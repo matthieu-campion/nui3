@@ -3,7 +3,6 @@
   Copyright (C) 2002-2003 Sebastien Metrot
 
   licence: see nui3/LICENCE.TXT
-  Copyright (C) 2000-2003 NGL Team
 */
 
 #define __nuiDragAndDrop_h__ // Disable this include
