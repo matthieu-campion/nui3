@@ -1,0 +1,220 @@
+/*
+  NUI3 - C++ cross-platform GUI framework for OpenGL based applications
+  Copyright (C) 2002-2003 Sebastien Metrot
+
+  licence: see nui3/LICENCE.TXT
+*/
+
+#ifndef __nuiMainWindow_h__
+#define __nuiMainWindow_h__
+
+//#include "nui.h"
+#include "nuiTopLevel.h"
+
+#include <stack>
+
+class nuiLabel;
+class nuiMainWindow;
+class nuiTimer;
+class nuiMainMenu;
+
+class NUI_API nuiContextInfo : public nglContextInfo
+{
+public:
+  enum Type
+  {
+    StandardContext2D,
+    StandardContext3D,
+    OffscreenContext2D,
+    OffscreenContext3D
+  };
+
+  nuiContextInfo(Type type = StandardContext2D);
+};
+
+/// This class implements the root nui object: the main window of any application.
+class NUI_API nuiMainWindow :  public nuiTopLevel
+{
+public:
+  nuiMainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& rInfo, const nglContext* pShared = NULL, const nglPath& mResPath = nglPath(ePathCurrent));
+  nuiMainWindow(uint Width = 320, uint Height = 240, bool Fullscreen=false, const nglPath& mResPath = nglPath(ePathCurrent));
+  bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
+
+  virtual ~nuiMainWindow();
+
+  virtual nuiXMLNode* Serialize(nuiXMLNode* pParentNode, bool Recursive) const;
+
+
+  bool IsKeyDown (nglKeyCode Key) const;
+//  void GetMouseInfo(nglMouseInfo& rMouseInfo);
+
+  /* @name Inherited from nuiWidget */
+  //@{
+  virtual void BroadcastInvalidate(nuiWidgetPtr pSender);
+  virtual void BroadcastInvalidateLayout(nuiWidgetPtr pSender, bool BroadCastOnly);
+  virtual void BroadcastInvalidateRect(nuiWidgetPtr pSender, const nuiRect& rRect);
+  bool SetMouseCursor(nuiMouseCursor Cursor);
+  //@}
+
+  /** @name Debugging helper functions */
+  //@{
+  void DBG_DisplayMouseOverInfo(); ///< Displays a tool tip near the mouse with informations on the object currently pointed to by the mouse.
+  void DBG_SetMouseOverInfo(bool set);
+  bool DBG_GetMouseOverInfo();
+  void DBG_DisplayMouseOverObject(); ///< Displays a frame over the object currently pointed to by the mouse.
+  void DBG_SetMouseOverObject(bool set);
+  bool DBG_GetMouseOverObject();
+  //@}
+
+  void SetQuitOnClose(bool Set);
+  bool GetQuitOnClose() const;
+
+  /** @name Frame rate limitation */
+  //@{
+  void  SetFrameRateLimit(float fps); ///< Change the maximum framerate to use for this main window (in number of frames per second). fps should be less than or equal to 0 if you want no limit. 
+  float GetFrameRateLimit(); ///< Return the maximum framerate to use for this main window (in number of frames per second). If it returns 0 there is no limit. 
+  //@}
+
+  void SetDebugMode(bool Set);
+
+  /** @name Redirected to nglWindow via nuiMainWindow::NGLWindow */
+  //@{
+  void BeginSession();
+  nglContext* GetNGLContext();
+  nglWindow* GetNGLWindow();
+  void SetState (nglWindow::StateChange State);
+  uint32 GetWidth();
+  uint32 GetHeight();
+  bool SetSize (uint Width, uint Height);
+  uint GetError() const;               ///< Retrieve the current error code
+  const nglChar* GetErrorStr() const;            ///< Retrieve the current error message
+  const nglChar* GetErrorStr(uint Error) const;  ///< Retrieve error message by code
+  
+  virtual void OnDragEnter();
+  virtual void OnDragLeave();
+  virtual bool OnCanDrop (nglDragAndDrop* pDragObject, int X, int Y, nglMouseInfo::Flags Button);
+  //virtual bool OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y) { return NULL; } ///< inherited from nuiWidget
+  virtual void OnDropped (nglDragAndDrop* pDragObject, int X,int Y, nglMouseInfo::Flags Button);
+  
+  class NUI_API WidgetCanDrop : public TestWidgetFunctor
+  {
+  public:
+    WidgetCanDrop(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y) 
+    { mpDragObject = pDragObject; mX = X; mY = Y; };
+    ~WidgetCanDrop() {};
+    bool operator()(nuiWidgetPtr pWidget)
+    {
+      nuiSize x = mX, y = mY;
+      pWidget->GlobalToLocal(x, y);
+      return pWidget->OnCanDrop(mpDragObject, x, y);
+    }
+  protected:
+    nglDragAndDrop* mpDragObject;
+    nuiSize mX, mY;
+  };
+  virtual bool Drag(nuiWidget* pDragSource, nglDragAndDrop* pDragObject);
+  virtual void OnDragFeedback(nglDropEffect eDropEffect);
+  virtual void OnDragged (nglDragAndDrop* pDragObject);
+  virtual void OnStopDragging();
+  
+  //@}
+
+  virtual void EnterModalState();
+  virtual void ExitModalState();
+  
+  void SetMainMenu(nuiMainMenu* pMainMenu);
+  nuiMainMenu* GetMainMenu();
+
+protected:
+  /* @name Redirected from nglWindow via nuiMainWindow::NGLWindow */
+  //@{
+  virtual void OnPaint();
+  virtual void Paint();
+  virtual void LazyPaint();
+  virtual void OnResize (uint Width, uint Height);
+  virtual void OnCreation();
+  virtual void OnDestruction();
+  virtual void OnActivation();
+  virtual void OnDesactivation();
+  virtual void OnClose();
+  virtual void OnState(nglWindow::StateInfo State);
+  virtual bool OnTextInput   (const nglString& rUnicodeText);
+  virtual bool OnKeyDown     (const nglKeyEvent& rEvent);
+  virtual bool OnKeyUp       (const nglKeyEvent& rEvent);
+  virtual bool OnMouseClick  (nglMouseInfo& rInfo);
+  virtual bool OnMouseUnclick(nglMouseInfo& rInfo);
+  virtual bool OnMouseMove   (nglMouseInfo& rInfo);
+  //@}
+
+  nuiEventSink<nuiMainWindow> mMainWinSink;
+
+  bool mQuitOnClose;
+  float mMaxFPS;
+  nglTime mLastRendering;
+  nuiTimer* mpInvalidateTimer;
+  bool InvalidateTimer(const nuiEvent& rEvent);
+
+  nuiWidget*      mpDragSource; ///< widget that has initialized a drag operation
+  nuiWidget*      mpWidgetCanDrop; ///< if not NULL, this is the last widget that return true to an OnCanDrop call (used for DragLeave)
+private:
+  /* @name Debugging */
+  //@{
+  bool mDisplayMouseOverInfo;
+  bool mDisplayMouseOverObject;
+  //@}
+
+  bool mDebugMode;
+  bool ShowWidgetInspector();
+  nuiMainWindow* mpInspectorWindow;
+
+  bool mInvalidatePosted;
+  
+  friend class NGLWindow;
+
+  class NUI_API NGLWindow : public nglWindow
+  {
+  public:
+    NGLWindow(nuiMainWindow* pMainWindow, uint Width, uint Height, bool FullScreen);
+    NGLWindow(nuiMainWindow* pMainWindow, const nglContextInfo& rContextInfo, const nglWindowInfo& rInfo, const nglContext* pShared);
+    virtual ~NGLWindow();
+
+    /* @name Inheritance from nglWindow */
+    //@{
+    virtual void OnPaint();
+    virtual void OnResize (uint Width, uint Height);
+    virtual void OnCreation();
+    virtual void OnDestruction();
+    virtual void OnActivation();
+    virtual void OnDesactivation();
+    virtual void OnClose();
+    virtual void OnState(StateInfo State);
+    virtual bool OnTextInput(const nglString& rUnicodeText);
+    virtual bool OnKeyDown(const nglKeyEvent& rEvent);
+    virtual bool OnKeyUp(const nglKeyEvent& rEvent);
+    virtual bool OnMouseClick(nglMouseInfo& rInfo);
+    virtual bool OnMouseUnclick(nglMouseInfo& rInfo);
+    virtual bool OnMouseMove(nglMouseInfo& rInfo);
+    
+    // Dnd receive
+    virtual void OnDragEnter();
+    virtual void OnDragLeave();
+    virtual bool OnCanDrop(nglDragAndDrop* pDragObject, int X, int Y, nglMouseInfo::Flags Button);
+    virtual void OnDropped(nglDragAndDrop* pDragObject, int X,int Y, nglMouseInfo::Flags Button);
+
+    // Dnd send
+    virtual bool Drag(nglDragAndDrop* pDragObject);
+    virtual void OnDragFeedback(nglDropEffect eDropEffect);
+    virtual void OnDragged (nglDragAndDrop* pDragObject);
+    virtual void OnStopDragging();
+    //@}
+
+  private:
+    nuiMainWindow* mpMainWindow;
+  };
+
+  NGLWindow* mpNGLWindow;
+  uint mFullFrameRedraw;
+  bool OnInspectorDeath(const nuiEvent& rEvent);
+};
+
+#endif // __nuiMainWindow_h__

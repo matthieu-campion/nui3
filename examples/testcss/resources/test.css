@@ -1,0 +1,163 @@
+//
+//  NUI3 demonstration sample - C++ cross-platform GUI framework for OpenGL based applications
+//  Copyright (C) 2002-2003 Sebastien Metrot
+//
+//  licence: see nui3/LICENCE.TXT
+//
+
+
+#include "test_included.css"
+
+@nuiFrame Frame1
+{
+  //const nglPath& rTexturePath
+  Texture : "rsrc:/test.png";
+  //const nuiRect& rClientRect
+  ClientRect : "{7 5 46 45}";
+  //const nuiColor& rColor = nuiColor(255, 255, 255, 255)
+  Color : #ffffffff;
+  
+  EnableBorder : true;
+}
+
+@Color mycolor1 = #E0E0FF;
+@Color mycolor2 = #10102F;
+
+@nuiGradientDecoration buttongradient
+{
+  Color1 : mycolor1;
+  Color2 : mycolor2;
+  StrokeColor : #001010;
+  StrokeSize : 1;
+}
+
+@nuiGradientDecoration buttonlabel
+{
+  Color1 : #50506F;
+  Color2 : #10102F;
+  StrokeSize : 0;
+}
+
+@nuiGradientDecoration buttonLabelHover
+{
+  Color1 : #70707F;
+  Color2 : #30303F;
+  StrokeSize : 0;
+}
+
+
+@font HeaderFont
+{
+  GenericName : "sans-serif";
+  Size : 25;
+  Bold : true;
+}
+
+@font HoveredLabelFont
+{
+  GenericName : "sans-serif";
+  Size : 35;
+  Italic : true;
+}
+
+@font Hello1Font
+{
+  GenericName : "serif";
+  Size : 25;
+  Italic : false;
+  Bold : true;
+}
+
+@font DefaultFont
+{
+  GenericName : "serif";
+  Size : 14;
+  Bold : false;
+  Italic : false;
+}
+
+nuiWidget
+{
+  BorderLeft : 2;
+  BorderRight : 2;
+  BorderTop : 2;
+  BorderBottom : 2;
+
+  TextPosition : center;
+  Position : fill;
+  FillRule : fill;
+  TextColor : darkblue;
+  Decoration : buttongradient;
+}
+
+nuiVBox
+{
+  BorderLeft : 10;
+  BorderRight : 10;
+  BorderTop : 10;
+  BorderBottom : 10;
+  Decoration : Frame1;
+  DecorationMode : Overdraw;
+}
+
+nuiButton.nuiLabel
+{
+  TextPosition : left;
+  TextColor : green;
+//  backgroundcolor : lightgreen;
+  Decoration : buttonlabel;
+}
+
+nuiButton[Name=btn2].nuiLabel
+{
+  TextPosition : right;
+  TextColor : black;
+  BackgroundColor : lightblue;
+}
+
+nuiButton.nuiLabel[Hover:true]
+{
+  TextPosition : topright;
+  TextColor : white;
+  Decoration : buttonLabelHover;
+}
+
+nuiButton.nuiLabel[Selected:true]
+{
+  TextPosition : topright;
+  TextColor : white;
+}
+
+nuiButton[Selected:true]
+{
+  Decoration : Frame1;
+}
+
+nuiButton[Selected:false]
+{
+  BorderLeft : 0;
+  BorderRight : 0;
+  BorderTop : 0;
+  BorderBottom : 0;
+  Decoration : none;
+}
+
+nuiLabel[Hover:false]
+{
+  Font : DefaultFont;
+}
+
+nuiLabel[Hover:true]
+{
+  Font : HoveredLabelFont;
+}
+
+("RecursiveBox")
+{
+  Position: left;
+  BorderLeft: 5;
+  Decoration: none;
+  TextColor : black;
+  Font: DefaultFont;
+}
+

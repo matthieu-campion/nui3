@@ -1,0 +1,89 @@
+// hello world
+
+a = 42;
+b = 42.42;
+c = true;
+d = "Hello";
+e = "World";
+f = d + ", " + e;
+
+result = a + a/100;
+
+for (i = 0; i <= 10; i++)
+  a = 2 * i;
+
+b = 0;
+while (a)
+{
+  b++;
+  a--;
+}
+
+c = 10;
+repeat
+{
+  c /= 2;
+} until (c < 2);
+
+if (a > 1)
+  b = true;
+else
+  b = false;
+
+funk testfunk(x,y,z)
+{
+  return x + y + z;
+}
+
+funk testline(x,y,z) = x * y * z;
+
+testpointer = testline;
+
+a = testfunk(1,2,3);
+b = testline(2,3,4);
+c = testpointer(2,3,4);
+
+funk sideeffect(a,b,c)
+{
+  local mylocalval;
+  
+  myval = a+b+c;
+  mylocalval = myval;
+}
+
+funk recursive(v)
+{
+  if (v > 1)
+    return v + recursive(v-1);
+  
+  return 1;
+}
+
+recurse = recursive(10);
+
+//print(d);
+
+
+win = MainWindow.Find("Bench/WMScrollView/wm/ScriptWin");
+button = nuiButton(win);
+image = nuiImage(button, "../data/toucan.png");
+image.SetPosition(5);
+label = nuiLabel(button, "nuiScript\ncreated\nthis button");
+label.SetPosition(8);
+button.SetToolTip("This button was created from an nui script.\nIt is composed of some text over an image.\nIf you click on it it will destroy its parent window.");
+button.SetProperty("ToolTipFollowMouse", "false");
+button.SetProperty("ToolTipPosition", "Center");
+windowclass = button.GetProperty("Class");
+windowname  = MainWindow.GetProperty("Name");
+dump("registered the new button!");
+
+funk OnButtonClick(btn)
+{
+  dump("Inside the callback!", "this second param", "and a third one", 10, 42.3, "and the last param");
+  parent = btn.GetParent();
+  parent.Trash();
+  return false;
+}
+
+button.Connect("Activated", OnButtonClick, button);
+

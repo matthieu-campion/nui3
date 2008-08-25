@@ -1,0 +1,2483 @@
+/*
+  NUI3 - C++ cross-platform GUI framework for OpenGL based applications
+  Copyright (C) 2002-2003 Sebastien Metrot
+
+  licence: see nui3/LICENCE.TXT
+*/
+
+#include "nui.h"
+
+#pragma warning(disable : 4996)
+
+#include <limits>
+#include <vector>
+#include <locale.h>
+#include <stdlib.h>
+#include <stdarg.h>
+
+#include "nglUTFStringConv.h"
+
+#ifdef WINCE
+#define ngl_vsnwprintf	_vswprintf
+#define ngl_snprintf	_snprintf
+#define ngl_strcmp		wcscmp
+#define ngl_stricmp 		wcsicmp
+#define ngl_strncmp 		wcsncmp
+#define ngl_strnicmp		wcsnicmp
+#define ngl_mbs_stricmp	_stricmp
+#elif defined _WIN32_
+#define ngl_vsnwprintf	_vswprintf
+#define ngl_snprintf	_snprintf
+#define ngl_strcmp		wcscmp
+#define ngl_stricmp 		wcsicmp
+#define ngl_strncmp 		wcsncmp
+#define ngl_strnicmp		wcsnicmp
+#define ngl_mbs_stricmp	stricmp
+#elif defined _CARBON_
+#define ngl_vsnwprintf vswprintf
+#define ngl_snprintf	snprintf
+#define ngl_strcmp wcscmp
+#define ngl_stricmp wcscasecmp
+#define ngl_strncmp wcsncmp
+#define ngl_strnicmp wcsncasecmp
+#define ngl_mbs_stricmp strcasecmp
+
+static int wcscasecmp(const nglChar* s1, const nglChar* s2) 
+{
+  nglChar c1;
+  nglChar c2;
+  do
+  {
+    int diff;
+    
+    c1 = *s1++;
+    c2 = *s2++;
+    if (!c1)
+      break;
+    diff = c1 - c2;
+    if (diff) 
+    {
+      if ((c1 >= L'A') && (c1 <= L'Z'))
+        c1 += 0x20;
+      if ((c2 >= L'A') && (c2 <= L'Z'))
+        c2 += 0x20;
+      if (c1 != c2) 
+        break;
+    }
+  } while (1);
+  if (c1 < c2)
+    return -1;
+  return c1 - c2;
+}
+
+static int wcsncasecmp(const wchar_t* s1, const wchar_t* s2, int64 n)
+{
+  nglChar c1;
+  nglChar c2;
+  if (!n)
+    return 0;
+  do 
+  {
+    int diff;
+    
+    c1 = *s1++;
+    c2 = *s2++;
+    if (!c1)
+      break;
+    diff = c1 - c2;
+    if (diff)
+    {
+      if ((c1 >= L'A') && (c1 <= L'Z'))
+        c1 += 0x20;
+      if ((c2 >= L'A') && (c2 <= L'Z'))
+        c2 += 0x20;
+      if (c1 != c2)
+        break;
+    }
+  } while (--n);
+  if (c1 < c2)
+    return -1;
+  return c1 - c2;
+}
+#elif defined _LINUX_
+#include <wctype.h>
+#define ngl_vsnwprintf vswprintf
+#define ngl_snprintf	snprintf
+#define ngl_strcmp wcscmp
+#define ngl_stricmp wcscasecmp
+#define ngl_strncmp wcsncmp
+#define ngl_strnicmp wcsncasecmp
+#define ngl_mbs_stricmp strcasecmp
+#endif
+
+#ifdef WINCE
+#define NO_LOCALE(x) \
+{ \
+x; \
+}
+#else
+#define NO_LOCALE(x) \
+{ \
+int nui_locale_test = ngl_mbs_stricmp(setlocale(LC_NUMERIC, NULL), "C"); \
+if (nui_locale_test) setlocale(LC_NUMERIC, "C"); \
+x; \
+if (nui_locale_test) setlocale(LC_NUMERIC, ""); \
+}
+#endif
+
+/////////////////////////////// Sometimes missing functions:
+
+static void ngl_uitoa (uint64 x, uint32 base, nglString& _String)
+{
+	// Max Number is 33 digits long in binary
+	if (base < 2) 
+		return;
+  
+	nglChar Temp[34];
+	nglChar* pTemp = Temp + 33;
+  
+	*pTemp-- = 0;
+  
+	do
+	{
+		nglChar digit = (nglChar)(x % base);
+		*pTemp = digit + (digit > 9 ? L'a' - 10 : L'0');
+		x /= base;
+		pTemp--;
+	} while (x);
+  
+	pTemp++;
+	_String = pTemp;
+}
+
+static void ngl_itoa (int64 x, int32 base, nglString& _String)
+{
+	if (base < 2) 
+		return;
+  
+	// Max Number is 33 digits long in binary
+	nglChar Temp[34];
+	nglChar* pTemp = Temp + 33;
+	bool neg = false;
+  
+	*pTemp = 0;
+	pTemp--;
+  
+	if (x < 0)
+	{
+		x = -x;
+		neg = true;
+	}
+  
+	do
+	{
+		nglChar digit = (nglChar)(x % base);
+		*pTemp = digit + (digit > 9 ? L'a' - 10 : L'0');
+		x /= base;
+		pTemp--;
+	} while (x);
+  
+	if (neg)
+		*pTemp = L'-';
+	else
+		pTemp++;
+  
+	_String = pTemp;
+}
+
+
+static void ngl_ftoa(double x, nglString& _String, int32 precision, nglFloatFormatFlag flag)
+{
+	nglString fmt;
+  
+	fmt.Add(L'%');
+	if (flag & ShowSign)
+		fmt.Add(L'-');
+	fmt.Add(L'.');
+	fmt.Add((int64)precision);
+	nglChar t = L'f';
+	if (flag & Scientific)
+		t = L'e';
+	else if (flag & Condensed)
+		t = L'g';
+  
+	fmt.Add(t);
+  
+	// Use the standard display with the 'C' locale:
+	_String.CFormat(fmt.GetChars(), x);
+}
+
+
+static int ngl_getdigit(nglChar c)
+{
+	if (c >= '0' && c <= '9')
+		return c - '0';
+  
+	if (c >= 'a' && c <= 'z')
+		return 10 + c - 'a';
+  
+	if (c >= 'A' && c <= 'Z')
+		return 10 + c - 'A';
+  
+	return -1;
+}
+
+static uint64 ngl_atoui(const nglChar* str, int base);
+static int64 ngl_atoi(const nglChar* str, int base);
+
+static double ngl_atof(const nglChar* str)
+{
+	if (!str)
+		return 0;
+  
+	bool neg = false;
+	const nglChar* pStr = str;
+	double value = 0;
+	//  bool dotfound = false;
+  
+	if (*pStr == '-')
+	{
+		neg = true;
+		pStr++;
+	}
+  
+	nglChar c = ngl_getdigit(*pStr);
+	while (*pStr && c >= 0 && c <= 9)
+	{
+		value = value * 10 + c;
+		pStr++;
+		c = ngl_getdigit(*pStr);
+	}
+  
+	// Read decimal dot:
+	if (*pStr == '.')
+	{
+		pStr++;
+		double count = 1, v = 0;
+		c = ngl_getdigit(*pStr);
+		while (*pStr && c >= 0 && c <= 9) // Read decimal part:
+		{
+			v = v * 10 + c;
+			count *= 10;
+			pStr++;
+			c = ngl_getdigit(*pStr);
+		}
+    
+		if (count)
+		{
+			value += v / count;
+		}
+	}
+  
+	if (*pStr == 'e' || *pStr == 'E')
+	{
+		pStr++;
+		int32 exponent = (int32)ngl_atoi(pStr, 10);
+		value *= pow(10.0, exponent);
+	}
+  
+	return neg ? -value : value;
+}
+
+static uint64 ngl_atoui(const nglChar* str, int base)
+{
+	if (!str)
+		return 0;
+  
+	uint64 value = 0;
+	const nglChar* pStr = str;
+  
+	while (*pStr)
+	{
+		nglChar c = ngl_getdigit(*pStr);
+		if (c >= base || c < 0)
+			return value;
+    
+		value = base * value + c;
+		pStr++;
+	}
+  
+	return value;
+}
+
+static int64 ngl_atoi(const nglChar* str, int base)
+{
+	if (!str)
+		return 0;
+  
+	int64 value = 0;
+	const nglChar* pStr = str;
+	bool neg = false;
+  
+	if (*pStr == '-')
+	{
+		neg = true;
+		pStr++;
+	}
+  
+	value = ngl_atoui(pStr, base);
+  
+	if (neg)
+		value = -value;
+  
+	return value;
+}
+
+
+////////////////////////////////////////////////////////////////
+
+static inline int nat_isdigit(nglChar a)
+{
+	return iswdigit(a);
+}
+
+
+static inline int64 nat_isspace(nglChar a)
+{
+	return iswspace(a);
+}
+
+
+bool nglIsDigit (nglChar a)
+{
+  return (nat_isdigit(a) != 0);
+}
+
+bool nglIsSpace (nglChar a)
+{
+  return (nat_isspace(a) != 0);
+}
+
+
+static inline nglChar nat_toupper(nglChar a)
+{
+	return towupper(a);
+}
+
+
+
+static int32 compare_right(nglChar const *a, nglChar const *b)
+{
+	int bias = 0;
+  
+	/* The longest run of digits wins.  That aside, the greatest
+   value wins, but we can't know that it will until we've scanned
+   both numbers to know that they have the same magnitude, so we
+   remember it in BIAS. */
+	for (;; a++, b++) {
+		if (!nat_isdigit(*a)  &&  !nat_isdigit(*b))
+			return bias;
+		else if (!nat_isdigit(*a))
+			return -1;
+		else if (!nat_isdigit(*b))
+			return +1;
+		else if (*a < *b) 
+		{
+			if (!bias)
+				bias = -1;
+		} 
+		else if (*a > *b) 
+		{
+			if (!bias)
+				bias = +1;
+		} 
+		else if (!*a  &&  !*b)
+		{
+			return bias;
+		}
+	}
+  
+	return 0;
+}
+
+
+static int32 compare_left(nglChar const *a, nglChar const *b)
+{
+	/* Compare two left-aligned numbers: the first to have a
+   different value wins. */
+	for (;; a++, b++) 
+	{
+		if (!nat_isdigit(*a)  &&  !nat_isdigit(*b))
+			return 0;
+		else if (!nat_isdigit(*a))
+			return -1;
+		else if (!nat_isdigit(*b))
+			return +1;
+		else if (*a < *b)
+			return -1;
+		else if (*a > *b)
+			return +1;
+	}
+  
+	return 0;
+}
+
+static int32 strnatcmp0(nglChar const *a, nglChar const *b, int fold_case)
+{
+	int64 ai, bi;
+	nglChar ca, cb;
+	int32 fractional;
+	int32 result;
+  
+	assert(a && b);
+	ai = bi = 0;
+	while (1) 
+	{
+		ca = a[ai]; cb = b[bi];
+    
+		/* skip over leading spaces or zeros */
+		while (nat_isspace(ca))
+			ca = a[++ai];
+    
+		while (nat_isspace(cb))
+			cb = b[++bi];
+    
+		/* process run of digits */
+		if (nat_isdigit(ca)  &&  nat_isdigit(cb)) 
+		{
+			fractional = (ca == '0' || cb == '0');
+      
+			if (fractional) 
+			{
+				if ((result = compare_left(a+ai, b+bi)) != 0)
+					return result;
+			} 
+			else 
+			{
+				if ((result = compare_right(a+ai, b+bi)) != 0)
+					return result;
+			}
+		}
+    
+		if (!ca && !cb) 
+		{
+			/* The strings compare the same.  Perhaps the caller
+       will want to call strcmp to break the tie. */
+      return fold_case ? ngl_stricmp(a, b) : ngl_strcmp(a, b);
+		}
+    
+		if (fold_case) 
+		{
+			ca = nat_toupper(ca);
+			cb = nat_toupper(cb);
+		}
+    
+		if (ca < cb)
+			return -1;
+		else if (ca > cb)
+			return +1;
+    
+		++ai; ++bi;
+	}
+  
+	return 0;
+}
+
+static int32 strnatcmp(nglChar const *a, nglChar const *b) 
+{
+	return strnatcmp0(a, b, 0);
+}
+
+
+/* Compare, recognizing numeric string and ignoring case. */
+static int32 strnatcasecmp(nglChar const *a, nglChar const *b) 
+{
+	return strnatcmp0(a, b, 1);
+}
+
+
+
+const nglChar nglString::Zero = 0;
+const nglChar nglString::Tab = '\t';
+const nglChar nglString::NewLine = '\n';
+
+nglString nglString::Null;
+nglString nglString::Empty(L"");
+nglString nglString::WhiteSpace(L" \n\t\r");
+
+nglString::nglString()
+{
+  mIsNull = true;
+}
+
+nglString::nglString(nglChar Ch)
+{
+	mString = Ch;
+  mIsNull = false;
+}
+
+nglString::nglString(int32 integer)
+{
+	SetCInt(integer);
+  mIsNull = false;
+}
+
+nglString::nglString(uint32 integer)
+{
+	SetCUInt(integer);
+  mIsNull = false;
+}
+
+nglString::nglString(float fl, int32 precision)
+{
+	SetCFloat(fl, precision);
+  mIsNull = false;
+}
+
+
+nglString::nglString(double db, int32 precision)
+{
+	SetCDouble(db, precision);
+  mIsNull = false;
+}
+
+
+nglString::nglString(const nglString& rSource)
+{
+	mString = rSource.mString; 
+  mIsNull = false;
+}
+
+nglString::nglString(const nglChar* pSource)
+{
+  mIsNull = true;
+	if (pSource)
+	{
+		mString = pSource; 
+    mIsNull = false;
+	}
+}
+
+nglString::nglString(const std::string& rSource, nglTextEncoding Encoding)
+{
+	Import(rSource.c_str(), Encoding);
+  mIsNull = false;
+}
+
+nglString::nglString(const std::wstring& rSource)
+{
+	mString = rSource;
+  mIsNull = false;
+}
+
+nglString::nglString(const char* pSource, nglTextEncoding Encoding)
+{
+  mIsNull = true;
+	if (!pSource)
+    return;
+  
+	Import(pSource, Encoding);
+  mIsNull = false;
+}
+
+nglString::nglString(const char* pSource, int32 Length, nglTextEncoding Encoding)
+{
+  mIsNull = true;
+	if (!pSource)
+    return;
+  
+	Import(pSource, Length, Encoding);
+  mIsNull = false;
+}
+
+nglString::~nglString()
+{
+}
+
+int32 nglString::GetLength() const
+{
+	return (int32)mString.size();
+}
+
+bool nglString::IsEmpty() const
+{
+	return mString.empty();
+}
+
+bool nglString::IsNull() const
+{
+  return mIsNull;
+}
+
+nglChar nglString::GetChar(uint32 Index) const
+{
+	if (IsEmpty())
+		return 0;
+	return mString[Index];
+}
+
+nglChar nglString::GetLastChar() const
+{
+	if (IsEmpty())
+		return 0;
+	return mString[(uint32)GetLength()-1];
+}
+
+const nglChar* nglString::GetChars() const
+{
+	return (const nglChar*)mString.c_str();
+}
+
+std::string nglString::GetStdString(const nglTextEncoding Encoding) const
+{
+	char* pTemp = Export(Encoding);
+	std::string tmp(pTemp);
+	free(pTemp);
+	return tmp;
+}
+
+std::wstring nglString::GetStdWString() const
+{
+	return mString;
+}
+
+
+/*
+ char* nglString::Export(const nglTextEncoding Encoding) const
+ {
+ int32 cw = (int32)mString.size();
+ int32 size = cw*2+1;
+ char*	psz = (char*)alloca(size);
+ 
+ #ifdef _WIN32_
+ int64 cc = WideCharToMultiByte(CP_ACP, 0, &mString[0], (int)cw, psz, (int)size, NULL, NULL);
+ #else
+ int64 cc = wcstombs(psz, mString.c_str(), (int)cw);
+ #endif
+ 
+ psz[cc] = '\0';
+ return strdup(psz);
+ }
+ */
+
+char* nglString::Export (const nglTextEncoding Encoding) const
+{
+	nglStringConv* pConv = nglString::GetStringConv(nglEncodingPair(eEncodingInternal, Encoding)); // From=internal -> To=user 'Encoding'
+  
+	if (pConv->GetState() != eStringConv_OK)
+		return NULL;
+  
+	bool done = false;
+  
+	// Source
+	int32 to_read = GetLength() * sizeof(nglChar);
+	const char* source = (const char*)&mString[0];
+  
+  // Output : let's try with a buffer size of GetLength() chars
+  int32 written = 0;
+  int32 buffer_size = GetLength() + 4;
+  buffer_size *= 4 * sizeof(nglChar);
+  char* buffer = (char*) malloc(buffer_size);
+  memset(buffer, 0, buffer_size);
+  if (!buffer)
+    return NULL;
+  
+  do
+  {
+    char* target = buffer + written;
+    *target = '\0';
+    int32 to_write = buffer_size - 1 - written;
+    int32 to_write0 = to_write;
+    
+#ifdef DEBUG_EXPORT
+		printf("\nExport : to_read=%d  to_write=%d\n", to_read, to_write);
+#endif
+    pConv->Process(source, to_read, target, to_write);
+    written += to_write0 - to_write;
+#ifdef DEBUG_EXPORT
+		printf("         to_read=%d  to_write=%d  written=%d (" SFORMAT ")\n", to_read, to_write, written, conv.GetErrorStr());
+		printf("         '%ls'\n", buffer);
+#endif
+    
+		switch (pConv->GetState())
+		{
+      case eStringConv_OK:
+        // If the following errors occur, we can't go further :
+      case eStringConv_RangeError:
+      case eStringConv_InvalidConversion:
+      case eStringConv_NeedInput:
+			{
+				done = true;
+				break;
+			}
+        
+      case eStringConv_NeedOutput:
+			{
+				// We need a larger output buffer. Heuristic : add half of the input buffer size
+#ifdef DEBUG_EXPORT
+				printf("         resize(%d -> %d)\n", buffer_size, buffer_size + (GetLength() + 1) / 2);
+#endif
+        int32 oldsize = buffer_size;
+        buffer_size += (GetLength() + 4) / 2;
+        buffer = (char*) realloc(buffer, buffer_size);
+        memset(buffer + oldsize, 0, buffer_size - oldsize);
+        if (!buffer)
+          return NULL;
+        break;
+      }
+    }
+  }
+  while (!done);
+  
+  buffer[written] = 0;
+  return buffer;
+}
+
+int32 nglString::Export (int32& rOffset, char* pBuffer, int32& rToWrite, const nglTextEncoding Encoding) const
+{
+	if (rOffset < 0 || !pBuffer || rToWrite < 0)
+		return -1;
+  
+	nglStringConv* pConv = nglString::GetStringConv(nglEncodingPair(eEncodingInternal, Encoding)); // From=internal -> To=user 'Encoding'
+  
+	return Export(rOffset, pBuffer, rToWrite, *pConv);
+}
+
+int32 nglString::Export (int32& rOffset, char* pBuffer, int32& rToWrite, nglStringConv& rConv) const
+{
+	if (rOffset < 0 || rOffset >= GetLength() || !pBuffer || rToWrite < 0)
+		return -1;
+  
+	int to_read = (GetLength() - rOffset) * sizeof(nglChar);
+	int to_read0 = to_read;
+	const char* source = (const char*)&mString[rOffset];
+  
+#ifdef DEBUG_EXPORT
+	printf("\nExport*: to_read=%d  to_write=%d  offset=%d\n", to_read, rToWrite, rOffset);
+#endif
+	int errors = rConv.Process(source, to_read, pBuffer, rToWrite);
+	rOffset += (to_read0 - to_read) / sizeof(nglChar);
+#ifdef DEBUG_EXPORT
+	printf("         to_read=%d  to_write=%d  offset=%d (" SFORMAT ")\n", to_read, rToWrite, rOffset, rConv.GetErrorStr());
+#endif
+  
+	if (rConv.GetState() == eStringConv_RangeError ||
+      rConv.GetState() == eStringConv_InvalidConversion)
+		return -1;
+  
+	return errors;
+}
+
+
+
+nglString nglString::Extract(uint32 Index) const
+{                   
+	return Extract(Index, GetLength() - Index);
+}
+
+nglString nglString::Extract(int32 Index, int32 Length) const
+{
+	int32 len = GetLength();
+	if (Index >= len)
+		return nglString();
+	if (Index + Length > len)
+		Length = len - Index;
+	return nglString(mString.substr(Index, Length));
+}
+
+
+nglString nglString::GetLeft(int32 Count) const
+{
+	return Extract(0, Count);
+}
+
+nglString nglString::GetRight(int32 Count) const
+{
+	int32 len = GetLength();
+	if (Count > len)
+		Count = len;
+	return Extract(len - Count, Count);
+}
+
+
+int64 nglString::GetInt64(int Base) const
+{
+	return (IsEmpty() ? 0 : ngl_atoi(&mString[0], Base));
+}
+
+uint64 nglString::GetUInt64(int Base) const
+{
+	return (IsEmpty() ? 0 : ngl_atoui(&mString[0], Base));
+}
+
+float nglString::GetFloat() const
+{
+	return (IsEmpty() ? 0.0f : (float)ngl_atof(&mString[0]));
+}
+
+double nglString::GetDouble() const
+{
+	return (IsEmpty() ? 0.0 : ngl_atof(&mString[0]));
+}
+
+
+int64 nglString::GetCInt64(int Base) const
+{
+  
+	return (IsEmpty() ? 0 : ngl_atoi(&mString[0], Base));
+}
+
+uint64 nglString::GetCUInt64(int Base) const
+{
+	return (IsEmpty() ? 0 : ngl_atoui(&mString[0], Base));
+}
+
+float nglString::GetCFloat() const
+{
+	return (IsEmpty() ? 0.0f : (float)ngl_atof(&mString[0]));
+}
+
+double nglString::GetCDouble() const
+{
+	return (IsEmpty() ? 0.0 : ngl_atof(&mString[0]));
+}
+
+bool nglString::SetChar(nglChar Ch, int32 Index)
+{
+	assert(Index < GetLength());
+	mString[Index] = Ch;
+	return true;
+}
+
+
+bool nglString::Fill(nglChar Pattern, int32 RepeatCount)
+{
+	mString.resize(RepeatCount);
+	for (int32 i = 0; i < RepeatCount; i++)
+		mString[i] = Pattern;
+  mIsNull = false;
+	return true;
+}
+
+bool nglString::Fill(const nglChar* pPattern, int32 RepeatCount)
+{
+	nglString str(pPattern);
+  mIsNull = false;
+	return Fill(str, RepeatCount);
+}
+
+bool nglString::Fill(const nglString& rPattern, int32 RepeatCount)
+{
+	mString.clear();
+  mIsNull = false;
+	for (int32 i = 0; i < RepeatCount; i++)
+		mString += rPattern.GetStdWString();
+	return true;
+}
+
+int32 nglString::Import(const char* pBuffer, const nglTextEncoding Encoding)
+{
+	if (!pBuffer)
+		return false;
+  
+  mIsNull = false;
+	int32 offset = 0;
+	int32 len = (int32)strlen(pBuffer);
+  
+	return Import(offset, pBuffer, len, Encoding);
+}
+
+int32 nglString::Import (const char* pBuffer, int32 ByteCount, const nglTextEncoding Encoding)
+{
+	if (!pBuffer)
+		return false;
+  
+  mIsNull = false;
+	int32 offset = 0;
+  
+	return Import(offset, pBuffer, ByteCount, Encoding);
+}
+
+int32 nglString::Import (int32& rOffset, const char* pBuffer, int32& rToRead, const nglTextEncoding Encoding)
+{
+	if (!pBuffer || rToRead < 0)
+		return -1;
+  
+  mIsNull = false;
+	nglStringConv* pConv = nglString::GetStringConv(nglEncodingPair(Encoding, eEncodingInternal)); // From=user 'Encoding' -> To=internal
+  
+	return Import(rOffset, pBuffer, rToRead, *pConv);
+}
+
+
+int32 nglString::Import (int32& rOffset, const char* pBuffer, int32& rToRead, nglStringConv& rConv)
+{
+	if (!pBuffer || rToRead < 0)
+		return -1;
+  
+  mIsNull = false;
+	int32 errors = 0;
+	int32 to_read = rToRead;
+	bool done = false;
+  
+	// Simple heuristic : let's allocate rToRead nglChars (plus the untouched rOffset ones)
+	mString.resize((size_t)(rOffset + rToRead));
+  
+	do
+	{
+		nglChar* target = (nglChar*) &mString[(size_t)rOffset];
+		int32 to_write = ((int32)mString.size() - rOffset) * sizeof(nglChar);
+		int32 to_write0 = to_write;
+    
+#ifdef DEBUG_IMPORT
+		printf("\nImport : to_read=%d  to_write=%d  rOffset=%d\n", to_read, to_write, rOffset);
+#endif
+		errors += rConv.Process(pBuffer, to_read, (char*&)target, to_write);
+		rOffset += (to_write0 - to_write) / sizeof(nglChar);
+#ifdef DEBUG_IMPORT
+		printf("         to_read=%d  to_write=%d  rOffset=%d (" SFORMAT ")\n", to_read, to_write, rOffset, rConv.GetErrorStr());
+		printf("         '" SFORMAT "'\n", mpBuffer);
+#endif
+    
+		switch (rConv.GetState())
+		{
+      case eStringConv_OK:
+        // If the following errors occur, we can't go further :
+      case eStringConv_RangeError:
+      case eStringConv_InvalidConversion:
+      case eStringConv_NeedInput:
+			{
+				mString.resize(rOffset);
+				done = true;
+				break;
+			}
+        
+      case eStringConv_NeedOutput:
+			{
+				// We need a larger string buffer. Heuristic : add half of the input buffer size
+#ifdef DEBUG_IMPORT
+				printf("         resize(%d -> %d)\n", mBufferSize - 1, mBufferSize - 1 + (rToRead + 1) / 2);
+#endif
+				mString.resize((size_t)(mString.size() - 1 + (rToRead + 1) / 2));
+				break;
+			}
+		}
+	}
+	while (!done);
+  
+	rToRead = to_read;
+	return errors;
+}
+
+
+
+
+bool nglString::Copy(nglChar Ch)
+{
+  mIsNull = false;
+	mString.resize(1);
+	mString[1] = Ch;
+	return true;
+}
+
+bool nglString::Copy(const nglChar* pSource)
+{
+  mIsNull = false;
+	mString = pSource;
+	return true;
+}
+
+bool nglString::Copy(const nglChar* pSource, int32 len)
+{
+  mIsNull = false;
+	int32 slen = (int32)wcslen(pSource);
+	len = MIN(len, slen);
+	mString.resize(len);
+	for (int32 i = 0; i < len; i++)
+		mString[i] = pSource[i];
+	mString[len] = 0;
+	return true;
+}
+
+bool nglString::Copy(const nglString& rSource)
+{
+  mIsNull = false;
+	mString = rSource.mString;
+	return true;
+}
+
+bool nglString::Insert(nglChar Ch, int32 Index)
+{
+  mIsNull = false;
+	mString.insert(Index, 1, Ch);
+	return true;
+}
+
+bool nglString::Insert(const nglChar* pSource, int32 Index)
+{
+  mIsNull = false;
+	mString.insert(Index, pSource);
+	return true;
+}
+
+bool nglString::Insert(const nglString& rSource, int32 Index)
+{
+  mIsNull = false;
+	mString.insert(Index, rSource.mString);
+	return true;
+}
+
+nglString& nglString::Append(nglChar Ch)
+{
+  mIsNull = false;
+	Insert(Ch, GetLength());
+	return *this;
+}
+
+nglString& nglString::Append(const nglChar* pSource)
+{
+  mIsNull = false;
+	Insert(pSource, GetLength());
+	return *this;
+}
+
+nglString& nglString::Append(const nglString& rSource)
+{
+  mIsNull = false;
+	Insert(rSource, GetLength());
+	return *this;
+}
+
+nglString& nglString::Prepend(nglChar Ch)
+{
+  mIsNull = false;
+	Insert(Ch, 0);
+	return *this;
+}
+
+nglString& nglString::Prepend(const nglChar* pSource)
+{
+  mIsNull = false;
+	Insert(pSource, 0);
+	return *this;
+}
+
+nglString& nglString::Prepend(const nglString& rSource)
+{
+  mIsNull = false;
+	Insert(rSource, 0);
+	return *this;
+}
+
+void nglString::SetCInt(int64 Value, int Base)
+{
+  mIsNull = false;
+	ngl_itoa(Value, Base, *this);
+}
+
+void nglString::SetCUInt(uint64 Value, int Base)
+{
+  mIsNull = false;
+	ngl_uitoa(Value, Base, *this);
+}
+
+void nglString::SetCFloat(float Value, int32 precision, nglFloatFormatFlag flag)
+{
+  mIsNull = false;
+	ngl_ftoa(Value, *this, precision, flag);
+}
+
+void nglString::SetCDouble(double Value, int32 precision, nglFloatFormatFlag flag)
+{
+  mIsNull = false;
+	ngl_ftoa(Value, *this, precision, flag);
+}
+
+void nglString::Nullify()
+{
+  mIsNull = true;
+	mString.clear();
+}
+
+bool nglString::Wipe()
+{
+	mString.clear();
+	return true;
+}
+
+bool nglString::Delete(int32 Index)
+{
+	assert(!Index  || (Index < (int32)mString.size()));
+	mString.erase(Index, mString.size() - Index);
+	return true;
+}
+
+bool nglString::Delete(int32 Index, int32 Length)
+{
+	assert(!Index  || (Index < (int32)mString.size()));
+	assert(Index+Length <= (int32)mString.size());
+	mString.erase(Index, Length);
+	return true;
+}
+
+bool nglString::DeleteLeft(int32 Count)
+{
+	assert(Count <= (int32)mString.size());
+	mString.erase(0, Count);
+	return true;
+}
+
+bool nglString::DeleteRight(int32 Count)
+{
+	assert(Count <= GetLength());
+	Delete(GetLength() - Count);
+	return true;
+}
+
+bool nglString::Trim()
+{
+	TrimLeft(WhiteSpace);
+	TrimRight(WhiteSpace);
+	return true;
+}
+
+bool nglString::Trim (nglChar Ch)
+{
+	TrimLeft(Ch);
+	TrimRight(Ch);
+	return true;
+}
+
+bool nglString::Trim(const nglChar* pTrimSet)
+{
+	TrimLeft(pTrimSet);
+	TrimRight(pTrimSet);
+	return true;
+}
+
+bool nglString::Trim(const nglString& rTrimSet)
+{
+	TrimLeft(rTrimSet);
+	TrimRight(rTrimSet);
+	return true;
+}
+
+
+bool nglString::TrimLeft()
+{
+	TrimLeft(WhiteSpace);
+	return true;
+}
+
+bool nglString::TrimLeft(nglChar Ch)
+{
+	nglChar tmp[2] = {Ch, 0};
+	TrimLeft(tmp);
+	return true;
+}
+
+bool nglString::TrimLeft(const nglChar* pTrimSet)
+{
+	int32 i = 0;
+	int32 len = (int32)mString.size();
+	int j = 0;
+	while (i < len)
+	{
+		j = 0;
+		while (pTrimSet[j] && pTrimSet[j] != mString[i])
+			j++;
+		if (!pTrimSet[j])
+		{
+			if (i)
+				DeleteLeft(i);
+			return true;
+		}
+		i++;
+	}
+  if (i)
+    DeleteLeft(i);
+	return false;
+}
+
+bool nglString::TrimLeft(const nglString& rTrimSet)
+{
+	TrimLeft(rTrimSet.GetChars());
+	return true;
+}
+
+
+bool nglString::TrimRight()
+{
+	TrimRight(WhiteSpace);
+	return true;
+}
+
+bool nglString::TrimRight(nglChar Ch)
+{
+	nglChar tmp[2] = {Ch, 0};
+	TrimRight(tmp);
+	return true;
+}
+
+bool nglString::TrimRight(const nglChar* pTrimSet)
+{
+	int32 len = (int32)mString.size();
+	int32 i = len - 1;
+	while (i >= 0)
+	{
+		int j = 0;
+		while (pTrimSet[j] && pTrimSet[j] != mString[i])
+			j++;
+		if (!pTrimSet[j])
+		{
+			if (i != len - 1)
+				DeleteRight(len - i - 1);
+			return true;
+		}
+		i--;
+	}
+	return false;
+}
+
+bool nglString::TrimRight(const nglString& rTrimSet)
+{
+	TrimRight(rTrimSet.GetChars());
+	return true;
+}
+
+
+bool nglString::Replace(int32 Index, int32 Length, nglChar Ch)
+{
+	mString.replace(Index, Length, 1, Ch);
+	return true;
+}
+
+bool nglString::Replace(int32 Index, int32 Length, const nglChar* pSource)
+{
+	mString.replace(Index, Length, pSource);
+	return true;
+}
+
+
+bool nglString::Replace(int32 Index, int32 Length, const nglString& rSource)
+{
+	mString.replace(Index, Length, rSource.GetStdWString());
+	return true;
+}
+
+
+bool nglString::Replace(const nglChar Old, const nglChar New)
+{
+	bool changed = false;
+	int32 len = (int32)mString.size();
+	for (int32 i = 0; i < len; i++)
+		if (mString[i] == Old)
+		{
+			mString[i] = New;
+			changed = true;
+		}
+  return changed;
+}
+
+bool nglString::Replace(const nglChar* pOld, const nglChar* pNew)
+{
+	return Replace(nglString(pOld), nglString(pNew));
+}
+
+bool nglString::Replace(const nglString& rOld, const nglString& rNew)
+{
+	bool changed = false;
+	int32 i = 0;
+	int32 len = GetLength();
+	int32 oldlen = rOld.GetLength();
+	int32 newlen = rNew.GetLength();
+  
+	while (i < len && i >= 0)
+	{
+		i = Find(rOld, i);
+		if (i < 0)
+			return changed;
+		Delete(i, oldlen);
+		Insert(rNew, i);
+		i += newlen;
+    len = GetLength();
+	}
+	return changed;
+}
+
+
+nglString& nglString::ToUpper()
+{
+	int32 len = GetLength();
+	for (int32 i = 0; i < len; i++)
+		mString[i] = towupper(mString[i]);
+	return *this;
+}
+
+nglString& nglString::ToUpper(int32 Index, int32 Length)
+{
+	int32 len = GetLength();
+	if (Index + Length <= len)
+		len = Length;
+	for (int32 i = Index; i < len; i++)
+		mString[i] = towupper(mString[i]);
+	return *this;
+}
+
+nglString& nglString::ToLower()
+{
+	int32 len = GetLength();
+	for (int32 i = 0; i < len; i++)
+		mString[i] = towlower(mString[i]);
+	return *this;
+}
+
+nglString& nglString::ToLower(int32 Index, int32 Length)
+{
+	int32 len = GetLength();
+	if (Index + Length <= len)
+		len = Length;
+	for (int32 i = Index; i < len; i++)
+		mString[i] = towupper(mString[i]);
+	return *this;
+}
+
+std::set<char> nglString::gURLDontEncodeChars;
+
+char* nglString::EncodeUrl()
+{
+  if (nglString::gURLDontEncodeChars.empty())
+  {
+    char c;
+    for (c = 'a'; c <= 'z'; c++)
+    {
+      gURLDontEncodeChars.insert(c);
+    }
+    for (c = 'A'; c <= 'Z'; c++)
+    {
+      gURLDontEncodeChars.insert(c);
+    }
+    for (c = '0'; c <= '9'; c++)
+    {
+      gURLDontEncodeChars.insert(c);
+    }
+    gURLDontEncodeChars.insert('-');
+    gURLDontEncodeChars.insert('_');
+    gURLDontEncodeChars.insert('.');
+    gURLDontEncodeChars.insert('*');
+    gURLDontEncodeChars.insert(' ');
+  }
+  
+  char* pExportChars = Export(eUTF8);
+  int32 exportLen = strlen(pExportChars);
+  int32 resultLen = exportLen + 1;
+  char* pResultChars = (char*)malloc(resultLen);
+  int j = 0;
+  std::set<char>::const_iterator end = gURLDontEncodeChars.end();
+  for (int i = 0; i < exportLen; i++) 
+  {
+    char c = pExportChars[i];
+    if (nglString::gURLDontEncodeChars.find(c) != end) {
+      if (c == ' ')
+      {
+        pResultChars[j] = '+';
+      }
+      else
+      {
+        pResultChars[j] = c;
+      }
+      j++;
+    }
+    else
+    {
+      resultLen += 3;
+      pResultChars = (char*)realloc(pResultChars, resultLen);
+      ngl_snprintf(&pResultChars[j], 4, "%%%02hhX", c); // puts a '\0' at the end of snprintf, not a problem: enough space, and will be re-written
+      j+=3;
+    }
+  }
+  free(pExportChars);
+  pResultChars[j] = NULL;
+  return pResultChars;
+}
+
+
+nglString& nglString::Format(const nglChar* pFormat, ...)
+{
+  if (!pFormat)
+    return *this;
+  
+  mIsNull = false;
+  va_list args;
+  
+  va_start(args, pFormat);
+  Formatv(pFormat, args);
+  va_end(args);
+  
+  return *this;
+}
+
+nglString& nglString::Format(const char* pFormat, ...)
+{
+  if (!pFormat)
+    return *this;
+  
+  mIsNull = false;
+  nglString str(pFormat);
+  va_list args;
+  
+  va_start(args, pFormat);
+  Formatv(str.GetChars(), args);
+  va_end(args);
+  
+  return *this;
+}
+
+#define FORMAT_BUFSIZE 1024
+
+nglString& nglString::Formatv(const nglChar* pFormat, va_list Args)
+{
+  if (!pFormat)
+    return *this;
+  
+  mIsNull = false;
+  nglChar sbuffer[FORMAT_BUFSIZE+1];
+  memset(sbuffer, 0, FORMAT_BUFSIZE * sizeof(nglChar));
+  int len;
+  
+#ifdef _WIN32_
+  // Try to render in stack buffer
+  len = _vsnwprintf(sbuffer, FORMAT_BUFSIZE, pFormat, Args);
+  
+  if (len >= 0)
+  {
+    /* Output fits in the stack buffer, copy it
+     */
+    Copy(sbuffer);
+    return *this;
+  }
+  else if (len == -1)
+  {
+    /* Output does not fit in the stack buffer.
+     * Windows brain dead xxprintf implementation does not return needed space
+     * (as ISOC99 mandates), so we guess more or less.
+     * We iterate with a growing buffer, starting from 2*FORMAT_BUFSIZE.
+     */
+    int bufsize = FORMAT_BUFSIZE;
+    
+    do
+    {
+      // Try with a buffer twice as large
+      bufsize *= 2;
+      mString.resize(bufsize);
+      
+      len = _vsnwprintf(&mString[0], bufsize, pFormat, Args);
+      if (len >= 0)
+      {
+        /* Fits, hurra !
+         * In the event where len==bufsize (no zero terminal written), we have to terminate the string.
+         */
+        mString[bufsize] = 0;
+        return *this;
+      }
+    }
+    while (len == -1); // Does not fit (yet), try again. Otherwise an error occured, exit.
+  }
+  
+  return *this;
+#else  // _WIN32_
+  
+  const nglChar* format = pFormat;
+  
+  // Try to render in stack buffer
+  len = ngl_vsnwprintf(sbuffer, FORMAT_BUFSIZE, format, Args);
+  
+  if (len <= FORMAT_BUFSIZE)
+  {
+    /* Output fits in the stack buffer, copy it.
+     * Works okay if vsnprintf could not stuff the terminal zero (ie. len == FORMAT_BUFSIZE)
+     */
+    Copy(sbuffer);
+    return *this;
+  }
+  
+  /* Stack buffer did not fit the string, we need 'len' Chars
+   */
+  mString.resize(len);
+  
+  len = ngl_vsnwprintf(&mString[0], len, format, Args);
+  mString[len] = 0;
+  return *this;
+#endif
+}
+
+nglString& nglString::Formatv(const char* pFormat, va_list Args)
+{
+  mIsNull = false;
+  nglString str(pFormat);
+  return Formatv(str.GetChars(), Args);
+}
+
+
+nglString& nglString::CFormat(const nglChar* pFormat, ...)
+{
+  if (!pFormat)
+    return *this;
+  
+  mIsNull = false;
+  va_list args;
+  
+  va_start(args, pFormat);
+  NO_LOCALE( Formatv(pFormat, args) );
+  va_end(args);
+  
+  return *this;
+}
+
+nglString& nglString::CFormat(const char* pFormat, ...)
+{
+  if (!pFormat)
+    return *this;
+  
+  mIsNull = false;
+  nglString str(pFormat);
+  
+  va_list args;
+  
+  va_start(args, pFormat);
+  NO_LOCALE( Formatv(str.GetChars(), args) );
+  va_end(args);
+  
+  return *this;
+}
+
+
+nglString& nglString::CFormatv(const nglChar* pFormat, va_list Args)
+{
+  if (!pFormat)
+    return *this;
+  
+  mIsNull = false;
+  NO_LOCALE( Formatv(pFormat, Args) );
+  return *this;
+}
+
+nglString& nglString::CFormatv(const char* pFormat, va_list Args)
+{
+  if (!pFormat)
+    return *this;
+  
+  mIsNull = false;
+  NO_LOCALE( Formatv(pFormat, Args) );
+  return *this;
+}
+
+
+nglString& nglString::AddFormat(const char* pString, ...)
+{
+  nglString tmp;
+  nglString str(pString);
+  
+  va_list args;
+  
+  va_start(args, pString);
+  NO_LOCALE( tmp.Formatv(str.GetChars(), args) );
+  va_end(args);
+  
+  return Add(tmp);
+}
+
+nglString& nglString::AddFormat(const char* pString, va_list Args)
+{
+  nglString tmp;
+  nglString str(pString);
+  
+  NO_LOCALE( tmp.Formatv(str.GetChars(), Args) );
+  
+  return Add(tmp);
+}
+
+nglString& nglString::AddFormat(const nglChar* pString, ...)
+{
+  nglString tmp;
+  va_list args;
+  
+  va_start(args, pString);
+  NO_LOCALE( tmp.Formatv(pString, args) );
+  va_end(args);
+  
+  return Add(tmp);
+}
+
+nglString& nglString::AddFormat(const nglChar* pString, va_list Args)
+{
+  nglString tmp;
+  
+  NO_LOCALE( tmp.Formatv(pString, Args) );
+  
+  return Add(tmp);
+}
+
+
+
+nglString& nglString::Add(nglChar ch)
+{
+  mIsNull = false;
+  Append(ch);
+  return *this;
+}
+
+nglString& nglString::Add(int8 s, int base)
+{
+  nglString str;
+  mIsNull = false;
+  str.SetCInt(s, base);
+  Append(str);
+  return *this;
+}
+
+nglString& nglString::Add(uint8 s, int base)
+{
+  nglString str;
+  mIsNull = false;
+  str.SetCUInt(s, base);
+  Append(str);
+  return *this;
+}
+
+nglString& nglString::Add(int16 s, int base)
+{
+  nglString str;
+  mIsNull = false;
+  str.SetCInt(s, base);
+  Append(str);
+  return *this;
+}
+
+nglString& nglString::Add(uint16 s, int base)
+{
+  nglString str;
+  mIsNull = false;
+  str.SetCUInt(s, base);
+  Append(str);
+  return *this;
+}
+
+nglString& nglString::Add(int32 s, int base)
+{
+  nglString str;
+  mIsNull = false;
+  str.SetCInt(s, base);
+  Append(str);
+  return *this;
+}
+
+nglString& nglString::Add(uint32 s, int base)
+{
+  nglString str;
+  mIsNull = false;
+  str.SetCUInt(s, base);
+  Append(str);
+  return *this;
+}
+
+nglString& nglString::Add(int64 s, int base)
+{
+  nglString str;
+  mIsNull = false;
+  str.SetCInt(s, base);
+  Append(str);
+  return *this;
+}
+
+nglString& nglString::Add(uint64 s, int base)
+{
+  nglString str;
+  mIsNull = false;
+  str.SetCUInt(s, base);
+  Append(str);
+  return *this;
+}
+
+nglString& nglString::Add(float s, int32 precision, nglFloatFormatFlag flag)
+{
+  nglString str;
+  mIsNull = false;
+  str.SetCFloat(s, precision, flag);
+  Append(str);
+  return *this;
+}
+
+nglString& nglString::Add(double s, int32 precision, nglFloatFormatFlag flag)
+{
+  nglString str;
+  mIsNull = false;
+  str.SetCDouble(s, precision, flag);
+  Append(str);
+  return *this;
+}
+
+nglString& nglString::Add(const char* pString, int32 count)
+{
+  mIsNull = false;
+  nglString str(pString);
+  for (int32 i = 0; i < count; i++)
+    Append(str);
+  return *this;
+}
+
+nglString& nglString::Add(const nglChar* pString, int32 count)
+{
+  mIsNull = false;
+  for (int32 i = 0; i < count; i++)
+    Append(pString);
+  return *this;
+}
+
+nglString& nglString::Add(const nglString& rString, int32 count)
+{
+  mIsNull = false;
+  for (int32 i = 0; i < count; i++)
+    Append(rString);
+  return *this;
+}
+
+nglString& nglString::Add(void* pVoidPointer)
+{
+  mIsNull = false;
+  nglString str;
+  str.CFormat("0x%x", pVoidPointer);
+  Append(str);
+  return *this;
+}
+
+nglString& nglString::AddNewLine()
+{
+  mIsNull = false;
+  Append(_T("\n"));
+  return *this;
+}
+
+
+int32 nglString::HexDump(const char* pBuffer, int32 ByteCount, bool PrintChar, int32 Columns)
+{
+  nglString temp;
+  int32 pos = 0;
+  int32 line = 0;
+  
+  Wipe();
+  
+  while (pos < ByteCount)
+  {
+    int32 i, lpos;
+    
+    // Offset
+    temp.Format(L"%.8x  ", pos);
+    *this += temp;
+    
+    // Hex display
+    lpos = pos;
+    for (i = 0; i < Columns; i++)
+    {
+      if (lpos < ByteCount)
+      {
+        temp.Format(L"%.2x ", (unsigned char)pBuffer[lpos]);
+        lpos++;
+        *this += temp;
+      }
+      else
+        *this += L"   ";
+      
+      if (i + 1 == Columns / 2)
+        *this += L' ';
+    }
+    
+    if (PrintChar)
+    {
+      // nglChar display
+      lpos = pos;
+      *this += L" |";
+      for (i = 0; i < Columns; i++)
+      {
+        if (lpos < ByteCount)
+        {
+          nglChar c = (nglChar)pBuffer[lpos];
+          
+          *this += iswprint(c) ? c : L'.';
+          lpos++;
+        }
+        else
+          *this += L' ';
+      }
+      *this += L'|';
+    }
+    
+    *this += L'\n';
+    pos += Columns;
+    line++;
+  }
+  
+  return line;
+}
+
+
+int32 nglString::Compare(const nglChar* pSource, bool CaseSensitive) const
+{
+  int result = (CaseSensitive) ?
+  ngl_strcmp(&mString[0], pSource) :
+  ngl_stricmp(&mString[0], pSource);
+  
+  if (result < 0) result = -1;
+  if (result > 0) result = 1;
+  return result;
+}
+
+int32 nglString::Compare(const nglString& rSource, bool CaseSensitive) const
+{
+  return Compare(&rSource.mString[0], CaseSensitive);
+}
+
+int32 nglString::Compare(const nglChar* pSource, int32 Index, int32 Length, bool CaseSensitive) const
+{
+  // Warning, no check against pSource bounds wrt. Index
+  int result = (CaseSensitive) ?
+  ngl_strncmp (&(mString[Index]), pSource, Length) :
+  ngl_strnicmp(&(mString[Index]), pSource, (int64)Length);
+  
+  if (result < 0) result = -1;
+  if (result > 0) result = 1;
+  return result;
+}
+
+int32 nglString::Compare(const nglString& rSource, int32 Index, int32 Length, bool CaseSensitive) const
+{
+  return Compare(&rSource.mString[0], Index, Length, CaseSensitive);
+}
+
+int32 nglString::CompareNatural(const nglChar* pSource, bool CaseSensitive) const
+{
+  int32 result = (CaseSensitive) ?
+  strnatcmp(&mString[0], pSource) :
+  strnatcasecmp(&mString[0], pSource);
+  
+  if (result < 0) result = -1;
+  if (result > 0) result = 1;
+  return result;
+}
+
+int nglString::CompareNatural(const nglString& rSource, bool CaseSensitive) const
+{
+  return CompareNatural(&rSource.mString[0], CaseSensitive);
+}
+
+int32 nglString::CompareLeft(const nglChar* pSource, bool CaseSensitive) const
+{
+  if (CaseSensitive)
+  {
+    uint32 pos = 0;
+    int t = 0;
+    do
+    {
+      const nglChar c = mString[pos];
+      const nglChar cc = pSource[pos];
+      if (!cc)
+        return 0;
+      t = cc - c;
+      pos++;
+    } while (!t);
+    return t;
+  }
+  
+  // !Case Sens
+  uint32 pos = 0;
+  int t = 0;
+  do
+  {
+    const nglChar c = towlower(mString[pos]);
+    const nglChar cc = towlower(pSource[pos]);
+    if (!cc)
+      return 0;
+    t = cc - c;
+    pos++;
+  } while (!t);
+  return t;
+}
+
+int32 nglString::CompareLeft(const nglString& rSource, bool CaseSensitive) const
+{
+  return CompareLeft(&rSource.mString[0], CaseSensitive);
+}
+
+int32 nglString::Find(nglChar Ch, int32 Index, int32 End,  bool CaseSensitive) const
+{
+  int32 len = GetLength();
+  int32 end = MIN(End, len);
+  
+  if (IsEmpty() || (Ch == Zero) || (Index >= len))
+    return -1;
+  
+  int32 i = Index;
+  if (CaseSensitive)
+  {
+    while ((i < end) && (mString[i] != Ch))
+      i++;
+  }
+  else
+  {
+    nglChar up = towupper(Ch);
+    nglChar lo = towlower(Ch);
+    
+    while ((i < end) && (mString[i] != up) && (mString[i] != lo))
+      i++;
+  }
+  
+  return (i < end) ? i : -1;
+  
+}
+
+int32 nglString::Find(nglChar Ch, int32 Index, bool CaseSensitive) const
+{
+  int32 len = GetLength();
+  if (IsEmpty() || (Ch == Zero) || (Index >= len))
+    return -1;
+  
+  int32 i = Index;
+  if (CaseSensitive)
+  {
+    while ((i < len) && (mString[i] != Ch))
+      i++;
+  }
+  else
+  {
+    nglChar up = towupper(Ch);
+    nglChar lo = towlower(Ch);
+    
+    while ((i < len) && (mString[i] != up) && (mString[i] != lo))
+      i++;
+  }
+  
+  return (i < len) ? i : -1;
+}
+
+int32 nglString::Find(const nglChar* pSource, int32 Index, bool CaseSensitive) const
+{
+  const nglChar* pFound = wcsstr(&mString[Index], pSource);
+  if (!pFound)
+    return -1;
+  return Index + (int32)(pFound - &mString[Index]);
+}
+
+int32 nglString::Find(const nglString& rSource, int32 Index, bool CaseSensitive) const
+{
+  return Find(rSource.GetChars(), Index, CaseSensitive);
+}
+
+int32 nglString::FindLast(nglChar Ch, int32 Index, bool CaseSensitive) const
+{
+  if (IsEmpty() || (Ch == Zero)) return -1;
+  
+  int32 len = GetLength();
+  if (Index < 0)
+    Index += len;
+  if ((Index < 0) || (Index >= len)) return -1;
+  
+  if (CaseSensitive)
+  {
+    while ((Index >= 0) && (mString[Index] != Ch))
+      Index--;
+  }
+  else
+  {
+    nglChar up = towupper(Ch);
+    nglChar lo = towlower(Ch);
+    
+    while ((Index >= 0) && (mString[Index] != up) && (mString[Index] != lo))
+      Index--;
+  }
+  
+  return Index;
+}
+
+int32 nglString::FindLast(const nglChar* pSource, int32 Index, bool CaseSensitive) const
+{
+  int32 SourceLength = (int32)wcslen(pSource);
+  if (IsEmpty() || !pSource || (SourceLength <= 0))
+    return -1;
+  
+  // In reverse mode, negative indexes become GetLength()-index
+  if (Index < 0)
+    Index += GetLength();
+  
+  if ((Index < 0) || (Index >= GetLength()))
+    return -1;
+  
+  nglString* buffer_s = NULL;
+  nglString* source_s = NULL;
+  const nglChar* buffer = NULL;
+  const nglChar* source = NULL;
+  
+  if (!CaseSensitive)
+  {
+    buffer_s = new nglString(*this);
+    if (!buffer_s) return -1;
+    
+    source_s = new nglString(pSource);
+    if (!source_s)
+    {
+      delete buffer_s;
+      return -1;
+    }
+    
+    buffer_s->ToLower();
+    source_s->ToLower();
+    buffer = buffer_s->GetChars();
+    source = source_s->GetChars();
+  }
+  else
+  {
+    buffer = GetChars();
+    source = pSource;
+  }
+  
+  int32 pos;
+  
+  pos = Index + 1 - SourceLength;
+  
+  while ((pos >= 0) && ngl_strncmp(&(buffer[pos]), source, SourceLength))
+    pos--;
+  
+  if (!CaseSensitive)
+  {
+    delete source_s;
+    delete buffer_s;
+  }
+  
+  return pos;
+}
+
+int32 nglString::FindLast(const nglString& rSource, int32 Index, bool CaseSensitive) const
+{
+  return FindLast(rSource.GetChars(), Index, CaseSensitive);
+}
+
+
+int32 nglString::Contains(nglChar Ch, int32 Index, int32 End, bool CaseSensitive) const
+{
+  if (IsEmpty() || (Ch == Zero)) return 0;
+  
+  int32 end = MIN(GetLength(), End);
+  int32 match = 0;
+  
+  if (CaseSensitive)
+  {
+    int32 i;
+    for (i = Index; i < end; i++)
+      if (mString[i] == Ch) match++;
+  }
+  else
+  {
+    nglChar up = towupper(Ch);
+    nglChar lo = towlower(Ch);
+    int32 i;
+    
+    for (i = Index; i < end; i++)
+      if ((mString[i] == up) || (mString[i] == lo)) match++;
+  }
+  return match;
+}
+
+int32 nglString::Contains(nglChar Ch, bool CaseSensitive) const
+{
+  if (IsEmpty() || (Ch == Zero))
+    return 0;
+  
+  int32 len = GetLength(), match = 0;
+  
+  if (CaseSensitive)
+  {
+    int32 i;
+    for (i = 0; i < len; i++)
+      if (mString[i] == Ch) match++;
+  }
+  else
+  {
+    nglChar up = towupper(Ch);
+    nglChar lo = towlower(Ch);
+    int32 i;
+    
+    for (i = 0; i < len; i++)
+      if ((mString[i] == up) || (mString[i] == lo)) match++;
+  }
+  
+  return match;
+}
+
+int32 nglString::Contains(const nglChar* pSource, bool CaseSensitive) const
+{
+  int32 SourceLength = (int32)wcslen(pSource);
+  if (IsEmpty() || !pSource || (SourceLength <= 0))
+    return 0;
+  
+  nglString* buffer_s = NULL;
+  nglString* source_s = NULL;
+  const nglChar* buffer = NULL;
+  const nglChar* source = NULL;
+  
+  if (!CaseSensitive)
+  {
+    buffer_s = new nglString(*this);
+    if (!buffer_s) return -1;
+    
+    source_s = new nglString(pSource);
+    if (!source_s)
+    {
+      delete buffer_s;
+      return -1;
+    }
+    
+    buffer_s->ToLower();
+    source_s->ToLower();
+    buffer = buffer_s->GetChars();
+    source = source_s->GetChars();
+  }
+  else
+  {
+    buffer = GetChars();
+    source = pSource;
+  }
+  
+  int match = 0;
+  const nglChar* ptr = buffer;
+  
+  while ((ptr = wcsstr(ptr, source)))
+  {
+    match++;
+    ptr += SourceLength;
+  }
+  
+  if (!CaseSensitive)
+  {
+    delete source_s;
+    delete buffer_s;
+  }
+  
+  return match;
+}
+
+int32 nglString::Contains(const nglString& rSource, bool CaseSensitive) const
+{
+  return Contains(rSource.GetChars());
+}
+
+
+int32 nglString::Tokenize(std::vector<nglString>& rTokens) const
+{
+  return Tokenize(rTokens, WhiteSpace.GetChars());
+}
+
+
+int32 nglString::Tokenize(std::vector<nglString>& rTokens, nglChar Separator) const
+{
+  nglChar sep[2];
+  
+  sep[0] = Separator;
+  sep[1] = Zero;
+  return Tokenize(rTokens, sep);
+}
+
+int32 nglString::Tokenize(std::vector<nglString>& rTokens, const nglChar* pSeparators) const
+{
+  if (IsEmpty() || !pSeparators/* || !*pSeparators*/)
+    return -1;
+  
+  int32 index = 0, count = 0;
+  while (index < GetLength())
+  {
+    int32 len = (int32) wcscspn(&(mString[index]), pSeparators);
+    if (len > 0)
+    {
+      nglString token;
+      
+      token.Copy(&(mString[index]), len);
+      rTokens.push_back(token);
+      count++;
+    }
+    else
+      index += 1;
+    index += len;
+  }
+  
+  return count;
+}
+
+int32 nglString::Tokenize(std::vector<nglString>& rTokens, const nglString& rSeparators) const
+{
+  return Tokenize(rTokens, rSeparators.GetChars());
+}
+
+
+// Assignment
+const nglString& nglString::operator=(const nglChar Ch)
+{
+  Copy(Ch);
+  return *this;
+}
+
+const nglString& nglString::operator=(const char* pSource)
+{
+  Copy(nglString(pSource));
+  return *this;
+}
+
+const nglString& nglString::operator=(const nglChar* pSource)
+{
+  Copy(pSource);
+  return *this;
+}
+
+const nglString& nglString::operator=(const nglString& rSource)
+{
+  Copy(rSource);
+  return *this;
+}
+
+bool nglString::IsInt() const
+{
+  if (IsEmpty())
+    return false;
+  
+  int32 index = 0;
+  nglChar ch = mString[0];
+  if (ch == '-')
+    index++;
+  
+  for (; index < GetLength(); index++)
+  {
+    ch = mString[index];
+    if (ch < '0' || ch > '9')
+      return false;
+  }
+  
+  return true;
+}
+
+bool nglString::IsFloat() const
+{
+  if (IsEmpty())
+    return false;
+  
+  int32 index = 0;
+  nglChar ch = mString[0];
+  if (ch == '-' || ch == '+') // Pre minus sign
+    index++;
+  
+  bool hasDigits = false;
+  for (; index < GetLength(); index++)
+  {
+    ch = mString[index];
+    if (ch < '0' || ch > '9') // Look for digits?
+    {
+      switch (ch)
+      {
+        case '.': // Decimal point, look for decimal digits or exponents
+          hasDigits = false;
+          index++;
+          for (; index < GetLength(); index++)
+          {
+            ch = mString[index];
+            if (ch < '0' || ch > '9') // Look for digits
+            {
+              if (ch == 'e' || ch == 'E')
+              {
+                if (!hasDigits)
+                  return false;
+                hasDigits = false;
+                index++;
+                ch = mString[index];
+                if (ch == '-' || ch == '+')
+                  index++;
+                for (; index < GetLength(); index++)
+                {
+                  ch = mString[index];
+                  if (ch < '0' || ch > '9')
+                    return false;
+                  else
+                    hasDigits = true;
+                }
+                return hasDigits;
+              }
+              else
+              {
+                return false;
+              }
+            }
+            else
+            {
+              hasDigits = true;
+            }
+          }
+          return hasDigits;
+          break;
+          case 'e':
+          case 'E':
+          if (!hasDigits)
+            return false;
+          hasDigits = false;
+          index++;
+          ch = mString[index];
+          if (ch == '-' || ch == '+')
+            index++;
+          for (; index < GetLength(); index++)
+          {
+            ch = mString[index];
+            if (ch < '0' || ch > '9')
+              return false;
+            else
+              hasDigits = true;
+          }
+          return hasDigits;
+          break;
+      }
+      return false;
+    }
+    else
+    {
+      hasDigits = true;
+    }
+  }
+  
+  return hasDigits;
+}
+
+nglChar nglStringConv::mUnknown = L'?';
+
+nglStringConvMap nglString::gStringConvCache;
+
+nglStringConv* nglString::GetStringConv(const nglEncodingPair& rEncodings)
+{
+  if (gStringConvCache.empty())
+  {
+    nglEncodingPair p = nglEncodingPair(eUTF8, eUCS2);
+    nglStringConv* pConv = new nglUTFStringConv(eUTF8, eUCS2);
+    gStringConvCache.insert(std::pair<const nglEncodingPair, nglStringConv*>(p, pConv));
+    p = nglEncodingPair(eUTF8, eUCS4);
+    pConv = new nglUTFStringConv(eUTF8, eUCS4);
+    gStringConvCache.insert(std::pair<const nglEncodingPair, nglStringConv*>(p, pConv));
+    p = nglEncodingPair(eUCS2, eUTF8);
+    pConv = new nglUTFStringConv(eUCS2, eUTF8);
+    gStringConvCache.insert(std::pair<const nglEncodingPair, nglStringConv*>(p, pConv));
+    p = nglEncodingPair(eUCS2, eUCS4);
+    pConv = new nglUTFStringConv(eUCS2, eUCS4);
+    gStringConvCache.insert(std::pair<const nglEncodingPair, nglStringConv*>(p, pConv));
+    p = nglEncodingPair(eUCS4, eUTF8);
+    pConv = new nglUTFStringConv(eUCS4, eUTF8);
+    gStringConvCache.insert(std::pair<const nglEncodingPair, nglStringConv*>(p, pConv));
+    p = nglEncodingPair(eUCS4, eUCS2);
+    pConv = new nglUTFStringConv(eUCS4, eUCS2);
+    gStringConvCache.insert(std::pair<const nglEncodingPair, nglStringConv*>(p, pConv));
+    
+    p = nglEncodingPair(eEncodingNative, eUTF8);
+    pConv = new nglUTFStringConv(eEncodingNative, eUTF8);
+    gStringConvCache.insert(std::pair<const nglEncodingPair, nglStringConv*>(p, pConv));
+    p = nglEncodingPair(eEncodingNative, eUCS2);
+    pConv = new nglUTFStringConv(eEncodingNative, eUCS2);
+    gStringConvCache.insert(std::pair<const nglEncodingPair, nglStringConv*>(p, pConv));
+    p = nglEncodingPair(eEncodingNative, eUCS4);
+    pConv = new nglUTFStringConv(eEncodingNative, eUCS4);
+    gStringConvCache.insert(std::pair<const nglEncodingPair, nglStringConv*>(p, pConv));
+    p = nglEncodingPair(eUTF8, eEncodingNative);
+    pConv = new nglUTFStringConv(eUTF8, eEncodingNative);
+    gStringConvCache.insert(std::pair<const nglEncodingPair, nglStringConv*>(p, pConv));
+    p = nglEncodingPair(eUCS2, eEncodingNative);
+    pConv = new nglUTFStringConv(eUCS2, eEncodingNative);
+    gStringConvCache.insert(std::pair<const nglEncodingPair, nglStringConv*>(p, pConv));
+    p = nglEncodingPair(eUCS4, eEncodingNative);
+    pConv = new nglUTFStringConv(eUCS4, eEncodingNative);
+    gStringConvCache.insert(std::pair<const nglEncodingPair, nglStringConv*>(p, pConv));
+    
+    p = nglEncodingPair(eUTF8, eEncodingInternal);
+    pConv = new nglUTFStringConv(eUTF8, eEncodingInternal);
+    gStringConvCache.insert(std::pair<const nglEncodingPair, nglStringConv*>(p, pConv));
+    p = nglEncodingPair(eUCS2, eEncodingInternal);
+    pConv = new nglUTFStringConv(eUCS2, eEncodingInternal);
+    gStringConvCache.insert(std::pair<const nglEncodingPair, nglStringConv*>(p, pConv));
+    p = nglEncodingPair(eUCS4, eEncodingInternal);
+    pConv = new nglUTFStringConv(eUCS4, eEncodingInternal);
+    gStringConvCache.insert(std::pair<const nglEncodingPair, nglStringConv*>(p, pConv));
+    p = nglEncodingPair(eEncodingInternal, eUTF8);
+    pConv = new nglUTFStringConv(eEncodingInternal, eUTF8);
+    gStringConvCache.insert(std::pair<const nglEncodingPair, nglStringConv*>(p, pConv));
+    p = nglEncodingPair(eEncodingInternal, eUCS2);
+    pConv = new nglUTFStringConv(eEncodingInternal, eUCS2);
+    gStringConvCache.insert(std::pair<const nglEncodingPair, nglStringConv*>(p, pConv));
+    p = nglEncodingPair(eEncodingInternal, eUCS4);
+    pConv = new nglUTFStringConv(eEncodingInternal, eUCS4);
+    gStringConvCache.insert(std::pair<const nglEncodingPair, nglStringConv*>(p, pConv));
+    
+    p = nglEncodingPair(eEncodingNative, eEncodingInternal);
+    pConv = new nglUTFStringConv(eEncodingNative, eEncodingInternal);
+    gStringConvCache.insert(std::pair<const nglEncodingPair, nglStringConv*>(p, pConv));
+    p = nglEncodingPair(eEncodingInternal, eEncodingNative);
+    pConv = new nglUTFStringConv(eEncodingInternal, eEncodingNative);
+    gStringConvCache.insert(std::pair<const nglEncodingPair, nglStringConv*>(p, pConv));
+  }
+  
+  nglStringConvMap::iterator it = gStringConvCache.find(rEncodings);
+  if (it != gStringConvCache.end())
+    return it->second;
+  
+  nglStringConv* pConverter = new nglStringConv(rEncodings.first, rEncodings.second);
+  
+  if (pConverter && pConverter->GetState() == eStringConv_OK)
+  {
+    gStringConvCache.insert(std::pair<nglEncodingPair, nglStringConv*>(rEncodings, pConverter));
+    return pConverter;
+  }
+  
+  return NULL;
+}
+
+void nglString::ReleaseStringConvs()
+{
+  nglStringConvMap::iterator it = gStringConvCache.begin();
+  nglStringConvMap::iterator end = gStringConvCache.end();
+  
+  while (it != end)
+  {
+    delete it->second;
+    
+    ++it;
+  }
+}
+
+uint32 nglString::GetLevenshteinDistance(const nglString& rSource, bool CaseSensitive)
+{
+  const size_t len1 = GetLength(), len2 = rSource.GetLength();
+  std::vector<std::vector<uint32> > d(len1 + 1, std::vector<uint32>(len2 + 1));
+  
+  if (CaseSensitive)
+  {
+    for(size_t i = 1; i <= len1; ++i)
+    {
+      for(size_t j = 1; j <= len2; ++j)
+      {
+        d[i][j] = MIN(d[i - 1][j] + 1, MIN(d[i][j - 1] + 1, d[i - 1][j - 1] + (mString[i - 1] == rSource.mString[j - 1] ? 0 : 1)));
+      }
+    }
+  }
+  else
+  {
+    for(size_t i = 1; i <= len1; ++i)
+    {
+      for(size_t j = 1; j <= len2; ++j)
+      {
+        d[i][j] = MIN(d[i - 1][j] + 1, MIN(d[i][j - 1] + 1, d[i - 1][j - 1] + (toupper(mString[i - 1]) == toupper(rSource.mString[j - 1]) ? 0 : 1)));
+      }
+    }
+  }
+  
+  return d[len1][len2];
+}
+
+
+#ifdef _CARBON_
+CFStringRef nglString::ToCFString() const
+{
+  char* pStr = Export();
+  CFStringRef cfStr = CFStringCreateWithCString(kCFAllocatorDefault, pStr, kCFStringEncodingUTF8);
+  free(pStr);
+  return cfStr;
+}
+
+#endif
+

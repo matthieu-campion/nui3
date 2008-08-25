@@ -1,0 +1,31 @@
+//
+//  NUI3 demonstration sample - C++ cross-platform GUI framework for OpenGL based applications
+//  Copyright (C) 2002-2003 Sebastien Metrot
+//
+//  licence: see nui3/LICENCE.TXT
+//
+
+
+@nuiColorDecoration dLabelTest
+{
+  ClientRect: "{5 5 0 0}";
+  FillColor: rgb(128,128,128);
+  StrokeColor: white;
+  ShapeMode: StrokeAndFill;
+  StrokeSize: 10;
+}
+
+@nuiFrame dLabelTestFrame
+{
+  Texture: "rsrc:/frametest.png";
+  ClientRect: "{5 5 5 5}";
+}
+
+nuiLabel[Style=StyleLabelTest]
+{
+  TextColor: white;
+  DecorationMode: Border;
+  Decoration: dLabelTest;
+}
+
+

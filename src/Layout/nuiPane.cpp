@@ -1,0 +1,259 @@
+/*
+  NUI3 - C++ cross-platform GUI framework for OpenGL based applications
+  Copyright (C) 2002-2003 Sebastien Metrot
+
+  licence: see nui3/LICENCE.TXT
+*/
+
+#include "nui.h"
+#include "nui.h"
+#include "nuiApplication.h"
+#include "nuiPane.h"
+#include "nuiXML.h"
+#include "nuiDrawContext.h"
+
+nuiPane::nuiPane(const nuiColor& rFillColor, const nuiColor& rStrokeColor, nuiShapeMode ShapeMode, nuiBlendFunc BlendFunc)
+ : nuiSimpleContainer()
+{
+  SetObjectClass(_T("nuiPane"));
+  mInterceptMouse = false;
+#ifdef NGL_USE_COMPLEX_PROPERTIES
+  mProperties[_T("InterceptMouse")].Bind(&mInterceptMouse, true, false); 
+#endif
+  
+  mFillColor = rFillColor;
+  mStrokeColor = rStrokeColor;
+  
+  SetColor(eShapeFill, rFillColor);
+  SetColor(eShapeStroke, rStrokeColor);
+
+  mShapeMode = ShapeMode;
+  mBlendFunc = BlendFunc;
+  mLineWidth = 1;
+  mCanRespectConstraint = true;
+
+  NUI_ADD_EVENT(ClickedMouse);
+  NUI_ADD_EVENT(UnclickedMouse);
+  NUI_ADD_EVENT(MovedMouse);
+
+  mpShape = NULL;
+  SetCurve(0);
+}
+
+bool nuiPane::Load(const nuiXMLNode* pNode)
+{
+	LoadAttributes(pNode);
+	LoadChildren(pNode);
+
+  mInterceptMouse = nuiGetBool ( pNode, _T("InterceptMouse"), false);
+#ifdef NGL_USE_COMPLEX_PROPERTIES
+  mProperties[_T("InterceptMouse")].Bind(&mInterceptMouse, true, false); 
+#endif
+  mLineWidth = nuiGetVal(pNode, _T("LineWidth"), 1.0f);
+  mCanRespectConstraint = true;
+  
+  NUI_ADD_EVENT(ClickedMouse);
+  NUI_ADD_EVENT(UnclickedMouse);
+  NUI_ADD_EVENT(MovedMouse);
+
+  mpShape = NULL;
+  SetCurve(0);
+  
+  return true;
+}
+
+
+bool nuiPane::LoadAttributes(const nuiXMLNode* pNode)
+{
+	return nuiSimpleContainer::LoadAttributes(pNode);
+}
+
+bool nuiPane::LoadChildren(const nuiXMLNode* pNode)
+{
+	return nuiSimpleContainer::LoadChildren(pNode);
+}
+
+
+nuiXMLNode* nuiPane::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
+{
+	nuiXMLNode* paneNode = SerializeAttributes(pParentNode, Recursive);
+	SerializeChildren(paneNode, Recursive);
+  
+  return paneNode;
+}
+
+
+void nuiPane::SerializeChildren(nuiXMLNode* pParentNode, bool Recursive) const
+{
+	nuiContainer::SerializeChildren(pParentNode, Recursive);
+}
+
+
+nuiXMLNode* nuiPane::SerializeAttributes(nuiXMLNode* pParentNode, bool Recursive) const
+{
+	return nuiContainer::SerializeAttributes(pParentNode, Recursive);
+}
+
+
+
+
+
+
+
+
+
+nuiPane::~nuiPane()
+{
+  delete mpShape;
+}
+
+bool nuiPane::Draw(nuiDrawContext* pContext)
+{
+  pContext->PushState();
+  pContext->ResetClipShape();
+
+  pContext->EnableBlending(true);
+  pContext->SetBlendFunc(mBlendFunc);
+
+
+  nuiColor col = GetColor(eShapeFill);
+  pContext->SetFillColor(col);
+  col = GetColor(eShapeStroke);
+  pContext->SetStrokeColor(col);
+  pContext->EnableAntialiasing(true);
+  pContext->SetLineWidth(mLineWidth);
+  if (mCurve != 0)
+  {
+    pContext->DrawShape(mpShape, mShapeMode);
+  }
+  else
+  {
+    pContext->DrawRect(mRect.Size(), mShapeMode);
+  }
+  pContext->PopState();
+
+  DrawChildren(pContext);
+  return true;
+}
+
+bool nuiPane::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
+{
+  ClickedMouse(X,Y,Button);
+  return mInterceptMouse;
+}
+
+bool nuiPane::MouseUnclicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
+{
+  UnclickedMouse(X,Y,Button);
+  return mInterceptMouse;
+}
+
+bool nuiPane::MouseMoved  (nuiSize X, nuiSize Y)
+{
+  MovedMouse(X,Y);
+  return mInterceptMouse;
+}
+
+void nuiPane::SetInterceptMouse(bool intercept)
+{
+  mInterceptMouse = intercept;
+}
+
+bool nuiPane::GetInterceptMouse()
+{
+  return mInterceptMouse;
+}
+
+bool nuiPane::SetRect(const nuiRect& rRect)
+{
+  bool reload = !(mRect == rRect);
+
+  nuiRect r(rRect.Size());
+  r.Grow((nuiSize)ToNearest(-mCurve * .5f), (nuiSize)ToNearest(-mCurve * .5f));
+  r.RoundToNearest();
+
+  nuiWidget::LayoutConstraint constraint(mConstraint);
+  constraint.mMaxWidth -= (nuiSize)ToNearest(mCurve * .5f);
+  constraint.mMaxHeight -= (nuiSize)ToNearest(mCurve * .5f);
+
+  IteratorPtr pIt;
+  for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
+  {
+    nuiWidgetPtr pItem = pIt->GetWidget();
+    pItem->SetLayoutConstraint(constraint);
+    pItem->SetLayout(r);
+  }
+  delete pIt;
+
+  nuiWidget::SetRect(rRect);
+
+  if (reload)
+    SetCurve(mCurve);
+
+  return true;
+}
+
+void nuiPane::SetCurve(float curve)
+{
+  mCurve = curve;
+  delete mpShape;
+  mpShape = new nuiShape();
+  mpShape->AddRoundRect(mRect.Size(), curve);
+}
+
+void nuiPane::SetLineWidth(float Width)
+{
+  mLineWidth = Width;
+  Invalidate();
+}
+
+
+void nuiPane::SetFillColor(const nuiColor& rFillColor)
+{
+  mFillColor = rFillColor;
+  SetColor(eShapeFill, rFillColor);
+  Invalidate();
+}
+
+void nuiPane::SetStrokeColor(const nuiColor& rStrokeColor)
+{
+  mStrokeColor = rStrokeColor;
+  SetColor(eShapeStroke, rStrokeColor);
+  Invalidate();
+}
+
+void nuiPane::SetShapeMode(nuiShapeMode shapeMode)
+{
+  mShapeMode = shapeMode;
+  Invalidate();
+}
+
+nuiRect nuiPane::CalcIdealSize()
+{
+  nuiRect temp;
+
+  nuiWidget::LayoutConstraint constraint(mConstraint);
+  constraint.mMaxWidth -= (nuiSize)ToNearest(mCurve * .5f);
+  constraint.mMaxHeight -= (nuiSize)ToNearest(mCurve * .5f);
+
+  IteratorPtr pIt;
+  for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
+  {
+    nuiWidgetPtr pItem = pIt->GetWidget();
+    pItem->SetLayoutConstraint(constraint);
+    nuiRect t = pItem->GetIdealRect();
+    temp.Union(t,temp); // Dummy call. Only the side effect is important: the object recalculates its layout.
+    //NGL_OUT(_T("    PaneItem rect %ls\n"), t.GetValue().GetChars());
+  }
+  delete pIt;
+
+  temp.Grow((nuiSize)ToNearest(mCurve * .5f), (nuiSize)ToNearest(mCurve * .5f));
+  temp.RoundToBiggest();
+
+  DebugRefreshInfo();
+
+  temp.MoveTo(0,0);
+
+  //NGL_OUT(_T("    Pane rect %ls\n"), mIdealRect.GetValue().GetChars());
+  return temp;
+}

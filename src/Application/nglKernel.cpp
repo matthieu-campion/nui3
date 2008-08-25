@@ -1,0 +1,310 @@
+/*
+  NUI3 - C++ cross-platform GUI framework for OpenGL based applications
+  Copyright (C) 2002-2003 Sebastien Metrot
+
+  licence: see nui3/LICENCE.TXT
+*/
+
+#include "nui.h"
+#include "nglKernel.h"
+#include "nglConsole.h"
+#include "nglLog.h"
+
+#include "nglDataObjects.h"
+
+#include "nuiNativeResourceVolume.h"
+
+/* Defined in <platform>/nglKernel.cpp
+ */
+extern const nglChar* gpKernelErrorTable[];
+
+/* The kernel global instance is referenced here (and only here)
+ */
+NGL_API nglKernel * App = NULL;
+
+
+
+/*
+ * Life cycle
+ */
+
+void nglKernel::Quit (int Code)
+{
+  // Pure nglKernel instance : does not handle event loop, can't quit by its own will.
+}
+
+void nglKernel::AddExit (ExitFunc Func)
+{
+  mExitFuncs.push_front(Func);
+}
+
+void nglKernel::DelExit (ExitFunc Func)
+{
+  mExitFuncs.remove(Func);
+}
+
+
+/*
+ * Runtime debugging
+ */
+
+// bool nglKernel::GetDebug() [inlined in header]
+
+void nglKernel::SetDebug (bool Debug)
+{
+  mDebug = Debug;
+}
+
+
+/*
+ * Logging and output
+ */
+
+nglLog& nglKernel::GetLog()
+{
+  if (!mpLog)
+  {
+    mpLog = new nglLog();
+  }
+  return *mpLog;
+}
+
+
+nglConsole& nglKernel::GetConsole()
+{
+  if (!mpCon)
+  {
+    mpCon = new nglConsole();
+    mOwnCon = true;
+  }
+  return *mpCon;
+}
+
+void nglKernel::SetConsole (nglConsole* pConsole)
+{
+  if (mpCon && mOwnCon)
+    delete mpCon;
+  mpCon = pConsole;
+  mOwnCon = false;
+}
+
+/*
+ * Application context
+ */
+
+const nglPath& nglKernel::GetPath()
+{
+  return mPath;
+}
+
+const nglString& nglKernel::GetName()
+{
+  return mName;
+}
+
+int nglKernel::GetArgCount()
+{
+  return (int)mArgs.size();
+}
+
+const nglString& nglKernel::GetArg (int Index)
+{
+  return (Index < (int)mArgs.size()) ? mArgs[Index] : nglString::Null;
+}
+
+
+/* Clipboard (platform specific)
+ *
+nglString GetClipboard();
+bool SetClipboard(const nglString& rString);
+ */
+nglClipBoard& nglKernel::GetClipBoard()
+{
+  return mClipboard;
+}
+
+/*
+ * DataTypesRegistry
+ */
+nglDataTypesRegistry& nglKernel::GetDataTypesRegistry()
+{
+  return mDataTypesRegistry;
+}
+
+
+/*
+ * User callbacks
+ */
+
+// Init/Exit:
+void nglKernel::OnInit()
+{
+}
+
+void nglKernel::OnExit(int Code)
+{
+}
+
+// Device management:
+void nglKernel::OnDeviceAdded(const nglDeviceInfo* pDeviceInfo)
+{
+}
+
+void nglKernel::OnDeviceRemoved(const nglDeviceInfo* pDeviceInfo)
+{
+}
+
+
+/*
+ * Life cycle (private)
+ */
+
+void nglKernel::IncRef()
+{
+  mRefCount++;
+}
+
+void nglKernel::DecRef()
+{
+  NGL_ASSERT(mRefCount > 0);
+
+  mRefCount--;
+  if (mRefCount == 0)
+    delete this;
+}
+
+
+void nglKernel::Init()
+{
+  mRefCount = 0;
+#ifdef _DEBUG_
+  mDebug = true;
+#else
+  mDebug = false;
+#endif
+  mpLog = NULL;
+  mpCon = NULL;
+  mOwnCon = false;
+}
+
+void nglKernel::Exit()
+{
+  ExitFuncList::iterator func_i;
+  
+  for (func_i = mExitFuncs.begin(); func_i != mExitFuncs.end(); ++func_i)
+  {
+    ExitFunc func;
+
+    func = *func_i;
+    if (func)
+      (*func)();
+  }
+  mExitFuncs.clear();
+
+#ifdef NGL_STRING_STATS
+  nglString::DumpStats(NGL_LOG_INFO);
+#endif
+
+  if (mpLog)
+  {
+    delete mpLog;
+    mpLog = NULL;
+  }
+
+  if (mpCon && mOwnCon)
+  {
+    delete mpCon;
+    mpCon = NULL;
+  }
+  
+  nglString::ReleaseStringConvs();
+}
+
+void nglKernel::SetName(const nglString& rName)
+{
+  mName = rName;
+}
+
+void nglKernel::SetPath(const nglPath& rPath)
+{
+  mPath = rPath;
+}
+
+void nglKernel::ParseCmdLine (char* pCmdLine)
+{
+  enum { skipping, reading_token, reading_quoted_token } state = skipping;
+  nglString arg;
+  char* p = pCmdLine;
+  char* token_p = NULL;
+  bool eos;
+
+  do
+  {
+    eos = (*p == 0);
+
+    switch (state)
+    {
+      case skipping:
+        if (*p == '"') { state = reading_quoted_token; token_p = p + 1; } else
+        if (*p != ' ') { state = reading_token; token_p = p; }
+        /* else keep skipping */
+        break;
+      case reading_token:
+      case reading_quoted_token:
+        if (eos ||
+            (state == reading_token && *p == ' ') ||
+            (state == reading_quoted_token && *p == '"'))
+        {
+          *p = 0;
+          arg = token_p;
+          mArgs.push_back (arg);
+          state = skipping;
+        }
+        break;
+    }
+    p++;
+  }
+  while (!eos);
+}
+
+void nglKernel::AddArg (const nglString& rArg)
+{
+  uint size = mArgs.size();
+
+  mArgs.resize(size + 1);
+  mArgs[size++] = rArg;
+}
+
+void nglKernel::DelArg (int Pos, int Count)
+{
+  if (Count > 1)
+    mArgs.erase (mArgs.begin() + Pos, mArgs.begin() + Pos + Count);
+  else
+    mArgs.erase (mArgs.begin() + Pos);
+}
+
+
+/*
+ * Internal callbacks
+ */
+
+const nglChar* nglKernel::OnError (uint& rError) const
+{
+  return FetchError(gpKernelErrorTable, NULL, rError);
+}
+
+void nglKernel::CallOnInit()
+{
+  NGL_DEBUG( NGL_LOG(_T("kernel"), NGL_LOG_INFO, _T("Init (%d parameter%ls)"), GetArgCount(), (GetArgCount() > 1) ? _T("s") : _T("")); )
+  nglVolume* pResources = new nuiNativeResourceVolume();
+  nglVolume::Mount(pResources);
+  OnInit();
+}
+
+void nglKernel::CallOnExit(int Code)
+{
+  NGL_DEBUG( NGL_LOG(_T("kernel"), NGL_LOG_INFO, _T("Exit (code: %d)"), Code); )
+  nglVolume::UnmountAll();
+  OnExit (Code);
+}
+

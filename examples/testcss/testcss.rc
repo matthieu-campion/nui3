@@ -1,0 +1,5 @@
+frametest.png        NUI_RESOURCE    "./resources/frametest.png"
+test.css        NUI_RESOURCE    "./resources/test.css"
+test.png        NUI_RESOURCE    "./resources/test.png"
+test02.css        NUI_RESOURCE    "./resources/test02.css"
+test_included.css        NUI_RESOURCE    "./resources/test_included.css"

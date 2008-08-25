@@ -1,0 +1,10 @@
+This file contains UTF-8 chars. So we try to mix kanjis like 人 or 日本国.
+Nous pouvons aussi avoir des caractères latins typiques comme ê ï ou encore à.
+Support for right to left scripts is not ok yet:
+some random hebrew: אבגדהו
+some random arabic (no ligature supported yet): ءآأؤعخطٯ
+
+أنا قادر على أكل الزجاج و هذا لا يؤلمني. 
+אני יכול לאכול זכוכית וזה לא מזיק לי
+Tôi có thể ăn thủy tinh mà không hại gì.
+

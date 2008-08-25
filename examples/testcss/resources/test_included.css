@@ -1,0 +1,39 @@
+//
+//  NUI3 demonstration sample - C++ cross-platform GUI framework for OpenGL based applications
+//  Copyright (C) 2002-2003 Sebastien Metrot
+//
+//  licence: see nui3/LICENCE.TXT
+//
+
+
+"hello1"
+{
+  Text : "this text comes from the CSS";
+  TextColor : black;
+  BackgroundColor : lightgray;
+  ToolTip = "this tool tip should be active even if the widget has enough space";
+  ToolTipOnGrab = true;
+  ToolTipFollowMouse = true;
+  ToolTipPosition = top;
+  Font = Hello1Font;
+}
+
+
+"hello2"
+{
+  TextPosition : left;
+  TextColor : red;
+  Font : HeaderFont;
+}
+
+"hello2"[Hover:true]
+{
+  TextPosition : center;
+  TextColor : blue;
+}
+
+"hello3"
+{
+  TextPosition : right;
+  BackgroundColor : lightblue;
+}

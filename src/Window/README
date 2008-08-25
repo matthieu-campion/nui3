@@ -1,0 +1,42 @@
+NGL - Input device classes design
+
+
+nglInputDevice
+
+  This simple class is a proxy for the (internal) nglInputDeviceInstance.
+  It holds a reference to a nglInputDeviceIntance object and the necessary
+  members to store the controler information and axis/buttons values.
+
+  The only way for the user to create such a class is via the static
+  method Enum(). Objects returned by Enum() must (and will) be freed by
+  the user when he don't need them any more. The user might have several
+  nglInputDevice instances for the same controler at the same time (they
+  will refer to the same nglInputDeviceInstance).
+
+  The constructor is private to force the use of Enum().
+
+  The only method which has to be ported (and is not in nglInputDevice_shr.cpp)
+  is Enum().
+
+
+nglInputDeviceInstance
+
+  This class implements the (physical) input device abstraction. Since it
+  is expected that only one such instance per device should exist at the
+  same time, this class is only accessed through the nglInputDevice proxies.
+  There is a reference counter which bookkeeps the number of linked
+  nglInputDevices. The implementation can elect to do anything with this
+  reference counting, this is not a public API and behaviour.
+
+  Since nglInputDevice constructor is private, the only way to create
+  such a class from here is via CreateDevice().
+
+
+Multiple input APIs
+
+  To support multiple input APIs at the same time (DirectInput, Wacom,
+  XInput, Linux inputdev, etc), multiple derivations of nglInputDeviceInstance
+  can be written. This is the case of the 'unix' implementation : the
+  nglInputDevice::Enum() method is only a switch that tries the Enum() from
+  different nglInputDeviceInstance-based classes (2003/04/15: there is only
+  one backend).

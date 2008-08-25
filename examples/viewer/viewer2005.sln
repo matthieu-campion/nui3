@@ -1,0 +1,43 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "viewer", "viewer2005.vcproj", "{1411D26F-EDA9-478B-A71D-2F0A91029FBB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A703705A-1718-49A4-96B8-462ED8E0D491} = {A703705A-1718-49A4-96B8-462ED8E0D491}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libnui3005", "..\..\libnui3005.vcproj", "{A703705A-1718-49A4-96B8-462ED8E0D491}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Debug Static = Debug Static
+		Release = Release
+		Release Static = Release Static
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{1411D26F-EDA9-478B-A71D-2F0A91029FBB}.Debug.ActiveCfg = Debug|Win32
+		{1411D26F-EDA9-478B-A71D-2F0A91029FBB}.Debug.Build.0 = Debug|Win32
+		{1411D26F-EDA9-478B-A71D-2F0A91029FBB}.Debug Static.ActiveCfg = Debug Static|Win32
+		{1411D26F-EDA9-478B-A71D-2F0A91029FBB}.Debug Static.Build.0 = Debug Static|Win32
+		{1411D26F-EDA9-478B-A71D-2F0A91029FBB}.Release.ActiveCfg = Release|Win32
+		{1411D26F-EDA9-478B-A71D-2F0A91029FBB}.Release.Build.0 = Release|Win32
+		{1411D26F-EDA9-478B-A71D-2F0A91029FBB}.Release Static.ActiveCfg = Release Static|Win32
+		{1411D26F-EDA9-478B-A71D-2F0A91029FBB}.Release Static.Build.0 = Release Static|Win32
+		{A703705A-1718-49A4-96B8-462ED8E0D491}.Debug.ActiveCfg = Debug|Win32
+		{A703705A-1718-49A4-96B8-462ED8E0D491}.Debug.Build.0 = Debug|Win32
+		{A703705A-1718-49A4-96B8-462ED8E0D491}.Debug Static.ActiveCfg = Debug Static|Win32
+		{A703705A-1718-49A4-96B8-462ED8E0D491}.Debug Static.Build.0 = Debug Static|Win32
+		{A703705A-1718-49A4-96B8-462ED8E0D491}.Release.ActiveCfg = Release|Win32
+		{A703705A-1718-49A4-96B8-462ED8E0D491}.Release.Build.0 = Release|Win32
+		{A703705A-1718-49A4-96B8-462ED8E0D491}.Release Static.ActiveCfg = Release Static|Win32
+		{A703705A-1718-49A4-96B8-462ED8E0D491}.Release Static.Build.0 = Release Static|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+	GlobalSection(DPCodeReviewSolutionGUID) = preSolution
+		DPCodeReviewSolutionGUID = {00000000-0000-0000-0000-000000000000}
+	EndGlobalSection
+EndGlobal

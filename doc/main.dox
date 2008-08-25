@@ -1,0 +1,14 @@
+// This is the NUI2 documentation entry point, in Doxygen format.
+
+/** \mainpage NUI2 reference manual
+
+\section nui_intro Introduction
+
+NUI is a cross-platform C++ GUI programming framework for OpenGL applications
+In other words, its purpose is to help programmers write multi-platform GUI applications
+that deals with buttons, windows, listbox, menus, and other UI services -
+with a simple knowledge in C++.
+
+NUI2 is built on top of NGL. NGL used to be a separate crossplatform library aimed at creating crossplatorm OpenGL application easily. NGL ad NUI have been merged into the NUI2 project. All the external dependencies are also merged into the project now, to ease compilation and dev (freetype2, libjpeg, libpng, zlib...)
+.
+*/

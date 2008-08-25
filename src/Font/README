@@ -1,0 +1,158 @@
+NGL - Font classes design
+
+
+nglFontBase
+
+  This is mainly a wrapper around FreeType, which provides portable services
+  which don't rely on the renderer/windowing system. It will :
+
+  * load font ressources from files
+
+    It provides a very basic cache at this stage : multiple instances of
+    nglFontBase built from the same ressource (absolute file path for now)
+    share most of their data and spare a font reload. For instance it gives
+    an efficient copy constructor, and let the user configure different
+    contexts for each object (they have their own size, resolution, charmap,
+    rendering mode, and so on).
+
+
+  * provide detailed metrics
+
+    A bunch of metrics are needed at the layout and rendering stage. Global
+    metrics are immediatly available when the font is loaded. Local metrics
+    may sometimes involve glyph rendering (ie. most vectorial fonts will),
+    and the speed for retrieving this information will be heavily influenced
+    by the FT cache.
+
+
+  * manage charset conversion
+
+    Font files come with a limited set of charmaps. nglFontBase will
+    automatically use charset conversions (via nglStringConv) if it can't
+    find a charmap matching your locale. If USE_WCHAR is defined, the locale
+    is ignored and an unicode charmap is searched for. GetGlyphIndexes()
+    implements this magic.
+
+
+  * render glyphs in offscreen memory
+
+    Bitmap fonts are trivially loaded as 1-bit bitmap data from disk, can
+    be retrieved as such using GetGlyph(), and can be converted as an 8 bit
+    per pixel bitmap via GetBitmap8(). Vectorial font rendering is controled
+    by SetRenderMode() and are rendered on demand by GetGlyph(), as 1-bit
+    (monochrome mode) or 8-bit (anti-aliased mode) bitmaps. GetGlyph() speed
+    is obviously heavily influenced by the FT cache.
+
+    Rendering methods are protected, because they are expected to be only
+    used by font displayer classes which should inheritate nglFontBase.
+
+
+  * provide a glyph cache
+
+    These operations automatically takes advantage of the FreeType cache :
+
+     - GetMetrics(): local metrics retrieving
+     - GetGlyphIndexes(): charmap lookup
+     - GetGlyph(): outline or bitmap extraction/rendering
+
+
+nglFontInstance
+
+  This internal class (header is not public) is a helper for the FreeType
+  cache embedded in nglFontBase. It maintains a list of loaded fonts and
+  maps an ID to each instance. All query to the FreeType cache use this
+  ID : FreeType will automatically call the OnFaceRequest() handler if
+  the font has not been yet loaded, or if it has been flushed because
+  the cache hit some defined limits.
+
+
+nglFontLayout
+
+  This class is meant to play intensively with nglFontBase metrics. It has no
+  dependencies on the renderers. It sole purpose is too convert plain strings
+  into a list of positioned glyphs (see nglGlyphLayout). This has two advantages :
+
+   - a single text layout is often draw many times, computing the layout
+     once is thus an important optimisation
+
+   - text layout can be very complex (cf. BiDi algorithm and Arabic ligatures
+     support), and nglFontLayout provides a pluggable scheme for user-defined
+     or future layout implementations
+
+
+nglFont
+
+  This is the default font renderer (OpenGL based, of course). It manages
+  the context settings and provides a simple texture-based rendering. It
+  will have very poor performances since it does not use texture objects
+  as a default. You'll have to select a cache to obtain reasonable results.
+
+  It renders layouts by iterating their glyphs and calling OnPrintGlyph()
+  for each one. The default OnPrintGlyph() implementation tries to print
+  via the cache (succeed if cache present and has the glyph), otherwise
+  fallback on OnPrintGlyphDefault() which is a stateless renderer, using
+  OpenGL 1.0 texturing style.
+
+
+nglFontCache
+
+  This is an abstract class for nglFont cache implementations. Its goal
+  is to provide the fastest Draw() path. It is expected to use mainly
+  nglFontBase (metrics, rendering) and some nglFont helpers.
+  Init() is called when the cache is bound to a nglFont object.
+
+  The default cache implementation is kept private in src/font/ as
+  nglFontTexCache{.h,_shr.cpp}. It is a texture object based cache
+  (see the code for more details)
+
+
+nglFontTexCache
+
+  This is a private implentation of a texture cache for nglFont. This is
+  actually the default cache created when nglFont::UseCache() is called. It
+  allocates a single texture object and virtually decompose it as a grid
+  where each cell has the dimensions of the font global's bounding box.
+
+  The Init() methods tries texture sizes by increasing byte weight,
+  computing the fitting glyph count and the wasted place on the edges of
+  the texture (where only partial cells fit). It keeps the first match
+  that gives at least the number of fitting glyph requested by the user.
+
+  nglFontTexCache holds 'Glyph' objects : they store a simple GL list
+  name, and only require that the translation part of the modelview
+  matrix be updated before calling the list to display the glyph.
+
+  The 'Glyph' object collections is maintained in a LUT based on
+  std::vector, which is more efficient than std::map. It also
+  works because all fonts have mainly contiguous glyph IDs, thus the
+  vector should not grow wildly.
+
+
+Default embedded font
+
+  NGL library embeds a useful and all-purpose font ressource in its data
+  segment. This makes it easier for developer to use nglFont without
+  dealing with the (tedious) font ressource problem. Technically speaking,
+  the font ressource is embedded by the embed.pl script which generates
+  a C 'char array' description of the source file. This is then loaded
+  internally from memory by nglFontBase.
+
+  The font was choosen with the following constraints, by order of importance :
+
+   - licence compatibility : there is a gap between the high quality and complete
+     font family donated as GPL by URW++ (not LGPL compatible), and commercial
+     or very restricted font. The font ressource must not restrict modification
+     and redistribution.
+
+   - mostly useful for coders : the default font facility is meant to let
+     programmer use nglFont off the shelf. The preferred geek font is obviously
+     monospace for its justification simplicity
+
+   - legibility : the font should be readable from small sizes (10 pixels),
+     have a nice contrast, simple and not-too-thin-no-too-bold outlines. Serifs
+     are wasteful ornaments.
+
+  Bitstream, Inc. released a whole font family (10 faces) known as 'Vera' with
+  a generous licence on 2003/04/16. The embedded font is the roman (aka. regular)
+  monospaced face from this family, unmodified (as PfaEdit munges the hints). The
+  licensing terms are in the VeraCopyright.txt file.

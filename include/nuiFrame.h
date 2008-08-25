@@ -1,0 +1,65 @@
+/*
+  NUI3 - C++ cross-platform GUI framework for OpenGL based applications
+  Copyright (C) 2002-2003 Sebastien Metrot
+
+  licence: see nui3/LICENCE.TXT
+*/
+
+#pragma once
+
+#include "nui.h"
+#include "nuiDecoration.h"
+
+
+
+class nuiFrame : public nuiDecoration
+{
+public:
+  nuiFrame(const nglString& rName);
+  nuiFrame(const nglString& rName, nuiTexture* pTexture, const nuiRect& rClientRect, const nuiColor& rColor = nuiColor(255, 255, 255, 255));
+  nuiFrame(const nglString& rName, const nglPath& rTexturePath, const nuiRect& rClientRect, const nuiColor& rColor = nuiColor(255, 255, 255, 255));
+	void InitAttributes();
+  virtual ~nuiFrame();
+  
+  bool Load(const nuiXMLNode* pNode);
+  nuiXMLNode* Serialize(nuiXMLNode* pNode);
+  
+  
+
+  void SetSourceClientRect(const nuiRect& rRect);
+  const nuiRect& GetSourceClientRect() const;
+
+  void EnableBorder(bool set);
+  bool IsBorderEnabled() const;
+  
+  virtual nuiSize GetBorder(nuiPosition position) const;
+  virtual nuiRect GetIdealClientRect() const;
+  
+  nuiTexture* GetTexture() const;
+  
+  bool IsInterpolated();
+  void SetInterpolated(bool set);
+
+  const nglPath& GetTexturePath() const;
+  void SetTexturePath(const nglPath& rPath);
+
+	const nuiColor& GetColor() const;
+	void SetColor(const nuiColor& color);
+
+  void SetDebug(bool set);
+protected : 
+
+  virtual void Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rRect);
+
+	
+private:
+  nuiTexture* mpTexture;
+
+	// attributes ***********************************
+  nuiColor mColor;
+  nuiRect mClientRect;
+  bool mBorderEnabled;
+  bool mDebug;
+  bool mInterpolated;
+};
+

@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<nuiSpline Closed="true" Mode="CatmullRom">
+  <nuiSplineNode X="10.000000" Y="100.000000" Z="0.000000">
+    <MetaData Value="0.000000"/>
+    <MetaData Value="0.000000"/>
+    <MetaData Value="1.000000"/>
+    <MetaData Value="0.000000"/>
+    <MetaData Value="0.000000"/>
+    <MetaData Value="0.500000"/>
+  </nuiSplineNode>
+  <nuiSplineNode X="100.000000" Y="10.000000" Z="0.000000">
+    <MetaData Value="0.500000"/>
+    <MetaData Value="0.000000"/>
+    <MetaData Value="0.000000"/>
+    <MetaData Value="1.000000"/>
+    <MetaData Value="0.000000"/>
+    <MetaData Value="0.300000"/>
+  </nuiSplineNode>
+  <nuiSplineNode X="190.000000" Y="100.000000" Z="0.000000">
+    <MetaData Value="0.500000"/>
+    <MetaData Value="0.500000"/>
+    <MetaData Value="0.000000"/>
+    <MetaData Value="0.000000"/>
+    <MetaData Value="1.000000"/>
+    <MetaData Value="0.800000"/>
+  </nuiSplineNode>
+  <nuiSplineNode X="100.000000" Y="190.000000" Z="0.000000">
+    <MetaData Value="0.000000"/>
+    <MetaData Value="0.500000"/>
+    <MetaData Value="1.000000"/>
+    <MetaData Value="0.000000"/>
+    <MetaData Value="1.000000"/>
+    <MetaData Value="1.000000"/>
+  </nuiSplineNode>
+</nuiSpline>

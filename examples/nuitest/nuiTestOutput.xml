@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <nuiMainWindow Class="nuiMainWindow" Enabled="1" Name="01E29840" RedrawOnHover="0" Selected="0" Title="nui test" UseRenderCache="0" Visibled="1">
+   <nuiToolTip Class="nuiToolTip" Enabled="1" Name="ToolTip Container" RedrawOnHover="0" Selected="0" UseRenderCache="1" Visibled="0">
+     <nuiLabel Class="nuiLabel" Enabled="1" Name="ToolTip Label" Position="Left" RedrawOnHover="0" Selected="0" ToolTip="" UseRenderCache="1" Visibled="0">
+      "
+    </nuiLabel>
+  </nuiToolTip>
+   <nuiLabel Class="nuiLabel" Enabled="1" Name="020368D0" Position="Left" RedrawOnHover="0" Selected="0" ToolTip="" UseRenderCache="1" Visibled="0">
+    "No info
+  </nuiLabel>
+   <nuiSplitter Class="nuiSplitter" Enabled="1" Name="Bench" RedrawOnHover="0" Selected="0" UseRenderCache="1" Visibled="1">
+     <nuiScrollView Class="nuiScrollView" Enabled="1" Name="03006CD8" RedrawOnHover="0" Selected="0" UseRenderCache="1" Visibled="1">
+       <nuiTreeView Class="nuiTreeView" Enabled="1" Name="03001EE8" RedrawOnHover="0" Selected="0" UseRenderCache="1" Visibled="1">
+         <nuiTreeNode Class="nuiTreeNode" Name="02002178"/>
+      </nuiTreeView>
+    </nuiScrollView>
+     <nuiScrollView Class="nuiScrollView" Enabled="1" Name="WMScrollView" RedrawOnHover="0" Selected="0" UseRenderCache="1" Visibled="1">
+       <nuiWindowManager Class="nuiWindowManager" Enabled="1" Name="wm" RedrawOnHover="0" Selected="0" UseRenderCache="1" Visibled="1"/>
+    </nuiScrollView>
+  </nuiSplitter>
+</nuiMainWindow>

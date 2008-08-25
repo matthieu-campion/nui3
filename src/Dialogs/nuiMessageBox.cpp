@@ -1,0 +1,324 @@
+/*
+  NUI3 - C++ cross-platform GUI framework for OpenGL based applications
+  Copyright (C) 2002-2003 Sebastien Metrot
+
+  licence: see nui3/LICENCE.TXT
+*/
+
+#include "nui.h"
+#include "nuiMessageBox.h"
+#include "nuiLabel.h"
+#include "nuiButton.h"
+#include "nuiPane.h"
+#include "nuiVBox.h"
+
+#include "nuiColorDecoration.h"
+
+const nuiMessageBox::Button nuiMessageBox::ButtonYes    = 1;
+const nuiMessageBox::Button nuiMessageBox::ButtonNo     = 0;
+const nuiMessageBox::Button nuiMessageBox::ButtonOK     = 1;
+const nuiMessageBox::Button nuiMessageBox::ButtonCancel = 0;
+const nuiMessageBox::Button nuiMessageBox::ButtonRetry  = 2;
+
+nuiMessageBox::nuiMessageBox(nuiContainer * pParent, const nglString& rTitle, const nglString& rMessage, nuiMessageBoxType type, bool showIcon)
+: nuiModalContainer(pParent), mpBtnBox(NULL), mSink(this)
+{
+  nuiLabel* pMessage = new nuiLabel(rMessage);
+  pMessage->SetObjectName(_T("nuiMessageBox::Message"));
+  Init(rTitle, pMessage, type, showIcon);
+}
+
+
+nuiMessageBox::nuiMessageBox(nuiContainer * pParent, const nglString& rTitle, nuiWidget* pContents, nuiMessageBoxType type, bool showIcon)
+: nuiModalContainer(pParent), mpBtnBox(NULL), mSink(this)
+{
+  Init(rTitle, pContents, type, showIcon);
+}
+
+void nuiMessageBox::Init(const nglString& rTitle, nuiWidget* pContents, nuiMessageBoxType type, bool showIcon)
+{
+  mType = type;
+  
+  SetObjectClass(_T("nuiMessageBox"));
+
+  mClickedButton = ButtonCancel;
+  
+  // default decoration
+  nuiDecoration* pDefaultDeco = nuiDecoration::Get(_T("nuiMessageBox::DefaultDecoration"));
+  if (!pDefaultDeco)
+    pDefaultDeco = new nuiColorDecoration(_T("nuiMessageBox::DefaultDecoration"), nuiRect(10,10,0,0), nuiColor(190,190,190), 1, nuiColor(120,120,120), eStrokeAndFillShape);
+  SetDecoration(pDefaultDeco, eDecorationBorder);
+  SetColor(eNormalTextFg, nuiColor(0,0,0));
+  
+
+  nuiVBox* pVBox = new nuiVBox();
+  pVBox->SetExpand(nuiExpandShrinkAndGrow);
+  pVBox->SetObjectName(_T("nuiMessageBox::Client"));
+  AddChild(pVBox);
+  
+  nuiLabel* pTitle = new nuiLabel(rTitle);
+  pTitle->SetObjectName(_T("nuiMessageBox::Title"));
+  pVBox->AddCell(pTitle);
+  
+  nuiHBox* pHBox = new nuiHBox(2);
+  pHBox->SetObjectName(_T("nuiMessageBox::Contents"));
+  pVBox->AddCell(pHBox);
+
+  if (showIcon)
+  {
+    nuiSimpleContainer* pIcon = new nuiSimpleContainer();
+    nglString objectName;
+    objectName.Format(_T("nuiMessageBox::Icon"), rTitle.GetChars());
+    pIcon->SetObjectName(objectName);
+    pHBox->SetCell(0, pIcon, nuiCenter);
+  }
+  
+  pHBox->SetCell(1, pContents);
+  pHBox->SetCellExpand(1, nuiExpandShrinkAndGrow);
+  
+  mpBtnBox = new nuiHBox();
+  mpBtnBox->SetObjectName(_T("nuiMessageBox::ButtonBox"));
+  pVBox->AddCell(mpBtnBox);
+
+  mpBtnBox->AddCell(NULL);
+  mpBtnBox->SetCellExpand(mpBtnBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
+
+  
+  switch (mType)
+  {
+    case eMB_OK:
+      mpBtnBox->AddCell(CreateOK());
+      mpBtnBox->SetPosition(nuiCenter);
+      break;
+      
+    case eMB_Cancel:
+      mpBtnBox->AddCell(CreateCancel());
+      mpBtnBox->SetPosition(nuiCenter);
+      break;
+      
+    case eMB_OKCancel:
+      mpBtnBox->AddCell(CreateOK());
+      mpBtnBox->AddCell(CreateCancel());
+      break;
+      
+    case eMB_RetryOKCancel:
+      mpBtnBox->AddCell(CreateRetry());
+      mpBtnBox->AddCell(CreateOK());
+      mpBtnBox->AddCell(CreateCancel());
+      break;
+      
+    case eMB_YesNo:
+      mpBtnBox->AddCell(CreateYes());
+      mpBtnBox->AddCell(CreateNo());
+      break;
+      
+    case eMB_Custom:
+      break;
+  }
+  
+  
+  SetPosition(nuiCenter);
+  GetTopLevel()->SetFocus(this);
+}
+
+
+
+nuiMessageBox::~nuiMessageBox()
+{
+}
+
+nuiMessageBox::Button nuiMessageBox::Do(nuiContainer * pParent, const nglString& rTitle, const nglString& rMessage, nuiMessageBoxType type)
+{
+  nuiMessageBox* pBox = new nuiMessageBox(pParent, rTitle, rMessage, type);
+  Button res = pBox->QueryUser();
+  pBox->Trash();
+  return res;
+}
+
+nuiWidget* nuiMessageBox::CreateOK()
+{
+  nuiButton* pButton = new nuiButton();
+  pButton->SetObjectName(_T("nuiMessageBox::Button"));
+  
+  nuiLabel* pButtonLabel = new nuiLabel(_T("OK <ENTER>"));
+  pButton->AddChild(pButtonLabel);
+  
+  mSink.Connect(pButton->Activated, &nuiMessageBox::OnOK);
+  
+  return pButton;
+}
+
+nuiWidget* nuiMessageBox::CreateCancel()
+{
+  nuiButton* pButton = new nuiButton();
+  pButton->SetObjectName(_T("nuiMessageBox::Button"));  
+  
+  nuiLabel* pButtonLabel = new nuiLabel(_T("Cancel <ESC>"));
+  pButton->AddChild(pButtonLabel);
+  
+  mSink.Connect(pButton->Activated, &nuiMessageBox::OnCancel);
+  
+  return pButton;
+}
+
+nuiWidget* nuiMessageBox::CreateYes()
+{
+  nuiButton* pButton = new nuiButton();
+  pButton->SetObjectName(_T("nuiMessageBox::Button"));
+  
+  nuiLabel* pButtonLabel = new nuiLabel(_T("Yes <Y>"));
+  pButton->AddChild(pButtonLabel);
+  
+  mSink.Connect(pButton->Activated, &nuiMessageBox::OnOK);
+  
+  return pButton;
+}
+
+nuiWidget* nuiMessageBox::CreateNo()
+{
+  nuiButton* pButton = new nuiButton();
+  pButton->SetObjectName(_T("nuiMessageBox::Button"));
+  
+  nuiLabel* pButtonLabel = new nuiLabel(_T("No <N>"));
+  pButton->AddChild(pButtonLabel);
+  
+  mSink.Connect(pButton->Activated, &nuiMessageBox::OnCancel);
+  
+  return pButton;
+}
+
+nuiWidget* nuiMessageBox::CreateRetry()
+{
+  nuiButton* pButton = new nuiButton();
+  pButton->SetObjectName(_T("nuiMessageBox::Button"));
+  
+  nuiLabel* pButtonLabel = new nuiLabel(_T("Retry"));
+  pButton->AddChild(pButtonLabel);
+  
+  mSink.Connect(pButton->Activated, &nuiMessageBox::OnRetry);
+  
+  return pButton;
+}
+
+nuiWidget* nuiMessageBox::CreateCustom(const nglString& rName, Button btn)
+{
+  nuiButton* pButton = new nuiButton();
+  pButton->SetObjectName(_T("nuiMessageBox::Button"));
+  
+  nuiLabel* pButtonLabel = new nuiLabel(rName);
+  pButton->AddChild(pButtonLabel);
+  
+  mSink.Connect(pButton->Activated, &nuiMessageBox::OnCustom, (void*)btn);
+  
+  return pButton;
+}
+
+nuiWidget* nuiMessageBox::CreateCustom(nuiWidget* pWidget, Button btn)
+{
+  nuiButton* pButton = new nuiButton();
+  pButton->SetObjectName(_T("nuiMessageBox::Button"));
+  pButton->AddChild(pWidget);
+  
+  mSink.Connect(pButton->Activated, &nuiMessageBox::OnCustom, (void*)btn);
+  
+  return pButton;
+}
+
+nuiMessageBox::Button nuiMessageBox::QueryUser()
+{
+  Button btn = ButtonCancel;
+  DoModal();
+  btn = mClickedButton;
+  Trash();
+  return btn;
+}
+
+bool nuiMessageBox::OnOK(const nuiEvent& rEvent)
+{
+  mClickedButton = ButtonOK;
+  ExitModal();
+  return false;
+}
+
+bool nuiMessageBox::OnCancel(const nuiEvent& rEvent)
+{
+  mClickedButton = ButtonCancel;
+  ExitModal();
+  return false;
+}
+
+bool nuiMessageBox::OnRetry(const nuiEvent& rEvent)
+{
+  mClickedButton = ButtonRetry;
+  ExitModal();
+  return false;
+}
+
+bool nuiMessageBox::OnCustom(const nuiEvent& rEvent)
+{
+  Button btn = (Button)rEvent.mpUser; 
+  mClickedButton = btn;
+  ExitModal();
+  return false;
+}
+
+
+// TODO: Add more shortcuts, default buttons, and shortcuts informations on the buttons
+bool nuiMessageBox::KeyUp(const nglKeyEvent& rEvent)
+{  
+  if (rEvent.mKey == NK_ESC)
+  {
+    if ((mType == eMB_OKCancel) || (mType == eMB_Cancel))
+    {
+      mClickedButton = ButtonCancel;
+      ExitModal();
+      return true;
+    }
+  }
+  else if (rEvent.mKey == NK_ENTER)
+  {
+    if ((mType == eMB_OKCancel) || (mType == eMB_OK))
+    {
+      mClickedButton = ButtonOK;
+      ExitModal();
+      return true;
+    }
+  }
+  else if (rEvent.mKey == NK_Y)
+  {
+    if (mType == eMB_YesNo)
+    {
+      mClickedButton = ButtonYes;
+      ExitModal();
+      return true;
+    }
+  }
+  else if (rEvent.mKey == NK_N)
+  {
+    if (mType == eMB_YesNo)
+    {
+      mClickedButton = ButtonNo;
+      ExitModal();
+      return true;
+    }
+  }
+  
+  nuiModalContainer::KeyUp(rEvent);
+  return false;
+}
+
+
+bool nuiMessageBox::KeyDown(const nglKeyEvent& rEvent)
+{
+  return nuiModalContainer::KeyDown(rEvent);
+}
+
+void nuiMessageBox::AddButton(const nglString& rName, Button btn)
+{
+  mpBtnBox->AddCell(CreateCustom(rName, btn));
+}
+
+void nuiMessageBox::AddButton(nuiWidget* pWidget, Button btn)
+{
+  mpBtnBox->AddCell(CreateCustom(pWidget, btn));
+}
