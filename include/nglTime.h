@@ -34,7 +34,7 @@ public:
   int Minutes;  ///< 0..59
   int Hours;    ///< 0..23
   int Day;      ///< 1..31
-  int Month;    ///< 1..12
+  int Month;    ///< 1..12 (unlike system's gmtime, 0..11)
   int Year;     ///< number of years since 1900
   int WeekDay;  ///< 0..6 (0 is Sunday)
   int DST;      ///< day light saving time (1..366)

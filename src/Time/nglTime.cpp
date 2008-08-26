@@ -44,7 +44,7 @@ void nglTimeInfo::CopyFromSys (const struct tm* pTM)
   Minutes = pTM->tm_min;
   Hours   = pTM->tm_hour;
   Day     = pTM->tm_mday;
-  Month   = pTM->tm_mon;
+  Month   = pTM->tm_mon+1; // tm_mon is [0..11]. Month is [1..12]
   Year    = pTM->tm_year;
   WeekDay = pTM->tm_wday;
   DST     = pTM->tm_isdst;
@@ -56,7 +56,7 @@ void nglTimeInfo::CopyToSys (struct tm* pTM) const
   pTM->tm_min   = Minutes;
   pTM->tm_hour  = Hours;
   pTM->tm_mday  = Day;
-  pTM->tm_mon   = Month;
+  pTM->tm_mon   = Month-1; // tm_mon is [0..11]. Month is [1..12]
   pTM->tm_year  = Year;
   pTM->tm_wday  = WeekDay;
   pTM->tm_isdst = DST;
