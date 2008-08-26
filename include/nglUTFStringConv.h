@@ -12,16 +12,7 @@
 
 typedef ConversionResult (*UTFConverter) (const char** sourceStart, const char* sourceEnd, char** targetStart, char* targetEnd, ConversionFlags flags);
 
-#ifdef __cplusplus
-extern "C"
-{
-#endif
-
-  ConversionResult NoConversion(const char** sourceStart, const char* sourceEnd, char** targetStart, char* targetEnd, ConversionFlags flags);
-
-#ifdef __cplusplus
-}
-#endif
+ConversionResult NoConversion(const char** sourceStart, const char* sourceEnd, char** targetStart, char* targetEnd, ConversionFlags flags);
 
 class NGL_API nglUTFStringConv : public nglStringConv
 {
