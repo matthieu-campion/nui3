@@ -171,7 +171,7 @@ protected:
 
   bool Copy(nuiObject* pParams);
   bool Cut(nuiObject* pParams);
-  bool Paste(nuiObject* pParams);
+  virtual bool Paste(nuiObject* pParams);
 
   bool DeleteForward(nuiObject* pParams);
   bool DeleteBackward(nuiObject* pParams);
