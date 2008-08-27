@@ -16,6 +16,10 @@ nuiMetaPainter::nuiMetaPainter(const nuiRect& rRect, nglContext* pContext)
 {
   mLastStateValid = false;
   mpCache = &mOperations;
+  mNbDrawChild = 0;
+  mNbDrawArray = 0;
+  mNbClearStencil = 0;
+  mNbClearColor = 0;
 }
 
 nuiMetaPainter::~nuiMetaPainter()
@@ -148,12 +152,14 @@ void nuiMetaPainter::SetState(const nuiRenderState& rState, bool ForceApply)
 void nuiMetaPainter::ClearColor()
 {
   StoreOpCode(eClearColor);
+  mNbClearColor++;
 }
 
 void nuiMetaPainter::ClearStencil(uint8 value)
 {
   StoreOpCode(eClearStencil);
   StoreInt((int32)value);
+  mNbClearStencil++;
 }
 
 void nuiMetaPainter::DrawArray(const nuiRenderArray& rRenderArray)
@@ -163,6 +169,8 @@ void nuiMetaPainter::DrawArray(const nuiRenderArray& rRenderArray)
   StoreOpCode(eDrawArray);
   StorePointer(new nuiRenderArray(rRenderArray));
 
+  mNbDrawArray++;
+  
 /*
   uint start = mVertices.size();
   uint count = rRenderArray.GetSize();
@@ -189,6 +197,7 @@ void nuiMetaPainter::DrawChild(nuiWidget* pChild)
   mLastStateValid = false;
   StoreOpCode(eDrawChild);
   StorePointer(pChild);
+  mNbDrawChild++;
 }
 
 void nuiMetaPainter::LoadMatrix(const nuiMatrix& rMatrix)
@@ -278,6 +287,13 @@ void nuiMetaPainter::ReDraw(nuiDrawContext* pContext)
   nuiPainter* pPainter = pContext->GetPainter();
   mOperationPos = 0;
   uint size = mOperations.size();
+  
+  const bool DoDrawChild = mNbDrawChild;
+  const bool DoDrawArray = mNbDrawArray;
+  const bool DoDrawSelf = DoDrawArray || mNbClearStencil || mNbClearColor;
+  if (!(DoDrawChild || DoDrawSelf))
+    return;
+  
   while (mOperationPos < size)
   {
     OpCode code = FetchOpCode();
@@ -297,8 +313,9 @@ void nuiMetaPainter::ReDraw(nuiDrawContext* pContext)
     case eSetState:
       {
         nuiRenderState* pState = ((nuiRenderState*)FetchPointer());
-        bool ForceApply = FetchInt()?true:false;
-        pPainter->SetState(*pState, ForceApply);
+        bool ForceApply = FetchInt() ? true : false;
+        if (DoDrawSelf)
+          pPainter->SetState(*pState, ForceApply);
       }
       break;
     case eDrawArray:
@@ -311,10 +328,12 @@ void nuiMetaPainter::ReDraw(nuiDrawContext* pContext)
       pPainter->ClearStencil((uint32)FetchInt());
       break;
     case eBeginSession:
-      pPainter->BeginSession();
+      if (DoDrawSelf)
+        pPainter->BeginSession();
       break;
     case eEndSession:
-      pPainter->EndSession();
+      if (DoDrawSelf)
+        pPainter->EndSession();
       break;
     case eDrawChild:
       {
@@ -382,6 +401,11 @@ void nuiMetaPainter::Reset(nuiPainter const * pFrom)
 {
   mOperationPos = 0;
   mLastStateValid = false;
+  mNbDrawChild = 0;
+  mNbDrawArray = 0;
+  mNbClearStencil = 0;
+  mNbClearColor = 0;
+
   uint size = mOperations.size();
   while (mOperationPos < size)
   {

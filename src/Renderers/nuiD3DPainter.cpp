@@ -476,6 +476,9 @@ void nuiD3DPainter::ClearStencil(uint8 value)
 
 void nuiD3DPainter::DrawArray(const nuiRenderArray& rArray)
 {
+  if (!mEnableDrawArray)
+    return;
+  
   nuiRenderArray array(rArray);
 
   LPDIRECT3DDEVICE9 pDev = mpContext->GetDirect3DDevice();

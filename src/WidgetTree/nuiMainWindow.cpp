@@ -617,6 +617,17 @@ bool nuiMainWindow::OnKeyDown(const nglKeyEvent& rEvent)
     {
       ShowWidgetInspector();
     }
+    else if (rEvent.mKey == NK_T && 
+        (IsKeyDown(NK_LCTRL) || IsKeyDown(NK_RCTRL)) && 
+        (IsKeyDown(NK_LSHIFT) || IsKeyDown(NK_RSHIFT))
+        )
+    {
+      nuiDrawContext* pCtx = GetDrawContext();
+      nuiPainter* pPainter = pCtx->GetPainter();
+      pPainter->DEBUG_EnableDrawArray(!pPainter->DEBUG_GetEnableDrawArray());
+      
+      InvalidateLayout();
+    }
   }
   return CallKeyDown(rEvent);
 }

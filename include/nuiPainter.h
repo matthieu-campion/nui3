@@ -119,6 +119,9 @@ public:
     // do nothing by default, this is only used to debug defered rendering (i.e. nuiMetaPainter).
   }
   
+  void DEBUG_EnableDrawArray(bool set) const;
+  bool DEBUG_GetEnableDrawArray() const;
+  
 protected:
   nuiRenderState mState;
   std::stack <nuiClipper*> mpClippingStack;
@@ -134,6 +137,8 @@ protected:
   uint32 mBatches;
 
   bool mDummyMode;
+
+  mutable bool mEnableDrawArray;
 };
 
 #endif

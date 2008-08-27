@@ -17,6 +17,7 @@ nuiPainter::nuiPainter(const nuiRect& rRect, nglContext* pContext)
   mHeight = ToNearest(rRect.GetHeight());
   mMatrixStack.push(nuiMatrix());
   mDummyMode = false;
+  mEnableDrawArray = true;
 }
 
 nuiPainter::~nuiPainter() 
@@ -157,4 +158,14 @@ uint32 nuiPainter::GetClipStackSize() const
 uint32 nuiPainter::GetRectangleTextureSupport() const
 {
   return 0;
+}
+
+void nuiPainter::DEBUG_EnableDrawArray(bool set) const
+{
+  mEnableDrawArray = set;
+}
+
+bool nuiPainter::DEBUG_GetEnableDrawArray() const
+{
+  return mEnableDrawArray;
 }

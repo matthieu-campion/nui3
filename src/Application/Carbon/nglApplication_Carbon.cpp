@@ -184,7 +184,6 @@ int nglApplication::Main(int argc, char** argv)
   return Run();
 }
 
-
 bool nglApplication::Init(int ArgCnt, char** pArg)
 {
   int i;
@@ -239,12 +238,15 @@ bool nglApplication::Init(int ArgCnt, char** pArg)
   err = AEInstallEventHandler( kCoreEventClass, kAEOpenDocuments, NewAEEventHandlerUPP((AEEventHandlerProcPtr)OpenDocumentsAppleEventHandler), 0, false);
   if (err != noErr)
     return false; /*ExitToShell();*/
-
+  
   MakeMenu();
   
   SysInit();
   return true;
 }
+
+
+extern TSMDocumentID nuiTSMDocument;
 
 int nglApplication::Run()
 {
@@ -252,6 +254,14 @@ int nglApplication::Run()
 
   RunApplicationEventLoop();
   CallOnExit(0);
+
+  if (nuiTSMDocument)
+  {
+    FixTSMDocument(nuiTSMDocument);
+    DeactivateTSMDocument(nuiTSMDocument);
+    DeleteTSMDocument(nuiTSMDocument);
+  }
+  
   ExitToShell();
   
 #endif // __CFM_CLASSIC__

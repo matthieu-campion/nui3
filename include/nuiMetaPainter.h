@@ -111,6 +111,11 @@ protected:
   bool mLastStateValid;
 
   nuiRenderArray mVertices;
+  
+  uint32 mNbDrawChild;
+  uint32 mNbDrawArray;
+  uint32 mNbClearStencil;
+  uint32 mNbClearColor;
 };
 
 #endif // __nuiMetaPainter_h__

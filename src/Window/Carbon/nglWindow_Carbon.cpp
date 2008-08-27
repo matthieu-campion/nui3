@@ -51,6 +51,9 @@ const nglChar* gpWindowErrorTable[] =
  #define EVENTTYPE kEventWindowDrawContent
  */
 
+TSMDocumentID nuiTSMDocument;
+
+
 /*
  * OS specific info
  */
@@ -798,8 +801,8 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
       {
         switch (eventKind)
         {
-          case kEventTextInputUnicodeText:
-          case kEventTextInputUnicodeForKeyEvent:
+        case kEventTextInputUnicodeText:
+        case kEventTextInputUnicodeForKeyEvent:
           {
             UInt32 size = 0;
             OSStatus err = GetEventParameter(eventRef, kEventParamTextInputSendText, typeUnicodeText, NULL, NULL, &size, NULL);
@@ -817,6 +820,67 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
             if (CallOnTextInput(str))
               result = noErr;
           }
+          break;
+        
+        case kEventTextInputShowHideBottomWindow:
+          {
+            Boolean r = false;
+            OSErr err = GetEventParameter(eventRef, kEventParamTextInputSendShowHide, typeBoolean, NULL, sizeof(r), NULL, &r);
+            printf("kEventTextInputShowHideBottomWindow\n");
+            if (r)
+              printf("kEventTextInputShowHideBottomWindow Activated Input window\n");
+            else
+              printf("kEventTextInputShowHideBottomWindow Disabled Input window\n");
+            result = eventNotHandledErr;  
+          }
+          break;
+            
+        case kEventTextInputFilterText:
+          {
+            printf("kEventTextInputFilterText\n");
+          }
+          break;
+            
+            
+          case kEventTextInputUpdateActiveInputArea:
+          {
+            printf("kEventTextInputUpdateActiveInputArea\n");
+          }
+          break;
+
+        case kEventTextInputPosToOffset:
+          {
+            printf("kEventTextInputPosToOffset\n");
+          }
+          break;
+            
+        case kEventTextInputGetSelectedText:
+          {
+            printf("kEventTextInputGetSelectedText\n");
+          }
+          break;
+            
+        case kEventTextInputOffsetToPos:
+          {
+            printf("kEventTextInputOffsetToPos\n");
+            long byte_offset;
+            Point p;
+            
+            OSErr err = GetEventParameter(eventRef, kEventParamTextInputSendTextOffset, typeLongInteger, NULL, sizeof (long), NULL, &byte_offset);
+            if (err != noErr)
+              break;
+            
+            p.h = 50;
+            p.v = 100;
+                
+//              SetEventParameter (event, kEventParamTextInputReplyPointSize, typeFixed, sizeof (Fixed), &point_size);
+//              SetEventParameter (event, kEventParamTextInputReplyLineHeight, typeShortInteger, sizeof (short), &height);
+//              SetEventParameter (event, kEventParamTextInputReplyLineAscent, typeShortInteger, sizeof (short), &ascent);
+            err = SetEventParameter (eventRef, kEventParamTextInputReplyPoint, typeQDPoint, sizeof (Point), &p);
+            if (err == noErr)
+              result = noErr;
+          }
+          break;
         }
       }
       break;
@@ -1023,31 +1087,33 @@ OSStatus nglWindow::WindowEventHandler (EventHandlerCallRef eventHandlerCallRef,
         CallOnCreation();
         break;
       case kEventWindowActivated:
-        //          printf("Event: Activated\n");
+        printf("Event: Activated\n");
+        ActivateTSMDocument(nuiTSMDocument);
         SetUserFocusWindow(mWindow);
         CallOnActivation();
         if (mIsFakeChildWindow)
           result = eventNotHandledErr;
         break;
-        case kEventWindowDeactivated:
-        //          printf("Event: Deactivated\n");
+      case kEventWindowDeactivated:
+        printf("Event: Deactivated\n");
+        DeactivateTSMDocument(nuiTSMDocument);
         CallOnDesactivation();
         if (mIsFakeChildWindow)
           result = eventNotHandledErr;
         break;
-        case kEventWindowClose:
+      case kEventWindowClose:
         //          printf("Event: Close\n");
         if (mIsFakeChildWindow)
           result = eventNotHandledErr;
         CallOnClose();
         break;
-        case kEventWindowClosed:
+      case kEventWindowClosed:
         //          printf("Event: Closed\n");
         if (mIsFakeChildWindow)
           result = eventNotHandledErr;
         CallOnDestruction();
         break;
-        case kEventWindowBoundsChanged:
+      case kEventWindowBoundsChanged:
       {
         // Window is being resized
         Rect bounds;
@@ -1128,7 +1194,17 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
     { kEventClassKeyboard, kEventRawKeyRepeat},
     { kEventClassKeyboard, kEventRawKeyModifiersChanged},
     { kEventClassTextInput, kEventTextInputUnicodeForKeyEvent },
-    { kEventClassTextInput, kEventTextInputUnicodeText }
+    { kEventClassTextInput, kEventTextInputUnicodeText },
+
+    { kEventClassTextInput, kEventTextInputUpdateActiveInputArea },
+    { kEventClassTextInput, kEventTextInputUnicodeForKeyEvent },
+    { kEventClassTextInput, kEventTextInputOffsetToPos },
+    { kEventClassTextInput, kEventTextInputPosToOffset },
+    //kEventTSMDocumentAccessGetFirstRectForRange
+    { kEventClassTextInput, kEventTextInputShowHideBottomWindow },
+    { kEventClassTextInput, kEventTextInputGetSelectedText },
+    { kEventClassTextInput, kEventTextInputUnicodeText },
+    { kEventClassTextInput, kEventTextInputFilterText }
   };
   
   mpContext = NULL;
@@ -1262,6 +1338,17 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
 			}
 		}
     mWindow = mOSInfo.WindowHandle;
+    
+    if (!nuiTSMDocument)
+    {
+      InterfaceTypeList supportedServices =
+      {
+        kUnicodeDocumentInterfaceType
+      };
+      NewTSMDocument(1, supportedServices, &nuiTSMDocument, 0);
+      // We don't support inline input yet, use input window by default
+      UseInputWindow(nuiTSMDocument, TRUE);
+    }
     
     if (!mWindow)
     {

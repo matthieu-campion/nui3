@@ -99,6 +99,9 @@ void nuiSoftwarePainter::SetState(const nuiRenderState& rState, bool ForceApply)
 
 void nuiSoftwarePainter::DrawArray(const nuiRenderArray& rArray)
 {
+  if (!mEnableDrawArray)
+    return;
+  
   switch (rArray.GetMode())
   {
   case GL_POINTS:

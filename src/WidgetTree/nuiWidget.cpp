@@ -538,11 +538,13 @@ bool nuiWidget::SetParent(nuiContainerPtr pParent)
 
 void nuiWidget::LocalToGlobal(int& x, int& y) const
 {
-  nuiVector vec((double)x,(double)y,0);
   if (!mMatrixIsIdentity)
+  {
+    nuiVector vec((double)x,(double)y, 0);
     vec = GetMatrix() * vec;
-  x = ToBelow(vec[0]);
-  y = ToBelow(vec[1]);
+    x = ToBelow(vec[0]);
+    y = ToBelow(vec[1]);
+  }
 
   x += (int)mRect.mLeft;
   y += (int)mRect.mTop;
@@ -553,11 +555,13 @@ void nuiWidget::LocalToGlobal(int& x, int& y) const
 
 void nuiWidget::LocalToGlobal(nuiSize& x, nuiSize& y) const
 {
-  nuiVector vec(x, y,0);
   if (!mMatrixIsIdentity)
+  {
+    nuiVector vec(x, y, 0);
     vec = GetMatrix() * vec;
-  x = vec[0];
-  y = vec[1];
+    x = vec[0];
+    y = vec[1];
+  }
 
   x += mRect.mLeft;
   y += mRect.mTop;
@@ -568,22 +572,19 @@ void nuiWidget::LocalToGlobal(nuiSize& x, nuiSize& y) const
 
 void nuiWidget::LocalToGlobal(nuiRect& rRect) const
 {
-  nuiVector vec1(rRect.mLeft,rRect.mTop,0);
-  nuiVector vec2(rRect.mRight,rRect.mBottom,0);
   if (!mMatrixIsIdentity)
   {
+    nuiVector vec1(rRect.mLeft,rRect.mTop,0);
+    nuiVector vec2(rRect.mRight,rRect.mBottom,0);
     vec1 = GetMatrix() * vec1;
     vec2 = GetMatrix() * vec2;
+    rRect.mLeft   = vec1[0];
+    rRect.mTop    = vec1[1];
+    rRect.mRight  = vec2[0];
+    rRect.mBottom = vec2[1];
   }
-  rRect.mLeft   = vec1[0];
-  rRect.mTop    = vec1[1];
-  rRect.mRight  = vec2[0];
-  rRect.mBottom = vec2[1];
 
-  rRect.mLeft   += mRect.mLeft;
-  rRect.mRight  += mRect.mLeft;
-  rRect.mTop    += mRect.mTop;
-  rRect.mBottom += mRect.mTop;
+  rRect.Move(mRect.mLeft, mRect.mTop);
 
   if (mpParent)
   {
@@ -850,7 +851,7 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
   //if (mNeedLayout)
   // printf("need layout bug on 0x%X [%ls - %ls]\n", this, GetProperty("Class").GetChars(), GetProperty("Name").GetChars());
 
-  bool drawingincache = mpParent?mpParent->IsDrawingInCache(true):false;
+  bool drawingincache = mpParent ? mpParent->IsDrawingInCache(true) : false;
 
   nuiRect clip;
   pContext->GetClipRect(clip);

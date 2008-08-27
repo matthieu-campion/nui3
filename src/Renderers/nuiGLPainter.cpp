@@ -484,6 +484,10 @@ void nuiGLPainter::DrawArray(const nuiRenderArray& rArray)
 {
   mRenderOperations++;
   mBatches++;
+
+  if (!mEnableDrawArray)
+    return;
+  
   uint32 size = rArray.GetSize();
   
   total += size;
