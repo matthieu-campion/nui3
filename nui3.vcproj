@@ -1332,6 +1332,14 @@
 					RelativePath=".\src\Net\Win\nuiHTTP_WinXX.cpp"
 					>
 				</File>
+				<File
+					RelativePath=".\include\nuiURL.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Net\Win\nuiURL_WinXX.cpp"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Renderers"
