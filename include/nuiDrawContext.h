@@ -238,6 +238,8 @@ protected:
   nuiPainter* mpPainter;
 
   GLint mClipShapeValue;
+  
+  uint32 mStateChanges;
 };
 
 #endif // __nuiDrawContext_h__

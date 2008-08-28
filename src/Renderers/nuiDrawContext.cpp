@@ -34,6 +34,8 @@ nuiDrawContext::nuiDrawContext(const nuiRect& rRect)
   mPermitAntialising = true;
 
   mpPainter = NULL;
+  
+  mStateChanges = 1;
 }
 
 nuiDrawContext::~nuiDrawContext()
@@ -144,6 +146,7 @@ void nuiDrawContext::SetStencilMode(nuiStencilMode mode, uint8 value)
 {
   mCurrentState.mStencilValue = value;
   mCurrentState.mStencilMode = mode;
+  mStateChanges++;
 }
 
 uint32 nuiDrawContext::GetStencilValue() const
@@ -171,6 +174,7 @@ void nuiDrawContext::PushState()
 {
   nuiRenderState *pState = new nuiRenderState(mCurrentState);
   mpRenderStateStack.push(pState);
+  mStateChanges++;
 }
 
 void nuiDrawContext::PopState()
@@ -179,6 +183,7 @@ void nuiDrawContext::PopState()
   mCurrentState = *pState;
   mpRenderStateStack.pop();
   delete pState;
+  mStateChanges++;
 }
 
 const nuiRenderState& nuiDrawContext::GetState()
@@ -192,17 +197,20 @@ bool nuiDrawContext::ResetState()
   nuiShader* pTmp = mCurrentState.mpShader;
   mCurrentState = Dummy;
   mCurrentState.mpShader = pTmp;
+  mStateChanges++;
   return true;
 }
 
 void nuiDrawContext::EnableBlending(bool val)       
 { 
   mCurrentState.mBlending = val; 
+  mStateChanges++;
 }
 
 void nuiDrawContext::EnableTexturing(bool val)      
 { 
   mCurrentState.mTexturing = val;
+  mStateChanges++;
 }
 
 void nuiGetBlendFuncFactors(nuiBlendFunc Func, GLenum& src, GLenum& dst)
@@ -238,6 +246,7 @@ void nuiGetBlendFuncFactors(nuiBlendFunc Func, GLenum& src, GLenum& dst)
 void nuiDrawContext::SetBlendFunc(nuiBlendFunc Func)
 {
   mCurrentState.mBlendFunc = Func;
+  mStateChanges++;
 }
 
 /****************************************************************************
@@ -249,11 +258,15 @@ void nuiDrawContext::SetBlendFunc(nuiBlendFunc Func)
 void nuiDrawContext::SetTexture (nuiTexture* pTex) 
 {
   nuiTexture* pOld = mCurrentState.mpTexture;
+  if (pTex == pOld)
+    return;
+  
   mCurrentState.mpTexture = pTex ;
   if (pTex)
     pTex->Acquire();
   if (pOld)
     pOld->Release();
+  mStateChanges++;
 }
 
 bool nuiDrawContext::IsTextureCurrent(nuiTexture* pTex) 
@@ -275,11 +288,13 @@ nuiTexture* nuiDrawContext::GetTexture()
 void nuiDrawContext::SetFillColor(const nuiColor& rColor)
 {
   mCurrentState.mFillColor = rColor;
+  mStateChanges++;
 }
 
 void nuiDrawContext::SetStrokeColor(const nuiColor& rColor)
 {
   mCurrentState.mStrokeColor = rColor;
+  mStateChanges++;
 }
 
 const nuiColor& nuiDrawContext::GetFillColor()
@@ -299,11 +314,13 @@ void nuiDrawContext::SetLineWidth(nuiSize Width)
   if (Width == 0.0f)
     Width = 0.0001f;
   mCurrentState.mLineWidth = Width;
+//  mStateChanges++;
 }
 
 void nuiDrawContext::EnableAntialiasing(bool set)
 {
   mCurrentState.mAntialiasing = set;
+  mStateChanges++;
 }
 
 bool nuiDrawContext::GetAntialiasing()
@@ -314,6 +331,7 @@ bool nuiDrawContext::GetAntialiasing()
 void nuiDrawContext::SetWinding(nuiShape::Winding Rule)
 {
   mCurrentState.mWinding = Rule;
+//  mStateChanges++;
 }
 
 nuiShape::Winding nuiDrawContext::GetWinding()
@@ -329,11 +347,14 @@ nuiShape::Winding nuiDrawContext::GetWinding()
 void nuiDrawContext::SetClearColor(const nuiColor& ClearColor)
 {
   mCurrentState.mClearColor = ClearColor;
+  mStateChanges++;
 }
 
 void nuiDrawContext::Clear() 
 { 
-  mpPainter->SetState(mCurrentState);
+  if (mStateChanges)
+    mpPainter->SetState(mCurrentState);
+  mStateChanges = 0;
   mpPainter->ClearColor(); 
 }
 
@@ -397,6 +418,9 @@ void nuiDrawContext::DrawShape(nuiShape* pShape, nuiShapeMode Mode, float Qualit
 bool nuiDrawContext::SetFont (nuiFont* pFont, bool AlreadyAcquired)
 {
   nuiFont* pOld = mCurrentState.mpFont;
+  if (pOld == pFont)
+    return true;
+  
   mCurrentState.mpFont = pFont;
   if (mCurrentState.mpFont && !AlreadyAcquired)
     mCurrentState.mpFont->Acquire();
@@ -452,7 +476,8 @@ void nuiDrawContext::DrawImage(const nuiRect& rDest, const nuiRect& rSource)
 void nuiDrawContext::DrawImageQuad(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3, const nuiRect& rSource)
 {
   bool texturing = mCurrentState.mTexturing;
-  EnableTexturing(true);
+  if (!texturing)
+    EnableTexturing(true);
 
   nuiSize tx,ty,tw,th;
 
@@ -499,7 +524,8 @@ void nuiDrawContext::DrawImageQuad(float x0, float y0, float x1, float y1, float
 
   DrawArray(array);
 
-  EnableTexturing(texturing);
+  if (!texturing)
+    EnableTexturing(texturing);
 }
 
 void nuiDrawContext::DrawGradient(const nuiGradient& rGradient, const nuiRect& rEnclosingRect, const nuiVector2& rP1, const nuiVector2& rP2)
@@ -930,7 +956,10 @@ void nuiDrawContext::DrawArray(const nuiRenderArray& rArray)
   }
 #endif
 
-  mpPainter->SetState(mCurrentState);
+  if (mStateChanges)
+    mpPainter->SetState(mCurrentState);
+  mStateChanges = 0;
+
   mpPainter->DrawArray(rArray);
 }
 
@@ -965,11 +994,16 @@ void nuiDrawContext::LoadMatrix(const nuiMatrix& Matrix)
 
 void nuiDrawContext::MultMatrix(const nuiMatrix& Matrix)
 {
+  if (Matrix.IsIdentity())
+    return;
   mpPainter->MultMatrix(Matrix);
 }
 
 void nuiDrawContext::Translate(nuiSize X, nuiSize Y)
 {
+  if (X == 0 && Y == 0)
+    return;
+  
   nuiMatrix m;
   m.SetTranslation(X, Y, 0);
   MultMatrix(m);
@@ -977,6 +1011,9 @@ void nuiDrawContext::Translate(nuiSize X, nuiSize Y)
 
 void nuiDrawContext::Scale(nuiSize X, nuiSize Y)
 {
+  if (X == 1.0 && Y == 1.0)
+    return;
+  
   nuiMatrix m;
   m.SetScaling(X, Y, 1);
   MultMatrix(m);
@@ -1001,6 +1038,7 @@ const nuiMatrix& nuiDrawContext::GetMatrix() const
 void nuiDrawContext::EnableColorBuffer(bool set)
 {
   mCurrentState.mColorBuffer = set;
+  mStateChanges++;
 }
 
 uint32 nuiDrawContext::GetClipStackSize() const
@@ -1012,12 +1050,15 @@ uint32 nuiDrawContext::GetClipStackSize() const
 
 void nuiDrawContext::DrawShade(const nuiRect& rSourceRect, const nuiRect& rShadeRect)
 {
+  bool texturing = mCurrentState.mTexturing;
   bool blending = mCurrentState.mBlending;
   nuiBlendFunc blendfunc;
   blendfunc = mCurrentState.mBlendFunc;
 
-  EnableBlending(true);
-  SetBlendFunc(nuiBlendTransp);
+  if (!blending)
+    EnableBlending(true);
+  if (blendfunc != nuiBlendTransp)
+    SetBlendFunc(nuiBlendTransp);
 
   nuiSize ShadeSize = rSourceRect.mLeft - rShadeRect.mLeft;
 
@@ -1067,7 +1108,9 @@ void nuiDrawContext::DrawShade(const nuiRect& rSourceRect, const nuiRect& rShade
   nuiColor transp(0.0f,0.0f,0.0f,0.0f);
   nuiColor opaque(0.0f,0.0f,0.0f,SHADE_ALPHA);
 
-  EnableTexturing(true);
+  if (!texturing)
+    EnableTexturing(true);
+  
   SetTexture(pShade);
 
   nuiRenderArray array(GL_TRIANGLES);
@@ -1302,10 +1345,14 @@ void nuiDrawContext::DrawShade(const nuiRect& rSourceRect, const nuiRect& rShade
 
   DrawArray(array);
 
-  EnableTexturing(false);
+  if (!texturing)
+    EnableTexturing(false);
 
-  EnableBlending(blending);
-  SetBlendFunc(blendfunc);
+  if (!blending)
+    EnableBlending(blending);
+  
+  if (blendfunc != nuiBlendTransp)
+    SetBlendFunc(blendfunc);
 }
 
 

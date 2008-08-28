@@ -146,6 +146,9 @@ protected:
   bool mDummyMode;
 
   mutable bool mEnableDrawArray;
+  static uint32 mNeedTextureBackingStore;
+  void AddNeedTextureBackingStore();
+  void DelNeedTextureBackingStore();
 };
 
 #endif

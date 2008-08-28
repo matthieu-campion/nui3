@@ -574,7 +574,10 @@ int32 nuiList::GetItemNumber(nuiWidgetPtr pWidget)
   {
     nuiWidgetPtr pItem = pIt->GetWidget();
     if (pItem == pWidget)
+    {
+      delete pIt;
       return count;
+    }
     count++;
   }
   delete pIt;

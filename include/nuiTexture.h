@@ -83,6 +83,8 @@ public:
   static void AddCache(nuiTextureCache* pCache);
   static void DelCache(nuiTextureCache* pCache);
   
+  static void RetainBuffers(bool Set);
+  
 protected:
   nuiTexture(nglIStream* pInput, nglImageCodec* pCodec = NULL); ///< Create an image from an input stream and a codec.  If \param pCodec is NULL all codecs will be tried on the image.
   nuiTexture(const nglPath& rPath, nglImageCodec* pCodec = NULL ); ///< Create an image from a path and a codec. If \param pCodec is NULL all codecs will be tried on the image.
@@ -112,6 +114,7 @@ protected:
   static nglContext* mpSharedContext;
   static nuiTextureMap mpTextures;
   static nuiTextureCacheSet mTextureCaches;
+  static bool mRetainBuffers;
 };
 
 class nuiTextureCache

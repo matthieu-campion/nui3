@@ -58,10 +58,12 @@ nuiSoftwarePainter::nuiSoftwarePainter(const nuiRect& rRect, nglContext* pContex
   mWidth = ToNearest(rRect.GetWidth());
   mHeight = ToNearest(rRect.GetHeight());
   mpRasterizer = new nuiRasterizer(mWidth, mHeight);
+  AddNeedTextureBackingStore();
 }
 
 nuiSoftwarePainter::~nuiSoftwarePainter()
 {
+  DelNeedTextureBackingStore();
 }
 
 

@@ -10,7 +10,6 @@
 #include "nuiTexture.h"
 #include "nuiXML.h"
 #include "nuiDrawContext.h"
-#include "nuiGLESPainter.h"
 
 using namespace std;
 
@@ -151,7 +150,7 @@ nuiTexture::nuiTexture(nglIStream* pInput, nglImageCodec* pCodec)
   mpImage = new nglImage(pInput, pCodec);
   mOwnImage = true;
   mForceReload = false;
-  mRetainBuffer = true;
+  mRetainBuffer = mRetainBuffers;
 
   static uint count = 0;
   nglString name;
@@ -169,7 +168,7 @@ nuiTexture::nuiTexture (const nglPath& rPath, nglImageCodec* pCodec)
   mpImage = new nglImage(rPath, pCodec);
   mOwnImage = true;
   mForceReload = false;
-  mRetainBuffer = true;
+  mRetainBuffer = mRetainBuffers;
 
   SetProperty(_T("Source"),rPath.GetPathName());
   mpTextures[rPath.GetPathName()] = this;
@@ -184,7 +183,7 @@ nuiTexture::nuiTexture (nglImageInfo& rInfo, bool Clone)
   mpImage = new nglImage(rInfo, Clone);
   mOwnImage = true;
   mForceReload = false;
-  mRetainBuffer = true;
+  mRetainBuffer = mRetainBuffers;
        
   static uint count = 0;
   nglString name;
@@ -205,7 +204,7 @@ nuiTexture::nuiTexture (const nglImage& rImage)
   mpImage = new nglImage(rImage);
   mOwnImage = true;
   mForceReload = false;
-  mRetainBuffer = true;
+  mRetainBuffer = mRetainBuffers;
 
   nglString name;
   name.Format(_T("Image 0x%x"),mpImage);
@@ -222,7 +221,7 @@ nuiTexture::nuiTexture (nglImage* pImage, bool OwnImage)
   mpImage = pImage;
   mOwnImage = OwnImage;
   mForceReload = false;
-  mRetainBuffer = true;
+  mRetainBuffer = mRetainBuffers;
 
   nglString name;
   name.Format(_T("Image 0x%x"),mpImage);
@@ -238,7 +237,7 @@ nuiTexture::nuiTexture(const nuiXMLNode* pNode)
   SetObjectClass(_T("nuiTexture"));
   mOwnImage = true;
   mForceReload = false;
-  mRetainBuffer = true;
+  mRetainBuffer = mRetainBuffers;
 
   nglPath path(nuiGetString(pNode, _T("Source")));
   mpImage = new nglImage(path);
@@ -566,3 +565,11 @@ void nuiTextureCache::InvalidateTexture(nuiTexture* pTexture, bool ForceReload)
 
 
 nuiTextureCacheSet nuiTexture::mTextureCaches;
+
+bool nuiTexture::mRetainBuffers = false;
+
+void nuiTexture::RetainBuffers(bool Set)
+{
+  mRetainBuffers = Set;
+}
+

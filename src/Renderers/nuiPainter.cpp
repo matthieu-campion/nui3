@@ -196,3 +196,23 @@ bool nuiPainter::DEBUG_GetEnableDrawArray() const
 {
   return mEnableDrawArray;
 }
+
+uint32 nuiPainter::mNeedTextureBackingStore = 0;
+
+void nuiPainter::AddNeedTextureBackingStore()
+{
+  mNeedTextureBackingStore++;
+  if (mNeedTextureBackingStore)
+  {
+    nuiTexture::RetainBuffers(true);
+  }
+}
+
+void nuiPainter::DelNeedTextureBackingStore()
+{
+  mNeedTextureBackingStore--;
+  if (!mNeedTextureBackingStore)
+  {
+    nuiTexture::RetainBuffers(false);
+  }
+}

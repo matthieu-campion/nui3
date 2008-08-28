@@ -180,4 +180,6 @@ void nuiApp::OnInit()
     pImage->SetUseAlpha(true);
   }
   */
+  
+  NGL_OUT(_T("nuiObject: %d\nnuiWidget: %d\nnuiContainer: %d\nbool: %d\n"), sizeof(nuiObject), sizeof(nuiWidget), sizeof(nuiContainer), sizeof(bool));
 }

@@ -604,18 +604,16 @@ void nuiWidget::GlobalToLocal(int& x, int& y) const
   x -= (int)mRect.mLeft;
   y -= (int)mRect.mTop;
 
-  nuiVector vec((double)x,(double)y,0);
-
   if (!mMatrixIsIdentity)
   {
+    nuiVector vec((double)x,(double)y,0);
     nuiMatrix mat;
     GetMatrix(mat);
     mat.InvertHomogenous();
     vec = mat * vec;
+    x = ToBelow(vec[0]);
+    y = ToBelow(vec[1]);
   }
-
-  x = ToBelow(vec[0]);
-  y = ToBelow(vec[1]);
 }
 
 void nuiWidget::GlobalToLocal(nuiSize& x, nuiSize& y) const
@@ -625,18 +623,16 @@ void nuiWidget::GlobalToLocal(nuiSize& x, nuiSize& y) const
   x -= mRect.mLeft;
   y -= mRect.mTop;
 
-  nuiVector vec(x,y,0);
-
   if (!mMatrixIsIdentity)
   {
+    nuiVector vec(x,y,0);
     nuiMatrix mat;
     GetMatrix(mat);
     mat.InvertHomogenous();
     vec = mat * vec;
+    x = vec[0];
+    y = vec[1];
   }
-
-  x = vec[0];
-  y = vec[1];
 }
 
 void nuiWidget::GlobalToLocal(nuiRect& rRect) const
@@ -645,10 +641,7 @@ void nuiWidget::GlobalToLocal(nuiRect& rRect) const
   {
     mpParent->GlobalToLocal(rRect);
   }
-  rRect.mLeft   -= mRect.mLeft;
-  rRect.mRight  -= mRect.mLeft;
-  rRect.mTop    -= mRect.mTop;
-  rRect.mBottom -= mRect.mTop;
+  rRect.Move(-mRect.mLeft, -mRect.mTop);
 
   if (!mMatrixIsIdentity)
   {
