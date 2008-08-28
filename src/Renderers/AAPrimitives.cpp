@@ -59,21 +59,24 @@
 *    -O3 -mcpu=pentium -Wno-unknown-pragmas
 */
 
-#ifndef __NUI_NO_AA__
 
 #include "nui.h"
 
+#ifndef __NUI_NO_AA__
+
 #include <stdlib.h>        // for malloc
 #include <string.h>        // for strstr, because gluCheckExtension isn't available in libglu32 on windows
-#if defined(__APPLE__)      // for ntohl byteswapping, should be a no-op on PPC and __bswap on x86.
-#include <arpa/inet.h>
+
+#if defined(__APPLE__)     // for ntohl byteswapping, should be a no-op on PPC and __bswap on x86.
+  #include <arpa/inet.h>
 #else
-#if defined(_WIN32)
-#include <winsock.h>
-#else
-#include <netinet/in.h>
+  #if defined(_WIN32)
+    #include <winsock.h>
+  #else
+    #include <netinet/in.h>
+  #endif
 #endif
-#endif
+
 #include "nglMath.h"
 #include "AAPrimitives.h"
 
@@ -1138,4 +1141,4 @@ void APIENTRY glAAVertex2f(float x, float y)
   }
 }
 
-#endif//__NUI_NO_AA__
+#endif //__NUI_NO_AA__
