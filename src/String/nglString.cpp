@@ -33,7 +33,7 @@
 #define ngl_strncmp 		wcsncmp
 #define ngl_strnicmp		wcsnicmp
 #define ngl_mbs_stricmp	stricmp
-#elif defined _CARBON_
+#elif defined _CARBON_ || defined _UIKIT_
 #define ngl_vsnwprintf vswprintf
 #define ngl_snprintf	snprintf
 #define ngl_strcmp wcscmp
@@ -2417,13 +2417,16 @@ nglStringConv* nglString::GetStringConv(const nglEncodingPair& rEncodings)
     return it->second;
   
   nglStringConv* pConverter = new nglStringConv(rEncodings.first, rEncodings.second);
-  
-  if (pConverter && pConverter->GetState() == eStringConv_OK)
+  NGL_ASSERT(pConverter);
+
+  if (pConverter->GetState() == eStringConv_OK)
   {
     gStringConvCache.insert(std::pair<nglEncodingPair, nglStringConv*>(rEncodings, pConverter));
     return pConverter;
   }
-  
+
+  delete pConverter;  
+
   return NULL;
 }
 
@@ -2470,7 +2473,7 @@ uint32 nglString::GetLevenshteinDistance(const nglString& rSource, bool CaseSens
 }
 
 
-#ifdef _CARBON_
+#if defined _CARBON_ || defined _UIKIT_
 CFStringRef nglString::ToCFString() const
 {
   char* pStr = Export();
@@ -2478,6 +2481,5 @@ CFStringRef nglString::ToCFString() const
   free(pStr);
   return cfStr;
 }
-
 #endif
 

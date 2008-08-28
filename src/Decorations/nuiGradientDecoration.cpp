@@ -304,7 +304,7 @@ nglString nuiGradientDecoration::GetOrientation()
   if (mOrientation == nuiVertical)
     return nglString(_T("Vertical"));
 
-  nglString(_T("Horizontal"));
+  return nglString(_T("Horizontal"));
 }
 
 

@@ -83,8 +83,15 @@ the NGL_APP_CREATE macro for instance.
 #include "nglConsole.h"
 #include "nglPath.h"
 #include "nglTimer.h"
-#include "nglClipBoard.h"
-#include "nglDataTypesRegistry.h"
+
+#ifndef _NOCLIPBOARD_
+# include "nglClipBoard.h"
+#endif
+
+#if (!defined _NODND_ && !defined _NOCLIPBOARD_)
+# include "nglDataTypesRegistry.h"
+#endif
+
 #include <list>
 
 class nglDeviceInfo;
@@ -216,6 +223,7 @@ public:
   */
   //@}
 
+#ifndef _NOCLIPBOARD_
   /** @name Clipboard */
   //@{
   virtual nglClipBoard &GetClipBoard();
@@ -231,11 +239,14 @@ public:
     \return returns false if the clipboard is not available (maybe temporarily)
   */
   //@}
+#endif//_NOCLIPBOARD_
 
+#if (!defined _NODND_ || !defined _NOCLIPBOARD_)
   /** @name DataTypesRegistry */
   //@{
   virtual nglDataTypesRegistry& GetDataTypesRegistry();
   //@}
+#endif//_NODND_ || _NOCLIPBOARD_
 
   /** @name User callbacks */
   //@{
@@ -299,6 +310,11 @@ protected:
   // From nglError
   virtual const nglChar* OnError (uint& rError) const;
 
+#ifdef _UIKIT_
+	// Called right before the application will be terminated by iPhone OS
+	virtual void OnWillExit();	
+#endif
+
 private:
   typedef std::list<ExitFunc>    ExitFuncList;
   typedef std::vector<nglString> ArgList;
@@ -307,14 +323,20 @@ private:
   bool          mDebug;
   nglLog*       mpLog;
   nglConsole*   mpCon;
+
+#ifndef _NOCLIPBOARD_
   nglClipBoard  mClipboard;
+#endif
+
   bool          mOwnCon;
   ExitFuncList  mExitFuncs;
   nglPath       mPath;
   nglString     mName;
   ArgList       mArgs;
 
+#if !defined _NODND_ && !defined _NOCLIPBOARD_
   nglDataTypesRegistry mDataTypesRegistry;
+#endif
 
   nglKernel(const nglKernel&) {} // Undefined copy constructor
 
@@ -399,6 +421,26 @@ protected:
   EventHandlerRef   mEventHandlerRef;
   EventHandlerProcPtr mEventHandlerUPP;
 #endif // _CARBON_
+
+#ifdef _UIKIT_
+protected:
+//#FIXME: Volume Handling
+
+  bool SysInit();
+
+  friend void objCCallOnInit(void* pUIApplication);
+  friend void objCCallOnExit(int Code);
+  friend void objCCallOnWillExit();
+  
+  void CallOnWillExit();
+	
+  void* mpUIApplication;
+
+public:
+	void * GetUIApplication() { return mpUIApplication; }
+
+#endif//_UIKIT_
+
 };
 
 

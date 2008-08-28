@@ -111,7 +111,9 @@ void nglFont::SetAlphaTest (float Threshold)
 
 void nglFont::PushContext()
 {
+#ifndef _OPENGL_ES_
   glPushAttrib(GL_COLOR_BUFFER_BIT | GL_CURRENT_BIT | GL_ENABLE_BIT | GL_TEXTURE_BIT);
+#endif // !_OPENGL_ES_
   if (mpCache)
     mpCache->PushContext();
 }
@@ -120,7 +122,9 @@ void nglFont::PopContext()
 {
   if (mpCache)
     mpCache->PopContext();
+#ifndef _OPENGL_ES_
   glPopAttrib();
+#endif // !_OPENGL_ES_
 }
 
 void nglFont::SetContext()
@@ -139,7 +143,11 @@ void nglFont::SetContext()
   else
     glDisable(GL_ALPHA_TEST);
 
+#ifdef _OPENGL_ES_
+	glColor4f(mColor[0], mColor[1], mColor[2], mColor[3]);
+#else
   glColor4fv (mColor);
+#endif // _OPENGL_ES_
 
   if (mpCache)
   mpCache->SetContext();
@@ -216,7 +224,9 @@ bool nglFont::BitmapToTexture (const GlyphBitmap& rBitmap, GLint OffsetX, GLint 
 
       if (GetBitmap8(rBitmap, bmp8))
       {
+#ifndef _OPENGL_ES_
         glPixelStorei(GL_UNPACK_ROW_LENGTH, bmp8.Pitch);
+#endif
         glPixelStorei(GL_UNPACK_ALIGNMENT, 8);
         glTexSubImage2D(GL_TEXTURE_2D, 0, OffsetX, OffsetY, tex_w, tex_h, GL_ALPHA, GL_UNSIGNED_BYTE, bmp8.pData);
       }
@@ -225,7 +235,9 @@ bool nglFont::BitmapToTexture (const GlyphBitmap& rBitmap, GLint OffsetX, GLint 
 
     case 8:
     {
+#ifndef _OPENGL_ES_
       glPixelStorei(GL_UNPACK_ROW_LENGTH, rBitmap.Pitch);
+#endif
       glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
       glTexSubImage2D(GL_TEXTURE_2D, 0, OffsetX, OffsetY, tex_w, tex_h, GL_ALPHA, GL_UNSIGNED_BYTE, rBitmap.pData);
     }
@@ -266,6 +278,8 @@ bool nglFont::OnPrintGlyph (const nglGlyphLayout& rGlyph)
  */
 bool nglFont::OnPrintGlyphDefault (const nglGlyphLayout& rGlyph)
 {
+#ifndef _OPENGL_ES_
+
   // Fetch rendered glyph
   GlyphHandle glyph = GetGlyph(rGlyph.Index, eGlyphBitmap);
 
@@ -325,6 +339,11 @@ bool nglFont::OnPrintGlyphDefault (const nglGlyphLayout& rGlyph)
   glEnd();
 
   return true;
+#else 
+	NGL_ASSERT(!"OpenGL/ES : Need to port this function (nglFont::OnPrintGlyphDefault)\n");
+  return false;
+#endif // !_OPENGL_ES_ 
+
 }
 
 
@@ -337,9 +356,13 @@ bool nglFont::UseCache (int Hint)
   /* The hint of nglFontTexCache is the miminum number of glyph
    * fitting the cache. We provide an arbitrary default of 128
    */
+#ifndef _OPENGL_ES_
   nglFontCache* cache = new nglFontTexCache(Hint > 0 ? Hint : 128);
-
-  return cache && CacheInit(cache);
+	return cache && CacheInit(cache);
+#else
+	NGL_ASSERT(!"_OPENGL_ES : FontTexCache not yet implemented");
+	return false;
+#endif // !_OPENGL_ES_
 }
 
 bool nglFont::SetCache (nglFontCache* pCache)

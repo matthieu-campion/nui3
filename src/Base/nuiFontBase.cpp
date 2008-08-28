@@ -574,8 +574,14 @@ nuiTexture *nuiFontBase::AllocateTexture(uint size)
   pTexture->SetMagFilter(GL_NEAREST);
 //  pTexture->SetMinFilter(GL_LINEAR);
 //  pTexture->SetMagFilter(GL_LINEAR);
+
+#ifdef _OPENGL_ES_
+  pTexture->SetWrapS(GL_CLAMP_TO_EDGE);
+  pTexture->SetWrapT(GL_CLAMP_TO_EDGE);
+#else
   pTexture->SetWrapS(GL_CLAMP);
   pTexture->SetWrapT(GL_CLAMP);
+#endif
 
   return pTexture;
 }

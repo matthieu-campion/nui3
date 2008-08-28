@@ -126,6 +126,17 @@ private:
   long mHeight, mWidth, mRate, mBPP;
 
 #endif // _CARBON_
+
+#ifdef _UIKIT_
+private:
+  static uint                  mXDepth;
+
+  static void Init();
+  static bool SetMode (nglVideoMode* pMode, bool Lock);
+
+  long mHeight, mWidth, mRate, mBPP;
+
+#endif//_UIKIT_
   
 friend class nglApplication;
 friend class nglWindow;

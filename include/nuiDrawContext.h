@@ -38,10 +38,12 @@
 #include <vector>
 
 class nuiTexture;
+class nuiSurface;
 
 enum nuiRenderer
 {
   eOpenGL = eTargetAPI_OpenGL,
+  eOpenGLES = eTargetAPI_OpenGLES,
   eDirect3D = eTargetAPI_Direct3D,
   eSoftware = eTargetAPI_None
 };

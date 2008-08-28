@@ -16,8 +16,14 @@
 #include "nglImageCodec.h"
 #include "nglMath.h"
 
+#ifndef _UIKIT_
 #include "nglImageTGACodec.h"
 #include "nglImagePPMCodec.h"
+#endif
+
+#ifdef HAVE_COREGRAPHICS
+#include "nglImageCGCodec.h"
+#endif
 #ifdef HAVE_LIBPNG
 #include "nglImagePNGCodec.h"
 #endif
@@ -371,8 +377,14 @@ void nglImage::Init()
   {
     mpCodecInfos = new std::vector<nglImageCodecInfo*>();
     App->AddExit(Exit);
+  #ifndef _UIKIT_
     mpCodecInfos->push_back(new nglImageTGACodecInfo());
     mpCodecInfos->push_back(new nglImagePPMCodecInfo());
+  #endif
+
+  #ifdef HAVE_COREGRAPHICS
+    mpCodecInfos->push_back(new nglImageCGCodecInfo());
+  #endif
   #ifdef HAVE_LIBPNG
     mpCodecInfos->push_back(new nglImagePNGCodecInfo());
   #endif
@@ -474,6 +486,13 @@ bool nglImage::OnCodecError()
 const nglChar* nglImage::OnError (uint& rError) const
 {
   return FetchError(gpImageErrorTable, NULL, rError);
+}
+
+/* Image Buffer management
+ */
+void nglImage::ReleaseBuffer()
+{
+  mInfo.ReleaseBuffer();
 }
 
 /* Image Pixel Access:

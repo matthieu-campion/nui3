@@ -10,7 +10,9 @@
 #include "nglConsole.h"
 #include "nglLog.h"
 
+#if (!defined _NODND_ && !defined _NOCLIPBOARD_)
 #include "nglDataObjects.h"
+#endif
 
 #include "nuiNativeResourceVolume.h"
 
@@ -113,6 +115,7 @@ const nglString& nglKernel::GetArg (int Index)
 }
 
 
+#ifndef _NOCLIPBOARD_
 /* Clipboard (platform specific)
  *
 nglString GetClipboard();
@@ -122,7 +125,9 @@ nglClipBoard& nglKernel::GetClipBoard()
 {
   return mClipboard;
 }
+#endif
 
+#if (!defined _NODND_ && !defined _NOCLIPBOARD_)
 /*
  * DataTypesRegistry
  */
@@ -130,7 +135,7 @@ nglDataTypesRegistry& nglKernel::GetDataTypesRegistry()
 {
   return mDataTypesRegistry;
 }
-
+#endif
 
 /*
  * User callbacks
@@ -308,3 +313,13 @@ void nglKernel::CallOnExit(int Code)
   OnExit (Code);
 }
 
+#ifdef _UIKIT_
+void nglKernel::CallOnWillExit()
+{
+  OnWillExit();
+}
+
+void nglKernel::OnWillExit()
+{}
+
+#endif

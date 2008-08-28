@@ -213,6 +213,9 @@ inline int32 ToAbove(float x) ///< Cast x to an int using "to greater" rounding 
   #define fpclass    _fpclass
 #endif
 
+#ifdef _UIKIT_ /// TMP FIX: not sure needed ...
+#define finite(x) __inline_isfinited((double)(x))
+#endif
 
 inline float nuiAbs(float f) 
 {

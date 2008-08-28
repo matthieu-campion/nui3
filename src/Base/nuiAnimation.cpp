@@ -11,7 +11,11 @@
 #include "nglMath.h"
 
 nuiAnimation::nuiAnimation()
+#ifdef _UIKIT_
+: mTimer(0.01),
+#else
 : mTimer(0.1),
+#endif
   mAnimSink(this)
 {
   mFrameTime = 0;

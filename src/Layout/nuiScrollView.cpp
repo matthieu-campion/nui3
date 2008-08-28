@@ -10,7 +10,11 @@
 #include "nuiScrollView.h"
 
 #define SCROLL_SIZE 12.0f
-#define NUI_SMOOTH_SCROLL_RATIO (1.f/2.f)
+#ifdef _UIKIT_
+# define NUI_SMOOTH_SCROLL_RATIO (1.f/4.f)
+#else
+# define NUI_SMOOTH_SCROLL_RATIO (1.f/2.f)
+#endif
 
 nuiScrollView::nuiScrollView(bool Horizontal, bool Vertical)
   : nuiComposite(),

@@ -335,7 +335,7 @@ private:
 #endif
 #endif //_UNIX_
 
-#ifdef _CARBON_
+#if (defined _CARBON_ || defined _UIKIT_)
 private:
   bool mIsVisible;
 
@@ -343,7 +343,8 @@ private:
 #ifdef USE_WCHAR
   nglStringConv mOutputConv;
 #endif
-#endif //_CARBON_
+#endif //_CARBON_||_UIKIT_
+
   
 #ifdef _WIN32_
 public:

@@ -495,6 +495,8 @@ uint64 nglPath::GetVolumes(std::list<nglPathVolume>& rVolumes, uint64 Flags)
 {
 #ifdef _CARBON_
   nglPathVolume::UpdateVolumes(rVolumes);
+#elif defined(_UIKIT_)
+///< FIXME: TODO ?
 #else
 	#define DEVICE tokens[0]
   #define MPOINT tokens[1]

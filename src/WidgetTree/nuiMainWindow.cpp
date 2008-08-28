@@ -288,7 +288,14 @@ void nuiMainWindow::Paint()
   nuiDrawContext* pContext = GetDrawContext();
   
   pContext->GetPainter()->ResetStats();
+
+#ifdef _UIKIT_  
+  pContext->GetPainter()->SetDrawOrigin(mDrawOrigin);
+#endif
+
+#ifndef __NUI_NO_SOFTWARE__
   nuiSoftwarePainter* pCTX = dynamic_cast<nuiSoftwarePainter*>(pContext->GetPainter());
+#endif
 
   mpNGLWindow->BeginSession();
 
@@ -320,8 +327,10 @@ void nuiMainWindow::Paint()
   pContext->StopRendering();
   EmptyTrash();
 
+#ifndef __NUI_NO_SOFTWARE__
   if (pCTX)
     pCTX->Display(GetNGLWindow());
+#endif//__NUI_NO_SOFTWARE__
 
   pContext->EndSession();
   mpNGLWindow->EndSession();
@@ -722,6 +731,7 @@ nglWindow* nuiMainWindow::GetNGLWindow()
   return mpNGLWindow;
 }
 
+#ifndef _NODND_
 void nuiMainWindow::OnDragEnter()
 {
   //NGL_OUT(_T("nuiMainWindow::OnDragEnter\n"));
@@ -810,6 +820,7 @@ void nuiMainWindow::OnStopDragging()
   if (mpDragSource && mpDragSource != this)
     mpDragSource->OnStopDragging(); ///< advise drag source
 }
+#endif//_NODND_
 
 ///////////////////////////
 nuiMainWindow::NGLWindow::NGLWindow(nuiMainWindow* pMainWindow, uint Width, uint Height, bool FullScreen)
@@ -899,6 +910,8 @@ bool nuiMainWindow::NGLWindow::OnMouseMove(nglMouseInfo& rInfo)
   return mpMainWindow->OnMouseMove(rInfo);
 }
 
+#ifndef _NODND_
+
 // Dnd receive
 void nuiMainWindow::NGLWindow::OnDragEnter()
 {
@@ -945,6 +958,7 @@ void nuiMainWindow::NGLWindow::OnStopDragging()
   nglWindow::OnStopDragging();
   mpMainWindow->OnStopDragging();
 }
+#endif//_NODND_
 
 void nuiMainWindow::SetQuitOnClose(bool Set)
 {

@@ -25,7 +25,7 @@ enum nglTextFormat
 	eTextNative = eTextDOS
 #elif (defined _WIN32_)
 	eTextNative = eTextDOS
-#elif (defined _CARBON_)
+#elif (defined _CARBON_) || (defined _UIKIT_)
 	eTextNative = eTextUnix
 #endif
 };
@@ -761,7 +761,7 @@ public:
 	//@}
   static nglStringConv* GetStringConv(const nglEncodingPair& rEncodings);
   
-  #ifdef _CARBON_
+  #if defined _CARBON_ || defined _UIKIT_
   CFStringRef ToCFString() const; ///< return a Carbon string reference (don't forget to release the CFString using CFRelease)
   #endif
 

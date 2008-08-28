@@ -18,6 +18,7 @@
 class nuiTexture;
 class nuiPainter;
 class nuiTextureCache;
+class nuiSurface;
 
 typedef std::map<nglString, nuiTexture*, nglString::LessFunctor> nuiTextureMap;
 typedef std::set<nuiTextureCache*> nuiTextureCacheSet;
@@ -33,7 +34,8 @@ public:
   static nuiTexture* GetTexture (const nglImage& rImage); ///< Create an image by copying an existing nglImage.
   static nuiTexture* GetTexture (nglImage* pImage, bool OwnImage); ///< Create an image from an existing nglImage. If \param OwnImage the nglImage object will be deleted with the nuiTexture.
   static nuiTexture* GetTexture (const nuiXMLNode* pNode); ///< Create an image from an xml description.
-  static nuiTexture* GetTexture (const nglString& rName); ///< Get a texture from its ID only.
+  static nuiTexture* GetTexture (const nglString& rName); ///< Get a texture from its ID only
+  static nuiTexture* GetTexture (nuiSurface* pSurface, bool OwnSurface); ///< Create a texture from an existing nuiSurface. . If \param OwnImage the nuiSurface object will be deleted with the nuiTexture.
 
   static void ClearAll();
   static void ForceReloadAll(bool Rebind = false);
@@ -48,6 +50,7 @@ public:
   void TextureToImageCoord(nuiAltSize& x, nuiAltSize& y) const;
 
   nglImage* GetImage() const; ///< Return a pointer to the nglImage contained in this object.
+  void      ReleaseBuffer(); ///< Release the image source
 
   GLuint GetMinFilter() const; ///< Get the maximization filter
   GLuint GetMagFilter() const; ///< Get the minimization filter
@@ -66,6 +69,8 @@ public:
   void SetWrapT(GLuint WrapT);       ///< Set the T coord wrap rule.
   void SetEnvMode(GLuint Mode);      ///< Set the environement mode.
 
+  void SetRetainBuffer(bool Retain); ///< Set the nglImage destroying switch upon uploading to OpenGL
+
   bool SetSource(const nglString& rName); ///< Set the image source. Permits to set a global name for an image source instead of the automatically assigned one.
   nglString GetSource() const; ///< Retreive the source name of this texture.
 
@@ -73,6 +78,7 @@ public:
   
   bool IsUptoDate() const { return !mForceReload; }
   bool IsPowerOfTwo() const; // Returns true if the width and the height of the texture are powers of two.
+  bool IsBufferRetained() const { return mRetainBuffer; } ///< returns true if the texture doesn't try to destroy the image source upon uploading to OpenGL
 
   static void AddCache(nuiTextureCache* pCache);
   static void DelCache(nuiTextureCache* pCache);
@@ -95,6 +101,7 @@ protected:
   nuiSize mRealWidthPOT;
   nuiSize mRealHeightPOT;
   bool mForceReload;
+  bool mRetainBuffer;
 
   GLuint mMinFilter;
   GLuint mMagFilter;

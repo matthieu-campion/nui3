@@ -75,8 +75,21 @@ and in NGL user application code.
  */
 #ifdef __APPLE__
   #define __MACOSX__
+
+// Include conditionals
+	#include <TargetConditionals.h>
+
+	// Using UIKit for iPhone and iPhone simulator
+	#if (defined (TARGET_IPHONE_SIMULATOR) || defined (TARGET_OS_IPHONE))
+    #define _UIKIT_
+    #define _CORE_FOUNDATION_
+    #define _NOCLIPBOARD_
+    #define _NODND_
+
+    #include <CoreFoundation/CoreFoundation.h>
+
   // Make Carbon the default choice when compiling on a Mac, even when using gcc
-  #if (!defined(_CARBON_) && !defined(_DARWIN_))
+  #elif (!defined(_CARBON_) && !defined(_DARWIN_))
     #define _CARBON_
   #endif
   #ifdef __GNUC__
@@ -259,6 +272,39 @@ and in NGL user application code.
 #endif // _UNIX_
 
 
+/* MacOS/UIKit
+ */
+#ifdef _UIKIT_
+  #if (((defined _DEBUG) || (defined DEBUG)) && !(defined _DEBUG_)) 
+    #define _DEBUG_
+  #endif
+  
+  #ifndef __cplusplus
+//  #if defined(_OBJC_)
+		#include <UIKit/UIKit.h>
+  #endif
+  
+  #define USE_VECTOR_STRING_DATA
+
+  #include <stdlib.h>
+  #include <stddef.h>
+  #include <limits.h>
+
+  typedef int8_t    int8;
+  typedef int16_t   int16;
+  typedef int32_t   int32;
+  typedef int64_t   int64;
+  typedef u_int8_t  uint8;
+  typedef u_int16_t uint16;
+  typedef u_int32_t uint32;
+  typedef u_int64_t uint64;
+
+    
+  #define NGL_API __attribute__((visibility("hidden"))) 
+  
+#endif//_UIKIT_
+
+
 /* MacOS/Carbon
  */
 #ifdef _CARBON_
@@ -384,10 +430,42 @@ typedef wchar_t nglChar;
 #endif
 #define UNUSED(x)    ((x) = (x))
 
+/* Multitouch support if any
+ */
+#ifdef _UIKIT_
+  #define _MULTI_TOUCHES_
+  #define _NUI_MAX_TOUCHES_ 5
+#endif
+
 /* At last, include GL and GLU headers if necessary
  */
 #ifndef _NOGFX_
-#  ifdef _CARBON_
+
+#   define __NUI_NO_GLES__
+
+#  ifdef _UIKIT_
+#    define _OPENGL_ES_
+// Make our GLES Painter available, and disable other Painters...
+#    undef  __NUI_NO_GLES__
+#    define __NUI_NO_SOFTWARE__
+#    define __NUI_NO_D3D__
+#    define __NUI_NO_GL__
+
+// Disable Anti-Aliasing
+#    define __NUI_NO_AA__
+
+#    if defined(_OBJC_)
+#     include <OpenGLES/EAGL.h>
+#     include <OpenGLES/EAGLDisplay.h>
+#    endif
+#    include <OpenGLES/ES1/gl.h>
+#    include <OpenGLES/ES1/glext.h>
+
+// Fake GLU for OpenGLES
+     typedef double GLdouble;
+#    include "glu/libtess/tess.h"
+
+#  elif defined _CARBON_
 #    if defined(__MWERKS__)
 #      if macintosh == 0
 #        include <AGL/agl.h>
@@ -472,6 +550,8 @@ typedef unsigned int GLhandleARB;  /* shader object handle */
 #define NGL_CONFIG_H <ngl_config.win32.h>
 #elif (defined _CARBON_)
 #define NGL_CONFIG_H <ngl_config.mac.h>
+#elif (defined _UIKIT_)
+#define NGL_CONFIG_H <ngl_config.uikit.h>
 #else
 #define NGL_CONFIG_H <ngl_config.tux.h>
 #endif

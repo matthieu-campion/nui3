@@ -8,6 +8,10 @@
 #include "nui.h"
 #include "nuiHTTP.h"
 
+#ifdef _UIKIT_
+#include <CFNetwork/CFNetwork.h>
+#endif//_UIKIT_
+
 nuiHTTPResponse* nuiHTTPRequest::SendRequest()
 {
   char* pUrl = mUrl.Export();

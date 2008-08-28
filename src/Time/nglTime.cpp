@@ -9,7 +9,7 @@
 #include "nglTime.h"
 #include "nglKernel.h"
 
-#if defined(_UNIX_) || (defined _CARBON_ && !macintosh)
+#if defined(_UNIX_) || (defined _CARBON_ && !macintosh) || defined(_CORE_FOUNDATION_)
 #define _POSIX_WORLD_
 #endif
 

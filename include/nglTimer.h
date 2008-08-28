@@ -23,6 +23,10 @@
   #endif
 #endif
 
+#if defined(_CORE_FOUNDATION_)
+  #include <CoreFoundation/CoreFoundation.h>
+#endif
+
 //! Low resolution, general purpose timer
 /*!
 nglTimer can trigger a user-event at a given frequency. Here is a simple example
@@ -130,6 +134,15 @@ private:
   EventLoopTimerUPP mTimerProc;
   EventLoopTimerRef mTimer;
   friend pascal void nglTimerAction(EventLoopTimerRef theTimer, void* userData);
+  void TimerAction();
+#endif
+
+#if defined(_CORE_FOUNDATION_)
+private:
+  CFRunLoopRef      mpCFRunLoop;
+  CFRunLoopTimerRef mpCFRunLoopTimer;
+  nglTime mLastTime;
+  friend void nglTimerAction(CFRunLoopTimerRef pTimer, void* pUserData);
   void TimerAction();
 #endif
 

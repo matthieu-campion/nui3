@@ -26,7 +26,13 @@ This class is not available if the _NOGFX_ symbol is defined.
 #include "nglVideoMode.h"
 #include "nuiMouseCursor.h"
 
+#ifndef _NODND_
 #include "nglDragAndDropObjects.h"
+#endif
+
+#ifdef _MULTI_TOUCHES_
+typedef int nglTouchId;
+#endif
 
 class nuiMainMenu;
 
@@ -55,6 +61,24 @@ public:
   int   X;        ///< Horizontal coordinate
   int   Y;        ///< Vertical coordinate
   Flags Buttons;  ///< Buttons state
+
+#ifdef _MULTI_TOUCHES_
+  nglTouchId    mTouchId; ///< used to retrieve which finger acting
+#endif
+
+#ifdef _UIKIT_
+  // Handle  specific touch screen events
+  typedef enum
+  {
+    eNoSwipe = 0,
+    eSwipeUp = 1,
+    eSwipeDown = 2,
+    eSwipeLeft = 4,
+    eSwipeRight = 8
+  } SwipeDirection;
+
+  SwipeDirection SwipeInfo;
+#endif //_UIKIT_
 };
 
 
@@ -148,6 +172,11 @@ public:
 
     OSInfo();
 #endif // _CARBON_
+
+#ifdef _UIKIT_
+    void* mpUIWindow; // Pointer to the nglUIWindow (Based on UIWindow from UIKit).
+    OSInfo();
+#endif
   };
 
   typedef uint Flags;      ///< Used during nglWindow construction, see nglWindowInfo
@@ -585,6 +614,9 @@ window = new nglWindow (context, info, NULL);
   */
   //@}
 
+
+#ifndef _NODND_
+
   /** @name Drag and drop */
   //@{
   virtual void OnDragEnter();
@@ -608,6 +640,8 @@ window = new nglWindow (context, info, NULL);
   virtual void OnStopDragging(); ///< called when a drag operation is interupted or finished
   //@}
 
+#endif//_NODND_
+
   void EnterModalState();
   void ExitModalState();
   
@@ -628,6 +662,9 @@ private:
 
   nglWindow(const nglWindow&) {} // Undefined copy constructor
 
+#ifdef _UIKIT_///< HACK: To be called from ObjectiveC interfaces
+public:
+#endif
   void CallOnCreation();
   void CallOnDestruction();
   void CallOnActivation();
@@ -724,6 +761,14 @@ private:
 #ifdef _CARBON_
 class nglCarbonDragAndDrop* mpCarbonDragAndDrop;
 #endif //_CARBON_
+
+#ifdef _UIKIT_
+private:
+  void InternalInit(const nglContextInfo& rContext, const nglWindowInfo& rInfo,
+                    const nglContext* pShared);
+  
+  int32 mInSession;
+#endif
 
 #ifdef _WIN32_
 private:

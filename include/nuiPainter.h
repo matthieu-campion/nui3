@@ -113,6 +113,11 @@ public:
   uint32 GetVertices() const;
   uint32 GetBatches() const;
 
+  // Display transformation
+  void SetDrawOrigin(nuiPosition Origin) { mDrawOrigin = Origin; }
+  nuiPosition GetDrawOrigin() { return mDrawOrigin; }
+  
+
   // Debug:
   virtual void AddBreakPoint()
   {
@@ -131,6 +136,8 @@ protected:
   uint32 mHeight;
   nuiClipper mClip;
   std::stack<nuiMatrix> mMatrixStack;
+
+  nuiPosition mDrawOrigin;
 
   uint32 mRenderOperations;
   uint32 mVertices;

@@ -195,14 +195,14 @@ void nuiRenderArray::SetVertex(const nuiVector2& rV2f)
 
 void nuiRenderArray::SetColor(float r, float g, float b, float a)
 {
-  NGL_ASSERT(r <= 1.0f);
-  NGL_ASSERT(r >= 0.0f);
-  NGL_ASSERT(g <= 1.0f);
-  NGL_ASSERT(g >= 0.0f);
-  NGL_ASSERT(b <= 1.0f);
-  NGL_ASSERT(b >= 0.0f);
-  NGL_ASSERT(a <= 1.0f);
-  NGL_ASSERT(a >= 0.0f);
+  NGL_ASSERT(r <= 1.0);
+  NGL_ASSERT(r >= 0.0);
+  NGL_ASSERT(g <= 1.0);
+  NGL_ASSERT(g >= 0.0);
+  NGL_ASSERT(b <= 1.0);
+  NGL_ASSERT(b >= 0.0);
+  NGL_ASSERT(a <= 1.0);
+  NGL_ASSERT(a >= 0.0);
   NGL_ASSERT(r != std::numeric_limits<float>::signaling_NaN());
   NGL_ASSERT(r != std::numeric_limits<float>::quiet_NaN());
   NGL_ASSERT(g != std::numeric_limits<float>::signaling_NaN());

@@ -11,6 +11,8 @@
 #ifndef __AAPRIMITIVES__
 #define __AAPRIMITIVES__
 
+#ifndef __NUI_NO_AA__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -89,5 +91,7 @@ extern "C" {
 #ifdef __cplusplus
 }
 #endif
+
+#endif//__NUI_NO_AA__
 
 #endif //__AAPRIMITIVES__

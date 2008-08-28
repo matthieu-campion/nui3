@@ -17,6 +17,11 @@ nuiPainter::nuiPainter(const nuiRect& rRect, nglContext* pContext)
   mHeight = ToNearest(rRect.GetHeight());
   mMatrixStack.push(nuiMatrix());
   mDummyMode = false;
+
+#ifdef _UIKIT_
+  mDrawOrigin=nuiTop;
+#endif
+
   mEnableDrawArray = true;
 }
 
@@ -39,7 +44,16 @@ void nuiPainter::StartRendering(nuiSize ClipOffsetX, nuiSize ClipOffsetY)
     delete mpClippingStack.top();
     mpClippingStack.pop();
   }
-  mClip.Set(ToNearest(mClipOffsetX), ToNearest(mClipOffsetY), mWidth, mHeight);
+
+  uint32 w=mWidth, h=mHeight;
+#ifdef _UIKIT_
+  if (mDrawOrigin == nuiLeft || mDrawOrigin == nuiRight) {
+    w=mHeight;
+    h=mWidth;
+  }
+#endif
+
+  mClip.Set(ToNearest(mClipOffsetX), ToNearest(mClipOffsetY), w, h);
   while (!mMatrixStack.empty())
     mMatrixStack.pop();
   mMatrixStack.push(nuiMatrix());
@@ -105,7 +119,14 @@ void nuiPainter::Clip(const nuiRect& rRect)
 
 void nuiPainter::ResetClipRect()
 {
-  mClip.Set(ToNearest(mClipOffsetX), ToNearest(mClipOffsetY), mWidth, mHeight);
+  uint32 w=mWidth, h=mHeight;
+#ifdef _UIKIT_
+  if (mDrawOrigin == nuiLeft || mDrawOrigin == nuiRight) {
+    w=mHeight;
+    h=mWidth;
+  }
+#endif
+  mClip.Set(ToNearest(mClipOffsetX), ToNearest(mClipOffsetY), w, h);
 }
 
 void nuiPainter::EnableClipping(bool set)
@@ -121,7 +142,13 @@ bool nuiPainter::GetClipRect(nuiRect& rRect) const
   }
   else
   {
-    rRect.Set(0, 0, mWidth, mHeight);
+#ifdef _UIKIT_
+    if (mDrawOrigin == nuiLeft || mDrawOrigin == nuiRight)
+      rRect.Set(0, 0, mHeight, mWidth);
+    else
+#endif
+      rRect.Set(0, 0, mWidth, mHeight);
+
   }
   return mClip.mEnabled;
 }

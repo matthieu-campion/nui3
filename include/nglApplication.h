@@ -251,6 +251,25 @@ protected:
   EventLoopTimerRef mIdleTimer;
 #endif // _CARBON_
 
+#ifdef _UIKIT_
+public:
+  nglString GetBundlePath();
+
+protected:
+//  bool mExitPosted;
+//  int  mExitCode;
+
+  int  Main(int argc, char** argv);
+  bool Init(int argc, char** argv);
+  int  Run();
+//  void MakeMenu();
+//  void DoMenuCommand(long int command);
+
+//  static OSErr QuitAppleEventHandler( const AppleEvent *appleEvt, AppleEvent* reply, UInt32 refcon );
+  friend int main(int argc, char** argv);
+
+#endif//_UIKIT_
+
 #ifdef _UNIX_
 private:
   friend int main(int, char**);
@@ -317,7 +336,7 @@ extern NGL_API class nglKernel* App;
   #define __NGL_APP_MAINCALL WinMain(hInstance, hPrevInstance, lpCmdLine, nShowCmd)
 #endif // _WIN32_
 
-#if defined(_UNIX_) || defined(_CARBON_)
+#if defined(_UNIX_) || defined(_CARBON_) || defined(_UIKIT_)
   #define __NGL_APP_MAINDECL int main(int argc, char** argv)
   #define __NGL_APP_MAINCALL Main(argc, argv)
 #endif // _UNIX_

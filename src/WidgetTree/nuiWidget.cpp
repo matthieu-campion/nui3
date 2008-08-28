@@ -23,6 +23,11 @@
 //const bool gGlobalUseRenderCache = false;
 const bool gGlobalUseRenderCache = true;
 
+#ifdef _OPENGL_ES_
+#define NUI_DEFAULT_AUTO_CLIP_SELF false
+#else
+#define NUI_DEFAULT_AUTO_CLIP_SELF true
+#endif
 
 //#define NUI_LOG_GETIDEALRECT
 
@@ -286,7 +291,7 @@ void nuiWidget::Init()
   mCanRespectConstraint = false; ///< By default the widgets don't care about the constraints imposed by their parents. Only few ones care about this.
   mNeedInvalidateOnSetRect = true;
   mDrawingInCache = false;
-  mAutoClipSelf = true;
+  mAutoClipSelf = NUI_DEFAULT_AUTO_CLIP_SELF;
   mpRenderCache = NULL;
 	mUseRenderCache = false;
 
@@ -1714,9 +1719,9 @@ bool nuiWidget::ReleaseToolTip(nuiWidgetPtr pWidget)
 }
 
 
+#ifndef _NODND_
 
-/// new dnd
-/// drag
+/// Drag
 bool nuiWidget::Drag(nglDragAndDrop* pDragObj)
 {
   nuiMainWindow* pWin = (nuiMainWindow*)GetTopLevel();
@@ -1733,7 +1738,8 @@ void nuiWidget::OnStopDragging()
   // Do nothing, drag and drop is not supported by default.
 }
 
-/// drop
+
+/// Drop
 
 bool nuiWidget::OnCanDrop(nglDragAndDrop* pDragObject,nuiSize X,nuiSize Y)
 {
@@ -1750,6 +1756,7 @@ void nuiWidget::OnDropLeave()
   // Do nothing, drag and drop is not supported by default.
 }
 
+#endif//_NODND_
 
 uint32 GetParentCount(nuiWidget* pWidget)
 {
@@ -2493,11 +2500,11 @@ bool nuiWidget::AutoTrash(const nuiEvent& rEvent)
   return false;
 }
 
-void nuiWidget::EnableAutoClipSelf(bool set)
+void nuiWidget::EnableAutoClipSelf(bool Set, bool Recurse)
 {
-  if (mAutoClipSelf != set)
+  if (mAutoClipSelf != Set)
   {
-    mAutoClipSelf = set;
+    mAutoClipSelf = Set;
     Invalidate();
     DebugRefreshInfo();
   }

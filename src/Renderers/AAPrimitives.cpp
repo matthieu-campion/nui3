@@ -59,6 +59,8 @@
 *    -O3 -mcpu=pentium -Wno-unknown-pragmas
 */
 
+#ifndef __NUI_NO_AA__
+
 #include "nui.h"
 
 #include <stdlib.h>        // for malloc
@@ -1135,3 +1137,5 @@ void APIENTRY glAAVertex2f(float x, float y)
     } break;
   }
 }
+
+#endif//__NUI_NO_AA__

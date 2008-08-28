@@ -288,6 +288,19 @@ void nuiContainer::CallConnectTopLevel(nuiTopLevel* pTopLevel)
   delete pIt;
 }
 
+void nuiContainer::EnableAutoClipSelf(bool Set, bool Recurse)
+{
+  nuiWidget::EnableAutoClipSelf(Set, Recurse);
+  if (Recurse)
+  {
+    IteratorPtr pIt;
+    for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
+    {
+      nuiWidgetPtr pItem = pIt->GetWidget();
+      pItem->EnableAutoClipSelf(Set, Recurse);
+    }
+  }
+}
 
 void nuiContainer::InvalidateChildren(bool Recurse)
 {

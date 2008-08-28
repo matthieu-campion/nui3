@@ -9,7 +9,11 @@
 #include "nuiOutliner.h"
 #include "nuiArc.h"
 #include "nuiDrawContext.h"
-#include "AAPrimitives.h"
+#include "nuiRenderArray.h"
+
+#ifndef __NUI_NO_AA__
+  #include "AAPrimitives.h"
+#endif
 
 nuiOutliner::nuiOutliner(nuiPathGenerator* pPath, float linewidth)
 {
@@ -372,7 +376,7 @@ void nui_glVertex2f(GLfloat x, GLfloat y)
   gpCurrentObject->GetLastArray()->PushVertex();
 }
 
-#if 1
+#ifndef __NUI_NO_AA__
 void nuiOutliner::TessellateObj(nuiRenderObject& rObject, const nuiPath& rVertices, uint offset, int count, float Quality)
 {
   NGL_ASSERT(count);
@@ -439,10 +443,18 @@ void nuiOutliner::TessellateObj(nuiRenderObject& rObject, const nuiPath& rVertic
       vec[0] = vec[1];
       vec[1] = -tmp;
 
-      pArray->AddVertex(rPoint + vec);
-      pArray->AddVertex(rPoint - vec);
-      pArray->AddVertex(rNextPoint + vec);
-      pArray->AddVertex(rNextPoint - vec);
+      pArray->SetVertex(rPoint + vec);
+      pArray->PushVertex();
+      
+      pArray->SetVertex(rPoint - vec);
+      pArray->PushVertex();
+
+      pArray->SetVertex(rNextPoint + vec);
+      pArray->PushVertex();
+
+      pArray->SetVertex(rNextPoint - vec);
+      pArray->PushVertex();
+
     }
   }
 
@@ -465,8 +477,10 @@ bool nuiOutliner::TessellateObj(nuiRenderObject& rObject, float Quality)
   uint offset = 0;
   uint count = total;
 
+#ifndef __NUI_NO_AA__
   glAALineWidth(mLineWidth);
   glAAPointSize(mLineWidth);
+#endif
 
   //Find sub path:
   for (uint i = offset; i < total; i++)

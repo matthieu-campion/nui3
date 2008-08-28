@@ -35,13 +35,25 @@ Lookup precompiled headers in the VC doc to learn how to use them.
 #include "nglApplication.h"
 #include "nglBitmapTools.h"
 #include "nglCPUInfo.h"
+
+#ifndef _NOCLIPBOARD_
 #include "nglClipBoard.h"
+#endif
+
 #include "nglConsole.h"
 #include "nglContext.h"
+
+#if (!defined _NOCLIPBOARD_ || !defined _NODND_)
 #include "nglDataObjects.h"
 #include "nglDataTypesRegistry.h"
+#endif
+
 #include "nglDeviceInfo.h"
+
+#ifndef _NODND_
 #include "nglDragAndDropObjects.h"
+#endif
+
 #include "nglEndian.h"
 #include "nglError.h"
 #include "nglEvent.h"

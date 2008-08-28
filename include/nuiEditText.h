@@ -10,8 +10,14 @@
 #include "nuiComposite.h"
 #include "nuiTheme.h"
 
+#ifndef _NODND_
 #include "nglDragAndDropObjects.h"
+#endif
+
+#if !defined _NOCLIPBOARD_ && !defined _NODND_
 #include "nglDataObjects.h"
+#endif
+
 #include "nuiFontBase.h"
 
 class nuiFont;
@@ -43,10 +49,12 @@ public:
   virtual bool MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
   virtual bool MouseMoved    (nuiSize X, nuiSize Y);
 
+#ifndef _NODND_
   virtual bool OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y);
   virtual void OnDropped(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
   virtual void OnDragged(nglDragAndDrop* pDragObject);
   virtual void OnStopDragging();
+#endif
 
   enum CommandId
   {
@@ -79,9 +87,11 @@ public:
     eSelectLine,
     eSelectWord,
 
+#ifndef _NOCLIPBOARD_
     eCopy,
     eCut,
     ePaste,
+#endif
 
     eDeleteForward,
     eDeleteBackward,
@@ -169,9 +179,11 @@ protected:
   bool SelectLine(nuiObject* pParams);
   bool SelectWord(nuiObject* pParams);
 
+#ifndef _NOCLIPBOARD_
   bool Copy(nuiObject* pParams);
   bool Cut(nuiObject* pParams);
   virtual bool Paste(nuiObject* pParams);
+#endif
 
   bool DeleteForward(nuiObject* pParams);
   bool DeleteBackward(nuiObject* pParams);

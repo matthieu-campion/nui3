@@ -61,6 +61,19 @@ public:
   virtual void Trash(nuiWidgetPtr pWidget); ///< Ask for the destruction of this object as soon as possible.
   //@}
 
+#ifdef _UIKIT_
+  /** @name Object size management */
+  //@{
+  bool SetLayout(const nuiRect& rRect);
+  nuiRect GetBorderedRect() const;
+  nuiRect GetOverDrawRect(bool LocalRect = true) const;
+  void SetDrawOrigin(nuiPosition Origin) { mDrawOrigin = Origin; } ///< change the drawing top position (top -> bottom || bottom -> top || left -> right || right -> left).
+  nuiPosition GetDrawOrigin() { return mDrawOrigin; }
+  const nuiRect& GetDisplayRect() { return mDisplayRect; }
+  bool IsInsideLocal(nuiSize X, nuiSize Y); ///< Overriden to fit draw origin expectations
+  //@}
+#endif
+
   /** @name Rendering: */
   //@{
   bool Draw(class nuiDrawContext *pContext);
@@ -152,7 +165,6 @@ protected:
   bool OnMessageQueueTick(const nuiEvent& rEvent);
   void UpdateHoverList(nglMouseInfo& rInfo);
   
-  nuiWidgetPtr mpGrab;
   nuiWidgetPtr mpFocus;
   nuiWidgetPtr mpUnderMouse;
 
@@ -167,8 +179,24 @@ protected:
   nuiLabel* mpInfoLabel;
 
   nuiTimer mMessageQueueTimer;
-  
+
+#ifdef _MULTI_TOUCHES_
+  typedef std::map<nglTouchId, nuiWidgetPtr> nuiGrabMap;
+  nuiGrabMap mpGrab;
+  typedef std::map<nglTouchId, std::list<nuiWidgetPtr> > nuiGrabStackMap;
+  nuiGrabStackMap mpGrabStack;
+
+///< Helpers:
+  inline bool HasGrab(nuiWidgetPtr pWidget);
+  inline nuiWidgetPtr GetGrab(nglTouchId touchId) const;
+  inline void PushGrab(nglTouchId touchId, nuiWidgetPtr pWidget);
+  inline nuiWidgetPtr PopGrab(nglTouchId touchId);
+  inline std::list<nuiWidgetPtr>& GetGrabStack(nglTouchId touchId);
+  inline nglTouchId GetGrabId(nuiWidgetPtr pWidget) const;
+#else
+  nuiWidgetPtr mpGrab;
   std::list<nuiWidgetPtr> mpGrabStack;
+#endif
 
   nglPath mResPath;
 
@@ -179,7 +207,12 @@ protected:
   bool IsTrashFull() const;
   
   nuiWidgetPtr mpWatchedWidget;
-  
+
+#ifdef _UIKIT_
+  nuiRect mDisplayRect;
+  nuiPosition mDrawOrigin;
+#endif
+
   void UpdateWidgetsCSS();
   
 private:

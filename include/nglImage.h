@@ -29,6 +29,10 @@ class nglPath;
   #define GL_LUMINANCE_ALPHA   0x190A
 #endif
 
+#ifdef _OPENGL_ES_
+  #define GL_COLOR_INDEX       0x1900
+#endif
+
 //! Internal nglImage buffer format
 enum nglImageBufferFormat
 {
@@ -282,6 +286,11 @@ public:
     FIXME: should retrieve error with GetCodec()->GetError()
   */
   //@}
+
+  virtual void ReleaseBuffer();
+  /*!< Wrapper to nglImageInfo Buffer Memory
+    Please see nglImageInfo documentation for memory management.
+  */
 
   friend class nglImageCodec;
 

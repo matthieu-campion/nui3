@@ -9,6 +9,7 @@
 #include "nui.h"
 #include "nuiDrawContext.h"
 #include "nuiGLPainter.h"
+#include "nuiGLESPainter.h"
 #include "nuiD3DPainter.h"
 #include "nuiSoftwarePainter.h"
 #include "nuiWidget.h"
@@ -914,6 +915,7 @@ void nuiDrawContext::DrawArray(const nuiRenderArray& rArray)
     case GL_TRIANGLE_FAN:
       NGL_ASSERT(size > 2);
       break;
+#ifndef _OPENGL_ES_
     case GL_QUADS:
       NGL_ASSERT(size > 3 && !(size % 4));
       break;
@@ -923,6 +925,7 @@ void nuiDrawContext::DrawArray(const nuiRenderArray& rArray)
     case GL_POLYGON:
       NGL_ASSERT(size > 3);
       break;
+#endif
     }
   }
 #endif
@@ -1051,8 +1054,13 @@ void nuiDrawContext::DrawShade(const nuiRect& rSourceRect, const nuiRect& rShade
 
     pShade->SetMinFilter(GL_LINEAR);
     pShade->SetMagFilter(GL_LINEAR);
+#ifndef _OPENGL_ES_
     pShade->SetWrapS(GL_CLAMP);
     pShade->SetWrapT(GL_CLAMP);
+#else
+    pShade->SetWrapS(GL_CLAMP_TO_EDGE);
+    pShade->SetWrapT(GL_CLAMP_TO_EDGE);  
+#endif
     pShade->SetEnvMode(GL_MODULATE);
   }
 
@@ -1307,17 +1315,26 @@ nuiDrawContext *nuiDrawContext::CreateDrawContext(const nuiRect& rRect, nuiRende
   nuiPainter* pPainter = NULL;
   switch (Renderer)
   {
+#ifndef __NUI_NO_GL__
   case eOpenGL:
     pPainter = new nuiGLPainter(pContext, rRect);
     break;
+#endif
+#ifndef __NUI_NO_GLES__
+  case eOpenGLES:
+    pPainter = new nuiGLESPainter(pContext, rRect);
+    break;
+#endif
 #ifndef __NUI_NO_D3D__
   case eDirect3D:
     pPainter = new nuiD3DPainter(pContext, rRect);
     break;
 #endif
+#ifndef __NUI_NO_SOFTWARE__
   case eSoftware:
     pPainter = new nuiSoftwarePainter(rRect, pContext);
     break;
+#endif
   }
   pC->SetPainter(pPainter);
   return pC;

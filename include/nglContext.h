@@ -37,6 +37,7 @@ enum nglTargetAPI
 {
   eTargetAPI_None,
   eTargetAPI_OpenGL,
+  eTargetAPI_OpenGLES,
 #ifdef _WIN32_
   eTargetAPI_Direct3D // This one is only valid under win32
 #else
@@ -191,8 +192,10 @@ if (HasExtension(_T("GL_ARB_texture_compression")))
   */
   //@}
 
+#ifndef _OPENGL_ES_
   // Include extension methods as members here
   #include "ngl_glext.h"
+#endif
 
   /** @name  */
   //@{
@@ -272,6 +275,32 @@ protected:
   void aglDellocEntryPoints (void);
   void* aglGetProcAddress (const char * pszProc);
   nglContextInfo mContextInfo;
+#endif
+
+#ifdef _UIKIT_
+protected:
+  void* mpContext; ///< Used to carry the Objective C interface EAGLContext
+  GLuint        mPixelFormat;
+  GLuint        mDepthFormat;
+  GLuint        mRenderBuffer;
+  GLuint        mFrameBuffer;
+  GLuint        mDepthBuffer;
+
+  nglContextInfo mContextInfo;
+  uint mWidth;
+  uint mHeight;
+
+  bool mFullscreen;
+
+  void* mpUIWindow;
+
+  bool Build(const nglContextInfo& rInfo, const nglContext* pShared, bool Fullscreen);
+  bool Destroy();
+
+  bool InternalMakeCurrent(void* pContext) const;
+  bool InternalSwapBuffers() const;
+
+  friend class nglContextInfo;
 #endif
 };
 

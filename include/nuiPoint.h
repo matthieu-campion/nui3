@@ -10,6 +10,7 @@
 
 //#include "nui.h"
 #include "nuiXML.h"
+#include "nglMath.h"
 #include <vector>
 
 enum nuiPointType 

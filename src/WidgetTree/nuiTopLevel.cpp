@@ -15,6 +15,32 @@
 
 #define PARTIAL_REDRAW_DEFAULT false
 
+#if 0//defined(_MULTI_TOUCHES_) && defined(_DEBUG_)
+# define NGL_TOUCHES_DEBUG(X) (X)
+# define _NGL_DEBUG_TOUCHES_
+#else//!_MULTI_TOUCHES_
+# define NGL_TOUCHES_DEBUG(X)
+#endif//!_MULTI_TOUCHES_
+
+#ifdef _NGL_DEBUG_TOUCHES_
+#define PRINT_GRAB_IDS()\
+{\
+  for (nuiGrabMap::const_iterator it = mpGrab.begin(); it != mpGrab.end(); ++it)\
+  {\
+    NGL_OUT(_T("[%d] -> "), it->first);\
+    if (!(it->second)) {\
+      NGL_OUT(_T("NULL\n"));\
+    } else {\
+      NGL_OUT(_T("%ls\n"),\
+                      it->second->GetProperty(_T("Class")).GetChars());\
+    }\
+  }\
+}
+#else
+#define PRINT_GRAB_IDS() {}
+#endif
+
+
 class nuiToolTip : public nuiSimpleContainer
 {
 public:
@@ -148,8 +174,17 @@ nuiTopLevel::nuiTopLevel(const nglPath& rResPath)
   mTopLevelSink.Connect(mToolTipTimerOff.Tick, &nuiTopLevel::ToolTipOff);
   mTopLevelSink.Connect(mMessageQueueTimer.Tick, &nuiTopLevel::OnMessageQueueTick);
   mMessageQueueTimer.Start(false);
-  
+
+#ifdef _UIKIT_
+  mDrawOrigin = nuiTop;
+#endif
+
+#ifdef _MULTI_TOUCHES_
+  mpGrab.clear();
+  mMouseInfo.mTouchId = -1;
+#else
   mpGrab = NULL;
+#endif
   mpFocus = NULL;
   mpUnderMouse = NULL;
 
@@ -188,7 +223,16 @@ bool nuiTopLevel::Load(const nuiXMLNode* pNode)
   mTopLevelSink.Connect(mToolTipTimerOn.Tick, &nuiMainWindow::ToolTipOn);
   mTopLevelSink.Connect(mToolTipTimerOff.Tick, &nuiMainWindow::ToolTipOff);
 
+#ifdef _UIKIT_
+  mDrawOrigin = nuiTop;
+#endif
+
+#ifdef _MULTI_TOUCHES_
+  mpGrab.clear();
+  mMouseInfo.mTouchId = -1;
+#else
   mpGrab = NULL;
+#endif
   mpFocus = NULL;
   mpUnderMouse = NULL;
 
@@ -216,7 +260,11 @@ void nuiTopLevel::Exit()
   mTopLevelSink.Disconnect(&nuiMainWindow::ToolTipOff);
 
   mpToolTipLabel = NULL;
+#ifdef _MULTI_TOUCHES_
+  mpGrab.clear();
+#else  
   mpGrab = NULL;
+#endif
   mpFocus = NULL;
   mpUnderMouse = NULL;
   mpToolTipSource = NULL;
@@ -332,12 +380,24 @@ void nuiTopLevel::AdviseObjectDeath(nuiWidgetPtr pWidget)
   
   mHoveredWidgets.erase(pWidget);
   
+#ifdef _MULTI_TOUCHES_
+  nglTouchId touchId;
+  while ( (touchId = GetGrabId(pWidget)) >= 0 )
+  {
+    std::list<nuiWidgetPtr>& rGrabStack = GetGrabStack(touchId);
+    rGrabStack.remove(pWidget);
+    NGL_ASSERT(mpGrab.find(touchId) != mpGrab.end());
+    mpGrab.erase(mpGrab.find(touchId));
+  }
+#else//!_MULTI_TOUCHES_
   if (mpGrab == pWidget)
   {
     mpGrabStack.remove(pWidget);
     mpGrab = NULL;
     Ungrab(pWidget);
   }
+#endif//!_MULTI_TOUCHES_
+
   if (mpFocus == pWidget)
     mpFocus = NULL;
   if (mpUnderMouse == pWidget)
@@ -376,7 +436,11 @@ nuiDrawContext* nuiTopLevel::GetDrawContext()
 
   nuiRect rect = GetRect().Size();
   mpDrawContext = nuiDrawContext::CreateDrawContext(rect, mRenderer, GetNGLContext());
- 
+
+#ifdef _UIKIT_
+  mpDrawContext->GetPainter()->SetDrawOrigin(mDrawOrigin);
+#endif
+
   return mpDrawContext;
 }
 
@@ -435,7 +499,59 @@ nuiTrashElement::~nuiTrashElement()
 
 bool nuiTopLevel::Grab(nuiWidgetPtr pWidget)
 {
-//NGL_OUT(_T("Grab 0x%x\n"), pWidget);
+  NGL_TOUCHES_DEBUG( NGL_OUT(_T("nuiTopLevel::Grab 0x%x\n"), pWidget) );
+
+#ifdef _MULTI_TOUCHES_
+
+///< some widgets acquire the grab on creation, which is pretty unpleasant (this hack is quite bad)
+  nglTouchId touchId = mMouseInfo.mTouchId;
+  if (touchId < 0) {
+    return false;
+  }
+  
+  if (pWidget && !pWidget->AcceptsMultipleGrabs()
+///< Checks if the Widget has been grabbed by another touches
+      && HasGrab(pWidget))
+  {
+
+  NGL_TOUCHES_DEBUG( NGL_OUT(_T("TouchId[%d] "), mMouseInfo.mTouchId) );
+  NGL_TOUCHES_DEBUG( NGL_OUT(_T("%ls of type %ls already grabbed on touch id[%d]\n"), 
+          pWidget->GetProperty(_T("Name")).GetChars(),
+          pWidget->GetProperty(_T("Class")).GetChars(), GetGrabId(pWidget)) );
+
+    return false;
+  }
+  if (pWidget) {
+    NGL_TOUCHES_DEBUG( NGL_OUT(_T("TouchId[%d] "), mMouseInfo.mTouchId) );
+    NGL_TOUCHES_DEBUG( NGL_OUT(_T("Grab from %ls of type %ls\n"),
+            pWidget->GetProperty(_T("Name")).GetChars(), pWidget->GetProperty(_T("Class")).GetChars()) );
+  }
+
+  nuiWidgetPtr pGrab = GetGrab();
+  
+  if (pGrab)
+  {
+    if (pWidget) {
+      PushGrab(touchId, pGrab);
+    }
+    pGrab->MouseUngrabbed();
+  }
+
+  pGrab = pWidget;
+  mpGrab[touchId] = pWidget;
+  if (pGrab)
+    pGrab->MouseGrabbed();
+
+  if (pGrab && pGrab->GetProperty("ToolTipOnGrab") == _T("true"))
+  {
+    mpToolTipSource = pGrab;
+    SetToolTipOn(false);
+  }
+  else
+    mDisplayToolTip = false;
+
+#else//!_MULTI_TOUCHES_
+
   if (mpGrab)
   {
     if (pWidget)
@@ -454,12 +570,46 @@ bool nuiTopLevel::Grab(nuiWidgetPtr pWidget)
   }
   else
     mDisplayToolTip = false;
+
+#endif//!_MULTI_TOUCHES_
+
   return true;
 }
 
 bool nuiTopLevel::Ungrab(nuiWidgetPtr pWidget)
 {
-//printf("Ungrab 0x%x\n", pWidget);
+NGL_TOUCHES_DEBUG( NGL_OUT(_T("nuiTopLevel::Ungrab 0x%x\n"), pWidget) );
+if (pWidget) {
+//  NGL_TOUCHES_DEBUG( NGL_OUT(_T("TouchId[%d] "), mMouseInfo.mTouchId) );
+  NGL_TOUCHES_DEBUG( NGL_OUT(_T("Ungrab from %ls of type %ls\n"),
+          pWidget->GetProperty(_T("Name")).GetChars(), pWidget->GetProperty(_T("Class")).GetChars()) );
+}
+
+#ifdef _MULTI_TOUCHES_
+
+  nuiWidgetPtr pGrab = GetGrab();
+  if (pGrab && pGrab->GetProperty("ToolTipOnGrab") == _T("true"))
+  {
+    mpToolTipSource = NULL;
+    mDisplayToolTip = false;
+  }
+
+  std::list<nuiWidgetPtr>& rGrabStack = GetGrabStack(mMouseInfo.mTouchId);
+  if (rGrabStack.size() && pGrab == pWidget)
+  {
+    if (pGrab)
+      pGrab->MouseUngrabbed();
+    pGrab = PopGrab(mMouseInfo.mTouchId);
+    if (pGrab)
+      pGrab->MouseGrabbed();
+  }
+  else
+  {
+    Grab(NULL);
+  }
+
+#else//!_MULTI_TOUCHES_
+
   if (mpGrab && mpGrab->GetProperty("ToolTipOnGrab") == _T("true"))
   {
     mpToolTipSource = NULL;
@@ -479,14 +629,39 @@ bool nuiTopLevel::Ungrab(nuiWidgetPtr pWidget)
   {
     Grab(NULL);
   }
-
-  //NGL_OUT(_T("Ungrab 0x%x done\n"), pWidget);
+#endif//_MULTI_TOUCHES_
   return true;
 }
 
 bool nuiTopLevel::CancelGrab()
 {
-//NGL_OUT(_T("Cancel Grab\n"));
+NGL_TOUCHES_DEBUG( NGL_OUT(_T("CancelGrab()\n")) );
+#ifdef _MULTI_TOUCHES_
+  for (nuiGrabMap::const_iterator it = mpGrab.begin(); it != mpGrab.end(); ++it)
+  {
+    nglTouchId touchId = it->first;
+    nuiWidget* pGrab = it->second;
+    std::list<nuiWidgetPtr>& rGrabStack = GetGrabStack(touchId);
+
+    while (pGrab)
+    {
+      if (pGrab->GetProperty("ToolTipOnGrab") == _T("true"))
+      {
+        mpToolTipSource = NULL;
+        mDisplayToolTip = false;
+      }
+      pGrab->MouseUngrabbed();
+      pGrab = NULL;
+
+      if (rGrabStack.size()) {
+        pGrab = PopGrab(touchId);
+      }
+    }
+    NGL_ASSERT(rGrabStack.empty());
+  }
+  mpGrab.clear();
+  mpGrabStack.clear();
+#else//!_MULTI_TOUCHES_
   while (mpGrab)
   {
     if (mpGrab->GetProperty("ToolTipOnGrab") == _T("true"))
@@ -504,13 +679,80 @@ bool nuiTopLevel::CancelGrab()
       mpGrabStack.pop_back();
     }
   }
-
+#endif
   return true;
 }
 
+
+#ifdef _MULTI_TOUCHES_
+
+bool nuiTopLevel::HasGrab(nuiWidgetPtr pWidget)
+{
+  if (GetGrabId(pWidget) >= 0)
+    return true;
+  return false;
+}
+
+std::list<nuiWidgetPtr>& nuiTopLevel::GetGrabStack(nglTouchId touchId)
+{
+  nuiGrabStackMap::iterator it = mpGrabStack.find(touchId);
+  if (it != mpGrabStack.end())
+    return it->second;
+  mpGrabStack[touchId] = std::list<nuiWidgetPtr>();
+  return mpGrabStack[touchId];
+}
+
+nglTouchId nuiTopLevel::GetGrabId(nuiWidgetPtr pWidget) const
+{
+  nuiGrabMap::const_iterator end = mpGrab.end();
+  for (nuiGrabMap::const_iterator it = mpGrab.begin(); it != end; ++it)
+  {
+    if (it->second == pWidget)
+      return it->first;
+  }
+  return (nglTouchId)-1;
+}
+
+void nuiTopLevel::PushGrab(nglTouchId touchId, nuiWidgetPtr pWidget)
+{
+  NGL_ASSERT(pWidget);
+  NGL_TOUCHES_DEBUG( NGL_OUT(_T("Push[%d] Grabstack: [%ls] of type [%ls]\n"),
+          pWidget->GetProperty(_T("Name")).GetChars(), pWidget->GetProperty(_T("Class")).GetChars()) );
+  mpGrabStack[touchId].push_back(pWidget);
+}
+
+nuiWidgetPtr nuiTopLevel::PopGrab(nglTouchId touchId)
+{
+  NGL_TOUCHES_DEBUG( NGL_OUT(_T("Pop[%d] Grabstack\n"), touchId) );
+
+  std::list<nuiWidgetPtr>& rGrabStack = GetGrabStack(touchId);
+  if (rGrabStack.empty())
+    return NULL;
+
+  nuiWidgetPtr pWidget = rGrabStack.back();
+  NGL_TOUCHES_DEBUG( NGL_OUT(_T("->%ls of type %ls\n"),
+                              pWidget->GetProperty(_T("Name")).GetChars(),
+                              pWidget->GetProperty(_T("Class")).GetChars()) );
+  rGrabStack.pop_back();
+  return pWidget;
+}
+
+nuiWidgetPtr nuiTopLevel::GetGrab(nglTouchId touchId) const
+{
+  nuiGrabMap::const_iterator it = mpGrab.find(touchId);
+  if (it != mpGrab.end())
+    return it->second;
+  return NULL;
+}
+#endif
+
 nuiWidgetPtr nuiTopLevel::GetGrab() const
 {
+#ifdef _MULTI_TOUCHES_
+  return GetGrab(mMouseInfo.mTouchId);
+#else
   return mpGrab;
+#endif
 }
 
 bool nuiTopLevel::SetFocus(nuiWidgetPtr pWidget)
@@ -549,7 +791,6 @@ bool nuiTopLevel::ActivateToolTip(nuiWidgetPtr pWidget, bool Now)
   {
     ToolTipOn(NULL);
   }
-
 
   return true;
 }
@@ -710,14 +951,65 @@ bool nuiTopLevel::CallKeyUp (const nglKeyEvent& rEvent)
   return false;
 }
 
+#ifdef _UIKIT_
+void AdjustFromDrawOrigin(nuiPosition DrawOrigin, const nuiRect& rRect, nglMouseInfo& rInfo)
+{
+  switch (DrawOrigin)
+  {
+    case nuiLeft: {
+      int tmpX= rInfo.X;
+      rInfo.X = ((int)rRect.GetHeight()) - rInfo.Y;
+      rInfo.Y = tmpX;
+    } break;
+    case nuiRight: {
+      int tmpY = rInfo.Y;
+      rInfo.Y = ((int)rRect.GetWidth()) - rInfo.X;
+      rInfo.X = tmpY;
+    } break;
+    case nuiBottom: {
+      rInfo.X = ((int)rRect.GetWidth()) - rInfo.X;
+      rInfo.Y = ((int)rRect.GetHeight()) - rInfo.Y;
+    } break;
+    case nuiTop:
+    break;
+  }
+}
+#endif
+
 bool nuiTopLevel::CallMouseClick (nglMouseInfo& rInfo)
 {
-  mLastClickedButton = rInfo.Buttons;
+#ifdef _UIKIT_
+  AdjustFromDrawOrigin(mDrawOrigin, mRect, rInfo);
+  mMouseInfo.SwipeInfo = rInfo.SwipeInfo;
+#endif
 
   mMouseInfo.X = rInfo.X;
   mMouseInfo.Y = rInfo.Y;
   mMouseInfo.Buttons |= rInfo.Buttons;
-  //OUT("OnMouseClick\n");
+
+#ifdef _MULTI_TOUCHES_
+
+NGL_TOUCHES_DEBUG( NGL_OUT(_T("nuiTopLevel::CallMouseClick X:%d Y:%d\n"), rInfo.X, rInfo.Y) );
+
+  mMouseInfo.mTouchId = rInfo.mTouchId;
+
+NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseClick [%d] BEGIN\n"), rInfo.mTouchId) );
+
+  nuiWidgetPtr pGrab = GetGrab();
+  if (pGrab)
+  {
+		bool res = false;
+    if (pGrab->MouseEventsEnabled())
+    {
+      res = pGrab->DispatchMouseClick((nuiSize)rInfo.X, (nuiSize)rInfo.Y, rInfo.Buttons);
+    }
+
+PRINT_GRAB_IDS();
+NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseClick [%d] END\n"), rInfo.mTouchId) );
+
+    return res;
+  }
+#else//!_MULTI_TOUCHES_
   if (mpGrab)
   {
 		bool res = false;
@@ -727,6 +1019,7 @@ bool nuiTopLevel::CallMouseClick (nglMouseInfo& rInfo)
     }
     return res;
   }
+#endif//!_MULTI_TOUCHES_
 
   bool res = DispatchMouseClick((nuiSize)rInfo.X, (nuiSize)rInfo.Y, rInfo.Buttons);
   nuiWidget* pWidgetUnder = GetChild((nuiSize)rInfo.X, (nuiSize)rInfo.Y);
@@ -734,23 +1027,45 @@ bool nuiTopLevel::CallMouseClick (nglMouseInfo& rInfo)
     SetMouseCursor(pWidgetUnder->GetMouseCursor());
   else
     SetMouseCursor(GetMouseCursor());
+
+#ifdef _MULTI_TOUCHES_
+PRINT_GRAB_IDS();
+NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseClick [%d] END\n"), rInfo.mTouchId) );
+#endif//_MULTI_TOUCHES_
+
 	return res;
 }
 
 bool nuiTopLevel::CallMouseUnclick(nglMouseInfo& rInfo)
 {
+#ifdef _UIKIT_
+  AdjustFromDrawOrigin(mDrawOrigin, mRect, rInfo);
+  mMouseInfo.SwipeInfo = rInfo.SwipeInfo;
+#endif
+
+//  NGL_TOUCHES_DEBUG( NGL_OUT(_T("nuiTopLevel::CallMouseUnclick X:%d Y:%d\n"), rInfo.X, rInfo.Y) );
+
   mMouseInfo.X = rInfo.X;
   mMouseInfo.Y = rInfo.Y;
   mMouseInfo.Buttons &= ~rInfo.Buttons;
   nglMouseInfo::Flags Buttons = rInfo.Buttons | mLastClickedButton & nglMouseInfo::ButtonDoubleClick;
-  //OUT("OnMouseUnclick\n");
-  if (mpGrab)
+
+#ifdef _MULTI_TOUCHES_
+  mMouseInfo.mTouchId = rInfo.mTouchId;
+NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseUnclick [%d] BEGIN\n"), rInfo.mTouchId) );
+#endif//!_MULTI_TOUCHES_
+  nuiWidgetPtr pGrab = GetGrab();
+  if (pGrab)
   {
 		bool res = false;
-    if (mpGrab->MouseEventsEnabled())
+    if (pGrab->MouseEventsEnabled())
     {
-      res = mpGrab->DispatchMouseUnclick((nuiSize)rInfo.X, (nuiSize)rInfo.Y, Buttons);
+      res = pGrab->DispatchMouseUnclick((nuiSize)rInfo.X, (nuiSize)rInfo.Y, Buttons);
     }
+#ifdef _MULTI_TOUCHES_
+PRINT_GRAB_IDS();
+NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseUnclick [%d] END\n"), rInfo.mTouchId) );
+#endif//_MULTI_TOUCHES_
     return res ;
   }
 
@@ -760,6 +1075,12 @@ bool nuiTopLevel::CallMouseUnclick(nglMouseInfo& rInfo)
     SetMouseCursor(pWidgetUnder->GetMouseCursor());
   else
     SetMouseCursor(GetMouseCursor());
+
+#ifdef _MULTI_TOUCHES_
+PRINT_GRAB_IDS();
+NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseUnclick [%d] END\n"), rInfo.mTouchId) );
+#endif//_MULTI_TOUCHES_
+
 	return res;
 }
 
@@ -783,11 +1104,16 @@ void UpdateHoverList(nuiContainer* pContainer, nuiSize X, nuiSize Y, std::set<nu
 
 void nuiTopLevel::UpdateHoverList(nglMouseInfo& rInfo)
 {
+#ifdef _MULTI_TOUCHES_
+//  if (GetGrab())
+    return;
+#else//!_MULTI_TOUCHES_
   if (mpGrab)
   {
     return;
   }
-  
+#endif//!_MULTI_TOUCHES_
+
   std::list<nuiWidget*> HoverList;
   std::set<nuiWidget*> HoverSet;
   HoverSet.insert(this);
@@ -847,8 +1173,20 @@ void nuiTopLevel::UpdateHoverList(nglMouseInfo& rInfo)
 
 bool nuiTopLevel::CallMouseMove (nglMouseInfo& rInfo)
 {
+#ifdef _UIKIT_
+  AdjustFromDrawOrigin(mDrawOrigin, mRect, rInfo);
+  mMouseInfo.SwipeInfo = rInfo.SwipeInfo;
+#endif
+
+NGL_TOUCHES_DEBUG( NGL_OUT(_T("nuiTopLevel::CallMouseMove X:%d Y:%d\n"), rInfo.X, rInfo.Y) );
+
   mMouseInfo.X = rInfo.X;
   mMouseInfo.Y = rInfo.Y;
+
+#ifdef _MULTI_TOUCHES_
+  mMouseInfo.mTouchId = rInfo.mTouchId;
+NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseMove [%d] BEGIN\n"), rInfo.mTouchId) );
+#endif
 
   nuiWidgetPtr pWidget = NULL;
   nuiWidgetPtr pWidgetUnder = NULL;
@@ -862,18 +1200,24 @@ bool nuiTopLevel::CallMouseMove (nglMouseInfo& rInfo)
 	nuiWidgetPtr pHandled = NULL;
 
   // If there is a grab on the mouse serve the grabbing widget and only this one:
-  if (mpGrab)
+  nuiWidgetPtr pGrab = GetGrab();
+  if (pGrab)
   {
     //NGL_OUT(_T("grabbed mouse move on '%ls' / '%ls'\n"), mpGrab->GetObjectClass().GetChars(), mpGrab->GetObjectName().GetChars());
+#ifdef _MULTI_TOUCHES_
+    NGL_ASSERT(mpGrab[mMouseInfo.mTouchId]);
+    if (mpGrab[mMouseInfo.mTouchId]->MouseEventsEnabled())
+#else
     if (mpGrab->MouseEventsEnabled())
+#endif
     {
-      pHandled = mpGrab->DispatchMouseMove((nuiSize)rInfo.X, (nuiSize)rInfo.Y);
+      pHandled = pGrab->DispatchMouseMove((nuiSize)rInfo.X, (nuiSize)rInfo.Y);
     }
     
     nuiWidgetPtr pChild = NULL;
     // There might be no grab object left after the mouse move event!
-    if (mpGrab) 
-      pChild = mpGrab;
+    if (pGrab) 
+      pChild = pGrab;
     else             
       pChild = GetChild((nuiSize)rInfo.X, (nuiSize)rInfo.Y);
 
@@ -881,12 +1225,13 @@ bool nuiTopLevel::CallMouseMove (nglMouseInfo& rInfo)
     // Set the mouse cursor to the right object:
     SetMouseCursor(pChild->GetMouseCursor());
     SetToolTipRect();
+    
+//NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseMove [%d] END\n"), rInfo.mTouchId) );
     return pHandled != NULL;
   }
   else
   { /// this is a mouse over event
     UpdateHoverList(rInfo);
-    
     nuiSize x,y;
 
     IteratorPtr pIt;
@@ -946,6 +1291,7 @@ bool nuiTopLevel::CallMouseMove (nglMouseInfo& rInfo)
     SetMouseCursor(GetMouseCursor());
 
   SetToolTipRect();
+//NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseMove [%d] END\n"), rInfo.mTouchId) );
   return pHandled != NULL;
 }
 
@@ -1044,6 +1390,19 @@ static const bool DISPLAY_PARTIAL_RECTS = false;
 
 bool nuiTopLevel::Draw(class nuiDrawContext *pContext)
 {
+  uint32 clipWidth, clipHeight;
+#ifdef _UIKIT_
+  if (mDrawOrigin == nuiLeft || mDrawOrigin == nuiRight) {
+    clipWidth=pContext->GetHeight();
+    clipHeight=pContext->GetWidth();
+  }
+  else
+#endif
+  {
+    clipWidth=pContext->GetWidth();
+    clipHeight=pContext->GetHeight();
+  }
+
   if (mPartialRedraw && !DISPLAY_PARTIAL_RECTS)
   {
     // Prepare the layout changes:
@@ -1078,7 +1437,7 @@ bool nuiTopLevel::Draw(class nuiDrawContext *pContext)
     // Update the widget informations:
     {
       nuiPainter* pPainter = pContext->GetPainter();
-      nuiMetaPainter painter(nuiRect(0,0, pContext->GetWidth(), pContext->GetHeight()), NULL);
+      nuiMetaPainter painter(nuiRect(0,0, clipWidth, clipHeight), NULL);
       painter.SetDummyMode(true);
       pContext->SetPainter(&painter);
 
@@ -1240,6 +1599,12 @@ void nuiTopLevel::BroadcastInvalidateRect(nuiWidgetPtr pSender, const nuiRect& r
 {
   nuiRect r = rRect;
   nuiRect rect = GetRect();
+
+#ifdef _UIKIT_
+  if (mDrawOrigin == nuiLeft || mDrawOrigin == nuiRight)
+    rect.SetSize(rect.GetHeight(), rect.GetWidth());
+#endif
+
   r.Move(rect.Left(), rect.Top());
   r.Intersect(r, rect);
 
@@ -1293,8 +1658,14 @@ void nuiTopLevel::AddInvalidRect(const nuiRect& rRect)
 bool nuiTopLevel::SetRect(const nuiRect& rRect)
 {
   nuiWidget::SetRect(rRect);
-
   nuiRect rect(mRect.Size());
+
+#ifdef _UIKIT_
+  if (mDrawOrigin == nuiLeft || mDrawOrigin == nuiRight)
+    rect.SetSize(rect.GetHeight(), rect.GetWidth());  
+  mDisplayRect=rect;
+#endif
+
   IteratorPtr pIt;
   for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
   {
@@ -1311,6 +1682,140 @@ bool nuiTopLevel::SetRect(const nuiRect& rRect)
 
   return true;
 }
+
+
+#ifdef _UIKIT_
+
+bool nuiTopLevel::SetLayout(const nuiRect& rRect)
+{
+  bool res = false;
+  nuiRect rect(rRect);
+  rect.Bottom() -= mBorderBottom;
+  rect.Top() += mBorderTop;
+  rect.Left() += mBorderLeft;
+  rect.Right() -= mBorderRight;
+  
+  bool SizeChanged = !rect.Size().IsEqual(mRect.Size());
+  bool PositionChanged = (rect.Left() != mRect.Left()) || (rect.Top() != mRect.Top());
+  mNeedSelfLayout = mNeedSelfLayout || mClippingOptims || SizeChanged;
+
+  if (mNeedSelfLayout)
+  {
+    res = SetRect(rect);
+  }
+  else
+  {
+    // Is this case the widget have just been moved inside its parent. No need to re layout it, only change the rect...
+    mRect = rect;
+    if (mDrawOrigin == nuiLeft || mDrawOrigin == nuiRight)
+      rect.SetSize(rect.GetHeight(), rect.GetWidth());
+    mDisplayRect=rect;
+
+    if (mNeedLayout)
+    {
+      // The children need to be re layed out (at least one of them!).
+      nuiContainer::IteratorPtr pIt = GetFirstChild();
+      do
+      {
+        nuiWidgetPtr pItem = pIt->GetWidget();
+        if (pItem)
+        {
+          // The rect of each child doesn't change BUT we still ask for its ideal rect.
+          nuiRect rect(pItem->GetBorderedRect());
+          nuiRect ideal(pItem->GetIdealRect());
+
+          if (pItem->HasUserPos()) 	 
+          { 	 
+            rect = ideal; 	 
+          } 	 
+          else if (pItem->HasUserSize())
+          {
+            rect.SetSize(ideal.GetWidth(), ideal.GetHeight());
+          }
+          else
+          {
+            // Set the widget to the size of the parent
+          }
+
+          pItem->SetLayout(rect);
+        }
+      } while (GetNextChild(pIt));
+      delete pIt;
+
+    }
+  }
+
+  //#TEST:
+#ifdef NUI_CHECK_LAYOUTS
+  IteratorPtr pIt;
+  for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
+  {
+    nuiWidgetPtr pItem = pIt->GetWidget();
+    if (pItem->IsVisible())
+    {
+      NGL_ASSERT(!pItem->GetNeedLayout());
+    }
+  }
+  delete pIt;
+  //#TEST end
+#endif
+
+  mNeedSelfLayout = false;
+  mNeedLayout = false;
+  DebugRefreshInfo();
+  return res;
+}
+
+nuiRect nuiTopLevel::GetBorderedRect() const
+{
+  nuiRect rect = mDisplayRect;
+  rect.Bottom() += mBorderBottom;
+  rect.Top() -= mBorderTop;
+  rect.Left() -= mBorderLeft;
+  rect.Right() += mBorderRight;
+  
+  return rect;
+}
+
+nuiRect nuiTopLevel::GetOverDrawRect(bool LocalRect) const
+{
+  nuiRect r(mDisplayRect);
+  if (LocalRect)
+    r = r.Size();
+  
+  nuiSize Left = mODLeft;
+  nuiSize Right = mODRight;
+  nuiSize Top = mODTop;
+  nuiSize Bottom = mODBottom;
+
+  if (mpDecoration)
+  {
+    Left = MAX(Left, mpDecoration->GetBorder(nuiLeft));
+    Right = MAX(Right, mpDecoration->GetBorder(nuiRight));
+    Top = MAX(Top, mpDecoration->GetBorder(nuiTop));
+    Bottom = MAX(Bottom, mpDecoration->GetBorder(nuiBottom));
+  }
+
+  r.Set(r.Left() - Left,
+        r.Top() - Top,
+        r.Right() + Right,
+        r.Bottom() + Bottom,
+        false);
+
+  return r;
+}
+
+bool nuiTopLevel::IsInsideLocal(nuiSize X, nuiSize Y)
+{
+  if (!IsVisible(false))
+    return false;
+  if (mInteractiveOD)
+    return GetOverDrawRect(false).IsInside(X, Y);
+  return mDisplayRect.IsInside(X,Y);
+}
+
+#endif//_UIKIT_
+
 
 bool nuiTopLevel::InitHotKeys(nglIStream* pHotKeys)
 {

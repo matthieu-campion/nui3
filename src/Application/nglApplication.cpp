@@ -161,7 +161,12 @@ void nglApplication::PrintUsage()
  */
 
 #ifdef __APPLE__
-#ifdef __MACHO__
+
+#ifdef _UIKIT_
+///< TODO?
+
+#elif defined(__MACHO__)
+
 pascal void TimerAction (EventLoopTimerRef  theTimer, EventLoopIdleTimerMessage inState, void* userData)
 {
   if (inState == kEventLoopIdleTimerIdling)
@@ -179,6 +184,13 @@ pascal void TimerAction (EventLoopTimerRef  theTimer, void* userData)
 void nglApplication::SetIdle (bool UseIdle)
 {
 #ifdef __APPLE__
+
+# ifdef _UIKIT_
+
+///< TODO?
+
+# else//!_UIKIT_
+
   EventLoopRef       mainLoop;
   EventLoopTimerRef  theTimer;
   
@@ -210,8 +222,9 @@ void nglApplication::SetIdle (bool UseIdle)
     RemoveEventLoopTimer(mIdleTimer);
     mIdleTimer = NULL;
   }
-#endif
-      
+#endif//!_UIKIT_
+#endif//_APPLE_
+
   
   mUseIdle = UseIdle;
 #ifdef _UNIX_

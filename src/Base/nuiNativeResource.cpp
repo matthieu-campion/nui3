@@ -13,7 +13,7 @@
 
 #ifdef _WIN32_
 #endif // _WIN32_
-#ifdef _CARBON_
+#if (defined _CARBON_) || (defined _UIKIT_)
 extern "C"
 {
 #include <mach-o/dyld.h>
@@ -176,7 +176,7 @@ bool nuiNativeResource::GetResourcesList(std::vector<nglPath>& rResources)
 #else
 void RecurseChildren(std::vector<nglPath>& rResources, nglPath ResPath, nglPath BasePath)
 {
-  //wprintf(_T("Enum resources BasePath '%ls'\n"), BasePath.GetChars());
+  wprintf(_T("Enum resources BasePath '%ls'\n"), BasePath.GetChars());
   if (BasePath.IsLeaf())
   {
     nglString str(ResPath.GetPathName());

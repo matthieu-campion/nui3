@@ -156,9 +156,9 @@ public:
   float GetAlpha(bool MixWithParent = true) const; ///< Returns the current alpha transparency value of this object, mixed with the one of its parents if MixWithParent==true.
   virtual void SetAlpha(float Alpha); ///< The the alpha transparency value of this object. 
   virtual nuiDrawContext* GetDrawContext(); ///< Retrieve the draw context from the root object (the main window).
-  void EnableAutoClipSelf(bool set);
+  virtual void EnableAutoClipSelf(bool Set, bool Recurse = false);
   bool IsAutoClipSelfEnabled() const;
-  
+
   void SetOverDraw(nuiSize Left, nuiSize Top, nuiSize Right, nuiSize Bottom); ///< Set the amount of over draw for each border of the widget.
   void ResetOverDraw(); ///< Reset the overdraw borders to 0. Equivalent to SetOverDraw(0, 0, 0, 0);
   void GetOverDraw(nuiSize& Left, nuiSize& Top, nuiSize& Right, nuiSize& Bottom) const; ///< Fill the arguments with the amount of overdraw for each border of the widget
@@ -181,6 +181,9 @@ public:
 
   /** @name Incomming mouse events */
   //@{
+#ifdef _MULTI_TOUCHES_
+  virtual bool AcceptsMultipleGrabs() { return false; }
+#endif
   // These three methods receive the mouse coordinates in this object referential
   void EnableMouseEvent(bool enable);
   bool MouseEventsEnabled() const;
@@ -251,6 +254,7 @@ public:
   virtual bool ReleaseToolTip(nuiWidgetPtr pWidget); ///< Tell the system to stop displaying this object's tooltip.
   //@}
 
+#ifndef _NODND_
   /** @name Drag and drop */
   //@{
   //  void CancelDrag(nuiDragObject* pDragObject); ///< A widget calls this method to stop an ongoing drag and drop operation with the designated object.
@@ -262,6 +266,7 @@ public:
   virtual void OnDragged(nglDragAndDrop* pDragObject); ///< This method is called on the drag and drop source widget by the window manager whenever the drag & drop operation was accepted by the user (by releasing the mouse button on a widget that support the dragged object type). This is the last time the source widget is allowed to place data in the drag and dropped object. 
   virtual void OnStopDragging(); ///< Called when a drag operation, initiated by the widget, is canceled or finished
   //@}
+#endif
 
   /** @name Basic outgoing events */
   //@{
