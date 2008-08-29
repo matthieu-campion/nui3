@@ -144,11 +144,21 @@ public:
   void Print(const nglChar* pFormat, ...); ///< Adds the given string to the currently held text
   void SetFollowModifications(bool Set);
 
-
+  void SetTextColor(const nuiColor& Color);
+  const nuiColor& GetTextColor() const;
+  
   // events
   nuiSimpleEventSource<0> TextChanged;
 
 protected:
+  
+  void InitAttributes();
+    
+  void _SetFont(const nglString& rFontSymbol);
+  void SetFont(const nglString& rFontSymbol);
+  const nglString& _GetFont() const;
+  
+  
   // Commands:
   bool GoDocBegin(nuiObject* pParams);
   bool GoDocEnd(nuiObject* pParams);
@@ -304,6 +314,10 @@ protected:
   bool mFollowModifications;
   bool mStartDragging;
   bool mDragging;
+  
+  bool mTextColorSet;
+  nuiColor mTextColor;
+  
 };
 
 #endif // __nuiEditText_h__

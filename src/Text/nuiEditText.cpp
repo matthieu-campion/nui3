@@ -28,9 +28,12 @@ nuiEditText::nuiEditText(const nglString& rText)
   mSelectionActive(false),
   mIsEditable(true),
   mFollowModifications(true),
-  mStartDragging(false)
+  mStartDragging(false),
+  mTextColorSet(false)
 {
-  SetObjectClass(_T("nuiEditText"));
+  if (SetObjectClass(_T("nuiEditText")))
+    InitAttributes();
+  
   SetFont(nuiTheme::Default);
   SetText(rText);
   InitCommands();
@@ -73,6 +76,21 @@ nuiEditText::~nuiEditText()
     mpFont->Release();
 }
 
+
+void nuiEditText::InitAttributes()
+{
+  AddAttribute(new nuiAttribute<const nuiColor&>
+               (nglString(_T("TextColor")), nuiUnitNone,
+                nuiFastDelegate::MakeDelegate(this, &nuiEditText::GetTextColor), 
+                nuiFastDelegate::MakeDelegate(this, &nuiEditText::SetTextColor)));
+  
+  AddAttribute(new nuiAttribute<const nglString&>
+               (nglString(_T("Font")), nuiUnitName,
+                nuiFastDelegate::MakeDelegate(this, &nuiEditText::_GetFont), 
+                nuiFastDelegate::MakeDelegate(this, &nuiEditText::_SetFont)));
+}
+
+
 nuiXMLNode* nuiEditText::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
 {
   return nuiSimpleContainer::Serialize(pParentNode, Recursive);
@@ -102,7 +120,13 @@ bool nuiEditText::Draw(nuiDrawContext* pContext)
   pContext->SetFillColor(c);
   pContext->DrawRect(GetRect().Size(), eFillShape);
 
-  pContext->SetTextColor(GetColor(eNormalTextFg));
+  nuiColor textColor;
+  if (mTextColorSet)
+    textColor = mTextColor;
+  else
+    textColor = GetColor(eNormalTextFg);
+    
+  pContext->SetTextColor(textColor);
   pContext->SetFillColor(GetColor(eSelectionMarkee));
   uint count = (uint32)mpBlocks.size();
   nuiSize PosX = 0, PosY = 0;
@@ -181,6 +205,38 @@ bool nuiEditText::SetRect(const nuiRect& rRect)
     y += rect.GetHeight();
   }
   return true;
+}
+
+void nuiEditText::SetFont(const nglString& rFontSymbol)
+{
+  nuiFont* pFont = nuiFont::GetFont(rFontSymbol);
+  if (pFont)
+    SetFont(pFont);
+}
+
+void nuiEditText::_SetFont(const nglString& rFontSymbol)
+{
+  SetFont(rFontSymbol);
+}
+
+const nglString& nuiEditText::_GetFont() const
+{
+  if (mpFont)
+    return mpFont->GetObjectName();
+  return nglString::Null;
+}
+
+
+void nuiEditText::SetTextColor(const nuiColor& Color)
+{
+  mTextColorSet = true;
+  mTextColor = Color;
+  Invalidate();
+}
+
+const nuiColor& nuiEditText::GetTextColor() const
+{
+  return mTextColor;
 }
 
 
