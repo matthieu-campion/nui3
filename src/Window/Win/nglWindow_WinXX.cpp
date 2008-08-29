@@ -3049,7 +3049,8 @@ void GetDropEffects(nglDragAndDrop* pObj, DWORD* pEffect)
 
 void nglWindow::EnterModalState()
 {
-  SetState(eShow);
+  if (GetState() == eHide || GetState() == eMinimize)
+    SetState(eShow);
 
   MSG msg;
 
