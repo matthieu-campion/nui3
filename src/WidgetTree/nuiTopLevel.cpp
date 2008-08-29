@@ -880,20 +880,14 @@ bool nuiTopLevel::IsKeyDown (nglKeyCode Key) const
 
 bool nuiTopLevel::CallTextInput (const nglString& rUnicodeText)
 {
-  nuiWidget* pDest = mpFocus;
-  while (pDest)
+  if (mpFocus && mpFocus->IsEnabled())
   {
-    if (pDest->IsEnabled())
+    if (mpFocus->DispatchTextInput(rUnicodeText))
     {
-      if (pDest->DispatchTextInput(rUnicodeText))
-      {
-        return true;
-      }
+      return true;
     }
-    pDest = pDest->GetParent();
   }
-  
-  if (!mpFocus)
+  else
   {
     if (DispatchTextInput(rUnicodeText))
       return true;
@@ -905,20 +899,17 @@ bool nuiTopLevel::CallTextInput (const nglString& rUnicodeText)
 
 bool nuiTopLevel::CallKeyDown (const nglKeyEvent& rEvent)
 {
-  nuiWidget* pDest = mpFocus;
-  while (pDest)
+  if (mpFocus)
   {
-    if (pDest->IsEnabled())
+    if (mpFocus->IsEnabled())
     {
-      if (pDest->DispatchKeyDown(rEvent))
+      if (mpFocus->DispatchKeyDown(rEvent))
       {
         return true;
       }
     }
-    pDest = pDest->GetParent();
   }
-
-  if (!mpFocus)
+  else
   {
     if (DispatchKeyDown(rEvent))
       return true;
@@ -929,20 +920,14 @@ bool nuiTopLevel::CallKeyDown (const nglKeyEvent& rEvent)
 
 bool nuiTopLevel::CallKeyUp (const nglKeyEvent& rEvent)
 {
-  nuiWidget* pDest = mpFocus;
-  while (pDest)
+  if (mpFocus && mpFocus->IsEnabled())
   {
-    if (pDest->IsEnabled())
+    if (mpFocus->DispatchKeyUp(rEvent))
     {
-      if (pDest->DispatchKeyUp(rEvent))
-      {
-        return true;
-      }
+      return true;
     }
-    pDest = pDest->GetParent();
   }
-
-  if (!mpFocus)
+  else
   {
     if (DispatchKeyUp(rEvent))
       return true;

@@ -44,11 +44,7 @@ inline int32 ToAbove(ifp32 i)
 
 inline int32 ToNearest(ifp32 i)
 {
-  int32 frac = Frac(i);
-  int32 res = ToZero(i);
-  if (frac > NUI_FP_HALF)
-    return res + 1;
-  return res;
+  return ToBelow(i + (NUI_FP_ONE >> 1));
 }
 
 
@@ -58,23 +54,23 @@ inline int32 nuiFPDiv(ifp32 a, ifp32 b)
   {
     int64 cc = 0x40000000 / b;
     cc = (cc * a) >> 14;
-    ifp32 ret = (int32)(cc & 0xffffffff);
+    const ifp32 ret = (int32)(cc & 0xffffffff);
     return ret;
   } 
   
   int64 aa = a;
-  int64 bb = b;
+  const int64 bb = b;
   aa <<= NUI_FP_SHIFT;
   aa /= bb;
-  ifp32 ret = (ifp32)(aa & 0xffffffff);
+  const ifp32 ret = (ifp32)(aa & 0xffffffff);
   return ret;
 }
 
 inline ifp32 nuiFPMul(ifp32 a, ifp32 b)
 ////////////////////////////////////////
 {
-  int64 aa = a;
-  int64 bb = b;
+  const int64 aa = a;
+  const int64 bb = b;
   int64 cc = aa * bb;
   cc >>= NUI_FP_SHIFT;
   return (ifp32)(cc & 0xffffffff);

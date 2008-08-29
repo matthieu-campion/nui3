@@ -1123,7 +1123,7 @@ bool nuiWidget::TriggerHotKeys(const nglKeyEvent& rEvent, bool KeyDown,  bool Pr
     nglString name = it->first;
     nuiHotKey* pHotKey = GetTopLevel()->GetHotKey(name);
       
-    if ((pHotKey->IsEnabled()) && ((pHotKey->HasPriority() && Priority) || (!pHotKey->HasPriority() && !Priority)))
+    if (pHotKey->IsEnabled() && (pHotKey->HasPriority() == Priority))
     {
       bool res = false;
       if (KeyDown)

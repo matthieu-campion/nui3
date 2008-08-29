@@ -100,7 +100,7 @@ public:
     return *this;
   }  
   
-  uint32 GetColor() const
+  inline uint32 GetColor() const
   {
     return mColor;
   }
@@ -156,15 +156,15 @@ public:
     return *this;
   }  
   
-  uint32 GetColor() const
+  inline uint32 GetColor() const
   {
     const uint32 col0 = mSrc0.GetColor();
     const uint32 col1 = mSrc1.GetColor();
     uint32 col = 0;
     
-    const uint8* pCol0 = (const uint8*)&col0;
-    const uint8* pCol1 = (const uint8*)&col1;
-    uint8* pCol = (uint8*)&col;
+    const uint8* const pCol0 = (const uint8*)&col0;
+    const uint8* const pCol1 = (const uint8*)&col1;
+    uint8* const pCol = (uint8*)&col;
     
     pCol[0] = (pCol0[0] * pCol1[0]) >> 8;
     pCol[1] = (pCol0[1] * pCol1[1]) >> 8;
@@ -571,7 +571,7 @@ public:
     mValue.Clear();
   }
 
-  uint32 GetColor()
+  inline uint32 GetColor()
   {
     return mValue.GetColor();
   }
