@@ -568,6 +568,7 @@ nuiTexture *nuiFontBase::AllocateTexture(uint size)
   ImageInfo.AllocateBuffer();
 
   nuiTexture *pTexture = nuiTexture::GetTexture(ImageInfo, true);
+  pTexture->SetRetainBuffer(true);
 
   pTexture->SetEnvMode(GL_BLEND);
   pTexture->SetMinFilter(GL_NEAREST);
