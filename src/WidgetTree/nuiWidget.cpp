@@ -334,7 +334,7 @@ void nuiWidget::Init()
   mSelected = false;
   mVisible = true;
   
-  
+  mWantKeyboardFocus = false;
   
   LoadIdentityMatrix();
 
@@ -1185,11 +1185,14 @@ bool nuiWidget::DispatchMouseClick (nuiSize X, nuiSize Y, nglMouseInfo::Flags Bu
   if (IsInside(X,Y) || hasgrab)
   {
     GlobalToLocal(X,Y);
-    if (PreClicked(X,Y, Button))
-      return true;
-    bool ret = MouseClicked(X,Y,Button);
-    ret |= Clicked(X,Y,Button);
-    return ret;
+    bool res = PreClicked(X,Y, Button);
+    if (!res)
+    {
+      res = MouseClicked(X,Y,Button);
+      res |= Clicked(X,Y,Button);
+    }
+
+    return res;
   }
   return false;
 }
@@ -1206,11 +1209,16 @@ bool nuiWidget::DispatchMouseUnclick (nuiSize X, nuiSize Y, nglMouseInfo::Flags 
   if (IsInside(X,Y) || hasgrab)
   {
     GlobalToLocal(X,Y);
-    if (PreUnclicked(X,Y, Button))
-      return true;
-    bool ret = MouseUnclicked(X,Y,Button);
-    ret |= Unclicked(X,Y,Button);
-    return ret;
+    bool res = PreUnclicked(X,Y, Button);
+    if (!res)
+    {
+      res = MouseUnclicked(X,Y,Button);
+      res |= Unclicked(X,Y,Button);
+    }
+
+    if (mWantKeyboardFocus && (Button == nglMouseInfo::ButtonLeft || Button == nglMouseInfo::ButtonRight))
+      Focus();
+    return res;
   }
   return false;
 }
@@ -1270,6 +1278,17 @@ bool nuiWidget::Ungrab()
 
   ApplyCSSForStateChange(NUI_WIDGET_MATCHTAG_STATE);
   return false;
+}
+
+
+bool nuiWidget::GetWantKeyboardFocus() const
+{
+  return mWantKeyboardFocus;
+}
+
+void nuiWidget::SetWantKeyboardFocus(bool Set)
+{
+  mWantKeyboardFocus = Set;
 }
 
 bool nuiWidget::Focus()

@@ -218,6 +218,8 @@ void nuiEditText::InitKeyBindings()
   mCommandKeyBindings[NK_Z] = eUndo;
   //  mCommandKeyBindings[NK_Z] = eRedo;
   //  mKeyBindings[] = eShowCursor;
+  
+  SetWantKeyboardFocus(true);
 }
 
 bool nuiEditText::TextInput(const nglString& rUnicodeString)
@@ -383,7 +385,6 @@ bool nuiEditText::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
       MoveCursorTo(X,Y);
       mSelecting = true;
     }
-    Focus();
   }
   Grab();
   Invalidate();

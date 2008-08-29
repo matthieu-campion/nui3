@@ -16,11 +16,13 @@ nuiModalContainer::nuiModalContainer(nuiContainerPtr pParent)
   mInModalState(false)
 {
   nuiTopLevel* pTop = NULL;
-  if (pParent)
-    pTop = pParent->GetTopLevel();
-  if (pTop)
-    pTop->AddChild(this);
+  pTop = pParent->GetTopLevel();
+  mpPreviousFocus = pTop->GetFocus();
+  SetWantKeyboardFocus(true);
 
+  pTop->AddChild(this);
+
+  
   SetObjectClass(_T("nuiModalContainer"));
   GetTopLevel()->CancelGrab();
   Grab();
@@ -84,7 +86,7 @@ bool nuiModalContainer::DispatchMouseClick (nuiSize X, nuiSize Y, nglMouseInfo::
     bool ret = MouseClicked(X,Y,Button);
     ret |= Clicked(X,Y,Button);
     
-    return mIsModal;
+    return mIsModal || ret;
   }
   return false;
 }
@@ -119,12 +121,17 @@ bool nuiModalContainer::DispatchMouseUnclick (nuiSize X, nuiSize Y, nglMouseInfo
     }
 
     GlobalToLocal(X,Y);
-    if (PreUnclicked(X,Y, Button))
-      return true;
-    bool ret = MouseUnclicked(X,Y,Button);
-    ret |= Unclicked(X,Y,Button);
+    bool res = PreUnclicked(X,Y, Button);
+    if (!res)
+    {
+      res = MouseUnclicked(X,Y,Button);
+      res |= Unclicked(X,Y,Button);
+    }
     
-    return mIsModal;
+    if (mWantKeyboardFocus && (Button == nglMouseInfo::ButtonLeft || Button == nglMouseInfo::ButtonRight))
+      Focus();
+    
+    return mIsModal || res;
   }
   return false;
 }
@@ -246,13 +253,17 @@ void nuiModalContainer::ExitModal()
 
 void nuiModalContainer::OnTrash()
 {
+  nuiTopLevel* pTop = GetTopLevel();
+  NGL_ASSERT(pTop);
+
   if (mInModalState)
   {
-    nuiTopLevel* pTop = GetTopLevel();
-    NGL_ASSERT(pTop);
     mInModalState = false;
     pTop->ExitModalState();
   }
+
+  if (mpPreviousFocus)
+    mpPreviousFocus->Focus();
   
   nuiSimpleContainer::OnTrash();
 }

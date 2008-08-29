@@ -193,6 +193,7 @@ nuiTopLevel::nuiTopLevel(const nglPath& rResPath)
   EnablePartialRedraw(PARTIAL_REDRAW_DEFAULT);
   EnableRenderCache(false);
 
+  SetWantKeyboardFocus(true);
   SetMouseCursor(eCursorArrow);
 }
 
@@ -757,6 +758,11 @@ nuiWidgetPtr nuiTopLevel::GetGrab() const
 
 bool nuiTopLevel::SetFocus(nuiWidgetPtr pWidget)
 {
+  if (mpFocus == pWidget)
+    return true;
+
+  nuiWidget* pOldFocus = mpFocus;
+  
   if (mpFocus)
     mpFocus->OnSetFocus(pWidget);
   if (pWidget)
@@ -764,6 +770,11 @@ bool nuiTopLevel::SetFocus(nuiWidgetPtr pWidget)
 
   mpFocus = pWidget;
 
+  if (pOldFocus)
+    pOldFocus->Invalidate();
+  if (mpFocus)
+    mpFocus->Invalidate();
+  
   return true;
 }
 

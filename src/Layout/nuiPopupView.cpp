@@ -20,6 +20,8 @@ nuiPopupView::nuiPopupView(nuiWidget* pWidget, nuiSize X, nuiSize Y)
     pTop = pWidget->GetTopLevel();
   if (pTop)
     pTop->AddChild(this);
+
+  SetWantKeyboardFocus(true);
   
   GetTopLevel()->CancelGrab();
 }

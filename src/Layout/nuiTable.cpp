@@ -881,6 +881,8 @@ void nuiTable::InitProperties()
   AddEvent(_T("TableClicked"), Clicked);
   NUI_ADD_EVENT(Activated);
   NUI_ADD_EVENT(SelectionChanged);
+  
+  SetWantKeyboardFocus(true);
 }
 
 nuiTable::~nuiTable()
@@ -1331,15 +1333,11 @@ bool nuiTable::Draw(nuiDrawContext* pContext)
 
 bool nuiTable::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
 {
-  Focus();
-
   if (!IsEnabled())
     return false;
 
   if (Button & nglMouseInfo::ButtonLeft)
   {
-    Focus();
-
     if (mDisplayHeaders && (Y <= (int)mHeader.GetTotalHeight()))
     {
       int col = GetColumn(X,Y);
@@ -2017,9 +2015,17 @@ bool nuiTable::DispatchMouseUnclick (nuiSize X, nuiSize Y, nglMouseInfo::Flags B
     delete pIt;
 
     GlobalToLocal(X,Y);
-    bool ret = MouseUnclicked(X,Y,Button);
-    ret |= Unclicked(X,Y,Button);
-    return ret;
+    bool res = PreUnclicked(X,Y, Button);
+    if (!res)
+    {
+      res = MouseUnclicked(X,Y,Button);
+      res |= Unclicked(X,Y,Button);
+    }
+    
+    if (mWantKeyboardFocus && (Button == nglMouseInfo::ButtonLeft || Button == nglMouseInfo::ButtonRight))
+      Focus();
+    
+    return res;
   }
   return false;
 }

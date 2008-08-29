@@ -50,6 +50,7 @@ void nuiMesh::Init()
 {
   SetObjectClass(_T("nuiMesh"));
 
+  SetWantKeyboardFocus(true);
   mpEngine = NULL;
   mDemo = false;
   mDemoSpeed = 50.f;
@@ -211,13 +212,10 @@ bool nuiMesh::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
   }
   else if (Button == nglMouseInfo::ButtonLeft && !mDemo)
   {
-    Focus();
     StartView(X, Y);
     return true;
   }
 
-  // Other clics (right, middle) will give us focus
-  Focus();
   return false;
 }
 

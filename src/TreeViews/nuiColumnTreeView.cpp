@@ -35,6 +35,7 @@ nuiColumnTreeView::nuiColumnTreeView(nuiTreeNodePtr pTree)
 {
   SetObjectClass(_T("nuiColumnTreeView"));
   mMinColumnSize = NUI_COLUMNTREEVIEW_MINCOLSIZE;
+  SetWantKeyboardFocus(true);
 
   mInterline = NUI_COLUMNTREEVIEW_INTERLINE;
   mHandleSize = NUI_COLUMNTREEVIEW_HANDLE_SIZE;
@@ -581,7 +582,6 @@ bool nuiColumnTreeView::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags B
   bool shiftisdown = IsKeyDown(NK_LSHIFT) || IsKeyDown(NK_RSHIFT);
   if ((Button & nglMouseInfo::ButtonLeft) || (Button & nglMouseInfo::ButtonRight))
   {
-    Focus();
     if ((Button & nglMouseInfo::ButtonLeft) && (Button & nglMouseInfo::ButtonDoubleClick))
     {
       if (mpSelectedNode)

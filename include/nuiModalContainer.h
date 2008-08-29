@@ -36,6 +36,7 @@ public:
 private:
   bool mIsModal;
   bool mInModalState;
+  nuiWidget* mpPreviousFocus;
 };
 
 void Alert(nuiContainer* pParent, const nglString& rTitle, const nglString& rMessage);

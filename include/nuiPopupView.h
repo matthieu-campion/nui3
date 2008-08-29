@@ -30,6 +30,7 @@ public:
   
   void ConnectTopLevel();
 protected:
+  //#TODO Add some way to give focus back to the previous focussed widget
   nuiSize mX, mY;
   nuiRect mChildrenRect;
 };

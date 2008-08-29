@@ -68,6 +68,7 @@ nuiPopupMenu::nuiPopupMenu(nuiWidget* pParent, nuiTreeNodePtr pTree, const nuiRe
   //nuiTopLevel* pTopLevel = GetTopLevel();
   //if (pTopLevel)
   //mpOldFocused = pTopLevel->GetFocus();
+  SetWantKeyboardFocus(true);
   Focus();
   //  Grab();
 }

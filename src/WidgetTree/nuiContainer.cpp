@@ -471,11 +471,17 @@ bool nuiContainer::DispatchMouseUnclick (nuiSize X, nuiSize Y, nglMouseInfo::Fla
     }
 
     GlobalToLocal(X,Y);
-    if (PreUnclicked(X,Y, Button))
-      return true;
-    bool ret = MouseUnclicked(X,Y,Button);
-    ret |= Unclicked(X,Y,Button);
-    return ret;
+    bool res = PreUnclicked(X,Y, Button);
+    if (!res)
+    {
+      res = MouseUnclicked(X,Y,Button);
+      res |= Unclicked(X,Y,Button);
+    }
+    
+    if (mWantKeyboardFocus && (Button == nglMouseInfo::ButtonLeft || Button == nglMouseInfo::ButtonRight))
+      Focus();
+    
+    return res;
   }
   return false;
 }

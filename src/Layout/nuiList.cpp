@@ -77,6 +77,8 @@ void nuiList::InitProperties()
   AddEvent(_T("ListDoubleClicked"), DoubleClicked);
   NUI_ADD_EVENT(Activated);
   NUI_ADD_EVENT(SelectionChanged);
+
+  SetWantKeyboardFocus(true);
 }
 
 nuiList::~nuiList()
@@ -587,16 +589,11 @@ int32 nuiList::GetItemNumber(nuiWidgetPtr pWidget)
 
 bool nuiList::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
 {
-
-  Focus();
-
   if (IsDisabled())
     return false;
 
   if (Button & nglMouseInfo::ButtonLeft)
   {
-    Focus();
-
     nuiWidgetPtr pItem = GetItem(X,Y);
     if (pItem && pItem->IsEnabled())
     {

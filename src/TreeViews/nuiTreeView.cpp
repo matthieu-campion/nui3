@@ -270,6 +270,7 @@ nuiTreeView::nuiTreeView(nuiTreeNodePtr pTree)
   SetObjectClass(_T("nuiTreeView"));
   mMultiSelectable = false;
   mDeSelectable = true;
+  SetWantKeyboardFocus(true);
   
   mClickX = mClickY = mNewX = mNewY= 0;
   mClicked = mDrawMarkee = false;
@@ -554,7 +555,6 @@ bool nuiTreeView::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
 {
   if (Button & nglMouseInfo::ButtonLeft)
   {
-    Focus();
     mNewX = mOldX = mClickX = X;
     mNewY = mOldY = mClickY = Y;
 

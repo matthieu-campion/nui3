@@ -203,6 +203,8 @@ public:
 
   /** @name Misc. & incoming events management */
   //@{
+  bool GetWantKeyboardFocus() const;
+  void SetWantKeyboardFocus(bool Set);
   bool HasGrab();  ///< Ask is this widget has the mouse grab.
   bool Grab();  ///< Request the mouse grab
   bool Ungrab(); ///< Release the mouse grab
@@ -460,6 +462,7 @@ protected:
 
   bool mMouseEventEnabled;
   bool mLocalMouseEventEnabled;
+  bool mWantKeyboardFocus;
   
   bool mTrashed;
 
