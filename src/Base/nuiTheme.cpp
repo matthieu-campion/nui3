@@ -30,6 +30,8 @@
 nuiTheme::nuiTheme(const nglPath& rPath)
 : mPath(rPath)
 {
+  SetObjectClass(_T("nuiTheme"));
+  
   mRefCount = 1;
   if (!mPath.IsLeaf()) // Is the path a directory?
   {
@@ -75,8 +77,6 @@ void nuiTheme::Release()
 bool nuiTheme::Load(nuiXMLNode* pNode)
 {
   nglPath Path(_T("./"));
-
-  SetProperty(nglString(_T("Class")),pNode->GetAttribute(nglString(_T("nuiTheme"))));
 
   LoadDefaults();
 /*

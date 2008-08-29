@@ -58,12 +58,10 @@ nuiSplitterHandle::nuiSplitterHandle(nuiSplitter* pParent)
   if (pParent->mOrientation == nuiVertical)
   {
     SetUserSize(7,0);
-    SetProperty(_T("Orientation"), _T("Vertical"));
   }
   else
   {
     SetUserSize(0,7);
-    SetProperty(_T("Orientation"), _T("Horizontal"));
   }
   
   // default decoration
@@ -284,28 +282,6 @@ void nuiSplitter::SetDecoration(nuiDecoration* pDecoration, nuiDecorationMode Mo
 
 void nuiSplitter::InitProperties()
 {
-  if (mOrientation == nuiVertical)
-    SetProperty(_T("Orientation"), _T("Vertical"));
-  else
-    SetProperty(_T("Orientation"), _T("Horizontal"));
-
-
-#ifdef NGL_USE_COMPLEX_PROPERTIES
-  mProperties["Orientation"].Bind(&mOrientation, true, false);
-  mProperties["Clicked"].Bind(&mClicked, false, true);
-  mProperties["Fixed"].Bind(&mFixed, true, false);
-  mProperties["HandleHover"].Bind(&mHandleHover, false, true);
-
-  mProperties["HandlePos"].Bind(&mHandlePos, true, false);
-  mProperties["HandlePosMin"].Bind(&mHandlePosMin, true, false);
-  mProperties["HandlePosMax"].Bind(&mHandlePosMax, true, false);
-
-  mProperties["StartHandlePos"].Bind(&mStartHandlePos, false, true);
-  mProperties["EndHandlePos"].Bind(&mEndHandlePos, false, true);
-  mProperties["GotoStep"].Bind(&mGotoStep, false, true);
-
-  mProperties["MasterChild"].Bind(&mMasterChild, true, false);
-#endif
 }
 
 

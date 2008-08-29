@@ -21,6 +21,9 @@ public:
 	
   virtual ~nuiSimpleContainer();
   
+  virtual bool SetObjectClass(const nglString& rName);
+  virtual void SetObjectName(const nglString& rName);
+  
   virtual bool AddChild(nuiWidgetPtr pChild);
   virtual bool DelChild(nuiWidgetPtr pChild,bool Delete = false); ///< Remove this child from the object. If Delete is true then the child will be deleted too. Returns true if success.
   virtual uint GetChildrenCount() const;

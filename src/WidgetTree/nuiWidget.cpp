@@ -86,7 +86,10 @@ nuiWidget::nuiWidget()
   mPosition(nuiFill),
   mFillRule(nuiFill),
   mMatrixIsIdentity(true),
-  mCSSPasses(0)
+  mCSSPasses(0),
+  mpParent(NULL),
+  mpTheme(NULL)
+
 {
   if (SetObjectClass(_T("nuiWidget")))
     InitAttributes();
@@ -98,9 +101,7 @@ nuiWidget::nuiWidget()
 #endif
   
   Init();
-  mpParent = NULL;
   
-  mpTheme = NULL;
   // Property bindings:
   InitProperties();
 }
@@ -423,12 +424,20 @@ nuiXMLNode* nuiWidget::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
   return pNode;
 }
 
+bool nuiWidget::SetObjectClass(const nglString& rName)
+{
+  bool res = nuiObject::SetObjectClass(rName);
+  ResetCSSPass();
+  ApplyCSSForStateChange(NUI_WIDGET_MATCHTAG_ALL);
+  return res;
+}
 
 // virtual from nuiObject
 void nuiWidget::SetObjectName(const nglString& rName)
 {
   nuiObject::SetObjectName(rName);
-  ApplyCSSForStateChange(NUI_WIDGET_MATCHTAG_STATE);
+  ResetCSSPass();
+  ApplyCSSForStateChange(NUI_WIDGET_MATCHTAG_ALL);
 }
 
 

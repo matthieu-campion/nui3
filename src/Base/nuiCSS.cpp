@@ -1199,7 +1199,8 @@ bool nuiCSSRule::Match(nuiWidget* pWidget, uint32 MatchersMask)
   std::vector<nuiWidgetMatcher*>::iterator end = mMatchers.end();
   while (it != end && pWidget)
   {
-    if (!(*it)->Match(pWidget))
+    nuiWidgetMatcher* pMatcher = *it;
+    if (!pMatcher->Match(pWidget))
       return false;
     ++it;
   }

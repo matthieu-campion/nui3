@@ -75,6 +75,19 @@ nuiContainer::~nuiContainer()
   //NGL_OUT(_T("Deleting nuiContainer '%ls' (class='%ls')\n"), GetProperty(_T("Name")).GetChars(), GetProperty(_T("Class")).GetChars());
 }
 
+// We need to do something special about SetObjectXXX in order to avoid pure virtual method called from the constructor.
+bool nuiContainer::SetObjectClass(const nglString& rName)
+{
+  return nuiObject::SetObjectClass(rName);
+}
+
+// We need to do something special about SetObjectXXX in order to avoid pure virtual method called from the constructor.
+void nuiContainer::SetObjectName(const nglString& rName)
+{
+  nuiObject::SetObjectName(rName);
+}
+
+
 bool nuiContainer::Trash()
 {
   return nuiWidget::Trash();
@@ -882,8 +895,8 @@ void nuiContainer::InternalResetCSSPass()
 {
   nuiWidget::InternalResetCSSPass();
   
-  IteratorPtr pIt;
-  for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
+  IteratorPtr pIt = GetFirstChild();
+  for (; pIt && pIt->IsValid(); GetNextChild(pIt))
   {
     nuiWidgetPtr pItem = pIt->GetWidget();
     pItem->ResetCSSPass();

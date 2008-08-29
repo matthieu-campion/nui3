@@ -123,6 +123,9 @@ public:
   virtual ~nuiContainer(); 
   //@}
 
+  virtual bool SetObjectClass(const nglString& rName);
+  virtual void SetObjectName(const nglString& rName);
+  
   /** @name Serialization */
   //@{
   virtual nuiXMLNode* Serialize(nuiXMLNode* pParentNode, bool Recursive = false) const;

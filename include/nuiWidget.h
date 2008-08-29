@@ -60,7 +60,8 @@ public:
   nglString Dump(); ///< serialize the object and dump the result in a output string
   //@}
 
-  void SetObjectName(const nglString& rName); ///< does a SetProperty("Name"...) + refresh css
+  virtual bool SetObjectClass(const nglString& rName);
+  virtual void SetObjectName(const nglString& rName);
 
 
   /** @name Object relation management */

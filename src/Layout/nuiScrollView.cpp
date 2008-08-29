@@ -569,7 +569,6 @@ bool nuiScrollView::OnHotRectChanged(const nuiEvent& rEvent)
 
 void nuiScrollView::SetFillChildren(bool Set) ///< If filling is enabled the scroll view will try to move its child in order to honor the available space
 {
-  SetProperty("FillChildren", Set?"true":"false");
   mFillChildren = Set;
   Invalidate();
 }

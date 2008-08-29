@@ -100,7 +100,7 @@ public:
   
 protected:
   static std::vector<int32> mInheritanceMap;
-  bool SetObjectClass(const nglString& rClass); ///< does a SetProperty("Class"...). Returns true if this is the first time an object of this class is registered.
+  virtual bool SetObjectClass(const nglString& rClass); ///< does a SetProperty("Class"...). Returns true if this is the first time an object of this class is registered.
   void InitProperties(); ///< Take care of the property bindings.
 
   void AddAttribute(const nglString& rName, nuiAttributeBase* pProperty);

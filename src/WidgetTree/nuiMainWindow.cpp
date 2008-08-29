@@ -174,10 +174,6 @@ bool nuiMainWindow::Load(const nuiXMLNode* pNode)
   mLastRendering = 0;
 
   // Once every thing is properly created on the root window, create the children:
-  nglString name;
-  name.CFormat(_T("%p"),this);
-  SetProperty(nglString(_T("Name")),name);
-
   if (mpParent)
     mpParent->DelChild(this);
   SetParent(NULL);
@@ -185,7 +181,7 @@ bool nuiMainWindow::Load(const nuiXMLNode* pNode)
   SetVisible(true);
 
   if (pNode->HasAttribute(_T("Name")))
-    SetProperty(nglString(_T("Name")),pNode->GetAttribute(nglString(_T("Name"))));
+    SetObjectName(pNode->GetAttribute(nglString(_T("Name"))));
 
   if (pNode->HasAttribute(_T("Title")))
     mpNGLWindow->SetTitle(pNode->GetAttribute(nglString(_T("Title"))));

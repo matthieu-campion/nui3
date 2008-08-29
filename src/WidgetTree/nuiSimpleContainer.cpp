@@ -68,6 +68,19 @@ nuiSimpleContainer::~nuiSimpleContainer()
   delete pIt;
 }
 
+// We need to by pass nuiContainer as is has a special implementation of SetObjectXXX in order to prevent calling pure virtual methods
+bool nuiSimpleContainer::SetObjectClass(const nglString& rName)
+{
+  return nuiWidget::SetObjectClass(rName);
+}
+
+// We need to by pass nuiContainer as is has a special implementation of SetObjectXXX in order to prevent calling pure virtual methods
+void nuiSimpleContainer::SetObjectName(const nglString& rName)
+{
+  nuiWidget::SetObjectName(rName);
+}
+
+
 bool nuiSimpleContainer::AddChild(nuiWidgetPtr pChild)
 {
   if (GetDebug())

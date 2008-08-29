@@ -123,7 +123,7 @@ void nuiRadioButton::SetPressed(bool Pressed)
 
 void nuiRadioButton::SetGroup(const nglString& rGroupName)
 {
-  SetProperty("Group", rGroupName);
+  SetProperty(_T("Group"), rGroupName);
 }
 
 void nuiRadioButton::SetGroupManager(nuiRadioButtonGroup* pGroup)
@@ -138,7 +138,7 @@ nuiRadioButtonGroup* nuiRadioButton::GetGroupManager()
 
 const nglString& nuiRadioButton::GetGroup()
 {
-  return GetProperty("Group");
+  return GetProperty(_T("Group"));
 }
 
 

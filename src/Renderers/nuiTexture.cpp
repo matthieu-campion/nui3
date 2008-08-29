@@ -487,15 +487,15 @@ void nuiTexture::SetRetainBuffer(bool Retain)
 
 bool nuiTexture::SetSource(const nglString& rName)
 {
-  mpTextures.erase(GetProperty("Source"));
-  SetProperty("Source", rName);
+  mpTextures.erase(GetProperty(_T("Source")));
+  SetProperty(_T("Source"), rName);
   mpTextures[rName] = this;
   return true;
 }
 
 nglString nuiTexture::GetSource() const
 {
-  return GetProperty("Source");
+  return GetProperty(_T("Source"));
 }
 
 uint32 nuiTexture::GetWidth() const
