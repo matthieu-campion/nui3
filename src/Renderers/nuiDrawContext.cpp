@@ -82,18 +82,21 @@ void nuiDrawContext::PopClipping()
 bool nuiDrawContext::Clip(const nuiRect& rRect)
 {
   mpPainter->Clip(rRect);
+  mStateChanges++;
   return true;
 }
 
 bool nuiDrawContext::ResetClipRect()
 {
   mpPainter->ResetClipRect();
+  mStateChanges++;
   return true;
 }
 
 bool nuiDrawContext::EnableClipping(bool set)
 {
   mpPainter->EnableClipping(set);
+  mStateChanges++;
   return true;
 }
 
