@@ -37,6 +37,8 @@ private:
   bool mIsModal;
   bool mInModalState;
   nuiWidget* mpPreviousFocus;
+  nuiEventSink<nuiModalContainer> mModalEventSink;
+  bool OnPreviousFocusTrashed(const nuiEvent& rEvent);
 };
 
 void Alert(nuiContainer* pParent, const nglString& rTitle, const nglString& rMessage);

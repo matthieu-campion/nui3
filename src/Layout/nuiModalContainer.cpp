@@ -13,11 +13,14 @@
 nuiModalContainer::nuiModalContainer(nuiContainerPtr pParent)
 : nuiSimpleContainer(),
   mIsModal(true),
-  mInModalState(false)
+  mInModalState(false),
+  mModalEventSink(this)
 {
   nuiTopLevel* pTop = NULL;
   pTop = pParent->GetTopLevel();
   mpPreviousFocus = pTop->GetFocus();
+  if (mpPreviousFocus)
+    mModalEventSink.Connect(mpPreviousFocus->Trashed, &nuiModalContainer::OnPreviousFocusTrashed);
   SetWantKeyboardFocus(true);
 
   pTop->AddChild(this);
@@ -306,3 +309,8 @@ void nuiMessageBox(nuiContainer* pParent, const nglString& rTitle, const nglStri
   pModal->DoModal();
 }
 
+bool nuiModalContainer::OnPreviousFocusTrashed(const nuiEvent& rEvent)
+{
+  mpPreviousFocus = NULL;
+  return false;
+}
