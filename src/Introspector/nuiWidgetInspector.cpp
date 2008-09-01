@@ -323,7 +323,18 @@ void nuiWidgetInfo::RebuildInfo()
     nglString text = mpTarget->GetProperty(_T("Name"));
     mpName->SetText(text);
 
-    text = mpTarget->GetProperty(_T("Class"));
+    //text = mpTarget->GetProperty(_T("Class"));
+    std::vector<nglString> classes;
+    mpTarget->GetObjectInheritance(classes);
+    text.Wipe();
+    for (uint i = 0; i < classes.size(); i++)
+    {
+      if (i)
+      {
+        text.Add(_T(" <-- "));
+      }
+      text.Add(classes[i]);
+    }
     mpClass->SetText(text);
 
     nglString str(typeid(mpTarget).name());

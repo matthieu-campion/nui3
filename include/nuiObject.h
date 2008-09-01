@@ -54,6 +54,7 @@ public:
   const nglString& GetObjectName() const; ///< adapter to GetProperty("Name") for nuiAttribute
   virtual void SetObjectName(const nglString& rName); ///< does a SetProperty("Name"...)
   const nglString& GetObjectClass() const; ///< adapter to GetProperty("Name") for nuiAttribute
+  void GetObjectInheritance(std::vector<nglString>& rClasses) const;
   bool IsOfClass(const nglString& rClass) const;
   bool IsOfClass(int32 ClassIndex) const;
   void SetProperty(const nglString& rName, const nglString& rValue); ///< Add or change a property of the object.

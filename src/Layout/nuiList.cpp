@@ -35,6 +35,8 @@ nuiList::nuiList(nuiOrientation Orientation)
   mMoveOnly = false;
   mSelectionStart = 0;
 
+  SetWantKeyboardFocus(true);
+
   InitProperties();
 }
 
@@ -77,8 +79,6 @@ void nuiList::InitProperties()
   AddEvent(_T("ListDoubleClicked"), DoubleClicked);
   NUI_ADD_EVENT(Activated);
   NUI_ADD_EVENT(SelectionChanged);
-
-  SetWantKeyboardFocus(true);
 }
 
 nuiList::~nuiList()

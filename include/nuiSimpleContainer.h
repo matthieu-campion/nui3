@@ -37,7 +37,7 @@ public:
   virtual bool GetNextChild(nuiContainer::ConstIteratorPtr pIterator) const;
   virtual bool GetPreviousChild(nuiContainer::IteratorPtr pIterator);
   virtual bool GetPreviousChild(nuiContainer::ConstIteratorPtr pIterator) const;
-
+  
   virtual void RaiseChild(nuiWidgetPtr pChild);
   virtual void LowerChild(nuiWidgetPtr pChild);
   virtual void RaiseChildToFront(nuiWidgetPtr pChild);

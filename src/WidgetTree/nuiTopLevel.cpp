@@ -411,6 +411,40 @@ void nuiTopLevel::AdviseObjectDeath(nuiWidgetPtr pWidget)
     ReleaseToolTip(pWidget);
   
   mCSSWidgets.erase(pWidget);
+  
+  {
+    // Update the tab order containers:
+    SetTabForward(pWidget, NULL, false);
+    SetTabBackward(pWidget, NULL, false);
+    
+    {
+      std::set<nuiWidgetPtr> ForwardSources;
+      GetTabForwardSources(pWidget, ForwardSources);
+      std::set<nuiWidgetPtr>::iterator it = ForwardSources.begin();
+      std::set<nuiWidgetPtr>::iterator end = ForwardSources.end();
+      while (it != end)
+      {
+        nuiWidgetPtr pSource = *it;
+        SetTabForward(pSource, NULL, false);
+        ++it;
+      }
+    }
+
+    {
+      std::set<nuiWidgetPtr> BackwardSources;
+      GetTabBackwardSources(pWidget, BackwardSources);
+      std::set<nuiWidgetPtr>::iterator it = BackwardSources.begin();
+      std::set<nuiWidgetPtr>::iterator end = BackwardSources.end();
+      while (it != end)
+      {
+        nuiWidgetPtr pSource = *it;
+        SetTabBackward(pSource, NULL, false);
+        ++it;
+      }
+    }
+    
+  }
+  
 }
 
 void nuiTopLevel::AdviseSubTreeDeath(nuiWidgetPtr pWidget)
@@ -2164,3 +2198,114 @@ void nuiTopLevel::EnterModalState()
 void nuiTopLevel::ExitModalState()
 {
 }
+
+void nuiTopLevel::SetTabForward(nuiWidget* pSource, nuiWidget* pDestination, bool AutoReverse)
+{
+  // First check f there is already an entry in the table for this source
+  std::map<nuiWidgetPtr, nuiWidgetPtr>::iterator it = mTabForward.find(pSource);
+  
+  // if this is the case then remove the back pointer
+  if (it != mTabForward.end())
+  {
+    if (!pDestination)
+    {
+      mTabForward.erase(it);
+      return;
+    }
+    
+    if (it->second != pDestination)
+      mTabForwardRev[pDestination].erase(pSource);
+    else
+      return; // Nothing to do
+  }
+
+  NGL_ASSERT(pDestination);
+  
+  // Add the relation to the table
+  mTabForward[pSource] = pDestination;
+
+  // Add the relation to the reverse table (for quick removal when the pointed widget will die)
+  mTabForwardRev[pDestination].insert(pSource);
+  
+  // If needed, added the bacward relation too (so that Tab and then shift-Tab goes back to the original source)
+  if (AutoReverse)
+  {
+    SetTabBackward(pDestination, pSource, false);
+  }
+  
+}
+
+void nuiTopLevel::SetTabBackward(nuiWidget* pSource, nuiWidget* pDestination, bool AutoReverse)
+{
+  // First check f there is already an entry in the table for this source
+  std::map<nuiWidgetPtr, nuiWidgetPtr>::iterator it = mTabBackward.find(pSource);
+  
+  // if this is the case then remove the back pointer
+  if (it != mTabBackward.end())
+  {
+    if (!pDestination)
+    {
+      mTabBackward.erase(it);
+      return;
+    }
+    
+    if (it->second != pDestination)
+      mTabBackwardRev[pDestination].erase(pSource);
+    else
+      return; // Nothing to do
+  }
+
+  NGL_ASSERT(pDestination);
+  
+  // Add the relation to the table
+  mTabBackward[pSource] = pDestination;
+  
+  // Add the relation to the reverse table (for quick removal when the pointed widget will die)
+  mTabBackwardRev[pDestination].insert(pSource);
+  
+  // If needed, added the bacward relation too (so that Tab and then shift-Tab goes back to the original source)
+  if (AutoReverse)
+  {
+    SetTabForward(pDestination, pSource, false);
+  }
+  
+}
+
+nuiWidget* nuiTopLevel::GetTabForward(nuiWidget* pSource) const
+{
+  std::map<nuiWidgetPtr, nuiWidgetPtr>::const_iterator it = mTabForward.find(pSource);
+  if (it != mTabForward.end())
+    return it->second;
+  return NULL;
+}
+
+nuiWidget* nuiTopLevel::GetTabBackward(nuiWidget* pSource) const
+{
+  std::map<nuiWidgetPtr, nuiWidgetPtr>::const_iterator it = mTabBackward.find(pSource);
+  if (it != mTabBackward.end())
+    return it->second;
+  return NULL;
+}
+
+void nuiTopLevel::GetTabForwardSources(nuiWidget* pDestination, std::set<nuiWidgetPtr>& rSources) const
+{
+  std::map<nuiWidgetPtr, std::set<nuiWidgetPtr> >::const_iterator it = mTabForwardRev.find(pDestination);
+  if (it != mTabForwardRev.end())
+  {
+    rSources = it->second;
+    return;
+  }
+  rSources.clear();
+}
+
+void nuiTopLevel::GetTabBackwardSources(nuiWidget* pDestination, std::set<nuiWidgetPtr>& rSources) const
+{
+  std::map<nuiWidgetPtr, std::set<nuiWidgetPtr> >::const_iterator it = mTabBackwardRev.find(pDestination);
+  if (it != mTabBackwardRev.end())
+  {
+    rSources = it->second;
+    return;
+  }
+  rSources.clear();
+}
+

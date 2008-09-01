@@ -228,9 +228,22 @@ bool nuiObject::SetObjectClass(const nglString& rClass)
   return first;
 }
 
+void nuiObject::GetObjectInheritance(std::vector<nglString>& rClasses) const
+{
+  int32 c = mClassNameIndex;
+  
+  do
+  {
+    rClasses.push_back(GetClassNameFromIndex(c));
+    c = mInheritanceMap[c];
+  }
+  while (c >= 0);
+}
+
+
 bool nuiObject::IsOfClass(const nglString& rClass) const
 {
-  int32 c = GetClassNameIndex(GetObjectClass());
+  int32 c = GetClassNameIndex(rClass);
   return IsOfClass(c);
 }
 

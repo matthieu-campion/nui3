@@ -503,7 +503,10 @@ bool nuiContainer::DispatchMouseUnclick (nuiSize X, nuiSize Y, nglMouseInfo::Fla
     }
     
     if (mWantKeyboardFocus && (Button == nglMouseInfo::ButtonLeft || Button == nglMouseInfo::ButtonRight))
+    {
       Focus();
+      return true;
+    }
     
     return res;
   }
@@ -915,4 +918,65 @@ void nuiContainer::InternalResetCSSPass()
   delete pIt;
 }
 
+nuiContainer::IteratorPtr nuiContainer::GetChildIterator(nuiWidgetPtr pChild)
+{
+  IteratorPtr pIt = GetFirstChild();
+  while (pIt->IsValid() && pIt->GetWidget() != pChild)
+    GetNextChild(pIt);
+  return pIt;
+}
+
+nuiContainer::ConstIteratorPtr nuiContainer::GetChildIterator(nuiWidgetPtr pChild) const
+{
+  ConstIteratorPtr pIt = GetFirstChild();
+  while (pIt->IsValid() && pIt->GetWidget() != pChild)
+    GetNextChild(pIt);
+  return pIt;
+}
+
+nuiWidgetPtr nuiContainer::GetNextFoccussableChild(nuiWidgetPtr pChild) const
+{
+  ConstIteratorPtr pIt = pChild ? GetChildIterator(pChild) : GetFirstChild();
+  if (!pIt->IsValid())
+    return NULL;
+  
+  if (pChild)
+    GetNextChild(pIt);
+  
+  while (pIt->IsValid() && !pIt->GetWidget()->GetWantKeyboardFocus() && pIt->GetWidget())
+    GetNextChild(pIt);
+  
+  if (pIt->IsValid())
+  {
+    nuiWidgetPtr pW = pIt->GetWidget();
+    delete pIt;
+    return pW;
+  }
+  
+  delete pIt;
+  return NULL;
+}
+
+nuiWidgetPtr nuiContainer::GetPreviousFoccussableChild(nuiWidgetPtr pChild) const
+{
+  ConstIteratorPtr pIt = pChild ? GetChildIterator(pChild) : GetLastChild();
+  if (!pIt->IsValid())
+    return NULL;
+  
+  if (pChild)
+    GetPreviousChild(pIt);
+  
+  while (pIt->IsValid() && !pIt->GetWidget()->GetWantKeyboardFocus() && pIt->GetWidget())
+    GetPreviousChild(pIt);
+  
+  if (pIt->IsValid())
+  {
+    nuiWidgetPtr pW = pIt->GetWidget();
+    delete pIt;
+    return pW;
+  }
+  
+  delete pIt;
+  return NULL;
+}
 

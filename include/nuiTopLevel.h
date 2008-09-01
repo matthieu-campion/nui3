@@ -99,6 +99,13 @@ public:
 
   virtual bool SetFocus(nuiWidgetPtr pWidget); ///< Redirect all keyboard events to this object.
   virtual nuiWidgetPtr GetFocus() const; ///< Returns the object that currently has the keyboard focus.
+  
+  void SetTabForward(nuiWidget* pSource, nuiWidget* pDestination, bool AutoReverse = true);
+  void SetTabBackward(nuiWidget* pSource, nuiWidget* pDestination, bool AutoReverse = false);
+  nuiWidget* GetTabForward(nuiWidget* pFrom) const;
+  nuiWidget* GetTabBackward(nuiWidget* pFrom) const;
+  void GetTabForwardSources(nuiWidget* pDestination, std::set<nuiWidgetPtr>& rSources) const;
+  void GetTabBackwardSources(nuiWidget* pDestination, std::set<nuiWidgetPtr>& rSources) const;
   //@}
 
   /** @name Generic tooltips */
@@ -241,6 +248,11 @@ private:
   std::map<nuiWidgetPtr, uint32> mCSSWidgets;
   
   nuiCSS* mpCSS;
+  
+  std::map<nuiWidgetPtr, nuiWidgetPtr> mTabForward;
+  std::map<nuiWidgetPtr, nuiWidgetPtr> mTabBackward;
+  std::map<nuiWidgetPtr, std::set<nuiWidgetPtr> > mTabForwardRev;
+  std::map<nuiWidgetPtr, std::set<nuiWidgetPtr> > mTabBackwardRev;
 };
 
 bool operator==(const nuiTrashElement& rElement1,const nuiTrashElement& rElement2);

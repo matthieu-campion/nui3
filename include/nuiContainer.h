@@ -155,6 +155,10 @@ public:
   virtual bool GetNextChild(ConstIteratorPtr pIterator) const = 0;
   virtual bool GetPreviousChild(ConstIteratorPtr pIterator) const = 0;
 
+  virtual IteratorPtr GetChildIterator(nuiWidgetPtr pChild);
+  virtual ConstIteratorPtr GetChildIterator(nuiWidgetPtr pChild) const;
+  virtual nuiWidgetPtr GetNextFoccussableChild(nuiWidgetPtr pChild) const;
+  virtual nuiWidgetPtr GetPreviousFoccussableChild(nuiWidgetPtr pChild) const;
   //@}
 
   /** @name Outgoing events */

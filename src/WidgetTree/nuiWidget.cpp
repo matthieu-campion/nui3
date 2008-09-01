@@ -1115,6 +1115,34 @@ bool nuiWidget::DispatchKeyDown(const nglKeyEvent& rEvent)
     return true;
   }
   
+  if (rEvent.mKey == NK_TAB && HasFocus())
+  {
+    nuiTopLevel* pTop = GetTopLevel();
+    NGL_ASSERT(pTop);
+    
+    // The user wants to change the focussed widget
+    nuiWidget* pNext = NULL;
+    if (IsKeyDown(NK_LSHIFT) || IsKeyDown(NK_RSHIFT))
+    {
+      // Backward
+      pNext = pTop->GetTabBackward(this);
+      if (!pNext && mpParent)
+        pNext = mpParent->GetPreviousFoccussableChild(this);
+    }
+    else
+    {
+      // Forward
+      pNext = pTop->GetTabForward(this);
+      if (!pNext && mpParent)
+        pNext = mpParent->GetNextFoccussableChild(this);
+    }
+
+    if (pNext)
+      pNext->Focus();
+    
+    return true;
+  }
+  
   if (mpParent)
   {
     return mpParent->DispatchKeyDown(rEvent);
@@ -1137,6 +1165,13 @@ bool nuiWidget::DispatchKeyUp(const nglKeyEvent& rEvent)
   
   if (TriggerHotKeys(rEvent, false, false))
   {
+    return true;
+  }
+
+  if (rEvent.mKey == NK_TAB && HasFocus())
+  {
+    // The user has just changed the focussed widget
+    // Let's eat ths remnant key and return...
     return true;
   }
   
