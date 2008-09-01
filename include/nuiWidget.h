@@ -141,6 +141,7 @@ public:
 
   virtual bool IsInside(nuiSize X, nuiSize Y); ///< Return true if the point (X,Y) (in the coordinates of the root object) is inside the object. This method call IsInsideLocal internally so you may not need to redefine it.
   virtual bool IsInsideLocal(nuiSize X, nuiSize Y); ///< Return true if the point (X,Y) (in the coordinates of the parent) is inside the object.
+  nuiRect GetVisibleRect() const;
   //@}
 
   /** @name Rendering */
@@ -354,7 +355,11 @@ public:
 
   virtual nuiWidgetPtr GetChild(const nglString& rName, bool DeepSearch) { return NULL; } ///< Dummy implementation of the GetChild Method for easy widget/Container interaction.
   virtual void ConnectTopLevel(); ///< This method is called when the widget is connected to the Top Level. Overload it to perform specific actions in a widget.
+  virtual void DisconnectTopLevel(); ///< This method is called when the widget is disconnected from the Top Level. Overload it to perform specific actions in a widget.
 
+  
+  /** @name Drawing */
+  //@{
   void SetFillColor(nuiDrawContext* pContext, nuiWidgetElement Element);
   void SetStrokeColor(nuiDrawContext* pContext, nuiWidgetElement Element);
 
@@ -376,9 +381,11 @@ public:
 
   void EnableClippingOptims(bool set) { mClippingOptims = set; Invalidate(); } ///< This widget will constraint its rendering to the clipping region given by it rect instead of just drawing everything directly. This implies that any layout change must invalidate this widget instead of testing for partial redraws. Disabled by default.
   bool IsClippingOptimEnabled() const { return mClippingOptims; } ///< This widget will constraint its rendering to the clipping region given by it rect instead of just drawing everything directly. This implies that any layout change must invalidate this widget instead of testing for partial redraws. Disabled by default.
+  //@}
   
-  nuiRect GetVisibleRect() const;
-
+  
+  /** @name Layout Constraints */
+  //@{
   class NUI_API LayoutConstraint
   {
   public:
@@ -395,9 +402,13 @@ public:
 
   virtual bool SetLayoutConstraint(const LayoutConstraint& rConstraint); ///< Change the layout constraint imposed by this widget's parent. Return false if the constraint haven't changed, true otherwise.
   const LayoutConstraint& GetLayoutConstraint() const; ///< Retrieve the layout constraint imposed by this widget's parent.
+  //@}
 
+  /** @name Debug Tags */
+  //@{
   void SetDebug(int32 DebugLevel);
   int32 GetDebug(bool recursive = false) const;
+  //@}
   
   /** @name Hot Keys */
   //@{
@@ -408,20 +419,40 @@ public:
   void DelHotKey(const nglString& rName); ///< Removes the event in local map, asks for deletion at top level
   //@}
 
+  /** @name Generic Public Events */
+  //@{
   nuiEventSource* GetEvent(const nglString& rName);
   void GetEvents(std::vector<nglString>& rNames);
+  //@}
 
-  
+  /** @name Decorations */
+  //@{
   virtual void SetDecoration(const nglString& rName);
   void SetDecoration(nuiDecoration* pDecoration, nuiDecorationMode Mode = eDecorationOverdraw);
   void SetDecorationMode(nuiDecorationMode Mode = eDecorationOverdraw);
   nuiDecoration* GetDecoration() const;
   const nglString& GetDecorationName() const;
   nuiDecorationMode GetDecorationMode() const;
-
+  //@}
+  
+  /** @name Keyboard Focus Decorations */
+  //@{
+  virtual void SetFocusDecoration(const nglString& rName);
+  void SetFocusDecoration(nuiDecoration* pDecoration, nuiDecorationMode Mode = eDecorationOverdraw);
+  void SetFocusDecorationMode(nuiDecorationMode Mode = eDecorationOverdraw);
+  nuiDecoration* GetFocusDecoration() const;
+  const nglString& GetFocusDecorationName() const;
+  nuiDecorationMode GetFocusDecorationMode() const;
+  void SetFocusVisible(bool set);
+  bool IsFocusVisible() const;
+  //@}
+  
+  /** @name CSS (Cascading style sheets) */
+  //@{
   void IncrementCSSPass();
   void ResetCSSPass();
   uint32 GetCSSPass() const;
+  //@}
   
 protected:
   std::map<nglString, nuiEventSource*, nglString::LessFunctor> mEventMap;
@@ -431,6 +462,7 @@ protected:
   virtual void BroadcastInvalidateRect(nuiWidgetPtr pSender, const nuiRect& rRect);
   virtual void BroadcastInvalidateLayout(nuiWidgetPtr pSender, bool BroadCastOnly);
   virtual void CallConnectTopLevel(nuiTopLevel* pTopLevel); ///< This method is called when the widget is connected to the Top Level. Overload it to perform specific actions in a widget.
+  virtual void CallDisconnectTopLevel(nuiTopLevel* pTopLevel); ///< This method is called when the widget is disconnected from the Top Level. Overload it to perform specific actions in a widget.
 
   virtual void CallOnTrash(); ///< This method is called whenever a Trash occurred on the widget tree branch. It performs some clean up and then calls nuiWidget::OnTrash to enable the user to handle the trash.
 
@@ -504,6 +536,9 @@ protected:
 
   void ApplyCSSForStateChange(uint32 MatchersTag); ///< This method will match this widget's state with the CSS and apply the changes needed to display it correctly
   
+  virtual void DrawFocus(nuiDrawContext* pContext, bool FrontOrBack); ///< Draw a decoration to show that the widget has the keyboard focus. The focus is drawn on top of the regular decoration if it exists.
+  void DispatchFocus(nuiWidgetPtr pWidget); ///< Advise the objet of a change of focus object. pWidget can be null.
+  
 private:    
   nuiTimer* mpAnimationTimer;
   bool mAnimateLayout;
@@ -542,8 +577,14 @@ private:
   nuiSize mODBottom;
   bool mInteractiveOD;
   
+  // Normal decoration:
   nuiDecoration* mpDecoration;
   nuiDecorationMode mDecorationMode;
+
+  // Focus decoration:
+  nuiDecoration* mpFocusDecoration;
+  nuiDecorationMode mFocusDecorationMode;
+  bool mShowFocus;
 
   void SetLeftBorder(nuiSize border);
   void SetTopBorder(nuiSize border);

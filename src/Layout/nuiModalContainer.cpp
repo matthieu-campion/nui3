@@ -29,6 +29,7 @@ nuiModalContainer::nuiModalContainer(nuiContainerPtr pParent)
   SetObjectClass(_T("nuiModalContainer"));
   GetTopLevel()->CancelGrab();
   Grab();
+  SetFocusVisible(false);
   Focus();
 }
 

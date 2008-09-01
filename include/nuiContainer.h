@@ -194,6 +194,7 @@ protected:
   bool DrawChildren(nuiDrawContext* pContext); ///< This helper method calls the DrawMethod on all the children of the nuiObject using the DrawChild method. 
   void BroadcastVisible();
   virtual void CallConnectTopLevel(nuiTopLevel* pTopLevel); ///< Connects container to Top Level, then asks children to connect.
+  virtual void CallDisconnectTopLevel(nuiTopLevel* pTopLevel); ///< Disconnects container from Top Level, then asks children to disconnect too.
   virtual void CallOnTrash();
   virtual void InternalResetCSSPass();
 

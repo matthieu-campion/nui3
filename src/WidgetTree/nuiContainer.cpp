@@ -301,6 +301,17 @@ void nuiContainer::CallConnectTopLevel(nuiTopLevel* pTopLevel)
   delete pIt;
 }
 
+void nuiContainer::CallDisconnectTopLevel(nuiTopLevel* pTopLevel)
+{
+  nuiWidget::CallDisconnectTopLevel(pTopLevel);
+  IteratorPtr pIt;
+  for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
+  {
+    pIt->GetWidget()->CallDisconnectTopLevel(pTopLevel);
+  }
+  delete pIt;
+}
+
 void nuiContainer::EnableAutoClipSelf(bool Set, bool Recurse)
 {
   nuiWidget::EnableAutoClipSelf(Set, Recurse);

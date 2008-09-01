@@ -83,13 +83,14 @@ nuiWidget::nuiWidget()
   mODBottom(0),
   mInteractiveOD(false),
   mpDecoration(NULL),
+  mpFocusDecoration(NULL),
+  mShowFocus(true),
   mPosition(nuiFill),
   mFillRule(nuiFill),
   mMatrixIsIdentity(true),
   mCSSPasses(0),
   mpParent(NULL),
   mpTheme(NULL)
-
 {
   if (SetObjectClass(_T("nuiWidget")))
     InitAttributes();
@@ -231,7 +232,12 @@ void nuiWidget::InitAttributes()
   AddAttribute(new nuiAttribute<bool>
    (nglString(_T("Hover")), nuiUnitBoolean,
     nuiAttribute<bool>::GetterDelegate(this, &nuiWidget::GetHover)));
-	
+
+  AddAttribute(new nuiAttribute<bool>
+   (nglString(_T("Focus")), nuiUnitBoolean,
+    nuiAttribute<bool>::GetterDelegate(this, &nuiWidget::HasFocus)));
+  
+	// Decoration:
   AddAttribute(new nuiAttribute<const nglString&>
                (nglString(_T("Decoration")), nuiUnitName,
                 nuiAttribute<const nglString&>::GetterDelegate(this, &nuiWidget::GetDecorationName),
@@ -243,7 +249,24 @@ void nuiWidget::InitAttributes()
                 nuiAttribute<nuiDecorationMode>::GetterDelegate(this, &nuiWidget::GetDecorationMode),
                 nuiAttribute<nuiDecorationMode>::SetterDelegate(this, &nuiWidget::SetDecorationMode)));
 
-
+  // Focus Decoration:
+  AddAttribute(new nuiAttribute<const nglString&>
+               (nglString(_T("FocusDecoration")), nuiUnitName,
+                nuiAttribute<const nglString&>::GetterDelegate(this, &nuiWidget::GetFocusDecorationName),
+                nuiAttribute<const nglString&>::SetterDelegate(this, &nuiWidget::SetFocusDecoration)));
+  
+  
+  AddAttribute(new nuiAttribute<nuiDecorationMode>
+               (nglString(_T("FocusDecorationMode")), nuiUnitNone,
+                nuiAttribute<nuiDecorationMode>::GetterDelegate(this, &nuiWidget::GetFocusDecorationMode),
+                nuiAttribute<nuiDecorationMode>::SetterDelegate(this, &nuiWidget::SetFocusDecorationMode)));
+  
+  AddAttribute(new nuiAttribute<bool>
+               (nglString(_T("FocusVisible")), nuiUnitBoolean,
+                nuiAttribute<bool>::GetterDelegate(this, &nuiWidget::IsFocusVisible),
+                nuiAttribute<bool>::SetterDelegate(this, &nuiWidget::SetFocusVisible)));
+  
+  
   // nuiAttribute<nuiSize> <=> nuiAttribute<double>
   AddAttribute(new nuiAttribute<nuiSize>
                (nglString(_T("BorderLeft")), nuiUnitSize,
@@ -282,6 +305,11 @@ void nuiWidget::InitAttributes()
                 nuiFastDelegate::MakeDelegate(this, &nuiWidget::GetMouseCursor),
                 nuiFastDelegate::MakeDelegate(this, &nuiWidget::SetAttrMouseCursor)));
   
+  
+  AddAttribute(new nuiAttribute<bool>
+               (nglString(_T("WantKeyBoardFocus")), nuiUnitBoolean,
+                nuiAttribute<bool>::GetterDelegate(this, &nuiWidget::GetWantKeyboardFocus),
+                nuiAttribute<bool>::SetterDelegate(this, &nuiWidget::SetWantKeyboardFocus)));
   
 }
 
@@ -533,7 +561,10 @@ bool nuiWidget::SetParent(nuiContainerPtr pParent)
   {
     pRoot->ReleaseToolTip(this);
     if (!pParent) // If we used to be connected to a root but the current parenting changes that: tell the trunk of the tree about it!
+    {
       pRoot->AdviseSubTreeDeath(this);
+      CallDisconnectTopLevel(pRoot);
+    }
   }
 
   mpParent = pParent;
@@ -910,6 +941,13 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
         pContext->PopState();
       }
       
+      if (HasFocus())
+      {
+        pContext->PushState();
+        DrawFocus(pContext, false);
+        pContext->PopState();
+      }
+      
       ////////////////////// Draw the widget
       pContext->PushState();
       Draw(pContext);
@@ -922,6 +960,13 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
         nuiRect sizerect(GetRect().Size());
         mpDecoration->ClientToGlobalRect(sizerect);
         mpDecoration->DrawFront(pContext, this, sizerect);
+        pContext->PopState();
+      }
+
+      if (HasFocus())
+      {
+        pContext->PushState();
+        DrawFocus(pContext, true);
         pContext->PopState();
       }
       
@@ -983,6 +1028,13 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
         pContext->PopState();
       }
       
+      if (HasFocus())
+      {
+        pContext->PushState();
+        DrawFocus(pContext, false);
+        pContext->PopState();
+      }
+
       ////////////////////// Draw the widget
       pContext->PushState();
       Draw(pContext);
@@ -998,6 +1050,13 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
         pContext->PopState();
       }
       
+      if (HasFocus())
+      {
+        pContext->PushState();
+        DrawFocus(pContext, true);
+        pContext->PopState();
+      }
+
       if (mAutoClipSelf)
         pContext->PopClipping();
       pContext->PopState();
@@ -1305,6 +1364,8 @@ bool nuiWidget::Focus()
   if (HasFocus())
     return true;
 
+  Invalidate();
+
   nuiTopLevelPtr pRoot = GetTopLevel();
 
   if (pRoot)
@@ -1319,6 +1380,7 @@ bool nuiWidget::UnFocus()
     return false;
   nuiTopLevelPtr pRoot = GetTopLevel();
 
+  Invalidate();
   if (pRoot)
     return pRoot->SetFocus(NULL);
 
@@ -1445,6 +1507,10 @@ nglString nuiWidget::GetInheritedProperty (const nglString& rName)
 
 
 void nuiWidget::OnSetFocus(nuiWidgetPtr pWidget)
+{
+}
+
+void nuiWidget::DispatchFocus(nuiWidgetPtr pWidget)
 {
   mHasFocus = (pWidget == this);
   FocusChanged();
@@ -2896,14 +2962,101 @@ nuiDecoration* nuiWidget::GetDecoration() const
   return mpDecoration;
 }
 
+
+/// Focus Decoration:
+void nuiWidget::SetFocusDecoration(const nglString& rName)
+{
+  nuiDecoration* pDecoration = nuiDecoration::Get(rName);
+  SetFocusDecoration(pDecoration, mFocusDecorationMode);
+}
+
+void nuiWidget::SetFocusDecorationMode(nuiDecorationMode Mode)
+{
+  mFocusDecorationMode = Mode;
+  
+  if (mpFocusDecoration)
+  {
+    nuiSize Left = 0;
+    nuiSize Top = 0;
+    nuiSize Right = 0;
+    nuiSize Bottom = 0;
+    
+    if (Mode == eDecorationOverdraw || Mode == eDecorationBorder)
+    {
+      GetOverDraw(Left, Top, Right, Bottom);
+      Left   = MAX(Left  , mpFocusDecoration->GetBorder(nuiLeft));
+      Top    = MAX(Top   , mpFocusDecoration->GetBorder(nuiTop));
+      Right  = MAX(Right , mpFocusDecoration->GetBorder(nuiRight));
+      Bottom = MAX(Bottom, mpFocusDecoration->GetBorder(nuiBottom));
+      SetOverDraw(Left, Top, Right, Bottom);
+    }
+    
+    if (Mode == eDecorationBorder)
+    {
+      GetBorder(Left, Right, Top, Bottom);
+      Left   = MAX(Left  , mpFocusDecoration->GetBorder(nuiLeft));
+      Top    = MAX(Top   , mpFocusDecoration->GetBorder(nuiTop));
+      Right  = MAX(Right , mpFocusDecoration->GetBorder(nuiRight));
+      Bottom = MAX(Bottom, mpFocusDecoration->GetBorder(nuiBottom));
+      SetBorder(Left, Right, Top, Bottom);
+    }
+  }
+}
+
+const nglString& nuiWidget::GetFocusDecorationName() const
+{
+  if (mpFocusDecoration)
+    return mpFocusDecoration->GetObjectName();
+  return nglString::Null;
+}
+
+nuiDecorationMode nuiWidget::GetFocusDecorationMode() const
+{
+  return mFocusDecorationMode;
+}
+
+void nuiWidget::SetFocusDecoration(nuiDecoration* pDecoration, nuiDecorationMode Mode)
+{
+  if (pDecoration)
+    pDecoration->Acquire();
+  if (mpFocusDecoration)
+    mpFocusDecoration->Release();
+  
+  mpFocusDecoration = pDecoration;
+  
+  SetFocusDecorationMode(Mode);
+  
+  InvalidateLayout();
+}
+
+nuiDecoration* nuiWidget::GetFocusDecoration() const
+{
+  return mpFocusDecoration;
+}
+
+
+//////// TopLevel Management:
 void nuiWidget::CallConnectTopLevel(nuiTopLevel* pTopLevel)
 {
   // Apply CSS, do default stuff, etc...
+  if (HasFocus())
+    pTopLevel->SetFocus(this);
   pTopLevel->PrepareWidgetCSS(this, false, NUI_WIDGET_MATCHTAG_ALL);
   ConnectTopLevel();
 }
 
+void nuiWidget::CallDisconnectTopLevel(nuiTopLevel* pTopLevel)
+{
+  if (HasFocus())
+    UnFocus();
+  DisconnectTopLevel();
+}
+
 void nuiWidget::ConnectTopLevel()
+{
+}
+
+void nuiWidget::DisconnectTopLevel()
 {
 }
 
@@ -2938,3 +3091,52 @@ uint32 nuiWidget::GetCSSPass() const
 {
   return mCSSPasses;
 }
+
+void nuiWidget::DrawFocus(nuiDrawContext* pContext, bool FrontOrBack)
+{
+  if (!mShowFocus)
+    return;
+  
+  if (mpFocusDecoration)
+  {
+    nuiRect sizerect(GetRect().Size());
+    mpFocusDecoration->ClientToGlobalRect(sizerect);
+    if (FrontOrBack)
+      mpFocusDecoration->DrawFront(pContext, this, sizerect);
+    else
+      mpFocusDecoration->DrawBack(pContext, this, sizerect);
+  }
+  else
+  {
+    if (FrontOrBack)
+    {
+      nuiRect rect(GetRect().Size());
+      rect.Bottom() += mBorderBottom - 1;
+      rect.Top() -= mBorderTop + 0;
+      rect.Left() -= mBorderLeft + 0;
+      rect.Right() += mBorderRight - 1;
+      
+      pContext->SetLineWidth(2);
+      pContext->SetBlendFunc(nuiBlendTransp);
+      pContext->EnableBlending(true);
+      pContext->SetStrokeColor(nuiColor(64, 64, 255, 128));
+      
+      nuiShape shp;
+      shp.AddRect(rect);
+      
+      pContext->DrawShape(&shp, eStrokeShape);
+    }
+  }
+}
+
+void nuiWidget::SetFocusVisible(bool set)
+{
+  mShowFocus = set;
+  Invalidate();
+}
+
+bool nuiWidget::IsFocusVisible() const
+{
+  return mShowFocus;
+}
+

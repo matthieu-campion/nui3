@@ -194,6 +194,7 @@ nuiTopLevel::nuiTopLevel(const nglPath& rResPath)
   EnableRenderCache(false);
 
   SetWantKeyboardFocus(true);
+  SetFocusVisible(false);
   SetMouseCursor(eCursorArrow);
 }
 
@@ -764,9 +765,9 @@ bool nuiTopLevel::SetFocus(nuiWidgetPtr pWidget)
   nuiWidget* pOldFocus = mpFocus;
   
   if (mpFocus)
-    mpFocus->OnSetFocus(pWidget);
+    mpFocus->DispatchFocus(pWidget);
   if (pWidget)
-    pWidget->OnSetFocus(pWidget);
+    pWidget->DispatchFocus(pWidget);
 
   mpFocus = pWidget;
 
