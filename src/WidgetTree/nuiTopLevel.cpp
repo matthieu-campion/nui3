@@ -2219,7 +2219,8 @@ void nuiTopLevel::SetTabForward(nuiWidget* pSource, nuiWidget* pDestination, boo
       return; // Nothing to do
   }
 
-  NGL_ASSERT(pDestination);
+  if (!pDestination)
+    return;
   
   // Add the relation to the table
   mTabForward[pSource] = pDestination;
@@ -2255,7 +2256,8 @@ void nuiTopLevel::SetTabBackward(nuiWidget* pSource, nuiWidget* pDestination, bo
       return; // Nothing to do
   }
 
-  NGL_ASSERT(pDestination);
+  if (!pDestination)
+    return;
   
   // Add the relation to the table
   mTabBackward[pSource] = pDestination;
