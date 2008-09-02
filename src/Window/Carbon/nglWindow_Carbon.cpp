@@ -806,14 +806,24 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
           {
             UInt32 size = 0;
             OSStatus err = GetEventParameter(eventRef, kEventParamTextInputSendText, typeUnicodeText, NULL, NULL, &size, NULL);
-
+            //printf("GetEventParameter(eventRef, kEventParamTextInputSendText, typeUnicodeText, NULL, NULL, &size, NULL) = %d [size = %d]\n", err, size);
+            
             uint16 unicodetext[size + 1];
             memset(unicodetext, 0, sizeof(uint16) * (size + 1));
             err = GetEventParameter(eventRef, kEventParamTextInputSendText, typeUnicodeText, NULL, size, NULL, unicodetext);
+            //printf("GetEventParameter(eventRef, kEventParamTextInputSendText, typeUnicodeText, NULL, size, NULL, unicodetext) = %d\n", err);
+            //for (uint i = 0; i < size; i++)
+            //{
+            //  printf("%d: '%c' {%d}\n", i, unicodetext[i], unicodetext[i]);
+            //}
             if (err != noErr)
               return eventNotHandledErr;
             
-            nglString str((char*)unicodetext, eUCS2);
+            nglChar ucs4[size+1];
+            memset(ucs4, 0, sizeof(nglChar) * (size + 1));
+            for (uint i = 0; i < size; i++)
+              ucs4[i] = unicodetext[i];
+            nglString str(ucs4);
             //char* pStr = str.Export(eUTF8);
             //printf("Unicode text entered: '%s' [%d] {%x}\n", pStr, str.GetLength(), str[0]);
             //delete[] pStr;
