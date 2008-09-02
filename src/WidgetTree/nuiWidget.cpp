@@ -1097,6 +1097,85 @@ bool nuiWidget::DispatchTextInput(const nglString& rUnicodeText)
   return false;
 }
 
+nuiWidgetPtr DeepSearchNextFocussableWidget(nuiWidgetPtr pWidget, bool TryThisNode)
+{
+  if (TryThisNode && pWidget->GetWantKeyboardFocus())
+    return pWidget;
+    
+  nuiContainer* pContainer = dynamic_cast<nuiContainer*>(pWidget); // Is this a container?
+  if (pContainer)
+  {
+    std::auto_ptr<nuiContainer::Iterator> pIt(pContainer->GetFirstChild());
+    while (pIt->IsValid())
+    {
+      nuiWidget* pItem = pIt->GetWidget();
+      
+      nuiWidgetPtr pChild = DeepSearchNextFocussableWidget(pItem, true);
+      if (pChild)
+        return pChild;
+      
+      pContainer->GetNextChild(pIt.get());
+    }
+  }
+  
+  return NULL;
+}
+
+nuiWidgetPtr GetNextFocussableSibling(nuiWidgetPtr pWidget)
+{
+  nuiContainer* pParent = pWidget->GetParent();
+  if (pParent)
+  {
+    std::auto_ptr<nuiContainer::Iterator> pIt(pParent->GetChildIterator(pWidget));
+    pParent->GetNextChild(pIt.get());
+    
+    while (pIt->IsValid())
+    {
+      nuiWidgetPtr pSibling = pIt->GetWidget();
+      nuiWidgetPtr pItem = DeepSearchNextFocussableWidget(pSibling, true);
+      if (pItem)
+        return pItem;
+      
+      pParent->GetNextChild(pIt.get());
+    }
+  }
+  
+  return NULL;
+}
+
+nuiWidgetPtr GetNextFocussableWidget(nuiWidgetPtr pWidget)
+{
+  nuiWidget* pItem = DeepSearchNextFocussableWidget(pWidget, false);
+  if (pItem)
+    return pItem;
+
+  nuiWidgetPtr pNextWidget = pWidget;
+  while (pNextWidget)
+  {
+    pItem = GetNextFocussableSibling(pNextWidget);
+    if (pItem)
+      return pItem;
+    
+    pNextWidget = pNextWidget->GetParent();
+  }
+  
+  nuiTopLevel* pTop = pWidget->GetTopLevel();
+  if (pTop != pWidget)
+    return GetNextFocussableWidget(pTop);
+    
+  return NULL;
+}
+
+nuiWidgetPtr DeepSearcPrevioushFocussableWidget(nuiWidgetPtr pWidget)
+{
+  return NULL;
+}
+
+nuiWidgetPtr GetPreviousFocussableWidget(nuiWidgetPtr pWidget)
+{
+  return NULL;
+}
+
 
 bool nuiWidget::DispatchKeyDown(const nglKeyEvent& rEvent)
 {
@@ -1127,14 +1206,14 @@ bool nuiWidget::DispatchKeyDown(const nglKeyEvent& rEvent)
       // Backward
       pNext = pTop->GetTabBackward(this);
       if (!pNext && mpParent)
-        pNext = mpParent->GetPreviousFoccussableChild(this);
+        pNext = mpParent->GetPreviousFocussableChild(this);
     }
     else
     {
       // Forward
       pNext = pTop->GetTabForward(this);
       if (!pNext && mpParent)
-        pNext = mpParent->GetNextFoccussableChild(this);
+        pNext = GetNextFocussableWidget(this);
     }
 
     if (pNext)

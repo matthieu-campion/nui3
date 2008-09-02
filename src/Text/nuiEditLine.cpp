@@ -56,8 +56,7 @@ bool nuiEditLine::KeyDown (const nglKeyEvent& rEvent)
   }
   else if (rEvent.mKey == NK_TAB)
   {
-    AutoComplete();
-    return true;
+    return AutoComplete();
   }
   else if (rEvent.mKey == NK_ENTER || rEvent.mKey == NK_PAD_ENTER)
   {

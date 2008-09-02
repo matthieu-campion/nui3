@@ -157,8 +157,8 @@ public:
 
   virtual IteratorPtr GetChildIterator(nuiWidgetPtr pChild);
   virtual ConstIteratorPtr GetChildIterator(nuiWidgetPtr pChild) const;
-  virtual nuiWidgetPtr GetNextFoccussableChild(nuiWidgetPtr pChild) const;
-  virtual nuiWidgetPtr GetPreviousFoccussableChild(nuiWidgetPtr pChild) const;
+  virtual nuiWidgetPtr GetNextFocussableChild(nuiWidgetPtr pChild) const;
+  virtual nuiWidgetPtr GetPreviousFocussableChild(nuiWidgetPtr pChild) const;
   //@}
 
   /** @name Outgoing events */

@@ -934,7 +934,7 @@ nuiContainer::ConstIteratorPtr nuiContainer::GetChildIterator(nuiWidgetPtr pChil
   return pIt;
 }
 
-nuiWidgetPtr nuiContainer::GetNextFoccussableChild(nuiWidgetPtr pChild) const
+nuiWidgetPtr nuiContainer::GetNextFocussableChild(nuiWidgetPtr pChild) const
 {
   ConstIteratorPtr pIt = pChild ? GetChildIterator(pChild) : GetFirstChild();
   if (!pIt->IsValid())
@@ -957,7 +957,7 @@ nuiWidgetPtr nuiContainer::GetNextFoccussableChild(nuiWidgetPtr pChild) const
   return NULL;
 }
 
-nuiWidgetPtr nuiContainer::GetPreviousFoccussableChild(nuiWidgetPtr pChild) const
+nuiWidgetPtr nuiContainer::GetPreviousFocussableChild(nuiWidgetPtr pChild) const
 {
   ConstIteratorPtr pIt = pChild ? GetChildIterator(pChild) : GetLastChild();
   if (!pIt->IsValid())
