@@ -1166,14 +1166,54 @@ nuiWidgetPtr GetNextFocussableWidget(nuiWidgetPtr pWidget)
   return NULL;
 }
 
-nuiWidgetPtr DeepSearcPrevioushFocussableWidget(nuiWidgetPtr pWidget)
+nuiWidgetPtr DeepSearchPreviousFocussableWidget(nuiWidgetPtr pWidget, bool TryThisNode)
 {
+  nuiContainer* pContainer = dynamic_cast<nuiContainer*>(pWidget); // Is this a container?
+  if (pContainer)
+  {
+    std::auto_ptr<nuiContainer::Iterator> pIt(pContainer->GetLastChild());
+    while (pIt->IsValid())
+    {
+      nuiWidget* pItem = pIt->GetWidget();
+      
+      nuiWidgetPtr pChild = DeepSearchPreviousFocussableWidget(pItem, true);
+      if (pChild)
+        return pChild;
+      
+      pContainer->GetPreviousChild(pIt.get());
+    }
+  }
+  
+  if (TryThisNode && pWidget->GetWantKeyboardFocus())
+    return pWidget;
+
   return NULL;
 }
 
 nuiWidgetPtr GetPreviousFocussableWidget(nuiWidgetPtr pWidget)
 {
-  return NULL;
+  nuiWidget* pItem = NULL;
+  nuiContainer* pParent = pWidget->GetParent();
+  if (pParent)
+  {
+    std::auto_ptr<nuiContainer::Iterator> pIt(pParent->GetChildIterator(pWidget));
+    pParent->GetPreviousChild(pIt.get());
+    while (pIt->IsValid())
+    {
+      pItem = pIt->GetWidget();
+      nuiWidgetPtr pChild = DeepSearchPreviousFocussableWidget(pItem, true);
+      if (pChild)
+        return pChild;
+      
+      pParent->GetPreviousChild(pIt.get());
+    }
+    
+    return GetPreviousFocussableWidget(pParent);
+  }
+  
+  nuiTopLevel* pTop = pWidget->GetTopLevel();
+  NGL_ASSERT(pTop);
+  return DeepSearchPreviousFocussableWidget(pTop, true);
 }
 
 
@@ -1206,7 +1246,7 @@ bool nuiWidget::DispatchKeyDown(const nglKeyEvent& rEvent)
       // Backward
       pNext = pTop->GetTabBackward(this);
       if (!pNext && mpParent)
-        pNext = mpParent->GetPreviousFocussableChild(this);
+        pNext = GetPreviousFocussableWidget(this);
     }
     else
     {
