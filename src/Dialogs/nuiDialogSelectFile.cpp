@@ -72,8 +72,6 @@ void nuiDialogSelectFile::Init(nuiMainWindow* pParent, const nglString& rTitle, 
   mpSelector->UpdateLayout();
 
   mpEditLine->SetText(defaultEntry);
-  
-  DoModal();
 }
 
 
