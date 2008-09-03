@@ -133,7 +133,7 @@ nuiNativeResource::nuiNativeResource(const nglPath& rPath)
   
   mValid = true;
 #endif
-#if defined _CARBON_ || defined _LINUX_   
+#if defined _CARBON_ || defined _UIKIT_ || defined _LINUX_
   nglPath ResourcePath(GetResourcePath());
   ResourcePath += rPath;
   nglIFile File(ResourcePath, false);
@@ -145,7 +145,7 @@ nuiNativeResource::nuiNativeResource(const nglPath& rPath)
   
   mpBuffer = pData;
   mSize = datasize;
-#endif // _CARBON_ || _LINUX_
+#endif // _CARBON_ || _UIKIT_ || _LINUX_
 }
 
 nuiNativeResource::~nuiNativeResource()
