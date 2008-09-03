@@ -715,25 +715,9 @@ bool nglPath::GetInfo(nglPathInfo& rInfo) const
       return pVolume->GetPathInfo(*this, rInfo);
   }
   
-#ifdef WINCE
-	WIN32_FILE_ATTRIBUTE_DATA	dataInfo;
 
-	BOOL	result = GetFileAttributesEx(mPathName.GetChars(), GetFileExInfoStandard, &dataInfo);
-	if(result==0)	{ rInfo.Exists=false;  return false; }
-
-	rInfo.Exists	 = true;
-	rInfo.IsLeaf     = (dataInfo.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)==0;
-	rInfo.LastAccess = (Time)(double)((((int64)dataInfo.ftLastAccessTime.dwHighDateTime)<<32) + ((int64)dataInfo.ftLastAccessTime.dwLowDateTime));
-	rInfo.LastMod    = (Time)(double)((((int64)dataInfo.ftLastWriteTime .dwHighDateTime)<<32) + ((int64)dataInfo.ftLastWriteTime .dwLowDateTime));
-	rInfo.Size       = rInfo.IsLeaf ? (mxSize)((((int64)dataInfo.nFileSizeHigh)<<32) + ((int64)dataInfo.nFileSizeLow)) : 0;
-	rInfo.CanRead    = true; 
-	rInfo.CanWrite   = (dataInfo.dwFileAttributes & FILE_ATTRIBUTE_READONLY)==0;
-  rInfo.Visible    = nglIsFileVisible(mPathName);
+#ifdef _WIN32_
   
-	return true;
-  
-#else
-
 	WIN32_FILE_ATTRIBUTE_DATA	dataInfo;
 
 	BOOL	result = GetFileAttributesEx(mPathName.GetChars(), GetFileExInfoStandard, &dataInfo);
@@ -750,6 +734,39 @@ bool nglPath::GetInfo(nglPathInfo& rInfo) const
   
 	return true;
 
+#else
+  
+  struct stat info;
+  std::string tmp(mPathName.GetStdString());
+  if (stat(tmp.c_str(), &info) == -1)
+  {
+    switch (errno)
+    {
+      case ENOTDIR:
+        ////SetError("path", NGL_PATH_EBADPATH);
+        break;
+      case EACCES :
+        ////SetError("path", NGL_PATH_EACCESS);
+        break;
+    }
+    rInfo.Exists = false;
+    return false;
+  }
+  rInfo.Exists     = true;
+#ifdef _WIN32_
+  rInfo.IsLeaf     = !(_S_IFDIR & info.st_mode);
+#else
+  rInfo.IsLeaf     = !S_ISDIR(info.st_mode);
+#endif
+  rInfo.LastAccess = (nglTime)(double)info.st_atime;
+  rInfo.LastMod    = (nglTime)(double)info.st_mtime;
+  rInfo.Size       = rInfo.IsLeaf ? info.st_size : 0;
+  rInfo.CanRead    = (access(mPathName.GetStdString().c_str(), R_OK) != -1);
+  rInfo.CanWrite   = (access(mPathName.GetStdString().c_str(), W_OK) != -1);
+  rInfo.Visible    = nglIsFileVisible(mPathName);
+  return true;
+  
+  
 #endif
   
 }
