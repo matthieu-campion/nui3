@@ -971,6 +971,7 @@ void nuiMainWindow::EnterModalState()
   EmptyTrash();
   CancelGrab();
   mMouseInfo.Buttons = 0;
+  
   mpNGLWindow->EnterModalState();
   EmptyTrash();
   CancelGrab();

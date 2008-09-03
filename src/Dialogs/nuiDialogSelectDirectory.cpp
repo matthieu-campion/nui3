@@ -33,6 +33,8 @@ nuiDialogSelectDirectory::nuiDialogSelectDirectory(nuiMainWindow* pParent, const
   mEventSink.Connect(DialogDone, &nuiDialogSelectDirectory::OnDialogDone);
   
   mpSelector->UpdateLayout();
+  
+  DoModal();
 }
 
 nuiDialogSelectDirectory::~nuiDialogSelectDirectory()

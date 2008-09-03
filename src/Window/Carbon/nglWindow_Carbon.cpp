@@ -1177,6 +1177,7 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
   mModifiers = 0;
   mInvalidatePosted = false;
   mRedrawing = false;
+  mInModalState = false;
   EventTypeSpec WindowEvents[]=
   {
     // Mouse Class:
@@ -1908,6 +1909,8 @@ bool nglWindow::MakeCurrent() const
 
 void nglWindow::EnterModalState()
 {
+  mInModalState = true;
+  
   SetState(eShow);
 
   ProcessSerialNumber CurrentProcess;
@@ -1925,10 +1928,13 @@ void nglWindow::EnterModalState()
   }
   
   OSStatus err = RunAppModalLoopForWindow(mWindow);
+  
   NGL_ASSERT(err == 0);
 }
 
 void nglWindow::ExitModalState()
 {
+  mInModalState = false;
+  
   OSStatus err = QuitAppModalLoopForWindow(mWindow);
 }

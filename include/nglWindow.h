@@ -643,6 +643,7 @@ window = new nglWindow (context, info, NULL);
 #endif//_NODND_
 
   void EnterModalState();
+  bool IsInModalState();
   void ExitModalState();
   
   void SetMainMenu(nuiMainMenu* pMenu); ///< associate a nuiMainMenu to this window, to perform automatic deleting
@@ -650,6 +651,8 @@ window = new nglWindow (context, info, NULL);
   
 protected:
   virtual const nglChar* OnError (uint& rError) const;
+  
+  
 
 private:
   OSInfo             mOSInfo;
@@ -659,6 +662,8 @@ private:
   nglMouseInfo::Mode mMouseMode;
   bool               mKeyRepeat;
   bool               mpKeyState[NGL_KEY_MAX];
+  bool mInModalState;
+  
 
   nglWindow(const nglWindow&) {} // Undefined copy constructor
 
@@ -800,7 +805,6 @@ protected:
   friend LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam );
   friend LRESULT CALLBACK KbdMsgProc(int code, WPARAM wParam, LPARAM lParam);
 
-  bool mInModalState;
 #endif // _WIN32_
 
 #ifdef _WIN32_ // Win32 Drag And drop Support
