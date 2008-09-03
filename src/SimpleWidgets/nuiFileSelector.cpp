@@ -63,6 +63,10 @@ void nuiFileSelectorNode::Open(bool Opened)
     {
       nglPath pathName(*it);
 
+      //LBDEBUG
+      NGL_OUT(_T("pathName '%ls'\n"), pathName.GetChars());
+      ///////////
+
       if (pathName.IsVisible())
       {
         nuiTreeNode* pNode = mpSelector->GetNewNode(pathName);
