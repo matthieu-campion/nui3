@@ -323,7 +323,7 @@ nuiMainMenu* nglWindow::GetMainMenu()
 
 bool nglWindow::IsInModalState()
 {
-  return mInModalState;
+  return (mInModalState != 0);
 }
 
 

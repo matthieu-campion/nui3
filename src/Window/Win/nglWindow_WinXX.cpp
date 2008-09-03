@@ -1039,7 +1039,7 @@ bool nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
 {
   SetError(NGL_WINDOW_ENONE);
 
-  mInModalState = false;
+  mInModalState = 0;
  
   if (!mAtom)
   {
@@ -3054,7 +3054,8 @@ void nglWindow::EnterModalState()
 
   MSG msg;
 
-  mInModalState = true;
+  mInModalState++;
+  uint32 storeModalState = mInModalState;
 
   do
   {
@@ -3080,7 +3081,7 @@ void nglWindow::EnterModalState()
         DispatchMessage(&msg);
       }
     }
-  } while (msg.message != WM_QUIT && mInModalState);
+  } while (msg.message != WM_QUIT && (mInModalState > storeModalState));
   
   if (msg.message == WM_QUIT)
   {
@@ -3091,5 +3092,5 @@ void nglWindow::EnterModalState()
 
 void nglWindow::ExitModalState()
 {
-  mInModalState = false;
+  mInModalState--;
 }

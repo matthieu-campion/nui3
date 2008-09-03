@@ -662,7 +662,7 @@ private:
   nglMouseInfo::Mode mMouseMode;
   bool               mKeyRepeat;
   bool               mpKeyState[NGL_KEY_MAX];
-  bool mInModalState;
+  uint32 mInModalState;
   
 
   nglWindow(const nglWindow&) {} // Undefined copy constructor
