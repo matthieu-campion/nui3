@@ -1126,7 +1126,7 @@ int32 nglPath::GetChildren(list<nglPath>* pChildren) const
 		return false;
 	}
 
-	#ifdef WINCE
+//	#ifdef WINCE
 
 	WCHAR	filter[MAX_PATH + 1];
 
@@ -1149,6 +1149,7 @@ int32 nglPath::GetChildren(list<nglPath>* pChildren) const
 			{
 				nglPath	path = *this;
 				path += nglPath(findData.cFileName);
+
 				pChildren->push_back(path);
 			}
 			count++;
@@ -1157,43 +1158,6 @@ int32 nglPath::GetChildren(list<nglPath>* pChildren) const
 
 	FindClose(dir);
 
-	#else
-
-	wchar_t filter[MAX_PATH + 1];
-	struct _wfinddata_t entry;
-	intptr_t dir;
-
-  std::wstring str = mPathName.GetStdWString();
-	wcscpy(filter, str.c_str());
-	if (filter[wcslen(filter)-1] == L'/')
-		wcscat(filter, L"*");
-	else
-		wcscat(filter, L"/*");
-
-	dir = _wfindfirst(filter, &entry);
-	if (dir == -1L)
-	{
-		return 0;
-	}
-
-	do
-	{
-		if (wcscmp(entry.name, L".") && wcscmp(entry.name, L".."))
-		{
-			if (pChildren)
-			{
-				nglPath path = *this;
-				path += nglPath(entry.name);
-				pChildren->push_back(path);
-			}
-			count++;
-		}
-	}
-	while (_wfindnext(dir, &entry) == 0);
-
-	_findclose(dir);
-
-	#endif
 
 	return count;
 }
