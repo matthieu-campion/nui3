@@ -1159,17 +1159,18 @@ int32 nglPath::GetChildren(list<nglPath>* pChildren) const
 
 	#else
 
-	char filter[MAX_PATH + 1];
-	struct _finddata_t entry;
+	wchar_t filter[MAX_PATH + 1];
+	struct _wfinddata_t entry;
 	intptr_t dir;
 
-	strcpy(filter, mPathName.GetStdString().c_str());
-	if (filter[strlen(filter)-1] =='/')
-		strcat(filter, "*");
+  std::wstring str = mPathName.GetStdWString();
+	wcscpy(filter, str.c_str());
+	if (filter[wcslen(filter)-1] == L'/')
+		wcscat(filter, L"*");
 	else
-		strcat(filter, "/*");
+		wcscat(filter, L"/*");
 
-	dir = _findfirst(filter, &entry);
+	dir = _wfindfirst(filter, &entry);
 	if (dir == -1L)
 	{
 		return 0;
@@ -1177,7 +1178,7 @@ int32 nglPath::GetChildren(list<nglPath>* pChildren) const
 
 	do
 	{
-		if (strcmp(entry.name, ".") && strcmp(entry.name, ".."))
+		if (wcscmp(entry.name, L".") && wcscmp(entry.name, L".."))
 		{
 			if (pChildren)
 			{
@@ -1188,7 +1189,7 @@ int32 nglPath::GetChildren(list<nglPath>* pChildren) const
 			count++;
 		}
 	}
-	while (_findnext(dir, &entry) == 0);
+	while (_wfindnext(dir, &entry) == 0);
 
 	_findclose(dir);
 
