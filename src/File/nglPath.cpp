@@ -717,16 +717,64 @@ bool nglPath::GetInfo(nglPathInfo& rInfo) const
   
 
 #ifdef _WIN32_
+
   
 	WIN32_FILE_ATTRIBUTE_DATA	dataInfo;
 
 	BOOL	result = GetFileAttributesEx(mPathName.GetChars(), GetFileExInfoStandard, &dataInfo);
 	if(result==0)	{ rInfo.Exists=false;  return false; }
 
+  SYSTEMTIME lastAccess; 
+  bool res = FileTimeToSystemTime(&dataInfo.ftLastAccessTime, &lastAccess);
+  SystemTimeToTzSpecificLocalTime(NULL, &lastAccess, &lastAccess);
+  NGL_ASSERT(res);
+
+  SYSTEMTIME lastMod; 
+  res = FileTimeToSystemTime(&dataInfo.ftLastWriteTime, &lastMod);
+  SystemTimeToTzSpecificLocalTime(NULL, &lastMod, &lastMod);
+  NGL_ASSERT(res);
+
+  nglTimeInfo accessTimeInfo;
+  accessTimeInfo.Seconds = lastAccess.wSecond;
+  accessTimeInfo.Minutes = lastAccess.wMinute;
+  accessTimeInfo.Hours = lastAccess.wHour;
+  accessTimeInfo.Day = lastAccess.wDay;
+  accessTimeInfo.Month = lastAccess.wMonth; ///< 1..12 (unlike system's gmtime, 0..11)
+  accessTimeInfo.Year = lastAccess.wYear - 1900; 
+  accessTimeInfo.WeekDay = lastAccess.wDayOfWeek;
+  accessTimeInfo.DST = -1; // <=> information not available
+
+
+  nglTimeInfo modTimeInfo;
+  modTimeInfo.Seconds = lastMod.wSecond;
+  modTimeInfo.Minutes = lastMod.wMinute;
+  modTimeInfo.Hours = lastMod.wHour;
+  modTimeInfo.Day = lastMod.wDay;
+  modTimeInfo.Month = lastMod.wMonth; ///< 1..12 (unlike system's gmtime, 0..11)
+  modTimeInfo.Year = lastMod.wYear - 1900; 
+  modTimeInfo.WeekDay = lastMod.wDayOfWeek;
+  modTimeInfo.DST = -1; // <=> information not available
+
+  // output debug
+/*
+wchar_t prout[1024];
+  swprintf(&prout[0], 1024,_T("\n\nFILE '%ls'\naccess seconds %d  Minutes %d   Hours %d   Day %d   Month %d   Year %d   WeekDay %d   DST %d\n"),
+    GetChars(), accessTimeInfo.Seconds, accessTimeInfo.Minutes, accessTimeInfo.Hours, accessTimeInfo.Day, accessTimeInfo.Month, accessTimeInfo.Year, accessTimeInfo.WeekDay, accessTimeInfo.DST);
+ 
+  OutputDebugString(&prout[0]);
+
+  swprintf(&prout[0], 1024,_T("mod seconds %d  Minutes %d   Hours %d   Day %d   Month %d   Year %d   WeekDay %d   DST %d\n"),
+    modTimeInfo.Seconds, modTimeInfo.Minutes, modTimeInfo.Hours, modTimeInfo.Day, modTimeInfo.Month, modTimeInfo.Year, modTimeInfo.WeekDay, modTimeInfo.DST);
+ 
+  OutputDebugString(&prout[0]);
+*/
+
+
+
 	rInfo.Exists	 = true;
 	rInfo.IsLeaf     = (dataInfo.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)==0;
-	rInfo.LastAccess = (double)((((int64)dataInfo.ftLastAccessTime.dwHighDateTime)<<32) + ((int64)dataInfo.ftLastAccessTime.dwLowDateTime));
-	rInfo.LastMod    = (double)((((int64)dataInfo.ftLastWriteTime .dwHighDateTime)<<32) + ((int64)dataInfo.ftLastWriteTime .dwLowDateTime));
+	rInfo.LastAccess = nglTime(accessTimeInfo);
+	rInfo.LastMod    = nglTime(modTimeInfo);
 	rInfo.Size       = rInfo.IsLeaf ? ((((int64)dataInfo.nFileSizeHigh)<<32) + ((int64)dataInfo.nFileSizeLow)) : 0;
 	rInfo.CanRead    = true; 
 	rInfo.CanWrite   = (dataInfo.dwFileAttributes & FILE_ATTRIBUTE_READONLY)==0;

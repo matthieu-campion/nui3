@@ -3060,7 +3060,7 @@ void nglWindow::EnterModalState()
   do
   {
     // Process (rest of) msg queue
-    while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE) && msg.message != WM_QUIT && mInModalState)
+    while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE) && msg.message != WM_QUIT && (mInModalState >= storeModalState))
     {
       bool ok = true;
       if (msg.hwnd != mHWnd)
@@ -3081,11 +3081,11 @@ void nglWindow::EnterModalState()
         DispatchMessage(&msg);
       }
     }
-  } while (msg.message != WM_QUIT && (mInModalState > storeModalState));
+  } while (msg.message != WM_QUIT && (mInModalState >= storeModalState));
   
   if (msg.message == WM_QUIT)
   {
-    PostQuitMessage(0);
+    PostQuitMessage(msg.wParam);
   }
 }
 

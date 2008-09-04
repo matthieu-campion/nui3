@@ -37,7 +37,7 @@ public:
   int Month;    ///< 1..12 (unlike system's gmtime, 0..11)
   int Year;     ///< number of years since 1900
   int WeekDay;  ///< 0..6 (0 is Sunday)
-  int DST;      ///< day light saving time (1..366)
+  int DST;      ///< Un drapeau indiquant si le décalage d'heure hiver/éte est en cours au moment de l'appel. La valeur retournée est positive si le décalage est en fonction, nulle s'il ne l'est pas, et négative si l'information n'est pas disponible.
 
 private:
   void CopyToSys   (struct tm* pTM) const;

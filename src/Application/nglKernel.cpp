@@ -74,6 +74,10 @@ nglLog& nglKernel::GetLog()
 
 nglConsole& nglKernel::GetConsole()
 {
+  //#HACH This is a hack to have NGL_OUT working event when nuiInit hasn't been called yet
+  if (!this)
+    return *(nglConsole*)NULL;
+
   if (!mpCon)
   {
     mpCon = new nglConsole();
