@@ -125,23 +125,6 @@ nuiHotKeyImpl<T>::~nuiHotKeyImpl()
 {
 }
 
-
-// SLBDBG
-//template <typename T>
-//nuiHotKeyImpl<T>* nuiHotKeyImpl<T>::Clone()
-//{
-//  T trigger = pHotKeyChar->GetTrigger();
-//  nuiKeyModifier modifiers = pHotKeyChar->GetModifiers();
-//  bool hasPriority = pHotKeyChar->HasPriority();
-//  bool isOnKeyUp = pHotKeyChar->IsOnKeyUp();
-//  nglString description = pHotKeyChar->GetDescription();
-//  
-//  // create the new hotkey
-//  nuiHotKeyImpl<T>* pNewHotKey = new nuiHotKeyImpl<T>*(trigger, modifiers, hasPriority, isOnKeyUp);
-//  pNewHotKey->SetName(rName);
-//  pNewHotKey->SetDescription(description);
-//}
-
 template <typename T>
 bool nuiHotKeyImpl<T>::OnKeyDown( const nglKeyEvent& rEvent, nuiKeyModifier CurrentModifiers, nuiSimpleEventSource<nuiWidgetActivated>& Activated )
 {

@@ -19,7 +19,6 @@ nuiHotKeyEditor::nuiHotKeyEditor()
   mpSelectedLabel = NULL;
   mpSelectedHotKey = NULL;
   
-  // SLBDBG
   // #FIXME: temp highlight : write text in green when a label is seleted. Background coloring doesn't seem to work though
   SetColor(eNormalTextFg, nuiColor(_T("black")));
   SetColor(eSelectedTextFg, nuiColor(_T("Green")));
