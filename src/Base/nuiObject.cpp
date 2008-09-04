@@ -495,7 +495,7 @@ int32 nuiObject::GetClassNameIndex(const nglString& rName)
     mObjectClassNames.push_back(rName);
     mClassAttributes.resize(index + 1);
     mInheritanceMap.push_back(-2); // -1 = not parent, -2 = not initialized
-    //printf("New class: %ls [%d]\n", rName.GetChars());
+    printf("New class: %ls [%d]\n", rName.GetChars(), index);
     
     return index;
   }
