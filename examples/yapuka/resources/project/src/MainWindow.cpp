@@ -16,7 +16,7 @@
  */
 
 MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& rInfo, bool ShowFPS, const nglContext* pShared )
-  : nuiMainWindow(rContextInfo, rInfo, pShared, nglPath(_T("../data"))), mEventSink(this)
+  : nuiMainWindow(rContextInfo, rInfo, pShared, nglPath(ePathCurrent)), mEventSink(this)
 {
 
 }
