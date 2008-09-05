@@ -14,8 +14,6 @@
 #define TIMER_MIN_PERIOD     0.050
 #define TIMER_ZERO_TOLERANCE 0.005 // _must_ be <= TIMER_MIN_PERIOD
 
-#ifdef NGL_USE_WIN32_MMTIMER
-
 MMRESULT nglTimer::mTimerID = -1;
 void nglTimer::InitMainTimer()
 {
@@ -44,9 +42,9 @@ nglTimer::nglTimer(nglTime Period)
 {
   mCounter = 0;
   mRoundsPerTick = 0;
-  mCallCnt=0;
-  //mTimerID=0;
-  mRunning=false;
+  mCallCnt = 0;
+  //mTimerID = 0;
+  mRunning = false;
   SetPeriod(Period);
   mLastTick = nglTime::GetTime();
   mTimers.push_back(this);
@@ -70,7 +68,7 @@ nglTime nglTimer::GetMinPeriod()
 {
   TIMECAPS caps;
   timeGetDevCaps(&caps,sizeof(TIMECAPS));
-  return 0.001f*(nglTime)caps.wPeriodMin;
+  return 0.001f * (nglTime)caps.wPeriodMin;
 }
 
 nglTime nglTimer::GetPeriod()
@@ -82,7 +80,7 @@ bool nglTimer::SetPeriod(nglTime Period)
 {
   if (mRunning) 
     return false;
-  mPeriod=Period;
+  mPeriod = Period;
   mRoundsPerTick = ToBelow(mPeriod / GetMinPeriod());
   if (!mRoundsPerTick)
     mRoundsPerTick = 1;
@@ -104,11 +102,11 @@ bool nglTimer::Start(bool Immediate, bool Reset)
     mCounter = MIN(mRoundsPerTick, mCounter);
     if (Reset)
     {
-      mCallCnt=0;
+      mCallCnt = 0;
       mCounter = mRoundsPerTick;
     }
-    mRunning=true;
-    mLastTick=nglTime::GetTime();
+    mRunning = true;
+    mLastTick = nglTime::GetTime();
     if (Immediate)
       OnTick(0);
   }
@@ -126,7 +124,7 @@ void nglTimer::Stop()
   {
     //timeKillEvent(mTimerID);
     //mTimerID=NULL;
-    mRunning=false;
+    mRunning = false;
   }
 }
 
@@ -168,146 +166,11 @@ LRESULT nglTimer::WndProc (HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
   for (it = mTimers.begin(); it != end; ++it)
   {
     nglTimer* pTimer = *it;
-    pTimer->CallOnTick();
+    if (pTimer->IsRunning())
+      pTimer->CallOnTick();
   }
   return 0;
 }
-
-#else
-nglTimer::nglTimer(nglTime Period)
-{
-  mCallCnt = 0;
-  mTimerHandle = NULL;
-  mRunning = false;
-  SetPeriod(Period);
-  mLastTick = nglTime::GetTime();
-  mTimers.push_back(this);
-}
-
-nglTimer::~nglTimer()
-{
-  Stop();
-  mTimers.remove(this);
-}
-
-
-uint nglTimer::GetTickCount()
-{
-  return mCallCnt;
-}
-
-nglTime nglTimer::GetMinPeriod()
-{
-  return 0.001; // 1 ms
-}
-
-nglTime nglTimer::GetPeriod()
-{
-  return mPeriod;
-}
-
-bool nglTimer::SetPeriod(nglTime Period)
-{
-  if (mRunning) 
-    return false;
-  mPeriod = Period;
-  return true;
-}
-
-VOID CALLBACK TimeProc(PVOID lpParameter, BOOLEAN TimerOrWaitFired)
-{
-  nglTimer::PostMessage();
-}
-
-bool nglTimer::Start(bool Immediate, bool Reset)
-{
-  //OutputDebugString("nglTimer::Start\n");
-  if (mRunning)
-    return false;
-
-  int32 t = MAX(1, ToNearest(1000.0*mPeriod)); // The time should last at least 1ms as this is the limit of the Win32 API
-  BOOL res = CreateTimerQueueTimer(&mTimerHandle, NULL /* Default timer queue */, &::TimeProc, this, t, t, WT_EXECUTEINTIMERTHREAD);
-
-  if (mTimerHandle!=NULL)
-  {
-    if (Reset)
-      mCallCnt = 0;
-    mRunning = true;
-    mLastTick = nglTime::GetTime();
-    //OutputDebugString("nglTimer::Start OK\n");
-    if (Immediate)
-      CallOnTick();
-  }
-  else
-    mRunning=false;
-
-  return mRunning;
-}
-
-void nglTimer::Stop()
-{
-  //OutputDebugString("nglTimer::Stop\n");
-  if (mRunning && mTimerHandle)
-  {
-    //OutputDebugString("nglTimer::Stop OK\n");
-    DeleteTimerQueueTimer(NULL, mTimerHandle, INVALID_HANDLE_VALUE);
-    mTimerHandle = NULL;
-    mRunning=false;
-  }
-}
-
-bool nglTimer::IsRunning()
-{
-  return mRunning;
-}
-
-
-/*
- *  Internals:
- */
-
-void nglTimer::CallOnTick()
-{
-  if (mRunning)
-  {
-    mCallCnt++;
-    nglTime tick;
-    //tick = nglTime::GetTime();
-
-    //OutputDebugString("nglTimer::CallOnTick()\n");
-    OnTick(tick-mLastTick);
-    
-    mLastTick = tick;
-  }
-  else
-  {
-    //OutputDebugString("nglTimer::CallOnTick() failed\n");
-  }
-}
-
-std::list<nglTimer*> nglTimer::mTimers;
-
-LRESULT nglTimer::WndProc (HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
-{
-  nglTimer* pTimer = (nglTimer*)lParam;
-  if (pTimer)
-  {
-    std::list<nglTimer*>::iterator it;
-    std::list<nglTimer*>::iterator end = mTimers.end();
-    for (it = mTimers.begin(); it != end; ++it)
-    {
-      if (*it == pTimer) // This timer is still valid!
-      {
-        pTimer->CallOnTick();
-        return 0;
-      }
-    }
-  }
-  //OutputDebugString("nglTimer::WndProc() for a DEAD timer\n");
-  // We only get there if the tick comes from a dead timer...
-  return 0;
-}
-#endif
 
 void nglTimer::PostMessage()
 {

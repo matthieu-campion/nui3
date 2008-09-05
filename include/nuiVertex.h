@@ -43,7 +43,7 @@ inline uint32 NUI_RGBA(uint8 R, uint8 G, uint8 B, uint8 A)
 inline uint32 NUI_RGBA(uint8 R, uint8 G, uint8 B, uint8 A)
 {
 #ifdef _WIN32_
-  return  ( (((uint32)R) << 24) + (((uint32)G) << 16) + (((uint32)B) << 8) + ((uint32)A) );
+  return  ( (A << 24) + (R << 16) + (G << 8) + B );
 #else
   return  ( (((uint32)A) << 24) + (((uint32)R) << 16) + (((uint32)G) << 8) + ((uint32)B) );
 #endif
