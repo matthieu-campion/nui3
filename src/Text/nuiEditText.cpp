@@ -384,7 +384,7 @@ bool nuiEditText::KeyUp(const nglKeyEvent& rEvent)
     return true;
   }
 
-  return false;
+  return !(IsKeyDown(NK_LMOD) || IsKeyDown(NK_RMOD) || IsKeyDown(NK_LALT) || IsKeyDown(NK_RALT));
 }
 
 void nuiEditText::MoveDropCursorTo(nuiSize X, nuiSize Y)
