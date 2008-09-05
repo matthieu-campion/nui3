@@ -26,14 +26,15 @@ const nuiStateDescription nuiStateHoverOff   = 0 << 30;
 const nuiStateDescription nuiStateHoverOn    = 1 << 30;
 
 
-const nuiStateDescription nuiStateMask       = (1 << 27) + (1 << 28) + (1 << 29) + (1 << 30) + (1 << 31);
+
+const nuiStateDescription nuiStateMask       = (1 << 26) + (1 << 27) + (1 << 28) + (1 << 29) + (1 << 30) + (1 << 31);
 
 class nuiStateDecoration : public nuiDecoration
 {
 public:
   nuiStateDecoration(const nglString& rName); /// undefined number of states
-  nuiStateDecoration(const nglString& rName, const nglString& rUp, const nglString& rDown = nglString::Null, const nglString& rHoverOn = nglString::Null, const nglString& rDisabled = nglString::Null); ///2 to 4 states
-  nuiStateDecoration(const nglString& rName, const nglString& rUp, const nglString& rDown, const nglString& rUpHoverOn,  const nglString& rDownHoverOn, const nglString& rDisabled); /// 5 states
+  nuiStateDecoration(const nglString& rName, const nglString& rUp, const nglString& rDown = nglString::Null, const nglString& rHoverOn = nglString::Null, const nglString& rDisabled = nglString::Null, const nglString& rDisabledSelected = nglString::Null); ///2 to 4 states
+  nuiStateDecoration(const nglString& rName, const nglString& rUp, const nglString& rDown, const nglString& rUpHoverOn,  const nglString& rDownHoverOn, const nglString& rDisabled, const nglString& rDisabledSelected); /// 5 states
 
   virtual ~nuiStateDecoration();
   
@@ -68,6 +69,10 @@ public:
 
   const nglString& GetDecoDisabled();
   void SetDecoDisabled(const nglString& rPath);
+
+  const nglString& GetDecoDisabledSelected();
+  void SetDecoDisabledSelected(const nglString& rPath);  
+  
   const nglString& GetDecoUpDisabled();
   void SetDecoUpDisabled(const nglString& rPath);
   const nglString& GetDecoDownDisabled();
@@ -91,6 +96,7 @@ private:
   nglString mDecoUpDisabled;
   nglString mDecoDownDisabled;
   nglString mDecoSelected;
+  nglString mDecoDisabledSelected;
   
   nuiRect mClientRect;
   bool mUseSourceClientRect;

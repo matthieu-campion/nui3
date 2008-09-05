@@ -20,35 +20,38 @@ nuiStateDecoration::nuiStateDecoration(const nglString& rName)
 }
 
 
-nuiStateDecoration::nuiStateDecoration(const nglString& rName, const nglString& rUp, const nglString& rDown, const nglString& rHoverOn, const nglString& rDisabled)
+nuiStateDecoration::nuiStateDecoration(const nglString& rName, const nglString& rUp, const nglString& rDown, const nglString& rHoverOn, const nglString& rDisabled, const nglString& rDisabledSelected)
   : nuiDecoration(rName), mClientRect(0,0,0,0), mUseSourceClientRect(false)
 {
   if (SetObjectClass(_T("nuiStateDecoration")))
     InitAttributes();
 
   if (!rUp.IsNull())
-    SetState(nuiStateEnabled  + nuiStateReleased, GetDecoration(rUp));
+    SetState(nuiStateEnabled  | nuiStateReleased, GetDecoration(rUp));
   if (!rDown.IsNull())
-    SetState(nuiStateEnabled  + nuiStatePressed,  GetDecoration(rDown));
+    SetState(nuiStateEnabled  | nuiStatePressed,  GetDecoration(rDown));
   if (!rHoverOn.IsNull())
-    SetState(nuiStateEnabled  + nuiStateHoverOn,  GetDecoration(rHoverOn));
+    SetState(nuiStateEnabled  | nuiStateHoverOn,  GetDecoration(rHoverOn));
   if (!rDisabled.IsNull())
-    SetState(nuiStateDisabled + nuiStateReleased, GetDecoration(rDisabled));
+    SetState(nuiStateDisabled | nuiStateReleased, GetDecoration(rDisabled));
+  if (!rDisabledSelected.IsNull())
+    SetState(nuiStateDisabled | nuiStateSelected, GetDecoration(rDisabledSelected));
 }
 
 
 
-nuiStateDecoration::nuiStateDecoration(const nglString& rName, const nglString& rUp, const nglString& rDown, const nglString& rUpHoverOn,  const nglString& rDownHoverOn, const nglString& rDisabled)
+nuiStateDecoration::nuiStateDecoration(const nglString& rName, const nglString& rUp, const nglString& rDown, const nglString& rUpHoverOn,  const nglString& rDownHoverOn, const nglString& rDisabled, const nglString& rDisabledSelected)
   : nuiDecoration(rName), mClientRect(0,0,0,0), mUseSourceClientRect(false)
 {
   if (SetObjectClass(_T("nuiStateDecoration")))
     InitAttributes();
 
-  SetState(nuiStateEnabled  + nuiStateReleased + nuiStateHoverOff, GetDecoration(rUp));
-  SetState(nuiStateEnabled  + nuiStateReleased + nuiStateHoverOn,  GetDecoration(rUpHoverOn));  
-  SetState(nuiStateEnabled  + nuiStatePressed + nuiStateHoverOff,  GetDecoration(rDown));
-  SetState(nuiStateEnabled  + nuiStatePressed + nuiStateHoverOn,  GetDecoration(rDownHoverOn));
-  SetState(nuiStateDisabled + nuiStateReleased, GetDecoration(rDisabled));
+  SetState(nuiStateEnabled  | nuiStateReleased | nuiStateHoverOff, GetDecoration(rUp));
+  SetState(nuiStateEnabled  | nuiStateReleased | nuiStateHoverOn,  GetDecoration(rUpHoverOn));  
+  SetState(nuiStateEnabled  | nuiStatePressed | nuiStateHoverOff,  GetDecoration(rDown));
+  SetState(nuiStateEnabled  | nuiStatePressed | nuiStateHoverOn,  GetDecoration(rDownHoverOn));
+  SetState(nuiStateDisabled | nuiStateReleased, GetDecoration(rDisabled));
+  SetState(nuiStateDisabled | nuiStateSelected, GetDecoration(rDisabledSelected));
 } 
 
 
@@ -105,6 +108,11 @@ void nuiStateDecoration::InitAttributes()
    (nglString(_T("OnDisabled")), nuiUnitNone,
     nuiFastDelegate::MakeDelegate(this, &nuiStateDecoration::GetDecoDisabled), 
     nuiFastDelegate::MakeDelegate(this, &nuiStateDecoration::SetDecoDisabled)));
+
+  AddAttribute(new nuiAttribute<const nglString&>
+     (nglString(_T("OnDisabledSelected")), nuiUnitNone,
+      nuiFastDelegate::MakeDelegate(this, &nuiStateDecoration::GetDecoDisabledSelected), 
+      nuiFastDelegate::MakeDelegate(this, &nuiStateDecoration::SetDecoDisabledSelected)));
 
   AddAttribute(new nuiAttribute<const nglString&>
    (nglString(_T("OnUpDisabled")), nuiUnitNone,
@@ -166,6 +174,7 @@ void nuiStateDecoration::DrawBack(nuiDrawContext* pContext, nuiWidget* pWidget, 
   nuiDecoration* pChoice3 = NULL;
   nuiDecoration* pChoice2 = NULL;
   
+  
   if (pButton)
   {
     state += pButton->IsPressed() ? nuiStatePressed : nuiStateReleased;
@@ -176,9 +185,13 @@ void nuiStateDecoration::DrawBack(nuiDrawContext* pContext, nuiWidget* pWidget, 
     state += pWidget->IsSelected() ? nuiStateSelected : nuiStateUnselected;
     pChoice2 = GetState(state);  
   }
-  
+
+
   state += pWidget->IsEnabled(true) ? nuiStateEnabled : nuiStateDisabled;
   nuiDecoration* pChoice1 = GetState(state);
+
+  
+
   
   state += pWidget->GetHover() ? nuiStateHoverOn : nuiStateHoverOff;
   nuiDecoration* pChoice0 = GetState(state);  
@@ -213,7 +226,7 @@ void nuiStateDecoration::DrawBack(nuiDrawContext* pContext, nuiWidget* pWidget, 
 void nuiStateDecoration::DrawFront(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rRect)
 {
   nuiButton* pButton = dynamic_cast<nuiButton*>(pWidget);
-  
+
   nuiStateDescription state = 0;
   nuiDecoration* pChoice4 = GetState(state);
 
@@ -426,7 +439,7 @@ const nglString& nuiStateDecoration::GetDecoUp()
 void nuiStateDecoration::SetDecoUp(const nglString& rPath)
 {
   mDecoUp = rPath;
-  SetState(nuiStateEnabled + nuiStateReleased, GetDecoration(mDecoUp));  
+  SetState(nuiStateEnabled | nuiStateReleased, GetDecoration(mDecoUp));  
 }
 
 
@@ -439,7 +452,7 @@ const nglString& nuiStateDecoration::GetDecoDown()
 void nuiStateDecoration::SetDecoDown(const nglString& rPath)
 {
   mDecoDown = rPath;
-  SetState(nuiStateEnabled + nuiStatePressed, GetDecoration(mDecoDown));  
+  SetState(nuiStateEnabled | nuiStatePressed, GetDecoration(mDecoDown));  
 }
 
 
@@ -452,7 +465,7 @@ const nglString& nuiStateDecoration::GetDecoUpHover()
 void nuiStateDecoration::SetDecoUpHover(const nglString& rPath)
 {
   mDecoUpHover = rPath;
-  SetState(nuiStateEnabled + nuiStateReleased + nuiStateHoverOn, GetDecoration(mDecoUpHover));  
+  SetState(nuiStateEnabled | nuiStateReleased | nuiStateHoverOn, GetDecoration(mDecoUpHover));  
 }
 
 
@@ -465,7 +478,7 @@ const nglString& nuiStateDecoration::GetDecoDownHover()
 void nuiStateDecoration::SetDecoDownHover(const nglString& rPath)
 {
   mDecoDownHover = rPath;
-  SetState(nuiStateEnabled + nuiStatePressed + nuiStateHoverOn, GetDecoration(mDecoDownHover));  
+  SetState(nuiStateEnabled | nuiStatePressed | nuiStateHoverOn, GetDecoration(mDecoDownHover));  
 }
 
 
@@ -486,6 +499,20 @@ void nuiStateDecoration::SetDecoDisabled(const nglString& rPath)
 
 
 
+const nglString& nuiStateDecoration::GetDecoDisabledSelected()
+{
+  return mDecoDisabledSelected;
+}
+
+
+void nuiStateDecoration::SetDecoDisabledSelected(const nglString& rPath)
+{
+  mDecoDisabledSelected = rPath;
+  SetState(nuiStateDisabled | nuiStateSelected, GetDecoration(mDecoDisabledSelected));  
+}
+
+
+
 
 const nglString& nuiStateDecoration::GetDecoUpDisabled()
 {
@@ -496,7 +523,7 @@ const nglString& nuiStateDecoration::GetDecoUpDisabled()
 void nuiStateDecoration::SetDecoUpDisabled(const nglString& rPath)
 {
   mDecoUpDisabled = rPath;
-  SetState(nuiStateReleased + nuiStateDisabled, GetDecoration(mDecoUpDisabled));  
+  SetState(nuiStateReleased | nuiStateDisabled, GetDecoration(mDecoUpDisabled));  
 }
 
 
@@ -511,7 +538,7 @@ const nglString& nuiStateDecoration::GetDecoDownDisabled()
 void nuiStateDecoration::SetDecoDownDisabled(const nglString& rPath)
 {
   mDecoDownDisabled = rPath;
-  SetState(nuiStatePressed + nuiStateDisabled, GetDecoration(mDecoDownDisabled));  
+  SetState(nuiStatePressed | nuiStateDisabled, GetDecoration(mDecoDownDisabled));  
 }
 
 

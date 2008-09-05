@@ -177,6 +177,8 @@ bool nuiWidget::AttrIsEnabled()
 	return IsEnabled();
 }
 
+
+
 bool nuiWidget::AttrIsVisible()
 {
 	return IsVisible();
@@ -191,7 +193,7 @@ void nuiWidget::InitAttributes()
     (nglString(_T("Enabled")), nuiUnitBoolean,
      nuiAttribute<bool>::GetterDelegate(this, &nuiWidget::AttrIsEnabled),
      nuiAttribute<bool>::SetterDelegate(this, &nuiWidget::SetEnabled)));
-
+  
   AddAttribute(new nuiAttribute<bool>
     (nglString(_T("Visible")), nuiUnitBoolean,
      nuiAttribute<bool>::GetterDelegate(this, &nuiWidget::AttrIsVisible),
@@ -202,6 +204,8 @@ void nuiWidget::InitAttributes()
      nuiAttribute<bool>::GetterDelegate(this, &nuiWidget::AttrIsSelected),
      nuiAttribute<bool>::SetterDelegate(this, &nuiWidget::SetSelected)));
 
+  
+  
   AddAttribute(new nuiAttribute<const nuiRect&>
     (nglString(_T("UserRect")), nuiUnitNone,
      nuiAttribute<const nuiRect&>::GetterDelegate(this, &nuiWidget::GetUserRect),

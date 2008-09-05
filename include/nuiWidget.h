@@ -227,6 +227,7 @@ public:
   virtual void SetSelected(bool set);
   bool IsEnabled(bool combined = true) const;
 	bool AttrIsEnabled();
+  
   bool IsDisabled(bool combined = true) const
   {
     return !IsEnabled(combined);

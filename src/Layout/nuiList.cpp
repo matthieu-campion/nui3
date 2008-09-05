@@ -595,7 +595,7 @@ bool nuiList::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
   if (Button & nglMouseInfo::ButtonLeft)
   {
     nuiWidgetPtr pItem = GetItem(X,Y);
-    if (pItem && pItem->IsEnabled())
+    if (pItem && pItem->IsEnabled(false))
     {
       mCursorLine = GetItemNumber(pItem);
       if (mMultiSelectable)
@@ -674,7 +674,7 @@ void nuiList::SelectItemSilent(uint ItemNumber)
 
 void nuiList::SelectItem(nuiWidgetPtr pItem)
 {
-  if (pItem && pItem->IsEnabled())
+  if (pItem && pItem->IsEnabled(false))
   {
     if (mMultiSelectable)
     {
@@ -706,7 +706,7 @@ void nuiList::SelectItem(nuiWidgetPtr pItem)
 
 void nuiList::SelectItemSilent(nuiWidgetPtr pItem)
 {
-  if (pItem && pItem->IsEnabled())
+  if (pItem && pItem->IsEnabled(false))
   {
     if (mMultiSelectable)
     {
