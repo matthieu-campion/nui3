@@ -29,26 +29,26 @@ nglMimeSource::~nglMimeSource()
 nglMimeTextSource::nglMimeTextSource(const nglString & str)
 : nglMimeSource(nglMimeSource::TextMimeData)
 {
-  mTextUtf8 = str.Export(eUTF8);
-  mLength = strlen(mTextUtf8);
+  mpTextUtf8 = str.Export(eUTF8);
+  mLength = strlen(mpTextUtf8);
 }
 
 
 nglMimeTextSource::~nglMimeTextSource()
 {
-  free(mTextUtf8);
+  delete mpTextUtf8;
 }
 
 void nglMimeTextSource::SetText(const nglString& str)
 {
-  free(mTextUtf8);
-  mTextUtf8 = str.Export(eUTF8);
-  mLength = strlen(mTextUtf8);
+  delete mpTextUtf8;
+  mpTextUtf8 = str.Export(eUTF8);
+  mLength = strlen(mpTextUtf8);
 }
 
 const uint8 *nglMimeTextSource::GetData() const
 {
-  return (uint8*)mTextUtf8;
+  return (uint8*)mpTextUtf8;
 }
 
 nglSize nglMimeTextSource::GetDataSize() const
@@ -58,5 +58,16 @@ nglSize nglMimeTextSource::GetDataSize() const
 
 void nglMimeTextSource::SetData(const uint8 *data, nglSize length)
 {
-  memcpy(mTextUtf8, data, length);
+  delete mpTextUtf8;
+  mpTextUtf8 = new char[length + 1];
+
+  memcpy(mpTextUtf8, data, length);
+  mpTextUtf8[length] = 0;
+  mLength = length;
 }
+
+nglString nglMimeTextSource::GetText() const
+{
+  return nglString(mpTextUtf8, eUTF8);
+}
+

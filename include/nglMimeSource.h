@@ -57,7 +57,7 @@ public:
   nglMimeTextSource(const nglString & str = nglString::Empty);
   virtual ~nglMimeTextSource();
 
-  virtual nglString GetText() const { return nglString(mTextUtf8, eUTF8); }
+  virtual nglString GetText() const;
 
   virtual void SetText(const nglString& str);
 
@@ -68,7 +68,7 @@ protected:
   virtual void SetData(const uint8 *data, nglSize length);
 
 private:
-  char* mTextUtf8;
+  char* mpTextUtf8;
   nglSize mLength;
 };
 
