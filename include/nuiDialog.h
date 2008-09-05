@@ -75,7 +75,7 @@ protected:
   virtual bool  OnCancel(const nuiEvent& rEvent);
   virtual bool  OnApply(const nuiEvent& rEvent);
   virtual bool  OnAccept(const nuiEvent& rEvent);
-private:
+protected:
 	nuiEventSink<nuiDialog> mSink;
   nuiSimpleContainer*   mpLayoutContainer;
   nuiGrid*        mpGlobalGrid;

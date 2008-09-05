@@ -93,6 +93,12 @@ public:
    This is diferent than closig the main window. Returning true on this method quits the application, false refuse the exit.
    */
   //@}
+
+  bool IsQuitRequested() const;
+  /*!<
+   Returns true if Quit has been called
+   */
+  //@}
   
   virtual void OpenDocuments(std::list<nglPath>& paths);
   /*!<

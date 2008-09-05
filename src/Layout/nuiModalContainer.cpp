@@ -265,7 +265,7 @@ void nuiModalContainer::OnTrash()
     mInModalState = false;
     pTop->ExitModalState();
   }
-
+  
   /* LBDEBUG FIXME
   if (mpPreviousFocus)
     mpPreviousFocus->Focus();

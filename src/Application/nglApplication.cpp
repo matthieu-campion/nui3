@@ -278,3 +278,10 @@ void nglApplication::OpenDocuments(std::list<nglPath>& filePaths)
 {
 }
 
+bool nglApplication::IsQuitRequested() const
+{
+  return mExitPosted;
+}
+
+
+

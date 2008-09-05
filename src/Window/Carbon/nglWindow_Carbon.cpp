@@ -1,9 +1,21 @@
 /*
-  NUI3 - C++ cross-platform GUI framework for OpenGL based applications
-  Copyright (C) 2002-2003 Sebastien Metrot
-
-  licence: see nui3/LICENCE.TXT
-*/
+ NGL - C++ cross-platform framework for OpenGL based applications
+ Copyright (C) 2000-2003 NGL Team
+ 
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public
+ License as published by the Free Software Foundation; either
+ version 2.1 of the License, or (at your option) any later version.
+ 
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Lesser General Public License for more details.
+ 
+ You should have received a copy of the GNU Lesser General Public
+ License along with this library; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
 #include "nui.h"
 #include "nglApplication.h"
@@ -1097,7 +1109,6 @@ OSStatus nglWindow::WindowEventHandler (EventHandlerCallRef eventHandlerCallRef,
         CallOnCreation();
         break;
       case kEventWindowActivated:
-        printf("Event: Activated\n");
         ActivateTSMDocument(nuiTSMDocument);
         SetUserFocusWindow(mWindow);
         CallOnActivation();
@@ -1105,7 +1116,6 @@ OSStatus nglWindow::WindowEventHandler (EventHandlerCallRef eventHandlerCallRef,
           result = eventNotHandledErr;
         break;
       case kEventWindowDeactivated:
-        printf("Event: Deactivated\n");
         DeactivateTSMDocument(nuiTSMDocument);
         CallOnDesactivation();
         if (mIsFakeChildWindow)
@@ -1271,31 +1281,31 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
     WindowAttributes attributes = kWindowStandardHandlerAttribute | kWindowLiveResizeAttribute | kWindowCollapseBoxAttribute | 
     kWindowAsyncDragAttribute | kWindowFullZoomAttribute;
     
-    if (rInfo.Flags & FullScreen)
-    {
-      attributes |= kWindowNoConstrainAttribute;
-      
-      int x=0;
-      int y=0;
-      
-      if (rInfo.Pos == nglWindowInfo::ePosUser)
-      {
-        x = rInfo.XPos;
-        y = rInfo.YPos;
-      }
-      else if (rInfo.Pos == nglWindowInfo::ePosCenter)
-      {
-        nglVideoMode videoMode;
-        int w = videoMode.GetWidth();
-        int h = videoMode.GetHeight();
-        
-        x = (w - rInfo.Width)/2;
-        y = (h - rInfo.Height)/2;      
-      }
-      
-      SetRect(&wRect,x,y,x+rInfo.Width,y+rInfo.Height); /* left, top, right, bottom */
-    }
-    else if (rInfo.Flags & NoBorder)
+    //if (rInfo.Flags & FullScreen)
+//    {
+//      attributes |= kWindowNoConstrainAttribute;
+//      
+//      int x=0;
+//      int y=0;
+//      
+//      if (rInfo.Pos == nglWindowInfo::ePosUser)
+//      {
+//        x = rInfo.XPos;
+//        y = rInfo.YPos;
+//      }
+//      else if (rInfo.Pos == nglWindowInfo::ePosCenter)
+//      {
+//        nglVideoMode videoMode;
+//        int w = videoMode.GetWidth();
+//        int h = videoMode.GetHeight();
+//        
+//        x = (w - rInfo.Width)/2;
+//        y = (h - rInfo.Height)/2;      
+//      }
+//      
+//      SetRect(&wRect,x,y,x+rInfo.Width,y+rInfo.Height); /* left, top, right, bottom */
+//    }
+    if (rInfo.Flags & NoBorder)
     {
       attributes |= kWindowNoTitleBarAttribute;
       
@@ -1910,6 +1920,7 @@ bool nglWindow::MakeCurrent() const
 void nglWindow::EnterModalState()
 {
   mInModalState++;
+  uint32 state = mInModalState;
   
   SetState(eShow);
 
@@ -1927,9 +1938,13 @@ void nglWindow::EnterModalState()
     int32 iErr = NMInstall(&nmr);
   }
   
-  OSStatus err = RunAppModalLoopForWindow(mWindow);
   
-  NGL_ASSERT(err == 0);
+  while (state <= mInModalState && !((nglApplication*)App)->IsQuitRequested())
+  {
+    OSStatus err = RunAppModalLoopForWindow(mWindow);
+    NGL_ASSERT(err == 0);
+  }
+  
 }
 
 void nglWindow::ExitModalState()
