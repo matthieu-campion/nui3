@@ -5078,7 +5078,6 @@
 				E5816DE30C3CECAB00902DFE /* nglIFile.cpp */,
 				E5816C8D0C3CECAB00902DFE /* nglIFile.h */,
 				E5816DE40C3CECAB00902DFE /* nglIMemory.cpp */,
-				E5816C910C3CECAB00902DFE /* nglInputDevice.h */,
 				E5816DE50C3CECAB00902DFE /* nglIOFile.cpp */,
 				E5816C920C3CECAB00902DFE /* nglIOFile.h */,
 				E5816C930C3CECAB00902DFE /* nglIOStream.h */,
@@ -5233,6 +5232,7 @@
 		E5816E1C0C3CECAB00902DFE /* Window */ = {
 			isa = PBXGroup;
 			children = (
+				E5816C910C3CECAB00902DFE /* nglInputDevice.h */,
 				E5816C7A0C3CECAB00902DFE /* ngl_glext.h */,
 				E5816E1D0C3CECAB00902DFE /* Carbon */,
 				E5816E230C3CECAB00902DFE /* glext */,
