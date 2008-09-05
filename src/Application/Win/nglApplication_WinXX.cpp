@@ -101,6 +101,7 @@ nglApplication::nglApplication()
 {
   mUseIdle = false;
   mLastIdleCall = 0.0f;
+  mExitPosted = false;
 
   // nglApplication is a kernel's client, just as plugin instances
   IncRef();

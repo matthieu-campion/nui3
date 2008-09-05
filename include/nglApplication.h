@@ -215,6 +215,7 @@ myprogram --log-level all:0,net:info
 
 protected:
   const nglChar* OnError (uint& rError) const; // From nglError
+  bool mExitPosted;
 
 private:
   bool    mUseIdle;
@@ -235,7 +236,6 @@ private:
 
 #ifdef _CARBON_
 protected:
-  bool mExitPosted;
   int  mExitCode;
 
   int  Main(int argc, char** argv);
