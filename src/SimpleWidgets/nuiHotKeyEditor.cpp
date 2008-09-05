@@ -26,6 +26,8 @@ nuiHotKeyEditor::nuiHotKeyEditor()
   SetColor(eNormalTextBg, nuiColor(_T("Red")));
   SetColor(eSelectedTextBg, nuiColor(_T("Green")));
   SetColor(eDisabledTextBg, nuiColor(_T("Blue")));
+  
+  SetWantKeyboardFocus(true);
 }
 
 nuiHotKeyEditor::~nuiHotKeyEditor()
@@ -144,7 +146,6 @@ bool nuiHotKeyEditor::OnCellClicked(const nuiEvent& rEvent)
     if (pLabel == mpEditLabel) // this shortcut was in edition
     {
       // cancel editing
-      mpEditLabel->UnFocus();
       mpEditLabel->SetSelected(false);
       mpEditLabel->SetText(mpSelectedHotKey->ShortcutToString());
       mpEditLabel = NULL;
@@ -155,7 +156,6 @@ bool nuiHotKeyEditor::OnCellClicked(const nuiEvent& rEvent)
     {
       // the cell was already selected, enter edit mode
       mpEditLabel = pLabel;
-      mpEditLabel->Focus();
       mpEditLabel->SetText(_T("....."));
     }
     else // the cell was inactive, cancel everything in progress and select this one
@@ -163,7 +163,6 @@ bool nuiHotKeyEditor::OnCellClicked(const nuiEvent& rEvent)
       // cancel editing
       if (mpEditLabel)
       {        
-        mpEditLabel->UnFocus();
         mpEditLabel->SetText(mpSelectedHotKey->ShortcutToString());
         mpEditLabel = NULL;
       }
@@ -290,7 +289,6 @@ bool nuiHotKeyEditor::KeyDown(const nglKeyEvent& rEvent)
     }    
     
     // exit editing
-    mpEditLabel->UnFocus();
     mpEditLabel = NULL;
     mpSelectedLabel->SetSelected(false);
     mpSelectedLabel = NULL;
