@@ -105,6 +105,9 @@ nuiWidget::nuiWidget()
   
   // Property bindings:
   InitProperties();
+  
+  // Default Decoration
+  SetDefaultDecoration();
 }
 
 
@@ -3049,6 +3052,13 @@ bool nuiWidget::IsOverDrawInteractive() const
 {
   return mInteractiveOD;
 }
+
+
+void nuiWidget::SetDefaultDecoration()
+{
+  
+}
+
 
 void nuiWidget::SetDecoration(const nglString& rName)
 {

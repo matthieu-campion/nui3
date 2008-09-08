@@ -428,6 +428,7 @@ public:
 
   /** @name Decorations */
   //@{
+  virtual void SetDefaultDecoration();
   virtual void SetDecoration(const nglString& rName);
   void SetDecoration(nuiDecoration* pDecoration, nuiDecorationMode Mode = eDecorationOverdraw);
   void SetDecorationMode(nuiDecorationMode Mode = eDecorationOverdraw);
