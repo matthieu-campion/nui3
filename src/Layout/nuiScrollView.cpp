@@ -9,6 +9,8 @@
 #include "nuiDrawContext.h"
 #include "nuiScrollView.h"
 
+#include "nuiGradientDecoration.h"
+
 #define SCROLL_SIZE 12.0f
 #ifdef _UIKIT_
 # define NUI_SMOOTH_SCROLL_RATIO (1.f/4.f)
@@ -33,9 +35,16 @@ nuiScrollView::nuiScrollView(nuiScrollBar* pHorizontalScrollBar, nuiScrollBar* p
 
 void nuiScrollView::SetDefaultDecoration()
 {
-  nuiGradientDecoration* pDeco = new nuiGradientDecoration(_T("decoDefaultScrollView"), _T("5 5 0 0"), 
-      nuiColor::GetColor(_T("clrDefaultPane1")), nuiColor::GetColor(_T("clrDefaultPane2")), 
-      nuiVertical, 1/*strokesize*/, nuiColor::GetColor(_T("clrDefaultStroke")), eStrokeAndFillShape);
+  nuiColor cPane1,cPane2,cStroke;
+  
+  nuiColor::GetColor(_T("clrDefaultPane1"), cPane1);
+  nuiColor::GetColor(_T("clrDefaultPane2"), cPane2);
+  nuiColor::GetColor(_T("clrDefaultStroke"), cStroke);
+  
+
+  
+  nuiGradientDecoration* pDeco = new nuiGradientDecoration(_T("decoDefaultScrollView"), nuiRect(5,5,0,0), 
+      cPane1, cPane2, nuiVertical, 1/*strokesize*/, cStroke, eStrokeAndFillShape);
   
   SetDecoration(pDeco, eDecorationBorder);
 }
