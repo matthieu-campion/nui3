@@ -27,8 +27,6 @@ void nuiDefaultDecoration::Init()
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiEditText")), &nuiDefaultDecoration::EditText);
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiEditLine")), &nuiDefaultDecoration::EditLine);
 
-  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiScrollView")), &nuiDefaultDecoration::ScrollView);
-
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiTitledPane")), &nuiDefaultDecoration::TitledPane);
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFolderPane")), &nuiDefaultDecoration::FolderPane);
 
@@ -86,22 +84,22 @@ void nuiDefaultDecoration::ScrollBar(nuiWidget* pWidget)
 
 
 
-void nuiDefaultDecoration::ScrollView(nuiWidget* pWidget)
-{
-  
-  nuiGradientDecoration* pDeco = (nuiGradientDecoration*)nuiDecoration::Get(_T("nuiDefaultDecorationScrollView"));
-  if (!pDeco)
-  {
-    nuiColor cPane1,cPane2,cStroke;
-    cPane1.SetValue(_T("nuiDefaultColorPane1"));
-    cPane2.SetValue(_T("nuiDefaultColorPane2"));
-    cStroke.SetValue(_T("nuiDefaultColorStroke"));
-    
-    pDeco = new nuiGradientDecoration(_T("nuiDefaultDecorationScrollView"), nuiRect(5,5,0,0), cPane1, cPane2, nuiVertical, 1/*strokesize*/, cStroke, eStrokeAndFillShape);
-  }
-  
-  pWidget->SetDecoration(pDeco, eDecorationBorder);
-}
+//void nuiDefaultDecoration::ScrollView(nuiWidget* pWidget)
+//{
+//  
+//  nuiGradientDecoration* pDeco = (nuiGradientDecoration*)nuiDecoration::Get(_T("nuiDefaultDecorationScrollView"));
+//  if (!pDeco)
+//  {
+//    nuiColor cPane1,cPane2,cStroke;
+//    cPane1.SetValue(_T("nuiDefaultColorPane1"));
+//    cPane2.SetValue(_T("nuiDefaultColorPane2"));
+//    cStroke.SetValue(_T("nuiDefaultColorStroke"));
+//    
+//    pDeco = new nuiGradientDecoration(_T("nuiDefaultDecorationScrollView"), nuiRect(5,5,0,0), cPane1, cPane2, nuiVertical, 1/*strokesize*/, cStroke, eStrokeAndFillShape);
+//  }
+//  
+//  pWidget->SetDecoration(pDeco, eDecorationBorder);
+//}
 
 
 void nuiDefaultDecoration::TitledPane(nuiWidget* pWidget)
