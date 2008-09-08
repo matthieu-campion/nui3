@@ -813,6 +813,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\Decorations\nuiDefaultDecoration.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiDefaultDecoration.h"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Decorations\nuiFrame.cpp"
 					>
 				</File>
