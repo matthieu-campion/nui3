@@ -23,6 +23,17 @@ static static_color static_colors[] =
 {(nglChar*)_T("nuiDefaultColorPane2"), 252,252,252},
 {(nglChar*)_T("nuiDefaultColorStroke"), 205,205,205},
 
+{(nglChar*)_T("nuiDefaultColorLabelText"), 40,40,40},
+
+{(nglChar*)_T("nuiDefaultColorScrollBar1"), 169,181,200},
+{(nglChar*)_T("nuiDefaultColorScrollBar2"), 91,115,150},
+{(nglChar*)_T("nuiDefaultColorScrollBar3"), 34,66,114},
+{(nglChar*)_T("nuiDefaultColorScrollBarStroke"), 94,117,152},
+
+
+
+
+
   // constants
   {(nglChar*)_T("aliceblue"), 240, 248, 255}, 
   {(nglChar*)_T("antiquewhite"), 250, 235, 215}, 

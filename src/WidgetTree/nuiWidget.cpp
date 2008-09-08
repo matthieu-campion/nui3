@@ -3239,7 +3239,7 @@ void nuiWidget::CallDisconnectTopLevel(nuiTopLevel* pTopLevel)
     UnFocus();
   DisconnectTopLevel();
 }
-
+ 
 void nuiWidget::ConnectTopLevel()
 {
 }

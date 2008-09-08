@@ -25,6 +25,20 @@ public:
   
   static void Init();
 
-  static void nuiScrollView(nuiWidget* pWidget);
+  static void Label(nuiWidget* pWidget);
+  static void EditText(nuiWidget* pWidget);
+  static void EditLine(nuiWidget* pWidget);
 
+  static void ScrollView(nuiWidget* pWidget);
+
+  static void TitledPane(nuiWidget* pWidget);
+  static void FolderPane(nuiWidget* pWidget);
+
+  static void Button(nuiWidget* pWidget);
+  static void ToggleButton(nuiWidget* pWidget);
+
+  // special cases
+  static void ScrollBar(nuiWidget* pWidget);
+
+  
 };
