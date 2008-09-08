@@ -17,6 +17,7 @@
 #include "nuiWidgetElements.h"
 #include "nuiHotKey.h"
 #include "nuiDecorationDefines.h"
+#include "nuiDefaultDecoration.h"
 
 typedef std::vector<uint8> nuiRenderCache;
 
@@ -428,7 +429,8 @@ public:
 
   /** @name Decorations */
   //@{
-  virtual void SetDefaultDecoration();
+  void InitDefaultDecorations();
+  static void SetDefaultDecoration(int32 objectClassIndex, nuiDecorationDelegate dlg);
   virtual void SetDecoration(const nglString& rName);
   void SetDecoration(nuiDecoration* pDecoration, nuiDecorationMode Mode = eDecorationOverdraw);
   void SetDecorationMode(nuiDecorationMode Mode = eDecorationOverdraw);
@@ -587,6 +589,9 @@ private:
   nuiDecoration* mpFocusDecoration;
   nuiDecorationMode mFocusDecorationMode;
   bool mShowFocus;
+  
+  static std::vector<nuiDecorationDelegate> mDefaultDecorations;
+
 
   void SetLeftBorder(nuiSize border);
   void SetTopBorder(nuiSize border);

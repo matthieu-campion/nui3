@@ -102,12 +102,12 @@ nuiWidget::nuiWidget()
 #endif
   
   Init();
+
+  InitDefaultDecorations();
   
   // Property bindings:
   InitProperties();
   
-  // Default Decoration
-  SetDefaultDecoration();
 }
 
 
@@ -3053,10 +3053,21 @@ bool nuiWidget::IsOverDrawInteractive() const
   return mInteractiveOD;
 }
 
-
-void nuiWidget::SetDefaultDecoration()
+void nuiWidget::InitDefaultDecorations()
 {
-  
+  if (mDefaultDecorations.size())
+    return;
+
+  nuiDefaultDecoration::Init();
+}
+
+// static 
+void nuiWidget::SetDefaultDecoration(int32 objectClassIndex, nuiDecorationDelegate dlg)
+{
+  if (objectClassIndex >= mDefaultDecorations.size())
+    mDefaultDecorations.resize(objectClassIndex+1);
+
+  mDefaultDecorations[objectClassIndex] = dlg;
 }
 
 
@@ -3211,6 +3222,15 @@ void nuiWidget::CallConnectTopLevel(nuiTopLevel* pTopLevel)
     pTopLevel->SetFocus(this);
   pTopLevel->PrepareWidgetCSS(this, false, NUI_WIDGET_MATCHTAG_ALL);
   ConnectTopLevel();
+
+  // cal delegate for default decoration, if the user has not set any decoration, and if there is a default decoration
+  int32 index = GetObjectClassNameIndex();
+  if (!GetDecoration() && (mDefaultDecorations.size() > index))
+  {
+    nuiDecorationDelegate dlg = mDefaultDecorations[index];
+    if (dlg)
+      dlg(this);
+  }
 }
 
 void nuiWidget::CallDisconnectTopLevel(nuiTopLevel* pTopLevel)
@@ -3308,3 +3328,9 @@ bool nuiWidget::IsFocusVisible() const
   return mShowFocus;
 }
 
+
+
+// ***************************************************************************
+
+// static 
+std::vector<nuiDecorationDelegate> nuiWidget::mDefaultDecorations;

@@ -19,9 +19,9 @@ typedef struct static_color
 static static_color static_colors[] =
 {
   // default colors for decoration
-{(nglChar*)_T("clrDefaultPane1"), 240,240,240},
-{(nglChar*)_T("clrDefaultPane2"), 252,252,252},
-{(nglChar*)_T("clrDefaultStroke"), 205,205,205},
+{(nglChar*)_T("nuiDefaultColorPane1"), 240,240,240},
+{(nglChar*)_T("nuiDefaultColorPane2"), 252,252,252},
+{(nglChar*)_T("nuiDefaultColorStroke"), 205,205,205},
 
   // constants
   {(nglChar*)_T("aliceblue"), 240, 248, 255}, 

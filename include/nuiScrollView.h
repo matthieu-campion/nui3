@@ -22,8 +22,6 @@ public:
   virtual bool Load(const nuiXMLNode* pNode);
   virtual ~nuiScrollView();
   
-  virtual void SetDefaultDecoration();
-  
   virtual nuiRect CalcIdealSize();
   virtual bool SetRect(const nuiRect& rRect);
   virtual bool Draw(nuiDrawContext* pContext);

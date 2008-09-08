@@ -33,22 +33,6 @@ nuiScrollView::nuiScrollView(nuiScrollBar* pHorizontalScrollBar, nuiScrollBar* p
 }
 
 
-void nuiScrollView::SetDefaultDecoration()
-{
-  nuiColor cPane1,cPane2,cStroke;
-  
-  nuiColor::GetColor(_T("clrDefaultPane1"), cPane1);
-  nuiColor::GetColor(_T("clrDefaultPane2"), cPane2);
-  nuiColor::GetColor(_T("clrDefaultStroke"), cStroke);
-  
-
-  
-  nuiGradientDecoration* pDeco = new nuiGradientDecoration(_T("decoDefaultScrollView"), nuiRect(5,5,0,0), 
-      cPane1, cPane2, nuiVertical, 1/*strokesize*/, cStroke, eStrokeAndFillShape);
-  
-  SetDecoration(pDeco, eDecorationBorder);
-}
-
 
 bool nuiScrollView::Load(const nuiXMLNode* pNode)
 {
