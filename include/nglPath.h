@@ -160,7 +160,8 @@ public:
 	nglString GetNodeName() const;      ///< Returns the last path component (node name)
 	nglString GetExtension() const;     ///< Returns the file extension (without the dot), or an empty string if the path is a folder or a file without extension
 	nglString GetRemovedExtension() const;     ///< Returns the path without extension (and without the dot)
-	nglString GetParentName() const;  ///< Returns the parent path as a string (remove the last node)
+  void SetExtension(const nglString& rExtension); ///< Changes the extension of the file (or add one if needed).
+  nglString GetParentName() const;  ///< Returns the parent path as a string (remove the last node)
 	nglPath   GetParent() const;      ///< Returns the parent path (remove the last node)
   void Split(std::vector<nglString>& rElements); ///< Split the elements of this path into its elements (folders and eventual file))
 	int32 GetChildren(std::list<nglPath>* pChildren) const;

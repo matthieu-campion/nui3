@@ -639,12 +639,24 @@ nglString nglPath::GetExtension() const
 
 nglString nglPath::GetRemovedExtension() const
 {
-	nglString	result	= mPathName;
-	int32	dot		= result.FindLast(_T('.'));
-	if(dot==-1)		return result;
+	nglString	result = mPathName;
+	int32	dot = result.FindLast(_T('.'));
+	if (dot == -1)
+    return result;
 
 	result.DeleteRight(result.GetLength()-dot);
 	return result;
+}
+
+void nglPath::SetExtension(const nglString& rExtension)
+{
+  int32 dot = mPathName.FindLast(_T('.'));
+  if (dot != -1)
+  {
+    mPathName.DeleteRight(mPathName.GetLength() - dot);
+  }
+
+  mPathName.Add(_T('.')).Add(rExtension);
 }
 
 nglString nglPath::GetParentName() const
