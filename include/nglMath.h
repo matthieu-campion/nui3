@@ -38,6 +38,23 @@
 #define DEG2RAD(x) ((x) * M_PI / 180.0f)
 #define RAD2DEG(x) ((x) * 180.0f / M_PI)
 
+#ifdef _MSC_VER
+#define copysign   _copysign
+#define chgsign    _chgsign
+#define scalb      _scalb
+#define logb       _logb
+#define nextafter  _nextafter
+#define finite     _finite
+#define isnan      _isnan
+#define fpclass    _fpclass
+#pragma warning(push)
+#pragma warning(disable: 4307)
+#endif
+
+#ifdef _UIKIT_ /// TMP FIX: not sure needed ...
+#define finite(x) __inline_isfinited((double)(x))
+#endif
+
 
 uint NGL_API Log2Ceil(uint Value);
 /*!< Retrieve the binary logarithm of \a Value (by excess)
@@ -201,22 +218,6 @@ inline int32 ToAbove(float x) ///< Cast x to an int using "to greater" rounding 
   return ToAbove((double)x);
 }
 
-
-#ifdef _MSC_VER
-  #define copysign   _copysign
-  #define chgsign    _chgsign
-  #define scalb      _scalb
-  #define logb       _logb
-  #define nextafter  _nextafter
-  #define finite     _finite
-  #define isnan      _isnan
-  #define fpclass    _fpclass
-#endif
-
-#ifdef _UIKIT_ /// TMP FIX: not sure needed ...
-#define finite(x) __inline_isfinited((double)(x))
-#endif
-
 inline float nuiAbs(float f) 
 {
   int32 i = ((*(int32*)&f) & 0x7fffffff);
@@ -250,5 +251,9 @@ inline int64 nuiSign(double f)
 {
   return 1 + (((*(int64*)&f) >> 63) << 1);
 }
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
 #endif // __nglMath_h__
