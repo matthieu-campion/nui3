@@ -258,6 +258,10 @@ bool nuiColor::SetValue(const nglString& rString)
         return true;
       }
     }
+    
+    // the color name is unknow.
+    wprintf(_T("error : the color name '%ls' is unknown\n"), rString.GetChars());
+    NGL_ASSERT(0);
   }
   
   NGL_OUT(_T("nuiColor warning : could not find any color definition from '%ls'\n"), rString.GetChars());
