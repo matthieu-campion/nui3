@@ -63,8 +63,14 @@ void nuiDialogSelectFile::Init(nuiMainWindow* pParent, const nglString& rTitle, 
   
   nuiLabel* pTitle = new nuiLabel(rTitle);
   pTitle->SetObjectName(_T("nuiDialog::Title"));
-  
+    
   InitDialog(pTitle, NULL, nuiDialog::eDialogButtonOk | nuiDialog::eDialogButtonCancel);
+    
+  nuiButton* pButton = new nuiButton(_T("New Folder"));
+  pButton->SetObjectName(_T("nuiDialog::Button"));
+  AddButton(pButton, nuiDialog::eDialogButtonCustom);
+  mEventSink.Connect(pButton->Activated, &nuiDialogSelectFile::OnCreateNewFolder);
+  
   SetContents(pBox, nuiCenter);
   SetDefaultPos();
   mEventSink.Connect(DialogDone, &nuiDialogSelectFile::OnDialogDone);
@@ -97,6 +103,52 @@ bool nuiDialogSelectFile::OnSelectorOK(const nuiEvent& rEvent)
   if (FileSelected())
     Trash();
   
+  return false;
+}
+bool nuiDialogSelectFile::OnCreateNewFolder(const nuiEvent& rEvent)
+{
+  mpCreateDialog = new nuiDialog(mpParent);
+  nuiSimpleContainer* pContainer = new nuiSimpleContainer();
+  pContainer->SetUserSize(400, 80);
+  
+  mpCreateEditLine = new nuiEditLine();
+  mpCreateEditLine->SetPosition(nuiFillHorizontal);
+  pContainer->AddChild(mpCreateEditLine);
+  
+  mpCreateDialog->InitDialog(_T("CREATE A NEW FOLDER"), NULL, nuiDialog::eDialogButtonOk + nuiDialog::eDialogButtonCancel);
+  
+  mpCreateDialog->SetContents(pContainer);
+  mpCreateDialog->SetDefaultPos();
+  mEventSink.Connect(mpCreateDialog->DialogDone, &nuiDialogSelectFile::OnCreateNewFolderDone);
+  
+  mpCreateEditLine->Focus();
+  
+  NGL_OUT(_T("new folder \n"));
+  
+  return true;
+}
+
+
+bool nuiDialogSelectFile::OnCreateNewFolderDone(const nuiEvent& rEvent)
+{
+  
+  nuiDialog::DialogResult result = mpCreateDialog->GetResult();
+  
+  if (result == nuiDialog::eDialogAccepted)
+  {
+    nglString text = mpCreateEditLine->GetText();
+    text.Trim();
+    if (text == nglString::Null)
+      return true;
+    
+    mPath = mpSelector->GetPath();
+    mPath += nglPath(mpCreateEditLine->GetText());
+    mPath.Create();
+    
+    mRootPath = mpSelector->GetRootPath();
+    
+    mpSelector->SetRootPath(mRootPath);
+  }  
   return false;
 }
 

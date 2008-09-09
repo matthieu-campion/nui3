@@ -20,6 +20,9 @@ class nuiDialogSelectFile : public nuiDialog
     nuiDialogSelectFile(nuiMainWindow* pParent, const nglString& rTitle, const nglPath& rPath = nglPath(nglString::Null), const nglPath& rRootPath  = nglPath(nglString::Null), const nglString& defaultEntry = nglString::Null, const std::list<nglString>& rFilters = std::list<nglString>(), bool showHiddenFiles = false);
     virtual ~nuiDialogSelectFile();
     
+    bool OnCreateNewFolder(const nuiEvent& rEvent);
+    bool OnCreateNewFolderDone(const nuiEvent& rEvent);
+    
     const nglPath& GetSelectedFile();
     const nglPath& GetRootPath();
     
@@ -36,6 +39,9 @@ class nuiDialogSelectFile : public nuiDialog
     nuiSimpleContainer* mpContainer;
     nuiFileSelector* mpSelector;
     nuiEditLine* mpEditLine;
+    
+    nuiDialog* mpCreateDialog;
+    nuiEditLine* mpCreateEditLine;
     
     nglPath mPath;
     nglPath mRootPath;

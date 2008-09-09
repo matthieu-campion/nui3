@@ -25,6 +25,7 @@ nuiDialogSelectDirectory::nuiDialogSelectDirectory(nuiMainWindow* pParent, const
   InitDialog(pTitle, NULL, nuiDialog::eDialogButtonOk + nuiDialog::eDialogButtonCancel);
   
   nuiButton* pButton = new nuiButton(_T("New Folder"));
+  pButton->SetObjectName(_T("nuiDialog::Button"));
   AddButton(pButton, nuiDialog::eDialogButtonCustom);
   mEventSink.Connect(pButton->Activated, &nuiDialogSelectDirectory::OnCreateNewFolder);
   
