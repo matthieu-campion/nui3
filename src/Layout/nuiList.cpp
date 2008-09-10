@@ -66,15 +66,7 @@ bool nuiList::Load(const nuiXMLNode* pNode)
 }
 
 void nuiList::InitProperties()
-{
-#ifdef NGL_USE_COMPLEX_PROPERTIES
-  mProperties[_T("Orientation")].Bind(&mOrientation,true,false);
-  mProperties[_T("BorderSize")].Bind(&mBorderSize,true,false);
-  mProperties[_T("MultiSelectable")].Bind(&mMultiSelectable,true,false);
-  mProperties[_T("Unselectable")].Bind(&mUnselectable,true,false);
-  mProperties[_T("FixedAspectRatio")].Bind(&mFixedAspectRatio,true,false);
-#endif
-  
+{  
   AddEvent(_T("ListClicked"), Clicked);
   AddEvent(_T("ListDoubleClicked"), DoubleClicked);
   NUI_ADD_EVENT(Activated);

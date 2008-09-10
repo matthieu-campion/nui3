@@ -17,9 +17,6 @@ nuiPane::nuiPane(const nuiColor& rFillColor, const nuiColor& rStrokeColor, nuiSh
 {
   SetObjectClass(_T("nuiPane"));
   mInterceptMouse = false;
-#ifdef NGL_USE_COMPLEX_PROPERTIES
-  mProperties[_T("InterceptMouse")].Bind(&mInterceptMouse, true, false); 
-#endif
   
   mFillColor = rFillColor;
   mStrokeColor = rStrokeColor;
@@ -46,9 +43,6 @@ bool nuiPane::Load(const nuiXMLNode* pNode)
 	LoadChildren(pNode);
 
   mInterceptMouse = nuiGetBool ( pNode, _T("InterceptMouse"), false);
-#ifdef NGL_USE_COMPLEX_PROPERTIES
-  mProperties[_T("InterceptMouse")].Bind(&mInterceptMouse, true, false); 
-#endif
   mLineWidth = nuiGetVal(pNode, _T("LineWidth"), 1.0f);
   mCanRespectConstraint = true;
   

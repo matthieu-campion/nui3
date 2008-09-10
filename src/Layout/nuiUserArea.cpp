@@ -19,9 +19,6 @@ nuiUserArea::nuiUserArea()
   SetObjectClass(_T("nuiUserArea"));
   mInterceptMouse = false;
   mPrepareGLContext = false;
-#ifdef NGL_USE_COMPLEX_PROPERTIES
-  mProperties[_T("InterceptMouse")].Bind(&mInterceptMouse, true, false); 
-#endif
   
   EnableRenderCache(false);
 
@@ -38,9 +35,6 @@ bool nuiUserArea::Load(const nuiXMLNode* pNode)
 
   mInterceptMouse = nuiGetBool ( pNode, _T("InterceptMouse"), false);
   mPrepareGLContext = nuiGetBool ( pNode, _T("PrepareGLContext"), false);
-#ifdef NGL_USE_COMPLEX_PROPERTIES
-  mProperties[_T("InterceptMouse")].Bind(&mInterceptMouse, true, false); 
-#endif
   
   EnableRenderCache(false);
 

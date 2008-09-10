@@ -115,19 +115,6 @@ void nuiWindow::InitProperties()
   EnableInteractiveOverDraw(true);
 
   SetObjectClass(_T("nuiWindow"));
-
-#ifdef NGL_USE_COMPLEX_PROPERTIES
-  mProperties[_T("Title")].Bind(&mTitle,true,false);
-  mProperties[_T("StaticChildren")].Bind(&mStaticChildren,true,false);
-  mProperties[_T("NoResize")].Bind(&mNoResize,true,false);
-  mProperties[_T("NoMove")].Bind(&mNoMove,true,false);
-  mProperties[_T("NoCaption")].Bind(&mNoCaption,true,false);
-  mProperties[_T("Raw")].Bind(&mRawWindow,true,false);
-  mProperties[_T("Modal")].Bind(&mModal,true,false);
-  mProperties[_T("MinimumWidth")].Bind(&mMinimumWidth,true,false);
-  mProperties[_T("MinimumHeight")].Bind(&mMinimumHeight,true,false);
-  mProperties[_T("NoClose")].Bind(&mNoClose,true,false);
-#endif
   
   // Standard anims:
   nuiWidgetAnimation* pScaleAnim = new nuiScaleToMatrixWidgetAnim(this, 0.3, .01f);

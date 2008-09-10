@@ -869,14 +869,6 @@ nuiXMLNode* nuiTable::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
 
 void nuiTable::InitProperties()
 {
-#ifdef NGL_USE_COMPLEX_PROPERTIES
-  mProperties["MultiSelectable"].Bind(&mMultiSelectable,true,false);
-  mProperties["Unselectable"].Bind(&mUnselectable,true,false);
-  mProperties["FixedAspectRatio"].Bind(&mFixedAspectRatio,true,false);
-  mProperties["Clicked"].Bind(&mClicked,false,true);
-  mProperties["SelectedColumn"].Bind(&mSelectedCol,true,false);
-  mProperties["DisplayHeaders"].Bind(&mDisplayHeaders,true,false);
-#endif
   
   AddEvent(_T("TableClicked"), Clicked);
   NUI_ADD_EVENT(Activated);

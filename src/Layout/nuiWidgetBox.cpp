@@ -52,12 +52,6 @@ bool nuiWidgetBox::Draw(nuiDrawContext* pContext)
 void nuiWidgetBox::InitProperties()
 {
   mCanRespectConstraint = true;
-#ifdef NGL_USE_COMPLEX_PROPERTIES
-  mProperties[_T("BorderSize")].Bind(&mBorderSize,true,false);
-  mProperties[_T("Orientation")].Bind(&mOrientation,true,false);
-  mProperties[_T("Proportional")].Bind(&mProportional,true,false);
-  mProperties[_T("Fill")].Bind(&mFill,true,false);
-#endif
 }
 
 

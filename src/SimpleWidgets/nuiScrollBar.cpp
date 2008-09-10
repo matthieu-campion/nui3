@@ -48,9 +48,6 @@ nuiScrollBar::nuiScrollBar(nuiOrientation orientation, const nuiRange& rRange, n
   if (mpThumb)
     AddChild(mpThumb);
 
-#ifdef NGL_USE_COMPLEX_PROPERTIES
-  mProperties["Orientation"].Bind(&mOrientation,true,false);
-#endif
   NUI_ADD_EVENT(ValueChanged);
 }
 
@@ -74,9 +71,6 @@ bool nuiScrollBar::Load(const nuiXMLNode* pNode)
   mScrollBarSink.Connect(mRange.Changed, &nuiScrollBar::DoInvalidateLayout);
   mScrollBarSink.Connect(mRange.ValueChanged, &nuiScrollBar::DoInvalidate);
 
-#ifdef NGL_USE_COMPLEX_PROPERTIES
-  mProperties["Orientation"].Bind(&mOrientation,true,false);
-#endif
   NUI_ADD_EVENT(ValueChanged);
   
   return true;

@@ -26,12 +26,6 @@ nuiButton::nuiButton()
   mBorderSize = mDefaultBorderSize;
   mShadeSize = INACTIVE_SHADE_SIZE;
   SetRedrawOnHover(true);
-
-#ifdef NGL_USE_COMPLEX_PROPERTIES
-  mProperties["Clicked"].Bind(&mClicked,false,true);
-  mProperties["DrawSelf"].Bind(&mDrawSelf,true,false);
-  mProperties["BorderSize"].Bind(&mBorderSize,true, false);
-#endif
   
   NUI_ADD_EVENT(ButtonPressed);
   NUI_ADD_EVENT(ButtonDePressed);
@@ -53,12 +47,6 @@ nuiButton::nuiButton(const nglString& rText)
   pLabel->SetPosition(nuiCenter);
   SetRedrawOnHover(true);
 
-#ifdef NGL_USE_COMPLEX_PROPERTIES
-  mProperties["Clicked"].Bind(&mClicked,false,true);
-  mProperties["DrawSelf"].Bind(&mDrawSelf,true,false);
-  mProperties["BorderSize"].Bind(&mBorderSize,true, false);
-#endif
-  
   NUI_ADD_EVENT(ButtonPressed);
   NUI_ADD_EVENT(ButtonDePressed);
   NUI_ADD_EVENT(ButtonDePressedInactive);

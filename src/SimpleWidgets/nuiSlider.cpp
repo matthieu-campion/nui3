@@ -43,10 +43,6 @@ nuiSlider::nuiSlider(nuiOrientation orientation, const nuiRange& rRange)
   mSliderSink.Connect(mRange.Changed, &nuiSlider::DoInvalidate);
   mSliderSink.Connect(mRange.ValueChanged, &nuiSlider::DoInvalidate);
 
-#ifdef NGL_USE_COMPLEX_PROPERTIES
-  mProperties["Orientation"].Bind(&mOrientation,true,false);
-#endif
-  
   mpHandle = NULL;
   mpBackground = NULL;
   SetHandleOffset(0);
@@ -71,10 +67,6 @@ bool nuiSlider::Load(const nuiXMLNode* pNode)
   mOrientation = nuiGetOrientation(pNode);
   mSliderSink.Connect(mRange.Changed, &nuiSlider::DoInvalidate);
   mSliderSink.Connect(mRange.ValueChanged, &nuiSlider::DoInvalidate);
-
-#ifdef NGL_USE_COMPLEX_PROPERTIES
-  mProperties["Orientation"].Bind(&mOrientation,true,false);
-#endif
   
   mpHandle = NULL;
   mpBackground = NULL;

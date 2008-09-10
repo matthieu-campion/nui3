@@ -405,21 +405,6 @@ void nuiWidget::Init()
 void nuiWidget::InitProperties()
 {
   mClippingOptims = false;
-
-#ifdef NGL_USE_COMPLEX_PROPERTIES
-  mProperties[_T("Visible")].Bind(&mVisible,true);
-  mProperties[_T("Alpha")].Bind(&mAlpha, true);
-  mProperties[_T("MixAlpha")].Bind(&mMixAlpha, true);
-  mProperties[_T("InheritAlpha")].Bind(&mInheritAlpha, true);
-  mProperties[_T("HasFocus")].Bind(&mHasFocus,false, true);
-  mProperties[_T("NeedRender")].Bind(&mNeedRender,false, true);
-
-  mProperties[_T("Enabled")].Bind(&mEnabled, true);
-  mProperties[_T("Selected")].Bind(&mSelected, false);
-  mProperties[_T("StateLocked")].Bind(&mStateLocked);
-  mProperties[_T("Hover")].Bind(&mHover, false, true);
-  mProperties[_T("ExclusiveSelection")].Bind(&mSelectionExclusive, true, false);
-#endif
 }
 
 

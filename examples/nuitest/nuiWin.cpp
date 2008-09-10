@@ -101,7 +101,10 @@ using namespace std;
 #include "nuiMatrixView.h"
 #include "tests/ThreadInspectorTest.h"
 
+#include "nuiBindings.h"
+
 /*
+ 
  * Simple console based on nuiText
  */
 
@@ -146,6 +149,8 @@ nuiWin::nuiWin(const nglContextInfo& rContextInfo, const nglWindowInfo& rInfo, b
 
   SetDebugMode(true);
 
+  nuiInitBindings();
+  
   if (rContextInfo.TargetAPI == eTargetAPI_OpenGL)
   {
     NGL_OUT(_T("glExtensions: %ls\n"), glGetString(GL_EXTENSIONS));

@@ -181,15 +181,6 @@ void nuiLabel::InitAttributes()
 void nuiLabel::InitProperties()
 {
   mCanRespectConstraint = true;
-#ifdef NGL_USE_COMPLEX_PROPERTIES
-  mProperties[_T("VMargin")].Bind(&mVMargin,true,false);
-  mProperties[_T("HMargin")].Bind(&mHMargin,true,false);
-  mProperties[_T("Text")].Bind(&mText,true,false);
-  mProperties[_T("ClearBg")].Bind(&mClearBg,true,false);
-  mProperties[_T("TextPosition")].Bind(&mTextPosition,true,false);
-  mLabelSink.Connect(mProperties[_T("Text")].Changed, &nuiLabel::OnTextChanged);
-#endif
-
 }
 
 void nuiLabel::_SetFont(const nglString& rFontSymbol)
