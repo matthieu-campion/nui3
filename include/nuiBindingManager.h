@@ -70,6 +70,7 @@ public:
   static Type Convert(const nuiArgument& rArg)
   {
     //return rArg;
+    return (Type)0;
   }
 };
 
@@ -1016,6 +1017,407 @@ public:
   }
 };
 
+// Const versions of the method storages:
+template <class Class, class RetType> class nuiConstMethodStorage0 : public nuiRunable
+{
+private:
+  typedef RetType (Class::*FunctionType)() const;
+  FunctionType mStorage;
+public:
+  nuiConstMethodStorage0(FunctionType t)
+  {
+    mStorage = t;
+  }
+
+  bool Run(nuiCallContext& rContext)
+  {
+    rContext.GetResult() = (nuiArgumentTrait<Class&>::Convert(rContext[0]).*mStorage)();
+    return true;
+  }
+
+  void DumpArgs(std::vector<nglString>& rTypes) const
+  {
+    rTypes.clear();
+    rTypes.push_back(nuiArgumentTrait<RetType>::GetName());
+  }
+};
+
+template <class Class> class nuiConstMethodStorage0<Class, void> : public nuiRunable
+{
+private:
+  typedef void (Class::*FunctionType)() const;
+  FunctionType mStorage;
+public:
+  nuiConstMethodStorage0(FunctionType t)
+  {
+    mStorage = t;
+  }
+
+  bool Run(nuiCallContext& rContext)
+  {
+    rContext.GetResult().SetVoid(true);
+    (nuiArgumentTrait<Class&>::Convert(rContext[0]).*mStorage)();
+    return true;
+  }
+
+  void DumpArgs(std::vector<nglString>& rTypes) const
+  {
+    rTypes.clear();
+    rTypes.push_back(nuiArgumentTrait<void>::GetName());
+  }
+};
+
+
+template <class Class, class RetType, class Param1> class nuiConstMethodStorage1 : public nuiRunable
+{
+private:
+  typedef RetType (Class::*FunctionType)(Param1 param1) const;
+  FunctionType mStorage;
+public:
+  nuiConstMethodStorage1(FunctionType t)
+  {
+    mStorage = t;
+  }
+
+  bool Run(nuiCallContext& rContext)
+  {
+    rContext.GetResult() = (nuiArgumentTrait<Class&>::Convert(rContext[0]).*mStorage)(nuiArgumentTrait<Param1>::Convert(rContext[1]));
+    return true;
+  }
+
+  void DumpArgs(std::vector<nglString>& rTypes) const
+  {
+    rTypes.clear();
+    rTypes.push_back(nuiArgumentTrait<RetType>::GetName());
+    rTypes.push_back(nuiArgumentTrait<Param1>::GetName());
+  }
+};
+
+template <class Class, class Param1>
+class nuiConstMethodStorage1<Class, void, Param1> : public nuiRunable
+{
+private:
+  typedef void (Class::*FunctionType)(Param1 param1) const;
+  FunctionType mStorage;
+public:
+  nuiConstMethodStorage1(FunctionType t)
+  {
+    mStorage = t;
+  }
+
+  bool Run(nuiCallContext& rContext)
+  {
+    rContext.GetResult().SetVoid(true);
+    (nuiArgumentTrait<Class&>::Convert(rContext[0]).*mStorage)(nuiArgumentTrait<Param1>::Convert(rContext[1]));
+    return true;
+  }
+
+  void DumpArgs(std::vector<nglString>& rTypes) const
+  {
+    rTypes.clear();
+    rTypes.push_back(nuiArgumentTrait<void>::GetName());
+    rTypes.push_back(nuiArgumentTrait<Param1>::GetName());
+  }
+};
+
+template <class Class, class RetType, class Param1, class Param2>
+class nuiConstMethodStorage2 : public nuiRunable
+{
+private:
+  typedef RetType (Class::*FunctionType)(Param1 param1, Param2 param2) const;
+  FunctionType mStorage;
+public:
+  nuiConstMethodStorage2(FunctionType t)
+  {
+    mStorage = t;
+  }
+
+  bool Run(nuiCallContext& rContext)
+  {
+    if (is_same_type<RetType, void>::value)
+    {
+      rContext.GetResult().SetVoid(true);
+      (nuiArgumentTrait<Class&>::Convert(rContext[0]).*mStorage)
+        (
+        nuiArgumentTrait<Param1>::Convert(rContext[1]),
+        nuiArgumentTrait<Param2>::Convert(rContext[2])
+        );
+    }
+    else
+    {
+      rContext.GetResult() = 
+        (nuiArgumentTrait<Class&>::Convert(rContext[0]).*mStorage)
+        (
+        nuiArgumentTrait<Param1>::Convert(rContext[1]),
+        nuiArgumentTrait<Param2>::Convert(rContext[2])
+        );
+    }
+    return true;
+  }
+
+  void DumpArgs(std::vector<nglString>& rTypes) const
+  {
+    rTypes.clear();
+    rTypes.push_back(nuiArgumentTrait<RetType>::GetName());
+    rTypes.push_back(nuiArgumentTrait<Param1>::GetName());
+    rTypes.push_back(nuiArgumentTrait<Param2>::GetName());
+  }
+};
+
+template <class Class, class Param1, class Param2>
+class nuiConstMethodStorage2<Class, void, Param1, Param2> : public nuiRunable
+{
+private:
+  typedef void (Class::*FunctionType)(Param1 param1, Param2 param2) const;
+  FunctionType mStorage;
+public:
+  nuiConstMethodStorage2(FunctionType t)
+  {
+    mStorage = t;
+  }
+
+  bool Run(nuiCallContext& rContext)
+  {
+    rContext.GetResult().SetVoid(true);
+    (nuiArgumentTrait<Class&>::Convert(rContext[0]).*mStorage)
+      (
+      nuiArgumentTrait<Param1>::Convert(rContext[1]),
+      nuiArgumentTrait<Param2>::Convert(rContext[2])
+      );
+    return true;
+  }
+
+  void DumpArgs(std::vector<nglString>& rTypes) const
+  {
+    rTypes.clear();
+    rTypes.push_back(nuiArgumentTrait<void>::GetName());
+    rTypes.push_back(nuiArgumentTrait<Param1>::GetName());
+    rTypes.push_back(nuiArgumentTrait<Param2>::GetName());
+  }
+};
+
+
+template <class Class, class RetType, class Param1, class Param2, class Param3>
+class nuiConstMethodStorage3 : public nuiRunable
+{
+private:
+  typedef RetType (Class::*FunctionType)(Param1 param1, Param2 param2, Param3 param3) const;
+  FunctionType mStorage;
+public:
+  nuiConstMethodStorage3(FunctionType t)
+  {
+    mStorage = t;
+  }
+
+  bool Run(nuiCallContext& rContext)
+  {
+    rContext.GetResult() = 
+      (nuiArgumentTrait<Class&>::Convert(rContext[0]).*mStorage)
+      (
+      nuiArgumentTrait<Param1>::Convert(rContext[1]),
+      nuiArgumentTrait<Param2>::Convert(rContext[2]),
+      nuiArgumentTrait<Param3>::Convert(rContext[3])
+      );
+    return true;
+  }
+
+  void DumpArgs(std::vector<nglString>& rTypes) const
+  {
+    rTypes.clear();
+    rTypes.push_back(nuiArgumentTrait<RetType>::GetName());
+    rTypes.push_back(nuiArgumentTrait<Param1>::GetName());
+    rTypes.push_back(nuiArgumentTrait<Param2>::GetName());
+    rTypes.push_back(nuiArgumentTrait<Param3>::GetName());
+  }
+};
+
+template <class Class, class Param1, class Param2, class Param3>
+class nuiConstMethodStorage3<Class, void, Param1, Param2, Param3> : public nuiRunable
+{
+private:
+  typedef void (Class::*FunctionType)(Param1 param1, Param2 param2, Param3 param3) const;
+  FunctionType mStorage;
+public:
+  nuiConstMethodStorage3(FunctionType t)
+  {
+    mStorage = t;
+  }
+
+  bool Run(nuiCallContext& rContext)
+  {
+    rContext.GetResult() = 
+      (nuiArgumentTrait<Class&>::Convert(rContext[0]).*mStorage)
+      (
+      nuiArgumentTrait<Param1>::Convert(rContext[1]),
+      nuiArgumentTrait<Param2>::Convert(rContext[2]),
+      nuiArgumentTrait<Param3>::Convert(rContext[3])
+      );
+    return true;
+  }
+
+  void DumpArgs(std::vector<nglString>& rTypes) const
+  {
+    rTypes.clear();
+    rTypes.push_back(nuiArgumentTrait<void>::GetName());
+    rTypes.push_back(nuiArgumentTrait<Param1>::GetName());
+    rTypes.push_back(nuiArgumentTrait<Param2>::GetName());
+    rTypes.push_back(nuiArgumentTrait<Param3>::GetName());
+  }
+};
+
+
+template <class Class, class RetType, class Param1, class Param2, class Param3, class Param4>
+class nuiConstMethodStorage4 : public nuiRunable
+{
+private:
+  typedef RetType (Class::*FunctionType)(Param1 param1, Param2 param2, Param3 param3, Param4 param4) const;
+  FunctionType mStorage;
+public:
+  nuiConstMethodStorage4(FunctionType t)
+  {
+    mStorage = t;
+  }
+
+  bool Run(nuiCallContext& rContext)
+  {
+    rContext.GetResult() = 
+      (nuiArgumentTrait<Class&>::Convert(rContext[0]).*mStorage)
+      (
+      nuiArgumentTrait<Param1>::Convert(rContext[1]),
+      nuiArgumentTrait<Param2>::Convert(rContext[2]),
+      nuiArgumentTrait<Param3>::Convert(rContext[3]),
+      nuiArgumentTrait<Param4>::Convert(rContext[4])
+      );
+    return true;
+  }
+
+  void DumpArgs(std::vector<nglString>& rTypes) const
+  {
+    rTypes.clear();
+    rTypes.push_back(nuiArgumentTrait<RetType>::GetName());
+    rTypes.push_back(nuiArgumentTrait<Param1>::GetName());
+    rTypes.push_back(nuiArgumentTrait<Param2>::GetName());
+    rTypes.push_back(nuiArgumentTrait<Param3>::GetName());
+    rTypes.push_back(nuiArgumentTrait<Param4>::GetName());
+  }
+};
+
+template <class Class, class Param1, class Param2, class Param3, class Param4>
+class nuiConstMethodStorage4<Class, void, Param1, Param2, Param3, Param4> : public nuiRunable
+{
+private:
+  typedef void (Class::*FunctionType)(Param1 param1, Param2 param2, Param3 param3, Param4 param4) const;
+  FunctionType mStorage;
+public:
+  nuiConstMethodStorage4(FunctionType t)
+  {
+    mStorage = t;
+  }
+
+  bool Run(nuiCallContext& rContext)
+  {
+    rContext.GetResult().SetVoid(true);
+    (nuiArgumentTrait<Class&>::Convert(rContext[0]).*mStorage)
+      (
+      nuiArgumentTrait<Param1>::Convert(rContext[1]),
+      nuiArgumentTrait<Param2>::Convert(rContext[2]),
+      nuiArgumentTrait<Param3>::Convert(rContext[3]),
+      nuiArgumentTrait<Param4>::Convert(rContext[4])
+      );
+    return true;
+  }
+
+  void DumpArgs(std::vector<nglString>& rTypes) const
+  {
+    rTypes.clear();
+    rTypes.push_back(nuiArgumentTrait<void>::GetName());
+    rTypes.push_back(nuiArgumentTrait<Param1>::GetName());
+    rTypes.push_back(nuiArgumentTrait<Param2>::GetName());
+    rTypes.push_back(nuiArgumentTrait<Param3>::GetName());
+    rTypes.push_back(nuiArgumentTrait<Param4>::GetName());
+  }
+};
+
+
+template <class Class, class RetType, class Param1, class Param2, class Param3, class Param4, class Param5>
+class nuiConstMethodStorage5 : public nuiRunable
+{
+private:
+  typedef RetType (Class::*FunctionType)(Param1 param1, Param2 param2, Param3 param3, Param4 param4, Param4 param5) const;
+  FunctionType mStorage;
+public:
+  nuiConstMethodStorage5(FunctionType t)
+  {
+    mStorage = t;
+  }
+
+  bool Run(nuiCallContext& rContext)
+  {
+    rContext.GetResult() = 
+      (nuiArgumentTrait<Class&>::Convert(rContext[0]).*mStorage)
+      (
+      nuiArgumentTrait<Param1>::Convert(rContext[1]),
+      nuiArgumentTrait<Param2>::Convert(rContext[2]),
+      nuiArgumentTrait<Param3>::Convert(rContext[3]),
+      nuiArgumentTrait<Param4>::Convert(rContext[4]),
+      nuiArgumentTrait<Param5>::Convert(rContext[5])
+      );
+    return true;
+  }
+
+  void DumpArgs(std::vector<nglString>& rTypes) const
+  {
+    rTypes.clear();
+    rTypes.push_back(nuiArgumentTrait<RetType>::GetName());
+    rTypes.push_back(nuiArgumentTrait<Param1>::GetName());
+    rTypes.push_back(nuiArgumentTrait<Param2>::GetName());
+    rTypes.push_back(nuiArgumentTrait<Param3>::GetName());
+    rTypes.push_back(nuiArgumentTrait<Param4>::GetName());
+    rTypes.push_back(nuiArgumentTrait<Param5>::GetName());
+  }
+};
+
+
+template <class Class, class Param1, class Param2, class Param3, class Param4, class Param5>
+class nuiConstMethodStorage5<Class, void, Param1, Param2, Param3, Param4, Param5> : public nuiRunable
+{
+private:
+  typedef void (Class::*FunctionType)(Param1 param1, Param2 param2, Param3 param3, Param4 param4, Param4 param5) const;
+  FunctionType mStorage;
+public:
+  nuiConstMethodStorage5(FunctionType t)
+  {
+    mStorage = t;
+  }
+
+  bool Run(nuiCallContext& rContext)
+  {
+    rContext.GetResult().SetVoid(true);
+    (nuiArgumentTrait<Class&>::Convert(rContext[0]).*mStorage)
+      (
+      nuiArgumentTrait<Param1>::Convert(rContext[1]),
+      nuiArgumentTrait<Param2>::Convert(rContext[2]),
+      nuiArgumentTrait<Param3>::Convert(rContext[3]),
+      nuiArgumentTrait<Param4>::Convert(rContext[4]),
+      nuiArgumentTrait<Param5>::Convert(rContext[5])
+      );
+    return true;
+  }
+
+  void DumpArgs(std::vector<nglString>& rTypes) const
+  {
+    rTypes.clear();
+    rTypes.push_back(nuiArgumentTrait<void>::GetName());
+    rTypes.push_back(nuiArgumentTrait<Param1>::GetName());
+    rTypes.push_back(nuiArgumentTrait<Param2>::GetName());
+    rTypes.push_back(nuiArgumentTrait<Param3>::GetName());
+    rTypes.push_back(nuiArgumentTrait<Param4>::GetName());
+    rTypes.push_back(nuiArgumentTrait<Param5>::GetName());
+  }
+};
+
+
+
 
 class nuiFunction : public nuiRunable
 {
@@ -1084,32 +1486,32 @@ public:
   /////////
   template <class RetType, class Class> nuiFunction(RetType (Class::*pFunction)() const)
   {
-    mpStorage = new nuiMethodStorage0<const Class, RetType>(pFunction);
+    mpStorage = new nuiConstMethodStorage0<const Class, RetType>(pFunction);
   }
   
   template <class RetType, class Class, class Param1> nuiFunction(RetType (Class::*pFunction)(Param1) const)
   {
-    mpStorage = new nuiMethodStorage1<const Class, RetType, Param1>(pFunction);
+    mpStorage = new nuiConstMethodStorage1<const Class, RetType, Param1>(pFunction);
   }
   
   template <class RetType, class Class, class Param1, class Param2> nuiFunction(RetType (Class::*pFunction)(Param1, Param2) const)
   {
-    mpStorage = new nuiMethodStorage2<const Class, RetType, Param1, Param2>(pFunction);
+    mpStorage = new nuiConstMethodStorage2<const Class, RetType, Param1, Param2>(pFunction);
   }
   
   template <class RetType, class Class, class Param1, class Param2, class Param3> nuiFunction(RetType (Class::*pFunction)(Param1, Param2, Param3) const)
   {
-    mpStorage = new nuiMethodStorage3<const Class, RetType, Param1, Param2, Param3>(pFunction);
+    mpStorage = new nuiConstMethodStorage3<const Class, RetType, Param1, Param2, Param3>(pFunction);
   }
   
   template <class RetType, class Class, class Param1, class Param2, class Param3, class Param4> nuiFunction(RetType (Class::*pFunction)(Param1, Param2, Param3, Param4) const)
   {
-    mpStorage = new nuiMethodStorage4<const Class, RetType, Param1, Param2, Param3, Param4>(pFunction);
+    mpStorage = new nuiConstMethodStorage4<const Class, RetType, Param1, Param2, Param3, Param4>(pFunction);
   }
   
   template <class RetType, class Class, class Param1, class Param2, class Param3, class Param4, class Param5> nuiFunction(RetType (Class::*pFunction)(Param1, Param2, Param3, Param4, Param5) const)
   {
-    mpStorage = new nuiMethodStorage5<const Class, RetType, Param1, Param2, Param3, Param4, Param5>(pFunction);
+    mpStorage = new nuiConstMethodStorage5<const Class, RetType, Param1, Param2, Param3, Param4, Param5>(pFunction);
   }
 
   //////////////

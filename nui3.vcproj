@@ -2437,6 +2437,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="Bindings"
+				>
+				<File
+					RelativePath=".\src\Bindings\nuiBindings.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiBindings.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Dependencies"

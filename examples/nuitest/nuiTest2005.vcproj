@@ -150,7 +150,7 @@
 				InlineFunctionExpansion="2"
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="1"
-				OmitFramePointers="true"
+				OmitFramePointers="false"
 				EnableFiberSafeOptimizations="true"
 				AdditionalIncludeDirectories="../../include,../../../StlPort/STLPort,../../../ngl/include,../../../freetype2/include"
 				PreprocessorDefinitions="NDEBUG;_WINDOWS;WIN32;NGL_STATIC_BUILD;_STLP_NO_IOSTREAMS=1;_STLP_NO_EXCEPTIONS=1;_STLP_DONT_THROW_RANGE_ERRORS=1;_STLP_USE_SYSTEM_ASSERT=1"

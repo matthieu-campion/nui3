@@ -56,3 +56,13 @@ bool nuiInitBindings()
 }
 
 
+// c:\work\nui3\include\nuiBindingManager.h(1087) : error C2664: 
+// 'nuiMethodStorage0<Class,RetType>::nuiMethodStorage0(const nglString (__thiscall nuiObject::* )(void))' : cannot convert parameter 1 from 
+// 'const nglString &(__thiscall nuiObject::* )(void) const' to 
+// 'const nglString (__thiscall nuiObject::* )(void)'
+
+// c:\work\nui3\include\nuiBindingManager.h(1087) : error C2664: 
+// 'nuiMethodStorage0<Class,RetType>::nuiMethodStorage0(const nglString (__thiscall nuiObject::* )(void))' : cannot convert parameter 1 from
+// 'const nglString &(__thiscall nuiObject::* )(void) const' to
+// 'const nglString (__thiscall nuiObject::* )(void)'
+
