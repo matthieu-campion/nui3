@@ -54,7 +54,7 @@ void nuiDialogSelectFile::Init(nuiMainWindow* pParent, const nglString& rTitle, 
   mpContainer->SetUserSize(mpParent->GetWidth() * .8, mpParent->GetHeight() * .8);
   
   pEditContainer->SetUserSize(mpParent->GetWidth() * .8, 20);
-  pEditContainer->SetBorder(10, 10);
+  pEditContainer->SetBorder(5,5);
   
   pBox->SetCellExpand(0, nuiExpandShrinkAndGrow);
   pBox->SetCellExpand(1, nuiExpandFixed);
