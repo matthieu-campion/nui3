@@ -25,13 +25,13 @@ nuiNativeResourceVolume::nuiNativeResourceVolume()
     {
       ref = tmp;
       tmp = tmp.GetParent();
-      nglString nodename(ref.GetNodeName());
-      if (!nodename.IsEmpty())
+			nglString nodename(ref.GetNodeName());
+			if (!nodename.IsEmpty())
       {
         mItems[tmp].insert(nodename);
         //wprintf(_T("mItems[%ls] <- '%ls'\n"), tmp.GetChars(), nodename.GetChars());
       }
-    }
+		}
   }
 }
 
@@ -42,7 +42,10 @@ nuiNativeResourceVolume::~nuiNativeResourceVolume()
 
 bool nuiNativeResourceVolume::GetPathInfo(const nglPath& rPath, nglPathInfo& rInfo)
 {
-  nglPath path(rPath.GetVolumeLessPath());
+	nglString tmp = rPath.GetVolumeLessPath();
+  nglPath path(tmp);
+	tmp.TrimLeft(L'/');
+	nglPath trimmed(tmp);
   
   if (!path.GetPathName().Compare(_T("/")))
   {
@@ -59,8 +62,8 @@ bool nuiNativeResourceVolume::GetPathInfo(const nglPath& rPath, nglPathInfo& rIn
     return true;  
   }
 
-  std::map<nglPath, std::set<nglString> >::const_iterator it = mItems.find(path);
-  
+  std::map<nglPath, std::set<nglString> >::const_iterator it = mItems.find(trimmed);
+	
   if (it != mItems.end())
   {
     // This is a folder
