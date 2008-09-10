@@ -14,7 +14,7 @@
 #include "nuiGrid.h"
 
 // this is an interface for hboxes and vboxes
-class nuiBox : public nuiSimpleContainer
+class nuiBox : public nuiGrid
 {
 public:  
   virtual void DisplayGridBorder(bool enable, nuiSize gridBorderSize = 1.f) = 0;  ///< Allow to display the grid border
@@ -80,13 +80,10 @@ public:
   }
   
 protected:
-  nuiBox()
+  nuiBox(uint32 nbcellsH, uint32 nbcellsV)
+  : nuiGrid(nbcellsH, nbcellsV)
   {
   }
-    
-  nuiGrid*  mpGrid;
-  
-  
 };
 
 

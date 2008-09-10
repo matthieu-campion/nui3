@@ -371,7 +371,7 @@ void nuiGrid::ClearCells(bool trash)
     {
       if (mGrid[c][r] != NULL)
       {
-        DelChild(mGrid[c][r], trash);
+        nuiGrid::DelChild(mGrid[c][r], trash);
         mGrid[c][r] = NULL;
       }
     }
@@ -390,10 +390,12 @@ bool nuiGrid::SetCell(uint column, uint row, nuiWidget* pWidget, nuiPosition pos
     if (!ReplaceExisting)
       return false;
 
+    mGrid[column][row] = NULL;
+
     if (TrashExisting)
       pOldWidget->Trash();
     else
-      DelChild(pOldWidget, false);
+      nuiGrid::DelChild(pOldWidget, false);
       
   }
   mGrid[column][row] = pWidget;
@@ -401,7 +403,7 @@ bool nuiGrid::SetCell(uint column, uint row, nuiWidget* pWidget, nuiPosition pos
   if (pWidget)
   {
     pWidget->SetPosition(position);
-    AddChild(pWidget);
+    nuiGrid::AddChild(pWidget);
   }
   
   InvalidateLayout();
@@ -431,7 +433,7 @@ void nuiGrid::SetCellPosition(uint column, uint row, nuiPosition position)
     pWidget->SetPosition(position);
 }
  
-bool nuiGrid::FindCell(nuiWidgetPtr pWidget, uint& rCol, uint& rRow)
+bool nuiGrid::FindCell(nuiWidgetPtr pWidget, uint& rCol, uint& rRow) const 
 {
   for (uint c = 0; c < mNbColumns; c++)
   {
@@ -448,7 +450,7 @@ bool nuiGrid::FindCell(nuiWidgetPtr pWidget, uint& rCol, uint& rRow)
   return false;
 }
 
-nuiWidget* nuiGrid::GetCell(uint column, uint row)
+nuiWidget* nuiGrid::GetCell(uint column, uint row) const
 {
   NGL_ASSERT(column < mNbColumns);
   NGL_ASSERT(row < mNbRows);
@@ -457,7 +459,7 @@ nuiWidget* nuiGrid::GetCell(uint column, uint row)
 }
 
 
-nuiTokenBase* nuiGrid::GetCellToken(uint col, uint row)
+nuiTokenBase* nuiGrid::GetCellToken(uint col, uint row) const
 {
   nuiWidget* pWidget = GetCell(col, row);
   if (!pWidget)
@@ -702,93 +704,93 @@ void nuiGrid::ResetColumnPixels(uint row)
 
 ///////
 
-nuiSize nuiGrid::GetColumnSpacing(uint column)
+nuiSize nuiGrid::GetColumnSpacing(uint column) const
 {
   NGL_ASSERT(column < mNbColumns);
   return mVGaps[column];
 }
 
-nuiSize nuiGrid::GetRowSpacing(uint row)
+nuiSize nuiGrid::GetRowSpacing(uint row) const
 {
   NGL_ASSERT(row < mNbRows);
   return mHGaps[row];
 }
 
-void nuiGrid::GetGridSize(uint& columns, uint& rows)
+void nuiGrid::GetGridSize(uint& columns, uint& rows) const
 {
   columns = mNbColumns;
   rows = mNbRows;
 }
 
-nuiSize nuiGrid::GetColumnGrowRatio(uint col)
+nuiSize nuiGrid::GetColumnGrowRatio(uint col) const
 {
   NGL_ASSERT(col < mNbColumns);
   return mExpandGrowColumns[col];
 }
 
-nuiSize nuiGrid::GetColumnShrinkRatio(uint col)
+nuiSize nuiGrid::GetColumnShrinkRatio(uint col) const
 {
   NGL_ASSERT(col < mNbColumns);
   return mExpandShrinkColumns[col];
 }
 
-nuiSize nuiGrid::GetRowGrowRatio(uint row)
+nuiSize nuiGrid::GetRowGrowRatio(uint row) const
 {
   NGL_ASSERT(row < mNbRows);
   return mExpandGrowRows[row];
 }
 
-nuiSize nuiGrid::GetRowShrinkRatio(uint row)
+nuiSize nuiGrid::GetRowShrinkRatio(uint row) const
 {
   NGL_ASSERT(row < mNbRows);
   return mExpandShrinkRows[row];
 }
 
 
-nuiSize nuiGrid::GetRowMaxGrow(uint row)
+nuiSize nuiGrid::GetRowMaxGrow(uint row) const
 {
   NGL_ASSERT(row < mNbRows);
   return mMaxGrowRows[row];
 }
 
-nuiSize nuiGrid::GetColumnMaxGrow(uint col)
+nuiSize nuiGrid::GetColumnMaxGrow(uint col) const
 {
   NGL_ASSERT(col < mNbColumns);
   return mMaxGrowColumns[col];
 }
 
-nuiSize nuiGrid::GetRowMaxPixels(uint row)
+nuiSize nuiGrid::GetRowMaxPixels(uint row) const
 {
   NGL_ASSERT(row < mNbRows);
   return mMaximumRowSizes[row];
 }
 
-nuiSize nuiGrid::GetColumnMaxPixels(uint col)
+nuiSize nuiGrid::GetColumnMaxPixels(uint col) const
 {
   NGL_ASSERT(col < mNbColumns);
   return mMaximumColumnSizes[col];
 }
 
 
-nuiSize nuiGrid::GetRowMaxShrink(uint row)
+nuiSize nuiGrid::GetRowMaxShrink(uint row) const
 {
   NGL_ASSERT(row < mNbRows);
   return mMaxShrinkRows[row];
 }
 
-nuiSize nuiGrid::GetColumnMaxShrink(uint col)
+nuiSize nuiGrid::GetColumnMaxShrink(uint col) const
 {
   NGL_ASSERT(col < mNbColumns);
   return mMaxShrinkColumns[col];
 }
 
-nuiSize nuiGrid::GetRowMinPixels(uint row)
+nuiSize nuiGrid::GetRowMinPixels(uint row) const
 {
   NGL_ASSERT(row < mNbRows);
   return mMinimumRowSizes[row];  
 }
 
-nuiSize nuiGrid::GetColumnMinPixels(uint col)
+nuiSize nuiGrid::GetColumnMinPixels(uint col) const
 {
   NGL_ASSERT(col < mNbColumns);
   return mMinimumColumnSizes[col];
@@ -805,7 +807,7 @@ void nuiGrid::SetCellVisible(uint col, uint row, bool set)
   pWidget->SetEnabled(set);
 }
 
-bool nuiGrid::IsCellVisible(uint col, uint row)
+bool nuiGrid::IsCellVisible(uint col, uint row) const
 {
   nuiWidget* pWidget = GetCell(col, row);
   return pWidget->IsVisible();  
@@ -820,7 +822,7 @@ void nuiGrid::SetRowVisible(uint row, bool set)
     SetCellVisible(col, row, set);
 }
 
-bool nuiGrid::IsRowVisible(uint row)
+bool nuiGrid::IsRowVisible(uint row) const
 {
   NGL_ASSERT(row < mNbRows);
   return mRowVisible[row];

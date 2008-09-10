@@ -1405,6 +1405,8 @@
 		E57465160D634B5600A2D66B /* nuiSerializeContext.h in Headers */ = {isa = PBXBuildFile; fileRef = E57465140D634B5600A2D66B /* nuiSerializeContext.h */; };
 		E57465180D634B6B00A2D66B /* nuiSerializeContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E57465170D634B6B00A2D66B /* nuiSerializeContext.cpp */; };
 		E57465190D634B6B00A2D66B /* nuiSerializeContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E57465170D634B6B00A2D66B /* nuiSerializeContext.cpp */; };
+		E57502A40E77EF6800D240DE /* nuiBindings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E57502A30E77EF6800D240DE /* nuiBindings.cpp */; };
+		E57502A50E77EF6800D240DE /* nuiBindings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E57502A30E77EF6800D240DE /* nuiBindings.cpp */; };
 		E577AB3F0C8C06E900CE9A7A /* nuiSimpleContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E577AB3E0C8C06E900CE9A7A /* nuiSimpleContainer.cpp */; };
 		E577AB400C8C06E900CE9A7A /* nuiSimpleContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E577AB3E0C8C06E900CE9A7A /* nuiSimpleContainer.cpp */; };
 		E577AB440C8C071B00CE9A7A /* nuiSimpleContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = E577AB430C8C071B00CE9A7A /* nuiSimpleContainer.h */; };
@@ -2707,6 +2709,7 @@
 		E57204710D7A3A7F009BAD9F /* nuiHTTP_Carbon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiHTTP_Carbon.cpp; path = src/Net/Carbon/nuiHTTP_Carbon.cpp; sourceTree = SOURCE_ROOT; };
 		E57465140D634B5600A2D66B /* nuiSerializeContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiSerializeContext.h; path = include/nuiSerializeContext.h; sourceTree = SOURCE_ROOT; };
 		E57465170D634B6B00A2D66B /* nuiSerializeContext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiSerializeContext.cpp; sourceTree = "<group>"; };
+		E57502A30E77EF6800D240DE /* nuiBindings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiBindings.cpp; path = Bindings/nuiBindings.cpp; sourceTree = "<group>"; };
 		E577AB3E0C8C06E900CE9A7A /* nuiSimpleContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiSimpleContainer.cpp; sourceTree = "<group>"; };
 		E577AB430C8C071B00CE9A7A /* nuiSimpleContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiSimpleContainer.h; path = include/nuiSimpleContainer.h; sourceTree = SOURCE_ROOT; };
 		E577AEA90C8D81A100CE9A7A /* nuiContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiContainer.cpp; path = src/WidgetTree/nuiContainer.cpp; sourceTree = SOURCE_ROOT; };
@@ -3901,6 +3904,14 @@
 			name = SoftwareRasterizer;
 			sourceTree = "<group>";
 		};
+		E57502A20E77EDC500D240DE /* Bindings */ = {
+			isa = PBXGroup;
+			children = (
+				E57502A30E77EF6800D240DE /* nuiBindings.cpp */,
+			);
+			name = Bindings;
+			sourceTree = "<group>";
+		};
 		E581672D0C3CEBF100902DFE = {
 			isa = PBXGroup;
 			children = (
@@ -4638,6 +4649,7 @@
 				E52E1A230CD7EE46006FBCDD /* Audio */,
 				E5816D210C3CECAB00902DFE /* Application */,
 				E5816D510C3CECAB00902DFE /* Base */,
+				E57502A20E77EDC500D240DE /* Bindings */,
 				BCFE08170E050A990073662D /* Dialogs */,
 				BC3BA45F0D250EC9005B175E /* Decorations */,
 				E5816D6C0C3CECAB00902DFE /* File */,
@@ -7188,6 +7200,7 @@
 				BC96D6C80E07FE9600D24189 /* nuiMessageBox.cpp in Sources */,
 				BCD0F0EE0E643D3400B84520 /* nuiURL_Carbon.cpp in Sources */,
 				BC5529FA0E754CE400E8068E /* nuiDefaultDecoration.cpp in Sources */,
+				E57502A50E77EF6800D240DE /* nuiBindings.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7684,6 +7697,7 @@
 				BC96D6C70E07FE9600D24189 /* nuiMessageBox.cpp in Sources */,
 				BCD0F0ED0E643D3400B84520 /* nuiURL_Carbon.cpp in Sources */,
 				BC5529F90E754CE400E8068E /* nuiDefaultDecoration.cpp in Sources */,
+				E57502A40E77EF6800D240DE /* nuiBindings.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

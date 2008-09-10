@@ -45,12 +45,12 @@ public:
   bool SetCellToken(uint col, uint row, nuiTokenBase* pToken);
 
   void SetCellPosition(uint col, uint row, nuiPosition position); ///< Sets the position of the widget inside the cell
-  bool FindCell(nuiWidgetPtr pWidget, uint& rCol, uint& rRow); ///< Returns true if \p pWidget was found in this container. If it was found, its position in the grid are set in rCol and rRow.
+  bool FindCell(nuiWidgetPtr pWidget, uint& rCol, uint& rRow) const; ///< Returns true if \p pWidget was found in this container. If it was found, its position in the grid are set in rCol and rRow.
 
   void ClearCells(bool trash=true);
 
-  nuiWidget* GetCell(uint col, uint row);               ///< returns NULL if cell is empty
-  nuiTokenBase* GetCellToken(uint col, uint row);
+  nuiWidget* GetCell(uint col, uint row) const;               ///< returns NULL if cell is empty
+  nuiTokenBase* GetCellToken(uint col, uint row) const;
 
   // Rows and columns settings:
   void SetColumnSpacing(uint column, nuiSize hgap); ///< Sets the horizontal spacing to hgap around widgets in the given column.
@@ -75,29 +75,29 @@ public:
   void ResetColumnPixels(uint col);                ///< make the minimum size in pixels back to its variable capactiy
   
   // Corresponding Getters:
-  nuiSize GetColumnSpacing(uint column); ///< Gets the horizontal spacing to hgap around widgets in the given column.
-  nuiSize GetRowSpacing(uint row);       ///< Gets the vertical spacing to hgap  around widgets in the given column.
-  void GetGridSize(uint& columns, uint& rows);        ///< Gets the grid size in number of columns and rows.
-  nuiSize GetColumnGrowRatio(uint col);///< Gets the ratio to the given column.
-  nuiSize GetColumnShrinkRatio(uint col);///< Gets the expand ratio of the given column.
-  nuiSize GetRowGrowRatio(uint col);///< Gets the expand mode and ratio of the given Row.
-  nuiSize GetRowShrinkRatio(uint col);///< Gets the expand mode and ratio of the given Row.
+  nuiSize GetColumnSpacing(uint column) const; ///< Gets the horizontal spacing to hgap around widgets in the given column.
+  nuiSize GetRowSpacing(uint row) const;       ///< Gets the vertical spacing to hgap  around widgets in the given column.
+  void GetGridSize(uint& columns, uint& rows) const;        ///< Gets the grid size in number of columns and rows.
+  nuiSize GetColumnGrowRatio(uint col) const;///< Gets the ratio to the given column.
+  nuiSize GetColumnShrinkRatio(uint col) const;///< Gets the expand ratio of the given column.
+  nuiSize GetRowGrowRatio(uint col) const;///< Gets the expand mode and ratio of the given Row.
+  nuiSize GetRowShrinkRatio(uint col) const;///< Gets the expand mode and ratio of the given Row.
 
-  nuiSize GetRowMaxGrow(uint row);        ///< Gets the maximum growing percentage ratio for the given row 
-  nuiSize GetColumnMaxGrow(uint col);     ///< Gets the maximum growing percentage ratio for the given column 
-  nuiSize GetRowMaxPixels(uint row);       ///< Gets the maximum size in pixels for the given row
-  nuiSize GetColumnMaxPixels(uint column); ///< Gets the maximum size in pixels for the given column
+  nuiSize GetRowMaxGrow(uint row) const;        ///< Gets the maximum growing percentage ratio for the given row 
+  nuiSize GetColumnMaxGrow(uint col) const;     ///< Gets the maximum growing percentage ratio for the given column 
+  nuiSize GetRowMaxPixels(uint row) const;       ///< Gets the maximum size in pixels for the given row
+  nuiSize GetColumnMaxPixels(uint column) const; ///< Gets the maximum size in pixels for the given column
 
-  nuiSize GetRowMaxShrink(uint row);      ///< Gets the maximum shrinking percentage ratio for the given row 
-  nuiSize GetColumnMaxShrink(uint col);   ///< Gets the maximum shrinking percentage ratio for the given column 
-  nuiSize GetRowMinPixels(uint row);       ///< Gets the minimum size in pixels for the given row
-  nuiSize GetColumnMinPixels(uint column); ///< Gets the minimum size in pixels for the given column
+  nuiSize GetRowMaxShrink(uint row) const;      ///< Gets the maximum shrinking percentage ratio for the given row 
+  nuiSize GetColumnMaxShrink(uint col) const;   ///< Gets the maximum shrinking percentage ratio for the given column 
+  nuiSize GetRowMinPixels(uint row) const;       ///< Gets the minimum size in pixels for the given row
+  nuiSize GetColumnMinPixels(uint column) const; ///< Gets the minimum size in pixels for the given column
   
   // cells visibility
   void SetCellVisible(uint col, uint row, bool set);
-  bool IsCellVisible(uint col, uint row);
+  bool IsCellVisible(uint col, uint row) const;
   void SetRowVisible(uint row, bool set);
-  bool IsRowVisible(uint row);
+  bool IsRowVisible(uint row) const;
 
 
   // Add rows/columns:
@@ -109,8 +109,8 @@ public:
 
   virtual bool Draw(nuiDrawContext* pContext);
   
-  uint GetNbRows()    { return mNbRows;     }
-  uint GetNbColumns() { return mNbColumns;  }
+  uint GetNbRows() const    { return mNbRows;     }
+  uint GetNbColumns() const { return mNbColumns;  }
 
   void RemoveRows(uint pos, uint rows);
   void RemoveColumns(uint pos, uint columns);

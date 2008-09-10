@@ -23,8 +23,6 @@ public:
   
   // overloaded to redirect the use. Please use SetContents instead
   virtual bool AddChild(nuiWidgetPtr pChild);
-  virtual bool DelChild(nuiWidgetPtr pChild,bool Delete = false); ///< Remove this child from the object. If Delete is true then the child will be deleted too. Returns true if success.
-
 	
   virtual bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
   virtual nuiXMLNode* Serialize(nuiXMLNode* pParentNode, bool Recursive = false) const;

@@ -81,12 +81,6 @@ public:
   nuiSize GetDefaultSpacing() const;
   void SetDefaultSpacing(nuiSize set);
 
-
-protected:
-
-  nuiGrid*  mpGrid;
-
-
 };
 
 #endif

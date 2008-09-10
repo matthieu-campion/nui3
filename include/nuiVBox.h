@@ -82,9 +82,6 @@ public:
 
 protected:
 
-  nuiGrid*  mpGrid;
-
-
 };
 
 #endif

@@ -55,13 +55,6 @@ bool nuiTitledPane::AddChild(nuiWidgetPtr pChild)
   return false;
 }
 
-bool nuiTitledPane::DelChild(nuiWidgetPtr pChild, bool Delete)
-{
-  NGL_ASSERT(0);
-  return false;
-}
-
-
 
 bool nuiTitledPane::Load(const nuiXMLNode* pNode)
 {
