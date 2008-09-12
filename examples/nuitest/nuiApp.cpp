@@ -159,7 +159,7 @@ void nuiApp::OnInit()
   Info.Title = _T("nui test");
   Info.XPos = 0;
   Info.YPos = 0;
-        
+  
   win = new nuiWin(ContextInfo,Info, ShowFPS);
   if ((!win) || (win->GetError()))
   {

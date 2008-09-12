@@ -110,9 +110,9 @@ void nglApplication::MakeMenu()   /* Put up a menu */
     err = Gestalt(gestaltMenuMgrAttr, &response);
     if ((err == noErr) && (response & gestaltMenuMgrAquaLayoutMask))
     {
-      menu = GetMenuHandle( mFile );
-      DeleteMenuItem( menu, iQuit );
-      DeleteMenuItem( menu, iQuitSeparator );
+      menu = GetMenuHandle(mFile);
+      DeleteMenuItem(menu, iQuit);
+      DeleteMenuItem(menu, iQuitSeparator);
     }
 
     DrawMenuBar();
@@ -121,10 +121,9 @@ void nglApplication::MakeMenu()   /* Put up a menu */
   {
     long response;
     MenuHandle menu;
-    InitCursor();
     // Init Menus
-    menu = NewMenu (mFile, (unsigned char*)"\004File");// new menu
-    InsertMenu (menu, 0);// add menu to end
+    menu = NewMenu(mFile, (unsigned char*)"\004File");// new menu
+    InsertMenu(menu, 0);// add menu to end
     SetRootMenu(menu);
     // insert application menus here
     // add quit if not under Mac OS X
@@ -228,8 +227,6 @@ bool nglApplication::Init(int ArgCnt, char** pArg)
 
   // TODO: Implement Carbon init
   OSErr err;
-
-  InitCursor();
 
   err = AEInstallEventHandler( kCoreEventClass, kAEQuitApplication, NewAEEventHandlerUPP((AEEventHandlerProcPtr)QuitAppleEventHandler), 0, false );
   if (err != noErr)

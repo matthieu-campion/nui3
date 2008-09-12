@@ -37,12 +37,6 @@ public:
   virtual ~nuiEventTargetBase() {}
   virtual bool OnEvent(const nuiEvent& rEvent) = 0;
   virtual void Disconnect(nuiEventSource& rSource) = 0;
-  
-  bool IsEnumerating() const { return mEnumerating; } // In order to assert when doing something wrong
-
-protected:
-  // Trash mechanism:
-  bool mEnumerating;
 };
 
 /// Do not touch this either!
@@ -57,7 +51,6 @@ public:
   virtual bool SendEvent(const nuiEvent& rEvent = nuiEvent(0));
   virtual bool operator() (const nuiEvent& rEvent = nuiEvent(0));
   uint GetTargetCount() const;
-  void EmptyTrash();
 
   void Enable(bool Set = true)
   {
@@ -76,8 +69,6 @@ public:
 
 protected:
   mutable std::vector<nuiEventTargetBase*> mpTargets;
-  mutable std::vector<nuiEventTargetBase*> mpTrash;
-  mutable bool mEnumerating;
 
 private:
   // Restrict access to some methods & constructors:
@@ -94,7 +85,6 @@ public:
   nuiEventTarget (T* pTarget)
     : nuiEventTargetBase()
   {
-    mEnumerating = false;
     mpTarget = pTarget;
   }
 
@@ -105,16 +95,13 @@ public:
 
   virtual void DisconnectAll()
   {
+    LinksMap links(mpLinks);
 		typename LinksMap::iterator it;
-		typename LinksMap::iterator end = mpLinks.end();
-    bool old = mEnumerating;
-    mEnumerating = true;
-    for (it=mpLinks.begin(); it != end; ++it)
+		typename LinksMap::iterator end = links.end();
+    for (it = links.begin(); it != end; ++it)
     {
       Disconnect(*(it->first));
     }
-    mEnumerating = old;
-    HandlePendingConnections();
   }
 
   virtual bool OnEvent(const nuiEvent& rEvent)
@@ -123,17 +110,15 @@ public:
     NGL_ASSERT(mpTarget);
     
     bool handled = false;
-    bool old = mEnumerating;
-    mEnumerating = true;
 
     nuiEventSource* pSource = (nuiEventSource*)rEvent.GetSource();
     typename LinksMap::const_iterator it_source = mpLinks.find(pSource);
 
     if (it_source != mpLinks.end())
     {
-      const LinkList& rLinks(it_source->second);
-      typename LinkList::const_iterator it   = rLinks.begin();
-      typename LinkList::const_iterator end  = rLinks.end();
+      LinkList links(it_source->second);
+      typename LinkList::const_iterator it   = links.begin();
+      typename LinkList::const_iterator end  = links.end();
 
       for (; (it != end) && !handled; ++it)
       {
@@ -144,8 +129,6 @@ public:
         handled = (((T*)mpTarget)->*pFunc)( rEvent );
       }
     }
-    mEnumerating = old;
-    HandlePendingConnections();
     return handled;
   }
 
@@ -153,12 +136,6 @@ public:
   {
     NGL_ASSERT(mpTarget);
     // Beware!! If the debugger brings you here its probably that you forgot to call nuiEventSink<...>::SetTarget in some of your constructor code!!!
-    if (mEnumerating)
-    {
-      mpPendingConnections.push_back(new ConnectionOrder(ConnectionOrder::eConnect, &rSource, pTargetFunc, pUser));
-      return;
-    }
-
     Link* pLink = new Link;
     pLink->mpTargetFunc = pTargetFunc;
     pLink->mpUser = pUser;
@@ -173,12 +150,6 @@ public:
   {
     NGL_ASSERT(mpTarget);
     // Beware!! If the debugger brings you here its probably that you forgot to call nuiEventSink<...>::SetTarget in some of your constructor code!!!
-    if (mEnumerating)
-    {
-      mpPendingConnections.push_back(new ConnectionOrder(ConnectionOrder::eDisconnect, &rSource, NULL));
-      return;
-    }
-    
     typename LinksMap::iterator it_source = mpLinks.find(&rSource);
     if (it_source != mpLinks.end())
     {
@@ -197,11 +168,6 @@ public:
   {
     NGL_ASSERT(mpTarget);
     // Beware!! If the debugger brings you here its probably that you forgot to call nuiEventSink<...>::SetTarget in some of your constructor code!!!
-    if (mEnumerating)
-    {
-      mpPendingConnections.push_back( new ConnectionOrder(ConnectionOrder::eDisconnect, NULL, pTargetFunc) );
-      return;
-    }
 
     std::vector<nuiEventSource*> toErase;
     typename LinksMap::const_iterator end_source = mpLinks.end();
@@ -238,11 +204,6 @@ public:
   {
     NGL_ASSERT(mpTarget);
     // Beware!! If the debugger brings you here its probably that you forgot to call nuiEventSink<...>::SetTarget in some of your constructor code!!!
-    if (mEnumerating)
-    {
-      mpPendingConnections.push_back(new ConnectionOrder(ConnectionOrder::eDisconnect, &rSource, pTargetFunc));
-      return;
-    }
 
     typename LinksMap::iterator it_source = mpLinks.find(&rSource);
     if (it_source != mpLinks.end())
@@ -273,75 +234,6 @@ public:
 
 protected:
   
-  class NUI_API ConnectionOrder
-  {
-  public:
-    enum ConnectionOrderType
-    {
-      eDisconnect,
-      eConnect
-    };
-
-    ConnectionOrder(ConnectionOrderType type, nuiEventSource* pSource, TargetFunc pFunc, void* pUser = NULL)
-    {
-      mType = type;
-      mpSource = pSource;
-      mpFunc = pFunc;
-      mpUser = pUser;
-    }
-    
-    ~ConnectionOrder()
-    {
-    }
-
-    ConnectionOrderType mType;
-    nuiEventSource*     mpSource;
-    TargetFunc          mpFunc;
-    void*               mpUser;
-  };
-
-  virtual void HandlePendingConnections()
-  {
-    if (mEnumerating)
-      return;
-
-    typename std::vector<ConnectionOrder*>::iterator it;
-    typename std::vector<ConnectionOrder*>::iterator end = mpPendingConnections.end();
-
-    for (it = mpPendingConnections.begin(); it != end; ++it)
-    {
-      if (*it)
-      {
-        typename nuiEventTarget<T>::ConnectionOrder::ConnectionOrderType type = (*it)->mType;
-        nuiEventSource* pSource = (*it)->mpSource;
-        TargetFunc pFunc = (*it)->mpFunc;
-        if (type == ConnectionOrder::eDisconnect)
-        {
-          if (pSource && pFunc)
-          {
-            Disconnect(*pSource, pFunc);
-          }
-          else if (pSource)
-          {
-            Disconnect(*pSource);
-          }
-          else if (pFunc)
-          {
-            Disconnect(pFunc);
-          }
-        }
-        else //type == ConnectionOrder::eConnect
-        {
-          void* pUser = (*it)->mpUser;
-          Connect(*pSource, pFunc, pUser);
-        }
-        delete (*it);
-      }
-    }
-
-    mpPendingConnections.clear();
-  }
-
   // Target handling:
   void SetTarget(T* pTarget)
   {
@@ -352,8 +244,6 @@ protected:
     return mpTarget;
   }
   
-  std::vector <ConnectionOrder*> mpPendingConnections;
-
 private:
   class NUI_API Link
   {

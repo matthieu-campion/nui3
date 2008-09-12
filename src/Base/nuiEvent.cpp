@@ -42,7 +42,6 @@ const nuiEventSource* nuiEvent::GetSource() const
 // class nuiEventSource
 nuiEventSource::nuiEventSource()
 {
-  mEnumerating = false;
   mEnabled = true;
 }
 
@@ -51,15 +50,12 @@ nuiEventSource::~nuiEventSource()
   std::vector<nuiEventTargetBase*>::iterator it;
   std::vector<nuiEventTargetBase*>::iterator end = mpTargets.end();
 
-  mEnumerating = true;
   // Only add every target once, they will manage multiple event connection by them selves.
   for (it = mpTargets.begin(); it!=end; ++it) 
   {
-    NGL_ASSERT(!(*it)->IsEnumerating());
-    (*it)->Disconnect(*this);
+    nuiEventTargetBase* pETB = *it;
+    pETB->Disconnect(*this);
   }
-  mEnumerating = false;
-  EmptyTrash();
 }
 
 void nuiEventSource::Connect(nuiEventTargetBase* t)
@@ -79,19 +75,14 @@ void nuiEventSource::Connect(nuiEventTargetBase* t)
 void nuiEventSource::Disconnect(nuiEventTargetBase* t)
 {
   //  OUT("Disconnecting 0x%x from 0x%x\n",t,this);
-  if (!mEnumerating)
+  for (uint32 i = 0; i < mpTargets.size(); i++)
   {
-    for (uint32 i = 0; i < mpTargets.size(); i++)
+    if (mpTargets[i] == t)
     {
-      if (mpTargets[i] == t)
-      {
-        mpTargets.erase(mpTargets.begin() + i);
-        return;
-      }
-    }    
-  }
-  else
-    mpTrash.push_back(t);
+      mpTargets.erase(mpTargets.begin() + i);
+      return;
+    }
+  }    
 }
 
 bool nuiEventSource::SendEvent(const nuiEvent& rEvent)
@@ -99,21 +90,16 @@ bool nuiEventSource::SendEvent(const nuiEvent& rEvent)
   rEvent.SetSource(this);
   if (IsEnabled())
   {
-    mEnumerating = true;
-    std::vector<nuiEventTargetBase*>::const_iterator it;
-    std::vector<nuiEventTargetBase*>::const_iterator end;
-    it = mpTargets.begin();
-    end=mpTargets.end();
+    std::vector<nuiEventTargetBase*> targets(mpTargets);
+    std::vector<nuiEventTargetBase*>::const_iterator it = targets.begin();
+    std::vector<nuiEventTargetBase*>::const_iterator end = targets.end();
 
     bool handled = false;
-    while (it!=end && !handled)
+    while (it != end && !handled)
     {
       handled =((*it)->OnEvent(rEvent));
       ++it;
     }
-
-    mEnumerating = false;
-    EmptyTrash();
 
     return handled;
   }
@@ -129,23 +115,6 @@ bool nuiEventSource::operator() (const nuiEvent& rEvent)
 uint nuiEventSource::GetTargetCount() const
 {
   return (uint)mpTargets.size();
-}
-
-void nuiEventSource::EmptyTrash()
-{
-  if (!mEnumerating)
-  {
-    std::vector<nuiEventTargetBase*>::iterator it;
-    std::vector<nuiEventTargetBase*>::iterator end;
-    it=mpTrash.begin();
-    end=mpTrash.end();
-    while (it!=end)
-    {
-      Disconnect(*it);
-      ++it;
-    }
-    mpTrash.clear();
-  }
 }
 
 nuiEventSource::nuiEventSource(const nuiEventSource& rSource) 
