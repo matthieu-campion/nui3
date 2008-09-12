@@ -100,11 +100,13 @@ bool nuiDialogSelectFile::OnSelectorOK(const nuiEvent& rEvent)
   mRootPath = mpSelector->GetRootPath();
   
   // send event and close the dialog if the user answered true
-  if (FileSelected())
+  if (!FileSelected())
     Trash();
   
   return false;
 }
+
+
 bool nuiDialogSelectFile::OnCreateNewFolder(const nuiEvent& rEvent)
 {
   mpCreateDialog = new nuiDialog(mpParent);

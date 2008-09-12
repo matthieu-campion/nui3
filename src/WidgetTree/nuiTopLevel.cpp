@@ -333,7 +333,7 @@ void nuiTopLevel::FillTrash()
 
 void nuiTopLevel::EmptyTrash()
 {
-  BroadcastQueuedNotifications();
+  //BroadcastQueuedNotifications();
   UpdateWidgetsCSS();
 
   mFillTrash = false;

@@ -10,20 +10,20 @@
 #include "nuiNotification.h"
 
 
-nuiMessageQueue::nuiMessageQueue ()
+nuiMessageQueue::nuiMessageQueue()
   : mQueueCS(_T("nuiMessageQueueCS"))
 {
 }
 
 
-nuiMessageQueue::~nuiMessageQueue ()
+nuiMessageQueue::~nuiMessageQueue()
 {
 }
   
 bool nuiMessageQueue::Post(nuiNotification* notif)
 {
-  nglCriticalSectionGuard guard (mQueueCS);
-  mQueue.push (notif);
+  nglCriticalSectionGuard guard(mQueueCS);
+  mQueue.push(notif);
   
   // unlock thread waiting to read the message
   mSyncEvent.Set ();
@@ -41,11 +41,11 @@ nuiNotification* nuiMessageQueue::Get(uint32 time)
     mQueueCS.Unlock();
     return NULL;
   }
-  nuiNotification* notif = mQueue.front ();
-  mQueue.pop ();
+  nuiNotification* notif = mQueue.front();
+  mQueue.pop();
   
   // no more messages. next call to Get will block 'til another message is posted.
-  if (mQueue.empty()) mSyncEvent.Reset ();
+  if (mQueue.empty()) mSyncEvent.Reset();
   mQueueCS.Unlock();
   
   
