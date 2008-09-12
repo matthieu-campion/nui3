@@ -75,8 +75,8 @@ public:
   }
 
 protected:
-  mutable std::list<nuiEventTargetBase*> mpTargets;
-  mutable std::list<nuiEventTargetBase*> mpTrash;
+  mutable std::vector<nuiEventTargetBase*> mpTargets;
+  mutable std::vector<nuiEventTargetBase*> mpTrash;
   mutable bool mEnumerating;
 
 private:
@@ -165,7 +165,8 @@ public:
 
     rSource.Connect(this);
 
-    mpLinks[&rSource].push_front(pLink);
+    LinkList& rLinkList(mpLinks[&rSource]);
+    rLinkList.insert(rLinkList.begin(), pLink);
   }
 
   virtual void Disconnect(nuiEventSource& rSource)
@@ -202,7 +203,7 @@ public:
       return;
     }
 
-    std::list<nuiEventSource*> toErase;
+    std::vector<nuiEventSource*> toErase;
     typename LinksMap::const_iterator end_source = mpLinks.end();
     for (typename LinksMap::iterator it_source = mpLinks.begin(); it_source != end_source; ++it_source)
     {
@@ -225,12 +226,11 @@ public:
         toErase.push_back(it_source->first);
     }
     
-    while (!toErase.empty())
+    for (uint32 i = 0; i < toErase.size(); i++)
     {
-      nuiEventSource* pSource = *(toErase.begin());
+      nuiEventSource* pSource = toErase[i];
       pSource->Disconnect(this);
       mpLinks.erase(pSource);
-      toErase.pop_front();
     }
   }
 
@@ -305,8 +305,8 @@ protected:
     if (mEnumerating)
       return;
 
-    typename std::list<ConnectionOrder*>::iterator it;
-    typename std::list<ConnectionOrder*>::iterator end = mpPendingConnections.end();
+    typename std::vector<ConnectionOrder*>::iterator it;
+    typename std::vector<ConnectionOrder*>::iterator end = mpPendingConnections.end();
 
     for (it = mpPendingConnections.begin(); it != end; ++it)
     {
@@ -352,7 +352,7 @@ protected:
     return mpTarget;
   }
   
-  std::list <ConnectionOrder*> mpPendingConnections;
+  std::vector <ConnectionOrder*> mpPendingConnections;
 
 private:
   class NUI_API Link
@@ -362,8 +362,8 @@ private:
     void*       mpUser;
   };
 
-  typedef std::list<Link*> LinkList;
-  typedef std::map<nuiEventSource*, LinkList > LinksMap;
+  typedef std::vector<Link*> LinkList;
+  typedef std::map<nuiEventSource*, LinkList> LinksMap;
   LinksMap mpLinks;
 
   T* mpTarget;

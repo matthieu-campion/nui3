@@ -258,8 +258,9 @@ void nuiTopLevel::Exit()
   if (mReleased)
     return;
   
-  mTopLevelSink.Disconnect(&nuiMainWindow::ToolTipOn);
-  mTopLevelSink.Disconnect(&nuiMainWindow::ToolTipOff);
+//   mTopLevelSink.Disconnect(&nuiMainWindow::ToolTipOn);
+//   mTopLevelSink.Disconnect(&nuiMainWindow::ToolTipOff);
+  mTopLevelSink.DisconnectAll();
 
   mpToolTipLabel = NULL;
 #ifdef _MULTI_TOUCHES_

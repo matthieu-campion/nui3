@@ -48,8 +48,8 @@ nuiEventSource::nuiEventSource()
 
 nuiEventSource::~nuiEventSource()
 {
-  list<nuiEventTargetBase*>::iterator it;
-  list<nuiEventTargetBase*>::iterator end = mpTargets.end();
+  std::vector<nuiEventTargetBase*>::iterator it;
+  std::vector<nuiEventTargetBase*>::iterator end = mpTargets.end();
 
   mEnumerating = true;
   // Only add every target once, they will manage multiple event connection by them selves.
@@ -64,8 +64,8 @@ nuiEventSource::~nuiEventSource()
 
 void nuiEventSource::Connect(nuiEventTargetBase* t)
 {
-  list<nuiEventTargetBase*>::iterator it;
-  list<nuiEventTargetBase*>::iterator end = mpTargets.end();
+  std::vector<nuiEventTargetBase*>::iterator it;
+  std::vector<nuiEventTargetBase*>::iterator end = mpTargets.end();
 
   // Only add every target once, they will manage multiple event connection by them selves.
   for (it = mpTargets.begin(); it!=end; ++it) 
@@ -73,14 +73,23 @@ void nuiEventSource::Connect(nuiEventTargetBase* t)
     if ((*it) == t)
       return;
   }
-  mpTargets.push_front(t);
+  mpTargets.insert(mpTargets.begin(), t);
 }
 
 void nuiEventSource::Disconnect(nuiEventTargetBase* t)
 {
   //  OUT("Disconnecting 0x%x from 0x%x\n",t,this);
   if (!mEnumerating)
-    mpTargets.remove(t);
+  {
+    for (uint32 i = 0; i < mpTargets.size(); i++)
+    {
+      if (mpTargets[i] == t)
+      {
+        mpTargets.erase(mpTargets.begin() + i);
+        return;
+      }
+    }    
+  }
   else
     mpTrash.push_back(t);
 }
@@ -91,8 +100,8 @@ bool nuiEventSource::SendEvent(const nuiEvent& rEvent)
   if (IsEnabled())
   {
     mEnumerating = true;
-    list<nuiEventTargetBase*>::const_iterator it;
-    list<nuiEventTargetBase*>::const_iterator end;
+    std::vector<nuiEventTargetBase*>::const_iterator it;
+    std::vector<nuiEventTargetBase*>::const_iterator end;
     it = mpTargets.begin();
     end=mpTargets.end();
 
@@ -126,8 +135,8 @@ void nuiEventSource::EmptyTrash()
 {
   if (!mEnumerating)
   {
-    list<nuiEventTargetBase*>::iterator it;
-    list<nuiEventTargetBase*>::iterator end;
+    std::vector<nuiEventTargetBase*>::iterator it;
+    std::vector<nuiEventTargetBase*>::iterator end;
     it=mpTrash.begin();
     end=mpTrash.end();
     while (it!=end)
