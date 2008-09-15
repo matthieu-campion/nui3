@@ -8,20 +8,12 @@
 
 import sys
 
-if (len(sys.argv) < 2):
-  print "Usage: %s <binary font file> [<dest source file>]" % sys.argv[0]
+if (len(sys.argv) < 3):
+  print "Usage: %s <binary font file> <dest font name>" % sys.argv[0]
   sys.exit()
 
 sourcefile = file(sys.argv[1])
-
-if (len(sys.argv) < 3):
-  i = sys.argv[1].rfind('.')
-  if i == -1:
-    destfilename = sys.argv[1]
-  else:
-    destfilename = sys.argv[1][:i]
-else:
-  destfilename = sys.argv[2]
+destfilename = sys.argv[2]
 
 datafile = file(sys.argv[1])
 data = datafile.read()
@@ -34,11 +26,7 @@ size = len(data)
 hfile = file(destfilename + '.h', 'w')
 cppfile = file(destfilename + '.cpp', 'w')
 
-i = sys.argv[1].rfind('/')
-if i == -1:
-  defname = destfilename.replace(' ', '_')
-else:
-  defname = destfilename[i+1:].replace(' ', '_')
+defname = destfilename.replace(' ', '_')
 
 hfile.write("""/*
   NUI3 - C++ cross-platform GUI framework for OpenGL based applications
@@ -50,10 +38,10 @@ hfile.write("""/*
 #ifndef __%s_h__
 #define __%s_h__
 
-extern const char* gpFontBase;
-const long         gFontSize = %d;
+extern const char* gp%sFontBase;
+const long         g%sFontSize = %d;
 
-#endif // __%s_h__""" % (defname, defname, size, defname))
+#endif // __%s_h__""" % (defname, defname, defname, defname, size, defname))
 
 cppfile.write("""/*
   NUI3 - C++ cross-platform GUI framework for OpenGL based applications
