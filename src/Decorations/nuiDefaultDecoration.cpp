@@ -10,6 +10,9 @@
 #include "nuiGradientDecoration.h"
 #include "nuiBorderDecoration.h"
 #include "nuiMetaDecoration.h"
+#include "nglImagePNGCodec.h"
+#include "nuiDefaultDecoration_nuiButton.h"
+#include "nuiFrame.h"
 
 nuiDefaultDecoration::nuiDefaultDecoration()
 {
@@ -181,7 +184,40 @@ void nuiDefaultDecoration::FolderPane(nuiWidget* pWidget)
 
 void nuiDefaultDecoration::Button(nuiWidget* pWidget)
 {
+
+  nuiGradientDecoration* pDeco = (nuiGradientDecoration*)nuiDecoration::Get(_T("nuiDefaultDecorationButton"));
+  if (pDeco)
+  {
+    pWidget->SetDecoration(pDeco, eDecorationBorder);
+    return;
+  }
   
+  nglIMemory* pIMemUp = new nglIMemory(gpDefaultDecorationButtonUp, gpDefaultDecorationButtonUpSize);
+  nuiTexture* pTexUp = nuiTexture::GetTexture(pIMemUp);
+  NGL_ASSERT(pTexUp);
+  nuiFrame* pFrameUp = new nuiFrame(_T("nuiDefaultDecorationButtonUp"), pTexUp, nuiRect(3,3,12,15));
+
+  
+  nglIMemory* pIMemHover = new nglIMemory(gpDefaultDecorationButtonHover, gpDefaultDecorationButtonHoverSize);
+  nuiTexture* pTexHover = nuiTexture::GetTexture(pIMemHover);
+  NGL_ASSERT(pTexHover);
+  nuiFrame* pFrameHover = new nuiFrame(_T("nuiDefaultDecorationButtonHover"), pTexHover, nuiRect(3,3,12,15));
+  
+  
+  nglIMemory* pIMemDown = new nglIMemory(gpDefaultDecorationButtonDown, gpDefaultDecorationButtonDownSize);
+  nuiTexture* pTexDown = nuiTexture::GetTexture(pIMemDown);
+  NGL_ASSERT(pTexDown);
+  nuiFrame* pFrameDown = new nuiFrame(_T("nuiDefaultDecorationButtonDown"), pTexDown, nuiRect(3,3,12,15));
+  
+  
+  
+  nuiStateDecoration* pState = new nuiStateDecoration(_T("nuiDefaultDecorationButton"), 
+                                                      _T("nuiDefaultDecorationButtonUp"),
+                                                      _T("nuiDefaultDecorationButtonDown"),
+                                                      _T("nuiDefaultDecorationButtonHover"));
+
+  pWidget->SetDecoration(pState, eDecorationBorder);
+
 }
 
 

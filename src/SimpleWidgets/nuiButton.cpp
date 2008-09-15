@@ -14,7 +14,7 @@
 #include "nuiDecoration.h"
 #include "nuiFrame.h"
 
-#define INACTIVE_SHADE_SIZE 8.f
+#define INACTIVE_SHADE_SIZE 0.f
 
 nuiButton::nuiButton()
   : nuiSimpleContainer()
@@ -142,7 +142,7 @@ bool nuiButton::Draw(nuiDrawContext* pContext)
 
   if (pDeco)
   {
-    DrawChildren(pContext);
+    DrawChildren(pContext);    
   }
   else 
   {
@@ -159,6 +159,8 @@ bool nuiButton::Draw(nuiDrawContext* pContext)
   }
   return true;
 }
+
+
 
 nuiRect nuiButton::CalcIdealSize()
 {
