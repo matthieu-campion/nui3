@@ -27,6 +27,7 @@ datafile = file(sys.argv[1])
 data = datafile.read()
 datafile.close()
 datastr = ''.join(map(lambda x: '\\x%02x' % ord(x), data))
+datastr =  '"\n"'.join([datastr[n:n+64] for n in range(0,len(datastr),64)])
 
 size = len(data)
 
@@ -63,7 +64,7 @@ cppfile.write("""/*
 
 #include "nui.h"
 
-NGL_API const char* gpDefaultFontBase =\"%s\";""" % datastr)
+NGL_API const char* gpDefaultFontBase = \"%s\";""" % datastr)
 
 hfile.close()
 cppfile.close()
