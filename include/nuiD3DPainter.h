@@ -48,6 +48,8 @@ protected:
 
   static uint32 mActiveContexts;
 
+  void ApplyTexture(const nuiRenderState& rState, bool ForceApply);
+
   virtual void ReleaseCacheObject(void* pHandle);
   //void DrawSmallArray(const nuiRenderArray& rArray);
   void LoadCurrentMatrix();
