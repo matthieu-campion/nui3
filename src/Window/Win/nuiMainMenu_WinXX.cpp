@@ -118,6 +118,25 @@ void nuiMainMenuItem::SetChecked(bool set)
 
 
 
+void nuiMainMenuItem::SetText(const nglString& rText)
+{
+  //BOOL InsertMenu(
+  //  UINT nPosition,
+  //  UINT nFlags,
+  //  UINT_PTR nIDNewItem = 0,
+  //  LPCTSTR lpszNewItem = NULL 
+  //  );
+  //BOOL ModifyMenu(
+  //  UINT nPosition,
+  //  UINT nFlags,
+  //  UINT_PTR nIDNewItem = 0,
+  //  LPCTSTR lpszNewItem = NULL 
+  //  );
+
+  int32 index = ComputeIndexInParent();
+  ModifyMenu(mpPrivate->mhParentMenu, index, MF_BYPOSITION|MF_STRING|MF_POPUP, (UINT)mpPrivate->mhMenu, rText.GetChars());
+}
+
 void nuiMainMenuItem::MakeSubMenu(uint32 unused)
 {
   int32 index = ComputeIndexInParent();
