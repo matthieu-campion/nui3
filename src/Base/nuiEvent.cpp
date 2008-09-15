@@ -47,14 +47,15 @@ nuiEventSource::nuiEventSource()
 
 nuiEventSource::~nuiEventSource()
 {
-  std::vector<nuiEventTargetBase*>::iterator it;
+  std::vector<nuiEventTargetBase*>::iterator it = mpTargets.begin();
   std::vector<nuiEventTargetBase*>::iterator end = mpTargets.end();
 
   // Only add every target once, they will manage multiple event connection by them selves.
-  for (it = mpTargets.begin(); it!=end; ++it) 
+  while (it != mpTargets.end()) 
   {
     nuiEventTargetBase* pETB = *it;
     pETB->Disconnect(*this);
+    it = mpTargets.begin();
   }
 }
 
