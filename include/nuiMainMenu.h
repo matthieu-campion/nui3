@@ -40,6 +40,8 @@ public:
   void SetChecked(bool set);
   bool IsChecked();
   
+  bool SetText(const nglString& rText);
+  
   nuiSimpleEventSource<0> Activated;
   nuiSimpleEventSource<0> Checked;
   nuiSimpleEventSource<0> Unchecked;
@@ -55,7 +57,7 @@ private:
   
   nuiMainMenuItemType mType;
   bool mChecked;
-  bool mEnabled;  
+  bool mEnabled;
   bool mIsBeingDeleted;
 };
 

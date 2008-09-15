@@ -133,7 +133,13 @@ void nuiMainMenuItem::SetChecked(bool set)
     Unchecked();
 }
 
-
+bool nuiMainMenuItem::SetText(const nglString& rText)
+{  
+  nuiMainMenuItem* pParent = (nuiMainMenuItem*)GetParent();
+  int32 index = ComputeIndexInParent()+1; // apple item's index is one-base
+  
+  SetMenuItemTextWithCFString(pParent->mpPrivate->mpMenuRef, index, rText.ToCFString());
+}
 
 void nuiMainMenuItem::MakeSubMenu(uint32 subMenuID)
 {
