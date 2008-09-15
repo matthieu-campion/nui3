@@ -20,6 +20,12 @@ nuiBorderDecoration::nuiBorderDecoration(const nglString& rName)
   mBorderMode = eBorderNormal;
   mBlendFunc = nuiBlendTransp;
   mClientRect = nuiRect(0,0,0,0);
+  
+  mUseStrokeGlobalColor = true;
+  mUseStrokeLeftColor  = false;
+  mUseStrokeRightColor  = false;
+  mUseStrokeTopColor  = false;
+  mUseStrokeBottomColor  = false;
 }
 
 nuiBorderDecoration::~nuiBorderDecoration()
@@ -44,6 +50,28 @@ void nuiBorderDecoration::InitAttributes()
    nuiFastDelegate::MakeDelegate(this, &nuiBorderDecoration::GetStrokeColor), 
    nuiFastDelegate::MakeDelegate(this, &nuiBorderDecoration::SetStrokeColor)));
 
+  
+  AddAttribute(new nuiAttribute<const nuiColor&>
+               (nglString(_T("StrokeLeftColor")), nuiUnitColor,
+                nuiFastDelegate::MakeDelegate(this, &nuiBorderDecoration::GetStrokeLeftColor), 
+                nuiFastDelegate::MakeDelegate(this, &nuiBorderDecoration::SetStrokeLeftColor)));
+
+  AddAttribute(new nuiAttribute<const nuiColor&>
+               (nglString(_T("StrokeRightColor")), nuiUnitColor,
+                nuiFastDelegate::MakeDelegate(this, &nuiBorderDecoration::GetStrokeRightColor), 
+                nuiFastDelegate::MakeDelegate(this, &nuiBorderDecoration::SetStrokeRightColor)));
+
+  AddAttribute(new nuiAttribute<const nuiColor&>
+               (nglString(_T("StrokeTopColor")), nuiUnitColor,
+                nuiFastDelegate::MakeDelegate(this, &nuiBorderDecoration::GetStrokeTopColor), 
+                nuiFastDelegate::MakeDelegate(this, &nuiBorderDecoration::SetStrokeTopColor)));
+
+  AddAttribute(new nuiAttribute<const nuiColor&>
+               (nglString(_T("StrokeBottomColor")), nuiUnitColor,
+                nuiFastDelegate::MakeDelegate(this, &nuiBorderDecoration::GetStrokeBottomColor), 
+                nuiFastDelegate::MakeDelegate(this, &nuiBorderDecoration::SetStrokeBottomColor)));
+  
+  
   AddAttribute(new nuiAttribute<nglString>
   (nglString(_T("Border")), nuiUnitNone,
    nuiFastDelegate::MakeDelegate(this, &nuiBorderDecoration::GetBorderType), 
@@ -85,48 +113,61 @@ void nuiBorderDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, con
   pContext->SetBlendFunc(mBlendFunc);
   pContext->EnableTexturing(false);
 
-  pContext->SetStrokeColor(mStrokeColor);
   pContext->SetLineWidth(mStrokeSize);
-
-  if (mBorderMode == eBorderNormal)
+  
+  if ((mBorderType == eBorderAll) && mUseStrokeGlobalColor)
   {
-    switch(mBorderType)
-    {
-    case eBorderAll:
-      pContext->DrawRect(rDestRect, eStrokeShape);
-      break;
-    case eBorderLeft:
-      pContext->DrawLine(rDestRect.Left(), rDestRect.Top(), rDestRect.Left(), rDestRect.Bottom());
-      break;
-    case eBorderRight:
-      pContext->DrawLine(rDestRect.Right()-1, rDestRect.Top(), rDestRect.Right()-1, rDestRect.Bottom());
-      break;
-    case eBorderTop:
-      pContext->DrawLine(rDestRect.Left(), rDestRect.Top(), rDestRect.Right(), rDestRect.Top());
-      break;
-    case eBorderBottom:
-      pContext->DrawLine(rDestRect.Left(), rDestRect.Bottom()-1, rDestRect.Right(), rDestRect.Bottom()-1);
-      break;
-    case eBorderHorizontal:
-      pContext->DrawLine(rDestRect.Left(), rDestRect.Top(), rDestRect.Right(), rDestRect.Top());
-      pContext->DrawLine(rDestRect.Left(), rDestRect.Bottom()-1, rDestRect.Right(), rDestRect.Bottom()-1);
-      break;
-    case eBorderVertical:
-      pContext->DrawLine(rDestRect.Left(), rDestRect.Top(), rDestRect.Left(), rDestRect.Bottom());
-      pContext->DrawLine(rDestRect.Right()-1, rDestRect.Top(), rDestRect.Right()-1, rDestRect.Bottom());
-      break;
-    case eBorderNone: break;
-    }
-  }
-  else if (mBorderMode == eBorder3DOut)
-  {
-    //#FIXME TODO
+    pContext->SetStrokeColor(mStrokeColor);
+    pContext->DrawRect(rDestRect, eStrokeShape);
+    return;
   }
 
-  else if (mBorderMode == eBorder3DIn)
+
+  // left
+  if ((mBorderType == eBorderAll) || (mBorderType == eBorderLeft) || (mBorderType == eBorderVertical))
   {
-    //#FIXME TODO
+    if (mUseStrokeLeftColor)
+      pContext->SetStrokeColor(mStrokeLeftColor);
+    else
+      pContext->SetStrokeColor(mStrokeColor);
+      
+    pContext->DrawLine(rDestRect.Left(), rDestRect.Top(), rDestRect.Left(), rDestRect.Bottom());
   }
+
+  // right
+  if ((mBorderType == eBorderAll) || (mBorderType == eBorderRight) || (mBorderType == eBorderVertical))
+  {
+    if (mUseStrokeRightColor)
+      pContext->SetStrokeColor(mStrokeRightColor);
+    else
+      pContext->SetStrokeColor(mStrokeColor);
+    
+    pContext->DrawLine(rDestRect.Right()-1, rDestRect.Top(), rDestRect.Right()-1, rDestRect.Bottom());
+  }
+  
+  //top
+  if ((mBorderType == eBorderAll) || (mBorderType == eBorderTop) || (mBorderType == eBorderHorizontal))
+  {
+    if (mUseStrokeTopColor)
+      pContext->SetStrokeColor(mStrokeTopColor);
+    else
+      pContext->SetStrokeColor(mStrokeColor);
+    
+    pContext->DrawLine(rDestRect.Left(), rDestRect.Top(), rDestRect.Right(), rDestRect.Top());
+  }
+
+  // bottom
+  if ((mBorderType == eBorderAll) || (mBorderType == eBorderBottom) || (mBorderType == eBorderHorizontal))
+  {
+    if (mUseStrokeBottomColor)
+      pContext->SetStrokeColor(mStrokeBottomColor);
+    else
+      pContext->SetStrokeColor(mStrokeColor);
+    
+    pContext->DrawLine(rDestRect.Left(), rDestRect.Bottom()-1, rDestRect.Right(), rDestRect.Bottom()-1);
+  }
+  
+  
 }
 
 
@@ -203,6 +244,71 @@ void nuiBorderDecoration::SetStrokeColor(const nuiColor& color)
 {
   mStrokeColor = color;
 }
+
+
+
+
+const nuiColor& nuiBorderDecoration::GetStrokeLeftColor() const
+{
+  return mStrokeLeftColor;
+}
+
+
+void nuiBorderDecoration::SetStrokeLeftColor(const nuiColor& color)
+{
+  mStrokeLeftColor = color;
+  mUseStrokeLeftColor = true;
+  mUseStrokeGlobalColor = false;
+}
+
+
+
+
+const nuiColor& nuiBorderDecoration::GetStrokeRightColor() const
+{
+  return mStrokeRightColor;
+}
+
+
+void nuiBorderDecoration::SetStrokeRightColor(const nuiColor& color)
+{
+  mStrokeRightColor = color;
+  mUseStrokeRightColor = true;
+  mUseStrokeGlobalColor = false;
+}
+
+
+
+
+const nuiColor& nuiBorderDecoration::GetStrokeTopColor() const
+{
+  return mStrokeTopColor;
+}
+
+
+void nuiBorderDecoration::SetStrokeTopColor(const nuiColor& color)
+{
+  mStrokeTopColor = color;
+  mUseStrokeTopColor = true;
+  mUseStrokeGlobalColor = false;
+}
+
+
+
+
+const nuiColor& nuiBorderDecoration::GetStrokeBottomColor() const
+{
+  return mStrokeBottomColor;
+}
+
+
+void nuiBorderDecoration::SetStrokeBottomColor(const nuiColor& color)
+{
+  mStrokeBottomColor = color;
+  mUseStrokeBottomColor = true;
+  mUseStrokeGlobalColor = false;
+}
+
 
 
 void nuiBorderDecoration::SetStrokeSize(uint32 size)

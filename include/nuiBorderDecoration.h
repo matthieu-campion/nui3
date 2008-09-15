@@ -53,6 +53,20 @@ public:
 
   const nuiColor& GetStrokeColor() const;
 	void SetStrokeColor(const nuiColor& color);
+
+  const nuiColor& GetStrokeLeftColor() const;
+	void SetStrokeLeftColor(const nuiColor& color);
+
+  const nuiColor& GetStrokeRightColor() const;
+	void SetStrokeRightColor(const nuiColor& color);
+
+  const nuiColor& GetStrokeTopColor() const;
+	void SetStrokeTopColor(const nuiColor& color);
+
+  const nuiColor& GetStrokeBottomColor() const;
+	void SetStrokeBottomColor(const nuiColor& color);
+  
+  
   void SetStrokeSize(uint32 size);
   uint32 GetStrokeSize() const;
   void SetBorderMode(nglString mode);
@@ -69,7 +83,16 @@ private:
   void InitAttributes();
 
   uint32 mStrokeSize;
+  bool mUseStrokeGlobalColor;
   nuiColor mStrokeColor;
+  bool mUseStrokeLeftColor;
+  nuiColor mStrokeLeftColor;
+  bool mUseStrokeRightColor;
+  nuiColor mStrokeRightColor;
+  bool mUseStrokeTopColor;
+  nuiColor mStrokeTopColor;
+  bool mUseStrokeBottomColor;
+  nuiColor mStrokeBottomColor;
   nuiBorderMode mBorderMode;
   nuiBorderType mBorderType;
   nuiBlendFunc mBlendFunc;
