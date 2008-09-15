@@ -20,7 +20,29 @@ enum nuiSplitterMode
 	eModePercentage 
 };
 
-class nuiSplitterHandle;
+
+class nuiSplitterHandle : public nuiSimpleContainer
+{
+public:
+  nuiSplitterHandle(nuiSplitter* pParent);
+  virtual ~nuiSplitterHandle();
+  
+  nuiSplitter* GetSplitter();
+  
+  bool mClicked;
+  
+private:
+  
+  // Received Mouse events:
+  virtual bool MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
+  virtual bool MouseUnclicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
+  virtual nuiWidgetPtr DispatchMouseMove (nuiSize X, nuiSize Y);
+  virtual bool MouseMoved  (nuiSize X, nuiSize Y);
+  
+  
+  nuiSplitter* mpParent;
+  double mClickPos;
+};
 
 
 /// This is a split view widget. It divides its client area in two views (horizontaly or verticaly) which acts as two subcontainers. The user can change the proportional size of the area, but it is also possible to lock the split to prevent modification.

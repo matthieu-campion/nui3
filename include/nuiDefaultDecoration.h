@@ -29,6 +29,8 @@ public:
   static void EditText(nuiWidget* pWidget);
   static void EditLine(nuiWidget* pWidget);
 
+  static void SplitterHandle(nuiWidget* pWidget);
+
   static void TitledPane(nuiWidget* pWidget);
   static void FolderPane(nuiWidget* pWidget);
 

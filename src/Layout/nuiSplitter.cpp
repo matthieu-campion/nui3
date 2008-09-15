@@ -26,57 +26,23 @@ using namespace std;
 //
 //***************************************************************************************************
 
-class nuiSplitterHandle : public nuiSimpleContainer
-{
-public:
-  nuiSplitterHandle(nuiSplitter* pParent);
-  virtual ~nuiSplitterHandle();
-  
-  bool mClicked;
 
-private:
-
-  // Received Mouse events:
-  virtual bool MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
-  virtual bool MouseUnclicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
-  virtual nuiWidgetPtr DispatchMouseMove (nuiSize X, nuiSize Y);
-  virtual bool MouseMoved  (nuiSize X, nuiSize Y);
-  
-
-
-  nuiSplitter* mpParent;
-  double mClickPos;
-};
 
 
 nuiSplitterHandle::nuiSplitterHandle(nuiSplitter* pParent)
 {
   SetObjectClass(_T("nuiSplitterHandle"));
   mpParent = pParent;
-  mClicked = false;
-  
-  if (pParent->mOrientation == nuiVertical)
-  {
-    SetUserSize(7,0);
-  }
-  else
-  {
-    SetUserSize(0,7);
-  }
-  
-  // default decoration
-  nuiDecoration* pDeco = nuiDecoration::Get(_T("nuiSplitterHandleDefaultDecoration"));
-  if (!pDeco)
-  {
-    nuiOrientation orientation = (pParent->mOrientation == nuiVertical)? nuiHorizontal : nuiVertical;
-    pDeco = new nuiGradientDecoration(_T("nuiSplitterHandleDefaultDecoration"), 
-      nuiRect(0, 0, 0, 0), nuiColor(223,223,223), nuiColor(202,202,202), orientation, 1, nuiColor(190,190,190), eStrokeAndFillShape);
-  }
-  SetDecoration(pDeco, eDecorationBorder);
+  mClicked = false;  
 }
 
 nuiSplitterHandle::~nuiSplitterHandle()
 {
+}
+
+nuiSplitter* nuiSplitterHandle::GetSplitter()
+{
+  return mpParent;
 }
 
 // virtual 
