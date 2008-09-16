@@ -10,7 +10,6 @@
 #include "nuiGradientDecoration.h"
 #include "nuiBorderDecoration.h"
 #include "nuiMetaDecoration.h"
-#include "nglImagePNGCodec.h"
 #include "nuiDefaultDecoration_nuiButton.h"
 #include "nuiFrame.h"
 
