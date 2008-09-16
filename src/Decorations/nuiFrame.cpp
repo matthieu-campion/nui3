@@ -470,10 +470,6 @@ void nuiFrame::SetSourceClientRect(const nuiRect& rRect)
 void nuiFrame::EnableBorder(bool set)
 {
   mBorderEnabled = set;
-  if (!set)
-  {
-    wprintf(_T("DECO '%ls'\n"), GetName().GetChars());
-  }
 }
 
 bool nuiFrame::IsBorderEnabled() const

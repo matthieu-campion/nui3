@@ -711,11 +711,11 @@ bool nuiContainer::SetLayout(const nuiRect& rRect)
     }
   }
   
-  rect.Bottom() -= mBorderBottom;
-  rect.Top() += mBorderTop;
-  rect.Left() += mBorderLeft;
-  rect.Right() -= mBorderRight;
-
+  rect.Left()   += GetActualBorderLeft();
+  rect.Right()  -= GetActualBorderRight();
+  rect.Top()    += GetActualBorderTop();
+  rect.Bottom() -= GetActualBorderBottom();
+  
   rect.RoundToNearest();
 
   bool SizeChanged = !rect.Size().IsEqual(mRect.Size());

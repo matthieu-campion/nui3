@@ -2692,28 +2692,39 @@ bool nuiWin::CreateFrameWindow2(const nuiEvent& rEvent)
 
 bool nuiWin::CreateFrameWindow3(const nuiEvent& rEvent)
 {
-  nuiFrame* pFrame = new nuiFrame(_T("TestFrame3"), nuiTexture::GetTexture(nglPath(_T("rsrc:/fondtrack.png"))), nuiRect(7, 7, 35, 53));
-  
+  nuiFrame* pFrame0 = new nuiFrame(_T("TestFrame3"), nuiTexture::GetTexture(nglPath(_T("rsrc:/fondtrack.png"))), nuiRect(7, 7, 35, 53));
+  nuiFrame* pFrame1 = new nuiFrame(_T("TestFrame3"), nuiTexture::GetTexture(nglPath(_T("rsrc:/fondtrack.png"))), nuiRect(7, 7, 35, 53));
+  pFrame0->EnableBorder(false);
+  pFrame1->EnableBorder(true);
+  nuiFrame* pFrames[2] = { pFrame0, pFrame1 };
   
   nuiDecorationMode modes[3] = {eDecorationBorder, eDecorationClientOnly, eDecorationOverdraw};
-  nglString modesStr[3] = {_T("Border"), _T("ClientOnly"), _T("OverDraw")};
+  nglString modesStr[3] = {_T("Border"), _T("Client"), _T("OvrDrw")};
   nglString borderStr[2] = {_T("false"), _T("true")};
   nuiWindow* windows[6];
   nuiSimpleContainer* containers[6];
   
-  for (int i =0; i < 3; i++)
+  for (int i = 0; i < 3; i++)
   {
     for (int e = 0; e < 2; e++)
     {
-      pFrame->EnableBorder(e);
-      windows[2 * i + e] = new nuiWindow(nuiRect(200*i, 150*e, 160, 120), nglWindow::NoFlag, _T("Frame View test 3"));
+      windows[2 * i + e] = new nuiWindow(nuiRect(50 + 200*e, 50 + 150*i, 160, 120), nglWindow::NoFlag, _T("Frame View test 3"));
       mpManager->AddChild(windows[2 * i + e]);
-      containers[2 * i + e] = new nuiSimpleContainer();
-      containers[2 * i + e]->AddChild(new nuiLabel(_T("Decoration mode = ") + modesStr[i] + _T("\nEnable Border = ") + borderStr[e]));
-      containers[2 * i + e]->SetColor(eNormalTextFg, nuiColor(0, 0, 0));
-      containers[2 * i + e]->SetDecoration(pFrame, modes[i]);
+      nuiLabel* pLabel = new nuiLabel(_T("Decoration mode\n= ") + modesStr[i] + _T("\nEnable Border\n= ") + borderStr[e]);
+      nuiSimpleContainer * pCont = new nuiSimpleContainer();
+      pCont->AddChild(pLabel);
+      //pCont->SetPosition(nuiCenter);
+      pCont->SetDecoration(pFrames[e], modes[i]);
+      pCont->SetBorder(4, 4);
+      pCont->SetDebug(1);
       
-      windows[2 * i + e]->AddChild(containers[2 * i + e]);
+      windows[2 * i + e]->AddChild(pCont);
+      pLabel->SetColor(eNormalTextFg, nuiColor(0, 0, 0));
+      pLabel->SetPosition(nuiCenter);
+      //pLabel->SetDecoration(pFrames[e], modes[i]);
+      pLabel->SetBackground(true);
+      pLabel->SetBackgroundColor(nuiColor(192, 192, 0, 128));
+      //pLabel->SetBorder(2, 2);
     }
   }
 

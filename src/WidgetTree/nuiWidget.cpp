@@ -277,23 +277,40 @@ void nuiWidget::InitAttributes()
   // nuiAttribute<nuiSize> <=> nuiAttribute<double>
   AddAttribute(new nuiAttribute<nuiSize>
                (nglString(_T("BorderLeft")), nuiUnitSize,
-                nuiFastDelegate::MakeDelegate(this, &nuiWidget::GetLeftBorder),
-                nuiFastDelegate::MakeDelegate(this, &nuiWidget::SetLeftBorder)));
+                nuiFastDelegate::MakeDelegate(this, &nuiWidget::GetBorderLeft),
+                nuiFastDelegate::MakeDelegate(this, &nuiWidget::SetBorderLeft)));
 
   AddAttribute(new nuiAttribute<nuiSize>
                (nglString(_T("BorderTop")), nuiUnitSize,
-                nuiFastDelegate::MakeDelegate(this, &nuiWidget::GetTopBorder),
-                nuiFastDelegate::MakeDelegate(this, &nuiWidget::SetTopBorder)));
+                nuiFastDelegate::MakeDelegate(this, &nuiWidget::GetBorderTop),
+                nuiFastDelegate::MakeDelegate(this, &nuiWidget::SetBorderTop)));
   
   AddAttribute(new nuiAttribute<nuiSize>
                (nglString(_T("BorderRight")), nuiUnitSize,
-                nuiFastDelegate::MakeDelegate(this, &nuiWidget::GetRightBorder),
-                nuiFastDelegate::MakeDelegate(this, &nuiWidget::SetRightBorder)));
+                nuiFastDelegate::MakeDelegate(this, &nuiWidget::GetBorderRight),
+                nuiFastDelegate::MakeDelegate(this, &nuiWidget::SetBorderRight)));
   
   AddAttribute(new nuiAttribute<nuiSize>
                (nglString(_T("BorderBottom")), nuiUnitSize,
-                nuiFastDelegate::MakeDelegate(this, &nuiWidget::GetBottomBorder),
-                nuiFastDelegate::MakeDelegate(this, &nuiWidget::SetBottomBorder)));
+                nuiFastDelegate::MakeDelegate(this, &nuiWidget::GetBorderBottom),
+                nuiFastDelegate::MakeDelegate(this, &nuiWidget::SetBorderBottom)));
+  
+  // nuiAttribute<nuiSize> <=> nuiAttribute<double>
+  AddAttribute(new nuiAttribute<nuiSize>
+               (nglString(_T("ActualBorderLeft")), nuiUnitSize,
+                nuiFastDelegate::MakeDelegate(this, &nuiWidget::GetActualBorderLeft)));
+  
+  AddAttribute(new nuiAttribute<nuiSize>
+               (nglString(_T("ActualBorderTop")), nuiUnitSize,
+                nuiFastDelegate::MakeDelegate(this, &nuiWidget::GetActualBorderTop)));
+  
+  AddAttribute(new nuiAttribute<nuiSize>
+               (nglString(_T("ActualBorderRight")), nuiUnitSize,
+                nuiFastDelegate::MakeDelegate(this, &nuiWidget::GetActualBorderRight)));
+  
+  AddAttribute(new nuiAttribute<nuiSize>
+               (nglString(_T("ActualBorderBottom")), nuiUnitSize,
+                nuiFastDelegate::MakeDelegate(this, &nuiWidget::GetActualBorderBottom)));
   
   nuiAttribute<nuiPosition>* AttributePosition = new nuiAttribute<nuiPosition>
   (nglString(_T("Position")), nuiUnitPosition,
@@ -726,10 +743,10 @@ const nuiRect& nuiWidget::GetRect() const
 nuiRect nuiWidget::GetBorderedRect() const
 {
   nuiRect rect = GetRect();
-  rect.Bottom() += mBorderBottom;
-  rect.Top() -= mBorderTop;
-  rect.Left() -= mBorderLeft;
-  rect.Right() += mBorderRight;
+  rect.Bottom() += GetActualBorderBottom();
+  rect.Top() -= GetActualBorderTop();
+  rect.Left() -= GetActualBorderLeft();
+  rect.Right() += GetActualBorderRight();
   return rect;
 }
 
@@ -2025,11 +2042,11 @@ const nuiRect& nuiWidget::GetIdealRect()
       mIdealRect.MoveTo(mUserRect.mLeft, mUserRect.mTop);
     
 
-    mIdealRect.Bottom() += mBorderBottom;
-    mIdealRect.Top() -= mBorderTop;
-    mIdealRect.Left() -= mBorderLeft;
-    mIdealRect.Right() += mBorderRight;
-    mIdealRect.Move(-mBorderLeft, -mBorderTop);
+    mIdealRect.Bottom() += GetActualBorderBottom();
+    mIdealRect.Top() -= GetActualBorderTop();
+    mIdealRect.Left() -= GetActualBorderLeft();
+    mIdealRect.Right() += GetActualBorderRight();
+    mIdealRect.Move(-GetActualBorderLeft(), -GetActualBorderTop());
     mIdealRect.RoundToBiggest();
 
   }
@@ -2084,52 +2101,92 @@ void nuiWidget::SetBorder(nuiSize X, nuiSize Y)
   DebugRefreshInfo();
 }
 
-void nuiWidget::SetLeftBorder(nuiSize border)
+void nuiWidget::SetBorderLeft(nuiSize border)
 {
   mBorderLeft = border;
   InvalidateLayout();
   DebugRefreshInfo();
 }
 
-void nuiWidget::SetTopBorder(nuiSize border)
+void nuiWidget::SetBorderTop(nuiSize border)
 {
   mBorderTop = border;
   InvalidateLayout();
   DebugRefreshInfo();
 }
 
-void nuiWidget::SetRightBorder(nuiSize border)
+void nuiWidget::SetBorderRight(nuiSize border)
 {
   mBorderRight = border;
   InvalidateLayout();
   DebugRefreshInfo();
 }
 
-void nuiWidget::SetBottomBorder(nuiSize border)
+void nuiWidget::SetBorderBottom(nuiSize border)
 {
   mBorderBottom = border;
   InvalidateLayout();
   DebugRefreshInfo();
 }
 
-nuiSize nuiWidget::GetLeftBorder() const
+nuiSize nuiWidget::GetBorderLeft() const
 {
   return mBorderLeft;
 }
 
-nuiSize nuiWidget::GetTopBorder() const
+nuiSize nuiWidget::GetBorderTop() const
 {
   return mBorderTop;
 }
 
-nuiSize nuiWidget::GetRightBorder() const
+nuiSize nuiWidget::GetBorderRight() const
 {
   return mBorderRight;
 }
 
-nuiSize nuiWidget::GetBottomBorder() const
+nuiSize nuiWidget::GetBorderBottom() const
 {
   return mBorderBottom;
+}
+
+nuiSize nuiWidget::GetActualBorderLeft() const
+{
+  nuiSize Left = mBorderLeft;
+  if (mpDecoration && mDecorationMode == eDecorationBorder)
+    Left = MAX(Left, mpDecoration->GetBorder(nuiLeft));
+  if (mpFocusDecoration && mFocusDecorationMode == eDecorationBorder)
+    Left = MAX(Left, mpFocusDecoration->GetBorder(nuiLeft));
+  return Left;
+}
+
+nuiSize nuiWidget::GetActualBorderTop() const
+{
+  nuiSize Top = mBorderTop;
+  if (mpDecoration && mDecorationMode == eDecorationBorder)
+    Top = MAX(Top, mpDecoration->GetBorder(nuiTop));
+  if (mpFocusDecoration && mFocusDecorationMode == eDecorationBorder)
+    Top = MAX(Top, mpFocusDecoration->GetBorder(nuiTop));
+  return Top;
+}
+
+nuiSize nuiWidget::GetActualBorderRight() const
+{
+  nuiSize Right = mBorderRight;
+  if (mpDecoration && mDecorationMode == eDecorationBorder)
+    Right = MAX(Right, mpDecoration->GetBorder(nuiRight));
+  if (mpFocusDecoration && mFocusDecorationMode == eDecorationBorder)
+    Right = MAX(Right, mpFocusDecoration->GetBorder(nuiRight));
+  return Right;
+}
+
+nuiSize nuiWidget::GetActualBorderBottom() const
+{
+  nuiSize Bottom = mBorderBottom;
+  if (mpDecoration && mDecorationMode == eDecorationBorder)
+    Bottom = MAX(Bottom, mpDecoration->GetBorder(nuiBottom));
+  if (mpFocusDecoration && mFocusDecorationMode == eDecorationBorder)
+    Bottom = MAX(Bottom, mpFocusDecoration->GetBorder(nuiBottom));
+  return Bottom;
 }
 
 
@@ -2196,10 +2253,10 @@ bool nuiWidget::SetLayout(const nuiRect& rRect)
   }
   
   
-  rect.Left() += mBorderLeft;
-  rect.Right() -= mBorderRight;
-  rect.Top() += mBorderTop;
-  rect.Bottom() -= mBorderBottom;
+  rect.Left()   += GetActualBorderLeft();
+  rect.Right()  -= GetActualBorderRight();
+  rect.Top()    += GetActualBorderTop();
+  rect.Bottom() -= GetActualBorderBottom();
 
   rect.RoundToNearest();
     
@@ -2995,6 +3052,29 @@ void nuiWidget::GetOverDraw(nuiSize& Left, nuiSize& Top, nuiSize& Right, nuiSize
   Right = mODRight;
   Top = mODTop;
   Bottom = mODBottom;
+  
+  if (mpDecoration)
+  {    
+    if (mDecorationMode == eDecorationOverdraw || mDecorationMode == eDecorationBorder)
+    {
+      Left   = MAX(Left  , mpDecoration->GetBorder(nuiLeft));
+      Top    = MAX(Top   , mpDecoration->GetBorder(nuiTop));
+      Right  = MAX(Right , mpDecoration->GetBorder(nuiRight));
+      Bottom = MAX(Bottom, mpDecoration->GetBorder(nuiBottom));
+    }
+  }
+  
+  if (mpFocusDecoration)
+  {    
+    if (mFocusDecorationMode == eDecorationOverdraw || mFocusDecorationMode == eDecorationBorder)
+    {
+      Left   = MAX(Left  , mpFocusDecoration->GetBorder(nuiLeft));
+      Top    = MAX(Top   , mpFocusDecoration->GetBorder(nuiTop));
+      Right  = MAX(Right , mpFocusDecoration->GetBorder(nuiRight));
+      Bottom = MAX(Bottom, mpFocusDecoration->GetBorder(nuiBottom));
+    }
+  }
+  
 }
 
 nuiRect nuiWidget::GetOverDrawRect(bool LocalRect) const
@@ -3003,18 +3083,12 @@ nuiRect nuiWidget::GetOverDrawRect(bool LocalRect) const
   if (LocalRect)
     r = r.Size();
   
-  nuiSize Left = mODLeft;
-  nuiSize Right = mODRight;
-  nuiSize Top = mODTop;
-  nuiSize Bottom = mODBottom;
+  nuiSize Left = 0;
+  nuiSize Right = 0;
+  nuiSize Top = 0;
+  nuiSize Bottom = 0;
 
-  if (mpDecoration)
-  {
-    Left = MAX(Left, mpDecoration->GetBorder(nuiLeft));
-    Right = MAX(Right, mpDecoration->GetBorder(nuiRight));
-    Top = MAX(Top, mpDecoration->GetBorder(nuiTop));
-    Bottom = MAX(Bottom, mpDecoration->GetBorder(nuiBottom));
-  }
+  GetOverDraw(Left, Top, Right, Bottom);
   
   r.Set(r.Left() - Left,
         r.Top() - Top,
@@ -3065,34 +3139,7 @@ void nuiWidget::SetDecoration(const nglString& rName)
 void nuiWidget::SetDecorationMode(nuiDecorationMode Mode)
 {
   mDecorationMode = Mode;
-  
-  if (mpDecoration)
-  {
-    nuiSize Left = 0;
-    nuiSize Top = 0;
-    nuiSize Right = 0;
-    nuiSize Bottom = 0;
-    
-    if (Mode == eDecorationOverdraw || Mode == eDecorationBorder)
-    {
-      GetOverDraw(Left, Top, Right, Bottom);
-      Left   = MAX(Left  , mpDecoration->GetBorder(nuiLeft));
-      Top    = MAX(Top   , mpDecoration->GetBorder(nuiTop));
-      Right  = MAX(Right , mpDecoration->GetBorder(nuiRight));
-      Bottom = MAX(Bottom, mpDecoration->GetBorder(nuiBottom));
-      SetOverDraw(Left, Top, Right, Bottom);
-    }
-    
-    if (Mode == eDecorationBorder)
-    {
-      GetBorder(Left, Right, Top, Bottom);
-      Left   = MAX(Left  , mpDecoration->GetBorder(nuiLeft));
-      Top    = MAX(Top   , mpDecoration->GetBorder(nuiTop));
-      Right  = MAX(Right , mpDecoration->GetBorder(nuiRight));
-      Bottom = MAX(Bottom, mpDecoration->GetBorder(nuiBottom));
-      SetBorder(Left, Right, Top, Bottom);
-    }
-  }
+  InvalidateLayout();
 }
 
 const nglString& nuiWidget::GetDecorationName() const
@@ -3137,34 +3184,7 @@ void nuiWidget::SetFocusDecoration(const nglString& rName)
 void nuiWidget::SetFocusDecorationMode(nuiDecorationMode Mode)
 {
   mFocusDecorationMode = Mode;
-  
-  if (mpFocusDecoration)
-  {
-    nuiSize Left = 0;
-    nuiSize Top = 0;
-    nuiSize Right = 0;
-    nuiSize Bottom = 0;
-    
-    if (Mode == eDecorationOverdraw || Mode == eDecorationBorder)
-    {
-      GetOverDraw(Left, Top, Right, Bottom);
-      Left   = MAX(Left  , mpFocusDecoration->GetBorder(nuiLeft));
-      Top    = MAX(Top   , mpFocusDecoration->GetBorder(nuiTop));
-      Right  = MAX(Right , mpFocusDecoration->GetBorder(nuiRight));
-      Bottom = MAX(Bottom, mpFocusDecoration->GetBorder(nuiBottom));
-      SetOverDraw(Left, Top, Right, Bottom);
-    }
-    
-    if (Mode == eDecorationBorder)
-    {
-      GetBorder(Left, Right, Top, Bottom);
-      Left   = MAX(Left  , mpFocusDecoration->GetBorder(nuiLeft));
-      Top    = MAX(Top   , mpFocusDecoration->GetBorder(nuiTop));
-      Right  = MAX(Right , mpFocusDecoration->GetBorder(nuiRight));
-      Bottom = MAX(Bottom, mpFocusDecoration->GetBorder(nuiBottom));
-      SetBorder(Left, Right, Top, Bottom);
-    }
-  }
+  InvalidateLayout();
 }
 
 const nglString& nuiWidget::GetFocusDecorationName() const
@@ -3284,10 +3304,10 @@ void nuiWidget::DrawFocus(nuiDrawContext* pContext, bool FrontOrBack)
     if (FrontOrBack)
     {
       nuiRect rect(GetRect().Size());
-      rect.Bottom() += mBorderBottom - 1;
-      rect.Top() -= mBorderTop + 0;
-      rect.Left() -= mBorderLeft + 0;
-      rect.Right() += mBorderRight - 1;
+      rect.Bottom() += GetBorderBottom() - 1;
+      rect.Top() -= GetBorderTop() + 0;
+      rect.Left() -= GetBorderLeft() + 0;
+      rect.Right() += GetBorderRight() - 1;
       
       pContext->SetLineWidth(2);
       pContext->SetBlendFunc(nuiBlendTransp);

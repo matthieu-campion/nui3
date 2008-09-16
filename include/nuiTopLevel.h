@@ -65,8 +65,6 @@ public:
   /** @name Object size management */
   //@{
   bool SetLayout(const nuiRect& rRect);
-  nuiRect GetBorderedRect() const;
-  nuiRect GetOverDrawRect(bool LocalRect = true) const;
   void SetDrawOrigin(nuiPosition Origin) { mDrawOrigin = Origin; } ///< change the drawing top position (top -> bottom || bottom -> top || left -> right || right -> left).
   nuiPosition GetDrawOrigin() { return mDrawOrigin; }
   const nuiRect& GetDisplayRect() { return mDisplayRect; }

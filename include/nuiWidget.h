@@ -42,7 +42,6 @@ typedef std::vector<nuiWidgetPtr> nuiWidgetList;
 typedef nuiContainer* nuiContainerPtr;
 typedef std::vector<nuiContainerPtr> nuiContainerList;
 
-
 class NUI_API nuiWidget : public nuiObject
 {
   friend class nuiContainer;
@@ -593,14 +592,18 @@ private:
   static std::vector<nuiDecorationDelegate> mDefaultDecorations;
 
 
-  void SetLeftBorder(nuiSize border);
-  void SetTopBorder(nuiSize border);
-  void SetRightBorder(nuiSize border);
-  void SetBottomBorder(nuiSize border);
-  nuiSize GetLeftBorder() const;
-  nuiSize GetTopBorder() const;
-  nuiSize GetRightBorder() const;
-  nuiSize GetBottomBorder() const;
+  void SetBorderLeft(nuiSize border);
+  void SetBorderTop(nuiSize border);
+  void SetBorderRight(nuiSize border);
+  void SetBorderBottom(nuiSize border);
+  nuiSize GetBorderLeft() const;
+  nuiSize GetBorderTop() const;
+  nuiSize GetBorderRight() const;
+  nuiSize GetBorderBottom() const;
+  nuiSize GetActualBorderLeft() const;
+  nuiSize GetActualBorderTop() const;
+  nuiSize GetActualBorderRight() const;
+  nuiSize GetActualBorderBottom() const;
   
   nuiPosition mPosition;
   nuiPosition mFillRule;

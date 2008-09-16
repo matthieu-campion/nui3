@@ -1798,45 +1798,6 @@ bool nuiTopLevel::SetLayout(const nuiRect& rRect)
   return res;
 }
 
-nuiRect nuiTopLevel::GetBorderedRect() const
-{
-  nuiRect rect = mDisplayRect;
-  rect.Bottom() += mBorderBottom;
-  rect.Top() -= mBorderTop;
-  rect.Left() -= mBorderLeft;
-  rect.Right() += mBorderRight;
-  
-  return rect;
-}
-
-nuiRect nuiTopLevel::GetOverDrawRect(bool LocalRect) const
-{
-  nuiRect r(mDisplayRect);
-  if (LocalRect)
-    r = r.Size();
-  
-  nuiSize Left = mODLeft;
-  nuiSize Right = mODRight;
-  nuiSize Top = mODTop;
-  nuiSize Bottom = mODBottom;
-
-  if (mpDecoration)
-  {
-    Left = MAX(Left, mpDecoration->GetBorder(nuiLeft));
-    Right = MAX(Right, mpDecoration->GetBorder(nuiRight));
-    Top = MAX(Top, mpDecoration->GetBorder(nuiTop));
-    Bottom = MAX(Bottom, mpDecoration->GetBorder(nuiBottom));
-  }
-
-  r.Set(r.Left() - Left,
-        r.Top() - Top,
-        r.Right() + Right,
-        r.Bottom() + Bottom,
-        false);
-
-  return r;
-}
-
 bool nuiTopLevel::IsInsideLocal(nuiSize X, nuiSize Y)
 {
   if (!IsVisible(false))

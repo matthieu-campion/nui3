@@ -294,8 +294,18 @@ bool nuiLabel::Draw(nuiDrawContext* pContext)
 
   if (mClearBg)
   {
+    if (ColorBg.Alpha() < 1.0)
+    {
+      pContext->SetBlendFunc(nuiBlendTransp);
+      pContext->EnableBlending(true);
+    }
     pContext->SetFillColor(ColorBg);   
     pContext->DrawRect(mRect.Size(),eFillShape);
+    if (ColorBg.Alpha() < 1.0)
+    {
+      pContext->SetBlendFunc(nuiBlendSource);
+      pContext->EnableBlending(false);
+    }
   }
 
   if (mpLayout)
