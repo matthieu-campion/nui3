@@ -254,7 +254,7 @@ void nuiTheme::DrawWindowShade(nuiDrawContext* pContext, const nuiRect& rRect, b
   pContext->DrawShade(rRect,ShadeRect);
 }
 
-#define CAPTION_SIZE 16
+#define CAPTION_SIZE 24
 #define RESIZE_SIZE 3
 #define BORDER_SIZE 2
 
@@ -433,60 +433,46 @@ void nuiTheme::DrawActiveWindow(nuiDrawContext* pContext, nuiWindow* pWindow)
 
   if (!(Flags & (nuiWindow::Raw & ~nuiWindow::NoCaption)))
   {
-    DrawWindowBackground(pContext, pWindow, true);
-
-    nuiShape shape;
-    nuiContour* pContour = new nuiContour();
-    nuiPoint point;
-
-    pContext->SetStrokeColor(nuiColor(.95f,.95f,.99f, alpha));
-    point = nuiVector2(Rect.mLeft,    Rect.mTop+1);
-    pContour->LineTo(point);
-    point = nuiVector2(Rect.mRight-1, Rect.mTop+1);
-    pContour->LineTo(point);
-    point = nuiVector2(Rect.mRight-1, Rect.mBottom);
-    pContour->LineTo(point);
-    point = nuiVector2(Rect.mLeft,    Rect.mBottom);
-    pContour->LineTo(point);
-
-    shape.AddContour(pContour);
-    pContext->DrawShape(&shape, eStrokeShape);
 
     // Draw window decorations:
     if (!(Flags & (nuiWindow::NoCaption & ~nuiWindow::NoClose)))
     {
       // Draw the caption bar:
       nuiRect r = Rect;
-      r.mLeft  += BORDER_SIZE;
-      r.mTop   += BORDER_SIZE;
-      r.mRight -= BORDER_SIZE-1;
       r.mBottom = r.mTop + CAPTION_SIZE;
-      pContext->SetStrokeColor(nuiColor(.90f,.90f,.95f,alpha));
-      pContext->DrawRect(r,eStrokeShape);
+      
+      nuiGradient gradient;
+      nuiColor color;
+      nuiColor::GetColor(_T("nuiDefaultClrCaptionBkg1"), color);
+      gradient.AddStop(color, 0.f);
+      nuiColor::GetColor(_T("nuiDefaultClrCaptionBkg2"), color);
+      gradient.AddStop(color, 1.f);
+      
+      pContext->DrawGradient(gradient, r, 0, r.Top(), 0, r.Bottom());
 
-      nuiShape shape;
-      nuiContour* pContour = new nuiContour();
-      nuiPoint point;
+      nuiColor::GetColor(_T("nuiDefaultClrCaptionBorder"), color);
+      pContext->SetStrokeColor(color);
+      pContext->DrawRect(r, eStrokeShape);
+      
+      nuiColor::GetColor(_T("nuiDefaultClrCaptionBorderLight"), color);
+      pContext->SetStrokeColor(color);
+      pContext->DrawLine(r.Left()+1, r.Top()+1, r.Right()-2, r.Top()+1);
 
-      pContext->SetStrokeColor(nuiColor(.70f,.70f,.85f, alpha));
-      point = nuiVector2(Rect.mLeft + RESIZE_SIZE+1,  Rect.mTop + RESIZE_SIZE+1);
-      pContour->LineTo(point);
-      point = nuiVector2(Rect.mRight - RESIZE_SIZE, Rect.mTop + RESIZE_SIZE+1);
-      pContour->LineTo(point);
-      point = nuiVector2(Rect.mRight - RESIZE_SIZE, Rect.mTop + CAPTION_SIZE);
-      pContour->LineTo(point);
-      point = nuiVector2(Rect.mLeft + RESIZE_SIZE+1,  Rect.mTop + CAPTION_SIZE);
-      pContour->LineTo(point);
-
-      shape.AddContour(pContour);
-      pContext->DrawShape(&shape, eStrokeShape);
-
-      nuiFont *pFont = GetFont(Default);
+      nuiColor::GetColor(_T("nuiDefaultClrCaptionBorderDark"), color);
+      pContext->SetStrokeColor(color);
+      pContext->DrawLine(r.Left(), r.Bottom(), r.Right(), r.Bottom());
+        
+      
+      nuiFont *pFont = nuiFont::GetFont(11);
       pContext->SetFont(pFont);
       nglFontInfo Info;
       pFont->GetInfo(Info);
-      pContext->SetTextColor(nuiColor(0.3f,0.3f,0.4f, alpha));
-      pContext->DrawText(r.mLeft + RESIZE_SIZE, r.mTop + Info.Ascender, Title.GetChars());
+      nuiColor::GetColor(_T("nuiDefaultClrCaptionTextLight"), color);
+      pContext->SetTextColor(color);
+      pContext->DrawText(r.mLeft + RESIZE_SIZE +5 +1, r.mTop + Info.Ascender +5 +1, Title.GetChars());
+      nuiColor::GetColor(_T("nuiDefaultClrCaptionText"), color);
+      pContext->SetTextColor(color);
+      pContext->DrawText(r.mLeft + RESIZE_SIZE +5 , r.mTop + Info.Ascender +5 , Title.GetChars());
       pFont->Release();
     }
 

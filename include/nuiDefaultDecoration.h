@@ -24,6 +24,9 @@ public:
   ~nuiDefaultDecoration();
   
   static void Init();
+  static void InitColors();
+
+  static void Window(nuiWidget* pWidget);
 
   static void Label(nuiWidget* pWidget);
   static void EditText(nuiWidget* pWidget);

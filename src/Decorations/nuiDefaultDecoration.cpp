@@ -26,6 +26,10 @@ nuiDefaultDecoration::~nuiDefaultDecoration()
 
 void nuiDefaultDecoration::Init()
 {
+  InitColors();
+  
+  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiWindow")), &nuiDefaultDecoration::Window);
+
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiLabel")), &nuiDefaultDecoration::Label);
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiEditText")), &nuiDefaultDecoration::EditText);
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiEditLine")), &nuiDefaultDecoration::EditLine);
@@ -41,6 +45,39 @@ void nuiDefaultDecoration::Init()
 
 }
 
+
+
+void nuiDefaultDecoration::InitColors()
+{
+  nuiColor::SetColor(_T("nuiDefaultClrCaptionBkg1"), nuiColor(197,197,197));
+  nuiColor::SetColor(_T("nuiDefaultClrCaptionBkg2"), nuiColor(150,150,150));
+
+  nuiColor::SetColor(_T("nuiDefaultClrCaptionBorder"), nuiColor(150,150,150));
+  nuiColor::SetColor(_T("nuiDefaultClrCaptionBorderLight"), nuiColor(238,238,238));
+  nuiColor::SetColor(_T("nuiDefaultClrCaptionBorderDark"), nuiColor(64,64,64));
+
+  nuiColor::SetColor(_T("nuiDefaultClrCaptionText"), nuiColor(16,16,16));
+  nuiColor::SetColor(_T("nuiDefaultClrCaptionTextLight"), nuiColor(215,215,215));
+}
+
+
+
+
+void nuiDefaultDecoration::Window(nuiWidget* pWidget)
+{
+  nuiWindow* pWindow = (nuiWindow*)pWidget;
+  
+  nuiGradientDecoration* pDeco = (nuiGradientDecoration*)nuiDecoration::Get(_T("nuiDefaultDecorationWindow"));
+  if (!pDeco)
+  {
+    pDeco = new nuiGradientDecoration(_T("nuiDefaultDecorationWindow"), 
+                                      nuiRect(0,0, 0,0), nuiColor(220,220,220), nuiColor(180,180,180), nuiVertical, 1, nuiColor(175,175,175), eStrokeAndFillShape);
+  }
+  pWindow->SetDecoration(pDeco);
+
+  // see nuiTheme::DrawActiveWindow for the rest
+  
+}
 
 
 void nuiDefaultDecoration::Label(nuiWidget* pWidget)

@@ -10,6 +10,7 @@
 #include "nuiHBox.h"
 #include "nuiAttributeEditor.h"
 #include "nuiGradientDecoration.h"
+#include "nuiColorDecoration.h"
 
 #define NOTIF_LOCKA _T("NOTIF_LOCKA")
 #define NOTIF_UNLOCKA _T("NOTIF_UNLOCKA")
@@ -30,6 +31,15 @@ ThreadInspectorTest::ThreadInspectorTest()
   AddCell(pLabel);
   SetCellMinPixels(0, 90);
   
+  
+  
+  //LBDEBUG
+  pLabel = new nuiLabel(_T("PROUT"));
+  AddCell(pLabel, nuiCenter);
+  nuiColorDecoration* pDeco2 = new nuiColorDecoration(_T("prout"), nuiRect(5,5,0,0), nuiColor(255,0,0));
+  pLabel->SetDecoration(pDeco2, eDecorationBorder);
+  pLabel->SetBorder(0,2);
+
   
 
 
