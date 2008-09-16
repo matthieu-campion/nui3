@@ -195,19 +195,22 @@ void nuiDefaultDecoration::Button(nuiWidget* pWidget)
   nglIMemory* pIMemUp = new nglIMemory(gpDefaultDecorationButtonUp, gpDefaultDecorationButtonUpSize);
   nuiTexture* pTexUp = nuiTexture::GetTexture(pIMemUp);
   NGL_ASSERT(pTexUp);
-  nuiFrame* pFrameUp = new nuiFrame(_T("nuiDefaultDecorationButtonUp"), pTexUp, nuiRect(3,3,12,15));
+  nuiFrame* pFrameUp = new nuiFrame(_T("nuiDefaultDecorationButtonUp"), pTexUp, nuiRect(5,5, 1,19));
+  delete pIMemUp;
 
   
   nglIMemory* pIMemHover = new nglIMemory(gpDefaultDecorationButtonHover, gpDefaultDecorationButtonHoverSize);
   nuiTexture* pTexHover = nuiTexture::GetTexture(pIMemHover);
   NGL_ASSERT(pTexHover);
-  nuiFrame* pFrameHover = new nuiFrame(_T("nuiDefaultDecorationButtonHover"), pTexHover, nuiRect(3,3,12,15));
+  nuiFrame* pFrameHover = new nuiFrame(_T("nuiDefaultDecorationButtonHover"), pTexHover, nuiRect(5,5, 1,19));
+  delete pIMemHover;
   
   
   nglIMemory* pIMemDown = new nglIMemory(gpDefaultDecorationButtonDown, gpDefaultDecorationButtonDownSize);
   nuiTexture* pTexDown = nuiTexture::GetTexture(pIMemDown);
   NGL_ASSERT(pTexDown);
-  nuiFrame* pFrameDown = new nuiFrame(_T("nuiDefaultDecorationButtonDown"), pTexDown, nuiRect(3,3,12,15));
+  nuiFrame* pFrameDown = new nuiFrame(_T("nuiDefaultDecorationButtonDown"), pTexDown, nuiRect(5,5, 1,19));
+  delete pIMemDown;
   
   
   

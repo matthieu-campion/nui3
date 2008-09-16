@@ -14,7 +14,7 @@
 #include "nuiDecoration.h"
 #include "nuiFrame.h"
 
-#define INACTIVE_SHADE_SIZE 0.f
+#define INACTIVE_SHADE_SIZE 8.f
 
 nuiButton::nuiButton()
   : nuiSimpleContainer()
