@@ -29,6 +29,9 @@ ThreadInspectorTest::ThreadInspectorTest()
   pLabel->SetWrapping(true);
   AddCell(pLabel);
   SetCellMinPixels(0, 90);
+  
+  
+
 
   //***********************************
   // test tool
@@ -47,11 +50,9 @@ ThreadInspectorTest::ThreadInspectorTest()
 
   nuiButton* pCreateBtn = new nuiButton(_T("Create CS Thread"));
   pBox->AddCell(pCreateBtn);
-  pCreateBtn->SetShadeSize(2);
   mEventSink.Connect(pCreateBtn->Activated, &ThreadInspectorTest::CreateCSThread);
   nuiButton* pRemoveBtn = new nuiButton(_T("Terminate CS Thread"));
   pBox->AddCell(pRemoveBtn);
-  pRemoveBtn->SetShadeSize(2);
   mEventSink.Connect(pRemoveBtn->Activated, &ThreadInspectorTest::RemoveCSThread);
 
   // threads list
@@ -72,11 +73,9 @@ ThreadInspectorTest::ThreadInspectorTest()
 
   pCreateBtn = new nuiButton(_T("Create LL Thread"));
   pBox->AddCell(pCreateBtn);
-  pCreateBtn->SetShadeSize(2);
   mEventSink.Connect(pCreateBtn->Activated, &ThreadInspectorTest::CreateLLThread);
   pRemoveBtn = new nuiButton(_T("Terminate LL Thread"));
   pBox->AddCell(pRemoveBtn);
-  pRemoveBtn->SetShadeSize(2);
   mEventSink.Connect(pRemoveBtn->Activated, &ThreadInspectorTest::RemoveLLThread);
 
   // threads list

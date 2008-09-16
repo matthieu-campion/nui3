@@ -9,13 +9,13 @@
 #define __nuiDefaultDecoration_nuiButton_h__
 
 extern const char* gpDefaultDecorationButtonUp;
-const long         gpDefaultDecorationButtonUpSize = 303;
+const long         gpDefaultDecorationButtonUpSize = 334;
 
 extern const char* gpDefaultDecorationButtonHover;
-const long         gpDefaultDecorationButtonHoverSize = 295;
+const long         gpDefaultDecorationButtonHoverSize = 311;
 
 extern const char* gpDefaultDecorationButtonDown;
-const long         gpDefaultDecorationButtonDownSize = 333;
+const long         gpDefaultDecorationButtonDownSize = 257;
 
 
 #endif // __nuiDefaultDecoration_nuiButton_h__
