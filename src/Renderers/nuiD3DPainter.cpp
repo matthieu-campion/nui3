@@ -21,7 +21,7 @@
 #define NUI_USE_MULTISAMPLE_AA
 //#define NUI_USE_GL_VERTEX_BUFFER
 #define NUI_COMPLEX_SHAPE_THRESHOLD 6
-
+ 
 
 //***************************
 //jonathan - TO DO LIST
@@ -146,12 +146,21 @@ public:
       case D3DERR_WASSTILLDRAWING:
         NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ALWAYS, _T("D3D Error : Was still drawing."));
         break;
+
+//#FIXME
+#ifdef D3DERR_DEVICEREMOVED
       case D3DERR_DEVICEREMOVED:
         NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ALWAYS, _T("D3D Error : Device removed."));
         break;
+#endif
+
+//#FIXME
+#ifdef D3DERR_DEVICEHUNG
       case D3DERR_DEVICEHUNG:
         NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ALWAYS, _T("D3D Error : Device hung."));
         break;
+#endif
+
       default:
         NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ALWAYS, _T("Unknown Direct3D Error."));
         break;
