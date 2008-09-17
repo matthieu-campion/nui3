@@ -39,7 +39,7 @@ protected:
   
   bool mIsMenu;       ///< true if the item is a menu
   bool mIsSubMenu;    ///< true if the item is a submenu
-  HMENU mhParentMenu; ///< in our tree schema, the menubar is not a parent of a menu, but we still need to have access to its handle, so let's store it right here
+  HMENU mhParentMenu; ///< in our tree scheme, the menubar is not a parent of a menu, but we still need to have access to its handle, so let's store it right here
   HMENU mhMenu;       ///< the menu handle for a menu or a submenu
   
 };
@@ -120,25 +120,25 @@ void nuiMainMenuItem::SetChecked(bool set)
 
 void nuiMainMenuItem::SetText(const nglString& rText)
 {
-  // SLB TODO
-  //int32 index = ComputeIndexInParent();
-  ////ModifyMenu(mpPrivate->mhParentMenu, index, MF_BYPOSITION|MF_STRING|MF_POPUP, (UINT)mpPrivate->mhMenu, rText.GetChars());
+   uint32 flags = MF_BYCOMMAND | MF_STRING;
 
-  //LPMENUITEMINFO infos = (LPMENUITEMINFO)malloc(sizeof(MENUITEMINFO));
-  //infos->fMask = MIIM_STRING;
-  //infos->dwTypeData = L"tmp";
-
-  //bool success = SetMenuItemInfo (mpPrivate->mhParentMenu, index, true, infos);
-
-  //if (!success)
-  //{
-  //  int error = GetLastError();
-  //  NGL_OUT(nglString(error).GetChars());
-  //  // Error Code 87 : parameter incorrect ??
-  //}
-
-
-  //free(infos);
+   if (mChecked)
+     flags |= MF_CHECKED;
+   else
+     flags |= MF_UNCHECKED;
+ 
+   if (mEnabled)
+     flags |= MF_ENABLED;
+   else
+     flags |= MF_GRAYED;
+ 
+   bool success = ModifyMenu(mpPrivate->mhParentMenu, (UINT)this, flags, (UINT)this, rText.GetChars());
+ 
+   //if (!success)
+   //{
+   //  int error = GetLastError();
+   //  NGL_OUT(nglString(error).GetChars());
+   //}
 }
 
 void nuiMainMenuItem::MakeSubMenu(uint32 unused)
