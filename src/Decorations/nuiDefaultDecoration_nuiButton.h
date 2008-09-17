@@ -5,8 +5,7 @@
   licence: see nui3/LICENCE.TXT
 */
 
-#ifndef __nuiDefaultDecoration_nuiButton_h__
-#define __nuiDefaultDecoration_nuiButton_h__
+#pragma once
 
 extern const char* gpDefaultDecorationButtonUp;
 const long         gpDefaultDecorationButtonUpSize = 334;
@@ -18,4 +17,12 @@ extern const char* gpDefaultDecorationButtonDown;
 const long         gpDefaultDecorationButtonDownSize = 257;
 
 
-#endif // __nuiDefaultDecoration_nuiButton_h__
+extern const char* gpDefaultDecorationCloseButtonUp;
+const long         gpDefaultDecorationCloseButtonUpSize = 388;
+
+extern const char* gpDefaultDecorationCloseButtonHover;
+const long         gpDefaultDecorationCloseButtonHoverSize = 355;
+
+extern const char* gpDefaultDecorationCloseButtonDown;
+const long         gpDefaultDecorationCloseButtonDownSize = 443;
+

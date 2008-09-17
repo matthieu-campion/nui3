@@ -153,17 +153,10 @@ void nuiWindow::SetFlags (nuiWindowFlags Flags)
     if (!mpCloseButton)
     {
       mpCloseButton = new nuiButton();
+      mpCloseButton->SetObjectClass(_T("nuiCloseButton"));
+      mpCloseButton->SetPosition(nuiLeft);
       AddChild(mpCloseButton);
       mpCloseButton->SetSerializeMode(eDontSaveNode);
-
-      nuiPane* pPane = new nuiPane();
-      pPane->SetCurve(8);
-      nuiLabel *pLabel = new nuiLabel(nglString(_T("x")));
-      ((nuiButton*)mpCloseButton)->AddChild(pPane);
-      ((nuiButton*)mpCloseButton)->SetDrawSelf(false);
-      pPane->AddChild(pLabel);
-      pLabel->SetPosition(nuiCenter);
-      pLabel->SetSerializeMode(eDontSaveNode);
 
       mpCloseButton->SetToolTip(_T("Close this Window"));
       mNuiWindowSink.Connect(((nuiButton*)mpCloseButton)->Activated, &nuiWindow::HandleCloseButtonPressed);
@@ -248,8 +241,8 @@ bool nuiWindow::SetRect(const nuiRect& rRect)
     else
     {
       nuiRect r(Rect);
-      r.Move(Rect.GetWidth() - 14, -16);
-      r.SetSize((long)14,(long)14);
+      r.Move(Rect.GetWidth() - 18, -21);
+      r.SetSize((long)12,(long)15);
       pItem->SetLayout(r);
     }
   }

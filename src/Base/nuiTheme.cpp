@@ -462,7 +462,7 @@ void nuiTheme::DrawActiveWindow(nuiDrawContext* pContext, nuiWindow* pWindow)
       pContext->SetStrokeColor(color);
       pContext->DrawLine(r.Left(), r.Bottom(), r.Right(), r.Bottom());
         
-      
+      // window title
       nuiFont *pFont = nuiFont::GetFont(11);
       pContext->SetFont(pFont);
       nglFontInfo Info;

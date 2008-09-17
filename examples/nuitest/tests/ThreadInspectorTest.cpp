@@ -32,15 +32,6 @@ ThreadInspectorTest::ThreadInspectorTest()
   SetCellMinPixels(0, 90);
   
   
-  
-  //LBDEBUG
-  pLabel = new nuiLabel(_T("PROUT"));
-  AddCell(pLabel, nuiCenter);
-  nuiColorDecoration* pDeco2 = new nuiColorDecoration(_T("prout"), nuiRect(5,5,0,0), nuiColor(255,0,0));
-  pLabel->SetDecoration(pDeco2, eDecorationBorder);
-  pLabel->SetBorder(0,2);
-
-  
 
 
   //***********************************

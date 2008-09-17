@@ -41,6 +41,8 @@ void nuiDefaultDecoration::Init()
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFolderPane")), &nuiDefaultDecoration::FolderPane);
 
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiButton")), &nuiDefaultDecoration::Button);
+  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiCloseButton")), &nuiDefaultDecoration::CloseButton);
+  
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiToggleButton")), &nuiDefaultDecoration::ToggleButton);
 
 }
@@ -258,6 +260,50 @@ void nuiDefaultDecoration::Button(nuiWidget* pWidget)
 
   pWidget->SetDecoration(pState, eDecorationBorder);
 
+}
+
+
+
+void nuiDefaultDecoration::CloseButton(nuiWidget* pWidget)
+{
+  
+  nuiGradientDecoration* pDeco = (nuiGradientDecoration*)nuiDecoration::Get(_T("nuiDefaultDecorationCloseButton"));
+  if (pDeco)
+  {
+    pWidget->SetDecoration(pDeco, eDecorationBorder);
+    return;
+  }
+  
+  nglIMemory* pIMemUp = new nglIMemory(gpDefaultDecorationCloseButtonUp, gpDefaultDecorationCloseButtonUpSize);
+  nuiTexture* pTexUp = nuiTexture::GetTexture(pIMemUp);
+  NGL_ASSERT(pTexUp);
+  nuiFrame* pFrameUp = new nuiFrame(_T("nuiDefaultDecorationCloseButtonUp"), pTexUp, nuiRect(0,0,12,15));
+  delete pIMemUp;
+  
+  
+  nglIMemory* pIMemHover = new nglIMemory(gpDefaultDecorationCloseButtonHover, gpDefaultDecorationCloseButtonHoverSize);
+  nuiTexture* pTexHover = nuiTexture::GetTexture(pIMemHover);
+  NGL_ASSERT(pTexHover);
+  nuiFrame* pFrameHover = new nuiFrame(_T("nuiDefaultDecorationCloseButtonHover"), pTexHover, nuiRect(0,0,12,15));
+  delete pIMemHover;
+  
+  
+  nglIMemory* pIMemDown = new nglIMemory(gpDefaultDecorationCloseButtonDown, gpDefaultDecorationCloseButtonDownSize);
+  nuiTexture* pTexDown = nuiTexture::GetTexture(pIMemDown);
+  NGL_ASSERT(pTexDown);
+  nuiFrame* pFrameDown = new nuiFrame(_T("nuiDefaultDecorationCloseButtonDown"), pTexDown, nuiRect(0,0,12,15));
+  delete pIMemDown;
+  
+  
+  
+  nuiStateDecoration* pState = new nuiStateDecoration(_T("nuiDefaultDecorationCloseButton"), 
+                                                      _T("nuiDefaultDecorationCloseButtonUp"),
+                                                      _T("nuiDefaultDecorationCloseButtonDown"),
+                                                      _T("nuiDefaultDecorationCloseButtonHover"));
+  pState->SetSourceClientRect(nuiRect(0,0,12,15));
+  
+  pWidget->SetDecoration(pState, eDecorationBorder);
+  
 }
 
 
