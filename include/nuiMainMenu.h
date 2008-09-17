@@ -40,13 +40,15 @@ public:
   void SetChecked(bool set);
   bool IsChecked();
   
-  void SetText(const nglString& rText);
+
   
   nuiSimpleEventSource<0> Activated;
   nuiSimpleEventSource<0> Checked;
   nuiSimpleEventSource<0> Unchecked;
     
 protected:
+
+  void SetText(const nglString& rText);
 
   nuiMainMenuItemPrivate* mpPrivate;
 
@@ -89,6 +91,9 @@ protected:
   
   bool RegisterFromWindow(nglWindow* pWindow); // don't use this method. call nuiMainWindow::SetMainMenu
   bool UnregisterFromWindow(nglWindow* pWindow);
+
+  void SetItemText(nuiMainMenuItem* pItem, const nglString& rText);
+
 private:
   
   void Init();
@@ -98,7 +103,6 @@ private:
   
   void InsertMenu(nuiMainMenuItem* pItem);
   void InsertItem(nuiMainMenuItem* pParent, nuiMainMenuItem* pItem);
-  
   
   nuiMainMenuItem* mpRoot;
   nuiMainMenuPrivate* mpPrivate;

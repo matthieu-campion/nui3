@@ -120,21 +120,25 @@ void nuiMainMenuItem::SetChecked(bool set)
 
 void nuiMainMenuItem::SetText(const nglString& rText)
 {
-  //BOOL InsertMenu(
-  //  UINT nPosition,
-  //  UINT nFlags,
-  //  UINT_PTR nIDNewItem = 0,
-  //  LPCTSTR lpszNewItem = NULL 
-  //  );
-  //BOOL ModifyMenu(
-  //  UINT nPosition,
-  //  UINT nFlags,
-  //  UINT_PTR nIDNewItem = 0,
-  //  LPCTSTR lpszNewItem = NULL 
-  //  );
+  // SLB TODO
+  //int32 index = ComputeIndexInParent();
+  ////ModifyMenu(mpPrivate->mhParentMenu, index, MF_BYPOSITION|MF_STRING|MF_POPUP, (UINT)mpPrivate->mhMenu, rText.GetChars());
 
-  int32 index = ComputeIndexInParent();
-  ModifyMenu(mpPrivate->mhParentMenu, index, MF_BYPOSITION|MF_STRING|MF_POPUP, (UINT)mpPrivate->mhMenu, rText.GetChars());
+  //LPMENUITEMINFO infos = (LPMENUITEMINFO)malloc(sizeof(MENUITEMINFO));
+  //infos->fMask = MIIM_STRING;
+  //infos->dwTypeData = L"tmp";
+
+  //bool success = SetMenuItemInfo (mpPrivate->mhParentMenu, index, true, infos);
+
+  //if (!success)
+  //{
+  //  int error = GetLastError();
+  //  NGL_OUT(nglString(error).GetChars());
+  //  // Error Code 87 : parameter incorrect ??
+  //}
+
+
+  //free(infos);
 }
 
 void nuiMainMenuItem::MakeSubMenu(uint32 unused)
@@ -146,7 +150,7 @@ void nuiMainMenuItem::MakeSubMenu(uint32 unused)
   
   // then, replace it by a submenu
   const nglString& rItemLabel = GetElement();
-  
+
   mpPrivate->mIsSubMenu = true;
   mpPrivate->mhMenu = CreatePopupMenu();
   InsertMenu(mpPrivate->mhParentMenu, index, MF_BYPOSITION|MF_STRING|MF_POPUP, (UINT)mpPrivate->mhMenu, rItemLabel.GetChars());
@@ -341,4 +345,14 @@ void nuiMainMenu::InsertItem(nuiMainMenuItem* pParent, nuiMainMenuItem* pItem)
     AppendMenu(pItem->mpPrivate->mhParentMenu, MF_SEPARATOR, (UINT)pItem, rItemLabel.GetChars());
   else
     AppendMenu(pItem->mpPrivate->mhParentMenu, MF_STRING, (UINT)pItem, rItemLabel.GetChars());
+}
+
+
+void nuiMainMenu::SetItemText(nuiMainMenuItem* pItem, const nglString& rText)
+{
+  if (pItem->GetType() != eItemString)
+    return;
+
+  pItem->SetText(rText);
+  mpPrivate->Draw();
 }
