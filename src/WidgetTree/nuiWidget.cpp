@@ -2251,8 +2251,7 @@ bool nuiWidget::SetLayout(const nuiRect& rRect)
       rect.SetPosition(mFillRule, rRect);
     }
   }
-  
-  
+    
   rect.Left()   += GetActualBorderLeft();
   rect.Right()  -= GetActualBorderRight();
   rect.Top()    += GetActualBorderTop();

@@ -718,12 +718,14 @@ bool nuiContainer::SetLayout(const nuiRect& rRect)
   
   rect.RoundToNearest();
 
+  bool PositionChanged = (rect.Left() != mRect.Left()) || (rect.Top() != mRect.Top());
   bool SizeChanged = !rect.Size().IsEqual(mRect.Size());
   mNeedSelfLayout = mNeedSelfLayout || mClippingOptims || SizeChanged;
 
   if (mNeedSelfLayout)
   {
     res = SetRect(rect);
+    Invalidate();
   }
   else
   {
@@ -779,6 +781,9 @@ bool nuiContainer::SetLayout(const nuiRect& rRect)
   //#TEST end
 #endif
 
+  if (PositionChanged && mpParent)
+    mpParent->Invalidate();
+  
   mNeedSelfLayout = false;
   mNeedLayout = false;
   DebugRefreshInfo();

@@ -312,8 +312,8 @@ class nuiTexelAccessor_Lum
 public:
   inline static uint32 GetTexelColor(nuiTexture* mpTexture, uint8* pBuffer, int32 width, int32 height, ifp32 U, ifp32 V)
   {
-    U = ToAbove(U);
-    V = ToAbove(V);
+    U = ToBelow(U);
+    V = ToNearest(V);
     const int32 index = (U + width * V);
     const uint8 lum = pBuffer[index];
     return NUI_RGBA(lum, lum, lum, 255);
@@ -325,8 +325,8 @@ class nuiTexelAccessor_Alpha
 public:
   static uint32 GetTexelColor(nuiTexture* mpTexture, uint8* pBuffer, int32 width, int32 height, ifp32 U, ifp32 V)
   {
-    U = ToAbove(U);
-    V = ToAbove(V);
+    U = ToNearest(U);
+    V = ToNearest(V);
     const int32 index = (U + width * V);
     const uint8 alpha = pBuffer[index];
     return NUI_RGBA(255, 255, 255, alpha);
@@ -338,8 +338,8 @@ class nuiTexelAccessor_LumA
 public:
   inline static uint32 GetTexelColor(nuiTexture* mpTexture, uint8* pBuffer, int32 width, int32 height, ifp32 U, ifp32 V)
   {
-    U = ToAbove(U);
-    V = ToAbove(V);
+    U = ToNearest(U);
+    V = ToNearest(V);
     const int32 index = 2 * (U + width * V);
     const uint8 lum = pBuffer[index];
     const uint8 alpha = pBuffer[index + 1];
@@ -352,8 +352,8 @@ class nuiTexelAccessor_RGB24
 public:
   inline static uint32 GetTexelColor(nuiTexture* mpTexture, uint8* pBuffer, int32 width, int32 height, ifp32 U, ifp32 V)
   {
-    U = ToAbove(U);
-    V = ToAbove(V);
+    U = ToNearest(U);
+    V = ToNearest(V);
     const int32 index = 3 * (U + width * V);
     const uint8 r = pBuffer[index];
     const uint8 g = pBuffer[index + 1];
@@ -367,8 +367,8 @@ class nuiTexelAccessor_RGBA32
 public:
   inline static uint32 GetTexelColor(nuiTexture* mpTexture, uint8* pBuffer, int32 width, int32 height, ifp32 U, ifp32 V)
   {
-    U = ToAbove(U);
-    V = ToAbove(V);
+    U = ToNearest(U);
+    V = ToNearest(V);
     if (U < 0)
       U = 0;
     if (V < 0)

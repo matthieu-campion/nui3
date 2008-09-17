@@ -302,6 +302,8 @@ void nuiMainWindow::Paint()
   if (DrawFullFrame && RestorePartial)
     EnablePartialRedraw(false);
 
+  std::vector<nuiRect> RedrawList(mRedrawList);
+    
 //  static int counter = 0;
   //NGL_OUT(_T("%d OnPaint %d - %d\n"), counter++, DrawFullFrame, RestorePartial);
 
@@ -325,7 +327,17 @@ void nuiMainWindow::Paint()
 
 #ifndef __NUI_NO_SOFTWARE__
   if (pCTX)
-    pCTX->Display(GetNGLWindow());
+  {
+    if (DrawFullFrame)
+    {
+      pCTX->Display(GetNGLWindow(), GetRect());      
+    }
+    else
+    {
+      for (uint i = 0; i < RedrawList.size(); i++)
+        pCTX->Display(GetNGLWindow(), RedrawList[i]);
+    }
+  }
 #endif//__NUI_NO_SOFTWARE__
 
   pContext->EndSession();

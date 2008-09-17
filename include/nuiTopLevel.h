@@ -220,7 +220,7 @@ protected:
 
   void UpdateWidgetsCSS();
   
-private:
+protected:
   /* @name Trash management */
   //@{
   bool mFillTrash;

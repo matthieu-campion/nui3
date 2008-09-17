@@ -904,7 +904,7 @@ void nuiSoftwarePainter::DrawRectangle(const nuiRenderArray& rArray, int p1, int
 }
 
 
-void nuiSoftwarePainter::Display(nglWindow* pWindow)
+void nuiSoftwarePainter::Display(nglWindow* pWindow, const nuiRect& rRect)
 {
   if (!pWindow)
     return;
@@ -916,6 +916,13 @@ void nuiSoftwarePainter::Display(nglWindow* pWindow)
     return;
 
   //TestAgg((char*)&mBuffer[0], mWidth, mHeight);
+  
+  int32 x, y, w, h;
+  x = ToBelow(rRect.Left());
+  y = ToBelow(rRect.Top());
+  w = ToBelow(rRect.GetWidth());
+  h = ToBelow(rRect.GetHeight());
+  int32 offset = (x + mWidth * y);
   
 #ifdef _WIN32_
   HDC hdc = GetDC(pInfo->WindowHandle);
@@ -973,12 +980,12 @@ void nuiSoftwarePainter::Display(nglWindow* pWindow)
 
   SetDIBitsToDevice(
     hdc,              // handle to DC
-    0,                // x-coord of destination upper-left corner
-    0,                // y-coord of destination upper-left corner
-    r.right,          // width of destination rectangle
-    r.bottom,         // height of destination rectangle
-    0,                // x-coord of source upper-left corner
-    0,                // y-coord of source upper-left corner
+    x,                // x-coord of destination upper-left corner
+    y,                // y-coord of destination upper-left corner
+    w,          // width of destination rectangle
+    h,         // height of destination rectangle
+    x,                // x-coord of source upper-left corner
+    y,                // y-coord of source upper-left corner
 
     0,                // first scan line
     (LONG)mHeight,    // number of scan lines
@@ -998,42 +1005,31 @@ void nuiSoftwarePainter::Display(nglWindow* pWindow)
   
   //CGContextRef myMemoryContext;
   CGColorSpaceRef cspace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
-  CGDataProviderRef provider = CGDataProviderCreateWithData(NULL, mpRasterizer->GetBuffer(), mWidth * mHeight * 4, NULL);
+  CGDataProviderRef provider = CGDataProviderCreateWithData(NULL, mpRasterizer->GetBuffer() + offset, mWidth * h * 4, NULL);
   
-  //myMemoryContext = CGBitmapContextCreate(mpScreen->GetColorBuffer(), mWidth, mHeight, 8, 4 * mWidth, cspace, kCGBitmapByteOrder32Host | kCGImageAlphaNone);
-  CGImageRef img = CGImageCreate (
-                            mWidth,
-                            mHeight,
-                            8,
-                            32,
-                            mWidth * 4,
-                            cspace,
-                            kCGBitmapByteOrder32Host | kCGImageAlphaNoneSkipFirst,
-                            provider,
-                            NULL,
-                            0,
-                            kCGRenderingIntentDefault
-                            );
+  CGImageRef img = CGImageCreate(
+                                 w,
+                                 h,
+                                 8,
+                                 32,
+                                 mWidth * 4,
+                                 cspace,
+                                 kCGBitmapByteOrder32Host | kCGImageAlphaNoneSkipFirst,
+                                 provider,
+                                 NULL,
+                                 0,
+                                 kCGRenderingIntentDefault
+                                 );
   
   CGContextRef myContext;
   
   SetPortWindowPort (win);// 1
   QDBeginCGContext (GetWindowPort (win), &myContext);
-      
-  // ********** Your drawing code here **********
-  //CGImageRef img = CGBitmapContextCreateImage(myMemoryContext);
-  
-  CGRect rect = CGRectMake(0, 0, mWidth, mHeight);
+
+  CGRect rect = CGRectMake(x, mHeight - h - y, w, h);
   CGContextDrawImage(myContext, rect, img);
   
-//  CGContextSetRGBFillColor (myContext, 1, 0, 0, .5);               
-//  CGContextFillRect (myContext, CGRectMake (0, 0, 200, 100));
-//  CGContextSetRGBFillColor (myContext, 0, 0, 1, .5);      
-//  CGContextFillRect (myContext, CGRectMake (0, 0, 100, 200));         
-  
-//  CGContextFlush(myContext);
-  QDEndCGContext (GetWindowPort(win), &myContext);
-  
+  QDEndCGContext (GetWindowPort(win), &myContext);  
           
 #endif
 }

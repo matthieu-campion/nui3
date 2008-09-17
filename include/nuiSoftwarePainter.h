@@ -29,7 +29,7 @@ public:
   virtual void EndSession();
   virtual uint32 GetRectangleTextureSupport() const { return 1; }
 
-  void Display(nglWindow* pWindow);
+  void Display(nglWindow* pWindow, const nuiRect& rRect);
 
   class nuiRasterizer* GetRasterizer() const;
 
