@@ -443,7 +443,15 @@ void nuiMainMenu::InsertItem(nuiMainMenuItem* pParent, nuiMainMenuItem* pItem)
 }
 
 
+
+void nuiMainMenu::SetItemText(nuiMainMenuItem* pItem, const nglString& rText)
+{
+  if (pItem->GetType() != eItemString)
+    return;
   
+  pItem->SetText(rText);
+}
+
   
 
 
