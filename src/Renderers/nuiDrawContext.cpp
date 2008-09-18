@@ -497,6 +497,34 @@ void nuiDrawContext::DrawImageQuad(float x0, float y0, float x1, float y1, float
   array.EnableArray(nuiRenderArray::eTexCoord, true);
   array.EnableArray(nuiRenderArray::eColor, true);
 
+//  // 1
+//  array.SetTexCoords(tx,ty); 
+//  array.SetVertex(x0, y0);
+//  array.SetColor(mCurrentState.mFillColor);
+//  array.PushVertex();
+//
+//  array.SetTexCoords(tw,ty); 
+//  array.SetVertex(x1, y1);
+//  array.PushVertex();
+//
+//  array.SetTexCoords(tw,th); 
+//  array.SetVertex(x2, y2);
+//  array.PushVertex();
+//
+//  // 2
+//  array.SetTexCoords(tx,ty); 
+//  array.SetVertex(x0, y0);
+//  array.SetColor(mCurrentState.mFillColor);
+//  array.PushVertex();
+//
+//  array.SetTexCoords(tw,th); 
+//  array.SetVertex(x2, y2);
+//  array.PushVertex();
+//
+//  array.SetTexCoords(tx,th); 
+//  array.SetVertex(x3, y3);
+//  array.PushVertex();
+
   // 1
   array.SetTexCoords(tx,ty); 
   array.SetVertex(x0, y0);
@@ -507,13 +535,13 @@ void nuiDrawContext::DrawImageQuad(float x0, float y0, float x1, float y1, float
   array.SetVertex(x1, y1);
   array.PushVertex();
 
-  array.SetTexCoords(tw,th); 
-  array.SetVertex(x2, y2);
+  array.SetTexCoords(tx,th); 
+  array.SetVertex(x3, y3);
   array.PushVertex();
 
   // 2
-  array.SetTexCoords(tx,ty); 
-  array.SetVertex(x0, y0);
+  array.SetTexCoords(tw,ty); 
+  array.SetVertex(x1, y1);
   array.SetColor(mCurrentState.mFillColor);
   array.PushVertex();
 
@@ -524,7 +552,7 @@ void nuiDrawContext::DrawImageQuad(float x0, float y0, float x1, float y1, float
   array.SetTexCoords(tx,th); 
   array.SetVertex(x3, y3);
   array.PushVertex();
-
+  
   DrawArray(array);
 
   if (!texturing)

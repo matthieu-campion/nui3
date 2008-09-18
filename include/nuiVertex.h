@@ -258,7 +258,6 @@ public:
   inline uint32 GetColor() const
   {
     return NUI_RGBA(ToNearest(mR), ToNearest(mG), ToNearest(mB), ToNearest(mA));
-//    return NUI_RGBA(64, 64, 128, 128);
   }
   
   void Add(const nuiGouraudColor& rColor)
@@ -313,7 +312,7 @@ public:
   inline static uint32 GetTexelColor(nuiTexture* mpTexture, uint8* pBuffer, int32 width, int32 height, ifp32 U, ifp32 V)
   {
     U = ToBelow(U);
-    V = ToNearest(V);
+    V = ToAbove(V);
     const int32 index = (U + width * V);
     const uint8 lum = pBuffer[index];
     return NUI_RGBA(lum, lum, lum, 255);
@@ -325,8 +324,8 @@ class nuiTexelAccessor_Alpha
 public:
   static uint32 GetTexelColor(nuiTexture* mpTexture, uint8* pBuffer, int32 width, int32 height, ifp32 U, ifp32 V)
   {
-    U = ToNearest(U);
-    V = ToNearest(V);
+    U = ToAbove(U);
+    V = ToAbove(V);
     const int32 index = (U + width * V);
     const uint8 alpha = pBuffer[index];
     return NUI_RGBA(255, 255, 255, alpha);
@@ -338,8 +337,8 @@ class nuiTexelAccessor_LumA
 public:
   inline static uint32 GetTexelColor(nuiTexture* mpTexture, uint8* pBuffer, int32 width, int32 height, ifp32 U, ifp32 V)
   {
-    U = ToNearest(U);
-    V = ToNearest(V);
+    U = ToAbove(U);
+    V = ToAbove(V);
     const int32 index = 2 * (U + width * V);
     const uint8 lum = pBuffer[index];
     const uint8 alpha = pBuffer[index + 1];
@@ -352,8 +351,8 @@ class nuiTexelAccessor_RGB24
 public:
   inline static uint32 GetTexelColor(nuiTexture* mpTexture, uint8* pBuffer, int32 width, int32 height, ifp32 U, ifp32 V)
   {
-    U = ToNearest(U);
-    V = ToNearest(V);
+    U = ToAbove(U);
+    V = ToAbove(V);
     const int32 index = 3 * (U + width * V);
     const uint8 r = pBuffer[index];
     const uint8 g = pBuffer[index + 1];
@@ -367,8 +366,8 @@ class nuiTexelAccessor_RGBA32
 public:
   inline static uint32 GetTexelColor(nuiTexture* mpTexture, uint8* pBuffer, int32 width, int32 height, ifp32 U, ifp32 V)
   {
-    U = ToNearest(U);
-    V = ToNearest(V);
+    U = ToAbove(U);
+    V = ToAbove(V);
     if (U < 0)
       U = 0;
     if (V < 0)
@@ -409,8 +408,8 @@ public:
     mWidth = pImage->GetWidth();
     mHeight = pImage->GetHeight();
     
-    mU = (ToNearest(u)) << NUI_FP_SHIFT;
-    mV = (ToNearest(v)) << NUI_FP_SHIFT;
+    mU = ToNearest(u * (nuiSize)NUI_FP_ONE);
+    mV = ToNearest(v * (nuiSize)NUI_FP_ONE);
   }
     
   nuiTexelColor& operator=(const nuiTexelColor& rTexel)
@@ -581,15 +580,12 @@ public:
     const int32 f = Frac(mY);
     const int32 ff = NUI_FP_MASK - f;
     
-    //if (f)
-    {
-      mY = Trunc(mY);
-      mX += nuiFPMul(ff, rIncr.mX);
+    mY = Trunc(mY);
+    mX += nuiFPMul(ff, rIncr.mX);
 
-      InterpolatedType t = rIncr.mValue;
-      t.Mul(ff);
-      mValue.Add(t);
-    }
+    InterpolatedType t = rIncr.mValue;
+    t.Mul(ff);
+    mValue.Add(t);
   }
   
   void PrestepX(const nuiVertex<InterpolatedType>& rIncr)
@@ -607,7 +603,8 @@ public:
   
   ifp32 GetIncrToX(const nuiVertex<InterpolatedType>& rVertex, nuiVertex<InterpolatedType>& rResultVertex) const
   {
-    const ifp32 _count = rVertex.mX - mX;
+    //const ifp32 _count = rVertex.mX - mX;
+    const ifp32 _count = ToAbove(rVertex.mX) - ToAbove(mX);
     
     if (_count > 0)
     {
@@ -631,16 +628,18 @@ public:
   
   ifp32 GetIncrToY(const nuiVertex<InterpolatedType>& rVertex, nuiVertex<InterpolatedType>& rResultVertex) const
   {
-    const ifp32 _count = rVertex.mY - mY;
+    //const ifp32 _count = rVertex.mY - mY;
+    const ifp32 _countY = ToAbove(rVertex.mY) - ToAbove(mY);
+    const ifp32 _countX = ToAbove(rVertex.mX) - ToAbove(mX);
     
-    if (_count > 0)
+    if (_countY > 0)
     {
-      rResultVertex.mX = nuiFPDiv((rVertex.mX - mX), _count);
+      rResultVertex.mX = nuiFPDiv(_countX, _countY);
       rResultVertex.mY = NUI_FP_ONE;
 
       rResultVertex.mValue = rVertex.mValue;
       rResultVertex.mValue.Sub(mValue);
-      rResultVertex.mValue.Div(_count);
+      rResultVertex.mValue.Div(_countY);
     }
     else
     {

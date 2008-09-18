@@ -54,7 +54,7 @@ inline int32 nuiFPDiv(ifp32 a, ifp32 b)
   {
     int64 cc = 0x40000000 / b;
     cc = (cc * a) >> 14;
-    const ifp32 ret = (int32)(cc & 0xffffffff);
+    const ifp32 ret = (int32)cc;
     return ret;
   } 
   
@@ -62,17 +62,25 @@ inline int32 nuiFPDiv(ifp32 a, ifp32 b)
   const int64 bb = b;
   aa <<= NUI_FP_SHIFT;
   aa /= bb;
-  const ifp32 ret = (ifp32)(aa & 0xffffffff);
+  const ifp32 ret = (ifp32)aa;
   return ret;
 }
 
 inline ifp32 nuiFPMul(ifp32 a, ifp32 b)
-////////////////////////////////////////
 {
   const int64 aa = a;
   const int64 bb = b;
   int64 cc = aa * bb;
   cc >>= NUI_FP_SHIFT;
-  return (ifp32)(cc & 0xffffffff);
+  return (ifp32)cc;
+}
+
+inline ifp32 nuiFPMulT(ifp32 a, ifp32 b)
+{
+  const int64 aa = a;
+  const int64 bb = b;
+  int64 cc = aa * bb;
+  cc >>= NUI_FP_SHIFT;
+  return (ifp32)cc;
 }
 
