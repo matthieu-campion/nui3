@@ -127,9 +127,6 @@ static Vertex      *glAA_VAR;          // VAR globals
 static unsigned short   *glAA_line_index;
 static int        glAA_VAR_i, glAA_VAR_skip, glAA_fence;
 
-static bool        hasMIPGEN, hasVAR,      // control globals
-hasCLIENTTEX;
-static bool        useMIPGEN, useVAR;
 static float      logtbl[pdb];        // for sphere lookups
 
 // private helper functions
@@ -140,61 +137,6 @@ static float      logtbl[pdb];        // for sphere lookups
 static inline void glAASetContext() 
 {
 }
-
-
-// -------------------------------------------------
-// test hardware mipmap generation
-// -------------------------------------------------
-bool introspectMIPGEN() 
-{
-  bool workingMIPGEN = 0;
-  return false; // temporarily always fail, until I figure out what is wrong with GF4MX
-  if (hasMIPGEN) 
-  {
-    // test hardware mipmap generation to verify it does the right thing (some drivers don't)
-    GLuint texID[1];
-    const unsigned char tex[] = 
-    { 
-      0,   0,   0,   0,   0,   0,   0,   0,
-      0,   0,   0,   0,   0,   0,   0,   0,
-      0,   0, 255, 255, 255, 127,   0,   0,
-      0,   0, 255, 255, 255, 255,   0,   0,
-      0,   0, 127, 127, 255, 255,   0,   0,
-      0,   0, 127, 127, 255,   0,   0,   0,
-      0,   0,   0,   0,   0,   0,   0,   0,
-      0,   0,   0,   0,   0,   0,   0,   0 
-    };
-
-    glGenTextures(1, &texID[0]);
-    glBindTexture(GL_TEXTURE_2D, texID[0]);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-    // Use hardware filtering and client storage for faster texture generation.
-    glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP_SGIS, GL_TRUE);
-    glHint(GL_GENERATE_MIPMAP_HINT_SGIS, GL_FASTEST);
-    if (hasCLIENTTEX) 
-      glPixelStorei(GL_UNPACK_CLIENT_STORAGE_APPLE, 1);
-    // Generate the full texture mipmap pyramid.
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, 8, 8, 0, GL_ALPHA, GL_UNSIGNED_BYTE, tex);
-    if (hasCLIENTTEX) 
-      glPixelStorei(GL_UNPACK_CLIENT_STORAGE_APPLE, 0);    
-
-    // now check the results
-    unsigned char tex1[16];
-    glGetTexImage(GL_TEXTURE_2D, 1, GL_ALPHA, GL_UNSIGNED_BYTE, tex1);
-    if (((tex1[0] | tex1[1] | tex1[2] | tex1[3] |
-      tex1[4] |                     tex1[7] |
-      tex1[8] |                     tex1[11]|
-      tex1[12]| tex1[13]| tex1[14]| tex1[15]) == 0) &&
-      (tex1[5] == 255) && (tex1[6] == 223) &&
-      (tex1[9] == 127) && (tex1[10]== 191))
-      workingMIPGEN = 1;
-    // printf("glAArg: Using hardware mipmap generation: %d\n", workingMIPGEN);
-    glDeleteTextures(1, &texID[0]);
-  }
-  // return workingMIPGEN;
-}
-
 
 // glAA APIs
 
@@ -218,76 +160,13 @@ void APIENTRY glAAInit()
   }
 
   glAASetContext();
-  // check renderer capabilities
-  const GLubyte *extensions = NULL; //glGetString(GL_EXTENSIONS);
-  hasVAR = hasMIPGEN = hasCLIENTTEX = 0;
 
-  if (extensions) 
-  {
-#if 0 && defined(__APPLE__)
-    // this should be true on all renderers except Rage 128 and Radeon 7000.
-    hasVAR = (strstr((char *)extensions, "GL_APPLE_vertex_array_range") != NULL);
-#endif  
-    // on OS X, this should be true on 10.2.3 and later, but it does not work reliably on some GPUs.
-    //hasMIPGEN = (strstr((char *)extensions, "GL_SGIS_generate_mipmap") != NULL);
-
-    // this should be true on all OS X renderers, and not on any linux or windows renderers.
-    //hasCLIENTTEX = (strstr((char *)extensions, "GL_APPLE_client_storage") != NULL);
-  }
-  useVAR = 0; // off by default. Client must turn on (and handle flushing.)
-  useMIPGEN = introspectMIPGEN(); // use it only if it actually works
-
-  // VAR buffers & state
-  //
-  // Currently, if the VAR extension is not available, we revert to immediate mode.
-  // It is easy to modify this to use regular vertex array submission instead.
-  // That provides a good speed boost on most systems, but it is actually slower on the Radeon 7000,
-  // and on Mac OS X, that is one of the only two cards which do not have VAR.
-  // A future update will provide VBO and/or non-interleaved vertex array submission. 
-  //
-  if (hasVAR) 
-  {
-    int j;
-    if (!glAA_VAR)
-      glAA_VAR = (Vertex *) malloc(vsize * VAR_bufs);
-    if (!glAA_line_index) 
-    {
-      glAA_line_index = (unsigned short *)malloc(sizeof(unsigned short)*line_i*VAR_bufs);
-      for (j=0; j<VAR_bufs; j++)
-      {
-        unsigned short v = VAR_size*j;
-        for (i=line_i*j; i<line_i*(j+1); i+= 12)
-        {
-          glAA_line_index[i  ] = v;
-          glAA_line_index[i+1] = v+1;
-          glAA_line_index[i+2] = v+3;
-          glAA_line_index[i+3] = v+2;
-          glAA_line_index[i+4] = v+4;
-          glAA_line_index[i+5] = v+5;
-          glAA_line_index[i+6] = v+7;
-          glAA_line_index[i+7] = v+6;
-          glAA_line_index[i+8] = v+2;
-          glAA_line_index[i+9] = v+3;
-          glAA_line_index[i+10]= v+5;
-          glAA_line_index[i+11]= v+4;
-          v=v+8;
-        }
-      }
-    }
-    glAA_VAR_i = glAA_fence = 0;
-
-#if 0 && defined(__APPLE__)
-    glEnableClientState(GL_VERTEX_ARRAY_RANGE_APPLE);
-    glVertexArrayRangeAPPLE(vsize * VAR_bufs, (GLvoid *)glAA_VAR);
-    glGenFencesAPPLE(VAR_bufs, &glAA_fences[0]);
-#endif
-    glEnableClientState(GL_COLOR_ARRAY);
-    glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(Vertex), &glAA_VAR[0].rgba);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    glTexCoordPointer(2, GL_FLOAT, sizeof(Vertex), &glAA_VAR[0].tx);
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glVertexPointer(2, GL_FLOAT, sizeof(Vertex), &glAA_VAR[0].x);
-  }
+  glEnableClientState(GL_COLOR_ARRAY);
+  glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(Vertex), &glAA_VAR[0].rgba);
+  glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+  glTexCoordPointer(2, GL_FLOAT, sizeof(Vertex), &glAA_VAR[0].tx);
+  glEnableClientState(GL_VERTEX_ARRAY);
+  glVertexPointer(2, GL_FLOAT, sizeof(Vertex), &glAA_VAR[0].x);
 
   // setup defaults
   glAA_old_mode = (GLenum)-1;
@@ -306,19 +185,7 @@ void APIENTRY glAAExit()
   int i;
   glAASetContext();
 
-  // dispose of VA buffers
-  if (hasVAR) 
-  {
-#if 0 && defined(__APPLE__)
-    glVertexArrayRangeAPPLE(0, 0);
-    glDisableClientState(GL_VERTEX_ARRAY_RANGE_APPLE);
-    glDeleteFencesAPPLE(VAR_bufs, &glAA_fences[0]);
-#endif
-    free (glAA_VAR); glAA_VAR = 0;
-    free (glAA_line_index); glAA_line_index = 0;
-  }
-
-  // and texture data
+  // free texture data
   for (i=0; i<8; i++)
   {
     if (glAA_texture[i]) 
@@ -434,19 +301,6 @@ void APIENTRY glAAGenerateAATex(float F, GLuint id, float alias)
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
         // Clamp the max mip level to 2x2 (1 px with 1 px border all around...)
 //        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, l2psz);
-/*
-        if (useMIPGEN) 
-        {
-          // Use hardware filtering and client storage for faster texture generation.
-          glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP_SGIS, GL_TRUE);
-          glHint(GL_GENERATE_MIPMAP_HINT_SGIS, GL_FASTEST);
-          if (hasCLIENTTEX)
-            glPixelStorei(GL_UNPACK_CLIENT_STORAGE_APPLE, 1);
-          // Generate the full texture mipmap pyramid the first time.
-          glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, pdb, pdb, 0, GL_ALPHA, GL_UNSIGNED_BYTE, texture);
-        }
-        else 
-*/
         {
           // Generate the entire mip pyramid slowly in software
           gluBuild2DMipmaps(GL_TEXTURE_2D, GL_ALPHA, pdb, pdb, GL_ALPHA, GL_UNSIGNED_BYTE, texture);
@@ -455,17 +309,6 @@ void APIENTRY glAAGenerateAATex(float F, GLuint id, float alias)
       else 
       {
         glBindTexture(GL_TEXTURE_2D, glAA_texture[id]);
-/*
-        if (useMIPGEN) 
-        {
-          if (hasCLIENTTEX) glPixelStorei(GL_UNPACK_CLIENT_STORAGE_APPLE, 1);
-          // Update only the sphere area after the first time.
-          glPixelStorei(GL_UNPACK_ROW_LENGTH, pdb);
-          glTexSubImage2D(GL_TEXTURE_2D, 0, psz, psz, psz, psz, GL_ALPHA, GL_UNSIGNED_BYTE, texture+pdb*psz+psz);
-          glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
-        }
-        else 
-*/
         {
           // Generate the entire mip pyramid slowly in software
           gluBuild2DMipmaps(GL_TEXTURE_2D, GL_ALPHA, pdb, pdb, GL_ALPHA, GL_UNSIGNED_BYTE, texture);
@@ -484,10 +327,6 @@ void APIENTRY glAAGenerateAATex(float F, GLuint id, float alias)
       mipfix[0]=mipfix[1]=mipfix[2]=mipfix[3]=fix;
       glTexSubImage2D(GL_TEXTURE_2D, l2phf, 2, 2, 2, 2, GL_ALPHA, GL_UNSIGNED_BYTE, mipfix);
       glTexSubImage2D(GL_TEXTURE_2D, l2psz, 1, 1, 1, 1, GL_ALPHA, GL_UNSIGNED_BYTE, mipfix);
-      if (useMIPGEN & hasCLIENTTEX) 
-      {
-//        glPixelStorei(GL_UNPACK_CLIENT_STORAGE_APPLE, 0);
-      }
     }
   }
   glError();
@@ -526,7 +365,7 @@ void APIENTRY glAABegin(GLenum mode)
     glAAFlush();
   }
   glAA_mode = mode;
-  if (!useVAR && (mode==GL_POINTS)) 
+  if (mode==GL_POINTS)
     nui_glBegin(GL_TRIANGLE_STRIP);
 }
 
@@ -565,7 +404,7 @@ void APIENTRY glAAEnd()
   glAA_vi = glAA_vp = 0;
   // reset stipple index
   glAA_stipple_idx = 0;
-  if (!useVAR && (glAA_mode==GL_POINTS)) 
+  if (glAA_mode == GL_POINTS)
     nui_glEnd();
   glError();
 }
@@ -573,75 +412,18 @@ void APIENTRY glAAEnd()
 
 void APIENTRY glAAFlush() 
 {
-#if 0 && defined(__APPLE__)
-  if (useVAR)
-  {
-    static int glAA_VAR_ip = 0;
-    int length = glAA_VAR_i-glAA_VAR_ip;
-
-    if (length > 0)
-    {
-      switch (glAA_mode) 
-      {
-      case GL_POINTS: 
-        {
-          // if (glAA_VAR_ip &3) printf("glAArg: WARNING! flushing pnt  from bad align %x %d\n", glAA_VAR_ip, glAA_VAR_skip);
-          // printf("glAArg: flushing %4d pnts  (%5d vertices) from %04x\n", length/4, length, glAA_VAR_ip);
-          glFlushVertexArrayRangeAPPLE(length*sizeof(Vertex), &glAA_VAR[glAA_VAR_ip]);
-          glDrawArrays(GL_QUADS, glAA_VAR_ip, length);
-        }
-        break;
-      case GL_LINE_LOOP:
-      case GL_LINE_STRIP:
-      case GL_LINES: 
-        {
-          // if (glAA_VAR_ip &7) printf("glAArg: WARNING! flushing line from bad align %x %d\n", glAA_VAR_ip, glAA_VAR_skip);
-          // printf("glAArg: flushing %4d lines (%5d vertices) from %04x\n", length/8, length, glAA_VAR_ip);
-          // printf("drawing %5d line elements from %04x\n", length+(length>>1), glAA_VAR_ip+(glAA_VAR_ip>>1));
-          glFlushVertexArrayRangeAPPLE(length*sizeof(Vertex), &glAA_VAR[glAA_VAR_ip]);
-          glDrawElements(GL_QUADS, length+(length>>1), GL_UNSIGNED_SHORT, &glAA_line_index[glAA_VAR_ip+(glAA_VAR_ip>>1)]);
-        }
-        break;
-      }
-    }
-    if (glAA_VAR_skip) 
-    {
-      glAA_VAR_i += glAA_VAR_skip;
-      glAA_VAR_ip += glAA_VAR_skip;
-      glAA_VAR_skip = 0;
-    }
-
-    if (glAA_VAR_i && !(glAA_VAR_i%VAR_size))
-    {
-      glSetFenceAPPLE(glAA_fences[glAA_fence]);
-      glError();  // any error reported here in debug mode is probably from the client, not glAArg!
-      glAA_fence++; 
-      if (glAA_fence >= VAR_bufs) 
-        glAA_fence = 0;
-      glAA_VAR_i = glAA_VAR_ip = VAR_size*glAA_fence;
-      // printf("glAArg: VAR index fenced to %04x\n", glAA_VAR_i);
-      glFinishFenceAPPLE(glAA_fences[glAA_fence]);
-      // Get rid of any spurious error that may occur after switching contexts, in order to not mislead clients...
-      while(glGetError() != GL_NO_ERROR)
-        ;
-    }
-    else glAA_VAR_ip = glAA_VAR_i;
-  }
-  else 
-  { 
-    // immediate mode, do nothing.
-    // glFlush();
-  }
-#endif
 }
 
 
 void APIENTRY glAAEnable(GLenum cap) 
 {
   if (cap == GL_LINE_STIPPLE) 
+  {
     glAA_enable_stipple = 1;
+  }
   else if (cap == GLAA_VERTEX_ARRAY) 
-    useVAR = hasVAR;
+  {    
+  }
   else 
     glEnable(cap);
 }
@@ -652,7 +434,9 @@ void APIENTRY glAADisable(GLenum cap)
   if (cap == GL_LINE_STIPPLE) 
     glAA_enable_stipple = 0;
   else if (cap == GLAA_VERTEX_ARRAY) 
-    useVAR = 0;
+  {
+    
+  }
   else 
     glDisable(cap);
 }
@@ -843,41 +627,20 @@ void APIENTRY glAAVertex2f(float x, float y)
       c3 = ntohl(c3);
       c4 = ntohl(c4);
 
-      if (useVAR)
-      {
-        int i = glAA_VAR_i;
-        glAA_VAR[i  ].rgba = c1;
-        glAA_VAR[i+1].rgba = c2;
-        glAA_VAR[i+2].rgba = c3;
-        glAA_VAR[i+3].rgba = c4;
-        glAA_VAR[i  ].tx = glAA_VAR[i+3].tx =
-          glAA_VAR[i  ].ty = glAA_VAR[i+1].ty = psz-bord;
-        glAA_VAR[i+1].tx = glAA_VAR[i+2].tx = 
-          glAA_VAR[i+2].ty = glAA_VAR[i+3].ty = pdb+bord;
-        glAA_VAR[i  ].x = glAA_VAR[i+3].x = centx;
-        glAA_VAR[i  ].y = glAA_VAR[i+1].y = centy;
-        glAA_VAR[i+1].x = glAA_VAR[i+2].x = centx+size;
-        glAA_VAR[i+2].y = glAA_VAR[i+3].y = centy+size;
-        glAA_VAR_i += 4; 
-        int room = VAR_size*(glAA_fence+1)-glAA_VAR_i;
-        if (room < 4) { glAA_VAR_skip = room; glAAFlush();}
-      }
-      else 
-      {  // immediate mode
-        nui_glColor4ubv((const GLubyte *)&c1);
-        nui_glTexCoord2f(psz-bord, psz-bord);
-        nui_glVertex2f(centx,      centy);
-        nui_glColor4ubv((const GLubyte *)&c2);
-        nui_glTexCoord2f(pdb+bord, psz-bord);
-        nui_glVertex2f(centx+size, centy);
-        nui_glColor4ubv((const GLubyte *)&c3);
-        nui_glTexCoord2f(pdb+bord, pdb+bord);
-        nui_glVertex2f(centx+size, centy+size);
-        nui_glColor4ubv((const GLubyte *)&c4);
-        nui_glTexCoord2f(psz-bord, pdb+bord);
-        nui_glVertex2f(centx,      centy+size);
-      }
-    } break;
+      nui_glColor4ubv((const GLubyte *)&c1);
+      nui_glTexCoord2f(psz-bord, psz-bord);
+      nui_glVertex2f(centx,      centy);
+      nui_glColor4ubv((const GLubyte *)&c2);
+      nui_glTexCoord2f(pdb+bord, psz-bord);
+      nui_glVertex2f(centx+size, centy);
+      nui_glColor4ubv((const GLubyte *)&c3);
+      nui_glTexCoord2f(pdb+bord, pdb+bord);
+      nui_glVertex2f(centx+size, centy+size);
+      nui_glColor4ubv((const GLubyte *)&c4);
+      nui_glTexCoord2f(psz-bord, pdb+bord);
+      nui_glVertex2f(centx,      centy+size);
+    }
+    break;
 
   case GL_LINE_LOOP:
   case GL_LINE_STRIP:
@@ -1005,117 +768,80 @@ void APIENTRY glAAVertex2f(float x, float y)
             c2 = (c2 & 0xFFFFFF00) | (((c2 & 0x000000FF)*int_alpha_fix)>>8);
           }
 
-          if (useVAR)
+          int cl1 = ntohl(lerpRGBA(c1, c2, cp2));
+          int cl2 = ntohl(lerpRGBA(c1, c2, cw2));
+          int cl3 = ntohl(lerpRGBA(c1, c2, cw4));
+          int cl4 = ntohl(lerpRGBA(c1, c2, cp4));
+          if (glAA_line_width <= 1.0f || glAA_mode != GL_LINE_STRIP)
           {
-            // should use altivec, here...
-            glAA_VAR[i  ].rgba = glAA_VAR[i+1].rgba = ntohl(lerpRGBA(c1, c2, cp2));
-            glAA_VAR[i+2].rgba = glAA_VAR[i+3].rgba = ntohl(lerpRGBA(c1, c2, cw2));
-            glAA_VAR[i+4].rgba = glAA_VAR[i+5].rgba = ntohl(lerpRGBA(c1, c2, cw4));
-            glAA_VAR[i+6].rgba = glAA_VAR[i+7].rgba = ntohl(lerpRGBA(c1, c2, cp4));
+            nui_glBegin(GL_TRIANGLE_STRIP);
+            nui_glColor4ubv((const GLubyte *)&cl1);
+            nui_glTexCoord2f(pdb+bord,  psz-bord);
+            nui_glVertex2f(x1-perp_x-parl_x, y1-perp_y-parl_y);
+            nui_glTexCoord2f(psz-bord,  psz-bord);
+            nui_glVertex2f(x1+perp_x-parl_x, y1+perp_y-parl_y);
 
-            glAA_VAR[i+3].tx = glAA_VAR[i+1].tx = glAA_VAR[i+5].tx = glAA_VAR[i+7].tx =
-              glAA_VAR[i  ].ty = glAA_VAR[i+1].ty = glAA_VAR[i+6].ty = glAA_VAR[i+7].ty = psz-bord;
-            glAA_VAR[i+2].tx = glAA_VAR[i  ].tx = glAA_VAR[i+4].tx = glAA_VAR[i+6].tx = pdb+bord;
-            glAA_VAR[i+3].ty = glAA_VAR[i+2].ty = pct;
-            glAA_VAR[i+5].ty = glAA_VAR[i+4].ty = pct + GLAARG_RADEON7000_KLUDGE;
+            nui_glColor4ubv((const GLubyte *)&cl2);
+            nui_glTexCoord2f(psz-bord,  pct);
+            nui_glVertex2f(x1+perp_x, y1+perp_y);
+            nui_glTexCoord2f(pdb+bord,  pct);
+            nui_glVertex2f(x1-perp_x, y1-perp_y);
 
-            glAA_VAR[i  ].x = x1-perp_x-parl_x;    glAA_VAR[i  ].y = y1-perp_y-parl_y;
-            glAA_VAR[i+1].x = x1+perp_x-parl_x;    glAA_VAR[i+1].y = y1+perp_y-parl_y;
-            glAA_VAR[i+2].x = x1-perp_x;      glAA_VAR[i+2].y = y1-perp_y;
-            glAA_VAR[i+3].x = x1+perp_x;      glAA_VAR[i+3].y = y1+perp_y;
-            glAA_VAR[i+4].x = x-perp_x;        glAA_VAR[i+4].y = y-perp_y;
-            glAA_VAR[i+5].x = x+perp_x;        glAA_VAR[i+5].y = y+perp_y;
-            glAA_VAR[i+6].x = x-perp_x+parl_x;    glAA_VAR[i+6].y = y-perp_y+parl_y;
-            glAA_VAR[i+7].x = x+perp_x+parl_x;    glAA_VAR[i+7].y = y+perp_y+parl_y;
+            nui_glColor4ubv((const GLubyte *)&cl3);        
+            nui_glTexCoord2f(psz-bord,  pct + GLAARG_RADEON7000_KLUDGE);
+            nui_glVertex2f(x+perp_x, y+perp_y);
+            nui_glTexCoord2f(pdb+bord,  pct + GLAARG_RADEON7000_KLUDGE);
+            nui_glVertex2f(x-perp_x, y-perp_y);
 
-            glAA_VAR_i += 8;
-            int room = VAR_size*(glAA_fence+1)-glAA_VAR_i;
-            if (room < 8) 
-            { 
-              glAA_VAR_skip = room; 
-              glAAFlush();
-            }
-
-            i = glAA_VAR_i;
+            nui_glColor4ubv((const GLubyte *)&cl4);
+            nui_glTexCoord2f(psz-bord,  psz-bord);
+            nui_glVertex2f(x+perp_x+parl_x, y+perp_y+parl_y);
+            nui_glTexCoord2f(pdb+bord,  psz-bord);
+            nui_glVertex2f(x-perp_x+parl_x, y-perp_y+parl_y);
+            nui_glEnd();
           }
-          else 
-          { // immediate  
-            int cl1 = ntohl(lerpRGBA(c1, c2, cp2));
-            int cl2 = ntohl(lerpRGBA(c1, c2, cw2));
-            int cl3 = ntohl(lerpRGBA(c1, c2, cw4));
-            int cl4 = ntohl(lerpRGBA(c1, c2, cp4));
-            if (glAA_line_width <= 1.0f || glAA_mode != GL_LINE_STRIP)
+          else
+          {
+            if (glAA_vi < 2)
             {
               nui_glBegin(GL_TRIANGLE_STRIP);
               nui_glColor4ubv((const GLubyte *)&cl1);
-              nui_glTexCoord2f(pdb+bord,  psz-bord);
-              nui_glVertex2f(x1-perp_x-parl_x, y1-perp_y-parl_y);
               nui_glTexCoord2f(psz-bord,  psz-bord);
               nui_glVertex2f(x1+perp_x-parl_x, y1+perp_y-parl_y);
+              nui_glTexCoord2f(pdb+bord,  psz-bord);
+              nui_glVertex2f(x1-perp_x-parl_x, y1-perp_y-parl_y);
+            }
 
-              nui_glColor4ubv((const GLubyte *)&cl2);
-              nui_glTexCoord2f(psz-bord,  pct);
-              nui_glVertex2f(x1+perp_x, y1+perp_y);
-              nui_glTexCoord2f(pdb+bord,  pct);
-              nui_glVertex2f(x1-perp_x, y1-perp_y);
+            nui_glColor4ubv((const GLubyte *)&cl2);
+            nui_glTexCoord2f(psz-bord,  pct);
+            nui_glVertex2f(x1+perp_x, y1+perp_y);
+            nui_glTexCoord2f(pdb+bord,  pct);
+            nui_glVertex2f(x1-perp_x, y1-perp_y);
 
-              nui_glColor4ubv((const GLubyte *)&cl3);        
-              nui_glTexCoord2f(psz-bord,  pct + GLAARG_RADEON7000_KLUDGE);
-              nui_glVertex2f(x+perp_x, y+perp_y);
-              nui_glTexCoord2f(pdb+bord,  pct + GLAARG_RADEON7000_KLUDGE);
-              nui_glVertex2f(x-perp_x, y-perp_y);
+            nui_glColor4ubv((const GLubyte *)&cl3);        
+            nui_glTexCoord2f(psz-bord,  pct + GLAARG_RADEON7000_KLUDGE);
+            nui_glVertex2f(x+perp_x, y+perp_y);
+            nui_glTexCoord2f(pdb+bord,  pct + GLAARG_RADEON7000_KLUDGE);
+            nui_glVertex2f(x-perp_x, y-perp_y);
 
+            //if (!glAA_vi)
+            {
+              end_color = cl4;
+              end_tx1 = pdb + bord;
+              end_ty1 = psz - bord;
+              end_x1 = x-perp_x+parl_x;
+              end_y1 = y-perp_y+parl_y;
+              end_tx2 = psz-bord;
+              end_ty2 = psz-bord;
+              end_x2 = x+perp_x+parl_x;
+              end_y2 = y+perp_y+parl_y;
               nui_glColor4ubv((const GLubyte *)&cl4);
               nui_glTexCoord2f(psz-bord,  psz-bord);
               nui_glVertex2f(x+perp_x+parl_x, y+perp_y+parl_y);
               nui_glTexCoord2f(pdb+bord,  psz-bord);
               nui_glVertex2f(x-perp_x+parl_x, y-perp_y+parl_y);
-              nui_glEnd();
-            }
-            else
-            {
-              if (glAA_vi < 2)
-              {
-                nui_glBegin(GL_TRIANGLE_STRIP);
-                nui_glColor4ubv((const GLubyte *)&cl1);
-                nui_glTexCoord2f(psz-bord,  psz-bord);
-                nui_glVertex2f(x1+perp_x-parl_x, y1+perp_y-parl_y);
-                nui_glTexCoord2f(pdb+bord,  psz-bord);
-                nui_glVertex2f(x1-perp_x-parl_x, y1-perp_y-parl_y);
-              }
 
-              nui_glColor4ubv((const GLubyte *)&cl2);
-              nui_glTexCoord2f(psz-bord,  pct);
-              nui_glVertex2f(x1+perp_x, y1+perp_y);
-              nui_glTexCoord2f(pdb+bord,  pct);
-              nui_glVertex2f(x1-perp_x, y1-perp_y);
-
-              nui_glColor4ubv((const GLubyte *)&cl3);        
-              nui_glTexCoord2f(psz-bord,  pct + GLAARG_RADEON7000_KLUDGE);
-              nui_glVertex2f(x+perp_x, y+perp_y);
-              nui_glTexCoord2f(pdb+bord,  pct + GLAARG_RADEON7000_KLUDGE);
-              nui_glVertex2f(x-perp_x, y-perp_y);
-
-              //if (!glAA_vi)
-              {
-                end_color = cl4;
-                end_tx1 = pdb + bord;
-                end_ty1 = psz - bord;
-                end_x1 = x-perp_x+parl_x;
-                end_y1 = y-perp_y+parl_y;
-                end_tx2 = psz-bord;
-                end_ty2 = psz-bord;
-                end_x2 = x+perp_x+parl_x;
-                end_y2 = y+perp_y+parl_y;
-                nui_glColor4ubv((const GLubyte *)&cl4);
-                nui_glTexCoord2f(psz-bord,  psz-bord);
-                nui_glVertex2f(x+perp_x+parl_x, y+perp_y+parl_y);
-                nui_glTexCoord2f(pdb+bord,  psz-bord);
-                nui_glVertex2f(x-perp_x+parl_x, y-perp_y+parl_y);
-
-                //nui_glEnd();
-              }
-
+              //nui_glEnd();
             }
           }
           s  += dash+gap;

@@ -37,11 +37,6 @@ extern "C" {
   // eventually this constant will probably be passed as an argument to glAAGenerateAATex() but it is hardcoded here for now.
 #define phf 32
 
-  // VAR constants; could be determined empirically at runtime depending on the GPU, but hardcoded here for now.
-  // VAR_size*VAR_bufs must be <= 65536 to let the index be an unsigned short. VAR_bufs must be at least 2.
-#define VAR_size 1024
-#define VAR_bufs 64
-
 
   // basic 2D types
   typedef struct GLCoord2 {
