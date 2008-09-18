@@ -7,6 +7,7 @@
 
 #include "nui.h"
 #include "nuiDefaultDecoration.h"
+#include "nuiColorDecoration.h"
 #include "nuiGradientDecoration.h"
 #include "nuiBorderDecoration.h"
 #include "nuiMetaDecoration.h"
@@ -45,6 +46,19 @@ void nuiDefaultDecoration::Init()
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiCloseButton")), &nuiDefaultDecoration::CloseButton);
   
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiToggleButton")), &nuiDefaultDecoration::ToggleButton);
+  
+  
+  // FileSelector
+  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileSelector::FolderView")), &nuiDefaultDecoration::FileSelector_FolderView);
+  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileSelector::InfoView")), &nuiDefaultDecoration::FileSelector_InfoView);
+  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileSelector::FolderLabel")), &nuiDefaultDecoration::FileSelector_FolderLabel);
+  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileSelector::VolumeIcon")), &nuiDefaultDecoration::FileSelector_VolumeIcon);
+  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileSelector::FolderIcon")), &nuiDefaultDecoration::FileSelector_FolderIcon);
+  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileSelector::TreeView")), &nuiDefaultDecoration::FileSelector_TreeView);
+  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileSelector::TreeFolderLabel")), &nuiDefaultDecoration::FileSelector_TreeFolderLabel);
+  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileSelector::TreeFileLabel")), &nuiDefaultDecoration::FileSelector_TreeFileLabel);
+  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileSelector::TreeFolderIcon")), &nuiDefaultDecoration::FileSelector_TreeFolderIcon);
+  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileSelector::TreeFileIcon")), &nuiDefaultDecoration::FileSelector_TreeFileIcon);
 
 }
 
@@ -145,6 +159,9 @@ void nuiDefaultDecoration::Window(nuiWidget* pWidget)
   // see nuiTheme::DrawActiveWindow for the rest
   
 }
+
+
+
 
 
 void nuiDefaultDecoration::Label(nuiWidget* pWidget)
@@ -333,6 +350,96 @@ void nuiDefaultDecoration::ToggleButton(nuiWidget* pWidget)
 }
 
 
+
+
+
+
+
+//***********************************************************************************************************************************
+//
+// FileSelector
+//
+//***********************************************************************************************************************************
+
+void nuiDefaultDecoration::FileSelector_FolderView(nuiWidget* pWidget)
+{
+  nuiMetaDecoration* pDeco = (nuiMetaDecoration*)nuiDecoration::Get(_T("nuiDefaultDecorationFileSelector_FolderView"));
+  if (!pDeco)
+  {
+    nuiColorDecoration* pDeco1 = new nuiColorDecoration(_T("nuiDefaultDecorationFileSelector_FolderView_1"), nuiRect(5,5,0,0), nuiColor(214,221,229));
+    nuiBorderDecoration* pDeco2 = new nuiBorderDecoration(_T("nuiDefaultDecorationFileSelector_FolderView_2"));
+    pDeco2->SetStrokeColor(nuiColor(139,139,139));
+    pDeco2->SetStrokeSize(1);
+    pDeco2->SetBorderType(_T("Right"));
+
+    pDeco = new nuiMetaDecoration(_T("nuiDefaultDecorationFileSelector_FolderView"));
+    pDeco->AddDecoration(pDeco1);
+    pDeco->AddDecoration(pDeco2);
+  }
+  pWidget->SetDecoration(pDeco);
+}
+
+void nuiDefaultDecoration::FileSelector_InfoView(nuiWidget* pWidget)
+{
+  
+}
+
+
+void nuiDefaultDecoration::FileSelector_FolderLabel(nuiWidget* pWidget)
+{
+  
+}
+
+
+void nuiDefaultDecoration::FileSelector_VolumeIcon(nuiWidget* pWidget)
+{
+  
+}
+
+
+void nuiDefaultDecoration::FileSelector_FolderIcon(nuiWidget* pWidget)
+{
+  
+}
+
+
+void nuiDefaultDecoration::FileSelector_TreeView(nuiWidget* pWidget)
+{
+  
+}
+
+
+void nuiDefaultDecoration::FileSelector_TreeFolderLabel(nuiWidget* pWidget)
+{
+  
+}
+
+
+void nuiDefaultDecoration::FileSelector_TreeFileLabel(nuiWidget* pWidget)
+{
+  
+}
+
+
+void nuiDefaultDecoration::FileSelector_TreeFolderIcon(nuiWidget* pWidget)
+{
+  
+}
+
+
+void nuiDefaultDecoration::FileSelector_TreeFileIcon(nuiWidget* pWidget)
+{
+  
+}
+
+
+
+
+//***********************************************************************************************************************************
+//
+// special cases
+//
+//***********************************************************************************************************************************
 
 void nuiDefaultDecoration::MainWindow(nuiMainWindow* pWindow)
 {

@@ -27,9 +27,10 @@ public:
   static void Init();
   static void InitColors();
   static void InitMaps();
+  
 
   static void Window(nuiWidget* pWidget);
-
+  
   static void Label(nuiWidget* pWidget);
   static void EditText(nuiWidget* pWidget);
   static void EditLine(nuiWidget* pWidget);
@@ -43,6 +44,19 @@ public:
   static void CloseButton(nuiWidget* pWidget);
   static void ToggleButton(nuiWidget* pWidget);
 
+
+  // file selector
+  static void FileSelector_FolderView(nuiWidget* pWidget);
+  static void FileSelector_InfoView(nuiWidget* pWidget);
+  static void FileSelector_FolderLabel(nuiWidget* pWidget);
+  static void FileSelector_VolumeIcon(nuiWidget* pWidget);
+  static void FileSelector_FolderIcon(nuiWidget* pWidget);
+  static void FileSelector_TreeView(nuiWidget* pWidget);
+  static void FileSelector_TreeFolderLabel(nuiWidget* pWidget);
+  static void FileSelector_TreeFileLabel(nuiWidget* pWidget);
+  static void FileSelector_TreeFolderIcon(nuiWidget* pWidget);
+  static void FileSelector_TreeFileIcon(nuiWidget* pWidget);
+  
   // special case
   static void MainWindow(nuiMainWindow* pWindow);
 

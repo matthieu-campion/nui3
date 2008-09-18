@@ -893,38 +893,6 @@ void nuiTheme::SetElementColor(nuiWidgetElement Element,const nuiColor& rColor)
 
 void nuiTheme::DrawTreeHandle(nuiDrawContext* pContext, const nuiRect& rRect, bool IsOpened, nuiSize TREE_HANDLE_SIZE)
 {
-//  nuiShape Shape;
-//
-//  nuiSize x,y;
-//  x = rRect.mLeft;
-//  y = rRect.mTop + (rRect.GetHeight() - TREE_HANDLE_SIZE)/2.0f;
-//
-//  nuiContour* pContour = new nuiContour();
-//  if (IsOpened)
-//  {
-//    pContour->LineTo(nuiPoint(x, y, 0));
-//    pContour->LineTo(nuiPoint(x + TREE_HANDLE_SIZE, y, 0));
-//    pContour->LineTo(nuiPoint(x + TREE_HANDLE_SIZE/2, y + TREE_HANDLE_SIZE, 0));
-//    pContour->LineTo(nuiPoint(x, y, 0));
-//  }
-//  else
-//  {
-//    pContour->LineTo(nuiPoint(x, y, 0));
-//    pContour->LineTo(nuiPoint(x + TREE_HANDLE_SIZE, y + TREE_HANDLE_SIZE/2, 0));
-//    pContour->LineTo(nuiPoint(x, y + TREE_HANDLE_SIZE, 0));
-//    pContour->LineTo(nuiPoint(x, y, 0));
-//  }
-//
-//  Shape.AddContour(pContour);
-//
-//  pContext->EnableBlending(true);
-//  pContext->SetBlendFunc(nuiBlendTransp);
-//  pContext->EnableTexturing(false);
-//
-//  pContext->DrawShape(&Shape, eFillShape);
-  
-//  const nuiRect& rRect = pScroll->GetRangeRect();
-  
   nuiFrame* pFrame = NULL;
   if (IsOpened)
     pFrame = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationArrowOpen"));
