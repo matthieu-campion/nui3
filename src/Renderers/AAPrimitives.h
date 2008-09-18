@@ -13,39 +13,27 @@
 
 #ifndef __NUI_NO_AA__
 
-#if defined(__APPLE__)
-#include <OpenGL/gl.h>
-#include <OpenGL/glu.h>
-#include <OpenGL/glext.h>
-#else
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GL/glext.h>
-#endif
-
-  // the point half-width in px. must be a power of two <= 256.
-  // eventually this constant will probably be passed as an argument to glAAGenerateAATex() but it is hardcoded here for now.
+// the point half-width in px. must be a power of two <= 256.
+// eventually this constant will probably be passed as an argument to glAAGenerateAATex() but it is hardcoded here for now.
 #define phf 32
 
+// expose these globals for client access
+extern GLuint glAA_texture;
+extern uint8* glAA_AAtex;
 
 
-  // expose these globals for client access
-  extern GLuint      glAA_texture;
-  extern unsigned char  *glAA_AAtex;
-
-
-  // glAArg API
-  void glAAInit();
-  void glAAExit();
-  void glAAGenerateAATex(float falloff, float alias);
-  void glAABegin(GLenum mode);
-  void glAAEnd();
-  void glAALineWidth(GLfloat width);
-  void glAAColor3f(float R, float G, float B);
-  void glAAColor4f(float R, float G, float B, float A);
-  void glAAColor4ubv(const GLubyte *c);
-  void glAAColor1ui(GLuint c);
-  void glAAVertex2f(GLfloat x, GLfloat y);
+// glAArg API
+void glAAInit();
+void glAAExit();
+void glAAGenerateAATex(float falloff, float alias);
+void glAABegin(GLenum mode);
+void glAAEnd();
+void glAALineWidth(GLfloat width);
+void glAAColor3f(float R, float G, float B);
+void glAAColor4f(float R, float G, float B, float A);
+void glAAColor4ubv(const GLubyte *c);
+void glAAColor1ui(GLuint c);
+void glAAVertex2f(GLfloat x, GLfloat y);
 
 
 #endif//__NUI_NO_AA__

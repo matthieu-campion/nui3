@@ -31,6 +31,7 @@ const nuiWindowFlags nuiWindow::Raw = RAWFLAG | NoCaption;
 const nuiWindowFlags nuiWindow::NoCaption = NOCAPTIONFLAG | NoClose;
 const nuiWindowFlags nuiWindow::NoClose = 32;
 const nuiWindowFlags nuiWindow::Modal = 64;
+const nuiWindowFlags nuiWindow::DecoratedBackground = 128;
 
 nuiWindow::nuiWindow()
 : nuiSimpleContainer(),
@@ -273,9 +274,9 @@ bool nuiWindow::Draw(nuiDrawContext* pContext)
     if (pRoot->GetActiveWindow() == this)
     {
       if (mMoving)
-        pTheme->DrawMovingWindow(pContext,this);
+        pTheme->DrawMovingWindow(pContext, this);
       else
-        pTheme->DrawActiveWindow(pContext,this);
+        pTheme->DrawActiveWindow(pContext, this);
     }
     else
       pTheme->DrawWindow(pContext,this);

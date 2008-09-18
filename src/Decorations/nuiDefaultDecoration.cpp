@@ -108,14 +108,21 @@ void nuiDefaultDecoration::InitMaps()
 void nuiDefaultDecoration::Window(nuiWidget* pWidget)
 {
   nuiWindow* pWindow = (nuiWindow*)pWidget;
-  
-  nuiGradientDecoration* pDeco = (nuiGradientDecoration*)nuiDecoration::Get(_T("nuiDefaultDecorationWindow"));
-  if (!pDeco)
+  if (pWindow->GetFlags() & nuiWindow::DecoratedBackground)
   {
-    pDeco = new nuiGradientDecoration(_T("nuiDefaultDecorationWindow"), 
-                                      nuiRect(0,0, 0,0), nuiColor(245,245,245), nuiColor(235,235,235), nuiVertical, 1, nuiColor(175,175,175), eStrokeAndFillShape);
+    nuiGradientDecoration* pDeco = (nuiGradientDecoration*)nuiDecoration::Get(_T("nuiDefaultDecorationWindow"));
+    if (!pDeco)
+    {
+      pDeco = new nuiGradientDecoration(_T("nuiDefaultDecorationWindow"), 
+                                        nuiRect(0,0, 0,0), nuiColor(245,245,245), nuiColor(235,235,235), nuiVertical, 1, nuiColor(175,175,175), eStrokeAndFillShape);
+    }
+    pWindow->SetDecoration(pDeco);
   }
-  pWindow->SetDecoration(pDeco);
+  else
+  {
+    pWindow->SetColor(eActiveWindowBg, nuiColor(255, 255, 255));
+    pWindow->SetColor(eInactiveWindowBg, nuiColor(200, 200, 200));
+  }
 
   // see nuiTheme::DrawActiveWindow for the rest
   
@@ -311,7 +318,7 @@ void nuiDefaultDecoration::ToggleButton(nuiWidget* pWidget)
 
 void nuiDefaultDecoration::MainWindow(nuiMainWindow* pWindow)
 {
-  nuiSimpleContainer* pCont = new nuiSimpleContainer();
+  nuiWidget* pCont = new nuiWidget();
   pWindow->AddChild(pCont);
   nuiGradientDecoration* pDeco = new nuiGradientDecoration(_T("nuiDefaultDecorationMainWindow"), 
                                                            nuiRect(0,0, 0,0), nuiColor(245,245,245), nuiColor(235,235,235), nuiVertical, 0, nuiColor(0,0,0), eFillShape);

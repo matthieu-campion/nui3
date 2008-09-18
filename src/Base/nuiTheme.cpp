@@ -434,6 +434,8 @@ void nuiTheme::DrawActiveWindow(nuiDrawContext* pContext, nuiWindow* pWindow)
 
   if (!(Flags & (nuiWindow::Raw & ~nuiWindow::NoCaption)))
   {
+    if (!pWindow->GetDecoration())
+      DrawWindowBackground(pContext, pWindow, true);
 
     // Draw window decorations:
     if (!(Flags & (nuiWindow::NoCaption & ~nuiWindow::NoClose)))
@@ -497,6 +499,8 @@ void nuiTheme::DrawMovingWindow(nuiDrawContext* pContext, nuiWindow* pWindow)
 
   if (!(Flags & (nuiWindow::Raw & ~nuiWindow::NoCaption)))
   {
+    if (!pWindow->GetDecoration())
+      DrawWindowBackground(pContext, pWindow, true);
     
     // Draw window decorations:
     if (!(Flags & (nuiWindow::NoCaption & ~nuiWindow::NoClose)))

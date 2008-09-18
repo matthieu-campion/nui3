@@ -2711,7 +2711,7 @@ bool nuiWin::CreateFrameWindow3(const nuiEvent& rEvent)
   {
     for (int e = 0; e < 2; e++)
     {
-      windows[2 * i + e] = new nuiWindow(nuiRect(50 + 200*e, 50 + 150*i, 160, 120), nglWindow::NoFlag, _T("Frame View test 3"));
+      windows[2 * i + e] = new nuiWindow(nuiRect(50 + 200 * e, 50 + 150 * i, 160, 120), nglWindow::NoFlag, _T("Frame View test 3"));
       mpManager->AddChild(windows[2 * i + e]);
       nuiLabel* pLabel = new nuiLabel(_T("Decoration mode\n= ") + modesStr[i] + _T("\nEnable Border\n= ") + borderStr[e]);
       nuiSimpleContainer * pCont = new nuiSimpleContainer();
