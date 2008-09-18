@@ -98,6 +98,8 @@ nuiMainWindow::nuiMainWindow(uint Width, uint Height, bool Fullscreen, const ngl
   mpInspectorWindow = NULL;
   
   mpWidgetCanDrop = NULL;
+  
+  nuiDefaultDecoration::MainWindow(this);
 }
 
 nuiMainWindow::nuiMainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& rInfo, const nglContext* pShared, const nglPath& rResPath)
@@ -132,6 +134,8 @@ nuiMainWindow::nuiMainWindow(const nglContextInfo& rContextInfo, const nglWindow
   mInvalidatePosted = false;
   mpInspectorWindow = NULL;
   mpWidgetCanDrop = NULL;
+  
+  nuiDefaultDecoration::MainWindow(this);  
 }
 
 bool nuiMainWindow::Load(const nuiXMLNode* pNode)

@@ -153,16 +153,6 @@ void nuiFrame::SetTexturePath(const nglPath& rPath)
 // virtual
 void nuiFrame::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rDestRect)
 {
-//#FIXME
-//  if (mDebug)
-//  {
-//    Debugger();
-//  }
-
-
-  
-  nuiRect rect = pWidget->GetRect().Size();
-
   nuiRenderArray array(GL_TRIANGLES);
   array.EnableArray(nuiRenderArray::eVertex, true);
   array.EnableArray(nuiRenderArray::eTexCoord, true);

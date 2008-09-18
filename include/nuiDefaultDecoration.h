@@ -12,6 +12,7 @@
 
 
 class nuiWidget;
+class nuiMainWindow;
 
 typedef nuiFastDelegate::FastDelegate1<nuiWidget*> nuiDecorationDelegate;
 
@@ -25,6 +26,7 @@ public:
   
   static void Init();
   static void InitColors();
+  static void InitMaps();
 
   static void Window(nuiWidget* pWidget);
 
@@ -41,8 +43,7 @@ public:
   static void CloseButton(nuiWidget* pWidget);
   static void ToggleButton(nuiWidget* pWidget);
 
-  // special cases
-  static void ScrollBar(nuiWidget* pWidget);
+  // special case
+  static void MainWindow(nuiMainWindow* pWindow);
 
-  
 };

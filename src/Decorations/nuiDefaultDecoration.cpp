@@ -10,7 +10,7 @@
 #include "nuiGradientDecoration.h"
 #include "nuiBorderDecoration.h"
 #include "nuiMetaDecoration.h"
-#include "nuiDefaultDecoration_nuiButton.h"
+#include "nuiDefaultDecorationMaps.h"
 #include "nuiFrame.h"
 
 nuiDefaultDecoration::nuiDefaultDecoration()
@@ -27,6 +27,7 @@ nuiDefaultDecoration::~nuiDefaultDecoration()
 void nuiDefaultDecoration::Init()
 {
   InitColors();
+  InitMaps();
   
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiWindow")), &nuiDefaultDecoration::Window);
 
@@ -63,6 +64,45 @@ void nuiDefaultDecoration::InitColors()
 }
 
 
+void nuiDefaultDecoration::InitMaps()
+{
+  // vertical scrollbar background
+  nglIMemory* pIMem = new nglIMemory(gpDefaultDecorationScrollbarVerticalBkg, gpDefaultDecorationScrollbarVerticalBkgSize);
+  nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
+  NGL_ASSERT(pTex);
+  nuiFrame* pFrame = new nuiFrame(_T("nuiDefaultDecorationScrollBarVerticalBkg"), pTex, nuiRect(6,8,0,0));
+  pFrame->UseWidgetAlpha(false);
+  delete pIMem;
+
+  // vertical scrollbar handle
+  pIMem = new nglIMemory(gpDefaultDecorationScrollbarVerticalHdl, gpDefaultDecorationScrollbarVerticalHdlSize);
+  pTex = nuiTexture::GetTexture(pIMem);
+  NGL_ASSERT(pTex);
+  pFrame = new nuiFrame(_T("nuiDefaultDecorationScrollBarVerticalHdl"), pTex, nuiRect(2,6,6,0));
+  pFrame->UseWidgetAlpha(false);
+  delete pIMem;
+  
+  // Horizontal scrollbar background
+  pIMem = new nglIMemory(gpDefaultDecorationScrollbarHorizontalBkg, gpDefaultDecorationScrollbarHorizontalBkgSize);
+  pTex = nuiTexture::GetTexture(pIMem);
+  NGL_ASSERT(pTex);
+  pFrame = new nuiFrame(_T("nuiDefaultDecorationScrollBarHorizontalBkg"), pTex, nuiRect(8,6,0,0));
+  pFrame->UseWidgetAlpha(false);
+  delete pIMem;
+  
+  // Horizontal scrollbar handle
+  pIMem = new nglIMemory(gpDefaultDecorationScrollbarHorizontalHdl, gpDefaultDecorationScrollbarHorizontalHdlSize);
+  pTex = nuiTexture::GetTexture(pIMem);
+  NGL_ASSERT(pTex);
+  pFrame = new nuiFrame(_T("nuiDefaultDecorationScrollBarHorizontalHdl"), pTex, nuiRect(6,2,0,6));
+  pFrame->UseWidgetAlpha(false);
+  delete pIMem;  
+}
+
+
+
+
+
 
 
 void nuiDefaultDecoration::Window(nuiWidget* pWidget)
@@ -73,7 +113,7 @@ void nuiDefaultDecoration::Window(nuiWidget* pWidget)
   if (!pDeco)
   {
     pDeco = new nuiGradientDecoration(_T("nuiDefaultDecorationWindow"), 
-                                      nuiRect(0,0, 0,0), nuiColor(220,220,220), nuiColor(180,180,180), nuiVertical, 1, nuiColor(175,175,175), eStrokeAndFillShape);
+                                      nuiRect(0,0, 0,0), nuiColor(245,245,245), nuiColor(235,235,235), nuiVertical, 1, nuiColor(175,175,175), eStrokeAndFillShape);
   }
   pWindow->SetDecoration(pDeco);
 
@@ -160,51 +200,6 @@ void nuiDefaultDecoration::SplitterHandle(nuiWidget* pWidget)
   
 }
 
-
-
-void nuiDefaultDecoration::ScrollBar(nuiWidget* pWidget)
-{
-  
-  nuiGradientDecoration* pDeco = (nuiGradientDecoration*)nuiDecoration::Get(_T("nuiDefaultDecorationScrollBar"));
-  if (!pDeco)
-  {
-    nuiColor c1,c2,c3,cStroke;
-    nuiScrollBar* pBar = (nuiScrollBar*)pWidget;
-    nuiOrientation orient = pBar->GetOrientation();
-
-    c1.SetValue(_T("nuiDefaultColorScrollBar1"));
-    c2.SetValue(_T("nuiDefaultColorScrollBar2"));
-    c3.SetValue(_T("nuiDefaultColorScrollBar3"));
-    cStroke.SetValue(_T("nuiDefaultColorScrollBarStroke"));
-    
-    pDeco = new nuiGradientDecoration(_T("nuiDefaultDecorationScrollBar"), nuiRect(5,5,0,0), c1, c2, c3, c3, orient, 1/*strokesize*/, cStroke, eStrokeAndFillShape);
-    pDeco->SetOffset1(0.f);
-    pDeco->SetOffset2(0.1f);
-    pDeco->SetOffset3(1.f);
-    pDeco->SetOffset4(1.f);
-  }
-  
-  pWidget->SetDecoration(pDeco, eDecorationBorder);
-}
-
-
-
-//void nuiDefaultDecoration::ScrollView(nuiWidget* pWidget)
-//{
-//  
-//  nuiGradientDecoration* pDeco = (nuiGradientDecoration*)nuiDecoration::Get(_T("nuiDefaultDecorationScrollView"));
-//  if (!pDeco)
-//  {
-//    nuiColor cPane1,cPane2,cStroke;
-//    cPane1.SetValue(_T("nuiDefaultColorPane1"));
-//    cPane2.SetValue(_T("nuiDefaultColorPane2"));
-//    cStroke.SetValue(_T("nuiDefaultColorStroke"));
-//    
-//    pDeco = new nuiGradientDecoration(_T("nuiDefaultDecorationScrollView"), nuiRect(5,5,0,0), cPane1, cPane2, nuiVertical, 1/*strokesize*/, cStroke, eStrokeAndFillShape);
-//  }
-//  
-//  pWidget->SetDecoration(pDeco, eDecorationBorder);
-//}
 
 
 void nuiDefaultDecoration::TitledPane(nuiWidget* pWidget)
@@ -310,5 +305,16 @@ void nuiDefaultDecoration::CloseButton(nuiWidget* pWidget)
 void nuiDefaultDecoration::ToggleButton(nuiWidget* pWidget)
 {
   
+}
+
+
+
+void nuiDefaultDecoration::MainWindow(nuiMainWindow* pWindow)
+{
+  nuiSimpleContainer* pCont = new nuiSimpleContainer();
+  pWindow->AddChild(pCont);
+  nuiGradientDecoration* pDeco = new nuiGradientDecoration(_T("nuiDefaultDecorationMainWindow"), 
+                                                           nuiRect(0,0, 0,0), nuiColor(245,245,245), nuiColor(235,235,235), nuiVertical, 0, nuiColor(0,0,0), eFillShape);
+  pCont->SetDecoration(pDeco);  
 }
 

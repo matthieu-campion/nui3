@@ -24,6 +24,7 @@ public:
   bool Load(const nuiXMLNode* pNode);
   nuiXMLNode* Serialize(nuiXMLNode* pNode);
   
+  virtual void Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rRect);
   
 
   void SetSourceClientRect(const nuiRect& rRect);
@@ -47,10 +48,8 @@ public:
 	void SetColor(const nuiColor& color);
 
   void SetDebug(bool set);
-protected : 
 
-  virtual void Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rRect);
-
+  
 	
 private:
   nuiTexture* mpTexture;

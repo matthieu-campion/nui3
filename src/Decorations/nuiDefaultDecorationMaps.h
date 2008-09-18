@@ -26,3 +26,16 @@ const long         gpDefaultDecorationCloseButtonHoverSize = 355;
 extern const char* gpDefaultDecorationCloseButtonDown;
 const long         gpDefaultDecorationCloseButtonDownSize = 443;
 
+
+extern const char* gpDefaultDecorationScrollbarVerticalBkg;
+const long         gpDefaultDecorationScrollbarVerticalBkgSize = 266;
+
+extern const char* gpDefaultDecorationScrollbarVerticalHdl;
+const long         gpDefaultDecorationScrollbarVerticalHdlSize = 360;
+
+
+extern const char* gpDefaultDecorationScrollbarHorizontalBkg;
+const long         gpDefaultDecorationScrollbarHorizontalBkgSize = 258;
+
+extern const char* gpDefaultDecorationScrollbarHorizontalHdl;
+const long         gpDefaultDecorationScrollbarHorizontalHdlSize = 378;

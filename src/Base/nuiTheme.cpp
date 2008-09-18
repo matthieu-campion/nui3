@@ -24,6 +24,7 @@
 #include "nuiContour.h"
 #include "nuiDialog.h"
 #include "nuiLabel.h"
+#include "nuiFrame.h"
 
 #define DEFAULTFONTSIZE 11.0f
 
@@ -783,42 +784,32 @@ nuiLabel *nuiTheme::CreateTreeNodeLabel(const nglString &text)
 void nuiTheme::DrawScrollBarBackground(nuiDrawContext* pContext, nuiScrollBar* pScroll)
 {
   const nuiRect& rRect = pScroll->GetRangeRect();
-
-  pContext->SetStrokeColor(pScroll->GetColor(eScrollBarBg));
-  pContext->SetFillColor(pScroll->GetColor(eScrollBarBg));
   
-  nuiShape rrect;
-  rrect.AddRoundRect(rRect, MIN(rRect.GetWidth(), rRect.GetHeight()) / 2.0f);
-
-  //pContext->DrawRect(rRect,eStrokeAndFillShape);
-  pContext->DrawShape(&rrect,eStrokeAndFillShape);
-
-  pContext->SetStrokeColor(pScroll->GetColor(eScrollBarBgHover));
-  pContext->DrawRect(rRect,eStrokeShape);
+  nuiFrame* pBkg = NULL;
+  if (pScroll->GetOrientation() == nuiVertical)
+    pBkg = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationScrollBarVerticalBkg"));
+  else
+    pBkg = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationScrollBarHorizontalBkg"));
+  NGL_ASSERT(pBkg);
+  
+  nuiRect rectDest(0.0f, 0.0f, rRect.GetWidth(), rRect.GetHeight());
+  pBkg->Draw(pContext, NULL, rectDest);
 }
+
 
 void nuiTheme::DrawScrollBarForeground(nuiDrawContext* pContext, nuiScrollBar* pScroll)
 {
-  const nuiRect& rRect( pScroll->GetThumbRect() );
+  nuiFrame* pFrame = NULL;
+  if (pScroll->GetOrientation() == nuiVertical)
+    pFrame = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationScrollBarVerticalHdl"));
+  else
+    pFrame = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationScrollBarHorizontalHdl"));
+  NGL_ASSERT(pFrame);
 
-  nuiColor c;
-  if (pScroll->GetHover())
-	{
-    c = pScroll->GetColor(eScrollBarFgHover);
-  }
-	else
-	{
-    c = pScroll->GetColor(eScrollBarFg);
-	}
-  pContext->SetFillColor(c);
-	pContext->SetStrokeColor(c);
-	
-  nuiShape s;
-
-  nuiRect r(rRect);
-  r.Grow(-1.5, -1.5);
-  s.AddRoundRect(r, MIN(r.GetWidth(), r.GetHeight()) / 2.0f);
-  pContext->DrawShape(&s, eStrokeAndFillShape);
+  nuiRect rRect = pScroll->GetThumbRect();
+  rRect.Grow(-1.f, -1.f);
+  
+  pFrame->Draw(pContext, NULL, rRect);
 }
 
 

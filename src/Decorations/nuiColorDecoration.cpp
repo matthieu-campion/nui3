@@ -126,6 +126,7 @@ nuiXMLNode* nuiColorDecoration::Serialize(nuiXMLNode* pNode)
 // virtual
 void nuiColorDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rDestRect)
 {
+
   pContext->EnableAntialiasing(false);
   pContext->EnableBlending(true);
   pContext->SetBlendFunc(mBlendFunc);

@@ -155,6 +155,9 @@ nuiWin::nuiWin(const nglContextInfo& rContextInfo, const nglWindowInfo& rInfo, b
   {
     NGL_OUT(_T("glExtensions: %ls\n"), glGetString(GL_EXTENSIONS));
   }
+  
+  
+
 }
 
 
