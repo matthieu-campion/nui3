@@ -893,36 +893,56 @@ void nuiTheme::SetElementColor(nuiWidgetElement Element,const nuiColor& rColor)
 
 void nuiTheme::DrawTreeHandle(nuiDrawContext* pContext, const nuiRect& rRect, bool IsOpened, nuiSize TREE_HANDLE_SIZE)
 {
-  nuiShape Shape;
-
-  nuiSize x,y;
-  x = rRect.mLeft;
-  y = rRect.mTop + (rRect.GetHeight() - TREE_HANDLE_SIZE)/2.0f;
-
-  nuiContour* pContour = new nuiContour();
+//  nuiShape Shape;
+//
+//  nuiSize x,y;
+//  x = rRect.mLeft;
+//  y = rRect.mTop + (rRect.GetHeight() - TREE_HANDLE_SIZE)/2.0f;
+//
+//  nuiContour* pContour = new nuiContour();
+//  if (IsOpened)
+//  {
+//    pContour->LineTo(nuiPoint(x, y, 0));
+//    pContour->LineTo(nuiPoint(x + TREE_HANDLE_SIZE, y, 0));
+//    pContour->LineTo(nuiPoint(x + TREE_HANDLE_SIZE/2, y + TREE_HANDLE_SIZE, 0));
+//    pContour->LineTo(nuiPoint(x, y, 0));
+//  }
+//  else
+//  {
+//    pContour->LineTo(nuiPoint(x, y, 0));
+//    pContour->LineTo(nuiPoint(x + TREE_HANDLE_SIZE, y + TREE_HANDLE_SIZE/2, 0));
+//    pContour->LineTo(nuiPoint(x, y + TREE_HANDLE_SIZE, 0));
+//    pContour->LineTo(nuiPoint(x, y, 0));
+//  }
+//
+//  Shape.AddContour(pContour);
+//
+//  pContext->EnableBlending(true);
+//  pContext->SetBlendFunc(nuiBlendTransp);
+//  pContext->EnableTexturing(false);
+//
+//  pContext->DrawShape(&Shape, eFillShape);
+  
+//  const nuiRect& rRect = pScroll->GetRangeRect();
+  
+  nuiFrame* pFrame = NULL;
   if (IsOpened)
-  {
-    pContour->LineTo(nuiPoint(x, y, 0));
-    pContour->LineTo(nuiPoint(x + TREE_HANDLE_SIZE, y, 0));
-    pContour->LineTo(nuiPoint(x + TREE_HANDLE_SIZE/2, y + TREE_HANDLE_SIZE, 0));
-    pContour->LineTo(nuiPoint(x, y, 0));
-  }
+    pFrame = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationArrowOpen"));
   else
-  {
-    pContour->LineTo(nuiPoint(x, y, 0));
-    pContour->LineTo(nuiPoint(x + TREE_HANDLE_SIZE, y + TREE_HANDLE_SIZE/2, 0));
-    pContour->LineTo(nuiPoint(x, y + TREE_HANDLE_SIZE, 0));
-    pContour->LineTo(nuiPoint(x, y, 0));
-  }
-
-  Shape.AddContour(pContour);
-
-  pContext->EnableBlending(true);
-  pContext->SetBlendFunc(nuiBlendTransp);
-  pContext->EnableTexturing(false);
-
-  pContext->DrawShape(&Shape, eFillShape);
+    pFrame = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationArrowClose"));
+  NGL_ASSERT(pFrame);
+  
+  const nuiRect& rectSrc = pFrame->GetSourceClientRect();
+  
+  nuiSize x,y;
+  x = rRect.Left() + (int)((rRect.GetWidth() - rectSrc.GetWidth()) / 2.f);
+  y = rRect.Top() + (int)((rRect.GetHeight() - rectSrc.GetHeight()) / 2.f);
+  nuiRect rectDest(x, y, rectSrc.GetWidth() , rectSrc.GetHeight());
+  pFrame->Draw(pContext, NULL, rectDest);
 }
+
+
+
 
 void nuiTheme::DrawSelectionRectangle(nuiDrawContext* pContext, const nuiRect& rRect, 
                                       nuiWidgetElement Color, nuiWidget* pWidget)

@@ -39,3 +39,12 @@ const long         gpDefaultDecorationScrollbarHorizontalBkgSize = 258;
 
 extern const char* gpDefaultDecorationScrollbarHorizontalHdl;
 const long         gpDefaultDecorationScrollbarHorizontalHdlSize = 378;
+
+
+
+
+extern const char* gpDefaultDecorationArrowClose;
+const long         gpDefaultDecorationArrowCloseSize = 176;
+
+extern const char* gpDefaultDecorationArrowOpen;
+const long         gpDefaultDecorationArrowOpenSize = 182;
