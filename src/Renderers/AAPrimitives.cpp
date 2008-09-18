@@ -80,6 +80,105 @@
 #include "nglMath.h"
 #include "AAPrimitives.h"
 
+#ifndef CLAMP
+#define CLAMP(X,lo,hi)  ({ __typeof__(X) __x = (X); __typeof__(lo) __l = (lo); __typeof__(hi) __h = (hi);\
+((__x) > (__h)) ? (__h) : (((__x) < (__l)) ? (__l) : (__x));  })
+#endif
+
+#endif
+
+#include <stdio.h>        // for printf debugging
+#include <math.h>        // for log exp sqrt etc, and maybe sqrtf
+#include <limits.h>        // for INT_MAX
+#include <float.h>        // for FLT_MAX
+
+#if defined(_NGL_PPC_)
+#include <ppc_intrinsics.h>
+// ---------------------------------------------------------------------
+// fast reciprocal square root estimate with Newton-Raphson refinement
+// ---------------------------------------------------------------------
+static inline float frsqrtes_nr(float x)
+{
+  float e = __frsqrtes(x);
+  e *= (1.5f - (0.5f * x * e * e));
+  return e;
+}
+#else
+// ---------------------------------------------------------------------
+// reciprocal square root at full 32 bit precision
+// ---------------------------------------------------------------------
+static inline float frsqrtes_nr(float x)
+{
+  return 1.0f/sqrtf(x);
+}
+#endif
+
+
+// ---------------------------------------------------------------------
+// linear interpolation between two RGBA colors. t [0..1]
+// ---------------------------------------------------------------------
+static inline unsigned int lerpRGBA(const unsigned int d, const unsigned int s, const float t)
+{
+  unsigned int ti = ToBelow(t*256);
+  unsigned int dstga = d      & 0xFF00FF;
+  unsigned int dstrb = d >> 8 & 0xFF00FF;
+  unsigned int srcga = s      & 0xFF00FF;
+  unsigned int srcrb = s >> 8 & 0xFF00FF;
+  unsigned int dga = srcga - dstga;
+  unsigned int drb = srcrb - dstrb;
+  dga = (dga * ti) >> 8;  
+  drb = (drb * ti) >> 8;  
+  const unsigned int ga  = (dga + dstga)      & 0x00FF00FF;
+  const unsigned int rb  = (drb + dstrb) << 8 & 0xFF00FF00;
+  return ga | rb;
+}
+
+
+#ifndef glError
+#ifdef DEBUG
+#define glError() { \
+GLenum err = glGetError(); \
+if (GL_NO_ERROR != err) NGL_OUT(_T("glError: %s caught at %s:%u\n"), (char *)gluErrorString(err), __FILE__, __LINE__); \
+}
+#else
+#define glError()
+#endif
+#endif
+
+#ifdef  _MSC_VER
+inline double log2(double x)
+{
+  return log(x)/0.30102999566398119521373889472449; // log2(x) = log10(x)/log10(2)
+}
+
+inline float log2f(float x)
+{
+  return logf(x)/0.30102999566398119521373889472449f; // log2(x) = log10(x)/log10(2)
+}
+#endif
+
+void nui_glBegin(GLenum mode);
+void nui_glEnd();
+void nui_glColor4ubv(const GLubyte *v);
+void nui_glTexCoord2f(GLfloat s, GLfloat t);
+void nui_glVertex2f(GLfloat s, GLfloat t);
+
+// basic 2D types
+typedef struct GLCoord2
+{
+  GLfloat  x;
+  GLfloat  y;
+} GLCoord2;
+
+typedef struct Vertex
+{
+  GLuint  rgba;      // usage of this int assumes big-endian order. it is byteswapped on x86 before submission to GL.
+  GLfloat  x;
+  GLfloat  y;
+  GLfloat  tx;
+  GLfloat  ty;
+} Vertex;   
+
 
 // some convienence constants for the texture dimensions:
 // point size, size minus one, half size squared, double size, point center, radius squared
@@ -101,12 +200,11 @@
 
 
 // exposed globals for client app
-GLuint          glAA_texture[8];      // the AA sphere texIDs
-unsigned char      *glAA_AAtex[8];        // AA texture buffer
+GLuint          glAA_texture;      // the AA sphere texIDs
+unsigned char      *glAA_AAtex;        // AA texture buffer
 
 // file-scope globals
 static GLenum      glAA_mode, glAA_old_mode;   // state globals
-static bool        glAA_enable_plight, glAA_enable_stipple;
 static Vertex      glAA_v[4];          // temp stack space for three points (quad is biggest primitive)
 static int        glAA_vi, glAA_vp, glAA_vcl; // vertex stack index, vertex previous index, vertex color last set
 static int        glAA_vc[4];          // vertex color stack usage bools
@@ -145,7 +243,7 @@ static inline void glAASetContext()
 // setting up GL ctx and state (PixelStore, texture matrix etc)
 // THERE MUST BE A VALID CONTEXT CREATED BEFORE CALLING THIS (to set up VAR state etc)
 //
-void APIENTRY glAAInit() 
+void glAAInit() 
 {
   int i;
   for (i=1; i<=pdb; i++)
@@ -154,10 +252,7 @@ void APIENTRY glAAInit()
     logtbl[i-1] = log((float)i/pdb);
   }
 
-  for (i=0; i<8; i++)
-  {
-    glAA_texture[i] = 0; 
-  }
+  glAA_texture = 0; 
 
   glAASetContext();
 
@@ -170,35 +265,27 @@ void APIENTRY glAAInit()
 
   // setup defaults
   glAA_old_mode = (GLenum)-1;
-  glAAPointSize(1.0f);
-  GLCoord2 tempcoord = {0.0f, 0.0f};
-  glAAPointLight(tempcoord);
   glAALineWidth(1.0f);
-  glAALineStipplePhase(1.0f, 0xFFFF, 0.0f);
-  glAADisable(GL_LINE_STIPPLE);
   glAAColor1ui(0xFFFFFFFF);
 }
 
 
-void APIENTRY glAAExit() 
+void glAAExit() 
 {
   int i;
   glAASetContext();
 
   // free texture data
-  for (i=0; i<8; i++)
-  {
-    if (glAA_texture[i]) 
-    { 
-      glDeleteTextures(1, &glAA_texture[i]); 
-      glAA_texture[i] = 0; 
-    }
+  if (glAA_texture) 
+  { 
+    glDeleteTextures(1, &glAA_texture); 
+    glAA_texture = 0; 
+  }
 
-    if (glAA_AAtex[i])   
-    { 
-      free(glAA_AAtex[i]); 
-      glAA_AAtex[i] = 0; 
-    }
+  if (glAA_AAtex)
+  { 
+    free(glAA_AAtex);
+    glAA_AAtex = 0; 
   }
 }
 
@@ -258,17 +345,16 @@ inline float ifun(float x, float y, float F)
 }
 
 
-void APIENTRY glAAGenerateAATex(float F, GLuint id, float alias) 
+void glAAGenerateAATex(float F, float alias) 
 {      
   // compute the AA sphere
-  if (id < 8) 
   {
     uint32 l2phf = ToBelow(log2(phf));
     uint32 l2psz = ToBelow(log2(psz));
 
-    if (!glAA_AAtex[id]) 
-      glAA_AAtex[id] = (unsigned char*)calloc(1, pdb*pdb);
-    unsigned char *texture = glAA_AAtex[id];
+    if (!glAA_AAtex) 
+      glAA_AAtex = (unsigned char*)calloc(1, pdb*pdb);
+    unsigned char *texture = glAA_AAtex;
     if (texture) 
     {
       int x = phf-1;
@@ -291,11 +377,11 @@ void APIENTRY glAAGenerateAATex(float F, GLuint id, float alias)
 
       glAASetContext();
       glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-      if (!glAA_texture[id])
+      if (!glAA_texture)
       {
-        glAA_texture[id] = -1;
-        glGenTextures(1, &glAA_texture[id]);
-        glBindTexture(GL_TEXTURE_2D, glAA_texture[id]);
+        glAA_texture = -1;
+        glGenTextures(1, &glAA_texture);
+        glBindTexture(GL_TEXTURE_2D, glAA_texture);
         // Ideally we could use GL_CLAMP_TO_BORDER, but this is not available on GF2MX and GF4MX.
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -308,7 +394,7 @@ void APIENTRY glAAGenerateAATex(float F, GLuint id, float alias)
       }
       else 
       {
-        glBindTexture(GL_TEXTURE_2D, glAA_texture[id]);
+        glBindTexture(GL_TEXTURE_2D, glAA_texture);
         {
           // Generate the entire mip pyramid slowly in software
           gluBuild2DMipmaps(GL_TEXTURE_2D, GL_ALPHA, pdb, pdb, GL_ALPHA, GL_UNSIGNED_BYTE, texture);
@@ -338,7 +424,7 @@ void APIENTRY glAAGenerateAATex(float F, GLuint id, float alias)
 // The concept here is very simple, just buffer incoming vertex data until the current primitive is full,
 // then calculate appropriate textured triangles for the primitive and submit in a group.
 //
-void APIENTRY glAABegin(GLenum mode) 
+void glAABegin(GLenum mode) 
 {
   glError();
   glAA_vi = glAA_vp = 0;
@@ -362,7 +448,6 @@ void APIENTRY glAABegin(GLenum mode)
       }
       break;
     }
-    glAAFlush();
   }
   glAA_mode = mode;
   if (mode==GL_POINTS)
@@ -380,7 +465,7 @@ static float end_x2;
 static float end_y2;
 
 
-void APIENTRY glAAEnd() 
+void glAAEnd() 
 {
   glAA_old_mode = glAA_mode;
   if ((glAA_mode == GL_LINE_STRIP) || (glAA_mode == GL_LINE_LOOP)) 
@@ -410,87 +495,7 @@ void APIENTRY glAAEnd()
 }
 
 
-void APIENTRY glAAFlush() 
-{
-}
-
-
-void APIENTRY glAAEnable(GLenum cap) 
-{
-  if (cap == GL_LINE_STIPPLE) 
-  {
-    glAA_enable_stipple = 1;
-  }
-  else if (cap == GLAA_VERTEX_ARRAY) 
-  {    
-  }
-  else 
-    glEnable(cap);
-}
-
-
-void APIENTRY glAADisable(GLenum cap) 
-{
-  if (cap == GL_LINE_STIPPLE) 
-    glAA_enable_stipple = 0;
-  else if (cap == GLAA_VERTEX_ARRAY) 
-  {
-    
-  }
-  else 
-    glDisable(cap);
-}
-
-
-void APIENTRY glAAPointSize(float s) 
-{
-  float size = ((s>0.0f) ? s: 1.0f);
-
-  if (size != glAA_point_size) 
-  {
-    float r = MAX(1.0f, size);
-    // find min/max using float trick (faster than floor/ceil or casts, only works for positive IEEE 32 bit floats)
-    float minr = (r+8388608.f)-8388608.f;
-    if (r < minr) minr -= 1.0f;
-    float maxr = (minr == r) ? minr : minr+1.0f;
-    // calculate the tex coords for a 0.5px outset, doing two divides at once
-    float den2 = 1.0f/(maxr*minr);
-    float ratio = phf*minr*den2;
-    glAA_point_border = ratio+(phf*maxr*den2*1.5f-ratio)*(maxr-r);
-    glAA_point_maxr = maxr;
-    glAA_point_size = size;
-  }
-  if (glAA_mode == GL_POINTS)              // allow changing before glAAEnd()
-    glAA_alpha_fix = MIN(1.0f, glAA_point_size);
-}
-
-
-void APIENTRY glAAPointLight(GLCoord2 light) 
-{
-  // passed in point normalized to -1..1
-  float x = light.x, y = light.y;
-  // contain coords within circle to avoid interpolation artifacts
-  float factor = x*x+y*y;
-  if (factor) 
-  {
-    float perpd = frsqrtes_nr(factor);
-    if (perpd < 1)
-    {
-      x *= perpd;
-      y *= perpd;
-    }
-  }
-  x+=1.0f; y+=1.0f;
-
-  glAA_plight[0] = (unsigned short)(256*((2.0f-x)*(2.0f-y)));
-  glAA_plight[1] = (unsigned short)(256*(      x *(2.0f-y)));
-  glAA_plight[2] = (unsigned short)(256*(      x *      y));
-  glAA_plight[3] = (unsigned short)(256*((2.0f-x)*      y));
-  glAA_enable_plight = (light.x || light.y);
-}
-
-
-void APIENTRY glAALineWidth(float w) 
+void glAALineWidth(float w) 
 {
   float width = ((w>0.0f) ? w : 1.0f);
 
@@ -513,57 +518,13 @@ void APIENTRY glAALineWidth(float w)
 }
 
 
-inline void APIENTRY glAALineStipple (GLint factor, GLushort pattern) 
-{
-  glAALineStipplePhase((GLfloat)factor, pattern, 0.0f);
-}
-
-
-// stipple pattern is buggy. wrapping across segments and phase adjustment are broken.
-void APIENTRY glAALineStipplePhase (GLfloat factor, GLushort pattern, GLfloat phase) 
-{
-  float fac = MAX(1.0f, factor), len = 0.0f;
-  int b, i=0, pat = pattern, m=pat&1;
-  for (b=0; b<16;)
-  {
-    int p=pat&1;
-    while ((m==p) && (b<16))
-    {
-      len += fac;
-      pat >>= 1;
-      p=pat&1;
-      b++;
-    }
-    glAA_stipple[i++] = m?len:-len;
-    m = p;
-    len = 0.0f;
-  }
-  if (i==1)
-  {
-    glAA_stipple[0] = FLT_MAX;
-  }
-  else if (i&1) 
-  {
-    // if odd number of dashes then we wrap, so adjust the phase
-    // glAA_stipple[i+1] = 0.0f;
-    i--;
-    phase += fabsf(glAA_stipple[i]);
-    glAA_stipple[0] += glAA_stipple[i];
-  }
-  glAA_stipple_phase = phase;
-  glAA_stipple_count = i;
-  //for (b=0; b<glAA_stipple_count; b++){ printf("%.0f ", glAA_stipple[b]); }
-  //printf("  phase %.0f\n", glAA_stipple_phase);
-}
-
-
-inline void APIENTRY glAAColor3f(float R, float G, float B)
+inline void glAAColor3f(float R, float G, float B)
 {
   glAAColor4f(R, G, B, 1.0f);
 }
 
 
-void APIENTRY glAAColor4f(float R, float G, float B, float A)
+void glAAColor4f(float R, float G, float B, float A)
 {
   glAA_vc[glAA_vi] = 1;
   glAA_vcl = glAA_vi;
@@ -571,7 +532,7 @@ void APIENTRY glAAColor4f(float R, float G, float B, float A)
 }
 
 
-void APIENTRY glAAColor4ubv(const GLubyte *c)
+void glAAColor4ubv(const GLubyte *c)
 {
   if (c) 
   {
@@ -582,7 +543,7 @@ void APIENTRY glAAColor4ubv(const GLubyte *c)
 }
 
 
-void APIENTRY glAAColor1ui(GLuint c)
+void glAAColor1ui(GLuint c)
 {
   glAA_vc[glAA_vi] = 1;
   glAA_vcl = glAA_vi;
@@ -591,7 +552,7 @@ void APIENTRY glAAColor1ui(GLuint c)
 
 
 // here's where all the real work is done.
-void APIENTRY glAAVertex2f(float x, float y) 
+void glAAVertex2f(float x, float y) 
 {
   switch (glAA_mode) 
   {
@@ -614,14 +575,6 @@ void APIENTRY glAAVertex2f(float x, float y)
       }
       int c2 = c1, c3 = c1, c4 = c1;
 
-      // apply saturation lighting if needed
-      if (glAA_enable_plight) 
-      {
-        c1 = scalesatRGB(c1, glAA_plight[0]);
-        c2 = scalesatRGB(c2, glAA_plight[1]);
-        c3 = scalesatRGB(c3, glAA_plight[2]);
-        c4 = scalesatRGB(c4, glAA_plight[3]);
-      }
       c1 = ntohl(c1);
       c2 = ntohl(c2);
       c3 = ntohl(c3);
@@ -667,7 +620,6 @@ void APIENTRY glAAVertex2f(float x, float y)
         float bord = glAA_line_border;
         float maxr = glAA_line_maxr;        
         float alpha_fix = glAA_alpha_fix;
-        bool enable_stipple = glAA_enable_stipple;
 
         float perp_y = x1-x;
         float perp_x = y-y1;
@@ -711,44 +663,10 @@ void APIENTRY glAAVertex2f(float x, float y)
         while (s <= lengm1) 
         {
 
-          if (enable_stipple)
-          { // this chunk is buggy and in progress
-            if (s==0.0f) 
-            {
-              dash = glAA_stipple[b];
-              if (dash>0.0f) 
-              {
-                dash -= glAA_stipple_phase;
-                b = (b+1)%glAA_stipple_count;
-                gap = -glAA_stipple[b];
-              }
-              else 
-              {
-                s-=dash + glAA_stipple_phase;
-                x1 -= unit_x*(dash + glAA_stipple_phase);
-                y1 -= unit_y*(dash + glAA_stipple_phase);
-                b = (b+1)%glAA_stipple_count;
-                dash = glAA_stipple[b];
-                b = (b+1)%glAA_stipple_count;
-                gap = -glAA_stipple[b];
-              }
-            }
-            else 
-            {
-              x1 += unit_x*(dash+gap);
-              y1 += unit_y*(dash+gap);
-              dash = fabsf(glAA_stipple[b]);
-              b = (b+1)%glAA_stipple_count;
-              gap =  fabsf(glAA_stipple[b]);
-            }
-            b = (b+1)%glAA_stipple_count;
-          }
-
           if (s >= leng-dash) 
           {
             dash = MAX(1.0f, leng-s); // clip final dash
           } 
-          // printf("glAArg: line w %.1f leng %.1f using(%d) %.1f dash [%d], s is %.1f, gap is %.1f [%d]\n", width, leng, glAA_enable_stipple, dash, b, s, gap, b+1);
           x = x1 + (dash-1.0f)*unit_x;
           y = y1 + (dash-1.0f)*unit_y;
 
@@ -824,7 +742,6 @@ void APIENTRY glAAVertex2f(float x, float y)
             nui_glTexCoord2f(pdb+bord,  pct + GLAARG_RADEON7000_KLUDGE);
             nui_glVertex2f(x-perp_x, y-perp_y);
 
-            //if (!glAA_vi)
             {
               end_color = cl4;
               end_tx1 = pdb + bord;
@@ -841,14 +758,11 @@ void APIENTRY glAAVertex2f(float x, float y)
               nui_glTexCoord2f(pdb+bord,  psz-bord);
               nui_glVertex2f(x-perp_x+parl_x, y-perp_y+parl_y);
 
-              //nui_glEnd();
             }
           }
           s  += dash+gap;
         }
         glAA_stipple_idx = b;
-
-        //  printf("glAArg: add line at %d alphafix is %f\n", glAA_VAR_i, glAA_alpha_fix);
 
         if (glAA_mode == GL_LINES) 
         {
@@ -866,5 +780,3 @@ void APIENTRY glAAVertex2f(float x, float y)
     } break;
   }
 }
-
-#endif //__NUI_NO_AA__

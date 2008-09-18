@@ -1093,7 +1093,6 @@
 		E542A0430C3F0A5900225219 /* ngl.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816C770C3CECAB00902DFE /* ngl.h */; };
 		E542A0440C3F0A5900225219 /* nuiButton.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816CB40C3CECAB00902DFE /* nuiButton.h */; };
 		E542A0450C3F0A5900225219 /* nglMachOPrefix.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816D2F0C3CECAB00902DFE /* nglMachOPrefix.h */; };
-		E542A0460C3F0A5900225219 /* AAUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816DA80C3CECAB00902DFE /* AAUtilities.h */; };
 		E542A0470C3F0A5900225219 /* nglCarbonDragAndDrop.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816D280C3CECAB00902DFE /* nglCarbonDragAndDrop.h */; };
 		E542A0480C3F0A5900225219 /* nglCFMClassicPrefix.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816D290C3CECAB00902DFE /* nglCFMClassicPrefix.h */; };
 		E542A0490C3F0A5900225219 /* ngl_carbon.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816D260C3CECAB00902DFE /* ngl_carbon.h */; };
@@ -2177,7 +2176,6 @@
 		E58177B80C3D112C00902DFE /* nglOStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DEA0C3CECAB00902DFE /* nglOStream.cpp */; };
 		E58177BA0C3D112C00902DFE /* nuiWidgetBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DA00C3CECAB00902DFE /* nuiWidgetBox.cpp */; };
 		E58177BC0C3D112C00902DFE /* nglMachOPrefix.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816D2F0C3CECAB00902DFE /* nglMachOPrefix.h */; };
-		E58177BD0C3D112C00902DFE /* AAUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816DA80C3CECAB00902DFE /* AAUtilities.h */; };
 		E58177BE0C3D112C00902DFE /* nglCarbonDragAndDrop.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816D280C3CECAB00902DFE /* nglCarbonDragAndDrop.h */; };
 		E58177BF0C3D112C00902DFE /* nglCFMClassicPrefix.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816D290C3CECAB00902DFE /* nglCFMClassicPrefix.h */; };
 		E58177C00C3D112C00902DFE /* ngl_carbon.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816D260C3CECAB00902DFE /* ngl_carbon.h */; };
@@ -3284,7 +3282,6 @@
 		E5816DA40C3CECAB00902DFE /* nglMath.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nglMath.cpp; path = src/Math/nglMath.cpp; sourceTree = SOURCE_ROOT; };
 		E5816DA60C3CECAB00902DFE /* AAPrimitives.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = AAPrimitives.cpp; path = src/Renderers/AAPrimitives.cpp; sourceTree = SOURCE_ROOT; };
 		E5816DA70C3CECAB00902DFE /* AAPrimitives.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = AAPrimitives.h; path = src/Renderers/AAPrimitives.h; sourceTree = SOURCE_ROOT; };
-		E5816DA80C3CECAB00902DFE /* AAUtilities.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = AAUtilities.h; path = src/Renderers/AAUtilities.h; sourceTree = SOURCE_ROOT; };
 		E5816DAB0C3CECAB00902DFE /* nuiArc.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiArc.cpp; path = src/Renderers/nuiArc.cpp; sourceTree = SOURCE_ROOT; };
 		E5816DAC0C3CECAB00902DFE /* nuiContour.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiContour.cpp; path = src/Renderers/nuiContour.cpp; sourceTree = SOURCE_ROOT; };
 		E5816DAD0C3CECAB00902DFE /* nuiD3DPainter.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiD3DPainter.cpp; path = src/Renderers/nuiD3DPainter.cpp; sourceTree = SOURCE_ROOT; };
@@ -4969,7 +4966,6 @@
 				E55DEDF90D350FE3002DA5BD /* SoftwareRasterizer */,
 				E5816DA60C3CECAB00902DFE /* AAPrimitives.cpp */,
 				E5816DA70C3CECAB00902DFE /* AAPrimitives.h */,
-				E5816DA80C3CECAB00902DFE /* AAUtilities.h */,
 				E5816DAB0C3CECAB00902DFE /* nuiArc.cpp */,
 				E5816CB10C3CECAB00902DFE /* nuiArc.h */,
 				E5816DAC0C3CECAB00902DFE /* nuiContour.cpp */,
@@ -5623,7 +5619,6 @@
 				E542A0430C3F0A5900225219 /* ngl.h in Headers */,
 				E542A0440C3F0A5900225219 /* nuiButton.h in Headers */,
 				E542A0450C3F0A5900225219 /* nglMachOPrefix.h in Headers */,
-				E542A0460C3F0A5900225219 /* AAUtilities.h in Headers */,
 				E542A0470C3F0A5900225219 /* nglCarbonDragAndDrop.h in Headers */,
 				E542A0480C3F0A5900225219 /* nglCFMClassicPrefix.h in Headers */,
 				E542A0490C3F0A5900225219 /* ngl_carbon.h in Headers */,
@@ -6270,7 +6265,6 @@
 				E58176FA0C3D110B00902DFE /* ngl.h in Headers */,
 				E58176FB0C3D110B00902DFE /* nuiButton.h in Headers */,
 				E58177BC0C3D112C00902DFE /* nglMachOPrefix.h in Headers */,
-				E58177BD0C3D112C00902DFE /* AAUtilities.h in Headers */,
 				E58177BE0C3D112C00902DFE /* nglCarbonDragAndDrop.h in Headers */,
 				E58177BF0C3D112C00902DFE /* nglCFMClassicPrefix.h in Headers */,
 				E58177C00C3D112C00902DFE /* ngl_carbon.h in Headers */,

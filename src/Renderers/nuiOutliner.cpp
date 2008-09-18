@@ -479,7 +479,6 @@ bool nuiOutliner::TessellateObj(nuiRenderObject& rObject, float Quality)
 
 #ifndef __NUI_NO_AA__
   glAALineWidth(mLineWidth);
-  glAAPointSize(mLineWidth);
 #endif
 
   //Find sub path:

@@ -72,7 +72,7 @@ nuiGLPainter::nuiGLPainter(nglContext* pContext, const nuiRect& rRect)
 	{
 		glAAInit();
 		nuiCheckForGLErrors();
-		glAAGenerateAATex(0.0f, 0, 0.0f);
+		glAAGenerateAATex(0.0f, 0.0f);
 		nuiCheckForGLErrors();
 
 		// texture init
@@ -554,7 +554,7 @@ void nuiGLPainter::DrawArray(const nuiRenderArray& rArray)
       if (mState.mBlendFunc != nuiBlendTransp)
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-      glBindTexture(GL_TEXTURE_2D, glAA_texture[0]);
+      glBindTexture(GL_TEXTURE_2D, glAA_texture);
 
       glMatrixMode(GL_TEXTURE);
       glPushMatrix();
