@@ -604,7 +604,13 @@ void nuiWin::OnCreation()
 
 /*finfo.Descender - */
   }
-
+  
+  
+  
+  //LBDEBUG
+  nuiEvent event;
+  CreateFileSelectorWindow(event);
+  ///////////////////////////
 }
 
 
@@ -1659,7 +1665,7 @@ bool nuiWin::CreateColumnTreeViewWindow(const nuiEvent& rEvent)
 
 bool nuiWin::CreateFileSelectorWindow(const nuiEvent& rEvent)
 {
-  nuiWindow* pWin = new nuiWindow(nuiRect(10, 10, 300, 200), nuiWindow::NoFlag, _T("File Selector"));
+  nuiWindow* pWin = new nuiWindow(nuiRect(10, 10, 300, 200), nuiWindow::DecoratedBackground, _T("File Selector"));
   mpManager->AddChild(pWin);
   nuiFileSelector* pFS = new nuiFileSelector(_T("/"), _T("*"), NULL, nuiFileSelector::eTree);
   pWin->AddChild(pFS);

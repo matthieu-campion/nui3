@@ -27,6 +27,7 @@ public:
   static void Init();
   static void InitColors();
   static void InitMaps();
+  static void InitIcons();
   
 
   static void Window(nuiWidget* pWidget);

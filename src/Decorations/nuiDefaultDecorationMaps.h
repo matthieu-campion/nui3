@@ -48,3 +48,17 @@ const long         gpDefaultDecorationArrowCloseSize = 176;
 
 extern const char* gpDefaultDecorationArrowOpen;
 const long         gpDefaultDecorationArrowOpenSize = 182;
+
+
+
+
+// icons
+
+extern const char* gpDefaultDecorationIconVolume;
+const long         gpDefaultDecorationIconVolumeSize = 816;
+
+extern const char* gpDefaultDecorationIconFolder;
+const long         gpDefaultDecorationIconFolderSize = 522;
+
+extern const char* gpDefaultDecorationIconFile;
+const long         gpDefaultDecorationIconFileSize = 419;

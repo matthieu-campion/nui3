@@ -87,6 +87,7 @@ protected:
   bool mNoClose;
   bool mNoMove;
   bool mRawWindow;
+  bool mDecoratedBackground;
   nglString mTitle;
 
   nuiSize mMinimumHeight;

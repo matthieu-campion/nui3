@@ -815,6 +815,8 @@ void nuiTheme::DrawScrollBarForeground(nuiDrawContext* pContext, nuiScrollBar* p
   
   pFrame->Draw(pContext, NULL, rRect);
 }
+ 
+
 
 
 

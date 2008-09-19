@@ -135,8 +135,11 @@ void nuiApp::OnInit()
     }
     else
     {
-      Width = 800;
-      Height = 600;
+      //LBDEBUG
+//      Width = 800;
+//      Height = 600;
+      Width = 1280;
+      Height = 1024;
     }
   }
 

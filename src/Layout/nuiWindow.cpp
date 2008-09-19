@@ -142,6 +142,7 @@ void nuiWindow::SetFlags (nuiWindowFlags Flags)
   mNoCaption = (bool)((Flags & NOCAPTIONFLAG)!=0);
   mRawWindow = (bool)((Flags & RAWFLAG)!=0);
   mModal = (bool)((Flags & Modal)!=0);
+  mDecoratedBackground = (bool)((Flags & DecoratedBackground)!=0);
 
   if (Flags & nuiWindow::NoClose)
   {
@@ -177,6 +178,7 @@ nuiWindowFlags nuiWindow::GetFlags ()
   if (mNoCaption) Flags |= NoCaption;
   if (mRawWindow) Flags |= Raw;
   if (mModal) Flags |= Modal;
+  if (mDecoratedBackground) Flags |= DecoratedBackground;
 
   return Flags;
 }
