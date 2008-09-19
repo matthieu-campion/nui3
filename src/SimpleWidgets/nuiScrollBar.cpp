@@ -44,7 +44,9 @@ nuiScrollBar::nuiScrollBar(nuiOrientation orientation, const nuiRange& rRange, n
 
   mScrollBarSink.Connect(mRange.Changed, &nuiScrollBar::DoInvalidateLayout);
   mScrollBarSink.Connect(mRange.ValueChanged, &nuiScrollBar::DoInvalidate);
-
+  mScrollBarSink.Connect(mTimer.Tick, &nuiScrollBar::HandlePageUp);
+  mScrollBarSink.Connect(mTimer.Tick, &nuiScrollBar::HandlePageDown);
+  
   if (mpThumb)
     AddChild(mpThumb);
 
@@ -237,13 +239,11 @@ bool nuiScrollBar::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Butt
     {
       if (X < mThumbRect.Left()) // PageUp
       {
-        mScrollBarSink.Connect(mTimer.Tick, &nuiScrollBar::HandlePageUp);
         mTimer.Start(true,true);
         mPageUpClicked = true;
       }
       else if (X > mThumbRect.Right()) // PageDown
       {
-        mScrollBarSink.Connect(mTimer.Tick, &nuiScrollBar::HandlePageDown);
         mTimer.Start(true,true);
         mPageDownClicked = true;
       }
@@ -267,13 +267,11 @@ bool nuiScrollBar::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Butt
     {
       if (Y < mThumbRect.Top()) // PageUp
       {
-        mScrollBarSink.Connect(mTimer.Tick, &nuiScrollBar::HandlePageUp);
         mTimer.Start(true,true);
         mPageUpClicked = true;
       }
       else if (Y > mThumbRect.Bottom()) // PageDown
       {
-        mScrollBarSink.Connect(mTimer.Tick, &nuiScrollBar::HandlePageDown);
         mTimer.Start(true,true);
         mPageDownClicked = true;
       }
@@ -307,9 +305,6 @@ bool nuiScrollBar::MouseUnclicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Bu
 
     if (mPageUpClicked || mPageDownClicked)
     {
-      mScrollBarSink.Disconnect(&nuiScrollBar::HandlePageUp);
-      mScrollBarSink.Disconnect(&nuiScrollBar::HandlePageDown);
-
       mTimer.Stop();
     }
     else
@@ -375,13 +370,15 @@ bool nuiScrollBar::Decrement(const nuiEvent& rEvent)
 // Data management:
 bool nuiScrollBar::HandlePageDown(const nuiEvent& rEvent)
 {
-  mRange.PageIncrement();
+  if (mPageDownClicked)
+    mRange.PageIncrement();
   return false;
 }
 
 bool nuiScrollBar::HandlePageUp(const nuiEvent& rEvent)
 {
-  mRange.PageDecrement();
+  if (mPageUpClicked)
+    mRange.PageDecrement();
   return false;
 }
 
