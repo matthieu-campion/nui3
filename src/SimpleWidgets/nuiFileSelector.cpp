@@ -139,9 +139,6 @@ void nuiFileSelector::Init(const nglPath& rPath, const nglPath& rRootPath, const
   mShowHiddenFiles = showHiddenFiles;
   mFilters = rFilters;
   
-  SetHandleColor(nuiColor(0,0,0)); // default values
-  SetSelectionColor(nuiColor(0,0,255)); // default values
-
   InitSelector (rPath, rRootPath, mpEntry, mode, ShowVolumes);
   
   NUI_ADD_EVENT(OK);
@@ -156,18 +153,6 @@ nuiFileSelector::~nuiFileSelector()
 
 void nuiFileSelector::InitAttributes()
 {
-  nuiAttribute<const nuiColor&>* pHColor = new nuiAttribute<const nuiColor&>
-  (nglString(_T("HandleColor")), nuiUnitColor,
-   nuiFastDelegate::MakeDelegate(this, &nuiFileSelector::GetHandleColor), 
-   nuiFastDelegate::MakeDelegate(this, &nuiFileSelector::SetHandleColor));
-  AddAttribute(pHColor);
-
-  nuiAttribute<const nuiColor&>* pSColor = new nuiAttribute<const nuiColor&>
-  (nglString(_T("SelectionColor")), nuiUnitColor,
-   nuiFastDelegate::MakeDelegate(this, &nuiFileSelector::GetSelectionColor), 
-   nuiFastDelegate::MakeDelegate(this, &nuiFileSelector::SetSelectionColor));
-  AddAttribute(pSColor);
-
   AddAttribute(new nuiAttribute<nglString>
   (nglString(_T("Filter")), nuiUnitName,
     nuiAttribute<nglString>::GetterDelegate(this, &nuiFileSelector::GetLastFilter),
@@ -767,29 +752,5 @@ bool nuiFileSelector::OnFolderListSelectionChanged(const nuiEvent& event)
 
 
 
-//*******************************************************************************
-//
-// attributes
-//
-//*******************************************************************************
 
-const nuiColor& nuiFileSelector::GetHandleColor()
-{
-  return GetColor(eTreeViewHandle);
-}
-
-void nuiFileSelector::SetHandleColor(const nuiColor& rColor)
-{
-  SetColor(eTreeViewHandle, rColor);
-}
-
-const nuiColor& nuiFileSelector::GetSelectionColor()
-{
-  return GetColor(eTreeViewSelection);
-}
-
-void nuiFileSelector::SetSelectionColor(const nuiColor& rColor)
-{
-  SetColor(eTreeViewSelection, rColor);
-}
 

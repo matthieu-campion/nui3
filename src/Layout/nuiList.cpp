@@ -79,6 +79,8 @@ nuiList::~nuiList()
 
 bool nuiList::Draw(nuiDrawContext* pContext)
 {
+  nuiTheme *pTheme = GetTheme();
+
   IteratorPtr pIt;
   for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
   {
@@ -86,15 +88,17 @@ bool nuiList::Draw(nuiDrawContext* pContext)
     if (pItem)
     {
       if (pItem->IsSelected())
-      {
-        nuiTheme *pTheme = GetTheme();
-        pTheme->DrawSelectionRectangle(pContext, pItem->GetRect(), eTreeViewSelection, pItem);
-        pTheme->Release();
-      }
+        pTheme->DrawSelectionBackground(pContext, pItem->GetRect(), pItem);
+
       DrawChild(pContext, pItem);
+
+      if (pItem->IsSelected())
+        pTheme->DrawSelectionForeground(pContext, pItem->GetRect(), pItem);
     }
   }
   delete pIt;
+
+  pTheme->Release();
   return true;
 }
 

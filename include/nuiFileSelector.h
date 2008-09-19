@@ -115,11 +115,6 @@ private:
   bool OnActivated (const nuiEvent& event);
   bool OnFolderListSelectionChanged(const nuiEvent& event);
 
-  const nuiColor& GetHandleColor();
-  void SetHandleColor(const nuiColor& rColor);
-  const nuiColor& GetSelectionColor();
-  void SetSelectionColor(const nuiColor& rColor);
-
   nuiHBox* mpMainBox;
   nuiVBox* mpInfoBox;
   nuiEditLine* mpEntry;

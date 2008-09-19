@@ -91,6 +91,8 @@ public:
   void DrawTreeHandle(nuiDrawContext* pContext, const nuiRect& rRect, bool IsOpened, nuiSize TreeHandleSize); ///< Draw the typical nuiTreeView node widget as opened or closed inside the given rectangle.
 
   // Generic Selection Rectangles:
+  void DrawSelectionBackground(nuiDrawContext* pContext, const nuiRect& rRect, nuiWidget* pWidget = NULL);
+  void DrawSelectionForeground(nuiDrawContext* pContext, const nuiRect& rRect, nuiWidget* pWidget = NULL);
   void DrawSelectionRectangle(nuiDrawContext* pContext, const nuiRect& rRect, nuiWidgetElement Color, nuiWidget* pWidget = NULL); ///< Draw a selection rectangle around the givent frame with the correct color.
   void DrawMarkee(nuiDrawContext* pContext, const nuiRect& rRect, nuiWidgetElement Color); ///< Draw a markee selection rectangle around the givent frame with the correct color.
 

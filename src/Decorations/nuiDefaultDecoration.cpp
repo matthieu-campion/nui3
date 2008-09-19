@@ -28,6 +28,7 @@ nuiDefaultDecoration::~nuiDefaultDecoration()
 void nuiDefaultDecoration::Init()
 {
   InitColors();
+  InitSelection();
   InitMaps();
   InitIcons();
   
@@ -76,6 +77,18 @@ void nuiDefaultDecoration::InitColors()
 
   nuiColor::SetColor(_T("nuiDefaultClrCaptionText"), nuiColor(16,16,16));
   nuiColor::SetColor(_T("nuiDefaultClrCaptionTextLight"), nuiColor(215,215,215));
+  
+  nuiColor::SetColor(_T("nuiDefaultClrSelection"), nuiColor(56,117,215));
+}
+
+
+void nuiDefaultDecoration::InitSelection()
+{
+  nuiColor color;
+  nuiColor::GetColor(_T("nuiDefaultClrSelection"), color);
+  
+  nuiColorDecoration* pDeco = new nuiColorDecoration(_T("nuiDefaultDecorationSelectionBackground"), 
+                                                     nuiRect(3,3,0,0), color);
 }
 
 

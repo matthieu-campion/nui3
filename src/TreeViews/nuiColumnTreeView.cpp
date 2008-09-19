@@ -109,29 +109,17 @@ nuiTreeNode* nuiColumnTreeView::DrawColumn(nuiDrawContext* pContext, nuiTreeNode
       nuiWidgetPtr pWidget = pNode->GetElement();
       if (!pRes && (pNode->IsOpened() || pNode->IsSelected()))
       {
-        pRes = pNode;
-
         nuiRect r = pWidget->GetRect();
         r.SetSize(r.GetWidth() + mHandleSize, r.GetHeight());
-        pContext->EnableBlending(true);
-        pContext->SetBlendFunc(nuiBlendTransp);
-
-        nuiGradient gradient;
-        nuiColor col = GetColor(eTreeViewSelection);
-        gradient.AddStop(col, 0);
-        col.Multiply(.5f);
-        gradient.AddStop(col, 1);
-
-        pContext->PushClipping();
-        pContext->Clip(r);
-        pContext->DrawGradient(gradient, r, 0, r.Top(), 0, r.Bottom());
-        pContext->PopClipping();
+        pTheme->DrawSelectionBackground(pContext, r, pWidget);
       }
 
       if (!pNode->IsEmpty())
       {
+
         nuiRect r = pWidget->GetRect();
         nuiRect HR(r.Left() + r.GetWidth(), r.Top(), mHandleSize, r.GetHeight());
+        
         SetFillColor(pContext, eTreeViewHandle);
         SetStrokeColor(pContext, eTreeViewHandle);
         pContext->PushClipping();
@@ -141,6 +129,16 @@ nuiTreeNode* nuiColumnTreeView::DrawColumn(nuiDrawContext* pContext, nuiTreeNode
         pContext->PopClipping();
       }
       DrawChild(pContext, pWidget);
+
+      if (!pRes && (pNode->IsOpened() || pNode->IsSelected()))
+      {
+        pRes = pNode;
+        
+        nuiRect r = pWidget->GetRect();
+        r.SetSize(r.GetWidth() + mHandleSize, r.GetHeight());
+        pTheme->DrawSelectionForeground(pContext, r, pWidget);
+      }
+      
     }
   }
   pTheme->Release();

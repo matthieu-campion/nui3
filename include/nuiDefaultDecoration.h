@@ -26,6 +26,7 @@ public:
   
   static void Init();
   static void InitColors();
+  static void InitSelection();
   static void InitMaps();
   static void InitIcons();
   

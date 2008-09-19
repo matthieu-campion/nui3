@@ -351,9 +351,8 @@ bool nuiTreeView::DrawTree(nuiDrawContext* pContext, nuiTreeNode* pTree)
     nuiRect rect = pWidget->GetRect();
 
     if (pTree->IsSelected())
-    {
-      pTheme->DrawSelectionRectangle(pContext, rect, eSelectedActiveBackground);
-    }
+      pTheme->DrawSelectionBackground(pContext, rect);
+
 
     if (!pTree->IsEmpty() || pTree->mAlwaysDisplayTreeHandle)
     {
@@ -366,6 +365,10 @@ bool nuiTreeView::DrawTree(nuiDrawContext* pContext, nuiTreeNode* pTree)
         pTheme->DrawTreeHandle(pContext, r, pTree->IsOpened(), NUI_TREEVIEW_HANDLE_SIZE);
     }
     DrawChild(pContext, pWidget);
+
+    if (pTree->IsSelected())
+      pTheme->DrawSelectionForeground(pContext, rect);
+    
   }
 
   if (pTree->IsOpened())

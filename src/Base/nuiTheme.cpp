@@ -912,6 +912,24 @@ void nuiTheme::DrawTreeHandle(nuiDrawContext* pContext, const nuiRect& rRect, bo
 }
 
 
+void nuiTheme::DrawSelectionBackground(nuiDrawContext* pContext, const nuiRect& rRect, nuiWidget* pWidget)
+{
+  nuiDecoration* pDeco = nuiDecoration::Get(_T("nuiDefaultDecorationSelectionBackground"));
+  if (!pDeco)
+    return;
+  
+  pDeco->Draw(pContext, pWidget, rRect);  
+}
+
+
+void nuiTheme::DrawSelectionForeground(nuiDrawContext* pContext, const nuiRect& rRect, nuiWidget* pWidget)
+{
+  nuiDecoration* pDeco = nuiDecoration::Get(_T("nuiDefaultDecorationSelectionForeground"));
+  if (!pDeco)
+    return;
+  
+  pDeco->Draw(pContext, pWidget, rRect);  
+}
 
 
 void nuiTheme::DrawSelectionRectangle(nuiDrawContext* pContext, const nuiRect& rRect, 
@@ -940,7 +958,7 @@ void nuiTheme::DrawSelectionRectangle(nuiDrawContext* pContext, const nuiRect& r
   nuiRect rect = rRect;
   rect.RoundToBiggest();
   pContext->DrawRect(rect, eStrokeShape);
-  pContext->DrawGradient(gradient, rect, 0, rect.Top(), 0, rect.Bottom());
+  pContext->DrawGradient(gradient, rect, 0, rect.Top(), 0, rect.Bottom());  
 }
 
 void nuiTheme::DrawMarkee(nuiDrawContext* pContext, const nuiRect& rRect, nuiWidgetElement Color)
