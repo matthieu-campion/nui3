@@ -204,9 +204,9 @@ void nuiDefaultDecoration::Window(nuiWidget* pWidget)
 
 void nuiDefaultDecoration::Label(nuiWidget* pWidget)
 {
-  nuiColor cText;
-  cText.SetValue(_T("nuiDefaultColorLabelText"));
-  pWidget->SetColor(eNormalTextFg, cText);
+//  nuiColor cText;
+//  cText.SetValue(_T("nuiDefaultColorLabelText"));
+//  pWidget->SetColor(eNormalTextFg, cText);
 }
 
 void nuiDefaultDecoration::EditText(nuiWidget* pWidget)

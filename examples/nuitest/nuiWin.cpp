@@ -609,7 +609,7 @@ void nuiWin::OnCreation()
   
   //LBDEBUG
   nuiEvent event;
-  CreateFileSelectorWindow(event);
+  CreateNewWindow(event);
   ///////////////////////////
 }
 
