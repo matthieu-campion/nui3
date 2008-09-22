@@ -27,6 +27,7 @@ extern const char* gpDefaultDecorationCloseButtonDown;
 const long         gpDefaultDecorationCloseButtonDownSize = 443;
 
 
+// scrollbar
 extern const char* gpDefaultDecorationScrollbarVerticalBkg;
 const long         gpDefaultDecorationScrollbarVerticalBkgSize = 266;
 
@@ -39,6 +40,23 @@ const long         gpDefaultDecorationScrollbarHorizontalBkgSize = 258;
 
 extern const char* gpDefaultDecorationScrollbarHorizontalHdl;
 const long         gpDefaultDecorationScrollbarHorizontalHdlSize = 378;
+
+
+
+// slider
+extern const char* gpDefaultDecorationSliderVerticalBkg;
+const long         gpDefaultDecorationSliderVerticalBkgSize = 179;
+
+extern const char* gpDefaultDecorationSliderVerticalHdl;
+const long         gpDefaultDecorationSliderVerticalHdlSize = 621;
+
+
+extern const char* gpDefaultDecorationSliderHorizontalBkg;
+const long         gpDefaultDecorationSliderHorizontalBkgSize = 168;
+
+extern const char* gpDefaultDecorationSliderHorizontalHdl;
+const long         gpDefaultDecorationSliderHorizontalHdlSize = 640;
+
 
 
 

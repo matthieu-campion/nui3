@@ -823,64 +823,74 @@ void nuiTheme::DrawScrollBarForeground(nuiDrawContext* pContext, nuiScrollBar* p
 void nuiTheme::DrawSliderBackground(nuiDrawContext* pContext, nuiSlider* pScroll)
 {
   nuiRect rect = pScroll->GetRect().Size();
-  nuiSize w = rect.GetWidth();
-  nuiSize h = rect.GetHeight();
-  nuiSize Min = pScroll->GetHandlePosMin();
-  nuiSize Max = pScroll->GetHandlePosMax();
+  nuiFrame* pFrame = NULL;
+  
+  nuiSize min = pScroll->GetHandlePosMin();
+  nuiSize max = pScroll->GetHandlePosMax();
 
-  if (pScroll->GetOrientation() == nuiHorizontal)
+  if (pScroll->GetOrientation() == nuiVertical)
   {
-    h /= 2;
-    rect.Set(Min, h - 1.0f, Max - Min, 2.0f);
+    pFrame = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationSliderVerticalBkg"));
+    nuiSize x = (int)((rect.GetWidth() - pFrame->GetSourceClientRect().GetWidth()) / 2);
+    nuiSize w = pFrame->GetSourceClientRect().GetWidth();
+    rect.Set(x, min, w, max-min);
   }
   else
   {
-    w /= 2;
-    rect.Set(w - 1.0f , h - Max , 2.0f , Max - Min);
-  }
-
-  pContext->SetFillColor(pScroll->GetColor(eSliderBarBg));
-  pContext->DrawRect(rect,eFillShape);
-
-  if (pScroll->GetHover())
-  {
-    pContext->SetStrokeColor(pScroll->GetColor(eSliderBarBgHover));
-    pContext->DrawRect(rect,eStrokeShape);
-  }
+    pFrame = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationSliderHorizontalBkg"));
+    nuiSize y = (int)((rect.GetHeight() - pFrame->GetSourceClientRect().GetHeight()) / 2);
+    nuiSize h = pFrame->GetSourceClientRect().GetHeight();
+    rect.Set(min, y, max - min, h);
+  }  
+  
+  pFrame->Draw(pContext, NULL, rect);  
 }
+
+
 
 void nuiTheme::DrawSliderForeground(nuiDrawContext* pContext, nuiSlider* pScroll)
 {
   nuiRect rect = pScroll->GetRect().Size();
-  nuiOrientation Orientation = pScroll->GetOrientation();
   float start;
   const nuiRange& Range = pScroll->GetRange();
-
+  
   start  = Range.ConvertToUnit(Range.GetValue());
-
-  pContext->EnableBlending(false);
-
-  if (Orientation == nuiHorizontal)
+  nuiFrame* pFrame = NULL;
+  
+  if (pScroll->GetOrientation() == nuiVertical)
   {
-    rect.mTop += 1;
-    rect.mBottom -= 1;
-    rect.mLeft = (start * (rect.mRight - 16));
-    rect.mRight = rect.mLeft + 16;
+    pFrame = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationSliderVerticalHdl"));
+    NGL_ASSERT(pFrame);
+    const nuiRect& srcRect = pFrame->GetSourceClientRect();
+    
+    nuiSize h = rect.GetHeight() - srcRect.GetHeight();
+    rect.mTop = h - (start * h);
+    rect.mBottom = rect.mTop + srcRect.GetHeight();
+
+    rect.mLeft = (int)(rect.GetWidth() - srcRect.GetWidth())/2;
+    rect.mRight = rect.mLeft + srcRect.GetWidth();
+  
   }
   else
   {
-    rect.mTop = ((1 - start) * (rect.mBottom - 16));
-    rect.mBottom = rect.mTop + 16;
-    rect.mLeft += 1;
-    rect.mRight -= 1;
-  }
+    pFrame = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationSliderHorizontalHdl"));
+    NGL_ASSERT(pFrame);
+    const nuiRect& srcRect = pFrame->GetSourceClientRect();
 
-  pContext->SetFillColor(pScroll->GetColor(eSliderBarFg));
-  nuiShape shp;
-  shp.AddCircle(rect.Left()+rect.GetWidth()/2, rect.Top() + rect.GetHeight()/2, rect.GetHeight()/3);
-  pContext->DrawShape(&shp, eFillShape);
-  //pContext->DrawRect(rect,eFillShape);
+    rect.mLeft = (start * (rect.GetWidth() - srcRect.GetWidth()));
+    rect.mRight = rect.mLeft + srcRect.GetWidth();
+
+    rect.mTop = (int)(rect.GetHeight() - srcRect.GetHeight())/2;
+    rect.mBottom = rect.mTop + srcRect.GetHeight();
 }
+  
+  
+  pFrame->Draw(pContext, NULL, rect);   
+ 
+}
+
+
+
 
 
 const nuiColor& nuiTheme::GetElementColor(nuiWidgetElement Element) const

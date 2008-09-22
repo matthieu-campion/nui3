@@ -607,10 +607,6 @@ void nuiWin::OnCreation()
   
   
   
-  //LBDEBUG
-  nuiEvent event;
-  CreateNewWindow(event);
-  ///////////////////////////
 }
 
 
@@ -2508,7 +2504,7 @@ bool nuiWin::CreateFontWindow(const nuiEvent& rEvent)
 
 bool nuiWin::CreateFontBrowserWindow(const nuiEvent& rEvent)
 {
-  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, _T("Fonts"));
+  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nuiWindow::DecoratedBackground, _T("Fonts"));
   mpManager->AddChild(pWindow);
   //new TestLabel(new nuiScrollView(pWindow, true, false), _T("Test text: yHwWmMfFgGi .;[]()_-|#*%$ 1234567890"));
   

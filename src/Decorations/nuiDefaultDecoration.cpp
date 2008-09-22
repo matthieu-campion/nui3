@@ -68,6 +68,9 @@ void nuiDefaultDecoration::Init()
 
 void nuiDefaultDecoration::InitColors()
 {
+  nuiColor::SetColor(_T("nuiDefaultClrWindowBkg1"), nuiColor(240,240,240));
+  nuiColor::SetColor(_T("nuiDefaultClrWindowBkg2"), nuiColor(230,230,230));
+
   nuiColor::SetColor(_T("nuiDefaultClrCaptionBkg1"), nuiColor(197,197,197));
   nuiColor::SetColor(_T("nuiDefaultClrCaptionBkg2"), nuiColor(150,150,150));
 
@@ -125,6 +128,46 @@ void nuiDefaultDecoration::InitMaps()
   pFrame = new nuiFrame(_T("nuiDefaultDecorationScrollBarHorizontalHdl"), pTex, nuiRect(6,2,0,6));
   pFrame->UseWidgetAlpha(false);
   delete pIMem;  
+  
+  
+  
+  
+  
+  
+  // vertical slider background
+  pIMem = new nglIMemory(gpDefaultDecorationSliderVerticalBkg, gpDefaultDecorationSliderVerticalBkgSize);
+  pTex = nuiTexture::GetTexture(pIMem);
+  NGL_ASSERT(pTex);
+  pFrame = new nuiFrame(_T("nuiDefaultDecorationSliderVerticalBkg"), pTex, nuiRect(0,6,4,0));
+  pFrame->UseWidgetAlpha(false);
+  delete pIMem;
+  
+  // vertical slider handle
+  pIMem = new nglIMemory(gpDefaultDecorationSliderVerticalHdl, gpDefaultDecorationSliderVerticalHdlSize);
+  pTex = nuiTexture::GetTexture(pIMem);
+  NGL_ASSERT(pTex);
+  pFrame = new nuiFrame(_T("nuiDefaultDecorationSliderVerticalHdl"), pTex, nuiRect(0,0,20,20));
+  pFrame->UseWidgetAlpha(false);
+  delete pIMem;
+  
+  // Horizontal slider background
+  pIMem = new nglIMemory(gpDefaultDecorationSliderHorizontalBkg, gpDefaultDecorationSliderHorizontalBkgSize);
+  pTex = nuiTexture::GetTexture(pIMem);
+  NGL_ASSERT(pTex);
+  pFrame = new nuiFrame(_T("nuiDefaultDecorationSliderHorizontalBkg"), pTex, nuiRect(6,0,0,4));
+  pFrame->UseWidgetAlpha(false);
+  delete pIMem;
+  
+  // Horizontal slider handle
+  pIMem = new nglIMemory(gpDefaultDecorationSliderHorizontalHdl, gpDefaultDecorationSliderHorizontalHdlSize);
+  pTex = nuiTexture::GetTexture(pIMem);
+  NGL_ASSERT(pTex);
+  pFrame = new nuiFrame(_T("nuiDefaultDecorationSliderHorizontalHdl"), pTex, nuiRect(0,0,20,20));
+  pFrame->UseWidgetAlpha(false);
+  delete pIMem; 
+  
+  
+  
 
 
 
@@ -183,8 +226,12 @@ void nuiDefaultDecoration::Window(nuiWidget* pWidget)
     nuiGradientDecoration* pDeco = (nuiGradientDecoration*)nuiDecoration::Get(_T("nuiDefaultDecorationWindow"));
     if (!pDeco)
     {
+      nuiColor color1, color2;
+      nuiColor::GetColor(_T("nuiDefaultClrWindowBkg1"), color1);
+      nuiColor::GetColor(_T("nuiDefaultClrWindowBkg2"), color2);
+      
       pDeco = new nuiGradientDecoration(_T("nuiDefaultDecorationWindow"), 
-                                        nuiRect(0,0, 0,0), nuiColor(245,245,245), nuiColor(235,235,235), nuiVertical, 1, nuiColor(175,175,175), eStrokeAndFillShape);
+                                        nuiRect(0,0, 0,0), color1, color2, nuiVertical, 1, nuiColor(175,175,175), eStrokeAndFillShape);
     }
     pWindow->SetDecoration(pDeco);
   }
@@ -495,8 +542,11 @@ void nuiDefaultDecoration::MainWindow(nuiMainWindow* pWindow)
 {
   nuiWidget* pCont = new nuiWidget();
   pWindow->AddChild(pCont);
+  nuiColor color1, color2;
+  nuiColor::GetColor(_T("nuiDefaultClrWindowBkg1"), color1);
+  nuiColor::GetColor(_T("nuiDefaultClrWindowBkg2"), color2);
   nuiGradientDecoration* pDeco = new nuiGradientDecoration(_T("nuiDefaultDecorationMainWindow"), 
-                                                           nuiRect(0,0, 0,0), nuiColor(245,245,245), nuiColor(225,225,225), nuiVertical, 0, nuiColor(0,0,0), eFillShape);
+                                                           nuiRect(0,0, 0,0), color1, color2, nuiVertical, 0, nuiColor(0,0,0), eFillShape);
   pCont->SetDecoration(pDeco);  
 }
 

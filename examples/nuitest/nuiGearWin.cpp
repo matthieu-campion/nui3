@@ -83,7 +83,7 @@ void SetImageMode(nuiImage* pImage, int mode)
 
 
 nuiGearWin::nuiGearWin(const nuiRect& rRect)
-: nuiWindow(rRect, nuiWindow::NoFlag),
+: nuiWindow(rRect, nuiWindow::DecoratedBackground),
   mGearWinSink(this)
 {
   nuiSplitter* pSplitter = new nuiSplitter(nuiHorizontal);
