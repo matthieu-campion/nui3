@@ -68,6 +68,11 @@ extern const char* gpDefaultDecorationArrowOpen;
 const long         gpDefaultDecorationArrowOpenSize = 182;
 
 
+// dialogs, message box
+extern const char* gpDefaultDecorationDialogPane;
+const long         gpDefaultDecorationDialogPaneSize = 1108;
+
+
 
 
 // icons

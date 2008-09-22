@@ -3237,6 +3237,8 @@ void nuiWidget::CallConnectTopLevel(nuiTopLevel* pTopLevel)
   }
 }
 
+
+
 void nuiWidget::CallDisconnectTopLevel(nuiTopLevel* pTopLevel)
 {
   if (HasFocus())

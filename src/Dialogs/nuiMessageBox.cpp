@@ -37,18 +37,10 @@ nuiMessageBox::nuiMessageBox(nuiContainer * pParent, const nglString& rTitle, nu
 
 void nuiMessageBox::Init(const nglString& rTitle, nuiWidget* pContents, nuiMessageBoxType type, bool showIcon)
 {
-  mType = type;
-  
   SetObjectClass(_T("nuiMessageBox"));
+  mType = type;
 
   mClickedButton = ButtonCancel;
-  
-  // default decoration
-  nuiDecoration* pDefaultDeco = nuiDecoration::Get(_T("nuiMessageBox::DefaultDecoration"));
-  if (!pDefaultDeco)
-    pDefaultDeco = new nuiColorDecoration(_T("nuiMessageBox::DefaultDecoration"), nuiRect(10,10,0,0), nuiColor(190,190,190), 1, nuiColor(120,120,120), eStrokeAndFillShape);
-  SetDecoration(pDefaultDeco, eDecorationBorder);
-  SetColor(eNormalTextFg, nuiColor(0,0,0));
   
 
   nuiVBox* pVBox = new nuiVBox();
@@ -58,6 +50,7 @@ void nuiMessageBox::Init(const nglString& rTitle, nuiWidget* pContents, nuiMessa
   
   nuiLabel* pTitle = new nuiLabel(rTitle);
   pTitle->SetObjectName(_T("nuiMessageBox::Title"));
+  pTitle->SetObjectClass(_T("nuiMessageBox::Title"));
   pVBox->AddCell(pTitle);
   
   nuiHBox* pHBox = new nuiHBox(2);
@@ -119,6 +112,9 @@ void nuiMessageBox::Init(const nglString& rTitle, nuiWidget* pContents, nuiMessa
   
   SetPosition(nuiCenter);
   GetTopLevel()->SetFocus(this);
+  
+  // default decoration
+  nuiDefaultDecoration::MessageBox(this);
 }
 
 

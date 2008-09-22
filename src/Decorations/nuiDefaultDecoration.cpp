@@ -13,6 +13,7 @@
 #include "nuiMetaDecoration.h"
 #include "nuiDefaultDecorationMaps.h"
 #include "nuiFrame.h"
+#include "nuiMessageBox.h"
 
 nuiDefaultDecoration::nuiDefaultDecoration()
 {
@@ -48,6 +49,9 @@ void nuiDefaultDecoration::Init()
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiCloseButton")), &nuiDefaultDecoration::CloseButton);
   
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiToggleButton")), &nuiDefaultDecoration::ToggleButton);
+
+  // dialogs
+  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiMessageBox::Title")), &nuiDefaultDecoration::MessageBox_Title);
   
   
   // FileSelector
@@ -256,6 +260,7 @@ void nuiDefaultDecoration::Label(nuiWidget* pWidget)
 //  pWidget->SetColor(eNormalTextFg, cText);
 }
 
+
 void nuiDefaultDecoration::EditText(nuiWidget* pWidget)
 {
   
@@ -266,6 +271,7 @@ void nuiDefaultDecoration::EditLine(nuiWidget* pWidget)
 {
   
 }
+
 
 void nuiDefaultDecoration::SplitterHandle(nuiWidget* pWidget)
 {
@@ -349,6 +355,7 @@ void nuiDefaultDecoration::Button(nuiWidget* pWidget)
   if (pDeco)
   {
     pWidget->SetDecoration(pDeco, eDecorationBorder);
+    pWidget->SetBorder(10,10);
     return;
   }
   
@@ -381,6 +388,7 @@ void nuiDefaultDecoration::Button(nuiWidget* pWidget)
   pState->SetSourceClientRect(nuiRect(4,4,2,9));
 
   pWidget->SetDecoration(pState, eDecorationBorder);
+  pWidget->SetBorder(10,10);
 
 }
 
@@ -433,6 +441,7 @@ void nuiDefaultDecoration::ToggleButton(nuiWidget* pWidget)
 {
   
 }
+
 
 
 
@@ -549,4 +558,30 @@ void nuiDefaultDecoration::MainWindow(nuiMainWindow* pWindow)
                                                            nuiRect(0,0, 0,0), color1, color2, nuiVertical, 0, nuiColor(0,0,0), eFillShape);
   pCont->SetDecoration(pDeco);  
 }
+
+
+void nuiDefaultDecoration::MessageBox(nuiMessageBox* pBox)
+{
+  nuiFrame* pFrame = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationDialogPane"));
+  if (!pFrame)
+  {
+    nglIMemory* pIMem = new nglIMemory(gpDefaultDecorationDialogPane, gpDefaultDecorationDialogPaneSize);
+    nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
+    NGL_ASSERT(pTex);
+    pFrame = new nuiFrame(_T("nuiDefaultDecorationDialogPane"), pTex, nuiRect(12,16,0,16));
+    pFrame->UseWidgetAlpha(false);
+    delete pIMem; 
+  }
+  NGL_ASSERT(pFrame);
+  pBox->SetDecoration(pFrame);
+}
+
+void nuiDefaultDecoration::MessageBox_Title(nuiWidget* pWidget)
+{
+  nuiLabel* pLabel = (nuiLabel*)pWidget;
+  
+  pLabel->SetFont(nuiFont::GetFont(14), true);
+  pLabel->SetBorder(0,0,0,15);
+}
+
 

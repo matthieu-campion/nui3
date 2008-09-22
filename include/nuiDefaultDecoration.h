@@ -13,6 +13,7 @@
 
 class nuiWidget;
 class nuiMainWindow;
+class nuiMessageBox;
 
 typedef nuiFastDelegate::FastDelegate1<nuiWidget*> nuiDecorationDelegate;
 
@@ -46,6 +47,9 @@ public:
   static void CloseButton(nuiWidget* pWidget);
   static void ToggleButton(nuiWidget* pWidget);
 
+  // dialogs
+  static void MessageBox_Title(nuiWidget* pWidget);
+
 
   // file selector
   static void FileSelector_FolderView(nuiWidget* pWidget);
@@ -61,5 +65,7 @@ public:
   
   // special case
   static void MainWindow(nuiMainWindow* pWindow);
+  static void MessageBox(nuiMessageBox* pBox);
+  
 
 };

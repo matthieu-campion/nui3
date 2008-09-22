@@ -4505,7 +4505,10 @@ bool nuiWin::CreateVolumesTestWindow(const nuiEvent& rEvent)
 bool nuiWin::CreateMessageBox(const nuiEvent& rEvent)
 {
   nuiMessageBox::Button res;
-  res = nuiMessageBox::Do(this, _T("Simple message box (OK)"), _T("This simple message box should be displayed.\nYou normaly can't interact with the rest of the GUI\nbefore you click the OK button"), eMB_OK);
+  
+  nuiMessageBox* pBox = new nuiMessageBox(this, _T("Simple message box (OK)"), _T("This simple message box should be displayed.\nYou normaly can't interact with the rest of the GUI\nbefore you click the OK button"), eMB_OK);
+  res = pBox->QueryUser();
+
   res = nuiMessageBox::Do(this, _T("Simple message box (Cancel)"), _T("This is a 'Cancel' message box"), eMB_Cancel);
   res = nuiMessageBox::Do(this, _T("Simple message box (OK - Cancel)"), _T("This is a 'OK/Cancel' message box"), eMB_OKCancel);
   res = nuiMessageBox::Do(this, _T("Simple message box (Retry - OK - Cancel)"), _T("This is a 'Retry/OK/Cancel' message box"), eMB_RetryOKCancel);
