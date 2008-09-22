@@ -1097,7 +1097,7 @@ bool nuiWin::OnTextSizeSliderChanged(const nuiEvent& rEvent)
 
 bool nuiWin::CreateSliderWindow(const nuiEvent& rEvent)
 {
-  nuiWindow* pWin = new nuiWindow(nuiRect(10.0f,10.0f, 300.f,400.f),0 ,(_T("Slider Window")));
+  nuiWindow* pWin = new nuiWindow(nuiRect(10.0f,10.0f, 300.f,400.f), nuiWindow::DecoratedBackground ,(_T("Slider Window")));
   mpManager->AddChild(pWin);
     
   nuiVBox* pVBox = new nuiVBox(5);
@@ -1128,9 +1128,7 @@ bool nuiWin::CreateSliderWindow(const nuiEvent& rEvent)
     //Vertical Slider
     {
       nuiHBox* pBox = new nuiHBox(3);
-      nuiPane* pPane = new nuiPane();
-      pPane->AddChild(pBox);
-      pDefaultBox->SetCell(0, pPane);
+      pDefaultBox->SetCell(0, pBox);
       nuiSlider* pSlider = new nuiSlider(nuiVertical, nuiRange(0, 0, 100, 1.f, 5.f, 0));
       nglString s;
       s.SetCDouble(pSlider->GetRange().GetValue());
@@ -1151,9 +1149,7 @@ bool nuiWin::CreateSliderWindow(const nuiEvent& rEvent)
     //Horizontal Slider
     {
       nuiHBox* pBox = new nuiHBox(3);
-      nuiPane* pPane = new nuiPane();
-      pPane->AddChild(pBox);
-      pDefaultBox->SetCell(1, pPane);
+      pDefaultBox->SetCell(1, pBox);
       nuiSlider* pSlider = new nuiSlider(nuiHorizontal, nuiRange(0, 0, 100, 1.f, 5.f, 0));
       nglString s;
       s.SetCDouble(pSlider->GetRange().GetValue());
@@ -1191,9 +1187,7 @@ bool nuiWin::CreateSliderWindow(const nuiEvent& rEvent)
     //Vertical Slider
     {
       nuiHBox* pBox = new nuiHBox(3);
-      nuiPane* pPane = new nuiPane();
-      pPane->AddChild(pBox);
-      pDefaultBox->SetCell(0, pPane);
+      pDefaultBox->SetCell(0, pBox);
       nuiSlider* pSlider = new nuiSlider(nuiVertical, nuiRange(0, 0, 100, 20.f, 50.f, 0));
       pSlider->GetRange().SetDiscreetStepSize(true);
       nglString s;
@@ -1215,9 +1209,7 @@ bool nuiWin::CreateSliderWindow(const nuiEvent& rEvent)
     //Horizontal Slider
     {
       nuiHBox* pBox = new nuiHBox(3);
-      nuiPane* pPane = new nuiPane();
-      pPane->AddChild(pBox);
-      pDefaultBox->SetCell(1, pPane);
+      pDefaultBox->SetCell(1, pBox);
       nuiSlider* pSlider = new nuiSlider(nuiHorizontal, nuiRange(0, 0, 100, 20.f, 50.f, 0));
       pSlider->GetRange().SetDiscreetStepSize(true);
       nglString s;
@@ -1237,161 +1229,7 @@ bool nuiWin::CreateSliderWindow(const nuiEvent& rEvent)
     
   }
   
-  //Handle with Image
-  {
-    nuiHBox* pHandleBox = new nuiHBox(2);
-    pHandleBox->SetExpand(nuiExpandShrinkAndGrow, 1);
-    pHandleBox->SetCellExpand(0, nuiExpandShrinkAndGrow, 1);
-    pHandleBox->SetCellExpand(1, nuiExpandShrinkAndGrow, 1);
-    
-    nuiVBox* pLabelBox = new nuiVBox(2);
-    pLabelBox->SetExpand(nuiExpandShrinkAndGrow, 1);
-    pLabelBox->SetCellExpand(0, nuiExpandShrinkAndGrow, 1);
-    pLabelBox->SetCellExpand(1, nuiExpandShrinkAndGrow, 1);
-    pLabelBox->SetCell(0, new nuiLabel(_T("Handle with Image:")));
-    pLabelBox->SetCell(1, pHandleBox);
-    
-    pVBox->SetCell(2, pLabelBox);
-    {
-      //Vertical Slider with widgets
-      nuiImage* pHandle = new nuiImage(_T("rsrc:/slider/handle.png"));
-      
-      nuiHBox* pBox = new nuiHBox(3);
-      nuiPane* pPane = new nuiPane();
-      pPane->AddChild(pBox);
-      pHandleBox->SetCell(0, pPane);
-      nuiSlider* pSlider = new nuiSlider(nuiVertical, nuiRange(0, 0, 100, 1.f, 5.f, 0));
-      nglString s;
-      s.SetCDouble(pSlider->GetRange().GetValue());
-      nuiLabel* pText = new nuiLabel(s);
-      pText->SetPosition(nuiCenter);
-      nuiLabel* pText2 = new nuiLabel(s);
-      pText2->SetPosition(nuiCenter);
-      
-      pSlider->SetHandle(pHandle);
-      
-      pBox->SetCell(0, pSlider, nuiCenter);
-      pBox->SetCell(1, pText);
-      pBox->SetCell(2, pText2);
-      
-      pBox->SetExpand(nuiExpandShrinkAndGrow, 1);
-      
-      mWinSink.Connect(pSlider->InteractiveValueChanged, &nuiWin::OnSliderChanged, new std::pair<nuiSlider*, nuiLabel*>(pSlider, pText));
-      mWinSink.Connect(pSlider->ValueChanged, &nuiWin::OnSliderChanged, new std::pair<nuiSlider*, nuiLabel*>(pSlider, pText2));
-    }
-    
-    {
-      //Horizontal Slider with widgets
-      nuiImage* pHandle = new nuiImage(_T("rsrc:/slider/handle.png"));
-      
-      nuiHBox* pBox = new nuiHBox(3);
-      nuiPane* pPane = new nuiPane();
-      pPane->AddChild(pBox);
-      pHandleBox->SetCell(1, pPane);
-      nuiSlider* pSlider = new nuiSlider(nuiHorizontal, nuiRange(0, 0, 100, 1.f, 5.f, 0));
-      nglString s;
-      s.SetCDouble(pSlider->GetRange().GetValue());
-      nuiLabel* pText = new nuiLabel(s);
-      pText->SetPosition(nuiCenter);
-      nuiLabel* pText2 = new nuiLabel(s);
-      pText2->SetPosition(nuiCenter);
-      
-      pSlider->SetHandle(pHandle);
-      
-      pBox->SetCell(0, pSlider, nuiCenter);
-      pBox->SetCell(1, pText);
-      pBox->SetCell(2, pText2);
 
-      pBox->SetExpand(nuiExpandShrinkAndGrow, 1);
-      
-      mWinSink.Connect(pSlider->InteractiveValueChanged, &nuiWin::OnSliderChanged, new std::pair<nuiSlider*, nuiLabel*>(pSlider, pText));
-      mWinSink.Connect(pSlider->ValueChanged, &nuiWin::OnSliderChanged, new std::pair<nuiSlider*, nuiLabel*>(pSlider, pText2));
-    }
-  }
-  
-  //Handle with Image + Background with Image
-  {
-    //nuiImage* pBack = new nuiImage(_T("rsrc:/bt.png"));
-    nuiImage* pBack = new nuiImage(_T("rsrc:/slider/background.png"));
-    
-    nuiHBox* pHandleBox = new nuiHBox(2);
-    pHandleBox->SetExpand(nuiExpandShrinkAndGrow, 1);
-    pHandleBox->SetCellExpand(0, nuiExpandShrinkAndGrow, 1);
-    pHandleBox->SetCellExpand(1, nuiExpandShrinkAndGrow, 1);
-    
-    nuiHBox* pHeaderBox = new nuiHBox(2);
-    pHeaderBox->SetCell(0, new nuiLabel(_T("Handle with Image + Background with Image:")));
-    pHeaderBox->SetCell(1, pBack);
-    
-    nuiVBox* pLabelBox = new nuiVBox(2);
-    pLabelBox->SetExpand(nuiExpandShrinkAndGrow, 1);
-    pLabelBox->SetCellExpand(0, nuiExpandShrinkAndGrow, 1);
-    pLabelBox->SetCellExpand(1, nuiExpandShrinkAndGrow, 1);
-    pLabelBox->SetCell(0, pHeaderBox);
-    pLabelBox->SetCell(1, pHandleBox);
-    
-    pVBox->SetCell(3, pLabelBox);
-    {
-      //Vertical Slider with widgets
-      nuiHBox* pBox = new nuiHBox(3);
-      nuiPane* pPane = new nuiPane();
-      pPane->AddChild(pBox);
-      pHandleBox->SetCell(0, pPane);
-      nuiSlider* pSlider = new nuiSlider(nuiVertical, nuiRange(0, 0, 100, 1.f, 5.f, 0));
-      nglString s;
-      s.SetCDouble(pSlider->GetRange().GetValue());
-      nuiLabel* pText = new nuiLabel(s);
-      pText->SetPosition(nuiCenter);
-      nuiLabel* pText2 = new nuiLabel(s);
-      pText2->SetPosition(nuiCenter);
-      
-      nuiImage* pHandle = new nuiImage(_T("rsrc:/slider/handle.png"));
-      nuiImage* pBackground = new nuiImage(_T("rsrc:/slider/backgroundVertical.png"));
-      
-      
-      pSlider->SetHandle(pHandle);
-      pSlider->SetBackground(pBackground);
-      
-      pBox->SetCell(0, pSlider, nuiCenter);
-      pBox->SetCell(1, pText);
-      pBox->SetCell(2, pText2);
-      
-      pBox->SetExpand(nuiExpandShrinkAndGrow, 1);
-      
-      mWinSink.Connect(pSlider->InteractiveValueChanged, &nuiWin::OnSliderChanged, new std::pair<nuiSlider*, nuiLabel*>(pSlider, pText));
-      mWinSink.Connect(pSlider->ValueChanged, &nuiWin::OnSliderChanged, new std::pair<nuiSlider*, nuiLabel*>(pSlider, pText2));
-    }
-    
-    {
-      //Horizontal Slider with widgets
-      nuiHBox* pBox = new nuiHBox(3);
-      nuiPane* pPane = new nuiPane();
-      pPane->AddChild(pBox);
-      pHandleBox->SetCell(1, pPane);
-      nuiSlider* pSlider = new nuiSlider(nuiHorizontal, nuiRange(0, 0, 100, 1.f, 5.f, 0));
-      nglString s;
-      s.SetCDouble(pSlider->GetRange().GetValue());
-      nuiLabel* pText = new nuiLabel(s);
-      pText->SetPosition(nuiCenter);
-      nuiLabel* pText2 = new nuiLabel(s);
-      pText2->SetPosition(nuiCenter);
-      
-      nuiImage* pHandle = new nuiImage(_T("rsrc:/slider/handle.png"));
-      //nuiImage* pBackground = new nuiImage(_T("rsrc:/slider/background.png"));
-    
-      pSlider->SetHandle(pHandle);
-      pSlider->SetBackground(pBack);
-      
-      pBox->SetCell(0, pSlider, nuiCenter);
-      pBox->SetCell(1, pText);
-      pBox->SetCell(2, pText2);
-      
-      pBox->SetExpand(nuiExpandShrinkAndGrow, 1);
-      
-      mWinSink.Connect(pSlider->InteractiveValueChanged, &nuiWin::OnSliderChanged, new std::pair<nuiSlider*, nuiLabel*>(pSlider, pText));
-      mWinSink.Connect(pSlider->ValueChanged, &nuiWin::OnSliderChanged, new std::pair<nuiSlider*, nuiLabel*>(pSlider, pText2));
-    }
-  }
   
   //Handle with Image + Background Deco
   {
@@ -1415,9 +1253,7 @@ bool nuiWin::CreateSliderWindow(const nuiEvent& rEvent)
       nuiImage* pHandle = new nuiImage(_T("rsrc:/slider/handle.png"));
       
       nuiHBox* pBox = new nuiHBox(3);
-      nuiPane* pPane = new nuiPane();
-      pPane->AddChild(pBox);
-      pHandleBox->SetCell(0, pPane);
+      pHandleBox->SetCell(0, pBox);
       nuiSlider* pSlider = new nuiSlider(nuiVertical, nuiRange(0, 0, 100, 1.f, 5.f, 0));
       pSlider->SetDecoration(pFrame);
       nglString s;
@@ -1444,9 +1280,7 @@ bool nuiWin::CreateSliderWindow(const nuiEvent& rEvent)
       nuiImage* pHandle = new nuiImage(_T("rsrc:/slider/handle.png"));
       
       nuiHBox* pBox = new nuiHBox(3);
-      nuiPane* pPane = new nuiPane();
-      pPane->AddChild(pBox);
-      pHandleBox->SetCell(1, pPane);
+      pHandleBox->SetCell(1, pBox);
       nuiSlider* pSlider = new nuiSlider(nuiHorizontal, nuiRange(0, 0, 100, 1.f, 5.f, 0));
       pSlider->SetDecoration(pFrame);
       nglString s;
