@@ -1362,7 +1362,7 @@ bool nuiWin::CreateFileListWindow(const nuiEvent& rEvent)
 
 bool nuiWin::CreateRadioButtonsWindow(const nuiEvent& rEvent)
 {
-  nuiWindow* pRadioWin = new nuiWindow(nuiRect(10, 10, 400, 200), nuiWindow::NoFlag, _T("Radio Buttons"));
+  nuiWindow* pRadioWin = new nuiWindow(nuiRect(10, 10, 400, 200), nuiWindow::DecoratedBackground, _T("Radio Buttons"));
   mpManager->AddChild(pRadioWin);
   nuiWidgetBox* pRadioBoxBox = new nuiWidgetBox(nuiVertical);
   pRadioWin->AddChild(pRadioBoxBox);
@@ -1379,21 +1379,41 @@ bool nuiWin::CreateRadioButtonsWindow(const nuiEvent& rEvent)
       pRadioBut->SetGroup(_T("radios"));
     }
   }
-  // Bleh groups:
+  
+  // buttons without internal label:
   nuiRadioButtonGroup* pGroup= new nuiRadioButtonGroup();
   {
     nuiWidgetBox* pRadioBox = new nuiWidgetBox(nuiHorizontal);
     pRadioBoxBox->AddChild(pRadioBox);
     for (int r = 0; r < 4; r++)
     {
-      nglString tmp;
-      tmp.Format(_T("Bleh %d"), r);
-      nuiRadioButton* pRadioBut = new nuiRadioButton(tmp);
+      nuiRadioButton* pRadioBut = new nuiRadioButton();
+      pRadioBut->SetPosition(nuiCenter);
       pRadioBox->AddChild(pRadioBut);
       pGroup->AddRadioButton(pRadioBut);
-      //pRadioBut->SetGroup(_T("bleh"));
     }
   }
+
+  // disabled buttons without internal label:
+  pGroup= new nuiRadioButtonGroup();
+  {
+    nuiWidgetBox* pRadioBox = new nuiWidgetBox(nuiHorizontal);
+    pRadioBoxBox->AddChild(pRadioBox);
+    
+    nuiRadioButton* pRadioBut = new nuiRadioButton();
+    pRadioBut->SetPosition(nuiCenter);
+    pRadioBox->AddChild(pRadioBut);
+    pGroup->AddRadioButton(pRadioBut);
+    pRadioBut->SetEnabled(false);
+    
+    pRadioBut = new nuiRadioButton();
+    pRadioBut->SetPosition(nuiCenter);
+    pRadioBox->AddChild(pRadioBut);
+    pGroup->AddRadioButton(pRadioBut);
+    pRadioBut->SetPressed(true);
+    pRadioBut->SetEnabled(false);
+  }
+  
   return false;
 }
 

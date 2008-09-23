@@ -41,11 +41,11 @@ void nuiDefaultDecoration::Init()
   
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiSplitterHandle")), &nuiDefaultDecoration::SplitterHandle);
   
-
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiTitledPane")), &nuiDefaultDecoration::TitledPane);
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFolderPane")), &nuiDefaultDecoration::FolderPane);
 
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiButton")), &nuiDefaultDecoration::Button);
+  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiRadioButton")), &nuiDefaultDecoration::RadioButton);
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiCloseButton")), &nuiDefaultDecoration::CloseButton);
   
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiToggleButton")), &nuiDefaultDecoration::ToggleButton);
@@ -351,7 +351,7 @@ void nuiDefaultDecoration::FolderPane(nuiWidget* pWidget)
 void nuiDefaultDecoration::Button(nuiWidget* pWidget)
 {
 
-  nuiGradientDecoration* pDeco = (nuiGradientDecoration*)nuiDecoration::Get(_T("nuiDefaultDecorationButton"));
+  nuiStateDecoration* pDeco = (nuiStateDecoration*)nuiDecoration::Get(_T("nuiDefaultDecorationButton"));
   if (pDeco)
   {
     pWidget->SetDecoration(pDeco, eDecorationBorder);
@@ -391,6 +391,72 @@ void nuiDefaultDecoration::Button(nuiWidget* pWidget)
   pWidget->SetBorder(10,10);
 
 }
+
+
+
+
+
+void nuiDefaultDecoration::RadioButton(nuiWidget* pWidget)
+{
+  nuiRadioButton* pBtn = (nuiRadioButton*)pWidget;
+  if (pBtn->HasContents())
+  {
+    nuiDefaultDecoration::Button(pWidget);
+    return;
+  }
+  
+  
+  nuiStateDecoration* pDeco = (nuiStateDecoration*)nuiDecoration::Get(_T("nuiDefaultDecorationRadioButton"));
+  if (pDeco)
+  {
+    pWidget->SetDecoration(pDeco, eDecorationBorder);
+    pWidget->SetBorder(10,10);
+    return;
+  }
+  
+  nglIMemory* pIMem = new nglIMemory(gpDefaultDecorationRadioButtonUp, gpDefaultDecorationRadioButtonUpSize);
+  nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
+  NGL_ASSERT(pTex);
+  nuiFrame* pFrame = new nuiFrame(_T("nuiDefaultDecorationRadioButtonUp"), pTex, nuiRect(0,0,13,13));
+  delete pIMem;
+  
+  
+  pIMem = new nglIMemory(gpDefaultDecorationRadioButtonDown, gpDefaultDecorationRadioButtonDownSize);
+  pTex = nuiTexture::GetTexture(pIMem);
+  NGL_ASSERT(pTex);
+  pFrame = new nuiFrame(_T("nuiDefaultDecorationRadioButtonDown"), pTex, nuiRect(0,0,13,13));
+  delete pIMem;
+
+  pIMem = new nglIMemory(gpDefaultDecorationRadioButtonUpDisabled, gpDefaultDecorationRadioButtonUpDisabledSize);
+  pTex = nuiTexture::GetTexture(pIMem);
+  NGL_ASSERT(pTex);
+  pFrame = new nuiFrame(_T("nuiDefaultDecorationRadioButtonUpDisabled"), pTex, nuiRect(0,0,13,13));
+  delete pIMem;
+
+  pIMem = new nglIMemory(gpDefaultDecorationRadioButtonDownDisabled, gpDefaultDecorationRadioButtonDownDisabledSize);
+  pTex = nuiTexture::GetTexture(pIMem);
+  NGL_ASSERT(pTex);
+  pFrame = new nuiFrame(_T("nuiDefaultDecorationRadioButtonDownDisabled"), pTex, nuiRect(0,0,13,13));
+  delete pIMem;
+  
+  
+  nuiStateDecoration* pState = new nuiStateDecoration(_T("nuiDefaultDecorationRadioButton"), 
+                                                      _T("nuiDefaultDecorationRadioButtonUp"),
+                                                      _T("nuiDefaultDecorationRadioButtonDown"),
+                                                      _T("nuiDefaultDecorationRadioButtonUp"),/* hover up */
+                                                      _T("nuiDefaultDecorationRadioButtonDown"), /* hover down*/
+                                                      _T("nuiDefaultDecorationRadioButtonUpDisabled"),
+                                                      _T("nuiDefaultDecorationRadioButtonDownDisabled"));
+  pState->SetSourceClientRect(nuiRect(0,0,13,13));
+  
+  pWidget->SetDecoration(pState, eDecorationBorder);
+  pWidget->SetBorder(10,10);
+  
+}
+
+
+
+
 
 
 

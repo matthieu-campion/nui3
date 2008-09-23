@@ -44,6 +44,7 @@ public:
   static void FolderPane(nuiWidget* pWidget);
 
   static void Button(nuiWidget* pWidget);
+  static void RadioButton(nuiWidget* pWidget);
   static void CloseButton(nuiWidget* pWidget);
   static void ToggleButton(nuiWidget* pWidget);
 

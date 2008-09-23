@@ -40,11 +40,13 @@ public:
 
   void EnableToggleable(bool set);
   bool IsToggleable() const;
+  bool HasContents() const;
 
   nuiSimpleEventSource<nuiWidgetActivated> Deactivated;
 private:
   nuiRadioButtonGroup* mpGroupManager;
   bool mCanToggle;
+  bool mHasContents;
 };
 
 #endif // __nuiRadioButton_h__

@@ -7,6 +7,8 @@
 
 #pragma once
 
+
+// buttons 
 extern const char* gpDefaultDecorationButtonUp;
 const long         gpDefaultDecorationButtonUpSize = 334;
 
@@ -14,7 +16,24 @@ extern const char* gpDefaultDecorationButtonHover;
 const long         gpDefaultDecorationButtonHoverSize = 311;
 
 extern const char* gpDefaultDecorationButtonDown;
-const long         gpDefaultDecorationButtonDownSize = 257;
+const long         gpDefaultDecorationButtonDownSize = 421;
+
+
+
+
+extern const char* gpDefaultDecorationRadioButtonUp;
+const long         gpDefaultDecorationRadioButtonUpSize = 468;
+
+extern const char* gpDefaultDecorationRadioButtonDown;
+const long         gpDefaultDecorationRadioButtonDownSize = 523;
+
+extern const char* gpDefaultDecorationRadioButtonUpDisabled;
+const long         gpDefaultDecorationRadioButtonUpDisabledSize = 441;
+
+extern const char* gpDefaultDecorationRadioButtonDownDisabled;
+const long         gpDefaultDecorationRadioButtonDownDisabledSize = 518;
+
+
 
 
 extern const char* gpDefaultDecorationCloseButtonUp;

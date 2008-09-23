@@ -20,6 +20,7 @@ nuiRadioButton::nuiRadioButton()
   SetGroup(_T("Default"));
   mpGroupManager = NULL;
   mCanToggle = false;
+  mHasContents = false;
 }
 
 nuiRadioButton::nuiRadioButton(const nglString& rText)
@@ -29,6 +30,7 @@ nuiRadioButton::nuiRadioButton(const nglString& rText)
   SetGroup(_T("Default"));
   mpGroupManager = NULL;
   mCanToggle = false;
+  mHasContents = true;
 }
 
 nuiRadioButton::nuiRadioButton(const nglImage& rImage)
@@ -38,6 +40,7 @@ nuiRadioButton::nuiRadioButton(const nglImage& rImage)
   SetGroup(_T("Default"));
   mpGroupManager = NULL;
   mCanToggle = false;
+  mHasContents = true;
 }
 
 bool nuiRadioButton::Load(const nuiXMLNode* pNode)
@@ -47,6 +50,7 @@ bool nuiRadioButton::Load(const nuiXMLNode* pNode)
   SetGroup(nuiGetString(pNode, _T("Group"), _T("Default")));
   mpGroupManager = NULL;
   mCanToggle = false;
+  mHasContents = true;
   
   return true;
 }
@@ -171,5 +175,10 @@ void nuiRadioButton::EnableToggleable(bool set)
 bool nuiRadioButton::IsToggleable() const
 {
   return mCanToggle;
+}
+
+bool nuiRadioButton::HasContents() const
+{
+  return mHasContents;
 }
 

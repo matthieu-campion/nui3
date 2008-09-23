@@ -35,7 +35,10 @@ nuiStateDecoration::nuiStateDecoration(const nglString& rName, const nglString& 
   if (!rDisabled.IsNull())
     SetState(nuiStateDisabled | nuiStateReleased, GetDecoration(rDisabled));
   if (!rDisabledSelected.IsNull())
+  {
     SetState(nuiStateDisabled | nuiStateSelected, GetDecoration(rDisabledSelected));
+    SetState(nuiStateDisabled | nuiStatePressed, GetDecoration(rDisabledSelected));
+  }
 }
 
 
@@ -52,6 +55,7 @@ nuiStateDecoration::nuiStateDecoration(const nglString& rName, const nglString& 
   SetState(nuiStateEnabled  | nuiStatePressed | nuiStateHoverOn,  GetDecoration(rDownHoverOn));
   SetState(nuiStateDisabled | nuiStateReleased, GetDecoration(rDisabled));
   SetState(nuiStateDisabled | nuiStateSelected, GetDecoration(rDisabledSelected));
+  SetState(nuiStateDisabled | nuiStatePressed, GetDecoration(rDisabledSelected));
 } 
 
 
@@ -406,7 +410,11 @@ void nuiStateDecoration::SetState(nuiStateDescription State, nuiDecoration* pDec
 
 void nuiStateDecoration::SetState(nuiStateDescription State, const nglString& rDecorationName)
 {  
+  if (rDecorationName == nglString::Null)
+    return;
   nuiDecoration* pDecoration = nuiDecoration::Get(rDecorationName, true);
+  if (!pDecoration)
+    return;
   SetState(State, pDecoration);
 }
 
