@@ -2,7 +2,7 @@
 {
 	08FB7793FE84155DC02AAC07 /* Project object */ = {
 		activeBuildConfigurationName = Default;
-		activeSDKPreference = iphoneos2.0;
+		activeSDKPreference = iphoneos2.1;
 		activeTarget = D2AAC045055464E500DB518D /* nuiE */;
 		addToTargets = (
 			614B637D0DA7BA67000F4C22 /* nuiEd */,
@@ -34,11 +34,11 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 243532948;
-			PBXWorkspaceStateSaveDate = 243532948;
+			PBXPerProjectTemplateStateSaveDate = 243900962;
+			PBXWorkspaceStateSaveDate = 243900962;
 		};
 		perUserProjectItems = {
-			611742E30E8404A2004CEFDB /* PBXTextBookmark */ = 611742E30E8404A2004CEFDB /* PBXTextBookmark */;
+			611742E30E8404A2004CEFDB = 611742E30E8404A2004CEFDB /* PBXTextBookmark */;
 			616924440E8319FD00C11B58 = 616924440E8319FD00C11B58 /* PBXTextBookmark */;
 			616924450E8319FD00C11B58 = 616924450E8319FD00C11B58 /* PBXTextBookmark */;
 			616924460E8319FD00C11B58 = 616924460E8319FD00C11B58 /* PBXTextBookmark */;

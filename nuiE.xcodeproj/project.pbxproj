@@ -6154,7 +6154,7 @@
 				OTHER_CFLAGS = "-ObjC++";
 				"OTHER_CFLAGS[arch=*]" = "";
 				PREBINDING = YES;
-				SDKROOT = iphoneos2.0;
+				SDKROOT = iphoneos2.1;
 				STRIP_INSTALLED_PRODUCT = NO;
 				USE_HEADERMAP = NO;
 				VALID_ARCHS = "i386 armv6";
