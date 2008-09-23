@@ -14,6 +14,9 @@
 #include "nuiDefaultDecorationMaps.h"
 #include "nuiFrame.h"
 #include "nuiMessageBox.h"
+#include "nuiTabView.h"
+
+
 
 nuiDefaultDecoration::nuiDefaultDecoration()
 {
@@ -43,7 +46,7 @@ void nuiDefaultDecoration::Init()
   
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiTitledPane")), &nuiDefaultDecoration::TitledPane);
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFolderPane")), &nuiDefaultDecoration::FolderPane);
-
+  
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiButton")), &nuiDefaultDecoration::Button);
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiRadioButton")), &nuiDefaultDecoration::RadioButton);
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiCloseButton")), &nuiDefaultDecoration::CloseButton);
@@ -86,6 +89,9 @@ void nuiDefaultDecoration::InitColors()
   nuiColor::SetColor(_T("nuiDefaultClrCaptionTextLight"), nuiColor(215,215,215));
   
   nuiColor::SetColor(_T("nuiDefaultClrSelection"), nuiColor(56,117,215));
+
+  nuiColor::SetColor(_T("nuiDefaultClrNormalTab"), nuiColor(64,64,64));
+  nuiColor::SetColor(_T("nuiDefaultClrSelectedTab"), nuiColor(32,32,32));
 }
 
 
@@ -345,6 +351,7 @@ void nuiDefaultDecoration::FolderPane(nuiWidget* pWidget)
 {
   
 }
+
 
 
 
@@ -648,6 +655,94 @@ void nuiDefaultDecoration::MessageBox_Title(nuiWidget* pWidget)
   
   pLabel->SetFont(nuiFont::GetFont(14), true);
   pLabel->SetBorder(0,0,0,15);
+}
+
+
+
+void nuiDefaultDecoration::TabView_Tab(nuiTabView* pView, nuiWidget* pTab)
+{
+  nglString decoName = _T("nuiDefaultDecorationTabTop");
+  nglString decoUpName;
+  nglString decoDownName;
+  
+  nuiRect frameRect;
+
+  const char* decoUp = gpDefaultDecorationTabTopUp;
+  const char* decoDown = gpDefaultDecorationTabTopDown;
+  long decoUpSize = gpDefaultDecorationTabTopUpSize;
+  long decoDownSize = gpDefaultDecorationTabTopDownSize;
+  
+  switch (pView->GetPosition())
+  {
+    case nuiTop:
+      decoName = _T("nuiDefaultDecorationTabTop");
+      decoUp = gpDefaultDecorationTabTopUp;
+      decoDown = gpDefaultDecorationTabTopDown;
+      decoUpSize = gpDefaultDecorationTabTopUpSize;
+      decoDownSize = gpDefaultDecorationTabTopDownSize;
+      frameRect = nuiRect(4,5,2,4);
+      break;
+      
+    case nuiLeft:
+      decoName = _T("nuiDefaultDecorationTabLeft");
+      decoUp = gpDefaultDecorationTabLeftUp;
+      decoDown = gpDefaultDecorationTabLeftDown;
+      decoUpSize = gpDefaultDecorationTabLeftUpSize;
+      decoDownSize = gpDefaultDecorationTabLeftDownSize;
+      frameRect = nuiRect(5,4,4,2);
+      break;
+      
+    case nuiRight:
+      decoName = _T("nuiDefaultDecorationTabRight");
+      decoUp = gpDefaultDecorationTabRightUp;
+      decoDown = gpDefaultDecorationTabRightDown;
+      decoUpSize = gpDefaultDecorationTabRightUpSize;
+      decoDownSize = gpDefaultDecorationTabRightDownSize;
+      frameRect = nuiRect(5,4,4,2);
+      break;
+      
+    case nuiBottom:
+      decoName = _T("nuiDefaultDecorationTabBottom");
+      decoUp = gpDefaultDecorationTabBottomUp;
+      decoDown = gpDefaultDecorationTabBottomDown;
+      decoUpSize = gpDefaultDecorationTabBottomUpSize;
+      decoDownSize = gpDefaultDecorationTabBottomDownSize;
+      frameRect = nuiRect(4,5,2,4);
+      break;
+  }
+  
+  nuiStateDecoration* pDeco = (nuiStateDecoration*)nuiDecoration::Get(decoName);
+  if (pDeco)
+  {
+    pTab->SetDecoration(pDeco, eDecorationBorder);
+    return;
+  }
+  
+  decoUpName = decoName + _T("Up");
+  decoDownName = decoName + _T("Down");
+  
+  nglIMemory* pIMem = new nglIMemory(decoUp, decoUpSize);
+  nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
+  NGL_ASSERT(pTex);
+  nuiFrame* pFrame = new nuiFrame(decoUpName, pTex, frameRect);
+  delete pIMem;
+  
+  pIMem = new nglIMemory(decoDown, decoDownSize);
+  pTex = nuiTexture::GetTexture(pIMem);
+  NGL_ASSERT(pTex);
+  pFrame = new nuiFrame(decoDownName, pTex, frameRect);
+  delete pIMem;
+  
+  
+  
+  nuiStateDecoration* pState = new nuiStateDecoration(decoName);
+  pState->SetState(nuiStateEnabled  | nuiStateReleased, nuiDecoration::Get(decoUpName));
+  pState->SetState(nuiStateEnabled  | nuiStateSelected, nuiDecoration::Get(decoDownName));
+  
+  pState->SetSourceClientRect(frameRect);
+  
+  pTab->SetDecoration(pState, eDecorationBorder);
+  
 }
 
 

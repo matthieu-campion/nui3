@@ -22,41 +22,7 @@ public:
   uint mTabIndex;
 };
 
-class NUI_API nuiSimpleIcon : public nuiSimpleContainer
-{
-public:
-  nuiSimpleIcon(const nglString& rName, nuiPosition pos);
-  ~nuiSimpleIcon();
 
-  virtual nuiRect CalcIdealSize();
-  bool SetRect(const nuiRect& rRect);
-  bool Draw(nuiDrawContext* pContext);
-  
-  void SetFontSize(const nuiSize& rFontSize);
-
-  void SetColor(nuiWidgetElement elem, const nuiColor& rColor); // react to these: eSelectedTabBg, eNormalTabBg, eSelectedTextFg, eNormalTextFg
-
-  void SetPosition(nuiPosition pos);
-  nuiPosition GetPosition();
-  nuiOrientation GetOrientation();
-
-  void SetRadius(float radius);
-
-protected:
-  nglString       mName;
-  nuiPosition     mPosition;
-  nuiOrientation  mOrientation;
-  nuiGradient*    mpGradient;
-  nuiGradient*    mpSelectedGradient;
-  nuiSize         mFontSize;
-  nuiFont*        mpFont;
-  nuiLabel*       mpLabel;
-  nuiShape*       mpShape;
-  float           mRadius;
-
-  void ResetGradient();
-  void ResetSelectedGradient();
-};
 
 class NUI_API nuiTabView : public nuiSimpleContainer
 {
@@ -73,8 +39,9 @@ public:
     
   bool OnIconClicked(const nuiEvent& rEvent);
 
-  virtual void AddTab(nuiWidget* pTab, nuiWidget* pIcon);
-  virtual void InsertTab(nuiWidget* pTab, nuiWidget* pIcon, uint position);
+  virtual void AddTab(const nglString& rTitle, nuiWidget* pTab);
+  virtual void AddTab(nuiWidget* pTitle, nuiWidget* pTab);
+  virtual void InsertTab(nuiWidget* pTitle, nuiWidget* pTab, uint position);
   virtual void RemoveTab(nuiWidget* pTab, bool trashit = true);
   virtual void RemoveTab(const uint& tab_index, bool trashit = true);
    

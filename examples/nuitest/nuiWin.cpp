@@ -1772,39 +1772,30 @@ bool nuiWin::CreateSWFTest1Window(const nuiEvent& rEvent)
 
 bool nuiWin::CreateTabViewWindow(const nuiEvent& rEvent)
 {
-  nuiWindow* pWin = new nuiWindow(nuiRect(10, 10, 200, 200), nglWindow::NoFlag, _T("TabView..."));
+  nuiWindow* pWin = new nuiWindow(nuiRect(10, 10, 340, 200), nglWindow::NoFlag, _T("TabView..."));
   mpManager->AddChild(pWin);
  
   nuiRect PageRect = nuiRect(0.f, 0.f, 200.f, 150.f);
   nuiRect IconRect = nuiRect(0.f, 0.f, 40.f, 20.f);
   //nuiPosition position = nuiRight;
-  nuiPosition position = nuiLeft;
+  //nuiPosition position = nuiLeft;
   //nuiPosition position = nuiBottom;
-  //nuiPosition position = nuiTop;
+  nuiPosition position = nuiTop;
 
   
   nuiTabView* pTabView = new nuiTabView(position);
   pWin->AddChild(pTabView);
 
-  nuiSimpleIcon* pIcon = new nuiSimpleIcon(_T("Tab1"), position);
-  pIcon->SetColor(eNormalTabBg, nuiColor(0.f, .5f, 1.f, .5f));
-  pIcon->SetColor(eSelectedTabBg, nuiColor(0.f, .5f, 1.f));
   nuiLabel* pLabel = new nuiLabel(_T("Tab\nOne\nThe\nfirst\nand\nforemost"));
   
   pLabel->SetFont(nuiFont::GetFont(18));
   pLabel->SetOrientation(nuiVertical);
-  pTabView->AddTab(pLabel, pIcon);
+  pTabView->AddTab(_T("Tab1"), pLabel);
   
-  pIcon = new nuiSimpleIcon(_T("Tab2"), position);
-  pIcon->SetColor(eNormalTabBg, nuiColor(0.f, .5f, 1.f, .5f));
-  pIcon->SetColor(eSelectedTabBg, nuiColor(0.f, .5f, 1.f));
   nuiImage* pPage = new nuiImage(_T("rsrc:/nui.png"));
-  pTabView->AddTab(pPage, pIcon);
+  pTabView->AddTab(_T("Tab2"), pPage);
  
 
-  pIcon = new nuiSimpleIcon(_T("Tab3"), position);
-  pIcon->SetColor(eNormalTabBg, nuiColor(0.f, .5f, 1.f, .5f));
-  pIcon->SetColor(eSelectedTabBg, nuiColor(0.f, .5f, 1.f));
   { // Page 3
     nglString VertexShader(nglString::Empty);
     nglString FragmentShader(
@@ -1826,14 +1817,9 @@ bool nuiWin::CreateTabViewWindow(const nuiEvent& rEvent)
     nuiImage* pImage = new nuiImage(_T("rsrc:/small_ngl.png"));
     pShaderView->AddChild(pImage);
     pImage->SetFillRule(nuiTopLeft);
-    pTabView->AddTab(pShaderView, pIcon);
+    pTabView->AddTab(_T("Tab3"), pShaderView);
   }
 
-
-
-  pIcon = new nuiSimpleIcon(_T("Tab4"), position);
-  pIcon->SetColor(eNormalTabBg, nuiColor(0.f, .5f, 1.f, .5f));
-  pIcon->SetColor(eSelectedTabBg, nuiColor(0.f, .5f, 1.f));
   nuiFixed* pFixed = new nuiFixed();
   nuiButton* pButton = new nuiButton(_T("Add Tab"));
   pFixed->AddChild(pButton);
@@ -1843,7 +1829,7 @@ bool nuiWin::CreateTabViewWindow(const nuiEvent& rEvent)
   pFixed->AddChild(pButton);
   pButton->SetUserRect(nuiRect(20.f, 80.f, 100.f, 30.f));
   mWinSink.Connect(pButton->ButtonPressed, &nuiWin::RemoveTab, pTabView);
-  pTabView->AddTab(pFixed, pIcon);
+  pTabView->AddTab(_T("Tab4"), pFixed);
  
   pTabView->SelectTab(0);
 
@@ -1857,12 +1843,8 @@ bool nuiWin::AddTab(const nuiEvent& rEvent)
 
   nuiPosition pos = pTabView->GetPosition();
   s.Format(_T("Tab%d"), pTabView->GetTabCount()+1);
-  
-  nuiSimpleIcon* pIcon = new nuiSimpleIcon(s, pos);
-  pIcon->SetColor(eNormalTabBg, nuiColor(0.f, .5f, 1.f, .5f));
-  pIcon->SetColor(eSelectedTabBg, nuiColor(0.f, .5f, 1.f));
 
-  pTabView->AddTab(new nuiLabel(s), pIcon);
+  pTabView->AddTab(s, new nuiLabel(s));
   return false;
 }
 

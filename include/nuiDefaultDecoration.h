@@ -14,6 +14,7 @@
 class nuiWidget;
 class nuiMainWindow;
 class nuiMessageBox;
+class nuiTabView;
 
 typedef nuiFastDelegate::FastDelegate1<nuiWidget*> nuiDecorationDelegate;
 
@@ -67,6 +68,7 @@ public:
   // special case
   static void MainWindow(nuiMainWindow* pWindow);
   static void MessageBox(nuiMessageBox* pBox);
+  static void TabView_Tab(nuiTabView* pView, nuiWidget* pTab);
   
 
 };

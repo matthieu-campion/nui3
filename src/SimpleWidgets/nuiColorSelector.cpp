@@ -67,7 +67,7 @@ nuiColorSelector::nuiColorSelector(const nuiColor& rInitialColor, const std::vec
     mSink.Connect(mpRgbAlphaSlider->InteractiveValueChanged, &nuiColorSelector::RgbSliderChanged);
     mSink.Connect(mpRgbAlphaSlider->ValueChanged, &nuiColorSelector::RgbSliderChanged);
     
-    mpTabView->AddTab(mpRgbGrid, pPane);
+    mpTabView->AddTab(pPane, mpRgbGrid);
   }
   
   {
@@ -78,7 +78,7 @@ nuiColorSelector::nuiColorSelector(const nuiColor& rInitialColor, const std::vec
     pLabel->SetBorder(2.f, 1.f);
     pPane->AddChild(pLabel);
     
-    mpTabView->AddTab(mpHsvGrid, pPane);
+    mpTabView->AddTab(pPane, mpHsvGrid);
   }
   
   {
@@ -89,7 +89,7 @@ nuiColorSelector::nuiColorSelector(const nuiColor& rInitialColor, const std::vec
     
     MakeSwatchGrid();
     
-    mpTabView->AddTab(mpSwatchGrid, pPane);
+    mpTabView->AddTab(pPane, mpSwatchGrid);
   }
   
   AddChild(mpMainBox);
