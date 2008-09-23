@@ -38,7 +38,6 @@ public:
     GLubyte mA;
     GLfloat mTX;
     GLfloat mTY;
-    GLboolean mEdgeFlag;
   };
 
   enum DataType
@@ -46,8 +45,7 @@ public:
     eVertex = 0,
     eColor,
     eTexCoord,
-    eNormal,
-    eEdgeFlag
+    eNormal
   };
 
   inline std::vector<Vertex>& GetVertices()
@@ -84,7 +82,6 @@ public:
   void SetColor(uint8 r, uint8 g, uint8 b, uint8 a);
   void SetColor(const nuiColor& rColor);
   void SetTexCoords(float tx, float ty);
-  void SetEdgeFlag(bool set);
   
   void PushVertex();
 private:

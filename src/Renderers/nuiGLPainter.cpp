@@ -636,6 +636,7 @@ void nuiGLPainter::DrawArray(const nuiRenderArray& rArray)
       glDisableClientState(GL_NORMAL_ARRAY);
 */
 
+/*
     if (rArray.IsArrayEnabled(nuiRenderArray::eEdgeFlag))
     {
       glEnableClientState(GL_EDGE_FLAG_ARRAY);
@@ -644,7 +645,8 @@ void nuiGLPainter::DrawArray(const nuiRenderArray& rArray)
     }
     else
       glDisableClientState(GL_EDGE_FLAG_ARRAY);
-
+*/
+    
     nuiCheckForGLErrors();
     glDrawArrays(mode, 0, size);
     nuiCheckForGLErrors();

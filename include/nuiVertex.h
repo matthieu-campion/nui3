@@ -538,6 +538,11 @@ public:
     mValue.Add(rVertex.mValue);
   }
   
+  void AddValue(const nuiVertex<InterpolatedType>& rVertex)
+  {
+    mValue.Add(rVertex.mValue);
+  }
+  
   void Sub(const nuiVertex<InterpolatedType>& rVertex)
   {
     mX -= rVertex.mX;
@@ -656,6 +661,56 @@ public:
   {
     return mValue.IsStable();
   }
+  
+  template <class PixelBlender>
+  void DrawHLine(uint32* pBuffer, nuiVertex<InterpolatedType>& v0, int32 width)
+  {
+    NGL_ASSERT(width > 0);
+    
+    if (PixelBlender::CanOptimize())
+    {
+      if (IsStable())
+      {
+        uint32 color = v0.GetColor();
+        for (uint i = 0; i < width; i++)
+          pBuffer[i] = color;
+      }
+      else
+      {
+        while (width > 0)
+        {
+          *pBuffer = v0.GetColor();
+          pBuffer++;
+          v0.AddValue(*this);
+          width--;
+        }
+      }
+    }
+    else
+    {
+      if (IsStable())
+      {
+        uint32 color = v0.GetColor();
+        while (width > 0)
+        {
+          PixelBlender::Blend(*pBuffer, color);
+          pBuffer++;
+          width--;
+        }
+      }
+      else
+      {
+        while (width > 0)
+        {
+          PixelBlender::Blend(*pBuffer, v0.GetColor());
+          pBuffer++;
+          v0.AddValue(*this);
+          width--;
+        }
+      }
+    }
+  }
+  
   
   
 private:

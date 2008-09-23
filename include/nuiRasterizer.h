@@ -63,7 +63,7 @@ private:
   bool SetupSegment(VertexType& r0, VertexType& r1, VertexType& rIncr)
   {
     int32 height  = r1.Y() - r0.Y();
-
+    
     if (height == 0)
     {
       if (AcceptHorizontalLines)
@@ -151,9 +151,60 @@ private:
     }
   }
   
+//  template <class PixelBlender, class VertexType>
+//  void DrawHLine(VertexType& Left, VertexType& Right)
+//  {
+//    VertexType v0(Left);
+//    VertexType v1(Right);
+//    int32 width = v1.X() - v0.X();
+//    if (!width)
+//      return;
+//    
+//    VertexType incr(v1);
+//    incr.Sub(v0);
+//    incr.Div(width);
+//
+//    incr.SetX(NUI_FP_ONE);
+//    incr.SetY(0);
+//            
+//    ClipSegmentX(v0, v1, incr);
+//        
+//    int32 y = v0.CeiledY();
+//    int32 x = ToAbove(v0.X());
+//    int32 end = ToAbove(v1.X());
+//    
+//    uint32* pBuffer = mpBuffer + (y * mWidth + x);
+//    
+//    if (incr.IsStable())
+//    {
+//      uint32 color = v0.GetColor();
+//      while (x < end)
+//      {
+//        PixelBlender::Blend(*pBuffer, color);
+//        pBuffer++;
+//        x++;
+//      }
+//    }
+//    else
+//    {
+//      while (x < end)
+//      {
+//        PixelBlender::Blend(*pBuffer, v0.GetColor());
+//        pBuffer++;
+//        v0.Add(incr);
+//        x++;
+//      }
+//    }
+//  }
+
   template <class PixelBlender, class VertexType>
   void DrawHLine(VertexType& Left, VertexType& Right)
   {
+    if (Left.X() > Right.X())
+    {
+      DrawHLine<PixelBlender, VertexType>(Right, Left);
+      return;
+    }
     VertexType v0(Left);
     VertexType v1(Right);
     int32 width = v1.X() - v0.X();
@@ -163,40 +214,37 @@ private:
     VertexType incr(v1);
     incr.Sub(v0);
     incr.Div(width);
-
+    
     incr.SetX(NUI_FP_ONE);
     incr.SetY(0);
-            
+    
     ClipSegmentX(v0, v1, incr);
-        
+    
     int32 y = v0.CeiledY();
     int32 x = ToAbove(v0.X());
     int32 end = ToAbove(v1.X());
+
+    width = end - x;
+    if (!width)
+      return;
+    
+    if (width < 0)
+    {
+      VertexType tmp1 = v0;
+      v0 = v1;
+      v1 = tmp1;
+      width = -width;
+      VertexType tmp2 = incr;
+      incr.Clear();
+      incr.Sub(tmp2);
+      std::swap(x, end);
+    }
     
     uint32* pBuffer = mpBuffer + (y * mWidth + x);
-    
-    if (incr.IsStable())
-    {
-      uint32 color = v0.GetColor();
-      while (x < end)
-      {
-        PixelBlender::Blend(*pBuffer, color);
-        pBuffer++;
-        x++;
-      }
-    }
-    else
-    {
-      while (x < end)
-      {
-        PixelBlender::Blend(*pBuffer, v0.GetColor());
-        pBuffer++;
-        v0.Add(incr);
-        x++;
-      }
-    }
+
+    incr.DrawHLine<PixelBlender>(pBuffer, v0, (end - x));
   }
-    
+  
 public:
   nuiRasterizer(uint32 Width, uint32 Height, uint32* pBuffer = NULL)
   {
@@ -388,6 +436,9 @@ public:
     clipped |= !SetupSegment<VertexType, false>(Left0, Left1, LeftIncr);
     clipped |= !SetupSegment<VertexType, false>(Right0, Right1, RightIncr);
 
+    NGL_ASSERT(Left0.X() <= Right0.X());
+    NGL_ASSERT(Left1.X() <= Right1.X());
+    
     if (!clipped)
       DrawSection<PixelBlender>(Left0, Left1, LeftIncr, Right0, Right1, RightIncr);
 
@@ -409,6 +460,11 @@ public:
       clipped = !SetupSegment<VertexType, false>(Left0, Left1, LeftIncr);
     }
         
+    NGL_ASSERT(Left0.X() <= Right0.X());
+    NGL_ASSERT(Left1.X() <= Right1.X());
+    NGL_ASSERT(Left0.Y() == Right0.Y());
+    NGL_ASSERT(Left1.Y() == Right1.Y());
+
     if (!clipped)
       DrawSection<PixelBlender>(Left0, Left1, LeftIncr, Right0, Right1, RightIncr);
   }

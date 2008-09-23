@@ -37,7 +37,6 @@ nuiRenderArray::nuiRenderArray(GLenum mode, bool Static)
   mCurrentVertex.mG = 0;
   mCurrentVertex.mB = 0;
   mCurrentVertex.mA = 255;
-  mCurrentVertex.mEdgeFlag = true;
   
 }
 
@@ -108,11 +107,6 @@ void nuiRenderArray::PushVertex()
   NGL_ASSERT(mCurrentVertex.mTY != std::numeric_limits<float>::quiet_NaN());
 
   mVertices.push_back(mCurrentVertex);
-}
-
-void nuiRenderArray::SetEdgeFlag( bool set )
-{
-  mCurrentVertex.mEdgeFlag = set;
 }
 
 uint32 nuiRenderArray::GetSize() const

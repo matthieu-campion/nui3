@@ -16,6 +16,11 @@ public:
   {
     dest_color = src_color;
   }
+
+  static bool CanOptimize()
+  {
+    return true;
+  }
 };
 
 class nuiPixelBlender_Add32
@@ -24,6 +29,11 @@ public:
   static void Blend(uint32& dest_color, const uint32 src_color)
   {
     dest_color += src_color;
+  }
+
+  static bool CanOptimize()
+  {
+    return false;
   }
 };
 
@@ -50,6 +60,11 @@ public:
     Dg = (SMA * Dg + SA * Sg) >> 8;
     Db = (SMA * Db + SA * Sb) >> 8;
   }
+  
+  static bool CanOptimize()
+  {
+    return false;
+  }
 };
 
 class nuiPixelBlender_TranspAdd
@@ -74,6 +89,11 @@ public:
     Dg = MIN(255, Dg + ((SA * Sg) >> 8));
     Db = MIN(255, Db + ((SA * Sb) >> 8));
   }
+
+  static bool CanOptimize()
+  {
+    return false;
+  }
 };
 
 class nuiPixelBlender_Add
@@ -97,6 +117,11 @@ public:
     Dg = MIN(255, Dg + Sg);
     Db = MIN(255, Db + Sb);
     Da = MIN(255, Da + Sa);
+  }
+
+  static bool CanOptimize()
+  {
+    return false;
   }
 };
 

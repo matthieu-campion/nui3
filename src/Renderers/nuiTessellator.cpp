@@ -244,7 +244,7 @@ void TessellatorInfo::InternalTessBegin(GLenum type)
 {
   nuiRenderArray* pArray = new nuiRenderArray(type);
   pArray->EnableArray(nuiRenderArray::eVertex);
-  pArray->EnableArray(nuiRenderArray::eEdgeFlag);
+  //pArray->EnableArray(nuiRenderArray::eEdgeFlag);
   mpObject->AddArray(pArray);
 }
 
@@ -257,7 +257,7 @@ void TessellatorInfo::InternalTessVertex(void* vertex_data)
 {
   nuiRenderArray* pArray = mpObject->GetLastArray();
   pArray->SetVertex(mTempPoints[(uint32)vertex_data]);
-  pArray->SetEdgeFlag(mEdgeFlag);
+  //pArray->SetEdgeFlag(mEdgeFlag);
   pArray->PushVertex();
 }
 
