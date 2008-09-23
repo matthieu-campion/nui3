@@ -1131,7 +1131,7 @@ bool nuiWin::CreateSliderWindow(const nuiEvent& rEvent)
       pDefaultBox->SetCell(0, pBox);
       nuiSlider* pSlider = new nuiSlider(nuiVertical, nuiRange(0, 0, 100, 1.f, 5.f, 0));
       nglString s;
-      s.SetCDouble(pSlider->GetRange().GetValue());
+      s.Format(_T("%.2f"), pSlider->GetRange().GetValue());
       nuiLabel* pText = new nuiLabel(s);
       pText->SetPosition(nuiCenter);
       nuiLabel* pText2 = new nuiLabel(s);
@@ -1152,7 +1152,7 @@ bool nuiWin::CreateSliderWindow(const nuiEvent& rEvent)
       pDefaultBox->SetCell(1, pBox);
       nuiSlider* pSlider = new nuiSlider(nuiHorizontal, nuiRange(0, 0, 100, 1.f, 5.f, 0));
       nglString s;
-      s.SetCDouble(pSlider->GetRange().GetValue());
+      s.Format(_T(".2f"), pSlider->GetRange().GetValue());
       nuiLabel* pText = new nuiLabel(s);
       pText->SetPosition(nuiCenter);
       nuiLabel* pText2 = new nuiLabel(s);
@@ -1191,7 +1191,7 @@ bool nuiWin::CreateSliderWindow(const nuiEvent& rEvent)
       nuiSlider* pSlider = new nuiSlider(nuiVertical, nuiRange(0, 0, 100, 20.f, 50.f, 0));
       pSlider->GetRange().SetDiscreetStepSize(true);
       nglString s;
-      s.SetCDouble(pSlider->GetRange().GetValue());
+      s.Format(_T("%.2f"), pSlider->GetRange().GetValue());
       nuiLabel* pText = new nuiLabel(s);
       pText->SetPosition(nuiCenter);
       nuiLabel* pText2 = new nuiLabel(s);
@@ -1213,7 +1213,7 @@ bool nuiWin::CreateSliderWindow(const nuiEvent& rEvent)
       nuiSlider* pSlider = new nuiSlider(nuiHorizontal, nuiRange(0, 0, 100, 20.f, 50.f, 0));
       pSlider->GetRange().SetDiscreetStepSize(true);
       nglString s;
-      s.SetCDouble(pSlider->GetRange().GetValue());
+      s.Format(_T(".2f"), pSlider->GetRange().GetValue());
       nuiLabel* pText = new nuiLabel(s);
       pText->SetPosition(nuiCenter);
       nuiLabel* pText2 = new nuiLabel(s);
@@ -1257,7 +1257,7 @@ bool nuiWin::CreateSliderWindow(const nuiEvent& rEvent)
       nuiSlider* pSlider = new nuiSlider(nuiVertical, nuiRange(0, 0, 100, 1.f, 5.f, 0));
       pSlider->SetDecoration(pFrame);
       nglString s;
-      s.SetCDouble(pSlider->GetRange().GetValue());
+      s.Format(_T(".2f"), pSlider->GetRange().GetValue());
       nuiLabel* pText = new nuiLabel(s);
       pText->SetPosition(nuiCenter);
       nuiLabel* pText2 = new nuiLabel(s);
@@ -1284,7 +1284,7 @@ bool nuiWin::CreateSliderWindow(const nuiEvent& rEvent)
       nuiSlider* pSlider = new nuiSlider(nuiHorizontal, nuiRange(0, 0, 100, 1.f, 5.f, 0));
       pSlider->SetDecoration(pFrame);
       nglString s;
-      s.SetCDouble(pSlider->GetRange().GetValue());
+      s.Format(_T(".2f"), pSlider->GetRange().GetValue());
       nuiLabel* pText = new nuiLabel(s);
       pText->SetPosition(nuiCenter);
       nuiLabel* pText2 = new nuiLabel(s);
@@ -1313,7 +1313,7 @@ bool nuiWin::OnSliderChanged(const nuiEvent& rEvent)
   nuiLabel* pText = pPair->second;
   
   nglString s;
-  s.SetCDouble(pSlider->GetRange().GetValue());
+  s.Format(_T("%.2f"), pSlider->GetRange().GetValue());
   pText->SetText(s);
   
   return false;
@@ -1748,8 +1748,8 @@ bool nuiWin::CreateSWFTest1Window(const nuiEvent& rEvent)
   //nglString movie(_T("rsrc:/header2.swf"));
   //nglString movie(_T("rsrc:/menu.swf"));
   //nglString movie(_T("rsrc:/enconstruction.swf"));
-  //nglString movie(_T("rsrc:/nui1.swf"));
-  nglString movie(_T("rsrc:/Tweens.swf"));
+  nglString movie(_T("rsrc:/nui1.swf"));
+  //nglString movie(_T("rsrc:/Tweens.swf"));
   //nglString movie(_T("rsrc:/Electric-Field.swf"));
   //nglString movie(_T("rsrc:/ninja1.swf"));
   //nglString movie(_T("rsrc:/clinger.swf"));
@@ -1837,11 +1837,11 @@ bool nuiWin::CreateTabViewWindow(const nuiEvent& rEvent)
   nuiFixed* pFixed = new nuiFixed();
   nuiButton* pButton = new nuiButton(_T("Add Tab"));
   pFixed->AddChild(pButton);
-  pButton->SetUserRect(nuiRect(0.f, 0.f, 100.f, 50.f));
+  pButton->SetUserRect(nuiRect(20.f, 20.f, 100.f, 30.f));
   mWinSink.Connect(pButton->ButtonPressed, &nuiWin::AddTab, pTabView);
   pButton = new nuiButton(_T("Remove Tab"));
   pFixed->AddChild(pButton);
-  pButton->SetUserRect(nuiRect(0.f, 50.f, 100.f, 50.f));
+  pButton->SetUserRect(nuiRect(20.f, 80.f, 100.f, 30.f));
   mWinSink.Connect(pButton->ButtonPressed, &nuiWin::RemoveTab, pTabView);
   pTabView->AddTab(pFixed, pIcon);
  
