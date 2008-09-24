@@ -18,9 +18,9 @@
 
 
 
-nuiTabView::nuiTabView(nuiPosition pos)
+nuiTabView::nuiTabView(nuiPosition pos, bool decoratedBackground)
 : nuiSimpleContainer(), mTabViewEvents(this),
-  mCurrentTabIndex(0), mPosition(pos)
+  mCurrentTabIndex(0), mPosition(pos), mDecoratedBackground(decoratedBackground)
 {
   SetObjectClass(_T("nuiTabView"));
   mChildrenRectUnion = true;
@@ -291,26 +291,41 @@ bool nuiTabView::MouseUnclicked (nuiSize X, nuiSize Y, nglMouseInfo::Flags Butto
 }
  
 
-void nuiTabView::AddTab(const nglString& rTitle, nuiWidget* pTab)
+void nuiTabView::AddTab(const nglString& rTitle, nuiWidget* pContents)
 {
   nuiLabel* pLabel = new nuiLabel(rTitle);
   pLabel->SetBorder(4,4);
-  AddTab(pLabel, pTab);
+  AddTab(pLabel, pContents);
 }
 
-void nuiTabView::AddTab(nuiWidget* pTitle, nuiWidget* pTab)
+void nuiTabView::AddTab(nuiWidget* pTitle, nuiWidget* pContents)
 {
-  InsertTab(pTitle, pTab, mIcons.size());
+  InsertTab(pTitle, pContents, mIcons.size());
 }
 
-void nuiTabView::InsertTab(nuiWidget* pTitle, nuiWidget* pTab, uint pos)
+void nuiTabView::InsertTab(nuiWidget* pTitle, nuiWidget* pContents, uint pos)
 {
-  AddChild(pTab);
+  nuiSimpleContainer* pDecoTab;
+  nuiSimpleContainer* pDecoContents;
   
-  nuiSimpleContainer* pDeco = new nuiSimpleContainer();
-  pDeco->SetObjectName(_T("nuiTabView::Tab"));
-  pDeco->SetObjectClass(_T("nuiTabView::Tab"));
-  pDeco->AddChild(pTitle);
+  nuiWidget* pTitleWidget = pTitle;
+  nuiWidget* pContentsWidget = pContents;
+  
+  if (mDecoratedBackground)
+  {
+    pDecoTab = new nuiSimpleContainer();
+    pDecoTab->SetObjectName(_T("nuiTabView::Tab"));
+    pDecoTab->SetObjectClass(_T("nuiTabView::Tab"));
+    pDecoTab->AddChild(pTitle);
+
+    pDecoContents = new nuiSimpleContainer();
+    pDecoContents->SetObjectName(_T("nuiTabView::Contents"));
+    pDecoContents->SetObjectClass(_T("nuiTabView::Contents"));
+    pDecoContents->AddChild(pContents);
+    
+    pTitleWidget = pDecoTab;
+    pContentsWidget = pDecoContents;
+  }
   
   nuiColor color;
   nuiColor::GetColor(_T("nuiDefaultClrNormalTab"), color);
@@ -318,17 +333,18 @@ void nuiTabView::InsertTab(nuiWidget* pTitle, nuiWidget* pTab, uint pos)
   nuiColor::GetColor(_T("nuiDefaultClrSelectedTab"), color);
   pTitle->SetColor(eSelectedTextFg, color);
   
-  AddChild(pDeco);
+  AddChild(pContentsWidget);
+  AddChild(pTitleWidget);
   
   if (!mTabs.empty())
-    pTab->SetEnabled(false);
-  pDeco->SetSelected(false);
-  mTabViewEvents.Connect(pDeco->Clicked, &nuiTabView::OnIconClicked, pDeco);
+    pContentsWidget->SetEnabled(false);
+  pTitleWidget->SetSelected(false);
+  mTabViewEvents.Connect(pTitleWidget->Clicked, &nuiTabView::OnIconClicked, pTitleWidget);
   
   if (pos >= mIcons.size())
   {
-    mTabs.push_back(pTab);
-    mIcons.push_back(pDeco);
+    mTabs.push_back(pContentsWidget);
+    mIcons.push_back(pTitleWidget);
   }
   else
   {
@@ -338,13 +354,17 @@ void nuiTabView::InsertTab(nuiWidget* pTitle, nuiWidget* pTab, uint pos)
     {
       if (t == pos)
       {
-        mIcons.insert(i, pDeco);
-        mTabs.insert(it, pTab);
+        mIcons.insert(i, pTitleWidget);
+        mTabs.insert(it, pContentsWidget);
       }
     }
   }
   
-  nuiDefaultDecoration::TabView_Tab(this, pDeco);
+  if (mDecoratedBackground)
+  {
+    nuiDefaultDecoration::TabView_Tab(this, pTitleWidget);
+    nuiDefaultDecoration::TabView_Contents(this, pContentsWidget);
+  }
   
   SelectTab(0);
 }

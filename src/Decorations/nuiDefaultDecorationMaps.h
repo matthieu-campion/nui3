@@ -98,22 +98,36 @@ const long         gpDefaultDecorationDialogPaneSize = 1108;
 extern const char* gpDefaultDecorationTabTopUp;
 const long         gpDefaultDecorationTabTopUpSize = 263;
 extern const char* gpDefaultDecorationTabTopDown;
-const long         gpDefaultDecorationTabTopDownSize = 277;
+const long         gpDefaultDecorationTabTopDownSize = 218;
 
 extern const char* gpDefaultDecorationTabLeftUp;
 const long         gpDefaultDecorationTabLeftUpSize = 256;
 extern const char* gpDefaultDecorationTabLeftDown;
-const long         gpDefaultDecorationTabLeftDownSize = 279;
+const long         gpDefaultDecorationTabLeftDownSize = 225;
 
 extern const char* gpDefaultDecorationTabRightUp;
 const long         gpDefaultDecorationTabRightUpSize = 264;
 extern const char* gpDefaultDecorationTabRightDown;
-const long         gpDefaultDecorationTabRightDownSize = 289;
+const long         gpDefaultDecorationTabRightDownSize = 244;
 
 extern const char* gpDefaultDecorationTabBottomUp;
 const long         gpDefaultDecorationTabBottomUpSize = 268;
 extern const char* gpDefaultDecorationTabBottomDown;
-const long         gpDefaultDecorationTabBottomDownSize = 292;
+const long         gpDefaultDecorationTabBottomDownSize = 240;
+
+
+extern const char* gpDefaultDecorationTabTopContents;
+const long         gpDefaultDecorationTabTopContentsSize = 241;
+
+extern const char* gpDefaultDecorationTabLeftContents;
+const long         gpDefaultDecorationTabLeftContentsSize = 244;
+
+extern const char* gpDefaultDecorationTabRightContents;
+const long         gpDefaultDecorationTabRightContentsSize = 233;
+
+extern const char* gpDefaultDecorationTabBottomContents;
+const long         gpDefaultDecorationTabBottomContentsSize = 223;
+
 
 
 

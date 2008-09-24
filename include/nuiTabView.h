@@ -27,7 +27,7 @@ public:
 class NUI_API nuiTabView : public nuiSimpleContainer
 {
 public:
-  nuiTabView(nuiPosition pos);
+  nuiTabView(nuiPosition pos, bool decoratedBackground = true);
   virtual ~nuiTabView();
 
   virtual nuiRect CalcIdealSize();
@@ -39,9 +39,9 @@ public:
     
   bool OnIconClicked(const nuiEvent& rEvent);
 
-  virtual void AddTab(const nglString& rTitle, nuiWidget* pTab);
-  virtual void AddTab(nuiWidget* pTitle, nuiWidget* pTab);
-  virtual void InsertTab(nuiWidget* pTitle, nuiWidget* pTab, uint position);
+  virtual void AddTab(const nglString& rTitle, nuiWidget* pContents);
+  virtual void AddTab(nuiWidget* pTitle, nuiWidget* pContents);
+  virtual void InsertTab(nuiWidget* pTitle, nuiWidget* pContents, uint position);
   virtual void RemoveTab(nuiWidget* pTab, bool trashit = true);
   virtual void RemoveTab(const uint& tab_index, bool trashit = true);
    
@@ -78,6 +78,7 @@ protected:
   bool mFoldable;
   bool mFolded;
   bool mSliding;
+  bool mDecoratedBackground;
   float mFoldRatio;
 };
 

@@ -69,6 +69,7 @@ public:
   static void MainWindow(nuiMainWindow* pWindow);
   static void MessageBox(nuiMessageBox* pBox);
   static void TabView_Tab(nuiTabView* pView, nuiWidget* pTab);
+  static void TabView_Contents(nuiTabView* pView, nuiWidget* pContents);
   
 
 };

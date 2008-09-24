@@ -746,3 +746,72 @@ void nuiDefaultDecoration::TabView_Tab(nuiTabView* pView, nuiWidget* pTab)
 }
 
 
+
+
+
+
+
+
+
+void nuiDefaultDecoration::TabView_Contents(nuiTabView* pView, nuiWidget* pContents)
+{
+  nglString decoName = _T("nuiDefaultDecorationTabTopContents");
+  
+  nuiRect frameRect;
+  
+  const char* deco = gpDefaultDecorationTabTopContents;
+  long decoSize = gpDefaultDecorationTabTopContentsSize;
+  
+  switch (pView->GetPosition())
+  {
+    case nuiTop:
+      decoName = _T("nuiDefaultDecorationTabTopContents");
+      deco = gpDefaultDecorationTabTopContents;
+      decoSize = gpDefaultDecorationTabTopContentsSize;
+      frameRect = nuiRect(4,5,2,4);
+      break;
+      
+    case nuiLeft:
+      decoName = _T("nuiDefaultDecorationTabLeftContents");
+      deco = gpDefaultDecorationTabLeftContents;
+      decoSize = gpDefaultDecorationTabLeftContentsSize;
+      frameRect = nuiRect(5,4,4,2);
+      break;
+      
+    case nuiRight:
+      decoName = _T("nuiDefaultDecorationTabRightContents");
+      deco = gpDefaultDecorationTabRightContents;
+      decoSize = gpDefaultDecorationTabRightContentsSize;
+      frameRect = nuiRect(5,4,4,2);
+      break;
+      
+    case nuiBottom:
+      decoName = _T("nuiDefaultDecorationTabBottomContents");
+      deco = gpDefaultDecorationTabBottomContents;
+      decoSize = gpDefaultDecorationTabBottomContentsSize;
+      frameRect = nuiRect(4,5,2,4);
+      break;
+  }
+  
+  nuiFrame* pDeco = (nuiFrame*)nuiDecoration::Get(decoName);
+  if (pDeco)
+  {
+    pContents->SetDecoration(pDeco, eDecorationBorder);
+    return;
+  }
+  
+  nglIMemory* pIMem = new nglIMemory(deco, decoSize);
+  nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
+  NGL_ASSERT(pTex);
+  pDeco = new nuiFrame(decoName, pTex, frameRect);
+  delete pIMem;
+  
+  pContents->SetDecoration(pDeco, eDecorationBorder);
+  
+}
+
+
+
+
+
+
