@@ -866,18 +866,6 @@ void nuiD3DPainter::DrawArray(const nuiRenderArray& rArray)
       glDisableClientState(GL_NORMAL_ARRAY);
       */
 
-    if (array.IsArrayEnabled(nuiRenderArray::eEdgeFlag))
-    {
-      NGL_OUT(_T("EEDGEFLAG ARRAY "));
-      int a=0;
-      //this->ClearColor();
-      //return;
-      /*
-      glEnableClientState(GL_EDGE_FLAG_ARRAY);
-      glEdgeFlagPointer(0, &array.GetEdgeFlags()[0]);
-      CheckForGLErrors();
-      */
-    }
     /*
     else
       glDisableClientState(GL_EDGE_FLAG_ARRAY);
