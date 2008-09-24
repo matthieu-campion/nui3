@@ -42,6 +42,11 @@ public:
   void SetSpacesPerTab(uint count);
   uint GetSpacesPerTab();
 
+  void SetUnderline(bool set);
+  bool GetUnderline() const;
+  void SetStrikeThrough(bool set);
+  bool GetStrikeThrough() const;
+  
   virtual void OnFinalizeLayout();
 
   void SetWrapX(nuiSize WrapX);
@@ -49,6 +54,15 @@ public:
 
   nuiRect GetRect() const;
   nglFontBase* FindFontForMissingGlyph(nglFontBase* pOriginalFont, nglChar Glyph);
+  
+  struct Line
+  {
+    float mX;
+    float mY;
+    float mWidth;
+  };
+  
+  const std::vector<Line>& GetLines() const;
 protected:
   uint mSpacesPerTab;
   nuiOrientation mOrientation;
@@ -70,6 +84,10 @@ protected:
   void GetWordSize(nuiRect& rRect, const GlyphList& rGlyphs);
   
   std::vector<nuiFont*> mpSubstitutionFonts;
+
+  std::vector<Line> mLines;
+  bool mUnderline;
+  bool mStrikeThrough;
 };
 
 class NUI_API nuiFontBase : public nglFontBase

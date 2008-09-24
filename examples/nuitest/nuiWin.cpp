@@ -94,6 +94,8 @@
 
 #include "nuiMessageBox.h"
 
+#include "nuiHyperLink.h"
+
 #include <iostream>
 
 using namespace std;
@@ -1797,27 +1799,8 @@ bool nuiWin::CreateTabViewWindow(const nuiEvent& rEvent)
  
 
   { // Page 3
-    nglString VertexShader(nglString::Empty);
-    nglString FragmentShader(
-      _T("void main(void)\n")\
-      _T("{\n")\
-      _T("vec4 tcolor = texture2D(nuiTexture2D0, gl_TexCoord[0].st);\n")\
-      _T("gl_FragColor = tcolor * vec4(vec3(0, gl_TexCoord[0].st),1.0);\n")\
-      _T("}\n")\
-      );
-    nuiShader* pShader = new nuiShader(GetNGLContext(), _T("Test Shader1"), VertexShader, FragmentShader);
-    if (!pShader->Compile())
-    {
-      NGL_OUT((_T("Shader compilation status:\n%ls\n")), pShader->GetErrorMessage().GetChars());
-      delete pShader;
-      return false;
-    }
-
-    nuiShaderView* pShaderView = new nuiShaderView(pShader);
-    nuiImage* pImage = new nuiImage(_T("rsrc:/small_ngl.png"));
-    pShaderView->AddChild(pImage);
-    pImage->SetFillRule(nuiTopLeft);
-    pTabView->AddTab(_T("Tab3"), pShaderView);
+    nuiHyperLink* pLink = new nuiHyperLink(_T("http://libnui.net"), _T("Go to the nui website!"));
+    pTabView->AddTab(_T("Tab3"), pLink);
   }
 
   nuiFixed* pFixed = new nuiFixed();

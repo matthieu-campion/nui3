@@ -294,7 +294,7 @@ bool nuiTabView::MouseUnclicked (nuiSize X, nuiSize Y, nglMouseInfo::Flags Butto
 void nuiTabView::AddTab(const nglString& rTitle, nuiWidget* pContents)
 {
   nuiLabel* pLabel = new nuiLabel(rTitle);
-  pLabel->SetBorder(4,4);
+  pLabel->SetBorder(4,2);
   AddTab(pLabel, pContents);
 }
 

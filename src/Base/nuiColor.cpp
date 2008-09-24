@@ -30,8 +30,7 @@ static static_color static_colors[] =
 {(nglChar*)_T("nuiDefaultColorScrollBar3"), 34,66,114},
 {(nglChar*)_T("nuiDefaultColorScrollBarStroke"), 94,117,152},
 
-
-
+{(nglChar*)_T("nuiHyperLink"), 64,64,255},
 
 
   // constants

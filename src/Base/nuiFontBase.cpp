@@ -36,13 +36,15 @@ static const nglChar* gpFontErrorTable[] =
 
 //class nuiFontLayout : public nglFontLayout
 nuiFontLayout::nuiFontLayout(nglFontBase& rFont, float PenX , float PenY, nuiOrientation Orientation)
-  : nglFontLayout(rFont, PenX, PenY)
+  : nglFontLayout(rFont, PenX, PenY), mUnderline(false), mStrikeThrough(false)
 {
   mOrientation = Orientation;
   SetDownAxis(1);
   mSpacesPerTab = 2;
   mWrapX = 0;
   mpCurrentWord = NULL;
+  Line l = {mPenX, mPenY, 0.0f };
+  mLines.push_back(l);
 }
 
 nuiFontLayout::~nuiFontLayout()
@@ -58,6 +60,26 @@ nuiFontLayout::WordElement::WordElement()
   //mGlyph;
   mChar = 0;
   mPos = -1;
+}
+
+void nuiFontLayout::SetUnderline(bool set)
+{
+  mUnderline = set;
+}
+
+bool nuiFontLayout::GetUnderline() const
+{
+  return mUnderline;
+}
+
+void nuiFontLayout::SetStrikeThrough(bool set)
+{
+  mStrikeThrough = set;
+}
+
+bool nuiFontLayout::GetStrikeThrough() const
+{
+  return mStrikeThrough;
 }
 
 nuiFontLayout::WordElement::WordElement(const WordElement& rWordElement)
@@ -115,12 +137,16 @@ void nuiFontLayout::OnGlyph (nglFontBase* pFont, const nglString& rString, int P
         nglFontInfo info;
         pFont->GetInfo(info);
         mPenY += mDownAxis * info.AdvanceMaxH;
+
+        Line l = {mPenX, mPenY, 0.0f };
+        mLines.push_back(l);
       }
       else if (c == _T('\t'))
       {
         nglFontInfo info;
         pFont->GetInfo(info);
         mPenX += info.AdvanceMaxW * mSpacesPerTab;
+        mLines[mLines.size() - 1].mWidth += info.AdvanceMaxW * mSpacesPerTab;
       }
       else if (c < _T(' ') ||  // skip control chars (includes newline)
         !pGlyph)        // no glyph to render
@@ -144,6 +170,8 @@ void nuiFontLayout::OnGlyph (nglFontBase* pFont, const nglString& rString, int P
         // Proceed with glyph advance
         mPenX += pGlyph->AdvanceX;
         mPenY += pGlyph->AdvanceY;
+        
+        mLines[mLines.size() - 1].mWidth += pGlyph->AdvanceX;
       }
     }
     else // Using Wrapper
@@ -258,12 +286,18 @@ void nuiFontLayout::OnFinalizeLayout()
         mPenY += mDownAxis * info.AdvanceMaxH;
         mGlyphPrev = 0;
         mpFontPrev = NULL;
+
+        Line l = {mPenX, mPenY, 0.0f };
+        mLines.push_back(l);
       }
       else if (c == _T('\t'))
       {
         //NGL_OUT(_T("TAB\n"));
         if (mPenX > 0.0f)
+        {
           mPenX += info.AdvanceMaxW * mSpacesPerTab;
+          mLines[mLines.size() - 1].mWidth += info.AdvanceMaxW * mSpacesPerTab;
+        }
         mGlyphPrev = 0;
         mpFontPrev = NULL;
       }
@@ -327,6 +361,9 @@ void nuiFontLayout::OnFinalizeLayout()
           {
             mPenX = mGlyphs[0].X; // Go back to layout X origin
             mPenY += mDownAxis * info.AdvanceMaxH;
+
+            Line l = {mPenX, mPenY, 0.0f };
+            mLines.push_back(l);
           }
           //NGL_OUT(_T("Wrapped to %f %f\n"), mPenX, mPenY);
         }
@@ -369,6 +406,8 @@ void nuiFontLayout::OnFinalizeLayout()
             mPenX += pGlyph->AdvanceX;
             mPenY += pGlyph->AdvanceY;
 
+            mLines[mLines.size() - 1].mWidth += pGlyph->AdvanceX + kx;
+            
             mGlyphPrev = pGlyph->Index;
             mpFontPrev = pFont;
             
@@ -499,6 +538,11 @@ nglFontBase* nuiFontLayout::FindFontForMissingGlyph(nglFontBase* pOriginalFont, 
   }
   
   return NULL; // We don't have a valid font for substitution...
+}
+
+const std::vector<nuiFontLayout::Line>& nuiFontLayout::GetLines() const
+{
+  return mLines;
 }
 
 
@@ -741,12 +785,12 @@ void nuiFontBase::GetCacheGlyph(uint Index, nuiFontBase::GlyphLocation &rGlyphLo
   }
 }
 
-void nuiFontBase::SetAlphaTest (float Threshold)
+void nuiFontBase::SetAlphaTest(float Threshold)
 {
   mAlphaTest = Threshold;
 }
 
-int nuiFontBase::Print (nuiDrawContext *pContext, float X, float Y, const nglString& rText)
+int nuiFontBase::Print(nuiDrawContext *pContext, float X, float Y, const nglString& rText)
 {
   nuiFontLayout layout(*this);
 
@@ -769,7 +813,7 @@ int nuiFontBase::Print (nuiDrawContext *pContext, float X, float Y, const nglStr
   return Print(pContext, X, Y, layout);
 }
 
-int nuiFontBase::Print (nuiDrawContext *pContext, float X, float Y, const nuiFontLayout& rLayout)
+int nuiFontBase::Print(nuiDrawContext *pContext, float X, float Y, const nuiFontLayout& rLayout)
 {
   uint todo = rLayout.GetGlyphCount();
   if (!todo)
@@ -810,6 +854,56 @@ int nuiFontBase::Print (nuiDrawContext *pContext, float X, float Y, const nuiFon
 
   PrintGlyphs(pContext, Glyphs);
 
+  // Draw underlines if needed
+  if (rLayout.GetUnderline())
+  {
+    const std::vector<nuiFontLayout::Line>& rLines(rLayout.GetLines());
+    nglFontInfo info;
+    GetInfo (info);
+    float pos = -info.UnderlinePos;
+    float thickness = info.UnderlineThick;
+    pContext->SetLineWidth(thickness);
+    nuiColor oldcolor(pContext->GetStrokeColor());
+    pContext->SetStrokeColor(pContext->GetTextColor());
+    
+    for (uint32 i = 0; i < rLines.size(); i++)
+    {
+      nuiFontLayout::Line rLine(rLines[i]);
+      const float x1 = X + rLine.mX;
+      const float x2 = X + rLine.mX + rLine.mWidth;
+      const float y = ToNearest(Y + rLine.mY + pos);
+      if (rLine.mWidth > 0)
+        pContext->DrawLine(x1, y, x2, y);
+    }
+
+    pContext->SetStrokeColor(oldcolor);
+  }
+  
+  // Draw underlines if needed
+  if (rLayout.GetStrikeThrough())
+  {
+    const std::vector<nuiFontLayout::Line>& rLines(rLayout.GetLines());
+    nglFontInfo info;
+    GetInfo (info);
+    float pos = -info.Ascender * .4f;
+    float thickness = info.UnderlineThick;
+    pContext->SetLineWidth(thickness);
+    nuiColor oldcolor(pContext->GetStrokeColor());
+    pContext->SetStrokeColor(pContext->GetTextColor());
+    
+    for (uint32 i = 0; i < rLines.size(); i++)
+    {
+      nuiFontLayout::Line rLine(rLines[i]);
+      const float x1 = X + rLine.mX;
+      const float x2 = X + rLine.mX + rLine.mWidth;
+      const float y = ToNearest(Y + rLine.mY + pos);
+      if (rLine.mWidth > 0)
+        pContext->DrawLine(x1, y, x2, y);
+    }
+    
+    pContext->SetStrokeColor(oldcolor);
+  }
+  
   pContext->EnableBlending(blendsaved);
   pContext->EnableTexturing(texturesaved);
 

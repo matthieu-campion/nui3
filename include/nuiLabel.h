@@ -48,6 +48,10 @@ public:
   void SetFont(nuiFontRequest& rFontRequest);
   void SetFont(const nglString& rFontSymbol);
   nuiFont* GetFont(); //< Return the font used by the widget.
+  void SetUnderline(bool set);
+  bool GetUnderline() const;
+  void SetStrikeThrough(bool set);
+  bool GetStrikeThrough() const;
 
   void SetTextColor(const nuiColor& Color); ///< Get the text color.
   void SetBackgroundColor(const nuiColor& Color); ///< Set the background color.
@@ -68,7 +72,7 @@ public:
   nuiOrientation GetOrientation(); ///< Get the orientation of the text in the widget's rectangle.
 
   void SetBackground(bool bg); ///< If \param bg is true the label will clear its background before being drawn.
-  bool GetBackground(); ///< Return true if the label will clear its background before being drawn.
+  bool GetBackground() const; ///< Return true if the label will clear its background before being drawn.
 
   void UseEllipsis(bool useEllipsis); ///< If \param useEllipsis is true the label will display ... at the end of the text if there is not enough space to display it
 
@@ -98,6 +102,8 @@ protected:
   nuiRect GetLayoutRect();
 
   bool mWrapping;
+  bool mUnderline;
+  bool mStrikeThrough;
 
   bool mTextColorSet;
   bool mBackColorSet;

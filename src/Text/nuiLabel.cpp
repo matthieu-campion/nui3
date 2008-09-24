@@ -17,7 +17,9 @@
 
 nuiLabel::nuiLabel(const nglString& Text, nuiTheme::FontStyle FontStyle)
   : nuiWidget(),
-    mLabelSink(this)
+    mLabelSink(this),
+    mUnderline(false),
+    mStrikeThrough(false)
 {
   if (SetObjectClass(_T("nuiLabel")))
     InitAttributes();
@@ -165,7 +167,17 @@ void nuiLabel::InitAttributes()
    nuiFastDelegate::MakeDelegate(this, &nuiLabel::GetBackground), 
    nuiFastDelegate::MakeDelegate(this, &nuiLabel::SetBackground)));
   
-
+  AddAttribute(new nuiAttribute<bool>
+  (nglString(_T("Underline")), nuiUnitYesNo,
+   nuiFastDelegate::MakeDelegate(this, &nuiLabel::GetUnderline), 
+   nuiFastDelegate::MakeDelegate(this, &nuiLabel::SetUnderline)));
+  
+  AddAttribute(new nuiAttribute<bool>
+  (nglString(_T("StrikeThrough")), nuiUnitYesNo,
+   nuiFastDelegate::MakeDelegate(this, &nuiLabel::GetStrikeThrough), 
+   nuiFastDelegate::MakeDelegate(this, &nuiLabel::SetStrikeThrough)));
+  
+  
   AddAttribute(new nuiAttribute<nuiPosition>
   (nglString(_T("TextPosition")), nuiUnitPosition,
    nuiFastDelegate::MakeDelegate(this, &nuiLabel::GetTextPosition), 
@@ -343,6 +355,8 @@ void nuiLabel::CalcLayout()
         if (mpLayout)
           delete mpLayout;
         mpLayout = new nuiFontLayout(*mpFont, 0, 0, mOrientation);
+        mpLayout->SetUnderline(mUnderline);
+        mpLayout->SetStrikeThrough(mStrikeThrough);
         mFontChanged = false;
       }
 
@@ -510,7 +524,7 @@ void nuiLabel::SetBackground(bool bg)
   Invalidate();
 }
 
-bool nuiLabel::GetBackground()
+bool nuiLabel::GetBackground() const
 {
   return mClearBg;
 }
@@ -661,4 +675,30 @@ bool nuiLabel::SetLayoutConstraint(const nuiWidget::LayoutConstraint& rConstrain
     return true;
   }
   return false;
+}
+
+void nuiLabel::SetUnderline(bool set)
+{
+  mUnderline = set;
+  if (mpLayout)
+    mpLayout->SetUnderline(mUnderline);
+  Invalidate();
+}
+
+bool nuiLabel::GetUnderline() const
+{
+  return mUnderline;
+}
+
+void nuiLabel::SetStrikeThrough(bool set)
+{
+  mStrikeThrough = set;
+  if (mpLayout)
+    mpLayout->SetStrikeThrough(mStrikeThrough);
+  Invalidate();
+}
+
+bool nuiLabel::GetStrikeThrough() const
+{
+  return mStrikeThrough;
 }

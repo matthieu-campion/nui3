@@ -2237,6 +2237,10 @@
 		E5B009E00C87855E004BEE4E /* nuiToggleButton.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B009DE0C87855E004BEE4E /* nuiToggleButton.h */; };
 		E5B009E40C87857A004BEE4E /* nuiRadioButton.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B009E30C87857A004BEE4E /* nuiRadioButton.h */; };
 		E5B009E50C87857A004BEE4E /* nuiRadioButton.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B009E30C87857A004BEE4E /* nuiRadioButton.h */; };
+		E5B916C10E8A6CDC00610715 /* nuiHyperLink.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5B916C00E8A6CDC00610715 /* nuiHyperLink.cpp */; };
+		E5B916C20E8A6CDC00610715 /* nuiHyperLink.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5B916C00E8A6CDC00610715 /* nuiHyperLink.cpp */; };
+		E5B916C40E8A6CFB00610715 /* nuiHyperLink.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B916C30E8A6CFB00610715 /* nuiHyperLink.h */; };
+		E5B916C50E8A6CFB00610715 /* nuiHyperLink.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B916C30E8A6CFB00610715 /* nuiHyperLink.h */; };
 		E5BCF2EA0D88226100D6EAEF /* nuiFontBrowser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5BCF2E90D88226100D6EAEF /* nuiFontBrowser.cpp */; };
 		E5BCF2EB0D88226100D6EAEF /* nuiFontBrowser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5BCF2E90D88226100D6EAEF /* nuiFontBrowser.cpp */; };
 		E5BCF2ED0D88227D00D6EAEF /* nuiFontBrowser.h in Headers */ = {isa = PBXBuildFile; fileRef = E5BCF2EC0D88227D00D6EAEF /* nuiFontBrowser.h */; };
@@ -3405,6 +3409,8 @@
 		E5B008310C871F5F004BEE4E /* nuiDrawContext.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiDrawContext.h; path = include/nuiDrawContext.h; sourceTree = SOURCE_ROOT; };
 		E5B009DE0C87855E004BEE4E /* nuiToggleButton.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiToggleButton.h; path = include/nuiToggleButton.h; sourceTree = SOURCE_ROOT; };
 		E5B009E30C87857A004BEE4E /* nuiRadioButton.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiRadioButton.h; path = include/nuiRadioButton.h; sourceTree = SOURCE_ROOT; };
+		E5B916C00E8A6CDC00610715 /* nuiHyperLink.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiHyperLink.cpp; sourceTree = "<group>"; };
+		E5B916C30E8A6CFB00610715 /* nuiHyperLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiHyperLink.h; path = include/nuiHyperLink.h; sourceTree = SOURCE_ROOT; };
 		E5BCF2E90D88226100D6EAEF /* nuiFontBrowser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiFontBrowser.cpp; sourceTree = "<group>"; };
 		E5BCF2EC0D88227D00D6EAEF /* nuiFontBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiFontBrowser.h; path = include/nuiFontBrowser.h; sourceTree = SOURCE_ROOT; };
 		E5C2ED740CF6480A0098B8BB /* nglVolume.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nglVolume.h; path = include/nglVolume.h; sourceTree = SOURCE_ROOT; };
@@ -5175,6 +5181,8 @@
 				E54EDB7C0C8EF49400B294C8 /* nuiSpinnerLabel.h */,
 				E5816E030C3CECAB00902DFE /* nuiText.cpp */,
 				E5816D0D0C3CECAB00902DFE /* nuiText.h */,
+				E5B916C00E8A6CDC00610715 /* nuiHyperLink.cpp */,
+				E5B916C30E8A6CFB00610715 /* nuiHyperLink.h */,
 			);
 			name = Text;
 			path = src/Text;
@@ -6004,6 +6012,7 @@
 				BCD0F0F10E643D4700B84520 /* nuiURL.h in Headers */,
 				BC5529FD0E754CEF00E8068E /* nuiDefaultDecoration.h in Headers */,
 				BC1D4E650E81667C00E84651 /* nuiDefaultDecorationMaps.h in Headers */,
+				E5B916C40E8A6CFB00610715 /* nuiHyperLink.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6651,6 +6660,7 @@
 				BCD0F0F00E643D4700B84520 /* nuiURL.h in Headers */,
 				BC5529FC0E754CEF00E8068E /* nuiDefaultDecoration.h in Headers */,
 				BC1D4E630E81667C00E84651 /* nuiDefaultDecorationMaps.h in Headers */,
+				E5B916C50E8A6CFB00610715 /* nuiHyperLink.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7206,6 +7216,7 @@
 				BC5529FA0E754CE400E8068E /* nuiDefaultDecoration.cpp in Sources */,
 				E57502A50E77EF6800D240DE /* nuiBindings.cpp in Sources */,
 				BC1D4E640E81667C00E84651 /* nuiDefaultDecorationMaps.cpp in Sources */,
+				E5B916C20E8A6CDC00610715 /* nuiHyperLink.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7704,6 +7715,7 @@
 				BC5529F90E754CE400E8068E /* nuiDefaultDecoration.cpp in Sources */,
 				E57502A40E77EF6800D240DE /* nuiBindings.cpp in Sources */,
 				BC1D4E620E81667C00E84651 /* nuiDefaultDecorationMaps.cpp in Sources */,
+				E5B916C10E8A6CDC00610715 /* nuiHyperLink.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
