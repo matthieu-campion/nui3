@@ -48,7 +48,7 @@ bool nuiDialogSelectDirectory::OnSelectorOK(const nuiEvent& rEvent)
   mPath = mpSelector->GetPath();
   
   // send event and close the dialog if the user answered true
-  if (DirectorySelected())
+  if (!DirectorySelected())
     Trash();
   
   return false;
