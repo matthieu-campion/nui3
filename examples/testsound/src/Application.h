@@ -20,8 +20,9 @@ public:
   Application();
   ~Application();
 
-   void OnInit();
+  void OnInit();
   void OnExit (int Code);
+  
 protected:
    MainWindow *mpMainWindow;
 };

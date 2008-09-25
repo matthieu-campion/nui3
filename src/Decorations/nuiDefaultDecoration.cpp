@@ -417,7 +417,6 @@ void nuiDefaultDecoration::RadioButton(nuiWidget* pWidget)
   if (pDeco)
   {
     pWidget->SetDecoration(pDeco, eDecorationBorder);
-    pWidget->SetBorder(10,10);
     return;
   }
   
@@ -457,7 +456,6 @@ void nuiDefaultDecoration::RadioButton(nuiWidget* pWidget)
   pState->SetSourceClientRect(nuiRect(0,0,13,13));
   
   pWidget->SetDecoration(pState, eDecorationBorder);
-  pWidget->SetBorder(10,10);
   
 }
 

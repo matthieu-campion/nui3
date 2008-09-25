@@ -27,6 +27,7 @@ hfile = file(destfilename + '.h', 'w')
 cppfile = file(destfilename + '.cpp', 'w')
 
 defname = destfilename.replace(' ', '_')
+defname = defname.rpartition('/')[2]
 
 hfile.write("""/*
   NUI3 - C++ cross-platform GUI framework for OpenGL based applications
@@ -35,13 +36,12 @@ hfile.write("""/*
   licence: see nui3/LICENCE.TXT
 */
 
-#ifndef __%s_h__
-#define __%s_h__
+#pragma once
 
-extern const char* gp%sFontBase;
-const long         g%sFontSize = %d;
+extern const char* gp%s;
+const long         g%sSize = %d;
 
-#endif // __%s_h__""" % (defname, defname, defname, defname, size, defname))
+""" % (defname, defname, size))
 
 cppfile.write("""/*
   NUI3 - C++ cross-platform GUI framework for OpenGL based applications
@@ -52,7 +52,7 @@ cppfile.write("""/*
 
 #include "nui.h"
 
-NGL_API const char* gpDefaultFontBase = \"%s\";""" % datastr)
+NGL_API const char* gp%s = \"%s\";""" % (defname, datastr))
 
 hfile.close()
 cppfile.close()
