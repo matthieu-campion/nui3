@@ -51,7 +51,7 @@ Generator::Generator()
   
   mpToolLabel = new nuiLabel(prefPath.GetPathName()); 
   mpToolLabel->SetDecoration(pDeco, eDecorationBorder);
-  pBox->SetCell(0, mpToolLabel);
+  pBox->SetCell(0, mpToolLabel, nuiFillHorizontal);
   pBox->SetCellExpand(0, nuiExpandShrinkAndGrow);
   nuiButton* pBtn = new nuiButton(_T("browse"));
   pBox->SetCell(1, pBtn);
@@ -81,7 +81,7 @@ Generator::Generator()
   
   mpSourceLabel = new nuiLabel(prefPath.GetPathName());  
   mpSourceLabel->SetDecoration(pDeco, eDecorationBorder);
-  pBox->SetCell(0, mpSourceLabel);
+  pBox->SetCell(0, mpSourceLabel, nuiFillHorizontal);
   pBox->SetCellExpand(0, nuiExpandShrinkAndGrow);
   pBtn = new nuiButton(_T("browse"));
   pBox->SetCell(1, pBtn);
@@ -276,8 +276,14 @@ bool Generator::OnStart(const nuiEvent& rEvent)
   }
   
   
+  //******************************************************************
+  //
   // create the "includer file"
-  nglPath includerPath = nglPath(source.GetPathName() + _T(".h"));
+  //
+  
+  nglPath HincluderPath = nglPath(source.GetPathName() + _T(".h"));
+  nglPath CPPincluderPath = nglPath(source.GetPathName() + _T(".cpp"));
+
   char* includer_str = 
   "/*\n"
   "NUI3 - C++ cross-platform GUI framework for OpenGL based applications\n"
@@ -286,11 +292,13 @@ bool Generator::OnStart(const nuiEvent& rEvent)
   "licence: see nui3/LICENCE.TXT\n"
   "*/\n"
   "\n"
-  "\n"
-  "#pragma once\n"
   "\n";
-  nglString includerStr(includer_str);
+
+  nglString HincluderStr(includer_str);
+  HincluderStr.Append(_T("#pragma once\n\n"));
   
+  nglString CPPincluderStr(includer_str);
+   
   for (it = children.begin(); it != children.end(); ++it)
   {
     nglPath child = *it;
@@ -302,20 +310,29 @@ bool Generator::OnStart(const nuiEvent& rEvent)
     nglString nodeStr = node.GetPathName();
     nodeStr.DeleteRight(node.GetExtension().GetLength() +1);
     
-    nglPath destPath = codeSource + nglPath(nodeStr);
-    destPath = nglPath(destPath.GetPathName() + _T(".h"));
+    nglPath HdestPath = codeSource + nglPath(nodeStr);
+    nglPath CPPdestPath = codeSource + nglPath(nodeStr);
+    HdestPath = nglPath(HdestPath.GetPathName() + _T(".h"));
+    CPPdestPath = nglPath(CPPdestPath.GetPathName() + _T(".cpp"));
 
-    destPath.MakeRelativeTo(includerPath.GetParent());
+    HdestPath.MakeRelativeTo(HincluderPath.GetParent());
+    CPPdestPath.MakeRelativeTo(CPPincluderPath.GetParent());
     
     nglString tmp;
-    tmp.Format(_T("#include \"%ls\"\n"), destPath.GetChars());
-    includerStr.Append(tmp);
+    tmp.Format(_T("#include \"%ls\"\n"), HdestPath.GetChars());
+    HincluderStr.Append(tmp);
+    tmp.Format(_T("#include \"%ls\"\n"), CPPdestPath.GetChars());
+    CPPincluderStr.Append(tmp);
   }
   
   // write the "includer file" on disk
-  nglIOStream* ostream = includerPath.OpenWrite();
+  nglIOStream* ostream = HincluderPath.OpenWrite();
   NGL_ASSERT(ostream);
-  ostream->WriteText(includerStr);
+  ostream->WriteText(HincluderStr);
+  delete ostream;
+  ostream = CPPincluderPath.OpenWrite();
+  NGL_ASSERT(ostream);
+  ostream->WriteText(CPPincluderStr);
   delete ostream;
   
   

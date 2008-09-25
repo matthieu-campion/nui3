@@ -11,7 +11,7 @@
 #include "nuiGradientDecoration.h"
 #include "nuiBorderDecoration.h"
 #include "nuiMetaDecoration.h"
-#include "nuiDefaultDecorationMaps.h"
+#include "DefaultDecoration.h"
 #include "nuiFrame.h"
 #include "nuiMessageBox.h"
 #include "nuiTabView.h"
@@ -108,7 +108,7 @@ void nuiDefaultDecoration::InitSelection()
 void nuiDefaultDecoration::InitMaps()
 {
   // vertical scrollbar background
-  nglIMemory* pIMem = new nglIMemory(gpDefaultDecorationScrollbarVerticalBkg, gpDefaultDecorationScrollbarVerticalBkgSize);
+  nglIMemory* pIMem = new nglIMemory(gpScrollbarVerticalBkg, gScrollbarVerticalBkgSize);
   nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
   nuiFrame* pFrame = new nuiFrame(_T("nuiDefaultDecorationScrollBarVerticalBkg"), pTex, nuiRect(6,8,0,0));
@@ -116,7 +116,7 @@ void nuiDefaultDecoration::InitMaps()
   delete pIMem;
 
   // vertical scrollbar handle
-  pIMem = new nglIMemory(gpDefaultDecorationScrollbarVerticalHdl, gpDefaultDecorationScrollbarVerticalHdlSize);
+  pIMem = new nglIMemory(gpScrollbarVerticalHdl, gScrollbarVerticalHdlSize);
   pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(_T("nuiDefaultDecorationScrollBarVerticalHdl"), pTex, nuiRect(2,6,6,0));
@@ -124,7 +124,7 @@ void nuiDefaultDecoration::InitMaps()
   delete pIMem;
   
   // Horizontal scrollbar background
-  pIMem = new nglIMemory(gpDefaultDecorationScrollbarHorizontalBkg, gpDefaultDecorationScrollbarHorizontalBkgSize);
+  pIMem = new nglIMemory(gpScrollbarHorizontalBkg, gScrollbarHorizontalBkgSize);
   pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(_T("nuiDefaultDecorationScrollBarHorizontalBkg"), pTex, nuiRect(8,6,0,0));
@@ -132,7 +132,7 @@ void nuiDefaultDecoration::InitMaps()
   delete pIMem;
   
   // Horizontal scrollbar handle
-  pIMem = new nglIMemory(gpDefaultDecorationScrollbarHorizontalHdl, gpDefaultDecorationScrollbarHorizontalHdlSize);
+  pIMem = new nglIMemory(gpScrollbarHorizontalHdl, gScrollbarHorizontalHdlSize);
   pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(_T("nuiDefaultDecorationScrollBarHorizontalHdl"), pTex, nuiRect(6,2,0,6));
@@ -145,7 +145,7 @@ void nuiDefaultDecoration::InitMaps()
   
   
   // vertical slider background
-  pIMem = new nglIMemory(gpDefaultDecorationSliderVerticalBkg, gpDefaultDecorationSliderVerticalBkgSize);
+  pIMem = new nglIMemory(gpSliderVerticalBkg, gSliderVerticalBkgSize);
   pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(_T("nuiDefaultDecorationSliderVerticalBkg"), pTex, nuiRect(0,6,4,0));
@@ -153,7 +153,7 @@ void nuiDefaultDecoration::InitMaps()
   delete pIMem;
   
   // vertical slider handle
-  pIMem = new nglIMemory(gpDefaultDecorationSliderVerticalHdl, gpDefaultDecorationSliderVerticalHdlSize);
+  pIMem = new nglIMemory(gpSliderVerticalHdl, gSliderVerticalHdlSize);
   pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(_T("nuiDefaultDecorationSliderVerticalHdl"), pTex, nuiRect(0,0,20,20));
@@ -161,7 +161,7 @@ void nuiDefaultDecoration::InitMaps()
   delete pIMem;
   
   // Horizontal slider background
-  pIMem = new nglIMemory(gpDefaultDecorationSliderHorizontalBkg, gpDefaultDecorationSliderHorizontalBkgSize);
+  pIMem = new nglIMemory(gpSliderHorizontalBkg, gSliderHorizontalBkgSize);
   pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(_T("nuiDefaultDecorationSliderHorizontalBkg"), pTex, nuiRect(6,0,0,4));
@@ -169,7 +169,7 @@ void nuiDefaultDecoration::InitMaps()
   delete pIMem;
   
   // Horizontal slider handle
-  pIMem = new nglIMemory(gpDefaultDecorationSliderHorizontalHdl, gpDefaultDecorationSliderHorizontalHdlSize);
+  pIMem = new nglIMemory(gpSliderHorizontalHdl, gSliderHorizontalHdlSize);
   pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(_T("nuiDefaultDecorationSliderHorizontalHdl"), pTex, nuiRect(0,0,20,20));
@@ -182,7 +182,7 @@ void nuiDefaultDecoration::InitMaps()
 
 
   // arrow handle close
-  pIMem = new nglIMemory(gpDefaultDecorationArrowClose, gpDefaultDecorationArrowCloseSize);
+  pIMem = new nglIMemory(gpArrowClose, gArrowCloseSize);
   pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(_T("nuiDefaultDecorationArrowClose"), pTex, nuiRect(0,0,7,6));
@@ -190,7 +190,7 @@ void nuiDefaultDecoration::InitMaps()
   delete pIMem;  
 
   // arrow handle open
-  pIMem = new nglIMemory(gpDefaultDecorationArrowOpen, gpDefaultDecorationArrowOpenSize);
+  pIMem = new nglIMemory(gpArrowOpen, gArrowOpenSize);
   pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(_T("nuiDefaultDecorationArrowOpen"), pTex, nuiRect(0,0,6,7));
@@ -203,7 +203,7 @@ void nuiDefaultDecoration::InitMaps()
 void nuiDefaultDecoration::InitIcons()
 {
   // volume icon
-  nglIMemory* pIMem = new nglIMemory(gpDefaultDecorationIconVolume, gpDefaultDecorationIconVolumeSize);
+  nglIMemory* pIMem = new nglIMemory(gpIconVolume, gIconVolumeSize);
   nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
   nuiFrame* pFrame = new nuiFrame(_T("nuiDefaultDecorationIconVolume"), pTex, nuiRect(0,0,18,19));
@@ -211,7 +211,7 @@ void nuiDefaultDecoration::InitIcons()
   delete pIMem; 
 
   // folder icon
-  pIMem = new nglIMemory(gpDefaultDecorationIconFolder, gpDefaultDecorationIconFolderSize);
+  pIMem = new nglIMemory(gpIconFolder, gIconFolderSize);
   pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(_T("nuiDefaultDecorationIconFolder"), pTex, nuiRect(0,0,18,16));
@@ -219,7 +219,7 @@ void nuiDefaultDecoration::InitIcons()
   delete pIMem;  
   
   // file icon
-  pIMem = new nglIMemory(gpDefaultDecorationIconFile, gpDefaultDecorationIconFileSize);
+  pIMem = new nglIMemory(gpIconFile, gIconFileSize);
   pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(_T("nuiDefaultDecorationIconFile"), pTex, nuiRect(0,0,16,20));
@@ -362,28 +362,27 @@ void nuiDefaultDecoration::Button(nuiWidget* pWidget)
   if (pDeco)
   {
     pWidget->SetDecoration(pDeco, eDecorationBorder);
-    pWidget->SetBorder(10,10);
     return;
   }
   
-  nglIMemory* pIMemUp = new nglIMemory(gpDefaultDecorationButtonUp, gpDefaultDecorationButtonUpSize);
+  nglIMemory* pIMemUp = new nglIMemory(gpButtonUp, gButtonUpSize);
   nuiTexture* pTexUp = nuiTexture::GetTexture(pIMemUp);
   NGL_ASSERT(pTexUp);
-  nuiFrame* pFrameUp = new nuiFrame(_T("nuiDefaultDecorationButtonUp"), pTexUp, nuiRect(4,5,2,7));
+  nuiFrame* pFrameUp = new nuiFrame(_T("nuiDefaultDecorationButtonUp"), pTexUp, nuiRect(14,15,2,7));
   delete pIMemUp;
 
   
-  nglIMemory* pIMemHover = new nglIMemory(gpDefaultDecorationButtonHover, gpDefaultDecorationButtonHoverSize);
+  nglIMemory* pIMemHover = new nglIMemory(gpButtonUp, gButtonUpSize);
   nuiTexture* pTexHover = nuiTexture::GetTexture(pIMemHover);
   NGL_ASSERT(pTexHover);
-  nuiFrame* pFrameHover = new nuiFrame(_T("nuiDefaultDecorationButtonHover"), pTexHover, nuiRect(4,5,2,7));
+  nuiFrame* pFrameHover = new nuiFrame(_T("nuiDefaultDecorationButtonHover"), pTexHover, nuiRect(14,15,2,7));
   delete pIMemHover;
   
   
-  nglIMemory* pIMemDown = new nglIMemory(gpDefaultDecorationButtonDown, gpDefaultDecorationButtonDownSize);
+  nglIMemory* pIMemDown = new nglIMemory(gpButtonDown, gButtonDownSize);
   nuiTexture* pTexDown = nuiTexture::GetTexture(pIMemDown);
   NGL_ASSERT(pTexDown);
-  nuiFrame* pFrameDown = new nuiFrame(_T("nuiDefaultDecorationButtonDown"), pTexDown, nuiRect(4,5,2,7));
+  nuiFrame* pFrameDown = new nuiFrame(_T("nuiDefaultDecorationButtonDown"), pTexDown, nuiRect(14,15,2,7));
   delete pIMemDown;
   
   
@@ -392,10 +391,9 @@ void nuiDefaultDecoration::Button(nuiWidget* pWidget)
                                                       _T("nuiDefaultDecorationButtonUp"),
                                                       _T("nuiDefaultDecorationButtonDown"),
                                                       _T("nuiDefaultDecorationButtonHover"));
-  pState->SetSourceClientRect(nuiRect(4,4,2,9));
+  pState->SetSourceClientRect(nuiRect(14,15,2,7));
 
   pWidget->SetDecoration(pState, eDecorationBorder);
-  pWidget->SetBorder(10,10);
 
 }
 
@@ -420,29 +418,29 @@ void nuiDefaultDecoration::RadioButton(nuiWidget* pWidget)
     return;
   }
   
-  nglIMemory* pIMem = new nglIMemory(gpDefaultDecorationRadioButtonUp, gpDefaultDecorationRadioButtonUpSize);
+  nglIMemory* pIMem = new nglIMemory(gpRadioButtonUp, gRadioButtonUpSize);
   nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
-  nuiFrame* pFrame = new nuiFrame(_T("nuiDefaultDecorationRadioButtonUp"), pTex, nuiRect(0,0,13,13));
+  nuiFrame* pFrame = new nuiFrame(_T("nuiDefaultDecorationRadioButtonUp"), pTex, nuiRect(10,10,13,13));
   delete pIMem;
   
   
-  pIMem = new nglIMemory(gpDefaultDecorationRadioButtonDown, gpDefaultDecorationRadioButtonDownSize);
+  pIMem = new nglIMemory(gpRadioButtonDown, gRadioButtonDownSize);
   pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
-  pFrame = new nuiFrame(_T("nuiDefaultDecorationRadioButtonDown"), pTex, nuiRect(0,0,13,13));
+  pFrame = new nuiFrame(_T("nuiDefaultDecorationRadioButtonDown"), pTex, nuiRect(10,10,13,13));
   delete pIMem;
 
-  pIMem = new nglIMemory(gpDefaultDecorationRadioButtonUpDisabled, gpDefaultDecorationRadioButtonUpDisabledSize);
+  pIMem = new nglIMemory(gpRadioButtonUpDisabled, gRadioButtonUpDisabledSize);
   pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
-  pFrame = new nuiFrame(_T("nuiDefaultDecorationRadioButtonUpDisabled"), pTex, nuiRect(0,0,13,13));
+  pFrame = new nuiFrame(_T("nuiDefaultDecorationRadioButtonUpDisabled"), pTex, nuiRect(10,10,13,13));
   delete pIMem;
 
-  pIMem = new nglIMemory(gpDefaultDecorationRadioButtonDownDisabled, gpDefaultDecorationRadioButtonDownDisabledSize);
+  pIMem = new nglIMemory(gpRadioButtonDownDisabled, gRadioButtonDownDisabledSize);
   pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
-  pFrame = new nuiFrame(_T("nuiDefaultDecorationRadioButtonDownDisabled"), pTex, nuiRect(0,0,13,13));
+  pFrame = new nuiFrame(_T("nuiDefaultDecorationRadioButtonDownDisabled"), pTex, nuiRect(10,10,13,13));
   delete pIMem;
   
   
@@ -453,7 +451,7 @@ void nuiDefaultDecoration::RadioButton(nuiWidget* pWidget)
                                                       _T("nuiDefaultDecorationRadioButtonDown"), /* hover down*/
                                                       _T("nuiDefaultDecorationRadioButtonUpDisabled"),
                                                       _T("nuiDefaultDecorationRadioButtonDownDisabled"));
-  pState->SetSourceClientRect(nuiRect(0,0,13,13));
+  pState->SetSourceClientRect(nuiRect(10,10,13,13));
   
   pWidget->SetDecoration(pState, eDecorationBorder);
   
@@ -475,21 +473,21 @@ void nuiDefaultDecoration::CloseButton(nuiWidget* pWidget)
     return;
   }
   
-  nglIMemory* pIMemUp = new nglIMemory(gpDefaultDecorationCloseButtonUp, gpDefaultDecorationCloseButtonUpSize);
+  nglIMemory* pIMemUp = new nglIMemory(gpCloseButtonUp, gCloseButtonUpSize);
   nuiTexture* pTexUp = nuiTexture::GetTexture(pIMemUp);
   NGL_ASSERT(pTexUp);
   nuiFrame* pFrameUp = new nuiFrame(_T("nuiDefaultDecorationCloseButtonUp"), pTexUp, nuiRect(0,0,12,15));
   delete pIMemUp;
   
   
-  nglIMemory* pIMemHover = new nglIMemory(gpDefaultDecorationCloseButtonHover, gpDefaultDecorationCloseButtonHoverSize);
+  nglIMemory* pIMemHover = new nglIMemory(gpCloseButtonHover, gCloseButtonHoverSize);
   nuiTexture* pTexHover = nuiTexture::GetTexture(pIMemHover);
   NGL_ASSERT(pTexHover);
   nuiFrame* pFrameHover = new nuiFrame(_T("nuiDefaultDecorationCloseButtonHover"), pTexHover, nuiRect(0,0,12,15));
   delete pIMemHover;
   
   
-  nglIMemory* pIMemDown = new nglIMemory(gpDefaultDecorationCloseButtonDown, gpDefaultDecorationCloseButtonDownSize);
+  nglIMemory* pIMemDown = new nglIMemory(gpCloseButtonDown, gCloseButtonDownSize);
   nuiTexture* pTexDown = nuiTexture::GetTexture(pIMemDown);
   NGL_ASSERT(pTexDown);
   nuiFrame* pFrameDown = new nuiFrame(_T("nuiDefaultDecorationCloseButtonDown"), pTexDown, nuiRect(0,0,12,15));
@@ -636,7 +634,7 @@ void nuiDefaultDecoration::MessageBox(nuiMessageBox* pBox)
   nuiFrame* pFrame = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationDialogPane"));
   if (!pFrame)
   {
-    nglIMemory* pIMem = new nglIMemory(gpDefaultDecorationDialogPane, gpDefaultDecorationDialogPaneSize);
+    nglIMemory* pIMem = new nglIMemory(gpDialogPane, gDialogPaneSize);
     nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
     NGL_ASSERT(pTex);
     pFrame = new nuiFrame(_T("nuiDefaultDecorationDialogPane"), pTex, nuiRect(12,16,0,16));
@@ -665,46 +663,46 @@ void nuiDefaultDecoration::TabView_Tab(nuiTabView* pView, nuiWidget* pTab)
   
   nuiRect frameRect;
 
-  const char* decoUp = gpDefaultDecorationTabTopUp;
-  const char* decoDown = gpDefaultDecorationTabTopDown;
-  long decoUpSize = gpDefaultDecorationTabTopUpSize;
-  long decoDownSize = gpDefaultDecorationTabTopDownSize;
+  const char* decoUp = gpTabTopUp;
+  const char* decoDown = gpTabTopDown;
+  long decoUpSize = gTabTopUpSize;
+  long decoDownSize = gTabTopDownSize;
   
   switch (pView->GetPosition())
   {
     case nuiTop:
       decoName = _T("nuiDefaultDecorationTabTop");
-      decoUp = gpDefaultDecorationTabTopUp;
-      decoDown = gpDefaultDecorationTabTopDown;
-      decoUpSize = gpDefaultDecorationTabTopUpSize;
-      decoDownSize = gpDefaultDecorationTabTopDownSize;
+      decoUp = gpTabTopUp;
+      decoDown = gpTabTopDown;
+      decoUpSize = gTabTopUpSize;
+      decoDownSize = gTabTopDownSize;
       frameRect = nuiRect(4,5,2,4);
       break;
       
     case nuiLeft:
       decoName = _T("nuiDefaultDecorationTabLeft");
-      decoUp = gpDefaultDecorationTabLeftUp;
-      decoDown = gpDefaultDecorationTabLeftDown;
-      decoUpSize = gpDefaultDecorationTabLeftUpSize;
-      decoDownSize = gpDefaultDecorationTabLeftDownSize;
+      decoUp = gpTabLeftUp;
+      decoDown = gpTabLeftDown;
+      decoUpSize = gTabLeftUpSize;
+      decoDownSize = gTabLeftDownSize;
       frameRect = nuiRect(5,4,4,2);
       break;
       
     case nuiRight:
       decoName = _T("nuiDefaultDecorationTabRight");
-      decoUp = gpDefaultDecorationTabRightUp;
-      decoDown = gpDefaultDecorationTabRightDown;
-      decoUpSize = gpDefaultDecorationTabRightUpSize;
-      decoDownSize = gpDefaultDecorationTabRightDownSize;
+      decoUp = gpTabRightUp;
+      decoDown = gpTabRightDown;
+      decoUpSize = gTabRightUpSize;
+      decoDownSize = gTabRightDownSize;
       frameRect = nuiRect(5,4,4,2);
       break;
       
     case nuiBottom:
       decoName = _T("nuiDefaultDecorationTabBottom");
-      decoUp = gpDefaultDecorationTabBottomUp;
-      decoDown = gpDefaultDecorationTabBottomDown;
-      decoUpSize = gpDefaultDecorationTabBottomUpSize;
-      decoDownSize = gpDefaultDecorationTabBottomDownSize;
+      decoUp = gpTabBottomUp;
+      decoDown = gpTabBottomDown;
+      decoUpSize = gTabBottomUpSize;
+      decoDownSize = gTabBottomDownSize;
       frameRect = nuiRect(4,5,2,4);
       break;
   }
@@ -757,36 +755,36 @@ void nuiDefaultDecoration::TabView_Contents(nuiTabView* pView, nuiWidget* pConte
   
   nuiRect frameRect;
   
-  const char* deco = gpDefaultDecorationTabTopContents;
-  long decoSize = gpDefaultDecorationTabTopContentsSize;
+  const char* deco = gpTabTopContents;
+  long decoSize = gTabTopContentsSize;
   
   switch (pView->GetPosition())
   {
     case nuiTop:
       decoName = _T("nuiDefaultDecorationTabTopContents");
-      deco = gpDefaultDecorationTabTopContents;
-      decoSize = gpDefaultDecorationTabTopContentsSize;
+      deco = gpTabTopContents;
+      decoSize = gTabTopContentsSize;
       frameRect = nuiRect(4,5,2,4);
       break;
       
     case nuiLeft:
       decoName = _T("nuiDefaultDecorationTabLeftContents");
-      deco = gpDefaultDecorationTabLeftContents;
-      decoSize = gpDefaultDecorationTabLeftContentsSize;
+      deco = gpTabLeftContents;
+      decoSize = gTabLeftContentsSize;
       frameRect = nuiRect(5,4,4,2);
       break;
       
     case nuiRight:
       decoName = _T("nuiDefaultDecorationTabRightContents");
-      deco = gpDefaultDecorationTabRightContents;
-      decoSize = gpDefaultDecorationTabRightContentsSize;
+      deco = gpTabRightContents;
+      decoSize = gTabRightContentsSize;
       frameRect = nuiRect(5,4,4,2);
       break;
       
     case nuiBottom:
       decoName = _T("nuiDefaultDecorationTabBottomContents");
-      deco = gpDefaultDecorationTabBottomContents;
-      decoSize = gpDefaultDecorationTabBottomContentsSize;
+      deco = gpTabBottomContents;
+      decoSize = gTabBottomContentsSize;
       frameRect = nuiRect(4,5,2,4);
       break;
   }
