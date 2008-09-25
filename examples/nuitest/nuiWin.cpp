@@ -3433,10 +3433,13 @@ private:
         nuiVertex_Solid v1(rVertices[ii+1].mX, rVertices[ii+1].mY, c1);
         nuiVertex_Solid v2(rVertices[ii+2].mX, rVertices[ii+2].mY, c2);
         
-        for (uint32 j = i; j < i+3; j++)
+        for (uint32 j = ii; j < ii+3; j++)
         {
-          printf("%3d: %6f / %6f\n", j, rVertices[j].mX, rVertices[j].mY);
+          printf("%3d: %10f / %10f\n", j, rVertices[j].mX, rVertices[j].mY);
         }
+        printf("[0x%x / 0x%x]\n", v0.X(), v0.Y());
+        printf("[0x%x / 0x%x]\n", v1.X(), v1.Y());
+        printf("[0x%x / 0x%x]\n", v2.X(), v2.Y());
         printf("\n");
         
         mpRasterizer->DrawLine<nuiPixelBlender_Transp>(v0, v0);

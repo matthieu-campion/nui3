@@ -13,7 +13,13 @@ nuiHyperLink::nuiHyperLink(const nglString& rURL, const nglString& rLabel)
   : nuiLabel(rLabel.IsNull() ? rURL : rLabel),
     mURL(rURL)
 {
-  SetObjectClass(_T("nuiHyperLink"));
+  if (SetObjectClass(_T("nuiHyperLink")))
+  {
+    AddAttribute(new nuiAttribute<const nglString&>
+                 (nglString(_T("URL")), nuiUnitName,
+                  nuiFastDelegate::MakeDelegate(this, &nuiHyperLink::GetURL), 
+                  nuiFastDelegate::MakeDelegate(this, &nuiHyperLink::SetURL)));
+  }
   SetTextColor(nuiColor(_T("nuiHyperLink")));
 }
 
@@ -49,6 +55,7 @@ bool nuiHyperLink::MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Butt
       // Open url in default browser
       nuiURL url(mURL);
       url.OpenBrowser();
+      SetUnderline(false);
     }
   }
   return true;
