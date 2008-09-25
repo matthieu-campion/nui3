@@ -621,10 +621,6 @@ bool nuiTreeView::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
         nuiWidgetPtr pWidget = pNode->GetElement();
         if (pWidget && pWidget->GetRect().IsInside(X,Y))
           Selected(); ///< Double click => Selection Action!
-      }
-
-      if (Button & nglMouseInfo::ButtonDoubleClick)
-      {
         pNode->Activated();
       }
       else
@@ -1032,7 +1028,8 @@ bool nuiTreeView::KeyDown(const nglKeyEvent& rEvent)
   }
   else if (rEvent.mKey == NK_ENTER || rEvent.mKey == NK_PAD_ENTER)
   {
-    Activated();
+    if (mpSelectedNode)
+      mpSelectedNode->Activated();
     return true;
   }
   return false;
