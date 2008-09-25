@@ -2317,6 +2317,7 @@
 		56892C1F0DE489B7005806AD /* nuiMemoryPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiMemoryPool.h; path = include/nuiMemoryPool.h; sourceTree = SOURCE_ROOT; };
 		56AFF7570D74522D003A6AF3 /* nuiHTTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiHTTP.h; path = ../../include/nuiHTTP.h; sourceTree = "<group>"; };
 		56AFF75F0D745886003A6AF3 /* nuiHTTP.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiHTTP.cpp; sourceTree = "<group>"; };
+		56C0F8360E7EAA76006DE460 /* makefont.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = makefont.py; path = ../../Desktop/makefont.py; sourceTree = SOURCE_ROOT; };
 		944C54120E00017400B691C5 /* nuiHotKeyEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiHotKeyEditor.cpp; sourceTree = "<group>"; };
 		944C54170E00018200B691C5 /* nuiHotKeyEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiHotKeyEditor.h; path = include/nuiHotKeyEditor.h; sourceTree = SOURCE_ROOT; };
 		BC0F707C0DB3BC0100329939 /* nglThreadChecker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nglThreadChecker.cpp; path = src/Threading/nglThreadChecker.cpp; sourceTree = SOURCE_ROOT; };
@@ -4848,6 +4849,7 @@
 		E5816D770C3CECAB00902DFE /* Font */ = {
 			isa = PBXGroup;
 			children = (
+				56C0F8360E7EAA76006DE460 /* makefont.py */,
 				E5816D5B0C3CECAB00902DFE /* nuiFont.cpp */,
 				E5816CC90C3CECAB00902DFE /* nuiFont.h */,
 				E5816D5C0C3CECAB00902DFE /* nuiFontBase.cpp */,
