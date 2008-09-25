@@ -64,6 +64,14 @@
 		56AFF7600D745886003A6AF3 /* nuiHTTP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56AFF75F0D745886003A6AF3 /* nuiHTTP.cpp */; };
 		56AFF7610D745886003A6AF3 /* nuiHTTP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56AFF75F0D745886003A6AF3 /* nuiHTTP.cpp */; };
 		56B2E0F00D632D51009AF1EA /* nuiFontManager.h in Headers */ = {isa = PBXBuildFile; fileRef = E587B7260C56BF440076200A /* nuiFontManager.h */; };
+		941A98BB0E8BEAAE00CAFC3A /* nuiScrollingLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 941A98BA0E8BEAAE00CAFC3A /* nuiScrollingLabel.cpp */; };
+		941A98BC0E8BEAAE00CAFC3A /* nuiScrollingLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 941A98BA0E8BEAAE00CAFC3A /* nuiScrollingLabel.cpp */; };
+		941A98BE0E8BEAD000CAFC3A /* nuiScrollingLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 941A98BD0E8BEAD000CAFC3A /* nuiScrollingLabel.h */; };
+		941A98BF0E8BEAD000CAFC3A /* nuiScrollingLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 941A98BD0E8BEAD000CAFC3A /* nuiScrollingLabel.h */; };
+		941A98CB0E8BF04700CAFC3A /* nuiScrollBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 941A98CA0E8BF04700CAFC3A /* nuiScrollBox.cpp */; };
+		941A98CC0E8BF04700CAFC3A /* nuiScrollBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 941A98CA0E8BF04700CAFC3A /* nuiScrollBox.cpp */; };
+		941A98CE0E8BF05C00CAFC3A /* nuiScrollBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 941A98CD0E8BF05C00CAFC3A /* nuiScrollBox.h */; };
+		941A98CF0E8BF05C00CAFC3A /* nuiScrollBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 941A98CD0E8BF05C00CAFC3A /* nuiScrollBox.h */; };
 		944C54130E00017400B691C5 /* nuiHotKeyEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 944C54120E00017400B691C5 /* nuiHotKeyEditor.cpp */; };
 		944C54140E00017400B691C5 /* nuiHotKeyEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 944C54120E00017400B691C5 /* nuiHotKeyEditor.cpp */; };
 		944C54180E00018200B691C5 /* nuiHotKeyEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = 944C54170E00018200B691C5 /* nuiHotKeyEditor.h */; };
@@ -2318,6 +2326,10 @@
 		56AFF7570D74522D003A6AF3 /* nuiHTTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiHTTP.h; path = ../../include/nuiHTTP.h; sourceTree = "<group>"; };
 		56AFF75F0D745886003A6AF3 /* nuiHTTP.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiHTTP.cpp; sourceTree = "<group>"; };
 		56C0F8360E7EAA76006DE460 /* makefont.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = makefont.py; path = ../../Desktop/makefont.py; sourceTree = SOURCE_ROOT; };
+		941A98BA0E8BEAAE00CAFC3A /* nuiScrollingLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiScrollingLabel.cpp; path = src/Text/nuiScrollingLabel.cpp; sourceTree = SOURCE_ROOT; };
+		941A98BD0E8BEAD000CAFC3A /* nuiScrollingLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiScrollingLabel.h; path = include/nuiScrollingLabel.h; sourceTree = SOURCE_ROOT; };
+		941A98CA0E8BF04700CAFC3A /* nuiScrollBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiScrollBox.cpp; path = src/Layout/nuiScrollBox.cpp; sourceTree = SOURCE_ROOT; };
+		941A98CD0E8BF05C00CAFC3A /* nuiScrollBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiScrollBox.h; path = include/nuiScrollBox.h; sourceTree = SOURCE_ROOT; };
 		944C54120E00017400B691C5 /* nuiHotKeyEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiHotKeyEditor.cpp; sourceTree = "<group>"; };
 		944C54170E00018200B691C5 /* nuiHotKeyEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiHotKeyEditor.h; path = include/nuiHotKeyEditor.h; sourceTree = SOURCE_ROOT; };
 		BC0F707C0DB3BC0100329939 /* nglThreadChecker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nglThreadChecker.cpp; path = src/Threading/nglThreadChecker.cpp; sourceTree = SOURCE_ROOT; };
@@ -4936,6 +4948,8 @@
 				E53645E80CDF7CE300838C78 /* nuiPopupView.h */,
 				E5816D9A0C3CECAB00902DFE /* nuiPositioner.cpp */,
 				E5816CEE0C3CECAB00902DFE /* nuiPositioner.h */,
+				941A98CA0E8BF04700CAFC3A /* nuiScrollBox.cpp */,
+				941A98CD0E8BF05C00CAFC3A /* nuiScrollBox.h */,
 				E5816D9B0C3CECAB00902DFE /* nuiScrollView.cpp */,
 				E5816CFA0C3CECAB00902DFE /* nuiScrollView.h */,
 				E5816CFB0C3CECAB00902DFE /* nuiShadeContainer.h */,
@@ -5174,6 +5188,8 @@
 		E5816DFF0C3CECAB00902DFE /* Text */ = {
 			isa = PBXGroup;
 			children = (
+				941A98BA0E8BEAAE00CAFC3A /* nuiScrollingLabel.cpp */,
+				941A98BD0E8BEAD000CAFC3A /* nuiScrollingLabel.h */,
 				E55FFC7A0C8EF78000C8DDE0 /* nuiFormatedLabel.h */,
 				E55FFC7B0C8EF78000C8DDE0 /* nuiFormater.h */,
 				E5816E000C3CECAB00902DFE /* nuiEditLine.cpp */,
@@ -6023,6 +6039,8 @@
 				BC5529FD0E754CEF00E8068E /* nuiDefaultDecoration.h in Headers */,
 				BC80B2530E8B99C000ECDCE7 /* DefaultDecoration.h in Headers */,
 				E5B916C40E8A6CFB00610715 /* nuiHyperLink.h in Headers */,
+				941A98BF0E8BEAD000CAFC3A /* nuiScrollingLabel.h in Headers */,
+				941A98CF0E8BF05C00CAFC3A /* nuiScrollBox.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6671,6 +6689,8 @@
 				BC5529FC0E754CEF00E8068E /* nuiDefaultDecoration.h in Headers */,
 				BC80B2520E8B99C000ECDCE7 /* DefaultDecoration.h in Headers */,
 				E5B916C50E8A6CFB00610715 /* nuiHyperLink.h in Headers */,
+				941A98BE0E8BEAD000CAFC3A /* nuiScrollingLabel.h in Headers */,
+				941A98CE0E8BF05C00CAFC3A /* nuiScrollBox.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7227,6 +7247,8 @@
 				E57502A50E77EF6800D240DE /* nuiBindings.cpp in Sources */,
 				BC80B3660E8BBB2600ECDCE7 /* DefaultDecoration.cpp in Sources */,
 				E5B916C20E8A6CDC00610715 /* nuiHyperLink.cpp in Sources */,
+				941A98BC0E8BEAAE00CAFC3A /* nuiScrollingLabel.cpp in Sources */,
+				941A98CC0E8BF04700CAFC3A /* nuiScrollBox.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7726,6 +7748,8 @@
 				E57502A40E77EF6800D240DE /* nuiBindings.cpp in Sources */,
 				BC80B3650E8BBB2600ECDCE7 /* DefaultDecoration.cpp in Sources */,
 				E5B916C10E8A6CDC00610715 /* nuiHyperLink.cpp in Sources */,
+				941A98BB0E8BEAAE00CAFC3A /* nuiScrollingLabel.cpp in Sources */,
+				941A98CB0E8BF04700CAFC3A /* nuiScrollBox.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
