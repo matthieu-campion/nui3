@@ -11,7 +11,7 @@
 #include "nuiGradientDecoration.h"
 #include "nuiBorderDecoration.h"
 #include "nuiMetaDecoration.h"
-#include "DefaultDecoration.h"
+#include "../Graphics/DefaultDecoration.h"
 #include "nuiFrame.h"
 #include "nuiMessageBox.h"
 #include "nuiTabView.h"

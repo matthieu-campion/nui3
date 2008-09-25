@@ -821,14 +821,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\Decorations\nuiDefaultDecorationMaps.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Decorations\nuiDefaultDecorationMaps.h"
-					>
-				</File>
-				<File
 					RelativePath=".\src\Decorations\nuiFrame.cpp"
 					>
 				</File>
@@ -872,6 +864,18 @@
 					RelativePath=".\include\nuiTreeHandleDecoration.h"
 					>
 				</File>
+				<Filter
+					Name="Embeded"
+					>
+					<File
+						RelativePath=".\graphics\DefaultDecoration.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\graphics\DefaultDecoration.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="File"
@@ -2046,6 +2050,14 @@
 				</File>
 				<File
 					RelativePath=".\include\nuiFormater.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Text\nuiHyperLink.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiHyperLink.h"
 					>
 				</File>
 				<File
