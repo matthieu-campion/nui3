@@ -200,11 +200,11 @@ private:
   template <class PixelBlender, class VertexType>
   void DrawHLine(VertexType& Left, VertexType& Right)
   {
-    if (Left.X() > Right.X())
-    {
-      DrawHLine<PixelBlender, VertexType>(Right, Left);
-      return;
-    }
+//     if (Left.X() > Right.X())
+//     {
+//       DrawHLine<PixelBlender, VertexType>(Right, Left);
+//       return;
+//     }
     VertexType v0(Left);
     VertexType v1(Right);
     int32 width = v1.X() - v0.X();
@@ -225,24 +225,27 @@ private:
     int32 end = ToAbove(v1.X());
 
     width = end - x;
-    if (!width)
+    if (width <= 0)
       return;
-    
-    if (width < 0)
-    {
-      VertexType tmp1 = v0;
-      v0 = v1;
-      v1 = tmp1;
-      width = -width;
-      VertexType tmp2 = incr;
-      incr.Clear();
-      incr.Sub(tmp2);
-      std::swap(x, end);
-    }
+
+//     if (!width)
+//       return;
+//     
+//     if (width < 0)
+//     {
+//       VertexType tmp1 = v0;
+//       v0 = v1;
+//       v1 = tmp1;
+//       width = -width;
+//       VertexType tmp2 = incr;
+//       incr.Clear();
+//       incr.Sub(tmp2);
+//       std::swap(x, end);
+//     }
     
     uint32* pBuffer = mpBuffer + (y * mWidth + x);
 
-    incr.DrawHLine<PixelBlender>(pBuffer, v0, (end - x));
+    incr.DrawHLine<PixelBlender>(pBuffer, v0, width);
   }
   
 public:

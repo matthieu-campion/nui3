@@ -18,7 +18,7 @@
 MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& rInfo, bool ShowFPS, const nglContext* pShared )
   : nuiMainWindow(rContextInfo, rInfo, pShared, nglPath(ePathCurrent)), mEventSink(this)
 {
-
+  SetDecoration(NULL);
 }
 
 MainWindow::~MainWindow()
@@ -27,9 +27,20 @@ MainWindow::~MainWindow()
 
 void MainWindow::OnCreation()
 {
-  nuiImage* pImage = new nuiImage(_T("rsrc:/rasters2.png"));
-  pImage->SetPosition(nuiCenter);
-  AddChild(pImage);
+  bool test1 = false;
+  bool test2 = true;
+
+  if (test1)
+  {
+    nuiImage* pImage = new nuiImage(_T("rsrc:/rasters2.png"));
+    pImage->SetPosition(nuiCenter);
+    AddChild(pImage);
+  }
+
+  if (test2)
+  {
+
+  }
 }
 
 void MainWindow::OnClose()
