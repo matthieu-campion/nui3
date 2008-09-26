@@ -21,16 +21,9 @@ public:
   bool Load(nuiXMLNode* pNode);
   virtual ~nuiComboBox();
   
-  virtual nuiRect CalcIdealSize();
-  virtual bool    Draw(nuiDrawContext* pContext);
-  virtual bool    SetRect(const nuiRect& rRect);
-
-  virtual bool    MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
   
   nuiSimpleEventSource<0> ValueChanged;
   bool OnSelect(const nuiEvent& rEvent);
-
-  void SetMenuTextColor(const nuiColor &NormalTextColor, const nuiColor &SelectedTextColor, const nuiColor &DisabledTextColor);
 
   nuiWidget*    GetSelectedWidget();
   nuiTreeNode*  GetSelected();
@@ -40,21 +33,19 @@ public:
   void          SetSelected(uint32 childIndex);
   void          SetValue(uint32 childIndex);
 
-  void          SetHandleSize(nuiSize width, nuiSize height);
-  void          GetHandleSize(nuiSize& rWidth, nuiSize& rHeight);
-  void          SetHandleOffset(nuiSize offset);
-  nuiSize       GetHandleWidth() const;
-  nuiSize       GetHandleHeight() const;
-  nuiSize       GetHandleOffset() const;
-
-  bool IsBoxDisplayed() const;
-  void SetBoxDisplayed(bool set);
-
   void SetTree(nuiTreeNode* pTree);
   
   nuiSimpleEventSource<nuiWidgetSelected> SelectionChanged; ///< This event is called whenever selection of the items of the list have changed. 
 
 protected:
+
+  virtual nuiRect CalcIdealSize();
+  virtual bool    Draw(nuiDrawContext* pContext);
+  virtual bool    SetRect(const nuiRect& rRect);
+
+  virtual bool    MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
+
+
   void ReparentTree(nuiTreeNode* pTree);
   void UnparentTree(nuiTreeNode* pTree);
   nuiTreeNode*  mpChoicesTree;
@@ -64,11 +55,6 @@ protected:
   nuiSize       mHandleWidth;
   nuiSize       mHandleHeight;
   nuiSize       mHandleOffset;
-
-  bool mBoxDisplayed;
-
-  nuiColor mMenuText[3];
-  bool mHasCustomMenuTextFg;
 
   nuiEventSink<nuiComboBox> mComboBoxEvents;
 };

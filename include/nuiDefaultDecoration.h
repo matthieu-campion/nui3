@@ -48,6 +48,8 @@ public:
   static void RadioButton(nuiWidget* pWidget);
   static void CloseButton(nuiWidget* pWidget);
   static void ToggleButton(nuiWidget* pWidget);
+  
+  static void ComboBox(nuiWidget* pWidget);
 
   // dialogs
   static void MessageBox_Title(nuiWidget* pWidget);

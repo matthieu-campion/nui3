@@ -51,12 +51,11 @@ Generator::Generator()
   
   mpToolLabel = new nuiLabel(prefPath.GetPathName()); 
   mpToolLabel->SetDecoration(pDeco, eDecorationBorder);
-  pBox->SetCell(0, mpToolLabel, nuiFillHorizontal);
+  pBox->SetCell(0, mpToolLabel);
   pBox->SetCellExpand(0, nuiExpandShrinkAndGrow);
   nuiButton* pBtn = new nuiButton(_T("browse"));
-  pBox->SetCell(1, pBtn);
+  pBox->SetCell(1, pBtn, nuiTop);
   mEventSink.Connect(pBtn->Activated, &Generator::OnBrowseToolRequest);
-  
   
   
   // separation line
@@ -81,7 +80,7 @@ Generator::Generator()
   
   mpSourceLabel = new nuiLabel(prefPath.GetPathName());  
   mpSourceLabel->SetDecoration(pDeco, eDecorationBorder);
-  pBox->SetCell(0, mpSourceLabel, nuiFillHorizontal);
+  pBox->SetCell(0, mpSourceLabel);
   pBox->SetCellExpand(0, nuiExpandShrinkAndGrow);
   pBtn = new nuiButton(_T("browse"));
   pBox->SetCell(1, pBtn);

@@ -9,9 +9,9 @@
 #include "nuiDrawContext.h"
 #include "nuiComboBox.h"
 
-#define DEFAULT_HANDLE_WIDTH    8.f
-#define DEFAULT_HANDLE_HEIGHT   5.f
-#define DEFAULT_HANDLE_OFFSET  5.f
+#define DEFAULT_HANDLE_WIDTH    10.f
+#define DEFAULT_HANDLE_HEIGHT   10.f
+#define DEFAULT_HANDLE_OFFSET  12.f
 
 nuiComboBox::nuiComboBox()
 : nuiSimpleContainer(), 
@@ -25,8 +25,6 @@ nuiComboBox::nuiComboBox()
   mComboBoxEvents(this)
 {
   SetObjectClass(_T("nuiComboBox"));
-  mBoxDisplayed = true;
-  mHasCustomMenuTextFg = false;
 }
 
 
@@ -43,9 +41,6 @@ nuiComboBox::nuiComboBox(nuiTreeNode* pChoicesTree, bool ownTree)
 {
   SetObjectClass(_T("nuiComboBox"));
 
-  mBoxDisplayed = true;
-  mHasCustomMenuTextFg = false;
-  
   ReparentTree(mpChoicesTree);
 }
 
@@ -62,8 +57,6 @@ bool nuiComboBox::Load(nuiXMLNode* pNode)
   mHandleOffset = DEFAULT_HANDLE_OFFSET;
 
   mComboBoxEvents.SetTarget(this);
-  mBoxDisplayed = true;
-  mHasCustomMenuTextFg = false;
 
   return true;
 }
@@ -124,13 +117,6 @@ void SetTreeRect(nuiTreeNode* pTree, const nuiRect& rRect)
   }
 }
 
-void nuiComboBox::SetMenuTextColor(const nuiColor &NormalTextColor, const nuiColor &SelectedTextColor, const nuiColor &DisabledTextColor)
-{
-  mMenuText[0] = NormalTextColor;
-  mMenuText[1] = SelectedTextColor;
-  mMenuText[2] = DisabledTextColor;
-  mHasCustomMenuTextFg = true;
-}
 
 bool nuiComboBox::SetRect(const nuiRect& rRect)
 {
@@ -143,40 +129,6 @@ bool nuiComboBox::SetRect(const nuiRect& rRect)
 
 bool nuiComboBox::Draw(nuiDrawContext* pContext)
 {
-  if (mBoxDisplayed)
-  {
-    pContext->EnableBlending(true);
-    pContext->SetBlendFunc(nuiBlendTransp);
-    
-    const nuiRect& rect(GetRect().Size());
-    
-    nuiShape shape;
-    shape.AddRoundRect(rect, MIN(rect.GetWidth(), rect.GetHeight())/2.f);
-
-    pContext->SetFillColor(GetColor(eComboBoxBg));
-    nuiColor black(0.f, 0.f, 0.f, GetAlpha());
-    pContext->SetStrokeColor(GetColor(eComboBoxLining));
-    pContext->DrawShape(&shape, eStrokeAndFillShape);
-
-    
-    nuiRect r(rect.Right() - (mHandleWidth+mHandleOffset), (nuiSize)ToNearest(rect.GetHeight()/2.f - mHandleHeight/2.f), mHandleWidth, mHandleHeight);
-    
-    pContext->EnableAntialiasing(true);
-
-    nuiShape arrow;
-    arrow.LineTo(nuiPoint((nuiSize)ToBelow(r.Left()+r.GetWidth()/2.f) , r.Bottom()));
-    arrow.LineTo(nuiPoint(r.Left(), r.Top()));
-    arrow.LineTo(nuiPoint(r.Right(), r.Top()));
-    arrow.CloseContour();
-
-    pContext->SetFillColor(GetColor(eSelectionMarkee));
-    pContext->SetStrokeColor(GetColor(eSelectionMarkee));
-    pContext->DrawShape(&arrow, eStrokeAndFillShape);
-    
-    nuiReflection ref(0.4f, 0.5f);
-    ref.Draw(pContext, rect, &shape);
-  }
-
   nuiWidget* pWidget = GetSelectedWidget();
   if (pWidget)
   {
@@ -217,21 +169,6 @@ bool nuiComboBox::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
       nuiRect rect(0.f,0.f,0.f,0.f);
       PrepareMenuTree(mpChoicesTree);
       nuiPopupMenu* pMenu = new nuiPopupMenu(this, mpChoicesTree, nuiRect(0.f,0.f,GetRect().GetWidth() - (mHandleWidth + mHandleOffset),0.f), false);  
-      
-      nuiColor col;
-      std::map<nuiWidgetElement, nuiColor>::iterator it = mWidgetElementColors.begin();
-      std::map<nuiWidgetElement, nuiColor>::iterator end = mWidgetElementColors.end();
-      while (it != end)
-      {
-        pMenu->SetColor(it->first, it->second);
-        ++it;
-      }
-      if (mHasCustomMenuTextFg)
-      {
-        pMenu->SetColor(eNormalTextFg, mMenuText[0]);
-        pMenu->SetColor(eSelectedTextFg, mMenuText[1]);
-        pMenu->SetColor(eDisabledTextFg, mMenuText[2]);
-      }
       
       pMenu->ShowFirstNode(false);
       mComboBoxEvents.Connect(pMenu->MenuDone, &nuiComboBox::OnSelect, pMenu);
@@ -319,49 +256,6 @@ void nuiComboBox::SetSelected(nuiTreeNode* pSelection)
   InvalidateLayout();
 }
 
-void nuiComboBox::SetHandleSize(nuiSize width, nuiSize height)
-{ 
-  mHandleWidth = width;
-  mHandleHeight = height;
-  InvalidateLayout();
-}
-
-void nuiComboBox::SetHandleOffset(nuiSize offset)
-{ 
-  mHandleOffset = offset;
-  InvalidateLayout();
-}
-
-void nuiComboBox::GetHandleSize(nuiSize& rWidth, nuiSize& rHeight)
-{
-  rWidth = mHandleWidth;
-  rHeight = mHandleHeight;
-}
-
-nuiSize nuiComboBox::GetHandleWidth() const
-{
-  return mHandleWidth;
-}
-
-nuiSize nuiComboBox::GetHandleHeight() const
-{
-  return mHandleHeight;
-}
-
-nuiSize nuiComboBox::GetHandleOffset() const
-{
-  return mHandleOffset;
-}
-
-bool nuiComboBox::IsBoxDisplayed() const
-{
-  return mBoxDisplayed;
-}
-
-void nuiComboBox::SetBoxDisplayed(bool set)
-{
-  mBoxDisplayed = set;
-}
 
 void nuiComboBox::UnparentTree(nuiTreeNode* pTree)
 {

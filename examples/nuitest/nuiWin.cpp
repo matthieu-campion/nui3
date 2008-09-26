@@ -607,7 +607,9 @@ void nuiWin::OnCreation()
 /*finfo.Descender - */
   }
   
-  
+  //LBDEBUG
+  nuiEvent event;
+  CreateComboBoxWindow(event);
   
 }
 
@@ -1926,7 +1928,7 @@ bool nuiWin::CreateWrappedLabelWindow(const nuiEvent& rEvent)
 
 bool nuiWin::CreateComboBoxWindow(const nuiEvent& rEvent)
 {
-  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, _T("Combo Box"));
+  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nuiWindow::DecoratedBackground, _T("Combo Box"));
   mpManager->AddChild(pWindow);
 
   nuiTreeNodePtr pNode = NULL;
@@ -1947,9 +1949,18 @@ bool nuiWin::CreateComboBoxWindow(const nuiEvent& rEvent)
     pNode->AddChild(pNode2);
   }
 
-  nuiComboBox* pCombo = new nuiComboBox(pTree, true);
-  pWindow->AddChild(pCombo);
 
+    nuiTreeNode* pNode2 = new nuiTreeNode(_T("my last long choice"), true);
+    pNode->AddChild(pNode2);
+
+
+  nuiComboBox* pCombo = new nuiComboBox(pTree, true);
+  
+  nuiVBox* pVBox = new nuiVBox(0);
+  pWindow->AddChild(pVBox);
+  
+  pVBox->AddCell(pCombo, nuiCenter);
+  
   return false;
 }
 

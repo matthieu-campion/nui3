@@ -15,6 +15,8 @@ licence: see nui3/LICENCE.TXT
 #include "DefaultDecoration/src/CloseButtonDown.h"
 #include "DefaultDecoration/src/CloseButtonHover.h"
 #include "DefaultDecoration/src/CloseButtonUp.h"
+#include "DefaultDecoration/src/ComboDown.h"
+#include "DefaultDecoration/src/ComboUp.h"
 #include "DefaultDecoration/src/DialogPane.h"
 #include "DefaultDecoration/src/IconFile.h"
 #include "DefaultDecoration/src/IconFolder.h"

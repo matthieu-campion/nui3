@@ -50,8 +50,10 @@ void nuiDefaultDecoration::Init()
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiButton")), &nuiDefaultDecoration::Button);
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiRadioButton")), &nuiDefaultDecoration::RadioButton);
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiCloseButton")), &nuiDefaultDecoration::CloseButton);
-  
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiToggleButton")), &nuiDefaultDecoration::ToggleButton);
+  
+  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiComboBox")), &nuiDefaultDecoration::ComboBox);
+  
 
   // dialogs
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiMessageBox::Title")), &nuiDefaultDecoration::MessageBox_Title);
@@ -75,8 +77,8 @@ void nuiDefaultDecoration::Init()
 
 void nuiDefaultDecoration::InitColors()
 {
-  nuiColor::SetColor(_T("nuiDefaultClrWindowBkg1"), nuiColor(240,240,240));
-  nuiColor::SetColor(_T("nuiDefaultClrWindowBkg2"), nuiColor(230,230,230));
+  nuiColor::SetColor(_T("nuiDefaultClrWindowBkg1"), nuiColor(225,230,235));
+  nuiColor::SetColor(_T("nuiDefaultClrWindowBkg2"), nuiColor(255,255,255));
 
   nuiColor::SetColor(_T("nuiDefaultClrCaptionBkg1"), nuiColor(197,197,197));
   nuiColor::SetColor(_T("nuiDefaultClrCaptionBkg2"), nuiColor(150,150,150));
@@ -242,6 +244,8 @@ void nuiDefaultDecoration::Window(nuiWidget* pWidget)
       
       pDeco = new nuiGradientDecoration(_T("nuiDefaultDecorationWindow"), 
                                         nuiRect(0,0, 0,0), color1, color2, nuiVertical, 1, nuiColor(175,175,175), eStrokeAndFillShape);
+      pDeco->SetOffset1(0.f);
+      pDeco->SetOffset2(0.5f);
     }
     pWindow->SetDecoration(pDeco);
   }
@@ -466,7 +470,7 @@ void nuiDefaultDecoration::RadioButton(nuiWidget* pWidget)
 void nuiDefaultDecoration::CloseButton(nuiWidget* pWidget)
 {
   
-  nuiGradientDecoration* pDeco = (nuiGradientDecoration*)nuiDecoration::Get(_T("nuiDefaultDecorationCloseButton"));
+  nuiStateDecoration* pDeco = (nuiStateDecoration*)nuiDecoration::Get(_T("nuiDefaultDecorationCloseButton"));
   if (pDeco)
   {
     pWidget->SetDecoration(pDeco, eDecorationBorder);
@@ -513,6 +517,41 @@ void nuiDefaultDecoration::ToggleButton(nuiWidget* pWidget)
 
 
 
+void nuiDefaultDecoration::ComboBox(nuiWidget* pWidget)
+{
+ 
+  nuiStateDecoration* pDeco = (nuiStateDecoration*)nuiDecoration::Get(_T("nuiDefaultDecorationComboBox"));
+  if (pDeco)
+  {
+    pWidget->SetDecoration(pDeco, eDecorationBorder);
+    return;
+  }
+  
+  nglIMemory* pIMem = new nglIMemory(gpComboUp, gComboUpSize);
+  nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
+  NGL_ASSERT(pTex);
+  nuiFrame* pFrame = new nuiFrame(_T("nuiDefaultDecorationComboBoxUp"), pTex, nuiRect(12,4,2,10));
+  pFrame->EnableBorder(false);
+  delete pIMem;
+    
+  pIMem = new nglIMemory(gpComboDown, gComboDownSize);
+  pTex = nuiTexture::GetTexture(pIMem);
+  NGL_ASSERT(pTex);
+  pFrame = new nuiFrame(_T("nuiDefaultDecorationComboBoxDown"), pTex, nuiRect(12,4,2,10));
+  pFrame->EnableBorder(false);
+  delete pIMem;
+  
+  
+  
+  nuiStateDecoration* pState = new nuiStateDecoration(_T("nuiDefaultDecorationComboBox"));
+  pState->SetState(nuiStateEnabled  | nuiStateReleased, nuiDecoration::Get(_T("nuiDefaultDecorationComboBoxUp")));
+  pState->SetState(nuiStateEnabled  | nuiStateSelected, nuiDecoration::Get(_T("nuiDefaultDecorationComboBoxDown")));
+  pWidget->SetDecoration(pState, eDecorationBorder);
+  pWidget->SetUserHeight(18);
+  
+  pWidget->SetColor(eSelectedTextFg, nuiColor(32,32,32));
+  
+}
 
 
 
@@ -625,6 +664,8 @@ void nuiDefaultDecoration::MainWindow(nuiMainWindow* pWindow)
   nuiColor::GetColor(_T("nuiDefaultClrWindowBkg2"), color2);
   nuiGradientDecoration* pDeco = new nuiGradientDecoration(_T("nuiDefaultDecorationMainWindow"), 
                                                            nuiRect(0,0, 0,0), color1, color2, nuiVertical, 0, nuiColor(0,0,0), eFillShape);
+  pDeco->SetOffset1(0.f);
+  pDeco->SetOffset2(0.5f);                                                           
   pCont->SetDecoration(pDeco);  
 }
 
