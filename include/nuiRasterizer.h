@@ -404,15 +404,15 @@ public:
       topr = 0;
       midr = 2;
     }
-    else if (Triangle[1].X() < Triangle[2].X())
-    {
-      topl = 0;
-      midl = 1;
-      botl = 2;
-      topr = 0;
-      midr = 2;
-      botr = 2;
-    }
+//     else if (Triangle[1].X() < Triangle[2].X())
+//     {
+//       topl = 0;
+//       midl = 1;
+//       botl = 2;
+//       topr = 0;
+//       midr = 2;
+//       botr = 2;
+//     }
     else
     {
       topl = 0;
@@ -436,8 +436,15 @@ public:
     clipped |= !SetupSegment<VertexType, false>(Left0, Left1, LeftIncr);
     clipped |= !SetupSegment<VertexType, false>(Right0, Right1, RightIncr);
 
-    NGL_ASSERT(Left0.X() <= Right0.X());
-    NGL_ASSERT(Left1.X() <= Right1.X());
+    if (!((Left0.X() <= Right0.X()) && (Left1.X() <= Right1.X())))
+    {
+      std::swap(Left0, Right0);
+      std::swap(Left1, Right1);
+      std::swap(LeftIncr, RightIncr);
+      std::swap(topl, topr);
+      std::swap(midl, midr);
+      std::swap(botl, botr);
+    }
     
     if (!clipped)
       DrawSection<PixelBlender>(Left0, Left1, LeftIncr, Right0, Right1, RightIncr);
@@ -462,8 +469,8 @@ public:
         
     NGL_ASSERT(Left0.X() <= Right0.X());
     NGL_ASSERT(Left1.X() <= Right1.X());
-    NGL_ASSERT(Left0.Y() == Right0.Y());
-    NGL_ASSERT(Left1.Y() == Right1.Y());
+//     NGL_ASSERT(Left0.Y() == Right0.Y());
+//     NGL_ASSERT(Left1.Y() == Right1.Y());
 
     if (!clipped)
       DrawSection<PixelBlender>(Left0, Left1, LeftIncr, Right0, Right1, RightIncr);

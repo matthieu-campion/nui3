@@ -5,6 +5,7 @@ Copyright (C) 2002-2003 Sebastien Metrot & Vincent Caron
 licence: see nui3/LICENCE.TXT
 */
 
+#include "nui.h"
 
 #include "DefaultDecoration/src/ArrowClose.cpp"
 #include "DefaultDecoration/src/ArrowOpen.cpp"

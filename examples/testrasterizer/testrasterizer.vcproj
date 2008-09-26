@@ -193,6 +193,10 @@
 				>
 			</File>
 		</Filter>
+		<File
+			RelativePath=".\testrasterizer.rc"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>
