@@ -5,9 +5,8 @@
  licence: see nui3/LICENCE.TXT
 */
 
-#include "nuiScrollingLabel.h"
-
 #include "nui.h"
+#include "nuiScrollingLabel.h"
 #include "nuiFontBase.h"
 
 nuiScrollingLabel::nuiScrollingLabel(const nglString& rText, nuiTheme::FontStyle FontStyle, nuiScrollLoop ScrollLoop, bool smartScroll, bool centered)
@@ -929,7 +928,7 @@ void nuiScrollingLabel::CreateSubStrings(nuiSize width)
 //////////////////////////////
 
 
-void nuiScrollingLabel::SetHFPS(double hfps)
+void nuiScrollingLabel::SetHFPS(float hfps)
 {
   mHFPS = hfps;
   if (mOrientation == nuiHorizontal)
@@ -938,12 +937,12 @@ void nuiScrollingLabel::SetHFPS(double hfps)
   }
 }
 
-double nuiScrollingLabel::GetHFPS() const
+float nuiScrollingLabel::GetHFPS() const
 {
   return mHFPS;
 }
 
-void nuiScrollingLabel::SetVFPS(double vfps)
+void nuiScrollingLabel::SetVFPS(float vfps)
 {
   mVFPS = vfps;
   if (mOrientation == nuiVertical)
@@ -952,14 +951,14 @@ void nuiScrollingLabel::SetVFPS(double vfps)
   }
 }
 
-double nuiScrollingLabel::GetVFPS() const
+float nuiScrollingLabel::GetVFPS() const
 {
   return mVFPS;
 }
 
 
 // private - only used internally
-void nuiScrollingLabel::SetFPS(double fps)
+void nuiScrollingLabel::SetFPS(float fps)
 {
   mFPS = fps;
 
@@ -973,12 +972,12 @@ void nuiScrollingLabel::SetFPS(double fps)
   RestartScrolling();
 }
 
-double nuiScrollingLabel::GetFPS() const
+float nuiScrollingLabel::GetFPS() const
 {
   return mFPS;
 }
 
-void nuiScrollingLabel::SetPPF(double ppf)
+void nuiScrollingLabel::SetPPF(float ppf)
 {
   mPPF = ppf;
   
@@ -986,7 +985,7 @@ void nuiScrollingLabel::SetPPF(double ppf)
   RestartScrolling();
 }
 
-double nuiScrollingLabel::GetPPF() const
+float nuiScrollingLabel::GetPPF() const
 {
   return mPPF;
 }
@@ -1055,42 +1054,42 @@ bool nuiScrollingLabel::GetSmartScroll() const
   return mSmartScroll;
 }
 
-void nuiScrollingLabel::SetHPause(int hPause)
+void nuiScrollingLabel::SetHPause(float hPause)
 {
   mHPause = hPause;
 }
 
-void nuiScrollingLabel::SetHWait(int hWait)
+void nuiScrollingLabel::SetHWait(float hWait)
 {
   mHPause = hWait;
 }
 
-void nuiScrollingLabel::SetVPause(int vPause)
+void nuiScrollingLabel::SetVPause(float vPause)
 {
   mVPause = vPause;
 }
 
-void nuiScrollingLabel::SetVWait(int vWait)
+void nuiScrollingLabel::SetVWait(float vWait)
 {
   mVWait = vWait;
 }
 
-int nuiScrollingLabel::GetHPause() const
+float nuiScrollingLabel::GetHPause() const
 {
   return mHPause;
 }
 
-int nuiScrollingLabel::GetHWait() const
+float nuiScrollingLabel::GetHWait() const
 {
   return mHWait;
 }
 
-int nuiScrollingLabel::GetVPause() const
+float nuiScrollingLabel::GetVPause() const
 {
   return mVPause;
 }
 
-int nuiScrollingLabel::GetVWait() const
+float nuiScrollingLabel::GetVWait() const
 {
   return mVWait;
 }

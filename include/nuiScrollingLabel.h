@@ -21,8 +21,8 @@
 // Get Rid of mPPF if we're always setting it at 1 ppf, and increasing speed using the fps value ?
 
 
-#define DEFAULT_VERTICAL_FPS 20.0
-#define DEFAULT_HORIZONTAL_FPS 60.0
+#define DEFAULT_VERTICAL_FPS 20.f
+#define DEFAULT_HORIZONTAL_FPS 60.f
 
 enum nuiScrollLoop
 {
@@ -63,27 +63,27 @@ public:
   void CreateSubStrings(nuiSize width);
   
   // Getters & Setters
-  void SetHFPS(double hfps);
-  void SetVFPS(double vfps);
-  double GetFPS() const;
-  double GetHFPS() const;
-  double GetVFPS() const;
-  void SetPPF(double ppf);
-  double GetPPF() const;
+  void SetHFPS(float hfps);
+  void SetVFPS(float vfps);
+  float GetFPS() const;
+  float GetHFPS() const;
+  float GetVFPS() const;
+  void SetPPF(float ppf);
+  float GetPPF() const;
   void SetCentered(bool centered);
   bool IsCentered() const;
   void SetScrollLoop(nuiScrollLoop scrollLoop);
   nuiScrollLoop GetScrollLoop();
   void SetSmartScroll(bool smartScroll);
   bool GetSmartScroll() const;
-  void SetHPause(int hPause);
-  void SetHWait(int hWait);
-  void SetVPause(int vPause);
-  void SetVWait(int vWait);
-  int GetHPause() const;
-  int GetHWait() const;
-  int GetVPause() const;
-  int GetVWait() const;
+  void SetHPause(float hPause);
+  void SetHWait(float hWait);
+  void SetVPause(float vPause);
+  void SetVWait(float vWait);
+  float GetHPause() const;
+  float GetHWait() const;
+  float GetVPause() const;
+  float GetVWait() const;
   
   
 private:
@@ -95,17 +95,17 @@ private:
   // bool mAutoStart;
   
   // Speed management : actual scrolling speed is (mFPS * mPPF) pixels per second
-  double mFPS; // current frames per second value used to calculate the timer's period and step animation
-  void SetFPS(double fps); // private because only used internally
-  double mHFPS; // desired fps value for horizontal scrolling
-  double mVFPS; // desired fps value for vertical scrolling
-  double mPPF; // pixels per frame (default: 1.0)
+  float mFPS; // current frames per second value used to calculate the timer's period and step animation
+  void SetFPS(float fps); // private because only used internally
+  float mHFPS; // desired fps value for horizontal scrolling
+  float mVFPS; // desired fps value for vertical scrolling
+  float mPPF; // pixels per frame (default: 1.0)
   
   // Pauses
-  int mHPause; // time (in seconds) paused between each ping and pong : default is 2 seconds
-  int mHWait; // time (in seconds) waited before another ping pong : default is 2 seconds
-  int mVPause; // time (in seconds) paused with the label displayed : default is 2 seconds
-  int mVWait; // time (in seconds) waited before scrolling another line : default is 0 seconds
+  float mHPause; // time (in seconds) paused between each ping and pong : default is 2 seconds
+  float mHWait; // time (in seconds) waited before another ping pong : default is 2 seconds
+  float mVPause; // time (in seconds) paused with the label displayed : default is 2 seconds
+  float mVWait; // time (in seconds) waited before scrolling another line : default is 0 seconds
   
   // sub strings management (nuiVertical scrolling)
   bool mNeedSubStrings;
