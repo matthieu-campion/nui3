@@ -53,6 +53,7 @@
 #include "nuiMessageQueue.h"
 #include "nuiColorSelector.h"
 #include "nuiGradientDecoration.h"
+#include "nuiBackgroundPane.h"
 
 #include "nuiGearWin.h"
 
@@ -2626,8 +2627,13 @@ bool nuiWin::CreateColorSelector(const nuiEvent& rEvent)
 {
   nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, _T("Color Selector"));
   mpManager->AddChild(pWindow);
+  
+  nuiBackgroundPane* pPane = new nuiBackgroundPane();
   nuiColorSelector* pSelector = new nuiColorSelector();
-  pWindow->AddChild(pSelector);
+  pPane->AddChild(pSelector);
+  
+  pPane->SetPosition(nuiCenter);
+  pWindow->AddChild(pPane);
   return false;
 }
 

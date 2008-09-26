@@ -16,6 +16,8 @@ nuiColorSelector::nuiColorSelector(const nuiColor& rInitialColor, const std::vec
   mNumColors(20),
   mSink(this)
 {
+  SetObjectClass(_T("nuiColorSelector"));
+  
   mpMainBox = new nuiVBox(0);
   mpMainBox->SetObjectName(_T("nuiColorSelector::MainBox"));
   
@@ -68,6 +70,7 @@ nuiColorSelector::nuiColorSelector(const nuiColor& rInitialColor, const std::vec
     mSink.Connect(mpRgbAlphaSlider->ValueChanged, &nuiColorSelector::RgbSliderChanged);
     
     mpTabView->AddTab(pPane, mpRgbGrid);
+//  mpTabView->AddTab(_T("
   }
   
   {
