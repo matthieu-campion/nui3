@@ -151,60 +151,10 @@ private:
     }
   }
   
-//  template <class PixelBlender, class VertexType>
-//  void DrawHLine(VertexType& Left, VertexType& Right)
-//  {
-//    VertexType v0(Left);
-//    VertexType v1(Right);
-//    int32 width = v1.X() - v0.X();
-//    if (!width)
-//      return;
-//    
-//    VertexType incr(v1);
-//    incr.Sub(v0);
-//    incr.Div(width);
-//
-//    incr.SetX(NUI_FP_ONE);
-//    incr.SetY(0);
-//            
-//    ClipSegmentX(v0, v1, incr);
-//        
-//    int32 y = v0.CeiledY();
-//    int32 x = ToAbove(v0.X());
-//    int32 end = ToAbove(v1.X());
-//    
-//    uint32* pBuffer = mpBuffer + (y * mWidth + x);
-//    
-//    if (incr.IsStable())
-//    {
-//      uint32 color = v0.GetColor();
-//      while (x < end)
-//      {
-//        PixelBlender::Blend(*pBuffer, color);
-//        pBuffer++;
-//        x++;
-//      }
-//    }
-//    else
-//    {
-//      while (x < end)
-//      {
-//        PixelBlender::Blend(*pBuffer, v0.GetColor());
-//        pBuffer++;
-//        v0.Add(incr);
-//        x++;
-//      }
-//    }
-//  }
 
   template <class PixelBlender, class VertexType>
   void DrawHLine(VertexType& Left, VertexType& Right)
   {
-//     if (Left.X() > Right.X())
-//     {
-//       DrawHLine<PixelBlender, VertexType>(Right, Left);
-//       return;
-//     }
     VertexType v0(Left);
     VertexType v1(Right);
     int32 width = v1.X() - v0.X();
@@ -227,21 +177,6 @@ private:
     width = end - x;
     if (width <= 0)
       return;
-
-//     if (!width)
-//       return;
-//     
-//     if (width < 0)
-//     {
-//       VertexType tmp1 = v0;
-//       v0 = v1;
-//       v1 = tmp1;
-//       width = -width;
-//       VertexType tmp2 = incr;
-//       incr.Clear();
-//       incr.Sub(tmp2);
-//       std::swap(x, end);
-//     }
     
     uint32* pBuffer = mpBuffer + (y * mWidth + x);
 
