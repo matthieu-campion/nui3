@@ -19,6 +19,7 @@ licence: see nui3/LICENCE.TXT
 #include "DefaultDecoration/src/IconFile.cpp"
 #include "DefaultDecoration/src/IconFolder.cpp"
 #include "DefaultDecoration/src/IconVolume.cpp"
+#include "DefaultDecoration/src/PopupMenu.cpp"
 #include "DefaultDecoration/src/RadioButtonDown.cpp"
 #include "DefaultDecoration/src/RadioButtonDownDisabled.cpp"
 #include "DefaultDecoration/src/RadioButtonUp.cpp"

@@ -21,6 +21,7 @@ licence: see nui3/LICENCE.TXT
 #include "DefaultDecoration/src/IconFile.h"
 #include "DefaultDecoration/src/IconFolder.h"
 #include "DefaultDecoration/src/IconVolume.h"
+#include "DefaultDecoration/src/PopupMenu.h"
 #include "DefaultDecoration/src/RadioButtonDown.h"
 #include "DefaultDecoration/src/RadioButtonDownDisabled.h"
 #include "DefaultDecoration/src/RadioButtonUp.h"

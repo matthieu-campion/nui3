@@ -53,7 +53,7 @@ void nuiDefaultDecoration::Init()
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiToggleButton")), &nuiDefaultDecoration::ToggleButton);
   
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiComboBox")), &nuiDefaultDecoration::ComboBox);
-  
+
 
   // dialogs
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiMessageBox::Title")), &nuiDefaultDecoration::MessageBox_Title);
@@ -180,6 +180,13 @@ void nuiDefaultDecoration::InitMaps()
   
   
   
+  // popup Menu
+  pIMem = new nglIMemory(gpPopupMenu, gPopupMenuSize);
+  pTex = nuiTexture::GetTexture(pIMem);
+  NGL_ASSERT(pTex);
+  pFrame = new nuiFrame(_T("nuiDefaultDecorationPopupMenu"), pTex, nuiRect(8,8,0,14));
+  pFrame->UseWidgetAlpha(false);
+  delete pIMem;  
 
 
 
@@ -552,7 +559,6 @@ void nuiDefaultDecoration::ComboBox(nuiWidget* pWidget)
   pWidget->SetColor(eSelectedTextFg, nuiColor(32,32,32));
   
 }
-
 
 
 

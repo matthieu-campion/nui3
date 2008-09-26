@@ -86,9 +86,6 @@ enum nuiWidgetElement
   eDisabledImage,
   eSelectedImage,
 
-  eComboBoxBg,
-  eComboBoxLining,
-  
   eToolTipBg,
   eToolTipFg,
   eToolTipBorder,

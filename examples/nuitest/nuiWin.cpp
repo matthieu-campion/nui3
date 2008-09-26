@@ -607,10 +607,6 @@ void nuiWin::OnCreation()
 /*finfo.Descender - */
   }
   
-  //LBDEBUG
-  nuiEvent event;
-  CreateComboBoxWindow(event);
-  
 }
 
 

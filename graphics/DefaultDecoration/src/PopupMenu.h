@@ -7,6 +7,6 @@
 
 #pragma once
 
-extern const char* gpButtonHover;
-const long         gButtonHoverSize = 311;
+extern const char* gpPopupMenu;
+const long         gPopupMenuSize = 716;
 

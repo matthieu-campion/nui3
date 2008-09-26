@@ -181,10 +181,6 @@ void nuiTheme::LoadDefaults()
   SetElementColor(eMatrixViewBorder,            nuiColor(120,120,120));
   SetElementColor(eMatrixViewBackground,        nuiColor(220,220,220));
 
-
-  SetElementColor(eComboBoxBg,                  nuiColor(128, 128, 128, 128));
-  SetElementColor(eComboBoxLining,              nuiColor(0, 0, 0, 128));
-
   /// 
   /// Button colors:
   ///
@@ -698,36 +694,17 @@ void nuiTheme::DrawKnob(nuiDrawContext* pContext, nuiKnob* pKnob)
 
 void nuiTheme::DrawMenuWindow(nuiDrawContext* pContext, const nuiRect& rRect, nuiWidget* pWidget)
 {
-  DrawWindowShade(pContext, rRect, false);
-
-  bool blending = pContext->GetState().mBlending;
-  nuiBlendFunc blendfunc = pContext->GetState().mBlendFunc;
-
-  pContext->EnableBlending(true);
-  pContext->SetBlendFunc(nuiBlendTransp);
-
-  nuiColor col;
-  if (pWidget)
-    col = pWidget->GetColor(eMenuBg);
-  else
-    col = GetElementColor(eMenuBg);
-
-  pContext->SetFillColor(col);
-  pContext->DrawRect(rRect,eFillShape);
+  nuiFrame* pFrame = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationPopupMenu"));
+  NGL_ASSERT(pFrame);
   
-  nuiRect r = rRect;
+  nuiRect rect;
+  // add default decoration border to decoration size, since the decoration is drawn manually
+  rect.Set(rRect.Left(), rRect.Top(), 
+    rRect.GetWidth() + pFrame->GetBorder(nuiLeft) + pFrame->GetBorder(nuiRight),
+    rRect.GetHeight() + pFrame->GetBorder(nuiTop) + pFrame->GetBorder(nuiBottom));
   
-  if (pWidget)
-    col = pWidget->GetColor(eMenuFg);
-  else
-    col = GetElementColor(eMenuFg);
-  
-//  col.Multiply(.8f, false);
-  pContext->SetStrokeColor(col);
-  pContext->DrawRect(r,eStrokeShape);
+  pFrame->Draw(pContext, NULL, rect);
 
-  pContext->EnableBlending(blending);
-  pContext->SetBlendFunc(blendfunc);
 }
 
 void nuiTheme::DrawMenuItem(nuiDrawContext* pContext, const nuiRect& rRect, bool Hover)
