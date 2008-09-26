@@ -145,9 +145,6 @@ void nuiTheme::LoadDefaults()
   SetElementColor(eTreeViewHandle,              nuiColor(0.4f, 0.4f, 0.4f, 0.5f));
   SetElementColor(eTreeViewSelection,           nuiColor(0.4f, 0.5f, 1.f, 0.5f));
 
-  SetElementColor(eSelectedActiveBackground,    nuiColor(0.7f, 0.7f, 1.0f, 0.5f));
-  SetElementColor(eSelectedInactiveBackground,  nuiColor(0.3f, 0.3f, 0.5f, 0.5f));
-
   SetElementColor(eSelectionMarkee,             nuiColor(0.8f, 0.8f, 1.f, 0.5f));
 
   SetElementColor(eNormalTextFg,                nuiColor(0.f,0.f,0.f));
@@ -919,34 +916,34 @@ void nuiTheme::DrawSelectionForeground(nuiDrawContext* pContext, const nuiRect& 
 }
 
 
-void nuiTheme::DrawSelectionRectangle(nuiDrawContext* pContext, const nuiRect& rRect, 
-                                      nuiWidgetElement Color, nuiWidget* pWidget)
-{
-  pContext->EnableAntialiasing(false);
-  pContext->EnableBlending(true);
-  pContext->SetBlendFunc(nuiBlendTransp);
-  pContext->EnableTexturing(false);
-  nuiColor col;
-  if (pWidget)
-    col = pWidget->GetColor(Color);
-  else
-    col = GetElementColor(Color);
-
-  pContext->SetFillColor(col);
-  pContext->SetStrokeColor(col);
-  
-  nuiGradient gradient;
-  gradient.AddStop(col, 0);
-  col.Multiply(.5f);
-  gradient.AddStop(col, 1);
-  
-  //pContext->DrawGradient(gradient, rRect, 0, rRect.Top(), 0, rRect.Bottom());
-  
-  nuiRect rect = rRect;
-  rect.RoundToBiggest();
-  pContext->DrawRect(rect, eStrokeShape);
-  pContext->DrawGradient(gradient, rect, 0, rect.Top(), 0, rect.Bottom());  
-}
+//void nuiTheme::DrawSelectionRectangle(nuiDrawContext* pContext, const nuiRect& rRect, 
+//                                      nuiWidgetElement Color, nuiWidget* pWidget)
+//{
+//  pContext->EnableAntialiasing(false);
+//  pContext->EnableBlending(true);
+//  pContext->SetBlendFunc(nuiBlendTransp);
+//  pContext->EnableTexturing(false);
+//  nuiColor col;
+//  if (pWidget)
+//    col = pWidget->GetColor(Color);
+//  else
+//    col = GetElementColor(Color);
+//
+//  pContext->SetFillColor(col);
+//  pContext->SetStrokeColor(col);
+//  
+//  nuiGradient gradient;
+//  gradient.AddStop(col, 0);
+//  col.Multiply(.5f);
+//  gradient.AddStop(col, 1);
+//  
+//  //pContext->DrawGradient(gradient, rRect, 0, rRect.Top(), 0, rRect.Bottom());
+//  
+//  nuiRect rect = rRect;
+//  rect.RoundToBiggest();
+//  pContext->DrawRect(rect, eStrokeShape);
+//  pContext->DrawGradient(gradient, rect, 0, rect.Top(), 0, rect.Bottom());  
+//}
 
 void nuiTheme::DrawMarkee(nuiDrawContext* pContext, const nuiRect& rRect, nuiWidgetElement Color)
 {

@@ -59,9 +59,6 @@ enum nuiWidgetElement
   eTreeViewHandle,
   eTreeViewSelection,
 
-  eSelectedActiveBackground,
-  eSelectedInactiveBackground,
-  
   eNormalTextFg,
   eSelectedTextFg,
   eDisabledTextFg,

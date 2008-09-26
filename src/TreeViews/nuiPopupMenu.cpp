@@ -198,6 +198,7 @@ bool nuiPopupMenu::DrawTree(nuiDrawContext* pContext, nuiTreeNode* pTree, uint d
   nuiTheme* pTheme = GetTheme();
   NGL_ASSERT(pTheme);
 
+
   if (pTree != mpTree) // then Draw a new rect for this depth
   {
     pTheme->DrawMenuWindow(pContext, pRect->mRect, this);
@@ -212,12 +213,13 @@ bool nuiPopupMenu::DrawTree(nuiDrawContext* pContext, nuiTreeNode* pTree, uint d
     pChildWidget = pChildNode->GetElement();
     WidgetRect = pChildWidget->GetRect();
 
+    // selection background
     if (pChildNode->IsSelected() || pChildNode->IsOpened())
     {
       nuiSize TreeHandleSize = pRect->mHasNonEmpty ? NUI_POPUP_TREE_HANDLE_SIZE : 0.f;
       nuiRect r = WidgetRect;
       r.SetSize(WidgetRect.GetWidth()+TreeHandleSize, WidgetRect.GetHeight());
-      pTheme->DrawSelectionRectangle(pContext, r, eSelectedActiveBackground, this);
+      pTheme->DrawSelectionBackground(pContext, r, this);
     }
 
     if (!pChildNode->IsEmpty())
@@ -230,6 +232,16 @@ bool nuiPopupMenu::DrawTree(nuiDrawContext* pContext, nuiTreeNode* pTree, uint d
     }
 
     DrawChild(pContext, pChildWidget);
+
+    // selection foreground 
+    if (pChildNode->IsSelected() || pChildNode->IsOpened())
+    {
+      nuiSize TreeHandleSize = pRect->mHasNonEmpty ? NUI_POPUP_TREE_HANDLE_SIZE : 0.f;
+      nuiRect r = WidgetRect;
+      r.SetSize(WidgetRect.GetWidth()+TreeHandleSize, WidgetRect.GetHeight());
+      pTheme->DrawSelectionForeground(pContext, r, this);
+    }
+
 
     if (pChildNode->IsOpened())
     {

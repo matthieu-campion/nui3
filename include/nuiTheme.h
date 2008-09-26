@@ -93,7 +93,7 @@ public:
   // Generic Selection Rectangles:
   void DrawSelectionBackground(nuiDrawContext* pContext, const nuiRect& rRect, nuiWidget* pWidget = NULL);
   void DrawSelectionForeground(nuiDrawContext* pContext, const nuiRect& rRect, nuiWidget* pWidget = NULL);
-  void DrawSelectionRectangle(nuiDrawContext* pContext, const nuiRect& rRect, nuiWidgetElement Color, nuiWidget* pWidget = NULL); ///< Draw a selection rectangle around the givent frame with the correct color.
+//  void DrawSelectionRectangle(nuiDrawContext* pContext, const nuiRect& rRect, nuiWidgetElement Color, nuiWidget* pWidget = NULL); ///< Draw a selection rectangle around the givent frame with the correct color.
   void DrawMarkee(nuiDrawContext* pContext, const nuiRect& rRect, nuiWidgetElement Color); ///< Draw a markee selection rectangle around the givent frame with the correct color.
 
   // Element Colors:
