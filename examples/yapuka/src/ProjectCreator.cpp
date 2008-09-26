@@ -334,7 +334,7 @@ bool ProjectCreator::OnSourceSelected(const nuiEvent& rEvent)
 
  GetPreferences().SetString(PREFERENCES_PROJECTCREATOR, _T("nuiSourcePath"), mNuiSourcePath);
 
-  return true;
+  return false;
 }
 
 
@@ -361,7 +361,7 @@ bool ProjectCreator::OnTargetSelected(const nuiEvent& rEvent)
   OnTargetTextChanged(rEvent);
   GetPreferences().SetString(PREFERENCES_PROJECTCREATOR, _T("nuiTargetPath"), path.GetParent().GetPathName());  
   
-  return true;
+  return false;
 }
 
 
