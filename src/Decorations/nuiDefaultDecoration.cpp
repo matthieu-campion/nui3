@@ -733,7 +733,7 @@ void nuiDefaultDecoration::TabView_Tab(nuiTabView* pView, nuiWidget* pTab)
   long decoUpSize = gTabTopUpSize;
   long decoDownSize = gTabTopDownSize;
   
-  switch (pView->GetPosition())
+  switch (pView->GetTabPosition())
   {
     case nuiTop:
       decoName = _T("nuiDefaultDecorationTabTop");
@@ -769,6 +769,11 @@ void nuiDefaultDecoration::TabView_Tab(nuiTabView* pView, nuiWidget* pTab)
       decoUpSize = gTabBottomUpSize;
       decoDownSize = gTabBottomDownSize;
       frameRect = nuiRect(4,5,2,4);
+      break;
+      
+    default:
+      NGL_OUT(_T("nui3 error : the nuiTabView object doesn't have a nuiPosition valid parameter!\n"));
+      NGL_ASSERT(0);
       break;
   }
   
@@ -823,7 +828,7 @@ void nuiDefaultDecoration::TabView_Contents(nuiTabView* pView, nuiWidget* pConte
   const char* deco = gpTabTopContents;
   long decoSize = gTabTopContentsSize;
   
-  switch (pView->GetPosition())
+  switch (pView->GetTabPosition())
   {
     case nuiTop:
       decoName = _T("nuiDefaultDecorationTabTopContents");

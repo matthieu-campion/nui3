@@ -27,7 +27,7 @@ public:
 class NUI_API nuiTabView : public nuiSimpleContainer
 {
 public:
-  nuiTabView(nuiPosition pos, bool decoratedBackground = true);
+  nuiTabView(nuiPosition tabPosition, bool decoratedBackground = true);
   virtual ~nuiTabView();
 
   virtual nuiRect CalcIdealSize();
@@ -47,10 +47,10 @@ public:
    
   uint GetTabCount();
 
-  nuiPosition GetPosition();
+  nuiPosition GetTabPosition();
   
   nuiOrientation GetOrientation();
-  void SetPosition(nuiPosition position);
+  void SetTabPosition(nuiPosition tabPosition);
 
   void SelectTab(const uint& index);
   uint GetSelectedTab() const { return mCurrentTabIndex; }
@@ -67,7 +67,7 @@ public:
   nuiSimpleEventSource<0> TabSelect;
 protected:
   uint mCurrentTabIndex;
-  nuiPosition mPosition;
+  nuiPosition mTabPosition;
 
   std::vector<nuiWidget*> mTabs;
   std::vector<nuiWidget*> mIcons;

@@ -42,7 +42,16 @@ public:
   nuiSimpleEventSource<0> ColorChanged;
   
 private:
-  bool RefreshColors(const nuiEvent& rEvent);
+  
+  nuiWidget* Tab_RGB();
+  nuiWidget* Tab_HSV();
+  nuiWidget* Tab_Swatches();
+  
+  bool OnTabSelected(const nuiEvent& rEvent);
+  
+  void Tab_RGB_Update();
+  
+  
   bool SwatchSelected(const nuiEvent& rEvent);
   bool RgbSliderChanged(const nuiEvent& rEvent);
   

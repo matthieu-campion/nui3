@@ -135,6 +135,7 @@ protected:
   static nuiTheme* mpTheme;
 
   uint32 mRefCount;
+  nuiFont* mpWindowTitleFont;
 };
 
 #endif // __nuiTheme_h__

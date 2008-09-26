@@ -18,9 +18,9 @@
 
 
 
-nuiTabView::nuiTabView(nuiPosition pos, bool decoratedBackground)
+nuiTabView::nuiTabView(nuiPosition tabPosition, bool decoratedBackground)
 : nuiSimpleContainer(), mTabViewEvents(this),
-  mCurrentTabIndex(0), mPosition(pos), mDecoratedBackground(decoratedBackground)
+  mCurrentTabIndex(0), mTabPosition(tabPosition), mDecoratedBackground(decoratedBackground)
 {
   SetObjectClass(_T("nuiTabView"));
   mChildrenRectUnion = true;
@@ -59,7 +59,7 @@ nuiRect nuiTabView::CalcIdealSize()
   }
   IdealRect.SetSize(w, h);
   mIdealTabsRect = IdealRect;
-  if (mPosition == nuiTop || mPosition == nuiBottom)
+  if (mTabPosition == nuiTop || mTabPosition == nuiBottom)
   { 
     mIdealIconsRect.SetSize(W, mIdealIconsRect.GetHeight());
     IdealRect.SetSize(w, h + mIdealIconsRect.GetHeight());
@@ -119,7 +119,7 @@ bool nuiTabView::SetRect(const nuiRect& rRect)
   nuiSize Tmp;
   uint i = 0;
 
-  if (mPosition == nuiRight || mPosition == nuiLeft)
+  if (mTabPosition == nuiRight || mTabPosition == nuiLeft)
   {
     if (mIdealIconsRect.GetHeight() > rRect.GetHeight())
       R = rRect.GetHeight() / mIdealIconsRect.GetHeight();        
@@ -132,7 +132,7 @@ bool nuiTabView::SetRect(const nuiRect& rRect)
 
   if (mChildrenRectUnion)
   {
-    if (mPosition == nuiRight)
+    if (mTabPosition == nuiRight)
     {
       TabRect = nuiRect(0.f, 0.f, rRect.GetWidth() - mIdealIconsRect.GetWidth(), rRect.GetHeight());
       X = TabRect.GetWidth();
@@ -147,7 +147,7 @@ bool nuiTabView::SetRect(const nuiRect& rRect)
         Y += Tmp;
       }
     }
-    else if (mPosition == nuiTop)
+    else if (mTabPosition == nuiTop)
     {
       TabRect = nuiRect(0.f, mIdealIconsRect.GetHeight(), rRect.GetWidth(), rRect.GetHeight() - mIdealIconsRect.GetHeight());
       float YOff = -TabRect.GetHeight() * mFoldRatio;
@@ -161,7 +161,7 @@ bool nuiTabView::SetRect(const nuiRect& rRect)
         X += Tmp;
       }
     }
-    else if (mPosition == nuiLeft)
+    else if (mTabPosition == nuiLeft)
     {
       TabRect = nuiRect(mIdealIconsRect.GetWidth(), 0.f, rRect.GetWidth() - mIdealIconsRect.GetWidth(), rRect.GetHeight());
       float XOff = -TabRect.GetWidth() * mFoldRatio;
@@ -175,7 +175,7 @@ bool nuiTabView::SetRect(const nuiRect& rRect)
         Y += Tmp;
       }
     }
-    else// if (mPosition == nuiBottom)
+    else// if (mTabPosition == nuiBottom)
     {
       TabRect = nuiRect(0.f, 0.f, rRect.GetWidth(), rRect.GetHeight() - mIdealIconsRect.GetHeight());
       float YOff = TabRect.GetHeight() * mFoldRatio;
@@ -194,7 +194,7 @@ bool nuiTabView::SetRect(const nuiRect& rRect)
   else
   {
     nuiRect r(mTabs[mCurrentTabIndex]->GetIdealRect());
-    if (mPosition == nuiRight)
+    if (mTabPosition == nuiRight)
     {
       r.Right() = (MIN(rRect.GetWidth() - mIdealIconsRect.GetWidth(), r.GetWidth()));
       TabRect = nuiRect(0.f, 0.f, r.GetWidth(), rRect.GetHeight());
@@ -210,7 +210,7 @@ bool nuiTabView::SetRect(const nuiRect& rRect)
         Y += Tmp;
       }
     }
-    else if (mPosition == nuiTop)
+    else if (mTabPosition == nuiTop)
     {
       r.Bottom() = (MIN(rRect.GetHeight() - mIdealIconsRect.GetHeight(), r.GetHeight()));
       TabRect = nuiRect(0.f, mIdealIconsRect.GetHeight(), rRect.GetWidth(), r.GetHeight() - mIdealIconsRect.GetHeight());
@@ -225,7 +225,7 @@ bool nuiTabView::SetRect(const nuiRect& rRect)
         X += Tmp;
       }
     }
-    else if (mPosition == nuiLeft)
+    else if (mTabPosition == nuiLeft)
     {
       r.Right() = (MIN(rRect.GetWidth() - mIdealIconsRect.GetWidth(), r.GetWidth()));
       TabRect = nuiRect(mIdealIconsRect.GetWidth(), 0.f, r.GetWidth() - mIdealIconsRect.GetWidth(), rRect.GetHeight());
@@ -240,7 +240,7 @@ bool nuiTabView::SetRect(const nuiRect& rRect)
         Y += Tmp;
       }
     }
-    else// if (mPosition == nuiBottom)
+    else// if (mTabPosition == nuiBottom)
     {
       r.Bottom() = (MIN(rRect.GetHeight() - mIdealIconsRect.GetHeight(), r.GetHeight()));
       TabRect = nuiRect(0.f, 0.f, rRect.GetWidth(), r.GetHeight() - mIdealIconsRect.GetHeight());
@@ -307,6 +307,9 @@ void nuiTabView::InsertTab(nuiWidget* pTitle, nuiWidget* pContents, uint pos)
 {
   nuiSimpleContainer* pDecoTab;
   nuiSimpleContainer* pDecoContents;
+  
+  NGL_ASSERT(pTitle);
+  NGL_ASSERT(pContents);
   
   nuiWidget* pTitleWidget = pTitle;
   nuiWidget* pContentsWidget = pContents;
@@ -455,11 +458,11 @@ void nuiTabView::SelectTab(const uint& rIndex)
     InvalidateLayout();
 }
 
-void nuiTabView::SetPosition(nuiPosition position)
+void nuiTabView::SetTabPosition(nuiPosition tabPosition)
 {
-  if (mPosition == position)
+  if (mTabPosition == tabPosition)
     return;
-  mPosition = position;
+  mTabPosition = tabPosition;
  InvalidateLayout();
 }
 
@@ -479,12 +482,12 @@ bool nuiTabView::GetChildrenRectUnion() const
 
 nuiOrientation nuiTabView::GetOrientation()
 {
-  return mPosition == nuiLeft || mPosition == nuiRight ? nuiVertical : nuiHorizontal;
+  return mTabPosition == nuiLeft || mTabPosition == nuiRight ? nuiVertical : nuiHorizontal;
 }
 
-nuiPosition nuiTabView::GetPosition()
+nuiPosition nuiTabView::GetTabPosition()
 {
-  return mPosition;
+  return mTabPosition;
 }
 
 uint nuiTabView::GetTabCount()

@@ -50,6 +50,8 @@ nuiTheme::nuiTheme(const nglPath& rPath)
   int i = 0;
   for (i = 0; i < StyleCount; i++)
     mpFonts[i] = 0;
+    
+  mpWindowTitleFont = nuiFont::GetFont(11);
 }
 
 nuiTheme::nuiTheme(nuiXMLNode* pNode)
@@ -60,6 +62,8 @@ nuiTheme::nuiTheme(nuiXMLNode* pNode)
   for (i = 0; i < StyleCount; i++)
     mpFonts[i] = 0;
 
+  mpWindowTitleFont = nuiFont::GetFont(11);
+  
   Load(pNode);
 }
 
@@ -226,6 +230,9 @@ nuiTheme::~nuiTheme()
       mpFonts[i]->Release();
     mpFonts[i] = 0;
   }
+
+  mpWindowTitleFont->Release();
+
   if (mpTheme == this)
     mpTheme = NULL;
 }
@@ -459,17 +466,15 @@ void nuiTheme::DrawActiveWindow(nuiDrawContext* pContext, nuiWindow* pWindow)
       pContext->DrawLine(r.Left(), r.Bottom(), r.Right(), r.Bottom());
         
       // window title
-      nuiFont *pFont = nuiFont::GetFont(11);
-      pContext->SetFont(pFont);
+      pContext->SetFont(mpWindowTitleFont);
       nglFontInfo Info;
-      pFont->GetInfo(Info);
+      mpWindowTitleFont->GetInfo(Info);
       nuiColor::GetColor(_T("nuiDefaultClrCaptionTextLight"), color);
       pContext->SetTextColor(color);
       pContext->DrawText(r.mLeft + RESIZE_SIZE +5 +1, r.mTop + Info.Ascender +5 +1, Title.GetChars());
       nuiColor::GetColor(_T("nuiDefaultClrCaptionText"), color);
       pContext->SetTextColor(color);
       pContext->DrawText(r.mLeft + RESIZE_SIZE +5 , r.mTop + Info.Ascender +5 , Title.GetChars());
-      pFont->Release();
     }
 
   }

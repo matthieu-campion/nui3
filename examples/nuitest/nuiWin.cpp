@@ -2625,9 +2625,9 @@ bool nuiWin::CreateDragZone(const nuiEvent& rEvent)
 
 bool nuiWin::CreateColorSelector(const nuiEvent& rEvent)
 {
-  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, _T("Color Selector"));
+  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nuiWindow::DecoratedBackground, _T("Color Selector"));
   mpManager->AddChild(pWindow);
-  
+
   nuiBackgroundPane* pPane = new nuiBackgroundPane();
   nuiColorSelector* pSelector = new nuiColorSelector();
   pPane->AddChild(pSelector);
