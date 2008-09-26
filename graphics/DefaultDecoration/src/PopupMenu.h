@@ -8,5 +8,5 @@
 #pragma once
 
 extern const char* gpPopupMenu;
-const long         gPopupMenuSize = 716;
+const long         gPopupMenuSize = 772;
 
