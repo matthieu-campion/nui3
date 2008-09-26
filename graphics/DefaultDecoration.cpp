@@ -5,6 +5,7 @@ Copyright (C) 2002-2003 Sebastien Metrot & Vincent Caron
 licence: see nui3/LICENCE.TXT
 */
 
+
 #include "nui.h"
 
 #include "DefaultDecoration/src/ArrowClose.cpp"
@@ -16,10 +17,10 @@ licence: see nui3/LICENCE.TXT
 #include "DefaultDecoration/src/CloseButtonUp.cpp"
 #include "DefaultDecoration/src/ComboDown.cpp"
 #include "DefaultDecoration/src/ComboUp.cpp"
-#include "DefaultDecoration/src/DialogPane.cpp"
 #include "DefaultDecoration/src/IconFile.cpp"
 #include "DefaultDecoration/src/IconFolder.cpp"
 #include "DefaultDecoration/src/IconVolume.cpp"
+#include "DefaultDecoration/src/Pane.cpp"
 #include "DefaultDecoration/src/PopupMenu.cpp"
 #include "DefaultDecoration/src/RadioButtonDown.cpp"
 #include "DefaultDecoration/src/RadioButtonDownDisabled.cpp"

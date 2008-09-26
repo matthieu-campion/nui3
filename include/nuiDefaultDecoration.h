@@ -34,6 +34,7 @@ public:
   
 
   static void Window(nuiWidget* pWidget);
+  static void BackgroundPane(nuiWidget* pWidget);
   
   static void Label(nuiWidget* pWidget);
   static void EditText(nuiWidget* pWidget);

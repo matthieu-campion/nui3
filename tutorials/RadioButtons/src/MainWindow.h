@@ -19,9 +19,13 @@ public:
   void OnCreation();
   void OnClose();
   
+protected:
+
+  bool OnComboChanged(const nuiEvent& rEvent);
   
 private:
-
+  
+  nuiLabel* mpLabel;
   nuiEventSink<MainWindow> mEventSink;
 };
 

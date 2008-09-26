@@ -37,6 +37,7 @@ void nuiDefaultDecoration::Init()
   InitIcons();
   
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiWindow")), &nuiDefaultDecoration::Window);
+  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiBackgroundPane")), &nuiDefaultDecoration::BackgroundPane);
 
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiLabel")), &nuiDefaultDecoration::Label);
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiEditText")), &nuiDefaultDecoration::EditText);
@@ -266,6 +267,23 @@ void nuiDefaultDecoration::Window(nuiWidget* pWidget)
   
 }
 
+
+
+void nuiDefaultDecoration::BackgroundPane(nuiWidget* pWidget)
+{
+  nuiFrame* pFrame = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationPane"));
+  if (!pFrame)
+  {
+    nglIMemory* pIMem = new nglIMemory(gpPane, gPaneSize);
+    nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
+    NGL_ASSERT(pTex);
+    pFrame = new nuiFrame(_T("nuiDefaultDecorationPane"), pTex, nuiRect(12,16,0,16));
+    pFrame->UseWidgetAlpha(false);
+    delete pIMem; 
+  }
+  NGL_ASSERT(pFrame);
+  pWidget->SetDecoration(pFrame);
+}
 
 
 
@@ -678,13 +696,13 @@ void nuiDefaultDecoration::MainWindow(nuiMainWindow* pWindow)
 
 void nuiDefaultDecoration::MessageBox(nuiMessageBox* pBox)
 {
-  nuiFrame* pFrame = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationDialogPane"));
+  nuiFrame* pFrame = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationPane"));
   if (!pFrame)
   {
-    nglIMemory* pIMem = new nglIMemory(gpDialogPane, gDialogPaneSize);
+    nglIMemory* pIMem = new nglIMemory(gpPane, gPaneSize);
     nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
     NGL_ASSERT(pTex);
-    pFrame = new nuiFrame(_T("nuiDefaultDecorationDialogPane"), pTex, nuiRect(12,16,0,16));
+    pFrame = new nuiFrame(_T("nuiDefaultDecorationPane"), pTex, nuiRect(12,16,0,16));
     pFrame->UseWidgetAlpha(false);
     delete pIMem; 
   }

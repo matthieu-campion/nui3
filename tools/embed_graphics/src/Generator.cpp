@@ -297,6 +297,7 @@ bool Generator::OnStart(const nuiEvent& rEvent)
   HincluderStr.Append(_T("#pragma once\n\n"));
   
   nglString CPPincluderStr(includer_str);
+  CPPincluderStr.Append(_T("#include \"nui.h\"\n\n"));
    
   for (it = children.begin(); it != children.end(); ++it)
   {

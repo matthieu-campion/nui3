@@ -23,7 +23,6 @@ public:
   
   
   nuiSimpleEventSource<0> ValueChanged;
-  bool OnSelect(const nuiEvent& rEvent);
 
   nuiWidget*    GetSelectedWidget();
   nuiTreeNode*  GetSelected();
@@ -45,6 +44,7 @@ protected:
 
   virtual bool    MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
 
+  bool OnSelect(const nuiEvent& rEvent);
 
   void ReparentTree(nuiTreeNode* pTree);
   void UnparentTree(nuiTreeNode* pTree);

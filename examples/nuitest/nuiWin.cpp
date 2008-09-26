@@ -607,6 +607,11 @@ void nuiWin::OnCreation()
 /*finfo.Descender - */
   }
   
+  
+  // LBDEBUG
+  nuiEvent event;
+  CreateColorSelector(event);
+  
 }
 
 
