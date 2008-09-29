@@ -9,6 +9,9 @@
 #include "MainWindow.h"
 #include "Application.h"
 #include "nuiRadioButtonGroup.h"
+#include "nuiHBox.h"
+#include "nuiVBox.h"
+
 
 /*
  * MainWindow
@@ -26,71 +29,93 @@ MainWindow::~MainWindow()
 
 void MainWindow::OnCreation()
 {
-  nuiSimpleContainer* pContainer = new nuiSimpleContainer();
-  pContainer->SetUserSize(400,300);
-  pContainer->SetPosition(nuiCenter);
-  AddChild(pContainer);
+  // create a vertical box for the layout
+  nuiVBox* pMainBox = new nuiVBox(0);
+  pMainBox->SetUserSize(400,300);
+  pMainBox->SetPosition(nuiCenter);
+  AddChild(pMainBox);
 
+  // create a label for information display 
   mpLabel = new nuiLabel();
   mpLabel->SetPosition(nuiTopLeft);
   mpLabel->SetBorder(20,20);
   AddChild(mpLabel);
       
-  nuiWidgetBox* pRadioBoxBox = new nuiWidgetBox(nuiVertical);
-  pContainer->AddChild(pRadioBoxBox);
 
-  
-  // Radio groups:
+  //***********************************************************
+  // first set : radio button with text inside
+  //
   {
-    nuiWidgetBox* pRadioBox = new nuiWidgetBox(nuiHorizontal);
-    pRadioBoxBox->AddChild(pRadioBox);
-    for (int index = 0; index < 4; index++)
+    // create a hbox as a container and add it to the mainbox
+    nuiHBox* pBox = new nuiHBox(0);
+    pBox->SetExpand(nuiExpandShrinkAndGrow);               // make the hbox fill the entire provided height, and make shrink/grow with the parent (<=> window)
+    pMainBox->AddCell(pBox);
+    
+    for (int index = 0; index < 4; index++)                // will create 4 radiobuttons,
     {
       nglString tmp;
       tmp.Format(_T("Radio %d"), index);
-      nuiRadioButton* pRadioBut = new nuiRadioButton(tmp);
-      pRadioBox->AddChild(pRadioBut);
-      pRadioBut->SetGroup(_T("radios"));
+      nuiRadioButton* pRadioBut = new nuiRadioButton(tmp);// with text inside
+      pBox->AddCell(pRadioBut);
+      pRadioBut->SetGroup(_T("radios"));                  // set the radio group for group behavior
       
-      mEventSink.Connect(pRadioBut->Activated, &MainWindow::OnSelected, (void*)index);
+      // will send an event in the ::OnSelected receiver when the radiobutton is 'activated'
+      mEventSink.Connect(pRadioBut->Activated, &MainWindow::OnSelected, (void*)index);  // index is given as a user parameter to recognise the button
     }
+    
+    pBox->SetAllCellsExpand(nuiExpandShrinkAndGrow);      // make the hbox's cells fill the entire width
   }
   
-  // buttons without internal label:
+  
+  //***********************************************************
+  // second set : classic radio button, using a radiobutton group
+  //
   nuiRadioButtonGroup* pGroup= new nuiRadioButtonGroup();
   {
-    nuiWidgetBox* pRadioBox = new nuiWidgetBox(nuiHorizontal);
-    pRadioBoxBox->AddChild(pRadioBox);
+    nuiHBox* pBox = new nuiHBox(0);
+    pMainBox->AddCell(pBox);
     for (int index = 4; index < 8; index++)
     {
       nuiRadioButton* pRadioBut = new nuiRadioButton();
       pRadioBut->SetPosition(nuiCenter);
-      pRadioBox->AddChild(pRadioBut);
+      pBox->AddCell(pRadioBut);
       pGroup->AddRadioButton(pRadioBut);
 
       mEventSink.Connect(pRadioBut->Activated, &MainWindow::OnSelected, (void*)index);    
     }
+    pBox->SetAllCellsExpand(nuiExpandShrinkAndGrow);      // make the hbox's cells fill the entire width
   }
   
-  // disabled buttons without internal label:
+  //***********************************************************
+  // third set : classic disabled radio button
+  //
   pGroup= new nuiRadioButtonGroup();
   {
-    nuiWidgetBox* pRadioBox = new nuiWidgetBox(nuiHorizontal);
-    pRadioBoxBox->AddChild(pRadioBox);
+    nuiHBox* pBox = new nuiHBox(0);
+    pMainBox->AddCell(pBox);
     
     nuiRadioButton* pRadioBut = new nuiRadioButton();
     pRadioBut->SetPosition(nuiCenter);
-    pRadioBox->AddChild(pRadioBut);
+    pBox->AddCell(pRadioBut);
     pGroup->AddRadioButton(pRadioBut);
     pRadioBut->SetEnabled(false);
     
     pRadioBut = new nuiRadioButton();
     pRadioBut->SetPosition(nuiCenter);
-    pRadioBox->AddChild(pRadioBut);
+    pBox->AddCell(pRadioBut);
     pGroup->AddRadioButton(pRadioBut);
     pRadioBut->SetPressed(true);
     pRadioBut->SetEnabled(false);
+    
+    // don't need to connect the buttons' events, since all we wanna do here is to show how disabled buttons are looking
+  
+    pBox->SetAllCellsExpand(nuiExpandShrinkAndGrow);      // make the hbox's cells fill the entire width
   }
+  
+  
+  
+  // make the mainbox's layout fill the entire user size (c.f. line #33)
+  pMainBox->SetAllCellsExpand(nuiExpandShrinkAndGrow);
 
 }
 

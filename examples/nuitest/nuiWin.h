@@ -54,9 +54,6 @@ protected:
   bool CreateColumnTreeViewWindow(const nuiEvent& rEvent);
   bool CreateScrolledImageWindow(const nuiEvent& rEvent);
   bool CreateScrolledImageWindow2(const nuiEvent& rEvent);
-  bool CreateGridWindow(const nuiEvent& rEvent);
-  bool CreateScrollGridWindow(const nuiEvent& rEvent);
-  bool CreateResizeGridWindow(const nuiEvent& rEvent);
   bool CreateGLSLTest1Window(const nuiEvent& rEvent);
   bool CreateSWFTest1Window(const nuiEvent& rEvent);
   bool CreateTabViewWindow(const nuiEvent& rEvent);
