@@ -35,7 +35,7 @@ void MainWindow::OnCreation()
   {
     nglString str;
     str.Format(_T("Choice #%d"), i);
-    pNode = new nuiTreeNode(str, true);
+    pNode = new nuiTreeNode(str, false);
     pTree->AddChild(pNode);
   }
   
@@ -44,7 +44,7 @@ void MainWindow::OnCreation()
   {
     nglString str;
     str.Format(_T("Choice %c"), (char)(_T('A') + i));
-    nuiTreeNode* pNode2 = new nuiTreeNode(str, true);
+    nuiTreeNode* pNode2 = new nuiTreeNode(str, false);
     pNode->AddChild(pNode2);
   }
   nuiTreeNode* pNode2 = new nuiTreeNode(_T("my last long choice"), true);
