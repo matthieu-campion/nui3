@@ -83,13 +83,19 @@ void nuiDefaultDecoration::InitColors()
 
   nuiColor::SetColor(_T("nuiDefaultClrCaptionBkg1"), nuiColor(197,197,197));
   nuiColor::SetColor(_T("nuiDefaultClrCaptionBkg2"), nuiColor(150,150,150));
+  
+  nuiColor::SetColor(_T("nuiDefaultClrInactiveCaptionBkg1"), nuiColor(157,157,157));
+  nuiColor::SetColor(_T("nuiDefaultClrInactiveCaptionBkg2"), nuiColor(110,110,110));
+  
 
   nuiColor::SetColor(_T("nuiDefaultClrCaptionBorder"), nuiColor(150,150,150));
   nuiColor::SetColor(_T("nuiDefaultClrCaptionBorderLight"), nuiColor(238,238,238));
   nuiColor::SetColor(_T("nuiDefaultClrCaptionBorderDark"), nuiColor(64,64,64));
-
+  nuiColor::SetColor(_T("nuiDefaultClrInactiveCaptionBorderLight"), nuiColor(198,198,198));
+  
   nuiColor::SetColor(_T("nuiDefaultClrCaptionText"), nuiColor(16,16,16));
   nuiColor::SetColor(_T("nuiDefaultClrCaptionTextLight"), nuiColor(215,215,215));
+  nuiColor::SetColor(_T("nuiDefaultClrInactiveCaptionTextLight"), nuiColor(175,175,175));
   
   nuiColor::SetColor(_T("nuiDefaultClrSelection"), nuiColor(56,117,215));
 

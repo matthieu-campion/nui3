@@ -355,68 +355,63 @@ void nuiTheme::DrawWindowBackground(nuiDrawContext* pContext, nuiWindow* pWindow
 void nuiTheme::DrawWindow(nuiDrawContext* pContext, nuiWindow* pWindow)
 {
   pContext->EnableAntialiasing(false);
-
+  // Box:
   nuiWindowFlags Flags = pWindow->GetFlags();
   nglString Title = pWindow->GetTitle();
   nuiRect Rect = pWindow->GetRect().Size();
   nuiRect rRect = Rect;
-
-  if (!(Flags & (nuiWindow::Raw & nuiWindow::NoCaption)))
+  bool blending = pContext->GetState().mBlending;
+  
+  float alpha = pWindow->GetAlpha(false);
+  pContext->EnableBlending(alpha != 1);
+  
+  if (!(Flags & (nuiWindow::Raw & ~nuiWindow::NoCaption)))
   {
-    DrawWindowBackground(pContext, pWindow, false);
-
-    bool blending = pContext->GetState().mBlending;
-    pContext->EnableBlending(true);
-
-    nuiRect r;
-    r = Rect;
-    r.mTop+=1;
-    r.mRight-=1;
-    pContext->SetStrokeColor(pWindow->GetColor(eInactiveWindowFg));
-    pContext->DrawRect(r,eStrokeShape);
-
-    nuiColor c = pWindow->GetColor(eInactiveWindowFg);
-    nuiColor col = c;
-
+    if (!pWindow->GetDecoration())
+      DrawWindowBackground(pContext, pWindow, true);
+    
     // Draw window decorations:
     if (!(Flags & (nuiWindow::NoCaption & ~nuiWindow::NoClose)))
     {
       // Draw the caption bar:
-      r = Rect;
-      r.mLeft  += BORDER_SIZE;
-      r.mTop   += BORDER_SIZE;
-      r.mRight -= BORDER_SIZE-1;
-      r.mBottom = rRect.mTop - BORDER_SIZE;
-      pContext->SetStrokeColor(col);
-      pContext->DrawRect(r,eStrokeShape);
-
-      pContext->EnableBlending(true);
-      pContext->SetBlendFunc(nuiBlendTransp);
-
-      nuiShape shape;
-      nuiPoint point;
-
-      col = c;
-      col.Multiply(.8f);
-      pContext->SetFillColor(col);
-
-      Rect.mLeft+= RESIZE_SIZE +1;
-      Rect.mRight-= RESIZE_SIZE;
-      Rect.mBottom = Rect.mTop + CAPTION_SIZE;
-      Rect.mTop += RESIZE_SIZE+1;
-
-      pContext->DrawRect(Rect, eFillShape);
-
-      nuiFont *pFont = GetFont(Default);
-      pContext->SetFont(pFont);
+      nuiRect r = Rect;
+      r.mBottom = r.mTop + CAPTION_SIZE;
+      
+      nuiGradient gradient;
+      nuiColor color;
+      nuiColor::GetColor(_T("nuiDefaultClrInactiveCaptionBkg1"), color);
+      gradient.AddStop(color, 0.f);
+      nuiColor::GetColor(_T("nuiDefaultClrInactiveCaptionBkg2"), color);
+      gradient.AddStop(color, 1.f);
+      
+      pContext->DrawGradient(gradient, r, 0, r.Top(), 0, r.Bottom());
+      
+      nuiColor::GetColor(_T("nuiDefaultClrCaptionBorder"), color);
+      pContext->SetStrokeColor(color);
+      pContext->DrawRect(r, eStrokeShape);
+      
+      nuiColor::GetColor(_T("nuiDefaultClrInactiveCaptionBorderLight"), color);
+      pContext->SetStrokeColor(color);
+      pContext->DrawLine(r.Left()+1, r.Top()+1, r.Right()-2, r.Top()+1);
+      
+      nuiColor::GetColor(_T("nuiDefaultClrCaptionBorderDark"), color);
+      pContext->SetStrokeColor(color);
+      pContext->DrawLine(r.Left(), r.Bottom(), r.Right(), r.Bottom());
+      
+      // window title
+      pContext->SetFont(mpWindowTitleFont);
       nglFontInfo Info;
-      pFont->GetInfo(Info);
-      pContext->SetTextColor(pWindow->GetColor(eInactiveWindowTitle));
-      pContext->DrawText(r.mLeft + RESIZE_SIZE, r.mTop + Info.Ascender, Title.GetChars());
-      pFont->Release();
+      mpWindowTitleFont->GetInfo(Info);
+      nuiColor::GetColor(_T("nuiDefaultClrInactiveCaptionTextLight"), color);
+      pContext->SetTextColor(color);
+      pContext->DrawText(r.mLeft + RESIZE_SIZE +5 +1, r.mTop + Info.Ascender +5 +1, Title.GetChars());
+      nuiColor::GetColor(_T("nuiDefaultClrCaptionText"), color);
+      pContext->SetTextColor(color);
+      pContext->DrawText(r.mLeft + RESIZE_SIZE +5 , r.mTop + Info.Ascender +5 , Title.GetChars());
     }
-    pContext->EnableBlending(blending);
+    
   }
+  pContext->EnableBlending(blending);
 }
 
 void nuiTheme::DrawActiveWindow(nuiDrawContext* pContext, nuiWindow* pWindow)
