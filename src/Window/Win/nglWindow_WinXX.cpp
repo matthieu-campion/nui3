@@ -878,7 +878,7 @@ HRESULT STDMETHODCALLTYPE nglDropTarget::DragEnter(IDataObject *pDataObj, DWORD 
   //NGL_OUT(_T("NEW: DataObject from nglDropTarget\n"));
 
   HRESULT res;
-  if ((res = GetObject(pDataObj, false)) != S_OK)
+  if ((res = GetObject(pDataObj, true)) != S_OK)
     return res;
 
   /*
