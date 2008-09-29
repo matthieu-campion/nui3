@@ -160,8 +160,8 @@ public:
   {
     const uint32 col0 = mSrc0.GetColor();
     const uint32 col1 = mSrc1.GetColor();
+
     uint32 col = 0;
-    
     const uint8* const pCol0 = (const uint8*)&col0;
     const uint8* const pCol1 = (const uint8*)&col1;
     uint8* const pCol = (uint8*)&col;
@@ -170,7 +170,7 @@ public:
     pCol[1] = (pCol0[1] * pCol1[1]) >> 8;
     pCol[2] = (pCol0[2] * pCol1[2]) >> 8;
     pCol[3] = (pCol0[3] * pCol1[3]) >> 8;
-    
+
     return col;
   }
   
@@ -717,8 +717,6 @@ private:
   ifp32 mX;
   ifp32 mY;
 };
-
-
 
 ////////////////////
 

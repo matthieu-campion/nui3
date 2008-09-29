@@ -43,6 +43,57 @@ Shark result:
  */
 
 
+//template void nuiVertex<class IType>::DrawHLine<nuiPixelBlender_Transp>(uint32* pBuffer, nuiVertex<IType>& v0, int32 width)
+//{
+//  NGL_ASSERT(width > 0);
+//  
+//  if (PixelBlender::CanOptimize())
+//  {
+//    if (IsStable())
+//    {
+//      uint32 color = v0.GetColor();
+//      for (uint i = 0; i < width; i++)
+//        pBuffer[i] = color;
+//    }
+//    else
+//    {
+//      while (width > 0)
+//      {
+//        *pBuffer = v0.GetColor();
+//        pBuffer++;
+//        v0.AddValue(*this);
+//        width--;
+//      }
+//    }
+//  }
+//  else
+//  {
+//    if (IsStable())
+//    {
+//      uint32 color = v0.GetColor();
+//      while (width > 0)
+//      {
+//        PixelBlender::Blend(*pBuffer, color);
+//        pBuffer++;
+//        width--;
+//      }
+//    }
+//    else
+//    {
+//      while (width > 0)
+//      {
+//        PixelBlender::Blend(*pBuffer, v0.GetColor());
+//        pBuffer++;
+//        v0.AddValue(*this);
+//        width--;
+//      }
+//    }
+//  }
+//}
+
+
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -19,21 +19,21 @@ typedef struct static_color
 static static_color static_colors[] =
 {
   // default colors for decoration
-{(nglChar*)_T("nuiDefaultColorPane1"), 240,240,240},
-{(nglChar*)_T("nuiDefaultColorPane2"), 252,252,252},
-{(nglChar*)_T("nuiDefaultColorStroke"), 205,205,205},
+  {(nglChar*)_T("nuiDefaultColorPane1"), 240,240,240},
+  {(nglChar*)_T("nuiDefaultColorPane2"), 252,252,252},
+  {(nglChar*)_T("nuiDefaultColorStroke"), 205,205,205},
 
-{(nglChar*)_T("nuiDefaultColorLabelText"), 40,40,40},
+  {(nglChar*)_T("nuiDefaultColorLabelText"), 40,40,40},
 
-{(nglChar*)_T("nuiDefaultColorScrollBar1"), 169,181,200},
-{(nglChar*)_T("nuiDefaultColorScrollBar2"), 91,115,150},
-{(nglChar*)_T("nuiDefaultColorScrollBar3"), 34,66,114},
-{(nglChar*)_T("nuiDefaultColorScrollBarStroke"), 94,117,152},
+  {(nglChar*)_T("nuiDefaultColorScrollBar1"), 169,181,200},
+  {(nglChar*)_T("nuiDefaultColorScrollBar2"), 91,115,150},
+  {(nglChar*)_T("nuiDefaultColorScrollBar3"), 34,66,114},
+  {(nglChar*)_T("nuiDefaultColorScrollBarStroke"), 94,117,152},
 
-{(nglChar*)_T("nuiHyperLink"), 64,64,255},
+  {(nglChar*)_T("nuiHyperLink"), 64,64,255},
 
 
-  // constants
+  // constants (web colors)
   {(nglChar*)_T("aliceblue"), 240, 248, 255}, 
   {(nglChar*)_T("antiquewhite"), 250, 235, 215}, 
   {(nglChar*)_T("aqua"),  0, 255, 255}, 

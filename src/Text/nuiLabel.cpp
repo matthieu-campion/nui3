@@ -50,7 +50,9 @@ nuiLabel::nuiLabel(const nglString& Text, nuiTheme::FontStyle FontStyle)
 
 nuiLabel::nuiLabel(const nglString& Text, nuiFont* pFont, bool AlreadyAcquired)
   : nuiWidget(),
-    mLabelSink(this)
+    mLabelSink(this),
+    mUnderline(false),
+    mStrikeThrough(false)
 {
   if (SetObjectClass(_T("nuiLabel")))
     InitAttributes();

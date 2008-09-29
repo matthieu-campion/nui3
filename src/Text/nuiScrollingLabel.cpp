@@ -12,6 +12,7 @@
 nuiScrollingLabel::nuiScrollingLabel(const nglString& rText, nuiTheme::FontStyle FontStyle, nuiScrollLoop ScrollLoop, bool smartScroll, bool centered)
 : mScrollingLabelSink(this)
 {
+  SetObjectClass(_T("nuiScrollingLabel"));
   mTickCount = 0;
   mScrollLoop = ScrollLoop;
   mSmartScroll = smartScroll;
@@ -55,6 +56,7 @@ nuiScrollingLabel::nuiScrollingLabel(const nglString& rText, nuiTheme::FontStyle
 nuiScrollingLabel::nuiScrollingLabel(const nglString& rText, nuiFont* pFont, bool AlreadyAcquired, nuiScrollLoop ScrollLoop, bool smartScroll, bool centered)
 : mScrollingLabelSink(this)
 {
+  SetObjectClass(_T("nuiScrollingLabel"));
   mTickCount = 0;
   mScrollLoop = ScrollLoop;
   mSmartScroll = smartScroll;
@@ -98,6 +100,7 @@ nuiScrollingLabel::nuiScrollingLabel(const nglString& rText, nuiFont* pFont, boo
 nuiScrollingLabel::nuiScrollingLabel(nuiLabel* pLabel, nuiScrollLoop ScrollLoop, bool smartScroll, bool centered)
 : mScrollingLabelSink(this)
 {
+  SetObjectClass(_T("nuiScrollingLabel"));
   mTickCount = 0;
   mScrollLoop = ScrollLoop;
   mSmartScroll = smartScroll;

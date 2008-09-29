@@ -44,14 +44,24 @@ public:
   {
     //dest_color = src_color; return; //#TEST
 
+    const uint8 Sa = ((const uint8*)&src_color)[NUI_RGBA_ENDIANSAFE_A];
+    if (Sa == 0)
+      return;
     const uint8 Sr = ((const uint8*)&src_color)[NUI_RGBA_ENDIANSAFE_R];
     const uint8 Sg = ((const uint8*)&src_color)[NUI_RGBA_ENDIANSAFE_G];
     const uint8 Sb = ((const uint8*)&src_color)[NUI_RGBA_ENDIANSAFE_B];
-    const uint8 Sa = ((const uint8*)&src_color)[NUI_RGBA_ENDIANSAFE_A];
-    
+
     uint8& Dr = ((uint8*)&dest_color)[NUI_RGBA_ENDIANSAFE_R];
     uint8& Dg = ((uint8*)&dest_color)[NUI_RGBA_ENDIANSAFE_G];
     uint8& Db = ((uint8*)&dest_color)[NUI_RGBA_ENDIANSAFE_B];
+
+    if (Sa == 255)
+    {
+      Dr = Sr;
+      Dg = Sg;
+      Db = Sb;
+      return;
+    }
     
     const int16 SA = Sa + 1;
     const int16 SMA = (1 << 8) - SA;
@@ -74,15 +84,25 @@ public:
   {
     //dest_color = src_color; return; //#TEST
 
+    const uint8 Sa = ((const uint8*)&src_color)[NUI_RGBA_ENDIANSAFE_A];
+    if (Sa == 0)
+      return;
     const uint8 Sr = ((const uint8*)&src_color)[NUI_RGBA_ENDIANSAFE_R];
     const uint8 Sg = ((const uint8*)&src_color)[NUI_RGBA_ENDIANSAFE_G];
     const uint8 Sb = ((const uint8*)&src_color)[NUI_RGBA_ENDIANSAFE_B];
-    const uint8 Sa = ((const uint8*)&src_color)[NUI_RGBA_ENDIANSAFE_A];
     
     uint8& Dr = ((uint8*)&dest_color)[NUI_RGBA_ENDIANSAFE_R];
     uint8& Dg = ((uint8*)&dest_color)[NUI_RGBA_ENDIANSAFE_G];
     uint8& Db = ((uint8*)&dest_color)[NUI_RGBA_ENDIANSAFE_B];
     
+    if (Sa == 255)
+    {
+      Dr = MIN(255, Sr + Dr);
+      Dg = MIN(255, Sg + Dg);
+      Db = MIN(255, Sb + Db);
+      return;
+    }
+
     const int16 SA = Sa + 1;
     
     Dr = MIN(255, Dr + ((SA * Sr) >> 8));
@@ -106,17 +126,17 @@ public:
     const uint8 Sr = ((const uint8*)&src_color)[NUI_RGBA_ENDIANSAFE_R];
     const uint8 Sg = ((const uint8*)&src_color)[NUI_RGBA_ENDIANSAFE_G];
     const uint8 Sb = ((const uint8*)&src_color)[NUI_RGBA_ENDIANSAFE_B];
-    const uint8 Sa = ((const uint8*)&src_color)[NUI_RGBA_ENDIANSAFE_A];
+    //const uint8 Sa = ((const uint8*)&src_color)[NUI_RGBA_ENDIANSAFE_A];
     
     uint8& Dr = ((uint8*)&dest_color)[NUI_RGBA_ENDIANSAFE_R];
     uint8& Dg = ((uint8*)&dest_color)[NUI_RGBA_ENDIANSAFE_G];
     uint8& Db = ((uint8*)&dest_color)[NUI_RGBA_ENDIANSAFE_B];
-    uint8& Da = ((uint8*)&dest_color)[NUI_RGBA_ENDIANSAFE_A];
+    //uint8& Da = ((uint8*)&dest_color)[NUI_RGBA_ENDIANSAFE_A];
     
     Dr = MIN(255, Dr + Sr);
     Dg = MIN(255, Dg + Sg);
     Db = MIN(255, Db + Sb);
-    Da = MIN(255, Da + Sa);
+    //Da = MIN(255, Da + Sa);
   }
 
   static bool CanOptimize()
