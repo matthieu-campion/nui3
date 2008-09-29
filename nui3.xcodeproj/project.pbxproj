@@ -92,6 +92,10 @@
 		BC2C68840D745D5500309364 /* nuiColorDecoration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC2C68820D745D5500309364 /* nuiColorDecoration.cpp */; };
 		BC2C68860D745D6E00309364 /* nuiColorDecoration.h in Headers */ = {isa = PBXBuildFile; fileRef = BC2C68850D745D6E00309364 /* nuiColorDecoration.h */; };
 		BC2C68870D745D6E00309364 /* nuiColorDecoration.h in Headers */ = {isa = PBXBuildFile; fileRef = BC2C68850D745D6E00309364 /* nuiColorDecoration.h */; };
+		BC31AB730E910E1E000FD6C6 /* nuiCheckerboardDecoration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC31AB720E910E1E000FD6C6 /* nuiCheckerboardDecoration.cpp */; };
+		BC31AB740E910E1E000FD6C6 /* nuiCheckerboardDecoration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC31AB720E910E1E000FD6C6 /* nuiCheckerboardDecoration.cpp */; };
+		BC31AB760E910E2B000FD6C6 /* nuiCheckerboardDecoration.h in Headers */ = {isa = PBXBuildFile; fileRef = BC31AB750E910E2B000FD6C6 /* nuiCheckerboardDecoration.h */; };
+		BC31AB770E910E2B000FD6C6 /* nuiCheckerboardDecoration.h in Headers */ = {isa = PBXBuildFile; fileRef = BC31AB750E910E2B000FD6C6 /* nuiCheckerboardDecoration.h */; };
 		BC3532780DF4279A003930C3 /* nuiMouseCursor.h in Headers */ = {isa = PBXBuildFile; fileRef = BC3532770DF4279A003930C3 /* nuiMouseCursor.h */; };
 		BC3532790DF4279A003930C3 /* nuiMouseCursor.h in Headers */ = {isa = PBXBuildFile; fileRef = BC3532770DF4279A003930C3 /* nuiMouseCursor.h */; };
 		BC35D3180CF5C55C002CE274 /* nuiAttributeEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC35D3160CF5C55C002CE274 /* nuiAttributeEditor.cpp */; };
@@ -2344,6 +2348,8 @@
 		BC1CE4B60DC2A4A600DAF677 /* nuiRangeAttributeEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiRangeAttributeEditor.h; path = include/nuiRangeAttributeEditor.h; sourceTree = SOURCE_ROOT; };
 		BC2C68820D745D5500309364 /* nuiColorDecoration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiColorDecoration.cpp; path = src/Decorations/nuiColorDecoration.cpp; sourceTree = SOURCE_ROOT; };
 		BC2C68850D745D6E00309364 /* nuiColorDecoration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiColorDecoration.h; path = include/nuiColorDecoration.h; sourceTree = SOURCE_ROOT; };
+		BC31AB720E910E1E000FD6C6 /* nuiCheckerboardDecoration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiCheckerboardDecoration.cpp; path = src/Decorations/nuiCheckerboardDecoration.cpp; sourceTree = SOURCE_ROOT; };
+		BC31AB750E910E2B000FD6C6 /* nuiCheckerboardDecoration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiCheckerboardDecoration.h; path = include/nuiCheckerboardDecoration.h; sourceTree = SOURCE_ROOT; };
 		BC3532770DF4279A003930C3 /* nuiMouseCursor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiMouseCursor.h; path = ../../include/nuiMouseCursor.h; sourceTree = "<group>"; };
 		BC35D3160CF5C55C002CE274 /* nuiAttributeEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiAttributeEditor.cpp; path = src/Attributes/nuiAttributeEditor.cpp; sourceTree = SOURCE_ROOT; };
 		BC35D31B0CF5C57B002CE274 /* nuiAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiAttribute.h; path = include/nuiAttribute.h; sourceTree = SOURCE_ROOT; };
@@ -3623,6 +3629,8 @@
 				BC915AFB0DE187F80044CD59 /* nuiImageDecoration.h */,
 				BC3BA4680D251050005B175E /* nuiGradientDecoration.cpp */,
 				BC3BA4740D25107B005B175E /* nuiGradientDecoration.h */,
+				BC31AB720E910E1E000FD6C6 /* nuiCheckerboardDecoration.cpp */,
+				BC31AB750E910E2B000FD6C6 /* nuiCheckerboardDecoration.h */,
 				BC5529F80E754CE400E8068E /* nuiDefaultDecoration.cpp */,
 				BC5529FB0E754CEF00E8068E /* nuiDefaultDecoration.h */,
 			);
@@ -6050,6 +6058,7 @@
 				941A98BF0E8BEAD000CAFC3A /* nuiScrollingLabel.h in Headers */,
 				941A98CF0E8BF05C00CAFC3A /* nuiScrollBox.h in Headers */,
 				BC8383540E8D36E500023E3A /* nuiBackgroundPane.h in Headers */,
+				BC31AB770E910E2B000FD6C6 /* nuiCheckerboardDecoration.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6701,6 +6710,7 @@
 				941A98BE0E8BEAD000CAFC3A /* nuiScrollingLabel.h in Headers */,
 				941A98CE0E8BF05C00CAFC3A /* nuiScrollBox.h in Headers */,
 				BC8383530E8D36E500023E3A /* nuiBackgroundPane.h in Headers */,
+				BC31AB760E910E2B000FD6C6 /* nuiCheckerboardDecoration.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7260,6 +7270,7 @@
 				941A98BC0E8BEAAE00CAFC3A /* nuiScrollingLabel.cpp in Sources */,
 				941A98CC0E8BF04700CAFC3A /* nuiScrollBox.cpp in Sources */,
 				BC8383510E8D36D600023E3A /* nuiBackgroundPane.cpp in Sources */,
+				BC31AB740E910E1E000FD6C6 /* nuiCheckerboardDecoration.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7762,6 +7773,7 @@
 				941A98BB0E8BEAAE00CAFC3A /* nuiScrollingLabel.cpp in Sources */,
 				941A98CB0E8BF04700CAFC3A /* nuiScrollBox.cpp in Sources */,
 				BC8383500E8D36D600023E3A /* nuiBackgroundPane.cpp in Sources */,
+				BC31AB730E910E1E000FD6C6 /* nuiCheckerboardDecoration.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
