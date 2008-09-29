@@ -64,7 +64,6 @@
 
 #include "nuiTessellator.h"
 #include "nuiFontManager.h"
-#include "nuiFontBrowser.h"
 
 #include "nuiFormater.h"
 #include "nuiFormatedLabel.h"
@@ -385,15 +384,6 @@ void nuiWin::OnCreation()
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateTextLayoutWindow);
   pMainTree->AddChild(pElement);
   
-  // CreateFontWindow:
-  pElement = new nuiTreeNode(_T("Font window"));
-  mWinSink.Connect(pElement->Activated, &nuiWin::CreateFontWindow);
-  pMainTree->AddChild(pElement);
-  
-  // CreateFontBrowserWindow:
-  pElement = new nuiTreeNode(_T("Font Browser"));
-  mWinSink.Connect(pElement->Activated, &nuiWin::CreateFontBrowserWindow);
-  pMainTree->AddChild(pElement);
   
   // CreateFontSubstitutionWindow:
   pElement = new nuiTreeNode(_T("Font Substitution window"));
@@ -2027,119 +2017,6 @@ bool nuiWin::CreateTextLayoutWindow(const nuiEvent& rEvent)
   pBox->AddCell(new TestLabel(TEST_TEXT, _T("<nuiFont Size=\"12\" Source=\"../Data/Vera.ttf\"/>")));
   pBox->AddCell(new TestLabel(TEST_TEXT, _T("<nuiFont Size=\"12\" Source=\"../Data/VeraMono.ttf\"/>")));
   
-  return false;
-}
-
-void DumpFonts(const std::list<nuiFontRequestResult>& rFonts, nglString& rString)
-{
-  std::list<nuiFontRequestResult>::const_iterator it = rFonts.begin();
-  std::list<nuiFontRequestResult>::const_iterator end = rFonts.end();
-
-  while (it != end)
-  {
-    const nuiFontRequestResult& rResult = *it;
-    rString.AddFormat(_T("Score:\t\t%f\n"), rResult.GetScore());
-    const nuiFontDesc* pFontDesc = rResult.GetFontDesc();
-    rString.AddFormat(_T("Path:\t\t%ls\n"), pFontDesc->GetPath().GetChars());
-    rString.AddFormat(_T("Family name:\t\t%ls\n"), pFontDesc->GetName().GetChars());
-    rString.AddFormat(_T("Style  name:\t\t%ls\n"), pFontDesc->GetStyle().GetChars());
-    rString.AddFormat(_T("Face:\t\t%d\n"), pFontDesc->GetFace());
-
-    rString.AddFormat(_T("Bold:\t\t%ls\n"), YESNO(pFontDesc->GetBold()));
-    rString.AddFormat(_T("Italic:\t\t%ls\n"), YESNO(pFontDesc->GetItalic()));
-    rString.AddFormat(_T("Monospace:\t\t%ls\n"), YESNO(pFontDesc->GetMonospace()));
-    rString.AddFormat(_T("Scalable:\t\t%ls\n"), YESNO(pFontDesc->GetScalable()));
-
-    rString.AddFormat(_T("Encodings:\t\t%d\n"), (uint32)pFontDesc->GetEncodings().size());
-    rString.AddFormat(_T("Glyphs:\t\t%d\n"), (uint32)pFontDesc->GetGlyphs().size());
-
-    if (!pFontDesc->GetScalable())
-      rString.AddFormat(_T("Sizes:\t\t%d\n"), (uint32)pFontDesc->GetSizes().size());
-
-    rString.AddFormat(_T("\n\n"));
-
-    ++it;
-  }
-
-}
-
-bool nuiWin::CreateFontWindow(const nuiEvent& rEvent)
-{
-  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, _T("Fonts"));
-  mpManager->AddChild(pWindow);
-  //new TestLabel(new nuiScrollView(pWindow, true, false), _T("Test text: yHwWmMfFgGi .;[]()_-|#*%$ 1234567890"));
-  nuiScrollView* pScroller = new nuiScrollView(true, true);
-  pWindow->AddChild(pScroller);
-  nuiText* pText = new nuiText(_T(""));
-  pScroller->AddChild(pText);
-  pText->SetFont(nuiTheme::Fixed);
-  
-  nuiFontManager& rFontManager(nuiFontManager::GetManager());
-  
-  std::vector<nuiFontDesc*> fonts;
-  rFontManager.GetFonts(fonts);
-  pText->Print(_T("%d fonts in the system.\n"), fonts.size());
-  
-  if (0)
-  {
-    pText->Print(_T("Requesting all the monospace fonts and prefer the ones that have bold glyphs:\n"));
-    
-    nuiFontRequest request;
-    request.SetMonospace(1.0f, true);
-    request.SetBold(true, 0.5f);
-    
-    nglString dump;
-    std::list<nuiFontRequestResult> result;
-    rFontManager.RequestFont(request, result);
-    DumpFonts(result, dump);
-    
-    
-    pText->Print(_T("%ls"), dump.GetChars());
-  }
-  
-  if (1)
-  {
-    pText->Print(_T("Requesting all the fonts from the arial family and prefer the ones that have italic glyphs:\n"));
-    
-    nuiFontRequest request;
-    request.SetName(_T("arial"), 1.0f, true);
-    request.SetItalic(true, 0.5f);
-    
-    nglString dump;
-    std::list<nuiFontRequestResult> result;
-    rFontManager.RequestFont(request, result);
-    DumpFonts(result, dump);
-    
-    
-    pText->Print(_T("%ls"), dump.GetChars());
-  }
-  
-  if (0)
-  {
-    
-    pText->Print(_T("Requesting all the fonts than have the unicode character 0x4e2d:\n"));
-    
-    nuiFontRequest request;
-    request.MustHaveGlyph(0x4e2d, 1.0f);
-    
-    nglString dump;
-    std::list<nuiFontRequestResult> result;
-    rFontManager.RequestFont(request, result);
-    DumpFonts(result, dump);
-    
-    pText->Print(_T("%ls"), dump.GetChars());
-  }
-  return false;
-}
-
-bool nuiWin::CreateFontBrowserWindow(const nuiEvent& rEvent)
-{
-  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nuiWindow::DecoratedBackground, _T("Fonts"));
-  mpManager->AddChild(pWindow);
-  //new TestLabel(new nuiScrollView(pWindow, true, false), _T("Test text: yHwWmMfFgGi .;[]()_-|#*%$ 1234567890"));
-  
-  nuiFontBrowser* pBrowser = new nuiFontBrowser();
-  pWindow->AddChild(pBrowser);
   return false;
 }
 

@@ -62,8 +62,6 @@ protected:
   bool CreateWrappedLabelWindow(const nuiEvent& rEvent);
   bool CreateWhizzAnimWindow(const nuiEvent& rEvent);
   bool CreateTextLayoutWindow(const nuiEvent& rEvent);
-  bool CreateFontWindow(const nuiEvent& rEvent);
-  bool CreateFontBrowserWindow(const nuiEvent& rEvent);
   bool CreateFontSubstitutionWindow(const nuiEvent& rEvent);
   bool CreateSignalsAndSlotsTestWindow(const nuiEvent& rEvent);
   bool CreateFileSelectorWindow(const nuiEvent& rEvent);
