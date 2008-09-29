@@ -220,7 +220,9 @@ void nuiColorSelector::SetCurrentColor(const nuiColor& rColor)
   FormatColor(alpha, mpAlphaSliderLabel);
   
   mpColorPane->Invalidate();
-  ColorChanged();
+  
+  // send event
+  ColorChanged(); 
 }
 
 void nuiColorSelector::SetColorList(const std::vector<nuiColor>& rColorList)
@@ -243,6 +245,8 @@ bool nuiColorSelector::SwatchSelected(const nuiEvent& rEvent)
   SetCurrentColor(pPane->GetFillColor());
   OnTabSelected(nuiEvent());
   
+  // send event
+  SwatchColorChanged(); 
   return true;
 }
 
@@ -292,6 +296,9 @@ bool nuiColorSelector::RgbSliderChanged(const nuiEvent& rEvent)
   nuiSize alpha = (float)mpRgbAlphaSlider->GetRange().GetValue();
 
   SetCurrentColor(nuiColor(red, green, blue, alpha));
+  
+  // send event
+  RGBColorChanged();
 
   return true;
 }
