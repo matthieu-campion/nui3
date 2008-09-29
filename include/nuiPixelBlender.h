@@ -40,36 +40,58 @@ public:
 class nuiPixelBlender_Transp
 {
 public:
+  static inline uint32 lerpRGBA(const uint32 d, const uint32 s, uint32 ti)
+  {
+    //uint32 ti = ToBelow(t*256);
+    uint32 dstga = d      & 0xFF00FF;
+    uint32 dstrb = d >> 8 & 0xFF00FF;
+    uint32 srcga = s      & 0xFF00FF;
+    uint32 srcrb = s >> 8 & 0xFF00FF;
+    uint32 dga = srcga - dstga;
+    uint32 drb = srcrb - dstrb;
+    dga = (dga * ti) >> 8;  
+    drb = (drb * ti) >> 8;  
+    const uint32 ga  = (dga + dstga)      & 0x00FF00FF;
+    const uint32 rb  = (drb + dstrb) << 8 & 0xFF00FF00;
+    return ga | rb;
+  }
+
   static void Blend(uint32& dest_color, const uint32 src_color)
   {
-    //dest_color = src_color; return; //#TEST
-
-    const uint8 Sa = ((const uint8*)&src_color)[NUI_RGBA_ENDIANSAFE_A];
-    if (Sa == 0)
-      return;
-    const uint8 Sr = ((const uint8*)&src_color)[NUI_RGBA_ENDIANSAFE_R];
-    const uint8 Sg = ((const uint8*)&src_color)[NUI_RGBA_ENDIANSAFE_G];
-    const uint8 Sb = ((const uint8*)&src_color)[NUI_RGBA_ENDIANSAFE_B];
-
-    uint8& Dr = ((uint8*)&dest_color)[NUI_RGBA_ENDIANSAFE_R];
-    uint8& Dg = ((uint8*)&dest_color)[NUI_RGBA_ENDIANSAFE_G];
-    uint8& Db = ((uint8*)&dest_color)[NUI_RGBA_ENDIANSAFE_B];
-
-    if (Sa == 255)
-    {
-      Dr = Sr;
-      Dg = Sg;
-      Db = Sb;
-      return;
-    }
-    
-    const int16 SA = Sa + 1;
-    const int16 SMA = (1 << 8) - SA;
-    
-    Dr = (SMA * Dr + SA * Sr) >> 8;
-    Dg = (SMA * Dg + SA * Sg) >> 8;
-    Db = (SMA * Db + SA * Sb) >> 8;
+    const uint8 Sa = 255 - ((const uint8*)&src_color)[NUI_RGBA_ENDIANSAFE_A];
+    dest_color = lerpRGBA(src_color, dest_color, Sa + 1);
   }
+  
+//  static void Blend(uint32& dest_color, const uint32 src_color)
+//  {
+//    //dest_color = src_color; return; //#TEST
+//
+//    const uint8 Sa = ((const uint8*)&src_color)[NUI_RGBA_ENDIANSAFE_A];
+//    if (Sa == 0)
+//      return;
+//    const uint8 Sr = ((const uint8*)&src_color)[NUI_RGBA_ENDIANSAFE_R];
+//    const uint8 Sg = ((const uint8*)&src_color)[NUI_RGBA_ENDIANSAFE_G];
+//    const uint8 Sb = ((const uint8*)&src_color)[NUI_RGBA_ENDIANSAFE_B];
+//
+//    uint8& Dr = ((uint8*)&dest_color)[NUI_RGBA_ENDIANSAFE_R];
+//    uint8& Dg = ((uint8*)&dest_color)[NUI_RGBA_ENDIANSAFE_G];
+//    uint8& Db = ((uint8*)&dest_color)[NUI_RGBA_ENDIANSAFE_B];
+//
+//    if (Sa == 255)
+//    {
+//      Dr = Sr;
+//      Dg = Sg;
+//      Db = Sb;
+//      return;
+//    }
+//    
+//    const int16 SA = Sa + 1;
+//    const int16 SMA = (1 << 8) - SA;
+//    
+//    Dr = (SMA * Dr + SA * Sr) >> 8;
+//    Dg = (SMA * Dg + SA * Sg) >> 8;
+//    Db = (SMA * Db + SA * Sb) >> 8;
+//  }
   
   static bool CanOptimize()
   {

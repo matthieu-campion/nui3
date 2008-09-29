@@ -738,3 +738,8 @@ bool nuiSortVertexPointers(const VertexType& rV0, const VertexType& rV1)
   return rV0.X() < rV1.X();
 }
 
+//template <typename PixelBlender, class VertexType>
+//void nuiDrawHLine(uint32* pBuffer, VertexType& v0, VertexType& incr, int32 width)
+//{
+//  incr.DrawHLine<PixelBlender>(pBuffer, v0, width);
+//}
