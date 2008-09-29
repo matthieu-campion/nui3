@@ -22,6 +22,9 @@ public:
   
 private:
 
+  bool OnComboChanged(const nuiEvent& rEvent);
+  
+  nuiLabel* mpLabel;
   nuiEventSink<MainWindow> mEventSink;
 };
 
