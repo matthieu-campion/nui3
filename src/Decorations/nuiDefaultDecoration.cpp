@@ -206,6 +206,16 @@ void nuiDefaultDecoration::InitMaps()
   pFrame = new nuiFrame(_T("nuiDefaultDecorationArrowOpen"), pTex, nuiRect(0,0,6,7));
   pFrame->UseWidgetAlpha(false);
   delete pIMem;  
+  
+  
+  
+  // Checkerboard for color alpha viewing
+  pIMem = new nglIMemory(gpCheckerboardSmall, gCheckerboardSmallSize);
+  pTex = nuiTexture::GetTexture(pIMem);
+  NGL_ASSERT(pTex);
+  pFrame = new nuiFrame(_T("nuiDefaultDecorationCheckerboardSmall"), pTex, nuiRect(0,0,20,20));
+  pFrame->UseWidgetAlpha(false);
+  delete pIMem;  
 }
 
 
@@ -386,7 +396,6 @@ void nuiDefaultDecoration::FolderPane(nuiWidget* pWidget)
 
 void nuiDefaultDecoration::Button(nuiWidget* pWidget)
 {
-
   nuiStateDecoration* pDeco = (nuiStateDecoration*)nuiDecoration::Get(_T("nuiDefaultDecorationButton"));
   if (pDeco)
   {

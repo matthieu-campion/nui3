@@ -49,6 +49,8 @@ public:
   void SetFillColor(const nuiColor& rFillColor);
   void SetStrokeColor(const nuiColor& rStrokeColor);
   void SetShapeMode(nuiShapeMode shapeMode);
+  const nuiColor& GetFillColor() const;
+  const nuiColor& GetStrokeColor() const;
   
   virtual bool SetRect(const nuiRect& rRect);
   virtual nuiRect CalcIdealSize();

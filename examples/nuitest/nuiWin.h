@@ -72,7 +72,6 @@ protected:
   bool CreateFileSelectorWindow(const nuiEvent& rEvent);
   bool CreateClippingTest(const nuiEvent& rEvent);
   bool CreateDragZone(const nuiEvent& rEvent);
-  bool CreateColorSelector(const nuiEvent& rEvent);
   bool CreateEnableTestWindow(const nuiEvent& rEvent);
   bool CreateButtonDecorationWindow(const nuiEvent& rEvent);
   bool CreateVolumesTestWindow(const nuiEvent& rEvent);

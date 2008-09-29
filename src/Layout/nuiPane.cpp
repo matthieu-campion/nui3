@@ -21,9 +21,6 @@ nuiPane::nuiPane(const nuiColor& rFillColor, const nuiColor& rStrokeColor, nuiSh
   mFillColor = rFillColor;
   mStrokeColor = rStrokeColor;
   
-  SetColor(eShapeFill, rFillColor);
-  SetColor(eShapeStroke, rStrokeColor);
-
   mShapeMode = ShapeMode;
   mBlendFunc = BlendFunc;
   mLineWidth = 1;
@@ -109,11 +106,8 @@ bool nuiPane::Draw(nuiDrawContext* pContext)
   pContext->EnableBlending(true);
   pContext->SetBlendFunc(mBlendFunc);
 
-
-  nuiColor col = GetColor(eShapeFill);
-  pContext->SetFillColor(col);
-  col = GetColor(eShapeStroke);
-  pContext->SetStrokeColor(col);
+  pContext->SetFillColor(mFillColor);
+  pContext->SetStrokeColor(mStrokeColor);
   pContext->EnableAntialiasing(true);
   pContext->SetLineWidth(mLineWidth);
   if (mCurve != 0)
@@ -205,15 +199,24 @@ void nuiPane::SetLineWidth(float Width)
 void nuiPane::SetFillColor(const nuiColor& rFillColor)
 {
   mFillColor = rFillColor;
-  SetColor(eShapeFill, rFillColor);
   Invalidate();
 }
 
 void nuiPane::SetStrokeColor(const nuiColor& rStrokeColor)
 {
   mStrokeColor = rStrokeColor;
-  SetColor(eShapeStroke, rStrokeColor);
   Invalidate();
+}
+
+
+const nuiColor& nuiPane::GetFillColor() const
+{
+  return mFillColor;
+}
+
+const nuiColor& nuiPane::GetStrokeColor() const
+{
+  return mStrokeColor;
 }
 
 void nuiPane::SetShapeMode(nuiShapeMode shapeMode)

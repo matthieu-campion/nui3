@@ -90,7 +90,8 @@ nuiWidget::nuiWidget()
   mMatrixIsIdentity(true),
   mCSSPasses(0),
   mpParent(NULL),
-  mpTheme(NULL)
+  mpTheme(NULL),
+  mDecorationEnabled(true)
 {
   if (SetObjectClass(_T("nuiWidget")))
     InitAttributes();
@@ -3173,6 +3174,32 @@ nuiDecoration* nuiWidget::GetDecoration() const
 }
 
 
+void nuiWidget::EnableDecoration(bool set)
+{
+  mDecorationEnabled = set;
+  
+  if (!mDecorationEnabled)
+  {
+    nuiDecoration* pDeco = GetDecoration();
+    if (pDeco)
+      mDecorationName = pDeco->GetName();
+    SetDecoration(NULL);
+  }
+  else
+  {
+    nuiDecoration* pDeco = nuiDecoration::Get(mDecorationName);
+    SetDecoration(pDeco, mDecorationMode);
+  }
+}
+
+bool nuiWidget::IsDecorationEnabled() const
+{
+  return mDecorationEnabled;
+}
+
+
+
+
 /// Focus Decoration:
 void nuiWidget::SetFocusDecoration(const nglString& rName)
 {
@@ -3229,7 +3256,7 @@ void nuiWidget::CallConnectTopLevel(nuiTopLevel* pTopLevel)
 
   // cal delegate for default decoration, if the user has not set any decoration, and if there is a default decoration
   int32 index = GetObjectClassNameIndex();
-  if (!GetDecoration() && (mDefaultDecorations.size() > index))
+  if (!GetDecoration() && mDecorationEnabled && (mDefaultDecorations.size() > index))
   {
     nuiDecorationDelegate dlg = mDefaultDecorations[index];
     if (dlg)

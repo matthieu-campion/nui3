@@ -7,6 +7,10 @@
 
 #include "nui.h"
 #include "nuiColorSelector.h"
+#include "nuiMetaDecoration.h"
+#include "nuiFrame.h"
+
+
 
 nuiColorSelector::nuiColorSelector(const nuiColor& rInitialColor, const std::vector<nuiColor>& rInitialColorList, ColorSelectorMode mode /* = eModeRGB */)
 : nuiSimpleContainer(), 
@@ -20,12 +24,24 @@ nuiColorSelector::nuiColorSelector(const nuiColor& rInitialColor, const std::vec
   
   mpMainBox = new nuiVBox(0);
   mpMainBox->SetObjectName(_T("nuiColorSelector::MainBox"));
+  mpMainBox->SetExpand(nuiExpandShrinkAndGrow);
   AddChild(mpMainBox);
   
-  mpColorPane = new nuiPane(mCurrentColor, nuiColor(0.f, 0.f, 0.f, 1.f));
+  mpColorPane = new nuiSimpleContainer();
   mpColorPane->SetBorder(2.f, 2.f);
   mpColorPane->SetUserSize(20.f, 20.f);
   mpMainBox->AddCell(mpColorPane, nuiLeft);
+  
+  nuiMetaDecoration* pMetaDeco = new nuiMetaDecoration(_T("dnuiColorSelector::ColorPane"));
+  mpColorPane->SetDecoration(pMetaDeco, eDecorationBorder);
+  
+  nuiFrame* pFrame = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationCheckerboardSmall"));
+  NGL_ASSERT(pFrame);
+  pMetaDeco->AddDecoration(pFrame);
+
+  mpColorPaneDeco = new nuiColorDecoration(_T("dnuiColorSelector::ColorPane::ColorDeco"), mCurrentColor, 1, nuiColor(0,0,0));
+  pMetaDeco->AddDecoration(mpColorPaneDeco);
+
   
   mpTabView = new nuiTabView(nuiTop);
   mpTabView->SetObjectName(_T("nuiColorSelector::TabView"));
@@ -59,17 +75,18 @@ nuiWidget* nuiColorSelector::Tab_RGB()
   nuiSize blue = mCurrentColor.Blue();
   nuiSize alpha = mCurrentColor.Alpha();
   
-  mpRgbGrid = new nuiGrid(2, 4);
+  mpRgbGrid = new nuiGrid(3, 4);
+  mpRgbGrid->SetBorder(0,0,10,10);
     
   nuiPane* pPane = new nuiPane(nuiColor(1.f, 1.f, 1.f, 1.f), nuiColor(0.f, 0.f, 0.f, 1.f), eStrokeShape);
   nuiLabel* pLabel = new nuiLabel(_T("RGB"));
   pLabel->SetBorder(2.f, 1.f);
   pPane->AddChild(pLabel);
   
-  mpRgbGrid->SetCell(0, 0, new nuiLabel(_T("Red:")));
-  mpRgbGrid->SetCell(0, 1, new nuiLabel(_T("Green:")));
-  mpRgbGrid->SetCell(0, 2, new nuiLabel(_T("Blue:")));
-  mpRgbGrid->SetCell(0, 3, new nuiLabel(_T("Alpha:")));
+  mpRgbGrid->SetCell(0, 0, new nuiLabel(_T("r:")));
+  mpRgbGrid->SetCell(0, 1, new nuiLabel(_T("g:")));
+  mpRgbGrid->SetCell(0, 2, new nuiLabel(_T("b:")));
+  mpRgbGrid->SetCell(0, 3, new nuiLabel(_T("a:")));
   
   mpRedSlider = new nuiSlider(nuiHorizontal, nuiRange(red, 0.f, 1.f));
   mpRgbGrid->SetCell(1, 0, mpRedSlider);
@@ -91,7 +108,35 @@ nuiWidget* nuiColorSelector::Tab_RGB()
   mSink.Connect(mpRgbAlphaSlider->InteractiveValueChanged, &nuiColorSelector::RgbSliderChanged);
   mSink.Connect(mpRgbAlphaSlider->ValueChanged, &nuiColorSelector::RgbSliderChanged);
   
+  mpRgbGrid->SetColumnPixels(2, 25);
+  
+  mpRedSliderLabel = new nuiLabel(_T(""), nuiFont::GetFont(8));
+  FormatColor(red, mpRedSliderLabel);
+  mpRgbGrid->SetCell(2, 0, mpRedSliderLabel, nuiRight);
+  
+  mpGreenSliderLabel = new nuiLabel(_T(""), nuiFont::GetFont(8));
+  FormatColor(green, mpGreenSliderLabel);
+  mpRgbGrid->SetCell(2, 1, mpGreenSliderLabel, nuiRight);
+  
+  mpBlueSliderLabel = new nuiLabel(_T(""), nuiFont::GetFont(8));
+  FormatColor(blue, mpBlueSliderLabel);
+  mpRgbGrid->SetCell(2, 2, mpBlueSliderLabel, nuiRight);
+  
+  mpAlphaSliderLabel = new nuiLabel(_T(""), nuiFont::GetFont(8));
+  FormatColor(alpha, mpAlphaSliderLabel);
+  mpRgbGrid->SetCell(2, 3, mpAlphaSliderLabel, nuiRight);
+  
+  
   return mpRgbGrid;
+}
+
+
+void nuiColorSelector::FormatColor(nuiSize color, nuiLabel* pLabel)
+{
+  nglString str;
+  uint32 value = uint32(color * 255);
+  str.Format(_T("%d"), value);
+  pLabel->SetText(str);
 }
 
 
@@ -99,22 +144,12 @@ nuiWidget* nuiColorSelector::Tab_HSV()
 {
   mpHsvGrid = new nuiGrid(2, 4);
   
-  nuiPane* pPane = new nuiPane(nuiColor(1.f, 1.f, 1.f, 1.f), nuiColor(0.f, 0.f, 0.f, 1.f), eStrokeShape);
-  nuiLabel* pLabel = new nuiLabel(_T("HSV"));
-  pLabel->SetBorder(2.f, 1.f);
-  pPane->AddChild(pLabel);
-
   return mpHsvGrid;
 }
 
 
 nuiWidget* nuiColorSelector::Tab_Swatches()
 {
-  nuiPane* pPane = new nuiPane(nuiColor(1.f, 1.f, 1.f, 1.f), nuiColor(0.f, 0.f, 0.f, 1.f), eStrokeShape);
-  nuiLabel* pLabel = new nuiLabel(_T("Swatches"));
-  pLabel->SetBorder(2.f, 1.f);
-  pPane->AddChild(pLabel);
-  
   MakeSwatchGrid();
 
   return mpSwatchGrid;
@@ -142,25 +177,26 @@ void nuiColorSelector::MakeSwatchGrid()
     mpSwatchGrid->Trash();
   
   mpSwatchGrid = new nuiGrid(5, 0);
-  for (int j=0; j<5; j++)
-  {
-    mpSwatchGrid->SetColumnPixels(j, 16.f);
-  }
+  mpSwatchGrid->SetBorder(0,0,10,10);
   
   std::vector<nuiColor>::const_iterator end = mColorList.end();
   uint i = 0;
   for (std::vector<nuiColor>::const_iterator it = mColorList.begin(); it != end; ++it, i++)
   {
     mpSwatchGrid->AddRows(i, 1);
-    mpSwatchGrid->SetRowPixels(i, 16.f);
     nuiPane* pSwatchPane;
-    pSwatchPane = new nuiPane(*it, nuiColor(0.f, 0.f, 0.f, 1.f));
+    pSwatchPane = new nuiPane(*it, nuiColor(32,32,32));
     nuiButton* pButton = new nuiButton();
+    pButton->SetUserSize(16,16);
     pButton->SetDrawSelf(false);
-    pButton->SetBorder(1.f,1.f);
+    pButton->SetBorder(2,2);
     pButton->AddChild(pSwatchPane);
+    
+    pButton->EnableDecoration(false);
+    
+    
     mSink.Connect(pButton->Clicked, &nuiColorSelector::SwatchSelected, pSwatchPane);
-    mpSwatchGrid->SetCell(i%5, i/5, pButton);
+    mpSwatchGrid->SetCell(i%5, i/5, pButton, nuiCenter);
   }
 }
 
@@ -172,7 +208,17 @@ const nuiColor& nuiColorSelector::GetCurrentColor() const
 void nuiColorSelector::SetCurrentColor(const nuiColor& rColor)
 {
   mCurrentColor = rColor;
-  mpColorPane->SetFillColor(rColor);
+  mpColorPaneDeco->SetFillColor(rColor);
+  
+  nuiSize red = rColor.Red();
+  nuiSize green = rColor.Green();
+  nuiSize blue = rColor.Blue();
+  nuiSize alpha = rColor.Alpha();
+  FormatColor(red, mpRedSliderLabel);
+  FormatColor(green, mpGreenSliderLabel);
+  FormatColor(blue, mpBlueSliderLabel);
+  FormatColor(alpha, mpAlphaSliderLabel);
+  
   mpColorPane->Invalidate();
   ColorChanged();
 }
@@ -194,7 +240,7 @@ void nuiColorSelector::SetNumColors(uint NumColors)
 bool nuiColorSelector::SwatchSelected(const nuiEvent& rEvent)
 {
   nuiPane* pPane = (nuiPane*) rEvent.mpUser;
-  SetCurrentColor(pPane->GetColor(eShapeFill));
+  SetCurrentColor(pPane->GetFillColor());
   OnTabSelected(nuiEvent());
   
   return true;
@@ -220,27 +266,33 @@ bool nuiColorSelector::OnTabSelected(const nuiEvent& rEvent)
 
 void nuiColorSelector::Tab_RGB_Update()
 {
-//  mpRedSlider->ValueChanged.Disable();
-//  mpRedSlider->GetRange().SetValue(mCurrentColor.Red());
-//  mpRedSlider->ValueChanged.Enable();
-//  
-//  mpGreenSlider->ValueChanged.Disable();
-//  mpGreenSlider->GetRange().SetValue(mCurrentColor.Green());
-//  mpGreenSlider->ValueChanged.Enable();
-//  
-//  mpBlueSlider->ValueChanged.Disable();
-//  mpBlueSlider->GetRange().SetValue(mCurrentColor.Blue());
-//  mpBlueSlider->ValueChanged.Enable();
-//  
-//  mpRgbAlphaSlider->ValueChanged.Disable();
-//  mpRgbAlphaSlider->GetRange().SetValue(mCurrentColor.Alpha());
-//  mpRgbAlphaSlider->ValueChanged.Enable();
+  mpRedSlider->ValueChanged.Disable();
+  mpRedSlider->GetRange().SetValue(mCurrentColor.Red());
+  mpRedSlider->ValueChanged.Enable();
+  
+  mpGreenSlider->ValueChanged.Disable();
+  mpGreenSlider->GetRange().SetValue(mCurrentColor.Green());
+  mpGreenSlider->ValueChanged.Enable();
+  
+  mpBlueSlider->ValueChanged.Disable();
+  mpBlueSlider->GetRange().SetValue(mCurrentColor.Blue());
+  mpBlueSlider->ValueChanged.Enable();
+  
+  mpRgbAlphaSlider->ValueChanged.Disable();
+  mpRgbAlphaSlider->GetRange().SetValue(mCurrentColor.Alpha());
+  mpRgbAlphaSlider->ValueChanged.Enable();
 
 }
 
 bool nuiColorSelector::RgbSliderChanged(const nuiEvent& rEvent)
 {
-  SetCurrentColor(nuiColor((float)mpRedSlider->GetRange().GetValue(), (float)mpGreenSlider->GetRange().GetValue(), (float)mpBlueSlider->GetRange().GetValue(), (float)mpRgbAlphaSlider->GetRange().GetValue()));
+  nuiSize red = (float)mpRedSlider->GetRange().GetValue();
+  nuiSize green = (float)mpGreenSlider->GetRange().GetValue();
+  nuiSize blue = (float)mpBlueSlider->GetRange().GetValue();
+  nuiSize alpha = (float)mpRgbAlphaSlider->GetRange().GetValue();
+
+  SetCurrentColor(nuiColor(red, green, blue, alpha));
+
   return true;
 }
 

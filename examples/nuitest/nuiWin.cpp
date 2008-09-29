@@ -49,7 +49,6 @@
 #include "nuiPane.h"
 #include "nuiFileSelector.h"
 #include "nuiMessageQueue.h"
-#include "nuiColorSelector.h"
 #include "nuiGradientDecoration.h"
 #include "nuiBackgroundPane.h"
 
@@ -506,10 +505,6 @@ void nuiWin::OnCreation()
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateDragZone);
   pMainTree->AddChild(pElement);
   
-  pElement = new nuiTreeNode(_T("Color Selector"));
-  mWinSink.Connect(pElement->Activated, &nuiWin::CreateColorSelector);
-  pMainTree->AddChild(pElement);
-  
   pElement = new nuiTreeNode(_T("Clipping Test"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateClippingTest);
   pMainTree->AddChild(pElement);
@@ -595,10 +590,6 @@ void nuiWin::OnCreation()
 /*finfo.Descender - */
   }
   
-  
-  // LBDEBUG
-  nuiEvent event;
-  CreateColorSelector(event);
   
 }
 
@@ -2517,19 +2508,6 @@ bool nuiWin::CreateDragZone(const nuiEvent& rEvent)
   return false;
 }
 
-bool nuiWin::CreateColorSelector(const nuiEvent& rEvent)
-{
-  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nuiWindow::DecoratedBackground, _T("Color Selector"));
-  mpManager->AddChild(pWindow);
-
-  nuiBackgroundPane* pPane = new nuiBackgroundPane();
-  nuiColorSelector* pSelector = new nuiColorSelector();
-  pPane->AddChild(pSelector);
-  
-  pPane->SetPosition(nuiCenter);
-  pWindow->AddChild(pPane);
-  return false;
-}
 
 class ClippingTest : public nuiWidget
 {

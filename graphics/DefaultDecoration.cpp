@@ -12,6 +12,7 @@ licence: see nui3/LICENCE.TXT
 #include "DefaultDecoration/src/ArrowOpen.cpp"
 #include "DefaultDecoration/src/ButtonDown.cpp"
 #include "DefaultDecoration/src/ButtonUp.cpp"
+#include "DefaultDecoration/src/CheckerboardSmall.cpp"
 #include "DefaultDecoration/src/CloseButtonDown.cpp"
 #include "DefaultDecoration/src/CloseButtonHover.cpp"
 #include "DefaultDecoration/src/CloseButtonUp.cpp"

@@ -13,6 +13,7 @@
 #include "nuiGrid.h"
 #include "nuiVBox.h"
 #include "nuiPane.h"
+#include "nuiColorDecoration.h"
 
 #include <vector>
 
@@ -50,6 +51,7 @@ private:
   bool OnTabSelected(const nuiEvent& rEvent);
   
   void Tab_RGB_Update();
+  void FormatColor(nuiSize color, nuiLabel* pLabel);
   
   
   bool SwatchSelected(const nuiEvent& rEvent);
@@ -58,7 +60,9 @@ private:
   void MakeSwatchGrid();
   
   nuiVBox* mpMainBox;
-  nuiPane* mpColorPane;
+  nuiSimpleContainer* mpColorPane;
+  nuiColorDecoration* mpColorPaneDeco;
+  
   nuiTabView* mpTabView;
   nuiGrid* mpRgbGrid;
   nuiGrid* mpHsvGrid;
@@ -67,6 +71,7 @@ private:
   // Control widgets
   nuiSlider *mpRedSlider, *mpGreenSlider, *mpBlueSlider, *mpRgbAlphaSlider;
   nuiSlider *mpHueSlider, *mpSaturationSlider, *mpValueSlider, *mpHsvAlphaSlider;
+  nuiLabel *mpRedSliderLabel, *mpGreenSliderLabel, *mpBlueSliderLabel, *mpAlphaSliderLabel;
   
   nuiColor mCurrentColor;
   std::vector<nuiColor> mColorList;

@@ -436,6 +436,8 @@ public:
   nuiDecoration* GetDecoration() const;
   const nglString& GetDecorationName() const;
   nuiDecorationMode GetDecorationMode() const;
+  void EnableDecoration(bool set);
+  bool IsDecorationEnabled() const;
   //@}
   
   /** @name Keyboard Focus Decorations */
@@ -488,6 +490,9 @@ protected:
   bool mEnabled;
   bool mStateLocked;
   bool mHover;
+  
+  bool mDecorationEnabled;
+  nglString mDecorationName;
 
   bool mNeedSelfLayout; ///< Layout of this widget has been invalidated
   bool mNeedLayout; ///< Layout has been invalidated in this branch of the widget tree. This doesn't mean that this particularobject needs to recalc its layout, it may come from one of its children.
