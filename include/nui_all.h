@@ -60,7 +60,6 @@ precompiled header central file and everything should be rolling. (lookup precom
 #include "nuiTimer.h"
 #include "nuiUserArea.h"
 #include "nuiWidget.h"
-#include "nuiWidgetBox.h"
 #include "nuiWindow.h"
 #include "nuiXML.h"
 #include "nuiStateDummy.h"

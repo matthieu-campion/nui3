@@ -23,7 +23,6 @@
 #include "nuiEditText.h"
 #include "nuiLabel.h"
 #include "nuiScrollBar.h"
-#include "nuiWidgetBox.h"
 #include "nuiSplitter.h"
 #include "nuiList.h"
 #include "nuiFileList.h"
@@ -912,12 +911,12 @@ bool nuiWin::CreateMessedUpWindow(const nuiEvent& rEvent)
 {
   nuiWindow* pWin = new nuiWindow(nuiRect(10.0f,10.0f,350.0f,250.0f)); 
   mpManager->AddChild(pWin);
-  nuiWidgetBox* pBox = new nuiWidgetBox(nuiVertical);
+  nuiVBox* pBox = new nuiVBox(0);
   pWin->AddChild(pBox);
 //  pBox->SetUserRect(nuiRect(0,0,350,250));
 
   nuiSplitter* pSplitter = new nuiSplitter(nuiVertical);
-  pBox->AddChild(pSplitter);
+  pBox->AddCell(pSplitter);
   //LBDEBUG pSplitter->SetFixed(true);
   pSplitter->SetMasterChild(true);
 
@@ -938,27 +937,27 @@ bool nuiWin::CreateMessedUpWindow(const nuiEvent& rEvent)
   pDummy->SetDummy(true, pDummyLabel);
 
   nuiButton* pButton1 = new nuiButton(nglString(_T("Create a new window")));
-  pBox->AddChild(pButton1);
+  pBox->AddCell(pButton1);
   mWinSink.Connect(pButton1->ButtonPressed, &nuiWin::CreateNewWindow);
 
   nuiButton* pBtn = new nuiButton(_T("add text"));
-  pBox->AddChild(pBtn);
+  pBox->AddCell(pBtn);
   mWinSink.Connect(pBtn->ButtonPressed, &nuiWin::OutputSomething, pBtn);
 
   pBtn = new nuiButton(nglString(_T("Create a window from a glade XML description"))  );
-  pBox->AddChild(pBtn);
+  pBox->AddCell(pBtn);
   mWinSink.Connect(pBtn->ButtonPressed, &nuiWin::CreateFromGladeXML, pBtn);
   
   pBtn = new nuiButton(nglString(_T("Create a window from an NUI XML description"))  );
-  pBox->AddChild(pBtn);
+  pBox->AddCell(pBtn);
   mWinSink.Connect(pBtn->ButtonPressed, &nuiWin::CreateFromXML, pBtn);
 
   pBtn = new nuiButton(nglString(_T("Do a file selection"))  );
-  pBox->AddChild(pBtn);
+  pBox->AddCell(pBtn);
   mWinSink.Connect(pBtn->ButtonPressed, &nuiWin::FileSelect, NULL);
 
   nuiEditLine* pEdt = new nuiEditLine(nglString(_T(""))  );
-  pBox->AddChild(pEdt);
+  pBox->AddCell(pEdt);
   mWinSink.Connect(pEdt->Selected, &nuiWin::LogText, pEdt);
 
   return false;
@@ -1350,26 +1349,26 @@ public:
     if (pSelectedNode && !pSelectedNode->IsOpened())
     {
       Clear(true);
-      nuiWidgetBox* pWidget = new nuiWidgetBox(nuiVertical);
+      nuiVBox* pWidget = new nuiVBox(0);
       AddChild(pWidget);
       nglString str;
       nuiWidget* pItem = pSelectedNode->GetElement();
 
       str.Format(_T("TreeNode pointer: 0x%x"), pSelectedNode);
-      pWidget->AddChild(new nuiLabel(str));
+      pWidget->AddCell(new nuiLabel(str));
       str.Format(_T("Element pointer: 0x%x"), pItem);
-      pWidget->AddChild(new nuiLabel(str));
+      pWidget->AddCell(new nuiLabel(str));
       str.Format(_T("Item class: %ls"), pItem->GetProperty(_T("Class")).GetChars());
-      pWidget->AddChild(new nuiLabel(str));
+      pWidget->AddCell(new nuiLabel(str));
       str.Format(_T("Item name: %ls"), pItem->GetProperty(_T("Name")).GetChars());
-      pWidget->AddChild(new nuiLabel(str));
+      pWidget->AddCell(new nuiLabel(str));
 
       str.Format(_T("Is open: %ls"), pSelectedNode->IsOpened()?_T("yes"):_T("no"));
-      pWidget->AddChild(new nuiLabel(str));
+      pWidget->AddCell(new nuiLabel(str));
       str.Format(_T("Size: %f"), pSelectedNode->GetSize());
-      pWidget->AddChild(new nuiLabel(str));
+      pWidget->AddCell(new nuiLabel(str));
       str.Format(_T("Position: %f"), pSelectedNode->GetPosition());
-      pWidget->AddChild(new nuiLabel(str));
+      pWidget->AddCell(new nuiLabel(str));
 
       return true;
     }
@@ -1747,17 +1746,17 @@ bool nuiWin::CreateWrappedLabelWindow(const nuiEvent& rEvent)
   nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, _T("Wrapped Label"));
   mpManager->AddChild(pWindow);
   
-  nuiWidgetBox* pBox = new nuiWidgetBox(nuiVertical);
+  nuiVBox* pBox = new nuiVBox(0);
   pWindow->AddChild(pBox);
   nuiLabel* pNormalLabel = new nuiLabel(_T("Normal Label that is just cut out at the end of the window"));
-  pBox->AddChild(pNormalLabel);
+  pBox->AddCell(pNormalLabel);
   nuiLabel* pCutLabel = new nuiLabel(_T("Label that is cut in the middle of the line if there is not enough space."));
-  pBox->AddChild(pCutLabel);
+  pBox->AddCell(pCutLabel);
   pCutLabel->UseEllipsis(true);
 
   nuiLabel* pLabel = new nuiLabel(_T("This text should be long enough for me to test wrapping of the label. So let's add some stupid stuff as I really can't think of anything clever to declare right now."));
   nuiScrollView* pSV = new nuiScrollView();
-  pBox->AddChild(pSV);
+  pBox->AddCell(pSV);
   pSV->AddChild(pLabel);
   pLabel->SetWrapping(true);
   pLabel->SetPosition(nuiTopLeft);
@@ -2019,14 +2018,14 @@ bool nuiWin::CreateTextLayoutWindow(const nuiEvent& rEvent)
   //new TestLabel(new nuiScrollView(pWindow, true, false), _T("Test text: yHwWmMfFgGi .;[]()_-|#*%$ 1234567890"));
   nuiScrollView* pScroller = new nuiScrollView(true, false);
   pWindow->AddChild(pScroller);
-  nuiWidgetBox* pBox = new nuiWidgetBox(nuiVertical);
+  nuiVBox* pBox = new nuiVBox(0);
   pScroller->AddChild(pBox);
   
 #define TEST_TEXT _T("['AZERTY_azertyig.DAT']")
   //#define TEST_TEXT _T("Test text: yHwWmMfFgGi .;[]()_-|#*%$ 1234567890")
   
-  pBox->AddChild(new TestLabel(TEST_TEXT, _T("<nuiFont Size=\"12\" Source=\"../Data/Vera.ttf\"/>")));
-  pBox->AddChild(new TestLabel(TEST_TEXT, _T("<nuiFont Size=\"12\" Source=\"../Data/VeraMono.ttf\"/>")));
+  pBox->AddCell(new TestLabel(TEST_TEXT, _T("<nuiFont Size=\"12\" Source=\"../Data/Vera.ttf\"/>")));
+  pBox->AddCell(new TestLabel(TEST_TEXT, _T("<nuiFont Size=\"12\" Source=\"../Data/VeraMono.ttf\"/>")));
   
   return false;
 }

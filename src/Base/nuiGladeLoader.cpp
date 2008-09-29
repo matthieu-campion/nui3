@@ -89,14 +89,12 @@ bool RecursiveGladeImport(nuiXMLNode* pFrom, nuiXMLNode* pTo)
         }
         else if (pTextNode->GetValue() == nglString(_T("GtkVBox")) )
         {
-          pTo->SetName( nglString(_T("nuiWidgetBox")) );
-          pTo->SetAttribute( nglString(_T("Orientation")), nglString(_T("Vertical")) );
+          pTo->SetName( nglString(_T("nuiVBox")) );
           havechildren = true;
         }
         else if (pTextNode->GetValue() == nglString(_T("GtkHBox")) )
         {
-          pTo->SetName( nglString(_T("nuiWidgetBox")) );
-          pTo->SetAttribute( nglString(_T("Orientation")), nglString(_T("Horizontal")) );
+          pTo->SetName( nglString(_T("nuiHBox")) );
           havechildren = true;
         }
         else if (pTextNode->GetValue() == nglString(_T("GtkButton")) )

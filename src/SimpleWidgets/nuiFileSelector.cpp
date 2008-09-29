@@ -10,7 +10,6 @@
 #include "nuiFileSelector.h"
 #include "nuiMainWindow.h"
 #include "nuiSplitter.h"
-#include "nuiWidgetBox.h"
 #include "nuiWindowManager.h"
 #include "nuiPane.h"
 

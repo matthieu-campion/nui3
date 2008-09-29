@@ -11,13 +11,12 @@
 
 #include "nuiButton.h"
 #include "nuiPopupMenu.h"
-#include "nuiWidgetBox.h"
 #include "nuiUserArea.h"
 #include "nuiLabel.h"
 #include "nuiSlider.h"
-#include "nuiWidgetBox.h"
 #include "nuiFixed.h"
 #include "nuiSplitter.h"
+#include "nuiHBox.h"
 
 /*
 typedef struct BlendMode
@@ -92,20 +91,20 @@ nuiGearWin::nuiGearWin(const nuiRect& rRect)
   //LBDEBUG pSplitter->SetFixed(true);
 //  nuiContainerPtr pSplitter = this;
 
-  nuiWidgetBox* pBox = new nuiWidgetBox(nuiHorizontal);
+  nuiHBox* pBox = new nuiHBox();
   pSplitter->AddChild(pBox);
 //  pBox->SetUserRect(nuiRect(5.0f,5.0f,mRect.GetWidth()-10,25.0f));
 
   /* Packing in this pBox : pButton1, a nuiSlider, pButton2, mpFPSLabel
    */
   nuiButton* pButton1 = new nuiButton(nglString("Toggle Animation"));
-  pBox->AddChild(pButton1);
+  pBox->AddCell(pButton1);
   mGearWinSink.Connect(pButton1->ButtonPressed, &nuiGearWin::ToggleAnimation);
 
   mpFPSLabel = new nuiLabel(nglString("Alpha:"));
-  pBox->AddChild(mpFPSLabel);
+  pBox->AddCell(mpFPSLabel);
   mpAlphaBar = new nuiSlider(nuiHorizontal,nuiRange(0.5f, 0.0f, 1.0f, 0.1f, 0.2f, 0.0f));
-  pBox->AddChild(mpAlphaBar);
+  pBox->AddCell(mpAlphaBar);
   nglPath HandlePic("../data/HorizontalSliderHandle.png");
   if (HandlePic.Exists() && HandlePic.IsLeaf())
   {
@@ -115,7 +114,7 @@ nuiGearWin::nuiGearWin(const nuiRect& rRect)
   }
 
   nuiFixed* pFixed = new nuiFixed();
-  pBox->AddChild(pFixed);
+  pBox->AddCell(pFixed);
   mpFPSLabel = new nuiLabel(nglString("-"));
   pFixed->AddChild(mpFPSLabel);
   mpFPSLabel->SetUserRect(nuiRect(0.0f,0.0f,44.0f,18.0f));
