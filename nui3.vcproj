@@ -793,6 +793,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\Decorations\nuiCheckerboardDecoration.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiCheckerboardDecoration.h"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Decorations\nuiColorDecoration.cpp"
 					>
 				</File>
