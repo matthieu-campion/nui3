@@ -18,7 +18,6 @@
 #include "nuiCSS.h"
 #include "nuiButton.h"
 #include "nuiToggleButton.h"
-#include "nuiRadioButton.h"
 #include "nuiFixed.h"
 #include "nuiText.h"
 #include "nuiEditText.h"
@@ -46,7 +45,6 @@
 #include "nuiSWF.h"
 #include "nuiTabView.h"
 #include "nuiShapeView.h"
-#include "nuiComboBox.h"
 #include "nuiModalContainer.h"
 #include "nuiPane.h"
 #include "nuiFileSelector.h"
@@ -65,8 +63,6 @@
 #include "nuiColumnTreeView.h"
 
 #include "nuiSoftwarePainter.h"
-
-#include "nuiRadioButtonGroup.h"
 
 #include "nuiTessellator.h"
 #include "nuiFontManager.h"
@@ -332,10 +328,6 @@ void nuiWin::OnCreation()
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateNewWindow);
   pMainTree->AddChild(pElement);
 
-  // Radio Buttons window:
-  pElement = new nuiTreeNode(_T("Radio Buttons"));
-  mWinSink.Connect(pElement->Activated, &nuiWin::CreateRadioButtonsWindow);
-  pMainTree->AddChild(pElement);
 
   // Column Tree View window:
   pElement = new nuiTreeNode(_T("Column Tree View Window"));
@@ -397,11 +389,6 @@ void nuiWin::OnCreation()
   // CreateWrappedLabelWindow:
   pElement = new nuiTreeNode(_T("Wrapped Label"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateWrappedLabelWindow);
-  pMainTree->AddChild(pElement);
-
-  // CreateComboBoxWindow:
-  pElement = new nuiTreeNode(_T("ComboBox"));
-  mWinSink.Connect(pElement->Activated, &nuiWin::CreateComboBoxWindow);
   pMainTree->AddChild(pElement);
 
   // CreateWhizzAnimWindow:
@@ -1366,62 +1353,6 @@ bool nuiWin::CreateFileListWindow(const nuiEvent& rEvent)
   return false;
 }
 
-bool nuiWin::CreateRadioButtonsWindow(const nuiEvent& rEvent)
-{
-  nuiWindow* pRadioWin = new nuiWindow(nuiRect(10, 10, 400, 200), nuiWindow::DecoratedBackground, _T("Radio Buttons"));
-  mpManager->AddChild(pRadioWin);
-  nuiWidgetBox* pRadioBoxBox = new nuiWidgetBox(nuiVertical);
-  pRadioWin->AddChild(pRadioBoxBox);
-  // Radio groups:
-  {
-    nuiWidgetBox* pRadioBox = new nuiWidgetBox(nuiHorizontal);
-    pRadioBoxBox->AddChild(pRadioBox);
-    for (int r = 0; r < 4; r++)
-    {
-      nglString tmp;
-      tmp.Format(_T("Radio %d"), r);
-      nuiRadioButton* pRadioBut = new nuiRadioButton(tmp);
-      pRadioBox->AddChild(pRadioBut);
-      pRadioBut->SetGroup(_T("radios"));
-    }
-  }
-  
-  // buttons without internal label:
-  nuiRadioButtonGroup* pGroup= new nuiRadioButtonGroup();
-  {
-    nuiWidgetBox* pRadioBox = new nuiWidgetBox(nuiHorizontal);
-    pRadioBoxBox->AddChild(pRadioBox);
-    for (int r = 0; r < 4; r++)
-    {
-      nuiRadioButton* pRadioBut = new nuiRadioButton();
-      pRadioBut->SetPosition(nuiCenter);
-      pRadioBox->AddChild(pRadioBut);
-      pGroup->AddRadioButton(pRadioBut);
-    }
-  }
-
-  // disabled buttons without internal label:
-  pGroup= new nuiRadioButtonGroup();
-  {
-    nuiWidgetBox* pRadioBox = new nuiWidgetBox(nuiHorizontal);
-    pRadioBoxBox->AddChild(pRadioBox);
-    
-    nuiRadioButton* pRadioBut = new nuiRadioButton();
-    pRadioBut->SetPosition(nuiCenter);
-    pRadioBox->AddChild(pRadioBut);
-    pGroup->AddRadioButton(pRadioBut);
-    pRadioBut->SetEnabled(false);
-    
-    pRadioBut = new nuiRadioButton();
-    pRadioBut->SetPosition(nuiCenter);
-    pRadioBox->AddChild(pRadioBut);
-    pGroup->AddRadioButton(pRadioBut);
-    pRadioBut->SetPressed(true);
-    pRadioBut->SetEnabled(false);
-  }
-  
-  return false;
-}
 
 class SamplePreview : public nuiColumnTreeViewPreview
 {
@@ -1928,43 +1859,6 @@ bool nuiWin::CreateWrappedLabelWindow(const nuiEvent& rEvent)
   return false;
 }
 
-bool nuiWin::CreateComboBoxWindow(const nuiEvent& rEvent)
-{
-  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nuiWindow::DecoratedBackground, _T("Combo Box"));
-  mpManager->AddChild(pWindow);
-
-  nuiTreeNodePtr pNode = NULL;
-  nuiTreeNodePtr pTree = new nuiTreeNode(_T("Root"), true);
-  for (uint i = 0; i < 10; i++)
-  {
-    nglString str;
-    str.Format(_T("Choice #%d"), i);
-    pNode = new nuiTreeNode(str, true);
-    pTree->AddChild(pNode);
-  }
-
-  for (uint i = 0; i < 10; i++)
-  {
-    nglString str;
-    str.Format(_T("Choice %c"), (char)(_T('A') + i));
-    nuiTreeNode* pNode2 = new nuiTreeNode(str, true);
-    pNode->AddChild(pNode2);
-  }
-
-
-    nuiTreeNode* pNode2 = new nuiTreeNode(_T("my last long choice"), true);
-    pNode->AddChild(pNode2);
-
-
-  nuiComboBox* pCombo = new nuiComboBox(pTree, true);
-  
-  nuiVBox* pVBox = new nuiVBox(0);
-  pWindow->AddChild(pVBox);
-  
-  pVBox->AddCell(pCombo, nuiCenter);
-  
-  return false;
-}
 
 #define CIRCLE_COUNT 6
 class nuiWhizzAnim : public nuiWidget

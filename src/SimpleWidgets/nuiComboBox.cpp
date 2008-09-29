@@ -162,8 +162,6 @@ bool nuiComboBox::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
   {
     if (Button & nglMouseInfo::ButtonLeft)
     {
-      nuiWidget::SetSelected(true);
-      
       mpOldSelected = mpSelected;
       mpSelected = NULL;
       nuiRect rect(0.f,0.f,0.f,0.f);

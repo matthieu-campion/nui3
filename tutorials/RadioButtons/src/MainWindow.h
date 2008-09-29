@@ -21,7 +21,7 @@ public:
   
 protected:
 
-  bool OnComboChanged(const nuiEvent& rEvent);
+  bool OnSelected(const nuiEvent& rEvent);
   
 private:
   

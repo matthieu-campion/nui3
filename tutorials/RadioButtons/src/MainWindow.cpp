@@ -8,8 +8,7 @@
 #include "nui.h"
 #include "MainWindow.h"
 #include "Application.h"
-#include "nuiComboBox.h"
-#include "nuiGrid.h"
+#include "nuiRadioButtonGroup.h"
 
 /*
  * MainWindow
@@ -27,55 +26,81 @@ MainWindow::~MainWindow()
 
 void MainWindow::OnCreation()
 {
-  // build combo choices tree
-  nuiTreeNodePtr pNode = NULL;
-  nuiTreeNodePtr pTree = new nuiTreeNode(_T("Root"), true);
-  for (uint i = 0; i < 10; i++)
+  nuiSimpleContainer* pContainer = new nuiSimpleContainer();
+  pContainer->SetUserSize(400,300);
+  pContainer->SetPosition(nuiCenter);
+  AddChild(pContainer);
+
+  mpLabel = new nuiLabel();
+  mpLabel->SetPosition(nuiTopLeft);
+  mpLabel->SetBorder(20,20);
+  AddChild(mpLabel);
+      
+  nuiWidgetBox* pRadioBoxBox = new nuiWidgetBox(nuiVertical);
+  pContainer->AddChild(pRadioBoxBox);
+
+  
+  // Radio groups:
   {
-    nglString str;
-    str.Format(_T("Choice #%d"), i);
-    pNode = new nuiTreeNode(str, true);
-    pTree->AddChild(pNode);
+    nuiWidgetBox* pRadioBox = new nuiWidgetBox(nuiHorizontal);
+    pRadioBoxBox->AddChild(pRadioBox);
+    for (int index = 0; index < 4; index++)
+    {
+      nglString tmp;
+      tmp.Format(_T("Radio %d"), index);
+      nuiRadioButton* pRadioBut = new nuiRadioButton(tmp);
+      pRadioBox->AddChild(pRadioBut);
+      pRadioBut->SetGroup(_T("radios"));
+      
+      mEventSink.Connect(pRadioBut->Activated, &MainWindow::OnSelected, (void*)index);
+    }
+  }
+  
+  // buttons without internal label:
+  nuiRadioButtonGroup* pGroup= new nuiRadioButtonGroup();
+  {
+    nuiWidgetBox* pRadioBox = new nuiWidgetBox(nuiHorizontal);
+    pRadioBoxBox->AddChild(pRadioBox);
+    for (int index = 4; index < 8; index++)
+    {
+      nuiRadioButton* pRadioBut = new nuiRadioButton();
+      pRadioBut->SetPosition(nuiCenter);
+      pRadioBox->AddChild(pRadioBut);
+      pGroup->AddRadioButton(pRadioBut);
+
+      mEventSink.Connect(pRadioBut->Activated, &MainWindow::OnSelected, (void*)index);    
+    }
+  }
+  
+  // disabled buttons without internal label:
+  pGroup= new nuiRadioButtonGroup();
+  {
+    nuiWidgetBox* pRadioBox = new nuiWidgetBox(nuiHorizontal);
+    pRadioBoxBox->AddChild(pRadioBox);
+    
+    nuiRadioButton* pRadioBut = new nuiRadioButton();
+    pRadioBut->SetPosition(nuiCenter);
+    pRadioBox->AddChild(pRadioBut);
+    pGroup->AddRadioButton(pRadioBut);
+    pRadioBut->SetEnabled(false);
+    
+    pRadioBut = new nuiRadioButton();
+    pRadioBut->SetPosition(nuiCenter);
+    pRadioBox->AddChild(pRadioBut);
+    pGroup->AddRadioButton(pRadioBut);
+    pRadioBut->SetPressed(true);
+    pRadioBut->SetEnabled(false);
   }
 
-  // combo choices sub-tree
-  for (uint i = 0; i < 10; i++)
-  {
-    nglString str;
-    str.Format(_T("Choice %c"), (char)(_T('A') + i));
-    nuiTreeNode* pNode2 = new nuiTreeNode(str, true);
-    pNode->AddChild(pNode2);
-  }
-  nuiTreeNode* pNode2 = new nuiTreeNode(_T("my last long choice"), true);
-  pNode->AddChild(pNode2);
-
-
-  // create combo box
-  nuiComboBox* pCombo = new nuiComboBox(pTree, true);
-  mEventSink.Connect(pCombo->ValueChanged, &MainWindow::OnComboChanged, (void*)pCombo);
-  
-  // create label for output display
-  mpLabel = new nuiLabel(_T(" "));
-  
-  // grid for gui layout
-  nuiGrid* pGrid = new nuiGrid(3,4);
-  pGrid->SetCell(1,1, pCombo);
-  pGrid->SetCell(1,2, mpLabel);
-
-  AddChild(pGrid);
 }
 
 
-bool MainWindow::OnComboChanged(const nuiEvent& rEvent)
+bool MainWindow::OnSelected(const nuiEvent& rEvent)
 {
-  nuiComboBox* pCombo = (nuiComboBox*)rEvent.mpUser;
-  
-  nuiWidget* pWidget = pCombo->GetSelectedWidget();
-  nuiLabel* pLabel = (nuiLabel*)pWidget;
-  uint32 index = pCombo->GetValue();
+  int32 index = (int32)rEvent.mpUser;
   
   nglString msg;
-  msg.Format(_T("the user choice is : '%ls' (index %d)"), pLabel->GetText().GetChars(), index);
+  msg.Format(_T("the user has selected radio button #%d"), index);
   mpLabel->SetText(msg);
   
   return true;

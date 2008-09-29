@@ -51,7 +51,6 @@ protected:
   bool CreateText2Window(const nuiEvent& rEvent);
   bool CreateFileListWindow(const nuiEvent& rEvent);
   bool CreateOffscreenArea(const nuiEvent& rEvent);
-  bool CreateRadioButtonsWindow(const nuiEvent& rEvent);
   bool CreateColumnTreeViewWindow(const nuiEvent& rEvent);
   bool CreateScrolledImageWindow(const nuiEvent& rEvent);
   bool CreateScrolledImageWindow2(const nuiEvent& rEvent);
@@ -64,7 +63,6 @@ protected:
   bool CreateShapeWindow(const nuiEvent& rEvent);
   bool TogglePartialRedraw(const nuiEvent& rEvent);
   bool CreateWrappedLabelWindow(const nuiEvent& rEvent);
-  bool CreateComboBoxWindow(const nuiEvent& rEvent);
   bool CreateWhizzAnimWindow(const nuiEvent& rEvent);
   bool CreateTextLayoutWindow(const nuiEvent& rEvent);
   bool CreateFontWindow(const nuiEvent& rEvent);
