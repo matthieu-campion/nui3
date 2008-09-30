@@ -362,7 +362,7 @@ OSErr nglDragReceiveHandler(WindowRef theWindow, void * handlerRefCon, DragRef t
   err = CountDragItems (theDrag, &numItems);
   NGL_ASSERT(!err);
   
-  for (UInt16 i = 1; i <= numItems; i++)
+  /*for (UInt16 i = 1; i <= numItems; i++)
   {
     DragItemRef theItemRef;
     err = GetDragItemReferenceNumber (theDrag, i, &theItemRef);
@@ -387,11 +387,11 @@ OSErr nglDragReceiveHandler(WindowRef theWindow, void * handlerRefCon, DragRef t
         {
           pObj = App->GetDataTypesRegistry().Create(mime);
           pDrag->AddType(pObj);
-          pObj->GetFlavorData(theDrag, theItemRef, theType);
         }
+        pObj->GetFlavorData(theDrag, theItemRef, theType);
       }
     }
-  }
+  }*/
   
   
   Point mouse;
@@ -459,23 +459,23 @@ OSErr nglDragTrackingHandler (DragTrackingMessage message, WindowRef theWindow, 
         for (UInt16 f = 1; f <= numFlavors; f++)
         {
           FlavorType theType;
-          err = GetFlavorType(theDrag, theItemRef, f, &theType);
+          err = GetFlavorType (theDrag, theItemRef, f, &theType);
           NGL_ASSERT(!err);
           
-          if (App->GetDataTypesRegistry().IsTypeRegistered(theType))
+          nglString mime;
+          if (App->GetDataTypesRegistry().GetRegisteredMimeType(theType, mime))
           {
-            nglString mime;
-            App->GetDataTypesRegistry().GetRegisteredMimeType(theType, mime);
-            nglDataObject* pObj = App->GetDataTypesRegistry().Create(mime);
-            
-            NGL_ASSERT(pObj);
-            //NGL_OUT("Add Type: %ls\n", mime.GetChars());
-            pDrag->AddType(pObj);
+            nglDataObject* pObj = pDrag->GetType(mime);
+            if (!pObj)
+            {
+              pObj = App->GetDataTypesRegistry().Create(mime);
+              pDrag->AddType(pObj);
+            }
             pObj->GetFlavorData(theDrag, theItemRef, theType);
           }
         }
-        pDnd->mpWin->OnDragEnter();
       }
+      pDnd->mpWin->OnDragEnter();
     }
       break;
     case kDragTrackingInWindow:
