@@ -700,12 +700,30 @@ public:
       }
       else
       {
-        while (width > 0)
+        if (1)
         {
-          PixelBlender::Blend(*pBuffer, v0.GetColor());
-          pBuffer++;
-          v0.AddValue(*this);
-          width--;
+          uint32 local[width];
+          for (uint32 i = 0; i < width; i++)
+          {
+            local[i] = v0.GetColor();
+            v0.AddValue(*this);
+          }
+          
+          for (uint32 i = 0; i < width; i++)
+          {
+            PixelBlender::Blend(*pBuffer, local[i]);
+            pBuffer++;
+          }
+        }
+        else
+        {
+          while (width > 0)
+          {
+            PixelBlender::Blend(*pBuffer, v0.GetColor());
+            pBuffer++;
+            v0.AddValue(*this);
+            width--;
+          }
         }
       }
     }

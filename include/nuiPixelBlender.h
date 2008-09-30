@@ -59,40 +59,19 @@ public:
   static void Blend(uint32& dest_color, const uint32 src_color)
   {
     const uint8 Sa = 255 - ((const uint8*)&src_color)[NUI_RGBA_ENDIANSAFE_A];
+    if (Sa == 0)
+    {
+      dest_color = src_color;
+      return;
+    }
+    if (Sa == 255)
+    {
+      return;
+    }
+    
     dest_color = lerpRGBA(src_color, dest_color, Sa + 1);
   }
-  
-//  static void Blend(uint32& dest_color, const uint32 src_color)
-//  {
-//    //dest_color = src_color; return; //#TEST
-//
-//    const uint8 Sa = ((const uint8*)&src_color)[NUI_RGBA_ENDIANSAFE_A];
-//    if (Sa == 0)
-//      return;
-//    const uint8 Sr = ((const uint8*)&src_color)[NUI_RGBA_ENDIANSAFE_R];
-//    const uint8 Sg = ((const uint8*)&src_color)[NUI_RGBA_ENDIANSAFE_G];
-//    const uint8 Sb = ((const uint8*)&src_color)[NUI_RGBA_ENDIANSAFE_B];
-//
-//    uint8& Dr = ((uint8*)&dest_color)[NUI_RGBA_ENDIANSAFE_R];
-//    uint8& Dg = ((uint8*)&dest_color)[NUI_RGBA_ENDIANSAFE_G];
-//    uint8& Db = ((uint8*)&dest_color)[NUI_RGBA_ENDIANSAFE_B];
-//
-//    if (Sa == 255)
-//    {
-//      Dr = Sr;
-//      Dg = Sg;
-//      Db = Sb;
-//      return;
-//    }
-//    
-//    const int16 SA = Sa + 1;
-//    const int16 SMA = (1 << 8) - SA;
-//    
-//    Dr = (SMA * Dr + SA * Sr) >> 8;
-//    Dg = (SMA * Dg + SA * Sg) >> 8;
-//    Db = (SMA * Db + SA * Sb) >> 8;
-//  }
-  
+
   static bool CanOptimize()
   {
     return false;
