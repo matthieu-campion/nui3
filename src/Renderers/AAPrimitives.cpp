@@ -335,10 +335,9 @@ void glAAGenerateAATex(float Falloff, float alias)
         // Clamp the max mip level to 2x2 (1 px with 1 px border all around...)
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, l2psz);
       }
-      else 
-      {
-        glBindTexture(GL_TEXTURE_2D, glAA_texture);
-      }
+
+      glBindTexture(GL_TEXTURE_2D, glAA_texture);
+
       // Generate the entire mip pyramid slowly in software
       gluBuild2DMipmaps(GL_TEXTURE_2D, GL_ALPHA, pdb, pdb, GL_ALPHA, GL_UNSIGNED_BYTE, texture);
 //      glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, pdb, pdb, 0, GL_ALPHA, GL_UNSIGNED_BYTE, texture);

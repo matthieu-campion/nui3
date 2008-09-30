@@ -311,7 +311,7 @@ class nuiTexelAccessor_Lum
 public:
   inline static uint32 GetTexelColor(nuiTexture* mpTexture, uint8* pBuffer, int32 width, int32 height, ifp32 U, ifp32 V)
   {
-    U = ToBelow(U);
+    U = ToAbove(U);
     V = ToAbove(V);
     const int32 index = (U + width * V);
     const uint8 lum = pBuffer[index];
@@ -672,7 +672,7 @@ public:
       if (IsStable())
       {
         uint32 color = v0.GetColor();
-        for (uint i = 0; i < width; i++)
+        for (int32 i = 0; i < width; i++)
           pBuffer[i] = color;
       }
       else
@@ -702,14 +702,14 @@ public:
       {
         if (1)
         {
-          uint32 local[width];
-          for (uint32 i = 0; i < width; i++)
+          uint32* local = (uint32*)alloca(width*sizeof(uint32));
+          for (int32 i = 0; i < width; i++)
           {
             local[i] = v0.GetColor();
             v0.AddValue(*this);
           }
           
-          for (uint32 i = 0; i < width; i++)
+          for (int32 i = 0; i < width; i++)
           {
             PixelBlender::Blend(*pBuffer, local[i]);
             pBuffer++;

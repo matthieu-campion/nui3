@@ -20,8 +20,8 @@
 #include "nuiWidgetMatcher.h"
 #include <limits>
 
-//const bool gGlobalUseRenderCache = false;
-const bool gGlobalUseRenderCache = true;
+const bool gGlobalUseRenderCache = false;
+//const bool gGlobalUseRenderCache = true;
 
 #ifdef _OPENGL_ES_
 #define NUI_DEFAULT_AUTO_CLIP_SELF false

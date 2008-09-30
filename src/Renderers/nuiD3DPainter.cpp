@@ -867,11 +867,6 @@ void nuiD3DPainter::DrawArray(const nuiRenderArray& rArray)
       */
 
     /*
-    else
-      glDisableClientState(GL_EDGE_FLAG_ARRAY);
-      */
-
-    /*
     CheckForGLErrors();
     glDrawArrays(array.GetMode(), 0, size);
     CheckForGLErrors();

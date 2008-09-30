@@ -488,21 +488,21 @@ void nuiGLPainter::DrawArray(const nuiRenderArray& rArray)
   if (!mEnableDrawArray)
     return;
   
-  uint32 size = rArray.GetSize();
+  uint32 s = rArray.GetSize();
   
-  total += size;
-  totalinframe += size;
-  mins = MIN(mins, size);
-  maxs = MAX(maxs, size);
-  //printf("DA (%d) min = %d  max = %d\n", size, mins, maxs);
+  total += s;
+  totalinframe += s;
+  mins = MIN(mins, s);
+  maxs = MAX(maxs, s);
+  //printf("DA (%d) min = %d  max = %d\n", s, mins, maxs);
   
-  if (!size)
+  if (!s)
     return;
 
   if (mClip.GetWidth() <= 0 || mClip.GetHeight() <= 0)
     return;
 
-  mVertices += size;
+  mVertices += s;
   GLenum mode = rArray.GetMode();
   //NGL_OUT(_T("GL Array Mode: %d   vertice count %d\n"), mode, size);
 
@@ -648,7 +648,7 @@ void nuiGLPainter::DrawArray(const nuiRenderArray& rArray)
 */
     
     nuiCheckForGLErrors();
-    glDrawArrays(mode, 0, size);
+    glDrawArrays(mode, 0, s);
     nuiCheckForGLErrors();
   }
 

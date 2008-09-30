@@ -1041,7 +1041,7 @@ void nuiSoftwarePainter::Display(nglWindow* pWindow, const nuiRect& rRect)
     w,          // width of destination rectangle
     h,         // height of destination rectangle
     x,                // x-coord of source upper-left corner
-    y,                // y-coord of source upper-left corner
+    mHeight - h - y,                // y-coord of source upper-left corner
 
     0,                // first scan line
     (LONG)mHeight,    // number of scan lines
