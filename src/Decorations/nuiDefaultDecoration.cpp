@@ -15,7 +15,7 @@
 #include "nuiFrame.h"
 #include "nuiMessageBox.h"
 #include "nuiTabView.h"
-
+#include "nuiBackgroundPane.h"
 
 
 nuiDefaultDecoration::nuiDefaultDecoration()
@@ -330,13 +330,36 @@ void nuiDefaultDecoration::Window(nuiWidget* pWidget)
 //
 void nuiDefaultDecoration::BackgroundPane(nuiWidget* pWidget)
 {
-  nuiFrame* pFrame = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationPane"));
+  nuiBackgroundPane* pPane = (nuiBackgroundPane*)pWidget;
+
+  nglString decoName;
+  const char* deco;
+  uint32 decoSize;
+  nuiRect rect;
+  
+  if (pPane->GetType() == eOutterBackground)
+  {
+    decoName = _T("nuiDefaultDecorationOutterPane");
+    deco = gpPaneOutter;
+    decoSize = gPaneOutterSize;
+    rect = nuiRect(12,12,0,1);
+  }
+  else
+  {
+    decoName = _T("nuiDefaultDecorationInnerPane");
+    deco = gpPaneInner;
+    decoSize = gPaneInnerSize;
+    rect = nuiRect(6,6,0,0);
+  }
+  
+  nuiFrame* pFrame = (nuiFrame*)nuiDecoration::Get(decoName);
+  
   if (!pFrame)
   {
-    nglIMemory* pIMem = new nglIMemory(gpPane, gPaneSize);
+    nglIMemory* pIMem = new nglIMemory(deco, decoSize);
     nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
     NGL_ASSERT(pTex);
-    pFrame = new nuiFrame(_T("nuiDefaultDecorationPane"), pTex, nuiRect(12,16,0,16));
+    pFrame = new nuiFrame(decoName, pTex, rect);
     pFrame->UseWidgetAlpha(false);
     delete pIMem; 
   }
@@ -870,10 +893,10 @@ void nuiDefaultDecoration::MessageBox(nuiMessageBox* pBox)
   nuiFrame* pFrame = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationPane"));
   if (!pFrame)
   {
-    nglIMemory* pIMem = new nglIMemory(gpPane, gPaneSize);
+    nglIMemory* pIMem = new nglIMemory(gpPaneOutter, gPaneOutterSize);
     nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
     NGL_ASSERT(pTex);
-    pFrame = new nuiFrame(_T("nuiDefaultDecorationPane"), pTex, nuiRect(12,16,0,16));
+    pFrame = new nuiFrame(_T("nuiDefaultDecorationPane"), pTex, nuiRect(12,12,0,1));
     pFrame->UseWidgetAlpha(false);
     delete pIMem; 
   }

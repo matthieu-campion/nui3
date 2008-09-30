@@ -57,8 +57,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		61A9DFBF0B833E9600BC506C /* RadioButtons.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RadioButtons.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		61A9DFC90B833EF200BC506C /* RadioButtonsD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RadioButtonsD.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		61A9DFBF0B833E9600BC506C /* Buttons.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Buttons.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		61A9DFC90B833EF200BC506C /* ButtonsD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ButtonsD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61A9DFD20B833F1500BC506C /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
 		61A9DFD30B833F1500BC506C /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
 		61A9DFD40B833F1500BC506C /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
@@ -137,8 +137,8 @@
 		61A9DFB50B833DE500BC506C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				61A9DFBF0B833E9600BC506C /* RadioButtons.app */,
-				61A9DFC90B833EF200BC506C /* RadioButtonsD.app */,
+				61A9DFBF0B833E9600BC506C /* Buttons.app */,
+				61A9DFC90B833EF200BC506C /* ButtonsD.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -155,9 +155,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		61A9DFBE0B833E9600BC506C /* RadioButtons */ = {
+		61A9DFBE0B833E9600BC506C /* Buttons */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 61A9DFC20B833E9600BC506C /* Build configuration list for PBXNativeTarget "RadioButtons" */;
+			buildConfigurationList = 61A9DFC20B833E9600BC506C /* Build configuration list for PBXNativeTarget "Buttons" */;
 			buildPhases = (
 				61A9DFBB0B833E9600BC506C /* Resources */,
 				61A9DFBC0B833E9600BC506C /* Sources */,
@@ -168,14 +168,14 @@
 			dependencies = (
 				BCBCB1640DFD45FA002E8BC3 /* PBXTargetDependency */,
 			);
-			name = RadioButtons;
+			name = Buttons;
 			productName = Temp;
-			productReference = 61A9DFBF0B833E9600BC506C /* RadioButtons.app */;
+			productReference = 61A9DFBF0B833E9600BC506C /* Buttons.app */;
 			productType = "com.apple.product-type.application";
 		};
-		61A9DFC80B833EF200BC506C /* RadioButtonsD */ = {
+		61A9DFC80B833EF200BC506C /* ButtonsD */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 61A9DFCC0B833EF300BC506C /* Build configuration list for PBXNativeTarget "RadioButtonsD" */;
+			buildConfigurationList = 61A9DFCC0B833EF300BC506C /* Build configuration list for PBXNativeTarget "ButtonsD" */;
 			buildPhases = (
 				61A9DFC50B833EF200BC506C /* Resources */,
 				61A9DFC60B833EF200BC506C /* Sources */,
@@ -186,9 +186,9 @@
 			dependencies = (
 				BCBCB1660DFD4605002E8BC3 /* PBXTargetDependency */,
 			);
-			name = RadioButtonsD;
+			name = ButtonsD;
 			productName = Tempd;
-			productReference = 61A9DFC90B833EF200BC506C /* RadioButtonsD.app */;
+			productReference = 61A9DFC90B833EF200BC506C /* ButtonsD.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -196,7 +196,7 @@
 /* Begin PBXProject section */
 		61A9DE3F0B833C9200BC506C /* Project object */ = {
 			isa = PBXProject;
-			buildConfigurationList = 61A9DE400B833C9200BC506C /* Build configuration list for PBXProject "RadioButtons" */;
+			buildConfigurationList = 61A9DE400B833C9200BC506C /* Build configuration list for PBXProject "Buttons" */;
 			compatibilityVersion = "Xcode 2.4";
 			hasScannedForEncodings = 0;
 			mainGroup = 61A9DE3D0B833C9200BC506C;
@@ -210,8 +210,8 @@
 			);
 			projectRoot = "";
 			targets = (
-				61A9DFBE0B833E9600BC506C /* RadioButtons */,
-				61A9DFC80B833EF200BC506C /* RadioButtonsD */,
+				61A9DFBE0B833E9600BC506C /* Buttons */,
+				61A9DFC80B833EF200BC506C /* ButtonsD */,
 			);
 		};
 /* End PBXProject section */
@@ -310,7 +310,7 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = "-lz";
 				PREBINDING = YES;
-				PRODUCT_NAME = RadioButtons;
+				PRODUCT_NAME = Buttons;
 				STRIP_INSTALLED_PRODUCT = YES;
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -337,7 +337,7 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = "-lz";
 				PREBINDING = YES;
-				PRODUCT_NAME = RadioButtonsD;
+				PRODUCT_NAME = ButtonsD;
 				WARNING_CFLAGS = (
 					"-Wmost",
 					"-Wno-four-char-constants",
@@ -351,7 +351,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		61A9DE400B833C9200BC506C /* Build configuration list for PBXProject "RadioButtons" */ = {
+		61A9DE400B833C9200BC506C /* Build configuration list for PBXProject "Buttons" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				61A9DE410B833C9200BC506C /* Default */,
@@ -359,7 +359,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Default;
 		};
-		61A9DFC20B833E9600BC506C /* Build configuration list for PBXNativeTarget "RadioButtons" */ = {
+		61A9DFC20B833E9600BC506C /* Build configuration list for PBXNativeTarget "Buttons" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				61A9DFC30B833E9600BC506C /* Default */,
@@ -367,7 +367,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Default;
 		};
-		61A9DFCC0B833EF300BC506C /* Build configuration list for PBXNativeTarget "RadioButtonsD" */ = {
+		61A9DFCC0B833EF300BC506C /* Build configuration list for PBXNativeTarget "ButtonsD" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				61A9DFCD0B833EF300BC506C /* Default */,

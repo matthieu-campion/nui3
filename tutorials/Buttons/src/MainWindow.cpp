@@ -8,9 +8,11 @@
 #include "nui.h"
 #include "MainWindow.h"
 #include "Application.h"
+#include "nuiLabel.h"
 #include "nuiRadioButtonGroup.h"
 #include "nuiHBox.h"
 #include "nuiVBox.h"
+#include "nuiBackgroundPane.h"
 
 
 /*
@@ -29,19 +31,22 @@ MainWindow::~MainWindow()
 
 void MainWindow::OnCreation()
 {
+  nuiBackgroundPane* pPane = new nuiBackgroundPane();
+  AddChild(pPane);
+  
   // create a vertical box for the layout
   nuiVBox* pMainBox = new nuiVBox(0);
   pMainBox->SetUserSize(400,300);
   pMainBox->SetPosition(nuiCenter);
-  AddChild(pMainBox);
-
+  pPane->AddChild(pMainBox);
+  
   // create a label for information display 
   mpLabel = new nuiLabel();
   mpLabel->SetPosition(nuiTopLeft);
   mpLabel->SetBorder(20,20);
   AddChild(mpLabel);
-      
-
+  
+  
   //***********************************************************
   // first set : radio button with text inside
   //
@@ -80,7 +85,7 @@ void MainWindow::OnCreation()
       pRadioBut->SetPosition(nuiCenter);
       pBox->AddCell(pRadioBut);
       pGroup->AddRadioButton(pRadioBut);
-
+      
       mEventSink.Connect(pRadioBut->Activated, &MainWindow::OnSelected, (void*)index);    
     }
     pBox->SetAllCellsExpand(nuiExpandShrinkAndGrow);      // make the hbox's cells fill the entire width
@@ -108,7 +113,7 @@ void MainWindow::OnCreation()
     pRadioBut->SetEnabled(false);
     
     // don't need to connect the buttons' events, since all we wanna do here is to show how disabled buttons are looking
-  
+    
     pBox->SetAllCellsExpand(nuiExpandShrinkAndGrow);      // make the hbox's cells fill the entire width
   }
   
@@ -116,7 +121,7 @@ void MainWindow::OnCreation()
   
   // make the mainbox's layout fill the entire user size (c.f. line #33)
   pMainBox->SetAllCellsExpand(nuiExpandShrinkAndGrow);
-
+  
 }
 
 
@@ -130,6 +135,7 @@ bool MainWindow::OnSelected(const nuiEvent& rEvent)
   
   return true;
 }
+
 
 
 void MainWindow::OnClose()

@@ -20,7 +20,7 @@ public:
   void OnClose();
   
 protected:
-
+  
   bool OnSelected(const nuiEvent& rEvent);
   
 private:

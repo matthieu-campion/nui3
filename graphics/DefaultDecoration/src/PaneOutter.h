@@ -7,6 +7,6 @@
 
 #pragma once
 
-extern const char* gpPane;
-const long         gPaneSize = 1108;
+extern const char* gpPaneOutter;
+const long         gPaneOutterSize = 734;
 

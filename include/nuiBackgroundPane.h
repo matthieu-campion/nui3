@@ -11,11 +11,17 @@
 #include "nuiEvent.h"
 #include "nuiMouseEvent.h"
 
+enum nuiBackgroundType
+{
+  eOutterBackground = 0,
+  eInnerBackground
+};
+
 /// This widget implements a pane area. It draws a decorated background and can intercept mouse events
 class NUI_API nuiBackgroundPane : public nuiSimpleContainer
 {
 public:
-  nuiBackgroundPane();
+  nuiBackgroundPane(nuiBackgroundType type = eOutterBackground);
   virtual bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
 	virtual bool LoadAttributes(const nuiXMLNode* pNode);
 	virtual bool LoadChildren(const nuiXMLNode* pNode);
@@ -23,6 +29,8 @@ public:
 	virtual void SerializeChildren(nuiXMLNode* pParentNode, bool Recursive = false) const; // top level children serialization
 	virtual nuiXMLNode* SerializeAttributes(nuiXMLNode* pParentNode, bool Recursive = false) const;
   virtual ~nuiBackgroundPane();
+  
+  nuiBackgroundType GetType() const;
 
   // Out going Events
   nuiMouseClicked   ClickedMouse;
@@ -38,6 +46,9 @@ public:
 
 protected:
   bool mInterceptMouse;
+  
+private:
+  nuiBackgroundType mType;
 };
 
 

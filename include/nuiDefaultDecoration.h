@@ -27,6 +27,15 @@ public:
   ~nuiDefaultDecoration();
   
   static void Init();
+
+  // special case
+  static void MainWindow(nuiMainWindow* pWindow);
+  static void MessageBox(nuiMessageBox* pBox);
+  static void TabView_Tab(nuiTabView* pView, nuiWidget* pTab);
+  static void TabView_Contents(nuiTabView* pView, nuiWidget* pContents);
+  
+protected:
+  
   static void InitColors();
   static void InitSelection();
   static void InitMaps();
@@ -68,11 +77,6 @@ public:
   static void FileSelector_TreeFolderIcon(nuiWidget* pWidget);
   static void FileSelector_TreeFileIcon(nuiWidget* pWidget);
   
-  // special case
-  static void MainWindow(nuiMainWindow* pWindow);
-  static void MessageBox(nuiMessageBox* pBox);
-  static void TabView_Tab(nuiTabView* pView, nuiWidget* pTab);
-  static void TabView_Contents(nuiTabView* pView, nuiWidget* pContents);
-  
+
 
 };

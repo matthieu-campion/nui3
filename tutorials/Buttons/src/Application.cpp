@@ -13,7 +13,7 @@
 
 #include "nglConsole.h"
 
-#define APPLICATION_TITLE _T("ComboBox")
+#define APPLICATION_TITLE _T("Buttons tutorial")
 
 
 NGL_APP_CREATE(Application);

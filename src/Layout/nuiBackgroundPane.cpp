@@ -10,8 +10,8 @@
 #include "nuiBackgroundPane.h"
 #include "nuiXML.h"
 
-nuiBackgroundPane::nuiBackgroundPane()
- : nuiSimpleContainer()
+nuiBackgroundPane::nuiBackgroundPane(nuiBackgroundType type)
+ : nuiSimpleContainer(), mType(type)
 {
   SetObjectClass(_T("nuiBackgroundPane"));
   mInterceptMouse = false;
@@ -75,6 +75,12 @@ nuiXMLNode* nuiBackgroundPane::SerializeAttributes(nuiXMLNode* pParentNode, bool
 nuiBackgroundPane::~nuiBackgroundPane()
 {
 }
+
+nuiBackgroundType nuiBackgroundPane::GetType() const
+{
+  return mType;
+}
+
 
 
 bool nuiBackgroundPane::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
