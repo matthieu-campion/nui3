@@ -991,7 +991,7 @@ HRESULT STDMETHODCALLTYPE nglDropTarget::Drop(IDataObject *pDataObj, DWORD grfKe
   *pdwEffect = 0;
   if (mpWindow->OnCanDrop(mpObject, x, y, mButton))
   { 
-    GetObject(pDataObj, true);
+    //GetObject(pDataObj, true);
     mpWindow->OnDropped(mpObject, x, y, mButton);
     
     nglDropEffect dropEffect = mpObject->GetDesiredDropEffect();
