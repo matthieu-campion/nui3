@@ -20,6 +20,7 @@ nuiToggleButton::nuiToggleButton()
   mDisplayAsCheckBox = false;
   mDisplayAsFrameBox = false;
   mCheckSize = mDefaultCheckSize;
+  mHasContents = false;
 }
 
 nuiToggleButton::nuiToggleButton(const nglString& rText)
@@ -29,6 +30,7 @@ nuiToggleButton::nuiToggleButton(const nglString& rText)
   mDisplayAsCheckBox = false;
   mDisplayAsFrameBox = false;
   mCheckSize = mDefaultCheckSize;
+  mHasContents = true;
 }
 
 nuiToggleButton::nuiToggleButton(nuiStateDecoration* pDecoration)
@@ -38,6 +40,7 @@ nuiToggleButton::nuiToggleButton(nuiStateDecoration* pDecoration)
   mDisplayAsCheckBox = false;
   mDisplayAsFrameBox = false;
   mCheckSize = mDefaultCheckSize;
+  mHasContents = false;
 }
 
 nuiToggleButton::nuiToggleButton(const nglImage& rImage)
@@ -47,6 +50,7 @@ nuiToggleButton::nuiToggleButton(const nglImage& rImage)
   mDisplayAsCheckBox = false;
   mDisplayAsFrameBox = false;
   mCheckSize = mDefaultCheckSize;
+  mHasContents = true;
 }
 
 bool nuiToggleButton::Load(const nuiXMLNode* pNode)
@@ -56,6 +60,7 @@ bool nuiToggleButton::Load(const nuiXMLNode* pNode)
   mDisplayAsCheckBox = false;
   mDisplayAsFrameBox = false;
   mCheckSize = mDefaultCheckSize;
+  mHasContents = true;
   
   return true;
 }
@@ -292,3 +297,10 @@ bool nuiToggleButton::SetRect(const nuiRect& rRect)
     return nuiButton::SetRect(rRect);
   }
 }
+
+
+bool nuiToggleButton::HasContents() const
+{
+  return mHasContents;
+}
+

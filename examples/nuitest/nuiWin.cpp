@@ -3504,7 +3504,7 @@ private :
 
 };
 
-MessageQueueTest::MessageQueueTest()
+MessageQueueTest()
 : nuiWindow(nuiRect(10, 10, 500, 300), nglWindow::NoFlag, _T("MessageQueue")),
   mSink(this)
 {
@@ -3540,7 +3540,7 @@ MessageQueueTest::MessageQueueTest()
     
 }
 
-void MessageQueueTest::Start ()
+void Start ()
 {
         mpThread1 = new MessageQueueThread (this, 0);
         mpThread2 = new MessageQueueThread (this, 1);
@@ -3554,12 +3554,12 @@ void MessageQueueTest::Start ()
     
         // launch a timer to display the messages
         mpTimer = new nuiTimer (100.0f / 1000.0);
-        mSink.Connect (mpTimer->Tick, &MessageQueueTest::OnTick);
+        mSink.Connect (mpTimer->Tick, &OnTick);
         mpTimer->Start ();
         
 }
   
-MessageQueueTest::~MessageQueueTest ()
+~MessageQueueTest ()
 {
     if (mpTimer) 
     {
@@ -3578,20 +3578,20 @@ MessageQueueTest::~MessageQueueTest ()
   
 
 
-void MessageQueueTest::AddText (nuiLabel* label, const nglString rText)
+void AddText (nuiLabel* label, const nglString rText)
 {
   label->SetText (label->GetText() + nglString ("\n") + rText);
 }
 
 
 
-void MessageQueueTest::Post(nuiNotification* notif)
+void Post(nuiNotification* notif)
 {
   mMainQueue.Post(notif);
 }
 
 
-bool MessageQueueTest::OnTick (const nuiEvent& event)
+bool OnTick (const nuiEvent& event)
 {
   nuiNotification* notif = mMainQueue.Get(1);
 
@@ -3617,7 +3617,7 @@ bool MessageQueueTest::OnTick (const nuiEvent& event)
 // inner class ; MessageQueueThread
 //
 //
-MessageQueueTest::MessageQueueThread::MessageQueueThread (MessageQueueTest* output, uint ID) 
+MessageQueueThread::MessageQueueThread (MessageQueueTest* output, uint ID) 
 : nglThread ()
 {
   mID = ID;
@@ -3628,24 +3628,24 @@ MessageQueueTest::MessageQueueThread::MessageQueueThread (MessageQueueTest* outp
 
 }
 
-MessageQueueTest::MessageQueueThread::~MessageQueueThread () 
+MessageQueueThread::~MessageQueueThread () 
 {
 
 }
 
 
-void MessageQueueTest::MessageQueueThread::SetInterlocutor(MessageQueueThread* interloc)
+void MessageQueueThread::SetInterlocutor(MessageQueueThread* interloc)
 {
   mpInterloc = interloc;
 }
 
-void MessageQueueTest::MessageQueueThread::Post(nuiNotification* notif)
+void MessageQueueThread::Post(nuiNotification* notif)
 {
   mQueue.Post(notif);
 }
 
 
-void MessageQueueTest::MessageQueueThread::OnStart()
+void MessageQueueThread::OnStart()
 {
   // first thread starts the conversation
   if (THREAD1)

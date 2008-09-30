@@ -29,6 +29,13 @@ nuiDefaultDecoration::~nuiDefaultDecoration()
   
 } 
 
+
+//**************************************************************************************************************
+//
+// Init
+//
+// connect the object class to the decoration method
+//
 void nuiDefaultDecoration::Init()
 {
   InitColors();
@@ -76,6 +83,12 @@ void nuiDefaultDecoration::Init()
 
 
 
+
+
+//**************************************************************************************************************
+//
+// InitColors
+//
 void nuiDefaultDecoration::InitColors()
 {
   nuiColor::SetColor(_T("nuiDefaultClrWindowBkg1"), nuiColor(225,230,235));
@@ -104,6 +117,11 @@ void nuiDefaultDecoration::InitColors()
 }
 
 
+
+//**************************************************************************************************************
+//
+// InitSelection
+//
 void nuiDefaultDecoration::InitSelection()
 {
   nuiColor color;
@@ -114,6 +132,15 @@ void nuiDefaultDecoration::InitSelection()
 }
 
 
+
+
+//**************************************************************************************************************
+//
+// InitMaps
+//
+// those maps are loaded in decorations, but are used dynamically in nuiTheme drawing methods, 
+// during the application running
+//
 void nuiDefaultDecoration::InitMaps()
 {
   // vertical scrollbar background
@@ -226,6 +253,11 @@ void nuiDefaultDecoration::InitMaps()
 
 
 
+
+//**************************************************************************************************************
+//
+// InitIcons
+//
 void nuiDefaultDecoration::InitIcons()
 {
   // volume icon
@@ -254,6 +286,13 @@ void nuiDefaultDecoration::InitIcons()
 }
 
 
+
+
+
+//**************************************************************************************************************
+//
+// nuiWindow
+//
 void nuiDefaultDecoration::Window(nuiWidget* pWidget)
 {
   nuiWindow* pWindow = (nuiWindow*)pWidget;
@@ -285,6 +324,10 @@ void nuiDefaultDecoration::Window(nuiWidget* pWidget)
 
 
 
+//**************************************************************************************************************
+//
+// nuiBackgroundPane
+//
 void nuiDefaultDecoration::BackgroundPane(nuiWidget* pWidget)
 {
   nuiFrame* pFrame = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationPane"));
@@ -298,12 +341,16 @@ void nuiDefaultDecoration::BackgroundPane(nuiWidget* pWidget)
     delete pIMem; 
   }
   NGL_ASSERT(pFrame);
-  pWidget->SetDecoration(pFrame);
+  pWidget->SetDecoration(pFrame, eDecorationBorder);
 }
 
 
 
 
+//**************************************************************************************************************
+//
+// nuiLabel
+//
 void nuiDefaultDecoration::Label(nuiWidget* pWidget)
 {
 //  nuiColor cText;
@@ -312,18 +359,30 @@ void nuiDefaultDecoration::Label(nuiWidget* pWidget)
 }
 
 
+//**************************************************************************************************************
+//
+// nuiEditText
+//
 void nuiDefaultDecoration::EditText(nuiWidget* pWidget)
 {
   
 }
 
 
+//**************************************************************************************************************
+//
+// nuiEditLine
+//
 void nuiDefaultDecoration::EditLine(nuiWidget* pWidget)
 {
   
 }
 
 
+//**************************************************************************************************************
+//
+// nuiSplitterHandle
+//
 void nuiDefaultDecoration::SplitterHandle(nuiWidget* pWidget)
 {
   nuiSplitterHandle* pHandle = (nuiSplitterHandle*)pWidget;
@@ -386,12 +445,20 @@ void nuiDefaultDecoration::SplitterHandle(nuiWidget* pWidget)
 
 
 
+//**************************************************************************************************************
+//
+// nuiTitledPane
+//
 void nuiDefaultDecoration::TitledPane(nuiWidget* pWidget)
 {
   
 }
 
 
+//**************************************************************************************************************
+//
+// nuiFolderPane
+//
 void nuiDefaultDecoration::FolderPane(nuiWidget* pWidget)
 {
   
@@ -400,6 +467,10 @@ void nuiDefaultDecoration::FolderPane(nuiWidget* pWidget)
 
 
 
+//**************************************************************************************************************
+//
+// nuiButton
+//
 void nuiDefaultDecoration::Button(nuiWidget* pWidget)
 {
   nuiStateDecoration* pDeco = (nuiStateDecoration*)nuiDecoration::Get(_T("nuiDefaultDecorationButton"));
@@ -445,6 +516,10 @@ void nuiDefaultDecoration::Button(nuiWidget* pWidget)
 
 
 
+//**************************************************************************************************************
+//
+// nuiRadioButton
+//
 void nuiDefaultDecoration::RadioButton(nuiWidget* pWidget)
 {
   nuiRadioButton* pBtn = (nuiRadioButton*)pWidget;
@@ -507,6 +582,10 @@ void nuiDefaultDecoration::RadioButton(nuiWidget* pWidget)
 
 
 
+//**************************************************************************************************************
+//
+// nuiCloseButton (for windows)
+//
 void nuiDefaultDecoration::CloseButton(nuiWidget* pWidget)
 {
   
@@ -550,13 +629,74 @@ void nuiDefaultDecoration::CloseButton(nuiWidget* pWidget)
 }
 
 
+
+
+//**************************************************************************************************************
+//
+// nuiToggleButton
+//
 void nuiDefaultDecoration::ToggleButton(nuiWidget* pWidget)
 {
+  nuiToggleButton* pBtn = (nuiToggleButton*)pWidget;
+  if (pBtn->HasContents())
+  {
+    nuiDefaultDecoration::Button(pWidget);
+    return;
+  }
+  
+  
+  nuiStateDecoration* pDeco = (nuiStateDecoration*)nuiDecoration::Get(_T("nuiDefaultDecorationToggleButton"));
+  if (pDeco)
+  {
+    pWidget->SetDecoration(pDeco, eDecorationBorder);
+    return;
+  }
+  
+  nglIMemory* pIMem = new nglIMemory(gpToggleButtonUp, gToggleButtonUpSize);
+  nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
+  NGL_ASSERT(pTex);
+  nuiFrame* pFrame = new nuiFrame(_T("nuiDefaultDecorationToggleButtonUp"), pTex, nuiRect(10,10,13,13));
+  delete pIMem;
+  
+  
+  pIMem = new nglIMemory(gpToggleButtonDown, gToggleButtonDownSize);
+  pTex = nuiTexture::GetTexture(pIMem);
+  NGL_ASSERT(pTex);
+  pFrame = new nuiFrame(_T("nuiDefaultDecorationToggleButtonDown"), pTex, nuiRect(10,10,13,13));
+  delete pIMem;
+  
+  pIMem = new nglIMemory(gpToggleButtonUpDisabled, gToggleButtonUpDisabledSize);
+  pTex = nuiTexture::GetTexture(pIMem);
+  NGL_ASSERT(pTex);
+  pFrame = new nuiFrame(_T("nuiDefaultDecorationToggleButtonUpDisabled"), pTex, nuiRect(10,10,13,13));
+  delete pIMem;
+  
+  pIMem = new nglIMemory(gpToggleButtonDownDisabled, gToggleButtonDownDisabledSize);
+  pTex = nuiTexture::GetTexture(pIMem);
+  NGL_ASSERT(pTex);
+  pFrame = new nuiFrame(_T("nuiDefaultDecorationToggleButtonDownDisabled"), pTex, nuiRect(10,10,13,13));
+  delete pIMem;
+  
+  
+  nuiStateDecoration* pState = new nuiStateDecoration(_T("nuiDefaultDecorationToggleButton"), 
+                                                      _T("nuiDefaultDecorationToggleButtonUp"),
+                                                      _T("nuiDefaultDecorationToggleButtonDown"),
+                                                      _T("nuiDefaultDecorationToggleButtonUp"),/* hover up */
+                                                      _T("nuiDefaultDecorationToggleButtonDown"), /* hover down*/
+                                                      _T("nuiDefaultDecorationToggleButtonUpDisabled"),
+                                                      _T("nuiDefaultDecorationToggleButtonDownDisabled"));
+  pState->SetSourceClientRect(nuiRect(10,10,13,13));
+  
+  pWidget->SetDecoration(pState, eDecorationBorder);
   
 }
 
 
 
+//**************************************************************************************************************
+//
+// nuiComboBox
+//
 void nuiDefaultDecoration::ComboBox(nuiWidget* pWidget)
 {
  
@@ -596,10 +736,14 @@ void nuiDefaultDecoration::ComboBox(nuiWidget* pWidget)
 
 
 
+
+
+//***********************************************************************************************************************************
 //***********************************************************************************************************************************
 //
 // FileSelector
 //
+//***********************************************************************************************************************************
 //***********************************************************************************************************************************
 
 void nuiDefaultDecoration::FileSelector_FolderView(nuiWidget* pWidget)
@@ -689,11 +833,19 @@ void nuiDefaultDecoration::FileSelector_TreeFileIcon(nuiWidget* pWidget)
 
 
 //***********************************************************************************************************************************
+//***********************************************************************************************************************************
 //
-// special cases
+// special cases. Those are not called through the automatic default decoration system.
+// they are called from their own source code.
 //
 //***********************************************************************************************************************************
+//***********************************************************************************************************************************
 
+
+//**************************************************************************************************************
+//
+// nuiMainWindow
+//
 void nuiDefaultDecoration::MainWindow(nuiMainWindow* pWindow)
 {
   nuiWidget* pCont = new nuiWidget();
@@ -709,6 +861,10 @@ void nuiDefaultDecoration::MainWindow(nuiMainWindow* pWindow)
 }
 
 
+//**************************************************************************************************************
+//
+// nuiMessageBox
+//
 void nuiDefaultDecoration::MessageBox(nuiMessageBox* pBox)
 {
   nuiFrame* pFrame = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationPane"));
@@ -725,6 +881,12 @@ void nuiDefaultDecoration::MessageBox(nuiMessageBox* pBox)
   pBox->SetDecoration(pFrame);
 }
 
+
+
+//**************************************************************************************************************
+//
+// nuiMessageBox::Title
+//
 void nuiDefaultDecoration::MessageBox_Title(nuiWidget* pWidget)
 {
   nuiLabel* pLabel = (nuiLabel*)pWidget;
@@ -735,6 +897,10 @@ void nuiDefaultDecoration::MessageBox_Title(nuiWidget* pWidget)
 
 
 
+//**************************************************************************************************************
+//
+// nuiTabView::Tab
+//
 void nuiDefaultDecoration::TabView_Tab(nuiTabView* pView, nuiWidget* pTab)
 {
   nglString decoName = _T("nuiDefaultDecorationTabTop");
@@ -830,9 +996,10 @@ void nuiDefaultDecoration::TabView_Tab(nuiTabView* pView, nuiWidget* pTab)
 
 
 
-
-
-
+//**************************************************************************************************************
+//
+// nuiTabView::Contents
+//
 
 void nuiDefaultDecoration::TabView_Contents(nuiTabView* pView, nuiWidget* pContents)
 {

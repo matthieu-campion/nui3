@@ -48,6 +48,8 @@ public:
   nuiSize GetCheckSize() const { return mCheckSize; }
   void SetCheckSize(nuiSize checkSize) { mCheckSize = checkSize; }
   
+  bool HasContents() const;
+  
   nuiSimpleEventSource<nuiWidgetActivated> Deactivated;
   
 protected:
@@ -56,6 +58,8 @@ protected:
   bool mDisplayAsCheckBox;
   bool mDisplayAsFrameBox;
   nuiSize mCheckSize;
+  bool mHasContents;
+
 };
 
 #endif // __nuiToggleButton_h__
