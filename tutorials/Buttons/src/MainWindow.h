@@ -20,8 +20,15 @@ public:
   void OnClose();
   
 protected:
-  
-  bool OnSelected(const nuiEvent& rEvent);
+
+  nuiWidget* Tutorial_Buttons();
+  nuiWidget* Tutorial_ToggleButtons();
+  nuiWidget* Tutorial_RadioButtons1();
+  nuiWidget* Tutorial_RadioButtons2();
+
+  bool OnButtonPressed(const nuiEvent& rEvent);
+  bool OnTogglePressed(const nuiEvent& rEvent);
+  bool OnRadioPressed(const nuiEvent& rEvent);
   
 private:
   

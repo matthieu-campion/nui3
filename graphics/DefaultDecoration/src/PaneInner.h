@@ -8,5 +8,5 @@
 #pragma once
 
 extern const char* gpPaneInner;
-const long         gPaneInnerSize = 331;
+const long         gPaneInnerSize = 357;
 
