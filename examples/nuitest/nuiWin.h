@@ -110,7 +110,6 @@ protected:
   bool OnTextWrapChanged(const nuiEvent& rEvent);
   bool OnTextSizeSliderChanged(const nuiEvent& rEvent);
   bool CreateTitledPaneWindow(const nuiEvent& rEvent);
-  bool MessageQueueWindow (const nuiEvent& rEvent);
 
   bool CreateSliderWindow(const nuiEvent& rEvent);
   bool OnSliderChanged(const nuiEvent& rEvent);
