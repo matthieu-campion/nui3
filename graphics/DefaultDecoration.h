@@ -47,3 +47,7 @@ licence: see nui3/LICENCE.TXT
 #include "DefaultDecoration/src/TabTopContents.h"
 #include "DefaultDecoration/src/TabTopDown.h"
 #include "DefaultDecoration/src/TabTopUp.h"
+#include "DefaultDecoration/src/ToggleButtonDown.h"
+#include "DefaultDecoration/src/ToggleButtonDownDisabled.h"
+#include "DefaultDecoration/src/ToggleButtonUp.h"
+#include "DefaultDecoration/src/ToggleButtonUpDisabled.h"

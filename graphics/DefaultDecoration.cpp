@@ -47,3 +47,7 @@ licence: see nui3/LICENCE.TXT
 #include "DefaultDecoration/src/TabTopContents.cpp"
 #include "DefaultDecoration/src/TabTopDown.cpp"
 #include "DefaultDecoration/src/TabTopUp.cpp"
+#include "DefaultDecoration/src/ToggleButtonDown.cpp"
+#include "DefaultDecoration/src/ToggleButtonDownDisabled.cpp"
+#include "DefaultDecoration/src/ToggleButtonUp.cpp"
+#include "DefaultDecoration/src/ToggleButtonUpDisabled.cpp"
