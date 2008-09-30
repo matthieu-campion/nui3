@@ -416,11 +416,6 @@ void nuiWin::OnCreation()
   mWinSink.Connect (pElement->Activated, &nuiWin::MatrixViewWindow);
   pMainTree->AddChild (pElement);
   
-  // MessageQueueWindow
-  pElement = new nuiTreeNode (_T("MessageQueue"));
-  mWinSink.Connect (pElement->Activated, &nuiWin::MessageQueueWindow);
-  pMainTree->AddChild (pElement);
-
 
   // DumpStats:
   pElement = new nuiTreeNode(_T("Dump some stats to the console"));
