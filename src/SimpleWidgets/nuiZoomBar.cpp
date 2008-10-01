@@ -58,13 +58,11 @@ bool nuiZoomBar::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
     {
       if (X < mThumbRect.Left()) // PageUp
       {
-        mScrollBarSink.Connect(mTimer.Tick, &nuiScrollBar::HandlePageUp);
         mTimer.Start(true,true);
         mPageUpClicked = true;
       }
       else if (X > mThumbRect.Right()) // PageDown
       {
-        mScrollBarSink.Connect(mTimer.Tick, &nuiScrollBar::HandlePageDown);
         mTimer.Start(true,true);
         mPageDownClicked = true;
       }
@@ -88,13 +86,11 @@ bool nuiZoomBar::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
     {
       if (Y < mThumbRect.Top()) // PageUp
       {
-        mScrollBarSink.Connect(mTimer.Tick, &nuiScrollBar::HandlePageUp);
         mTimer.Start(true,true);
         mPageUpClicked = true;
       }
       else if (Y > mThumbRect.Bottom()) // PageDown
       {
-        mScrollBarSink.Connect(mTimer.Tick, &nuiScrollBar::HandlePageDown);
         mTimer.Start(true,true);
         mPageDownClicked = true;
       }
@@ -138,10 +134,7 @@ bool nuiZoomBar::MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button
     mClicked = false;
     
     if (mPageUpClicked || mPageDownClicked)
-    {
-      mScrollBarSink.Disconnect(&nuiScrollBar::HandlePageUp);
-      mScrollBarSink.Disconnect(&nuiScrollBar::HandlePageDown);
-      
+    {      
       mTimer.Stop();
     }
     else
