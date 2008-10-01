@@ -434,13 +434,6 @@ void nuiWin::OnCreation()
   pWMScrollView->AddChild(mpManager);
   mpManager->SetProperty(_T("Name"), _T("wm"));
   
-  pElement = new nuiTreeNode(_T("File Selector Window (/)"));
-  mWinSink.Connect(pElement->Activated, &nuiWin::CreateFileSelectorWindow);
-  pMainTree->AddChild(pElement);
-  
-  pElement = new nuiTreeNode(_T("File Selector Window (Current dir)"));
-  mWinSink.Connect(pElement->Activated, &nuiWin::FileSelect);
-  pMainTree->AddChild(pElement);
   
   pElement = new nuiTreeNode(_T("nuiTitledPane and nuiFolderPane"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateTitledPaneWindow);
@@ -1411,16 +1404,6 @@ bool nuiWin::CreateColumnTreeViewWindow(const nuiEvent& rEvent)
   return false;
 }
 
-bool nuiWin::CreateFileSelectorWindow(const nuiEvent& rEvent)
-{
-  nuiWindow* pWin = new nuiWindow(nuiRect(10, 10, 300, 200), nuiWindow::DecoratedBackground, _T("File Selector"));
-  mpManager->AddChild(pWin);
-  nuiFileSelector* pFS = new nuiFileSelector(_T("/"), _T("*"), NULL, nuiFileSelector::eTree);
-  pWin->AddChild(pFS);
-  pFS->SetPath(nglPath(ePathCurrent));
-  
-  return false;
-}
 
 
 bool nuiWin::Draw(nuiDrawContext* pContext)
