@@ -58,6 +58,7 @@ public:
   void          AddButton(nuiButton* pButtonWidget, DialogButtonType type = eDialogButtonCustom, bool IsDefaultButton = false); ///< add the given nuiButton* pWidgetButton to the mpButtonsGrid according to the DialogButtonType order, create the mpGlobalGrid and mpButtonsGrid if necessary
 
   nuiButton* GetButton(DialogButtonType type);
+  nuiGrid* GetButtonsGrid();
   
   DialogResult GetResult();
 

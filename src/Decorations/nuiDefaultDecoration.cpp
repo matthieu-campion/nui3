@@ -64,6 +64,10 @@ void nuiDefaultDecoration::Init()
 
 
   // dialogs
+  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiDialog::Title")), &nuiDefaultDecoration::Dialog_Title);
+  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiDialogSelectFile::Title")), &nuiDefaultDecoration::DialogSelectFile_Title);
+  
+  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiDialog::EditLine")), &nuiDefaultDecoration::Dialog_EditLine);
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiMessageBox::Title")), &nuiDefaultDecoration::MessageBox_Title);
   
   
@@ -771,25 +775,17 @@ void nuiDefaultDecoration::ComboBox(nuiWidget* pWidget)
 
 void nuiDefaultDecoration::FileSelector_FolderView(nuiWidget* pWidget)
 {
-  nuiMetaDecoration* pDeco = (nuiMetaDecoration*)nuiDecoration::Get(_T("nuiDefaultDecorationFileSelector_FolderView"));
+  nuiColorDecoration* pDeco = (nuiColorDecoration*)nuiDecoration::Get(_T("nuiDefaultDecorationFileSelector_FolderView"));
   if (!pDeco)
   {
-    nuiColorDecoration* pDeco1 = new nuiColorDecoration(_T("nuiDefaultDecorationFileSelector_FolderView_1"), nuiRect(5,5,0,0), nuiColor(214,221,229));
-    nuiBorderDecoration* pDeco2 = new nuiBorderDecoration(_T("nuiDefaultDecorationFileSelector_FolderView_2"));
-    pDeco2->SetStrokeColor(nuiColor(139,139,139));
-    pDeco2->SetStrokeSize(1);
-    pDeco2->SetBorderType(_T("Right"));
-
-    pDeco = new nuiMetaDecoration(_T("nuiDefaultDecorationFileSelector_FolderView"));
-    pDeco->AddDecoration(pDeco1);
-    pDeco->AddDecoration(pDeco2);
+    pDeco = new nuiColorDecoration(_T("nuiDefaultDecorationFileSelector_FolderView"), nuiRect(5,5,0,0), nuiColor(214,221,229), 1, nuiColor(139,139,139), eStrokeAndFillShape);
   }
-  pWidget->SetDecoration(pDeco);
+  pWidget->SetDecoration(pDeco, eDecorationBorder);
 }
 
 void nuiDefaultDecoration::FileSelector_InfoView(nuiWidget* pWidget)
 {
-  
+
 }
 
 
@@ -819,7 +815,19 @@ void nuiDefaultDecoration::FileSelector_FolderIcon(nuiWidget* pWidget)
 
 void nuiDefaultDecoration::FileSelector_TreeView(nuiWidget* pWidget)
 {
-  
+  nuiGradientDecoration* pDeco = (nuiGradientDecoration*)nuiDecoration::Get(_T("nuiDefaultDecorationWindow"));
+  if (!pDeco)
+  {
+    nuiColor color1, color2;
+    nuiColor::GetColor(_T("nuiDefaultClrWindowBkg1"), color1);
+    nuiColor::GetColor(_T("nuiDefaultClrWindowBkg2"), color2);
+    
+    pDeco = new nuiGradientDecoration(_T("nuiDefaultDecorationWindow"), 
+                                      nuiRect(0,0, 0,0), color1, color2, nuiVertical, 1, nuiColor(175,175,175), eStrokeAndFillShape);
+    pDeco->SetOffset1(0.f);
+    pDeco->SetOffset2(0.5f);
+  }
+  pWidget->SetDecoration(pDeco, eDecorationBorder);  
 }
 
 
@@ -886,17 +894,111 @@ void nuiDefaultDecoration::MainWindow(nuiMainWindow* pWindow)
 
 //**************************************************************************************************************
 //
-// nuiMessageBox
+// nuiDialog
 //
-void nuiDefaultDecoration::MessageBox(nuiMessageBox* pBox)
+void nuiDefaultDecoration::Dialog(nuiSimpleContainer* pCont)
 {
-  nuiFrame* pFrame = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationPane"));
+  nuiFrame* pFrame = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationOutterPane"));
   if (!pFrame)
   {
     nglIMemory* pIMem = new nglIMemory(gpPaneOutter, gPaneOutterSize);
     nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
     NGL_ASSERT(pTex);
-    pFrame = new nuiFrame(_T("nuiDefaultDecorationPane"), pTex, nuiRect(12,12,0,1));
+    pFrame = new nuiFrame(_T("nuiDefaultDecorationOutterPane"), pTex, nuiRect(12,12,0,1));
+    pFrame->UseWidgetAlpha(false);
+    delete pIMem; 
+  }
+  NGL_ASSERT(pFrame);
+  pCont->SetDecoration(pFrame);  
+}
+
+
+//**************************************************************************************************************
+//
+// nuiDialog
+//
+void nuiDefaultDecoration::DialogSelectFile(nuiSimpleContainer* pCont)
+{
+  nuiFrame* pFrame = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationOutterPane"));
+  if (!pFrame)
+  {
+    nglIMemory* pIMem = new nglIMemory(gpPaneOutter, gPaneOutterSize);
+    nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
+    NGL_ASSERT(pTex);
+    pFrame = new nuiFrame(_T("nuiDefaultDecorationOutterPane"), pTex, nuiRect(12,12,0,1));
+    pFrame->UseWidgetAlpha(false);
+    pFrame->EnableBorder(false);
+    delete pIMem; 
+  }
+  NGL_ASSERT(pFrame);
+  pCont->SetDecoration(pFrame);  
+}
+
+
+//**************************************************************************************************************
+//
+// nuiDialog::Title
+//
+void nuiDefaultDecoration::Dialog_Title(nuiWidget* pWidget)
+{
+  nuiLabel* pLabel = (nuiLabel*)pWidget;
+  
+  pLabel->SetFont(nuiFont::GetFont(13), true);
+  pLabel->SetBorder(0,0,10,15);
+}
+
+//**************************************************************************************************************
+//
+// DialogSelectFile::Title
+//
+void nuiDefaultDecoration::DialogSelectFile_Title(nuiWidget* pWidget)
+{
+  nuiLabel* pLabel = (nuiLabel*)pWidget;
+  
+  pLabel->SetFont(nuiFont::GetFont(13), true);
+  pLabel->SetBorder(16,0,16,15);
+}
+
+
+
+
+
+
+//**************************************************************************************************************
+//
+// nuiDialog::EditLine
+//
+void nuiDefaultDecoration::Dialog_EditLine(nuiWidget* pWidget)
+{
+  nuiFrame* pFrame = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationInnerPane"));
+  if (!pFrame)
+  {
+    nglIMemory* pIMem = new nglIMemory(gpPaneInner, gPaneInnerSize);
+    nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
+    NGL_ASSERT(pTex);
+    pFrame = new nuiFrame(_T("nuiDefaultDecorationInnerPane"), pTex, nuiRect(6,6,0,0));
+    pFrame->UseWidgetAlpha(false);
+    delete pIMem; 
+  }
+  NGL_ASSERT(pFrame);
+  pWidget->SetDecoration(pFrame, eDecorationBorder);    
+}
+
+
+
+//**************************************************************************************************************
+//
+// nuiMessageBox
+//
+void nuiDefaultDecoration::MessageBox(nuiMessageBox* pBox)
+{
+  nuiFrame* pFrame = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationOutterPane"));
+  if (!pFrame)
+  {
+    nglIMemory* pIMem = new nglIMemory(gpPaneOutter, gPaneOutterSize);
+    nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
+    NGL_ASSERT(pTex);
+    pFrame = new nuiFrame(_T("nuiDefaultDecorationOutterPane"), pTex, nuiRect(12,12,0,1));
     pFrame->UseWidgetAlpha(false);
     delete pIMem; 
   }

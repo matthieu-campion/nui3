@@ -264,6 +264,12 @@ nuiButton* nuiDialog::GetButton(DialogButtonType type)
   return NULL; 
 }
 
+nuiGrid* nuiDialog::GetButtonsGrid()
+{
+  return mpButtonsGrid;
+}
+
+
 void nuiDialog::SetDefaultAnimations()
 {
   nuiMetaAnimation* pMetaAnim; 
@@ -288,14 +294,11 @@ void nuiDialog::SetDefaultAnimations()
 nuiSimpleContainer* nuiDialog::CreateDefaultLayout()
 {
   mpPane = new nuiSimpleContainer();
-  
-  // default decoration
-  nuiDecoration* pDefaultDeco = nuiDecoration::Get(_T("nuiDialog::DefaultDecoration"));
-  if (!pDefaultDeco)
-    pDefaultDeco = new nuiColorDecoration(_T("nuiDialog::DefaultDecoration"), nuiRect(10,10,0,0), nuiColor(190,190,190), 1, nuiColor(120,120,120), eStrokeAndFillShape);
-  mpPane->SetDecoration(pDefaultDeco, eDecorationBorder);
+  mpPane->SetObjectClass(_T("nuiDialog::Pane"));
+  mpPane->SetObjectName(_T("nuiDialog::Pane"));
   mpPane->SetColor(eNormalTextFg, nuiColor(0,0,0));
   
+  nuiDefaultDecoration::Dialog(mpPane);
   
   return mpPane;
 }

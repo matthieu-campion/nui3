@@ -32,9 +32,11 @@ void nuiDialogSelectFile::Init(nuiMainWindow* pParent, const nglString& rTitle, 
   mRootPath = rRootPath;
 
   nuiSimpleContainer* pEditContainer = new nuiSimpleContainer();
+  pEditContainer->SetBorder(16,16,10,0);
   
   mpEditLine = new nuiEditLine();
   mpEditLine->SetObjectName(_T("nuiDialog::EditLine"));
+  mpEditLine->SetObjectClass(_T("nuiDialog::EditLine"));
   mpEditLine->SetColor(eNormalTextFg, nuiColor(64,64,64));
   mpEditLine->SetColor(eSelectedTextFg, nuiColor(64,64,64));
   pEditContainer->AddChild(mpEditLine);
@@ -43,6 +45,7 @@ void nuiDialogSelectFile::Init(nuiMainWindow* pParent, const nglString& rTitle, 
   
   
   mpSelector = new nuiFileSelector(rPath, rRootPath, rFilters, mpEditLine);
+  mpSelector->SetBorder(6,0);
   
   mEventSink.Connect(mpSelector->OK, &nuiDialogSelectFile::OnSelectorOK);
   
@@ -53,8 +56,6 @@ void nuiDialogSelectFile::Init(nuiMainWindow* pParent, const nglString& rTitle, 
   
   mpContainer->SetUserSize(mpParent->GetWidth() * .8, mpParent->GetHeight() * .8);
   
-  pEditContainer->SetUserSize(mpParent->GetWidth() * .8, 20);
-  pEditContainer->SetBorder(5,5);
   
   pBox->SetCellExpand(0, nuiExpandShrinkAndGrow);
   pBox->SetCellExpand(1, nuiExpandFixed);
@@ -62,14 +63,24 @@ void nuiDialogSelectFile::Init(nuiMainWindow* pParent, const nglString& rTitle, 
 
   
   nuiLabel* pTitle = new nuiLabel(rTitle);
-  pTitle->SetObjectName(_T("nuiDialog::Title"));
-    
-  InitDialog(pTitle, NULL, nuiDialog::eDialogButtonOk | nuiDialog::eDialogButtonCancel);
+  pTitle->SetObjectName(_T("nuiDialogSelectFile::Title"));
+  pTitle->SetObjectClass(_T("nuiDialogSelectFile::Title"));
+  
+  nuiSimpleContainer* pLayoutPane = new nuiSimpleContainer();
+  pLayoutPane->SetObjectClass(_T("nuiDialog::Pane"));
+  pLayoutPane->SetObjectName(_T("nuiDialog::Pane"));
+  pLayoutPane->SetColor(eNormalTextFg, nuiColor(0,0,0));
+  
+  nuiDefaultDecoration::DialogSelectFile(pLayoutPane);
+  
+  InitDialog(pTitle, pLayoutPane, nuiDialog::eDialogButtonOk | nuiDialog::eDialogButtonCancel);
     
   nuiButton* pButton = new nuiButton(_T("New Folder"));
   pButton->SetObjectName(_T("nuiDialog::Button"));
   AddButton(pButton, nuiDialog::eDialogButtonCustom);
   mEventSink.Connect(pButton->Activated, &nuiDialogSelectFile::OnCreateNewFolder);
+  
+  nuiDialog::GetButtonsGrid()->SetBorder(0,10,0,10);
   
   SetContents(pBox, nuiCenter);
   SetDefaultPos();
