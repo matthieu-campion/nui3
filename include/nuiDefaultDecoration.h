@@ -32,7 +32,7 @@ public:
   // special case
   static void MainWindow(nuiMainWindow* pWindow);
   static void Dialog(nuiSimpleContainer* pCont);
-  static void DialogSelectFile(nuiSimpleContainer* pCont);
+//  static void DialogSelectFile(nuiSimpleContainer* pCont);
   static void MessageBox(nuiMessageBox* pBox);
   static void TabView_Tab(nuiTabView* pView, nuiWidget* pTab);
   static void TabView_Contents(nuiTabView* pView, nuiWidget* pContents);
@@ -66,7 +66,7 @@ protected:
 
   // dialogs
   static void Dialog_Title(nuiWidget* pWidget);
-  static void DialogSelectFile_Title(nuiWidget* pWidget);
+//  static void DialogSelectFile_Title(nuiWidget* pWidget);
   static void Dialog_EditLine(nuiWidget* pWidget);
   static void MessageBox_Title(nuiWidget* pWidget);
 

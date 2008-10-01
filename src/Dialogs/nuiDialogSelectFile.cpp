@@ -63,18 +63,20 @@ void nuiDialogSelectFile::Init(nuiMainWindow* pParent, const nglString& rTitle, 
 
   
   nuiLabel* pTitle = new nuiLabel(rTitle);
-  pTitle->SetObjectName(_T("nuiDialogSelectFile::Title"));
-  pTitle->SetObjectClass(_T("nuiDialogSelectFile::Title"));
+//  pTitle->SetObjectName(_T("nuiDialogSelectFile::Title"));
+//  pTitle->SetObjectClass(_T("nuiDialogSelectFile::Title"));
   
   nuiSimpleContainer* pLayoutPane = new nuiSimpleContainer();
   pLayoutPane->SetObjectClass(_T("nuiDialog::Pane"));
   pLayoutPane->SetObjectName(_T("nuiDialog::Pane"));
   pLayoutPane->SetColor(eNormalTextFg, nuiColor(0,0,0));
   
-  nuiDefaultDecoration::DialogSelectFile(pLayoutPane);
+  nuiDefaultDecoration::Dialog(pLayoutPane);
   
   InitDialog(pTitle, pLayoutPane, nuiDialog::eDialogButtonOk | nuiDialog::eDialogButtonCancel);
     
+
+  
   nuiButton* pButton = new nuiButton(_T("New Folder"));
   pButton->SetObjectName(_T("nuiDialog::Button"));
   AddButton(pButton, nuiDialog::eDialogButtonCustom);

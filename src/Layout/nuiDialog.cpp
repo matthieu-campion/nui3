@@ -60,6 +60,7 @@ void nuiDialog::InitDialog(nuiSimpleContainer* pLayoutContainer, uint32 buttons)
 void nuiDialog::InitDialog(const nglString& rMessage, nuiSimpleContainer* pLayoutContainer, uint32 buttons)
 {
   nuiLabel* pLabel = new nuiLabel(rMessage);
+  
   pLabel->SetHMargin(5.f);
   pLabel->SetVMargin(8.f);
   InitDialog(pLabel, pLayoutContainer, buttons);
@@ -67,6 +68,9 @@ void nuiDialog::InitDialog(const nglString& rMessage, nuiSimpleContainer* pLayou
 
 void nuiDialog::InitDialog(nuiLabel* pLabel, nuiSimpleContainer* pLayoutContainer, uint32 buttons)
 {
+  pLabel->SetObjectClass(_T("nuiDialog::Title"));
+  pLabel->SetObjectName(_T("nuiDialog::Title"));
+
   InitDialog(pLayoutContainer, buttons);
 
 //  NGL_ASSERT(buttons != 0);

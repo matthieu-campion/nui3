@@ -65,7 +65,7 @@ void nuiDefaultDecoration::Init()
 
   // dialogs
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiDialog::Title")), &nuiDefaultDecoration::Dialog_Title);
-  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiDialogSelectFile::Title")), &nuiDefaultDecoration::DialogSelectFile_Title);
+//  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiDialogSelectFile::Title")), &nuiDefaultDecoration::DialogSelectFile_Title);
   
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiDialog::EditLine")), &nuiDefaultDecoration::Dialog_EditLine);
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiMessageBox::Title")), &nuiDefaultDecoration::MessageBox_Title);
@@ -917,22 +917,22 @@ void nuiDefaultDecoration::Dialog(nuiSimpleContainer* pCont)
 //
 // nuiDialog
 //
-void nuiDefaultDecoration::DialogSelectFile(nuiSimpleContainer* pCont)
-{
-  nuiFrame* pFrame = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationOutterPane"));
-  if (!pFrame)
-  {
-    nglIMemory* pIMem = new nglIMemory(gpPaneOutter, gPaneOutterSize);
-    nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
-    NGL_ASSERT(pTex);
-    pFrame = new nuiFrame(_T("nuiDefaultDecorationOutterPane"), pTex, nuiRect(12,12,0,1));
-    pFrame->UseWidgetAlpha(false);
-    pFrame->EnableBorder(false);
-    delete pIMem; 
-  }
-  NGL_ASSERT(pFrame);
-  pCont->SetDecoration(pFrame);  
-}
+//void nuiDefaultDecoration::DialogSelectFile(nuiSimpleContainer* pCont)
+//{
+//  nuiFrame* pFrame = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationOutterPane"));
+//  if (!pFrame)
+//  {
+//    nglIMemory* pIMem = new nglIMemory(gpPaneOutter, gPaneOutterSize);
+//    nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
+//    NGL_ASSERT(pTex);
+//    pFrame = new nuiFrame(_T("nuiDefaultDecorationOutterPane"), pTex, nuiRect(12,12,0,1));
+//    pFrame->UseWidgetAlpha(false);
+//    pFrame->EnableBorder(false);
+//    delete pIMem; 
+//  }
+//  NGL_ASSERT(pFrame);
+//  pCont->SetDecoration(pFrame, eDecorationBorder);  
+//}
 
 
 //**************************************************************************************************************
@@ -951,14 +951,14 @@ void nuiDefaultDecoration::Dialog_Title(nuiWidget* pWidget)
 //
 // DialogSelectFile::Title
 //
-void nuiDefaultDecoration::DialogSelectFile_Title(nuiWidget* pWidget)
-{
-  nuiLabel* pLabel = (nuiLabel*)pWidget;
-  
-  pLabel->SetFont(nuiFont::GetFont(13), true);
-  pLabel->SetBorder(16,0,16,15);
-}
-
+//void nuiDefaultDecoration::DialogSelectFile_Title(nuiWidget* pWidget)
+//{
+//  nuiLabel* pLabel = (nuiLabel*)pWidget;
+//  
+//  pLabel->SetFont(nuiFont::GetFont(13), true);
+//  pLabel->SetBorder(16,0,16,15);
+//}
+//
 
 
 
