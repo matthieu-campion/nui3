@@ -193,6 +193,10 @@
 				>
 			</File>
 		</Filter>
+		<File
+			RelativePath=".\resource.rc"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>
