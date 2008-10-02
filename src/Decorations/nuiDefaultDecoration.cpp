@@ -38,11 +38,12 @@ nuiDefaultDecoration::~nuiDefaultDecoration()
 //
 void nuiDefaultDecoration::Init()
 {
+
   InitColors();
   InitSelection();
   InitMaps();
   InitIcons();
-  
+    
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiWindow")), &nuiDefaultDecoration::Window);
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiBackgroundPane")), &nuiDefaultDecoration::BackgroundPane);
 

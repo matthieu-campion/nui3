@@ -701,7 +701,6 @@ void nuiTheme::DrawMenuWindow(nuiDrawContext* pContext, const nuiRect& rRect, nu
     rRect.GetHeight() + pFrame->GetBorder(nuiTop) + pFrame->GetBorder(nuiBottom));
   
   pFrame->Draw(pContext, NULL, rect);
-
 }
 
 void nuiTheme::DrawMenuItem(nuiDrawContext* pContext, const nuiRect& rRect, bool Hover)

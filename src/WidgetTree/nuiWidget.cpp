@@ -3315,6 +3315,11 @@ uint32 nuiWidget::GetCSSPass() const
 
 void nuiWidget::DrawFocus(nuiDrawContext* pContext, bool FrontOrBack)
 {
+//#FIXME LBDEBUG : there's a bug somewhere in that, that makes ComboBox tutorial crash with Win32 (ati, vista)
+  // deactivate the DrawFocus for now, in order to release the application.
+return;
+
+
   if (!mShowFocus)
     return;
   
