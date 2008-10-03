@@ -28,10 +28,14 @@ private:
   bool OnToolSelected(const nuiEvent& rEvent);
 
   bool OnStart(const nuiEvent& rEvent);
+  void ParsePngFiles(const nglPath& rootSource, const nglPath& pngSource, const nglPath& codeSource);
+  void DumpIncluder(const nglPath& rootSource, const nglPath& pngSource,const nglPath& codeSource, const nglPath& HincluderPath, const nglPath& CPPincluderPath, nglString& HincluderStr, nglString& CPPincluderStr);
   
 
   nuiLabel* mpToolLabel;
   nuiLabel* mpSourceLabel;
+  
+  nglPath mTool;
   
   nuiTimer mTimer;
   nuiEventSink<Generator> mEventSink;

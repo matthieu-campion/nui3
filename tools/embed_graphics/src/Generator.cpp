@@ -199,8 +199,8 @@ bool Generator::OnSourceSelected(const nuiEvent& rEvent)
 bool Generator::OnStart(const nuiEvent& rEvent)
 {
   // check tool
-  nglPath tool(mpToolLabel->GetText());
-  if (!tool.Exists() || !tool.IsLeaf())
+  mTool = nglPath(mpToolLabel->GetText());
+  if (!mTool.Exists() || !mTool.IsLeaf())
   {
     nuiMessageBox* pBox = new nuiMessageBox((nuiMainWindow*)GetMainWindow(), _T("oups"), _T("the generator tool command line path is not valid."), eMB_OK);
     pBox->QueryUser();
@@ -219,7 +219,7 @@ bool Generator::OnStart(const nuiEvent& rEvent)
     return true;
   }
   
-  GetApp()->GetPreferences().SetPath(MAIN_KEY, _T("Tool"), tool);
+  GetApp()->GetPreferences().SetPath(MAIN_KEY, _T("Tool"), mTool);
   GetApp()->GetPreferences().SetPath(MAIN_KEY, _T("Source"), source);
   
 
@@ -249,30 +249,7 @@ bool Generator::OnStart(const nuiEvent& rEvent)
   
   
   // parse png file list
-  std::list<nglPath> children;
-  pngSource.GetChildren(&children);
-  
-  std::list<nglPath>::iterator it;
-  for (it = children.begin(); it != children.end(); ++it)
-  {
-    const nglPath& child = *it;
-    if (child.GetExtension().Compare(_T("png"), false))
-      continue;
-    
-    NGL_OUT(_T("path '%ls'\n"), child.GetChars());
-    
-    nglPath node = nglPath(child.GetNodeName());
-    
-    nglString nodeStr = node.GetPathName();
-    nodeStr.DeleteRight(node.GetExtension().GetLength() +1);
-
-    nglPath destPath = codeSource + nglPath(nodeStr);
-    
-    // and call the generator tool to create .cpp and .h files
-    nglString cmd;
-    cmd.Format(_T("%ls %ls %ls"), tool.GetChars(), child.GetChars(), destPath.GetChars());
-    system(cmd.GetStdString().c_str());
-  }
+  ParsePngFiles(pngSource, pngSource, codeSource);
   
   
   //******************************************************************
@@ -299,31 +276,8 @@ bool Generator::OnStart(const nuiEvent& rEvent)
   nglString CPPincluderStr(includer_str);
   CPPincluderStr.Append(_T("#include \"nui.h\"\n\n"));
    
-  for (it = children.begin(); it != children.end(); ++it)
-  {
-    nglPath child = *it;
-    if (child.GetExtension().Compare(_T("png"), false))
-      continue;
-    
-    nglPath node = nglPath(child.GetNodeName());
-    
-    nglString nodeStr = node.GetPathName();
-    nodeStr.DeleteRight(node.GetExtension().GetLength() +1);
-    
-    nglPath HdestPath = codeSource + nglPath(nodeStr);
-    nglPath CPPdestPath = codeSource + nglPath(nodeStr);
-    HdestPath = nglPath(HdestPath.GetPathName() + _T(".h"));
-    CPPdestPath = nglPath(CPPdestPath.GetPathName() + _T(".cpp"));
 
-    HdestPath.MakeRelativeTo(HincluderPath.GetParent());
-    CPPdestPath.MakeRelativeTo(CPPincluderPath.GetParent());
-    
-    nglString tmp;
-    tmp.Format(_T("#include \"%ls\"\n"), HdestPath.GetChars());
-    HincluderStr.Append(tmp);
-    tmp.Format(_T("#include \"%ls\"\n"), CPPdestPath.GetChars());
-    CPPincluderStr.Append(tmp);
-  }
+  DumpIncluder(pngSource, pngSource,codeSource, HincluderPath, CPPincluderPath, HincluderStr, CPPincluderStr);
   
   // write the "includer file" on disk
   nglIOStream* ostream = HincluderPath.OpenWrite();
@@ -343,3 +297,87 @@ bool Generator::OnStart(const nuiEvent& rEvent)
   return true;
 }
 
+
+void Generator::ParsePngFiles(const nglPath& rootSource, const nglPath& pngSource, const nglPath& codeSource)
+{
+  std::list<nglPath> children;
+  pngSource.GetChildren(&children);
+  
+  std::list<nglPath>::iterator it;
+  for (it = children.begin(); it != children.end(); ++it)
+  {
+    const nglPath& child = *it;
+    
+    if (!child.IsLeaf())
+    {
+      // recurs.
+      ParsePngFiles(rootSource, child, codeSource);
+      continue;
+    }
+    
+    if (child.GetExtension().Compare(_T("png"), false))
+      continue;
+    
+    nglString node = child.GetPathName();
+    node.DeleteLeft(rootSource.GetPathName().GetLength()+1);
+    node.DeleteRight(nglPath(node).GetExtension().GetLength() +1);
+    
+    nglPath destPath = codeSource + nglPath(node);
+    
+    NGL_OUT(_T("path '%ls', node '%ls' => destPath '%ls'\n"), child.GetChars(), node.GetChars(), destPath.GetChars());
+    
+    nglPath destDir = destPath.GetParent();
+    if (!destDir.Exists())
+      destDir.Create(true);
+    
+    // and call the generator tool to create .cpp and .h files
+    nglString cmd;
+    cmd.Format(_T("%ls %ls %ls"), mTool.GetChars(), child.GetChars(), destPath.GetChars());
+    system(cmd.GetStdString().c_str());
+  }
+  
+}
+
+
+
+void Generator::DumpIncluder(const nglPath& rootSource, const nglPath& pngSource,const nglPath& codeSource, const nglPath& HincluderPath, const nglPath& CPPincluderPath, nglString& HincluderStr, nglString& CPPincluderStr)
+{
+  std::list<nglPath> children;
+  std::list<nglPath>::iterator it;
+  
+  pngSource.GetChildren(&children);
+  
+  for (it = children.begin(); it != children.end(); ++it)
+  {
+    nglPath child = *it;
+    
+    if (!child.IsLeaf())
+    {
+      // recurs.
+      DumpIncluder(rootSource, child, codeSource, HincluderPath, CPPincluderPath, HincluderStr, CPPincluderStr);
+      continue;
+    }
+    
+    if (child.GetExtension().Compare(_T("png"), false))
+      continue;
+    
+    nglString node = child.GetPathName();
+    node.DeleteLeft(rootSource.GetPathName().GetLength()+1);
+    node.DeleteRight(nglPath(node).GetExtension().GetLength() +1);
+    
+    nglPath HdestPath = codeSource + nglPath(node);
+    nglPath CPPdestPath = codeSource + nglPath(node);
+    HdestPath = nglPath(HdestPath.GetPathName() + _T(".h"));
+    CPPdestPath = nglPath(CPPdestPath.GetPathName() + _T(".cpp"));
+    
+    HdestPath.MakeRelativeTo(HincluderPath.GetParent());
+    CPPdestPath.MakeRelativeTo(CPPincluderPath.GetParent());
+    
+    nglString tmp;
+    tmp.Format(_T("#include \"%ls\"\n"), HdestPath.GetChars());
+    HincluderStr.Append(tmp);
+    tmp.Format(_T("#include \"%ls\"\n"), CPPdestPath.GetChars());
+    CPPincluderStr.Append(tmp);
+  }
+  
+}
