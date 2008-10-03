@@ -16,6 +16,7 @@
 #include "nuiMessageBox.h"
 #include "nuiTabView.h"
 #include "nuiBackgroundPane.h"
+#include "nuiKnobSequence.h"
 
 
 nuiDefaultDecoration::nuiDefaultDecoration()
@@ -61,12 +62,12 @@ void nuiDefaultDecoration::Init()
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiCloseButton")), &nuiDefaultDecoration::CloseButton);
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiToggleButton")), &nuiDefaultDecoration::ToggleButton);
   
-  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiComboBox")), &nuiDefaultDecoration::ComboBox);
+  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiKnobSequence")), &nuiDefaultDecoration::KnobSequence);
 
+  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiComboBox")), &nuiDefaultDecoration::ComboBox);
 
   // dialogs
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiDialog::Title")), &nuiDefaultDecoration::Dialog_Title);
-//  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiDialogSelectFile::Title")), &nuiDefaultDecoration::DialogSelectFile_Title);
   
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiDialog::EditLine")), &nuiDefaultDecoration::Dialog_EditLine);
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiMessageBox::Title")), &nuiDefaultDecoration::MessageBox_Title);
@@ -762,6 +763,27 @@ void nuiDefaultDecoration::ComboBox(nuiWidget* pWidget)
 }
 
 
+
+//**************************************************************************************************************
+//
+// nuiKnobSequence
+//
+void nuiDefaultDecoration::KnobSequence(nuiWidget* pWidget)
+{
+  nuiKnobSequence* pKnob = (nuiKnobSequence*)pWidget;
+  
+  nuiFrameSequence* pSeq = (nuiFrameSequence*)nuiDecoration::Get(_T("nuiDefaultDecorationKnobSequence"));
+  if (!pSeq)
+  {
+    nglIMemory* pIMem = new nglIMemory(gpKnobSequence, gKnobSequenceSize);
+    nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
+    NGL_ASSERT(pTex);
+    pSeq = new nuiFrameSequence(_T("nuiDefaultDecorationKnobSequence"), 31, 0, pTex, nuiVertical, nuiRect(0,0,32,32));
+    delete pIMem;      
+  }
+
+  pKnob->SetFrameSequence(pSeq);
+}
 
 
 

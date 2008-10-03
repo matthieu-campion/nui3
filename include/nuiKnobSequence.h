@@ -5,44 +5,30 @@
   licence: see nui3/LICENCE.TXT
 */
 
-#ifndef __nuiKnob_h__
-#define __nuiKnob_h__
+#pragma once
 
-// loic berthelot, 2008/10/02 : nuiKnob becomes deprecated, gonna be removed some day
-// use nuiKnobSequence instead.
+#include "nui.h"
+#include "nuiFrameSequence.h"
 
-#include "nuiWidget.h"
-#include "nuiEvent.h"
-#include "nuiTimer.h"
-#include "nuiRange.h"
-#include "nuiContainer.h"
+
 
 /// Basic slider with range support.
-class NUI_API nuiKnob : public nuiSimpleContainer
+class NUI_API nuiKnobSequence : public nuiSimpleContainer
 {
 public:
-  nuiKnob(const nuiRange& rRange = nuiRange());
+  nuiKnobSequence(const nuiRange& rRange = nuiRange());
   virtual bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
-  virtual ~nuiKnob();
-
+  virtual ~nuiKnobSequence();
   virtual nuiXMLNode* Serialize(nuiXMLNode* pParentNode, bool Recursive) const;
-
-  virtual bool Draw(nuiDrawContext* pContext);
 
   virtual nuiRange& GetRange(); ///< Return the Range used by this scroll bar. 
 
-  //Received Events:
-  bool MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
-  bool MouseUnclicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
-  bool MouseMoved  (nuiSize X, nuiSize Y);
+  void SetFrameSequence(nuiFrameSequence* pSeq);
+  nuiFrameSequence* GetFrameSequence();
 
   // Sent events:
   nuiSimpleEventSource<nuiValueChanged> ValueChanged; ///< This event is sent whenever the Knob's thumb position is changed (by the user or by the program).
   nuiSimpleEventSource<nuiValueChanged> InteractiveValueChanged; ///< This event is sent whenever the Knob's thumb position is changed and the mouse is unclicked.
-  bool HandlePageDown(const nuiEvent& rEvent);
-  bool HandlePageUp(const nuiEvent& rEvent);
-
-  virtual nuiRect CalcIdealSize();
 
   // the bigger the Sensitivity is, the slower the knob will turn.
   static void SetDefaultSensitivity(nuiSize DefaultSensitivity);
@@ -56,6 +42,19 @@ public:
   void SetFineSensitivityKey(nglKeyCode FineSensitivityKey);
 
 protected:
+
+//  virtual bool Draw(nuiDrawContext* pContext);
+
+  //Received Events:
+  bool MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
+  bool MouseUnclicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
+  bool MouseMoved  (nuiSize X, nuiSize Y);
+  
+  bool HandlePageDown(const nuiEvent& rEvent);
+  bool HandlePageUp(const nuiEvent& rEvent);
+  
+  virtual nuiRect CalcIdealSize();
+  
   bool DoInvalidate(const nuiEvent& rEvent);
   bool HandleClicked(const nuiEvent& rEvent);
   bool HandleUnclicked(const nuiEvent& rEvent);
@@ -79,8 +78,10 @@ protected:
 
   static nglKeyCode mDefaultFineSensitivityKey;
   nglKeyCode mFineSensitivityKey;
+  
+  nuiFrameSequence* mpFrameSequence;
 
-  nuiEventSink<nuiKnob> mKnobSink;
+  nuiEventSink<nuiKnobSequence> mKnobSink;
 };
 
-#endif // __nuiKnob_h__
+

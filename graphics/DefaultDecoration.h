@@ -21,6 +21,7 @@ licence: see nui3/LICENCE.TXT
 #include "DefaultDecoration/src/IconFile.h"
 #include "DefaultDecoration/src/IconFolder.h"
 #include "DefaultDecoration/src/IconVolume.h"
+#include "DefaultDecoration/src/KnobSequence.h"
 #include "DefaultDecoration/src/PaneInner.h"
 #include "DefaultDecoration/src/PaneOutter.h"
 #include "DefaultDecoration/src/PopupMenu.h"

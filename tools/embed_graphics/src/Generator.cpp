@@ -229,9 +229,7 @@ bool Generator::OnStart(const nuiEvent& rEvent)
   if (codeSource.Exists())
   {
     nglString cmd;
-    cmd.Format(_T("rm %ls/*.cpp"), codeSource.GetChars());
-    system(cmd.GetStdString().c_str());
-    cmd.Format(_T("rm %ls/*.h"), codeSource.GetChars());
+    cmd.Format(_T("rm -rf %ls/*"), codeSource.GetChars());
     system(cmd.GetStdString().c_str());
   }
   // else create the folder
