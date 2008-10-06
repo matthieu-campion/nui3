@@ -10,6 +10,7 @@
 #include "nuiDrawContext.h"
 #include "nuiXML.h"
 #include "nuiTheme.h"
+#include "nuiMetaDecoration.h"
 
 #define KNOB_IDEAL_WIDTH 12
 #define KNOB_IDEAL_SIZE 100
@@ -19,14 +20,15 @@ nuiSize nuiKnobSequence::mDefaultSensitivity = 10;
 nuiSize nuiKnobSequence::mDefaultFineSensitivityRatio = 10;
 nglKeyCode nuiKnobSequence::mDefaultFineSensitivityKey = NK_LSHIFT;
 
-nuiKnobSequence::nuiKnobSequence(const nuiRange& rRange)
+nuiKnobSequence::nuiKnobSequence(const nuiRange& rRange, bool showDefaultBackground)
   : nuiSimpleContainer(),
     mRange(rRange),
     mKnobSink(this),
-  mpFrameSequence(NULL)
+    mpFrameSequence(NULL),
+    mShowDefaultBackground(showDefaultBackground)
 {
   SetObjectClass(_T("nuiKnobSequence"));
-  
+    
   mClicked = false;
   mRange.SetPageSize(0);
 
@@ -76,10 +78,21 @@ nuiKnobSequence::~nuiKnobSequence()
 {
 }
 
-void nuiKnobSequence::SetFrameSequence(nuiFrameSequence* pSeq)
+void nuiKnobSequence::SetKnobDecoration(nuiFrameSequence* pFrameSeq, nuiDecoration* pBkgDeco, nuiDecorationMode mode)
 {
-  mpFrameSequence = pSeq;
-  SetDecoration(mpFrameSequence);
+  mpFrameSequence = pFrameSeq;
+  
+  if (!pBkgDeco)
+  {
+    SetDecoration(mpFrameSequence, mode);
+    return;
+  }
+  
+  nuiMetaDecoration* pDeco = new nuiMetaDecoration(_T("nuiKnobSequenceDecoration"));
+  pDeco->AddDecoration(pBkgDeco);
+  pDeco->AddDecoration(mpFrameSequence);
+  
+  SetDecoration(pDeco, mode);
 }
 
 
@@ -89,53 +102,8 @@ nuiFrameSequence* nuiKnobSequence::GetFrameSequence()
 }
 
 
-//bool nuiKnobSequence::Draw(nuiDrawContext* pContext)
-//{
-//  nuiWidget* pItem = NULL;
-//
-//  long count = mpChildren.size();
-//  if (!count)
-//  {
-//    nuiTheme* pTheme = GetTheme();
-//    NGL_ASSERT(pTheme);
-//
-//    //    pTheme->DrawKnob(pContext, this);
-//    pTheme->Release();
-//    return true;
-//  }
-//  if (count == 1)
-//  {
-//    nuiSize value = mRange.ConvertToUnit(mRange.GetValue());
-//    count = ToBelow((nuiSize)count * value);
-//
-//    nuiWidgetList::iterator it = mpChildren.begin();
-//    pItem = *it;
-//
-//    if (pItem)
-//      DrawChild(pContext, pItem);
-//  }
-//  else
-//  {
-//    count--;
-//
-//    nuiSize value = mRange.ConvertToUnit(mRange.GetValue());
-//    count = ToBelow((nuiSize)count * value);
-//
-//    nuiWidgetList::iterator it = mpChildren.begin();
-//    nuiWidgetList::iterator end = mpChildren.end();
-//    for ( ; count && it != end; count--)
-//      ++it;
-//
-//    if (it == end)
-//      return true;
-//
-//    pItem = *it;
-//
-//    if (pItem)
-//      DrawChild(pContext, pItem);
-//  }
-//  return true;
-//}
+
+
 
 // Received Mouse events:
 bool nuiKnobSequence::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
@@ -228,30 +196,7 @@ bool nuiKnobSequence::MouseMoved  (nuiSize X, nuiSize Y)
     long count = mpChildren.size();
     if (!count)
       return true;
-    /*
-    if (count == 1)
-    {
-      nuiSize value = mRange.ConvertToUnit(mRange.GetValue());
-      count = ToBelow((nuiSize)count * value);
 
-      nuiWidgetList::iterator it = mpChildren.begin();
-      pItem = *it;
-
-      if (pItem)
-      {
-        nuiMatrix mat1,mat2,mat3, mat;
-        nuiRect rect = pItem->GetRect();
-        mat1.Translate(rect.GetWidth()/2.0f,rect.GetHeight()/2.0f, 0);
-        mat2.Rotate(300.0f * value, 0,0,1);
-        mat3.Translate(-rect.GetWidth()/2.0f,-rect.GetHeight()/2.0f, 0);
-
-        mat *= mat1;
-        mat *= mat2;
-        mat *= mat3;
-        pItem->SetMatrix(mat); // this will automatically call Invalidate() on the child item.
-      }
-    }
-    */
     return true;
   }
 
@@ -276,6 +221,12 @@ nuiRange& nuiKnobSequence::GetRange()
   return mRange;
 }
 
+bool nuiKnobSequence::GetShowDefaultBackground() const
+{
+  return mShowDefaultBackground;
+}
+
+
 bool nuiKnobSequence::DoInvalidate(const nuiEvent& rEvent)
 {
   mInteractiveValueChanged = true;
@@ -285,8 +236,7 @@ bool nuiKnobSequence::DoInvalidate(const nuiEvent& rEvent)
   if (mpFrameSequence)
   {
     uint32 index = (int)((mpFrameSequence->GetNbFrames()-1) * (mRange.GetValue() - mRange.GetMinimum())) / (mRange.GetMaximum() - mRange.GetMinimum());
-    
-    mpFrameSequence->SetFrameIndex(index);
+    mpFrameSequence->SetFrameIndex(this, index);
   }
   
   Invalidate();
@@ -297,8 +247,10 @@ nuiRect nuiKnobSequence::CalcIdealSize()
 {
   if (mpChildren.empty())
   {
-    mIdealRect.Set(0,0, 32,32);
-    return mIdealRect;
+    nuiDecoration* pDeco = GetDecoration();
+    if (!pDeco)
+      return nuiRect(0,0,0,0);
+    return pDeco->GetIdealClientRect();
   }
   else
   {

@@ -7,6 +7,6 @@
 
 #pragma once
 
-extern const char* gpKnobSequence;
-const long         gKnobSequenceSize = 52013;
+extern const char* gpKnobSequenceHdl;
+const long         gKnobSequenceHdlSize = 60783;
 

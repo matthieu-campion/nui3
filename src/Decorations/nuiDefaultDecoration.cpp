@@ -255,6 +255,8 @@ void nuiDefaultDecoration::InitMaps()
   pFrame = new nuiFrame(_T("nuiDefaultDecorationCheckerboardSmall"), pTex, nuiRect(0,0,20,20));
   pFrame->UseWidgetAlpha(false);
   delete pIMem;  
+  
+
 }
 
 
@@ -771,18 +773,58 @@ void nuiDefaultDecoration::ComboBox(nuiWidget* pWidget)
 void nuiDefaultDecoration::KnobSequence(nuiWidget* pWidget)
 {
   nuiKnobSequence* pKnob = (nuiKnobSequence*)pWidget;
+
+  nuiRect clientRect;
+  nglString decoName;
   
-  nuiFrameSequence* pSeq = (nuiFrameSequence*)nuiDecoration::Get(_T("nuiDefaultDecorationKnobSequence"));
+  if (pKnob->GetShowDefaultBackground())
+  {
+    clientRect.Set(0,0,64,64);
+    decoName = _T("nuiDefaultDecorationKnobSequenceHdlWithBkg");
+  }
+  else
+  {
+    clientRect.Set(16,16,32,32);
+    decoName = _T("nuiDefaultDecorationKnobSequenceHdlWithoutBkg");
+  }
+  
+
+  
+  nuiFrameSequence* pSeq = (nuiFrameSequence*)nuiDecoration::Get(decoName);
   if (!pSeq)
   {
-    nglIMemory* pIMem = new nglIMemory(gpKnobSequence, gKnobSequenceSize);
+    nglIMemory* pIMem = new nglIMemory(gpKnobSequenceHdl, gKnobSequenceHdlSize);
     nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
     NGL_ASSERT(pTex);
-    pSeq = new nuiFrameSequence(_T("nuiDefaultDecorationKnobSequence"), 31, 0, pTex, nuiVertical, nuiRect(0,0,32,32));
+    pSeq = new nuiFrameSequence(decoName, 31, pTex, nuiVertical, clientRect);
+    pSeq->SetLayer(eLayerFront);
     delete pIMem;      
   }
 
-  pKnob->SetFrameSequence(pSeq);
+  nuiDecorationMode mode = eDecorationClientOnly;
+  
+  nuiFrame* pBkgDeco = NULL;
+  
+  // background for nuiKnobSequence
+  if (pKnob->GetShowDefaultBackground())
+  {
+    pBkgDeco = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationKnobSequenceBkg"));
+    if (!pBkgDeco)
+    {
+      nglIMemory* pIMem = new nglIMemory(gpKnobSequenceBkg, gKnobSequenceBkgSize);
+      nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
+      NGL_ASSERT(pTex);
+      pBkgDeco = new nuiFrame(_T("nuiDefaultDecorationKnobSequenceBkg"), pTex, nuiRect(0,0,64,64));
+      pBkgDeco->UseWidgetAlpha(false);
+      pBkgDeco->SetLayer(eLayerBack);
+      delete pIMem;  
+    }
+    
+    mode = eDecorationBorder;    
+  }
+  
+  
+  pKnob->SetKnobDecoration(pSeq, pBkgDeco, mode);
 }
 
 

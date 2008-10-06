@@ -10,20 +10,27 @@
 #include "nui.h"
 #include "nuiFrameSequence.h"
 
+//
+// decoration classes
+//
+// nuiKnobSequence
+// nuiKnobSequence::Background
+//
 
 
 /// Basic slider with range support.
 class NUI_API nuiKnobSequence : public nuiSimpleContainer
 {
 public:
-  nuiKnobSequence(const nuiRange& rRange = nuiRange());
+  nuiKnobSequence(const nuiRange& rRange = nuiRange(), bool showDefaultBackground = true);
   virtual bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
   virtual ~nuiKnobSequence();
   virtual nuiXMLNode* Serialize(nuiXMLNode* pParentNode, bool Recursive) const;
 
   virtual nuiRange& GetRange(); ///< Return the Range used by this scroll bar. 
+  bool GetShowDefaultBackground() const;
 
-  void SetFrameSequence(nuiFrameSequence* pSeq);
+  void SetKnobDecoration(nuiFrameSequence* pFrameSeq, nuiDecoration* pBkgDeco = NULL, nuiDecorationMode mode = eDecorationBorder);
   nuiFrameSequence* GetFrameSequence();
 
   // Sent events:
@@ -61,6 +68,7 @@ protected:
 
   nuiSize mClickValue;
 
+  bool mShowDefaultBackground;
   bool mClicked;
 
   nuiSize mClickX;

@@ -16,8 +16,8 @@ class nuiFrameSequence : public nuiDecoration
 {
 public:
   nuiFrameSequence(const nglString& rName);
-  nuiFrameSequence(const nglString& rName, uint32 nbFrames, uint32 firstFrameIndex, nuiTexture* pTexture, nuiOrientation orientation, const nuiRect& rClientRect, const nuiColor& rColor = nuiColor(255, 255, 255, 255));
-  nuiFrameSequence(const nglString& rName, uint32 nbFrames, uint32 firstFrameIndex, const nglPath& rTexturePath, nuiOrientation orientation, const nuiRect& rClientRect, const nuiColor& rColor = nuiColor(255, 255, 255, 255));
+  nuiFrameSequence(const nglString& rName, uint32 nbFrames, nuiTexture* pTexture, nuiOrientation orientation, const nuiRect& rClientRect, const nuiColor& rColor = nuiColor(255, 255, 255, 255));
+  nuiFrameSequence(const nglString& rName, uint32 nbFrames, const nglPath& rTexturePath, nuiOrientation orientation, const nuiRect& rClientRect, const nuiColor& rColor = nuiColor(255, 255, 255, 255));
   void InitAttributes();
   virtual ~nuiFrameSequence();
   
@@ -26,8 +26,8 @@ public:
   
   virtual void Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rRect);
   
-  uint32 GetFrameIndex() const;
-  void SetFrameIndex(uint32 index);
+  uint32 GetFrameIndex(nuiWidget* pWidget) const;
+  void SetFrameIndex(nuiWidget* pWidget, uint32 index);
   
   uint32 GetNbFrames() const;
   void SetNbFrames(uint32 nbFrames);
@@ -55,9 +55,6 @@ public:
   const nuiColor& GetColor() const;
   void SetColor(const nuiColor& color);
   
-  void SetDebug(bool set);
-  
-  
   
 private:
 
@@ -71,7 +68,7 @@ private:
   nuiRect mTexRect;
   bool mBorderEnabled;
   bool mInterpolated;
-  uint32 mIndex;
+  std::map<nuiWidget*, uint32> mIndex;
   uint32 mNbFrames;
   nuiOrientation mOrientation;
 };

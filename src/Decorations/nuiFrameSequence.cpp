@@ -19,10 +19,9 @@ mBorderEnabled(true)
   mColor = nuiColor(255,255,255);
   mInterpolated = true;
   mNbFrames = 0;
-  mIndex = 0;
 }
 
-nuiFrameSequence::nuiFrameSequence(const nglString& rName, uint32 nbFrames, uint32 firstFrameIndex, nuiTexture* pTexture, nuiOrientation orientation, const nuiRect& rClientRect, const nuiColor& rColor)
+nuiFrameSequence::nuiFrameSequence(const nglString& rName, uint32 nbFrames, nuiTexture* pTexture, nuiOrientation orientation, const nuiRect& rClientRect, const nuiColor& rColor)
 : nuiDecoration(rName),
 mpTexture(pTexture),
 mColor(rColor),
@@ -33,14 +32,13 @@ mBorderEnabled(true)
     InitAttributes();
   mInterpolated = true;
   mNbFrames = nbFrames;
-  mIndex = firstFrameIndex;
   mOrientation = orientation;
   
   UpdateTexSize();
     
 }
 
-nuiFrameSequence::nuiFrameSequence(const nglString& rName, uint32 nbFrames, uint32 firstFrameIndex, const nglPath& rTexturePath, nuiOrientation orientation, const nuiRect& rClientRect, const nuiColor& rColor)
+nuiFrameSequence::nuiFrameSequence(const nglString& rName, uint32 nbFrames, const nglPath& rTexturePath, nuiOrientation orientation, const nuiRect& rClientRect, const nuiColor& rColor)
 : nuiDecoration(rName),
 mpTexture(NULL),
 mColor(rColor),
@@ -55,7 +53,6 @@ mBorderEnabled(true)
     SetProperty(_T("Texture"), rTexturePath.GetPathName());
   mInterpolated = true;
   mNbFrames = nbFrames;
-  mIndex = firstFrameIndex;
   mOrientation = orientation;
   
   UpdateTexSize();
@@ -96,11 +93,6 @@ void nuiFrameSequence::InitAttributes()
    nuiAttribute<uint32>::GetterDelegate(this, &nuiFrameSequence::GetNbFrames),
    nuiAttribute<uint32>::SetterDelegate(this, &nuiFrameSequence::SetNbFrames));
 
-  nuiAttribute<uint32>* AttributeFrameIndex = new nuiAttribute<uint32>
-  (nglString(_T("FrameIndex")), nuiUnitNone,
-   nuiAttribute<uint32>::GetterDelegate(this, &nuiFrameSequence::GetFrameIndex),
-   nuiAttribute<uint32>::SetterDelegate(this, &nuiFrameSequence::SetFrameIndex));
-  
   nuiAttribute<nglString>* AttributeOrientation = new nuiAttribute<nglString>
   (nglString(_T("Orientation")), nuiUnitNone,
    nuiAttribute<nglString>::GetterDelegate(this, &nuiFrameSequence::GetOrientation),
@@ -115,7 +107,6 @@ void nuiFrameSequence::InitAttributes()
 	AddAttribute(_T("Interpolation"), AttributeInterpolation);
   
 	AddAttribute(_T("NbFrames"), AttributeNbFrames);
-	AddAttribute(_T("FrameIndex"), AttributeFrameIndex);
   AddAttribute(_T("Orientation"), AttributeOrientation);
 }
 
@@ -158,14 +149,18 @@ void nuiFrameSequence::UpdateTexSize()
   
 }
 
-uint32 nuiFrameSequence::GetFrameIndex() const
+uint32 nuiFrameSequence::GetFrameIndex(nuiWidget* pWidget) const
 {
-  return mIndex;
+  std::map<nuiWidget*, uint32>::const_iterator it = mIndex.find(pWidget);
+  if (it == mIndex.end())
+    return 0;
+  
+  return it->second;
 }
 
-void nuiFrameSequence::SetFrameIndex(uint32 index)
+void nuiFrameSequence::SetFrameIndex(nuiWidget* pWidget, uint32 index)
 {
-  mIndex = index;
+  mIndex[pWidget] = index;
 }
 
 uint32 nuiFrameSequence::GetNbFrames() const
@@ -246,12 +241,19 @@ void nuiFrameSequence::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const 
   
   nuiSize w = mTexRect.GetWidth(), h = mTexRect.GetHeight();
   
-  float X0 = (mOrientation == nuiHorizontal)? (float)(mIndex * mTexRect.GetWidth()) : 0;
+  uint32 index;
+  std::map<nuiWidget*, uint32>::iterator it = mIndex.find(pWidget);
+  if (it == mIndex.end())
+    index = 0;
+  else
+    index = it->second;
+  
+  float X0 = (mOrientation == nuiHorizontal)? (float)(index * mTexRect.GetWidth()) : 0;
   float X1 = X0 + (float)mClientRect.Left();
   float X2 = X0 + (float)mClientRect.Right();
   float X3 = X0 + (float)w;
   
-  float Y0 = (mOrientation == nuiVertical)? (float)(mIndex * mTexRect.GetHeight()) : 0;
+  float Y0 = (mOrientation == nuiVertical)? (float)(index * mTexRect.GetHeight()) : 0;
   float Y1 = Y0 + (float)mClientRect.Top();
   float Y2 = Y0 + (float)mClientRect.Bottom();
   float Y3 = Y0 + (float)h;    
