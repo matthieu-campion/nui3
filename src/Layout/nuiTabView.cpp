@@ -20,7 +20,8 @@
 
 nuiTabView::nuiTabView(nuiPosition tabPosition, bool decoratedBackground)
 : nuiSimpleContainer(), mTabViewEvents(this),
-  mCurrentTabIndex(0), mTabPosition(tabPosition), mDecoratedBackground(decoratedBackground)
+  mCurrentTabIndex(0), mTabPosition(tabPosition), mDecoratedBackground(decoratedBackground),
+mChangeOnDrag(false)
 {
   SetObjectClass(_T("nuiTabView"));
   mChildrenRectUnion = true;
@@ -41,7 +42,7 @@ nuiRect nuiTabView::CalcIdealSize()
   nuiSize w = 0.f, h = 0.f;
   nuiSize W = 0.f, H = 0.f;
 
-  for (std::vector<nuiWidget*>::iterator it = mIcons.begin(); it != mIcons.end(); it++)
+  for (std::vector<Tab*>::iterator it = mIcons.begin(); it != mIcons.end(); it++)
   {
     W += (*it)->GetIdealRect().GetWidth();
     H += (*it)->GetIdealRect().GetHeight();
@@ -265,7 +266,7 @@ bool nuiTabView::Draw(nuiDrawContext* pContext)
 {
   pContext->Clip(mRect.Size());
   pContext->SetStrokeColor(nuiColor(1.f,1.f,0.f));
-  for (std::vector<nuiWidget*>::iterator it = mIcons.begin(); it != mIcons.end(); it++)
+  for (std::vector<Tab*>::iterator it = mIcons.begin(); it != mIcons.end(); it++)
   {
     DrawChild(pContext, (*it));
   }
@@ -276,7 +277,7 @@ bool nuiTabView::Draw(nuiDrawContext* pContext)
 
 bool nuiTabView::MouseClicked   (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
 {
-  for (std::vector<nuiWidget*>::iterator it = mIcons.begin(); it != mIcons.end(); it++)
+  for (std::vector<Tab*>::iterator it = mIcons.begin(); it != mIcons.end(); it++)
     if ((*it)->GetRect().IsInside(X,Y))
       return true;
   return false;
@@ -284,7 +285,7 @@ bool nuiTabView::MouseClicked   (nuiSize X, nuiSize Y, nglMouseInfo::Flags Butto
 
 bool nuiTabView::MouseUnclicked (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
 {
-  for (std::vector<nuiWidget*>::iterator it = mIcons.begin(); it != mIcons.end(); it++)
+  for (std::vector<Tab*>::iterator it = mIcons.begin(); it != mIcons.end(); it++)
     if ((*it)->GetRect().IsInside(X,Y))
       return true;
   return false;
@@ -311,7 +312,7 @@ void nuiTabView::InsertTab(nuiWidget* pTitle, nuiWidget* pContents, uint pos)
   NGL_ASSERT(pTitle);
   NGL_ASSERT(pContents);
   
-  nuiWidget* pTitleWidget = pTitle;
+  Tab* pTitleWidget = NULL;
   nuiWidget* pContentsWidget = pContents;
   
   if (mDecoratedBackground)
@@ -326,8 +327,12 @@ void nuiTabView::InsertTab(nuiWidget* pTitle, nuiWidget* pContents, uint pos)
     pDecoContents->SetObjectClass(_T("nuiTabView::Contents"));
     pDecoContents->AddChild(pContents);
     
-    pTitleWidget = pDecoTab;
+    pTitleWidget = new Tab(pDecoTab);
     pContentsWidget = pDecoContents;
+  }
+  else
+  {
+    pTitleWidget = new Tab(pTitle);
   }
   
   nuiColor color;
@@ -342,7 +347,8 @@ void nuiTabView::InsertTab(nuiWidget* pTitle, nuiWidget* pContents, uint pos)
   if (!mTabs.empty())
     pContentsWidget->SetEnabled(false);
   pTitleWidget->SetSelected(false);
-  mTabViewEvents.Connect(pTitleWidget->Clicked, &nuiTabView::OnIconClicked, pTitleWidget);
+  mTabViewEvents.Connect(pTitle->Clicked, &nuiTabView::OnIconClicked, pTitleWidget);
+  mTabViewEvents.Connect(pTitleWidget->EnterDrag, &nuiTabView::OnTabEnterDrag, pTitleWidget);
   
   if (pos >= mIcons.size())
   {
@@ -352,7 +358,7 @@ void nuiTabView::InsertTab(nuiWidget* pTitle, nuiWidget* pContents, uint pos)
   else
   {
     uint t = 0;
-    std::vector<nuiWidget*>::iterator i = mIcons.begin();
+    std::vector<Tab*>::iterator i = mIcons.begin();
     for (std::vector<nuiWidget*>::iterator it = mTabs.begin(); it != mTabs.end(); it++, i++, t++)
     {
       if (t == pos)
@@ -374,7 +380,7 @@ void nuiTabView::InsertTab(nuiWidget* pTitle, nuiWidget* pContents, uint pos)
 
 void nuiTabView::RemoveTab(nuiWidget* pTab, bool trashit)
 {
-  std::vector<nuiWidget*>::iterator i = mIcons.begin();
+  std::vector<Tab*>::iterator i = mIcons.begin();
   for (std::vector<nuiWidget*>::iterator it = mTabs.begin(); it != mTabs.end(); it++, i++)
   {
     if (*it == pTab)
@@ -395,7 +401,7 @@ void nuiTabView::RemoveTab(const uint& tab_index, bool trashit)
   NGL_ASSERT(tab_index < mIcons.size());
 
   uint t = 0;
-  std::vector<nuiWidget*>::iterator i = mIcons.begin();
+  std::vector<Tab*>::iterator i = mIcons.begin();
   for (std::vector<nuiWidget*>::iterator it = mTabs.begin(); it != mTabs.end(); it++, i++, t++)
   {
     if (t == tab_index)
@@ -413,7 +419,7 @@ void nuiTabView::RemoveTab(const uint& tab_index, bool trashit)
 
 bool nuiTabView::OnIconClicked(const nuiEvent& rEvent)
 {
-  nuiWidget* pIcon = (nuiWidget*)(rEvent.mpUser);
+  Tab* pIcon = (Tab*)(rEvent.mpUser);
   for (uint i = 0; i < mIcons.size(); i++)
   {
     if (mIcons[i] == pIcon)
@@ -435,9 +441,18 @@ bool nuiTabView::OnIconClicked(const nuiEvent& rEvent)
       TabSelect(TabEvent(mCurrentTabIndex));
     }
     else
-      ((nuiWidget*)(mIcons[i]))->SetSelected(false);
+      ((Tab*)(mIcons[i]))->SetSelected(false);
   }
   return true;
+}
+
+bool nuiTabView::OnTabEnterDrag(const nuiEvent& rEvent)
+{
+  if (mChangeOnDrag)
+  {
+    return OnIconClicked(rEvent);
+  }
+  return false;
 }
 
 void nuiTabView::SelectTab(const uint& rIndex)
@@ -446,12 +461,12 @@ void nuiTabView::SelectTab(const uint& rIndex)
 //  if (mCurrentTabIndex == rIndex)
 //    return;
 
-  ((nuiWidget*)(mIcons[mCurrentTabIndex]))->SetSelected(false);
+  ((Tab*)(mIcons[mCurrentTabIndex]))->SetSelected(false);
   mTabs[mCurrentTabIndex]->SetEnabled(false);
   mCurrentTabIndex = rIndex;
   mTabs[mCurrentTabIndex]->SetEnabled(true);
 
-  ((nuiWidget*)(mIcons[mCurrentTabIndex]))->SetSelected(true);
+  ((Tab*)(mIcons[mCurrentTabIndex]))->SetSelected(true);
   if (mChildrenRectUnion)
     Invalidate();
   else
@@ -528,6 +543,16 @@ void nuiTabView::SetFolded( bool set, bool Animate )
 bool nuiTabView::GetFolded() const
 {
   return mFolded;
+}
+
+void nuiTabView::SetChangeOnDrag(bool change)
+{
+  mChangeOnDrag = change;
+}
+
+bool nuiTabView::GetChangeOnDrag() const
+{
+  return mChangeOnDrag;
 }
 
 TabEvent::TabEvent(const uint& index) : nuiEvent(), mTabIndex(index)

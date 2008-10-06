@@ -1593,6 +1593,7 @@ bool nuiWin::CreateTabViewWindow(const nuiEvent& rEvent)
 
   
   nuiTabView* pTabView = new nuiTabView(position);
+  pTabView->SetChangeOnDrag(true);
   pWin->AddChild(pTabView);
 
   nuiLabel* pLabel = new nuiLabel(_T("Tab\nOne\nThe\nfirst\nand\nforemost"));

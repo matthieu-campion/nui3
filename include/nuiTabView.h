@@ -26,6 +26,8 @@ public:
 
 class NUI_API nuiTabView : public nuiSimpleContainer
 {
+private:
+  class Tab;
 public:
   nuiTabView(nuiPosition tabPosition, bool decoratedBackground = true);
   virtual ~nuiTabView();
@@ -38,6 +40,7 @@ public:
   virtual bool MouseUnclicked (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
     
   bool OnIconClicked(const nuiEvent& rEvent);
+  bool OnTabEnterDrag(const nuiEvent& rEvent);
 
   virtual void AddTab(const nglString& rTitle, nuiWidget* pContents);
   virtual void AddTab(nuiWidget* pTitle, nuiWidget* pContents);
@@ -62,6 +65,9 @@ public:
 
   void SetFolded(bool set, bool Animate = true);
   bool GetFolded() const;
+  
+  void SetChangeOnDrag(bool change);
+  bool GetChangeOnDrag() const;
 
   nuiEventSink<nuiTabView> mTabViewEvents;
   nuiSimpleEventSource<0> TabSelect;
@@ -70,16 +76,38 @@ protected:
   nuiPosition mTabPosition;
 
   std::vector<nuiWidget*> mTabs;
-  std::vector<nuiWidget*> mIcons;
+  std::vector<Tab*> mIcons;
   nuiRect mIdealIconsRect;
   nuiRect mIdealTabsRect;
 
+  bool mChangeOnDrag;
   bool mChildrenRectUnion;
   bool mFoldable;
   bool mFolded;
   bool mSliding;
   bool mDecoratedBackground;
   float mFoldRatio;
+  
+private:
+  class Tab : public nuiSimpleContainer
+    {
+    public:
+      Tab(nuiWidget* pWidget)
+      {
+        AddChild(pWidget);
+      }
+      
+      virtual bool OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y)
+      {
+        if (!IsSelected())
+        {
+          EnterDrag();
+        }
+        return false;
+      }
+      
+      nuiSimpleEventSource<0> EnterDrag;
+    };
 };
 
 #endif//__nuiTabView_h__
