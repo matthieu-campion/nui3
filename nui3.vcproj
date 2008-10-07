@@ -838,6 +838,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\Decorations\nuiFrameSequence.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiFrameSequence.h"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Decorations\nuiGradientDecoration.cpp"
 					>
 				</File>
@@ -1711,6 +1719,14 @@
 				</File>
 				<File
 					RelativePath=".\include\nuiKnob.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\SimpleWidgets\nuiKnobSequence.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiKnobSequence.h"
 					>
 				</File>
 				<File
