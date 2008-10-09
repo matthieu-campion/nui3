@@ -16,7 +16,7 @@
 #include "nuiMessageBox.h"
 #include "nuiTabView.h"
 #include "nuiBackgroundPane.h"
-#include "nuiKnobSequence.h"
+#include "nuiKnob.h"
 
 
 nuiDefaultDecoration::nuiDefaultDecoration()
@@ -62,7 +62,7 @@ void nuiDefaultDecoration::Init()
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiCloseButton")), &nuiDefaultDecoration::CloseButton);
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiToggleButton")), &nuiDefaultDecoration::ToggleButton);
   
-  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiKnobSequence")), &nuiDefaultDecoration::KnobSequence);
+  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiKnob")), &nuiDefaultDecoration::KnobSequence);
 
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiComboBox")), &nuiDefaultDecoration::ComboBox);
 
@@ -770,11 +770,11 @@ void nuiDefaultDecoration::ComboBox(nuiWidget* pWidget)
 
 //**************************************************************************************************************
 //
-// nuiKnobSequence
+// nuiKnob
 //
 void nuiDefaultDecoration::KnobSequence(nuiWidget* pWidget)
 {
-  nuiKnobSequence* pKnob = (nuiKnobSequence*)pWidget;
+  nuiKnob* pKnob = (nuiKnob*)pWidget;
 
   nuiRect clientRect;
   nglString decoName;
@@ -808,7 +808,7 @@ void nuiDefaultDecoration::KnobSequence(nuiWidget* pWidget)
   
   nuiFrame* pBkgDeco = NULL;
   
-  // background for nuiKnobSequence
+  // background for nuiKnob
   if (pKnob->GetShowDefaultBackground())
   {
     pBkgDeco = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationKnobSequenceBkg"));

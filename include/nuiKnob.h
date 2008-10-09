@@ -13,18 +13,18 @@
 //
 // decoration classes
 //
-// nuiKnobSequence
-// nuiKnobSequence::Background
+// nuiKnob
+// nuiKnob::Background
 //
 
 
 /// Basic slider with range support.
-class NUI_API nuiKnobSequence : public nuiSimpleContainer
+class NUI_API nuiKnob : public nuiSimpleContainer
 {
 public:
-  nuiKnobSequence(const nuiRange& rRange = nuiRange(), bool showDefaultBackground = true);
+  nuiKnob(const nuiRange& rRange = nuiRange(), bool showDefaultBackground = true);
   virtual bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
-  virtual ~nuiKnobSequence();
+  virtual ~nuiKnob();
   virtual nuiXMLNode* Serialize(nuiXMLNode* pParentNode, bool Recursive) const;
 
   virtual nuiRange& GetRange(); ///< Return the Range used by this scroll bar. 
@@ -34,7 +34,7 @@ public:
   void SetKnobDecoration(nuiFrameSequence* pFrameSeq, nuiDecoration* pBkgDeco = NULL, nuiDecorationMode mode = eDecorationBorder);
   nuiFrameSequence* GetFrameSequence();
   
-  // virtual from nuiWidget : using this SetDecoration method means you're handling the background outside the nuiKnobSequence (or means you don't have any bkg)
+  // virtual from nuiWidget : using this SetDecoration method means you're handling the background outside the nuiKnob (or means you don't have any bkg)
   virtual void SetDecoration(nuiDecoration* pDecoration, nuiDecorationMode Mode = eDecorationOverdraw);
 
 
@@ -94,7 +94,7 @@ protected:
   
   nuiFrameSequence* mpFrameSequence;
 
-  nuiEventSink<nuiKnobSequence> mKnobSink;
+  nuiEventSink<nuiKnob> mKnobSink;
 };
 
 

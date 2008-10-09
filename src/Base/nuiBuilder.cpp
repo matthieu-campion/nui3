@@ -50,7 +50,7 @@
 #include "nuiFolderPane.h"
 #include "nuiTitledPane.h"
 #include "nuiFormatedLabel.h"
-#include "nuiKnobSequence.h"
+#include "nuiKnob.h"
 
 
 using namespace std;
@@ -98,7 +98,7 @@ void nuiBuilder::Init()
   NUI_ADD_WIDGET_CREATOR(nuiEditText,"Widget");
   NUI_ADD_WIDGET_CREATOR(nuiEditLine,"Widget");
   NUI_ADD_WIDGET_CREATOR(nuiButton,"Widget");
-  NUI_ADD_WIDGET_CREATOR(nuiKnobSequence,"Widget");
+  NUI_ADD_WIDGET_CREATOR(nuiKnob,"Widget");
   NUI_ADD_WIDGET_CREATOR(nuiToggleButton,"Widget");
   NUI_ADD_WIDGET_CREATOR(nuiRadioButton,"Widget");
   NUI_ADD_WIDGET_CREATOR(nuiImage,"Widget");

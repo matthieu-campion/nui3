@@ -6,7 +6,7 @@
 */
 
 #include "nui.h"
-#include "nuiKnobSequence.h"
+#include "nuiKnob.h"
 #include "nuiDrawContext.h"
 #include "nuiXML.h"
 #include "nuiTheme.h"
@@ -16,18 +16,18 @@
 #define KNOB_IDEAL_SIZE 100
 #define HANDLE_SIZE KNOB_IDEAL_WIDTH
 
-nuiSize nuiKnobSequence::mDefaultSensitivity = 10;
-nuiSize nuiKnobSequence::mDefaultFineSensitivityRatio = 10;
-nglKeyCode nuiKnobSequence::mDefaultFineSensitivityKey = NK_LSHIFT;
+nuiSize nuiKnob::mDefaultSensitivity = 10;
+nuiSize nuiKnob::mDefaultFineSensitivityRatio = 10;
+nglKeyCode nuiKnob::mDefaultFineSensitivityKey = NK_LSHIFT;
 
-nuiKnobSequence::nuiKnobSequence(const nuiRange& rRange, bool showDefaultBackground)
+nuiKnob::nuiKnob(const nuiRange& rRange, bool showDefaultBackground)
   : nuiSimpleContainer(),
     mRange(rRange),
     mKnobSink(this),
     mpFrameSequence(NULL),
     mShowDefaultBackground(showDefaultBackground)
 {
-  SetObjectClass(_T("nuiKnobSequence"));
+  SetObjectClass(_T("nuiKnob"));
     
   mClicked = false;
   mRange.SetPageSize(0);
@@ -36,17 +36,17 @@ nuiKnobSequence::nuiKnobSequence(const nuiRange& rRange, bool showDefaultBackgro
   mFineSensitivityRatio = mDefaultFineSensitivityRatio;
   mFineSensitivityKey = mDefaultFineSensitivityKey;
 
-  mKnobSink.Connect(mRange.Changed, &nuiKnobSequence::DoInvalidate);
-  //mKnobSink.Connect(mRange.ValueChanged, &nuiKnobSequence::DoInvalidate);
+  mKnobSink.Connect(mRange.Changed, &nuiKnob::DoInvalidate);
+  //mKnobSink.Connect(mRange.ValueChanged, &nuiKnob::DoInvalidate);
   NUI_ADD_EVENT(ValueChanged);
   NUI_ADD_EVENT(InteractiveValueChanged);  
 }
 
-bool nuiKnobSequence::Load(const nuiXMLNode* pNode)
+bool nuiKnob::Load(const nuiXMLNode* pNode)
 {
   nuiSimpleContainer::Load(pNode);
 
-  SetObjectClass(_T("nuiKnobSequence"));
+  SetObjectClass(_T("nuiKnob"));
   mKnobSink.SetTarget(this);
   mClicked = false;
   mInteractiveValueChanged = false;
@@ -56,15 +56,15 @@ bool nuiKnobSequence::Load(const nuiXMLNode* pNode)
   mFineSensitivityKey = mDefaultFineSensitivityKey;
 
   // FIXME: interpret other attributes...
-  mKnobSink.Connect(mRange.Changed, &nuiKnobSequence::DoInvalidate);
-  //mKnobSink.Connect(mRange.ValueChanged, &nuiKnobSequence::DoInvalidate);
+  mKnobSink.Connect(mRange.Changed, &nuiKnob::DoInvalidate);
+  //mKnobSink.Connect(mRange.ValueChanged, &nuiKnob::DoInvalidate);
   NUI_ADD_EVENT(ValueChanged);
   NUI_ADD_EVENT(InteractiveValueChanged);
   
   return true;
 }
 
-nuiXMLNode* nuiKnobSequence::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
+nuiXMLNode* nuiKnob::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
 {
   nuiXMLNode* pNode = nuiWidget::Serialize(pParentNode,true);
   if (!pNode) 
@@ -74,11 +74,11 @@ nuiXMLNode* nuiKnobSequence::Serialize(nuiXMLNode* pParentNode, bool Recursive) 
 }
 
 
-nuiKnobSequence::~nuiKnobSequence()
+nuiKnob::~nuiKnob()
 {
 }
 
-void nuiKnobSequence::SetKnobDecoration(nuiFrameSequence* pFrameSeq, nuiDecoration* pBkgDeco, nuiDecorationMode mode)
+void nuiKnob::SetKnobDecoration(nuiFrameSequence* pFrameSeq, nuiDecoration* pBkgDeco, nuiDecorationMode mode)
 {
   mpFrameSequence = pFrameSeq;
   
@@ -88,7 +88,7 @@ void nuiKnobSequence::SetKnobDecoration(nuiFrameSequence* pFrameSeq, nuiDecorati
     return;
   }
   
-  nuiMetaDecoration* pDeco = new nuiMetaDecoration(_T("nuiKnobSequenceDecoration"));
+  nuiMetaDecoration* pDeco = new nuiMetaDecoration(_T("nuiKnobDecoration"));
   pDeco->AddDecoration(pBkgDeco);
   pDeco->AddDecoration(mpFrameSequence);
   
@@ -100,7 +100,7 @@ void nuiKnobSequence::SetKnobDecoration(nuiFrameSequence* pFrameSeq, nuiDecorati
 }
 
 // virtual from nuiWidget
-void nuiKnobSequence::SetDecoration(nuiDecoration* pDecoration, nuiDecorationMode Mode)
+void nuiKnob::SetDecoration(nuiDecoration* pDecoration, nuiDecorationMode Mode)
 {
   nuiFrameSequence* pFrameSeq = dynamic_cast<nuiFrameSequence*>(pDecoration);
   if (pFrameSeq)
@@ -116,7 +116,7 @@ void nuiKnobSequence::SetDecoration(nuiDecoration* pDecoration, nuiDecorationMod
 
 
 
-nuiFrameSequence* nuiKnobSequence::GetFrameSequence()
+nuiFrameSequence* nuiKnob::GetFrameSequence()
 {
   return mpFrameSequence;
 }
@@ -126,7 +126,7 @@ nuiFrameSequence* nuiKnobSequence::GetFrameSequence()
 
 
 // Received Mouse events:
-bool nuiKnobSequence::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
+bool nuiKnob::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
 {
   mClickX = X;
   mClickY = Y;
@@ -169,7 +169,7 @@ bool nuiKnobSequence::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags B
   return false;
 }            
 
-bool nuiKnobSequence::MouseUnclicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
+bool nuiKnob::MouseUnclicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
 {
   if (mInteractiveValueChanged)
     ValueChanged();
@@ -187,7 +187,7 @@ bool nuiKnobSequence::MouseUnclicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags
   return false;
 }
 
-bool nuiKnobSequence::MouseMoved  (nuiSize X, nuiSize Y)
+bool nuiKnob::MouseMoved  (nuiSize X, nuiSize Y)
 {
   if (mClicked)
   {
@@ -224,30 +224,30 @@ bool nuiKnobSequence::MouseMoved  (nuiSize X, nuiSize Y)
 }
 
 // Data management:
-bool nuiKnobSequence::HandlePageDown(const nuiEvent& rEvent)
+bool nuiKnob::HandlePageDown(const nuiEvent& rEvent)
 {
   mRange.PageIncrement();
   return false;
 }
 
-bool nuiKnobSequence::HandlePageUp(const nuiEvent& rEvent)
+bool nuiKnob::HandlePageUp(const nuiEvent& rEvent)
 {
   mRange.PageDecrement();
   return false;
 }
 
-nuiRange& nuiKnobSequence::GetRange()
+nuiRange& nuiKnob::GetRange()
 {
   return mRange;
 }
 
-bool nuiKnobSequence::GetShowDefaultBackground() const
+bool nuiKnob::GetShowDefaultBackground() const
 {
   return mShowDefaultBackground;
 }
 
 
-bool nuiKnobSequence::DoInvalidate(const nuiEvent& rEvent)
+bool nuiKnob::DoInvalidate(const nuiEvent& rEvent)
 {
   mInteractiveValueChanged = true;
   InteractiveValueChanged();
@@ -263,7 +263,7 @@ bool nuiKnobSequence::DoInvalidate(const nuiEvent& rEvent)
   return false;
 }
 
-nuiRect nuiKnobSequence::CalcIdealSize()
+nuiRect nuiKnob::CalcIdealSize()
 {
   if (mpChildren.empty())
   {
@@ -278,33 +278,33 @@ nuiRect nuiKnobSequence::CalcIdealSize()
   }
 }
 
-void nuiKnobSequence::SetDefaultSensitivity(nuiSize DefaultSensitivity) 
+void nuiKnob::SetDefaultSensitivity(nuiSize DefaultSensitivity) 
 { 
   mDefaultSensitivity = DefaultSensitivity;
 }
 
-void nuiKnobSequence::SetSensitivity(nuiSize Sensitivity) 
+void nuiKnob::SetSensitivity(nuiSize Sensitivity) 
 { 
   mSensitivity = Sensitivity; 
 } 
 
 // the bigger the ratio is, the slower the knob will turn.
-void nuiKnobSequence::SetDefaultFineSensitivityRatio(nuiSize DefaultFineSensitivityRatio) 
+void nuiKnob::SetDefaultFineSensitivityRatio(nuiSize DefaultFineSensitivityRatio) 
 { 
   mDefaultFineSensitivityRatio = DefaultFineSensitivityRatio;
 }
 
-void nuiKnobSequence::SetFineSensitivityRatio(nuiSize FineSensitivityRatio) 
+void nuiKnob::SetFineSensitivityRatio(nuiSize FineSensitivityRatio) 
 { 
   mFineSensitivityRatio = FineSensitivityRatio; 
 } 
 
-void nuiKnobSequence::SetDefaultFineSensitivityKey(nglKeyCode DefaultFineSensitivityKey)
+void nuiKnob::SetDefaultFineSensitivityKey(nglKeyCode DefaultFineSensitivityKey)
 {
   mDefaultFineSensitivityKey = DefaultFineSensitivityKey;
 }
 
-void nuiKnobSequence::SetFineSensitivityKey(nglKeyCode FineSensitivityKey)
+void nuiKnob::SetFineSensitivityKey(nglKeyCode FineSensitivityKey)
 {
   mFineSensitivityKey = FineSensitivityKey;
 }
