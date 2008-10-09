@@ -8,7 +8,7 @@
 #pragma once
 
 #include "nuiMainWindow.h"
-#include "nuiKnobSequence.h"
+#include "nuiKnob.h"
 
 
 class MainWindow : public nuiMainWindow
@@ -25,7 +25,7 @@ private:
 
   bool OnValueChanged(const nuiEvent& rEvent);
   
-  nuiKnobSequence* mpKnob;
+  nuiKnob* mpKnob;
   nuiLabel* mpLabel;
   nuiEventSink<MainWindow> mEventSink;
 };

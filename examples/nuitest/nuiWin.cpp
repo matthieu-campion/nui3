@@ -33,7 +33,6 @@
 #include "nuiStateDummy.h"
 #include "nuiSVGView.h"
 #include "nuiWindowManager.h"
-#include "nuiKnob.h"
 #include "nuiAnimView.h"
 #include "nuiScrollView.h"
 #include "nuiTreeView.h"
@@ -215,11 +214,6 @@ void nuiWin::OnCreation()
   // SVG Tiger Tester:
   pElement = new nuiTreeNode(_T("SVG View (Tiger)"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateSVGTigerWindow, NULL);
-  pMainTree->AddChild(pElement);
-
-  // Knob Tester:
-  pElement = new nuiTreeNode(_T("Simple Knob"));
-  mWinSink.Connect(pElement->Activated, &nuiWin::CreateKnobWindow, NULL);
   pMainTree->AddChild(pElement);
 
   // Anim Tester:
@@ -712,44 +706,8 @@ bool nuiWin::CreateTreeViewWindow(const nuiEvent& rEvent)
   return false;
 }
 
-bool nuiWin::CreateKnobWindow(const nuiEvent& rEvent)
-{
-  nuiWindow* pKnobWin = new nuiWindow(nuiRect(10, 10, 100, 100), nuiWindow::NoFlag, _T("Knob example"));
-  mpManager->AddChild(pKnobWin);
-  //new nuiKnob(pKnobWin, nuiRange(0, 0, 1, .01f, .1f, 0));
-  //nuiImage* pImg = new nuiImage(pKnob, _T("rsrc:/knob/button.png"));
-  //pImg->SetPosition(nuiCenter);
-  
-  nuiHBox* pBox = new nuiHBox(3);
-  pKnobWin->AddChild(pBox);
-  
-  nuiLabel* pText = new nuiLabel(nglString::Empty);
-  pText->SetPosition(nuiCenter);
-  nuiLabel* pText2 = new nuiLabel(nglString::Empty);
-  pText2->SetPosition(nuiCenter);
-  nuiKnob* pKnob = new nuiKnob(nuiRange(0, 0, 1, .01f, .1f, 0));
-  
-  pBox->SetCell(0, pKnob);
-  pBox->SetCell(1, pText);
-  pBox->SetCell(2, pText2);
-  
-  mWinSink.Connect(pKnob->InteractiveValueChanged, &nuiWin::OnKnobChanged, new std::pair<nuiKnob*, nuiLabel*>(pKnob, pText));
-  mWinSink.Connect(pKnob->ValueChanged, &nuiWin::OnKnobChanged, new std::pair<nuiKnob*, nuiLabel*>(pKnob, pText2));
-  return false;
-}
 
-bool nuiWin::OnKnobChanged(const nuiEvent& rEvent)
-{
-  std::pair<nuiKnob*, nuiLabel*>* pPair = (std::pair<nuiKnob*, nuiLabel*>*)rEvent.mpUser;
-  nuiKnob* pKnob = pPair->first;
-  nuiLabel* pText = pPair->second;
-  
-  nglString s;
-  s.SetCDouble(pKnob->GetRange().GetValue());
-  pText->SetText(s);
-  
-  return false;
-}
+
 
 bool nuiWin::CreateAnimWindow(const nuiEvent& rEvent)
 {

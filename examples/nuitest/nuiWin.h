@@ -42,8 +42,6 @@ protected:
   bool CreateSplineWindow(const nuiEvent& rEvent);
   bool CreateTreeViewWindow(const nuiEvent& rEvent);
   bool CreateSVGTigerWindow(const nuiEvent& rEvent);
-  bool CreateKnobWindow(const nuiEvent& rEvent);
-  bool OnKnobChanged(const nuiEvent& rEvent);
   bool CreateAnimWindow(const nuiEvent& rEvent);
   bool CreateTableViewWindow(const nuiEvent& rEvent);
   bool CreateMessedUpWindow(const nuiEvent& rEvent);
