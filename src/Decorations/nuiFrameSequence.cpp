@@ -166,8 +166,6 @@ void nuiFrameSequence::UpdateTexSize(nglImage* pImage)
     
     // create temp. buffer for destination
     uint32 dstBufferSize = mTexRect.GetWidth() * mTexRect.GetHeight() * 4;
-//    nglString header;
-//    header.Format(_T("P6\n%d %d\n255\n");
     char* pDst = (char*)malloc(dstBufferSize);
     NGL_ASSERT(pDst);
 
@@ -258,11 +256,17 @@ void nuiFrameSequence::UpdateTexSize(nglImage* pImage)
         }
         
         // create a texture from the copyied buffer and store it
-        nglIMemory* pIMem = new nglIMemory(pDst, mTexRect.GetWidth() * mTexRect.GetHeight() * 4);
-        NGL_ASSERT(pIMem);
-        nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
+        info.mBufferFormat = eImageFormatRaw;
+        info.mPixelFormat = eImagePixelRGBA;
+        info.mWidth = mTexRect.GetWidth();
+        info.mHeight = mTexRect.GetHeight();
+        info.mBitDepth = 32;
+        info.mBytesPerPixel = 4;
+        info.mBytesPerLine = (mTexRect.GetWidth() * 4);
+        info.mpBuffer = pDst;
+        
+        nuiTexture* pTex = nuiTexture::GetTexture(info, true/* clone the buffer */);
         mTextures.push_back(pTex);
-        delete pIMem;
         
         if (mInterpolated)
         {
