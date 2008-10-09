@@ -76,7 +76,6 @@ precompiled header central file and everything should be rolling. (lookup precom
 #include "nuiTreeView.h"
 #include "nuiWindowManager.h"
 #include "nuiAnimView.h"
-#include "nuiKnob.h"
 #include "nuiOffscreenView.h"
 #include "nuiScrollView.h"
 #include "nuiZoomView.h"

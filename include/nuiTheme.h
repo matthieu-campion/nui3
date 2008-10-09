@@ -24,7 +24,6 @@ class nuiContainer;
 class nuiDialog;
 
 class nuiFont;
-class nuiKnob;
 class nuiSplitter;
 class nuiLabel;
 
@@ -69,9 +68,6 @@ public:
   // Slider:
   virtual void DrawSliderBackground(nuiDrawContext* pContext, nuiSlider* pScroll);
   virtual void DrawSliderForeground(nuiDrawContext* pContext, nuiSlider* pScroll);
-
-  // Knob:
-  virtual void DrawKnob(nuiDrawContext* pContext, nuiKnob* pKnob);
 
 
   // CheckBox:

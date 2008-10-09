@@ -41,7 +41,6 @@
 #include "nuiTabBar.h"
 #include "nuiTreeView.h"
 #include "nuiColumnTreeView.h"
-#include "nuiKnob.h"
 #include "nuiSlider.h"
 #include "nuiPane.h"
 #include "nuiProgress.h"
@@ -51,6 +50,7 @@
 #include "nuiFolderPane.h"
 #include "nuiTitledPane.h"
 #include "nuiFormatedLabel.h"
+#include "nuiKnobSequence.h"
 
 
 using namespace std;
@@ -84,7 +84,6 @@ void nuiBuilder::Init()
   NUI_ADD_WIDGET_CREATOR(nuiTabBar,"Container");
   NUI_ADD_WIDGET_CREATOR(nuiTreeView,"Container");
   NUI_ADD_WIDGET_CREATOR(nuiColumnTreeView,"Container");
-  NUI_ADD_WIDGET_CREATOR(nuiKnob,"Container");
   NUI_ADD_WIDGET_CREATOR(nuiSlider,"Container");
   NUI_ADD_WIDGET_CREATOR(nuiPane,"Container");
   NUI_ADD_WIDGET_CREATOR(nuiGrid,"Container");
@@ -99,6 +98,7 @@ void nuiBuilder::Init()
   NUI_ADD_WIDGET_CREATOR(nuiEditText,"Widget");
   NUI_ADD_WIDGET_CREATOR(nuiEditLine,"Widget");
   NUI_ADD_WIDGET_CREATOR(nuiButton,"Widget");
+  NUI_ADD_WIDGET_CREATOR(nuiKnobSequence,"Widget");
   NUI_ADD_WIDGET_CREATOR(nuiToggleButton,"Widget");
   NUI_ADD_WIDGET_CREATOR(nuiRadioButton,"Widget");
   NUI_ADD_WIDGET_CREATOR(nuiImage,"Widget");

@@ -39,7 +39,7 @@ nuiKnobSequence::nuiKnobSequence(const nuiRange& rRange, bool showDefaultBackgro
   mKnobSink.Connect(mRange.Changed, &nuiKnobSequence::DoInvalidate);
   //mKnobSink.Connect(mRange.ValueChanged, &nuiKnobSequence::DoInvalidate);
   NUI_ADD_EVENT(ValueChanged);
-  NUI_ADD_EVENT(InteractiveValueChanged);
+  NUI_ADD_EVENT(InteractiveValueChanged);  
 }
 
 bool nuiKnobSequence::Load(const nuiXMLNode* pNode)
@@ -93,6 +93,10 @@ void nuiKnobSequence::SetKnobDecoration(nuiFrameSequence* pFrameSeq, nuiDecorati
   pDeco->AddDecoration(mpFrameSequence);
   
   nuiWidget::SetDecoration(pDeco, mode);
+
+  // init knob first position regarding current range value
+  nuiEvent event;
+  DoInvalidate(event);
 }
 
 // virtual from nuiWidget
@@ -103,6 +107,11 @@ void nuiKnobSequence::SetDecoration(nuiDecoration* pDecoration, nuiDecorationMod
     mpFrameSequence = pFrameSeq;
   
   nuiWidget::SetDecoration(pDecoration, Mode);
+  
+  // init knob first position regarding current range value
+  nuiEvent event;
+  DoInvalidate(event);
+  
 }
 
 

@@ -19,7 +19,6 @@
 #include "nuiSlider.h"
 #include "nuiSplitter.h"
 #include "nglIMemory.h"
-#include "nuiKnob.h"
 #include "nuiToggleButton.h"
 #include "nuiContour.h"
 #include "nuiDialog.h"
@@ -667,27 +666,6 @@ void nuiTheme::DrawTab(nuiDrawContext* pContext, nuiTab* pTab)
 }
 
 
-void nuiTheme::DrawKnob(nuiDrawContext* pContext, nuiKnob* pKnob)
-{
-  const nuiRect & rect = pKnob->GetRect();
-  pContext->EnableAntialiasing(true);
-  nuiSize value = pKnob->GetRange().ConvertToUnit(pKnob->GetRange().GetValue());
-  nuiSize centerX = (rect.mRight - rect.mLeft)/2.f;
-  nuiSize centerY = (rect.mBottom - rect.mTop)/2.f;
-  nuiSize radius = MIN(rect.GetHeight(), rect.GetWidth()) / 2.f - 2.f;
-
-  float theta =  ((value - 0.5f)) * 0.8f * 2.0f * (float)M_PI;
-  nuiSize x = .9f * radius * sinf(theta);
-  nuiSize y = .9f * radius * cosf(theta);
-  nuiSize x2 = 0.5f * x;
-  nuiSize y2 = 0.5f * y;
-
-  pContext->SetLineWidth(3.f);
-  pContext->SetStrokeColor(pKnob->GetColor(eKnobMarker));
-  pContext->DrawLine(centerX + x, centerY - y, centerX + x2, centerY - y2);
-
-  pContext->SetLineWidth(1.f);
-}
 
 void nuiTheme::DrawMenuWindow(nuiDrawContext* pContext, const nuiRect& rRect, nuiWidget* pWidget)
 {
