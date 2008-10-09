@@ -56,7 +56,7 @@ public:
   
 private:
 
-  void UpdateTexSize(nglImage* pImage = NULL);
+  bool CreateTextures(); // return true if the textures have been properly created
 
   nglString mGlobalTexturePath;
   std::vector<nuiTexture*> mTextures;
@@ -70,5 +70,8 @@ private:
   std::map<nuiWidget*, uint32> mIndex;
   uint32 mNbFrames;
   nuiOrientation mOrientation;
+  
+  nglImage* mpTempImage;
+  bool mRefreshTextures;
 };
 
