@@ -30,8 +30,13 @@ public:
   virtual nuiRange& GetRange(); ///< Return the Range used by this scroll bar. 
   bool GetShowDefaultBackground() const;
 
+  // a special SetDecoration method to handle the default associated background
   void SetKnobDecoration(nuiFrameSequence* pFrameSeq, nuiDecoration* pBkgDeco = NULL, nuiDecorationMode mode = eDecorationBorder);
   nuiFrameSequence* GetFrameSequence();
+  
+  // virtual from nuiWidget : using this SetDecoration method means you're handling the background outside the nuiKnobSequence (or means you don't have any bkg)
+  virtual void SetDecoration(nuiDecoration* pDecoration, nuiDecorationMode Mode = eDecorationOverdraw);
+
 
   // Sent events:
   nuiSimpleEventSource<nuiValueChanged> ValueChanged; ///< This event is sent whenever the Knob's thumb position is changed (by the user or by the program).

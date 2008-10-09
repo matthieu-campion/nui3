@@ -11,7 +11,6 @@
 
 nuiFrameSequence::nuiFrameSequence(const nglString& rName)
 : nuiDecoration(rName),
-mpTexture(NULL),
 mBorderEnabled(true)
 {
   if (SetObjectClass(_T("nuiFrameSequence")))
@@ -21,9 +20,8 @@ mBorderEnabled(true)
   mNbFrames = 0;
 }
 
-nuiFrameSequence::nuiFrameSequence(const nglString& rName, uint32 nbFrames, nuiTexture* pTexture, nuiOrientation orientation, const nuiRect& rClientRect, const nuiColor& rColor)
+nuiFrameSequence::nuiFrameSequence(const nglString& rName, uint32 nbFrames, nglImage* pImage, nuiOrientation orientation, const nuiRect& rClientRect, const nuiColor& rColor)
 : nuiDecoration(rName),
-mpTexture(pTexture),
 mColor(rColor),
 mClientRect(rClientRect),
 mBorderEnabled(true)
@@ -34,28 +32,29 @@ mBorderEnabled(true)
   mNbFrames = nbFrames;
   mOrientation = orientation;
   
-  UpdateTexSize();
+  UpdateTexSize(pImage);
     
 }
 
 nuiFrameSequence::nuiFrameSequence(const nglString& rName, uint32 nbFrames, const nglPath& rTexturePath, nuiOrientation orientation, const nuiRect& rClientRect, const nuiColor& rColor)
 : nuiDecoration(rName),
-mpTexture(NULL),
 mColor(rColor),
 mClientRect(rClientRect),
-mBorderEnabled(true)
+mBorderEnabled(true),
+mGlobalTexturePath(rTexturePath)
 {
   if (SetObjectClass(_T("nuiFrameSequence")))
     InitAttributes();
 	
-  mpTexture = nuiTexture::GetTexture(rTexturePath);
-  if (mpTexture)
-    SetProperty(_T("Texture"), rTexturePath.GetPathName());
+  nglImage* pImage = new nglImage(rTexturePath);
+
   mInterpolated = true;
   mNbFrames = nbFrames;
   mOrientation = orientation;
   
-  UpdateTexSize();
+  UpdateTexSize(pImage);
+  
+  delete pImage;
 }
 
 
@@ -114,14 +113,17 @@ void nuiFrameSequence::InitAttributes()
 
 nuiFrameSequence::~nuiFrameSequence()
 {
-  mpTexture->Release();
+  for (uint32 i = 0; i < mTextures.size(); i++)
+    mTextures[i]->Release();
 }
 
 bool nuiFrameSequence::Load(const nuiXMLNode* pNode)
 {
   mColor.SetValue(nuiGetString(pNode, _T("Color"), _T("white")));
   mClientRect.SetValue(nuiGetString(pNode, _T("ClientRect"), _T("{0,0,0,0}")));
-  mpTexture = nuiTexture::GetTexture(nglPath(nuiGetString(pNode, _T("Texture"), nglString::Empty)));
+  nglImage* pImage = new nglImage(nglPath(nuiGetString(pNode, _T("Texture"), nglString::Empty)));
+  UpdateTexSize(pImage);
+  delete pImage;
   return true;
 }
 
@@ -136,16 +138,150 @@ nuiXMLNode* nuiFrameSequence::Serialize(nuiXMLNode* pNode)
 }
 
 
-
-void nuiFrameSequence::UpdateTexSize()
+void nuiFrameSequence::UpdateTexSize(nglImage* pImage)
 {
-  if (!mpTexture || !mNbFrames)
+  if (!mNbFrames)
+    return;
+    
+  if (!pImage && !mTextures.size())
     return;
   
+  NGL_ASSERT(pImage);
+  
   if (mOrientation == nuiVertical)
-    mTexRect.Set(0, 0, mpTexture->GetWidth(), ToBelow(mpTexture->GetHeight() / (float)mNbFrames));
+    mTexRect.Set(0, 0, pImage->GetWidth(), ToBelow(pImage->GetHeight() / (float)mNbFrames));
   else
-    mTexRect.Set(0, 0, ToBelow(mpTexture->GetWidth() / (float)mNbFrames), mpTexture->GetHeight());
+    mTexRect.Set(0, 0, ToBelow(pImage->GetWidth() / (float)mNbFrames), pImage->GetHeight());
+
+  if (GetSourceClientRect() == nuiRect(0,0,0,0))
+    SetSourceClientRect(mTexRect);  
+  
+  if (pImage)
+  {
+    // clean existing textures
+    for (uint32 i = 0; i < mTextures.size(); i++)
+      mTextures[i]->Release();
+    
+    char* pBuffer = pImage->GetBuffer();
+    
+    // create temp. buffer for destination
+    uint32 dstBufferSize = mTexRect.GetWidth() * mTexRect.GetHeight() * 4;
+//    nglString header;
+//    header.Format(_T("P6\n%d %d\n255\n");
+    char* pDst = (char*)malloc(dstBufferSize);
+    NGL_ASSERT(pDst);
+
+    
+    //*****************************************************************
+    // frames are aligned vertically
+    if (mOrientation == nuiVertical)
+    {
+
+      // copy and paste each frame from the image to an individual texture
+      for (uint32 frame = 0; frame < mNbFrames; frame++)
+      {
+        uint32 x = 0;
+        uint32 y = frame * mTexRect.GetHeight();
+        
+        nglImageInfo info;
+        pImage->GetInfo(info);
+        NGL_ASSERT((info.mPixelFormat == eImagePixelRGB) || (info.mPixelFormat == eImagePixelRGBA))
+
+        char* pSrc = pBuffer + (y * info.mBytesPerLine);
+                  
+        nglCopyLineFn pFunc = nglGetCopyLineFn(32, info.mBitDepth);
+        NGL_ASSERT(pFunc);
+        
+        // copy part of the image
+        pFunc(pDst, pSrc, mTexRect.GetWidth() * mTexRect.GetHeight(), false/*don't invert*/);
+        
+                  
+        // create a texture from the copyied buffer and store it
+        info.mBufferFormat = eImageFormatRaw;
+        info.mPixelFormat = eImagePixelRGBA;
+        info.mWidth = mTexRect.GetWidth();
+        info.mHeight = mTexRect.GetHeight();
+        info.mBitDepth = 32;
+        info.mBytesPerPixel = 4;
+        info.mBytesPerLine = (mTexRect.GetWidth() * 4);
+        info.mpBuffer = pDst;
+                  
+        nuiTexture* pTex = nuiTexture::GetTexture(info, true/* clone the buffer */);
+        mTextures.push_back(pTex);
+        
+        
+        
+        if (mInterpolated)
+        {
+          pTex->SetMinFilter(GL_LINEAR);
+          pTex->SetMagFilter(GL_LINEAR);
+        }
+        else
+        {
+          pTex->SetMinFilter(GL_NEAREST);
+          pTex->SetMagFilter(GL_NEAREST);
+        }
+        
+        
+      }
+    }
+
+    //*****************************************************************
+    // frames are aligned horizontally
+    else
+    {
+      
+      // copy and paste each frame from the image to an individual texture
+      for (uint32 frame = 0; frame < mNbFrames; frame++)
+      {
+        uint32 x = frame * mTexRect.GetWidth();
+        
+        nglImageInfo info;
+        pImage->GetInfo(info);
+        NGL_ASSERT((info.mPixelFormat == eImagePixelRGB) || (info.mPixelFormat == eImagePixelRGBA))
+
+        char* pSrc = pBuffer + (x * info.mBytesPerPixel);
+        
+        nglCopyLineFn pFunc = nglGetCopyLineFn(32, info.mBitDepth);
+        NGL_ASSERT(pFunc);
+        
+        char* pDstPtr = pDst;
+
+        // copy line per line
+        for (uint32 y = 0; y < mTexRect.GetHeight(); y++)
+        {        
+          pSrc = pBuffer + (y * info.mBytesPerLine) + (x * info.mBytesPerPixel);
+          
+          pFunc(pDstPtr, pSrc, mTexRect.GetWidth(), false/*don't invert*/);
+          
+          pDstPtr += ((uint32)mTexRect.GetWidth() * 4);
+        }
+        
+        // create a texture from the copyied buffer and store it
+        nglIMemory* pIMem = new nglIMemory(pDst, mTexRect.GetWidth() * mTexRect.GetHeight() * 4);
+        NGL_ASSERT(pIMem);
+        nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
+        mTextures.push_back(pTex);
+        delete pIMem;
+        
+        if (mInterpolated)
+        {
+          pTex->SetMinFilter(GL_LINEAR);
+          pTex->SetMagFilter(GL_LINEAR);
+        }
+        else
+        {
+          pTex->SetMinFilter(GL_NEAREST);
+          pTex->SetMagFilter(GL_NEAREST);
+        }        
+      }
+    }
+    
+    // clean up
+    free(pDst);
+    
+  }
+    
   
 }
 
@@ -202,31 +338,17 @@ const nglPath& nuiFrameSequence::GetTexturePath() const
   if (HasProperty(_T("Texture")))
     return GetProperty(_T("Texture"));
   
-  return mpTexture->GetSource();
+  return mGlobalTexturePath;
 }
 
 void nuiFrameSequence::SetTexturePath(const nglPath& rPath)
 {
-  SetProperty(_T("Texture"), rPath.GetPathName());
-  nuiTexture* pOld = mpTexture;
-  mpTexture = nuiTexture::GetTexture(rPath);
-  if (GetSourceClientRect() == nuiRect(0,0,0,0))
-    SetSourceClientRect(nuiRect(0, 0, mpTexture->GetWidth(), mpTexture->GetHeight()));
-  if (pOld)
-    pOld->Release();
+  SetProperty(_T("Texture"), mGlobalTexturePath);
+  nglImage* pImage = new nglImage(rPath);
+  NGL_ASSERT(pImage);
   
-  if (mInterpolated)
-  {
-    mpTexture->SetMinFilter(GL_LINEAR);
-    mpTexture->SetMagFilter(GL_LINEAR);
-  }
-  else
-  {
-    mpTexture->SetMinFilter(GL_NEAREST);
-    mpTexture->SetMagFilter(GL_NEAREST);
-  }
-  
-  UpdateTexSize();
+  UpdateTexSize(pImage);
+  delete pImage;
 }
 
 
@@ -248,31 +370,33 @@ void nuiFrameSequence::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const 
   else
     index = it->second;
   
-  float X0 = (mOrientation == nuiHorizontal)? (float)(index * mTexRect.GetWidth()) : 0;
-  float X1 = X0 + (float)mClientRect.Left();
-  float X2 = X0 + (float)mClientRect.Right();
-  float X3 = X0 + (float)w;
+  NGL_ASSERT(mTextures.size() > index);
+  nuiTexture* pTexture = mTextures[index];
   
-  float Y0 = (mOrientation == nuiVertical)? (float)(index * mTexRect.GetHeight()) : 0;
-  float Y1 = Y0 + (float)mClientRect.Top();
-  float Y2 = Y0 + (float)mClientRect.Bottom();
-  float Y3 = Y0 + (float)h;    
+  float X0 = 0;
+  float X1 = (float)mClientRect.Left();
+  float X2 = (float)mClientRect.Right();
+  float X3 = (float)w;
+  
+  float Y0 = 0;
+  float Y1 = (float)mClientRect.Top();
+  float Y2 = (float)mClientRect.Bottom();
+  float Y3 = (float)h;
   
   const float x0 = (float)rDestRect.Left();
-  const float x1 = x0 + (X1-X0);
+  const float x1 = x0 + X1;
   const float x3 = (float)rDestRect.Right();
   const float x2 = x3 - (X3 - X2);
   
   const float y0 = (float)rDestRect.Top();
-  const float y1 = y0 + (Y1-Y0);
+  const float y1 = y0 + Y1;
   const float y3 = (float)rDestRect.Bottom();
   const float y2 = y3 - (Y3 - Y2);
   
-  
-  mpTexture->ImageToTextureCoord(X0, Y0);
-  mpTexture->ImageToTextureCoord(X1, Y1);
-  mpTexture->ImageToTextureCoord(X2, Y2);
-  mpTexture->ImageToTextureCoord(X3, Y3);
+  pTexture->ImageToTextureCoord(X0, Y0);
+  pTexture->ImageToTextureCoord(X1, Y1);
+  pTexture->ImageToTextureCoord(X2, Y2);
+  pTexture->ImageToTextureCoord(X3, Y3);
   
   //////// TOP PART
   // TopLeft rect:
@@ -519,14 +643,14 @@ void nuiFrameSequence::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const 
     float widgetAlpha = pWidget->GetAlpha();
     color.Alpha() *= widgetAlpha;
     
-    //    wprintf(_T("nuiFrameSequence::Draw (0x%x) alpha %.2f => color (%.2f, %.2f, %.2f, %.2f)\n"), this, widgetAlpha,
+    //    wprintf(_T("nuiFrame::Draw (0x%x) alpha %.2f => color (%.2f, %.2f, %.2f, %.2f)\n"), this, widgetAlpha,
     //    color.Alpha(), color.Red(), color.Green(), color.Blue());
   }
   
   pContext->EnableTexturing(true);
   pContext->EnableBlending(true);
   pContext->SetBlendFunc(nuiBlendTransp);
-  pContext->SetTexture(mpTexture);
+  pContext->SetTexture(pTexture);
   pContext->SetFillColor(color);
   pContext->DrawArray(array);
 }
@@ -601,12 +725,6 @@ nuiSize nuiFrameSequence::GetBorder(nuiPosition position) const
 }
 
 
-nuiTexture* nuiFrameSequence::GetTexture() const
-{
-  return mpTexture;
-}
-
-
 const nuiColor& nuiFrameSequence::GetColor() const
 {
 	return mColor;
@@ -632,17 +750,18 @@ void nuiFrameSequence::SetInterpolated(bool set)
 {
   mInterpolated = set;
   
-  if (mpTexture)
+  for (uint32 i = 0; i < mTextures.size(); i++)
   {
+    nuiTexture* pTexture = mTextures[i];
     if (mInterpolated)
     {
-      mpTexture->SetMinFilter(GL_LINEAR);
-      mpTexture->SetMagFilter(GL_LINEAR);
+      pTexture->SetMinFilter(GL_LINEAR);
+      pTexture->SetMagFilter(GL_LINEAR);
     }
     else
     {
-      mpTexture->SetMinFilter(GL_NEAREST);
-      mpTexture->SetMagFilter(GL_NEAREST);    
+      pTexture->SetMinFilter(GL_NEAREST);
+      pTexture->SetMagFilter(GL_NEAREST);    
     }
   }
 }

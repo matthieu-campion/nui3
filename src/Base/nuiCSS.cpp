@@ -11,6 +11,7 @@
 #include "nglOStream.h"
 
 #include "nuiFrame.h"
+#include "nuiFrameSequence.h"
 #include "nuiMetaDecoration.h"
 #include "nuiStateDecoration.h"
 #include "nuiBorderDecoration.h"
@@ -424,6 +425,10 @@ protected:
     if (rType == _T("nuiFrame"))
     {
       pObj = new nuiFrame(rName);
+    }
+    else if (rType == _T("nuiFrameSequence"))
+    {
+      pObj = new nuiFrameSequence(rName);
     }
     else if (rType == _T("nuiBorderDecoration"))
     {

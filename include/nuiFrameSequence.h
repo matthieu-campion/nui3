@@ -16,7 +16,7 @@ class nuiFrameSequence : public nuiDecoration
 {
 public:
   nuiFrameSequence(const nglString& rName);
-  nuiFrameSequence(const nglString& rName, uint32 nbFrames, nuiTexture* pTexture, nuiOrientation orientation, const nuiRect& rClientRect, const nuiColor& rColor = nuiColor(255, 255, 255, 255));
+  nuiFrameSequence(const nglString& rName, uint32 nbFrames, nglImage* pImage, nuiOrientation orientation, const nuiRect& rClientRect, const nuiColor& rColor = nuiColor(255, 255, 255, 255));
   nuiFrameSequence(const nglString& rName, uint32 nbFrames, const nglPath& rTexturePath, nuiOrientation orientation, const nuiRect& rClientRect, const nuiColor& rColor = nuiColor(255, 255, 255, 255));
   void InitAttributes();
   virtual ~nuiFrameSequence();
@@ -44,8 +44,6 @@ public:
   virtual nuiSize GetBorder(nuiPosition position) const;
   virtual nuiRect GetIdealClientRect() const;
   
-  nuiTexture* GetTexture() const;
-  
   bool IsInterpolated();
   void SetInterpolated(bool set);
   
@@ -58,9 +56,10 @@ public:
   
 private:
 
-  void UpdateTexSize();
+  void UpdateTexSize(nglImage* pImage = NULL);
 
-  nuiTexture* mpTexture;
+  nglString mGlobalTexturePath;
+  std::vector<nuiTexture*> mTextures;
   
   // attributes ***********************************
   nuiColor mColor;

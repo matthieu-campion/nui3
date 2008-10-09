@@ -84,7 +84,7 @@ void nuiKnobSequence::SetKnobDecoration(nuiFrameSequence* pFrameSeq, nuiDecorati
   
   if (!pBkgDeco)
   {
-    SetDecoration(mpFrameSequence, mode);
+    nuiWidget::SetDecoration(mpFrameSequence, mode);
     return;
   }
   
@@ -92,8 +92,19 @@ void nuiKnobSequence::SetKnobDecoration(nuiFrameSequence* pFrameSeq, nuiDecorati
   pDeco->AddDecoration(pBkgDeco);
   pDeco->AddDecoration(mpFrameSequence);
   
-  SetDecoration(pDeco, mode);
+  nuiWidget::SetDecoration(pDeco, mode);
 }
+
+// virtual from nuiWidget
+void nuiKnobSequence::SetDecoration(nuiDecoration* pDecoration, nuiDecorationMode Mode)
+{
+  nuiFrameSequence* pFrameSeq = dynamic_cast<nuiFrameSequence*>(pDecoration);
+  if (pFrameSeq)
+    mpFrameSequence = pFrameSeq;
+  
+  nuiWidget::SetDecoration(pDecoration, Mode);
+}
+
 
 
 nuiFrameSequence* nuiKnobSequence::GetFrameSequence()

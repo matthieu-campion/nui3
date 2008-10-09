@@ -236,8 +236,10 @@ void nuiDefaultDecoration::InitMaps()
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(_T("nuiDefaultDecorationArrowClose"), pTex, nuiRect(0,0,7,6));
   pFrame->UseWidgetAlpha(false);
-  delete pIMem;  
 
+  delete pIMem;  
+  
+  
   // arrow handle open
   pIMem = new nglIMemory(gpArrowOpen, gArrowOpenSize);
   pTex = nuiTexture::GetTexture(pIMem);
@@ -794,11 +796,12 @@ void nuiDefaultDecoration::KnobSequence(nuiWidget* pWidget)
   if (!pSeq)
   {
     nglIMemory* pIMem = new nglIMemory(gpKnobSequenceHdl, gKnobSequenceHdlSize);
-    nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
-    NGL_ASSERT(pTex);
-    pSeq = new nuiFrameSequence(decoName, 31, pTex, nuiVertical, clientRect);
+    nglImage* pImage = new nglImage(pIMem);
+    NGL_ASSERT(pImage);
+    pSeq = new nuiFrameSequence(decoName, 31, pImage, nuiVertical, clientRect);
     pSeq->SetLayer(eLayerFront);
-    delete pIMem;      
+    delete pIMem;     
+    delete pImage;
   }
 
   nuiDecorationMode mode = eDecorationClientOnly;
