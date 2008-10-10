@@ -41,6 +41,8 @@ public:
   virtual void CreateDeviceObjects();
   virtual void ReleaseDeviceObjects();
 
+  virtual uint32 GetRectangleTextureSupport() const;
+
   nglContext* GetContext() const;
 
   virtual void CreateTexture(nuiTexture* pTexture);
@@ -76,6 +78,9 @@ protected:
 
   GLenum GetTextureTarget(bool POT) const;
   void UploadTexture(nuiTexture* pTexture);
+
+  uint32 mCanRectangleTexture;
+
 };
 #endif //   #ifndef __NUI_NO_D3D__
 
