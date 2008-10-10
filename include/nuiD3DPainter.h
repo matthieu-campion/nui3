@@ -28,6 +28,7 @@ public:
   virtual void StartRendering(nuiSize ClipOffsetX, nuiSize ClipOffsetY);
   virtual void SetState(const nuiRenderState& rState, bool ForceApply = false);
   virtual void DrawArray(const nuiRenderArray& rArray);
+  void         DrawPrimitiveBatch();
   virtual void ClearColor();
   virtual void ClearStencil(uint8 value);
   virtual void BeginSession();
@@ -36,6 +37,9 @@ public:
   virtual void MultMatrix(const nuiMatrix& rMatrix);
   virtual void PushMatrix();
   virtual void PopMatrix();
+
+  virtual void CreateDeviceObjects();
+  virtual void ReleaseDeviceObjects();
 
   nglContext* GetContext() const;
 
@@ -63,6 +67,12 @@ protected:
     IDirect3DTexture9* mpTexture;
   };
   std::map<nuiTexture*, TextureInfo> mTextures;
+
+  LPDIRECT3DVERTEXBUFFER9 mpVB;
+  DWORD                   mnCurrentVBOffset;
+
+  DWORD                   mnBatchCurrentVBOffset;
+  DWORD                   mnBatchCurrentVBSize;
 
   GLenum GetTextureTarget(bool POT) const;
   void UploadTexture(nuiTexture* pTexture);
