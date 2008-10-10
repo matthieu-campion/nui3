@@ -269,7 +269,6 @@ double nuiAnimation::UpdateTime()
   mUpdatingTime = true;
 
   nglTime now;
-  NGL_OUT(_T("now: %f\n"), (double)now);
   double t = now - mLastTime;
   double advance = mDirection * t;
   mCurrentTime += advance;

@@ -46,7 +46,6 @@ public:
 
   /** @name Adding special contours */
   //@{
-  void AddOutline(nuiShape* pShape, float LineWidth);
   void AddCircle(float X, float Y, float Radius, bool CCW = false, float Quality = 0.5f);
   void AddEllipse(float X, float Y, float XRadius, float YRadius, bool CCW = false, float Quality = 0.5f);
   void AddRoundRect(const nuiRect& rRect, float Radius, bool CCW = false, float Quality = 0.5f);

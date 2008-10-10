@@ -101,12 +101,15 @@ Log2Floor(65) : 6
 /* Float to Ints Conversion helpers
  */
 
+#define USE_FAST_FLOAT_CONVERSION 0
 //#FIXME: Always set fast float to 0: does not work in special cases on X86
 //needs to be fixed
-#if !(defined USE_FAST_FLOAT_CONVERSION) && (defined _NGL_X86_) 
-  #define USE_FAST_FLOAT_CONVERSION 1
-#else
-  #define USE_FAST_FLOAT_CONVERSION 0
+#if !(defined USE_FAST_FLOAT_CONVERSION)
+  #if (defined _NGL_X86_) 
+    #define USE_FAST_FLOAT_CONVERSION 1
+  #else
+    #define USE_FAST_FLOAT_CONVERSION 0
+  #endif
 #endif
 
 
@@ -122,10 +125,9 @@ Log2Floor(65) : 6
 #include <ppc_intrinsics.h>
 #endif // _NGL_PPC_
 
-
-static const double _nui_doublemagic         = double(6755399441055744.0);       //2^52 * 1.5,  uses limited precisicion to floor
-static const double _nui_doublemagicdelta    = (1.5e-8);                         //almost .5f = .5f + 1e^(number of exp bit)
-static const double _nui_doublemagicroundeps	= (.5f-_nui_doublemagicdelta);          //almost .5f = .5f - 1e^(number of exp bit)
+const double _nui_doublemagic         = double(6755399441055744.0);       //2^52 * 1.5,  uses limited precisicion to floor
+const double _nui_doublemagicdelta    = (1.5e-8);                         //almost .5f = .5f + 1e^(number of exp bit)
+const double _nui_doublemagicroundeps	= (.5f-_nui_doublemagicdelta);          //almost .5f = .5f - 1e^(number of exp bit)
 
 union _nui_double
 {
@@ -136,9 +138,6 @@ union _nui_double
 inline int32 ToNearest(double x) ///< Cast x to an int using "to zero" rounding mode (Normal Ansi C behaviour).
 {
 #if USE_FAST_FLOAT_CONVERSION
-  static const double _nui_doublemagic         = double(6755399441055744.0);       //2^52 * 1.5,  uses limited precisicion to floor
-  static const double _nui_doublemagicdelta    = (1.5e-8);                         //almost .5f = .5f + 1e^(number of exp bit)
-  static const double _nui_doublemagicroundeps	= (.5f-_nui_doublemagicdelta);          //almost .5f = .5f - 1e^(number of exp bit)
 #ifdef __GNUC__
   _nui_double& rX(reinterpret_cast<_nui_double&>(x));
   rX.d	= rX.d + _nui_doublemagic;
@@ -183,6 +182,7 @@ inline bool IsDenormal(double& sample) ///< if sample is stored as denormal doub
 #undef __iexp
 #undef __iman
 
+#if USE_FAST_FLOAT_CONVERSION
 inline int32 ToNearest(float x) ///< Cast x to an int using "to zero" rounding mode (Normal Ansi C behaviour).
 {
   return ToNearest((double)x);
@@ -217,6 +217,43 @@ inline int32 ToAbove(float x) ///< Cast x to an int using "to greater" rounding 
 {
   return ToAbove((double)x);
 }
+#else
+inline int32 ToNearest(float x) ///< Cast x to an int using "to zero" rounding mode (Normal Ansi C behaviour).
+{
+  return ToNearest((double)x);
+}
+
+inline int32 ToZero(double x)  ///< Cast x to an int using "to lower" rounding mode.
+{
+  return ((x < 0.0) ? ToNearest(x + .5) : ToNearest(x - .5));
+}
+
+inline int32 ToZero(float x)  ///< Cast x to an int using "to lower" rounding mode.
+{
+  return ToZero((double)x);
+}
+
+inline int32 ToBelow(double x) ///< Cast x to an int using "to nearest" rounding mode.
+{
+  return ToNearest(x - 0.5);
+}
+
+inline int32 ToBelow(float x) ///< Cast x to an int using "to nearest" rounding mode.
+{
+  return ToBelow((double)x);
+}
+
+inline int32 ToAbove(double x) ///< Cast x to an int using "to greater" rounding mode.
+{
+  return ToNearest(x + 0.5);
+}
+
+inline int32 ToAbove(float x) ///< Cast x to an int using "to greater" rounding mode.
+{
+  return ToAbove((double)x);
+}
+#endif
+
 
 inline float nuiAbs(float f) 
 {

@@ -542,32 +542,34 @@ void nuiGLPainter::DrawArray(const nuiRenderArray& rArray)
   else
 #endif // NUI_USE_ANTIALIASING
   {
-    if (rArray.UseGLAATexture())
+//#TEST meeloo disabling AA texture
+//     if (rArray.UseGLAATexture())
+//     {
+//       if (mState.mTexturing && mTextureTarget != GL_TEXTURE_2D)
+//         glDisable(mTextureTarget);
+//       if (!mState.mTexturing || (mState.mTexturing && mTextureTarget != GL_TEXTURE_2D))
+//         glEnable(GL_TEXTURE_2D);
+// 
+//       if (!mState.mBlending)
+//         glEnable(GL_BLEND);
+//       if (mState.mBlendFunc != nuiBlendTransp)
+//         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+// 
+//       glBindTexture(GL_TEXTURE_2D, glAA_texture);
+// 
+//       glMatrixMode(GL_TEXTURE);
+//       glPushMatrix();
+//       glLoadIdentity();
+//       glMatrixMode(GL_MODELVIEW);
+// 
+//       glPushMatrix();
+//       glTranslatef(0.5f, 0.5f, 0);
+//     }
+//     else
+    if (!mState.mTexturing)
     {
-      if (mState.mTexturing && mTextureTarget != GL_TEXTURE_2D)
-        glDisable(mTextureTarget);
-      if (!mState.mTexturing || (mState.mTexturing && mTextureTarget != GL_TEXTURE_2D))
-        glEnable(GL_TEXTURE_2D);
-
-      if (!mState.mBlending)
-        glEnable(GL_BLEND);
-      if (mState.mBlendFunc != nuiBlendTransp)
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-      glBindTexture(GL_TEXTURE_2D, glAA_texture);
-
-      glMatrixMode(GL_TEXTURE);
       glPushMatrix();
-      glLoadIdentity();
-      glMatrixMode(GL_MODELVIEW);
-
-      glPushMatrix();
-      glTranslatef(0.5f, 0.5f, 0);
-    }
-    else if (!mState.mTexturing)
-    {
-      glPushMatrix();
-      glTranslatef(0.5f, 0.5f, 0);
+      //glTranslatef(0.5f, 0.5f, 0);
       nuiCheckForGLErrors();
     }
   }
@@ -667,39 +669,41 @@ void nuiGLPainter::DrawArray(const nuiRenderArray& rArray)
   else
 #endif // NUI_USE_ANTIALIASING
   {
-    if (rArray.UseGLAATexture())
-    {
-      glMatrixMode(GL_TEXTURE);
-      glPopMatrix();
-      glMatrixMode(GL_MODELVIEW);
-      glPopMatrix();
-
-      if (mState.mpTexture && mState.mTexturing)
-      {
-        if (mTextureTarget != GL_TEXTURE_2D)
-        {
-          glDisable(GL_TEXTURE_2D);
-          glEnable(mTextureTarget);
-        }
-
-        UploadTexture(mState.mpTexture);
-      }
-      else
-      {
-        glDisable(GL_TEXTURE_2D);
-      }
-
-      if (!mState.mBlending)
-        glDisable(GL_BLEND);
-      if (mState.mBlendFunc != nuiBlendTransp)
-      {
-        GLenum src, dst;
-        nuiGetBlendFuncFactors(mState.mBlendFunc, src, dst);
-        glBlendFunc(src, dst);
-      }
-      //ApplyTexture(mState, true);
-    }
-    else if (!mState.mTexturing)
+//#TEST meeloo disabling AA texture
+//     if (rArray.UseGLAATexture())
+//     {
+//       glMatrixMode(GL_TEXTURE);
+//       glPopMatrix();
+//       glMatrixMode(GL_MODELVIEW);
+//       glPopMatrix();
+// 
+//       if (mState.mpTexture && mState.mTexturing)
+//       {
+//         if (mTextureTarget != GL_TEXTURE_2D)
+//         {
+//           glDisable(GL_TEXTURE_2D);
+//           glEnable(mTextureTarget);
+//         }
+// 
+//         UploadTexture(mState.mpTexture);
+//       }
+//       else
+//       {
+//         glDisable(GL_TEXTURE_2D);
+//       }
+// 
+//       if (!mState.mBlending)
+//         glDisable(GL_BLEND);
+//       if (mState.mBlendFunc != nuiBlendTransp)
+//       {
+//         GLenum src, dst;
+//         nuiGetBlendFuncFactors(mState.mBlendFunc, src, dst);
+//         glBlendFunc(src, dst);
+//       }
+//       //ApplyTexture(mState, true);
+//     }
+//     else
+    if (!mState.mTexturing)
     {
       glPopMatrix();
     }

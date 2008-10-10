@@ -34,6 +34,7 @@ nuiDrawContext::nuiDrawContext(const nuiRect& rRect)
   mPermitAntialising = true;
 
   mpPainter = NULL;
+  mpAATexture = nuiTexture::GetAATexture();
   
   mStateChanges = 1;
 }
@@ -43,6 +44,8 @@ nuiDrawContext::~nuiDrawContext()
   SetTexture(NULL);
   SetFont(NULL);
   SetShader(NULL);
+  mpAATexture->Release();
+
   delete mpPainter;
   mpPainter = NULL;
   while (!mpRenderStateStack.empty())
@@ -364,16 +367,17 @@ void nuiDrawContext::Clear()
 void nuiDrawContext::DrawShape(nuiShape* pShape, nuiShapeMode Mode, float Quality)
 {
   NGL_ASSERT(pShape != NULL);
-
+  PushState();
   switch (Mode)
   {
   case eStrokeShape:
     {
       nuiRenderObject* pObject = pShape->Outline(Quality, mCurrentState.mLineWidth, mCurrentState.mLineJoin, mCurrentState.mLineCap);
-      nuiColor tmp(GetFillColor());
       SetFillColor(GetStrokeColor());
+      SetTexture(mpAATexture);
+      EnableBlending(true);
+      SetBlendFunc(nuiBlendTransp);//GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
       DrawObject(*pObject);
-      SetFillColor(tmp);
       delete pObject;
     }
     break;
@@ -397,10 +401,12 @@ void nuiDrawContext::DrawShape(nuiShape* pShape, nuiShapeMode Mode, float Qualit
 
       {
         nuiRenderObject* pObject = pShape->Outline(Quality, mCurrentState.mLineWidth, mCurrentState.mLineJoin, mCurrentState.mLineCap);
-        nuiColor tmp(GetFillColor());
         SetFillColor(GetStrokeColor());
+        SetTexture(mpAATexture);
+        EnableTexturing(true);
+        EnableBlending(true);
+        SetBlendFunc(nuiBlendTransp);//GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         DrawObject(*pObject);
-        SetFillColor(tmp);
         delete pObject;
       }
     }
@@ -408,6 +414,7 @@ void nuiDrawContext::DrawShape(nuiShape* pShape, nuiShapeMode Mode, float Qualit
   case eDefault: //?
     break;
   }
+  PopState();
 }
 
 

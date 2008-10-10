@@ -345,7 +345,7 @@ void nui_glBegin(GLenum mode)
   {
     nuiRenderArray* pArray = new nuiRenderArray(mode);
     gpCurrentObject->AddArray(pArray);
-    pArray->UseGLAATexture(true);
+    //pArray->UseGLAATexture(true);
     //pArray->EnableArray(nuiRenderArray::eColor);
     pArray->EnableArray(nuiRenderArray::eVertex);
     pArray->EnableArray(nuiRenderArray::eTexCoord);

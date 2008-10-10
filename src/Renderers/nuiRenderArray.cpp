@@ -12,8 +12,7 @@
 /// class nuiRenderArray
 nuiRenderArray::nuiRenderArray(GLenum mode, bool Static)
 {
-  //std::vector<float> mFloats[5];
-  for (uint i = 0; i < 5; i++)
+  for (uint i = 0; i < 4; i++)
     mEnabled[i] = false;
   mEnabled[eVertex] = true; // Enable Vertices by default
   mStatic = Static;
@@ -26,8 +25,6 @@ nuiRenderArray::nuiRenderArray(GLenum mode, bool Static)
   mpCacheHandle = NULL;
   mpCacheManager = NULL;
 
-  mUseGLAATexture = false;
-  
   mCurrentVertex.mX = 0.0f;
   mCurrentVertex.mY = 0.0f;
   mCurrentVertex.mZ = 0.0f;
@@ -54,8 +51,6 @@ nuiRenderArray::nuiRenderArray(const nuiRenderArray& rArray)
 
   mpCacheHandle = NULL;
   mpCacheManager = NULL;
-
-  mUseGLAATexture = rArray.mUseGLAATexture;
 
   mCurrentVertex = rArray.mCurrentVertex;
 }
@@ -147,16 +142,6 @@ void nuiRenderArray::FillBuffer(GLubyte* pBuffer) const
   uint32 size = GetSize();
   uint32 bytes = size * sizeof(Vertex);
   memcpy(pBuffer, &mVertices[0], bytes);
-}
-
-bool nuiRenderArray::UseGLAATexture() const
-{
-  return mUseGLAATexture;
-}
-
-void nuiRenderArray::UseGLAATexture(bool set)
-{
-  mUseGLAATexture = set;
 }
 
 void nuiRenderArray::SetVertex(float x, float y, float z)

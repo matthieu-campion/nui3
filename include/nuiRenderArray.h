@@ -71,8 +71,6 @@ public:
   void SetCacheHandle(nuiCacheManager* pManager, void* pHandle) const;
   uint32 GetTotalSize() const;
   void FillBuffer(GLubyte* pBuffer) const;
-  bool UseGLAATexture() const;
-  void UseGLAATexture(bool set);
 
   void SetVertex(float x, float y, float z = 0.0f);
   void SetVertex(const nuiVector& rVf);
@@ -90,13 +88,10 @@ private:
   uint mTexCoordElements;
 
   GLenum mMode;
-  bool mEnabled[5];
+  bool mEnabled[4];
   bool mStatic;
   mutable void* mpCacheHandle;
   mutable nuiCacheManager* mpCacheManager;
-
-  bool mUseGLAATexture;
-
 
   Vertex mCurrentVertex;
   std::vector<Vertex> mVertices;

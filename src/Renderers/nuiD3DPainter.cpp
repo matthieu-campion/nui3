@@ -50,6 +50,8 @@ int setStateCount = 0;
  
 #define DIRECTX_FULL_LOG
 
+#define NUI_VERTEXBUFFER_MAXSIZE 16384
+
 //***************************
 //jonathan - TO DO LIST
 //non native directx primitives support : quads, quad strips, polygons
@@ -583,7 +585,7 @@ void nuiD3DPainter::CreateDeviceObjects()
   if (!mpVB)
   {
     int size = sizeof(NuiD3DVertex);
-    hr = pDev->CreateVertexBuffer(2048 * sizeof(NuiD3DVertex), D3DUSAGE_DYNAMIC, 
+    hr = pDev->CreateVertexBuffer(NUI_VERTEXBUFFER_MAXSIZE * sizeof(NuiD3DVertex), D3DUSAGE_DYNAMIC, 
       D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1, D3DPOOL_DEFAULT, &mpVB, NULL );
 #ifdef NUI_PROFILE_DIRECTX
     for (int i=0; i<100; ++i)
@@ -763,7 +765,7 @@ void nuiD3DPainter::DrawPrimitiveBatch()
 {
   mnBatchCurrentVBOffset += mnBatchCurrentVBSize;
   mnBatchCurrentVBSize = 0;
-  if (mnBatchCurrentVBOffset >= 2048)
+  if (mnBatchCurrentVBOffset >= NUI_VERTEXBUFFER_MAXSIZE)
     mnBatchCurrentVBOffset = 0;
 }
 */
@@ -802,40 +804,41 @@ void nuiD3DPainter::DrawArray(const nuiRenderArray& rArray)
   NUI_RETURN_IF_RENDERING_DISABLED;
 
   {  //#FIXME Set up Antialiasing texture
-    if (rArray.UseGLAATexture())
-    {
-      //NGL_OUT(_T("GLAA"));
-      //return; //@@@     
-      //int a=0;
-      //pDev->SetTexture()
-      /*
-      if (!mState.mBlending)
-      //if (1)
-      {
-        //glEnable(GL_BLEND);
-        hr = pDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-      }
-      if (mState.mBlendFunc != nuiBlendTransp) 
-      //if (1)
-      {
-        //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        hr = pDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-        hr = pDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-      }
-
-      //glBindTexture(GL_TEXTURE_2D, glAA_texture[0]);
-      */
-      /*
-      glMatrixMode(GL_TEXTURE);
-      glPushMatrix();
-      glLoadIdentity();
-      glMatrixMode(GL_MODELVIEW);
-      glPushMatrix();
-      glTranslatef(0.5f, 0.5f, 0);
-      */
-     
-    }
-    else if (!mState.mTexturing)
+//     if (rArray.UseGLAATexture())
+//     {
+//       //NGL_OUT(_T("GLAA"));
+//       //return; //@@@     
+//       //int a=0;
+//       //pDev->SetTexture()
+//       /*
+//       if (!mState.mBlending)
+//       //if (1)
+//       {
+//         //glEnable(GL_BLEND);
+//         hr = pDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+//       }
+//       if (mState.mBlendFunc != nuiBlendTransp) 
+//       //if (1)
+//       {
+//         //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+//         hr = pDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+//         hr = pDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+//       }
+// 
+//       //glBindTexture(GL_TEXTURE_2D, glAA_texture[0]);
+//       */
+//       /*
+//       glMatrixMode(GL_TEXTURE);
+//       glPushMatrix();
+//       glLoadIdentity();
+//       glMatrixMode(GL_MODELVIEW);
+//       glPushMatrix();
+//       glTranslatef(0.5f, 0.5f, 0);
+//       */
+//      
+//     }
+//     else
+    if (!mState.mTexturing)
     {
       
       //glPushMatrix();
@@ -1086,7 +1089,7 @@ void nuiD3DPainter::DrawArray(const nuiRenderArray& rArray)
   NuiD3DVertex* pVertices = NULL;
   DWORD nSectionSize = size; //vertices count
   DWORD flagLock = 0;
-  if ((mnCurrentVBOffset+nSectionSize)<=2048)
+  if ((mnCurrentVBOffset + nSectionSize) <= NUI_VERTEXBUFFER_MAXSIZE)
   {
     flagLock=D3DLOCK_NOOVERWRITE;
   }
