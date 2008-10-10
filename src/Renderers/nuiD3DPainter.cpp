@@ -564,7 +564,7 @@ void nuiD3DPainter::SetState(const nuiRenderState& rState, bool ForceApply)
   if (mState.mTexturing)
     hr = pDev->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_MODULATE); 
   else
-    hr = pDev->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
+    hr = pDev->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_MODULATE); //SELECT1
   
   PROFILE_CHRONO_OUT(1);
   //NGL_OUT(_T("--------------"));
@@ -1482,7 +1482,13 @@ void nuiD3DPainter::UploadTexture(nuiTexture* pTexture)
 //#endif
                
               /*
-              p[dst*4+0] = pBits[src*4+1];
+              p[dst*4+0] = 0;
+						  p[dst*4+1] = 0;
+						  p[dst*4+2] = 0;
+						  p[dst*4+3] = pBits[src*4+0];
+              */
+              /*
+              p[dst*4+0] = pBits[(src*4+1];
 						  p[dst*4+1] = pBits[src*4+2];
 						  p[dst*4+2] = pBits[src*4+3];
 						  p[dst*4+3] = pBits[src*4+0];
