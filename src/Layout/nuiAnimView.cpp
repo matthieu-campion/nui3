@@ -39,7 +39,7 @@ bool nuiAnimView::Draw(nuiDrawContext* pContext)
 {
   nuiWidget* pItem = NULL;
 
-  long count = mpChildren.size();
+  uint32 count = (int32)mpChildren.size();
   if (!count)
     return true;
 
@@ -50,6 +50,7 @@ bool nuiAnimView::Draw(nuiDrawContext* pContext)
   }
   double value = TimeToFrame(GetTime());
   count = ToBelow(value);
+  NGL_OUT(_T("AnimView Draw: %f\n"), value);
 
   nuiWidgetList::iterator it = mpChildren.begin();
   nuiWidgetList::iterator end = mpChildren.end();

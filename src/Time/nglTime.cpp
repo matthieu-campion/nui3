@@ -31,8 +31,8 @@ const nglTime nglTime::Week   = 604800;
 const nglTime nglTime::Year   = 31557600;
 
 #ifdef _WIN32_
-double nglTime::mLaunchValue = 0;
-int nglTime::mLaunchDate = 0;
+__int64 nglTime::mLaunchValue = 0;
+int32 nglTime::mLaunchDate = 0;
 #endif // _WIN32_
 
 
@@ -84,14 +84,7 @@ nglTime::nglTime()
 #endif // macintosh
 
 #ifdef _WIN32_
-  double tempval = GetTime();
-  if (!mLaunchDate)
-  {
-    mLaunchDate = time(NULL);
-    mLaunchValue = tempval;
-  }
-  
-  mValue = mLaunchDate + (tempval - mLaunchValue);
+  mValue = GetTime();
 #endif // _WIN32_
 }
 
@@ -106,6 +99,11 @@ nglTime::nglTime(const nglTimeInfo& rInfo)
 
   rInfo.CopyToSys(&tinfo);
   mValue = mktime (&tinfo);
+  
+#ifdef _WIN32_
+  mValue -= mLaunchDate;
+#endif
+  ;
 }
 
 nglTime::nglTime(const nglTime& rTime)
@@ -127,6 +125,9 @@ bool nglTime::GetGMTime (nglTimeInfo& rInfo)
 {
   struct tm* tinfo;
   time_t tstamp = (time_t)mValue;
+#ifdef _WIN32_
+  tstamp += mLaunchDate;
+#endif
 
   tinfo = gmtime (&tstamp);
   if (!tinfo)
@@ -140,6 +141,9 @@ bool nglTime::GetLocalTime (nglTimeInfo& rInfo)
 {
   struct tm* tinfo;
   time_t tstamp = (time_t)mValue;
+#ifdef _WIN32_
+  tstamp += mLaunchDate;
+#endif
 
   tinfo = localtime (&tstamp);
   if (!tinfo)
@@ -156,6 +160,9 @@ nglString nglTime::GetGMTimeStr (const char* pFormat)
   char buffer[1024+1];
   struct tm* tinfo;
   time_t tstamp = (time_t)mValue;
+#ifdef _WIN32_
+  tstamp += mLaunchDate;
+#endif
 
   if (!(tinfo = gmtime (&tstamp)) ||
       !strftime (buffer, 1024, pFormat, tinfo))
@@ -170,6 +177,9 @@ nglString nglTime::GetLocalTimeStr (const char* pFormat)
   char buffer[1024+1];
   struct tm* tinfo;
   time_t tstamp = (time_t)mValue;
+#ifdef _WIN32_
+  tstamp += mLaunchDate;
+#endif
 
   if (!(tinfo = localtime (&tstamp)) ||
       !strftime (buffer, 1024, pFormat, tinfo))
@@ -253,18 +263,25 @@ double nglTime::GetTime()
   {
     if (!QueryPerformanceFrequency((LARGE_INTEGER *)&mTimerFrequency))
       mTimerFrequency=0;
+    QueryPerformanceCounter((LARGE_INTEGER *)&mLaunchValue);
+    if (!mLaunchDate)
+    {
+      mLaunchDate = time(NULL);
+    }
   }
 
   if (mTimerFrequency!=0)
   {
     QueryPerformanceCounter((LARGE_INTEGER *)&tt);
-    t=(double)tt;
-    t/=mTimerFrequency;
+    tt -= mLaunchValue;
+    t = (double)tt;
+    t /= mTimerFrequency;
   }
   else
   {
-    t=((double)timeGetTime())/1000.0;
+    t = ((double)timeGetTime())/1000.0;
   }
+  //t += mLaunchDate;
   return t;
 }
 #endif // _WIN32_

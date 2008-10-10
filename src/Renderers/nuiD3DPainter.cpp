@@ -17,6 +17,7 @@
 #include "AAPrimitives.h"
 
 
+#define NGL_OUT(a)
 //#define NGL_OUT(a) wprintf(a)
 //#define NUI_PROFILE_DIRECTX
 #define DIRECTX_FULL_LOG

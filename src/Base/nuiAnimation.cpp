@@ -201,7 +201,7 @@ double nuiAnimation::GetTime()
 
 double nuiAnimation::TimeToFrame(double Tm)
 {
-  if (mFrameTime == 0)
+  if (mFrameTime <= 0)
     return 0;
   return Tm / mFrameTime;
 }
@@ -269,6 +269,7 @@ double nuiAnimation::UpdateTime()
   mUpdatingTime = true;
 
   nglTime now;
+  NGL_OUT(_T("now: %f\n"), (double)now);
   double t = now - mLastTime;
   double advance = mDirection * t;
   mCurrentTime += advance;
