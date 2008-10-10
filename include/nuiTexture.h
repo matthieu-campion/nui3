@@ -36,7 +36,8 @@ public:
   static nuiTexture* GetTexture (const nuiXMLNode* pNode); ///< Create an image from an xml description.
   static nuiTexture* GetTexture (const nglString& rName); ///< Get a texture from its ID only
   static nuiTexture* GetTexture (nuiSurface* pSurface, bool OwnSurface); ///< Create a texture from an existing nuiSurface. . If \param OwnImage the nuiSurface object will be deleted with the nuiTexture.
-
+  static nuiTexture* GetAATexture(); ///< Returns an antialiasing texture for use with AAPrimitives.cpp
+  
   static void ClearAll();
   static void ForceReloadAll(bool Rebind = false);
 
@@ -68,7 +69,9 @@ public:
   void SetWrapS(GLuint WrapS);       ///< Set the S coord wrap rule.
   void SetWrapT(GLuint WrapT);       ///< Set the T coord wrap rule.
   void SetEnvMode(GLuint Mode);      ///< Set the environement mode.
-
+  void EnableAutoMipMap(bool Set);   ///< Enable the automatic creation of mip maps from the original texture.
+  bool GetAutoMipMap() const;
+  
   void SetRetainBuffer(bool Retain); ///< Set the nglImage destroying switch upon uploading to OpenGL
 
   bool SetSource(const nglString& rName); ///< Set the image source. Permits to set a global name for an image source instead of the automatically assigned one.
@@ -110,6 +113,7 @@ protected:
   GLuint mWrapS;
   GLuint mWrapT;
   GLuint mEnvMode;
+  bool mAutoMipMap;
 
   static nglContext* mpSharedContext;
   static nuiTextureMap mpTextures;

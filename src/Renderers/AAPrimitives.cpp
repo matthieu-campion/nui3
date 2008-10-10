@@ -291,6 +291,32 @@ inline float ifun(float x, float y, float F)
   texture[(pct-1 - y) + (pct-1 - x) * pdb] = c;\
 }
 
+void glAAGenerateAABuffer(float Falloff, float alias, uint8* texture) 
+{      
+  // compute the AA sphere
+  {
+    uint32 l2phf = ToBelow(log2(phf));
+    uint32 l2psz = ToBelow(log2(psz));
+    
+    int32 x = phf - 1;
+    int32 y = 0;
+    int32 ax;
+    float T = 0.0f;
+    float ys = 0.0f;
+    while (x > y) 
+    {
+      ys = (float)(y * y);
+      float L = sqrt(prs - ys);
+      float D = ceilf(L) - L;
+      if (D < T) x--;
+      for(ax = y; ax < x; ax++)
+        putpixel(ax, y, (uint8)ifun((float)ax, ys, Falloff));            // fill wedge
+      putpixel(x, y, (uint8)((1.0f - D) * (ifun((float)x, ys, Falloff))));          // outer edge
+      T = D;
+      y++;
+    }
+  }
+}
 
 void glAAGenerateAATex(float Falloff, float alias) 
 {      
@@ -304,24 +330,8 @@ void glAAGenerateAATex(float Falloff, float alias)
     uint8 *texture = glAA_AAtex;
     if (texture) 
     {
-      int32 x = phf - 1;
-      int32 y = 0;
-      int32 ax;
-      float T = 0.0f;
-      float ys = 0.0f;
-      while (x > y) 
-      {
-        ys = (float)(y * y);
-        float L = sqrt(prs - ys);
-        float D = ceilf(L) - L;
-        if (D < T) x--;
-        for(ax = y; ax < x; ax++)
-          putpixel(ax, y, (uint8)ifun((float)ax, ys, Falloff));            // fill wedge
-        putpixel(x, y, (uint8)((1.0f - D) * (ifun((float)x, ys, Falloff))));          // outer edge
-        T = D;
-        y++;
-      }
-
+      glAAGenerateAABuffer(Falloff, alias, texture);
+      
       glAASetContext();
       glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
       if (!glAA_texture)

@@ -25,6 +25,7 @@ extern uint8* glAA_AAtex;
 // glAArg API
 void glAAInit();
 void glAAExit();
+void glAAGenerateAABuffer(float Falloff, float alias, uint8* texture);
 void glAAGenerateAATex(float falloff, float alias);
 void glAABegin(GLenum mode);
 void glAAEnd();

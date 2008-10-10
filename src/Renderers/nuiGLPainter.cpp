@@ -956,18 +956,25 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
       else
 #endif
       {
-        glTexImage2D
-        (  
-         target,
-         0,
-         pImage->GetPixelFormat(),
-         (int)Width,
-         (int)Height,
-         0,
-         pixelformat,
-         type,
-         pBuffer
-         );
+        if (pTexture->GetAutoMipMap())
+        {
+          gluBuild2DMipmaps(target, pImage->GetPixelFormat(), (int)Width, (int)Height, pixelformat, type, pBuffer);
+        }
+        else
+        {
+          glTexImage2D
+          (  
+           target,
+           0,
+           pImage->GetPixelFormat(),
+           (int)Width,
+           (int)Height,
+           0,
+           pixelformat,
+           type,
+           pBuffer
+           );
+        }
         nuiCheckForGLErrors();
       }
 

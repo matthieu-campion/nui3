@@ -10,6 +10,7 @@
 #include "nuiTexture.h"
 #include "nuiXML.h"
 #include "nuiDrawContext.h"
+#include "AAPrimitives.h"
 
 using namespace std;
 
@@ -107,6 +108,43 @@ nuiTexture* nuiTexture::GetTexture (const nglString& rName)
   if (it == mpTextures.end())
     return NULL;
   pTexture = it->second;
+  if (pTexture)
+    pTexture->Acquire();
+  return pTexture;
+}
+
+//#TODO remove this and do something to have more general AAPrimitives.*
+#define psz (phf * 2)
+#define psm (psz - 1)
+#define phs (phf * phf)
+#define pdb (psz * 2)
+#define pct (psz + phf)
+#define prs ((phf-1)*(phf-1))
+
+nuiTexture* nuiTexture::GetAATexture()
+{
+  nuiTexture* pTexture = NULL;
+  nuiTextureMap::iterator it = mpTextures.find(_T("nuiTextureAA"));
+  if (it == mpTextures.end())
+  {
+    nglImageInfo info(true);
+    info.mBufferFormat = eImageFormatRaw;  ///< Buffer data format can be raw (user accessible) or proprietary (opaque to user, such as S3TC/DXTC)
+    info.mPixelFormat = eImagePixelAlpha;   ///< Pixel components and respective components bit resolution
+    info.mWidth = pdb;                        ///< Image width in pixels (0 if \a mpBuffer is NULL)
+    info.mHeight = pdb;                       ///< Image height in pixels (0 if \a mpBuffer is NULL)
+    info.mBitDepth = 8;                     ///< Pixel bit depth (sum of components bit resolution, 0 if \a mpBuffer is NULL)
+    info.mBytesPerPixel = 1;                ///< Pixel allocation size in bytes (>= pixel bit depth, 0 if \a mpBuffer is NULL)
+    info.mBytesPerLine = pdb;                 ///< Pixel row allocation size in bytes (>= pixel size * image width, 0 if \a mpBuffer is NULL)
+    info.AllocateBuffer();
+    uint8* buffer = (uint8*)info.mpBuffer;
+    glAAGenerateAABuffer(0, 0, buffer);
+    pTexture = nuiTexture::GetTexture(info);
+  }
+  else
+  {
+    pTexture = it->second;
+  }
+  
   if (pTexture)
     pTexture->Acquire();
   return pTexture;
@@ -301,6 +339,7 @@ void nuiTexture::Init()
   mWrapT = GL_CLAMP;
 #endif
   mEnvMode = GL_MODULATE;
+  mAutoMipMap = false;
   
   nuiTextureCacheSet::iterator it = mTextureCaches.begin();
   nuiTextureCacheSet::iterator end = mTextureCaches.end();
@@ -516,6 +555,17 @@ uint32 nuiTexture::GetWidthPOT() const
 uint32 nuiTexture::GetHeightPOT() const
 {
   return mRealHeightPOT;
+}
+
+void nuiTexture::EnableAutoMipMap(bool Set)
+{
+  mAutoMipMap = Set;
+  ForceReload(true);
+}
+
+bool nuiTexture::GetAutoMipMap() const
+{
+  return mAutoMipMap;
 }
 
 /////////
