@@ -1462,7 +1462,7 @@ void nuiD3DPainter::UploadTexture(nuiTexture* pTexture)
 		  char* pBits = pImage->GetBuffer();
 		  if (!pBits)
 		    int a=0;
-		  if (pBits)
+		  if (pBits && p)
 		  {	
 			  if (d3dTextureFormat == D3DFMT_A8R8G8B8)
 			  {
