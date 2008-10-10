@@ -220,7 +220,7 @@ nuiD3DPainter::nuiD3DPainter(nglContext* pContext, const nuiRect& rRect)
 {
   mpVB = NULL;
   mnCurrentVBOffset = 0;
-
+  mCanRectangleTexture = 1; //FIXME
   mnBatchCurrentVBOffset = 0;
   mnBatchCurrentVBSize = 0;
   if (!mActiveContexts)
@@ -309,7 +309,7 @@ void nuiD3DPainter::StartRendering(nuiSize ClipOffsetX, nuiSize ClipOffsetY)
   if (mState.mTexturing)
     hr = pDev->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_MODULATE); 
   else
-    hr = pDev->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_MODULATE); //D3DTOP_SELECTARG1
+    hr = pDev->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_SELECTARG1); //D3DTOP_SELECTARG1
   hr = pDev->SetStreamSource( 0, mpVB, 0, sizeof(NuiD3DVertex) );
 }
 
@@ -1062,7 +1062,7 @@ void nuiD3DPainter::DrawArray(const nuiRenderArray& rArray)
     const uint8 B = /*ToBelow*/(c.Red()   * 255.0);
     const uint8 A = /*ToBelow*/(c.Alpha() * 255.0);
 
-    pDev->SetRenderState(D3DRS_TEXTUREFACTOR,RGB(R,G,B));
+    //pDev->SetRenderState(D3DRS_TEXTUREFACTOR,RGB(R,G,B));
   }
 
   //PROFILE_CHRONO_OUT(18, "COLOR PERMUTATION" );
@@ -1452,16 +1452,12 @@ void nuiD3DPainter::UploadTexture(nuiTexture* pTexture)
     if (reload)
     {
       //we have to reload texture content
-       D3DLOCKED_RECT lockedRect;
-
+      D3DLOCKED_RECT lockedRect;
 		  hr = info.mpTexture->LockRect(0, &lockedRect, NULL, D3DLOCK_DISCARD);
 	    char* p = (char*) lockedRect.pBits;
 	    int tex_width = lockedRect.Pitch/4;
-  			
 		  int pixelSize = pImage->GetPixelSize();
 		  char* pBits = pImage->GetBuffer();
-		  if (!pBits)
-		    int a=0;
 		  if (pBits && p)
 		  {	
 			  if (d3dTextureFormat == D3DFMT_A8R8G8B8)
@@ -1486,12 +1482,20 @@ void nuiD3DPainter::UploadTexture(nuiTexture* pTexture)
 //#endif
                
               /*
-              //rand()%255
-              p[dst*4+0] = 0;
-						  p[dst*4+1] = 0;
-						  p[dst*4+2] = 0;
-						  p[dst*4+3] = 255;
+              p[dst*4+0] = pBits[src*4+1];
+						  p[dst*4+1] = pBits[src*4+2];
+						  p[dst*4+2] = pBits[src*4+3];
+						  p[dst*4+3] = pBits[src*4+0];
               */
+              
+              //rand()%255
+              /*
+              p[dst*4+0] = rand()%255;
+						  p[dst*4+1] = rand()%255;
+						  p[dst*4+2] = rand()%255;
+						  p[dst*4+3] = rand()%255;
+              */
+              
               
               /*
               const uint8 R = v.mB;
@@ -1505,7 +1509,9 @@ void nuiD3DPainter::UploadTexture(nuiTexture* pTexture)
 						  //p[dst*4+3] = 200; //A
               
 					  }
+            
 				  }
+        
 			}
 			else
 			{
@@ -1514,9 +1520,12 @@ void nuiD3DPainter::UploadTexture(nuiTexture* pTexture)
       }
 			info.mpTexture->UnlockRect(0);
 			}
+      else
+      {
+        int a=0;
+      }
 
 
-//       glPixelStorei(GL_UNPACK_ALIGNMENT,1);
 
       GLuint pixelformat = pImage->GetPixelFormat();
 
@@ -1538,8 +1547,6 @@ void nuiD3DPainter::UploadTexture(nuiTexture* pTexture)
 
       info.mReload = false;
       
-
-
       /*
       GLbyte* pBuffer = NULL;
       bool allocated = false;
@@ -1583,17 +1590,8 @@ void nuiD3DPainter::UploadTexture(nuiTexture* pTexture)
 	hr = pDev->SetSamplerState(0, D3DSAMP_MAGFILTER, nuiGetTextureFilteringTypeD3D(pTexture->GetMagFilter()));
 	hr = pDev->SetSamplerState(0, D3DSAMP_ADDRESSU, nuiGetTextureAdressModeD3D(pTexture->GetWrapS()));
 	hr = pDev->SetSamplerState(0, D3DSAMP_ADDRESSV, nuiGetTextureAdressModeD3D(pTexture->GetWrapT()));
-  //D3DSAMP_MIPFILTER
-//   glTexParameteri(target, GL_TEXTURE_MIN_FILTER, pTexture->GetMinFilter());
-//   nuiCheckForGLErrors();
-//   glTexParameteri(target, GL_TEXTURE_MAG_FILTER, pTexture->GetMagFilter());
-//   nuiCheckForGLErrors();
-//   glTexParameteri(target, GL_TEXTURE_WRAP_S, pTexture->GetWrapS());
-//   nuiCheckForGLErrors();
-//   glTexParameteri(target, GL_TEXTURE_WRAP_T, pTexture->GetWrapT());
-//   nuiCheckForGLErrors();
-// 
-	//TO DO : env mode
+	
+  //TO DO : env mode ?
 //   glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, pTexture->GetEnvMode());
 //   nuiCheckForGLErrors();
 // 
@@ -1849,5 +1847,9 @@ void nuiD3DPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
   } 
 }
 
+uint32 nuiD3DPainter::GetRectangleTextureSupport() const
+{
+  return mCanRectangleTexture;
+}
 
 #endif //   #ifndef __NUI_NO_D3D__
