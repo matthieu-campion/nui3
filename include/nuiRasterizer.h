@@ -407,9 +407,11 @@ public:
         
     if (Left0.Y() > Left1.Y() || Right0.Y() > Right1.Y())
       return;
-    
-    NGL_ASSERT(Left0.X() <= Right0.X());
-    NGL_ASSERT(Left1.X() <= Right1.X());
+//    if ((Left0.X() > Right0.X()) || (Left1.X() > Right1.X()))
+//      return;
+//    
+//    NGL_ASSERT(Left0.X() <= Right0.X());
+//    NGL_ASSERT(Left1.X() <= Right1.X());
 //     NGL_ASSERT(Left0.Y() == Right0.Y());
 //     NGL_ASSERT(Left1.Y() == Right1.Y());
 

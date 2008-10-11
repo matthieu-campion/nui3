@@ -375,6 +375,7 @@ void nuiDrawContext::DrawShape(nuiShape* pShape, nuiShapeMode Mode, float Qualit
       nuiRenderObject* pObject = pShape->Outline(Quality, mCurrentState.mLineWidth, mCurrentState.mLineJoin, mCurrentState.mLineCap);
       SetFillColor(GetStrokeColor());
       SetTexture(mpAATexture);
+      EnableTexturing(true);
       EnableBlending(true);
       SetBlendFunc(nuiBlendTransp);//GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
       DrawObject(*pObject);
