@@ -604,6 +604,9 @@ bool nglContext::BuildDirect3D(HWND hwnd, const nglContextInfo& rInfo, const ngl
   presParams.BackBufferFormat = D3DFMT_X8R8G8B8;
   HRESULT hr = pDirect3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hwnd, D3DCREATE_MIXED_VERTEXPROCESSING, &presParams, &mpDirect3DDevice);
   if (FAILED(hr))
+    hr = pDirect3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hwnd, D3DCREATE_MIXED_VERTEXPROCESSING, &presParams, &mpDirect3DDevice);
+
+  if (FAILED(hr))
   {
     switch (hr)
     {
