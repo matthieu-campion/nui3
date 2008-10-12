@@ -309,32 +309,32 @@ nuiPosition nuiTheme::GetWindowPart(nuiRect rect,nuiSize X,nuiSize Y,nuiWindowFl
     AdjustWindowRect(rect, Flags, RectIsClient);
  
   if (!(Flags & (nuiWindow::NoCaption & ~nuiWindow::NoClose)))
-    rect.mTop-= CAPTION_SIZE;
+    rect.mTop -= CAPTION_SIZE;
   if (!(Flags & nuiWindow::NoResize))
   {
     if (!rect.IsInside(X,Y))
     {
-      if (X <= rect.mLeft+4)
+      if (X <= rect.mLeft + 4)
       {
-        if (Y <= rect.mTop+4)
+        if (Y <= rect.mTop + 4)
           ClickPos = nuiTopLeft;
-        else if (Y >= rect.mBottom-4)
+        else if (Y >= rect.mBottom - 4)
           ClickPos = nuiBottomLeft;
         else
           ClickPos = nuiLeft;
       }
-      else if (X >= rect.mRight-4)
+      else if (X >= rect.mRight - 4)
       {
-        if (Y <= rect.mTop+4)
+        if (Y <= rect.mTop + 4)
           ClickPos = nuiTopRight;
-        else if (Y >= rect.mBottom-4)
+        else if (Y >= rect.mBottom - 4)
           ClickPos = nuiBottomRight;
         else
           ClickPos = nuiRight;
       }
-      else if (Y <= rect.mTop+4)
+      else if (Y <= rect.mTop + 4)
         ClickPos = nuiTop;
-      else if (Y >= rect.mBottom-4)
+      else if (Y >= rect.mBottom - 4)
         ClickPos = nuiBottom;
     }
   }

@@ -371,14 +371,14 @@ bool nuiWindow::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
   {
     LocalToLocal(GetParent(), X,Y);
 
-    mClickX=X;
-    mClickY=Y;
+    mClickX = X;
+    mClickY = Y;
 
     nuiRect _Rect = GetRect();
     _Rect.Transform(GetMatrix());
     nuiTheme* pTheme = GetTheme();
     NGL_ASSERT(pTheme);
-    mClickPos= pTheme->GetWindowPart(_Rect,X,Y,GetFlags(), false);
+    mClickPos= pTheme->GetWindowPart(_Rect, X, Y, GetFlags(), false);
     pTheme->Release();
 
     nuiRect wRect = GetRect();
@@ -425,7 +425,7 @@ bool nuiWindow::MouseUnclicked (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button
 
   if (Button == nglMouseInfo::ButtonLeft && mMoving != eNoMove)
   {
-    LocalToLocal(GetParent(), X,Y);
+    LocalToLocal(GetParent(), X, Y);
 
     mClickX = X;
     mClickY = Y;
@@ -446,13 +446,13 @@ bool nuiWindow::MouseMoved (nuiSize X, nuiSize Y)
   {
   nuiSize dx, dy;
 
-  LocalToLocal(GetParent(), X,Y);
+  LocalToLocal(GetParent(), X, Y);
   dx = X - mClickX;
   dy = Y - mClickY;
 
   if (mMoving == ePreMove)
   {
-    if (abs((int)dx)>WINDOW_MINIMOVE || abs((int)dy)>WINDOW_MINIMOVE)
+    if (abs((int)dx) > WINDOW_MINIMOVE || abs((int)dy) > WINDOW_MINIMOVE)
       mMoving = eMove;
     else
       return true;
@@ -470,7 +470,7 @@ bool nuiWindow::MouseMoved (nuiSize X, nuiSize Y)
     {
     case nuiCenter:
       {
-        wRect.Move(dx,dy);
+        wRect.Move(dx, dy);
       }
       break;
     case nuiTopLeft:

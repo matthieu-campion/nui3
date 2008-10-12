@@ -13,7 +13,7 @@
 #include "nuiContainer.h"
 
 #define NUI_TREEVIEW_DEPTH_INSET (12.0f)
-#define NUI_TREEVIEW_INTERLINE (3.0f)
+#define NUI_TREEVIEW_INTERLINE (2.0f)
 #define NUI_TREEVIEW_HANDLE_SIZE (8.0f)
 
 // nuiTreeNode
@@ -405,7 +405,9 @@ void nuiTreeView::CalcTreeSize(nuiRect& rRect, uint32 Depth, nuiTreeNode* pTree)
   if (pWidget)
   {
     nuiRect WidgetRect = pWidget->GetIdealRect().Size();
-    WidgetRect.Set(0.0f, 0.0f, WidgetRect.GetWidth() + GetDepthInset(Depth)/*mDepthInset * (nuiSize)(Depth+1)*/, (nuiSize)ToAbove(WidgetRect.GetHeight() + NUI_TREEVIEW_INTERLINE));
+    WidgetRect.Set(0.0f, 0.0f, WidgetRect.GetWidth() + GetDepthInset(Depth), (nuiSize)ToAbove(WidgetRect.GetHeight() + NUI_TREEVIEW_INTERLINE));
+//    WidgetRect.Set(0.0f, 0.0f, WidgetRect.GetWidth() + GetDepthInset(Depth), (nuiSize)ToAbove(WidgetRect.GetHeight()));
+    WidgetRect.RoundToAbove();
     rRect.Set(0.0f,0.0f, MAX(rRect.GetWidth(), WidgetRect.GetWidth()), rRect.GetHeight() + WidgetRect.GetHeight());
   }
 
@@ -455,8 +457,9 @@ void nuiTreeView::SetTreeRect(nuiSize& Y, uint32 Depth, nuiTreeNode* pTree)
       WidgetRect.SetWidth(width);
     }
     
+    WidgetRect.RoundToAbove();
     pWidget->SetLayout(WidgetRect);
-    Y += NUI_TREEVIEW_INTERLINE + WidgetRect.GetHeight();
+    Y = WidgetRect.Bottom();
   }
 
 
