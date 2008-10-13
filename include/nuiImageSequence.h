@@ -8,41 +8,31 @@
 #pragma once
 
 #include "nui.h"
-#include "nuiDecoration.h"
 
 
-
-class nuiFrameSequence : public nuiDecoration
+class nuiImageSequence : public nuiWidget
 {
 public:
-  nuiFrameSequence(const nglString& rName);
-  nuiFrameSequence(const nglString& rName, uint32 nbFrames, nglImage* pImage, nuiOrientation orientation, const nuiRect& rClientRect, const nuiColor& rColor = nuiColor(255, 255, 255, 255));
-  nuiFrameSequence(const nglString& rName, uint32 nbFrames, const nglPath& rTexturePath, nuiOrientation orientation, const nuiRect& rClientRect, const nuiColor& rColor = nuiColor(255, 255, 255, 255));
+  nuiImageSequence();
+  nuiImageSequence(uint32 nbFrames, nglImage* pImage, nuiOrientation orientation, const nuiColor& rColor = nuiColor(255, 255, 255, 255));
+  nuiImageSequence(uint32 nbFrames, const nglPath& rTexturePath, nuiOrientation orientation, const nuiColor& rColor = nuiColor(255, 255, 255, 255));
   void InitAttributes();
-  virtual ~nuiFrameSequence();
+  virtual ~nuiImageSequence();
   
   bool Load(const nuiXMLNode* pNode);
   nuiXMLNode* Serialize(nuiXMLNode* pNode);
   
-  virtual void Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rRect);
+  virtual nuiRect CalcIdealSize();  
+  virtual bool Draw(nuiDrawContext* pContext);
   
   uint32 GetFrameIndex(nuiWidget* pWidget) const;
-  void SetFrameIndex(nuiWidget* pWidget, uint32 index);
+  void SetFrameIndex(uint32 index);
   
   uint32 GetNbFrames() const;
   void SetNbFrames(uint32 nbFrames);
   
   void SetOrientation(nglString orientation);
   nglString GetOrientation();
-  
-  void SetSourceClientRect(const nuiRect& rRect);
-  const nuiRect& GetSourceClientRect() const;
-  
-  void EnableBorder(bool set);
-  bool IsBorderEnabled() const;
-  
-  virtual nuiSize GetBorder(nuiPosition position) const;
-  virtual nuiRect GetIdealClientRect() const;
   
   bool IsInterpolated();
   void SetInterpolated(bool set);
@@ -63,13 +53,12 @@ private:
   
   // attributes ***********************************
   nuiColor mColor;
-  nuiRect mClientRect;
   nuiRect mTexRect;
-  bool mBorderEnabled;
   bool mInterpolated;
-  std::map<nuiWidget*, uint32> mIndex;
   uint32 mNbFrames;
+  uint32 mFrameIndex;
   nuiOrientation mOrientation;
+  bool mUseAlpha;
   
   nglImage* mpTempImage;
   bool mRefreshTextures;

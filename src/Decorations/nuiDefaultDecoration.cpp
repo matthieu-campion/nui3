@@ -21,7 +21,7 @@
 
 nuiDefaultDecoration::nuiDefaultDecoration()
 {
-  
+  mpKnobSequence = NULL;
 }
 
 
@@ -772,46 +772,26 @@ void nuiDefaultDecoration::ComboBox(nuiWidget* pWidget)
 //
 // nuiKnob
 //
+
+nuiImageSequence* nuiDefaultDecoration::mpKnobSequence;
+
 void nuiDefaultDecoration::KnobSequence(nuiWidget* pWidget)
 {
   nuiKnob* pKnob = (nuiKnob*)pWidget;
 
-  nuiRect clientRect;
-  nglString decoName;
-  
-  if (pKnob->GetShowDefaultBackground())
-  {
-    clientRect.Set(0,0,64,64);
-    decoName = _T("nuiDefaultDecorationKnobSequenceHdlWithBkg");
-  }
-  else
-  {
-    clientRect.Set(16,16,32,32);
-    decoName = _T("nuiDefaultDecorationKnobSequenceHdlWithoutBkg");
-  }
-  
-
-  
-  nuiFrameSequence* pSeq = (nuiFrameSequence*)nuiDecoration::Get(decoName);
-  if (!pSeq)
+  if (!pKnob->GetImageSequence() && !mpKnobSequence)
   {
     nglIMemory* pIMem = new nglIMemory(gpKnobSequenceHdl, gKnobSequenceHdlSize);
     nglImage* pImage = new nglImage(pIMem);
     NGL_ASSERT(pImage);
-    pSeq = new nuiFrameSequence(decoName, 31, pImage, nuiVertical, clientRect);
-    pSeq->SetLayer(eLayerFront);
+    mpKnobSequence = new nuiImageSequence(31, pImage, nuiVertical);
     delete pIMem;     
     delete pImage;
   }
 
-  nuiDecorationMode mode = eDecorationClientOnly;
-  
-  nuiFrame* pBkgDeco = NULL;
-  
-  // background for nuiKnob
   if (pKnob->GetShowDefaultBackground())
   {
-    pBkgDeco = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationKnobSequenceBkg"));
+    nuiFrame* pBkgDeco = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationKnobSequenceBkg"));
     if (!pBkgDeco)
     {
       nglIMemory* pIMem = new nglIMemory(gpKnobSequenceBkg, gKnobSequenceBkgSize);
@@ -822,12 +802,11 @@ void nuiDefaultDecoration::KnobSequence(nuiWidget* pWidget)
       pBkgDeco->SetLayer(eLayerBack);
       delete pIMem;  
     }
-    
-    mode = eDecorationBorder;    
+    pKnob->SetDecoration(pBkgDeco, eDecorationBorder);
   }
   
-  
-  pKnob->SetKnobDecoration(pSeq, pBkgDeco, mode);
+  if (!pKnob->GetImageSequence())
+    pKnob->SetImageSequence(mpKnobSequence);
 }
 
 

@@ -8,7 +8,7 @@
 #pragma once
 
 #include "nui.h"
-#include "nuiFrameSequence.h"
+#include "nuiImageSequence.h"
 
 //
 // decoration classes
@@ -23,20 +23,28 @@ class NUI_API nuiKnob : public nuiSimpleContainer
 {
 public:
   nuiKnob(const nuiRange& rRange = nuiRange(), bool showDefaultBackground = true);
+  nuiKnob(const nuiRange& rRange, nuiImageSequence* pImageSequence, bool showDefaultBackground);
+  void Init(const nuiRange& rRange, bool showDefaultBackground);
+  void InitAttributes();
+
+  
   virtual bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
   virtual ~nuiKnob();
   virtual nuiXMLNode* Serialize(nuiXMLNode* pParentNode, bool Recursive) const;
+  
+  void SetImageSequence(nuiImageSequence* pImageSequence);
+  nuiImageSequence* GetImageSequence();
+  bool GetShowDefaultBackground();
+  
+  // attributes
+  const nglPath& GetSequencePath();
+  void SetSequencePath(const nglPath& rPath);
+  nglString GetOrientation();
+  void SetOrientation(nglString orientation);
+  uint32 GetNbFrames();
+  void SetNbFrames(uint32 nbFrames);
 
   virtual nuiRange& GetRange(); ///< Return the Range used by this scroll bar. 
-  bool GetShowDefaultBackground() const;
-
-  // a special SetDecoration method to handle the default associated background
-  void SetKnobDecoration(nuiFrameSequence* pFrameSeq, nuiDecoration* pBkgDeco = NULL, nuiDecorationMode mode = eDecorationBorder);
-  nuiFrameSequence* GetFrameSequence();
-  
-  // virtual from nuiWidget : using this SetDecoration method means you're handling the background outside the nuiKnob (or means you don't have any bkg)
-  virtual void SetDecoration(nuiDecoration* pDecoration, nuiDecorationMode Mode = eDecorationOverdraw);
-
 
   // Sent events:
   nuiSimpleEventSource<nuiValueChanged> ValueChanged; ///< This event is sent whenever the Knob's thumb position is changed (by the user or by the program).
@@ -55,7 +63,7 @@ public:
 
 protected:
 
-//  virtual bool Draw(nuiDrawContext* pContext);
+  virtual bool Draw(nuiDrawContext* pContext);
 
   //Received Events:
   bool MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
@@ -73,7 +81,6 @@ protected:
 
   nuiSize mClickValue;
 
-  bool mShowDefaultBackground;
   bool mClicked;
 
   nuiSize mClickX;
@@ -92,9 +99,17 @@ protected:
   static nglKeyCode mDefaultFineSensitivityKey;
   nglKeyCode mFineSensitivityKey;
   
-  nuiFrameSequence* mpFrameSequence;
+  nuiImageSequence* mpImageSequence;
+  uint32 mFrameIndex;
 
   nuiEventSink<nuiKnob> mKnobSink;
+  
+  bool mShowDefaultBackground;
+  
+  nglPath mSequencePath;
+  uint32 mSequenceNbFrames;
+  nglString mSequenceOrientation;
+  bool mSequenceNeedRefresh;
 };
 
 

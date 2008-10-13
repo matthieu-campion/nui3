@@ -16,6 +16,8 @@ class nuiSimpleContainer;
 class nuiMainWindow;
 class nuiMessageBox;
 class nuiTabView;
+class nuiImageSequence;
+
 
 typedef nuiFastDelegate::FastDelegate1<nuiWidget*> nuiDecorationDelegate;
 
@@ -84,6 +86,9 @@ protected:
   static void FileSelector_TreeFolderIcon(nuiWidget* pWidget);
   static void FileSelector_TreeFileIcon(nuiWidget* pWidget);
   
+private:
+  
+  static nuiImageSequence* mpKnobSequence;
 
 
 };

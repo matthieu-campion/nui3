@@ -42,7 +42,7 @@ void MainWindow::OnCreation()
   pMainBox->AddCell(pBloc);
   pMainBox->SetCellExpand(pMainBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
   
-  nuiKnob* pKnob = new nuiKnob(nuiRange(0, 0, 30, 1, 10, 10), true/*with background*/);
+  nuiKnob* pKnob = new nuiKnob(nuiRange(0, 0, 30, 1, 10, 10), true);
   pKnob->SetPosition(nuiCenter);
   pBloc->AddCell(pKnob);
   

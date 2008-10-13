@@ -9,12 +9,7 @@
 #include "nuiKnob.h"
 #include "nuiDrawContext.h"
 #include "nuiXML.h"
-#include "nuiTheme.h"
-#include "nuiMetaDecoration.h"
 
-#define KNOB_IDEAL_WIDTH 12
-#define KNOB_IDEAL_SIZE 100
-#define HANDLE_SIZE KNOB_IDEAL_WIDTH
 
 nuiSize nuiKnob::mDefaultSensitivity = 10;
 nuiSize nuiKnob::mDefaultFineSensitivityRatio = 10;
@@ -22,25 +17,121 @@ nglKeyCode nuiKnob::mDefaultFineSensitivityKey = NK_LSHIFT;
 
 nuiKnob::nuiKnob(const nuiRange& rRange, bool showDefaultBackground)
   : nuiSimpleContainer(),
-    mRange(rRange),
-    mKnobSink(this),
-    mpFrameSequence(NULL),
-    mShowDefaultBackground(showDefaultBackground)
+    mKnobSink(this)
 {
-  SetObjectClass(_T("nuiKnob"));
-    
+  if (SetObjectClass(_T("nuiKnob")))
+    InitAttributes();
+  Init(rRange, showDefaultBackground);
+}
+
+nuiKnob::nuiKnob(const nuiRange& rRange, nuiImageSequence* pImageSequence, bool showDefaultBackground)
+: nuiSimpleContainer(),
+mKnobSink(this)
+{
+  if (SetObjectClass(_T("nuiKnob")))
+    InitAttributes();
+  Init(rRange, showDefaultBackground);
+  SetImageSequence(pImageSequence);
+}
+
+
+void nuiKnob::Init(const nuiRange& rRange, bool showDefaultBackground)
+{
+  mRange = rRange;
+  mShowDefaultBackground = showDefaultBackground;
+  mpImageSequence = NULL;
   mClicked = false;
   mRange.SetPageSize(0);
-
+  mFrameIndex = 0;
+  mShowDefaultBackground = showDefaultBackground;
+  
   mSensitivity = mDefaultSensitivity;
   mFineSensitivityRatio = mDefaultFineSensitivityRatio;
   mFineSensitivityKey = mDefaultFineSensitivityKey;
-
+  
   mKnobSink.Connect(mRange.Changed, &nuiKnob::DoInvalidate);
   //mKnobSink.Connect(mRange.ValueChanged, &nuiKnob::DoInvalidate);
   NUI_ADD_EVENT(ValueChanged);
   NUI_ADD_EVENT(InteractiveValueChanged);  
+  
+  mSequenceNeedRefresh = false;
+  mSequenceNbFrames = 0;
+  mSequenceOrientation = "Vertical";
+  
 }
+
+
+void nuiKnob::InitAttributes()
+{
+  nuiAttribute<const nglPath&>* AttributeTexture = new nuiAttribute<const nglPath&>
+  (nglString(_T("Sequence")), nuiUnitNone,
+   nuiFastDelegate::MakeDelegate(this, &nuiKnob::GetSequencePath), 
+   nuiFastDelegate::MakeDelegate(this, &nuiKnob::SetSequencePath));
+  
+  nuiAttribute<uint32>* AttributeNbFrames = new nuiAttribute<uint32>
+  (nglString(_T("NbFrames")), nuiUnitNone,
+   nuiAttribute<uint32>::GetterDelegate(this, &nuiKnob::GetNbFrames),
+   nuiAttribute<uint32>::SetterDelegate(this, &nuiKnob::SetNbFrames));
+  
+  nuiAttribute<nglString>* AttributeOrientation = new nuiAttribute<nglString>
+  (nglString(_T("Orientation")), nuiUnitNone,
+   nuiAttribute<nglString>::GetterDelegate(this, &nuiKnob::GetOrientation),
+   nuiAttribute<nglString>::SetterDelegate(this, &nuiKnob::SetOrientation));
+  
+  AddAttribute(AttributeTexture);
+  AddAttribute(AttributeNbFrames);
+  AddAttribute(AttributeOrientation);
+  
+}  
+
+
+// attributes
+const nglPath& nuiKnob::GetSequencePath()
+{
+  return mpImageSequence->GetTexturePath();
+}
+
+void nuiKnob::SetSequencePath(const nglPath& rPath)
+{
+  mSequencePath = rPath;
+  mSequenceNeedRefresh = true;
+  nuiEvent event;
+  DoInvalidate(event);
+}
+
+
+nglString nuiKnob::GetOrientation()
+{
+  return mpImageSequence->GetOrientation();
+}
+
+
+void nuiKnob::SetOrientation(nglString orientation)
+{
+  mSequenceOrientation = orientation;
+  mSequenceNeedRefresh = true;
+  nuiEvent event;
+  DoInvalidate(event);
+}
+
+
+uint32 nuiKnob::GetNbFrames()
+{
+  return mpImageSequence->GetNbFrames();
+}
+
+
+void nuiKnob::SetNbFrames(uint32 nbFrames)
+{
+  mSequenceNbFrames = nbFrames;
+  mSequenceNeedRefresh = true;
+  nuiEvent event;
+  DoInvalidate(event);
+}
+
+
+
+
 
 bool nuiKnob::Load(const nuiXMLNode* pNode)
 {
@@ -78,51 +169,22 @@ nuiKnob::~nuiKnob()
 {
 }
 
-void nuiKnob::SetKnobDecoration(nuiFrameSequence* pFrameSeq, nuiDecoration* pBkgDeco, nuiDecorationMode mode)
-{
-  mpFrameSequence = pFrameSeq;
-  
-  if (!pBkgDeco)
-  {
-    nuiWidget::SetDecoration(mpFrameSequence, mode);
-    return;
-  }
-  
-  nuiMetaDecoration* pDeco = new nuiMetaDecoration(_T("nuiKnobDecoration"));
-  pDeco->AddDecoration(pBkgDeco);
-  pDeco->AddDecoration(mpFrameSequence);
-  
-  nuiWidget::SetDecoration(pDeco, mode);
 
-  // init knob first position regarding current range value
-  nuiEvent event;
-  DoInvalidate(event);
+void nuiKnob::SetImageSequence(nuiImageSequence* pImageSequence)
+{
+  mpImageSequence = pImageSequence;
 }
 
-// virtual from nuiWidget
-void nuiKnob::SetDecoration(nuiDecoration* pDecoration, nuiDecorationMode Mode)
+nuiImageSequence* nuiKnob::GetImageSequence()
 {
-  nuiFrameSequence* pFrameSeq = dynamic_cast<nuiFrameSequence*>(pDecoration);
-  if (pFrameSeq)
-    mpFrameSequence = pFrameSeq;
-  
-  nuiWidget::SetDecoration(pDecoration, Mode);
-  
-  // init knob first position regarding current range value
-  nuiEvent event;
-  DoInvalidate(event);
-  
+  return mpImageSequence;
 }
 
 
-
-nuiFrameSequence* nuiKnob::GetFrameSequence()
+bool nuiKnob::GetShowDefaultBackground()
 {
-  return mpFrameSequence;
+  return mShowDefaultBackground;
 }
-
-
-
 
 
 // Received Mouse events:
@@ -187,7 +249,7 @@ bool nuiKnob::MouseUnclicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
   return false;
 }
 
-bool nuiKnob::MouseMoved  (nuiSize X, nuiSize Y)
+bool nuiKnob::MouseMoved(nuiSize X, nuiSize Y)
 {
   if (mClicked)
   {
@@ -241,23 +303,24 @@ nuiRange& nuiKnob::GetRange()
   return mRange;
 }
 
-bool nuiKnob::GetShowDefaultBackground() const
-{
-  return mShowDefaultBackground;
-}
 
 
 bool nuiKnob::DoInvalidate(const nuiEvent& rEvent)
 {
+  if (mSequenceNeedRefresh)
+  {
+    delete mpImageSequence;
+    mpImageSequence = NULL;
+    
+    mpImageSequence = new nuiImageSequence();
+    mpImageSequence->SetNbFrames(mSequenceNbFrames);
+    mpImageSequence->SetTexturePath(mSequencePath);
+    mpImageSequence->SetOrientation(mSequenceOrientation);
+    mSequenceNeedRefresh = false;
+  }
+  
   mInteractiveValueChanged = true;
   InteractiveValueChanged();
-  
-  // update FrameSequence decoration
-  if (mpFrameSequence)
-  {
-    uint32 index = (int)((mpFrameSequence->GetNbFrames()-1) * (mRange.GetValue() - mRange.GetMinimum())) / (mRange.GetMaximum() - mRange.GetMinimum());
-    mpFrameSequence->SetFrameIndex(this, index);
-  }
   
   Invalidate();
   return false;
@@ -267,15 +330,29 @@ nuiRect nuiKnob::CalcIdealSize()
 {
   if (mpChildren.empty())
   {
-    nuiDecoration* pDeco = GetDecoration();
-    if (!pDeco)
+    if (!mpImageSequence)
       return nuiRect(0,0,0,0);
-    return pDeco->GetIdealClientRect();
+    
+    const nuiRect& rect = mpImageSequence->GetIdealRect();
+    return rect;
   }
   else
   {
     return nuiSimpleContainer::CalcIdealSize();
   }
+}
+
+bool nuiKnob::Draw(nuiDrawContext* pContext)
+{
+  if (mpImageSequence)
+  {
+    mFrameIndex = (int)((mpImageSequence->GetNbFrames()-1) * (mRange.GetValue() - mRange.GetMinimum())) / (mRange.GetMaximum() - mRange.GetMinimum());
+    mpImageSequence->SetFrameIndex(mFrameIndex);
+    mpImageSequence->Draw(pContext);
+  }
+  
+  nuiSimpleContainer::Draw(pContext);
+  
 }
 
 void nuiKnob::SetDefaultSensitivity(nuiSize DefaultSensitivity) 
