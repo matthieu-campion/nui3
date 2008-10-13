@@ -354,7 +354,6 @@ void nuiGetBlendFuncFactorsD3D(nuiBlendFunc Func, DWORD& src, DWORD& dst)
 
 
 
-
 D3DTEXTUREFILTERTYPE nuiGetTextureFilteringTypeD3D(GLuint Filter)
 {
   //return D3DTEXF_POINT;
@@ -369,6 +368,13 @@ D3DTEXTUREFILTERTYPE nuiGetTextureFilteringTypeD3D(GLuint Filter)
 	default:
 		return D3DTEXF_NONE;
 		break;
+
+    /*
+    #define GL_NEAREST_MIPMAP_NEAREST         0x2700
+#define GL_LINEAR_MIPMAP_NEAREST          0x2701
+#define GL_NEAREST_MIPMAP_LINEAR          0x2702
+#define GL_LINEAR_MIPMAP_LINEAR           0x2703
+    */
 	}
 }
 
@@ -1413,12 +1419,89 @@ void nuiD3DPainter::UploadTexture(nuiTexture* pTexture)
       */
     }
   }
-	hr = pDev->SetSamplerState(0, D3DSAMP_MINFILTER, nuiGetTextureFilteringTypeD3D(pTexture->GetMinFilter()));
-	hr = pDev->SetSamplerState(0, D3DSAMP_MAGFILTER, nuiGetTextureFilteringTypeD3D(pTexture->GetMagFilter()));
+  ApplyTextureFiltering(pDev, pTexture->GetMinFilter(), pTexture->GetMagFilter());
+	//hr = pDev->SetSamplerState(0, D3DSAMP_MINFILTER, nuiGetTextureFilteringTypeD3D(pTexture->GetMinFilter()));
+	//hr = pDev->SetSamplerState(0, D3DSAMP_MAGFILTER, nuiGetTextureFilteringTypeD3D(pTexture->GetMagFilter()));
 	hr = pDev->SetSamplerState(0, D3DSAMP_ADDRESSU, nuiGetTextureAdressModeD3D(pTexture->GetWrapS()));
 	hr = pDev->SetSamplerState(0, D3DSAMP_ADDRESSV, nuiGetTextureAdressModeD3D(pTexture->GetWrapT()));
 }
 
+
+
+void nuiD3DPainter::ApplyTextureFiltering(LPDIRECT3DDEVICE9 pDev, GLuint minfilter, GLuint magfilter)
+{
+  HRESULTChecker hr = S_OK;
+  switch (minfilter)
+	{
+	  case GL_NEAREST:
+      hr = pDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_POINT);
+      hr = pDev->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_NONE);
+      
+		  break;
+	  case GL_LINEAR:
+      hr = pDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+      hr = pDev->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_NONE);
+		  break;
+    case GL_NEAREST_MIPMAP_NEAREST:
+      hr = pDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_POINT);
+      hr = pDev->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_POINT);
+      break;
+    case GL_LINEAR_MIPMAP_NEAREST:
+      hr = pDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+      hr = pDev->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_POINT);
+      break;
+    case GL_NEAREST_MIPMAP_LINEAR:
+      hr = pDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_POINT);
+      hr = pDev->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
+      break;
+    case GL_LINEAR_MIPMAP_LINEAR:
+      hr = pDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+      hr = pDev->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
+      break;
+	  default:
+		  return;
+		  break;
+  }
+  switch (magfilter)
+	{
+	  case GL_NEAREST:
+      pDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_POINT);
+		  break;
+	  case GL_LINEAR:
+      pDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+		  break;
+	  default:
+		  return;
+		  break;
+  }
+
+
+	//}
+
+}
+
+
+/*
+
+D3DTEXTUREFILTERTYPE nuiGetTextureFilteringTypeD3D(GLuint Filter)
+{
+  //return D3DTEXF_POINT;
+	switch (Filter)
+	{
+	case GL_NEAREST:
+    hr = pDev->SetSamplerState(0, D3DSAMP_MINFILTER, nuiGetTextureFilteringTypeD3D(pTexture->GetMinFilter()));
+	  hr = pDev->SetSamplerState(0, D3DSAMP_MAGFILTER, nuiGetTextureFilteringTypeD3D(pTexture->GetMagFilter()));
+		return D3DTEXF_POINT;
+		break;
+	case GL_LINEAR:
+		return D3DTEXF_LINEAR;
+		break;
+	default:
+		return D3DTEXF_NONE;
+		break;
+	}
+}
+*/
 
 
 void nuiD3DPainter::DestroyTexture(nuiTexture* pTexture)
