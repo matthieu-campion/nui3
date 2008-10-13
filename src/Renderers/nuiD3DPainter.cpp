@@ -585,8 +585,7 @@ void nuiD3DPainter::CreateDeviceObjects()
   if (!mpVB)
   {
     int size = sizeof(NuiD3DVertex);
-    hr = pDev->CreateVertexBuffer(NUI_VERTEXBUFFER_MAXSIZE * sizeof(NuiD3DVertex), D3DUSAGE_DYNAMIC, 
-      D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1, D3DPOOL_DEFAULT, &mpVB, NULL );
+    hr = pDev->CreateVertexBuffer(NUI_VERTEXBUFFER_MAXSIZE * sizeof(NuiD3DVertex), D3DUSAGE_DYNAMIC, D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1 | D3DUSAGE_WRITEONLY, D3DPOOL_DEFAULT, &mpVB, NULL );
 #ifdef NUI_PROFILE_DIRECTX
     for (int i=0; i<100; ++i)
       PROFILE_CHRONO_RESET(i);
@@ -727,7 +726,7 @@ void nuiD3DPainter::ClearColor()
   
   //FIXME
   //HRESULTChecker hr = pDev->Clear(1, &rectClear, D3DCLEAR_TARGET | D3DCLEAR_STENCIL | D3DCLEAR_ZBUFFER, D3DCOLOR_ARGB(a, r, g, b), 1.0f, 0);
-  HRESULTChecker hr = pDev->Clear(1, NULL, D3DCLEAR_TARGET | D3DCLEAR_STENCIL | D3DCLEAR_ZBUFFER, D3DCOLOR_ARGB(a, r, g, b), 1.0f, 0);
+  HRESULTChecker hr = pDev->Clear(1, &rectClear, D3DCLEAR_TARGET | D3DCLEAR_STENCIL | D3DCLEAR_ZBUFFER, D3DCOLOR_ARGB(a, r, g, b), 1.0f, 0);
  
   NGL_OUT(_T("D3D::Clear()\n"));
   ::Beep(440,1);

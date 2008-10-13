@@ -588,23 +588,30 @@ bool nglContext::BuildDirect3D(HWND hwnd, const nglContextInfo& rInfo, const ngl
   D3DPRESENT_PARAMETERS presParams;
   ZeroMemory(&presParams,sizeof(presParams));
 
+  //presParams.BackBufferFormat = D3DFMT_UNKNOWN;
+  presParams.BackBufferFormat = D3DFMT_X8R8G8B8;
   presParams.BackBufferCount = 1;
   presParams.Windowed = TRUE;
+  
+  presParams.MultiSampleType = D3DMULTISAMPLE_NONE;//(D3DMULTISAMPLE_TYPE)rInfo.AASampleCnt;
+
   if (rInfo.CopyOnSwap)
     presParams.SwapEffect = D3DSWAPEFFECT_COPY;
   else
     presParams.SwapEffect = D3DSWAPEFFECT_FLIP;
 
-  presParams.BackBufferFormat = D3DFMT_UNKNOWN;
-  presParams.MultiSampleType = D3DMULTISAMPLE_NONE;//(D3DMULTISAMPLE_TYPE)rInfo.AASampleCnt;
+  presParams.hDeviceWindow = hwnd;
+
   presParams.EnableAutoDepthStencil = TRUE;
   presParams.AutoDepthStencilFormat = D3DFMT_D24S8;
-  //presParams.Flags = D3DPRESENTFLAG_DEVICECLIP;
-  presParams.hDeviceWindow = hwnd;
-  presParams.BackBufferFormat = D3DFMT_X8R8G8B8;
+  
+  presParams.Flags = D3DPRESENTFLAG_DEVICECLIP;
+
   HRESULT hr = pDirect3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hwnd, D3DCREATE_MIXED_VERTEXPROCESSING, &presParams, &mpDirect3DDevice);
   if (FAILED(hr))
     hr = pDirect3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hwnd, D3DCREATE_MIXED_VERTEXPROCESSING, &presParams, &mpDirect3DDevice);
+  if (FAILED(hr))
+    hr = pDirect3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hwnd, D3DCREATE_SOFTWARE_VERTEXPROCESSING, &presParams, &mpDirect3DDevice);
 
   if (FAILED(hr))
   {
