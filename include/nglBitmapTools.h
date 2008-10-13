@@ -28,5 +28,11 @@ NGL_API void nglInvertLine32 (unsigned int* pDst, unsigned int* pSrc, unsigned i
 NGL_API void nglInvertLine24 (char* pDst, char* pSrc, unsigned int pixelcount);
 NGL_API void nglInvertLine16 (short* pDst, short* pSrc, unsigned int pixelcount);
 
+//D3D ARGB functions
+NGL_API void nglCopyLine15To32ARGB (void* pDst, void* pSrc, int PixelCount, bool Invert);
+NGL_API void nglCopyLine16To32ARGB (void* pDst, void* pSrc, int PixelCount, bool Invert);
+NGL_API void nglCopyLine32To32ARGB (void* pDst, void* pSrc, int PixelCount, bool Invert);
+
+
 #endif // __nglBitmapTools_h__
 
