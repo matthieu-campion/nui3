@@ -16,9 +16,9 @@
 #include <stdarg.h>
 #include <malloc.h>
 #include <crtdbg.h>
-#include <ImageHlp.h>
+#include <DbgHelp.h>
 
-#pragma comment( lib, "imagehlp.lib" )
+#pragma comment( lib, "dbghelp.lib" )
 
 #pragma warning (disable: 4005 4530 4267 4786)
 
@@ -2224,7 +2224,8 @@ class  dbgTracer
 	void  InternalTraceStack ( int nLevel, PCONTEXT	pCtx, DWORD nExtraNesting, HANDLE hThread, 
 					   bool bImagehlpStackWalk = true )
 	{
-		STACKFRAME	sf = { 0 };
+    bImagehlpStackWalk = true;
+		STACKFRAME64	sf = { 0 };
 		HANDLE		hProcess = GetCurrentProcess();
 		
 		sf.AddrPC.Offset    = pCtx->Eip;
@@ -2250,14 +2251,13 @@ class  dbgTracer
 		{
 			BOOL	bRes;
 			if ( bImagehlpStackWalk )  {
-				bRes = StackWalk (IMAGE_FILE_MACHINE_I386, hProcess, hThread, &sf, 
-								  NULL, NULL, SymFunctionTableAccess, SymGetModuleBase, NULL);
+				bRes = StackWalk64(IMAGE_FILE_MACHINE_I386, hProcess, hThread, &sf, pCtx, NULL, SymFunctionTableAccess64, SymGetModuleBase64, NULL);
 			}
-			else
-				bRes = IntelStackWalk (&sf);
+//			else
+//				bRes = IntelStackWalk (&sf);
 			if ( nCurLevel++ < nExtraNesting )
 				continue;
-			if ( !bRes  ||  !sf.AddrFrame.Offset )
+			if ( !bRes )// ||  !sf.AddrFrame.Offset )
 				break;
 
 			// Use TraceFnName to ensure tracing at least function names 
