@@ -351,7 +351,7 @@ bool nuiKnob::Draw(nuiDrawContext* pContext)
     mpImageSequence->Draw(pContext);
   }
   
-  nuiSimpleContainer::Draw(pContext);
+  return nuiSimpleContainer::Draw(pContext);
   
 }
 
