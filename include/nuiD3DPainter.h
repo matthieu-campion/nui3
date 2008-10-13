@@ -72,9 +72,11 @@ protected:
 
   LPDIRECT3DVERTEXBUFFER9 mpVB;
   DWORD                   mnCurrentVBOffset;
+  DWORD                   mnCurrentVBSize;
 
   DWORD                   mnBatchCurrentVBOffset;
   DWORD                   mnBatchCurrentVBSize;
+
 
   GLenum GetTextureTarget(bool POT) const;
   void UploadTexture(nuiTexture* pTexture);
