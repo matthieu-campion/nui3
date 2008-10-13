@@ -49,6 +49,8 @@ public:
   virtual void DestroyTexture(nuiTexture* pTexture);
   virtual void InvalidateTexture(nuiTexture* pTexture, bool ForceReload);
 
+  void        ApplyTextureFiltering(LPDIRECT3DDEVICE9 pDev, GLuint minfilter, GLuint magfilter);
+
 protected:
   nglContext* mpContext;
 
