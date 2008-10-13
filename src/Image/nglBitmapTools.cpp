@@ -335,6 +335,36 @@ NGL_API void nglCopyLine15To32 (void* pDst, void* pSrc, int PixelCount, bool Inv
   }
 }
 
+
+NGL_API void nglCopyLine15To32ARGB (void* pDst, void* pSrc, int PixelCount, bool Invert)
+{
+  int i;
+  unsigned short temp;
+  char* pDest = (char*)pDst;
+  if (Invert)
+  {
+    for (i=0; i<PixelCount; i++)
+    {
+      temp = ((short*)pSrc)[PixelCount - i -1];
+      *pDest++ = (temp << 3) & 0xF8;
+      *pDest++ = (temp >> 2) & 0xF8;
+      *pDest++ = (temp >> 7) & 0xF8;
+      *pDest++ = 0; 
+    }
+  }
+  else
+  {
+    for (i=0; i<PixelCount; i++)
+    {
+      temp = ((short*)pSrc)[i];
+      *pDest++ = (temp << 3) & 0xF8;
+      *pDest++ = (temp >> 2) & 0xF8;
+      *pDest++ = (temp >> 7) & 0xF8;
+      *pDest++ = 0;
+    }
+  }
+}
+
 /// From 16 BPP
 NGL_API void nglCopyLine16To8 (void* pDst, void* pSrc, int PixelCount, bool Invert)
 {
@@ -460,6 +490,37 @@ NGL_API void nglCopyLine16To32 (void* pDst, void* pSrc, int PixelCount, bool Inv
     }
   }
 }
+
+
+NGL_API void nglCopyLine16To32ARGB (void* pDst, void* pSrc, int PixelCount, bool Invert)
+{
+  int i;
+  unsigned short temp;
+  char* pDest = (char*)pDst;
+  if (Invert)
+  {
+    for (i=0; i<PixelCount; i++)
+    {
+      temp = ((short*)pSrc)[PixelCount - i -1];
+      *pDest++ = (temp >> 8) & 0xF8;
+      *pDest++ = (temp >> 3) & 0xF8;
+      *pDest++ = (temp << 3) & 0xF8;
+      *pDest++ = 0;
+    }
+  }
+  else
+  {
+    for (i=0; i<PixelCount; i++)
+    {
+      temp = ((short*)pSrc)[i];
+      *pDest++ = (temp >> 8) & 0xF8;
+      *pDest++ = (temp >> 3) & 0xF8;
+      *pDest++ = (temp << 3) & 0xF8;
+      *pDest++ = 0;
+    }
+  }
+}
+
 
 /// From 24 BPP
 NGL_API void nglCopyLine24To8 (void* pDst, void* pSrc, int PixelCount, bool Invert)
@@ -749,7 +810,42 @@ NGL_API void nglCopyLine32To32 (void* pDst, void* pSrc, int PixelCount, bool Inv
   {
     memcpy(pDst,pSrc,PixelCount*4);
   }
-}                                          
+}     
+
+NGL_API void nglCopyLine32To32ARGB (void* pDst, void* pSrc, int PixelCount, bool Invert)
+{                                          
+  if (Invert)
+  {
+    int i;
+    char r,g,b,a;
+    char* pSource = (char*) pSrc;
+    char* pDest   = (char*) pDst + 4 * (PixelCount - 1) - 1;
+    for (i=0; i<PixelCount; i++)
+    {
+      r = *pSource++;
+      g = *pSource++;
+      b = *pSource++;
+      a = *pSource++;
+      *pDest-- = a;
+      *pDest-- = r;
+      *pDest-- = g;
+      *pDest-- = b;
+    }
+  }
+  else
+  {
+    char* pSource = (char*) pSrc;
+    char* pDest   = (char*) pDst;
+    //memcpy(pDst,pSrc,PixelCount*4);
+    for (int i=0; i<PixelCount; ++i)
+    {
+      pDest[i*4+0] = pSource[i*4+2];
+      pDest[i*4+1] = pSource[i*4+1];
+      pDest[i*4+2] = pSource[i*4+0];
+      pDest[i*4+3] = pSource[i*4+3];
+    }
+  }
+} 
 
 /// Stubber:
 NGL_API nglCopyLineFn nglGetCopyLineFn (int DstBPP, int SrcBPP)
