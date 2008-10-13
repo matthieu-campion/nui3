@@ -19,8 +19,10 @@
 
 #define NGL_OUT(a)
 //#define NGL_OUT(a) wprintf(a)
+
 //#define NUI_PROFILE_DIRECTX
-#define DIRECTX_FULL_LOG
+//#define DIRECTX_FULL_LOG
+//#define AUDIBLE_CLEAR
 
 //profiling--------------------------------
 #ifdef NUI_PROFILE_DIRECTX
@@ -48,18 +50,7 @@ int setStateCount = 0;
 //#define NUI_USE_GL_VERTEX_BUFFER
 #define NUI_COMPLEX_SHAPE_THRESHOLD 6
  
-#define DIRECTX_FULL_LOG
-
-#define NUI_VERTEXBUFFER_MAXSIZE 16384
-
-//***************************
-//jonathan - TO DO LIST
-//non native directx primitives support : quads, quad strips, polygons
-//rArray.UseGLAATexture - glAA !
-//lost device, recreation(CTRL-ALT-SUPPR ...) - device release
-//textures : 15 and 16 bits formats
-//optimisation (DrawPrimitiveUP ? renderstates ? ...)
-//***************************
+//#define DIRECTX_FULL_LOG
 
 struct NuiD3DVertex
 {
@@ -226,6 +217,9 @@ nuiD3DPainter::nuiD3DPainter(nglContext* pContext, const nuiRect& rRect)
   mCanRectangleTexture = 1; //FIXME
   mnBatchCurrentVBOffset = 0;
   mnBatchCurrentVBSize = 0;
+
+  //taille courante du vertex buffer
+  mnCurrentVBSize = 8;
   if (!mActiveContexts)
   {
   }
@@ -245,7 +239,7 @@ nuiD3DPainter::~nuiD3DPainter()
 {
   mActiveContexts--;
   if (mActiveContexts == 0)
-    glAAExit(); //FIX ME
+    glAAExit(); //FIXME
 }
 
 
@@ -277,14 +271,34 @@ void nuiD3DPainter::StartRendering(nuiSize ClipOffsetX, nuiSize ClipOffsetY)
   D3DMATRIX projection;
   D3DMATRIX tr;
   D3DMATRIX id;
+  
+  /*
+  D3DMATRIX mat_texture;
+  nuiMatrix mtex;
+  mtex.Translate(0.5, 0.5, 0);
+  ConvertMatrix(mat_texture, mtex);
+  hr = pDev->SetTransform(D3DTS_TEXTURE0, &mat_texture);
+  */
 
   nuiMatrix m, m0, m1;
+
+//#define DECALAGE_ARTEFACTS
+#ifdef DECALAGE_ARTEFACTS
+  //décalage d'un demi pixel pour corriger les artefacts
+  float decalagex = 2.0f / (float)mWidth / 2.0f;
+  float decalagey = 2.0f / (float)mHeight / 2.0f;
+//m.Translate(0.0000005, 0.0000005, 0); //@@@
+  m.Translate(decalagex/1000.0f, decalagey/1000.0f, 0); //@@@
+#endif
+
   ConvertMatrix(id, m);
-  m0.SetTranslation(-1.0f, 1.0f, 0.0f);
+  m0.SetTranslation(-1.0f+0.00005f, 1.0f+0.00005f, 0.0f);
+  //m0.SetTranslation(-1.0f, 1.0f, 0.0f);
   m0.Transpose();
+  
   m1.SetScaling(2.0f / (float)mWidth, -2.0f / (float)mHeight, 1.0f);
   m = m1 * m0;
-  ConvertMatrix(projection, m);
+  ConvertMatrix(projection, m); 
   
   hr = pDev->SetTransform(D3DTS_PROJECTION, &projection);
   hr = pDev->SetTransform(D3DTS_WORLD, &id);
@@ -293,26 +307,16 @@ void nuiD3DPainter::StartRendering(nuiSize ClipOffsetX, nuiSize ClipOffsetY)
   hr = pDev->SetRenderState(D3DRS_ZENABLE, D3DZB_FALSE);
   hr = pDev->SetRenderState(D3DRS_SCISSORTESTENABLE, FALSE);
   hr = pDev->SetRenderState(D3DRS_STENCILENABLE, FALSE);
-  hr = pDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+  hr = pDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE); //FALSE
   hr = pDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
-  hr = pDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-  hr = pDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-
-  hr = pDev->SetRenderState(D3DRS_AMBIENT,RGB(255,255,255)); //@@@
-  hr = pDev->SetRenderState(D3DRS_LIGHTING,FALSE); 
+  hr = pDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA); //D3DBLEND_SRCALPHA
+  hr = pDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA); //D3DBLEND_INVSRCALPHA
+  //hr = pDev->SetRenderState(D3DRS_AMBIENT,RGB(255,255,255)); //@@@
+  hr = pDev->SetRenderState(D3DRS_LIGHTING,FALSE); //FALSE 
   hr = pDev->SetRenderState(D3DRS_CULLMODE,D3DCULL_NONE);
-
-  hr = pDev->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_MODULATE); //D3DTOP_SELECTARG1//D3DTOP_ADD //D3DTOP_MODULATE
-  hr = pDev->SetTextureStageState( 0, D3DTSS_COLORARG1, D3DTA_DIFFUSE);
-  hr = pDev->SetTextureStageState( 0, D3DTSS_COLORARG2, D3DTA_TEXTURE);
-  hr = pDev->SetTextureStageState( 0, D3DTSS_ALPHAOP, D3DTOP_MODULATE); //ADD : black SUBTRACT : texte n'apparait pas
-  hr = pDev->SetTextureStageState( 0, D3DTSS_ALPHAARG1, D3DTA_DIFFUSE); //@@@
-  hr = pDev->SetTextureStageState( 0, D3DTSS_ALPHAARG2, D3DTA_TEXTURE); //@@@
-  //FIXME
-  if (mState.mTexturing)
-    hr = pDev->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_MODULATE); 
-  else
-    hr = pDev->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_SELECTARG1); //D3DTOP_SELECTARG1
+  //D3DFILL_SOLID
+  //D3DFILL_WIREFRAME
+  hr = pDev->SetRenderState(D3DRS_FILLMODE,D3DFILL_SOLID);
   hr = pDev->SetStreamSource( 0, mpVB, 0, sizeof(NuiD3DVertex) );
 }
 
@@ -396,6 +400,8 @@ D3DTEXTUREADDRESS nuiGetTextureAdressModeD3D(GLuint AdressMode)
 
 void nuiD3DPainter::SetState(const nuiRenderState& rState, bool ForceApply)
 {
+  //if (drawArrayCount > 3)
+  //  return;
   //return;
   //NGL_OUT(_T("--------------"));
   PROFILE_CHRONO_IN(1);
@@ -406,7 +412,6 @@ void nuiD3DPainter::SetState(const nuiRenderState& rState, bool ForceApply)
   NUI_RETURN_IF_RENDERING_DISABLED;
   LPDIRECT3DDEVICE9 pDev = mpContext->GetDirect3DDevice();
   HRESULTChecker hr = S_OK;
-  //CheckForGLErrors();
 
   //----------------------------
   //blending -------------------
@@ -414,7 +419,7 @@ void nuiD3DPainter::SetState(const nuiRenderState& rState, bool ForceApply)
   //#ifdef BLENDING_ENABLED
   if (ForceApply || mState.mBlending != rState.mBlending)
   {
-    NGL_OUT(_T("Blending Value %d "), mState.mBlending);
+    //NGL_OUT(_T("Blending Value %d "), mState.mBlending);
     mState.mBlending = rState.mBlending;
     if (mState.mBlending)
     {
@@ -441,7 +446,7 @@ void nuiD3DPainter::SetState(const nuiRenderState& rState, bool ForceApply)
 //#ifdef STENCIL_ENABLED
   if (ForceApply || mState.mStencilMode != rState.mStencilMode || mState.mStencilValue != rState.mStencilValue)
   {
-    NGL_OUT(_T("Stencil mode"));
+    //NGL_OUT(_T("Stencil mode"));
     mState.mStencilMode = rState.mStencilMode;
     mState.mStencilValue = rState.mStencilValue;
     switch (mState.mStencilMode)
@@ -516,7 +521,7 @@ void nuiD3DPainter::SetState(const nuiRenderState& rState, bool ForceApply)
 //#ifdef COLORBUFFER_ENABLED
   if (ForceApply || mState.mColorBuffer != rState.mColorBuffer)
   {
-	  NGL_OUT(_T("ColorBuffer Value %d "), mState.mColorBuffer);
+	  //NGL_OUT(_T("ColorBuffer Value %d "), mState.mColorBuffer);
 	  mState.mColorBuffer = rState.mColorBuffer;
     if (mState.mColorBuffer == GL_TRUE)
 	  {
@@ -564,10 +569,53 @@ void nuiD3DPainter::SetState(const nuiRenderState& rState, bool ForceApply)
   mState.mStrokeColor = rState.mStrokeColor;
   mState.mFillColor = rState.mFillColor;
 
+
+  //pDev->SetRenderState( D3DRS_DIFFUSEMATERIALSOURCE, D3DMCS_COLOR1 );
   if (mState.mTexturing)
-    hr = pDev->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_MODULATE); 
+  {
+    //modulate texture and diffuse
+    //D3DTOP_MODULATE
+    //D3DTOP_BLENDTEXTUREALPHA
+    //
+    //hr = pDev->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_MODULATE); //D3DTOP_SELECTARG1//D3DTOP_ADD //D3DTOP_MODULATE
+    hr = pDev->SetTextureStageState( 0, D3DTSS_COLORARG1, D3DTA_DIFFUSE);
+    hr = pDev->SetTextureStageState( 0, D3DTSS_COLORARG2, D3DTA_TEXTURE);
+    //selon le type de texture, on prend la texture ou on add la texture à la diffuse
+    //attention au blending avec les textures 8 bits !!!
+    if (mState.mpTexture->GetImage()->GetBitDepth() == 8)
+    {
+      //NGL_OUT(_T("TEXTURE 8"));
+      hr = pDev->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_ADD); //MODULATE : tout reste noir
+    }
+    else if (mState.mpTexture->GetImage()->GetBitDepth() == 32)
+    {
+      //NGL_OUT(_T("TEXTURE 32"));
+      hr = pDev->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_SELECTARG2); //MODULATE : tout reste noir
+    }
+    else
+    {
+      //NGL_OUT(_T("TEXTURE ?"));
+    }
+     
+
+    hr = pDev->SetTextureStageState( 0, D3DTSS_ALPHAARG1, D3DTA_DIFFUSE); //@@@
+    hr = pDev->SetTextureStageState( 0, D3DTSS_ALPHAARG2, D3DTA_TEXTURE); //@@@
+    hr = pDev->SetTextureStageState( 0, D3DTSS_ALPHAOP, D3DTOP_MODULATE); 
+  }
   else
-    hr = pDev->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_MODULATE); //SELECT1
+  {
+    //select diffuse color
+    hr = pDev->SetTextureStageState( 0, D3DTSS_COLORARG1, D3DTA_DIFFUSE);
+    hr = pDev->SetTextureStageState( 0, D3DTSS_COLORARG2, D3DTA_TEXTURE);
+    hr = pDev->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_SELECTARG1); //D3DTOP_MODULATE SELECT1
+     
+    hr = pDev->SetTextureStageState( 0, D3DTSS_ALPHAARG1, D3DTA_DIFFUSE); //@@@
+    hr = pDev->SetTextureStageState( 0, D3DTSS_ALPHAARG2, D3DTA_TEXTURE); //@@@
+    hr = pDev->SetTextureStageState( 0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1); //D3DTOP_MODULATE SELECT1 //D3DTOP_SELECTARG1
+
+  }
+
+  
   
   PROFILE_CHRONO_OUT(1);
   //NGL_OUT(_T("--------------"));
@@ -585,7 +633,10 @@ void nuiD3DPainter::CreateDeviceObjects()
   if (!mpVB)
   {
     int size = sizeof(NuiD3DVertex);
-    hr = pDev->CreateVertexBuffer(NUI_VERTEXBUFFER_MAXSIZE * sizeof(NuiD3DVertex), D3DUSAGE_DYNAMIC, D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1 | D3DUSAGE_WRITEONLY, D3DPOOL_DEFAULT, &mpVB, NULL );
+
+    hr = pDev->CreateVertexBuffer(mnCurrentVBSize * sizeof(NuiD3DVertex), D3DUSAGE_DYNAMIC, 
+      D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1, D3DPOOL_DEFAULT, &mpVB, NULL );
+
 #ifdef NUI_PROFILE_DIRECTX
     for (int i=0; i<100; ++i)
       PROFILE_CHRONO_RESET(i);
@@ -618,11 +669,9 @@ void nuiD3DPainter::ReleaseDeviceObjects()
 
 void nuiD3DPainter::SetSize(uint32 w, uint32 h)
 {
-  //PROFILE_CHRONO_IN(7);
   NUI_RETURN_IF_RENDERING_DISABLED;
   mWidth = w;
   mHeight = h;
-
   //in case of a size change we have to :
   //release all graphic objects (textures)
   //reset the device
@@ -665,7 +714,7 @@ void nuiD3DPainter::SetSize(uint32 w, uint32 h)
   presParams.AutoDepthStencilFormat = D3DFMT_D24S8;
   //presParams.Flags = D3DPRESENTFLAG_DEVICECLIP;
   presParams.hDeviceWindow = creationParameters.hFocusWindow;//hwnd;
-  presParams.BackBufferFormat = D3DFMT_X8R8G8B8;
+  presParams.BackBufferFormat = D3DFMT_A8R8G8B8;
   presParams.BackBufferWidth = w;
   presParams.BackBufferHeight = h;
   
@@ -692,7 +741,7 @@ void nuiD3DPainter::SetSize(uint32 w, uint32 h)
     default:
       break;
   }  
-  //PROFILE_CHRONO_OUT(7, "SetSize()");
+ 
 }
 
 
@@ -702,7 +751,6 @@ void nuiD3DPainter::SetSize(uint32 w, uint32 h)
 
 void nuiD3DPainter::ClearColor()
 {
-  //PROFILE_CHRONO_IN(6);
   mRenderOperations++;
   NUI_RETURN_IF_RENDERING_DISABLED;
 
@@ -723,14 +771,13 @@ void nuiD3DPainter::ClearColor()
   rectClear.x2 = mClip.Right()-mClipOffsetX;
   rectClear.y1 = mClip.Top()-mClipOffsetY;
   rectClear.y2 = mClip.Bottom()-mClipOffsetY;
-  
-  //FIXME
-  //HRESULTChecker hr = pDev->Clear(1, &rectClear, D3DCLEAR_TARGET | D3DCLEAR_STENCIL | D3DCLEAR_ZBUFFER, D3DCOLOR_ARGB(a, r, g, b), 1.0f, 0);
+ 
   HRESULTChecker hr = pDev->Clear(1, &rectClear, D3DCLEAR_TARGET | D3DCLEAR_STENCIL | D3DCLEAR_ZBUFFER, D3DCOLOR_ARGB(a, r, g, b), 1.0f, 0);
  
-  NGL_OUT(_T("D3D::Clear()\n"));
+  //NGL_OUT(_T("D3D::Clear()\n"));
+#ifdef AUDIBLE_CLEAR
   ::Beep(440,1);
-  //PROFILE_CHRONO_OUT(6, "Clear color");
+#endif
 }
 
 
@@ -739,7 +786,6 @@ void nuiD3DPainter::ClearColor()
 
 void nuiD3DPainter::ClearStencil(uint8 value)
 {
-  //PROFILE_CHRONO_IN(5);
   mRenderOperations++;
   NUI_RETURN_IF_RENDERING_DISABLED;
   LPDIRECT3DDEVICE9 pDev = mpContext->GetDirect3DDevice();
@@ -755,23 +801,14 @@ void nuiD3DPainter::ClearStencil(uint8 value)
   hr = pDev->SetRenderState(D3DRS_STENCILMASK, ~0); 
   hr = pDev->Clear(1, &rectClear, D3DCLEAR_STENCIL, 0, 1.0f, value);
   hr = pDev->SetRenderState(D3DRS_STENCILMASK, 0);
-  //PROFILE_CHRONO_OUT(5, "Clear Stencil");
 }
 
-/*
-
-void nuiD3DPainter::DrawPrimitiveBatch()
-{
-  mnBatchCurrentVBOffset += mnBatchCurrentVBSize;
-  mnBatchCurrentVBSize = 0;
-  if (mnBatchCurrentVBOffset >= NUI_VERTEXBUFFER_MAXSIZE)
-    mnBatchCurrentVBOffset = 0;
-}
-*/
 
 
 void nuiD3DPainter::DrawArray(const nuiRenderArray& rArray)
 {
+  //if (drawArrayCount > 3)
+  //  return;
   //NGL_OUT(_T("--------------"));
 #ifdef NUI_PROFILE_DIRECTX
   drawArrayCount ++;
@@ -782,12 +819,7 @@ void nuiD3DPainter::DrawArray(const nuiRenderArray& rArray)
 
   if (!mEnableDrawArray)
     return;
-  /*
-  PROFILE_CHRONO_IN(18);
-  //nuiRenderArray array(rArray);
-  PROFILE_CHRONO_OUT(18, "ARRAY COPY");
-  */
-
+  
   LPDIRECT3DDEVICE9 pDev = mpContext->GetDirect3DDevice();
   mRenderOperations++;
   mBatches++;
@@ -799,9 +831,8 @@ void nuiD3DPainter::DrawArray(const nuiRenderArray& rArray)
     return;
 
   mVertices += size;
-  //PROFILE_CHRONO_IN(18);
+ 
   NUI_RETURN_IF_RENDERING_DISABLED;
-
   {  //#FIXME Set up Antialiasing texture
 //     if (rArray.UseGLAATexture())
 //     {
@@ -839,91 +870,12 @@ void nuiD3DPainter::DrawArray(const nuiRenderArray& rArray)
 //     else
     if (!mState.mTexturing)
     {
-      
       //glPushMatrix();
-      //glTranslatef(0.5f, 0.5f, 0);
-      //nuiCheckForGLErrors();
-      
+      //glTranslatef(0.5f, 0.5f, 0); 
       int a=0;
     }
   }
 
-    //PROFILE_CHRONO_OUT(18, "INTERNAL RENDER STATE");    
-    
-    if (rArray.IsArrayEnabled(nuiRenderArray::eTexCoord))
-    {
-      //NGL_OUT(_T("rArray.UseGLAATexture() "));
-      int a=0;
-      /*
-      glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-      glTexCoordPointer(array.GetTexCoordElements(), GL_FLOAT, 0, &array.GetTexCoords()[0]);
-      CheckForGLErrors();
-      */
-    }
-    else
-    {
-      int a=0;
-      NGL_OUT(_T("TEXTCOORD ARRAY NOT ENABLED"));
-    }
-    /*
-    else
-      glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-      */
-
-    if (rArray.IsArrayEnabled(nuiRenderArray::eNormal))
-    {
-      //NGL_OUT(_T("ENORMAL ARRAY "));
-      int a=0;
-      /*
-      glEnableClientState(GL_NORMAL_ARRAY);
-      glNormalPointer(GL_FLOAT, 0, &array.GetNormals()[0]);
-      CheckForGLErrors();
-      */
-    }
-    /*
-    else
-      glDisableClientState(GL_NORMAL_ARRAY);
-      */
-
-    /*
-    if (array.IsArrayEnabled(nuiRenderArray::eEdgeFlag))
-    {
-      NGL_OUT(_T("EEDGEFLAG ARRAY "));
-      int a=0;
-      //this->ClearColor();
-      //return;
-      
-    }
-    */
-    /*
-    CheckForGLErrors();
-    glDrawArrays(array.GetMode(), 0, size);
-    CheckForGLErrors();
-    */
-  /*}*/
-
-  //hr = pDev->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);//D3DTOP_MODULATE
-  //D3DTOP_ADD
-  //D3DTOP_MODULATE
-
-  //GL_TRIANGLE_STRIP OK
-
-  //JT
-  
-  /*
-  if (array.GetMode() != GL_TRIANGLES)
-    return;
-  if (size != 30)
-    return;
-    */
-    
-  //if (size != 42) //54 60 108
-  //  return;
-    
-  //if (size > 42)
-  //  return;
-  //NuiD3DVertex* pBuffer = new NuiD3DVertex[size];
-//NGL_OUT(_T("Apply Target: 0x%x\n"), target);
 
   //PROFILE_CHRONO_IN(18);
   D3DPRIMITIVETYPE primtype = D3DPT_POINTLIST;
@@ -973,6 +925,7 @@ void nuiD3DPainter::DrawArray(const nuiRenderArray& rArray)
     c = mState.mFillColor;
     primitivecount = size-2;
     //NGL_OUT(_T("Primitive : Triangle strip %d "), size);
+    //return; //@@@
     break;
 
   case GL_TRIANGLE_FAN:
@@ -1002,57 +955,18 @@ void nuiD3DPainter::DrawArray(const nuiRenderArray& rArray)
     break;
   }
 
-  
-  //PROFILE_CHRONO_OUT(18, "PRIMITIVE SELECTION" );
-  //PROFILE_CHRONO_IN(18);
-  //hr = pDev->SetRenderState(D3DRS_AMBIENT,D3DCOLOR_RGBA((uint8)(c.Red()*255.0f), (uint8)(c.Green()*255.0f), (uint8)(c.Blue()*255.0f), (uint8)(c.Alpha()*255.0f)));
-  //hr = pDev->SetRenderState(D3DRS_AMBIENT,D3DCOLOR_RGBA(255, 0, 0, 255)); 
-
   const DWORD VertexFVF =	D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1;
   hr = pDev->SetFVF(VertexFVF);
-
-  // We need to swap the bytes in the render array because D3D uses ARGB and OpenGL wants RGBA...
   
-  //FIXME : permuter les couleurs plus tard
-#ifdef FIXME
-  if (rArray.IsArrayEnabled(nuiRenderArray::eColor))
+#ifdef DIRECTX_FULL_LOG
+  if (mState.mTexturing)
   {
-    //NGL_OUT(_T("ECOLOR ARRAY --------- "));
-    for (uint i = 0; i < size; i++)
-    {
-      nuiRenderArray::Vertex& v(rArray.GetVertices()[i]);
-      const uint8 R = v.mB;
-      const uint8 G = v.mG;
-      const uint8 B = v.mR;
-      const uint8 A = v.mA;
-      v.mR = R;
-      v.mG = G;
-      v.mB = B;
-      v.mA = A;
-    }
+    NGL_OUT(_T("TEXTURING ENABLED"));
   }
   else
   {
-    const uint8 R = /*ToBelow*/(c.Blue()  * 255.0);
-    const uint8 G = /*ToBelow*/(c.Green() * 255.0);
-    const uint8 B = /*ToBelow*/(c.Red()   * 255.0);
-    const uint8 A = /*ToBelow*/(c.Alpha() * 255.0);
-
-    //NGL_OUT(_T("RGBA %d %d %d %d"), R,   G, B, A);
-    for (uint i = 0; i < size; i++)
-    {
-      nuiRenderArray::Vertex& v(rArray.GetVertices()[i]);
-
-      v.mR = R;//R;
-      v.mG = G;
-      v.mB = B;
-      v.mA = A;//A;
-
-    }
-    //pDev->SetRenderState(D3DRS_TEXTUREFACTOR,RGB(R,G,B));
+    NGL_OUT(_T("TEXTURING DISABLED"));
   }
-#endif
-
   if (rArray.IsArrayEnabled(nuiRenderArray::eColor))
   {
     NGL_OUT(_T("COLOR ARRAY ENABLED"));
@@ -1060,60 +974,60 @@ void nuiD3DPainter::DrawArray(const nuiRenderArray& rArray)
   else
   {
     NGL_OUT(_T("COLOR ARRAY NOT ENABLED"));
-    const uint8 R = /*ToBelow*/(c.Blue()  * 255.0);
-    const uint8 G = /*ToBelow*/(c.Green() * 255.0);
-    const uint8 B = /*ToBelow*/(c.Red()   * 255.0);
-    const uint8 A = /*ToBelow*/(c.Alpha() * 255.0);
-
-    //pDev->SetRenderState(D3DRS_TEXTUREFACTOR,RGB(R,G,B));
   }
-
-  //PROFILE_CHRONO_OUT(18, "COLOR PERMUTATION" );
-  // #FIXME 
+#endif
+ 
   UINT stride = sizeof(nuiRenderArray::Vertex);
   void* pData = (void*)&rArray.GetVertices()[0];
-  //pData = pBuffer;
-  //stride = sizeof(NuiD3DVertex);
-  //stride = 6*4;
- 
-  //int a=rand() % 10;
-  //if (a == 0)
-
- //#define DRAW_1
-#ifdef DRAW_1
+ //#define DRAW_PUP
+#ifdef DRAW_PUP
   hr = pDev->DrawPrimitiveUP(primtype, primitivecount, pData, stride);				//draw triangle ( NEW )
-
 #else
   //on copie les datas dans le vertex buffer
   NuiD3DVertex* pVertices = NULL;
   DWORD nSectionSize = size; //vertices count
   DWORD flagLock = 0;
-  if ((mnCurrentVBOffset + nSectionSize) <= NUI_VERTEXBUFFER_MAXSIZE)
+  //le +1 c'est pour la fermeture de la line loop au cas où ...
+  if (nSectionSize+1>mnCurrentVBSize)
+  {
+    //buffer too small, release and allocate a bigger one...
+    mnCurrentVBSize = nSectionSize*2; //2 fois la taille max
+    if (mpVB)
+    {
+      mpVB->Release();
+      mpVB = NULL;
+      int size = sizeof(NuiD3DVertex);
+      hr = pDev->CreateVertexBuffer(mnCurrentVBSize * sizeof(NuiD3DVertex), D3DUSAGE_DYNAMIC, 
+      D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1, D3DPOOL_DEFAULT, &mpVB, NULL );
+      hr = pDev->SetStreamSource( 0, mpVB, 0, sizeof(NuiD3DVertex) );
+      flagLock = D3DLOCK_DISCARD;
+      mnCurrentVBOffset = 0;
+    }
+  }
+  if ((mnCurrentVBOffset+nSectionSize+1)<=mnCurrentVBSize)
   {
     flagLock=D3DLOCK_NOOVERWRITE;
   }
   else
   {
-    //overflow
+    //overflow, start from beginning
     flagLock = D3DLOCK_DISCARD;
     mnCurrentVBOffset = 0;
   }
-  //PROFILE_CHRONO_IN(18);
   hr = mpVB->Lock( mnCurrentVBOffset * sizeof(NuiD3DVertex), // Offset to lock
-                   nSectionSize * sizeof(NuiD3DVertex),    // Size to lock
+                   (nSectionSize+1) * sizeof(NuiD3DVertex),    // Size to lock
                    (void**) &pVertices, 
                    flagLock);
-  //PROFILE_CHRONO_OUT(18, "VERTEX BUFFER LOCK");
-  //PROFILE_CHRONO_IN(18);
+  const uint8 R = ToBelow(c.Red()  * 255.0);
+  const uint8 G = ToBelow(c.Green() * 255.0);
+  const uint8 B = ToBelow(c.Blue()   * 255.0);
+  const uint8 A = ToBelow(c.Alpha() * 255.0);
 
-  const uint8 R = /*ToBelow*/(c.Blue()  * 255.0);
-  const uint8 G = /*ToBelow*/(c.Green() * 255.0);
-  const uint8 B = /*ToBelow*/(c.Red()   * 255.0);
-  const uint8 A = /*ToBelow*/(c.Alpha() * 255.0);
-
-  //copie des vertices plus rapide
-  //memcpy(pVertices, pData, nSectionSize*sizeof(NuiD3DVertex));
-  
+//copie des vertices plus rapide
+//#define SIMPLE_COPY
+//#ifdef SIMPLE_COPY
+//memcpy(pVertices, pData, nSectionSize*sizeof(NuiD3DVertex));
+//#else
   for (int i=0; i<nSectionSize; ++i)
   {
     //copy vertex by vertex
@@ -1124,96 +1038,55 @@ void nuiD3DPainter::DrawArray(const nuiRenderArray& rArray)
     pDst->x = pSrc->x;
     pDst->y = pSrc->y;
     pDst->z = pSrc->z;
-    
-    //if (rArray.IsArrayEnabled(nuiRenderArray::eTexCoord))
-   // {
-      pDst->tu = pSrc->tu;
-      pDst->tv = pSrc->tv;
-   // }
-    /*
-    else
-    {
-      pDst->tu = (float)(rand()%100)/100.0f;
-      pDst->tv = (float)(rand()%100)/100.0f;
-      pDst->tu = pSrc->tu*2;
-      pDst->tv = pSrc->tv*2;
-    }
-    */
-    
-    //pDst->tu = (float)(rand()%100)/100.0f;
-    //pDst->tv = (float)(rand()%100)/100.0f;
-    
+    pDst->tu = pSrc->tu;
+    pDst->tv = pSrc->tv;
+    uint8* pDstColor = (uint8*)&pDst->diffuse;
+    uint8* pSrcColor = (uint8*)&pSrc->diffuse;
     if (rArray.IsArrayEnabled(nuiRenderArray::eColor))
     {
-      ((char*)&pDst->diffuse)[0] = ((char*)&pSrc->diffuse)[2];
-      ((char*)&pDst->diffuse)[1] = ((char*)&pSrc->diffuse)[1];
-      ((char*)&pDst->diffuse)[2] = ((char*)&pSrc->diffuse)[0];
-      ((char*)&pDst->diffuse)[3] = ((char*)&pSrc->diffuse)[3];
+      pDstColor[0] = pSrcColor[2];
+      pDstColor[1] = pSrcColor[1];
+      pDstColor[2] = pSrcColor[0];
+      pDstColor[3] = pSrcColor[3];
     }
     else
-    {
-      ((char*)&pDst->diffuse)[0] = R;
-      ((char*)&pDst->diffuse)[1] = G;
-      ((char*)&pDst->diffuse)[2] = B;
-      ((char*)&pDst->diffuse)[3] = A;
-    }
-
-    
+    { 
+      pDstColor[0] = B;
+      pDstColor[1] = G;
+      pDstColor[2] = R;
+      pDstColor[3] = A;
+    }  
   }
+//#endif
   
-  //PROFILE_CHRONO_OUT(18, "MEMCPY VERTICES");
-  //memcpy(pVertices, pData, nSectionSize * sizeof(NuiD3DVertex));
-  //unlock
-  //PROFILE_CHRONO_IN(19);
+  if (rArray.GetMode() == GL_LINE_LOOP)
+  {
+    //la line loop n'existe pas en D3D, il faut donc fermer la boucle !
+    primitivecount+=1;
+    NuiD3DVertex* pDst = pVertices+nSectionSize;
+    //bof mais les structures sont compatibles
+    NuiD3DVertex* pSrc = pVertices;
+    memcpy(pDst, pSrc, sizeof(NuiD3DVertex));
+  }
+  else
+  {
+    //nothing
+  }
   hr = mpVB->Unlock();
-  //PROFILE_CHRONO_OUT(19, "VERTEX BUFFER UNLOCK");
-  //
-  //PROFILE_CHRONO_IN(20);
   hr = pDev->DrawPrimitive(primtype, mnCurrentVBOffset, primitivecount);
-  //PROFILE_CHRONO_OUT(20, "DRAW PRIMITIVE");
   mnCurrentVBOffset += nSectionSize;
 
 #endif
   if (mState.mAntialiasing)
   {
-
-    //NGL_OUT(_T("ANTIALIASING ENABLED --------- "));
-/*
-#ifdef NUI_USE_MULTISAMPLE_AA
-    glDisable(GL_MULTISAMPLE_ARB);
-#else
-    glDisable(GL_POLYGON_SMOOTH);
-    glDisable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-#endif
-    CheckForGLErrors();
-*/
     NGL_ASSERT(0);
   }
   else
   {
-/*
-    if (!mState.mTexturing)
-    {
-      glPopMatrix();
-    }
-    CheckForGLErrors();
-*/
   }
-
-/*
-  glColor3f(1.0f, 1.0f, 1.0f);5
-  CheckForGLErrors();
-*/
-//  pDev->SetVertexData4ub(D3DVSDE_DIFFUSE, 255, 255, 255, 255);
   PROFILE_CHRONO_OUT(2);
   //NGL_OUT(_T("--------------"));
 }
-
-
-
-
-
 
 
 
@@ -1234,7 +1107,6 @@ void nuiD3DPainter::BeginSession()
 
 void nuiD3DPainter::EndSession()
 {
-  
   // Bleh!
 #ifdef DIRECTX_FULL_LOG
   NGL_OUT(_T("EndSession"));
@@ -1333,8 +1205,8 @@ void nuiD3DPainter::UploadTexture(nuiTexture* pTexture)
 	//PROFILE_CHRONO_IN(4);
   LPDIRECT3DDEVICE9 pDev = mpContext->GetDirect3DDevice();
   HRESULTChecker hr = S_OK;
-  float Width = pTexture->GetWidth();
-  float Height = pTexture->GetHeight();
+  int Width = pTexture->GetWidth();
+  int Height = pTexture->GetHeight();
   GLenum target = GetTextureTarget(pTexture->IsPowerOfTwo());
   bool changedctx = false;
 
@@ -1402,17 +1274,22 @@ void nuiD3DPainter::UploadTexture(nuiTexture* pTexture)
         NGL_ASSERT(0);
       }
 	  }
-    else if (type==16 || type==15)
+    else if (type==15)
 	  {  
-		  bytes = 2;
-		  d3dTextureFormat = D3DFMT_A1R5G5B5;
+		  bytes = 4;
+		  d3dTextureFormat = D3DFMT_A8R8G8B8;
 	  }
+    else if (type==16)
+	  {  
+		  bytes = 4;
+		  d3dTextureFormat = D3DFMT_A8R8G8B8;
+    }
     else if (type==24)
 	  {
 		  bytes = 3;
       if (pixelFormat == eImagePixelRGB)
       {
-        d3dTextureFormat = D3DFMT_X8R8G8B8;
+        d3dTextureFormat = D3DFMT_X8R8G8B8; 
       }
       else
       {
@@ -1436,17 +1313,6 @@ void nuiD3DPainter::UploadTexture(nuiTexture* pTexture)
     { 
       NGL_OUT(_T("CreateTexture format %d\n"), d3dTextureFormat);
       //we have to (re)create the texture
-      //D3DPOOL_MANAGED ne fonctionne pas avec D3DUSAGE_DYNAMIC ?
-	    //FIXME : créer la texture uniquement la première fois 
-      //- les fois suivantes, on accède à la texture existante 
-      //(équivalent glTexImage2D et glTexSubImage2D)
-      //
-      /*
-      if (d3dTextureFormat == D3DFMT_R8G8B8)
-      {
-        d3dTextureFormat = D3DFMT_A8R8G8B8;
-      }
-      */
       hr = pDev->CreateTexture(Width, Height, 1, D3DUSAGE_DYNAMIC, d3dTextureFormat, D3DPOOL_DEFAULT, &info.mpTexture, NULL);
       firstload = true;
       reload = true;
@@ -1460,99 +1326,58 @@ void nuiD3DPainter::UploadTexture(nuiTexture* pTexture)
 	    char* p = (char*) lockedRect.pBits;
 	    int tex_width = lockedRect.Pitch/4;
 		  int pixelSize = pImage->GetPixelSize();
-		  char* pBits = pImage->GetBuffer();
+		  char* pBits = (char*)pImage->GetBuffer();
 		  if (pBits && p)
 		  {	
 			  if (d3dTextureFormat == D3DFMT_A8R8G8B8)
-			  {
-				  int dst, src;
+        {
+          if (type == 32)
+          {
+            for (int h=0;h<Height ; ++h)
+				    {  
+              nglCopyLine32To32ARGB(p+h*tex_width*4, pBits+h*Width*4, Width, false);
+            }
+          }
+          else if (type == 16)
+          {
+            for (int h=0;h<Height ; ++h)
+				    {
+              nglCopyLine16To32ARGB(p+h*tex_width*4, pBits+h*Width*2, Width, false);
+            }
+          }
+          else if (type == 15)
+          {
+            for (int h=0;h<Height ; ++h)
+				    {
+              nglCopyLine15To32ARGB(p+h*tex_width*4, pBits+h*Width*2, Width, false);
+            }
+          }
+				  /*
+          int dst, src;
 				  for (int h=0;h<Height ; ++h)
 				  {
 					  for (int w=0 ; w<Width ; ++w)
 					  {
 						  dst = w+h*tex_width;
 						  src = w + h*Width;
-						  //p[dst*4+0] = pBits[src*4+1];
-						  //p[dst*4+1] = pBits[src*4+2];
-						  //p[dst*4+2] = pBits[src*4+3];
-						  //p[dst*4+3] = pBits[src*4+0];
-
-//#ifdef OLD
               p[dst*4+0] = pBits[src*4+2];
 						  p[dst*4+1] = pBits[src*4+1];
 						  p[dst*4+2] = pBits[src*4+0];
-						  p[dst*4+3] = pBits[src*4+3];
-//#endif
-               
-              /*
-              p[dst*4+0] = 0;
-						  p[dst*4+1] = 0;
-						  p[dst*4+2] = 0;
-						  p[dst*4+3] = pBits[src*4+0];
-              */
-              /*
-              p[dst*4+0] = pBits[(src*4+1];
-						  p[dst*4+1] = pBits[src*4+2];
-						  p[dst*4+2] = pBits[src*4+3];
-						  p[dst*4+3] = pBits[src*4+0];
-              */
-              
-              //rand()%255
-              /*
-              p[dst*4+0] = rand()%255;
-						  p[dst*4+1] = rand()%255;
-						  p[dst*4+2] = rand()%255;
-						  p[dst*4+3] = rand()%255;
-              */
-              
-              
-              /*
-              const uint8 R = v.mB;
-        const uint8 G = v.mG;
-        const uint8 B = v.mR;
-        const uint8 A = v.mA;
-        */  
-              //p[dst*4+0] = 0; //B
-						  //p[dst*4+1] = 0; //green
-						  //p[dst*4+2] = 255; //R
-						  //p[dst*4+3] = 200; //A
-              
+						  p[dst*4+3] = pBits[src*4+3]; //255;//pBits[src*4+3];    
 					  }
-            
 				  }
-        
-			}
-			else
-			{
-				//memset(p, 0xFF, Height*Width*bytes);
-				memcpy(p, pImage->GetBuffer(), Height*Width*bytes);
-      }
-			info.mpTexture->UnlockRect(0);
+          */
+			  }
+			  else
+			  {
+				  memcpy(p, pImage->GetBuffer(), Height*Width*bytes);
+        }
+			  info.mpTexture->UnlockRect(0);
 			}
       else
       {
         int a=0;
       }
-
-
-
-      GLuint pixelformat = pImage->GetPixelFormat();
-
-//       {
-//         glTexImage2D
-//           (  
-//           target,
-//           0,
-//           pImage->GetPixelFormat(),
-//           (int)Width,
-//           (int)Height,
-//           0,
-//           pixelformat,
-//           type,
-//           pBuffer
-//           );
-//         nuiCheckForGLErrors();
-//       }
 
       info.mReload = false;
       
@@ -1586,60 +1411,12 @@ void nuiD3DPainter::UploadTexture(nuiTexture* pTexture)
         
       }
       */
-	
-	  //création de la texture D3D
-
-
-      //if (allocated)
-      //  free(pBuffer);
     }
   }
-  //FIXME : à globaliser ?
 	hr = pDev->SetSamplerState(0, D3DSAMP_MINFILTER, nuiGetTextureFilteringTypeD3D(pTexture->GetMinFilter()));
 	hr = pDev->SetSamplerState(0, D3DSAMP_MAGFILTER, nuiGetTextureFilteringTypeD3D(pTexture->GetMagFilter()));
 	hr = pDev->SetSamplerState(0, D3DSAMP_ADDRESSU, nuiGetTextureAdressModeD3D(pTexture->GetWrapS()));
 	hr = pDev->SetSamplerState(0, D3DSAMP_ADDRESSV, nuiGetTextureAdressModeD3D(pTexture->GetWrapT()));
-	
-  //TO DO : env mode ?
-//   glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, pTexture->GetEnvMode());
-//   nuiCheckForGLErrors();
-// 
-	//?
-//   if (changedctx)
-//   {
-//     mpContext->BeginSession();
-//     nuiCheckForGLErrors();
-//     glBindTexture(target, info.mpTexture);
-//     nuiCheckForGLErrors();
-//     glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, pTexture->GetEnvMode());
-//     nuiCheckForGLErrors();
-//   }
-// 
-//   glMatrixMode(GL_TEXTURE);
-//   nuiCheckForGLErrors();
-//   glLoadIdentity();
-//   nuiCheckForGLErrors();
-// 
-//   uint32 rectangle = GetRectangleTextureSupport();
-//   nuiCheckForGLErrors();
-//   if (rectangle != 1)
-//   {
-//     double rx = pTexture->GetWidth() / Width;
-//     double ry = pTexture->GetHeight() / Height;
-//     if (target == GL_TEXTURE_RECTANGLE_ARB)
-//     {
-//       rx *= pTexture->GetWidth();
-//       ry *= pTexture->GetHeight();
-//     }
-// 
-//     glScaled(rx, ry, 1);
-//     nuiCheckForGLErrors();
-//   }
-// 
-//   glMatrixMode(GL_MODELVIEW);
-//   nuiCheckForGLErrors();
-
-  //PROFILE_CHRONO_OUT(4, "UploadTexture()");
 }
 
 
@@ -1686,8 +1463,8 @@ void nuiD3DPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
 {
 	LPDIRECT3DDEVICE9 pDev = mpContext->GetDirect3DDevice();
   HRESULTChecker hr = S_OK;
-	/*
 	
+  /*
 	if (ForceApply || mState.mTexturing != rState.mTexturing)
 	  {
 		mState.mTexturing = rState.mTexturing;
@@ -1729,58 +1506,33 @@ void nuiD3DPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
 	  */
 
 
-
-	
-	
+  if (ForceApply || mState.mTexturing != rState.mTexturing)
+	{
+		mState.mTexturing = rState.mTexturing;
+		if (mState.mTexturing)
+		  pDev->SetRenderState(D3DRS_SCISSORTESTENABLE, false);
+		else
+		  pDev->SetTexture(0, NULL);
+      
+	}
 	// 2D Textures: 
   std::map<nuiTexture*, TextureInfo>::const_iterator it = mTextures.find(rState.mpTexture);
   bool uptodate = (it == mTextures.end()) ? false : ( !it->second.mReload && it->second.mpTexture != NULL );
   if (ForceApply || (mState.mpTexture != rState.mpTexture) || (mState.mpTexture && !uptodate))
   { 
-    //GLenum intarget = 0;
-    //GLenum outtarget = 0;
-
-    /*
-    if (mState.mpTexture)
-    {      
-      //outtarget = GetTextureTarget(mState.mpTexture->IsPowerOfTwo());
-	  mState.mpTexture->Release();
-      //mState.mpTexture->UnapplyGL(this); #TODO Un apply the texture
-      //nuiCheckForGLErrors();
-      //mState.mpTexture->Release();
-      //nuiCheckForGLErrors();
-    }
-    */
-
     mState.mpTexture = rState.mpTexture ;
-
     if (mState.mpTexture)
     {
-      //intarget = GetTextureTarget(mState.mpTexture->IsPowerOfTwo());
-
       mState.mpTexture->Acquire();
-      
       UploadTexture(mState.mpTexture);
-	  std::map<nuiTexture*, TextureInfo>::const_iterator it = mTextures.find(rState.mpTexture);
-	  IDirect3DTexture9* pTexture = it->second.mpTexture;
-	  hr = pDev->SetTexture(0, it->second.mpTexture);
-    
-
-      //nuiCheckForGLErrors();
-      /*
-	  if (mState.mpShader)
-      {
-        std::map<nuiTexture*, TextureInfo>::const_iterator it = mTextures.find(rState.mpTexture);
-        mState.mpShader->SetTexture2D(0, it->second.mTexture);
-      }
-      nuiCheckForGLErrors();
-	  */
+	    std::map<nuiTexture*, TextureInfo>::const_iterator it = mTextures.find(rState.mpTexture);
+	    IDirect3DTexture9* pTexture = it->second.mpTexture;
+	    hr = pDev->SetTexture(0, it->second.mpTexture);
     }
     else
     {
       hr = pDev->SetTexture(0, NULL); //disable texturing
     }
-
     //NGL_OUT(_T("Change texture from 0x%x to 0x%x\n"), outtarget, intarget);
 /*
     mTextureTarget = intarget;
@@ -1855,6 +1607,8 @@ void nuiD3DPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
 	*/
   } 
 }
+
+
 
 uint32 nuiD3DPainter::GetRectangleTextureSupport() const
 {
