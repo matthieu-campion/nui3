@@ -8,6 +8,8 @@
 #include "nui.h"
 #include "nuiRange.h"
 
+#include <cmath>
+
 nuiRange::nuiRange(double Value, double Min, double Max, double Increment, double PageIncrement, double PageSize, double Origin)
 {
   mEvents = true;
@@ -33,7 +35,7 @@ nuiRange::nuiRange(double Value, double Min, double Max, double Increment, doubl
   mValue = Value;
   SetValue(Value);
 
-  if (Origin == std::numeric_limits<double>::quiet_NaN())
+  if (std::isnan<double>(Origin))
   {
     mOrigin = Min;
   }

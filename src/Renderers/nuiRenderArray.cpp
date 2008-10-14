@@ -9,6 +9,8 @@
 #include "nuiRenderArray.h"
 #include "nuiColor.h"
 
+#include <cmath>
+
 /// class nuiRenderArray
 nuiRenderArray::nuiRenderArray(GLenum mode, bool Static)
 {
@@ -85,21 +87,16 @@ bool nuiRenderArray::IsArrayEnabled(DataType tpe) const
 void nuiRenderArray::PushVertex()
 {
   NGL_ASSERT(mCurrentVertex.mX != std::numeric_limits<float>::infinity());
-  NGL_ASSERT(mCurrentVertex.mX != std::numeric_limits<float>::signaling_NaN());
-  NGL_ASSERT(mCurrentVertex.mX != std::numeric_limits<float>::quiet_NaN());
+  NGL_ASSERT(!std::isnan<float>(mCurrentVertex.mX));
   NGL_ASSERT(mCurrentVertex.mY != std::numeric_limits<float>::infinity());
-  NGL_ASSERT(mCurrentVertex.mY != std::numeric_limits<float>::signaling_NaN());
-  NGL_ASSERT(mCurrentVertex.mY != std::numeric_limits<float>::quiet_NaN());
+  NGL_ASSERT(!std::isnan<float>(mCurrentVertex.mY));
   NGL_ASSERT(mCurrentVertex.mZ != std::numeric_limits<float>::infinity());
-  NGL_ASSERT(mCurrentVertex.mZ != std::numeric_limits<float>::signaling_NaN());
-  NGL_ASSERT(mCurrentVertex.mZ != std::numeric_limits<float>::quiet_NaN());
+  NGL_ASSERT(!std::isnan<float>(mCurrentVertex.mZ));
 
   NGL_ASSERT(mCurrentVertex.mTX != std::numeric_limits<float>::infinity());
-  NGL_ASSERT(mCurrentVertex.mTX != std::numeric_limits<float>::signaling_NaN());
-  NGL_ASSERT(mCurrentVertex.mTX != std::numeric_limits<float>::quiet_NaN());
+  NGL_ASSERT(!std::isnan<float>(mCurrentVertex.mTX));
   NGL_ASSERT(mCurrentVertex.mTY != std::numeric_limits<float>::infinity());
-  NGL_ASSERT(mCurrentVertex.mTY != std::numeric_limits<float>::signaling_NaN());
-  NGL_ASSERT(mCurrentVertex.mTY != std::numeric_limits<float>::quiet_NaN());
+  NGL_ASSERT(!std::isnan<float>(mCurrentVertex.mTY));
 
   mVertices.push_back(mCurrentVertex);
 }
@@ -182,14 +179,10 @@ void nuiRenderArray::SetColor(float r, float g, float b, float a)
   NGL_ASSERT(b >= 0.0);
   NGL_ASSERT(a <= 1.0);
   NGL_ASSERT(a >= 0.0);
-  NGL_ASSERT(r != std::numeric_limits<float>::signaling_NaN());
-  NGL_ASSERT(r != std::numeric_limits<float>::quiet_NaN());
-  NGL_ASSERT(g != std::numeric_limits<float>::signaling_NaN());
-  NGL_ASSERT(g != std::numeric_limits<float>::quiet_NaN());
-  NGL_ASSERT(b != std::numeric_limits<float>::signaling_NaN());
-  NGL_ASSERT(b != std::numeric_limits<float>::quiet_NaN());
-  NGL_ASSERT(a != std::numeric_limits<float>::signaling_NaN());
-  NGL_ASSERT(a != std::numeric_limits<float>::quiet_NaN());
+  NGL_ASSERT(!std::isnan<float>(r));
+  NGL_ASSERT(!std::isnan<float>(g));
+  NGL_ASSERT(!std::isnan<float>(b));
+  NGL_ASSERT(!std::isnan<float>(a));
 
   mCurrentVertex.mR = (uint8)ToBelow(r * 255.0f);
   mCurrentVertex.mG = (uint8)ToBelow(g * 255.0f);
