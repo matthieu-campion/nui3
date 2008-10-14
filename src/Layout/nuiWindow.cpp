@@ -205,7 +205,7 @@ nuiRect nuiWindow::CalcIdealSize()
   }
 
   mIdealRect = GetRectFromFlags(rect, GetFlags(), true);
-  return mIdealRect; 
+  return mIdealRect.Size(); 
 }
 
 bool nuiWindow::SetRect(const nuiRect& rRect)
@@ -378,7 +378,7 @@ bool nuiWindow::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
     _Rect.Transform(GetMatrix());
     nuiTheme* pTheme = GetTheme();
     NGL_ASSERT(pTheme);
-    mClickPos= pTheme->GetWindowPart(_Rect, X, Y, GetFlags(), false);
+    mClickPos = pTheme->GetWindowPart(_Rect, X, Y, GetFlags(), false);
     pTheme->Release();
 
     nuiRect wRect = GetRect();
@@ -409,6 +409,7 @@ bool nuiWindow::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
       break;
     }
     mMoving = ePreMove;
+    SetAlpha(0.5f);
 
     Invalidate();
 
@@ -464,6 +465,7 @@ bool nuiWindow::MouseMoved (nuiSize X, nuiSize Y)
   if (mMoving == eMove)
   {
     nuiRect wRect = GetIdealRect();
+    wRect.RoundToNearest();
     nuiRect woriginal = wRect;
 
     switch (mClickPos)
@@ -548,6 +550,7 @@ bool nuiWindow::MouseMoved (nuiSize X, nuiSize Y)
 
     SetAlpha(0.5f);
 
+    wRect.RoundToNearest();
     if (mpManager)
       mpManager->ValidateWindowRect(wRect);
     
@@ -566,13 +569,13 @@ bool nuiWindow::MouseMoved (nuiSize X, nuiSize Y)
       mClickPos= pTheme->GetWindowPart(_Rect,X,Y,GetFlags(), false);
       pTheme->Release();
 
-      SetMouseCursor(eCursorArrow);
+      SetMouseCursor(eCursorDoNotSet);
 
       switch (mClickPos)
       {
       case nuiCenter:
         if (!mNoMove)
-          SetMouseCursor(eCursorArrow);
+          SetMouseCursor(eCursorHand);
         break;
       case nuiTopLeft:
         if (!mNoResize)

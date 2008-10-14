@@ -2025,10 +2025,15 @@ const nuiRect& nuiWidget::GetIdealRect()
   {
     mIdealRect = CalcIdealSize();
 
-    if (mHasUserWidth)
-      mIdealRect.SetWidth(mUserRect.GetWidth());
-    if (mHasUserHeight)
-      mIdealRect.SetHeight(mUserRect.GetHeight());
+    if (mHasUserSize && mHasUserPos)
+      mIdealRect = mUserRect;
+    else
+    {
+      if (mHasUserWidth)
+        mIdealRect.SetWidth(mUserRect.GetWidth());
+      if (mHasUserHeight)
+        mIdealRect.SetHeight(mUserRect.GetHeight());
+    }
 
     if (mMaxWidth > 0.0f)
       mIdealRect.Right() = MIN(mMaxWidth, mIdealRect.GetWidth());
@@ -2039,7 +2044,7 @@ const nuiRect& nuiWidget::GetIdealRect()
     if (mMinHeight > 0.0f)
       mIdealRect.Bottom() = MAX(mMinHeight, mIdealRect.GetHeight());
 
-    if (mHasUserPos)
+    if (mHasUserPos && !mHasUserSize)
       mIdealRect.MoveTo(mUserRect.mLeft, mUserRect.mTop);
     
 

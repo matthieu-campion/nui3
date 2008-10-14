@@ -314,27 +314,27 @@ nuiPosition nuiTheme::GetWindowPart(nuiRect rect,nuiSize X,nuiSize Y,nuiWindowFl
   {
     if (!rect.IsInside(X,Y))
     {
-      if (X <= rect.mLeft + 4)
+      if (X <= rect.mLeft)
       {
-        if (Y <= rect.mTop + 4)
+        if (Y <= rect.mTop)
           ClickPos = nuiTopLeft;
-        else if (Y >= rect.mBottom - 4)
+        else if (Y >= rect.mBottom)
           ClickPos = nuiBottomLeft;
         else
           ClickPos = nuiLeft;
       }
-      else if (X >= rect.mRight - 4)
+      else if (X >= rect.mRight)
       {
-        if (Y <= rect.mTop + 4)
+        if (Y <= rect.mTop)
           ClickPos = nuiTopRight;
-        else if (Y >= rect.mBottom - 4)
+        else if (Y >= rect.mBottom)
           ClickPos = nuiBottomRight;
         else
           ClickPos = nuiRight;
       }
-      else if (Y <= rect.mTop + 4)
+      else if (Y <= rect.mTop)
         ClickPos = nuiTop;
-      else if (Y >= rect.mBottom - 4)
+      else if (Y >= rect.mBottom)
         ClickPos = nuiBottom;
     }
   }
