@@ -1308,8 +1308,8 @@ nuiFontManager& nuiFontManager::GetManager(bool InitIfNeeded)
 {
   if (InitIfNeeded && gManager.mpFonts.empty() && gManager.mFontFolders.empty())
   {
-    gManager.AddSystemFolders();
-    gManager.ScanFolders();
+//    gManager.AddSystemFolders();
+//    gManager.ScanFolders();
   }
   
   return gManager;

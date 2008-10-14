@@ -14,7 +14,7 @@
 #ifdef _WIN32_
 #define ISNAN_FLOAT isnan
 #else
-#define ISNAN_FLOAT ISNAN_FLOAT
+#define ISNAN_FLOAT std::isnan<float>
 #endif
 
 /// class nuiRenderArray
