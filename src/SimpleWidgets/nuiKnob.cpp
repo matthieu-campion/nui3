@@ -342,6 +342,13 @@ nuiRect nuiKnob::CalcIdealSize()
   }
 }
 
+bool nuiKnob::SetRect(const nuiRect& rRect)
+{
+  mpImageSequence->SetRect(rRect);
+  nuiWidget::SetRect(rRect);
+  return true;
+}
+
 bool nuiKnob::Draw(nuiDrawContext* pContext)
 {
   if (mpImageSequence)

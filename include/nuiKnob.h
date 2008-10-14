@@ -63,6 +63,7 @@ public:
 
 protected:
 
+  virtual bool SetRect(const nuiRect& rRect);
   virtual bool Draw(nuiDrawContext* pContext);
 
   //Received Events:

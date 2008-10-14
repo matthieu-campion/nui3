@@ -377,7 +377,7 @@ bool nuiImageSequence::Draw(nuiDrawContext* pContext)
     alpha = GetAlpha();
   }
   
-  const nuiRect& destRect = mIdealRect.Size();
+  const nuiRect& destRect = mRect.Size();
   
   nuiColor color = nuiColor(1.0f, 1.0f, 1.0f, alpha);
     
