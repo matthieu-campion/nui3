@@ -79,6 +79,7 @@ public:
   void SetColor(float r, float g, float b, float a);
   void SetColor(uint8 r, uint8 g, uint8 b, uint8 a);
   void SetColor(const nuiColor& rColor);
+  void SetColor(uint32 Color);
   void SetTexCoords(float tx, float ty);
   
   void PushVertex();

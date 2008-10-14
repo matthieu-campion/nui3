@@ -204,6 +204,13 @@ void nuiRenderArray::SetColor(uint8 r, uint8 g, uint8 b, uint8 a)
   mCurrentVertex.mA = a;
 }
 
+void nuiRenderArray::SetColor(uint32 Color)
+{
+  uint8* pCol = (uint8*)&Color;
+  SetColor(pCol[0], pCol[1], pCol[2], pCol[3]);
+}
+
+
 void nuiRenderArray::SetColor(const nuiColor& rColor)
 {
   SetColor(rColor.Red(), rColor.Green(), rColor.Blue(), rColor.Alpha());

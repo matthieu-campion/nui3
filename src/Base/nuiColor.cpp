@@ -365,3 +365,15 @@ bool nuiColor::GetColor(const nglString& rName, nuiColor& rColor)
 }
 
 nuiColor::ColorMap nuiColor::mCustomColors;
+
+uint32 nuiColor::GetRGBA() const
+{
+  uint32 t = 0;
+  uint8* pt = (uint8*)&t;
+  pt[0] = ToBelow(mRed   * 255.0f);
+  pt[1] = ToBelow(mGreen * 255.0f);
+  pt[2] = ToBelow(mBlue  * 255.0f);
+  pt[3] = ToBelow(mAlpha * 255.0f);
+  return t;
+}
+

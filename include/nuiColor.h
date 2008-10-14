@@ -134,6 +134,8 @@ public:
     return mRed == rColor.mRed && mGreen == rColor.mGreen && mBlue == rColor.mBlue && mAlpha == rColor.mAlpha;
   }
 
+  uint32 GetRGBA() const;
+  
   static void EnumStandardColorNames(std::vector<nglString>& rStandardColorNames);
   static void EnumCustomizedColorNames(std::vector<nglString>& rUserColorNames);
   
