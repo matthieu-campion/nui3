@@ -10,6 +10,12 @@
 
 #include <cmath>
 
+#ifdef _WIN32_
+  #define ISNAN_DOUBLE isnan
+#else
+  #define ISNAN_DOUBLE std::isnan<double>
+#endif
+
 nuiRange::nuiRange(double Value, double Min, double Max, double Increment, double PageIncrement, double PageSize, double Origin)
 {
   mEvents = true;
@@ -35,7 +41,7 @@ nuiRange::nuiRange(double Value, double Min, double Max, double Increment, doubl
   mValue = Value;
   SetValue(Value);
 
-  if (std::isnan<double>(Origin))
+  if (ISNAN_DOUBLE(Origin))
   {
     mOrigin = Min;
   }

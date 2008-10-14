@@ -11,6 +11,12 @@
 
 #include <cmath>
 
+#ifdef _WIN32_
+#define ISNAN_FLOAT isnan
+#else
+#define ISNAN_FLOAT ISNAN_FLOAT
+#endif
+
 /// class nuiRenderArray
 nuiRenderArray::nuiRenderArray(GLenum mode, bool Static)
 {
@@ -87,16 +93,16 @@ bool nuiRenderArray::IsArrayEnabled(DataType tpe) const
 void nuiRenderArray::PushVertex()
 {
   NGL_ASSERT(mCurrentVertex.mX != std::numeric_limits<float>::infinity());
-  NGL_ASSERT(!std::isnan<float>(mCurrentVertex.mX));
+  NGL_ASSERT(!ISNAN_FLOAT(mCurrentVertex.mX));
   NGL_ASSERT(mCurrentVertex.mY != std::numeric_limits<float>::infinity());
-  NGL_ASSERT(!std::isnan<float>(mCurrentVertex.mY));
+  NGL_ASSERT(!ISNAN_FLOAT(mCurrentVertex.mY));
   NGL_ASSERT(mCurrentVertex.mZ != std::numeric_limits<float>::infinity());
-  NGL_ASSERT(!std::isnan<float>(mCurrentVertex.mZ));
+  NGL_ASSERT(!ISNAN_FLOAT(mCurrentVertex.mZ));
 
   NGL_ASSERT(mCurrentVertex.mTX != std::numeric_limits<float>::infinity());
-  NGL_ASSERT(!std::isnan<float>(mCurrentVertex.mTX));
+  NGL_ASSERT(!ISNAN_FLOAT(mCurrentVertex.mTX));
   NGL_ASSERT(mCurrentVertex.mTY != std::numeric_limits<float>::infinity());
-  NGL_ASSERT(!std::isnan<float>(mCurrentVertex.mTY));
+  NGL_ASSERT(!ISNAN_FLOAT(mCurrentVertex.mTY));
 
   mVertices.push_back(mCurrentVertex);
 }
@@ -179,10 +185,10 @@ void nuiRenderArray::SetColor(float r, float g, float b, float a)
   NGL_ASSERT(b >= 0.0);
   NGL_ASSERT(a <= 1.0);
   NGL_ASSERT(a >= 0.0);
-  NGL_ASSERT(!std::isnan<float>(r));
-  NGL_ASSERT(!std::isnan<float>(g));
-  NGL_ASSERT(!std::isnan<float>(b));
-  NGL_ASSERT(!std::isnan<float>(a));
+  NGL_ASSERT(!ISNAN_FLOAT(r));
+  NGL_ASSERT(!ISNAN_FLOAT(g));
+  NGL_ASSERT(!ISNAN_FLOAT(b));
+  NGL_ASSERT(!ISNAN_FLOAT(a));
 
   mCurrentVertex.mR = (uint8)ToBelow(r * 255.0f);
   mCurrentVertex.mG = (uint8)ToBelow(g * 255.0f);
