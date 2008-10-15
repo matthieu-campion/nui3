@@ -194,9 +194,10 @@ void nuiPane::SetCurve(float curve)
 {
   mCurve = curve;
   delete mpShape;
-  if (curve != 0)
-  mpShape = new nuiShape();
-  mpShape->AddRoundRect(mRect.Size(), curve);
+  if (curve != 0) {
+    mpShape = new nuiShape();
+    mpShape->AddRoundRect(mRect.Size(), curve);
+  }
 }
 
 void nuiPane::SetLineWidth(float Width)
