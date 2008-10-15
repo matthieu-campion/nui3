@@ -110,15 +110,13 @@ bool nuiPane::Draw(nuiDrawContext* pContext)
   pContext->SetStrokeColor(mStrokeColor);
   pContext->EnableAntialiasing(true);
   pContext->SetLineWidth(mLineWidth);
-
   if (mCurve != 0)
   {
     pContext->DrawShape(mpShape, mShapeMode);
   }
   else
   {
-    nuiRect rect = nuiRect(0.f,0.f,mRect.GetWidth(), mRect.GetHeight());
-    pContext->DrawRect(rect, mShapeMode);
+    pContext->DrawRect(mRect.Size(), mShapeMode);
   }
   pContext->PopState();
 
@@ -159,25 +157,18 @@ bool nuiPane::SetRect(const nuiRect& rRect)
   bool reload = !(mRect == rRect);
 
   nuiRect r(rRect.Size());
-  
-  nuiWidget::LayoutConstraint constraint(mConstraint);
-  
-  if (mCurve != 0)
-  {
-    r.Grow((nuiSize)ToNearest(-mCurve * .5f), (nuiSize)ToNearest(-mCurve * .5f));
-    r.RoundToNearest();
+  r.Grow((nuiSize)ToNearest(-mCurve * .5f), (nuiSize)ToNearest(-mCurve * .5f));
+  r.RoundToNearest();
 
-    
-    constraint.mMaxWidth -= (nuiSize)ToNearest(mCurve * .5f);
-    constraint.mMaxHeight -= (nuiSize)ToNearest(mCurve * .5f);
-  }
+  nuiWidget::LayoutConstraint constraint(mConstraint);
+  constraint.mMaxWidth -= (nuiSize)ToNearest(mCurve * .5f);
+  constraint.mMaxHeight -= (nuiSize)ToNearest(mCurve * .5f);
 
   IteratorPtr pIt;
   for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
   {
     nuiWidgetPtr pItem = pIt->GetWidget();
-    if (mCurve != 0)
-      pItem->SetLayoutConstraint(constraint);
+    pItem->SetLayoutConstraint(constraint);
     pItem->SetLayout(r);
   }
   delete pIt;
@@ -194,7 +185,9 @@ void nuiPane::SetCurve(float curve)
 {
   mCurve = curve;
   delete mpShape;
-  if (curve != 0) {
+
+  if (curve != 0) 
+  {
     mpShape = new nuiShape();
     mpShape->AddRoundRect(mRect.Size(), curve);
   }
@@ -241,29 +234,23 @@ nuiRect nuiPane::CalcIdealSize()
   nuiRect temp;
 
   nuiWidget::LayoutConstraint constraint(mConstraint);
-  if (mCurve != 0)
-  {
-    constraint.mMaxWidth -= (nuiSize)ToNearest(mCurve * .5f);
-    constraint.mMaxHeight -= (nuiSize)ToNearest(mCurve * .5f);
-  }
+  constraint.mMaxWidth -= (nuiSize)ToNearest(mCurve * .5f);
+  constraint.mMaxHeight -= (nuiSize)ToNearest(mCurve * .5f);
 
   IteratorPtr pIt;
   for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
   {
     nuiWidgetPtr pItem = pIt->GetWidget();
-    if (mCurve != 0)
-      pItem->SetLayoutConstraint(constraint);
+    pItem->SetLayoutConstraint(constraint);
     nuiRect t = pItem->GetIdealRect();
     temp.Union(t,temp); // Dummy call. Only the side effect is important: the object recalculates its layout.
     //NGL_OUT(_T("    PaneItem rect %ls\n"), t.GetValue().GetChars());
   }
   delete pIt;
 
-  if (mCurve != 0)
-  {
-    temp.Grow((nuiSize)ToNearest(mCurve * .5f), (nuiSize)ToNearest(mCurve * .5f));
-    temp.RoundToBiggest();
-  }
+  temp.Grow((nuiSize)ToNearest(mCurve * .5f), (nuiSize)ToNearest(mCurve * .5f));
+  temp.RoundToBiggest();
+  
 
   DebugRefreshInfo();
 

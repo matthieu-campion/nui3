@@ -569,7 +569,7 @@ void nuiGLPainter::DrawArray(const nuiRenderArray& rArray)
     if (!mState.mTexturing)
     {
       glPushMatrix();
-      //glTranslatef(0.5f, 0.5f, 0);
+      glTranslatef(0.5f, 0.5f, 0);
       nuiCheckForGLErrors();
     }
   }
