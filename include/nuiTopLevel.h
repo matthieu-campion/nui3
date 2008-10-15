@@ -61,17 +61,6 @@ public:
   virtual void Trash(nuiWidgetPtr pWidget); ///< Ask for the destruction of this object as soon as possible.
   //@}
 
-#ifdef _UIKIT_
-  /** @name Object size management */
-  //@{
-  bool SetLayout(const nuiRect& rRect);
-  void SetDrawOrigin(nuiPosition Origin) { mDrawOrigin = Origin; } ///< change the drawing top position (top -> bottom || bottom -> top || left -> right || right -> left).
-  nuiPosition GetDrawOrigin() { return mDrawOrigin; }
-  const nuiRect& GetDisplayRect() { return mDisplayRect; }
-  bool IsInsideLocal(nuiSize X, nuiSize Y); ///< Overriden to fit draw origin expectations
-  //@}
-#endif
-
   /** @name Rendering: */
   //@{
   bool Draw(class nuiDrawContext *pContext);
@@ -212,11 +201,6 @@ protected:
   bool IsTrashFull() const;
   
   nuiWidgetPtr mpWatchedWidget;
-
-#ifdef _UIKIT_
-  nuiRect mDisplayRect;
-  nuiPosition mDrawOrigin;
-#endif
 
   void UpdateWidgetsCSS();
   

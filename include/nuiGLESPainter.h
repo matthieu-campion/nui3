@@ -84,6 +84,9 @@ protected:
   };
   std::map<nuiSurface*, FramebufferInfo> mFramebuffers;
 
+  void ApplySurface(const nuiRenderState& rState);
+  void DestroySurface(nuiSurface* pSurface, bool DestroyTexture);
+
   GLenum GetTextureTarget(bool POT) const;
 
 public:

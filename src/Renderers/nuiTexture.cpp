@@ -124,6 +124,7 @@ nuiTexture* nuiTexture::GetTexture (const nglString& rName)
 nuiTexture* nuiTexture::GetAATexture()
 {
   nuiTexture* pTexture = NULL;
+#ifndef __NUI_NO_AA__
   nuiTextureMap::iterator it = mpTextures.find(_T("nuiTextureAA"));
   if (it == mpTextures.end())
   {
@@ -150,6 +151,7 @@ nuiTexture* nuiTexture::GetAATexture()
   
   if (pTexture)
     pTexture->Acquire();
+#endif
   return pTexture;
 }
 

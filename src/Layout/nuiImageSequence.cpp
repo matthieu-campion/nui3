@@ -183,7 +183,7 @@ bool nuiImageSequence::CreateTextures()
     // copy and paste each frame from the image to an individual texture
     for (uint32 frame = 0; frame < mNbFrames; frame++)
     {
-      uint32 x = 0;
+//      uint32 x = 0;
       uint32 y = frame * mTexRect.GetHeight();
       
       nglImageInfo info;

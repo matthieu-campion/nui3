@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "nuiTheme.h"
 #include "nglMatrix.h"
 #include "nuiTexture.h"
-
+#include "nuiSurface.h"
 
 #ifndef __NUI_NO_GLES__
 
@@ -79,30 +79,24 @@ void nuiGLESPainter::StartRendering(nuiSize ClipOffsetX, nuiSize ClipOffsetY)
   nuiPainter::StartRendering(ClipOffsetX, ClipOffsetY);
 
   glMatrixMode(GL_PROJECTION);
-  glViewport(0,0, mWidth, mHeight);
+  
+  if (mAngle == 90 || mAngle == 270) {
+    glViewport(0,0, mHeight, mWidth);
+  }
+  else {
+    glViewport(0,0, mWidth, mHeight);
+  }
 
   nuiCheckForGLErrors();
   glLoadIdentity();
-  //  glScalef (1, -1, 1);
-  glTranslatef(-1.0f, 1.0f, 0.0f );
 
+  glRotatef(mAngle, 0.f,0.f,1.f);
+  
+  glTranslatef(-1.0f, 1.0f, 0.0f );
   glScalef (2.0f/(float)mWidth, -2.0f/(float)mHeight, 1.0f);
 
   nuiCheckForGLErrors();
 
-  if (mDrawOrigin == nuiRight) {
-    glTranslatef(mWidth, 0.f, 0.f);
-    glRotatef(90.f, 0.f,0.f,1.f);
-  }
-  else if (mDrawOrigin == nuiLeft) {
-    glTranslatef(0.f, mHeight, 0.f);
-    glRotatef(-90.f, 0.f,0.f,1.f);
-  }
-  else if (mDrawOrigin == nuiBottom) {
-    glTranslatef(mWidth, mHeight, 0.f);
-    glRotatef(180.f, 0.f,0.f,1.f);
-  }
-  
   glMatrixMode (GL_MODELVIEW);
   glLoadIdentity();
 
@@ -243,36 +237,36 @@ void nuiGLESPainter::SetState(const nuiRenderState& rState, bool ForceApply)
     glEnable(GL_SCISSOR_TEST);
     nuiRect clip(mClip);
     clip.Move(-mClipOffsetX, -mClipOffsetY);
-      
-    float x,y,w,h;
     
-    if (mDrawOrigin == nuiLeft) {
-      x = clip.Top();
-      y = clip.Left();
+    int x,y,w,h;
+
+    if (mAngle == 90) {
+      x = ToBelow(clip.Top());
+      y = ToBelow(clip.Left());
       w = ToBelow(clip.GetHeight());
       h = ToBelow(clip.GetWidth());
     }
-    else if (mDrawOrigin == nuiRight) {
-      x = mWidth - clip.Bottom();
-      y = mHeight - clip.Right();
+    else if (mAngle == 180) {
+      w = ToBelow(clip.GetWidth());
+      h = ToBelow(clip.GetHeight());
+      x = ToBelow(mWidth - w - clip.Left());
+      y = ToBelow(clip.Top());
+    }
+    else if (mAngle == 270) {
       w = ToBelow(clip.GetHeight());
       h = ToBelow(clip.GetWidth());
+      x = ToBelow(mHeight - clip.Top() - w);
+      y = ToBelow(mWidth - clip.Left() - h);
     }
-    else if (mDrawOrigin == nuiBottom) {
-      x = mWidth - clip.Right();
-      y = clip.Top();
+    else { NGL_ASSERT(!mAngle);
+      x = ToBelow(clip.Left());
+      y = ToBelow(mHeight - clip.Bottom());
       w = ToBelow(clip.GetWidth());
       h = ToBelow(clip.GetHeight());
     }
-    else { //(mDrawOrigin == nuiTop)
-      x = clip.Left();
-      y = mHeight - clip.Bottom();
-      w = ToBelow(clip.GetWidth());
-      h = ToBelow(clip.GetHeight());
-    }
-    
-//  NGL_OUT(_T("Clip {%f, %f, %f, %f}\n"), x, y, w, h);
+//    NGL_OUT(_T("To Screen Clip {%d, %d, %d, %d}\n"), x,y,w,h);
     glScissor(x, y, w, h);
+
     nuiCheckForGLErrors();
   }
   else
@@ -296,37 +290,75 @@ void nuiGLESPainter::SetSize(uint32 w, uint32 h)
   nuiCheckForGLErrors();
 }
 
-/*
+inline bool nuiCheckFramebufferStatus()
+{
+  GLint status = glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES);
+
+#if defined(NGL_DEBUG)
+
+  switch (status) {
+    case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT_OES: {
+      NGL_OUT(_T("GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT_OES\n"));
+    } break;
+    case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT_OES: {
+      NGL_OUT(_T("GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT_OES\n"));
+    } break;
+    case GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS_OES: {
+      NGL_OUT(_T("GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS_OES\n"));
+    } break;
+    case GL_FRAMEBUFFER_INCOMPLETE_FORMATS_OES: {
+      NGL_OUT(_T("GL_FRAMEBUFFER_INCOMPLETE_FORMATS_OES\n"));
+    } break;
+    case GL_FRAMEBUFFER_UNSUPPORTED_OES: {
+      NGL_OUT(_T("GL_FRAMEBUFFER_UNSUPPORTED_OES\n"));
+    } break;
+  }
+
+#endif
+
+  return (status == GL_FRAMEBUFFER_COMPLETE_OES);
+}
+
 void nuiGLESPainter::ApplySurface(const nuiRenderState& rState)
 {
   NGL_ASSERT(rState.mpSurface);
 
   std::map<nuiSurface*, FramebufferInfo>::const_iterator it = mFramebuffers.find(rState.mpSurface);
-  bool create = (it == mSurfaces.end()) ? true : false;  
+  bool create = (it == mFramebuffers.end()) ? true : false;  
 
-  nuiSize width = rState.mpSurface->GetWidth();
-  nuiSize height = rState.mpSurface->GetHeight();
-  
+  GLuint width = (GLuint)rState.mpSurface->GetWidth();
+  GLuint height = (GLuint)rState.mpSurface->GetHeight();
+
+//  glGetIntegerv(GL_RENDERBUFFER_BINDING_OES,  &mOldRenderbuffer);
+//	glGetIntegerv(GL_FRAMEBUFFER_BINDING_OES,   &mOldFramebuffer);
+//  glGetIntegerv(GL_TEXTURE_BINDING_2D, (GLint *) &oldTexture);
+
+  FramebufferInfo info;
+
   if (create)
-  {
-    FramebufferInfo info;
-     
+  {     
     glGenFramebuffersOES(1, &info.mFramebuffer);
-    glGenTextures(1, &info.mTexture);
+    glBindFramebufferOES(GL_FRAMEBUFFER_OES, info.mFramebuffer);
+
+    nuiCheckFramebufferStatus();
 
 ///< Do we need a depth buffer
-    if (rState.mpSurface->IsDepthEnabled())
-      glGenRenderbuffersOES(1, &mDepthBuffer);
+    if (rState.mpSurface->IsDepthEnabled()) {
+      glGenRenderbuffersOES(1, &info.mDepthbuffer);
+      
+    }
     else
-      info.mDepthbuffer = (GLuint)-1;
+      info.mDepthbuffer = 0;
 
 ///< Do we need a stencil buffer
-    if (rState.mpSurface->IsStencilEnabled())
-      glGenRenderbuffersOES(1, &info.mStencilBuffer);
+    if (rState.mpSurface->IsStencilEnabled()) {
+      glGenRenderbuffersOES(1, &info.mStencilbuffer);
+    }
     else
-      info.mStencilbuffer = (GLuint)-1;
+      info.mStencilbuffer = 0;
     
-///< bind buffers to framebuffer
+///< render to texture
+    glGenTextures(1, &info.mTexture);
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, info.mTexture);
     glTexImage2D(
@@ -337,11 +369,11 @@ void nuiGLESPainter::ApplySurface(const nuiRenderState& rState)
       0,
       GL_RGBA,
       GL_UNSIGNED_BYTE,
-      NULL ///< Doesn't upload data
+      NULL
     );
 
     glBindRenderbufferOES(GL_RENDERBUFFER_OES, 0);
-    glBindFramebufferOES(GL_FRAMEBUFFER_OES, mFrameBuffer);
+    glBindFramebufferOES(GL_FRAMEBUFFER_OES, info.mFramebuffer);
 
     glFramebufferTexture2DOES(GL_FRAMEBUFFER_OES,
                               GL_COLOR_ATTACHMENT0_OES,
@@ -355,16 +387,14 @@ void nuiGLESPainter::ApplySurface(const nuiRenderState& rState)
     it = mFramebuffers.find(rState.mpSurface);
     NGL_ASSERT(it != mFramebuffers.end());
   }
+  else {
+    info = it->second;
+  }
 
 ///< Bind
 
-//	glGetIntegerv(GL_RENDERBUFFER_BINDING_OES, (GLint *) &mOldRenderBuffer);
-//	glGetIntegerv(GL_FRAMEBUFFER_BINDING_OES, (GLint *) &mOldFrameBuffer);
-//  glGetIntegerv(GL_TEXTURE_BINDING_2D, (GLint *) &mOldTexture);
-  FramebufferInfo& rInfo = it->second;
-
   glEnable(GL_TEXTURE_2D);
-  glBindTexture(GL_TEXTURE_2D, rInfo.mTexture);
+  glBindTexture(GL_TEXTURE_2D, info.mTexture);
   glTexImage2D(
     GL_TEXTURE_2D, 0, GL_RGBA,
     width, height, 0,
@@ -374,72 +404,42 @@ void nuiGLESPainter::ApplySurface(const nuiRenderState& rState)
   );
 
 //glBindRenderbufferOES(GL_RENDERBUFFER_OES, 0);
-  glBindFramebufferOES(GL_FRAMEBUFFER_OES, rInfo.mFramebuffer);
+  glBindFramebufferOES(GL_FRAMEBUFFER_OES, info.mFramebuffer);
 
   glFramebufferTexture2DOES(GL_FRAMEBUFFER_OES,
                             GL_COLOR_ATTACHMENT0_OES,
                     	      GL_TEXTURE_2D,
-                            rInfo.mTexture,
+                            info.mTexture,
                             NULL);
 
   glBindTexture(GL_TEXTURE_2D, 0);
 
-  GLint completeness = glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES);
-  switch (completeness) {
-    case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT_OES: {
-      NGL_DEBUG(_T("GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT_OES\n"));
-    } break;
-    case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT_OES: {
-      NGL_DEBUG(_T("GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT_OES\n"));
-    } break;
-    case GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS_OES: {
-      NGL_DEBUG(_T("GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS_OES\n"));
-    } break;
-    case GL_FRAMEBUFFER_INCOMPLETE_FORMATS_OES: {
-      NGL_DEBUG(_T("GL_FRAMEBUFFER_INCOMPLETE_FORMATS_OES\n"));
-    } break;
-    case GL_FRAMEBUFFER_UNSUPPORTED_OES: {
-      NGL_DEBUG(_T("GL_FRAMEBUFFER_UNSUPPORTED_OES\n"));
-    } break;
-    default: {
-      NGL_ASSERT(completeness == GL_FRAMEBUFFER_COMPLETE_OES);
-    }
-  }
+  bool statusOK = nuiCheckFramebufferStatus();
+
   glViewport(0,0, width, height);
+
+  NGL_ASSERT(statusOK);
 }
 
 void nuiGLESPainter::DestroySurface(nuiSurface* pSurface, bool DestroyTexture)
 {
-  std::map<nuiSurface*, FramebufferInfo>::const_iterator it = mFramebuffers.find(rState.mpSurface);
+  std::map<nuiSurface*, FramebufferInfo>::iterator it = mFramebuffers.find(pSurface);
   if (it == mFramebuffers.end()) {
     return;
   }
-  FramebufferInfo& rInfo = it->second;
+  FramebufferInfo info = it->second;
 
-  NGL_ASSERT(rInfo.mFramebuffer >= 0);
-  glDeleteFramebuffersOES(1, &rInfo.mFramebuffer);
-  if (rInfo.mTexture >= 0 && DestroyTexture)
-    glDeleteRenderbuffersOES(1, &rInfo.mTexture);
-  if (rInfo.mDepthbuffer >= 0)
-    glDeleteRenderbuffersOES(1, &rInfo.mDepthbuffer);
-  if (rInfo.mStencilbuffer >= 0)
-    glDeleteRenderbuffersOES(1, &rInfo.mStencilbuffer);
+  NGL_ASSERT(info.mFramebuffer > 0);
+  glDeleteFramebuffersOES(1, &info.mFramebuffer);
+  if (info.mTexture > 0 && DestroyTexture)
+    glDeleteRenderbuffersOES(1, &info.mTexture);
+  if (info.mDepthbuffer > 0)
+    glDeleteRenderbuffersOES(1, &info.mDepthbuffer);
+  if (info.mStencilbuffer > 0)
+    glDeleteRenderbuffersOES(1, &info.mStencilbuffer);
   
   mFramebuffers.erase(it);
 }
-///< UnBind()
-{
-  glBindFramebufferOES(GL_FRAMEBUFFER_OES, mOldFrameBuffer);
-
-  if (glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) != GL_FRAMEBUFFER_COMPLETE_OES)
-  {
-    MI31_OUT(_T("Framebuffer status incomplete\n"));
-    return;
-  }
-
-  mIsSet = false;
-}
-*/
 
 void nuiGLESPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
 {
@@ -644,6 +644,7 @@ void nuiGLESPainter::BlurRect(const nuiRect& rRect, uint Strength)
 
 #define LOGENUM(XXX) case XXX: { NGL_OUT(_T("%ls\n"), #XXX); } break;
 
+#if 0
 void nuiGLESPainter::DrawArray(const nuiRenderArray& rArray)
 {
   mRenderOperations++;
@@ -871,6 +872,242 @@ void nuiGLESPainter::DrawArray(const nuiRenderArray& rArray)
   
   nuiCheckForGLErrors();
 }
+#else
+void nuiGLESPainter::DrawArray(const nuiRenderArray& rArray)
+{
+  mRenderOperations++;
+  mBatches++;
+  
+  if (!mEnableDrawArray)
+    return;
+  
+  uint32 s = rArray.GetSize();
+  
+  total += s;
+  totalinframe += s;
+  mins = MIN(mins, s);
+  maxs = MAX(maxs, s);
+  //printf("DA (%d) min = %d  max = %d\n", s, mins, maxs);
+  
+  if (!s)
+    return;
+  
+  if (mClip.GetWidth() <= 0 || mClip.GetHeight() <= 0)
+    return;
+  
+  mVertices += s;
+  GLenum mode = rArray.GetMode();
+  //NGL_OUT(_T("GL Array Mode: %d   vertice count %d\n"), mode, size);
+  
+  /*
+   switch (rArray.GetMode())
+   {
+   LOGENUM(GL_POINTS);
+   LOGENUM(GL_LINES);
+   LOGENUM(GL_LINE_LOOP);
+   LOGENUM(GL_LINE_STRIP);
+   //LOGENUM(GL_TRIANGLES);
+   LOGENUM(GL_TRIANGLE_STRIP);
+   LOGENUM(GL_TRIANGLE_FAN);
+   //LOGENUM(GL_QUADS);
+   LOGENUM(GL_QUAD_STRIP);
+   LOGENUM(GL_POLYGON);
+   }
+   */
+  
+  
+  NUI_RETURN_IF_RENDERING_DISABLED;
+  
+#ifdef NUI_USE_ANTIALIASING
+  if (mState.mAntialiasing)
+  {
+#ifdef NUI_USE_MULTISAMPLE_AA
+    glHint(GL_MULTISAMPLE_FILTER_HINT_NV, GL_NICEST);
+    glEnable(GL_MULTISAMPLE_ARB);
+    nuiCheckForGLErrors();
+#else
+    glEnable(GL_POLYGON_SMOOTH);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA_SATURATE, GL_ONE);
+    nuiCheckForGLErrors();
+#endif
+  }
+  else
+#endif // NUI_USE_ANTIALIASING
+  {
+    //#TEST meeloo disabling AA texture
+    //     if (rArray.UseGLAATexture())
+    //     {
+    //       if (mState.mTexturing && mTextureTarget != GL_TEXTURE_2D)
+    //         glDisable(mTextureTarget);
+    //       if (!mState.mTexturing || (mState.mTexturing && mTextureTarget != GL_TEXTURE_2D))
+    //         glEnable(GL_TEXTURE_2D);
+    // 
+    //       if (!mState.mBlending)
+    //         glEnable(GL_BLEND);
+    //       if (mState.mBlendFunc != nuiBlendTransp)
+    //         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    // 
+    //       glBindTexture(GL_TEXTURE_2D, glAA_texture);
+    // 
+    //       glMatrixMode(GL_TEXTURE);
+    //       glPushMatrix();
+    //       glLoadIdentity();
+    //       glMatrixMode(GL_MODELVIEW);
+    // 
+    //       glPushMatrix();
+    //       glTranslatef(0.5f, 0.5f, 0);
+    //     }
+    //     else
+    if (!mState.mTexturing)
+    {
+      glPushMatrix();
+      //glTranslatef(0.5f, 0.5f, 0);
+      nuiCheckForGLErrors();
+    }
+  }
+  
+  {
+    
+    if (rArray.IsArrayEnabled(nuiRenderArray::eVertex))
+    {
+      glEnableClientState(GL_VERTEX_ARRAY);
+      glVertexPointer(3, GL_FLOAT, sizeof(nuiRenderArray::Vertex), &rArray.GetVertices()[0].mX);
+      nuiCheckForGLErrors();
+    }
+    else
+      glDisableClientState(GL_VERTEX_ARRAY);
+    
+    
+    if (rArray.IsArrayEnabled(nuiRenderArray::eColor))
+    {
+      glEnableClientState(GL_COLOR_ARRAY);
+      glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(nuiRenderArray::Vertex), &rArray.GetVertices()[0].mR);
+      nuiCheckForGLErrors();
+    }
+    else
+    {
+      glDisableClientState(GL_COLOR_ARRAY);
+      nuiColor c;
+      switch (rArray.GetMode())
+      {
+        case GL_POINTS:
+        case GL_LINES:
+        case GL_LINE_LOOP:
+        case GL_LINE_STRIP:
+          c = mState.mStrokeColor;
+          break;
+          
+        case GL_TRIANGLES:
+        case GL_TRIANGLE_STRIP:
+        case GL_TRIANGLE_FAN:
+//        case GL_QUADS:
+//        case GL_QUAD_STRIP:
+//        case GL_POLYGON:
+          c = mState.mFillColor;
+          break;
+      }
+      glColor4f(c.Red(), c.Green(), c.Blue(), c.Alpha());
+      nuiCheckForGLErrors();
+    }
+    
+    if (rArray.IsArrayEnabled(nuiRenderArray::eTexCoord))
+    {
+      glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+      glTexCoordPointer(2, GL_FLOAT, sizeof(nuiRenderArray::Vertex), &rArray.GetVertices()[0].mTX);
+      nuiCheckForGLErrors();
+    }
+    else
+      glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    
+    /*
+     if (rArray.IsArrayEnabled(nuiRenderArray::eNormal))
+     {
+     glEnableClientState(GL_NORMAL_ARRAY);
+     glNormalPointer(GL_FLOAT, sizeof(nuiRenderArray::Vertex)-12, &rArray.GetVertices()[0].mNX);
+     nuiCheckForGLErrors();
+     }
+     else
+     glDisableClientState(GL_NORMAL_ARRAY);
+     */
+    
+    /*
+     if (rArray.IsArrayEnabled(nuiRenderArray::eEdgeFlag))
+     {
+     glEnableClientState(GL_EDGE_FLAG_ARRAY);
+     glEdgeFlagPointer(sizeof(nuiRenderArray::Vertex), &rArray.GetVertices()[0].mEdgeFlag);
+     nuiCheckForGLErrors();
+     }
+     else
+     glDisableClientState(GL_EDGE_FLAG_ARRAY);
+     */
+    
+    nuiCheckForGLErrors();
+    glDrawArrays(mode, 0, s);
+    nuiCheckForGLErrors();
+  }
+  
+#ifdef NUI_USE_ANTIALIASING
+  if (mState.mAntialiasing)
+  {
+#ifdef NUI_USE_MULTISAMPLE_AA
+    glDisable(GL_MULTISAMPLE_ARB);
+#else
+    glDisable(GL_POLYGON_SMOOTH);
+    glDisable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+#endif
+    nuiCheckForGLErrors();
+  }
+  else
+#endif // NUI_USE_ANTIALIASING
+  {
+    //#TEST meeloo disabling AA texture
+    //     if (rArray.UseGLAATexture())
+    //     {
+    //       glMatrixMode(GL_TEXTURE);
+    //       glPopMatrix();
+    //       glMatrixMode(GL_MODELVIEW);
+    //       glPopMatrix();
+    // 
+    //       if (mState.mpTexture && mState.mTexturing)
+    //       {
+    //         if (mTextureTarget != GL_TEXTURE_2D)
+    //         {
+    //           glDisable(GL_TEXTURE_2D);
+    //           glEnable(mTextureTarget);
+    //         }
+    // 
+    //         UploadTexture(mState.mpTexture);
+    //       }
+    //       else
+    //       {
+    //         glDisable(GL_TEXTURE_2D);
+    //       }
+    // 
+    //       if (!mState.mBlending)
+    //         glDisable(GL_BLEND);
+    //       if (mState.mBlendFunc != nuiBlendTransp)
+    //       {
+    //         GLenum src, dst;
+    //         nuiGetBlendFuncFactors(mState.mBlendFunc, src, dst);
+    //         glBlendFunc(src, dst);
+    //       }
+    //       //ApplyTexture(mState, true);
+    //     }
+    //     else
+    if (!mState.mTexturing)
+    {
+      glPopMatrix();
+    }
+    nuiCheckForGLErrors();
+  }
+  
+  glColor4f(1.0f, 1.0f, 1.0f, 1.f);
+  nuiCheckForGLErrors();
+}
+
+#endif
 
 void nuiGLESPainter::BeginSession()
 {

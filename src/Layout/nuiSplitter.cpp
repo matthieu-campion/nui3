@@ -98,7 +98,7 @@ nuiWidgetPtr nuiSplitterHandle::DispatchMouseMove(nuiSize X, nuiSize Y)
   if (!mMouseEventEnabled || mTrashed)
     return false;
 
-  nuiWidgetPtr pHandled=NULL;
+//  nuiWidgetPtr pHandled=NULL;
   bool res=false;
   bool hasgrab = HasGrab();
   bool inside=false;
@@ -505,7 +505,7 @@ bool nuiSplitter::SetRectHorizontal(const nuiRect& rRect)
 bool nuiSplitter::SetRectVertical(const nuiRect& rRect)
 {
   nuiSize Height = rRect.GetHeight();
-  nuiSize Width = rRect.GetWidth();
+//  nuiSize Width = rRect.GetWidth();
   nuiSize left;
   nuiRect Rect;
   

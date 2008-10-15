@@ -483,7 +483,7 @@ void nuiTheme::DrawMovingWindow(nuiDrawContext* pContext, nuiWindow* pWindow)
   nglString Title = pWindow->GetTitle();
   nuiRect Rect = pWindow->GetRect().Size();
   nuiRect rRect = Rect;
-  float alpha = pWindow->GetAlpha(true);
+//  float alpha = pWindow->GetAlpha(true);
 
   nuiRect rect = rRect.Size();
   pWindow->LocalToGlobal(rect);

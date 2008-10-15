@@ -18,9 +18,21 @@ public:
   nuiSurface(const nuiSize& rWidth, const nuiSize& rHeight);
   virtual ~nuiSurface();
 
+  nuiSize GetWidth() const;
+  nuiSize GetHeight() const;
+
+  bool IsDepthEnabled() const;
+  bool IsStencilEnabled() const;
+  
+  void EnableDepth(bool Enable);
+  void EnableStencil(bool Enable);
+
 private:
   nuiSize mWidth;
   nuiSize mHeight;
+  
+  bool mDepthEnabled;
+  bool mStencilEnabled;
 };
 
 #endif//__nuiSurface_h__

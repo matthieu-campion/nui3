@@ -35,7 +35,7 @@ const nglChar* gpWindowErrorTable[] =
 #define NGL_OUT {}
 #endif
 
-#if defined(_MULTI_TOUCHES_) && 0//defined(_DEBUG_)
+#if defined(_MULTI_TOUCHES_) && defined(_DEBUG_)
 # define NGL_TOUCHES_OUT NGL_OUT
 #else//!_MULTI_TOUCHES_
 # define NGL_TOUCHES_OUT {}
@@ -45,6 +45,33 @@ const nglChar* gpWindowErrorTable[] =
 
 static std::list<nglTouchId> gAvailableTouches;
 static nglTouchId gPressedTouches[_NUI_MAX_TOUCHES_];
+
+void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
+{
+  switch (Angle)
+  {
+    case 90: {
+      int tmpX= rInfo.X;
+      rInfo.X = ((int)rRect.GetWidth()) - rInfo.Y;
+      rInfo.Y = tmpX;
+    } break;
+    case 270: {
+      int tmpY = rInfo.Y;
+      rInfo.Y = ((int)rRect.GetHeight()) - rInfo.X;
+      rInfo.X = tmpY;
+    } break;
+    case 180: {
+      rInfo.X = ((int)rRect.GetWidth()) - rInfo.X;
+      rInfo.Y = ((int)rRect.GetHeight()) - rInfo.Y;
+    } break;
+    case 0: {
+    } break;
+    default: {
+      NGL_ASSERT(!"Unsupported rendering angle");
+    }
+  }
+  NGL_TOUCHES_OUT(_T("AdjustFromAngle %d, X:%d Y:%d\n"), Angle, rInfo.X, rInfo.Y);
+}
 
 @implementation nglUIWindow
 
@@ -152,6 +179,8 @@ static nglTouchId gPressedTouches[_NUI_MAX_TOUCHES_];
   touches.resize((uint)count);
   [pArray getObjects: &touches[0]];
 
+  const nuiRect rect(0,0, mpNGLWindow->GetWidth(), mpNGLWindow->GetHeight());
+
   for (uint n = 0; n < count; n++)
   {
     UITouch* pTouch = touches[n];
@@ -182,6 +211,9 @@ static nglTouchId gPressedTouches[_NUI_MAX_TOUCHES_];
         info.Buttons = nglMouseInfo::ButtonLeft;
         info.X = x;
         info.Y = y;
+
+        AdjustFromAngle(mpNGLWindow->GetRotation(), rect, info);
+
         info.SwipeInfo = nglMouseInfo::eNoSwipe;
         info.mTouchId = rTouch.mTouchId;
         mpNGLWindow->CallOnMouseUnclick(info);
@@ -204,6 +236,9 @@ static nglTouchId gPressedTouches[_NUI_MAX_TOUCHES_];
         info.Buttons = nglMouseInfo::ButtonLeft;
         info.X = x;
         info.Y = y;
+
+        AdjustFromAngle(mpNGLWindow->GetRotation(), rect, info);
+
         info.SwipeInfo = nglMouseInfo::eNoSwipe;
         info.mTouchId = rTouch.mTouchId;
 
@@ -247,6 +282,9 @@ static nglTouchId gPressedTouches[_NUI_MAX_TOUCHES_];
 
       info.X = x;
       info.Y = y;
+
+      AdjustFromAngle(mpNGLWindow->GetRotation(), rect, info);
+
       info.SwipeInfo = nglMouseInfo::eNoSwipe;
       info.mTouchId = newTouch.mTouchId;
 
@@ -309,23 +347,34 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
     gAvailableTouches.push_back(t);
   }
 
-  mInSession=0;
+  mInSession  = 0;
+  mWidth      = rInfo.Width;
+  mHeight     = rInfo.Height;
+  mAngle      = rInfo.Rotate;
+
   CGRect rect = [[UIScreen mainScreen] bounds];
 
-  mWidth = rect.size.width;
-  mHeight = rect.size.height;
+  if (mWidth == 0 || mHeight == 0) {
+    if (mAngle == 90 || mAngle == 270) { ///< invert screen sizes
+      mWidth = (uint)rect.size.height;
+      mHeight = (uint)rect.size.width;
+    }
+    else {
+      mWidth = (uint)rect.size.width;
+      mHeight = (uint)rect.size.height;
+    }
+  }
+  printf("nglWindow::InternalInit: w:%d h:%d\n", (uint)rect.size.width, (uint)rect.size.height);
+  printf("nglWindow::InternalInit: w:%d h:%d\n", mWidth, mHeight);
 
+///< Create the actual window
   nglUIWindow* pUIWindow = [[nglUIWindow alloc] initWithFrame: rect andNGLWindow: this];
-
-// Set up the ability to track multiple touches.
-  [pUIWindow setMultipleTouchEnabled: YES];
 
   mOSInfo.mpUIWindow = pUIWindow;
   mpUIWindow = pUIWindow;
 
-  NGL_ASSERT(App);
-  
-  bool fullscreen = (rInfo.Flags & nglWindow::FullScreen);
+// Enable multitouch
+  [pUIWindow setMultipleTouchEnabled: YES];
   
   [pUIWindow makeKeyAndVisible];
   
@@ -339,14 +388,81 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
     NGL_ASSERT(0);
     return;
   }
-  if (!Build(rContext, pShared, fullscreen))
+  if (!Build(rContext, pShared, rInfo.Flags & nglWindow::FullScreen))
   {
 ///< An error has been raised by nglContext's code
     NGL_LOG(_T("window"), NGL_LOG_INFO, _T("could not create its context"));
     NGL_ASSERT(0);
     return;
   }
+
+
+///< Rendering takes place in a Core Animation Layer
+  CAEAGLLayer* pLayer = (CAEAGLLayer*)[pUIWindow layer];
+  NGL_ASSERT(pLayer);  
+	//pLayer.opaque = YES;
+  BOOL retainBacking = NO;//rInfo.Offscreen ? YES : NO;
+	[pLayer setDrawableProperties:
+   [NSDictionary dictionaryWithObjectsAndKeys:
+    [NSNumber numberWithBool:retainBacking],
+    kEAGLDrawablePropertyRetainedBacking,
+    (NSString*)mEAGLPixelFormat,
+    kEAGLDrawablePropertyColorFormat,
+    nil
+   ]
+  ];
+//mpEAGLLayer = pLayer;
+
+  rect = [(nglUIWindow*)mpUIWindow frame];
+  CGSize newSize;
+	newSize = [pLayer bounds].size;
+	newSize.width = roundf(newSize.width);
+	newSize.height = roundf(newSize.height);
   
+//	mWidth = newSize.width;
+//  mHeight = newSize.height;
+
+
+///< This layer is then used as the color attachement for a framebuffer based rendering
+	GLuint oldRenderbuffer;
+	GLuint oldFramebuffer;
+	glGetIntegerv(GL_RENDERBUFFER_BINDING_OES, (GLint *) &oldRenderbuffer);
+	glGetIntegerv(GL_FRAMEBUFFER_BINDING_OES, (GLint *) &oldFramebuffer);
+	
+	glGenRenderbuffersOES(1, &mRenderBuffer);
+	glGenFramebuffersOES(1, &mFrameBuffer);
+	
+	glBindRenderbufferOES(GL_RENDERBUFFER_OES, mRenderBuffer);
+	glBindFramebufferOES(GL_FRAMEBUFFER_OES, mFrameBuffer);
+
+	[(EAGLContext*)mpContext renderbufferStorage: GL_RENDERBUFFER_OES
+                                  fromDrawable: pLayer];
+
+	glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES,
+                               GL_COLOR_ATTACHMENT0_OES,
+                               GL_RENDERBUFFER_OES,
+                               mRenderBuffer);
+  
+	if (mDepthFormat)
+  {
+		glGenRenderbuffersOES(1, &mDepthBuffer);
+		glBindRenderbufferOES(GL_RENDERBUFFER_OES, mDepthBuffer);
+		glRenderbufferStorageOES(GL_RENDERBUFFER_OES,
+                             mDepthFormat,
+                             mWidth,
+                             mHeight);
+
+		glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES,
+                                 GL_DEPTH_ATTACHMENT_OES,
+                                 GL_RENDERBUFFER_OES,
+                                 mDepthBuffer);
+	}
+	
+	NGL_ASSERT (glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) == GL_FRAMEBUFFER_COMPLETE_OES);
+  //  glBindFramebufferOES(GL_FRAMEBUFFER_OES, oldFramebuffer);
+  //	glBindRenderbufferOES(GL_RENDERBUFFER_OES, oldRenderbuffer);
+
+///< usless call to on creation ...
   CallOnCreation();
 }
 
@@ -459,16 +575,26 @@ void nglWindow::EndSession()
   NGL_LOG(_T("window"), NGL_LOG_INFO, _T("EndSession\n"));
 #endif
 
-  InternalSwapBuffers();
-//  InternalMakeCurrent(NULL);
-  mInSession=0;
+  if (MakeCurrent())
+  {
+    glBindRenderbufferOES(GL_RENDERBUFFER_OES, mRenderBuffer);	
+
+    if ( ![(EAGLContext*)mpContext presentRenderbuffer: GL_RENDERBUFFER_OES] )
+    {
+      printf("Failed to swap renderbuffer in %s\n", __FUNCTION__);
+    }
+    mInSession=0;
+  }
 
 #endif
 }
 
 bool nglWindow::MakeCurrent() const
 {
-  return InternalMakeCurrent(mpContext);
+  EAGLContext* pContext = [EAGLContext currentContext];	
+	if (pContext != mpContext)
+    return InternalMakeCurrent(mpContext);
+  return true;
 }
 
 void nglWindow::Invalidate()

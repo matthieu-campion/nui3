@@ -14,6 +14,7 @@
 class nuiTexture;
 class nuiFont;
 class nuiShader;
+class nuiSurface;
 
 enum nuiBlendFunc
 {
@@ -69,6 +70,9 @@ public:
 
   bool mTexturing;
   nuiTexture* mpTexture;
+
+  bool mRenderToSurface;
+  nuiSurface* mpSurface;
 
   // Rendering buffers:
   bool mColorBuffer;

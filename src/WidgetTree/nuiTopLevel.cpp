@@ -175,10 +175,6 @@ nuiTopLevel::nuiTopLevel(const nglPath& rResPath)
   mTopLevelSink.Connect(mMessageQueueTimer.Tick, &nuiTopLevel::OnMessageQueueTick);
   mMessageQueueTimer.Start(false);
 
-#ifdef _UIKIT_
-  mDrawOrigin = nuiTop;
-#endif
-
 #ifdef _MULTI_TOUCHES_
   mpGrab.clear();
   mMouseInfo.mTouchId = -1;
@@ -224,10 +220,6 @@ bool nuiTopLevel::Load(const nuiXMLNode* pNode)
   
   mTopLevelSink.Connect(mToolTipTimerOn.Tick, &nuiMainWindow::ToolTipOn);
   mTopLevelSink.Connect(mToolTipTimerOff.Tick, &nuiMainWindow::ToolTipOff);
-
-#ifdef _UIKIT_
-  mDrawOrigin = nuiTop;
-#endif
 
 #ifdef _MULTI_TOUCHES_
   mpGrab.clear();
@@ -473,10 +465,6 @@ nuiDrawContext* nuiTopLevel::GetDrawContext()
 
   nuiRect rect = GetRect().Size();
   mpDrawContext = nuiDrawContext::CreateDrawContext(rect, mRenderer, GetNGLContext());
-
-#ifdef _UIKIT_
-  mpDrawContext->GetPainter()->SetDrawOrigin(mDrawOrigin);
-#endif
 
   return mpDrawContext;
 }
@@ -983,38 +971,8 @@ bool nuiTopLevel::CallKeyUp (const nglKeyEvent& rEvent)
   return false;
 }
 
-#ifdef _UIKIT_
-void AdjustFromDrawOrigin(nuiPosition DrawOrigin, const nuiRect& rRect, nglMouseInfo& rInfo)
-{
-  switch (DrawOrigin)
-  {
-    case nuiLeft: {
-      int tmpX= rInfo.X;
-      rInfo.X = ((int)rRect.GetHeight()) - rInfo.Y;
-      rInfo.Y = tmpX;
-    } break;
-    case nuiRight: {
-      int tmpY = rInfo.Y;
-      rInfo.Y = ((int)rRect.GetWidth()) - rInfo.X;
-      rInfo.X = tmpY;
-    } break;
-    case nuiBottom: {
-      rInfo.X = ((int)rRect.GetWidth()) - rInfo.X;
-      rInfo.Y = ((int)rRect.GetHeight()) - rInfo.Y;
-    } break;
-    case nuiTop:
-    break;
-  }
-}
-#endif
-
 bool nuiTopLevel::CallMouseClick (nglMouseInfo& rInfo)
 {
-#ifdef _UIKIT_
-  AdjustFromDrawOrigin(mDrawOrigin, mRect, rInfo);
-  mMouseInfo.SwipeInfo = rInfo.SwipeInfo;
-#endif
-
   mMouseInfo.X = rInfo.X;
   mMouseInfo.Y = rInfo.Y;
   mMouseInfo.Buttons |= rInfo.Buttons;
@@ -1070,11 +1028,6 @@ NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseClick [%d] END\n"), rInfo.mTouchId) );
 
 bool nuiTopLevel::CallMouseUnclick(nglMouseInfo& rInfo)
 {
-#ifdef _UIKIT_
-  AdjustFromDrawOrigin(mDrawOrigin, mRect, rInfo);
-  mMouseInfo.SwipeInfo = rInfo.SwipeInfo;
-#endif
-
 //  NGL_TOUCHES_DEBUG( NGL_OUT(_T("nuiTopLevel::CallMouseUnclick X:%d Y:%d\n"), rInfo.X, rInfo.Y) );
 
   mMouseInfo.X = rInfo.X;
@@ -1205,11 +1158,6 @@ void nuiTopLevel::UpdateHoverList(nglMouseInfo& rInfo)
 
 bool nuiTopLevel::CallMouseMove (nglMouseInfo& rInfo)
 {
-#ifdef _UIKIT_
-  AdjustFromDrawOrigin(mDrawOrigin, mRect, rInfo);
-  mMouseInfo.SwipeInfo = rInfo.SwipeInfo;
-#endif
-
 NGL_TOUCHES_DEBUG( NGL_OUT(_T("nuiTopLevel::CallMouseMove X:%d Y:%d\n"), rInfo.X, rInfo.Y) );
 
   mMouseInfo.X = rInfo.X;
@@ -1423,13 +1371,6 @@ static const bool DISPLAY_PARTIAL_RECTS = false;
 bool nuiTopLevel::Draw(class nuiDrawContext *pContext)
 {
   uint32 clipWidth, clipHeight;
-#ifdef _UIKIT_
-  if (mDrawOrigin == nuiLeft || mDrawOrigin == nuiRight) {
-    clipWidth=pContext->GetHeight();
-    clipHeight=pContext->GetWidth();
-  }
-  else
-#endif
   {
     clipWidth=pContext->GetWidth();
     clipHeight=pContext->GetHeight();
@@ -1632,11 +1573,6 @@ void nuiTopLevel::BroadcastInvalidateRect(nuiWidgetPtr pSender, const nuiRect& r
   nuiRect r = rRect;
   nuiRect rect = GetRect();
 
-#ifdef _UIKIT_
-  if (mDrawOrigin == nuiLeft || mDrawOrigin == nuiRight)
-    rect.SetSize(rect.GetHeight(), rect.GetWidth());
-#endif
-
   r.Move(rect.Left(), rect.Top());
   r.Intersect(r, rect);
 
@@ -1692,12 +1628,6 @@ bool nuiTopLevel::SetRect(const nuiRect& rRect)
   nuiWidget::SetRect(rRect);
   nuiRect rect(mRect.Size());
 
-#ifdef _UIKIT_
-  if (mDrawOrigin == nuiLeft || mDrawOrigin == nuiRight)
-    rect.SetSize(rect.GetHeight(), rect.GetWidth());  
-  mDisplayRect=rect;
-#endif
-
   IteratorPtr pIt;
   for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
   {
@@ -1714,101 +1644,6 @@ bool nuiTopLevel::SetRect(const nuiRect& rRect)
 
   return true;
 }
-
-
-#ifdef _UIKIT_
-
-bool nuiTopLevel::SetLayout(const nuiRect& rRect)
-{
-  bool res = false;
-  nuiRect rect(rRect);
-  rect.Bottom() -= mBorderBottom;
-  rect.Top() += mBorderTop;
-  rect.Left() += mBorderLeft;
-  rect.Right() -= mBorderRight;
-  
-  bool SizeChanged = !rect.Size().IsEqual(mRect.Size());
-  bool PositionChanged = (rect.Left() != mRect.Left()) || (rect.Top() != mRect.Top());
-  mNeedSelfLayout = mNeedSelfLayout || mClippingOptims || SizeChanged;
-
-  if (mNeedSelfLayout)
-  {
-    res = SetRect(rect);
-  }
-  else
-  {
-    // Is this case the widget have just been moved inside its parent. No need to re layout it, only change the rect...
-    mRect = rect;
-    if (mDrawOrigin == nuiLeft || mDrawOrigin == nuiRight)
-      rect.SetSize(rect.GetHeight(), rect.GetWidth());
-    mDisplayRect=rect;
-
-    if (mNeedLayout)
-    {
-      // The children need to be re layed out (at least one of them!).
-      nuiContainer::IteratorPtr pIt = GetFirstChild();
-      do
-      {
-        nuiWidgetPtr pItem = pIt->GetWidget();
-        if (pItem)
-        {
-          // The rect of each child doesn't change BUT we still ask for its ideal rect.
-          nuiRect rect(pItem->GetBorderedRect());
-          nuiRect ideal(pItem->GetIdealRect());
-
-          if (pItem->HasUserPos()) 	 
-          { 	 
-            rect = ideal; 	 
-          } 	 
-          else if (pItem->HasUserSize())
-          {
-            rect.SetSize(ideal.GetWidth(), ideal.GetHeight());
-          }
-          else
-          {
-            // Set the widget to the size of the parent
-          }
-
-          pItem->SetLayout(rect);
-        }
-      } while (GetNextChild(pIt));
-      delete pIt;
-
-    }
-  }
-
-  //#TEST:
-#ifdef NUI_CHECK_LAYOUTS
-  IteratorPtr pIt;
-  for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
-  {
-    nuiWidgetPtr pItem = pIt->GetWidget();
-    if (pItem->IsVisible())
-    {
-      NGL_ASSERT(!pItem->GetNeedLayout());
-    }
-  }
-  delete pIt;
-  //#TEST end
-#endif
-
-  mNeedSelfLayout = false;
-  mNeedLayout = false;
-  DebugRefreshInfo();
-  return res;
-}
-
-bool nuiTopLevel::IsInsideLocal(nuiSize X, nuiSize Y)
-{
-  if (!IsVisible(false))
-    return false;
-  if (mInteractiveOD)
-    return GetOverDrawRect(false).IsInside(X, Y);
-  return mDisplayRect.IsInside(X,Y);
-}
-
-#endif//_UIKIT_
-
 
 bool nuiTopLevel::InitHotKeys(nglIStream* pHotKeys)
 {

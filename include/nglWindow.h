@@ -326,6 +326,8 @@ window = new nglWindow (context, info, NULL);
     \param rVertical vertical resolution in DPI
     \return true if \p rHorizontal and \p rVertical contain valid information
   */
+  uint GetRotation();           ///< Return the current (user area) rotation angle
+  virtual void SetRotation(uint Angle); ///< Set the current (user area) rotation angle
   //@}
 
   /** @name Appearance */
@@ -664,8 +666,8 @@ private:
   nglMouseInfo::Mode mMouseMode;
   bool               mKeyRepeat;
   bool               mpKeyState[NGL_KEY_MAX];
-  uint32 mInModalState;
-  
+  uint32             mInModalState;
+  uint               mAngle;
 
   nglWindow(const nglWindow&) {} // Undefined copy constructor
 
@@ -771,10 +773,16 @@ class nglCarbonDragAndDrop* mpCarbonDragAndDrop;
 
 #ifdef _UIKIT_
 private:
+  uint mWidth, mHeight;
   void InternalInit(const nglContextInfo& rContext, const nglWindowInfo& rInfo,
                     const nglContext* pShared);
-  
+
   int32 mInSession;
+  void* mpUIWindow;
+  GLuint mRenderBuffer;
+  GLuint mFrameBuffer;
+  GLuint mDepthBuffer;
+
 #endif
 
 #ifdef _WIN32_
@@ -900,11 +908,12 @@ Title     = App->GetName();
   Position                Pos;        ///< Initial position hint
   int                     XPos;       ///< X position 
   int                     YPos;       ///< Y position
-  uint                    Width;      ///< Rendering area width
+  uint                    Width;      ///< Rendering area Width
   uint                    Height;     ///< Rendering area Height
+  uint                    Rotate;     ///< Rendering area Rotation Angle
   nglWindow::Flags        Flags;      ///< Window flags
   nglWindow::EventMask    Events;     ///< Event mask
-  nuiMouseCursor             Cursor;     ///< Cursor shape
+  nuiMouseCursor          Cursor;     ///< Cursor shape
   nglMouseInfo::Mode      MouseMode;  ///< Mouse mode
   bool                    KeyRepeat;  ///< Key repeat
   nglString               Title;      ///< Caption title

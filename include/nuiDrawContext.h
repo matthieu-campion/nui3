@@ -130,7 +130,14 @@ public:
   nuiTexture* GetTexture ( );
   void SetTexture ( nuiTexture* pTex );
   //@}
-
+  
+  /** @name Surface manipulation */
+  //@{
+  bool IsSurfaceCurrent  ( nuiSurface* pSurface );
+  nuiSurface* GetSurface ( );
+  void SetSurface ( nuiSurface* pSurface );
+  //@}
+  
   /** @name Matrix operations */
   //@{
   void PushMatrix();

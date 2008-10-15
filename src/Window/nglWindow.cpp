@@ -49,6 +49,7 @@ nglWindowInfo::nglWindowInfo(uint UserWidth, uint UserHeight, bool IsFullScreen)
   YPos      = 0;
   Width     = UserWidth;
   Height    = UserHeight;
+  Rotate    = 0;
   Flags     = IsFullScreen ? nglWindow::FullScreen : nglWindow::NoFlag;
   Events    = nglWindow::AllEvents;
   Cursor    = eCursorArrow;
@@ -326,6 +327,21 @@ nuiMainMenu* nglWindow::GetMainMenu()
 bool nglWindow::IsInModalState()
 {
   return (mInModalState != 0);
+}
+
+
+/*
+ * Geometry
+ */
+
+uint nglWindow::GetRotation()
+{
+  return mAngle;
+}
+
+void nglWindow::SetRotation(uint Angle)
+{
+  mAngle = Angle;
 }
 
 

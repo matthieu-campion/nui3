@@ -35,7 +35,7 @@ public:
   static nuiTexture* GetTexture (nglImage* pImage, bool OwnImage); ///< Create an image from an existing nglImage. If \param OwnImage the nglImage object will be deleted with the nuiTexture.
   static nuiTexture* GetTexture (const nuiXMLNode* pNode); ///< Create an image from an xml description.
   static nuiTexture* GetTexture (const nglString& rName); ///< Get a texture from its ID only
-  static nuiTexture* GetTexture (nuiSurface* pSurface, bool OwnSurface); ///< Create a texture from an existing nuiSurface. . If \param OwnImage the nuiSurface object will be deleted with the nuiTexture.
+  static nuiTexture* GetTexture (nuiSurface* pSurface, bool OwnSurface); ///< Create a texture from an existing nuiSurface. If \param OwnSurface the nuiSurface object will be deleted with the nuiTexture.
   static nuiTexture* GetAATexture(); ///< Returns an antialiasing texture for use with AAPrimitives.cpp
   
   static void ClearAll();

@@ -113,9 +113,9 @@ public:
   uint32 GetVertices() const;
   uint32 GetBatches() const;
 
-  // Display transformation
-  void SetDrawOrigin(nuiPosition Origin) { mDrawOrigin = Origin; }
-  nuiPosition GetDrawOrigin() { return mDrawOrigin; }
+  // Display rotation
+  void SetAngle(uint32 Angle) { mAngle = Angle; }
+  uint32 GetAngle() { return mAngle; }
   
 
   // Debug:
@@ -134,10 +134,10 @@ protected:
   nuiSize mClipOffsetY;
   uint32 mWidth;
   uint32 mHeight;
+  uint32 mAngle;
+
   nuiClipper mClip;
   std::stack<nuiMatrix> mMatrixStack;
-
-  nuiPosition mDrawOrigin;
 
   uint32 mRenderOperations;
   uint32 mVertices;

@@ -32,6 +32,7 @@ using namespace std;
 /* These errors are shared by all platform-specific implementations
 */
 //FIXME this is not used
+#if 0 
 static const nglChar* gpFileErrorTable[] =
 {
 	/*  0 */ _T("No error"),
@@ -45,7 +46,7 @@ static const nglChar* gpFileErrorTable[] =
 	/*  8 */ _T("System open file maximum reached"),
 	NULL
 };
-
+#endif
 
 #ifdef _DEBUG_
 const nglChar* File_mode(nglFileMode mode)

@@ -18,6 +18,7 @@
 #include "nuiTessellator.h"
 #include "nuiOutliner.h"
 #include "nuiTexture.h"
+#include "nuiSurface.h"
 
 /****************************************************************************
  *
@@ -44,6 +45,7 @@ nuiDrawContext::~nuiDrawContext()
   SetTexture(NULL);
   SetFont(NULL);
   SetShader(NULL);
+  SetSurface(NULL);
   mpAATexture->Release();
 
   delete mpPainter;
@@ -283,6 +285,36 @@ bool nuiDrawContext::IsTextureCurrent(nuiTexture* pTex)
 nuiTexture* nuiDrawContext::GetTexture()
 { 
   return mCurrentState.mpTexture; 
+}
+
+/****************************************************************************
+ *
+ * Surface manipulation
+ *
+ ****************************************************************************/
+
+void nuiDrawContext::SetSurface (nuiSurface* pSurface) 
+{
+  nuiSurface* pOld = mCurrentState.mpSurface;
+  if (pSurface == pOld)
+    return;
+  
+  mCurrentState.mpSurface = pSurface ;
+  if (pSurface)
+    pSurface->Acquire();
+  if (pOld)
+    pOld->Release();
+  mStateChanges++;
+}
+
+bool nuiDrawContext::IsSurfaceCurrent(nuiSurface* pSurface) 
+{ 
+  return mCurrentState.mpSurface == pSurface;
+}
+
+nuiSurface* nuiDrawContext::GetSurface()
+{ 
+  return mCurrentState.mpSurface; 
 }
 
 /****************************************************************************

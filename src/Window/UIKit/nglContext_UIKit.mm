@@ -141,7 +141,6 @@ const nglChar* gpEAGLErrorTable[] =
 nglContext::nglContext()
 {
   mpContext = NULL;
-  mpUIWindow = NULL;
 }
 
 nglContext::~nglContext()
@@ -167,57 +166,43 @@ bool nglContext::Build(const nglContextInfo& rInfo, const nglContext* pShared, b
 //  uint32 frameBits = (rInfo.FrameBitsR + rInfo.FrameBitsG + rInfo.FrameBitsB + rInfo.FrameBitsA);
 
 ///< defaults
-  mDepthFormat = 0;
+  mDepthFormat = 0;//rInfo.DepthBits;
   mPixelFormat = GL_RGB565_OES;
 	NSString* pixelFormat = kEAGLColorFormatRGB565;
 
 ///< Choose our pixel format
-  if (  rInfo.FrameBitsR == 8 && rInfo.FrameBitsG == 8 && rInfo.FrameBitsB == 8 && rInfo.FrameBitsA == 8 &&
-            rInfo.DepthBits == 0)
+
+  if (rInfo.FrameBitsR == 8 &&
+      rInfo.FrameBitsG == 8 &&
+      rInfo.FrameBitsB == 8 &&
+      rInfo.FrameBitsA == 8)
   {
     mPixelFormat = GL_RGBA8_OES;
 		pixelFormat = kEAGLColorFormatRGBA8;
-    mDepthFormat = 0;
   }
-  else if (rInfo.FrameBitsR == 5 && rInfo.FrameBitsG == 6 && rInfo.FrameBitsB == 5 && rInfo.FrameBitsA == 0 &&
-            rInfo.DepthBits == 0)
+  else if (rInfo.FrameBitsR == 5 &&
+           rInfo.FrameBitsG == 6 &&
+           rInfo.FrameBitsB == 5 &&
+           rInfo.FrameBitsA == 0)
   {
     mPixelFormat = GL_RGB565_OES;
 		pixelFormat = kEAGLColorFormatRGB565;
-    mDepthFormat = 0;
   }
   else
   {
-    NGL_LOG(_T("context"), NGL_LOG_INFO, _T("could not find any acceptable Pixel Format compatible with: RGBA:%d:%d:%d:%d Depth:%d\n"), 
-            rInfo.FrameBitsR, rInfo.FrameBitsG, rInfo.FrameBitsB, rInfo.FrameBitsA, rInfo.DepthBits);
+    NGL_LOG(_T("context"), NGL_LOG_INFO, _T("could not find any acceptable Pixel Format compatible with: RGBA:%d:%d:%d:%dn"), 
+            rInfo.FrameBitsR, rInfo.FrameBitsG, rInfo.FrameBitsB, rInfo.FrameBitsA);
     Destroy();
     return false;
   }
 
-  NGL_LOG(_T("context"), NGL_LOG_INFO, _T("choosing GLES Pixel Format [%ls] compatible with: RGBA:%d:%d:%d:%d Depth:%d\n"),
+  NGL_LOG(_T("context"), NGL_LOG_INFO, _T("choosing GLES Pixel Format [%ls] compatible with: RGBA:%d:%d:%d:%d\n"),
           pixelFormat == kEAGLColorFormatRGBA8 ? _T("kEAGLColorFormatRGBA8") : _T("kEAGLColorFormatRGB565"),
-          rInfo.FrameBitsR, rInfo.FrameBitsG, rInfo.FrameBitsB, rInfo.FrameBitsA, rInfo.DepthBits);
+          rInfo.FrameBitsR, rInfo.FrameBitsG, rInfo.FrameBitsB, rInfo.FrameBitsA);
+  mEAGLPixelFormat = pixelFormat;
 
-
-///< Set our layer
-  NGL_ASSERT(mpUIWindow);
-  CGRect rect = [(nglUIWindow*)mpUIWindow frame];
-  mWidth  = rect.size.width;
-  mHeight = rect.size.height;
-  CAEAGLLayer* pLayer = (CAEAGLLayer*)[(nglUIWindow*)mpUIWindow layer];
-  NGL_ASSERT(pLayer);  
-	//pLayer.opaque = YES;
-  BOOL retainBacking = rInfo.Offscreen ? YES : NO;
-	[pLayer setDrawableProperties: 
-    [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:retainBacking],
-                                                kEAGLDrawablePropertyRetainedBacking,
-                                                pixelFormat,
-                                                kEAGLDrawablePropertyColorFormat,
-                                                nil
-    ]
-  ];
-  
 ///< Create our context
+
   mpContext = NULL;
   if (pShared) {
     mpContext = [[EAGLContext alloc]  initWithAPI: kEAGLRenderingAPIOpenGLES1
@@ -239,67 +224,10 @@ bool nglContext::Build(const nglContextInfo& rInfo, const nglContext* pShared, b
     Destroy();
     return false;
   }
-	
-  CGSize newSize;
-	newSize = [pLayer bounds].size;
-	newSize.width = roundf(newSize.width);
-	newSize.height = roundf(newSize.height);
-
-	mWidth = newSize.width;
-  mHeight = newSize.height;
-
-	GLuint oldRenderbuffer;
-	GLuint oldFramebuffer;
-	glGetIntegerv(GL_RENDERBUFFER_BINDING_OES, (GLint *) &oldRenderbuffer);
-	glGetIntegerv(GL_FRAMEBUFFER_BINDING_OES, (GLint *) &oldFramebuffer);
-	
-	glGenRenderbuffersOES(1, &mRenderBuffer);
-	glGenFramebuffersOES(1, &mFrameBuffer);
-	
-	glBindRenderbufferOES(GL_RENDERBUFFER_OES, mRenderBuffer);
-	glBindFramebufferOES(GL_FRAMEBUFFER_OES, mFrameBuffer);
-		
-	[(EAGLContext*)mpContext renderbufferStorage: GL_RENDERBUFFER_OES fromDrawable: pLayer];  
-
-	glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, mRenderBuffer);
-
-	if (mDepthFormat)
-  {
-		glGenRenderbuffersOES(1, &mDepthBuffer);
-		glBindRenderbufferOES(GL_RENDERBUFFER_OES, mDepthBuffer);
-		glRenderbufferStorageOES(GL_RENDERBUFFER_OES, mDepthFormat, newSize.width, newSize.height);
-		glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_DEPTH_ATTACHMENT_OES, GL_RENDERBUFFER_OES, mDepthBuffer);
-	}
-	
-	if (glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) != GL_FRAMEBUFFER_COMPLETE_OES)
-	{
-		NGL_OUT(_T("Error: failed to make complete framebuffer object\n"));
-		return false;
-	}
-
-//  glBindFramebufferOES(GL_FRAMEBUFFER_OES, oldFramebuffer);
-	glBindRenderbufferOES(GL_RENDERBUFFER_OES, oldRenderbuffer);
-
-//  [(EAGLContext*) mpContext presentRenderbuffer:GL_RENDERBUFFER_OES];
-
-/*
-	if ( [(EAGLContext*) mpContext presentRenderbuffer:GL_RENDERBUFFER_OES] == NO )
-	{
-		NGL_OUT(_T("Error: Can't set Render Buffer Storage\n"));
-		glDeleteRenderbuffersOES(1, &mRenderBuffer);
-		glBindRenderbufferOES(GL_RENDERBUFFER_BINDING_OES, oldRenderbuffer);
-    Destroy();
-		return false;
-	}
-*/
-
-//nglString errorStr;
-//GET_GL_ERROR(errorStr)
 
 #endif
   return true;
 }
-
 
 bool nglContext::InternalMakeCurrent(void* pContext) const
 {
@@ -310,6 +238,7 @@ bool nglContext::InternalMakeCurrent(void* pContext) const
     NGL_LOG(_T("context"), NGL_LOG_INFO, _T("EAGLContext setCurrentContext: %p: [error]\n"), pContext);
     return false;
   }
+
 # ifdef _DEBUG_CONTEXT_
   NGL_LOG(_T("context"), NGL_LOG_INFO, _T("EAGLContext setCurrentContext: %p: [succeeded]\n"), pContext);
 # endif
@@ -317,38 +246,6 @@ bool nglContext::InternalMakeCurrent(void* pContext) const
 #endif
   return true;
 }
-
-
-bool nglContext::InternalSwapBuffers() const
-{
-  bool res = true;
-
-#ifndef __NOGLCONTEXT__
-
-  EAGLContext* pContext = [EAGLContext currentContext];	
-
-	if (pContext != mpContext) {
-    if ( !InternalMakeCurrent(mpContext) ) {
-      return false;
-    }
-  }
-
-	glBindRenderbufferOES(GL_RENDERBUFFER_OES, mRenderBuffer);	
-	if ( ![(EAGLContext*)mpContext presentRenderbuffer: GL_RENDERBUFFER_OES] )
-  {
-		printf("Failed to swap renderbuffer in %s\n", __FUNCTION__);
-    res = false;
-  }
-
-	if (pContext != mpContext) {
-    InternalMakeCurrent((void*)pContext);
-  }
-  
-#endif
-
-  return res;
-}
-
 
 const nglChar* nglContext::OnError (uint& rError) const
 {

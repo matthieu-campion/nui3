@@ -290,7 +290,7 @@ void nuiMainWindow::Paint()
   pContext->GetPainter()->ResetStats();
 
 #ifdef _UIKIT_  
-  pContext->GetPainter()->SetDrawOrigin(mDrawOrigin);
+  pContext->GetPainter()->SetAngle(mpNGLWindow->GetRotation());
 #endif
 
 #ifndef __NUI_NO_SOFTWARE__

@@ -96,7 +96,7 @@ private:
       {
         AddChild(pWidget);
       }
-      
+#ifndef _NODND_      
       virtual bool OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y)
       {
         if (!IsSelected())
@@ -105,7 +105,7 @@ private:
         }
         return false;
       }
-      
+#endif
       nuiSimpleEventSource<0> EnterDrag;
     };
 };
