@@ -673,10 +673,9 @@ void nuiTheme::DrawMenuWindow(nuiDrawContext* pContext, const nuiRect& rRect, nu
   NGL_ASSERT(pFrame);
   
   nuiRect rect;
-  // add default decoration border to decoration size, since the decoration is drawn manually
-  rect.Set(rRect.Left(), rRect.Top(), 
-    rRect.GetWidth() + pFrame->GetBorder(nuiLeft) + pFrame->GetBorder(nuiRight),
-    rRect.GetHeight() + pFrame->GetBorder(nuiTop) + pFrame->GetBorder(nuiBottom));
+  rect.Set(rRect.Left() - pFrame->GetBorder(nuiLeft), rRect.Top() - pFrame->GetBorder(nuiTop), 
+           rRect.GetWidth() + pFrame->GetBorder(nuiLeft) + pFrame->GetBorder(nuiRight),
+           rRect.GetHeight() + pFrame->GetBorder(nuiTop) + pFrame->GetBorder(nuiBottom));
   
   pFrame->Draw(pContext, NULL, rect);
 }

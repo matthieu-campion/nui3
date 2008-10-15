@@ -198,7 +198,6 @@ bool nuiPopupMenu::DrawTree(nuiDrawContext* pContext, nuiTreeNode* pTree, uint d
   nuiTheme* pTheme = GetTheme();
   NGL_ASSERT(pTheme);
 
-
   if (pTree != mpTree) // then Draw a new rect for this depth
   {
     pTheme->DrawMenuWindow(pContext, pRect->mRect, this);
@@ -213,12 +212,12 @@ bool nuiPopupMenu::DrawTree(nuiDrawContext* pContext, nuiTreeNode* pTree, uint d
     pChildWidget = pChildNode->GetElement();
     WidgetRect = pChildWidget->GetRect();
 
-    // selection background
     if (pChildNode->IsSelected() || pChildNode->IsOpened())
     {
       nuiSize TreeHandleSize = pRect->mHasNonEmpty ? NUI_POPUP_TREE_HANDLE_SIZE : 0.f;
       nuiRect r = WidgetRect;
       r.SetSize(WidgetRect.GetWidth()+TreeHandleSize, WidgetRect.GetHeight());
+      
       pTheme->DrawSelectionBackground(pContext, r, this);
     }
 
@@ -233,16 +232,17 @@ bool nuiPopupMenu::DrawTree(nuiDrawContext* pContext, nuiTreeNode* pTree, uint d
 
     DrawChild(pContext, pChildWidget);
 
-    // selection foreground 
     if (pChildNode->IsSelected() || pChildNode->IsOpened())
     {
       nuiSize TreeHandleSize = pRect->mHasNonEmpty ? NUI_POPUP_TREE_HANDLE_SIZE : 0.f;
       nuiRect r = WidgetRect;
       r.SetSize(WidgetRect.GetWidth()+TreeHandleSize, WidgetRect.GetHeight());
+      
       pTheme->DrawSelectionForeground(pContext, r, this);
     }
-
-
+    
+    
+    
     if (pChildNode->IsOpened())
     {
       pOpenedNode = pChildNode;
@@ -390,18 +390,6 @@ nuiRect nuiPopupMenu::CalcIdealSize()
     }
   }
   mIdealRect = GlobRect;
-  
-  // add default decoration border
-  nuiDecoration* pDeco = GetDecoration();
-  if (!pDeco)
-  {
-    pDeco = nuiDecoration::Get(_T("nuiDefaultDecorationPopupMenu"));
-    NGL_ASSERT(pDeco);
-    mIdealRect = nuiRect(mIdealRect.Left() + pDeco->GetBorder(nuiLeft), mIdealRect.Top() + pDeco->GetBorder(nuiTop), 
-                         mIdealRect.GetWidth() + pDeco->GetBorder(nuiLeft) + pDeco->GetBorder(nuiRight), 
-                         mIdealRect.GetHeight() + pDeco->GetBorder(nuiTop) + pDeco->GetBorder(nuiBottom));
-  }
-  
   return mIdealRect;
 }
 
@@ -546,7 +534,7 @@ bool nuiPopupMenu::SetRect(const nuiRect& rRect)
   mYdir = 1;
   nuiSize X, Y;
   X = Y = 0;
-  
+
   NGL_ASSERT(mpTree);
 
   NGL_ASSERT(!mRects.empty());
@@ -565,22 +553,7 @@ bool nuiPopupMenu::SetRect(const nuiRect& rRect)
     ToNearest(pRect->mRect.Top() - (decal >= 0.f ? decal : 0.f)), 
     ToNearest(pRect->mRect.GetWidth() - (decal >= 0.f ? SB_WIDTH : 0.f)),
     ToNearest(WidgetRect.GetHeight()));
-    
-  // add default decoration border
-  nuiDecoration* pDeco = GetDecoration();
-  if (!pDeco)
-  {
-    pDeco = nuiDecoration::Get(_T("nuiDefaultDecorationPopupMenu"));
-    NGL_ASSERT(pDeco);
-    WidgetRect = nuiRect(WidgetRect.Left() + pDeco->GetBorder(nuiLeft), WidgetRect.Top() + pDeco->GetBorder(nuiTop), 
-                         WidgetRect.GetWidth(), 
-                         WidgetRect.GetHeight());
-  }
-    
-    
   pWidget->SetLayout(WidgetRect);
-
-
 
   if (mShowFirstNode)
   {
@@ -589,15 +562,8 @@ bool nuiPopupMenu::SetRect(const nuiRect& rRect)
   }
   else
   {
-    // don't forget to add default decoration border to get the proper position
     X = mInitialPos.Left();
-    if (pDeco)
-      X += pDeco->GetBorder(nuiLeft);
-
     Y = mInitialPos.Top() - (decal >= 0.f ? decal : 0.f);
-    if (pDeco)
-      Y += pDeco->GetBorder(nuiTop);
-    
   }
 
   uint32 count = mpTree->GetChildrenCount();
@@ -611,9 +577,7 @@ bool nuiPopupMenu::SetRect(const nuiRect& rRect)
     NGL_ASSERT(pNode);
     pWidget = pNode->GetElement();
     NGL_ASSERT(pWidget)
-    
-    WidgetRect = pWidget->GetIdealRect();
-    
+      WidgetRect = pWidget->GetIdealRect();
     WidgetRect.Set(ToNearest(X), 
       ToNearest(Y), 
       ToNearest(PopupRect.GetWidth() - (decal >= 0.f ? SB_WIDTH : 0.f) - TreeHandleSize), 
@@ -715,20 +679,6 @@ inline void nuiPopupMenu::SetTreeRect(uint depth, nuiSize X, nuiSize Y, nuiTreeN
     NGL_ASSERT(pWidget)
       WidgetRect = pWidget->GetIdealRect();
     WidgetRect.Set(ToNearest(X), ToNearest(Y), ToNearest(PopupRect.GetWidth() - SbWidth - TreeHandleSize), ToNearest(WidgetRect.GetHeight()));
-    
-    
-    // add default decoration border
-    nuiDecoration* pDeco = GetDecoration();
-    if (!pDeco)
-    {
-      pDeco = nuiDecoration::Get(_T("nuiDefaultDecorationPopupMenu"));
-      NGL_ASSERT(pDeco);
-      WidgetRect = nuiRect(WidgetRect.Left() + pDeco->GetBorder(nuiLeft), 
-                           WidgetRect.Top() + pDeco->GetBorder(nuiTop), 
-                           WidgetRect.GetWidth(), 
-                           WidgetRect.GetHeight());
-    }    
-    
     pWidget->SetLayout(WidgetRect);
     if (pNode->IsOpened())
     {
