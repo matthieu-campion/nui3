@@ -503,7 +503,7 @@ nuiWidget::~nuiWidget()
 	
   if (GetDebug())
   {
-    NGL_OUT(_T("nuiWidget::~nuiWidget() [0x%x '%ls']\n"), this, GetProperty(_T("Class")).GetChars());
+    NGL_OUT(_T("nuiWidget::~nuiWidget() [0x%x '%ls':'%ls']\n"), this, GetObjectClass().GetChars(), GetObjectName().GetChars());
   }
   
   ClearAnimations();
@@ -3275,6 +3275,7 @@ void nuiWidget::CallDisconnectTopLevel(nuiTopLevel* pTopLevel)
 {
   if (HasFocus())
     UnFocus();
+  pTopLevel->DisconnectWidget(this);
   DisconnectTopLevel();
 }
  

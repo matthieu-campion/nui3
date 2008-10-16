@@ -59,6 +59,8 @@ public:
   virtual void AdviseObjectDeath(nuiWidgetPtr pWidget); ///< Any nuiWidget will call this method when dying. Don't forget to call this version in any overriden AdviseObjectDeath you make.
   void AdviseSubTreeDeath(nuiWidgetPtr pWidget);
   virtual void Trash(nuiWidgetPtr pWidget); ///< Ask for the destruction of this object as soon as possible.
+  void DisconnectWidget(nuiWidget* pWidget);
+
   //@}
 
   /** @name Rendering: */

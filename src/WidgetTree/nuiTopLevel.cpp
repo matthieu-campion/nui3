@@ -305,6 +305,13 @@ void nuiTopLevel::Exit()
   }
 }
 
+void nuiTopLevel::DisconnectWidget(nuiWidget* pWidget)
+{
+  nuiTrashElement Elem(nuiTrashElement::DeleteWidget,pWidget);
+  mpTrash.remove(Elem);
+  AdviseObjectDeath(pWidget);
+}
+
 void nuiTopLevel::Trash(nuiWidgetPtr pWidget)
 {
   nuiTrashElement Elem(nuiTrashElement::DeleteWidget,pWidget);
