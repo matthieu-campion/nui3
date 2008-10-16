@@ -285,7 +285,7 @@ protected:
   GLuint        mPixelFormat;
   GLuint        mDepthFormat;
 
-  void*         mEAGLPixelFormat;
+  void*         mpEAGLPixelFormat;
 
   nglContextInfo mContextInfo;
 

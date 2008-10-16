@@ -9,6 +9,7 @@
 			D2AAC045055464E500DB518D /* nuiE */,
 		);
 		breakpoints = (
+			61EFF8620EA7F6D1004CAFBF /* nuiImage.cpp:220 */,
 		);
 		codeSenseManager = 61A25F980E62A0930084597C /* Code sense */;
 		perUserDictionary = {
@@ -58,8 +59,8 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 245787226;
-			PBXWorkspaceStateSaveDate = 245787226;
+			PBXPerProjectTemplateStateSaveDate = 245867119;
+			PBXWorkspaceStateSaveDate = 245867119;
 		};
 		sourceControlManager = 61A25F970E62A0930084597C /* Source Control */;
 		userBuildSettings = {
@@ -489,6 +490,22 @@
 			sepNavVisRange = "{0, 942}";
 		};
 	};
+	6126D5400DA5716500D2641A /* nuiFixed.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1163, 1349}}";
+			sepNavSelRange = "{792, 0}";
+			sepNavVisRange = "{289, 1110}";
+			sepNavWindowFrame = "{{233, 0}, {1222, 1178}}";
+		};
+	};
+	6126D5410DA5716500D2641A /* nuiFixed.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1163, 1065}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 715}";
+			sepNavWindowFrame = "{{19, -5}, {1222, 1178}}";
+		};
+	};
 	6126D54A0DA5716500D2641A /* nuiMatrixView.cpp */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {604, 21794}}";
@@ -534,9 +551,9 @@
 	};
 	6126D56B0DA5716500D2641A /* nglMath.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1060, 4386}}";
-			sepNavSelRange = "{6621, 0}";
-			sepNavVisRange = "{6016, 1192}";
+			sepNavIntBoundsRect = "{{0, 0}, {1855, 5700}}";
+			sepNavSelRange = "{4884, 25}";
+			sepNavVisRange = "{4599, 785}";
 		};
 	};
 	6126D5700DA5716500D2641A /* nuiHTTP_Carbon.cpp */ = {
@@ -590,9 +607,10 @@
 	};
 	6126D5820DA5716500D2641A /* nuiDrawContext.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1188, 27892}}";
-			sepNavSelRange = "{0, 0}";
-			sepNavVisRange = "{0, 189}";
+			sepNavIntBoundsRect = "{{0, 0}, {1163, 27246}}";
+			sepNavSelRange = "{22788, 0}";
+			sepNavVisRange = "{21972, 1812}";
+			sepNavWindowFrame = "{{431, -199}, {1222, 1178}}";
 		};
 	};
 	6126D5830DA5716500D2641A /* nuiDrawContext.h */ = {
@@ -604,9 +622,9 @@
 	};
 	6126D5840DA5716500D2641A /* nuiGLPainter.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1043, 19950}}";
-			sepNavSelRange = "{6152, 125}";
-			sepNavVisRange = "{5585, 1499}";
+			sepNavIntBoundsRect = "{{0, 0}, {1163, 19855}}";
+			sepNavSelRange = "{6120, 0}";
+			sepNavVisRange = "{5585, 1596}";
 			sepNavWindowFrame = "{{809, 0}, {1102, 1178}}";
 		};
 	};
@@ -620,8 +638,8 @@
 	};
 	6126D5860DA5716500D2641A /* nuiGLESPainter.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {703, 26600}}";
-			sepNavSelRange = "{6779, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {1163, 26163}}";
+			sepNavSelRange = "{6529, 0}";
 			sepNavVisRange = "{6058, 1453}";
 			sepNavWindowFrame = "{{11, -65}, {762, 1178}}";
 		};
@@ -747,6 +765,14 @@
 			sepNavIntBoundsRect = "{{0, 0}, {1097, 731}}";
 			sepNavSelRange = "{995, 13}";
 			sepNavVisRange = "{900, 456}";
+		};
+	};
+	6126D5C30DA5716500D2641A /* nuiImage.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1163, 4712}}";
+			sepNavSelRange = "{4950, 0}";
+			sepNavVisRange = "{4072, 961}";
+			sepNavWindowFrame = "{{19, -5}, {1222, 1178}}";
 		};
 	};
 	6126D5C60DA5716500D2641A /* nuiImageDropZone.h */ = {
@@ -1091,9 +1117,9 @@
 	};
 	6126D6590DA5716500D2641A /* nuiWidget.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1040, 64068}}";
-			sepNavSelRange = "{594, 0}";
-			sepNavVisRange = "{242, 1132}";
+			sepNavIntBoundsRect = "{{0, 0}, {1163, 64220}}";
+			sepNavSelRange = "{44572, 0}";
+			sepNavVisRange = "{43997, 1434}";
 			sepNavWindowFrame = "{{821, 0}, {1099, 1178}}";
 		};
 	};
@@ -1123,17 +1149,18 @@
 	};
 	6126D6700DA5716500D2641A /* nglWindow_UIKit.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {715, 12464}}";
-			sepNavSelRange = "{6560, 0}";
-			sepNavVisRange = "{6176, 1703}";
+			sepNavIntBoundsRect = "{{0, 0}, {1163, 11286}}";
+			sepNavSelRange = "{828, 0}";
+			sepNavVisRange = "{202, 1362}";
 			sepNavWindowFrame = "{{694, -100}, {774, 1178}}";
 		};
 	};
 	6126D6710DA5716500D2641A /* nglContext_UIKit.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1063, 5358}}";
-			sepNavSelRange = "{5456, 0}";
-			sepNavVisRange = "{3782, 1170}";
+			sepNavIntBoundsRect = "{{0, 0}, {1163, 5624}}";
+			sepNavSelRange = "{6542, 0}";
+			sepNavVisRange = "{6152, 1079}";
+			sepNavWindowFrame = "{{345, 0}, {774, 1178}}";
 		};
 	};
 	6126D6720DA5716500D2641A /* nglVideoMode_UIKit.mm */ = {
@@ -1153,16 +1180,16 @@
 	};
 	6126D6780DA5716500D2641A /* nglContext.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1063, 4769}}";
-			sepNavSelRange = "{542, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {1163, 4769}}";
+			sepNavSelRange = "{523, 0}";
 			sepNavVisRange = "{0, 917}";
 		};
 	};
 	6126D6790DA5716500D2641A /* nglContext.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1063, 6099}}";
-			sepNavSelRange = "{8364, 16}";
-			sepNavVisRange = "{7330, 1677}";
+			sepNavIntBoundsRect = "{{0, 0}, {1163, 5738}}";
+			sepNavSelRange = "{2242, 10}";
+			sepNavVisRange = "{733, 2334}";
 			sepNavWindowFrame = "{{19, -5}, {774, 1178}}";
 		};
 	};
@@ -1297,6 +1324,23 @@
 			sepNavSelRange = "{14839, 110}";
 			sepNavVisRange = "{14669, 380}";
 		};
+	};
+	61EFF8620EA7F6D1004CAFBF /* nuiImage.cpp:220 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 6126D5C30DA5716500D2641A /* nuiImage.cpp */;
+		functionName = "nuiImage::CalcIdealSize()";
+		hitCount = 1;
+		ignoreCount = 0;
+		lineNumber = 220;
+		location = BeatMakerd;
+		modificationTime = 245888949.143557;
+		state = 1;
 	};
 	61F5F0610E644377009FDD61 /* nglStringConv_CoreFoundation.cpp */ = {
 		uiCtxt = {

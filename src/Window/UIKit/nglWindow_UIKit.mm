@@ -35,7 +35,7 @@ const nglChar* gpWindowErrorTable[] =
 #define NGL_OUT {}
 #endif
 
-#if defined(_MULTI_TOUCHES_) && defined(_DEBUG_)
+#if defined(_MULTI_TOUCHES_) && 0//defined(_DEBUG_)
 # define NGL_TOUCHES_OUT NGL_OUT
 #else//!_MULTI_TOUCHES_
 # define NGL_TOUCHES_OUT {}
@@ -364,8 +364,6 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
       mHeight = (uint)rect.size.height;
     }
   }
-  printf("nglWindow::InternalInit: w:%d h:%d\n", (uint)rect.size.width, (uint)rect.size.height);
-  printf("nglWindow::InternalInit: w:%d h:%d\n", mWidth, mHeight);
 
 ///< Create the actual window
   nglUIWindow* pUIWindow = [[nglUIWindow alloc] initWithFrame: rect andNGLWindow: this];
@@ -401,12 +399,12 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
   CAEAGLLayer* pLayer = (CAEAGLLayer*)[pUIWindow layer];
   NGL_ASSERT(pLayer);  
 	//pLayer.opaque = YES;
-  BOOL retainBacking = NO;//rInfo.Offscreen ? YES : NO;
+  BOOL retainBacking = rContext.CopyOnSwap ? YES : NO;
 	[pLayer setDrawableProperties:
    [NSDictionary dictionaryWithObjectsAndKeys:
     [NSNumber numberWithBool:retainBacking],
     kEAGLDrawablePropertyRetainedBacking,
-    (NSString*)mEAGLPixelFormat,
+    (NSString*)mpEAGLPixelFormat,
     kEAGLDrawablePropertyColorFormat,
     nil
    ]

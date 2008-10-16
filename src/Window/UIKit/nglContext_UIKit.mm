@@ -199,7 +199,8 @@ bool nglContext::Build(const nglContextInfo& rInfo, const nglContext* pShared, b
   NGL_LOG(_T("context"), NGL_LOG_INFO, _T("choosing GLES Pixel Format [%ls] compatible with: RGBA:%d:%d:%d:%d\n"),
           pixelFormat == kEAGLColorFormatRGBA8 ? _T("kEAGLColorFormatRGBA8") : _T("kEAGLColorFormatRGB565"),
           rInfo.FrameBitsR, rInfo.FrameBitsG, rInfo.FrameBitsB, rInfo.FrameBitsA);
-  mEAGLPixelFormat = pixelFormat;
+
+  mpEAGLPixelFormat = pixelFormat;
 
 ///< Create our context
 
