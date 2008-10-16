@@ -80,7 +80,8 @@ public:
 
   bool SetPath(const nglPath& rPath);      ///< Change currently selected Path.
   bool SetRootPath(const nglPath& rPath);      ///< Change current root
-  nglPath GetPath() const;          ///< Retrieve currently selected Path.
+  nglPath GetPath() const;          ///< Retrieve currently selected Path, including the node currently entered in the entry box
+  nglPath GetFolderPath() const; ///< Retrieve currently selected Path, or its parent if a file is selected. The entry box content is not used.
   nglPath GetRootPath() const;          ///< Retrieve current root.
 
   void SetDisplayMode(DisplayMode mode);

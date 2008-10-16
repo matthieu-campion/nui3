@@ -537,6 +537,19 @@ nglPath nuiFileSelector::GetPath() const
 	return pathName;
 }
 
+nglPath nuiFileSelector::GetFolderPath() const
+{
+  nglPath path = GetPath();
+  
+  if (!path.Exists() || path.IsLeaf())
+  {
+    // a file is selected, or the user already entered something in the entry box, get the parent.
+    path = path.GetParent();
+  }
+  
+  return path;
+}
+
 nglPath nuiFileSelector::GetRootPath() const
 {
   nuiTreeNode* pTree = mpTreeView->GetTree();
