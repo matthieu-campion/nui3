@@ -3521,7 +3521,7 @@ bool nuiWin::DumpStats(const nuiEvent& rEvent)
 
   NGL_OUT(_T("floating point tests:\n"));
   {
-    float f = 28;
+    float f = -28.5;
     int32 below = ToBelow(f);
     int32 above = ToAbove(f);
     int32 zero = ToZero(f);
@@ -3533,7 +3533,7 @@ bool nuiWin::DumpStats(const nuiEvent& rEvent)
     NGL_OUT(_T("float nearest %d\n"), nearest);
   }
   {
-    double f = 28;
+    double f = -28.5;
     int32 below = ToBelow(f);
     int32 above = ToAbove(f);
     int32 zero = ToZero(f);

@@ -196,22 +196,22 @@ inline int32 ToNearest(float x) ///< Cast x to an int using "to zero" rounding m
 
 inline int32 ToZero(double x)  ///< Cast x to an int using "to lower" rounding mode.
 {
-  return (int32)floor(x);
+  return (int32)x;
 }
 
 inline int32 ToZero(float x)  ///< Cast x to an int using "to lower" rounding mode.
 {
-  return (int32)floor(x);
+  return (int32)x;
 }
 
 inline int32 ToBelow(double x) ///< Cast x to an int using "to nearest" rounding mode.
 {
-  return (int32)x;
+  return (int32)floor(x);
 }
 
 inline int32 ToBelow(float x) ///< Cast x to an int using "to nearest" rounding mode.
 {
-  return (int32)x;
+  return (int32)floor(x);
 }
 
 inline int32 ToAbove(double x) ///< Cast x to an int using "to greater" rounding mode.
