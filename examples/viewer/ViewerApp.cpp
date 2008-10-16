@@ -26,12 +26,9 @@ void ViewerApp::OnExit (int Code)
 
 void ViewerApp::OnInit()
 {
-  nuiContextInfo ctx_info;
-  nglWindowInfo win_info;
   nuiRenderer renderer = eOpenGL;
 
   ParseDefaultArgs();
-  nglWindow::ParseArgs(ctx_info, win_info);
 
   int i = 0;
   while (i < GetArgCount())
@@ -52,10 +49,14 @@ void ViewerApp::OnInit()
     {
       arg = GetArg(i+1);
       if (arg == _T("opengl")) renderer = eOpenGL; else
+      if (arg == _T("direct3d"))
+      {
+        renderer = eDirect3D;
+      } else
       if (arg == _T("software")) renderer = eSoftware; else
       {
         NGL_OUT(_T("Unknown rendering target\n"));
-        Quit(1);
+        exit(0);
       }
       i++;
     }
@@ -64,7 +65,12 @@ void ViewerApp::OnInit()
   
   nuiMainWindow::SetRenderer(renderer);
 
+  nuiContextInfo ctx_info(nuiContextInfo::StandardContext3D);
+  nglWindowInfo win_info;
+  nglWindow::ParseArgs(ctx_info, win_info);
   nglPath path = i < GetArgCount() ? nglPath(GetArg(i)) : nglPath(ePathCurrent);
+  if (!path.Exists())
+    path = nglPath(ePathCurrent);
 
   mpWindow = new ViewerWin(ctx_info, win_info, path);
   if (mpWindow->GetError())
