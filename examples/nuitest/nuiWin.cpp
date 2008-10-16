@@ -3359,14 +3359,227 @@ bool nuiWin::CreateTitledPaneWindow(const nuiEvent& rEvent)
 
 
 
+// ====================================================================================================================
+//  Defines
+// ====================================================================================================================
+#ifndef _xs_DEFAULT_CONVERSION
+#define _xs_DEFAULT_CONVERSION      0
+#endif //_xs_DEFAULT_CONVERSION
 
 
+#if _xs_BigEndian_
+#define _xs_iexp_                        0
+#define _xs_iman_                        1
+#else
+#define _xs_iexp_                        1       //intel is little endian
+#define _xs_iman_                        0
+#endif //BigEndian_
+
+
+#define _xs_doublecopysgn(a,b)      ((int32*)&a)[_xs_iexp_]&=~(((int32*)&b)[_xs_iexp_]&0x80000000) 
+#define _xs_doubleisnegative(a)     ((((int32*)&a)[_xs_iexp_])|0x80000000) 
+
+typedef double real64;
+typedef float real32;
+
+/// ====================================================================================================================
+//  Constants
+// ====================================================================================================================
+const real64 _xs_doublemagic             = real64 (6755399441055744.0);      //2^52 * 1.5,  uses limited precisicion to floor
+const real64 _xs_doublemagicdelta        = (1.5e-8);                         //almost .5f = .5f + 1e^(number of exp bit)
+const real64 _xs_doublemagicroundeps     = (.5-_xs_doublemagicdelta);       //almost .5f = .5f - 1e^(number of exp bit)
+
+
+// ====================================================================================================================
+//  Prototypes
+// ====================================================================================================================
+int32 xs_CRoundToInt      (real64 val, real64 dmr =  _xs_doublemagic);
+int32 xs_ToInt            (real64 val, real64 dme = -_xs_doublemagicroundeps);
+int32 xs_FloorToInt       (real64 val, real64 dme =  _xs_doublemagicroundeps);
+int32 xs_CeilToInt        (real64 val, real64 dme =  _xs_doublemagicroundeps);
+int32 xs_RoundToInt       (real64 val);
+
+
+//int32 versions	 	- just to make macros and templates easier
+int32 xs_CRoundToInt      (int32 val)   {return val;}
+int32 xs_ToInt            (int32 val)   {return val;}
+
+// ====================================================================================================================
+//  Fix Class
+// ====================================================================================================================
+template <int32 N> class xs_Fix
+{
+public:
+ typedef int32 Fix;
+  // ====================================================================================================================
+  //  Basic Conversion from Numbers
+  // ==================================================================================================================== 
+  inline static Fix       ToFix       (int32 val)    {return val<<N;}
+  inline static Fix       ToFix       (real64 val)   {return xs_ConvertToFixed(val);}
+  
+  // ====================================================================================================================
+  //  Basic Conversion to Numbers
+  // ====================================================================================================================
+  inline static real64    ToReal      (Fix f)        {return real64(f)/real64(1<<N);}
+  inline static int32     ToInt       (Fix f)        {return f>>N;}
+
+protected:
+  // ====================================================================================================================
+  // Helper function - mainly to preserve _xs_DEFAULT_CONVERSION
+  // ====================================================================================================================
+  inline static int32 xs_ConvertToFixed (real64 val)
+  {
+#if _xs_DEFAULT_CONVERSION==0
+    return xs_CRoundToInt(val, _xs_doublemagic/(1<<N));
+#else
+    return (long)((val)*(1<<N));
+#endif
+  }
+};
+
+// ====================================================================================================================
+// ====================================================================================================================
+//  Inline implementation
+// ====================================================================================================================
+// ====================================================================================================================
+inline int32 xs_CRoundToInt(real64 val, real64 dmr)
+{
+#if _xs_DEFAULT_CONVERSION==0
+  val = val + dmr;
+  return ((int32*)&val)[_xs_iman_];
+#else
+  return int32(floor(val+.5));
+#endif
+}
+
+// ====================================================================================================================
+inline int32 xs_ToInt(real64 val, real64 dme)
+{
+  /* unused - something else I tried...
+   _xs_doublecopysgn(dme,val);
+   return xs_CRoundToInt(val+dme);
+   */
+  
+#if _xs_DEFAULT_CONVERSION==0
+//  return (val<0) ?   xs_CRoundToInt(val-dme) : xs_CRoundToInt(val+dme);
+  _xs_doublecopysgn(dme,val);
+  return xs_CRoundToInt(val+dme);
+#else
+  return int32(val);  
+#endif
+}
+
+// ====================================================================================================================
+inline int32 xs_FloorToInt(real64 val, real64 dme)
+{
+#if _xs_DEFAULT_CONVERSION==0  
+  return xs_CRoundToInt (val - dme);
+#else
+  return floor(val);
+#endif
+}
+
+// ====================================================================================================================
+inline int32 xs_CeilToInt(real64 val, real64 dme)
+{
+#if _xs_DEFAULT_CONVERSION==0
+  return xs_CRoundToInt (val + dme);
+#else
+  return ceil(val);
+#endif  
+}
+
+//=================================================================================================================
+inline int32 xs_RoundToInt(real64 val)
+{
+#if _xs_DEFAULT_CONVERSION==0
+  return xs_CRoundToInt (val + _xs_doublemagicdelta);
+#else
+  return floor(val+.5);
+#endif
+}
+
+// ====================================================================================================================
+// ====================================================================================================================
+
+template <class Class> inline int32 tozero(Class x)
+{
+//  return x >= 0 ? xs_CRoundToInt(x) : -xs_CRoundToInt(-x);
+  return xs_ToInt(x);
+}
+
+//inline int32 tozero(float x)
+//{
+//  return x >= 0 ? xs_CRoundToInt(x) : -xs_CRoundToInt(-x);
+//}
 
 bool nuiWin::DumpStats(const nuiEvent& rEvent)
 {
   NGL_OUT((_T("sizeof(nuiObject): %d\n")), sizeof(nuiObject));
   NGL_OUT((_T("sizeof(nuiWidget): %d\n")), sizeof(nuiWidget));
   NGL_OUT((_T("sizeof(nuiContainer): %d\n")), sizeof(nuiContainer));
+
+  NGL_OUT(_T("floating point tests:\n"));
+  {
+    float f = 28;
+    int32 below = ToBelow(f);
+    int32 above = ToAbove(f);
+    int32 zero = ToZero(f);
+    int32 nearest = ToNearest(f);
+    
+    NGL_OUT(_T("float below %d\n"), below);
+    NGL_OUT(_T("float above %d\n"), above);
+    NGL_OUT(_T("float zero %d\n"), zero);
+    NGL_OUT(_T("float nearest %d\n"), nearest);
+  }
+  {
+    double f = 28;
+    int32 below = ToBelow(f);
+    int32 above = ToAbove(f);
+    int32 zero = ToZero(f);
+    int32 nearest = ToNearest(f);
+    
+    NGL_OUT(_T("double below %d\n"), below);
+    NGL_OUT(_T("double above %d\n"), above);
+    NGL_OUT(_T("double zero %d\n"), zero);
+    NGL_OUT(_T("double nearest %d\n"), nearest);
+  }
+  
+  {
+    float f1 = -10000;
+    float f2 = 10000;
+    float incr = 0.1f;
+    
+    while (f1 < f2)
+    {
+      int32 i1 = tozero(f1);
+      int32 i2 = (int32)f1;
+      
+      if (i1 != i2)
+      {
+        NGL_OUT(_T("Float Rounding error: %f (ToBelow = %d / cast = %d)\n"), f1, i1, i2);
+      }
+      f1 += incr;
+    }
+  }
+  
+  {
+    double f1 = -10000;
+    double f2 = 10000;
+    double incr = 0.1f;
+    
+    while (f1 < f2)
+    {
+      int32 i1 = tozero(f1);
+      int32 i2 = (int32)f1;
+      
+      if (i1 != i2)
+      {
+        NGL_OUT(_T("Double Rounding error: %f (ToBelow = %d / cast = %d)\n"), f1, i1, i2);
+      }
+      f1 += incr;
+    }
+  }
   return false;
 }
 

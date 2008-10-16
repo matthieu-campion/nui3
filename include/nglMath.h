@@ -135,9 +135,9 @@ union _nui_double
   int32 i[2];
 };
 
+#if USE_FAST_FLOAT_CONVERSION
 inline int32 ToNearest(double x) ///< Cast x to an int using "to zero" rounding mode (Normal Ansi C behaviour).
 {
-#if USE_FAST_FLOAT_CONVERSION
 #ifdef __GNUC__
   _nui_double& rX(reinterpret_cast<_nui_double&>(x));
   rX.d	= rX.d + _nui_doublemagic;
@@ -147,42 +147,8 @@ inline int32 ToNearest(double x) ///< Cast x to an int using "to zero" rounding 
   x = x + _nui_doublemagic;
   return ((int32*)&x)[__iman];
 #endif
-#else
-  return (int32)floor(x+.5);
-#endif
 }
 
-inline void Undenormalise(float& sample) ///< if sample is stored as denormal float it will be set to 0
-{
-#ifdef _NGL_X86_
-  if(((*(uint*)&sample)&0x7f800000)==0) 
-    sample=0.0f;
-#else
-  // To nothing!
-#endif
-}
-
-inline bool IsDenormal(float& sample) ///< if sample is stored as denormal float it will be set to 0
-{
-  return (((*(uint*)&sample)&0x7f800000)==0);
-}
-
-inline void Undenormalise(double& sample) ///< if sample is stored as denormal double it will be set to 0
-{
-  if (((((int *)&sample)[__iexp])&0x7fe00000) != 0)
-    sample = 0.0;
-}
-
-inline bool IsDenormal(double& sample) ///< if sample is stored as denormal double it will be set to 0
-{
-  return (((((int *)&sample)[__iexp])&0x7fe00000) != 0);
-}
-
-
-#undef __iexp
-#undef __iman
-
-#if USE_FAST_FLOAT_CONVERSION
 inline int32 ToNearest(float x) ///< Cast x to an int using "to zero" rounding mode (Normal Ansi C behaviour).
 {
   return ToNearest((double)x);
@@ -218,43 +184,76 @@ inline int32 ToAbove(float x) ///< Cast x to an int using "to greater" rounding 
   return ToAbove((double)x);
 }
 #else
+inline int32 ToNearest(double x) ///< Cast x to an int using "to zero" rounding mode (Normal Ansi C behaviour).
+{
+  return (int32)round(x);
+}
+
 inline int32 ToNearest(float x) ///< Cast x to an int using "to zero" rounding mode (Normal Ansi C behaviour).
 {
-  return ToNearest((double)x);
+  return (int32)round((double)x);
 }
 
 inline int32 ToZero(double x)  ///< Cast x to an int using "to lower" rounding mode.
 {
-  return ((x < 0.0) ? ToNearest(x + .5) : ToNearest(x - .5));
+  return (int32)floor(x);
 }
 
 inline int32 ToZero(float x)  ///< Cast x to an int using "to lower" rounding mode.
 {
-  return ToZero((double)x);
+  return (int32)floor(x);
 }
 
 inline int32 ToBelow(double x) ///< Cast x to an int using "to nearest" rounding mode.
 {
-  return ToNearest(x - 0.5);
+  return (int32)x;
 }
 
 inline int32 ToBelow(float x) ///< Cast x to an int using "to nearest" rounding mode.
 {
-  return ToBelow((double)x);
+  return (int32)x;
 }
 
 inline int32 ToAbove(double x) ///< Cast x to an int using "to greater" rounding mode.
 {
-  return ToNearest(x + 0.5);
+  return (int32)ceil(x);
 }
 
 inline int32 ToAbove(float x) ///< Cast x to an int using "to greater" rounding mode.
 {
-  return ToAbove((double)x);
+  return (int32)ceil(x);
 }
 #endif
 
 
+// Denormals:
+inline void Undenormalise(float& sample) ///< if sample is stored as denormal float it will be set to 0
+{
+#ifdef _NGL_X86_
+  if(((*(uint*)&sample)&0x7f800000)==0) 
+    sample=0.0f;
+#else
+  // To nothing!
+#endif
+}
+
+inline bool IsDenormal(float& sample) ///< if sample is stored as denormal float it will be set to 0
+{
+  return (((*(uint*)&sample)&0x7f800000)==0);
+}
+
+inline void Undenormalise(double& sample) ///< if sample is stored as denormal double it will be set to 0
+{
+  if (((((int *)&sample)[__iexp])&0x7fe00000) != 0)
+    sample = 0.0;
+}
+
+inline bool IsDenormal(double& sample) ///< if sample is stored as denormal double it will be set to 0
+{
+  return (((((int *)&sample)[__iexp])&0x7fe00000) != 0);
+}
+
+// Sign operations:
 inline float nuiAbs(float f) 
 {
   int32 i = ((*(int32*)&f) & 0x7fffffff);
@@ -288,6 +287,10 @@ inline int64 nuiSign(double f)
 {
   return 1 + (((*(int64*)&f) >> 63) << 1);
 }
+
+#undef __iexp
+#undef __iman
+
 
 #ifdef _MSC_VER
 #pragma warning(pop)

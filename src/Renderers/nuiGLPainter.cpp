@@ -34,6 +34,30 @@ static uint32 maxs = 0;
 static uint32 totalinframe = 0;
 static uint32 total = 0;
 
+//
+//  //	generate the buffer ID and bind it
+//  glGenBuffersARB( 1, &vertexBufferID );
+//  glBindBufferARB( GL_ARRAY_BUFFER_ARB, vertexBufferID );
+//
+//  //	tell OpenGL how much data you've got
+//  //	and whether it is static (GL_STATIC_DRAW_ARB),
+//  //	dynamic (GL_DYNAMIC_DRAW_ARB),
+//  //	or streamed (GL_STREAM_DRAW_ARB)
+//  //	according to the ARB spec, streamed means
+//  //	"specify once and use once or perhaps only a few times"
+//  glBufferDataARB( GL_ARRAY_BUFFER_ARB, dataSize,
+//                  NULL, GL_STATIC_DRAW_ARB );
+//
+//  //	ask OpenGL for a buffer to store your data
+//  GLubyte *dest = glMapBufferARB( GL_ARRAY_BUFFER_ARB, GL_WRITE_ONLY_ARB );
+//
+//  //	write your data into the buffer once
+//
+//  //	flush the buffer object and let OpenGL cache it
+//  glUnmapBufferARB( GL_ARRAY_BUFFER_ARB );
+//
+//  //	unbind the VBO
+//  glBindBufferARB( GL_ARRAY_BUFFER_ARB, 0 );
 
 nuiGLPainter::nuiGLPainter(nglContext* pContext, const nuiRect& rRect)
 : nuiPainter(rRect, pContext)
