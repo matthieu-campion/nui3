@@ -50,6 +50,8 @@ public:
   virtual void InvalidateTexture(nuiTexture* pTexture, bool ForceReload);
 
   void        ApplyTextureFiltering(LPDIRECT3DDEVICE9 pDev, GLuint minfilter, GLuint magfilter);
+  bool        IsTextureFormatSupported(LPDIRECT3DDEVICE9 pDev, D3DFORMAT format);
+  void        SetDefaultRenderStates(LPDIRECT3DDEVICE9 pDev);
 
 protected:
   nglContext* mpContext;
@@ -78,6 +80,8 @@ protected:
 
   DWORD                   mnBatchCurrentVBOffset;
   DWORD                   mnBatchCurrentVBSize;
+
+  bool                    bInitialized;
 
 
   GLenum GetTextureTarget(bool POT) const;
