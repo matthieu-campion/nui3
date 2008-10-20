@@ -32,6 +32,7 @@ public:
   virtual bool SetRect(const nuiRect& rRect);
   void SetTrashRemoval(bool); ///< If this is true the menu will be trashed as soon as a menu entry have been selected. Otherwise the MenuRemove call back will be called.
   virtual bool IsParentActive() const;
+  virtual bool DelChild(nuiWidgetPtr pChild,bool Delete = false);
 
   void SetTreeOwner(bool OwnTree); ///< This method tells the nuiPopupMenu is it owns its the nuiTree or not. This permits to destroy (or not) the nuiTree accordingly when the nuiTreePopup is destroyed.
   bool IsTreeOwner();
@@ -67,6 +68,7 @@ protected:
   virtual void ReparentTree(nuiTreeNode* pTree);
   virtual void UnparentTree(nuiTreeNode* pTree);
   virtual void RemoveMenu(); ///< Handles removal of the menu once an item have been selected.
+  bool DelChild(nuiTreePtr pTree, nuiWidgetPtr pChild, bool Delete);
 
   nuiTreeNode* GetParentNode(nuiTreeNodePtr pParent, nuiTreeNodePtr pNode);
   nuiTreeNode* mpTree;

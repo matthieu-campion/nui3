@@ -1,8 +1,8 @@
 /*
-  NUI3 - C++ cross-platform GUI framework for OpenGL based applications
-  Copyright (C) 2002-2003 Sebastien Metrot
+NUI3 - C++ cross-platform GUI framework for OpenGL based applications
+Copyright (C) 2002-2003 Sebastien Metrot
 
-  licence: see nui3/LICENCE.TXT
+licence: see nui3/LICENCE.TXT
 */
 
 #include "nui.h"
@@ -28,25 +28,25 @@
 
 nuiPopupMenu::nuiPopupMenu(nuiWidget* pParent, nuiTreeNodePtr pTree, const nuiRect& rRect, bool OwnTree)
 : nuiSimpleContainer(),
-  mPopupTreeSink(this),
-  mpSelectedNode(NULL),
-  mpNewSelectedNode(NULL),
-  mOwnTree(OwnTree),
-  mSelectionTimer(nglTime(TIMER_PERIOD)),
-  mScrollTimer(1.0f/15.0f),
-  mDelayTime(DELAY_TIME),
-  mpOldFocused(NULL)
+mPopupTreeSink(this),
+mpSelectedNode(NULL),
+mpNewSelectedNode(NULL),
+mOwnTree(OwnTree),
+mSelectionTimer(nglTime(TIMER_PERIOD)),
+mScrollTimer(1.0f/15.0f),
+mDelayTime(DELAY_TIME),
+mpOldFocused(NULL)
 {
   mTrashRemoval = false;
   SetObjectClass(_T("nuiPopupMenu"));
   nuiRect r = rRect;
-  
+
   nuiTopLevel* pTop = NULL;
   if (pParent)
     pTop = pParent->GetTopLevel();
   if (pTop)
     pTop->AddChild(this);
-  
+
   mpTree = pTree;
   ReparentTree(mpTree);
   mSelectedNodes.push_back(mpTree);
@@ -79,7 +79,7 @@ bool nuiPopupMenu::Load(const nuiXMLNode* pNode)
   mpNewSelectedNode = NULL;
   mpOldFocused = NULL;
   mDelayTime = DELAY_TIME;
- /*
+  /*
   mPopupTreeSink.SetTarget(this);
   SetObjectClass("nuiPopupMenu");
   mTrashRemoval = false;
@@ -105,7 +105,7 @@ bool nuiPopupMenu::Load(const nuiXMLNode* pNode)
 
   Focus();
   */
-  
+
   return true;
 }
 
@@ -217,7 +217,7 @@ bool nuiPopupMenu::DrawTree(nuiDrawContext* pContext, nuiTreeNode* pTree, uint d
       nuiSize TreeHandleSize = pRect->mHasNonEmpty ? NUI_POPUP_TREE_HANDLE_SIZE : 0.f;
       nuiRect r = WidgetRect;
       r.SetSize(WidgetRect.GetWidth()+TreeHandleSize, WidgetRect.GetHeight());
-      
+
       pTheme->DrawSelectionBackground(pContext, r, this);
     }
 
@@ -237,12 +237,12 @@ bool nuiPopupMenu::DrawTree(nuiDrawContext* pContext, nuiTreeNode* pTree, uint d
       nuiSize TreeHandleSize = pRect->mHasNonEmpty ? NUI_POPUP_TREE_HANDLE_SIZE : 0.f;
       nuiRect r = WidgetRect;
       r.SetSize(WidgetRect.GetWidth()+TreeHandleSize, WidgetRect.GetHeight());
-      
+
       pTheme->DrawSelectionForeground(pContext, r, this);
     }
-    
-    
-    
+
+
+
     if (pChildNode->IsOpened())
     {
       pOpenedNode = pChildNode;
@@ -325,13 +325,13 @@ nuiRect nuiPopupMenu::CalcIdealSize()
   for (uint32 i = 0; i < count; i++)
   {
     nuiTreeNode* pNode = dynamic_cast<nuiTreeNode*>(mpTree->GetChild(i));
-    
+
     if (pNode)
     {
       pWidget = pNode->GetElement();
       WidgetRect = pWidget->GetIdealRect();
       rect.SetSize(MAX(rect.GetWidth(), WidgetRect.GetWidth()), 
-                   rect.GetHeight() + WidgetRect.GetHeight());
+        rect.GetHeight() + WidgetRect.GetHeight());
       if (!pNode->IsEmpty())
         HasNonEmpty = true;
       if (pNode->IsOpened())
@@ -344,7 +344,7 @@ nuiRect nuiPopupMenu::CalcIdealSize()
         }
         mRects[cpt+1]->mpFromNode = pNode;
         NGL_ASSERT(mRects.size() > cpt+1);
-        
+
         GlobRect = rect;
         CalcTreeSize(GlobRect, pNode, cpt);
       }
@@ -363,7 +363,7 @@ nuiRect nuiPopupMenu::CalcIdealSize()
 
   if (mInitialPos.GetWidth() > rect.GetWidth())
     rect.SetWidth(mInitialPos.GetWidth());
-  
+
   mRects[0]->mRect = rect;
 
   if (cpt+1 < mRects.size())
@@ -393,6 +393,41 @@ nuiRect nuiPopupMenu::CalcIdealSize()
   return mIdealRect;
 }
 
+bool nuiPopupMenu::DelChild(nuiWidgetPtr pChild,bool Delete)
+{
+  return DelChild(mpTree, pChild, Delete);
+}
+
+bool nuiPopupMenu::DelChild(nuiTreePtr pTree, nuiWidgetPtr pChild, bool Delete)
+{
+  uint32 count = pTree->GetChildrenCount();
+  if (count <= 0)
+    return false;
+
+  for (uint32 i = 0; i < count; i++)
+  {
+    nuiTreeNode* pNode = dynamic_cast<nuiTreeNode*>(pTree->GetChild(i));
+    NGL_ASSERT(pNode);
+    nuiWidget* pWidget = pNode->GetElement();
+    NGL_ASSERT(pWidget);
+    if (pWidget == pChild)
+    {
+      bool res = pTree->DelChild(pNode, false);
+      if (res)
+      {
+        res = nuiSimpleContainer::DelChild(pChild, Delete); 
+      }
+      return res;
+    }
+
+    if (pNode->IsOpened())
+    {
+      return DelChild(pNode, pChild, Delete);
+    }
+  }
+  return false;
+}
+
 void nuiPopupMenu::CalcTreeSize(nuiRect& rRect, nuiTreeNode* pTree, uint32& cpt)
 {
   NGL_ASSERT(pTree); // no chance to happen
@@ -408,7 +443,7 @@ void nuiPopupMenu::CalcTreeSize(nuiRect& rRect, nuiTreeNode* pTree, uint32& cpt)
     return;
 
   bool HasNonEmpty = false;
-  
+
   for (uint32 i = 0; i < count; i++)
   {
     nuiTreeNode* pNode = dynamic_cast<nuiTreeNode*>(pTree->GetChild(i));
@@ -899,7 +934,7 @@ bool nuiPopupMenu::MouseMoved(nuiSize X, nuiSize Y)
           return true;
         }
       }
-      
+
       if (Y < AUTOSCROLL_HEIGHT)
       {
         // Scroll up

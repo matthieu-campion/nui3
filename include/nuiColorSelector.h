@@ -39,8 +39,8 @@ public:
   
   const nuiColor& GetCurrentColor() const;
   void SetCurrentColor(const nuiColor& rColor);
-  
-  
+
+
   nuiSimpleEventSource<0> ColorChanged; // sent in all cases
   
   nuiSimpleEventSource<0> RGBColorChanged; // sent if the color has been changed with the RGB sliders

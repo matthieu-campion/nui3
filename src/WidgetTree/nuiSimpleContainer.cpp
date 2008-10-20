@@ -123,7 +123,7 @@ bool nuiSimpleContainer::DelChild(nuiWidgetPtr pChild,bool Delete)
 
   if (GetDebug())
   {
-    NGL_OUT(_T("[%ls] Del Child 0x%x <--- 0x%x (%s)\n"), GetProperty(_T("Class")).GetChars(), this, pChild, Delete?"delete":"no delete");
+    NGL_OUT(_T("[%ls] Del Child 0x%x <--- 0x%x (%s)\n"), GetObjectClass().GetChars(), this, pChild, Delete?"delete":"no delete");
   }
   
   nuiWidgetList::iterator it  = mpChildren.begin();
