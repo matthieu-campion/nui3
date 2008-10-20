@@ -1347,17 +1347,17 @@ bool nuiEditText::SelectWord(nuiObject* pParams)
     if (isalnum(mText.GetChar(start)))
     {
       // Select a word:
-      while (isalnum(mText.GetChar(start-1)) && start)
+      while (start && isalnum(mText.GetChar(start-1)))
         start--;
-      while (isalnum(mText.GetChar(end)) && end < len)
+      while (end < len && isalnum(mText.GetChar(end)))
         end++;
     }
     else
     {
       // Select a sign that is not a word
-      while (!isalnum(mText.GetChar(start-1)) && mText.GetChar(start-1) > ' ' && start)
+      while (start && !isalnum(mText.GetChar(start-1)) && mText.GetChar(start-1) > ' ')
         start--;
-      while (!isalnum(mText.GetChar(end)) && mText.GetChar(start-1) > ' ' && end < len)
+      while (end < len && !isalnum(mText.GetChar(end)) && mText.GetChar(start-1) > ' ')
         end++;
     }
 
