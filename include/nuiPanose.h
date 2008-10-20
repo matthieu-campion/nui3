@@ -9,6 +9,8 @@
 
 #pragma once
 
+#include "nui.h"
+
 /////////////////////////////
 // PANOSE Structures and defines:
 enum nuiFontFamily
