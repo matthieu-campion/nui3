@@ -230,6 +230,17 @@ private:
   nuiFontLetterForm       mLetterForm;        // 7
   nuiFontMidLine          mMidLine;           // 8
   nuiFontXHeight          mXHeight;           // 9
+
+  uint32 CompareFamily         (nuiFontFamily           set) const;
+  uint32 CompareSerif          (nuiFontSerif            set) const;
+  uint32 CompareWeight         (nuiFontWeight           set) const;
+  uint32 CompareProportion     (nuiFontProportion       set) const;
+  uint32 CompareContrast       (nuiFontContrast         set) const;
+  uint32 CompareStrokeVariation(nuiFontStrokeVariation  set) const;
+  uint32 CompareArmStyle       (nuiFontArmStyle         set) const;
+  uint32 CompareLetterForm     (nuiFontLetterForm       set) const;
+  uint32 CompareMidLine        (nuiFontMidLine          set) const;
+  uint32 CompareXHeight        (nuiFontXHeight          set) const;
 };
 
 
