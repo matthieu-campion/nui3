@@ -2302,6 +2302,10 @@
 		E5F796B20C750BB4009CE779 /* harfbuzz.h in Headers */ = {isa = PBXBuildFile; fileRef = E5F7968D0C750BB4009CE779 /* harfbuzz.h */; };
 		E5F796D60C750BB4009CE779 /* harfbuzz.c in Sources */ = {isa = PBXBuildFile; fileRef = E5F7968C0C750BB4009CE779 /* harfbuzz.c */; };
 		E5F796D70C750BB4009CE779 /* harfbuzz.h in Headers */ = {isa = PBXBuildFile; fileRef = E5F7968D0C750BB4009CE779 /* harfbuzz.h */; };
+		E5F9F7710EACB86D00F8D3A3 /* nuiPanose.h in Headers */ = {isa = PBXBuildFile; fileRef = E5F9F7700EACB86D00F8D3A3 /* nuiPanose.h */; };
+		E5F9F7720EACB86D00F8D3A3 /* nuiPanose.h in Headers */ = {isa = PBXBuildFile; fileRef = E5F9F7700EACB86D00F8D3A3 /* nuiPanose.h */; };
+		E5F9F7770EACC8F000F8D3A3 /* nuiPanose.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5F9F7750EACC8F000F8D3A3 /* nuiPanose.cpp */; };
+		E5F9F7790EACC8F100F8D3A3 /* nuiPanose.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5F9F7750EACC8F000F8D3A3 /* nuiPanose.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -2333,7 +2337,6 @@
 		56892C1F0DE489B7005806AD /* nuiMemoryPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiMemoryPool.h; path = include/nuiMemoryPool.h; sourceTree = SOURCE_ROOT; };
 		56AFF7570D74522D003A6AF3 /* nuiHTTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiHTTP.h; path = ../../include/nuiHTTP.h; sourceTree = "<group>"; };
 		56AFF75F0D745886003A6AF3 /* nuiHTTP.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiHTTP.cpp; sourceTree = "<group>"; };
-		56C0F8360E7EAA76006DE460 /* makefont.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = makefont.py; path = ../../Desktop/makefont.py; sourceTree = SOURCE_ROOT; };
 		941A98BA0E8BEAAE00CAFC3A /* nuiScrollingLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiScrollingLabel.cpp; path = src/Text/nuiScrollingLabel.cpp; sourceTree = SOURCE_ROOT; };
 		941A98BD0E8BEAD000CAFC3A /* nuiScrollingLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiScrollingLabel.h; path = include/nuiScrollingLabel.h; sourceTree = SOURCE_ROOT; };
 		941A98CA0E8BF04700CAFC3A /* nuiScrollBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiScrollBox.cpp; path = src/Layout/nuiScrollBox.cpp; sourceTree = SOURCE_ROOT; };
@@ -3494,6 +3497,8 @@
 		E5F7968B0C750BB4009CE779 /* harfbuzz-tibetan.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = "harfbuzz-tibetan.c"; path = "harfbuzz/harfbuzz-tibetan.c"; sourceTree = "<group>"; };
 		E5F7968C0C750BB4009CE779 /* harfbuzz.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = harfbuzz.c; path = harfbuzz/harfbuzz.c; sourceTree = "<group>"; };
 		E5F7968D0C750BB4009CE779 /* harfbuzz.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = harfbuzz.h; path = harfbuzz/harfbuzz.h; sourceTree = "<group>"; };
+		E5F9F7700EACB86D00F8D3A3 /* nuiPanose.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiPanose.h; path = include/nuiPanose.h; sourceTree = SOURCE_ROOT; };
+		E5F9F7750EACC8F000F8D3A3 /* nuiPanose.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiPanose.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -4883,7 +4888,6 @@
 		E5816D770C3CECAB00902DFE /* Font */ = {
 			isa = PBXGroup;
 			children = (
-				56C0F8360E7EAA76006DE460 /* makefont.py */,
 				E5816D5B0C3CECAB00902DFE /* nuiFont.cpp */,
 				E5816CC90C3CECAB00902DFE /* nuiFont.h */,
 				E5816D5C0C3CECAB00902DFE /* nuiFontBase.cpp */,
@@ -4906,6 +4910,8 @@
 				E5816D810C3CECAB00902DFE /* nglFontTexCache.cpp */,
 				E5816D820C3CECAB00902DFE /* nglFontTexCache.h */,
 				E57BBF730C5C9FBF0026DE07 /* nglFontLayout.h */,
+				E5F9F7700EACB86D00F8D3A3 /* nuiPanose.h */,
+				E5F9F7750EACC8F000F8D3A3 /* nuiPanose.cpp */,
 			);
 			name = Font;
 			path = src/Font;
@@ -6059,6 +6065,7 @@
 				BC31AB770E910E2B000FD6C6 /* nuiCheckerboardDecoration.h in Headers */,
 				BCCFC4500E9E656B004A487E /* nuiKnob.h in Headers */,
 				BC19E19B0EA3AC210026CB6B /* nuiImageSequence.h in Headers */,
+				E5F9F7720EACB86D00F8D3A3 /* nuiPanose.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6711,6 +6718,7 @@
 				BC31AB760E910E2B000FD6C6 /* nuiCheckerboardDecoration.h in Headers */,
 				BCCFC44F0E9E656B004A487E /* nuiKnob.h in Headers */,
 				BC19E19A0EA3AC210026CB6B /* nuiImageSequence.h in Headers */,
+				E5F9F7710EACB86D00F8D3A3 /* nuiPanose.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7271,6 +7279,7 @@
 				BC31AB740E910E1E000FD6C6 /* nuiCheckerboardDecoration.cpp in Sources */,
 				BCCFC44D0E9E655B004A487E /* nuiKnob.cpp in Sources */,
 				BC19E1980EA3AC030026CB6B /* nuiImageSequence.cpp in Sources */,
+				E5F9F7790EACC8F100F8D3A3 /* nuiPanose.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7774,6 +7783,7 @@
 				BC31AB730E910E1E000FD6C6 /* nuiCheckerboardDecoration.cpp in Sources */,
 				BCCFC44C0E9E655B004A487E /* nuiKnob.cpp in Sources */,
 				BC19E1970EA3AC030026CB6B /* nuiImageSequence.cpp in Sources */,
+				E5F9F7770EACC8F000F8D3A3 /* nuiPanose.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
