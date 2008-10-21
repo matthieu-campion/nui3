@@ -11,6 +11,8 @@
 #include "nuiFontManager.h"
 #include "nglThreadChecker.h"
 
+#define NUI_FONTDB_PATH _T("nuiFonts.db3")
+
 class __NglKernel__ : public nglKernel
 {
 public:
@@ -85,7 +87,7 @@ bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
   
   // Init the font manager:
   nglPath fontdb(ePathUserAppSettings);
-  fontdb += nglString(_T("nuiFonts.db"));
+  fontdb += nglString(NUI_FONTDB_PATH);
 
   if (fontdb.Exists() && fontdb.IsLeaf())
   {
@@ -99,7 +101,7 @@ bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
 bool nuiUninit()
 {
   nglPath fontdb(ePathUserAppSettings);
-  fontdb += nglString(_T("nuiFonts.db"));
+  fontdb += nglString(NUI_FONTDB_PATH);
 
   nuiFontManager& rManager(nuiFontManager::GetManager(false));
   if (rManager.GetFontCount())

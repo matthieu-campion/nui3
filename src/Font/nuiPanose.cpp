@@ -7,9 +7,10 @@
  *
  */
 
+#include "nui.h"
 #include "nuiPanose.h"
 
-nuiPanose::nuiPanose(const nuiFontPanoseBytes& rPanoseBytes)
+nuiPanose::nuiPanose()
 {
   mFamily = eFamily_Any;
   mSerif = eSerif_Any;
@@ -23,18 +24,14 @@ nuiPanose::nuiPanose(const nuiFontPanoseBytes& rPanoseBytes)
   mXHeight = eXHeight_Any;
 }
 
+nuiPanose::nuiPanose(const nuiFontPanoseBytes& rPanoseBytes)
+{
+  SetBytes(rPanoseBytes);
+}
+
 nuiPanose::nuiPanose(uint8 pPanoseBytes[10])
 {
-  mFamily = (nuiFontFamily) pPanoseBytes[0];
-  mSerif = (nuiFontSerif) pPanoseBytes[1];
-  mWeight = (nuiFontWeight) pPanoseBytes[2];
-  mProportion = (nuiFontProportion) pPanoseBytes[3];
-  mContrast = (nuiFontContrast) pPanoseBytes[4];
-  mStrokeVariation = (nuiFontStrokeVariation) pPanoseBytes[5];
-  mArmStyle = (nuiFontArmStyle) pPanoseBytes[6];
-  mLetterForm = (nuiFontLetterForm) pPanoseBytes[7];
-  mMidLine = (nuiFontMidLine) pPanoseBytes[8];
-  mXHeight = (nuiFontXHeight) pPanoseBytes[9];
+  SetBytes(pPanoseBytes);
 }
 
 nuiPanose::nuiPanose(const nuiPanose& rPanose)
@@ -78,6 +75,21 @@ void nuiPanose::SetBytes(const nuiFontPanoseBytes& rBytes)
   mMidLine = (nuiFontMidLine) rBytes.mMidLine;
   mXHeight = (nuiFontXHeight) rBytes.mXHeight;
 }
+
+void nuiPanose::SetBytes(uint8 pPanoseBytes[10])
+{
+  mFamily = (nuiFontFamily) pPanoseBytes[0];
+  mSerif = (nuiFontSerif) pPanoseBytes[1];
+  mWeight = (nuiFontWeight) pPanoseBytes[2];
+  mProportion = (nuiFontProportion) pPanoseBytes[3];
+  mContrast = (nuiFontContrast) pPanoseBytes[4];
+  mStrokeVariation = (nuiFontStrokeVariation) pPanoseBytes[5];
+  mArmStyle = (nuiFontArmStyle) pPanoseBytes[6];
+  mLetterForm = (nuiFontLetterForm) pPanoseBytes[7];
+  mMidLine = (nuiFontMidLine) pPanoseBytes[8];
+  mXHeight = (nuiFontXHeight) pPanoseBytes[9];
+}
+
 
 uint32 nuiPanose::GetDistance(const nuiPanose& rPanose) const
 {

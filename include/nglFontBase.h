@@ -16,7 +16,10 @@
 //#include "nui.h"
 #include "nglError.h"
 #include "nglPath.h"
+#include "nuiPanose.h"
+
 class nglStringConv;
+
 #include <vector>
 #include <set>
 
@@ -285,8 +288,15 @@ public:
   float     EMToPoint   (float Value) const;  ///< Convert from EM to points (undefined for bitmap fonts)
   float     PixelToPoint(float Value) const;  ///< Convert from pixels to points (font size independent)
   float     PointToPixel(float Value) const;  ///< Convert from points to pixels (font size independent)
-  //@}
 
+  const nuiFontPanoseBytes& GetPanoseBytes() const;
+  /*!< Return the panose (opentype font features) or this font. See http://www.w3.org/Fonts/Panose/pan2.html to learn about the panose standard.
+   \return a reference to the panose structure for this font
+   */
+  
+  //@}
+  bool HasPanoseInfo() const; ///< Returns true if this font containst panose info bytes.
+  
   /** @name Glyph metrics */
   //@{
   float GetSize (nglFontUnit Unit = eFontUnitPixel) const;  ///< Returns current font size using \p Unit
@@ -471,6 +481,9 @@ private:
   float                 mUnitsPerEM;
   float                 mGlobalHeight;
  
+  nuiFontPanoseBytes    mPanoseBytes;
+  bool                  mHasPanoseInfo;
+  
   /* Init/setup
    */
   void Defaults();

@@ -23,6 +23,7 @@ using namespace std;
 #include <ft2build.h>
 #include FT_FREETYPE_H
 #include FT_CACHE_H
+#include FT_TRUETYPE_TABLES_H
 
 /* Globals
  */
@@ -1071,6 +1072,20 @@ bool nglFontBase::LoadFinish()
   mUnitsPerEM   = (float)mpFace->Face->units_per_EM;
   mGlobalHeight = (float)mpFace->Face->height; // Only valid for scalable fonts (see GetHeight())
 
+  // Get Panose information from the TT OS/2 tables
+  TT_OS2* pOS2 = (TT_OS2*)FT_Get_Sfnt_Table(mpFace->Face, ft_sfnt_os2);
+  if (pOS2)
+  {
+    memcpy(&mPanoseBytes, pOS2->panose, 10);
+    mHasPanoseInfo = true;
+  }
+  else
+  {
+    NGL_OUT(_T("Warning: font '%ls (%ls)' has no panose information.\n"), mFamilyName.GetChars(), mStyleName.GetChars());
+    memset(&mPanoseBytes, 0, 10);
+    mHasPanoseInfo = false;
+  }
+  
   /* Select a default size
    */
   if (IsScalable())
@@ -1220,6 +1235,16 @@ void nglFontBase::OnExit()
 const nglChar* nglFontBase::OnError (uint& rError) const
 {
   return FetchError(gpFontBaseErrorTable, NULL, rError);
+}
+
+const nuiFontPanoseBytes& nglFontBase::GetPanoseBytes() const
+{
+  return mPanoseBytes;
+}
+
+bool nglFontBase::HasPanoseInfo() const
+{
+  return mHasPanoseInfo;
 }
 
 #endif // HAVE_FREETYPE

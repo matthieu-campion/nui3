@@ -1983,7 +1983,7 @@ bool nuiWin::CreateFontSubstitutionWindow(const nuiEvent& rEvent)
 
 bool nuiWin::SaveFontDB(const nuiEvent& rEvent)
 {
-  nglPath p(_T("nuiFonts.db"));
+  nglPath p(_T("nuiFonts.db3"));
   nglOFile strm(p, eOFileCreate);
   nuiFontManager& rManager(nuiFontManager::GetManager());
   rManager.Save(strm);
@@ -1993,7 +1993,7 @@ bool nuiWin::SaveFontDB(const nuiEvent& rEvent)
 
 bool nuiWin::LoadFontDB(const nuiEvent& rEvent)
 {
-  nglPath p(_T("nuiFonts.db"));
+  nglPath p(_T("nuiFonts.db3"));
   nglIFile strm(p);
   nuiFontManager::LoadManager(strm);
   

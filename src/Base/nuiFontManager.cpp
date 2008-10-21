@@ -66,7 +66,7 @@ void nuiFontRequest::GetFontsForGenericName(const nglString& rName, std::vector<
 }
 
 ///! Font Request class:
-nuiFontRequest::nuiFontRequest()
+nuiFontRequest::nuiFontRequest(nglFontBase* pOriginalFont, bool ForcePanoseOnlyFonts)
 {
   if (SetObjectClass(_T("nuiFontRequest")))
     InitAttributes();
@@ -184,6 +184,27 @@ nuiFontRequest::nuiFontRequest()
   /*mItalic.mScore = 0.05f;
   mBold.mScore = 0.05f;
   mMonospace.mScore = 0.05f;*/
+  if (pOriginalFont)
+  {
+    if (pOriginalFont->HasPanoseInfo())
+    {
+      MustBeSimilar(pOriginalFont->GetPanoseBytes(), 50.0f);
+    }
+      
+    if (!ForcePanoseOnlyFonts || !pOriginalFont->HasPanoseInfo())
+    {
+      SetName(pOriginalFont->GetFamilyName(), 3.0f);
+      SetStyle(pOriginalFont->GetStyleName(), 1.5f);
+      SetItalic(pOriginalFont->IsItalic(), 1.0f);
+      SetBold(pOriginalFont->IsBold(), 1.0f);
+      if (pOriginalFont->IsScalable())
+        SetScalable(10.f, true);
+      if (pOriginalFont->IsMonospace())
+        SetMonospace(1.0f);
+      MustHaveSize(pOriginalFont->GetSize(), 1.0f);
+    }
+  }
+  
 }
 
 void nuiFontRequest::InitAttributes()
@@ -346,6 +367,13 @@ void nuiFontRequest::MustHaveSize(int32 size, float Score, bool Strict)
   mMustHaveSizes.mStrict = Strict;  
 }
 
+void nuiFontRequest::MustBeSimilar(const nuiPanose& rPanose, float score, bool Strict)
+{
+  mPanose.mElement = rPanose;
+  mPanose.mScore = score;
+  mPanose.mStrict = Strict;
+}
+
 void nuiFontRequest::_SetName(const nglString& rName)
 {
   SetName(rName, 1.0);
@@ -473,7 +501,6 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
     printf("Error Scanning font '%ls' face %d\n", rPath.GetChars(), Face);
     return;
   }
-  NGL_OUT(_T("Scanning font '%ls' face %d\n"), rPath.GetChars(), Face);
   
   uint32 size = pStream->Available();
   FT_Byte* pBuffer = new FT_Byte[size];
@@ -487,6 +514,7 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
  
   if (error)
     return;
+  NGL_OUT(_T("Scanning font '%ls' face %d\n"), rPath.GetChars(), Face);
   
   NGL_ASSERT(pFace->num_faces > Face);
   
@@ -503,21 +531,13 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
   // Get Panose information from the TT OS/2 tables
   TT_OS2* pOS2 = (TT_OS2*)FT_Get_Sfnt_Table(pFace, ft_sfnt_os2);
   if (pOS2)
+    memcpy(&mPanoseBytes, pOS2->panose, 10);
+  else
   {
-//    if (pOS2->panose[0] == eFamily_Decorative)
-//    {
-//      printf("'%ls' (%ls) is decorative, skipping\n", mName.GetChars(), rPath.GetChars());
-//      return;
-//    }
-//
-//    if (pOS2->panose[0] == eFamily_Pictorial)
-//    {
-//      printf("'%ls' (%ls) is pictorial, skipping\n", mName.GetChars(), rPath.GetChars());
-//      return;
-//    }
-    
+    NGL_OUT(_T("Warning: font '%ls' has no panose information.\n"), mPath.GetChars());
+    memset(&mPanoseBytes, 0, 10);
   }
-  
+
   // Get encodings:
   for (int32 i = 0; i < pFace->num_charmaps; i++)
   {
@@ -635,6 +655,11 @@ const std::set<int32>& nuiFontDesc::GetSizes() const
   return mSizes;
 }
 
+const nuiFontPanoseBytes& nuiFontDesc::GetPanoseBytes() const
+{
+  return mPanoseBytes;
+}
+
 bool nuiFontDesc::Save(nglOStream& rStream)
 {
   uint32 s = 0;
@@ -662,13 +687,13 @@ bool nuiFontDesc::Save(nglOStream& rStream)
   
   uint32 boolean = 0;
   
-  boolean = mBold?1:0;
+  boolean = mBold ? 1 : 0;
   rStream.WriteUInt32(&boolean);
-  boolean = mItalic?1:0;
+  boolean = mItalic ? 1 : 0;
   rStream.WriteUInt32(&boolean);
-  boolean = mMonospace?1:0;
+  boolean = mMonospace ? 1 : 0;
   rStream.WriteUInt32(&boolean);
-  boolean = mScalable?1:0;
+  boolean = mScalable ? 1 : 0;
   rStream.WriteUInt32(&boolean);
   
   s = mEncodings.size();
@@ -679,7 +704,6 @@ bool nuiFontDesc::Save(nglOStream& rStream)
     rStream.WriteUInt32(&Encodings[0], s);
   }
   
-  
   s = mGlyphs.size();
   rStream.WriteUInt32(&s);
   if (s)
@@ -688,7 +712,6 @@ bool nuiFontDesc::Save(nglOStream& rStream)
     rStream.WriteUInt16(&Glyphs[0], s);
   }
   
-  
   s = mSizes.size();
   rStream.WriteUInt32(&s);
   if (s)
@@ -696,11 +719,16 @@ bool nuiFontDesc::Save(nglOStream& rStream)
     std::vector<uint32> Sizes(mSizes.begin(), mSizes.end());  
     rStream.WriteUInt32(&Sizes[0], s);
   }
+ 
+  // Write the panose bytes for this font:
+  rStream.Write(&mPanoseBytes, 10, 1);
   
   delete[] pPath;
   delete[] pName;
   delete[] pStyle;
 
+  
+  
   return true;
 }
 
@@ -771,6 +799,9 @@ bool nuiFontDesc::Load(nglIStream& rStream)
     mSizes.clear();
     mSizes.insert(Sizes.begin(), Sizes.end());
   }
+
+  // Write the panose bytes for this font:
+  rStream.Read(&mPanoseBytes, 10, 1);
   
   return true;
 }
@@ -1086,6 +1117,8 @@ void nuiFontManager::RequestFont(nuiFontRequest& rRequest, std::list<nuiFontRequ
         score += _s;
     }
     
+    SetScore(score, sscore, rRequest.mPanose.mScore, rRequest.mPanose.mStrict, rRequest.mPanose.mElement.GetDistance(pFontDesc->GetPanoseBytes()), false);
+    
     if (!pFontDesc->GetScalable())
     {
       if (rRequest.mMustHaveSizes.mStrict)
@@ -1153,7 +1186,7 @@ nuiFontManager& nuiFontManager::LoadManager(nglIStream& rStream)
 }
 
 
-#define NUI_FONTDB_MARKER "nuiFontDatabase"
+#define NUI_FONTDB_MARKER "nuiFontDatabase3"
 
 bool nuiFontManager::Save(nglOStream& rStream)
 {

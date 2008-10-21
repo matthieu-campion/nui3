@@ -188,12 +188,14 @@ typedef struct nuiFontPanoseBytes
 class nuiPanose
 {
 public:
-  nuiPanose(const nuiFontPanoseBytes& rPanoseBytes);  
-  nuiPanose(uint8 pPanoseBytes[10]);  
+  nuiPanose();
+  nuiPanose(const nuiFontPanoseBytes& rPanoseBytes);
+  nuiPanose(uint8 pPanoseBytes[10]);
   nuiPanose(const nuiPanose& rPanose);
   
   void GetBytes(nuiFontPanoseBytes& rBytes) const;
   void SetBytes(const nuiFontPanoseBytes& rBytes);
+  void SetBytes(uint8 pPanoseBytes[10]);
 
   uint32 GetDistance(const nuiPanose& rPanose) const;
   

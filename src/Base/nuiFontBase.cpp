@@ -502,17 +502,7 @@ nglFontBase* nuiFontLayout::FindFontForMissingGlyph(nglFontBase* pOriginalFont, 
   
   // try to find a font with the glyph that is similar enough:
   nuiFontManager& rFontManager(nuiFontManager::GetManager());
-  nuiFontRequest request;
-  request.SetName(pOriginalFont->GetFamilyName(), 3.0f);
-  request.SetStyle(pOriginalFont->GetStyleName(), 1.5f);
-  request.SetItalic(pOriginalFont->IsItalic(), 1.0f);
-  request.SetBold(pOriginalFont->IsBold(), 1.0f);
-  if (pOriginalFont->IsScalable())
-    request.SetScalable(10.f, true);
-  if (pOriginalFont->IsMonospace())
-    request.SetMonospace(1.0f);
-  request.MustHaveSize(pOriginalFont->GetSize(), 1.0f);
-
+  nuiFontRequest request(pOriginalFont);
   request.MustHaveGlyph(Glyph, 1.0f, true);
   
   std::list<nuiFontRequestResult> fonts;

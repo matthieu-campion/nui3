@@ -9,12 +9,13 @@
 #define __nuiFontManager_h__
 
 #include "nuiFont.h"
+#include "nuiPanose.h"
 
 
 class nuiFontRequest : public nuiObject
 {
 public:
-  nuiFontRequest();
+  nuiFontRequest(nglFontBase* pOriginalFont = NULL, bool ForcePanoseOnlyFonts = true);
   ~nuiFontRequest();
   
   static void AddGenericNameForFont(const nglString& rGenericName, const nglString& rFamilyName);
@@ -34,6 +35,7 @@ public:
   void SetScalable(float Score, bool Strict = false);
   void MustHaveEncoding(nglTextEncoding Encoding, float Score, bool Strict = false);
   void MustHaveSize(int32 size, float Score, bool Strict = false);
+  void MustBeSimilar(const nuiPanose& rPanose, float Score, bool Strict = false);
 
 private:
   template <class T> class ScoredElement
@@ -62,6 +64,7 @@ private:
   ScoredElement<std::set<nglChar> >           mMustHaveGlyphs;
   ScoredElement<std::set<nglTextEncoding> >   mMustHaveEncoding;
   ScoredElement<std::set<int32> >             mMustHaveSizes;
+  ScoredElement<nuiPanose>  mPanose;
   
   static std::multimap<nglString, nglString> gFontsForGenericNames;
   static std::map<nglString, nglString> gGenericNamesForFonts;
@@ -108,6 +111,8 @@ public:
   const std::set<nglChar>&          GetGlyphs() const;
   const std::set<int32>&            GetSizes() const;
   
+  const nuiFontPanoseBytes& GetPanoseBytes() const; 
+  
   bool IsValid() const;
   
   bool Save(nglOStream& rStream);
@@ -127,6 +132,8 @@ private:
   std::set<nglTextEncoding> mEncodings;
   std::set<nglChar>         mGlyphs;
   std::set<int32>           mSizes;
+
+  nuiFontPanoseBytes        mPanoseBytes;
 };
 
 class nuiFontRequestResult
