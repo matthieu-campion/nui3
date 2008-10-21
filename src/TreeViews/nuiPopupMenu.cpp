@@ -393,6 +393,12 @@ nuiRect nuiPopupMenu::CalcIdealSize()
   return mIdealRect;
 }
 
+/***********************************************
+CF: This was an attempt at removing trashed objects automatically
+from the tree. However, it results in trashed objects when reparenting
+the tree. AddChild -> DelChild -> Trash...
+Needs a fix.
+
 bool nuiPopupMenu::DelChild(nuiWidgetPtr pChild,bool Delete)
 {
   return DelChild(mpTree, pChild, Delete);
@@ -426,7 +432,7 @@ bool nuiPopupMenu::DelChild(nuiTreePtr pTree, nuiWidgetPtr pChild, bool Delete)
     }
   }
   return false;
-}
+}*/
 
 void nuiPopupMenu::CalcTreeSize(nuiRect& rRect, nuiTreeNode* pTree, uint32& cpt)
 {
