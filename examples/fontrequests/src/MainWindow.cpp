@@ -13,6 +13,7 @@
 #include "nuiHBox.h"
 #include "nuiComboBox.h"
 #include "nuiFontManager.h"
+#include "nuiBackgroundPane.h"
 
 /*
  * MainWindow
@@ -307,13 +308,15 @@ void MainWindow::OnCreation()
     mEventSink.Connect(pCombos[i]->SelectionChanged, &MainWindow::OnRequestChanged);
   }
 
-  nuiDefaultDecoration::Dialog(pRequestBox);
+//  nuiDefaultDecoration::Dialog(pRequestBox);
+  nuiBackgroundPane* pPane = new nuiBackgroundPane(eOutterBackground);
+  pPane->AddChild(pRequestBox);
   pRequestBox->SetExpand(nuiExpandShrinkAndGrow);
   pMainBox->SetExpand(nuiExpandShrinkAndGrow);
 
   mpFontScroll = new nuiScrollView();
   
-  pMainBox->AddCell(pRequestBox);
+  pMainBox->AddCell(pPane);
   pMainBox->AddCell(mpFontScroll);
   pMainBox->SetCellExpand(1, nuiExpandShrinkAndGrow);
   

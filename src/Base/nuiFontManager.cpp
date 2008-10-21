@@ -367,10 +367,10 @@ void nuiFontRequest::MustHaveSize(int32 size, float Score, bool Strict)
   mMustHaveSizes.mStrict = Strict;  
 }
 
-void nuiFontRequest::MustBeSimilar(const nuiPanose& rPanose, float score, bool Strict)
+void nuiFontRequest::MustBeSimilar(const nuiPanose& rPanose, float Score, bool Strict)
 {
   mPanose.mElement = rPanose;
-  mPanose.mScore = score;
+  mPanose.mScore = Score;
   mPanose.mStrict = Strict;
 }
 
@@ -531,7 +531,14 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
   // Get Panose information from the TT OS/2 tables
   TT_OS2* pOS2 = (TT_OS2*)FT_Get_Sfnt_Table(pFace, ft_sfnt_os2);
   if (pOS2)
+  {
     memcpy(&mPanoseBytes, pOS2->panose, 10);
+    nglString str;
+    uint8* pBytes = (uint8*)&mPanoseBytes;
+    for (uint i = 0; i < 10; i++)
+      str.Add(pBytes[i]).Add(_T(" "));
+    NGL_OUT(_T("\tpanose bytes: %ls\n"), str.GetChars());
+  }
   else
   {
     NGL_OUT(_T("Warning: font '%ls' has no panose information.\n"), mPath.GetChars());
@@ -1117,7 +1124,7 @@ void nuiFontManager::RequestFont(nuiFontRequest& rRequest, std::list<nuiFontRequ
         score += _s;
     }
     
-    SetScore(score, sscore, rRequest.mPanose.mScore, rRequest.mPanose.mStrict, rRequest.mPanose.mElement.GetDistance(pFontDesc->GetPanoseBytes()), false);
+    SetScore(score, sscore, rRequest.mPanose.mScore * rRequest.mPanose.mElement.GetNormalizedDistance(pFontDesc->GetPanoseBytes()), rRequest.mPanose.mStrict, true, false);
     
     if (!pFontDesc->GetScalable())
     {

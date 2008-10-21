@@ -107,6 +107,10 @@ uint32 nuiPanose::GetDistance(const nuiPanose& rPanose) const
   return score;
 }
 
+float nuiPanose::GetNormalizedDistance(const nuiPanose& rPanose) const
+{
+  return 1.0f / (float)GetDistance(rPanose);
+}
 
 nuiFontFamily nuiPanose::GetFamily() const
 {

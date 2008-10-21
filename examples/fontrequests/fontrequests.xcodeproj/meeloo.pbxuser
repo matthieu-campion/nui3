@@ -2,8 +2,8 @@
 {
 	61A9DE3F0B833C9200BC506C /* Project object */ = {
 		activeBuildConfigurationName = Default;
-		activeExecutable = E5317BB50EAE041F00208EEF /* fontrequests */;
-		activeTarget = 61A9DFBE0B833E9600BC506C /* fontrequests */;
+		activeExecutable = E5317BB60EAE041F00208EEF /* fontrequestsD */;
+		activeTarget = 61A9DFC80B833EF200BC506C /* fontrequestsD */;
 		codeSenseManager = E5317BBB0EAE043E00208EEF /* Code sense */;
 		executables = (
 			E5317BB50EAE041F00208EEF /* fontrequests */,
@@ -108,6 +108,22 @@
 			E5317CBA0EAE2D6A00208EEF /* PBXTextBookmark */ = E5317CBA0EAE2D6A00208EEF /* PBXTextBookmark */;
 			E5317CBC0EAE2DD700208EEF /* PBXTextBookmark */ = E5317CBC0EAE2DD700208EEF /* PBXTextBookmark */;
 			E5317CBD0EAE2DD700208EEF /* PBXTextBookmark */ = E5317CBD0EAE2DD700208EEF /* PBXTextBookmark */;
+			E5317CBF0EAE2F4400208EEF /* PBXTextBookmark */ = E5317CBF0EAE2F4400208EEF /* PBXTextBookmark */;
+			E5317CC00EAE2F4400208EEF /* PBXTextBookmark */ = E5317CC00EAE2F4400208EEF /* PBXTextBookmark */;
+			E5317CC20EAE2F4400208EEF /* PBXTextBookmark */ = E5317CC20EAE2F4400208EEF /* PBXTextBookmark */;
+			E5317CC30EAE2F4400208EEF /* PBXTextBookmark */ = E5317CC30EAE2F4400208EEF /* PBXTextBookmark */;
+			E5317CC50EAE2F4400208EEF /* PBXTextBookmark */ = E5317CC50EAE2F4400208EEF /* PBXTextBookmark */;
+			E5317CC90EAE2F7200208EEF /* PBXTextBookmark */ = E5317CC90EAE2F7200208EEF /* PBXTextBookmark */;
+			E5317CCA0EAE2F7200208EEF /* PBXTextBookmark */ = E5317CCA0EAE2F7200208EEF /* PBXTextBookmark */;
+			E5317CF60EAE32FA00208EEF /* PBXTextBookmark */ = E5317CF60EAE32FA00208EEF /* PBXTextBookmark */;
+			E5317CF70EAE32FA00208EEF /* PBXTextBookmark */ = E5317CF70EAE32FA00208EEF /* PBXTextBookmark */;
+			E5317CF80EAE32FA00208EEF /* PBXTextBookmark */ = E5317CF80EAE32FA00208EEF /* PBXTextBookmark */;
+			E5317CFA0EAE32FA00208EEF /* PBXTextBookmark */ = E5317CFA0EAE32FA00208EEF /* PBXTextBookmark */;
+			E5317CFB0EAE32FA00208EEF /* PBXTextBookmark */ = E5317CFB0EAE32FA00208EEF /* PBXTextBookmark */;
+			E5317CFC0EAE32FA00208EEF /* PBXTextBookmark */ = E5317CFC0EAE32FA00208EEF /* PBXTextBookmark */;
+			E5317CFD0EAE32FA00208EEF /* PBXTextBookmark */ = E5317CFD0EAE32FA00208EEF /* PBXTextBookmark */;
+			E5317D0E0EAE39D400208EEF /* PBXTextBookmark */ = E5317D0E0EAE39D400208EEF /* PBXTextBookmark */;
+			E5317D0F0EAE39D400208EEF /* PBXTextBookmark */ = E5317D0F0EAE39D400208EEF /* PBXTextBookmark */;
 		};
 		sourceControlManager = E5317BBA0EAE043E00208EEF /* Source Control */;
 		userBuildSettings = {
@@ -127,9 +143,9 @@
 	};
 	61A9DFF10B83433800BC506C /* MainWindow.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1582, 4758}}";
-			sepNavSelRange = "{7131, 0}";
-			sepNavVisRange = "{6674, 822}";
+			sepNavIntBoundsRect = "{{0, 0}, {1187, 4888}}";
+			sepNavSelRange = "{7261, 0}";
+			sepNavVisRange = "{6329, 1521}";
 		};
 	};
 	61A9DFF20B83433800BC506C /* MainWindow.h */ = {
@@ -219,7 +235,7 @@
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 45";
 		rLen = 0;
-		rLoc = 868;
+		rLoc = 899;
 		rType = 0;
 		vrLen = 655;
 		vrLoc = 631;
@@ -229,7 +245,7 @@
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 23";
 		rLen = 0;
-		rLoc = 584;
+		rLoc = 615;
 		rType = 0;
 		vrLen = 538;
 		vrLoc = 172;
@@ -249,7 +265,7 @@
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 45";
 		rLen = 0;
-		rLoc = 868;
+		rLoc = 899;
 		rType = 0;
 		vrLen = 655;
 		vrLoc = 631;
@@ -269,7 +285,7 @@
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 45";
 		rLen = 0;
-		rLoc = 868;
+		rLoc = 899;
 		rType = 0;
 		vrLen = 655;
 		vrLoc = 631;
@@ -279,7 +295,7 @@
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 289";
 		rLen = 0;
-		rLoc = 7166;
+		rLoc = 7296;
 		rType = 0;
 		vrLen = 1906;
 		vrLoc = 4365;
@@ -289,7 +305,7 @@
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 45";
 		rLen = 0;
-		rLoc = 868;
+		rLoc = 899;
 		rType = 0;
 		vrLen = 625;
 		vrLoc = 631;
@@ -299,7 +315,7 @@
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 288";
 		rLen = 0;
-		rLoc = 6899;
+		rLoc = 7035;
 		rType = 0;
 		vrLen = 1917;
 		vrLoc = 4365;
@@ -309,7 +325,7 @@
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 45";
 		rLen = 0;
-		rLoc = 868;
+		rLoc = 899;
 		rType = 0;
 		vrLen = 625;
 		vrLoc = 631;
@@ -319,7 +335,7 @@
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 289";
 		rLen = 0;
-		rLoc = 6899;
+		rLoc = 7035;
 		rType = 0;
 		vrLen = 1928;
 		vrLoc = 4543;
@@ -329,7 +345,7 @@
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 45";
 		rLen = 0;
-		rLoc = 868;
+		rLoc = 899;
 		rType = 0;
 		vrLen = 625;
 		vrLoc = 631;
@@ -339,7 +355,7 @@
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 290";
 		rLen = 0;
-		rLoc = 6907;
+		rLoc = 7043;
 		rType = 0;
 		vrLen = 1960;
 		vrLoc = 4543;
@@ -349,7 +365,7 @@
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 45";
 		rLen = 0;
-		rLoc = 868;
+		rLoc = 899;
 		rType = 0;
 		vrLen = 625;
 		vrLoc = 631;
@@ -359,7 +375,7 @@
 		comments = "error: call of overloaded 'SetSelected(int)' is ambiguous";
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		rLen = 0;
-		rLoc = 244;
+		rLoc = 245;
 		rType = 1;
 	};
 	E5317C510EAE1C5600208EEF /* PBXTextBookmark */ = {
@@ -367,7 +383,7 @@
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 252";
 		rLen = 0;
-		rLoc = 5083;
+		rLoc = 5114;
 		rType = 0;
 		vrLen = 1939;
 		vrLoc = 4983;
@@ -377,7 +393,7 @@
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 40";
 		rLen = 0;
-		rLoc = 868;
+		rLoc = 899;
 		rType = 0;
 		vrLen = 635;
 		vrLoc = 631;
@@ -387,7 +403,7 @@
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 251";
 		rLen = 0;
-		rLoc = 5083;
+		rLoc = 5114;
 		rType = 0;
 		vrLen = 1978;
 		vrLoc = 4983;
@@ -397,7 +413,7 @@
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 40";
 		rLen = 0;
-		rLoc = 868;
+		rLoc = 899;
 		rType = 0;
 		vrLen = 635;
 		vrLoc = 631;
@@ -407,7 +423,7 @@
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 253";
 		rLen = 0;
-		rLoc = 5083;
+		rLoc = 5114;
 		rType = 0;
 		vrLen = 1966;
 		vrLoc = 4983;
@@ -417,7 +433,7 @@
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 40";
 		rLen = 0;
-		rLoc = 868;
+		rLoc = 899;
 		rType = 0;
 		vrLen = 635;
 		vrLoc = 631;
@@ -427,7 +443,7 @@
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 253";
 		rLen = 0;
-		rLoc = 5083;
+		rLoc = 5114;
 		rType = 0;
 		vrLen = 1974;
 		vrLoc = 4983;
@@ -437,7 +453,7 @@
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 40";
 		rLen = 0;
-		rLoc = 868;
+		rLoc = 899;
 		rType = 0;
 		vrLen = 635;
 		vrLoc = 631;
@@ -447,7 +463,7 @@
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 254";
 		rLen = 0;
-		rLoc = 5083;
+		rLoc = 5114;
 		rType = 0;
 		vrLen = 2008;
 		vrLoc = 4983;
@@ -457,7 +473,7 @@
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 40";
 		rLen = 0;
-		rLoc = 868;
+		rLoc = 899;
 		rType = 0;
 		vrLen = 635;
 		vrLoc = 631;
@@ -467,7 +483,7 @@
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 254";
 		rLen = 0;
-		rLoc = 5083;
+		rLoc = 5114;
 		rType = 0;
 		vrLen = 2008;
 		vrLoc = 4983;
@@ -477,7 +493,7 @@
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 40";
 		rLen = 0;
-		rLoc = 868;
+		rLoc = 899;
 		rType = 0;
 		vrLen = 635;
 		vrLoc = 631;
@@ -487,7 +503,7 @@
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 324";
 		rLen = 0;
-		rLoc = 7342;
+		rLoc = 7472;
 		rType = 0;
 		vrLen = 2058;
 		vrLoc = 5150;
@@ -550,7 +566,7 @@
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 324";
 		rLen = 0;
-		rLoc = 7342;
+		rLoc = 7472;
 		rType = 0;
 		vrLen = 2058;
 		vrLoc = 5150;
@@ -577,9 +593,15 @@
 	};
 	E5317C750EAE240600208EEF /* nuiPanose.cpp */ = {
 		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
 		name = nuiPanose.cpp;
 		path = /Users/meeloo/work/nui3/src/Font/nuiPanose.cpp;
 		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1187, 5551}}";
+			sepNavSelRange = "{492, 0}";
+			sepNavVisRange = "{3266, 775}";
+		};
 	};
 	E5317C760EAE240600208EEF /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -593,13 +615,14 @@
 	};
 	E5317C770EAE240600208EEF /* nuiPanose.h */ = {
 		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
 		name = nuiPanose.h;
 		path = /Users/meeloo/work/nui3/include/nuiPanose.h;
 		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1590, 3445}}";
 			sepNavSelRange = "{3827, 41}";
-			sepNavVisRange = "{2935, 2862}";
+			sepNavVisRange = "{2935, 2847}";
 		};
 	};
 	E5317C810EAE27EB00208EEF /* PBXTextBookmark */ = {
@@ -669,7 +692,7 @@
 		comments = "error: expected initializer before 'nuiFontManager'";
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		rLen = 1;
-		rLoc = 343;
+		rLoc = 346;
 		rType = 1;
 	};
 	E5317C890EAE27EB00208EEF /* PBXTextBookmark */ = {
@@ -711,7 +734,7 @@
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1187, 2574}}";
 			sepNavSelRange = "{5527, 0}";
-			sepNavVisRange = "{4357, 1786}";
+			sepNavVisRange = "{4352, 1791}";
 		};
 	};
 	E5317C8D0EAE27EB00208EEF /* PBXTextBookmark */ = {
@@ -719,7 +742,7 @@
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 338";
 		rLen = 0;
-		rLoc = 7600;
+		rLoc = 7730;
 		rType = 0;
 		vrLen = 1002;
 		vrLoc = 7185;
@@ -729,7 +752,7 @@
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 338";
 		rLen = 0;
-		rLoc = 7600;
+		rLoc = 7730;
 		rType = 0;
 		vrLen = 1002;
 		vrLoc = 7185;
@@ -753,7 +776,7 @@
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 338";
 		rLen = 0;
-		rLoc = 7600;
+		rLoc = 7730;
 		rType = 0;
 		vrLen = 1002;
 		vrLoc = 7185;
@@ -835,7 +858,7 @@
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 339";
 		rLen = 0;
-		rLoc = 7600;
+		rLoc = 7730;
 		rType = 0;
 		vrLen = 1151;
 		vrLoc = 7140;
@@ -855,7 +878,7 @@
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 340";
 		rLen = 0;
-		rLoc = 7600;
+		rLoc = 7730;
 		rType = 0;
 		vrLen = 856;
 		vrLoc = 7058;
@@ -875,7 +898,7 @@
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 343";
 		rLen = 0;
-		rLoc = 7600;
+		rLoc = 7730;
 		rType = 0;
 		vrLen = 841;
 		vrLoc = 7058;
@@ -943,7 +966,7 @@
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 341";
 		rLen = 14;
-		rLoc = 7603;
+		rLoc = 7733;
 		rType = 0;
 		vrLen = 1392;
 		vrLoc = 7313;
@@ -963,7 +986,7 @@
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 320";
 		rLen = 0;
-		rLoc = 7131;
+		rLoc = 7261;
 		rType = 0;
 		vrLen = 1319;
 		vrLoc = 6177;
@@ -983,7 +1006,7 @@
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 320";
 		rLen = 0;
-		rLoc = 7131;
+		rLoc = 7261;
 		rType = 0;
 		vrLen = 822;
 		vrLoc = 6674;
@@ -1003,9 +1026,198 @@
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 320";
 		rLen = 0;
-		rLoc = 7131;
+		rLoc = 7261;
 		rType = 0;
 		vrLen = 822;
 		vrLoc = 6674;
+	};
+	E5317CBF0EAE2F4400208EEF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5317C770EAE240600208EEF /* nuiPanose.h */;
+		name = "nuiPanose.h: 198";
+		rLen = 41;
+		rLoc = 3827;
+		rType = 0;
+		vrLen = 2810;
+		vrLoc = 2935;
+	};
+	E5317CC00EAE2F4400208EEF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5317CC10EAE2F4400208EEF /* nuiBackgroundPane.h */;
+		name = "nuiBackgroundPane.h: 17";
+		rLen = 16;
+		rLoc = 297;
+		rType = 0;
+		vrLen = 1185;
+		vrLoc = 0;
+	};
+	E5317CC10EAE2F4400208EEF /* nuiBackgroundPane.h */ = {
+		isa = PBXFileReference;
+		name = nuiBackgroundPane.h;
+		path = /Users/meeloo/work/nui3/include/nuiBackgroundPane.h;
+		sourceTree = "<absolute>";
+	};
+	E5317CC20EAE2F4400208EEF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 312";
+		rLen = 17;
+		rLoc = 6916;
+		rType = 0;
+		vrLen = 894;
+		vrLoc = 6655;
+	};
+	E5317CC30EAE2F4400208EEF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5317CC40EAE2F4400208EEF /* nuiBackgroundPane.h */;
+		name = "nuiBackgroundPane.h: 17";
+		rLen = 16;
+		rLoc = 297;
+		rType = 0;
+		vrLen = 1185;
+		vrLoc = 0;
+	};
+	E5317CC40EAE2F4400208EEF /* nuiBackgroundPane.h */ = {
+		isa = PBXFileReference;
+		name = nuiBackgroundPane.h;
+		path = /Users/meeloo/work/nui3/include/nuiBackgroundPane.h;
+		sourceTree = "<absolute>";
+	};
+	E5317CC50EAE2F4400208EEF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 319";
+		rLen = 0;
+		rLoc = 7150;
+		rType = 0;
+		vrLen = 860;
+		vrLoc = 6655;
+	};
+	E5317CC90EAE2F7200208EEF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5317C770EAE240600208EEF /* nuiPanose.h */;
+		name = "nuiPanose.h: 198";
+		rLen = 41;
+		rLoc = 3827;
+		rType = 0;
+		vrLen = 2810;
+		vrLoc = 2935;
+	};
+	E5317CCA0EAE2F7200208EEF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 312";
+		rLen = 0;
+		rLoc = 6939;
+		rType = 0;
+		vrLen = 861;
+		vrLoc = 6655;
+	};
+	E5317CF60EAE32FA00208EEF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 312";
+		rLen = 0;
+		rLoc = 6939;
+		rType = 0;
+		vrLen = 1556;
+		vrLoc = 6070;
+	};
+	E5317CF70EAE32FA00208EEF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5317C8C0EAE27EB00208EEF /* nuiFontManager.h */;
+		name = "nuiFontManager.h: 136";
+		rLen = 18;
+		rLoc = 4141;
+		rType = 0;
+		vrLen = 1503;
+		vrLoc = 2890;
+	};
+	E5317CF80EAE32FA00208EEF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "error: no match for 'operator[]' in '((nuiFontDesc*)this)->nuiFontDesc::mPanoseBytes[i]'";
+		fRef = E5317CF90EAE32FA00208EEF /* nuiFontManager.cpp */;
+		rLen = 1;
+		rLoc = 538;
+		rType = 1;
+	};
+	E5317CF90EAE32FA00208EEF /* nuiFontManager.cpp */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
+		name = nuiFontManager.cpp;
+		path = /Users/meeloo/work/nui3/src/Font/../Base/nuiFontManager.cpp;
+		sourceTree = "<absolute>";
+	};
+	E5317CFA0EAE32FA00208EEF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 312";
+		rLen = 0;
+		rLoc = 6939;
+		rType = 0;
+		vrLen = 1556;
+		vrLoc = 6070;
+	};
+	E5317CFB0EAE32FA00208EEF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5317C8C0EAE27EB00208EEF /* nuiFontManager.h */;
+		name = "nuiFontManager.h: 175";
+		rLen = 44;
+		rLoc = 5447;
+		rType = 0;
+		vrLen = 2004;
+		vrLoc = 4139;
+	};
+	E5317CFC0EAE32FA00208EEF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5317C8C0EAE27EB00208EEF /* nuiFontManager.h */;
+		name = "nuiFontManager.h: 136";
+		rLen = 18;
+		rLoc = 4141;
+		rType = 0;
+		vrLen = 1503;
+		vrLoc = 2890;
+	};
+	E5317CFD0EAE32FA00208EEF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5317CFE0EAE32FA00208EEF /* nuiFontManager.cpp */;
+		name = "nuiFontManager.cpp: 539";
+		rLen = 0;
+		rLoc = 17914;
+		rType = 0;
+		vrLen = 1697;
+		vrLoc = 16779;
+	};
+	E5317CFE0EAE32FA00208EEF /* nuiFontManager.cpp */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
+		name = nuiFontManager.cpp;
+		path = /Users/meeloo/work/nui3/src/Base/nuiFontManager.cpp;
+		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1582, 17888}}";
+			sepNavSelRange = "{17914, 0}";
+			sepNavVisRange = "{17008, 1653}";
+		};
+	};
+	E5317D0E0EAE39D400208EEF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5317C770EAE240600208EEF /* nuiPanose.h */;
+		name = "nuiPanose.h: 198";
+		rLen = 41;
+		rLoc = 3827;
+		rType = 0;
+		vrLen = 2847;
+		vrLoc = 2935;
+	};
+	E5317D0F0EAE39D400208EEF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5317CFE0EAE32FA00208EEF /* nuiFontManager.cpp */;
+		name = "nuiFontManager.cpp: 539";
+		rLen = 0;
+		rLoc = 17914;
+		rType = 0;
+		vrLen = 1653;
+		vrLoc = 17008;
 	};
 }

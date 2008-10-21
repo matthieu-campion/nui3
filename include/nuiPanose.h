@@ -198,6 +198,7 @@ public:
   void SetBytes(uint8 pPanoseBytes[10]);
 
   uint32 GetDistance(const nuiPanose& rPanose) const;
+  float GetNormalizedDistance(const nuiPanose& rPanose) const;
   
   nuiFontFamily           GetFamily         () const;
   nuiFontSerif            GetSerif          () const;

@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>ActivePerspectiveName</key>
-	<string>Build</string>
+	<string>Debug</string>
 	<key>AllowedModules</key>
 	<array>
 		<dict>
@@ -321,7 +321,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E5317CBC0EAE2DD700208EEF</string>
+										<string>E5317D0E0EAE39D400208EEF</string>
 										<key>history</key>
 										<array>
 											<string>E5317C6B0EAE240600208EEF</string>
@@ -525,8 +525,6 @@
 							<string>MainColumn</string>
 							<real>255</real>
 						</array>
-						<key>RubberWindowFrame</key>
-						<string>0 59 1920 1119 0 0 1920 1178 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -542,7 +540,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>E59365260C7AD788001596BD</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>MainWindow.cpp</string>
+								<string>nuiFontManager.cpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -550,26 +548,28 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>E59365270C7AD788001596BD</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>MainWindow.cpp</string>
+										<string>nuiFontManager.cpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E5317CBD0EAE2DD700208EEF</string>
+										<string>E5317D0F0EAE39D400208EEF</string>
 										<key>history</key>
 										<array>
 											<string>E5317C6D0EAE240600208EEF</string>
 											<string>E5317C820EAE27EB00208EEF</string>
 											<string>E5317C830EAE27EB00208EEF</string>
 											<string>E5317C840EAE27EB00208EEF</string>
-											<string>E5317C860EAE27EB00208EEF</string>
 											<string>E5317CAF0EAE2D6500208EEF</string>
 											<string>E5317CB10EAE2D6500208EEF</string>
 											<string>E5317CB30EAE2D6500208EEF</string>
-											<string>E5317CB80EAE2D6500208EEF</string>
+											<string>E5317CC00EAE2F4400208EEF</string>
+											<string>E5317CF60EAE32FA00208EEF</string>
+											<string>E5317CF70EAE32FA00208EEF</string>
+											<string>E5317CF80EAE32FA00208EEF</string>
 										</array>
 										<key>nextStack</key>
 										<array>
-											<string>E5317CB70EAE2D6500208EEF</string>
+											<string>E5317CFC0EAE32FA00208EEF</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -577,6 +577,8 @@
 											<string>E5317C240EAE168200208EEF</string>
 											<string>E5317C890EAE27EB00208EEF</string>
 											<string>E5317C8A0EAE27EB00208EEF</string>
+											<string>E5317CFA0EAE32FA00208EEF</string>
+											<string>E5317CFB0EAE32FA00208EEF</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -590,23 +592,19 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {1643, 488}}</string>
-								<key>RubberWindowFrame</key>
-								<string>0 59 1920 1119 0 0 1920 1178 </string>
+								<string>{{0, 0}, {1643, 850}}</string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>488pt</string>
+							<string>850pt</string>
 						</dict>
 						<dict>
 							<key>Proportion</key>
-							<string>585pt</string>
+							<string>223pt</string>
 							<key>Tabs</key>
 							<array>
 								<dict>
-									<key>BecomeActive</key>
-									<true/>
 									<key>ContentConfiguration</key>
 									<dict>
 										<key>PBXProjectModuleGUID</key>
@@ -621,9 +619,7 @@
 									<key>GeometryConfiguration</key>
 									<dict>
 										<key>Frame</key>
-										<string>{{10, 27}, {1643, 558}}</string>
-										<key>RubberWindowFrame</key>
-										<string>0 59 1920 1119 0 0 1920 1178 </string>
+										<string>{{10, 27}, {1643, 196}}</string>
 									</dict>
 									<key>Module</key>
 									<string>PBXBuildResultsModule</string>
@@ -700,6 +696,8 @@
 					<dict>
 						<key>Frame</key>
 						<string>{{0, 0}, {1920, 346}}</string>
+						<key>RubberWindowFrame</key>
+						<string>0 59 1920 1119 0 0 1920 1178 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXDebugCLIModule</string>
@@ -774,7 +772,11 @@
 							</array>
 							<key>Frame</key>
 							<string>{{0, 277}, {672, 450}}</string>
+							<key>RubberWindowFrame</key>
+							<string>0 59 1920 1119 0 0 1920 1178 </string>
 						</dict>
+						<key>RubberWindowFrame</key>
+						<string>0 59 1920 1119 0 0 1920 1178 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXDebugSessionModule</string>
@@ -830,6 +832,7 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
+		<string>E5317D100EAE39D400208EEF</string>
 		<string>E5317BC70EAE045700208EEF</string>
 		<string>E5317BC80EAE045700208EEF</string>
 		<string>/Users/meeloo/work/nui3/examples/fontrequests/fontrequests.xcodeproj</string>
