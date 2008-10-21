@@ -212,6 +212,7 @@ void nuiPanose::SetXHeight(nuiFontXHeight set)
 
 nglString nuiPanose::Dump() const
 {
+  return nglString::Empty;
 }
 
 

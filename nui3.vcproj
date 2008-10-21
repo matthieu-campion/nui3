@@ -1013,6 +1013,14 @@
 					RelativePath=".\include\nuiFontManager.h"
 					>
 				</File>
+				<File
+					RelativePath=".\src\Font\nuiPanose.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiPanose.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Image"
