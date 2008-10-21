@@ -321,7 +321,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E5317D0E0EAE39D400208EEF</string>
+										<string>E5317DA20EAE7FB700208EEF</string>
 										<key>history</key>
 										<array>
 											<string>E5317C6B0EAE240600208EEF</string>
@@ -552,7 +552,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E5317D0F0EAE39D400208EEF</string>
+										<string>E5317DA30EAE7FB700208EEF</string>
 										<key>history</key>
 										<array>
 											<string>E5317C6D0EAE240600208EEF</string>
@@ -832,7 +832,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E5317D100EAE39D400208EEF</string>
 		<string>E5317BC70EAE045700208EEF</string>
 		<string>E5317BC80EAE045700208EEF</string>
 		<string>/Users/meeloo/work/nui3/examples/fontrequests/fontrequests.xcodeproj</string>

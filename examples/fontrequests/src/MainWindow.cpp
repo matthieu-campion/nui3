@@ -346,7 +346,7 @@ void MainWindow::UpdateFontList(uint8 bytes[10])
   std::list<nuiFontRequestResult> Fonts;
   nuiFontManager::GetManager().RequestFont(request, Fonts);
   
-  nuiGrid* pGrid = new nuiGrid(4, Fonts.size() + 1);
+  nuiGrid* pGrid = new nuiGrid(5, Fonts.size() + 1);
   
   uint32 index = 1;
   std::list<nuiFontRequestResult>::const_iterator it = Fonts.begin();
@@ -354,13 +354,24 @@ void MainWindow::UpdateFontList(uint8 bytes[10])
   while (it != end)
   {
     const nuiFontRequestResult& rResult(*it);
+    const nuiFontDesc* pDesc = rResult.GetFontDesc();
     nglString str;
     str.SetCFloat(rResult.GetScore());
     pGrid->SetCell(0, index, new nuiLabel(str), nuiLeft, true, true);
     pGrid->SetCell(1, index, new nuiLabel(rResult.GetPath().GetNodeName().GetChars()), nuiLeft, true, true);
     str.SetCInt(rResult.GetFace());
     pGrid->SetCell(2, index, new nuiLabel(str), nuiLeft, true, true);
-    pGrid->SetCell(3, index, new nuiLabel(rResult.GetPath().GetParent().GetChars()), nuiLeft, true, true);
+    
+    str.Wipe();
+    nuiFontPanoseBytes bytes = pDesc->GetPanoseBytes();
+    uint8* pBytes = (uint8*)&bytes;
+    for (uint i = 0; i < 10; i++)
+      str.Add(pBytes[i]).Add(_T(" "));
+    str.Trim();
+    //NGL_OUT(_T("%ls [%ls]\n"), rResult.GetPath().GetChars(), str.GetChars());
+    pGrid->SetCell(3, index, new nuiLabel(str), nuiCenter, true, true);
+    
+    pGrid->SetCell(4, index, new nuiLabel(rResult.GetPath().GetParent().GetChars()), nuiLeft, true, true);
     ++it;
     index++;
   }
@@ -368,10 +379,15 @@ void MainWindow::UpdateFontList(uint8 bytes[10])
   for (uint32 k = 0; k < pGrid->GetNbColumns(); k++)
   {
     pGrid->SetColumnExpand(k, nuiExpandShrinkAndGrow);
+    //pGrid->SetColumnSpacing(k, 5);
+  }
+  for (uint32 l = 0; l < pGrid->GetNbRows(); l++)
+  {
+    //pGrid->SetRowSpacing(l, 5);
   }
   pGrid->SetPosition(nuiFill);
   
-  pGrid->DisplayGridBorder(true, 1.0);
+  pGrid->DisplayGridBorder(true, .5);
   mpFontScroll->AddChild(pGrid);
 }
 
