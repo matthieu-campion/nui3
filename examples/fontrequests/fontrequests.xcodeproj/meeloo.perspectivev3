@@ -309,7 +309,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>E5CCBB220C7A385900EB6BD1</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>nuiPanose.h</string>
+								<string>MainWindow.h</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -317,27 +317,20 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>E5CCBB230C7A385900EB6BD1</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>nuiPanose.h</string>
+										<string>MainWindow.h</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E5317DA20EAE7FB700208EEF</string>
+										<string>E5317EAE0EAE981300208EEF</string>
 										<key>history</key>
 										<array>
 											<string>E5317C6B0EAE240600208EEF</string>
-											<string>E5317C6C0EAE240600208EEF</string>
-											<string>E5317C6D0EAE240600208EEF</string>
-											<string>E5317C6F0EAE240600208EEF</string>
-										</array>
-										<key>nextStack</key>
-										<array>
-											<string>E5317C740EAE240600208EEF</string>
+											<string>E5317C730EAE240600208EEF</string>
 										</array>
 										<key>prevStack</key>
 										<array>
 											<string>E5317C710EAE240600208EEF</string>
 											<string>E5317C720EAE240600208EEF</string>
-											<string>E5317C730EAE240600208EEF</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -540,7 +533,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>E59365260C7AD788001596BD</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>nuiFontManager.cpp</string>
+								<string>MainWindow.cpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -548,37 +541,21 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>E59365270C7AD788001596BD</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>nuiFontManager.cpp</string>
+										<string>MainWindow.cpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E5317DA30EAE7FB700208EEF</string>
+										<string>E5317EAF0EAE981300208EEF</string>
 										<key>history</key>
 										<array>
-											<string>E5317C6D0EAE240600208EEF</string>
-											<string>E5317C820EAE27EB00208EEF</string>
 											<string>E5317C830EAE27EB00208EEF</string>
-											<string>E5317C840EAE27EB00208EEF</string>
-											<string>E5317CAF0EAE2D6500208EEF</string>
-											<string>E5317CB10EAE2D6500208EEF</string>
-											<string>E5317CB30EAE2D6500208EEF</string>
-											<string>E5317CC00EAE2F4400208EEF</string>
-											<string>E5317CF60EAE32FA00208EEF</string>
-											<string>E5317CF70EAE32FA00208EEF</string>
-											<string>E5317CF80EAE32FA00208EEF</string>
-										</array>
-										<key>nextStack</key>
-										<array>
-											<string>E5317CFC0EAE32FA00208EEF</string>
+											<string>E5317CFA0EAE32FA00208EEF</string>
 										</array>
 										<key>prevStack</key>
 										<array>
 											<string>E5317C220EAE168200208EEF</string>
 											<string>E5317C240EAE168200208EEF</string>
-											<string>E5317C890EAE27EB00208EEF</string>
 											<string>E5317C8A0EAE27EB00208EEF</string>
-											<string>E5317CFA0EAE32FA00208EEF</string>
-											<string>E5317CFB0EAE32FA00208EEF</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>

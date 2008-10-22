@@ -10,8 +10,7 @@
 \brief Text layouts (see nglFontBase)
 */
 
-#ifndef __nglFontLayout_h__
-#define __nglFontLayout_h__
+#pragma once
 
 //#include "nui.h"
 #include <vector>
@@ -191,4 +190,3 @@ private:
 };
 
 
-#endif // __nglFontLayout_h__

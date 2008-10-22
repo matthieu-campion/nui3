@@ -5,8 +5,7 @@
   licence: see nui3/LICENCE.TXT
 */
 
-#ifndef __nuiFontManager_h__
-#define __nuiFontManager_h__
+#pragma once
 
 #include "nuiFont.h"
 #include "nuiPanose.h"
@@ -137,61 +136,59 @@ private:
 };
 
 class nuiFontRequestResult
-  {
-  public:
-    nuiFontRequestResult(const nglPath& rPath, int32 Face, float Score, nuiFontDesc* pFontDesc);
-    ~nuiFontRequestResult();
-    
-    const nglPath& GetPath() const;
-    int32 GetFace() const;
-    float GetScore() const;
-    const nuiFontDesc* GetFontDesc() const;
-  private:
-    nglPath mPath;
-    int32 mFace;
-    float mScore;
-    nuiFontDesc* mpFontDesc;
-  };
+{
+public:
+  nuiFontRequestResult(const nglPath& rPath, int32 Face, float Score, nuiFontDesc* pFontDesc);
+  ~nuiFontRequestResult();
+  
+  const nglPath& GetPath() const;
+  int32 GetFace() const;
+  float GetScore() const;
+  const nuiFontDesc* GetFontDesc() const;
+private:
+  nglPath mPath;
+  int32 mFace;
+  float mScore;
+  nuiFontDesc* mpFontDesc;
+};
 
 class nuiFontManager
-  {
-  public:
-    nuiFontManager();
-    virtual ~nuiFontManager();
-    
-    void            AddFolder(const nglString& rId, const nglPath& rPath);
-    void            DelFolder(const nglString& rId);
-    void            DelFolder(const nglPath& rPath);
-    const nglPath&  GetFolder(const nglString& rId) const;
-    void AddSystemFolders();
-    static void GetSystemFolders(std::map<nglString, nglPath>& rFolders);
-    void ScanFolders(bool rescanAllFolders = false);
-    
-    void GetFolderList(std::list<nglString>& rList) const;
-    void GetFolderList(std::vector<nglString>& rList) const;
-    bool FindFontInFolders(const nglString& rFontFileName, nglPath& rResultFontPath) const; 
-    static bool FindFontInSystemFolders(const nglString& rFontFileName, nglPath& rResultFontPath); 
+{
+public:
+  nuiFontManager();
+  virtual ~nuiFontManager();
+  
+  void            AddFolder(const nglString& rId, const nglPath& rPath);
+  void            DelFolder(const nglString& rId);
+  void            DelFolder(const nglPath& rPath);
+  const nglPath&  GetFolder(const nglString& rId) const;
+  void AddSystemFolders();
+  static void GetSystemFolders(std::map<nglString, nglPath>& rFolders);
+  void ScanFolders(bool rescanAllFolders = false);
+  
+  void GetFolderList(std::list<nglString>& rList) const;
+  void GetFolderList(std::vector<nglString>& rList) const;
+  bool FindFontInFolders(const nglString& rFontFileName, nglPath& rResultFontPath) const; 
+  static bool FindFontInSystemFolders(const nglString& rFontFileName, nglPath& rResultFontPath); 
 
-    void RequestFont(nuiFontRequest& rRequest, std::list<nuiFontRequestResult>& rFoundFonts) const;
-    nuiFont* GetFont(nuiFontRequest& rRequest, const nglString& rID = nglString::Null) const;
-    void GetFonts(std::vector<nuiFontDesc*>& rList) const;
-    
-    uint32 GetFontCount() const;
-    
-    static nuiFontManager& GetManager(bool InitIfNeeded = true);
-    static nuiFontManager& LoadManager(nglIStream& rStream);
-    
-    bool Save(nglOStream& rStream);
-    bool Load(nglIStream& rStream);
-    
-    void Clear();
-  private:
-    std::map<nglString, nglPath> mFontFolders;
-    std::vector<nuiFontDesc*> mpFonts;
-    std::set<nglPath> mScannedFolders;
-    
-    static nuiFontManager gManager;
-  };
-
-#endif //ifndef __nuiFontManager_h__
+  void RequestFont(nuiFontRequest& rRequest, std::list<nuiFontRequestResult>& rFoundFonts) const;
+  nuiFont* GetFont(nuiFontRequest& rRequest, const nglString& rID = nglString::Null) const;
+  void GetFonts(std::vector<nuiFontDesc*>& rList) const;
+  
+  uint32 GetFontCount() const;
+  
+  static nuiFontManager& GetManager(bool InitIfNeeded = true);
+  static nuiFontManager& LoadManager(nglIStream& rStream);
+  
+  bool Save(nglOStream& rStream);
+  bool Load(nglIStream& rStream);
+  
+  void Clear();
+private:
+  std::map<nglString, nglPath> mFontFolders;
+  std::vector<nuiFontDesc*> mpFonts;
+  std::set<nglPath> mScannedFolders;
+  
+  static nuiFontManager gManager;
+};
 

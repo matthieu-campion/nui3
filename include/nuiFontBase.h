@@ -6,11 +6,10 @@
 */
 
 
-#ifndef __nuiFontBase_h__
-#define __nuiFontBase_h__
+#pragma once
 
-#include "nglFontLayout.h"
 #include "nglFontBase.h"
+#include "nglFontLayout.h"
 #include "nuiRect.h"
 
 #include <vector>
@@ -159,4 +158,3 @@ private:
 
 };
 
-#endif // __nuiFontBase_h__

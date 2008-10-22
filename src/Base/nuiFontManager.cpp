@@ -1087,7 +1087,7 @@ void nuiFontManager::RequestFont(nuiFontRequest& rRequest, std::list<nuiFontRequ
       nglString genName = nuiFontRequest::GetGenericNameForFont(pFontDesc->GetName());
       if (!genName.IsNull())
       {
-        if(rRequest.mGenericName.mStrict)
+        if (rRequest.mGenericName.mStrict)
         {
           if (genName.Compare(rRequest.mGenericName.mElement) == 0)
           {
@@ -1095,7 +1095,7 @@ void nuiFontManager::RequestFont(nuiFontRequest& rRequest, std::list<nuiFontRequ
           }
           else
           {
-            sscore *= 0.f;
+            sscore = 0.f;
           }
         }
         else

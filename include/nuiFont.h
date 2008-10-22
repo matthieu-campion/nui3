@@ -5,8 +5,7 @@
   licence: see nui3/LICENCE.TXT
 */
 
-#ifndef __nuiFont_h__
-#define __nuiFont_h__
+#pragma once
 
 //#include "nui.h"
 #include "nuiFontBase.h"
@@ -52,4 +51,3 @@ protected:
   bool mPermanent;
 };
 
-#endif // __nuiFont_h__

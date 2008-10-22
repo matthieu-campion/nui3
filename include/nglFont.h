@@ -10,8 +10,7 @@
 \brief Font renderer (2D, OpenGL based)
 */
 
-#ifndef __nglFont_h__
-#define __nglFont_h__
+#pragma once
 
 //#include "nui.h"
 #include "nglFontBase.h"
@@ -260,4 +259,3 @@ private:
   void CacheRelease();
 };
 
-#endif // __nglFont_h__

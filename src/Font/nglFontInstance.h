@@ -10,8 +10,7 @@
 \brief Font instance handler for FreeType cache manager
 */
 
-#ifndef __nglFontInstance_h__
-#define __nglFontInstance_h__
+#pragma once
 
 //#include "nui.h"
 #include <vector>
@@ -64,4 +63,3 @@ private:
   uint32 Release();
 };
 
-#endif // __nglFontInstance_h__

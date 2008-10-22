@@ -10,8 +10,7 @@
 \brief Font cache helper for nglFont
 */
 
-#ifndef __nglFontCache_h__
-#define __nglFontCache_h__
+#pragma once
 
 //#include "nui.h"
 class nglGlyphLayout;
@@ -82,4 +81,3 @@ protected:
   nglFontCache(const nglFontCache&) {} // Undefined copy constructor
 };
 
-#endif // __nglFontCache_h__

@@ -10,8 +10,7 @@
 \brief Font abstraction (see nglFont for display)
 */
 
-#ifndef __nglFontBase_h__
-#define __nglFontBase_h__
+#pragma once
 
 //#include "nui.h"
 #include "nglError.h"
@@ -500,4 +499,3 @@ private:
   friend class nglFontInfo;
 };
 
-#endif // __nglFontBase_h__

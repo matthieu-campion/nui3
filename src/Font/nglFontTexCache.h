@@ -10,8 +10,7 @@
 \brief A simple texture based cache for nglFont (internal)
 */
 
-#ifndef __nglFontTexCache_h__
-#define __nglFontTexCache_h__
+#pragma once
 
 //#include "nui.h"
 #include "nglFont.h"
@@ -63,4 +62,3 @@ private:
   Glyph* LUTLookup (uint Index);
 };
 
-#endif // __nglFontTexCache_h__
