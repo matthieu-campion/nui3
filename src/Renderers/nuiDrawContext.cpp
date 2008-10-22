@@ -202,9 +202,14 @@ const nuiRenderState& nuiDrawContext::GetState()
 bool nuiDrawContext::ResetState()
 {
   nuiRenderState Dummy;
-  nuiShader* pTmp = mCurrentState.mpShader;
+  nuiShader* pShader = mCurrentState.mpShader;
+  nuiSurface* pSurface = mCurrentState.mpSurface;
+  if (pSurface)
+    pSurface->Acquire();
+
   mCurrentState = Dummy;
-  mCurrentState.mpShader = pTmp;
+  mCurrentState.mpShader = pShader;
+  mCurrentState.mpSurface = pSurface;
   mStateChanges++;
   return true;
 }

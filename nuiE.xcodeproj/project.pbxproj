@@ -11,10 +11,13 @@
 		610FDCD70DE4504B009AFAFB /* nglImageCGCodec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 610FDCD50DE4504B009AFAFB /* nglImageCGCodec.cpp */; };
 		610FDCD80DE4504B009AFAFB /* nglImageCGCodec.h in Headers */ = {isa = PBXBuildFile; fileRef = 610FDCD40DE4504B009AFAFB /* nglImageCGCodec.h */; };
 		610FDCD90DE4504B009AFAFB /* nglImageCGCodec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 610FDCD50DE4504B009AFAFB /* nglImageCGCodec.cpp */; };
+		611944D80EAE8F910078D6B3 /* nuiPanose.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 611944D70EAE8F910078D6B3 /* nuiPanose.cpp */; };
+		611944D90EAE8F910078D6B3 /* nuiPanose.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 611944D70EAE8F910078D6B3 /* nuiPanose.cpp */; };
+		611944DB0EAE8FBE0078D6B3 /* nuiPanose.h in Headers */ = {isa = PBXBuildFile; fileRef = 611944DA0EAE8FBE0078D6B3 /* nuiPanose.h */; };
+		611944DC0EAE8FBE0078D6B3 /* nuiPanose.h in Headers */ = {isa = PBXBuildFile; fileRef = 611944DA0EAE8FBE0078D6B3 /* nuiPanose.h */; };
 		6126D6850DA5716500D2641A /* nuiColorSelector.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4650DA5716500D2641A /* nuiColorSelector.h */; };
 		6126D6860DA5716500D2641A /* nui.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4660DA5716500D2641A /* nui.h */; };
 		6126D6870DA5716500D2641A /* nui_all.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4670DA5716500D2641A /* nui_all.h */; };
-		6126D6880DA5716500D2641A /* nuiDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4680DA5716500D2641A /* nuiDialog.h */; };
 		6126D6890DA5716500D2641A /* nuiGladeLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4690DA5716500D2641A /* nuiGladeLoader.h */; };
 		6126D68A0DA5716500D2641A /* nuiMesh.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D46A0DA5716500D2641A /* nuiMesh.h */; };
 		6126D68B0DA5716500D2641A /* nuiMouseEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D46B0DA5716500D2641A /* nuiMouseEvent.h */; };
@@ -156,8 +159,6 @@
 		6126D7350DA5716500D2641A /* nglFontInstance.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5220DA5716500D2641A /* nglFontInstance.h */; };
 		6126D7360DA5716500D2641A /* nglFontLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5230DA5716500D2641A /* nglFontLayout.cpp */; };
 		6126D7370DA5716500D2641A /* nglFontLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5240DA5716500D2641A /* nglFontLayout.h */; };
-		6126D7380DA5716500D2641A /* nglFontBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5250DA5716500D2641A /* nglFontBase.h */; };
-		6126D73B0DA5716500D2641A /* nglFontLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5280DA5716500D2641A /* nglFontLayout.h */; };
 		6126D73C0DA5716500D2641A /* nglBitmapTools.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D52A0DA5716500D2641A /* nglBitmapTools.h */; };
 		6126D73D0DA5716500D2641A /* nglImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D52B0DA5716500D2641A /* nglImage.h */; };
 		6126D73F0DA5716500D2641A /* nglBitmapTools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D52D0DA5716500D2641A /* nglBitmapTools.cpp */; };
@@ -729,7 +730,6 @@
 		614B637F0DA7BA67000F4C22 /* nuiColorSelector.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4650DA5716500D2641A /* nuiColorSelector.h */; };
 		614B63800DA7BA67000F4C22 /* nui.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4660DA5716500D2641A /* nui.h */; };
 		614B63810DA7BA67000F4C22 /* nui_all.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4670DA5716500D2641A /* nui_all.h */; };
-		614B63820DA7BA67000F4C22 /* nuiDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4680DA5716500D2641A /* nuiDialog.h */; };
 		614B63830DA7BA67000F4C22 /* nuiGladeLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4690DA5716500D2641A /* nuiGladeLoader.h */; };
 		614B63840DA7BA67000F4C22 /* nuiMesh.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D46A0DA5716500D2641A /* nuiMesh.h */; };
 		614B63850DA7BA67000F4C22 /* nuiMouseEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D46B0DA5716500D2641A /* nuiMouseEvent.h */; };
@@ -805,8 +805,6 @@
 		614B63CC0DA7BA67000F4C22 /* nglFontCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5200DA5716500D2641A /* nglFontCache.h */; };
 		614B63CD0DA7BA67000F4C22 /* nglFontInstance.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5220DA5716500D2641A /* nglFontInstance.h */; };
 		614B63CE0DA7BA67000F4C22 /* nglFontLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5240DA5716500D2641A /* nglFontLayout.h */; };
-		614B63CF0DA7BA67000F4C22 /* nglFontBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5250DA5716500D2641A /* nglFontBase.h */; };
-		614B63D00DA7BA67000F4C22 /* nglFontLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5280DA5716500D2641A /* nglFontLayout.h */; };
 		614B63D10DA7BA67000F4C22 /* nglBitmapTools.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D52A0DA5716500D2641A /* nglBitmapTools.h */; };
 		614B63D20DA7BA67000F4C22 /* nglImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D52B0DA5716500D2641A /* nglImage.h */; };
 		614B63D30DA7BA67000F4C22 /* nglImageCodec.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D52C0DA5716500D2641A /* nglImageCodec.h */; };
@@ -1554,6 +1552,10 @@
 		61C2E3130EA0A63D0096299A /* nuiBackgroundPane.h in Headers */ = {isa = PBXBuildFile; fileRef = 61C2E3110EA0A63D0096299A /* nuiBackgroundPane.h */; };
 		61C2E3140EA0A63D0096299A /* nuiBackgroundPane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61C2E3100EA0A63D0096299A /* nuiBackgroundPane.cpp */; };
 		61C2E3150EA0A63D0096299A /* nuiBackgroundPane.h in Headers */ = {isa = PBXBuildFile; fileRef = 61C2E3110EA0A63D0096299A /* nuiBackgroundPane.h */; };
+		61D085300EAFAC6100B73835 /* nglFontTexCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5270DA5716500D2641A /* nglFontTexCache.h */; };
+		61D085310EAFAC6100B73835 /* nglFontTexCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5260DA5716500D2641A /* nglFontTexCache.cpp */; };
+		61D085440EAFADCF00B73835 /* nuiMouseCursor.h in Headers */ = {isa = PBXBuildFile; fileRef = 61D085430EAFADCF00B73835 /* nuiMouseCursor.h */; };
+		61D085450EAFADCF00B73835 /* nuiMouseCursor.h in Headers */ = {isa = PBXBuildFile; fileRef = 61D085430EAFADCF00B73835 /* nuiMouseCursor.h */; };
 		61D3CA6A0E780A2F00084163 /* nuiDefaultDecoration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61D3CA680E780A2F00084163 /* nuiDefaultDecoration.cpp */; };
 		61D3CA6B0E780A2F00084163 /* nuiDefaultDecoration.h in Headers */ = {isa = PBXBuildFile; fileRef = 61D3CA690E780A2F00084163 /* nuiDefaultDecoration.h */; };
 		61D3CA6C0E780A2F00084163 /* nuiDefaultDecoration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61D3CA680E780A2F00084163 /* nuiDefaultDecoration.cpp */; };
@@ -1578,15 +1580,16 @@
 /* Begin PBXFileReference section */
 		610FDCD40DE4504B009AFAFB /* nglImageCGCodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nglImageCGCodec.h; sourceTree = "<group>"; };
 		610FDCD50DE4504B009AFAFB /* nglImageCGCodec.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nglImageCGCodec.cpp; sourceTree = "<group>"; };
-		6126D4650DA5716500D2641A /* nuiColorSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nuiColorSelector.h; sourceTree = "<group>"; };
+		611944D70EAE8F910078D6B3 /* nuiPanose.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiPanose.cpp; sourceTree = "<group>"; };
+		611944DA0EAE8FBE0078D6B3 /* nuiPanose.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiPanose.h; path = include/nuiPanose.h; sourceTree = SOURCE_ROOT; };
+		6126D4650DA5716500D2641A /* nuiColorSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiColorSelector.h; path = ../../include/nuiColorSelector.h; sourceTree = "<group>"; };
 		6126D4660DA5716500D2641A /* nui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nui.h; path = ../../include/nui.h; sourceTree = "<group>"; };
 		6126D4670DA5716500D2641A /* nui_all.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nui_all.h; path = ../../include/nui_all.h; sourceTree = "<group>"; };
-		6126D4680DA5716500D2641A /* nuiDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nuiDialog.h; sourceTree = "<group>"; };
-		6126D4690DA5716500D2641A /* nuiGladeLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nuiGladeLoader.h; sourceTree = "<group>"; };
-		6126D46A0DA5716500D2641A /* nuiMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nuiMesh.h; sourceTree = "<group>"; };
-		6126D46B0DA5716500D2641A /* nuiMouseEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nuiMouseEvent.h; sourceTree = "<group>"; };
-		6126D46C0DA5716500D2641A /* nuiOffscreenView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nuiOffscreenView.h; sourceTree = "<group>"; };
-		6126D46D0DA5716500D2641A /* nuiWidgetElements.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nuiWidgetElements.h; sourceTree = "<group>"; };
+		6126D4690DA5716500D2641A /* nuiGladeLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiGladeLoader.h; path = ../../include/nuiGladeLoader.h; sourceTree = "<group>"; };
+		6126D46A0DA5716500D2641A /* nuiMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiMesh.h; path = ../../include/nuiMesh.h; sourceTree = "<group>"; };
+		6126D46B0DA5716500D2641A /* nuiMouseEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiMouseEvent.h; path = ../../include/nuiMouseEvent.h; sourceTree = "<group>"; };
+		6126D46C0DA5716500D2641A /* nuiOffscreenView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiOffscreenView.h; path = ../../include/nuiOffscreenView.h; sourceTree = "<group>"; };
+		6126D46D0DA5716500D2641A /* nuiWidgetElements.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiWidgetElements.h; path = ../../include/nuiWidgetElements.h; sourceTree = "<group>"; };
 		6126D46E0DA5716500D2641A /* ngl.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = ngl.h; path = ../include/ngl.h; sourceTree = "<group>"; };
 		6126D46F0DA5716500D2641A /* ngl_all.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = ngl_all.h; path = ../include/ngl_all.h; sourceTree = "<group>"; };
 		6126D4720DA5716500D2641A /* nuiAttribute.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiAttribute.cpp; path = Attributes/nuiAttribute.cpp; sourceTree = "<group>"; };
@@ -1758,10 +1761,8 @@
 		6126D5220DA5716500D2641A /* nglFontInstance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nglFontInstance.h; sourceTree = "<group>"; };
 		6126D5230DA5716500D2641A /* nglFontLayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nglFontLayout.cpp; sourceTree = "<group>"; };
 		6126D5240DA5716500D2641A /* nglFontLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nglFontLayout.h; path = include/nglFontLayout.h; sourceTree = SOURCE_ROOT; };
-		6126D5250DA5716500D2641A /* nglFontBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nglFontBase.h; path = include/nglFontBase.h; sourceTree = SOURCE_ROOT; };
 		6126D5260DA5716500D2641A /* nglFontTexCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nglFontTexCache.cpp; sourceTree = "<group>"; };
 		6126D5270DA5716500D2641A /* nglFontTexCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nglFontTexCache.h; sourceTree = "<group>"; };
-		6126D5280DA5716500D2641A /* nglFontLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nglFontLayout.h; path = include/nglFontLayout.h; sourceTree = SOURCE_ROOT; };
 		6126D52A0DA5716500D2641A /* nglBitmapTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nglBitmapTools.h; path = include/nglBitmapTools.h; sourceTree = SOURCE_ROOT; };
 		6126D52B0DA5716500D2641A /* nglImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nglImage.h; path = include/nglImage.h; sourceTree = SOURCE_ROOT; };
 		6126D52C0DA5716500D2641A /* nglImageCodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nglImageCodec.h; path = include/nglImageCodec.h; sourceTree = SOURCE_ROOT; };
@@ -2640,6 +2641,7 @@
 		61C2E1240EA09E080096299A /* nuiCheckerboardDecoration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiCheckerboardDecoration.h; path = include/nuiCheckerboardDecoration.h; sourceTree = SOURCE_ROOT; };
 		61C2E3100EA0A63D0096299A /* nuiBackgroundPane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiBackgroundPane.cpp; sourceTree = "<group>"; };
 		61C2E3110EA0A63D0096299A /* nuiBackgroundPane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiBackgroundPane.h; path = include/nuiBackgroundPane.h; sourceTree = SOURCE_ROOT; };
+		61D085430EAFADCF00B73835 /* nuiMouseCursor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiMouseCursor.h; path = include/nuiMouseCursor.h; sourceTree = SOURCE_ROOT; };
 		61D3CA680E780A2F00084163 /* nuiDefaultDecoration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiDefaultDecoration.cpp; path = Decorations/nuiDefaultDecoration.cpp; sourceTree = "<group>"; };
 		61D3CA690E780A2F00084163 /* nuiDefaultDecoration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiDefaultDecoration.h; path = include/nuiDefaultDecoration.h; sourceTree = SOURCE_ROOT; };
 		61D3CA6E0E780A3900084163 /* nuiDecorationDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiDecorationDefines.h; path = include/nuiDecorationDefines.h; sourceTree = SOURCE_ROOT; };
@@ -2694,7 +2696,6 @@
 			isa = PBXGroup;
 			children = (
 				6126DA770DA5746200D2641A /* deps */,
-				6126D4630DA5716500D2641A /* include */,
 				6126D4700DA5716500D2641A /* src */,
 				1AB674ADFE9D54B511CA2CBB /* Products */,
 			);
@@ -2717,28 +2718,6 @@
 				610FDCD50DE4504B009AFAFB /* nglImageCGCodec.cpp */,
 			);
 			name = CoreGraphics;
-			sourceTree = "<group>";
-		};
-		6126D4630DA5716500D2641A /* include */ = {
-			isa = PBXGroup;
-			children = (
-				6126D4640DA5716500D2641A /* nui */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		6126D4640DA5716500D2641A /* nui */ = {
-			isa = PBXGroup;
-			children = (
-				6126D4650DA5716500D2641A /* nuiColorSelector.h */,
-				6126D4680DA5716500D2641A /* nuiDialog.h */,
-				6126D4690DA5716500D2641A /* nuiGladeLoader.h */,
-				6126D46A0DA5716500D2641A /* nuiMesh.h */,
-				6126D46B0DA5716500D2641A /* nuiMouseEvent.h */,
-				6126D46C0DA5716500D2641A /* nuiOffscreenView.h */,
-				6126D46D0DA5716500D2641A /* nuiWidgetElements.h */,
-			);
-			name = nui;
 			sourceTree = "<group>";
 		};
 		6126D4700DA5716500D2641A /* src */ = {
@@ -2914,14 +2893,18 @@
 				6126D4D20DA5716500D2641A /* nuiFlags.cpp */,
 				6126D4D30DA5716500D2641A /* nuiFlags.h */,
 				6126D4DA0DA5716500D2641A /* nuiGladeLoader.cpp */,
+				6126D4690DA5716500D2641A /* nuiGladeLoader.h */,
 				6126D4DB0DA5716500D2641A /* nuiHotKey.cpp */,
 				6126D4DC0DA5716500D2641A /* nuiHotKey.h */,
 				6126D4DD0DA5716500D2641A /* nuiInit.cpp */,
 				6126D4DE0DA5716500D2641A /* nuiInit.h */,
 				61AB29150E64639D00623908 /* nuiMemoryPool.cpp */,
 				61AB29160E64639D00623908 /* nuiMemoryPool.h */,
+				6126D46A0DA5716500D2641A /* nuiMesh.h */,
 				6126D4DF0DA5716500D2641A /* nuiMessageQueue.cpp */,
 				6126D4E00DA5716500D2641A /* nuiMessageQueue.h */,
+				61D085430EAFADCF00B73835 /* nuiMouseCursor.h */,
+				6126D46B0DA5716500D2641A /* nuiMouseEvent.h */,
 				6126D4E10DA5716500D2641A /* nuiNativeResource.cpp */,
 				6126D4E20DA5716500D2641A /* nuiNativeResource.h */,
 				6126D4E30DA5716500D2641A /* nuiNotification.cpp */,
@@ -2948,6 +2931,7 @@
 				6126D4F80DA5716500D2641A /* nuiTree.cpp */,
 				6126D4F90DA5716500D2641A /* nuiTree.h */,
 				6126D4FA0DA5716500D2641A /* nuiTreeEvent.h */,
+				6126D46D0DA5716500D2641A /* nuiWidgetElements.h */,
 				6126D4FB0DA5716500D2641A /* nuiXML.cpp */,
 				6126D4FC0DA5716500D2641A /* nuiXML.h */,
 			);
@@ -2960,25 +2944,25 @@
 				616F5CC50E8C3E78002F5301 /* Embeded */,
 				C9F4A30A0E05E3F80084143E /* nuiBorderDecoration.h */,
 				C9F4A3060E05E3E70084143E /* nuiBorderDecoration.cpp */,
-				616EA3740DC4994F00593FE7 /* nuiTreeHandleDecoration.cpp */,
-				616EA3710DC4994200593FE7 /* nuiTreeHandleDecoration.h */,
 				6126D4FF0DA5716500D2641A /* nuiColorDecoration.cpp */,
 				6126D5000DA5716500D2641A /* nuiColorDecoration.h */,
-				61C2E1230EA09E080096299A /* nuiCheckerboardDecoration.cpp */,
-				61C2E1240EA09E080096299A /* nuiCheckerboardDecoration.h */,
 				6126D5010DA5716500D2641A /* nuiMetaDecoration.h */,
 				6126D5020DA5716500D2641A /* nuiMetaDecoration.cpp */,
 				6126D5030DA5716500D2641A /* nuiStateDecoration.cpp */,
 				6126D5040DA5716500D2641A /* nuiStateDecoration.h */,
+				616EA3740DC4994F00593FE7 /* nuiTreeHandleDecoration.cpp */,
+				616EA3710DC4994200593FE7 /* nuiTreeHandleDecoration.h */,
 				6126D5050DA5716500D2641A /* nuiDecoration.cpp */,
 				6126D5060DA5716500D2641A /* nuiDecoration.h */,
 				61D3CA6E0E780A3900084163 /* nuiDecorationDefines.h */,
 				6126D5070DA5716500D2641A /* nuiFrame.cpp */,
 				6126D5080DA5716500D2641A /* nuiFrame.h */,
-				6126D5090DA5716500D2641A /* nuiGradientDecoration.cpp */,
-				6126D50A0DA5716500D2641A /* nuiGradientDecoration.h */,
 				C9F4A3110E05E43D0084143E /* nuiImageDecoration.h */,
 				C9F4A30E0E05E42D0084143E /* nuiImageDecoration.cpp */,
+				6126D5090DA5716500D2641A /* nuiGradientDecoration.cpp */,
+				6126D50A0DA5716500D2641A /* nuiGradientDecoration.h */,
+				61C2E1230EA09E080096299A /* nuiCheckerboardDecoration.cpp */,
+				61C2E1240EA09E080096299A /* nuiCheckerboardDecoration.h */,
 				61D3CA680E780A2F00084163 /* nuiDefaultDecoration.cpp */,
 				61D3CA690E780A2F00084163 /* nuiDefaultDecoration.h */,
 			);
@@ -3032,10 +3016,10 @@
 				6126D5220DA5716500D2641A /* nglFontInstance.h */,
 				6126D5230DA5716500D2641A /* nglFontLayout.cpp */,
 				6126D5240DA5716500D2641A /* nglFontLayout.h */,
-				6126D5250DA5716500D2641A /* nglFontBase.h */,
 				6126D5260DA5716500D2641A /* nglFontTexCache.cpp */,
 				6126D5270DA5716500D2641A /* nglFontTexCache.h */,
-				6126D5280DA5716500D2641A /* nglFontLayout.h */,
+				611944DA0EAE8FBE0078D6B3 /* nuiPanose.h */,
+				611944D70EAE8F910078D6B3 /* nuiPanose.cpp */,
 			);
 			path = Font;
 			sourceTree = "<group>";
@@ -3222,6 +3206,7 @@
 				6126D5B30DA5716500D2641A /* nuiButton.cpp */,
 				6126D5B40DA5716500D2641A /* nuiButton.h */,
 				6126D5B50DA5716500D2641A /* nuiColorSelector.cpp */,
+				6126D4650DA5716500D2641A /* nuiColorSelector.h */,
 				6126D5B60DA5716500D2641A /* nuiComboBox.cpp */,
 				6126D5B70DA5716500D2641A /* nuiComboBox.h */,
 				6126D5B80DA5716500D2641A /* nuiComposite.h */,
@@ -3245,6 +3230,7 @@
 				6126D5CD0DA5716500D2641A /* nuiMeshEngine.cpp */,
 				6126D5CF0DA5716500D2641A /* nuiMeshEngine.h */,
 				6126D5D00DA5716500D2641A /* nuiOffscreenView.cpp */,
+				6126D46C0DA5716500D2641A /* nuiOffscreenView.h */,
 				6126D5D10DA5716500D2641A /* nuiProgress.cpp */,
 				6126D5D20DA5716500D2641A /* nuiProgress.h */,
 				6126D5D30DA5716500D2641A /* nuiRadioButton.cpp */,
@@ -4480,7 +4466,6 @@
 				614B637F0DA7BA67000F4C22 /* nuiColorSelector.h in Headers */,
 				614B63800DA7BA67000F4C22 /* nui.h in Headers */,
 				614B63810DA7BA67000F4C22 /* nui_all.h in Headers */,
-				614B63820DA7BA67000F4C22 /* nuiDialog.h in Headers */,
 				614B63830DA7BA67000F4C22 /* nuiGladeLoader.h in Headers */,
 				614B63840DA7BA67000F4C22 /* nuiMesh.h in Headers */,
 				614B63850DA7BA67000F4C22 /* nuiMouseEvent.h in Headers */,
@@ -4556,8 +4541,6 @@
 				614B63CC0DA7BA67000F4C22 /* nglFontCache.h in Headers */,
 				614B63CD0DA7BA67000F4C22 /* nglFontInstance.h in Headers */,
 				614B63CE0DA7BA67000F4C22 /* nglFontLayout.h in Headers */,
-				614B63CF0DA7BA67000F4C22 /* nglFontBase.h in Headers */,
-				614B63D00DA7BA67000F4C22 /* nglFontLayout.h in Headers */,
 				614B63D10DA7BA67000F4C22 /* nglBitmapTools.h in Headers */,
 				614B63D20DA7BA67000F4C22 /* nglImage.h in Headers */,
 				614B63D30DA7BA67000F4C22 /* nglImageCodec.h in Headers */,
@@ -4967,6 +4950,9 @@
 				61C2E1260EA09E080096299A /* nuiCheckerboardDecoration.h in Headers */,
 				61C2E3130EA0A63D0096299A /* nuiBackgroundPane.h in Headers */,
 				6199939E0EA6044600D2E090 /* nuiImageSequence.h in Headers */,
+				611944DB0EAE8FBE0078D6B3 /* nuiPanose.h in Headers */,
+				61D085300EAFAC6100B73835 /* nglFontTexCache.h in Headers */,
+				61D085440EAFADCF00B73835 /* nuiMouseCursor.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4977,7 +4963,6 @@
 				6126D6850DA5716500D2641A /* nuiColorSelector.h in Headers */,
 				6126D6860DA5716500D2641A /* nui.h in Headers */,
 				6126D6870DA5716500D2641A /* nui_all.h in Headers */,
-				6126D6880DA5716500D2641A /* nuiDialog.h in Headers */,
 				6126D6890DA5716500D2641A /* nuiGladeLoader.h in Headers */,
 				6126D68A0DA5716500D2641A /* nuiMesh.h in Headers */,
 				6126D68B0DA5716500D2641A /* nuiMouseEvent.h in Headers */,
@@ -5053,8 +5038,6 @@
 				6126D7330DA5716500D2641A /* nglFontCache.h in Headers */,
 				6126D7350DA5716500D2641A /* nglFontInstance.h in Headers */,
 				6126D7370DA5716500D2641A /* nglFontLayout.h in Headers */,
-				6126D7380DA5716500D2641A /* nglFontBase.h in Headers */,
-				6126D73B0DA5716500D2641A /* nglFontLayout.h in Headers */,
 				6126D73C0DA5716500D2641A /* nglBitmapTools.h in Headers */,
 				6126D73D0DA5716500D2641A /* nglImage.h in Headers */,
 				6126D74C0DA5716500D2641A /* nuiBox.h in Headers */,
@@ -5464,6 +5447,8 @@
 				61C2E1280EA09E080096299A /* nuiCheckerboardDecoration.h in Headers */,
 				61C2E3150EA0A63D0096299A /* nuiBackgroundPane.h in Headers */,
 				6199939F0EA6044600D2E090 /* nuiImageSequence.h in Headers */,
+				611944DC0EAE8FBE0078D6B3 /* nuiPanose.h in Headers */,
+				61D085450EAFADCF00B73835 /* nuiMouseCursor.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5813,6 +5798,8 @@
 				61C2E1250EA09E080096299A /* nuiCheckerboardDecoration.cpp in Sources */,
 				61C2E3120EA0A63D0096299A /* nuiBackgroundPane.cpp in Sources */,
 				619993A30EA6047D00D2E090 /* nuiImageSequence.cpp in Sources */,
+				611944D80EAE8F910078D6B3 /* nuiPanose.cpp in Sources */,
+				61D085310EAFAC6100B73835 /* nglFontTexCache.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6106,6 +6093,7 @@
 				61C2E1270EA09E080096299A /* nuiCheckerboardDecoration.cpp in Sources */,
 				61C2E3140EA0A63D0096299A /* nuiBackgroundPane.cpp in Sources */,
 				619993A40EA6047D00D2E090 /* nuiImageSequence.cpp in Sources */,
+				611944D90EAE8F910078D6B3 /* nuiPanose.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6160,6 +6148,7 @@
 					HAVE_BCOPY,
 					UIKIT,
 				);
+				GCC_VERSION = 4.0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GENERATE_PROFILING_CODE = NO;

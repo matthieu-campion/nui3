@@ -45,10 +45,14 @@ public:
   virtual void PopMatrix();
   virtual uint32 GetRectangleTextureSupport() const;
 
-  virtual nuiTexture* CreateTexture(const nglString& rName, const nuiSize& rWidth, const nuiSize& rHeight);
+  virtual void CreateTexture(nuiTexture* pTexture);
   virtual void DestroyTexture(nuiTexture* pTexture);
   virtual void InvalidateTexture(nuiTexture* pTexture, bool ForceReload);
   
+  virtual void CreateSurface(nuiSurface* pSurface);
+  virtual void DestroySurface(nuiSurface* pSurface);
+  virtual void InvalidateSurface(nuiSurface* pSurface, bool ForceReload);
+
 protected:
   nglContext* mpContext;
 
@@ -59,6 +63,8 @@ protected:
   uint32 mCanRectangleTexture;
   GLenum mTextureTarget;
 
+  GLint mOldFramebuffer;
+  
   void ApplyTexture(const nuiRenderState& rState, bool ForceApply);
   
   class TextureInfo
@@ -84,8 +90,7 @@ protected:
   };
   std::map<nuiSurface*, FramebufferInfo> mFramebuffers;
 
-  void ApplySurface(const nuiRenderState& rState);
-  void DestroySurface(nuiSurface* pSurface, bool DestroyTexture);
+  void ApplySurface(const nuiRenderState& rState, bool ForceApply);
 
   GLenum GetTextureTarget(bool POT) const;
 

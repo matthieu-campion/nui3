@@ -393,7 +393,8 @@ void nuiWidget::Init()
   LoadIdentityMatrix();
 
   EnableRenderCache(true);
-
+//  EnableRenderCache(false);
+  
   // Events:
   NUI_ADD_EVENT(Trashed);
   NUI_ADD_EVENT(Destroyed);

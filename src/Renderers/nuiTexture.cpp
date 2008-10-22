@@ -12,6 +12,8 @@
 #include "nuiDrawContext.h"
 #include "AAPrimitives.h"
 
+#include "nuiSurface.h"
+
 using namespace std;
 
 nuiTextureMap nuiTexture::mpTextures;
@@ -99,6 +101,25 @@ nuiTexture* nuiTexture::GetTexture (const nuiXMLNode* pNode)
   if (pTexture)
     pTexture->Acquire();
   return pTexture;
+}
+
+nuiTexture* nuiTexture::GetTexture (nuiSurface* pSurface, bool Acquired)
+{
+  nuiTexture* pTexture = NULL;
+  nglString name;
+  name.Format(_T("Surface 0x%x"), pSurface);
+  nuiTextureMap::iterator it = mpTextures.find(name);
+  if (it == mpTextures.end()) {
+    pTexture = new nuiTexture(pSurface);    
+    if (!Acquired) {
+      pSurface->Acquire();
+    }
+  }
+  else
+    pTexture = it->second;
+  if (pTexture)
+    pTexture->Acquire();
+  return pTexture;  
 }
 
 nuiTexture* nuiTexture::GetTexture (const nglString& rName)
@@ -191,6 +212,7 @@ nuiTexture::nuiTexture(nglIStream* pInput, nglImageCodec* pCodec)
 {
   SetObjectClass(_T("nuiTexture"));
   mpImage = new nglImage(pInput, pCodec);
+  mpSurface = NULL;
   mOwnImage = true;
   mForceReload = false;
   mRetainBuffer = mRetainBuffers;
@@ -209,6 +231,7 @@ nuiTexture::nuiTexture (const nglPath& rPath, nglImageCodec* pCodec)
 {
   SetObjectClass(_T("nuiTexture"));
   mpImage = new nglImage(rPath, pCodec);
+  mpSurface = NULL;
   mOwnImage = true;
   mForceReload = false;
   mRetainBuffer = mRetainBuffers;
@@ -224,6 +247,7 @@ nuiTexture::nuiTexture (nglImageInfo& rInfo, bool Clone)
 {
   SetObjectClass(_T("nuiTexture"));
   mpImage = new nglImage(rInfo, Clone);
+  mpSurface = NULL;
   mOwnImage = true;
   mForceReload = false;
   mRetainBuffer = mRetainBuffers;
@@ -245,6 +269,7 @@ nuiTexture::nuiTexture (const nglImage& rImage)
 {
   SetObjectClass(_T("nuiTexture"));
   mpImage = new nglImage(rImage);
+  mpSurface = NULL;
   mOwnImage = true;
   mForceReload = false;
   mRetainBuffer = mRetainBuffers;
@@ -262,6 +287,7 @@ nuiTexture::nuiTexture (nglImage* pImage, bool OwnImage)
 {
   SetObjectClass(_T("nuiTexture"));
   mpImage = pImage;
+  mpSurface = NULL;
   mOwnImage = OwnImage;
   mForceReload = false;
   mRetainBuffer = mRetainBuffers;
@@ -278,6 +304,7 @@ nuiTexture::nuiTexture(const nuiXMLNode* pNode)
 {
   nuiObject::Load(pNode);
   SetObjectClass(_T("nuiTexture"));
+  mpSurface = NULL;
   mOwnImage = true;
   mForceReload = false;
   mRetainBuffer = mRetainBuffers;
@@ -292,6 +319,22 @@ nuiTexture::nuiTexture(const nuiXMLNode* pNode)
   Init();
 }
 
+nuiTexture::nuiTexture(nuiSurface* pSurface)
+{
+  mpImage = NULL;
+  mpSurface = pSurface;
+  mOwnImage = false;
+  mForceReload = false;
+  mRetainBuffer = false;
+
+  nglString name;
+  name.Format(_T("Surface 0x%x"), mpSurface);
+  SetProperty(_T("Source"), name);
+  mpTextures[name] = this;
+
+  Init();  
+}
+
 void nuiTexture::Init()
 {	
 //  NGL_OUT(_T("nuiTexture::Init() (0x%x - [%f %f] source='%ls') COUNT: %d\n"), this, mRealWidth, mRealHeight, GetProperty(_T("Source")).GetChars(), mpTextures.size());
@@ -299,15 +342,20 @@ void nuiTexture::Init()
   mRealWidth = 0;
   mRealHeight = 0;
 
-  if (mpImage)
-  {
+  if (mpImage) {
     mRealWidth = (nuiSize)mpImage->GetWidth();
     mRealHeight = (nuiSize)mpImage->GetHeight();
-    
-    mRealWidthPOT = (nuiSize)mpImage->GetWidth();
-    mRealHeightPOT = (nuiSize)mpImage->GetHeight();
+  }
+  else if (mpSurface) {
+    mRealWidth = (nuiSize)mpSurface->GetWidth();
+    mRealHeight = (nuiSize)mpSurface->GetHeight();
+  }
+  mRealWidthPOT = mRealWidth;
+  mRealHeightPOT = mRealHeight;
 
-    // Find the nearest bounding power of two size:
+  if (mRealWidth > 0 && mRealHeight > 0)
+  // Find the nearest bounding power of two size:
+  {
     uint i;
     nuiSize val = 1;
     for (i=0; i<32; i++)
@@ -428,6 +476,11 @@ void nuiTexture::ReleaseBuffer()
   if (mOwnImage) {
     mpImage->ReleaseBuffer();
   }
+}
+
+nuiSurface* nuiTexture::GetSurface() const
+{
+  return mpSurface;
 }
 
 void nuiTexture::ImageToTextureCoord(nuiAltSize& x, nuiAltSize& y) const

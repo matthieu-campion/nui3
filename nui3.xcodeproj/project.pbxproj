@@ -64,6 +64,10 @@
 		56AFF7600D745886003A6AF3 /* nuiHTTP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56AFF75F0D745886003A6AF3 /* nuiHTTP.cpp */; };
 		56AFF7610D745886003A6AF3 /* nuiHTTP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56AFF75F0D745886003A6AF3 /* nuiHTTP.cpp */; };
 		56B2E0F00D632D51009AF1EA /* nuiFontManager.h in Headers */ = {isa = PBXBuildFile; fileRef = E587B7260C56BF440076200A /* nuiFontManager.h */; };
+		61D085110EAFAA3F00B73835 /* nuiSurface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61D085100EAFAA3F00B73835 /* nuiSurface.cpp */; };
+		61D085120EAFAA3F00B73835 /* nuiSurface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61D085100EAFAA3F00B73835 /* nuiSurface.cpp */; };
+		61D085140EAFAA5400B73835 /* nuiSurface.h in Headers */ = {isa = PBXBuildFile; fileRef = 61D085130EAFAA5400B73835 /* nuiSurface.h */; };
+		61D085150EAFAA5400B73835 /* nuiSurface.h in Headers */ = {isa = PBXBuildFile; fileRef = 61D085130EAFAA5400B73835 /* nuiSurface.h */; };
 		941A98BB0E8BEAAE00CAFC3A /* nuiScrollingLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 941A98BA0E8BEAAE00CAFC3A /* nuiScrollingLabel.cpp */; };
 		941A98BC0E8BEAAE00CAFC3A /* nuiScrollingLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 941A98BA0E8BEAAE00CAFC3A /* nuiScrollingLabel.cpp */; };
 		941A98BE0E8BEAD000CAFC3A /* nuiScrollingLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 941A98BD0E8BEAD000CAFC3A /* nuiScrollingLabel.h */; };
@@ -2337,6 +2341,8 @@
 		56892C1F0DE489B7005806AD /* nuiMemoryPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiMemoryPool.h; path = include/nuiMemoryPool.h; sourceTree = SOURCE_ROOT; };
 		56AFF7570D74522D003A6AF3 /* nuiHTTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiHTTP.h; path = ../../include/nuiHTTP.h; sourceTree = "<group>"; };
 		56AFF75F0D745886003A6AF3 /* nuiHTTP.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiHTTP.cpp; sourceTree = "<group>"; };
+		61D085100EAFAA3F00B73835 /* nuiSurface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiSurface.cpp; sourceTree = "<group>"; };
+		61D085130EAFAA5400B73835 /* nuiSurface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiSurface.h; path = include/nuiSurface.h; sourceTree = SOURCE_ROOT; };
 		941A98BA0E8BEAAE00CAFC3A /* nuiScrollingLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiScrollingLabel.cpp; path = src/Text/nuiScrollingLabel.cpp; sourceTree = SOURCE_ROOT; };
 		941A98BD0E8BEAD000CAFC3A /* nuiScrollingLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiScrollingLabel.h; path = include/nuiScrollingLabel.h; sourceTree = SOURCE_ROOT; };
 		941A98CA0E8BF04700CAFC3A /* nuiScrollBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiScrollBox.cpp; path = src/Layout/nuiScrollBox.cpp; sourceTree = SOURCE_ROOT; };
@@ -5015,6 +5021,8 @@
 		E5816DA50C3CECAB00902DFE /* Renderers */ = {
 			isa = PBXGroup;
 			children = (
+				61D085130EAFAA5400B73835 /* nuiSurface.h */,
+				61D085100EAFAA3F00B73835 /* nuiSurface.cpp */,
 				E55DEDF90D350FE3002DA5BD /* SoftwareRasterizer */,
 				E5816DA60C3CECAB00902DFE /* AAPrimitives.cpp */,
 				E5816DA70C3CECAB00902DFE /* AAPrimitives.h */,
@@ -6066,6 +6074,7 @@
 				BCCFC4500E9E656B004A487E /* nuiKnob.h in Headers */,
 				BC19E19B0EA3AC210026CB6B /* nuiImageSequence.h in Headers */,
 				E5F9F7720EACB86D00F8D3A3 /* nuiPanose.h in Headers */,
+				61D085150EAFAA5400B73835 /* nuiSurface.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6719,6 +6728,7 @@
 				BCCFC44F0E9E656B004A487E /* nuiKnob.h in Headers */,
 				BC19E19A0EA3AC210026CB6B /* nuiImageSequence.h in Headers */,
 				E5F9F7710EACB86D00F8D3A3 /* nuiPanose.h in Headers */,
+				61D085140EAFAA5400B73835 /* nuiSurface.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7280,6 +7290,7 @@
 				BCCFC44D0E9E655B004A487E /* nuiKnob.cpp in Sources */,
 				BC19E1980EA3AC030026CB6B /* nuiImageSequence.cpp in Sources */,
 				E5F9F7790EACC8F100F8D3A3 /* nuiPanose.cpp in Sources */,
+				61D085120EAFAA3F00B73835 /* nuiSurface.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7784,6 +7795,7 @@
 				BCCFC44C0E9E655B004A487E /* nuiKnob.cpp in Sources */,
 				BC19E1970EA3AC030026CB6B /* nuiImageSequence.cpp in Sources */,
 				E5F9F7770EACC8F000F8D3A3 /* nuiPanose.cpp in Sources */,
+				61D085110EAFAA3F00B73835 /* nuiSurface.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

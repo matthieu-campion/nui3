@@ -35,7 +35,7 @@ public:
   static nuiTexture* GetTexture (nglImage* pImage, bool OwnImage); ///< Create an image from an existing nglImage. If \param OwnImage the nglImage object will be deleted with the nuiTexture.
   static nuiTexture* GetTexture (const nuiXMLNode* pNode); ///< Create an image from an xml description.
   static nuiTexture* GetTexture (const nglString& rName); ///< Get a texture from its ID only
-  static nuiTexture* GetTexture (nuiSurface* pSurface, bool OwnSurface); ///< Create a texture from an existing nuiSurface. If \param OwnSurface the nuiSurface object will be deleted with the nuiTexture.
+  static nuiTexture* GetTexture (nuiSurface* pSurface, bool Acquired); ///< Create a texture from an existing nuiSurface.
   static nuiTexture* GetAATexture(); ///< Returns an antialiasing texture for use with AAPrimitives.cpp
   
   static void ClearAll();
@@ -52,6 +52,8 @@ public:
 
   nglImage* GetImage() const; ///< Return a pointer to the nglImage contained in this object.
   void      ReleaseBuffer(); ///< Release the image source
+
+  nuiSurface* GetSurface() const; ///< Return a pointer to the nuiSurface contained in this object.
 
   GLuint GetMinFilter() const; ///< Get the maximization filter
   GLuint GetMagFilter() const; ///< Get the minimization filter
@@ -95,12 +97,16 @@ protected:
   nuiTexture(const nglImage& rImage); ///< Create an image by copying an existing nglImage.
   nuiTexture(nglImage* pImage, bool OwnImage); ///< Create an image from an existing nglImage. If \param OwnImage the nglImage object will be deleted with the nuiTexture.
   nuiTexture(const nuiXMLNode* pNode); ///< Create an image from an xml description.
+  nuiTexture(nuiSurface* pSurface); ///< Create an image for rendering to surface
   
   virtual ~nuiTexture();
   void Init();
 
   nglImage* mpImage;
   bool mOwnImage;
+
+  nuiSurface* mpSurface;
+
   nuiSize mRealWidth;
   nuiSize mRealHeight;
   nuiSize mRealWidthPOT;

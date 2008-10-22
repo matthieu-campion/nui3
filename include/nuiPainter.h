@@ -30,6 +30,7 @@
 
 #include "nuiRenderArray.h"
 #include "nuiRenderState.h"
+#include "nuiSurface.h"
 
 class NUI_API nuiClipper : public nuiRect
 {
@@ -67,7 +68,7 @@ public:
   bool mEnabled;
 };
 
-class NUI_API nuiPainter : public nuiTextureCache
+class NUI_API nuiPainter : public nuiTextureCache, public nuiSurfaceCache
 {
 public:
   nuiPainter(const nuiRect& rRect, nglContext* pContext = NULL);

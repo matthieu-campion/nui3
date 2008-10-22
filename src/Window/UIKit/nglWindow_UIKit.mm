@@ -5,6 +5,7 @@
 #include "nglContext.h"
 #include "nglWindow.h"
 #include "nglKeyboard.h"
+#include "nuiMouseCursor.h"
 
 #include <QuartzCore/QuartzCore.h>
 

@@ -28,6 +28,7 @@ This file includes all nui external and internal headers to create the precompil
 #include "nuiRange.h"
 #include "nuiColor.h"
 #include "nuiTexture.h"
+#include "nuiSurface.h"
 #include "nuiShape.h"
 #include "nuiPath.h"
 #include "nuiContour.h"

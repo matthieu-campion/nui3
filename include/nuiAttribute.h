@@ -15,6 +15,7 @@
 #include "nuiRange.h"
 #include "nuiShape.h"
 #include "nuiDecorationDefines.h"
+#include "nuiMouseCursor.h"
 
 class nuiAttributeEditor;
 class nuiPoint;

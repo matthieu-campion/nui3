@@ -5,19 +5,19 @@
   licence: see nui3/LICENCE.TXT
 */
 
+
 #ifndef __nuiFontBase_h__
 #define __nuiFontBase_h__
 
-#include "nglFontBase.h"
 #include "nglFontLayout.h"
+#include "nglFontBase.h"
 #include "nuiRect.h"
 
 #include <vector>
 #include <map>
 
 class nglPath;
-class nglFont;
-class nglGlyphLayout;
+//class nglFont;
 class nuiTexture;
 class nuiDrawContext;
 class nuiTexture;
