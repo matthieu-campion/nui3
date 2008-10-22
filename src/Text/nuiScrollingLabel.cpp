@@ -959,6 +959,26 @@ float nuiScrollingLabel::GetVFPS() const
   return mVFPS;
 }
 
+void nuiScrollingLabel::SlowDown(float factor)
+{
+  if ((factor >= 1) || (factor <= 0))
+  {
+    return;
+  }
+  
+  SetFPS(mFPS*factor);
+}
+
+void nuiScrollingLabel::SpeedUp(float factor)
+{
+  if (factor <= 1)
+  {
+    return;
+  }
+  
+  SetFPS(mFPS*factor);
+}
+
 
 // private - only used internally
 void nuiScrollingLabel::SetFPS(float fps)

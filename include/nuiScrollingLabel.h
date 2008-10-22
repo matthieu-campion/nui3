@@ -65,6 +65,8 @@ public:
   // Getters & Setters
   void SetHFPS(float hfps);
   void SetVFPS(float vfps);
+  void SlowDown(float factor = 0.5f);
+  void SpeedUp(float factor = 2.f);
   float GetFPS() const;
   float GetHFPS() const;
   float GetVFPS() const;
