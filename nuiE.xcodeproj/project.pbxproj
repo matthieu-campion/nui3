@@ -1552,8 +1552,6 @@
 		61C2E3130EA0A63D0096299A /* nuiBackgroundPane.h in Headers */ = {isa = PBXBuildFile; fileRef = 61C2E3110EA0A63D0096299A /* nuiBackgroundPane.h */; };
 		61C2E3140EA0A63D0096299A /* nuiBackgroundPane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61C2E3100EA0A63D0096299A /* nuiBackgroundPane.cpp */; };
 		61C2E3150EA0A63D0096299A /* nuiBackgroundPane.h in Headers */ = {isa = PBXBuildFile; fileRef = 61C2E3110EA0A63D0096299A /* nuiBackgroundPane.h */; };
-		61D085300EAFAC6100B73835 /* nglFontTexCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5270DA5716500D2641A /* nglFontTexCache.h */; };
-		61D085310EAFAC6100B73835 /* nglFontTexCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5260DA5716500D2641A /* nglFontTexCache.cpp */; };
 		61D085440EAFADCF00B73835 /* nuiMouseCursor.h in Headers */ = {isa = PBXBuildFile; fileRef = 61D085430EAFADCF00B73835 /* nuiMouseCursor.h */; };
 		61D085450EAFADCF00B73835 /* nuiMouseCursor.h in Headers */ = {isa = PBXBuildFile; fileRef = 61D085430EAFADCF00B73835 /* nuiMouseCursor.h */; };
 		61D3CA6A0E780A2F00084163 /* nuiDefaultDecoration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61D3CA680E780A2F00084163 /* nuiDefaultDecoration.cpp */; };
@@ -4951,7 +4949,6 @@
 				61C2E3130EA0A63D0096299A /* nuiBackgroundPane.h in Headers */,
 				6199939E0EA6044600D2E090 /* nuiImageSequence.h in Headers */,
 				611944DB0EAE8FBE0078D6B3 /* nuiPanose.h in Headers */,
-				61D085300EAFAC6100B73835 /* nglFontTexCache.h in Headers */,
 				61D085440EAFADCF00B73835 /* nuiMouseCursor.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5799,7 +5796,6 @@
 				61C2E3120EA0A63D0096299A /* nuiBackgroundPane.cpp in Sources */,
 				619993A30EA6047D00D2E090 /* nuiImageSequence.cpp in Sources */,
 				611944D80EAE8F910078D6B3 /* nuiPanose.cpp in Sources */,
-				61D085310EAFAC6100B73835 /* nglFontTexCache.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
