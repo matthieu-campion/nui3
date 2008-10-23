@@ -1463,8 +1463,8 @@ bool nuiD3DPainter::IsTextureFormatSupported(LPDIRECT3DDEVICE9 pDev, D3DFORMAT f
       pDev->GetDirect3D(&pDirect3D);
       HRESULT hresult = pDirect3D->CheckDeviceFormat( D3DADAPTER_DEFAULT,
                                           D3DDEVTYPE_HAL,
-                                          D3DFMT_X8R8G8B8,
-                                          D3DUSAGE_DYNAMIC|D3DUSAGE_AUTOGENMIPMAP,
+                                          D3DFMT_R8G8B8,
+                                          D3DUSAGE_DYNAMIC | D3DUSAGE_AUTOGENMIPMAP,
                                           D3DRTYPE_TEXTURE,
                                           format);
  

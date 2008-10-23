@@ -493,22 +493,22 @@ bool nuiScrollView::Scrolled(const nuiEvent& rEvent)
 
 bool nuiScrollView::Clear(bool Delete)
 {
-  IteratorPtr pIt;
-  for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
+  int childCount = GetChildrenCount();
+  for (childCount--; childCount >= 0; childCount--)
   {
-    nuiWidgetPtr pItem = pIt->GetWidget();
-    if (pItem && pItem != mpHorizontal && pItem != mpVertical)
+    nuiWidget* pWidget = GetChild(childCount);
+    if (pWidget && pWidget != mpHorizontal && pWidget != mpVertical)
     {
-      DelChild(pItem, Delete);
+      DelChild(pWidget, Delete);
     }
   }
-  delete pIt;
   mpChildren.clear();
   if (!mVerticalIsExternal)
     mpChildren.push_back(mpVertical);
   if (!mHorizontalIsExternal)
     mpChildren.push_back(mpHorizontal);
   InvalidateLayout();
+  DebugRefreshInfo();
   return true;
 }
 
