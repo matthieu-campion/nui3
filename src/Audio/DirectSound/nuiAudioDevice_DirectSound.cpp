@@ -1070,7 +1070,9 @@ nuiAudioDevice_DS_OutputTh::nuiAudioDevice_DS_OutputTh(nuiAudioDevice_DirectSoun
   mpDSOutputBuffer = NULL;
 
   if (pDev->HasOutput())
-  mpDSOutputBuffer = pDev->GetOutputBuffer();
+  {
+    mpDSOutputBuffer = pDev->GetOutputBuffer();
+  }
   mpRingBuffer = pDev->GetRingBuffer();
 
   mInputEvents[0] = inputEvent0;
@@ -1161,7 +1163,6 @@ void nuiAudioDevice_DS_OutputTh::Process(uint pos)
       for (uint32 ch=0; ch < mNbChannels; ch++)
         nuiAudioConvert_DEfloatToINint16(mFloatOutputBuf[ch], mpLocalBuf, ch, mNbChannels, mBufferSize);
 
-
       //#FIXME : here we can use pBuf1 and pBuf2 as the ouput buffer for DEfloatToINint16, instead of using a useless local buffer.
       // do that when you have the time to... :)
 
@@ -1187,7 +1188,7 @@ uint32 nuiAudioDevice_DS_OutputTh::ReadFromRingBuf(uint32 nbSampleFrames, std::v
 {
   bool need2ndPass = true;
   uint32 ch, i;
-  float	*rbuf;
+  float *pRing, *pOut;
   uint32 nbRead, nbRead2;
 
   // prepare 1st pass reading
@@ -1205,11 +1206,13 @@ uint32 nuiAudioDevice_DS_OutputTh::ReadFromRingBuf(uint32 nbSampleFrames, std::v
   // 1st pass reading
   for (ch = 0; ch < nbChannels; ch++)
   {
-    rbuf = (float*)mpRingBuffer->GetReadPointer(ch);
-    
+    pRing = (float*)mpRingBuffer->GetReadPointer(ch);
+    pOut = outbuf[ch];
+
+
     for (i=0; i < nbRead; i++)
     {
-      outbuf[ch][i] = rbuf[i];
+      *(pOut++) = *(pRing++);
     }
   }
   
@@ -1225,16 +1228,17 @@ uint32 nuiAudioDevice_DS_OutputTh::ReadFromRingBuf(uint32 nbSampleFrames, std::v
   
   for (ch = 0; ch < nbChannels; ch++)
   {
-    rbuf = (float*)mpRingBuffer->GetReadPointer(ch);
-    
-    for (i=0; i < nbRead; i++)
+    pRing = (float*)mpRingBuffer->GetReadPointer(ch);
+    pOut = &(outbuf[ch][nbRead]);
+
+    for (i=0; i < nbRead2; i++)
     {
-      outbuf[ch][i] = rbuf[i];
+      *(pOut++) = *(pRing++);
     }
   }
   
   // update ringbuf pointer
-  mpRingBuffer->AdvanceReadIndex (nbRead2); 
+  mpRingBuffer->AdvanceReadIndex(nbRead2); 
 
   return nbRead+nbRead2;
 
