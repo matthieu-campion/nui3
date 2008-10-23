@@ -95,6 +95,7 @@ public:
 
 
   nuiSimpleEventSource<0> HandleMoved;
+  nuiSimpleEventSource<0> GoToHandlePosAnimDone;
 
 protected:
   bool StepHandlePos(const nuiEvent& rEvent);  

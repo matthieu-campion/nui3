@@ -905,22 +905,26 @@ bool nuiSplitter::StepHandlePos(const nuiEvent& rEvent)
   {
     if(GetHandlePos() > mEndHandlePos)
     {
-      SetHandlePos(GetHandlePos() - mGotoStep);
+      nuiSize newPos = ((GetHandlePos() - mGotoStep) > mEndHandlePos) ? (GetHandlePos() - mGotoStep) : mEndHandlePos;
+      SetHandlePos(newPos);
     }
     else
     {
       mpTimer->Stop();
+      GoToHandlePosAnimDone();
     }
   }
   else
   {
     if(GetHandlePos() < mEndHandlePos)
     {
-      SetHandlePos(GetHandlePos() + mGotoStep);
+      nuiSize newPos = ((GetHandlePos() + mGotoStep) < mEndHandlePos) ? (GetHandlePos() + mGotoStep) : mEndHandlePos;
+      SetHandlePos(newPos);
     }
     else
     {
       mpTimer->Stop();
+      GoToHandlePosAnimDone();
     }
   } 
   return false;
