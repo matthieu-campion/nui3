@@ -34,7 +34,9 @@ nuiTreeNode* GetTree(const char* pNames[])
   nuiTreeNode* pTree = new nuiTreeNode(_T("tree"));
   for (uint32 i = 0; pNames[i]; i++)
   {
-    nuiTreeNode* pNode = new nuiTreeNode(nglString(pNames[i]));
+    nglString str;
+    str.Add(i).Add(_T(" - ")).Add(pNames[i]);
+    nuiTreeNode* pNode = new nuiTreeNode(str);
     pTree->AddChild(pNode);
   }
   return pTree;
@@ -347,7 +349,13 @@ void MainWindow::UpdateFontList(uint8 bytes[10])
   nuiFontManager::GetManager().RequestFont(request, Fonts);
   
   nuiGrid* pGrid = new nuiGrid(5, Fonts.size() + 1);
-  
+
+  pGrid->SetCell(0, 0, new nuiLabel(_T("Score")), nuiLeft, true, true);
+  pGrid->SetCell(1, 0, new nuiLabel(_T("Name")), nuiLeft, true, true);
+  pGrid->SetCell(2, 0, new nuiLabel(_T("Face")), nuiLeft, true, true);
+  pGrid->SetCell(3, 0, new nuiLabel(_T("PANOSE Bytes")), nuiLeft, true, true);
+  pGrid->SetCell(4, 0, new nuiLabel(_T("Path")), nuiLeft, true, true);
+
   uint32 index = 1;
   std::list<nuiFontRequestResult>::const_iterator it = Fonts.begin();
   std::list<nuiFontRequestResult>::const_iterator end = Fonts.end();
