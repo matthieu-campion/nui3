@@ -129,6 +129,8 @@ protected:
   bool CreateMessageBox(const nuiEvent& rEvent);
   bool CreateWidgetTexture(const nuiEvent& rEvent);
   
+  bool AudioDeviceSelected(const nuiEvent& rEvent);
+  bool AudioComboTrashed(const nuiEvent& rEvent);
 
   // The window manager:
   nuiWindowManager* mpManager;
