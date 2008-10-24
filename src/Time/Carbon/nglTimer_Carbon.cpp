@@ -104,12 +104,14 @@ bool nglTimer::Start(bool Immediate, bool Reset)
 
   EventTimerInterval interval = mPeriod * kEventDurationSecond;
   InstallEventLoopTimer (mainLoop,
-                         Immediate ? 0 : interval,
+                         0,
                          interval,
                          mTimerProc,
                          (void*)this,
                          &mTimer);
 
+  if (Immediate)
+    OnTick(0);
   return true;
 }
 
