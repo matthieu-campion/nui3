@@ -94,7 +94,11 @@ void nuiAudioDeviceAPI::RegisterWithManager()
 
 nuiAudioDeviceManager& nuiAudioDeviceManager::Get()
 {
-  return mManager;
+  if (!gpManager)
+  {
+    gpManager = new nuiAudioDeviceManager();
+  }
+  return *gpManager;
 }
 
 nuiAudioDeviceManager::~nuiAudioDeviceManager()
@@ -176,6 +180,6 @@ void nuiAudioDeviceManager::RegisterAPI(nuiAudioDeviceAPI* pAPI)
 }
 
 
-nuiAudioDeviceManager nuiAudioDeviceManager::mManager;
+nuiAudioDeviceManager* nuiAudioDeviceManager::gpManager = NULL;
 
 

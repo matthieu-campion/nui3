@@ -86,6 +86,6 @@ protected:
   
   int32 mDeviceCount;
   
-  static nuiAudioDeviceManager mManager;
+  static nuiAudioDeviceManager* gpManager;
 };
 
