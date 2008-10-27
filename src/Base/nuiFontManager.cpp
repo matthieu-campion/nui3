@@ -571,14 +571,55 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
   
   // Get glyphs:
   FT_ULong  charcode = 0;
+  int32  prevcharcode = -1;
+  int32  rangestart = -1;
+  uint32 rangecount = 0;
+  uint32 glyphcount = 0;
   FT_UInt   gindex = 0;
     
   charcode = FT_Get_First_Char(pFace, &gindex);
+  std::set<nglChar> tmpset;
   while ( gindex != 0 )
   {
-    mGlyphs.insert(charcode);
-    charcode = FT_Get_Next_Char(pFace, charcode, &gindex);     
+    glyphcount++;
+//    if (prevcharcode > 0 && prevcharcode + 1 != charcode)
+//    {
+//      //NGL_OUT(_T("range: %d to %d (%d glyphs)\n"), rangestart, charcode, charcode - rangestart);
+//      rangestart = -1;
+//      rangecount++;
+//    }
+    tmpset.insert(charcode);
+    prevcharcode = charcode;
+//    if (rangestart == -1)
+//      rangestart = prevcharcode;
+    
+    charcode = FT_Get_Next_Char(pFace, charcode, &gindex);
   }
+
+  std::set<nglChar>::iterator it = tmpset.begin();
+  std::set<nglChar>::iterator end = tmpset.end();
+  
+  mGlyphs.resize(tmpset.size());
+  
+  uint i = 0;
+  while (it != end)
+  {
+    nglChar c = *it;
+    mGlyphs[i] = c;
+    
+    ++it;
+    i++;
+  }
+  
+  std::sort(mGlyphs.begin(), mGlyphs.end());
+  
+//  if (prevcharcode > 0)
+//  {
+//    //NGL_OUT(_T("last range: %d to %d (%d glyphs)\n"), rangestart, prevcharcode, prevcharcode - rangestart);
+//    rangecount++;
+//  }
+  
+  NGL_OUT(_T("\t%d glyph ranges (%d glyphs)\n"), rangecount, glyphcount);
   
   FT_Done_Face(pFace);
   delete pBuffer;
@@ -646,8 +687,40 @@ bool nuiFontDesc::HasEncoding(nglTextEncoding Encoding) const
 
 bool nuiFontDesc::HasGlyph(nglChar Glyph) const
 {
-  std::set<nglChar>::const_iterator it = mGlyphs.find(Glyph);
-  return (it != mGlyphs.end());
+  // Dychotomic lookup of the charcode:
+  
+  int32 len = mGlyphs.size();
+  int32 start = 0;
+  int32 end = len - 1;
+  int32 middle = (start + end) >> 1;
+  
+  while (len > 0)
+  {
+    nglChar middleglyph = mGlyphs[middle];
+    nglChar firstglyph = mGlyphs[start];
+    nglChar lastglyph = mGlyphs[end];
+
+    if (Glyph < firstglyph || lastglyph < Glyph)
+      return false;
+
+    if (middleglyph == Glyph)
+      return true;
+    
+    if (middleglyph < Glyph) 
+    {
+      // Return right hand part
+      start = middle + 1;
+    }
+    else
+    {
+      // Return Left hand part
+      end = middle - 1;
+    }
+    
+    len = end - start;
+    middle = (start + end >> 1);
+  }
+  return false;
 }
 
 bool nuiFontDesc::HasSize(int32 Size) const
@@ -661,7 +734,7 @@ const std::set<nglTextEncoding>& nuiFontDesc::GetEncodings() const
   return mEncodings;
 }
 
-const std::set<nglChar>& nuiFontDesc::GetGlyphs() const
+const std::vector<nglChar>& nuiFontDesc::GetGlyphs() const
 {
   return mGlyphs;
 }
@@ -723,10 +796,7 @@ bool nuiFontDesc::Save(nglOStream& rStream)
   s = mGlyphs.size();
   rStream.WriteUInt32(&s);
   if (s)
-  {
-    std::vector<uint16> Glyphs(mGlyphs.begin(), mGlyphs.end());
-    rStream.WriteUInt16(&Glyphs[0], s);
-  }
+    rStream.Write(&mGlyphs[0], s, sizeof(nglChar));
   
   s = mSizes.size();
   rStream.WriteUInt32(&s);
@@ -797,14 +867,9 @@ bool nuiFontDesc::Load(nglIStream& rStream)
   }
   
   rStream.ReadUInt32(&s);
-  std::vector<uint16> Glyphs;
-  Glyphs.resize(s);
+  mGlyphs.resize(s);
   if (s)
-  {
-    rStream.ReadUInt16(&Glyphs[0], s);
-    mGlyphs.clear();
-    mGlyphs.insert(Glyphs.begin(), Glyphs.end());
-  }
+    rStream.Read(&mGlyphs[0], s, sizeof(nglChar));
   
   rStream.ReadUInt32(&s);
   std::vector<uint32> Sizes;
@@ -1123,17 +1188,28 @@ void nuiFontManager::RequestFont(nuiFontRequest& rRequest, std::list<nuiFontRequ
     }
     
     {
-      const std::set<nglChar>& rGlyphs(pFontDesc->GetGlyphs());
-      float _s = rRequest.mMustHaveGlyphs.mScore * intersection_score(rRequest.mMustHaveGlyphs.mElement, rGlyphs);
+      uint32 count = 0;  
+      std::set<nglChar>::const_iterator it = rRequest.mMustHaveGlyphs.mElement.begin();
+      std::set<nglChar>::const_iterator end = rRequest.mMustHaveGlyphs.mElement.end();
+      
+      while (it != end)
+      {
+        const nglChar glyph = *it;
+        if (pFontDesc->HasGlyph(glyph))
+          count++;
+        ++it;
+      }
+      
+      float f = (float)count / (float)rRequest.mMustHaveGlyphs.mElement.size();
+      float _s = rRequest.mMustHaveGlyphs.mScore * f;
       if (rRequest.mMustHaveGlyphs.mStrict)
       {
-        if (_s > 0.f)
-          sscore *= _s;
-        else
-          sscore = 0.f;
+        sscore *= _s;
       }
       else
+      {
         score += _s;
+      }
     }
     
     SetScore(score, sscore, rRequest.mPanose.mScore * rRequest.mPanose.mElement.GetNormalizedDistance(pFontDesc->GetPanoseBytes()), rRequest.mPanose.mStrict, true, false);

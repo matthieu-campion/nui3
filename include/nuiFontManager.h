@@ -107,7 +107,7 @@ public:
   bool HasSize(int32 Size) const;
   
   const std::set<nglTextEncoding>&  GetEncodings() const;
-  const std::set<nglChar>&          GetGlyphs() const;
+  const std::vector<nglChar>&       GetGlyphs() const;
   const std::set<int32>&            GetSizes() const;
   
   const nuiFontPanoseBytes& GetPanoseBytes() const; 
@@ -129,7 +129,7 @@ private:
   bool mMonospace;
   bool mScalable;
   std::set<nglTextEncoding> mEncodings;
-  std::set<nglChar>         mGlyphs;
+  std::vector<nglChar>      mGlyphs;
   std::set<int32>           mSizes;
 
   nuiFontPanoseBytes        mPanoseBytes;

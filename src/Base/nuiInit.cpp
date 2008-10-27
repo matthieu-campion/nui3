@@ -11,7 +11,7 @@
 #include "nuiFontManager.h"
 #include "nglThreadChecker.h"
 
-#define NUI_FONTDB_PATH _T("nuiFonts.db3")
+#define NUI_FONTDB_PATH _T("nuiFonts.db4")
 
 class __NglKernel__ : public nglKernel
 {
