@@ -687,7 +687,7 @@ bool nuiFontDesc::HasEncoding(nglTextEncoding Encoding) const
 
 bool nuiFontDesc::HasGlyph(nglChar Glyph) const
 {
-  // Dychotomic lookup of the charcode:
+  // Dichotomic lookup of the charcode:
   
   int32 len = mGlyphs.size();
   int32 start = 0;
