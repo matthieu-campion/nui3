@@ -85,6 +85,9 @@ void nuiTitledPane::SetTitle(const nglString& rTitle, nuiPosition position)
 {
   nuiLabel* label = new nuiLabel(rTitle, nuiFont::GetFont (12));
   SetCell(0, label, position);
+  
+  label->SetObjectName(_T("nuiTitledPane::Title"));
+  
   InvalidateLayout();
 }	
 

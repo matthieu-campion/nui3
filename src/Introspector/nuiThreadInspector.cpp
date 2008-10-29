@@ -149,7 +149,7 @@ void nuiThreadInspector::Build()
   nuiAttribBase Base = GetAttribute(_T("Running"));
   nuiAttributeEditor* pEditor = Base.GetEditor();
   pEditor->SetBorder(2, 2);
-  pGrid->SetCell(1,1, pEditor);
+  pGrid->SetCell(1,1, pEditor, nuiCenter);
 
 
   // Updating
@@ -160,7 +160,7 @@ void nuiThreadInspector::Build()
   Base = GetAttribute(_T("Updating"));
   pEditor = Base.GetEditor();
   pEditor->SetBorder(2, 2);
-  pGrid->SetCell(1,2, pEditor);
+  pGrid->SetCell(1,2, pEditor, nuiCenter);
   
   // read-only updates count
   row++;
@@ -194,7 +194,7 @@ void nuiThreadInspector::Build()
   Base = GetAttribute(_T("ShowLongLock"));
   pEditor = Base.GetEditor();
   pEditor->SetBorder(2, 2);
-  pGrid->SetCell(3,1, pEditor);
+  pGrid->SetCell(3,1, pEditor, nuiCenter);
 
 
   // long lock treshold
