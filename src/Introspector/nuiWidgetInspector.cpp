@@ -38,17 +38,21 @@ private:
 ///////// nuiWidgetInspectorNode:
 
 nuiWidgetInspectorNode::nuiWidgetInspectorNode(nuiWidget* pTarget)
-: nuiTreeNode(pTarget->GetProperty("Class") + nglString(" - ") + pTarget->GetProperty("Name"), false, false),
+: nuiTreeNode(pTarget ? (pTarget->GetProperty("Class") + nglString(" - ") + pTarget->GetProperty("Name")) : _T("Empty"), false, false),
   mInspectorNodeSink(this),
   mpTarget(pTarget),
   mpTree(NULL)
 {
   UpdateInfos(NULL);
-  mInspectorNodeSink.Connect(mpTarget->DebugRefreshInfo, &nuiWidgetInspectorNode::UpdateInfos);
+  if (pTarget)
+	mInspectorNodeSink.Connect(mpTarget->DebugRefreshInfo, &nuiWidgetInspectorNode::UpdateInfos);
 }
 
 bool nuiWidgetInspectorNode::UpdateInfos(const nuiEvent& rEvent)
 {
+  if (!mpTarget)
+	return false;
+
   float r = 0;
   float g = 0;
   float b = 0;
