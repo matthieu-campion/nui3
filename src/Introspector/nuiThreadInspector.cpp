@@ -488,8 +488,12 @@ void nuiThreadInspector::Clean(nuiTreeNode* pParent, const std::map<nglThread::I
     {
       nglLock* pLock;
       bool lockdead = true;
-//      bool res = nuiGetTokenValue<nglLock*>(pLockNode->GetToken(), pLock);
-      //NGL_ASSERT(res);
+      //ICI
+      bool res = nuiGetTokenValue<nglLock*>(pLockNode->GetToken(), pLock);
+      NGL_ASSERT(res);
+      
+      //
+      NGL_OUT(_T("debug token lock 0x%x\n"), pLock);
         
       for (itl = list.begin(); itl != list.end(); ++itl)
       {

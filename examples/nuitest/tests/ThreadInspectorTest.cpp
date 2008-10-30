@@ -340,7 +340,37 @@ void TITthread::SetLockedC(bool set)
 TITCSthread::TITCSthread(const nglString& rName)
   : TITthread(rName)
 {
-  InitAttributes();
+  mLockedA = false;
+  mLockedB = false;
+  mLockedC = false;
+  
+  if (SetObjectClass(_T("TITCSThread")))
+    InitAttributes();
+      
+  nuiVBox* pVBox = new nuiVBox(2);
+  AddCell(pVBox);
+  
+  nuiAttribBase Base(GetAttribute(_T("LockedA")));
+  mpEditorA = Base.GetEditor();
+  pVBox->SetCell(0, mpEditorA, nuiCenter);
+  pVBox->SetCell(1, new nuiLabel(_T("shared cs A"), nuiFont::GetFont(8)));
+  
+  pVBox = new nuiVBox(2);
+  AddCell(pVBox);
+  
+  Base = GetAttribute(_T("LockedB"));
+  mpEditorB = Base.GetEditor();
+  pVBox->SetCell(0, mpEditorB, nuiCenter);
+  pVBox->SetCell(1, new nuiLabel(_T("shared cs B"), nuiFont::GetFont(8)));
+  
+  pVBox = new nuiVBox(2);
+  AddCell(pVBox);
+  
+  Base = GetAttribute(_T("LockedC"));
+  mpEditorC = Base.GetEditor();
+  pVBox->SetCell(0, mpEditorC, nuiCenter);
+  pVBox->SetCell(1, new nuiLabel(_T("shared cs C"), nuiFont::GetFont(8)));
+      
 }
 
 TITCSthread::~TITCSthread()
@@ -355,45 +385,16 @@ void TITCSthread::InitAttributes()
     (nglString(_T("LockedA")), nuiUnitOnOff,
      nuiAttribute<bool>::GetterDelegate(this, &TITthread::IsLockedA),
      nuiAttribute<bool>::SetterDelegate(this, &TITthread::SetLockedA)));
-  mLockedA = false;
 
   AddAttribute(new nuiAttribute<bool>
     (nglString(_T("LockedB")), nuiUnitOnOff,
      nuiAttribute<bool>::GetterDelegate(this, &TITthread::IsLockedB),
      nuiAttribute<bool>::SetterDelegate(this, &TITthread::SetLockedB)));
-  mLockedB = false;
 
   AddAttribute(new nuiAttribute<bool>
     (nglString(_T("LockedC")), nuiUnitOnOff,
      nuiAttribute<bool>::GetterDelegate(this, &TITthread::IsLockedC),
      nuiAttribute<bool>::SetterDelegate(this, &TITthread::SetLockedC)));
-  mLockedC = false;
-
-
-
-  nuiVBox* pVBox = new nuiVBox(2);
-  AddCell(pVBox);
-  
-  nuiAttribBase Base(GetAttribute(_T("LockedA")));
-  mpEditorA = Base.GetEditor();
-  pVBox->SetCell(0, mpEditorA, nuiCenter);
-  pVBox->SetCell(1, new nuiLabel(_T("shared cs A"), nuiFont::GetFont(8)));
-
-  pVBox = new nuiVBox(2);
-  AddCell(pVBox);
-  
-  Base = GetAttribute(_T("LockedB"));
-  mpEditorB = Base.GetEditor();
-  pVBox->SetCell(0, mpEditorB, nuiCenter);
-  pVBox->SetCell(1, new nuiLabel(_T("shared cs B"), nuiFont::GetFont(8)));
-
-  pVBox = new nuiVBox(2);
-  AddCell(pVBox);
-  
-  Base = GetAttribute(_T("LockedC"));
-  mpEditorC = Base.GetEditor();
-  pVBox->SetCell(0, mpEditorC, nuiCenter);
-  pVBox->SetCell(1, new nuiLabel(_T("shared cs C"), nuiFont::GetFont(8)));
 }
 
 

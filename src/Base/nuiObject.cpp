@@ -444,7 +444,16 @@ nuiAttribBase nuiObject::GetAttribute(const nglString& rName) const
     std::map<nglString,nuiAttributeBase*>::const_iterator end = mClassAttributes[c].end();
     
     if (it != end)
+    {
+      // #HACK meeloo: strange shit on MacOSX...
+//      nuiObject* pThis = const_cast<nuiObject*>(this);
+//      void** ppVoid = (void**)&pThis;
+//      void* pVoid = *ppVoid;
+//      nuiObject* pCouille = (nuiObject*)pVoid;
+//      return nuiAttribBase(pVoid, it->second);
+      
       return nuiAttribBase(const_cast<nuiObject*>(this), it->second);
+    }
     
     c = mInheritanceMap[c];
   }
