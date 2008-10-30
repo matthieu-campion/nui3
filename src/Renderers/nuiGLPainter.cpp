@@ -96,8 +96,8 @@ nuiGLPainter::nuiGLPainter(nglContext* pContext, const nuiRect& rRect)
 	{
 		glAAInit();
 		nuiCheckForGLErrors();
-		glAAGenerateAATex(0.0f, 0.0f);
-		nuiCheckForGLErrors();
+//		glAAGenerateAATex(0.0f, 0.0f);
+//		nuiCheckForGLErrors();
 
 		// texture init
 		//#ifndef __APPLE__
@@ -138,7 +138,7 @@ void nuiGLPainter::StartRendering(nuiSize ClipOffsetX, nuiSize ClipOffsetY)
   glScalef (2.0f/(float)mWidth, -2.0f/(float)mHeight, 1.0f);
   nuiCheckForGLErrors();
 
-  glMatrixMode (GL_MODELVIEW);
+  glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
 
   glDisable(GL_DEPTH_TEST);
@@ -943,20 +943,24 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
         }
       }
       
-      if (type == 8)
-        type=GL_UNSIGNED_BYTE;
-      else if (type==16 || type==15)
-        type=GL_UNSIGNED_SHORT_5_5_5_1;
-      else if (type==24)
-        type=GL_UNSIGNED_BYTE;
-      else if (type==32)
-        type=GL_UNSIGNED_BYTE;
+      switch (type)
+      {
+        case 16:
+        case 15:
+          type = GL_UNSIGNED_SHORT_5_5_5_1;
+          break;
+        case 8:
+        case 24:
+        case 32:
+          type = GL_UNSIGNED_BYTE;
+          break;
+      }
       
       glPixelStorei(GL_UNPACK_ALIGNMENT,1);
       nuiCheckForGLErrors();
       
 #ifdef _CARBON_
-      glTexParameteri(target, //GL_TEXTURE_RECTANGLE_ARB,
+      glTexParameteri(target,
                       GL_TEXTURE_STORAGE_HINT_APPLE,
                       GL_STORAGE_CACHED_APPLE);
       glPixelStorei(GL_UNPACK_CLIENT_STORAGE_APPLE, GL_TRUE);
