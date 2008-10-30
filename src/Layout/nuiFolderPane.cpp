@@ -18,31 +18,36 @@
 
 
 nuiFolderPane::nuiFolderPane(nuiWidget* pTitleWidget, bool opened)
-: nuiTitledPane(pTitleWidget)
+: nuiTitledPane()
 {
+  SetObjectClass(_T("nuiFolderPane"));
+  SetTitleWithHandle(pTitleWidget, nuiLeft);
   Init (opened);
 }
 
 
 
 nuiFolderPane::nuiFolderPane(const nglString& rText, bool opened)
-: nuiTitledPane(rText)
+: nuiTitledPane()
 {
+  SetObjectClass(_T("nuiFolderPane"));
+  SetTitleWithHandle(rText, nuiLeft);
   Init (opened);
   
 }
 
 
 nuiFolderPane::nuiFolderPane(nuiLabelAttribute* pLabel, bool opened)
-: nuiTitledPane(pLabel)
+: nuiTitledPane()
 {
+  SetObjectClass(_T("nuiFolderPane"));
+  SetTitleWithHandle(pLabel, nuiLeft);
   Init (opened);
   
 }
 
 void nuiFolderPane::Init (bool opened)
 {
-  SetObjectClass(_T("nuiFolderPane"));
   mIsOpened = opened;
   mInteractiveCloseEnabled = true;
   nuiWidget* pTitle = GetTitle();
@@ -150,6 +155,8 @@ void nuiFolderPane::SetTitle(const nglString& rTitle, nuiPosition position)
   
   if (mIsOpened)
     label->SetSelected(true);
+  
+  label->SetObjectName(_T("nuiFolderPane::Title"));  
       
   InvalidateLayout();
 }	
@@ -167,7 +174,9 @@ void nuiFolderPane::SetTitle(nuiWidget* pTitleWidget, nuiPosition position)
 
 void nuiFolderPane::SetTitleWithHandle(const nglString& rTitle, nuiPosition position)
 {
-  SetTitleWithHandle(new nuiLabel(rTitle), position);
+  nuiLabel* pLabel = new nuiLabel(rTitle);
+  pLabel->SetObjectName(_T("nuiFolderPane::TitleLabel"));
+  SetTitleWithHandle(pLabel, position);
 }
 
 
@@ -184,6 +193,8 @@ void nuiFolderPane::SetTitleWithHandle(nuiWidget* pTitleWidget, nuiPosition posi
   pTitleBox->AddCell(pPaneHandle);
   
   pTitleBox->AddCell(pTitleWidget);
+  
+  pTitleBox->SetObjectName(_T("nuiFolderPane::Title"));  
   
   SetTitle(pTitleBox);
 }
