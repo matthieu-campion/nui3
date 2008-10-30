@@ -134,17 +134,17 @@ void nglThread::OnStart()
   // Do nothing by default
 }
 
-bool nglThread::IsCurrent()
+bool nglThread::IsCurrent() const
 {
   return (pthread_self() == mpData->thread);
 }
 
-nglThread::State nglThread::GetState()
+nglThread::State nglThread::GetState() const
 {
   return mState;
 }
 
-nglThread::Priority nglThread::GetPriority()
+nglThread::Priority nglThread::GetPriority() const
 {
   return mPriority;
 }
@@ -205,7 +205,7 @@ nglThread::ID nglThread::GetCurThreadID()
 
 
 
-nglThread::ID nglThread::GetID()
+nglThread::ID nglThread::GetID() const
 {
   return mpData->GetThreadID();
 }
