@@ -43,7 +43,6 @@ nuiFormatedLabel::nuiFormatedLabel(const nuiFormater& rFormater, double value, n
   mFormater(rFormater)
 {
   //#FIXME waiting for me to know if there is a default font pointer...
-  NGL_ASSERT(pFont != NULL);
   NGL_ASSERT(&mFormater);
   
   SetObjectClass(_T("nuiFormatedLabel"));

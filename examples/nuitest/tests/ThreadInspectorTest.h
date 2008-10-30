@@ -21,15 +21,14 @@
 // TITthread : implement a generic class for a thread
 //
 //*********************************************************************
-class TITthread : public nglThread, public nuiHBox
+class TITthread : public nuiObject
 {
 public:
 
   virtual ~TITthread();
 
-  virtual void Start();
-          void Stop();
-
+  void Start();
+  void Stop();
 
   // attributes
   bool IsLockedA();
@@ -38,7 +37,9 @@ public:
   void SetLockedB(bool set);
   bool IsLockedC();
   void SetLockedC(bool set);
-          
+         
+  const nglString& GetName() const;
+  nglThread::ID	GetID() const;
 protected:
 
   TITthread(const nglString& rName);
@@ -46,16 +47,12 @@ protected:
   bool mLockedA;
   bool mLockedB;
   bool mLockedC;
-  nuiAttributeEditor* mpEditorA;
-  nuiAttributeEditor* mpEditorB;
-  nuiAttributeEditor* mpEditorC;
 
   nuiMessageQueue mQueue;
 
-
 private:
+  nglThreadDelegate mThread;
 
-  
   virtual void OnStart();
   virtual bool WaitForLock()=0;
   virtual bool WaitForLockOrUnlock() =0;
@@ -80,6 +77,7 @@ public:
   virtual ~TITCSthread();
   void InitAttributes();
 
+  nuiWidget* InitGUI();
 private:
 
   virtual bool WaitForLock();
@@ -105,6 +103,7 @@ public:
   virtual ~TITLLthread();
   void InitAttributes();
 
+  nuiWidget* InitGUI();
 private:
 
   virtual bool WaitForLock();

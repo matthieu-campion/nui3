@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include "nuiFastDelegate.h"
+
 class nglThreadPrivate;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -54,11 +56,11 @@ public:
   // Start / Stop
   bool Start(); ///< Start a paused thread
   bool Join(); ///< Wait until the thread is stopped
-  Priority GetPriority();	///< Get thread priority
+  Priority GetPriority() const;	///< Get thread priority
   bool SetPriority(Priority priority); ///< Set thread priority
-  State GetState(); ///< Return the thread's state.
-  bool IsCurrent(); ///< Return true if the call is made from this thread.
-  ID GetID(); ///< Return thread ID
+  State GetState() const; ///< Return the thread's state.
+  bool IsCurrent() const; ///< Return true if the call is made from this thread.
+  ID GetID() const; ///< Return thread ID
   const nglString& GetName() const;
   
   inline nglThreadPrivate* GetThreadPrivate() const
@@ -83,6 +85,21 @@ private:
   Priority mPriority; ///< Priority
   nglThreadPrivate* mpData; ///< Plateform dependent data
   nglString mName;
+};
+
+
+class NGL_API nglThreadDelegate : public nglThread
+{
+public:
+  typedef nuiFastDelegate::FastDelegate0<> ThreadDelegate;
+  nglThreadDelegate(const ThreadDelegate& rStartFunction, Priority priority = Normal); // Constructor
+  nglThreadDelegate(const ThreadDelegate& rStartFunction, const nglString& rName, Priority priority = Normal);
+  virtual ~nglThreadDelegate(); // Destructor
+
+  virtual void OnStart(); ///< Main thread method
+
+private:
+  ThreadDelegate mDelegate;
 };
 
 

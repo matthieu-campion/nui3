@@ -197,7 +197,7 @@ void nglThread::OnStart()
 //
 //	 
 //
-bool nglThread::IsCurrent()
+bool nglThread::IsCurrent() const
 {
   return GetCurrentThread() == mpData->mThread;
 }
@@ -209,7 +209,7 @@ bool nglThread::IsCurrent()
 //
 //	 
 //
-nglThread::State	nglThread::GetState()
+nglThread::State	nglThread::GetState() const
 {
   return mState;
 }
@@ -221,7 +221,7 @@ nglThread::State	nglThread::GetState()
 //
 //	 
 //
-nglThread::Priority nglThread::GetPriority()
+nglThread::Priority nglThread::GetPriority() const
 {
   return mPriority;
 }
@@ -307,7 +307,7 @@ void nglThread::USleep(uint32 usecs)
 //
 //	 Return thread ID
 //
-nglThread::ID	nglThread::GetID()
+nglThread::ID	nglThread::GetID() const
 {
   return mpData->GetThreadID();
 }

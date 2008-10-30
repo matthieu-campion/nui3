@@ -61,3 +61,24 @@ bool nglDelThreadFromGlobalList(nglThread* thread)
 }
 
 
+////////////////////////
+// nglThreadDelegate
+////////////////////////
+nglThreadDelegate::nglThreadDelegate(const ThreadDelegate& rStartFunction, Priority priority)
+: nglThread(priority), mDelegate(rStartFunction)
+{
+}
+
+nglThreadDelegate::nglThreadDelegate(const ThreadDelegate& rStartFunction, const nglString& rName, Priority priority)
+: nglThread(rName, priority), mDelegate(rStartFunction)
+{
+}
+
+nglThreadDelegate::~nglThreadDelegate()
+{
+}
+
+void nglThreadDelegate::OnStart()
+{
+  mDelegate();
+}

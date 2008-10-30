@@ -93,7 +93,6 @@ ThreadInspectorTest::~ThreadInspectorTest()
   {
     TITCSthread* pThread = it->second;
     pThread->Stop();
-    pThread->Join();
   }
 
   std::map<nuiWidget*, TITLLthread*>::iterator it2;
@@ -101,7 +100,6 @@ ThreadInspectorTest::~ThreadInspectorTest()
   {
     TITLLthread* pThread = it2->second;
     pThread->Stop();
-    pThread->Join();
   }
   
 }
@@ -130,7 +128,7 @@ bool ThreadInspectorTest::CreateCSThread(const nuiEvent& rEvent)
   nuiLabel* pLabel = new nuiLabel(label);
   pBox->AddCell(pLabel);
   
-  pBox->AddCell(pThread);
+  pBox->AddCell(pThread->InitGUI());
   
   return true;
 }
@@ -149,7 +147,6 @@ bool ThreadInspectorTest::RemoveCSThread(const nuiEvent& rEvent)
   // request stop to the thread
   TITCSthread* pThread = it->second;
   pThread->Stop();
-  pThread->Join();
   
   // clean
   delete pThread;
@@ -185,7 +182,7 @@ bool ThreadInspectorTest::CreateLLThread(const nuiEvent& rEvent)
   nuiLabel* pLabel = new nuiLabel(label);
   pBox->AddCell(pLabel);
   
-  pBox->AddCell(pThread);
+  pBox->AddCell(pThread->InitGUI());
   
   return true;
 }
@@ -204,7 +201,6 @@ bool ThreadInspectorTest::RemoveLLThread(const nuiEvent& rEvent)
   // request stop to the thread
   TITLLthread* pThread = it->second;
   pThread->Stop();
-  pThread->Join();
   
   // clean
   delete pThread;
@@ -222,9 +218,12 @@ bool ThreadInspectorTest::RemoveLLThread(const nuiEvent& rEvent)
 //
 //*********************************************************************************
 TITthread::TITthread(const nglString& rName)
-  : nglThread(rName), nuiHBox(0), mRunCS(_T("CSrunning")), mLockCS(_T("CSlocking"))
+  : mRunCS(_T("CSrunning"))
+  , mLockCS(_T("CSlocking"))
+  , mThread(nuiFastDelegate::MakeDelegate(this, &TITthread::OnStart), rName)
 {
   mRunning = false;
+
 }
 
 TITthread::~TITthread()
@@ -237,7 +236,7 @@ TITthread::~TITthread()
 void TITthread::Start()
 {
   mRunning = true;
-  nglThread::Start();
+  mThread.Start();
 }
 
 void TITthread::Stop()
@@ -248,6 +247,8 @@ void TITthread::Stop()
     
   nglCriticalSectionGuard guard(mRunCS);
   mRunning = false;
+
+  mThread.Join();
 }
 
 // virtual
@@ -255,7 +256,7 @@ void TITthread::OnStart()
 {
   while (mRunning)
   {
-    MsSleep(10);
+    mThread.MsSleep(10);
     {
       nglCriticalSectionGuard guard(mRunCS);
 
@@ -269,7 +270,7 @@ void TITthread::OnStart()
       // will block 'til the blocked cs 
       while (mLockedA || mLockedB || mLockedC)
       {
-        MsSleep(10);
+        mThread.MsSleep(10);
 
         if (!WaitForLockOrUnlock())
           continue;
@@ -280,6 +281,15 @@ void TITthread::OnStart()
   }
 }
 
+const nglString& TITthread::GetName() const
+{
+  return mThread.GetName();
+}
+
+nglThread::ID TITthread::GetID() const
+{
+  return mThread.GetID();
+}
 
 
 bool TITthread::IsLockedA()
@@ -346,31 +356,7 @@ TITCSthread::TITCSthread(const nglString& rName)
   
   if (SetObjectClass(_T("TITCSThread")))
     InitAttributes();
-      
-  nuiVBox* pVBox = new nuiVBox(2);
-  AddCell(pVBox);
-  
-  nuiAttribBase Base(GetAttribute(_T("LockedA")));
-  mpEditorA = Base.GetEditor();
-  pVBox->SetCell(0, mpEditorA, nuiCenter);
-  pVBox->SetCell(1, new nuiLabel(_T("shared cs A"), nuiFont::GetFont(8)));
-  
-  pVBox = new nuiVBox(2);
-  AddCell(pVBox);
-  
-  Base = GetAttribute(_T("LockedB"));
-  mpEditorB = Base.GetEditor();
-  pVBox->SetCell(0, mpEditorB, nuiCenter);
-  pVBox->SetCell(1, new nuiLabel(_T("shared cs B"), nuiFont::GetFont(8)));
-  
-  pVBox = new nuiVBox(2);
-  AddCell(pVBox);
-  
-  Base = GetAttribute(_T("LockedC"));
-  mpEditorC = Base.GetEditor();
-  pVBox->SetCell(0, mpEditorC, nuiCenter);
-  pVBox->SetCell(1, new nuiLabel(_T("shared cs C"), nuiFont::GetFont(8)));
-      
+            
 }
 
 TITCSthread::~TITCSthread()
@@ -383,20 +369,47 @@ void TITCSthread::InitAttributes()
 {
   AddAttribute(new nuiAttribute<bool>
     (nglString(_T("LockedA")), nuiUnitOnOff,
-     nuiAttribute<bool>::GetterDelegate(this, &TITthread::IsLockedA),
-     nuiAttribute<bool>::SetterDelegate(this, &TITthread::SetLockedA)));
+     nuiFastDelegate::MakeDelegate(this, &TITthread::IsLockedA),
+     nuiFastDelegate::MakeDelegate(this, &TITthread::SetLockedA)));
 
   AddAttribute(new nuiAttribute<bool>
     (nglString(_T("LockedB")), nuiUnitOnOff,
-     nuiAttribute<bool>::GetterDelegate(this, &TITthread::IsLockedB),
-     nuiAttribute<bool>::SetterDelegate(this, &TITthread::SetLockedB)));
+     nuiFastDelegate::MakeDelegate(this, &TITthread::IsLockedB),
+     nuiFastDelegate::MakeDelegate(this, &TITthread::SetLockedB)));
 
   AddAttribute(new nuiAttribute<bool>
     (nglString(_T("LockedC")), nuiUnitOnOff,
-     nuiAttribute<bool>::GetterDelegate(this, &TITthread::IsLockedC),
-     nuiAttribute<bool>::SetterDelegate(this, &TITthread::SetLockedC)));
+     nuiFastDelegate::MakeDelegate(this, &TITthread::IsLockedC),
+     nuiFastDelegate::MakeDelegate(this, &TITthread::SetLockedC)));
 }
 
+
+nuiWidget* TITCSthread::InitGUI()
+{
+  nuiHBox* pBox = new nuiHBox();
+  nuiVBox* pVBox = new nuiVBox(2);
+  pBox->AddCell(pVBox);
+  
+  nuiAttribBase Base(GetAttribute(_T("LockedA")));
+  pVBox->SetCell(0, Base.GetEditor(), nuiCenter);
+  pVBox->SetCell(1, new nuiLabel(_T("shared cs A"), nuiFont::GetFont(8)));
+  
+  pVBox = new nuiVBox(2);
+  pBox->AddCell(pVBox);
+  
+  Base = GetAttribute(_T("LockedB"));
+  pVBox->SetCell(0, Base.GetEditor(), nuiCenter);
+  pVBox->SetCell(1, new nuiLabel(_T("shared cs B"), nuiFont::GetFont(8)));
+  
+  pVBox = new nuiVBox(2);
+  pBox->AddCell(pVBox);
+  
+  Base = GetAttribute(_T("LockedC"));
+  pVBox->SetCell(0, Base.GetEditor(), nuiCenter);
+  pVBox->SetCell(1, new nuiLabel(_T("shared cs C"), nuiFont::GetFont(8)));
+
+  return pBox;
+}
 
 
 bool TITCSthread::WaitForLock()
@@ -507,7 +520,12 @@ nglCriticalSection TITCSthread::mSharedCSC(nglString(_T("CSshared C")));
 TITLLthread::TITLLthread(const nglString& rName)
   : TITthread(rName)
 {
-  InitAttributes();
+  mLockedA = false;
+  mLockedB = false;
+  mLockedC = false;
+
+  if (SetObjectClass(_T("TITLLThread")))
+    InitAttributes();
 }
 
 TITLLthread::~TITLLthread()
@@ -522,45 +540,43 @@ void TITLLthread::InitAttributes()
     (nglString(_T("LockedA")), nuiUnitOnOff,
      nuiAttribute<bool>::GetterDelegate(this, &TITthread::IsLockedA),
      nuiAttribute<bool>::SetterDelegate(this, &TITthread::SetLockedA)));
-  mLockedA = false;
 
   AddAttribute(new nuiAttribute<bool>
     (nglString(_T("LockedB")), nuiUnitOnOff,
      nuiAttribute<bool>::GetterDelegate(this, &TITthread::IsLockedB),
      nuiAttribute<bool>::SetterDelegate(this, &TITthread::SetLockedB)));
-  mLockedB = false;
 
   AddAttribute(new nuiAttribute<bool>
     (nglString(_T("LockedC")), nuiUnitOnOff,
      nuiAttribute<bool>::GetterDelegate(this, &TITthread::IsLockedC),
      nuiAttribute<bool>::SetterDelegate(this, &TITthread::SetLockedC)));
-  mLockedC = false;
+}
 
-
-
+nuiWidget* TITLLthread::InitGUI()
+{
+  nuiHBox* pBox = new nuiHBox();
   nuiVBox* pVBox = new nuiVBox(2);
-  AddCell(pVBox);
+  pBox->AddCell(pVBox);
   
   nuiAttribBase Base(GetAttribute(_T("LockedA")));
-  mpEditorA = Base.GetEditor();
-  pVBox->SetCell(0, mpEditorA, nuiCenter);
+  pVBox->SetCell(0, Base.GetEditor(), nuiCenter);
   pVBox->SetCell(1, new nuiLabel(_T("shared ll A"), nuiFont::GetFont(8)));
 
   pVBox = new nuiVBox(2);
-  AddCell(pVBox);
+  pBox->AddCell(pVBox);
   
   Base = GetAttribute(_T("LockedB"));
-  mpEditorB = Base.GetEditor();
-  pVBox->SetCell(0, mpEditorB, nuiCenter);
+  pVBox->SetCell(0, Base.GetEditor(), nuiCenter);
   pVBox->SetCell(1, new nuiLabel(_T("shared ll B"), nuiFont::GetFont(8)));
 
   pVBox = new nuiVBox(2);
-  AddCell(pVBox);
+  pBox->AddCell(pVBox);
   
   Base = GetAttribute(_T("LockedC"));
-  mpEditorC = Base.GetEditor();
-  pVBox->SetCell(0, mpEditorC, nuiCenter);
+  pVBox->SetCell(0, Base.GetEditor(), nuiCenter);
   pVBox->SetCell(1, new nuiLabel(_T("shared ll C"), nuiFont::GetFont(8)));
+
+  return pBox;
 }
 
 
