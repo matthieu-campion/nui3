@@ -141,6 +141,7 @@ typedef struct Vertex
 // the original Radeon and the Radeon 7000 have a hardware bug (#3633400):
 // adjacent vertices with identical texture coordinates break the mipmap selection policy.
 // the workaround is to nudge some of the texture coords by a tiny amount.
+//#define GLAARG_RADEON7000_KLUDGE 0.0001f
 #define GLAARG_RADEON7000_KLUDGE 0.0001f
 
 // VAR convienence constants based on the hardcoded values in the header.

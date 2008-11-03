@@ -163,6 +163,8 @@ nuiTexture* nuiTexture::GetAATexture()
     pTexture = nuiTexture::GetTexture(info, _T("nuiTextureAA"));
     pTexture->SetMinFilter(GL_LINEAR_MIPMAP_LINEAR);
     pTexture->SetMagFilter(GL_LINEAR);
+    pTexture->SetWrapS(GL_REPEAT);
+    pTexture->SetWrapT(GL_REPEAT);
     pTexture->EnableAutoMipMap(true);
   }
   else
