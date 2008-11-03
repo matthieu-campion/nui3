@@ -990,7 +990,8 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
       {
         if (pTexture->GetAutoMipMap())
         {
-          gluBuild2DMipmaps(target, pImage->GetPixelFormat(), (int)Width, (int)Height, pixelformat, type, pBuffer);
+          glTexParameteri(target, GL_TEXTURE_MAX_LEVEL, (int)log2(Width));
+          gluBuild2DMipmaps(target, pImage->GetPixelFormat(), (int)Width, (int)Height, pixelformat, type, pBuffer);          
         }
         else
         {
