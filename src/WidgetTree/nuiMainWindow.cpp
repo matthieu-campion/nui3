@@ -402,7 +402,7 @@ void nuiMainWindow::OnClose()
   if (mQuitOnClose)
     App->Quit(0);
   else
-    nuiWidget::Trash();
+    Trash();
 }
 
 void nuiMainWindow::OnState (nglWindow::StateInfo State)
@@ -684,8 +684,17 @@ bool nuiMainWindow::ShowWidgetInspector()
 bool nuiMainWindow::OnInspectorDeath(const nuiEvent& rEvent)
 {
   mpInspectorWindow = NULL;
+  SetWatchedWidget(NULL);
   return false;
 }
+
+bool nuiMainWindow::Trash()
+{
+  delete this;
+  return true;
+}
+
+
 
 void nuiMainWindow::SetDebugMode(bool Set)
 {

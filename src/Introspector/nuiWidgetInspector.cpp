@@ -277,6 +277,14 @@ nuiWidgetInfo::~nuiWidgetInfo()
 void nuiWidgetInfo::SetTarget(nuiWidget* pWidget)
 {
   nuiWidget* pTarget = mpTarget;
+  
+  if (mpTarget)
+  {
+    nuiTopLevel* pTop = mpTarget->GetTopLevel();
+    if (pTop)
+      pTop->SetWatchedWidget(NULL);
+  }
+
   mpTarget = pWidget;
 
   if (mpTarget && mpTarget != pTarget)

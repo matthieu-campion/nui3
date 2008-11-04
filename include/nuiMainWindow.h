@@ -68,6 +68,7 @@ public:
 
   void SetQuitOnClose(bool Set);
   bool GetQuitOnClose() const;
+  bool Trash();
 
   /** @name Frame rate limitation */
   //@{

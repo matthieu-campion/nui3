@@ -497,6 +497,8 @@ nglString nuiWidget::Dump()
 
 nuiWidget::~nuiWidget()
 {
+  Destroyed();
+  
 #ifdef NUI_WIDGET_STATS
   wcount--;
   gWidgetCounter.Add(GetProperty("Class"));
@@ -527,7 +529,6 @@ nuiWidget::~nuiWidget()
   }
 
   delete mpRenderCache;
-  Destroyed();
 }
 
 bool nuiWidget::IsTrashed(bool combined) const 
