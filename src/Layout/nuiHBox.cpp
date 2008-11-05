@@ -244,6 +244,9 @@ void nuiHBox::AddCell(nuiWidget* pWidget, nuiPosition position)
 {
   uint pos = nuiGrid::GetNbColumns();
   nuiGrid::AddColumns(pos, 1);
+  if (GetNbRows() == 0)
+    nuiGrid::AddRows(0,1);
+  
   nuiGrid::SetCell(pos, 0, pWidget, position); 
 }
 

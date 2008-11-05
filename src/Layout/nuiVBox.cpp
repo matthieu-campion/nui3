@@ -238,6 +238,9 @@ void nuiVBox::AddCell(nuiWidget* pWidget, nuiPosition position)
 {
   uint pos = nuiGrid::GetNbRows();
   nuiGrid::AddRows(pos, 1);
+  if (GetNbColumns() == 0)
+    nuiGrid::AddColumns(0,1);
+  
   nuiGrid::SetCell(0, pos, pWidget, position); 
 }
 
