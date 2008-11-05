@@ -31,6 +31,15 @@ nuiRadioButton::nuiRadioButton(const nglString& rText)
   mCanToggle = false;
 }
 
+nuiRadioButton::nuiRadioButton(nuiStateDecoration* pDecoration)
+  : nuiToggleButton(pDecoration)
+{
+  SetObjectClass(_T("nuiRadioButton"));
+  SetGroup(_T("Default"));
+  mpGroupManager = NULL;
+  mCanToggle = false;
+}
+
 nuiRadioButton::nuiRadioButton(const nglImage& rImage)
   : nuiToggleButton(rImage)
 {

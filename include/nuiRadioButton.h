@@ -22,6 +22,7 @@ class NUI_API nuiRadioButton : public nuiToggleButton
 public:
   nuiRadioButton(); ///< Create a simple button (empty).
   nuiRadioButton(const nglString& rText); ///< Create a simple button with a nuiLabel as a child filling the client area.
+  nuiRadioButton(nuiStateDecoration* pDecoration); ///< Create a simple button with a skin.
   nuiRadioButton(const nglImage& rImage); ///< Create a simple button with a nuiImage as a child filling the client area.
   virtual bool Load(const nuiXMLNode* pNode); ///< Create a button from an XML description.
   virtual ~nuiRadioButton();
