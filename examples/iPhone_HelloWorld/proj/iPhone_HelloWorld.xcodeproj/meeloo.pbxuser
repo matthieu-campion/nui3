@@ -1,0 +1,329 @@
+// !$*UTF8*$!
+{
+	29B97313FDCFA39411CA2CEA /* Project object */ = {
+		activeBuildConfigurationName = Default;
+		activeExecutable = E53DAA150EC266F100175F39 /* iPhone_HelloWorld */;
+		activeSDKPreference = iphoneos2.1;
+		activeTarget = C99995F80DA6EE97001A7116 /* iPhone_HelloWorld */;
+		codeSenseManager = E53DAA210EC2671100175F39 /* Code sense */;
+		executables = (
+			E53DAA150EC266F100175F39 /* iPhone_HelloWorld */,
+			E53DAA160EC266F100175F39 /* iPhone_HelloWorldD */,
+		);
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXExecutablesDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXExecutablesDataSource_NameID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					22,
+					300,
+					1300,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXExecutablesDataSource_ActiveFlagID,
+					PBXExecutablesDataSource_NameID,
+					PBXExecutablesDataSource_CommentsID,
+				);
+			};
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					1412,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXConfiguration.PBXTargetDataSource.PBXTargetDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					1372,
+					60,
+					20,
+					48,
+					43,
+					43,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXTargetDataSource_PrimaryAttribute,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 247658890;
+			PBXWorkspaceStateSaveDate = 247658890;
+		};
+		perUserProjectItems = {
+			E53430D90EC2F29500575BA6 = E53430D90EC2F29500575BA6 /* PlistBookmark */;
+			E534311A0EC2F87700575BA6 = E534311A0EC2F87700575BA6 /* PlistBookmark */;
+			E534312D0EC2F92500575BA6 = E534312D0EC2F92500575BA6 /* PlistBookmark */;
+			E53431300EC2F97100575BA6 = E53431300EC2F97100575BA6 /* PlistBookmark */;
+			E53431340EC2F97100575BA6 = E53431340EC2F97100575BA6 /* PlistBookmark */;
+			E53431430EC2F9A300575BA6 /* PlistBookmark */ = E53431430EC2F9A300575BA6 /* PlistBookmark */;
+			E53431470EC2F9C500575BA6 /* PlistBookmark */ = E53431470EC2F9C500575BA6 /* PlistBookmark */;
+			E53431480EC2F9CD00575BA6 /* PlistBookmark */ = E53431480EC2F9CD00575BA6 /* PlistBookmark */;
+			E534314C0EC2F9CD00575BA6 /* PlistBookmark */ = E534314C0EC2F9CD00575BA6 /* PlistBookmark */;
+			E534315A0EC311E800575BA6 /* PlistBookmark */ = E534315A0EC311E800575BA6 /* PlistBookmark */;
+			E534315B0EC311E800575BA6 /* PlistBookmark */ = E534315B0EC311E800575BA6 /* PlistBookmark */;
+		};
+		sourceControlManager = E53DAA200EC2671100175F39 /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	61DF35850EC256EB00051F43 /* nuiWin.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1453, 1040}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 579}";
+			sepNavWindowFrame = "{{15, 5}, {1512, 1168}}";
+		};
+	};
+	61DF35860EC256EB00051F43 /* nuiWin.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1453, 1040}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 306}";
+			sepNavWindowFrame = "{{15, 5}, {1512, 1168}}";
+		};
+	};
+	61DF35870EC256EB00051F43 /* nuiApp.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1453, 1131}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 1476}";
+			sepNavWindowFrame = "{{15, 5}, {1512, 1168}}";
+		};
+	};
+	61DF35930EC25ADC00051F43 /* nuiApp.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1453, 1040}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 236}";
+			sepNavWindowFrame = "{{15, 5}, {1512, 1168}}";
+		};
+	};
+	C98C92370DA7D5B500B348FA /* Icon.png */ = {
+		uiCtxt = {
+			sepNavWindowFrame = "{{15, 5}, {1512, 1168}}";
+		};
+	};
+	C99995F80DA6EE97001A7116 /* iPhone_HelloWorld */ = {
+		activeExec = 0;
+		executables = (
+			E53DAA150EC266F100175F39 /* iPhone_HelloWorld */,
+		);
+	};
+	C9F5F9070DA84CAB00E078ED /* iPhone_HelloWorldD */ = {
+		activeExec = 0;
+		executables = (
+			E53DAA160EC266F100175F39 /* iPhone_HelloWorldD */,
+		);
+	};
+	E53430D90EC2F29500575BA6 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = E53430DA0EC2F29500575BA6;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	E53430DA0EC2F29500575BA6 = {
+		isa = PBXFileReference;
+		lastKnownFileType = folder;
+		sourceTree = "<group>";
+	};
+	E534311A0EC2F87700575BA6 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = C9F2587A0E5861EA00687021 /* dlist.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/meeloo/work/nui3/examples/iPhone_helloworld/proj/dlist.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	E534312D0EC2F92500575BA6 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = C9F2587A0E5861EA00687021 /* dlist.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/meeloo/work/nui3/examples/iPhone_helloworld/proj/dlist.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	E53431300EC2F97100575BA6 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = C9F2587A0E5861EA00687021 /* dlist.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/meeloo/work/nui3/examples/iPhone_helloworld/proj/dlist.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	E53431340EC2F97100575BA6 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = C9F2587A0E5861EA00687021 /* dlist.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/meeloo/work/nui3/examples/iPhone_helloworld/proj/dlist.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	E53431430EC2F9A300575BA6 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = C9F2587A0E5861EA00687021 /* dlist.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/meeloo/work/nui3/examples/iPhone_HelloWorld/proj/dlist.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	E53431470EC2F9C500575BA6 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = C9F2587A0E5861EA00687021 /* dlist.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/meeloo/work/nui3/examples/iPhone_HelloWorld/proj/dlist.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	E53431480EC2F9CD00575BA6 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = C9F2587A0E5861EA00687021 /* dlist.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/meeloo/work/nui3/examples/iPhone_HelloWorld/proj/dlist.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	E534314C0EC2F9CD00575BA6 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = C9F2587A0E5861EA00687021 /* dlist.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/meeloo/work/nui3/examples/iPhone_HelloWorld/proj/dlist.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	E534315A0EC311E800575BA6 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = C9F2587A0E5861EA00687021 /* dlist.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/meeloo/work/nui3/examples/iPhone_HelloWorld/proj/dlist.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	E534315B0EC311E800575BA6 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = C9F2587A0E5861EA00687021 /* dlist.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/meeloo/work/nui3/examples/iPhone_HelloWorld/proj/dlist.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	E53DAA150EC266F100175F39 /* iPhone_HelloWorld */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 1;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = iPhone_HelloWorld;
+		savedGlobals = {
+		};
+		sourceDirectories = (
+		);
+	};
+	E53DAA160EC266F100175F39 /* iPhone_HelloWorldD */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 1;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = iPhone_HelloWorldD;
+		savedGlobals = {
+		};
+		sourceDirectories = (
+		);
+	};
+	E53DAA200EC2671100175F39 /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+		};
+	};
+	E53DAA210EC2671100175F39 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+}
