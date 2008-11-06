@@ -463,7 +463,12 @@ typedef wchar_t nglChar;
 
 // Fake GLU for OpenGLES
      typedef double GLdouble;
-#    include "glu/libtess/tess.h"
+    /* TessWinding */
+    #define GLU_TESS_WINDING_ODD               100130
+    #define GLU_TESS_WINDING_NONZERO           100131
+    #define GLU_TESS_WINDING_POSITIVE          100132
+    #define GLU_TESS_WINDING_NEGATIVE          100133
+    #define GLU_TESS_WINDING_ABS_GEQ_TWO       100134
 
 #  elif defined _CARBON_
 #    if defined(__MWERKS__)

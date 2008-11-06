@@ -35,7 +35,7 @@ private:
   nuiRenderObject* GenerateFromPath(float Quality);
   nuiRenderObject* GenerateFromShape(float Quality);
 
-  static GLUtesselator* mpTess;
+  static struct GLUtesselator* mpTess;
   static uint32 mRefs;
 };
 

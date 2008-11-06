@@ -12,6 +12,10 @@
 #include "nuiPathGenerator.h"
 #include "nuiContour.h"
 
+#ifdef _UIKIT_
+#    include "glu/libtess/tess.h"
+#endif
+
 class nuiPoint;
 
 
