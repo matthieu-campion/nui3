@@ -36,6 +36,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		E51D5B230EC3A28500182E40 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 61DF35C60EC25BCD00051F43 /* nuiE.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 614B637D0DA7BA67000F4C22 /* nuiEd */;
+			remoteInfo = nuiEd;
+		};
 		E53431240EC2F88400575BA6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 61DF35C60EC25BCD00051F43 /* nuiE.xcodeproj */;
@@ -240,6 +247,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				E51D5B240EC3A28500182E40 /* PBXTargetDependency */,
 			);
 			name = iPhone_HelloWorldD;
 			productName = beatmaker;
@@ -330,6 +338,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		E51D5B240EC3A28500182E40 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = nuiEd;
+			targetProxy = E51D5B230EC3A28500182E40 /* PBXContainerItemProxy */;
+		};
 		E534312B0EC2F89E00575BA6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = nuiEd;

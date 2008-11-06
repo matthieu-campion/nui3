@@ -2,9 +2,9 @@
 {
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
 		activeBuildConfigurationName = Default;
-		activeExecutable = E53DAA150EC266F100175F39 /* iPhone_HelloWorld */;
-		activeSDKPreference = iphoneos2.1;
-		activeTarget = C99995F80DA6EE97001A7116 /* iPhone_HelloWorld */;
+		activeExecutable = E53DAA160EC266F100175F39 /* iPhone_HelloWorldD */;
+		activeSDKPreference = iphonesimulator2.1;
+		activeTarget = C9F5F9070DA84CAB00E078ED /* iPhone_HelloWorldD */;
 		codeSenseManager = E53DAA210EC2671100175F39 /* Code sense */;
 		executables = (
 			E53DAA150EC266F100175F39 /* iPhone_HelloWorld */,
@@ -69,21 +69,25 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 247658890;
-			PBXWorkspaceStateSaveDate = 247658890;
+			PBXPerProjectTemplateStateSaveDate = 247702113;
+			PBXWorkspaceStateSaveDate = 247702113;
 		};
 		perUserProjectItems = {
+			E51D5B100EC3A27D00182E40 /* PlistBookmark */ = E51D5B100EC3A27D00182E40 /* PlistBookmark */;
+			E51D5B270EC3A29800182E40 /* PlistBookmark */ = E51D5B270EC3A29800182E40 /* PlistBookmark */;
+			E51D5B280EC3A29F00182E40 /* PlistBookmark */ = E51D5B280EC3A29F00182E40 /* PlistBookmark */;
+			E51D5B2C0EC3A29F00182E40 /* PlistBookmark */ = E51D5B2C0EC3A29F00182E40 /* PlistBookmark */;
+			E51D5B300EC3A36000182E40 /* PlistBookmark */ = E51D5B300EC3A36000182E40 /* PlistBookmark */;
+			E51D5B310EC3A36400182E40 /* PlistBookmark */ = E51D5B310EC3A36400182E40 /* PlistBookmark */;
+			E51D5B320EC3A37B00182E40 /* PlistBookmark */ = E51D5B320EC3A37B00182E40 /* PlistBookmark */;
+			E51D5B4E0EC3A4AA00182E40 /* PlistBookmark */ = E51D5B4E0EC3A4AA00182E40 /* PlistBookmark */;
+			E51D5B5E0EC3A4B200182E40 /* PlistBookmark */ = E51D5B5E0EC3A4B200182E40 /* PlistBookmark */;
+			E51D5B5F0EC3A4B200182E40 /* PlistBookmark */ = E51D5B5F0EC3A4B200182E40 /* PlistBookmark */;
 			E53430D90EC2F29500575BA6 = E53430D90EC2F29500575BA6 /* PlistBookmark */;
-			E534311A0EC2F87700575BA6 = E534311A0EC2F87700575BA6 /* PlistBookmark */;
-			E534312D0EC2F92500575BA6 = E534312D0EC2F92500575BA6 /* PlistBookmark */;
-			E53431300EC2F97100575BA6 = E53431300EC2F97100575BA6 /* PlistBookmark */;
-			E53431340EC2F97100575BA6 = E53431340EC2F97100575BA6 /* PlistBookmark */;
-			E53431430EC2F9A300575BA6 /* PlistBookmark */ = E53431430EC2F9A300575BA6 /* PlistBookmark */;
-			E53431470EC2F9C500575BA6 /* PlistBookmark */ = E53431470EC2F9C500575BA6 /* PlistBookmark */;
-			E53431480EC2F9CD00575BA6 /* PlistBookmark */ = E53431480EC2F9CD00575BA6 /* PlistBookmark */;
-			E534314C0EC2F9CD00575BA6 /* PlistBookmark */ = E534314C0EC2F9CD00575BA6 /* PlistBookmark */;
-			E534315A0EC311E800575BA6 /* PlistBookmark */ = E534315A0EC311E800575BA6 /* PlistBookmark */;
-			E534315B0EC311E800575BA6 /* PlistBookmark */ = E534315B0EC311E800575BA6 /* PlistBookmark */;
+			E53431430EC2F9A300575BA6 = E53431430EC2F9A300575BA6 /* PlistBookmark */;
+			E53431470EC2F9C500575BA6 = E53431470EC2F9C500575BA6 /* PlistBookmark */;
+			E53431B30EC3A1FF00575BA6 = E53431B30EC3A1FF00575BA6 /* PlistBookmark */;
+			E53431B40EC3A1FF00575BA6 = E53431B40EC3A1FF00575BA6 /* PlistBookmark */;
 		};
 		sourceControlManager = E53DAA200EC2671100175F39 /* Source Control */;
 		userBuildSettings = {
@@ -138,6 +142,116 @@
 			E53DAA160EC266F100175F39 /* iPhone_HelloWorldD */,
 		);
 	};
+	E51D5B100EC3A27D00182E40 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = C9F2587A0E5861EA00687021 /* dlist.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/meeloo/work/nui3/examples/iPhone_HelloWorld/proj/dlist.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	E51D5B270EC3A29800182E40 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = C9F2587A0E5861EA00687021 /* dlist.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/meeloo/work/nui3/examples/iPhone_HelloWorld/proj/dlist.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	E51D5B280EC3A29F00182E40 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = C9F2587A0E5861EA00687021 /* dlist.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/meeloo/work/nui3/examples/iPhone_HelloWorld/proj/dlist.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	E51D5B2C0EC3A29F00182E40 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = C9F2587A0E5861EA00687021 /* dlist.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/meeloo/work/nui3/examples/iPhone_HelloWorld/proj/dlist.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	E51D5B300EC3A36000182E40 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = C9F2587A0E5861EA00687021 /* dlist.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/meeloo/work/nui3/examples/iPhone_HelloWorld/proj/dlist.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	E51D5B310EC3A36400182E40 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = C9F2587A0E5861EA00687021 /* dlist.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/meeloo/work/nui3/examples/iPhone_HelloWorld/proj/dlist.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	E51D5B320EC3A37B00182E40 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = C9F2587A0E5861EA00687021 /* dlist.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/meeloo/work/nui3/examples/iPhone_HelloWorld/proj/dlist.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	E51D5B4E0EC3A4AA00182E40 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = C9F2587A0E5861EA00687021 /* dlist.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/meeloo/work/nui3/examples/iPhone_HelloWorld/proj/dlist.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	E51D5B5E0EC3A4B200182E40 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = C9F2587A0E5861EA00687021 /* dlist.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/meeloo/work/nui3/examples/iPhone_HelloWorld/proj/dlist.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	E51D5B5F0EC3A4B200182E40 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = C9F2587A0E5861EA00687021 /* dlist.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/meeloo/work/nui3/examples/iPhone_HelloWorld/proj/dlist.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
 	E53430D90EC2F29500575BA6 /* PlistBookmark */ = {
 		isa = PlistBookmark;
 		fRef = E53430DA0EC2F29500575BA6;
@@ -152,50 +266,6 @@
 		isa = PBXFileReference;
 		lastKnownFileType = folder;
 		sourceTree = "<group>";
-	};
-	E534311A0EC2F87700575BA6 /* PlistBookmark */ = {
-		isa = PlistBookmark;
-		fRef = C9F2587A0E5861EA00687021 /* dlist.plist */;
-		fallbackIsa = PBXBookmark;
-		isK = 0;
-		kPath = (
-		);
-		name = /Users/meeloo/work/nui3/examples/iPhone_helloworld/proj/dlist.plist;
-		rLen = 0;
-		rLoc = 2147483647;
-	};
-	E534312D0EC2F92500575BA6 /* PlistBookmark */ = {
-		isa = PlistBookmark;
-		fRef = C9F2587A0E5861EA00687021 /* dlist.plist */;
-		fallbackIsa = PBXBookmark;
-		isK = 0;
-		kPath = (
-		);
-		name = /Users/meeloo/work/nui3/examples/iPhone_helloworld/proj/dlist.plist;
-		rLen = 0;
-		rLoc = 2147483647;
-	};
-	E53431300EC2F97100575BA6 /* PlistBookmark */ = {
-		isa = PlistBookmark;
-		fRef = C9F2587A0E5861EA00687021 /* dlist.plist */;
-		fallbackIsa = PBXBookmark;
-		isK = 0;
-		kPath = (
-		);
-		name = /Users/meeloo/work/nui3/examples/iPhone_helloworld/proj/dlist.plist;
-		rLen = 0;
-		rLoc = 2147483647;
-	};
-	E53431340EC2F97100575BA6 /* PlistBookmark */ = {
-		isa = PlistBookmark;
-		fRef = C9F2587A0E5861EA00687021 /* dlist.plist */;
-		fallbackIsa = PBXBookmark;
-		isK = 0;
-		kPath = (
-		);
-		name = /Users/meeloo/work/nui3/examples/iPhone_helloworld/proj/dlist.plist;
-		rLen = 0;
-		rLoc = 2147483647;
 	};
 	E53431430EC2F9A300575BA6 /* PlistBookmark */ = {
 		isa = PlistBookmark;
@@ -219,7 +289,7 @@
 		rLen = 0;
 		rLoc = 2147483647;
 	};
-	E53431480EC2F9CD00575BA6 /* PlistBookmark */ = {
+	E53431B30EC3A1FF00575BA6 /* PlistBookmark */ = {
 		isa = PlistBookmark;
 		fRef = C9F2587A0E5861EA00687021 /* dlist.plist */;
 		fallbackIsa = PBXBookmark;
@@ -230,29 +300,7 @@
 		rLen = 0;
 		rLoc = 2147483647;
 	};
-	E534314C0EC2F9CD00575BA6 /* PlistBookmark */ = {
-		isa = PlistBookmark;
-		fRef = C9F2587A0E5861EA00687021 /* dlist.plist */;
-		fallbackIsa = PBXBookmark;
-		isK = 0;
-		kPath = (
-		);
-		name = /Users/meeloo/work/nui3/examples/iPhone_HelloWorld/proj/dlist.plist;
-		rLen = 0;
-		rLoc = 2147483647;
-	};
-	E534315A0EC311E800575BA6 /* PlistBookmark */ = {
-		isa = PlistBookmark;
-		fRef = C9F2587A0E5861EA00687021 /* dlist.plist */;
-		fallbackIsa = PBXBookmark;
-		isK = 0;
-		kPath = (
-		);
-		name = /Users/meeloo/work/nui3/examples/iPhone_HelloWorld/proj/dlist.plist;
-		rLen = 0;
-		rLoc = 2147483647;
-	};
-	E534315B0EC311E800575BA6 /* PlistBookmark */ = {
+	E53431B40EC3A1FF00575BA6 /* PlistBookmark */ = {
 		isa = PlistBookmark;
 		fRef = C9F2587A0E5861EA00687021 /* dlist.plist */;
 		fallbackIsa = PBXBookmark;
@@ -320,6 +368,7 @@
 		fallbackIsa = XCSourceControlManager;
 		isSCMEnabled = 0;
 		scmConfiguration = {
+			repositoryName = "nui 1";
 		};
 	};
 	E53DAA210EC2671100175F39 /* Code sense */ = {

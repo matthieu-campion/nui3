@@ -194,10 +194,10 @@ if (HasExtension(_T("GL_ARB_texture_compression")))
   */
   //@}
 
-#ifndef _OPENGL_ES_
+//#ifndef _OPENGL_ES_
   // Include extension methods as members here
   #include "ngl_glext.h"
-#endif
+//#endif
 
   /** @name  */
   //@{

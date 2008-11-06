@@ -462,7 +462,8 @@ typedef wchar_t nglChar;
 #    include <OpenGLES/ES1/glext.h>
 
 // Fake GLU for OpenGLES
-     typedef double GLdouble;
+    typedef double GLdouble;
+    typedef double GLclampd;
     /* TessWinding */
     #define GLU_TESS_WINDING_ODD               100130
     #define GLU_TESS_WINDING_NONZERO           100131
