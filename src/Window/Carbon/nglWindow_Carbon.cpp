@@ -1863,7 +1863,7 @@ void nglWindow::SetEventMask(EventMask Events)
   
 }
 
-bool nglWindow::GetResolution(float& rHorizontal, float& rVertical)
+bool nglWindow::GetResolution(float& rHorizontal, float& rVertical) const
 {
   rHorizontal = rVertical = 72.f;
   return false;

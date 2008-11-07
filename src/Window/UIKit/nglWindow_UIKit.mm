@@ -125,42 +125,45 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 
 - (void) InitNGLWindow
 {
-  UIDevice* pUIDev = [UIDevice currentDevice];
-  int angle = -1;
-  int w, h;
-  w = [UIScreen mainScreen].applicationFrame.size.width;
-  h = [UIScreen mainScreen].applicationFrame.size.height;
-  int ww, hh;
-  ww = w;
-  hh = h;
-  switch (pUIDev.orientation)
+  if (mpNGLWindow->GetAutoRotation())
   {
-    case UIDeviceOrientationUnknown:
-    case UIDeviceOrientationFaceUp:
-    case UIDeviceOrientationFaceDown:
-      break;
-    case UIDeviceOrientationPortrait:
-      angle = 0;
-      break;
-    case UIDeviceOrientationPortraitUpsideDown:
-      angle = 180;
-      break;
-    case UIDeviceOrientationLandscapeLeft:
-      angle = 270;
-      w = hh;
-      h = ww;
-      break;
-    case UIDeviceOrientationLandscapeRight:
-      angle = 90;
-      w = hh;
-      h = ww;
-      break;
-  }
-  if (angle >= 0 && angle != mpNGLWindow->GetRotation())
-  {
-    mpNGLWindow->SetRotation(angle);
-    mpNGLWindow->SetSize(w, h);
-    mInvalidated = true;
+    UIDevice* pUIDev = [UIDevice currentDevice];
+    int angle = -1;
+    int w, h;
+    w = [UIScreen mainScreen].applicationFrame.size.width;
+    h = [UIScreen mainScreen].applicationFrame.size.height;
+    int ww, hh;
+    ww = w;
+    hh = h;
+    switch (pUIDev.orientation)
+    {
+      case UIDeviceOrientationUnknown:
+      case UIDeviceOrientationFaceUp:
+      case UIDeviceOrientationFaceDown:
+        break;
+      case UIDeviceOrientationPortrait:
+        angle = 0;
+        break;
+      case UIDeviceOrientationPortraitUpsideDown:
+        angle = 180;
+        break;
+      case UIDeviceOrientationLandscapeLeft:
+        angle = 270;
+        w = hh;
+        h = ww;
+        break;
+      case UIDeviceOrientationLandscapeRight:
+        angle = 90;
+        w = hh;
+        h = ww;
+        break;
+    }
+    if (angle >= 0 && angle != mpNGLWindow->GetRotation())
+    {
+      mpNGLWindow->SetRotation(angle);
+      mpNGLWindow->SetSize(w, h);
+      mInvalidated = true;
+    }
   }
   
   if (!mInited)
@@ -431,6 +434,8 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
   SetError (NGL_WINDOW_ENONE);
   SetEventMask(nglWindow::AllEvents);
 
+  mAutoRotate = true;
+  
   for (nglTouchId t = 0; t < _NUI_MAX_TOUCHES_; t++)
   {
     gPressedTouches[t] = false;
@@ -716,7 +721,7 @@ void nglWindow::SetEventMask(EventMask Events)
   mEventMask = Events;
 }
 
-bool nglWindow::GetResolution(float& rHorizontal, float& rVertical)
+bool nglWindow::GetResolution(float& rHorizontal, float& rVertical) const
 {
   rHorizontal = rVertical = 72.f;
   return false;

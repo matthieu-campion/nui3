@@ -210,6 +210,16 @@ bool nglWindow::OnMouseMove (nglMouseInfo& rInfo)
 	return false;
 }
 
+void nglWindow::EnableAutoRotation(bool set)
+{
+  mAutoRotate = set;
+}
+
+bool nglWindow::GetAutoRotation() const
+{
+  return mAutoRotate;
+}
+
 
 /*
  * Internal callbacks
@@ -334,7 +344,7 @@ bool nglWindow::IsInModalState()
  * Geometry
  */
 
-uint nglWindow::GetRotation()
+uint nglWindow::GetRotation() const
 {
   return mAngle;
 }

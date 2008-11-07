@@ -319,15 +319,17 @@ window = new nglWindow (context, info, NULL);
     \param YPos position ordinate
     \return true if the window position was updated
   */
-  bool GetResolution (float& rHorizontal, float& rVertical);
+  bool GetResolution (float& rHorizontal, float& rVertical) const;
   /*!<
     Retrieve screen resolution in DPI (dots per inch).
     \param rHorizontal horizontal resolution in DPI
     \param rVertical vertical resolution in DPI
     \return true if \p rHorizontal and \p rVertical contain valid information
   */
-  uint GetRotation();           ///< Return the current (user area) rotation angle
+  uint GetRotation() const;           ///< Return the current (user area) rotation angle
   virtual void SetRotation(uint Angle); ///< Set the current (user area) rotation angle
+  void EnableAutoRotation(bool set); ///< Change the rotation and size of the screen to follow the device's screen orientation (this is the default behaviour).
+  bool GetAutoRotation() const; ///< Change the rotation and size of the screen to follow the device's screen orientation (this is the default behaviour).
   //@}
 
   /** @name Appearance */
@@ -668,6 +670,7 @@ private:
   bool               mpKeyState[NGL_KEY_MAX];
   uint32             mInModalState;
   uint               mAngle;
+  bool               mAutoRotate;
 
   nglWindow(const nglWindow&) {} // Undefined copy constructor
 
