@@ -325,7 +325,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E51D5CA40EC3DAA100182E40</string>
+										<string>E51D5CF40EC4540500182E40</string>
 										<key>history</key>
 										<array>
 											<string>E51D5C4E0EC3D44F00182E40</string>
@@ -539,7 +539,6 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>2</integer>
 									<integer>0</integer>
 								</array>
 							</array>
@@ -574,8 +573,6 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -593,7 +590,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E51D5CAA0EC3DAA100182E40</string>
+										<string>E51D5CF70EC4540500182E40</string>
 										<key>history</key>
 										<array>
 											<string>E51D5B770EC3A9AE00182E40</string>
@@ -603,7 +600,7 @@
 											<string>E51D5C7C0EC3D6D500182E40</string>
 											<string>E51D5CA50EC3DAA100182E40</string>
 											<string>E51D5CA60EC3DAA100182E40</string>
-											<string>E51D5CA70EC3DAA100182E40</string>
+											<string>E51D5CF60EC4540500182E40</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -644,6 +641,8 @@
 							<key>Tabs</key>
 							<array>
 								<dict>
+									<key>BecomeActive</key>
+									<true/>
 									<key>ContentConfiguration</key>
 									<dict>
 										<key>PBXProjectModuleGUID</key>
@@ -867,7 +866,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E51D5CAB0EC3DAA100182E40</string>
 		<string>E51D5C360EC3D2A300182E40</string>
 		<string>E51D5C340EC3D28800182E40</string>
 		<string>/Users/meeloo/work/nui3/examples/iPhone_HelloWorld/proj/iPhone_HelloWorld.xcodeproj</string>

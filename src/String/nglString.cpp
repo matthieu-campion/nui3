@@ -535,7 +535,7 @@ nglString::nglString(double db, int32 precision)
 nglString::nglString(const nglString& rSource)
 {
   mString = rSource.mString; 
-  mIsNull = false;
+  mIsNull = rSource.mIsNull;
 }
 
 nglString::nglString(const nglChar* pSource)

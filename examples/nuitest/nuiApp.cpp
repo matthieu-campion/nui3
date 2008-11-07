@@ -57,13 +57,15 @@ void nuiApp::OnExit (int Code)
   if (win)
     delete win;
 
+  nuiTranslator::GetTranslator().SaveLanguage(_T("SavedLocale.loc"));
+  
   nuiUninit();
 }
 
 void nuiApp::OnInit()
 {
   nuiInit(NULL);
-  
+   
   uint Width = 0, Height = 0;
   bool HasSize = false;
   bool IsFullScreen = false;
@@ -78,6 +80,9 @@ void nuiApp::OnInit()
   // Accept NGL default options
   ParseDefaultArgs();
 
+  nglString loc(setlocale(LC_ALL, NULL)); // get the current locale
+  NGL_OUT(_T("Current locale: %ls\n"), loc.GetChars());
+  
   GetLog().UseConsole(true);
   GetLog().SetLevel(_T("font"), 100);
 
@@ -119,8 +124,15 @@ void nuiApp::OnInit()
       else if (!arg.Compare(_T("software"))) Renderer = eSoftware;
       i++;
     }
+    else if (!arg.Compare(_T("--locale")) || !arg.Compare(_T("-l"))) 
+    {
+      loc = GetArg(i+1);
+      i++;
+    }
     i++;
   }
+  
+  nuiTranslator::GetTranslator().LoadLanguage(nglString(nglString(loc)));
   
   nuiMainWindow::SetRenderer(Renderer);
 
@@ -140,6 +152,7 @@ void nuiApp::OnInit()
     }
   }
 
+  nuiTranslator::GetTranslator().SetLearning(true);
 
 /*
   Width = 512;

@@ -177,98 +177,98 @@ void nuiWin::OnCreation()
 
   pFixed->SetProperty(_T("Name"), _T("Bench"));
 
-  nuiTreeNode* pMainTree = new nuiTreeNode(_T("Main Menu"), true, false);
+  nuiTreeNode* pMainTree = new nuiTreeNode(nuiTR("Main Menu"), true, false);
 
   nuiTreeNode* pElement = NULL;
 
   // Console Tester:
-  pElement = new nuiTreeNode(_T("Console Test window"));
+  pElement = new nuiTreeNode(nuiTR("Console Test window"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateConsoleWindow, NULL);
   pMainTree->AddChild(pElement);
 
   // nuiThreadInspector Tester:
-  pElement = new nuiTreeNode(_T("nuiThreadInspector Test window"));
+  pElement = new nuiTreeNode(nuiTR("nuiThreadInspector Test window"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateThreadInspectorTestWindow, NULL);
   pMainTree->AddChild(pElement);
 
 
   // CSS Parser Tester:
-  pElement = new nuiTreeNode(_T("CSS Parser Test window"));
+  pElement = new nuiTreeNode(nuiTR("CSS Parser Test window"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateCSSParserTest, NULL);
   pMainTree->AddChild(pElement);
 
   // Blur Area:
-  pElement = new nuiTreeNode(_T("Composited Radial Blur"));
+  pElement = new nuiTreeNode(nuiTR("Composited Radial Blur"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateBlurArea, NULL);
   pMainTree->AddChild(pElement);
 
   // Spline Tester:
-  pElement = new nuiTreeNode(_T("Spline View"));
+  pElement = new nuiTreeNode(nuiTR("Spline View"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateSplineWindow, NULL);
   pMainTree->AddChild(pElement);
 
   // TreeView Tester:
-  pElement = new nuiTreeNode(_T("Tree View"));
+  pElement = new nuiTreeNode(nuiTR("Tree View"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateTreeViewWindow, NULL);
   pMainTree->AddChild(pElement);
 
   // SVG Tiger Tester:
-  pElement = new nuiTreeNode(_T("SVG View (Tiger)"));
+  pElement = new nuiTreeNode(nuiTR("SVG View (Tiger)"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateSVGTigerWindow, NULL);
   pMainTree->AddChild(pElement);
 
   // Anim Tester:
-  pElement = new nuiTreeNode(_T("Simple Anim"));
+  pElement = new nuiTreeNode(nuiTR("Simple Anim"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateAnimWindow, NULL);
   pMainTree->AddChild(pElement);
 
   // Table Tester:
-  pElement = new nuiTreeNode(_T("Table View"));
+  pElement = new nuiTreeNode(nuiTR("Table View"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateTableViewWindow, NULL);
   pMainTree->AddChild(pElement);
 
   // Save XML Desc:
-  pElement = new nuiTreeNode(_T("Serialize to nuiTextOutput.xml"));
+  pElement = new nuiTreeNode(nuiTR("Serialize to nuiTextOutput.xml"));
   mWinSink.Connect(pElement->Activated, &nuiWin::SaveXMLDescription);
   pMainTree->AddChild(pElement);
 
   // Messed Up window:
-  pElement = new nuiTreeNode(_T("Messed up window"));
+  pElement = new nuiTreeNode(nuiTR("Messed up window"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateMessedUpWindow);
   pMainTree->AddChild(pElement);
 
   // Text window:
-  pElement = new nuiTreeNode(_T("Fixed Font Text window"));
+  pElement = new nuiTreeNode(nuiTR("Fixed Font Text window"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateTextWindow);
   pMainTree->AddChild(pElement);
 
   // Text2 window:
-  pElement = new nuiTreeNode(_T("Complex Font Layout test windows"));
+  pElement = new nuiTreeNode(nuiTR("Complex Font Layout test windows"));
   pMainTree->AddChild(pElement);
 
   {
-    nuiTreeNode* pSubElement = new nuiTreeNode(_T("I can eat glass"));
+    nuiTreeNode* pSubElement = new nuiTreeNode(nuiTR("I can eat glass"));
     mWinSink.Connect(pSubElement->Activated, &nuiWin::CreateText2Window, (void*)_T("rsrc:/GLASS.txt"));
     pElement->AddChild(pSubElement);
 
   }
 
   {
-    nuiTreeNode* pSubElement = new nuiTreeNode(_T("Hello"));
+    nuiTreeNode* pSubElement = new nuiTreeNode(nuiTR("Hello"));
     mWinSink.Connect(pSubElement->Activated, &nuiWin::CreateText2Window, (void*)_T("rsrc:/HELLO.txt"));
     pElement->AddChild(pSubElement);
 
   }
 
   {
-    nuiTreeNode* pSubElement = new nuiTreeNode(_T("Simple text"));
+    nuiTreeNode* pSubElement = new nuiTreeNode(nuiTR("Simple text"));
     mWinSink.Connect(pSubElement->Activated, &nuiWin::CreateText2Window, (void*)_T("rsrc:/sampletext2.txt"));
     pElement->AddChild(pSubElement);
 
   }
 
   {
-    nuiTreeNode* pSubElement = new nuiTreeNode(_T("All unicode glyphs (very slow!)"));
+    nuiTreeNode* pSubElement = new nuiTreeNode(nuiTR("All unicode glyphs (very slow!)"));
     mWinSink.Connect(pSubElement->Activated, &nuiWin::CreateText2Window, (void*)_T("rsrc:/all-unicode.txt"));
     pElement->AddChild(pSubElement);
 
@@ -300,7 +300,7 @@ void nuiWin::OnCreation()
 
     for (int i = 0; tests[i]; i++)
     {
-      nglString txt(_T("Test file: "));
+      nglString txt(nuiTR("Test file: "));
       nglPath p(tests[i]);
       txt += p.GetNodeName();
 
@@ -311,28 +311,28 @@ void nuiWin::OnCreation()
   }
 
   // File List window:
-  pElement = new nuiTreeNode(_T("File List window"));
+  pElement = new nuiTreeNode(nuiTR("File List window"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateFileListWindow);
   pMainTree->AddChild(pElement);
 
   // 3D Gears + compositing window:
-  pElement = new nuiTreeNode(_T("3D Gears + compositing"));
+  pElement = new nuiTreeNode(nuiTR("3D Gears + compositing"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateNewWindow);
   pMainTree->AddChild(pElement);
 
 
   // Column Tree View window:
-  pElement = new nuiTreeNode(_T("Column Tree View Window"));
+  pElement = new nuiTreeNode(nuiTR("Column Tree View Window"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateColumnTreeViewWindow);
   pMainTree->AddChild(pElement);
 
   // CreateScrolledImageWindow:
-  pElement = new nuiTreeNode(_T("Scrolled Image Window (1)"));
+  pElement = new nuiTreeNode(nuiTR("Scrolled Image Window (1)"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateScrolledImageWindow);
   pMainTree->AddChild(pElement);
 
   // CreateScrolledImageWindow2:
-  pElement = new nuiTreeNode(_T("Scrolled Image Window (2)"));
+  pElement = new nuiTreeNode(nuiTR("Scrolled Image Window (2)"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateScrolledImageWindow2);
   pMainTree->AddChild(pElement);
 
@@ -340,80 +340,80 @@ void nuiWin::OnCreation()
   if (GetRenderer() == eOpenGL)
   {
     // CreateGLSLTest1Window:
-    pElement = new nuiTreeNode(_T("GLSL Shader Test 1 Window"));
+    pElement = new nuiTreeNode(nuiTR("GLSL Shader Test 1 Window"));
     mWinSink.Connect(pElement->Activated, &nuiWin::CreateGLSLTest1Window);
     pMainTree->AddChild(pElement);
   }
 
   // CreateSWFTest1Window:
-  pElement = new nuiTreeNode(_T("SWF widget Test 1 Window"));
+  pElement = new nuiTreeNode(nuiTR("SWF widget Test 1 Window"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateSWFTest1Window);
   pMainTree->AddChild(pElement);
   // CreateTabViewWindow
-  pElement = new nuiTreeNode(_T("TabView Container Window"));
+  pElement = new nuiTreeNode(nuiTR("TabView Container Window"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateTabViewWindow);
   pMainTree->AddChild(pElement);
 
   // CreateShapeWindow:
-  pElement = new nuiTreeNode(_T("Shapes Window"));
+  pElement = new nuiTreeNode(nuiTR("Shapes Window"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateShapeWindow);
   pMainTree->AddChild(pElement);
 
   // TogglePartialRedraw:
-  pElement = new nuiTreeNode(_T("Toggle Partial Redraw"));
+  pElement = new nuiTreeNode(nuiTR("Toggle Partial Redraw"));
   mWinSink.Connect(pElement->Activated, &nuiWin::TogglePartialRedraw);
   pMainTree->AddChild(pElement);
 
   // CreateWrappedLabelWindow:
-  pElement = new nuiTreeNode(_T("Wrapped Label"));
+  pElement = new nuiTreeNode(nuiTR("Wrapped Label"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateWrappedLabelWindow);
   pMainTree->AddChild(pElement);
 
   // CreateWhizzAnimWindow:
-  pElement = new nuiTreeNode(_T("Whizzy Anim"));
+  pElement = new nuiTreeNode(nuiTR("Whizzy Anim"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateWhizzAnimWindow);
   pMainTree->AddChild(pElement);
 
   // CreateTextLayoutWindow:
-  pElement = new nuiTreeNode(_T("Text Layout"));
+  pElement = new nuiTreeNode(nuiTR("Text Layout"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateTextLayoutWindow);
   pMainTree->AddChild(pElement);
 
 
   // CreateFontSubstitutionWindow:
-  pElement = new nuiTreeNode(_T("Font Substitution window"));
+  pElement = new nuiTreeNode(nuiTR("Font Substitution window"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateFontSubstitutionWindow);
   pMainTree->AddChild(pElement);
 
   // CreateSignalsAndSlotsTestWindow:
-  pElement = new nuiTreeNode(_T("Signals And Slots Tests Window"));
+  pElement = new nuiTreeNode(nuiTR("Signals And Slots Tests Window"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateSignalsAndSlotsTestWindow);
   pMainTree->AddChild(pElement);
 
   // SoftwarePainterWindow:
-  pElement = new nuiTreeNode(_T("Software Painter Window"));
+  pElement = new nuiTreeNode(nuiTR("Software Painter Window"));
   mWinSink.Connect(pElement->Activated, &nuiWin::SoftwarePainterWindow);
   pMainTree->AddChild(pElement);
 
   // $loic (2007/08/24)
   // SpinerLabelWindow
-  pElement = new nuiTreeNode (_T("Spiner Label and Formated Label"));
+  pElement = new nuiTreeNode (nuiTR("Spiner Label and Formated Label"));
   mWinSink.Connect (pElement->Activated, &nuiWin::SpinerLabelWindow);
   pMainTree->AddChild (pElement);
 
   // VBoxAndHBoxWindow
-  pElement = new nuiTreeNode (_T("VBox and HBox"));
+  pElement = new nuiTreeNode (nuiTR("VBox and HBox"));
   mWinSink.Connect (pElement->Activated, &nuiWin::VBoxAndHBoxWindow);
   pMainTree->AddChild (pElement);
 
   // MatrixViewWindow
-  pElement = new nuiTreeNode (_T("MatrixView"));
+  pElement = new nuiTreeNode (nuiTR("MatrixView"));
   mWinSink.Connect (pElement->Activated, &nuiWin::MatrixViewWindow);
   pMainTree->AddChild (pElement);
 
 
   // DumpStats:
-  pElement = new nuiTreeNode(_T("Dump some stats to the console"));
+  pElement = new nuiTreeNode(nuiTR("Dump some stats to the console"));
   mWinSink.Connect(pElement->Activated, &nuiWin::DumpStats);
   pMainTree->AddChild(pElement);
 
@@ -424,96 +424,96 @@ void nuiWin::OnCreation()
 
   nuiScrollView* pWMScrollView = new nuiScrollView();
   pFixed->AddChild(pWMScrollView);
-  pWMScrollView->SetProperty(_T("Name"), _T("WMScrollView"));
+  pWMScrollView->SetObjectName(_T("WMScrollView"));
   mpManager = new nuiWindowManager();
   pWMScrollView->AddChild(mpManager);
-  mpManager->SetProperty(_T("Name"), _T("wm"));
+  mpManager->SetObjectName(_T("wm"));
 
 
-  pElement = new nuiTreeNode(_T("nuiTitledPane and nuiFolderPane"));
+  pElement = new nuiTreeNode(nuiTR("nuiTitledPane and nuiFolderPane"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateTitledPaneWindow);
   pMainTree->AddChild(pElement);
 
 
-  pElement = new nuiTreeNode(_T("Slider test"));
+  pElement = new nuiTreeNode(nuiTR("Slider test"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateSliderWindow);
   pMainTree->AddChild(pElement);
 
-  pElement = new nuiTreeNode(_T("Save font database"));
+  pElement = new nuiTreeNode(nuiTR("Save font database"));
   mWinSink.Connect(pElement->Activated, &nuiWin::SaveFontDB);
   pMainTree->AddChild(pElement);
 
-  pElement = new nuiTreeNode(_T("Load font database"));
+  pElement = new nuiTreeNode(nuiTR("Load font database"));
   mWinSink.Connect(pElement->Activated, &nuiWin::LoadFontDB);
   pMainTree->AddChild(pElement);
 
-  pElement = new nuiTreeNode(_T("Frame View"));
+  pElement = new nuiTreeNode(nuiTR("Frame View"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateFrameWindow);
   pMainTree->AddChild(pElement);
 
-  pElement = new nuiTreeNode(_T("Frame View 2"));
+  pElement = new nuiTreeNode(nuiTR("Frame View 2"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateFrameWindow2);
   pMainTree->AddChild(pElement);
 
-  pElement = new nuiTreeNode(_T("Frame View 3"));
+  pElement = new nuiTreeNode(nuiTR("Frame View 3"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateFrameWindow3);
   pMainTree->AddChild(pElement);
 
-  pElement = new nuiTreeNode(_T("Drag Zone"));
+  pElement = new nuiTreeNode(nuiTR("Drag Zone"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateDragZone);
   pMainTree->AddChild(pElement);
 
-  pElement = new nuiTreeNode(_T("Clipping Test"));
+  pElement = new nuiTreeNode(nuiTR("Clipping Test"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateClippingTest);
   pMainTree->AddChild(pElement);
 
-  pElement = new nuiTreeNode(_T("Enum audio hardware"));
+  pElement = new nuiTreeNode(nuiTR("Enum audio hardware"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateAudioWindow);
   pMainTree->AddChild(pElement);
 
-  pElement = new nuiTreeNode(_T("nuiAudioFifo test"));
+  pElement = new nuiTreeNode(nuiTR("nuiAudioFifo test"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateAudioFifoWindow);
   pMainTree->AddChild(pElement);
 
-  pElement = new nuiTreeNode(_T("nuiHTTP test"));
+  pElement = new nuiTreeNode(nuiTR("nuiHTTP test"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateHTTPWindow);
   pMainTree->AddChild(pElement);
 
-  pElement = new nuiTreeNode(_T("nuiHTML test"));
+  pElement = new nuiTreeNode(nuiTR("nuiHTML test"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateHTMLWindow);
   pMainTree->AddChild(pElement);
 
-  pElement = new nuiTreeNode(_T("Enum native resources"));
+  pElement = new nuiTreeNode(nuiTR("Enum native resources"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateResourceWindow);
   pMainTree->AddChild(pElement);
 
   // Enable Widget Tester:
-  pElement = new nuiTreeNode(_T("Enable Widget"));
+  pElement = new nuiTreeNode(nuiTR("Enable Widget"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateEnableTestWindow, NULL);
   pMainTree->AddChild(pElement);
 
   // Button Decorations:
-  pElement = new nuiTreeNode(_T("Button decorations"));
+  pElement = new nuiTreeNode(nuiTR("Button decorations"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateButtonDecorationWindow, NULL);
   pMainTree->AddChild(pElement);
 
   // Enumerate Volumes:
-  pElement = new nuiTreeNode(_T("Enumerate Volumes"));
+  pElement = new nuiTreeNode(nuiTR("Enumerate Volumes"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateVolumesTestWindow, NULL);
   pMainTree->AddChild(pElement);
 
   // Label Elleipsi Test:
-  pElement = new nuiTreeNode(_T("Label Ellipsis Test"));
+  pElement = new nuiTreeNode(nuiTR("Label Ellipsis Test"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateEllispsisTestWindow, NULL);
   pMainTree->AddChild(pElement);
 
   // Message box:
-  pElement = new nuiTreeNode(_T("Message Box"));
+  pElement = new nuiTreeNode(nuiTR("Message Box"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateMessageBox, NULL);
   pMainTree->AddChild(pElement);
 
   // Widget Texture:
-  pElement = new nuiTreeNode(_T("Widget Texture"));
+  pElement = new nuiTreeNode(nuiTR("Widget Texture"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateWidgetTexture, NULL);
   pMainTree->AddChild(pElement);
 
@@ -560,7 +560,7 @@ bool nuiWin::CreateConsoleWindow(const nuiEvent& rEvent)
   nuiScrollView* pScrollView = new nuiScrollView();
   pWindow->AddChild(pScrollView);
 
-  Console* pConsole = new Console(nglString(_T("Welcome to the nui test application!\nThis window contains a text widget to which the ngl's console output have been redirected\n")));
+  Console* pConsole = new Console(nuiTR("Welcome to the nui test application!\nThis window contains a text widget to which the ngl's console output have been redirected\n"));
   pScrollView->AddChild(pConsole);
   App->SetConsole(pConsole);
   return false;
@@ -676,7 +676,7 @@ bool nuiWin::CreateSplineWindow(const nuiEvent& rEvent)
 
 bool nuiWin::CreateTreeViewWindow(const nuiEvent& rEvent)
 {
-  nuiWindow* pTreeWin = new nuiWindow(nuiRect(10, 10, 320, 300), nuiWindow::NoFlag, _T("TreeView example"));
+  nuiWindow* pTreeWin = new nuiWindow(nuiRect(10, 10, 320, 300), nuiWindow::NoFlag, nuiTR("TreeView example"));
   mpManager->AddChild(pTreeWin);
 
   nuiTreeNode* pTreeNode = new nuiTreeNode(_T("Prout"), true, true);
@@ -689,12 +689,12 @@ bool nuiWin::CreateTreeViewWindow(const nuiEvent& rEvent)
   pTreeNode2->AddChild(new nuiTreeNode(_T("X")));
   pTreeNode2->AddChild(new nuiTreeNode(_T("XX")));
 
-  nuiTreeNode* pTreeNode3 = new nuiTreeNode(_T("Image Container:"), true, true);
+  nuiTreeNode* pTreeNode3 = new nuiTreeNode(nuiTR("Image Container:"), true, true);
   pTreeNode2->AddChild(pTreeNode3);
   pTreeNode3->AddChild(new nuiTreeNode(new nuiImage(_T("rsrc:/toucan.png"))));
   pTreeNode3->AddChild(new nuiTreeNode(new nuiImage(_T("rsrc:/small_ngl.png"))));
 
-  pTreeNode2->AddChild(new nuiTreeNode(_T("XXXX")));
+  pTreeNode2->AddChild(new nuiTreeNode(nuiTR("XXXX")));
   pTreeNode2->Open(true);
 
   nuiScrollView* pScrollView = new nuiScrollView();
@@ -712,7 +712,7 @@ bool nuiWin::CreateTreeViewWindow(const nuiEvent& rEvent)
 
 bool nuiWin::CreateAnimWindow(const nuiEvent& rEvent)
 {
-  nuiWindow* pAnimWin = new nuiWindow(nuiRect(10, 10, 100, 200), nuiWindow::NoFlag, _T("Anim example"));
+  nuiWindow* pAnimWin = new nuiWindow(nuiRect(10, 10, 100, 200), nuiWindow::NoFlag, nuiTR("Anim example"));
   mpManager->AddChild(pAnimWin);
   nuiAnimView* pAnim = new nuiAnimView();
   pAnimWin->AddChild(pAnim);
@@ -768,7 +768,7 @@ bool nuiWin::CreateTableViewWindow(const nuiEvent& rEvent)
   pTableWin->AddChild(pTableBox);
   //LBDEBUG pTableBox->SetFixed(true);
   pTableBox->SetMasterChild(true);
-  nuiButton* pClear = new nuiButton((_T("Clear all")));
+  nuiButton* pClear = new nuiButton((nuiTR("Clear all")));
   pTableBox->AddChild(pClear);
   nuiTable* pTable = new nuiTable();
   nuiScrollView* pScrollView = new nuiScrollView();
@@ -776,10 +776,10 @@ bool nuiWin::CreateTableViewWindow(const nuiEvent& rEvent)
   pScrollView->AddChild(pTable);
 
   pTable->SetMultiSelectable(true);
-  pTable->InsertColumn(0,(_T("First Column")));
-  pTable->InsertColumn(1,(_T("Second Column")));
-  pTable->InsertColumn(2,(_T("Third Column")));
-  pTable->InsertColumn(3,(_T("Empty Column")));
+  pTable->InsertColumn(0,(nuiTR("First Column")));
+  pTable->InsertColumn(1,(nuiTR("Second Column")));
+  pTable->InsertColumn(2,(nuiTR("Third Column")));
+  pTable->InsertColumn(3,(nuiTR("Empty Column")));
 
   int i;
   for (i=0; i<10; i++)
@@ -795,46 +795,46 @@ bool nuiWin::CreateTableViewWindow(const nuiEvent& rEvent)
   }
 
   pTable->InsertRow(5);
-  pTable->SetCell(5,0,new nuiLabel((_T("this row contains an image and a button"))));
+  pTable->SetCell(5,0,new nuiLabel((nuiTR("this row contains an image and a button"))));
   nuiImage* pCellImage = new nuiImage(nglPath(_T("rsrc:/small_ngl.png")));
   pCellImage->SetFillRule(nuiCenter);
   pTable->SetCell(5,1,pCellImage);
-  pTable->SetCell(5,2,new nuiButton(_T("Button!")));
+  pTable->SetCell(5,2,new nuiButton(nuiTR("Button!")));
 
   nuiTableRowPtr pRow = pTable->GetRow((uint)0);
 
-  nuiLabel* pRowLabel = new nuiLabel((_T("Tree row!!!")));
+  nuiLabel* pRowLabel = new nuiLabel((nuiTR("Tree row!!!")));
   nuiWidgetList WidgetList;
   WidgetList.push_back(pRowLabel);
-  pRowLabel = new nuiLabel((_T("Tree row element...")));
+  pRowLabel = new nuiLabel((nuiTR("Tree row element...")));
   WidgetList.push_back(pRowLabel);
   nuiTableRowPtr pNewRow = new nuiTableRow(pTable, WidgetList); 
   pRow->AddRow(pNewRow);
 
   pRow = pNewRow;
-  pRowLabel = new nuiLabel((_T("Tree row2!!!")));
+  pRowLabel = new nuiLabel((nuiTR("Tree row2!!!")));
   WidgetList.clear();
   WidgetList.push_back(pRowLabel);
-  pRowLabel = new nuiLabel((_T("Tree row element...2")));
+  pRowLabel = new nuiLabel((nuiTR("Tree row element...2")));
   WidgetList.push_back(pRowLabel);
   pNewRow = new nuiTableRow(pTable, WidgetList); 
   pRow->AddRow(pNewRow);
 
   nuiTableRowPtr pOldRow = pRow; 
   pRow = pNewRow;
-  pRowLabel = new nuiLabel((_T("Tree row2!!!")));
+  pRowLabel = new nuiLabel((nuiTR("Tree row2!!!")));
   WidgetList.clear();
   WidgetList.push_back(pRowLabel);
-  pRowLabel = new nuiLabel((_T("Tree row element...2")));
+  pRowLabel = new nuiLabel((nuiTR("Tree row element...2")));
   WidgetList.push_back(pRowLabel);
   pNewRow = new nuiTableRow(pTable, WidgetList); 
   pRow->AddRow(pNewRow);
 
-  pRowLabel = new nuiLabel((_T("Another row!!!")));
+  pRowLabel = new nuiLabel((nuiTR("Another row!!!")));
   WidgetList.clear();
   WidgetList.push_back(pRowLabel);
   WidgetList.push_back(NULL); // test to see if this works?
-  pRowLabel = new nuiLabel((_T("Yet another tree row element...")));
+  pRowLabel = new nuiLabel((nuiTR("Yet another tree row element...")));
   WidgetList.push_back(pRowLabel);
   pNewRow = new nuiTableRow(pTable, WidgetList); 
   pOldRow->AddRow(pNewRow);
@@ -857,9 +857,7 @@ bool nuiWin::CreateMessedUpWindow(const nuiEvent& rEvent)
   //LBDEBUG pSplitter->SetFixed(true);
   pSplitter->SetMasterChild(true);
 
-  nuiText* pText = new nuiText(nglString(_T("This window is a box of buttons.\n")
-    _T("You can select any one of them and their\n")
-    _T("layout is managed by their owner!.\n")));
+  nuiText* pText = new nuiText(nuiTR("This window is a box of buttons.\nYou can select any one of them and their\nlayout is managed by their owner!.\n"));
   nuiScrollView* pSV = new nuiScrollView();
   pSplitter->AddChild(pSV);
   pSV->AddChild(pText);
@@ -868,28 +866,28 @@ bool nuiWin::CreateMessedUpWindow(const nuiEvent& rEvent)
   pSplitter->AddChild(pDummy);
   nuiImage* pDummyImg = new nuiImage(nglPath(_T("rsrc:/small_ngl.png")));
   pDummyImg->SetFillRule(nuiCenter);
-  nuiLabel* pDummyLabel = new nuiLabel((_T("This is the ngl logo!!!")));
+  nuiLabel* pDummyLabel = new nuiLabel((nuiTR("This is the ngl logo!!!")));
 
   pDummy->SetDummy(false, pDummyImg);
   pDummy->SetDummy(true, pDummyLabel);
 
-  nuiButton* pButton1 = new nuiButton(nglString(_T("Create a new window")));
+  nuiButton* pButton1 = new nuiButton(nuiTR("Create a new window"));
   pBox->AddCell(pButton1);
   mWinSink.Connect(pButton1->ButtonPressed, &nuiWin::CreateNewWindow);
 
-  nuiButton* pBtn = new nuiButton(_T("add text"));
+  nuiButton* pBtn = new nuiButton(nuiTR("add text"));
   pBox->AddCell(pBtn);
   mWinSink.Connect(pBtn->ButtonPressed, &nuiWin::OutputSomething, pBtn);
 
-  pBtn = new nuiButton(nglString(_T("Create a window from a glade XML description"))  );
+  pBtn = new nuiButton(nuiTR("Create a window from a glade XML description"));
   pBox->AddCell(pBtn);
   mWinSink.Connect(pBtn->ButtonPressed, &nuiWin::CreateFromGladeXML, pBtn);
 
-  pBtn = new nuiButton(nglString(_T("Create a window from an NUI XML description"))  );
+  pBtn = new nuiButton(nuiTR("Create a window from an NUI XML description"));
   pBox->AddCell(pBtn);
   mWinSink.Connect(pBtn->ButtonPressed, &nuiWin::CreateFromXML, pBtn);
 
-  pBtn = new nuiButton(nglString(_T("Do a file selection"))  );
+  pBtn = new nuiButton(nuiTR("Do a file selection"));
   pBox->AddCell(pBtn);
   mWinSink.Connect(pBtn->ButtonPressed, &nuiWin::FileSelect, NULL);
 
@@ -902,7 +900,7 @@ bool nuiWin::CreateMessedUpWindow(const nuiEvent& rEvent)
 
 bool nuiWin::CreateTextWindow(const nuiEvent& rEvent)
 {
-  nuiWindow* pWin2 = new nuiWindow(nuiRect(10.0f,10.0f,500.0f,350.0f),0 ,(_T("Fixed Font Text Window")));
+  nuiWindow* pWin2 = new nuiWindow(nuiRect(10.0f,10.0f,500.0f,350.0f),0 ,(nuiTR("Fixed Font Text Window")));
   mpManager->AddChild(pWin2);
 
   nuiEditText* pText = new nuiEditText(nglString::Empty);
@@ -931,7 +929,7 @@ bool nuiWin::CreateTextWindow(const nuiEvent& rEvent)
 
 bool nuiWin::CreateText2Window(const nuiEvent& rEvent)
 {
-  nuiWindow* pWin2 = new nuiWindow(nuiRect(10.0f,10.0f,500.0f,350.0f),0 ,(_T("Default Font Text Window")));
+  nuiWindow* pWin2 = new nuiWindow(nuiRect(10.0f,10.0f,500.0f,350.0f),0 ,(nuiTR("Default Font Text Window")));
   mpManager->AddChild(pWin2);
 
   nuiGrid* pGrid = new nuiGrid(1, 2);
@@ -946,7 +944,7 @@ bool nuiWin::CreateText2Window(const nuiEvent& rEvent)
   pScrollView->AddChild(pText);
   pText->SetPosition(nuiTopLeft);
 
-  nuiToggleButton* pCheck = new nuiToggleButton(_T("Wrapping"));
+  nuiToggleButton* pCheck = new nuiToggleButton(nuiTR("Wrapping"));
   pCheck->SetPressed(true);
   nuiSlider* pSlider = new nuiSlider(nuiHorizontal, nuiRange(15, 1, 128, 1.f, 5.f, 0));
 
@@ -1003,7 +1001,7 @@ bool nuiWin::OnTextSizeSliderChanged(const nuiEvent& rEvent)
 
 bool nuiWin::CreateSliderWindow(const nuiEvent& rEvent)
 {
-  nuiWindow* pWin = new nuiWindow(nuiRect(10.0f,10.0f, 300.f,400.f), nuiWindow::DecoratedBackground ,(_T("Slider Window")));
+  nuiWindow* pWin = new nuiWindow(nuiRect(10.0f,10.0f, 300.f,400.f), nuiWindow::DecoratedBackground ,(nuiTR("Slider Window")));
   mpManager->AddChild(pWin);
 
   nuiVBox* pVBox = new nuiVBox(5);
@@ -1026,7 +1024,7 @@ bool nuiWin::CreateSliderWindow(const nuiEvent& rEvent)
     pLabelBox->SetExpand(nuiExpandShrinkAndGrow, 1);
     pLabelBox->SetCellExpand(0, nuiExpandShrinkAndGrow, 1);
     pLabelBox->SetCellExpand(1, nuiExpandShrinkAndGrow, 1);
-    pLabelBox->SetCell(0, new nuiLabel(_T("Default drawing:")));
+    pLabelBox->SetCell(0, new nuiLabel(nuiTR("Default drawing:")));
     pLabelBox->SetCell(1, pDefaultBox);
 
     pVBox->SetCell(0, pLabelBox);
@@ -1085,7 +1083,7 @@ bool nuiWin::CreateSliderWindow(const nuiEvent& rEvent)
     pLabelBox->SetExpand(nuiExpandShrinkAndGrow, 1);
     pLabelBox->SetCellExpand(0, nuiExpandShrinkAndGrow, 1);
     pLabelBox->SetCellExpand(1, nuiExpandShrinkAndGrow, 1);
-    pLabelBox->SetCell(0, new nuiLabel(_T("Discreet Step:")));
+    pLabelBox->SetCell(0, new nuiLabel(nuiTR("Discreet Step:")));
     pLabelBox->SetCell(1, pDefaultBox);
 
     pVBox->SetCell(1, pLabelBox);
@@ -1148,12 +1146,12 @@ bool nuiWin::CreateSliderWindow(const nuiEvent& rEvent)
     pLabelBox->SetExpand(nuiExpandShrinkAndGrow, 1);
     pLabelBox->SetCellExpand(0, nuiExpandShrinkAndGrow, 1);
     pLabelBox->SetCellExpand(1, nuiExpandShrinkAndGrow, 1);
-    pLabelBox->SetCell(0, new nuiLabel(_T("Handle with Image + Background Deco:")));
+    pLabelBox->SetCell(0, new nuiLabel(nuiTR("Handle with Image + Background Deco:")));
     pLabelBox->SetCell(1, pHandleBox);
 
     pVBox->SetCell(4, pLabelBox);
 
-    nuiFrame* pFrame = new nuiFrame(_T("SliderBackground"), _T("rsrc:/slider/background.png"), nuiRect(0 ,0 , 201, 7));
+    nuiFrame* pFrame = new nuiFrame(nuiTR("SliderBackground"), _T("rsrc:/slider/background.png"), nuiRect(0 ,0 , 201, 7));
     {
       //Vertical Slider with widgets
       nuiImage* pHandle = new nuiImage(_T("rsrc:/slider/handle.png"));
@@ -1227,7 +1225,7 @@ bool nuiWin::OnSliderChanged(const nuiEvent& rEvent)
 
 bool nuiWin::CreateEllispsisTestWindow(const nuiEvent& rEvent)
 {
-  nuiWindow* pWin = new nuiWindow(nuiRect(10.0f,10.0f,200.0f,50.0f),0 ,(_T("Label Ellipsis Test Window")));
+  nuiWindow* pWin = new nuiWindow(nuiRect(10.0f,10.0f,200.0f,50.0f),0 ,(nuiTR("Label Ellipsis Test Window")));
   mpManager->AddChild(pWin);
 
   //  nuiHBox* pHBox = new nuiHBox(2);
@@ -1316,32 +1314,32 @@ public:
 
 bool nuiWin::CreateColumnTreeViewWindow(const nuiEvent& rEvent)
 {
-  nuiWindow* pColumnTreeViewWin = new nuiWindow(nuiRect(10, 10, 300, 200), nuiWindow::NoFlag, _T("Column Tree View"));
+  nuiWindow* pColumnTreeViewWin = new nuiWindow(nuiRect(10, 10, 300, 200), nuiWindow::NoFlag, nuiTR("Column Tree View"));
   mpManager->AddChild(pColumnTreeViewWin);
-  nuiTreeNode* pTree = new nuiTreeNode(_T("Menu"));
-  pTree->AddChild(new nuiTreeNode(_T("test1")));
-  pTree->AddChild(new nuiTreeNode(_T("test2")));
-  pTree->AddChild(new nuiTreeNode(_T("test3")));
-  nuiTreeNode* pSubTree = new nuiTreeNode(_T("test4"));
+  nuiTreeNode* pTree = new nuiTreeNode(nuiTR("Menu"));
+  pTree->AddChild(new nuiTreeNode(nuiTR("test1")));
+  pTree->AddChild(new nuiTreeNode(nuiTR("test2")));
+  pTree->AddChild(new nuiTreeNode(nuiTR("test3")));
+  nuiTreeNode* pSubTree = new nuiTreeNode(nuiTR("test4"));
   pSubTree->Open(true);
   pTree->AddChild(pSubTree);
-  pSubTree->AddChild(new nuiTreeNode(_T("sub1")));
-  pSubTree->AddChild(new nuiTreeNode(_T("sub2 with a quite long name...")));
-  pSubTree->AddChild(new nuiTreeNode(_T("sub3")));
+  pSubTree->AddChild(new nuiTreeNode(nuiTR("sub1")));
+  pSubTree->AddChild(new nuiTreeNode(nuiTR("sub2 with a quite long name...")));
+  pSubTree->AddChild(new nuiTreeNode(nuiTR("sub3")));
 
-  nuiTreeNode* pSubTree2 = new nuiTreeNode(_T("Bleh"));
+  nuiTreeNode* pSubTree2 = new nuiTreeNode(nuiTR("Bleh"));
   pSubTree2->Open(true);
   pSubTree->AddChild(pSubTree2);
-  pSubTree2->AddChild(new nuiTreeNode(_T("first bleh")));
-  pSubTree2->AddChild(new nuiTreeNode(_T("middle bleh")));
-  pSubTree2->AddChild(new nuiTreeNode(_T("last bleh")));
+  pSubTree2->AddChild(new nuiTreeNode(nuiTR("first bleh")));
+  pSubTree2->AddChild(new nuiTreeNode(nuiTR("middle bleh")));
+  pSubTree2->AddChild(new nuiTreeNode(nuiTR("last bleh")));
 
-  nuiTreeNode* pSubTree3 = new nuiTreeNode(_T("Kazoo"));
+  nuiTreeNode* pSubTree3 = new nuiTreeNode(nuiTR("Kazoo"));
   pSubTree3->Open(true);
   pSubTree2->AddChild(pSubTree3);
-  pSubTree3->AddChild(new nuiTreeNode(_T("Kazoo for Breakfast")));
-  pSubTree3->AddChild(new nuiTreeNode(_T("Kazoo for Lunch")));
-  pSubTree3->AddChild(new nuiTreeNode(_T("Kazoo for Diner")));
+  pSubTree3->AddChild(new nuiTreeNode(nuiTR("Kazoo for Breakfast")));
+  pSubTree3->AddChild(new nuiTreeNode(nuiTR("Kazoo for Lunch")));
+  pSubTree3->AddChild(new nuiTreeNode(nuiTR("Kazoo for Diner")));
 
   for (int counter = 0; counter < 10; counter++)
   {
@@ -1441,7 +1439,7 @@ void nuiWin::OnPaint()
 
 bool nuiWin::CreateScrolledImageWindow(const nuiEvent& rEvent)
 {
-  nuiWindow* pWin = new nuiWindow(nuiRect(10, 10, 200, 200), nglWindow::NoFlag, _T("Scrolled Image..."));
+  nuiWindow* pWin = new nuiWindow(nuiRect(10, 10, 200, 200), nglWindow::NoFlag, nuiTR("Scrolled Image..."));
   mpManager->AddChild(pWin);
   nuiScrollView* pScrollView = new nuiScrollView();
   pWin->AddChild(pScrollView);
@@ -1454,7 +1452,7 @@ bool nuiWin::CreateScrolledImageWindow(const nuiEvent& rEvent)
 
 bool nuiWin::CreateScrolledImageWindow2(const nuiEvent& rEvent)
 {
-  nuiWindow* pWin = new nuiWindow(nuiRect(10, 10, 200, 200), nglWindow::NoFlag, _T("Scrolled Image (2)..."));
+  nuiWindow* pWin = new nuiWindow(nuiRect(10, 10, 200, 200), nglWindow::NoFlag, nuiTR("Scrolled Image (2)..."));
   mpManager->AddChild(pWin);
   nuiScrollView* pScrollView = new nuiScrollView();
   pWin->AddChild(pScrollView);
@@ -1468,7 +1466,7 @@ bool nuiWin::CreateScrolledImageWindow2(const nuiEvent& rEvent)
 
 bool nuiWin::CreateGLSLTest1Window(const nuiEvent& rEvent)
 {
-  nuiWindow* pWin = new nuiWindow(nuiRect(10, 10, 200, 200), nglWindow::NoFlag, _T("Shaded Image..."));
+  nuiWindow* pWin = new nuiWindow(nuiRect(10, 10, 200, 200), nglWindow::NoFlag, nuiTR("Shaded Image..."));
   mpManager->AddChild(pWin);
   nuiScrollView* pScrollView = new nuiScrollView();
   pWin->AddChild(pScrollView);
@@ -1484,7 +1482,7 @@ bool nuiWin::CreateGLSLTest1Window(const nuiEvent& rEvent)
   nuiShader* pShader = new nuiShader(GetNGLContext(), _T("Test Shader1"), VertexShader, FragmentShader);
   if (!pShader->Compile())
   {
-    NGL_OUT((_T("Shader compilation status:\n%ls\n")), pShader->GetErrorMessage().GetChars());
+    NGL_OUT(_T("Shader compilation status:\n%ls\n"), pShader->GetErrorMessage().GetChars());
     pScrollView->AddChild(new nuiLabel(pShader->GetErrorMessage()));
     delete pShader;
     return false;
@@ -1501,7 +1499,7 @@ bool nuiWin::CreateGLSLTest1Window(const nuiEvent& rEvent)
 
 bool nuiWin::CreateSWFTest1Window(const nuiEvent& rEvent)
 {
-  nuiWindow* pWin = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, _T("SWF Movie..."));
+  nuiWindow* pWin = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, nuiTR("SWF Movie..."));
   mpManager->AddChild(pWin);
   nuiSimpleContainer* pContainer = new nuiPositioner();
   pWin->AddChild(pContainer);
@@ -1540,7 +1538,7 @@ bool nuiWin::CreateSWFTest1Window(const nuiEvent& rEvent)
 
 bool nuiWin::CreateTabViewWindow(const nuiEvent& rEvent)
 {
-  nuiWindow* pWin = new nuiWindow(nuiRect(10, 10, 340, 200), nglWindow::NoFlag, _T("TabView..."));
+  nuiWindow* pWin = new nuiWindow(nuiRect(10, 10, 340, 200), nglWindow::NoFlag, nuiTR("TabView..."));
   mpManager->AddChild(pWin);
 
   nuiRect PageRect = nuiRect(0.f, 0.f, 200.f, 150.f);
@@ -1555,31 +1553,31 @@ bool nuiWin::CreateTabViewWindow(const nuiEvent& rEvent)
   pTabView->SetChangeOnDrag(true);
   pWin->AddChild(pTabView);
 
-  nuiLabel* pLabel = new nuiLabel(_T("Tab\nOne\nThe\nfirst\nand\nforemost"));
+  nuiLabel* pLabel = new nuiLabel(nuiTR("Tab\nOne\nThe\nfirst\nand\nforemost"));
 
   pLabel->SetFont(nuiFont::GetFont(18));
   pLabel->SetOrientation(nuiVertical);
-  pTabView->AddTab(_T("Tab1"), pLabel);
+  pTabView->AddTab(nuiTR("Tab1"), pLabel);
 
   nuiImage* pPage = new nuiImage(_T("rsrc:/nui.png"));
-  pTabView->AddTab(_T("Tab2"), pPage);
+  pTabView->AddTab(nuiTR("Tab2"), pPage);
 
 
   { // Page 3
-    nuiHyperLink* pLink = new nuiHyperLink(_T("http://libnui.net"), _T("Go to the nui website!"));
-    pTabView->AddTab(_T("Tab3"), pLink);
+    nuiHyperLink* pLink = new nuiHyperLink(_T("http://libnui.net"), nuiTR("Go to the nui website!"));
+    pTabView->AddTab(nuiTR("Tab3"), pLink);
   }
 
   nuiFixed* pFixed = new nuiFixed();
-  nuiButton* pButton = new nuiButton(_T("Add Tab"));
+  nuiButton* pButton = new nuiButton(nuiTR("Add Tab"));
   pFixed->AddChild(pButton);
   pButton->SetUserRect(nuiRect(20.f, 20.f, 100.f, 30.f));
   mWinSink.Connect(pButton->ButtonPressed, &nuiWin::AddTab, pTabView);
-  pButton = new nuiButton(_T("Remove Tab"));
+  pButton = new nuiButton(nuiTR("Remove Tab"));
   pFixed->AddChild(pButton);
   pButton->SetUserRect(nuiRect(20.f, 80.f, 100.f, 30.f));
   mWinSink.Connect(pButton->ButtonPressed, &nuiWin::RemoveTab, pTabView);
-  pTabView->AddTab(_T("Tab4"), pFixed);
+  pTabView->AddTab(nuiTR("Tab4"), pFixed);
 
   pTabView->SelectTab(0);
 
@@ -1613,7 +1611,7 @@ bool nuiWin::RemoveTab(const nuiEvent& rEvent)
 
 bool nuiWin::CreateShapeWindow(const nuiEvent& rEvent)
 {
-  nuiWindow* pWin = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, _T("nuiShapes..."));
+  nuiWindow* pWin = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, nuiTR("nuiShapes..."));
   mpManager->AddChild(pWin);
 
   nuiShape* pShape = new nuiShape();
@@ -1660,29 +1658,29 @@ bool nuiWin::TogglePartialRedraw(const nuiEvent& rEvent)
   nuiTopLevel::EnablePartialRedraw(!nuiTopLevel::IsPartialRedrawEnabled());
   if (nuiTopLevel::IsPartialRedrawEnabled())
   {
-    NGL_OUT((_T("Partial Redraw Enabled\n")));
+    NGL_OUT(_T("Partial Redraw Enabled\n"));
   }
   else
   {
-    NGL_OUT((_T("Partial Redraw Disabled\n")));
+    NGL_OUT(_T("Partial Redraw Disabled\n"));
   }
   return false;
 }
 
 bool nuiWin::CreateWrappedLabelWindow(const nuiEvent& rEvent)
 {
-  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, _T("Wrapped Label"));
+  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, nuiTR("Wrapped Label"));
   mpManager->AddChild(pWindow);
 
   nuiVBox* pBox = new nuiVBox(0);
   pWindow->AddChild(pBox);
-  nuiLabel* pNormalLabel = new nuiLabel(_T("Normal Label that is just cut out at the end of the window"));
+  nuiLabel* pNormalLabel = new nuiLabel(nuiTR("Normal Label that is just cut out at the end of the window"));
   pBox->AddCell(pNormalLabel);
-  nuiLabel* pCutLabel = new nuiLabel(_T("Label that is cut in the middle of the line if there is not enough space."));
+  nuiLabel* pCutLabel = new nuiLabel(nuiTR("Label that is cut in the middle of the line if there is not enough space."));
   pBox->AddCell(pCutLabel);
   pCutLabel->UseEllipsis(true);
 
-  nuiLabel* pLabel = new nuiLabel(_T("This text should be long enough for me to test wrapping of the label. So let's add some stupid stuff as I really can't think of anything clever to declare right now."));
+  nuiLabel* pLabel = new nuiLabel(nuiTR("This text should be long enough for me to test wrapping of the label. So let's add some stupid stuff as I really can't think of anything clever to declare right now."));
   nuiScrollView* pSV = new nuiScrollView();
   pBox->AddCell(pSV);
   pSV->AddChild(pLabel);
@@ -1809,7 +1807,7 @@ private:
 
 bool nuiWin::CreateWhizzAnimWindow(const nuiEvent& rEvent)
 {
-  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, _T("Whizzy Anim"));
+  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, nuiTR("Whizzy Anim"));
   mpManager->AddChild(pWindow);
 
   nuiWhizzAnim* pAnim = new nuiWhizzAnim();
@@ -1941,7 +1939,7 @@ private:
 
 bool nuiWin::CreateTextLayoutWindow(const nuiEvent& rEvent)
 {
-  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, _T("Text Layout"));
+  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, nuiTR("Text Layout"));
   mpManager->AddChild(pWindow);
   //new TestLabel(new nuiScrollView(pWindow, true, false), _T("Test text: yHwWmMfFgGi .;[]()_-|#*%$ 1234567890"));
   nuiScrollView* pScroller = new nuiScrollView(true, false);
@@ -1949,8 +1947,8 @@ bool nuiWin::CreateTextLayoutWindow(const nuiEvent& rEvent)
   nuiVBox* pBox = new nuiVBox(0);
   pScroller->AddChild(pBox);
 
-#define TEST_TEXT _T("['AZERTY_azertyig.DAT']")
-  //#define TEST_TEXT _T("Test text: yHwWmMfFgGi .;[]()_-|#*%$ 1234567890")
+#define TEST_TEXT nuiTR("['AZERTY_azertyig.DAT']")
+  //#define TEST_TEXT nuiTR("Test text: yHwWmMfFgGi .;[]()_-|#*%$ 1234567890")
 
   pBox->AddCell(new TestLabel(TEST_TEXT, _T("<nuiFont Size=\"12\" Source=\"../Data/Vera.ttf\"/>")));
   pBox->AddCell(new TestLabel(TEST_TEXT, _T("<nuiFont Size=\"12\" Source=\"../Data/VeraMono.ttf\"/>")));
@@ -1961,9 +1959,9 @@ bool nuiWin::CreateTextLayoutWindow(const nuiEvent& rEvent)
 
 bool nuiWin::CreateFontSubstitutionWindow(const nuiEvent& rEvent)
 {
-  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, _T("Fonts"));
+  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, nuiTR("Fonts"));
   mpManager->AddChild(pWindow);
-  //new TestLabel(new nuiScrollView(pWindow, true, false), _T("Test text: yHwWmMfFgGi .;[]()_-|#*%$ 1234567890"));
+  //new TestLabel(new nuiScrollView(pWindow, true, false), nuiTR("Test text: yHwWmMfFgGi .;[]()_-|#*%$ 1234567890"));
   nuiScrollView* pScroller = new nuiScrollView(true, true);
   pWindow->AddChild(pScroller);
   nuiText* pText = new nuiText(_T(""));
@@ -1971,7 +1969,7 @@ bool nuiWin::CreateFontSubstitutionWindow(const nuiEvent& rEvent)
   pText->SetFont(nuiTheme::Default);
 
   nuiFontManager& rFontManager(nuiFontManager::GetManager());
-  nglString txt(_T("This string will contain a chinese glyph: '_'\n\n"));
+  nglString txt(nuiTR("This string will contain a chinese glyph: '_'\n\n"));
   pText->Print(txt.GetChars());
 
   txt.Replace('_',(nglChar)0x4eba);
@@ -2052,7 +2050,7 @@ public:
 
 bool nuiWin::CreateSignalsAndSlotsTestWindow(const nuiEvent& rEvent)
 {
-  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, _T("Signals and slots"));
+  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, nuiTR("Signals and slots"));
   mpManager->AddChild(pWindow);
   nuiScrollView* pScroller = new nuiScrollView(true, true);
   pWindow->AddChild(pScroller);
@@ -2063,25 +2061,25 @@ bool nuiWin::CreateSignalsAndSlotsTestWindow(const nuiEvent& rEvent)
   DelegateTest t1(nglString("test1"));
   DelegateTestChild t2(nglString("test2"));
 
-  pText->AddText(_T("Direct access:\n"));
+  pText->AddText(nuiTR("Direct access:\n"));
   t1.PrintName(pText);
   t2.PrintName(pText);
 
-  pText->AddText(_T("Delegate access:\n"));
+  pText->AddText(nuiTR("Delegate access:\n"));
   nuiFastDelegate::FastDelegate1<nuiText*> delegate1(&t1, &DelegateTest::PrintName);
   nuiFastDelegate::FastDelegate1<nuiText*> delegate2(&t2, &DelegateTest::PrintName);
 
   delegate1(pText);
   delegate2(pText);
 
-  pText->AddText(_T("Modified delegate access:\n"));
+  pText->AddText(nuiTR("Modified delegate access:\n"));
   delegate1.SetThis(&t2);
   delegate2.SetThis(&t1);
 
   delegate1(pText);
   delegate2(pText);
 
-  pText->AddText(_T("Modified indirect delegate access (thru nuiObject*):\n"));
+  pText->AddText(nuiTR("Modified indirect delegate access (thru nuiObject*):\n"));
   nuiObject* pObject1 = &t1;
   nuiObject* pObject2 = &t2;
   delegate1.SetThis(pObject1);
@@ -2090,7 +2088,7 @@ bool nuiWin::CreateSignalsAndSlotsTestWindow(const nuiEvent& rEvent)
   delegate1(pText);
   delegate2(pText);
 
-  pText->AddText(_T("Modified indirect delegate access (thru nuiWidget*):\n"));
+  pText->AddText(nuiTR("Modified indirect delegate access (thru nuiWidget*):\n"));
   nuiWidget* pWidget1 = &t1;
   nuiWidget* pWidget2 = &t2;
   delegate1.SetThis(pWidget2);
@@ -2104,7 +2102,7 @@ bool nuiWin::CreateSignalsAndSlotsTestWindow(const nuiEvent& rEvent)
 
 bool nuiWin::CreateFrameWindow(const nuiEvent& rEvent)
 {
-  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, _T("Frame View test"));
+  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, nuiTR("Frame View test"));
   mpManager->AddChild(pWindow);
 
   nuiFrame* pFrame = new nuiFrame(_T("TestFrame1"), nuiTexture::GetTexture(nglPath(_T("rsrc:/frame1.png"))), nuiRect(7, 5, 46, 45));
@@ -2113,7 +2111,7 @@ bool nuiWin::CreateFrameWindow(const nuiEvent& rEvent)
   pFrameView->SetBorder(16, 16);
   pFrameView->AddChild(new nuiImage(nuiTexture::GetTexture(nglPath(_T("rsrc:/toucan.png"))), true));
 
-  nuiLabel* pText = new nuiLabel(_T("This label should\nbe inside\na bitmaped frame"), nuiFont::GetFont(30.0f));
+  nuiLabel* pText = new nuiLabel(nuiTR("This label should\nbe inside\na bitmaped frame"), nuiFont::GetFont(30.0f));
   pFrameView->AddChild(pText);
   pText->SetPosition(nuiCenter);
   pText->SetColor(eNormalTextFg, nuiColor(128, 128, 182));
@@ -2123,12 +2121,12 @@ bool nuiWin::CreateFrameWindow(const nuiEvent& rEvent)
 
 bool nuiWin::CreateFrameWindow2(const nuiEvent& rEvent)
 {
-  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, _T("Frame View test 2"));
+  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, nuiTR("Frame View test 2"));
   mpManager->AddChild(pWindow);
   nuiPositioner* pPositioner = new nuiPositioner(nuiCenter);
 
   nuiFrame* pFrame = new nuiFrame(_T("TestFrame2"), nuiTexture::GetTexture(nglPath(_T("rsrc:/frame1.png"))), nuiRect(7, 5, 46, 45));
-  nuiLabel* pText = new nuiLabel(_T("Label in a frame"), nuiFont::GetFont(35.0f));
+  nuiLabel* pText = new nuiLabel(nuiTR("Label in a frame"), nuiFont::GetFont(35.0f));
   pText->SetDecoration(pFrame);
   pText->SetPosition(nuiCenter);
   pText->SetColor(eNormalTextFg, nuiColor(0, 0, 0, 128));
@@ -2158,7 +2156,7 @@ bool nuiWin::CreateFrameWindow3(const nuiEvent& rEvent)
   {
     for (int e = 0; e < 2; e++)
     {
-      windows[2 * i + e] = new nuiWindow(nuiRect(50 + 200 * e, 50 + 150 * i, 160, 120), nglWindow::NoFlag, _T("Frame View test 3"));
+      windows[2 * i + e] = new nuiWindow(nuiRect(50 + 200 * e, 50 + 150 * i, 160, 120), nglWindow::NoFlag, nuiTR("Frame View test 3"));
       mpManager->AddChild(windows[2 * i + e]);
       nuiLabel* pLabel = new nuiLabel(_T("Decoration mode\n= ") + modesStr[i] + _T("\nEnable Border\n= ") + borderStr[e]);
       nuiSimpleContainer * pCont = new nuiSimpleContainer();
@@ -2229,7 +2227,7 @@ public:
 
 bool nuiWin::CreateDragZone(const nuiEvent& rEvent)
 {
-  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, _T("Drag Zone test"));
+  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, nuiTR("Drag Zone test"));
   mpManager->AddChild(pWindow);
   DragPane* pDragPane = new DragPane();
   pWindow->AddChild(pDragPane);
@@ -2273,7 +2271,7 @@ public:
 
 bool nuiWin::CreateClippingTest(const nuiEvent& rEvent)
 {
-  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, _T("Clipping test"));
+  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, nuiTR("Clipping test"));
   mpManager->AddChild(pWindow);
   pWindow->AddChild(new ClippingTest());
   return false;
@@ -2339,11 +2337,11 @@ private:
 
 bool nuiWin::CreateAudioWindow(const nuiEvent& rEvent)
 {
-  nuiWindow* pWindow = new nuiWindow(nuiRect(10.0f,10.0f, 300.f,400.f), nuiWindow::DecoratedBackground ,(_T("Audio Hardware")));
+  nuiWindow* pWindow = new nuiWindow(nuiRect(10.0f,10.0f, 300.f,400.f), nuiWindow::DecoratedBackground ,(nuiTR("Audio Hardware")));
   mpManager->AddChild(pWindow);
   nuiVBox* pBox = new nuiVBox();
   pWindow->AddChild(pBox);
-  nuiLabel* pTitle = new nuiLabel(_T("Enum audio devices on this machine:\n"));
+  nuiLabel* pTitle = new nuiLabel(nuiTR("Enum audio devices on this machine:\n"));
   pBox->AddCell(pTitle);
   nuiComboBox* pCombo = new nuiComboBox();
   pBox->AddCell(pCombo);
@@ -2356,7 +2354,7 @@ bool nuiWin::CreateAudioWindow(const nuiEvent& rEvent)
   mWinSink.Connect(pCombo->SelectionChanged, &nuiWin::AudioDeviceSelected, pCombo);
   mWinSink.Connect(pCombo->Trashed, &nuiWin::AudioComboTrashed, pCombo);
 
-  nuiTreeNode* pTree = new nuiTreeNode(_T("AudioDevices"));
+  nuiTreeNode* pTree = new nuiTreeNode(nuiTR("AudioDevices"));
 
   nuiAudioDeviceManager::Get().Update();
   uint32 devs = nuiAudioDeviceManager::Get().GetDeviceCount();
@@ -2399,17 +2397,17 @@ bool nuiWin::AudioDeviceSelected(const nuiEvent& rEvent)
 
   nglString str;
 
-  str.Add(_T("Name: ")).Add(pDev->GetName()).AddNewLine();
-  str.Add(_T("API: ")).Add(pDev->GetAPIName()).AddNewLine();
-  str.Add(_T("Manufacturer: ")).Add(pDev->GetManufacturer()).AddNewLine();
+  str.Add(nuiTR("Name: ")).Add(pDev->GetName()).AddNewLine();
+  str.Add(nuiTR("API: ")).Add(pDev->GetAPIName()).AddNewLine();
+  str.Add(nuiTR("Manufacturer: ")).Add(pDev->GetManufacturer()).AddNewLine();
 
-  str.Add(_T("Sample rates:"));
+  str.Add(nuiTR("Sample rates:"));
   const std::vector<double>& SampleRates(pDev->GetSampleRates());
   for (uint32 sr = 0; sr < SampleRates.size(); sr++)
     str.Add(_T(" ")).Add(SampleRates[sr]);
   str.AddNewLine();
 
-  str.Add(_T("Buffer sizes:"));
+  str.Add(nuiTR("Buffer sizes:"));
   const std::vector<uint32>& BuffserSizes(pDev->GetBufferSizes());
   for (uint32 sr = 0; sr < BuffserSizes.size(); sr++)
     str.Add(_T(" ")).Add(BuffserSizes[sr]);
@@ -2419,7 +2417,7 @@ bool nuiWin::AudioDeviceSelected(const nuiEvent& rEvent)
   uint32 inchcount = pDev->GetInputChannelCount();
   if (inchcount)
   {
-    str.Add(_T("\tInput channels:")).AddNewLine();
+    str.Add(nuiTR("\tInput channels:")).AddNewLine();
     for (uint32 c = 0; c < inchcount; c++)
       str.Add(_T("\t\t")).Add(c).Add(_T(" - ")).Add(pDev->GetInputChannelName(c)).AddNewLine();
   }
@@ -2427,7 +2425,7 @@ bool nuiWin::AudioDeviceSelected(const nuiEvent& rEvent)
   uint32 outchcount = pDev->GetOutputChannelCount();
   if (outchcount)
   {
-    str.Add(_T("\tOutput channels:")).AddNewLine();
+    str.Add(nuiTR("\tOutput channels:")).AddNewLine();
     for (uint32 c = 0; c < outchcount; c++)
       str.Add(_T("\t\t")).Add(c).Add(_T(" - ")).Add(pDev->GetOutputChannelName(c)).AddNewLine();
   }
@@ -2452,7 +2450,7 @@ bool nuiWin::AudioDeviceSelected(const nuiEvent& rEvent)
 
   if (!res)
   {
-    NGL_OUT(_T("nuiAudioDevice Open failed!\n"));
+    NGL_OUT(nuiTR("nuiAudioDevice Open failed!\n"));
     return false;
   }
 
@@ -2547,14 +2545,14 @@ private:
 
 bool nuiWin::CreateAudioFifoWindow(const nuiEvent& rEvent)
 {
-  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, _T("AudioFifo test"));
+  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, nuiTR("AudioFifo test"));
   mpManager->AddChild(pWindow);
   nuiText* pText = new nuiText();
   nuiScrollView* pScrollView = new nuiScrollView();
   pScrollView->AddChild(pText);
   pWindow->AddChild(pScrollView);
 
-  pText->AddText(_T("You should hear a test sound. Otherwise, check the Console for error messages.\n"));
+  pText->AddText(nuiTR("You should hear a test sound. Otherwise, check the Console for error messages.\n"));
 
   // take a loot at CreateAudioWindow above, to see how the device can be asked about the provided sample rates and buffer sizes.
   // here, the values are just hard-coded. We give a 4096 samples buffer size as a parameter : with the machine this program has been written on, Windows's DirectSound can't bear a lower value without messing up the sound
@@ -2591,7 +2589,7 @@ bool nuiWin::CreateAudioFifoWindow(const nuiEvent& rEvent)
 
 bool nuiWin::CreateHTTPWindow(const nuiEvent& rEvent)
 {
-  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, _T("HTTP Request"));
+  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, nuiTR("HTTP Request"));
   mpManager->AddChild(pWindow);
 
   nuiVBox* pVBox = new nuiVBox(3);
@@ -2601,7 +2599,7 @@ bool nuiWin::CreateHTTPWindow(const nuiEvent& rEvent)
   pHBox->SetCell(1, mpURLText);
   pVBox->SetCell(0, pHBox);
 
-  nuiButton* pButton = new nuiButton(_T("Send"));
+  nuiButton* pButton = new nuiButton(nuiTR("Send"));
   mWinSink.Connect(pButton->Activated, &nuiWin::SendHTTPRequest);
   pVBox->SetCell(1, pButton, nuiRight);
 
@@ -2624,7 +2622,7 @@ bool nuiWin::SendHTTPRequest(const nuiEvent& rEvent)
   }
   else
   {
-    mpHTTPResponseLabel->SetText(_T("Unable to connect to ") + url);
+    mpHTTPResponseLabel->SetText(nuiTR("Unable to connect to ") + url);
   }
   return true;
 }
@@ -2656,14 +2654,14 @@ struct Test
 
 bool nuiWin::CreateResourceWindow(const nuiEvent& rEvent)
 {
-  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, _T("Native Resources"));
+  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, nuiTR("Native Resources"));
   mpManager->AddChild(pWindow);
   nuiText* pText = new nuiText();
   nuiScrollView* pScrollView = new nuiScrollView();
   pScrollView->AddChild(pText);
   pWindow->AddChild(pScrollView);
 
-  pText->AddText(_T("Enum native resources on this executable:\n"));
+  pText->AddText(nuiTR("Enum native resources on this executable:\n"));
 
   std::list<nglPath> resources;
   nglPath p(_T("rsrc:/"));
@@ -2802,7 +2800,7 @@ private:
       mpRasterizer->DrawTriangle<nuiPixelBlender_Transp>(v0, v2, v3);
     }
 
-    pBox->AddCell(new nuiLabel(_T("General test")));
+    pBox->AddCell(new nuiLabel(nuiTR("General test")));
     mpRasterizer->ReverseBufferABGR();
     mpTex = nuiTexture::GetTexture(info);
     mpTex->SetSource(_T("soft_image3"));
@@ -2916,7 +2914,7 @@ private:
 
 
     {
-      pBox->AddCell(new nuiLabel(_T("clipping test")));
+      pBox->AddCell(new nuiLabel(nuiTR("clipping test")));
       //mpRasterizer->ReverseBufferABGR();
       mpTex = nuiTexture::GetTexture(info);
       mpTex->SetSource(_T("soft_image2"));
@@ -2991,7 +2989,7 @@ private:
       mpRasterizer->DrawTriangle<nuiPixelBlender_Transp>(v0, v2, v3);
     }
 
-    pBox->AddCell(new nuiLabel(_T("General test")));
+    pBox->AddCell(new nuiLabel(nuiTR("General test")));
     mpRasterizer->ReverseBufferABGR();
     mpTex = nuiTexture::GetTexture(info);
     mpTex->SetSource(_T("soft_image0"));
@@ -3036,7 +3034,7 @@ private:
 
 
     {
-      pBox->AddCell(new nuiLabel(_T("clipping test")));
+      pBox->AddCell(new nuiLabel(nuiTR("clipping test")));
       mpRasterizer->ReverseBufferABGR();
       mpTex = nuiTexture::GetTexture(info);
       mpTex->SetSource(_T("soft_image1"));
@@ -3111,7 +3109,7 @@ private:
     delete pTess;
 
     {
-      pBox->AddCell(new nuiLabel(_T("Shape rendering")));
+      pBox->AddCell(new nuiLabel(nuiTR("Shape rendering")));
       //mpRasterizer->ReverseBufferABGR();
       mpTex = nuiTexture::GetTexture(info);
       mpTex->SetSource(_T("soft_image4"));
@@ -3127,7 +3125,7 @@ private:
 
 bool nuiWin::SoftwarePainterWindow(const nuiEvent& rEvent)
 {
-  nuiWindow* pWin = new SoftwareWindow(nuiRect(10, 10, 300, 600), nglWindow::NoFlag, _T("Software Rasterizer"));
+  nuiWindow* pWin = new SoftwareWindow(nuiRect(10, 10, 300, 600), nglWindow::NoFlag, nuiTR("Software Rasterizer"));
   mpManager->AddChild(pWin);
 
   return false;
@@ -3167,12 +3165,12 @@ static nuiRange mmRange(0,-100,100);
 
 bool nuiWin::SpinerLabelWindow (const nuiEvent& rEvent)
 {
-  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, _T("Spiner Label, Formated Label and Formater"));
+  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, nuiTR("Spiner Label, Formated Label and Formater"));
   mpManager->AddChild(pWindow);
 
 
   nuiVBox* box1 = new nuiVBox(2);
-  nuiButton* pBtn = new nuiButton(_T("prout"));
+  nuiButton* pBtn = new nuiButton(nuiTR("prout"));
   box1->SetCell(0, pBtn);
 
   //  nuiScrollView* pScroller = new nuiScrollView(true, true);
@@ -3206,7 +3204,7 @@ bool nuiWin::SpinerLabelWindow (const nuiEvent& rEvent)
 
 bool nuiWin::VBoxAndHBoxWindow (const nuiEvent& rEvent)
 {
-  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, _T("nuiVBox and nuiHBox"));
+  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, nuiTR("nuiVBox and nuiHBox"));
   mpManager->AddChild(pWindow);
 
   nuiVBox* boxv = new nuiVBox(2);
@@ -3294,7 +3292,7 @@ bool nuiWin::MatrixViewWindow (const nuiEvent& rEvent)
 
 
 
-  nuiButton* btn = new nuiButton(_T("test"));
+  nuiButton* btn = new nuiButton(nuiTR("test"));
   vbox->SetCell(1, btn);
   mWinSink.Connect(btn->Activated, &nuiWin::MatrixViewTest, (void*)mat);
 
@@ -3359,7 +3357,7 @@ void nuiWin::GetMatrixViewItemDesc(nuiMatrixViewItemDesc& rDesc)
 //
 bool nuiWin::CreateTitledPaneWindow(const nuiEvent& rEvent)
 {
-  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 500, 300), nglWindow::NoFlag, _T("nuiTitledPane and nuiFolderPane"));
+  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 500, 300), nglWindow::NoFlag, nuiTR("nuiTitledPane and nuiFolderPane"));
   mpManager->AddChild(pWindow);
 
   nuiVBox* vbox = new nuiVBox(2);
@@ -3368,24 +3366,24 @@ bool nuiWin::CreateTitledPaneWindow(const nuiEvent& rEvent)
   vbox->SetDefaultSpacing(10);
 
   nuiPane* pPane = new nuiPane();
-  nuiLabel* pLabel = new nuiLabel(_T("Title"), nuiFont::GetFont(12));
+  nuiLabel* pLabel = new nuiLabel(nuiTR("Title"), nuiFont::GetFont(12));
   pPane->AddChild(pLabel);
 
   nuiTitledPane* pTPane = new nuiTitledPane(pPane);
   vbox->SetCell (0, pTPane);
   vbox->SetCellSpacing (0, 10);
 
-  pTPane->AddChild(new nuiLabel(_T("bleh!")));
+  pTPane->AddChild(new nuiLabel(nuiTR("bleh!")));
 
   nuiPane* pPane2 = new nuiPane();
   nuiLabel* pLabel2 = new nuiLabel(_T("FolderTitle"), nuiFont::GetFont(12));
   pPane2->AddChild(pLabel2);
 
-  nuiFolderPane* pFPane = new nuiFolderPane(_T("My Folder Pane"));
+  nuiFolderPane* pFPane = new nuiFolderPane(nuiTR("My Folder Pane"));
   vbox->SetCell (1, pFPane);
   vbox->SetCellSpacing (1, 10);
 
-  pFPane->AddChild(new nuiLabel(_T("bleh!")));
+  pFPane->AddChild(new nuiLabel(nuiTR("bleh!")));
 
 
   return false;
@@ -3553,7 +3551,7 @@ bool nuiWin::DumpStats(const nuiEvent& rEvent)
   NGL_OUT((_T("sizeof(nuiWidget): %d\n")), sizeof(nuiWidget));
   NGL_OUT((_T("sizeof(nuiContainer): %d\n")), sizeof(nuiContainer));
 
-  NGL_OUT(_T("floating point tests:\n"));
+  NGL_OUT(nuiTR("floating point tests:\n"));
   {
     float f = -28.5;
     int32 below = ToBelow(f);
@@ -3699,7 +3697,7 @@ bool nuiWin::CreateFromXML( const nuiEvent& rEvent)
   Info.Width = 640;
   Info.Height = 480;
   Info.Pos = nglWindowInfo::ePosCenter;
-  Info.Title = _T("nui test");
+  Info.Title = nuiTR("nui test");
   Info.XPos = 0;
   Info.YPos = 0;
 
@@ -3707,7 +3705,7 @@ bool nuiWin::CreateFromXML( const nuiEvent& rEvent)
   if ((!win) || (win->GetError()))
   {
     if (win) 
-      NGL_OUT((_T("Error: cannot create window (%ls)\n")), win->GetErrorStr());
+      NGL_OUT(_T("Error: cannot create window (%ls)\n"), win->GetErrorStr());
     App->Quit (1);
     return false;
   }
@@ -3738,7 +3736,7 @@ bool nuiWin::SaveXMLDescription(const nuiEvent& rEvent)
 bool nuiWin::LogText(const nuiEvent& rEvent)
 {
   nuiEditLine* pLine = (nuiEditLine*)rEvent.mpUser;
-  NGL_OUT((_T("From Edit Line: %ls\n")),pLine->GetText().GetChars());
+  NGL_OUT(_T("From Edit Line: %ls\n"),pLine->GetText().GetChars());
   pLine->SetText((_T("")));
   return false;
 }
@@ -3753,7 +3751,7 @@ bool nuiWin::ClearTable(const nuiEvent& rEvent)
 
 bool nuiWin::FileSelect(const nuiEvent& rEvent)
 {
-  nuiWindow* pWin = new nuiWindow(nuiRect(10, 10, 200, 200), nuiWindow::NoFlag, _T("Select a file..."));
+  nuiWindow* pWin = new nuiWindow(nuiRect(10, 10, 200, 200), nuiWindow::NoFlag, nuiTR("Select a file..."));
   mpManager->AddChild(pWin);
   nuiFileSelector* pFileSelector = new nuiFileSelector(nglPath(_T("/")));
   pWin->AddChild(pFileSelector);
@@ -3768,7 +3766,7 @@ bool nuiWin::FileSelectDone(const nuiEvent& rEvent)
   nuiFileSelector* pFileSelector = (nuiFileSelector*)rEvent.mpUser;
 
   nglPath path = pFileSelector->GetPath();
-  NGL_OUT((_T("File selection: '%ls'\n")), path.GetChars());
+  NGL_OUT(_T("File selection: '%ls'\n"), path.GetChars());
 
   pFileSelector->GetParent()->Trash();
   return true;
@@ -3801,9 +3799,9 @@ bool nuiWin::DrawBlur(const nuiEvent& rEvent)
 
 bool nuiWin::CreateEnableTestWindow(const nuiEvent& rEvent)
 {
-  nuiWindow* pEnableWin = new nuiWindow(nuiRect(10, 10, 100, 100), nuiWindow::NoFlag, _T("Enable Widget Test"));
+  nuiWindow* pEnableWin = new nuiWindow(nuiRect(10, 10, 100, 100), nuiWindow::NoFlag, nuiTR("Enable Widget Test"));
 
-  nuiLabel* pLabel = new nuiLabel(_T("Disabled Label"));
+  nuiLabel* pLabel = new nuiLabel(nuiTR("Disabled Label"));
   pLabel->SetEnabled(false);
 
   nuiSpinnerLabel* pSpinner = new nuiSpinnerLabel();
@@ -3813,7 +3811,7 @@ bool nuiWin::CreateEnableTestWindow(const nuiEvent& rEvent)
   pBox->SetCell(0, pLabel);
   pBox->SetCell(1, pSpinner);
 
-  nuiFolderPane* pFolder = new nuiFolderPane(_T("EnableWidget Folder"));
+  nuiFolderPane* pFolder = new nuiFolderPane(nuiTR("EnableWidget Folder"));
   pFolder->AddChild(pBox);
 
   pEnableWin->AddChild(pFolder);
@@ -3824,7 +3822,7 @@ bool nuiWin::CreateEnableTestWindow(const nuiEvent& rEvent)
 
 bool nuiWin::CreateButtonDecorationWindow(const nuiEvent& rEvent)
 {
-  nuiWindow* pEnableWin = new nuiWindow(nuiRect(10, 10, 100, 100), nuiWindow::NoFlag, _T("Button Decoration sample"));
+  nuiWindow* pEnableWin = new nuiWindow(nuiRect(10, 10, 100, 100), nuiWindow::NoFlag, nuiTR("Button Decoration sample"));
 
   pEnableWin->SetColor(eActiveWindowBg, nuiColor(0,0,0));
   pEnableWin->SetColor(eInactiveWindowBg, nuiColor(0,0,0));
@@ -3840,33 +3838,33 @@ bool nuiWin::CreateButtonDecorationWindow(const nuiEvent& rEvent)
 
 bool nuiWin::CreateVolumesTestWindow(const nuiEvent& rEvent)
 {
-  nuiWindow* pEnableWin = new nuiWindow(nuiRect(10, 10, 300, 300), nuiWindow::NoFlag, _T("Enumerate Volumes Test"));
+  nuiWindow* pEnableWin = new nuiWindow(nuiRect(10, 10, 300, 300), nuiWindow::NoFlag, nuiTR("Enumerate Volumes Test"));
   nuiText* pText = new nuiText();
 
   std::list<nglPathVolume> Volumes;
 
   std::pair<uint64, nglString> flags[5];
   flags[0].first = 0xFFFFFFFF;
-  flags[0].second = _T("All");
+  flags[0].second = nuiTR("All");
   flags[1].first = 1;
-  flags[1].second = _T("ReadOnly");
+  flags[1].second = nuiTR("ReadOnly");
   flags[2].first = 2;
-  flags[2].second = _T("Removable");
+  flags[2].second = nuiTR("Removable");
   flags[3].first = 4;
-  flags[3].second = _T("Offline");
+  flags[3].second = nuiTR("Offline");
   flags[4].first = 8;
-  flags[4].second = _T("System");
+  flags[4].second = nuiTR("System");
 
   for (int i =0; i < 5; i++)
   {
     nglVolume::GetVolumes(Volumes, flags[i].first);
-    pText->AddText(_T("\nFlags :  ") + flags[i].second + _T("\nGetVolumes   number of volumes : ") + nglString((uint32)Volumes.size()) + _T("\n"));
+    pText->AddText(nuiTR("\nFlags :  ") + flags[i].second + nuiTR("\nGetVolumes   number of volumes : ") + nglString((uint32)Volumes.size()) + _T("\n"));
 
     std::list<nglPathVolume>::iterator it;
     for (it = Volumes.begin(); it != Volumes.end(); ++it, i++)
     {
       nglPathVolume volume = *it;
-      pText->AddText(_T("VOLUME ") + nglString((uint32)i) + _T(":\n  Path:  ") + volume.mPath.GetPathName() + _T("\n  Comment: ") + volume.mComment + _T("\n\n"));
+      pText->AddText(nuiTR("VOLUME ") + nglString((uint32)i) + nuiTR(":\n  Path:  ") + volume.mPath.GetPathName() + nuiTR("\n  Comment: ") + volume.mComment + _T("\n\n"));
     }
     Volumes.clear();
   }
@@ -3882,13 +3880,13 @@ bool nuiWin::CreateMessageBox(const nuiEvent& rEvent)
 {
   nuiMessageBox::Button res;
 
-  nuiMessageBox* pBox = new nuiMessageBox(this, _T("Simple message box (OK)"), _T("This simple message box should be displayed.\nYou normaly can't interact with the rest of the GUI\nbefore you click the OK button"), eMB_OK);
+  nuiMessageBox* pBox = new nuiMessageBox(this, nuiTR("Simple message box (OK)"), nuiTR("This simple message box should be displayed.\nYou normaly can't interact with the rest of the GUI\nbefore you click the OK button"), eMB_OK);
   res = pBox->QueryUser();
 
-  res = nuiMessageBox::Do(this, _T("Simple message box (Cancel)"), _T("This is a 'Cancel' message box"), eMB_Cancel);
-  res = nuiMessageBox::Do(this, _T("Simple message box (OK - Cancel)"), _T("This is a 'OK/Cancel' message box"), eMB_OKCancel);
-  res = nuiMessageBox::Do(this, _T("Simple message box (Retry - OK - Cancel)"), _T("This is a 'Retry/OK/Cancel' message box"), eMB_RetryOKCancel);
-  res = nuiMessageBox::Do(this, _T("Simple message box (Yes - No) [Last MsgBox Test]"), _T("This is a 'Yes/No' message box,\nyou will now be able to go back to what you were doing..."), eMB_YesNo);
+  res = nuiMessageBox::Do(this, nuiTR("Simple message box (Cancel)"), nuiTR("This is a 'Cancel' message box"), eMB_Cancel);
+  res = nuiMessageBox::Do(this, nuiTR("Simple message box (OK - Cancel)"), nuiTR("This is a 'OK/Cancel' message box"), eMB_OKCancel);
+  res = nuiMessageBox::Do(this, nuiTR("Simple message box (Retry - OK - Cancel)"), nuiTR("This is a 'Retry/OK/Cancel' message box"), eMB_RetryOKCancel);
+  res = nuiMessageBox::Do(this, nuiTR("Simple message box (Yes - No) [Last MsgBox Test]"), nuiTR("This is a 'Yes/No' message box,\nyou will now be able to go back to what you were doing..."), eMB_YesNo);
   return false;
 }
 
@@ -3936,7 +3934,7 @@ bool nuiWin::CreateWidgetTexture(const nuiEvent& rEvent)
 
   nuiTexture* pTexture = nuiTexture::GetTexture(info, true);
 
-  nuiWindow* pWin = new nuiWindow(nuiRect(10, 10, 300, 300), nuiWindow::NoFlag, _T("Widget Texture"));
+  nuiWindow* pWin = new nuiWindow(nuiRect(10, 10, 300, 300), nuiWindow::NoFlag, nuiTR("Widget Texture"));
   mpManager->AddChild(pWin);
   nuiScrollView* pScroll = new nuiScrollView();
   pWin->AddChild(pScroll);

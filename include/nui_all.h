@@ -79,13 +79,10 @@ precompiled header central file and everything should be rolling. (lookup precom
 #include "nuiOffscreenView.h"
 #include "nuiScrollView.h"
 #include "nuiZoomView.h"
-/*
-#include "nuiOpcodes.h"
-#include "nuiParser.h"
-*/
 #include "nuiTextureHelpers.h"
 #include "nuiWidgetAnimation.h"
 #include "nuiApplication.h"
 
+#include "nuiTranslator.h"
 
 #endif // __nui_all_h__

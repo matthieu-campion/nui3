@@ -1,0 +1,59 @@
+ , 3D Gears + compositing , Engrenages en 3D + composition
+ , All unicode glyphs (very slow!) , Tous les caractères unicode (super lent!)
+ , Button decorations ,Décorations de boutons
+ , CSS Parser Test window ,Test de lecture de CSS
+ , Clipping Test ,Test de clipping
+ , Column Tree View Window ,Arbre sous forme de colones
+ , Complex Font Layout test windows ,Composition de polices de caractères complexe
+ , Composited Radial Blur ,Flou radial composité
+ , Console Test window ,Fenêtre de test de la console
+ , Drag Zone ,Zone de clické-déposé
+ , Dump some stats to the console ,Balancer des infos vers la console…
+ , Enable Widget ,Test de controle graphique activé
+ , Enum audio hardware ,Liste des cartes son
+ , Enum native resources ,Liste des resources natives
+ , Enumerate Volumes ,Liste des volumes
+ , File List window ,Liste des fichiers
+ , Fixed Font Text window ,Texte en police fixe
+ , Font Substitution window ,Substitution de police de caractères
+ , Frame View , Frame View
+ , Frame View 2 , Frame View 2
+ , Frame View 3 , Frame View 3
+ , GLSL Shader Test 1 Window ,Test de GLSL Shader
+ , Hello ,Bonjour
+ , I can eat glass ,Je peux manger du verre
+ , Label Ellipsis Test ,Elipse de label
+ , Load font database ,Charger la base de polices de caractères
+ , Main Menu ,Menu principal
+ , MatrixView , MatrixView
+ , Message Box ,Boites de messages
+ , Messed up window ,Fenêtre bordelique
+ , SVG View (Tiger) ,Affichage SVG (le tigre qu'on voit dans toutes les démos…)
+ , SWF widget Test 1 Window ,Test Shockwave Flash
+ , Save font database ,Sauver la base de donnée des polices de caratères
+ , Scrolled Image Window (1) ,Image affichée dans une nuiScrollView (1)
+ , Scrolled Image Window (2) ,Image affichée dans une nuiScrollView (2)
+ , Serialize to nuiTextOutput.xml ,Serializer l'arbre des widgets dans un fichier xml
+ , Shapes Window ,Quelques formes graphiques
+ , Signals And Slots Tests Window ,Test des signaux
+ , Simple Anim ,Animation Simple
+ , Simple text ,Texte simple
+ , Slider test ,Test de curseur
+ , Software Painter Window ,Test de rendu logiciel
+ , Spiner Label and Formated Label ,Label clickable
+ , Spline View ,Affichage de spline editable
+ , TabView Container Window ,Affichage par onglets
+ , Table View ,Tableau
+ , "Test file: ", "Fichier de test: "
+ , Text Layout ,Placement de texte:
+ , Toggle Partial Redraw ,Activer/Desactiver le rendu partiel
+ , Tree View ,Control d'arbre
+ , VBox and HBox ,Vbox et Hbox
+ , Whizzy Anim ,Anim trop chelou
+ , Widget Texture ,Texture de controle
+ , Wrapped Label ,Label avec retour à la ligne
+ , nuiAudioFifo test , nuiAudioFifo test
+ , nuiHTML test , nuiHTML test
+ , nuiHTTP test , nuiHTTP test
+ , nuiThreadInspector Test window ,Test nuiThreadInspector
+ , nuiTitledPane and nuiFolderPane , nuiTitledPane et nuiFolderPane
