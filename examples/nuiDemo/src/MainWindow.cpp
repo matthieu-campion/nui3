@@ -7,9 +7,10 @@
 
 #include "nui.h"
 #include "MainWindow.h"
-#include "Application.h"
 #include "nuiLabel.h"
+#include "nuiCSS.h"
 
+#include "Application.h"
 #include "Gui/Gui.h"
 #include "Engine/Engine.h"
 
@@ -20,7 +21,7 @@
 MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& rInfo, bool ShowFPS, const nglContext* pShared )
   : nuiMainWindow(rContextInfo, rInfo, pShared, nglPath(ePathCurrent)), mEventSink(this)
 {
-
+  LoadCSS(_T("rsrc:/css/nuiDemo.css"));
 }
 
 MainWindow::~MainWindow()
@@ -48,6 +49,32 @@ void MainWindow::OnClose()
   
   
   App->Quit();
+}
+
+
+bool MainWindow::LoadCSS(const nglPath& rPath)
+{
+  nglIStream* pF = rPath.OpenRead();
+  if (!pF)
+  {
+    NGL_OUT(_T("Unable to open CSS source file '%ls'\n"), rPath.GetChars());
+    return false;
+  }
+  
+  nuiCSS* pCSS = new nuiCSS();
+  bool res = pCSS->Load(*pF, rPath);
+  delete pF;
+  
+  if (res)
+  {
+    SetCSS(pCSS);
+    return true;
+  }
+  
+  NGL_OUT(_T("%ls\n"), pCSS->GetErrorString().GetChars());
+  
+  delete pCSS;
+  return false;
 }
 
 

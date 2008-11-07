@@ -25,30 +25,35 @@ Gui::Gui()
   nuiImage* pTitleImg = new nuiImage();
   pTitleImg->SetObjectName(_T("ImageTitle"));
   AddCell(pTitleImg);
-  
+  SetCellExpand(GetNbCells()-1, nuiExpandShrinkAndGrow);
+    
   // row 2: start button and oscillo
   nuiHBox* pBox = new nuiHBox(0);
   pBox->SetExpand(nuiExpandShrinkAndGrow);
   AddCell(pBox);
+  SetCellExpand(GetNbCells()-1, nuiExpandShrinkAndGrow);
   
   nuiToggleButton* pStartBtn = new nuiToggleButton();
   pStartBtn->SetObjectName(_T("ButtonStart"));
-  pBox->AddCell(pStartBtn);
+  pBox->AddCell(pStartBtn, nuiCenter);
   
   guiOscillo* pOscillo = new guiOscillo();
-  pBox->AddCell(pOscillo);
+  pBox->AddCell(pOscillo, nuiCenter);
   
   // row 3: text and controls
   pBox = new nuiHBox(0);
   pBox->SetExpand(nuiExpandShrinkAndGrow);
   AddCell(pBox);
+  SetCellExpand(GetNbCells()-1, nuiExpandShrinkAndGrow);
   
   nuiLabel* pText = new nuiLabel(_T("TEXT"));
   pText->SetObjectName(_T("Text"));
   pBox->AddCell(pText);
+  pBox->SetCellExpand(pBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
   
   nuiWidget* pControls = BuildControls();
   pBox->AddCell(pControls);
+  pBox->SetCellExpand(pBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
   
 }
 
@@ -68,7 +73,7 @@ nuiWidget* Gui::BuildControls()
   // pitch slider
   nuiSlider* pPitchSlider = new nuiSlider(nuiHorizontal);
   pPitchSlider->SetObjectName(_T("SliderPitch"));
-  pBox->AddCell(pPitchSlider);
+  pBox->AddCell(pPitchSlider, nuiCenter);
   
   // frequency knob
   nuiKnob* pFreqKnob = new nuiKnob();

@@ -16,9 +16,11 @@ public:
   MainWindow(const nglContextInfo& rContext, const nglWindowInfo& rInfo, bool ShowFPS = false, const nglContext* pShared = NULL);
   ~MainWindow();
 
+protected:
   virtual void OnCreation();
   virtual void OnClose();
   
+  bool LoadCSS(const nglPath& rPath);
   
 private:
 
