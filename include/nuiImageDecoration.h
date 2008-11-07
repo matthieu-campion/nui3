@@ -16,8 +16,8 @@ class nuiImageDecoration : public nuiDecoration
 {
 public:
   nuiImageDecoration(const nglString& rName);
-  nuiImageDecoration(const nglString& rName, nuiTexture* pTexture, const nuiRect& rClientRect = nuiRect(0,0,0,0), nuiPosition position = nuiCenter);
-  nuiImageDecoration(const nglString& rName, const nglPath& rTexturePath, const nuiRect& rClientRect = nuiRect(0,0,0,0), nuiPosition position = nuiCenter);
+  nuiImageDecoration(const nglString& rName, nuiTexture* pTexture, const nuiRect& rClientRect = nuiRect(0,0,0,0), nuiPosition position = nuiCenter, const nuiColor& rColor = nuiColor(255,255,255,255));
+  nuiImageDecoration(const nglString& rName, const nglPath& rTexturePath, const nuiRect& rClientRect = nuiRect(0,0,0,0), nuiPosition position = nuiCenter, const nuiColor& rColor = nuiColor(255,255,255,255));
 	void InitAttributes();
   virtual ~nuiImageDecoration();
   
@@ -41,6 +41,9 @@ public:
   nuiPosition GetPosition();
   void SetPosition(nuiPosition pos);
 
+  const nuiColor& GetColor() const;
+  void SetColor(const nuiColor& rColor);
+
 protected : 
 
   virtual void Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rDestRect);
@@ -53,5 +56,6 @@ private:
   nuiRect mClientRect;
   bool mBorderEnabled;
   nuiPosition mPosition;
+  nuiColor mColor;
 };
 

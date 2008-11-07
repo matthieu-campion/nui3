@@ -13,29 +13,32 @@ nuiImageDecoration::nuiImageDecoration(const nglString& rName)
 : nuiDecoration(rName),
   mpTexture(NULL),
   mPosition(nuiCenter),
-  mBorderEnabled(true)
+  mBorderEnabled(true),
+  mColor(255,255,255,255)
 {
   if (SetObjectClass(_T("nuiImageDecoration")))
     InitAttributes();
 }
 
-nuiImageDecoration::nuiImageDecoration(const nglString& rName, nuiTexture* pTexture, const nuiRect& rClientRect, nuiPosition position)
+nuiImageDecoration::nuiImageDecoration(const nglString& rName, nuiTexture* pTexture, const nuiRect& rClientRect, nuiPosition position, const nuiColor& rColor)
 : nuiDecoration(rName),
   mpTexture(pTexture),
   mPosition(position),
   mClientRect(rClientRect),
-  mBorderEnabled(true)
+  mBorderEnabled(true),
+  mColor(rColor)
 {
   if (SetObjectClass(_T("nuiImageDecoration")))
     InitAttributes();
 }
 
-nuiImageDecoration::nuiImageDecoration(const nglString& rName, const nglPath& rTexturePath, const nuiRect& rClientRect, nuiPosition position)
+nuiImageDecoration::nuiImageDecoration(const nglString& rName, const nglPath& rTexturePath, const nuiRect& rClientRect, nuiPosition position, const nuiColor& rColor)
 : nuiDecoration(rName),
   mpTexture(NULL),
   mPosition(position),
   mClientRect(rClientRect),
-  mBorderEnabled(true)
+  mBorderEnabled(true),
+  mColor(rColor)
 {
   if (SetObjectClass(_T("nuiImageDecoration")))
     InitAttributes();
@@ -71,7 +74,11 @@ void nuiImageDecoration::InitAttributes()
     nuiFastDelegate::MakeDelegate(this, &nuiImageDecoration::GetPosition), 
     nuiFastDelegate::MakeDelegate(this, &nuiImageDecoration::SetPosition));
   
-
+  nuiAttribute<const nuiColor&>* AttributeColor = new nuiAttribute<const nuiColor&>
+  (nglString(_T("Color")), nuiUnitNone,
+   nuiAttribute<const nuiColor&>::GetterDelegate(this, &nuiImageDecoration::GetColor), 
+   nuiAttribute<const nuiColor&>::SetterDelegate(this, &nuiImageDecoration::SetColor));
+  
 	AddAttribute(_T("EnableBorder"), AttributeBorder);
 	AddAttribute(_T("ClientRect"), AttributeRect);
 	AddAttribute(_T("Texture"), AttributeTexture);
@@ -133,6 +140,16 @@ void nuiImageDecoration::SetTexturePath(const nglPath& rPath)
     pOld->Release();
 }
 
+const nuiColor& nuiImageDecoration::GetColor() const
+{
+  return mColor;
+}
+
+void nuiImageDecoration::SetColor(const nuiColor& rColor)
+{
+  mColor = rColor;
+}
+
 void nuiImageDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rDestRect)
 {
   if (!mpTexture || !mpTexture->GetImage() || !mpTexture->GetImage()->GetPixelSize())
@@ -146,7 +163,7 @@ void nuiImageDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, cons
   pContext->EnableBlending(true);
   pContext->SetBlendFunc(nuiBlendTransp);
   pContext->SetTexture(mpTexture);
-  pContext->SetFillColor(nuiColor(255,255,255,255));
+  pContext->SetFillColor(mColor);
   pContext->DrawImage(rect, mClientRect);
 }
 
