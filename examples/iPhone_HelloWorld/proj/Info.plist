@@ -27,6 +27,6 @@
 	<key>NSHumanReadableCopyright</key>
 	<string>libnui.net</string>
 	<key>UIInterfaceOrientation</key>
-	<string>UIInterfaceOrientationLandscapeRight</string>
+	<string>UIDeviceOrientationPortrait</string>
 </dict>
 </plist>

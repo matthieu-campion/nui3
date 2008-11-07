@@ -35,7 +35,7 @@ void nuiApp::OnInit()
   uint Angle = 0;
 //Angle = 90;
 //Angle = 180;
-  Angle = 270;
+  Angle = 0;
 
   bool HasSize = false;
   bool IsFullScreen = false;
