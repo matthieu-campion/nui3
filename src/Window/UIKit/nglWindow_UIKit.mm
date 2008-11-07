@@ -648,8 +648,6 @@ bool nglWindow::MakeCurrent() const
 
 void nglWindow::Invalidate()
 {
-///< FIXME? Direct Drawing Invalidation directly Calls OnPaint for now ...
-//  CallOnPaint();
   [(nglUIWindow*)mpUIWindow invalidate];
 }
 

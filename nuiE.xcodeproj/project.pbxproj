@@ -1574,6 +1574,7 @@
 		C9F4A3120E05E43D0084143E /* nuiImageDecoration.h in Headers */ = {isa = PBXBuildFile; fileRef = C9F4A3110E05E43D0084143E /* nuiImageDecoration.h */; };
 		C9F4A3130E05E43D0084143E /* nuiImageDecoration.h in Headers */ = {isa = PBXBuildFile; fileRef = C9F4A3110E05E43D0084143E /* nuiImageDecoration.h */; };
 		E51D5B450EC3A3C900182E40 /* ngl_glext_table.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D6670DA5716500D2641A /* ngl_glext_table.cpp */; };
+		E51D5BCE0EC3C5DD00182E40 /* ngl_glext_table.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D6670DA5716500D2641A /* ngl_glext_table.cpp */; };
 		E53431800EC39F2600575BA6 /* nuiMainMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E534317F0EC39F2600575BA6 /* nuiMainMenu.cpp */; };
 		E53431810EC39F2600575BA6 /* nuiMainMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E534317F0EC39F2600575BA6 /* nuiMainMenu.cpp */; };
 		E53431870EC39FFF00575BA6 /* nuiMainMenu_UIKit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E53431860EC39FFF00575BA6 /* nuiMainMenu_UIKit.cpp */; };
@@ -6104,6 +6105,7 @@
 				611944D90EAE8F910078D6B3 /* nuiPanose.cpp in Sources */,
 				E53431810EC39F2600575BA6 /* nuiMainMenu.cpp in Sources */,
 				E53431880EC39FFF00575BA6 /* nuiMainMenu_UIKit.cpp in Sources */,
+				E51D5BCE0EC3C5DD00182E40 /* ngl_glext_table.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
