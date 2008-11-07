@@ -108,6 +108,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   }
   mInited = false;
   mInvalidated = true;
+  [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
   mInvalidationTimer = [NSTimer scheduledTimerWithTimeInterval:(1.0f/60.0f) target:self selector:@selector(Paint) userInfo:nil repeats:YES];
 
   return self;
@@ -115,6 +116,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 
 - (void) dealloc
 {
+  [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
 //NGL_OUT(_T("[nglUIWindow dealloc]\n"));
   mpNGLWindow->CallOnDestruction();
   [mInvalidationTimer release];
@@ -123,6 +125,44 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 
 - (void) InitNGLWindow
 {
+  UIDevice* pUIDev = [UIDevice currentDevice];
+  int angle = -1;
+  int w, h;
+  w = [UIScreen mainScreen].applicationFrame.size.width;
+  h = [UIScreen mainScreen].applicationFrame.size.height;
+  int ww, hh;
+  ww = w;
+  hh = h;
+  switch (pUIDev.orientation)
+  {
+    case UIDeviceOrientationUnknown:
+    case UIDeviceOrientationFaceUp:
+    case UIDeviceOrientationFaceDown:
+      break;
+    case UIDeviceOrientationPortrait:
+      angle = 0;
+      break;
+    case UIDeviceOrientationPortraitUpsideDown:
+      angle = 180;
+      break;
+    case UIDeviceOrientationLandscapeLeft:
+      angle = 270;
+      w = hh;
+      h = ww;
+      break;
+    case UIDeviceOrientationLandscapeRight:
+      angle = 90;
+      w = hh;
+      h = ww;
+      break;
+  }
+  if (angle >= 0 && angle != mpNGLWindow->GetRotation())
+  {
+    mpNGLWindow->SetRotation(angle);
+    mpNGLWindow->OnResize(w, h);
+    mInvalidated = true;
+  }
+  
   if (!mInited)
   {
     mInited = true;

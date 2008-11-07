@@ -40,14 +40,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 61DF35C60EC25BCD00051F43 /* nuiE.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 614B637D0DA7BA67000F4C22 /* nuiEd */;
+			remoteGlobalIDString = 614B637D0DA7BA67000F4C22;
 			remoteInfo = nuiEd;
 		};
 		E51D5B7D0EC3A9BD00182E40 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 61DF35C60EC25BCD00051F43 /* nuiE.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = D2AAC045055464E500DB518D /* nuiE */;
+			remoteGlobalIDString = D2AAC045055464E500DB518D;
 			remoteInfo = nuiE;
 		};
 		E53431240EC2F88400575BA6 /* PBXContainerItemProxy */ = {
