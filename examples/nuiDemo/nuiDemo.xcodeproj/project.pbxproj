@@ -25,6 +25,8 @@
 		BC085D640EC46CD200D95F92 /* Gui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC085D610EC46CD200D95F92 /* Gui.cpp */; };
 		BC085D670EC46CDB00D95F92 /* Engine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC085D650EC46CDB00D95F92 /* Engine.cpp */; };
 		BC085D680EC46CDB00D95F92 /* Engine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC085D650EC46CDB00D95F92 /* Engine.cpp */; };
+		BC085DA00EC473EF00D95F92 /* guiOscillo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC085D9E0EC473EF00D95F92 /* guiOscillo.cpp */; };
+		BC085DA10EC473EF00D95F92 /* guiOscillo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC085D9E0EC473EF00D95F92 /* guiOscillo.cpp */; };
 		BCBCB15F0DFD45BD002E8BC3 /* libnui3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */; };
 		BCBCB1600DFD45C1002E8BC3 /* libnui3D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15C0DFD45B6002E8BC3 /* libnui3D.a */; };
 /* End PBXBuildFile section */
@@ -76,6 +78,8 @@
 		BC085D620EC46CD200D95F92 /* Gui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gui.h; path = src/Gui/Gui.h; sourceTree = SOURCE_ROOT; };
 		BC085D650EC46CDB00D95F92 /* Engine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Engine.cpp; path = src/Engine/Engine.cpp; sourceTree = SOURCE_ROOT; };
 		BC085D660EC46CDB00D95F92 /* Engine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Engine.h; path = src/Engine/Engine.h; sourceTree = SOURCE_ROOT; };
+		BC085D9E0EC473EF00D95F92 /* guiOscillo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = guiOscillo.cpp; path = src/Gui/guiOscillo.cpp; sourceTree = SOURCE_ROOT; };
+		BC085D9F0EC473EF00D95F92 /* guiOscillo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = guiOscillo.h; path = src/Gui/guiOscillo.h; sourceTree = SOURCE_ROOT; };
 		BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nui3.xcodeproj; path = ../../nui3.xcodeproj; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -158,6 +162,8 @@
 			children = (
 				BC085D610EC46CD200D95F92 /* Gui.cpp */,
 				BC085D620EC46CD200D95F92 /* Gui.h */,
+				BC085D9E0EC473EF00D95F92 /* guiOscillo.cpp */,
+				BC085D9F0EC473EF00D95F92 /* guiOscillo.h */,
 			);
 			name = Gui;
 			sourceTree = "<group>";
@@ -287,6 +293,7 @@
 				61A9DFF40B83433800BC506C /* MainWindow.cpp in Sources */,
 				BC085D640EC46CD200D95F92 /* Gui.cpp in Sources */,
 				BC085D680EC46CDB00D95F92 /* Engine.cpp in Sources */,
+				BC085DA10EC473EF00D95F92 /* guiOscillo.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,6 +305,7 @@
 				61A9DFF60B83433800BC506C /* MainWindow.cpp in Sources */,
 				BC085D630EC46CD200D95F92 /* Gui.cpp in Sources */,
 				BC085D670EC46CDB00D95F92 /* Engine.cpp in Sources */,
+				BC085DA00EC473EF00D95F92 /* guiOscillo.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

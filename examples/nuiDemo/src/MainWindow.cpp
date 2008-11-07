@@ -31,12 +31,12 @@ MainWindow::~MainWindow()
 //virtual
 void MainWindow::OnCreation()
 {
+  // build engine
+  Engine* pEngine();
+
   // build gui
   Gui* pGui = new Gui();
   AddChild(pGui);
-  
-  // build engine
-  Engine* pEngine();
 }
 
 

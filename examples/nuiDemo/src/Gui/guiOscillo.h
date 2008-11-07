@@ -10,14 +10,12 @@
 #include "nui.h"
 #include "nuiVBox.h"
 
-class Gui : public nuiVBox
+class guiOscillo : public nuiWidget
 {
 public:
-  Gui();
-  virtual ~Gui();
+  guiOscillo();
+  virtual ~guiOscillo();
 
-protected:
-  
-  nuiWidget* BuildControls();
+
 };
 
