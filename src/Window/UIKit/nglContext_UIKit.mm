@@ -205,11 +205,13 @@ bool nglContext::Build(const nglContextInfo& rInfo, const nglContext* pShared, b
 ///< Create our context
 
   mpContext = NULL;
-  if (pShared) {
+  if (pShared)
+  {
     mpContext = [[EAGLContext alloc]  initWithAPI: kEAGLRenderingAPIOpenGLES1
                                       sharegroup:  [(EAGLContext*)pShared->mpContext sharegroup]];
   }
-  else {
+  else
+  {
     mpContext = [[EAGLContext alloc]  initWithAPI: kEAGLRenderingAPIOpenGLES1];
   }
   NGL_ASSERT(mpContext);
@@ -221,7 +223,8 @@ bool nglContext::Build(const nglContextInfo& rInfo, const nglContext* pShared, b
     return false;
   }
 
-  if (!InternalMakeCurrent(mpContext)) {
+  if (!InternalMakeCurrent(mpContext))
+  {
     Destroy();
     return false;
   }

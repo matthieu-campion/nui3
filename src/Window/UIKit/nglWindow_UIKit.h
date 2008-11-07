@@ -27,11 +27,15 @@ typedef std::map<UITouch*,nglTouchInfo> TouchesInfo;
   TouchesInfo mpTouches[_NUI_MAX_TOUCHES_];
   uint8       mTouchCount;
   nglTime mLastEventTime;
+  bool        mInited;
+  bool        mInvalidated;
+  NSTimer*    mInvalidationTimer;
 }
 
 + (Class) layerClass;
 - (id) initWithFrame: (CGRect) rect andNGLWindow: (nglWindow*) pNGLWindow;
 - (void) dealloc;
+- (void) invalidate;
 - (void) sendEvent: (UIEvent*) pEvent;
 //- (void) touchesChangedWithEvent: (UIEvent*) pEvent;
 - (void) dumpTouch: (UITouch*) pTouch;

@@ -10,12 +10,6 @@ nuiWin::nuiWin( const nglContextInfo& rContext,
 {
   SetObjectClass(_T("nuiWin"));
   SetObjectName(_T("nuiWin"));
-
-#ifdef _UIKIT_
-  OnCreation();
-  Invalidate();
-  OnPaint();
-#endif//_UIKIT_
 }
 
 nuiWin::~nuiWin()

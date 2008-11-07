@@ -51,25 +51,34 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 {
   switch (Angle)
   {
-    case 90: {
-      int tmpX= rInfo.X;
-      rInfo.X = ((int)rRect.GetWidth()) - rInfo.Y;
-      rInfo.Y = tmpX;
-    } break;
-    case 270: {
-      int tmpY = rInfo.Y;
-      rInfo.Y = ((int)rRect.GetHeight()) - rInfo.X;
-      rInfo.X = tmpY;
-    } break;
-    case 180: {
-      rInfo.X = ((int)rRect.GetWidth()) - rInfo.X;
-      rInfo.Y = ((int)rRect.GetHeight()) - rInfo.Y;
-    } break;
-    case 0: {
-    } break;
-    default: {
-      NGL_ASSERT(!"Unsupported rendering angle");
-    }
+    case 90:
+      {
+        int tmpX= rInfo.X;
+        rInfo.X = ((int)rRect.GetWidth()) - rInfo.Y;
+        rInfo.Y = tmpX;
+      }
+      break;
+    case 270:
+      {
+        int tmpY = rInfo.Y;
+        rInfo.Y = ((int)rRect.GetHeight()) - rInfo.X;
+        rInfo.X = tmpY;
+      }
+      break;
+    case 180:
+      {
+        rInfo.X = ((int)rRect.GetWidth()) - rInfo.X;
+        rInfo.Y = ((int)rRect.GetHeight()) - rInfo.Y;
+      }
+      break;
+    case 0:
+      {
+      }
+      break;
+    default:
+      {
+        NGL_ASSERT(!"Unsupported rendering angle");
+      }
   }
   NGL_TOUCHES_OUT(_T("AdjustFromAngle %d, X:%d Y:%d\n"), Angle, rInfo.X, rInfo.Y);
 }
@@ -85,31 +94,54 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 {
 	return [CAEAGLLayer class];
 }
+
 - (id) initWithFrame: (CGRect) rect andNGLWindow: (nglWindow*) pNGLWindow
 {
 //NGL_OUT(_T("[nglUIWindow initWithFrame]\n"));
-  if ( (self = [super initWithFrame: rect]) ) {
+  if ( (self = [super initWithFrame: rect]) )
+  {
     mpNGLWindow = pNGLWindow;
   }
-  else {
+  else
+  {
     NGL_ASSERT(!"initWithFrame: Could not initialize UIWindow");
   }
+  mInited = false;
+  mInvalidated = true;
+  mInvalidationTimer = [NSTimer scheduledTimerWithTimeInterval:(1.0f/60.0f) target:self selector:@selector(Paint) userInfo:nil repeats:YES];
+
   return self;
 }
+
 - (void) dealloc
 {
 //NGL_OUT(_T("[nglUIWindow dealloc]\n"));
   mpNGLWindow->CallOnDestruction();
+  [mInvalidationTimer release];
   [super dealloc];
+}
+
+- (void) InitNGLWindow
+{
+  if (!mInited)
+  {
+    mInited = true;
+    mpNGLWindow->CallOnCreation();
+    mpNGLWindow->Invalidate();
+    mpNGLWindow->OnPaint();
+  }
 }
 
 - (void) sendEvent: (UIEvent*) pEvent
 {
+  [self InitNGLWindow];
+  
 //  NGL_OUT(_T("[nglUIWindow sendEvent]\n"));
   nglTime t0;
 //  [self dumpTouches: pEvent];
   nglWindow::EventMask mask = mpNGLWindow->GetEventMask();
-  if (mask & nglWindow::MouseEvents) {
+  if (mask & nglWindow::MouseEvents)
+  {
     [self handleEvent: pEvent];
   }
   nglTime t1;
@@ -166,6 +198,17 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
     [self dumpTouch: pTouch];
   }
 }
+
+- (void)Paint
+{
+  [self InitNGLWindow];
+  if (mInvalidated)
+  {
+    mInvalidated = false;
+    mpNGLWindow->CallOnPaint();
+  }
+}
+
 
 - (void) handleEvent: (UIEvent*) pEvent
 {
@@ -308,6 +351,11 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 */
 }
 
+- (void) invalidate
+{
+  mInvalidated = true;
+}
+
 @end///< nglUIWindow
 
 
@@ -343,7 +391,8 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
   SetError (NGL_WINDOW_ENONE);
   SetEventMask(nglWindow::AllEvents);
 
-  for (nglTouchId t = 0; t < _NUI_MAX_TOUCHES_; t++) {
+  for (nglTouchId t = 0; t < _NUI_MAX_TOUCHES_; t++)
+  {
     gPressedTouches[t] = false;
     gAvailableTouches.push_back(t);
   }
@@ -355,12 +404,14 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
 
   CGRect rect = [[UIScreen mainScreen] bounds];
 
-  if (mWidth == 0 || mHeight == 0) {
+  if (mWidth == 0 || mHeight == 0)
+  {
     if (mAngle == 90 || mAngle == 270) { ///< invert screen sizes
       mWidth = (uint)rect.size.height;
       mHeight = (uint)rect.size.width;
     }
-    else {
+    else
+    {
       mWidth = (uint)rect.size.width;
       mHeight = (uint)rect.size.height;
     }
@@ -461,8 +512,7 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
   //  glBindFramebufferOES(GL_FRAMEBUFFER_OES, oldFramebuffer);
   //	glBindRenderbufferOES(GL_RENDERBUFFER_OES, oldRenderbuffer);
 
-///< usless call to on creation ...
-  CallOnCreation();
+  
 }
 
 nglWindow::~nglWindow()
@@ -599,7 +649,8 @@ bool nglWindow::MakeCurrent() const
 void nglWindow::Invalidate()
 {
 ///< FIXME? Direct Drawing Invalidation directly Calls OnPaint for now ...
-  CallOnPaint();
+//  CallOnPaint();
+  [(nglUIWindow*)mpUIWindow invalidate];
 }
 
 bool nglWindow::SetCursor(nuiMouseCursor Cursor)

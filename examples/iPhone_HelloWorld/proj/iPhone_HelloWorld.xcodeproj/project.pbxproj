@@ -31,8 +31,8 @@
 		C9F5F92E0DA84CAB00E078ED /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C999972E0DA6F405001A7116 /* OpenGLES.framework */; };
 		C9F5F92F0DA84CAB00E078ED /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C99997710DA6F9F2001A7116 /* AudioToolbox.framework */; };
 		C9F5F9300DA84CAB00E078ED /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C99998F50DA7CAF2001A7116 /* QuartzCore.framework */; };
+		E51D5B8B0EC3A9E100182E40 /* libnuiEd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E53431270EC2F88400575BA6 /* libnuiEd.a */; };
 		E53431280EC2F88800575BA6 /* libnuiE.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E53431250EC2F88400575BA6 /* libnuiE.a */; };
-		E53431290EC2F88C00575BA6 /* libnuiEd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E53431270EC2F88400575BA6 /* libnuiEd.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +42,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 614B637D0DA7BA67000F4C22 /* nuiEd */;
 			remoteInfo = nuiEd;
+		};
+		E51D5B7D0EC3A9BD00182E40 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 61DF35C60EC25BCD00051F43 /* nuiE.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC045055464E500DB518D /* nuiE */;
+			remoteInfo = nuiE;
 		};
 		E53431240EC2F88400575BA6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -55,13 +62,6 @@
 			containerPortal = 61DF35C60EC25BCD00051F43 /* nuiE.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 614B66C30DA7BA67000F4C22;
-			remoteInfo = nuiEd;
-		};
-		E534312A0EC2F89E00575BA6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 61DF35C60EC25BCD00051F43 /* nuiE.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 614B637D0DA7BA67000F4C22;
 			remoteInfo = nuiEd;
 		};
 /* End PBXContainerItemProxy section */
@@ -117,7 +117,7 @@
 				C9F5F9300DA84CAB00E078ED /* QuartzCore.framework in Frameworks */,
 				C9CD09890DDDC04B0082235F /* CFNetwork.framework in Frameworks */,
 				C9EA04FF0E2917FA0067EF48 /* MediaPlayer.framework in Frameworks */,
-				E53431290EC2F88C00575BA6 /* libnuiEd.a in Frameworks */,
+				E51D5B8B0EC3A9E100182E40 /* libnuiEd.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -229,7 +229,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				E534312B0EC2F89E00575BA6 /* PBXTargetDependency */,
+				E51D5B7E0EC3A9BD00182E40 /* PBXTargetDependency */,
 			);
 			name = iPhone_HelloWorld;
 			productName = beatmaker;
@@ -343,10 +343,10 @@
 			name = nuiEd;
 			targetProxy = E51D5B230EC3A28500182E40 /* PBXContainerItemProxy */;
 		};
-		E534312B0EC2F89E00575BA6 /* PBXTargetDependency */ = {
+		E51D5B7E0EC3A9BD00182E40 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = nuiEd;
-			targetProxy = E534312A0EC2F89E00575BA6 /* PBXContainerItemProxy */;
+			name = nuiE;
+			targetProxy = E51D5B7D0EC3A9BD00182E40 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
