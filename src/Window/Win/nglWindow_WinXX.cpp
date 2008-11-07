@@ -1397,7 +1397,7 @@ bool nglWindow::SetPosition (int XPos, int YPos)
   return true;
 }
 
-bool nglWindow::GetResolution (float& rHorizontal, float& rVertical)
+bool nglWindow::GetResolution (float& rHorizontal, float& rVertical) const
 {
   rHorizontal = (float)GetDeviceCaps(mDC, LOGPIXELSX);
   rVertical   = (float)GetDeviceCaps(mDC, LOGPIXELSY);
