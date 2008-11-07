@@ -1,0 +1,8 @@
+nuiDemo.icns        NUI_RESOURCE    "resources/nuiDemo.icns"
+nuiDemo.ico        NUI_RESOURCE    "resources/nuiDemo.ico"
+nuiDemo.png        NUI_RESOURCE    "resources/nuiDemo.png"
+css/Gui.css        NUI_RESOURCE    "resources/css/Gui.css"
+css/nuiDemo.css        NUI_RESOURCE    "resources/css/nuiDemo.css"
+decorations/title.png        NUI_RESOURCE    "resources/decorations/title.png"
+0 ICON "resources/nuiDemo.ico"
+1 ICON "resources/nuiDemo.ico"

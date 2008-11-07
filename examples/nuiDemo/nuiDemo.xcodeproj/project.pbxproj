@@ -27,10 +27,6 @@
 		BC085D680EC46CDB00D95F92 /* Engine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC085D650EC46CDB00D95F92 /* Engine.cpp */; };
 		BC085DA00EC473EF00D95F92 /* guiOscillo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC085D9E0EC473EF00D95F92 /* guiOscillo.cpp */; };
 		BC085DA10EC473EF00D95F92 /* guiOscillo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC085D9E0EC473EF00D95F92 /* guiOscillo.cpp */; };
-		BC9DC75D0EC4DE7D00B3E1F1 /* Gui.css in Resources */ = {isa = PBXBuildFile; fileRef = BC9DC75B0EC4DE7D00B3E1F1 /* Gui.css */; };
-		BC9DC75E0EC4DE7D00B3E1F1 /* nuiDemo.css in Resources */ = {isa = PBXBuildFile; fileRef = BC9DC75C0EC4DE7D00B3E1F1 /* nuiDemo.css */; };
-		BC9DC75F0EC4DE7D00B3E1F1 /* Gui.css in Resources */ = {isa = PBXBuildFile; fileRef = BC9DC75B0EC4DE7D00B3E1F1 /* Gui.css */; };
-		BC9DC7600EC4DE7D00B3E1F1 /* nuiDemo.css in Resources */ = {isa = PBXBuildFile; fileRef = BC9DC75C0EC4DE7D00B3E1F1 /* nuiDemo.css */; };
 		BCBCB15F0DFD45BD002E8BC3 /* libnui3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */; };
 		BCBCB1600DFD45C1002E8BC3 /* libnui3D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15C0DFD45B6002E8BC3 /* libnui3D.a */; };
 /* End PBXBuildFile section */
@@ -209,10 +205,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 61A9DFC20B833E9600BC506C /* Build configuration list for PBXNativeTarget "nuiDemo" */;
 			buildPhases = (
-				61A9DFBB0B833E9600BC506C /* Resources */,
 				61A9DFBC0B833E9600BC506C /* Sources */,
 				61A9DFBD0B833E9600BC506C /* Frameworks */,
-				BC9DC7A90EC4DFF400B3E1F1 /* ShellScript */,
+				BC9DC7A90EC4DFF400B3E1F1 /* Resources Script */,
 			);
 			buildRules = (
 			);
@@ -228,9 +223,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 61A9DFCC0B833EF300BC506C /* Build configuration list for PBXNativeTarget "nuiDemoD" */;
 			buildPhases = (
-				61A9DFC50B833EF200BC506C /* Resources */,
 				61A9DFC60B833EF200BC506C /* Sources */,
 				61A9DFC70B833EF200BC506C /* Frameworks */,
+				BC86D97C0EC500CF007DA3FE /* Resources Script */,
 			);
 			buildRules = (
 			);
@@ -284,35 +279,29 @@
 		};
 /* End PBXReferenceProxy section */
 
-/* Begin PBXResourcesBuildPhase section */
-		61A9DFBB0B833E9600BC506C /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BC9DC75F0EC4DE7D00B3E1F1 /* Gui.css in Resources */,
-				BC9DC7600EC4DE7D00B3E1F1 /* nuiDemo.css in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		61A9DFC50B833EF200BC506C /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BC9DC75D0EC4DE7D00B3E1F1 /* Gui.css in Resources */,
-				BC9DC75E0EC4DE7D00B3E1F1 /* nuiDemo.css in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
-
 /* Begin PBXShellScriptBuildPhase section */
-		BC9DC7A90EC4DFF400B3E1F1 /* ShellScript */ = {
+		BC86D97C0EC500CF007DA3FE /* Resources Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Resources Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "rsync -rC ./resources/ --exclude \".*\" \"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"\n../../../nui3/tools/make_rc.py resources resource.rc\necho 0 ICON \\\"resources/nuiDemo.ico\\\" >> resource.rc\necho 1 ICON \\\"resources/nuiDemo.ico\\\" >> resource.rc\n";
+		};
+		BC9DC7A90EC4DFF400B3E1F1 /* Resources Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Resources Script";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
