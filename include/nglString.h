@@ -425,6 +425,7 @@ public:
   
   char* EncodeUrl(); ///< outputs a malloc'ed char* encoded as valid URL data in UTF8 as per RFC 2396
 
+	nglString& Format(const nglString& rFormat, ...);
 	nglString& Format(const nglChar* pFormat, ...);
 	nglString& Format(const char* pFormat, ...);
 	/*!< Format a string from arguments a la printf
@@ -434,15 +435,18 @@ public:
 	<b>Important</b> : the %%s tag refers to a Unicode string on \e all platforms
 	(ie. _T("hello") or mystring.GetChars()).
 	*/
+	nglString& Formatv(const nglString& rFormat, va_list Args);
 	nglString& Formatv(const nglChar* pFormat, va_list Args);
 	nglString& Formatv(const char* pFormat, va_list Args);
 	/*!< Format a string from arguments a la printf
 	This is the vararg version of Format()
 	*/
 
+	nglString& CFormat(const nglString& rFormat, ...);
 	nglString& CFormat(const nglChar* pFormat, ...);
 	nglString& CFormat(const char* pFormat, ...);
 	/*!< Format a string from arguments a la printf, using the 'C' locale (American numeric conventions) */
+	nglString& CFormatv(const nglString& pFormat, va_list Args);
 	nglString& CFormatv(const nglChar* pFormat, va_list Args);
 	nglString& CFormatv(const char* pFormat, va_list Args);
 	/*!< Format a string from arguments a la printf, using the 'C' locale (American numeric conventions) */

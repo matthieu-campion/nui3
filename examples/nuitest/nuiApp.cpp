@@ -80,6 +80,7 @@ void nuiApp::OnInit()
   // Accept NGL default options
   ParseDefaultArgs();
 
+  setlocale(LC_ALL, ""); // get the current locale
   nglString loc(setlocale(LC_ALL, NULL)); // get the current locale
   NGL_OUT(_T("Current locale: %ls\n"), loc.GetChars());
   

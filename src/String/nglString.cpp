@@ -1392,6 +1392,22 @@ char* nglString::EncodeUrl()
 }
 
 
+nglString& nglString::Format(const nglString& rFormat, ...)
+{
+  if (rFormat.IsNull())
+    return *this;
+  
+  mIsNull = false;
+  va_list args;
+  
+  va_start(args, rFormat);
+  Formatv(rFormat, args);
+  va_end(args);
+  
+  return *this;
+}
+
+
 nglString& nglString::Format(const nglChar* pFormat, ...)
 {
   if (!pFormat)
@@ -1508,6 +1524,12 @@ nglString& nglString::Formatv(const char* pFormat, va_list Args)
   return Formatv(str.GetChars(), Args);
 }
 
+nglString& nglString::Formatv(const nglString& rFormat, va_list Args)
+{
+  mIsNull = false;
+  return Formatv(rFormat.GetChars(), Args);
+}
+
 
 nglString& nglString::CFormat(const nglChar* pFormat, ...)
 {
@@ -1521,6 +1543,21 @@ nglString& nglString::CFormat(const nglChar* pFormat, ...)
   NO_LOCALE( Formatv(pFormat, args) );
   va_end(args);
 
+  return *this;
+}
+
+nglString& nglString::CFormat(const nglString& rFormat, ...)
+{
+  if (rFormat.IsNull())
+    return *this;
+  
+  mIsNull = false;
+  va_list args;
+  
+  va_start(args, rFormat);
+  NO_LOCALE( Formatv(rFormat, args) );
+  va_end(args);
+  
   return *this;
 }
 
@@ -1549,6 +1586,16 @@ nglString& nglString::CFormatv(const nglChar* pFormat, va_list Args)
 
   mIsNull = false;
   NO_LOCALE( Formatv(pFormat, Args) );
+  return *this;
+}
+
+nglString& nglString::CFormatv(const nglString& rFormat, va_list Args)
+{
+  if (rFormat.IsNull())
+    return *this;
+  
+  mIsNull = false;
+  NO_LOCALE( Formatv(rFormat, Args) );
   return *this;
 }
 
