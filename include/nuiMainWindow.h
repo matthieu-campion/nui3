@@ -87,6 +87,8 @@ public:
   uint32 GetWidth();
   uint32 GetHeight();
   bool SetSize (uint Width, uint Height);
+  void SetRotation(uint Angle);
+  uint GetRotation();
   uint GetError() const;               ///< Retrieve the current error code
   const nglChar* GetErrorStr() const;            ///< Retrieve the current error message
   const nglChar* GetErrorStr(uint Error) const;  ///< Retrieve error message by code
@@ -148,6 +150,7 @@ protected:
   virtual bool OnMouseClick  (nglMouseInfo& rInfo);
   virtual bool OnMouseUnclick(nglMouseInfo& rInfo);
   virtual bool OnMouseMove   (nglMouseInfo& rInfo);
+  virtual bool OnRotation    (uint Angle);
   //@}
 
   nuiEventSink<nuiMainWindow> mMainWinSink;
@@ -198,6 +201,7 @@ private:
     virtual bool OnMouseClick(nglMouseInfo& rInfo);
     virtual bool OnMouseUnclick(nglMouseInfo& rInfo);
     virtual bool OnMouseMove(nglMouseInfo& rInfo);
+    virtual bool OnRotation(uint Angle);
 
 #ifndef _NODND_
     // Dnd receive

@@ -332,6 +332,7 @@ window = new nglWindow (context, info, NULL);
   bool GetAutoRotation() const; ///< Change the rotation and size of the screen to follow the device's screen orientation (this is the default behaviour).
   //@}
 
+
   /** @name Appearance */
   //@{
   StateInfo GetState() const;
@@ -617,6 +618,12 @@ window = new nglWindow (context, info, NULL);
 
     This event is only triggered if the window has the focus (ie. has received
     a OnActivation() event).
+  */
+  virtual bool OnRotation(uint Angle);
+  /*!<
+   This method is called when a rotation of the device is detected.
+   \param Angle
+   \return true is accepting the new Angle
   */
   //@}
 

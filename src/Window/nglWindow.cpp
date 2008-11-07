@@ -210,6 +210,11 @@ bool nglWindow::OnMouseMove (nglMouseInfo& rInfo)
 	return false;
 }
 
+bool nglWindow::OnRotation(uint Angle)
+{
+  return true;
+}
+
 void nglWindow::EnableAutoRotation(bool set)
 {
   mAutoRotate = set;

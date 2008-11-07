@@ -158,11 +158,15 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
         h = ww;
         break;
     }
+
     if (angle >= 0 && angle != mpNGLWindow->GetRotation())
     {
-      mpNGLWindow->SetRotation(angle);
-      mpNGLWindow->SetSize(w, h);
-      mInvalidated = true;
+      if (mpNGLWindow->OnRotation(angle))
+      {
+        mpNGLWindow->SetRotation(angle);
+        mpNGLWindow->SetSize(w, h);
+        mInvalidated = true;
+      }
     }
   }
   

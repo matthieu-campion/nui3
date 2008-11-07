@@ -653,6 +653,11 @@ bool nuiMainWindow::OnKeyDown(const nglKeyEvent& rEvent)
   return CallKeyDown(rEvent);
 }
 
+bool nuiMainWindow::OnRotation(uint Angle)
+{
+  return true;
+}
+
 bool nuiMainWindow::ShowWidgetInspector()
 {
   if (mpInspectorWindow)
@@ -730,6 +735,16 @@ uint32 nuiMainWindow::GetHeight()
 bool nuiMainWindow::SetSize (uint Width, uint Height)
 {
   return mpNGLWindow->SetSize(Width, Height);
+}
+
+void nuiMainWindow::SetRotation(uint Angle)
+{
+  mpNGLWindow->SetRotation(Angle);
+}
+
+uint nuiMainWindow::GetRotation()
+{
+  return mpNGLWindow->GetRotation();
 }
 
 uint nuiMainWindow::GetError() const
@@ -929,6 +944,11 @@ bool nuiMainWindow::NGLWindow::OnMouseUnclick(nglMouseInfo& rInfo)
 bool nuiMainWindow::NGLWindow::OnMouseMove(nglMouseInfo& rInfo)
 {
   return mpMainWindow->OnMouseMove(rInfo);
+}
+
+bool nuiMainWindow::NGLWindow::OnRotation(uint Angle)
+{
+  return mpMainWindow->OnRotation(Angle);
 }
 
 #ifndef _NODND_
