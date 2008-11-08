@@ -10,11 +10,18 @@
 guiOscillo::guiOscillo()
 : nuiWidget()
 {
-
+  SetObjectClass(_T("guiOscillo"));
 }
 
 
 guiOscillo::~guiOscillo()
 {
 
+}
+
+
+// virtual, overloaded from nuiWidget, to be able to draw the oscillo manually
+bool guiOscillo::Draw(nuiDrawContext* pContext)
+{
+  return true;
 }

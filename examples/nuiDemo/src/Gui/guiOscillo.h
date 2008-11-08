@@ -16,6 +16,9 @@ public:
   guiOscillo();
   virtual ~guiOscillo();
 
-
+protected:
+  
+  // overloaded from nuiWidget, to be able to draw the oscillo manually
+  virtual bool Draw(nuiDrawContext* pContext);
 };
 

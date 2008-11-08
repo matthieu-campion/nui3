@@ -30,11 +30,11 @@ Gui::Gui()
   nuiHBox* pBox = new nuiHBox(0);
   pBox->SetExpand(nuiExpandShrinkAndGrow);
   AddCell(pBox);
-  SetCellExpand(GetNbCells()-1, nuiExpandShrinkAndGrow);
   
   nuiToggleButton* pStartBtn = new nuiToggleButton();
   pStartBtn->SetObjectName(_T("ButtonStart"));
   pBox->AddCell(pStartBtn, nuiCenter);
+  pBox->SetCellExpand(pBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
   
   guiOscillo* pOscillo = new guiOscillo();
   pBox->AddCell(pOscillo, nuiCenter);

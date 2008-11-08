@@ -24,6 +24,22 @@
   Decoration: dButtonStart;
 }
 
+
+@nuiFrame dguiOscillo
+{
+  Texture: "rsrc:/decorations/oscilloBackground.png";
+  ClientRect: "{2 2 4 4}";
+}
+
+guiOscillo!
+{
+  DecorationMode: Border;
+  Decoration: dguiOscillo;
+  UserRect: "{0 0 400 170}";
+  // you could also use UserWidth:400 and UserHeight:170
+  BorderRight: 20;
+}
+
 "Text"!
 {
   TextColor:red;
