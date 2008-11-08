@@ -16,9 +16,8 @@
 nuiImage::nuiImage (nuiTexture* pTexture, bool AlreadyAcquired)
   : nuiWidget()
 {
-  SetObjectClass(_T("nuiImage"));
-//  mPosition = nuiFill;
-//  mFillRule = nuiFill;
+  if (SetObjectClass(_T("nuiImage")))
+    InitAttributes();
 
   mpTexture = pTexture;
   if (!AlreadyAcquired && pTexture)
@@ -33,10 +32,9 @@ nuiImage::nuiImage (nuiTexture* pTexture, bool AlreadyAcquired)
 nuiImage::nuiImage (nglIStream* pInput, nglImageCodec* pCodec)
   : nuiWidget()
 {
-  SetObjectClass(_T("nuiImage"));
+  if (SetObjectClass(_T("nuiImage")))
+    InitAttributes();
 
-//  mPosition = nuiFill;
-//  mFillRule = nuiFill;
   mpTexture = nuiTexture::GetTexture(pInput, pCodec);
   mUseAlpha = true;
   mBlendFunc = nuiBlendTransp;
@@ -46,10 +44,9 @@ nuiImage::nuiImage (nglIStream* pInput, nglImageCodec* pCodec)
 nuiImage::nuiImage (const nglPath& rPath, nglImageCodec* pCodec)
   : nuiWidget()
 {
-  SetObjectClass(_T("nuiImage"));
+  if (SetObjectClass(_T("nuiImage")))
+    InitAttributes();
 
-//  mPosition = nuiFill;
-//  mFillRule = nuiFill;
   mpTexture = nuiTexture::GetTexture(rPath, pCodec);
   mUseAlpha = true;
   mBlendFunc = nuiBlendTransp;
@@ -60,10 +57,9 @@ nuiImage::nuiImage (const nglPath& rPath, nglImageCodec* pCodec)
 nuiImage::nuiImage (nglImageInfo& rInfo, bool Clone)
   : nuiWidget()
 {
-  SetObjectClass(_T("nuiImage"));
+  if (SetObjectClass(_T("nuiImage")))
+    InitAttributes();
 
-//  mPosition = nuiFill;
-//  mFillRule = nuiFill;
   mpTexture = nuiTexture::GetTexture(rInfo, Clone);
   mUseAlpha = true;
   mBlendFunc = nuiBlendTransp;
@@ -73,10 +69,9 @@ nuiImage::nuiImage (nglImageInfo& rInfo, bool Clone)
 nuiImage::nuiImage (const nglImage& rImage)
   : nuiWidget()
 {
-  SetObjectClass(_T("nuiImage"));
+  if (SetObjectClass(_T("nuiImage")))
+    InitAttributes();
 
-//  mPosition = nuiFill;
-//  mFillRule = nuiFill;
   mpTexture = nuiTexture::GetTexture(rImage);
   mUseAlpha = true;
   mBlendFunc = nuiBlendTransp;
@@ -86,23 +81,45 @@ nuiImage::nuiImage (const nglImage& rImage)
 nuiImage::nuiImage (nglImage* pImage, bool OwnImage)
   : nuiWidget()
 {
-  SetObjectClass(_T("nuiImage"));
+  if (SetObjectClass(_T("nuiImage")))
+    InitAttributes();
 
-//  mPosition = nuiFill;
-//  mFillRule = nuiFill;
   mpTexture = nuiTexture::GetTexture(pImage,OwnImage);
   mUseAlpha = true;
   mBlendFunc = nuiBlendTransp;
   mIgnoreState = false;
 }
 
+
+void nuiImage::InitAttributes()
+{
+  AddAttribute(new nuiAttribute<const nglPath&>
+   (nglString(_T("Texture")), nuiUnitNone,
+    nuiFastDelegate::MakeDelegate(this, &nuiImage::GetTexturePath), 
+    nuiFastDelegate::MakeDelegate(this, &nuiImage::SetTexturePath)));
+}
+
+
+const nglPath& nuiImage::GetTexturePath()
+{
+  return mTexturePath;
+}
+
+void nuiImage::SetTexturePath(const nglPath& rTexturePath)
+{
+  mTexturePath = rTexturePath;
+  
+  mpTexture = nuiTexture::GetTexture(mTexturePath, NULL);
+  mUseAlpha = true;
+  mBlendFunc = nuiBlendTransp;
+  SetProperty(_T("Source"),mTexturePath.GetPathName());
+  mIgnoreState = false;  
+}
+
 bool nuiImage::Load(const nuiXMLNode* pNode)
 {
   nuiWidget::Load(pNode);
   SetObjectClass(_T("nuiImage"));
-
-//  mPosition = nuiFill;
-//  mFillRule = nuiFill;
 
   mpTexture = nuiTexture::GetTexture(pNode);
   mUseAlpha = true;

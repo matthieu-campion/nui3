@@ -26,6 +26,12 @@ public:
   explicit nuiImage (nglImageInfo& rInfo, bool Clone = true); ///< Create an image from an nglImageInfo structure. If \param is true then the image buffer will be cloned, otherwise it will be deleted with the nuiImage.
   explicit nuiImage (const nglImage& rImage); ///< Create an image by copying an existing nglImage.
   explicit nuiImage (nglImage* pImage, bool OwnImage); ///< Create an image from an existing nglImage. If \param OwnImage the nglImage object will be deleted with the nuiImage.
+  
+  void InitAttributes();
+  
+  const nglPath& GetTexturePath();
+  void SetTexturePath(const nglPath& rTexturePath);
+  
   virtual bool Load (const nuiXMLNode* pNode); ///< Create an image from an xml description.
 
   virtual nuiXMLNode* Serialize(nuiXMLNode* pParentNode, bool Recursive) const;
@@ -48,6 +54,7 @@ public:
 
 protected:
   nuiTexture* mpTexture;
+  nglPath mTexturePath;
   bool mUseAlpha;
   bool mIgnoreState;
 
