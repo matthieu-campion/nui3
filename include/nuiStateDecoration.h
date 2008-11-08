@@ -11,6 +11,18 @@
 #include "nuiDecoration.h"
 
 
+// list of attributes that can be used to set a nuiStateDecoration with bitmap files or decoration reference names
+// OnUp
+// OnDown
+// OnUpHover
+// OnDownHover
+// OnSelected (if the widget is not a button. if it's a button, use OnDown instead)
+// OnDisabled
+// OnDisabledSelected
+// OnUpDisabled
+// OnDownDisabled
+             
+
 typedef uint32 nuiStateDescription;
 
 const nuiStateDescription nuiStateUnselected = 0 << 27;

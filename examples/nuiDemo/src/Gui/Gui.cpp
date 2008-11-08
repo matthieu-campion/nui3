@@ -24,8 +24,7 @@ Gui::Gui()
   // row 1: title image
   nuiImage* pTitleImg = new nuiImage();
   pTitleImg->SetObjectName(_T("ImageTitle"));
-  AddCell(pTitleImg);
-  SetCellExpand(GetNbCells()-1, nuiExpandShrinkAndGrow);
+  AddCell(pTitleImg, nuiTopLeft);
     
   // row 2: start button and oscillo
   nuiHBox* pBox = new nuiHBox(0);

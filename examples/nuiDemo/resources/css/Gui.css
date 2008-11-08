@@ -1,6 +1,27 @@
 "ImageTitle"!
 {
   Texture: "rsrc:/decorations/title.png";
+  BorderLeft: 10;
+  BorderTop: 10;
+}
+
+
+@nuiStateDecoration dButtonStart
+{
+  OnUp: "rsrc:/decorations/buttonStartUp.png";
+  OnUpHover: "rsrc:/decorations/buttonStartUpHover.png";
+  OnDown: "rsrc:/decorations/buttonStartDown.png";
+  OnDownHover: "rsrc:/decorations/buttonStartDownHover.png";
+  // you could also use a map for the following states if you need:
+  // OnSelected, OnDisabled, OnDisabledSelected, OnUpDisabled, OnDownDisabled
+  // please have a look to nuiStateDecoration.h
+}
+
+
+"ButtonStart"!
+{
+  DecorationMode: Border;
+  Decoration: dButtonStart;
 }
 
 "Text"!
