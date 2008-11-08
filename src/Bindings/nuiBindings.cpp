@@ -1,10 +1,8 @@
 /*
- *  nuiBindings.cpp
- *  nui3
- *
- *  Created by Sebastien Metrot on 05/09/2008.
- *  Copyright 2008 MXP4. All rights reserved.
- *
+ NUI3 - C++ cross-platform GUI framework for OpenGL based applications
+ Copyright (C) 2002-2003 Sebastien Metrot
+ 
+ licence: see nui3/LICENCE.TXT
  */
 
 #include "nui.h"

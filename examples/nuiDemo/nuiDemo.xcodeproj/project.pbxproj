@@ -29,6 +29,14 @@
 		BC085DA10EC473EF00D95F92 /* guiOscillo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC085D9E0EC473EF00D95F92 /* guiOscillo.cpp */; };
 		BCBCB15F0DFD45BD002E8BC3 /* libnui3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */; };
 		BCBCB1600DFD45C1002E8BC3 /* libnui3D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15C0DFD45B6002E8BC3 /* libnui3D.a */; };
+		BCE44D9C0EC6463C00AEBD64 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCE44D990EC6463C00AEBD64 /* AudioToolbox.framework */; };
+		BCE44D9D0EC6463C00AEBD64 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCE44D9A0EC6463C00AEBD64 /* AudioUnit.framework */; };
+		BCE44D9E0EC6463C00AEBD64 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCE44D9B0EC6463C00AEBD64 /* CoreAudio.framework */; };
+		BCE44D9F0EC6463C00AEBD64 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCE44D990EC6463C00AEBD64 /* AudioToolbox.framework */; };
+		BCE44DA00EC6463C00AEBD64 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCE44D9A0EC6463C00AEBD64 /* AudioUnit.framework */; };
+		BCE44DA10EC6463C00AEBD64 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCE44D9B0EC6463C00AEBD64 /* CoreAudio.framework */; };
+		BCE44DC20EC646A600AEBD64 /* AudioTrack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCE44DC00EC646A600AEBD64 /* AudioTrack.cpp */; };
+		BCE44DC30EC646A600AEBD64 /* AudioTrack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCE44DC00EC646A600AEBD64 /* AudioTrack.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +91,11 @@
 		BC9DC75B0EC4DE7D00B3E1F1 /* Gui.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = Gui.css; path = resources/css/Gui.css; sourceTree = SOURCE_ROOT; };
 		BC9DC75C0EC4DE7D00B3E1F1 /* nuiDemo.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = nuiDemo.css; path = resources/css/nuiDemo.css; sourceTree = SOURCE_ROOT; };
 		BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nui3.xcodeproj; path = ../../nui3.xcodeproj; sourceTree = SOURCE_ROOT; };
+		BCE44D990EC6463C00AEBD64 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = /System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<absolute>"; };
+		BCE44D9A0EC6463C00AEBD64 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = /System/Library/Frameworks/AudioUnit.framework; sourceTree = "<absolute>"; };
+		BCE44D9B0EC6463C00AEBD64 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = /System/Library/Frameworks/CoreAudio.framework; sourceTree = "<absolute>"; };
+		BCE44DC00EC646A600AEBD64 /* AudioTrack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioTrack.cpp; path = src/Engine/AudioTrack.cpp; sourceTree = SOURCE_ROOT; };
+		BCE44DC10EC646A600AEBD64 /* AudioTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioTrack.h; path = src/Engine/AudioTrack.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +109,9 @@
 				61A9DFDA0B833F1500BC506C /* Carbon.framework in Frameworks */,
 				61A9DFDB0B833F1500BC506C /* OpenGL.framework in Frameworks */,
 				BCBCB15F0DFD45BD002E8BC3 /* libnui3.a in Frameworks */,
+				BCE44D9F0EC6463C00AEBD64 /* AudioToolbox.framework in Frameworks */,
+				BCE44DA00EC6463C00AEBD64 /* AudioUnit.framework in Frameworks */,
+				BCE44DA10EC6463C00AEBD64 /* CoreAudio.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -109,6 +125,9 @@
 				61A9DFDF0B833F1500BC506C /* Carbon.framework in Frameworks */,
 				61A9DFE00B833F1500BC506C /* OpenGL.framework in Frameworks */,
 				BCBCB1600DFD45C1002E8BC3 /* libnui3D.a in Frameworks */,
+				BCE44D9C0EC6463C00AEBD64 /* AudioToolbox.framework in Frameworks */,
+				BCE44D9D0EC6463C00AEBD64 /* AudioUnit.framework in Frameworks */,
+				BCE44D9E0EC6463C00AEBD64 /* CoreAudio.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -128,6 +147,9 @@
 			isa = PBXGroup;
 			children = (
 				BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */,
+				BCE44D990EC6463C00AEBD64 /* AudioToolbox.framework */,
+				BCE44D9A0EC6463C00AEBD64 /* AudioUnit.framework */,
+				BCE44D9B0EC6463C00AEBD64 /* CoreAudio.framework */,
 				61A9DFD20B833F1500BC506C /* AGL.framework */,
 				61A9DFD30B833F1500BC506C /* CoreFoundation.framework */,
 				61A9DFD40B833F1500BC506C /* CoreServices.framework */,
@@ -174,6 +196,8 @@
 		BC085D600EC46A4700D95F92 /* Engine */ = {
 			isa = PBXGroup;
 			children = (
+				BCE44DC00EC646A600AEBD64 /* AudioTrack.cpp */,
+				BCE44DC10EC646A600AEBD64 /* AudioTrack.h */,
 				BC085D650EC46CDB00D95F92 /* Engine.cpp */,
 				BC085D660EC46CDB00D95F92 /* Engine.h */,
 			);
@@ -320,6 +344,7 @@
 				BC085D640EC46CD200D95F92 /* Gui.cpp in Sources */,
 				BC085D680EC46CDB00D95F92 /* Engine.cpp in Sources */,
 				BC085DA10EC473EF00D95F92 /* guiOscillo.cpp in Sources */,
+				BCE44DC30EC646A600AEBD64 /* AudioTrack.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -332,6 +357,7 @@
 				BC085D630EC46CD200D95F92 /* Gui.cpp in Sources */,
 				BC085D670EC46CDB00D95F92 /* Engine.cpp in Sources */,
 				BC085DA00EC473EF00D95F92 /* guiOscillo.cpp in Sources */,
+				BCE44DC20EC646A600AEBD64 /* AudioTrack.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

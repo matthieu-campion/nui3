@@ -29,14 +29,6 @@ public:
   nuiAudioTrack();
 	virtual ~nuiAudioTrack();
 
-	void	Init(uint32 bufSize, double sampleRate, uint32 nbChannels, float volume, bool bufferingEnabled);
-
-	uint32 CanRead();
-  void Read(uint32 sampleFrames);
-      
-  bool CanProcess(uint32 SampleFrames);
-  void Process(uint32 SampleFrames, std::vector<float*>& rOutputBuffer);
-
 	// inline
 	inline void Pause(bool pause=true)    { nglCriticalSectionGuard guard(mPausedCS); mPaused=pause;  }
 	inline bool	IsPaused()                { return mPaused; }
@@ -61,6 +53,13 @@ protected :
 private:
 
   bool  ResetBuffer ();
+	void	Init(uint32 bufSize, double sampleRate, uint32 nbChannels, float volume, bool bufferingEnabled);
+  
+	uint32 CanRead();
+  void Read(uint32 sampleFrames);
+  
+  bool CanProcess(uint32 SampleFrames);
+  void Process(uint32 SampleFrames, std::vector<float*>& rOutputBuffer);
   
 	nglRingBuffer*	mpRingBuf;		// ring buffer for audio data
 	int32	mBufSize;

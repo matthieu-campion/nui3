@@ -32,8 +32,8 @@ MainWindow::~MainWindow()
 //virtual
 void MainWindow::OnCreation()
 {
-  // build engine
-  Engine* pEngine();
+  // build application engine
+  Engine* pEngine = new Engine();
 
   // build gui
   Gui* pGui = new Gui();

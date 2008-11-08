@@ -5,6 +5,16 @@
   licence: see nui3/LICENCE.TXT
 */
 
+//
+// guiOscillo inherits from nuiWidget, to draw an oscilloscope, reacting to the sound the application plays
+// inheriting from nuiWidget allows us to:
+// - include the guiOscillo object in the nui widget tree of the application graphic interface
+// - overload all the nuiWidget method we need. 
+//
+// Here, we only need to overload bool Draw(nuiDrawContext* pContext). It's the standard method called by the 
+// rendering system to draw any widget. 
+//
+
 #pragma once
 
 #include "nui.h"

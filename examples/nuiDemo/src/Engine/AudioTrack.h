@@ -10,20 +10,14 @@
 #include "nui.h"
 #include "nuiAudioFifo.h"
 
-#include "Engine/AudioTrack.h"
-
-
-class Engine
+class AudioTrack : public nuiAudioTrack
 {
 public:
+  AudioTrack(nuiAudioFifo* pAudioFifo);
+  ~AudioTrack();
   
-  Engine();
-  ~Engine();
-  
+  void Start();
 private:
   
-  nuiAudioFifo* InitEngineAudio();
-  
   nuiAudioFifo* mpAudioFifo;
-  AudioTrack* mpAudioTrack;
 };
