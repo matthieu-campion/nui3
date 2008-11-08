@@ -55,10 +55,7 @@ nglString nuiFontRequest::GetGenericNameForFont(const nglString& rName)
   {
     return nuiFontRequest::gGenericNamesForFonts[name];
   }
-  else
-  {
-    return NULL;
-  }
+  return nglString::Null;
 }
 
 void nuiFontRequest::GetFontsForGenericName(const nglString& rName, std::vector<nglString>& rFonts)

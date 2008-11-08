@@ -7,6 +7,7 @@
 
 #include "nui.h"
 #include "nuiInit.h"
+#include "nuiLocale.h"
 #include "nuiApp.h"
 #include "nuiWin.h"
 
@@ -80,8 +81,7 @@ void nuiApp::OnInit()
   // Accept NGL default options
   ParseDefaultArgs();
 
-  setlocale(LC_ALL, ""); // get the current locale
-  nglString loc(setlocale(LC_ALL, NULL)); // get the current locale
+  nglString loc(nuiLocale::GetCurrentLanguage()); // get the current locale
   NGL_OUT(_T("Current locale: %ls\n"), loc.GetChars());
   
   GetLog().UseConsole(true);

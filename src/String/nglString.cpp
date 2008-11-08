@@ -2528,5 +2528,14 @@ CFStringRef nglString::ToCFString() const
   free(pStr);
   return cfStr;
 }
+
+nglString::nglString(CFStringRef str)
+{
+  CFIndex length = CFStringGetLength(str);
+  UniChar* buffer = (UniChar*)malloc(length * sizeof(UniChar));
+  CFStringGetCharacters(str, CFRangeMake(0, length), buffer);
+  Import((char*)buffer, length * sizeof(UniChar), eUCS2);
+  free(buffer);
+}
 #endif
 

@@ -773,7 +773,8 @@ public:
   static nglStringConv* GetStringConv(const nglEncodingPair& rEncodings);
   
   #if defined _CARBON_ || defined _UIKIT_
-  CFStringRef ToCFString() const; ///< return a Carbon string reference (don't forget to release the CFString using CFRelease)
+  CFStringRef ToCFString() const; ///< return a Core Foundation string reference (don't forget to release the CFString using CFRelease)
+  nglString(CFStringRef ref); ///< create an nglString from a Core Foundation string reference (don't forget to release the CFString using CFRelease)
   #endif
 
 private:
