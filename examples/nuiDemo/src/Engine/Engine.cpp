@@ -16,6 +16,7 @@ Engine::Engine()
 
 Engine::~Engine()
 {
+  mpAudioTrack->Stop();
   mpAudioFifo->Close();
   delete mpAudioFifo;
 }
@@ -53,4 +54,11 @@ nuiAudioFifo* Engine::InitEngineAudio()
   // you can use a nuiAudioTrack for each stream,
   // or mix the stream yourself if you like, and use a single nuiAudioTrack.
   //
+}
+
+
+
+AudioTrack* Engine::GetAudioTrack()
+{
+  return mpAudioTrack;
 }

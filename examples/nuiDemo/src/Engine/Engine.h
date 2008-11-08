@@ -20,6 +20,8 @@ public:
   Engine();
   ~Engine();
   
+  AudioTrack* GetAudioTrack();
+  
 private:
   
   nuiAudioFifo* InitEngineAudio();

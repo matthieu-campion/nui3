@@ -19,5 +19,17 @@ public:
 protected:
   
   nuiWidget* BuildControls();
+  
+  // gui events receivers
+  bool OnStartButtonPressed(const nuiEvent& rEvent);
+  bool OnStartButtonDePressed(const nuiEvent& rEvent);
+  
+  // a sink to connect the event sources to the local event receivers.
+  nuiEventSink<Gui> mEventSink;
+  // the nuiEventSink HAS TO be connected to the class instance (here, Gui instance) in order to run properly.
+  //
+  // Forgetting to set ups that connection happened all the time and each time, it was a pain in the ass to understand the bug.
+  // => now, the nuiEventSink is templated: it makes the sink connection be mandatory in the class constructor, 
+  // otherwise the compiler complains and you can understand right away what it complains for.
 };
 

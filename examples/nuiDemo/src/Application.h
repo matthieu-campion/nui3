@@ -9,6 +9,7 @@
 
 #include "nui.h"
 #include "nuiApplication.h"
+#include "Engine/Engine.h"
 
 class MainWindow;
 
@@ -20,13 +21,20 @@ public:
 
   void OnInit();
   void OnExit (int Code);
+  
+  MainWindow* GetMainWindow();
+  Engine* GetEngine();
 
 private:
   
-  MainWindow* mpMainWindow;
+  void InitWindow();
   
+  MainWindow* mpMainWindow;
+  Engine* mpEngine;
 };
 
 
 // a global call to retrieve the application object
 Application* GetApp();
+MainWindow* GetMainWindow();
+Engine* GetEngine();

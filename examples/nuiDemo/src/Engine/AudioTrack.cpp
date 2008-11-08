@@ -6,7 +6,10 @@
 */
 
 #include "Engine/AudioTrack.h"
+#include "Application.h"
+
 #include "nuiMessageBox.h"
+
 
 AudioTrack::AudioTrack(nuiAudioFifo* pAudioFifo)
 : nuiAudioTrack()
@@ -22,13 +25,36 @@ AudioTrack::~AudioTrack()
 
 void AudioTrack::Start()
 {
-//  uint32 nbChannels = 2;
-//  float volume = 1.0f;
-//  bool enableBuffering = true;
-//  
-//  if (!mpAudioFifo->RegisterTrack(this, mpAudioFifo->GetSampleRate(), nbChannels, volume, enableBuffering))
-//  {
-//    nuiMessageBox* pBox = new nuiMessageBox(GetMainWindow(), _T("nuiDemo"), _T("error trying to play sound"), eMB_OK);
-//    pBox->QueryUser(); // make the message box modal. Once exiting the modal state, the box is auto-trashed, you don't have to do it yourself.
-//  }
+  uint32 nbChannels = 2;
+  float volume = 1.0f;
+  bool enableBuffering = true;
+  
+  if (!mpAudioFifo->RegisterTrack(this, mpAudioFifo->GetSampleRate(), nbChannels, volume, enableBuffering))
+  {
+    nuiMessageBox* pBox = new nuiMessageBox((nuiMainWindow*)GetMainWindow(), _T("nuiDemo"), _T("error trying to play sound"), eMB_OK);
+    pBox->QueryUser(); // make the message box modal. Once exiting the modal state, the box is auto-trashed, you don't have to do it yourself.
+  }
+}
+
+
+
+void AudioTrack::Stop()
+{
+  mpAudioFifo->UnregisterTrack(this);
+}
+
+
+// virtual method from nuiAudioTrack. Have a look to nuiAudioFifo.h
+uint32 AudioTrack::ReadSamples(uint32 sampleFrames, std::vector<float*>& rBuffer)
+{
+  uint32 nbReadSamples = 0;
+  
+  return nbReadSamples;
+}
+
+
+// virtual method from nuiAudioTrack. Have a look to nuiAudioFifo.h
+void AudioTrack::ProcessedSamples(uint32 sampleFrames, uint32 bufSize, uint32 bufPos)
+{
+  // do nothing for now...
 }

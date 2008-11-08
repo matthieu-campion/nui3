@@ -12,7 +12,6 @@
 
 #include "Application.h"
 #include "Gui/Gui.h"
-#include "Engine/Engine.h"
 
 /*
  * MainWindow
@@ -32,9 +31,6 @@ MainWindow::~MainWindow()
 //virtual
 void MainWindow::OnCreation()
 {
-  // build application engine
-  Engine* pEngine = new Engine();
-
   // build gui
   Gui* pGui = new Gui();
   AddChild(pGui);

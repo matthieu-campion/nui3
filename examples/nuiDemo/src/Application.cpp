@@ -10,6 +10,7 @@
 #include "nuiInit.h"
 #include "Application.h"
 #include "MainWindow.h"
+#include "Engine/Engine.h"
 
 #include "nglConsole.h"
 
@@ -39,25 +40,34 @@ void Application::OnInit()
 {
   nuiInit(NULL);
 
+  InitWindow();
+  
+  // build application engine
+  mpEngine = new Engine();
+}
+
+
+void Application::InitWindow()
+{
   uint Width = 0, Height = 0;
   bool HasSize = false;
   bool IsFullScreen = false;
   bool DebugObject = false;
   bool DebugInfo = false;
   bool ShowFPS = false;
-//  nuiRenderer Renderer = eDirect3D;
+  //  nuiRenderer Renderer = eDirect3D;
   nuiRenderer Renderer = eOpenGL;
-//  nuiRenderer Renderer = eSoftware;
-
+  //  nuiRenderer Renderer = eSoftware;
+  
   // Accept NGL default options
   ParseDefaultArgs();
-
+  
   GetLog().UseConsole(true);
   GetLog().SetLevel(_T("font"), 100);
-
+  
   // Manual
   if ( (GetArgCount() == 1) &&
-       ((!GetArg(0).Compare(_T("-h"))) || (!GetArg(0).Compare(_T("--help")))) )
+      ((!GetArg(0).Compare(_T("-h"))) || (!GetArg(0).Compare(_T("--help")))) )
   {
     NGL_OUT(_T("no params\n"));
     Quit (0);
@@ -72,7 +82,7 @@ void Application::OnInit()
     if ((!arg.Compare(_T("--size")) || !arg.Compare(_T("-s"))) && ((i+1) < GetArgCount()))
     {
       int w, h;
-
+      
       std::string str(GetArg(i+1).GetStdString());
       sscanf(str.c_str(), "%dx%d", &w, &h);
       if (w > 0) Width  = w;
@@ -96,13 +106,13 @@ void Application::OnInit()
   }
   
   nuiMainWindow::SetRenderer(Renderer);
-
+  
   if (!HasSize)
   {
     if (IsFullScreen)
     {
       nglVideoMode current_mode;
-
+      
       Width = current_mode.GetWidth();
       Height = current_mode.GetHeight();
     }
@@ -112,14 +122,14 @@ void Application::OnInit()
       Height = 600;
     }
   }
-
-
+  
+  
   /* Create the nglWindow (and thus a GL context, don't even try to
    *   instantiate the gui (or nglFont) before the nuiWin !)
    */
   nuiContextInfo ContextInfo(nuiContextInfo::StandardContext3D);
   nglWindowInfo Info;
-
+  
   Info.Flags = IsFullScreen ? nglWindow::FullScreen : 0;
   Info.Width = Width;
   Info.Height = Height;
@@ -127,7 +137,7 @@ void Application::OnInit()
   Info.Title = APPLICATION_TITLE;
   Info.XPos = 0;
   Info.YPos = 0;
-        
+  
   mpMainWindow = new MainWindow(ContextInfo,Info, ShowFPS);
   if ((!mpMainWindow) || (mpMainWindow->GetError()))
   {
@@ -138,12 +148,35 @@ void Application::OnInit()
   }
   mpMainWindow->DBG_SetMouseOverInfo(DebugInfo);
   mpMainWindow->DBG_SetMouseOverObject(DebugObject);
-  mpMainWindow->SetState(nglWindow::eShow);
-
+  mpMainWindow->SetState(nglWindow::eShow);  
 }
 
+
+
+MainWindow* Application::GetMainWindow()
+{
+  return mpMainWindow;
+}
+
+Engine* Application::GetEngine()
+{
+  return mpEngine;
+}
+
+
+// globals ***********************************************
 
 Application* GetApp()
 {
   return ((Application*)App);
+}
+
+MainWindow* GetMainWindow()
+{
+  return ((Application*)App)->GetMainWindow();
+}
+
+Engine* GetEngine()
+{
+  return ((Application*)App)->GetEngine();
 }
