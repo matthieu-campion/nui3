@@ -230,7 +230,8 @@ uint32 nuiWaveReader::Read(void* pBuffer, uint32 SampleFrames, nuiSampleBitForma
               mPosition += sizeRead / mSampleInfo.GetChannels();
               
               nuiAudioConvert_16bitsBufferToFloat(pTempFloat, NbSamplePointsToRead);
-              return sizeRead / mSampleInfo.GetChannels();
+              uint64 nb = sizeRead / mSampleInfo.GetChannels();
+              return (uint32)nb;
             }
             break;
             
@@ -267,14 +268,14 @@ uint32 nuiWaveReader::Read(void* pBuffer, uint32 SampleFrames, nuiSampleBitForma
             break;
             
           default:
-              return false;
+              return 0;
               break;
         }
       }
       break;
       
     default :
-      return false;
+      return 0;
       break;
   }
 }

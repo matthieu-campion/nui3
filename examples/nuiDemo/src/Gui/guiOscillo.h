@@ -30,5 +30,9 @@ protected:
   
   // overloaded from nuiWidget, to be able to draw the oscillo manually
   virtual bool Draw(nuiDrawContext* pContext);
+  
+private:
+  
+//    const std::vector<std::vector<float> >& mrData;
 };
 

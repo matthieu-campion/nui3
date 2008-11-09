@@ -9,6 +9,8 @@
 
 #include "nui.h"
 #include "nuiAudioFifo.h"
+#include "nuiWaveReader.h"
+#include "nuiSample.h"
 
 class AudioTrack : public nuiAudioTrack
 {
@@ -31,4 +33,7 @@ protected:
 private:
   
   nuiAudioFifo* mpAudioFifo;
+  nuiWaveReader* mpWaveReader;
+//  nuiSample* mpSample;
+  float* mpSamples;
 };

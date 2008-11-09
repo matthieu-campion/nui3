@@ -1,6 +1,7 @@
 nuiDemo.icns        NUI_RESOURCE    "resources/nuiDemo.icns"
 nuiDemo.ico        NUI_RESOURCE    "resources/nuiDemo.ico"
 nuiDemo.png        NUI_RESOURCE    "resources/nuiDemo.png"
+sample.wav        NUI_RESOURCE    "resources/sample.wav"
 css/Gui.css        NUI_RESOURCE    "resources/css/Gui.css"
 css/nuiDemo.css        NUI_RESOURCE    "resources/css/nuiDemo.css"
 decorations/buttonStartDown.png        NUI_RESOURCE    "resources/decorations/buttonStartDown.png"
