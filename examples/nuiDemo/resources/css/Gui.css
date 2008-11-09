@@ -1,3 +1,14 @@
+//@nuiFrame dGui
+//{
+//  Texture: "rsrc:/decorations/bg-brushed_metal.png";
+//  ClientRect: "{0 0 220 225}";
+//}
+//
+//Gui!
+//{
+//  Decoration: dGui;
+//}
+
 "ImageTitle"!
 {
   Texture: "rsrc:/decorations/title.png";

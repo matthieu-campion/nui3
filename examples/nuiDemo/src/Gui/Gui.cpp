@@ -85,6 +85,7 @@ Gui::~Gui()
 }
 
 
+
 nuiWidget* Gui::BuildControls()
 {
   nuiVBox* pBox = new nuiVBox(0);

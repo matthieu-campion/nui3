@@ -10,7 +10,6 @@
 #include "nui.h"
 #include "nuiAudioFifo.h"
 #include "nuiWaveReader.h"
-#include "nuiSample.h"
 
 class AudioTrack : public nuiAudioTrack
 {
@@ -35,6 +34,7 @@ protected:
 private:
   
   nuiAudioFifo* mpAudioFifo;
-  nuiWaveReader* mpWaveReader;
   std::vector<std::vector<float> > mSamples;
+  nuiSampleInfo mInfos;
+  uint32 mStartSample;
 };

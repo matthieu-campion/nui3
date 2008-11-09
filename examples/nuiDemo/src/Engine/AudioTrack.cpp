@@ -9,7 +9,6 @@
 #include "Application.h"
 
 #include "nuiMessageBox.h"
-#include "nuiWaveReader.h"
 
 
 AudioTrack::AudioTrack(nuiAudioFifo* pAudioFifo)
@@ -25,18 +24,37 @@ AudioTrack::AudioTrack(nuiAudioFifo* pAudioFifo)
     pBox->QueryUser();
   }
   
-  mpWaveReader = new nuiWaveReader(*istream);
-  nuiSampleInfo infos;
-  bool res = mpWaveReader->ReadInfo(infos); 
-  float* pSamples = new float[infos.GetSampleFrames() * infos.GetChannels()];  
-  uint32 nbReadSamples = mpWaveReader->Read((void*)pSamples, infos.GetSampleFrames(), eSampleFloat32);  
-  NGL_OUT(_T("Read %d samples.\n"), nbReadSamples);
-//  mpSample = new nuiSample(*mpWaveReader);
+  nuiWaveReader* pWaveReader = new nuiWaveReader(*istream);
+  bool res = pWaveReader->ReadInfo(mInfos); 
+  float* pSamples = new float[mInfos.GetSampleFrames() * mInfos.GetChannels()];  
+  uint32 nbReadSamples = pWaveReader->Read((void*)pSamples, mInfos.GetSampleFrames(), eSampleFloat32);  
+  delete pWaveReader;
+  
+  // init local deinterlaced buffer
+  mSamples.resize(mInfos.GetChannels());
+  for (uint32 c = 0; c < mInfos.GetChannels(); c++)
+    mSamples[c].resize(mInfos.GetSampleFrames());
+  
+  // deinterlace
+  float* pInput;
+  float* pOutput;
+  for (uint c = 0; c < mInfos.GetChannels(); c++)
+  {
+      pInput = pSamples + c;
+      pOutput = &(mSamples[c][0]);
+      for (uint32 s = 0; s < nbReadSamples; s++)
+      {
+        *(pOutput++) = *pInput;
+        pInput += mInfos.GetChannels();
+      }
+  }  
+  
+  
+  mStartSample = 0;
 }
 
 AudioTrack::~AudioTrack()
 {
-  delete mpWaveReader;
 }
 
 const std::vector<std::vector<float> >& AudioTrack::GetSamples() const
@@ -69,11 +87,46 @@ void AudioTrack::Stop()
 // virtual method from nuiAudioTrack. Have a look to nuiAudioFifo.h
 uint32 AudioTrack::ReadSamples(uint32 sampleFrames, std::vector<float*>& rBuffer)
 {
-  uint32 nbReadSamples = 0;
+  uint32 nbSamplesToCopy = MIN(sampleFrames, mInfos.GetSampleFrames() - mStartSample);
 
-  // do it
+  // give what you have to the audio system
+  for (uint32 c = 0; c < rBuffer.size(); c++)
+  {
+    uint32 startSample = mStartSample;
+    
+    for (uint32 s = 0; s < nbSamplesToCopy; s++, startSample++)
+      rBuffer[c][s] = mSamples[c][startSample];
+  }
   
-  return nbReadSamples;
+  mStartSample += nbSamplesToCopy;
+  
+  // (nbSamplesToCopy < sampleFrames) <=> you couldn't copy as much samples as requested by the audio system
+  // it happens for instance when the end of the sound sample has been reached.
+  //
+  // you may decide what you're gonna use to fill the rest of the buffer (in order not to get a crappy sound due to unknown buffer contents)
+  // option 1: fill the rest of the buffer with 0.0f: to provide a clean silence
+  // option 2: you want the sound to loop: go back to the sample's beginning and continue to copy...
+  // here, we want the sound to loop.
+  if (nbSamplesToCopy < sampleFrames)
+  {
+    mStartSample = 0;
+    
+    nbSamplesToCopy = MIN(sampleFrames, mInfos.GetSampleFrames() - mStartSample);
+    
+    // give what you have to the audio system
+    for (uint32 c = 0; c < rBuffer.size(); c++)
+    {
+      uint32 startSample = mStartSample;
+      
+      for (uint32 s = 0; s < nbSamplesToCopy; s++, startSample++)
+        rBuffer[c][s] = mSamples[c][startSample];
+    }
+    
+    mStartSample += nbSamplesToCopy;
+  }
+  
+  
+  return sampleFrames;
 }
 
 

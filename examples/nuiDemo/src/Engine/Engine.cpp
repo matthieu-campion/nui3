@@ -25,7 +25,7 @@ Engine::~Engine()
 nuiAudioFifo* Engine::InitEngineAudio()
 {
   // parameters for audio system
-  int64 inBufSize = 128 * 1024; // input buffer size <=> input sound buffering 
+  int64 inBufSize = 16 * 1024; // input buffer size <=> input sound buffering 
   int64 outBufSize = 4096;      // output buffer size <=> buffer for output playing to soundcard
   double sampleRate = 44100.0f; // smaple rate
   int64 nbChannels = 2;         // nb channels
