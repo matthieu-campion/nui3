@@ -8,6 +8,7 @@
 #include "nui.h"
 #include "nuiWaveWriter.h"
 #include "nuiWaveReader.h"
+#include "nuiAudioConvert.h"
 
 nuiWaveWriter::nuiWaveWriter(nglOStream& rStream) : nuiSampleWriter(rStream)
 {
@@ -258,7 +259,7 @@ uint32 nuiWaveWriter::Write(const void* pBuffer, uint32 SampleFrames, nuiSampleB
             std::vector<uint8> TempBuffer;
             TempBuffer.resize(NbSamplePointsToRead * 3); //nb of sample points * 3 bytes (24 bits) = nb of bytes to read
             
-            ConvertFloatTo24bitsLittleEndian(pTempFloat,&TempBuffer[0],NbSamplePointsToRead);
+            nuiAudioConvert_FloatTo24bitsLittleEndian(pTempFloat,&TempBuffer[0],NbSamplePointsToRead);
             
             return mrStream.WriteUInt8(&TempBuffer[0], NbSamplePointsToRead * 3) / (3 * mrSampleInfo.GetChannels());
           }
