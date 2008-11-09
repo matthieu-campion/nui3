@@ -30,6 +30,7 @@ AudioTrack::AudioTrack(nuiAudioFifo* pAudioFifo)
   bool res = mpWaveReader->ReadInfo(infos); 
   float* pSamples = new float[infos.GetSampleFrames() * infos.GetChannels()];  
   uint32 nbReadSamples = mpWaveReader->Read((void*)pSamples, infos.GetSampleFrames(), eSampleFloat32);  
+  NGL_OUT(_T("Read %d samples.\n"), nbReadSamples);
 //  mpSample = new nuiSample(*mpWaveReader);
 }
 

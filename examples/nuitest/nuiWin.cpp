@@ -1409,6 +1409,7 @@ bool nuiWin::Draw(nuiDrawContext* pContext)
     }
 
   }
+
   /*
   const float V = 100.f;
   nuiRenderArray r(GL_TRIANGLE_STRIP);

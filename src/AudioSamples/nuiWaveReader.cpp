@@ -168,114 +168,118 @@ bool  nuiWaveReader::ReadInfo(nuiSampleInfo& rInfos)
 uint32 nuiWaveReader::Read(void* pBuffer, uint32 SampleFrames, nuiSampleBitFormat format)
 {
   const uint64 NbSamplePointsToRead = SampleFrames * mSampleInfo.GetChannels();
+  uint64 nb = 0;
   
   switch(format)
   {
-    case eSampleInt16 :
+  case eSampleInt16 :
+    {
+      switch (mSampleInfo.GetBitsPerSample())
       {
-        switch ( mSampleInfo.GetBitsPerSample() )
+      case 8:
         {
-          case 8 :
-            {
-              int16* pTempInt16 = (int16*)pBuffer;
-              
-              int64 sizeRead;
-              sizeRead = mrStream.ReadUInt8( ((uint8*)pTempInt16) + NbSamplePointsToRead , NbSamplePointsToRead);
-              mPosition += sizeRead / mSampleInfo.GetChannels();
-              nuiAudioConvert_Unsigned8bitsBufferTo16Bits(pTempInt16, sizeRead);
-              return sizeRead / mSampleInfo.GetChannels();
-            }
-            break;
-            
-          case 16 :
-            {
-              int64 sizeRead;
-              sizeRead = mrStream.ReadInt16( (int16*)pBuffer, NbSamplePointsToRead);
-              mPosition += sizeRead / mSampleInfo.GetChannels();
-              return sizeRead / mSampleInfo.GetChannels();
-            }
-            break;
-            
-          case 24 :
-          case 32 :
-          default:
-            return 0;
-            break;
+          int16* pTempInt16 = (int16*)pBuffer;
+          
+          int64 sizeRead;
+          sizeRead = mrStream.ReadUInt8(((uint8*)pTempInt16) + NbSamplePointsToRead , NbSamplePointsToRead);
+          mPosition += sizeRead / mSampleInfo.GetChannels();
+          nuiAudioConvert_Unsigned8bitsBufferTo16Bits(pTempInt16, sizeRead);
+          nb = sizeRead / mSampleInfo.GetChannels();
         }
-      }
-      break;
-      
-    case eSampleFloat32 :
-      {
-        switch ( mSampleInfo.GetBitsPerSample() )
+        break;
+        
+      case 16:
         {
-          case 8 :
-            {
-              float* pTempFloat = (float*)pBuffer;
-              int64 sizeRead;
-              
-              sizeRead = mrStream.ReadUInt8( (uint8*)pTempFloat + 3 * NbSamplePointsToRead , NbSamplePointsToRead);
-              mPosition += sizeRead / mSampleInfo.GetChannels();
-              nuiAudioConvert_Unsigned8bitsBufferToFloat(pTempFloat, sizeRead);
-              return sizeRead / mSampleInfo.GetChannels();
-            }
-            break;
-            
-          case 16 :
-            {
-              float* pTempFloat = (float*)pBuffer;
-              int64 sizeRead;
-              
-              sizeRead = mrStream.ReadInt16( (int16*)pTempFloat + NbSamplePointsToRead, NbSamplePointsToRead);
-              mPosition += sizeRead / mSampleInfo.GetChannels();
-              
-              nuiAudioConvert_16bitsBufferToFloat(pTempFloat, NbSamplePointsToRead);
-              uint64 nb = sizeRead / mSampleInfo.GetChannels();
-              return (uint32)nb;
-            }
-            break;
-            
-          case 24 :
-            {
-              float* pTempFloat = (float*)pBuffer;
-              int64 sizeRead;
-              
-              uint8* pTempBuffer;
-              pTempBuffer = new uint8[NbSamplePointsToRead * 3]; //nb of sample points * 3 bytes (24 bits) = nb of bytes to read
-              
-              sizeRead = mrStream.ReadUInt8(pTempBuffer, NbSamplePointsToRead * 3)/3; //divide by 3 to get actual number of read samples
-              mPosition += sizeRead / mSampleInfo.GetChannels();
-              
-              uint64 i;
-              for (i = 0; i < sizeRead; i++)
-              {
-                pTempFloat[i] = nuiAudioConvert_24bitsToFloatFromLittleEndian(pTempBuffer + (3 * i));
-              }
+          int64 sizeRead;
+          sizeRead = mrStream.ReadInt16((int16*)pBuffer, NbSamplePointsToRead);
+          mPosition += sizeRead / mSampleInfo.GetChannels();
+          nb = sizeRead / mSampleInfo.GetChannels();
+        }
+        break;
+        
+      case 24:
+      case 32:
+      default:
+        NGL_ASSERT(0);
+        nb = 0;
+        break;
+      }
+    }
+    break;
+    
+  case eSampleFloat32 :
+    {
+      switch (mSampleInfo.GetBitsPerSample())
+      {
+      case 8:
+        {
+          float* pTempFloat = (float*)pBuffer;
+          int64 sizeRead;
+          
+          sizeRead = mrStream.ReadUInt8((uint8*)pTempFloat + 3 * NbSamplePointsToRead , NbSamplePointsToRead);
+          mPosition += sizeRead / mSampleInfo.GetChannels();
+          nuiAudioConvert_Unsigned8bitsBufferToFloat(pTempFloat, sizeRead);
+          nb = sizeRead / mSampleInfo.GetChannels();
+        }
+        break;
+        
+      case 16:
+        {
+          float* pTempFloat = (float*)pBuffer;
+          int64 sizeRead;
+          
+          sizeRead = mrStream.ReadInt16((int16*)pTempFloat + NbSamplePointsToRead, NbSamplePointsToRead);
+          mPosition += sizeRead / mSampleInfo.GetChannels();
+          
+          nuiAudioConvert_16bitsBufferToFloat(pTempFloat, NbSamplePointsToRead);
+          nb = sizeRead / mSampleInfo.GetChannels();
+        }
+        break;
+        
+      case 24:
+        {
+          float* pTempFloat = (float*)pBuffer;
+          int64 sizeRead;
+          
+          uint8* pTempBuffer;
+          pTempBuffer = new uint8[NbSamplePointsToRead * 3]; //nb of sample points * 3 bytes (24 bits) = nb of bytes to read
+          
+          sizeRead = mrStream.ReadUInt8(pTempBuffer, NbSamplePointsToRead * 3) / 3; //divide by 3 to get actual number of read samples
+          mPosition += sizeRead / mSampleInfo.GetChannels();
+          
+          uint64 i;
+          for (i = 0; i < sizeRead; i++)
+          {
+            pTempFloat[i] = nuiAudioConvert_24bitsToFloatFromLittleEndian(pTempBuffer + (3 * i));
+          }
 
-              delete[] pTempBuffer;
-              
-              return sizeRead / mSampleInfo.GetChannels();
-            }
-            break;
-            
-          case 32 :
-            {
-              int64 sizeRead;
-              sizeRead = mrStream.ReadFloat( (float*)pBuffer, NbSamplePointsToRead);
-              mPosition += sizeRead / mSampleInfo.GetChannels();
-              return sizeRead / mSampleInfo.GetChannels();
-            }
-            break;
-            
-          default:
-              return 0;
-              break;
+          delete[] pTempBuffer;
+          
+          nb = sizeRead / mSampleInfo.GetChannels();
         }
+        break;
+        
+      case 32:
+        {
+          int64 sizeRead;
+          sizeRead = mrStream.ReadFloat((float*)pBuffer, NbSamplePointsToRead);
+          mPosition += sizeRead / mSampleInfo.GetChannels();
+          nb = sizeRead / mSampleInfo.GetChannels();
+        }
+        break;
+        
+      default:
+        NGL_ASSERT(0);
+        nb = 0;
+        break;
       }
-      break;
-      
-    default :
-      return 0;
-      break;
+    }
+    break;
+  default:
+    NGL_ASSERT(0);
+    nb = 0;
+    break;
   }
+  
+  return nb;
 }

@@ -90,6 +90,7 @@ Lookup precompiled headers in the VC doc to learn how to use them.
 #include "nglWindow.h"
 #include "nglZipFS.h"
 
+#include "nglMath.h"
 
 #endif // __ngl_all_h__
 

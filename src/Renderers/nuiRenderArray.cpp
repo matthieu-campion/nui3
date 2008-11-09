@@ -6,16 +6,9 @@
 */
 
 #include "nui.h"
+#include "nglMath.h"
 #include "nuiRenderArray.h"
 #include "nuiColor.h"
-
-#include <cmath>
-
-#ifdef _WIN32_
-#define ISNAN_FLOAT isnan
-#else
-#define ISNAN_FLOAT std::isnan<float>
-#endif
 
 /// class nuiRenderArray
 nuiRenderArray::nuiRenderArray(GLenum mode, bool Static)
@@ -93,16 +86,16 @@ bool nuiRenderArray::IsArrayEnabled(DataType tpe) const
 void nuiRenderArray::PushVertex()
 {
   NGL_ASSERT(mCurrentVertex.mX != std::numeric_limits<float>::infinity());
-  NGL_ASSERT(!ISNAN_FLOAT(mCurrentVertex.mX));
+  NGL_ASSERT(!isnan(mCurrentVertex.mX));
   NGL_ASSERT(mCurrentVertex.mY != std::numeric_limits<float>::infinity());
-  NGL_ASSERT(!ISNAN_FLOAT(mCurrentVertex.mY));
+  NGL_ASSERT(!isnan(mCurrentVertex.mY));
   NGL_ASSERT(mCurrentVertex.mZ != std::numeric_limits<float>::infinity());
-  NGL_ASSERT(!ISNAN_FLOAT(mCurrentVertex.mZ));
+  NGL_ASSERT(!isnan(mCurrentVertex.mZ));
 
   NGL_ASSERT(mCurrentVertex.mTX != std::numeric_limits<float>::infinity());
-  NGL_ASSERT(!ISNAN_FLOAT(mCurrentVertex.mTX));
+  NGL_ASSERT(!isnan(mCurrentVertex.mTX));
   NGL_ASSERT(mCurrentVertex.mTY != std::numeric_limits<float>::infinity());
-  NGL_ASSERT(!ISNAN_FLOAT(mCurrentVertex.mTY));
+  NGL_ASSERT(!isnan(mCurrentVertex.mTY));
 
   mVertices.push_back(mCurrentVertex);
 }
@@ -185,10 +178,10 @@ void nuiRenderArray::SetColor(float r, float g, float b, float a)
   NGL_ASSERT(b >= 0.0);
   NGL_ASSERT(a <= 1.0);
   NGL_ASSERT(a >= 0.0);
-  NGL_ASSERT(!ISNAN_FLOAT(r));
-  NGL_ASSERT(!ISNAN_FLOAT(g));
-  NGL_ASSERT(!ISNAN_FLOAT(b));
-  NGL_ASSERT(!ISNAN_FLOAT(a));
+  NGL_ASSERT(!isnan(r));
+  NGL_ASSERT(!isnan(g));
+  NGL_ASSERT(!isnan(b));
+  NGL_ASSERT(!isnan(a));
 
   mCurrentVertex.mR = (uint8)ToBelow(r * 255.0f);
   mCurrentVertex.mG = (uint8)ToBelow(g * 255.0f);

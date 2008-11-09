@@ -13,6 +13,7 @@
 #include "base/smart_ptr.h"
 #include "gameswf.h"	// for ref_counted
 #include <wchar.h>
+#include <math.h>
 
 namespace gameswf
 {

@@ -33,6 +33,9 @@ guiOscillo::~guiOscillo()
 // virtual, overloaded from nuiWidget, to be able to draw the oscillo manually
 bool guiOscillo::Draw(nuiDrawContext* pContext)
 {
+  if (mrData.empty())
+    return false;
+  
   uint32 s1 = mrData[0].size();
   uint32 s2 = GetRect().GetWidth();
   uint32 count = MIN(s1, s2);
