@@ -28,8 +28,8 @@ AudioTrack::AudioTrack(nuiAudioFifo* pAudioFifo)
   mpWaveReader = new nuiWaveReader(*istream);
   nuiSampleInfo infos;
   bool res = mpWaveReader->ReadInfo(infos); 
-  mpSamples = new float[infos.GetSampleFrames() * infos.GetChannels()];  
-  uint32 nbReadSamples = mpWaveReader->Read((void*)mpSamples, infos.GetSampleFrames(), eSampleFloat32);  
+  float* pSamples = new float[infos.GetSampleFrames() * infos.GetChannels()];  
+  uint32 nbReadSamples = mpWaveReader->Read((void*)pSamples, infos.GetSampleFrames(), eSampleFloat32);  
 //  mpSample = new nuiSample(*mpWaveReader);
 }
 
@@ -38,6 +38,10 @@ AudioTrack::~AudioTrack()
   delete mpWaveReader;
 }
 
+const std::vector<std::vector<float> >& AudioTrack::GetSamples() const
+{
+  return mSamples;
+}
 
 
 void AudioTrack::Start()

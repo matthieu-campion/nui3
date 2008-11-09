@@ -23,7 +23,7 @@
 class guiOscillo : public nuiWidget
 {
 public:
-  guiOscillo();
+  guiOscillo(const std::vector<std::vector<float> >& rData);
   virtual ~guiOscillo();
 
 protected:
@@ -33,6 +33,6 @@ protected:
   
 private:
   
-//    const std::vector<std::vector<float> >& mrData;
+    const std::vector<std::vector<float> >& mrData;
 };
 

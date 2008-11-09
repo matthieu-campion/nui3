@@ -21,6 +21,8 @@ public:
   void Start();
   void Stop();
   
+  const std::vector<std::vector<float> >& GetSamples() const;
+  
 protected:
   
 	// virtual method from nuiAudioTrack. Have a look to nuiAudioFifo.h
@@ -34,6 +36,5 @@ private:
   
   nuiAudioFifo* mpAudioFifo;
   nuiWaveReader* mpWaveReader;
-//  nuiSample* mpSample;
-  float* mpSamples;
+  std::vector<std::vector<float> > mSamples;
 };

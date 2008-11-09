@@ -51,7 +51,7 @@ Gui::Gui()
   mEventSink.Connect(pStartBtn->ButtonDePressed, &Gui::OnStartButtonDePressed);
   
   // oscillo
-  guiOscillo* pOscillo = new guiOscillo();
+  guiOscillo* pOscillo = new guiOscillo(GetEngine()->GetAudioTrack()->GetSamples());
   pBox->AddCell(pOscillo, nuiCenter);
   
 

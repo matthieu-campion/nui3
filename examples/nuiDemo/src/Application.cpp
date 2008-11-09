@@ -40,10 +40,10 @@ void Application::OnInit()
 {
   nuiInit(NULL);
 
-  InitWindow();
-  
   // build application engine
   mpEngine = new Engine();
+
+  InitWindow();
 }
 
 
