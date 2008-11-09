@@ -18,14 +18,14 @@ AudioTrack::AudioTrack(nuiAudioFifo* pAudioFifo)
   mpAudioFifo = pAudioFifo;
   
   // load sound sample
-  nglIFile ifile(_T("./sample.wav"));
-  if (!ifile.IsOpen())
+  nglIStream* istream = nglPath(_T("rsrc:/sample.wav")).OpenRead();
+  if (!istream || !istream->Available())
   {
     nuiMessageBox* pBox = new nuiMessageBox((nuiMainWindow*)GetMainWindow(), _T("nuiDemo"), _T("error trying to load sound"), eMB_OK);
     pBox->QueryUser();
   }
   
-  mpWaveReader = new nuiWaveReader(ifile);
+  mpWaveReader = new nuiWaveReader(*istream);
   nuiSampleInfo infos;
   bool res = mpWaveReader->ReadInfo(infos); 
   mpSamples = new float[infos.GetSampleFrames() * infos.GetChannels()];  
