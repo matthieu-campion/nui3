@@ -2522,6 +2522,62 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="AudioSamples"
+				>
+				<File
+					RelativePath=".\src\AudioSamples\nuiSample.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiSample.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiSampleDefines.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\AudioSamples\nuiSampleInfo.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiSampleInfo.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\AudioSamples\nuiSampleReader.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiSampleReader.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\AudioSamples\nuiSampleWriter.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiSampleWriter.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\AudioSamples\nuiWaveReader.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiWaveReader.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\AudioSamples\nuiWaveWriter.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiWaveWriter.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Dependencies"

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="nuiDemo"
 	ProjectGUID="{D87858E8-0145-4B03-889A-3186371799DC}"
 	RootNamespace="template"
@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../../include"
+				AdditionalIncludeDirectories="../../include;./src"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -116,7 +116,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../include"
+				AdditionalIncludeDirectories="../../include;./src"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="0"
@@ -192,7 +192,71 @@
 				RelativePath="src\MainWindow.h"
 				>
 			</File>
+			<Filter
+				Name="Engine"
+				>
+				<File
+					RelativePath=".\src\Engine\AudioTrack.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Engine\AudioTrack.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Engine\BiQuad.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Engine\BiQuad.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Engine\Engine.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Engine\Engine.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Gui"
+				>
+				<File
+					RelativePath=".\src\Gui\Gui.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Gui\Gui.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Gui\guiOscillo.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Gui\guiOscillo.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="css"
+				>
+				<File
+					RelativePath=".\resources\css\Gui.css"
+					>
+				</File>
+				<File
+					RelativePath=".\resources\css\nuiDemo.css"
+					>
+				</File>
+			</Filter>
 		</Filter>
+		<File
+			RelativePath=".\resource.rc"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>
