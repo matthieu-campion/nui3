@@ -23,6 +23,9 @@ protected:
   // gui events receivers
   bool OnStartButtonPressed(const nuiEvent& rEvent);
   bool OnStartButtonDePressed(const nuiEvent& rEvent);
+
+  bool OnPitchSliderChanged(const nuiEvent& rEvent);
+  
   
   // a sink to connect the event sources to the local event receivers.
   nuiEventSink<Gui> mEventSink;

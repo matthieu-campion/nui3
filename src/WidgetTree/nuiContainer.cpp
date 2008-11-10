@@ -95,6 +95,14 @@ bool nuiContainer::Trash()
 
 void nuiContainer::CallOnTrash()
 {
+  ChildrenCallOnTrash();
+  
+  OnTrash();
+}
+
+
+void nuiContainer::ChildrenCallOnTrash()
+{
   IteratorPtr pIt;
   for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
   {
@@ -102,9 +110,7 @@ void nuiContainer::CallOnTrash()
     if (pItem)
       pItem->CallOnTrash();
   }
-  delete pIt;
-  
-  OnTrash();
+  delete pIt;  
 }
 
 nuiContainerPtr nuiContainer::GetRoot() const

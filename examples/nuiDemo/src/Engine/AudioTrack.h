@@ -11,6 +11,8 @@
 #include "nuiAudioFifo.h"
 #include "nuiWaveReader.h"
 
+#include "Engine/BiQuad.h"
+
 class AudioTrack : public nuiAudioTrack
 {
 public:
@@ -22,10 +24,14 @@ public:
   
   const std::vector<std::vector<float> >& GetSamplesBuffer() const;
   
+  BiQuad& GetFilter();
+  
 protected:
   
 	// virtual method from nuiAudioTrack. Have a look to nuiAudioFifo.h
   virtual uint32 ReadSamples(uint32 sampleFrames, std::vector<float*>& rBuffer);
+  
+  void ReadWaveContents(uint32 sampleFrames, std::vector<float*>& rBuffer);
   
 private:
   
@@ -35,4 +41,6 @@ private:
   
   nuiSampleInfo mInfos;
   uint32 mStartSample;
+  
+  BiQuad mFilter;
 };

@@ -67,8 +67,14 @@ nuiAudioFifo* Engine::InitEngineAudio()
 }
 
 
-
+// shortcut to audio track
 AudioTrack* Engine::GetAudioTrack()
 {
   return mpAudioTrack;
+}
+
+// shortcut to audiotrack filter
+BiQuad& Engine::GetFilter()
+{
+  return mpAudioTrack->GetFilter();
 }

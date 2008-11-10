@@ -156,6 +156,10 @@ uint nuiSimpleContainer::GetChildrenCount() const
 
 bool nuiSimpleContainer::Clear(bool Delete)
 {
+  // start by trashing everybody
+  nuiContainer::ChildrenCallOnTrash();
+
+  // then, clear the container
   int childCount = GetChildrenCount();
   for (childCount--; childCount >= 0; childCount--)
   {

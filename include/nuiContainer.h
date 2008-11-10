@@ -194,12 +194,14 @@ public:
   virtual bool DelChild(nuiWidgetPtr pChild,bool Delete=false) = 0;
 
 protected:
+  
   void DrawChild(nuiDrawContext* pContext, nuiWidget* pChild); /// Draw the given widget as a child of this widget.
   bool DrawChildren(nuiDrawContext* pContext); ///< This helper method calls the DrawMethod on all the children of the nuiObject using the DrawChild method. 
   void BroadcastVisible();
   virtual void CallConnectTopLevel(nuiTopLevel* pTopLevel); ///< Connects container to Top Level, then asks children to connect.
   virtual void CallDisconnectTopLevel(nuiTopLevel* pTopLevel); ///< Disconnects container from Top Level, then asks children to disconnect too.
   virtual void CallOnTrash();
+  void ChildrenCallOnTrash();
   virtual void InternalResetCSSPass();
 
 };

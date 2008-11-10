@@ -11,6 +11,7 @@
 #include "nuiAudioFifo.h"
 
 #include "Engine/AudioTrack.h"
+#include "Engine/BiqUad.h"
 
 
 class Engine
@@ -21,6 +22,7 @@ public:
   ~Engine();
   
   AudioTrack* GetAudioTrack();
+  BiQuad& GetFilter();
   
 private:
   

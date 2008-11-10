@@ -16,7 +16,7 @@
 //
 
 AudioTrack::AudioTrack(nuiAudioFifo* pAudioFifo)
-: nuiAudioTrack()
+: nuiAudioTrack(), mFilter(44100, 2)
 {
   mpAudioFifo = pAudioFifo;
   
@@ -67,6 +67,12 @@ AudioTrack::AudioTrack(nuiAudioFifo* pAudioFifo)
   
   // init first sample to play
   mStartSample = 0;
+  
+  
+  // initialise filters
+  mFilter.SetQ(0.0f);
+  mFilter.SetFreq(4000);
+  mFilter.SetType(BiQuad::LowPass);
 }
 
 
@@ -81,6 +87,11 @@ const std::vector<std::vector<float> >& AudioTrack::GetSamplesBuffer() const
   return mSamplesBuffer;
 }
 
+
+BiQuad& AudioTrack::GetFilter()
+{
+  return mFilter;
+}
 
 
 //********************************************************************************
@@ -132,13 +143,7 @@ uint32 AudioTrack::ReadSamples(uint32 sampleFrames, std::vector<float*>& rBuffer
   uint32 nbSamplesToCopy = MIN(sampleFrames, mInfos.GetSampleFrames() - mStartSample);
 
   // fill the output buffer
-  for (uint32 c = 0; c < rBuffer.size(); c++)
-  {
-    uint32 startSample = mStartSample;
-    
-    for (uint32 s = 0; s < nbSamplesToCopy; s++, startSample++)
-      rBuffer[c][s] = mWavContents[c][startSample];
-  }
+  ReadWaveContents(nbSamplesToCopy, rBuffer);
   
   // update for next cycle
   mStartSample += nbSamplesToCopy;
@@ -157,14 +162,13 @@ uint32 AudioTrack::ReadSamples(uint32 sampleFrames, std::vector<float*>& rBuffer
     mStartSample = 0;
     
     nbSamplesToCopy = MIN(sampleFrames, mInfos.GetSampleFrames() - mStartSample);
-    for (uint32 c = 0; c < rBuffer.size(); c++)
-    {
-      uint32 startSample = mStartSample;
-      for (uint32 s = 0; s < nbSamplesToCopy; s++, startSample++)
-        rBuffer[c][s] = mWavContents[c][startSample];
-    }
+    ReadWaveContents(nbSamplesToCopy, rBuffer);
     mStartSample += nbSamplesToCopy;
   }
+
+
+  // apply filter
+  mFilter.Process(rBuffer, rBuffer, sampleFrames);
   
   
   // fill the buffer for the GUI's oscillo
@@ -177,4 +181,20 @@ uint32 AudioTrack::ReadSamples(uint32 sampleFrames, std::vector<float*>& rBuffer
   
   return sampleFrames;
 }
+
+
+
+
+
+void AudioTrack::ReadWaveContents(uint32 sampleFrames, std::vector<float*>& rBuffer)
+{
+  for (uint32 c = 0; c < rBuffer.size(); c++)
+  {
+    uint32 startSample = mStartSample;
+    
+    for (uint32 s = 0; s < sampleFrames; s++, startSample++)
+      rBuffer[c][s] = mWavContents[c][startSample];
+  }  
+}
+
 

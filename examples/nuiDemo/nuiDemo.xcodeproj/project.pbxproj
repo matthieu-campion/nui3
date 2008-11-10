@@ -29,6 +29,8 @@
 		BC085DA10EC473EF00D95F92 /* guiOscillo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC085D9E0EC473EF00D95F92 /* guiOscillo.cpp */; };
 		BC29E4B20EC717A000D4B349 /* CoreAudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC29E4B10EC717A000D4B349 /* CoreAudioKit.framework */; };
 		BC29E4B30EC717A000D4B349 /* CoreAudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC29E4B10EC717A000D4B349 /* CoreAudioKit.framework */; };
+		BCA7BADA0EC8693C00AFA105 /* BiQuad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCA7BAD80EC8693C00AFA105 /* BiQuad.cpp */; };
+		BCA7BADB0EC8693C00AFA105 /* BiQuad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCA7BAD80EC8693C00AFA105 /* BiQuad.cpp */; };
 		BCBCB15F0DFD45BD002E8BC3 /* libnui3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */; };
 		BCE44D9C0EC6463C00AEBD64 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCE44D990EC6463C00AEBD64 /* AudioToolbox.framework */; };
 		BCE44D9D0EC6463C00AEBD64 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCE44D9A0EC6463C00AEBD64 /* AudioUnit.framework */; };
@@ -93,6 +95,8 @@
 		BC29E4B10EC717A000D4B349 /* CoreAudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudioKit.framework; path = /System/Library/Frameworks/CoreAudioKit.framework; sourceTree = "<absolute>"; };
 		BC9DC75B0EC4DE7D00B3E1F1 /* Gui.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = Gui.css; path = resources/css/Gui.css; sourceTree = SOURCE_ROOT; };
 		BC9DC75C0EC4DE7D00B3E1F1 /* nuiDemo.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = nuiDemo.css; path = resources/css/nuiDemo.css; sourceTree = SOURCE_ROOT; };
+		BCA7BAD80EC8693C00AFA105 /* BiQuad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BiQuad.cpp; path = src/Engine/BiQuad.cpp; sourceTree = SOURCE_ROOT; };
+		BCA7BAD90EC8693C00AFA105 /* BiQuad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BiQuad.h; path = src/Engine/BiQuad.h; sourceTree = SOURCE_ROOT; };
 		BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nui3.xcodeproj; path = ../../nui3.xcodeproj; sourceTree = SOURCE_ROOT; };
 		BCE44D990EC6463C00AEBD64 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = /System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<absolute>"; };
 		BCE44D9A0EC6463C00AEBD64 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = /System/Library/Frameworks/AudioUnit.framework; sourceTree = "<absolute>"; };
@@ -206,6 +210,8 @@
 				BCE44DC10EC646A600AEBD64 /* AudioTrack.h */,
 				BC085D650EC46CDB00D95F92 /* Engine.cpp */,
 				BC085D660EC46CDB00D95F92 /* Engine.h */,
+				BCA7BAD80EC8693C00AFA105 /* BiQuad.cpp */,
+				BCA7BAD90EC8693C00AFA105 /* BiQuad.h */,
 			);
 			name = Engine;
 			sourceTree = "<group>";
@@ -351,6 +357,7 @@
 				BC085D680EC46CDB00D95F92 /* Engine.cpp in Sources */,
 				BC085DA10EC473EF00D95F92 /* guiOscillo.cpp in Sources */,
 				BCE44DC30EC646A600AEBD64 /* AudioTrack.cpp in Sources */,
+				BCA7BADB0EC8693C00AFA105 /* BiQuad.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -364,6 +371,7 @@
 				BC085D670EC46CDB00D95F92 /* Engine.cpp in Sources */,
 				BC085DA00EC473EF00D95F92 /* guiOscillo.cpp in Sources */,
 				BCE44DC20EC646A600AEBD64 /* AudioTrack.cpp in Sources */,
+				BCA7BADA0EC8693C00AFA105 /* BiQuad.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

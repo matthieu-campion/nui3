@@ -93,9 +93,14 @@ nuiWidget* Gui::BuildControls()
   
   
   // pitch slider
-  nuiSlider* pPitchSlider = new nuiSlider(nuiHorizontal);
+  nuiSlider* pPitchSlider = new nuiSlider(nuiHorizontal, nuiRange(0, 0, 100));
   pPitchSlider->SetObjectName(_T("SliderPitch"));
   pBox->AddCell(pPitchSlider, nuiCenter);
+  
+  // connect slider event to receiver
+  // InteractiveValueChanged event : real-time slider value change
+  // ValueChanged event: once the value has been set and the mouse has been released from the slider
+  mEventSink.Connect(pPitchSlider->InteractiveValueChanged, &Gui::OnPitchSliderChanged, (void*)pPitchSlider);
   
   // frequency knob
   nuiKnob* pFreqKnob = new nuiKnob();
@@ -137,4 +142,16 @@ bool Gui::OnStartButtonDePressed(const nuiEvent& rEvent)
   return true;
 }
 
+
+bool Gui::OnPitchSliderChanged(const nuiEvent& rEvent)
+{
+  nuiSlider* pPitchSlider = (nuiSlider*)rEvent.mpUser;
+  NGL_ASSERT(pPitchSlider);
+  
+  
+  GetEngine()->GetFilter().SetQ(pPitchSlider->GetRange().GetValue());
+  GetEngine()->GetFilter().ComputeCoefficients();
+  
+  return true;
+}
 
