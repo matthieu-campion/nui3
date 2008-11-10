@@ -38,26 +38,23 @@ bool guiOscillo::Draw(nuiDrawContext* pContext)
  if (mrData.empty())
     return false;
   
-  //LBDEBUG
-  NGL_OUT(_T("guiOscillo::Draw\n"));
- 
   uint32 s1 = mrData[0].size();
   uint32 s2 = GetRect().GetWidth();
   uint32 count = MIN(s1, s2);
   nuiSize hi = GetRect().GetHeight();
   nuiSize mid = hi / 2;
+
+  nuiColor color[2];
+  color[0] = nuiColor(84,117,203);
+  color[1] = nuiColor(200,0,0);
+  
   for (uint32 c = 0; c < mrData.size(); c++)
   {
-    nglString colors[] =
-    {
-      _T("red"),
-      _T("green")
-    };
-    uint32 colorcount = 2;
     
     nuiRenderArray array(GL_LINE_STRIP);
-    nuiColor Color(colors[c % colorcount]);
-    array.SetColor(Color);
+    array.EnableArray(nuiRenderArray::eColor, true);
+    
+    array.SetColor(color[c]);
     for (uint32 s = 0; s < count; s++)
     {
       float value = mrData[c][s];
@@ -67,5 +64,6 @@ bool guiOscillo::Draw(nuiDrawContext* pContext)
     
     pContext->DrawArray(array);
   }
+  
   return true;
 }

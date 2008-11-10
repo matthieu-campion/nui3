@@ -26,7 +26,7 @@ nuiAudioFifo* Engine::InitEngineAudio()
 {
   // parameters for audio system
   int64 inBufSize = 16 * 1024; // input buffer size <=> input sound buffering 
-  int64 outBufSize = 4096;      // output buffer size <=> buffer for output playing to soundcard
+  int64 outBufSize = 2048;      // output buffer size <=> buffer for output playing to soundcard
   double sampleRate = 44100.0f; // smaple rate
   int64 nbChannels = 2;         // nb channels
   
@@ -54,6 +54,16 @@ nuiAudioFifo* Engine::InitEngineAudio()
   // you can use a nuiAudioTrack for each stream,
   // or mix the stream yourself if you like, and use a single nuiAudioTrack.
   //
+  
+  // another note about sound handling:
+  // in our demo, we play a single sound. 
+  // To do that, all we need to do is to open a nuiAudioDevice, and connect the 
+  // nuiAudioProcessFn callback, to feed the soundcard with samples. Fast and  easy, have a look to nuiAudioDevice.h.
+  //
+  // BUT, because we want to show you the possibility of the nui audio system, 
+  // we use a nuiAudioFifo and a nuiAudioTrack (AudioTrack.cpp),
+  // which show a way to play several sounds in same time. 
+  // That's the system you may want to use to implement an audio mixer for instance.
 }
 
 
