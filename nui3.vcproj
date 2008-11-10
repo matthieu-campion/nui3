@@ -2053,6 +2053,14 @@
 					RelativePath=".\include\nglUTFStringConv.h"
 					>
 				</File>
+				<File
+					RelativePath=".\src\String\nuiTranslator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiTranslator.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Text"
