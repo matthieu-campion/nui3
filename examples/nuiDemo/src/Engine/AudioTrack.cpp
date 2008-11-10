@@ -25,15 +25,25 @@ AudioTrack::AudioTrack(nuiAudioFifo* pAudioFifo)
   }
   
   nuiWaveReader* pWaveReader = new nuiWaveReader(*istream);
-  bool res = pWaveReader->ReadInfo(mInfos); 
+  if (!pWaveReader->ReadInfo(mInfos))
+  {
+    nuiMessageBox* pBox = new nuiMessageBox((nuiMainWindow*)GetMainWindow(), _T("nuiDemo"), _T("error, source is not a wav file"), eMB_OK);
+    pBox->QueryUser();
+  }
+
   float* pSamples = new float[mInfos.GetSampleFrames() * mInfos.GetChannels()];  
   uint32 nbReadSamples = pWaveReader->Read((void*)pSamples, mInfos.GetSampleFrames(), eSampleFloat32);  
   delete pWaveReader;
   
   // init local deinterlaced buffer
-  mSamples.resize(mInfos.GetChannels());
+  mWavContents.resize(mInfos.GetChannels());
   for (uint32 c = 0; c < mInfos.GetChannels(); c++)
-    mSamples[c].resize(mInfos.GetSampleFrames());
+    mWavContents[c].resize(mInfos.GetSampleFrames());
+  
+  // init
+  mSamplesBuffer.resize(mInfos.GetChannels());
+  for (uint32 c = 0; c < mInfos.GetChannels(); c++)
+    mSamplesBuffer[c].resize(4096);
   
   // deinterlace
   float* pInput;
@@ -41,7 +51,7 @@ AudioTrack::AudioTrack(nuiAudioFifo* pAudioFifo)
   for (uint c = 0; c < mInfos.GetChannels(); c++)
   {
       pInput = pSamples + c;
-      pOutput = &(mSamples[c][0]);
+      pOutput = &(mWavContents[c][0]);
       for (uint32 s = 0; s < nbReadSamples; s++)
       {
         *(pOutput++) = *pInput;
@@ -57,9 +67,9 @@ AudioTrack::~AudioTrack()
 {
 }
 
-const std::vector<std::vector<float> >& AudioTrack::GetSamples() const
+const std::vector<std::vector<float> >& AudioTrack::GetSamplesBuffer() const
 {
-  return mSamples;
+  return mSamplesBuffer;
 }
 
 
@@ -67,7 +77,7 @@ void AudioTrack::Start()
 {
   uint32 nbChannels = 2;
   float volume = 1.0f;
-  bool enableBuffering = true;
+  bool enableBuffering = false;
   
   if (!mpAudioFifo->RegisterTrack(this, mpAudioFifo->GetSampleRate(), nbChannels, volume, enableBuffering))
   {
@@ -95,7 +105,7 @@ uint32 AudioTrack::ReadSamples(uint32 sampleFrames, std::vector<float*>& rBuffer
     uint32 startSample = mStartSample;
     
     for (uint32 s = 0; s < nbSamplesToCopy; s++, startSample++)
-      rBuffer[c][s] = mSamples[c][startSample];
+      rBuffer[c][s] = mWavContents[c][startSample];
   }
   
   mStartSample += nbSamplesToCopy;
@@ -119,19 +129,20 @@ uint32 AudioTrack::ReadSamples(uint32 sampleFrames, std::vector<float*>& rBuffer
       uint32 startSample = mStartSample;
       
       for (uint32 s = 0; s < nbSamplesToCopy; s++, startSample++)
-        rBuffer[c][s] = mSamples[c][startSample];
+        rBuffer[c][s] = mWavContents[c][startSample];
     }
     
     mStartSample += nbSamplesToCopy;
+  }
+  
+  //
+  for (uint32 c = 0; c < mSamplesBuffer.size(); c++)
+  {
+    for (uint32 s = 0; s < sampleFrames; s++)
+      mSamplesBuffer[c][s] = rBuffer[c][s];
   }
   
   
   return sampleFrames;
 }
 
-
-// virtual method from nuiAudioTrack. Have a look to nuiAudioFifo.h
-void AudioTrack::ProcessedSamples(uint32 sampleFrames, uint32 bufSize, uint32 bufPos)
-{
-  // do nothing for now...
-}

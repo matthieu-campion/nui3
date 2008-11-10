@@ -35,34 +35,37 @@ guiOscillo::~guiOscillo()
 // virtual, overloaded from nuiWidget, to be able to draw the oscillo manually
 bool guiOscillo::Draw(nuiDrawContext* pContext)
 {
- // if (mrData.empty())
-//    return false;
-//  
-//  uint32 s1 = mrData[0].size();
-//  uint32 s2 = GetRect().GetWidth();
-//  uint32 count = MIN(s1, s2);
-//  nuiSize hi = GetRect().GetHeight();
-//  nuiSize mid = hi / 2;
-//  for (uint32 j = 0; j < mrData.size(); j++)
-//  {
-//    nglString colors[] =
-//    {
-//      _T("red"),
-//      _T("green")
-//    };
-//    uint32 colorcount = 2;
-//    
-//    nuiRenderArray array(GL_LINE_STRIP);
-//    nuiColor Color(colors[j % colorcount]);
-//    array.SetColor(Color);
-//    for (uint32 i = 0; i < count; i++)
-//    {
-//      float value = mrData[j][i];
-//      array.SetVertex(i, mid + hi * value);
-//      array.PushVertex();
-//    }
-//    
-//    pContext->DrawArray(array);
-//  }
+ if (mrData.empty())
+    return false;
+  
+  //LBDEBUG
+  NGL_OUT(_T("guiOscillo::Draw\n"));
+ 
+  uint32 s1 = mrData[0].size();
+  uint32 s2 = GetRect().GetWidth();
+  uint32 count = MIN(s1, s2);
+  nuiSize hi = GetRect().GetHeight();
+  nuiSize mid = hi / 2;
+  for (uint32 c = 0; c < mrData.size(); c++)
+  {
+    nglString colors[] =
+    {
+      _T("red"),
+      _T("green")
+    };
+    uint32 colorcount = 2;
+    
+    nuiRenderArray array(GL_LINE_STRIP);
+    nuiColor Color(colors[c % colorcount]);
+    array.SetColor(Color);
+    for (uint32 s = 0; s < count; s++)
+    {
+      float value = mrData[c][s];
+      array.SetVertex(s, mid + hi * value);
+      array.PushVertex();
+    }
+    
+    pContext->DrawArray(array);
+  }
   return true;
 }

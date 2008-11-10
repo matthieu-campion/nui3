@@ -20,21 +20,19 @@ public:
   void Start();
   void Stop();
   
-  const std::vector<std::vector<float> >& GetSamples() const;
+  const std::vector<std::vector<float> >& GetSamplesBuffer() const;
   
 protected:
   
 	// virtual method from nuiAudioTrack. Have a look to nuiAudioFifo.h
   virtual uint32 ReadSamples(uint32 sampleFrames, std::vector<float*>& rBuffer);
   
-  
-	// virtual method from nuiAudioTrack. Have a look to nuiAudioFifo.h
-	virtual	void	ProcessedSamples(uint32 sampleFrames, uint32 bufSize, uint32 bufPos);
-  
 private:
   
   nuiAudioFifo* mpAudioFifo;
-  std::vector<std::vector<float> > mSamples;
+  std::vector<std::vector<float> > mWavContents;
+  std::vector<std::vector<float> > mSamplesBuffer;
+  
   nuiSampleInfo mInfos;
   uint32 mStartSample;
 };
