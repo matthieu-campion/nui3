@@ -1081,7 +1081,7 @@ bool nglFontBase::LoadFinish()
   }
   else
   {
-    NGL_DEBUG( NGL_OUT(_T("Warning: font '%ls (%ls)' has no panose information.\n"), mFamilyName.GetChars(), mStyleName.GetChars()) );
+    NGL_DEBUG( NGL_OUT(_T("Warning: font '%ls (%ls)' has no panose information.\n"), mFamilyName.GetChars(), mStyleName.GetChars()); )
     memset(&mPanoseBytes, 0, 10);
     mHasPanoseInfo = false;
   }
