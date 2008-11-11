@@ -93,6 +93,8 @@
 		BC085D9E0EC473EF00D95F92 /* guiOscillo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = guiOscillo.cpp; path = src/Gui/guiOscillo.cpp; sourceTree = SOURCE_ROOT; };
 		BC085D9F0EC473EF00D95F92 /* guiOscillo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = guiOscillo.h; path = src/Gui/guiOscillo.h; sourceTree = SOURCE_ROOT; };
 		BC29E4B10EC717A000D4B349 /* CoreAudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudioKit.framework; path = /System/Library/Frameworks/CoreAudioKit.framework; sourceTree = "<absolute>"; };
+		BC70912F0EC9AD03002BBE9C /* Colors.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = Colors.css; path = resources/css/Colors.css; sourceTree = SOURCE_ROOT; };
+		BC7091300EC9AD03002BBE9C /* Fonts.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = Fonts.css; path = resources/css/Fonts.css; sourceTree = SOURCE_ROOT; };
 		BC9DC75B0EC4DE7D00B3E1F1 /* Gui.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = Gui.css; path = resources/css/Gui.css; sourceTree = SOURCE_ROOT; };
 		BC9DC75C0EC4DE7D00B3E1F1 /* nuiDemo.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = nuiDemo.css; path = resources/css/nuiDemo.css; sourceTree = SOURCE_ROOT; };
 		BCA7BAD80EC8693C00AFA105 /* BiQuad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BiQuad.cpp; path = src/Engine/BiQuad.cpp; sourceTree = SOURCE_ROOT; };
@@ -220,6 +222,8 @@
 			isa = PBXGroup;
 			children = (
 				BC9DC75C0EC4DE7D00B3E1F1 /* nuiDemo.css */,
+				BC7091300EC9AD03002BBE9C /* Fonts.css */,
+				BC70912F0EC9AD03002BBE9C /* Colors.css */,
 				BC9DC75B0EC4DE7D00B3E1F1 /* Gui.css */,
 			);
 			name = css;

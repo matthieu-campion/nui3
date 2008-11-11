@@ -1,3 +1,12 @@
+//
+// Gui.css
+//
+// NUI3 - C++ cross-platform GUI framework for OpenGL based applications
+// Copyright (C) 2002-2003 Sebastien Metrot
+//
+// licence: see nui3/LICENCE.TXT
+//
+
 //@nuiFrame dGui
 //{
 //  Texture: "rsrc:/decorations/bg-brushed_metal.png";
@@ -17,12 +26,26 @@
 }
 
 
+
+//************************************************************************
+//
+// nuiStateDecoration
+//
+// With a nuiStateDecoration, a widget can get a decoration for every state
+// it could have during runtime. It's the perfect decoration for a roll-over 
+// button for instance.
+// To each attribute, you can assign a bitmap filename, as shown below, or a
+// decoration reference. In that case, the decoration must have been declared 
+// above the stateDecoration (or in another css stylesheet, included before this
+// current one.
+//
 @nuiStateDecoration dButtonStart
 {
   OnUp: "rsrc:/decorations/buttonStartUp.png";
   OnUpHover: "rsrc:/decorations/buttonStartUpHover.png";
   OnDown: "rsrc:/decorations/buttonStartDown.png";
   OnDownHover: "rsrc:/decorations/buttonStartDownHover.png";
+  
   // you could also use a map for the following states if you need:
   // OnSelected, OnDisabled, OnDisabledSelected, OnUpDisabled, OnDownDisabled
   // please have a look to nuiStateDecoration.h
@@ -35,6 +58,22 @@
   Decoration: dButtonStart;
 }
 
+
+
+
+//************************************************************************
+//
+// nuiFrame
+//
+// A nuiFrame applyes an image depending on the ClienRect attribute value.
+//
+// Let's say you've got an image, with a size of W pixels x H pixels.
+// The clientRect: "{x y w h}" defines the border zone around the widget, 
+// and the client area which the widget is drawn in. 
+// W = (x * 2) + w, and H = (y * 2) + h
+// 
+// 
+//
 
 @nuiFrame dguiOscillo
 {
@@ -52,15 +91,6 @@ guiOscillo!
 }
 
 
-@Font FontText
-{  
-  GenericName: sans-serif;
-  Size: 10;
-  Bold: true;
-  Italic: false;
-}
-
-@Color ClrGradient1 = rgb(240,240,240);
 
 @nuiGradientDecoration dText
 {
@@ -91,4 +121,5 @@ guiOscillo!
   UserWidth: 200;
 }
 
-// don't forget to add a blank ending line
+// don't forget to add a blank ending line, otherwise the css parsing will fail!
+

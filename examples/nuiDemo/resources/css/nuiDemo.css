@@ -1,3 +1,27 @@
+//
+// nuiDemo.css
+//
+// NUI3 - C++ cross-platform GUI framework for OpenGL based applications
+// Copyright (C) 2002-2003 Sebastien Metrot
+//
+// licence: see nui3/LICENCE.TXT
+//
+
+//
+// this is a NUI's stylesheet example.
+// From a NUI stylesheet, you're able to manage:
+// - GUI's object decoration and styles
+// - NUI's widget any attributes values
+//
+// you can include all the css code right below, or include css files to separate 
+// the css code for each module of your program.
+// I like to have a css file for the fonts declaration, another for colors code declarations, 
+// and a css file for each GUI's module. But it's totally up to you!
+// 
+
+#include "Fonts.css"
+#include "Colors.css"
 #include "Gui.css"
 
-// don't forget to add a blank ending line
+// don't forget to add a blank ending line, otherwise the css parsing will fail!
+

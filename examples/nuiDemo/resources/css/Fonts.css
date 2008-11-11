@@ -1,0 +1,26 @@
+//
+// Fonts.css
+//
+// NUI3 - C++ cross-platform GUI framework for OpenGL based applications
+// Copyright (C) 2002-2003 Sebastien Metrot
+//
+// licence: see nui3/LICENCE.TXT
+//
+
+// This example show how to declare fonts in a NUI's stylesheet.
+// The fonts can then be used in a css stylesheet, as a 'Font' attribute of any text widgets.
+//
+// it can also be retrieved in the source code, using {nuiFont* nuiFont::GetFont(const nglString& rId)} (see nuiFont.h)
+//
+
+@Font FontText
+{  
+  GenericName: sans-serif;
+  Size: 10;
+  Bold: true;
+  Italic: false;
+}
+
+
+// don't forget to add a blank ending line, otherwise the css parsing will fail!
+

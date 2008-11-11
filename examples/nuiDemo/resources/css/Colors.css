@@ -1,0 +1,27 @@
+//
+// Colors.css
+//
+// NUI3 - C++ cross-platform GUI framework for OpenGL based applications
+// Copyright (C) 2002-2003 Sebastien Metrot
+//
+// licence: see nui3/LICENCE.TXT
+//
+
+// This example shows how to declare colors in a NUI's stylesheet.
+// The color reference can then be used in a css stylesheet, as any color attribute of a text widget or a decoration.
+//
+// it can also be retrieved in the source code, using {bool GetColor(const nglString& rName, nuiColor& rColor)} (see nuiColor.h)
+//
+// declaring a color and use its reference in a css declaration is not mandatory. You're able to use a rgb color code directly, 
+// as shown in Gui.css. It's done for convinience of software development.
+//
+
+
+@Color ClrGradient1 = rgb(240,240,240);
+
+// you could also add an alpha channel : rgb(240,240,240,255) (same color as above), 
+// or any other alpha value in order to get transparency.
+
+
+// don't forget to add a blank ending line, otherwise the css parsing will fail!
+
