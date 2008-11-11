@@ -520,7 +520,7 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
  
   if (error)
     return;
-  NGL_OUT(_T("Scanning font '%ls' face %d\n"), rPath.GetChars(), Face);
+  NGL_DEBUG( NGL_OUT(_T("Scanning font '%ls' face %d\n"), rPath.GetChars(), Face) );
   
   NGL_ASSERT(pFace->num_faces > Face);
   
@@ -543,11 +543,11 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
     uint8* pBytes = (uint8*)&mPanoseBytes;
     for (uint i = 0; i < 10; i++)
       str.Add(pBytes[i]).Add(_T(" "));
-    NGL_OUT(_T("\tpanose bytes: %ls\n"), str.GetChars());
+    NGL_DEBUG( NGL_OUT(_T("\tpanose bytes: %ls\n"), str.GetChars()) );
   }
   else
   {
-    NGL_OUT(_T("Warning: font '%ls' has no panose information.\n"), mPath.GetChars());
+    NGL_DEBUG( NGL_OUT(_T("Warning: font '%ls' has no panose information.\n"), mPath.GetChars()) );
     memset(&mPanoseBytes, 0, 10);
   }
 
@@ -616,7 +616,7 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
 //    rangecount++;
 //  }
   
-  NGL_OUT(_T("\t%d glyph ranges (%d glyphs)\n"), rangecount, glyphcount);
+  NGL_DEBUG( NGL_OUT(_T("\t%d glyph ranges (%d glyphs)\n"), rangecount, glyphcount) );
   
   FT_Done_Face(pFace);
   delete pBuffer;
@@ -922,7 +922,7 @@ void nuiFontManager::GetSystemFolders(std::map<nglString, nglPath>& rFolders)
     {
       rFolders[_T("System0")] = p;
       
-      NGL_OUT(_T("Adding System0 font folder: '%ls'\n"), p);
+      NGL_DEBUG( NGL_OUT(_T("Adding System0 font folder: '%ls'\n"), p) );
     }
     else
     {
@@ -974,7 +974,7 @@ const nglPath& nuiFontManager::GetFolder(const nglString& rId) const
 
 void nuiFontManager::ScanFolders(bool rescanAllFolders /* = false */)
 {
-  NGL_OUT(_T("Scan system fonts....\n"));
+  NGL_DEBUG( NGL_OUT(_T("Scan system fonts....\n")) );
   nglTime start_time;
   
   mpFonts.clear();
