@@ -259,7 +259,7 @@ void nuiGLESPainter::SetState(const nuiRenderState& rState, bool ForceApply)
       w = ToBelow(clip.GetWidth());
       h = ToBelow(clip.GetHeight());
     }
-//    NGL_OUT(_T("To Screen Clip {%d, %d, %d, %d}\n"), x,y,w,h);
+//NGL_OUT(_T("To Screen Clip {%d, %d, %d, %d}\n"), x,y,w,h);
     glScissor(x, y, w, h);
 
     nuiCheckForGLErrors();
@@ -977,7 +977,7 @@ void nuiGLESPainter::DrawArray(const nuiRenderArray& rArray)
     if (!mState.mTexturing)
     {
       glPushMatrix();
-      //glTranslatef(0.5f, 0.5f, 0);
+      glTranslatef(0.5f, 0.5f, 0);
       nuiCheckForGLErrors();
     }
   }

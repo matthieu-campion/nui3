@@ -176,7 +176,7 @@ bool nuiNativeResource::GetResourcesList(std::vector<nglPath>& rResources)
 #else
 void RecurseChildren(std::vector<nglPath>& rResources, nglPath ResPath, nglPath BasePath)
 {
-  wprintf(_T("Enum resources BasePath '%ls'\n"), BasePath.GetChars());
+//wprintf(_T("Enum resources BasePath '%ls'\n"), BasePath.GetChars());
   if (BasePath.IsLeaf())
   {
     nglString str(ResPath.GetPathName());
