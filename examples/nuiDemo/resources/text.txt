@@ -1,0 +1,8 @@
+nuiDemo shows a basic application example 
+made with the NUI framework:
+
+- build a graphic user interface
+- handle some user control events
+- build the basics of an advanced audio system
+- handle file loading from the binary's resources
+- decorate the GUI using a NUI's css stylesheet

@@ -25,6 +25,8 @@ protected:
   bool OnStartButtonDePressed(const nuiEvent& rEvent);
 
   bool OnPitchSliderChanged(const nuiEvent& rEvent);
+  bool OnFreqKnobChanged(const nuiEvent& rEvent);
+  bool OnQKnobChanged(const nuiEvent& rEvent);
   
   
   // a sink to connect the event sources to the local event receivers.

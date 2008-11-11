@@ -51,9 +51,44 @@ guiOscillo!
   BorderRight: 20;
 }
 
+
+@Font FontText
+{  
+  GenericName: sans-serif;
+  Size: 10;
+  Bold: true;
+  Italic: false;
+}
+
+@Color ClrGradient1 = rgb(240,240,240);
+
+@nuiGradientDecoration dText
+{
+  Orientation: Vertical;
+  StrokeSize: 1;
+  Color1: ClrGradient1;
+  Color2: rgb(210,210,210);
+  StrokeColor: rgb(32,32,32);
+  ShapeMode: StrokeAndFill;
+  Offset1: 0;
+  Offset2: 0.5;
+  
+  ClientRect: "{10 10 0 0}";
+}
+
 "Text"!
 {
-  TextColor:red;
+  Font: FontText;
+  TextColor:gray;
+  
+  DecorationMode: Border;
+  Decoration: dText;
+}
+
+
+"SliderPitch"!
+{
+  UserWidth: 200;
 }
 
 // don't forget to add a blank ending line

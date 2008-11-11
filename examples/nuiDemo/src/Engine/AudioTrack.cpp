@@ -40,6 +40,8 @@ AudioTrack::AudioTrack(nuiAudioFifo* pAudioFifo)
   float* pSamples = new float[mInfos.GetSampleFrames() * mInfos.GetChannels()];  
   uint32 nbReadSamples = pWaveReader->Read((void*)pSamples, mInfos.GetSampleFrames(), eSampleFloat32);  
   delete pWaveReader;
+  delete istream;
+  
   
   // init deinterlaced main buffer, that is going to the contain the whole wave contents
   mWavContents.resize(mInfos.GetChannels());

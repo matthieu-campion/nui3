@@ -67,8 +67,15 @@ Gui::Gui()
   // a text to display
   nuiLabel* pText = new nuiLabel(_T("TEXT"));
   pText->SetObjectName(_T("Text"));
-  pBox->AddCell(pText);
+  pBox->AddCell(pText, nuiCenter);
   pBox->SetCellExpand(pBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
+  
+  // load text contents from binary's resources
+  nglString textContents;
+  nglIStream* pTextInput = nglPath(_T("rsrc:/text.txt")).OpenRead();
+  NGL_ASSERT(pTextInput);
+  pTextInput->ReadText(textContents);
+  pText->SetText(textContents);
   
   // area for the sound controls
   nuiWidget* pControls = BuildControls();
@@ -96,6 +103,7 @@ nuiWidget* Gui::BuildControls()
   nuiSlider* pPitchSlider = new nuiSlider(nuiHorizontal, nuiRange(0, 0, 100));
   pPitchSlider->SetObjectName(_T("SliderPitch"));
   pBox->AddCell(pPitchSlider, nuiCenter);
+  pBox->SetCellExpand(pBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
   
   // connect slider event to receiver
   // InteractiveValueChanged event : real-time slider value change
@@ -103,15 +111,23 @@ nuiWidget* Gui::BuildControls()
   mEventSink.Connect(pPitchSlider->InteractiveValueChanged, &Gui::OnPitchSliderChanged, (void*)pPitchSlider);
   
   // frequency knob
-  nuiKnob* pFreqKnob = new nuiKnob();
+  nuiKnob* pFreqKnob = new nuiKnob(nuiRange(4000, 20, 20000));
   pFreqKnob->SetObjectName(_T("KnobFrequency"));
   pBox->AddCell(pFreqKnob, nuiCenter);
+  pBox->SetCellExpand(pBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
+  
+  // connect knob event to receiver
+  mEventSink.Connect(pFreqKnob->InteractiveValueChanged, &Gui::OnFreqKnobChanged, (void*)pFreqKnob);
   
   // Q knob
-  nuiKnob* pQKnob = new nuiKnob();
+  nuiKnob* pQKnob = new nuiKnob(nuiRange(0, 0, 100));
   pQKnob->SetObjectName(_T("KnobQ"));
   pBox->AddCell(pQKnob, nuiCenter);
+  pBox->SetCellExpand(pBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
   
+  // connect knob event to receiver
+  mEventSink.Connect(pQKnob->InteractiveValueChanged, &Gui::OnQKnobChanged, (void*)pQKnob);
+
   return pBox;
 }
 
@@ -154,4 +170,29 @@ bool Gui::OnPitchSliderChanged(const nuiEvent& rEvent)
   
   return true;
 }
+
+
+bool Gui::OnFreqKnobChanged(const nuiEvent& rEvent)
+{
+  nuiKnob* pFreqKnob = (nuiKnob*)rEvent.mpUser;
+  NGL_ASSERT(pFreqKnob);
+  
+  
+  GetEngine()->GetFilter().SetFreq(pFreqKnob->GetRange().GetValue());
+  GetEngine()->GetFilter().ComputeCoefficients();
+  return true;
+}
+
+
+bool Gui::OnQKnobChanged(const nuiEvent& rEvent)
+{
+  nuiKnob* pQKnob = (nuiKnob*)rEvent.mpUser;
+  NGL_ASSERT(pQKnob);
+  
+  
+  GetEngine()->GetFilter().SetQ(pQKnob->GetRange().GetValue());
+  GetEngine()->GetFilter().ComputeCoefficients();
+  return true;
+}
+
 
