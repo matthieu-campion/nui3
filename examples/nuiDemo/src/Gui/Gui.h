@@ -24,7 +24,7 @@ protected:
   bool OnStartButtonPressed(const nuiEvent& rEvent);
   bool OnStartButtonDePressed(const nuiEvent& rEvent);
 
-  bool OnPitchSliderChanged(const nuiEvent& rEvent);
+  bool OnQSliderChanged(const nuiEvent& rEvent);
   bool OnFreqKnobChanged(const nuiEvent& rEvent);
   bool OnQKnobChanged(const nuiEvent& rEvent);
   

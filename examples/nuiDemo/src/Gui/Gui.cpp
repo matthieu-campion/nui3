@@ -100,18 +100,18 @@ nuiWidget* Gui::BuildControls()
   
   
   // pitch slider
-  nuiSlider* pPitchSlider = new nuiSlider(nuiHorizontal, nuiRange(0, 0, 100));
-  pPitchSlider->SetObjectName(_T("SliderPitch"));
-  pBox->AddCell(pPitchSlider, nuiCenter);
+  nuiSlider* pQSlider = new nuiSlider(nuiHorizontal, nuiRange(0, 0, 100));
+  pQSlider->SetObjectName(_T("SliderQ"));
+  pBox->AddCell(pQSlider, nuiCenter);
   pBox->SetCellExpand(pBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
   
   // connect slider event to receiver
   // InteractiveValueChanged event : real-time slider value change
   // ValueChanged event: once the value has been set and the mouse has been released from the slider
-  mEventSink.Connect(pPitchSlider->InteractiveValueChanged, &Gui::OnPitchSliderChanged, (void*)pPitchSlider);
+  mEventSink.Connect(pQSlider->InteractiveValueChanged, &Gui::OnQSliderChanged, (void*)pQSlider);
   
   // frequency knob
-  nuiKnob* pFreqKnob = new nuiKnob(nuiRange(4000, 20, 20000));
+  nuiKnob* pFreqKnob = new nuiKnob(nuiRange(.4f, 0.0f, 1.0f));
   pFreqKnob->SetObjectName(_T("KnobFrequency"));
   pBox->AddCell(pFreqKnob, nuiCenter);
   pBox->SetCellExpand(pBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
@@ -120,7 +120,7 @@ nuiWidget* Gui::BuildControls()
   mEventSink.Connect(pFreqKnob->InteractiveValueChanged, &Gui::OnFreqKnobChanged, (void*)pFreqKnob);
   
   // Q knob
-  nuiKnob* pQKnob = new nuiKnob(nuiRange(0, 0, 100));
+  nuiKnob* pQKnob = new nuiKnob(nuiRange(0.0f, 0.0f, 1.0f));
   pQKnob->SetObjectName(_T("KnobQ"));
   pBox->AddCell(pQKnob, nuiCenter);
   pBox->SetCellExpand(pBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
@@ -159,13 +159,13 @@ bool Gui::OnStartButtonDePressed(const nuiEvent& rEvent)
 }
 
 
-bool Gui::OnPitchSliderChanged(const nuiEvent& rEvent)
+bool Gui::OnQSliderChanged(const nuiEvent& rEvent)
 {
-  nuiSlider* pPitchSlider = (nuiSlider*)rEvent.mpUser;
-  NGL_ASSERT(pPitchSlider);
+  nuiSlider* pQSlider = (nuiSlider*)rEvent.mpUser;
+  NGL_ASSERT(pQSlider);
   
   
-  GetEngine()->GetFilter().SetQ(pPitchSlider->GetRange().GetValue());
+  GetEngine()->GetFilter().SetQ(pQSlider->GetRange().GetValue());
   GetEngine()->GetFilter().ComputeCoefficients();
   
   return true;
@@ -178,7 +178,11 @@ bool Gui::OnFreqKnobChanged(const nuiEvent& rEvent)
   NGL_ASSERT(pFreqKnob);
   
   
-  GetEngine()->GetFilter().SetFreq(pFreqKnob->GetRange().GetValue());
+  float val = pFreqKnob->GetRange().GetValue();
+  val = val * val * val * val;
+  val *= 19980;
+  val += 20;
+  GetEngine()->GetFilter().SetFreq(val);
   GetEngine()->GetFilter().ComputeCoefficients();
   return true;
 }
