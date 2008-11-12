@@ -580,8 +580,8 @@ nglString nuiAudioDeviceAPI_CoreAudio::GetDeviceName(uint32 index) const
 {
   UInt32 propsize;
   CFStringRef tempStr;
-  verify_noerr(AudioDeviceGetPropertyInfo(mDeviceIDs[index], 0, false, kAudioDevicePropertyDataSourceNameForIDCFString, &propsize, NULL));
-  OSStatus err = AudioDeviceGetProperty(mDeviceIDs[index], 0, false, kAudioDevicePropertyDataSourceNameForIDCFString, &propsize, &tempStr);
+  verify_noerr(AudioDeviceGetPropertyInfo(mDeviceIDs[index], 0, false, kAudioDevicePropertyDeviceNameCFString, &propsize, NULL));
+  verify_noerr(AudioDeviceGetProperty(mDeviceIDs[index], 0, false, kAudioDevicePropertyDeviceNameCFString, &propsize, &tempStr));
   nglString str(tempStr);
   CFRelease(tempStr);
   return str + _T(" (") + mName + _T(")");
