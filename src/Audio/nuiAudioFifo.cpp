@@ -512,7 +512,7 @@ bool nuiAudioFifo::RegisterTrack (nuiAudioTrack* track, double sampleRate, uint3
 	nglCriticalSectionGuard inputGuard(mInputCS);
 	nglCriticalSectionGuard outputGuard(mOutputCS);
 	
-	mAudioTracks.push_back (track);
+	mAudioTracks.push_back(track);
 	track->Init(mBufferingEnabled?mRingbufSize:0, sampleRate, nbChannels, volume, mBufferingEnabled);
   
   if (sampleRate != mSampleRate)

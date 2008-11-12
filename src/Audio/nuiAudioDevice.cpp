@@ -168,12 +168,12 @@ nuiAudioDevice* nuiAudioDeviceManager::GetDeviceWithNameAndAPI(const nglString& 
 
 nuiAudioDevice* nuiAudioDeviceManager::GetDefaultOutputDevice()
 {
-  return mAPIs[0]->GetDefaultOutputDevice();
+  return mAPIs.begin()->second->GetDefaultOutputDevice();
 }
 
 nuiAudioDevice* nuiAudioDeviceManager::GetDefaultInputDevice()
 {
-  return mAPIs[0]->GetDefaultInputDevice();
+  return mAPIs.begin()->second->GetDefaultInputDevice();
 }
 
 nuiAudioDeviceManager::nuiAudioDeviceManager()
