@@ -194,6 +194,9 @@ public:
   void SetBytes(const nuiFontPanoseBytes& rBytes);
   void SetBytes(uint8 pPanoseBytes[10]);
 
+  void SetBold(bool set);
+  void SetItalic(bool set);
+  
   uint32 GetDistance(const nuiPanose& rPanose) const;
   float GetNormalizedDistance(const nuiPanose& rPanose) const;
   

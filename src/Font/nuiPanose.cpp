@@ -425,4 +425,58 @@ uint32 nuiPanose::CompareXHeight(nuiFontXHeight set) const
   return XHeightMetric[mXHeight][set];
 }
 
+void nuiPanose::SetBold(bool set)
+{
+  if (mFamily != eFamily_Pictorial)
+	{
+		// only do this if we're not a symbol font    
+		if (!set)
+		{
+			// regular font
+			if (mWeight == eWeight_Any || mWeight == eWeight_NoFit || mWeight > eWeight_Medium)
+			{
+				mWeight = eWeight_Medium;
+			}
+		}
+		else
+		{
+			// bold font
+			if (mWeight == eWeight_Any || mWeight == eWeight_NoFit || mWeight < eWeight_Bold)
+			{
+				mWeight = eWeight_Bold;
+			}
+		}
+  }  
+}
 
+void nuiPanose::SetItalic(bool set)
+{
+  if (mFamily != eFamily_Pictorial)
+  {
+    // only do this if we're not a symbol font    
+    if (!set)
+    {
+      // upright font
+      if (mLetterForm == eLetterForm_Any || mLetterForm == eLetterForm_NoFit)
+      {
+        mLetterForm = eLetterForm_NormalCompact;
+      }
+      else if (mLetterForm >= eLetterForm_ObliqueCompact && mLetterForm <= eLetterForm_ObliqueSquare)
+      {
+        mLetterForm = (nuiFontLetterForm)(mLetterForm - 7); //#HACK
+      }
+    }
+    else
+    {
+      // italic font
+      if (mLetterForm == eLetterForm_Any || mLetterForm == eLetterForm_NoFit)
+      {
+        mLetterForm = eLetterForm_ObliqueCompact;
+      }
+      else if (mLetterForm >= eLetterForm_NormalCompact && mLetterForm <= eLetterForm_NormalSquare)
+      {
+        mLetterForm = (nuiFontLetterForm)(mLetterForm + 7); //#HACK
+      }
+    }
+  }
+}

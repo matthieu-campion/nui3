@@ -195,6 +195,10 @@ nuiFontRequest::nuiFontRequest(nglFontBase* pOriginalFont, bool ForcePanoseOnlyF
     if (pOriginalFont->HasPanoseInfo())
     {
       MustBeSimilar(pOriginalFont->GetPanoseBytes(), 50.0f);
+      if (mItalic.mScore > 0.0)
+        mPanose.mElement.SetItalic(pOriginalFont->IsItalic());
+      if (mBold.mScore > 0.0)
+        mPanose.mElement.SetBold(pOriginalFont->IsBold());
     }
       
     if (!ForcePanoseOnlyFonts || !pOriginalFont->HasPanoseInfo())
@@ -1197,15 +1201,19 @@ void nuiFontManager::RequestFont(nuiFontRequest& rRequest, std::list<nuiFontRequ
         ++it;
       }
       
-      float f = (float)count / (float)rRequest.mMustHaveGlyphs.mElement.size();
-      float _s = rRequest.mMustHaveGlyphs.mScore * f;
-      if (rRequest.mMustHaveGlyphs.mStrict)
+      uint32 glyphcount = rRequest.mMustHaveGlyphs.mElement.size();
+      if (glyphcount)
       {
-        sscore *= _s;
-      }
-      else
-      {
-        score += _s;
+        float f = (float)count / (float)glyphcount;
+        float _s = rRequest.mMustHaveGlyphs.mScore * f;
+        if (rRequest.mMustHaveGlyphs.mStrict)
+        {
+          sscore *= _s;
+        }
+        else
+        {
+          score += _s;
+        }
       }
     }
     

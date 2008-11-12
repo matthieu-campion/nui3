@@ -3556,6 +3556,8 @@ bool nuiWin::DumpStats(const nuiEvent& rEvent)
   NGL_OUT((_T("sizeof(nuiObject): %d\n")), sizeof(nuiObject));
   NGL_OUT((_T("sizeof(nuiWidget): %d\n")), sizeof(nuiWidget));
   NGL_OUT((_T("sizeof(nuiContainer): %d\n")), sizeof(nuiContainer));
+  NGL_OUT((_T("sizeof(nglString): %d\n")), sizeof(nglString));
+  NGL_OUT((_T("\tsizeof(wstring): %d\n")), sizeof(wstring));
 
   NGL_OUT(nuiTR("floating point tests:\n"));
   {
