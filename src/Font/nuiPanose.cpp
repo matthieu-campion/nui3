@@ -459,9 +459,9 @@ void nuiPanose::SetItalic(bool set)
       // upright font
       if (mLetterForm == eLetterForm_Any || mLetterForm == eLetterForm_NoFit)
       {
-        mLetterForm = eLetterForm_NormalCompact;
+        mLetterForm = eLetterForm_NormalContact;
       }
-      else if (mLetterForm >= eLetterForm_ObliqueCompact && mLetterForm <= eLetterForm_ObliqueSquare)
+      else if (mLetterForm >= eLetterForm_ObliqueContact && mLetterForm <= eLetterForm_ObliqueSquare)
       {
         mLetterForm = (nuiFontLetterForm)(mLetterForm - 7); //#HACK
       }
@@ -471,9 +471,9 @@ void nuiPanose::SetItalic(bool set)
       // italic font
       if (mLetterForm == eLetterForm_Any || mLetterForm == eLetterForm_NoFit)
       {
-        mLetterForm = eLetterForm_ObliqueCompact;
+        mLetterForm = eLetterForm_ObliqueContact;
       }
-      else if (mLetterForm >= eLetterForm_NormalCompact && mLetterForm <= eLetterForm_NormalSquare)
+      else if (mLetterForm >= eLetterForm_NormalContact && mLetterForm <= eLetterForm_NormalSquare)
       {
         mLetterForm = (nuiFontLetterForm)(mLetterForm + 7); //#HACK
       }
