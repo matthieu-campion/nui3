@@ -28,15 +28,30 @@ public:
   virtual ~nuiSignal()
   {
   }
+
+  void Disable()
+  {
+    mDisabled = true;
+  }
+  
+  void Enable()
+  {
+    mDisabled = false;
+  }
+  
 protected:
   nuiSignal()
   {
+    mDisabled = false;
   }
 
   virtual void DisconnectInternal(const nuiFastDelegate::DelegateMemento &slot) = 0;
 
   void RemoveConnection(nuiSlotsSink &rSink, const nuiFastDelegate::DelegateMemento &rSlot);
   void AddConnection(nuiSlotsSink &rSink, const nuiFastDelegate::DelegateMemento &rSlot);
+
+  bool mDisabled;
+
 };
 
 // N=0
@@ -64,6 +79,9 @@ public:
 
   void operator()() const
   {
+    if (mDisabled)
+      return;
+      
     //#FIXME: temp hack to avoid modification of the map (connection/deconnection of slots) during iteration
     typename std::map<Slot, nuiSlotsSink*>::const_iterator it = mSlots.begin();
     typename std::map<Slot, nuiSlotsSink*>::const_iterator end = mSlots.end();
@@ -133,6 +151,9 @@ public:
 
   void operator()(Param1 param1) const
   {
+    if (mDisabled)
+      return;
+
     //#FIXME: temp hack to avoid modification of the map (connection/deconnection of slots) during iteration
     typename std::map<Slot, nuiSlotsSink*>::const_iterator it = mSlots.begin();
     typename std::map<Slot, nuiSlotsSink*>::const_iterator end = mSlots.end();
@@ -202,6 +223,9 @@ public:
 
   void operator()(Param1 param1, Param2 param2) const
   {
+    if (mDisabled)
+      return;
+
     //#FIXME: temp hack to avoid modification of the map (connection/deconnection of slots) during iteration
     typename std::map<Slot, nuiSlotsSink*>::const_iterator it = mSlots.begin();
     typename std::map<Slot, nuiSlotsSink*>::const_iterator end = mSlots.end();
@@ -272,6 +296,9 @@ public:
 
   void operator()(Param1 param1, Param2 param2, Param3 param3) const
   {
+    if (mDisabled)
+      return;
+
     //#FIXME: temp hack to avoid modification of the map (connection/deconnection of slots) during iteration
     typename std::map<Slot, nuiSlotsSink*>::const_iterator it = mSlots.begin();
     typename std::map<Slot, nuiSlotsSink*>::const_iterator end = mSlots.end();

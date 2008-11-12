@@ -168,7 +168,7 @@ void nuiTranslator::GetLanguages(std::vector<nglString>& rLanguages) const
 
 const nglString& nuiTranslator::Translate(const nglString& rStringToTranslate, const nglString& rDomain) const
 {
-  NGL_OUT(_T("nuiTranslator::Translate [%ls] '%ls'\n"), rDomain.GetChars(), rStringToTranslate.GetChars());
+//  NGL_OUT(_T("nuiTranslator::Translate [%ls] '%ls'\n"), rDomain.GetChars(), rStringToTranslate.GetChars());
   
   DomainMap::const_iterator it = mDomains.find(rDomain);
   if (it == mDomains.end())
