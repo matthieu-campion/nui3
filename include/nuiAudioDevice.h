@@ -44,20 +44,30 @@ protected:
   bool mIsPresent;
 };
 
-class nuiAudioDeviceAPI
+class nuiAudioDeviceAPI : public nuiNonCopyable
 {
 public:
   virtual ~nuiAudioDeviceAPI();
   
-  virtual uint32 GetDeviceCount() const = 0; 
-  virtual nuiAudioDevice* GetDevice(uint32 index) const = 0;
-  virtual nuiAudioDevice* GetDefaultInputDevice() const = 0;
-  virtual nuiAudioDevice* GetDefaultOutputDevice() const = 0;
+  const nglString& GetAPIName() const
+  {
+    return mName;
+  }
+  virtual uint32 GetDeviceCount() const = 0;
+  virtual nglString GetDeviceName(uint32 index) const = 0;
+  virtual nuiAudioDevice* GetDevice(uint32 index) = 0;
+  virtual nuiAudioDevice* GetDevice(const nglString& rDeviceName) = 0;
+  virtual nuiAudioDevice* GetDefaultInputDevice() = 0;
+  virtual nuiAudioDevice* GetDefaultOutputDevice() = 0;
   
   void RegisterWithManager();
 protected:
   nuiAudioDeviceAPI();
+
+  nglString mName;
 };
+
+typedef std::map<nglString, nuiAudioDeviceAPI*> APIMap;
 
 class nuiAudioDeviceManager
 {
@@ -72,7 +82,8 @@ public:
 
   uint32 GetDeviceCount() const;
   nuiAudioDevice* GetDevice(uint32 DeviceIndex);
-  nuiAudioDevice* GetDeviceWithNameAndAPI(const nglString& deviceName, const nglString& apiName);
+  nglString       GetDeviceName(uint32 DeviceIndex);
+  nuiAudioDevice* GetDeviceWithNameAndAPI(const nglString& rDeviceName, const nglString& rApiName);
   nuiAudioDevice* GetDefaultOutputDevice();
   nuiAudioDevice* GetDefaultInputDevice();
   
@@ -81,11 +92,9 @@ protected:
   nuiAudioDeviceManager();
   
   friend void nuiAudioDeviceAPI::RegisterWithManager();
-  void RegisterAPI(nuiAudioDeviceAPI* pAPI);
-  std::vector<nuiAudioDeviceAPI*> mAPIs;
+  void RegisterAPI(const nglString& rAPIName, nuiAudioDeviceAPI* pAPI);
+  APIMap mAPIs;
   
   int32 mDeviceCount;
-  
-  static nuiAudioDeviceManager* gpManager;
 };
 

@@ -1,22 +1,20 @@
 /*
-  NUI3 - C++ cross-platform GUI framework for OpenGL based applications
-  Copyright (C) 2002-2003 Sebastien Metrot
+NUI3 - C++ cross-platform GUI framework for OpenGL based applications
+Copyright (C) 2002-2003 Sebastien Metrot
 
-  licence: see nui3/LICENCE.TXT
+licence: see nui3/LICENCE.TXT
 */
 
 #include "nui.h"
+
+#include "nuiAudioDevice_DirectSound.h"
 #include "nuiAudioConvert.h"
-#include "nuiAudioDevice.h"
 #include "nglThread.h"
 #include "nglRingBuffer.h"
-#include <dsound.h>
 
 #pragma comment( lib , "dsound.lib" )
 
-
-
-
+#define API_NAME _T("DirectSound")
 
 #undef NGL_OUT
 void NGL_OUT(const nglChar* pFormat, ...)
@@ -72,13 +70,13 @@ private:
   uint32 WriteToRingBuf(const std::vector<float*>& inbuf, uint32 nbSampleFrames, uint32 nbChannels);
 
   bool mContinue;
-  
+
   uint32 mBufferSize;
   uint32 mInputNbChannels;
   uint32 mOutputNbChannels;
   LPDIRECTSOUNDCAPTUREBUFFER mpDSInputBuffer;
   nglRingBuffer* mpRingBuffer;
-  
+
   HANDLE mEvents[2];
   int16* mpLocalBuf;
 
@@ -164,7 +162,7 @@ public:
 
 
 protected:
-	void Init();
+  void Init();
 
 
   bool mHasInput;
@@ -203,115 +201,15 @@ protected:
 };
 
 
-
-
-class nuiAudioDeviceAPI_DirectSound : public nuiAudioDeviceAPI
+nuiAudioDeviceAPI_DirectSound::nuiAudioDeviceAPI_DirectSound()
 {
-public:
-  nuiAudioDeviceAPI_DirectSound()
-  {
-    // nothing to do here...
-  }
-
-  virtual ~nuiAudioDeviceAPI_DirectSound()
-  {
-
-  }
-
-  virtual uint32 GetDeviceCount() const;
-
-  virtual nuiAudioDevice* GetDevice(uint32 index) const;
-  virtual nuiAudioDevice* GetDefaultInputDevice() const;
-  virtual nuiAudioDevice* GetDefaultOutputDevice() const;
-
-protected:
-
-  class DeviceDesc
-  {
-  public:
-    DeviceDesc()
-    {
-      mInputGUID = DSDEVID_DefaultCapture;
-      mOutputGUID = DSDEVID_DefaultPlayback;
-    }
-
-    GUID mInputGUID;
-    GUID mOutputGUID;
-    nglString mInName;
-    nglString mInModule;
-    nglString mOutName;
-    nglString mOutModule;
-  };
-
-  
-  mutable std::vector<DeviceDesc> mDeviceIDs;
-  mutable std::map<nglString, int32> mDeviceMap;
-  
-
-
-private:
-  BOOL RealDSEnumInputCallback(LPGUID lpGuid, LPCWSTR lpcstrDescription, LPCWSTR lpcstrModule);
-
-  static BOOL CALLBACK DSEnumInputCallback(LPGUID lpGuid, LPCWSTR lpcstrDescription, LPCWSTR lpcstrModule, LPVOID lpContext);
-
-  BOOL RealDSEnumOutputCallback(LPGUID lpGuid, LPCWSTR lpcstrDescription, LPCWSTR lpcstrModule);
-
-  static BOOL CALLBACK DSEnumOutputCallback(LPGUID lpGuid, LPCWSTR lpcstrDescription, LPCWSTR lpcstrModule, LPVOID lpContext);
-};
-
-
-// static
-static nuiAudioDeviceAPI_DirectSound DirectSoundAPI;
-
-
-nuiAudioDeviceAPI* GetDirectSoundAPI()
-{
-return &DirectSoundAPI;
+  mName = API_NAME;
+  RegisterWithManager();
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-
-#undef NGL_OUT
-
-void NGL_OUT(nglChar* pFormat, ...)
+nuiAudioDeviceAPI_DirectSound::~nuiAudioDeviceAPI_DirectSound()
 {
-	if (!pFormat)
-		return;
-
-  nglString temp;
-
-	va_list args;
-
-	va_start(args, pFormat);
-	temp.Formatv(pFormat, args);
-	va_end(args);
-
-  OutputDebugString(temp.GetChars());
 }
-*/
 
 
 nuiAudioDevice_DirectSound::nuiAudioDevice_DirectSound(GUID IGuid, GUID OGuid, const nglString& rInName, const nglString& rOutName, const nglString& rInModule, const nglString& rOutModule)
@@ -354,7 +252,7 @@ nuiAudioDevice_DirectSound::nuiAudioDevice_DirectSound(GUID IGuid, GUID OGuid, c
 nuiAudioDevice_DirectSound::nuiAudioDevice_DirectSound()
 : nuiAudioDevice()
 {
-	mInName = _T("Default Device");
+  mInName = _T("Default Device");
   mOutName = _T("Default Device");
 
   //mManufacturer = rOutModule;
@@ -386,7 +284,7 @@ nuiAudioDevice_DirectSound::nuiAudioDevice_DirectSound()
 
 void nuiAudioDevice_DirectSound::Init()
 {
-  mAPIName = _T("DirectSound");
+  mAPIName = API_NAME;
 
   mpRingBuffer = NULL;
   mpInputBuffer = NULL;
@@ -522,65 +420,65 @@ bool nuiAudioDevice_DirectSound::Open(std::vector<uint32>& rInputChannels, std::
   // init input buffers
   if (mHasInput)
   {
-	  {
-	    mActiveInputChannels = rInputChannels;
-	  }
+    {
+      mActiveInputChannels = rInputChannels;
+    }
 
-	  WAVEFORMATEX IFormat;
-	  IFormat.wFormatTag = WAVE_FORMAT_PCM;
-	  IFormat.nChannels = (WORD)mInputChannels.size();
-	  IFormat.nSamplesPerSec = ToNearest(SampleRate);
-	  IFormat.wBitsPerSample = 16;
-	  IFormat.nAvgBytesPerSec = IFormat.nChannels * IFormat.nSamplesPerSec * (IFormat.wBitsPerSample / 8);
-	  IFormat.nBlockAlign = IFormat.nChannels * (IFormat.wBitsPerSample / 8);
-	  IFormat.cbSize = 0;
+    WAVEFORMATEX IFormat;
+    IFormat.wFormatTag = WAVE_FORMAT_PCM;
+    IFormat.nChannels = (WORD)mInputChannels.size();
+    IFormat.nSamplesPerSec = ToNearest(SampleRate);
+    IFormat.wBitsPerSample = 16;
+    IFormat.nAvgBytesPerSec = IFormat.nChannels * IFormat.nSamplesPerSec * (IFormat.wBitsPerSample / 8);
+    IFormat.nBlockAlign = IFormat.nChannels * (IFormat.wBitsPerSample / 8);
+    IFormat.cbSize = 0;
 
-	  DSCBUFFERDESC IBufferDesc;
-	  memset(&IBufferDesc, 0, sizeof(IBufferDesc));
-	  IBufferDesc.dwSize = sizeof(DSCBUFFERDESC);
-	  IBufferDesc.dwFlags = DSCBCAPS_WAVEMAPPED;
-	  IBufferDesc.dwBufferBytes = (IFormat.wBitsPerSample / 8) * IFormat.nChannels * BufferSize * 2;
-	  IBufferDesc.dwReserved = 0;
-	  IBufferDesc.lpwfxFormat = &IFormat;
-	  IBufferDesc.dwFXCount = 0;
-	  IBufferDesc.lpDSCFXDesc = NULL;
+    DSCBUFFERDESC IBufferDesc;
+    memset(&IBufferDesc, 0, sizeof(IBufferDesc));
+    IBufferDesc.dwSize = sizeof(DSCBUFFERDESC);
+    IBufferDesc.dwFlags = DSCBCAPS_WAVEMAPPED;
+    IBufferDesc.dwBufferBytes = (IFormat.wBitsPerSample / 8) * IFormat.nChannels * BufferSize * 2;
+    IBufferDesc.dwReserved = 0;
+    IBufferDesc.lpwfxFormat = &IFormat;
+    IBufferDesc.dwFXCount = 0;
+    IBufferDesc.lpDSCFXDesc = NULL;
 
-	  hr = mpDirectSoundCapture->CreateCaptureBuffer(&IBufferDesc, &mpInputBuffer, NULL);
+    hr = mpDirectSoundCapture->CreateCaptureBuffer(&IBufferDesc, &mpInputBuffer, NULL);
   }
 
 
   // init output buffers
   if (mHasOutput)
   {
-	  {
-	    mActiveOutputChannels = rOutputChannels;
-	  }
+    {
+      mActiveOutputChannels = rOutputChannels;
+    }
 
-	  WAVEFORMATEX OFormat;
-	  OFormat.wFormatTag = WAVE_FORMAT_PCM;
-	  OFormat.nChannels = (WORD)mOutputChannels.size();
-	  OFormat.nSamplesPerSec = ToNearest(SampleRate);
-	  OFormat.wBitsPerSample = 16;
-	  OFormat.nAvgBytesPerSec = OFormat.nChannels * OFormat.nSamplesPerSec * (OFormat.wBitsPerSample / 8);
-	  OFormat.nBlockAlign = OFormat.nChannels * OFormat.wBitsPerSample / 8;
-	  OFormat.cbSize = 0;
+    WAVEFORMATEX OFormat;
+    OFormat.wFormatTag = WAVE_FORMAT_PCM;
+    OFormat.nChannels = (WORD)mOutputChannels.size();
+    OFormat.nSamplesPerSec = ToNearest(SampleRate);
+    OFormat.wBitsPerSample = 16;
+    OFormat.nAvgBytesPerSec = OFormat.nChannels * OFormat.nSamplesPerSec * (OFormat.wBitsPerSample / 8);
+    OFormat.nBlockAlign = OFormat.nChannels * OFormat.wBitsPerSample / 8;
+    OFormat.cbSize = 0;
 
-	  DSBUFFERDESC  OBufferDesc;
-	  memset(&OBufferDesc, 0, sizeof(OBufferDesc));
-	  OBufferDesc.dwSize = sizeof(OBufferDesc);
-	  OBufferDesc.dwFlags = DSBCAPS_GLOBALFOCUS | DSBCAPS_CTRLPOSITIONNOTIFY;
-	  OBufferDesc.dwBufferBytes = (OFormat.wBitsPerSample / 8) * OFormat.nChannels * BufferSize * 2;
-	  OBufferDesc.dwReserved = 0;
-	  OBufferDesc.lpwfxFormat = &OFormat;
+    DSBUFFERDESC  OBufferDesc;
+    memset(&OBufferDesc, 0, sizeof(OBufferDesc));
+    OBufferDesc.dwSize = sizeof(OBufferDesc);
+    OBufferDesc.dwFlags = DSBCAPS_GLOBALFOCUS | DSBCAPS_CTRLPOSITIONNOTIFY;
+    OBufferDesc.dwBufferBytes = (OFormat.wBitsPerSample / 8) * OFormat.nChannels * BufferSize * 2;
+    OBufferDesc.dwReserved = 0;
+    OBufferDesc.lpwfxFormat = &OFormat;
 
-	  hr = mpDirectSound->CreateSoundBuffer(&OBufferDesc, &mpOutputBuffer, NULL);
+    hr = mpDirectSound->CreateSoundBuffer(&OBufferDesc, &mpOutputBuffer, NULL);
   }
 
 
   // create event for notifications
-	mNotifInputEvent[0] = CreateEvent(NULL, FALSE, FALSE, _T("NUI_DSoundInputEvent0"));
+  mNotifInputEvent[0] = CreateEvent(NULL, FALSE, FALSE, _T("NUI_DSoundInputEvent0"));
   mNotifInputEvent[1] = CreateEvent(NULL, FALSE, FALSE, _T("NUI_DSoundInputEvent1"));
-	mNotifOutputEvent[0] = CreateEvent(NULL, FALSE, FALSE, _T("NUI_DSoundOutputEvent0"));
+  mNotifOutputEvent[0] = CreateEvent(NULL, FALSE, FALSE, _T("NUI_DSoundOutputEvent0"));
   mNotifOutputEvent[1] = CreateEvent(NULL, FALSE, FALSE, _T("NUI_DSoundOutputEvent1"));
 
 
@@ -596,21 +494,21 @@ bool nuiAudioDevice_DirectSound::Open(std::vector<uint32>& rInputChannels, std::
     mInputPosNotify[1].dwOffset = BufferSize * sizeof(int16) * mInputChannels.size() * 2 - 1;
     mInputPosNotify[1].hEventNotify = mNotifInputEvent[1];           
 
-	  LPDIRECTSOUNDNOTIFY pInputNotify = NULL;
-	  if( FAILED( hr = mpInputBuffer->QueryInterface( IID_IDirectSoundNotify, (VOID**)&pInputNotify ) ) )
-	  {
+    LPDIRECTSOUNDNOTIFY pInputNotify = NULL;
+    if( FAILED( hr = mpInputBuffer->QueryInterface( IID_IDirectSoundNotify, (VOID**)&pInputNotify ) ) )
+    {
       NGL_OUT(_T("nuiAudioDevice_DirectSound::Open ERROR : failed in querying interface for input notifications.\n"));
-	    return false;
-	  }
+      return false;
+    }
 
- 
-	  // Tell DirectSound when to notify us. the notification will come in the from 
-	  // of signaled events that are handled in WinMain()
-	  if( FAILED( hr = pInputNotify->SetNotificationPositions( 2, mInputPosNotify ) ) )
-	  {
+
+    // Tell DirectSound when to notify us. the notification will come in the from 
+    // of signaled events that are handled in WinMain()
+    if( FAILED( hr = pInputNotify->SetNotificationPositions( 2, mInputPosNotify ) ) )
+    {
       NGL_OUT(_T("nuiAudioDevice_DirectSound::Open ERROR : failed in setting notifications for input\n"));
-	    return false;
-	  }
+      return false;
+    }
 
     pInputNotify->Release();
   }
@@ -627,28 +525,28 @@ bool nuiAudioDevice_DirectSound::Open(std::vector<uint32>& rInputChannels, std::
     mOutputPosNotify[1].dwOffset = BufferSize * sizeof(int16) * mOutputChannels.size() * 2 - 1;
     mOutputPosNotify[1].hEventNotify = mNotifOutputEvent[1];    
 
-	  LPDIRECTSOUNDNOTIFY pOutputNotify = NULL;
-	  if( FAILED( hr = mpOutputBuffer->QueryInterface( IID_IDirectSoundNotify, (VOID**)&pOutputNotify ) ) )
-	  {
+    LPDIRECTSOUNDNOTIFY pOutputNotify = NULL;
+    if( FAILED( hr = mpOutputBuffer->QueryInterface( IID_IDirectSoundNotify, (VOID**)&pOutputNotify ) ) )
+    {
       NGL_OUT(_T("nuiAudioDevice_DirectSound::Open ERROR : failed in querying interface for output notifications.\n"));
-	    return false;
-	  }
+      return false;
+    }
 
-	  // Tell DirectSound when to notify us. the notification will come in the from 
-	  // of signaled events that are handled in WinMain()
-	  if( FAILED( hr = pOutputNotify->SetNotificationPositions( 2, mOutputPosNotify ) ) )
-	  {
+    // Tell DirectSound when to notify us. the notification will come in the from 
+    // of signaled events that are handled in WinMain()
+    if( FAILED( hr = pOutputNotify->SetNotificationPositions( 2, mOutputPosNotify ) ) )
+    {
       NGL_OUT(_T("nuiAudioDevice_DirectSound::Open ERROR : failed in setting notifications for output\n"));
-	    return false;
-	  }
+      return false;
+    }
 
     pOutputNotify->Release();
   }
 
 
-   // start input processing thread
-    mpProcessingTh = new nuiAudioDevice_DS_ProcessingTh(this, mNotifInputEvent[0], mNotifInputEvent[1], mAudioProcessFn);
-    mpProcessingTh->Start();
+  // start input processing thread
+  mpProcessingTh = new nuiAudioDevice_DS_ProcessingTh(this, mNotifInputEvent[0], mNotifInputEvent[1], mAudioProcessFn);
+  mpProcessingTh->Start();
 
 
 
@@ -670,7 +568,7 @@ bool nuiAudioDevice_DirectSound::Open(std::vector<uint32>& rInputChannels, std::
       NGL_OUT(_T("InputBuffer->Start ERROR!\n"));    
   }
 
-   
+
 
 
 
@@ -841,7 +739,7 @@ nuiAudioDevice_DS_ProcessingTh::nuiAudioDevice_DS_ProcessingTh(nuiAudioDevice_Di
   mpProcessFunction = pProcessFunction;
 
   mContinue = false;
-  
+
   mBufferSize = pDev->GetBufferSize();
   mInputNbChannels = pDev->GetNbInputChannels();
   mOutputNbChannels = pDev->GetNbOutputChannels();
@@ -879,7 +777,7 @@ nuiAudioDevice_DS_ProcessingTh::~nuiAudioDevice_DS_ProcessingTh()
   uint i;
 
   delete mpLocalBuf;
-  
+
   for (i=0; i < mFloatOutputBuf.size(); i++)
     delete mFloatOutputBuf[i];
 
@@ -901,15 +799,15 @@ void nuiAudioDevice_DS_ProcessingTh::Process(uint pos)
   DWORD bufferBytes = mBufferSize * mInputNbChannels * sizeof(int16);
 
   if (!mpRingBuffer->GetWritable())
-      return;
- 
+    return;
+
   //
   // lock the input buffer if any,
   // and read data from it to the local buffer
   //
   if (  mpDSInputBuffer 
-     && mpDSInputBuffer->Lock(pos * bufferBytes /* offset */, bufferBytes /*size*/, (LPVOID*)&pBuf1, &size1, (LPVOID*)&pBuf2, &size2, 0)
-     )
+    && mpDSInputBuffer->Lock(pos * bufferBytes /* offset */, bufferBytes /*size*/, (LPVOID*)&pBuf1, &size1, (LPVOID*)&pBuf2, &size2, 0)
+    )
   {
     if (!pBuf1 || !size1)
     {
@@ -921,7 +819,7 @@ void nuiAudioDevice_DS_ProcessingTh::Process(uint pos)
     // check that we got the right size
     NGL_ASSERT((size1+size2) == bufferBytes);
 
- 
+
     // copy input data into local buffer
     memcpy(mpLocalBuf, pBuf1, size1);
     if (pBuf2)
@@ -975,11 +873,11 @@ uint32 nuiAudioDevice_DS_ProcessingTh::WriteToRingBuf(const std::vector<float*>&
 
   // update ringbuf pointer
   mpRingBuffer->AdvanceWriteIndex(nbWrite);
-  
+
 
   if (!need2ndPass)
     return nbWrite;
-  
+
   // prepare 2nd pass writing
   nbWrite2  = mpRingBuffer->GetWritableToEnd();
 
@@ -991,13 +889,13 @@ uint32 nuiAudioDevice_DS_ProcessingTh::WriteToRingBuf(const std::vector<float*>&
   // 2nd pass writing
   for (c=0; c<nbChannels; c++)
     rbuf[c] = (float*)mpRingBuffer->GetWritePointer(c);        
-    
+
   for (i=nbWrite; i < nbWrite+nbWrite2; i++)
   {
     for (c=0; c < nbChannels; c++)
       rbuf[c][i] = inbuf[c][i];
   }
-  
+
   // update ringbuf pointer
   mpRingBuffer->AdvanceWriteIndex(nbWrite2);
 
@@ -1014,26 +912,26 @@ void nuiAudioDevice_DS_ProcessingTh::OnStart()
 
   while (mContinue)
   {
-    
+
     DWORD dwEvent  = WaitForMultipleObjects(2, mEvents, false, 500);
 
     switch (dwEvent) 
     { 
-        case WAIT_OBJECT_0 + 0:
-            Process(0);
-            break;
-        case WAIT_OBJECT_0 + 1:
-            Process(1);
-            break; 
+    case WAIT_OBJECT_0 + 0:
+      Process(0);
+      break;
+    case WAIT_OBJECT_0 + 1:
+      Process(1);
+      break; 
 
-        case WAIT_TIMEOUT:
-            NGL_OUT2(_T("Process Thread : Wait timed out.\n"));
-            break;
+    case WAIT_TIMEOUT:
+      NGL_OUT2(_T("Process Thread : Wait timed out.\n"));
+      break;
 
-        default: 
-           // NGL_OUT(_T("Process Thread : Wait error: %d\n"), GetLastError()); 
-            mContinue=false;
-            break;
+    default: 
+      // NGL_OUT(_T("Process Thread : Wait error: %d\n"), GetLastError()); 
+      mContinue=false;
+      break;
     }
 
 
@@ -1087,7 +985,7 @@ nuiAudioDevice_DS_OutputTh::nuiAudioDevice_DS_OutputTh(nuiAudioDevice_DirectSoun
 
   // init interlaced int16 buffer
   mpLocalBuf = new int16[mBufferSize * mNbChannels];
- 
+
 }
 
 
@@ -1110,9 +1008,9 @@ void nuiAudioDevice_DS_OutputTh::Process(uint pos)
   DWORD size2=0;
   DWORD bufferBytes = mBufferSize * mNbChannels * sizeof(int16);
   bool isEmpty=false;
- 
+
   if (!mpRingBuffer->GetReadable())
-      isEmpty=true; 
+    isEmpty=true; 
   //
   // lock the output buffer if any,
   // and read data from ringbuffer and write to output buffer
@@ -1127,56 +1025,56 @@ void nuiAudioDevice_DS_OutputTh::Process(uint pos)
     FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, dw, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR) &lpMsgBuf, 0, NULL );
 
     wsprintf(szBuf, 
-        _T("GetOutputBuffer()->Lock failed with error %d: %ls"), dw, lpMsgBuf); 
- 
+      _T("GetOutputBuffer()->Lock failed with error %d: %ls"), dw, lpMsgBuf); 
+
     //NGL_OUT(_T("ERROR : %ls\n"), szBuf); 
 
     LocalFree(lpMsgBuf);
 
   }
   else
-  if (mpDSOutputBuffer)
-  {
-    if (!pBuf1 || !size1)
+    if (mpDSOutputBuffer)
     {
-      NGL_OUT(_T("nuiAudioDevice_DS_OutputTh::Process error : could not lock any part of the input buffer\n"));
-      NGL_ASSERT(0);
-      return;
+      if (!pBuf1 || !size1)
+      {
+        NGL_OUT(_T("nuiAudioDevice_DS_OutputTh::Process error : could not lock any part of the input buffer\n"));
+        NGL_ASSERT(0);
+        return;
+      }
+
+      // check that we got the right size
+      NGL_ASSERT((size1+size2) == bufferBytes);
+
+      // no sound to play. silence please
+      if (isEmpty)
+      {
+        memset(pBuf1, 0, size1);
+        if (pBuf2)
+          memset(pBuf2, 0, size2);
+      }
+      else
+      {
+        // copy ring buffer to local buffer 
+        uint32 nbRead = ReadFromRingBuf(mBufferSize, mFloatOutputBuf, mNbChannels);
+
+        // convert and interlace local buffer from deinterlaced float to interlaced int16
+        for (uint32 ch=0; ch < mNbChannels; ch++)
+          nuiAudioConvert_DEfloatToINint16(mFloatOutputBuf[ch], mpLocalBuf, ch, mNbChannels, mBufferSize);
+
+        //#FIXME : here we can use pBuf1 and pBuf2 as the ouput buffer for DEfloatToINint16, instead of using a useless local buffer.
+        // do that when you have the time to... :)
+
+        // copy local buffer to output buffer
+        memcpy(pBuf1, mpLocalBuf, size1);
+        if (pBuf2)
+          memcpy(pBuf2, mpLocalBuf+size1, size2);
+      }
+
+      // release DS input buffer
+      mpDSOutputBuffer->Unlock(pBuf1, size1, pBuf2, size2);
     }
 
-    // check that we got the right size
-    NGL_ASSERT((size1+size2) == bufferBytes);
- 
-    // no sound to play. silence please
-    if (isEmpty)
-    {
-      memset(pBuf1, 0, size1);
-      if (pBuf2)
-        memset(pBuf2, 0, size2);
-    }
-    else
-    {
-      // copy ring buffer to local buffer 
-      uint32 nbRead = ReadFromRingBuf(mBufferSize, mFloatOutputBuf, mNbChannels);
 
-      // convert and interlace local buffer from deinterlaced float to interlaced int16
-      for (uint32 ch=0; ch < mNbChannels; ch++)
-        nuiAudioConvert_DEfloatToINint16(mFloatOutputBuf[ch], mpLocalBuf, ch, mNbChannels, mBufferSize);
-
-      //#FIXME : here we can use pBuf1 and pBuf2 as the ouput buffer for DEfloatToINint16, instead of using a useless local buffer.
-      // do that when you have the time to... :)
-
-      // copy local buffer to output buffer
-      memcpy(pBuf1, mpLocalBuf, size1);
-      if (pBuf2)
-        memcpy(pBuf2, mpLocalBuf+size1, size2);
-    }
-
-     // release DS input buffer
-    mpDSOutputBuffer->Unlock(pBuf1, size1, pBuf2, size2);
-  }
-
- 
 }
 
 
@@ -1193,7 +1091,7 @@ uint32 nuiAudioDevice_DS_OutputTh::ReadFromRingBuf(uint32 nbSampleFrames, std::v
 
   // prepare 1st pass reading
   nbRead = mpRingBuffer->GetReadableToEnd();
-  
+
   // read what you need. not more! (maybe less, 'cause it's the 1st pass...)
   if (nbRead > nbSampleFrames)
     nbRead = nbSampleFrames;
@@ -1202,7 +1100,7 @@ uint32 nuiAudioDevice_DS_OutputTh::ReadFromRingBuf(uint32 nbSampleFrames, std::v
   {
     need2ndPass = false;
   }
-  
+
   // 1st pass reading
   for (ch = 0; ch < nbChannels; ch++)
   {
@@ -1215,32 +1113,32 @@ uint32 nuiAudioDevice_DS_OutputTh::ReadFromRingBuf(uint32 nbSampleFrames, std::v
       *(pOut++) = *(pRing++);
     }
   }
-  
+
   // update ringbuf pointer
   mpRingBuffer->AdvanceReadIndex (nbRead);
-  
+
   if (!need2ndPass)
     return nbRead;
 
   // prepare 2nd pass reading
   nbRead2 = mpRingBuffer->GetReadableToEnd();
   NGL_ASSERT((nbRead+nbRead2)==nbSampleFrames)
-  
-  for (ch = 0; ch < nbChannels; ch++)
-  {
-    pRing = (float*)mpRingBuffer->GetReadPointer(ch);
-    pOut = &(outbuf[ch][nbRead]);
 
-    for (i=0; i < nbRead2; i++)
+    for (ch = 0; ch < nbChannels; ch++)
     {
-      *(pOut++) = *(pRing++);
-    }
-  }
-  
-  // update ringbuf pointer
-  mpRingBuffer->AdvanceReadIndex(nbRead2); 
+      pRing = (float*)mpRingBuffer->GetReadPointer(ch);
+      pOut = &(outbuf[ch][nbRead]);
 
-  return nbRead+nbRead2;
+      for (i=0; i < nbRead2; i++)
+      {
+        *(pOut++) = *(pRing++);
+      }
+    }
+
+    // update ringbuf pointer
+    mpRingBuffer->AdvanceReadIndex(nbRead2); 
+
+    return nbRead+nbRead2;
 
 }
 
@@ -1257,23 +1155,23 @@ void nuiAudioDevice_DS_OutputTh::OnStart()
 
     switch (dwEvent) 
     { 
-        case WAIT_OBJECT_0 + 0:
-            SetEvent(mInputEvents[0]);
-            Process(0);
-            break;
-        case WAIT_OBJECT_0 + 1:
-            SetEvent(mInputEvents[1]);
-            Process(1);
-            break; 
+    case WAIT_OBJECT_0 + 0:
+      SetEvent(mInputEvents[0]);
+      Process(0);
+      break;
+    case WAIT_OBJECT_0 + 1:
+      SetEvent(mInputEvents[1]);
+      Process(1);
+      break; 
 
-        case WAIT_TIMEOUT:
-            NGL_OUT2(_T("."));
-            break;
+    case WAIT_TIMEOUT:
+      NGL_OUT2(_T("."));
+      break;
 
-        default: 
-            NGL_OUT(_T("Output process : Wait error: %d\n"), GetLastError()); 
-            mContinue=false;
-            break;
+    default: 
+      NGL_OUT(_T("Output process : Wait error: %d\n"), GetLastError()); 
+      mContinue=false;
+      break;
     }
 
 
@@ -1315,17 +1213,35 @@ uint32 nuiAudioDeviceAPI_DirectSound::GetDeviceCount() const
   return (uint32)mDeviceIDs.size();
 }
 
-nuiAudioDevice* nuiAudioDeviceAPI_DirectSound::GetDevice(uint32 index) const
+nuiAudioDevice* nuiAudioDeviceAPI_DirectSound::GetDevice(uint32 index)
 {
   return new nuiAudioDevice_DirectSound(mDeviceIDs[index].mInputGUID, mDeviceIDs[index].mOutputGUID, mDeviceIDs[index].mInName, mDeviceIDs[index].mOutName, mDeviceIDs[index].mInModule, mDeviceIDs[index].mOutModule);
 }
 
-nuiAudioDevice* nuiAudioDeviceAPI_DirectSound::GetDefaultOutputDevice() const
+nuiAudioDevice* nuiAudioDeviceAPI_DirectSound::GetDevice(const nglString& rDeviceName)
+{
+  std::vector<DeviceDesc>::const_iterator end = mDeviceIDs.end();
+  for (std::vector<DeviceDesc>::const_iterator it = mDeviceIDs.begin(); it != end; ++it)
+  {
+    if (it->mOutName == rDeviceName)
+    {
+      return new nuiAudioDevice_DirectSound(it->mInputGUID, it->mOutputGUID, it->mInName, it->mOutName, it->mInModule, it->mOutModule);
+    }
+  }
+  NGL_ASSERT(0);
+}
+
+nglString nuiAudioDeviceAPI_DirectSound::GetDeviceName(uint32 index) const
+{
+  return mDeviceIDs[index].mOutName;
+}
+
+nuiAudioDevice* nuiAudioDeviceAPI_DirectSound::GetDefaultOutputDevice()
 {
   return new nuiAudioDevice_DirectSound();
 }
 
-nuiAudioDevice* nuiAudioDeviceAPI_DirectSound::GetDefaultInputDevice() const
+nuiAudioDevice* nuiAudioDeviceAPI_DirectSound::GetDefaultInputDevice()
 {
   return new nuiAudioDevice_DirectSound();
 }
@@ -1397,8 +1313,4 @@ BOOL CALLBACK nuiAudioDeviceAPI_DirectSound::DSEnumOutputCallback(LPGUID lpGuid,
   return pAPI->RealDSEnumOutputCallback(lpGuid, lpcstrDescription, lpcstrModule);
 }
 
-
-// static
-//nuiAudioDeviceAPI_DirectSound DirectSoundAPI;
-
-
+ nuiAudioDeviceAPI_DirectSound DirectSoundApi;

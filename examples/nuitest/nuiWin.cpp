@@ -2361,9 +2361,9 @@ bool nuiWin::CreateAudioWindow(const nuiEvent& rEvent)
   uint32 devs = nuiAudioDeviceManager::Get().GetDeviceCount();
   for (uint32 i = 0; i < devs; i++)
   {
-    nuiAudioDevice* pDev = nuiAudioDeviceManager::Get().GetDevice(i);
-    nuiLabel* pLabel = new nuiLabel(pDev->GetName() + _T(" (") + pDev->GetAPIName() + _T(")"));
-    pLabel->SetToken(new nuiToken<nuiAudioDevice*>(pDev));
+    nglString devname = nuiAudioDeviceManager::Get().GetDeviceName(i);
+    nuiLabel* pLabel = new nuiLabel(devname + _T(" (") + _T(")"));
+    pLabel->SetToken(new nuiToken<nuiAudioDevice*>(nuiAudioDeviceManager::Get().GetDevice(i)));
     pTree->AddChild(new nuiTreeNode(pLabel));
   }
 
@@ -2394,7 +2394,12 @@ bool nuiWin::AudioDeviceSelected(const nuiEvent& rEvent)
   nuiText* pText;
   bool res = nuiGetTokenValue<nuiText*>(pCombo->GetToken(), pText);
   nuiAudioDevice* pDev;
-  res = nuiGetTokenValue<nuiAudioDevice*>(pCombo->GetSelectedWidget()->GetToken(), pDev);
+  nuiWidget* pWidget = pCombo->GetSelectedWidget();
+  if (!pWidget)
+    return false;
+  res = nuiGetTokenValue<nuiAudioDevice*>(pWidget->GetToken(), pDev);
+  if (!res)
+    return false;
 
   nglString str;
 

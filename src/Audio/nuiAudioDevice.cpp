@@ -76,7 +76,6 @@ bool nuiAudioDevice::IsPresent() const
 // Audio Device API:
 nuiAudioDeviceAPI::nuiAudioDeviceAPI()
 {
-  RegisterWithManager();
 }
 
 nuiAudioDeviceAPI::~nuiAudioDeviceAPI()
@@ -85,7 +84,7 @@ nuiAudioDeviceAPI::~nuiAudioDeviceAPI()
 
 void nuiAudioDeviceAPI::RegisterWithManager()
 {
-  nuiAudioDeviceManager::Get().RegisterAPI(this);
+  nuiAudioDeviceManager::Get().RegisterAPI(mName, this);
 }
 
 
@@ -94,43 +93,21 @@ void nuiAudioDeviceAPI::RegisterWithManager()
 
 nuiAudioDeviceManager& nuiAudioDeviceManager::Get()
 {
-  if (!gpManager)
-  {
-    gpManager = new nuiAudioDeviceManager();
-  }
-  return *gpManager;
+  static nuiAudioDeviceManager manager;
+  return manager;
 }
 
 nuiAudioDeviceManager::~nuiAudioDeviceManager()
 {
 }
 
-#ifdef _CARBON_
-  nuiAudioDeviceAPI* GetCoreAudioAPI(); //#FIXME Hack around compiler bug?
-#endif
-
-#ifdef _WIN32_
-  nuiAudioDeviceAPI* GetDirectSoundAPI(); //#FIXME Hack around compiler bug?
-#endif
-
 void nuiAudioDeviceManager::Update()
 {
-
-
-#ifdef _CARBON_
-  GetCoreAudioAPI(); //#FIXME Hack around linker strangeness?
-#endif
-
-#ifdef _WIN32_
-  GetDirectSoundAPI();
-#endif
-
-
-
   mDeviceCount = 0;
-  for (uint32 i = 0; i < mAPIs.size(); i++)
+  APIMap::const_iterator end = mAPIs.end();
+  for (APIMap::const_iterator it = mAPIs.begin(); it != end; ++it)
   {
-    uint32 count = mAPIs[i]->GetDeviceCount();
+    uint32 count = it->second->GetDeviceCount();
     mDeviceCount += count;
   }
 }
@@ -142,21 +119,51 @@ uint32 nuiAudioDeviceManager::GetDeviceCount() const
 
 nuiAudioDevice* nuiAudioDeviceManager::GetDevice(uint32 DeviceIndex)
 {
-  uint32 ApiIndex = DeviceIndex >> 16;
-  uint32 DevIndex = DeviceIndex & 0xffff;
-  
-  return mAPIs[ApiIndex]->GetDevice(DevIndex);
+  APIMap::const_iterator end = mAPIs.end();
+  for (APIMap::const_iterator it = mAPIs.begin(); it != end; ++it)
+  {
+    nuiAudioDeviceAPI* pAPI = it->second;
+    uint32 devcount = pAPI->GetDeviceCount();
+    if (DeviceIndex > devcount)
+    {
+      DeviceIndex -= devcount;
+    }
+    else
+    {
+      return pAPI->GetDevice(DeviceIndex);
+    }
+  }
+  NGL_ASSERT(0);
 }
 
-nuiAudioDevice* nuiAudioDeviceManager::GetDeviceWithNameAndAPI(const nglString& deviceName, const nglString& apiName)
+nglString nuiAudioDeviceManager::GetDeviceName(uint32 DeviceIndex)
 {
-  for (int32 i = 0; i < mDeviceCount; i++)
+  APIMap::const_iterator end = mAPIs.end();
+  for (APIMap::const_iterator it = mAPIs.begin(); it != end; ++it)
   {
-    nuiAudioDevice* device = GetDevice(i);
-    if (device->GetName() == deviceName && device->GetAPIName() == apiName)
-      return device;
+    nuiAudioDeviceAPI* pAPI = it->second;
+    uint32 devcount = pAPI->GetDeviceCount();
+    if (DeviceIndex >= devcount)
+    {
+      DeviceIndex -= devcount;
+    }
+    else
+    {
+      return pAPI->GetDeviceName(DeviceIndex) + _T(" (") + pAPI->GetAPIName() + _T(")");
+    }
   }
-  return NULL;
+  NGL_ASSERT(0);
+}
+
+nuiAudioDevice* nuiAudioDeviceManager::GetDeviceWithNameAndAPI(const nglString& rDeviceName, const nglString& rApiName)
+{
+  APIMap::const_iterator end = mAPIs.end();
+  APIMap::const_iterator it = mAPIs.find(rApiName);
+  if (it != end)
+  {
+    return it->second->GetDevice(rDeviceName);
+  }
+  NGL_ASSERT(0);
 }
 
 nuiAudioDevice* nuiAudioDeviceManager::GetDefaultOutputDevice()
@@ -174,12 +181,16 @@ nuiAudioDeviceManager::nuiAudioDeviceManager()
   mDeviceCount = 0;
 }
 
-void nuiAudioDeviceManager::RegisterAPI(nuiAudioDeviceAPI* pAPI)
+void nuiAudioDeviceManager::RegisterAPI(const nglString& rAPIName, nuiAudioDeviceAPI* pAPI)
 {
-  mAPIs.push_back(pAPI);
+  APIMap::const_iterator end = mAPIs.end();
+  APIMap::const_iterator it = mAPIs.find(rAPIName);
+  if (it != end)
+  {
+    delete it->second;
+  }
+  mAPIs[rAPIName] = pAPI;
+  Update();
 }
-
-
-nuiAudioDeviceManager* nuiAudioDeviceManager::gpManager = NULL;
 
 

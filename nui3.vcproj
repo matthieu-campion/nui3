@@ -490,6 +490,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\nuiAudioDevice_DirectSound.h"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Audio\nuiAudioFifo.cpp"
 					>
 				</File>

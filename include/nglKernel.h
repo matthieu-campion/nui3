@@ -352,8 +352,8 @@ protected:
 
 public:
   virtual HINSTANCE GetHInstance() const;
-protected:
   virtual HWND      GetHWnd() const;
+protected:
   virtual HDC       GetDC() const;
   virtual HFONT     GetSystemFont() const;
   virtual LPDIRECT3D9 GetDirect3D() const;
