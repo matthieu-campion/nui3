@@ -584,7 +584,7 @@ nglString nuiAudioDeviceAPI_CoreAudio::GetDeviceName(uint32 index) const
   verify_noerr(AudioDeviceGetProperty(mDeviceIDs[index], 0, false, kAudioDevicePropertyDeviceNameCFString, &propsize, &tempStr));
   nglString str(tempStr);
   CFRelease(tempStr);
-  return str + _T(" (") + mName + _T(")");
+  return str;
 }
 
 nuiAudioDevice* nuiAudioDeviceAPI_CoreAudio::GetDefaultOutputDevice()
