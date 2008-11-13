@@ -16,6 +16,13 @@ licence: see nui3/LICENCE.TXT
 
 #define API_NAME _T("DirectSound")
 
+inline float	fmin(float a, float b) { if (a < b) return a; else return b; }
+inline float	fmax(float a, float b) { if (a < b) return b; else return a; }
+inline float	fclamp(float f, float xmin, float xmax) {
+	assert( xmin <= xmax );
+	return fmax(xmin, fmin(f, xmax));
+}
+
 #undef NGL_OUT
 void NGL_OUT(const nglChar* pFormat, ...)
 {
@@ -1057,9 +1064,18 @@ void nuiAudioDevice_DS_OutputTh::Process(uint pos)
         // copy ring buffer to local buffer 
         uint32 nbRead = ReadFromRingBuf(mBufferSize, mFloatOutputBuf, mNbChannels);
 
+        // clamp values of output buffer between -1 and 1
         // convert and interlace local buffer from deinterlaced float to interlaced int16
         for (uint32 ch=0; ch < mNbChannels; ch++)
+        {
+          float* pFloat = mFloatOutputBuf[ch];
+          for (uint32 s = 0; s < nbRead; s++)
+          {
+            (*pFloat) = fclamp(*pFloat, -1.0f, 1.0f);
+            pFloat++;
+          }
           nuiAudioConvert_DEfloatToINint16(mFloatOutputBuf[ch], mpLocalBuf, ch, mNbChannels, mBufferSize);
+        }
 
         //#FIXME : here we can use pBuf1 and pBuf2 as the ouput buffer for DEfloatToINint16, instead of using a useless local buffer.
         // do that when you have the time to... :)
