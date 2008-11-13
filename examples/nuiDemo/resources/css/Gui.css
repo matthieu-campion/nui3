@@ -15,13 +15,13 @@
 
 @nuiGradientDecoration dGui
 {
-  Color1: rgb(0,0,0);
-  Color2: rgb(0,0,0);
+  Color1: rgb(16,16,16);
+  Color2: rgb(16,16,16);
   Color3: rgb(39,34,31);
-  Color4: rgb(78,78,78);
+  Color4: rgb(64,64,64);
   Offset1: 0;
-  Offset2: 0.3;
-  Offset3: 0.6;
+  Offset2: 0.2;
+  Offset3: 0.4;
   Offset4: 1;
   Orientation: Vertical;
   ShapeMode: Fill;
@@ -101,6 +101,25 @@ Gui!
   UserRect: "{0 0 300 140}";
   BorderRight: 20;
 }
+
+
+
+
+@nuiFrame dguiOscillo
+{
+  Texture: "rsrc:/decorations/oscilloGloss.png";
+  Layer: Front;
+  ClientRect: "{15 15 270 110}";
+}
+
+
+guiOscillo!
+{
+  DecorationMode: Border;
+  Decoration: dguiOscillo;
+}
+
+
 
 
 

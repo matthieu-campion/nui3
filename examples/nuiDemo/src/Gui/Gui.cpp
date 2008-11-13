@@ -57,7 +57,7 @@ Gui::Gui()
   
   guiOscillo* pOscillo = new guiOscillo(GetEngine()->GetAudioTrack()->GetSamplesBuffer());
   pOscilloBkg->AddChild(pOscillo);
-  pOscillo->SetBorder(15,15);
+  
   
 
   // row 3: text and sound controls *******************************

@@ -12,6 +12,7 @@ decorations/buttonStartDownHover.png        NUI_RESOURCE    "resources/decoratio
 decorations/buttonStartUp.png        NUI_RESOURCE    "resources/decorations/buttonStartUp.png"
 decorations/buttonStartUpHover.png        NUI_RESOURCE    "resources/decorations/buttonStartUpHover.png"
 decorations/oscilloBackground.png        NUI_RESOURCE    "resources/decorations/oscilloBackground.png"
+decorations/oscilloGloss.png        NUI_RESOURCE    "resources/decorations/oscilloGloss.png"
 decorations/title.png        NUI_RESOURCE    "resources/decorations/title.png"
 0 ICON "resources/nuiDemo.ico"
 1 ICON "resources/nuiDemo.ico"
