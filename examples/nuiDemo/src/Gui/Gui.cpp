@@ -51,8 +51,13 @@ Gui::Gui()
   mEventSink.Connect(pStartBtn->ButtonDePressed, &Gui::OnStartButtonDePressed);
   
   // oscillo
+  nuiSimpleContainer* pOscilloBkg = new nuiSimpleContainer();
+  pOscilloBkg->SetObjectName(_T("guiOscilloBackground"));
+  pBox->AddCell(pOscilloBkg, nuiCenter);
+  
   guiOscillo* pOscillo = new guiOscillo(GetEngine()->GetAudioTrack()->GetSamplesBuffer());
-  pBox->AddCell(pOscillo, nuiCenter);
+  pOscilloBkg->AddChild(pOscillo);
+  pOscillo->SetBorder(15,15);
   
 
   // row 3: text and sound controls *******************************

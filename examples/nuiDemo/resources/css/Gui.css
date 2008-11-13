@@ -7,16 +7,30 @@
 // licence: see nui3/LICENCE.TXT
 //
 
-//@nuiFrame dGui
+//@nuiColorDecoration dGui
 //{
-//  Texture: "rsrc:/decorations/bg-brushed_metal.png";
-//  ClientRect: "{0 0 220 225}";
+//  FillColor: black;
+//  ShapeMode: Fill;
 //}
-//
-//Gui!
-//{
-//  Decoration: dGui;
-//}
+
+@nuiGradientDecoration dGui
+{
+  Color1: rgb(0,0,0);
+  Color2: rgb(0,0,0);
+  Color3: rgb(39,34,31);
+  Color4: rgb(78,78,78);
+  Offset1: 0;
+  Offset2: 0.3;
+  Offset3: 0.6;
+  Offset4: 1;
+  Orientation: Vertical;
+  ShapeMode: Fill;
+}
+
+Gui!
+{
+  Decoration: dGui;
+}
 
 "ImageTitle"!
 {
@@ -75,18 +89,16 @@
 // 
 //
 
-@nuiFrame dguiOscillo
+@nuiFrame dguiOscilloBackground
 {
   Texture: "rsrc:/decorations/oscilloBackground.png";
-  ClientRect: "{2 2 4 4}";
 }
 
-guiOscillo!
+"guiOscilloBackground"!
 {
   DecorationMode: Border;
-  Decoration: dguiOscillo;
-  UserRect: "{0 0 400 170}";
-  // you could also use UserWidth:400 and UserHeight:170
+  Decoration: dguiOscilloBackground;
+  UserRect: "{0 0 300 140}";
   BorderRight: 20;
 }
 

@@ -14,6 +14,14 @@
 
 #include "nglConsole.h"
 
+#ifdef _CARBON_
+#include "nuiAudioDevice_CoreAudio.h"
+#else
+#include "nuiAudioDevice_DirectSound.h"
+#endif
+
+
+
 #define APPLICATION_TITLE _T("nuiDemo")
 
 
@@ -22,6 +30,7 @@ NGL_APP_CREATE(Application);
 Application::Application()
 {
   mpMainWindow = NULL;
+  wprintf(_T("Audio system:%ld"), CoreAudioAPI.GetAPIName().GetChars());
 }
 
 Application::~Application()
@@ -118,8 +127,8 @@ void Application::InitWindow()
     }
     else
     {
-      Width = 800;
-      Height = 600;
+      Width = 700;
+      Height = 500;
     }
   }
   
