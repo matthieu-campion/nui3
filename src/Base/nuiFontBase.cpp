@@ -45,6 +45,8 @@ nuiFontLayout::nuiFontLayout(nglFontBase& rFont, float PenX , float PenY, nuiOri
   mpCurrentWord = NULL;
   Line l = {mPenX, mPenY, 0.0f };
   mLines.push_back(l);
+  mXDensity = 1.0f;
+  mYDensity = 1.0f;
 }
 
 nuiFontLayout::~nuiFontLayout()
@@ -136,7 +138,7 @@ void nuiFontLayout::OnGlyph (nglFontBase* pFont, const nglString& rString, int P
           mPenX = mGlyphs[0].X; // Go back to layout X origin
         nglFontInfo info;
         pFont->GetInfo(info);
-        mPenY += mDownAxis * info.AdvanceMaxH;
+        mPenY += (mDownAxis * info.AdvanceMaxH) * mYDensity;
 
         Line l = {mPenX, mPenY, 0.0f };
         mLines.push_back(l);
@@ -168,7 +170,7 @@ void nuiFontLayout::OnGlyph (nglFontBase* pFont, const nglString& rString, int P
         AddGlyph(pFont, mPenX, mPenY, Pos, pGlyph);
 
         // Proceed with glyph advance
-        mPenX += pGlyph->AdvanceX;
+        mPenX += pGlyph->AdvanceX * mXDensity;
         mPenY += pGlyph->AdvanceY;
         
         mLines[mLines.size() - 1].mWidth += pGlyph->AdvanceX;
@@ -403,7 +405,7 @@ void nuiFontLayout::OnFinalizeLayout()
             //AddGlyph(X, Y, Pos, pGlyph);
 
             // Proceed with glyph advance
-            mPenX += pGlyph->AdvanceX;
+            mPenX += pGlyph->AdvanceX * mXDensity;
             mPenY += pGlyph->AdvanceY;
 
             mLines[mLines.size() - 1].mWidth += pGlyph->AdvanceX + kx;
@@ -533,6 +535,22 @@ nglFontBase* nuiFontLayout::FindFontForMissingGlyph(nglFontBase* pOriginalFont, 
 const std::vector<nuiFontLayout::Line>& nuiFontLayout::GetLines() const
 {
   return mLines;
+}
+
+void nuiFontLayout::SetDensity(nuiSize X, nuiSize Y)
+{
+  mXDensity = X;
+  mYDensity = Y;
+}
+
+nuiSize nuiFontLayout::GetDensityX() const
+{
+  return mXDensity;
+}
+
+nuiSize nuiFontLayout::GetDensityY() const
+{
+  return mYDensity;
 }
 
 

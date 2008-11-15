@@ -92,7 +92,6 @@ protected:
   bool mTextChanged;
   bool mFontChanged;
   bool mUseEllipsis;
-  bool mAlreadyReduced;
   bool mClearBg;
   nuiFont* mpFont;
   nuiOrientation mOrientation;

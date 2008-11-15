@@ -38,7 +38,7 @@ nuiAudioFifo* Engine::InitEngineAudio()
 
   // The audio fifo is the main audio system of NUI.
   nuiAudioFifo* pAudioFifo = new nuiAudioFifo(inBufSize, outBufSize, sampleRate, nbChannels, inDeviceName, outDeviceName, apiName);
-  pAudioFifo->Start();  
+  pAudioFifo->Start(); // Comment this line if it crashes on the iPhone (or any other other device without a working nuiAudioDevice class) if you want to run without sound  
   return pAudioFifo;
 
   // Once you've initialized and started the audio fifo, 

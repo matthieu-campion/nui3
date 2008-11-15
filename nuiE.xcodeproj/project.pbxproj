@@ -1579,6 +1579,54 @@
 		E53431810EC39F2600575BA6 /* nuiMainMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E534317F0EC39F2600575BA6 /* nuiMainMenu.cpp */; };
 		E53431870EC39FFF00575BA6 /* nuiMainMenu_UIKit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E53431860EC39FFF00575BA6 /* nuiMainMenu_UIKit.cpp */; };
 		E53431880EC39FFF00575BA6 /* nuiMainMenu_UIKit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E53431860EC39FFF00575BA6 /* nuiMainMenu_UIKit.cpp */; };
+		E5CD2FCF0ECF85E70083037A /* nuiAudioConvert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D4880DA5716500D2641A /* nuiAudioConvert.cpp */; };
+		E5CD2FD00ECF85E80083037A /* nuiAudioConvert.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4890DA5716500D2641A /* nuiAudioConvert.h */; };
+		E5CD2FD10ECF85E90083037A /* nuiAudioDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D48D0DA5716500D2641A /* nuiAudioDevice.cpp */; };
+		E5CD2FD20ECF85E90083037A /* nuiAudioDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D48C0DA5716500D2641A /* nuiAudioDevice.h */; };
+		E5CD2FD30ECF85EA0083037A /* nuiAudioDevice_CoreAudio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D48E0DA5716500D2641A /* nuiAudioDevice_CoreAudio.cpp */; };
+		E5CD2FD40ECF85EB0083037A /* nuiAudioFifo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D48A0DA5716500D2641A /* nuiAudioFifo.cpp */; };
+		E5CD2FD50ECF85EB0083037A /* nuiAudioFifo.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D48B0DA5716500D2641A /* nuiAudioFifo.h */; };
+		E5CD2FD60ECF85EC0083037A /* nuiAudioResampler.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4870DA5716500D2641A /* nuiAudioResampler.h */; };
+		E5CD2FDF0ECF86510083037A /* nuiSample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CD2FD90ECF86510083037A /* nuiSample.cpp */; };
+		E5CD2FE00ECF86510083037A /* nuiSampleInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CD2FDA0ECF86510083037A /* nuiSampleInfo.cpp */; };
+		E5CD2FE10ECF86510083037A /* nuiSampleReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CD2FDB0ECF86510083037A /* nuiSampleReader.cpp */; };
+		E5CD2FE20ECF86510083037A /* nuiSampleWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CD2FDC0ECF86510083037A /* nuiSampleWriter.cpp */; };
+		E5CD2FE30ECF86510083037A /* nuiWaveReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CD2FDD0ECF86510083037A /* nuiWaveReader.cpp */; };
+		E5CD2FE40ECF86510083037A /* nuiWaveWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CD2FDE0ECF86510083037A /* nuiWaveWriter.cpp */; };
+		E5CD2FE50ECF86510083037A /* nuiSample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CD2FD90ECF86510083037A /* nuiSample.cpp */; };
+		E5CD2FE60ECF86510083037A /* nuiSampleInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CD2FDA0ECF86510083037A /* nuiSampleInfo.cpp */; };
+		E5CD2FE70ECF86510083037A /* nuiSampleReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CD2FDB0ECF86510083037A /* nuiSampleReader.cpp */; };
+		E5CD2FE80ECF86510083037A /* nuiSampleWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CD2FDC0ECF86510083037A /* nuiSampleWriter.cpp */; };
+		E5CD2FE90ECF86510083037A /* nuiWaveReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CD2FDD0ECF86510083037A /* nuiWaveReader.cpp */; };
+		E5CD2FEA0ECF86510083037A /* nuiWaveWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CD2FDE0ECF86510083037A /* nuiWaveWriter.cpp */; };
+		E5CD2FEB0ECF86770083037A /* nuiFrameView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5BF0DA5716500D2641A /* nuiFrameView.cpp */; };
+		E5CD2FEC0ECF86780083037A /* nuiFrameView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5C00DA5716500D2641A /* nuiFrameView.h */; };
+		E5CD2FF30ECF86B50083037A /* nuiSoftwarePainter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5A40DA5716500D2641A /* nuiSoftwarePainter.cpp */; };
+		E5CD2FF40ECF86B50083037A /* nuiSoftwarePainter.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5A50DA5716500D2641A /* nuiSoftwarePainter.h */; };
+		E5CD2FF50ECF86BA0083037A /* nuiRasterizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5760DA5716500D2641A /* nuiRasterizer.h */; };
+		E5CD2FF60ECF86BE0083037A /* nuiPixelBlender.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5750DA5716500D2641A /* nuiPixelBlender.h */; };
+		E5CD2FF70ECF86C90083037A /* nuiFixedPoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5780DA5716500D2641A /* nuiFixedPoint.h */; };
+		E5CD2FF80ECF86D00083037A /* AAPrimitives.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D57A0DA5716500D2641A /* AAPrimitives.h */; };
+		E5CD2FF90ECF86D20083037A /* AAPrimitives.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5790DA5716500D2641A /* AAPrimitives.cpp */; };
+		E5CD2FFA0ECF875E0083037A /* nuiAudioConvert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D4880DA5716500D2641A /* nuiAudioConvert.cpp */; };
+		E5CD2FFB0ECF875F0083037A /* nuiAudioConvert.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4890DA5716500D2641A /* nuiAudioConvert.h */; };
+		E5CD2FFC0ECF875F0083037A /* nuiAudioDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D48D0DA5716500D2641A /* nuiAudioDevice.cpp */; };
+		E5CD2FFD0ECF875F0083037A /* nuiAudioDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D48C0DA5716500D2641A /* nuiAudioDevice.h */; };
+		E5CD2FFF0ECF87610083037A /* nuiAudioFifo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D48A0DA5716500D2641A /* nuiAudioFifo.cpp */; };
+		E5CD30000ECF87610083037A /* nuiAudioFifo.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D48B0DA5716500D2641A /* nuiAudioFifo.h */; };
+		E5CD30010ECF87620083037A /* nuiAudioResampler.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4870DA5716500D2641A /* nuiAudioResampler.h */; };
+		E5CD30470ECF88040083037A /* nuiDialogSelectDirectory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CD30440ECF88040083037A /* nuiDialogSelectDirectory.cpp */; };
+		E5CD30480ECF88040083037A /* nuiDialogSelectFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CD30450ECF88040083037A /* nuiDialogSelectFile.cpp */; };
+		E5CD30490ECF88040083037A /* nuiMessageBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CD30460ECF88040083037A /* nuiMessageBox.cpp */; };
+		E5CD304A0ECF88040083037A /* nuiDialogSelectDirectory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CD30440ECF88040083037A /* nuiDialogSelectDirectory.cpp */; };
+		E5CD304B0ECF88040083037A /* nuiDialogSelectFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CD30450ECF88040083037A /* nuiDialogSelectFile.cpp */; };
+		E5CD304C0ECF88040083037A /* nuiMessageBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CD30460ECF88040083037A /* nuiMessageBox.cpp */; };
+		E5CD30500ECF88350083037A /* nuiDialogSelectDirectory.h in Headers */ = {isa = PBXBuildFile; fileRef = E5CD304D0ECF88350083037A /* nuiDialogSelectDirectory.h */; };
+		E5CD30510ECF88350083037A /* nuiDialogSelectFile.h in Headers */ = {isa = PBXBuildFile; fileRef = E5CD304E0ECF88350083037A /* nuiDialogSelectFile.h */; };
+		E5CD30520ECF88350083037A /* nuiDragAndDrop.h in Headers */ = {isa = PBXBuildFile; fileRef = E5CD304F0ECF88350083037A /* nuiDragAndDrop.h */; };
+		E5CD30530ECF88350083037A /* nuiDialogSelectDirectory.h in Headers */ = {isa = PBXBuildFile; fileRef = E5CD304D0ECF88350083037A /* nuiDialogSelectDirectory.h */; };
+		E5CD30540ECF88350083037A /* nuiDialogSelectFile.h in Headers */ = {isa = PBXBuildFile; fileRef = E5CD304E0ECF88350083037A /* nuiDialogSelectFile.h */; };
+		E5CD30550ECF88350083037A /* nuiDragAndDrop.h in Headers */ = {isa = PBXBuildFile; fileRef = E5CD304F0ECF88350083037A /* nuiDragAndDrop.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -2664,6 +2712,18 @@
 		D2AAC046055464E500DB518D /* libnuiE.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libnuiE.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E534317F0EC39F2600575BA6 /* nuiMainMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiMainMenu.cpp; sourceTree = "<group>"; };
 		E53431860EC39FFF00575BA6 /* nuiMainMenu_UIKit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiMainMenu_UIKit.cpp; path = UIKit/nuiMainMenu_UIKit.cpp; sourceTree = "<group>"; };
+		E5CD2FD90ECF86510083037A /* nuiSample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiSample.cpp; path = src/AudioSamples/nuiSample.cpp; sourceTree = SOURCE_ROOT; };
+		E5CD2FDA0ECF86510083037A /* nuiSampleInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiSampleInfo.cpp; path = src/AudioSamples/nuiSampleInfo.cpp; sourceTree = SOURCE_ROOT; };
+		E5CD2FDB0ECF86510083037A /* nuiSampleReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiSampleReader.cpp; path = src/AudioSamples/nuiSampleReader.cpp; sourceTree = SOURCE_ROOT; };
+		E5CD2FDC0ECF86510083037A /* nuiSampleWriter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiSampleWriter.cpp; path = src/AudioSamples/nuiSampleWriter.cpp; sourceTree = SOURCE_ROOT; };
+		E5CD2FDD0ECF86510083037A /* nuiWaveReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiWaveReader.cpp; path = src/AudioSamples/nuiWaveReader.cpp; sourceTree = SOURCE_ROOT; };
+		E5CD2FDE0ECF86510083037A /* nuiWaveWriter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiWaveWriter.cpp; path = src/AudioSamples/nuiWaveWriter.cpp; sourceTree = SOURCE_ROOT; };
+		E5CD30440ECF88040083037A /* nuiDialogSelectDirectory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiDialogSelectDirectory.cpp; path = src/Dialogs/nuiDialogSelectDirectory.cpp; sourceTree = SOURCE_ROOT; };
+		E5CD30450ECF88040083037A /* nuiDialogSelectFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiDialogSelectFile.cpp; path = src/Dialogs/nuiDialogSelectFile.cpp; sourceTree = SOURCE_ROOT; };
+		E5CD30460ECF88040083037A /* nuiMessageBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiMessageBox.cpp; path = src/Dialogs/nuiMessageBox.cpp; sourceTree = SOURCE_ROOT; };
+		E5CD304D0ECF88350083037A /* nuiDialogSelectDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiDialogSelectDirectory.h; path = include/nuiDialogSelectDirectory.h; sourceTree = SOURCE_ROOT; };
+		E5CD304E0ECF88350083037A /* nuiDialogSelectFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiDialogSelectFile.h; path = include/nuiDialogSelectFile.h; sourceTree = SOURCE_ROOT; };
+		E5CD304F0ECF88350083037A /* nuiDragAndDrop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiDragAndDrop.h; path = include/nuiDragAndDrop.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2733,9 +2793,11 @@
 				6126D46F0DA5716500D2641A /* ngl_all.h */,
 				6126D4710DA5716500D2641A /* Attributes */,
 				6126D4860DA5716500D2641A /* Audio */,
+				E5CD2FD80ECF863E0083037A /* AudioSamples */,
 				6126D48F0DA5716500D2641A /* Application */,
 				6126D4BD0DA5716500D2641A /* Base */,
 				6126D4FD0DA5716500D2641A /* Decorations */,
+				E5CD30420ECF87E50083037A /* Dialogs */,
 				6126D50B0DA5716500D2641A /* File */,
 				6126D5180DA5716500D2641A /* Font */,
 				6126D5290DA5716500D2641A /* Image */,
@@ -4464,6 +4526,32 @@
 			path = GL;
 			sourceTree = "<group>";
 		};
+		E5CD2FD80ECF863E0083037A /* AudioSamples */ = {
+			isa = PBXGroup;
+			children = (
+				E5CD2FD90ECF86510083037A /* nuiSample.cpp */,
+				E5CD2FDA0ECF86510083037A /* nuiSampleInfo.cpp */,
+				E5CD2FDB0ECF86510083037A /* nuiSampleReader.cpp */,
+				E5CD2FDC0ECF86510083037A /* nuiSampleWriter.cpp */,
+				E5CD2FDD0ECF86510083037A /* nuiWaveReader.cpp */,
+				E5CD2FDE0ECF86510083037A /* nuiWaveWriter.cpp */,
+			);
+			name = AudioSamples;
+			sourceTree = "<group>";
+		};
+		E5CD30420ECF87E50083037A /* Dialogs */ = {
+			isa = PBXGroup;
+			children = (
+				E5CD304D0ECF88350083037A /* nuiDialogSelectDirectory.h */,
+				E5CD304E0ECF88350083037A /* nuiDialogSelectFile.h */,
+				E5CD304F0ECF88350083037A /* nuiDragAndDrop.h */,
+				E5CD30440ECF88040083037A /* nuiDialogSelectDirectory.cpp */,
+				E5CD30450ECF88040083037A /* nuiDialogSelectFile.cpp */,
+				E5CD30460ECF88040083037A /* nuiMessageBox.cpp */,
+			);
+			name = Dialogs;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -4960,6 +5048,13 @@
 				6199939E0EA6044600D2E090 /* nuiImageSequence.h in Headers */,
 				611944DB0EAE8FBE0078D6B3 /* nuiPanose.h in Headers */,
 				61D085440EAFADCF00B73835 /* nuiMouseCursor.h in Headers */,
+				E5CD2FFB0ECF875F0083037A /* nuiAudioConvert.h in Headers */,
+				E5CD2FFD0ECF875F0083037A /* nuiAudioDevice.h in Headers */,
+				E5CD30000ECF87610083037A /* nuiAudioFifo.h in Headers */,
+				E5CD30010ECF87620083037A /* nuiAudioResampler.h in Headers */,
+				E5CD30500ECF88350083037A /* nuiDialogSelectDirectory.h in Headers */,
+				E5CD30510ECF88350083037A /* nuiDialogSelectFile.h in Headers */,
+				E5CD30520ECF88350083037A /* nuiDragAndDrop.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5456,6 +5551,19 @@
 				6199939F0EA6044600D2E090 /* nuiImageSequence.h in Headers */,
 				611944DC0EAE8FBE0078D6B3 /* nuiPanose.h in Headers */,
 				61D085450EAFADCF00B73835 /* nuiMouseCursor.h in Headers */,
+				E5CD2FD00ECF85E80083037A /* nuiAudioConvert.h in Headers */,
+				E5CD2FD20ECF85E90083037A /* nuiAudioDevice.h in Headers */,
+				E5CD2FD50ECF85EB0083037A /* nuiAudioFifo.h in Headers */,
+				E5CD2FD60ECF85EC0083037A /* nuiAudioResampler.h in Headers */,
+				E5CD2FEC0ECF86780083037A /* nuiFrameView.h in Headers */,
+				E5CD2FF40ECF86B50083037A /* nuiSoftwarePainter.h in Headers */,
+				E5CD2FF50ECF86BA0083037A /* nuiRasterizer.h in Headers */,
+				E5CD2FF60ECF86BE0083037A /* nuiPixelBlender.h in Headers */,
+				E5CD2FF70ECF86C90083037A /* nuiFixedPoint.h in Headers */,
+				E5CD2FF80ECF86D00083037A /* AAPrimitives.h in Headers */,
+				E5CD30530ECF88350083037A /* nuiDialogSelectDirectory.h in Headers */,
+				E5CD30540ECF88350083037A /* nuiDialogSelectFile.h in Headers */,
+				E5CD30550ECF88350083037A /* nuiDragAndDrop.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5809,6 +5917,18 @@
 				E53431800EC39F2600575BA6 /* nuiMainMenu.cpp in Sources */,
 				E53431870EC39FFF00575BA6 /* nuiMainMenu_UIKit.cpp in Sources */,
 				E51D5B450EC3A3C900182E40 /* ngl_glext_table.cpp in Sources */,
+				E5CD2FDF0ECF86510083037A /* nuiSample.cpp in Sources */,
+				E5CD2FE00ECF86510083037A /* nuiSampleInfo.cpp in Sources */,
+				E5CD2FE10ECF86510083037A /* nuiSampleReader.cpp in Sources */,
+				E5CD2FE20ECF86510083037A /* nuiSampleWriter.cpp in Sources */,
+				E5CD2FE30ECF86510083037A /* nuiWaveReader.cpp in Sources */,
+				E5CD2FE40ECF86510083037A /* nuiWaveWriter.cpp in Sources */,
+				E5CD2FFA0ECF875E0083037A /* nuiAudioConvert.cpp in Sources */,
+				E5CD2FFC0ECF875F0083037A /* nuiAudioDevice.cpp in Sources */,
+				E5CD2FFF0ECF87610083037A /* nuiAudioFifo.cpp in Sources */,
+				E5CD30470ECF88040083037A /* nuiDialogSelectDirectory.cpp in Sources */,
+				E5CD30480ECF88040083037A /* nuiDialogSelectFile.cpp in Sources */,
+				E5CD30490ECF88040083037A /* nuiMessageBox.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6106,6 +6226,22 @@
 				E53431810EC39F2600575BA6 /* nuiMainMenu.cpp in Sources */,
 				E53431880EC39FFF00575BA6 /* nuiMainMenu_UIKit.cpp in Sources */,
 				E51D5BCE0EC3C5DD00182E40 /* ngl_glext_table.cpp in Sources */,
+				E5CD2FCF0ECF85E70083037A /* nuiAudioConvert.cpp in Sources */,
+				E5CD2FD10ECF85E90083037A /* nuiAudioDevice.cpp in Sources */,
+				E5CD2FD30ECF85EA0083037A /* nuiAudioDevice_CoreAudio.cpp in Sources */,
+				E5CD2FD40ECF85EB0083037A /* nuiAudioFifo.cpp in Sources */,
+				E5CD2FE50ECF86510083037A /* nuiSample.cpp in Sources */,
+				E5CD2FE60ECF86510083037A /* nuiSampleInfo.cpp in Sources */,
+				E5CD2FE70ECF86510083037A /* nuiSampleReader.cpp in Sources */,
+				E5CD2FE80ECF86510083037A /* nuiSampleWriter.cpp in Sources */,
+				E5CD2FE90ECF86510083037A /* nuiWaveReader.cpp in Sources */,
+				E5CD2FEA0ECF86510083037A /* nuiWaveWriter.cpp in Sources */,
+				E5CD2FEB0ECF86770083037A /* nuiFrameView.cpp in Sources */,
+				E5CD2FF30ECF86B50083037A /* nuiSoftwarePainter.cpp in Sources */,
+				E5CD2FF90ECF86D20083037A /* AAPrimitives.cpp in Sources */,
+				E5CD304A0ECF88040083037A /* nuiDialogSelectDirectory.cpp in Sources */,
+				E5CD304B0ECF88040083037A /* nuiDialogSelectFile.cpp in Sources */,
+				E5CD304C0ECF88040083037A /* nuiMessageBox.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

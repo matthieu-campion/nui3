@@ -48,6 +48,7 @@ nglContextInfo::nglContextInfo()
 
     case 24:
     case 32:
+    default:
       FrameBitsR  = 8;
       FrameBitsG  = 8;
       FrameBitsB  = 8;

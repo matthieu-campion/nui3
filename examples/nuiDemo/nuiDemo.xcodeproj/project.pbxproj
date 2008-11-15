@@ -105,6 +105,7 @@
 		BCE44D9B0EC6463C00AEBD64 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = /System/Library/Frameworks/CoreAudio.framework; sourceTree = "<absolute>"; };
 		BCE44DC00EC646A600AEBD64 /* AudioTrack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioTrack.cpp; path = src/Engine/AudioTrack.cpp; sourceTree = SOURCE_ROOT; };
 		BCE44DC10EC646A600AEBD64 /* AudioTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioTrack.h; path = src/Engine/AudioTrack.h; sourceTree = SOURCE_ROOT; };
+		E5CD2ECF0ECF808B0083037A /* nuiPhoneDemo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "nuiPhoneDemo-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +152,7 @@
 				61A9DE4A0B833CD000BC506C /* src */,
 				61A9DE490B833CB000BC506C /* deps */,
 				61A9DFB50B833DE500BC506C /* Products */,
+				E5CD2ECF0ECF808B0083037A /* nuiPhoneDemo-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};

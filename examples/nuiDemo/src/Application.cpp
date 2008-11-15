@@ -16,8 +16,10 @@
 
 #ifdef _CARBON_
 #include "nuiAudioDevice_CoreAudio.h"
-#else
+#elif (defined _WIN32_)
 #include "nuiAudioDevice_DirectSound.h"
+#else
+// Add needed sound API
 #endif
 
 
@@ -30,7 +32,6 @@ NGL_APP_CREATE(Application);
 Application::Application()
 {
   mpMainWindow = NULL;
-  wprintf(_T("Audio system:%ld"), CoreAudioAPI.GetAPIName().GetChars());
 }
 
 Application::~Application()
@@ -64,9 +65,13 @@ void Application::InitWindow()
   bool DebugObject = false;
   bool DebugInfo = false;
   bool ShowFPS = false;
-  //  nuiRenderer Renderer = eDirect3D;
+#ifdef _UIKIT_
+  nuiRenderer Renderer = eOpenGLES; // iPhone is OpenGL ES until we merge the OGLES renderer in the more general OGL one
+#else
   nuiRenderer Renderer = eOpenGL;
+  //  nuiRenderer Renderer = eDirect3D;
   //  nuiRenderer Renderer = eSoftware;
+#endif
   
   // Accept NGL default options
   ParseDefaultArgs();

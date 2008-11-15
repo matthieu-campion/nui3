@@ -27,9 +27,11 @@ nglVideoMode::nglVideoMode()
 {
   CGRect rect = [[UIScreen mainScreen] bounds];
 
-  mWidth= (uint)rect.size.width;
-  mHeight= (uint)rect.size.height;
+  mWidth = (uint)rect.size.width;
+  mHeight = (uint)rect.size.height;
 
+  mBPP = 16;
+  
   Init();
 }
 

@@ -17,7 +17,7 @@ public:
   nglStringCodec(nglTextEncoding From, nglTextEncoding To);
   ~nglStringCodec();
   
-  ::TextEncoding GetIANA (nglTextEncoding Encoding) const;
+  ::TextEncoding GetIANA(nglTextEncoding Encoding, bool NormalizedFormC) const;
   
 };
 
@@ -196,8 +196,8 @@ nglStringCodec::nglStringCodec(nglTextEncoding From, nglTextEncoding To)
   mFrom = From;
   mTo = To;
   
-  ::TextEncoding from = GetIANA(mFrom);
-  ::TextEncoding to = GetIANA(mTo);
+  ::TextEncoding from = GetIANA(mFrom, false);
+  ::TextEncoding to = GetIANA(mTo, true);
   
   OSStatus Result = 0;
   if (to != from)
@@ -217,8 +217,9 @@ nglStringCodec::~nglStringCodec()
 }
 
 
-::TextEncoding nglStringCodec::GetIANA (nglTextEncoding Encoding) const
+::TextEncoding nglStringCodec::GetIANA(nglTextEncoding Encoding, bool NormalizedFormC) const
 {
+  TextEncodingVariant norm = NormalizedFormC ? kUnicodeNormalizationFormC : kUnicodeNoSubset;
   switch (Encoding)
   {
     // 8 bit encodings    
@@ -268,16 +269,16 @@ nglStringCodec::~nglStringCodec()
     case eCP950 : return kTextEncodingDOSChineseTrad;
       
       // Unicode variants - the MacOS API is not very clear on those encodings
-    case eUTF7 : return CreateTextEncoding(kTextEncodingUnicodeDefault, kUnicodeNoSubset, kUnicodeUTF7Format); 
-		case eUTF8 : return CreateTextEncoding(kTextEncodingUnicodeDefault, kUnicodeNoSubset, kUnicodeUTF8Format);
-    case eUCS2 : return CreateTextEncoding(kTextEncodingUnicodeDefault, kUnicodeNoSubset, kUnicodeUTF16Format);
-    case eUCS4 : return CreateTextEncoding(kTextEncodingUnicodeDefault, kUnicodeNoSubset, kUnicodeUTF16Format); // not yet implemented on MacOSX so we cheat with 16 bit and we'll transcode to and from 32 bits by hand
+    case eUTF7 : return CreateTextEncoding(kTextEncodingUnicodeDefault, norm, kUnicodeUTF7Format); 
+		case eUTF8 : return CreateTextEncoding(kTextEncodingUnicodeDefault, norm, kUnicodeUTF8Format);
+    case eUCS2 : return CreateTextEncoding(kTextEncodingUnicodeDefault, norm, kUnicodeUTF16Format);
+    case eUCS4 : return CreateTextEncoding(kTextEncodingUnicodeDefault, norm, kUnicodeUTF16Format); // not yet implemented on MacOSX so we cheat with 16 bit and we'll transcode to and from 32 bits by hand
                                                                                                                            // Others
       
       
-    case eEncodingInternal: return CreateTextEncoding(kTextEncodingUnicodeDefault, kUnicodeNoSubset, kUnicodeUTF16Format);
+    case eEncodingInternal: return CreateTextEncoding(kTextEncodingUnicodeDefault, norm, kUnicodeUTF16Format);
       
-    case eEncodingNative  : return CreateTextEncoding(kTextEncodingUnicodeDefault, kUnicodeNoSubset, kUnicodeUTF8Format);
+    case eEncodingNative  : return CreateTextEncoding(kTextEncodingUnicodeDefault, norm, kUnicodeUTF8Format);
       
     case eEncodingUnknown:
     default:

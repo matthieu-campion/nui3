@@ -289,6 +289,7 @@ nuiFontRequest::~nuiFontRequest()
 void nuiFontRequest::SetName(const nglString& rName, float Score, bool Strict)
 {
   mName.mElement = rName;
+  mName.mElement.ToLower();
   mName.mScore = Score;  
   mName.mStrict = Strict;  
 }
@@ -296,6 +297,7 @@ void nuiFontRequest::SetName(const nglString& rName, float Score, bool Strict)
 void nuiFontRequest::SetGenericName(const nglString& rName, float Score, bool Strict)
 {
   mGenericName.mElement = rName;
+  mGenericName.mElement.ToLower();
   mGenericName.mScore = Score;  
   mGenericName.mStrict = Strict;  
 }
@@ -303,6 +305,7 @@ void nuiFontRequest::SetGenericName(const nglString& rName, float Score, bool St
 void nuiFontRequest::SetStyle(const nglString& rStyle, float Score, bool Strict)
 {
   mStyle.mElement = rStyle;
+  mStyle.mElement.ToLower();
   mStyle.mScore = Score;  
   mStyle.mStrict = Strict;  
 }
@@ -1119,13 +1122,10 @@ static void SetScore(float& score, float& sscore, float request_score, bool stri
 void nuiFontManager::RequestFont(nuiFontRequest& rRequest, std::list<nuiFontRequestResult>& rFoundFonts) const
 {
   rFoundFonts.clear();
-  rRequest.mName.mElement.ToLower();
-  rRequest.mGenericName.mElement.ToLower();
-  rRequest.mStyle.mElement.ToLower();
   
   if (nuiFontRequest::gFontsForGenericNames.find(rRequest.mName.mElement) != nuiFontRequest::gFontsForGenericNames.end())
-    // given name is actually a generic name
   {
+    // given name is actually a generic name
     rRequest.mGenericName = rRequest.mName;
     rRequest.mName.mElement = nuiFontRequest::gDefaultFontsForGenericNames[rRequest.mGenericName.mElement];
   }

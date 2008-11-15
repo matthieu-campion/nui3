@@ -51,6 +51,10 @@ public:
   void SetWrapX(nuiSize WrapX);
   nuiSize GetWrapX() const;
 
+  void SetDensity(nuiSize X, nuiSize Y);
+  nuiSize GetDensityX() const;
+  nuiSize GetDensityY() const;
+
   nuiRect GetRect() const;
   nglFontBase* FindFontForMissingGlyph(nglFontBase* pOriginalFont, nglChar Glyph);
   
@@ -87,6 +91,8 @@ protected:
   std::vector<Line> mLines;
   bool mUnderline;
   bool mStrikeThrough;
+  float mXDensity;
+  float mYDensity;
 };
 
 class NUI_API nuiFontBase : public nglFontBase

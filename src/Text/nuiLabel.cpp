@@ -67,7 +67,6 @@ nuiLabel::nuiLabel(const nglString& Text, nuiFont* pFont, bool AlreadyAcquired)
   mBackColorSet = false;  
   
   mUseEllipsis = false;
-  mAlreadyReduced = false;
   mClearBg = false;
   mTextPosition = nuiLeft;
 
@@ -100,7 +99,6 @@ bool nuiLabel::Load(const nuiXMLNode* pNode)
   */
 
   mUseEllipsis = false;
-  mAlreadyReduced = false;
   mClearBg = false;
   mWrapping = false;
   mIgnoreState = false;
@@ -383,7 +381,6 @@ void nuiLabel::CalcLayout()
       GetLayoutRect();
       mTextChanged = false;
       mFontChanged = false;
-      mAlreadyReduced = false;
     }
   }
 }
@@ -414,30 +411,26 @@ bool nuiLabel::SetRect(const nuiRect& rRect)
   if (!mpLayout)
     return false;
 
-  if (ideal.GetWidth()> mRect.GetWidth())
+  if (ideal.GetWidth() > mRect.GetWidth())
   {
-    if (!mAlreadyReduced)
+    if (mUseEllipsis)
     {
-      if (mUseEllipsis)
-      {
-        nuiSize diff = ideal.GetWidth() - mRect.GetWidth();
-        int NbLetterToRemove = ToNearest(diff / (ideal.GetWidth() / mText.GetLength())) + 3;
-        nglString text = mText;
-        text.DeleteRight(MIN(NbLetterToRemove, text.GetLength()));
-        text.Append(_T("..."));
-        mAlreadyReduced = true;
-        mpLayout->Init(0,0);
-        mpLayout->SetWrapX(0);
-        mpLayout->Layout(text);
-        GetLayoutRect();
-      }
-      else if (mWrapping)
-      {
-        mpLayout->Init(0,0);
-        mpLayout->SetWrapX(mRect.GetWidth() - mBorderLeft - mBorderRight);
-        mpLayout->Layout(mText);
-        GetLayoutRect();
-      }
+      nuiSize diff = ideal.GetWidth() - mRect.GetWidth();
+      int NbLetterToRemove = ToNearest(diff / (ideal.GetWidth() / mText.GetLength())) + 3;
+      nglString text = mText;
+      text.DeleteRight(MIN(NbLetterToRemove, text.GetLength()));
+      text.Append(_T("..."));
+      mpLayout->Init(0,0);
+      mpLayout->SetWrapX(0);
+      mpLayout->Layout(text);
+      GetLayoutRect();
+    }
+    else if (mWrapping)
+    {
+      mpLayout->Init(0,0);
+      mpLayout->SetWrapX(mRect.GetWidth() - mBorderLeft - mBorderRight);
+      mpLayout->Layout(mText);
+      GetLayoutRect();
     }
 
     SetToolTip(mText);
