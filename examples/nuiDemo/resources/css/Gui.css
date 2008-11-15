@@ -7,11 +7,6 @@
 // licence: see nui3/LICENCE.TXT
 //
 //
-//@nuiColorDecoration dGui
-//{
-//  FillColor: black;
-//  ShapeMode: Fill;
-//}
 
 @nuiGradientDecoration dGui
 {
@@ -20,12 +15,13 @@
   Color3: rgb(39,34,31);
   Color4: rgb(64,64,64);
   Offset1: 0;
-  Offset2: 0.2;
-  Offset3: 0.4;
+  Offset2: 0.4;
+  Offset3: 0.6;
   Offset4: 1;
   Orientation: Vertical;
   ShapeMode: Fill;
 }
+
 
 Gui!
 {
@@ -37,6 +33,7 @@ Gui!
   Texture: "rsrc:/decorations/title.png";
   BorderLeft: 10;
   BorderTop: 10;
+  BorderBottom: 10;
 }
 
 
@@ -98,8 +95,8 @@ Gui!
 {
   DecorationMode: Border;
   Decoration: dguiOscilloBackground;
-  UserRect: "{0 0 300 140}";
-  BorderRight: 20;
+  UserRect: "{0 0 280 131}";
+  BorderBottom: 5;
 }
 
 
@@ -109,7 +106,7 @@ Gui!
 {
   Texture: "rsrc:/decorations/oscilloGloss.png";
   Layer: Front;
-  ClientRect: "{15 15 270 110}";
+  ClientRect: "{10 12 270 116}";
 }
 
 

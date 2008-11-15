@@ -31,40 +31,32 @@ Gui::Gui()
   AddCell(pTitleImg, nuiTopLeft);
     
 
-  // row 2: start button and oscillo ******************************
+  // row 2: oscillo ***********************************************
   //
   
-  // a box for row layout
-  nuiHBox* pBox = new nuiHBox(0);
-  pBox->SetExpand(nuiExpandShrinkAndGrow);
-  AddCell(pBox);
+  nuiSimpleContainer* pOscilloBkg = new nuiSimpleContainer();
+  pOscilloBkg->SetObjectName(_T("guiOscilloBackground"));
+  AddCell(pOscilloBkg, nuiCenter);
   
-  // start/stop button
+  guiOscillo* pOscillo = new guiOscillo(GetEngine()->GetAudioTrack()->GetSamplesBuffer());
+  pOscilloBkg->AddChild(pOscillo);
+  
+  
+  // row 3: on/off button and   -
   nuiToggleButton* pStartBtn = new nuiToggleButton();
   pStartBtn->SetObjectName(_T("ButtonStart"));
-  pBox->AddCell(pStartBtn, nuiCenter);
-  pBox->SetCellExpand(pBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
+  AddCell(pStartBtn, nuiCenter);
   
   // connect the button event to the gui controller.
   // <=> in the nui-way-of-thinking : connect the button event source you're interessted in to the event receiver of your choice
   mEventSink.Connect(pStartBtn->ButtonPressed, &Gui::OnStartButtonPressed);
   mEventSink.Connect(pStartBtn->ButtonDePressed, &Gui::OnStartButtonDePressed);
   
-  // oscillo
-  nuiSimpleContainer* pOscilloBkg = new nuiSimpleContainer();
-  pOscilloBkg->SetObjectName(_T("guiOscilloBackground"));
-  pBox->AddCell(pOscilloBkg, nuiCenter);
-  
-  guiOscillo* pOscillo = new guiOscillo(GetEngine()->GetAudioTrack()->GetSamplesBuffer());
-  pOscilloBkg->AddChild(pOscillo);
-  
-  
-
-  // row 3: text and sound controls *******************************
+  // row 4: text and sound controls *******************************
   //
   
   // a box for row layout
-  pBox = new nuiHBox(0);
+  nuiHBox* pBox = new nuiHBox(0);
   pBox->SetExpand(nuiExpandShrinkAndGrow);
   AddCell(pBox);
   SetCellExpand(GetNbCells()-1, nuiExpandShrinkAndGrow);

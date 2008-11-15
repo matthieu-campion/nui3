@@ -38,10 +38,12 @@ bool guiOscillo::Draw(nuiDrawContext* pContext)
  if (mrData.empty())
     return false;
   
+  const nuiRect& rect = GetRect();
+  
   uint32 s1 = mrData[0].size();
-  uint32 s2 = GetRect().GetWidth();
+  uint32 s2 = rect.GetWidth();
   uint32 count = MIN(s1, s2);
-  nuiSize hi = GetRect().GetHeight();
+  nuiSize hi = rect.GetHeight();
   nuiSize mid = hi / 2;
 
   nuiColor color[2];

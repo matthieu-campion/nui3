@@ -127,8 +127,8 @@ void Application::InitWindow()
     }
     else
     {
-      Width = 700;
-      Height = 500;
+      Width = 320;
+      Height = 480;
     }
   }
   
