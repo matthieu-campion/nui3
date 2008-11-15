@@ -6,26 +6,26 @@
 //
 // licence: see nui3/LICENCE.TXT
 //
-
-@nuiColorDecoration dGui
-{
-  FillColor: black;
-  ShapeMode: Fill;
-}
-
-//@nuiGradientDecoration dGui
+//
+//@nuiColorDecoration dGui
 //{
-//  Color1: rgb(16,16,16);
-//  Color2: rgb(16,16,16);
-//  Color3: rgb(39,34,31);
-//  Color4: rgb(64,64,64);
-//  Offset1: 0;
-//  Offset2: 0.2;
-//  Offset3: 0.4;
-//  Offset4: 1;
-//  Orientation: Vertical;
+//  FillColor: black;
 //  ShapeMode: Fill;
 //}
+
+@nuiGradientDecoration dGui
+{
+  Color1: rgb(16,16,16);
+  Color2: rgb(16,16,16);
+  Color3: rgb(39,34,31);
+  Color4: rgb(64,64,64);
+  Offset1: 0;
+  Offset2: 0.2;
+  Offset3: 0.4;
+  Offset4: 1;
+  Orientation: Vertical;
+  ShapeMode: Fill;
+}
 
 Gui!
 {
