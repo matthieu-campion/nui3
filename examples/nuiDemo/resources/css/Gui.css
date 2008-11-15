@@ -65,21 +65,11 @@ Gui!
   // please have a look to nuiStateDecoration.h
 }
 
-@nuiFrame dButtonStartText
-{
-  Texture: "rsrc:/decorations/buttonStartText.png";
-}
-
-@nuiMetaDecoration dButtonStart
-{
-  Decoration: dButtonStartBkg;
-  Decoration: dButtonStartText;
-}
 
 "ButtonStart"!
 {
   DecorationMode: Border;
-  Decoration: dButtonStart;
+  Decoration: dButtonStartBkg;
 }
 
 
