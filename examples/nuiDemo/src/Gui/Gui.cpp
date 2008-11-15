@@ -54,30 +54,35 @@ Gui::Gui()
   
   // row 4: text and sound controls *******************************
   //
-  
-  // a box for row layout
-  nuiHBox* pBox = new nuiHBox(0);
-  pBox->SetExpand(nuiExpandShrinkAndGrow);
-  AddCell(pBox);
+  nuiSimpleContainer* pPaneBkg = new nuiSimpleContainer();
+  pPaneBkg->SetObjectName(_T("PaneBkg"));
+  AddCell(pPaneBkg, nuiBottom);
   SetCellExpand(GetNbCells()-1, nuiExpandShrinkAndGrow);
   
-  // a text to display
-  nuiLabel* pText = new nuiLabel(_T("TEXT"));
-  pText->SetObjectName(_T("Text"));
-  pBox->AddCell(pText, nuiCenter);
-  pBox->SetCellExpand(pBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
-  
-  // load text contents from binary's resources
-  nglString textContents;
-  nglIStream* pTextInput = nglPath(_T("rsrc:/text.txt")).OpenRead();
-  NGL_ASSERT(pTextInput);
-  pTextInput->ReadText(textContents);
-  pText->SetText(textContents);
-  
+//  // a box for row layout
+//  nuiHBox* pBox = new nuiHBox(0);
+//  pBox->SetExpand(nuiExpandShrinkAndGrow);
+//  AddCell(pBox);
+//  SetCellExpand(GetNbCells()-1, nuiExpandShrinkAndGrow);
+//  
+//  
   // area for the sound controls
   nuiWidget* pControls = BuildControls();
-  pBox->AddCell(pControls);
-  pBox->SetCellExpand(pBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
+  pPaneBkg->AddChild(pControls);
+
+  //  // a text to display
+  //  nuiLabel* pText = new nuiLabel(_T("TEXT"));
+  //  pText->SetObjectName(_T("Text"));
+  //  pBox->AddCell(pText, nuiCenter);
+  //  pBox->SetCellExpand(pBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
+  //  
+  //  // load text contents from binary's resources
+  //  nglString textContents;
+  //  nglIStream* pTextInput = nglPath(_T("rsrc:/text.txt")).OpenRead();
+  //  NGL_ASSERT(pTextInput);
+  //  pTextInput->ReadText(textContents);
+  //  pText->SetText(textContents);
+  
   
 }
 
