@@ -3,6 +3,6 @@ made with the NUI framework:
 
 - build a graphic user interface
 - handle some user control events
-- build the basics of an advanced audio system
-- handle file loading from the binary's resources
-- decorate the GUI using a NUI's css stylesheet
+- basics of an advanced audio system
+- load files from the binary's resources
+- decorate the GUI with NUI's stylesheets

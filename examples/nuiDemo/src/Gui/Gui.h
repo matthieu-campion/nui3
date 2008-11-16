@@ -9,6 +9,7 @@
 
 #include "nui.h"
 #include "nuiVBox.h"
+#include "nuiHBox.h"
 
 class Gui : public nuiVBox
 {
@@ -29,6 +30,16 @@ protected:
   bool OnFreqKnobChanged(const nuiEvent& rEvent);
   bool OnQKnobChanged(const nuiEvent& rEvent);
   
+  bool OnShowText(const nuiEvent& rEvent);
+  bool OnShowControls(const nuiEvent& rEvent);
+  
+private:
+
+  nuiLabel* mpText;
+  nuiWidget* mpControls;
+  nuiTimer mTimer;
+  uint32 mTextPaneWidth;
+  uint32 mControlsPaneWidth;
   
   // a sink to connect the event sources to the local event receivers.
   nuiEventSink<Gui> mEventSink;
@@ -37,5 +48,8 @@ protected:
   // Forgetting to set ups that connection happened all the time and each time, it was a pain in the ass to understand the bug.
   // => now, the nuiEventSink is templated: it makes the sink connection be mandatory in the class constructor, 
   // otherwise the compiler complains and you can understand right away what it complains for.
+
+  // another sink, assigned to the timer
+  nuiEventSink<Gui> mTimerSink;
 };
 
