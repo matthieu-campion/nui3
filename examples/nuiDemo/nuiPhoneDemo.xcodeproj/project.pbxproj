@@ -1,0 +1,581 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C99995FC0DA6EE97001A7116 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		C99995FD0DA6EE97001A7116 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		C99995FE0DA6EE97001A7116 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
+		C99997300DA6F405001A7116 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C999972E0DA6F405001A7116 /* OpenGLES.framework */; };
+		C99997720DA6F9F2001A7116 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C99997710DA6F9F2001A7116 /* AudioToolbox.framework */; };
+		C99998F60DA7CAF2001A7116 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C99998F50DA7CAF2001A7116 /* QuartzCore.framework */; };
+		C9CD09880DDDC04B0082235F /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9CD09870DDDC04B0082235F /* CFNetwork.framework */; };
+		C9CD09890DDDC04B0082235F /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9CD09870DDDC04B0082235F /* CFNetwork.framework */; };
+		C9EA04FE0E2917FA0067EF48 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9EA04FD0E2917FA0067EF48 /* MediaPlayer.framework */; };
+		C9EA04FF0E2917FA0067EF48 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9EA04FD0E2917FA0067EF48 /* MediaPlayer.framework */; };
+		C9F5F92B0DA84CAB00E078ED /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		C9F5F92C0DA84CAB00E078ED /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		C9F5F92D0DA84CAB00E078ED /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
+		C9F5F92E0DA84CAB00E078ED /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C999972E0DA6F405001A7116 /* OpenGLES.framework */; };
+		C9F5F92F0DA84CAB00E078ED /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C99997710DA6F9F2001A7116 /* AudioToolbox.framework */; };
+		C9F5F9300DA84CAB00E078ED /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C99998F50DA7CAF2001A7116 /* QuartzCore.framework */; };
+		E5CD2F610ECF82860083037A /* libnuiE.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E5CD2F5E0ECF82810083037A /* libnuiE.a */; };
+		E5CD2F620ECF828B0083037A /* libnuiEd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E5CD2F600ECF82810083037A /* libnuiEd.a */; };
+		E5CD2F780ECF82BE0083037A /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CD2F680ECF82BE0083037A /* Application.cpp */; };
+		E5CD2F790ECF82BE0083037A /* AudioTrack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CD2F6B0ECF82BE0083037A /* AudioTrack.cpp */; };
+		E5CD2F7A0ECF82BE0083037A /* BiQuad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CD2F6D0ECF82BE0083037A /* BiQuad.cpp */; };
+		E5CD2F7B0ECF82BE0083037A /* Engine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CD2F6F0ECF82BE0083037A /* Engine.cpp */; };
+		E5CD2F7C0ECF82BE0083037A /* Gui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CD2F720ECF82BE0083037A /* Gui.cpp */; };
+		E5CD2F7D0ECF82BE0083037A /* guiOscillo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CD2F740ECF82BE0083037A /* guiOscillo.cpp */; };
+		E5CD2F7E0ECF82BE0083037A /* MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CD2F760ECF82BE0083037A /* MainWindow.cpp */; };
+		E5CD2F7F0ECF82BE0083037A /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CD2F680ECF82BE0083037A /* Application.cpp */; };
+		E5CD2F800ECF82BE0083037A /* AudioTrack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CD2F6B0ECF82BE0083037A /* AudioTrack.cpp */; };
+		E5CD2F810ECF82BE0083037A /* BiQuad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CD2F6D0ECF82BE0083037A /* BiQuad.cpp */; };
+		E5CD2F820ECF82BE0083037A /* Engine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CD2F6F0ECF82BE0083037A /* Engine.cpp */; };
+		E5CD2F830ECF82BE0083037A /* Gui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CD2F720ECF82BE0083037A /* Gui.cpp */; };
+		E5CD2F840ECF82BE0083037A /* guiOscillo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CD2F740ECF82BE0083037A /* guiOscillo.cpp */; };
+		E5CD2F850ECF82BE0083037A /* MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CD2F760ECF82BE0083037A /* MainWindow.cpp */; };
+		E5CD31100ED0CEE30083037A /* guiTheme.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CD310E0ED0CEE30083037A /* guiTheme.cpp */; };
+		E5CD31110ED0CEE30083037A /* guiTheme.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CD310E0ED0CEE30083037A /* guiTheme.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E5CD2F5D0ECF82810083037A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 61DF35C60EC25BCD00051F43 /* nuiE.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC046055464E500DB518D /* libnuiE.a */;
+			remoteInfo = nuiE;
+		};
+		E5CD2F5F0ECF82810083037A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 61DF35C60EC25BCD00051F43 /* nuiE.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 614B66C30DA7BA67000F4C22 /* libnuiEd.a */;
+			remoteInfo = nuiEd;
+		};
+		E5CD2F630ECF82960083037A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 61DF35C60EC25BCD00051F43 /* nuiE.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC045055464E500DB518D /* nuiE */;
+			remoteInfo = nuiE;
+		};
+		E5CD2F650ECF82A00083037A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 61DF35C60EC25BCD00051F43 /* nuiE.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 614B637D0DA7BA67000F4C22 /* nuiEd */;
+			remoteInfo = nuiEd;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		61DF35C60EC25BCD00051F43 /* nuiE.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nuiE.xcodeproj; path = ../../nuiE.xcodeproj; sourceTree = SOURCE_ROOT; };
+		C99996020DA6EE97001A7116 /* iPhoneDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iPhoneDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C999972E0DA6F405001A7116 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		C99997710DA6F9F2001A7116 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		C99998F50DA7CAF2001A7116 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		C9CD09870DDDC04B0082235F /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		C9DCE4C20DA7F4FF008AC45D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C9EA04FD0E2917FA0067EF48 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		C9F2587A0E5861EA00687021 /* dlist.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = dlist.plist; sourceTree = "<group>"; };
+		C9F5F9330DA84CAB00E078ED /* iPhoneDemoD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iPhoneDemoD.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E5CD2F0E0ECF82310083037A /* Colors.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = Colors.css; path = resources/css/Colors.css; sourceTree = SOURCE_ROOT; };
+		E5CD2F0F0ECF82310083037A /* Fonts.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = Fonts.css; path = resources/css/Fonts.css; sourceTree = SOURCE_ROOT; };
+		E5CD2F100ECF82310083037A /* Gui.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = Gui.css; path = resources/css/Gui.css; sourceTree = SOURCE_ROOT; };
+		E5CD2F110ECF82310083037A /* nuiDemo.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = nuiDemo.css; path = resources/css/nuiDemo.css; sourceTree = SOURCE_ROOT; };
+		E5CD2F130ECF82310083037A /* buttonStartDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buttonStartDown.png; path = resources/decorations/buttonStartDown.png; sourceTree = SOURCE_ROOT; };
+		E5CD2F140ECF82310083037A /* buttonStartDownHover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buttonStartDownHover.png; path = resources/decorations/buttonStartDownHover.png; sourceTree = SOURCE_ROOT; };
+		E5CD2F150ECF82310083037A /* buttonStartUp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buttonStartUp.png; path = resources/decorations/buttonStartUp.png; sourceTree = SOURCE_ROOT; };
+		E5CD2F160ECF82310083037A /* buttonStartUpHover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buttonStartUpHover.png; path = resources/decorations/buttonStartUpHover.png; sourceTree = SOURCE_ROOT; };
+		E5CD2F170ECF82310083037A /* oscilloBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = oscilloBackground.png; path = resources/decorations/oscilloBackground.png; sourceTree = SOURCE_ROOT; };
+		E5CD2F180ECF82310083037A /* oscilloGloss.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = oscilloGloss.png; path = resources/decorations/oscilloGloss.png; sourceTree = SOURCE_ROOT; };
+		E5CD2F190ECF82310083037A /* pane.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pane.png; path = resources/decorations/pane.png; sourceTree = SOURCE_ROOT; };
+		E5CD2F1A0ECF82310083037A /* title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = title.png; path = resources/decorations/title.png; sourceTree = SOURCE_ROOT; };
+		E5CD2F1B0ECF82310083037A /* nuiDemo.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = nuiDemo.icns; path = resources/nuiDemo.icns; sourceTree = "<group>"; };
+		E5CD2F1C0ECF82310083037A /* nuiDemo.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; name = nuiDemo.ico; path = resources/nuiDemo.ico; sourceTree = "<group>"; };
+		E5CD2F1D0ECF82310083037A /* nuiDemo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = nuiDemo.png; path = resources/nuiDemo.png; sourceTree = "<group>"; };
+		E5CD2F1E0ECF82310083037A /* sample.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = sample.wav; path = resources/sample.wav; sourceTree = "<group>"; };
+		E5CD2F1F0ECF82310083037A /* text.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = text.txt; path = resources/text.txt; sourceTree = "<group>"; };
+		E5CD2F680ECF82BE0083037A /* Application.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Application.cpp; path = src/Application.cpp; sourceTree = SOURCE_ROOT; };
+		E5CD2F690ECF82BE0083037A /* Application.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Application.h; path = src/Application.h; sourceTree = SOURCE_ROOT; };
+		E5CD2F6B0ECF82BE0083037A /* AudioTrack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioTrack.cpp; path = src/Engine/AudioTrack.cpp; sourceTree = SOURCE_ROOT; };
+		E5CD2F6C0ECF82BE0083037A /* AudioTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioTrack.h; path = src/Engine/AudioTrack.h; sourceTree = SOURCE_ROOT; };
+		E5CD2F6D0ECF82BE0083037A /* BiQuad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BiQuad.cpp; path = src/Engine/BiQuad.cpp; sourceTree = SOURCE_ROOT; };
+		E5CD2F6E0ECF82BE0083037A /* BiQuad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BiQuad.h; path = src/Engine/BiQuad.h; sourceTree = SOURCE_ROOT; };
+		E5CD2F6F0ECF82BE0083037A /* Engine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Engine.cpp; path = src/Engine/Engine.cpp; sourceTree = SOURCE_ROOT; };
+		E5CD2F700ECF82BE0083037A /* Engine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Engine.h; path = src/Engine/Engine.h; sourceTree = SOURCE_ROOT; };
+		E5CD2F720ECF82BE0083037A /* Gui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Gui.cpp; path = src/Gui/Gui.cpp; sourceTree = SOURCE_ROOT; };
+		E5CD2F730ECF82BE0083037A /* Gui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gui.h; path = src/Gui/Gui.h; sourceTree = SOURCE_ROOT; };
+		E5CD2F740ECF82BE0083037A /* guiOscillo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = guiOscillo.cpp; path = src/Gui/guiOscillo.cpp; sourceTree = SOURCE_ROOT; };
+		E5CD2F750ECF82BE0083037A /* guiOscillo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = guiOscillo.h; path = src/Gui/guiOscillo.h; sourceTree = SOURCE_ROOT; };
+		E5CD2F760ECF82BE0083037A /* MainWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MainWindow.cpp; path = src/MainWindow.cpp; sourceTree = SOURCE_ROOT; };
+		E5CD2F770ECF82BE0083037A /* MainWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainWindow.h; path = src/MainWindow.h; sourceTree = SOURCE_ROOT; };
+		E5CD310E0ED0CEE30083037A /* guiTheme.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = guiTheme.cpp; path = src/Gui/guiTheme.cpp; sourceTree = SOURCE_ROOT; };
+		E5CD310F0ED0CEE30083037A /* guiTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = guiTheme.h; path = src/Gui/guiTheme.h; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C99995FB0DA6EE97001A7116 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C99995FC0DA6EE97001A7116 /* Foundation.framework in Frameworks */,
+				C99995FD0DA6EE97001A7116 /* UIKit.framework in Frameworks */,
+				C99995FE0DA6EE97001A7116 /* CoreGraphics.framework in Frameworks */,
+				C99997300DA6F405001A7116 /* OpenGLES.framework in Frameworks */,
+				C99997720DA6F9F2001A7116 /* AudioToolbox.framework in Frameworks */,
+				C99998F60DA7CAF2001A7116 /* QuartzCore.framework in Frameworks */,
+				C9CD09880DDDC04B0082235F /* CFNetwork.framework in Frameworks */,
+				C9EA04FE0E2917FA0067EF48 /* MediaPlayer.framework in Frameworks */,
+				E5CD2F610ECF82860083037A /* libnuiE.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9F5F9290DA84CAB00E078ED /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9F5F92B0DA84CAB00E078ED /* Foundation.framework in Frameworks */,
+				C9F5F92C0DA84CAB00E078ED /* UIKit.framework in Frameworks */,
+				C9F5F92D0DA84CAB00E078ED /* CoreGraphics.framework in Frameworks */,
+				C9F5F92E0DA84CAB00E078ED /* OpenGLES.framework in Frameworks */,
+				C9F5F92F0DA84CAB00E078ED /* AudioToolbox.framework in Frameworks */,
+				C9F5F9300DA84CAB00E078ED /* QuartzCore.framework in Frameworks */,
+				C9CD09890DDDC04B0082235F /* CFNetwork.framework in Frameworks */,
+				C9EA04FF0E2917FA0067EF48 /* MediaPlayer.framework in Frameworks */,
+				E5CD2F620ECF828B0083037A /* libnuiEd.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C9EA04FD0E2917FA0067EF48 /* MediaPlayer.framework */,
+				C9CD09870DDDC04B0082235F /* CFNetwork.framework */,
+				C99998F50DA7CAF2001A7116 /* QuartzCore.framework */,
+				C99997710DA6F9F2001A7116 /* AudioToolbox.framework */,
+				C999972E0DA6F405001A7116 /* OpenGLES.framework */,
+				1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */,
+				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
+				1D30AB110D05D00D00671497 /* Foundation.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C99996020DA6EE97001A7116 /* iPhoneDemo.app */,
+				C9F5F9330DA84CAB00E078ED /* iPhoneDemoD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
+			isa = PBXGroup;
+			children = (
+				C9F2587A0E5861EA00687021 /* dlist.plist */,
+				C99996230DA6EED8001A7116 /* deps */,
+				C99996330DA6EED8001A7116 /* src */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = CustomTemplate;
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E5CD2F0D0ECF82310083037A /* css */,
+				E5CD2F120ECF82310083037A /* decorations */,
+				E5CD2F1B0ECF82310083037A /* nuiDemo.icns */,
+				E5CD2F1C0ECF82310083037A /* nuiDemo.ico */,
+				E5CD2F1D0ECF82310083037A /* nuiDemo.png */,
+				E5CD2F1E0ECF82310083037A /* sample.wav */,
+				E5CD2F1F0ECF82310083037A /* text.txt */,
+				C9DCE4C20DA7F4FF008AC45D /* Info.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
+				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C99996230DA6EED8001A7116 /* deps */ = {
+			isa = PBXGroup;
+			children = (
+				61DF35C60EC25BCD00051F43 /* nuiE.xcodeproj */,
+			);
+			name = deps;
+			sourceTree = "<group>";
+		};
+		C99996330DA6EED8001A7116 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				E5CD2F680ECF82BE0083037A /* Application.cpp */,
+				E5CD2F690ECF82BE0083037A /* Application.h */,
+				E5CD2F6A0ECF82BE0083037A /* Engine */,
+				E5CD2F710ECF82BE0083037A /* Gui */,
+				E5CD2F760ECF82BE0083037A /* MainWindow.cpp */,
+				E5CD2F770ECF82BE0083037A /* MainWindow.h */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+		E5CD2F0D0ECF82310083037A /* css */ = {
+			isa = PBXGroup;
+			children = (
+				E5CD2F0E0ECF82310083037A /* Colors.css */,
+				E5CD2F0F0ECF82310083037A /* Fonts.css */,
+				E5CD2F100ECF82310083037A /* Gui.css */,
+				E5CD2F110ECF82310083037A /* nuiDemo.css */,
+			);
+			name = css;
+			path = resources/css;
+			sourceTree = "<group>";
+		};
+		E5CD2F120ECF82310083037A /* decorations */ = {
+			isa = PBXGroup;
+			children = (
+				E5CD2F130ECF82310083037A /* buttonStartDown.png */,
+				E5CD2F140ECF82310083037A /* buttonStartDownHover.png */,
+				E5CD2F150ECF82310083037A /* buttonStartUp.png */,
+				E5CD2F160ECF82310083037A /* buttonStartUpHover.png */,
+				E5CD2F170ECF82310083037A /* oscilloBackground.png */,
+				E5CD2F180ECF82310083037A /* oscilloGloss.png */,
+				E5CD2F190ECF82310083037A /* pane.png */,
+				E5CD2F1A0ECF82310083037A /* title.png */,
+			);
+			name = decorations;
+			path = resources/decorations;
+			sourceTree = "<group>";
+		};
+		E5CD2F590ECF82810083037A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E5CD2F5E0ECF82810083037A /* libnuiE.a */,
+				E5CD2F600ECF82810083037A /* libnuiEd.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E5CD2F6A0ECF82BE0083037A /* Engine */ = {
+			isa = PBXGroup;
+			children = (
+				E5CD2F6B0ECF82BE0083037A /* AudioTrack.cpp */,
+				E5CD2F6C0ECF82BE0083037A /* AudioTrack.h */,
+				E5CD2F6D0ECF82BE0083037A /* BiQuad.cpp */,
+				E5CD2F6E0ECF82BE0083037A /* BiQuad.h */,
+				E5CD2F6F0ECF82BE0083037A /* Engine.cpp */,
+				E5CD2F700ECF82BE0083037A /* Engine.h */,
+			);
+			name = Engine;
+			path = src/Engine;
+			sourceTree = SOURCE_ROOT;
+		};
+		E5CD2F710ECF82BE0083037A /* Gui */ = {
+			isa = PBXGroup;
+			children = (
+				E5CD310E0ED0CEE30083037A /* guiTheme.cpp */,
+				E5CD310F0ED0CEE30083037A /* guiTheme.h */,
+				E5CD2F720ECF82BE0083037A /* Gui.cpp */,
+				E5CD2F730ECF82BE0083037A /* Gui.h */,
+				E5CD2F740ECF82BE0083037A /* guiOscillo.cpp */,
+				E5CD2F750ECF82BE0083037A /* guiOscillo.h */,
+			);
+			name = Gui;
+			path = src/Gui;
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C99995F80DA6EE97001A7116 /* iPhoneDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C99995FF0DA6EE97001A7116 /* Build configuration list for PBXNativeTarget "iPhoneDemo" */;
+			buildPhases = (
+				C99995FA0DA6EE97001A7116 /* Sources */,
+				C99995FB0DA6EE97001A7116 /* Frameworks */,
+				E5CD306B0ECF89170083037A /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E5CD2F640ECF82960083037A /* PBXTargetDependency */,
+			);
+			name = iPhoneDemo;
+			productName = beatmaker;
+			productReference = C99996020DA6EE97001A7116 /* iPhoneDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C9F5F9070DA84CAB00E078ED /* iPhoneDemoD */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C9F5F9310DA84CAB00E078ED /* Build configuration list for PBXNativeTarget "iPhoneDemoD" */;
+			buildPhases = (
+				C9F5F90E0DA84CAB00E078ED /* Sources */,
+				C9F5F9290DA84CAB00E078ED /* Frameworks */,
+				E5CD30690ECF88F30083037A /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E5CD2F660ECF82A00083037A /* PBXTargetDependency */,
+			);
+			name = iPhoneDemoD;
+			productName = beatmaker;
+			productReference = C9F5F9330DA84CAB00E078ED /* iPhoneDemoD.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "nuiPhoneDemo" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = E5CD2F590ECF82810083037A /* Products */;
+					ProjectRef = 61DF35C60EC25BCD00051F43 /* nuiE.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				C99995F80DA6EE97001A7116 /* iPhoneDemo */,
+				C9F5F9070DA84CAB00E078ED /* iPhoneDemoD */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		E5CD2F5E0ECF82810083037A /* libnuiE.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnuiE.a;
+			remoteRef = E5CD2F5D0ECF82810083037A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E5CD2F600ECF82810083037A /* libnuiEd.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnuiEd.a;
+			remoteRef = E5CD2F5F0ECF82810083037A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		E5CD30690ECF88F30083037A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "rsync -rC ./resources/ --exclude \".*\" \"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"\n";
+		};
+		E5CD306B0ECF89170083037A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "rsync -rC ./resources/ --exclude \".*\" \"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C99995FA0DA6EE97001A7116 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E5CD2F7F0ECF82BE0083037A /* Application.cpp in Sources */,
+				E5CD2F800ECF82BE0083037A /* AudioTrack.cpp in Sources */,
+				E5CD2F810ECF82BE0083037A /* BiQuad.cpp in Sources */,
+				E5CD2F820ECF82BE0083037A /* Engine.cpp in Sources */,
+				E5CD2F830ECF82BE0083037A /* Gui.cpp in Sources */,
+				E5CD2F840ECF82BE0083037A /* guiOscillo.cpp in Sources */,
+				E5CD2F850ECF82BE0083037A /* MainWindow.cpp in Sources */,
+				E5CD31110ED0CEE30083037A /* guiTheme.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9F5F90E0DA84CAB00E078ED /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E5CD2F780ECF82BE0083037A /* Application.cpp in Sources */,
+				E5CD2F790ECF82BE0083037A /* AudioTrack.cpp in Sources */,
+				E5CD2F7A0ECF82BE0083037A /* BiQuad.cpp in Sources */,
+				E5CD2F7B0ECF82BE0083037A /* Engine.cpp in Sources */,
+				E5CD2F7C0ECF82BE0083037A /* Gui.cpp in Sources */,
+				E5CD2F7D0ECF82BE0083037A /* guiOscillo.cpp in Sources */,
+				E5CD2F7E0ECF82BE0083037A /* MainWindow.cpp in Sources */,
+				E5CD31100ED0CEE30083037A /* guiTheme.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E5CD2F640ECF82960083037A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = nuiE;
+			targetProxy = E5CD2F630ECF82960083037A /* PBXContainerItemProxy */;
+		};
+		E5CD2F660ECF82A00083037A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = nuiEd;
+			targetProxy = E5CD2F650ECF82A00083037A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		C01FCF4F08A954540054247B /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
+				GCC_PFE_C_DIALECTS = "c++";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				GCC_THUMB_SUPPORT = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/src",
+					"$(SRCROOT)/../../include",
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = (
+					"-x",
+					"objective-c++",
+					"-ObjC++",
+				);
+				OTHER_LDFLAGS = "-lz";
+				PREBINDING = NO;
+				SDKROOT = iphoneos2.1;
+				USE_HEADERMAP = NO;
+			};
+			name = Default;
+		};
+		C99996000DA6EE97001A7116 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_AUTO_VECTORIZATION = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_THUMB_SUPPORT = NO;
+				GCC_UNROLL_LOOPS = YES;
+				GENERATE_PROFILING_CODE = NO;
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_LDFLAGS = "-lz";
+				PREBINDING = NO;
+				PRODUCT_NAME = iPhoneDemo;
+				STRIPFLAGS = "-SXx";
+				STRIP_INSTALLED_PRODUCT = YES;
+			};
+			name = Default;
+		};
+		C9F5F9320DA84CAB00E078ED /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos2.1]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_DEBUG_,
+					_DEBUG,
+				);
+				GCC_THUMB_SUPPORT = NO;
+				GENERATE_PROFILING_CODE = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
+				LIBRARY_SEARCH_PATHS = "";
+				PREBINDING = NO;
+				PRODUCT_NAME = iPhoneDemoD;
+			};
+			name = Default;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "nuiPhoneDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		C99995FF0DA6EE97001A7116 /* Build configuration list for PBXNativeTarget "iPhoneDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C99996000DA6EE97001A7116 /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		C9F5F9310DA84CAB00E078ED /* Build configuration list for PBXNativeTarget "iPhoneDemoD" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C9F5F9320DA84CAB00E078ED /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}
