@@ -131,7 +131,9 @@ nuiWidget* Gui::BuildControls()
   mEventSink.Connect(pQSlider->InteractiveValueChanged, &Gui::OnQSliderChanged, (void*)pQSlider);
   
   // frequency knob
-  nuiKnob* pFreqKnob = new nuiKnob(nuiRange(.4f, 0.0f, 1.0f), false);
+  nuiImageSequence* pImgSequence = new nuiImageSequence(31, "rsrc:/decorations/knob.png", nuiVertical);
+  
+  nuiKnob* pFreqKnob = new nuiKnob(nuiRange(.4f, 0.0f, 1.0f), pImgSequence, false);
   pFreqKnob->SetObjectName(_T("KnobFrequency"));
   pBox->AddCell(pFreqKnob, nuiCenter);
   pBox->SetCellExpand(pBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
@@ -140,7 +142,7 @@ nuiWidget* Gui::BuildControls()
   mEventSink.Connect(pFreqKnob->InteractiveValueChanged, &Gui::OnFreqKnobChanged, (void*)pFreqKnob);
   
   // Q knob
-  nuiKnob* pQKnob = new nuiKnob(nuiRange(0.0f, 0.0f, 1.0f));
+  nuiKnob* pQKnob = new nuiKnob(nuiRange(0.0f, 0.0f, 1.0f), pImgSequence, false);
   pQKnob->SetObjectName(_T("KnobQ"));
   pBox->AddCell(pQKnob, nuiCenter);
   pBox->SetCellExpand(pBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
