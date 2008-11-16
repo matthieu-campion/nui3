@@ -27,6 +27,8 @@
 		BC085D680EC46CDB00D95F92 /* Engine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC085D650EC46CDB00D95F92 /* Engine.cpp */; };
 		BC085DA00EC473EF00D95F92 /* guiOscillo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC085D9E0EC473EF00D95F92 /* guiOscillo.cpp */; };
 		BC085DA10EC473EF00D95F92 /* guiOscillo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC085D9E0EC473EF00D95F92 /* guiOscillo.cpp */; };
+		BC09F4FF0ED0818700C1CA33 /* guiTheme.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC09F4FD0ED0818700C1CA33 /* guiTheme.cpp */; };
+		BC09F5000ED0818700C1CA33 /* guiTheme.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC09F4FD0ED0818700C1CA33 /* guiTheme.cpp */; };
 		BC29E4B20EC717A000D4B349 /* CoreAudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC29E4B10EC717A000D4B349 /* CoreAudioKit.framework */; };
 		BC29E4B30EC717A000D4B349 /* CoreAudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC29E4B10EC717A000D4B349 /* CoreAudioKit.framework */; };
 		BCA7BADA0EC8693C00AFA105 /* BiQuad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCA7BAD80EC8693C00AFA105 /* BiQuad.cpp */; };
@@ -92,6 +94,8 @@
 		BC085D660EC46CDB00D95F92 /* Engine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Engine.h; path = src/Engine/Engine.h; sourceTree = SOURCE_ROOT; };
 		BC085D9E0EC473EF00D95F92 /* guiOscillo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = guiOscillo.cpp; path = src/Gui/guiOscillo.cpp; sourceTree = SOURCE_ROOT; };
 		BC085D9F0EC473EF00D95F92 /* guiOscillo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = guiOscillo.h; path = src/Gui/guiOscillo.h; sourceTree = SOURCE_ROOT; };
+		BC09F4FD0ED0818700C1CA33 /* guiTheme.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = guiTheme.cpp; path = src/Gui/guiTheme.cpp; sourceTree = SOURCE_ROOT; };
+		BC09F4FE0ED0818700C1CA33 /* guiTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = guiTheme.h; path = src/Gui/guiTheme.h; sourceTree = SOURCE_ROOT; };
 		BC29E4B10EC717A000D4B349 /* CoreAudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudioKit.framework; path = /System/Library/Frameworks/CoreAudioKit.framework; sourceTree = "<absolute>"; };
 		BC70912F0EC9AD03002BBE9C /* Colors.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = Colors.css; path = resources/css/Colors.css; sourceTree = SOURCE_ROOT; };
 		BC7091300EC9AD03002BBE9C /* Fonts.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = Fonts.css; path = resources/css/Fonts.css; sourceTree = SOURCE_ROOT; };
@@ -201,6 +205,8 @@
 			children = (
 				BC085D610EC46CD200D95F92 /* Gui.cpp */,
 				BC085D620EC46CD200D95F92 /* Gui.h */,
+				BC09F4FD0ED0818700C1CA33 /* guiTheme.cpp */,
+				BC09F4FE0ED0818700C1CA33 /* guiTheme.h */,
 				BC085D9E0EC473EF00D95F92 /* guiOscillo.cpp */,
 				BC085D9F0EC473EF00D95F92 /* guiOscillo.h */,
 			);
@@ -364,6 +370,7 @@
 				BC085DA10EC473EF00D95F92 /* guiOscillo.cpp in Sources */,
 				BCE44DC30EC646A600AEBD64 /* AudioTrack.cpp in Sources */,
 				BCA7BADB0EC8693C00AFA105 /* BiQuad.cpp in Sources */,
+				BC09F5000ED0818700C1CA33 /* guiTheme.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -378,6 +385,7 @@
 				BC085DA00EC473EF00D95F92 /* guiOscillo.cpp in Sources */,
 				BCE44DC20EC646A600AEBD64 /* AudioTrack.cpp in Sources */,
 				BCA7BADA0EC8693C00AFA105 /* BiQuad.cpp in Sources */,
+				BC09F4FF0ED0818700C1CA33 /* guiTheme.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

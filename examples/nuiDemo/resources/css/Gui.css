@@ -31,7 +31,7 @@ Gui!
 "ImageTitle"!
 {
   Texture: "rsrc:/decorations/title.png";
-  BorderLeft: 10;
+  BorderLeft: 25;
   BorderTop: 10;
   BorderBottom: 10;
 }
@@ -140,20 +140,6 @@ guiOscillo!
 }
 
 
-//@nuiGradientDecoration dText
-//{
-//  Orientation: Vertical;
-//  StrokeSize: 1;
-//  Color1: ClrGradient1;
-//  Color2: rgb(210,210,210);
-//  StrokeColor: rgb(32,32,32);
-//  ShapeMode: StrokeAndFill;
-//  Offset1: 0;
-//  Offset2: 0.5;
-//  
-//  ClientRect: "{10 10 0 0}";
-//}
-
 "Text"!
 {
   Font: FontText;
@@ -163,7 +149,22 @@ guiOscillo!
 
 "SliderQ"!
 {
-  UserWidth: 200;
+  UserWidth: 150;
+  UserHeight: 25;
+}
+
+
+
+@nuiFrame dSliderBkg
+{
+  Texture: "rsrc:/decorations/sliderBkg.png";
+  ClientRect: "{3 0 1 4}";
+}
+
+@nuiFrame dSliderHandle
+{
+  Texture: "rsrc:/decorations/sliderHandle.png";
+  ClientRect: "{0 0 39 25}";
 }
 
 // don't forget to add a blank ending line, otherwise the css parsing will fail!

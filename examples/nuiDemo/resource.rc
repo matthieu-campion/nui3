@@ -16,6 +16,8 @@ decorations/knobSwitch.png        NUI_RESOURCE    "resources/decorations/knobSwi
 decorations/oscilloBackground.png        NUI_RESOURCE    "resources/decorations/oscilloBackground.png"
 decorations/oscilloGloss.png        NUI_RESOURCE    "resources/decorations/oscilloGloss.png"
 decorations/pane.png        NUI_RESOURCE    "resources/decorations/pane.png"
+decorations/sliderBkg.png        NUI_RESOURCE    "resources/decorations/sliderBkg.png"
+decorations/sliderHandle.png        NUI_RESOURCE    "resources/decorations/sliderHandle.png"
 decorations/title.png        NUI_RESOURCE    "resources/decorations/title.png"
 0 ICON "resources/nuiDemo.ico"
 1 ICON "resources/nuiDemo.ico"

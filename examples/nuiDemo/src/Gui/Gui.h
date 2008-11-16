@@ -11,6 +11,8 @@
 #include "nuiVBox.h"
 #include "nuiHBox.h"
 
+#include "guiTheme.h"
+
 class Gui : public nuiVBox
 {
 public:
@@ -49,7 +51,9 @@ private:
   // => now, the nuiEventSink is templated: it makes the sink connection be mandatory in the class constructor, 
   // otherwise the compiler complains and you can understand right away what it complains for.
 
-  // another sink, assigned to the timer
+  // another sink, for timer animation (could use mEventSink instead, it's just for coding convenience)
   nuiEventSink<Gui> mTimerSink;
+  
+  guiTheme mTheme; // for overloading some of the widgets drawing (sliders in our case)
 };
 
