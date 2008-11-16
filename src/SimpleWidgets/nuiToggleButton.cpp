@@ -149,9 +149,10 @@ bool nuiToggleButton::MouseUnclicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags
   {
     mClicked = false;
     Ungrab();
+
+    SetPressed(!IsPressed());
     if (mRect.Size().IsInside(X,Y))
     {
-      SetPressed(!IsPressed());
       if (IsPressed())
 				Activated();
 			else
