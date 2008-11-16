@@ -117,6 +117,12 @@ guiOscillo!
 }
 
 
+"KnobSwitch"!
+{
+  BorderLeft: 20;
+  BorderRight: 30;
+  BorderTop: 45;
+}
 
 @nuiFrame dPaneBkg
 {

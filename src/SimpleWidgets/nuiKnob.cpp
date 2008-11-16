@@ -43,7 +43,6 @@ void nuiKnob::Init(const nuiRange& rRange, bool showDefaultBackground)
   mClicked = false;
   mRange.SetPageSize(0);
   mFrameIndex = 0;
-  mShowDefaultBackground = showDefaultBackground;
   
   mSensitivity = mDefaultSensitivity;
   mFineSensitivityRatio = mDefaultFineSensitivityRatio;

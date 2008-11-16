@@ -32,6 +32,11 @@ NGL_APP_CREATE(Application);
 Application::Application()
 {
   mpMainWindow = NULL;
+  
+  // this make the audio system works (c.f. last update on nuiAudioDevice)
+  #ifdef _CARBON_
+  wprintf(_T("Audio system:%ld"), CoreAudioAPI.GetAPIName().GetChars());
+  #endif
 }
 
 Application::~Application()

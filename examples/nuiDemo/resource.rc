@@ -11,6 +11,8 @@ decorations/buttonStartDown.png        NUI_RESOURCE    "resources/decorations/bu
 decorations/buttonStartDownHover.png        NUI_RESOURCE    "resources/decorations/buttonStartDownHover.png"
 decorations/buttonStartUp.png        NUI_RESOURCE    "resources/decorations/buttonStartUp.png"
 decorations/buttonStartUpHover.png        NUI_RESOURCE    "resources/decorations/buttonStartUpHover.png"
+decorations/knob.png        NUI_RESOURCE    "resources/decorations/knob.png"
+decorations/knobSwitch.png        NUI_RESOURCE    "resources/decorations/knobSwitch.png"
 decorations/oscilloBackground.png        NUI_RESOURCE    "resources/decorations/oscilloBackground.png"
 decorations/oscilloGloss.png        NUI_RESOURCE    "resources/decorations/oscilloGloss.png"
 decorations/pane.png        NUI_RESOURCE    "resources/decorations/pane.png"

@@ -42,10 +42,28 @@ Gui::Gui()
   pOscilloBkg->AddChild(pOscillo);
   
   
-  // row 3: on/off button and   -
+  // row 3: gui switch knob and on/off button  *********************
+  //
+  nuiHBox* pBox = new nuiHBox(2);
+  AddCell(pBox);
+  
+  // image sequence for knob decoration
+  nuiImageSequence* pImgSequence = new nuiImageSequence(2, "rsrc:/decorations/knobSwitch.png", nuiVertical);
+
+  // gui switch knob (to switch from the audio controls to the explanation text display)
+  nuiKnob* pSwitchKnob = new nuiKnob(nuiRange(0.f, 0.f, 1.f, 1.f, 1.f), pImgSequence, false);
+  pSwitchKnob->SetSensitivity(0.f);
+  pSwitchKnob->SetObjectName(_T("KnobSwitch"));
+  pBox->SetCell(0, pSwitchKnob, nuiBottom);
+  
+  
+  // connect switch knob event to receiver
+  mEventSink.Connect(pSwitchKnob->InteractiveValueChanged, &Gui::OnSwitchKnobChanged, (void*)pSwitchKnob);  
+  
+  // on/off button
   nuiToggleButton* pStartBtn = new nuiToggleButton();
   pStartBtn->SetObjectName(_T("ButtonStart"));
-  AddCell(pStartBtn, nuiCenter);
+  pBox->SetCell(1, pStartBtn, nuiTop);
   
   // connect the button event to the gui controller.
   // <=> in the nui-way-of-thinking : connect the button event source you're interessted in to the event receiver of your choice
@@ -113,7 +131,7 @@ nuiWidget* Gui::BuildControls()
   mEventSink.Connect(pQSlider->InteractiveValueChanged, &Gui::OnQSliderChanged, (void*)pQSlider);
   
   // frequency knob
-  nuiKnob* pFreqKnob = new nuiKnob(nuiRange(.4f, 0.0f, 1.0f));
+  nuiKnob* pFreqKnob = new nuiKnob(nuiRange(.4f, 0.0f, 1.0f), false);
   pFreqKnob->SetObjectName(_T("KnobFrequency"));
   pBox->AddCell(pFreqKnob, nuiCenter);
   pBox->SetCellExpand(pBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
@@ -140,6 +158,16 @@ nuiWidget* Gui::BuildControls()
 //
 // Gui Events Receivers
 //
+
+bool Gui::OnSwitchKnobChanged(const nuiEvent& rEvent)
+{
+  nuiKnob* pKnob = (nuiKnob*)rEvent.mpUser;
+  NGL_ASSERT(pKnob);
+  
+  NGL_OUT(_T("debug %.2f\n"), pKnob->GetRange().GetValue());
+  return true;
+}
+
 
 bool Gui::OnStartButtonPressed(const nuiEvent& rEvent)
 {
