@@ -61,6 +61,7 @@ protected:
   bool mDisplayAsFrameBox;
   nuiSize mCheckSize;
   bool mHasContents;
+  bool mWasPressed;
 
 };
 

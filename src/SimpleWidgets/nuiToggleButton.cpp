@@ -135,7 +135,8 @@ bool nuiToggleButton::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags B
   if (Button & nglMouseInfo::ButtonLeft)
   {
     mClicked = true;
-    SetSelected(true);
+    mWasPressed = IsPressed();
+    SetPressed(!mWasPressed);
     Grab();
     Invalidate();
     return true;
@@ -152,7 +153,7 @@ bool nuiToggleButton::MouseUnclicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags
 
     if (mRect.Size().IsInside(X,Y))
     {
-      SetPressed(!IsPressed());
+      SetPressed(!mWasPressed);
       if (IsPressed())
 				Activated();
 			else
@@ -160,7 +161,7 @@ bool nuiToggleButton::MouseUnclicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags
     }
     else
     {
-      SetSelected(IsPressed());
+      SetPressed(mWasPressed);
     }
 
     Invalidate();
@@ -171,6 +172,21 @@ bool nuiToggleButton::MouseUnclicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags
 
 bool nuiToggleButton::MouseMoved(nuiSize X, nuiSize Y)
 {
+  if (IsDisabled())
+    return false;
+  
+  if (mClicked)
+  {
+    if (mRect.Size().IsInside(X,Y))
+    {
+      SetPressed(!mWasPressed);
+    }
+    else
+    {
+      SetPressed(mWasPressed);
+    }
+    return true;
+  }
   return false;
 }
 

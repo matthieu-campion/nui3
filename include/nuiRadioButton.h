@@ -30,9 +30,9 @@ public:
   void SetGroup(const nglString& rGroupName);
   const nglString& GetGroup();
 
-  virtual bool MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
-
-  virtual void SetPressed(bool Pressed = true);
+  virtual bool MouseClicked   (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
+  virtual bool MouseUnclicked (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
+  virtual bool MouseMoved     (nuiSize X, nuiSize Y);
 
   virtual bool SetParent(nuiContainerPtr pParent);
 

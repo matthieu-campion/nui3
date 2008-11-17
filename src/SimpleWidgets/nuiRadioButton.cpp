@@ -66,6 +66,26 @@ nuiRadioButton::~nuiRadioButton()
     mpGroupManager->RemoveRadioButton(this);
 }
 
+bool nuiRadioButton::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
+{
+  if (IsDisabled())
+    return false;
+
+  if (Button & nglMouseInfo::ButtonLeft)
+  {
+    mClicked = true;
+    mWasPressed = IsPressed();
+    if (mCanToggle)
+      SetPressed(!mWasPressed);
+    else
+      SetPressed(true);
+    Grab();
+    Invalidate();
+    return true;
+  }
+  return false;
+}            
+
 bool nuiRadioButton::MouseUnclicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
 {
   if ( (Button & nglMouseInfo::ButtonLeft) && mClicked)
@@ -75,11 +95,11 @@ bool nuiRadioButton::MouseUnclicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags 
     if (mRect.Size().IsInside(X,Y))
     {
       if (mCanToggle)
-        SetPressed(!IsPressed());
+        SetPressed(!mWasPressed);
       else
         SetPressed(true);
 
-      if (IsPressed())
+      if (IsPressed() && !mWasPressed)
       {
         if (mpParent && !mpGroupManager)
         {
@@ -101,13 +121,13 @@ bool nuiRadioButton::MouseUnclicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags 
         }
         Activated();
       }
-      else {
+      else if (!IsPressed() && mWasPressed) {
         Deactivated();
       }
     }
     else
     {
-      SetSelected(IsPressed());
+      SetPressed(mWasPressed);
     }
 
     Invalidate();
@@ -116,25 +136,27 @@ bool nuiRadioButton::MouseUnclicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags 
   return false;
 }
 
-
-void nuiRadioButton::SetPressed(bool Pressed)
+bool nuiRadioButton::MouseMoved(nuiSize X, nuiSize Y)
 {
-  if (mPressed == Pressed)
-    return;
-
-  mPressed = Pressed;
-  if (Pressed)
+  if (IsDisabled())
+    return false;
+  
+  if (mClicked)
   {
-    SetSelected(true);
-    ButtonPressed();
+    if (mRect.Size().IsInside(X,Y))
+    {
+      if (mCanToggle)
+        SetPressed(!mWasPressed);
+      else
+        SetPressed(true);
+    }
+    else
+    {
+      SetPressed(mWasPressed);
+    }
+    return true;
   }
-  else
-  {    
-    SetSelected(false);
-    ButtonDePressed();
-  }
-
-  Invalidate();
+  return false;
 }
 
 void nuiRadioButton::SetGroup(const nglString& rGroupName)
