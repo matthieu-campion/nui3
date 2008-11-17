@@ -161,6 +161,7 @@ public:
   virtual void EnableAutoClipSelf(bool Set, bool Recurse = false);
   bool IsAutoClipSelfEnabled() const;
 
+  //changer l'overdraw to clipper sur le GetRect en cas de decoration et pas d'overdraw
   void SetOverDraw(nuiSize Left, nuiSize Top, nuiSize Right, nuiSize Bottom); ///< Set the amount of over draw for each border of the widget.
   void ResetOverDraw(); ///< Reset the overdraw borders to 0. Equivalent to SetOverDraw(0, 0, 0, 0);
   void GetOverDraw(nuiSize& Left, nuiSize& Top, nuiSize& Right, nuiSize& Bottom) const; ///< Fill the arguments with the amount of overdraw for each border of the widget

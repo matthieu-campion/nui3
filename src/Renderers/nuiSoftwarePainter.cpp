@@ -183,15 +183,15 @@ void nuiSoftwarePainter::DrawArray(const nuiRenderArray& rArray)
   case GL_TRIANGLE_STRIP:
     DrawTrianglesStrip(rArray);
     break;
-  case GL_QUADS:
-    DrawQuads(rArray);
-    break;
-  case GL_QUAD_STRIP:
-    DrawQuadStrip(rArray);
-    break;
-  case GL_POLYGON:
-    //NGL_OUT(_T("GL_POLYGON Not Implemented\n"));
-    break;
+//  case GL_QUADS:
+//    DrawQuads(rArray);
+//    break;
+//  case GL_QUAD_STRIP:
+//    DrawQuadStrip(rArray);
+//    break;
+//  case GL_POLYGON:
+//    //NGL_OUT(_T("GL_POLYGON Not Implemented\n"));
+//    break;
   }
 }
 
@@ -580,10 +580,10 @@ void nuiSoftwarePainter::DrawTriangle(const nuiRenderArray& rArray, int p1, int 
       case GL_TRIANGLES:
       case GL_TRIANGLE_STRIP:
       case GL_TRIANGLE_FAN:
-      case GL_QUADS:
-      case GL_QUAD_STRIP:
-      case GL_POLYGON:
-        c1 = c2 = c3 = mState.mFillColor;
+//      case GL_QUADS:
+//      case GL_QUAD_STRIP:
+//      case GL_POLYGON:
+//        c1 = c2 = c3 = mState.mFillColor;
         break;
     }
   }

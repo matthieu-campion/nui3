@@ -48,28 +48,28 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 61DF35C60EC25BCD00051F43 /* nuiE.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = D2AAC046055464E500DB518D /* libnuiE.a */;
+			remoteGlobalIDString = D2AAC046055464E500DB518D;
 			remoteInfo = nuiE;
 		};
 		E5CD2F5F0ECF82810083037A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 61DF35C60EC25BCD00051F43 /* nuiE.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 614B66C30DA7BA67000F4C22 /* libnuiEd.a */;
+			remoteGlobalIDString = 614B66C30DA7BA67000F4C22;
 			remoteInfo = nuiEd;
 		};
 		E5CD2F630ECF82960083037A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 61DF35C60EC25BCD00051F43 /* nuiE.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = D2AAC045055464E500DB518D /* nuiE */;
+			remoteGlobalIDString = D2AAC045055464E500DB518D;
 			remoteInfo = nuiE;
 		};
 		E5CD2F650ECF82A00083037A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 61DF35C60EC25BCD00051F43 /* nuiE.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 614B637D0DA7BA67000F4C22 /* nuiEd */;
+			remoteGlobalIDString = 614B637D0DA7BA67000F4C22;
 			remoteInfo = nuiEd;
 		};
 /* End PBXContainerItemProxy section */

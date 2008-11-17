@@ -658,6 +658,16 @@ bool nuiMainWindow::OnRotation(uint Angle)
   return true;
 }
 
+void nuiMainWindow::EnableAutoRotation(bool set)
+{
+  mpNGLWindow->EnableAutoRotation(set);
+}
+
+bool nuiMainWindow::GetAutoRotation() const
+{
+  return mpNGLWindow->GetAutoRotation();
+}
+
 bool nuiMainWindow::ShowWidgetInspector()
 {
   if (mpInspectorWindow)

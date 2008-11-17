@@ -89,6 +89,8 @@ public:
   bool SetSize (uint Width, uint Height);
   void SetRotation(uint Angle);
   uint GetRotation();
+  void EnableAutoRotation(bool set); ///< Change the rotation and size of the screen to follow the device's screen orientation (this is the default behaviour).
+  bool GetAutoRotation() const; ///< Change the rotation and size of the screen to follow the device's screen orientation (this is the default behaviour).
   uint GetError() const;               ///< Retrieve the current error code
   const nglChar* GetErrorStr() const;            ///< Retrieve the current error message
   const nglChar* GetErrorStr(uint Error) const;  ///< Retrieve error message by code

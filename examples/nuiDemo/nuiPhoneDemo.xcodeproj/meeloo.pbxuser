@@ -93,17 +93,12 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 248480175;
-			PBXWorkspaceStateSaveDate = 248480175;
+			PBXPerProjectTemplateStateSaveDate = 248609998;
+			PBXWorkspaceStateSaveDate = 248609998;
 		};
 		perUserProjectItems = {
 			E51D5B7A0EC3A9AE00182E40 /* PlistBookmark */ = E51D5B7A0EC3A9AE00182E40 /* PlistBookmark */;
-			E51D5C460EC3D40500182E40 /* PBXTextBookmark */ = E51D5C460EC3D40500182E40 /* PBXTextBookmark */;
-			E51D5C630EC3D5D700182E40 /* PlistBookmark */ = E51D5C630EC3D5D700182E40 /* PlistBookmark */;
-			E51D5C680EC3D5D700182E40 /* PlistBookmark */ = E51D5C680EC3D5D700182E40 /* PlistBookmark */;
 			E51D5C7C0EC3D6D500182E40 /* PBXTextBookmark */ = E51D5C7C0EC3D6D500182E40 /* PBXTextBookmark */;
-			E51D5C8C0EC3D91B00182E40 /* PBXTextBookmark */ = E51D5C8C0EC3D91B00182E40 /* PBXTextBookmark */;
-			E51D5C910EC3D91B00182E40 /* PBXTextBookmark */ = E51D5C910EC3D91B00182E40 /* PBXTextBookmark */;
 			E51D5CA60EC3DAA100182E40 /* PBXTextBookmark */ = E51D5CA60EC3DAA100182E40 /* PBXTextBookmark */;
 			E51D5CA80EC3DAA100182E40 /* PBXTextBookmark */ = E51D5CA80EC3DAA100182E40 /* PBXTextBookmark */;
 			E51D5CA90EC3DAA100182E40 /* PBXTextBookmark */ = E51D5CA90EC3DAA100182E40 /* PBXTextBookmark */;
@@ -123,9 +118,6 @@
 			E5CD2F2F0ECF826F0083037A /* PlistBookmark */ = E5CD2F2F0ECF826F0083037A /* PlistBookmark */;
 			E5CD2F300ECF826F0083037A /* PBXBookmark */ = E5CD2F300ECF826F0083037A /* PBXBookmark */;
 			E5CD2F310ECF826F0083037A /* PBXTextBookmark */ = E5CD2F310ECF826F0083037A /* PBXTextBookmark */;
-			E5CD2F320ECF826F0083037A /* PlistBookmark */ = E5CD2F320ECF826F0083037A /* PlistBookmark */;
-			E5CD2F330ECF826F0083037A /* PBXTextBookmark */ = E5CD2F330ECF826F0083037A /* PBXTextBookmark */;
-			E5CD2F340ECF826F0083037A /* PBXBookmark */ = E5CD2F340ECF826F0083037A /* PBXBookmark */;
 			E5CD2F350ECF826F0083037A /* PBXBookmark */ = E5CD2F350ECF826F0083037A /* PBXBookmark */;
 			E5CD2F360ECF826F0083037A /* PBXBookmark */ = E5CD2F360ECF826F0083037A /* PBXBookmark */;
 			E5CD2F370ECF826F0083037A /* PBXBookmark */ = E5CD2F370ECF826F0083037A /* PBXBookmark */;
@@ -135,11 +127,7 @@
 			E5CD2F3B0ECF826F0083037A /* PBXBookmark */ = E5CD2F3B0ECF826F0083037A /* PBXBookmark */;
 			E5CD2F3C0ECF826F0083037A /* PBXBookmark */ = E5CD2F3C0ECF826F0083037A /* PBXBookmark */;
 			E5CD2F3D0ECF826F0083037A /* PBXBookmark */ = E5CD2F3D0ECF826F0083037A /* PBXBookmark */;
-			E5CD2F3E0ECF826F0083037A /* PBXBookmark */ = E5CD2F3E0ECF826F0083037A /* PBXBookmark */;
-			E5CD305C0ECF889B0083037A /* PBXBookmark */ = E5CD305C0ECF889B0083037A /* PBXBookmark */;
 			E5CD30700ECF89850083037A /* PlistBookmark */ = E5CD30700ECF89850083037A /* PlistBookmark */;
-			E5CD30720ECF89850083037A /* PlistBookmark */ = E5CD30720ECF89850083037A /* PlistBookmark */;
-			E5CD30A20ECF8CBB0083037A /* PBXTextBookmark */ = E5CD30A20ECF8CBB0083037A /* PBXTextBookmark */;
 			E5CD30A40ECF8CBB0083037A /* PBXTextBookmark */ = E5CD30A40ECF8CBB0083037A /* PBXTextBookmark */;
 			E5CD30A60ECF8CBB0083037A /* PBXTextBookmark */ = E5CD30A60ECF8CBB0083037A /* PBXTextBookmark */;
 			E5CD30AA0ECF8CBB0083037A /* PBXTextBookmark */ = E5CD30AA0ECF8CBB0083037A /* PBXTextBookmark */;
@@ -148,14 +136,10 @@
 			E5CD30B60ECF8CBB0083037A /* PBXTextBookmark */ = E5CD30B60ECF8CBB0083037A /* PBXTextBookmark */;
 			E5CD30BA0ECF8CBB0083037A /* PBXTextBookmark */ = E5CD30BA0ECF8CBB0083037A /* PBXTextBookmark */;
 			E5CD30BC0ECF8CBB0083037A /* PBXTextBookmark */ = E5CD30BC0ECF8CBB0083037A /* PBXTextBookmark */;
-			E5CD30D60ECF8F4B0083037A /* PBXTextBookmark */ = E5CD30D60ECF8F4B0083037A /* PBXTextBookmark */;
-			E5CD30DA0ECF8FB80083037A /* PBXTextBookmark */ = E5CD30DA0ECF8FB80083037A /* PBXTextBookmark */;
-			E5CD30DF0ECF8FB80083037A /* PBXTextBookmark */ = E5CD30DF0ECF8FB80083037A /* PBXTextBookmark */;
-			E5CD30E00ECF8FB80083037A /* PlistBookmark */ = E5CD30E00ECF8FB80083037A /* PlistBookmark */;
 			E5CD30E80ECF91550083037A /* PBXTextBookmark */ = E5CD30E80ECF91550083037A /* PBXTextBookmark */;
 			E5CD30EC0ECF926B0083037A /* PBXTextBookmark */ = E5CD30EC0ECF926B0083037A /* PBXTextBookmark */;
-			E5CD31210ED0DC740083037A /* PlistBookmark */ = E5CD31210ED0DC740083037A /* PlistBookmark */;
 			E5CD31220ED0DC740083037A /* PBXTextBookmark */ = E5CD31220ED0DC740083037A /* PBXTextBookmark */;
+			E5CD31400ED18A220083037A /* PBXTextBookmark */ = E5CD31400ED18A220083037A /* PBXTextBookmark */;
 		};
 		sourceControlManager = E53DAA200EC2671100175F39 /* Source Control */;
 		userBuildSettings = {
@@ -190,11 +174,6 @@
 		name = nglWindow_UIKit.mm;
 		path = /Users/meeloo/work/nui3/src/Window/UIKit/nglWindow_UIKit.mm;
 		sourceTree = "<group>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1187, 9763}}";
-			sepNavSelRange = "{12566, 0}";
-			sepNavVisRange = "{11853, 1507}";
-		};
 	};
 	E51D5BF00EC3D0A100182E40 /* nglWindow_UIKit.mm:168 */ = {
 		isa = PBXFileBreakpoint;
@@ -305,51 +284,12 @@
 		path = /Users/meeloo/work/nui3/src/Window/UIKit/nglWindow_UIKit.mm;
 		sourceTree = "<absolute>";
 	};
-	E51D5C460EC3D40500182E40 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E51D5C170EC3D1D700182E40 /* nglWindow_UIKit.mm */;
-		name = "nglWindow_UIKit.mm: 143";
-		rLen = 0;
-		rLoc = 3802;
-		rType = 0;
-		vrLen = 1275;
-		vrLoc = 2550;
-	};
-	E51D5C630EC3D5D700182E40 /* PlistBookmark */ = {
-		isa = PlistBookmark;
-		fRef = C9DCE4C20DA7F4FF008AC45D /* Info.plist */;
-		fallbackIsa = PBXBookmark;
-		isK = 0;
-		kPath = (
-			UIInterfaceOrientation,
-		);
-		name = /Users/meeloo/work/nui3/examples/iPhone_HelloWorld/proj/Info.plist;
-		rLen = 0;
-		rLoc = 2147483647;
-	};
-	E51D5C680EC3D5D700182E40 /* PlistBookmark */ = {
-		isa = PlistBookmark;
-		fRef = C9DCE4C20DA7F4FF008AC45D /* Info.plist */;
-		fallbackIsa = PBXBookmark;
-		isK = 0;
-		kPath = (
-			UIInterfaceOrientation,
-		);
-		name = /Users/meeloo/work/nui3/examples/iPhone_HelloWorld/proj/Info.plist;
-		rLen = 0;
-		rLoc = 2147483647;
-	};
 	E51D5C720EC3D5F300182E40 /* nuiMainWindow.cpp */ = {
 		isa = PBXFileReference;
 		lastKnownFileType = sourcecode.cpp.cpp;
 		name = nuiMainWindow.cpp;
 		path = /Users/meeloo/work/nui3/src/WidgetTree/nuiMainWindow.cpp;
 		sourceTree = "<absolute>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1187, 13871}}";
-			sepNavSelRange = "{0, 0}";
-			sepNavVisRange = "{156, 1053}";
-		};
 	};
 	E51D5C7C0EC3D6D500182E40 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -360,33 +300,6 @@
 		rType = 0;
 		vrLen = 1032;
 		vrLoc = 7859;
-	};
-	E51D5C8C0EC3D91B00182E40 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E51D5C8D0EC3D91B00182E40 /* nglWindow.h */;
-		name = "nglWindow.h: 672";
-		rLen = 0;
-		rLoc = 24332;
-		rType = 0;
-		vrLen = 1642;
-		vrLoc = 23795;
-	};
-	E51D5C8D0EC3D91B00182E40 /* nglWindow.h */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.c.h;
-		name = nglWindow.h;
-		path = /Users/meeloo/work/nui3/include/nglWindow.h;
-		sourceTree = "<absolute>";
-	};
-	E51D5C910EC3D91B00182E40 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E51D5C920EC3D91B00182E40 /* nglWindow.h */;
-		name = "nglWindow.h: 672";
-		rLen = 0;
-		rLoc = 24332;
-		rType = 0;
-		vrLen = 1642;
-		vrLoc = 23795;
 	};
 	E51D5C920EC3D91B00182E40 /* nglWindow.h */ = {
 		isa = PBXFileReference;
@@ -601,31 +514,6 @@
 		vrLen = 285;
 		vrLoc = 0;
 	};
-	E5CD2F320ECF826F0083037A /* PlistBookmark */ = {
-		isa = PlistBookmark;
-		fRef = C9DCE4C20DA7F4FF008AC45D /* Info.plist */;
-		fallbackIsa = PBXBookmark;
-		isK = 0;
-		kPath = (
-		);
-		name = /Users/meeloo/work/nui3/examples/nuiDemo/Info.plist;
-		rLen = 0;
-		rLoc = 2147483647;
-	};
-	E5CD2F330ECF826F0083037A /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E5CD2F1F0ECF82310083037A /* text.txt */;
-		name = "text.txt: 1";
-		rLen = 0;
-		rLoc = 0;
-		rType = 0;
-		vrLen = 285;
-		vrLoc = 0;
-	};
-	E5CD2F340ECF826F0083037A /* PBXBookmark */ = {
-		isa = PBXBookmark;
-		fRef = E5CD2F1D0ECF82310083037A /* nuiDemo.png */;
-	};
 	E5CD2F350ECF826F0083037A /* PBXBookmark */ = {
 		isa = PBXBookmark;
 		fRef = E5CD2F1B0ECF82310083037A /* nuiDemo.icns */;
@@ -662,10 +550,6 @@
 		isa = PBXBookmark;
 		fRef = E5CD2F1A0ECF82310083037A /* title.png */;
 	};
-	E5CD2F3E0ECF826F0083037A /* PBXBookmark */ = {
-		isa = PBXBookmark;
-		fRef = E5CD2F1B0ECF82310083037A /* nuiDemo.icns */;
-	};
 	E5CD2F680ECF82BE0083037A /* Application.cpp */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1187, 2548}}";
@@ -694,22 +578,7 @@
 			sepNavVisRange = "{0, 1002}";
 		};
 	};
-	E5CD305C0ECF889B0083037A /* PBXBookmark */ = {
-		isa = PBXBookmark;
-		fRef = E5CD2F1A0ECF82310083037A /* title.png */;
-	};
 	E5CD30700ECF89850083037A /* PlistBookmark */ = {
-		isa = PlistBookmark;
-		fRef = C9F2587A0E5861EA00687021 /* dlist.plist */;
-		fallbackIsa = PBXBookmark;
-		isK = 0;
-		kPath = (
-		);
-		name = /Users/meeloo/work/nui3/examples/nuiDemo/dlist.plist;
-		rLen = 0;
-		rLoc = 2147483647;
-	};
-	E5CD30720ECF89850083037A /* PlistBookmark */ = {
 		isa = PlistBookmark;
 		fRef = C9F2587A0E5861EA00687021 /* dlist.plist */;
 		fallbackIsa = PBXBookmark;
@@ -722,24 +591,10 @@
 	};
 	E5CD30740ECF89850083037A /* nuiAudioDevice.cpp */ = {
 		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
 		name = nuiAudioDevice.cpp;
 		path = /Users/meeloo/work/nui3/src/Audio/nuiAudioDevice.cpp;
 		sourceTree = "<absolute>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1582, 2561}}";
-			sepNavSelRange = "{3375, 0}";
-			sepNavVisRange = "{2493, 1420}";
-		};
-	};
-	E5CD30A20ECF8CBB0083037A /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E5CD30740ECF89850083037A /* nuiAudioDevice.cpp */;
-		name = "nuiAudioDevice.cpp: 171";
-		rLen = 0;
-		rLoc = 3375;
-		rType = 0;
-		vrLen = 1353;
-		vrLoc = 2514;
 	};
 	E5CD30A40ECF8CBB0083037A /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -753,6 +608,7 @@
 	};
 	E5CD30A50ECF8CBB0083037A /* nglKernel.cpp */ = {
 		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
 		name = nglKernel.cpp;
 		path = /Users/meeloo/work/nui3/src/Application/nglKernel.cpp;
 		sourceTree = "<absolute>";
@@ -769,6 +625,7 @@
 	};
 	E5CD30A70ECF8CBB0083037A /* nglContext_UIKit.mm */ = {
 		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.objcpp;
 		name = nglContext_UIKit.mm;
 		path = /Users/meeloo/work/nui3/src/Window/UIKit/nglContext_UIKit.mm;
 		sourceTree = "<absolute>";
@@ -785,6 +642,7 @@
 	};
 	E5CD30AB0ECF8CBB0083037A /* nuiMainWindow.h */ = {
 		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
 		name = nuiMainWindow.h;
 		path = /Users/meeloo/work/nui3/include/nuiMainWindow.h;
 		sourceTree = "<absolute>";
@@ -811,6 +669,7 @@
 	};
 	E5CD30B40ECF8CBB0083037A /* nglKernel.cpp */ = {
 		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
 		name = nglKernel.cpp;
 		path = /Users/meeloo/work/nui3/src/Application/nglKernel.cpp;
 		sourceTree = "<absolute>";
@@ -827,6 +686,7 @@
 	};
 	E5CD30B70ECF8CBB0083037A /* nglContext_UIKit.mm */ = {
 		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.objcpp;
 		name = nglContext_UIKit.mm;
 		path = /Users/meeloo/work/nui3/src/Window/UIKit/nglContext_UIKit.mm;
 		sourceTree = "<absolute>";
@@ -843,6 +703,7 @@
 	};
 	E5CD30BB0ECF8CBB0083037A /* nuiMainWindow.h */ = {
 		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
 		name = nuiMainWindow.h;
 		path = /Users/meeloo/work/nui3/include/nuiMainWindow.h;
 		sourceTree = "<absolute>";
@@ -859,67 +720,10 @@
 	};
 	E5CD30BE0ECF8CBB0083037A /* nglWindow_UIKit.mm */ = {
 		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.objcpp;
 		name = nglWindow_UIKit.mm;
 		path = /Users/meeloo/work/nui3/src/Window/UIKit/nglWindow_UIKit.mm;
 		sourceTree = "<absolute>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1582, 9698}}";
-			sepNavSelRange = "{12768, 0}";
-			sepNavVisRange = "{11862, 1763}";
-		};
-	};
-	E5CD30D50ECF8F3F0083037A /* nuiRefCount.h */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.c.h;
-		name = nuiRefCount.h;
-		path = /Users/meeloo/work/nui3/include/nuiRefCount.h;
-		sourceTree = "<absolute>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1582, 962}}";
-			sepNavSelRange = "{475, 0}";
-			sepNavVisRange = "{0, 930}";
-		};
-	};
-	E5CD30D60ECF8F4B0083037A /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E5CD30BE0ECF8CBB0083037A /* nglWindow_UIKit.mm */;
-		name = "nglWindow_UIKit.mm: 494";
-		rLen = 0;
-		rLoc = 12768;
-		rType = 0;
-		vrLen = 1589;
-		vrLoc = 11946;
-	};
-	E5CD30DA0ECF8FB80083037A /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E5CD30D50ECF8F3F0083037A /* nuiRefCount.h */;
-		name = "nuiRefCount.h: 32";
-		rLen = 0;
-		rLoc = 475;
-		rType = 0;
-		vrLen = 836;
-		vrLoc = 0;
-	};
-	E5CD30DF0ECF8FB80083037A /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E5CD30D50ECF8F3F0083037A /* nuiRefCount.h */;
-		name = "nuiRefCount.h: 32";
-		rLen = 0;
-		rLoc = 475;
-		rType = 0;
-		vrLen = 836;
-		vrLoc = 0;
-	};
-	E5CD30E00ECF8FB80083037A /* PlistBookmark */ = {
-		isa = PlistBookmark;
-		fRef = C9F2587A0E5861EA00687021 /* dlist.plist */;
-		fallbackIsa = PBXBookmark;
-		isK = 0;
-		kPath = (
-		);
-		name = /Users/meeloo/work/nui3/examples/nuiDemo/dlist.plist;
-		rLen = 0;
-		rLoc = 2147483647;
 	};
 	E5CD30E80ECF91550083037A /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -941,17 +745,6 @@
 		vrLen = 1420;
 		vrLoc = 2493;
 	};
-	E5CD31210ED0DC740083037A /* PlistBookmark */ = {
-		isa = PlistBookmark;
-		fRef = C9F2587A0E5861EA00687021 /* dlist.plist */;
-		fallbackIsa = PBXBookmark;
-		isK = 0;
-		kPath = (
-		);
-		name = /Users/meeloo/work/nui3/examples/nuiDemo/dlist.plist;
-		rLen = 0;
-		rLoc = 2147483647;
-	};
 	E5CD31220ED0DC740083037A /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = E5CD31230ED0DC740083037A /* nuiRefCount.h */;
@@ -964,13 +757,25 @@
 	};
 	E5CD31230ED0DC740083037A /* nuiRefCount.h */ = {
 		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
 		name = nuiRefCount.h;
 		path = /Users/meeloo/work/nui3/include/nuiRefCount.h;
 		sourceTree = "<absolute>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1582, 962}}";
-			sepNavSelRange = "{475, 0}";
-			sepNavVisRange = "{0, 930}";
-		};
+	};
+	E5CD31400ED18A220083037A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5CD31410ED18A220083037A /* nuiRefCount.h */;
+		name = "nuiRefCount.h: 32";
+		rLen = 0;
+		rLoc = 475;
+		rType = 0;
+		vrLen = 930;
+		vrLoc = 0;
+	};
+	E5CD31410ED18A220083037A /* nuiRefCount.h */ = {
+		isa = PBXFileReference;
+		name = nuiRefCount.h;
+		path = /Users/meeloo/work/nui3/include/nuiRefCount.h;
+		sourceTree = "<absolute>";
 	};
 }
