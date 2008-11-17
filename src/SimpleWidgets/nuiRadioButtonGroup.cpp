@@ -41,32 +41,30 @@ void nuiRadioButtonGroup::AddRadioButton(nuiRadioButton *pRadioButton)
 {
   mRadioButtons.insert(pRadioButton);
   pRadioButton->SetGroupManager(this);
-  mSink.Connect(pRadioButton->ButtonPressed, &nuiRadioButtonGroup::OnEvent, pRadioButton);
-  mSink.Connect(pRadioButton->ButtonDePressed, &nuiRadioButtonGroup::OnEvent, pRadioButton);
+  mSink.Connect(pRadioButton->Activated, &nuiRadioButtonGroup::OnActivated, pRadioButton);
 }
 
 void nuiRadioButtonGroup::RemoveRadioButton(nuiRadioButton *pRadioButton)
 {
   mRadioButtons.erase(pRadioButton);
   pRadioButton->SetGroupManager(NULL);
-  mSink.Disconnect(pRadioButton->ButtonPressed);
-  mSink.Disconnect(pRadioButton->ButtonDePressed);
+  mSink.Disconnect(pRadioButton->Activated);
 }
 
-bool nuiRadioButtonGroup::OnEvent(const nuiEvent& rEvent)
+bool nuiRadioButtonGroup::OnActivated(const nuiEvent& rEvent)
 {
   nuiRadioButton *pRadioButton = (nuiRadioButton*)rEvent.mpUser;
+  NGL_ASSERT(pRadioButton->IsPressed());
 
-  if (pRadioButton->IsPressed())
+  std::set<nuiRadioButton*>::iterator it = mRadioButtons.begin();
+  std::set<nuiRadioButton*>::iterator end = mRadioButtons.end();
+  for (;it != end; ++it)
   {
-    std::set<nuiRadioButton*>::iterator it = mRadioButtons.begin();
-    std::set<nuiRadioButton*>::iterator end = mRadioButtons.end();
-    for (;it != end; ++it)
+    if ( (*it) != pRadioButton)
     {
-      if ( (*it) != pRadioButton)
-      {
-        (*it)->SetPressed(false);
-        //#FIXME : the following line has been added to fix a missing behavior. still has to be validated
+      bool wasPressed = (*it)->IsPressed();
+      (*it)->SetPressed(false);
+      if (wasPressed) {
         (*it)->Deactivated();
       }
     }

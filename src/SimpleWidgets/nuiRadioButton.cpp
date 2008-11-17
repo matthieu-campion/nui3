@@ -81,12 +81,20 @@ bool nuiRadioButton::MouseUnclicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags 
 
       if (IsPressed())
       {
-        if (mpParent && !mpGroupManager) {
+        if (mpParent && !mpGroupManager)
+        {
           nuiContainer::IteratorPtr pIt = mpParent->GetFirstChild();
-          while (pIt->IsValid()) {
+          while (pIt->IsValid())
+          {
             nuiRadioButton* pRadio = dynamic_cast<nuiRadioButton*>(pIt->GetWidget());
             if (pRadio && (pRadio != this) && pRadio->GetGroup() == GetGroup())
+            {
+              bool wasPressed = pRadio->IsPressed();
               pRadio->SetPressed(false);
+              if (wasPressed) {
+                pRadio->Deactivated();
+              }
+            }
             mpParent->GetNextChild(pIt);
           }
           delete pIt;
