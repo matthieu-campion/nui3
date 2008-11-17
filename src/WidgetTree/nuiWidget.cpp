@@ -909,14 +909,16 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
   nuiRect _self_and_decorations = GetOverDrawRect(true, true);
   nuiRect self = _self;
   nuiRect self_and_decorations = _self_and_decorations;
+  
   LocalToGlobal(self);
-  LocalToGlobal(self_and_decorations);
+  if (_self == _self_and_decorations)
+    self_and_decorations = self;
+  else
+    LocalToGlobal(self_and_decorations);
 
-  {
-    nuiRect inter;
-    if (!inter.Intersect(self_and_decorations, clip)) // Only render at the last needed moment. As we are currently offscreen or clipped entirely we will redraw another day.
-      return false;
-  }
+  nuiRect inter;
+  if (!inter.Intersect(self_and_decorations, clip)) // Only render at the last needed moment. As we are currently offscreen or clipped entirely we will redraw another day.
+    return false;
 
 
   if (mOffscreenEnabled)
@@ -940,7 +942,8 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
       if (mAutoClipSelf)
       {
         pContext->PushClipping();
-        pContext->Clip(_self_and_decorations);
+        if (mpDecoration)
+          pContext->Clip(_self_and_decorations);
         pContext->EnableClipping(true);
       }
 
@@ -971,7 +974,6 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
       {
         pContext->PushClipping();
         pContext->Clip(_self);
-        pContext->EnableClipping(true);
       }
 
       pContext->PushState();
@@ -980,6 +982,7 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
       
       if (mAutoClipSelf)
         pContext->PopClipping();
+      
       ////////////////////// Draw the Overlay
       if (mpDecoration)
       {
