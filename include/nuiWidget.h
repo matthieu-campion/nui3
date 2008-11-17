@@ -161,11 +161,10 @@ public:
   virtual void EnableAutoClipSelf(bool Set, bool Recurse = false);
   bool IsAutoClipSelfEnabled() const;
 
-  //changer l'overdraw to clipper sur le GetRect en cas de decoration et pas d'overdraw
   void SetOverDraw(nuiSize Left, nuiSize Top, nuiSize Right, nuiSize Bottom); ///< Set the amount of over draw for each border of the widget.
   void ResetOverDraw(); ///< Reset the overdraw borders to 0. Equivalent to SetOverDraw(0, 0, 0, 0);
-  void GetOverDraw(nuiSize& Left, nuiSize& Top, nuiSize& Right, nuiSize& Bottom) const; ///< Fill the arguments with the amount of overdraw for each border of the widget
-  nuiRect GetOverDrawRect(bool LocalRect = true) const; ///< Return the overdraw rect (i.e. GetRect() + the overdraw values for each border). If LocalRect is true then the rect is relative to this widget's coordinates system (default). Otherwise, it's relative to this widget's parent coordinate system.
+  void GetOverDraw(nuiSize& Left, nuiSize& Top, nuiSize& Right, nuiSize& Bottom, bool IncludeDecorations) const; ///< Fill the arguments with the amount of overdraw for each border of the widget
+  nuiRect GetOverDrawRect(bool LocalRect, bool IncludeDecorations) const; ///< Return the overdraw rect (i.e. GetRect() + the overdraw values for each border). If LocalRect is true then the rect is relative to this widget's coordinates system (default). Otherwise, it's relative to this widget's parent coordinate system.
   void EnableInteractiveOverDraw(bool set); ///< If set is true then the widget will receive mouse events on its overdrawn borders.
   bool IsOverDrawInteractive() const; ///< Returns true if the widget is to receive mouse events on its overdrawn borders.
   //@}

@@ -460,7 +460,7 @@ bool nuiScrollView::Draw(nuiDrawContext* pContext)
 //    }
 //    else
     nuiRect intersect;
-    if (intersect.Intersect(rect, pItem->GetOverDrawRect()))
+    if (intersect.Intersect(rect, pItem->GetOverDrawRect(true, true)))
     {
       DrawChild(pContext, pItem);
     }

@@ -770,7 +770,7 @@ void nuiWidget::BroadcastInvalidateRect(nuiWidgetPtr pSender, const nuiRect& rRe
 {
   nuiRect r = rRect;
   nuiRect rect = GetRect();
-  nuiRect size = GetOverDrawRect(true);
+  nuiRect size = GetOverDrawRect(true, true);
   r.Intersect(r, size);
 
   nuiVector vec1(r.Left(),r.Top(),0);
@@ -810,7 +810,7 @@ void nuiWidget::Invalidate()
     return;
   }
 
-  nuiWidget::InvalidateRect(GetOverDrawRect());
+  nuiWidget::InvalidateRect(GetOverDrawRect(true, true));
   SilentInvalidate();
 
   if (mpParent)
@@ -905,12 +905,18 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
 
   nuiRect clip;
   pContext->GetClipRect(clip);
-  nuiRect _self = GetOverDrawRect();
+  nuiRect _self = GetOverDrawRect(true, false);
+  nuiRect _self_and_decorations = GetOverDrawRect(true, true);
   nuiRect self = _self;
+  nuiRect self_and_decorations = _self_and_decorations;
   LocalToGlobal(self);
-  nuiRect inter;
-  if (!inter.Intersect(self, clip)) // Only render at the last needed moment. As we are currently offscreen or clipped entirely we will redraw another day.
-    return false;
+  LocalToGlobal(self_and_decorations);
+
+  {
+    nuiRect inter;
+    if (!inter.Intersect(self_and_decorations, clip)) // Only render at the last needed moment. As we are currently offscreen or clipped entirely we will redraw another day.
+      return false;
+  }
 
 
   if (mOffscreenEnabled)
@@ -934,7 +940,7 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
       if (mAutoClipSelf)
       {
         pContext->PushClipping();
-        pContext->Clip(_self);
+        pContext->Clip(_self_and_decorations);
         pContext->EnableClipping(true);
       }
 
@@ -961,10 +967,19 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
       }
       
       ////////////////////// Draw the widget
+      if (mAutoClipSelf)
+      {
+        pContext->PushClipping();
+        pContext->Clip(_self);
+        pContext->EnableClipping(true);
+      }
+
       pContext->PushState();
       Draw(pContext);
       pContext->PopState();
       
+      if (mAutoClipSelf)
+        pContext->PopClipping();
       ////////////////////// Draw the Overlay
       if (mpDecoration)
       {
@@ -1933,7 +1948,7 @@ bool nuiWidget::IsInsideLocal(nuiSize X, nuiSize Y)
   if (!IsVisible(false))
     return false;
   if (mInteractiveOD)
-    return GetOverDrawRect(false).IsInside(X, Y);
+    return GetOverDrawRect(false, false).IsInside(X, Y);
   return GetRect().IsInside(X,Y);
 }
 
@@ -2655,13 +2670,13 @@ const nuiMatrix& nuiWidget::GetMatrix() const
 
 void nuiWidget::SetMatrix(const nuiMatrix& rMatrix)
 {
-  nuiWidget::InvalidateRect(GetOverDrawRect());
+  nuiWidget::InvalidateRect(GetOverDrawRect(true, true));
   SilentInvalidate();
   
   mMatrix = rMatrix;
   mMatrixIsIdentity = mMatrix.IsIdentity();
   
-  nuiWidget::InvalidateRect(GetOverDrawRect());
+  nuiWidget::InvalidateRect(GetOverDrawRect(true, true));
   SilentInvalidate();
   
   if (mpParent)
@@ -3053,14 +3068,14 @@ void nuiWidget::ResetOverDraw()
   SetOverDraw(0, 0, 0, 0);
 }
 
-void nuiWidget::GetOverDraw(nuiSize& Left, nuiSize& Top, nuiSize& Right, nuiSize& Bottom) const
+void nuiWidget::GetOverDraw(nuiSize& Left, nuiSize& Top, nuiSize& Right, nuiSize& Bottom, bool IncludeDecorations) const
 {
   Left = mODLeft;
   Right = mODRight;
   Top = mODTop;
   Bottom = mODBottom;
   
-  if (mpDecoration)
+  if (mpDecoration && IncludeDecorations)
   {    
     if (mDecorationMode == eDecorationOverdraw || mDecorationMode == eDecorationBorder)
     {
@@ -3071,7 +3086,7 @@ void nuiWidget::GetOverDraw(nuiSize& Left, nuiSize& Top, nuiSize& Right, nuiSize
     }
   }
   
-  if (mpFocusDecoration)
+  if (mpFocusDecoration && IncludeDecorations)
   {    
     if (mFocusDecorationMode == eDecorationOverdraw || mFocusDecorationMode == eDecorationBorder)
     {
@@ -3084,7 +3099,7 @@ void nuiWidget::GetOverDraw(nuiSize& Left, nuiSize& Top, nuiSize& Right, nuiSize
   
 }
 
-nuiRect nuiWidget::GetOverDrawRect(bool LocalRect) const
+nuiRect nuiWidget::GetOverDrawRect(bool LocalRect, bool IncludeDecorations) const
 {
   nuiRect r(GetRect());
   if (LocalRect)
@@ -3095,7 +3110,7 @@ nuiRect nuiWidget::GetOverDrawRect(bool LocalRect) const
   nuiSize Top = 0;
   nuiSize Bottom = 0;
 
-  GetOverDraw(Left, Top, Right, Bottom);
+  GetOverDraw(Left, Top, Right, Bottom, IncludeDecorations);
   
   r.Set(r.Left() - Left,
         r.Top() - Top,
