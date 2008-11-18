@@ -84,7 +84,6 @@ bool nuiDecoration::IsWidgetAlphaUsed()
   return mUseWidgetAlpha;
 }
 
-
 nuiDecoration* nuiDecoration::Get(const nglString& rName, bool silent)
 {
   std::map<nglString, nuiDecoration*>::iterator it = mDecorations.find(rName);
@@ -105,7 +104,11 @@ nuiDecoration* nuiDecoration::Get(const nglString& rName, bool silent)
 void nuiDecoration::AddDecoration(nuiDecoration* pDecoration)
 {
   const nglString& name(pDecoration->GetProperty(_T("Name")));
+  std::map<nglString, nuiDecoration*>::iterator it = mDecorations.find(name);
+  if (it != mDecorations.end())
+    it->second->Release();
   mDecorations[name] = pDecoration;
+  pDecoration->Acquire();
 }
 
 void nuiDecoration::DelDecoration(nuiDecoration* pDecoration)
@@ -113,7 +116,7 @@ void nuiDecoration::DelDecoration(nuiDecoration* pDecoration)
   nglString name(pDecoration->GetProperty(_T("Name")));
   
   std::map<nglString, nuiDecoration*>::iterator it = mDecorations.find(name);
-  if (it != mDecorations.end())
+  if (it != mDecorations.end() && pDecoration == it->second)
     mDecorations.erase(it);
 }
 

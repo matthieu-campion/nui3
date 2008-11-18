@@ -20,7 +20,7 @@ public:
   void InitAttributes();
 
   virtual ~nuiDecoration();
-  
+
   virtual bool Load(const nuiXMLNode* pNode) = 0;
   virtual nuiXMLNode* Serialize(nuiXMLNode* pNode) = 0;
   

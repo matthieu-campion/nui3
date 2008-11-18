@@ -27,7 +27,7 @@ public:
     return ++mCount; 
   }
 
-  uint Release()   
+  uint Release()
   { 
     NGL_ASSERTR(mCount > 0, mCount); 
     mCount--;

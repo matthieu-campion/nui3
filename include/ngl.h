@@ -283,8 +283,6 @@ and in NGL user application code.
 //  #if defined(_OBJC_)
 		#include <UIKit/UIKit.h>
   #endif
-  
-  #define USE_VECTOR_STRING_DATA
 
   #include <stdlib.h>
   #include <stddef.h>

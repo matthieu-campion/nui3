@@ -34,7 +34,7 @@ public:
 
   virtual bool Draw(nuiDrawContext* pContext);
   virtual nuiRect CalcIdealSize();
-  bool SetRect(const nuiRect& rRect);
+  virtual bool SetRect(const nuiRect& rRect);
 
   virtual void SetText(const nglString& Text); ///< Modify the label's text.
   virtual const nglString& GetText() const; ///< Retrieve the label's text.
