@@ -447,12 +447,12 @@ typedef wchar_t nglChar;
 #    define _OPENGL_ES_
 // Make our GLES Painter available, and disable other Painters...
 #    undef  __NUI_NO_GLES__
-#    define __NUI_NO_SOFTWARE__
+#    undef __NUI_NO_SOFTWARE__
 #    define __NUI_NO_D3D__
 #    define __NUI_NO_GL__
 
 // Disable Anti-Aliasing
-#    define __NUI_NO_AA__
+//#    define __NUI_NO_AA__
 
 #    if defined(_OBJC_)
 #     include <OpenGLES/EAGL.h>

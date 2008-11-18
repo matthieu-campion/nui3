@@ -70,6 +70,8 @@ nglString nuiAudioDevice_AudioQueue::GetChannelName(bool IsInput, uint32 index) 
 //class nuiAudioDeviceAPI_AudioQueue : public nuiAudioDeviceAPI
 nuiAudioDeviceAPI_AudioQueue::nuiAudioDeviceAPI_AudioQueue()
 {
+  mName = _T("AudioQueue");
+  RegisterWithManager();
 }
 
 nuiAudioDeviceAPI_AudioQueue::~nuiAudioDeviceAPI_AudioQueue()

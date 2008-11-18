@@ -46,7 +46,8 @@ nuiDrawContext::~nuiDrawContext()
   SetFont(NULL);
   SetShader(NULL);
   SetSurface(NULL);
-  mpAATexture->Release();
+  if (mpAATexture)
+    mpAATexture->Release();
 
   delete mpPainter;
   mpPainter = NULL;

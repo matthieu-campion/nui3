@@ -61,10 +61,12 @@ inline void nuiSetViewport(GLuint Angle, GLuint Width, GLuint Height)
 {
   glMatrixMode(GL_PROJECTION);    
   
-  if (Angle == 90 || Angle == 270) {
+  if (Angle == 90 || Angle == 270)
+  {
     glViewport(0,0, Height, Width);
   }
-  else {
+  else
+  {
     glViewport(0,0, Width, Height);
   }
   
@@ -235,25 +237,30 @@ void nuiGLESPainter::SetState(const nuiRenderState& rState, bool ForceApply)
     
     int x,y,w,h;
 
-    if (mAngle == 90) {
+    if (mAngle == 90)
+    {
       x = ToBelow(clip.Top());
       y = ToBelow(clip.Left());
       w = ToBelow(clip.GetHeight());
       h = ToBelow(clip.GetWidth());
     }
-    else if (mAngle == 180) {
+    else if (mAngle == 180)
+    {
       w = ToBelow(clip.GetWidth());
       h = ToBelow(clip.GetHeight());
       x = ToBelow(mWidth - w - clip.Left());
       y = ToBelow(clip.Top());
     }
-    else if (mAngle == 270) {
+    else if (mAngle == 270)
+    {
       w = ToBelow(clip.GetHeight());
       h = ToBelow(clip.GetWidth());
       x = ToBelow(mHeight - clip.Top() - w);
       y = ToBelow(mWidth - clip.Left() - h);
     }
-    else { NGL_ASSERT(!mAngle);
+    else
+    {
+      NGL_ASSERT(!mAngle);
       x = ToBelow(clip.Left());
       y = ToBelow(mHeight - clip.Bottom());
       w = ToBelow(clip.GetWidth());
@@ -265,7 +272,9 @@ void nuiGLESPainter::SetState(const nuiRenderState& rState, bool ForceApply)
     nuiCheckForGLErrors();
   }
   else
+  {
     glDisable(GL_SCISSOR_TEST);
+  }
 
   mState.mClearColor = rState.mClearColor;
   mState.mStrokeColor = rState.mStrokeColor;
@@ -291,22 +300,33 @@ inline bool nuiCheckFramebufferStatus()
 
 #if defined(NGL_DEBUG)
 
-  switch (status) {
-    case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT_OES: {
-      NGL_OUT(_T("GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT_OES\n"));
-    } break;
-    case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT_OES: {
-      NGL_OUT(_T("GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT_OES\n"));
-    } break;
-    case GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS_OES: {
-      NGL_OUT(_T("GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS_OES\n"));
-    } break;
-    case GL_FRAMEBUFFER_INCOMPLETE_FORMATS_OES: {
-      NGL_OUT(_T("GL_FRAMEBUFFER_INCOMPLETE_FORMATS_OES\n"));
-    } break;
-    case GL_FRAMEBUFFER_UNSUPPORTED_OES: {
-      NGL_OUT(_T("GL_FRAMEBUFFER_UNSUPPORTED_OES\n"));
-    } break;
+  switch (status)
+  {
+    case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT_OES:
+      {
+        NGL_OUT(_T("GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT_OES\n"));
+      }
+      break;
+    case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT_OES:
+      {
+        NGL_OUT(_T("GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT_OES\n"));
+      }
+      break;
+    case GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS_OES:
+      {
+        NGL_OUT(_T("GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS_OES\n"));
+      }
+      break;
+    case GL_FRAMEBUFFER_INCOMPLETE_FORMATS_OES:
+      {
+        NGL_OUT(_T("GL_FRAMEBUFFER_INCOMPLETE_FORMATS_OES\n"));
+      }
+      break;
+    case GL_FRAMEBUFFER_UNSUPPORTED_OES:
+      {
+        NGL_OUT(_T("GL_FRAMEBUFFER_UNSUPPORTED_OES\n"));
+      }
+      break;
   }
 
 #endif
@@ -332,8 +352,10 @@ void nuiGLESPainter::ApplySurface(const nuiRenderState& rState, bool ForceApply)
     GLuint height = (GLuint)pSurface->GetHeight();
 
     nuiTexture* pTexture = pSurface->GetTexture();
-    if (pTexture && !pTexture->IsPowerOfTwo()) {
-      switch (GetRectangleTextureSupport()) {
+    if (pTexture && !pTexture->IsPowerOfTwo())
+    {
+      switch (GetRectangleTextureSupport())
+      {
         case 0:
           width = (GLuint)pTexture->GetWidthPOT();
           height= (GLuint)pTexture->GetHeightPOT();
@@ -383,7 +405,9 @@ void nuiGLESPainter::ApplySurface(const nuiRenderState& rState, bool ForceApply)
         nuiCheckForGLErrors();
       }
       else
+      {
         info.mDepthbuffer = 0;
+      }
 
 ///< Do we need a stencil buffer
       if (pSurface->GetStencil())
@@ -409,7 +433,9 @@ void nuiGLESPainter::ApplySurface(const nuiRenderState& rState, bool ForceApply)
         nuiCheckForGLErrors();
       }
       else
+      {
         info.mStencilbuffer = 0;
+      }
 
 ///< We definetly need a color attachement
 ///< render to texture
@@ -431,15 +457,18 @@ void nuiGLESPainter::ApplySurface(const nuiRenderState& rState, bool ForceApply)
                                   0);
         nuiCheckForGLErrors();
       }
-      else {
-///< TODO: renderbuffer (can be used for the screen framebuffer)
+      else
+      {
+        ///< TODO: renderbuffer (can be used for the screen framebuffer)
       }
 
       nuiCheckFramebufferStatus();
       nuiCheckForGLErrors();
       mFramebuffers[pSurface] = info;
     }
-    else { /// !create
+    else
+    {
+      /// !create
       info = it->second;
       glBindFramebufferOES(GL_FRAMEBUFFER_OES, info.mFramebuffer);
       nuiCheckForGLErrors();
@@ -447,7 +476,9 @@ void nuiGLESPainter::ApplySurface(const nuiRenderState& rState, bool ForceApply)
     }
     nuiSetViewport(0, pSurface->GetWidth(), pSurface->GetHeight());
   }
-  else { /// !pSurface
+  else
+  {
+    /// !pSurface
     glBindFramebufferOES(GL_FRAMEBUFFER_OES, mOldFramebuffer);
     nuiCheckForGLErrors();
     nuiCheckFramebufferStatus();
@@ -950,30 +981,6 @@ void nuiGLESPainter::DrawArray(const nuiRenderArray& rArray)
   else
 #endif // NUI_USE_ANTIALIASING
   {
-    //#TEST meeloo disabling AA texture
-    //     if (rArray.UseGLAATexture())
-    //     {
-    //       if (mState.mTexturing && mTextureTarget != GL_TEXTURE_2D)
-    //         glDisable(mTextureTarget);
-    //       if (!mState.mTexturing || (mState.mTexturing && mTextureTarget != GL_TEXTURE_2D))
-    //         glEnable(GL_TEXTURE_2D);
-    // 
-    //       if (!mState.mBlending)
-    //         glEnable(GL_BLEND);
-    //       if (mState.mBlendFunc != nuiBlendTransp)
-    //         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    // 
-    //       glBindTexture(GL_TEXTURE_2D, glAA_texture);
-    // 
-    //       glMatrixMode(GL_TEXTURE);
-    //       glPushMatrix();
-    //       glLoadIdentity();
-    //       glMatrixMode(GL_MODELVIEW);
-    // 
-    //       glPushMatrix();
-    //       glTranslatef(0.5f, 0.5f, 0);
-    //     }
-    //     else
     if (!mState.mTexturing)
     {
       glPushMatrix();
@@ -1077,40 +1084,6 @@ void nuiGLESPainter::DrawArray(const nuiRenderArray& rArray)
   else
 #endif // NUI_USE_ANTIALIASING
   {
-    //#TEST meeloo disabling AA texture
-    //     if (rArray.UseGLAATexture())
-    //     {
-    //       glMatrixMode(GL_TEXTURE);
-    //       glPopMatrix();
-    //       glMatrixMode(GL_MODELVIEW);
-    //       glPopMatrix();
-    // 
-    //       if (mState.mpTexture && mState.mTexturing)
-    //       {
-    //         if (mTextureTarget != GL_TEXTURE_2D)
-    //         {
-    //           glDisable(GL_TEXTURE_2D);
-    //           glEnable(mTextureTarget);
-    //         }
-    // 
-    //         UploadTexture(mState.mpTexture);
-    //       }
-    //       else
-    //       {
-    //         glDisable(GL_TEXTURE_2D);
-    //       }
-    // 
-    //       if (!mState.mBlending)
-    //         glDisable(GL_BLEND);
-    //       if (mState.mBlendFunc != nuiBlendTransp)
-    //       {
-    //         GLenum src, dst;
-    //         nuiGetBlendFuncFactors(mState.mBlendFunc, src, dst);
-    //         glBlendFunc(src, dst);
-    //       }
-    //       //ApplyTexture(mState, true);
-    //     }
-    //     else
     if (!mState.mTexturing)
     {
       glPopMatrix();
@@ -1121,7 +1094,6 @@ void nuiGLESPainter::DrawArray(const nuiRenderArray& rArray)
   glColor4f(1.0f, 1.0f, 1.0f, 1.f);
   nuiCheckForGLErrors();
 }
-
 #endif
 
 void nuiGLESPainter::BeginSession()

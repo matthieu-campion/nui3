@@ -28,6 +28,7 @@ nuiLabel::nuiLabel(const nglString& Text, nuiTheme::FontStyle FontStyle)
   mFontChanged = true;
   mOrientation = nuiHorizontal;
   mpLayout = NULL;
+  mpIdealLayout = NULL;
   mpFont = NULL;
 
   mTextColorSet = false;
@@ -86,6 +87,7 @@ bool nuiLabel::Load(const nuiXMLNode* pNode)
   nuiWidget::Load(pNode);
   mLabelSink.SetTarget(this);
   mpLayout = NULL;
+  mpIdealLayout = NULL;
   mpFont = NULL;
   mFontChanged = true;
 
@@ -137,8 +139,8 @@ nuiXMLNode* nuiLabel::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
 
 nuiLabel::~nuiLabel()
 {
-  if (mpLayout)
-    delete mpLayout;
+  delete mpLayout;
+  delete mpIdealLayout;
   if (mpFont)
     mpFont->Release();
 }
@@ -354,13 +356,19 @@ void nuiLabel::CalcLayout()
       {
         if (mpLayout)
           delete mpLayout;
+        if (mpIdealLayout)
+          delete mpIdealLayout;
         mpLayout = new nuiFontLayout(*mpFont, 0, 0, mOrientation);
+        mpIdealLayout = new nuiFontLayout(*mpFont, 0, 0, mOrientation);
         mpLayout->SetUnderline(mUnderline);
+        mpIdealLayout->SetUnderline(mUnderline);
         mpLayout->SetStrikeThrough(mStrikeThrough);
+        mpIdealLayout->SetStrikeThrough(mStrikeThrough);
         mFontChanged = false;
       }
 
       mpLayout->Init(0,0);
+      mpIdealLayout->Init(0,0);
       if (mWrapping)
       {
         //NGL_OUT(_T("Setting wrapping to %f\n"), mConstraint.mMaxWidth);
@@ -373,11 +381,16 @@ void nuiLabel::CalcLayout()
           wrap = MAX(wrap1, wrap2);
         
         mpLayout->SetWrapX(wrap - mBorderLeft - mBorderRight);
+        mpIdealLayout->SetWrapX(wrap - mBorderLeft - mBorderRight);
       }
       else
+      {
         mpLayout->SetWrapX(0);
+        mpIdealLayout->SetWrapX(0);
+      }
 
       mpLayout->Layout(mText);
+      mpIdealLayout->Layout(mText);
       GetLayoutRect();
       mTextChanged = false;
       mFontChanged = false;
@@ -408,8 +421,6 @@ bool nuiLabel::SetRect(const nuiRect& rRect)
 
   nuiRect ideal(mIdealLayoutRect);
 
-  if (!mpLayout)
-    return false;
 
   if (ideal.GetWidth() > mRect.GetWidth())
   {
@@ -418,11 +429,13 @@ bool nuiLabel::SetRect(const nuiRect& rRect)
       nuiSize diff = ideal.GetWidth() - mRect.GetWidth();
       int NbLetterToRemove = ToNearest(diff / (ideal.GetWidth() / mText.GetLength())) + 3;
       nglString text = mText;
-      text.DeleteRight(MIN(NbLetterToRemove, text.GetLength()));
+      int len = text.GetLength();
+      text.DeleteRight(MIN(NbLetterToRemove, len));
       text.Append(_T("..."));
       mpLayout->Init(0,0);
       mpLayout->SetWrapX(0);
       mpLayout->Layout(text);
+      CalcLayout();
       GetLayoutRect();
     }
     else if (mWrapping)
@@ -446,7 +459,7 @@ bool nuiLabel::SetRect(const nuiRect& rRect)
 
 nuiRect nuiLabel::GetLayoutRect()
 {
-  mIdealLayoutRect = mpLayout->GetRect();
+  mIdealLayoutRect = mpIdealLayout->GetRect();
   mIdealLayoutRect.Grow(mHMargin, mVMargin);
   mIdealLayoutRect = mIdealLayoutRect.Size();
   return mIdealLayoutRect;

@@ -23,11 +23,17 @@
 //const bool gGlobalUseRenderCache = false;
 const bool gGlobalUseRenderCache = true;
 
-#ifdef _OPENGL_ES_
-#define NUI_DEFAULT_AUTO_CLIP_SELF false
-#else
-#define NUI_DEFAULT_AUTO_CLIP_SELF true
-#endif
+bool nuiWidget::mSelfClippingDefault = true;
+
+void nuiWidget::SetSelfClippingDefault(bool set)
+{
+  mSelfClippingDefault = set;
+}
+
+bool nuiWidget::GetSelfClippingDefault()
+{
+  return mSelfClippingDefault;
+}
 
 //#define NUI_LOG_GETIDEALRECT
 
@@ -345,7 +351,7 @@ void nuiWidget::Init()
   mCanRespectConstraint = false; ///< By default the widgets don't care about the constraints imposed by their parents. Only few ones care about this.
   mNeedInvalidateOnSetRect = true;
   mDrawingInCache = false;
-  mAutoClipSelf = NUI_DEFAULT_AUTO_CLIP_SELF;
+  mAutoClipSelf = mSelfClippingDefault;
   mpRenderCache = NULL;
 	mUseRenderCache = false;
 

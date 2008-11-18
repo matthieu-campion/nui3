@@ -332,14 +332,20 @@ void glAAGenerateAATex(float Falloff, float alias)
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
         // Clamp the max mip level to 2x2 (1 px with 1 px border all around...)
+#ifndef _UIKIT_
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, l2psz);
+#endif
       }
 
       glBindTexture(GL_TEXTURE_2D, glAA_texture);
 
       // Generate the entire mip pyramid slowly in software
+#ifndef _UIKIT_
       gluBuild2DMipmaps(GL_TEXTURE_2D, GL_ALPHA, pdb, pdb, GL_ALPHA, GL_UNSIGNED_BYTE, texture);
-//      glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, pdb, pdb, 0, GL_ALPHA, GL_UNSIGNED_BYTE, texture);
+#else
+      glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, pdb, pdb, 0, GL_ALPHA, GL_UNSIGNED_BYTE, texture);
+#endif
+
 
       // Set filtering depending on our aliasing mode.
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, (alias > 0.66) ? GL_NEAREST : GL_LINEAR);  

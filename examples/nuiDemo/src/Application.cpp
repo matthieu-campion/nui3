@@ -18,6 +18,8 @@
 #include "nuiAudioDevice_CoreAudio.h"
 #elif (defined _WIN32_)
 #include "nuiAudioDevice_DirectSound.h"
+#elif (defined _UIKIT_)
+#include "nuiAudioDevice_AudioQueue.h"
 #else
 // Add needed sound API
 #endif
@@ -35,7 +37,9 @@ Application::Application()
   
   // this make the audio system works (c.f. last update on nuiAudioDevice)
   #ifdef _CARBON_
-  wprintf(_T("Audio system:%ld"), CoreAudioAPI.GetAPIName().GetChars());
+  wprintf(_T("Audio system:%ls\n"), CoreAudioAPI.GetAPIName().GetChars());
+  #elif (defined _UIKIT_)
+  wprintf(_T("Audio system:%ls\n"), AudioQueueAPI.GetAPIName().GetChars());
   #endif
 }
 

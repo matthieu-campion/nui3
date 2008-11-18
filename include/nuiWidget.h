@@ -458,6 +458,9 @@ public:
   void ResetCSSPass();
   uint32 GetCSSPass() const;
   //@}
+
+  static void SetSelfClippingDefault(bool set);
+  static bool GetSelfClippingDefault();
   
 protected:
   std::map<nglString, nuiEventSource*, nglString::LessFunctor> mEventMap;
@@ -546,7 +549,7 @@ protected:
   
   virtual void DrawFocus(nuiDrawContext* pContext, bool FrontOrBack); ///< Draw a decoration to show that the widget has the keyboard focus. The focus is drawn on top of the regular decoration if it exists.
   void DispatchFocus(nuiWidgetPtr pWidget); ///< Advise the objet of a change of focus object. pWidget can be null.
-  
+
 private:    
   nuiTimer* mpAnimationTimer;
   bool mAnimateLayout;
@@ -615,6 +618,7 @@ private:
   
   uint32 mCSSPasses;
   virtual void InternalResetCSSPass();
+  static bool mSelfClippingDefault;
 };
 
 #define NUI_ADD_EVENT(NAME) { AddEvent(_T(#NAME), NAME); }
