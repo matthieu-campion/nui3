@@ -62,6 +62,7 @@ nuiLabel::nuiLabel(const nglString& Text, nuiFont* pFont, bool AlreadyAcquired)
   mFontChanged = true;
   mOrientation = nuiHorizontal;
   mpLayout = NULL;
+  mpIdealLayout = NULL;
   mpFont = NULL;
 
   mTextColorSet = false;
