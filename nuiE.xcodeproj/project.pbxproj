@@ -1579,6 +1579,12 @@
 		E53431810EC39F2600575BA6 /* nuiMainMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E534317F0EC39F2600575BA6 /* nuiMainMenu.cpp */; };
 		E53431870EC39FFF00575BA6 /* nuiMainMenu_UIKit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E53431860EC39FFF00575BA6 /* nuiMainMenu_UIKit.cpp */; };
 		E53431880EC39FFF00575BA6 /* nuiMainMenu_UIKit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E53431860EC39FFF00575BA6 /* nuiMainMenu_UIKit.cpp */; };
+		E56A07830ED232BB00805D1C /* nuiAudioDevice_CoreAudio.h in Headers */ = {isa = PBXBuildFile; fileRef = E56A07820ED232BB00805D1C /* nuiAudioDevice_CoreAudio.h */; };
+		E56A07840ED232BB00805D1C /* nuiAudioDevice_CoreAudio.h in Headers */ = {isa = PBXBuildFile; fileRef = E56A07820ED232BB00805D1C /* nuiAudioDevice_CoreAudio.h */; };
+		E56A07860ED24B3F00805D1C /* nuiAudioDevice_AudioQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = E56A07850ED24B3F00805D1C /* nuiAudioDevice_AudioQueue.h */; };
+		E56A07870ED24B3F00805D1C /* nuiAudioDevice_AudioQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = E56A07850ED24B3F00805D1C /* nuiAudioDevice_AudioQueue.h */; };
+		E56A079C0ED24F3200805D1C /* nuiAudioDevice_AudioQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E56A079B0ED24F3200805D1C /* nuiAudioDevice_AudioQueue.cpp */; };
+		E56A079D0ED24F3200805D1C /* nuiAudioDevice_AudioQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E56A079B0ED24F3200805D1C /* nuiAudioDevice_AudioQueue.cpp */; };
 		E5CD2FCF0ECF85E70083037A /* nuiAudioConvert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D4880DA5716500D2641A /* nuiAudioConvert.cpp */; };
 		E5CD2FD00ECF85E80083037A /* nuiAudioConvert.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4890DA5716500D2641A /* nuiAudioConvert.h */; };
 		E5CD2FD10ECF85E90083037A /* nuiAudioDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D48D0DA5716500D2641A /* nuiAudioDevice.cpp */; };
@@ -2714,6 +2720,9 @@
 		D2AAC046055464E500DB518D /* libnuiE.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libnuiE.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E534317F0EC39F2600575BA6 /* nuiMainMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiMainMenu.cpp; sourceTree = "<group>"; };
 		E53431860EC39FFF00575BA6 /* nuiMainMenu_UIKit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiMainMenu_UIKit.cpp; path = UIKit/nuiMainMenu_UIKit.cpp; sourceTree = "<group>"; };
+		E56A07820ED232BB00805D1C /* nuiAudioDevice_CoreAudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiAudioDevice_CoreAudio.h; path = include/nuiAudioDevice_CoreAudio.h; sourceTree = SOURCE_ROOT; };
+		E56A07850ED24B3F00805D1C /* nuiAudioDevice_AudioQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiAudioDevice_AudioQueue.h; path = include/nuiAudioDevice_AudioQueue.h; sourceTree = SOURCE_ROOT; };
+		E56A079B0ED24F3200805D1C /* nuiAudioDevice_AudioQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiAudioDevice_AudioQueue.cpp; path = Audio/AudioQueue/nuiAudioDevice_AudioQueue.cpp; sourceTree = "<group>"; };
 		E5CD2FD90ECF86510083037A /* nuiSample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiSample.cpp; path = src/AudioSamples/nuiSample.cpp; sourceTree = SOURCE_ROOT; };
 		E5CD2FDA0ECF86510083037A /* nuiSampleInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiSampleInfo.cpp; path = src/AudioSamples/nuiSampleInfo.cpp; sourceTree = SOURCE_ROOT; };
 		E5CD2FDB0ECF86510083037A /* nuiSampleReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiSampleReader.cpp; path = src/AudioSamples/nuiSampleReader.cpp; sourceTree = SOURCE_ROOT; };
@@ -2856,6 +2865,7 @@
 		6126D4860DA5716500D2641A /* Audio */ = {
 			isa = PBXGroup;
 			children = (
+				E56A07820ED232BB00805D1C /* nuiAudioDevice_CoreAudio.h */,
 				6126D4870DA5716500D2641A /* nuiAudioResampler.h */,
 				6126D4880DA5716500D2641A /* nuiAudioConvert.cpp */,
 				6126D4890DA5716500D2641A /* nuiAudioConvert.h */,
@@ -2864,6 +2874,8 @@
 				6126D48C0DA5716500D2641A /* nuiAudioDevice.h */,
 				6126D48D0DA5716500D2641A /* nuiAudioDevice.cpp */,
 				6126D48E0DA5716500D2641A /* nuiAudioDevice_CoreAudio.cpp */,
+				E56A07850ED24B3F00805D1C /* nuiAudioDevice_AudioQueue.h */,
+				E56A079B0ED24F3200805D1C /* nuiAudioDevice_AudioQueue.cpp */,
 			);
 			name = Audio;
 			sourceTree = "<group>";
@@ -5061,6 +5073,8 @@
 				E5CD31960ED1A86A0083037A /* nuiPixelBlender.h in Headers */,
 				E5CD31970ED1A8730083037A /* nuiSoftwarePainter.h in Headers */,
 				E5CD319A0ED1A87A0083037A /* nuiVertex.h in Headers */,
+				E56A07830ED232BB00805D1C /* nuiAudioDevice_CoreAudio.h in Headers */,
+				E56A07860ED24B3F00805D1C /* nuiAudioDevice_AudioQueue.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5570,6 +5584,8 @@
 				E5CD30540ECF88350083037A /* nuiDialogSelectFile.h in Headers */,
 				E5CD30550ECF88350083037A /* nuiDragAndDrop.h in Headers */,
 				E5CD319C0ED1A8970083037A /* nuiVertex.h in Headers */,
+				E56A07840ED232BB00805D1C /* nuiAudioDevice_CoreAudio.h in Headers */,
+				E56A07870ED24B3F00805D1C /* nuiAudioDevice_AudioQueue.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5935,6 +5951,7 @@
 				E5CD30470ECF88040083037A /* nuiDialogSelectDirectory.cpp in Sources */,
 				E5CD30480ECF88040083037A /* nuiDialogSelectFile.cpp in Sources */,
 				E5CD30490ECF88040083037A /* nuiMessageBox.cpp in Sources */,
+				E56A079C0ED24F3200805D1C /* nuiAudioDevice_AudioQueue.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6246,6 +6263,7 @@
 				E5CD304A0ECF88040083037A /* nuiDialogSelectDirectory.cpp in Sources */,
 				E5CD304B0ECF88040083037A /* nuiDialogSelectFile.cpp in Sources */,
 				E5CD304C0ECF88040083037A /* nuiMessageBox.cpp in Sources */,
+				E56A079D0ED24F3200805D1C /* nuiAudioDevice_AudioQueue.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

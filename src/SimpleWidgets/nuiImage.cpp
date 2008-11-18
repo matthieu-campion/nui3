@@ -153,8 +153,8 @@ nuiXMLNode* nuiImage::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
 
 nuiImage::~nuiImage()
 {
-  NGL_ASSERT(mpTexture);
-  mpTexture->Release();
+  if (mpTexture)
+    mpTexture->Release();
 }
 
 void nuiImage::ForceReload()
