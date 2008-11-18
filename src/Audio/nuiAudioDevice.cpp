@@ -124,7 +124,7 @@ nuiAudioDevice* nuiAudioDeviceManager::GetDevice(uint32 DeviceIndex)
   {
     nuiAudioDeviceAPI* pAPI = it->second;
     uint32 devcount = pAPI->GetDeviceCount();
-    if (DeviceIndex > devcount)
+    if (DeviceIndex >= devcount)
     {
       DeviceIndex -= devcount;
     }
