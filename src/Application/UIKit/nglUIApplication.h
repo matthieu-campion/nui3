@@ -1,5 +1,5 @@
-#ifndef __nglUIKitApplication_h__
-#define __nglUIKitApplication_h__
+#ifndef __nglUIApplication_h__
+#define __nglUIApplication_h__
 
 #include "ngl.h"
 #import <UIKit/UIKit.h>
@@ -20,11 +20,14 @@
 }
 - (void) dealloc;
 - (void) applicationDidFinishLaunching:       (UIApplication*) pUIApp;
+- (void) applicationDidBecomeActive:          (UIApplication*) pUIApp;
+- (void) applicationWillResignActive:         (UIApplication*) pUIApp;
 - (void) applicationDidReceiveMemoryWarning:  (UIApplication*) pUIApp;
 - (void) applicationSignificantTimeChange:    (UIApplication*) pUIApp;
 - (void) applicationWillTerminate:            (UIApplication*) pUIApp;
 
+
 @end//nglUIApplicationDelegate
 
 
-#endif//__nglUIKitApplication_h__
+#endif//__nglUIApplication_h__

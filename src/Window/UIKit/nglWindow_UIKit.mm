@@ -12,7 +12,7 @@
 
 #include <string.h>
 
-#include "nglWindow_UIKit.h"
+#include "nglUIWindow.h"
 
 
 //#include "nglImage.h"

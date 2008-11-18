@@ -3,9 +3,10 @@
 using namespace std;
 
 #include "nglApplication.h"
+#include "nglUIApplication.h"
 
-#include "nglUIKitApplication.h"
-
+#include "../../Window/UIKit/nglUIWindow.h"
+#include "nglWindow.h"
 
 /*
 ** nglUIApplication
@@ -54,9 +55,34 @@ void objCCallOnWillExit();
 
   objCCallOnInit(pUIApplication);
 }
+
+- (void) applicationDidBecomeActive:          (UIApplication*) pUIApplication
+{
+  NGL_DEBUG( NGL_OUT(_T("[nglUIApplicationDelegate applicationDidBecomeActive]\n")); )
+  NGL_ASSERT(App);
+
+  id win = [pUIApplication keyWindow];
+  NGL_ASSERT(win);
+  nglWindow* pWindow = [win getNGLWindow];
+  NGL_ASSERT(pWindow);
+  pWindow->CallOnActivation();
+}
+
+- (void) applicationWillResignActive:         (UIApplication*) pUIApplication
+{
+  NGL_DEBUG( NGL_OUT(_T("[nglUIApplicationDelegate applicationWillResignActive]\n")); )
+  NGL_ASSERT(App);
+  
+  nglUIWindow* win = (nglUIWindow*)[pUIApplication keyWindow];
+  NGL_ASSERT(win);
+  nglWindow* pWindow = [win getNGLWindow];
+  NGL_ASSERT(pWindow);
+  pWindow->CallOnDesactivation();
+}
+
 - (void) applicationDidReceiveMemoryWarning:  (UIApplication*) pUIApplication
 {
-  NGL_OUT(_T("[nglUIApplicationDelegate applicationDidReceiveMemoryWarning]\n"));
+  NGL_DEBUG( NGL_OUT(_T("[nglUIApplicationDelegate applicationDidReceiveMemoryWarning]\n")); )
 }
 - (void) applicationSignificantTimeChange:    (UIApplication*) pUIApplication
 {
