@@ -753,7 +753,7 @@ NGL_API void nglCopyLine24To32ARGB (void* pDst, void* pSrc, int PixelCount, bool
       pDest[i*4+0] = pSource[i*3+2];
       pDest[i*4+1] = pSource[i*3+1];
       pDest[i*4+2] = pSource[i*3+0];
-      //pDest[i*4+3] = 0;
+      pDest[i*4+3] = 255;
     }
   }
 }   
