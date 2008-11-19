@@ -155,6 +155,9 @@ public:
   virtual bool IsDeSelectable();
   virtual void SetMultiSelectable(bool Set);
   virtual void SetDeSelectable(bool Set);
+  void StartMultiSelection();
+  void StopMultiSelection();
+  bool IsMultiSelecting() const;
 
   virtual void SetTree(nuiTreeNodePtr pTree, bool DeleteOldTree = true); ///< Change the tree to be displayed in the widget.
   nuiTreeNodePtr GetTree(); ///< Return the tree model used by this widget.
@@ -181,6 +184,7 @@ protected:
   virtual bool OnTreeChildDeleted(const nuiEvent& rEvent);
     
   bool mMultiSelectable;
+  bool mInMultiSelection;
   bool mDeSelectable;
 
   nuiSize mClickX;

@@ -269,6 +269,7 @@ nuiTreeView::nuiTreeView(nuiTreeNodePtr pTree)
 {
   SetObjectClass(_T("nuiTreeView"));
   mMultiSelectable = false;
+  mInMultiSelection = false;
   mDeSelectable = true;
   SetWantKeyboardFocus(true);
   
@@ -289,6 +290,7 @@ bool nuiTreeView::Load(const nuiXMLNode* pNode)
   nuiSimpleContainer::Load(pNode);
   mpSelectedNode = NULL;
   mMultiSelectable = true;
+  mInMultiSelection = false;
   mDeSelectable = true;
 
   mClickX = mClickY = mNewX = mNewY= 0;
@@ -971,9 +973,9 @@ bool nuiTreeView::KeyDown(const nglKeyEvent& rEvent)
     nuiTreeNodePtr pPrev = pSelected->GetPreviousOpen();
     if (pPrev)
     {
-      SelectAll(false);
+      if (mInMultiSelection)
+        SelectAll(false);
       Select(pPrev, true, false);
-      SelectionChanged();
     }
     return true;
   }
@@ -982,9 +984,9 @@ bool nuiTreeView::KeyDown(const nglKeyEvent& rEvent)
     nuiTreeNodePtr pNext = pSelected->GetNextOpen();
     if (pNext)
     {
-      SelectAll(false);
+      if (mInMultiSelection)
+        SelectAll(false);
       Select(pNext, true, false);
-      SelectionChanged();
     }
     return true;
   }
@@ -1002,9 +1004,9 @@ bool nuiTreeView::KeyDown(const nglKeyEvent& rEvent)
         nuiTreeNodePtr pChild = (nuiTreeNodePtr)pSelected->GetChild(0);
         if (pChild)
         {
-          SelectAll(false);
+          if (mInMultiSelection)
+            SelectAll(false);
           Select(pChild, true, false);
-          SelectionChanged();
         }
       }
     }
@@ -1022,9 +1024,9 @@ bool nuiTreeView::KeyDown(const nglKeyEvent& rEvent)
       nuiTreeNodePtr pParent = (nuiTreeNodePtr)pSelected->GetParent();
       if (pParent)
       {
-        SelectAll(false);
+        if (mInMultiSelection)
+          SelectAll(false);
         Select(pParent, true, false);
-        SelectionChanged();
       }
     }
     return true;
@@ -1042,3 +1044,19 @@ bool nuiTreeView::KeyUp(const nglKeyEvent& rEvent)
 {
   return false;
 }
+
+void nuiTreeView::StartMultiSelection()
+{
+  mInMultiSelection = true;
+}
+
+void nuiTreeView::StopMultiSelection()
+{
+  mInMultiSelection = false;
+}
+
+bool nuiTreeView::IsMultiSelecting() const
+{
+  return mInMultiSelection;
+}
+
