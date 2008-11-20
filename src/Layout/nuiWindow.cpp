@@ -554,7 +554,7 @@ bool nuiWindow::MouseMoved (nuiSize X, nuiSize Y)
     if (mpManager)
       mpManager->ValidateWindowRect(wRect);
     
-    SetUserRect(wRect);
+    SetUserPos(wRect.mLeft, wRect.mTop);
 
    return true;
   }
