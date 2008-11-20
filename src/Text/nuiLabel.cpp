@@ -300,7 +300,7 @@ bool nuiLabel::Draw(nuiDrawContext* pContext)
   nglFontInfo info;
   mpFont->GetInfo(info);
 
-  nuiRect rect = mIdealLayoutRect;
+  nuiRect rect = mpLayout->GetRect();
 
   rect.SetPosition(mTextPosition, mRect.Size());
   //pContext->DrawRect(rect, eStrokeShape);
