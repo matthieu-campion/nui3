@@ -47,18 +47,16 @@ Gui::Gui()
   nuiHBox* pBox = new nuiHBox(2);
   AddCell(pBox);
   
-  // image sequence for knob decoration
-  nuiImageSequence* pImgSequence = new nuiImageSequence(2, "rsrc:/decorations/knobSwitch.png", nuiVertical);
-
-  // gui switch knob (to switch from the audio controls to the explanation text display)
-  nuiKnob* pSwitchKnob = new nuiKnob(nuiRange(1.f, 1.f, 2.f, 1.f, 1.f), pImgSequence, false);
-  pSwitchKnob->SetSensitivity(0.f);
-  pSwitchKnob->SetObjectName(_T("KnobSwitch"));
-  pBox->SetCell(0, pSwitchKnob, nuiBottom);
+  // gui switch button (to switch from the audio controls to the explanation text display)
+  nuiToggleButton* pSwitch = new nuiToggleButton();
+  pSwitch->SetObjectName(_T("ButtonSwitch"));
+  pBox->SetCell(0, pSwitch, nuiBottom);
   
+  pSwitch->SetPressed(true); // by default
   
-  // connect switch knob event to receiver
-  mEventSink.Connect(pSwitchKnob->InteractiveValueChanged, &Gui::OnSwitchKnobChanged, (void*)pSwitchKnob);  
+  // connect switch event to receiver
+  mEventSink.Connect(pSwitch->ButtonPressed, &Gui::OnSwitchChanged, (void*)pSwitch);  
+  mEventSink.Connect(pSwitch->ButtonDePressed, &Gui::OnSwitchChanged, (void*)pSwitch);  
   
   // on/off button
   nuiToggleButton* pStartBtn = new nuiToggleButton();
@@ -168,17 +166,15 @@ nuiWidget* Gui::BuildControls()
 // Gui Events Receivers
 //
 
-bool Gui::OnSwitchKnobChanged(const nuiEvent& rEvent)
+bool Gui::OnSwitchChanged(const nuiEvent& rEvent)
 {
-  nuiKnob* pKnob = (nuiKnob*)rEvent.mpUser;
-  NGL_ASSERT(pKnob);
+  nuiToggleButton* pBtn = (nuiToggleButton*)rEvent.mpUser;
+  NGL_ASSERT(pBtn);
 
   mTimer.Stop();
   mTimerSink.DisconnectAll();
 
-  float value = pKnob->GetRange().GetValue();
-  
-  if (value == 2)
+  if (!pBtn->IsPressed())
     mTimerSink.Connect(mTimer.Tick, &Gui::OnShowText);
   else
     mTimerSink.Connect(mTimer.Tick, &Gui::OnShowControls);

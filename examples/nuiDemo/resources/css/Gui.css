@@ -117,11 +117,18 @@ guiOscillo!
 }
 
 
-"KnobSwitch"!
+@nuiStateDecoration dButtonSwitch
 {
-  BorderLeft: 20;
+  OnUp: "rsrc:/decorations/switchUp.png";
+  OnDown: "rsrc:/decorations/switchDown.png";
+}
+
+"ButtonSwitch"!
+{
+  Decoration: dButtonSwitch;
+  BorderLeft: 25;
   BorderRight: 30;
-  BorderTop: 45;
+  BorderTop: 55;
 }
 
 @nuiFrame dPaneBkg
