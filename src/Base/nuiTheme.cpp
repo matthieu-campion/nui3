@@ -706,24 +706,38 @@ void nuiTheme::DrawMenuItem(nuiDrawContext* pContext, const nuiRect& rRect, bool
 
 nuiFont* nuiTheme::GetFont(FontStyle Style)
 {
-  if (Style>=StyleCount)
-    return NULL;
-  nuiXML XML(_T("FontDesc"));
-  std::string str(mFonts[Style].GetStdString());
-  nglIMemory memory(str.c_str(), str.size());
-  if (!XML.Load(memory))
-    printf("Error parsing default font description (%ls)\n", mFonts[Style].GetChars());
-  nuiFont* pFont = nuiFont::GetFont(&XML);
-
+  nuiFont* pFont = mpFonts[Style];
   if (!pFont)
-    pFont = nuiFont::GetFont(12);
-  
-  if (pFont && !mpFonts[Style]) // Lock the font so that if doesn't get unloaded by the system...
   {
+    if (Style>=StyleCount)
+      return NULL;
+    nuiXML XML(_T("FontDesc"));
+    std::string str(mFonts[Style].GetStdString());
+    nglIMemory memory(str.c_str(), str.size());
+    if (!XML.Load(memory))
+      printf("Error parsing default font description (%ls)\n", mFonts[Style].GetChars());
+    pFont = nuiFont::GetFont(&XML);
+
+    if (!pFont)
+      pFont = nuiFont::GetFont(12);
+    
     mpFonts[Style] = pFont;
-    pFont->Acquire();
   }
+
+  if (pFont) // Lock the font so that if doesn't get unloaded by the system...
+    pFont->Acquire();
+
   return pFont;
+}
+
+void nuiTheme::SetFont(FontStyle Style, nuiFont* pFont)
+{
+  nuiFont* pOldFont = mpFonts[Style];
+  if (pFont)
+    pFont->Acquire();
+  if (pOldFont)
+    pOldFont->Release();
+  mpFonts[Style] = pFont;
 }
 
 nuiDialog*  nuiTheme::CreateDefaultDialog(nuiContainer* pParent)

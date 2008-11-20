@@ -510,7 +510,7 @@ nuiWidget::~nuiWidget()
   gWidgetCounter.Add(GetProperty("Class"));
 #endif
 	
-  if (GetDebug())
+  //if (GetDebug())
   {
     NGL_OUT(_T("nuiWidget::~nuiWidget() [0x%x '%ls':'%ls']\n"), this, GetObjectClass().GetChars(), GetObjectName().GetChars());
   }

@@ -140,6 +140,7 @@ nuiXMLNode* nuiLabel::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
 
 nuiLabel::~nuiLabel()
 {
+  printf("~nuiLabel: '%ls'\n", mText.GetChars());
   delete mpLayout;
   delete mpIdealLayout;
   if (mpFont)

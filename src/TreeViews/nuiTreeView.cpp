@@ -996,6 +996,10 @@ bool nuiTreeView::KeyDown(const nglKeyEvent& rEvent)
     {
       // Close the selected node
       pSelected->Open(true);
+      if (IsKeyDown(NK_LMOD) || IsKeyDown(NK_RMOD))
+      {
+        pSelected->OpenAllChildren(true);
+      }
     }
     else
     {

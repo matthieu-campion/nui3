@@ -98,6 +98,7 @@ public:
 
   // Fonts
   nuiFont* GetFont(FontStyle Style); ///< Retreive the font used for the given style. You must release the font once you used it!!!
+  void SetFont(FontStyle Style, nuiFont* pFont); ///< Changes the font used for the given style. If Delete==true the old one will be deleted.
 
   // Dialog Creation
   virtual nuiDialog*  CreateDefaultDialog(nuiContainer* pParent);
@@ -107,7 +108,6 @@ public:
 protected:
   friend class nuiDrawContext;
   // Fonts and text handling:
-  void SetFont(FontStyle Style, nuiFont* pFont, bool Delete=true); ///< Changes the font used for the given style. If Delete==true the old one will be deleted.
 
   void LoadDefaults(); ///< Load the default color & geometry values.
 
