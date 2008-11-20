@@ -3215,15 +3215,29 @@ bool nuiWin::VBoxAndHBoxWindow (const nuiEvent& rEvent)
 
   nuiVBox* boxv = new nuiVBox(2);
   nuiHBox* boxh = new nuiHBox(2);
+  boxv->DisplayGridBorder(true);
 
-  nuiLabel* pLabel = new nuiLabel(_T("r0 is very very very very very very very very looooooooooooong. much longer than the box might be able to display, but it also should be wrapped so we should be able to read it."));
-  pLabel->SetWrapping(true);                                
+  nuiLabel* pLabel;
+
+  pLabel = new nuiLabel(_T("r0 long enough"));
   boxv->SetCell(0, pLabel);
-  boxv->SetCell(1, new nuiLabel(_T("r1")));
-  boxv->AddCell(new nuiLabel(_T("r2")));
-  boxv->AddCell(new nuiLabel(_T("r3")));
+  
+  pLabel = new nuiLabel(_T("r1"));
+  pLabel->SetTextPosition(nuiCenter);
+  boxv->SetCell(1, pLabel);
 
+  pLabel = new nuiLabel(_T("r2"));
+  pLabel->SetTextPosition(nuiBottom);
+  boxv->AddCell(pLabel);
 
+  pLabel = new nuiLabel(_T("r3"));
+  pLabel->SetPosition(nuiCenter);
+  boxv->AddCell(pLabel);
+
+  pLabel = new nuiLabel(_T("r4"));
+  pLabel->SetPosition(nuiBottom);
+  boxv->AddCell(pLabel);
+  
 
   boxh->SetCell(0, new nuiLabel(_T("c0")));
   boxh->SetCell(1, new nuiLabel(_T("c1")));
