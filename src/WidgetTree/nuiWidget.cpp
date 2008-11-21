@@ -3164,7 +3164,7 @@ void nuiWidget::SetDefaultDecoration(int32 objectClassIndex, nuiDecorationDelega
 void nuiWidget::SetDecoration(const nglString& rName)
 {
   nuiDecoration* pDecoration = nuiDecoration::Get(rName);
-  SetDecoration(pDecoration, mDecorationMode);
+  SetDecoration(pDecoration, mDecorationMode, true);
 }
 
 void nuiWidget::SetDecorationMode(nuiDecorationMode Mode)
@@ -3185,9 +3185,9 @@ nuiDecorationMode nuiWidget::GetDecorationMode() const
   return mDecorationMode;
 }
 
-void nuiWidget::SetDecoration(nuiDecoration* pDecoration, nuiDecorationMode Mode)
+void nuiWidget::SetDecoration(nuiDecoration* pDecoration, nuiDecorationMode Mode, bool AlreadyAcquired)
 {
-  if (pDecoration)
+  if (pDecoration && !AlreadyAcquired)
     pDecoration->Acquire();
   if (mpDecoration)
     mpDecoration->Release();

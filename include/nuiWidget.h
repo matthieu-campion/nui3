@@ -431,7 +431,7 @@ public:
   void InitDefaultDecorations();
   static void SetDefaultDecoration(int32 objectClassIndex, nuiDecorationDelegate dlg);
   virtual void SetDecoration(const nglString& rName);
-  virtual void SetDecoration(nuiDecoration* pDecoration, nuiDecorationMode Mode = eDecorationOverdraw);
+  virtual void SetDecoration(nuiDecoration* pDecoration, nuiDecorationMode Mode = eDecorationOverdraw, bool AlreadyAcquired=false);
   void SetDecorationMode(nuiDecorationMode Mode = eDecorationOverdraw);
   nuiDecoration* GetDecoration() const;
   const nglString& GetDecorationName() const;
