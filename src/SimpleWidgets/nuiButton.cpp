@@ -80,7 +80,7 @@ nuiButton::nuiButton(const nglImage& rImage)
   NUI_ADD_EVENT(Activated);
 }
 
-nuiButton::nuiButton(nuiDecoration* pDeco)
+nuiButton::nuiButton(nuiDecoration* pDeco, bool AlreadyAcquired)
 : nuiSimpleContainer()
 {
   SetObjectClass(_T("nuiButton"));
@@ -91,7 +91,7 @@ nuiButton::nuiButton(nuiDecoration* pDeco)
   mShadeSize = INACTIVE_SHADE_SIZE;
   SetRedrawOnHover(true);
   
-  SetDecoration(pDeco);
+  SetDecoration(pDeco, eDecorationOverdraw, AlreadyAcquired);
   
 #ifdef NGL_USE_COMPLEX_PROPERTIES
   mProperties["Clicked"].Bind(&mClicked,false,true);
