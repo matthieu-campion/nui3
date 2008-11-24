@@ -570,6 +570,11 @@ void nuiGLPainter::DrawArray(const nuiRenderArray& rArray)
 
   NUI_RETURN_IF_RENDERING_DISABLED;
 
+  bool NeedTranslateHack = mode == GL_LINES || mode == GL_LINE_LOOP || mode == GL_LINE_STRIP;
+  if (NeedTranslateHack)
+    glTranslatef(1, 0, 0);
+  
+  
 #ifdef NUI_USE_ANTIALIASING
   if (mState.mAntialiasing)
   {
@@ -639,9 +644,8 @@ void nuiGLPainter::DrawArray(const nuiRenderArray& rArray)
     else
     {
       glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-      glTranslatef(1, 0, 0);
     }
-
+    
 /*
     if (rArray.IsArrayEnabled(nuiRenderArray::eNormal))
     {
@@ -719,7 +723,7 @@ void nuiGLPainter::DrawArray(const nuiRenderArray& rArray)
 //     }
 //     else
 
-    if (!rArray.IsArrayEnabled(nuiRenderArray::eTexCoord))
+    if (NeedTranslateHack)
       glTranslatef(-1, 0, 0);
   }
 
