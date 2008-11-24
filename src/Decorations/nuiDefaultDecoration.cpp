@@ -935,7 +935,7 @@ void nuiDefaultDecoration::MainWindow(nuiMainWindow* pWindow)
                                                            nuiRect(0,0, 0,0), color1, color2, nuiVertical, 0, nuiColor(0,0,0), eFillShape);
   pDeco->SetOffset1(0.f);
   pDeco->SetOffset2(0.5f);                                                           
-  pCont->SetDecoration(pDeco);  
+//  pWindow->SetDecoration(pDeco);  
 }
 
 

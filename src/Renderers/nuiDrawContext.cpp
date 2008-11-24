@@ -847,7 +847,7 @@ void nuiDrawContext::DrawRect(const nuiRect& rRect, nuiShapeMode Mode)
     // Draw the stroke in all cases:
     if (mode == GL_TRIANGLES)
     {
-      rect.Move(-.5,-.5); // Adjust to have a correct position on ATI and Matrox cards, this should work with nVidia too
+      //rect.Move(-.5,-.5); // Adjust to have a correct position on ATI and Matrox cards, this should work with nVidia too
       nuiRenderArray strokearray(mode);
       strokearray.EnableArray(nuiRenderArray::eVertex, true);
       strokearray.EnableArray(nuiRenderArray::eColor, true);
@@ -895,7 +895,7 @@ void nuiDrawContext::DrawRect(const nuiRect& rRect, nuiShapeMode Mode)
       return;
 
     nuiRect rect(rRect);
-    rect.Move(-.5,-.5); // Adjust to have a correct position on ATI and Matrox cards, this should work with nVidia too
+    //rect.Move(-.5,-.5); // Adjust to have a correct position on ATI and Matrox cards, this should work with nVidia too
     // Draw the filled part:
     nuiRenderArray fillarray(GL_TRIANGLES);
     fillarray.EnableArray(nuiRenderArray::eVertex, true);
@@ -926,7 +926,7 @@ void nuiDrawContext::DrawRect(const nuiRect& rRect, nuiShapeMode Mode)
   else if (Mode == eFillShape)
   {
     nuiRect rect(rRect);
-    rect.Move(0,-.5); // Adjust to have a correct position on ATI cards, this should work on nvidia too
+    //rect.Move(0,-.5); // Adjust to have a correct position on ATI cards, this should work on nvidia too
     // Draw the filled rectangle:
     nuiRenderArray fillarray(GL_TRIANGLES);
     fillarray.EnableArray(nuiRenderArray::eVertex, true);

@@ -18,6 +18,7 @@
 
 #ifndef __NUI_NO_GL__
 
+//#define NUI_RETURN_IF_RENDERING_DISABLED return;
 #define NUI_RETURN_IF_RENDERING_DISABLED
 //#define NUI_USE_GL_VERTEX_BUFFER
 #define NUI_COMPLEX_SHAPE_THRESHOLD 6
@@ -125,17 +126,17 @@ void nuiGLPainter::StartRendering(nuiSize ClipOffsetX, nuiSize ClipOffsetY)
   BeginSession();
   nuiCheckForGLErrors();
 
-  NUI_RETURN_IF_RENDERING_DISABLED;
+  //NUI_RETURN_IF_RENDERING_DISABLED;
 
   nuiPainter::StartRendering(ClipOffsetX, ClipOffsetY);
 
+  glViewport(0, 0, mWidth, mHeight);
   glMatrixMode(GL_PROJECTION);
-  glViewport(0,0, mWidth, mHeight);
-  nuiCheckForGLErrors();
   glLoadIdentity();
-  //  glScalef (1, -1, 1);
-  glTranslatef(-1.0f, 1.0f, 0.0f );
-  glScalef (2.0f/(float)mWidth, -2.0f/(float)mHeight, 1.0f);
+  glOrtho(0, mWidth, mHeight, 0, -1, 1);
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity();
+
   nuiCheckForGLErrors();
 
   glMatrixMode(GL_MODELVIEW);
@@ -154,6 +155,26 @@ void nuiGLPainter::StartRendering(nuiSize ClipOffsetX, nuiSize ClipOffsetY)
   glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   nuiCheckForGLErrors();
+  
+  
+  //#TEST pourri!
+//  glClearColor(1, 1, 1, 1);
+//  glClear(GL_COLOR_BUFFER_BIT);
+//  
+//  glColor3f(0, 0, 255);
+//  
+//  float x = 0;
+//  float y = 0;
+//  
+//  glBegin(GL_LINE_STRIP);
+//  glVertex2f(x, y);
+//  glVertex2f(mWidth, y);
+//  glVertex2f(mWidth, mHeight);
+//  glVertex2f(x, mHeight);
+//  glVertex2f(x, y);
+//  glEnd();
+//  
+//  mEnableDrawArray = false;
 }
 
 /*
@@ -563,40 +584,7 @@ void nuiGLPainter::DrawArray(const nuiRenderArray& rArray)
     nuiCheckForGLErrors();
 #endif
   }
-  else
 #endif // NUI_USE_ANTIALIASING
-  {
-//#TEST meeloo disabling AA texture
-//     if (rArray.UseGLAATexture())
-//     {
-//       if (mState.mTexturing && mTextureTarget != GL_TEXTURE_2D)
-//         glDisable(mTextureTarget);
-//       if (!mState.mTexturing || (mState.mTexturing && mTextureTarget != GL_TEXTURE_2D))
-//         glEnable(GL_TEXTURE_2D);
-// 
-//       if (!mState.mBlending)
-//         glEnable(GL_BLEND);
-//       if (mState.mBlendFunc != nuiBlendTransp)
-//         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-// 
-//       glBindTexture(GL_TEXTURE_2D, glAA_texture);
-// 
-//       glMatrixMode(GL_TEXTURE);
-//       glPushMatrix();
-//       glLoadIdentity();
-//       glMatrixMode(GL_MODELVIEW);
-// 
-//       glPushMatrix();
-//       glTranslatef(0.5f, 0.5f, 0);
-//     }
-//     else
-    if (!mState.mTexturing)
-    {
-      glPushMatrix();
-      glTranslatef(0.5f, 0.5f, 0);
-      nuiCheckForGLErrors();
-    }
-  }
 
   {
 
@@ -649,7 +637,10 @@ void nuiGLPainter::DrawArray(const nuiRenderArray& rArray)
       nuiCheckForGLErrors();
     }
     else
+    {
       glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+      glTranslatef(1, 0, 0);
+    }
 
 /*
     if (rArray.IsArrayEnabled(nuiRenderArray::eNormal))
@@ -727,11 +718,9 @@ void nuiGLPainter::DrawArray(const nuiRenderArray& rArray)
 //       //ApplyTexture(mState, true);
 //     }
 //     else
-    if (!mState.mTexturing)
-    {
-      glPopMatrix();
-    }
-    nuiCheckForGLErrors();
+
+    if (!rArray.IsArrayEnabled(nuiRenderArray::eTexCoord))
+      glTranslatef(-1, 0, 0);
   }
 
   glColor3f(1.0f, 1.0f, 1.0f);

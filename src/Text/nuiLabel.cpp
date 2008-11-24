@@ -356,15 +356,15 @@ void nuiLabel::CalcLayout()
     {
       if (mFontChanged)
       {
-        if (mpLayout)
-          delete mpLayout;
-        if (mpIdealLayout)
-          delete mpIdealLayout;
+        delete mpLayout;
+        delete mpIdealLayout;
+        mpLayout = NULL;
+        mpIdealLayout = NULL;
         mpLayout = new nuiFontLayout(*mpFont, 0, 0, mOrientation);
-        mpIdealLayout = new nuiFontLayout(*mpFont, 0, 0, mOrientation);
         mpLayout->SetUnderline(mUnderline);
-        mpIdealLayout->SetUnderline(mUnderline);
         mpLayout->SetStrikeThrough(mStrikeThrough);
+        mpIdealLayout = new nuiFontLayout(*mpFont, 0, 0, mOrientation);
+        mpIdealLayout->SetUnderline(mUnderline);
         mpIdealLayout->SetStrikeThrough(mStrikeThrough);
         mFontChanged = false;
       }

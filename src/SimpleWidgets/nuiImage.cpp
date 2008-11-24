@@ -176,9 +176,8 @@ bool nuiImage::Draw(nuiDrawContext* pContext)
   pContext->EnableTexturing(true);
   nglImage* pImage = mpTexture->GetImage();
   nuiSize w,h;
-  w=(nuiSize)pImage->GetWidth();
-  h=(nuiSize)pImage->GetHeight();
-  nuiRect rect(0.0f,0.0f,w,h);
+  w = (nuiSize)pImage->GetWidth();
+  h = (nuiSize)pImage->GetHeight();
 
   float alpha = 1.0f;
 
@@ -189,7 +188,7 @@ bool nuiImage::Draw(nuiDrawContext* pContext)
     alpha = GetAlpha();
   }
 
-  rect = mRect.Size();
+  nuiRect rect = mRect.Size();
 
   nuiColor color = nuiColor(1.0f, 1.0f, 1.0f, alpha);
 
@@ -209,8 +208,9 @@ bool nuiImage::Draw(nuiDrawContext* pContext)
     pContext->EnableBlending(true);
   }
 
+  //pContext->EnableClipping(false);
   pContext->SetFillColor(color);
-  pContext->DrawImage(rect,nuiRect(0.0f,0.0f,w,h));
+  pContext->DrawImage(rect, nuiRect(0.0f, 0.0f, w, h));
 
   pContext->EnableBlending(false);
   pContext->EnableTexturing(false);

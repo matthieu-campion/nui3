@@ -1440,12 +1440,16 @@ void nuiWin::OnPaint()
 
 bool nuiWin::CreateScrolledImageWindow(const nuiEvent& rEvent)
 {
-  nuiWindow* pWin = new nuiWindow(nuiRect(10, 10, 200, 200), nglWindow::NoFlag, nuiTR("Scrolled Image..."));
+  nuiWindow* pWin = new nuiWindow(nuiRect(10, 10, 300, 300), nglWindow::NoFlag, nuiTR("Scrolled Image..."));
   mpManager->AddChild(pWin);
   nuiScrollView* pScrollView = new nuiScrollView();
   pWin->AddChild(pScrollView);
-  nuiImage* pImage = new nuiImage(_T("rsrc:/nui.png"));
+  //nuiImage* pImage = new nuiImage(_T("rsrc:/nui.png"));
+  nuiImage* pImage = new nuiImage(_T("rsrc:/testalacon.png"));
+  pImage->GetTexture()->SetMinFilter(GL_NEAREST);
+  pImage->GetTexture()->SetMagFilter(GL_NEAREST);
   pScrollView->AddChild(pImage);
+  pImage->SetPosition(nuiTopLeft);
   pImage->SetFillRule(nuiTopLeft);
 
   return false;
@@ -2254,17 +2258,20 @@ public:
     pContext->SetFillColor(nuiColor(_T("red")));
     pContext->SetStrokeColor(nuiColor(_T("green")));
 
+    //r.Move(.5, .5);
+    pContext->DrawRect(r, eStrokeShape);
+    
     //pContext->AddBreakPoint();
 
-    pContext->PushClipping();
-    pContext->Clip(nuiRect(0, 0, w/2, h/2));
-    pContext->DrawRect(r, eStrokeAndFillShape);
-    pContext->PopClipping();
-
-    pContext->PushClipping();
-    pContext->Clip(nuiRect(w/2, h/2, w/2, h/2));
-    pContext->DrawRect(r, eStrokeAndFillShape);
-    pContext->PopClipping();
+//    pContext->PushClipping();
+//    pContext->Clip(nuiRect(0, 0, w/2, h/2));
+//    pContext->DrawRect(r, eStrokeAndFillShape);
+//    pContext->PopClipping();
+//
+//    pContext->PushClipping();
+//    pContext->Clip(nuiRect(w/2, h/2, w/2, h/2));
+//    pContext->DrawRect(r, eStrokeAndFillShape);
+//    pContext->PopClipping();
 
     return true;
   }
