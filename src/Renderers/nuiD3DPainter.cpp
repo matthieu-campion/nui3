@@ -277,8 +277,8 @@ void nuiD3DPainter::StartRendering(nuiSize ClipOffsetX, nuiSize ClipOffsetY)
 #endif
 
   ConvertMatrix(id, m);
-  float shiftX = -1.0f + 0.5f/mWidth;
-  float shiftY = 1.0f + 0.5f/mHeight;
+  float shiftX = -1.0f;
+  float shiftY = 1.0f;
   m0.SetTranslation(shiftX, shiftY, 0.0f);
   //m0.SetTranslation(-1.0f, 1.0f, 0.0f);
   m0.Transpose();
