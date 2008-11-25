@@ -690,235 +690,6 @@ void nuiGLESPainter::BlurRect(const nuiRect& rRect, uint Strength)
 
 #define LOGENUM(XXX) case XXX: { NGL_OUT(_T("%ls\n"), #XXX); } break;
 
-#if 0
-void nuiGLESPainter::DrawArray(const nuiRenderArray& rArray)
-{
-  mRenderOperations++;
-  mBatches++;
-  uint32 size = rArray.GetSize();
-  
-  total += size;
-  totalinframe += size;
-  mins = MIN(mins, size);
-  maxs = MAX(maxs, size);
-  //printf("DA (%d) min = %d  max = %d\n", size, mins, maxs);
-  
-  if (!size)
-    return;
-
-  if (mClip.GetWidth() <= 0 || mClip.GetHeight() <= 0)
-    return;
-
-  mVertices += size;
-
-/*
-  switch (rArray.GetMode())
-  {
-  LOGENUM(GL_POINTS);
-  LOGENUM(GL_LINES);
-  LOGENUM(GL_LINE_LOOP);
-  LOGENUM(GL_LINE_STRIP);
-  //LOGENUM(GL_TRIANGLES);
-  LOGENUM(GL_TRIANGLE_STRIP);
-  LOGENUM(GL_TRIANGLE_FAN);
-  //LOGENUM(GL_QUADS);
-  LOGENUM(GL_QUAD_STRIP);
-  LOGENUM(GL_POLYGON);
-  }
-*/
-
-
-  NUI_RETURN_IF_RENDERING_DISABLED;
-
-#ifdef NUI_USE_ANTIALIASING
-  if (mState.mAntialiasing)
-  {
-#ifdef NUI_USE_MULTISAMPLE_AA
-    glHint(GL_MULTISAMPLE_FILTER_HINT_NV, GL_NICEST);
-    glEnable(GL_MULTISAMPLE_ARB);
-    nuiCheckForGLErrors();
-#else
-    glEnable(GL_POLYGON_SMOOTH);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA_SATURATE, GL_ONE);
-    nuiCheckForGLErrors();
-#endif
-  }
-  else
-#endif // NUI_USE_ANTIALIASING
-  {
-    if (rArray.UseGLAATexture())
-    {
-      if (mState.mTexturing && mTextureTarget != GL_TEXTURE_2D)
-        glDisable(mTextureTarget);
-      if (!mState.mTexturing || (mState.mTexturing && mTextureTarget != GL_TEXTURE_2D))
-        glEnable(GL_TEXTURE_2D);
-
-      if (!mState.mBlending)
-        glEnable(GL_BLEND);
-      if (mState.mBlendFunc != nuiBlendTransp)
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-// glBindTexture(GL_TEXTURE_2D, glAA_texture[0]);
-
-      glMatrixMode(GL_TEXTURE);
-      glPushMatrix();
-      glLoadIdentity();
-      glMatrixMode(GL_MODELVIEW);
-
-      glPushMatrix();
-      glTranslatef(0.5f, 0.5f, 0);
-    }
-    else if (!mState.mTexturing)
-    {
-      glPushMatrix();
-      glTranslatef(0.5f, 0.5f, 0);
-      nuiCheckForGLErrors();
-    }
-  }
-
-  {
-    if (rArray.IsArrayEnabled(nuiRenderArray::eVertex))
-    {
-      glEnableClientState(GL_VERTEX_ARRAY);
-      glVertexPointer(3, GL_FLOAT, sizeof(nuiRenderArray::Vertex), &rArray.GetVertices()[0].mX);
-      nuiCheckForGLErrors();
-    }
-    else
-      glDisableClientState(GL_VERTEX_ARRAY);
-
-    if (rArray.IsArrayEnabled(nuiRenderArray::eColor))
-    {
-      glEnableClientState(GL_COLOR_ARRAY);
-      glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(nuiRenderArray::Vertex), &rArray.GetVertices()[0].mR);
-      nuiCheckForGLErrors();
-    }
-    else
-    {
-      glDisableClientState(GL_COLOR_ARRAY);
-      nuiColor c;
-      switch (rArray.GetMode())
-      {
-      case GL_POINTS:
-      case GL_LINES:
-      case GL_LINE_LOOP:
-      case GL_LINE_STRIP:
-        c = mState.mStrokeColor;
-        break;
-
-      case GL_TRIANGLES:
-      case GL_TRIANGLE_STRIP:
-      case GL_TRIANGLE_FAN:
-        c = mState.mFillColor;
-        break;
-      default:
-//      case GL_QUADS:
-//      case GL_QUAD_STRIP:
-//      case GL_POLYGON: 
-        {
-          NGL_ASSERT(!"GLES doesnt handle primitives: GL_QUADS || GL_QUAD_STRIP || GL_POLYGON");
-        } break;
-
-      }
-      glColor4f(c.Red(), c.Green(), c.Blue(), c.Alpha());
-      nuiCheckForGLErrors();
-    }
-
-    if (rArray.IsArrayEnabled(nuiRenderArray::eTexCoord))
-    {
-      glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-      glTexCoordPointer(2, GL_FLOAT, sizeof(nuiRenderArray::Vertex), &rArray.GetVertices()[0].mTX);
-      nuiCheckForGLErrors();
-    }
-    else
-      glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-
-/*
-    if (rArray.IsArrayEnabled(nuiRenderArray::eNormal))
-    {
-      glEnableClientState(GL_NORMAL_ARRAY);
-      glNormalPointer(GL_FLOAT, sizeof(nuiRenderArray::Vertex)-12, &rArray.GetVertices()[0].mNX);
-      nuiCheckForGLErrors();
-    }
-    else
-      glDisableClientState(GL_NORMAL_ARRAY);
-*/
-
-/*
-    if (rArray.IsArrayEnabled(nuiRenderArray::eEdgeFlag))
-    {
-      glEnableClientState(GL_EDGE_FLAG_ARRAY);
-      glEdgeFlagPointer(sizeof(nuiRenderArray::Vertex), &rArray.GetVertices()[0].mEdgeFlag);
-      nuiCheckForGLErrors();
-    }
-    else
-      glDisableClientState(GL_EDGE_FLAG_ARRAY);
-*/
-    nuiCheckForGLErrors();
-    glDrawArrays(rArray.GetMode(), 0, size);
-    nuiCheckForGLErrors();
-  }
-
-#ifdef NUI_USE_ANTIALIASING
-  if (mState.mAntialiasing)
-  {
-#ifdef NUI_USE_MULTISAMPLE_AA
-    glDisable(GL_MULTISAMPLE_ARB);
-#else
-    glDisable(GL_POLYGON_SMOOTH);
-    glDisable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-#endif
-    nuiCheckForGLErrors();
-  }
-  else
-#endif // NUI_USE_ANTIALIASING
-  {
-    if (rArray.UseGLAATexture())
-    {
-      glMatrixMode(GL_TEXTURE);
-      glPopMatrix();
-      glMatrixMode(GL_MODELVIEW);
-      glPopMatrix();
-
-      if (mState.mpTexture && mState.mTexturing)
-      {
-        if (mTextureTarget != GL_TEXTURE_2D)
-        {
-          glDisable(GL_TEXTURE_2D);
-          glEnable(mTextureTarget);
-        }
-
-        UploadTexture(mState.mpTexture);
-      }
-      else
-      {
-        glDisable(GL_TEXTURE_2D);
-      }
-
-      if (!mState.mBlending)
-        glDisable(GL_BLEND);
-      if (mState.mBlendFunc != nuiBlendTransp)
-      {
-        GLenum src, dst;
-        nuiGetBlendFuncFactors(mState.mBlendFunc, src, dst);
-        glBlendFunc(src, dst);
-      }
-      //ApplyTexture(mState, true);
-    }
-    else if (!mState.mTexturing)
-    {
-      glPopMatrix();
-    }
-    nuiCheckForGLErrors();
-  }
-
-  //glColor3f(1.0f, 1.0f, 1.0f);
-  glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-  
-  nuiCheckForGLErrors();
-}
-#else
 void nuiGLESPainter::DrawArray(const nuiRenderArray& rArray)
 {
   mRenderOperations++;
@@ -964,6 +735,10 @@ void nuiGLESPainter::DrawArray(const nuiRenderArray& rArray)
   
   NUI_RETURN_IF_RENDERING_DISABLED;
   
+  bool NeedTranslateHack = mode == GL_LINES || mode == GL_LINE_LOOP || mode == GL_LINE_STRIP;
+  if (NeedTranslateHack)
+    glTranslatef(1, 0, 0);
+
 #ifdef NUI_USE_ANTIALIASING
   if (mState.mAntialiasing)
   {
@@ -978,19 +753,9 @@ void nuiGLESPainter::DrawArray(const nuiRenderArray& rArray)
     nuiCheckForGLErrors();
 #endif
   }
-  else
 #endif // NUI_USE_ANTIALIASING
+
   {
-    if (!mState.mTexturing)
-    {
-      glPushMatrix();
-      glTranslatef(0.5f, 0.5f, 0);
-      nuiCheckForGLErrors();
-    }
-  }
-  
-  {
-    
     if (rArray.IsArrayEnabled(nuiRenderArray::eVertex))
     {
       glEnableClientState(GL_VERTEX_ARRAY);
@@ -1023,9 +788,6 @@ void nuiGLESPainter::DrawArray(const nuiRenderArray& rArray)
         case GL_TRIANGLES:
         case GL_TRIANGLE_STRIP:
         case GL_TRIANGLE_FAN:
-//        case GL_QUADS:
-//        case GL_QUAD_STRIP:
-//        case GL_POLYGON:
           c = mState.mFillColor;
           break;
       }
@@ -1084,11 +846,8 @@ void nuiGLESPainter::DrawArray(const nuiRenderArray& rArray)
   else
 #endif // NUI_USE_ANTIALIASING
   {
-    if (!mState.mTexturing)
-    {
-      glPopMatrix();
-    }
-    nuiCheckForGLErrors();
+    if (NeedTranslateHack)
+      glTranslatef(-1, 0, 0);
   }
   
   glColor4f(1.0f, 1.0f, 1.0f, 1.f);
