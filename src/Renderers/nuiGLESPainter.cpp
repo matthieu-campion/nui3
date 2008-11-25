@@ -853,7 +853,6 @@ void nuiGLESPainter::DrawArray(const nuiRenderArray& rArray)
   glColor4f(1.0f, 1.0f, 1.0f, 1.f);
   nuiCheckForGLErrors();
 }
-#endif
 
 void nuiGLESPainter::BeginSession()
 {
