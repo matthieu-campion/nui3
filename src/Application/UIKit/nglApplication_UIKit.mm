@@ -83,6 +83,8 @@ void objCCallOnWillExit();
 - (void) applicationDidReceiveMemoryWarning:  (UIApplication*) pUIApplication
 {
   NGL_DEBUG( NGL_OUT(_T("[nglUIApplicationDelegate applicationDidReceiveMemoryWarning]\n")); )
+	NGL_ASSERT(App);
+	((nglApplication *) App)->CallOnMemoryWarning();
 }
 - (void) applicationSignificantTimeChange:    (UIApplication*) pUIApplication
 {
@@ -188,17 +190,6 @@ bool nglApplication::Init(int ArgCnt, char** pArg)
   return true;
 }
 
-static nglString* gBundlePath = NULL;
-nglString nglApplication::GetBundlePath()
-{
-	if (!gBundlePath)
-	{
-		const char* p = [[[NSBundle mainBundle] resourcePath] UTF8String];
-		gBundlePath = new nglString(p);
-	}
-
-  return *gBundlePath;
-}
 
 /* Event management / main loop
  */

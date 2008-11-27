@@ -93,7 +93,7 @@ public:
    This is diferent than closig the main window. Returning true on this method quits the application, false refuse the exit.
    */
   //@}
-
+	
   bool IsQuitRequested() const;
   /*!<
    Returns true if Quit has been called
@@ -258,22 +258,24 @@ protected:
 #endif // _CARBON_
 
 #ifdef _UIKIT_
-public:
-  nglString GetBundlePath();
-
 protected:
-//  bool mExitPosted;
-//  int  mExitCode;
-
+	//@{
+	virtual void OnMemoryWarning();
+	/*!<
+	 Called when the system (iPhone OS) is sending memory warning to all processes.
+	 You should free up memory when this happens, warn the user or quit the application.
+	 */
+	
   int  Main(int argc, char** argv);
   bool Init(int argc, char** argv);
   int  Run();
-//  void MakeMenu();
-//  void DoMenuCommand(long int command);
 
 //  static OSErr QuitAppleEventHandler( const AppleEvent *appleEvt, AppleEvent* reply, UInt32 refcon );
   friend int main(int argc, char** argv);
 
+///< Yes, it has to be public (called from an obj-c class ...)
+public:
+	void CallOnMemoryWarning();
 #endif//_UIKIT_
 
 #ifdef _UNIX_

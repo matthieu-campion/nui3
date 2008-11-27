@@ -258,6 +258,17 @@ void nglApplication::CallOnIdle()
   mLastIdleCall = now;
 }
 
+///< Memory-warning methods (only availble on iPhone OS/UIKit)
+#ifdef _UIKIT_
+void nglApplication::OnMemoryWarning()
+{
+}
+
+void nglApplication::CallOnMemoryWarning()
+{
+	OnMemoryWarning();
+}
+#endif // _UIKIT_
 
 /*
  * From nglError
