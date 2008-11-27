@@ -16,21 +16,8 @@ nuiModalContainer::nuiModalContainer(nuiContainerPtr pParent)
   mInModalState(false),
   mModalEventSink(this)
 {
-  nuiTopLevel* pTop = NULL;
-  pTop = pParent->GetTopLevel();
-  mpPreviousFocus = pTop->GetFocus();
-  if (mpPreviousFocus)
-    mModalEventSink.Connect(mpPreviousFocus->Trashed, &nuiModalContainer::OnPreviousFocusTrashed);
-  SetWantKeyboardFocus(true);
-
-  pTop->AddChild(this);
-
-  
   SetObjectClass(_T("nuiModalContainer"));
-  GetTopLevel()->CancelGrab();
-  Grab();
-  SetFocusVisible(false);
-  Focus();
+  InitParent(pParent);
 }
 
 bool nuiModalContainer::Load(const nuiXMLNode* pNode)
@@ -46,6 +33,27 @@ bool nuiModalContainer::Load(const nuiXMLNode* pNode)
 
 nuiModalContainer::~nuiModalContainer()
 {
+}
+
+void nuiModalContainer::InitParent(nuiContainerPtr pParent)
+{
+  if (!pParent)
+    return;
+
+  nuiTopLevel* pTop = NULL;
+  pTop = pParent->GetTopLevel();
+  NGL_ASSERT(pTop);
+  mpPreviousFocus = pTop->GetFocus();
+  if (mpPreviousFocus)
+    mModalEventSink.Connect(mpPreviousFocus->Trashed, &nuiModalContainer::OnPreviousFocusTrashed);
+  
+  SetWantKeyboardFocus(true);
+  pTop->AddChild(this);
+  
+  GetTopLevel()->CancelGrab();
+  Grab();
+  SetFocusVisible(false);
+  Focus();
 }
 
 void nuiModalContainer::SetModal(bool enable_modal)
