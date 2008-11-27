@@ -27,19 +27,25 @@ MainWindow::~MainWindow()
 
 void MainWindow::OnCreation()
 {
-  bool test1 = false;
+  bool test1 = true;
   bool test2 = true;
 
   if (test1)
   {
     nuiImage* pImage = new nuiImage(_T("rsrc:/rasters2.png"));
     pImage->SetPosition(nuiCenter);
+    pImage->SetAlpha(0.5);
+    pImage->SetEnabled(false);
     AddChild(pImage);
   }
 
   if (test2)
   {
-
+    nuiImage* pImage = new nuiImage(_T("rsrc:/testalacon.png"));
+    pImage->SetPosition(nuiCenter);
+    pImage->SetAlpha(0.5);
+    pImage->SetEnabled(false);
+    AddChild(pImage);
   }
 }
 

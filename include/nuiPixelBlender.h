@@ -42,7 +42,6 @@ class nuiPixelBlender_Transp
 public:
   static inline uint32 lerpRGBA(const uint32 d, const uint32 s, uint32 ti)
   {
-    //uint32 ti = ToBelow(t*256);
     uint32 dstga = d      & 0xFF00FF;
     uint32 dstrb = d >> 8 & 0xFF00FF;
     uint32 srcga = s      & 0xFF00FF;
@@ -72,6 +71,7 @@ public:
     dest_color = lerpRGBA(src_color, dest_color, Sa + 1);
   }
 
+  
   static bool CanOptimize()
   {
     return false;

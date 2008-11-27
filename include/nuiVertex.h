@@ -353,6 +353,15 @@ public:
   {
     U = ToAbove(U);
     V = ToAbove(V);
+    if (U < 0)
+      U = 0;
+    if (V < 0)
+      V = 0;
+    if (U >= width)
+      U = width - 1;
+    if (V >= height)
+      V = height - 1;
+    
     const int32 index = 3 * (U + width * V);
     const uint8 r = pBuffer[index];
     const uint8 g = pBuffer[index + 1];

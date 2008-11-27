@@ -583,7 +583,7 @@ void nuiSoftwarePainter::DrawTriangle(const nuiRenderArray& rArray, int p1, int 
 //      case GL_QUADS:
 //      case GL_QUAD_STRIP:
 //      case GL_POLYGON:
-//        c1 = c2 = c3 = mState.mFillColor;
+        c1 = c2 = c3 = mState.mFillColor;
         break;
     }
   }
