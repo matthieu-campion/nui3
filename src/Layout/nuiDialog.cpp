@@ -41,11 +41,11 @@ void nuiDialog::InitDialog(nuiSimpleContainer* pLayoutContainer, uint32 buttons)
   NGL_ASSERT(mpLayoutContainer);
   NGL_ASSERT(GetTopLevel());
 
-//  SetPosition(nuiCenter);
-//  mpLayoutContainer->SetPosition(nuiCenter);
+//SetPosition(nuiCenter);
+//mpLayoutContainer->SetPosition(nuiCenter);
   SetDefaultPos();
   SetDefaultButtons(buttons); ///< if buttons == 0, default Grids wont be created to enable a user construction by parenting any user items on mpLayoutContainer returned by GetLayoutContainer
-  SetDefaultAnimations();
+//SetDefaultAnimations();
   StartAnimation(_T("SHOW"));
 
   // Register Hot Keys:
