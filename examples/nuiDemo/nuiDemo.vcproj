@@ -239,6 +239,14 @@
 					RelativePath=".\src\Gui\guiOscillo.h"
 					>
 				</File>
+				<File
+					RelativePath=".\src\Gui\guiTheme.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Gui\guiTheme.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="css"
