@@ -736,8 +736,14 @@ void nuiGLESPainter::DrawArray(const nuiRenderArray& rArray)
   NUI_RETURN_IF_RENDERING_DISABLED;
   
   bool NeedTranslateHack = mode == GL_LINES || mode == GL_LINE_LOOP || mode == GL_LINE_STRIP;
-  if (NeedTranslateHack)
-    glTranslatef(1, 0, 0);
+  float hackX, hackY;
+  if (NeedTranslateHack) {
+    if (mAngle == 0)        { hackX = 1; hackY = 1; }
+    else if (mAngle == 90)  { hackX = 0; hackY = 1; }
+    else if (mAngle == 180) { hackX = 0; hackY = 0; }
+    else/*mAngle == 270*/   { hackX = 1; hackY = 0; }
+    glTranslatef(hackX, hackY, 0);
+  }
 
 #ifdef NUI_USE_ANTIALIASING
   if (mState.mAntialiasing)
@@ -847,7 +853,7 @@ void nuiGLESPainter::DrawArray(const nuiRenderArray& rArray)
 #endif // NUI_USE_ANTIALIASING
   {
     if (NeedTranslateHack)
-      glTranslatef(-1, 0, 0);
+      glTranslatef(-hackX, -hackY, 0);
   }
   
   glColor4f(1.0f, 1.0f, 1.0f, 1.f);
