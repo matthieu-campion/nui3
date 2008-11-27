@@ -1093,7 +1093,7 @@ bool nuiPopupMenu::MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Butt
     nuiTreeNodePtr pNode = SearchNode(X,Y,cpt);
     if (pNode)
     {
-      if (pNode->GetElement()->IsDisabled())
+      if (!pNode->IsSelectionEnabled() || pNode->GetElement()->IsDisabled())
         return true;
       if (mpSelectedNode)
       {
