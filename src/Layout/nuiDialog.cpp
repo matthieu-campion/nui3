@@ -276,19 +276,19 @@ void nuiDialog::SetDefaultAnimations()
   nuiMetaAnimation* pMetaAnim; 
 
   pMetaAnim = new nuiMetaAnimation();
-  pMetaAnim->AddAnimation(new nuiFadeInWidgetAnim(this, 0.3));
-  pMetaAnim->AddAnimation(new nuiScaleToMatrixWidgetAnim(this, 0.3, 1));
+  pMetaAnim->AddAnimation(new nuiFadeInWidgetAnim(this, 0.3, false));
+  pMetaAnim->AddAnimation(new nuiScaleMatrixWidgetAnim(this, 0.3, 0, 1));
 
-  nuiMatrix m;
-  m.Scale(.5f,.5f, 1);
-  SetMatrix(m);
-  SetAlpha(0);
+//  nuiMatrix m;
+//  m.Scale(.5f,.5f, 1);
+//  SetMatrix(m);
+//  SetAlpha(0);
 
   AddAnimation(_T("SHOW"), pMetaAnim);
 
   pMetaAnim = new nuiMetaAnimation();
-  pMetaAnim->AddAnimation(new nuiFadeOutWidgetAnim(this, 0.3));
-  pMetaAnim->AddAnimation(new nuiScaleToMatrixWidgetAnim(this, 0.3, 2.f));
+  pMetaAnim->AddAnimation(new nuiFadeOutWidgetAnim(this, 0.3, false));
+  pMetaAnim->AddAnimation(new nuiScaleMatrixWidgetAnim(this, 0.3, 1, 2.f));
   AddAnimation(_T("TRASH"), pMetaAnim);
 }
 

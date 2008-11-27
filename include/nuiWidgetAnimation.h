@@ -151,19 +151,25 @@ protected:
 class NUI_API nuiFadeInWidgetAnim : public nuiFadeWidgetAnim
 {
 public:
-  nuiFadeInWidgetAnim (nuiWidgetPtr pTarget, double DurationInSeconds);
+  nuiFadeInWidgetAnim (nuiWidgetPtr pTarget, double DurationInSeconds, bool StartFromCurrentAlpha);
   bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
 
   virtual void Play(uint32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward);
+
+private:
+  bool mStartFromCurrentAlpha;
 };
 
 class NUI_API nuiFadeOutWidgetAnim : public nuiFadeWidgetAnim
 {
 public:
-  nuiFadeOutWidgetAnim (nuiWidgetPtr pTarget, double DurationInSeconds);
+  nuiFadeOutWidgetAnim (nuiWidgetPtr pTarget, double DurationInSeconds, bool StartFromCurrentAlpha);
   bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
 
   virtual void Play(uint32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward);
+
+private:
+  bool mStartFromCurrentAlpha;
 };
 
 #endif // __nuiAnimation_h__
