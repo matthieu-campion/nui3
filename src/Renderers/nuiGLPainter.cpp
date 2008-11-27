@@ -572,7 +572,7 @@ void nuiGLPainter::DrawArray(const nuiRenderArray& rArray)
 
   bool NeedTranslateHack = mode == GL_LINES || mode == GL_LINE_LOOP || mode == GL_LINE_STRIP;
   if (NeedTranslateHack)
-    glTranslatef(1, 0, 0);
+    glTranslatef(.5, 0, 0);
   
   
 #ifdef NUI_USE_ANTIALIASING
@@ -724,7 +724,7 @@ void nuiGLPainter::DrawArray(const nuiRenderArray& rArray)
 //     else
 
     if (NeedTranslateHack)
-      glTranslatef(-1, 0, 0);
+      glTranslatef(-.5, 0, 0);
   }
 
   glColor3f(1.0f, 1.0f, 1.0f);

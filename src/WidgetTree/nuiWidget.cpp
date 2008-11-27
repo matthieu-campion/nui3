@@ -1798,9 +1798,15 @@ void nuiWidget::SetEnabled(bool set)
   mEnabled = set;
   
   if (mEnabled)
+  {
     Enabled();
+    StartAnimation(_T("ENABLED"));
+  }
   else
+  {
     Disabled();
+    StartAnimation(_T("DISABLED"));
+  }
   
   StateChanged();
   ApplyCSSForStateChange(NUI_WIDGET_MATCHTAG_STATE);
@@ -1831,9 +1837,13 @@ void nuiWidget::SetSelected(bool set)
     }
     
     Selected();
+    StartAnimation(_T("SELECT"));
   }
   else
+  {
     Deselected();
+    StartAnimation(_T("DESELECT"));
+  }
   
 	StateChanged();
   ApplyCSSForStateChange(NUI_WIDGET_MATCHTAG_STATE);
@@ -1900,6 +1910,10 @@ void nuiWidget::SetVisible(bool Visible)
   DebugRefreshInfo();
  
   ApplyCSSForStateChange(NUI_WIDGET_MATCHTAG_STATE);
+  if (mVisible)
+    StartAnimation(_T("SHOW"));
+  else
+    StartAnimation(_T("HIDE"));
 }
 
 bool nuiWidget::IsVisible(bool combined) const
@@ -3293,6 +3307,8 @@ void nuiWidget::CallConnectTopLevel(nuiTopLevel* pTopLevel)
     if (dlg)
       dlg(this);
   }
+  
+  StartAnimation(_T("SHOW"));
 }
 
 
