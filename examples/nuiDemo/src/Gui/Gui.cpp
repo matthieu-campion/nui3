@@ -124,7 +124,7 @@ nuiWidget* Gui::BuildControls()
   pBox->SetExpand(nuiExpandShrinkAndGrow);
   
   // volume slider
-  nuiSlider* pVolumeSlider = new nuiSlider(nuiHorizontal, nuiRange(1.f, 0.f, 1.f));
+  nuiSlider* pVolumeSlider = new nuiSlider(nuiHorizontal, nuiRange(1.f, 0.f, 1.f, 0.1f, 0.f, 0.f));
   pVolumeSlider->SetObjectName(_T("SliderVolume"));
   pBox->AddCell(pVolumeSlider, nuiCenter);
   pBox->SetCellExpand(pBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
