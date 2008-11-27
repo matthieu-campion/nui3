@@ -123,8 +123,7 @@ nuiWidget* Gui::BuildControls()
   nuiVBox* pBox = new nuiVBox(0);
   pBox->SetExpand(nuiExpandShrinkAndGrow);
   
-  
-  // pitch slider
+  // volume slider
   nuiSlider* pQSlider = new nuiSlider(nuiHorizontal, nuiRange(0, 0, 100));
   pQSlider->SetObjectName(_T("SliderQ"));
   pBox->AddCell(pQSlider, nuiCenter);
