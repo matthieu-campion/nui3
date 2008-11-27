@@ -24,6 +24,7 @@ Engine::Engine()
   NGL_OUT(CoreAudioAPI.GetAPIName() + _T(" API loaded."));
 #endif
 
+  mVolume = 1.f;
   mpAudioFifo = InitEngineAudio();
   mpAudioTrack = new AudioTrack(mpAudioFifo);
 }
@@ -92,4 +93,15 @@ AudioTrack* Engine::GetAudioTrack()
 BiQuad& Engine::GetFilter()
 {
   return mpAudioTrack->GetFilter();
+}
+
+
+void Engine::SetVolume(float value)
+{
+  mVolume = value;
+}
+
+float Engine::GetVolume()
+{
+  return mVolume;
 }

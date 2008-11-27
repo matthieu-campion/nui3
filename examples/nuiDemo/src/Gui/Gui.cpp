@@ -124,15 +124,15 @@ nuiWidget* Gui::BuildControls()
   pBox->SetExpand(nuiExpandShrinkAndGrow);
   
   // volume slider
-  nuiSlider* pQSlider = new nuiSlider(nuiHorizontal, nuiRange(0, 0, 100));
-  pQSlider->SetObjectName(_T("SliderQ"));
-  pBox->AddCell(pQSlider, nuiCenter);
+  nuiSlider* pVolumeSlider = new nuiSlider(nuiHorizontal, nuiRange(1.f, 0.f, 1.f));
+  pVolumeSlider->SetObjectName(_T("SliderVolume"));
+  pBox->AddCell(pVolumeSlider, nuiCenter);
   pBox->SetCellExpand(pBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
   
   // connect slider event to receiver
   // InteractiveValueChanged event : real-time slider value change
   // ValueChanged event: once the value has been set and the mouse has been released from the slider
-  mEventSink.Connect(pQSlider->InteractiveValueChanged, &Gui::OnQSliderChanged, (void*)pQSlider);
+  mEventSink.Connect(pVolumeSlider->InteractiveValueChanged, &Gui::OnVolumeSliderChanged, (void*)pVolumeSlider);
   
   // frequency knob
   nuiImageSequence* pImgSequence = new nuiImageSequence(31, "rsrc:/decorations/knob.png", nuiVertical);
@@ -203,14 +203,12 @@ bool Gui::OnStartButtonDePressed(const nuiEvent& rEvent)
 }
 
 
-bool Gui::OnQSliderChanged(const nuiEvent& rEvent)
+bool Gui::OnVolumeSliderChanged(const nuiEvent& rEvent)
 {
-  nuiSlider* pQSlider = (nuiSlider*)rEvent.mpUser;
-  NGL_ASSERT(pQSlider);
+  nuiSlider* pSlider = (nuiSlider*)rEvent.mpUser;
+  NGL_ASSERT(pSlider);
   
-  
-  GetEngine()->GetFilter().SetQ(pQSlider->GetRange().GetValue());
-  GetEngine()->GetFilter().ComputeCoefficients();
+  GetEngine()->SetVolume(pSlider->GetRange().GetValue());
   
   return true;
 }

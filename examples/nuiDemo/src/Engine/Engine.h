@@ -23,6 +23,9 @@ public:
   
   AudioTrack* GetAudioTrack();
   BiQuad& GetFilter();
+
+  void SetVolume(float value);
+  float GetVolume();
   
 private:
   
@@ -30,4 +33,5 @@ private:
   
   nuiAudioFifo* mpAudioFifo;
   AudioTrack* mpAudioTrack;
+  float mVolume;
 };

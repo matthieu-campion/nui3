@@ -173,10 +173,14 @@ uint32 AudioTrack::ReadSamples(uint32 sampleFrames, std::vector<float*>& rBuffer
   // apply filter
   mFilter.Process(rBuffer, rBuffer, sampleFrames);
   
-  //LBDEBUG
-//  NGL_OUT(_T("%.2f %.2f %.2f %.2f %.2f %.2f %.2f %.2f\n"), rBuffer[0][0], rBuffer[0][1], rBuffer[0][2], rBuffer[0][3], rBuffer[0][4], rBuffer[0][5], rBuffer[0][6], rBuffer[0][7]);
-//  NGL_OUT(_T("%.2f %.2f %.2f %.2f %.2f %.2f %.2f %.2f\n\n"), rBuffer[1][0], rBuffer[1][1], rBuffer[1][2], rBuffer[1][3], rBuffer[1][4], rBuffer[1][5], rBuffer[1][6], rBuffer[1][7]);
-  
+  // apply volume
+  float volume = GetEngine()->GetVolume();
+  if (volume != 1.f)
+    for (uint32 c = 0; c < rBuffer.size(); c++)
+    {
+      for (uint32 s = 0; s < sampleFrames; s++)
+        rBuffer[c][s] = rBuffer[c][s] * volume;
+    }
   
   // fill the buffer for the GUI's oscillo
   for (uint32 c = 0; c < mSamplesBuffer.size(); c++)
