@@ -3,7 +3,7 @@
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
 		activeBuildConfigurationName = Default;
 		activeExecutable = E53DAA150EC266F100175F39 /* iPhoneDemo */;
-		activeSDKPreference = iphoneos2.1;
+		activeSDKPreference = iphoneos2.2;
 		activeTarget = C99995F80DA6EE97001A7116 /* iPhoneDemo */;
 		addToTargets = (
 			C9F5F9070DA84CAB00E078ED /* iPhoneDemoD */,
@@ -93,18 +93,16 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 248695037;
-			PBXWorkspaceStateSaveDate = 248695037;
+			PBXPerProjectTemplateStateSaveDate = 249528652;
+			PBXWorkspaceStateSaveDate = 249528652;
 		};
 		perUserProjectItems = {
+			E51030910EDF6A6500835202 /* PBXTextBookmark */ = E51030910EDF6A6500835202 /* PBXTextBookmark */;
 			E51D5B7A0EC3A9AE00182E40 /* PlistBookmark */ = E51D5B7A0EC3A9AE00182E40 /* PlistBookmark */;
 			E51D5CA80EC3DAA100182E40 /* PBXTextBookmark */ = E51D5CA80EC3DAA100182E40 /* PBXTextBookmark */;
 			E53430D90EC2F29500575BA6 /* PlistBookmark */ = E53430D90EC2F29500575BA6 /* PlistBookmark */;
 			E5A927F60ED2D74A00517AE8 /* PBXTextBookmark */ = E5A927F60ED2D74A00517AE8 /* PBXTextBookmark */;
 			E5A927FB0ED2D74A00517AE8 /* PBXTextBookmark */ = E5A927FB0ED2D74A00517AE8 /* PBXTextBookmark */;
-			E5A927FD0ED2D74A00517AE8 /* PBXTextBookmark */ = E5A927FD0ED2D74A00517AE8 /* PBXTextBookmark */;
-			E5A928800ED31B5200517AE8 /* PBXTextBookmark */ = E5A928800ED31B5200517AE8 /* PBXTextBookmark */;
-			E5A928810ED31B5200517AE8 /* PBXTextBookmark */ = E5A928810ED31B5200517AE8 /* PBXTextBookmark */;
 			E5CD2F210ECF826F0083037A /* PlistBookmark */ = E5CD2F210ECF826F0083037A /* PlistBookmark */;
 			E5CD2F220ECF826F0083037A /* PBXTextBookmark */ = E5CD2F220ECF826F0083037A /* PBXTextBookmark */;
 			E5CD2F230ECF826F0083037A /* PBXBookmark */ = E5CD2F230ECF826F0083037A /* PBXBookmark */;
@@ -137,6 +135,7 @@
 			E5CD30B60ECF8CBB0083037A /* PBXTextBookmark */ = E5CD30B60ECF8CBB0083037A /* PBXTextBookmark */;
 			E5CD30BA0ECF8CBB0083037A /* PBXTextBookmark */ = E5CD30BA0ECF8CBB0083037A /* PBXTextBookmark */;
 			E5CD30E80ECF91550083037A /* PBXTextBookmark */ = E5CD30E80ECF91550083037A /* PBXTextBookmark */;
+			E5EC7CDE0EDFF30E00F8404D /* PBXTextBookmark */ = E5EC7CDE0EDFF30E00F8404D /* PBXTextBookmark */;
 		};
 		sourceControlManager = E53DAA200EC2671100175F39 /* Source Control */;
 		userBuildSettings = {
@@ -153,6 +152,16 @@
 		executables = (
 			E53DAA160EC266F100175F39 /* iPhoneDemoD */,
 		);
+	};
+	E51030910EDF6A6500835202 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5CD2F680ECF82BE0083037A /* Application.cpp */;
+		name = "Application.cpp: 42";
+		rLen = 13;
+		rLoc = 874;
+		rType = 0;
+		vrLen = 1079;
+		vrLoc = 194;
 	};
 	E51D5B7A0EC3A9AE00182E40 /* PlistBookmark */ = {
 		isa = PlistBookmark;
@@ -394,36 +403,6 @@
 		vrLen = 2122;
 		vrLoc = 75;
 	};
-	E5A927FD0ED2D74A00517AE8 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E5CD2F680ECF82BE0083037A /* Application.cpp */;
-		name = "Application.cpp: 42";
-		rLen = 13;
-		rLoc = 874;
-		rType = 0;
-		vrLen = 942;
-		vrLoc = 243;
-	};
-	E5A928800ED31B5200517AE8 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E5CD2F680ECF82BE0083037A /* Application.cpp */;
-		name = "Application.cpp: 42";
-		rLen = 13;
-		rLoc = 874;
-		rType = 0;
-		vrLen = 966;
-		vrLoc = 219;
-	};
-	E5A928810ED31B5200517AE8 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E5CD2F680ECF82BE0083037A /* Application.cpp */;
-		name = "Application.cpp: 42";
-		rLen = 13;
-		rLoc = 874;
-		rType = 0;
-		vrLen = 1079;
-		vrLoc = 194;
-	};
 	E5CD2F1F0ECF82310083037A /* text.txt */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1582, 806}}";
@@ -555,7 +534,7 @@
 	};
 	E5CD2F680ECF82BE0083037A /* Application.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1582, 2886}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1582, 2821}}";
 			sepNavSelRange = "{874, 13}";
 			sepNavVisRange = "{194, 1079}";
 		};
@@ -710,5 +689,15 @@
 		rType = 0;
 		vrLen = 1763;
 		vrLoc = 11862;
+	};
+	E5EC7CDE0EDFF30E00F8404D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5CD2F680ECF82BE0083037A /* Application.cpp */;
+		name = "Application.cpp: 42";
+		rLen = 13;
+		rLoc = 874;
+		rType = 0;
+		vrLen = 1079;
+		vrLoc = 194;
 	};
 }
