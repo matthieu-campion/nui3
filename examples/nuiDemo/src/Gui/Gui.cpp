@@ -72,8 +72,7 @@ Gui::Gui()
   //
   nuiSimpleContainer* pPaneBkg = new nuiSimpleContainer();
   pPaneBkg->SetObjectName(_T("PaneBkg"));
-  AddCell(pPaneBkg, nuiBottom);
-  SetCellExpand(GetNbCells()-1, nuiExpandShrinkAndGrow);
+  AddCell(pPaneBkg, nuiCenter);
   
   // a box for row layout
   nuiHBox* pPaneBox = new nuiHBox(0);

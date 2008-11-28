@@ -455,10 +455,10 @@ void nuiWidgetInfo::RebuildInfo()
         nglString value;
         Base.ToString(value);
         nuiLabel* pLabel = new nuiLabel(value);
-        mpAttributeGrid->SetCell(1, i, pLabel);
+        mpAttributeGrid->SetCell(1, i, pLabel, nuiLeft);
       }
       else
-        mpAttributeGrid->SetCell(1, i, pEditor);
+        mpAttributeGrid->SetCell(1, i, pEditor, nuiLeft);
 
       ++it_a;
       i++;

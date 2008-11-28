@@ -261,6 +261,169 @@ nglImage::nglImage (const nglImage& rImage)
   mCompletion = rImage.mCompletion;
 }
 
+
+
+
+
+
+
+
+#define BRESHENAM2D(copyfunc)                              \
+if (sh<dh)																							 \
+for (j=0; j<=dh; j++) 																 \
+{ 																										 \
+\
+w_err=0;																						 \
+sw_pos=sh_pos;																			 \
+dw_pos=dh_pos;																			 \
+if (sw<dw)																					 \
+for (i=0; i<=dw; i++) 														 \
+{ 																								 \
+copyfunc                            						 \
+dw_pos+=dw_inc; 																 \
+w_err+=sw;																			 \
+if (w_err>=dw) { sw_pos+=sw_inc; w_err-=dw; } 	 \
+} 																								 \
+else																								 \
+for (i=0; i<=sw; i++) 														 \
+{ 																								 \
+copyfunc                                    		 \
+sw_pos+=sw_inc; 																 \
+w_err+=dw;																			 \
+if (w_err>=sw) { dw_pos+=dw_inc; w_err-=sw; } 	 \
+} 																								 \
+\
+dh_pos+=dh_inc; 																		 \
+h_err+=sh;																					 \
+if (h_err>=dh) { sh_pos+=sh_inc; h_err-=dh; } 			 \
+} 																										 \
+else																										 \
+for (j=0; j<=sh; j++) 																 \
+{ 																										 \
+\
+w_err=0;																						 \
+sw_pos=sh_pos;																			 \
+dw_pos=dh_pos;																			 \
+if (sw<dw)																					 \
+for (i=0; i<=dw; i++) 														 \
+{ 																								 \
+copyfunc                                      	 \
+dw_pos+=dw_inc; 																 \
+w_err+=sw;																			 \
+if (w_err>=dw) { sw_pos+=sw_inc; w_err-=dw; } 	 \
+} 																								 \
+else																								 \
+for (i=0; i<=sw; i++) 														 \
+{ 																								 \
+copyfunc                            						 \
+sw_pos+=sw_inc; 																 \
+w_err+=dw;																			 \
+if (w_err>=sw) { dw_pos+=dw_inc; w_err-=sw; } 	 \
+} 																								 \
+\
+sh_pos+=sh_inc; 																		 \
+h_err+=dh;																					 \
+if (h_err>=sh) { dh_pos+=dh_inc; h_err-=sh; } 			 \
+}
+
+
+
+
+//ICI
+nglImage::nglImage(const nglImage& rImage, uint scaledWidth, uint scaledHeight)
+{
+  Init();
+  mInfo.Copy(rImage.mInfo, false); // don't Clone image buffer
+  mInfo.mWidth = scaledWidth;
+  mInfo.mHeight = scaledHeight;
+  mInfo.AllocateBuffer();
+
+  mpCodec = NULL;                // Don't share the codec, and don't bother making a copy
+  mOwnCodec = true;
+  mCompletion = rImage.mCompletion;
+  
+  nglImageInfo sourceInfo;
+  rImage.GetInfo(sourceInfo);
+  
+  // copy and scale image buffer
+  uint32 dx1 = 0;
+  uint32 dy1 = 0;
+  uint32 dx2 = scaledWidth - 1;
+  uint32 dy2 = scaledHeight - 1;
+  uint32 sx1 = 0;
+  uint32 sy1 = 0;
+  uint32 sx2 = sourceInfo.mWidth - 1;
+  uint32 sy2 = sourceInfo.mHeight - 1;
+    
+  uint32 sw = sx2-sx1;
+  uint32 sh = sy2-sy1;
+  uint32 dw = dx2-dx1;
+  uint32 dh = dy2-dy1;
+  
+  /* prepare bresenham vars */
+  uint32 h_err = 0;
+  char* sh_pos = rImage.GetBuffer()  + (sy1 * sourceInfo.mBytesPerLine)  + (sx1 * sourceInfo.mBytesPerPixel);
+  char* dh_pos = GetBuffer()         + (dy1 * mInfo.mBytesPerLine)       + (dx1 * mInfo.mBytesPerPixel);
+
+  char *sw_pos, *dw_pos;
+  uint32 sh_inc, dh_inc, sw_inc, dw_inc;
+  uint32 i, j, w_err;
+
+  
+  if (sh < 0) 
+  { 
+    sh_inc = - sourceInfo.mBytesPerLine; 
+    sh = -sh; 
+  } 
+  else 
+    sh_inc = sourceInfo.mBytesPerLine;
+  
+  if (dh < 0) 
+  { 
+    dh_inc = -mInfo.mBytesPerLine; 
+    dh = -dh; 
+  } 
+  else 
+    dh_inc = mInfo.mBytesPerLine;
+  
+  if (sw < 0) 
+  { 
+    sw_inc = -sourceInfo.mBytesPerPixel; 
+    sw = -sw; 
+  } 
+  else 
+    sw_inc = sourceInfo.mBytesPerPixel;
+  
+  if (dw < 0) 
+  { 
+    dw_inc = -mInfo.mBytesPerPixel; 
+    dw = -dw; 
+  } 
+  else 
+    dw_inc = mInfo.mBytesPerPixel;
+  
+  switch (mInfo.mBytesPerPixel)
+  {
+    case 2: BRESHENAM2D(*(short*)dw_pos=*(short*)sw_pos; ) break;
+
+    case 3: BRESHENAM2D( *(char*)dw_pos=*(char*)sw_pos;
+                        *(((char*)dw_pos)+1)=*(((char*)sw_pos)+1);
+                        *(((char*)dw_pos)+2)=*(((char*)sw_pos)+2); )
+      break;
+
+    case 4: BRESHENAM2D( *(uint32*)dw_pos=*(uint32*)sw_pos; ) break;
+  }
+}
+  
+  
+
+
+
+
+
+
+
+
 nglImage::~nglImage()
 {
   // Image buffer is released by mpInfo destruction
@@ -494,6 +657,11 @@ void nglImage::ReleaseBuffer()
 {
   mInfo.ReleaseBuffer();
 }
+
+
+
+
+
 
 /* Image Pixel Access:
  */

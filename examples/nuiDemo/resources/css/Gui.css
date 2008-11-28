@@ -134,16 +134,18 @@ guiOscillo!
 @nuiFrame dPaneBkg
 {
   Texture: "rsrc:/decorations/pane.png";
-  ClientRect: "{3 3 22 148}";
+  ClientRect: "{12 12 4 130}";
 }
 
 "PaneBkg"!
 {
   DecorationMode: Border;
   Decoration: dPaneBkg;
-  UserWidth: 246;
-  UserHeight: 154; 
-  BorderBottom: 30;
+//  UserWidth: 222;
+//  UserHeight: 130; 
+//  UserWidth: 246;
+//  UserHeight: 154; 
+//  BorderBottom: 30;
 }
 
 

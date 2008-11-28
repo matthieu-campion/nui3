@@ -20,6 +20,10 @@
 MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& rInfo, bool ShowFPS, const nglContext* pShared )
   : nuiMainWindow(rContextInfo, rInfo, pShared, nglPath(ePathCurrent)), mEventSink(this)
 {
+#ifdef _DEBUG_
+  SetDebugMode(true);
+#endif
+  
   LoadCSS(_T("rsrc:/css/nuiDemo.css"));
 }
 

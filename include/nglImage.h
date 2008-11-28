@@ -226,6 +226,15 @@ public:
     The object will hold an exact copy of the source image description and buffer data.
     The image buffer data is cloned (and thus managed).
   */
+  
+  nglImage(const nglImage& rImage, uint scaledWidth, uint scaledHeight);
+  /*!< Create an image copy from another image, scaling the source image to the given size
+   \param rImage source image
+   \param scaledWidth requested width
+   \param scaledHeight requested height
+   
+   */
+  
   virtual ~nglImage();
   //@}
 
@@ -292,6 +301,9 @@ public:
     Please see nglImageInfo documentation for memory management.
   */
 
+  
+  void Scale();
+  
   friend class nglImageCodec;
 
   /** @name Global codec registry */
