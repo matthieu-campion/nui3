@@ -258,7 +258,9 @@ uint nuiVBox::GetNbCells() const
 
 bool nuiVBox::Clear(bool Delete)
 {
-  return nuiGrid::Clear(Delete);
+  bool res = Clear(Delete);
+  nuiGrid::AddColumns(0,1);
+  return res;
 }
 
 nuiSize nuiVBox::GetDefaultSpacing() const
