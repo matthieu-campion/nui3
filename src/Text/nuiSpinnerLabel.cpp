@@ -271,7 +271,7 @@ bool nuiSpinnerLabel::MouseMoved  (nuiSize X, nuiSize Y)
 // UpdateValue
 //
 //
-bool nuiSpinnerLabel::UpdateValue  (nuiSize movX, nuiSize movY)
+bool nuiSpinnerLabel::UpdateValue(nuiSize movX, nuiSize movY)
 {
   nuiSize sensitivity = mSensitivity;
   if (IsKeyDown(mFineSensitivityKey))
@@ -279,17 +279,12 @@ bool nuiSpinnerLabel::UpdateValue  (nuiSize movX, nuiSize movY)
     sensitivity *= mFineSensitivityRatio;
   }
 
-  nuiSize range = sqrtf(GetRect().GetWidth() * GetRect().GetHeight());
-
-  //nuiSize length = range;
   nuiSize start= mClickValue;
   nuiSize movement = ( movX + movY ) / sensitivity;
 
-  start += (mRange.GetRange() - mRange.GetPageSize()) * (movement/range);
+  start+= movement;
 
-
-  return SetValue (start);
-
+  return SetValue(start);
 }
 
 
