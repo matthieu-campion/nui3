@@ -70,6 +70,7 @@ protected:
   bool CreateHTTPWindow(const nuiEvent& rEvent);
   bool SendHTTPRequest(const nuiEvent& rEvent);
   bool CreateHTMLWindow(const nuiEvent& rEvent);
+  bool CreateImageResizeWindow(const nuiEvent& rEvent);
 
   bool CreateNewWindow(const nuiEvent& rEvent);
   bool ShowMenu(const nuiEvent& rEvent);

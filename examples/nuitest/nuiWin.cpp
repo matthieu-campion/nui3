@@ -482,7 +482,11 @@ void nuiWin::OnCreation()
   pElement = new nuiTreeNode(nuiTR("nuiHTML test"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateHTMLWindow);
   pMainTree->AddChild(pElement);
-
+  
+  pElement = new nuiTreeNode(nuiTR("nglImage Resize test"));
+  mWinSink.Connect(pElement->Activated, &nuiWin::CreateImageResizeWindow);
+  pMainTree->AddChild(pElement);
+  
   pElement = new nuiTreeNode(nuiTR("Enum native resources"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateResourceWindow);
   pMainTree->AddChild(pElement);
@@ -2655,6 +2659,25 @@ bool nuiWin::CreateHTMLWindow(const nuiEvent& rEvent)
 
   return false;
 }
+
+bool nuiWin::CreateImageResizeWindow(const nuiEvent& rEvent)
+{
+  nglPath p(_T("rsrc:/nui.png"));
+  nglIStream* pStream = p.OpenRead();
+  nglImage* pImage = new nglImage(pStream);
+  nglImage* pNewImage = new nglImage(*pImage, 80, 80);
+  
+  nuiWindow* pWin = new nuiWindow(nuiRect(10, 10, 320, 320));
+  nuiScrollView* pScroll = new nuiScrollView();
+  pWin->AddChild(pScroll);
+  nuiBox* pBox = new nuiVBox();
+  pScroll->AddChild(pBox);
+  pBox->AddCell(new nuiImage(pNewImage, true), nuiTopLeft);
+  pBox->AddCell(new nuiImage(pImage, true), nuiTopLeft);
+  mpManager->AddChild(pWin);
+  return false;
+}
+
 
 #include "nuiMemoryPool.h"
 

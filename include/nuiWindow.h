@@ -31,7 +31,7 @@ public:
   static const nuiWindowFlags NoCaption;      ///< The window have no caption bar. It implies also the NoClose flag.
   static const nuiWindowFlags NoClose;        ///< The window have no to close button.
   static const nuiWindowFlags Modal;          ///< The window if modal: no other window created before it can receive any mouse of keyboard event until it is destroyed.
-  static const nuiWindowFlags DecoratedBackground; ///< Apply a default the decoration to the client part of the window. By default the window has a white client rect
+  static const nuiWindowFlags DecoratedBackground; ///< Apply a default decoration to the client part of the window. By default the window has a white client rect
   virtual nuiRect GetRectFromFlags(const nuiRect& Rect, nuiWindowFlags flags, bool RectIsClient);
 
   // Construction/Destruction
