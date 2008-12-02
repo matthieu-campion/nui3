@@ -266,7 +266,6 @@ nglImage::nglImage (const nglImage& rImage)
 
 
 
-
 //
 //#define BRESHENAM2D(copyfunc)                              \
 //  if (sh<dh)																							 \
@@ -485,101 +484,105 @@ nglImage::nglImage (const nglImage& rImage)
 #define average(a, b)   (char)(( (int)(a) + (int)(b) ) >> 1)
 
 
-void nglImage::ScaleLineAvg(uint32* pTarget, int32 TgtWidth, uint32* Source, int32 SrcWidth)
+void ScaleLineAvg(uint32* pTarget, int32 TgtWidth, const uint32* pSource, int32 SrcWidth)
 {
-int32 NumPixels = TgtWidth;
-int32 IntPart   = SrcWidth / TgtWidth;
-int32 FractPart = SrcWidth % TgtWidth;
-int32 Mid       = TgtWidth / 2;
-int32 E         = 0;
-int32 skip;
-uint32 p;
+  int32 NumPixels = TgtWidth;
+  int32 IntPart   = SrcWidth / TgtWidth;
+  int32 FractPart = SrcWidth % TgtWidth;
+  int32 Mid       = TgtWidth / 2;
+  int32 E         = 0;
+  int32 skip;
+  uint32 p;
   
   skip = (TgtWidth < SrcWidth) ? 0 : TgtWidth / (2*SrcWidth) + 1;
   NumPixels -= skip;
   
   while (NumPixels-- > 0) 
   {
-    p = *Source;
+    p = *pSource;
     
     if (E >= Mid)
-      p = average(p, *(Source+1));
+      p = average(p, *(pSource + 1));
     
     *pTarget++ = p;
-    Source += IntPart;
+    pSource += IntPart;
     E += FractPart;
     
     if (E >= TgtWidth) 
     {
       E -= TgtWidth;
-      Source++;
+      pSource++;
     } 
   } 
   
   while (skip-- > 0)
   {
-    *pTarget++ = *Source;
+    *pTarget++ = *pSource;
   }
 }
 
 
 
-void nglImage::ScaleRectAvg(uint32* pTarget, int32 TgtWidth, int32 TgtHeight,
-  uint32* pSource, int32 SrcWidth, int32 SrcHeight)
+void ScaleRectAvg(uint32* pTarget, int32 TgtWidth, int32 TgtHeight,
+  const uint32* pSource, int32 SrcWidth, int32 SrcHeight)
 {
+  const uint32* pOriginalSource = pSource;
+  uint32* pOriginalTarget = pTarget;
+  
   int32 NumPixels = TgtHeight;
   int32 IntPart   = (SrcHeight * SrcWidth) / TgtHeight;
   int32 FractPart = SrcHeight % TgtHeight;
   int32 Mid       = TgtHeight / 2;
   int32 E         = 0;
   int32 skip;
-  uint32 *ScanLine, *ScanLineAhead;
-  uint32 *PrevSource = NULL;
-  uint32 *PrevSourceAhead = NULL;
+  uint32 *pScanLine;
+  uint32 *pScanLineAhead;
+  const uint32 *pPrevSource = NULL;
+  const uint32 *pPrevSourceAhead = NULL;
   
   skip = (TgtHeight < SrcHeight) ? 0 : TgtHeight / (2*SrcHeight) + 1;
   NumPixels -= skip;
   
-  ScanLine      = (uint32*)malloc(TgtWidth*sizeof(uint32));
-  ScanLineAhead = (uint32*)malloc(TgtWidth*sizeof(uint32));
+  pScanLine      = new uint32[TgtWidth];
+  pScanLineAhead = new uint32[TgtWidth];
   
   while (NumPixels-- > 0) 
   {
-    if (pSource != PrevSource) 
+    if (pSource != pPrevSource) 
     {
-      if (pSource == PrevSourceAhead) 
+      if (pSource == pPrevSourceAhead) 
       {
         /* the next scan line has already been scaled and stored in
          * ScanLineAhead; swap the buffers that ScanLine and ScanLineAhead
          * point to
          */
-        uint32* tmp = ScanLine;
-        ScanLine      = ScanLineAhead;
-        ScanLineAhead = tmp;
+        uint32* tmp = pScanLine;
+        pScanLine      = pScanLineAhead;
+        pScanLineAhead = tmp;
       }
       else 
       {
-        ScaleLineAvg(ScanLine, TgtWidth, pSource, SrcWidth);
+        ScaleLineAvg(pScanLine, TgtWidth, pSource, SrcWidth);
       }
       
-      PrevSource = pSource;
+      pPrevSource = pSource;
     }
     
-    if (E >= Mid && PrevSourceAhead != pSource+SrcWidth) 
+    if (E >= Mid && pPrevSourceAhead != pSource + SrcWidth) 
     {
       int32 x;
-      ScaleLineAvg(ScanLineAhead, TgtWidth, pSource+SrcWidth, SrcWidth);
+      ScaleLineAvg(pScanLineAhead, TgtWidth, pSource + SrcWidth, SrcWidth);
       
       for (x = 0; x < TgtWidth; x++)
-        ScanLine[x] = average(ScanLine[x], ScanLineAhead[x]);
+        pScanLine[x] = average(pScanLine[x], pScanLineAhead[x]);
       
-      PrevSourceAhead = pSource + SrcWidth;
+      pPrevSourceAhead = pSource + SrcWidth;
     } 
     
-    memcpy(pTarget, ScanLine, TgtWidth*sizeof(uint32));
+    memcpy(pTarget, pScanLine, TgtWidth * sizeof(uint32));
     pTarget += TgtWidth;
     pSource += IntPart;
-    E      += FractPart;
+    E       += FractPart;
     
     if (E >= TgtHeight) 
     {
@@ -588,30 +591,29 @@ void nglImage::ScaleRectAvg(uint32* pTarget, int32 TgtWidth, int32 TgtHeight,
     } 
   } 
   
-  if (skip > 0 && pSource != PrevSource)
-    ScaleLineAvg(ScanLine, TgtWidth, pSource, SrcWidth);
+  if (skip > 0 && pSource != pPrevSource)
+    ScaleLineAvg(pScanLine, TgtWidth, pSource, SrcWidth);
   
   while (skip-- > 0) 
   {
-    memcpy(pTarget, ScanLine, TgtWidth*sizeof(uint32));
+    memcpy(pTarget, pScanLine, TgtWidth * sizeof(uint32));
     pTarget += TgtWidth;
   }
   
-  free(ScanLine);
-  free(ScanLineAhead);
+  delete pScanLine;
+  delete pScanLineAhead;
 }
 
 
 
 //ICI
-nglImage::nglImage(const nglImage& rImage, uint scaledWidth, uint scaledHeight)
+nglImage::nglImage(const nglImage& rImage, uint NewWidth, uint NewHeight)
 {
   Init();
   mInfo.Copy(rImage.mInfo, false); // don't Clone image buffer
-  mInfo.mWidth = scaledWidth;
-  mInfo.mHeight = scaledHeight;
-  uint32 modulo = mInfo.mBytesPerLine % scaledWidth;
-  mInfo.mBytesPerLine = (scaledWidth * mInfo.mBytesPerPixel) + modulo;
+  mInfo.mWidth = NewWidth;
+  mInfo.mHeight = NewHeight;
+  mInfo.mBytesPerLine = NewWidth * mInfo.mBytesPerPixel;
   mInfo.AllocateBuffer();
 
   mpCodec = NULL;                // Don't share the codec, and don't bother making a copy
@@ -623,7 +625,7 @@ nglImage::nglImage(const nglImage& rImage, uint scaledWidth, uint scaledHeight)
   
 //  (dh_pos, mInfo.mWidth * 3, mInfo.mHeight, sh_pos, sourceInfo.mWidth *3, sourceInfo.mHeight);
   
-  ScaleRectAvg((uint32*)GetBuffer(), scaledWidth, scaledHeight,
+  ScaleRectAvg((uint32*)GetBuffer(), NewWidth, NewHeight,
                (uint32*)rImage.GetBuffer(), sourceInfo.mWidth, sourceInfo.mHeight);  
   
 //  // copy and scale image buffer
