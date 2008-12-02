@@ -824,7 +824,7 @@ void nuiDrawContext::DrawRect(const nuiRect& rRect, nuiShapeMode Mode)
   {
     nuiRect rect(rRect);
 
-    GLenum mode = GL_LINE_LOOP;
+    GLenum mode = GL_LINES;
 
     if (rect.mRight - rect.mLeft <= 1.0f)
     {
@@ -880,9 +880,20 @@ void nuiDrawContext::DrawRect(const nuiRect& rRect, nuiShapeMode Mode)
       strokearray.PushVertex();
       strokearray.SetVertex(rect.mRight, rect.mTop);
       strokearray.PushVertex();
+      
+      strokearray.SetVertex(rect.mRight, rect.mTop);
+      strokearray.PushVertex();
+      strokearray.SetVertex(rect.mRight, rect.mBottom);
+      strokearray.PushVertex();
+      
       strokearray.SetVertex(rect.mRight, rect.mBottom);
       strokearray.PushVertex();
       strokearray.SetVertex(rect.mLeft, rect.mBottom);
+      strokearray.PushVertex();
+
+      strokearray.SetVertex(rect.mLeft, rect.mBottom);
+      strokearray.PushVertex();
+      strokearray.SetVertex(rect.mLeft, rect.mTop);
       strokearray.PushVertex();
 
       DrawArray(strokearray);
