@@ -301,8 +301,17 @@ public:
     Please see nglImageInfo documentation for memory management.
   */
 
+  void ScaleLine(char* Target, int TgtWidth, char* Source, int SrcWidth);
+  void ScaleLineAvg(char* Target, int TgtWidth, char* Source, int SrcWidth);
+
+  void ScaleRect(char* Target, int TgtWidth, int TgtHeight, char* Source, int SrcWidth, int SrcHeight);
+
   
-  void Scale();
+  void ScaleLineAvg(uint32* pTarget, int32 TgtWidth, uint32* Source, int32 SrcWidth);
+  void ScaleRectAvg(uint32* pTarget, int32 TgtWidth, int32 TgtHeight, uint32* pSource, int32 SrcWidth, int32 SrcHeight);
+
+  
+  void Breshenam24(char* dh_pos, uint32 dw, uint32 dh, uint32 dw_inc, uint32 dh_inc, char* sh_pos, uint32 sw, uint32 sh, uint32 sw_inc, uint32 sh_inc);
   
   friend class nglImageCodec;
 

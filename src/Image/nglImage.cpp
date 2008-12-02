@@ -267,65 +267,339 @@ nglImage::nglImage (const nglImage& rImage)
 
 
 
+//
+//#define BRESHENAM2D(copyfunc)                              \
+//  if (sh<dh)																							 \
+//    for (j=0; j<=dh; j++) 																 \
+//    { 																										 \
+//                                                           \
+//      w_err=0;																						 \
+//      sw_pos=sh_pos;																			 \
+//      dw_pos=dh_pos;																			 \
+//      if (sw<dw)																					 \
+//        for (i=0; i<=dw; i++) 														 \
+//        { 																								 \
+//          copyfunc                            						 \
+//          dw_pos+=dw_inc; 																 \
+//          w_err+=sw;																			 \
+//          if (w_err>=dw) { sw_pos+=sw_inc; w_err-=dw; } 	 \
+//        } 																								 \
+//      else																								 \
+//        for (i=0; i<=sw; i++) 														 \
+//        { 																								 \
+//          copyfunc                                    		 \
+//          sw_pos+=sw_inc; 																 \
+//          w_err+=dw;																			 \
+//          if (w_err>=sw) { dw_pos+=dw_inc; w_err-=sw; } 	 \
+//        } 																								 \
+//                                                           \
+//      dh_pos+=dh_inc; 																		 \
+//      h_err+=sh;																					 \
+//      if (h_err>=dh) { sh_pos+=sh_inc; h_err-=dh; } 			 \
+//    } 																										 \
+//  else																										 \
+//    for (j=0; j<=sh; j++) 																 \
+//    { 																										 \
+//                                                           \
+//      w_err=0;																						 \
+//      sw_pos=sh_pos;																			 \
+//      dw_pos=dh_pos;																			 \
+//      if (sw<dw)																					 \
+//        for (i=0; i<=dw; i++) 														 \
+//        { 																								 \
+//          copyfunc                                      	 \
+//          dw_pos+=dw_inc; 																 \
+//          w_err+=sw;																			 \
+//          if (w_err>=dw) { sw_pos+=sw_inc; w_err-=dw; } 	 \
+//        } 																								 \
+//      else																								 \
+//        for (i=0; i<=sw; i++) 														 \
+//        { 																								 \
+//          copyfunc                            						 \
+//          sw_pos+=sw_inc; 																 \
+//          w_err+=dw;																			 \
+//          if (w_err>=sw) { dw_pos+=dw_inc; w_err-=sw; } 	 \
+//        } 																								 \
+//                                                           \
+//      sh_pos+=sh_inc; 																		 \
+//      h_err+=dh;																					 \
+//      if (h_err>=sh) { dh_pos+=dh_inc; h_err-=sh; } 			 \
+//    }
+//
+//
+//
+//void nglImage::Breshenam24(char* dh_pos, uint32 dw, uint32 dh, uint32 dw_inc, uint32 dh_inc, char* sh_pos, uint32 sw, uint32 sh, uint32 sw_inc, uint32 sh_inc)
+//{
+//uint32 w_err, h_err, i, j;
+//char* sw_pos;
+//char* dw_pos;
+//  
+//  if (sh < dh)																							 
+//    for (j=0; j <= dh; j++) 																 
+//    { 																										 
+//      w_err = 0;																						 
+//      sw_pos = sh_pos;																			 
+//      dw_pos = dh_pos;																			 
+//      if (sw < dw)																					 
+//        for (i=0; i <= dw; i++) 														 
+//        { 																								 
+//          *(char*)dw_pos=*(char*)sw_pos;
+//          *(((char*)dw_pos)+1)=*(((char*)sw_pos)+1);
+//          *(((char*)dw_pos)+2)=*(((char*)sw_pos)+2);
+//
+//          dw_pos+=dw_inc; 																 
+//          w_err+=sw;																			 
+//          if (w_err >= dw) { sw_pos+=sw_inc; w_err-=dw; } 	 
+//        } 																								 
+//      else																								 
+//        for (i=0; i <= sw; i++) 														 
+//        { 																								 
+//          *(char*)dw_pos=*(char*)sw_pos;
+//          *(((char*)dw_pos)+1)=*(((char*)sw_pos)+1);
+//          *(((char*)dw_pos)+2)=*(((char*)sw_pos)+2);
+//
+//          sw_pos+=sw_inc; 																 
+//          w_err+=dw;																			 
+//          if (w_err >= sw) { dw_pos+=dw_inc; w_err-=sw; } 	 
+//        } 																								 
+//      
+//      dh_pos += dh_inc; 																		 
+//      h_err += sh;																					 
+//      if (h_err >= dh) { sh_pos+=sh_inc; h_err-=dh; } 			 
+//    } 																										 
+//  else																										 
+//    for (j=0; j <= sh; j++) 																 
+//    { 																										 
+//      
+//      w_err = 0;																						 
+//      sw_pos = sh_pos;																			 
+//      dw_pos = dh_pos;																			 
+//      if (sw < dw)																					 
+//        for (i=0; i <= dw; i++) 														 
+//        { 																								 
+//          *(char*)dw_pos=*(char*)sw_pos;
+//          *(((char*)dw_pos)+1)=*(((char*)sw_pos)+1);
+//          *(((char*)dw_pos)+2)=*(((char*)sw_pos)+2);
+//
+//          dw_pos+=dw_inc; 																 
+//          w_err+=sw;																			 
+//          if (w_err >= dw) { sw_pos+=sw_inc; w_err-=dw; } 	 
+//        } 																								 
+//      else																								 
+//        for (i=0; i <= sw; i++) 														 
+//        { 																								 
+//          *(char*)dw_pos=*(char*)sw_pos;
+//          *(((char*)dw_pos)+1)=*(((char*)sw_pos)+1);
+//          *(((char*)dw_pos)+2)=*(((char*)sw_pos)+2);
+//
+//          sw_pos+=sw_inc; 																 
+//          w_err+=dw;																			 
+//          if (w_err >= sw) 
+//          { 
+//            dw_pos += dw_inc; 
+//            w_err -= sw; 
+//          } 	 
+//        } 																								 
+//      
+//      sh_pos+=sh_inc; 																		 
+//      h_err+=dh;																					 
+//      if (h_err >= sh) { dh_pos+=dh_inc; h_err-=sh; } 			 
+//    }
+//}
+//  
+//
+//void nglImage::ScaleLine(char* Target, int TgtWidth, char* Source, int SrcWidth)
+//{
+//  int NumPixels = TgtWidth;
+//  int IntPart = SrcWidth / TgtWidth;
+//  int FractPart = SrcWidth % TgtWidth;
+//  int E = 0;
+//  while (NumPixels-- > 0) {
+//    *Target++ = *Source;
+//    Source += IntPart;
+//    
+//    E += FractPart;
+//    if (E >= TgtWidth) {
+//      E -= TgtWidth;
+//      Source++;
+//    } /* if */
+//  } /* while */
+//}
+//
+//
+//void nglImage::ScaleLineAvg(char* Target, int TgtWidth, char* Source, int SrcWidth)
+//{
+//  int NumPixels = TgtWidth;
+//  int Mid = TgtWidth / 2;
+//  int E = 0;
+//  char p;
+//  if (TgtWidth > SrcWidth)
+//    NumPixels--;
+//  while (NumPixels-- > 0) 
+//  {
+//    p = *Source;
+//    if (E >= Mid)
+//      p = average(p, *(Source+1));
+//    *Target++ = p;
+//    E += SrcWidth;
+//    if (E >= TgtWidth) 
+//    {
+//      E -= TgtWidth;
+//      Source++;
+//    }
+//  }
+//  
+//  if (TgtWidth > SrcWidth)
+//    *Target = *Source;
+//}
+//
+//void nglImage::ScaleRect(char* Target, int TgtWidth, int TgtHeight, char* Source, int SrcWidth, int SrcHeight)
+//{
+//  int NumPixels = TgtHeight;
+//  int IntPart = (SrcHeight / TgtHeight) * SrcWidth;
+//  int FractPart = SrcHeight % TgtHeight;
+//  int E = 0;
+//  char* PrevSource = NULL;
+//  while (NumPixels-- > 0) 
+//  {
+//    if (Source == PrevSource) 
+//      memcpy(Target, Target-TgtWidth, TgtWidth*sizeof(*Target));
+//    else 
+//    {
+//      ScaleLineAvg(Target, TgtWidth, Source, SrcWidth);
+//      PrevSource = Source;
+//    } 
+//    
+//    Target += TgtWidth;
+//    Source += IntPart;
+//    E += FractPart;
+//    if (E >= TgtHeight) 
+//    {
+//      E -= TgtHeight;
+//      Source += SrcWidth;
+//    } 
+//  }
+//}  
+//  
 
-#define BRESHENAM2D(copyfunc)                              \
-if (sh<dh)																							 \
-for (j=0; j<=dh; j++) 																 \
-{ 																										 \
-\
-w_err=0;																						 \
-sw_pos=sh_pos;																			 \
-dw_pos=dh_pos;																			 \
-if (sw<dw)																					 \
-for (i=0; i<=dw; i++) 														 \
-{ 																								 \
-copyfunc                            						 \
-dw_pos+=dw_inc; 																 \
-w_err+=sw;																			 \
-if (w_err>=dw) { sw_pos+=sw_inc; w_err-=dw; } 	 \
-} 																								 \
-else																								 \
-for (i=0; i<=sw; i++) 														 \
-{ 																								 \
-copyfunc                                    		 \
-sw_pos+=sw_inc; 																 \
-w_err+=dw;																			 \
-if (w_err>=sw) { dw_pos+=dw_inc; w_err-=sw; } 	 \
-} 																								 \
-\
-dh_pos+=dh_inc; 																		 \
-h_err+=sh;																					 \
-if (h_err>=dh) { sh_pos+=sh_inc; h_err-=dh; } 			 \
-} 																										 \
-else																										 \
-for (j=0; j<=sh; j++) 																 \
-{ 																										 \
-\
-w_err=0;																						 \
-sw_pos=sh_pos;																			 \
-dw_pos=dh_pos;																			 \
-if (sw<dw)																					 \
-for (i=0; i<=dw; i++) 														 \
-{ 																								 \
-copyfunc                                      	 \
-dw_pos+=dw_inc; 																 \
-w_err+=sw;																			 \
-if (w_err>=dw) { sw_pos+=sw_inc; w_err-=dw; } 	 \
-} 																								 \
-else																								 \
-for (i=0; i<=sw; i++) 														 \
-{ 																								 \
-copyfunc                            						 \
-sw_pos+=sw_inc; 																 \
-w_err+=dw;																			 \
-if (w_err>=sw) { dw_pos+=dw_inc; w_err-=sw; } 	 \
-} 																								 \
-\
-sh_pos+=sh_inc; 																		 \
-h_err+=dh;																					 \
-if (h_err>=sh) { dh_pos+=dh_inc; h_err-=sh; } 			 \
+#define average(a, b)   (char)(( (int)(a) + (int)(b) ) >> 1)
+
+
+void nglImage::ScaleLineAvg(uint32* pTarget, int32 TgtWidth, uint32* Source, int32 SrcWidth)
+{
+int32 NumPixels = TgtWidth;
+int32 IntPart   = SrcWidth / TgtWidth;
+int32 FractPart = SrcWidth % TgtWidth;
+int32 Mid       = TgtWidth / 2;
+int32 E         = 0;
+int32 skip;
+uint32 p;
+  
+  skip = (TgtWidth < SrcWidth) ? 0 : TgtWidth / (2*SrcWidth) + 1;
+  NumPixels -= skip;
+  
+  while (NumPixels-- > 0) 
+  {
+    p = *Source;
+    
+    if (E >= Mid)
+      p = average(p, *(Source+1));
+    
+    *pTarget++ = p;
+    Source += IntPart;
+    E += FractPart;
+    
+    if (E >= TgtWidth) 
+    {
+      E -= TgtWidth;
+      Source++;
+    } 
+  } 
+  
+  while (skip-- > 0)
+  {
+    *pTarget++ = *Source;
+  }
 }
 
+
+
+void nglImage::ScaleRectAvg(uint32* pTarget, int32 TgtWidth, int32 TgtHeight,
+  uint32* pSource, int32 SrcWidth, int32 SrcHeight)
+{
+  int32 NumPixels = TgtHeight;
+  int32 IntPart   = (SrcHeight * SrcWidth) / TgtHeight;
+  int32 FractPart = SrcHeight % TgtHeight;
+  int32 Mid       = TgtHeight / 2;
+  int32 E         = 0;
+  int32 skip;
+  uint32 *ScanLine, *ScanLineAhead;
+  uint32 *PrevSource = NULL;
+  uint32 *PrevSourceAhead = NULL;
+  
+  skip = (TgtHeight < SrcHeight) ? 0 : TgtHeight / (2*SrcHeight) + 1;
+  NumPixels -= skip;
+  
+  ScanLine      = (uint32*)malloc(TgtWidth*sizeof(uint32));
+  ScanLineAhead = (uint32*)malloc(TgtWidth*sizeof(uint32));
+  
+  while (NumPixels-- > 0) 
+  {
+    if (pSource != PrevSource) 
+    {
+      if (pSource == PrevSourceAhead) 
+      {
+        /* the next scan line has already been scaled and stored in
+         * ScanLineAhead; swap the buffers that ScanLine and ScanLineAhead
+         * point to
+         */
+        uint32* tmp = ScanLine;
+        ScanLine      = ScanLineAhead;
+        ScanLineAhead = tmp;
+      }
+      else 
+      {
+        ScaleLineAvg(ScanLine, TgtWidth, pSource, SrcWidth);
+      }
+      
+      PrevSource = pSource;
+    }
+    
+    if (E >= Mid && PrevSourceAhead != pSource+SrcWidth) 
+    {
+      int32 x;
+      ScaleLineAvg(ScanLineAhead, TgtWidth, pSource+SrcWidth, SrcWidth);
+      
+      for (x = 0; x < TgtWidth; x++)
+        ScanLine[x] = average(ScanLine[x], ScanLineAhead[x]);
+      
+      PrevSourceAhead = pSource + SrcWidth;
+    } 
+    
+    memcpy(pTarget, ScanLine, TgtWidth*sizeof(uint32));
+    pTarget += TgtWidth;
+    pSource += IntPart;
+    E      += FractPart;
+    
+    if (E >= TgtHeight) 
+    {
+      E -= TgtHeight;
+      pSource += SrcWidth;
+    } 
+  } 
+  
+  if (skip > 0 && pSource != PrevSource)
+    ScaleLineAvg(ScanLine, TgtWidth, pSource, SrcWidth);
+  
+  while (skip-- > 0) 
+  {
+    memcpy(pTarget, ScanLine, TgtWidth*sizeof(uint32));
+    pTarget += TgtWidth;
+  }
+  
+  free(ScanLine);
+  free(ScanLineAhead);
+}
 
 
 
@@ -336,6 +610,8 @@ nglImage::nglImage(const nglImage& rImage, uint scaledWidth, uint scaledHeight)
   mInfo.Copy(rImage.mInfo, false); // don't Clone image buffer
   mInfo.mWidth = scaledWidth;
   mInfo.mHeight = scaledHeight;
+  uint32 modulo = mInfo.mBytesPerLine % scaledWidth;
+  mInfo.mBytesPerLine = (scaledWidth * mInfo.mBytesPerPixel) + modulo;
   mInfo.AllocateBuffer();
 
   mpCodec = NULL;                // Don't share the codec, and don't bother making a copy
@@ -345,74 +621,84 @@ nglImage::nglImage(const nglImage& rImage, uint scaledWidth, uint scaledHeight)
   nglImageInfo sourceInfo;
   rImage.GetInfo(sourceInfo);
   
-  // copy and scale image buffer
-  uint32 dx1 = 0;
-  uint32 dy1 = 0;
-  uint32 dx2 = scaledWidth - 1;
-  uint32 dy2 = scaledHeight - 1;
-  uint32 sx1 = 0;
-  uint32 sy1 = 0;
-  uint32 sx2 = sourceInfo.mWidth - 1;
-  uint32 sy2 = sourceInfo.mHeight - 1;
-    
-  uint32 sw = sx2-sx1;
-  uint32 sh = sy2-sy1;
-  uint32 dw = dx2-dx1;
-  uint32 dh = dy2-dy1;
+//  (dh_pos, mInfo.mWidth * 3, mInfo.mHeight, sh_pos, sourceInfo.mWidth *3, sourceInfo.mHeight);
   
-  /* prepare bresenham vars */
-  uint32 h_err = 0;
-  char* sh_pos = rImage.GetBuffer()  + (sy1 * sourceInfo.mBytesPerLine)  + (sx1 * sourceInfo.mBytesPerPixel);
-  char* dh_pos = GetBuffer()         + (dy1 * mInfo.mBytesPerLine)       + (dx1 * mInfo.mBytesPerPixel);
-
-  char *sw_pos, *dw_pos;
-  uint32 sh_inc, dh_inc, sw_inc, dw_inc;
-  uint32 i, j, w_err;
-
+  ScaleRectAvg((uint32*)GetBuffer(), scaledWidth, scaledHeight,
+               (uint32*)rImage.GetBuffer(), sourceInfo.mWidth, sourceInfo.mHeight);  
   
-  if (sh < 0) 
-  { 
-    sh_inc = - sourceInfo.mBytesPerLine; 
-    sh = -sh; 
-  } 
-  else 
-    sh_inc = sourceInfo.mBytesPerLine;
-  
-  if (dh < 0) 
-  { 
-    dh_inc = -mInfo.mBytesPerLine; 
-    dh = -dh; 
-  } 
-  else 
-    dh_inc = mInfo.mBytesPerLine;
-  
-  if (sw < 0) 
-  { 
-    sw_inc = -sourceInfo.mBytesPerPixel; 
-    sw = -sw; 
-  } 
-  else 
-    sw_inc = sourceInfo.mBytesPerPixel;
-  
-  if (dw < 0) 
-  { 
-    dw_inc = -mInfo.mBytesPerPixel; 
-    dw = -dw; 
-  } 
-  else 
-    dw_inc = mInfo.mBytesPerPixel;
-  
-  switch (mInfo.mBytesPerPixel)
-  {
-    case 2: BRESHENAM2D(*(short*)dw_pos=*(short*)sw_pos; ) break;
-
-    case 3: BRESHENAM2D( *(char*)dw_pos=*(char*)sw_pos;
-                        *(((char*)dw_pos)+1)=*(((char*)sw_pos)+1);
-                        *(((char*)dw_pos)+2)=*(((char*)sw_pos)+2); )
-      break;
-
-    case 4: BRESHENAM2D( *(uint32*)dw_pos=*(uint32*)sw_pos; ) break;
-  }
+//  // copy and scale image buffer
+//  uint32 dx1 = 0;
+//  uint32 dy1 = 0;
+//  uint32 dx2 = scaledWidth - 1;
+//  uint32 dy2 = scaledHeight - 1;
+//  uint32 sx1 = 0;
+//  uint32 sy1 = 0;
+//  uint32 sx2 = sourceInfo.mWidth - 1;
+//  uint32 sy2 = sourceInfo.mHeight - 1;
+//    
+//  uint32 sw = sx2-sx1;
+//  uint32 sh = sy2-sy1;
+//  uint32 dw = dx2-dx1;
+//  uint32 dh = dy2-dy1;
+//  
+//  /* prepare bresenham vars */
+//  uint32 h_err = 0;
+//  char* sh_pos = rImage.GetBuffer();
+//  sh_pos += (sy1 * sourceInfo.mBytesPerLine)  + (sx1 * sourceInfo.mBytesPerPixel);
+//  char* dh_pos = GetBuffer();
+//  dh_pos += (dy1 * mInfo.mBytesPerLine)       + (dx1 * mInfo.mBytesPerPixel);
+//
+//  char *sw_pos, *dw_pos;
+//  uint32 sh_inc, dh_inc, sw_inc, dw_inc;
+//  uint32 i, j, w_err;
+//
+//  
+//  if (sh < 0) 
+//  { 
+//    sh_inc = - sourceInfo.mBytesPerLine; 
+//    sh = -sh; 
+//  } 
+//  else 
+//    sh_inc = sourceInfo.mBytesPerLine;
+//  
+//  if (dh < 0) 
+//  { 
+//    dh_inc = -mInfo.mBytesPerLine; 
+//    dh = -dh; 
+//  } 
+//  else 
+//    dh_inc = mInfo.mBytesPerLine;
+//  
+//  
+//  if (sw < 0) 
+//  { 
+//    sw_inc = -sourceInfo.mBytesPerPixel; 
+//    sw = -sw; 
+//  } 
+//  else 
+//    sw_inc = sourceInfo.mBytesPerPixel;
+//  
+//  if (dw < 0) 
+//  { 
+//    dw_inc = -mInfo.mBytesPerPixel; 
+//    dw = -dw; 
+//  } 
+//  else 
+//    dw_inc = mInfo.mBytesPerPixel;
+//  
+//  
+//  
+//  switch (mInfo.mBytesPerPixel)
+//  {
+//    case 2: BRESHENAM2D(*(short*)dw_pos=*(short*)sw_pos; ) break;
+//
+//    case 3: 
+//      //Breshenam24(dh_pos, dw, dh, dw_inc, dh_inc, sh_pos, sw, sh, sw_inc, sh_inc);
+//      ScaleRect(dh_pos, mInfo.mWidth * 3, mInfo.mHeight, sh_pos, sourceInfo.mWidth *3, sourceInfo.mHeight);
+//      break;
+//
+//    case 4: BRESHENAM2D( *(uint32*)dw_pos=*(uint32*)sw_pos; ) break;
+//  }
 }
   
   
