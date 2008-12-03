@@ -449,7 +449,6 @@ void ScaleRectAvg(uint8* pTarget, int32 TgtWidth, int32 TgtHeight,
     } 
   } 
   
-  skip *= bpp;
   if (skip > 0 && pSource != pPrevSource)
     ScaleLineAvg<depth>(pScanLine, TgtWidth, pSource, SrcWidth);
   
