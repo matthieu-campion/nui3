@@ -85,7 +85,7 @@ protected:
   static void FileSelector_TreeFileLabel(nuiWidget* pWidget);
   static void FileSelector_TreeFolderIcon(nuiWidget* pWidget);
   static void FileSelector_TreeFileIcon(nuiWidget* pWidget);
-  
+
 private:
   
   static nuiImageSequence* mpKnobSequence;

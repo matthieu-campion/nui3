@@ -68,10 +68,6 @@ enum nuiWidgetElement
 
   eSelectionMarkee,
 
-  eProgressBg,
-  eProgressFg,
-  eProgressBorder,
-
   eMenuBg,
   eMenuFg,
   eMenuTitleBg,

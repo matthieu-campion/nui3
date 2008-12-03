@@ -33,6 +33,17 @@ public:
   void SetEndless(bool endless);
 
 protected:
+  
+  void InitAttributes();
+  
+  void SetFGColor(const nuiColor& Color);
+  const nuiColor& GetFGColor() const;
+  void SetBGColor(const nuiColor& Color);
+  const nuiColor& GetBGColor() const;  
+  
+  void SetGlow(float value);
+  float GetGlow() const;
+  
   float mProgress;
   float mAlphaIncr;
   float mAlphaAnim;
@@ -42,6 +53,8 @@ protected:
   bool mEndless; //false if this is a real progress bar, true if it is only an animated aiting placeholder
   float mEndlessAnim;
   float mEndlessIncr;
+  
+  nuiColor mFGColor, mBGColor;
 };
 
 

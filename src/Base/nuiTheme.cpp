@@ -158,11 +158,6 @@ void nuiTheme::LoadDefaults()
   SetElementColor(eSelectedTextBg,              nuiColor(.8f,.8f,.8f,.5f));
   SetElementColor(eDisabledTextBg,              nuiColor(.3f,.3f,.3f,0.f));
 
-  SetElementColor(eProgressBg,                  nuiColor(1.0f, 1.0f, 1.0f, 0.0f));
-  SetElementColor(eProgressFg,                  nuiColor(.2f, .2f, 1.0f, 1.0f));
-  SetElementColor(eProgressBorder,              nuiColor(0.0f, 0.0f, 0.0f, 0.5f));
-  SetElementColor(eProgressBorder,              nuiColor(0.0f, 0.0f, 0.0f, 0.5f));
-
   SetElementColor(eMenuBg,                      nuiColor(1.0f, 1.0f, 1.0f, .9f));
   SetElementColor(eMenuFg,                      nuiColor(0.f, 0.f, 0.f, 0.f));
   SetElementColor(eMenuTitleBg,                 nuiColor(.5f, .5f, .5f));

@@ -84,7 +84,6 @@ void nuiDefaultDecoration::Init()
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileSelector::TreeFileLabel")), &nuiDefaultDecoration::FileSelector_TreeFileLabel);
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileSelector::TreeFolderIcon")), &nuiDefaultDecoration::FileSelector_TreeFolderIcon);
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileSelector::TreeFileIcon")), &nuiDefaultDecoration::FileSelector_TreeFileIcon);
-
 }
 
 
@@ -120,7 +119,13 @@ void nuiDefaultDecoration::InitColors()
 
   nuiColor::SetColor(_T("nuiDefaultClrNormalTab"), nuiColor(64,64,64));
   nuiColor::SetColor(_T("nuiDefaultClrSelectedTab"), nuiColor(32,32,32));
+
+  nuiColor::SetColor(_T("nuiDefaultClrProgressFg"), nuiColor(76,145,230));
+  nuiColor::SetColor(_T("nuiDefaultClrProgressBg"), nuiColor(200,200,200));
+
+
 }
+
 
 
 
@@ -906,6 +911,7 @@ void nuiDefaultDecoration::FileSelector_TreeFileIcon(nuiWidget* pWidget)
   pWidget->SetDecoration(pFrame);    
   pWidget->SetUserSize(16,20);
 }
+
 
 
 

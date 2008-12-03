@@ -16,7 +16,12 @@
 
 nuiProgress::nuiProgress(float Progress)
 {
-  SetObjectClass(_T("nuiProgress"));
+  if (SetObjectClass(_T("nuiProgress")))
+    InitAttributes();
+  
+  nuiColor::GetColor(_T("nuiDefaultClrProgressFg"), mFGColor);
+  nuiColor::GetColor(_T("nuiDefaultClrProgressBg"), mBGColor);
+  
   mProgress = Progress;
   mAlphaIncr = INC;
   mAlphaAnim = 0;
@@ -30,7 +35,12 @@ nuiProgress::nuiProgress(float Progress)
 
 nuiProgress::nuiProgress()
 {
-  SetObjectClass(_T("nuiProgress"));
+  if (SetObjectClass(_T("nuiProgress")))
+    InitAttributes();
+  
+  nuiColor::GetColor(_T("nuiDefaultClrProgressFg"), mFGColor);
+  nuiColor::GetColor(_T("nuiDefaultClrProgressBg"), mBGColor);
+
   mProgress = 0.f;
   mAlphaIncr = INC;
   mAlphaAnim = 0;
@@ -58,6 +68,63 @@ bool nuiProgress::Load(const nuiXMLNode* pNode)
 nuiProgress::~nuiProgress()
 {
 }
+
+
+
+void nuiProgress::InitAttributes()
+{
+  AddAttribute(new nuiAttribute<const nuiColor&>
+               (nglString(_T("ForegroundColor")), nuiUnitNone,
+                nuiFastDelegate::MakeDelegate(this, &nuiProgress::GetFGColor), 
+                nuiFastDelegate::MakeDelegate(this, &nuiProgress::SetFGColor)));
+
+  AddAttribute(new nuiAttribute<const nuiColor&>
+               (nglString(_T("BackgroundColor")), nuiUnitNone,
+                nuiFastDelegate::MakeDelegate(this, &nuiProgress::GetBGColor), 
+                nuiFastDelegate::MakeDelegate(this, &nuiProgress::SetBGColor)));
+
+  AddAttribute(new nuiAttribute<float>
+               (nglString(_T("Glow")), nuiUnitNone,
+                nuiFastDelegate::MakeDelegate(this, &nuiProgress::GetGlow), 
+                nuiFastDelegate::MakeDelegate(this, &nuiProgress::SetGlow)));
+  
+  
+}
+
+
+void nuiProgress::SetFGColor(const nuiColor& Color)
+{
+  mFGColor = Color;
+  Invalidate();
+}
+
+const nuiColor& nuiProgress::GetFGColor() const
+{
+  return mFGColor;
+}
+
+void nuiProgress::SetBGColor(const nuiColor& Color)
+{
+  mBGColor = Color;
+  Invalidate();
+}
+
+const nuiColor& nuiProgress::GetBGColor() const
+{
+  return mBGColor;
+}
+
+
+void nuiProgress::SetGlow(float value)
+{
+  mGlowStrength = value;
+}
+
+float nuiProgress::GetGlow() const
+{
+  return mGlowStrength;
+}
+
 
 
 nuiRect nuiProgress::CalcIdealSize()
@@ -93,10 +160,10 @@ bool nuiProgress::Draw(nuiDrawContext* pContext)
   
   pContext->EnableBlending(true);
   pContext->SetBlendFunc(nuiBlendTransp);
-  pContext->SetFillColor(GetColor(eProgressBg));
+  pContext->SetFillColor(mBGColor);
   pContext->DrawRect(size, eFillShape);
   
-  nuiColor col = GetColor(eProgressFg);
+  nuiColor col = mFGColor;
   
   col.Alpha() += alpha;
   col.Crop();
