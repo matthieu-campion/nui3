@@ -2662,10 +2662,12 @@ bool nuiWin::CreateHTMLWindow(const nuiEvent& rEvent)
 
 bool nuiWin::CreateImageResizeWindow(const nuiEvent& rEvent)
 {
-  nglPath p(_T("rsrc:/nui.png"));
+//  nglPath p(_T("rsrc:/nui.png"));
+  nglPath p(_T("rsrc:/jpeg.jpg"));
+//  nglPath p(_T("rsrc:/gnu.tga"));
   nglIStream* pStream = p.OpenRead();
   nglImage* pImage = new nglImage(pStream);
-  nglImage* pNewImage = new nglImage(*pImage, 80, 80);
+  nglImage* pNewImage = new nglImage(*pImage, 320, 320);
   
   nuiWindow* pWin = new nuiWindow(nuiRect(10, 10, 320, 320));
   nuiScrollView* pScroll = new nuiScrollView();

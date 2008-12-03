@@ -262,18 +262,86 @@ nglImage::nglImage (const nglImage& rImage)
 }
 
 
-static uint32 average(uint32 a, uint32 b)
+template <int depth>
+uint32 average_pixels(uint32 a, uint32 b)
 {
-  const uint32 a0 = (a & 0x00ff00ff);
-  const uint32 b0 = (b & 0x00ff00ff);
-
-  const uint32 a1 = (a & 0xff00ff00) >> 1;
-  const uint32 b1 = (b & 0xff00ff00) >> 1;
+  if (depth == 32 || depth == 24)
+  {
+    const uint32 a0 = (a & 0x00ff00ff);
+    const uint32 b0 = (b & 0x00ff00ff);
+    
+    const uint32 a1 = (a & 0xff00ff00) >> 1;
+    const uint32 b1 = (b & 0xff00ff00) >> 1;
+    
+    return (((a0 + b0) >> 1) & 0x00ff00ff) + ((a1 + b1) & 0xff00ff00);
+  }
+  else if (depth == 16)
+  {
+    return a;    
+  }
   
-  return (((a0 + b0) >> 1) & 0x00ff00ff) + ((a1 + b1) & 0xff00ff00);
+  return (a + b) / 2;
 }
 
-static void ScaleLineAvg(uint32* pTarget, int32 TgtWidth, const uint32* pSource, int32 SrcWidth)
+template <int depth>
+void AdvancePtr(const uint8*& pSource, int set)
+{
+  pSource += set * (depth / 8);
+}
+
+template <int depth>
+void AdvancePtr(uint8*& pSource, int set)
+{
+  pSource += set * (depth / 8);
+}
+
+template <int depth>
+void CopyPixel(uint8* pTarget, uint32 pixel)
+{
+  if (depth == 32)
+  {
+    *(uint32*)pTarget = pixel;
+  }
+  else
+  {
+    for (uint32 i = 0; i < depth / 8; i++)
+    {
+      *pTarget++ = pixel & 0xff;
+      pixel >>= 8;
+    }
+  }
+}
+
+template <int depth>
+void CopyPixel(uint8*& pTarget, uint32 pixel, bool adv)
+{
+  CopyPixel<depth>(pTarget, pixel);  
+  if (adv)
+    AdvancePtr<depth>(pTarget, 1);
+}
+
+template <int depth>
+uint32 GetPixel(const uint8* pSrc)
+{
+  if (depth == 32)
+  {
+    return *(uint32*)pSrc;
+  }
+  else if (depth == 24)
+  {
+    return (*(uint32*)pSrc) & 0xffffff;
+  }
+  else if (depth == 16)
+  {
+    return (*(uint16*)pSrc);
+  }
+  
+  return *pSrc;
+}
+
+
+template <int depth>
+void ScaleLineAvg(uint8* pTarget, int32 TgtWidth, const uint8* pSource, int32 SrcWidth)
 {
   int32 NumPixels = TgtWidth;
   int32 IntPart   = SrcWidth / TgtWidth;
@@ -283,27 +351,29 @@ static void ScaleLineAvg(uint32* pTarget, int32 TgtWidth, const uint32* pSource,
   int32 skip;
   uint32 p;
   
-  skip = (TgtWidth < SrcWidth) ? 0 : TgtWidth / (2*SrcWidth) + 1;
+  skip = (TgtWidth < SrcWidth) ? 0 : TgtWidth / (2 * SrcWidth) + 1;
   NumPixels -= skip;
   
   while (NumPixels-- > 0) 
   {
-    p = *pSource;
+    p = GetPixel<depth>(pSource);
     
     if (E >= Mid)
-      p = average(p, *(pSource + 1));
+      p = average_pixels<depth>(p, GetPixel<depth>(pSource + (depth/8)));
     
-    *pTarget++ = p;
-    pSource += IntPart;
+    CopyPixel<depth>(pTarget, p, true);
+    AdvancePtr<depth>(pSource, IntPart);
+    
     E += FractPart;
     
     if (E >= TgtWidth) 
     {
       E -= TgtWidth;
-      pSource++;
+      AdvancePtr<depth>(pSource, 1);
     } 
   } 
   
+  skip *= (depth / 8);
   while (skip-- > 0)
   {
     *pTarget++ = *pSource;
@@ -312,28 +382,24 @@ static void ScaleLineAvg(uint32* pTarget, int32 TgtWidth, const uint32* pSource,
 
 
 
-static void ScaleRectAvg(uint32* pTarget, int32 TgtWidth, int32 TgtHeight,
-  const uint32* pSource, int32 SrcWidth, int32 SrcHeight)
+template <int depth>
+void ScaleRectAvg(uint8* pTarget, int32 TgtWidth, int32 TgtHeight,
+  const uint8* pSource, int32 SrcWidth, int32 SrcHeight)
 {
-  const uint32* pOriginalSource = pSource;
-  uint32* pOriginalTarget = pTarget;
-  
   int32 NumPixels = TgtHeight;
   int32 IntPart   = (SrcHeight / TgtHeight) * SrcWidth;
   int32 FractPart = SrcHeight % TgtHeight;
   int32 Mid       = TgtHeight / 2;
   int32 E         = 0;
-  int32 skip;
-  uint32 *pScanLine;
-  uint32 *pScanLineAhead;
-  const uint32 *pPrevSource = NULL;
-  const uint32 *pPrevSourceAhead = NULL;
+  const uint8 *pPrevSource = NULL;
+  const uint8 *pPrevSourceAhead = NULL;
+  const uint32 bpp = depth / 8;
   
-  skip = (TgtHeight < SrcHeight) ? 0 : TgtHeight / (2*SrcHeight) + 1;
+  int32 skip = (TgtHeight < SrcHeight) ? 0 : TgtHeight / (2 * SrcHeight) + 1;
   NumPixels -= skip;
   
-  pScanLine      = new uint32[TgtWidth];
-  pScanLineAhead = new uint32[TgtWidth];
+  uint8* pScanLine      = new uint8[TgtWidth * bpp];
+  uint8* pScanLineAhead = new uint8[TgtWidth * bpp];
   
   while (NumPixels-- > 0) 
   {
@@ -345,48 +411,52 @@ static void ScaleRectAvg(uint32* pTarget, int32 TgtWidth, int32 TgtHeight,
          * ScanLineAhead; swap the buffers that ScanLine and ScanLineAhead
          * point to
          */
-        uint32* tmp = pScanLine;
+        uint8* tmp = pScanLine;
         pScanLine      = pScanLineAhead;
         pScanLineAhead = tmp;
       }
       else 
       {
-        ScaleLineAvg(pScanLine, TgtWidth, pSource, SrcWidth);
+        ScaleLineAvg<depth>(pScanLine, TgtWidth, pSource, SrcWidth);
       }
       
       pPrevSource = pSource;
     }
     
-    if (E >= Mid && pPrevSourceAhead != pSource + SrcWidth) 
+    if (E >= Mid && pPrevSourceAhead != pSource + (SrcWidth * bpp)) 
     {
       int32 x;
-      ScaleLineAvg(pScanLineAhead, TgtWidth, pSource + SrcWidth, SrcWidth);
+      ScaleLineAvg<depth>(pScanLineAhead, TgtWidth, pSource + (SrcWidth * bpp), SrcWidth);
       
       for (x = 0; x < TgtWidth; x++)
-        pScanLine[x] = average(pScanLine[x], pScanLineAhead[x]);
+      {
+        const uint32 pix = average_pixels<depth>(GetPixel<depth>(pScanLine + x * bpp), GetPixel<depth>(pScanLineAhead + x * bpp));
+        CopyPixel<depth>(pScanLine + x * bpp, pix);
+      }
       
-      pPrevSourceAhead = pSource + SrcWidth;
+      pPrevSourceAhead = pSource + SrcWidth * bpp;
     } 
     
-    memcpy(pTarget, pScanLine, TgtWidth * sizeof(uint32));
-    pTarget += TgtWidth;
-    pSource += IntPart;
+    memcpy(pTarget, pScanLine, TgtWidth * bpp);
+    pTarget += TgtWidth * bpp;
+    pSource += IntPart * bpp;
     E       += FractPart;
     
     if (E >= TgtHeight) 
     {
       E -= TgtHeight;
-      pSource += SrcWidth;
+      pSource += SrcWidth * bpp;
     } 
   } 
   
+  skip *= bpp;
   if (skip > 0 && pSource != pPrevSource)
-    ScaleLineAvg(pScanLine, TgtWidth, pSource, SrcWidth);
+    ScaleLineAvg<depth>(pScanLine, TgtWidth, pSource, SrcWidth);
   
   while (skip-- > 0) 
   {
-    memcpy(pTarget, pScanLine, TgtWidth * sizeof(uint32));
-    pTarget += TgtWidth;
+    memcpy(pTarget, pScanLine, TgtWidth * bpp);
+    pTarget += TgtWidth * bpp;
   }
   
   delete pScanLine;
@@ -414,8 +484,25 @@ nglImage::nglImage(const nglImage& rImage, uint NewWidth, uint NewHeight)
   
 //  (dh_pos, mInfo.mWidth * 3, mInfo.mHeight, sh_pos, sourceInfo.mWidth *3, sourceInfo.mHeight);
   
-  ScaleRectAvg((uint32*)GetBuffer(), NewWidth, NewHeight,
-               (uint32*)rImage.GetBuffer(), sourceInfo.mWidth, sourceInfo.mHeight);  
+  switch (mInfo.mBitDepth)
+  {
+    case 8:
+      ScaleRectAvg<8>((uint8*)GetBuffer(), NewWidth, NewHeight,
+                      (uint8*)rImage.GetBuffer(), sourceInfo.mWidth, sourceInfo.mHeight);  
+      break;
+    case 16:
+      ScaleRectAvg<16>((uint8*)GetBuffer(), NewWidth, NewHeight,
+                       (uint8*)rImage.GetBuffer(), sourceInfo.mWidth, sourceInfo.mHeight);  
+      break;
+    case 24:
+      ScaleRectAvg<24>((uint8*)GetBuffer(), NewWidth, NewHeight,
+                       (uint8*)rImage.GetBuffer(), sourceInfo.mWidth, sourceInfo.mHeight);  
+      break;
+    case 32:
+      ScaleRectAvg<32>((uint8*)GetBuffer(), NewWidth, NewHeight,
+                       (uint8*)rImage.GetBuffer(), sourceInfo.mWidth, sourceInfo.mHeight);  
+      break;
+  }
   
 }
   
