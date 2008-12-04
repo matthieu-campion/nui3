@@ -88,6 +88,15 @@ bool nglImageInfo::AllocateBuffer()
   return (mpBuffer != NULL);
 }
 
+
+void nglImageInfo::Transfert(nglImageInfo& rInfo)
+{
+  Copy(rInfo, false);
+  mOwnBuffer = true; 
+  rInfo.mOwnBuffer = false;
+}
+
+
 void nglImageInfo::Copy (const nglImageInfo& rInfo, bool Clone)
 {
   mBufferFormat   = rInfo.mBufferFormat;
@@ -243,10 +252,16 @@ nglImage::nglImage (const nglPath& rPath, nglImageCodec* pCodec )
   delete pIFile;
 }
 
-nglImage::nglImage (nglImageInfo& rInfo, bool Clone)
+nglImage::nglImage(nglImageInfo& rInfo, nuiCopyPolicy policy)
 {
   Init();
-  mInfo.Copy(rInfo,Clone);
+  if (policy == eTransfert)
+    mInfo.Transfert(rInfo);
+  else
+  {
+    bool clone = (policy == eClone);
+    mInfo.Copy(rInfo, clone);
+  }
   mpCodec = NULL;
   mOwnCodec = true;
   mCompletion = (mInfo.mpBuffer) ? 1.0f : 0.0f;
@@ -260,6 +275,12 @@ nglImage::nglImage (const nglImage& rImage)
   mOwnCodec = true;
   mCompletion = rImage.mCompletion;
 }
+
+
+
+
+
+
 
 
 template <int depth>
@@ -384,7 +405,7 @@ void ScaleLineAvg(uint8* pTarget, int32 TgtWidth, const uint8* pSource, int32 Sr
 
 template <int depth>
 void ScaleRectAvg(uint8* pTarget, int32 TgtWidth, int32 TgtHeight,
-  const uint8* pSource, int32 SrcWidth, int32 SrcHeight)
+                  const uint8* pSource, int32 SrcWidth, int32 SrcHeight)
 {
   int32 NumPixels = TgtHeight;
   int32 IntPart   = (SrcHeight / TgtHeight) * SrcWidth;
@@ -464,7 +485,8 @@ void ScaleRectAvg(uint8* pTarget, int32 TgtWidth, int32 TgtHeight,
 
 
 
-//ICI
+
+
 nglImage::nglImage(const nglImage& rImage, uint NewWidth, uint NewHeight)
 {
   Init();
@@ -598,6 +620,104 @@ bool nglImage::Save (const nglPath& filename, nglImageCodec* pCodec)
   nglOFile file(filename,eOFileCreate);
   return Save(&file,pCodec);
 }
+
+
+
+
+
+
+
+/*
+ * image process
+ */
+
+/*
+ Init();
+ mInfo.Copy(rImage.mInfo, false); // don't Clone image buffer
+ mInfo.mWidth = NewWidth;
+ mInfo.mHeight = NewHeight;
+ mInfo.mBytesPerLine = NewWidth * mInfo.mBytesPerPixel;
+ mInfo.AllocateBuffer();
+ 
+ mpCodec = NULL;                // Don't share the codec, and don't bother making a copy
+ mOwnCodec = true;
+ mCompletion = rImage.mCompletion;
+ 
+ nglImageInfo sourceInfo;
+ rImage.GetInfo(sourceInfo);
+ 
+ //  (dh_pos, mInfo.mWidth * 3, mInfo.mHeight, sh_pos, sourceInfo.mWidth *3, sourceInfo.mHeight);
+ 
+ switch (mInfo.mBitDepth)
+ {
+ case 8:
+ ScaleRectAvg<8>((uint8*)GetBuffer(), NewWidth, NewHeight,
+ (uint8*)rImage.GetBuffer(), sourceInfo.mWidth, sourceInfo.mHeight);  
+ break;
+ case 16:
+ ScaleRectAvg<16>((uint8*)GetBuffer(), NewWidth, NewHeight,
+ (uint8*)rImage.GetBuffer(), sourceInfo.mWidth, sourceInfo.mHeight);  
+ break;
+ case 24:
+ ScaleRectAvg<24>((uint8*)GetBuffer(), NewWidth, NewHeight,
+ (uint8*)rImage.GetBuffer(), sourceInfo.mWidth, sourceInfo.mHeight);  
+ break;
+ case 32:
+ ScaleRectAvg<32>((uint8*)GetBuffer(), NewWidth, NewHeight,
+ (uint8*)rImage.GetBuffer(), sourceInfo.mWidth, sourceInfo.mHeight);  
+ break;
+ }
+ 
+*/ 
+
+nglImage* nglImage::Resize(uint32 width, uint32 height)
+{
+  // check
+  if ((mInfo.mWidth <= 0)|| (mInfo.mHeight <= 0))
+    return NULL;
+  
+  // init new image params.
+  nglImageInfo newInfo;
+  newInfo.Copy(mInfo, false/* don't clone*/);
+  newInfo.mWidth = width;
+  newInfo.mHeight = height;
+  newInfo.mBytesPerLine = newInfo.mWidth * newInfo.mBytesPerPixel;
+  newInfo.mOwnBuffer = false;
+  newInfo.AllocateBuffer();
+  newInfo.mOwnBuffer = true;
+
+  // build new image
+  nglImage* pNew = new nglImage(newInfo, eTransfert);
+  
+  switch (mInfo.mBitDepth)
+  {
+    case 8:
+      ScaleRectAvg<8>((uint8*)pNew->GetBuffer(), newInfo.mWidth, newInfo.mHeight,
+                      (uint8*)GetBuffer(), mInfo.mWidth, mInfo.mHeight);  
+      break;
+    case 16:
+      ScaleRectAvg<16>((uint8*)pNew->GetBuffer(), newInfo.mWidth, newInfo.mHeight,
+                       (uint8*)GetBuffer(), mInfo.mWidth, mInfo.mHeight);  
+      break;
+    case 24:
+      ScaleRectAvg<24>((uint8*)pNew->GetBuffer(), newInfo.mWidth, newInfo.mHeight,
+                       (uint8*)GetBuffer(), mInfo.mWidth, mInfo.mHeight);  
+      break;
+    case 32:
+      ScaleRectAvg<32>((uint8*)pNew->GetBuffer(), newInfo.mWidth, newInfo.mHeight,
+                       (uint8*)GetBuffer(), mInfo.mWidth, mInfo.mHeight);  
+      break;
+  }
+  
+  return pNew;
+}
+
+
+nglImage* nglImage::Crop(uint32 x, uint32 y, uint32 width, uint32 height)
+{
+  
+}
+
 
 
 /*

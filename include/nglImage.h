@@ -15,6 +15,7 @@
 
 //#include "nui.h"
 #include "nglError.h"
+#include "nuiFlags.h"
 
 class nglIStream;
 class nglOStream;
@@ -122,6 +123,8 @@ public:
 protected:
   bool mOwnBuffer;  ///< Memory management mode (ie. only release mpBuffer if mOwnBuffer is true)
 
+  void Transfert(nglImageInfo& rInfo);
+  
   void Copy (const nglImageInfo& rInfo, bool Clone);
   /*!< Copy metadata and optionally buffer data
     \param rInfo image information source
@@ -206,17 +209,17 @@ public:
     and OnData() callbacks will be called (once, in this order). OnError() might be invoked
     as well if an error occurs.
   */
-  nglImage (nglImageInfo& rInfo, bool Clone = true);
+  nglImage(nglImageInfo& rInfo, nuiCopyPolicy policy = eClone);
   /*!< Create an image from a user given description
     \param rInfo image description
-    \param Clone if true, clones the buffer data and manage it. If false, only keep a reference, but do not manage the buffer.
-
+    \param policy if eClone, clones the buffer data and manage it. If eReference, copy the buffer pointer but do not give ownership. If eTransfert, copy the buffer pointer and give the ownership (the ownership is removed from the source)
+   
     Create a nglImage object from a comprehensive description.
 
-    If \a Clone is true, nglImage makes a copy of rInfo.mpBuffer image data and owns it
+    If \a policy is eClone, nglImage makes a copy of rInfo.mpBuffer image data and owns it
     (ie. release this data memory when the nglImage object is destroyed).
 
-    If \a Clone is false, nglImage only copies the rInfo.mpBuffer reference, and do \e not
+    If \a policy is different from eClone nglImage only copies the rInfo.mpBuffer reference, and do \e not
     manage this memory (ie. it won't be released when the nglImage object is destroyed).
   */
   nglImage (const nglImage& rImage);
@@ -234,6 +237,7 @@ public:
    \param scaledHeight requested height
    
    */
+  
   
   virtual ~nglImage();
   //@}
@@ -269,6 +273,26 @@ public:
   bool Save (nglOStream* pOutput, nglImageCodec* pCodec );
   bool Save (const nglPath& rPath, nglImageCodec* pCodec );
   //@}
+  
+  
+  nglImage* Resize(uint32 width, uint32 height);
+  /*!< create a copy with a new size
+   \param width new image width
+   \param height new image height
+
+   This method uses a simple bresenham algorithm. Should be improved in the future.
+   */
+  
+  nglImage* Crop(uint32 x, uint32 y, uint32 width, uint32 height);
+  /*!< create a copy, cropping hte source 
+   \param x x-coord in the source image
+   \param y y-coord in the source image
+   \param width new image width
+   \param height new image height
+   
+   return NULL if the coordinates or the new size goes outside the source image.
+   */
+  
 
   /** @name User callbacks */
   //@{

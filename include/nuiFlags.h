@@ -62,6 +62,13 @@ enum nuiLineCap
 };
 
 
+enum nuiCopyPolicy
+{
+  eClone=0,
+  eReference,
+  eTransfert
+};
+
 
 // This is just plain ugly; i know...
 typedef uint nuiWindowFlags;

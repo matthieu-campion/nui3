@@ -248,7 +248,7 @@ nuiTexture::nuiTexture (nglImageInfo& rInfo, bool Clone)
   : nuiObject()
 {
   SetObjectClass(_T("nuiTexture"));
-  mpImage = new nglImage(rInfo, Clone);
+  mpImage = new nglImage(rInfo, eClone);
   mpSurface = NULL;
   mOwnImage = true;
   mForceReload = false;
