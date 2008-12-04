@@ -631,45 +631,6 @@ bool nglImage::Save (const nglPath& filename, nglImageCodec* pCodec)
  * image process
  */
 
-/*
- Init();
- mInfo.Copy(rImage.mInfo, false); // don't Clone image buffer
- mInfo.mWidth = NewWidth;
- mInfo.mHeight = NewHeight;
- mInfo.mBytesPerLine = NewWidth * mInfo.mBytesPerPixel;
- mInfo.AllocateBuffer();
- 
- mpCodec = NULL;                // Don't share the codec, and don't bother making a copy
- mOwnCodec = true;
- mCompletion = rImage.mCompletion;
- 
- nglImageInfo sourceInfo;
- rImage.GetInfo(sourceInfo);
- 
- //  (dh_pos, mInfo.mWidth * 3, mInfo.mHeight, sh_pos, sourceInfo.mWidth *3, sourceInfo.mHeight);
- 
- switch (mInfo.mBitDepth)
- {
- case 8:
- ScaleRectAvg<8>((uint8*)GetBuffer(), NewWidth, NewHeight,
- (uint8*)rImage.GetBuffer(), sourceInfo.mWidth, sourceInfo.mHeight);  
- break;
- case 16:
- ScaleRectAvg<16>((uint8*)GetBuffer(), NewWidth, NewHeight,
- (uint8*)rImage.GetBuffer(), sourceInfo.mWidth, sourceInfo.mHeight);  
- break;
- case 24:
- ScaleRectAvg<24>((uint8*)GetBuffer(), NewWidth, NewHeight,
- (uint8*)rImage.GetBuffer(), sourceInfo.mWidth, sourceInfo.mHeight);  
- break;
- case 32:
- ScaleRectAvg<32>((uint8*)GetBuffer(), NewWidth, NewHeight,
- (uint8*)rImage.GetBuffer(), sourceInfo.mWidth, sourceInfo.mHeight);  
- break;
- }
- 
-*/ 
-
 nglImage* nglImage::Resize(uint32 width, uint32 height)
 {
   // check
@@ -684,7 +645,6 @@ nglImage* nglImage::Resize(uint32 width, uint32 height)
   newInfo.mBytesPerLine = newInfo.mWidth * newInfo.mBytesPerPixel;
   newInfo.mOwnBuffer = false;
   newInfo.AllocateBuffer();
-  newInfo.mOwnBuffer = true;
 
   // build new image
   nglImage* pNew = new nglImage(newInfo, eTransfert);
@@ -715,7 +675,31 @@ nglImage* nglImage::Resize(uint32 width, uint32 height)
 
 nglImage* nglImage::Crop(uint32 x, uint32 y, uint32 width, uint32 height)
 {
+  // check
+  if (((x+width) > mInfo.mWidth)|| ((y+height) > mInfo.mHeight))
+    return NULL;
   
+  // init new image params.
+  nglImageInfo newInfo;
+  newInfo.Copy(mInfo, false/* don't clone*/);
+  newInfo.mWidth = width;
+  newInfo.mHeight = height;
+  newInfo.mBytesPerLine = newInfo.mWidth * newInfo.mBytesPerPixel;
+  newInfo.mOwnBuffer = false;
+  newInfo.AllocateBuffer();
+  
+  // build new image
+  nglImage* pNew = new nglImage(newInfo, eTransfert);
+  
+  char* pSrc = GetBuffer() + (x * mInfo.mBytesPerPixel);
+  char* pDst = pNew->GetBuffer();
+  
+  for (uint i = 0; i < height; i++, pSrc += mInfo.mBytesPerLine, pDst += newInfo.mBytesPerLine)
+  {
+    memcpy(pDst, pSrc, width * newInfo.mBytesPerPixel);
+  }
+  
+  return pNew;
 }
 
 
