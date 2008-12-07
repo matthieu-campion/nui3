@@ -104,8 +104,10 @@ protected:
   virtual bool SetObjectClass(const nglString& rClass); ///< does a SetProperty("Class"...). Returns true if this is the first time an object of this class is registered.
   void InitProperties(); ///< Take care of the property bindings.
 
-  void AddAttribute(const nglString& rName, nuiAttributeBase* pProperty);
-  void AddAttribute(nuiAttributeBase* pAttribute);
+  void AddAttribute(const nglString& rName, nuiAttributeBase* pProperty); ///< Add an attribute to this class (beware, all instances of this class will have this attribute. If you wnat the attribute to be private to this instance of the class use AddInstanceAttribute instead).
+  void AddAttribute(nuiAttributeBase* pAttribute); ///< Add an attribute to this class (beware, all instances of this class will have this attribute. If you wnat the attribute to be private to this instance of the class use AddInstanceAttribute instead).
+  void AddInstanceAttribute(const nglString& rName, nuiAttributeBase* pProperty); ///< Add an attribute to this object (beware, only this instance of this class will have this attribute. If you wnat the attribute to be global to all instances of the class use AddAttribute instead).
+  void AddInstanceAttribute(nuiAttributeBase* pAttribute); ///< Add an attribute to this object (beware, only this instance of this class will have this attribute. If you wnat the attribute to be global to all instances of the class use AddAttribute instead).
   
   nuiPropertyMap mProperties;
   static nuiPropertyMap mGlobalProperties;
@@ -120,7 +122,8 @@ private :
   static uint32 mUniqueAttributeOrder; // to handle properties's order
 
   static std::vector<nglString> mObjectClassNames;
-  static std::vector<std::map<nglString,nuiAttributeBase*> > mClassAttributes;
+  static std::vector<std::map<nglString, nuiAttributeBase*> > mClassAttributes;
+  std::map<nglString, nuiAttributeBase*> mInstanceAttributes;
   static std::map<nglString, int32> mObjectClassNamesMap;
 
   uint32 mClassNameIndex;

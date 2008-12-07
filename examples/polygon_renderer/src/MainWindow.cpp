@@ -214,10 +214,9 @@ public:
 class span
 {
 public:
-  span(const edge* e0, const edge* e1, int32 _y)
+  span(const edge* e0, const edge* e1)
   {
     x = ToAbove(e0->x);
-    y = _y;
     width = ToAbove(e1->x) - x;
 
     float diff = e1->x - e0->x;
@@ -259,7 +258,6 @@ public:
   }
   
   float x;
-  int32 y;
   uint32 width;
   
   float r, g, b, a;
@@ -275,7 +273,7 @@ public:
   ~Rasterizer();
   
   void DrawHLine(uint32 x0, uint32 x1, uint32 y, uint32 col);
-  void DrawHLine(span& rSpan);
+  void DrawHLine(span& rSpan, int32 y);
   
   void DrawTriangle(const vertex& v0, const vertex& v1, const vertex& v2);
   void DrawTriangle(const vertex& v0, const vertex& v1, const vertex& v2, uint32 color);
@@ -315,10 +313,10 @@ void Rasterizer::DrawHLine(uint32 x0, uint32 x1, uint32 y, uint32 col)
     *pSpan++ += col;
 }
 
-void Rasterizer::DrawHLine(span& rSpan)
+void Rasterizer::DrawHLine(span& rSpan, int32 y)
 {
   uint32 count = rSpan.width;
-  uint32* pSpan = (uint32*)mpScreen->GetPixel(rSpan.x, rSpan.y);
+  uint32* pSpan = (uint32*)mpScreen->GetPixel(rSpan.x, y);
   while (count--)
   {
     *pSpan++ = rSpan.GetColor();
@@ -444,7 +442,22 @@ void Rasterizer::DrawTriangle(const vertex& v0, const vertex& v1, const vertex& 
     edges.push_back(new edge(&v2, &v0));
   
   if (edges.empty())
-    return;
+    return; // float on y?
+  
+  if (v0.x == v1.x && v0.x == v2.x)
+    return; // flat on x?
+  
+  {
+    // Is the triangle flat but not parallel to an axis
+    float ax = v0.x;
+    float bx = v1.x;
+    float cx = v2.x;
+    float ay = v0.y;
+    float by = v1.y;
+    float cy = v2.y;
+    if (0 == (ax * (by - cy) + bx * (ay - cy) + cx * (ay - by)))
+      return;
+  }
   
   uint32 y = ToBelow(edges[0]->v0->y);
   
@@ -497,8 +510,8 @@ void Rasterizer::DrawTriangle(const vertex& v0, const vertex& v1, const vertex& 
         // Draw this span
         const float x0 = pLastEdge->x;
         const float x1 = pEdge->x;
-        span Span(pLastEdge, pEdge, y);
-        DrawHLine(Span);
+        span Span(pLastEdge, pEdge);
+        DrawHLine(Span, y);
         
         pLastEdge = NULL;
       }
@@ -556,10 +569,17 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
 //  rasterizer.DrawTriangle(100, 10, 200, 10, 100, 100,  0x7f007f00);
 //  rasterizer.DrawTriangle(200, 10, 200, 100, 100, 100, 0x7f00007f);
 
-  vertex v0(100, 10,  1, 0, 0);
+//  vertex v0(100, 10,  1, 0, 0);
+//  vertex v1(10, 100,  0, 1, 0);
+//  vertex v2(150, 150, 0, 0, 1);
+//  vertex v3(200, 10,  0, 1, 0);
+//  rasterizer.DrawTriangle(v0, v1, v2);
+//  rasterizer.DrawTriangle(v0, v2, v3);
+
+  vertex v0(10, 10,  1, 0, 0);
   vertex v1(10, 100,  0, 1, 0);
-  vertex v2(150, 150, 0, 0, 1);
-  vertex v3(200, 10,  0, 1, 0);
+  vertex v2(303, 100, 0, 0, 1);
+  vertex v3(303, 10,  0, 1, 0);
   rasterizer.DrawTriangle(v0, v1, v2);
   rasterizer.DrawTriangle(v0, v2, v3);
   

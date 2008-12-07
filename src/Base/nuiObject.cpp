@@ -388,6 +388,19 @@ void nuiObject::GetAttributes(std::map<nglString, nuiAttribBase>& rAttributeMap)
 {
   rAttributeMap.clear();
 
+  // Add instance attributes:
+  {
+    std::map<nglString,nuiAttributeBase*>::const_iterator it = mInstanceAttributes.begin();
+    std::map<nglString,nuiAttributeBase*>::const_iterator end = mInstanceAttributes.end();
+    
+    while (it != end)
+    {
+      rAttributeMap.insert(make_pair(it->first, nuiAttribBase(const_cast<nuiObject*>(this), it->second)));
+      ++it;
+    }
+  }
+
+  // Add classes attributes:
   int32 c = mClassNameIndex;
   while (c >= 0)
   {
@@ -413,6 +426,7 @@ void nuiObject::GetSortedAttributes(std::list<nuiAttribBase>& rListToFill) const
 {
   rListToFill.clear();
 
+  // Add classes attributes
   int32 c = mClassNameIndex;
   while (c >= 0)
   {
@@ -428,7 +442,20 @@ void nuiObject::GetSortedAttributes(std::list<nuiAttribBase>& rListToFill) const
     
     c = mInheritanceMap[c];
   }
+
+  // Add instance attributes
+  {
+    std::map<nglString,nuiAttributeBase*>::const_iterator it = mInstanceAttributes.begin();
+    std::map<nglString,nuiAttributeBase*>::const_iterator end = mInstanceAttributes.end();
+    while (it != end)
+    {
+      nuiAttributeBase* pBase = it->second;
+      rListToFill.push_back(nuiAttribBase(const_cast<nuiObject*>(this), pBase));
       
+      ++it;
+    }
+  }
+  
   rListToFill.sort(NUIATTRIBUTES_COMPARE);
 }
 
@@ -437,6 +464,17 @@ void nuiObject::GetSortedAttributes(std::list<nuiAttribBase>& rListToFill) const
 
 nuiAttribBase nuiObject::GetAttribute(const nglString& rName) const
 {
+  // Search Instance Attributes:
+  {
+    std::map<nglString,nuiAttributeBase*>::const_iterator it = mInstanceAttributes.find(rName);
+    std::map<nglString,nuiAttributeBase*>::const_iterator end = mInstanceAttributes.end();
+    
+    if (it != end)
+      return nuiAttribBase(const_cast<nuiObject*>(this), it->second);
+  }
+  
+  
+  // Search classes attributes:
   int32 c = mClassNameIndex;
   while (c >= 0)
   {
@@ -468,6 +506,22 @@ void nuiObject::AddAttribute(nuiAttributeBase* pAttribute)
   pAttribute->SetOrder(mUniqueAttributeOrder);
 
   mClassAttributes[mClassNameIndex][pAttribute->GetName()] = pAttribute;
+}
+
+void nuiObject::AddInstanceAttribute(const nglString& rName, nuiAttributeBase* pAttribute)
+{
+  mUniqueAttributeOrder++;
+  pAttribute->SetOrder(mUniqueAttributeOrder);
+  
+  mInstanceAttributes[rName] = pAttribute;
+}
+
+void nuiObject::AddInstanceAttribute(nuiAttributeBase* pAttribute)
+{
+  mUniqueAttributeOrder++;
+  pAttribute->SetOrder(mUniqueAttributeOrder);
+  
+  mInstanceAttributes[pAttribute->GetName()] = pAttribute;
 }
 
 
