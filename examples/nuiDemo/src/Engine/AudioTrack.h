@@ -43,4 +43,6 @@ private:
   uint32 mStartSample;
   
   BiQuad mFilter;
+  
+  float* mpSamples;
 };

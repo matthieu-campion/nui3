@@ -38,8 +38,8 @@ AudioTrack::AudioTrack(nuiAudioFifo* pAudioFifo)
   }
 
   // alloc local buffer and read the wave contents
-  float* pSamples = new float[mInfos.GetSampleFrames() * mInfos.GetChannels()];  
-  uint32 nbReadSamples = pWaveReader->Read((void*)pSamples, mInfos.GetSampleFrames(), eSampleFloat32);  
+  mpSamples = new float[mInfos.GetSampleFrames() * mInfos.GetChannels()];  
+  uint32 nbReadSamples = pWaveReader->Read((void*)mpSamples, mInfos.GetSampleFrames(), eSampleFloat32);  
   delete pWaveReader;
   delete istream;
   
@@ -59,7 +59,7 @@ AudioTrack::AudioTrack(nuiAudioFifo* pAudioFifo)
   float* pOutput;
   for (uint c = 0; c < mInfos.GetChannels(); c++)
   {
-      pInput = pSamples + c;
+      pInput = mpSamples + c;
       pOutput = &(mWavContents[c][0]);
       for (uint32 s = 0; s < nbReadSamples; s++)
       {
@@ -82,6 +82,7 @@ AudioTrack::AudioTrack(nuiAudioFifo* pAudioFifo)
 
 AudioTrack::~AudioTrack()
 {
+  delete mpSamples;
 }
 
 
