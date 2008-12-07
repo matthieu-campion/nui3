@@ -89,6 +89,12 @@ public:
 
   /** @name Life cycle */
   //@{
+  nglImageInfo(uint32 width, uint32 height, uint32 bitdepth);
+  /*!< Create a simple nglImageInfo with the corresponding width, height and bitdepth and allocate the buffer for these params. The buffer format is RGBA, RGB, Lum depending on the given bitdepth.
+   \param width The width of the buffer
+   \param height The width of the buffer
+   \param bitdepth Number of bits per pixel. Can be 32 (RGBA8), 24 (RGB8), 16 (R5G5B5A1), 15 (RGB5), or 8 (Lum).
+   */
   nglImageInfo (bool Managed = false);
   /*!<
     \param Managed choose memory management mode

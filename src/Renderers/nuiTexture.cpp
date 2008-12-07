@@ -344,11 +344,13 @@ void nuiTexture::Init()
   mRealWidth = 0;
   mRealHeight = 0;
 
-  if (mpImage) {
+  if (mpImage)
+  {
     mRealWidth = (nuiSize)mpImage->GetWidth();
     mRealHeight = (nuiSize)mpImage->GetHeight();
   }
-  else if (mpSurface) {
+  else if (mpSurface)
+  {
     mRealWidth = (nuiSize)mpSurface->GetWidth();
     mRealHeight = (nuiSize)mpSurface->GetHeight();
   }

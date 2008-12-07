@@ -50,6 +50,40 @@ static const nglChar* gpImageErrorTable[] =
  * nglImageInfo
  */
 
+nglImageInfo::nglImageInfo(uint32 width, uint32 height, uint32 bitdepth)
+{
+  switch (bitdepth)
+  {
+  case 32:
+    mPixelFormat = eImagePixelRGBA;
+    break;
+  case 24:
+    mPixelFormat = eImagePixelRGB;
+    break;
+  case 16:
+    mPixelFormat = eImagePixelRGBA;
+    break;
+  case 15:
+    mPixelFormat = eImagePixelRGB;
+    break;
+  case 8:
+    mPixelFormat = eImagePixelLum;
+    break;
+  }
+  
+  mBufferFormat = eImageFormatRaw;
+  mWidth = width;
+  mHeight = height;
+  mBitDepth = bitdepth;
+  mBytesPerPixel = (bitdepth + 1) / 8;
+  mBytesPerLine = mWidth * mBytesPerPixel;
+  mpBuffer = NULL;
+  mOwnBuffer = false;
+
+  AllocateBuffer();
+}
+
+
 nglImageInfo::nglImageInfo(bool Managed)
 {
   mBufferFormat = eImageFormatNone;

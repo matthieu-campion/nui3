@@ -149,7 +149,7 @@ void nuiTheme::LoadDefaults()
   SetElementColor(eTreeViewHandle,              nuiColor(0.4f, 0.4f, 0.4f, 0.5f));
   SetElementColor(eTreeViewSelection,           nuiColor(0.4f, 0.5f, 1.f, 0.5f));
 
-  SetElementColor(eSelectionMarkee,             nuiColor(0.8f, 0.8f, 1.f, 0.5f));
+  SetElementColor(eSelectionMarkee,             nuiColor(0.8f, 0.8f, 1.f, 0.9f));
 
   SetElementColor(eNormalTextFg,                nuiColor(0.f,0.f,0.f));
   SetElementColor(eSelectedTextFg,              nuiColor(1.f,1.f,1.f));

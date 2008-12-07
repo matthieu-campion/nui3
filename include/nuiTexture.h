@@ -28,14 +28,14 @@ class NUI_API nuiTexture : public nuiObject, public nuiRefCount
 {
 public:
   // Constructors and destructors are protected!
-  static nuiTexture* GetTexture (nglIStream* pInput, nglImageCodec* pCodec = NULL); ///< Create an image from an input stream and a codec.  If \param pCodec is NULL all codecs will be tried on the image.
-  static nuiTexture* GetTexture (const nglPath& rPath, nglImageCodec* pCodec = NULL ); ///< Create an image from a path and a codec. If \param pCodec is NULL all codecs will be tried on the image.
-  static nuiTexture* GetTexture (nglImageInfo& rInfo, bool Clone = true); ///< Create an image from an nglImageInfo structure. If \param is true then the image buffer will be cloned, otherwise it will be deleted with the nuiTexture.
-  static nuiTexture* GetTexture (const nglImage& rImage); ///< Create an image by copying an existing nglImage.
-  static nuiTexture* GetTexture (nglImage* pImage, bool OwnImage); ///< Create an image from an existing nglImage. If \param OwnImage the nglImage object will be deleted with the nuiTexture.
-  static nuiTexture* GetTexture (const nuiXMLNode* pNode); ///< Create an image from an xml description.
-  static nuiTexture* GetTexture (const nglString& rName); ///< Get a texture from its ID only
-  static nuiTexture* GetTexture (nuiSurface* pSurface, bool Acquired); ///< Create a texture from an existing nuiSurface.
+  static nuiTexture* GetTexture(nglIStream* pInput, nglImageCodec* pCodec = NULL); ///< Create an image from an input stream and a codec.  If \param pCodec is NULL all codecs will be tried on the image.
+  static nuiTexture* GetTexture(const nglPath& rPath, nglImageCodec* pCodec = NULL ); ///< Create an image from a path and a codec. If \param pCodec is NULL all codecs will be tried on the image.
+  static nuiTexture* GetTexture(nglImageInfo& rInfo, bool Clone = true); ///< Create an image from an nglImageInfo structure. If \param is true then the image buffer will be cloned, otherwise it will be deleted with the nuiTexture.
+  static nuiTexture* GetTexture(const nglImage& rImage); ///< Create an image by copying an existing nglImage.
+  static nuiTexture* GetTexture(nglImage* pImage, bool OwnImage); ///< Create an image from an existing nglImage. If \param OwnImage the nglImage object will be deleted with the nuiTexture.
+  static nuiTexture* GetTexture(const nuiXMLNode* pNode); ///< Create an image from an xml description.
+  static nuiTexture* GetTexture(const nglString& rName); ///< Get a texture from its ID only
+  static nuiTexture* GetTexture(nuiSurface* pSurface, bool Acquired); ///< Create a texture from an existing nuiSurface.
   static nuiTexture* GetAATexture(); ///< Returns an antialiasing texture for use with AAPrimitives.cpp
   
   static void ClearAll();
