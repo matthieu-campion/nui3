@@ -12,6 +12,7 @@
 
 
 #ifdef _WIN32_
+# include "nglIMemory.h"
 #endif // _WIN32_
 #if (defined _CARBON_) || (defined _UIKIT_)
 extern "C"
@@ -19,6 +20,7 @@ extern "C"
 #include <mach-o/dyld.h>
 #include <mach-o/ldsyms.h>
 }
+
 
 static CFBundleRef _CFXBundleCreateFromImageName(CFAllocatorRef allocator, const char* image_name);
 static CFBundleRef _CFXBundleCreateFromImageName(CFAllocatorRef allocator, const char* image_name)
@@ -96,7 +98,8 @@ static nglPath GetResourcePath()
 
 
 nuiNativeResource::nuiNativeResource(const nglPath& rPath)
-: nglIMemory(NULL, 0)
+: nglIStream(),
+  mpIStream(NULL)
 {
   mValid = false;
 #ifdef _WIN32_
@@ -125,32 +128,27 @@ nuiNativeResource::nuiNativeResource(const nglPath& rPath)
   memcpy(pData, pBuffer, size);
   
   // Init the nglIMemory we inherit from...
-  mpBuffer = (char*)pData;
-  mSize = datasize;
-  mOffset = 0;
-  
+  mpIStream = new nglIMemory((char*)pData, datasize);
+
   UnlockResource(GlobalHandle);
   
   mValid = true;
 #endif
 #if defined _CARBON_ || defined _UIKIT_ || defined _LINUX_
-  nglPath ResourcePath(GetResourcePath());
-  ResourcePath += rPath;
-  nglIFile File(ResourcePath, false);
-  mValid = File.Open();
+  nglPath resourcePath(GetResourcePath());
+  resourcePath += rPath;
   
-  uint32 datasize = File.Available();
-  char* pData = new char[datasize];
-  File.Read(pData, datasize, 1);
-  
-  mpBuffer = pData;
-  mSize = datasize;
+  if (resourcePath.Exists()) {
+    mpIStream = resourcePath.OpenRead();
+    NGL_ASSERT(mpIStream);
+    mValid = true;
+  }
 #endif // _CARBON_ || _UIKIT_ || _LINUX_
 }
 
 nuiNativeResource::~nuiNativeResource()
 {
-  delete[] mpBuffer;
+  delete mpIStream;
 }
 
 bool nuiNativeResource::IsValid() const
@@ -214,4 +212,78 @@ bool nuiNativeResource::GetResourcesList(std::vector<nglPath>& rResources)
   
   return true;
 }
+
+/*
+ * Wrapping the internal IStream
+ */
+
+nglStreamState nuiNativeResource::GetState() const
+{
+  return mpIStream->GetState();
+}
+nglFileOffset nuiNativeResource::GetPos() const
+{
+  return mpIStream->GetPos();
+}
+nglFileOffset nuiNativeResource::SetPos (nglFileOffset Where, nglStreamWhence Whence)
+{
+  return mpIStream->SetPos(Where, Whence);
+}
+nglFileSize nuiNativeResource::Available (uint WordSize)
+{
+  return mpIStream->Available(WordSize);
+}
+int64 nuiNativeResource::ReadUInt8  (uint8*  pData, int64 Count)
+{
+  return mpIStream->ReadUInt8(pData, Count);
+}
+int64 nuiNativeResource::ReadUInt16 (uint16* pData, int64 Count)
+{
+  return mpIStream->ReadUInt16(pData, Count);
+}
+int64 nuiNativeResource::ReadUInt32 (uint32* pData, int64 Count)
+{
+  return mpIStream->ReadUInt32(pData, Count);
+}
+int64 nuiNativeResource::ReadUInt64 (uint64* pData, int64 Count)
+{
+  return mpIStream->ReadUInt64(pData, Count);
+}
+int64 nuiNativeResource::ReadInt8   (int8*  pData, int64 Count)
+{
+  return mpIStream->ReadInt8(pData, Count);
+}
+int64 nuiNativeResource::ReadInt16  (int16* pData, int64 Count)
+{
+  return mpIStream->ReadInt16(pData, Count);
+}
+int64 nuiNativeResource::ReadInt32  (int32* pData, int64 Count)
+{
+  return mpIStream->ReadInt32(pData, Count);
+}
+int64 nuiNativeResource::ReadInt64  (int64* pData, int64 Count)
+{
+  return mpIStream->ReadInt64(pData, Count);
+}
+int64 nuiNativeResource::ReadFloat  (float*  pData, int64 Count)
+{
+  return mpIStream->ReadFloat(pData, Count);
+}
+int64 nuiNativeResource::ReadDouble (double* pData, int64 Count)
+{
+  return mpIStream->ReadDouble(pData, Count);
+}
+int64 nuiNativeResource::ReadLine   (nglString& rLine, nglTextFormat* pFormat)
+{
+  return mpIStream->ReadLine(rLine, pFormat);
+}
+int64 nuiNativeResource::Read (void* pData, int64 WordCount, uint WordSize)
+{
+  return mpIStream->Read(pData, WordCount, WordSize);
+}
+int64 nuiNativeResource::Peek (void* pData, int64 WordCount, uint WordSize)
+{
+  return mpIStream->Peek(pData, WordCount, WordSize);
+}
+
 #endif
