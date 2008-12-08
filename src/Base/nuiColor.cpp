@@ -468,7 +468,7 @@ void nuiColor::SetHSV(float h, float s, float v, float a)
   mAlpha = a;
 }
 
-void nuiColor::GetHSV(float& h, float& s, float& v)
+void nuiColor::GetHSV(float& h, float& s, float& v) const
 {
   RGBtoHSV(mRed, mGreen, mBlue, h, s, v);
 }
@@ -538,7 +538,7 @@ void nuiColor::SetHSL(float h, float s, float l, float a)
   mAlpha = a;
 }
 
-void nuiColor::GetHSL(float& h, float& s, float& l)
+void nuiColor::GetHSL(float& h, float& s, float& l) const
 {
   double r = mRed;
   double g = mGreen;

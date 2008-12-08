@@ -44,6 +44,7 @@ public:
   nuiSimpleEventSource<0> ColorChanged; // sent in all cases
   
   nuiSimpleEventSource<0> RGBColorChanged; // sent if the color has been changed with the RGB sliders
+  nuiSimpleEventSource<0> HSVColorChanged; // sent if the color has been changed with the RGB sliders
   nuiSimpleEventSource<0> SwatchColorChanged; // sent if the color has been changed through the Swatches selector
   
   
@@ -56,11 +57,13 @@ private:
   bool OnTabSelected(const nuiEvent& rEvent);
   
   void Tab_RGB_Update();
-  void FormatColor(nuiSize color, nuiLabel* pLabel);
+  void Tab_HSV_Update();
+  void FormatColor(nuiSize color, nuiLabel* pLabel, float maxval = 255.0f, bool integer = true);
   
   
   bool SwatchSelected(const nuiEvent& rEvent);
-  bool RgbSliderChanged(const nuiEvent& rEvent);
+  bool RGBSliderChanged(const nuiEvent& rEvent);
+  bool HSVSliderChanged(const nuiEvent& rEvent);
   
   void MakeSwatchGrid();
   
@@ -74,9 +77,10 @@ private:
   nuiGrid* mpSwatchGrid;
   
   // Control widgets
-  nuiSlider *mpRedSlider, *mpGreenSlider, *mpBlueSlider, *mpRgbAlphaSlider;
-  nuiSlider *mpHueSlider, *mpSaturationSlider, *mpValueSlider, *mpHsvAlphaSlider;
-  nuiLabel *mpRedSliderLabel, *mpGreenSliderLabel, *mpBlueSliderLabel, *mpAlphaSliderLabel;
+  nuiSlider *mpRedSlider, *mpGreenSlider, *mpBlueSlider, *mpRGBAlphaSlider;
+  nuiSlider *mpHueSlider, *mpSaturationSlider, *mpValueSlider, *mpHSVAlphaSlider;
+  nuiLabel *mpRedSliderLabel, *mpGreenSliderLabel, *mpBlueSliderLabel, *mpRGBAlphaSliderLabel;
+  nuiLabel *mpHueSliderLabel, *mpSaturationSliderLabel, *mpValueSliderLabel, *mpHSVAlphaSliderLabel;
   
   nuiColor mCurrentColor;
   std::vector<nuiColor> mColorList;

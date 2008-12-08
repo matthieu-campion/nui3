@@ -90,23 +90,23 @@ nuiWidget* nuiColorSelector::Tab_RGB()
   
   mpRedSlider = new nuiSlider(nuiHorizontal, nuiRange(red, 0.f, 1.f));
   mpRgbGrid->SetCell(1, 0, mpRedSlider);
-  mSink.Connect(mpRedSlider->InteractiveValueChanged, &nuiColorSelector::RgbSliderChanged);
-  mSink.Connect(mpRedSlider->ValueChanged, &nuiColorSelector::RgbSliderChanged);
+  mSink.Connect(mpRedSlider->InteractiveValueChanged, &nuiColorSelector::RGBSliderChanged);
+  mSink.Connect(mpRedSlider->ValueChanged, &nuiColorSelector::RGBSliderChanged);
   
   mpGreenSlider = new nuiSlider(nuiHorizontal, nuiRange(green, 0.f, 1.f));
   mpRgbGrid->SetCell(1, 1, mpGreenSlider);
-  mSink.Connect(mpGreenSlider->InteractiveValueChanged, &nuiColorSelector::RgbSliderChanged);
-  mSink.Connect(mpGreenSlider->ValueChanged, &nuiColorSelector::RgbSliderChanged);
+  mSink.Connect(mpGreenSlider->InteractiveValueChanged, &nuiColorSelector::RGBSliderChanged);
+  mSink.Connect(mpGreenSlider->ValueChanged, &nuiColorSelector::RGBSliderChanged);
   
   mpBlueSlider = new nuiSlider(nuiHorizontal, nuiRange(blue, 0.f, 1.f));
   mpRgbGrid->SetCell(1, 2, mpBlueSlider);
-  mSink.Connect(mpBlueSlider->InteractiveValueChanged, &nuiColorSelector::RgbSliderChanged);
-  mSink.Connect(mpBlueSlider->ValueChanged, &nuiColorSelector::RgbSliderChanged);
+  mSink.Connect(mpBlueSlider->InteractiveValueChanged, &nuiColorSelector::RGBSliderChanged);
+  mSink.Connect(mpBlueSlider->ValueChanged, &nuiColorSelector::RGBSliderChanged);
   
-  mpRgbAlphaSlider = new nuiSlider(nuiHorizontal, nuiRange(alpha, 0.f, 1.f));
-  mpRgbGrid->SetCell(1, 3, mpRgbAlphaSlider);
-  mSink.Connect(mpRgbAlphaSlider->InteractiveValueChanged, &nuiColorSelector::RgbSliderChanged);
-  mSink.Connect(mpRgbAlphaSlider->ValueChanged, &nuiColorSelector::RgbSliderChanged);
+  mpRGBAlphaSlider = new nuiSlider(nuiHorizontal, nuiRange(alpha, 0.f, 1.f));
+  mpRgbGrid->SetCell(1, 3, mpRGBAlphaSlider);
+  mSink.Connect(mpRGBAlphaSlider->InteractiveValueChanged, &nuiColorSelector::RGBSliderChanged);
+  mSink.Connect(mpRGBAlphaSlider->ValueChanged, &nuiColorSelector::RGBSliderChanged);
   
   mpRgbGrid->SetColumnPixels(2, 25);
   
@@ -122,27 +122,80 @@ nuiWidget* nuiColorSelector::Tab_RGB()
   FormatColor(blue, mpBlueSliderLabel);
   mpRgbGrid->SetCell(2, 2, mpBlueSliderLabel, nuiRight);
   
-  mpAlphaSliderLabel = new nuiLabel(_T(""), nuiFont::GetFont(8));
-  FormatColor(alpha, mpAlphaSliderLabel);
-  mpRgbGrid->SetCell(2, 3, mpAlphaSliderLabel, nuiRight);
+  mpRGBAlphaSliderLabel = new nuiLabel(_T(""), nuiFont::GetFont(8));
+  FormatColor(alpha, mpRGBAlphaSliderLabel);
+  mpRgbGrid->SetCell(2, 3, mpRGBAlphaSliderLabel, nuiRight);
   
   
   return mpRgbGrid;
 }
 
 
-void nuiColorSelector::FormatColor(nuiSize color, nuiLabel* pLabel)
+void nuiColorSelector::FormatColor(nuiSize color, nuiLabel* pLabel, float maxval, bool integer)
 {
   nglString str;
-  uint32 value = uint32(color * 255);
-  str.Format(_T("%d"), value);
+  str.Add(maxval * color, integer?0:1);
   pLabel->SetText(str);
 }
 
 
 nuiWidget* nuiColorSelector::Tab_HSV()
 {
-  mpHsvGrid = new nuiGrid(2, 4);
+  float h, s, v;
+  mCurrentColor.GetHSV(h, s, v);
+  nuiSize alpha = mCurrentColor.Alpha();
+  
+  mpHsvGrid = new nuiGrid(3, 4);
+  mpHsvGrid->SetBorder(0,0,10,10);
+  
+  nuiPane* pPane = new nuiPane(nuiColor(1.f, 1.f, 1.f, 1.f), nuiColor(0.f, 0.f, 0.f, 1.f), eStrokeShape);
+  nuiLabel* pLabel = new nuiLabel(_T("HSV"));
+  pLabel->SetBorder(2.f, 1.f);
+  pPane->AddChild(pLabel);
+  
+  mpHsvGrid->SetCell(0, 0, new nuiLabel(_T("h:")));
+  mpHsvGrid->SetCell(0, 1, new nuiLabel(_T("s:")));
+  mpHsvGrid->SetCell(0, 2, new nuiLabel(_T("v:")));
+  mpHsvGrid->SetCell(0, 3, new nuiLabel(_T("a:")));
+  
+  mpHueSlider = new nuiSlider(nuiHorizontal, nuiRange(h, 0.f, 1.f));
+  mpHsvGrid->SetCell(1, 0, mpHueSlider);
+  mSink.Connect(mpHueSlider->InteractiveValueChanged, &nuiColorSelector::HSVSliderChanged);
+  mSink.Connect(mpHueSlider->ValueChanged, &nuiColorSelector::HSVSliderChanged);
+  
+  mpSaturationSlider = new nuiSlider(nuiHorizontal, nuiRange(s, 0.f, 1.f));
+  mpHsvGrid->SetCell(1, 1, mpSaturationSlider);
+  mSink.Connect(mpSaturationSlider->InteractiveValueChanged, &nuiColorSelector::HSVSliderChanged);
+  mSink.Connect(mpSaturationSlider->ValueChanged, &nuiColorSelector::HSVSliderChanged);
+  
+  mpValueSlider = new nuiSlider(nuiHorizontal, nuiRange(v, 0.f, 1.f));
+  mpHsvGrid->SetCell(1, 2, mpValueSlider);
+  mSink.Connect(mpValueSlider->InteractiveValueChanged, &nuiColorSelector::HSVSliderChanged);
+  mSink.Connect(mpValueSlider->ValueChanged, &nuiColorSelector::HSVSliderChanged);
+  //
+  mpHSVAlphaSlider = new nuiSlider(nuiHorizontal, nuiRange(alpha, 0.f, 1.f));
+  mpHsvGrid->SetCell(1, 3, mpHSVAlphaSlider);
+  mSink.Connect(mpHSVAlphaSlider->InteractiveValueChanged, &nuiColorSelector::HSVSliderChanged);
+  mSink.Connect(mpHSVAlphaSlider->ValueChanged, &nuiColorSelector::HSVSliderChanged);
+  
+  mpHsvGrid->SetColumnPixels(2, 25);
+  
+  mpHueSliderLabel = new nuiLabel(_T(""), nuiFont::GetFont(8));
+  FormatColor(h, mpHueSliderLabel, 100, 1);
+  mpHsvGrid->SetCell(2, 0, mpHueSliderLabel, nuiRight);
+  
+  mpSaturationSliderLabel = new nuiLabel(_T(""), nuiFont::GetFont(8));
+  FormatColor(s, mpSaturationSliderLabel, 100, 1);
+  mpHsvGrid->SetCell(2, 1, mpSaturationSliderLabel, nuiRight);
+  
+  mpValueSliderLabel = new nuiLabel(_T(""), nuiFont::GetFont(8));
+  FormatColor(v, mpValueSliderLabel, 100, 1);
+  mpHsvGrid->SetCell(2, 2, mpValueSliderLabel, nuiRight);
+  
+  mpHSVAlphaSliderLabel = new nuiLabel(_T(""), nuiFont::GetFont(8));
+  FormatColor(alpha, mpHSVAlphaSliderLabel, 100, 1);
+  mpHsvGrid->SetCell(2, 3, mpHSVAlphaSliderLabel, nuiRight);
+  
   
   return mpHsvGrid;
 }
@@ -214,10 +267,23 @@ void nuiColorSelector::SetCurrentColor(const nuiColor& rColor)
   nuiSize green = rColor.Green();
   nuiSize blue = rColor.Blue();
   nuiSize alpha = rColor.Alpha();
+  float h, s, v;
+  rColor.GetHSV(h, s, v);
   FormatColor(red, mpRedSliderLabel);
   FormatColor(green, mpGreenSliderLabel);
   FormatColor(blue, mpBlueSliderLabel);
-  FormatColor(alpha, mpAlphaSliderLabel);
+  FormatColor(alpha, mpRGBAlphaSliderLabel);
+  
+  if (h < 0)
+  {
+    h = mpHueSlider->GetRange().GetValue();
+    s = mpSaturationSlider->GetRange().GetValue();
+    v = mpValueSlider->GetRange().GetValue();
+  }
+  FormatColor(h, mpHueSliderLabel, 100, 1);
+  FormatColor(s, mpSaturationSliderLabel, 100, 1);
+  FormatColor(v, mpValueSliderLabel, 100, 1);
+  FormatColor(alpha, mpHSVAlphaSliderLabel, 100, 1);
   
   mpColorPane->Invalidate();
   
@@ -259,6 +325,7 @@ bool nuiColorSelector::OnTabSelected(const nuiEvent& rEvent)
       Tab_RGB_Update();
       break;
     case 1: //HSV
+      Tab_HSV_Update();
       break;
     case 2: //Swatches
       break;
@@ -282,24 +349,64 @@ void nuiColorSelector::Tab_RGB_Update()
   mpBlueSlider->GetRange().SetValue(mCurrentColor.Blue());
   mpBlueSlider->ValueChanged.Enable();
   
-  mpRgbAlphaSlider->ValueChanged.Disable();
-  mpRgbAlphaSlider->GetRange().SetValue(mCurrentColor.Alpha());
-  mpRgbAlphaSlider->ValueChanged.Enable();
+  mpRGBAlphaSlider->ValueChanged.Disable();
+  mpRGBAlphaSlider->GetRange().SetValue(mCurrentColor.Alpha());
+  mpRGBAlphaSlider->ValueChanged.Enable();
 
 }
 
-bool nuiColorSelector::RgbSliderChanged(const nuiEvent& rEvent)
+void nuiColorSelector::Tab_HSV_Update()
+{
+  float h, s ,v;
+  mCurrentColor.GetHSV(h, s, v);
+  mpHueSlider->ValueChanged.Disable();
+  mpHueSlider->GetRange().SetValue(h);
+  mpHueSlider->ValueChanged.Enable();
+  
+  mpSaturationSlider->ValueChanged.Disable();
+  mpSaturationSlider->GetRange().SetValue(s);
+  mpSaturationSlider->ValueChanged.Enable();
+  
+  mpSaturationSlider->ValueChanged.Disable();
+  mpSaturationSlider->GetRange().SetValue(v);
+  mpSaturationSlider->ValueChanged.Enable();
+  
+  mpHSVAlphaSlider->ValueChanged.Disable();
+  mpHSVAlphaSlider->GetRange().SetValue(mCurrentColor.Alpha());
+  mpHSVAlphaSlider->ValueChanged.Enable();
+  
+}
+
+
+bool nuiColorSelector::RGBSliderChanged(const nuiEvent& rEvent)
 {
   nuiSize red = (float)mpRedSlider->GetRange().GetValue();
   nuiSize green = (float)mpGreenSlider->GetRange().GetValue();
   nuiSize blue = (float)mpBlueSlider->GetRange().GetValue();
-  nuiSize alpha = (float)mpRgbAlphaSlider->GetRange().GetValue();
-
+  nuiSize alpha = (float)mpRGBAlphaSlider->GetRange().GetValue();
+  
   SetCurrentColor(nuiColor(red, green, blue, alpha));
   
   // send event
   RGBColorChanged();
+  
+  return true;
+}
 
+bool nuiColorSelector::HSVSliderChanged(const nuiEvent& rEvent)
+{
+  nuiSize h = (float)mpHueSlider->GetRange().GetValue();
+  nuiSize s = (float)mpSaturationSlider->GetRange().GetValue();
+  nuiSize v = (float)mpValueSlider->GetRange().GetValue();
+  nuiSize alpha = (float)mpHSVAlphaSlider->GetRange().GetValue();
+  
+  nuiColor c;
+  c.SetHSV(h, s, v, alpha);
+  SetCurrentColor(c);
+  
+  // send event
+  HSVColorChanged();
+  
   return true;
 }
 
