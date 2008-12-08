@@ -324,6 +324,14 @@ void nuiColor::Crop()
     movups [eax], xmm0; //< Store the values back
   }
 #else
+  if (isnan(mRed))
+    mRed = 0;
+  if (isnan(mGreen))
+    mGreen = 0;
+  if (isnan(mBlue))
+    mBlue = 0;
+  if (isnan(mBlue))
+    mRed = 0;
   mRed   = MIN(1.0f, mRed  );
   mRed  =  MAX(0.0f, mRed  );
   mGreen = MIN(1.0f, mGreen);
@@ -404,8 +412,10 @@ void RGBtoHSV( float r, float g, float b, float& h, float& s, float& v )
 	else
 		h = 4 + (r - g) / delta;	// between magenta & cyan
 	h *= 60;				// degrees
-	if (h < 0)
+	while (h < 0)
 		h += 360;
+	while (h >= 360)
+		h -= 360;
   h /= 360;
 }
 
@@ -414,6 +424,11 @@ void HSVtoRGB( float& r, float& g, float& b, float h, float s, float v )
 	int i;
 	float f, p, q, t;
   h *= 360;
+  while (h >= 360)
+    h -= 360;
+  while (h < 0)
+    h += 360;
+  
 	if (s == 0)
   {
 		// achromatic (grey)
@@ -459,6 +474,8 @@ void HSVtoRGB( float& r, float& g, float& b, float h, float s, float v )
 			b = q;
 			break;
 	}
+  
+  
 }
 
 
@@ -466,6 +483,7 @@ void nuiColor::SetHSV(float h, float s, float v, float a)
 {
   HSVtoRGB(mRed, mGreen, mBlue, h, s, v);
   mAlpha = a;
+  Crop();
 }
 
 void nuiColor::GetHSV(float& h, float& s, float& v) const
@@ -536,6 +554,8 @@ void nuiColor::SetHSL(float h, float s, float l, float a)
   mGreen = g;
   mBlue = b;
   mAlpha = a;
+  
+  Crop();
 }
 
 void nuiColor::GetHSL(float& h, float& s, float& l) const

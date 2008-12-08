@@ -51,9 +51,7 @@ nuiColorSelector::nuiColorSelector(const nuiColor& rInitialColor, const std::vec
   mpTabView->AddTab(_T("RGB"), Tab_RGB());
   mpTabView->AddTab(_T("HSV"), Tab_HSV());
   mpTabView->AddTab(_T("Swatches"), Tab_Swatches());
-  
-  OnTabSelected(nuiEvent());
-  
+    
   switch (mode)
   {
     case eModeRGB:
@@ -181,19 +179,19 @@ nuiWidget* nuiColorSelector::Tab_HSV()
   mpHsvGrid->SetColumnPixels(2, 25);
   
   mpHueSliderLabel = new nuiLabel(_T(""), nuiFont::GetFont(8));
-  FormatColor(h, mpHueSliderLabel, 100, 1);
+  FormatColor(h, mpHueSliderLabel, 100, false);
   mpHsvGrid->SetCell(2, 0, mpHueSliderLabel, nuiRight);
   
   mpSaturationSliderLabel = new nuiLabel(_T(""), nuiFont::GetFont(8));
-  FormatColor(s, mpSaturationSliderLabel, 100, 1);
+  FormatColor(s, mpSaturationSliderLabel, 100, false);
   mpHsvGrid->SetCell(2, 1, mpSaturationSliderLabel, nuiRight);
   
   mpValueSliderLabel = new nuiLabel(_T(""), nuiFont::GetFont(8));
-  FormatColor(v, mpValueSliderLabel, 100, 1);
+  FormatColor(v, mpValueSliderLabel, 100, false);
   mpHsvGrid->SetCell(2, 2, mpValueSliderLabel, nuiRight);
   
   mpHSVAlphaSliderLabel = new nuiLabel(_T(""), nuiFont::GetFont(8));
-  FormatColor(alpha, mpHSVAlphaSliderLabel, 100, 1);
+  FormatColor(alpha, mpHSVAlphaSliderLabel, 100, false);
   mpHsvGrid->SetCell(2, 3, mpHSVAlphaSliderLabel, nuiRight);
   
   
@@ -267,25 +265,27 @@ void nuiColorSelector::SetCurrentColor(const nuiColor& rColor)
   nuiSize green = rColor.Green();
   nuiSize blue = rColor.Blue();
   nuiSize alpha = rColor.Alpha();
-  float h, s, v;
-  rColor.GetHSV(h, s, v);
   FormatColor(red, mpRedSliderLabel);
   FormatColor(green, mpGreenSliderLabel);
   FormatColor(blue, mpBlueSliderLabel);
   FormatColor(alpha, mpRGBAlphaSliderLabel);
   
-  if (h < 0)
-  {
-    h = mpHueSlider->GetRange().GetValue();
-    s = mpSaturationSlider->GetRange().GetValue();
-    v = mpValueSlider->GetRange().GetValue();
-  }
-  FormatColor(h, mpHueSliderLabel, 100, 1);
-  FormatColor(s, mpSaturationSliderLabel, 100, 1);
-  FormatColor(v, mpValueSliderLabel, 100, 1);
-  FormatColor(alpha, mpHSVAlphaSliderLabel, 100, 1);
+  float h, s, v;
+  h = mpHueSlider->GetRange().GetValue();
+  s = mpSaturationSlider->GetRange().GetValue();
+  v = mpValueSlider->GetRange().GetValue();
+  FormatColor(h, mpHueSliderLabel, 100, false);
+  FormatColor(s, mpSaturationSliderLabel, 100, false);
+  FormatColor(v, mpValueSliderLabel, 100, false);
+  FormatColor(alpha, mpHSVAlphaSliderLabel, 100, false);
   
   mpColorPane->Invalidate();
+  
+  uint tabIndex = mpTabView->GetSelectedTab();
+  if (tabIndex != 0)
+    Tab_RGB_Update();
+  if (tabIndex != 1)
+    Tab_HSV_Update();
   
   // send event
   ColorChanged(); 
@@ -309,7 +309,6 @@ bool nuiColorSelector::SwatchSelected(const nuiEvent& rEvent)
 {
   nuiPane* pPane = (nuiPane*) rEvent.mpUser;
   SetCurrentColor(pPane->GetFillColor());
-  OnTabSelected(nuiEvent());
   
   // send event
   SwatchColorChanged(); 
@@ -374,7 +373,6 @@ void nuiColorSelector::Tab_HSV_Update()
   mpHSVAlphaSlider->ValueChanged.Disable();
   mpHSVAlphaSlider->GetRange().SetValue(mCurrentColor.Alpha());
   mpHSVAlphaSlider->ValueChanged.Enable();
-  
 }
 
 
