@@ -135,6 +135,10 @@ public:
   }
 
   uint32 GetRGBA() const;
+  void SetHSV(float h, float s, float v, float a = 1.0f); ///< all parameters are [0, 1]
+  void GetHSV(float& h, float& s, float& v); ///< all parameters are [0, 1] except when h i undefined (r = g = b = 0), in this case h = -1
+  void SetHSL(float h, float s, float v, float a = 1.0f); ///< all parameters are [0, 1]
+  void GetHSL(float& h, float& s, float& v); ///< all parameters are [0, 1]
   
   static void EnumStandardColorNames(std::vector<nglString>& rStandardColorNames);
   static void EnumCustomizedColorNames(std::vector<nglString>& rUserColorNames);

@@ -274,6 +274,7 @@ public:
   
   void DrawHLine(uint32 x0, uint32 x1, uint32 y, uint32 col);
   void DrawHLine(span& rSpan, int32 y);
+  void BlendHLine(span& rSpan, int32 y);
   
   void DrawTriangle(const vertex& v0, const vertex& v1, const vertex& v2);
   void DrawTriangle(const vertex& v0, const vertex& v1, const vertex& v2, uint32 color);
@@ -320,6 +321,45 @@ void Rasterizer::DrawHLine(span& rSpan, int32 y)
   while (count--)
   {
     *pSpan++ = rSpan.GetColor();
+    rSpan.step_color();
+    rSpan.step_texture();
+  }
+}
+
+void Rasterizer::BlendHLine(span& rSpan, int32 y)
+{
+  uint32 count = rSpan.width;
+  uint32* pSpan = (uint32*)mpScreen->GetPixel(rSpan.x, y);
+  while (count--)
+  {
+    uint32 colA = rSpan.GetColor();
+    uint32 colB = *pSpan;
+    
+    uint32 colA0 = (colA & 0xff00ff00) >> 8;
+    uint32 colB0 = (colB & 0xff00ff00) >> 8;
+    uint32 colA1 = colA & 0x00ff00ff;
+    uint32 colB1 = colB & 0x00ff00ff;
+
+    uint32 alpha = (colA0 >> 16);
+    if (alpha)
+    {
+      uint32 malpha = 0x100 - alpha;
+      
+      colA0 *= alpha;
+      colA1 *= alpha;
+      colB0 *= malpha;
+      colB1 *= malpha;
+      
+      colA = colA0 + colB0;
+      colB = colA1 + colB1;
+      
+      uint32 col = (colA & 0xff00ff00) | ((colB & 0xff00ff00) >> 8);
+      
+      *pSpan = col;
+    }
+
+    pSpan++;
+    
     rSpan.step_color();
     rSpan.step_texture();
   }
@@ -511,7 +551,7 @@ void Rasterizer::DrawTriangle(const vertex& v0, const vertex& v1, const vertex& 
         const float x0 = pLastEdge->x;
         const float x1 = pEdge->x;
         span Span(pLastEdge, pEdge);
-        DrawHLine(Span, y);
+        BlendHLine(Span, y);
         
         pLastEdge = NULL;
       }
@@ -561,7 +601,7 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
   mpImage = new nglImage(info, eTransfert);
   uint32* pBuffer = (uint32*)mpImage->GetBuffer();
   for (uint32 i = 0; i < info.mHeight * info.mWidth; i++)
-    pBuffer[i] = 0xff000000;
+    pBuffer[i] = 0xff7f7f7f;
   
   Screen<32> screen(info.mWidth, info.mHeight, false, pBuffer);
   Rasterizer rasterizer(&screen, false);
@@ -576,10 +616,10 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
 //  rasterizer.DrawTriangle(v0, v1, v2);
 //  rasterizer.DrawTriangle(v0, v2, v3);
 
-  vertex v0(10, 10,  1, 0, 0);
-  vertex v1(10, 100,  0, 1, 0);
-  vertex v2(303, 100, 0, 0, 1);
-  vertex v3(303, 10,  0, 1, 0);
+  vertex v0(10, 10,  1, 0, 0, 0);
+  vertex v1(10, 100,  0, 1, 0, .5);
+  vertex v2(303, 100, 0, 0, 1, .5);
+  vertex v3(303, 10,  0, 1, 0, 1.0);
   rasterizer.DrawTriangle(v0, v1, v2);
   rasterizer.DrawTriangle(v0, v2, v3);
   
