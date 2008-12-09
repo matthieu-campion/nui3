@@ -226,7 +226,7 @@ public:
   float x;
   float xincr;
   
-  uint32 count;
+  int32 count;
 
   float r, g, b, a;
   float u, v;
@@ -394,7 +394,7 @@ void Rasterizer::DrawHLine(span& rSpan, int32 y)
   if (rSpan.clip(mClipLeft, mClipRight))
     return;
 
-  uint32 count = rSpan.width;
+  int32 count = rSpan.width;
   uint32* pSpan = (uint32*)mpScreen->GetPixel(rSpan.x, y);
   while (count--)
   {
@@ -409,7 +409,7 @@ void Rasterizer::BlendHLine(span& rSpan, int32 y)
   if (rSpan.clip(mClipLeft, mClipRight))
     return;
   
-  uint32 count = rSpan.width;
+  int32 count = rSpan.width;
   uint32* pSpan = (uint32*)mpScreen->GetPixel(rSpan.x, y);
   while (count--)
   {
@@ -597,15 +597,15 @@ void Rasterizer::DrawTriangle(const vertex& v0, const vertex& v1, const vertex& 
     if (0 == (ax * (by - cy) + bx * (ay - cy) + cx * (ay - by)))
       return;
   }
-  
-  uint32 y = ToBelow(edges[0]->v0.y);
-  
+    
   std::sort(edges.begin(), edges.end(), &compare_edge_y);
+  uint32 y = ToBelow(edges[0]->v0.y);
   uint32 current_edge = 0;
   for (uint32 e = 0; e < edges.size(); e++)
   {
     // Compute the number of scan lines before this edge is to become active
     edges[e]->count = ToAbove(edges[e]->v0.y) - y;
+    NGL_ASSERT(edges[e]->count >= 0);
   }
   
   
@@ -733,6 +733,23 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
     vertex v3(603, 10,  0, 1, 0, 1.0);
     rasterizer.DrawTriangle(v0, v1, v2);
     rasterizer.DrawTriangle(v0, v2, v3);
+  }
+
+  rasterizer.SetClipRect(0, 200, 640, 480);
+  {
+    srandom(time(NULL));
+    double now = nglTime();
+    for (uint32 i = 0; i < 1000; i++)
+    {
+#define R ((random() % 255) / 255.0f)
+      vertex v0(random() % 1200 - 200, random() % 800 - 200, R, R, R, R);
+      vertex v1(random() % 1200 - 200, random() % 800 - 200, R, R, R, R);
+      vertex v2(random() % 1200 - 200, random() % 800 - 200, R, R, R, R);
+//      printf("trangle %d (%f, %f / %f, %f / %f, %f)\n", i, v0.x, v0.y, v1.x, v1.y, v2.x, v2.y);
+      rasterizer.DrawTriangle(v0, v1, v2);
+    }
+    now = nglTime() - now;
+    printf("triangle rendering time: %fs\n", now);
   }
   
   mpTexture = nuiTexture::GetTexture(mpImage, true);
