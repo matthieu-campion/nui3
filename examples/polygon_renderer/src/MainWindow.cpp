@@ -739,7 +739,7 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
   {
     srandom(time(NULL));
     double now = nglTime();
-    for (uint32 i = 0; i < 1000; i++)
+    for (uint32 i = 0; i < 10000; i++)
     {
 #define R ((random() % 255) / 255.0f)
       vertex v0(random() % 1200 - 200, random() % 800 - 200, R, R, R, R);

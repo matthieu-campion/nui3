@@ -138,7 +138,8 @@ nuiNativeResource::nuiNativeResource(const nglPath& rPath)
   nglPath resourcePath(GetResourcePath());
   resourcePath += rPath;
   
-  if (resourcePath.Exists()) {
+  if (resourcePath.Exists())
+  {
     mpIStream = resourcePath.OpenRead();
     NGL_ASSERT(mpIStream);
     mValid = true;
@@ -212,6 +213,7 @@ bool nuiNativeResource::GetResourcesList(std::vector<nglPath>& rResources)
   
   return true;
 }
+#endif
 
 /*
  * Wrapping the internal IStream
@@ -286,4 +288,3 @@ int64 nuiNativeResource::Peek (void* pData, int64 WordCount, uint WordSize)
   return mpIStream->Peek(pData, WordCount, WordSize);
 }
 
-#endif
