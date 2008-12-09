@@ -137,43 +137,31 @@ public:
 class edge
 {
 public:
-  edge(const vertex* pV0, const vertex* pV1)
+  edge(const vertex& rV0, const vertex& rV1)
+  : v0(rV0.y < rV1.y ? rV0 : rV1),
+    v1(rV0.y < rV1.y ? rV1 : rV0),
+    upward(rV0.y > rV1.y)
   {
-    if (pV0->y < pV1->y)
-    {
-      v0 = pV0;
-      v1 = pV1;
-      upward = false;
-    }
-    else
-    {
-      v0 = pV1;
-      v1 = pV0;
-      upward = true;
-    }
-
     // coords:
-    uint32 ydiff = (ToBelow(v1->y) - ToAbove(v0->y));
-    x = v0->x;
-    xincr = (v1->x - v0->x) / ydiff; // Compute the slope
+    uint32 ydiff = (ToBelow(v1.y) - ToAbove(v0.y));
+    x = v0.x;
+    xincr = (v1.x - v0.x) / ydiff; // Compute the slope
 
     // color
-    r = v0->r;
-    g = v0->g;
-    b = v0->b;
-    a = v0->a;
-    rincr = (v1->r - v0->r) / ydiff; // Compute the slope
-    gincr = (v1->g - v0->g) / ydiff; // Compute the slope
-    bincr = (v1->b - v0->b) / ydiff; // Compute the slope
-    aincr = (v1->a - v0->a) / ydiff; // Compute the slope
+    r = v0.r;
+    g = v0.g;
+    b = v0.b;
+    a = v0.a;
+    rincr = (v1.r - v0.r) / ydiff; // Compute the slope
+    gincr = (v1.g - v0.g) / ydiff; // Compute the slope
+    bincr = (v1.b - v0.b) / ydiff; // Compute the slope
+    aincr = (v1.a - v0.a) / ydiff; // Compute the slope
 
     // texture
-    u = v0->u;
-    v = v0->v;
-    uincr = (v1->u - v0->u) / ydiff; // Compute the slope
-    vincr = (v1->v - v0->v) / ydiff; // Compute the slope
-    
-    uint32 count;
+    u = v0.u;
+    v = v0.v;
+    uincr = (v1.u - v0.u) / ydiff; // Compute the slope
+    vincr = (v1.v - v0.v) / ydiff; // Compute the slope
   }
 
   void step_coords()
@@ -195,8 +183,45 @@ public:
     v += uincr;
   }
 
-  const vertex* v0;
-  const vertex* v1;
+  bool clip(int32 top, int32 bottom)
+  {
+    float y = v0.y;
+    float yy = v1.y;
+    // Bail out if the edge is completely clipped
+    if (y >= bottom || yy <= top)
+      return true;
+    
+    float bdiff = yy - bottom;
+    float tdiff = top - y;
+    if (bdiff > 0)
+    {
+      // reduce width from the right
+      v1.x -= bdiff * xincr;
+      v1.y -= bdiff;
+    }
+    
+    if (tdiff > 0)
+    {
+      // reduce width from the left
+      float xdiff = tdiff * xincr;
+      x += xdiff;
+      v0.x += xdiff;
+      v0.y += tdiff;
+
+      // adjust the gradients:
+      r += tdiff * rincr;
+      g += tdiff * gincr;
+      b += tdiff * bincr;
+      a += tdiff * aincr;
+      u += tdiff * uincr;
+      v += tdiff * vincr;
+    }
+    
+    return false;
+  }
+  
+  vertex v0;
+  vertex v1;
 
   float x;
   float xincr;
@@ -214,28 +239,28 @@ public:
 class span
 {
 public:
-  span(const edge* e0, const edge* e1)
+  span(const edge& e0, const edge& e1)
   {
-    x = ToAbove(e0->x);
-    width = ToAbove(e1->x) - x;
+    x = ToAbove(e0.x);
+    width = ToAbove(e1.x) - x;
 
-    float diff = e1->x - e0->x;
+    float diff = e1.x - e0.x;
     
     // color
-    r = e0->r;
-    g = e0->g;
-    b = e0->b;
-    a = e0->a;
-    rincr = (e1->r - e0->r) / diff; // Compute the slope
-    gincr = (e1->g - e0->g) / diff; // Compute the slope
-    bincr = (e1->b - e0->b) / diff; // Compute the slope
-    aincr = (e1->a - e0->a) / diff; // Compute the slope
+    r = e0.r;
+    g = e0.g;
+    b = e0.b;
+    a = e0.a;
+    rincr = (e1.r - e0.r) / diff; // Compute the slope
+    gincr = (e1.g - e0.g) / diff; // Compute the slope
+    bincr = (e1.b - e0.b) / diff; // Compute the slope
+    aincr = (e1.a - e0.a) / diff; // Compute the slope
     
     // texture
-    u = e0->u;
-    v = e0->v;
-    uincr = (e1->u - e0->u) / diff; // Compute the slope
-    vincr = (e1->v - e0->v) / diff; // Compute the slope
+    u = e0.u;
+    v = e0.v;
+    uincr = (e1.u - e0.u) / diff; // Compute the slope
+    vincr = (e1.v - e0.v) / diff; // Compute the slope
   }
 
   uint32 GetColor() const
@@ -255,6 +280,37 @@ public:
   {
     u += uincr;
     v += vincr;
+  }
+  
+  bool clip(int32 left, int32 right)
+  {
+    float xx = x + width;
+    // Bail out if the span is completely clipped
+    if (x >= right || xx <= left)
+      return true;
+    
+    float rdiff = xx - right;
+    float ldiff = left - x;
+    if (rdiff > 0)
+    {
+      // reduce width from the right
+      width -= rdiff;
+    }
+    
+    if (ldiff > 0)
+    {
+      // reduce width from the left
+      x += ldiff;
+      width -= ldiff;
+      r += ldiff * rincr;
+      g += ldiff * gincr;
+      b += ldiff * bincr;
+      a += ldiff * aincr;
+      u += ldiff * uincr;
+      v += ldiff * vincr;
+    }
+    
+    return false;
   }
   
   float x;
@@ -280,15 +336,26 @@ public:
   void DrawTriangle(const vertex& v0, const vertex& v1, const vertex& v2, uint32 color);
   void DrawTriangle(float x0, float y0, float x1, float y1, float x2, float y2, uint32 color);
   
+  void SetClipRect(int32 left, int32 top, int32 right, int32 bottom);
+  
 private:
   Screen<32>* mpScreen;
   bool mOwnScreen;
+  
+  int32 mClipLeft;
+  int32 mClipRight;
+  int32 mClipTop;
+  int32 mClipBottom;
 };
 
 Rasterizer::Rasterizer(Screen<32>* pScreen, bool OwnScreen)
 {
   mOwnScreen = OwnScreen;
   mpScreen = pScreen;
+  mClipLeft = 0;
+  mClipRight = pScreen->GetWidth();
+  mClipTop = 0;
+  mClipBottom = pScreen->GetHeight();
 }
 
 Rasterizer::~Rasterizer()
@@ -297,9 +364,17 @@ Rasterizer::~Rasterizer()
     delete mpScreen;
 }
 
+void Rasterizer::SetClipRect(int32 left, int32 top, int32 right, int32 bottom)
+{
+  mClipLeft = left;
+  mClipRight = right;
+  mClipTop = top;
+  mClipBottom = bottom;
+}
+
 bool compare_edge_y(const edge* e0, const edge* e1)
 {
-  return e0->v0->y < e1->v0->y;
+  return e0->v0.y < e1->v0.y;
 }
 
 bool compare_edge_x(const edge* e0, const edge* e1)
@@ -316,6 +391,9 @@ void Rasterizer::DrawHLine(uint32 x0, uint32 x1, uint32 y, uint32 col)
 
 void Rasterizer::DrawHLine(span& rSpan, int32 y)
 {
+  if (rSpan.clip(mClipLeft, mClipRight))
+    return;
+
   uint32 count = rSpan.width;
   uint32* pSpan = (uint32*)mpScreen->GetPixel(rSpan.x, y);
   while (count--)
@@ -328,6 +406,9 @@ void Rasterizer::DrawHLine(span& rSpan, int32 y)
 
 void Rasterizer::BlendHLine(span& rSpan, int32 y)
 {
+  if (rSpan.clip(mClipLeft, mClipRight))
+    return;
+  
   uint32 count = rSpan.width;
   uint32* pSpan = (uint32*)mpScreen->GetPixel(rSpan.x, y);
   while (count--)
@@ -375,23 +456,23 @@ void Rasterizer::DrawTriangle(const vertex& v0, const vertex& v1, const vertex& 
   std::vector<edge*> edges;
   std::list<edge*> active_edges;
   if (v0.y != v1.y)
-    edges.push_back(new edge(&v0, &v1));
+    edges.push_back(new edge(v0, v1));
   if (v1.y != v2.y)
-    edges.push_back(new edge(&v1, &v2));
+    edges.push_back(new edge(v1, v2));
   if (v2.y != v0.y)
-    edges.push_back(new edge(&v2, &v0));
+    edges.push_back(new edge(v2, v0));
   
   if (edges.empty())
     return;
 
-  uint32 y = ToBelow(edges[0]->v0->y);
+  uint32 y = ToBelow(edges[0]->v0.y);
 
   std::sort(edges.begin(), edges.end(), &compare_edge_y);
   uint32 current_edge = 0;
   for (uint32 e = 0; e < edges.size(); e++)
   {
     // Compute the number of scan lines before this edge is to become active
-    edges[e]->count = ToAbove(edges[e]->v0->y) - y;
+    edges[e]->count = ToAbove(edges[e]->v0.y) - y;
   }
   
   
@@ -403,7 +484,7 @@ void Rasterizer::DrawTriangle(const vertex& v0, const vertex& v1, const vertex& 
       if (edges[e]->count == 0)
       {
         // Make this edge an active one
-        edges[e]->count = ToAbove(edges[e]->v1->y) - ToBelow(edges[e]->v0->y);
+        edges[e]->count = ToAbove(edges[e]->v1.y) - ToBelow(edges[e]->v0.y);
         active_edges.push_back(edges[e]);
         current_edge++;
       }
@@ -475,11 +556,29 @@ void Rasterizer::DrawTriangle(const vertex& v0, const vertex& v1, const vertex& 
   std::vector<edge*> edges;
   std::list<edge*> active_edges;
   if (v0.y != v1.y)
-    edges.push_back(new edge(&v0, &v1));
+  {
+    edge* pEdge = new edge(v0, v1);
+    if (pEdge->clip(mClipTop, mClipBottom))
+      delete pEdge;
+    else
+      edges.push_back(pEdge);
+  }
   if (v1.y != v2.y)
-    edges.push_back(new edge(&v1, &v2));
+  {
+    edge* pEdge = new edge(v1, v2);
+    if (pEdge->clip(mClipTop, mClipBottom))
+      delete pEdge;
+    else
+      edges.push_back(pEdge);
+  }
   if (v2.y != v0.y)
-    edges.push_back(new edge(&v2, &v0));
+  {
+    edge* pEdge = new edge(v2, v0);
+    if (pEdge->clip(mClipTop, mClipBottom))
+      delete pEdge;
+    else
+      edges.push_back(pEdge);
+  }
   
   if (edges.empty())
     return; // float on y?
@@ -499,14 +598,14 @@ void Rasterizer::DrawTriangle(const vertex& v0, const vertex& v1, const vertex& 
       return;
   }
   
-  uint32 y = ToBelow(edges[0]->v0->y);
+  uint32 y = ToBelow(edges[0]->v0.y);
   
   std::sort(edges.begin(), edges.end(), &compare_edge_y);
   uint32 current_edge = 0;
   for (uint32 e = 0; e < edges.size(); e++)
   {
     // Compute the number of scan lines before this edge is to become active
-    edges[e]->count = ToAbove(edges[e]->v0->y) - y;
+    edges[e]->count = ToAbove(edges[e]->v0.y) - y;
   }
   
   
@@ -518,7 +617,7 @@ void Rasterizer::DrawTriangle(const vertex& v0, const vertex& v1, const vertex& 
       if (edges[e]->count == 0)
       {
         // Make this edge an active one
-        edges[e]->count = ToAbove(edges[e]->v1->y) - ToBelow(edges[e]->v0->y);
+        edges[e]->count = ToAbove(edges[e]->v1.y) - ToBelow(edges[e]->v0.y);
         active_edges.push_back(edges[e]);
         current_edge++;
       }
@@ -550,7 +649,7 @@ void Rasterizer::DrawTriangle(const vertex& v0, const vertex& v1, const vertex& 
         // Draw this span
         const float x0 = pLastEdge->x;
         const float x1 = pEdge->x;
-        span Span(pLastEdge, pEdge);
+        span Span(*pLastEdge, *pEdge);
         BlendHLine(Span, y);
         
         pLastEdge = NULL;
@@ -605,6 +704,8 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
   
   Screen<32> screen(info.mWidth, info.mHeight, false, pBuffer);
   Rasterizer rasterizer(&screen, false);
+  rasterizer.SetClipRect(0, 0, 640, 480);
+  
 //  rasterizer.DrawTriangle(10, 10, 20, 15, 5, 20,       0x7f7f0000);
 //  rasterizer.DrawTriangle(100, 10, 200, 10, 100, 100,  0x7f007f00);
 //  rasterizer.DrawTriangle(200, 10, 200, 100, 100, 100, 0x7f00007f);
@@ -615,13 +716,24 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
 //  vertex v3(200, 10,  0, 1, 0);
 //  rasterizer.DrawTriangle(v0, v1, v2);
 //  rasterizer.DrawTriangle(v0, v2, v3);
-
-  vertex v0(10, 10,  1, 0, 0, 0);
-  vertex v1(10, 100,  0, 1, 0, .5);
-  vertex v2(303, 100, 0, 0, 1, .5);
-  vertex v3(303, 10,  0, 1, 0, 1.0);
-  rasterizer.DrawTriangle(v0, v1, v2);
-  rasterizer.DrawTriangle(v0, v2, v3);
+  {
+    vertex v0(10, 10,  1, 0, 0, 0);
+    vertex v1(10, 100,  0, 1, 0, .5);
+    vertex v2(303, 100, 0, 0, 1, .5);
+    vertex v3(303, 10,  0, 1, 0, 1.0);
+    rasterizer.DrawTriangle(v0, v1, v2);
+    rasterizer.DrawTriangle(v0, v2, v3);
+  }
+  
+  rasterizer.SetClipRect(330, 40, 400, 90);
+  {
+    vertex v0(310, 10,  1, 0, 0, 0);
+    vertex v1(310, 100,  0, 1, 0, .5);
+    vertex v2(603, 100, 0, 0, 1, .5);
+    vertex v3(603, 10,  0, 1, 0, 1.0);
+    rasterizer.DrawTriangle(v0, v1, v2);
+    rasterizer.DrawTriangle(v0, v2, v3);
+  }
   
   mpTexture = nuiTexture::GetTexture(mpImage, true);
   nuiImage* pImageUI = new nuiImage(mpTexture);

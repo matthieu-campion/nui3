@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>ActivePerspectiveName</key>
-	<string>Project</string>
+	<string>Debug</string>
 	<key>AllowedModules</key>
 	<array>
 		<dict>
@@ -294,8 +294,6 @@
 							<string>MainColumn</string>
 							<real>247</real>
 						</array>
-						<key>RubberWindowFrame</key>
-						<string>0 59 1920 1119 0 0 1920 1178 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -306,8 +304,6 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -325,10 +321,11 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E58F1C670EED31C800E59387</string>
+										<string>E58F1D990EEDEE5200E59387</string>
 										<key>history</key>
 										<array>
-											<string>E58F1C580EED311900E59387</string>
+											<string>E58F1D5E0EEDE8D900E59387</string>
+											<string>E58F1D610EEDE8D900E59387</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -343,8 +340,6 @@
 							<dict>
 								<key>Frame</key>
 								<string>{{0, 0}, {1651, 1073}}</string>
-								<key>RubberWindowFrame</key>
-								<string>0 59 1920 1119 0 0 1920 1178 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -368,8 +363,6 @@
 									<dict>
 										<key>Frame</key>
 										<string>{{10, 27}, {1651, -27}}</string>
-										<key>RubberWindowFrame</key>
-										<string>0 59 1920 1119 0 0 1920 1178 </string>
 									</dict>
 									<key>Module</key>
 									<string>XCDetailModule</string>
@@ -699,6 +692,8 @@
 					<dict>
 						<key>Frame</key>
 						<string>{{0, 0}, {1920, 346}}</string>
+						<key>RubberWindowFrame</key>
+						<string>0 58 1920 1119 0 0 1920 1178 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXDebugCLIModule</string>
@@ -773,7 +768,11 @@
 							</array>
 							<key>Frame</key>
 							<string>{{0, 277}, {672, 450}}</string>
+							<key>RubberWindowFrame</key>
+							<string>0 58 1920 1119 0 0 1920 1178 </string>
 						</dict>
+						<key>RubberWindowFrame</key>
+						<string>0 58 1920 1119 0 0 1920 1178 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXDebugSessionModule</string>
@@ -829,13 +828,14 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E58F1C680EED31C800E59387</string>
+		<string>E58F1D9A0EEDEE5200E59387</string>
+		<string>E58F1D730EEDEB5400E59387</string>
 		<string>E58F1C5E0EED311900E59387</string>
 		<string>E58F1C5F0EED311900E59387</string>
 		<string>/Users/meeloo/work/nui3/examples/polygon_renderer/polygon_renderer.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>0 59 1920 1119 0 0 1920 1178 </string>
+	<string>0 58 1920 1119 0 0 1920 1178 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>
@@ -1441,8 +1441,8 @@
 			<true/>
 			<key>TableOfContents</key>
 			<array>
-				<string>E57D66250EE9DF9B00904B3A</string>
-				<string>E57D66260EE9DF9B00904B3A</string>
+				<string>E58F1D730EEDEB5400E59387</string>
+				<string>E58F1D740EEDEB5400E59387</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
 				<string>1CA1AED706398EBD00589147</string>
 			</array>
@@ -1451,7 +1451,7 @@
 			<key>WindowString</key>
 			<string>23 746 744 409 0 0 1920 1178 </string>
 			<key>WindowToolGUID</key>
-			<string>E57D66250EE9DF9B00904B3A</string>
+			<string>E58F1D730EEDEB5400E59387</string>
 			<key>WindowToolIsVisible</key>
 			<false/>
 		</dict>
