@@ -17,14 +17,15 @@
 #include "nuiBorderAttributeEditor.h"
 #include "nuiRangeAttributeEditor.h"
 
-nuiAttributeBase::nuiAttributeBase(const nglString& rName, nuiAttributeType type, nuiAttributeUnit unit, const nuiRange& rRange, bool readonly)
+nuiAttributeBase::nuiAttributeBase(const nglString& rName, nuiAttributeType type, nuiAttributeUnit unit, const nuiRange& rRange, bool readonly, uint32 dimension)
 : mName(rName),
   mType(type),
   mUnit(unit),
   mReadOnly(readonly),
   mRange(rRange),
   mIgnoreAttributeChange(false),
-  mOrder(0)
+  mOrder(0),
+  mDimension(dimension)
 {
 
 }

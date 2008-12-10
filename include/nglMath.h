@@ -145,8 +145,8 @@ union _nui_double
   int32 i[2];
 };
 
-#if USE_FAST_FLOAT_CONVERSION
-inline int32 ToNearest(double x) ///< Cast x to an int using "to zero" rounding mode (Normal Ansi C behaviour).
+// fast versions:
+inline int32 FastToNearest(double x) ///< Cast x to an int using "to zero" rounding mode (Normal Ansi C behaviour).
 {
 #ifdef __GNUC__
   _nui_double& rX(reinterpret_cast<_nui_double&>(x));
@@ -159,39 +159,81 @@ inline int32 ToNearest(double x) ///< Cast x to an int using "to zero" rounding 
 #endif
 }
 
+inline int32 FastToNearest(float x) ///< Cast x to an int using "to zero" rounding mode (Normal Ansi C behaviour).
+{
+  return FastToNearest((double)x);
+}
+
+inline int32 FastToZero(double x)  ///< Cast x to an int using "to lower" rounding mode.
+{
+  return ((x < 0.0) ? FastToNearest(x + _nui_doublemagicroundeps) : FastToNearest(x - _nui_doublemagicroundeps));
+}
+
+inline int32 FastToZero(float x)  ///< Cast x to an int using "to lower" rounding mode.
+{
+  return FastToZero((double)x);
+}
+
+inline int32 FastToBelow(double x) ///< Cast x to an int using "to nearest" rounding mode.
+{
+  return FastToNearest(x - _nui_doublemagicroundeps);
+}
+
+inline int32 FastToBelow(float x) ///< Cast x to an int using "to nearest" rounding mode.
+{
+  return FastToBelow((double)x);
+}
+
+inline int32 FastToAbove(double x) ///< Cast x to an int using "to greater" rounding mode.
+{
+  return FastToNearest(x + _nui_doublemagicroundeps);
+}
+
+inline int32 FastToAbove(float x) ///< Cast x to an int using "to greater" rounding mode.
+{
+  return FastToAbove((double)x);
+}
+
+// Accurate versions:
+#if USE_FAST_FLOAT_CONVERSION
+inline int32 ToNearest(double x) ///< Cast x to an int using "to zero" rounding mode (Normal Ansi C behaviour).
+{
+  return FastToNearest(x);
+}
+
 inline int32 ToNearest(float x) ///< Cast x to an int using "to zero" rounding mode (Normal Ansi C behaviour).
 {
-  return ToNearest((double)x);
+  return FastToNearest((double)x);
 }
 
 inline int32 ToZero(double x)  ///< Cast x to an int using "to lower" rounding mode.
 {
-  return ((x < 0.0) ? ToNearest(x + _nui_doublemagicroundeps) : ToNearest(x - _nui_doublemagicroundeps));
+  return FastToZero(x);
 }
 
 inline int32 ToZero(float x)  ///< Cast x to an int using "to lower" rounding mode.
 {
-  return ToZero((double)x);
+  return FastToZero(x);
 }
 
 inline int32 ToBelow(double x) ///< Cast x to an int using "to nearest" rounding mode.
 {
-  return ToNearest(x - _nui_doublemagicroundeps);
+  return FastToBelow(x);
 }
 
 inline int32 ToBelow(float x) ///< Cast x to an int using "to nearest" rounding mode.
 {
-  return ToBelow((double)x);
+  return FastToBelow(x);
 }
 
 inline int32 ToAbove(double x) ///< Cast x to an int using "to greater" rounding mode.
 {
-  return ToNearest(x + _nui_doublemagicroundeps);
+  return FastToAbove(x);
 }
 
 inline int32 ToAbove(float x) ///< Cast x to an int using "to greater" rounding mode.
 {
-  return ToAbove((double)x);
+  return FastToAbove(x);
 }
 #else
 inline int32 ToNearest(double x) ///< Cast x to an int using "to zero" rounding mode (Normal Ansi C behaviour).

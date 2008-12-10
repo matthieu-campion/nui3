@@ -52,19 +52,19 @@ inline uint32 NUI_RGBA(uint8 R, uint8 G, uint8 B, uint8 A)
 
 inline uint32 NUI_RGBA_F(float R, float G, float B, float A)
 {
-  const uint8 r = ToNearest(255.f * R);
-  const uint8 g = ToNearest(255.f * G);
-  const uint8 b = ToNearest(255.f * B);
-  const uint8 a = ToNearest(255.f * A);
+  const uint8 r = FastToNearest(255.f * R);
+  const uint8 g = FastToNearest(255.f * G);
+  const uint8 b = FastToNearest(255.f * B);
+  const uint8 a = FastToNearest(255.f * A);
   return NUI_RGBA(r, g, b, a);
 }
 
 inline uint32 NUI_RGBA(const nuiColor& rColor)
 {
-  const uint8 r = ToNearest(255.f * rColor.Red());
-  const uint8 g = ToNearest(255.f * rColor.Green());
-  const uint8 b = ToNearest(255.f * rColor.Blue());
-  const uint8 a = ToNearest(255.f * rColor.Alpha());
+  const uint8 r = FastToNearest(255.f * rColor.Red());
+  const uint8 g = FastToNearest(255.f * rColor.Green());
+  const uint8 b = FastToNearest(255.f * rColor.Blue());
+  const uint8 a = FastToNearest(255.f * rColor.Alpha());
   return NUI_RGBA(r, g, b, a);
 }
 

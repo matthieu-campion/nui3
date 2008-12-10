@@ -143,7 +143,7 @@ public:
     upward(rV0.y > rV1.y)
   {
     // coords:
-    uint32 ydiff = (ToBelow(v1.y) - ToAbove(v0.y));
+    uint32 ydiff = (FastToBelow(v1.y) - FastToAbove(v0.y));
     x = v0.x;
     xincr = (v1.x - v0.x) / ydiff; // Compute the slope
 
@@ -241,8 +241,8 @@ class span
 public:
   span(const edge& e0, const edge& e1)
   {
-    x = ToAbove(e0.x);
-    width = ToAbove(e1.x) - x;
+    x = FastToAbove(e0.x);
+    width = FastToAbove(e1.x) - x;
 
     float diff = e1.x - e0.x;
     
@@ -465,14 +465,14 @@ void Rasterizer::DrawTriangle(const vertex& v0, const vertex& v1, const vertex& 
   if (edges.empty())
     return;
 
-  uint32 y = ToBelow(edges[0]->v0.y);
+  uint32 y = FastToBelow(edges[0]->v0.y);
 
   std::sort(edges.begin(), edges.end(), &compare_edge_y);
   uint32 current_edge = 0;
   for (uint32 e = 0; e < edges.size(); e++)
   {
     // Compute the number of scan lines before this edge is to become active
-    edges[e]->count = ToAbove(edges[e]->v0.y) - y;
+    edges[e]->count = FastToAbove(edges[e]->v0.y) - y;
   }
   
   
@@ -484,7 +484,7 @@ void Rasterizer::DrawTriangle(const vertex& v0, const vertex& v1, const vertex& 
       if (edges[e]->count == 0)
       {
         // Make this edge an active one
-        edges[e]->count = ToAbove(edges[e]->v1.y) - ToBelow(edges[e]->v0.y);
+        edges[e]->count = FastToAbove(edges[e]->v1.y) - FastToBelow(edges[e]->v0.y);
         active_edges.push_back(edges[e]);
         current_edge++;
       }
@@ -516,7 +516,7 @@ void Rasterizer::DrawTriangle(const vertex& v0, const vertex& v1, const vertex& 
         // Draw this span
         const float x0 = pLastEdge->x;
         const float x1 = pEdge->x;
-        DrawHLine(ToAbove(x0), ToAbove(x1), y, color);
+        DrawHLine(FastToAbove(x0), FastToAbove(x1), y, color);
         
         pLastEdge = NULL;
       }
@@ -599,12 +599,12 @@ void Rasterizer::DrawTriangle(const vertex& v0, const vertex& v1, const vertex& 
   }
     
   std::sort(edges.begin(), edges.end(), &compare_edge_y);
-  uint32 y = ToBelow(edges[0]->v0.y);
+  uint32 y = FastToBelow(edges[0]->v0.y);
   uint32 current_edge = 0;
   for (uint32 e = 0; e < edges.size(); e++)
   {
     // Compute the number of scan lines before this edge is to become active
-    edges[e]->count = ToAbove(edges[e]->v0.y) - y;
+    edges[e]->count = FastToAbove(edges[e]->v0.y) - y;
     NGL_ASSERT(edges[e]->count >= 0);
   }
   
@@ -617,7 +617,7 @@ void Rasterizer::DrawTriangle(const vertex& v0, const vertex& v1, const vertex& 
       if (edges[e]->count == 0)
       {
         // Make this edge an active one
-        edges[e]->count = ToAbove(edges[e]->v1.y) - ToBelow(edges[e]->v0.y);
+        edges[e]->count = FastToAbove(edges[e]->v1.y) - FastToBelow(edges[e]->v0.y);
         active_edges.push_back(edges[e]);
         current_edge++;
       }
