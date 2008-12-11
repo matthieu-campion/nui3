@@ -35,35 +35,35 @@ void nuiGrid::InitAttributes()
   // VerticalSpacing in "common sens" corresponds to DefaultHSpacing in "nuiGrid sens". It's better for css understanding
   AddAttribute(new nuiAttribute<nuiSize>
    (nglString(_T("VerticalSpacing")), nuiUnitSize,
-    nuiAttribute<nuiSize>::GetterDelegate(this, &nuiGrid::GetDefaultHSpacing),
-    nuiAttribute<nuiSize>::SetterDelegate(this, &nuiGrid::SetDefaultHSpacing)));                
+    nuiMakeDelegate(this, &nuiGrid::GetDefaultHSpacing),
+    nuiMakeDelegate(this, &nuiGrid::SetDefaultHSpacing)));                
                 
   // HorizontalSpacing in "common sens" corresponds to DefaultVSpacing in "nuiGrid sens". It's better for css understanding
   AddAttribute(new nuiAttribute<nuiSize>
    (nglString(_T("HorizontalSpacing")), nuiUnitSize,
-    nuiAttribute<nuiSize>::GetterDelegate(this, &nuiGrid::GetDefaultVSpacing),
-    nuiAttribute<nuiSize>::SetterDelegate(this, &nuiGrid::SetDefaultVSpacing)));                
+    nuiMakeDelegate(this, &nuiGrid::GetDefaultVSpacing),
+    nuiMakeDelegate(this, &nuiGrid::SetDefaultVSpacing)));                
 
   // Spacing is a shorcut for both HorizontalSpacing and VerticalSpacing
   AddAttribute(new nuiAttribute<nuiSize>
    (nglString(_T("Spacing")), nuiUnitSize,
-    nuiAttribute<nuiSize>::GetterDelegate(this, &nuiGrid::GetDefaultSpacing),
-    nuiAttribute<nuiSize>::SetterDelegate(this, &nuiGrid::SetDefaultSpacing)));                
+    nuiMakeDelegate(this, &nuiGrid::GetDefaultSpacing),
+    nuiMakeDelegate(this, &nuiGrid::SetDefaultSpacing)));                
 
   //void SetColumnSpacing(uint column, nuiSize hgap); ///< Sets the horizontal spacing to hgap around widgets in the given column.
   //void SetRowSpacing(uint row, nuiSize vgap);       ///< Sets the vertical spacing to hgap  around widgets in the given column.
   
   AddAttribute(new nuiAttribute<nuiSize>
                (nglString(_T("ColumnSpacing")), nuiUnitSize,
-                nuiAttribute<nuiSize>::GetterDelegate1(this, &nuiGrid::GetColumnSpacing),
-                nuiAttribute<nuiSize>::SetterDelegate1(this, &nuiGrid::SetColumnSpacing),
-                nuiAttribute<nuiSize>::ArrayRangeDelegate(this, &nuiGrid::GetColumnDimensionRange)));                
+                nuiMakeDelegate(this, &nuiGrid::GetColumnSpacing),
+                nuiMakeDelegate(this, &nuiGrid::SetColumnSpacing),
+                nuiMakeDelegate(this, &nuiGrid::GetColumnDimensionRange)));                
   
   AddAttribute(new nuiAttribute<nuiSize>
                (nglString(_T("RowSpacing")), nuiUnitSize,
-                nuiAttribute<nuiSize>::GetterDelegate1(this, &nuiGrid::GetRowSpacing),
-                nuiAttribute<nuiSize>::SetterDelegate1(this, &nuiGrid::SetRowSpacing),
-                nuiAttribute<nuiSize>::ArrayRangeDelegate(this, &nuiGrid::GetRowDimensionRange)));                
+                nuiMakeDelegate(this, &nuiGrid::GetRowSpacing),
+                nuiMakeDelegate(this, &nuiGrid::SetRowSpacing),
+                nuiMakeDelegate(this, &nuiGrid::GetRowDimensionRange)));                
   
 }
 

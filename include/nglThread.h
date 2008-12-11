@@ -91,7 +91,7 @@ private:
 class NGL_API nglThreadDelegate : public nglThread
 {
 public:
-  typedef nuiFastDelegate::FastDelegate0<> ThreadDelegate;
+  typedef nuiFastDelegate0<> ThreadDelegate;
   nglThreadDelegate(const ThreadDelegate& rStartFunction, Priority priority = Normal); // Constructor
   nglThreadDelegate(const ThreadDelegate& rStartFunction, const nglString& rName, Priority priority = Normal);
   virtual ~nglThreadDelegate(); // Destructor

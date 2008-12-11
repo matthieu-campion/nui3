@@ -21,7 +21,7 @@ nuiRangeAttributeEditor::nuiRangeAttributeEditor(const nuiAttrib<const nuiRange&
 	
   mpMainBox = NULL;
   Update();
-//	mSink.Connect(mpAttribute->AttributeChanged, nuiFastDelegate::MakeDelegate(this, &nuiRangeAttributeEditor::OnAttributeChanged));
+//	mSink.Connect(mpAttribute->AttributeChanged, nuiMakeDelegate(this, &nuiRangeAttributeEditor::OnAttributeChanged));
 }
 
 

@@ -151,47 +151,47 @@ void nuiLabel::InitAttributes()
 {
   AddAttribute(new nuiAttribute<const nglString&>
   (nglString(_T("Text")), nuiUnitName,
-   nuiFastDelegate::MakeDelegate(this, &nuiLabel::GetText), 
-   nuiFastDelegate::MakeDelegate(this, &nuiLabel::SetText)));
+   nuiMakeDelegate(this, &nuiLabel::GetText), 
+   nuiMakeDelegate(this, &nuiLabel::SetText)));
 
   AddAttribute(new nuiAttribute<const nuiColor&>
   (nglString(_T("TextColor")), nuiUnitNone,
-   nuiFastDelegate::MakeDelegate(this, &nuiLabel::GetTextColor), 
-   nuiFastDelegate::MakeDelegate(this, &nuiLabel::SetTextColor)));
+   nuiMakeDelegate(this, &nuiLabel::GetTextColor), 
+   nuiMakeDelegate(this, &nuiLabel::SetTextColor)));
   
 
   AddAttribute(new nuiAttribute<const nuiColor&>
   (nglString(_T("BackgroundColor")), nuiUnitNone,
-   nuiFastDelegate::MakeDelegate(this, &nuiLabel::GetBackgroundColor), 
-   nuiFastDelegate::MakeDelegate(this, &nuiLabel::SetBackgroundColor)));
+   nuiMakeDelegate(this, &nuiLabel::GetBackgroundColor), 
+   nuiMakeDelegate(this, &nuiLabel::SetBackgroundColor)));
   
 
   AddAttribute(new nuiAttribute<bool>
   (nglString(_T("Background")), nuiUnitYesNo,
-   nuiFastDelegate::MakeDelegate(this, &nuiLabel::GetBackground), 
-   nuiFastDelegate::MakeDelegate(this, &nuiLabel::SetBackground)));
+   nuiMakeDelegate(this, &nuiLabel::GetBackground), 
+   nuiMakeDelegate(this, &nuiLabel::SetBackground)));
   
   AddAttribute(new nuiAttribute<bool>
   (nglString(_T("Underline")), nuiUnitYesNo,
-   nuiFastDelegate::MakeDelegate(this, &nuiLabel::GetUnderline), 
-   nuiFastDelegate::MakeDelegate(this, &nuiLabel::SetUnderline)));
+   nuiMakeDelegate(this, &nuiLabel::GetUnderline), 
+   nuiMakeDelegate(this, &nuiLabel::SetUnderline)));
   
   AddAttribute(new nuiAttribute<bool>
   (nglString(_T("StrikeThrough")), nuiUnitYesNo,
-   nuiFastDelegate::MakeDelegate(this, &nuiLabel::GetStrikeThrough), 
-   nuiFastDelegate::MakeDelegate(this, &nuiLabel::SetStrikeThrough)));
+   nuiMakeDelegate(this, &nuiLabel::GetStrikeThrough), 
+   nuiMakeDelegate(this, &nuiLabel::SetStrikeThrough)));
   
   
   AddAttribute(new nuiAttribute<nuiPosition>
   (nglString(_T("TextPosition")), nuiUnitPosition,
-   nuiFastDelegate::MakeDelegate(this, &nuiLabel::GetTextPosition), 
-   nuiFastDelegate::MakeDelegate(this, &nuiLabel::SetTextPosition)));
+   nuiMakeDelegate(this, &nuiLabel::GetTextPosition), 
+   nuiMakeDelegate(this, &nuiLabel::SetTextPosition)));
   
 
   AddAttribute(new nuiAttribute<const nglString&>
   (nglString(_T("Font")), nuiUnitName,
-    nuiFastDelegate::MakeDelegate(this, &nuiLabel::_GetFont), 
-    nuiFastDelegate::MakeDelegate(this, &nuiLabel::_SetFont)));
+    nuiMakeDelegate(this, &nuiLabel::_GetFont), 
+    nuiMakeDelegate(this, &nuiLabel::_SetFont)));
 }
 
 void nuiLabel::InitProperties()

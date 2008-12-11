@@ -222,62 +222,62 @@ void nuiFontRequest::InitAttributes()
   // Name
   AddAttribute(new nuiAttribute<const nglString&>
                (nglString(_T("Name")), nuiUnitName,
-                nuiFastDelegate::FastDelegate0<const nglString&>(),
-                nuiFastDelegate::MakeDelegate(this, &nuiFontRequest::_SetName)));
+                nuiFastDelegate0<const nglString&>(),
+                nuiMakeDelegate(this, &nuiFontRequest::_SetName)));
   
   // GenericName
   AddAttribute(new nuiAttribute<const nglString&>
                (nglString(_T("GenericName")), nuiUnitName,
-                nuiFastDelegate::FastDelegate0<const nglString&>(),
-                nuiFastDelegate::MakeDelegate(this, &nuiFontRequest::_SetGenericName)));
+                nuiFastDelegate0<const nglString&>(),
+                nuiMakeDelegate(this, &nuiFontRequest::_SetGenericName)));
     
   // Style
   AddAttribute(new nuiAttribute<const nglString&>
                (nglString(_T("Style")), nuiUnitName,
-                nuiFastDelegate::FastDelegate0<const nglString&>(),
-                nuiFastDelegate::MakeDelegate(this, &nuiFontRequest::_SetStyle)));
+                nuiFastDelegate0<const nglString&>(),
+                nuiMakeDelegate(this, &nuiFontRequest::_SetStyle)));
   
   // Face
   AddAttribute(new nuiAttribute<int32>
                (nglString(_T("Face")), nuiUnitNone,
-                nuiFastDelegate::FastDelegate0<int32>(),
-                nuiFastDelegate::MakeDelegate(this, &nuiFontRequest::_SetFace)));
+                nuiFastDelegate0<int32>(),
+                nuiMakeDelegate(this, &nuiFontRequest::_SetFace)));
   
   // Size
   AddAttribute(new nuiAttribute<int32>
                (nglString(_T("Size")), nuiUnitPixels,
-                nuiFastDelegate::FastDelegate0<int32>(),
-                nuiFastDelegate::MakeDelegate(this, &nuiFontRequest::_SetSize)));
+                nuiFastDelegate0<int32>(),
+                nuiMakeDelegate(this, &nuiFontRequest::_SetSize)));
   
   // Italic
   AddAttribute(new nuiAttribute<bool>
                (nglString(_T("Italic")), nuiUnitName,
-                nuiFastDelegate::FastDelegate0<bool>(),
-                nuiFastDelegate::MakeDelegate(this, &nuiFontRequest::_SetItalic)));
+                nuiFastDelegate0<bool>(),
+                nuiMakeDelegate(this, &nuiFontRequest::_SetItalic)));
   
   // Bold
   AddAttribute(new nuiAttribute<bool>
                (nglString(_T("Bold")), nuiUnitName,
-                nuiFastDelegate::FastDelegate0<bool>(),
-                nuiFastDelegate::MakeDelegate(this, &nuiFontRequest::_SetBold)));
+                nuiFastDelegate0<bool>(),
+                nuiMakeDelegate(this, &nuiFontRequest::_SetBold)));
   
   // Proportionnal
   AddAttribute(new nuiAttribute<bool>
                (nglString(_T("Proportionnal")), nuiUnitName,
-                nuiFastDelegate::FastDelegate0<bool>(),
-                nuiFastDelegate::MakeDelegate(this, &nuiFontRequest::_SetProportionnal)));
+                nuiFastDelegate0<bool>(),
+                nuiMakeDelegate(this, &nuiFontRequest::_SetProportionnal)));
   
   // Monospace
   AddAttribute(new nuiAttribute<bool>
                (nglString(_T("Monospace")), nuiUnitName,
-                nuiFastDelegate::FastDelegate0<bool>(),
-                nuiFastDelegate::MakeDelegate(this, &nuiFontRequest::_SetMonospace)));
+                nuiFastDelegate0<bool>(),
+                nuiMakeDelegate(this, &nuiFontRequest::_SetMonospace)));
   
   // Scalable
   AddAttribute(new nuiAttribute<bool>
                (nglString(_T("Scalable")), nuiUnitName,
-                nuiFastDelegate::FastDelegate0<bool>(),
-                nuiFastDelegate::MakeDelegate(this, &nuiFontRequest::_SetScalable)));
+                nuiFastDelegate0<bool>(),
+                nuiMakeDelegate(this, &nuiFontRequest::_SetScalable)));
   
 }
 

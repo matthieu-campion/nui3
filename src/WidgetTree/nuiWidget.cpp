@@ -288,57 +288,57 @@ void nuiWidget::InitAttributes()
   // nuiAttribute<nuiSize> <=> nuiAttribute<double>
   AddAttribute(new nuiAttribute<nuiSize>
                (nglString(_T("BorderLeft")), nuiUnitSize,
-                nuiFastDelegate::MakeDelegate(this, &nuiWidget::GetBorderLeft),
-                nuiFastDelegate::MakeDelegate(this, &nuiWidget::SetBorderLeft)));
+                nuiMakeDelegate(this, &nuiWidget::GetBorderLeft),
+                nuiMakeDelegate(this, &nuiWidget::SetBorderLeft)));
 
   AddAttribute(new nuiAttribute<nuiSize>
                (nglString(_T("BorderTop")), nuiUnitSize,
-                nuiFastDelegate::MakeDelegate(this, &nuiWidget::GetBorderTop),
-                nuiFastDelegate::MakeDelegate(this, &nuiWidget::SetBorderTop)));
+                nuiMakeDelegate(this, &nuiWidget::GetBorderTop),
+                nuiMakeDelegate(this, &nuiWidget::SetBorderTop)));
   
   AddAttribute(new nuiAttribute<nuiSize>
                (nglString(_T("BorderRight")), nuiUnitSize,
-                nuiFastDelegate::MakeDelegate(this, &nuiWidget::GetBorderRight),
-                nuiFastDelegate::MakeDelegate(this, &nuiWidget::SetBorderRight)));
+                nuiMakeDelegate(this, &nuiWidget::GetBorderRight),
+                nuiMakeDelegate(this, &nuiWidget::SetBorderRight)));
   
   AddAttribute(new nuiAttribute<nuiSize>
                (nglString(_T("BorderBottom")), nuiUnitSize,
-                nuiFastDelegate::MakeDelegate(this, &nuiWidget::GetBorderBottom),
-                nuiFastDelegate::MakeDelegate(this, &nuiWidget::SetBorderBottom)));
+                nuiMakeDelegate(this, &nuiWidget::GetBorderBottom),
+                nuiMakeDelegate(this, &nuiWidget::SetBorderBottom)));
   
   // nuiAttribute<nuiSize> <=> nuiAttribute<double>
   AddAttribute(new nuiAttribute<nuiSize>
                (nglString(_T("ActualBorderLeft")), nuiUnitSize,
-                nuiFastDelegate::MakeDelegate(this, &nuiWidget::GetActualBorderLeft)));
+                nuiMakeDelegate(this, &nuiWidget::GetActualBorderLeft)));
   
   AddAttribute(new nuiAttribute<nuiSize>
                (nglString(_T("ActualBorderTop")), nuiUnitSize,
-                nuiFastDelegate::MakeDelegate(this, &nuiWidget::GetActualBorderTop)));
+                nuiMakeDelegate(this, &nuiWidget::GetActualBorderTop)));
   
   AddAttribute(new nuiAttribute<nuiSize>
                (nglString(_T("ActualBorderRight")), nuiUnitSize,
-                nuiFastDelegate::MakeDelegate(this, &nuiWidget::GetActualBorderRight)));
+                nuiMakeDelegate(this, &nuiWidget::GetActualBorderRight)));
   
   AddAttribute(new nuiAttribute<nuiSize>
                (nglString(_T("ActualBorderBottom")), nuiUnitSize,
-                nuiFastDelegate::MakeDelegate(this, &nuiWidget::GetActualBorderBottom)));
+                nuiMakeDelegate(this, &nuiWidget::GetActualBorderBottom)));
   
   nuiAttribute<nuiPosition>* AttributePosition = new nuiAttribute<nuiPosition>
   (nglString(_T("Position")), nuiUnitPosition,
-   nuiFastDelegate::MakeDelegate(this, &nuiWidget::GetPosition), 
-   nuiFastDelegate::MakeDelegate(this, &nuiWidget::SetPosition));
+   nuiMakeDelegate(this, &nuiWidget::GetPosition), 
+   nuiMakeDelegate(this, &nuiWidget::SetPosition));
   AddAttribute(_T("Position"), AttributePosition);
   
   nuiAttribute<nuiPosition>* AttributeFillRule = new nuiAttribute<nuiPosition>
   (nglString(_T("FillRule")), nuiUnitPosition,
-   nuiFastDelegate::MakeDelegate(this, &nuiWidget::GetFillRule), 
-   nuiFastDelegate::MakeDelegate(this, &nuiWidget::SetFillRule));
+   nuiMakeDelegate(this, &nuiWidget::GetFillRule), 
+   nuiMakeDelegate(this, &nuiWidget::SetFillRule));
   AddAttribute(_T("FillRule"), AttributeFillRule);
 
   AddAttribute(new nuiAttribute<nuiMouseCursor>
                (nglString(_T("Cursor")), nuiUnitNone,
-                nuiFastDelegate::MakeDelegate(this, &nuiWidget::GetMouseCursor),
-                nuiFastDelegate::MakeDelegate(this, &nuiWidget::SetAttrMouseCursor)));
+                nuiMakeDelegate(this, &nuiWidget::GetMouseCursor),
+                nuiMakeDelegate(this, &nuiWidget::SetAttrMouseCursor)));
   
   
   AddAttribute(new nuiAttribute<bool>

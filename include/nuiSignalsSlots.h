@@ -45,23 +45,23 @@ protected:
     mDisabled = false;
   }
 
-  virtual void DisconnectInternal(const nuiFastDelegate::DelegateMemento &slot) = 0;
+  virtual void DisconnectInternal(const nuiDelegateMemento &slot) = 0;
 
-  void RemoveConnection(nuiSlotsSink &rSink, const nuiFastDelegate::DelegateMemento &rSlot);
-  void AddConnection(nuiSlotsSink &rSink, const nuiFastDelegate::DelegateMemento &rSlot);
+  void RemoveConnection(nuiSlotsSink &rSink, const nuiDelegateMemento &rSlot);
+  void AddConnection(nuiSlotsSink &rSink, const nuiDelegateMemento &rSlot);
 
   bool mDisabled;
 
 };
 
 // N=0
-template<class RetType = nuiFastDelegate::detail::DefaultVoid>
+template<class RetType = detail::DefaultVoid>
 class nuiSignal0 : public nuiSignal, private nuiNonCopyable 
 {
   friend class nuiSlotsSink;
 public:
-  typedef typename nuiFastDelegate::detail::DefaultVoidToVoid<RetType>::type DesiredRetType;
-  typedef typename nuiFastDelegate::FastDelegate0<DesiredRetType> Slot;
+  typedef typename detail::DefaultVoidToVoid<RetType>::type DesiredRetType;
+  typedef nuiFastDelegate0<DesiredRetType> Slot;
 
   nuiSignal0()
   {
@@ -113,7 +113,7 @@ private:
       mSlots.erase(it);
   }
 
-  virtual void DisconnectInternal(const nuiFastDelegate::DelegateMemento &rSlot_)
+  virtual void DisconnectInternal(const nuiDelegateMemento &rSlot_)
   {
     Slot slot;
     slot.SetMemento(rSlot_);
@@ -127,13 +127,13 @@ private:
 };
 
 // N=1
-template<typename Param1, typename RetType=nuiFastDelegate::detail::DefaultVoid>
+template<typename Param1, typename RetType=detail::DefaultVoid>
 class nuiSignal1 : public nuiSignal, nuiNonCopyable  
 {
   friend class nuiSlotsSink;
 public:
-  typedef typename nuiFastDelegate::detail::DefaultVoidToVoid<RetType>::type DesiredRetType;
-  typedef typename nuiFastDelegate::FastDelegate1<Param1, DesiredRetType> Slot;
+  typedef typename detail::DefaultVoidToVoid<RetType>::type DesiredRetType;
+  typedef nuiFastDelegate1<Param1, DesiredRetType> Slot;
 
   nuiSignal1()
   {
@@ -185,7 +185,7 @@ private:
       mSlots.erase(it);
   }
 
-  virtual void DisconnectInternal(const nuiFastDelegate::DelegateMemento &slot_)
+  virtual void DisconnectInternal(const nuiDelegateMemento &slot_)
   {
     Slot slot;
     slot.SetMemento(slot_);
@@ -199,13 +199,13 @@ private:
 };
 
 // N=2
-template<class Param1, class Param2, class RetType=nuiFastDelegate::detail::DefaultVoid>
+template<class Param1, class Param2, class RetType=detail::DefaultVoid>
 class nuiSignal2 : public nuiSignal, nuiNonCopyable 
 {
   friend class nuiSlotsSink;
 public:
-  typedef typename nuiFastDelegate::detail::DefaultVoidToVoid<RetType>::type DesiredRetType;
-  typedef typename nuiFastDelegate::FastDelegate2<Param1, Param2, DesiredRetType> Slot;
+  typedef typename detail::DefaultVoidToVoid<RetType>::type DesiredRetType;
+  typedef nuiFastDelegate2<Param1, Param2, DesiredRetType> Slot;
 
   nuiSignal2()
   {
@@ -258,7 +258,7 @@ private:
       mSlots.erase(it);
   }
 
-  virtual void DisconnectInternal(const nuiFastDelegate::DelegateMemento &slot_)
+  virtual void DisconnectInternal(const nuiDelegateMemento &slot_)
   {
     Slot slot;
     slot.SetMemento(slot_);
@@ -272,13 +272,13 @@ private:
 };
 
 // N=3
-template<class Param1, class Param2, class Param3, class RetType=nuiFastDelegate::detail::DefaultVoid>
+template<class Param1, class Param2, class Param3, class RetType=detail::DefaultVoid>
 class nuiSignal3 : public nuiSignal, nuiNonCopyable  
 {
   friend class nuiSlotsSink;
 public:
-  typedef typename nuiFastDelegate::detail::DefaultVoidToVoid<RetType>::type DesiredRetType;
-  typedef typename nuiFastDelegate::FastDelegate3<Param1, Param2, Param3, DesiredRetType> Slot;
+  typedef typename detail::DefaultVoidToVoid<RetType>::type DesiredRetType;
+  typedef nuiFastDelegate3<Param1, Param2, Param3, DesiredRetType> Slot;
 
   nuiSignal3()
   {
@@ -330,7 +330,7 @@ private:
       mSlots.erase(it);
   }
 
-  virtual void DisconnectInternal(const nuiFastDelegate::DelegateMemento &slot_)
+  virtual void DisconnectInternal(const nuiDelegateMemento &slot_)
   {
     Slot slot;
     slot.SetMemento(slot_);
@@ -394,11 +394,11 @@ public:
   }
 
 private:
-  void AddConnection(nuiSignal* pSignal, const nuiFastDelegate::DelegateMemento &slot);
-  void RemoveConnection(nuiSignal* pSignal, const nuiFastDelegate::DelegateMemento &slot);
+  void AddConnection(nuiSignal* pSignal, const nuiDelegateMemento &slot);
+  void RemoveConnection(nuiSignal* pSignal, const nuiDelegateMemento &slot);
 
 private:
-  std::map<nuiSignal*, nuiFastDelegate::DelegateMemento> mConnections;
+  std::map<nuiSignal*, nuiDelegateMemento> mConnections;
 };
 
 

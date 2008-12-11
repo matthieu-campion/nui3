@@ -128,68 +128,68 @@ void nuiGradientDecoration::InitAttributes()
 
   nuiAttribute<uint32>* StrokeSize= new nuiAttribute<uint32>
   (nglString(_T("StrokeSize")), nuiUnitPixels,
-   nuiFastDelegate::MakeDelegate(this, &nuiGradientDecoration::GetStrokeSize),
-   nuiFastDelegate::MakeDelegate(this, &nuiGradientDecoration::SetStrokeSize));
+   nuiMakeDelegate(this, &nuiGradientDecoration::GetStrokeSize),
+   nuiMakeDelegate(this, &nuiGradientDecoration::SetStrokeSize));
 	AddAttribute(_T("StrokeSize"), StrokeSize);
   
   nuiAttribute<const nuiColor&>* Color1 = new nuiAttribute<const nuiColor&>
   (nglString(_T("Color1")), nuiUnitColor,
-   nuiFastDelegate::MakeDelegate(this, &nuiGradientDecoration::GetColor1), 
-   nuiFastDelegate::MakeDelegate(this, &nuiGradientDecoration::SetColor1));
+   nuiMakeDelegate(this, &nuiGradientDecoration::GetColor1), 
+   nuiMakeDelegate(this, &nuiGradientDecoration::SetColor1));
 	AddAttribute(_T("Color1"), Color1);
   
   nuiAttribute<const nuiColor&>* Color2 = new nuiAttribute<const nuiColor&>
   (nglString(_T("Color2")), nuiUnitColor,
-   nuiFastDelegate::MakeDelegate(this, &nuiGradientDecoration::GetColor2), 
-   nuiFastDelegate::MakeDelegate(this, &nuiGradientDecoration::SetColor2));
+   nuiMakeDelegate(this, &nuiGradientDecoration::GetColor2), 
+   nuiMakeDelegate(this, &nuiGradientDecoration::SetColor2));
 	AddAttribute(_T("Color2"), Color2);
   
   nuiAttribute<const nuiColor&>* Color3 = new nuiAttribute<const nuiColor&>
   (nglString(_T("Color3")), nuiUnitColor,
-   nuiFastDelegate::MakeDelegate(this, &nuiGradientDecoration::GetColor3), 
-   nuiFastDelegate::MakeDelegate(this, &nuiGradientDecoration::SetColor3));
+   nuiMakeDelegate(this, &nuiGradientDecoration::GetColor3), 
+   nuiMakeDelegate(this, &nuiGradientDecoration::SetColor3));
 	AddAttribute(_T("Color3"), Color3);
   
   nuiAttribute<const nuiColor&>* Color4 = new nuiAttribute<const nuiColor&>
   (nglString(_T("Color4")), nuiUnitColor,
-   nuiFastDelegate::MakeDelegate(this, &nuiGradientDecoration::GetColor4), 
-   nuiFastDelegate::MakeDelegate(this, &nuiGradientDecoration::SetColor4));
+   nuiMakeDelegate(this, &nuiGradientDecoration::GetColor4), 
+   nuiMakeDelegate(this, &nuiGradientDecoration::SetColor4));
 	AddAttribute(_T("Color4"), Color4);
   
   nuiAttribute<const nuiColor&>* StrokeColor = new nuiAttribute<const nuiColor&>
   (nglString(_T("StrokeColor")), nuiUnitColor,
-   nuiFastDelegate::MakeDelegate(this, &nuiGradientDecoration::GetStrokeColor), 
-   nuiFastDelegate::MakeDelegate(this, &nuiGradientDecoration::SetStrokeColor));
+   nuiMakeDelegate(this, &nuiGradientDecoration::GetStrokeColor), 
+   nuiMakeDelegate(this, &nuiGradientDecoration::SetStrokeColor));
 	AddAttribute(_T("StrokeColor"), StrokeColor);
   
   
   AddAttribute(new nuiAttribute<nuiShapeMode>
   (nglString(_T("ShapeMode")), nuiUnitNone,
-   nuiFastDelegate::MakeDelegate(this, &nuiGradientDecoration::GetShapeMode), 
-   nuiFastDelegate::MakeDelegate(this, &nuiGradientDecoration::SetShapeMode)));
+   nuiMakeDelegate(this, &nuiGradientDecoration::GetShapeMode), 
+   nuiMakeDelegate(this, &nuiGradientDecoration::SetShapeMode)));
   
   nuiAttribute<double>* Offset1 = new nuiAttribute<double>
   (nglString(_T("Offset1")), nuiUnitPercent,
-   nuiFastDelegate::MakeDelegate(this, &nuiGradientDecoration::GetOffset1), 
-   nuiFastDelegate::MakeDelegate(this, &nuiGradientDecoration::SetOffset1));
+   nuiMakeDelegate(this, &nuiGradientDecoration::GetOffset1), 
+   nuiMakeDelegate(this, &nuiGradientDecoration::SetOffset1));
 	AddAttribute(_T("Offset1"), Offset1);
 
   nuiAttribute<double>* Offset2 = new nuiAttribute<double>
   (nglString(_T("Offset2")), nuiUnitPercent,
-   nuiFastDelegate::MakeDelegate(this, &nuiGradientDecoration::GetOffset2), 
-   nuiFastDelegate::MakeDelegate(this, &nuiGradientDecoration::SetOffset2));
+   nuiMakeDelegate(this, &nuiGradientDecoration::GetOffset2), 
+   nuiMakeDelegate(this, &nuiGradientDecoration::SetOffset2));
 	AddAttribute(_T("Offset2"), Offset2);
 
   nuiAttribute<double>* Offset3 = new nuiAttribute<double>
   (nglString(_T("Offset3")), nuiUnitPercent,
-   nuiFastDelegate::MakeDelegate(this, &nuiGradientDecoration::GetOffset3), 
-   nuiFastDelegate::MakeDelegate(this, &nuiGradientDecoration::SetOffset3));
+   nuiMakeDelegate(this, &nuiGradientDecoration::GetOffset3), 
+   nuiMakeDelegate(this, &nuiGradientDecoration::SetOffset3));
 	AddAttribute(_T("Offset3"), Offset3);
 
   nuiAttribute<double>* Offset4 = new nuiAttribute<double>
   (nglString(_T("Offset4")), nuiUnitPercent,
-   nuiFastDelegate::MakeDelegate(this, &nuiGradientDecoration::GetOffset4), 
-   nuiFastDelegate::MakeDelegate(this, &nuiGradientDecoration::SetOffset4));
+   nuiMakeDelegate(this, &nuiGradientDecoration::GetOffset4), 
+   nuiMakeDelegate(this, &nuiGradientDecoration::SetOffset4));
 	AddAttribute(_T("Offset4"), Offset4);
 }
 

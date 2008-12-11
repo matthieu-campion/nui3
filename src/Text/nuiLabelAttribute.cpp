@@ -13,14 +13,14 @@ nuiLabelAttribute::nuiLabelAttribute(const nuiAttrib<const nglString&>& rAttribu
 {
 	SetObjectClass(_T("nuiLabelAttribute"));
 
-	mSink.Connect(rAttribute.GetChangedSignal(), nuiFastDelegate::MakeDelegate(this, &nuiLabelAttribute::OnAttributeChanged));
+	mSink.Connect(rAttribute.GetChangedSignal(), nuiMakeDelegate(this, &nuiLabelAttribute::OnAttributeChanged));
 }
 
 
 nuiLabelAttribute::nuiLabelAttribute(const nuiAttrib<const nglString&>& rAttribute, nuiFont* pFont, bool AlreadyAcquired)
 	: nuiLabel(rAttribute.Get(), pFont, AlreadyAcquired)
 {
-	mSink.Connect(rAttribute.GetChangedSignal(), nuiFastDelegate::MakeDelegate(this, &nuiLabelAttribute::OnAttributeChanged));
+	mSink.Connect(rAttribute.GetChangedSignal(), nuiMakeDelegate(this, &nuiLabelAttribute::OnAttributeChanged));
 }
 
 

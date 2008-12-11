@@ -95,8 +95,8 @@ void nuiImage::InitAttributes()
 {
   AddAttribute(new nuiAttribute<const nglPath&>
    (nglString(_T("Texture")), nuiUnitNone,
-    nuiFastDelegate::MakeDelegate(this, &nuiImage::GetTexturePath), 
-    nuiFastDelegate::MakeDelegate(this, &nuiImage::SetTexturePath)));
+    nuiMakeDelegate(this, &nuiImage::GetTexturePath), 
+    nuiMakeDelegate(this, &nuiImage::SetTexturePath)));
 }
 
 

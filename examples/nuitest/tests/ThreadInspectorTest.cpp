@@ -220,7 +220,7 @@ bool ThreadInspectorTest::RemoveLLThread(const nuiEvent& rEvent)
 TITthread::TITthread(const nglString& rName)
   : mRunCS(_T("CSrunning"))
   , mLockCS(_T("CSlocking"))
-  , mThread(nuiFastDelegate::MakeDelegate(this, &TITthread::OnStart), rName)
+  , mThread(nuiMakeDelegate(this, &TITthread::OnStart), rName)
 {
   mRunning = false;
 
@@ -369,18 +369,18 @@ void TITCSthread::InitAttributes()
 {
   AddAttribute(new nuiAttribute<bool>
     (nglString(_T("LockedA")), nuiUnitOnOff,
-     nuiFastDelegate::MakeDelegate(this, &TITthread::IsLockedA),
-     nuiFastDelegate::MakeDelegate(this, &TITthread::SetLockedA)));
+     nuiMakeDelegate(this, &TITthread::IsLockedA),
+     nuiMakeDelegate(this, &TITthread::SetLockedA)));
 
   AddAttribute(new nuiAttribute<bool>
     (nglString(_T("LockedB")), nuiUnitOnOff,
-     nuiFastDelegate::MakeDelegate(this, &TITthread::IsLockedB),
-     nuiFastDelegate::MakeDelegate(this, &TITthread::SetLockedB)));
+     nuiMakeDelegate(this, &TITthread::IsLockedB),
+     nuiMakeDelegate(this, &TITthread::SetLockedB)));
 
   AddAttribute(new nuiAttribute<bool>
     (nglString(_T("LockedC")), nuiUnitOnOff,
-     nuiFastDelegate::MakeDelegate(this, &TITthread::IsLockedC),
-     nuiFastDelegate::MakeDelegate(this, &TITthread::SetLockedC)));
+     nuiMakeDelegate(this, &TITthread::IsLockedC),
+     nuiMakeDelegate(this, &TITthread::SetLockedC)));
 }
 
 

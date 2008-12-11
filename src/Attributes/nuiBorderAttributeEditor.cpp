@@ -21,7 +21,7 @@ nuiBorderAttributeEditor::nuiBorderAttributeEditor(const nuiAttrib<nuiBorder>& r
 	mpLabel = new nuiLabel(contents);
 	AddChild(mpLabel);
 
-	mSink.Connect(mAttribute.GetChangedSignal(), nuiFastDelegate::MakeDelegate(this, &nuiBorderAttributeEditor::OnAttributeChanged));
+	mSink.Connect(mAttribute.GetChangedSignal(), nuiMakeDelegate(this, &nuiBorderAttributeEditor::OnAttributeChanged));
 }
 
 
@@ -38,7 +38,7 @@ nuiBorderAttributeEditor::nuiBorderAttributeEditor(const nuiAttrib<const nuiBord
 	mpLabel = new nuiLabel(contents);
 	AddChild(mpLabel);
 
-	mSink.Connect(mConstAttribute.GetChangedSignal(), nuiFastDelegate::MakeDelegate(this, &nuiBorderAttributeEditor::OnConstAttributeChanged));
+	mSink.Connect(mConstAttribute.GetChangedSignal(), nuiMakeDelegate(this, &nuiBorderAttributeEditor::OnConstAttributeChanged));
 }
 
 

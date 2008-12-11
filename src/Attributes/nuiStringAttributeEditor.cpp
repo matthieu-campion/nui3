@@ -37,7 +37,7 @@ nuiStringAttributeEditor::nuiStringAttributeEditor(const nuiAttrib<nglString>& r
     AddChild(mpLabel);
 	}
 	
-	mSink.Connect(mAttribute.GetChangedSignal(), nuiFastDelegate::MakeDelegate(this, &nuiStringAttributeEditor::OnAttributeChanged));
+	mSink.Connect(mAttribute.GetChangedSignal(), nuiMakeDelegate(this, &nuiStringAttributeEditor::OnAttributeChanged));
 }
 
 
@@ -66,7 +66,7 @@ nuiStringAttributeEditor::nuiStringAttributeEditor(const nuiAttrib<const nglStri
     AddChild(mpLabel);
 	}
 	
-	mSink.Connect(mConstAttribute.GetChangedSignal(), nuiFastDelegate::MakeDelegate(this, &nuiStringAttributeEditor::OnConstAttributeChanged));
+	mSink.Connect(mConstAttribute.GetChangedSignal(), nuiMakeDelegate(this, &nuiStringAttributeEditor::OnConstAttributeChanged));
 }
 
 nuiStringAttributeEditor::~nuiStringAttributeEditor()

@@ -64,8 +64,8 @@ void nuiKnob::InitAttributes()
 {
   nuiAttribute<const nglPath&>* AttributeTexture = new nuiAttribute<const nglPath&>
   (nglString(_T("Sequence")), nuiUnitNone,
-   nuiFastDelegate::MakeDelegate(this, &nuiKnob::GetSequencePath), 
-   nuiFastDelegate::MakeDelegate(this, &nuiKnob::SetSequencePath));
+   nuiMakeDelegate(this, &nuiKnob::GetSequencePath), 
+   nuiMakeDelegate(this, &nuiKnob::SetSequencePath));
   
   nuiAttribute<uint32>* AttributeNbFrames = new nuiAttribute<uint32>
   (nglString(_T("NbFrames")), nuiUnitNone,

@@ -2075,8 +2075,8 @@ bool nuiWin::CreateSignalsAndSlotsTestWindow(const nuiEvent& rEvent)
   t2.PrintName(pText);
 
   pText->AddText(nuiTR("Delegate access:\n"));
-  nuiFastDelegate::FastDelegate1<nuiText*> delegate1(&t1, &DelegateTest::PrintName);
-  nuiFastDelegate::FastDelegate1<nuiText*> delegate2(&t2, &DelegateTest::PrintName);
+  nuiFastDelegate1<nuiText*> delegate1(&t1, &DelegateTest::PrintName);
+  nuiFastDelegate1<nuiText*> delegate2(&t2, &DelegateTest::PrintName);
 
   delegate1(pText);
   delegate2(pText);
@@ -2463,7 +2463,7 @@ bool nuiWin::AudioDeviceSelected(const nuiEvent& rEvent)
 
   MyAudioStreamHandler handler(pDev->GetSampleRates().back());
 
-  res = pDev->Open(InChannels, OutChannels, pDev->GetSampleRates().back(), pDev->GetBufferSizes().back(), nuiFastDelegate::MakeDelegate(&handler, &MyAudioStreamHandler::Process));
+  res = pDev->Open(InChannels, OutChannels, pDev->GetSampleRates().back(), pDev->GetBufferSizes().back(), nuiMakeDelegate(&handler, &MyAudioStreamHandler::Process));
 
   if (!res)
   {
@@ -3333,7 +3333,7 @@ bool nuiWin::MatrixViewWindow (const nuiEvent& rEvent)
   nuiMatrixView* mat = new nuiMatrixView (length, length, true, true, nuiMatrixView::mDefaultFormater, nuiRange(0.0f,0.0f,100.0f,0.0f,10.0f), 2, 2);
   vbox->SetCell(0, mat);
 
-  mSink.Connect(mat->GetItemDesc, nuiFastDelegate::MakeDelegate(this, &nuiWin::GetMatrixViewItemDesc));
+  mSink.Connect(mat->GetItemDesc, nuiMakeDelegate(this, &nuiWin::GetMatrixViewItemDesc));
 
 
   mat->Init();

@@ -68,23 +68,23 @@ void nuiColorDecoration::InitAttributes()
 
   AddAttribute(new nuiAttribute<uint32>
   (nglString(_T("StrokeSize")), nuiUnitPixels,
-   nuiFastDelegate::MakeDelegate(this, &nuiColorDecoration::GetStrokeSize),
-   nuiFastDelegate::MakeDelegate(this, &nuiColorDecoration::SetStrokeSize)));
+   nuiMakeDelegate(this, &nuiColorDecoration::GetStrokeSize),
+   nuiMakeDelegate(this, &nuiColorDecoration::SetStrokeSize)));
   
   AddAttribute(new nuiAttribute<const nuiColor&>
   (nglString(_T("FillColor")), nuiUnitColor,
-   nuiFastDelegate::MakeDelegate(this, &nuiColorDecoration::GetFillColor), 
-   nuiFastDelegate::MakeDelegate(this, &nuiColorDecoration::SetFillColor)));
+   nuiMakeDelegate(this, &nuiColorDecoration::GetFillColor), 
+   nuiMakeDelegate(this, &nuiColorDecoration::SetFillColor)));
 
   AddAttribute(new nuiAttribute<const nuiColor&>
   (nglString(_T("StrokeColor")), nuiUnitColor,
-   nuiFastDelegate::MakeDelegate(this, &nuiColorDecoration::GetStrokeColor), 
-   nuiFastDelegate::MakeDelegate(this, &nuiColorDecoration::SetStrokeColor)));
+   nuiMakeDelegate(this, &nuiColorDecoration::GetStrokeColor), 
+   nuiMakeDelegate(this, &nuiColorDecoration::SetStrokeColor)));
 
   AddAttribute(new nuiAttribute<nuiShapeMode>
   (nglString(_T("ShapeMode")), nuiUnitNone,
-   nuiFastDelegate::MakeDelegate(this, &nuiColorDecoration::GetShapeMode), 
-   nuiFastDelegate::MakeDelegate(this, &nuiColorDecoration::SetShapeMode)));
+   nuiMakeDelegate(this, &nuiColorDecoration::GetShapeMode), 
+   nuiMakeDelegate(this, &nuiColorDecoration::SetShapeMode)));
 
   
 }

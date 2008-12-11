@@ -50,7 +50,7 @@ nuiPercentAttributeEditor::nuiPercentAttributeEditor(const nuiAttrib<float>& rAt
 	mpSlider = new nuiSlider(nuiHorizontal, mAttribute.GetRange());
 	vbox->AddCell(mpSlider);
 	
-	mSink.Connect(mAttribute.GetChangedSignal(), nuiFastDelegate::MakeDelegate(this, &nuiPercentAttributeEditor::OnAttributeChanged));	
+	mSink.Connect(mAttribute.GetChangedSignal(), nuiMakeDelegate(this, &nuiPercentAttributeEditor::OnAttributeChanged));	
 	
 	mEventSink.Connect(mpSlider->InteractiveValueChanged, &nuiPercentAttributeEditor::OnChanged);
 }

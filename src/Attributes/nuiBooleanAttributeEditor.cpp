@@ -25,7 +25,7 @@ nuiBooleanAttributeEditor::nuiBooleanAttributeEditor(const nuiAttrib<bool>& rAtt
   mpBtn->SetEnabled(!rAttribute.IsReadOnly());
 	AddChild(mpBtn);
 	
-	mSink.Connect(rAttribute.GetChangedSignal(), nuiFastDelegate::MakeDelegate(this, &nuiBooleanAttributeEditor::OnAttributeChanged));
+	mSink.Connect(rAttribute.GetChangedSignal(), nuiMakeDelegate(this, &nuiBooleanAttributeEditor::OnAttributeChanged));
 }
 
 

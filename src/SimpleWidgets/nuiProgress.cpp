@@ -75,18 +75,18 @@ void nuiProgress::InitAttributes()
 {
   AddAttribute(new nuiAttribute<const nuiColor&>
                (nglString(_T("ForegroundColor")), nuiUnitNone,
-                nuiFastDelegate::MakeDelegate(this, &nuiProgress::GetFGColor), 
-                nuiFastDelegate::MakeDelegate(this, &nuiProgress::SetFGColor)));
+                nuiMakeDelegate(this, &nuiProgress::GetFGColor), 
+                nuiMakeDelegate(this, &nuiProgress::SetFGColor)));
 
   AddAttribute(new nuiAttribute<const nuiColor&>
                (nglString(_T("BackgroundColor")), nuiUnitNone,
-                nuiFastDelegate::MakeDelegate(this, &nuiProgress::GetBGColor), 
-                nuiFastDelegate::MakeDelegate(this, &nuiProgress::SetBGColor)));
+                nuiMakeDelegate(this, &nuiProgress::GetBGColor), 
+                nuiMakeDelegate(this, &nuiProgress::SetBGColor)));
 
   AddAttribute(new nuiAttribute<float>
                (nglString(_T("Glow")), nuiUnitNone,
-                nuiFastDelegate::MakeDelegate(this, &nuiProgress::GetGlow), 
-                nuiFastDelegate::MakeDelegate(this, &nuiProgress::SetGlow)));
+                nuiMakeDelegate(this, &nuiProgress::GetGlow), 
+                nuiMakeDelegate(this, &nuiProgress::SetGlow)));
   
   
 }

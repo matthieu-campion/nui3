@@ -73,8 +73,8 @@ void nuiFrame::InitAttributes()
   
   nuiAttribute<const nglPath&>* AttributeTexture = new nuiAttribute<const nglPath&>
    (nglString(_T("Texture")), nuiUnitNone,
-    nuiFastDelegate::MakeDelegate(this, &nuiFrame::GetTexturePath), 
-    nuiFastDelegate::MakeDelegate(this, &nuiFrame::SetTexturePath));
+    nuiMakeDelegate(this, &nuiFrame::GetTexturePath), 
+    nuiMakeDelegate(this, &nuiFrame::SetTexturePath));
 
   nuiAttribute<bool>* AttributeInterpolation = new nuiAttribute<bool>
    (nglString(_T("Interpolation")), nuiUnitBoolean,

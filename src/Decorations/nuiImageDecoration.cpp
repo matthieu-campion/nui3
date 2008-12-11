@@ -66,13 +66,13 @@ void nuiImageDecoration::InitAttributes()
   
   nuiAttribute<const nglPath&>* AttributeTexture = new nuiAttribute<const nglPath&>
    (nglString(_T("Texture")), nuiUnitNone,
-    nuiFastDelegate::MakeDelegate(this, &nuiImageDecoration::GetTexturePath), 
-    nuiFastDelegate::MakeDelegate(this, &nuiImageDecoration::SetTexturePath));
+    nuiMakeDelegate(this, &nuiImageDecoration::GetTexturePath), 
+    nuiMakeDelegate(this, &nuiImageDecoration::SetTexturePath));
 
   nuiAttribute<nuiPosition>* AttributePosition = new nuiAttribute<nuiPosition>
    (nglString(_T("Position")), nuiUnitPosition,
-    nuiFastDelegate::MakeDelegate(this, &nuiImageDecoration::GetPosition), 
-    nuiFastDelegate::MakeDelegate(this, &nuiImageDecoration::SetPosition));
+    nuiMakeDelegate(this, &nuiImageDecoration::GetPosition), 
+    nuiMakeDelegate(this, &nuiImageDecoration::SetPosition));
   
   nuiAttribute<const nuiColor&>* AttributeColor = new nuiAttribute<const nuiColor&>
   (nglString(_T("Color")), nuiUnitNone,

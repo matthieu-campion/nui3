@@ -21,7 +21,7 @@ nuiSizeAttributeEditor::nuiSizeAttributeEditor(const nuiAttrib<double>& rAttribu
 	mpLabel = new nuiLabel(contents);
 	AddChild(mpLabel);
 
-	mSink.Connect(mAttribute.GetChangedSignal(), nuiFastDelegate::MakeDelegate(this, &nuiSizeAttributeEditor::OnAttributeChanged));
+	mSink.Connect(mAttribute.GetChangedSignal(), nuiMakeDelegate(this, &nuiSizeAttributeEditor::OnAttributeChanged));
 }
 
 

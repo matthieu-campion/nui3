@@ -34,8 +34,8 @@ void nuiDecoration::InitAttributes()
   
   AddAttribute(new nuiAttribute<nuiDecorationLayer>
   (nglString(_T("Layer")), nuiUnitNone,
-   nuiFastDelegate::MakeDelegate(this, &nuiDecoration::GetLayer), 
-   nuiFastDelegate::MakeDelegate(this, &nuiDecoration::SetLayer)));
+   nuiMakeDelegate(this, &nuiDecoration::GetLayer), 
+   nuiMakeDelegate(this, &nuiDecoration::SetLayer)));
  
 }
 

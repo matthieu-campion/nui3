@@ -17,8 +17,8 @@ nuiHyperLink::nuiHyperLink(const nglString& rURL, const nglString& rLabel)
   {
     AddAttribute(new nuiAttribute<const nglString&>
                  (nglString(_T("URL")), nuiUnitName,
-                  nuiFastDelegate::MakeDelegate(this, &nuiHyperLink::GetURL), 
-                  nuiFastDelegate::MakeDelegate(this, &nuiHyperLink::SetURL)));
+                  nuiMakeDelegate(this, &nuiHyperLink::GetURL), 
+                  nuiMakeDelegate(this, &nuiHyperLink::SetURL)));
   }
   SetTextColor(nuiColor(_T("nuiHyperLink")));
 }

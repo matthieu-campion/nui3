@@ -21,7 +21,7 @@ nuiPathAttributeEditor::nuiPathAttributeEditor(const nuiAttrib<nglPath>& rAttrib
 //	mpLabel = new nuiLabel(contents);
 //	AddChild(mpLabel);
 //
-//	mSink.Connect(mpAttribute->AttributeChanged, nuiFastDelegate::MakeDelegate(this, &nuiPointAttributeEditor::OnAttributeChanged));
+//	mSink.Connect(mpAttribute->AttributeChanged, nuiMakeDelegate(this, &nuiPointAttributeEditor::OnAttributeChanged));
 }
 
 

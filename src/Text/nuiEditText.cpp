@@ -81,13 +81,13 @@ void nuiEditText::InitAttributes()
 {
   AddAttribute(new nuiAttribute<const nuiColor&>
                (nglString(_T("TextColor")), nuiUnitNone,
-                nuiFastDelegate::MakeDelegate(this, &nuiEditText::GetTextColor), 
-                nuiFastDelegate::MakeDelegate(this, &nuiEditText::SetTextColor)));
+                nuiMakeDelegate(this, &nuiEditText::GetTextColor), 
+                nuiMakeDelegate(this, &nuiEditText::SetTextColor)));
   
   AddAttribute(new nuiAttribute<const nglString&>
                (nglString(_T("Font")), nuiUnitName,
-                nuiFastDelegate::MakeDelegate(this, &nuiEditText::_GetFont), 
-                nuiFastDelegate::MakeDelegate(this, &nuiEditText::_SetFont)));
+                nuiMakeDelegate(this, &nuiEditText::_GetFont), 
+                nuiMakeDelegate(this, &nuiEditText::_SetFont)));
 }
 
 

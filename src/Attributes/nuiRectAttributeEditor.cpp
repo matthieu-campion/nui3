@@ -21,7 +21,7 @@ nuiRectAttributeEditor::nuiRectAttributeEditor(const nuiAttrib<nuiRect>& rAttrib
 	mpLabel = new nuiLabel(contents);
 	AddChild(mpLabel);
 
-	mSink.Connect(mAttribute.GetChangedSignal(), nuiFastDelegate::MakeDelegate(this, &nuiRectAttributeEditor::OnAttributeChanged));
+	mSink.Connect(mAttribute.GetChangedSignal(), nuiMakeDelegate(this, &nuiRectAttributeEditor::OnAttributeChanged));
 }
 
 
@@ -38,7 +38,7 @@ nuiRectAttributeEditor::nuiRectAttributeEditor(const nuiAttrib<const nuiRect&>& 
 	mpLabel = new nuiLabel(contents);
 	AddChild(mpLabel);
 
-	mSink.Connect(mConstAttribute.GetChangedSignal(), nuiFastDelegate::MakeDelegate(this, &nuiRectAttributeEditor::OnConstAttributeChanged));
+	mSink.Connect(mConstAttribute.GetChangedSignal(), nuiMakeDelegate(this, &nuiRectAttributeEditor::OnConstAttributeChanged));
 }
 
 

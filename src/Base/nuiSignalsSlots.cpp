@@ -1,12 +1,12 @@
 #include "nui.h"
 #include "nuiSignalsSlots.h"
 
-void nuiSignal::RemoveConnection(nuiSlotsSink &sink, const nuiFastDelegate::DelegateMemento &slot)
+void nuiSignal::RemoveConnection(nuiSlotsSink &sink, const nuiDelegateMemento &slot)
 {
   sink.RemoveConnection(this, slot);
 }
 
-void nuiSignal::AddConnection(nuiSlotsSink &sink, const nuiFastDelegate::DelegateMemento &slot)
+void nuiSignal::AddConnection(nuiSlotsSink &sink, const nuiDelegateMemento &slot)
 {
   sink.AddConnection(this, slot);
 }
@@ -25,8 +25,8 @@ nuiSlotsSink::~nuiSlotsSink()
 
 void nuiSlotsSink::DisconnectAll()
 {
-  std::map<nuiSignal*, nuiFastDelegate::DelegateMemento>::const_iterator it = mConnections.begin();
-  std::map<nuiSignal*, nuiFastDelegate::DelegateMemento>::const_iterator end = mConnections.end();
+  std::map<nuiSignal*, nuiDelegateMemento>::const_iterator it = mConnections.begin();
+  std::map<nuiSignal*, nuiDelegateMemento>::const_iterator end = mConnections.end();
   for(; it!= end; ++it)
   {
     (*it).first->DisconnectInternal((*it).second);
@@ -34,14 +34,14 @@ void nuiSlotsSink::DisconnectAll()
   mConnections.clear();
 }
 
-void nuiSlotsSink::AddConnection(nuiSignal* pSignal, const nuiFastDelegate::DelegateMemento &slot) 
+void nuiSlotsSink::AddConnection(nuiSignal* pSignal, const nuiDelegateMemento &slot) 
 {
-  mConnections.insert(std::make_pair<nuiSignal*, nuiFastDelegate::DelegateMemento>(pSignal, slot));
+  mConnections.insert(std::make_pair<nuiSignal*, nuiDelegateMemento>(pSignal, slot));
 }
 
-void nuiSlotsSink::RemoveConnection(nuiSignal* pSignal, const nuiFastDelegate::DelegateMemento &slot) 
+void nuiSlotsSink::RemoveConnection(nuiSignal* pSignal, const nuiDelegateMemento &slot) 
 {	
-  std::map<nuiSignal*, nuiFastDelegate::DelegateMemento>::iterator it = mConnections.find(pSignal);
+  std::map<nuiSignal*, nuiDelegateMemento>::iterator it = mConnections.find(pSignal);
   if (it != mConnections.end())
     mConnections.erase(it);
 }

@@ -42,45 +42,45 @@ void nuiBorderDecoration::InitAttributes()
 
   AddAttribute(new nuiAttribute<uint32>
   (nglString(_T("StrokeSize")), nuiUnitPixels,
-   nuiFastDelegate::MakeDelegate(this, &nuiBorderDecoration::GetStrokeSize),
-   nuiFastDelegate::MakeDelegate(this, &nuiBorderDecoration::SetStrokeSize)));
+   nuiMakeDelegate(this, &nuiBorderDecoration::GetStrokeSize),
+   nuiMakeDelegate(this, &nuiBorderDecoration::SetStrokeSize)));
   
   AddAttribute(new nuiAttribute<const nuiColor&>
   (nglString(_T("StrokeColor")), nuiUnitColor,
-   nuiFastDelegate::MakeDelegate(this, &nuiBorderDecoration::GetStrokeColor), 
-   nuiFastDelegate::MakeDelegate(this, &nuiBorderDecoration::SetStrokeColor)));
+   nuiMakeDelegate(this, &nuiBorderDecoration::GetStrokeColor), 
+   nuiMakeDelegate(this, &nuiBorderDecoration::SetStrokeColor)));
 
   
   AddAttribute(new nuiAttribute<const nuiColor&>
                (nglString(_T("StrokeLeftColor")), nuiUnitColor,
-                nuiFastDelegate::MakeDelegate(this, &nuiBorderDecoration::GetStrokeLeftColor), 
-                nuiFastDelegate::MakeDelegate(this, &nuiBorderDecoration::SetStrokeLeftColor)));
+                nuiMakeDelegate(this, &nuiBorderDecoration::GetStrokeLeftColor), 
+                nuiMakeDelegate(this, &nuiBorderDecoration::SetStrokeLeftColor)));
 
   AddAttribute(new nuiAttribute<const nuiColor&>
                (nglString(_T("StrokeRightColor")), nuiUnitColor,
-                nuiFastDelegate::MakeDelegate(this, &nuiBorderDecoration::GetStrokeRightColor), 
-                nuiFastDelegate::MakeDelegate(this, &nuiBorderDecoration::SetStrokeRightColor)));
+                nuiMakeDelegate(this, &nuiBorderDecoration::GetStrokeRightColor), 
+                nuiMakeDelegate(this, &nuiBorderDecoration::SetStrokeRightColor)));
 
   AddAttribute(new nuiAttribute<const nuiColor&>
                (nglString(_T("StrokeTopColor")), nuiUnitColor,
-                nuiFastDelegate::MakeDelegate(this, &nuiBorderDecoration::GetStrokeTopColor), 
-                nuiFastDelegate::MakeDelegate(this, &nuiBorderDecoration::SetStrokeTopColor)));
+                nuiMakeDelegate(this, &nuiBorderDecoration::GetStrokeTopColor), 
+                nuiMakeDelegate(this, &nuiBorderDecoration::SetStrokeTopColor)));
 
   AddAttribute(new nuiAttribute<const nuiColor&>
                (nglString(_T("StrokeBottomColor")), nuiUnitColor,
-                nuiFastDelegate::MakeDelegate(this, &nuiBorderDecoration::GetStrokeBottomColor), 
-                nuiFastDelegate::MakeDelegate(this, &nuiBorderDecoration::SetStrokeBottomColor)));
+                nuiMakeDelegate(this, &nuiBorderDecoration::GetStrokeBottomColor), 
+                nuiMakeDelegate(this, &nuiBorderDecoration::SetStrokeBottomColor)));
   
   
   AddAttribute(new nuiAttribute<nglString>
   (nglString(_T("Border")), nuiUnitNone,
-   nuiFastDelegate::MakeDelegate(this, &nuiBorderDecoration::GetBorderType), 
-   nuiFastDelegate::MakeDelegate(this, &nuiBorderDecoration::SetBorderType)));
+   nuiMakeDelegate(this, &nuiBorderDecoration::GetBorderType), 
+   nuiMakeDelegate(this, &nuiBorderDecoration::SetBorderType)));
 
   AddAttribute(new nuiAttribute<nglString>
   (nglString(_T("BorderMode")), nuiUnitNone,
-   nuiFastDelegate::MakeDelegate(this, &nuiBorderDecoration::GetBorderMode), 
-   nuiFastDelegate::MakeDelegate(this, &nuiBorderDecoration::SetBorderMode)));
+   nuiMakeDelegate(this, &nuiBorderDecoration::GetBorderMode), 
+   nuiMakeDelegate(this, &nuiBorderDecoration::SetBorderMode)));
 }
 
 

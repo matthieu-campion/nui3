@@ -33,28 +33,28 @@ void nuiCheckerboardDecoration::InitAttributes()
 
   AddAttribute(new nuiAttribute<uint32>
   (nglString(_T("StrokeSize")), nuiUnitPixels,
-   nuiFastDelegate::MakeDelegate(this, &nuiCheckerboardDecoration::GetStrokeSize),
-   nuiFastDelegate::MakeDelegate(this, &nuiCheckerboardDecoration::SetStrokeSize)));
+   nuiMakeDelegate(this, &nuiCheckerboardDecoration::GetStrokeSize),
+   nuiMakeDelegate(this, &nuiCheckerboardDecoration::SetStrokeSize)));
   
   AddAttribute(new nuiAttribute<const nuiColor&>
   (nglString(_T("StrokeColor")), nuiUnitColor,
-   nuiFastDelegate::MakeDelegate(this, &nuiCheckerboardDecoration::GetStrokeColor), 
-   nuiFastDelegate::MakeDelegate(this, &nuiCheckerboardDecoration::SetStrokeColor)));
+   nuiMakeDelegate(this, &nuiCheckerboardDecoration::GetStrokeColor), 
+   nuiMakeDelegate(this, &nuiCheckerboardDecoration::SetStrokeColor)));
 
   AddAttribute(new nuiAttribute<const nuiColor&>
                (nglString(_T("BackgroundColor")), nuiUnitColor,
-                nuiFastDelegate::MakeDelegate(this, &nuiCheckerboardDecoration::GetBackgroundColor), 
-                nuiFastDelegate::MakeDelegate(this, &nuiCheckerboardDecoration::SetBackgroundColor)));
+                nuiMakeDelegate(this, &nuiCheckerboardDecoration::GetBackgroundColor), 
+                nuiMakeDelegate(this, &nuiCheckerboardDecoration::SetBackgroundColor)));
 
   AddAttribute(new nuiAttribute<uint32>
                (nglString(_T("TilesPerLine")), nuiUnitColor,
-                nuiFastDelegate::MakeDelegate(this, &nuiCheckerboardDecoration::GetTilesPerLine), 
-                nuiFastDelegate::MakeDelegate(this, &nuiCheckerboardDecoration::SetTilesPerLine)));
+                nuiMakeDelegate(this, &nuiCheckerboardDecoration::GetTilesPerLine), 
+                nuiMakeDelegate(this, &nuiCheckerboardDecoration::SetTilesPerLine)));
   
   AddAttribute(new nuiAttribute<const nuiColor&>
                (nglString(_T("TileColor")), nuiUnitColor,
-                nuiFastDelegate::MakeDelegate(this, &nuiCheckerboardDecoration::GetTileColor), 
-                nuiFastDelegate::MakeDelegate(this, &nuiCheckerboardDecoration::SetTileColor)));
+                nuiMakeDelegate(this, &nuiCheckerboardDecoration::GetTileColor), 
+                nuiMakeDelegate(this, &nuiCheckerboardDecoration::SetTileColor)));
 }
 
 

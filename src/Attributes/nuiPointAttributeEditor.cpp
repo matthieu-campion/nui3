@@ -21,7 +21,7 @@ nuiPointAttributeEditor::nuiPointAttributeEditor(const nuiAttrib<nuiPoint>& rAtt
 	mpLabel = new nuiLabel(contents);
 	AddChild(mpLabel);
 
-	mSink.Connect(mAttribute.GetChangedSignal(), nuiFastDelegate::MakeDelegate(this, &nuiPointAttributeEditor::OnAttributeChanged));
+	mSink.Connect(mAttribute.GetChangedSignal(), nuiMakeDelegate(this, &nuiPointAttributeEditor::OnAttributeChanged));
 }
 
 

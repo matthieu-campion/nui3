@@ -58,13 +58,13 @@ void nuiTreeHandleDecoration::InitAttributes()
 
   AddAttribute(new nuiAttribute<uint32>
   (nglString(_T("HandleSize")), nuiUnitPixels,
-   nuiFastDelegate::MakeDelegate(this, &nuiTreeHandleDecoration::GetHandleSize),
-   nuiFastDelegate::MakeDelegate(this, &nuiTreeHandleDecoration::SetHandleSize)));
+   nuiMakeDelegate(this, &nuiTreeHandleDecoration::GetHandleSize),
+   nuiMakeDelegate(this, &nuiTreeHandleDecoration::SetHandleSize)));
   
   AddAttribute(new nuiAttribute<const nuiColor&>
   (nglString(_T("HandleColor")), nuiUnitColor,
-   nuiFastDelegate::MakeDelegate(this, &nuiTreeHandleDecoration::GetHandleColor), 
-   nuiFastDelegate::MakeDelegate(this, &nuiTreeHandleDecoration::SetHandleColor)));
+   nuiMakeDelegate(this, &nuiTreeHandleDecoration::GetHandleColor), 
+   nuiMakeDelegate(this, &nuiTreeHandleDecoration::SetHandleColor)));
 }
 
 

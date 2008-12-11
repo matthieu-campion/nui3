@@ -19,7 +19,7 @@ class nuiTabView;
 class nuiImageSequence;
 
 
-typedef nuiFastDelegate::FastDelegate1<nuiWidget*> nuiDecorationDelegate;
+typedef nuiFastDelegate1<nuiWidget*> nuiDecorationDelegate;
 
 
 class nuiDefaultDecoration

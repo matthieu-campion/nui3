@@ -451,7 +451,7 @@ bool nuiAudioFifo::Start ()
   //#FIXME : ensure that samplerate and outbufsize are acceptable values for nuiAudioDevice (should enumerate possible value somewhere in the application)
   
   // open device access and start process
-  bool res = mpAudioDevice->Open(inputChannels/*<=> mNbInputChannels, #FIXME ? do we provide some inputs?*/, outputChannels, mSampleRate, mOutbufSize, nuiFastDelegate::MakeDelegate(this, &nuiAudioFifo::Process));
+  bool res = mpAudioDevice->Open(inputChannels/*<=> mNbInputChannels, #FIXME ? do we provide some inputs?*/, outputChannels, mSampleRate, mOutbufSize, nuiMakeDelegate(this, &nuiAudioFifo::Process));
   
   if (!res)
   {

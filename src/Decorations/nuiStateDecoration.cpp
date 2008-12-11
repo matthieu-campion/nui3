@@ -85,48 +85,48 @@ void nuiStateDecoration::InitAttributes()
 
   AddAttribute(new nuiAttribute<const nglString&>
    (nglString(_T("OnUp")), nuiUnitNone,
-    nuiFastDelegate::MakeDelegate(this, &nuiStateDecoration::GetDecoUp), 
-    nuiFastDelegate::MakeDelegate(this, &nuiStateDecoration::SetDecoUp)));
+    nuiMakeDelegate(this, &nuiStateDecoration::GetDecoUp), 
+    nuiMakeDelegate(this, &nuiStateDecoration::SetDecoUp)));
 
   AddAttribute(new nuiAttribute<const nglString&>
    (nglString(_T("OnDown")), nuiUnitNone,
-    nuiFastDelegate::MakeDelegate(this, &nuiStateDecoration::GetDecoDown), 
-    nuiFastDelegate::MakeDelegate(this, &nuiStateDecoration::SetDecoDown)));
+    nuiMakeDelegate(this, &nuiStateDecoration::GetDecoDown), 
+    nuiMakeDelegate(this, &nuiStateDecoration::SetDecoDown)));
 
   AddAttribute(new nuiAttribute<const nglString&>
    (nglString(_T("OnUpHover")), nuiUnitNone,
-    nuiFastDelegate::MakeDelegate(this, &nuiStateDecoration::GetDecoUpHover), 
-    nuiFastDelegate::MakeDelegate(this, &nuiStateDecoration::SetDecoUpHover)));
+    nuiMakeDelegate(this, &nuiStateDecoration::GetDecoUpHover), 
+    nuiMakeDelegate(this, &nuiStateDecoration::SetDecoUpHover)));
 
   AddAttribute(new nuiAttribute<const nglString&>
    (nglString(_T("OnDownHover")), nuiUnitNone,
-    nuiFastDelegate::MakeDelegate(this, &nuiStateDecoration::GetDecoDownHover), 
-    nuiFastDelegate::MakeDelegate(this, &nuiStateDecoration::SetDecoDownHover)));
+    nuiMakeDelegate(this, &nuiStateDecoration::GetDecoDownHover), 
+    nuiMakeDelegate(this, &nuiStateDecoration::SetDecoDownHover)));
     
   AddAttribute(new nuiAttribute<const nglString&>
    (nglString(_T("OnSelected")), nuiUnitNone,
-    nuiFastDelegate::MakeDelegate(this, &nuiStateDecoration::GetDecoSelected), 
-    nuiFastDelegate::MakeDelegate(this, &nuiStateDecoration::SetDecoSelected)));
+    nuiMakeDelegate(this, &nuiStateDecoration::GetDecoSelected), 
+    nuiMakeDelegate(this, &nuiStateDecoration::SetDecoSelected)));
 
   AddAttribute(new nuiAttribute<const nglString&>
    (nglString(_T("OnDisabled")), nuiUnitNone,
-    nuiFastDelegate::MakeDelegate(this, &nuiStateDecoration::GetDecoDisabled), 
-    nuiFastDelegate::MakeDelegate(this, &nuiStateDecoration::SetDecoDisabled)));
+    nuiMakeDelegate(this, &nuiStateDecoration::GetDecoDisabled), 
+    nuiMakeDelegate(this, &nuiStateDecoration::SetDecoDisabled)));
 
   AddAttribute(new nuiAttribute<const nglString&>
      (nglString(_T("OnDisabledSelected")), nuiUnitNone,
-      nuiFastDelegate::MakeDelegate(this, &nuiStateDecoration::GetDecoDisabledSelected), 
-      nuiFastDelegate::MakeDelegate(this, &nuiStateDecoration::SetDecoDisabledSelected)));
+      nuiMakeDelegate(this, &nuiStateDecoration::GetDecoDisabledSelected), 
+      nuiMakeDelegate(this, &nuiStateDecoration::SetDecoDisabledSelected)));
 
   AddAttribute(new nuiAttribute<const nglString&>
    (nglString(_T("OnUpDisabled")), nuiUnitNone,
-    nuiFastDelegate::MakeDelegate(this, &nuiStateDecoration::GetDecoUpDisabled), 
-    nuiFastDelegate::MakeDelegate(this, &nuiStateDecoration::SetDecoUpDisabled)));
+    nuiMakeDelegate(this, &nuiStateDecoration::GetDecoUpDisabled), 
+    nuiMakeDelegate(this, &nuiStateDecoration::SetDecoUpDisabled)));
 
   AddAttribute(new nuiAttribute<const nglString&>
    (nglString(_T("OnDownDisabled")), nuiUnitNone,
-    nuiFastDelegate::MakeDelegate(this, &nuiStateDecoration::GetDecoDownDisabled), 
-    nuiFastDelegate::MakeDelegate(this, &nuiStateDecoration::SetDecoDownDisabled)));
+    nuiMakeDelegate(this, &nuiStateDecoration::GetDecoDownDisabled), 
+    nuiMakeDelegate(this, &nuiStateDecoration::SetDecoDownDisabled)));
 
 
 }

@@ -57,7 +57,7 @@ enum nuiAttributeUnit
 class nuiAttributeBase
 {
 public:
-  typedef nuiFastDelegate::FastDelegate1<uint32 /*dimension */, uint32> ArrayRangeDelegate;
+  typedef nuiFastDelegate1<uint32 /*dimension */, uint32> ArrayRangeDelegate;
   
   virtual ~nuiAttributeBase();
 
@@ -137,17 +137,17 @@ class nuiAttribute : public nuiAttributeBase
 {
 public:
   // Direct access (dimension = 0)
-  typedef typename nuiFastDelegate::FastDelegate0<Contents> GetterDelegate;
-  typedef typename nuiFastDelegate::FastDelegate1<Contents> SetterDelegate;
+  typedef nuiFastDelegate0<Contents> GetterDelegate;
+  typedef nuiFastDelegate1<Contents> SetterDelegate;
   // Array (dimension = 1)
-  typedef typename nuiFastDelegate::FastDelegate1<uint32, Contents> GetterDelegate1;
-  typedef typename nuiFastDelegate::FastDelegate2<uint32, Contents> SetterDelegate1;
+  typedef nuiFastDelegate1<uint32, Contents> GetterDelegate1;
+  typedef nuiFastDelegate2<uint32, Contents> SetterDelegate1;
   // Array (dimension = 2)
-  typedef typename nuiFastDelegate::FastDelegate2<uint32, uint32, Contents> GetterDelegate2;
-  typedef typename nuiFastDelegate::FastDelegate3<uint32, uint32, Contents> SetterDelegate2;
+  typedef nuiFastDelegate2<uint32, uint32, Contents> GetterDelegate2;
+  typedef nuiFastDelegate3<uint32, uint32, Contents> SetterDelegate2;
 
-  typedef typename nuiFastDelegate::FastDelegate2<void*, nuiAttribute<Contents>*, nuiAttributeEditor* > NewEditorDelegate;
-  typedef nuiFastDelegate::FastDelegate3<void*, nglString&, Contents> FormaterDelegate;
+  typedef nuiFastDelegate2<void*, nuiAttribute<Contents>*, nuiAttributeEditor* > NewEditorDelegate;
+  typedef nuiFastDelegate3<void*, nglString&, Contents> FormaterDelegate;
 
   typedef nuiSignal1<Contents> Signal;
   typedef nuiSignal2<uint32, Contents> Signal0;
@@ -461,8 +461,8 @@ public:
   }
   
 private:
-  nuiFastDelegate::DelegateMemento mGetter;
-  nuiFastDelegate::DelegateMemento mSetter;
+  nuiDelegateMemento mGetter;
+  nuiDelegateMemento mSetter;
 	NewEditorDelegate mNewEditor;
 	FormaterDelegate mFormater;
   ArrayRangeDelegate mRangeGetter;
@@ -508,17 +508,17 @@ class nuiAttribute<const Contents&> : public nuiAttributeBase
 {
 public:
   // Direct access (dimension = 0)
-  typedef typename nuiFastDelegate::FastDelegate0<const Contents&> GetterDelegate;
-  typedef typename nuiFastDelegate::FastDelegate1<const Contents&> SetterDelegate;
+  typedef nuiFastDelegate0<const Contents&> GetterDelegate;
+  typedef nuiFastDelegate1<const Contents&> SetterDelegate;
   // Array (dimension = 1)
-  typedef typename nuiFastDelegate::FastDelegate1<uint32, const Contents&> GetterDelegate1;
-  typedef typename nuiFastDelegate::FastDelegate2<uint32, const Contents&> SetterDelegate1;
+  typedef nuiFastDelegate1<uint32, const Contents&> GetterDelegate1;
+  typedef nuiFastDelegate2<uint32, const Contents&> SetterDelegate1;
   // Array (dimension = 2)
-  typedef typename nuiFastDelegate::FastDelegate2<uint32, uint32, const Contents&> GetterDelegate2;
-  typedef typename nuiFastDelegate::FastDelegate3<uint32, uint32, const Contents&> SetterDelegate2;
+  typedef nuiFastDelegate2<uint32, uint32, const Contents&> GetterDelegate2;
+  typedef nuiFastDelegate3<uint32, uint32, const Contents&> SetterDelegate2;
   
-  typedef typename nuiFastDelegate::FastDelegate2<void*, nuiAttribute<const Contents&>*, nuiAttributeEditor* > NewEditorDelegate;
-  typedef nuiFastDelegate::FastDelegate3<void*, nglString&, const Contents&> FormaterDelegate;
+  typedef nuiFastDelegate2<void*, nuiAttribute<const Contents&>*, nuiAttributeEditor* > NewEditorDelegate;
+  typedef nuiFastDelegate3<void*, nglString&, const Contents&> FormaterDelegate;
   
   typedef nuiSignal1<const Contents&> Signal;
   typedef nuiSignal2<uint32, const Contents&> Signal0;
@@ -832,8 +832,8 @@ public:
   }
   
 private:
-  nuiFastDelegate::DelegateMemento mGetter;
-  nuiFastDelegate::DelegateMemento mSetter;
+  nuiDelegateMemento mGetter;
+  nuiDelegateMemento mSetter;
   NewEditorDelegate mNewEditor;
   FormaterDelegate mFormater;
   ArrayRangeDelegate mRangeGetter;
