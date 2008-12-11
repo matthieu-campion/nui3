@@ -854,12 +854,14 @@ void nuiD3DPainter::DrawArray(const nuiRenderArray& rArray)
   D3DPRIMITIVETYPE primtype = D3DPT_POINTLIST;
   int primitivecount = 0;
   nuiColor c;
+  bool translate_hack = false;
   switch (rArray.GetMode())
   {
   case GL_POINTS:
     primtype = D3DPT_POINTLIST;
     c = mState.mStrokeColor;
     primitivecount = size;
+    translate_hack = true;
     //NGL_OUT(_T("Primitive : Point list %d "), size);
     break;
 
@@ -867,6 +869,7 @@ void nuiD3DPainter::DrawArray(const nuiRenderArray& rArray)
     primtype = D3DPT_LINELIST;
     c = mState.mStrokeColor;
     primitivecount = size/2;
+    translate_hack = true;
     //NGL_OUT(_T("Primitive : Line list %d "), size);
     break;
 
@@ -876,6 +879,7 @@ void nuiD3DPainter::DrawArray(const nuiRenderArray& rArray)
     primtype = D3DPT_LINESTRIP; //#FIXME : close the loop 
     c = mState.mStrokeColor;
     primitivecount = size-1;
+    translate_hack = true;
     //NGL_OUT(_T("Primitive : Line loop %d "), size);
     break;
 
@@ -883,6 +887,7 @@ void nuiD3DPainter::DrawArray(const nuiRenderArray& rArray)
     primtype = D3DPT_LINESTRIP;
     c = mState.mStrokeColor;
     primitivecount = size-1;
+    translate_hack = true;
     //NGL_OUT(_T("Primitive : Line strip %d "), size);
     break;
 
@@ -956,11 +961,11 @@ void nuiD3DPainter::DrawArray(const nuiRenderArray& rArray)
 #ifdef DRAW_PUP
   hr = pDev->DrawPrimitiveUP(primtype, primitivecount, pData, stride);				//draw triangle ( NEW )
 #else
-  //on copie les datas dans le vertex buffer
+  // copy datas to the vertex buffer
   NuiD3DVertex* pVertices = NULL;
   DWORD nSectionSize = size; //vertices count
   DWORD flagLock = 0;
-  //le +1 c'est pour la fermeture de la line loop au cas où ...
+  //#HACK +1 in case of line loops thast we emulate by adding one vertex...
   if (nSectionSize+1>mnCurrentVBSize)
   {
     //buffer too small, release and allocate a bigger one...
@@ -996,11 +1001,20 @@ void nuiD3DPainter::DrawArray(const nuiRenderArray& rArray)
   const uint8 B = ToBelow(c.Blue()   * 255.0);
   const uint8 A = ToBelow(c.Alpha() * 255.0);
 
-//copie des vertices plus rapide
+// faster vertices copy
 //#define SIMPLE_COPY
 //#ifdef SIMPLE_COPY
 //memcpy(pVertices, pData, nSectionSize*sizeof(NuiD3DVertex));
 //#else
+
+  float tr_x = 0;
+  float tr_y = 0;
+  if (translate_hack)
+  {
+    tr_x = -.5;
+    tr_y = .5;
+  }
+
   for (int i=0; i<nSectionSize; ++i)
   {
     //copy vertex by vertex
@@ -1008,8 +1022,8 @@ void nuiD3DPainter::DrawArray(const nuiRenderArray& rArray)
     NuiD3DVertex* pDst = pVertices+i;
     //bof mais les structures sont compatibles
     NuiD3DVertex* pSrc = (NuiD3DVertex*)((char*)pData+(i*stride));
-    pDst->x = pSrc->x;
-    pDst->y = pSrc->y;
+    pDst->x = pSrc->x + tr_x;
+    pDst->y = pSrc->y + tr_y;
     pDst->z = pSrc->z;
     pDst->tu = pSrc->tu;
     pDst->tv = pSrc->tv;
@@ -1034,10 +1048,10 @@ void nuiD3DPainter::DrawArray(const nuiRenderArray& rArray)
   
   if (rArray.GetMode() == GL_LINE_LOOP)
   {
-    //la line loop n'existe pas en D3D, il faut donc fermer la boucle !
+    // there is no line loop in D3D so we need to emulate it by adding one vertex.
     primitivecount+=1;
     NuiD3DVertex* pDst = pVertices+nSectionSize;
-    //bof mais les structures sont compatibles
+    //#HACK not great but the structs are compatible...
     NuiD3DVertex* pSrc = pVertices;
     memcpy(pDst, pSrc, sizeof(NuiD3DVertex));
   }
@@ -1045,6 +1059,7 @@ void nuiD3DPainter::DrawArray(const nuiRenderArray& rArray)
   {
     //nothing
   }
+
   hr = mpVB->Unlock();
   hr = pDev->DrawPrimitive(primtype, mnCurrentVBOffset, primitivecount);
   mnCurrentVBOffset += nSectionSize;
