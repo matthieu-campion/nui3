@@ -453,7 +453,40 @@ void nuiWidgetInfo::RebuildInfo()
       if (!pEditor)
       {
         nglString value;
-        Base.ToString(value);
+        switch (Base.GetDimension())
+        {
+          case 0:
+            Base.ToString(value);
+            break;
+          case 1:
+            {
+              nglString str;
+              uint32 count = Base.GetIndexRange(0);
+              for (uint32 i = 0; i < count; i++)
+              {
+                Base.ToString(i, str);
+                value.Add(i).Add(_T(":")).Add(str).Add("\t");
+              }
+              value.Trim(_T('\t'));
+            }
+            break;
+          case 2:
+            {
+              nglString str;
+              uint32 counti = Base.GetIndexRange(0);
+              uint32 countj = Base.GetIndexRange(1);
+              for (uint32 i = 0; i < MIN(10, counti); i++)
+              {
+                for (uint32 j = 0; j < MIN(10, countj); j++)
+                {
+                  Base.ToString(i, j, str);
+                  value.Add(i).Add(",").Add(j).Add(_T(":")).Add(str).Add("\t");
+                }
+              }
+              value.Trim(_T('\t'));
+            }
+            break;
+        }
         nuiLabel* pLabel = new nuiLabel(value);
         mpAttributeGrid->SetCell(1, i, pLabel, nuiLeft);
       }

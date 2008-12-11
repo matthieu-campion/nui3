@@ -17,7 +17,7 @@
 #include "nuiBorderAttributeEditor.h"
 #include "nuiRangeAttributeEditor.h"
 
-nuiAttributeBase::nuiAttributeBase(const nglString& rName, nuiAttributeType type, nuiAttributeUnit unit, const nuiRange& rRange, bool readonly, uint32 dimension)
+nuiAttributeBase::nuiAttributeBase(const nglString& rName, nuiAttributeType type, nuiAttributeUnit unit, const nuiRange& rRange, bool readonly)
 : mName(rName),
   mType(type),
   mUnit(unit),
@@ -25,9 +25,21 @@ nuiAttributeBase::nuiAttributeBase(const nglString& rName, nuiAttributeType type
   mRange(rRange),
   mIgnoreAttributeChange(false),
   mOrder(0),
-  mDimension(dimension)
+  mDimension(0)
 {
+}
 
+nuiAttributeBase::nuiAttributeBase(const nglString& rName, nuiAttributeType type, nuiAttributeUnit unit, const nuiRange& rRange, bool readonly, uint32 dimension, const ArrayRangeDelegate& rRangeGetter)
+: mName(rName),
+  mType(type),
+  mUnit(unit),
+  mReadOnly(readonly),
+  mRange(rRange),
+  mIgnoreAttributeChange(false),
+  mOrder(0),
+  mDimension(dimension),
+  mRangeGetter(rRangeGetter)
+{
 }
 
 
@@ -78,6 +90,31 @@ int32 nuiAttributeBase::GetOrder() const
   return mOrder;
 }
 
+uint32 nuiAttributeBase::GetDimension() const
+{
+  return mDimension;
+}
+
+uint32 nuiAttributeBase::GetIndexRange(void* pTarget, uint32 Dimension) const
+{
+  NGL_ASSERT(GetDimension() > Dimension && mRangeGetter);
+  ArrayRangeDelegate getter(mRangeGetter);
+  getter.SetThis(pTarget);
+  return getter(Dimension);
+}
+
+void nuiAttributeBase::IgnoreAttributeChange(bool ignore)
+{
+  mIgnoreAttributeChange = ignore;
+}
+
+bool nuiAttributeBase::IsAttributeChangeIgnored() const
+{
+  return mIgnoreAttributeChange;
+}
+
+
+
 
 ////////////////// 
 // Declaration of some property types specializations:
@@ -126,9 +163,9 @@ DECLARE_NUIATTRIBUTE_TYPE(const nuiRange&);
 template class nuiAttribute<bool>;
 
 template <>
-bool nuiAttribute<bool>::ToString(void* pTarget, nglString& rString) const
+bool nuiAttribute<bool>::ToString(bool value, nglString& rString) const
 {
-  if (Get(pTarget))
+  if (value)
     rString = _T("true");
   else
     rString = _T("false");
@@ -137,12 +174,12 @@ bool nuiAttribute<bool>::ToString(void* pTarget, nglString& rString) const
 }
 
 template <>
-bool nuiAttribute<bool>::FromString(void* pTarget, const nglString& rString) const
+bool nuiAttribute<bool>::FromString(bool& rValue, const nglString& rString) const
 {
   if (rString.Compare(_T("true"), false) == 0)
-    Set(pTarget, true);
+    rValue = true;
   else
-    Set(pTarget, false);
+    rValue = false;
   
   return true;
 }
@@ -189,19 +226,19 @@ void nuiAttribute<int8>::FormatDefault(void* pTarget, nglString& string)
 }
 
 template <>
-bool nuiAttribute<int8>::ToString(void* pTarget, nglString& rString) const
+bool nuiAttribute<int8>::ToString(int8 Value, nglString& rString) const
 {
-  rString.SetCInt(Get(pTarget));
+  rString.SetCInt(Value);
   return true;
 }
 
 template <>
-bool nuiAttribute<int8>::FromString(void* pTarget, const nglString& rString) const
+bool nuiAttribute<int8>::FromString(int8& rValue, const nglString& rString) const
 {
   if (!rString.IsInt())
     return false;
 
-  Set(pTarget, rString.GetCInt());
+  rValue = rString.GetCInt();
   return true;
 }
 
@@ -232,19 +269,19 @@ void nuiAttribute<int16>::FormatDefault(void* pTarget, nglString & string)
 }
 
 template <>
-bool nuiAttribute<int16>::ToString(void* pTarget, nglString& rString) const
+bool nuiAttribute<int16>::ToString(int16 Value, nglString& rString) const
 {
-  rString.SetCInt(Get(pTarget));
+  rString.SetCInt(Value);
   return true;
 }
 
 template <>
-bool nuiAttribute<int16>::FromString(void* pTarget, const nglString& rString) const
+bool nuiAttribute<int16>::FromString(int16& rValue, const nglString& rString) const
 {
   if (!rString.IsInt())
     return false;
   
-  Set(pTarget, rString.GetCInt());
+  rValue = rString.GetCInt();
   return true;
 }
 
@@ -276,19 +313,19 @@ void nuiAttribute<int32>::FormatDefault(void* pTarget, nglString & string)
 }
 
 template <>
-bool nuiAttribute<int32>::ToString(void* pTarget, nglString& rString) const
+bool nuiAttribute<int32>::ToString(int32 Value, nglString& rString) const
 {
-  rString.SetCInt(Get(pTarget));
+  rString.SetCInt(Value);
   return true;
 }
 
 template <>
-bool nuiAttribute<int32>::FromString(void* pTarget, const nglString& rString) const
+bool nuiAttribute<int32>::FromString(int32& rValue, const nglString& rString) const
 {
   if (!rString.IsInt())
     return false;
   
-  Set(pTarget, rString.GetCInt());
+  rValue = rString.GetCInt();
   return true;
 }
 
@@ -319,19 +356,19 @@ void nuiAttribute<int64>::FormatDefault(void* pTarget, nglString & string)
 }
 
 template <>
-bool nuiAttribute<int64>::ToString(void* pTarget, nglString& rString) const
+bool nuiAttribute<int64>::ToString(int64 Value, nglString& rString) const
 {
-  rString.SetCInt(Get(pTarget));
+  rString.SetCInt(Value);
   return true;
 }
 
 template <>
-bool nuiAttribute<int64>::FromString(void* pTarget, const nglString& rString) const
+bool nuiAttribute<int64>::FromString(int64& rValue, const nglString& rString) const
 {
   if (!rString.IsInt())
     return false;
   
-  Set(pTarget, rString.GetCInt64());
+  rValue = rString.GetCInt64();
   return true;
 }
 
@@ -363,19 +400,19 @@ void nuiAttribute<uint8>::FormatDefault(void* pTarget, nglString & string)
 }
 
 template <>
-bool nuiAttribute<uint8>::ToString(void* pTarget, nglString& rString) const
+bool nuiAttribute<uint8>::ToString(uint8 Value, nglString& rString) const
 {
-  rString.SetCUInt(Get(pTarget));
+  rString.SetCUInt(Value);
   return true;
 }
 
 template <>
-bool nuiAttribute<uint8>::FromString(void* pTarget, const nglString& rString) const
+bool nuiAttribute<uint8>::FromString(uint8& rValue, const nglString& rString) const
 {
   if (!rString.IsInt())
     return false;
   
-  Set(pTarget, rString.GetCUInt());
+  rValue = rString.GetCUInt();
   return true;
 }
 
@@ -406,19 +443,19 @@ void nuiAttribute<uint16>::FormatDefault(void* pTarget, nglString & string)
 }
 
 template <>
-bool nuiAttribute<uint16>::ToString(void* pTarget, nglString& rString) const
+bool nuiAttribute<uint16>::ToString(uint16 Value, nglString& rString) const
 {
-  rString.SetCUInt(Get(pTarget));
+  rString.SetCUInt(Value);
   return true;
 }
 
 template <>
-bool nuiAttribute<uint16>::FromString(void* pTarget, const nglString& rString) const
+bool nuiAttribute<uint16>::FromString(uint16& rValue, const nglString& rString) const
 {
   if (!rString.IsInt())
     return false;
   
-  Set(pTarget, rString.GetCUInt());
+  rValue = rString.GetCUInt();
   return true;
 }
 
@@ -450,19 +487,19 @@ void nuiAttribute<uint32>::FormatDefault(void* pTarget, nglString & string)
 }
 
 template <>
-bool nuiAttribute<uint32>::ToString(void* pTarget, nglString& rString) const
+bool nuiAttribute<uint32>::ToString(uint32 Value, nglString& rString) const
 {
-  rString.SetCUInt(Get(pTarget));
+  rString.SetCUInt(Value);
   return true;
 }
 
 template <>
-bool nuiAttribute<uint32>::FromString(void* pTarget, const nglString& rString) const
+bool nuiAttribute<uint32>::FromString(uint32& rValue, const nglString& rString) const
 {
   if (!rString.IsInt())
     return false;
   
-  Set(pTarget, rString.GetCUInt());
+  rValue = rString.GetCUInt();
   return true;
 }
 
@@ -495,19 +532,19 @@ void nuiAttribute<uint64>::FormatDefault(void* pTarget, nglString & string)
 }
 
 template <>
-bool nuiAttribute<uint64>::ToString(void* pTarget, nglString& rString) const
+bool nuiAttribute<uint64>::ToString(uint64 Value, nglString& rString) const
 {
-  rString.SetCUInt(Get(pTarget));
+  rString.SetCUInt(Value);
   return true;
 }
 
 template <>
-bool nuiAttribute<uint64>::FromString(void* pTarget, const nglString& rString) const
+bool nuiAttribute<uint64>::FromString(uint64& rValue, const nglString& rString) const
 {
   if (!rString.IsInt())
     return false;
   
-  Set(pTarget, rString.GetCUInt64());
+  rValue = rString.GetCUInt64();
   return true;
 }
 
@@ -559,19 +596,19 @@ void nuiAttribute<float>::FormatDefault(void* pTarget, nglString & string)
 }
 
 template <>
-bool nuiAttribute<float>::ToString(void* pTarget, nglString& rString) const
+bool nuiAttribute<float>::ToString(float Value, nglString& rString) const
 {
-  rString.SetCFloat(Get(pTarget));
+  rString.SetCFloat(Value);
   return true;
 }
 
 template <>
-bool nuiAttribute<float>::FromString(void* pTarget, const nglString& rString) const
+bool nuiAttribute<float>::FromString(float& rValue, const nglString& rString) const
 {
   if (!rString.IsFloat())
     return false;
   
-  Set(pTarget, rString.GetCFloat());
+  rValue = rString.GetCFloat();
   return true;
 }
 
@@ -620,19 +657,19 @@ void nuiAttribute<double>::FormatDefault(void* pTarget, nglString & string)
 
 
 template <>
-bool nuiAttribute<double>::ToString(void* pTarget, nglString& rString) const
+bool nuiAttribute<double>::ToString(double Value, nglString& rString) const
 {
-  rString.SetCDouble(Get(pTarget));
+  rString.SetCDouble(Value);
   return true;
 }
 
 template <>
-bool nuiAttribute<double>::FromString(void* pTarget, const nglString& rString) const
+bool nuiAttribute<double>::FromString(double& rValue, const nglString& rString) const
 {
   if (!rString.IsFloat())
     return false;
   
-  Set(pTarget, rString.GetCDouble());
+  rValue = rString.GetCDouble();
   return true;
 }
 
@@ -662,16 +699,16 @@ void nuiAttribute<nuiPosition>::FormatDefault(void* pTarget, nglString & string)
 
 
 template <>
-bool nuiAttribute<nuiPosition>::ToString(void* pTarget, nglString& rString) const
+bool nuiAttribute<nuiPosition>::ToString(nuiPosition Value, nglString& rString) const
 {
-  rString = nuiGetPosition(Get(pTarget));
+  rString = nuiGetPosition(Value);
   return true;
 }
 
 template <>
-bool nuiAttribute<nuiPosition>::FromString(void* pTarget, const nglString& rString) const
+bool nuiAttribute<nuiPosition>::FromString(nuiPosition& rValue, const nglString& rString) const
 {
-  Set(pTarget, nuiGetPosition(rString));
+  rValue = nuiGetPosition(rString);
   return true;
 }
 
@@ -690,16 +727,16 @@ bool nuiAttribute<nuiPosition>::FromString(void* pTarget, const nglString& rStri
 template class nuiAttribute<nglString>;
 
 template <>
-bool nuiAttribute<nglString>::ToString(void* pTarget, nglString& rString) const
+bool nuiAttribute<nglString>::ToString(nglString Value, nglString& rString) const
 {
-  rString = Get(pTarget);
+  rString = Value;
   return true;
 }
 
 template <>
-bool nuiAttribute<nglString>::FromString(void* pTarget, const nglString& rString) const
+bool nuiAttribute<nglString>::FromString(nglString& rValue, const nglString& rString) const
 {
-  Set(pTarget, rString);
+  rValue = rString;
   return true;
 }
 
@@ -739,16 +776,16 @@ void nuiAttribute<const nglString&>::FormatDefault(void* pTarget, nglString & st
 }
 
 template <>
-bool nuiAttribute<const nglString&>::ToString(void* pTarget, nglString& rString) const
+bool nuiAttribute<const nglString&>::ToString(const nglString& rValue, nglString& rString) const
 {
-  rString = Get(pTarget);
+  rString = rValue;
   return true;
 }
 
 template <>
-bool nuiAttribute<const nglString&>::FromString(void* pTarget, const nglString& rString) const
+bool nuiAttribute<const nglString&>::FromString(nglString& rValue, const nglString& rString) const
 {
-  Set(pTarget, rString);
+  rValue = rString;
   return true;
 }
 
@@ -764,17 +801,16 @@ bool nuiAttribute<const nglString&>::FromString(void* pTarget, const nglString& 
 template class nuiAttribute<nuiColor>;
 
 template <>
-bool nuiAttribute<nuiColor>::ToString(void* pTarget, nglString& rString) const
+bool nuiAttribute<nuiColor>::ToString(nuiColor Value, nglString& rString) const
 {
-  rString = Get(pTarget).GetValue();
+  rString = Value.GetValue();
   return true;
 }
 
 template <>
-bool nuiAttribute<nuiColor>::FromString(void* pTarget, const nglString& rString) const
+bool nuiAttribute<nuiColor>::FromString(nuiColor& rValue, const nglString& rString) const
 {
-  nuiColor col(rString);
-  Set(pTarget, col);
+  rValue.SetValue(rString);
   return true;
 }
 
@@ -822,17 +858,16 @@ void nuiAttribute<const nuiColor&>::FormatDefault(void* pTarget, nglString & str
 
 
 template <>
-bool nuiAttribute<const nuiColor&>::ToString(void* pTarget, nglString& rString) const
+bool nuiAttribute<const nuiColor&>::ToString(const nuiColor& rValue, nglString& rString) const
 {
-  rString = Get(pTarget).GetValue();
+  rString = rValue.GetValue();
   return true;
 }
 
 template <>
-bool nuiAttribute<const nuiColor&>::FromString(void* pTarget, const nglString& rString) const
+bool nuiAttribute<const nuiColor&>::FromString(nuiColor& rValue, const nglString& rString) const
 {
-  nuiColor col(rString);
-  Set(pTarget, col);
+  rValue.SetValue(rString);
   return true;
 }
 
@@ -852,24 +887,15 @@ bool nuiAttribute<const nuiColor&>::FromString(void* pTarget, const nglString& r
 template class nuiAttribute<nuiPoint>;
 
 template <>
-bool nuiAttribute<nuiPoint>::ToString(void* pTarget, nglString& rString) const
+bool nuiAttribute<nuiPoint>::ToString(nuiPoint Value, nglString& rString) const
 {
-  nuiPoint point = Get(pTarget);
-  rString.CFormat(_T("%f,%f"), point[0], point[1]);
-  return true;
+  return Value.GetValue(rString);
 }
 
 template <>
-bool nuiAttribute<nuiPoint>::FromString(void* pTarget, const nglString& rString) const
+bool nuiAttribute<nuiPoint>::FromString(nuiPoint& rValue, const nglString& rString) const
 {
-  std::vector<nglString> tokens;
-  rString.Tokenize(tokens, nglChar(','));
-  nuiSize x = tokens[0].GetCDouble();
-  nuiSize y = tokens[1].GetCDouble();
-  
-  nuiPoint point(x,y);
-  Set(pTarget, point);
-  return true;
+  return rValue.SetValue(rString);
 }
 
 template <>
@@ -896,19 +922,16 @@ void nuiAttribute<nuiPoint>::FormatDefault(void* pTarget, nglString & string)
 template class nuiAttribute<nuiRect>;
 
 template <>
-bool nuiAttribute<nuiRect>::ToString(void* pTarget, nglString& rString) const
+bool nuiAttribute<nuiRect>::ToString(nuiRect Value, nglString& rString) const
 {
-  rString = Get(pTarget).GetValue();
+  rString = Value.GetValue();
   return true;
 }
 
 template <>
-bool nuiAttribute<nuiRect>::FromString(void* pTarget, const nglString& rString) const
+bool nuiAttribute<nuiRect>::FromString(nuiRect& rValue, const nglString& rString) const
 {
-  nuiRect rect;
-  rect.SetValue(rString);
-  Set(pTarget, rect);
-  return true;
+  return rValue.SetValue(rString);
 }
 
 
@@ -943,19 +966,16 @@ template class nuiAttribute<const nuiRect&>;
 
 
 template <>
-bool nuiAttribute<const nuiRect&>::ToString(void* pTarget, nglString& rString) const
+bool nuiAttribute<const nuiRect&>::ToString(const nuiRect& rValue, nglString& rString) const
 {
-  rString = Get(pTarget).GetValue();
+  rString = rValue.GetValue();
   return true;
 }
 
 template <>
-bool nuiAttribute<const nuiRect&>::FromString(void* pTarget, const nglString& rString) const
+bool nuiAttribute<const nuiRect&>::FromString(nuiRect& rValue, const nglString& rString) const
 {
-  nuiRect rect;
-  rect.SetValue(rString);
-  Set(pTarget, rect);
-  return true;
+  return rValue.SetValue(rString);
 }
 
 
@@ -990,19 +1010,16 @@ void nuiAttribute<const nuiRect&>::FormatDefault(void* pTarget, nglString & stri
 template class nuiAttribute<nuiBorder>;
 
 template <>
-bool nuiAttribute<nuiBorder>::ToString(void* pTarget, nglString& rString) const
+bool nuiAttribute<nuiBorder>::ToString(nuiBorder Value, nglString& rString) const
 {
-  rString = Get(pTarget).GetValue();
+  rString = Value.GetValue();
   return true;
 }
 
 template <>
-bool nuiAttribute<nuiBorder>::FromString(void* pTarget, const nglString& rString) const
+bool nuiAttribute<nuiBorder>::FromString(nuiBorder& rValue, const nglString& rString) const
 {
-  nuiBorder border;
-  border.SetValue(rString);
-  Set(pTarget, border);
-  return true;
+  return rValue.SetValue(rString);
 }
 
 
@@ -1037,19 +1054,16 @@ template class nuiAttribute<const nuiBorder&>;
 
 
 template <>
-bool nuiAttribute<const nuiBorder&>::ToString(void* pTarget, nglString& rString) const
+bool nuiAttribute<const nuiBorder&>::ToString(const nuiBorder& rValue, nglString& rString) const
 {
-  rString = Get(pTarget).GetValue();
+  rString = rValue.GetValue();
   return true;
 }
 
 template <>
-bool nuiAttribute<const nuiBorder&>::FromString(void* pTarget, const nglString& rString) const
+bool nuiAttribute<const nuiBorder&>::FromString(nuiBorder& rValue, const nglString& rString) const
 {
-  nuiBorder border;
-  border.SetValue(rString);
-  Set(pTarget, border);
-  return true;
+  return rValue.SetValue(rString);
 }
 
 
@@ -1081,16 +1095,16 @@ void nuiAttribute<const nuiBorder&>::FormatDefault(void* pTarget, nglString & st
 template class nuiAttribute<nglPath>;
 
 template <>
-bool nuiAttribute<nglPath>::ToString(void* pTarget, nglString& rString) const
+bool nuiAttribute<nglPath>::ToString(nglPath Value, nglString& rString) const
 {
-  rString = Get(pTarget).GetPathName();
+  rString = Value.GetPathName();
   return true;
 }
 
 template <>
-bool nuiAttribute<nglPath>::FromString(void* pTarget, const nglString& rString) const
+bool nuiAttribute<nglPath>::FromString(nglPath& rValue, const nglString& rString) const
 {
-  Set(pTarget, rString);
+  rValue = rString;
   return true;
 }
 
@@ -1117,16 +1131,16 @@ void nuiAttribute<const nglPath&>::FormatDefault(void* pTarget, nglString & stri
 }
 
 template <>
-bool nuiAttribute<const nglPath&>::ToString(void* pTarget, nglString& rString) const
+bool nuiAttribute<const nglPath&>::ToString(const nglPath& rValue, nglString& rString) const
 {
-  rString = Get(pTarget).GetPathName();
+  rString = rValue.GetPathName();
   return true;
 }
 
 template <>
-bool nuiAttribute<const nglPath&>::FromString(void* pTarget, const nglString& rString) const
+bool nuiAttribute<const nglPath&>::FromString(nglPath& rValue, const nglString& rString) const
 {
-  Set(pTarget, rString);
+  rValue = rString;
   return true;
 }
 
@@ -1164,10 +1178,9 @@ void nuiAttribute<nuiDecorationMode>::FormatDefault(void* pTarget, nglString & s
 }
 
 template <>
-bool nuiAttribute<nuiDecorationMode>::ToString(void* pTarget, nglString& rString) const
+bool nuiAttribute<nuiDecorationMode>::ToString(nuiDecorationMode Value, nglString& rString) const
 {
-  nuiDecorationMode mode = Get(pTarget);
-  switch (mode)
+  switch (Value)
   {
     case eDecorationOverdraw:
       rString = "Overdraw";
@@ -1182,29 +1195,29 @@ bool nuiAttribute<nuiDecorationMode>::ToString(void* pTarget, nglString& rString
       rString = "UnknownDecorationMode";
       return false;
   }
-  
+  return true;
 }
 
 template <>
-bool nuiAttribute<nuiDecorationMode>::FromString(void* pTarget, const nglString& rString) const
+bool nuiAttribute<nuiDecorationMode>::FromString(nuiDecorationMode& rValue, const nglString& rString) const
 {
-  if (!rString.Compare(_T("Overdraw")))
+  if (!rString.Compare(_T("Overdraw"), false))
   {
-    Set(pTarget, eDecorationOverdraw);
+    rValue = eDecorationOverdraw;
     return true;
   }
-  else if (!rString.Compare(_T("Border")))
+  else if (!rString.Compare(_T("Border"), false))
   {
-    Set(pTarget, eDecorationBorder);
+    rValue = eDecorationBorder;
     return true;
   }
-  if (!rString.Compare(_T("ClientOnly")))
+  else if (!rString.Compare(_T("ClientOnly"), false))
   {
-    Set(pTarget, eDecorationClientOnly);
+    rValue = eDecorationClientOnly;
     return true;
   }
-  else
-    return false;
+
+  return false;
 }
 
 
@@ -1251,10 +1264,9 @@ void nuiAttribute<nuiShapeMode>::FormatDefault(void* pTarget, nglString & string
 }
 
 template <>
-bool nuiAttribute<nuiShapeMode>::ToString(void* pTarget, nglString& rString) const
+bool nuiAttribute<nuiShapeMode>::ToString(nuiShapeMode Value, nglString& rString) const
 {
-  nuiShapeMode mode = Get(pTarget);
-  switch (mode)
+  switch (Value)
   {
     case eStrokeShape:
       rString = "Stroke";
@@ -1275,25 +1287,25 @@ bool nuiAttribute<nuiShapeMode>::ToString(void* pTarget, nglString& rString) con
 }
 
 template <>
-bool nuiAttribute<nuiShapeMode>::FromString(void* pTarget, const nglString& rString) const
+bool nuiAttribute<nuiShapeMode>::FromString(nuiShapeMode& rValue, const nglString& rString) const
 {
-  if (!rString.Compare(_T("Stroke")))
+  if (!rString.Compare(_T("Stroke"), false))
   {
-    Set(pTarget, eStrokeShape);
+    rValue = eStrokeShape;
     return true;
   }
-  else if (!rString.Compare(_T("Fill")))
+  else if (!rString.Compare(_T("Fill"), false))
   {
-    Set(pTarget, eFillShape);
+    rValue = eFillShape;
     return true;
   }
-  if (!rString.Compare(_T("StrokeAndFill")))
+  else if (!rString.Compare(_T("StrokeAndFill"), false))
   {
-    Set(pTarget, eStrokeAndFillShape);
+    rValue = eStrokeAndFillShape;
     return true;
   }
-  else
-    return false;
+
+  return false;
 }
 
 
@@ -1308,19 +1320,16 @@ template class nuiAttribute<const nuiRange&>;
 
 
 template <>
-bool nuiAttribute<const nuiRange&>::ToString(void* pTarget, nglString& rString) const
+bool nuiAttribute<const nuiRange&>::ToString(const nuiRange& rValue, nglString& rString) const
 {
-  rString = Get(pTarget).GetValue();
+  rString = rValue.GetValue();
   return true;
 }
 
 template <>
-bool nuiAttribute<const nuiRange&>::FromString(void* pTarget, const nglString& rString) const
+bool nuiAttribute<const nuiRange&>::FromString(nuiRange& rValue, const nglString& rString) const
 {
-  nuiRange range;
-  range.FromString(rString);
-  Set(pTarget, range);
-  return true;
+  return rValue.FromString(rString);
 }
 
 
@@ -1352,10 +1361,9 @@ void nuiAttribute<const nuiRange&>::FormatDefault(void* pTarget, nglString & str
 template class nuiAttribute<nuiDecorationLayer>;
 
 template <>
-bool nuiAttribute<nuiDecorationLayer>::ToString(void* pTarget, nglString& rString) const
+bool nuiAttribute<nuiDecorationLayer>::ToString(nuiDecorationLayer Value, nglString& rString) const
 {
-  nuiDecorationLayer layer = Get(pTarget);
-  if (layer == eLayerBack)
+  if (Value == eLayerBack)
     rString = _T("Back");
   else
     rString = _T("Front");
@@ -1364,15 +1372,14 @@ bool nuiAttribute<nuiDecorationLayer>::ToString(void* pTarget, nglString& rStrin
 }
 
 template <>
-bool nuiAttribute<nuiDecorationLayer>::FromString(void* pTarget, const nglString& rString) const
+bool nuiAttribute<nuiDecorationLayer>::FromString(nuiDecorationLayer& rValue, const nglString& rString) const
 {
-  nuiDecorationLayer layer;
-  if (!rString.Compare(_T("Back")))
-    layer = eLayerBack;
+  if (!rString.Compare(_T("Back"), false))
+    rValue = eLayerBack;
+  else if (!rString.Compare(_T("Front"), false))
+    rValue = eLayerFront;
   else
-    layer = eLayerFront;
-  
-  Set(pTarget, layer);
+    return false;
   return true;
 }
 
@@ -1403,11 +1410,9 @@ void nuiAttribute<nuiDecorationLayer>::FormatDefault(void* pTarget, nglString & 
 template class nuiAttribute<nuiMouseCursor>;
 
 template <>
-bool nuiAttribute<nuiMouseCursor>::ToString(void* pTarget, nglString& rString) const
+bool nuiAttribute<nuiMouseCursor>::ToString(nuiMouseCursor Value, nglString& rString) const
 {
-  nuiMouseCursor cursor = Get(pTarget);
-  
-  switch(cursor)
+  switch(Value)
   {
     case eCursorDoNotSet:
       rString = _T("DoNotSet");
@@ -1487,60 +1492,61 @@ bool nuiAttribute<nuiMouseCursor>::ToString(void* pTarget, nglString& rString) c
 }
 
 template <>
-bool nuiAttribute<nuiMouseCursor>::FromString(void* pTarget, const nglString& rString) const
+bool nuiAttribute<nuiMouseCursor>::FromString(nuiMouseCursor& rValue, const nglString& rString) const
 {
   nuiMouseCursor cursor = eCursorNone;
   
-  if (!rString.Compare(_T("DoNotSet")))
-    cursor = eCursorDoNotSet;
-  else if (!rString.Compare(_T("None")))
-    cursor = eCursorNone;
-  else if (!rString.Compare(_T("Arrow")))
-    cursor = eCursorArrow;
-  else if (!rString.Compare(_T("Cross")))
-    cursor = eCursorCross;
-  else if (!rString.Compare(_T("IBeam")))
-    cursor = eCursorIBeam;
-  else if (!rString.Compare(_T("Hand")))
-    cursor = eCursorHand;
-  else if (!rString.Compare(_T("ClosedHand")))
-    cursor = eCursorClosedHand;
-  else if (!rString.Compare(_T("Help")))
-    cursor = eCursorHelp;
-  else if (!rString.Compare(_T("Wait")))
-    cursor = eCursorWait;
-  else if (!rString.Compare(_T("Caret")))
-    cursor = eCursorCaret;
-  else if (!rString.Compare(_T("DnD")))
-    cursor = eCursorDnD;
-  else if (!rString.Compare(_T("Forbid")))
-    cursor = eCursorForbid;
-  else if (!rString.Compare(_T("Move")))
-    cursor = eCursorMove;
-  else if (!rString.Compare(_T("Resize")))
-    cursor = eCursorResize;
-  else if (!rString.Compare(_T("ResizeNS")))
-    cursor = eCursorResizeNS;
-  else if (!rString.Compare(_T("ResizeWE")))
-    cursor = eCursorResizeWE;
-  else if (!rString.Compare(_T("ResizeN")))
-    cursor = eCursorResizeN;
-  else if (!rString.Compare(_T("ResizeS")))
-    cursor = eCursorResizeS;
-  else if (!rString.Compare(_T("ResizeW")))
-    cursor = eCursorResizeW;
-  else if (!rString.Compare(_T("ResizeE")))
-    cursor = eCursorResizeE;
-  else if (!rString.Compare(_T("ResizeNW")))
-    cursor = eCursorResizeNW;
-  else if (!rString.Compare(_T("ResizeNE")))
-    cursor = eCursorResizeNE;
-  else if (!rString.Compare(_T("ResizeSW")))
-    cursor = eCursorResizeSW;
-  else if (!rString.Compare(_T("ResizeSE")))
-    cursor = eCursorResizeSE;
+  if (!rString.Compare(_T("DoNotSet"), false))
+    rValue = eCursorDoNotSet;
+  else if (!rString.Compare(_T("None"), false))
+    rValue = eCursorNone;
+  else if (!rString.Compare(_T("Arrow"), false))
+    rValue = eCursorArrow;
+  else if (!rString.Compare(_T("Cross"), false))
+    rValue = eCursorCross;
+  else if (!rString.Compare(_T("IBeam"), false))
+    rValue = eCursorIBeam;
+  else if (!rString.Compare(_T("Hand"), false))
+    rValue = eCursorHand;
+  else if (!rString.Compare(_T("ClosedHand"), false))
+    rValue = eCursorClosedHand;
+  else if (!rString.Compare(_T("Help"), false))
+    rValue = eCursorHelp;
+  else if (!rString.Compare(_T("Wait"), false))
+    rValue = eCursorWait;
+  else if (!rString.Compare(_T("Caret"), false))
+    rValue = eCursorCaret;
+  else if (!rString.Compare(_T("DnD"), false))
+    rValue = eCursorDnD;
+  else if (!rString.Compare(_T("Forbid"), false))
+    rValue = eCursorForbid;
+  else if (!rString.Compare(_T("Move"), false))
+    rValue = eCursorMove;
+  else if (!rString.Compare(_T("Resize"), false))
+    rValue = eCursorResize;
+  else if (!rString.Compare(_T("ResizeNS"), false))
+    rValue = eCursorResizeNS;
+  else if (!rString.Compare(_T("ResizeWE"), false))
+    rValue = eCursorResizeWE;
+  else if (!rString.Compare(_T("ResizeN"), false))
+    rValue = eCursorResizeN;
+  else if (!rString.Compare(_T("ResizeS"), false))
+    rValue = eCursorResizeS;
+  else if (!rString.Compare(_T("ResizeW"), false))
+    rValue = eCursorResizeW;
+  else if (!rString.Compare(_T("ResizeE"), false))
+    rValue = eCursorResizeE;
+  else if (!rString.Compare(_T("ResizeNW"), false))
+    rValue = eCursorResizeNW;
+  else if (!rString.Compare(_T("ResizeNE"), false))
+    rValue = eCursorResizeNE;
+  else if (!rString.Compare(_T("ResizeSW"), false))
+    rValue = eCursorResizeSW;
+  else if (!rString.Compare(_T("ResizeSE"), false))
+    rValue = eCursorResizeSE;
+  else
+    return false;
   
-  Set(pTarget, cursor);
   return true;
 }
 
@@ -1680,6 +1686,25 @@ bool nuiAttribBase::FromString(const nglString& rString) const
   return mpAttributeBase->FromString(mpTarget, rString);
 }
 
+bool nuiAttribBase::ToString(uint32 index, nglString& rString) const
+{
+  return mpAttributeBase->ToString(mpTarget, index, rString);
+}
+
+bool nuiAttribBase::FromString(uint32 index, const nglString& rString) const
+{
+  return mpAttributeBase->FromString(mpTarget, index, rString);
+}
+
+bool nuiAttribBase::ToString(uint32 index0, uint32 index1, nglString& rString) const
+{
+  return mpAttributeBase->ToString(mpTarget, index0, index1, rString);
+}
+
+bool nuiAttribBase::FromString(uint32 index0, uint32 index1, const nglString& rString) const
+{
+  return mpAttributeBase->FromString(mpTarget, index0, index1, rString);
+}
 
 void nuiAttribBase::IgnoreAttributeChange(bool ignore)
 {
@@ -1706,5 +1731,15 @@ bool nuiAttribBase::IsValid() const
 nuiAttribBase::operator bool() const
 {
   return IsValid();
+}
+
+uint32 nuiAttribBase::GetIndexRange(uint32 Dimension) const
+{
+  return mpAttributeBase->GetIndexRange(mpTarget, Dimension);
+}
+
+uint32 nuiAttribBase::GetDimension() const
+{
+  return mpAttributeBase->GetDimension();
 }
 

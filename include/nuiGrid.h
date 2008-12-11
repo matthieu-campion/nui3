@@ -126,7 +126,10 @@ public:
 
 protected:
 
-
+  uint32 GetDimensionRange(uint32 dimension) const;
+  uint32 GetColumnDimensionRange(uint32 dimension) const;
+  uint32 GetRowDimensionRange(uint32 dimension) const;
+  
   void    UpdateExpandRatio(std::vector<nuiSize>& rRatios, nuiSize& rCoeff);
   void    AdjustToExpand(nuiSize width, nuiSize height, 
                         std::vector<nuiSize>& Widths, std::vector<nuiSize>& Heights);

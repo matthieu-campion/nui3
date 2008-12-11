@@ -57,6 +57,8 @@ enum nuiAttributeUnit
 class nuiAttributeBase
 {
 public:
+  typedef nuiFastDelegate::FastDelegate1<uint32 /*dimension */, uint32> ArrayRangeDelegate;
+  
   virtual ~nuiAttributeBase();
 
   bool IsReadOnly() const;
@@ -77,27 +79,23 @@ public:
 
   virtual bool ToString(void* pTarget, nglString& rString) const = 0;
   virtual bool FromString(void* pTarget, const nglString& rString) const = 0;
+  virtual bool ToString(void* pTarget, int32 index, nglString& rString) const = 0;
+  virtual bool FromString(void* pTarget, int32 index, const nglString& rString) const = 0;
+  virtual bool ToString(void* pTarget, int32 index0, int32 index1, nglString& rString) const = 0;
+  virtual bool FromString(void* pTarget, int32 index0, int32 index1, const nglString& rString) const = 0;
   
-  void IgnoreAttributeChange(bool ignore)
-  {
-    mIgnoreAttributeChange = ignore;
-  }
-  
-  bool IsAttributeChangeIgnored() const
-  {
-    return mIgnoreAttributeChange;
-  }
+  void IgnoreAttributeChange(bool ignore);
+  bool IsAttributeChangeIgnored() const;
 
-  uint32 GetDimension() const
-  {
-    return mDimension;
-  }
+  uint32 GetDimension() const;
+  uint32 GetIndexRange(void* pTarget, uint32 Dimension) const;
 
 	virtual nuiAttributeEditor* GetEditor(void* pTarget) = 0;
   
   virtual void KillAttributeHolder(void* pHolder) = 0;
 protected:
-  nuiAttributeBase(const nglString& rName, nuiAttributeType type, nuiAttributeUnit units, const nuiRange& rRange, bool readonly, uint32 dimension);  ///< property 
+  nuiAttributeBase(const nglString& rName, nuiAttributeType type, nuiAttributeUnit units, const nuiRange& rRange, bool readonly);  ///< property 
+  nuiAttributeBase(const nglString& rName, nuiAttributeType type, nuiAttributeUnit units, const nuiRange& rRange, bool readonly, uint32 dimension, const ArrayRangeDelegate& rArrayRangeGetter);  ///< property 
   
 private:
   nglString mName;
@@ -108,6 +106,7 @@ private:
   bool mIgnoreAttributeChange;
   int32 mOrder;
   uint32 mDimension;
+  ArrayRangeDelegate mRangeGetter;
 };
 
 inline uint64 GetNewAttributeUniqueId()
@@ -141,17 +140,18 @@ public:
   typedef typename nuiFastDelegate::FastDelegate0<Contents> GetterDelegate;
   typedef typename nuiFastDelegate::FastDelegate1<Contents> SetterDelegate;
   // Array (dimension = 1)
-  typedef typename nuiFastDelegate::FastDelegate1<int32, Contents> GetterDelegate1;
-  typedef typename nuiFastDelegate::FastDelegate2<int32, Contents> SetterDelegate1;
+  typedef typename nuiFastDelegate::FastDelegate1<uint32, Contents> GetterDelegate1;
+  typedef typename nuiFastDelegate::FastDelegate2<uint32, Contents> SetterDelegate1;
   // Array (dimension = 2)
-  typedef typename nuiFastDelegate::FastDelegate2<int32, int32, Contents> GetterDelegate2;
-  typedef typename nuiFastDelegate::FastDelegate3<int32, int32, Contents> SetterDelegate2;
+  typedef typename nuiFastDelegate::FastDelegate2<uint32, uint32, Contents> GetterDelegate2;
+  typedef typename nuiFastDelegate::FastDelegate3<uint32, uint32, Contents> SetterDelegate2;
 
-  typedef typename nuiFastDelegate::FastDelegate3<int32 /*dimension */, int32&, int32&> ArrayRangeDelegate;
   typedef typename nuiFastDelegate::FastDelegate2<void*, nuiAttribute<Contents>*, nuiAttributeEditor* > NewEditorDelegate;
   typedef nuiFastDelegate::FastDelegate3<void*, nglString&, Contents> FormaterDelegate;
 
   typedef nuiSignal1<Contents> Signal;
+  typedef nuiSignal2<uint32, Contents> Signal0;
+  typedef nuiSignal3<uint32, uint32, Contents> Signal1;
   typedef std::map<void*, nuiSignal*> AttributeSignalMap;
 private:
   mutable AttributeSignalMap mAttributeChangedSignals;
@@ -160,47 +160,43 @@ public:
 
   // Direct Access: (dim = 0)
   nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate& rGetter, const SetterDelegate& rSetter, const nuiRange& rRange = nuiRange()) ///< Read/write property
-    : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::GetTypeId(), units, rRange, false, 0),
+    : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::GetTypeId(), units, rRange, false),
       mGetter(rGetter.GetMemento()),
       mSetter(rSetter.GetMemento())
   {
   }
   
   nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate& rGetter, const nuiRange& rRange = nuiRange()) ///< Read only property
-    : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::GetTypeId(), units, rRange, true, 0),
+    : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::GetTypeId(), units, rRange, true),
     mGetter(rGetter.GetMemento())
   {
   }
 
 	// Array (dim = 1)
   nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate1& rGetter, const SetterDelegate1& rSetter, const ArrayRangeDelegate& rRangeGetter, const nuiRange& rRange = nuiRange()) ///< Read/write property
-  : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::GetTypeId(), units, rRange, false, 1),
+  : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::GetTypeId(), units, rRange, false, 1, rRangeGetter),
   mGetter(rGetter.GetMemento()),
-  mSetter(rSetter.GetMemento()),
-  mRangeGetter(rRangeGetter)
+  mSetter(rSetter.GetMemento())
   {
   }
   
   nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate1& rGetter, const ArrayRangeDelegate& rRangeGetter = NULL, const nuiRange& rRange = nuiRange()) ///< Read only property
-  : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::GetTypeId(), units, rRange, true, 1),
-  mGetter(rGetter.GetMemento()),
-  mRangeGetter(rRangeGetter)
+  : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::GetTypeId(), units, rRange, true, 1, rRangeGetter),
+  mGetter(rGetter.GetMemento())
   {
   }
   
 	// Array (dim = 2)
   nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate2& rGetter, const SetterDelegate2& rSetter, const ArrayRangeDelegate& rRangeGetter, const nuiRange& rRange = nuiRange()) ///< Read/write property
-  : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::GetTypeId(), units, rRange, false, 2),
+  : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::GetTypeId(), units, rRange, false, 2, rRangeGetter),
   mGetter(rGetter.GetMemento()),
-  mSetter(rSetter.GetMemento()),
-  mRangeGetter(rRangeGetter)
+  mSetter(rSetter.GetMemento())
   {
   }
   
   nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate2& rGetter, const ArrayRangeDelegate& rRangeGetter = NULL, const nuiRange& rRange = nuiRange()) ///< Read only property
-  : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::GetTypeId(), units, rRange, true, 2),
-  mGetter(rGetter.GetMemento()),
-  mRangeGetter(rRangeGetter)
+  : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::GetTypeId(), units, rRange, true, 2, rRangeGetter),
+  mGetter(rGetter.GetMemento())
   {
   }
   
@@ -221,16 +217,55 @@ public:
     return pParentNode;
 	}
 
-  virtual bool ToString(void* pTarget, nglString& rString) const
+  bool ToString(Contents Value, nglString& rString) const
   {
-    return false;
+    return rString = Value;
   }
   
-  virtual bool FromString(void* pTarget, const nglString& rString) const
+  bool FromString(Contents& Value, const nglString& rString) const
   {
-    return false;
+    return Value = rString;
   }
-
+  
+  bool ToString(void* pTarget, nglString& rString) const
+  {
+    return ToString(Get(pTarget), rString);
+  }
+  
+  bool FromString(void* pTarget, const nglString& rString) const
+  {
+    Contents val;
+    bool res = FromString(val, rString);
+    Set(pTarget, val);
+    return res;
+  }
+  
+  bool ToString(void* pTarget, int32 index, nglString& rString) const
+  {
+    return ToString(Get(pTarget, index), rString);
+  }
+  
+  bool FromString(void* pTarget, int32 index, const nglString& rString) const
+  {
+    Contents val;
+    bool res = FromString(val, rString);
+    Set(pTarget, index, val);
+    return res;
+  }
+  
+  bool ToString(void* pTarget, int32 index0, int32 index1, nglString& rString) const
+  {
+    return ToString(Get(pTarget, index0, index1), rString);
+  }
+  
+  virtual bool FromString(void* pTarget, int32 index0, int32 index1, const nglString& rString) const
+  {
+    Contents val;
+    bool res = FromString(val, rString);
+    Set(pTarget, index0, index1, val);
+    return res;
+  }
+    
   // Getters for each dimension:
   Contents Get(void* pTarget) const
   {
@@ -242,7 +277,7 @@ public:
     return Getter();
   }
   
-  Contents Get(void* pTarget, int32 index) const
+  Contents Get(void* pTarget, uint32 index) const
   {
     NGL_ASSERT(mGetter);
     NGL_ASSERT(GetDimension() == 1);
@@ -252,7 +287,7 @@ public:
     return Getter(index);
   }
   
-  Contents Get(void* pTarget, int32 index0, int32 index1) const
+  Contents Get(void* pTarget, uint32 index0, uint32 index1) const
   {
     NGL_ASSERT(mGetter);
     NGL_ASSERT(GetDimension() == 2);
@@ -278,7 +313,7 @@ public:
     }
   }
   
-  void Set(void* pTarget, int32 index, Contents rValue) const
+  void Set(void* pTarget, uint32 index, Contents rValue) const
   {
     NGL_ASSERT(mSetter);
     NGL_ASSERT(GetDimension() == 1);
@@ -293,7 +328,7 @@ public:
     }
   }
   
-  void Set(void* pTarget, int32 index0, int32 index1, Contents rValue) const
+  void Set(void* pTarget, uint32 index0, uint32 index1, Contents rValue) const
   {
     NGL_ASSERT(mSetter);
     NGL_ASSERT(GetDimension() == 2);
@@ -306,15 +341,6 @@ public:
     {
       SendAttributeChanged(pTarget, index0, index1, rValue); 
     }
-  }
-
-  // Index range getter for dimensions > 0
-	bool GetIndexRange(uint32 Dimension, int32& rMinimum, int32& rMaximum) const
-  {
-    if (!mRangeGetter || Dimension > GetDimension())
-      return false;
-    mRangeGetter(Dimension, rMinimum, rMaximum);
-    return true;
   }
 
   // Get/Set Editors:
@@ -359,7 +385,7 @@ public:
 		return FormatDefault(pTarget, string);
 	}
 	
-	void Format(void* pTarget, int32 index, nglString& string)
+	void Format(void* pTarget, uint32 index, nglString& string)
 	{
 		if (mFormater)
 		{
@@ -370,7 +396,7 @@ public:
 		return FormatDefault(pTarget, string);
 	}
 	
-	void Format(void* pTarget, int32 index0, int32 index1, nglString& string)
+	void Format(void* pTarget, uint32 index0, uint32 index1, nglString& string)
 	{
 		if (mFormater)
 		{
@@ -397,6 +423,30 @@ public:
       return *pS;
     }
     return reinterpret_cast<Signal&>(*(it->second));
+  }
+  
+  Signal0& GetChangedSignal0(void* pTarget) const
+  {
+    AttributeSignalMap::iterator it = mAttributeChangedSignals.find(pTarget);
+    if (it == mAttributeChangedSignals.end())
+    {
+      Signal0* pS = new Signal0;
+      mAttributeChangedSignals[pTarget] = pS;
+      return *pS;
+    }
+    return reinterpret_cast<Signal0&>(*(it->second));
+  }
+  
+  Signal1& GetChangedSignal1(void* pTarget) const
+  {
+    AttributeSignalMap::iterator it = mAttributeChangedSignals.find(pTarget);
+    if (it == mAttributeChangedSignals.end())
+    {
+      Signal1* pS = new Signal1;
+      mAttributeChangedSignals[pTarget] = pS;
+      return *pS;
+    }
+    return reinterpret_cast<Signal1&>(*(it->second));
   }
   
   void KillAttributeHolder(void* pHolder)
@@ -428,31 +478,400 @@ private:
     }
   }	
 
-  void SendAttributeChanged(void* pTarget, int32 index, Contents value) const
+  void SendAttributeChanged(void* pTarget, uint32 index, Contents value) const
   {
     const AttributeSignalMap::iterator it  = mAttributeChangedSignals.find(pTarget);
     const AttributeSignalMap::iterator end = mAttributeChangedSignals.end();
     if (it != end)
     {
-      nuiSignal2<int32, Contents>* pSignal = (nuiSignal2<int32, Contents>*)it->second;
+      nuiSignal2<uint32, Contents>* pSignal = (nuiSignal2<uint32, Contents>*)it->second;
       (*pSignal)(index, value);
     }
   }	
 
-  void SendAttributeChanged(void* pTarget, int32 index0, int32 index1, Contents value) const
+  void SendAttributeChanged(void* pTarget, uint32 index0, uint32 index1, Contents value) const
   {
     const AttributeSignalMap::iterator it  = mAttributeChangedSignals.find(pTarget);
     const AttributeSignalMap::iterator end = mAttributeChangedSignals.end();
     if (it != end)
     {
-      nuiSignal3<int32, int32, Contents>* pSignal = (nuiSignal3<int32, int32, Contents>*)it->second;
+      nuiSignal3<uint32, uint32, Contents>* pSignal = (nuiSignal3<uint32, uint32, Contents>*)it->second;
       (*pSignal)(index0, index1, value);
     }
   }	
 };
 
 
-
+//////////////////////////////////////////////
+template <class Contents>  
+class nuiAttribute<const Contents&> : public nuiAttributeBase
+{
+public:
+  // Direct access (dimension = 0)
+  typedef typename nuiFastDelegate::FastDelegate0<const Contents&> GetterDelegate;
+  typedef typename nuiFastDelegate::FastDelegate1<const Contents&> SetterDelegate;
+  // Array (dimension = 1)
+  typedef typename nuiFastDelegate::FastDelegate1<uint32, const Contents&> GetterDelegate1;
+  typedef typename nuiFastDelegate::FastDelegate2<uint32, const Contents&> SetterDelegate1;
+  // Array (dimension = 2)
+  typedef typename nuiFastDelegate::FastDelegate2<uint32, uint32, const Contents&> GetterDelegate2;
+  typedef typename nuiFastDelegate::FastDelegate3<uint32, uint32, const Contents&> SetterDelegate2;
+  
+  typedef typename nuiFastDelegate::FastDelegate2<void*, nuiAttribute<const Contents&>*, nuiAttributeEditor* > NewEditorDelegate;
+  typedef nuiFastDelegate::FastDelegate3<void*, nglString&, const Contents&> FormaterDelegate;
+  
+  typedef nuiSignal1<const Contents&> Signal;
+  typedef nuiSignal2<uint32, const Contents&> Signal0;
+  typedef nuiSignal3<uint32, uint32, const Contents&> Signal1;
+  typedef std::map<void*, nuiSignal*> AttributeSignalMap;
+private:
+  mutable AttributeSignalMap mAttributeChangedSignals;
+public:
+  
+  
+  // Direct Access: (dim = 0)
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate& rGetter, const SetterDelegate& rSetter, const nuiRange& rRange = nuiRange()) ///< Read/write property
+  : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::GetTypeId(), units, rRange, false),
+  mGetter(rGetter.GetMemento()),
+  mSetter(rSetter.GetMemento())
+  {
+  }
+  
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate& rGetter, const nuiRange& rRange = nuiRange()) ///< Read only property
+  : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::GetTypeId(), units, rRange, true),
+  mGetter(rGetter.GetMemento())
+  {
+  }
+  
+  // Array (dim = 1)
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate1& rGetter, const SetterDelegate1& rSetter, const ArrayRangeDelegate& rRangeGetter, const nuiRange& rRange = nuiRange()) ///< Read/write property
+  : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::GetTypeId(), units, rRange, false, 1, rRangeGetter),
+  mGetter(rGetter.GetMemento()),
+  mSetter(rSetter.GetMemento())
+  {
+  }
+  
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate1& rGetter, const ArrayRangeDelegate& rRangeGetter = NULL, const nuiRange& rRange = nuiRange()) ///< Read only property
+  : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::GetTypeId(), units, rRange, true, 1, rRangeGetter),
+  mGetter(rGetter.GetMemento())
+  {
+  }
+  
+  // Array (dim = 2)
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate2& rGetter, const SetterDelegate2& rSetter, const ArrayRangeDelegate& rRangeGetter, const nuiRange& rRange = nuiRange()) ///< Read/write property
+  : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::GetTypeId(), units, rRange, false, 2, rRangeGetter),
+  mGetter(rGetter.GetMemento()),
+  mSetter(rSetter.GetMemento())
+  {
+  }
+  
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate2& rGetter, const ArrayRangeDelegate& rRangeGetter = NULL, const nuiRange& rRange = nuiRange()) ///< Read only property
+  : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::GetTypeId(), units, rRange, true, 2, rRangeGetter),
+  mGetter(rGetter.GetMemento())
+  {
+  }
+  
+  // inherited from AttributeBase, to be specialized for each type of Attribute
+  virtual bool Load(void* pTarget, const nuiXMLNode* pNode)
+  {
+    if (pNode->HasAttribute(GetName()))
+      return FromString(pTarget, pNode->GetAttribute(GetName()));
+    return false;
+  }
+  
+  // inherited from AttributeBase, to be specialized for each type of Attribute
+  virtual nuiXMLNode* Serialize(void* pTarget, nuiXMLNode* pParentNode) const
+  {
+    nglString str;
+    if (ToString(pTarget, str))
+      pParentNode->SetAttribute(GetName(), str);
+    return pParentNode;
+  }
+  
+  bool ToString(const Contents& rValue, nglString& rString) const
+  {
+    return rString = rValue;
+  }
+  
+  bool FromString(Contents& rValue, const nglString& rString) const
+  {
+    return rValue = rString;
+  }
+  
+  bool ToString(void* pTarget, nglString& rString) const
+  {
+    return ToString(Get(pTarget), rString);
+  }
+  
+  bool FromString(void* pTarget, const nglString& rString) const
+  {
+    Contents val;
+    bool res = FromString(val, rString);
+    Set(pTarget, val);
+    return res;
+  }
+  
+  bool ToString(void* pTarget, int32 index, nglString& rString) const
+  {
+    return ToString(Get(pTarget, index), rString);
+  }
+  
+  bool FromString(void* pTarget, int32 index, const nglString& rString) const
+  {
+    Contents val;
+    bool res = FromString(val, rString);
+    Set(pTarget, index, val);
+    return res;
+  }
+  
+  bool ToString(void* pTarget, int32 index0, int32 index1, nglString& rString) const
+  {
+    return ToString(Get(pTarget, index0, index1), rString);
+  }
+  
+  virtual bool FromString(void* pTarget, int32 index0, int32 index1, const nglString& rString) const
+  {
+    Contents val;
+    bool res = FromString(val, rString);
+    Set(pTarget, index0, index1, val);
+    return res;
+  }
+  
+  // Getters for each dimension:
+  const Contents& Get(void* pTarget) const
+  {
+    NGL_ASSERT(mGetter);
+    NGL_ASSERT(GetDimension() == 0);
+    GetterDelegate Getter;
+    Getter.SetMemento(mGetter);
+    Getter.SetThis(pTarget);
+    return Getter();
+  }
+  
+  const Contents& Get(void* pTarget, uint32 index) const
+  {
+    NGL_ASSERT(mGetter);
+    NGL_ASSERT(GetDimension() == 1);
+    GetterDelegate1 Getter;
+    Getter.SetMemento(mGetter);
+    Getter.SetThis(pTarget);
+    return Getter(index);
+  }
+  
+  const Contents& Get(void* pTarget, uint32 index0, uint32 index1) const
+  {
+    NGL_ASSERT(mGetter);
+    NGL_ASSERT(GetDimension() == 2);
+    GetterDelegate2 Getter;
+    Getter.SetMemento(mGetter);
+    Getter.SetThis(pTarget);
+    return Getter(index0, index1);
+  }
+  
+  // Setters for each dimension:
+  void Set(void* pTarget, const Contents& rValue) const
+  {
+    NGL_ASSERT(mSetter);
+    NGL_ASSERT(GetDimension() == 0);
+    SetterDelegate Setter;
+    Setter.SetMemento(mSetter);
+    Setter.SetThis(pTarget);
+    Setter(rValue);
+    
+    if (!IsAttributeChangeIgnored())
+    {
+      SendAttributeChanged(pTarget, rValue); 
+    }
+  }
+  
+  void Set(void* pTarget, uint32 index, const Contents& rValue) const
+  {
+    NGL_ASSERT(mSetter);
+    NGL_ASSERT(GetDimension() == 1);
+    SetterDelegate1 Setter;
+    Setter.SetMemento(mSetter);
+    Setter.SetThis(pTarget);
+    Setter(index, rValue);
+    
+    if (!IsAttributeChangeIgnored())
+    {
+      SendAttributeChanged(pTarget, index, rValue); 
+    }
+  }
+  
+  void Set(void* pTarget, uint32 index0, uint32 index1, const Contents& rValue) const
+  {
+    NGL_ASSERT(mSetter);
+    NGL_ASSERT(GetDimension() == 2);
+    SetterDelegate2 Setter;
+    Setter.SetMemento(mSetter);
+    Setter.SetThis(pTarget);
+    Setter(index0, index1, rValue);
+    
+    if (!IsAttributeChangeIgnored())
+    {
+      SendAttributeChanged(pTarget, index0, index1, rValue); 
+    }
+  }
+  
+  // Get/Set Editors:
+  void SetEditor(const NewEditorDelegate& rNewEditor)
+  {
+    mNewEditor = rNewEditor;
+  }
+  
+  virtual nuiAttributeEditor* GetEditor(void* pTarget)
+  {
+    if (mNewEditor)
+    {
+      // the user has specified its own editor.
+      return mNewEditor(pTarget, this);
+    }
+    
+    return GetDefaultEditor(pTarget);
+  }
+  
+  // return a NULL editor in general. The editors by default are defined in nuiAttribute.cpp, as a specialization of the template trait nuiAttribute<T>::GetEditor
+  // the user can also defines its own editor, in calling SetEditor	
+  nuiAttributeEditor* GetDefaultEditor(void* pTarget)
+  {
+    // if this code is executed, it means a template trait specialization is missing in nuiAttribute.cpp.
+    return NULL;
+  }
+  
+  void SetFormater(const FormaterDelegate& rFormater)
+  {
+    mFormater = rFormater;
+  }
+  
+  // Format methods for each dimensions:
+  void Format(void* pTarget, nglString& string)
+  {
+    if (mFormater)
+    {
+      // the user has specified its own formater.
+      return mFormater(pTarget, string, Get(pTarget));
+    }
+    
+    return FormatDefault(pTarget, string);
+  }
+  
+  void Format(void* pTarget, uint32 index, nglString& string)
+  {
+    if (mFormater)
+    {
+      // the user has specified its own formater.
+      return mFormater(pTarget, string, Get(pTarget, index));
+    }
+    
+    return FormatDefault(pTarget, string);
+  }
+  
+  void Format(void* pTarget, uint32 index0, uint32 index1, nglString& string)
+  {
+    if (mFormater)
+    {
+      // the user has specified its own formater.
+      return mFormater(pTarget, string, Get(pTarget, index0, index1));
+    }
+    
+    return FormatDefault(pTarget, string);
+  }
+  
+  void FormatDefault(void* pTarget, nglString& string)
+  {
+    // if don't want to use this default formater for your attribute, simply create a template trait specialization in attribute.cpp
+    return;
+  }
+  
+  Signal& GetChangedSignal(void* pTarget) const
+  {
+    AttributeSignalMap::iterator it = mAttributeChangedSignals.find(pTarget);
+    if (it == mAttributeChangedSignals.end())
+    {
+      Signal* pS = new Signal;
+      mAttributeChangedSignals[pTarget] = pS;
+      return *pS;
+    }
+    return reinterpret_cast<Signal&>(*(it->second));
+  }
+  
+  Signal0& GetChangedSignal0(void* pTarget) const
+  {
+    AttributeSignalMap::iterator it = mAttributeChangedSignals.find(pTarget);
+    if (it == mAttributeChangedSignals.end())
+    {
+      Signal0* pS = new Signal0;
+      mAttributeChangedSignals[pTarget] = pS;
+      return *pS;
+    }
+    return reinterpret_cast<Signal0&>(*(it->second));
+  }
+  
+  Signal1& GetChangedSignal1(void* pTarget) const
+  {
+    AttributeSignalMap::iterator it = mAttributeChangedSignals.find(pTarget);
+    if (it == mAttributeChangedSignals.end())
+    {
+      Signal1* pS = new Signal1;
+      mAttributeChangedSignals[pTarget] = pS;
+      return *pS;
+    }
+    return reinterpret_cast<Signal1&>(*(it->second));
+  }
+  
+  void KillAttributeHolder(void* pHolder)
+  {
+    AttributeSignalMap::iterator it  = mAttributeChangedSignals.find(pHolder);
+    AttributeSignalMap::iterator end = mAttributeChangedSignals.end();
+    if (it != end)
+    {
+      delete it->second;
+      mAttributeChangedSignals.erase(it);
+    }
+  }
+  
+private:
+  nuiFastDelegate::DelegateMemento mGetter;
+  nuiFastDelegate::DelegateMemento mSetter;
+  NewEditorDelegate mNewEditor;
+  FormaterDelegate mFormater;
+  ArrayRangeDelegate mRangeGetter;
+  
+  void SendAttributeChanged(void* pTarget, const Contents& value) const
+  {
+    const AttributeSignalMap::iterator it  = mAttributeChangedSignals.find(pTarget);
+    const AttributeSignalMap::iterator end = mAttributeChangedSignals.end();
+    if (it != end)
+    {
+      nuiSignal1<const Contents&>* pSignal = (nuiSignal1<const Contents&>*)it->second;
+      (*pSignal)(value);
+    }
+  }	
+  
+  void SendAttributeChanged(void* pTarget, uint32 index, const Contents& value) const
+  {
+    const AttributeSignalMap::iterator it  = mAttributeChangedSignals.find(pTarget);
+    const AttributeSignalMap::iterator end = mAttributeChangedSignals.end();
+    if (it != end)
+    {
+      nuiSignal2<uint32, const Contents&>* pSignal = (nuiSignal2<uint32, const Contents&>*)it->second;
+      (*pSignal)(index, value);
+    }
+  }	
+  
+  void SendAttributeChanged(void* pTarget, uint32 index0, uint32 index1, const Contents& value) const
+  {
+    const AttributeSignalMap::iterator it  = mAttributeChangedSignals.find(pTarget);
+    const AttributeSignalMap::iterator end = mAttributeChangedSignals.end();
+    if (it != end)
+    {
+      nuiSignal3<uint32, uint32, const Contents&>* pSignal = (nuiSignal3<uint32, uint32, const Contents&>*)it->second;
+      (*pSignal)(index0, index1, value);
+    }
+  }	
+};
+//////////////////////////////////////////////
 
 template <class Type> 
 nuiAttribute<Type>* nuiAttributeCast(const nuiAttributeBase* pBase)
@@ -491,12 +910,16 @@ public:
   
   int32 GetOrder() const;
   void SetOrder(int32 order);
-
+  
 	bool Load(const nuiXMLNode* pNode);
 	nuiXMLNode* Serialize(nuiXMLNode* pParentNode) const;
   
   bool ToString(nglString& rString) const;
   bool FromString(const nglString& rString) const;
+  bool ToString(uint32 index, nglString& rString) const;
+  bool FromString(uint32 index, const nglString& rString) const;
+  bool ToString(uint32 index0, uint32 index1, nglString& rString) const;
+  bool FromString(uint32 index0, uint32 index1, const nglString& rString) const;
   
   void IgnoreAttributeChange(bool ignore);
   
@@ -504,6 +927,9 @@ public:
   
 	nuiAttributeEditor* GetEditor();
 
+  uint32 GetDimension() const;
+  uint32 GetIndexRange(uint32 Dimension) const;
+  
   bool IsValid() const;
   operator bool() const;
 protected:
@@ -564,7 +990,27 @@ public:
     mpAttribute->Set(mpTarget, rValue);
   }
 	
-//	void SetEditor(const nuiAttribute<Contents>::NewEditorDelegate& rNewEditor)
+  Contents Get(uint32 index) const
+  {
+    return mpAttribute->Get(mpTarget, index);
+  }
+  
+  void Set(uint32 index, Contents rValue) const
+  {
+    mpAttribute->Set(mpTarget, index, rValue);
+  }
+	
+  Contents Get(uint32 index0, uint32 index1) const
+  {
+    return mpAttribute->Get(mpTarget, index0, index1);
+  }
+  
+  void Set(uint32 index0, uint32 index1, Contents rValue) const
+  {
+    mpAttribute->Set(mpTarget, index0, index1, rValue);
+  }
+
+  //	void SetEditor(const nuiAttribute<Contents>::NewEditorDelegate& rNewEditor)
 //	{
 //		mpAttribute->SetEditor(rNewEditor);
 //	}
@@ -597,10 +1043,44 @@ public:
 	{
 		mpAttribute->FormatDefault(mpTarget, rString);
 	}
+
+	void Format(uint32 index, nglString& rString)
+	{
+    mpAttribute->Format(mpTarget, index, rString);
+	}
+	
+	void FormatDefault(uint32 index, nglString& rString)
+	{
+		mpAttribute->FormatDefault(mpTarget, index, rString);
+	}
+	
+	void Format(uint32 index0, uint32 index1, nglString& rString)
+	{
+    mpAttribute->Format(mpTarget, index0, index1, rString);
+	}
+	
+	void FormatDefault(uint32 index0, uint32 index1, nglString& rString)
+	{
+		mpAttribute->FormatDefault(mpTarget, index0, index1, rString);
+	}
+	
 	
   nuiSignal1<Contents>& GetChangedSignal() const
   {
+    NGL_ASSERT(mpAttribute->GetDimension() == 0);
     return mpAttribute->GetChangedSignal(mpTarget);
+  }
+  
+  nuiSignal2<uint32, Contents>& GetChangedSignal0() const
+  {
+    NGL_ASSERT(mpAttribute->GetDimension() == 1);
+    return mpAttribute->GetChangedSignal0(mpTarget);
+  }
+  
+  nuiSignal3<uint32, uint32, Contents>& GetChangedSignal1() const
+  {
+    NGL_ASSERT(mpAttribute->GetDimension() == 2);
+    return mpAttribute->GetChangedSignal1(mpTarget);
   }
   
 private:
@@ -614,10 +1094,10 @@ private:
 ///////////////////////////// Specializations for simple types:
 
 template <>
-bool nuiAttribute<bool>::ToString(void* pTarget, nglString& rString) const;
+bool nuiAttribute<bool>::ToString(bool Value, nglString& rString) const;
 
 template <>
-bool nuiAttribute<bool>::FromString(void* pTarget, const nglString& rString) const;
+bool nuiAttribute<bool>::FromString(bool& Value, const nglString& rString) const;
 
 template <>
 nuiAttributeEditor* nuiAttribute<bool>::GetDefaultEditor(void* pTarget);
@@ -639,10 +1119,10 @@ template <>
 void nuiAttribute<int8>::FormatDefault(void* pTarget, nglString& string);
 
 template <>
-bool nuiAttribute<int8>::ToString(void* pTarget, nglString& rString) const;
+bool nuiAttribute<int8>::ToString(int8 Value, nglString& rString) const;
 
 template <>
-bool nuiAttribute<int8>::FromString(void* pTarget, const nglString& rString) const;
+bool nuiAttribute<int8>::FromString(int8& Value, const nglString& rString) const;
 
 
 
@@ -658,10 +1138,10 @@ template <>
 void nuiAttribute<int16>::FormatDefault(void* pTarget, nglString& string);
 
 template <>
-bool nuiAttribute<int16>::ToString(void* pTarget, nglString& rString) const;
+bool nuiAttribute<int16>::ToString(int16 rValue, nglString& rString) const;
 
 template <>
-bool nuiAttribute<int16>::FromString(void* pTarget, const nglString& rString) const;
+bool nuiAttribute<int16>::FromString(int16& rValue, const nglString& rString) const;
 
 
 //********************************
@@ -676,10 +1156,10 @@ template <>
 void nuiAttribute<int32>::FormatDefault(void* pTarget, nglString& string);
 
 template <>
-bool nuiAttribute<int32>::ToString(void* pTarget, nglString& rString) const;
+bool nuiAttribute<int32>::ToString(int32 rValue, nglString& rString) const;
 
 template <>
-bool nuiAttribute<int32>::FromString(void* pTarget, const nglString& rString) const;
+bool nuiAttribute<int32>::FromString(int32& rValue, const nglString& rString) const;
 
 //********************************
 //
@@ -693,10 +1173,10 @@ template <>
 void nuiAttribute<int64>::FormatDefault(void* pTarget, nglString& string);
 
 template <>
-bool nuiAttribute<int64>::ToString(void* pTarget, nglString& rString) const;
+bool nuiAttribute<int64>::ToString(int64 rValue, nglString& rString) const;
 
 template <>
-bool nuiAttribute<int64>::FromString(void* pTarget, const nglString& rString) const;
+bool nuiAttribute<int64>::FromString(int64& rValue, const nglString& rString) const;
 
 
 //********************************
@@ -711,10 +1191,10 @@ template <>
 void nuiAttribute<uint8>::FormatDefault(void* pTarget, nglString& string);
 
 template <>
-bool nuiAttribute<uint8>::ToString(void* pTarget, nglString& rString) const;
+bool nuiAttribute<uint8>::ToString(uint8 rValue, nglString& rString) const;
 
 template <>
-bool nuiAttribute<uint8>::FromString(void* pTarget, const nglString& rString) const;
+bool nuiAttribute<uint8>::FromString(uint8& rValue, const nglString& rString) const;
 
 
 //********************************
@@ -729,10 +1209,10 @@ template <>
 void nuiAttribute<uint16>::FormatDefault(void* pTarget, nglString& string);
 
 template <>
-bool nuiAttribute<uint16>::ToString(void* pTarget, nglString& rString) const;
+bool nuiAttribute<uint16>::ToString(uint16 rValue, nglString& rString) const;
 
 template <>
-bool nuiAttribute<uint16>::FromString(void* pTarget, const nglString& rString) const;
+bool nuiAttribute<uint16>::FromString(uint16& rValue, const nglString& rString) const;
 
 
 
@@ -748,10 +1228,10 @@ template <>
 void nuiAttribute<uint32>::FormatDefault(void* pTarget, nglString& string);
 
 template <>
-bool nuiAttribute<uint32>::ToString(void* pTarget, nglString& rString) const;
+bool nuiAttribute<uint32>::ToString(uint32 rValue, nglString& rString) const;
 
 template <>
-bool nuiAttribute<uint32>::FromString(void* pTarget, const nglString& rString) const;
+bool nuiAttribute<uint32>::FromString(uint32& rValue, const nglString& rString) const;
 
 
 
@@ -768,10 +1248,10 @@ template <>
 void nuiAttribute<uint64>::FormatDefault(void* pTarget, nglString& string);
 
 template <>
-bool nuiAttribute<uint64>::ToString(void* pTarget, nglString& rString) const;
+bool nuiAttribute<uint64>::ToString(uint64 Value, nglString& rString) const;
 
 template <>
-bool nuiAttribute<uint64>::FromString(void* pTarget, const nglString& rString) const;
+bool nuiAttribute<uint64>::FromString(uint64& rValue, const nglString& rString) const;
 
 
 
@@ -788,10 +1268,10 @@ template <>
 void nuiAttribute<float>::FormatDefault(void* pTarget, nglString& string);
 
 template <>
-bool nuiAttribute<float>::ToString(void* pTarget, nglString& rString) const;
+bool nuiAttribute<float>::ToString(float Value, nglString& rString) const;
 
 template <>
-bool nuiAttribute<float>::FromString(void* pTarget, const nglString& rString) const;
+bool nuiAttribute<float>::FromString(float& rValue, const nglString& rString) const;
 
 
 
@@ -807,10 +1287,10 @@ template <>
 void nuiAttribute<double>::FormatDefault(void* pTarget, nglString& string);
 
 template <>
-bool nuiAttribute<double>::ToString(void* pTarget, nglString& rString) const;
+bool nuiAttribute<double>::ToString(double Value, nglString& rString) const;
 
 template <>
-bool nuiAttribute<double>::FromString(void* pTarget, const nglString& rString) const;
+bool nuiAttribute<double>::FromString(double& rValue, const nglString& rString) const;
 
 
 
@@ -826,10 +1306,10 @@ template <>
 void nuiAttribute<nuiPosition>::FormatDefault(void* pTarget, nglString& string);
 
 template <>
-bool nuiAttribute<nuiPosition>::ToString(void* pTarget, nglString& rString) const;
+bool nuiAttribute<nuiPosition>::ToString(nuiPosition Value, nglString& rString) const;
 
 template <>
-bool nuiAttribute<nuiPosition>::FromString(void* pTarget, const nglString& rString) const;
+bool nuiAttribute<nuiPosition>::FromString(nuiPosition& rValue, const nglString& rString) const;
 
 
 
@@ -842,10 +1322,10 @@ bool nuiAttribute<nuiPosition>::FromString(void* pTarget, const nglString& rStri
 //
 
 template <>
-bool nuiAttribute<nglString>::ToString(void* pTarget, nglString& rString) const;
+bool nuiAttribute<nglString>::ToString(nglString Value, nglString& rString) const;
 
 template <>
-bool nuiAttribute<nglString>::FromString(void* pTarget, const nglString& rString) const;
+bool nuiAttribute<nglString>::FromString(nglString& rValue, const nglString& rString) const;
 
 template <>
 nuiAttributeEditor* nuiAttribute<nglString>::GetDefaultEditor(void* pTarget);
@@ -860,10 +1340,10 @@ void nuiAttribute<nglString>::FormatDefault(void* pTarget, nglString& string);
 //
 
 template <>
-bool nuiAttribute<const nglString&>::ToString(void* pTarget, nglString& rString) const;
+bool nuiAttribute<const nglString&>::ToString(const nglString& rValue, nglString& rString) const;
 
 template <>
-bool nuiAttribute<const nglString&>::FromString(void* pTarget, const nglString& rString) const;
+bool nuiAttribute<const nglString&>::FromString(nglString&, const nglString& rString) const;
 
 template <>
 nuiAttributeEditor* nuiAttribute<const nglString&>::GetDefaultEditor(void* pTarget);
@@ -881,10 +1361,10 @@ void nuiAttribute<const nglString&>::FormatDefault(void* pTarget, nglString& str
 //
 
 template <>
-bool nuiAttribute<nuiColor>::ToString(void* pTarget, nglString& rString) const;
+bool nuiAttribute<nuiColor>::ToString(nuiColor Value, nglString& rString) const;
 
 template <>
-bool nuiAttribute<nuiColor>::FromString(void* pTarget, const nglString& rString) const;
+bool nuiAttribute<nuiColor>::FromString(nuiColor& rValue, const nglString& rString) const;
 
 template <>
 nuiAttributeEditor* nuiAttribute<nuiColor>::GetDefaultEditor(void* pTarget);
@@ -899,10 +1379,10 @@ void nuiAttribute<nuiColor>::FormatDefault(void* pTarget, nglString& string);
 //
 
 template <>
-bool nuiAttribute<const nuiColor&>::ToString(void* pTarget, nglString& rString) const;
+bool nuiAttribute<const nuiColor&>::ToString(const nuiColor& rValue, nglString& rString) const;
 
 template <>
-bool nuiAttribute<const nuiColor&>::FromString(void* pTarget, const nglString& rString) const;
+bool nuiAttribute<const nuiColor&>::FromString(nuiColor& rValue, const nglString& rString) const;
 
 template <>
 nuiAttributeEditor* nuiAttribute<const nuiColor&>::GetDefaultEditor(void* pTarget);
@@ -918,10 +1398,10 @@ void nuiAttribute<const nuiColor&>::FormatDefault(void* pTarget, nglString& stri
 //
 
 template <>
-bool nuiAttribute<nuiPoint>::ToString(void* pTarget, nglString& rString) const;
+bool nuiAttribute<nuiPoint>::ToString(nuiPoint Value, nglString& rString) const;
 
 template <>
-bool nuiAttribute<nuiPoint>::FromString(void* pTarget, const nglString& rString) const;
+bool nuiAttribute<nuiPoint>::FromString(nuiPoint& rValue, const nglString& rString) const;
 
 template <>
 nuiAttributeEditor* nuiAttribute<nuiPoint>::GetDefaultEditor(void* pTarget);
@@ -936,10 +1416,10 @@ void nuiAttribute<nuiPoint>::FormatDefault(void* pTarget, nglString& string);
 //
 
 template <>
-bool nuiAttribute<nuiRect>::ToString(void* pTarget, nglString& rString) const;
+bool nuiAttribute<nuiRect>::ToString(nuiRect Value, nglString& rString) const;
 
 template <>
-bool nuiAttribute<nuiRect>::FromString(void* pTarget, const nglString& rString) const;
+bool nuiAttribute<nuiRect>::FromString(nuiRect& rValue, const nglString& rString) const;
 
 template <>
 nuiAttributeEditor* nuiAttribute<nuiRect>::GetDefaultEditor(void* pTarget);
@@ -953,10 +1433,10 @@ void nuiAttribute<nuiRect>::FormatDefault(void* pTarget, nglString& string);
 //
 
 template <>
-bool nuiAttribute<const nuiRect&>::ToString(void* pTarget, nglString& rString) const;
+bool nuiAttribute<const nuiRect&>::ToString(const nuiRect& rValue, nglString& rString) const;
 
 template <>
-bool nuiAttribute<const nuiRect&>::FromString(void* pTarget, const nglString& rString) const;
+bool nuiAttribute<const nuiRect&>::FromString(nuiRect& rValue, const nglString& rString) const;
 
 template <>
 nuiAttributeEditor* nuiAttribute<const nuiRect&>::GetDefaultEditor(void* pTarget);
@@ -972,10 +1452,10 @@ void nuiAttribute<const nuiRect&>::FormatDefault(void* pTarget, nglString& strin
 //
 
 template <>
-bool nuiAttribute<nuiBorder>::ToString(void* pTarget, nglString& rString) const;
+bool nuiAttribute<nuiBorder>::ToString(nuiBorder Value, nglString& rString) const;
 
 template <>
-bool nuiAttribute<nuiBorder>::FromString(void* pTarget, const nglString& rString) const;
+bool nuiAttribute<nuiBorder>::FromString(nuiBorder& rValue, const nglString& rString) const;
 
 template <>
 nuiAttributeEditor* nuiAttribute<nuiBorder>::GetDefaultEditor(void* pTarget);
@@ -989,10 +1469,10 @@ void nuiAttribute<nuiBorder>::FormatDefault(void* pTarget, nglString& string);
 //
 
 template <>
-bool nuiAttribute<const nuiBorder&>::ToString(void* pTarget, nglString& rString) const;
+bool nuiAttribute<const nuiBorder&>::ToString(const nuiBorder& rValue, nglString& rString) const;
 
 template <>
-bool nuiAttribute<const nuiBorder&>::FromString(void* pTarget, const nglString& rString) const;
+bool nuiAttribute<const nuiBorder&>::FromString(nuiBorder& rValue, const nglString& rString) const;
 
 template <>
 nuiAttributeEditor* nuiAttribute<const nuiBorder&>::GetDefaultEditor(void* pTarget);
@@ -1009,10 +1489,10 @@ void nuiAttribute<const nuiBorder&>::FormatDefault(void* pTarget, nglString& str
 //
 
 template <>
-bool nuiAttribute<nglPath>::ToString(void* pTarget, nglString& rString) const;
+bool nuiAttribute<nglPath>::ToString(nglPath Value, nglString& rString) const;
 
 template <>
-bool nuiAttribute<nglPath>::FromString(void* pTarget, const nglString& rString) const;
+bool nuiAttribute<nglPath>::FromString(nglPath& rValue, const nglString& rString) const;
 
 template <>
 void nuiAttribute<nglPath>::FormatDefault(void* pTarget, nglString& string);
@@ -1025,10 +1505,10 @@ void nuiAttribute<nglPath>::FormatDefault(void* pTarget, nglString& string);
 //
 
 template <>
-bool nuiAttribute<const nglPath&>::ToString(void* pTarget, nglString& rString) const;
+bool nuiAttribute<const nglPath&>::ToString(const nglPath& rValue, nglString& rString) const;
 
 template <>
-bool nuiAttribute<const nglPath&>::FromString(void* pTarget, const nglString& rString) const;
+bool nuiAttribute<const nglPath&>::FromString(nglPath& rValue, const nglString& rString) const;
 
 template <>
 void nuiAttribute<const nglPath&>::FormatDefault(void* pTarget, nglString& string);
@@ -1042,10 +1522,10 @@ void nuiAttribute<const nglPath&>::FormatDefault(void* pTarget, nglString& strin
 //
 
 template <>
-bool nuiAttribute<nuiDecorationMode>::ToString(void* pTarget, nglString& rString) const;
+bool nuiAttribute<nuiDecorationMode>::ToString(nuiDecorationMode Value, nglString& rString) const;
 
 template <>
-bool nuiAttribute<nuiDecorationMode>::FromString(void* pTarget, const nglString& rString) const;
+bool nuiAttribute<nuiDecorationMode>::FromString(nuiDecorationMode& rValue, const nglString& rString) const;
 
 template <>
 void nuiAttribute<nuiDecorationMode>::FormatDefault(void* pTarget, nglString& string);
@@ -1058,10 +1538,10 @@ void nuiAttribute<nuiDecorationMode>::FormatDefault(void* pTarget, nglString& st
 //
 
 template <>
-bool nuiAttribute<nuiShapeMode>::ToString(void* pTarget, nglString& rString) const;
+bool nuiAttribute<nuiShapeMode>::ToString(nuiShapeMode Value, nglString& rString) const;
 
 template <>
-bool nuiAttribute<nuiShapeMode>::FromString(void* pTarget, const nglString& rString) const;
+bool nuiAttribute<nuiShapeMode>::FromString(nuiShapeMode& rValue, const nglString& rString) const;
 
 template <>
 void nuiAttribute<nuiShapeMode>::FormatDefault(void* pTarget, nglString& string);
@@ -1075,10 +1555,10 @@ void nuiAttribute<nuiShapeMode>::FormatDefault(void* pTarget, nglString& string)
 //
 
 template <>
-bool nuiAttribute<const nuiRange&>::ToString(void* pTarget, nglString& rString) const;
+bool nuiAttribute<const nuiRange&>::ToString(const nuiRange& rValue, nglString& rString) const;
 
 template <>
-bool nuiAttribute<const nuiRange&>::FromString(void* pTarget, const nglString& rString) const;
+bool nuiAttribute<const nuiRange&>::FromString(nuiRange& rValue, const nglString& rString) const;
 
 template <>
 nuiAttributeEditor* nuiAttribute<const nuiRange&>::GetDefaultEditor(void* pTarget);
@@ -1096,10 +1576,10 @@ void nuiAttribute<const nuiRange&>::FormatDefault(void* pTarget, nglString& stri
 //
 
 template <>
-bool nuiAttribute<nuiDecorationLayer>::ToString(void* pTarget, nglString& rString) const;
+bool nuiAttribute<nuiDecorationLayer>::ToString(nuiDecorationLayer Value, nglString& rString) const;
 
 template <>
-bool nuiAttribute<nuiDecorationLayer>::FromString(void* pTarget, const nglString& rString) const;
+bool nuiAttribute<nuiDecorationLayer>::FromString(nuiDecorationLayer& rValue, const nglString& rString) const;
 
 template <>
 nuiAttributeEditor* nuiAttribute<nuiDecorationLayer>::GetDefaultEditor(void* pTarget);
@@ -1115,10 +1595,10 @@ void nuiAttribute<nuiDecorationLayer>::FormatDefault(void* pTarget, nglString& s
 //
 
 template <>
-bool nuiAttribute<nuiMouseCursor>::ToString(void* pTarget, nglString& rString) const;
+bool nuiAttribute<nuiMouseCursor>::ToString(nuiMouseCursor Value, nglString& rString) const;
 
 template <>
-bool nuiAttribute<nuiMouseCursor>::FromString(void* pTarget, const nglString& rString) const;
+bool nuiAttribute<nuiMouseCursor>::FromString(nuiMouseCursor& rValue, const nglString& rString) const;
 
 template <>
 nuiAttributeEditor* nuiAttribute<nuiMouseCursor>::GetDefaultEditor(void* pTarget);

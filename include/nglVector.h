@@ -345,7 +345,7 @@ public:
     return true;
   }
   
-  bool SetValue(const nglString& rValue) const
+  bool SetValue(const nglString& rValue)
   {
     //rDump.CFormat(_T("{ %8.3f %8.3f %8.3f %8.3f }"), (T)Elt[0], (T)Elt[1], (T)Elt[2], (T)Elt[3]);
 

@@ -49,8 +49,62 @@ void nuiGrid::InitAttributes()
    (nglString(_T("Spacing")), nuiUnitSize,
     nuiAttribute<nuiSize>::GetterDelegate(this, &nuiGrid::GetDefaultSpacing),
     nuiAttribute<nuiSize>::SetterDelegate(this, &nuiGrid::SetDefaultSpacing)));                
+
+  //void SetColumnSpacing(uint column, nuiSize hgap); ///< Sets the horizontal spacing to hgap around widgets in the given column.
+  //void SetRowSpacing(uint row, nuiSize vgap);       ///< Sets the vertical spacing to hgap  around widgets in the given column.
+  
+  AddAttribute(new nuiAttribute<nuiSize>
+               (nglString(_T("ColumnSpacing")), nuiUnitSize,
+                nuiAttribute<nuiSize>::GetterDelegate1(this, &nuiGrid::GetColumnSpacing),
+                nuiAttribute<nuiSize>::SetterDelegate1(this, &nuiGrid::SetColumnSpacing),
+                nuiAttribute<nuiSize>::ArrayRangeDelegate(this, &nuiGrid::GetColumnDimensionRange)));                
+  
+  AddAttribute(new nuiAttribute<nuiSize>
+               (nglString(_T("RowSpacing")), nuiUnitSize,
+                nuiAttribute<nuiSize>::GetterDelegate1(this, &nuiGrid::GetRowSpacing),
+                nuiAttribute<nuiSize>::SetterDelegate1(this, &nuiGrid::SetRowSpacing),
+                nuiAttribute<nuiSize>::ArrayRangeDelegate(this, &nuiGrid::GetRowDimensionRange)));                
+  
 }
 
+uint32 nuiGrid::GetDimensionRange(uint32 dimension) const
+{
+  switch (dimension)
+  {
+    case 0:
+      return GetNbColumns();
+      break;
+    case 1:
+      return GetNbRows();
+      break;
+  }
+  
+  return 0;
+}
+
+uint32 nuiGrid::GetColumnDimensionRange(uint32 dimension) const
+{
+  switch (dimension)
+  {
+    case 0:
+      return GetNbColumns();
+      break;
+  }
+  
+  return 0;
+}
+
+uint32 nuiGrid::GetRowDimensionRange(uint32 dimension) const
+{
+  switch (dimension)
+  {
+    case 1:
+      return GetNbRows();
+      break;
+  }
+  
+  return 0;
+}
 
 bool nuiGrid::Load(const nuiXMLNode* pNode)
 {
