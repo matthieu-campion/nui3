@@ -166,7 +166,7 @@ void FrameEditor::UpdateFrameViews(bool CopyImageRect)
   pFixed->AddChild(mpFrameView);
   
   nuiRectView* pFrameRectView = new nuiRectView(mpFrameView->GetIdealRect());
-  mSlotSink.Connect(pFrameRectView->RectChanged, nuiFastDelegate::MakeDelegate(this, &FrameEditor::OnFrameViewRectChanged));
+  mSlotSink.Connect(pFrameRectView->RectChanged, nuiMakeDelegate(this, &FrameEditor::OnFrameViewRectChanged));
 	mEventSink.Connect(pFrameRectView->MovedMouse, &FrameEditor::OnFrameMouseMoved);
 	pFrameRectView->EnableMouseEvent(true);
 
@@ -182,7 +182,7 @@ void FrameEditor::UpdateFrameViews(bool CopyImageRect)
     mpFrame->SetSourceClientRect(nuiRect(0, 0, pTexture->GetImage()->GetWidth(), pTexture->GetImage()->GetHeight()));
   
   nuiRectView* pRectView = new nuiRectView(mpFrame->GetSourceClientRect());
-  mSlotSink.Connect(pRectView->RectChanged, nuiFastDelegate::MakeDelegate(this, &FrameEditor::OnFrameRectChanged));
+  mSlotSink.Connect(pRectView->RectChanged, nuiMakeDelegate(this, &FrameEditor::OnFrameRectChanged));
 	mEventSink.Connect(pRectView->MovedMouse, &FrameEditor::OnFrameMouseMoved);
 	pRectView->EnableMouseEvent(true);
   pRectView->SetColor(eShapeStroke, nuiColor(_T("red")));
@@ -213,7 +213,7 @@ void FrameEditor::UpdateFrameViews(bool CopyImageRect)
 	
 	
 	// connect color change signal
-	mSlotSink.Connect(mAttributeColor.GetChangedSignal(), nuiFastDelegate::MakeDelegate(this, &FrameEditor::OnColorChanged));
+	mSlotSink.Connect(mAttributeColor.GetChangedSignal(), nuiMakeDelegate(this, &FrameEditor::OnColorChanged));
 
 }
 

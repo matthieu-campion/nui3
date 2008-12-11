@@ -376,11 +376,11 @@ void MainWindow::OnCreation()
   
   
   InputChannels.push_back(0);
-  bool res = mpInAudioDevice->Open(InputChannels, OutputChannels, SampleRate, BufferSize, nuiFastDelegate::MakeDelegate(this, &MainWindow::ProcessAudioInput));
+  bool res = mpInAudioDevice->Open(InputChannels, OutputChannels, SampleRate, BufferSize, nuiMakeDelegate(this, &MainWindow::ProcessAudioInput));
   InputChannels.clear();
   OutputChannels.push_back(0);
   OutputChannels.push_back(1);
-  //res = mpOutAudioDevice->Open(InputChannels, OutputChannels, SampleRate, BufferSize, nuiFastDelegate::MakeDelegate(this, &MainWindow::ProcessAudioOutput));
+  //res = mpOutAudioDevice->Open(InputChannels, OutputChannels, SampleRate, BufferSize, nuiMakeDelegate(this, &MainWindow::ProcessAudioOutput));
     
   nuiVBox* pVBox = new nuiVBox();
   AddChild(pVBox);

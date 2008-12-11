@@ -41,7 +41,7 @@ private:
 
 
 
-typedef nuiFastDelegate::FastDelegate1<nuiWidget*> WidgetDelegate;
+typedef nuiFastDelegate1<nuiWidget*> WidgetDelegate;
 
 
 class WidgetEditor : public nuiSimpleContainer

@@ -571,8 +571,6 @@
 								<string>29B97314FDCFA39411CA2CEA</string>
 								<string>C99996230DA6EED8001A7116</string>
 								<string>C99996330DA6EED8001A7116</string>
-								<string>E5CD2F6A0ECF82BE0083037A</string>
-								<string>E5CD2F710ECF82BE0083037A</string>
 								<string>29B97317FDCFA39411CA2CEA</string>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
@@ -631,7 +629,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E5CD31220ED0DC740083037A</string>
+										<string>E59309AA0EF1681B008E7906</string>
 										<key>history</key>
 										<array>
 											<string>E51D5C7C0EC3D6D500182E40</string>
@@ -654,7 +652,7 @@
 											<string>E5CD30AA0ECF8CBB0083037A</string>
 											<string>E5CD30E80ECF91550083037A</string>
 											<string>E5CD30EC0ECF926B0083037A</string>
-											<string>E5CD30DF0ECF8FB80083037A</string>
+											<string>E5CD31220ED0DC740083037A</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -664,7 +662,6 @@
 											<string>E5CD2F2F0ECF826F0083037A</string>
 											<string>E5CD2F300ECF826F0083037A</string>
 											<string>E5CD2F310ECF826F0083037A</string>
-											<string>E5CD2F320ECF826F0083037A</string>
 											<string>E5CD2F330ECF826F0083037A</string>
 											<string>E5CD2F340ECF826F0083037A</string>
 											<string>E5CD2F350ECF826F0083037A</string>
@@ -678,7 +675,6 @@
 											<string>E5CD2F3D0ECF826F0083037A</string>
 											<string>E5CD2F3E0ECF826F0083037A</string>
 											<string>E51D5B7A0EC3A9AE00182E40</string>
-											<string>E5CD30720ECF89850083037A</string>
 											<string>E5CD30AF0ECF8CBB0083037A</string>
 											<string>E5CD30B30ECF8CBB0083037A</string>
 											<string>E5CD30B60ECF8CBB0083037A</string>
@@ -753,11 +749,11 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E5CD2F080ECF81B90083037A</string>
+				<string>E59309A60EF1672F008E7906</string>
 				<string>1CA23EE50692099D00951B8B</string>
-				<string>E5CD2F090ECF81B90083037A</string>
+				<string>E59309A70EF1672F008E7906</string>
 				<string>E59365260C7AD788001596BD</string>
-				<string>E5CD2F0A0ECF81B90083037A</string>
+				<string>E59309A80EF1672F008E7906</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
 			<key>ToolbarConfiguration</key>
@@ -902,14 +898,14 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E5CD307A0ECF899A0083037A</string>
+				<string>E59309AC0EF1681B008E7906</string>
 				<string>1CCC7628064C1048000F2A68</string>
 				<string>1CCC7629064C1048000F2A68</string>
-				<string>E5CD307B0ECF899A0083037A</string>
-				<string>E5CD307C0ECF899A0083037A</string>
-				<string>E5CD307D0ECF899A0083037A</string>
-				<string>E5CD307E0ECF899A0083037A</string>
-				<string>E59365260C7AD788001596BD</string>
+				<string>E59309AD0EF1681B008E7906</string>
+				<string>E59309AE0EF1681B008E7906</string>
+				<string>E59309AF0EF1681B008E7906</string>
+				<string>E59309B00EF1681B008E7906</string>
+				<string>E59309B10EF1681B008E7906</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -935,9 +931,9 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E5CD307F0ECF899A0083037A</string>
-		<string>E5CD30800ECF899A0083037A</string>
-		<string>/Users/meeloo/work/nui3/examples/nuiDemo/nuiPhoneDemo.xcodeproj</string>
+		<string>E59309B20EF1681B008E7906</string>
+		<string>E59309B30EF1681B008E7906</string>
+		<string>/Users/meeloo/work/nui3/examples/iPhone_HelloWorld/proj/iPhone_HelloWorld.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
 	<string>1 59 1920 1119 0 0 1920 1178 </string>

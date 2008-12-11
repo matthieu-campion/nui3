@@ -68,14 +68,14 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 250174677;
-			PBXWorkspaceStateSaveDate = 250174677;
+			PBXPerProjectTemplateStateSaveDate = 250701449;
+			PBXWorkspaceStateSaveDate = 250701449;
 		};
 		perUserProjectItems = {
 			E55E6DC20EDEF11200B8B580 /* PBXTextBookmark */ = E55E6DC20EDEF11200B8B580 /* PBXTextBookmark */;
 			E55E6DEE0EDEF83100B8B580 /* PBXTextBookmark */ = E55E6DEE0EDEF83100B8B580 /* PBXTextBookmark */;
 			E55E6DF10EDEF83100B8B580 /* PBXTextBookmark */ = E55E6DF10EDEF83100B8B580 /* PBXTextBookmark */;
-			E55E6DF70EDEF84600B8B580 /* PBXTextBookmark */ = E55E6DF70EDEF84600B8B580 /* PBXTextBookmark */;
+			E593095F0EF16698008E7906 /* PBXTextBookmark */ = E593095F0EF16698008E7906 /* PBXTextBookmark */;
 			E593A2240E81649900030E8A /* PBXTextBookmark */ = E593A2240E81649900030E8A /* PBXTextBookmark */;
 			E593A2250E81649900030E8A /* PBXTextBookmark */ = E593A2250E81649900030E8A /* PBXTextBookmark */;
 			E593A2270E81649900030E8A /* PBXTextBookmark */ = E593A2270E81649900030E8A /* PBXTextBookmark */;
@@ -167,15 +167,15 @@
 		path = /Users/meeloo/work/nui3/include/nuiImage.h;
 		sourceTree = "<absolute>";
 	};
-	E55E6DF70EDEF84600B8B580 /* PBXTextBookmark */ = {
+	E593095F0EF16698008E7906 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 48";
 		rLen = 0;
 		rLoc = 996;
 		rType = 0;
-		vrLen = 806;
-		vrLoc = 248;
+		vrLen = 820;
+		vrLoc = 0;
 	};
 	E593A21F0E81648000030E8A /* testrasterizer */ = {
 		isa = PBXExecutable;

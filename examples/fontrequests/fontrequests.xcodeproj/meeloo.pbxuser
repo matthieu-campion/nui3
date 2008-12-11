@@ -32,19 +32,19 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 246407062;
-			PBXWorkspaceStateSaveDate = 246407062;
+			PBXPerProjectTemplateStateSaveDate = 250702023;
+			PBXWorkspaceStateSaveDate = 250702023;
 		};
 		perUserProjectItems = {
 			E56C9D0C0EB0833C009E4922 /* PBXTextBookmark */ = E56C9D0C0EB0833C009E4922 /* PBXTextBookmark */;
 			E56C9D0E0EB0833C009E4922 /* PBXTextBookmark */ = E56C9D0E0EB0833C009E4922 /* PBXTextBookmark */;
-			E56C9D230EB08554009E4922 /* PBXTextBookmark */ = E56C9D230EB08554009E4922 /* PBXTextBookmark */;
 			E56C9D270EB0AEA8009E4922 /* PBXTextBookmark */ = E56C9D270EB0AEA8009E4922 /* PBXTextBookmark */;
 			E56C9D2A0EB0AEA8009E4922 /* PBXTextBookmark */ = E56C9D2A0EB0AEA8009E4922 /* PBXTextBookmark */;
 			E56C9D2B0EB0AEA8009E4922 /* PBXTextBookmark */ = E56C9D2B0EB0AEA8009E4922 /* PBXTextBookmark */;
-			E56C9D2D0EB0AEA8009E4922 /* PBXTextBookmark */ = E56C9D2D0EB0AEA8009E4922 /* PBXTextBookmark */;
 			E56C9D300EB0BED0009E4922 /* PBXTextBookmark */ = E56C9D300EB0BED0009E4922 /* PBXTextBookmark */;
 			E56C9D320EB0BED0009E4922 /* PBXTextBookmark */ = E56C9D320EB0BED0009E4922 /* PBXTextBookmark */;
+			E59309E70EF16902008E7906 /* PBXTextBookmark */ = E59309E70EF16902008E7906 /* PBXTextBookmark */;
+			E59309E90EF16902008E7906 /* PBXTextBookmark */ = E59309E90EF16902008E7906 /* PBXTextBookmark */;
 		};
 		sourceControlManager = E5317BBA0EAE043E00208EEF /* Source Control */;
 		userBuildSettings = {
@@ -137,6 +137,7 @@
 		fallbackIsa = XCSourceControlManager;
 		isSCMEnabled = 0;
 		scmConfiguration = {
+			repositoryName = "nui 1";
 		};
 	};
 	E5317BBB0EAE043E00208EEF /* Code sense */ = {
@@ -169,21 +170,6 @@
 		name = nuiFontManager.cpp;
 		path = /Users/meeloo/work/nui3/src/Base/nuiFontManager.cpp;
 		sourceTree = "<absolute>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1582, 18447}}";
-			sepNavSelRange = "{19591, 0}";
-			sepNavVisRange = "{18705, 1300}";
-		};
-	};
-	E56C9D230EB08554009E4922 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E56C9D100EB0833C009E4922 /* nuiFontManager.cpp */;
-		name = "nuiFontManager.cpp: 604";
-		rLen = 0;
-		rLoc = 19591;
-		rType = 0;
-		vrLen = 760;
-		vrLoc = 18958;
 	};
 	E56C9D270EB0AEA8009E4922 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -197,6 +183,7 @@
 	};
 	E56C9D280EB0AEA8009E4922 /* nuiFontManager.h */ = {
 		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
 		name = nuiFontManager.h;
 		path = /Users/meeloo/work/nui3/include/nuiFontManager.h;
 		sourceTree = "<absolute>";
@@ -223,19 +210,10 @@
 	};
 	E56C9D2C0EB0AEA8009E4922 /* nuiFontManager.h */ = {
 		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
 		name = nuiFontManager.h;
 		path = /Users/meeloo/work/nui3/include/nuiFontManager.h;
 		sourceTree = "<absolute>";
-	};
-	E56C9D2D0EB0AEA8009E4922 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E56C9D100EB0833C009E4922 /* nuiFontManager.cpp */;
-		name = "nuiFontManager.cpp: 64";
-		rLen = 22;
-		rLoc = 1632;
-		rType = 0;
-		vrLen = 2281;
-		vrLoc = 884;
 	};
 	E56C9D300EB0BED0009E4922 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -249,6 +227,7 @@
 	};
 	E56C9D310EB0BED0009E4922 /* nuiFontManager.cpp */ = {
 		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
 		name = nuiFontManager.cpp;
 		path = /Users/meeloo/work/nui3/src/Base/nuiFontManager.cpp;
 		sourceTree = "<absolute>";
@@ -265,13 +244,46 @@
 	};
 	E56C9D330EB0BED0009E4922 /* nuiFontManager.cpp */ = {
 		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
 		name = nuiFontManager.cpp;
 		path = /Users/meeloo/work/nui3/src/Base/nuiFontManager.cpp;
 		sourceTree = "<absolute>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1582, 18447}}";
-			sepNavSelRange = "{19591, 0}";
-			sepNavVisRange = "{18705, 1300}";
+			sepNavIntBoundsRect = "{{0, 0}, {1582, 18681}}";
+			sepNavSelRange = "{19311, 0}";
+			sepNavVisRange = "{18227, 1497}";
 		};
+	};
+	E59309E70EF16902008E7906 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E59309E80EF16902008E7906 /* nuiFontManager.cpp */;
+		name = "nuiFontManager.cpp: 61";
+		rLen = 22;
+		rLoc = 1632;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	E59309E80EF16902008E7906 /* nuiFontManager.cpp */ = {
+		isa = PBXFileReference;
+		name = nuiFontManager.cpp;
+		path = /Users/meeloo/work/nui3/src/Base/nuiFontManager.cpp;
+		sourceTree = "<absolute>";
+	};
+	E59309E90EF16902008E7906 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E59309EA0EF16902008E7906 /* nuiFontManager.cpp */;
+		name = "nuiFontManager.cpp: 597";
+		rLen = 0;
+		rLoc = 19311;
+		rType = 0;
+		vrLen = 1500;
+		vrLoc = 18227;
+	};
+	E59309EA0EF16902008E7906 /* nuiFontManager.cpp */ = {
+		isa = PBXFileReference;
+		name = nuiFontManager.cpp;
+		path = /Users/meeloo/work/nui3/src/Base/nuiFontManager.cpp;
+		sourceTree = "<absolute>";
 	};
 }
