@@ -26,6 +26,7 @@ Lookup precompiled headers in the VC doc to learn how to use them.
 #include <vector>
 #include <map>
 #include <string>
+#include <memory>
 
 #include "nglKernel.h"
 #include "nglTime.h"

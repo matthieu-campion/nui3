@@ -2,8 +2,8 @@
 {
 	61A9DE3F0B833C9200BC506C /* Project object */ = {
 		activeBuildConfigurationName = Default;
-		activeExecutable = E5EC7F470EE963CC00F8404D /* polygon_renderer */;
-		activeTarget = 61A9DFBE0B833E9600BC506C /* polygon_renderer */;
+		activeExecutable = E5EC7F480EE963CC00F8404D /* polygon_rendererD */;
+		activeTarget = 61A9DFC80B833EF200BC506C /* polygon_rendererD */;
 		breakpoints = (
 		);
 		codeSenseManager = E5EC7F600EE963EC00F8404D /* Code sense */;
@@ -102,6 +102,12 @@
 			E56108920EF1E23D000170A7 /* PBXTextBookmark */ = E56108920EF1E23D000170A7 /* PBXTextBookmark */;
 			E56108960EF1E2A5000170A7 /* PBXTextBookmark */ = E56108960EF1E2A5000170A7 /* PBXTextBookmark */;
 			E56108990EF1E2C4000170A7 /* PBXTextBookmark */ = E56108990EF1E2C4000170A7 /* PBXTextBookmark */;
+			E56108E20EF2B31D000170A7 /* PBXTextBookmark */ = E56108E20EF2B31D000170A7 /* PBXTextBookmark */;
+			E56108E40EF2B31D000170A7 /* PBXTextBookmark */ = E56108E40EF2B31D000170A7 /* PBXTextBookmark */;
+			E56108E50EF2B31D000170A7 /* PBXTextBookmark */ = E56108E50EF2B31D000170A7 /* PBXTextBookmark */;
+			E56108E60EF2B31D000170A7 /* PBXTextBookmark */ = E56108E60EF2B31D000170A7 /* PBXTextBookmark */;
+			E56108E80EF2B31D000170A7 /* PBXTextBookmark */ = E56108E80EF2B31D000170A7 /* PBXTextBookmark */;
+			E56108E90EF2B327000170A7 /* PBXTextBookmark */ = E56108E90EF2B327000170A7 /* PBXTextBookmark */;
 			E58F1D5E0EEDE8D900E59387 = E58F1D5E0EEDE8D900E59387 /* PBXTextBookmark */;
 			E58F1DCE0EEDFFD500E59387 = E58F1DCE0EEDFFD500E59387 /* PBXTextBookmark */;
 			E58F1DD30EEDFFD500E59387 = E58F1DD30EEDFFD500E59387 /* PBXTextBookmark */;
@@ -136,9 +142,9 @@
 	};
 	61A9DFF10B83433800BC506C /* MainWindow.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1533, 12519}}";
-			sepNavSelRange = "{4855, 0}";
-			sepNavVisRange = "{4099, 986}";
+			sepNavIntBoundsRect = "{{0, 0}, {1533, 12025}}";
+			sepNavSelRange = "{18506, 0}";
+			sepNavVisRange = "{17974, 1480}";
 		};
 	};
 	61A9DFF20B83433800BC506C /* MainWindow.h */ = {
@@ -547,6 +553,76 @@
 		rType = 0;
 		vrLen = 986;
 		vrLoc = 4099;
+	};
+	E56108E20EF2B31D000170A7 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E56108E30EF2B31D000170A7 /* nglMath.h */;
+		name = "nglMath.h: 256";
+		rLen = 0;
+		rLoc = 6732;
+		rType = 0;
+		vrLen = 1313;
+		vrLoc = 6095;
+	};
+	E56108E30EF2B31D000170A7 /* nglMath.h */ = {
+		isa = PBXFileReference;
+		name = nglMath.h;
+		path = /Users/meeloo/work/nui3/include/nglMath.h;
+		sourceTree = "<absolute>";
+	};
+	E56108E40EF2B31D000170A7 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "error: 'colA' was not declared in this scope";
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		rLen = 0;
+		rLoc = 496;
+		rType = 1;
+	};
+	E56108E50EF2B31D000170A7 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 459";
+		rLen = 0;
+		rLoc = 8809;
+		rType = 0;
+		vrLen = 1329;
+		vrLoc = 8284;
+	};
+	E56108E60EF2B31D000170A7 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E56108E70EF2B31D000170A7 /* nglMath.h */;
+		name = "nglMath.h: 256";
+		rLen = 0;
+		rLoc = 6732;
+		rType = 0;
+		vrLen = 1313;
+		vrLoc = 6095;
+	};
+	E56108E70EF2B31D000170A7 /* nglMath.h */ = {
+		isa = PBXFileReference;
+		name = nglMath.h;
+		path = /Users/meeloo/work/nui3/include/nglMath.h;
+		sourceTree = "<absolute>";
+	};
+	E56108E80EF2B31D000170A7 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 845";
+		rLen = 0;
+		rLoc = 18506;
+		rType = 0;
+		vrLen = 1549;
+		vrLoc = 17974;
+	};
+	E56108E90EF2B327000170A7 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 845";
+		rLen = 0;
+		rLoc = 18506;
+		rType = 0;
+		vrLen = 1480;
+		vrLoc = 17974;
 	};
 	E58F1D5E0EEDE8D900E59387 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
