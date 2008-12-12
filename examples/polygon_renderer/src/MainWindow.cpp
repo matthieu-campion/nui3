@@ -266,6 +266,8 @@ public:
       aincr = 0; // Compute the slope
     }
     
+    stable = (rincr == 0 && gincr == 0 && bincr == 0 && aincr == 0);
+    
     // texture
     u = e0.u;
     v = e0.v;
@@ -322,6 +324,11 @@ public:
     
     return false;
   }
+
+  bool IsStable()
+  {
+    return stable;
+  }
   
   float x;
   uint32 width;
@@ -330,6 +337,7 @@ public:
   float u, v;
   float rincr, gincr, bincr, aincr;
   float uincr, vincr;
+  bool stable;
 };
 
 class Rasterizer
@@ -337,17 +345,21 @@ class Rasterizer
 public:
   Rasterizer(Screen<32>* pScreen, bool OwnScreen);
   ~Rasterizer();
-  
-  void DrawHLine(uint32 x0, uint32 x1, uint32 y, uint32 col);
+
+  typedef nuiFastDelegate2<span&, int32> HLiner;
+    
+  //void DrawHLine(uint32 x0, uint32 x1, uint32 y, uint32 col);
+  void DrawHLineStable(span& rSpan, int32 y);
   void DrawHLine(span& rSpan, int32 y);
+  void BlendHLineStable(span& rSpan, int32 y);
   void BlendHLine(span& rSpan, int32 y);
   
-  void DrawTriangle(const vertex& v0, const vertex& v1, const vertex& v2);
-  void DrawTriangle(const vertex& v0, const vertex& v1, const vertex& v2, uint32 color);
-  void DrawTriangle(float x0, float y0, float x1, float y1, float x2, float y2, uint32 color);
+  void DrawTriangle(const vertex& v0, const vertex& v1, const vertex& v2, const HLiner& rHLiner);
+//  void DrawTriangle(const vertex& v0, const vertex& v1, const vertex& v2, uint32 color);
+//  void DrawTriangle(float x0, float y0, float x1, float y1, float x2, float y2, uint32 color);
   
   void SetClipRect(int32 left, int32 top, int32 right, int32 bottom);
-  
+
 private:
   Screen<32>* mpScreen;
   bool mOwnScreen;
@@ -392,13 +404,14 @@ bool compare_edge_x(const edge* e0, const edge* e1)
   return e0->x < e1->x;
 }
 
-void Rasterizer::DrawHLine(uint32 x0, uint32 x1, uint32 y, uint32 col)
-{
-  uint32* pSpan = (uint32*)mpScreen->GetPixel(x0, y);
-  for (uint32 x = x0; x < x1; x++)
-    *pSpan++ += col;
-}
+//void Rasterizer::DrawHLine(uint32 x0, uint32 x1, uint32 y, uint32 col)
+//{
+//  uint32* pSpan = (uint32*)mpScreen->GetPixel(x0, y);
+//  for (uint32 x = x0; x < x1; x++)
+//    *pSpan++ += col;
+//}
 
+#if 0
 void Rasterizer::DrawHLine(span& rSpan, int32 y)
 {
   if (rSpan.clip(mClipLeft, mClipRight))
@@ -413,50 +426,51 @@ void Rasterizer::DrawHLine(span& rSpan, int32 y)
     rSpan.step_texture();
   }
 }
+#endif
 
-#if 0
-void Rasterizer::BlendHLine(span& rSpan, int32 y)
+void Rasterizer::BlendHLineStable(span& rSpan, int32 y)
 {
   if (rSpan.clip(mClipLeft, mClipRight))
     return;
   
   int32 count = rSpan.width;
   uint32* pSpan = (uint32*)mpScreen->GetPixel(rSpan.x, y);
+  
+  //int32 col = rSpan.GetColor();
+  int32 A0 = ToZero(rSpan.r * 0xffff);
+  int32 A1 = ToZero(rSpan.g * 0xffff);
+  int32 A2 = ToZero(rSpan.b * 0xffff);
+  int32 A3 = ToZero(rSpan.a * 0xffff);
+  
+  uint32 colA0 = ((A3 & 0xff00) << 8) | ((A1 & 0xff00) >> 8);
+  uint32 colA1 = ((A2 & 0xff00) << 8) | ((A0 & 0xff00) >> 8);
+  uint32 alpha = A3 >> 8;
+  uint32 malpha = 0x100 - alpha;
+  colA0 *= alpha;
+  colA1 *= alpha;
+  
   while (count--)
   {
-    uint32 colA = rSpan.GetColor();
     uint32 colB = *pSpan;
     
-    uint32 colA0 = (colA & 0xff00ff00) >> 8;
+    //uint32 colA = ((A3 & 0xff00) << 16) + ((A2 & 0xff00) << 8) + ((A1 & 0xff00)) + ((A0 & 0xff00) >> 8);
     uint32 colB0 = (colB & 0xff00ff00) >> 8;
-    uint32 colA1 = colA & 0x00ff00ff;
     uint32 colB1 = colB & 0x00ff00ff;
-
-    uint32 alpha = (colA0 >> 16);
+    
     if (alpha)
     {
-      uint32 malpha = 0x100 - alpha;
-      
-      colA0 *= alpha;
-      colA1 *= alpha;
       colB0 *= malpha;
       colB1 *= malpha;
       
-      colA = colA0 + colB0;
-      colB = colA1 + colB1;
-      
-      uint32 col = (colA & 0xff00ff00) | ((colB & 0xff00ff00) >> 8);
+      const uint32 col = ((colA0 + colB0) & 0xff00ff00) | (((colA1 + colB1) & 0xff00ff00) >> 8);
       
       *pSpan = col;
     }
-
-    pSpan++;
     
-    rSpan.step_color();
-    rSpan.step_texture();
+    pSpan++;
   }
 }
-#elif 1
+
 void Rasterizer::BlendHLine(span& rSpan, int32 y)
 {
   if (rSpan.clip(mClipLeft, mClipRight))
@@ -511,8 +525,8 @@ void Rasterizer::BlendHLine(span& rSpan, int32 y)
     //rSpan.step_texture();
   }
 }
-#else
-void Rasterizer::BlendHLine(span& rSpan, int32 y)
+
+void Rasterizer::DrawHLineStable(span& rSpan, int32 y)
 {
   if (rSpan.clip(mClipLeft, mClipRight))
     return;
@@ -543,8 +557,45 @@ void Rasterizer::BlendHLine(span& rSpan, int32 y)
     //rSpan.step_texture();
   }
 }
-#endif
 
+void Rasterizer::DrawHLine(span& rSpan, int32 y)
+{
+  if (rSpan.IsStable())
+  {
+    BlendHLineStable(rSpan, y);
+    return;
+  }
+  if (rSpan.clip(mClipLeft, mClipRight))
+    return;
+  
+  int32 count = rSpan.width;
+  uint32* pSpan = (uint32*)mpScreen->GetPixel(rSpan.x, y);
+  
+  //int32 col = rSpan.GetColor();
+  int32 A0 = ToZero(rSpan.r * 0x10000);
+  int32 A1 = ToZero(rSpan.g * 0x10000);
+  int32 A2 = ToZero(rSpan.b * 0x10000);
+  int32 A3 = ToZero(rSpan.a * 0x10000);
+  const int32 I0 = ToZero(rSpan.rincr * 0x10000);
+  const int32 I1 = ToZero(rSpan.gincr * 0x10000);
+  const int32 I2 = ToZero(rSpan.bincr * 0x10000);
+  const int32 I3 = ToZero(rSpan.aincr * 0x10000);
+  
+  while (count--)
+  {
+    const uint32 colA = ((A3 & 0xff00) << 16) + ((A2 & 0xff00) << 8) + ((A1 & 0xff00)) + ((A0 & 0xff00) >> 8);
+    *pSpan++ = colA;
+    
+    //rSpan.step_color();
+    A0 += I0;
+    A1 += I1;
+    A2 += I2;
+    A3 += I3;
+    //rSpan.step_texture();
+  }
+}
+
+#if 0
 void Rasterizer::DrawTriangle(float x0, float y0, float x1, float y1, float x2, float y2, uint32 color)
 {
   DrawTriangle(vertex(x0, y0), vertex(x1, y1), vertex(x2, y2), color);
@@ -649,8 +700,9 @@ void Rasterizer::DrawTriangle(const vertex& v0, const vertex& v1, const vertex& 
   }
   while (!active_edges.empty());
 }
+#endif
 
-void Rasterizer::DrawTriangle(const vertex& v0, const vertex& v1, const vertex& v2)
+void Rasterizer::DrawTriangle(const vertex& v0, const vertex& v1, const vertex& v2, const HLiner& rHLiner)
 {
   std::vector<edge*> edges;
   std::list<edge*> active_edges;
@@ -749,7 +801,7 @@ void Rasterizer::DrawTriangle(const vertex& v0, const vertex& v1, const vertex& 
         const float x0 = pLastEdge->x;
         const float x1 = pEdge->x;
         span Span(*pLastEdge, *pEdge);
-        BlendHLine(Span, y);
+        rHLiner(Span, y);
         
         pLastEdge = NULL;
       }
@@ -820,8 +872,8 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
     vertex v1(10, 100,  0, 1, 0, .5);
     vertex v2(303, 100, 0, 0, 1, .5);
     vertex v3(303, 10,  0, 1, 0, 1.0);
-    rasterizer.DrawTriangle(v0, v1, v2);
-    rasterizer.DrawTriangle(v0, v2, v3);
+    rasterizer.DrawTriangle(v0, v1, v2, nuiMakeDelegate(&rasterizer, &Rasterizer::DrawHLine));
+    rasterizer.DrawTriangle(v0, v2, v3, nuiMakeDelegate(&rasterizer, &Rasterizer::DrawHLine));
   }
   
   rasterizer.SetClipRect(330, 40, 400, 90);
@@ -830,8 +882,8 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
     vertex v1(310, 100,  0, 1, 0, .5);
     vertex v2(603, 100, 0, 0, 1, .5);
     vertex v3(603, 10,  0, 1, 0, 1.0);
-    rasterizer.DrawTriangle(v0, v1, v2);
-    rasterizer.DrawTriangle(v0, v2, v3);
+    rasterizer.DrawTriangle(v0, v1, v2, nuiMakeDelegate(&rasterizer, &Rasterizer::DrawHLine));
+    rasterizer.DrawTriangle(v0, v2, v3, nuiMakeDelegate(&rasterizer, &Rasterizer::DrawHLine));
   }
 
   rasterizer.SetClipRect(0, 200, 640, 480);
@@ -841,11 +893,11 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
     for (uint32 i = 0; i < 10000; i++)
     {
 #define R ((random() % 200 + 55) / 255.0f)
-#if 0 // Large triangles
+#if 1 // Large triangles
       vertex v0(random() % 1200 - 200, random() % 800 - 200, R, R, R, R);
       vertex v1(random() % 1200 - 200, random() % 800 - 200, R, R, R, R);
       vertex v2(random() % 1200 - 200, random() % 800 - 200, R, R, R, R);
-#else
+#else // small triangles
       float x = random() % 1200 - 200;
       float y = random() % 1200 - 200;
       vertex v0(x, y, R, R, R, R);
@@ -854,7 +906,7 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
 #endif
         
 //      printf("trangle %d (%f, %f / %f, %f / %f, %f)\n", i, v0.x, v0.y, v1.x, v1.y, v2.x, v2.y);
-      rasterizer.DrawTriangle(v0, v1, v2);
+      rasterizer.DrawTriangle(v0, v1, v2, nuiMakeDelegate(&rasterizer, &Rasterizer::BlendHLine));
     }
     now = nglTime() - now;
     printf("triangle rendering time: %fs\n", now);
