@@ -251,10 +251,20 @@ public:
     g = e0.g;
     b = e0.b;
     a = e0.a;
-    rincr = (e1.r - e0.r) / diff; // Compute the slope
-    gincr = (e1.g - e0.g) / diff; // Compute the slope
-    bincr = (e1.b - e0.b) / diff; // Compute the slope
-    aincr = (e1.a - e0.a) / diff; // Compute the slope
+    if (diff)
+    {
+      rincr = (e1.r - e0.r) / diff; // Compute the slope
+      gincr = (e1.g - e0.g) / diff; // Compute the slope
+      bincr = (e1.b - e0.b) / diff; // Compute the slope
+      aincr = (e1.a - e0.a) / diff; // Compute the slope
+    }
+    else
+    {
+      rincr = 0; // Compute the slope
+      gincr = 0; // Compute the slope
+      bincr = 0; // Compute the slope
+      aincr = 0; // Compute the slope
+    }
     
     // texture
     u = e0.u;
@@ -404,6 +414,7 @@ void Rasterizer::DrawHLine(span& rSpan, int32 y)
   }
 }
 
+#if 0
 void Rasterizer::BlendHLine(span& rSpan, int32 y)
 {
   if (rSpan.clip(mClipLeft, mClipRight))
@@ -445,6 +456,94 @@ void Rasterizer::BlendHLine(span& rSpan, int32 y)
     rSpan.step_texture();
   }
 }
+#elif 1
+void Rasterizer::BlendHLine(span& rSpan, int32 y)
+{
+  if (rSpan.clip(mClipLeft, mClipRight))
+    return;
+  
+  int32 count = rSpan.width;
+  uint32* pSpan = (uint32*)mpScreen->GetPixel(rSpan.x, y);
+  
+  //int32 col = rSpan.GetColor();
+  int32 A0 = ToZero(rSpan.r * 0xffff);
+  int32 A1 = ToZero(rSpan.g * 0xffff);
+  int32 A2 = ToZero(rSpan.b * 0xffff);
+  int32 A3 = ToZero(rSpan.a * 0xffff);
+  const int32 I0 = ToZero(rSpan.rincr * 0x10000);
+  const int32 I1 = ToZero(rSpan.gincr * 0x10000);
+  const int32 I2 = ToZero(rSpan.bincr * 0x10000);
+  const int32 I3 = ToZero(rSpan.aincr * 0x10000);
+  
+  while (count--)
+  {
+    uint32 colB = *pSpan;
+    
+    //uint32 colA = ((A3 & 0xff00) << 16) + ((A2 & 0xff00) << 8) + ((A1 & 0xff00)) + ((A0 & 0xff00) >> 8);
+    uint32 colA0 = ((A3 & 0xff00) << 8) | ((A1 & 0xff00) >> 8);
+    uint32 colA1 = ((A2 & 0xff00) << 8) | ((A0 & 0xff00) >> 8);
+    uint32 colB0 = (colB & 0xff00ff00) >> 8;
+    uint32 colB1 = colB & 0x00ff00ff;
+    
+    uint32 alpha = A3 >> 8;
+    if (alpha)
+    {
+      uint32 malpha = 0x100 - alpha;
+      
+      colA0 *= alpha;
+      colA1 *= alpha;
+      colB0 *= malpha;
+      colB1 *= malpha;
+            
+      const uint32 col = ((colA0 + colB0) & 0xff00ff00) | (((colA1 + colB1) & 0xff00ff00) >> 8);
+      //const uint32 col = ((colA0) & 0xff00ff00) | (((colA1) & 0xff00ff00) >> 8);
+      
+      *pSpan = col;
+    }
+    
+    pSpan++;
+    
+    //rSpan.step_color();
+    A0 += I0;
+    A1 += I1;
+    A2 += I2;
+    A3 += I3;
+    //rSpan.step_texture();
+  }
+}
+#else
+void Rasterizer::BlendHLine(span& rSpan, int32 y)
+{
+  if (rSpan.clip(mClipLeft, mClipRight))
+    return;
+  
+  int32 count = rSpan.width;
+  uint32* pSpan = (uint32*)mpScreen->GetPixel(rSpan.x, y);
+  
+  //int32 col = rSpan.GetColor();
+  int32 A0 = ToZero(rSpan.r * 0x10000);
+  int32 A1 = ToZero(rSpan.g * 0x10000);
+  int32 A2 = ToZero(rSpan.b * 0x10000);
+  int32 A3 = ToZero(rSpan.a * 0x10000);
+  const int32 I0 = ToZero(rSpan.rincr * 0x10000);
+  const int32 I1 = ToZero(rSpan.gincr * 0x10000);
+  const int32 I2 = ToZero(rSpan.bincr * 0x10000);
+  const int32 I3 = ToZero(rSpan.aincr * 0x10000);
+  
+  while (count--)
+  {
+    const uint32 colA = ((A3 & 0xff00) << 16) + ((A2 & 0xff00) << 8) + ((A1 & 0xff00)) + ((A0 & 0xff00) >> 8);
+    *pSpan++ = colA;
+    
+    //rSpan.step_color();
+    A0 += I0;
+    A1 += I1;
+    A2 += I2;
+    A3 += I3;
+    //rSpan.step_texture();
+  }
+}
+#endif
 
 void Rasterizer::DrawTriangle(float x0, float y0, float x1, float y1, float x2, float y2, uint32 color)
 {
@@ -741,10 +840,19 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
     double now = nglTime();
     for (uint32 i = 0; i < 10000; i++)
     {
-#define R ((random() % 255) / 255.0f)
+#define R ((random() % 200 + 55) / 255.0f)
+#if 0 // Large triangles
       vertex v0(random() % 1200 - 200, random() % 800 - 200, R, R, R, R);
       vertex v1(random() % 1200 - 200, random() % 800 - 200, R, R, R, R);
       vertex v2(random() % 1200 - 200, random() % 800 - 200, R, R, R, R);
+#else
+      float x = random() % 1200 - 200;
+      float y = random() % 1200 - 200;
+      vertex v0(x, y, R, R, R, R);
+      vertex v1(x + random() % 100 - 50, y + random() % 100 - 50, R, R, R, R);
+      vertex v2(x + random() % 100 - 50, y + random() % 100 - 50, R, R, R, R);
+#endif
+        
 //      printf("trangle %d (%f, %f / %f, %f / %f, %f)\n", i, v0.x, v0.y, v1.x, v1.y, v2.x, v2.y);
       rasterizer.DrawTriangle(v0, v1, v2);
     }
