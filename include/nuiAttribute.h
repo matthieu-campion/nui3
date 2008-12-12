@@ -269,7 +269,7 @@ public:
   // Getters for each dimension:
   Contents Get(void* pTarget) const
   {
-    NGL_ASSERT(mGetter);
+    NGL_ASSERT(!mGetter.empty());
     NGL_ASSERT(GetDimension() == 0);
     GetterDelegate Getter;
     Getter.SetMemento(mGetter);
@@ -279,7 +279,7 @@ public:
   
   Contents Get(void* pTarget, uint32 index) const
   {
-    NGL_ASSERT(mGetter);
+    NGL_ASSERT(!mGetter.empty());
     NGL_ASSERT(GetDimension() == 1);
     GetterDelegate1 Getter;
     Getter.SetMemento(mGetter);
@@ -289,7 +289,7 @@ public:
   
   Contents Get(void* pTarget, uint32 index0, uint32 index1) const
   {
-    NGL_ASSERT(mGetter);
+    NGL_ASSERT(!mGetter.empty());
     NGL_ASSERT(GetDimension() == 2);
     GetterDelegate2 Getter;
     Getter.SetMemento(mGetter);
@@ -300,7 +300,7 @@ public:
   // Setters for each dimension:
   void Set(void* pTarget, Contents rValue) const
   {
-    NGL_ASSERT(mSetter);
+    NGL_ASSERT(!mSetter.empty());
     NGL_ASSERT(GetDimension() == 0);
     SetterDelegate Setter;
     Setter.SetMemento(mSetter);
@@ -315,7 +315,7 @@ public:
   
   void Set(void* pTarget, uint32 index, Contents rValue) const
   {
-    NGL_ASSERT(mSetter);
+    NGL_ASSERT(!mSetter.empty());
     NGL_ASSERT(GetDimension() == 1);
     SetterDelegate1 Setter;
     Setter.SetMemento(mSetter);
@@ -330,7 +330,7 @@ public:
   
   void Set(void* pTarget, uint32 index0, uint32 index1, Contents rValue) const
   {
-    NGL_ASSERT(mSetter);
+    NGL_ASSERT(!mSetter.empty());
     NGL_ASSERT(GetDimension() == 2);
     SetterDelegate2 Setter;
     Setter.SetMemento(mSetter);
@@ -640,7 +640,7 @@ public:
   // Getters for each dimension:
   const Contents& Get(void* pTarget) const
   {
-    NGL_ASSERT(mGetter);
+    NGL_ASSERT(!mGetter.empty());
     NGL_ASSERT(GetDimension() == 0);
     GetterDelegate Getter;
     Getter.SetMemento(mGetter);
@@ -650,7 +650,7 @@ public:
   
   const Contents& Get(void* pTarget, uint32 index) const
   {
-    NGL_ASSERT(mGetter);
+    NGL_ASSERT(!mGetter.empty());
     NGL_ASSERT(GetDimension() == 1);
     GetterDelegate1 Getter;
     Getter.SetMemento(mGetter);
@@ -660,7 +660,7 @@ public:
   
   const Contents& Get(void* pTarget, uint32 index0, uint32 index1) const
   {
-    NGL_ASSERT(mGetter);
+    NGL_ASSERT(!mGetter.empty());
     NGL_ASSERT(GetDimension() == 2);
     GetterDelegate2 Getter;
     Getter.SetMemento(mGetter);
@@ -671,7 +671,7 @@ public:
   // Setters for each dimension:
   void Set(void* pTarget, const Contents& rValue) const
   {
-    NGL_ASSERT(mSetter);
+    NGL_ASSERT(!mSetter.empty());
     NGL_ASSERT(GetDimension() == 0);
     SetterDelegate Setter;
     Setter.SetMemento(mSetter);
@@ -686,7 +686,7 @@ public:
   
   void Set(void* pTarget, uint32 index, const Contents& rValue) const
   {
-    NGL_ASSERT(mSetter);
+    NGL_ASSERT(!mSetter.empty());
     NGL_ASSERT(GetDimension() == 1);
     SetterDelegate1 Setter;
     Setter.SetMemento(mSetter);
@@ -701,7 +701,7 @@ public:
   
   void Set(void* pTarget, uint32 index0, uint32 index1, const Contents& rValue) const
   {
-    NGL_ASSERT(mSetter);
+    NGL_ASSERT(!mSetter.empty());
     NGL_ASSERT(GetDimension() == 2);
     SetterDelegate2 Setter;
     Setter.SetMemento(mSetter);
