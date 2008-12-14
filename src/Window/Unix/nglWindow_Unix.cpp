@@ -408,7 +408,7 @@ bool nglWindow::SetPosition (int XPos, int YPos)
   return true;
 }
 
-bool nglWindow::GetResolution (float& rHorizontal, float& rVertical)
+bool nglWindow::GetResolution (float& rHorizontal, float& rVertical) const
 {
   if (!mpDisplay)
     return false;
@@ -528,12 +528,12 @@ void nglWindow::SetTitle (const nglString& rTitle)
 }
 
 
-nglWindow::CursorModel nglWindow::GetCursor() const
+nuiMouseCursor nglWindow::GetCursor() const
 {
   return mCursor;
 }
 
-bool nglWindow::SetCursor (CursorModel Cursor)
+bool nglWindow::SetCursor (nuiMouseCursor Cursor)
 {
   if (!mWindow) return false;
 
@@ -1043,11 +1043,11 @@ nglMouseInfo::Flags nglWindow::GetXButtons(uint Mask) const
   return flags;
 }
 
-Cursor nglWindow::GetXCursor(CursorModel Cursor)
+Cursor nglWindow::GetXCursor(nuiMouseCursor _Cursor)
 {
   unsigned int id = 0;
 
-  switch (Cursor)
+  switch (_Cursor)
   {
     case eCursorNone :
       if (mEmptyCursor == None)

@@ -105,7 +105,6 @@ set(SOURCES
   src/SimpleWidgets/nuiToggleButton.cpp
   src/SimpleWidgets/nuiZoomBar.cpp
   src/TreeViews/nuiColumnTreeView.cpp
-  src/TreeViews/nuiPopupTree.cpp
   src/TreeViews/nuiTreeView.cpp
   src/Layout/nuiAnimView.cpp
   src/Layout/nuiDialog.cpp
@@ -116,7 +115,7 @@ set(SOURCES
   src/Layout/nuiList.cpp
   src/Layout/nuiMatrixView.cpp
   src/Layout/nuiModalContainer.cpp
-  src/Layout/nuiMessageBox
+  src/Dialogs/nuiMessageBox.cpp
   src/Layout/nuiPane.cpp
   src/Layout/nuiPopupView.cpp
   src/Layout/nuiPositioner.cpp
@@ -127,7 +126,6 @@ set(SOURCES
   src/Layout/nuiTitledPane.cpp
   src/Layout/nuiUserArea.cpp
   src/Layout/nuiVBox.cpp
-  src/Layout/nuiWidgetBox.cpp
   src/Layout/nuiWindow.cpp
   src/Layout/nuiZoomView.cpp
   src/Audio/nuiAudioConvert.cpp
