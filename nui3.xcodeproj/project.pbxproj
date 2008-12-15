@@ -1462,6 +1462,10 @@
 		E55FFC7D0C8EF78000C8DDE0 /* nuiFormater.h in Headers */ = {isa = PBXBuildFile; fileRef = E55FFC7B0C8EF78000C8DDE0 /* nuiFormater.h */; };
 		E55FFC7E0C8EF78000C8DDE0 /* nuiFormatedLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = E55FFC7A0C8EF78000C8DDE0 /* nuiFormatedLabel.h */; };
 		E55FFC7F0C8EF78000C8DDE0 /* nuiFormater.h in Headers */ = {isa = PBXBuildFile; fileRef = E55FFC7B0C8EF78000C8DDE0 /* nuiFormater.h */; };
+		E561099A0EF5ED83000170A7 /* nuiUnicode.h in Headers */ = {isa = PBXBuildFile; fileRef = E56109990EF5ED82000170A7 /* nuiUnicode.h */; };
+		E561099B0EF5ED83000170A7 /* nuiUnicode.h in Headers */ = {isa = PBXBuildFile; fileRef = E56109990EF5ED82000170A7 /* nuiUnicode.h */; };
+		E561099D0EF5F3F1000170A7 /* nuiUnicode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E561099C0EF5F3F1000170A7 /* nuiUnicode.cpp */; };
+		E561099E0EF5F3F1000170A7 /* nuiUnicode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E561099C0EF5F3F1000170A7 /* nuiUnicode.cpp */; };
 		E57204720D7A3A7F009BAD9F /* nuiHTTP_Carbon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E57204710D7A3A7F009BAD9F /* nuiHTTP_Carbon.cpp */; };
 		E57204730D7A3A7F009BAD9F /* nuiHTTP_Carbon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E57204710D7A3A7F009BAD9F /* nuiHTTP_Carbon.cpp */; };
 		E57465150D634B5600A2D66B /* nuiSerializeContext.h in Headers */ = {isa = PBXBuildFile; fileRef = E57465140D634B5600A2D66B /* nuiSerializeContext.h */; };
@@ -2806,6 +2810,8 @@
 		E554C6D80DC1480700C5D69A /* nuiFontInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiFontInspector.h; path = include/nuiFontInspector.h; sourceTree = SOURCE_ROOT; };
 		E55FFC7A0C8EF78000C8DDE0 /* nuiFormatedLabel.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiFormatedLabel.h; path = include/nuiFormatedLabel.h; sourceTree = SOURCE_ROOT; };
 		E55FFC7B0C8EF78000C8DDE0 /* nuiFormater.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiFormater.h; path = include/nuiFormater.h; sourceTree = SOURCE_ROOT; };
+		E56109990EF5ED82000170A7 /* nuiUnicode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiUnicode.h; path = include/nuiUnicode.h; sourceTree = SOURCE_ROOT; };
+		E561099C0EF5F3F1000170A7 /* nuiUnicode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiUnicode.cpp; sourceTree = "<group>"; };
 		E57204710D7A3A7F009BAD9F /* nuiHTTP_Carbon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiHTTP_Carbon.cpp; path = src/Net/Carbon/nuiHTTP_Carbon.cpp; sourceTree = SOURCE_ROOT; };
 		E57465140D634B5600A2D66B /* nuiSerializeContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiSerializeContext.h; path = include/nuiSerializeContext.h; sourceTree = SOURCE_ROOT; };
 		E57465170D634B6B00A2D66B /* nuiSerializeContext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiSerializeContext.cpp; sourceTree = "<group>"; };
@@ -5290,6 +5296,8 @@
 				E5816DF60C3CECAB00902DFE /* nglString.cpp */,
 				56759A440D61A60700963F9A /* nglUTFStringConv.cpp */,
 				56759A470D61A61A00963F9A /* nglUTFStringConv.h */,
+				E56109990EF5ED82000170A7 /* nuiUnicode.h */,
+				E561099C0EF5F3F1000170A7 /* nuiUnicode.cpp */,
 			);
 			name = String;
 			path = src/String;
@@ -6165,6 +6173,7 @@
 				BCCF49600EC6271F0076CD11 /* nuiWaveWriter.h in Headers */,
 				BCE44CCB0EC6336000AEBD64 /* nuiSampleDefines.h in Headers */,
 				56CEA8B70ECB2E8A009F6CF4 /* nuiAudioDevice_CoreAudio.h in Headers */,
+				E561099A0EF5ED83000170A7 /* nuiUnicode.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6829,6 +6838,7 @@
 				BCCF49580EC6271F0076CD11 /* nuiWaveWriter.h in Headers */,
 				BCE44CCA0EC6336000AEBD64 /* nuiSampleDefines.h in Headers */,
 				56CEA8B60ECB2E8A009F6CF4 /* nuiAudioDevice_CoreAudio.h in Headers */,
+				E561099B0EF5ED83000170A7 /* nuiUnicode.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7399,6 +7409,7 @@
 				BCCF49460EC626F90076CD11 /* nuiSampleWriter.cpp in Sources */,
 				BCCF49470EC626F90076CD11 /* nuiWaveReader.cpp in Sources */,
 				BCCF49480EC626F90076CD11 /* nuiWaveWriter.cpp in Sources */,
+				E561099D0EF5F3F1000170A7 /* nuiUnicode.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7912,6 +7923,7 @@
 				BCCF493F0EC626F90076CD11 /* nuiSampleWriter.cpp in Sources */,
 				BCCF49400EC626F90076CD11 /* nuiWaveReader.cpp in Sources */,
 				BCCF49410EC626F90076CD11 /* nuiWaveWriter.cpp in Sources */,
+				E561099E0EF5F3F1000170A7 /* nuiUnicode.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
