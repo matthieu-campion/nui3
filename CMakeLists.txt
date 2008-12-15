@@ -3,6 +3,9 @@ cmake_minimum_required(VERSION 2.4)
 project( nui3 )
 
 set(SOURCES 
+
+  graphics/DefaultDecoration.cpp
+
   src/Base/nui.cpp
   src/Base/nuiAnimation.cpp
   src/Base/nuiBindingManager.cpp
@@ -32,6 +35,8 @@ set(SOURCES
   src/Base/nuiTree.cpp
   src/Base/nuiXML.cpp
   src/Base/nuiHTML.cpp
+  src/Bindings/nuiBindings.cpp
+  src/Text/nuiHyperLink.cpp
   src/Text/nuiEditLine.cpp
   src/Text/nuiEditText.cpp
   src/Text/nuiFormatedLabel.cpp
@@ -40,6 +45,7 @@ set(SOURCES
   src/Text/nuiLabelAttribute.cpp
   src/Text/nuiSpinnerLabel.cpp
   src/Text/nuiText.cpp
+  src/Renderers/nuiSurface.cpp
   src/Renderers/AAPrimitives.cpp
   src/Renderers/nuiArc.cpp
   src/Renderers/nuiContour.cpp
@@ -104,8 +110,11 @@ set(SOURCES
   src/SimpleWidgets/nuiTabBar.cpp
   src/SimpleWidgets/nuiToggleButton.cpp
   src/SimpleWidgets/nuiZoomBar.cpp
+  src/TreeViews/nuiPopupMenu.cpp
   src/TreeViews/nuiColumnTreeView.cpp
   src/TreeViews/nuiTreeView.cpp
+  src/Layout/nuiImageSequence.cpp
+  src/Layout/nuiBackgroundPane.cpp
   src/Layout/nuiAnimView.cpp
   src/Layout/nuiDialog.cpp
   src/Layout/nuiFixed.cpp
@@ -143,6 +152,8 @@ set(SOURCES
   src/Attributes/nuiPointAttributeEditor.cpp
   src/Attributes/nuiRectAttributeEditor.cpp
   src/Attributes/nuiStringAttributeEditor.cpp
+  src/Decorations/nuiDefaultDecoration.cpp
+  src/Decorations/nuiImageDecoration.cpp
   src/Decorations/nuiDecoration.cpp
   src/Decorations/nuiBorderDecoration.cpp
   src/Decorations/nuiTreeHandleDecoration.cpp
@@ -156,6 +167,7 @@ set(SOURCES
   src/String/nglStringConv_iconv.cpp
   src/String/nglUTFStringConv.cpp
   src/String/ConvertUTF.cpp
+  src/String/nuiTranslator.cpp
   src/Math/nglMath.cpp
   src/Stream/nglIFile.cpp
   src/Stream/nglIMemory.cpp
@@ -182,6 +194,7 @@ set(SOURCES
   src/File/nglPath.cpp
   src/File/nglVolume.cpp
   src/File/nuiNativeResourceVolume.cpp
+  src/Font/nuiPanose.cpp
   src/Font/ngl_default_font.cpp
   src/Font/nglFont.cpp
   src/Font/nglFontBase.cpp
@@ -192,6 +205,7 @@ set(SOURCES
   src/Time/nglTime.cpp
   src/Time/nglTimer.cpp
   src/Application/nglApplication.cpp
+  src/Application/nuiLocale.cpp
   src/Application/nglClipBoard.cpp
   src/Application/nglConsole.cpp
   src/Application/nglCPUInfo.cpp
@@ -218,6 +232,7 @@ set(SOURCES
   src/Threading/nglLightLock.cpp
   src/Threading/nglThreadChecker.cpp
   src/Net/nuiHTTP.cpp
+  src/Net/Unix/nuiURL_Unix.cpp
   src/Introspector/nuiFontInspector.cpp
   src/Introspector/nuiIntrospector.cpp
   src/Introspector/nuiThreadInspector.cpp

@@ -64,7 +64,7 @@ void nuiImageDecoration::InitAttributes()
     nuiAttribute<const nuiRect&>::GetterDelegate(this, &nuiImageDecoration::GetSourceClientRect),
     nuiAttribute<const nuiRect&>::SetterDelegate(this, &nuiImageDecoration::SetSourceClientRect));
   
-  nuiAttribute<const nglPath&>* AttributeTexture = new nuiAttribute<const nglPath&>
+  nuiAttribute<nglPath>* AttributeTexture = new nuiAttribute<nglPath>
    (nglString(_T("Texture")), nuiUnitNone,
     nuiMakeDelegate(this, &nuiImageDecoration::GetTexturePath), 
     nuiMakeDelegate(this, &nuiImageDecoration::SetTexturePath));
@@ -121,7 +121,7 @@ void nuiImageDecoration::SetPosition(nuiPosition pos)
 }
 
 
-const nglPath& nuiImageDecoration::GetTexturePath() const
+nglPath nuiImageDecoration::GetTexturePath() const
 {
   if (HasProperty(_T("Texture")))
     return GetProperty(_T("Texture"));
@@ -129,11 +129,11 @@ const nglPath& nuiImageDecoration::GetTexturePath() const
   return mpTexture->GetSource();
 }
 
-void nuiImageDecoration::SetTexturePath(const nglPath& rPath)
+void nuiImageDecoration::SetTexturePath(nglPath path)
 {
-  SetProperty(_T("Texture"), rPath.GetPathName());
+  SetProperty(_T("Texture"), path.GetPathName());
   nuiTexture* pOld = mpTexture;
-  mpTexture = nuiTexture::GetTexture(rPath);
+  mpTexture = nuiTexture::GetTexture(path);
   if (GetSourceClientRect() == nuiRect(0,0,0,0))
     SetSourceClientRect(nuiRect(0, 0, mpTexture->GetWidth(), mpTexture->GetHeight()));
   if (pOld)

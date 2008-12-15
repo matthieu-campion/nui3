@@ -21,6 +21,7 @@
 #include "nglApplication.h"
 #include "nglVideoMode.h"
 #include "nglWindow.h"
+#include "nuiMainMenu.h"
 #include "ngl_unix.h"
 
 #include <string.h>
@@ -1028,6 +1029,13 @@ void nglWindow::Grab(bool DoGrab)
     XUngrabPointer (mpDisplay, CurrentTime);
   }
   XFlush (mpDisplay);
+}
+
+
+bool nuiMainMenu::RegisterFromWindow(nglWindow*)
+{
+  //#TODO implement native menus on unix
+  return false;
 }
 
 nglMouseInfo::Flags nglWindow::GetXButtons(uint Mask) const

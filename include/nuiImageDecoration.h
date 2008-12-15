@@ -35,8 +35,8 @@ public:
   
   nuiTexture* GetTexture() const;
   
-  const nglPath& GetTexturePath() const;
-  void SetTexturePath(const nglPath& rPath);
+  nglPath GetTexturePath() const;
+  void SetTexturePath(nglPath path);
 
   nuiPosition GetPosition();
   void SetPosition(nuiPosition pos);
