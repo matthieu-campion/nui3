@@ -17,6 +17,15 @@ public:
   nuiFontRequest(nglFontBase* pOriginalFont = NULL, bool ForcePanoseOnlyFonts = true);
   ~nuiFontRequest();
   
+  /* generic font names are defined in the CSS standard
+   http://www.w3.org/TR/2002/WD-css3-fonts-20020802/#generic-font-families
+   A generic name is one of "serif", "sans-serif", "cursive", "fantasy", "monospace"
+   The generic name can be set as:
+    1) a parameter of the font request: the generic name is checked against the fonts-to-generic-names map (gGenericNamesForFonts)
+                                        the intersection is used to calculate the score of the request
+    2) the name of the font in the font request : the generic name is checked against the default font map (gDefaultFontsForGenericNames)
+                                                  the genreic name of the font is replaced by the name of the default font for this operating system
+   */
   static void AddGenericNameForFont(const nglString& rGenericName, const nglString& rFamilyName);
   static nglString GetGenericNameForFont(const nglString& rName);
   static void GetFontsForGenericName(const nglString& rName, std::vector<nglString>& rFonts);
