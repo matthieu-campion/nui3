@@ -125,6 +125,8 @@ set(SOURCES
   src/Layout/nuiMatrixView.cpp
   src/Layout/nuiModalContainer.cpp
   src/Dialogs/nuiMessageBox.cpp
+  src/Dialogs/nuiDialogSelectFile.cpp
+  src/Dialogs/nuiDialogSelectDirectory.cpp
   src/Layout/nuiPane.cpp
   src/Layout/nuiPopupView.cpp
   src/Layout/nuiPositioner.cpp

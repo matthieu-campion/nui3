@@ -525,7 +525,7 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
   
   error = FT_New_Memory_Face(gFTLibrary, pBuffer, size, Face, &pFace);
  
-  if (error)
+  if (error || pFace->num_faces <= Face)
     return;
   NGL_DEBUG( NGL_OUT(_T("Scanning font '%ls' face %d\n"), rPath.GetChars(), Face); )
   

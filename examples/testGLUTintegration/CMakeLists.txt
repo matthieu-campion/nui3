@@ -1,4 +1,4 @@
-project(yoraka)
+project(testGLUTintegration)
 
 INCLUDE(FindOpenGL)
 INCLUDE(FindGLUT)

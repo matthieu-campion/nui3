@@ -22,7 +22,7 @@
 #include "nuiTreeView.h"
 #include "nuiGrid.h"
 #include "nglConsole.h"
-#include "nuiPopupTree.h"
+#include "nuiPopupMenu.h"
 
 /*
  * MainWindow
