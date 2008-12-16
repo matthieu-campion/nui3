@@ -659,8 +659,6 @@ void Rasterizer::DrawTriangle(const vertex& v0, const vertex& v1, const vertex& 
         if (!pen_down && pLastEdge)
         {
           // Draw this span
-          const float x0 = pLastEdge->x;
-          const float x1 = pEdge->x;
           span Span(*pLastEdge, *pEdge);
           rHLiner(Span, y);
           
