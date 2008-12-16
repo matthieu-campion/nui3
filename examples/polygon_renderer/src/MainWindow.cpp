@@ -285,21 +285,7 @@ public:
   {
     return NUI_RGBA_F(r, g, b, a);
   }
-  
-  void step_color()
-  {
-    r += rincr;
-    g += gincr;
-    b += bincr;
-    a += aincr;
-  }
-  
-  void step_texture()
-  {
-    u += uincr;
-    v += vincr;
-  }
-  
+
   bool clip(int32 left, int32 right)
   {
     float xx = x + width;
@@ -371,6 +357,8 @@ private:
   int32 mClipRight;
   int32 mClipTop;
   int32 mClipBottom;
+  std::vector<edge*> edges;
+  std::vector<edge*> active_edges;
 };
 
 Rasterizer::Rasterizer(Screen<32>* pScreen, bool OwnScreen)
@@ -381,6 +369,9 @@ Rasterizer::Rasterizer(Screen<32>* pScreen, bool OwnScreen)
   mClipRight = pScreen->GetWidth();
   mClipTop = 0;
   mClipBottom = pScreen->GetHeight();
+
+  edges.reserve(3);
+  active_edges.reserve(3);
 }
 
 Rasterizer::~Rasterizer()
@@ -564,13 +555,33 @@ void Rasterizer::DrawHLine(span& rSpan, int32 y)
   }
 }
 
+typedef nuiFastDelegate2<const edge*, const edge*, bool> Comparator;
+
+void bubblesort(std::vector<edge*>& rVec, const Comparator& rComp)
+{
+  uint32 n = rVec.size();
+  bool swapped;
+  do
+  {
+    swapped = false;
+    n--;
+    for (uint32 i = 0; i < n; i++)
+    {
+      if (rComp(rVec[i + 1], rVec[i]))
+      {
+        edge* pEdge = rVec[i];
+        rVec[i] = rVec[i + 1];
+        rVec[i + 1] = pEdge;
+        swapped = true;
+      }
+    }
+  } while (swapped);
+}
 
 void Rasterizer::DrawTriangle(const vertex& v0, const vertex& v1, const vertex& v2, const HLiner& rHLiner)
 {
-  std::vector<edge*> edges;
-  std::vector<edge*> active_edges;
-  edges.reserve(3);
-  active_edges.reserve(3);
+  edges.clear();
+  active_edges.clear();
   edge Edge0(v0, v1);
   edge Edge1(v1, v2);
   edge Edge2(v2, v0);
@@ -609,7 +620,8 @@ void Rasterizer::DrawTriangle(const vertex& v0, const vertex& v1, const vertex& 
       return;
   }
     
-  std::sort(edges.begin(), edges.end(), compare_edge_y);
+  bubblesort(edges, Comparator(&compare_edge_y));
+  
   uint32 y = FastToBelow(edges[0]->v0.y);
   uint32 current_edge = 0;
   for (uint32 e = 0; e < edges.size(); e++)
@@ -620,6 +632,7 @@ void Rasterizer::DrawTriangle(const vertex& v0, const vertex& v1, const vertex& 
   }
   
   uint32 done;
+  uint32 count = 0;
   
   do
   {
@@ -633,6 +646,9 @@ void Rasterizer::DrawTriangle(const vertex& v0, const vertex& v1, const vertex& 
         edges[e]->count = FastToAbove(edges[e]->v1.y) - FastToBelow(edges[e]->v0.y);
         active_edges.push_back(edges[e]);
         current_edge++;
+        count++;
+
+        bubblesort(active_edges, Comparator(&compare_edge_x));
       }
       else
       {
@@ -640,18 +656,13 @@ void Rasterizer::DrawTriangle(const vertex& v0, const vertex& v1, const vertex& 
         edges[e]->count--;
       }
     }
-    
-    std::sort(active_edges.begin(), active_edges.end(), compare_edge_x);
-    
-    std::vector<edge*>::iterator it  = active_edges.begin();
-    std::vector<edge*>::iterator end = active_edges.end();
-    
+            
     bool pen_down = false;
-    bool last_upward = !(*it)->upward;
+    bool last_upward = !active_edges[0]->upward;
     edge* pLastEdge = NULL;
-    while (it != end)
+    for (uint32 i = 0; i < count; i++)
     {
-      edge* pEdge = *it;
+      edge* pEdge = active_edges[i];
       if (pEdge)
       {
         bool last_pen_down = pen_down;
@@ -674,14 +685,12 @@ void Rasterizer::DrawTriangle(const vertex& v0, const vertex& v1, const vertex& 
         
         last_upward = pEdge->upward;
       }
-      ++it;
     }
     
     // Go to the next scanline for each active edge:
-    it  = active_edges.begin();
-    while (it != end)
+    for (uint32 i = 0; i < count; i++)
     {
-      edge* pEdge = *it;
+      edge* pEdge = active_edges[i];
       if (pEdge)
       {
         pEdge->x += pEdge->xincr;
@@ -693,12 +702,10 @@ void Rasterizer::DrawTriangle(const vertex& v0, const vertex& v1, const vertex& 
         
         // Check for desactivation:
         if (!pEdge->count)
-          *it = NULL;
+          active_edges[i] = NULL;
         else
           done++;
       }
-      
-      ++it;
     }
     
     y++;
@@ -754,7 +761,7 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
   {
     //srandom(time(NULL));
     double now = nglTime();
-    for (uint32 i = 0; i < 1000000; i++)
+    for (uint32 i = 0; i < 10000; i++)
     {
 #define R ((random() % 200 + 55) / 255.0f)
 #if 1 // Large triangles
@@ -770,9 +777,9 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
 #endif
         
 //      printf("trangle %d (%f, %f / %f, %f / %f, %f)\n", i, v0.x, v0.y, v1.x, v1.y, v2.x, v2.y);
-//      rasterizer.DrawTriangle(v0, v1, v2, nuiMakeDelegate(&rasterizer, &Rasterizer::BlendHLine));
 //      rasterizer.DrawTriangle(v0, v1, v2, nuiMakeDelegate(&rasterizer, &Rasterizer::DrawHLineStable));
-      rasterizer.DrawTriangle(v0, v1, v2, DrawHLineNULL);
+      rasterizer.DrawTriangle(v0, v1, v2, nuiMakeDelegate(&rasterizer, &Rasterizer::BlendHLine));
+//      rasterizer.DrawTriangle(v0, v1, v2, DrawHLineNULL);
     }
     now = nglTime() - now;
     printf("triangle rendering time: %fs\n", now);

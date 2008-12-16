@@ -16,7 +16,7 @@ typedef struct nuiUnicodeRangeDesc
 };
 
 nuiUnicodeRangeDesc nuiUnicodeRanges[] =
-{
+{// Start , End   , Enum                                   
   { 0x0000,	0x007F,	eBasicLatin },
   { 0x0080,	0x00FF,	eC1ControlsAndLatin1Supplement },
   { 0x0100,	0x017F,	eLatinExtendedA },
