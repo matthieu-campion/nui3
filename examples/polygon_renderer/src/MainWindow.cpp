@@ -954,10 +954,8 @@ private:
 
   uint32 GetTexelSmooth(int32 u, int32 v) const
   {
-    const int32 w = mTextureWidth;
-    const int32 h = mTextureHeight;
-    int32 _u = u * w;
-    int32 _v = v * h;
+    int32 _u = u;
+    int32 _v = v;
     
     int32 x = (_u & 0xffff) >> 8;
     int32 y = (_v & 0xffff) >> 8;
@@ -1012,7 +1010,7 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
   Rasterizer rasterizer(&screen, false);
   rasterizer.SetClipRect(0, 0, 640, 480);
   rasterizer.SetTexture(pTexture);
-  rasterizer.SetTextureFilter(false);
+  rasterizer.SetTextureFilter(true);
   
   {
 //    vertex v0(10, 10,   1, 0, 0,   0, 0, 0);
@@ -1020,8 +1018,8 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
 //    vertex v2(303, 100, 0, 0, 1,  .5, 1, 1);
 //    vertex v3(303, 10,  0, 1, 0, 1.0, 1, 0);
     
-#define XMULTIPLIER 4
-#define YMULTIPLIER 4
+#define XMULTIPLIER 1
+#define YMULTIPLIER 1
     vertex v0(0, 0,   1, 0, 0,   0, 0, 0);
     vertex v1(0, pTexture->GetHeight() * YMULTIPLIER,  0, 1, 0,  .5, 0, 1);
     vertex v2(pTexture->GetWidth() * XMULTIPLIER, pTexture->GetHeight() * YMULTIPLIER, 0, 0, 1,  .5, 1, 1);
@@ -1034,7 +1032,7 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
 //    rasterizer.DrawTriangle(v0, v2, v3, nuiMakeDelegate(&rasterizer, &Rasterizer::DrawHLineTextureCopy));
   }
   
-#if 0
+#if 1
   rasterizer.SetClipRect(330, 40, 400, 90);
   {
     vertex v0(310, 10,  1, 0, 0, 0);
