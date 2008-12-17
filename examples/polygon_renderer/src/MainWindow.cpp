@@ -290,7 +290,7 @@ public:
   span(const edge& e0, const edge& e1)
   {
     x = FastToAbove(e0.x);
-    width = e1.x - x;
+    width = FastToAbove(e1.x) - x;
 
     float leftoffset = x - e0.x;
     
@@ -780,6 +780,7 @@ public:
           {
             // Draw this span
             span Span(*pLastEdge, *pEdge);
+            //printf("span %3d: %f to %f (%f / %d)\n", y, pLastEdge->x, pEdge->x, pEdge->x - pLastEdge->x, Span.width);
             rHLiner(Span, y);
             
             pLastEdge = NULL;
@@ -1010,7 +1011,7 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
   Rasterizer rasterizer(&screen, false);
   rasterizer.SetClipRect(0, 0, 640, 480);
   rasterizer.SetTexture(pTexture);
-  rasterizer.SetTextureFilter(true);
+  rasterizer.SetTextureFilter(false);
   
   {
 //    vertex v0(10, 10,   1, 0, 0,   0, 0, 0);
@@ -1024,12 +1025,12 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
     vertex v1(0, pTexture->GetHeight() * YMULTIPLIER,  0, 1, 0,  .5, 0, 1);
     vertex v2(pTexture->GetWidth() * XMULTIPLIER, pTexture->GetHeight() * YMULTIPLIER, 0, 0, 1,  .5, 1, 1);
     vertex v3(pTexture->GetWidth() * XMULTIPLIER, 0,  0, 1, 0, 1.0, 1, 0);
-    //    rasterizer.DrawTriangle(v0, v1, v2, nuiMakeDelegate(&rasterizer, &Rasterizer::DrawHLineTransp));
+//    rasterizer.DrawTriangle(v0, v1, v2, nuiMakeDelegate(&rasterizer, &Rasterizer::DrawHLineTransp));
 //    rasterizer.DrawTriangle(v0, v2, v3, nuiMakeDelegate(&rasterizer, &Rasterizer::DrawHLineTransp));
     rasterizer.DrawTriangle(v0, v1, v2, nuiMakeDelegate(&rasterizer, &Rasterizer::DrawHLineTextureCopy));
     rasterizer.DrawTriangle(v0, v2, v3, nuiMakeDelegate(&rasterizer, &Rasterizer::DrawHLineTextureCopy));
-//    rasterizer.DrawTriangle(v0, v1, v2, nuiMakeDelegate(&rasterizer, &Rasterizer::DrawHLineTextureCopy));
-//    rasterizer.DrawTriangle(v0, v2, v3, nuiMakeDelegate(&rasterizer, &Rasterizer::DrawHLineTextureCopy));
+//    rasterizer.DrawTriangle(v0, v1, v2, nuiMakeDelegate(&rasterizer, &Rasterizer::DrawHLineCopy));
+//    rasterizer.DrawTriangle(v0, v2, v3, nuiMakeDelegate(&rasterizer, &Rasterizer::DrawHLineCopy));
   }
   
 #if 1
@@ -1048,10 +1049,10 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
   {
     //srandom(time(NULL));
     double now = nglTime();
-    for (uint32 i = 0; i < 1000; i++)
+    for (uint32 i = 0; i < 10000000; i++)
     {
 #define R ((random() % 200 + 55) / 255.0f)
-#if 1 // Large triangles
+#if 0 // Large triangles
       vertex v0(random() % 1200 - 200, random() % 800 - 200, R, R, R, R, 0, 0);
       vertex v1(random() % 1200 - 200, random() % 800 - 200, R, R, R, R, 1, 0);
       vertex v2(random() % 1200 - 200, random() % 800 - 200, R, R, R, R, 0, 1);
@@ -1068,8 +1069,8 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
 //      rasterizer.DrawTriangle(v0, v1, v2, nuiMakeDelegate(&rasterizer, &Rasterizer::DrawHLineCopy));
 //      rasterizer.DrawTriangle(v0, v1, v2, nuiMakeDelegate(&rasterizer, &Rasterizer::DrawHLineTranspStable));
 //      rasterizer.DrawTriangle(v0, v1, v2, nuiMakeDelegate(&rasterizer, &Rasterizer::DrawHLineTransp));
-      rasterizer.DrawTriangle(v0, v1, v2, nuiMakeDelegate(&rasterizer, &Rasterizer::DrawHLineTextureCopy));
-//      rasterizer.DrawTriangle(v0, v1, v2, DrawHLineNULL);
+//      rasterizer.DrawTriangle(v0, v1, v2, nuiMakeDelegate(&rasterizer, &Rasterizer::DrawHLineTextureCopy));
+      rasterizer.DrawTriangle(v0, v1, v2, DrawHLineNULL);
     }
     now = nglTime() - now;
     printf("triangle rendering time: %fs\n", now);
