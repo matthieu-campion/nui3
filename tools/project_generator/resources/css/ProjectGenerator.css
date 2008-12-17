@@ -1,0 +1,25 @@
+//
+// main nui3 stylesheet
+//
+
+// you can include your stylesheets this way:
+// #include "myStylesheet.css"
+
+// remember each stylesheet file must have at least a blank ending line, 
+// or the stylehsheet parsing may not work properly
+
+
+@nuiGradientDecoration dProjectGenerator
+{
+  Color1: rgb(240,240,240);
+  Color2: rgb(200,200,200);
+  ShapeMode: Fill;
+}
+
+"ProjectGenerator"!
+{
+  Decoration: dProjectGenerator;
+}
+
+// blank ending line following
+
