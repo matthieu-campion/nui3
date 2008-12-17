@@ -147,14 +147,13 @@ public:
 class edge
 {
 public:
-  edge(const vertex& rV0, const vertex& rV1)
+  edge(const vertex& rV0, const vertex& rV1, int32 TextureWidth, int32 TextureHeight)
   : v0(rV0.y < rV1.y ? rV0 : rV1),
     v1(rV0.y < rV1.y ? rV1 : rV0),
     upward(rV0.y > rV1.y)
   {
     // coords:
     const uint32 ydiff = (FastToBelow(v1.y) - FastToAbove(v0.y));
-    const float invdiff = 1.0 / ydiff;
 
     x = v0.x;
     // color
@@ -163,18 +162,34 @@ public:
     b = v0.b;
     a = v0.a;
     // texture
-    u = v0.u;
-    v = v0.v;
+    u = v0.u * TextureWidth;
+    v = v0.v * TextureHeight;
 
-    xincr = (v1.x - v0.x) * invdiff; // Compute the slope
-
-    rincr = (v1.r - v0.r) * invdiff; // Compute the slope
-    gincr = (v1.g - v0.g) * invdiff; // Compute the slope
-    bincr = (v1.b - v0.b) * invdiff; // Compute the slope
-    aincr = (v1.a - v0.a) * invdiff; // Compute the slope
-
-    uincr = (v1.u - v0.u) * invdiff; // Compute the slope
-    vincr = (v1.v - v0.v) * invdiff; // Compute the slope
+    if (ydiff)
+    {
+      const float invdiff = 1.0 / ydiff;
+      xincr = (v1.x - v0.x) * invdiff; // Compute the slope
+      
+      rincr = (v1.r - v0.r) * invdiff; // Compute the slope
+      gincr = (v1.g - v0.g) * invdiff; // Compute the slope
+      bincr = (v1.b - v0.b) * invdiff; // Compute the slope
+      aincr = (v1.a - v0.a) * invdiff; // Compute the slope
+      
+      uincr = ((v1.u * TextureWidth)  - u) * invdiff; // Compute the slope
+      vincr = ((v1.v * TextureHeight) - v) * invdiff; // Compute the slope
+    }
+    else
+    {
+      xincr = 0; // Compute the slope
+      
+      rincr = 0; // Compute the slope
+      gincr = 0; // Compute the slope
+      bincr = 0; // Compute the slope
+      aincr = 0; // Compute the slope
+      
+      uincr = 0; // Compute the slope
+      vincr = 0; // Compute the slope
+    }
   }
 
   void step_coords()
@@ -275,9 +290,9 @@ public:
   span(const edge& e0, const edge& e1)
   {
     x = FastToAbove(e0.x);
-    width = FastToAbove(e1.x) - x;
+    width = e1.x - x;
 
-    const float diff = e1.x - e0.x;
+    float leftoffset = x - e0.x;
     
     // color
     r = e0.r;
@@ -288,9 +303,9 @@ public:
     u = e0.u;
     v = e0.v;
     
-    if (diff)
+    if (width)
     {
-      float invdiff = 1.0 / diff;
+      float invdiff = 1.0 / width;
       rincr = (e1.r - e0.r) * invdiff; // Compute the slope
       gincr = (e1.g - e0.g) * invdiff; // Compute the slope
       bincr = (e1.b - e0.b) * invdiff; // Compute the slope
@@ -627,11 +642,11 @@ public:
   
   void DrawHLineTextureCopy(span& rSpan, int32 y)
   {
-    if (rSpan.IsStable())
-    {
-      DrawHLineCopyStable(rSpan, y);
-      return;
-    }
+//    if (rSpan.IsStable())
+//    {
+//      DrawHLineCopyStable(rSpan, y);
+//      return;
+//    }
     if (rSpan.clip(mClipLeft, mClipRight))
       return;
     
@@ -639,10 +654,10 @@ public:
     uint32* pSpan = (uint32*)mpScreen->GetPixel(rSpan.x, y);
     
     //int32 col = rSpan.GetColor();
-    int32 U = ToAbove(rSpan.u * (float)0x10000);
-    int32 V = ToAbove(rSpan.v * (float)0x10000);
-    const int32 IU = ToZero(rSpan.uincr * (float)0x10000);
-    const int32 IV = ToZero(rSpan.vincr * (float)0x10000);
+    int32 U = ToNearest(rSpan.u * (float)0x10000);
+    int32 V = ToNearest(rSpan.v * (float)0x10000);
+    const int32 IU = ToNearest(rSpan.uincr * (float)0x10000);
+    const int32 IV = ToNearest(rSpan.vincr * (float)0x10000);
     
     while (count--)
     {
@@ -652,35 +667,6 @@ public:
       V += IV;
     }
   }
-  
-  void DrawHLineTextureSmoothCopy(span& rSpan, int32 y)
-  {
-    if (rSpan.IsStable())
-    {
-      DrawHLineCopyStable(rSpan, y);
-      return;
-    }
-    if (rSpan.clip(mClipLeft, mClipRight))
-      return;
-    
-    int32 count = rSpan.width;
-    uint32* pSpan = (uint32*)mpScreen->GetPixel(rSpan.x, y);
-    
-    //int32 col = rSpan.GetColor();
-    int32 U = ToAbove(rSpan.u * (float)0x10000);
-    int32 V = ToAbove(rSpan.v * (float)0x10000);
-    const int32 IU = ToNearest(rSpan.uincr * (float)0x10000);
-    const int32 IV = ToNearest(rSpan.vincr * (float)0x10000);
-    
-    while (count--)
-    {
-      *pSpan++ = mFilterTexelizer(U, V);
-      
-      U += IU;
-      V += IV;
-    }
-  }
-  
   
   typedef nuiFastDelegate2<const edge*, const edge*, bool> Comparator;
   
@@ -709,9 +695,9 @@ public:
   {
     mEdges.clear();
     mActiveEdges.clear();
-    edge Edge0(v0, v1);
-    edge Edge1(v1, v2);
-    edge Edge2(v2, v0);
+    edge Edge0(v0, v1, mTextureWidth, mTextureHeight);
+    edge Edge1(v1, v2, mTextureWidth, mTextureHeight);
+    edge Edge2(v2, v0, mTextureWidth, mTextureHeight);
     
     if (v0.y != v1.y)
     {
@@ -854,8 +840,8 @@ private:
   
   uint32 GetTexel8Lum(int32 u, int32 v) const
   {
-    u = (u * mTextureWidth) >> 16;
-    v = (v * mTextureHeight) >> 16;
+    u = u >> 16;
+    v = v >> 16;
     
     if (u < 0)
       u = 0;
@@ -874,8 +860,8 @@ private:
   
   uint32 GetTexel8Alpha(int32 u, int32 v) const
   {
-    u = (u * mTextureWidth) >> 16;
-    v = (v * mTextureHeight) >> 16;
+    u = u >> 16;
+    v = v >> 16;
     
     if (u < 0)
       u = 0;
@@ -909,8 +895,8 @@ private:
   
   uint32 GetTexel16LumA(int32 u, int32 v) const
   {
-    u = (u * mTextureWidth) >> 16;
-    v = (v * mTextureHeight) >> 16;
+    u = u >> 16;
+    v = v >> 16;
     
     if (u < 0)
       u = 0;
@@ -930,8 +916,8 @@ private:
   
   uint32 GetTexel24(int32 u, int32 v) const 
   {
-    u = (u * mTextureWidth) >> 16;
-    v = (v * mTextureHeight) >> 16;
+    u = u >> 16;
+    v = v >> 16;
     
     if (u < 0)
       u = 0;
@@ -950,8 +936,8 @@ private:
   
   uint32 GetTexel32(int32 u, int32 v)
   {
-    u = (u * mTextureWidth) >> 16;
-    v = (v * mTextureHeight) >> 16;
+    u = u >> 16;
+    v = v >> 16;
     
     const uint32* pBuffer = (uint32*)mpTextureBuffer;
     if (u < 0)
@@ -984,8 +970,8 @@ private:
     const int32 xx = 0x100 - x;
     const int32 yy = 0x100 - y;
     
-    int32 uu = u + (0x10000 / w);
-    int32 vv = v + (0x10000 / h);
+    int32 uu = u + 0x10000;
+    int32 vv = v + 0x10000;
     
     const uint32 col00 = mFilterTexelizer(u,  v);
     const uint32 col10 = mFilterTexelizer(uu, v);
@@ -1013,7 +999,8 @@ void DrawHLineNULL(span& rSpan, int32 y)
 MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& rInfo, bool ShowFPS, const nglContext* pShared )
   : nuiMainWindow(rContextInfo, rInfo, pShared, nglPath(ePathCurrent)), mEventSink(this)
 {
-  nuiTexture* pTexture = nuiTexture::GetTexture(nglPath(_T("/Users/meeloo/work/nui3/examples/data/jpeg.jpg")));
+//  nuiTexture* pTexture = nuiTexture::GetTexture(nglPath(_T("/Users/meeloo/work/nui3/examples/data/jpeg.jpg")));
+  nuiTexture* pTexture = nuiTexture::GetTexture(nglPath(_T("/Users/meeloo/work/nui3/examples/data/rasters.png")));
   SetDebugMode(true);
   nglImageInfo info(640, 480, 32);
   mpImage = new nglImage(info, eTransfert);
@@ -1025,7 +1012,7 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
   Rasterizer rasterizer(&screen, false);
   rasterizer.SetClipRect(0, 0, 640, 480);
   rasterizer.SetTexture(pTexture);
-  rasterizer.SetTextureFilter(true);
+  rasterizer.SetTextureFilter(false);
   
   {
 //    vertex v0(10, 10,   1, 0, 0,   0, 0, 0);
@@ -1033,8 +1020,8 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
 //    vertex v2(303, 100, 0, 0, 1,  .5, 1, 1);
 //    vertex v3(303, 10,  0, 1, 0, 1.0, 1, 0);
     
-#define XMULTIPLIER 1
-#define YMULTIPLIER 1
+#define XMULTIPLIER 4
+#define YMULTIPLIER 4
     vertex v0(0, 0,   1, 0, 0,   0, 0, 0);
     vertex v1(0, pTexture->GetHeight() * YMULTIPLIER,  0, 1, 0,  .5, 0, 1);
     vertex v2(pTexture->GetWidth() * XMULTIPLIER, pTexture->GetHeight() * YMULTIPLIER, 0, 0, 1,  .5, 1, 1);
@@ -1047,7 +1034,7 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
 //    rasterizer.DrawTriangle(v0, v2, v3, nuiMakeDelegate(&rasterizer, &Rasterizer::DrawHLineTextureCopy));
   }
   
-#if 1
+#if 0
   rasterizer.SetClipRect(330, 40, 400, 90);
   {
     vertex v0(310, 10,  1, 0, 0, 0);
