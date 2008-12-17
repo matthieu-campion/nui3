@@ -321,7 +321,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E52475090EF80A9000EEB239</string>
+										<string>E52477760EF937D600EEB239</string>
 										<key>history</key>
 										<array>
 											<string>E58F1D5E0EEDE8D900E59387</string>
@@ -582,7 +582,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E524750A0EF80A9000EEB239</string>
+										<string>E52477770EF937D600EEB239</string>
 										<key>history</key>
 										<array>
 											<string>E5EC7F730EE96B0C00F8404D</string>
@@ -596,11 +596,7 @@
 											<string>E58F1DCE0EEDFFD500E59387</string>
 											<string>E56108E20EF2B31D000170A7</string>
 											<string>E56109BD0EF6B59B000170A7</string>
-											<string>E52474BB0EF7FFBF00EEB239</string>
-										</array>
-										<key>nextStack</key>
-										<array>
-											<string>E56109C00EF6B59B000170A7</string>
+											<string>E52475100EF80FE200EEB239</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -726,7 +722,7 @@
 						<key>Frame</key>
 						<string>{{0, 0}, {1522, 335}}</string>
 						<key>RubberWindowFrame</key>
-						<string>0 70 1522 1108 0 0 1920 1178 </string>
+						<string>398 70 1522 1108 0 0 1920 1178 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXDebugCLIModule</string>
@@ -802,10 +798,10 @@
 							<key>Frame</key>
 							<string>{{0, 276}, {536, 451}}</string>
 							<key>RubberWindowFrame</key>
-							<string>0 70 1522 1108 0 0 1920 1178 </string>
+							<string>398 70 1522 1108 0 0 1920 1178 </string>
 						</dict>
 						<key>RubberWindowFrame</key>
-						<string>0 70 1522 1108 0 0 1920 1178 </string>
+						<string>398 70 1522 1108 0 0 1920 1178 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXDebugSessionModule</string>
@@ -861,12 +857,14 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
+		<string>E52477780EF937D600EEB239</string>
+		<string>E524755C0EF8636300EEB239</string>
 		<string>E524746D0EF7C3C600EEB239</string>
 		<string>E524746E0EF7C3C600EEB239</string>
 		<string>/Users/meeloo/work/nui3/examples/polygon_renderer/polygon_renderer.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>0 70 1522 1108 0 0 1920 1178 </string>
+	<string>398 70 1522 1108 0 0 1920 1178 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>
@@ -1404,6 +1402,14 @@
 										<array>
 											<integer>0</integer>
 										</array>
+										<array>
+											<integer>1</integer>
+											<integer>0</integer>
+										</array>
+										<array>
+											<integer>2</integer>
+											<integer>0</integer>
+										</array>
 									</array>
 									<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
 									<string>{{0, 0}, {168, 350}}</string>
@@ -1472,8 +1478,8 @@
 			<true/>
 			<key>TableOfContents</key>
 			<array>
-				<string>E58F1D730EEDEB5400E59387</string>
-				<string>E58F1D740EEDEB5400E59387</string>
+				<string>E524755C0EF8636300EEB239</string>
+				<string>E524755D0EF8636300EEB239</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
 				<string>1CA1AED706398EBD00589147</string>
 			</array>
@@ -1482,7 +1488,7 @@
 			<key>WindowString</key>
 			<string>23 746 744 409 0 0 1920 1178 </string>
 			<key>WindowToolGUID</key>
-			<string>E58F1D730EEDEB5400E59387</string>
+			<string>E524755C0EF8636300EEB239</string>
 			<key>WindowToolIsVisible</key>
 			<false/>
 		</dict>
