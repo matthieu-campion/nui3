@@ -12,8 +12,6 @@
 #include "nui.h"
 #include "nuiSampleInfo.h"
 
-class nuiAudioDecoderOSX;
-
 class nuiAudioDecoder 
 {
 public:
@@ -41,7 +39,5 @@ private:
   uint64 mPosition;
   nuiSampleInfo mInfo;
   
-#ifdef _MACOSX_
-  nuiAudioDecoderOSX* mpPrivate;
-#endif
+  class nuiAudioDecoderPrivate* mpPrivate;
 };

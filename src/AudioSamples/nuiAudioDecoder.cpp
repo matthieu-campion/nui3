@@ -6,7 +6,7 @@
  *  Copyright 2008 Mxp4. All rights reserved.
  *
  */
-
+#include "nui.h"
 #include "nuiAudioDecoder.h"
 
 nuiAudioDecoder::nuiAudioDecoder(nglIStream& rStream) :
