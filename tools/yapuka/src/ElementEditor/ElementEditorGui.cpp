@@ -4,104 +4,38 @@
 
   licence: see nui3/LICENCE.TXT
 */
+  
+#include "ElementEditorGui.h"
 
-#include "nui.h"
-#include "nuiInit.h"
-#include "MainWindow.h"
-#include "nuiApplication.h"
-
-#include "nuiHBox.h"
 #include "nuiVBox.h"
-#include "nuiList.h"
-#include "nuiLabel.h"
+#include "nuiHBox.h"
 #include "nuiPane.h"
-
-#include "ElementDesc.h"
-#include "ElementEditor.h"
-
-#include "nuiLabelRenamer.h"
+#include "nuiFileSelector.h"
 #include "nuiDialog.h"
-#include "Yapuka.h"
-#include "ProjectGenerator.h"
-#include "nuiCSS.h"
+#include "nuiLabelRenamer.h"
+#include "nuiBackgroundPane.h"
+
+#include "ElementEditor/ElementEditor.h"
+#include "Main/Yapuka.h"
 
 
-using namespace std;
-
-
-/*
- * MainWindow
- */
-
-MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& rInfo )
-  : nuiMainWindow(rContextInfo, rInfo, NULL, nglPath((_T("../data")))),
-	mWinSink(this)
+ElementEditorGui::ElementEditorGui()
+: nuiSimpleContainer(), mEventSink(this)
 {
-  //nuiTopLevel::EnablePartialRedraw(false);
-  SetDebugMode(true);
-
-	InitAttributes();	
-}
-
-
-
-void MainWindow::InitAttributes()
-{
-  mpAttributeMouseCoord = new nuiAttribute<nuiPoint>
-  (nglString(_T("Mouse Coordinates")), nuiUnitPixels,
-   nuiAttribute<nuiPoint>::GetterDelegate(this, &MainWindow::GetMouseCoord), 
-   nuiAttribute<nuiPoint>::SetterDelegate(this, &MainWindow::SetMouseCoord));
-  mAttributeMouseCoord = nuiAttribBase(this, mpAttributeMouseCoord);
-}
-
-
-
-MainWindow::~MainWindow()
-{
-  delete mpAttributeMouseCoord;
-}
-
-
-bool MainWindow::LoadCSS(const nglPath& rPath)
-{
-  nglIStream* pF = rPath.OpenRead();
-  if (!pF)
-  {
-    NGL_OUT(_T("Unable to open CSS source file '%ls'\n"), rPath.GetChars());
-    return false;
-  }
-  
-  nuiCSS* pCSS = new nuiCSS();
-  bool res = pCSS->Load(*pF, rPath);
-  
-  if (res)
-  {
-    SetCSS(pCSS);
-    return true;
-  }
-  
-  NGL_OUT(_T("%ls\n"), pCSS->GetErrorString().GetChars());
-  
-  delete pCSS;
-  return false;
-}
-
-void MainWindow::OnCreation()
-{
-  LoadCSS(_T("rsrc:/css/yapuka.css"));
-  
   // Main box [menus + buttons, main area]
   nuiVBox* pVBox = new nuiVBox(2);
   pVBox->SetExpand(nuiExpandShrinkAndGrow);
   AddChild(pVBox);
   
+  nuiBackgroundPane* pBkg = new nuiBackgroundPane(eInnerBackground);
+  pVBox->SetCell(0, pBkg);
+  pVBox->SetCellExpand(0, nuiExpandFixed);
+
   // Buttons box:
   nuiHBox* pButtonBox = new nuiHBox();
   pButtonBox->SetExpand(nuiExpandShrinkAndGrow);
-  pButtonBox->SetDecoration(GetDecorationManager()->Get(DECO_TOOLBAR), eDecorationBorder);
-  pVBox->SetCell(0, pButtonBox);
-  pVBox->SetCellExpand(0, nuiExpandFixed);
-
+  pBkg->AddChild(pButtonBox);
+  
   // Main Buttons
   nuiButton* pLoad = new nuiButton(_T("Load project"));
   pButtonBox->AddCell(pLoad,nuiCenter);
@@ -111,22 +45,19 @@ void MainWindow::OnCreation()
   
   nuiButton* pFrameEditor = new nuiButton(_T("New Frame"));
   pButtonBox->AddCell(pFrameEditor,nuiCenter);
-
+  
   nuiButton* pWidgetEditor = new nuiButton(_T("New Widget"));
   pButtonBox->AddCell(pWidgetEditor,nuiCenter);
-
-  nuiButton* pProjectCreator = new nuiButton(_T("Create nui Project"));
-  pButtonBox->AddCell(pProjectCreator,nuiCenter);
-
+  
   
   
   // Splitter:
   nuiSplitter* pSplitter = new nuiSplitter(nuiVertical);
   pVBox->SetCell(1, pSplitter);
   pVBox->SetCellExpand(1, nuiExpandShrinkAndGrow);
-
+  
   nuiPane* pLeftPane = new nuiPane(nuiColor(210, 215, 255));
-
+  
   nuiScrollView* pListSV = new nuiScrollView();
   pLeftPane->AddChild(pListSV);
   pSplitter->AddChild(pLeftPane);
@@ -145,27 +76,28 @@ void MainWindow::OnCreation()
   mpEditorContainer = new nuiSimpleContainer();
   pSplitter->AddChild(mpEditorContainer);
   
-  mWinSink.Connect(pLoad->Activated, &MainWindow::OnLoad);
-  mWinSink.Connect(pSave->Activated, &MainWindow::OnSave);
-  mWinSink.Connect(pFrameEditor->Activated, &MainWindow::OnNewFrame);
-  mWinSink.Connect(pWidgetEditor->Activated, &MainWindow::OnNewWidget);
-  mWinSink.Connect(pProjectCreator->Activated, &MainWindow::OnCreateProject);
-
-  mWinSink.Connect(mpElementTree->SelectionChanged, &MainWindow::OnElementSelected);
-  mWinSink.Connect(mpElementTree->Activated, &MainWindow::OnElementActivated);
+  mEventSink.Connect(pLoad->Activated, &ElementEditorGui::OnLoad);
+  mEventSink.Connect(pSave->Activated, &ElementEditorGui::OnSave);
+  mEventSink.Connect(pFrameEditor->Activated, &ElementEditorGui::OnNewFrame);
+  mEventSink.Connect(pWidgetEditor->Activated, &ElementEditorGui::OnNewWidget);
   
-  UpdateList();
+  mEventSink.Connect(mpElementTree->SelectionChanged, &ElementEditorGui::OnElementSelected);
+  mEventSink.Connect(mpElementTree->Activated, &ElementEditorGui::OnElementActivated);
   
+  UpdateList();	
 }
 
 
-void MainWindow::OnClose()
+
+
+ElementEditorGui::~ElementEditorGui()
 {
-  App->Quit();
+  
 }
 
 
-bool MainWindow::OnSave(const nuiEvent& rEvent)
+
+bool ElementEditorGui::OnSave(const nuiEvent& rEvent)
 {
   nglPath path(ePathUserDocuments);
   nuiPane* pEditPane = new nuiPane(nuiColor(255, 255, 255, 192), nuiColor(0, 0, 0, 192));
@@ -179,28 +111,28 @@ bool MainWindow::OnSave(const nuiEvent& rEvent)
   pPane->AddChild(pFS);
   pBox->AddCell(pPane);
   pBox->AddCell(pEditPane);
-
-  pPane->SetUserSize(GetWidth() * .8, GetHeight() * .8);
-  pEditPane->SetUserSize(GetWidth() * .8, 20);
+  
+  pPane->SetUserSize(GetMainWindow()->GetWidth() * .8, GetMainWindow()->GetHeight() * .8);
+  pEditPane->SetUserSize(GetMainWindow()->GetWidth() * .8, 20);
   pEditPane->SetCurve(2);
   pEditPane->SetBorder(5, 5);
   
   //pBox->SetExpand(nuiExpandShrinkAndGrow);
   pBox->SetCellExpand(0, nuiExpandShrinkAndGrow);
   pBox->SetCellExpand(1, nuiExpandFixed);
-
+  
   nuiDialog* pDialog = new nuiDialog(this);
   pDialog->InitDialog(_T("Save yapuka project"), NULL, nuiDialog::eDialogButtonOk | nuiDialog::eDialogButtonCancel);
   pDialog->SetContents(pBox, nuiCenter);
   pDialog->SetDefaultPos();
   pDialog->SetToken(new nuiToken<nuiFileSelector*>(pFS));
   
-  mWinSink.Connect(pDialog->DialogDone, &MainWindow::OnSaved, pDialog);
-
+  mEventSink.Connect(pDialog->DialogDone, &ElementEditorGui::OnSaved, pDialog);
+  
   return false;
 }
 
-bool MainWindow::OnSaved(const nuiEvent& rEvent)
+bool ElementEditorGui::OnSaved(const nuiEvent& rEvent)
 {
   nuiDialog* pDialog = (nuiDialog*)rEvent.mpUser;
   nuiFileSelector* pFS = ((nuiToken<nuiFileSelector*>*)pDialog->GetToken())->Token;
@@ -229,7 +161,7 @@ bool MainWindow::OnSaved(const nuiEvent& rEvent)
     nglString Dump(xml.Dump());
     
     NGL_OUT(_T("\n%ls\n"), Dump.GetChars());
- 
+    
     nglPath path(pFS->GetPath());
     if (path.GetExtension().IsEmpty())
     {
@@ -247,7 +179,7 @@ bool MainWindow::OnSaved(const nuiEvent& rEvent)
 
 
 
-bool MainWindow::OnLoad(const nuiEvent& rEvent)
+bool ElementEditorGui::OnLoad(const nuiEvent& rEvent)
 {
   nglPath path(ePathUserDocuments);
   nuiPane* pEditPane = new nuiPane(nuiColor(255, 255, 255, 192), nuiColor(0, 0, 0, 192));
@@ -262,8 +194,8 @@ bool MainWindow::OnLoad(const nuiEvent& rEvent)
   pBox->AddCell(pPane);
   pBox->AddCell(pEditPane);
   
-  pPane->SetUserSize(GetWidth() * .8, GetHeight() * .8);
-  pEditPane->SetUserSize(GetWidth() * .8, 20);
+  pPane->SetUserSize(GetMainWindow()->GetWidth() * .8, GetMainWindow()->GetHeight() * .8);
+  pEditPane->SetUserSize(GetMainWindow()->GetWidth() * .8, 20);
   pEditPane->SetCurve(2);
   pEditPane->SetBorder(5, 5);
   
@@ -277,12 +209,12 @@ bool MainWindow::OnLoad(const nuiEvent& rEvent)
   pDialog->SetDefaultPos();
   pDialog->SetToken(new nuiToken<nuiFileSelector*>(pFS));
   
-  mWinSink.Connect(pDialog->DialogDone, &MainWindow::OnLoaded, pDialog);
+  mEventSink.Connect(pDialog->DialogDone, &ElementEditorGui::OnLoaded, pDialog);
   
   return false;
 }
 
-bool MainWindow::OnLoaded(const nuiEvent& rEvent)
+bool ElementEditorGui::OnLoaded(const nuiEvent& rEvent)
 {
   nuiDialog* pDialog = (nuiDialog*)rEvent.mpUser;
   nuiFileSelector* pFS = ((nuiToken<nuiFileSelector*>*)pDialog->GetToken())->Token;
@@ -291,11 +223,11 @@ bool MainWindow::OnLoaded(const nuiEvent& rEvent)
   {
     nglPath path(pFS->GetPath());
     nglIFile file(path);
- 
+    
     nuiXML XML("yapuka");
     if (!XML.Load(file))
       return false;
-
+    
     for (uint32 i = 0; i < XML.GetChildrenCount(); i++)
     {
       nuiXMLNode* pNode = XML.GetChild(i);
@@ -327,7 +259,7 @@ bool MainWindow::OnLoaded(const nuiEvent& rEvent)
 
 
 
-bool MainWindow::OnNewFrame(const nuiEvent& rEvent)
+bool ElementEditorGui::OnNewFrame(const nuiEvent& rEvent)
 {
   ElementDesc* pDesc = new ElementDesc();
   pDesc->SetType(eElementFrame);
@@ -336,11 +268,11 @@ bool MainWindow::OnNewFrame(const nuiEvent& rEvent)
   UpdateList();
   if (!mElements.empty())
     mpElementTree->Select(mpLastElement, true);
-
+  
   return false;
 }
 
-bool MainWindow::OnNewWidget(const nuiEvent& rEvent)
+bool ElementEditorGui::OnNewWidget(const nuiEvent& rEvent)
 {
   ElementDesc* pDesc = new ElementDesc();
   pDesc->SetType(eElementWidget);
@@ -349,15 +281,15 @@ bool MainWindow::OnNewWidget(const nuiEvent& rEvent)
   UpdateList();
   if (!mElements.empty())
     mpElementTree->Select(mpLastElement, true);
-
+  
   return false;
 }
 
-void MainWindow::UpdateList()
+void ElementEditorGui::UpdateList()
 {
   mpFrameTree->Clear();
   mpWidgetTree->Clear();
-
+  
   if (mElements.empty())
   {
     nuiTreeNode* pNode = new nuiTreeNode(_T("Empty"));
@@ -379,26 +311,26 @@ void MainWindow::UpdateList()
       pNode->SetToken(new nuiToken<ElementDesc*>(pElement));
 			switch (pElement->GetType())
 			{
-			case eElementFrame:
-				mpFrameTree->AddChild(pNode);
-        nbFrames++;
-				break;
-			case eElementWidget:
-				mpWidgetTree->AddChild(pNode);
-        nbWidgets++;
-				break;
+        case eElementFrame:
+          mpFrameTree->AddChild(pNode);
+          nbFrames++;
+          break;
+        case eElementWidget:
+          mpWidgetTree->AddChild(pNode);
+          nbWidgets++;
+          break;
 			}
-
-
+      
+      
       ++it;
     }
     
     if (!nbFrames)
-     mpFrameTree->AddChild(new nuiTreeNode(_T("Empty")));
-
+      mpFrameTree->AddChild(new nuiTreeNode(_T("Empty")));
+    
     if (!nbWidgets)
-     mpWidgetTree->AddChild(new nuiTreeNode(_T("Empty")));
-      
+      mpWidgetTree->AddChild(new nuiTreeNode(_T("Empty")));
+    
   }
   
   if (mElements.empty())
@@ -407,7 +339,7 @@ void MainWindow::UpdateList()
   }
 }
 
-void MainWindow::ClearEditor()
+void ElementEditorGui::ClearEditor()
 {
   nuiLabel* pLabel = new nuiLabel(_T("No editor"), nuiFont::GetFont(36));
   pLabel->SetPosition(nuiCenter);
@@ -415,7 +347,7 @@ void MainWindow::ClearEditor()
   mpEditorContainer->AddChild(pLabel);
 }
 
-bool MainWindow::OnElementSelected(const nuiEvent& rEvent)
+bool ElementEditorGui::OnElementSelected(const nuiEvent& rEvent)
 {
   nuiTreeNode* pNode = mpElementTree->GetSelectedNode();
   if (pNode)
@@ -439,7 +371,7 @@ bool MainWindow::OnElementSelected(const nuiEvent& rEvent)
   return false;
 }
 
-bool MainWindow::OnElementActivated(const nuiEvent& rEvent)
+bool ElementEditorGui::OnElementActivated(const nuiEvent& rEvent)
 {
   nuiTreeNode* pNode = mpElementTree->GetSelectedNode();
   if (pNode)
@@ -448,19 +380,19 @@ bool MainWindow::OnElementActivated(const nuiEvent& rEvent)
 		
 		if (!pToken)
 			return false;
-
+    
 		// take care about that... be sure it's a nuiLabel
 		nuiLabel* pLabel = (nuiLabel*)pNode->GetElement();
 		
     nuiLabelRenamer* pRenamer = new nuiLabelRenamer(pLabel);
     pRenamer->SetToken(new nuiToken<ElementDesc*>(pToken->Token));
-    mWinSink.Connect(pRenamer->Renamed, &MainWindow::OnElementRenamed, pRenamer);
+    mEventSink.Connect(pRenamer->Renamed, &ElementEditorGui::OnElementRenamed, pRenamer);
   }
   
   return false;
 }
 
-bool MainWindow::OnElementRenamed(const nuiEvent& rEvent)
+bool ElementEditorGui::OnElementRenamed(const nuiEvent& rEvent)
 {
   nuiLabelRenamer* pItem = (nuiLabelRenamer*)rEvent.mpUser;
   NGL_ASSERT(pItem);
@@ -473,32 +405,4 @@ bool MainWindow::OnElementRenamed(const nuiEvent& rEvent)
   OnElementSelected(rEvent);
   return true;
 }
-
-
-bool MainWindow::OnCreateProject(const nuiEvent& rEvent)
-{
-  new ProjectCreator(this);
-	
-	return true;
-}
-
-
-
-
-// properties **************************************************************
-
-
-nuiPoint MainWindow::GetMouseCoord()
-{
-	return mMouseCoord;
-}
-
-void MainWindow::SetMouseCoord(nuiPoint point)
-{
-	mMouseCoord = point;
-}
-
-
-
-
 

@@ -56,8 +56,6 @@ void nuiApp::OnExit (int Code)
   if (win)
     delete win;
 
-  delete mpDecorationManager;
-
   nuiUninit();
 }
 
@@ -142,8 +140,6 @@ void nuiApp::OnInit()
   }
 
 
-  // decorations
-  mpDecorationManager = new DecorationManager;
 
 /*
   Width = 512;
@@ -192,9 +188,10 @@ MainWindow* nuiApp::GetMainWindow()
 	return win;
 }
 
-DecorationManager* nuiApp::GetDecorationManager()
+
+nuiApp* GetApp()
 {
-  return mpDecorationManager;
+  return ((nuiApp*)App);
 }
 
 
@@ -203,10 +200,6 @@ MainWindow* GetMainWindow()
 	return ((nuiApp*)App)->GetMainWindow();
 }
 
-DecorationManager* GetDecorationManager()
-{
-  return ((nuiApp*)App)->GetDecorationManager();
-}
 
 Preferences& GetPreferences()
 {

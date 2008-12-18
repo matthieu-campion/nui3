@@ -15,8 +15,8 @@ ToolPane::ToolPane(const nglString& rTitle, nuiWidget* pWidget)
 {
   nglString title = rTitle;
   nuiLabel* pLabel = new nuiLabel(title.ToUpper(), nuiFont::GetFont(11));
+  pLabel->SetObjectName(_T("Toolpane::Title"));
   pLabel->SetColor(eNormalTextFg, nuiColor(255,255,255));
-  pLabel->SetDecoration(GetDecorationManager()->Get(DECO_PANE_TITLE), eDecorationBorder);
   SetTitle(pLabel);
 	if (pWidget)
 		SetContents(pWidget);
@@ -26,7 +26,7 @@ ToolPane::ToolPane(const nglString& rTitle, nuiWidget* pWidget)
 ToolPane::ToolPane(nuiLabelAttribute* rLabel, nuiWidget* pWidget)
 	: nuiFolderPane(rLabel, true/*opened*/)
 {
-  GetTitle()->SetDecoration(GetDecorationManager()->Get(DECO_PANE_TITLE), eDecorationBorder);
+  GetTitle()->SetObjectName(_T("Toolpane::Title"));
   GetTitle()->SetColor(eNormalTextFg, nuiColor(255,255,255));
 	if (pWidget)
 		SetContents(pWidget);
@@ -36,7 +36,7 @@ ToolPane::ToolPane(nuiLabelAttribute* rLabel, nuiWidget* pWidget)
 // virtual from nuiTitledPane(through nuiFolderPane)
 void ToolPane::SetContents(nuiWidget* pWidget, nuiPosition position)
 {
-  pWidget->SetDecoration(GetDecorationManager()->Get(DECO_PANE_CONTENTS), eDecorationBorder);
+  pWidget->SetObjectName(_T("Toolpane::Contents"));
 	nuiFolderPane::SetContents(pWidget);
 }
 

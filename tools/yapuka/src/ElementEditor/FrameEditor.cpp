@@ -103,7 +103,7 @@ bool FrameEditor::OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y)
   if (pDragObject->IsTypeSupported(_T("ngl/Files")))
   {
     nglDataFilesObject* pFiles = (nglDataFilesObject*)pDragObject->GetType(_T("ngl/Files"));
-    const std::list<nglString>&rFiles(pFiles->GetFiles());
+    const std::list<nglString>& rFiles(pFiles->GetFiles());
   
     pDragObject->SetDesiredDropEffect(eDropEffectLink);
     mDrawDndFrame = true;

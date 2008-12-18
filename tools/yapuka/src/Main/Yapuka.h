@@ -7,15 +7,11 @@
 
 #pragma once
 
-#include "ngl.h"
-#include "nuiApplication.h"
-#include "nuiWindow.h"
-#include "DecorationManager.h"
-#include "Preferences.h"
+#include "nui.h"
+#include "Main/MainWindow.h"
+#include "Main/Preferences.h"
 
-#define PROPERTY_STYLE _T("Style")
 
-class MainWindow;
 
 class nuiApp : public nuiApplication
 {
@@ -26,7 +22,6 @@ public:
   void OnInit();
   void OnExit (int Code);
 	MainWindow* GetMainWindow();
-  DecorationManager* GetDecorationManager();
   
   
   Preferences& GetPreferences()
@@ -36,13 +31,11 @@ public:
   
 protected:
    MainWindow *win;
-   DecorationManager* mpDecorationManager;
   
 private:
   Preferences mPreferences;
 };
 
-
+nuiApp* GetApp();
 MainWindow* GetMainWindow();
-DecorationManager* GetDecorationManager();
 Preferences& GetPreferences();

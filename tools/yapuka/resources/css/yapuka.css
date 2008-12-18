@@ -1,64 +1,78 @@
-@Font DefaultFont
+
+
+// you can include your stylesheets this way:
+// #include "myStylesheet.css"
+
+// remember each stylesheet file must have at least a blank ending line, 
+// or the stylehsheet parsing may not work properly
+
+@nuiGradientDecoration dMainContainer
 {
-  GenericName: "Monaco";
-  Size: 10;
-  Italic: false;
-  Bold: false;
-}
-
-@Font FontEditLine
-{
-  GenericName: "Monaco";
-  Size: 8;
-  Italic: false;
-  Bold: false;
-}
-
-
-
-@nuiColorDecoration dDialogPane
-{
-  FillColor: rgb(220,220,220);
+  Color1: rgb(190,190,190);
+  Color2: rgb(140,140,140);
+  ShapeMode: Fill;
   ClientRect: "{10 10 0 0}";
 }
 
-"DialogPane"
+
+"MainContainer"!
 {
   DecorationMode: Border;
-  Decoration: dDialogPane;
+  Decoration: dMainContainer;
 }
 
 
-@nuiColorDecoration dnuiEditLine
+
+
+@Font FontTabView_Title
 {
-  FillColor: rgb(220,220,200);
-  StrokeColor: rgb(180,180,180);
-  StrokeSize: 1;
+  GenericName: sans-serif;
+  Size: 12;
+  Bold: true;
+  Italic: false;  
+}
+
+"TabView::Title"!
+{
+  Font: FontTabView_Title;
+  BorderTop: 6;
+  BorderBottom: 6;
+  BorderLeft: 3;
+  BorderRight: 3;
+}
+
+
+
+@nuiGradientDecoration dToolpane_Title
+{
+  Color1: rgb(91,110,141);
+  Color2: rgb(34,66,114);
+  ShapeMode: Fill;
+  ClientRect: "{5 5 0 0}";
+}
+
+
+@nuiGradientDecoration dToolpane_Contents
+{
+  Color1: rgb(236,231,231);
+  Color2: rgb(255,255,255);
+  StrokeColor: rgb(204,204,204);
   ShapeMode: StrokeAndFill;
-  ClientRect: "{3 3 0 0}";
+  ClientRect: "{5 5 0 0}";
 }
 
-nuiEditLine
+"Toolpane::Title"!
 {
   DecorationMode: Border;
-  Decoration: dnuiEditLine;
-  Font: FontEditLine;
-  TextColor: red;
+  Decoration: dToolpane_Title;
 }
 
-
-
-@nuiBorderDecoration dDialogBloc
-{
-  Border: None;
-  ClientRect: "{0 15 0 0}";
-}
-
-
-"DialogBloc"
+"Toolpane::Contents"!
 {
   DecorationMode: Border;
-  Decoration: dDialogBloc;
+  Decoration: dToolpane_Contents;
 }
 
+
+// blank ending line following
 
