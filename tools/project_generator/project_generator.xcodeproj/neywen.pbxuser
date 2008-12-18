@@ -80,16 +80,16 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 251220895;
-			PBXWorkspaceStateSaveDate = 251220895;
+			PBXPerProjectTemplateStateSaveDate = 251282955;
+			PBXWorkspaceStateSaveDate = 251282955;
 		};
 		perUserProjectItems = {
-			BCF4781A0EF96F2200EF6CA9 /* PBXTextBookmark */ = BCF4781A0EF96F2200EF6CA9 /* PBXTextBookmark */;
-			BCF4781C0EF96F2200EF6CA9 /* PBXTextBookmark */ = BCF4781C0EF96F2200EF6CA9 /* PBXTextBookmark */;
+			BCE4C31C0EFA59A500ABC3C6 /* PBXTextBookmark */ = BCE4C31C0EFA59A500ABC3C6 /* PBXTextBookmark */;
+			BCE4C31D0EFA59A500ABC3C6 /* PBXTextBookmark */ = BCE4C31D0EFA59A500ABC3C6 /* PBXTextBookmark */;
+			BCE4C31E0EFA59A500ABC3C6 /* PBXTextBookmark */ = BCE4C31E0EFA59A500ABC3C6 /* PBXTextBookmark */;
+			BCE4C31F0EFA59A500ABC3C6 /* PBXTextBookmark */ = BCE4C31F0EFA59A500ABC3C6 /* PBXTextBookmark */;
+			BCE4C3200EFA59A500ABC3C6 /* PBXTextBookmark */ = BCE4C3200EFA59A500ABC3C6 /* PBXTextBookmark */;
 			BCF4781D0EF96F2200EF6CA9 /* PBXTextBookmark */ = BCF4781D0EF96F2200EF6CA9 /* PBXTextBookmark */;
-			BCF4782A0EF9706600EF6CA9 /* PBXTextBookmark */ = BCF4782A0EF9706600EF6CA9 /* PBXTextBookmark */;
-			BCF4782B0EF9706600EF6CA9 /* PBXTextBookmark */ = BCF4782B0EF9706600EF6CA9 /* PBXTextBookmark */;
-			BCF4782E0EF9709300EF6CA9 /* PBXTextBookmark */ = BCF4782E0EF9709300EF6CA9 /* PBXTextBookmark */;
 		};
 		sourceControlManager = BCF476EB0EF953BC00EF6CA9 /* Source Control */;
 		userBuildSettings = {
@@ -134,6 +134,54 @@
 			sepNavSelRange = "{0, 0}";
 			sepNavVisRange = "{0, 533}";
 		};
+	};
+	BCE4C31C0EFA59A500ABC3C6 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = BCF476E80EF953BC00EF6CA9 /* ProjectGenerator.h */;
+		name = "ProjectGenerator.h: 38";
+		rLen = 0;
+		rLoc = 871;
+		rType = 0;
+		vrLen = 1420;
+		vrLoc = 3;
+	};
+	BCE4C31D0EFA59A500ABC3C6 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "error: 'targetsrcpath' was not declared in this scope";
+		fRef = BCF476E70EF953BC00EF6CA9 /* ProjectGenerator.cpp */;
+		rLen = 0;
+		rLoc = 536;
+		rType = 1;
+	};
+	BCE4C31E0EFA59A500ABC3C6 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = BCF476E80EF953BC00EF6CA9 /* ProjectGenerator.h */;
+		name = "ProjectGenerator.h: 38";
+		rLen = 0;
+		rLoc = 830;
+		rType = 0;
+		vrLen = 1393;
+		vrLoc = 3;
+	};
+	BCE4C31F0EFA59A500ABC3C6 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = BCF476E80EF953BC00EF6CA9 /* ProjectGenerator.h */;
+		name = "ProjectGenerator.h: 38";
+		rLen = 0;
+		rLoc = 871;
+		rType = 0;
+		vrLen = 1420;
+		vrLoc = 3;
+	};
+	BCE4C3200EFA59A500ABC3C6 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = BCF476E70EF953BC00EF6CA9 /* ProjectGenerator.cpp */;
+		name = "ProjectGenerator.cpp: 315";
+		rLen = 0;
+		rLoc = 9282;
+		rType = 0;
+		vrLen = 1778;
+		vrLoc = 8269;
 	};
 	BCF476E10EF9539F00EF6CA9 /* project_generator */ = {
 		isa = PBXExecutable;
@@ -189,16 +237,16 @@
 	};
 	BCF476E70EF953BC00EF6CA9 /* ProjectGenerator.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1323, 7238}}";
-			sepNavSelRange = "{15850, 61}";
-			sepNavVisRange = "{15565, 1432}";
+			sepNavIntBoundsRect = "{{0, 0}, {1323, 7029}}";
+			sepNavSelRange = "{9282, 0}";
+			sepNavVisRange = "{8269, 1778}";
 		};
 	};
 	BCF476E80EF953BC00EF6CA9 /* ProjectGenerator.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1323, 649}}";
-			sepNavSelRange = "{830, 0}";
-			sepNavVisRange = "{0, 1394}";
+			sepNavSelRange = "{871, 0}";
+			sepNavVisRange = "{3, 1420}";
 		};
 	};
 	BCF476EB0EF953BC00EF6CA9 /* Source Control */ = {
@@ -226,64 +274,14 @@
 			sepNavVisRange = "{0, 448}";
 		};
 	};
-	BCF4781A0EF96F2200EF6CA9 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = BCF476E80EF953BC00EF6CA9 /* ProjectGenerator.h */;
-		name = "ProjectGenerator.h: 45";
-		rLen = 12;
-		rLoc = 1071;
-		rType = 0;
-		vrLen = 1348;
-		vrLoc = 0;
-	};
-	BCF4781C0EF96F2200EF6CA9 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = BCF476E70EF953BC00EF6CA9 /* ProjectGenerator.cpp */;
-		name = "ProjectGenerator.cpp: 521";
-		rLen = 0;
-		rLoc = 11612;
-		rType = 0;
-		vrLen = 2345;
-		vrLoc = 13399;
-	};
 	BCF4781D0EF96F2200EF6CA9 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = BCF476E80EF953BC00EF6CA9 /* ProjectGenerator.h */;
 		name = "ProjectGenerator.h: 45";
 		rLen = 12;
-		rLoc = 1071;
+		rLoc = 1098;
 		rType = 0;
 		vrLen = 1348;
-		vrLoc = 0;
-	};
-	BCF4782A0EF9706600EF6CA9 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = BCF476E70EF953BC00EF6CA9 /* ProjectGenerator.cpp */;
-		name = "ProjectGenerator.cpp: 554";
-		rLen = 61;
-		rLoc = 15850;
-		rType = 0;
-		vrLen = 1432;
-		vrLoc = 15565;
-	};
-	BCF4782B0EF9706600EF6CA9 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = BCF476E70EF953BC00EF6CA9 /* ProjectGenerator.cpp */;
-		name = "ProjectGenerator.cpp: 554";
-		rLen = 61;
-		rLoc = 15850;
-		rType = 0;
-		vrLen = 1432;
-		vrLoc = 15565;
-	};
-	BCF4782E0EF9709300EF6CA9 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = BCF476E80EF953BC00EF6CA9 /* ProjectGenerator.h */;
-		name = "ProjectGenerator.h: 38";
-		rLen = 0;
-		rLoc = 830;
-		rType = 0;
-		vrLen = 1394;
 		vrLoc = 0;
 	};
 }

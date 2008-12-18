@@ -312,7 +312,7 @@ bool ProjectGenerator::OnGenerateButton(const nuiEvent& rEvent)
   if (targetPath.Exists())
   {
     nglString msg;
-    msg.Format(_T("the nui project '%ls' exists already!"), targetPath.GetChars());
+    msg.Format(_T("the following project exists already!\n'%ls'"), targetPath.GetChars());
     nuiMessageBox* pMessageBox = new nuiMessageBox(GetMainWindow(), nglString(_T("Project Creator")), msg, eMB_OK);
     pMessageBox->QueryUser();     
     return true;  
@@ -404,57 +404,19 @@ bool ProjectGenerator::Make()
   NGL_OUT(_T("nui project generator : target directory created '%ls'\n"), targetpath.GetChars());
 
     
-  // create src folders
-  nglPath targetsrcpath = targetpath;
-  targetsrcpath += nglPath(_T("src"));
-  if (!targetsrcpath.Create())
-  {
-    nglString msg;
-    msg.Format(_T("creating src folder '%ls'"), targetsrcpath.GetChars());
-    return MsgError(msg);
-  }
-    
-  NGL_OUT(_T("nui project generator : src folder created '%ls'\n"), targetsrcpath.GetChars());
-
-
-  //copy the src folder contents
-  nglPath srcpath = _T("rsrc:/project/src");
-  std::list<nglPath> children;
-  srcpath.GetChildren(&children);
-  std::list<nglPath>::iterator it;
-  for (it = children.begin(); it != children.end(); ++it)
-  {
-    const nglPath& srcpath = *it;
-    nglPath dstpath = targetsrcpath;
-    dstpath += srcpath.GetNodeName();
-    
-    nglString contents;
-    
-    nglIStream* piFile = srcpath.OpenRead();
-    if (!piFile)
-    {
-      nglString msg;
-      msg.Format(_T("opening for reading input file '%ls'"), srcpath.GetChars());
-      return MsgError(msg);
-    }
-
-    nglOStream* poFile = dstpath.OpenWrite(false);
-    if (!poFile)
-    {
-      nglString msg;
-      msg.Format(_T("opening for writing output file '%ls'"), dstpath.GetChars());
-      return MsgError(msg);
-    }
-    
-    piFile->PipeTo(*poFile);
-    delete poFile;
-    delete piFile;
+  //copy the src folder 
+  if (!CopyDirectory(targetpath + nglPath(_T("src")), _T("rsrc:/project/src")))
+    return false;
   
-    NGL_OUT(_T("nui project generator : created file '%ls'\n"), dstpath.GetChars());
-  }
 
-  
-  
+  //copy the resources folders
+  if (!CopyDirectory(targetpath + nglPath(_T("resources")), _T("rsrc:/project/resources")))
+    return false;
+  if (!CopyDirectory(targetpath + nglPath(_T("resources/css")), _T("rsrc:/project/resources/css")))
+    return false;
+  if (!CopyDirectory(targetpath + nglPath(_T("resources/decorations")), _T("rsrc:/project/resources/decorations")))
+    return false;
+
   
   
   // create xcodeproj folder
@@ -551,42 +513,56 @@ bool ProjectGenerator::Make()
 }
 
 
-bool ProjectGenerator::CopyDirectory(const nglPath& srcpath)
+bool ProjectGenerator::CopyDirectory(const nglPath& targetPath, const nglPath& srcpath)
 {
-//copy the resources folder contents
-nglPath srcpath = _T("rsrc:/project/src");
-std::list<nglPath> children;
-srcpath.GetChildren(&children);
-std::list<nglPath>::iterator it;
-for (it = children.begin(); it != children.end(); ++it)
-{
-  const nglPath& srcpath = *it;
-  nglPath dstpath = targetsrcpath;
-  dstpath += srcpath.GetNodeName();
-  
-  nglString contents;
-  
-  nglIStream* piFile = srcpath.OpenRead();
-  if (!piFile)
+  // create folder
+  if (!targetPath.Create())
   {
     nglString msg;
-    msg.Format(_T("opening for reading input file '%ls'"), srcpath.GetChars());
+    msg.Format(_T("creating target folder '%ls'"), targetPath.GetChars());
     return MsgError(msg);
   }
   
-  nglOStream* poFile = dstpath.OpenWrite(false);
-  if (!poFile)
+  
+  std::list<nglPath> children;
+  srcpath.GetChildren(&children);
+  std::list<nglPath>::iterator it;
+  for (it = children.begin(); it != children.end(); ++it)
   {
-    nglString msg;
-    msg.Format(_T("opening for writing output file '%ls'"), dstpath.GetChars());
-    return MsgError(msg);
+    const nglPath& srcpath = *it;
+    
+    if (!srcpath.IsLeaf())
+      continue;
+    
+    nglPath dstpath = targetPath;
+    dstpath += srcpath.GetNodeName();
+    
+    nglString contents;
+    
+    nglIStream* piFile = srcpath.OpenRead();
+    if (!piFile)
+    {
+      nglString msg;
+      msg.Format(_T("opening for reading input file '%ls'"), srcpath.GetChars());
+      return MsgError(msg);
+    }
+    
+    nglOStream* poFile = dstpath.OpenWrite(false);
+    if (!poFile)
+    {
+      nglString msg;
+      msg.Format(_T("opening for writing output file '%ls'"), dstpath.GetChars());
+      return MsgError(msg);
+    }
+    
+    piFile->PipeTo(*poFile);
+    delete poFile;
+    delete piFile;
+    
+    NGL_OUT(_T("nui project generator : created file '%ls'\n"), dstpath.GetChars());
   }
   
-  piFile->PipeTo(*poFile);
-  delete poFile;
-  delete piFile;
-  
-  NGL_OUT(_T("nui project generator : created file '%ls'\n"), dstpath.GetChars());
+  return true;
 }
 
 

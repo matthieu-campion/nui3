@@ -413,7 +413,27 @@ void nuiDefaultDecoration::EditText(nuiWidget* pWidget)
 //
 void nuiDefaultDecoration::EditLine(nuiWidget* pWidget)
 {
+  nuiBackgroundPane* pPane = (nuiBackgroundPane*)pWidget;
   
+  nglString decoName = _T("nuiDefaultDecorationInnerPane");
+  const char* deco = gpPaneInner;
+  uint32 decoSize = gPaneInnerSize;
+  nuiRect rect = nuiRect(6,6,0,0);
+  
+  nuiFrame* pFrame = (nuiFrame*)nuiDecoration::Get(decoName);
+  
+  if (!pFrame)
+  {
+    nglIMemory* pIMem = new nglIMemory(deco, decoSize);
+    nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
+    NGL_ASSERT(pTex);
+    pFrame = new nuiFrame(decoName, pTex, rect);
+    pFrame->UseWidgetAlpha(false);
+    delete pIMem; 
+  }
+  NGL_ASSERT(pFrame);
+  
+  pWidget->SetDecoration(pFrame, eDecorationBorder);  
 }
 
 

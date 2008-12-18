@@ -35,7 +35,7 @@ private:
 
   bool Make();
   bool MsgError(const nglString& error);
-  bool CopyDirectory(const nglPath& srcpath);  
+  bool CopyDirectory(const nglPath& targetPath, const nglPath& srcpath);  
   bool GenerateFile(const nglPath& src, const nglPath& dst);
   
 
