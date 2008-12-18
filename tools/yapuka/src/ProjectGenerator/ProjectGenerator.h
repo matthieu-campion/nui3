@@ -8,6 +8,7 @@
 #pragma once
 
 #include "nui.h"
+#include "nuiToggleButton.h"
 
 class ProjectGenerator : public nuiSimpleContainer
 {
@@ -17,6 +18,12 @@ public:
   virtual ~ProjectGenerator();
   
 private:
+  
+  nuiWidget* BuildBlocSourceDirectory();
+  nuiWidget* BuildBlocProjectDirectory();
+  nuiWidget* BuildBlocOptions();
+  nuiWidget* BuildBlocButtons();
+  
   
   
   bool OnBrowseSource(const nuiEvent& rEvent);
@@ -32,6 +39,7 @@ private:
   bool OnGenerateButton(const nuiEvent& rEvent);
   bool OnQuitButton(const nuiEvent& rEvent);
   
+  bool OnIconUpdate(const nuiEvent& rEvent);
 
   bool Make();
   bool MsgError(const nglString& error);
@@ -48,6 +56,16 @@ private:
   nuiEditLine* mpNuiSource;
   nuiEditLine* mpProjectTarget;
   nuiLabel* mpProjectFilename;
+  
+  
+  nuiImage* mpIconSourceDirectory;
+  nuiImage* mpIconProjectDirectory;
+  
+  
+  nuiToggleButton* mpCheckXcode;
+  nuiToggleButton* mpCheckVisualStudio;
+  nuiToggleButton* mpCheckiPhone;
+  
   
   bool mNuiCheckProjectFile;
   nuiLabel* mpNuiCheckProjectFile;

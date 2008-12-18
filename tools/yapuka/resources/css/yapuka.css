@@ -78,5 +78,109 @@
 }
 
 
+
+
+/////////////////////////////////////////////////
+//
+// ICONS
+//
+//
+
+"Icon::SourceDirectory"!
+{
+  Texture: "rsrc:/decorations/iconNui.png";
+  UserWidth: 48;
+  UserHeight: 48;
+  BorderTop: 50;
+  BorderLeft: 5;
+}
+
+"Icon::SourceDirectory::Disabled"!
+{
+  Texture: "rsrc:/decorations/iconNuiDisabled.png";
+  UserWidth: 48;
+  UserHeight: 48;
+  BorderTop: 50;
+  BorderLeft: 5;
+}
+
+"Icon::ProjectDirectory"!
+{
+  Texture: "rsrc:/decorations/iconNui.png";
+  UserWidth: 48;
+  UserHeight: 48;
+  BorderTop: 50;
+  BorderLeft: 5;
+}
+
+"Icon::ProjectDirectory::Disabled"!
+{
+  Texture: "rsrc:/decorations/iconNuiDisabled.png";
+  UserWidth: 48;
+  UserHeight: 48;
+  BorderTop: 50;
+  BorderLeft: 5;
+}
+
+
+"Icon::Xcode"!
+{
+  Texture: "rsrc:/decorations/iconXcode.png";
+  UserWidth: 40;
+  UserHeight: 40;
+  BorderTop: 5;
+  BorderLeft: 10;
+}
+
+"Icon::Xcode::Disabled"!
+{
+  Texture: "rsrc:/decorations/iconXcodeDisabled.png";
+  UserWidth: 40;
+  UserHeight: 40;
+  BorderTop: 5;
+  BorderLeft: 10;
+}
+
+
+"Icon::VisualStudio"!
+{
+  Texture: "rsrc:/decorations/iconVisualStudio.png";
+  UserWidth: 48;
+  UserHeight: 48;
+  BorderTop: 5;
+  BorderLeft: 7;
+}
+
+
+"Icon::VisualStudio::Disabled"!
+{
+  Texture: "rsrc:/decorations/iconVisualStudioDisabled.png";
+  UserWidth: 48;
+  UserHeight: 48;
+  BorderTop: 5;
+  BorderLeft: 7;
+}
+
+
+
+"Icon::iPhone"!
+{
+  Texture: "rsrc:/decorations/iconXcodeiPhone.png";
+  UserWidth: 40;
+  UserHeight: 40;
+  BorderTop: 5;
+  BorderLeft: 10;
+}
+
+"Icon::iPhone::Disabled"!
+{
+  Texture: "rsrc:/decorations/iconXcodeiPhoneDisabled.png";
+  UserWidth: 40;
+  UserHeight: 40;
+  BorderTop: 5;
+  BorderLeft: 10;
+}
+
+
 // blank ending line following
 

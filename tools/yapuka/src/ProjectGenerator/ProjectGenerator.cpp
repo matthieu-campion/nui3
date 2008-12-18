@@ -38,15 +38,58 @@ ProjectGenerator::ProjectGenerator()
   pVBox->SetExpand(nuiExpandShrinkAndGrow);
   AddChild(pVBox);
   
+  pVBox->AddCell(BuildBlocSourceDirectory());
+
+  pVBox->AddCell(new nuiSeparator(nuiHorizontal));
   
-  //*******************************************************************
-  // bloc for nui source directory
-  //
+  pVBox->AddCell(BuildBlocProjectDirectory());
+
+  pVBox->AddCell(new nuiSeparator(nuiHorizontal));
+  
+  pVBox->AddCell(BuildBlocOptions());
+
+  pVBox->AddCell(new nuiSeparator(nuiHorizontal));
+  
+  pVBox->AddCell(BuildBlocButtons());
+  
+  
+  
+  
+  mpTimer = new nuiTimer(0.5 /*0.5s*/);
+  mEventSink.Connect(mpTimer->Tick, &ProjectGenerator::OnTimerTick);
+  
+  if (mNuiSourcePath != nglString::Null)
+  {
+    nuiEvent event;
+    OnTimerTick(event);
+  }
+}
+
+
+
+
+
+
+//*******************************************************************
+// bloc for nui source directory
+//
+nuiWidget* ProjectGenerator::BuildBlocSourceDirectory()
+{
+  nuiHBox* pMainBox = new nuiHBox(2);
+  
+  // icon
+  mpIconSourceDirectory = new nuiImage();
+  mpIconSourceDirectory->SetObjectName(_T("Icon::SourceDirectory::Disabled"));
+  mpIconSourceDirectory->SetPosition(nuiTopLeft);
+  pMainBox->SetCell(0, mpIconSourceDirectory);
+  
+  // ui bloc
   nuiVBox* pBloc = new nuiVBox(0);
-  pBloc->SetObjectName(_T("DialogBloc"));
+  pMainBox->SetCell(1, pBloc);
+  pMainBox->SetCellExpand(1, nuiExpandShrinkAndGrow);
+  
   pBloc->SetExpand(nuiExpandShrinkAndGrow);
-  pBloc->SetBorder(40,40);
-  pVBox->AddCell(pBloc);
+  pBloc->SetBorder(20,40,40,40);
   
   pBloc->AddCell(new nuiLabel(_T("nui source directory:")));
   pBloc->SetCellExpand(pBloc->GetNbCells()-1, nuiExpandShrinkAndGrow);
@@ -68,7 +111,7 @@ ProjectGenerator::ProjectGenerator()
   // separation line
   pBloc->AddCell(NULL);
   pBloc->SetCellPixels(pBloc->GetNbCells()-1, 10);
-
+  
   
   // read-only information : nui3 selected directory checks
   nuiHBox* pHBox = new nuiHBox(0);
@@ -82,56 +125,65 @@ ProjectGenerator::ProjectGenerator()
   
   pHBox->AddCell(NULL);
   pHBox->SetCellPixels(pHBox->GetNbCells()-1, 10);
-
+  
   pHBox->AddCell(new nuiLabel(_T("nui3 tools: ")));
   mpNuiCheckTools = new nuiLabel(_T(""));
   mNuiCheckTools = false;
   pHBox->AddCell(mpNuiCheckTools);
   pHBox->SetCellExpand(pHBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
-
+  
   
   // read-only information : nui3 directory relative path from new project
   pBloc->AddCell(new nuiLabel(_T("nui3 relative path to project:")));
   mpNuiRelativeSource = new nuiLabel(mNuiRelativeSource.GetPathName());
   mpNuiRelativeSource->SetEnabled(false);
   pBloc->AddCell(mpNuiRelativeSource);
+
+  return pMainBox;
+}
+
+
+
+
+//***********************************************************************
+// bloc for new project target
+//
+nuiWidget* ProjectGenerator::BuildBlocProjectDirectory()
+{
+  nuiHBox* pMainBox = new nuiHBox(2);
   
+  // icon
+  mpIconProjectDirectory = new nuiImage();
+  mpIconProjectDirectory->SetObjectName(_T("Icon::ProjectDirectory"));
+  mpIconProjectDirectory->SetPosition(nuiTopLeft);
+  pMainBox->SetCell(0, mpIconProjectDirectory);
   
-  // separator
-  nuiSeparator* pSeparator = new nuiSeparator(nuiHorizontal);
-  pVBox->AddCell(pSeparator);
-  
-  
-  //***********************************************************************
-  // bloc for new project target
-  //
-  pBloc = new nuiVBox(0);
-  pBloc->SetObjectName(_T("DialogBloc"));
+  nuiVBox* pBloc = new nuiVBox(0);
+  pMainBox->SetCell(1, pBloc);
+  pMainBox->SetCellExpand(1, nuiExpandShrinkAndGrow);
   pBloc->SetExpand(nuiExpandShrinkAndGrow);
-  pBloc->SetBorder(40,40);
-  pVBox->AddCell(pBloc);
-  pVBox->SetCellExpand(pVBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
+  pBloc->SetBorder(20,40,40,40);
   
   pBloc->AddCell(new nuiLabel(_T("new project target:")));
   
-  pBox = new nuiHBox(2);
+  nuiHBox* pBox = new nuiHBox(2);
   pBloc->AddCell(pBox);
   mpProjectTarget = new nuiEditLine(mProjectTargetPath);
   mpProjectTarget->SetPosition(nuiFillHorizontal);
   mpProjectTarget->SetEnabled(false);
   mEventSink.Connect(mpProjectTarget->TextChanged, &ProjectGenerator::OnTargetTextChanged);
-
+  
   pBox->SetCell(0, mpProjectTarget);
   pBox->SetCellExpand(0, nuiExpandShrinkAndGrow);
-  pBtn = new nuiButton(_T("browse"));
+  nuiButton* pBtn = new nuiButton(_T("browse"));
   pBox->SetCell(1, pBtn);
   mEventSink.Connect(pBtn->Activated, &ProjectGenerator::OnBrowseTarget);  
   
-
+  
   // separation line
   pBloc->AddCell(NULL);
   pBloc->SetCellPixels(pBloc->GetNbCells()-1, 10);
-
+  
   // read-only bloc for project name, extracted from project target
   nglString projectFilename = mProjectTargetPath;
   projectFilename += _T("/newNuiProject.xcodeproj");
@@ -139,27 +191,118 @@ ProjectGenerator::ProjectGenerator()
   mpProjectFilename = new nuiLabel(projectFilename);
   pBloc->AddCell(mpProjectFilename);
   mpProjectFilename->SetEnabled(false);
-  
+
+  return pMainBox;
+}
 
 
-  // separator
-  pSeparator = new nuiSeparator(nuiHorizontal);
-  pVBox->AddCell(pSeparator);
+
+//***********************************************************************
+// bloc for options
+//
+nuiWidget* ProjectGenerator::BuildBlocOptions()
+{
+  nuiVBox* pMainBox = new nuiVBox(0);
+  pMainBox->SetBorder(0, 20);
+  
+  nuiHBox* pBloc = new nuiHBox(3);
+  pMainBox->AddCell(pBloc);
+  // icon
+  nuiImage* pIcon = new nuiImage();
+  pIcon->SetObjectName(_T("Icon::Xcode"));
+  pIcon->SetToken(new nuiToken<nglString>(_T("Icon::Xcode")));
+  pIcon->SetPosition(nuiTopLeft);
+  pBloc->SetCell(0, pIcon);
+  pBloc->SetCellPixels(0, 48);
+  // check box
+  mpCheckXcode = new nuiToggleButton();
+  mpCheckXcode->SetToken(new nuiToken<nuiImage*>(pIcon));
+  mEventSink.Connect(mpCheckXcode->ButtonPressed, &ProjectGenerator::OnIconUpdate, (void*)mpCheckXcode);
+  mEventSink.Connect(mpCheckXcode->ButtonDePressed, &ProjectGenerator::OnIconUpdate, (void*)mpCheckXcode);
+  mpCheckXcode->SetPressed(true);
+  mpCheckXcode->SetBorder(25,0,0, 0);
+  pBloc->SetCell(1, mpCheckXcode, nuiCenter);
+  // label
+  pBloc->SetCell(2, new nuiLabel(nuiTR("generate Xcode project file for Mac OS X")));
   
 
-  //***********************************************************************
-  // bloc for 
-  //
   
   
-  //***********************************************************************
-  // bloc for buttons
-  //
-  pBox = new nuiHBox(2);
+  pBloc = new nuiHBox(3);
+  pMainBox->AddCell(pBloc);
+  // icon
+  pIcon = new nuiImage();
+  pIcon->SetObjectName(_T("Icon::VisualStudio"));
+  pIcon->SetToken(new nuiToken<nglString>(_T("Icon::VisualStudio")));
+  pIcon->SetPosition(nuiTopLeft);
+  pBloc->SetCell(0, pIcon);
+  pBloc->SetCellPixels(0, 48);
+  // check box
+  mpCheckVisualStudio = new nuiToggleButton();
+  mpCheckVisualStudio->SetToken(new nuiToken<nuiImage*>(pIcon));
+  mEventSink.Connect(mpCheckVisualStudio->ButtonPressed, &ProjectGenerator::OnIconUpdate, (void*)mpCheckVisualStudio);
+  mEventSink.Connect(mpCheckVisualStudio->ButtonDePressed, &ProjectGenerator::OnIconUpdate, (void*)mpCheckVisualStudio);
+  mpCheckVisualStudio->SetPressed(true);
+  mpCheckVisualStudio->SetBorder(25,0,0, 0);
+  pBloc->SetCell(1, mpCheckVisualStudio, nuiCenter);
+  // label
+  pBloc->SetCell(2, new nuiLabel(nuiTR("generate MS Visual Studio 2005 project file for Win32")));
+  
+
+  pBloc = new nuiHBox(3);
+  pMainBox->AddCell(pBloc);
+  // icon
+  pIcon = new nuiImage();
+  pIcon->SetObjectName(_T("Icon::iPhone::Disabled"));
+  pIcon->SetToken(new nuiToken<nglString>(_T("Icon::iPhone")));
+  pIcon->SetPosition(nuiTopLeft);
+  pBloc->SetCell(0, pIcon);
+  pBloc->SetCellPixels(0, 48);
+  // check box
+  mpCheckiPhone = new nuiToggleButton();
+  mpCheckiPhone->SetToken(new nuiToken<nuiImage*>(pIcon));
+  mEventSink.Connect(mpCheckiPhone->ButtonPressed, &ProjectGenerator::OnIconUpdate, (void*)mpCheckiPhone);
+  mEventSink.Connect(mpCheckiPhone->ButtonDePressed, &ProjectGenerator::OnIconUpdate, (void*)mpCheckiPhone);
+  mpCheckiPhone->SetPressed(false);
+  mpCheckiPhone->SetBorder(25,0,0, 0);
+  pBloc->SetCell(1, mpCheckiPhone, nuiCenter);
+  // label
+  pBloc->SetCell(2, new nuiLabel(nuiTR("generate Xcode project file for iPhone")));
+  
+  
+  
+  return pMainBox;
+}
+
+
+
+bool ProjectGenerator::OnIconUpdate(const nuiEvent& rEvent)
+{
+  nuiToggleButton* pBtn = (nuiToggleButton*)rEvent.mpUser;
+  nuiImage* pIcon;
+  nglString objectName;
+  
+  nuiGetTokenValue<nuiImage*>(pBtn->GetToken(), pIcon);
+  nuiGetTokenValue<nglString>(pIcon->GetToken(), objectName);
+  
+  if (!pBtn->IsPressed())
+    objectName += nglString(_T("::Disabled"));
+
+  pIcon->SetObjectName(objectName);
+  
+  return true;
+}
+
+
+
+//***********************************************************************
+// bloc for buttons
+//
+nuiWidget* ProjectGenerator::BuildBlocButtons()
+{
+  nuiHBox* pBox = new nuiHBox(2);
   pBox->SetExpand(nuiExpandShrinkAndGrow);
-  pBox->SetBorder(40,40);
-  pVBox->AddCell(pBox);
-  pVBox->SetCellExpand(pVBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
+  pBox->SetBorder(20,40,40,40);
   
   nuiButton* pGeneratorButton = new nuiButton(_T("generate project"));
   pGeneratorButton->SetPosition(nuiRight);
@@ -173,15 +316,7 @@ ProjectGenerator::ProjectGenerator()
   mEventSink.Connect(pGeneratorButton->Activated, &ProjectGenerator::OnGenerateButton);
   mEventSink.Connect(pQuitButton->Activated, &ProjectGenerator::OnQuitButton);
   
-  
-  mpTimer = new nuiTimer(0.5 /*0.5s*/);
-  mEventSink.Connect(mpTimer->Tick, &ProjectGenerator::OnTimerTick);
-  
-  if (mNuiSourcePath != nglString::Null)
-  {
-    nuiEvent event;
-    OnTimerTick(event);
-  }
+  return pBox;
 }
 
 
@@ -206,17 +341,23 @@ bool ProjectGenerator::OnTimerTick(const nuiEvent& rEvent)
   nglPath proj = path;
   proj += nglPath(_T("nui3.xcodeproj"));
   
+  bool allOK = true;
+  
   if (proj.Exists())
   {
     mNuiCheckProjectFile = true;
     mpNuiCheckProjectFile->SetText(_T("found"));
     mpNuiCheckProjectFile->SetColor(eNormalTextFg, nuiColor(_T("green")));
+
+    allOK &= true;
   }
   else
   {
     mNuiCheckProjectFile = false;
     mpNuiCheckProjectFile->SetText(_T("not found!"));
     mpNuiCheckProjectFile->SetColor(eNormalTextFg, nuiColor(_T("red")));
+
+    allOK &= false;
   }
   
   // check if nui3 tool has been found (make_rc.py is taken as a reference)
@@ -228,13 +369,24 @@ bool ProjectGenerator::OnTimerTick(const nuiEvent& rEvent)
     mNuiCheckTools = true;
     mpNuiCheckTools->SetText(_T("found"));
     mpNuiCheckTools->SetColor(eNormalTextFg, nuiColor(_T("green")));
+
+    allOK &= true;
   }
   else
   {
     mNuiCheckTools = false;
     mpNuiCheckTools->SetText(_T("not found!"));
     mpNuiCheckTools->SetColor(eNormalTextFg, nuiColor(_T("red")));
+  
+    allOK &= false;
   }
+  
+  
+  if (allOK)
+    mpIconSourceDirectory->SetObjectName(_T("Icon::SourceDirectory"));
+  else
+    mpIconSourceDirectory->SetObjectName(_T("Icon::SourceDirectory::Disabled"));
+
   
   // compute nui relative path to project
   mNuiRelativeSource = nglPath(mpNuiSource->GetText());
