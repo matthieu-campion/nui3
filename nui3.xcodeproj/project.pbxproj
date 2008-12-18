@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		40A459A70EFAA71F00043B1F /* nuiAudioDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 40A459A60EFAA71F00043B1F /* nuiAudioDecoder.h */; };
+		40A459A80EFAA71F00043B1F /* nuiAudioDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 40A459A60EFAA71F00043B1F /* nuiAudioDecoder.h */; };
+		40A459AC0EFAABC400043B1F /* nuiAudioDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40A459AB0EFAABC400043B1F /* nuiAudioDecoder.cpp */; };
+		40A459AD0EFAABC400043B1F /* nuiAudioDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40A459AB0EFAABC400043B1F /* nuiAudioDecoder.cpp */; };
+		40A459BB0EFAAE4500043B1F /* nuiAudioDecoder_OSX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40A459BA0EFAAE4500043B1F /* nuiAudioDecoder_OSX.cpp */; };
+		40A459BC0EFAAE4500043B1F /* nuiAudioDecoder_OSX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40A459BA0EFAAE4500043B1F /* nuiAudioDecoder_OSX.cpp */; };
 		5621846A0D6302A3008C7CCB /* amigaconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 5621844E0D6302A3008C7CCB /* amigaconfig.h */; };
 		5621846B0D6302A3008C7CCB /* ascii.h in Headers */ = {isa = PBXBuildFile; fileRef = 5621844F0D6302A3008C7CCB /* ascii.h */; };
 		5621846C0D6302A3008C7CCB /* asciitab.h in Headers */ = {isa = PBXBuildFile; fileRef = 562184500D6302A3008C7CCB /* asciitab.h */; };
@@ -2355,6 +2361,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		40A459A60EFAA71F00043B1F /* nuiAudioDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiAudioDecoder.h; path = include/nuiAudioDecoder.h; sourceTree = SOURCE_ROOT; };
+		40A459AB0EFAABC400043B1F /* nuiAudioDecoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiAudioDecoder.cpp; path = AudioSamples/nuiAudioDecoder.cpp; sourceTree = "<group>"; };
+		40A459BA0EFAAE4500043B1F /* nuiAudioDecoder_OSX.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiAudioDecoder_OSX.cpp; path = AudioSamples/nuiAudioDecoder_OSX.cpp; sourceTree = "<group>"; };
 		5621844E0D6302A3008C7CCB /* amigaconfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = amigaconfig.h; sourceTree = "<group>"; };
 		5621844F0D6302A3008C7CCB /* ascii.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ascii.h; sourceTree = "<group>"; };
 		562184500D6302A3008C7CCB /* asciitab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asciitab.h; sourceTree = "<group>"; };
@@ -3751,6 +3760,9 @@
 				BCCF494F0EC6271F0076CD11 /* nuiWaveReader.h */,
 				BCCF493A0EC626F90076CD11 /* nuiWaveWriter.cpp */,
 				BCCF49500EC6271F0076CD11 /* nuiWaveWriter.h */,
+				40A459A60EFAA71F00043B1F /* nuiAudioDecoder.h */,
+				40A459AB0EFAABC400043B1F /* nuiAudioDecoder.cpp */,
+				40A459BA0EFAAE4500043B1F /* nuiAudioDecoder_OSX.cpp */,
 			);
 			name = AudioSamples;
 			sourceTree = "<group>";
@@ -6179,6 +6191,7 @@
 				56CEA8B70ECB2E8A009F6CF4 /* nuiAudioDevice_CoreAudio.h in Headers */,
 				E561099A0EF5ED83000170A7 /* nuiUnicode.h in Headers */,
 				BC34A0740EFA870A002F35C4 /* nuiVersion.h in Headers */,
+				40A459A80EFAA71F00043B1F /* nuiAudioDecoder.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6845,6 +6858,7 @@
 				56CEA8B60ECB2E8A009F6CF4 /* nuiAudioDevice_CoreAudio.h in Headers */,
 				E561099B0EF5ED83000170A7 /* nuiUnicode.h in Headers */,
 				BC34A0730EFA870A002F35C4 /* nuiVersion.h in Headers */,
+				40A459A70EFAA71F00043B1F /* nuiAudioDecoder.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7416,6 +7430,8 @@
 				BCCF49470EC626F90076CD11 /* nuiWaveReader.cpp in Sources */,
 				BCCF49480EC626F90076CD11 /* nuiWaveWriter.cpp in Sources */,
 				E561099D0EF5F3F1000170A7 /* nuiUnicode.cpp in Sources */,
+				40A459AC0EFAABC400043B1F /* nuiAudioDecoder.cpp in Sources */,
+				40A459BB0EFAAE4500043B1F /* nuiAudioDecoder_OSX.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7930,6 +7946,8 @@
 				BCCF49400EC626F90076CD11 /* nuiWaveReader.cpp in Sources */,
 				BCCF49410EC626F90076CD11 /* nuiWaveWriter.cpp in Sources */,
 				E561099E0EF5F3F1000170A7 /* nuiUnicode.cpp in Sources */,
+				40A459AD0EFAABC400043B1F /* nuiAudioDecoder.cpp in Sources */,
+				40A459BC0EFAAE4500043B1F /* nuiAudioDecoder_OSX.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
