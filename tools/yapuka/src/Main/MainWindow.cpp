@@ -77,6 +77,17 @@ void MainWindow::OnCreation()
   pTabView->AddTab(pLabel, new ElementEditorGui());
 
   pTabView->SelectTab(0);
+  
+  
+  // nui version number
+  nglString version;
+  version.Format(_T("nui %d.%d r%d %ls"), NUI_VERSION_MAJOR, NUI_VERSION_MINOR, NUI_VERSION_RELEASE, NUI_VERSION_BETA.GetChars());
+  pLabel = new nuiLabel(version);
+  pLabel->SetPosition(nuiTopRight);
+  pLabel->SetObjectName(_T("VersionNumber"));
+  pMainCont->AddChild(pLabel);
+  
+  
 }  
 
 

@@ -146,6 +146,10 @@ ProjectGenerator::ProjectGenerator()
   pSeparator = new nuiSeparator(nuiHorizontal);
   pVBox->AddCell(pSeparator);
   
+
+  //***********************************************************************
+  // bloc for 
+  //
   
   
   //***********************************************************************

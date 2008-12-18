@@ -16,22 +16,9 @@ and in NGL user application code.
 #ifndef __ngl_h__
 #define __ngl_h__
 
+#include "nuiVersion.h"
 
-/*
- * NGL version
- */
 
-#define NGL_VERSION_MAJOR   0
-#define NGL_VERSION_MINOR   8
-#define NGL_VERSION_MICRO   1
-
-#define NGL_VERSION_MAKE(major, minor, micro) ((major << 16) | (minor << 8) | micro)
-
-#define NGL_VERSION \
-        NGL_VERSION_MAKE(NGL_VERSION_MAJOR, NGL_VERSION_MINOR, NGL_VERSION_MICRO)
-
-#define NGL_VERSION_COMPARE(major, minor, micro) \
-       (NGL_VERSION_MAKE(major, minor, micro) - NGL_VERSION)
 
 #define USE_WCHAR
 
