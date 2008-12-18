@@ -6,8 +6,8 @@
 */
 
 #include "nui.h"
-#include "ToolPane.h"
-#include "Yapuka.h"
+#include "Tools/ToolPane.h"
+#include "Main/Yapuka.h"
 
 
 ToolPane::ToolPane(const nglString& rTitle, nuiWidget* pWidget)

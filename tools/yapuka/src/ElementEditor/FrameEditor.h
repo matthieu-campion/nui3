@@ -11,9 +11,9 @@
 #include "nuiSimpleContainer.h"
 #include "nuiFrame.h"
 #include "nuiFrameView.h"
-#include "ElementDesc.h"
+#include "ElementEditor/ElementDesc.h"
 #include "nuiMouseEvent.h"
-#include "ElementInspector.h"
+#include "Tools/ElementInspector.h"
 
 
 

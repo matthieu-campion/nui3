@@ -9,11 +9,11 @@
 
 #include "nui.h"
 #include "nuiSimpleContainer.h"
-#include "ElementDesc.h"
-#include "ElementInspector.h"
+#include "ElementEditor/ElementDesc.h"
+#include "Tools/ElementInspector.h"
 #include "nuiColumnTreeView.h"
 #include "nuiDialog.h"
-#include "ToolPaneAttributes.h"
+#include "Tools/ToolPaneAttributes.h"
 
 
 

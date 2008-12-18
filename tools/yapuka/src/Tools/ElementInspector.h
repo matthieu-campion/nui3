@@ -10,8 +10,8 @@
 #include "nui.h"
 #include "nuiPane.h"
 #include "nuiVBox.h"
-#include "ElementEditor.h"
-#include "ToolPane.h"
+#include "ElementEditor/ElementEditor.h"
+#include "Tools/ToolPane.h"
 
 
 

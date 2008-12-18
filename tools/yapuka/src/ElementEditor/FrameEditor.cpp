@@ -10,9 +10,9 @@
 #include "nuiHBox.h"
 #include "nuiSeparator.h"
 #include "nuiRectView.h"
-#include "MainWindow.h"
-#include "Yapuka.h"
-#include "ToolPaneAttributes.h"
+#include "Main/MainWindow.h"
+#include "Main/Yapuka.h"
+#include "Tools/ToolPaneAttributes.h"
 
 
 FrameEditor::FrameEditor(ElementDesc* pDesc, ElementInspector* pInspector)

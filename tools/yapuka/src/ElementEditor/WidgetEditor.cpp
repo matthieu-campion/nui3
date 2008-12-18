@@ -5,10 +5,10 @@
   licence: see nui3/LICENCE.TXT
 */
 
-#include "WidgetEditor.h"
-#include "Yapuka.h"
-#include "MainWindow.h"
-#include "WidgetDelegates.h"
+#include "ElementEditor/WidgetEditor.h"
+#include "Main/Yapuka.h"
+#include "Main/MainWindow.h"
+#include "ElementEditor/WidgetDelegates.h"
 #include "nuiHBox.h"
 
 

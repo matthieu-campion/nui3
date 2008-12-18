@@ -5,17 +5,17 @@
   licence: see nui3/LICENCE.TXT
 */
 
-#include "ProjectGenerator.h"
+#include "ProjectGenerator/ProjectGenerator.h"
 #include "nuiVBox.h"
 #include "nuiHBox.h"
 #include "nuiSeparator.h"
-#include "MainWindow.h"
+#include "Main/MainWindow.h"
 
 #include "nuiDialogSelectDirectory.h"
 #include "nuiDialogSelectFile.h"
 #include "nuiMessageBox.h"
 
-#include "Yapuka.h"
+#include "Main/Yapuka.h"
 
 
 ProjectGenerator::ProjectGenerator()

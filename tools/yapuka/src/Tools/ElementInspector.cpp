@@ -4,9 +4,9 @@
 
   licence: see nui3/LICENCE.TXT
 */
-#include "ElementInspector.h"
-#include "FrameEditor.h"
-#include "WidgetEditor.h"
+#include "Tools/ElementInspector.h"
+#include "ElementEditor/FrameEditor.h"
+#include "ElementEditor/WidgetEditor.h"
 #include "nuiAttributeEditor.h"
 
 ElementInspector::ElementInspector()

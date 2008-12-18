@@ -5,13 +5,13 @@
   licence: see nui3/LICENCE.TXT
 */
   
-#include "ElementEditor.h"
-#include "ElementInspector.h"
-#include "FrameEditor.h"
-#include "WidgetEditor.h"
+#include "ElementEditor/ElementEditor.h"
+#include "Tools/ElementInspector.h"
+#include "ElementEditor/FrameEditor.h"
+#include "ElementEditor/WidgetEditor.h"
 #include "nuiHBox.h"
-#include "Yapuka.h"
-#include "MainWindow.h"
+#include "Main/Yapuka.h"
+#include "Main/MainWindow.h"
 
 ElementEditor::ElementEditor(ElementDesc* pDesc)
 {
