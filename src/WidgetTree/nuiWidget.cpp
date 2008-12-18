@@ -92,6 +92,7 @@ nuiWidget::nuiWidget()
   mODTop(0),
   mODBottom(0),
   mInteractiveOD(false),
+  mInteractiveDecoration(false),
   mpDecoration(NULL),
   mpFocusDecoration(NULL),
   mShowFocus(true),
@@ -1974,6 +1975,8 @@ bool nuiWidget::IsInsideLocal(nuiSize X, nuiSize Y)
 {
   if (!IsVisible(false))
     return false;
+  if (mInteractiveDecoration)
+    return GetOverDrawRect(false, true).IsInside(X, Y);
   if (mInteractiveOD)
     return GetOverDrawRect(false, false).IsInside(X, Y);
   return GetRect().IsInside(X,Y);
@@ -3156,9 +3159,23 @@ void nuiWidget::EnableInteractiveOverDraw(bool set)
   }
 }
 
+void nuiWidget::EnableInteractiveDecoration(bool set)
+{
+  if (mInteractiveDecoration != set)
+  {
+    mInteractiveDecoration = set;
+    Invalidate();
+  }
+}
+
 bool nuiWidget::IsOverDrawInteractive() const
 {
   return mInteractiveOD;
+}
+
+bool nuiWidget::IsDecorationInteractive() const
+{
+  return mInteractiveDecoration;
 }
 
 void nuiWidget::InitDefaultDecorations()

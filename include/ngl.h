@@ -61,7 +61,7 @@ and in NGL user application code.
 /* Mac world
  */
 #ifdef __APPLE__
-  #define __MACOSX__
+  #define _MACOSX_
 
 // Include conditionals
 	#include <TargetConditionals.h>

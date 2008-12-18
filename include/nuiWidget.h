@@ -167,6 +167,8 @@ public:
   nuiRect GetOverDrawRect(bool LocalRect, bool IncludeDecorations) const; ///< Return the overdraw rect (i.e. GetRect() + the overdraw values for each border). If LocalRect is true then the rect is relative to this widget's coordinates system (default). Otherwise, it's relative to this widget's parent coordinate system.
   void EnableInteractiveOverDraw(bool set); ///< If set is true then the widget will receive mouse events on its overdrawn borders.
   bool IsOverDrawInteractive() const; ///< Returns true if the widget is to receive mouse events on its overdrawn borders.
+  void EnableInteractiveDecoration(bool set); ///< If set is true then the widget will receive mouse events on its overdrawn decoration borders.
+  bool IsDecorationInteractive() const; ///< Returns true if the widget is to receive mouse events on its overdrawn borders.
   //@}
 
   /** @name Incoming keyboard events */
@@ -587,6 +589,7 @@ private:
   nuiSize mODTop;
   nuiSize mODBottom;
   bool mInteractiveOD;
+  bool mInteractiveDecoration;
   
   // Normal decoration:
   nuiDecoration* mpDecoration;

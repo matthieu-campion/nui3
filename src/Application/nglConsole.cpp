@@ -251,7 +251,7 @@ void nglConsole::Outputv (const nglChar* pFormat, va_list Args)
   {
     nglString out;
     out.Formatv (pFormat, Args);
-#ifdef WIN32
+#ifdef _WIN32_
     OutputDebugString(out.GetChars());
 #else
     printf("%ls\n", out.GetChars());
