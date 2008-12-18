@@ -1,0 +1,64 @@
+@Font DefaultFont
+{
+  GenericName: "Monaco";
+  Size: 10;
+  Italic: false;
+  Bold: false;
+}
+
+@Font FontEditLine
+{
+  GenericName: "Monaco";
+  Size: 8;
+  Italic: false;
+  Bold: false;
+}
+
+
+
+@nuiColorDecoration dDialogPane
+{
+  FillColor: rgb(220,220,220);
+  ClientRect: "{10 10 0 0}";
+}
+
+"DialogPane"
+{
+  DecorationMode: Border;
+  Decoration: dDialogPane;
+}
+
+
+@nuiColorDecoration dnuiEditLine
+{
+  FillColor: rgb(220,220,200);
+  StrokeColor: rgb(180,180,180);
+  StrokeSize: 1;
+  ShapeMode: StrokeAndFill;
+  ClientRect: "{3 3 0 0}";
+}
+
+nuiEditLine
+{
+  DecorationMode: Border;
+  Decoration: dnuiEditLine;
+  Font: FontEditLine;
+  TextColor: red;
+}
+
+
+
+@nuiBorderDecoration dDialogBloc
+{
+  Border: None;
+  ClientRect: "{0 15 0 0}";
+}
+
+
+"DialogBloc"
+{
+  DecorationMode: Border;
+  Decoration: dDialogBloc;
+}
+
+
