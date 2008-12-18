@@ -12,9 +12,7 @@
 #include "nui.h"
 #include "nuiSampleInfo.h"
 
-#ifdef _MACOSX_
-#include <QuickTime/QuickTime.h>
-#endif
+class nuiAudioDecoderOSX;
 
 class nuiAudioDecoder 
 {
@@ -44,16 +42,6 @@ private:
   nuiSampleInfo mInfo;
   
 #ifdef _MACOSX_
-  uint8* mpInStreamData;
-  Movie mMovie;
-  MovieAudioExtractionRef mExtractionSessionRef;
-  Handle mInStreamDataHandle;
-  
-  Handle createPointerDataRefWithExtensions( void *data, Size dataSize, Str255 fileName, OSType fileType, StringPtr mimeTypeString);
-  OSStatus PtrDataRef_AddFileNameExtension( ComponentInstance dataRefHandler, Str255 fileName);
-  OSStatus PtrDataRef_AddFileTypeExtension( ComponentInstance dataRefHandler, OSType fileType);
-  OSStatus PtrDataRef_AddMIMETypeExtension(ComponentInstance dataRefHandler, StringPtr mimeType);
-  Handle MyCreatePointerReferenceHandle(void *data, Size dataSize);
-  bool CreateQuickTimeMovie(Handle dataHandle);
+  nuiAudioDecoderOSX* mpPrivate;
 #endif
 };

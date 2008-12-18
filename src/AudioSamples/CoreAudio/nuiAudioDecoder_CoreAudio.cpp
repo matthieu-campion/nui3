@@ -8,7 +8,7 @@
  */
 
 #include "nuiAudioDecoder.h"
-
+#include <QuickTime/QuickTime.h>
 
 bool CstrToPascal(const char* Cstr, Str255 PascalStr)
 {
@@ -23,6 +23,24 @@ bool CstrToPascal(const char* Cstr, Str255 PascalStr)
 }
 
 
+class nuiAudioDecoderOSX
+  {
+  public:
+    
+    uint8* mpInStreamData;
+    Movie mMovie;
+    MovieAudioExtractionRef mExtractionSessionRef;
+    Handle mInStreamDataHandle;
+    
+    Handle createPointerDataRefWithExtensions( void *data, Size dataSize, Str255 fileName, OSType fileType, StringPtr mimeTypeString);
+    OSStatus PtrDataRef_AddFileNameExtension( ComponentInstance dataRefHandler, Str255 fileName);
+    OSStatus PtrDataRef_AddFileTypeExtension( ComponentInstance dataRefHandler, OSType fileType);
+    OSStatus PtrDataRef_AddMIMETypeExtension(ComponentInstance dataRefHandler, StringPtr mimeType);
+    Handle MyCreatePointerReferenceHandle(void *data, Size dataSize);
+    bool CreateQuickTimeMovie(Handle dataHandle);
+  };
+
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////
@@ -31,25 +49,27 @@ bool nuiAudioDecoder::Init()
   if (mInitialized)
     return false; // already initialized
   
+  mpPrivate = new nuiAudioDecoderOSX();
+  
   bool result = false;
   
   EnterMovies();
   
   nglFileSize size  = mrStream.Available(1);
-  mpInStreamData    = new uint8[size];
-  mrStream.ReadUInt8(mpInStreamData, size);
+  mpPrivate->mpInStreamData    = new uint8[size];
+  mrStream.ReadUInt8(mpPrivate->mpInStreamData, size);
   
   const char* pFileName = "blabla.mp3";
   Str255 PascalFileName;
   CstrToPascal(pFileName, PascalFileName);
-  mInStreamDataHandle = createPointerDataRefWithExtensions(mpInStreamData, size, PascalFileName, NULL, NULL);
+  mpPrivate->mInStreamDataHandle = mpPrivate->createPointerDataRefWithExtensions(mpPrivate->mpInStreamData, size, PascalFileName, NULL, NULL);
   
-  if (mInStreamDataHandle)
+  if (mpPrivate->mInStreamDataHandle)
   {
-    if (CreateQuickTimeMovie(mInStreamDataHandle))
+    if (mpPrivate->CreateQuickTimeMovie(mpPrivate->mInStreamDataHandle))
     {
       //Begin Extraction
-      OSStatus err  = MovieAudioExtractionBegin(mMovie, 0, &mExtractionSessionRef);
+      OSStatus err  = MovieAudioExtractionBegin(mpPrivate->mMovie, 0, &mpPrivate->mExtractionSessionRef);
       result        = (err == noErr);
     }
     
@@ -62,15 +82,18 @@ void nuiAudioDecoder::Clear()
 {
   if (mInitialized)
   {
-    MovieAudioExtractionEnd(mExtractionSessionRef);
-    DisposeMovie(mMovie);
+    MovieAudioExtractionEnd(mpPrivate->mExtractionSessionRef);
+    DisposeMovie(mpPrivate->mMovie);
   }
   
-  if (mInStreamDataHandle)
-    DisposeHandle(mInStreamDataHandle);
+  if (mpPrivate->mInStreamDataHandle)
+    DisposeHandle(mpPrivate->mInStreamDataHandle);
   
-  if (mpInStreamData)
-    delete mpInStreamData;
+  if (mpPrivate->mpInStreamData)
+    delete mpPrivate->mpInStreamData;
+  
+  if (mpPrivate)
+    delete mpPrivate;
 }
 
 
@@ -82,14 +105,14 @@ bool nuiAudioDecoder::Seek(uint64 SampleFrame)
   
   OSStatus err = noErr;
   TimeRecord timeRec;
-  timeRec.scale       = GetMovieTimeScale(mMovie);
+  timeRec.scale       = GetMovieTimeScale(mpPrivate->mMovie);
   timeRec.base        = NULL;
   timeRec.value.hi    = 0;
   timeRec.value.lo    = SampleFrame / mInfo.GetSampleRate() * timeRec.scale;
   
   // Set the extraction current time.  The duration will 
   // be determined by how much is pulled.
-  err = MovieAudioExtractionSetProperty(mExtractionSessionRef, kQTPropertyClass_MovieAudioExtraction_Movie, kQTMovieAudioExtractionMoviePropertyID_CurrentTime, sizeof(TimeRecord), &timeRec);
+  err = MovieAudioExtractionSetProperty(mpPrivate->mExtractionSessionRef, kQTPropertyClass_MovieAudioExtraction_Movie, kQTMovieAudioExtractionMoviePropertyID_CurrentTime, sizeof(TimeRecord), &timeRec);
   return (err == noErr);
 }
 
@@ -106,7 +129,7 @@ bool nuiAudioDecoder::ReadInfo()
   AudioStreamBasicDescription asbd;
   
   // Get the default audio extraction ASBD
-  err = MovieAudioExtractionGetProperty(mExtractionSessionRef, kQTPropertyClass_MovieAudioExtraction_Audio, kQTMovieAudioExtractionAudioPropertyID_AudioStreamBasicDescription, sizeof (asbd), &asbd, nil);
+  err = MovieAudioExtractionGetProperty(mpPrivate->mExtractionSessionRef, kQTPropertyClass_MovieAudioExtraction_Audio, kQTMovieAudioExtractionAudioPropertyID_AudioStreamBasicDescription, sizeof (asbd), &asbd, nil);
   if (err != noErr)
     return false;
   
@@ -122,18 +145,18 @@ bool nuiAudioDecoder::ReadInfo()
   asbd.mBytesPerPacket  = asbd.mBytesPerFrame;
   
   // Set the new audio extraction ASBD
-  err = MovieAudioExtractionSetProperty(mExtractionSessionRef, kQTPropertyClass_MovieAudioExtraction_Audio, kQTMovieAudioExtractionAudioPropertyID_AudioStreamBasicDescription, sizeof (asbd), &asbd);
+  err = MovieAudioExtractionSetProperty(mpPrivate->mExtractionSessionRef, kQTPropertyClass_MovieAudioExtraction_Audio, kQTMovieAudioExtractionAudioPropertyID_AudioStreamBasicDescription, sizeof (asbd), &asbd);
   if (err != noErr)
     return false;
   
   //retrieve the length of the stream
   TimeValue maxDuration = 0;
   UInt8 i;
-  SInt32 trackCount = GetMovieTrackCount(mMovie);
+  SInt32 trackCount = GetMovieTrackCount(mpPrivate->mMovie);
   NGL_ASSERT(trackCount);
   for (i = 1; i < trackCount + 1; i++)
   {
-    Track aTrack = GetMovieIndTrackType(mMovie, i, SoundMediaType, movieTrackMediaType);
+    Track aTrack = GetMovieIndTrackType(mpPrivate->mMovie, i, SoundMediaType, movieTrackMediaType);
     if (aTrack) 
     {
       TimeValue aDuration = GetTrackDuration(aTrack);
@@ -142,7 +165,7 @@ bool nuiAudioDecoder::ReadInfo()
     }
   }
   
-  uint64 SampleFrames = (Float64)maxDuration / (Float64)GetMovieTimeScale(mMovie) * SampleRate;
+  uint64 SampleFrames = (Float64)maxDuration / (Float64)GetMovieTimeScale(mpPrivate->mMovie) * SampleRate;
   
   mInfo.SetChannels(nbChannels);
   mInfo.SetSampleRate(SampleRate);
@@ -168,7 +191,7 @@ uint32 nuiAudioDecoder::Read(std::vector<float*> buffers, uint32 SampleFrames)
   
   OSStatus err = noErr;
   AudioBufferList BufferList;
-  BufferList.mNumberBuffers               = nbChannels; // we query non-interleaved samples, so we need as many buffers as channels
+  BufferList.mNumberBuffers = nbChannels; // we query non-interleaved samples, so we need as many buffers as channels
   
   for (int ch = 0; ch < nbChannels; ch++)
   {
@@ -179,7 +202,7 @@ uint32 nuiAudioDecoder::Read(std::vector<float*> buffers, uint32 SampleFrames)
   
   UInt32 flags      = 0;
   UInt32 numFrames  = SampleFrames;
-  err = MovieAudioExtractionFillBuffer(mExtractionSessionRef, &numFrames, &BufferList, &flags);  //Extract
+  err = MovieAudioExtractionFillBuffer(mpPrivate->mExtractionSessionRef, &numFrames, &BufferList, &flags);  //Extract
   if (err != noErr)
     return 0;
   
@@ -188,7 +211,7 @@ uint32 nuiAudioDecoder::Read(std::vector<float*> buffers, uint32 SampleFrames)
   return SampleFramesRead;
 }
 
-Handle nuiAudioDecoder::createPointerDataRefWithExtensions( void *data, Size dataSize, Str255 fileName, OSType fileType, StringPtr mimeTypeString)
+Handle nuiAudioDecoderOSX::createPointerDataRefWithExtensions( void *data, Size dataSize, Str255 fileName, OSType fileType, StringPtr mimeTypeString)
 {
   OSStatus  err = noErr;
   Handle dataRef = NULL;
@@ -280,7 +303,7 @@ bail:
 //
 //////////
 
-OSStatus nuiAudioDecoder::PtrDataRef_AddFileNameExtension( ComponentInstance dataRefHandler /* data ref. handler */, Str255 fileName /* file name for extension */)
+OSStatus nuiAudioDecoderOSX::PtrDataRef_AddFileNameExtension( ComponentInstance dataRefHandler /* data ref. handler */, Str255 fileName /* file name for extension */)
 {
   OSStatus anErr = noErr;
   unsigned char myChar = 0;
@@ -321,7 +344,7 @@ bail:
 //
 //////////
 
-OSStatus nuiAudioDecoder::PtrDataRef_AddFileTypeExtension( ComponentInstance dataRefHandler /* data ref. handler */,  OSType fileType /* file type for extension */)
+OSStatus nuiAudioDecoderOSX::PtrDataRef_AddFileTypeExtension( ComponentInstance dataRefHandler /* data ref. handler */,  OSType fileType /* file type for extension */)
 {
   Handle      fileTypeHndl = NULL;
   OSStatus    anErr        = noErr;
@@ -355,7 +378,7 @@ bail:
 //
 //////////
 
-OSStatus nuiAudioDecoder::PtrDataRef_AddMIMETypeExtension(ComponentInstance dataRefHandler /* data ref. handler */, StringPtr mimeType /* mime type for extension */)
+OSStatus nuiAudioDecoderOSX::PtrDataRef_AddMIMETypeExtension(ComponentInstance dataRefHandler /* data ref. handler */, StringPtr mimeType /* mime type for extension */)
 {
   OSStatus anErr = noErr;
   Handle mimeTypeHndl = NULL;
@@ -391,7 +414,7 @@ bail:
 //
 //////////
 
-Handle nuiAudioDecoder::MyCreatePointerReferenceHandle(void *data, Size dataSize)
+Handle nuiAudioDecoderOSX::MyCreatePointerReferenceHandle(void *data, Size dataSize)
 {
   Handle dataRef = NULL;
   PointerDataRefRecord ptrDataRefRec;
@@ -408,7 +431,7 @@ Handle nuiAudioDecoder::MyCreatePointerReferenceHandle(void *data, Size dataSize
 }
 
 
-bool nuiAudioDecoder::CreateQuickTimeMovie(Handle dataHandle)
+bool nuiAudioDecoderOSX::CreateQuickTimeMovie(Handle dataHandle)
 {
   OSErr err = noErr;
   

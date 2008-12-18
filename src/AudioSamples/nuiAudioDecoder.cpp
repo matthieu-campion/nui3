@@ -12,7 +12,8 @@
 nuiAudioDecoder::nuiAudioDecoder(nglIStream& rStream) :
   mInitialized(false),
   mrStream(rStream),
-  mPosition(0)
+  mPosition(0),
+  mpPrivate(NULL)
 {
   mInitialized = Init();
 }
