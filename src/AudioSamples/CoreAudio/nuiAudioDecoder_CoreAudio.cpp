@@ -23,7 +23,7 @@ bool CstrToPascal(const char* Cstr, Str255 PascalStr)
 }
 
 
-class nuiAudioDecoderOSX
+class nuiAudioDecoderPrivate
   {
   public:
     
@@ -49,7 +49,7 @@ bool nuiAudioDecoder::Init()
   if (mInitialized)
     return false; // already initialized
   
-  mpPrivate = new nuiAudioDecoderOSX();
+  mpPrivate = new nuiAudioDecoderPrivate();
   
   bool result = false;
   
@@ -77,9 +77,9 @@ bool nuiAudioDecoder::Init()
       return false;
   }
   else
-    return false
+    return false;
   
-    result = ReadInfo();
+  result = ReadInfo();
   return result;
 }
 
@@ -216,7 +216,7 @@ uint32 nuiAudioDecoder::Read(std::vector<float*> buffers, uint32 SampleFrames)
   return SampleFramesRead;
 }
 
-Handle nuiAudioDecoderOSX::createPointerDataRefWithExtensions( void *data, Size dataSize, Str255 fileName, OSType fileType, StringPtr mimeTypeString)
+Handle nuiAudioDecoderPrivate::createPointerDataRefWithExtensions( void *data, Size dataSize, Str255 fileName, OSType fileType, StringPtr mimeTypeString)
 {
   OSStatus  err = noErr;
   Handle dataRef = NULL;
@@ -308,7 +308,7 @@ bail:
 //
 //////////
 
-OSStatus nuiAudioDecoderOSX::PtrDataRef_AddFileNameExtension( ComponentInstance dataRefHandler /* data ref. handler */, Str255 fileName /* file name for extension */)
+OSStatus nuiAudioDecoderPrivate::PtrDataRef_AddFileNameExtension( ComponentInstance dataRefHandler /* data ref. handler */, Str255 fileName /* file name for extension */)
 {
   OSStatus anErr = noErr;
   unsigned char myChar = 0;
@@ -349,7 +349,7 @@ bail:
 //
 //////////
 
-OSStatus nuiAudioDecoderOSX::PtrDataRef_AddFileTypeExtension( ComponentInstance dataRefHandler /* data ref. handler */,  OSType fileType /* file type for extension */)
+OSStatus nuiAudioDecoderPrivate::PtrDataRef_AddFileTypeExtension( ComponentInstance dataRefHandler /* data ref. handler */,  OSType fileType /* file type for extension */)
 {
   Handle      fileTypeHndl = NULL;
   OSStatus    anErr        = noErr;
@@ -383,7 +383,7 @@ bail:
 //
 //////////
 
-OSStatus nuiAudioDecoderOSX::PtrDataRef_AddMIMETypeExtension(ComponentInstance dataRefHandler /* data ref. handler */, StringPtr mimeType /* mime type for extension */)
+OSStatus nuiAudioDecoderPrivate::PtrDataRef_AddMIMETypeExtension(ComponentInstance dataRefHandler /* data ref. handler */, StringPtr mimeType /* mime type for extension */)
 {
   OSStatus anErr = noErr;
   Handle mimeTypeHndl = NULL;
@@ -419,7 +419,7 @@ bail:
 //
 //////////
 
-Handle nuiAudioDecoderOSX::MyCreatePointerReferenceHandle(void *data, Size dataSize)
+Handle nuiAudioDecoderPrivate::MyCreatePointerReferenceHandle(void *data, Size dataSize)
 {
   Handle dataRef = NULL;
   PointerDataRefRecord ptrDataRefRec;
@@ -436,7 +436,7 @@ Handle nuiAudioDecoderOSX::MyCreatePointerReferenceHandle(void *data, Size dataS
 }
 
 
-bool nuiAudioDecoderOSX::CreateQuickTimeMovie(Handle dataHandle)
+bool nuiAudioDecoderPrivate::CreateQuickTimeMovie(Handle dataHandle)
 {
   OSErr err = noErr;
   
