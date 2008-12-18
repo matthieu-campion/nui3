@@ -30,10 +30,10 @@ nuiRect nuiSeparator::CalcIdealSize()
   switch (mOrientation)
   {
   case nuiHorizontal:
-    res.Set(0.0f, 0.0f, rect.GetWidth(), 2.0f);
+    res.Set(0.0f, 0.0f, rect.GetWidth(), 3.0f);
     break;
   case nuiVertical:
-    res.Set(0.0f, 0.0f, 2.0f, rect.GetHeight());
+    res.Set(0.0f, 0.0f, 3.0f, rect.GetHeight());
     break;
   }
   
@@ -45,14 +45,13 @@ bool nuiSeparator::Draw(nuiDrawContext *pContext)
 {
   nuiRect r(GetRect());
 
-  pContext->SetBlendFunc(nuiBlendTransp);
-  pContext->EnableBlending(true);
-
-  pContext->SetStrokeColor(nuiColor(255, 255, 255, 120));
+  // TODO : vertical draw 
+  
+  pContext->SetStrokeColor(nuiColor(255, 255, 255));
   pContext->DrawLine(r.Left(), 0, r.Right(), 0);
 
-  pContext->SetStrokeColor(nuiColor(0, 0, 0, 32));
-  pContext->DrawLine(r.Left(), 1, r.Right(), 1);
+  pContext->SetStrokeColor(nuiColor(0, 0, 0, 56));
+  pContext->DrawLine(r.Left(), 1.5, r.Right(), 1.5);
   
   return true;
 }
