@@ -1530,7 +1530,8 @@ bool nglPath::MakeRelativeTo(const nglPath& rOriginal)
     return IsAbsolute();
   }
      
-  NGL_ASSERT(IsAbsolute() && rOriginal.IsAbsolute());
+  if (!IsAbsolute() || !rOriginal.IsAbsolute())
+    return false;
   
   nglString PathName;
   nglString RootName;
