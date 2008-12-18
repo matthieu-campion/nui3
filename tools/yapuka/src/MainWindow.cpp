@@ -22,7 +22,7 @@
 #include "nuiLabelRenamer.h"
 #include "nuiDialog.h"
 #include "Yapuka.h"
-#include "ProjectCreator.h"
+#include "ProjectGenerator.h"
 #include "nuiCSS.h"
 
 

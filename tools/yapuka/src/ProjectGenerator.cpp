@@ -15,7 +15,7 @@
 #include "nuiDialogSelectFile.h"
 #include "nuiMessageBox.h"
 
-#include "Application.h"
+#include "Yapuka.h"
 
 
 ProjectGenerator::ProjectGenerator()

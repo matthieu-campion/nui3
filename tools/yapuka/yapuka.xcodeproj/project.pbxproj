@@ -11,8 +11,6 @@
 		91CC2B320744CFC80018CBED /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91CC2B310744CFC80018CBED /* Carbon.framework */; };
 		91CC2B4F0744D00F0018CBED /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91CC2B4D0744D00F0018CBED /* CoreFoundation.framework */; };
 		91CC2B500744D00F0018CBED /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91CC2B4E0744D00F0018CBED /* CoreServices.framework */; };
-		BC0B239F0E012A9C00536AC9 /* ProjectCreator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC0B239D0E012A9C00536AC9 /* ProjectCreator.cpp */; };
-		BC0B23A00E012A9C00536AC9 /* ProjectCreator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC0B239D0E012A9C00536AC9 /* ProjectCreator.cpp */; };
 		BC0B23A30E012B4700536AC9 /* Preferences.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC0B23A10E012B4700536AC9 /* Preferences.cpp */; };
 		BC0B23A40E012B4700536AC9 /* Preferences.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC0B23A10E012B4700536AC9 /* Preferences.cpp */; };
 		BC0B24010E01301200536AC9 /* yapuka.css in Resources */ = {isa = PBXBuildFile; fileRef = BC0B24000E01301200536AC9 /* yapuka.css */; };
@@ -29,6 +27,8 @@
 		BCA530740D818C7900B8FAF4 /* ToolPaneAttributes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCA530710D818C7900B8FAF4 /* ToolPaneAttributes.cpp */; };
 		BCA530750D818C7900B8FAF4 /* ToolPane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCA5306F0D818C7900B8FAF4 /* ToolPane.cpp */; };
 		BCA530760D818C7900B8FAF4 /* ToolPaneAttributes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCA530710D818C7900B8FAF4 /* ToolPaneAttributes.cpp */; };
+		BCE4C3470EFA5BF300ABC3C6 /* ProjectGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCE4C3450EFA5BF300ABC3C6 /* ProjectGenerator.cpp */; };
+		BCE4C3480EFA5BF300ABC3C6 /* ProjectGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCE4C3450EFA5BF300ABC3C6 /* ProjectGenerator.cpp */; };
 		E582DDC50CD155A900659E1B /* ElementEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E582DDBF0CD155A900659E1B /* ElementEditor.cpp */; };
 		E582DDC60CD155A900659E1B /* FrameEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E582DDC10CD155A900659E1B /* FrameEditor.cpp */; };
 		E582DDC70CD155A900659E1B /* WidgetEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E582DDC30CD155A900659E1B /* WidgetEditor.cpp */; };
@@ -86,8 +86,6 @@
 		91CC2B310744CFC80018CBED /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		91CC2B4D0744D00F0018CBED /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
 		91CC2B4E0744D00F0018CBED /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
-		BC0B239D0E012A9C00536AC9 /* ProjectCreator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ProjectCreator.cpp; path = src/ProjectCreator.cpp; sourceTree = SOURCE_ROOT; };
-		BC0B239E0E012A9C00536AC9 /* ProjectCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProjectCreator.h; path = src/ProjectCreator.h; sourceTree = SOURCE_ROOT; };
 		BC0B23A10E012B4700536AC9 /* Preferences.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Preferences.cpp; path = src/Preferences.cpp; sourceTree = SOURCE_ROOT; };
 		BC0B23A20E012B4700536AC9 /* Preferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Preferences.h; path = src/Preferences.h; sourceTree = SOURCE_ROOT; };
 		BC0B24000E01301200536AC9 /* yapuka.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = yapuka.css; path = resources/css/yapuka.css; sourceTree = SOURCE_ROOT; };
@@ -102,6 +100,8 @@
 		BCA530700D818C7900B8FAF4 /* ToolPane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ToolPane.h; path = src/ToolPane.h; sourceTree = SOURCE_ROOT; };
 		BCA530710D818C7900B8FAF4 /* ToolPaneAttributes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ToolPaneAttributes.cpp; path = src/ToolPaneAttributes.cpp; sourceTree = SOURCE_ROOT; };
 		BCA530720D818C7900B8FAF4 /* ToolPaneAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ToolPaneAttributes.h; path = src/ToolPaneAttributes.h; sourceTree = SOURCE_ROOT; };
+		BCE4C3450EFA5BF300ABC3C6 /* ProjectGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ProjectGenerator.cpp; path = src/ProjectGenerator.cpp; sourceTree = SOURCE_ROOT; };
+		BCE4C3460EFA5BF300ABC3C6 /* ProjectGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProjectGenerator.h; path = src/ProjectGenerator.h; sourceTree = SOURCE_ROOT; };
 		E582DDBF0CD155A900659E1B /* ElementEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = ElementEditor.cpp; path = src/ElementEditor.cpp; sourceTree = SOURCE_ROOT; };
 		E582DDC00CD155A900659E1B /* ElementEditor.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ElementEditor.h; path = src/ElementEditor.h; sourceTree = SOURCE_ROOT; };
 		E582DDC10CD155A900659E1B /* FrameEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = FrameEditor.cpp; path = src/FrameEditor.cpp; sourceTree = SOURCE_ROOT; };
@@ -161,6 +161,8 @@
 		91CC2B030744CE540018CBED /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				BCE4C3450EFA5BF300ABC3C6 /* ProjectGenerator.cpp */,
+				BCE4C3460EFA5BF300ABC3C6 /* ProjectGenerator.h */,
 				BCA5306F0D818C7900B8FAF4 /* ToolPane.cpp */,
 				BCA530700D818C7900B8FAF4 /* ToolPane.h */,
 				BCA530710D818C7900B8FAF4 /* ToolPaneAttributes.cpp */,
@@ -183,8 +185,6 @@
 				E58F9C8D0CD01D4F00ECA4B1 /* MainWindow.h */,
 				E58F9C8E0CD01D4F00ECA4B1 /* Yapuka.cpp */,
 				E58F9C8F0CD01D4F00ECA4B1 /* Yapuka.h */,
-				BC0B239D0E012A9C00536AC9 /* ProjectCreator.cpp */,
-				BC0B239E0E012A9C00536AC9 /* ProjectCreator.h */,
 				BC0B23A10E012B4700536AC9 /* Preferences.cpp */,
 				BC0B23A20E012B4700536AC9 /* Preferences.h */,
 			);
@@ -377,8 +377,8 @@
 				BC9BFCAC0D815E13000DF398 /* DecorationManager.cpp in Sources */,
 				BCA530730D818C7900B8FAF4 /* ToolPane.cpp in Sources */,
 				BCA530740D818C7900B8FAF4 /* ToolPaneAttributes.cpp in Sources */,
-				BC0B23A00E012A9C00536AC9 /* ProjectCreator.cpp in Sources */,
 				BC0B23A40E012B4700536AC9 /* Preferences.cpp in Sources */,
+				BCE4C3480EFA5BF300ABC3C6 /* ProjectGenerator.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -397,8 +397,8 @@
 				BC9BFCAB0D815E13000DF398 /* DecorationManager.cpp in Sources */,
 				BCA530750D818C7900B8FAF4 /* ToolPane.cpp in Sources */,
 				BCA530760D818C7900B8FAF4 /* ToolPaneAttributes.cpp in Sources */,
-				BC0B239F0E012A9C00536AC9 /* ProjectCreator.cpp in Sources */,
 				BC0B23A30E012B4700536AC9 /* Preferences.cpp in Sources */,
+				BCE4C3470EFA5BF300ABC3C6 /* ProjectGenerator.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
