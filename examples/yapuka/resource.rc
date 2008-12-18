@@ -1,8 +1,0 @@
-css/yapuka.css        NUI_RESOURCE    "resources/css/yapuka.css"
-project/project.pbxproj        NUI_RESOURCE    "resources/project/project.pbxproj"
-project/project.sln        NUI_RESOURCE    "resources/project/project.sln"
-project/project.vcproj        NUI_RESOURCE    "resources/project/project.vcproj"
-project/src/Application.cpp        NUI_RESOURCE    "resources/project/src/Application.cpp"
-project/src/Application.h        NUI_RESOURCE    "resources/project/src/Application.h"
-project/src/MainWindow.cpp        NUI_RESOURCE    "resources/project/src/MainWindow.cpp"
-project/src/MainWindow.h        NUI_RESOURCE    "resources/project/src/MainWindow.h"
