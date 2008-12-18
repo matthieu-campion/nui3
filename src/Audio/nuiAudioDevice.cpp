@@ -149,7 +149,26 @@ nglString nuiAudioDeviceManager::GetDeviceName(uint32 DeviceIndex)
     }
     else
     {
-      return pAPI->GetDeviceName(DeviceIndex) + _T(" (") + pAPI->GetAPIName() + _T(")");
+      return pAPI->GetDeviceName(DeviceIndex);
+    }
+  }
+  NGL_ASSERT(0);
+}
+
+nglString nuiAudioDeviceManager::GetDeviceAPIName(uint32 DeviceIndex)
+{
+  APIMap::const_iterator end = mAPIs.end();
+  for (APIMap::const_iterator it = mAPIs.begin(); it != end; ++it)
+  {
+    nuiAudioDeviceAPI* pAPI = it->second;
+    uint32 devcount = pAPI->GetDeviceCount();
+    if (DeviceIndex >= devcount)
+    {
+      DeviceIndex -= devcount;
+    }
+    else
+    {
+      return pAPI->GetAPIName();
     }
   }
   NGL_ASSERT(0);

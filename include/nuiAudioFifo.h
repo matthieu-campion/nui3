@@ -102,12 +102,13 @@ public :
 	bool UnregisterTrack(nuiAudioTrack* track);
   bool ResetTrackBuffer(nuiAudioTrack* track, bool makePause);
   
-  const nglString& GetInDeviceName() const { return mInDeviceName; }
-  const nglString& GetOutDeviceName() const { return mOutDeviceName; }
-  uint32 GetRingBufferSize() const { return mRingbufSize; }
-  uint32 GetOutBufferSize() const { return mOutbufSize; }
-  double GetSampleRate() const { return mSampleRate; }
-  uint32 GetNbChannels() const { return mNbChannels;}
+  const nglString& GetInDeviceName() const;
+  const nglString& GetOutDeviceName() const;
+  const nglString& GetAPIName() const;
+  uint32 GetRingBufferSize() const;
+  uint32 GetOutBufferSize() const;
+  double GetSampleRate() const;
+  uint32 GetNbChannels() const;
 
 
 private : 

@@ -377,7 +377,7 @@ nuiAudioFifo::nuiAudioFifo (uint32 inbufSize, uint32 outbufSize, double sampleRa
 	mNbChannels	= nbChannels;
 	mSampleRate	= sampleRate;
   mInDeviceName  = inDeviceName;
-  mOutDeviceName = outDeviceName;
+  mOutDeviceName = outDeviceName;  
   mAPIName = apiName;
   
 	// ringbuffer size must be x = y^2
@@ -395,7 +395,7 @@ nuiAudioFifo::nuiAudioFifo (uint32 inbufSize, uint32 outbufSize, double sampleRa
 
 
 
-nuiAudioFifo::~nuiAudioFifo ()
+nuiAudioFifo::~nuiAudioFifo()
 {
 	Close();
 	for (size_t i=0; i < mAudioTracks.size(); i++)
@@ -416,7 +416,7 @@ nuiAudioFifo::~nuiAudioFifo ()
 // AUDIO CONTROLS
 //
 //*****************************************************************************************
-bool nuiAudioFifo::Start ()
+bool nuiAudioFifo::Start()
 {
 	if (mStarted) 
     return false;
@@ -468,9 +468,10 @@ bool nuiAudioFifo::Start ()
 
 
 
-void nuiAudioFifo::Reset ()
+void nuiAudioFifo::Reset()
 {
-	if (!mStarted) return;
+	if (!mStarted)
+    return;
   
 	for (size_t i=0; i < mAudioTracks.size(); i++)
 		UnregisterTrack (mAudioTracks[i]);
@@ -480,14 +481,16 @@ void nuiAudioFifo::Reset ()
 
 
 
-void nuiAudioFifo::Close ()
+void nuiAudioFifo::Close()
 {
-	if (!mStarted) return;
+	if (!mStarted)
+    return;
   
-	Reset ();
+	Reset();
   
 	//close audio here
-  mpAudioDevice->Close();
+  delete mpAudioDevice;
+  mpAudioDevice = NULL;
   
 	SetStopRequest(true);
   
@@ -793,5 +796,39 @@ void nuiAudioFifo::Process(const std::vector<const float*>& rInputBuffers, const
 
 
 
+const nglString& nuiAudioFifo::GetInDeviceName() const
+{
+  return mInDeviceName;
+}
+
+const nglString& nuiAudioFifo::GetOutDeviceName() const
+{
+  return mOutDeviceName;
+}
+
+const nglString& nuiAudioFifo::GetAPIName() const
+{
+  return mAPIName;
+}
+
+uint32 nuiAudioFifo::GetRingBufferSize() const
+{
+  return mRingbufSize;
+}
+
+uint32 nuiAudioFifo::GetOutBufferSize() const
+{
+  return mOutbufSize;
+}
+
+double nuiAudioFifo::GetSampleRate() const
+{
+  return mSampleRate;
+}
+
+uint32 nuiAudioFifo::GetNbChannels() const
+{
+  return mNbChannels;
+}
 
 

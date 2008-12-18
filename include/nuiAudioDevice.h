@@ -83,6 +83,7 @@ public:
   uint32 GetDeviceCount() const;
   nuiAudioDevice* GetDevice(uint32 DeviceIndex);
   nglString       GetDeviceName(uint32 DeviceIndex);
+  nglString       GetDeviceAPIName(uint32 DeviceIndex);
   nuiAudioDevice* GetDeviceWithNameAndAPI(const nglString& rDeviceName, const nglString& rApiName);
   nuiAudioDevice* GetDefaultOutputDevice();
   nuiAudioDevice* GetDefaultInputDevice();
