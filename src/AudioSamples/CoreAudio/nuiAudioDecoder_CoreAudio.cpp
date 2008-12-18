@@ -70,11 +70,16 @@ bool nuiAudioDecoder::Init()
     {
       //Begin Extraction
       OSStatus err  = MovieAudioExtractionBegin(mpPrivate->mMovie, 0, &mpPrivate->mExtractionSessionRef);
-      result        = (err == noErr);
+      if (err != noErr)
+        return false;
     }
-    
+    else
+      return false;
   }
+  else
+    return false
   
+    result = ReadInfo();
   return result;
 }
 
