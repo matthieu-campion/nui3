@@ -401,8 +401,26 @@ bool ProjectGenerator::OnTargetTextChanged(const nuiEvent& rEvent)
 {
   nglString text = mpProjectTarget->GetText();
   text.Trim();
+
+  if (!IsTargetValid(text))
+  {
+    mpIconProjectDirectory->SetObjectName(_T("Icon::ProjectDirectory::Disabled"));
+    mProjectTargetPath = nglString::Null;
+    mpProjectFilename->SetText(nglString::Null);
+    mpProjectTarget->SetText(nglString::Null);
+    mNuiCheckProjectFile = false;
+    
+    nglString msg;
+    msg.Format(_T("the target directory name is not valid!\nDon't use any blank or unicode character."));
+    MsgError(msg);
+    return false;
+  }
+  else
+    mpIconProjectDirectory->SetObjectName(_T("Icon::ProjectDirectory"));
+
   
   nglPath path(text);
+  
   
   nglString newtext = text + _T("/") + path.GetNodeName() + _T(".xcodeproj");
   mpProjectFilename->SetText(newtext);
@@ -413,6 +431,22 @@ bool ProjectGenerator::OnTargetTextChanged(const nuiEvent& rEvent)
   return true;
 }
 
+
+bool ProjectGenerator::IsTargetValid(const nglString& rTarget)
+{
+  for (int32 i = 0; i < rTarget.GetLength(); i++)
+  {
+    nglChar car = rTarget.GetChar(i);
+    if ((car == _T('-')) || (car == _T('_')) || (car == _T('/')) || (car == _T('\\')) || nglIsDigit(car))
+      continue;
+    
+    if ((car > _T('A')) && (car < _T('z')))
+      continue;
+    
+    return false;
+  }
+  return true;
+}
 
 
 ProjectGenerator::~ProjectGenerator()
@@ -535,7 +569,9 @@ bool ProjectGenerator::OnTargetSelected(const nuiEvent& rEvent)
   
   nglPath path(mProjectTargetPath);
   
-  OnTargetTextChanged(rEvent);
+  if (!OnTargetTextChanged(rEvent))
+    return true;
+  
   GetPreferences().SetString(PREFERENCES_PROJECTGENERATOR, _T("nuiTargetPath"), path.GetParent().GetPathName());  
   
   return false;
@@ -574,81 +610,102 @@ bool ProjectGenerator::Make()
     return false;
 
   
+  nglPath projpath;
+  nglPath projectfile;
+  nglString filename;
   
   // create xcodeproj folder
-  nglPath projpath = targetpath;
-  nglString projfolder = mProjectName + nglString(_T(".xcodeproj"));
-  projpath += nglPath(projfolder);
-  if (!projpath.Create())
+  if (mpCheckXcode->IsPressed())
   {
-    nglString msg;
-    msg.Format(_T("creating xcodeproj folder '%ls'"), projpath.GetChars());
-    return MsgError(msg);
-  }
+    projpath = targetpath;
+    nglString projfolder = mProjectName + nglString(_T(".xcodeproj"));
+    projpath += nglPath(projfolder);
+    if (!projpath.Create())
+    {
+      nglString msg;
+      msg.Format(_T("creating xcodeproj folder '%ls'"), projpath.GetChars());
+      return MsgError(msg);
+    }
+      
+    NGL_OUT(_T("nui project generator : project folder created '%ls'\n"), projpath.GetChars());
+
+  
+    // generate xcode project file
+    projectfile = targetpath;
+    projectfile += nglPath(projfolder);
+    projectfile += nglPath(_T("project.pbxproj"));
+    if (!GenerateFile(_T("rsrc:/project/project.pbxproj"), projectfile))
+      return false;
     
-  NGL_OUT(_T("nui project generator : project folder created '%ls'\n"), projpath.GetChars());
+  }
 
   
   
   // create iphone xcodeproj folder
-  projpath = targetpath;
-  nglString iphoneprojfolder = miPhoneProjectName + nglString(_T(".xcodeproj"));
-  projpath += nglPath(iphoneprojfolder);
-  if (!projpath.Create())
+  if (mpCheckiPhone->IsPressed())
   {
-    nglString msg;
-    msg.Format(_T("creating iphone xcodeproj folder '%ls'"), projpath.GetChars());
-    return MsgError(msg);
+    projpath = targetpath;
+    nglString iphoneprojfolder = miPhoneProjectName + nglString(_T(".xcodeproj"));
+    projpath += nglPath(iphoneprojfolder);
+    if (!projpath.Create())
+    {
+      nglString msg;
+      msg.Format(_T("creating iphone xcodeproj folder '%ls'"), projpath.GetChars());
+      return MsgError(msg);
+    }
+    
+    NGL_OUT(_T("nui project generator : iphone project folder created '%ls'\n"), projpath.GetChars());
+
+    // generate xcode iphone project file
+    projectfile = targetpath;
+    projectfile += nglPath(iphoneprojfolder);
+    projectfile += nglPath(_T("project.pbxproj"));
+    if (!GenerateFile(_T("rsrc:/project/project_iPhone.pbxproj"), projectfile))
+      return false;    
   }
   
-  NGL_OUT(_T("nui project generator : iphone project folder created '%ls'\n"), projpath.GetChars());
   
-  
-  
-  // generate xcode project file
-  nglPath projectfile = targetpath;
-  projectfile += nglPath(projfolder);
-  projectfile += nglPath(_T("project.pbxproj"));
-  if (!GenerateFile(_T("rsrc:/project/project.pbxproj"), projectfile))
-    return false;
 
-  // generate xcode iphone project file
-  projectfile = targetpath;
-  projectfile += nglPath(iphoneprojfolder);
-  projectfile += nglPath(_T("project.pbxproj"));
-  if (!GenerateFile(_T("rsrc:/project/project_iPhone.pbxproj"), projectfile))
-    return false;
-  
-  
-  
   // generate visual studio project file
-  nglString filename = mProjectName + nglString(_T(".vcproj"));
-  projectfile = targetpath;
-  projectfile += nglPath(filename);
-  if (!GenerateFile(_T("rsrc:/project/project.vcproj"), projectfile))
-    return false;
+  if (mpCheckVisualStudio->IsPressed())
+  {
+    filename = mProjectName + nglString(_T(".vcproj"));
+    projectfile = targetpath;
+    projectfile += nglPath(filename);
+    if (!GenerateFile(_T("rsrc:/project/project.vcproj"), projectfile))
+      return false;
+  }
 
   // generate visual studio solution file
-  filename = mProjectName + nglString(_T(".sln"));
-  projectfile = targetpath;
-  projectfile += nglPath(filename);
-  if (!GenerateFile(_T("rsrc:/project/project.sln"), projectfile))
-    return false;
+  if (mpCheckVisualStudio->IsPressed())
+  {
+    filename = mProjectName + nglString(_T(".sln"));
+    projectfile = targetpath;
+    projectfile += nglPath(filename);
+    if (!GenerateFile(_T("rsrc:/project/project.sln"), projectfile))
+      return false;
+  }
 
   
   // generate dlist.plist
-  filename = _T("dlist.plist");
-  projectfile = targetpath;
-  projectfile += nglPath(filename);
-  if (!GenerateFile(_T("rsrc:/project/dlist.plist"), projectfile))
-    return false;
+  if (mpCheckXcode->IsPressed() || mpCheckiPhone->IsPressed())
+  {
+    filename = _T("dlist.plist");
+    projectfile = targetpath;
+    projectfile += nglPath(filename);
+    if (!GenerateFile(_T("rsrc:/project/dlist.plist"), projectfile))
+      return false;
+  }
 
   // generate Info.plist
-  filename = _T("Info.plist");
-  projectfile = targetpath;
-  projectfile += nglPath(filename);
-  if (!GenerateFile(_T("rsrc:/project/Info.plist"), projectfile))
-    return false;
+  if (mpCheckXcode->IsPressed() || mpCheckiPhone->IsPressed())
+  {
+    filename = _T("Info.plist");
+    projectfile = targetpath;
+    projectfile += nglPath(filename);
+    if (!GenerateFile(_T("rsrc:/project/Info.plist"), projectfile))
+      return false;
+  }
   
   // generate resource.rc
   filename = _T("resource.rc");
