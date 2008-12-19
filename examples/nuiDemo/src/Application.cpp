@@ -19,7 +19,7 @@
 #elif (defined _WIN32_)
 #include "nuiAudioDevice_DirectSound.h"
 #elif (defined _UIKIT_)
-#include "nuiAudioDevice_AudioQueue.h"
+#include "nuiAudioDevice_AudioUnit.h"
 #else
 // Add needed sound API
 #endif
@@ -39,7 +39,7 @@ Application::Application()
   #ifdef _CARBON_
   wprintf(_T("Audio system:%ls\n"), CoreAudioAPI.GetAPIName().GetChars());
   #elif (defined _UIKIT_)
-  wprintf(_T("Audio system:%ls\n"), AudioQueueAPI.GetAPIName().GetChars());
+  wprintf(_T("Audio system:%ls\n"), AudioUnitAPI.GetAPIName().GetChars());
   #endif
 }
 

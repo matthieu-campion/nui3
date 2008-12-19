@@ -11,22 +11,26 @@
 
 
 
-class nuiAudioDevice_AudioQueue : public nuiAudioDevice
+class nuiAudioDevice_AudioUnit : public nuiAudioDevice
 {
 public:
-  nuiAudioDevice_AudioQueue();
+  nuiAudioDevice_AudioUnit();
   
-  virtual ~nuiAudioDevice_AudioQueue();
+  virtual ~nuiAudioDevice_AudioUnit();
   
   virtual bool Open(std::vector<uint32>& rInputChannels, std::vector<uint32>& rOutputChannels, double SampleRate, uint32 BufferSize, nuiAudioProcessFn pProcessFunction);
   
   virtual bool Close();
   
+  void Process(uint uNumFrames, AudioBufferList* ioData);
   
 protected:
+  
   void EnumSampleRates();
   void EnumBufferSizes();
   nglString GetChannelName(bool IsInput, uint32 index) const;
+  
+  
   
   nuiAudioProcessFn mAudioProcessFn;
   std::vector<uint32> mActiveInputChannels;
@@ -44,20 +48,18 @@ protected:
   std::vector<std::pair<uint32, uint32> > mInMap;
   std::vector<std::pair<uint32, uint32> > mOutMap;
 
-  AudioQueueRef mOutQueue;
-  AudioQueueRef mInQueue;
+  AudioUnit mAudioUnit;
   
-  static void OutputCallback(void* inUserData, AudioQueueRef inAQ, AudioQueueBufferRef inBuffer);
 };
 
 
 
 
-class nuiAudioDeviceAPI_AudioQueue : public nuiAudioDeviceAPI
+class nuiAudioDeviceAPI_AudioUnit : public nuiAudioDeviceAPI
 {
 public:
-  nuiAudioDeviceAPI_AudioQueue();
-  virtual ~nuiAudioDeviceAPI_AudioQueue();
+  nuiAudioDeviceAPI_AudioUnit();
+  virtual ~nuiAudioDeviceAPI_AudioUnit();
   
   virtual uint32 GetDeviceCount() const;
   
@@ -68,4 +70,4 @@ public:
   virtual nuiAudioDevice* GetDefaultInputDevice();
 };
 
-extern nuiAudioDeviceAPI_AudioQueue AudioQueueAPI;
+extern nuiAudioDeviceAPI_AudioUnit AudioUnitAPI;
