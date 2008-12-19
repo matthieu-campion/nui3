@@ -9,6 +9,9 @@
 #include "nuiWaveWriter.h"
 #include "nuiWaveReader.h"
 #include "nuiAudioConvert.h"
+#include "nuiChunksDefinitions.h"
+
+
 
 nuiWaveWriter::nuiWaveWriter(nglOStream& rStream) : nuiSampleWriter(rStream)
 {

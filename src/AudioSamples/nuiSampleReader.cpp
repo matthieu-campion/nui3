@@ -7,7 +7,7 @@
  
 #include "nui.h"
 #include "nuiSampleReader.h"
-
+#include "nuiChunksDefinitions.h"
 
 nuiSampleReader::nuiSampleReader(nglIStream& rStream) : mrStream(rStream)
 {

@@ -747,6 +747,8 @@
 		E504B3D90DFEB82A006B46E5 /* gameswf_abc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E504B2050DFEB829006B46E5 /* gameswf_abc.cpp */; };
 		E504B3DA0DFEB82A006B46E5 /* gameswf_disasm.h in Headers */ = {isa = PBXBuildFile; fileRef = E504B2060DFEB829006B46E5 /* gameswf_disasm.h */; };
 		E504B46D0DFEC642006B46E5 /* nuiSWF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DDF0C3CECAB00902DFE /* nuiSWF.cpp */; };
+		E504F0B90EFBAE5200A80C5C /* nuiChunksDefinitions.h in Headers */ = {isa = PBXBuildFile; fileRef = E504F0B80EFBAE5200A80C5C /* nuiChunksDefinitions.h */; };
+		E504F0BA0EFBAE5200A80C5C /* nuiChunksDefinitions.h in Headers */ = {isa = PBXBuildFile; fileRef = E504F0B80EFBAE5200A80C5C /* nuiChunksDefinitions.h */; };
 		E505C8810C958C16001D802C /* nglThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E505C87E0C958C16001D802C /* nglThread.cpp */; };
 		E505C8820C958C16001D802C /* nglThread_posix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E505C87F0C958C16001D802C /* nglThread_posix.cpp */; };
 		E505C8830C958C16001D802C /* nglCriticalSection_posix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E505C8800C958C16001D802C /* nglCriticalSection_posix.cpp */; };
@@ -2730,6 +2732,7 @@
 		E504B2040DFEB829006B46E5 /* webwidgets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = webwidgets.h; path = deps/gameswf/net/webwidgets.h; sourceTree = SOURCE_ROOT; };
 		E504B2050DFEB829006B46E5 /* gameswf_abc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = gameswf_abc.cpp; path = deps/gameswf/gameswf_abc.cpp; sourceTree = SOURCE_ROOT; };
 		E504B2060DFEB829006B46E5 /* gameswf_disasm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gameswf_disasm.h; path = deps/gameswf/gameswf_disasm.h; sourceTree = SOURCE_ROOT; };
+		E504F0B80EFBAE5200A80C5C /* nuiChunksDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiChunksDefinitions.h; path = AudioSamples/nuiChunksDefinitions.h; sourceTree = "<group>"; };
 		E505C87E0C958C16001D802C /* nglThread.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nglThread.cpp; path = src/Threading/nglThread.cpp; sourceTree = SOURCE_ROOT; };
 		E505C87F0C958C16001D802C /* nglThread_posix.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nglThread_posix.cpp; path = src/Threading/posix/nglThread_posix.cpp; sourceTree = SOURCE_ROOT; };
 		E505C8800C958C16001D802C /* nglCriticalSection_posix.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nglCriticalSection_posix.cpp; path = src/Threading/posix/nglCriticalSection_posix.cpp; sourceTree = SOURCE_ROOT; };
@@ -3763,6 +3766,7 @@
 				40A459A60EFAA71F00043B1F /* nuiAudioDecoder.h */,
 				40A459AB0EFAABC400043B1F /* nuiAudioDecoder.cpp */,
 				40A459BA0EFAAE4500043B1F /* nuiAudioDecoder_CoreAudio.cpp */,
+				E504F0B80EFBAE5200A80C5C /* nuiChunksDefinitions.h */,
 			);
 			name = AudioSamples;
 			sourceTree = "<group>";
@@ -6192,6 +6196,7 @@
 				E561099A0EF5ED83000170A7 /* nuiUnicode.h in Headers */,
 				BC34A0740EFA870A002F35C4 /* nuiVersion.h in Headers */,
 				40A459A80EFAA71F00043B1F /* nuiAudioDecoder.h in Headers */,
+				E504F0BA0EFBAE5200A80C5C /* nuiChunksDefinitions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6859,6 +6864,7 @@
 				E561099B0EF5ED83000170A7 /* nuiUnicode.h in Headers */,
 				BC34A0730EFA870A002F35C4 /* nuiVersion.h in Headers */,
 				40A459A70EFAA71F00043B1F /* nuiAudioDecoder.h in Headers */,
+				E504F0B90EFBAE5200A80C5C /* nuiChunksDefinitions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
