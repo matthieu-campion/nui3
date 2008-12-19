@@ -101,6 +101,9 @@ public:
   void GetBorder(nuiSize& rXLeft, nuiSize& rXRight, nuiSize& rYTop, nuiSize& rYBottom);
   void SetBorder(nuiSize XLeft, nuiSize XRight, nuiSize YTop, nuiSize YBottom); ///< Sets the empty space around the widget itself
 
+  void SetVisibleRect(const nuiRect& rRect); ///< This sets the rectangle that will actually be displayed in the parent widget (for example in case this widget is inside a nuiScrollView, only a part of it may be visible at once). The rectangle is local to the widget rect.
+  const nuiRect& GetVisibleRect() const; ///< This sets the rectangle that will actually be displayed in the parent widget (for example in case this widget is inside a nuiScrollView, only a part of it may be visible at once). The rectangle is local to the widget rect.
+  
   virtual const nuiRect& GetIdealRect(); ///< Return the ideal area used by this Object. If the layout of this object has changed CalIdealRect will be called and mIdealRect will contain the ideal rectangle. If the user specified a user size then mIdealRect will be overwritten with mUserRect. 
   virtual const nuiRect& GetRect() const; ///< Return the current area used by this Object.
   virtual nuiRect GetBorderedRect() const; ///< Return the current area used by this Object including its border
@@ -141,7 +144,6 @@ public:
 
   virtual bool IsInside(nuiSize X, nuiSize Y); ///< Return true if the point (X,Y) (in the coordinates of the root object) is inside the object. This method call IsInsideLocal internally so you may not need to redefine it.
   virtual bool IsInsideLocal(nuiSize X, nuiSize Y); ///< Return true if the point (X,Y) (in the coordinates of the parent) is inside the object.
-  nuiRect GetVisibleRect() const;
   //@}
 
   /** @name Rendering */
@@ -479,7 +481,8 @@ protected:
   nuiContainerPtr mpParent;
 
   float mAlpha; ///< Indicates the transparency level of the object. Optional. 
-  nuiRect mRect; ///< The bounding box of the nuiObject (in coordinates of its parent).
+  nuiRect mRect; ///< The bounding box of the nuiWidget (in coordinates of its parent).
+  nuiRect mVisibleRect; ///< The active bounding box of the nuiObject (in local coordinates).
   nuiRect mIdealRect; ///< The ideal bounding box of the nuiObject (in coordinates of its parent) position should be at the origin.
   nuiRect mUserRect; ///< The bounding box of the nuiObject if set by the user (in coordinates of its parent).
   nuiRect mHotRect; ///< The currently important interactive part of the widget. Containers try to keep this rect in view when possible. For exemple set it as the cursor rectangle in a text edit widget. Is you text edit is contained in a scroll view, the scroll view will try to follow the cursor.

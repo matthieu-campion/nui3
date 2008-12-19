@@ -350,6 +350,10 @@ bool nuiScrollView::SetChildrenRect(nuiSize x, nuiSize y, nuiSize xx, nuiSize yy
     NGL_OUT(_T("\tnuiScrollView::SetChildrenRect: (%f, %f) (%f, %f) - (%f, %f)\n"), x, y, xx, yy, scrollv, scrollh);
   }
   
+  nuiRect VisibleRect = GetRect().Size();
+  VisibleRect.Right() -= scrollv;
+  VisibleRect.Bottom() -= scrollh;
+  
   nuiRange& hrange = mpHorizontal->GetRange();
   nuiRange& vrange = mpVertical->GetRange();
   nuiSize XOffset = hrange.GetValue();
@@ -396,6 +400,9 @@ bool nuiScrollView::SetChildrenRect(nuiSize x, nuiSize y, nuiSize xx, nuiSize yy
         }
 
         pItem->SetLayout(rect);
+        rect = VisibleRect;
+        LocalToLocal(pItem, rect);
+        pItem->SetVisibleRect(rect);
       }
     }
     delete pIt;
@@ -431,6 +438,9 @@ bool nuiScrollView::SetChildrenRect(nuiSize x, nuiSize y, nuiSize xx, nuiSize yy
           NGL_OUT(_T("\tnuiScrollView::SetChildrenRect: SetLayout(%ls)\n"), rect.GetValue().GetChars());
         }
         pItem->SetLayout(rect);
+        rect = VisibleRect;
+        LocalToLocal(pItem, rect);
+        pItem->SetVisibleRect(rect);
       }
     }
     delete pIt;

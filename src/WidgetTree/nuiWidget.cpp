@@ -150,6 +150,7 @@ bool nuiWidget::Load(const nuiXMLNode* pNode)
     mRect.mTop = pNode->GetAttribute(nglString(_T("Y"))).GetCFloat();
     mRect.mBottom = mRect.mTop + pNode->GetAttribute(nglString(_T("Height"))).GetCFloat();
     mIdealRect = mRect;
+    mVisibleRect = GetOverDrawRect(true, true);
     SetUserRect(mRect);
   }
   else
@@ -821,7 +822,8 @@ void nuiWidget::Invalidate()
     return;
   }
 
-  nuiWidget::InvalidateRect(GetOverDrawRect(true, true));
+  //nuiWidget::InvalidateRect(GetOverDrawRect(true, true));
+  nuiWidget::InvalidateRect(GetVisibleRect());
   SilentInvalidate();
 
   if (mpParent)
@@ -917,7 +919,9 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
   nuiRect clip;
   pContext->GetClipRect(clip);
   nuiRect _self = GetOverDrawRect(true, false);
+  _self.Intersect(_self, mVisibleRect);
   nuiRect _self_and_decorations = GetOverDrawRect(true, true);
+  _self_and_decorations.Intersect(_self_and_decorations, mVisibleRect);
   nuiRect self = _self;
   nuiRect self_and_decorations = _self_and_decorations;
   
@@ -1976,9 +1980,19 @@ bool nuiWidget::IsInsideLocal(nuiSize X, nuiSize Y)
   if (!IsVisible(false))
     return false;
   if (mInteractiveDecoration)
-    return GetOverDrawRect(false, true).IsInside(X, Y);
+  {
+    nuiRect r = mVisibleRect;
+    LocalToLocal(GetParent(), r);
+    r.Intersect(mVisibleRect, GetOverDrawRect(false, true));
+    return r.IsInside(X, Y);
+  }
   if (mInteractiveOD)
-    return GetOverDrawRect(false, false).IsInside(X, Y);
+  {
+    nuiRect r = mVisibleRect;
+    LocalToLocal(GetParent(), r);
+    r.Intersect(r, GetOverDrawRect(false, false));
+    return r.IsInside(X, Y);
+  }
   return GetRect().IsInside(X,Y);
 }
 
@@ -2136,6 +2150,8 @@ bool nuiWidget::SetRect(const nuiRect& rRect)
     mRect.Set(rRect.Left(), rRect.Top(), mIdealRect.GetWidth(), mIdealRect.GetHeight());
   else 
     mRect = rRect;
+  mVisibleRect = GetOverDrawRect(true, true);
+  
   if (inval)
     Invalidate();
 
@@ -2261,6 +2277,16 @@ void nuiWidget::GetBorder(nuiSize& rLeft, nuiSize& rRight, nuiSize& rTop, nuiSiz
   rBottom = mBorderBottom;
 }
 
+void nuiWidget::SetVisibleRect(const nuiRect& rRect)
+{
+  mVisibleRect = rRect;
+  Invalidate();
+}
+
+const nuiRect& nuiWidget::GetVisibleRect() const
+{
+  return mVisibleRect;
+}
 
 bool nuiWidget::SetLayout(const nuiRect& rRect)
 {
@@ -2326,6 +2352,7 @@ bool nuiWidget::SetLayout(const nuiRect& rRect)
     // Is this case the widget has just been moved inside its parent. No need to re layout it, only change the rect...
     mRect = rect;
   }
+  mVisibleRect = GetOverDrawRect(true, true);
 
   if (PositionChanged && mpParent)
       mpParent->Invalidate();
@@ -2865,18 +2892,6 @@ bool nuiWidget::IsDrawingInCache(bool Recurse)
     return mpParent->IsDrawingInCache(Recurse);
   return false;
 }
-
-nuiRect nuiWidget::GetVisibleRect() const
-{
-  nuiRect r(mRect);
-  if (mpParent)
-    r.Intersect(mRect, mpParent->GetVisibleRect());
-  
-  // Back to the local rect:
-  r.Move(-mRect.mLeft, -mRect.Top());
-  return r;
-}
-
 
 #undef max
 #undef min

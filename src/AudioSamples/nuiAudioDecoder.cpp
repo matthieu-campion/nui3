@@ -73,3 +73,5 @@ bool nuiAudioDecoder::SampleFramesToBytes(uint64 inSampleFrames, uint64& outByte
   outBytes = inSampleFrames * mInfo.GetChannels() * mInfo.GetBitsPerSample() / 8;
   return true;
 }
+
+
