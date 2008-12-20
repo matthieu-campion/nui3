@@ -460,15 +460,6 @@ bool nuiScrollView::Draw(nuiDrawContext* pContext)
   for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
   {
     nuiWidgetPtr pItem = pIt->GetWidget();
-//    if (pItem != mpVertical && pItem != mpHorizontal)
-//    {
-//      pContext->PushClipping();
-//      pContext->Clip(rect);
-//
-//      DrawChild(pContext, pItem);
-//      pContext->PopClipping();
-//    }
-//    else
     nuiRect intersect;
     if (intersect.Intersect(rect, pItem->GetOverDrawRect(true, true)))
     {

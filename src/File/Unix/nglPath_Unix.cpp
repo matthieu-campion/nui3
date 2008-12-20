@@ -335,14 +335,47 @@ int nglPath::GetChildren (std::list<nglPath>* pChildren) const
 /*
  * This is rather Linux code here, warning other Unices !
  */
+#ifdef _MACOSX_
+static nglString GetMimeType(const nglString& extension)
+{
+  CFStringRef mimeType = NULL;
+  CFStringRef ext = extension.ToCFString();
+    
+  CFStringRef UTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, ext, NULL);
+  CFRelease(ext);
+  if (!UTI)
+    return nglString::Null;
+  
+  mimeType = UTTypeCopyPreferredTagWithClass(UTI, kUTTagClassMIMEType);
+  if (!mimeType) // check for edge case
+  {
+    return nglString::Null;
+  }
+  
+  CFRelease(UTI);
+  nglString mime(mimeType);
+  CFRelease(mimeType);
+  return mime;
+}
+#endif
 
 nglString nglPath::GetMimeType() const
 {
+  
   nglString ext = GetExtension();
   ext.ToLower();
   if (ext.IsEmpty())
     return nglString::Empty;
 
+#ifdef _MACOSX_
+  {
+    nglString mime = ::GetMimeType(ext);
+    if (!mime.IsNull())
+      return mime;
+  }
+#endif
+
+  
   nglPathInfo info;
   nglPath path("/etc/mime.types");
 
@@ -375,7 +408,6 @@ nglString nglPath::GetMimeType() const
   nglString& result = mMimeType[ext];
   return result.IsNull() ? nglString::Empty : result;
 }
-
 
 static const nglChar* _intrank(int x)
 {

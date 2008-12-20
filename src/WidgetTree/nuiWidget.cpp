@@ -223,10 +223,15 @@ void nuiWidget::InitAttributes()
   
   
   AddAttribute(new nuiAttribute<const nuiRect&>
-    (nglString(_T("UserRect")), nuiUnitNone,
-     nuiAttribute<const nuiRect&>::GetterDelegate(this, &nuiWidget::GetUserRect),
-     nuiAttribute<const nuiRect&>::SetterDelegate(this, &nuiWidget::SetUserRect)));
-
+               (nglString(_T("UserRect")), nuiUnitNone,
+                nuiAttribute<const nuiRect&>::GetterDelegate(this, &nuiWidget::GetUserRect),
+                nuiAttribute<const nuiRect&>::SetterDelegate(this, &nuiWidget::SetUserRect)));
+  
+  AddAttribute(new nuiAttribute<const nuiRect&>
+               (nglString(_T("VisibleRect")), nuiUnitNone,
+                nuiAttribute<const nuiRect&>::GetterDelegate(this, &nuiWidget::GetVisibleRect),
+                nuiAttribute<const nuiRect&>::SetterDelegate(this, &nuiWidget::SetVisibleRect)));
+  
   AddAttribute(new nuiAttribute<nuiSize>
                (nglString(_T("UserWidth")), nuiUnitNone,
                 nuiAttribute<nuiSize>::GetterDelegate(this, &nuiWidget::GetUserWidth),

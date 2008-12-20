@@ -9,7 +9,7 @@
 #include "nui.h"
 #include "nuiHBox.h"
 
-nuiHBox::nuiHBox(uint nbcells)
+nuiHBox::nuiHBox(uint32 nbcells)
 : nuiBox(nbcells, 1)
 {
   if (SetObjectClass(_T("nuiHBox")))
@@ -64,14 +64,14 @@ void nuiHBox::PlaceInvisibleWidgets(bool enable)
 
 
   
-bool nuiHBox::SetCell(uint cell, nuiWidget* pWidget, nuiPosition position, bool ReplaceExisting, bool TrashExisting)
+bool nuiHBox::SetCell(uint32 cell, nuiWidget* pWidget, nuiPosition position, bool ReplaceExisting, bool TrashExisting)
 {
   return nuiGrid::SetCell(cell, 0, pWidget, position, ReplaceExisting, TrashExisting);
 }
 
 
 
-void nuiHBox::SetCellPosition(uint cell, nuiPosition position)
+void nuiHBox::SetCellPosition(uint32 cell, nuiPosition position)
 {
   nuiGrid::SetCellPosition(cell, 0, position);
 }
@@ -80,7 +80,7 @@ void nuiHBox::SetCellPosition(uint cell, nuiPosition position)
 
 bool nuiHBox::FindCell(nuiWidgetPtr pWidget, uint& rCell) const
 {
-  uint row;
+  uint32 row;
   return nuiGrid::FindCell(pWidget, rCell, row);
 }
 
@@ -93,7 +93,7 @@ void nuiHBox::ClearCells(bool trash)
 
 
 
-nuiWidget* nuiHBox::GetCell(uint cell) const
+nuiWidget* nuiHBox::GetCell(uint32 cell) const
 {
   return nuiGrid::GetCell(cell, 0);
 }
@@ -101,7 +101,7 @@ nuiWidget* nuiHBox::GetCell(uint cell) const
 
 
   // Cells settings:
-void nuiHBox::SetCellSpacing(uint cell, nuiSize hgap)
+void nuiHBox::SetCellSpacing(uint32 cell, nuiSize hgap)
 {
   nuiGrid::SetColumnSpacing(cell, hgap);
 }
@@ -109,7 +109,7 @@ void nuiHBox::SetCellSpacing(uint cell, nuiSize hgap)
 
 void nuiHBox::SetAllCellsSpacing(nuiSize hgap)
 {
-  for (uint i = 0; i < GetNbCells(); i++)
+  for (uint32 i = 0; i < GetNbCells(); i++)
   {
     SetCellSpacing (i, hgap);
   }
@@ -121,21 +121,21 @@ void nuiHBox::SetBoxSpacing(nuiSize vgap)
 }
 
 
-void nuiHBox::SetBoxSize(uint cells)
+void nuiHBox::SetBoxSize(uint32 cells)
 {
   nuiGrid::SetGridSize(cells, 1);
 }
 
 
 
-void nuiHBox::SetCellExpand(uint cell, nuiExpandMode mode, nuiSize ratio)
+void nuiHBox::SetCellExpand(uint32 cell, nuiExpandMode mode, nuiSize ratio)
 {
   nuiGrid::SetColumnExpand(cell, mode, ratio);
 }
 
 void nuiHBox::SetAllCellsExpand(nuiExpandMode mode)
 {
-  for (uint i = 0; i < GetNbCells(); i++)
+  for (uint32 i = 0; i < GetNbCells(); i++)
   {
      nuiGrid::SetColumnExpand(i, mode);
   }
@@ -150,14 +150,14 @@ void nuiHBox::SetExpand(nuiExpandMode mode, nuiSize ratio)
 
 
   
-void nuiHBox::SetCellMaxGrow(uint cell, nuiSize ratio)
+void nuiHBox::SetCellMaxGrow(uint32 cell, nuiSize ratio)
 {
   nuiGrid::SetColumnMaxGrow(cell, ratio);
 }
 
 
 
-void nuiHBox::SetCellMaxPixels(uint cell, nuiSize size)
+void nuiHBox::SetCellMaxPixels(uint32 cell, nuiSize size)
 {
   nuiGrid::SetColumnMaxPixels(cell, size);
 }
@@ -165,14 +165,14 @@ void nuiHBox::SetCellMaxPixels(uint cell, nuiSize size)
 
 
     
-void nuiHBox::SetCellMaxShrink(uint cell, nuiSize ratio)
+void nuiHBox::SetCellMaxShrink(uint32 cell, nuiSize ratio)
 {
   nuiGrid::SetColumnMaxShrink(cell, ratio);
 }
 
 
 
-void nuiHBox::SetCellMinPixels(uint cell, nuiSize size)
+void nuiHBox::SetCellMinPixels(uint32 cell, nuiSize size)
 {
   nuiGrid::SetColumnMinPixels(cell, size);
 }
@@ -181,7 +181,7 @@ void nuiHBox::SetCellMinPixels(uint cell, nuiSize size)
 
   
   // Corresponding Getters:
-nuiSize nuiHBox::GetCellSpacing(uint cell) const
+nuiSize nuiHBox::GetCellSpacing(uint32 cell) const
 {
   return nuiGrid::GetColumnSpacing(cell);
 }
@@ -190,14 +190,14 @@ nuiSize nuiHBox::GetCellSpacing(uint cell) const
 
 
 
-nuiSize nuiHBox::GetCellGrowRatio(uint cell) const
+nuiSize nuiHBox::GetCellGrowRatio(uint32 cell) const
 {
   return nuiGrid::GetColumnGrowRatio(cell);
 }
 
 
 
-nuiSize nuiHBox::GetCellShrinkRatio(uint cell) const
+nuiSize nuiHBox::GetCellShrinkRatio(uint32 cell) const
 {
   return nuiGrid::GetColumnShrinkRatio(cell);
 }
@@ -205,14 +205,14 @@ nuiSize nuiHBox::GetCellShrinkRatio(uint cell) const
 
 
 
-nuiSize nuiHBox::GetCellMaxGrow(uint cell) const
+nuiSize nuiHBox::GetCellMaxGrow(uint32 cell) const
 {
   return nuiGrid::GetColumnMaxGrow(cell);
 }
 
 
 
-nuiSize nuiHBox::GetCellMaxPixels(uint cell) const
+nuiSize nuiHBox::GetCellMaxPixels(uint32 cell) const
 {
   return nuiGrid::GetColumnMaxPixels(cell);
 }
@@ -220,14 +220,14 @@ nuiSize nuiHBox::GetCellMaxPixels(uint cell) const
 
 
 
-nuiSize nuiHBox::GetCellMaxShrink(uint cell) const
+nuiSize nuiHBox::GetCellMaxShrink(uint32 cell) const
 {
   return nuiGrid::GetColumnMaxShrink(cell);
 }
 
 
 
-nuiSize nuiHBox::GetCellMinPixels(uint cell) const
+nuiSize nuiHBox::GetCellMinPixels(uint32 cell) const
 {
   return nuiGrid::GetColumnMinPixels(cell);
 }
@@ -235,14 +235,14 @@ nuiSize nuiHBox::GetCellMinPixels(uint cell) const
 
 
 
-void nuiHBox::AddCells(uint pos, uint cells)
+void nuiHBox::AddCells(uint32 pos, uint32 cells)
 {
   nuiGrid::AddColumns(pos, cells);
 }
 
 void nuiHBox::AddCell(nuiWidget* pWidget, nuiPosition position)
 {
-  uint pos = nuiGrid::GetNbColumns();
+  uint32 pos = nuiGrid::GetNbColumns();
   nuiGrid::AddColumns(pos, 1);
   if (GetNbRows() == 0)
     nuiGrid::AddRows(0,1);
@@ -252,13 +252,13 @@ void nuiHBox::AddCell(nuiWidget* pWidget, nuiPosition position)
 
 
 
-void nuiHBox::RemoveCells(uint pos, uint cells)
+void nuiHBox::RemoveCells(uint32 pos, uint32 cells)
 {
   nuiGrid::RemoveColumns(pos, cells);
 }
 
 
-uint nuiHBox::GetNbCells() const
+uint32 nuiHBox::GetNbCells() const
 {
   return nuiGrid::GetNbColumns();
 }  
@@ -280,16 +280,20 @@ void nuiHBox::SetDefaultSpacing(nuiSize set)
   nuiGrid::SetDefaultVSpacing(set);
 }
 
-void nuiHBox::SetCellPixels(uint column, nuiSize size)
+void nuiHBox::SetCellPixels(uint32 column, nuiSize size)
 {
   nuiGrid::SetColumnPixels(column, size);
 }
 
-void nuiHBox::ResetCellPixels(uint column)
+void nuiHBox::ResetCellPixels(uint32 column)
 {
   nuiGrid::ResetColumnPixels(column);
 }
 
+nuiSize nuiHBox::GetCellPixels(uint32 cell) const
+{
+  return nuiGrid::GetColumnPixels(cell);
+}
 
 
 void nuiHBox::SetSize(nuiSize size)

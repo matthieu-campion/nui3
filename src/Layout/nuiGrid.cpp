@@ -17,7 +17,7 @@
 #define NUI_DEFAULT_ROW_EXPAND_GROW   0
 #define NUI_DEFAULT_ROW_EXPAND_SHRINK 0
 
-nuiGrid::nuiGrid(uint nbcolumns, uint nbrows)
+nuiGrid::nuiGrid(uint32 nbcolumns, uint32 nbrows)
 : nuiSimpleContainer()
 {
   if (SetObjectClass(_T("nuiGrid")))
@@ -50,8 +50,8 @@ void nuiGrid::InitAttributes()
     nuiMakeDelegate(this, &nuiGrid::GetDefaultSpacing),
     nuiMakeDelegate(this, &nuiGrid::SetDefaultSpacing)));                
 
-  //void SetColumnSpacing(uint column, nuiSize hgap); ///< Sets the horizontal spacing to hgap around widgets in the given column.
-  //void SetRowSpacing(uint row, nuiSize vgap);       ///< Sets the vertical spacing to hgap  around widgets in the given column.
+  //void SetColumnSpacing(uint32 column, nuiSize hgap); ///< Sets the horizontal spacing to hgap around widgets in the given column.
+  //void SetRowSpacing(uint32 row, nuiSize vgap);       ///< Sets the vertical spacing to hgap  around widgets in the given column.
   
   AddAttribute(new nuiAttribute<nuiSize>
                (nglString(_T("ColumnSpacing")), nuiUnitSize,
@@ -119,7 +119,7 @@ bool nuiGrid::Load(const nuiXMLNode* pNode)
   return true;
 }
 
-inline void nuiGrid::Reset(uint nbcolumns, uint nbrows, bool clear)
+inline void nuiGrid::Reset(uint32 nbcolumns, uint32 nbrows, bool clear)
 {
   if (clear)
     Clear(false);
@@ -135,12 +135,12 @@ inline void nuiGrid::Reset(uint nbcolumns, uint nbrows, bool clear)
 
 
   mGrid.resize(mNbColumns);
-  for (uint c = 0; c < mNbColumns; c++)
+  for (uint32 c = 0; c < mNbColumns; c++)
   {
     mVGaps.push_back(mDefaultVSpacing); 
     mGrid[c].resize(mNbRows, NULL);
   }
-  for (uint r = 0; r < mNbRows; r++)
+  for (uint32 r = 0; r < mNbRows; r++)
   {
     mHGaps.push_back(mDefaultHSpacing);
   }
@@ -213,14 +213,14 @@ nuiRect nuiGrid::CalcIdealSize()
   nuiSize width = 0.f;
   nuiSize height = 0.f;
 
-  for (uint r = 0; r < mNbRows; r++)
+  for (uint32 r = 0; r < mNbRows; r++)
   {
     if (!mRowVisible[r])
       continue;
       
     nuiSize max = 0.f;
 
-    for (uint c = 0; c < mNbColumns; c++)
+    for (uint32 c = 0; c < mNbColumns; c++)
     {
       nuiWidget* pWidget = mGrid[c][r];
       if (pWidget != NULL)
@@ -245,10 +245,10 @@ nuiRect nuiGrid::CalcIdealSize()
   height += mGridBorderSize;
 
 
-  for (uint c = 0; c < mNbColumns; c++)
+  for (uint32 c = 0; c < mNbColumns; c++)
   {
     nuiSize max = 0.f;
-    for (uint r = 0; r < mNbRows; r++)
+    for (uint32 r = 0; r < mNbRows; r++)
     {
       if (!mRowVisible[r])
         continue;
@@ -299,7 +299,7 @@ void nuiGrid::AdjustToExpand(nuiSize width, nuiSize height, std::vector<nuiSize>
     height_step = height / mExpandShrinkRowsCoeff;
 
   nuiSize w;
-  for (uint c = 0; c < mNbColumns; c++)
+  for (uint32 c = 0; c < mNbColumns; c++)
   {
     w = mColumnWidths[c];
     if (width_step > 0.f)    
@@ -326,7 +326,7 @@ void nuiGrid::AdjustToExpand(nuiSize width, nuiSize height, std::vector<nuiSize>
   }
 
   nuiSize h;
-  for (uint r = 0; r < mNbRows; r++)
+  for (uint32 r = 0; r < mNbRows; r++)
   {
     h = mRowHeights[r];
     if (height_step > 0.f)
@@ -363,7 +363,7 @@ bool nuiGrid::SetRect(const nuiRect& rRect)
   nuiSize height = rRect.GetHeight() - mSizeRect.GetHeight();
 
   nuiSize X = 0.f, Y = 0.f;
-  uint row = 0, col = 0;
+  uint32 row = 0, col = 0;
 
   std::vector< std::vector<nuiWidget*> >::const_iterator col_it;
   std::vector<nuiWidget*>::const_iterator row_it;
@@ -373,7 +373,7 @@ bool nuiGrid::SetRect(const nuiRect& rRect)
   nuiSize sizeX = 0.f;
   nuiSize sizeY = 0.f;
 
-  uint cpt = 0;
+  uint32 cpt = 0;
   std::vector< std::vector<nuiWidget* > >::const_iterator col_end = mGrid.end();
   for (col_it = mGrid.begin(); col_it != col_end; ++col_it, col++)
   {
@@ -419,9 +419,9 @@ bool nuiGrid::SetRect(const nuiRect& rRect)
 
 void nuiGrid::ClearCells(bool trash)
 {
-  for (uint c = 0; c < mNbColumns; c++)
+  for (uint32 c = 0; c < mNbColumns; c++)
   {
-    for (uint r = 0; r < mNbRows; r++)
+    for (uint32 r = 0; r < mNbRows; r++)
     {
       if (mGrid[c][r] != NULL)
       {
@@ -433,7 +433,7 @@ void nuiGrid::ClearCells(bool trash)
 }
 
 
-bool nuiGrid::SetCell(uint column, uint row, nuiWidget* pWidget, nuiPosition position, bool ReplaceExisting, bool TrashExisting)
+bool nuiGrid::SetCell(uint32 column, uint32 row, nuiWidget* pWidget, nuiPosition position, bool ReplaceExisting, bool TrashExisting)
 {
   NGL_ASSERT(column < mNbColumns);
   NGL_ASSERT(row < mNbRows);
@@ -465,7 +465,7 @@ bool nuiGrid::SetCell(uint column, uint row, nuiWidget* pWidget, nuiPosition pos
   return true;
 }
 
-bool nuiGrid::SetCellToken(uint col, uint row, nuiTokenBase* pToken)
+bool nuiGrid::SetCellToken(uint32 col, uint32 row, nuiTokenBase* pToken)
 {
   nuiWidget* pWidget = GetCell(col, row);
   if (!pWidget)
@@ -477,7 +477,7 @@ bool nuiGrid::SetCellToken(uint col, uint row, nuiTokenBase* pToken)
 
 
 
-void nuiGrid::SetCellPosition(uint column, uint row, nuiPosition position)
+void nuiGrid::SetCellPosition(uint32 column, uint32 row, nuiPosition position)
 {
   NGL_ASSERT(column < mNbColumns);
   NGL_ASSERT(row < mNbRows);
@@ -489,9 +489,9 @@ void nuiGrid::SetCellPosition(uint column, uint row, nuiPosition position)
  
 bool nuiGrid::FindCell(nuiWidgetPtr pWidget, uint& rCol, uint& rRow) const 
 {
-  for (uint c = 0; c < mNbColumns; c++)
+  for (uint32 c = 0; c < mNbColumns; c++)
   {
-    for (uint r = 0; r < mNbRows; r++)
+    for (uint32 r = 0; r < mNbRows; r++)
     {
       if (mGrid[c][r] == pWidget)
       {
@@ -504,7 +504,7 @@ bool nuiGrid::FindCell(nuiWidgetPtr pWidget, uint& rCol, uint& rRow) const
   return false;
 }
 
-nuiWidget* nuiGrid::GetCell(uint column, uint row) const
+nuiWidget* nuiGrid::GetCell(uint32 column, uint32 row) const
 {
   NGL_ASSERT(column < mNbColumns);
   NGL_ASSERT(row < mNbRows);
@@ -513,7 +513,7 @@ nuiWidget* nuiGrid::GetCell(uint column, uint row) const
 }
 
 
-nuiTokenBase* nuiGrid::GetCellToken(uint col, uint row) const
+nuiTokenBase* nuiGrid::GetCellToken(uint32 col, uint32 row) const
 {
   nuiWidget* pWidget = GetCell(col, row);
   if (!pWidget)
@@ -524,7 +524,7 @@ nuiTokenBase* nuiGrid::GetCellToken(uint col, uint row) const
 
 
 
-void nuiGrid::SetColumnSpacing (uint column, nuiSize vgap)
+void nuiGrid::SetColumnSpacing (uint32 column, nuiSize vgap)
 {
   NGL_ASSERT(column < mNbColumns);
   mVGaps[column] = vgap;
@@ -532,7 +532,7 @@ void nuiGrid::SetColumnSpacing (uint column, nuiSize vgap)
   InvalidateLayout();
 }
 
-void nuiGrid::SetRowSpacing    (uint row, nuiSize hgap)
+void nuiGrid::SetRowSpacing    (uint32 row, nuiSize hgap)
 {
   NGL_ASSERT(row < mNbRows);
   mHGaps[row] = hgap;
@@ -540,12 +540,12 @@ void nuiGrid::SetRowSpacing    (uint row, nuiSize hgap)
   InvalidateLayout();
 }
 
-void nuiGrid::SetGridSize(uint columns, uint rows)
+void nuiGrid::SetGridSize(uint32 columns, uint32 rows)
 {
   Reset(columns, rows, false);
 }
 
-void nuiGrid::SetColumnExpand(uint col, nuiExpandMode mode, nuiSize ratio)
+void nuiGrid::SetColumnExpand(uint32 col, nuiExpandMode mode, nuiSize ratio)
 {
   NGL_ASSERT(ratio >= 1.f);
   NGL_ASSERT(col < mNbColumns);
@@ -577,7 +577,7 @@ void nuiGrid::SetColumnExpand(uint col, nuiExpandMode mode, nuiSize ratio)
   InvalidateLayout();
 }
 
-void nuiGrid::SetRowExpand(uint row, nuiExpandMode mode, nuiSize ratio)
+void nuiGrid::SetRowExpand(uint32 row, nuiExpandMode mode, nuiSize ratio)
 {
   NGL_ASSERT(ratio >= 1.f);
   NGL_ASSERT(row < mNbRows);
@@ -620,7 +620,7 @@ void nuiGrid::UpdateExpandRatio(std::vector<nuiSize>& rRatios, nuiSize& rCoeff)
     rCoeff = 1.f;  
 }
 
-void nuiGrid::SetRowMaxGrow(uint row, nuiSize ratio)
+void nuiGrid::SetRowMaxGrow(uint32 row, nuiSize ratio)
 {
   NGL_ASSERT(row < mNbRows);
   NGL_ASSERT(ratio >= 1.f)
@@ -630,7 +630,7 @@ void nuiGrid::SetRowMaxGrow(uint row, nuiSize ratio)
   InvalidateLayout();
 }
 
-void nuiGrid::SetColumnMaxGrow(uint col, nuiSize ratio)
+void nuiGrid::SetColumnMaxGrow(uint32 col, nuiSize ratio)
 {
   NGL_ASSERT(col < mNbColumns);
   NGL_ASSERT(ratio >= 1.f);
@@ -640,7 +640,7 @@ void nuiGrid::SetColumnMaxGrow(uint col, nuiSize ratio)
   InvalidateLayout();
 }
 
-void nuiGrid::SetRowMaxShrink(uint row, nuiSize ratio)
+void nuiGrid::SetRowMaxShrink(uint32 row, nuiSize ratio)
 {
   NGL_ASSERT(row < mNbRows);
   NGL_ASSERT(ratio <= 1.f)
@@ -651,7 +651,7 @@ void nuiGrid::SetRowMaxShrink(uint row, nuiSize ratio)
   InvalidateLayout();
 }
 
-void nuiGrid::SetColumnMaxShrink(uint col, nuiSize ratio)
+void nuiGrid::SetColumnMaxShrink(uint32 col, nuiSize ratio)
 {
   NGL_ASSERT(col < mNbColumns);
   NGL_ASSERT(ratio <= 1.f);
@@ -662,7 +662,7 @@ void nuiGrid::SetColumnMaxShrink(uint col, nuiSize ratio)
   InvalidateLayout();
 }
 
-void nuiGrid::SetRowMaxPixels(uint row, nuiSize size)
+void nuiGrid::SetRowMaxPixels(uint32 row, nuiSize size)
 {
   NGL_ASSERT(row < mNbRows);
   NGL_ASSERT(size >= 0.f);
@@ -674,7 +674,7 @@ void nuiGrid::SetRowMaxPixels(uint row, nuiSize size)
 
 
 
-void nuiGrid::SetColumnMaxPixels(uint col, nuiSize size)
+void nuiGrid::SetColumnMaxPixels(uint32 col, nuiSize size)
 {
   NGL_ASSERT(col < mNbColumns);
   NGL_ASSERT(size >= 0.f);
@@ -686,7 +686,7 @@ void nuiGrid::SetColumnMaxPixels(uint col, nuiSize size)
 
 
 
-void nuiGrid::SetRowMinPixels(uint row, nuiSize size)
+void nuiGrid::SetRowMinPixels(uint32 row, nuiSize size)
 {
   NGL_ASSERT(row < mNbRows);
   NGL_ASSERT(size >= 0.f);
@@ -699,7 +699,7 @@ void nuiGrid::SetRowMinPixels(uint row, nuiSize size)
 
 
 
-void nuiGrid::SetColumnMinPixels(uint col, nuiSize size)
+void nuiGrid::SetColumnMinPixels(uint32 col, nuiSize size)
 {
   NGL_ASSERT(col < mNbColumns);
   NGL_ASSERT(size >= 0.f);
@@ -713,7 +713,7 @@ void nuiGrid::SetColumnMinPixels(uint col, nuiSize size)
 
 
 
-void nuiGrid::SetRowPixels(uint row, nuiSize size)
+void nuiGrid::SetRowPixels(uint32 row, nuiSize size)
 {
   NGL_ASSERT(row < mNbRows);
   NGL_ASSERT(size >= 0.f);
@@ -725,7 +725,7 @@ void nuiGrid::SetRowPixels(uint row, nuiSize size)
 }
 
 
-void nuiGrid::SetColumnPixels(uint column, nuiSize size)
+void nuiGrid::SetColumnPixels(uint32 column, nuiSize size)
 {
   NGL_ASSERT(column < mNbColumns);
   NGL_ASSERT(size >= 0.f);
@@ -736,15 +736,24 @@ void nuiGrid::SetColumnPixels(uint column, nuiSize size)
   InvalidateLayout();
 }
 
+nuiSize nuiGrid::GetColumnPixels(uint32 col) const
+{
+  return mColumnWidths[col];
+}
 
-void nuiGrid::ResetRowPixels(uint row)
+nuiSize nuiGrid::GetRowPixels(uint32 row) const
+{
+  return mRowHeights[row];
+}
+
+void nuiGrid::ResetRowPixels(uint32 row)
 {
   mMaximumRowSizes[row] = -1.0f;  
   mMinimumRowSizes[row] = -1.0f;
   InvalidateLayout();  
 }
 
-void nuiGrid::ResetColumnPixels(uint row)
+void nuiGrid::ResetColumnPixels(uint32 row)
 {
   mMaximumColumnSizes[row] = -1.0f;  
   mMinimumColumnSizes[row] = -1.0f;
@@ -758,13 +767,13 @@ void nuiGrid::ResetColumnPixels(uint row)
 
 ///////
 
-nuiSize nuiGrid::GetColumnSpacing(uint column) const
+nuiSize nuiGrid::GetColumnSpacing(uint32 column) const
 {
   NGL_ASSERT(column < mNbColumns);
   return mVGaps[column];
 }
 
-nuiSize nuiGrid::GetRowSpacing(uint row) const
+nuiSize nuiGrid::GetRowSpacing(uint32 row) const
 {
   NGL_ASSERT(row < mNbRows);
   return mHGaps[row];
@@ -776,75 +785,75 @@ void nuiGrid::GetGridSize(uint& columns, uint& rows) const
   rows = mNbRows;
 }
 
-nuiSize nuiGrid::GetColumnGrowRatio(uint col) const
+nuiSize nuiGrid::GetColumnGrowRatio(uint32 col) const
 {
   NGL_ASSERT(col < mNbColumns);
   return mExpandGrowColumns[col];
 }
 
-nuiSize nuiGrid::GetColumnShrinkRatio(uint col) const
+nuiSize nuiGrid::GetColumnShrinkRatio(uint32 col) const
 {
   NGL_ASSERT(col < mNbColumns);
   return mExpandShrinkColumns[col];
 }
 
-nuiSize nuiGrid::GetRowGrowRatio(uint row) const
+nuiSize nuiGrid::GetRowGrowRatio(uint32 row) const
 {
   NGL_ASSERT(row < mNbRows);
   return mExpandGrowRows[row];
 }
 
-nuiSize nuiGrid::GetRowShrinkRatio(uint row) const
+nuiSize nuiGrid::GetRowShrinkRatio(uint32 row) const
 {
   NGL_ASSERT(row < mNbRows);
   return mExpandShrinkRows[row];
 }
 
 
-nuiSize nuiGrid::GetRowMaxGrow(uint row) const
+nuiSize nuiGrid::GetRowMaxGrow(uint32 row) const
 {
   NGL_ASSERT(row < mNbRows);
   return mMaxGrowRows[row];
 }
 
-nuiSize nuiGrid::GetColumnMaxGrow(uint col) const
+nuiSize nuiGrid::GetColumnMaxGrow(uint32 col) const
 {
   NGL_ASSERT(col < mNbColumns);
   return mMaxGrowColumns[col];
 }
 
-nuiSize nuiGrid::GetRowMaxPixels(uint row) const
+nuiSize nuiGrid::GetRowMaxPixels(uint32 row) const
 {
   NGL_ASSERT(row < mNbRows);
   return mMaximumRowSizes[row];
 }
 
-nuiSize nuiGrid::GetColumnMaxPixels(uint col) const
+nuiSize nuiGrid::GetColumnMaxPixels(uint32 col) const
 {
   NGL_ASSERT(col < mNbColumns);
   return mMaximumColumnSizes[col];
 }
 
 
-nuiSize nuiGrid::GetRowMaxShrink(uint row) const
+nuiSize nuiGrid::GetRowMaxShrink(uint32 row) const
 {
   NGL_ASSERT(row < mNbRows);
   return mMaxShrinkRows[row];
 }
 
-nuiSize nuiGrid::GetColumnMaxShrink(uint col) const
+nuiSize nuiGrid::GetColumnMaxShrink(uint32 col) const
 {
   NGL_ASSERT(col < mNbColumns);
   return mMaxShrinkColumns[col];
 }
 
-nuiSize nuiGrid::GetRowMinPixels(uint row) const
+nuiSize nuiGrid::GetRowMinPixels(uint32 row) const
 {
   NGL_ASSERT(row < mNbRows);
   return mMinimumRowSizes[row];  
 }
 
-nuiSize nuiGrid::GetColumnMinPixels(uint col) const
+nuiSize nuiGrid::GetColumnMinPixels(uint32 col) const
 {
   NGL_ASSERT(col < mNbColumns);
   return mMinimumColumnSizes[col];
@@ -854,29 +863,29 @@ nuiSize nuiGrid::GetColumnMinPixels(uint col) const
 
 /////////// cells visibility
 
-void nuiGrid::SetCellVisible(uint col, uint row, bool set)
+void nuiGrid::SetCellVisible(uint32 col, uint32 row, bool set)
 {
   nuiWidget* pWidget = GetCell(col, row);
   pWidget->SetVisible(set);
   pWidget->SetEnabled(set);
 }
 
-bool nuiGrid::IsCellVisible(uint col, uint row) const
+bool nuiGrid::IsCellVisible(uint32 col, uint32 row) const
 {
   nuiWidget* pWidget = GetCell(col, row);
   return pWidget->IsVisible();  
 }
 
-void nuiGrid::SetRowVisible(uint row, bool set)
+void nuiGrid::SetRowVisible(uint32 row, bool set)
 {
   NGL_ASSERT(row < mNbRows);
   mRowVisible[row] = set;
   
-  for (uint col=0; col < mNbColumns; col++)
+  for (uint32 col=0; col < mNbColumns; col++)
     SetCellVisible(col, row, set);
 }
 
-bool nuiGrid::IsRowVisible(uint row) const
+bool nuiGrid::IsRowVisible(uint32 row) const
 {
   NGL_ASSERT(row < mNbRows);
   return mRowVisible[row];
@@ -889,14 +898,14 @@ bool nuiGrid::IsRowVisible(uint row) const
 
 
 ///////
-void nuiGrid::AddRows(uint pos, uint rows)
+void nuiGrid::AddRows(uint32 pos, uint32 rows)
 {
   NGL_ASSERT(pos <= mNbRows);
   NGL_ASSERT(rows > 0);
 
   mNbRows += rows;
   std::vector<nuiWidget*>::iterator begin;
-  for (uint c = 0; c < mNbColumns; c++)
+  for (uint32 c = 0; c < mNbColumns; c++)
   {
     begin = mGrid[c].begin() + pos;
     mGrid[c].insert(begin, rows, NULL);
@@ -939,7 +948,7 @@ void nuiGrid::AddRows(uint pos, uint rows)
   InvalidateLayout();
 }
 
-void nuiGrid::RemoveRows(uint pos, uint rows)
+void nuiGrid::RemoveRows(uint32 pos, uint32 rows)
 {
   NGL_ASSERT(pos < mNbRows);
   NGL_ASSERT(rows >= 0);
@@ -947,7 +956,7 @@ void nuiGrid::RemoveRows(uint pos, uint rows)
   mNbRows -= rows;
   std::vector<nuiWidget*>::iterator begin;
   std::vector<nuiWidget*>::iterator end;
-  for (uint c = 0; c < mNbColumns; c++)
+  for (uint32 c = 0; c < mNbColumns; c++)
   {
     std::vector<nuiWidget*>::iterator erasor = begin = mGrid[c].begin() + pos;
     end   = mGrid[c].begin() + pos + rows;
@@ -1078,13 +1087,13 @@ bool nuiGrid::Draw(nuiDrawContext *pContext)
     pContext->SetLineWidth(mGridBorderSize);
     pContext->SetStrokeColor(GetColor(eBorder));
     nuiSize widthSoFar = 0.f;
-    for (uint i = 0; i < mWidths.size(); i++)
+    for (uint32 i = 0; i < mWidths.size(); i++)
     {
       widthSoFar += mVGaps[i];
 
       nuiSize heightSoFar = 0.f;
       nuiSize width = mWidths[i];
-      for (uint j = 0; j < mHeights.size(); j++)
+      for (uint32 j = 0; j < mHeights.size(); j++)
       {
         if (!mRowVisible[j])
           continue;
@@ -1108,12 +1117,12 @@ bool nuiGrid::Draw(nuiDrawContext *pContext)
   return true;
 }
 
-void nuiGrid::AddColumns(uint pos, uint columns)
+void nuiGrid::AddColumns(uint32 pos, uint32 columns)
 {
   NGL_ASSERT(pos <= mNbColumns);
   NGL_ASSERT(columns > 0);
   std::vector< std::vector<nuiWidget*> >::iterator col_it = mGrid.begin() + pos;
-  uint c;
+  uint32 c;
   for (c = 0; c < columns; c++)
   {
     std::vector<nuiWidget*> row;
@@ -1153,13 +1162,13 @@ void nuiGrid::AddColumns(uint pos, uint columns)
   InvalidateLayout();
 }
 
-void nuiGrid::RemoveColumns(uint pos, uint columns)
+void nuiGrid::RemoveColumns(uint32 pos, uint32 columns)
 {
 
   NGL_ASSERT(pos < mNbColumns);
   NGL_ASSERT(columns >= 0);
   std::vector< std::vector<nuiWidget*> >::iterator col_it = mGrid.begin() + pos;
-  uint c;
+  uint32 c;
   for (c = 0; c < columns; c++)
   {
     std::vector<nuiWidget*>::iterator row = col_it->begin();

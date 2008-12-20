@@ -8,7 +8,7 @@
 #include "nui.h"
 #include "nuiVBox.h"
 
-nuiVBox::nuiVBox(uint nbcells)
+nuiVBox::nuiVBox(uint32 nbcells)
 : nuiBox(1, nbcells)
 {
   if (SetObjectClass(_T("nuiVBox")))
@@ -63,7 +63,7 @@ void nuiVBox::PlaceInvisibleWidgets(bool enable)
 
 
   
-bool nuiVBox::SetCell(uint cell, nuiWidget* pWidget, nuiPosition position, bool ReplaceExisting, bool TrashExisting)
+bool nuiVBox::SetCell(uint32 cell, nuiWidget* pWidget, nuiPosition position, bool ReplaceExisting, bool TrashExisting)
 {
   return nuiGrid::SetCell(0, cell, pWidget, position, ReplaceExisting, TrashExisting);
 
@@ -71,7 +71,7 @@ bool nuiVBox::SetCell(uint cell, nuiWidget* pWidget, nuiPosition position, bool 
 
 
 
-void nuiVBox::SetCellPosition(uint cell, nuiPosition position)
+void nuiVBox::SetCellPosition(uint32 cell, nuiPosition position)
 {
   nuiGrid::SetCellPosition(0, cell, position);
 }
@@ -80,7 +80,7 @@ void nuiVBox::SetCellPosition(uint cell, nuiPosition position)
 
 bool nuiVBox::FindCell(nuiWidgetPtr pWidget, uint& rCell) const
 {
-  uint col;
+  uint32 col;
   return nuiGrid::FindCell(pWidget, col, rCell);
 }
 
@@ -93,7 +93,7 @@ void nuiVBox::ClearCells(bool trash)
 
 
 
-nuiWidget* nuiVBox::GetCell(uint cell) const
+nuiWidget* nuiVBox::GetCell(uint32 cell) const
 {
   return nuiGrid::GetCell(0, cell);
 }
@@ -101,14 +101,14 @@ nuiWidget* nuiVBox::GetCell(uint cell) const
 
 
   // Cells settings:
-void nuiVBox::SetCellSpacing(uint cell, nuiSize vgap)
+void nuiVBox::SetCellSpacing(uint32 cell, nuiSize vgap)
 {
   nuiGrid::SetRowSpacing(cell, vgap);
 }
 
 void nuiVBox::SetAllCellsSpacing(nuiSize gap)
 {
-  for (uint i = 0; i < GetNbCells(); i++)
+  for (uint32 i = 0; i < GetNbCells(); i++)
   {
     SetCellSpacing (i, gap);
   }
@@ -120,21 +120,21 @@ void nuiVBox::SetBoxSpacing(nuiSize hgap)
   nuiGrid::SetColumnSpacing(0, hgap);
 }
 
-void nuiVBox::SetBoxSize(uint cells)
+void nuiVBox::SetBoxSize(uint32 cells)
 {
   nuiGrid::SetGridSize(1, cells);
 }
 
 
 
-void nuiVBox::SetCellExpand(uint cell, nuiExpandMode mode, nuiSize ratio)
+void nuiVBox::SetCellExpand(uint32 cell, nuiExpandMode mode, nuiSize ratio)
 {
   nuiGrid::SetRowExpand(cell, mode, ratio);
 }
 
 void nuiVBox::SetAllCellsExpand(nuiExpandMode mode)
 {
-  for (uint i = 0; i < GetNbCells(); i++)
+  for (uint32 i = 0; i < GetNbCells(); i++)
   {
      nuiGrid::SetRowExpand(i, mode);
   }
@@ -147,14 +147,14 @@ void nuiVBox::SetExpand(nuiExpandMode mode, nuiSize ratio)
 }
 
   
-void nuiVBox::SetCellMaxGrow(uint cell, nuiSize ratio)
+void nuiVBox::SetCellMaxGrow(uint32 cell, nuiSize ratio)
 {
   nuiGrid::SetRowMaxGrow(cell, ratio);
 }
 
 
 
-void nuiVBox::SetCellMaxPixels(uint cell, nuiSize size)
+void nuiVBox::SetCellMaxPixels(uint32 cell, nuiSize size)
 {
   nuiGrid::SetRowMaxPixels(cell, size);
 }
@@ -162,14 +162,14 @@ void nuiVBox::SetCellMaxPixels(uint cell, nuiSize size)
 
 
     
-void nuiVBox::SetCellMaxShrink(uint cell, nuiSize ratio)
+void nuiVBox::SetCellMaxShrink(uint32 cell, nuiSize ratio)
 {
   nuiGrid::SetRowMaxShrink(cell, ratio);
 }
 
 
 
-void nuiVBox::SetCellMinPixels(uint cell, nuiSize size)
+void nuiVBox::SetCellMinPixels(uint32 cell, nuiSize size)
 {
   nuiGrid::SetRowMinPixels(cell, size);
 }
@@ -178,20 +178,20 @@ void nuiVBox::SetCellMinPixels(uint cell, nuiSize size)
 
   
   // Corresponding Getters:
-nuiSize nuiVBox::GetCellSpacing(uint cell) const
+nuiSize nuiVBox::GetCellSpacing(uint32 cell) const
 {
   return nuiGrid::GetRowSpacing(cell);
 }
 
 
-nuiSize nuiVBox::GetCellGrowRatio(uint cell) const
+nuiSize nuiVBox::GetCellGrowRatio(uint32 cell) const
 {
   return nuiGrid::GetRowGrowRatio(cell);
 }
 
 
 
-nuiSize nuiVBox::GetCellShrinkRatio(uint cell) const
+nuiSize nuiVBox::GetCellShrinkRatio(uint32 cell) const
 {
   return nuiGrid::GetRowShrinkRatio(cell);
 }
@@ -199,14 +199,14 @@ nuiSize nuiVBox::GetCellShrinkRatio(uint cell) const
 
 
 
-nuiSize nuiVBox::GetCellMaxGrow(uint cell) const
+nuiSize nuiVBox::GetCellMaxGrow(uint32 cell) const
 {
   return nuiGrid::GetRowMaxGrow(cell);
 }
 
 
 
-nuiSize nuiVBox::GetCellMaxPixels(uint cell) const
+nuiSize nuiVBox::GetCellMaxPixels(uint32 cell) const
 {
   return nuiGrid::GetRowMaxPixels(cell);
 }
@@ -214,14 +214,14 @@ nuiSize nuiVBox::GetCellMaxPixels(uint cell) const
 
 
 
-nuiSize nuiVBox::GetCellMaxShrink(uint cell) const
+nuiSize nuiVBox::GetCellMaxShrink(uint32 cell) const
 {
   return nuiGrid::GetRowMaxShrink(cell);
 }
 
 
 
-nuiSize nuiVBox::GetCellMinPixels(uint cell) const
+nuiSize nuiVBox::GetCellMinPixels(uint32 cell) const
 {
   return nuiGrid::GetRowMinPixels(cell);
 }
@@ -229,14 +229,14 @@ nuiSize nuiVBox::GetCellMinPixels(uint cell) const
 
 
 
-void nuiVBox::AddCells(uint pos, uint cells)
+void nuiVBox::AddCells(uint32 pos, uint32 cells)
 {
   nuiGrid::AddRows(pos, cells);
 }
 
 void nuiVBox::AddCell(nuiWidget* pWidget, nuiPosition position)
 {
-  uint pos = nuiGrid::GetNbRows();
+  uint32 pos = nuiGrid::GetNbRows();
   nuiGrid::AddRows(pos, 1);
   if (GetNbColumns() == 0)
     nuiGrid::AddColumns(0,1);
@@ -245,13 +245,13 @@ void nuiVBox::AddCell(nuiWidget* pWidget, nuiPosition position)
 }
 
 
-void nuiVBox::RemoveCells(uint pos, uint cells)
+void nuiVBox::RemoveCells(uint32 pos, uint32 cells)
 {
   nuiGrid::RemoveRows(pos, cells);
 }
 
 
-uint nuiVBox::GetNbCells() const
+uint32 nuiVBox::GetNbCells() const
 {
   return nuiGrid::GetNbRows();
 }  
@@ -274,12 +274,12 @@ void nuiVBox::SetDefaultSpacing(nuiSize set)
 }
 
 
-void nuiVBox::SetCellPixels(uint row, nuiSize size)
+void nuiVBox::SetCellPixels(uint32 row, nuiSize size)
 {
   nuiGrid::SetRowPixels(row, size);
 }
 
-void nuiVBox::ResetCellPixels(uint row)
+void nuiVBox::ResetCellPixels(uint32 row)
 {
   nuiGrid::ResetRowPixels(row);
 }
@@ -289,6 +289,11 @@ void nuiVBox::ResetCellPixels(uint row)
 void nuiVBox::SetSize(nuiSize size)
 {
   nuiGrid::SetColumnPixels(0, size);
+}
+
+nuiSize nuiVBox::GetCellPixels(uint32 cell) const
+{
+  return nuiGrid::GetRowPixels(cell);
 }
 
 
