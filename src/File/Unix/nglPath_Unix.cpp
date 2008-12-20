@@ -335,7 +335,7 @@ int nglPath::GetChildren (std::list<nglPath>* pChildren) const
 /*
  * This is rather Linux code here, warning other Unices !
  */
-#ifdef _MACOSX_
+#if (defined _MACOSX_) && !(defined _UIKIT_)
 static nglString GetMimeType(const nglString& extension)
 {
   CFStringRef mimeType = NULL;
@@ -367,7 +367,7 @@ nglString nglPath::GetMimeType() const
   if (ext.IsEmpty())
     return nglString::Empty;
 
-#ifdef _MACOSX_
+#if (defined _MACOSX_) && !(defined _UIKIT_)
   {
     nglString mime = ::GetMimeType(ext);
     if (!mime.IsNull())
