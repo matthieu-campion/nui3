@@ -12,6 +12,10 @@
 #include <CFNetwork/CFNetwork.h>
 #endif//_UIKIT_
 
+#ifdef _COCOA_
+#include <CFNetwork/CFNetwork.h>
+#endif//_UIKIT_
+
 nuiHTTPResponse* nuiHTTPRequest::SendRequest()
 {
   char* pUrl = mUrl.Export();

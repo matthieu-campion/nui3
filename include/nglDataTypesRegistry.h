@@ -25,6 +25,9 @@ typedef UINT        nglNativeObjectType;
 #ifdef _UNIX_
 typedef uint        nglNativeObjectType;
 #endif
+#ifdef _COCOA_
+typedef uint        nglNativeObjectType;
+#endif
 #ifdef _CARBON_
 typedef FlavorType  nglNativeObjectType;
 #endif

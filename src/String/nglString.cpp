@@ -33,7 +33,7 @@ licence: see nui3/LICENCE.TXT
 #define ngl_strncmp 		wcsncmp
 #define ngl_strnicmp		wcsnicmp
 #define ngl_mbs_stricmp	stricmp
-#elif defined _CARBON_ || defined _UIKIT_
+#elif defined _CARBON_ || defined _UIKIT_ || defined _COCOA_
 #define ngl_vsnwprintf vswprintf
 #define ngl_snprintf	snprintf
 #define ngl_strcmp wcscmp

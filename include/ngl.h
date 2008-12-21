@@ -13,8 +13,7 @@ This file must be included \e first in every source file, in NGL own sources
 and in NGL user application code.
 */
 
-#ifndef __ngl_h__
-#define __ngl_h__
+#pragma once
 
 #include "nuiVersion.h"
 
@@ -76,7 +75,7 @@ and in NGL user application code.
     #include <CoreFoundation/CoreFoundation.h>
 
   // Make Carbon the default choice when compiling on a Mac, even when using gcc
-  #elif (!defined(_CARBON_) && !defined(_DARWIN_))
+  #elif (!defined(_CARBON_) && !defined(_DARWIN_) && !defined(_COCOA_))
     #define _CARBON_
   #endif
   #ifdef __GNUC__
@@ -259,7 +258,8 @@ and in NGL user application code.
 #endif // _UNIX_
 
 
-/* MacOS/UIKit
+/*
+ MacOS/UIKit
  */
 #ifdef _UIKIT_
   #if (((defined _DEBUG) || (defined DEBUG)) && !(defined _DEBUG_)) 
@@ -289,8 +289,40 @@ and in NGL user application code.
   
 #endif//_UIKIT_
 
+/*
+ MacOS/Cocoa
+ */
+#ifdef _COCOA_
+#if (((defined _DEBUG) || (defined DEBUG)) && !(defined _DEBUG_)) 
+#define _DEBUG_
+#endif
 
-/* MacOS/Carbon
+#ifndef __cplusplus
+//  #if defined(_OBJC_)
+#include <Cocoa/Cocoa.h>
+#endif
+
+#include <stdlib.h>
+#include <stddef.h>
+#include <limits.h>
+
+typedef int8_t    int8;
+typedef int16_t   int16;
+typedef int32_t   int32;
+typedef int64_t   int64;
+typedef u_int8_t  uint8;
+typedef u_int16_t uint16;
+typedef u_int32_t uint32;
+typedef u_int64_t uint64;
+
+
+#define NGL_API __attribute__((visibility("hidden"))) 
+
+#endif//_COCOA_
+
+
+/*
+ MacOS/Carbon
  */
 #ifdef _CARBON_
   #if (((defined _DEBUG) || (defined DEBUG)) && !(defined _DEBUG_)) 
@@ -456,6 +488,23 @@ typedef wchar_t nglChar;
     #define GLU_TESS_WINDING_NEGATIVE          100133
     #define GLU_TESS_WINDING_ABS_GEQ_TWO       100134
 
+#  elif (defined _COCOA_)
+#    define _OPENGL_
+// Make our GL and Software Painters available, and disable other Painters...
+#    define __NUI_NO_GLES__
+#    undef __NUI_NO_SOFTWARE__
+#    define __NUI_NO_D3D__
+#    undef __NUI_NO_GL__
+
+
+#    if defined(_OBJC_)
+#     include <OpenGL/OpenGL.h>
+#    endif
+#    include <OpenGL/gl.h>
+#    include <OpenGL/glext.h>
+#    include <OpenGL/glu.h>
+
+
 #  elif defined _CARBON_
 #    if defined(__MWERKS__)
 #      if macintosh == 0
@@ -543,10 +592,11 @@ typedef unsigned int GLhandleARB;  /* shader object handle */
 #define NGL_CONFIG_H <ngl_config.mac.h>
 #elif (defined _UIKIT_)
 #define NGL_CONFIG_H <ngl_config.uikit.h>
+#elif (defined _COCOA_)
+#define NGL_CONFIG_H <ngl_config.cocoa.h>
 #else
 #define NGL_CONFIG_H <ngl_config.tux.h>
 #endif
 
 #include "ngl_all.h"
 
-#endif // __ngl_h__

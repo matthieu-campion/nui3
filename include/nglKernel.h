@@ -314,7 +314,12 @@ protected:
 	// Called right before the application will be terminated by iPhone OS
 	virtual void OnWillExit();	
 #endif
-
+  
+#ifdef _COCOA_
+	// Called right before the application will be terminated by the OS with COCOA
+	virtual void OnWillExit();	
+#endif
+  
 private:
   typedef std::list<ExitFunc>    ExitFuncList;
   typedef std::vector<nglString> ArgList;
@@ -441,6 +446,25 @@ public:
 
 #endif//_UIKIT_
 
+#ifdef _COCOA_
+protected:
+  //#FIXME: Volume Handling
+  
+  bool SysInit();
+  
+  friend void objCCallOnInit(void* pNSApplication);
+  friend void objCCallOnExit(int Code);
+  friend void objCCallOnWillExit();
+  
+  void CallOnWillExit();
+	
+  void* mpNSApplication;
+  
+public:
+	void * GetNSApplication() { return mpNSApplication; }
+  
+#endif//_UIKIT_
+  
 };
 
 

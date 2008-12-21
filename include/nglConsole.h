@@ -330,9 +330,6 @@ private:
   nglString mInputBuffer;
 
   void OnEvent(uint Flags);
-#ifdef USE_WCHAR
-  nglStringConv mOutputConv;
-#endif
 #endif //_UNIX_
 
 #if (defined _CARBON_ || defined _UIKIT_)
@@ -340,9 +337,6 @@ private:
   bool mIsVisible;
 
   void OnEvent(int Flags);
-#ifdef USE_WCHAR
-  nglStringConv mOutputConv;
-#endif
 #endif //_CARBON_||_UIKIT_
 
   
@@ -387,6 +381,10 @@ private:
   nglString mLine;
 
   static DWORD WINAPI ThreadProc(LPVOID lpParameter);
+#else
+#ifdef USE_WCHAR
+  nglStringConv mOutputConv;
+#endif
 #endif // _WIN32_
 };
 

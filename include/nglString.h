@@ -32,7 +32,7 @@ enum nglTextFormat
 	eTextNative = eTextDOS
 #elif (defined _WIN32_)
 	eTextNative = eTextDOS
-#elif (defined _CARBON_) || (defined _UIKIT_)
+#elif (defined _CARBON_) || (defined _UIKIT_) || (defined _COCOA_)
 	eTextNative = eTextUnix
 #endif
 };
@@ -772,7 +772,7 @@ public:
 	//@}
   static nglStringConv* GetStringConv(const nglEncodingPair& rEncodings);
   
-  #if defined _CARBON_ || defined _UIKIT_
+  #if (defined _CARBON_) || (defined _UIKIT_) || (defined _COCOA_)
   CFStringRef ToCFString() const; ///< return a Core Foundation string reference (don't forget to release the CFString using CFRelease)
   nglString(CFStringRef ref); ///< create an nglString from a Core Foundation string reference (don't forget to release the CFString using CFRelease)
   #endif

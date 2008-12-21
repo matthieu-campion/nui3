@@ -163,7 +163,10 @@ void nglApplication::PrintUsage()
 #ifdef __APPLE__
 
 #ifdef _UIKIT_
-///< TODO?
+///< #TODO?
+
+#elif (defined _COCOA_)
+///< #TODO?
 
 #elif defined(__MACHO__)
 
@@ -187,9 +190,11 @@ void nglApplication::SetIdle (bool UseIdle)
 
 # ifdef _UIKIT_
 
-///< TODO?
+///< #TODO?
 
-# else//!_UIKIT_
+#elif (defined _COCOA_) //COCOA
+
+# else //CARBON?
 
   EventLoopRef       mainLoop;
   EventLoopTimerRef  theTimer;
