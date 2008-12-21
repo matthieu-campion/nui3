@@ -141,6 +141,8 @@ nuiNativeResource::nuiNativeResource(const nglPath& rPath)
   if (resourcePath.Exists())
   {
     mpIStream = resourcePath.OpenRead();
+    if (!mpIStream)
+      NGL_OUT(_T("nuiNativeResource opening failed with path '%ls'\n"), resourcePath.GetChars());
     NGL_ASSERT(mpIStream);
     mValid = true;
   }

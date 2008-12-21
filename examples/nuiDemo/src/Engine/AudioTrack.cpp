@@ -21,7 +21,6 @@ AudioTrack::AudioTrack(nuiAudioFifo* pAudioFifo)
   mpAudioFifo = pAudioFifo;
   
   // open sound file from the binary's resources volume. If the file is in a regular folder of the HD, use a nglIFile constructor instead of nglPath.OpenRead
-//  nglIStream* istream = nglPath(_T("rsrc:/sample.wav")).OpenRead();
   nglIStream* istream = nglPath(_T("rsrc:/drums.wav")).OpenRead();
   if (!istream || !istream->Available())
   {
