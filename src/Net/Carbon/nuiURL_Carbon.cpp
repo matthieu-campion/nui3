@@ -46,7 +46,6 @@ bool nuiURL::OpenBrowser()
   // Release the URL and string
   CFRelease(url);
   CFRelease(str);
-
   
   return true;
 }

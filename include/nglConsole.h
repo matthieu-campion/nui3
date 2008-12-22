@@ -332,12 +332,12 @@ private:
   void OnEvent(uint Flags);
 #endif //_UNIX_
 
-#if (defined _CARBON_ || defined _UIKIT_)
+#if (defined _CARBON_ || defined _UIKIT_ || defined _COCOA_)
 private:
   bool mIsVisible;
 
   void OnEvent(int Flags);
-#endif //_CARBON_||_UIKIT_
+#endif //_CARBON_||_UIKIT_||COCOA
 
   
 #ifdef _WIN32_

@@ -10,6 +10,34 @@
 
 #define API_NAME _T("CoreAudio")
 
+#ifdef _DEBUG
+  #define nui_verify_noerr(errorCode)                                            \
+  do                                                                      \
+  {                                                                       \
+    if ( 0 != (errorCode) )                                             \
+    {                                                                   \
+    }                                                                   \
+  } while ( 0 )
+#else
+  #define nui_verify_noerr(errorCode)                                            \
+  do                                                                      \
+  {                                                                       \
+    int evalOnceErrorCode = (errorCode);                                \
+    if ( 0 != evalOnceErrorCode )                                       \
+    {                                                                   \
+      DEBUG_ASSERT_MESSAGE(                                           \
+        DEBUG_ASSERT_COMPONENT_NAME_STRING,                         \
+        #errorCode " == 0 ",                                        \
+        0,                                                          \
+        0,                                                          \
+        __FILE__,                                                   \
+        __LINE__,                                                   \
+        evalOnceErrorCode);                                         \
+    }                                                                   \
+  } while ( 0 )
+#endif
+
+
 class AudioDeviceState
   {
   public:
@@ -66,13 +94,13 @@ nuiAudioDevice_CoreAudio::nuiAudioDevice_CoreAudio(AudioDeviceID id)
   UInt32 maxlen = 1024;
   if (AudioDeviceGetProperty(mDeviceID, 0, false, kAudioDevicePropertyDeviceName, &maxlen, buf) != 0) // try as an output
   {
-    verify_noerr(AudioDeviceGetProperty(mDeviceID, 0, true, kAudioDevicePropertyDeviceName, &maxlen, buf)); // then as an input
+    nui_verify_noerr(AudioDeviceGetProperty(mDeviceID, 0, true, kAudioDevicePropertyDeviceName, &maxlen, buf)); // then as an input
   }
   mName.Import(buf);
   
   if (AudioDeviceGetProperty(mDeviceID, 0, false, kAudioDevicePropertyDeviceManufacturer, &maxlen, buf) != 0) // try as an output
   {
-    verify_noerr(AudioDeviceGetProperty(mDeviceID, 0, true, kAudioDevicePropertyDeviceManufacturer, &maxlen, buf)); // then as an input
+    nui_verify_noerr(AudioDeviceGetProperty(mDeviceID, 0, true, kAudioDevicePropertyDeviceManufacturer, &maxlen, buf)); // then as an input
   }
   mManufacturer.Import(buf);
   
@@ -553,10 +581,10 @@ uint32 nuiAudioDeviceAPI_CoreAudio::GetDeviceCount() const
   UInt32 propsize;
   mDeviceIDs.clear();
   
-  verify_noerr(AudioHardwareGetPropertyInfo(kAudioHardwarePropertyDevices, &propsize, NULL));
+  nui_verify_noerr(AudioHardwareGetPropertyInfo(kAudioHardwarePropertyDevices, &propsize, NULL));
   int nDevices = propsize / sizeof(AudioDeviceID);	
   mDeviceIDs.resize(nDevices);
-  verify_noerr(AudioHardwareGetProperty(kAudioHardwarePropertyDevices, &propsize, &mDeviceIDs[0]));
+  nui_verify_noerr(AudioHardwareGetProperty(kAudioHardwarePropertyDevices, &propsize, &mDeviceIDs[0]));
   
   return mDeviceIDs.size();
 }
@@ -580,8 +608,8 @@ nglString nuiAudioDeviceAPI_CoreAudio::GetDeviceName(uint32 index) const
 {
   UInt32 propsize;
   CFStringRef tempStr;
-  verify_noerr(AudioDeviceGetPropertyInfo(mDeviceIDs[index], 0, false, kAudioDevicePropertyDeviceNameCFString, &propsize, NULL));
-  verify_noerr(AudioDeviceGetProperty(mDeviceIDs[index], 0, false, kAudioDevicePropertyDeviceNameCFString, &propsize, &tempStr));
+  nui_verify_noerr(AudioDeviceGetPropertyInfo(mDeviceIDs[index], 0, false, kAudioDevicePropertyDeviceNameCFString, &propsize, NULL));
+  nui_verify_noerr(AudioDeviceGetProperty(mDeviceIDs[index], 0, false, kAudioDevicePropertyDeviceNameCFString, &propsize, &tempStr));
   nglString str(tempStr);
   CFRelease(tempStr);
   return str;
@@ -591,8 +619,8 @@ nuiAudioDevice* nuiAudioDeviceAPI_CoreAudio::GetDefaultOutputDevice()
 {
   AudioDeviceID deviceID = 0;
   UInt32 size;
-  verify_noerr(AudioHardwareGetPropertyInfo(kAudioHardwarePropertyDefaultOutputDevice, &size, NULL));
-  verify_noerr(AudioHardwareGetProperty(kAudioHardwarePropertyDefaultOutputDevice, &size, &deviceID));
+  nui_verify_noerr(AudioHardwareGetPropertyInfo(kAudioHardwarePropertyDefaultOutputDevice, &size, NULL));
+  nui_verify_noerr(AudioHardwareGetProperty(kAudioHardwarePropertyDefaultOutputDevice, &size, &deviceID));
   return new nuiAudioDevice_CoreAudio(deviceID);
 }
 
@@ -600,8 +628,8 @@ nuiAudioDevice* nuiAudioDeviceAPI_CoreAudio::GetDefaultInputDevice()
 {
   AudioDeviceID deviceID = 0;
   UInt32 size;
-  verify_noerr(AudioHardwareGetPropertyInfo(kAudioHardwarePropertyDefaultInputDevice, &size, NULL));
-  verify_noerr(AudioHardwareGetProperty(kAudioHardwarePropertyDefaultInputDevice, &size, &deviceID));
+  nui_verify_noerr(AudioHardwareGetPropertyInfo(kAudioHardwarePropertyDefaultInputDevice, &size, NULL));
+  nui_verify_noerr(AudioHardwareGetProperty(kAudioHardwarePropertyDefaultInputDevice, &size, &deviceID));
   return new nuiAudioDevice_CoreAudio(deviceID);
 }
 

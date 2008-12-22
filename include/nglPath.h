@@ -299,12 +299,12 @@ public:
 protected:
 	nglString   mPathName;
 
-#if (defined _UNIX_) || (defined _CARBON_) || (defined _UIKIT_)
+#if (defined _UNIX_) || (defined _CARBON_) || (defined _UIKIT_) || (defined _COCOA_)
 	typedef std::map<nglString, nglString, nglString::LessFunctor> MimeMap;
 
 	static nglTime mMimeTypeStamp;
 	static MimeMap mMimeType;
-#endif // _UNIX_ || _CARBON_ || _UIKIT_
+#endif // _UNIX_ || _CARBON_ || _UIKIT_ || _COCOA_
 
 	bool InternalSetPath (const char* pPath);
 	bool InternalSetPath (const nglChar* pPath);

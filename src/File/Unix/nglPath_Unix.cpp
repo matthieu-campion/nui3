@@ -14,7 +14,7 @@
 #include <dirent.h>
 #include <string.h>
 
-#ifdef _CARBON_
+#ifdef _MACOSX_
  #include <sys/param.h>
  #include <sys/ucred.h>
  #include <sys/mount.h>
@@ -68,7 +68,6 @@ void nglPathVolume::UpdateVolumes(std::list<nglPathVolume>& rVolumes)
       ++volumeIndex;
     }
   } while ( noErr == result );
-  
 }
 
 static OSErr nglFSGetVolParms(
@@ -269,6 +268,7 @@ nglPathVolume nglPathVolume::DelVolume(std::list<nglPathVolume>& rVolumes, int32
 #else
 bool nglPath::ResolveLink()
 {
+  //#TODO implement UIKIT & COCOA versions  
   return false;
 }
 #endif // _CARBON_
@@ -335,7 +335,7 @@ int nglPath::GetChildren (std::list<nglPath>* pChildren) const
 /*
  * This is rather Linux code here, warning other Unices !
  */
-#if (defined _MACOSX_) && !(defined _UIKIT_)
+#if (defined _CARBON_)
 static nglString GetMimeType(const nglString& extension)
 {
   CFStringRef mimeType = NULL;
@@ -367,7 +367,7 @@ nglString nglPath::GetMimeType() const
   if (ext.IsEmpty())
     return nglString::Empty;
 
-#if (defined _MACOSX_) && !(defined _UIKIT_)
+#if (defined _CARBON_)
   {
     nglString mime = ::GetMimeType(ext);
     if (!mime.IsNull())
@@ -527,8 +527,6 @@ uint64 nglPath::GetVolumes(std::list<nglPathVolume>& rVolumes, uint64 Flags)
 {
 #ifdef _CARBON_
   nglPathVolume::UpdateVolumes(rVolumes);
-#elif defined(_UIKIT_)
-///< FIXME: TODO ?
 #else
 	#define DEVICE tokens[0]
   #define MPOINT tokens[1]

@@ -14,7 +14,7 @@
 #ifdef _WIN32_
 # include "nglIMemory.h"
 #endif // _WIN32_
-#if (defined _CARBON_) || (defined _UIKIT_)
+#if (defined _CARBON_) || (defined _UIKIT_) || (defined _COCOA_)
 extern "C"
 {
 #include <mach-o/dyld.h>
@@ -134,7 +134,7 @@ nuiNativeResource::nuiNativeResource(const nglPath& rPath)
   
   mValid = true;
 #endif
-#if defined _CARBON_ || defined _UIKIT_ || defined _LINUX_
+#if defined _CARBON_ || defined _UIKIT_ || defined _COCOA_ || defined _LINUX_
   nglPath resourcePath(GetResourcePath());
   resourcePath += rPath;
   
@@ -146,7 +146,7 @@ nuiNativeResource::nuiNativeResource(const nglPath& rPath)
     NGL_ASSERT(mpIStream);
     mValid = true;
   }
-#endif // _CARBON_ || _UIKIT_ || _LINUX_
+#endif // _CARBON_ || _UIKIT_ || _COCOA_ || _LINUX_
 }
 
 nuiNativeResource::~nuiNativeResource()

@@ -72,6 +72,13 @@
 			remoteGlobalIDString = E58172D70C3D103300902DFE;
 			remoteInfo = nui3D;
 		};
+		E5BC28DD0EFF249B009EEA3B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BC1A61370E632DD700BDD037 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E592C5140EFE8CCC00340B35 /* libnui3D.a */;
+			remoteInfo = "nui3D cocoa";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -197,6 +204,7 @@
 			children = (
 				BC1A61400E632DD800BDD037 /* libnui3D.a */,
 				BC1A61420E632DD800BDD037 /* libnui3.a */,
+				E5BC28DE0EFF249B009EEA3B /* libnui3D.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -289,6 +297,13 @@
 			fileType = archive.ar;
 			path = libnui3.a;
 			remoteRef = BC1A61410E632DD800BDD037 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E5BC28DE0EFF249B009EEA3B /* libnui3D.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnui3D.a;
+			remoteRef = E5BC28DD0EFF249B009EEA3B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

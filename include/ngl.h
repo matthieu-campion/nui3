@@ -73,8 +73,16 @@ and in NGL user application code.
     #define _NODND_
 
     #include <CoreFoundation/CoreFoundation.h>
+    #include <CoreServices/CoreServices.h>
 
-  // Make Carbon the default choice when compiling on a Mac, even when using gcc
+  #elif (defined _COCOA_)
+    #define _CORE_FOUNDATION_
+    #define __MACHO__
+    #define __NGL_MACHO__
+    #include <CoreFoundation/CoreFoundation.h>
+    #include <CoreServices/CoreServices.h>
+
+// Make Carbon the default choice when compiling on a Mac, even when using gcc
   #elif (!defined(_CARBON_) && !defined(_DARWIN_) && !defined(_COCOA_))
     #define _CARBON_
   #endif
@@ -293,30 +301,30 @@ and in NGL user application code.
  MacOS/Cocoa
  */
 #ifdef _COCOA_
-#if (((defined _DEBUG) || (defined DEBUG)) && !(defined _DEBUG_)) 
-#define _DEBUG_
-#endif
+  #if (((defined _DEBUG) || (defined DEBUG)) && !(defined _DEBUG_)) 
+  #define _DEBUG_
+  #endif
 
-#ifndef __cplusplus
-//  #if defined(_OBJC_)
-#include <Cocoa/Cocoa.h>
-#endif
+  #ifndef __cplusplus
+  //  #if defined(_OBJC_)
+  #include <Cocoa/Cocoa.h>
+  #endif
 
-#include <stdlib.h>
-#include <stddef.h>
-#include <limits.h>
+  #include <stdlib.h>
+  #include <stddef.h>
+  #include <limits.h>
 
-typedef int8_t    int8;
-typedef int16_t   int16;
-typedef int32_t   int32;
-typedef int64_t   int64;
-typedef u_int8_t  uint8;
-typedef u_int16_t uint16;
-typedef u_int32_t uint32;
-typedef u_int64_t uint64;
+  typedef int8_t    int8;
+  typedef int16_t   int16;
+  typedef int32_t   int32;
+  typedef int64_t   int64;
+  typedef u_int8_t  uint8;
+  typedef u_int16_t uint16;
+  typedef u_int32_t uint32;
+  typedef u_int64_t uint64;
 
 
-#define NGL_API __attribute__((visibility("hidden"))) 
+  #define NGL_API __attribute__((visibility("hidden"))) 
 
 #endif//_COCOA_
 

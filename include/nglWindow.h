@@ -681,7 +681,8 @@ private:
 
   nglWindow(const nglWindow&) {} // Undefined copy constructor
 
-#ifdef _UIKIT_///< HACK: To be called from ObjectiveC interfaces
+#if (defined _UIKIT_) || (defined _COCOA_)
+  ///< #HACK: To be called from ObjectiveC interfaces
 public:
 #endif
   void CallOnCreation();
