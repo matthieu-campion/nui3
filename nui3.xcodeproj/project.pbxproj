@@ -3472,6 +3472,7 @@
 		E5BC28C00EFF17A9009EEA3B /* nglContext_Cocoa.mm in Sources */ = {isa = PBXBuildFile; fileRef = E5BC28BC0EFF17A9009EEA3B /* nglContext_Cocoa.mm */; };
 		E5BC28C10EFF17A9009EEA3B /* nglWindow_Cocoa.mm in Sources */ = {isa = PBXBuildFile; fileRef = E5BC28BD0EFF17A9009EEA3B /* nglWindow_Cocoa.mm */; };
 		E5BC28C20EFF17A9009EEA3B /* nuiMainMenu_Cocoa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5BC28BE0EFF17A9009EEA3B /* nuiMainMenu_Cocoa.cpp */; };
+		E5BC292C0F000399009EEA3B /* nglTimer_CoreFoundation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5BC292B0F000399009EEA3B /* nglTimer_CoreFoundation.cpp */; };
 		E5BCF2EA0D88226100D6EAEF /* nuiFontBrowser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5BCF2E90D88226100D6EAEF /* nuiFontBrowser.cpp */; };
 		E5BCF2EB0D88226100D6EAEF /* nuiFontBrowser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5BCF2E90D88226100D6EAEF /* nuiFontBrowser.cpp */; };
 		E5BCF2ED0D88227D00D6EAEF /* nuiFontBrowser.h in Headers */ = {isa = PBXBuildFile; fileRef = E5BCF2EC0D88227D00D6EAEF /* nuiFontBrowser.h */; };
@@ -4700,6 +4701,7 @@
 		E5BC28BC0EFF17A9009EEA3B /* nglContext_Cocoa.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = nglContext_Cocoa.mm; path = src/Window/Cocoa/nglContext_Cocoa.mm; sourceTree = SOURCE_ROOT; };
 		E5BC28BD0EFF17A9009EEA3B /* nglWindow_Cocoa.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = nglWindow_Cocoa.mm; path = src/Window/Cocoa/nglWindow_Cocoa.mm; sourceTree = SOURCE_ROOT; };
 		E5BC28BE0EFF17A9009EEA3B /* nuiMainMenu_Cocoa.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiMainMenu_Cocoa.cpp; path = src/Window/Cocoa/nuiMainMenu_Cocoa.cpp; sourceTree = SOURCE_ROOT; };
+		E5BC292B0F000399009EEA3B /* nglTimer_CoreFoundation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nglTimer_CoreFoundation.cpp; path = CoreFoundation/nglTimer_CoreFoundation.cpp; sourceTree = "<group>"; };
 		E5BCF2E90D88226100D6EAEF /* nuiFontBrowser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiFontBrowser.cpp; sourceTree = "<group>"; };
 		E5BCF2EC0D88227D00D6EAEF /* nuiFontBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiFontBrowser.h; path = include/nuiFontBrowser.h; sourceTree = SOURCE_ROOT; };
 		E5C2ED740CF6480A0098B8BB /* nglVolume.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nglVolume.h; path = include/nglVolume.h; sourceTree = SOURCE_ROOT; };
@@ -6559,6 +6561,7 @@
 		E5816E040C3CECAB00902DFE /* Time */ = {
 			isa = PBXGroup;
 			children = (
+				E5BC292D0F0003A0009EEA3B /* CoreFoundation */,
 				E5816E050C3CECAB00902DFE /* Carbon */,
 				E5816E070C3CECAB00902DFE /* nglTime.cpp */,
 				E5816CA60C3CECAB00902DFE /* nglTime.h */,
@@ -6715,6 +6718,14 @@
 			name = Cocoa;
 			path = src/Window/Cocoa;
 			sourceTree = SOURCE_ROOT;
+		};
+		E5BC292D0F0003A0009EEA3B /* CoreFoundation */ = {
+			isa = PBXGroup;
+			children = (
+				E5BC292B0F000399009EEA3B /* nglTimer_CoreFoundation.cpp */,
+			);
+			name = CoreFoundation;
+			sourceTree = "<group>";
 		};
 		E5F796590C750430009CE779 /* harfbuzz */ = {
 			isa = PBXGroup;
@@ -10371,6 +10382,7 @@
 				E5BC28C00EFF17A9009EEA3B /* nglContext_Cocoa.mm in Sources */,
 				E5BC28C10EFF17A9009EEA3B /* nglWindow_Cocoa.mm in Sources */,
 				E5BC28C20EFF17A9009EEA3B /* nuiMainMenu_Cocoa.cpp in Sources */,
+				E5BC292C0F000399009EEA3B /* nglTimer_CoreFoundation.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

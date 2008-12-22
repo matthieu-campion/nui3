@@ -100,10 +100,10 @@ bool nglTimer::Start(bool Immediate, bool Reset)
     ctx.release = NULL;
     ctx.copyDescription = NULL;
 
-
+    CFAbsoluteTime absTime = CFAbsoluteTimeGetCurrent() + (Immediate ? 0 : (double)mPeriod);
     mpCFRunLoopTimer =
       CFRunLoopTimerCreate( kCFAllocatorDefault,
-                            Immediate ? 0 : (double)mPeriod,
+                            absTime,
                             mPeriod, 
                             0,// option flags, not implemented so far
                             0,// timer order, not implemented so far
