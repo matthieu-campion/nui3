@@ -102,16 +102,20 @@ bool nglTimer::Start(bool Immediate, bool Reset)
 
   mRunning = true;
 
+
   EventTimerInterval interval = mPeriod * kEventDurationSecond;
   InstallEventLoopTimer (mainLoop,
-                         0,
+                         Immediate? 0 : mPeriod * kEventDurationSecond,   // get fireDelay the right value, depending on the user's choice about Immediate parameter.
                          interval,
                          mTimerProc,
                          (void*)this,
                          &mTimer);
 
-  if (Immediate)
-    OnTick(0);
+  // we don't need the following instruction since the fireDelay parameter
+  // does the job. Question is: how does this stuff could work before this fix??
+  //  if (Immediate)
+  //    OnTick(0);
+  
   return true;
 }
 
