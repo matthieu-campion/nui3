@@ -105,7 +105,7 @@ bool nglTimer::Start(bool Immediate, bool Reset)
 
   EventTimerInterval interval = mPeriod * kEventDurationSecond;
   InstallEventLoopTimer (mainLoop,
-                         Immediate? 0 : mPeriod * kEventDurationSecond,   // get fireDelay the right value, depending on the user's choice about Immediate parameter.
+                         Immediate? 0 : interval,   // get fireDelay the right value, depending on the user's choice about Immediate parameter.
                          interval,
                          mTimerProc,
                          (void*)this,
