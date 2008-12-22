@@ -101,6 +101,7 @@ bool nglTimer::Start(bool Immediate, bool Reset)
     ctx.copyDescription = NULL;
 
     CFAbsoluteTime absTime = CFAbsoluteTimeGetCurrent() + (Immediate ? 0 : (double)mPeriod);
+    
     mpCFRunLoopTimer =
       CFRunLoopTimerCreate( kCFAllocatorDefault,
                             absTime,
@@ -130,6 +131,7 @@ void nglTimer::Stop()
     CFRunLoopRef currentRunLoop = CFRunLoopGetCurrent();
     NGL_ASSERT(mpCFRunLoop == currentRunLoop);
     CFRunLoopRemoveTimer(currentRunLoop, mpCFRunLoopTimer, kCFRunLoopCommonModes);
+    mpCFRunLoopTimer = NULL;
   }
   mRunning = false;
 }
