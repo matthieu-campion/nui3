@@ -11,7 +11,9 @@
 	<key>CFBundleIconFile</key>
 	<string>Icon.png</string>
 	<key>CFBundleIdentifier</key>
-	<string>TAUXF86235.*</string>
+	<string>net.libnui.nuiDemo</string>
+	<key>CFBundleShortVersionString</key>
+	<string></string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>

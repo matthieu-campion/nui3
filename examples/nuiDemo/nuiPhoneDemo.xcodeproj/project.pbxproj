@@ -88,22 +88,6 @@
 		C9EA04FD0E2917FA0067EF48 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		C9F2587A0E5861EA00687021 /* dlist.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = dlist.plist; sourceTree = "<group>"; };
 		C9F5F9330DA84CAB00E078ED /* iPhoneDemoD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iPhoneDemoD.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E5CD2F0E0ECF82310083037A /* Colors.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = Colors.css; path = resources/css/Colors.css; sourceTree = SOURCE_ROOT; };
-		E5CD2F0F0ECF82310083037A /* Fonts.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = Fonts.css; path = resources/css/Fonts.css; sourceTree = SOURCE_ROOT; };
-		E5CD2F100ECF82310083037A /* Gui.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = Gui.css; path = resources/css/Gui.css; sourceTree = SOURCE_ROOT; };
-		E5CD2F110ECF82310083037A /* nuiDemo.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = nuiDemo.css; path = resources/css/nuiDemo.css; sourceTree = SOURCE_ROOT; };
-		E5CD2F130ECF82310083037A /* buttonStartDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buttonStartDown.png; path = resources/decorations/buttonStartDown.png; sourceTree = SOURCE_ROOT; };
-		E5CD2F140ECF82310083037A /* buttonStartDownHover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buttonStartDownHover.png; path = resources/decorations/buttonStartDownHover.png; sourceTree = SOURCE_ROOT; };
-		E5CD2F150ECF82310083037A /* buttonStartUp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buttonStartUp.png; path = resources/decorations/buttonStartUp.png; sourceTree = SOURCE_ROOT; };
-		E5CD2F160ECF82310083037A /* buttonStartUpHover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buttonStartUpHover.png; path = resources/decorations/buttonStartUpHover.png; sourceTree = SOURCE_ROOT; };
-		E5CD2F170ECF82310083037A /* oscilloBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = oscilloBackground.png; path = resources/decorations/oscilloBackground.png; sourceTree = SOURCE_ROOT; };
-		E5CD2F180ECF82310083037A /* oscilloGloss.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = oscilloGloss.png; path = resources/decorations/oscilloGloss.png; sourceTree = SOURCE_ROOT; };
-		E5CD2F190ECF82310083037A /* pane.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pane.png; path = resources/decorations/pane.png; sourceTree = SOURCE_ROOT; };
-		E5CD2F1A0ECF82310083037A /* title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = title.png; path = resources/decorations/title.png; sourceTree = SOURCE_ROOT; };
-		E5CD2F1B0ECF82310083037A /* nuiDemo.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = nuiDemo.icns; path = resources/nuiDemo.icns; sourceTree = "<group>"; };
-		E5CD2F1C0ECF82310083037A /* nuiDemo.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; name = nuiDemo.ico; path = resources/nuiDemo.ico; sourceTree = "<group>"; };
-		E5CD2F1D0ECF82310083037A /* nuiDemo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = nuiDemo.png; path = resources/nuiDemo.png; sourceTree = "<group>"; };
-		E5CD2F1F0ECF82310083037A /* text.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = text.txt; path = resources/text.txt; sourceTree = "<group>"; };
 		E5CD2F680ECF82BE0083037A /* Application.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Application.cpp; path = src/Application.cpp; sourceTree = SOURCE_ROOT; };
 		E5CD2F690ECF82BE0083037A /* Application.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Application.h; path = src/Application.h; sourceTree = SOURCE_ROOT; };
 		E5CD2F6B0ECF82BE0083037A /* AudioTrack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioTrack.cpp; path = src/Engine/AudioTrack.cpp; sourceTree = SOURCE_ROOT; };
@@ -205,12 +189,6 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				E5CD2F0D0ECF82310083037A /* css */,
-				E5CD2F120ECF82310083037A /* decorations */,
-				E5CD2F1B0ECF82310083037A /* nuiDemo.icns */,
-				E5CD2F1C0ECF82310083037A /* nuiDemo.ico */,
-				E5CD2F1D0ECF82310083037A /* nuiDemo.png */,
-				E5CD2F1F0ECF82310083037A /* text.txt */,
 				C9DCE4C20DA7F4FF008AC45D /* Info.plist */,
 			);
 			name = Resources;
@@ -244,34 +222,6 @@
 				E5CD2F770ECF82BE0083037A /* MainWindow.h */,
 			);
 			name = src;
-			sourceTree = "<group>";
-		};
-		E5CD2F0D0ECF82310083037A /* css */ = {
-			isa = PBXGroup;
-			children = (
-				E5CD2F0E0ECF82310083037A /* Colors.css */,
-				E5CD2F0F0ECF82310083037A /* Fonts.css */,
-				E5CD2F100ECF82310083037A /* Gui.css */,
-				E5CD2F110ECF82310083037A /* nuiDemo.css */,
-			);
-			name = css;
-			path = resources/css;
-			sourceTree = "<group>";
-		};
-		E5CD2F120ECF82310083037A /* decorations */ = {
-			isa = PBXGroup;
-			children = (
-				E5CD2F130ECF82310083037A /* buttonStartDown.png */,
-				E5CD2F140ECF82310083037A /* buttonStartDownHover.png */,
-				E5CD2F150ECF82310083037A /* buttonStartUp.png */,
-				E5CD2F160ECF82310083037A /* buttonStartUpHover.png */,
-				E5CD2F170ECF82310083037A /* oscilloBackground.png */,
-				E5CD2F180ECF82310083037A /* oscilloGloss.png */,
-				E5CD2F190ECF82310083037A /* pane.png */,
-				E5CD2F1A0ECF82310083037A /* title.png */,
-			);
-			name = decorations;
-			path = resources/decorations;
 			sourceTree = "<group>";
 		};
 		E5CD2F590ECF82810083037A /* Products */ = {

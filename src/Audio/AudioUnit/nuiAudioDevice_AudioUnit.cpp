@@ -76,8 +76,8 @@ void nuiAudioDevice_AudioUnit::Process(uint uNumFrames, AudioBufferList* ioData)
   
   for (uint32 s = 0; s < uNumFrames; s++)
   {
-    *dst0 = *ptr0 * (1 << 24);
-    *dst1 = *ptr1 * (1 << 24);
+    *dst0 = *ptr0 * ((1 << 24) - 1);
+    *dst1 = *ptr1 * ((1 << 24) - 1);
     ptr0++; ptr1++;
     dst0++; dst1++;
   }
