@@ -8,6 +8,7 @@
 #include "nuiAudioDevice.h"
 #include "nglThread.h"
 #include "nuiAudioDevice_AudioUnit.h"
+#include "nuiAudioConvert.h"
 
 //class nuiAudioDevice_AudioUnit : public nuiAudioDevice
 nuiAudioDevice_AudioUnit::nuiAudioDevice_AudioUnit()
@@ -61,15 +62,25 @@ OSStatus AudioUnitCallback(void* inRefCon,
 
 void nuiAudioDevice_AudioUnit::Process(uint uNumFrames, AudioBufferList* ioData)
 {
-  NGL_OUT(_T("nuiAudioDevice_AudioUnit::Process uNumFrames %d    %d %d\n"),uNumFrames, ioData->mBuffers[0].mNumberChannels, ioData->mBuffers[1].mNumberChannels );
+//  NGL_OUT(_T("nuiAudioDevice_AudioUnit::Process uNumFrames %d    %d %d\n"),uNumFrames, ioData->mBuffers[0].mNumberChannels, ioData->mBuffers[1].mNumberChannels );
   
-//  for (uint32 s = 0; s < uNumFrames; s++)
-//  memcpy(mOutputBuffers[0], ioData->mBuffers[0].mData, uNumFrames * sizeof(float));
-//  memcpy(mOutputBuffers[1], ioData->mBuffers[1].mData, uNumFrames * sizeof(float));
-  
-  mOutputBuffers[0] = (float*)ioData->mBuffers[0].mData;
-  mOutputBuffers[1] = (float*)ioData->mBuffers[1].mData;
   mAudioProcessFn(mInputBuffers, mOutputBuffers, uNumFrames);
+  
+
+  // copy buffers (int -> float)
+  float* ptr0 = mOutputBuffers[0];
+  float* ptr1 = mOutputBuffers[1];
+  
+  uint32* dst0 = (uint32*)ioData->mBuffers[0].mData;
+  uint32* dst1 = (uint32*)ioData->mBuffers[1].mData;
+  
+  for (uint32 s = 0; s < uNumFrames; s++)
+  {
+    *dst0 = *ptr0 * (1 << 24);
+    *dst1 = *ptr1 * (1 << 24);
+    ptr0++; ptr1++;
+    dst0++; dst1++;
+  }
 } 
 
 
@@ -89,9 +100,13 @@ bool nuiAudioDevice_AudioUnit::Open(std::vector<uint32>& rInputChannels, std::ve
   mBufferSize = BufferSize;
 
   
-  mOutputBuffers.resize(2);
-//  for (uint32 i = 0; i < 2; i++)
-//    mOutputBuffers[i].
+  mActiveInputChannels.resize(rInputChannels.size());
+  mActiveOutputChannels.resize(rOutputChannels.size());
+      
+  mOutputBuffers.resize(mActiveOutputChannels.size(), NULL);
+  // init buffers
+  for (uint32 i = 0; i < mOutputBuffers.size(); i++)
+    mOutputBuffers[i] = (float*)malloc(mBufferSize * sizeof(float));
   
   UInt32 size = sizeof (UInt32);
   UInt32 value = kAudioSessionOverrideAudioRoute_None;
@@ -111,7 +126,7 @@ bool nuiAudioDevice_AudioUnit::Open(std::vector<uint32>& rInputChannels, std::ve
 //  } 		
 	
 	// Set the buffer size
-	Float32 fBufferSize = mBufferSize / mSampleRate;	//256frames @ 44.1khz
+	Float32 fBufferSize = (float)mBufferSize / mSampleRate;	//256frames @ 44.1khz
 	err = AudioSessionSetProperty(kAudioSessionProperty_PreferredHardwareIOBufferDuration, sizeof(Float32), &fBufferSize);
 //	if (err != noErr)
 //  {
