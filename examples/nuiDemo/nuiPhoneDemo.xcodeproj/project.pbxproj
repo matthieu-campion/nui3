@@ -103,7 +103,6 @@
 		E5CD2F1B0ECF82310083037A /* nuiDemo.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = nuiDemo.icns; path = resources/nuiDemo.icns; sourceTree = "<group>"; };
 		E5CD2F1C0ECF82310083037A /* nuiDemo.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; name = nuiDemo.ico; path = resources/nuiDemo.ico; sourceTree = "<group>"; };
 		E5CD2F1D0ECF82310083037A /* nuiDemo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = nuiDemo.png; path = resources/nuiDemo.png; sourceTree = "<group>"; };
-		E5CD2F1E0ECF82310083037A /* sample.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = sample.wav; path = resources/sample.wav; sourceTree = "<group>"; };
 		E5CD2F1F0ECF82310083037A /* text.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = text.txt; path = resources/text.txt; sourceTree = "<group>"; };
 		E5CD2F680ECF82BE0083037A /* Application.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Application.cpp; path = src/Application.cpp; sourceTree = SOURCE_ROOT; };
 		E5CD2F690ECF82BE0083037A /* Application.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Application.h; path = src/Application.h; sourceTree = SOURCE_ROOT; };
@@ -211,7 +210,6 @@
 				E5CD2F1B0ECF82310083037A /* nuiDemo.icns */,
 				E5CD2F1C0ECF82310083037A /* nuiDemo.ico */,
 				E5CD2F1D0ECF82310083037A /* nuiDemo.png */,
-				E5CD2F1E0ECF82310083037A /* sample.wav */,
 				E5CD2F1F0ECF82310083037A /* text.txt */,
 				C9DCE4C20DA7F4FF008AC45D /* Info.plist */,
 			);

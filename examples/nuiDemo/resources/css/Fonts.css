@@ -13,13 +13,13 @@
 // it can also be retrieved in the source code, using {nuiFont* nuiFont::GetFont(const nglString& rId)} (see nuiFont.h)
 //
 
-@Font FontText
-{  
-  GenericName: sans-serif;
-  Size: 10;
-  Bold: true;
-  Italic: false;
-}
+//@Font FontText
+//{  
+//  GenericName: sans-serif;
+//  Size: 10;
+//  Bold: true;
+//  Italic: false;
+//}
 
 
 // don't forget to add a blank ending line, otherwise the css parsing will fail!
