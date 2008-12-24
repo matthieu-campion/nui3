@@ -10,8 +10,11 @@
 #include "nuiDrawContext.h"
 #include "nuiXML.h"
 
-
+#if (defined (TARGET_IPHONE_SIMULATOR) || defined (TARGET_OS_IPHONE))
+nuiSize nuiKnob::mDefaultSensitivity = 4;
+#else
 nuiSize nuiKnob::mDefaultSensitivity = 10;
+#endif
 nuiSize nuiKnob::mDefaultFineSensitivityRatio = 10;
 nglKeyCode nuiKnob::mDefaultFineSensitivityKey = NK_LSHIFT;
 
@@ -353,6 +356,7 @@ bool nuiKnob::Draw(nuiDrawContext* pContext)
   if (mpImageSequence)
   {
     mFrameIndex = (int)((mpImageSequence->GetNbFrames()-1) * (mRange.GetValue() - mRange.GetMinimum())) / (mRange.GetMaximum() - mRange.GetMinimum());
+    
     mpImageSequence->SetFrameIndex(mFrameIndex);
     mpImageSequence->Draw(pContext);
   }

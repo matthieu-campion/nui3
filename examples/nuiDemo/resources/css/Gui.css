@@ -141,11 +141,6 @@ guiOscillo!
 {
   DecorationMode: Border;
   Decoration: dPaneBkg;
-//  UserWidth: 222;
-//  UserHeight: 130; 
-//  UserWidth: 246;
-//  UserHeight: 154; 
-//  BorderBottom: 30;
 }
 
 
@@ -175,6 +170,13 @@ guiOscillo!
   Texture: "rsrc:/decorations/sliderHandle.png";
   ClientRect: "{0 0 39 25}";
 }
+
+
+//"KnobFrequency"!
+//{
+//  UserWidth: 50;
+//  UserHeight: 50;
+//}
 
 // don't forget to add a blank ending line, otherwise the css parsing will fail!
 

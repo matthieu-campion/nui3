@@ -79,6 +79,10 @@
 		1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		61DF35C60EC25BCD00051F43 /* nuiE.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nuiE.xcodeproj; path = ../../nuiE.xcodeproj; sourceTree = SOURCE_ROOT; };
+		BCEFD6A40F01B2260077E593 /* nuiDemo.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = nuiDemo.css; path = resources/css/nuiDemo.css; sourceTree = SOURCE_ROOT; };
+		BCEFD6A50F01B2260077E593 /* Gui.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = Gui.css; path = resources/css/Gui.css; sourceTree = SOURCE_ROOT; };
+		BCEFD6A60F01B2260077E593 /* Colors.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = Colors.css; path = resources/css/Colors.css; sourceTree = SOURCE_ROOT; };
+		BCEFD6A70F01B2260077E593 /* Fonts.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = Fonts.css; path = resources/css/Fonts.css; sourceTree = SOURCE_ROOT; };
 		C99996020DA6EE97001A7116 /* iPhoneDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iPhoneDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C999972E0DA6F405001A7116 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		C99997710DA6F9F2001A7116 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -177,9 +181,10 @@
 			isa = PBXGroup;
 			children = (
 				C9F2587A0E5861EA00687021 /* dlist.plist */,
-				C99996230DA6EED8001A7116 /* deps */,
+				BCEFD69F0F01B2080077E593 /* css */,
 				C99996330DA6EED8001A7116 /* src */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
+				C99996230DA6EED8001A7116 /* deps */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 			);
@@ -201,6 +206,17 @@
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BCEFD69F0F01B2080077E593 /* css */ = {
+			isa = PBXGroup;
+			children = (
+				BCEFD6A40F01B2260077E593 /* nuiDemo.css */,
+				BCEFD6A50F01B2260077E593 /* Gui.css */,
+				BCEFD6A60F01B2260077E593 /* Colors.css */,
+				BCEFD6A70F01B2260077E593 /* Fonts.css */,
+			);
+			name = css;
 			sourceTree = "<group>";
 		};
 		C99996230DA6EED8001A7116 /* deps */ = {
@@ -450,6 +466,7 @@
 		C99996000DA6EE97001A7116 /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: LOIC BERTHELOT";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "";
@@ -467,6 +484,7 @@
 				OTHER_LDFLAGS = "-lz";
 				PREBINDING = NO;
 				PRODUCT_NAME = iPhoneDemo;
+				PROVISIONING_PROFILE = "8901DAF7-02E9-4DC7-924A-DE62FC5BC962";
 				STRIPFLAGS = "-SXx";
 				STRIP_INSTALLED_PRODUCT = YES;
 			};
