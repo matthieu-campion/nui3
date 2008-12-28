@@ -466,7 +466,7 @@
 		C99996000DA6EE97001A7116 /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: LOIC BERTHELOT";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Sebastien Metrot";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "";
@@ -484,7 +484,7 @@
 				OTHER_LDFLAGS = "-lz";
 				PREBINDING = NO;
 				PRODUCT_NAME = iPhoneDemo;
-				PROVISIONING_PROFILE = "8901DAF7-02E9-4DC7-924A-DE62FC5BC962";
+				PROVISIONING_PROFILE = "0DF91EA4-C139-4630-9DD1-4E7C170CCF1D";
 				STRIPFLAGS = "-SXx";
 				STRIP_INSTALLED_PRODUCT = YES;
 			};

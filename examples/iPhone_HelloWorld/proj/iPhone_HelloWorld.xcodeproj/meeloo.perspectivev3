@@ -617,7 +617,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>E59365260C7AD788001596BD</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>nuiRefCount.h</string>
+								<string>nuiMainWindow.h</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -625,14 +625,13 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>E59365270C7AD788001596BD</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>nuiRefCount.h</string>
+										<string>nuiMainWindow.h</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E59309AA0EF1681B008E7906</string>
+										<string>E55DBF950F0579CA00A9EC18</string>
 										<key>history</key>
 										<array>
-											<string>E51D5C7C0EC3D6D500182E40</string>
 											<string>E51D5CA60EC3DAA100182E40</string>
 											<string>E5CD2F210ECF826F0083037A</string>
 											<string>E5CD2F220ECF826F0083037A</string>
@@ -649,10 +648,9 @@
 											<string>E5CD30700ECF89850083037A</string>
 											<string>E5CD30A40ECF8CBB0083037A</string>
 											<string>E5CD30A60ECF8CBB0083037A</string>
-											<string>E5CD30AA0ECF8CBB0083037A</string>
 											<string>E5CD30E80ECF91550083037A</string>
 											<string>E5CD30EC0ECF926B0083037A</string>
-											<string>E5CD31220ED0DC740083037A</string>
+											<string>E5CD30BA0ECF8CBB0083037A</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -678,8 +676,6 @@
 											<string>E5CD30AF0ECF8CBB0083037A</string>
 											<string>E5CD30B30ECF8CBB0083037A</string>
 											<string>E5CD30B60ECF8CBB0083037A</string>
-											<string>E5CD30BA0ECF8CBB0083037A</string>
-											<string>E5CD30BC0ECF8CBB0083037A</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -749,11 +745,11 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E59309A60EF1672F008E7906</string>
+				<string>E55DBF010F04647F00A9EC18</string>
 				<string>1CA23EE50692099D00951B8B</string>
-				<string>E59309A70EF1672F008E7906</string>
+				<string>E55DBF020F04647F00A9EC18</string>
 				<string>E59365260C7AD788001596BD</string>
-				<string>E59309A80EF1672F008E7906</string>
+				<string>E55DBF030F04647F00A9EC18</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
 			<key>ToolbarConfiguration</key>
@@ -898,14 +894,14 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E59309AC0EF1681B008E7906</string>
+				<string>E55DBF040F04647F00A9EC18</string>
 				<string>1CCC7628064C1048000F2A68</string>
 				<string>1CCC7629064C1048000F2A68</string>
-				<string>E59309AD0EF1681B008E7906</string>
-				<string>E59309AE0EF1681B008E7906</string>
-				<string>E59309AF0EF1681B008E7906</string>
-				<string>E59309B00EF1681B008E7906</string>
-				<string>E59309B10EF1681B008E7906</string>
+				<string>E55DBF050F04647F00A9EC18</string>
+				<string>E55DBF060F04647F00A9EC18</string>
+				<string>E55DBF070F04647F00A9EC18</string>
+				<string>E55DBF080F04647F00A9EC18</string>
+				<string>E55DBF090F04647F00A9EC18</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -931,8 +927,8 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E59309B20EF1681B008E7906</string>
-		<string>E59309B30EF1681B008E7906</string>
+		<string>E55DBF970F0579CA00A9EC18</string>
+		<string>E55DBF0B0F04647F00A9EC18</string>
 		<string>/Users/meeloo/work/nui3/examples/iPhone_HelloWorld/proj/iPhone_HelloWorld.xcodeproj</string>
 	</array>
 	<key>WindowString</key>

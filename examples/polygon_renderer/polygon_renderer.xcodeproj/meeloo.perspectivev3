@@ -720,14 +720,14 @@
 					<key>GeometryConfiguration</key>
 					<dict>
 						<key>Frame</key>
-						<string>{{0, 0}, {1522, 335}}</string>
+						<string>{{0, 0}, {1522, 0}}</string>
 						<key>RubberWindowFrame</key>
-						<string>398 70 1522 1108 0 0 1920 1178 </string>
+						<string>513 487 1522 691 0 0 1920 1178 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXDebugCLIModule</string>
 					<key>Proportion</key>
-					<string>335pt</string>
+					<string>0pt</string>
 				</dict>
 				<dict>
 					<key>ContentConfiguration</key>
@@ -746,8 +746,8 @@
 								<string>yes</string>
 								<key>sizes</key>
 								<array>
-									<string>{{0, 0}, {536, 276}}</string>
-									<string>{{0, 276}, {536, 451}}</string>
+									<string>{{0, 0}, {536, 245}}</string>
+									<string>{{0, 245}, {536, 400}}</string>
 								</array>
 							</dict>
 							<key>VerticalSplitView</key>
@@ -762,8 +762,8 @@
 								<string>yes</string>
 								<key>sizes</key>
 								<array>
-									<string>{{0, 0}, {536, 727}}</string>
-									<string>{{536, 0}, {986, 727}}</string>
+									<string>{{0, 0}, {536, 645}}</string>
+									<string>{{536, 0}, {986, 645}}</string>
 								</array>
 							</dict>
 						</dict>
@@ -783,7 +783,7 @@
 						<key>DebugSTDIOWindowFrame</key>
 						<string>{{200, 200}, {500, 300}}</string>
 						<key>Frame</key>
-						<string>{{0, 340}, {1522, 727}}</string>
+						<string>{{0, 5}, {1522, 645}}</string>
 						<key>PBXDebugSessionStackFrameViewKey</key>
 						<dict>
 							<key>DebugVariablesTableConfiguration</key>
@@ -796,17 +796,17 @@
 								<real>162</real>
 							</array>
 							<key>Frame</key>
-							<string>{{0, 276}, {536, 451}}</string>
+							<string>{{0, 245}, {536, 400}}</string>
 							<key>RubberWindowFrame</key>
-							<string>398 70 1522 1108 0 0 1920 1178 </string>
+							<string>513 487 1522 691 0 0 1920 1178 </string>
 						</dict>
 						<key>RubberWindowFrame</key>
-						<string>398 70 1522 1108 0 0 1920 1178 </string>
+						<string>513 487 1522 691 0 0 1920 1178 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXDebugSessionModule</string>
 					<key>Proportion</key>
-					<string>727pt</string>
+					<string>645pt</string>
 				</dict>
 			</array>
 			<key>Name</key>
@@ -824,14 +824,14 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E524744A0EF7B68500EEB239</string>
+				<string>E563BD810F0599B500F7666D</string>
 				<string>1CCC7628064C1048000F2A68</string>
 				<string>1CCC7629064C1048000F2A68</string>
-				<string>E524744B0EF7B68500EEB239</string>
-				<string>E524744C0EF7B68500EEB239</string>
-				<string>E524744D0EF7B68500EEB239</string>
-				<string>E524744E0EF7B68500EEB239</string>
-				<string>E524744F0EF7B68500EEB239</string>
+				<string>E563BD820F0599B500F7666D</string>
+				<string>E563BD830F0599B500F7666D</string>
+				<string>E563BD840F0599B500F7666D</string>
+				<string>E563BD850F0599B500F7666D</string>
+				<string>E563BD860F0599B500F7666D</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -857,13 +857,10 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E524755C0EF8636300EEB239</string>
-		<string>E524746D0EF7C3C600EEB239</string>
-		<string>E524746E0EF7C3C600EEB239</string>
 		<string>/Users/meeloo/work/nui3/examples/polygon_renderer/polygon_renderer.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>398 70 1522 1108 0 0 1920 1178 </string>
+	<string>513 487 1522 691 0 0 1920 1178 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>

@@ -73,7 +73,6 @@ and in NGL user application code.
     #define _NODND_
 
     #include <CoreFoundation/CoreFoundation.h>
-    #include <CoreServices/CoreServices.h>
 
   #elif (defined _COCOA_)
     #define _CORE_FOUNDATION_

@@ -25,6 +25,7 @@ bool nuiURL::IsNull()
 
 bool nuiURL::OpenBrowser()
 {
+#ifndef _UIKIT_
   if (mUrl == nglString::Null)
     return false;
   
@@ -48,4 +49,7 @@ bool nuiURL::OpenBrowser()
   CFRelease(str);
   
   return true;
+#else
+  return false;
+#endif
 }
