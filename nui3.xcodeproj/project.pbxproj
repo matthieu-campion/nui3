@@ -4685,7 +4685,7 @@
 		E592C0620EFE8AEB00340B35 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		E592C0640EFE8AEB00340B35 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		E592C0660EFE8AEB00340B35 /* CoreAudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudioKit.framework; path = System/Library/Frameworks/CoreAudioKit.framework; sourceTree = SDKROOT; };
-		E592C5140EFE8CCC00340B35 /* libnui3D.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libnui3D.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E592C5140EFE8CCC00340B35 /* libnui3D cocoa.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libnui3D cocoa.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E592C5AB0EFEC90600340B35 /* nglStringConv_CoreFoundation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nglStringConv_CoreFoundation.cpp; sourceTree = "<group>"; };
 		E592C5AE0EFEC93600340B35 /* nglStringConv_Carbon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nglStringConv_Carbon.cpp; sourceTree = "<group>"; };
 		E597C3100CBD00190036C9DA /* nuiSeparator.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiSeparator.cpp; path = src/SimpleWidgets/nuiSeparator.cpp; sourceTree = SOURCE_ROOT; };
@@ -5297,7 +5297,7 @@
 			children = (
 				E58172D80C3D103300902DFE /* libnui3D.a */,
 				E542A1AE0C3F0A5900225219 /* libnui3.a */,
-				E592C5140EFE8CCC00340B35 /* libnui3D.a */,
+				E592C5140EFE8CCC00340B35 /* libnui3D cocoa.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -8840,7 +8840,7 @@
 			);
 			name = "nui3D cocoa";
 			productName = nui3D;
-			productReference = E592C5140EFE8CCC00340B35 /* libnui3D.a */;
+			productReference = E592C5140EFE8CCC00340B35 /* libnui3D cocoa.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -10512,7 +10512,7 @@
 				);
 				INSTALL_PATH = /usr/local/lib;
 				PREBINDING = NO;
-				PRODUCT_NAME = nui3D;
+				PRODUCT_NAME = "nui3D cocoa";
 				USER_HEADER_SEARCH_PATHS = ". include deps/libpng deps/gameswf deps/zlib deps/libjpeg src/Application/Cocoa src/Stream/Zip deps/freetype2/include deps/expat/include deps/harfbuzz deps/expat/lib";
 			};
 			name = Default;
