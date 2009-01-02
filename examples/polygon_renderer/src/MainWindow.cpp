@@ -668,6 +668,34 @@ public:
     }
   }
   
+  void DrawHLineTextureTransp(span& rSpan, int32 y)
+  {
+    //    if (rSpan.IsStable())
+    //    {
+    //      DrawHLineCopyStable(rSpan, y);
+    //      return;
+    //    }
+    if (rSpan.clip(mClipLeft, mClipRight))
+      return;
+    
+    int32 count = rSpan.width;
+    uint32* pSpan = (uint32*)mpScreen->GetPixel(rSpan.x, y);
+    
+    //int32 col = rSpan.GetColor();
+    int32 U = ToNearest(rSpan.u * (float)0x10000);
+    int32 V = ToNearest(rSpan.v * (float)0x10000);
+    const int32 IU = ToNearest(rSpan.uincr * (float)0x10000);
+    const int32 IV = ToNearest(rSpan.vincr * (float)0x10000);
+    
+    while (count--)
+    {
+      *pSpan++ = mTexelizer(U, V);
+      
+      U += IU;
+      V += IV;
+    }
+  }
+  
   typedef nuiFastDelegate2<const edge*, const edge*, bool> Comparator;
   
   void bubblesort(std::vector<edge*>& rVec, const Comparator& rComp)
@@ -1049,7 +1077,7 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
   {
     //srandom(time(NULL));
     double now = nglTime();
-    for (uint32 i = 0; i < 10000000; i++)
+    for (uint32 i = 0; i < 1000000; i++)
     {
 #define R ((random() % 200 + 55) / 255.0f)
 #if 0 // Large triangles
@@ -1069,8 +1097,8 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
 //      rasterizer.DrawTriangle(v0, v1, v2, nuiMakeDelegate(&rasterizer, &Rasterizer::DrawHLineCopy));
 //      rasterizer.DrawTriangle(v0, v1, v2, nuiMakeDelegate(&rasterizer, &Rasterizer::DrawHLineTranspStable));
 //      rasterizer.DrawTriangle(v0, v1, v2, nuiMakeDelegate(&rasterizer, &Rasterizer::DrawHLineTransp));
-//      rasterizer.DrawTriangle(v0, v1, v2, nuiMakeDelegate(&rasterizer, &Rasterizer::DrawHLineTextureCopy));
-      rasterizer.DrawTriangle(v0, v1, v2, DrawHLineNULL);
+      rasterizer.DrawTriangle(v0, v1, v2, nuiMakeDelegate(&rasterizer, &Rasterizer::DrawHLineTextureCopy));
+//      rasterizer.DrawTriangle(v0, v1, v2, DrawHLineNULL);
     }
     now = nglTime() - now;
     printf("triangle rendering time: %fs\n", now);

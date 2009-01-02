@@ -2254,6 +2254,16 @@
 		E58602280CD6373100C0E789 /* nuiRectView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E58602260CD6373100C0E789 /* nuiRectView.cpp */; };
 		E58602290CD6373100C0E789 /* nuiRectView.h in Headers */ = {isa = PBXBuildFile; fileRef = E58602250CD6373100C0E789 /* nuiRectView.h */; };
 		E586022A0CD6373100C0E789 /* nuiRectView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E58602260CD6373100C0E789 /* nuiRectView.cpp */; };
+		E589486F0F0B0577006B3B17 /* ngl_carbon.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816D260C3CECAB00902DFE /* ngl_carbon.h */; };
+		E58948700F0B0580006B3B17 /* nglApplication_Carbon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D270C3CECAB00902DFE /* nglApplication_Carbon.cpp */; };
+		E58948710F0B0586006B3B17 /* nglClipBoard_Carbon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D2B0C3CECAB00902DFE /* nglClipBoard_Carbon.cpp */; };
+		E58948720F0B058D006B3B17 /* nglContext_Carbon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816E1E0C3CECAB00902DFE /* nglContext_Carbon.cpp */; };
+		E58948730F0B0592006B3B17 /* nglDataObjects_Carbon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D2D0C3CECAB00902DFE /* nglDataObjects_Carbon.cpp */; };
+		E58948740F0B059B006B3B17 /* nglKernel_Carbon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D2E0C3CECAB00902DFE /* nglKernel_Carbon.cpp */; };
+		E58948750F0B05A9006B3B17 /* nglTimer_Carbon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816E060C3CECAB00902DFE /* nglTimer_Carbon.cpp */; };
+		E58948760F0B05AD006B3B17 /* nglVideoMode_Carbon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816E210C3CECAB00902DFE /* nglVideoMode_Carbon.cpp */; };
+		E58948770F0B05B2006B3B17 /* nglWindow_Carbon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816E220C3CECAB00902DFE /* nglWindow_Carbon.cpp */; };
+		E58948780F0B05C3006B3B17 /* nuiMainMenu_Carbon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC77BAEB0DF9572E00E0EC0D /* nuiMainMenu_Carbon.cpp */; };
 		E591D61D0C82DBF600844D3E /* nuiFormatedLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E591D61A0C82DBF600844D3E /* nuiFormatedLabel.cpp */; };
 		E591D61E0C82DBF600844D3E /* nuiFormater.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E591D61B0C82DBF600844D3E /* nuiFormater.cpp */; };
 		E591D6200C82DBF600844D3E /* nuiFormatedLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E591D61A0C82DBF600844D3E /* nuiFormatedLabel.cpp */; };
@@ -8102,6 +8112,7 @@
 				BC34A0730EFA870A002F35C4 /* nuiVersion.h in Headers */,
 				40A459A70EFAA71F00043B1F /* nuiAudioDecoder.h in Headers */,
 				E504F0B90EFBAE5200A80C5C /* nuiChunksDefinitions.h in Headers */,
+				E589486F0F0B0577006B3B17 /* ngl_carbon.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9867,6 +9878,15 @@
 				E592C5AF0EFEC93600340B35 /* nglStringConv_Carbon.cpp in Sources */,
 				E5BC284C0EFF1132009EEA3B /* nuiHTTP_CoreFoundation.cpp in Sources */,
 				E53120830F0780C60081CB7E /* nuiURL_CoreFoundation.cpp in Sources */,
+				E58948700F0B0580006B3B17 /* nglApplication_Carbon.cpp in Sources */,
+				E58948710F0B0586006B3B17 /* nglClipBoard_Carbon.cpp in Sources */,
+				E58948720F0B058D006B3B17 /* nglContext_Carbon.cpp in Sources */,
+				E58948730F0B0592006B3B17 /* nglDataObjects_Carbon.cpp in Sources */,
+				E58948740F0B059B006B3B17 /* nglKernel_Carbon.cpp in Sources */,
+				E58948750F0B05A9006B3B17 /* nglTimer_Carbon.cpp in Sources */,
+				E58948760F0B05AD006B3B17 /* nglVideoMode_Carbon.cpp in Sources */,
+				E58948770F0B05B2006B3B17 /* nglWindow_Carbon.cpp in Sources */,
+				E58948780F0B05C3006B3B17 /* nuiMainMenu_Carbon.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
