@@ -301,6 +301,9 @@
 		BCF515C10D53785500ED7973 /* nuiCSV.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCF515BF0D53785500ED7973 /* nuiCSV.cpp */; };
 		BCF515C30D53786300ED7973 /* nuiCSV.h in Headers */ = {isa = PBXBuildFile; fileRef = BCF515C20D53786300ED7973 /* nuiCSV.h */; };
 		BCF515C40D53786300ED7973 /* nuiCSV.h in Headers */ = {isa = PBXBuildFile; fileRef = BCF515C20D53786300ED7973 /* nuiCSV.h */; };
+		BCF8F3690F0E6C8B000588D5 /* nuiSingleton.h in Headers */ = {isa = PBXBuildFile; fileRef = BCF8F3680F0E6C8B000588D5 /* nuiSingleton.h */; };
+		BCF8F36A0F0E6C8B000588D5 /* nuiSingleton.h in Headers */ = {isa = PBXBuildFile; fileRef = BCF8F3680F0E6C8B000588D5 /* nuiSingleton.h */; };
+		BCF8F36B0F0E6C8B000588D5 /* nuiSingleton.h in Headers */ = {isa = PBXBuildFile; fileRef = BCF8F3680F0E6C8B000588D5 /* nuiSingleton.h */; };
 		BCFE081C0E050AB90073662D /* nuiDialogSelectDirectory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCFE081A0E050AB90073662D /* nuiDialogSelectDirectory.cpp */; };
 		BCFE081D0E050AB90073662D /* nuiDialogSelectFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCFE081B0E050AB90073662D /* nuiDialogSelectFile.cpp */; };
 		BCFE081E0E050AB90073662D /* nuiDialogSelectDirectory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCFE081A0E050AB90073662D /* nuiDialogSelectDirectory.cpp */; };
@@ -3682,6 +3685,7 @@
 		BCF4F8250CF5E224009FEF20 /* nuiPointAttributeEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiPointAttributeEditor.h; path = include/nuiPointAttributeEditor.h; sourceTree = SOURCE_ROOT; };
 		BCF515BF0D53785500ED7973 /* nuiCSV.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiCSV.cpp; path = src/Utils/nuiCSV.cpp; sourceTree = SOURCE_ROOT; };
 		BCF515C20D53786300ED7973 /* nuiCSV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiCSV.h; path = include/nuiCSV.h; sourceTree = SOURCE_ROOT; };
+		BCF8F3680F0E6C8B000588D5 /* nuiSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiSingleton.h; path = include/nuiSingleton.h; sourceTree = SOURCE_ROOT; };
 		BCFE081A0E050AB90073662D /* nuiDialogSelectDirectory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiDialogSelectDirectory.cpp; path = src/Dialogs/nuiDialogSelectDirectory.cpp; sourceTree = SOURCE_ROOT; };
 		BCFE081B0E050AB90073662D /* nuiDialogSelectFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiDialogSelectFile.cpp; path = src/Dialogs/nuiDialogSelectFile.cpp; sourceTree = SOURCE_ROOT; };
 		BCFE08200E050ACB0073662D /* nuiDialogSelectDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiDialogSelectDirectory.h; path = include/nuiDialogSelectDirectory.h; sourceTree = SOURCE_ROOT; };
@@ -6162,6 +6166,7 @@
 				E57465140D634B5600A2D66B /* nuiSerializeContext.h */,
 				E57BC7550C63E9E00026DE07 /* nuiSignalsSlots.cpp */,
 				E57BC75B0C63EA1A0026DE07 /* nuiSignalsSlots.h */,
+				BCF8F3680F0E6C8B000588D5 /* nuiSingleton.h */,
 				E5816D680C3CECAB00902DFE /* nuiTheme.cpp */,
 				E5816D100C3CECAB00902DFE /* nuiTheme.h */,
 				E5816D690C3CECAB00902DFE /* nuiTimer.cpp */,
@@ -7446,6 +7451,7 @@
 				BC34A0740EFA870A002F35C4 /* nuiVersion.h in Headers */,
 				40A459A80EFAA71F00043B1F /* nuiAudioDecoder.h in Headers */,
 				E504F0BA0EFBAE5200A80C5C /* nuiChunksDefinitions.h in Headers */,
+				BCF8F36B0F0E6C8B000588D5 /* nuiSingleton.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8113,6 +8119,7 @@
 				40A459A70EFAA71F00043B1F /* nuiAudioDecoder.h in Headers */,
 				E504F0B90EFBAE5200A80C5C /* nuiChunksDefinitions.h in Headers */,
 				E589486F0F0B0577006B3B17 /* ngl_carbon.h in Headers */,
+				BCF8F3690F0E6C8B000588D5 /* nuiSingleton.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8778,6 +8785,7 @@
 				E5BC28580EFF1266009EEA3B /* ngl_cocoa.h in Headers */,
 				E5BC285A0EFF1266009EEA3B /* nglCocoaApplication.h in Headers */,
 				E5BC288F0EFF141B009EEA3B /* nglCocoaWindow.h in Headers */,
+				BCF8F36A0F0E6C8B000588D5 /* nuiSingleton.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
