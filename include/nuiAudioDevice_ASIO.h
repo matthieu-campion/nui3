@@ -1,3 +1,9 @@
+/*
+ NUI3 - C++ cross-platform GUI framework for OpenGL based applications
+ Copyright (C) 2002-2003 Sebastien Metrot
+ 
+ licence: see nui3/LICENCE.TXT
+ */
 
 #pragma once
 
@@ -11,12 +17,12 @@
 typedef nuiFastDelegate3<const uint8*, float*, uint32> ConvertToFloatFunc;
 typedef nuiFastDelegate3<const float*, uint8*, uint32> ConvertFromFloatFunc;
 
-class AudioDevice_ASIO : public nuiAudioDevice
+class nuiAudioDevice_ASIO : public nuiAudioDevice
 {
   friend class AudioDeviceAPI_ASIO;
 public:
-  AudioDevice_ASIO(IASIO* pDriver);
-  virtual ~AudioDevice_ASIO();
+  nuiAudioDevice_ASIO(IASIO* pDriver);
+  virtual ~nuiAudioDevice_ASIO();
 
   virtual bool Open(std::vector<uint32>& rInputChannels, std::vector<uint32>& rOutputChannels, double SampleRate, uint32 BufferSize, nuiAudioProcessFn pProcessFunction);
   virtual bool Close();
@@ -39,7 +45,7 @@ private:
   std::vector<ConvertFromFloatFunc> mOutputConversionFuncs;
 
   static ASIOCallbacks gCallbacks;
-  static AudioDevice_ASIO* gpCurrentDevice;
+  static nuiAudioDevice_ASIO* gpCurrentDevice;
 
   uint32 mBufferSize;
   double mSampleRate;
@@ -106,4 +112,4 @@ protected:
   int32 mCurrentDeviceIndex;
 };
 
-extern AudioDeviceAPI_ASIO AsioApi;
+extern nuiAudioDeviceAPI_ASIO nuiAsioApi;

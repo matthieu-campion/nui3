@@ -302,7 +302,7 @@
 		E5BC28DE0EFF249B009EEA3B /* libnui3D.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libnui3D.a;
+			path = "libnui3D cocoa.a";
 			remoteRef = E5BC28DD0EFF249B009EEA3B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
