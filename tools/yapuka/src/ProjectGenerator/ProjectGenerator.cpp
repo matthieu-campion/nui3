@@ -440,7 +440,7 @@ bool ProjectGenerator::IsTargetValid(const nglString& rTarget)
     if ((car == _T('-')) || (car == _T('_')) || (car == _T('/')) || (car == _T('\\')) || nglIsDigit(car))
       continue;
     
-    if ((car > _T('A')) && (car < _T('z')))
+    if ((car >= _T('A')) && (car <= _T('z')))
       continue;
     
     return false;
