@@ -1682,6 +1682,7 @@ bool nuiWin::CreateWrappedLabelWindow(const nuiEvent& rEvent)
   mpManager->AddChild(pWindow);
 
   nuiVBox* pBox = new nuiVBox(0);
+  pBox->SetExpand(nuiExpandShrinkAndGrow);
   pWindow->AddChild(pBox);
   nuiLabel* pNormalLabel = new nuiLabel(nuiTR("Normal Label that is just cut out at the end of the window"));
   pBox->AddCell(pNormalLabel);
@@ -1690,9 +1691,16 @@ bool nuiWin::CreateWrappedLabelWindow(const nuiEvent& rEvent)
   pCutLabel->UseEllipsis(true);
 
   nuiLabel* pLabel = new nuiLabel(nuiTR("This text should be long enough for me to test wrapping of the label. So let's add some stupid stuff as I really can't think of anything clever to declare right now."));
-  nuiScrollView* pSV = new nuiScrollView();
-  pBox->AddCell(pSV);
-  pSV->AddChild(pLabel);
+  if (0)
+  {
+    nuiScrollView* pSV = new nuiScrollView();
+    pBox->AddCell(pSV);
+    pSV->AddChild(pLabel);
+  }
+  else
+  {
+    pBox->AddCell(pLabel);    
+  }
   pLabel->SetWrapping(true);
   pLabel->SetPosition(nuiTopLeft);
   return false;

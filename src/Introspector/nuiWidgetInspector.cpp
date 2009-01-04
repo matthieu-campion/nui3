@@ -348,6 +348,7 @@ void nuiWidgetInfo::RebuildInfo()
       text.Add(classes[i]);
     }
     mpClass->SetText(text);
+    printf("Inheritance: %ls\n", text.GetChars());
 
     nglString str(typeid(mpTarget).name());
     mpCType->SetText(str);
@@ -445,6 +446,7 @@ void nuiWidgetInfo::RebuildInfo()
     while (it_a != end_a)
     {
       nglString pname(it_a->first);
+      //printf("\tattr: %ls\n", pname.GetChars());
       nuiAttribBase Base = it_a->second;
       nuiAttributeEditor* pEditor = Base.GetEditor();
       

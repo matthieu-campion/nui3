@@ -404,6 +404,7 @@ void nuiObject::GetAttributes(std::map<nglString, nuiAttribBase>& rAttributeMap)
   int32 c = mClassNameIndex;
   while (c >= 0)
   {
+    //printf("\t\tattr for class %ls\n", GetClassNameFromIndex(c).GetChars());
     std::map<nglString,nuiAttributeBase*>::const_iterator it = mClassAttributes[c].begin();
     std::map<nglString,nuiAttributeBase*>::const_iterator end = mClassAttributes[c].end();
     

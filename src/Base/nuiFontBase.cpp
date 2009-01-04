@@ -142,6 +142,8 @@ void nuiFontLayout::OnGlyph (nglFontBase* pFont, const nglString& rString, int P
 
         Line l = {mPenX, mPenY, 0.0f };
         mLines.push_back(l);
+        if (mNewLineDelegate)
+          mNewLineDelegate(Pos, false);
       }
       else if (c == _T('\t'))
       {
@@ -289,8 +291,16 @@ void nuiFontLayout::OnFinalizeLayout()
         mGlyphPrev = 0;
         mpFontPrev = NULL;
 
-        Line l = {mPenX, mPenY, 0.0f };
-        mLines.push_back(l);
+        if (mNewLineDelegate && !mNewLineDelegate(pWord->front().mPos, false))
+        {
+          return; // Stop adding lines
+        }
+        else
+        {
+          Line l = {mPenX, mPenY, 0.0f };
+          mLines.push_back(l);
+        }          
+        
       }
       else if (c == _T('\t'))
       {
@@ -321,10 +331,12 @@ void nuiFontLayout::OnFinalizeLayout()
 
         nuiRect r;
 
+        int32 pos = 0;
         int prev = mGlyphPrev;
         while (cit != cend)
         {
           WordElement& rElement(*cit);
+          pos = rElement.mPos;
           c = rElement.mChar;
           pGlyph = &rElement.mGlyph;
           
@@ -364,8 +376,28 @@ void nuiFontLayout::OnFinalizeLayout()
             mPenX = mGlyphs[0].X; // Go back to layout X origin
             mPenY += mDownAxis * info.AdvanceMaxH;
 
-            Line l = {mPenX, mPenY, 0.0f };
-            mLines.push_back(l);
+            if (mNewLineDelegate && !mNewLineDelegate(pos, false))
+            {
+              std::list<Word*>::iterator it = mWords.begin();
+              std::list<Word*>::iterator end = mWords.end();
+              
+              while (it != end)
+              {
+                Word* pWord = *it;
+                delete pWord;
+                
+                ++it;
+              }
+              
+              mWords.clear();
+              mpCurrentWord = NULL;
+              return; // Stop adding lines
+            }
+            else
+            {
+              Line l = {mPenX, mPenY, 0.0f };
+              mLines.push_back(l);
+            }          
           }
           //NGL_OUT(_T("Wrapped to %f %f\n"), mPenX, mPenY);
         }
@@ -553,6 +585,10 @@ nuiSize nuiFontLayout::GetDensityY() const
   return mYDensity;
 }
 
+void nuiFontLayout::SetNewLineDelegate(const NewLineDelegate& rDelegate)
+{
+  mNewLineDelegate = rDelegate;
+}
 
 /////////////////////////////////////////////
 nuiFontBase::nuiFontBase()

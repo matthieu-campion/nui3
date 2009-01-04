@@ -78,7 +78,7 @@ int nglFontLayout::GetMetrics (nglGlyphInfo& rInfo) const
   return count;
 }
 
-int nglFontLayout::Layout (const nglString& rText)
+int nglFontLayout::Layout (const nglString& rText, bool FinalizeLayout)
 {
   int len = rText.GetLength();
   if (len == 0)
@@ -146,10 +146,13 @@ int nglFontLayout::Layout (const nglString& rText)
     }
   }
 
+  if (FinalizeLayout)
+  {
+    mpFontPrev = NULL;
+    mGlyphPrev = 0;
+    OnFinalizeLayout();
+  }
   // Finalize the layout (needed to handle complex layout that needs to buffer glyphs in order to manage things such as word wrapping).
-  mpFontPrev = NULL;
-  mGlyphPrev = 0;
-  OnFinalizeLayout();
 
   return done;
 }
@@ -207,20 +210,34 @@ const nglGlyphLayout* nglFontLayout::GetGlyphAt (float X, float Y) const
     nglGlyphInfo info;
     const nglGlyphLayout& glyph = *g;
 
-    if (!glyph.mpFont->GetGlyphInfo(info, glyph.Index, nglFontBase::eGlyphBitmap))
-      continue;
-
-    float min = glyph.X + info.BearingX;
-    float max = min + info.Width;
-    if (X < min || X > max)
-      continue;
-
-    max = glyph.Y + info.BearingY;
-    min = max - info.Height;
-    if (Y < min || Y > max)
-      continue;
-
-    return &glyph;
+    if (glyph.Index >= 0)
+    {
+      // Existing glyph
+      if (!glyph.mpFont->GetGlyphInfo(info, glyph.Index, nglFontBase::eGlyphBitmap))
+        continue;
+      
+      float min = glyph.X + info.BearingX;
+      float max = min + info.Width;
+      if (X < min || X > max)
+        continue;
+      
+      max = glyph.Y + info.BearingY;
+      min = max - info.Height;
+      if (Y < min || Y > max)
+        continue;
+      
+      return &glyph;
+    }
+    else
+    {
+      // dummy glyph / placeholder
+      float min = glyph.X;
+      float max = ((g + 1) == mGlyphs.end() ? 0 : g->X);
+      if (X < min || X > max)
+        continue;
+            
+      return &glyph;
+    }
   }
 
   return NULL;
@@ -240,6 +257,40 @@ const nglGlyphLayout* nglFontLayout::GetGlyph (uint Offset) const
 /*
  * Protected interface
  */
+bool nglFontLayout::AddDummyGlyph(int32 ReferencePos, void* pUserPointer, float W, float H)
+{
+  nglGlyphLayout glyph;
+  
+  glyph.X     = mPenX;
+  glyph.Y     = mPenY;
+  glyph.Pos   = ReferencePos;
+  glyph.Index = -1;
+  glyph.mpFont = (nglFontBase*)pUserPointer;
+  mGlyphs.push_back(glyph);
+  
+  mpFontPrev = NULL;
+  mGlyphPrev = 0;  
+  
+  /* Update global layout metrics
+   */
+  float x, y;
+  
+  // Minima
+  x = mPenX;
+  y = mPenY;
+  mXMin = MIN(mXMin, x);
+  mYMin = MIN(mYMin, y);
+  
+  // Maxima
+  x += W;
+  y += H;
+  mXMax = MAX(mXMax, x);
+  mYMax = MAX(mYMax, y);
+  
+  mPenX += W;
+  mPenY += H;
+  return true;
+}
 
 bool nglFontLayout::AddGlyph (nglFontBase* pFont, float X, float Y, int Pos, nglGlyphInfo* pGlyph)
 {

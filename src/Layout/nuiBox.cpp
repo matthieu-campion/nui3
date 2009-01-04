@@ -55,6 +55,5 @@ nuiBox::~nuiBox()
 nuiBox::nuiBox(uint32 nbcellsH, uint32 nbcellsV)
 : nuiGrid(nbcellsH, nbcellsV)
 {
-  InitBoxAttributes();
 }
 

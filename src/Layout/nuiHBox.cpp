@@ -29,6 +29,8 @@ nuiHBox::~nuiHBox()
   
 void nuiHBox::InitAttributes()
 {
+  InitBoxAttributes();
+
   // HorizontalSpacing in "common sens" corresponds to DefaultVSpacing in "nuiGrid sens". It's better for css understanding
   AddAttribute(new nuiAttribute<nuiSize>
    (nglString(_T("HorizontalSpacing")), nuiUnitSize,

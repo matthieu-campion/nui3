@@ -17,25 +17,25 @@ public:
   nuiRect CalcIdealSize();
   bool SetRect(const nuiRect& rRect);
   
-private:
   typedef struct FlowState
-  {
-    FlowState(float width);
-    
-    // Text attributes:
-    bool mBold;
-    bool mItalic;
-    bool mUnderline;
-    nuiColor mTextColor;
-    float mWeight;
-    nuiFont* mpFont;
-    
-    // Canvas:
-    float mX; ///< Cursor X position
-    float mY; ///< Cursor Y position
-    float mWidth;
-    float mHeight;    
-  };
+    {
+      FlowState(float width);
+      
+      // Text attributes:
+      bool mBold;
+      bool mItalic;
+      bool mUnderline;
+      bool mStrikeThrough;
+      nuiColor mTextColor;
+      float mWeight;
+      nuiFont* mpFont;
+      
+      // Canvas:
+      float mX; ///< Cursor X position
+      float mY; ///< Cursor Y position
+      float mWidth;
+      float mHeight;    
+    };
   
   class Operation
   {
@@ -46,6 +46,7 @@ private:
     virtual void Draw(nuiDrawContext* pContext);
     virtual void Flow(FlowState& rState); ///< compute the layout of this operation.
   };
+private:
   
   std::vector<Operation*> mpOperations;
   float mWidth;

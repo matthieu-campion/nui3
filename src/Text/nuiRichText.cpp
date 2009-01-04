@@ -57,6 +57,7 @@ nuiRichText::FlowState::FlowState(float width)
   mBold = false;
   mItalic = false;
   mUnderline = false;
+  mStrikeThrough = false;
   mWeight = 14;
   mpFont = NULL;
   
@@ -88,4 +89,43 @@ void nuiRichText::Operation::Flow(FlowState& rState)
   // Default = don't draw anything
 }
 
-
+////////////
+// Operations:
+class TextOp : nuiRichText::Operation
+{
+  TextOp(const nglString& rString)
+  : mString(rString)
+  {
+  }
+  
+  ~TextOp()
+  {
+    delete mpLayout;
+  }
+  
+  virtual void Draw(nuiDrawContext* pContext)
+  {
+    pContext->SetTextColor(mColor);
+    pContext->DrawText(0, 0, *mpLayout);
+  }
+  
+  virtual void Flow(nuiRichText::FlowState& rState)
+  {
+    delete mpLayout;
+    mpLayout = new nuiFontLayout(*rState.mpFont, rState.mX, rState.mY);
+    mpLayout->SetWrapX(rState.mWidth);
+    mpLayout->SetUnderline(rState.mUnderline);
+    mpLayout->SetStrikeThrough(rState.mStrikeThrough);
+    
+    mpLayout->Layout(mString);
+    
+    nuiRect r = mpLayout->GetRect();
+    rState.mHeight += r.GetHeight();
+    rState.mY += r.GetHeight();
+  }
+  
+private:
+  nuiColor mColor;
+  nglString mString;
+  nuiFontLayout* mpLayout;
+};

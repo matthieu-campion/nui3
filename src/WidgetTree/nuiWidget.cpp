@@ -2297,6 +2297,8 @@ bool nuiWidget::SetLayout(const nuiRect& rRect)
 {
   bool res = false;
   nuiRect rect(GetIdealRect().Size());
+  nuiRect tmp(rRect.Size());
+  rect.Intersect(rect, tmp);
   
   if (mPosition != nuiFill)
   {

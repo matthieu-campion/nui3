@@ -65,6 +65,8 @@ public:
     float mWidth;
   };
   
+  typedef nuiFastDelegate2<int32 /* positions */, bool /* true if wrapped */, bool /*result*/>  NewLineDelegate;
+  void SetNewLineDelegate(const NewLineDelegate& rDelegate);
   const std::vector<Line>& GetLines() const;
 protected:
   uint mSpacesPerTab;
@@ -93,6 +95,7 @@ protected:
   bool mStrikeThrough;
   float mXDensity;
   float mYDensity;
+  NewLineDelegate mNewLineDelegate;
 };
 
 class NUI_API nuiFontBase : public nglFontBase

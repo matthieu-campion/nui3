@@ -24,8 +24,8 @@ class NGL_API nglGlyphLayout
 public:
   float X;      ///< Abscissa in layout coordinate space
   float Y;      ///< Ordinate in layout coordinate space
-  int   Pos;    ///< Position of the source char in the original laid out string
-  uint  Index;  ///< Glyph index in the current font
+  int32 Pos;    ///< Position of the source char in the original laid out string
+  int32 Index;  ///< Glyph index in the current font if > 0, otherwise mpFont is not a font but a void* used to reference some custom data.
   nglFontBase* mpFont; ///< Pointer to font used for the rendering the glyph
 };
 
@@ -73,7 +73,7 @@ public:
 
   /** @name Layout */
   //@{
-  int          Layout (const nglString& rText);
+  int          Layout (const nglString& rText, bool FinalizeLayout = true);
   /*!< 
     \param rText string to decompose
     \return number of glyphs effectively processed
@@ -133,6 +133,8 @@ void nglFontLayout::Onglyph (const nglString& rString, int Pos, nglGlyphInfo* pG
   void SetDownAxis(float UpDown);
   float GetDownAxis();
 
+  bool AddDummyGlyph(int32 ReferencePos, void* pUserPointer, float W, float H);
+  
 protected:
   typedef std::vector<nglGlyphLayout> GlyphList;
 
