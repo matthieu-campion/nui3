@@ -13,7 +13,7 @@
 
 #include "nglConsole.h"
 
-#define APPLICATION_TITLE _T("hello world!")
+#define APPLICATION_TITLE _T("nuiCommand nuiCommandManager tutorial")
 
 
 NGL_APP_CREATE(Application);
@@ -139,6 +139,9 @@ void Application::OnInit()
   Info.XPos = 0;
   Info.YPos = 0;
         
+  // create main menu
+  mpMainMenu = new MainMenu();
+  
   mpMainWindow = new MainWindow(ContextInfo,Info, ShowFPS);
   if ((!mpMainWindow) || (mpMainWindow->GetError()))
   {
@@ -147,6 +150,10 @@ void Application::OnInit()
     Quit (1);
     return;
   }
+
+  // link menu to window
+  mpMainWindow->SetMainMenu(mpMainMenu);
+  
   mpMainWindow->DBG_SetMouseOverInfo(DebugInfo);
   mpMainWindow->DBG_SetMouseOverObject(DebugObject);
   mpMainWindow->SetState(nglWindow::eShow);

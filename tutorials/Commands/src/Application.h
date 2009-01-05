@@ -10,6 +10,8 @@
 #include "nui.h"
 #include "nuiApplication.h"
 
+#include "MainMenu.h"
+
 class MainWindow;
 
 class Application : public nuiApplication
@@ -26,7 +28,7 @@ public:
 private:
   
   MainWindow* mpMainWindow;
-  
+  MainMenu* mpMainMenu;
 };
 
 
