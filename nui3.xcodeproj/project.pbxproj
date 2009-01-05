@@ -162,6 +162,18 @@
 		BC58C4B00D0078EB00C19A59 /* nuiLabelAttribute.h in Headers */ = {isa = PBXBuildFile; fileRef = BC58C4AE0D0078EB00C19A59 /* nuiLabelAttribute.h */; };
 		BC6477C10DEB208B000C5508 /* nuiDecorationDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = BC6477C00DEB208B000C5508 /* nuiDecorationDefines.h */; };
 		BC6477C20DEB208B000C5508 /* nuiDecorationDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = BC6477C00DEB208B000C5508 /* nuiDecorationDefines.h */; };
+		BC6CCB220F121D580020EE35 /* nuiCommandContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC6CCB200F121D580020EE35 /* nuiCommandContainer.cpp */; };
+		BC6CCB230F121D580020EE35 /* nuiCommandManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC6CCB210F121D580020EE35 /* nuiCommandManager.cpp */; };
+		BC6CCB240F121D580020EE35 /* nuiCommandContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC6CCB200F121D580020EE35 /* nuiCommandContainer.cpp */; };
+		BC6CCB250F121D580020EE35 /* nuiCommandManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC6CCB210F121D580020EE35 /* nuiCommandManager.cpp */; };
+		BC6CCB260F121D580020EE35 /* nuiCommandContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC6CCB200F121D580020EE35 /* nuiCommandContainer.cpp */; };
+		BC6CCB270F121D580020EE35 /* nuiCommandManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC6CCB210F121D580020EE35 /* nuiCommandManager.cpp */; };
+		BC6CCB2A0F121D750020EE35 /* nuiCommandContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = BC6CCB280F121D750020EE35 /* nuiCommandContainer.h */; };
+		BC6CCB2B0F121D750020EE35 /* nuiCommandManager.h in Headers */ = {isa = PBXBuildFile; fileRef = BC6CCB290F121D750020EE35 /* nuiCommandManager.h */; };
+		BC6CCB2C0F121D750020EE35 /* nuiCommandContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = BC6CCB280F121D750020EE35 /* nuiCommandContainer.h */; };
+		BC6CCB2D0F121D750020EE35 /* nuiCommandManager.h in Headers */ = {isa = PBXBuildFile; fileRef = BC6CCB290F121D750020EE35 /* nuiCommandManager.h */; };
+		BC6CCB2E0F121D750020EE35 /* nuiCommandContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = BC6CCB280F121D750020EE35 /* nuiCommandContainer.h */; };
+		BC6CCB2F0F121D750020EE35 /* nuiCommandManager.h in Headers */ = {isa = PBXBuildFile; fileRef = BC6CCB290F121D750020EE35 /* nuiCommandManager.h */; };
 		BC77BAE80DF94C2500E0EC0D /* nuiMainMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC77BAE70DF94C2500E0EC0D /* nuiMainMenu.cpp */; };
 		BC77BAE90DF94C2500E0EC0D /* nuiMainMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC77BAE70DF94C2500E0EC0D /* nuiMainMenu.cpp */; };
 		BC77BAED0DF9572E00E0EC0D /* nuiMainMenu_Carbon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC77BAEB0DF9572E00E0EC0D /* nuiMainMenu_Carbon.cpp */; };
@@ -3621,6 +3633,10 @@
 		BC58C4AB0D0078DB00C19A59 /* nuiLabelAttribute.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiLabelAttribute.cpp; path = src/Text/nuiLabelAttribute.cpp; sourceTree = SOURCE_ROOT; };
 		BC58C4AE0D0078EB00C19A59 /* nuiLabelAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiLabelAttribute.h; path = include/nuiLabelAttribute.h; sourceTree = SOURCE_ROOT; };
 		BC6477C00DEB208B000C5508 /* nuiDecorationDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiDecorationDefines.h; path = include/nuiDecorationDefines.h; sourceTree = SOURCE_ROOT; };
+		BC6CCB200F121D580020EE35 /* nuiCommandContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiCommandContainer.cpp; path = src/Base/nuiCommandContainer.cpp; sourceTree = SOURCE_ROOT; };
+		BC6CCB210F121D580020EE35 /* nuiCommandManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiCommandManager.cpp; path = src/Base/nuiCommandManager.cpp; sourceTree = SOURCE_ROOT; };
+		BC6CCB280F121D750020EE35 /* nuiCommandContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiCommandContainer.h; path = include/nuiCommandContainer.h; sourceTree = SOURCE_ROOT; };
+		BC6CCB290F121D750020EE35 /* nuiCommandManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiCommandManager.h; path = include/nuiCommandManager.h; sourceTree = SOURCE_ROOT; };
 		BC77BAE70DF94C2500E0EC0D /* nuiMainMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiMainMenu.cpp; path = src/Window/nuiMainMenu.cpp; sourceTree = SOURCE_ROOT; };
 		BC77BAEB0DF9572E00E0EC0D /* nuiMainMenu_Carbon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiMainMenu_Carbon.cpp; path = src/Window/Carbon/nuiMainMenu_Carbon.cpp; sourceTree = SOURCE_ROOT; };
 		BC77BAEE0DF9574500E0EC0D /* nuiMainMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiMainMenu.h; path = include/nuiMainMenu.h; sourceTree = SOURCE_ROOT; };
@@ -6134,6 +6150,10 @@
 				E5816CB50C3CECAB00902DFE /* nuiColor.h */,
 				E5816D570C3CECAB00902DFE /* nuiCommand.cpp */,
 				E5816CB80C3CECAB00902DFE /* nuiCommand.h */,
+				BC6CCB200F121D580020EE35 /* nuiCommandContainer.cpp */,
+				BC6CCB280F121D750020EE35 /* nuiCommandContainer.h */,
+				BC6CCB210F121D580020EE35 /* nuiCommandManager.cpp */,
+				BC6CCB290F121D750020EE35 /* nuiCommandManager.h */,
 				E5F5D3E40D4184BD00C36E8E /* nuiCSS.cpp */,
 				E5F5D3E00D4180CC00C36E8E /* nuiCSS.h */,
 				E5816D590C3CECAB00902DFE /* nuiEvent.cpp */,
@@ -7463,6 +7483,8 @@
 				E504F0BA0EFBAE5200A80C5C /* nuiChunksDefinitions.h in Headers */,
 				BCF8F36B0F0E6C8B000588D5 /* nuiSingleton.h in Headers */,
 				E5762C570F0EC76700286CF9 /* nuiRichText.h in Headers */,
+				BC6CCB2C0F121D750020EE35 /* nuiCommandContainer.h in Headers */,
+				BC6CCB2D0F121D750020EE35 /* nuiCommandManager.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8132,6 +8154,8 @@
 				E589486F0F0B0577006B3B17 /* ngl_carbon.h in Headers */,
 				BCF8F3690F0E6C8B000588D5 /* nuiSingleton.h in Headers */,
 				E5762C560F0EC76700286CF9 /* nuiRichText.h in Headers */,
+				BC6CCB2A0F121D750020EE35 /* nuiCommandContainer.h in Headers */,
+				BC6CCB2B0F121D750020EE35 /* nuiCommandManager.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8799,6 +8823,8 @@
 				E5BC288F0EFF141B009EEA3B /* nglCocoaWindow.h in Headers */,
 				BCF8F36A0F0E6C8B000588D5 /* nuiSingleton.h in Headers */,
 				E5762C580F0EC76700286CF9 /* nuiRichText.h in Headers */,
+				BC6CCB2E0F121D750020EE35 /* nuiCommandContainer.h in Headers */,
+				BC6CCB2F0F121D750020EE35 /* nuiCommandManager.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9392,6 +9418,8 @@
 				E5BC284E0EFF1132009EEA3B /* nuiHTTP_CoreFoundation.cpp in Sources */,
 				E53120840F0780C60081CB7E /* nuiURL_CoreFoundation.cpp in Sources */,
 				E5762C5B0F0EC78900286CF9 /* nuiRichText.cpp in Sources */,
+				BC6CCB240F121D580020EE35 /* nuiCommandContainer.cpp in Sources */,
+				BC6CCB250F121D580020EE35 /* nuiCommandManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9910,6 +9938,8 @@
 				E58948770F0B05B2006B3B17 /* nglWindow_Carbon.cpp in Sources */,
 				E58948780F0B05C3006B3B17 /* nuiMainMenu_Carbon.cpp in Sources */,
 				E5762C5A0F0EC78900286CF9 /* nuiRichText.cpp in Sources */,
+				BC6CCB220F121D580020EE35 /* nuiCommandContainer.cpp in Sources */,
+				BC6CCB230F121D580020EE35 /* nuiCommandManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10425,6 +10455,8 @@
 				E5BC292C0F000399009EEA3B /* nglTimer_CoreFoundation.cpp in Sources */,
 				E53120850F0780C60081CB7E /* nuiURL_CoreFoundation.cpp in Sources */,
 				E5762C5C0F0EC78900286CF9 /* nuiRichText.cpp in Sources */,
+				BC6CCB260F121D580020EE35 /* nuiCommandContainer.cpp in Sources */,
+				BC6CCB270F121D580020EE35 /* nuiCommandManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
