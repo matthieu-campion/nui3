@@ -28,15 +28,15 @@ public:
 
 protected:
 
-  Singleton()
+  nuiSingleton()
   {};
   
-  virtual ~Singleton()
+  virtual ~nuiSingleton()
   {};
 
 private:
 
-  Singleton(const Singleton& source)
+  nuiSingleton(const nuiSingleton& source)
   {};
 
   // Singleton class instance
