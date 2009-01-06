@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="8,00"
 	Name="nui3"
 	ProjectGUID="{A287CB70-6835-4961-BEF5-E2DCDBE2CED4}"
 	RootNamespace="nui3"
@@ -574,6 +574,22 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\Base\nuiCommandContainer.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiCommandContainer.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Base\nuiCommandManager.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiCommandManager.h"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Base\nuiCSS.cpp"
 					>
 				</File>
@@ -743,6 +759,10 @@
 				</File>
 				<File
 					RelativePath=".\include\nuiSignalsSlots.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiSingleton.h"
 					>
 				</File>
 				<File

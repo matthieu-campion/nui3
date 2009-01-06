@@ -185,6 +185,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\MainMenu.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\MainMenu.h"
+				>
+			</File>
+			<File
 				RelativePath="src\MainWindow.cpp"
 				>
 			</File>
@@ -192,6 +200,26 @@
 				RelativePath="src\MainWindow.h"
 				>
 			</File>
+			<Filter
+				Name="Commands"
+				>
+				<File
+					RelativePath=".\src\Commands\cmdFirstSample.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Commands\cmdFirstSample.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Commands\cmdSecondSample.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Commands\cmdSecondSample.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\resource.rc"
