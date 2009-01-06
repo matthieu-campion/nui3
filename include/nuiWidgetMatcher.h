@@ -304,9 +304,9 @@ class nuiGlobalVariableMatcher : public nuiWidgetMatcher // Match if the global 
 {
 public:
   nuiGlobalVariableMatcher(const nglString& rVariable, const nglString& rValue)
-  : mVariable(rVariable),
-    mValue(rValue),
-    nuiWidgetMatcher(false)
+  : nuiWidgetMatcher(false),
+    mVariable(rVariable),
+    mValue(rValue)
   {
     mPriority = NUI_WIDGET_MATCHER_STATE;
   }

@@ -368,6 +368,8 @@ bool nuiObject::ClearProperties(bool ClearNameAndClassToo)
 
 void nuiObject::SetToken(nuiTokenBase* pToken)
 {
+  if (mpToken != pToken)
+    delete mpToken;
   mpToken = pToken;
 }
 

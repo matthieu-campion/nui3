@@ -75,7 +75,33 @@ public:
 };
 
 
-
+class nuiTokenHolder
+{
+public:
+  nuiTokenHolder()
+  {
+    mpToken = NULL;
+  }
+  
+  virtual ~nuiTokenHolder()
+  {
+    delete mpToken;
+  }
+  
+  void SetToken(nuiTokenBase* pToken)
+  {
+    if (mpToken != pToken)
+      delete mpToken;
+    mpToken = pToken;
+  }
+  
+  nuiTokenBase* GetToken() const
+  {
+    return mpToken;  
+  }
+private:
+  nuiTokenBase* mpToken;
+};
 
 
  
