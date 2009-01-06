@@ -1166,6 +1166,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\Layout\nuiBox.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiBox.h"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Layout\nuiDialog.cpp"
 					>
 				</File>
