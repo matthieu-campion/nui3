@@ -6,7 +6,7 @@
  */
 
 
- 
+#include "nui.h" 
 #include "nuiCommandManager.h"
 #include "nuiCommand.h"
 
