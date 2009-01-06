@@ -318,6 +318,9 @@ void nuiFileSelector::InitSelector (const nglPath& rPath, const nglPath& rRootPa
 
 void nuiFileSelector::SetInfoView(nuiWidget* pWidget)
 {
+  if (!mpInfoBox)
+    return;
+  
   if (!pWidget)
   {
     if (mpInfoBox->GetNbCells() > 1)
@@ -475,10 +478,10 @@ bool nuiFileSelector::SetPath(const nglPath& rPath)
 //      pColTreeView->CreateScrollBars();
   }
   
-  if (!pColTreeView)
-  {
-    mpTreeView->Select(pNode, true);
-  }
+//  if (!pColTreeView)
+//  {
+//    mpTreeView->Select(pNode, true);
+//  }
   
   PathChanged();
   mpTreeView->SelectionChanged();
