@@ -462,6 +462,9 @@ bool nuiCommandManager::Repeat()
   
   // execute
   bool res = repeatCmd->Do();
+  
+  // flat the undo stack
+  inst->FlattenUndoStack();
 
   if (res)
   {
