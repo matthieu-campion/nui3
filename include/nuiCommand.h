@@ -74,7 +74,7 @@ public:
   const nglString&  GetArgName(uint32 index) const;
   nglString         Dump() const;
   
-  virtual nuiCommand*   CreatenuiCommand() const=0;
+  virtual nuiCommand*   CreateCommand() const=0;
   
   virtual nglString  Comment() const =0;
   

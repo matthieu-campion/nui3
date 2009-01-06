@@ -12,6 +12,7 @@
 #include "nuiCommandManager.h"
 #include "nuiCommand.h"
 
+
 enum mxMenuCommand
 {
   eMenu1Cmd1 = 0,
