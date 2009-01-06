@@ -8,7 +8,7 @@
 #pragma once
 
 #include "nuiMainWindow.h"
-
+#include "nuiVBox.h"
 
 class MainWindow : public nuiMainWindow
 {
@@ -21,13 +21,17 @@ public:
 
 protected:
   
-  bool OnButtonClick(const nuiEvent& rEvent);
+  bool Reset(const nuiEvent& rEvent);
+  nuiWidget* BuildTabView(nuiPosition pos);
+  
+  bool OnAddTab(const nuiEvent& rEvent);
+  bool OnRemoveTab(const nuiEvent& rEvent);
   
 private:
   
   bool LoadCSS(const nglPath& rPath);
-  
-  nuiLabel* mMyLabel;
+
+  nuiVBox* mpMainBox;
   nuiEventSink<MainWindow> mEventSink;
 };
 

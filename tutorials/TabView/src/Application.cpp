@@ -13,7 +13,7 @@
 
 #include "nglConsole.h"
 
-#define APPLICATION_TITLE _T("hello world!")
+#define APPLICATION_TITLE _T("TabView Sample")
 
 
 NGL_APP_CREATE(Application);

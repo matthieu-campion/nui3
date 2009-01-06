@@ -9,8 +9,9 @@
 #include "MainWindow.h"
 #include "Application.h"
 #include "nuiCSS.h"
-#include "nuiVBox.h"
-
+#include "nuiHBox.h"
+#include "nuiTabView.h"
+#include "nuiHyperLink.h"
 
 /*
  * MainWindow
@@ -30,54 +31,134 @@ MainWindow::~MainWindow()
 {
 }
 
+
+
 void MainWindow::OnCreation()
 {
-  // a vertical box for page layout
-  nuiVBox* pLayoutBox = new nuiVBox(0);
-  pLayoutBox->SetExpand(nuiExpandShrinkAndGrow);
-  AddChild(pLayoutBox);
+  mpMainBox = new nuiVBox(2);
+  mpMainBox->SetExpand(nuiExpandShrinkAndGrow);
+  AddChild(mpMainBox);
   
-  // image in the first box's cell
-  nuiImage* pImg = new nuiImage();
-  pImg->SetObjectName(_T("MyImage"));
-  pImg->SetPosition(nuiCenter);
-  pLayoutBox->AddCell(pImg);
-  pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
+  nuiHBox* pBox = new nuiHBox(0);
+  pBox->SetBorder(20,20,20,10);
+  mpMainBox->SetCell(0, pBox);
   
-  // button in the second cell : we use the default decoration for this button, but you could use the css to assign your own decoration
-  nuiButton* pButton = new nuiButton();
-  pButton->SetPosition(nuiCenter);
-  pLayoutBox->AddCell(pButton);
-  pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
-  
-  // click event on button
-  mEventSink.Connect(pButton->Activated, &MainWindow::OnButtonClick);
-  
-  // label with border in the button (put the label string in the button's constructor if you don't need borders)
-  nuiLabel* pButtonLabel = new nuiLabel(_T("click!"));
-  pButtonLabel->SetPosition(nuiCenter);
-  pButtonLabel->SetBorder(8,8);
-  pButton->AddChild(pButtonLabel);
+  nuiRadioButton* pTopButton = new nuiRadioButton(_T("top"));
+  pTopButton->SetGroup(_T("radios"));
+  pTopButton->SetObjectName(_T("TabButton"));
+  pBox->AddCell(pTopButton);
+  mEventSink.Connect(pTopButton->Activated, &MainWindow::Reset, (void*)nuiTop);
 
-  // label with decoration in the third cell
-  mMyLabel = new nuiLabel(_T("my label"));
-  mMyLabel->SetObjectName(_T("MyLabel"));
-  mMyLabel->SetPosition(nuiCenter);
-  pLayoutBox->AddCell(mMyLabel);
-  pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
+  nuiRadioButton* pButton = new nuiRadioButton(_T("left"));
+  pButton->SetGroup(_T("radios"));
+  pButton->SetObjectName(_T("TabButton"));
+  pBox->AddCell(pButton);
+  mEventSink.Connect(pButton->Activated, &MainWindow::Reset, (void*)nuiLeft);
+  
+  pButton = new nuiRadioButton(_T("right"));
+  pButton->SetGroup(_T("radios"));
+  pButton->SetObjectName(_T("TabButton"));
+  pBox->AddCell(pButton);
+  mEventSink.Connect(pButton->Activated, &MainWindow::Reset, (void*)nuiRight);
+  
+  pButton = new nuiRadioButton(_T("bottom"));
+  pButton->SetGroup(_T("radios"));
+  pButton->SetObjectName(_T("TabButton"));
+  pBox->AddCell(pButton);
+  mEventSink.Connect(pButton->Activated, &MainWindow::Reset, (void*)nuiBottom);
+
+  // default
+  pTopButton->SetPressed(true);
+  pTopButton->Activated();
 }
 
 
 
-bool MainWindow::OnButtonClick(const nuiEvent& rEvent)
+bool MainWindow::Reset(const nuiEvent& rEvent)
 {
-  nglString message;
-  double currentTime = nglTime();
-  message.Format(_T("click time: %.2f"), currentTime);
-  mMyLabel->SetText(message);
+  uint32 code = (uint32)rEvent.mpUser;
+  nuiPosition pos = (nuiPosition)code;
+  nuiWidget* pWidget = BuildTabView(pos);
+  mpMainBox->SetCell(1, pWidget);
+  mpMainBox->SetCellExpand(1, nuiExpandShrinkAndGrow);
   
-  return true; // means the event is caught and not broadcasted
+  return true;
 }
+
+
+nuiWidget* MainWindow::BuildTabView(nuiPosition pos)
+{
+  nuiTabView* pTabView = new nuiTabView(pos);
+  pTabView->SetChangeOnDrag(true);
+  pTabView->SetBorder(20,20,10,20);
+  AddChild(pTabView);
+  
+  // tab 1
+  nuiLabel* pLabel = new nuiLabel(nuiTR("Tab\nOne\nThe\nfirst\nand\nforemost"));
+  pLabel->SetObjectName(_T("Tab1Contents"));
+  pTabView->AddTab(nuiTR("Tab1"), pLabel);
+  
+  // tab 2
+  nuiImage* pTitle = new nuiImage();
+  pTitle->SetObjectName(_T("Tab2Title"));
+  
+  nuiImage* pPage = new nuiImage();
+  pPage->SetObjectName(_T("Tab2Contents"));
+  pPage->SetPosition(nuiCenter);
+  
+  pTabView->AddTab(pTitle, pPage);
+  
+  
+  // tab 3
+  nuiHyperLink* pLink = new nuiHyperLink(_T("http://libnui.net"), nuiTR("Go to the nui website!"));
+  pLink->SetObjectName(_T("HyperLink"));
+  pTabView->AddTab(nuiTR("Tab3"), pLink);
+  
+
+  // tab 4
+  nuiVBox* pBox = new nuiVBox(0);
+  nuiButton* pButton = new nuiButton(nuiTR("Add Tab"));
+  pButton->SetObjectName(_T("TabButton"));
+  pBox->AddCell(pButton);
+  mEventSink.Connect(pButton->ButtonPressed, &MainWindow::OnAddTab, pTabView);
+
+  pButton = new nuiButton(nuiTR("Remove Tab"));
+  pButton->SetObjectName(_T("TabButton"));
+  pBox->AddCell(pButton);
+  mEventSink.Connect(pButton->ButtonPressed, &MainWindow::OnRemoveTab, pTabView);
+
+  pTabView->AddTab(nuiTR("Tab4"), pBox);
+  
+  pTabView->SelectTab(0);
+  
+  return pTabView;
+}
+
+
+bool MainWindow::OnAddTab(const nuiEvent& rEvent)
+{
+  nuiTabView* pTabView = (nuiTabView*)rEvent.mpUser;
+  nglString s;
+  
+  s.Format(_T("Tab%d"), pTabView->GetTabCount()+1);
+  
+  pTabView->AddTab(s, new nuiLabel(s));
+  return false;
+}
+
+bool MainWindow::OnRemoveTab(const nuiEvent& rEvent)
+{
+  nuiTabView* pTabView = (nuiTabView*)rEvent.mpUser;
+  
+  if (pTabView->GetTabCount() > 4)
+  {
+    pTabView->RemoveTab(pTabView->GetTabCount()-1);
+    return true;
+  }
+  
+  return false;
+}
+
 
 
 void MainWindow::OnClose()

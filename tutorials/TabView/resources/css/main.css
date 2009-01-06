@@ -9,27 +9,52 @@
 // or the stylehsheet parsing may not work properly
 
 
-"MyImage"!
+@Font FontHyperLink
+{
+  GenericName: sans-serif;
+  Size: 48;
+  Bold: true;
+  Italic: false;
+}
+
+@Font FontNormal
+{
+  GenericName: sans-serif;
+  Size: 18;
+  Bold: false;
+  Italic: false;
+}
+
+
+"Tab1Contents"!
+{
+  Font: FontNormal;
+  Orientation: Vertical;
+}
+
+"Tab2Title"!
 {
   Texture: "rsrc:/decorations/image.png";
-  UserWidth: 100;
-  UserHeight: 100;
+  UserWidth: 32;
+  UserHeight: 32;
+  BorderLeft: 8;
+  BorderRight: 8;
 }
 
-
-@nuiColorDecoration dMyLabel
+"Tab2Contents"!
 {
-  FillColor: rgb(220,220,220);
-  StrokeColor: black;
-  ShapeMode: StrokeAndFill;
-  ClientRect: "{10 10 0 0}";
+  Texture: "rsrc:/decorations/image.png";
 }
 
-"MyLabel"!
+"HyperLink"!
 {
-  DecorationMode: Border;
-  Decoration: dMyLabel;
+  Font: FontHyperLink;
 }
 
-// blank ending line following
+
+"TabButton"!
+{
+  UserWidth: 90;
+  UserHeight: 30;
+}
 
