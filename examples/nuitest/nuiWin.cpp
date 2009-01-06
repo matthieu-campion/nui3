@@ -41,7 +41,6 @@ licence: see nui3/LICENCE.TXT
 #include "nuiShaderView.h"
 #include "nuiPositioner.h"
 #include "nuiSWF.h"
-#include "nuiTabView.h"
 #include "nuiShapeView.h"
 #include "nuiModalContainer.h"
 #include "nuiPane.h"
@@ -348,10 +347,6 @@ void nuiWin::OnCreation()
   // CreateSWFTest1Window:
   pElement = new nuiTreeNode(nuiTR("SWF widget Test 1 Window"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateSWFTest1Window);
-  pMainTree->AddChild(pElement);
-  // CreateTabViewWindow
-  pElement = new nuiTreeNode(nuiTR("TabView Container Window"));
-  mWinSink.Connect(pElement->Activated, &nuiWin::CreateTabViewWindow);
   pMainTree->AddChild(pElement);
 
   // CreateShapeWindow:
@@ -1545,78 +1540,7 @@ bool nuiWin::CreateSWFTest1Window(const nuiEvent& rEvent)
   return false;
 }
 
-bool nuiWin::CreateTabViewWindow(const nuiEvent& rEvent)
-{
-  nuiWindow* pWin = new nuiWindow(nuiRect(10, 10, 340, 200), nglWindow::NoFlag, nuiTR("TabView..."));
-  mpManager->AddChild(pWin);
 
-  nuiRect PageRect = nuiRect(0.f, 0.f, 200.f, 150.f);
-  nuiRect IconRect = nuiRect(0.f, 0.f, 40.f, 20.f);
-  //nuiPosition position = nuiRight;
-  //nuiPosition position = nuiLeft;
-  //nuiPosition position = nuiBottom;
-  nuiPosition position = nuiTop;
-
-
-  nuiTabView* pTabView = new nuiTabView(position);
-  pTabView->SetChangeOnDrag(true);
-  pWin->AddChild(pTabView);
-
-  nuiLabel* pLabel = new nuiLabel(nuiTR("Tab\nOne\nThe\nfirst\nand\nforemost"));
-
-  pLabel->SetFont(nuiFont::GetFont(18));
-  pLabel->SetOrientation(nuiVertical);
-  pTabView->AddTab(nuiTR("Tab1"), pLabel);
-
-  nuiImage* pPage = new nuiImage(_T("rsrc:/nui.png"));
-  pTabView->AddTab(nuiTR("Tab2"), pPage);
-
-
-  { // Page 3
-    nuiHyperLink* pLink = new nuiHyperLink(_T("http://libnui.net"), nuiTR("Go to the nui website!"));
-    pTabView->AddTab(nuiTR("Tab3"), pLink);
-  }
-
-  nuiFixed* pFixed = new nuiFixed();
-  nuiButton* pButton = new nuiButton(nuiTR("Add Tab"));
-  pFixed->AddChild(pButton);
-  pButton->SetUserRect(nuiRect(20.f, 20.f, 100.f, 30.f));
-  mWinSink.Connect(pButton->ButtonPressed, &nuiWin::AddTab, pTabView);
-  pButton = new nuiButton(nuiTR("Remove Tab"));
-  pFixed->AddChild(pButton);
-  pButton->SetUserRect(nuiRect(20.f, 80.f, 100.f, 30.f));
-  mWinSink.Connect(pButton->ButtonPressed, &nuiWin::RemoveTab, pTabView);
-  pTabView->AddTab(nuiTR("Tab4"), pFixed);
-
-  pTabView->SelectTab(0);
-
-  return false;
-}
-
-bool nuiWin::AddTab(const nuiEvent& rEvent)
-{
-  nuiTabView* pTabView = (nuiTabView*)rEvent.mpUser;
-  nglString s;
-
-  nuiPosition pos = pTabView->GetPosition();
-  s.Format(_T("Tab%d"), pTabView->GetTabCount()+1);
-
-  pTabView->AddTab(s, new nuiLabel(s));
-  return false;
-}
-
-bool nuiWin::RemoveTab(const nuiEvent& rEvent)
-{
-  nuiTabView* pTabView = (nuiTabView*)rEvent.mpUser;
-
-  if (pTabView->GetTabCount() > 4)
-  {
-    pTabView->RemoveTab(pTabView->GetTabCount()-1);
-    return true;
-  }
-
-  return false;
-}
 
 bool nuiWin::CreateShapeWindow(const nuiEvent& rEvent)
 {

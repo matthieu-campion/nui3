@@ -54,7 +54,6 @@ protected:
   bool CreateScrolledImageWindow2(const nuiEvent& rEvent);
   bool CreateGLSLTest1Window(const nuiEvent& rEvent);
   bool CreateSWFTest1Window(const nuiEvent& rEvent);
-  bool CreateTabViewWindow(const nuiEvent& rEvent);
   bool CreateShapeWindow(const nuiEvent& rEvent);
   bool TogglePartialRedraw(const nuiEvent& rEvent);
   bool CreateWrappedLabelWindow(const nuiEvent& rEvent);
@@ -86,8 +85,6 @@ protected:
   bool LogText(const nuiEvent& rEvent);
   bool ClearTable(const nuiEvent& rEvent);
   bool FileSelect(const nuiEvent& rEvent);
-  bool AddTab(const nuiEvent& rEvent);
-  bool RemoveTab(const nuiEvent& rEvent);
   bool FileSelectDone(const nuiEvent& rEvent);
 
   bool UpdateInspector(const nuiEvent& rEvent);
