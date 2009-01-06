@@ -64,7 +64,7 @@ class nuiCommandDesc
 {
 public:
   nuiCommandDesc(const nglString& rName);
-  ~nuiCommandDesc();
+  virtual ~nuiCommandDesc();
   
   void AddArg(const nglString& rName, const nglString& rType);
   const nglString&  GetName() const;
