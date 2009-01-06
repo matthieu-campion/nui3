@@ -209,7 +209,7 @@
 			children = (
 				BC1A62230E63320C00BDD037 /* libnui3D.a */,
 				BC1A62250E63320C00BDD037 /* libnui3.a */,
-				BC09B0310F0E5A8700956432 /* libnui3D.a */,
+				BC09B0310F0E5A8700956432 /* libnui3D cocoa.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -333,10 +333,10 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		BC09B0310F0E5A8700956432 /* libnui3D.a */ = {
+		BC09B0310F0E5A8700956432 /* libnui3D cocoa.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libnui3D.a;
+			path = "libnui3D cocoa.a";
 			remoteRef = BC09B0300F0E5A8700956432 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};

@@ -375,21 +375,26 @@ void nuiTheme::DrawWindow(nuiDrawContext* pContext, nuiWindow* pWindow)
       nuiGradient gradient;
       nuiColor color;
       nuiColor::GetColor(_T("nuiDefaultClrInactiveCaptionBkg1"), color);
+      color.Alpha() *= alpha;
       gradient.AddStop(color, 0.f);
       nuiColor::GetColor(_T("nuiDefaultClrInactiveCaptionBkg2"), color);
+      color.Alpha() *= alpha;
       gradient.AddStop(color, 1.f);
       
       pContext->DrawGradient(gradient, r, 0, r.Top(), 0, r.Bottom());
       
       nuiColor::GetColor(_T("nuiDefaultClrCaptionBorder"), color);
+      color.Alpha() *= alpha;
       pContext->SetStrokeColor(color);
       pContext->DrawRect(r, eStrokeShape);
       
       nuiColor::GetColor(_T("nuiDefaultClrInactiveCaptionBorderLight"), color);
+      color.Alpha() *= alpha;
       pContext->SetStrokeColor(color);
       pContext->DrawLine(r.Left()+1, r.Top()+1, r.Right()-2, r.Top()+1);
       
       nuiColor::GetColor(_T("nuiDefaultClrCaptionBorderDark"), color);
+      color.Alpha() *= alpha;
       pContext->SetStrokeColor(color);
       pContext->DrawLine(r.Left(), r.Bottom(), r.Right(), r.Bottom());
       
@@ -398,9 +403,11 @@ void nuiTheme::DrawWindow(nuiDrawContext* pContext, nuiWindow* pWindow)
       nglFontInfo Info;
       mpWindowTitleFont->GetInfo(Info);
       nuiColor::GetColor(_T("nuiDefaultClrInactiveCaptionTextLight"), color);
+      color.Alpha() *= alpha;
       pContext->SetTextColor(color);
       pContext->DrawText(r.mLeft + RESIZE_SIZE +5 +1, r.mTop + Info.Ascender +5 +1, Title.GetChars());
       nuiColor::GetColor(_T("nuiDefaultClrCaptionText"), color);
+      color.Alpha() *= alpha;
       pContext->SetTextColor(color);
       pContext->DrawText(r.mLeft + RESIZE_SIZE +5 , r.mTop + Info.Ascender +5 , Title.GetChars());
     }
@@ -437,21 +444,26 @@ void nuiTheme::DrawActiveWindow(nuiDrawContext* pContext, nuiWindow* pWindow)
       nuiGradient gradient;
       nuiColor color;
       nuiColor::GetColor(_T("nuiDefaultClrCaptionBkg1"), color);
+      color.Alpha() *= alpha;
       gradient.AddStop(color, 0.f);
       nuiColor::GetColor(_T("nuiDefaultClrCaptionBkg2"), color);
+      color.Alpha() *= alpha;
       gradient.AddStop(color, 1.f);
       
       pContext->DrawGradient(gradient, r, 0, r.Top(), 0, r.Bottom());
 
       nuiColor::GetColor(_T("nuiDefaultClrCaptionBorder"), color);
+      color.Alpha() *= alpha;
       pContext->SetStrokeColor(color);
       pContext->DrawRect(r, eStrokeShape);
       
       nuiColor::GetColor(_T("nuiDefaultClrCaptionBorderLight"), color);
+      color.Alpha() *= alpha;
       pContext->SetStrokeColor(color);
       pContext->DrawLine(r.Left()+1, r.Top()+1, r.Right()-2, r.Top()+1);
 
       nuiColor::GetColor(_T("nuiDefaultClrCaptionBorderDark"), color);
+      color.Alpha() *= alpha;
       pContext->SetStrokeColor(color);
       pContext->DrawLine(r.Left(), r.Bottom(), r.Right(), r.Bottom());
         
@@ -460,9 +472,11 @@ void nuiTheme::DrawActiveWindow(nuiDrawContext* pContext, nuiWindow* pWindow)
       nglFontInfo Info;
       mpWindowTitleFont->GetInfo(Info);
       nuiColor::GetColor(_T("nuiDefaultClrCaptionTextLight"), color);
+      color.Alpha() *= alpha;
       pContext->SetTextColor(color);
       pContext->DrawText(r.mLeft + RESIZE_SIZE +5 +1, r.mTop + Info.Ascender +5 +1, Title.GetChars());
       nuiColor::GetColor(_T("nuiDefaultClrCaptionText"), color);
+      color.Alpha() *= alpha;
       pContext->SetTextColor(color);
       pContext->DrawText(r.mLeft + RESIZE_SIZE +5 , r.mTop + Info.Ascender +5 , Title.GetChars());
     }
@@ -479,7 +493,7 @@ void nuiTheme::DrawMovingWindow(nuiDrawContext* pContext, nuiWindow* pWindow)
   nglString Title = pWindow->GetTitle();
   nuiRect Rect = pWindow->GetRect().Size();
   nuiRect rRect = Rect;
-//  float alpha = pWindow->GetAlpha(true);
+  float alpha = pWindow->GetAlpha(true);
 
   nuiRect rect = rRect.Size();
   pWindow->LocalToGlobal(rect);
@@ -500,21 +514,26 @@ void nuiTheme::DrawMovingWindow(nuiDrawContext* pContext, nuiWindow* pWindow)
       nuiGradient gradient;
       nuiColor color;
       nuiColor::GetColor(_T("nuiDefaultClrCaptionBkg1"), color);
+      color.Alpha() *= alpha;
       gradient.AddStop(color, 0.f);
       nuiColor::GetColor(_T("nuiDefaultClrCaptionBkg2"), color);
+      color.Alpha() *= alpha;
       gradient.AddStop(color, 1.f);
       
       pContext->DrawGradient(gradient, r, 0, r.Top(), 0, r.Bottom());
       
       nuiColor::GetColor(_T("nuiDefaultClrCaptionBorder"), color);
+      color.Alpha() *= alpha;
       pContext->SetStrokeColor(color);
       pContext->DrawRect(r, eStrokeShape);
       
       nuiColor::GetColor(_T("nuiDefaultClrCaptionBorderLight"), color);
+      color.Alpha() *= alpha;
       pContext->SetStrokeColor(color);
       pContext->DrawLine(r.Left()+1, r.Top()+1, r.Right()-2, r.Top()+1);
       
       nuiColor::GetColor(_T("nuiDefaultClrCaptionBorderDark"), color);
+      color.Alpha() *= alpha;
       pContext->SetStrokeColor(color);
       pContext->DrawLine(r.Left(), r.Bottom(), r.Right(), r.Bottom());
       
@@ -524,9 +543,11 @@ void nuiTheme::DrawMovingWindow(nuiDrawContext* pContext, nuiWindow* pWindow)
       nglFontInfo Info;
       pFont->GetInfo(Info);
       nuiColor::GetColor(_T("nuiDefaultClrCaptionTextLight"), color);
+      color.Alpha() *= alpha;
       pContext->SetTextColor(color);
       pContext->DrawText(r.mLeft + RESIZE_SIZE +5 +1, r.mTop + Info.Ascender +5 +1, Title.GetChars());
       nuiColor::GetColor(_T("nuiDefaultClrCaptionText"), color);
+      color.Alpha() *= alpha;
       pContext->SetTextColor(color);
       pContext->DrawText(r.mLeft + RESIZE_SIZE +5 , r.mTop + Info.Ascender +5 , Title.GetChars());
       pFont->Release();

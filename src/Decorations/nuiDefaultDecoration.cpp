@@ -159,7 +159,7 @@ void nuiDefaultDecoration::InitMaps()
   nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
   nuiFrame* pFrame = new nuiFrame(_T("nuiDefaultDecorationScrollBarVerticalBkg"), pTex, nuiRect(6,8,0,0));
-  pFrame->UseWidgetAlpha(false);
+  pFrame->UseWidgetAlpha(true);
   delete pIMem;
 
   // vertical scrollbar handle
@@ -167,7 +167,7 @@ void nuiDefaultDecoration::InitMaps()
   pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(_T("nuiDefaultDecorationScrollBarVerticalHdl"), pTex, nuiRect(2,6,6,0));
-  pFrame->UseWidgetAlpha(false);
+  pFrame->UseWidgetAlpha(true);
   delete pIMem;
   
   // Horizontal scrollbar background
@@ -175,7 +175,7 @@ void nuiDefaultDecoration::InitMaps()
   pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(_T("nuiDefaultDecorationScrollBarHorizontalBkg"), pTex, nuiRect(8,6,0,0));
-  pFrame->UseWidgetAlpha(false);
+  pFrame->UseWidgetAlpha(true);
   delete pIMem;
   
   // Horizontal scrollbar handle
@@ -183,7 +183,7 @@ void nuiDefaultDecoration::InitMaps()
   pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(_T("nuiDefaultDecorationScrollBarHorizontalHdl"), pTex, nuiRect(6,2,0,6));
-  pFrame->UseWidgetAlpha(false);
+  pFrame->UseWidgetAlpha(true);
   delete pIMem;  
   
   
@@ -196,7 +196,7 @@ void nuiDefaultDecoration::InitMaps()
   pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(_T("nuiDefaultDecorationSliderVerticalBkg"), pTex, nuiRect(0,6,4,0));
-  pFrame->UseWidgetAlpha(false);
+  pFrame->UseWidgetAlpha(true);
   delete pIMem;
   
   // vertical slider handle
@@ -204,7 +204,7 @@ void nuiDefaultDecoration::InitMaps()
   pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(_T("nuiDefaultDecorationSliderVerticalHdl"), pTex, nuiRect(0,0,20,20));
-  pFrame->UseWidgetAlpha(false);
+  pFrame->UseWidgetAlpha(true);
   delete pIMem;
   
   // Horizontal slider background
@@ -212,7 +212,7 @@ void nuiDefaultDecoration::InitMaps()
   pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(_T("nuiDefaultDecorationSliderHorizontalBkg"), pTex, nuiRect(6,0,0,4));
-  pFrame->UseWidgetAlpha(false);
+  pFrame->UseWidgetAlpha(true);
   delete pIMem;
   
   // Horizontal slider handle
@@ -220,7 +220,7 @@ void nuiDefaultDecoration::InitMaps()
   pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(_T("nuiDefaultDecorationSliderHorizontalHdl"), pTex, nuiRect(0,0,20,20));
-  pFrame->UseWidgetAlpha(false);
+  pFrame->UseWidgetAlpha(true);
   delete pIMem; 
   
   
@@ -230,7 +230,7 @@ void nuiDefaultDecoration::InitMaps()
   pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(_T("nuiDefaultDecorationPopupMenu"), pTex, nuiRect(8,8,0,14));
-  pFrame->UseWidgetAlpha(false);
+  pFrame->UseWidgetAlpha(true);
   delete pIMem;  
 
 
@@ -240,7 +240,7 @@ void nuiDefaultDecoration::InitMaps()
   pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(_T("nuiDefaultDecorationArrowClose"), pTex, nuiRect(0,0,7,6));
-  pFrame->UseWidgetAlpha(false);
+  pFrame->UseWidgetAlpha(true);
 
   delete pIMem;  
   
@@ -250,7 +250,7 @@ void nuiDefaultDecoration::InitMaps()
   pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(_T("nuiDefaultDecorationArrowOpen"), pTex, nuiRect(0,0,6,7));
-  pFrame->UseWidgetAlpha(false);
+  pFrame->UseWidgetAlpha(true);
   delete pIMem;  
   
   
@@ -260,7 +260,7 @@ void nuiDefaultDecoration::InitMaps()
   pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(_T("nuiDefaultDecorationCheckerboardSmall"), pTex, nuiRect(0,0,20,20));
-  pFrame->UseWidgetAlpha(false);
+  pFrame->UseWidgetAlpha(true);
   delete pIMem;  
   
 
@@ -280,7 +280,7 @@ void nuiDefaultDecoration::InitIcons()
   nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
   nuiFrame* pFrame = new nuiFrame(_T("nuiDefaultDecorationIconVolume"), pTex, nuiRect(0,0,18,19));
-  pFrame->UseWidgetAlpha(false);
+  pFrame->UseWidgetAlpha(true);
   delete pIMem; 
 
   // folder icon
@@ -288,7 +288,7 @@ void nuiDefaultDecoration::InitIcons()
   pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(_T("nuiDefaultDecorationIconFolder"), pTex, nuiRect(0,0,18,16));
-  pFrame->UseWidgetAlpha(false);
+  pFrame->UseWidgetAlpha(true);
   delete pIMem;  
   
   // file icon
@@ -296,7 +296,7 @@ void nuiDefaultDecoration::InitIcons()
   pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(_T("nuiDefaultDecorationIconFile"), pTex, nuiRect(0,0,16,20));
-  pFrame->UseWidgetAlpha(false);
+  pFrame->UseWidgetAlpha(true);
   delete pIMem; 
 }
 
@@ -375,7 +375,7 @@ void nuiDefaultDecoration::BackgroundPane(nuiWidget* pWidget)
     nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
     NGL_ASSERT(pTex);
     pFrame = new nuiFrame(decoName, pTex, rect);
-    pFrame->UseWidgetAlpha(false);
+    pFrame->UseWidgetAlpha(true);
     delete pIMem; 
   }
   NGL_ASSERT(pFrame);
@@ -428,7 +428,7 @@ void nuiDefaultDecoration::EditLine(nuiWidget* pWidget)
     nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
     NGL_ASSERT(pTex);
     pFrame = new nuiFrame(decoName, pTex, rect);
-    pFrame->UseWidgetAlpha(false);
+    pFrame->UseWidgetAlpha(true);
     delete pIMem; 
   }
   NGL_ASSERT(pFrame);
@@ -823,7 +823,7 @@ void nuiDefaultDecoration::KnobSequence(nuiWidget* pWidget)
       nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
       NGL_ASSERT(pTex);
       pBkgDeco = new nuiFrame(_T("nuiDefaultDecorationKnobSequenceBkg"), pTex, nuiRect(0,0,64,64));
-      pBkgDeco->UseWidgetAlpha(false);
+      pBkgDeco->UseWidgetAlpha(true);
       pBkgDeco->SetLayer(eLayerBack);
       delete pIMem;  
     }
@@ -978,7 +978,7 @@ void nuiDefaultDecoration::Dialog(nuiSimpleContainer* pCont)
     nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
     NGL_ASSERT(pTex);
     pFrame = new nuiFrame(_T("nuiDefaultDecorationOutterPane"), pTex, nuiRect(12,12,0,1));
-    pFrame->UseWidgetAlpha(false);
+    pFrame->UseWidgetAlpha(true);
     delete pIMem; 
   }
   NGL_ASSERT(pFrame);
@@ -999,7 +999,7 @@ void nuiDefaultDecoration::Dialog(nuiSimpleContainer* pCont)
 //    nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
 //    NGL_ASSERT(pTex);
 //    pFrame = new nuiFrame(_T("nuiDefaultDecorationOutterPane"), pTex, nuiRect(12,12,0,1));
-//    pFrame->UseWidgetAlpha(false);
+//    pFrame->UseWidgetAlpha(true);
 //    pFrame->EnableBorder(false);
 //    delete pIMem; 
 //  }
@@ -1050,7 +1050,7 @@ void nuiDefaultDecoration::Dialog_EditLine(nuiWidget* pWidget)
     nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
     NGL_ASSERT(pTex);
     pFrame = new nuiFrame(_T("nuiDefaultDecorationInnerPane"), pTex, nuiRect(6,6,0,0));
-    pFrame->UseWidgetAlpha(false);
+    pFrame->UseWidgetAlpha(true);
     delete pIMem; 
   }
   NGL_ASSERT(pFrame);
@@ -1072,7 +1072,7 @@ void nuiDefaultDecoration::MessageBox(nuiMessageBox* pBox)
     nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
     NGL_ASSERT(pTex);
     pFrame = new nuiFrame(_T("nuiDefaultDecorationOutterPane"), pTex, nuiRect(12,12,0,1));
-    pFrame->UseWidgetAlpha(false);
+    pFrame->UseWidgetAlpha(true);
     delete pIMem; 
   }
   NGL_ASSERT(pFrame);
