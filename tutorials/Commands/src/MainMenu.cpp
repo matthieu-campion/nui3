@@ -6,6 +6,7 @@
  */
 
 #include "MainMenu.h"
+#include "MainWindow.h"
 #include "Application.h"
 
 #include "nuiCommandManager.h"
@@ -14,7 +15,7 @@
 enum mxMenuCommand
 {
   eMenu1Cmd1 = 0,
-  eMenu1Cmd2 = 0,
+  eMenu1Cmd2,
   
   eMenu2Undo,
   eMenu2Redo,
@@ -119,7 +120,10 @@ bool MainMenu::OnMenuCommand(const nuiEvent& rEvent)
     case eMenu2Repeat:
       return nuiCommandManager::Repeat();
       
-    // default : any other command
+    // in our sample application, we automatically launch any command from the menu,
+    // withouth any arguments.
+    // Obviously, you're free to make your own system depending on your application purpose.
+    //
     default:
     {
       std::map<uint32,nglString>::iterator it = mCommands.find(menuCmd);
@@ -177,6 +181,9 @@ bool MainMenu::OnCommandChanged(const nuiEvent& rEvent)
   }
   SetItemText(mpRepeat, repeattext);
   
+  
+  // update monitor info
+  GetMainWindow()->UpdateCommandManagerInfo();
   
   return true;
 }

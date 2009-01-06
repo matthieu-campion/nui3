@@ -19,15 +19,15 @@ public:
   void OnCreation();
   void OnClose();
 
-protected:
-  
-  bool OnButtonClick(const nuiEvent& rEvent);
+  void AddMessage(const nglChar* pFormat, ...);
+  void UpdateCommandManagerInfo();
   
 private:
   
   bool LoadCSS(const nglPath& rPath);
   
-  nuiLabel* mMyLabel;
+  nuiLabel* mpConsole;
+  nuiLabel* mpDump;
   nuiEventSink<MainWindow> mEventSink;
 };
 

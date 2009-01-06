@@ -8,9 +8,12 @@
 #include "nui.h"
 #include "MainWindow.h"
 #include "Application.h"
+
 #include "nuiCSS.h"
 #include "nuiVBox.h"
-
+#include "nuiBackgroundPane.h"
+#include "nuiGrid.h"
+#include "nuiCommandManager.h"
 
 /*
  * MainWindow
@@ -32,53 +35,76 @@ MainWindow::~MainWindow()
 
 void MainWindow::OnCreation()
 {
-  // a vertical box for page layout
-  nuiVBox* pLayoutBox = new nuiVBox(0);
-  pLayoutBox->SetExpand(nuiExpandShrinkAndGrow);
-  AddChild(pLayoutBox);
+  nuiGrid* pGrid = new nuiGrid(2,2);
+  pGrid->SetRowExpand(1, nuiExpandShrinkAndGrow);
+  pGrid->SetColumnExpand(0, nuiExpandShrinkAndGrow);
+  pGrid->SetColumnExpand(1, nuiExpandShrinkAndGrow);
+  AddChild(pGrid);
   
-  // image in the first box's cell
-  nuiImage* pImg = new nuiImage();
-  pImg->SetObjectName(_T("MyImage"));
-  pImg->SetPosition(nuiCenter);
-  pLayoutBox->AddCell(pImg);
-  pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
+  nuiLabel* pLabel = new nuiLabel(_T("Console"));
+  pLabel->SetPosition(nuiCenter);
+  pLabel->SetBorder(10,10);
+  pGrid->SetCell(0,0, pLabel);
   
-  // button in the second cell : we use the default decoration for this button, but you could use the css to assign your own decoration
-  nuiButton* pButton = new nuiButton();
-  pButton->SetPosition(nuiCenter);
-  pLayoutBox->AddCell(pButton);
-  pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
-  
-  // click event on button
-  mEventSink.Connect(pButton->Activated, &MainWindow::OnButtonClick);
-  
-  // label with border in the button (put the label string in the button's constructor if you don't need borders)
-  nuiLabel* pButtonLabel = new nuiLabel(_T("click!"));
-  pButtonLabel->SetPosition(nuiCenter);
-  pButtonLabel->SetBorder(8,8);
-  pButton->AddChild(pButtonLabel);
+  pLabel = new nuiLabel(_T("CommandManager"));
+  pLabel->SetPosition(nuiCenter);
+  pLabel->SetBorder(10,10);
+  pGrid->SetCell(1,0, pLabel);
 
-  // label with decoration in the third cell
-  mMyLabel = new nuiLabel(_T("my label"));
-  mMyLabel->SetObjectName(_T("MyLabel"));
-  mMyLabel->SetPosition(nuiCenter);
-  pLayoutBox->AddCell(mMyLabel);
-  pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
+  
+  //****************************************************************
+  // console
+  //
+  nuiBackgroundPane* pPane = new nuiBackgroundPane(eInnerBackground);
+  pPane->SetPosition(nuiFill);
+  pPane->SetBorder(25,25);
+  pGrid->SetCell(0,1, pPane);
+  
+  nuiScrollView* pScroll = new nuiScrollView(true, true);
+  pPane->AddChild(pScroll);
+  
+  mpConsole = new nuiLabel(_T("Welcome to the 'Commands' tutorial.\nYou can play with the menus.\n"));
+  mpConsole->SetPosition(nuiTopLeft);
+  pScroll->AddChild(mpConsole);
+
+  
+  
+  //****************************************************************
+  // command manager dump
+  //
+
+  pPane = new nuiBackgroundPane(eInnerBackground);
+  pPane->SetPosition(nuiFill);
+  pPane->SetBorder(25,25);
+  pGrid->SetCell(1,1, pPane);
+
+  pScroll = new nuiScrollView(true, true);
+  pPane->AddChild(pScroll);
+  
+  mpDump = new nuiLabel(nuiCommandManager::Dump(), nuiFont::GetFont(8)); // we could use SetObjectName and the css to assign a font, but hell... just for once... :)
+  mpDump->SetPosition(nuiTopLeft);
+  pScroll->AddChild(mpDump);
+  
 }
 
 
-
-bool MainWindow::OnButtonClick(const nuiEvent& rEvent)
+void MainWindow::AddMessage(const nglChar* pFormat, ...)
 {
-  nglString message;
-  double currentTime = nglTime();
-  message.Format(_T("click time: %.2f"), currentTime);
-  mMyLabel->SetText(message);
+  va_list args;
+  nglString buf;
   
-  return true; // means the event is caught and not broadcasted
+  va_start(args, pFormat);
+  buf.Formatv(pFormat, args);
+  va_end (args);
+
+  mpConsole->SetText(mpConsole->GetText() + nglString(_T("\n\n")) + buf);
+  NGL_OUT(_T("%ls\n"), buf.GetChars());
 }
 
+void MainWindow::UpdateCommandManagerInfo()
+{
+  mpDump->SetText(nuiCommandManager::Dump());
+}
 
 void MainWindow::OnClose()
 {

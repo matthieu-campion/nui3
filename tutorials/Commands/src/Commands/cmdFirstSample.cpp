@@ -7,7 +7,8 @@
 
  
 #include "./Commands/cmdFirstSample.h"
- 
+#include "MainWindow.h"
+#include "Application.h"
  
 cmdFirstSample::cmdFirstSample() : nuiCommand(_T("FirstCommandRef"), _T("first Sample command"), true/*can undo*/, true/* use command manager*/, true/*can repeat*/)
 {
@@ -30,7 +31,7 @@ bool cmdFirstSample::ExecuteDo()
 {
   uint32 iWantToDoSomething = mArg1 + mArg2;
   
-  NGL_OUT(_T("cmdFirstSample ExecuteDo : %d + %d = %d\n"), mArg1, mArg2, iWantToDoSomething);
+  GetMainWindow()->AddMessage(_T("cmdFirstSample ExecuteDo : %d + %d = %d\n"), mArg1, mArg2, iWantToDoSomething);
   return true;
 }
     
@@ -45,7 +46,7 @@ bool cmdFirstSample::ExecuteDo()
 bool cmdFirstSample::ExecuteUndo()
 {
   // here you can do everything you want to "undo" the action programmed in ::ExecuteDo()
-  NGL_OUT(_T("SampleCommand ExecuteUndo"));
+  GetMainWindow()->AddMessage(_T("cmdFirstSample ExecuteUndo"));
   return true;
 }
     
