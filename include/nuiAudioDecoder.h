@@ -18,8 +18,6 @@ public:
   nuiAudioDecoder(nglIStream& rStream);
   virtual ~nuiAudioDecoder();
   
-  bool Init();
-  
   bool GetInfo(nuiSampleInfo& rInfo) const;
   uint32 Read(std::vector<float*> buffers, uint32 SampleFrames);
   
@@ -30,6 +28,7 @@ public:
   bool SampleFramesToBytes(uint64 inSampleFrames, uint64& outBytes) const;
   
 private:
+  bool Init();
   bool ReadInfo();
   bool Seek(uint64 SampleFrame);
   void Clear();

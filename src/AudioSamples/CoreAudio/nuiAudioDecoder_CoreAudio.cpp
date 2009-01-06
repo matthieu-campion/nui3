@@ -124,10 +124,6 @@ bool nuiAudioDecoder::Seek(uint64 SampleFrame)
 
 bool nuiAudioDecoder::ReadInfo()
 {
-  NGL_ASSERT(mInitialized);
-  if (!mInitialized)
-    return false;
-  
   OSStatus err = noErr;
   
   //Set audio extraction properties
@@ -144,9 +140,15 @@ bool nuiAudioDecoder::ReadInfo()
   uint32 BytesPerSample = sizeof(Float32);
   uint32 BitsPerSample  = BytesPerSample * 8;
   
+
+  //We want non-interleaved audio samples,
+  //so, in this case, the asbd object represents the samples format of only one channel
+  //the extraction method will fill an AudioBufferList structure which contains one AudioBuffer per channel
+  //since the following asbd description is relative to one AudioBuffer structure
+  //that's why, here, there is only one channel by frame (nb of bits per channel = nb of bits per frame)
   asbd.mFormatFlags     = kAudioFormatFlagIsFloat | kAudioFormatFlagIsNonInterleaved | kAudioFormatFlagsNativeEndian;
   asbd.mBitsPerChannel  = BitsPerSample;
-  asbd.mBytesPerFrame   = BytesPerSample * asbd.mChannelsPerFrame;
+  asbd.mBytesPerFrame   = BytesPerSample;
   asbd.mBytesPerPacket  = asbd.mBytesPerFrame;
   
   // Set the new audio extraction ASBD
@@ -195,24 +197,29 @@ uint32 nuiAudioDecoder::Read(std::vector<float*> buffers, uint32 SampleFrames)
     return 0;
   
   OSStatus err = noErr;
-  AudioBufferList BufferList;
-  BufferList.mNumberBuffers = nbChannels; // we query non-interleaved samples, so we need as many buffers as channels
+  uint32 listSize = sizeof(AudioBufferList) + sizeof(AudioBuffer) * (nbChannels - 1);
+  AudioBufferList* pBufList = reinterpret_cast<AudioBufferList*>(new Byte[listSize]);
+  pBufList->mNumberBuffers = nbChannels; // we query non-interleaved samples, so we need as many buffers as channels
   
-  for (int ch = 0; ch < nbChannels; ch++)
+  for (int ch = 0; ch < pBufList->mNumberBuffers; ch++)
   {
-    BufferList.mBuffers[ch].mNumberChannels  = 1;
-    BufferList.mBuffers[ch].mDataByteSize    = BytestoRead;
-    BufferList.mBuffers[ch].mData            = buffers[ch];
+    //each AudioBuffer object represents one channel since we want non-interleaved samples
+    pBufList->mBuffers[ch].mNumberChannels  = 1;
+    pBufList->mBuffers[ch].mDataByteSize    = BytestoRead / nbChannels;
+    pBufList->mBuffers[ch].mData            = &(buffers[ch][0]);
   }
   
   UInt32 flags      = 0;
   UInt32 numFrames  = SampleFrames;
-  err = MovieAudioExtractionFillBuffer(mpPrivate->mExtractionSessionRef, &numFrames, &BufferList, &flags);  //Extract
+  err = MovieAudioExtractionFillBuffer(mpPrivate->mExtractionSessionRef, &numFrames, pBufList, &flags);  //Extract
   if (err != noErr)
     return 0;
   
   uint32 SampleFramesRead = numFrames;
   mPosition  += SampleFramesRead;
+  
+  delete[] pBufList;
+  
   return SampleFramesRead;
 }
 
