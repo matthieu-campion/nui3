@@ -1,5 +1,6 @@
 #include "nui.h"
 #include "nuiAudioDecoder.h"
+#include "nuiAudioConvert.h"
 
 #include "windows.h"
 #include "wmsdk.h"
@@ -23,12 +24,14 @@ public:
   void Reset();
 
   void Append(uint8* pSrc, uint32 size);
-  uint32 Read(uint8* pDest, uint32 size);
-  uint32 ReadAndDeInterleaved(std::vector<float*>& rBuffers, uint32 size);
+  uint32 ReadDeInterleavedFloat32(std::vector<float*>& rBuffers, uint32 FramesRequested);
 
+  void SetInputBytesPerSample(uint32 bytes);
+  uint32 GetInputBytesPerSample() const;
 private:
   std::vector<uint8> mBuffer;
   uint32 mUtilSize;
+  uint32 mInputBytesPerSample;
 };
 
 class nglWindowsMediaIStream : public IStream
@@ -91,7 +94,6 @@ bool nuiAudioDecoder::Init()
 	if (SUCCEEDED(hr))
 	{
 	  result = ReadInfo();
-	  SetPosition(0);
 	}
   }
 
@@ -193,8 +195,9 @@ bool nuiAudioDecoder::ReadInfo()
 		if (pType->subtype == WMMEDIASUBTYPE_PCM && pType->formattype == WMFORMAT_WaveFormatEx)
 		{
 		  WAVEFORMATEX* pWFmt = (WAVEFORMATEX*)(pType->pbFormat);
+		  
 		  //Check if the samples are PCM audio
-		  if (pWFmt->wFormatTag != PCM_AUDIO_FORMAT_TAG || pWFmt->wBitsPerSample != REQUESTED_BITS_PER_SAMPLE)
+		  if (pWFmt->wFormatTag != PCM_AUDIO_FORMAT_TAG)
 		  {
 			free(pType);
 			result = false;
@@ -265,8 +268,10 @@ bool nuiAudioDecoder::ReadInfo()
 
 		  mInfo.SetChannels(nbChannels);
 		  mInfo.SetSampleRate(SampleRate);
-		  mInfo.SetBitsPerSample(bitsPerSample);
+		  mInfo.SetBitsPerSample(REQUESTED_BITS_PER_SAMPLE); // we want to convert to 32 bits float samples
 		  mInfo.SetSampleFrames(SampleFrames);
+
+		  mpPrivate->mQueue.SetInputBytesPerSample(bitsPerSample / 8);
 
 		  free(pType);
 		  result = true;
@@ -286,8 +291,7 @@ uint32 nuiAudioDecoder::Read(std::vector<float*> buffers, uint32 SampleFrames)
   if (!mInitialized)
 	return 0;
 
-  uint32 BytesToRead		= 0;
-  SampleFramesToBytes(SampleFrames, (uint64&)BytesToRead);
+  uint32 BytesToRead		= SampleFrames * mInfo.GetChannels() * mpPrivate->mQueue.GetInputBytesPerSample();
   HRESULT hr				= S_OK;
   INSSBuffer* pTempBuffer	= NULL;
   QWORD SampleTime			= 0;
@@ -317,14 +321,7 @@ uint32 nuiAudioDecoder::Read(std::vector<float*> buffers, uint32 SampleFrames)
 	flags			  = 0;
   }
 
-  //
-  //#FIXME: de-interlace buffers or find a way to say to WMReader to give non-interleaved buffers
-  //
-  //
-  //uint32 BytesRead	= mpPrivate->mQueue.Read((uint8*)pBuffer, BytesToRead);
-  uint32 BytesRead = mpPrivate->mQueue.ReadAndDeInterleaved(buffers, BytesToRead); // we want de-interleaved samples
-  uint32 FramesRead = 0;
-  BytesToSampleFrames(BytesRead, (uint64&)FramesRead);
+  uint32 FramesRead = mpPrivate->mQueue.ReadDeInterleavedFloat32(buffers, SampleFrames); // we want de-interleaved samples
   mPosition += FramesRead;
 
   return FramesRead;
@@ -341,7 +338,8 @@ uint32 nuiAudioDecoder::Read(std::vector<float*> buffers, uint32 SampleFrames)
 //**************************************************************
 
 SamplesQueue::SamplesQueue() :
-mUtilSize(0)
+mUtilSize(0),
+mInputBytesPerSample(1)
 {
 }
 
@@ -375,41 +373,67 @@ void SamplesQueue::Append(uint8* pSrc, uint32 size)
   memcpy(&(mBuffer[oldUtilSize]), pSrc, size);
 }
 
-uint32 SamplesQueue::Read(uint8* pDest, uint32 size)
+uint32 SamplesQueue::ReadDeInterleavedFloat32(std::vector<float*>& rBuffers, uint32 FramesRequested)
 {
-  uint32 SizeToRead = MIN(size, mUtilSize);
-  memcpy(pDest, &(mBuffer[0]), SizeToRead);
+  uint32 channels = rBuffers.size();
+  uint32 StoredSamples = mUtilSize / mInputBytesPerSample;
+  uint32 StoredFrames = StoredSamples / channels;
+  
+  uint32 FramesToRead = MIN(FramesRequested, StoredFrames);
+  uint32 SamplesToRead = FramesToRead * channels;
+  uint32 BytesToRead = SamplesToRead * mInputBytesPerSample;
 
-  mUtilSize -= SizeToRead;
-  if (mUtilSize > 0)
+  float* pFloatBuffer = new float[SamplesToRead];
+
+  if (mInputBytesPerSample == 1)
   {
-	memmove(&(mBuffer[0]), &(mBuffer[SizeToRead]), mUtilSize);
+	memcpy((int8*)pFloatBuffer + 3*SamplesToRead, &(mBuffer[0]), SamplesToRead);
+	nuiAudioConvert_Signed8bitsBufferToFloat(pFloatBuffer, SamplesToRead);
+  }
+  else if (mInputBytesPerSample == 2)
+  {
+	memcpy((int16*)pFloatBuffer + SamplesToRead, &(mBuffer[0]), SamplesToRead * mInputBytesPerSample);
+	nuiAudioConvert_16bitsBufferToFloat(pFloatBuffer, SamplesToRead);
+  }
+  else if (mInputBytesPerSample == 3)
+  {
+  	for (uint32 i = 0; i < SamplesToRead; i++)
+	{
+	  pFloatBuffer[i] = nuiAudioConvert_24bitsToFloatFromLittleEndian(&(mBuffer[3 * i]));
+	}
+  }
+  else if (mInputBytesPerSample == 4)
+  {
+	nuiAudioConvert_32bitsToFloat((int32*)&(mBuffer[0]), pFloatBuffer, SamplesToRead);
   }
 
-  return SizeToRead;
-}
-
-uint32 SamplesQueue::ReadAndDeInterleaved(std::vector<float*>& rBuffers, uint32 size)
-{
-  uint32 SizeToRead = MIN(size, mUtilSize);
-
-  uint32 channels = rBuffers.size();
-  uint32 FramesToRead = ToBelow((float)size / (float)channels);
   for (uint32 s = 0; s < FramesToRead; s++)
   {
 	for (uint32 c = 0; c < channels; c++)
 	{
-	  rBuffers[c][s] = mBuffer[s * channels + c];
+	  rBuffers[c][s] = pFloatBuffer[s * channels + c];
 	}
   }
 
-  mUtilSize -= SizeToRead;
+  mUtilSize -= BytesToRead;
   if (mUtilSize > 0)
   {
-	memmove(&(mBuffer[0]), &(mBuffer[SizeToRead]), mUtilSize);
+	memmove(&(mBuffer[0]), &(mBuffer[BytesToRead]), mUtilSize);
   }
 
-  return SizeToRead;
+  delete[] pFloatBuffer;
+
+  return FramesToRead;
+}
+
+void SamplesQueue::SetInputBytesPerSample(uint32 bytes)
+{
+  mInputBytesPerSample = bytes;
+}
+  
+uint32 SamplesQueue::GetInputBytesPerSample() const
+{
+  return mInputBytesPerSample;
 }
 
 

@@ -35,7 +35,7 @@ bool ConvertCompressedAudioFile(nglPath inPath, nglPath outPath)
   
   if (pDecoder->GetInfo(inInfo))
   {
-    NGL_OUT(_T("********************************************************\nOriginal file infos:\n"));
+    NGL_OUT(_T("********************************************************\Audio infos:\n"));
     PrintAudioInfos(inInfo);
     
     uint32 channels = inInfo.GetChannels();
@@ -44,7 +44,7 @@ bool ConvertCompressedAudioFile(nglPath inPath, nglPath outPath)
     {
       buffers[c] = new float[FRAMES_PACKET];
     }
-    float* pDeInterleavedBuffer = new float[channels * FRAMES_PACKET];
+	float* pDeInterleavedBuffer = new float[channels * FRAMES_PACKET];
     
     //write output samples infos
     outInfo.SetChannels(inInfo.GetChannels());
@@ -53,8 +53,6 @@ bool ConvertCompressedAudioFile(nglPath inPath, nglPath outPath)
     outInfo.SetFileFormat(eAudioWave);
     outInfo.SetFormatTag(eWaveFormatPcm);
     pWriter->WriteInfo(outInfo);
-    NGL_OUT(_T("********************************************************\nDecompressed file infos:\n"));
-    PrintAudioInfos(outInfo);
     
     uint32 FramesToRead = FRAMES_PACKET;
     uint32 FramesRead = 0;

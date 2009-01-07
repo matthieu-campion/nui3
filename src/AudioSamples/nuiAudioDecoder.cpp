@@ -16,6 +16,8 @@ nuiAudioDecoder::nuiAudioDecoder(nglIStream& rStream) :
   mpPrivate(NULL)
 {
   mInitialized = Init();
+  if (mInitialized)
+	SetPosition(0);
 }
 
 nuiAudioDecoder::~nuiAudioDecoder()
@@ -26,7 +28,6 @@ nuiAudioDecoder::~nuiAudioDecoder()
 
 bool nuiAudioDecoder::GetInfo(nuiSampleInfo& rInfo) const
 {
-  NGL_ASSERT(mInitialized);
   if (!mInitialized)
     return false;
   
