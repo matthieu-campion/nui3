@@ -61,10 +61,10 @@ public:
     eColumn
   };
   
-  nuiFileSelector(const nglPath& rPath, const nglPath& rRootPath, const nglString& rFilter = _T("*"), nuiEditLine* pEntry = NULL, bool showHiddenFiles = false, DisplayMode mode = eColumn, bool ShowVolumes = true);
-  nuiFileSelector(const nglPath& rPath, const nglPath& rRootPath, const std::list<nglString>& rFilters, nuiEditLine* pEntry = NULL, bool showHiddenFiles = false, DisplayMode mode = eColumn, bool ShowVolumes = true);
-  nuiFileSelector(const nglPath& rPath, const nglString& rFilter = _T("*"), nuiEditLine* pEntry = NULL, bool showHiddenFiles = false, DisplayMode mode = eColumn, bool ShowVolumes = true);
-  nuiFileSelector(const nglPath& rPath, const std::list<nglString>& rFilters, nuiEditLine* pEntry = NULL, bool showHiddenFiles = false, DisplayMode mode = eColumn, bool ShowVolumes = true);
+  nuiFileSelector(const nglPath& rPath, const nglPath& rRootPath, const nglString& rFilter = _T("*"), nuiEditLine* pEntry = NULL, bool showHiddenFiles = false, DisplayMode mode = eColumn, bool ShowVolumes = true, bool Opened = true);
+  nuiFileSelector(const nglPath& rPath, const nglPath& rRootPath, const std::list<nglString>& rFilters, nuiEditLine* pEntry = NULL, bool showHiddenFiles = false, DisplayMode mode = eColumn, bool ShowVolumes = true, bool Opened = true);
+  nuiFileSelector(const nglPath& rPath, const nglString& rFilter = _T("*"), nuiEditLine* pEntry = NULL, bool showHiddenFiles = false, DisplayMode mode = eColumn, bool ShowVolumes = true, bool Opened = true);
+  nuiFileSelector(const nglPath& rPath, const std::list<nglString>& rFilters, nuiEditLine* pEntry = NULL, bool showHiddenFiles = false, DisplayMode mode = eColumn, bool ShowVolumes = true, bool Opened = true);
   /*!< Creates a file selector instance
     \param pParent container
     \param rPath initial path displayed by the file browser
@@ -74,15 +74,16 @@ public:
   
   virtual ~nuiFileSelector();
   
-  void InitSelector(const nglPath& rPath, const nglPath& rRootPath, nuiEditLine* pEntry = NULL, DisplayMode mode = eColumn, bool ShowVolumes = true);
+  void InitSelector(const nglPath& rPath, const nglPath& rRootPath, nuiEditLine* pEntry = NULL, DisplayMode mode = eColumn, bool ShowVolumes = true, bool Opened = true);
 
   void SetFileName(const nglString& FileName);  ///< Set the entry widget's current text
 
   bool SetPath(const nglPath& rPath);      ///< Change currently selected Path.
-  bool SetRootPath(const nglPath& rPath);      ///< Change current root
+  bool SetRootPath(const nglPath& rPath, bool Opened = true);      ///< Change current root
   nglPath GetPath() const;          ///< Retrieve currently selected Path, including the node currently entered in the entry box
   nglPath GetFolderPath() const; ///< Retrieve currently selected Path, or its parent if a file is selected. The entry box content is not used.
   nglPath GetRootPath() const;          ///< Retrieve current root.
+  nuiTreeNode* GetRootNode();
 
   void SetDisplayMode(DisplayMode mode);
   DisplayMode GetDisplayMode() const;
@@ -93,7 +94,7 @@ public:
   
 private:
 
-  void Init(const nglPath& rPath, const nglPath& rRootPath, const std::list<nglString>& rFilters, nuiEditLine* pEntry, bool showHiddenFiles, DisplayMode mode, bool ShowVolumes);
+  void Init(const nglPath& rPath, const nglPath& rRootPath, const std::list<nglString>& rFilters, nuiEditLine* pEntry, bool showHiddenFiles, DisplayMode mode, bool ShowVolumes, bool Opened);
   
   void SetInfoView(nuiWidget* pWidget);
   nuiWidget* GetFileInfo(const nglPath& rPath);

@@ -99,37 +99,37 @@ bool nuiFileSelectorNode::IsEmpty() const
 
 
 
-nuiFileSelector::nuiFileSelector(const nglPath& rPath, const nglPath& rRootPath, const nglString& rFilter, nuiEditLine* pEntry, bool showHiddenFiles, DisplayMode mode, bool ShowVolumes)
+nuiFileSelector::nuiFileSelector(const nglPath& rPath, const nglPath& rRootPath, const nglString& rFilter, nuiEditLine* pEntry, bool showHiddenFiles, DisplayMode mode, bool ShowVolumes, bool Opened)
 : nuiComposite(), mpFolderList(NULL), mEventSink(this)
 {
   std::list<nglString> filters;
   if (rFilter != nglString::Null)
     filters.push_back(rFilter);
-  Init(rPath, rRootPath, filters, pEntry, showHiddenFiles, mode, ShowVolumes);
+  Init(rPath, rRootPath, filters, pEntry, showHiddenFiles, mode, ShowVolumes, Opened);
 }
 
-nuiFileSelector::nuiFileSelector(const nglPath& rPath, const nglPath& rRootPath, const std::list<nglString>& rFilters, nuiEditLine* pEntry, bool showHiddenFiles, DisplayMode mode, bool ShowVolumes)
+nuiFileSelector::nuiFileSelector(const nglPath& rPath, const nglPath& rRootPath, const std::list<nglString>& rFilters, nuiEditLine* pEntry, bool showHiddenFiles, DisplayMode mode, bool ShowVolumes, bool Opened)
 : nuiComposite(), mpFolderList(NULL), mEventSink(this)
 {
-  Init(rPath, rRootPath, rFilters, pEntry, showHiddenFiles, mode, ShowVolumes);  
+  Init(rPath, rRootPath, rFilters, pEntry, showHiddenFiles, mode, ShowVolumes, Opened);  
 }
 
-nuiFileSelector::nuiFileSelector(const nglPath& rPath, const nglString& rFilter, nuiEditLine* pEntry, bool showHiddenFiles, DisplayMode mode, bool ShowVolumes)
+nuiFileSelector::nuiFileSelector(const nglPath& rPath, const nglString& rFilter, nuiEditLine* pEntry, bool showHiddenFiles, DisplayMode mode, bool ShowVolumes, bool Opened)
 : nuiComposite(), mpFolderList(NULL), mEventSink(this)
 {
   std::list<nglString> filters;
   if (rFilter != nglString::Null)
     filters.push_back(rFilter);
-  Init(rPath, rPath, filters, pEntry, showHiddenFiles, mode, ShowVolumes);
+  Init(rPath, rPath, filters, pEntry, showHiddenFiles, mode, ShowVolumes, Opened);
 }
 
-nuiFileSelector::nuiFileSelector(const nglPath& rPath, const std::list<nglString>& rFilters, nuiEditLine* pEntry, bool showHiddenFiles, DisplayMode mode, bool ShowVolumes)
+nuiFileSelector::nuiFileSelector(const nglPath& rPath, const std::list<nglString>& rFilters, nuiEditLine* pEntry, bool showHiddenFiles, DisplayMode mode, bool ShowVolumes, bool Opened)
 : nuiComposite(), mpFolderList(NULL), mEventSink(this)
 {
-  Init(rPath, rPath, rFilters, pEntry, showHiddenFiles, mode, ShowVolumes);  
+  Init(rPath, rPath, rFilters, pEntry, showHiddenFiles, mode, ShowVolumes, Opened);  
 }
 
-void nuiFileSelector::Init(const nglPath& rPath, const nglPath& rRootPath, const std::list<nglString>& rFilters, nuiEditLine* pEntry, bool showHiddenFiles, DisplayMode mode, bool ShowVolumes)
+void nuiFileSelector::Init(const nglPath& rPath, const nglPath& rRootPath, const std::list<nglString>& rFilters, nuiEditLine* pEntry, bool showHiddenFiles, DisplayMode mode, bool ShowVolumes, bool Opened)
 {
   if (SetObjectClass(_T("nuiFileSelector")))  
     InitAttributes();
@@ -139,7 +139,7 @@ void nuiFileSelector::Init(const nglPath& rPath, const nglPath& rRootPath, const
   mFilters = rFilters;
   mpInfoBox = NULL;
   
-  InitSelector (rPath, rRootPath, mpEntry, mode, ShowVolumes);
+  InitSelector (rPath, rRootPath, mpEntry, mode, ShowVolumes, Opened);
   
   NUI_ADD_EVENT(OK);
   NUI_ADD_EVENT(Cancel);  
@@ -187,7 +187,7 @@ const std::list<nglString>& nuiFileSelector::GetFilters()
 //******************************************************************
 
 
-void nuiFileSelector::InitSelector (const nglPath& rPath, const nglPath& rRootPath, nuiEditLine* pEntry, DisplayMode mode, bool ShowVolumes)
+void nuiFileSelector::InitSelector (const nglPath& rPath, const nglPath& rRootPath, nuiEditLine* pEntry, DisplayMode mode, bool ShowVolumes, bool Opened)
 {
   mShowVolumes = ShowVolumes;
   mpMainBox = new nuiHBox(3);
@@ -312,7 +312,7 @@ void nuiFileSelector::InitSelector (const nglPath& rPath, const nglPath& rRootPa
     mEventSink.Connect(mpEntry->Selected, &nuiFileSelector::OnActivated);
   }
 
-  SetRootPath(rRootPath);
+  SetRootPath(rRootPath, Opened);
   SetPath(rPath);
 }
 
@@ -506,13 +506,13 @@ bool nuiFileSelector::SetPath(const nglPath& rPath)
   return true;
 }
 
-bool nuiFileSelector::SetRootPath(const nglPath& rPath)
+bool nuiFileSelector::SetRootPath(const nglPath& rPath, bool Opened)
 {
   nuiTreeNodePtr pNode = GetNewNode(rPath);
 
   if (pNode)
   {
-    pNode->Open(true);
+    pNode->Open(Opened);
     mpTreeView->SetTree(pNode);
     SetPath(rPath);
   }
@@ -560,6 +560,14 @@ nglPath nuiFileSelector::GetRootPath() const
   nuiTreeNode* pTree = mpTreeView->GetTree();
   return pTree->GetProperty(_T("Path"));
 }
+
+
+nuiTreeNode* nuiFileSelector::GetRootNode()
+{
+  nuiTreeNode* pNode = mpTreeView->GetTree();
+  return pNode;
+}
+
 
 bool nuiFileSelector::IsFilterSet(const nglString& rFilter)
 {
