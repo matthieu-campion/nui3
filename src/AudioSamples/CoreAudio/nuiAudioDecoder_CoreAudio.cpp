@@ -26,7 +26,15 @@ bool CstrToPascal(const char* Cstr, Str255 PascalStr)
 class nuiAudioDecoderPrivate
   {
   public:
+    nuiAudioDecoderPrivate(nglIStream& rStream);
+    virtual ~nuiAudioDecoderPrivate();
     
+    bool Init(const char* pFileName);
+    void Clear();
+    
+    nglIStream& mrStream;
+    nglFileSize mStreamSize;
+    bool mInitialized;
     uint8* mpInStreamData;
     Movie mMovie;
     MovieAudioExtractionRef mExtractionSessionRef;
@@ -40,6 +48,65 @@ class nuiAudioDecoderPrivate
     bool CreateQuickTimeMovie(Handle dataHandle);
   };
 
+nuiAudioDecoderPrivate::nuiAudioDecoderPrivate(nglIStream& rStream) :
+mInitialized(false),
+mrStream(rStream),
+mpInStreamData(NULL),
+mStreamSize(0)
+{
+  mStreamSize  = mrStream.Available(1);
+  mpInStreamData    = new uint8[mStreamSize];
+  mrStream.ReadUInt8(mpInStreamData, mStreamSize);
+}
+
+nuiAudioDecoderPrivate::~nuiAudioDecoderPrivate()
+{
+  if (mInitialized)
+    Clear();
+  
+  if (mpInStreamData)
+    delete mpInStreamData;
+}
+
+bool nuiAudioDecoderPrivate::Init(const char* pFileName)
+{
+  if (mInitialized)
+  {
+    Clear();
+    mInitialized = false;
+  }
+  
+  Str255 PascalFileName;
+  CstrToPascal(pFileName, PascalFileName);
+  mInStreamDataHandle = createPointerDataRefWithExtensions(mpInStreamData, mStreamSize, PascalFileName, NULL, NULL);
+  if (mInStreamDataHandle)
+  {
+    if (CreateQuickTimeMovie(mInStreamDataHandle))
+    {
+      //Begin Extraction
+      OSStatus err  = MovieAudioExtractionBegin(mMovie, 0, &mExtractionSessionRef);
+      if (err == noErr)
+        mInitialized = true;
+    }
+  }
+  
+  return mInitialized;
+}
+
+void nuiAudioDecoderPrivate::Clear()
+{
+  if (mInitialized)
+  {
+    MovieAudioExtractionEnd(mExtractionSessionRef);
+    DisposeMovie(mMovie);
+    
+    if (mInStreamDataHandle)
+      DisposeHandle(mInStreamDataHandle);
+  }
+  
+  mInitialized = false;
+}
+
 
 
 
@@ -49,54 +116,35 @@ bool nuiAudioDecoder::Init()
   if (mInitialized)
     return false; // already initialized
   
-  mpPrivate = new nuiAudioDecoderPrivate();
+  mpPrivate = new nuiAudioDecoderPrivate(mrStream);
   
   bool result = false;
   
   EnterMovies();
+    
+  //pass a fake file name to the init method, quicktime will try to recognize this file type extension, if not, try another.....
+  std::vector<const char*> FileExtensions;
+  FileExtensions.push_back("blabla.mp3");
+  FileExtensions.push_back("blabla.m4a");
+  FileExtensions.push_back("blabla.wma");
   
-  nglFileSize size  = mrStream.Available(1);
-  mpPrivate->mpInStreamData    = new uint8[size];
-  mrStream.ReadUInt8(mpPrivate->mpInStreamData, size);
-  
-  const char* pFileName = "blabla.mp3";
-  Str255 PascalFileName;
-  CstrToPascal(pFileName, PascalFileName);
-  mpPrivate->mInStreamDataHandle = mpPrivate->createPointerDataRefWithExtensions(mpPrivate->mpInStreamData, size, PascalFileName, NULL, NULL);
-  
-  if (mpPrivate->mInStreamDataHandle)
+  for (uint32 i = 0; i < FileExtensions.size(); i++)
   {
-    if (mpPrivate->CreateQuickTimeMovie(mpPrivate->mInStreamDataHandle))
+    if (mpPrivate->Init(FileExtensions[i]))
     {
-      //Begin Extraction
-      OSStatus err  = MovieAudioExtractionBegin(mpPrivate->mMovie, 0, &mpPrivate->mExtractionSessionRef);
-      if (err != noErr)
-        return false;
+      return ReadInfo();
     }
     else
-      return false;
+    {
+      mpPrivate->Clear();
+    }
   }
-  else
-    return false;
   
-  result = ReadInfo();
-  return result;
+  return false;
 }
 
 void nuiAudioDecoder::Clear()
 {
-  if (mInitialized)
-  {
-    MovieAudioExtractionEnd(mpPrivate->mExtractionSessionRef);
-    DisposeMovie(mpPrivate->mMovie);
-  }
-  
-  if (mpPrivate->mInStreamDataHandle)
-    DisposeHandle(mpPrivate->mInStreamDataHandle);
-  
-  if (mpPrivate->mpInStreamData)
-    delete mpPrivate->mpInStreamData;
-  
   if (mpPrivate)
     delete mpPrivate;
 }
