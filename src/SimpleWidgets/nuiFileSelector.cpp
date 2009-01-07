@@ -509,6 +509,7 @@ bool nuiFileSelector::SetPath(const nglPath& rPath)
 bool nuiFileSelector::SetRootPath(const nglPath& rPath)
 {
   nuiTreeNodePtr pNode = GetNewNode(rPath);
+
   if (pNode)
   {
     pNode->Open(true);
@@ -653,13 +654,27 @@ nuiTreeNode* nuiFileSelector::GetNewNode(const nglPath& rPath)
       if (!mShowHiddenFiles && (rPath.GetNodeName().GetChar(0) == _T('.')))
         return NULL;
         
+      nglString iconObjectName, labelObjectName;
+      
+      if (rPath.GetParent().GetPathName().IsEmpty() || !rPath.GetPathName().Compare(_T("/")) || !rPath.GetParent().GetPathName().Compare(_T("/Volumes")))
+      {
+        iconObjectName = _T("nuiFileSelector::VolumeIcon");
+        labelObjectName = _T("nuiFileSelector::TreeFolderLabel");
+      }
+      else
+      {
+        iconObjectName = _T("nuiFileSelector::TreeFolderIcon");
+        labelObjectName = _T("nuiFileSelector::TreeFolderLabel");
+      }
+      
+      
       pBox = new nuiHBox(2);
       pIcon = new nuiSimpleContainer();
-      pIcon->SetObjectName(_T("nuiFileSelector::TreeFolderIcon"));
-      pIcon->SetObjectClass(_T("nuiFileSelector::TreeFolderIcon"));
+      pIcon->SetObjectName(iconObjectName);
+      pIcon->SetObjectClass(iconObjectName);
       label = new nuiLabel(rPath.GetNodeName().IsEmpty()?_T("/"):rPath.GetNodeName());        
-      label->SetObjectName(_T("nuiFileSelector::TreeFolderLabel"));
-      label->SetObjectClass(_T("nuiFileSelector::TreeFolderLabel"));
+      label->SetObjectName(labelObjectName);
+      label->SetObjectClass(labelObjectName);
     }
     
     pBox->SetCell(0, pIcon, nuiCenter);
