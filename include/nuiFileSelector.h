@@ -91,6 +91,8 @@ public:
   nuiSimpleEventSource<nuiWidgetActivated> PathChanged;      ///< Event triggered when the user is navigating around the file system.
   nuiSimpleEventSource<nuiWidgetActivated> OK;      ///< Event triggered when the user was done (file selected)
   nuiSimpleEventSource<nuiActionAborted>   Cancel;  ///< Event triggered when the user was done (closed/cancelled)
+  nuiSimpleEventSource<0> Opened; // <when the root is opened/closed
+  nuiSimpleEventSource<0> Closed;
   
 private:
 
@@ -116,6 +118,8 @@ private:
   virtual nuiTreeNode* GetNewNode(const nglPath& rPath);
   bool OnActivated (const nuiEvent& event);
   bool OnFolderListSelectionChanged(const nuiEvent& event);
+  
+  bool OnRootStateChanged(const nuiEvent& rEvent);
 
   nuiHBox* mpMainBox;
   nuiVBox* mpInfoBox;

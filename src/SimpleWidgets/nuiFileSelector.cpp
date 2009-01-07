@@ -514,6 +514,10 @@ bool nuiFileSelector::SetRootPath(const nglPath& rPath, bool Opened)
   {
     pNode->Open(Opened);
     mpTreeView->SetTree(pNode);
+    
+    mEventSink.Connect(pNode->Opened, &nuiFileSelector::OnRootStateChanged, (void*)1);
+    mEventSink.Connect(pNode->Closed, &nuiFileSelector::OnRootStateChanged, (void*)0);
+    
     SetPath(rPath);
   }
   return true;
@@ -787,6 +791,21 @@ bool nuiFileSelector::OnFolderListSelectionChanged(const nuiEvent& event)
   NGL_OUT(_T("new Path :__") + SelectedPath.GetPathName() + _T("__\n"));
   SetRootPath(SelectedPath);
   return false;
+}
+
+
+
+bool nuiFileSelector::OnRootStateChanged(const nuiEvent& rEvent)
+{
+  uint32 opened = (uint32)rEvent.mpUser;
+  
+  // redirect event
+  if (opened)
+    Opened();
+  else
+    Closed();
+  
+  return true;
 }
 
 
