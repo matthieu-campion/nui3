@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="nuiAudioDecoderTest"
 	ProjectGUID="{D87858E8-0145-4B03-889A-3186371799DC}"
 	RootNamespace="template"
@@ -61,6 +61,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="wmvcore.lib"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -182,6 +183,14 @@
 			</File>
 			<File
 				RelativePath="src\Application.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\DecoderTest.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\DecoderTest.h"
 				>
 			</File>
 			<File

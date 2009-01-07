@@ -7,6 +7,8 @@
 
 #define PCM_AUDIO_FORMAT_TAG 0x0001
 
+#define REQUESTED_BITS_PER_SAMPLE 32 //we want to retrieve 32 bits audio samples
+
 #define ONE_SECOND 10000000 //one second in 100 nano sec unit (unit used by Windows Media Reader)
 
 class SamplesQueue
@@ -22,6 +24,7 @@ public:
 
   void Append(uint8* pSrc, uint32 size);
   uint32 Read(uint8* pDest, uint32 size);
+  uint32 ReadAndDeInterleaved(std::vector<float*>& rBuffers, uint32 size);
 
 private:
   std::vector<uint8> mBuffer;
@@ -191,7 +194,7 @@ bool nuiAudioDecoder::ReadInfo()
 		{
 		  WAVEFORMATEX* pWFmt = (WAVEFORMATEX*)(pType->pbFormat);
 		  //Check if the samples are PCM audio
-		  if (pWFmt->wFormatTag != PCM_AUDIO_FORMAT_TAG)
+		  if (pWFmt->wFormatTag != PCM_AUDIO_FORMAT_TAG || pWFmt->wBitsPerSample != REQUESTED_BITS_PER_SAMPLE)
 		  {
 			free(pType);
 			result = false;
@@ -267,7 +270,7 @@ bool nuiAudioDecoder::ReadInfo()
 
 		  free(pType);
 		  result = true;
-		  break; //we have found the right output and format, and yhe Sample info object is filled
+		  break; //we have found the right output and format, and the Sample info object is filled
 		}
 	  }
 
@@ -283,51 +286,48 @@ uint32 nuiAudioDecoder::Read(std::vector<float*> buffers, uint32 SampleFrames)
   if (!mInitialized)
 	return 0;
 
-  return 0;
-  //it doesn't work for the moment
-  //I must find a way to get non-interleaved buffers 
+  uint32 BytesToRead		= 0;
+  SampleFramesToBytes(SampleFrames, (uint64&)BytesToRead);
+  HRESULT hr				= S_OK;
+  INSSBuffer* pTempBuffer	= NULL;
+  QWORD SampleTime			= 0;
+  QWORD SampleDuration		= 0;
+  DWORD flags				= 0;
+  DWORD outputNum			= 0;
 
-//   uint32 BytesToRead		= 0;
-//   SampleFramesToBytes(SampleFrames, BytesToRead);
-//   HRESULT hr				= S_OK;
-//   INSSBuffer* pTempBuffer	= NULL;
-//   QWORD SampleTime			= 0;
-//   QWORD SampleDuration		= 0;
-//   DWORD flags				= 0;
-//   DWORD outputNum			= 0;
-// 
-//   while (SUCCEEDED(hr) && mpPrivate->mQueue.GetUtilSize() < BytesToRead)
-//   {
-// 	hr = mpPrivate->mpWMReader->GetNextSample(0, &pTempBuffer, &SampleTime, &SampleDuration, &flags, &outputNum, NULL);
-// 
-// 	if (SUCCEEDED(hr))
-// 	{
-// 	  BYTE* pBytes = NULL;
-// 	  DWORD length = 0;
-// 	  hr = pTempBuffer->GetBufferAndLength(&pBytes, &length);
-// 	  if (SUCCEEDED(hr))
-// 	  {
-// 		mpPrivate->mQueue.Append((uint8*)pBytes, length);
-// 	  }
-// 	  pTempBuffer->Release();
-// 	  pTempBuffer = NULL;
-// 	}
-// 
-// 	SampleTime		  = 0;
-// 	SampleDuration	  = 0;
-// 	flags			  = 0;
-//   }
-// 
-//   //
-//   //#FIXME: de-interlace buffers or find a way to say to WMReader to give non-interleaved buffers
-//   //
-//   //
-//   uint32 BytesRead	= mpPrivate->mQueue.Read((uint8*)pBuffer, BytesToRead);
-//   uint32 FramesRead = 0;
-//   BytesToSampleFrames(BytesRead, FramesRead);
-//   mPosition += FramesRead;
-// 
-//   return FramesRead;
+  while (SUCCEEDED(hr) && mpPrivate->mQueue.GetUtilSize() < BytesToRead)
+  {
+	hr = mpPrivate->mpWMReader->GetNextSample(0, &pTempBuffer, &SampleTime, &SampleDuration, &flags, &outputNum, NULL);
+
+	if (SUCCEEDED(hr))
+	{
+	  BYTE* pBytes = NULL;
+	  DWORD length = 0;
+	  hr = pTempBuffer->GetBufferAndLength(&pBytes, &length);
+	  if (SUCCEEDED(hr))
+	  {
+		mpPrivate->mQueue.Append((uint8*)pBytes, length);
+	  }
+	  pTempBuffer->Release();
+	  pTempBuffer = NULL;
+	}
+
+	SampleTime		  = 0;
+	SampleDuration	  = 0;
+	flags			  = 0;
+  }
+
+  //
+  //#FIXME: de-interlace buffers or find a way to say to WMReader to give non-interleaved buffers
+  //
+  //
+  //uint32 BytesRead	= mpPrivate->mQueue.Read((uint8*)pBuffer, BytesToRead);
+  uint32 BytesRead = mpPrivate->mQueue.ReadAndDeInterleaved(buffers, BytesToRead); // we want de-interleaved samples
+  uint32 FramesRead = 0;
+  BytesToSampleFrames(BytesRead, (uint64&)FramesRead);
+  mPosition += FramesRead;
+
+  return FramesRead;
 }
 
 
@@ -379,6 +379,29 @@ uint32 SamplesQueue::Read(uint8* pDest, uint32 size)
 {
   uint32 SizeToRead = MIN(size, mUtilSize);
   memcpy(pDest, &(mBuffer[0]), SizeToRead);
+
+  mUtilSize -= SizeToRead;
+  if (mUtilSize > 0)
+  {
+	memmove(&(mBuffer[0]), &(mBuffer[SizeToRead]), mUtilSize);
+  }
+
+  return SizeToRead;
+}
+
+uint32 SamplesQueue::ReadAndDeInterleaved(std::vector<float*>& rBuffers, uint32 size)
+{
+  uint32 SizeToRead = MIN(size, mUtilSize);
+
+  uint32 channels = rBuffers.size();
+  uint32 FramesToRead = ToBelow((float)size / (float)channels);
+  for (uint32 s = 0; s < FramesToRead; s++)
+  {
+	for (uint32 c = 0; c < channels; c++)
+	{
+	  rBuffers[c][s] = mBuffer[s * channels + c];
+	}
+  }
 
   mUtilSize -= SizeToRead;
   if (mUtilSize > 0)
