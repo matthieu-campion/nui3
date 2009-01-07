@@ -137,6 +137,7 @@ void nuiFileSelector::Init(const nglPath& rPath, const nglPath& rRootPath, const
 	mpEntry = pEntry;
   mShowHiddenFiles = showHiddenFiles;
   mFilters = rFilters;
+  mpInfoBox = NULL;
   
   InitSelector (rPath, rRootPath, mpEntry, mode, ShowVolumes);
   
