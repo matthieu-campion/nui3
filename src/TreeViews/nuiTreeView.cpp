@@ -262,9 +262,10 @@ void nuiTreeNode::GetSelected(std::list<nuiTreeNodePtr>& rSelected, bool Include
 
 /////////////////////////////
 // nuiTreeView
-nuiTreeView::nuiTreeView(nuiTreeNodePtr pTree)
+nuiTreeView::nuiTreeView(nuiTreeNodePtr pTree, bool displayRoot)
 : nuiSimpleContainer(),
   mTreeViewSink(this),
+  mDisplayRoot(displayRoot),
   mpSelectedNode(NULL)
 {
   SetObjectClass(_T("nuiTreeView"));
@@ -324,7 +325,7 @@ bool nuiTreeView::Draw(nuiDrawContext* pContext)
 {
   pContext->ResetState();
 
-  DrawTree(pContext, mpTree);
+  DrawTree(pContext, 0, mpTree);
 
   if (mDrawMarkee)
   {
@@ -339,7 +340,7 @@ bool nuiTreeView::Draw(nuiDrawContext* pContext)
 }
 
 
-bool nuiTreeView::DrawTree(nuiDrawContext* pContext, nuiTreeNode* pTree)
+bool nuiTreeView::DrawTree(nuiDrawContext* pContext, uint32 Depth, nuiTreeNode* pTree)
 {
   if (!pTree)
     return false;
@@ -348,7 +349,7 @@ bool nuiTreeView::DrawTree(nuiDrawContext* pContext, nuiTreeNode* pTree)
   NGL_ASSERT(pTheme);
 
   nuiWidgetPtr pWidget = pTree->GetElement();
-  if (pWidget)
+  if (pWidget && ((Depth != 0) || mDisplayRoot))
   {
     nuiRect rect = pWidget->GetRect();
 
@@ -381,7 +382,7 @@ bool nuiTreeView::DrawTree(nuiDrawContext* pContext, nuiTreeNode* pTree)
       nuiTreeNode* pNode = dynamic_cast<nuiTreeNode*>(pTree->GetChild(i));
       if (pNode)
       {
-        DrawTree(pContext, pNode);
+        DrawTree(pContext, Depth+1, pNode);
       }
     }
   }
@@ -404,11 +405,15 @@ void nuiTreeView::CalcTreeSize(nuiRect& rRect, uint32 Depth, nuiTreeNode* pTree)
   if (!pTree)
     return;
   nuiWidgetPtr pWidget = pTree->GetElement();
-  if (pWidget)
+  
+  uint32 depthInset = ((Depth != 0) || mDisplayRoot)? Depth-1 : Depth;
+  
+  if (pWidget && ((Depth != 0) || mDisplayRoot))
   {
     nuiRect WidgetRect = pWidget->GetIdealRect().Size();
-    WidgetRect.Set(0.0f, 0.0f, WidgetRect.GetWidth() + GetDepthInset(Depth), (nuiSize)ToAbove(WidgetRect.GetHeight() + NUI_TREEVIEW_INTERLINE));
-//    WidgetRect.Set(0.0f, 0.0f, WidgetRect.GetWidth() + GetDepthInset(Depth), (nuiSize)ToAbove(WidgetRect.GetHeight()));
+    
+    WidgetRect.Set(0.0f, 0.0f, WidgetRect.GetWidth() + GetDepthInset(depthInset), (nuiSize)ToAbove(WidgetRect.GetHeight() + NUI_TREEVIEW_INTERLINE));
+
     WidgetRect.RoundToAbove();
     rRect.Set(0.0f,0.0f, MAX(rRect.GetWidth(), WidgetRect.GetWidth()), rRect.GetHeight() + WidgetRect.GetHeight());
   }
@@ -445,12 +450,15 @@ void nuiTreeView::SetTreeRect(nuiSize& Y, uint32 Depth, nuiTreeNode* pTree)
   pTree->SetPosition(Y);
 
   pTree->SetDepth(Depth);
+  
+  uint32 depthInset = ((Depth != 0) || mDisplayRoot)? Depth-1 : Depth;
+  
 
   nuiWidgetPtr pWidget = pTree->GetElement();
-  if (pWidget)
+  if (pWidget && ((Depth != 0) || mDisplayRoot))
   {
     nuiRect WidgetRect = pWidget->GetIdealRect().Size();
-    WidgetRect.Move((nuiSize)ToNearest(GetDepthInset(Depth)/* mDepthInset * (nuiSize)(Depth+1)*/), (nuiSize)ToNearest(Y + NUI_TREEVIEW_INTERLINE));
+    WidgetRect.Move((nuiSize)ToNearest(GetDepthInset(depthInset)), (nuiSize)ToNearest(Y + NUI_TREEVIEW_INTERLINE));
     if (WidgetRect.Right() > GetRect().GetWidth())
     {
       nuiSize width = GetRect().GetWidth() - WidgetRect.Left();
