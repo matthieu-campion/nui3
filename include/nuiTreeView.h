@@ -121,7 +121,7 @@ protected:
 class NUI_API nuiTreeView : public nuiSimpleContainer
 {
 public:
-  nuiTreeView(nuiTreeNode* pTree = false);
+  nuiTreeView(nuiTreeNode* pTree = false, bool displayRoot=true);
   bool Load(const nuiXMLNode* pNode);
   virtual ~nuiTreeView();
 
@@ -171,7 +171,7 @@ public:
   nuiSimpleEventSource<nuiWidgetSelected> SelectionDone; ///< This event is called whenever a selection has been finished by an unclick
 
 protected:
-  virtual bool DrawTree(nuiDrawContext* pContext, nuiTreeNode* pTree);
+  virtual bool DrawTree(nuiDrawContext* pContext, uint32 Depth, nuiTreeNode* pTree);
   virtual void CalcTreeSize(nuiRect& rRect, uint32 Depth, nuiTreeNode* pTree);
   virtual void SetTreeRect(nuiSize& Y, uint32 Depth, nuiTreeNode* pTree);
   virtual void ReparentTree(nuiTreeNode* pTree);
@@ -183,6 +183,7 @@ protected:
   virtual bool OnTreeChildAdded(const nuiEvent& rEvent);
   virtual bool OnTreeChildDeleted(const nuiEvent& rEvent);
     
+  bool mDisplayRoot;  
   bool mMultiSelectable;
   bool mInMultiSelection;
   bool mDeSelectable;
