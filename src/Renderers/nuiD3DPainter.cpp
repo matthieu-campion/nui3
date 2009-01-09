@@ -17,6 +17,7 @@
 #include "AAPrimitives.h"
 
 #ifndef _DEBUG
+#undef NGL_OUT
 #define NGL_OUT(a)
 #endif
 //#define NGL_OUT(a) wprintf(a)

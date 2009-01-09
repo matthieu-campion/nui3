@@ -51,8 +51,41 @@ You just have to use the following labels as object names in your css file.
 
 */
 
+class nuiFileSelector;
 
-class NUI_API nuiFileSelector : public nuiComposite
+class nuiFileSelectorBase : public nuiComposite
+{
+public:
+  virtual nuiTreeNode* GetNewNode(const nglPath& rPath);
+
+protected:
+  // attributes
+  const std::list<nglString>& GetFilters();
+  void SetFilters(const std::list<nglString>& rFilters);
+  nglString GetLastFilter();
+  void AddFilter(nglString filter);
+  std::list<nglString> mFilters;
+  
+  bool IsFilterSet(const nglString& rFilter);
+  bool IsFileFiltered(const nglPath& rFile);
+  
+  bool mShowHiddenFiles;
+};
+
+class nuiFileSelectorNode : public nuiTreeNode
+{
+public:
+  nuiFileSelectorNode(nuiFileSelectorBase* pSelector, const nglPath& rPath, nuiWidget* pWidget);
+  virtual ~nuiFileSelectorNode();
+  
+  virtual void Open(bool Opened);
+  virtual bool IsEmpty() const;
+  
+private:
+  nuiFileSelectorBase* mpSelector;
+};
+
+class NUI_API nuiFileSelector : public nuiFileSelectorBase
 {
 public:
   enum DisplayMode
@@ -103,19 +136,7 @@ private:
   void FormatFileSize(nuiSize size, nglString& str);
 
   
-  bool IsFilterSet(const nglString& rFilter);
-  bool IsFileFiltered(const nglPath& rFile);
-  
-  // attributes
-  const std::list<nglString>& GetFilters();
-  void SetFilters(const std::list<nglString>& rFilters);
-  nglString GetLastFilter();
-  void AddFilter(nglString filter);
-  std::list<nglString> mFilters;
-  
-  bool mShowHiddenFiles;
 
-  virtual nuiTreeNode* GetNewNode(const nglPath& rPath);
   bool OnActivated (const nuiEvent& event);
   bool OnFolderListSelectionChanged(const nuiEvent& event);
   
@@ -133,9 +154,7 @@ private:
   bool OnClosed   (const nuiEvent& rEvent);
   bool OnOK       (const nuiEvent& rEvent);
   bool OnSelected (const nuiEvent& rEvent);
-  
-  friend class nuiFileSelectorNode;
-  
+
   DisplayMode mDisplayMode;
   nuiEventSink<nuiFileSelector> mEventSink;
   

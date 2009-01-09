@@ -778,7 +778,7 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
             res |= CallOnKeyDown(nglKeyEvent(NK_LALT, 0, 0));
           
           //NGL_OUT("ModifiersChanged %ls\n", YESNO(res));
-          result = res ? noErr : eventNotHandledErr;          
+          result = res ? (OSStatus)noErr : (OSStatus)eventNotHandledErr;          
         }
           break;
         case kEventRawKeyDown:
@@ -786,7 +786,7 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
           //NGL_OUT("%2.2d\"%c\"\n", keycode, (char)unicodetext, unicodetext);
           bool res = CallOnKeyDown(nglKeyEvent(ngl_scode_table[keycode],unicodetext,rawunicodetext));
           //NGL_OUT("KeyDown %ls\n", YESNO(res));
-          result = res ? noErr : eventNotHandledErr;
+          result = res ? (OSStatus)noErr : (OSStatus)eventNotHandledErr;
         }
           break;
           
@@ -795,7 +795,7 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
           //NGL_OUT("KeyUp 0x%x ['%c' (0x%x)]\n", keycode, (char)unicodetext, unicodetext);
           bool res = CallOnKeyUp(nglKeyEvent(ngl_scode_table[keycode],unicodetext, rawunicodetext));
           //NGL_OUT("KeyUp %ls\n", YESNO(res));
-          result = res ? noErr : eventNotHandledErr;
+          result = res ? (OSStatus)noErr : (OSStatus)eventNotHandledErr;
         }
           break;
         case kEventRawKeyRepeat:
@@ -803,7 +803,7 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
           //NGL_OUT("KeyRepeat\n");
           bool res = CallOnKeyDown(nglKeyEvent(ngl_scode_table[keycode],unicodetext, rawunicodetext));
           //NGL_OUT("KeyRepeat %ls\n", YESNO(res));
-          result = res ? noErr : eventNotHandledErr;
+          result = res ? (OSStatus)noErr : (OSStatus)eventNotHandledErr;
         }
           break;
       }
@@ -977,7 +977,7 @@ OSStatus nglWindow::WindowEventHandler (EventHandlerCallRef eventHandlerCallRef,
           minfo.Y = mouseLocation.v - mYOffset;
           minfo.Buttons = 0; // FIXME
           bool res = CallOnMouseMove(minfo);
-          result = res ? noErr : eventNotHandledErr;
+          result = res ? (OSStatus)noErr : (OSStatus)eventNotHandledErr;
         }
           break;
         case kEventMouseUp:
@@ -1001,7 +1001,7 @@ OSStatus nglWindow::WindowEventHandler (EventHandlerCallRef eventHandlerCallRef,
           minfo.X = mouseLocation.h - mXOffset;
           minfo.Y = mouseLocation.v - mYOffset;
           bool res = CallOnMouseUnclick(minfo);
-          result = res ? noErr : eventNotHandledErr;
+          result = res ? (OSStatus)noErr : (OSStatus)eventNotHandledErr;
         }
           break;
         case kEventMouseDown:
@@ -1032,7 +1032,7 @@ OSStatus nglWindow::WindowEventHandler (EventHandlerCallRef eventHandlerCallRef,
           minfo.X = mouseLocation.h - mXOffset;
           minfo.Y = mouseLocation.v - mYOffset;
           bool res = CallOnMouseClick(minfo);
-          result = res ? noErr : eventNotHandledErr;
+          result = res ? (OSStatus)noErr : (OSStatus)eventNotHandledErr;
           //Debugger();
           if (!IsWindowActive(mWindow))
           {
@@ -1073,7 +1073,7 @@ OSStatus nglWindow::WindowEventHandler (EventHandlerCallRef eventHandlerCallRef,
           
           bool res = CallOnMouseClick(minfo);
           res |= CallOnMouseUnclick(minfo);
-          result = res ? noErr : eventNotHandledErr;
+          result = res ? (OSStatus)noErr : (OSStatus)eventNotHandledErr;
         }
           break;
         default:

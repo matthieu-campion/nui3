@@ -33,8 +33,9 @@ This file contains keyboard layout macros.
   typedef uint nglKeyCode;
 #endif
 
+#ifndef __NGL_KEY_DECL
 #define __NGL_KEY_DECL(symbol,value) EXTERN_KEYBOARD_DEF NGL_API const nglKeyCode symbol __EQU(value)
-
+#endif
 
 /* PC-102 keys
  */

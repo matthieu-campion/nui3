@@ -14,21 +14,163 @@
 #include "nuiPane.h"
 
 //
-class nuiFileSelectorNode : public nuiTreeNode
+
+nuiTreeNode* nuiFileSelectorBase::GetNewNode(const nglPath& rPath)
 {
-public:
-  nuiFileSelectorNode(nuiFileSelector* pSelector, const nglPath& rPath, nuiWidget* pWidget);
-  virtual ~nuiFileSelectorNode();
+  nuiWidget* pWidget= NULL;
+  nuiHBox* pBox = NULL;
+  nuiSimpleContainer* pIcon = NULL;
+  nuiLabel* label = NULL;
   
-  virtual void Open(bool Opened);
-  virtual bool IsEmpty() const;
+  nglPath pathName = rPath;
   
-private:
-    nuiFileSelector* mpSelector;
-};
+  if (pathName.IsLeaf() || !pathName.GetExtension().Compare(_T("app")))
+  {
+    // no file is filtered
+    if (mFilters.size() == 0)
+      return NULL;
+    else if (IsFilterSet(_T("*")))
+    {
+      if (!pathName.GetExtension().Compare(_T("app")))
+        pathName = pathName.GetRemovedExtension();
+      
+      pBox = new nuiHBox(2);
+      pIcon = new nuiSimpleContainer();
+      pIcon->SetObjectName(_T("nuiFileSelector::TreeFileIcon"));
+      pIcon->SetObjectClass(_T("nuiFileSelector::TreeFileIcon"));
+      label = new nuiLabel(pathName.GetNodeName().IsEmpty()?_T("/"):pathName.GetNodeName());        
+      label->SetObjectName(_T("nuiFileSelector::TreeFileLabel"));      
+      label->SetObjectClass(_T("nuiFileSelector::TreeFileLabel"));      
+    }
+    
+    else 
+    {
+      if (!IsFileFiltered(rPath.GetNodeName()))
+        return NULL;
+      else
+      {
+        if (!pathName.GetExtension().Compare(_T("app")))
+          pathName = pathName.GetRemovedExtension();
+        
+        
+        pBox = new nuiHBox(2);
+        pIcon = new nuiSimpleContainer();
+        nglString objectName;
+        objectName.Format(_T("nuiFileSelector::TreeFilterIcon::%ls"), rPath.GetExtension().GetChars());
+        pIcon->SetObjectName(objectName);
+        pIcon->SetObjectClass(objectName);
+        label = new nuiLabel(pathName.GetNodeName().IsEmpty()?_T("/"):pathName.GetNodeName());        
+        label->SetObjectName(_T("nuiFileSelector::TreeFileLabel"));
+        label->SetObjectClass(_T("nuiFileSelector::TreeFileLabel"));
+      }
+    }
+    
+    
+    
+  }
+  else
+  {
+    if (!mShowHiddenFiles && (rPath.GetNodeName().GetChar(0) == _T('.')))
+      return NULL;
+    
+    nglString iconObjectName, labelObjectName;
+    
+    if (rPath.GetParent().GetPathName().IsEmpty() || !rPath.GetPathName().Compare(_T("/")) || !rPath.GetParent().GetPathName().Compare(_T("/Volumes")))
+    {
+      iconObjectName = _T("nuiFileSelector::VolumeIcon");
+      labelObjectName = _T("nuiFileSelector::TreeFolderLabel");
+    }
+    else
+    {
+      iconObjectName = _T("nuiFileSelector::TreeFolderIcon");
+      labelObjectName = _T("nuiFileSelector::TreeFolderLabel");
+    }
+    
+    
+    pBox = new nuiHBox(2);
+    pIcon = new nuiSimpleContainer();
+    pIcon->SetObjectName(iconObjectName);
+    pIcon->SetObjectClass(iconObjectName);
+    label = new nuiLabel(rPath.GetNodeName().IsEmpty()?_T("/"):rPath.GetNodeName());        
+    label->SetObjectName(labelObjectName);
+    label->SetObjectClass(labelObjectName);
+  }
+  
+  pBox->SetCell(0, pIcon, nuiCenter);
+  pBox->SetCell(1, label);
+  
+  pWidget = pBox;
+  
+  if (!pWidget)
+    return NULL;
+  
+  nuiFileSelectorNode* pNewNode = new nuiFileSelectorNode(this, rPath, pWidget);
+  
+  return pNewNode;
+}
+
+nglString nuiFileSelectorBase::GetLastFilter()
+{
+  if (mFilters.size() == 0)
+    return nglString::Null;
+  return mFilters.back();
+}
+
+void nuiFileSelectorBase::AddFilter(nglString filter)
+{
+  mFilters.push_back(filter);
+}
+
+void nuiFileSelectorBase::SetFilters(const std::list<nglString>& rFilters)
+{
+  mFilters = rFilters;
+}
+
+const std::list<nglString>& nuiFileSelectorBase::GetFilters()
+{
+  return mFilters;
+}
+
+bool nuiFileSelectorBase::IsFilterSet(const nglString& rFilter)
+{
+  std::list<nglString>::iterator it;
+  for (it = mFilters.begin(); it != mFilters.end(); ++it)
+  {
+    const nglString& filter = *it;
+    if (!filter.Compare(rFilter))
+      return true;
+  }
+  return false;
+}
+
+bool nuiFileSelectorBase::IsFileFiltered(const nglPath& rFile)
+{
+  const nglString& ext = rFile.GetExtension();
+  std::list<nglString>::iterator it;
+  bool filterres =  false;
+  for (it = mFilters.begin(); it != mFilters.end(); ++it)
+  {
+    const nglString& filter = *it;
+    if (!filter.Compare(ext))
+    {
+      filterres = true;
+      break;
+    }
+  }
+  
+  bool hiddenres = mShowHiddenFiles || (rFile.GetPathName().GetChar(0) != _T('.'));
+  
+  return (filterres && hiddenres);
+}
 
 
-nuiFileSelectorNode::nuiFileSelectorNode(nuiFileSelector* pSelector, const nglPath& rPath, nuiWidget* pWidget)
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+nuiFileSelectorNode::nuiFileSelectorNode(nuiFileSelectorBase* pSelector, const nglPath& rPath, nuiWidget* pWidget)
 : nuiTreeNode(pWidget)
 {
   mpSelector = pSelector;
@@ -100,7 +242,7 @@ bool nuiFileSelectorNode::IsEmpty() const
 
 
 nuiFileSelector::nuiFileSelector(const nglPath& rPath, const nglPath& rRootPath, const nglString& rFilter, nuiEditLine* pEntry, bool showHiddenFiles, DisplayMode mode, bool ShowVolumes, bool Opened)
-: nuiComposite(), mpFolderList(NULL), mEventSink(this)
+: nuiFileSelectorBase(), mpFolderList(NULL), mEventSink(this)
 {
   std::list<nglString> filters;
   if (rFilter != nglString::Null)
@@ -109,13 +251,13 @@ nuiFileSelector::nuiFileSelector(const nglPath& rPath, const nglPath& rRootPath,
 }
 
 nuiFileSelector::nuiFileSelector(const nglPath& rPath, const nglPath& rRootPath, const std::list<nglString>& rFilters, nuiEditLine* pEntry, bool showHiddenFiles, DisplayMode mode, bool ShowVolumes, bool Opened)
-: nuiComposite(), mpFolderList(NULL), mEventSink(this)
+: nuiFileSelectorBase(), mpFolderList(NULL), mEventSink(this)
 {
   Init(rPath, rRootPath, rFilters, pEntry, showHiddenFiles, mode, ShowVolumes, Opened);  
 }
 
 nuiFileSelector::nuiFileSelector(const nglPath& rPath, const nglString& rFilter, nuiEditLine* pEntry, bool showHiddenFiles, DisplayMode mode, bool ShowVolumes, bool Opened)
-: nuiComposite(), mpFolderList(NULL), mEventSink(this)
+: nuiFileSelectorBase(), mpFolderList(NULL), mEventSink(this)
 {
   std::list<nglString> filters;
   if (rFilter != nglString::Null)
@@ -124,7 +266,7 @@ nuiFileSelector::nuiFileSelector(const nglPath& rPath, const nglString& rFilter,
 }
 
 nuiFileSelector::nuiFileSelector(const nglPath& rPath, const std::list<nglString>& rFilters, nuiEditLine* pEntry, bool showHiddenFiles, DisplayMode mode, bool ShowVolumes, bool Opened)
-: nuiComposite(), mpFolderList(NULL), mEventSink(this)
+: nuiFileSelectorBase(), mpFolderList(NULL), mEventSink(this)
 {
   Init(rPath, rPath, rFilters, pEntry, showHiddenFiles, mode, ShowVolumes, Opened);  
 }
@@ -157,29 +299,6 @@ void nuiFileSelector::InitAttributes()
   (nglString(_T("Filter")), nuiUnitName,
     nuiAttribute<nglString>::GetterDelegate(this, &nuiFileSelector::GetLastFilter),
     nuiAttribute<nglString>::SetterDelegate(this, &nuiFileSelector::AddFilter)));
-}
-
-
-nglString nuiFileSelector::GetLastFilter()
-{
-  if (mFilters.size() == 0)
-    return nglString::Null;
-  return mFilters.back();
-}
-
-void nuiFileSelector::AddFilter(nglString filter)
-{
-  mFilters.push_back(filter);
-}
-
-void nuiFileSelector::SetFilters(const std::list<nglString>& rFilters)
-{
-  mFilters = rFilters;
-}
-
-const std::list<nglString>& nuiFileSelector::GetFilters()
-{
-  return mFilters;
 }
 
 
@@ -572,135 +691,6 @@ nuiTreeNode* nuiFileSelector::GetRootNode()
   return pNode;
 }
 
-
-bool nuiFileSelector::IsFilterSet(const nglString& rFilter)
-{
-  std::list<nglString>::iterator it;
-  for (it = mFilters.begin(); it != mFilters.end(); ++it)
-  {
-    const nglString& filter = *it;
-    if (!filter.Compare(rFilter))
-      return true;
-  }
-  return false;
-}
-
-bool nuiFileSelector::IsFileFiltered(const nglPath& rFile)
-{
-  const nglString& ext = rFile.GetExtension();
-  std::list<nglString>::iterator it;
-  bool filterres =  false;
-  for (it = mFilters.begin(); it != mFilters.end(); ++it)
-  {
-    const nglString& filter = *it;
-    if (!filter.Compare(ext))
-    {
-      filterres = true;
-      break;
-    }
-  }
-  
-  bool hiddenres = mShowHiddenFiles || (rFile.GetPathName().GetChar(0) != _T('.'));
-  
-  return (filterres && hiddenres);
-}
-
-
-
-nuiTreeNode* nuiFileSelector::GetNewNode(const nglPath& rPath)
-{
-  nuiWidget* pWidget= NULL;
-  nuiHBox* pBox = NULL;
-  nuiSimpleContainer* pIcon = NULL;
-  nuiLabel* label = NULL;
-  
-  nglPath pathName = rPath;
-  
-    if (pathName.IsLeaf() || !pathName.GetExtension().Compare(_T("app")))
-    {
-      // no file is filtered
-      if (mFilters.size() == 0)
-        return NULL;
-      
-      else if (IsFilterSet(_T("*")))
-      {
-        if (!pathName.GetExtension().Compare(_T("app")))
-          pathName = pathName.GetRemovedExtension();
-        
-        pBox = new nuiHBox(2);
-        pIcon = new nuiSimpleContainer();
-        pIcon->SetObjectName(_T("nuiFileSelector::TreeFileIcon"));
-        pIcon->SetObjectClass(_T("nuiFileSelector::TreeFileIcon"));
-        label = new nuiLabel(pathName.GetNodeName().IsEmpty()?_T("/"):pathName.GetNodeName());        
-        label->SetObjectName(_T("nuiFileSelector::TreeFileLabel"));      
-        label->SetObjectClass(_T("nuiFileSelector::TreeFileLabel"));      
-      }
-      
-      else 
-      {
-        if (!IsFileFiltered(rPath.GetNodeName()))
-          return NULL;
-        else
-        {
-          if (!pathName.GetExtension().Compare(_T("app")))
-            pathName = pathName.GetRemovedExtension();
-
-          
-          pBox = new nuiHBox(2);
-          pIcon = new nuiSimpleContainer();
-          nglString objectName;
-          objectName.Format(_T("nuiFileSelector::TreeFilterIcon::%ls"), rPath.GetExtension().GetChars());
-          pIcon->SetObjectName(objectName);
-          pIcon->SetObjectClass(objectName);
-          label = new nuiLabel(pathName.GetNodeName().IsEmpty()?_T("/"):pathName.GetNodeName());        
-          label->SetObjectName(_T("nuiFileSelector::TreeFileLabel"));
-          label->SetObjectClass(_T("nuiFileSelector::TreeFileLabel"));
-        }
-      }
-      
-
-
-    }
-    else
-    {
-      if (!mShowHiddenFiles && (rPath.GetNodeName().GetChar(0) == _T('.')))
-        return NULL;
-        
-      nglString iconObjectName, labelObjectName;
-      
-      if (rPath.GetParent().GetPathName().IsEmpty() || !rPath.GetPathName().Compare(_T("/")) || !rPath.GetParent().GetPathName().Compare(_T("/Volumes")))
-      {
-        iconObjectName = _T("nuiFileSelector::VolumeIcon");
-        labelObjectName = _T("nuiFileSelector::TreeFolderLabel");
-      }
-      else
-      {
-        iconObjectName = _T("nuiFileSelector::TreeFolderIcon");
-        labelObjectName = _T("nuiFileSelector::TreeFolderLabel");
-      }
-      
-      
-      pBox = new nuiHBox(2);
-      pIcon = new nuiSimpleContainer();
-      pIcon->SetObjectName(iconObjectName);
-      pIcon->SetObjectClass(iconObjectName);
-      label = new nuiLabel(rPath.GetNodeName().IsEmpty()?_T("/"):rPath.GetNodeName());        
-      label->SetObjectName(labelObjectName);
-      label->SetObjectClass(labelObjectName);
-    }
-    
-    pBox->SetCell(0, pIcon, nuiCenter);
-    pBox->SetCell(1, label);
-    
-    pWidget = pBox;
-  
-  if (!pWidget)
-    return NULL;
-    
-  nuiFileSelectorNode* pNewNode = new nuiFileSelectorNode(this, rPath, pWidget);
-  
-  return pNewNode;
-}
 
 void nuiFileSelector::SetDisplayMode(nuiFileSelector::DisplayMode mode)
 {

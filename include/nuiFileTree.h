@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "nuiComposite.h"
+#include "nuiFileSelector.h"
 #include "nuiTreeView.h"
 #include "nglVolume.h"
 #include "nuiHBox.h"
@@ -40,7 +40,7 @@ You just have to use the following labels as object names in your css file.
 
 #define ROOTPATH_ALLVOLUMES _T("*:")
 
-class nuiFileTree : public nuiComposite
+class nuiFileTree : public nuiFileSelectorBase
 {
 public:
   
@@ -65,18 +65,9 @@ private:
 
   nuiWidget* GetFileInfo(const nglPath& rPath);
   void FormatFileSize(nuiSize size, nglString& str);
-
-  bool IsFilterSet(const nglString& rFilter);
-  bool IsFileFiltered(const nglPath& rFile);
-  
-  const std::list<nglString>& GetFilters() const;
-  void SetFilters(const std::list<nglString>& rFilters);
-  std::list<nglString> mFilters;
   
 //  bool OnRootOpened(const nuiEvent& rEvent);
-  virtual nuiTreeNode* GetNewNode(const nglPath& rPath);
   
-  bool mShowHiddenFiles;
   nuiTreeView* mpTreeView;
   nuiTreeNode* mpTreeRoot;
   std::map<nglPath, nuiTreeNode*> mTrees; // rootpath => treeview
@@ -86,8 +77,6 @@ private:
   bool OnClosed   (const nuiEvent& rEvent);
   bool OnOK       (const nuiEvent& rEvent);
   bool OnSelected (const nuiEvent& rEvent);
-  
-  friend class nuiFileTreeNode;
   
   nuiEventSink<nuiFileTree> mEventSink;
   
