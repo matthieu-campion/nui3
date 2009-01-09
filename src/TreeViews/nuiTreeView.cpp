@@ -234,16 +234,6 @@ nuiTreeNodePtr nuiTreeNode::FindNode(nuiSize X, nuiSize Y)
   return NULL;
 }
 
-void nuiTreeNode::SetDepth(uint32 Depth)
-{
-  mDepth = Depth;
-}
-
-uint32 nuiTreeNode::GetDepth() const
-{
-  return mDepth;
-}
-
 void nuiTreeNode::GetSelected(std::list<nuiTreeNodePtr>& rSelected, bool IncludeInvisibleItem)
 {
   if (IsSelected())
@@ -448,8 +438,6 @@ void nuiTreeView::SetTreeRect(nuiSize& Y, uint32 Depth, nuiTreeNode* pTree)
     return;
 
   pTree->SetPosition(Y);
-
-  pTree->SetDepth(Depth);
   
   uint32 depthInset = ((Depth != 0) || mDisplayRoot)? Depth-1 : Depth;
   

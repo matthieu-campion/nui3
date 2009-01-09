@@ -454,7 +454,6 @@ void nuiPopupMenu::CalcTreeSize(nuiRect& rRect, nuiTreeNode* pTree, uint32& cpt)
   {
     nuiTreeNode* pNode = dynamic_cast<nuiTreeNode*>(pTree->GetChild(i));
     NGL_ASSERT(pNode);
-    pNode->SetDepth(depth);
     pWidget = pNode->GetElement();
     NGL_ASSERT(pWidget);
     WidgetRect = pWidget->GetIdealRect();

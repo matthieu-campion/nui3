@@ -38,11 +38,9 @@ public:
 
   nuiSize GetPosition() const;
   nuiSize GetSize() const;
-  uint32 GetDepth() const;
     
   void SetPosition(nuiSize Position);
   void SetSize(nuiSize Size);
-  void SetDepth(uint32 Depth);
 
   nuiTreeNodePtr FindNode(nuiSize X, nuiSize Y);
 
