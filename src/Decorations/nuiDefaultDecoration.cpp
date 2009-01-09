@@ -84,6 +84,16 @@ void nuiDefaultDecoration::Init()
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileSelector::TreeFileLabel")), &nuiDefaultDecoration::FileSelector_TreeFileLabel);
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileSelector::TreeFolderIcon")), &nuiDefaultDecoration::FileSelector_TreeFolderIcon);
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileSelector::TreeFileIcon")), &nuiDefaultDecoration::FileSelector_TreeFileIcon);
+
+  // FileTree
+  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileTree")), &nuiDefaultDecoration::FileSelector_TreeView);
+  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileTree::VolumeLabel")), &nuiDefaultDecoration::FileSelector_TreeFolderLabel);
+  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileTree::FolderLabel")), &nuiDefaultDecoration::FileSelector_TreeFolderLabel);
+  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileTree::FileLabel")), &nuiDefaultDecoration::FileSelector_TreeFileLabel);
+  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileTree::VolumeIcon")), &nuiDefaultDecoration::FileSelector_VolumeIcon);
+  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileTree::FolderIcon")), &nuiDefaultDecoration::FileSelector_TreeFolderIcon);
+  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileTree::FileIcon")), &nuiDefaultDecoration::FileSelector_TreeFileIcon);
+  
 }
 
 
