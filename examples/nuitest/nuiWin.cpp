@@ -412,7 +412,7 @@ void nuiWin::OnCreation()
   mWinSink.Connect(pElement->Activated, &nuiWin::DumpStats);
   pMainTree->AddChild(pElement);
 
-  nuiTreeView* pTreeMenu = new nuiTreeView(pMainTree);
+  nuiTreeView* pTreeMenu = new nuiTreeView(pMainTree, false);
   nuiScrollView* pScrollView = new nuiScrollView();
   pScrollView->AddChild(pTreeMenu);
   pFixed->AddChild(pScrollView);

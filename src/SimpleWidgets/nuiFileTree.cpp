@@ -129,7 +129,7 @@ bool nuiFileTree::SetRootPath(const nglPath& rPath)
     mpTreeView->Trash();
   
   mpTreeRoot = new nuiTreeNode(new nuiLabel(_T("TreeRoot")));
-  mpTreeView = new nuiTreeView(mpTreeRoot, false);
+  mpTreeView = new nuiTreeView(mpTreeRoot, true);
   
   AddChild(mpTreeView);
   
