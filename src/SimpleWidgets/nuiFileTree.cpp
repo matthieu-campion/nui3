@@ -224,12 +224,8 @@ bool nuiFileTree::SetRootPath(const nglPath& rPath)
   if (mpTreeView)
     mpTreeView->Trash();
   
-  bool displayRoot = true;
-  if (!rPath.GetPathName().Compare(ROOTPATH_ALLVOLUMES))
-    displayRoot = false;
-  
   mpTreeRoot = new nuiTreeNode(new nuiLabel(_T("TreeRoot")));
-  mpTreeView = new nuiTreeView(mpTreeRoot, displayRoot);
+  mpTreeView = new nuiTreeView(mpTreeRoot, false);
   
   AddChild(mpTreeView);
   
@@ -249,7 +245,7 @@ bool nuiFileTree::SetRootPath(const nglPath& rPath)
     {
       nglPathVolume volume = *it;
       
-      AddTree(volume.mPath, false);    
+      AddTree(volume.mPath, true);    
     }
   }
   
@@ -274,6 +270,10 @@ void nuiFileTree::AddTree(const nglPath& rPath, bool Opened)
 
 bool nuiFileTree::SetPath(const nglPath& rPath)
 {
+  //LBDEBUG
+  NGL_OUT(_T("\nSetPath ENTRY\n"));
+  ///////////
+  
   nglPath path(rPath);
   
   nuiTreeNode* pNode = NULL;
@@ -287,10 +287,22 @@ bool nuiFileTree::SetPath(const nglPath& rPath)
     for (it = mTrees.begin(); it != mTrees.end(); ++it)
     {
       const nglPath rRootPath = it->first;
+      
+      
+      //LBDEBUG
+      NGL_OUT(_T("SetPath rootpath '%ls'  compared to '%ls'\n"), rRootPath.GetChars(), tmpPath.GetChars());
+      ///////////
+      
       if (rRootPath == tmpPath)
       {
         rootPath = rRootPath;
         pNode = it->second;
+
+        //LBDEBUG
+        NGL_OUT(_T("SetPath OK rootpath accepted with '%ls' : pNode '%ls'\n"), tmpPath.GetChars(), pNode->GetProperty(_T("Path")).GetChars());
+        ///////////
+        
+        break;
       }
     }
           
@@ -300,10 +312,21 @@ bool nuiFileTree::SetPath(const nglPath& rPath)
   }
   
   if (!pNode)
+  {
+    //LBDEBUG
+    NGL_OUT(_T("SetPath ERROR not rootpath found!\n\n"), rootPath.GetChars());
+    ///////////
+    
     return false;
+  }
   
   
   path.MakeRelativeTo(rootPath);
+  
+  //LBDEBUG
+  NGL_OUT(_T("path has been made relartive : '%ls'\n"), path.GetChars());
+  ///////////
+  
   std::vector<nglString> tokens;
   path.GetPathName().Tokenize(tokens, '/');
   
@@ -322,8 +345,17 @@ bool nuiFileTree::SetPath(const nglPath& rPath)
       if (pBNode)
       {
         nglPath p(pBNode->GetProperty(_T("Path")));
+        
+        //LBDEBUG
+        NGL_OUT(_T("p.GetNodeName() '%ls' compare to tokens(%d) '%ls'\n"), p.GetNodeName().GetChars(), i, tokens.at(i).GetChars());
+        ////////////
+        
         if (p.GetNodeName() == tokens.at(i))
         {
+          //LBDEBUG
+          NGL_OUT(_T("OK\n"));
+          ////////////
+
           pNode = pBNode;
           break;
         }
