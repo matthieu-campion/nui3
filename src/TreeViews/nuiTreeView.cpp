@@ -967,9 +967,12 @@ bool nuiTreeView::KeyDown(const nglKeyEvent& rEvent)
     nuiTreeNodePtr pPrev = pSelected->GetPreviousOpen();
     if (pPrev)
     {
-      if (mInMultiSelection)
-        SelectAll(false);
-      Select(pPrev, true, false);
+      if (mDisplayRoot || pPrev != mpTree)
+      {
+        if (mInMultiSelection)
+          SelectAll(false);
+        Select(pPrev, true, false);
+      }
     }
     return true;
   }
@@ -978,9 +981,12 @@ bool nuiTreeView::KeyDown(const nglKeyEvent& rEvent)
     nuiTreeNodePtr pNext = pSelected->GetNextOpen();
     if (pNext)
     {
-      if (mInMultiSelection)
-        SelectAll(false);
-      Select(pNext, true, false);
+      if (mDisplayRoot || pNext != mpTree)
+      {
+        if (mInMultiSelection)
+          SelectAll(false);
+        Select(pNext, true, false);
+      }
     }
     return true;
   }
@@ -1020,11 +1026,14 @@ bool nuiTreeView::KeyDown(const nglKeyEvent& rEvent)
     else
     {
       nuiTreeNodePtr pParent = (nuiTreeNodePtr)pSelected->GetParent();
-      if (pParent)
+      if (mDisplayRoot || pParent != mpTree)
       {
-        if (mInMultiSelection)
-          SelectAll(false);
-        Select(pParent, true, false);
+        if (pParent)
+        {
+          if (mInMultiSelection)
+            SelectAll(false);
+          Select(pParent, true, false);
+        }
       }
     }
     return true;
