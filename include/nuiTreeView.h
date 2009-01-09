@@ -69,7 +69,6 @@ protected:
 
   nuiSize mPosition;
   nuiSize mSize;
-  uint32 mDepth;
 
 }; ///< This is the element that can be added to a tree view. 
 

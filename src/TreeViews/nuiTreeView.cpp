@@ -31,7 +31,6 @@ nuiTreeNode::nuiTreeNode(nuiWidgetPtr pElement, bool Opened, bool Selected, bool
 
   mPosition = 0;
   mSize = 0;
-  mDepth = 0;
   mSelectionEnabled = true;
 }
 
@@ -54,7 +53,6 @@ nuiTreeNode::nuiTreeNode(const nglString& rLabelName, bool Opened, bool Selected
 
   mPosition = 0;
   mSize = 0;
-  mDepth = 0;
   mSelectionEnabled = true;
 }
 
