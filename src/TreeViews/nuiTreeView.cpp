@@ -489,11 +489,11 @@ bool nuiTreeView::OnTreeChildAdded(const nuiEvent& rEvent)
 
   if (pNode)
   {
-    NGL_OUT(_T("Adding TreeNode 0x%x\n"), pNode);
+    //NGL_OUT(_T("Adding TreeNode 0x%x\n"), pNode);
     nuiWidgetPtr pWidget = pNode->GetElement();
     if (pWidget)
     {
-      NGL_OUT(_T("Adding TreeNode widget 0x%x\n"), pWidget);
+      //NGL_OUT(_T("Adding TreeNode widget 0x%x\n"), pWidget);
       AddChild(pWidget);
       pNode->SetOwnElement(false);
     }

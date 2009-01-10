@@ -120,7 +120,7 @@ bool nuiFileTree::SetRootPath(const nglPath& rPath)
 {
   if (rPath == nglPath(_T("*:")))
   {
-    nuiTreeNodePtr pRoot = new nuiTreeNode(_T("HdddenRoot"));
+    nuiTreeNodePtr pRoot = new nuiTreeNode(_T("*:"));
     pRoot->Open(true);
 
     std::list<nglPathVolume> volumes;
@@ -130,10 +130,10 @@ bool nuiFileTree::SetRootPath(const nglPath& rPath)
     std::list<nglPathVolume>::iterator end = volumes.end();
 
     while (it != end)
-    {
-      
+    {      
       const nglPathVolume vol(*it);
       nuiTreeNodePtr pNode = GetNewNode(vol.mPath);
+      //pNode->Open(true);
       pRoot->AddChild(pNode);
       
       ++it;
@@ -143,9 +143,7 @@ bool nuiFileTree::SetRootPath(const nglPath& rPath)
     
     mEventSink.Connect(pRoot->Opened, &nuiFileTree::OnRootStateChanged, (void*)1);
     mEventSink.Connect(pRoot->Closed, &nuiFileTree::OnRootStateChanged, (void*)0);
-    
-    SetPath(rPath);
-    
+        
     return true;
   }
   
@@ -183,7 +181,7 @@ void nuiFileTree::AddTree(const nglPath& rPath, bool Opened)
 
 bool nuiFileTree::SetPath(const nglPath& rPath)
 {
-  //NGL_OUT(_T("nuiFileTree::SetPath('%ls')"), rPath.GetChars());
+  NGL_OUT(_T("nuiFileTree::SetPath('%ls')\n"), rPath.GetChars());
   nglPath path(rPath);
   path.MakeRelativeTo(GetRootPath());
   std::vector<nglString> tokens;
@@ -197,20 +195,25 @@ bool nuiFileTree::SetPath(const nglPath& rPath)
     for (uint32 i = 0; i < pNode->GetChildrenCount() && !pRes; i++)
     {
       nuiTreeNodePtr pBNode = (nuiTreeNodePtr)pNode->GetChild(i);
+      bool old = pBNode->IsOpened();
       nglPath p(pBNode->GetProperty(_T("Path")));
-      //NGL_OUT(_T("%d compare '%ls' with '%ls'\n"), i, p.GetNodeName().GetChars(), tokens.at(0).GetChars());
+      NGL_OUT(_T("%d compare '%ls' with '%ls'\n"), i, p.GetNodeName().GetChars(), tokens.at(0).GetChars());
       if (p.GetNodeName() == tokens.at(0))
         pRes = pBNode;
       else
       {
+        if (!old)
+          pBNode->Open(true);
         for (uint32 j = 0; j < pBNode->GetChildrenCount() && !pRes; j++)
         {
           nuiTreeNodePtr pBNode2 = (nuiTreeNodePtr)pBNode->GetChild(j);
           nglPath p(pBNode2->GetProperty(_T("Path")));
-          //NGL_OUT(_T("%d %d compare '%ls' with '%ls'\n"), i, j, p.GetNodeName().GetChars(), tokens.at(0).GetChars());
+          NGL_OUT(_T("%d %d compare '%ls' with '%ls'\n"), i, j, p.GetNodeName().GetChars(), tokens.at(0).GetChars());
           if (p.GetNodeName() == tokens.at(0))
             pRes = pBNode2;
         }
+        if (!pRes && !old)
+          pBNode->Open(false);
       }
     }
     
