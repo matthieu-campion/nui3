@@ -175,6 +175,7 @@ nuiFileSelectorNode::nuiFileSelectorNode(nuiFileSelectorBase* pSelector, const n
 {
   mpSelector = pSelector;
   SetProperty(_T("Path"), rPath.GetPathName());
+  NGL_OUT(_T("New nuiFileSelectorNode: '%ls'\n"), rPath.GetChars());
 }
 
 nuiFileSelectorNode::~nuiFileSelectorNode()

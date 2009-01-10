@@ -10,9 +10,6 @@
 #include "nuiFileTree.h"
 
 
-#ifdef MYDEBUG
-
-
 //**************************************************************************************************************
 //
 // nuiFileTree
@@ -39,7 +36,8 @@ void nuiFileTree::Init(const nglPath& rPath, const nglPath& rRootPath, const std
   SetObjectClass(_T("nuiFileTree"));
   SetObjectName(_T("nuiFileTree"));
   
-  mpTreeView = NULL;
+  mpTreeView = new nuiTreeView(NULL, false);
+  AddChild(mpTreeView);
   mShowHiddenFiles = showHiddenFiles;
   mFilters = rFilters;
   mpCurrentTree = NULL;
@@ -120,40 +118,51 @@ nuiWidget* nuiFileTree::GetFileInfo(const nglPath& rPath)
 
 bool nuiFileTree::SetRootPath(const nglPath& rPath)
 {
-  mRootPath = rPath;
-  
-  mEventSink.DisconnectAll();
-  mTrees.clear();
-  
-  if (mpTreeView)
-    mpTreeView->Trash();
-  
-  mpTreeRoot = new nuiTreeNode(new nuiLabel(_T("TreeRoot")));
-  mpTreeView = new nuiTreeView(mpTreeRoot, true);
-  
-  AddChild(mpTreeView);
-  
-  
-  if (rPath.GetPathName().Compare(ROOTPATH_ALLVOLUMES))
+  if (rPath == nglPath(_T("*:")))
   {
-    AddTree(rPath, true);
-  }
-  
-  else
-  {
+    nuiTreeNodePtr pRoot = new nuiTreeNode(_T("HdddenRoot"));
+    pRoot->Open(true);
+
     std::list<nglPathVolume> volumes;
-    std::list<nglPathVolume>::iterator it;
-    
     nglPath::GetVolumes(volumes, nglPathVolume::All);
-    for (it = volumes.begin(); it != volumes.end(); ++it)
+    
+    std::list<nglPathVolume>::iterator it = volumes.begin();
+    std::list<nglPathVolume>::iterator end = volumes.end();
+
+    while (it != end)
     {
-      nglPathVolume volume = *it;
       
-      AddTree(volume.mPath, true);    
+      const nglPathVolume vol(*it);
+      nuiTreeNodePtr pNode = GetNewNode(vol.mPath);
+      pRoot->AddChild(pNode);
+      
+      ++it;
     }
+    
+    mpTreeView->SetTree(pRoot);
+    
+    mEventSink.Connect(pRoot->Opened, &nuiFileTree::OnRootStateChanged, (void*)1);
+    mEventSink.Connect(pRoot->Closed, &nuiFileTree::OnRootStateChanged, (void*)0);
+    
+    SetPath(rPath);
+    
+    return true;
   }
   
-  
+  nuiTreeNodePtr pNode = GetNewNode(rPath);  
+  if (pNode)
+  {
+    nuiTreeNodePtr pRoot = new nuiTreeNode(_T("HdddenRoot"));
+    pRoot->AddChild(pNode);
+    pRoot->Open(true);
+    pNode->Open(true);
+    mpTreeView->SetTree(pRoot);
+    
+    mEventSink.Connect(pRoot->Opened, &nuiFileTree::OnRootStateChanged, (void*)1);
+    mEventSink.Connect(pRoot->Closed, &nuiFileTree::OnRootStateChanged, (void*)0);
+    
+    SetPath(rPath);
+  }
   return true;
 }
 
@@ -174,67 +183,49 @@ void nuiFileTree::AddTree(const nglPath& rPath, bool Opened)
 
 bool nuiFileTree::SetPath(const nglPath& rPath)
 {
-  //LBDEBUG
-  NGL_OUT(_T("\nSetPath ENTRY\n"));
-  ///////////
-  
+  //NGL_OUT(_T("nuiFileTree::SetPath('%ls')"), rPath.GetChars());
   nglPath path(rPath);
-  
-  nuiTreeNode* pNode = NULL;
-  nglPath rootPath;
-  
-  // find which rootpath for this Path
-  nglPath tmpPath(rPath);
-  while (!pNode)
-  {
-    std::map<nglPath,nuiTreeNode*>::iterator it;
-    for (it = mTrees.begin(); it != mTrees.end(); ++it)
-    {
-      const nglPath rRootPath = it->first;
-      
-      
-      //LBDEBUG
-      NGL_OUT(_T("SetPath rootpath '%ls'  compared to '%ls'\n"), rRootPath.GetChars(), tmpPath.GetChars());
-      ///////////
-      
-      if (rRootPath == tmpPath)
-      {
-        rootPath = rRootPath;
-        pNode = it->second;
-
-        //LBDEBUG
-        NGL_OUT(_T("SetPath OK rootpath accepted with '%ls' : pNode '%ls'\n"), tmpPath.GetChars(), pNode->GetProperty(_T("Path")).GetChars());
-        ///////////
-        
-        break;
-      }
-    }
-          
-    tmpPath = tmpPath.GetParent();
-    if (tmpPath.GetPathName().IsEmpty() && !pNode)
-      break;
-  }
-  
-  if (!pNode)
-  {
-    //LBDEBUG
-    NGL_OUT(_T("SetPath ERROR not rootpath found!\n\n"), rootPath.GetChars());
-    ///////////
-    
-    return false;
-  }
-  
-  
-  path.MakeRelativeTo(rootPath);
-  
-  //LBDEBUG
-  NGL_OUT(_T("path has been made relartive : '%ls'\n"), path.GetChars());
-  ///////////
-  
+  path.MakeRelativeTo(GetRootPath());
   std::vector<nglString> tokens;
   path.GetPathName().Tokenize(tokens, '/');
+  nuiTreeNodePtr pNode = mpTreeView->GetTree();
+
+  if (!tokens.empty())
+  {
+    // Find start node:
+    nuiTreeNodePtr pRes = NULL;
+    for (uint32 i = 0; i < pNode->GetChildrenCount() && !pRes; i++)
+    {
+      nuiTreeNodePtr pBNode = (nuiTreeNodePtr)pNode->GetChild(i);
+      nglPath p(pBNode->GetProperty(_T("Path")));
+      //NGL_OUT(_T("%d compare '%ls' with '%ls'\n"), i, p.GetNodeName().GetChars(), tokens.at(0).GetChars());
+      if (p.GetNodeName() == tokens.at(0))
+        pRes = pBNode;
+      else
+      {
+        for (uint32 j = 0; j < pBNode->GetChildrenCount() && !pRes; j++)
+        {
+          nuiTreeNodePtr pBNode2 = (nuiTreeNodePtr)pBNode->GetChild(j);
+          nglPath p(pBNode2->GetProperty(_T("Path")));
+          //NGL_OUT(_T("%d %d compare '%ls' with '%ls'\n"), i, j, p.GetNodeName().GetChars(), tokens.at(0).GetChars());
+          if (p.GetNodeName() == tokens.at(0))
+            pRes = pBNode2;
+        }
+      }
+    }
+    
+    if (!pRes)
+      return false;
+    
+    pNode = pRes;
+  }
+  else
+  {
+    pNode = (nuiTreeNodePtr)pNode->GetChild(0);
+  }
   
   pNode->Select(false);
+  nuiColumnTreeView* pColTreeView = dynamic_cast<nuiColumnTreeView*>(mpTreeView);
   
   for (uint i = 0; i < tokens.size(); i++)
   {
@@ -249,17 +240,8 @@ bool nuiFileTree::SetPath(const nglPath& rPath)
       if (pBNode)
       {
         nglPath p(pBNode->GetProperty(_T("Path")));
-        
-        //LBDEBUG
-        NGL_OUT(_T("p.GetNodeName() '%ls' compare to tokens(%d) '%ls'\n"), p.GetNodeName().GetChars(), i, tokens.at(i).GetChars());
-        ////////////
-        
         if (p.GetNodeName() == tokens.at(i))
         {
-          //LBDEBUG
-          NGL_OUT(_T("OK\n"));
-          ////////////
-
           pNode = pBNode;
           break;
         }
@@ -269,37 +251,58 @@ bool nuiFileTree::SetPath(const nglPath& rPath)
     
     if (pNode == mpTreeView->GetSelectedNode()) // Have we found the next node?
       return false; // No next node found: bail out...
-        
+    
     nuiTreeNodePtr pParent = pNode;
     while (pParent)
     {
       if (!pParent->IsEmpty())
         pParent->Open(true);
+      if (pColTreeView)
+        pParent->Select(true);
       pParent = static_cast<nuiTreeNodePtr>(pParent->GetParent());
     }
-
+    
+    if (pColTreeView)
+      mpTreeView->Select(pNode, true);
+    
     if (pNode->IsEmpty()) // Bail out if the last node is a leaf
     {
       PathChanged();
       mpTreeView->SelectionChanged();
       mpTreeView->SetRect(mpTreeView->GetIdealRect());
+      if (pColTreeView)
+      {
+        //        pColTreeView->CalcHotRect();
+        //        pColTreeView->CalcVerticalHotRect();
+      }
       return false;
     }
     
+    //    if (pColTreeView)
+    //      pColTreeView->CreateScrollBars();
   }
   
+  //  if (!pColTreeView)
+  //  {
+  //    mpTreeView->Select(pNode, true);
+  //  }
   
   PathChanged();
   mpTreeView->SelectionChanged();
   mpTreeView->SetRect(mpTreeView->GetIdealRect());
+  if (pColTreeView)
+  {
+    //    pColTreeView->CalcHotRect();
+    //    pColTreeView->CalcVerticalHotRect();
+  }  
   
   
   // Update infos and change the edit line:
   nglPathInfo info;
   rPath.GetInfo(info);
-
+    
   mpTreeView->SetHotRect(mpTreeView->GetHotRect());
-
+  
   return true;
 }
 
@@ -381,6 +384,17 @@ bool nuiFileTree::OnSelected (const nuiEvent& rEvent)
   
 
 
-#endif
+bool nuiFileTree::OnRootStateChanged(const nuiEvent& rEvent)
+{
+  uint32 opened = (uint32)rEvent.mpUser;
+  
+  // redirect event
+//  if (opened)
+//    Opened();
+//  else
+//    Closed();
+  
+  return true;
+}
 
 

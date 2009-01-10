@@ -955,6 +955,7 @@ bool nuiWin::CreateText2Window(const nuiEvent& rEvent)
   pGrid->SetCell(0, 1, pScrollView, nuiFill);
 
   pText->SetWrapping(true);
+  pText->SetDebug(1);
 
   nglPath path((nglChar*)rEvent.mpUser);
   nglIStream* pFile = path.OpenRead();

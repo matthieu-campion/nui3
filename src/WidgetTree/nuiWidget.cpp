@@ -2940,6 +2940,7 @@ bool nuiWidget::SetLayoutConstraint(const nuiWidget::LayoutConstraint& rConstrai
   {
     mConstraint = rConstraint;
     mNeedIdealRect = mNeedIdealRect || mCanRespectConstraint;
+    //InvalidateLayout();
     return true;
   }
   return false;

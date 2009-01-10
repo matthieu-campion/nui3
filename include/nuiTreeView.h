@@ -118,7 +118,7 @@ protected:
 class NUI_API nuiTreeView : public nuiSimpleContainer
 {
 public:
-  nuiTreeView(nuiTreeNode* pTree = false, bool displayRoot=true);
+  nuiTreeView(nuiTreeNode* pTree = NULL, bool displayRoot=true);
   bool Load(const nuiXMLNode* pNode);
   virtual ~nuiTreeView();
 

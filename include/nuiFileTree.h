@@ -34,10 +34,6 @@ You just have to use the following labels as object names in your css file.
  
 */
 
-#define MYDEBUG
-#ifdef MYDEBUG
-
-
 #define ROOTPATH_ALLVOLUMES _T("*:")
 
 class nuiFileTree : public nuiFileSelectorBase
@@ -80,7 +76,8 @@ private:
   
   nuiEventSink<nuiFileTree> mEventSink;
   
+  bool OnRootStateChanged(const nuiEvent& rEvent);
+  
 };
 
-#endif
 

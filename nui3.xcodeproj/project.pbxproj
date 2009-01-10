@@ -6583,29 +6583,29 @@
 		E5816DFF0C3CECAB00902DFE /* Text */ = {
 			isa = PBXGroup;
 			children = (
-				941A98BA0E8BEAAE00CAFC3A /* nuiScrollingLabel.cpp */,
-				941A98BD0E8BEAD000CAFC3A /* nuiScrollingLabel.h */,
-				E55FFC7A0C8EF78000C8DDE0 /* nuiFormatedLabel.h */,
-				E55FFC7B0C8EF78000C8DDE0 /* nuiFormater.h */,
 				E5816E000C3CECAB00902DFE /* nuiEditLine.cpp */,
 				E5816CC00C3CECAB00902DFE /* nuiEditLine.h */,
 				E5816E010C3CECAB00902DFE /* nuiEditText.cpp */,
 				E5816CC10C3CECAB00902DFE /* nuiEditText.h */,
 				E591D61A0C82DBF600844D3E /* nuiFormatedLabel.cpp */,
+				E55FFC7A0C8EF78000C8DDE0 /* nuiFormatedLabel.h */,
 				E591D61B0C82DBF600844D3E /* nuiFormater.cpp */,
+				E55FFC7B0C8EF78000C8DDE0 /* nuiFormater.h */,
+				E5B916C00E8A6CDC00610715 /* nuiHyperLink.cpp */,
+				E5B916C30E8A6CFB00610715 /* nuiHyperLink.h */,
 				E5816E020C3CECAB00902DFE /* nuiLabel.cpp */,
 				E5816CD60C3CECAB00902DFE /* nuiLabel.h */,
 				BC58C4AB0D0078DB00C19A59 /* nuiLabelAttribute.cpp */,
 				BC58C4AE0D0078EB00C19A59 /* nuiLabelAttribute.h */,
 				E5816CD70C3CECAB00902DFE /* nuiLabelRenamer.h */,
+				E5762C590F0EC78900286CF9 /* nuiRichText.cpp */,
+				E5762C550F0EC76700286CF9 /* nuiRichText.h */,
+				941A98BA0E8BEAAE00CAFC3A /* nuiScrollingLabel.cpp */,
+				941A98BD0E8BEAD000CAFC3A /* nuiScrollingLabel.h */,
 				E54EDB4D0C8EBF5C00B294C8 /* nuiSpinnerLabel.cpp */,
 				E54EDB7C0C8EF49400B294C8 /* nuiSpinnerLabel.h */,
 				E5816E030C3CECAB00902DFE /* nuiText.cpp */,
 				E5816D0D0C3CECAB00902DFE /* nuiText.h */,
-				E5B916C00E8A6CDC00610715 /* nuiHyperLink.cpp */,
-				E5B916C30E8A6CFB00610715 /* nuiHyperLink.h */,
-				E5762C550F0EC76700286CF9 /* nuiRichText.h */,
-				E5762C590F0EC78900286CF9 /* nuiRichText.cpp */,
 			);
 			name = Text;
 			path = src/Text;

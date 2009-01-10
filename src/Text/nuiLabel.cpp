@@ -409,16 +409,18 @@ void nuiLabel::CalcLayout()
 nuiRect nuiLabel::CalcIdealSize()
 {
 //  NGL_OUT(_T("Calc 0x%x\n"), this);
-  nuiRect Rect;
   CalcLayout();
 
   if (mpLayout)
   {
-    Rect = mIdealLayoutRect;
+    mIdealRect = mIdealLayoutRect;
+    if (GetDebug(1))
+    {
+      printf("New ideal rect: %ls\n", mIdealRect.GetValue().GetChars());
+    }
   }
 
-  Rect.RoundToBiggest();
-  mIdealRect = Rect;
+  mIdealRect.RoundToBiggest();
   //NGL_OUT(_T("%ls [%ls]"), mText.GetChars(), mIdealRect.GetValue().GetChars());
   return mIdealRect;
 }
@@ -434,6 +436,7 @@ bool nuiLabel::SetRect(const nuiRect& rRect)
   {
     if (mUseEllipsis)
     {
+      CalcLayout();
       nuiSize diff = ideal.GetWidth() - mRect.GetWidth();
       int NbLetterToRemove = ToNearest(diff / (ideal.GetWidth() / mText.GetLength())) + 3;
       nglString text = mText;
@@ -443,14 +446,17 @@ bool nuiLabel::SetRect(const nuiRect& rRect)
       mpLayout->Init(0,0);
       mpLayout->SetWrapX(0);
       mpLayout->Layout(text);
-      CalcLayout();
       GetLayoutRect();
     }
     else if (mWrapping)
     {
+      CalcLayout();
       mpLayout->Init(0,0);
+      mpIdealLayout->Init(0,0);
       mpLayout->SetWrapX(mRect.GetWidth() - mBorderLeft - mBorderRight);
+      mpIdealLayout->SetWrapX(mRect.GetWidth() - mBorderLeft - mBorderRight);
       mpLayout->Layout(mText);
+      mpIdealLayout->Layout(mText);
       GetLayoutRect();
     }
 
@@ -470,6 +476,14 @@ nuiRect nuiLabel::GetLayoutRect()
   mIdealLayoutRect = mpIdealLayout->GetRect();
   mIdealLayoutRect.Grow(mHMargin, mVMargin);
   mIdealLayoutRect = mIdealLayoutRect.Size();
+  if (GetDebug())
+  {
+    printf("New layout rect: %ls\n", mIdealLayoutRect.GetValue().GetChars());
+  }
+  
+  if (!(mIdealLayoutRect == mIdealRect))
+    InvalidateLayout();
+  
   return mIdealLayoutRect;
 }
 
