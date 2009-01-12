@@ -69,9 +69,10 @@
 	};
 	401335D20F13B4F800140067 /* DecoderTest.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {930, 3192}}";
-			sepNavSelRange = "{5009, 0}";
-			sepNavVisRange = "{3486, 1775}";
+			sepNavIntBoundsRect = "{{0, 0}, {930, 3164}}";
+			sepNavSelRange = "{5052, 0}";
+			sepNavVisRange = "{3958, 1910}";
+			sepNavWindowFrame = "{{15, 39}, {989, 984}}";
 		};
 	};
 	401335D30F13B4F800140067 /* DecoderTest.h */ = {
@@ -168,6 +169,20 @@
 		vrLen = 1775;
 		vrLoc = 3486;
 	};
+	40DCF1AC0F1B4B5B00202C0F /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+	};
+	40DCF1B00F1B4B7100202C0F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 191";
+		rLen = 0;
+		rLoc = 5893;
+		rType = 0;
+		vrLen = 2276;
+		vrLoc = 3991;
+	};
 	61A9DE3F0B833C9200BC506C /* Project object */ = {
 		activeBuildConfigurationName = Default;
 		activeExecutable = 401335AF0F13B4B700140067 /* nuiAudioDecoderTestD */;
@@ -216,6 +231,8 @@
 			40DCF1970F1B441900202C0F /* PBXBookmark */ = 40DCF1970F1B441900202C0F /* PBXBookmark */;
 			40DCF1A30F1B443200202C0F /* PBXTextBookmark */ = 40DCF1A30F1B443200202C0F /* PBXTextBookmark */;
 			40DCF1A80F1B44A600202C0F /* PBXTextBookmark */ = 40DCF1A80F1B44A600202C0F /* PBXTextBookmark */;
+			40DCF1AC0F1B4B5B00202C0F /* PBXBookmark */ = 40DCF1AC0F1B4B5B00202C0F /* PBXBookmark */;
+			40DCF1B00F1B4B7100202C0F /* PBXTextBookmark */ = 40DCF1B00F1B4B7100202C0F /* PBXTextBookmark */;
 		};
 		sourceControlManager = 401335BC0F13B4BC00140067 /* Source Control */;
 		userBuildSettings = {
@@ -235,9 +252,9 @@
 	};
 	61A9DFF10B83433800BC506C /* MainWindow.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {930, 2870}}";
-			sepNavSelRange = "{5912, 0}";
-			sepNavVisRange = "{3991, 2319}";
+			sepNavIntBoundsRect = "{{0, 0}, {930, 2856}}";
+			sepNavSelRange = "{5893, 0}";
+			sepNavVisRange = "{3991, 2276}";
 			sepNavWindowFrame = "{{15, 39}, {989, 984}}";
 		};
 	};

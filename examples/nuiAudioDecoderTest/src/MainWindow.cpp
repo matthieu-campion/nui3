@@ -188,8 +188,7 @@ void MainWindow::OnNotification(const nuiNotification& rNotif)
     nglPath outPath = nglPath(temp + _T("_Decompressed.wav"));
     
     nglString message;
-    //if (ConvertCompressedAudioFile(mBrowsedFile, outPath))
-    if (TestSeek(mBrowsedFile, outPath))
+    if (ConvertCompressedAudioFile(mBrowsedFile, outPath))
     {
       message = _T("SUCCESS \nThe file: ") + mBrowsedFile.GetNodeName() + _T(" has been well converted to: ") + outPath.GetNodeName() + _T("\n");
     }
