@@ -278,7 +278,6 @@ nglString nuiAudioDevice_AudioUnit::GetChannelName(bool IsInput, uint32 index) c
 nuiAudioDeviceAPI_AudioUnit::nuiAudioDeviceAPI_AudioUnit()
 {
   mName = _T("AudioUnit");
-  RegisterWithManager();
 }
 
 nuiAudioDeviceAPI_AudioUnit::~nuiAudioDeviceAPI_AudioUnit()

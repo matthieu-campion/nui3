@@ -8,6 +8,7 @@
 #include "nui.h"
 #include "nuiAudioDevice.h"
 
+
 /////////
 // Audio Device:
 nuiAudioDevice::nuiAudioDevice()
@@ -82,9 +83,9 @@ nuiAudioDeviceAPI::~nuiAudioDeviceAPI()
 {
 }
 
-void nuiAudioDeviceAPI::RegisterWithManager()
+void nuiAudioDeviceAPI::RegisterWithManager(nuiAudioDeviceManager& rManager)
 {
-  nuiAudioDeviceManager::Get().RegisterAPI(mName, this);
+  rManager.RegisterAPI(mName, this);
 }
 
 
@@ -198,18 +199,46 @@ nuiAudioDevice* nuiAudioDeviceManager::GetDefaultInputDevice()
 nuiAudioDeviceManager::nuiAudioDeviceManager()
 {
   mDeviceCount = 0;
+  RegisterAPIS();
 }
 
 void nuiAudioDeviceManager::RegisterAPI(const nglString& rAPIName, nuiAudioDeviceAPI* pAPI)
 {
+  NGL_OUT(_T("nuiAudioDeviceManager::RegisterAPI('%ls') [0x%x]\n"), rAPIName.GetChars(), pAPI);
   APIMap::const_iterator end = mAPIs.end();
   APIMap::const_iterator it = mAPIs.find(rAPIName);
   if (it != end)
   {
-    delete it->second;
+    nuiAudioDeviceAPI* pOldAPI = it->second;
+    NGL_OUT(_T("\tkilling previous entry for this API [0x%p]\n"), pOldAPI);
+    delete pOldAPI;
   }
   mAPIs[rAPIName] = pAPI;
   Update();
 }
 
+#ifdef _WIN32_
+#include "nuiAudioDevice_DirectSound.h"
+//#include "nuiAudioDevice_ASIO.h"
+void nuiAudioDeviceManager::RegisterAPIS()
+{
+  DirectSoundApi.RegisterWithManager(*this);
+}
+#elif (defined _CARBON_) || (defined _COCOA_)
+#include "nuiAudioDevice_CoreAudio.h"
+void nuiAudioDeviceManager::RegisterAPIS()
+{
+  CoreAudioAPI.RegisterWithManager(*this);
+}
+#elif (defined _UIKIT_)
+#include "nuiAudioDevice_AudioUnit.h"
+void nuiAudioDeviceManager::RegisterAPIS()
+{
+  AudioUnitApi.RegisterWithManager(*this);
+}
+#else
+void nuiAudioDeviceManager::RegisterAPIS()
+{
+}
+#endif
 

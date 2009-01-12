@@ -569,7 +569,6 @@ void nuiAudioDevice_CoreAudio::SetPropertyData(UInt32 inChannel, bool inSection,
 nuiAudioDeviceAPI_CoreAudio::nuiAudioDeviceAPI_CoreAudio()
 {
   mName = API_NAME;
-  RegisterWithManager();
 }
 
 nuiAudioDeviceAPI_CoreAudio::~nuiAudioDeviceAPI_CoreAudio()

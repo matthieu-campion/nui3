@@ -211,7 +211,6 @@ protected:
 nuiAudioDeviceAPI_DirectSound::nuiAudioDeviceAPI_DirectSound()
 {
   mName = API_NAME;
-  RegisterWithManager();
 }
 
 nuiAudioDeviceAPI_DirectSound::~nuiAudioDeviceAPI_DirectSound()

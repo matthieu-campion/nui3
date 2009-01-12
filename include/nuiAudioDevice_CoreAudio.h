@@ -5,6 +5,8 @@
   licence: see nui3/LICENCE.TXT
 */
 
+#pragma once
+
 #include "nuiAudioDevice.h"
 #include "nglThread.h"
 #import <CoreAudio/CoreAudio.h>

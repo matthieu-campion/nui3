@@ -9,6 +9,8 @@
 
 #include "nui.h"
 
+class nuiAudioDeviceManager;
+
 typedef nuiFastDelegate3<const std::vector<const float*>&, const std::vector<float*>&, uint32> nuiAudioProcessFn; // the params are two arrays of float*: input and output
 
 class nuiAudioDevice
@@ -60,7 +62,7 @@ public:
   virtual nuiAudioDevice* GetDefaultInputDevice() = 0;
   virtual nuiAudioDevice* GetDefaultOutputDevice() = 0;
   
-  void RegisterWithManager();
+  void RegisterWithManager(nuiAudioDeviceManager& rManager);
 protected:
   nuiAudioDeviceAPI();
 
@@ -91,11 +93,14 @@ public:
   
 protected:
   nuiAudioDeviceManager();
+  void RegisterAPIS();
   
-  friend void nuiAudioDeviceAPI::RegisterWithManager();
+  friend void nuiAudioDeviceAPI::RegisterWithManager(nuiAudioDeviceManager& rManager);
   void RegisterAPI(const nglString& rAPIName, nuiAudioDeviceAPI* pAPI);
   APIMap mAPIs;
   
   int32 mDeviceCount;
 };
+
+
 
