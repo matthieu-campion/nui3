@@ -67,6 +67,21 @@
 		isa = PBXCodeSenseManager;
 		indexTemplatePath = "";
 	};
+	401335D20F13B4F800140067 /* DecoderTest.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {930, 3192}}";
+			sepNavSelRange = "{5009, 0}";
+			sepNavVisRange = "{3486, 1775}";
+		};
+	};
+	401335D30F13B4F800140067 /* DecoderTest.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {930, 856}}";
+			sepNavSelRange = "{290, 0}";
+			sepNavVisRange = "{0, 334}";
+			sepNavWindowFrame = "{{15, 39}, {989, 984}}";
+		};
+	};
 	40A459BA0EFAAE4500043B1F /* nuiAudioDecoder_CoreAudio.cpp */ = {
 		isa = PBXFileReference;
 		fileEncoding = 4;
@@ -74,12 +89,6 @@
 		name = nuiAudioDecoder_CoreAudio.cpp;
 		path = AudioSamples/CoreAudio/nuiAudioDecoder_CoreAudio.cpp;
 		sourceTree = "<group>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1914, 6874}}";
-			sepNavSelRange = "{3055, 0}";
-			sepNavVisRange = "{2102, 1367}";
-			sepNavWindowFrame = "{{22, 4}, {1610, 1024}}";
-		};
 	};
 	40D9B9F80F1515B20036BA1B /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -104,11 +113,6 @@
 		name = nuiAudioDecoder_CoreAudio.cpp;
 		path = /Users/mat/devel/nui3/src/AudioSamples/CoreAudio/nuiAudioDecoder_CoreAudio.cpp;
 		sourceTree = "<absolute>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1385, 7280}}";
-			sepNavSelRange = "{3056, 0}";
-			sepNavVisRange = "{0, 0}";
-		};
 	};
 	40D9BA0A0F1515BB0036BA1B /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -139,6 +143,30 @@
 		rType = 0;
 		vrLen = 0;
 		vrLoc = 0;
+	};
+	40DCF1970F1B441900202C0F /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = 401335D20F13B4F800140067 /* DecoderTest.cpp */;
+	};
+	40DCF1A30F1B443200202C0F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 401335D20F13B4F800140067 /* DecoderTest.cpp */;
+		name = "DecoderTest.cpp: 187";
+		rLen = 0;
+		rLoc = 5085;
+		rType = 0;
+		vrLen = 1750;
+		vrLoc = 3486;
+	};
+	40DCF1A80F1B44A600202C0F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 401335D20F13B4F800140067 /* DecoderTest.cpp */;
+		name = "DecoderTest.cpp: 185";
+		rLen = 0;
+		rLoc = 5010;
+		rType = 0;
+		vrLen = 1775;
+		vrLoc = 3486;
 	};
 	61A9DE3F0B833C9200BC506C /* Project object */ = {
 		activeBuildConfigurationName = Default;
@@ -176,15 +204,18 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 253035890;
-			PBXWorkspaceStateSaveDate = 253035890;
+			PBXPerProjectTemplateStateSaveDate = 253443983;
+			PBXWorkspaceStateSaveDate = 253443983;
 		};
 		perUserProjectItems = {
-			40D9B9F80F1515B20036BA1B /* PBXTextBookmark */ = 40D9B9F80F1515B20036BA1B /* PBXTextBookmark */;
-			40D9B9F90F1515B20036BA1B /* PBXTextBookmark */ = 40D9B9F90F1515B20036BA1B /* PBXTextBookmark */;
-			40D9BA0A0F1515BB0036BA1B /* PBXTextBookmark */ = 40D9BA0A0F1515BB0036BA1B /* PBXTextBookmark */;
-			40D9BA160F1516760036BA1B /* PBXTextBookmark */ = 40D9BA160F1516760036BA1B /* PBXTextBookmark */;
-			40D9BA190F1518850036BA1B /* PBXTextBookmark */ = 40D9BA190F1518850036BA1B /* PBXTextBookmark */;
+			40D9B9F80F1515B20036BA1B = 40D9B9F80F1515B20036BA1B /* PBXTextBookmark */;
+			40D9B9F90F1515B20036BA1B = 40D9B9F90F1515B20036BA1B /* PBXTextBookmark */;
+			40D9BA0A0F1515BB0036BA1B = 40D9BA0A0F1515BB0036BA1B /* PBXTextBookmark */;
+			40D9BA160F1516760036BA1B = 40D9BA160F1516760036BA1B /* PBXTextBookmark */;
+			40D9BA190F1518850036BA1B = 40D9BA190F1518850036BA1B /* PBXTextBookmark */;
+			40DCF1970F1B441900202C0F /* PBXBookmark */ = 40DCF1970F1B441900202C0F /* PBXBookmark */;
+			40DCF1A30F1B443200202C0F /* PBXTextBookmark */ = 40DCF1A30F1B443200202C0F /* PBXTextBookmark */;
+			40DCF1A80F1B44A600202C0F /* PBXTextBookmark */ = 40DCF1A80F1B44A600202C0F /* PBXTextBookmark */;
 		};
 		sourceControlManager = 401335BC0F13B4BC00140067 /* Source Control */;
 		userBuildSettings = {
@@ -204,9 +235,9 @@
 	};
 	61A9DFF10B83433800BC506C /* MainWindow.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {930, 3556}}";
-			sepNavSelRange = "{154, 0}";
-			sepNavVisRange = "{0, 1755}";
+			sepNavIntBoundsRect = "{{0, 0}, {930, 2870}}";
+			sepNavSelRange = "{5912, 0}";
+			sepNavVisRange = "{3991, 2319}";
 			sepNavWindowFrame = "{{15, 39}, {989, 984}}";
 		};
 	};

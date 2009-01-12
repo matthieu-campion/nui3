@@ -11,5 +11,6 @@
 #include "nuiSampleInfo.h"
 
 bool ConvertCompressedAudioFile(nglPath inPath, nglPath outPath);
+bool TestSeek(nglPath inPath, nglPath outPath);
 void PrintAudioInfos(nuiSampleInfo info);
 
