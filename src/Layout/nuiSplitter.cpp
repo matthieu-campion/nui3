@@ -672,6 +672,13 @@ bool nuiSplitter::GetHandleHover() const
   return mHandleHover;
 }
 
+
+nuiSplitterHandle* nuiSplitter::GetHandle() const
+{
+  return mpHandle;
+}
+
+
 nuiSize nuiSplitter::GetHandlePos()
 {
   return mHandlePos;

@@ -36,8 +36,16 @@ void nuiFileTree::Init(const nglPath& rPath, const nglPath& rRootPath, const std
   SetObjectClass(_T("nuiFileTree"));
   SetObjectName(_T("nuiFileTree"));
   
+  mpFileBox = new nuiVBox(0);
+  mpFileBox->SetExpand(nuiExpandShrinkAndGrow);
+  AddChild(mpFileBox);
+  
   mpTreeView = new nuiTreeView(NULL, false);
-  AddChild(mpTreeView);
+
+  mpFileBox->AddCell(mpTreeView);
+  mpFileBox->SetCellExpand(mpFileBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
+  
+  
   mShowHiddenFiles = showHiddenFiles;
   mFilters = rFilters;
   mpCurrentTree = NULL;
@@ -160,6 +168,10 @@ void nuiFileTree::AddTree(const nglPath& rPath, bool Opened)
 }
 
 
+//pInfo = new nuiLabel(GetFileInfo(rPath));
+//pInfo->SetObjectName(_T("nuiFileTree::FileInfo"));      
+//pInfo->SetObjectClass(_T("nuiFileTree::FileInfo"));      
+
 
 // virtual 
 nuiTreeNode* nuiFileTree::GetNewNode(const nglPath& rPath)
@@ -167,7 +179,6 @@ nuiTreeNode* nuiFileTree::GetNewNode(const nglPath& rPath)
   nuiHBox* pBox = NULL;
   nuiSimpleContainer* pIcon = NULL;
   nuiLabel* pLabel = NULL;
-  nuiLabel* pInfo = NULL;
   
   nglPath pathName = rPath;
   
@@ -182,7 +193,7 @@ nuiTreeNode* nuiFileTree::GetNewNode(const nglPath& rPath)
       if (!pathName.GetExtension().Compare(_T("app")))
         pathName = pathName.GetRemovedExtension();
       
-      pBox = new nuiHBox(3);
+      pBox = new nuiHBox(2);
       pIcon = new nuiSimpleContainer();
       pIcon->SetObjectName(_T("nuiFileTree::FileIcon"));
       pIcon->SetObjectClass(_T("nuiFileTree::FileIcon"));
@@ -190,9 +201,6 @@ nuiTreeNode* nuiFileTree::GetNewNode(const nglPath& rPath)
       pLabel = new nuiLabel(pathName.GetNodeName().IsEmpty()?_T("/"):pathName.GetNodeName());        
       pLabel->SetObjectName(_T("nuiFileTree::FileLabel"));      
       pLabel->SetObjectClass(_T("nuiFileTree::FileLabel"));      
-      pInfo = new nuiLabel(GetFileInfo(rPath));
-      pInfo->SetObjectName(_T("nuiFileTree::FileInfo"));      
-      pInfo->SetObjectClass(_T("nuiFileTree::FileInfo"));      
       
     }
     
@@ -206,7 +214,7 @@ nuiTreeNode* nuiFileTree::GetNewNode(const nglPath& rPath)
           pathName = pathName.GetRemovedExtension();
         
         
-        pBox = new nuiHBox(3);
+        pBox = new nuiHBox(2);
         pIcon = new nuiSimpleContainer();
         nglString objectName;
         objectName.Format(_T("nuiFileTree::FileIcon::%ls"), rPath.GetExtension().GetChars());
@@ -215,9 +223,6 @@ nuiTreeNode* nuiFileTree::GetNewNode(const nglPath& rPath)
         pLabel = new nuiLabel(pathName.GetNodeName().IsEmpty()?_T("/"):pathName.GetNodeName());        
         pLabel->SetObjectName(_T("nuiFileTree::FileLabel"));
         pLabel->SetObjectClass(_T("nuiFileTree::FileLabel"));
-        pInfo = new nuiLabel(GetFileInfo(rPath));
-        pInfo->SetObjectName(_T("nuiFileTree::FileInfo"));      
-        pInfo->SetObjectClass(_T("nuiFileTree::FileInfo"));      
       }
     }
     
@@ -243,23 +248,18 @@ nuiTreeNode* nuiFileTree::GetNewNode(const nglPath& rPath)
     }
     
     
-    pBox = new nuiHBox(3);
+    pBox = new nuiHBox(2);
     pIcon = new nuiSimpleContainer();
     pIcon->SetObjectName(iconObjectName);
     pIcon->SetObjectClass(iconObjectName);
     pLabel = new nuiLabel(rPath.GetNodeName().IsEmpty()?_T("/"):rPath.GetNodeName());        
     pLabel->SetObjectName(labelObjectName);
     pLabel->SetObjectClass(labelObjectName);
-    pInfo = new nuiLabel(GetFileInfo(rPath));
-    pInfo->SetObjectName(_T("nuiFileTree::FileInfo"));      
-    pInfo->SetObjectClass(_T("nuiFileTree::FileInfo"));      
   }
   
   pBox->SetCell(0, pIcon, nuiCenter);
   pBox->SetCell(1, pLabel);
   pBox->SetCellPixels(1, 100);
-  pInfo->SetPosition(nuiRight);
-  pBox->SetCell(2, pInfo);
   
   
   if (!pBox)

@@ -14,7 +14,7 @@
 #include "nuiHBox.h"
 #include "nuiVBox.h"
 #include "nuiList.h"
-
+#include "nuiSplitter.h"
 
 /*
 NOTE ABOUT DECORATIONS:
@@ -35,7 +35,6 @@ You just have to use the following labels as object names in your css file.
 */
 
 #define ROOTPATH_ALLVOLUMES _T("*:")
-
 
 
 class nuiFileTree : public nuiFileSelectorBase
@@ -67,6 +66,8 @@ private:
   void FormatFileSize(nuiSize size, nglString& str);
   
 //  bool OnRootOpened(const nuiEvent& rEvent);
+  
+  nuiVBox* mpFileBox;
   
   nuiTreeView* mpTreeView;
   nuiTreeNode* mpTreeRoot;

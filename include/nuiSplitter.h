@@ -70,6 +70,8 @@ public:
   void SetMode (nuiSplitterMode mode);
   nuiSplitterMode GetMode ();
 
+  nuiSplitterHandle* GetHandle() const;
+
   nuiSize GetHandlePos(); ///< Retrieve the Position of the handle separating the 2 widgets (in % if mode == eModePercentage).
   void SetHandlePos(nuiSize HandlePos); ///< Set the the position of the handle separation in between the 2 widgets (in % if mode == eModePercentage).
 

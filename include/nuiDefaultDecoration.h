@@ -53,7 +53,7 @@ protected:
   static void EditText(nuiWidget* pWidget);
   static void EditLine(nuiWidget* pWidget);
 
-  static void SplitterHandle(nuiWidget* pWidget);
+  static void Splitter(nuiWidget* pWidget);
 
   static void TitledPane(nuiWidget* pWidget);
   static void FolderPane(nuiWidget* pWidget);
@@ -88,6 +88,8 @@ protected:
 
   // file tree
   static void FileTree_View(nuiWidget* pWidget);
+//  static void FileTree_Node(nuiWidget* pWidget);
+  static void FileTree_ColumnLabel(nuiWidget* pWidget);
   static void FileTree_FolderLabel(nuiWidget* pWidget);
   static void FileTree_FileLabel(nuiWidget* pWidget);
   static void FileTree_FileInfo(nuiWidget* pWidget);

@@ -52,7 +52,7 @@ void nuiDefaultDecoration::Init()
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiEditText")), &nuiDefaultDecoration::EditText);
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiEditLine")), &nuiDefaultDecoration::EditLine);
   
-  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiSplitterHandle")), &nuiDefaultDecoration::SplitterHandle);
+  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiSplitter")), &nuiDefaultDecoration::Splitter);
   
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiTitledPane")), &nuiDefaultDecoration::TitledPane);
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFolderPane")), &nuiDefaultDecoration::FolderPane);
@@ -87,6 +87,8 @@ void nuiDefaultDecoration::Init()
 
   // FileTree
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileTree")), &nuiDefaultDecoration::FileTree_View);
+//  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileTree::Node")), &nuiDefaultDecoration::FileTree_Node);
+  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileTree::ColumnLabel")), &nuiDefaultDecoration::FileTree_ColumnLabel);
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileTree::VolumeLabel")), &nuiDefaultDecoration::FileTree_FolderLabel);
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileTree::FolderLabel")), &nuiDefaultDecoration::FileTree_FolderLabel);
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileTree::FileLabel")), &nuiDefaultDecoration::FileTree_FileLabel);
@@ -94,6 +96,7 @@ void nuiDefaultDecoration::Init()
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileTree::VolumeIcon")), &nuiDefaultDecoration::FileTree_VolumeIcon);
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileTree::FolderIcon")), &nuiDefaultDecoration::FileTree_FolderIcon);
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileTree::FileIcon")), &nuiDefaultDecoration::FileTree_FileIcon);
+
   
 }
 
@@ -133,7 +136,10 @@ void nuiDefaultDecoration::InitColors()
 
   nuiColor::SetColor(_T("nuiDefaultClrProgressFg"), nuiColor(76,145,230));
   nuiColor::SetColor(_T("nuiDefaultClrProgressBg"), nuiColor(200,200,200));
+  
+  nuiColor::SetColor(_T("nuiDefaultClrPaneBkg"), nuiColor(200,200,200));
 
+  nuiColor::SetColor(_T("nuiDefaultClrBorder"), nuiColor(190,190,190));
 
 }
 
@@ -450,13 +456,13 @@ void nuiDefaultDecoration::EditLine(nuiWidget* pWidget)
 
 //**************************************************************************************************************
 //
-// nuiSplitterHandle
+// nuiSplitter
 //
-void nuiDefaultDecoration::SplitterHandle(nuiWidget* pWidget)
+void nuiDefaultDecoration::Splitter(nuiWidget* pWidget)
 {
-  nuiSplitterHandle* pHandle = (nuiSplitterHandle*)pWidget;
-  nuiSplitter* pSplitter = pHandle->GetSplitter();
-  NGL_ASSERT(pSplitter);
+  nuiSplitter* pSplitter = (nuiSplitter*)pWidget;
+  nuiSplitterHandle* pHandle = pSplitter->GetHandle();
+  NGL_ASSERT(pHandle);
   
   if (pSplitter->GetOrientation() == nuiVertical)
   {
@@ -981,6 +987,44 @@ void nuiDefaultDecoration::FileTree_View(nuiWidget* pWidget)
     pDeco->SetOffset2(0.5f);
   }
   pWidget->SetDecoration(pDeco, eDecorationBorder);  
+}
+
+
+//void nuiDefaultDecoration::FileTree_Node(nuiWidget* pWidget)
+//{
+//  nuiBorderDecoration* pDeco = (nuiBorderDecoration*)nuiDecoration::Get(_T("nuiDefaultDecorationFileTreeNode"));
+//  if (!pDeco)
+//  {
+//    nuiColor color;
+//    nuiColor::GetColor(_T("nuiDefaultClrBorder"), color);
+//    
+//    pDeco = new nuiBorderDecoration(_T("nuiDefaultDecorationFileTreeNode"));
+//    pDeco->SetSourceClientRect(nuiRect(0,0,0,0));
+//    pDeco->SetStrokeColor(color);
+//    pDeco->SetStrokeSize(1);
+//    pDeco->SetBorderType(_T("Bottom"));
+//  }
+//  
+//  pWidget->SetDecoration(pDeco, eDecorationBorder);  
+//}
+//
+
+void nuiDefaultDecoration::FileTree_ColumnLabel(nuiWidget* pWidget)
+{  
+  pWidget->SetPosition(nuiFillHorizontal);
+  
+  nuiColorDecoration* pDeco = (nuiColorDecoration*)nuiDecoration::Get(_T("nuiDefaultDecorationFileTreeColumnLabel"));
+  if (!pDeco)
+  {
+    nuiColor fillColor;
+    nuiColor::GetColor(_T("nuiDefaultClrPaneBkg"), fillColor);
+    pDeco = new nuiColorDecoration(_T("nuiDefaultDecorationFileTreeColumnLabel"), nuiRect(3,3,0,0), fillColor);
+  }
+  
+  nuiLabel* pLabel = (nuiLabel*)pWidget;
+  pLabel->SetFont(nuiFont::GetFont(10), true);
+  
+  pWidget->SetDecoration(pDeco, eDecorationBorder);
 }
 
 
