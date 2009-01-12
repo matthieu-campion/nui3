@@ -58,57 +58,40 @@ nuiFileTree::~nuiFileTree()
 void nuiFileTree::FormatFileSize(nuiSize size, nglString& str)
 {
   if (size > 1000000000)
-    str.Format(_T("%.2f Go"), size / (1024*1024*1024));
+    str.Format(_T("%.2fGo"), size / (1024*1024*1024));
   else if (size > 1000000)
-    str.Format(_T("%.2f Mo"), size / (1024*1024));
+    str.Format(_T("%.2fMo"), size / (1024*1024));
   else if (size > 1000)
-    str.Format(_T("%.2f Ko"), size / 1024);
+    str.Format(_T("%.2fKo"), size / 1024);
   else 
-    str.Format(_T("%d b"), size);  
+    str.Format(_T("%db"), size);  
 }
 
 
-nuiWidget* nuiFileTree::GetFileInfo(const nglPath& rPath)
+nglString nuiFileTree::GetFileInfo(const nglPath& rPath)
 {
-  nuiSimpleContainer* pMainCont = new nuiSimpleContainer();
-  pMainCont->SetObjectName(_T("nuiFileTree::InfoView"));
-  pMainCont->SetObjectClass(_T("nuiFileTree::InfoView"));
-  
-  nuiVBox* pBox = new nuiVBox(0);
-  pBox->SetExpand(nuiExpandShrinkAndGrow);
-  pMainCont->AddChild(pBox);
-  
-  // file icon
-  nuiSimpleContainer* pIcon = new nuiSimpleContainer();
-  pBox->AddCell(pIcon, nuiCenter);
-  
-  nglString objectName;
-  objectName.Format(_T("nuiFileTree::InfoViewIcon::%ls"), rPath.GetExtension().GetChars());
-  pIcon->SetObjectName(objectName);
-  pIcon->SetObjectClass(objectName);
-  
-  // file name
-  nuiLabel* pLabel = new nuiLabel(rPath.GetNodeName());
-  pLabel->UseEllipsis(true);
-  pBox->AddCell(pLabel, nuiCenter);
-  
-  // file size
+  nglString str;
   nglPathInfo info;
   rPath.GetInfo(info);
-  nglString sizestr;
-  FormatFileSize(info.Size, sizestr);
-  pBox->AddCell(new nuiLabel(sizestr), nuiCenter);
-  
+
+
   // file modification date
   nglTimeInfo timeInfo;
   nglString timestr;
   nglTime lastMod = info.LastMod;
   lastMod.GetLocalTime(timeInfo);
-  timestr.Format(_T("%d / %d / %d   %d:%d"), timeInfo.Year+1900, timeInfo.Month, timeInfo.Day, timeInfo.Hours, timeInfo.Minutes);
-  pBox->AddCell(new nuiLabel(timestr), nuiCenter);
+  timestr.Format(_T("%d/%d/%d, %d:%d"), timeInfo.Year+1900, timeInfo.Month, timeInfo.Day, timeInfo.Hours, timeInfo.Minutes);
 
+  str.Append(timestr);
   
-  return pMainCont;
+  if (rPath.IsLeaf())
+  {
+    // file size
+    str.Append(_T(" - "));
+    FormatFileSize(info.Size, str);
+  }
+
+  return str;
 }
 
 
@@ -118,9 +101,9 @@ nuiWidget* nuiFileTree::GetFileInfo(const nglPath& rPath)
 
 bool nuiFileTree::SetRootPath(const nglPath& rPath)
 {
-  if (rPath == nglPath(_T("*:")))
+  if (rPath == nglPath(ROOTPATH_ALLVOLUMES))
   {
-    nuiTreeNodePtr pRoot = new nuiTreeNode(_T("*:"));
+    nuiTreeNodePtr pRoot = new nuiTreeNode(ROOTPATH_ALLVOLUMES);
     pRoot->Open(true);
 
     std::list<nglPathVolume> volumes;
@@ -150,7 +133,7 @@ bool nuiFileTree::SetRootPath(const nglPath& rPath)
   nuiTreeNodePtr pNode = GetNewNode(rPath);  
   if (pNode)
   {
-    nuiTreeNodePtr pRoot = new nuiTreeNode(_T("HdddenRoot"));
+    nuiTreeNodePtr pRoot = new nuiTreeNode(_T("HiddenRoot"));
     pRoot->AddChild(pNode);
     pRoot->Open(true);
     pNode->Open(true);
@@ -175,6 +158,118 @@ void nuiFileTree::AddTree(const nglPath& rPath, bool Opened)
   
   mTrees[rPath] = pNode;  
 }
+
+
+
+// virtual 
+nuiTreeNode* nuiFileTree::GetNewNode(const nglPath& rPath)
+{
+  nuiHBox* pBox = NULL;
+  nuiSimpleContainer* pIcon = NULL;
+  nuiLabel* pLabel = NULL;
+  nuiLabel* pInfo = NULL;
+  
+  nglPath pathName = rPath;
+  
+  if (pathName.IsLeaf() || !pathName.GetExtension().Compare(_T("app")))
+  {
+    // no file is filtered
+    if (mFilters.size() == 0)
+      return NULL;
+    
+    else if (IsFilterSet(_T("*")))
+    {
+      if (!pathName.GetExtension().Compare(_T("app")))
+        pathName = pathName.GetRemovedExtension();
+      
+      pBox = new nuiHBox(3);
+      pIcon = new nuiSimpleContainer();
+      pIcon->SetObjectName(_T("nuiFileTree::FileIcon"));
+      pIcon->SetObjectClass(_T("nuiFileTree::FileIcon"));
+      
+      pLabel = new nuiLabel(pathName.GetNodeName().IsEmpty()?_T("/"):pathName.GetNodeName());        
+      pLabel->SetObjectName(_T("nuiFileTree::FileLabel"));      
+      pLabel->SetObjectClass(_T("nuiFileTree::FileLabel"));      
+      pInfo = new nuiLabel(GetFileInfo(rPath));
+      pInfo->SetObjectName(_T("nuiFileTree::FileInfo"));      
+      pInfo->SetObjectClass(_T("nuiFileTree::FileInfo"));      
+      
+    }
+    
+    else 
+    {
+      if (!IsFileFiltered(rPath.GetNodeName()))
+        return NULL;
+      else
+      {
+        if (!pathName.GetExtension().Compare(_T("app")))
+          pathName = pathName.GetRemovedExtension();
+        
+        
+        pBox = new nuiHBox(3);
+        pIcon = new nuiSimpleContainer();
+        nglString objectName;
+        objectName.Format(_T("nuiFileTree::FileIcon::%ls"), rPath.GetExtension().GetChars());
+        pIcon->SetObjectName(objectName);
+        pIcon->SetObjectClass(objectName);
+        pLabel = new nuiLabel(pathName.GetNodeName().IsEmpty()?_T("/"):pathName.GetNodeName());        
+        pLabel->SetObjectName(_T("nuiFileTree::FileLabel"));
+        pLabel->SetObjectClass(_T("nuiFileTree::FileLabel"));
+        pInfo = new nuiLabel(GetFileInfo(rPath));
+        pInfo->SetObjectName(_T("nuiFileTree::FileInfo"));      
+        pInfo->SetObjectClass(_T("nuiFileTree::FileInfo"));      
+      }
+    }
+    
+    
+    
+  }
+  else
+  {
+    if (!mShowHiddenFiles && (rPath.GetNodeName().GetChar(0) == _T('.')))
+      return NULL;
+    
+    nglString iconObjectName, labelObjectName;
+    
+    if (rPath.GetParent().GetPathName().IsEmpty() || !rPath.GetPathName().Compare(_T("/")) || !rPath.GetParent().GetPathName().Compare(_T("/Volumes")))
+    {
+      iconObjectName = _T("nuiFileTree::VolumeIcon");
+      labelObjectName = _T("nuiFileTree::FolderLabel");
+    }
+    else
+    {
+      iconObjectName = _T("nuiFileTree::FolderIcon");
+      labelObjectName = _T("nuiFileTree::FolderLabel");
+    }
+    
+    
+    pBox = new nuiHBox(3);
+    pIcon = new nuiSimpleContainer();
+    pIcon->SetObjectName(iconObjectName);
+    pIcon->SetObjectClass(iconObjectName);
+    pLabel = new nuiLabel(rPath.GetNodeName().IsEmpty()?_T("/"):rPath.GetNodeName());        
+    pLabel->SetObjectName(labelObjectName);
+    pLabel->SetObjectClass(labelObjectName);
+    pInfo = new nuiLabel(GetFileInfo(rPath));
+    pInfo->SetObjectName(_T("nuiFileTree::FileInfo"));      
+    pInfo->SetObjectClass(_T("nuiFileTree::FileInfo"));      
+  }
+  
+  pBox->SetCell(0, pIcon, nuiCenter);
+  pBox->SetCell(1, pLabel);
+  pBox->SetCellPixels(1, 100);
+  pInfo->SetPosition(nuiRight);
+  pBox->SetCell(2, pInfo);
+  
+  
+  if (!pBox)
+    return NULL;
+  
+  nuiFileSelectorNode* pNewNode = new nuiFileSelectorNode(this, rPath, pBox);
+  
+  return pNewNode;
+}
+
 
 
 

@@ -116,6 +116,7 @@ void nuiImage::SetTexturePath(const nglPath& rTexturePath)
   mIgnoreState = false;  
 }
 
+
 bool nuiImage::Load(const nuiXMLNode* pNode)
 {
   nuiWidget::Load(pNode);

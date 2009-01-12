@@ -36,6 +36,8 @@ You just have to use the following labels as object names in your css file.
 
 #define ROOTPATH_ALLVOLUMES _T("*:")
 
+
+
 class nuiFileTree : public nuiFileSelectorBase
 {
 public:
@@ -49,6 +51,8 @@ public:
   nglPath GetPath() const;          ///< Retrieve currently selected Path
   nglPath GetRootPath() const;          ///< Retrieve current root.
 
+  virtual nuiTreeNode* GetNewNode(const nglPath& rPath);
+  
   nuiSimpleEventSource<nuiWidgetActivated> PathChanged;      ///< Event triggered when the user is navigating around the file system.
   nuiSimpleEventSource<nuiWidgetActivated> SelectionChanged; 
   nuiSimpleEventSource<nuiWidgetActivated> FileActivated; 
@@ -59,7 +63,7 @@ private:
   void Init(const nglPath& rPath, const nglPath& rRootPath, const std::list<nglString>& rFilters, bool showHiddenFiles);
   void AddTree(const nglPath& rPath, bool Opened);
 
-  nuiWidget* GetFileInfo(const nglPath& rPath);
+  nglString GetFileInfo(const nglPath& rPath);
   void FormatFileSize(nuiSize size, nglString& str);
   
 //  bool OnRootOpened(const nuiEvent& rEvent);

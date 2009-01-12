@@ -86,6 +86,15 @@ protected:
   static void FileSelector_TreeFolderIcon(nuiWidget* pWidget);
   static void FileSelector_TreeFileIcon(nuiWidget* pWidget);
 
+  // file tree
+  static void FileTree_View(nuiWidget* pWidget);
+  static void FileTree_FolderLabel(nuiWidget* pWidget);
+  static void FileTree_FileLabel(nuiWidget* pWidget);
+  static void FileTree_FileInfo(nuiWidget* pWidget);
+  static void FileTree_VolumeIcon(nuiWidget* pWidget);
+  static void FileTree_FolderIcon(nuiWidget* pWidget);
+  static void FileTree_FileIcon(nuiWidget* pWidget);
+
 private:
   
   static nuiImageSequence* mpKnobSequence;
