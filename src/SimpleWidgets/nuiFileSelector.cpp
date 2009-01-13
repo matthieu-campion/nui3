@@ -41,8 +41,7 @@ nuiTreeNode* nuiFileSelectorBase::GetNewNode(const nglPath& rPath)
       label = new nuiLabel(pathName.GetNodeName().IsEmpty()?_T("/"):pathName.GetNodeName());        
       label->SetObjectName(_T("nuiFileSelector::TreeFileLabel"));      
       label->SetObjectClass(_T("nuiFileSelector::TreeFileLabel"));      
-    }
-    
+    }    
     else 
     {
       if (!IsFileFiltered(rPath.GetNodeName()))
@@ -64,9 +63,6 @@ nuiTreeNode* nuiFileSelectorBase::GetNewNode(const nglPath& rPath)
         label->SetObjectClass(_T("nuiFileSelector::TreeFileLabel"));
       }
     }
-    
-    
-    
   }
   else
   {
@@ -180,11 +176,12 @@ nuiFileSelectorNode::nuiFileSelectorNode(nuiFileSelectorBase* pSelector, const n
 
 nuiFileSelectorNode::~nuiFileSelectorNode()
 {
-  
+  for (uint32 i = 0; i < mSubElements.size(); i++)
+  {
+    if (mSubElements[i])
+      mSubElements[i]->Trash();
+  }
 }
-
-
-
 
 void nuiFileSelectorNode::Open(bool Opened)
 {
@@ -211,6 +208,10 @@ void nuiFileSelectorNode::Open(bool Opened)
         if (pNode)
           AddChild(pNode);
       }
+      else
+      {
+        NGL_OUT(_T("Skipping invisible file '%ls'\n"), pathName.GetChars());
+      }
 
       ++it;
     }
@@ -228,6 +229,19 @@ bool nuiFileSelectorNode::IsEmpty() const
 }
 
 
+nuiWidgetPtr nuiFileSelectorNode::GetSubElement(uint32 index)
+{
+  if (mSubElements.empty())
+  {
+    nglPath p(GetProperty(_T("Path")));
+    nglPathInfo info;
+    p.GetInfo(info);
+    nglString str;
+    str.SetCInt(info.Size);
+    mSubElements.push_back(new nuiLabel(str));
+  }
+  return mSubElements[index];
+}
 
 
 

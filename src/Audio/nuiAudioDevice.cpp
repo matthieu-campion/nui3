@@ -222,7 +222,7 @@ void nuiAudioDeviceManager::RegisterAPI(const nglString& rAPIName, nuiAudioDevic
 //#include "nuiAudioDevice_ASIO.h"
 void nuiAudioDeviceManager::RegisterAPIS()
 {
-  DirectSoundApi.RegisterWithManager(*this);
+  DirectSoundAPI.RegisterWithManager(*this);
 }
 #elif (defined _CARBON_) || (defined _COCOA_)
 #include "nuiAudioDevice_CoreAudio.h"
@@ -234,7 +234,7 @@ void nuiAudioDeviceManager::RegisterAPIS()
 #include "nuiAudioDevice_AudioUnit.h"
 void nuiAudioDeviceManager::RegisterAPIS()
 {
-  AudioUnitApi.RegisterWithManager(*this);
+  AudioUnitAPI.RegisterWithManager(*this);
 }
 #else
 void nuiAudioDeviceManager::RegisterAPIS()

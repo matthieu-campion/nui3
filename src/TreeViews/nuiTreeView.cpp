@@ -248,6 +248,12 @@ void nuiTreeNode::GetSelected(std::list<nuiTreeNodePtr>& rSelected, bool Include
   }
 }
 
+nuiWidgetPtr nuiTreeNode::GetSubElement(uint32 index)
+{
+  return NULL;
+}
+
+
 /////////////////////////////
 // nuiTreeView
 nuiTreeView::nuiTreeView(nuiTreeNodePtr pTree, bool displayRoot)
@@ -357,6 +363,15 @@ bool nuiTreeView::DrawTree(nuiDrawContext* pContext, uint32 Depth, nuiTreeNode* 
     }
     DrawChild(pContext, pWidget);
 
+    // Draw the sub elements:
+    for (uint32 i = 0; i < mSubElements.size(); i++)
+    {
+      nuiWidgetPtr pWidget = pTree->GetSubElement(i);
+      if (pWidget)
+        DrawChild(pContext, pWidget);
+    }
+    
+    
     if (pTree->IsSelected())
       pTheme->DrawSelectionForeground(pContext, rect);
     
@@ -383,8 +398,15 @@ nuiRect nuiTreeView::CalcIdealSize()
 {
   mIdealRect = nuiRect();
 
+  for (uint32 i = 0; i < mSubElements.size(); i++)
+    mSubElements[i].mIdealWidth = 0;
+  
   CalcTreeSize(mIdealRect, 0, mpTree);
-
+  mTreeIdealWidth = mIdealRect.GetWidth();
+  
+  for (uint32 i = 0; i < mSubElements.size(); i++)
+    mIdealRect.Right() += mSubElements[i].mIdealWidth;  
+  
   return mIdealRect;
 }
 
@@ -404,6 +426,17 @@ void nuiTreeView::CalcTreeSize(nuiRect& rRect, uint32 Depth, nuiTreeNode* pTree)
 
     WidgetRect.RoundToAbove();
     rRect.Set(0.0f,0.0f, MAX(rRect.GetWidth(), WidgetRect.GetWidth()), rRect.GetHeight() + WidgetRect.GetHeight());
+
+    for (uint32 i = 0; i < mSubElements.size(); i++)
+    {
+      nuiWidgetPtr pWidget = pTree->GetSubElement(i);
+      if (pWidget)
+      {
+        nuiRect r = pWidget->GetIdealRect();
+        mSubElements[i].mIdealWidth = MAX(mSubElements[i].mIdealWidth, r.GetWidth());
+        rRect.SetHeight(MAX(rRect.GetHeight(), WidgetRect.GetHeight()));
+      }
+    }
   }
 
   if (pTree->IsOpened())
@@ -424,6 +457,17 @@ bool nuiTreeView::SetRect(const nuiRect& rRect)
 {
   nuiWidget::SetRect(rRect);
 
+  if (!mSubElements.empty())
+  {
+    mSubElements[0].mPosition = mTreeIdealWidth;
+    for (uint32 i = 1; i < mSubElements.size(); i++)
+    {
+      mSubElements[i].mWidth = mSubElements[i].mIdealWidth;
+      mSubElements[i].mPosition = mSubElements[i - 1].mPosition + mSubElements[i].mWidth;
+    }      
+  }
+    
+  
   nuiSize Y = 0;
   SetTreeRect(Y, 0, mpTree);
 
@@ -455,7 +499,20 @@ void nuiTreeView::SetTreeRect(nuiSize& Y, uint32 Depth, nuiTreeNode* pTree)
     
     WidgetRect.RoundToAbove();
     pWidget->SetLayout(WidgetRect);
+  
+    for (uint32 i = 0; i < mSubElements.size(); i++)
+    {
+      nuiWidgetPtr pWidget = pTree->GetSubElement(i);
+      if (pWidget)
+      {
+        pWidget->GetIdealRect();
+        nuiRect r(mSubElements[i].mPosition, WidgetRect.Top(), mSubElements[i].mWidth, WidgetRect.GetHeight());
+        pWidget->SetLayout(r);
+      }      
+    }
+                        
     Y = WidgetRect.Bottom();
+
   }
 
 
@@ -497,6 +554,14 @@ bool nuiTreeView::OnTreeChildAdded(const nuiEvent& rEvent)
       AddChild(pWidget);
       pNode->SetOwnElement(false);
     }
+    
+    for (uint32 i = 0; i < mSubElements.size(); i++)
+    {
+      nuiWidgetPtr pWidget = pNode->GetSubElement(i);
+      if (pWidget)
+        AddChild(pWidget);
+    }
+
   }
 
   return false;
@@ -512,6 +577,12 @@ bool nuiTreeView::OnTreeChildDeleted(const nuiEvent& rEvent)
     nuiWidgetPtr pWidget = pNode->GetElement();
     if (pWidget)
       pWidget->Trash();
+    for (uint32 i = 0; i < mSubElements.size(); i++)
+    {
+      nuiWidgetPtr pWidget = pNode->GetSubElement(i);
+      if (pWidget)
+        pWidget->Trash();
+    }
   }
   if (mpSelectedNode == pNode)
     mpSelectedNode = NULL;
@@ -530,7 +601,13 @@ void nuiTreeView::ReparentTree(nuiTreeNode* pTree)
     AddChild(pWidget);
     pTree->SetOwnElement(false);
   }
-
+  for (uint32 i = 0; i < mSubElements.size(); i++)
+  {
+    nuiWidgetPtr pWidget = pTree->GetSubElement(i);
+    if (pWidget)
+      AddChild(pWidget);
+  }
+  
 
   uint32 count = pTree->GetChildrenCount();
   for (uint32 i = 0; i < count; i++)
@@ -1066,5 +1143,21 @@ void nuiTreeView::StopMultiSelection()
 bool nuiTreeView::IsMultiSelecting() const
 {
   return mInMultiSelection;
+}
+
+void nuiTreeView::EnableSubElements(uint32 count)
+{
+  mSubElements.resize(count, SubElement(mDefaultSubElementWidth));
+}
+
+nuiSize nuiTreeView::mDefaultSubElementWidth = 32;
+
+nuiTreeView::SubElement::SubElement(nuiSize width)
+{
+  mWidth = width;
+  mIdealWidth = width;
+  mPosition = -1;
+  mMinWidth = 0;
+  mMaxWidth = -1;
 }
 

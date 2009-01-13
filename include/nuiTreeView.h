@@ -49,6 +49,8 @@ public:
   nuiTreeNodePtr GetLastOpenChild();
   nuiTreeNodePtr GetNextOpen();
   nuiTreeNodePtr GetPreviousOpen();
+
+  virtual nuiWidgetPtr GetSubElement(uint32 index);
   
   
   nuiSimpleEventSource<nuiWidgetActivated> Activated;
@@ -162,6 +164,8 @@ public:
   const nuiTreeNode* GetSelectedNode() const;
   nuiTreeNode* GetSelectedNode();
 
+  void EnableSubElements(uint32 count);
+  
   nuiMouseClicked Clicked; ///< This event is called whenever an item is clicked.
   nuiSimpleEventSource<nuiWidgetActivated> Activated; ///< This event is called whenever an item is chosen, that is to say, double clicked. This can only happend in a mono-selection tree.
   nuiSimpleEventSource<nuiWidgetSelected> SelectionChanged; ///< This event is called whenever selection of the items of the tree have changed. 
@@ -197,6 +201,20 @@ protected:
   std::vector<nuiSize> mDepthInsets;
 
   nuiTreeNode* mpSelectedNode;
+
+  class SubElement
+  {
+  public:
+    SubElement(nuiSize width);
+    nuiSize mWidth;
+    nuiSize mIdealWidth;
+    nuiSize mPosition;
+    nuiSize mMinWidth;
+    nuiSize mMaxWidth;
+  };
+  nuiSize mTreeIdealWidth;
+  std::vector<SubElement> mSubElements;
+  static nuiSize mDefaultSubElementWidth;
 };
 
 #endif

@@ -41,6 +41,7 @@ void nuiFileTree::Init(const nglPath& rPath, const nglPath& rRootPath, const std
   AddChild(mpFileBox);
   
   mpTreeView = new nuiTreeView(NULL, false);
+  mpTreeView->EnableSubElements(1);
 
   mpFileBox->AddCell(mpTreeView);
   mpFileBox->SetCellExpand(mpFileBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
@@ -52,6 +53,7 @@ void nuiFileTree::Init(const nglPath& rPath, const nglPath& rRootPath, const std
   
   SetRootPath(rRootPath);
   SetPath(rPath);  
+  
 }
 
 
@@ -276,7 +278,7 @@ nuiTreeNode* nuiFileTree::GetNewNode(const nglPath& rPath)
 
 bool nuiFileTree::SetPath(const nglPath& rPath)
 {
-  NGL_OUT(_T("nuiFileTree::SetPath('%ls')\n"), rPath.GetChars());
+  //NGL_OUT(_T("nuiFileTree::SetPath('%ls')\n"), rPath.GetChars());
   nglPath path(rPath);
   path.MakeRelativeTo(GetRootPath());
   std::vector<nglString> tokens;
@@ -292,7 +294,7 @@ bool nuiFileTree::SetPath(const nglPath& rPath)
       nuiTreeNodePtr pBNode = (nuiTreeNodePtr)pNode->GetChild(i);
       bool old = pBNode->IsOpened();
       nglPath p(pBNode->GetProperty(_T("Path")));
-      NGL_OUT(_T("%d compare '%ls' with '%ls'\n"), i, p.GetNodeName().GetChars(), tokens.at(0).GetChars());
+      //NGL_OUT(_T("%d compare '%ls' with '%ls'\n"), i, p.GetNodeName().GetChars(), tokens.at(0).GetChars());
       if (p.GetNodeName() == tokens.at(0))
         pRes = pBNode;
       else
@@ -303,7 +305,7 @@ bool nuiFileTree::SetPath(const nglPath& rPath)
         {
           nuiTreeNodePtr pBNode2 = (nuiTreeNodePtr)pBNode->GetChild(j);
           nglPath p(pBNode2->GetProperty(_T("Path")));
-          NGL_OUT(_T("%d %d compare '%ls' with '%ls'\n"), i, j, p.GetNodeName().GetChars(), tokens.at(0).GetChars());
+          //NGL_OUT(_T("%d %d compare '%ls' with '%ls'\n"), i, j, p.GetNodeName().GetChars(), tokens.at(0).GetChars());
           if (p.GetNodeName() == tokens.at(0))
             pRes = pBNode2;
         }
