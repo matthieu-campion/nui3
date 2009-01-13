@@ -24,14 +24,14 @@ nuiTreeNode* nuiFileSelectorBase::GetNewNode(const nglPath& rPath)
   
   nglPath pathName = rPath;
   
-  if (pathName.IsLeaf() || !pathName.GetExtension().Compare(_T("app")))
+  if (pathName.IsLeaf() || pathName.IsBundle())
   {
     // no file is filtered
     if (mFilters.size() == 0)
       return NULL;
     else if (IsFilterSet(_T("*")))
     {
-      if (!pathName.GetExtension().Compare(_T("app")))
+      if (pathName.IsBundle())
         pathName = pathName.GetRemovedExtension();
       
       pBox = new nuiHBox(2);
@@ -48,7 +48,7 @@ nuiTreeNode* nuiFileSelectorBase::GetNewNode(const nglPath& rPath)
         return NULL;
       else
       {
-        if (!pathName.GetExtension().Compare(_T("app")))
+        if (pathName.IsBundle())
           pathName = pathName.GetRemovedExtension();
         
         
@@ -225,7 +225,7 @@ void nuiFileSelectorNode::Open(bool Opened)
 bool nuiFileSelectorNode::IsEmpty() const
 {
   nglPath p(GetProperty(_T("Path")));
-  return p.IsLeaf();
+  return p.IsLeaf() || p.IsBundle();
 }
 
 
@@ -296,7 +296,7 @@ void nuiFileSelector::Init(const nglPath& rPath, const nglPath& rRootPath, const
   mFilters = rFilters;
   mpInfoBox = NULL;
   
-  InitSelector (rPath, rRootPath, mpEntry, mode, ShowVolumes, Opened);
+  InitSelector(rPath, rRootPath, mpEntry, mode, ShowVolumes, Opened);
   
   NUI_ADD_EVENT(OK);
   NUI_ADD_EVENT(Cancel);  

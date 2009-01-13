@@ -67,8 +67,6 @@ private:
   
 //  bool OnRootOpened(const nuiEvent& rEvent);
   
-  nuiVBox* mpFileBox;
-  
   nuiTreeView* mpTreeView;
   nuiTreeNode* mpTreeRoot;
   std::map<nglPath, nuiTreeNode*> mTrees; // rootpath => treeview

@@ -899,6 +899,16 @@ bool nglPath::IsVisible() const
 //#endif
 }
 
+bool nglPath::IsBundle() const
+{
+  nglPath p(*this);
+  p += nglPath(_T("contents/Info.plist"));
+  nglPathInfo info;
+  p.GetInfo(info);
+  return info.Exists && info.IsLeaf;
+}
+
+
 bool nglPath::IsLeaf() const
 {
 	nglPathInfo info;

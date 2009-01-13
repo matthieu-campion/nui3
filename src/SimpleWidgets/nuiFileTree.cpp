@@ -36,16 +36,9 @@ void nuiFileTree::Init(const nglPath& rPath, const nglPath& rRootPath, const std
   SetObjectClass(_T("nuiFileTree"));
   SetObjectName(_T("nuiFileTree"));
   
-  mpFileBox = new nuiVBox(0);
-  mpFileBox->SetExpand(nuiExpandShrinkAndGrow);
-  AddChild(mpFileBox);
-  
   mpTreeView = new nuiTreeView(NULL, false);
-  mpTreeView->EnableSubElements(1);
-
-  mpFileBox->AddCell(mpTreeView);
-  mpFileBox->SetCellExpand(mpFileBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
-  
+  //mpTreeView->EnableSubElements(1);
+  AddChild(mpTreeView);
   
   mShowHiddenFiles = showHiddenFiles;
   mFilters = rFilters;

@@ -187,10 +187,11 @@ public:
 	nglTime      GetLastMod() const;                  ///< Returns last modification (write) time stamp. Calls GetInfo() internally.
 	nglFileSize    GetSize() const;                     ///< Returns node size in bytes (folders always return zero). Calls GetInfo() internally.
 	nglString    GetMimeType() const;
-	bool IsVisible() const;                    ///< Check visibility on current node
 	/*!< Returns the standard MIME type description from file extension.
 	If the path is not a file or the type is unknown, returns an empty string
 	*/
+	bool IsVisible() const;                    ///< Check visibility on current node
+	bool IsBundle() const;                    ///< Returns true is the path is a MacOSX bundle/package
 	//@}
 	bool      ResolveLink(); ///< If this object is a link (Win32) or an alias (MacOS) it is transformed into the path it points too. Otherwise it isn't changed.
   bool      MakeRelativeTo(const nglPath& rOriginal); ///< Change this path so that it is relative to rOriginal. Return false if the operation fails.
