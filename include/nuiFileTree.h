@@ -62,16 +62,21 @@ private:
   void Init(const nglPath& rPath, const nglPath& rRootPath, const std::list<nglString>& rFilters, bool showHiddenFiles);
   void AddTree(const nglPath& rPath, bool Opened);
 
+  
   nglString GetFileInfo(const nglPath& rPath);
   void FormatFileSize(nuiSize size, nglString& str);
   
 //  bool OnRootOpened(const nuiEvent& rEvent);
+  bool OnNodeActivated(const nuiEvent& rEvent);
+  bool OnGotoParentFolder(const nuiEvent& rEvent);
   
+  nuiVBox* mpFileBox;
   nuiTreeView* mpTreeView;
   nuiTreeNode* mpTreeRoot;
   std::map<nglPath, nuiTreeNode*> mTrees; // rootpath => treeview
   nuiTreeNode* mpCurrentTree;
   nglPath mRootPath;
+  
 
   bool OnClosed   (const nuiEvent& rEvent);
   bool OnOK       (const nuiEvent& rEvent);

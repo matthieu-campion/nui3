@@ -36,9 +36,15 @@ void nuiFileTree::Init(const nglPath& rPath, const nglPath& rRootPath, const std
   SetObjectClass(_T("nuiFileTree"));
   SetObjectName(_T("nuiFileTree"));
   
+  mpFileBox = new nuiVBox(2);
+  mpFileBox->SetExpand(nuiExpandShrinkAndGrow);
+  AddChild(mpFileBox);
+  
   mpTreeView = new nuiTreeView(NULL, false);
+  mpFileBox->SetCell(1, mpTreeView);
+  mpFileBox->SetCellExpand(1, nuiExpandShrinkAndGrow);
+
   //mpTreeView->EnableSubElements(1);
-  AddChild(mpTreeView);
   
   mShowHiddenFiles = showHiddenFiles;
   mFilters = rFilters;
@@ -52,6 +58,55 @@ void nuiFileTree::Init(const nglPath& rPath, const nglPath& rRootPath, const std
 
 nuiFileTree::~nuiFileTree()
 {
+}
+
+
+
+bool nuiFileTree::OnNodeActivated(const nuiEvent& rEvent)
+{
+  nuiFileSelectorNode* pNode = (nuiFileSelectorNode*)rEvent.mpUser;
+  nglPath path(pNode->GetProperty(_T("Path")));
+  //  NGL_OUT(_T("DEBUG path '%ls'\n"), path.GetChars());
+  
+  SetRootPath(path);
+  SetPath(path);
+  
+  return true;
+}
+
+bool nuiFileTree::OnGotoParentFolder(const nuiEvent& rEvent)
+{
+  nglPath path = mRootPath;
+  nglPath parent = mRootPath.GetParent();
+  bool isParentVolume = false;
+  
+  std::list<nglPathVolume> volumes;
+  nglPath::GetVolumes(volumes, nglPathVolume::All);
+  
+  std::list<nglPathVolume>::iterator it = volumes.begin();
+  std::list<nglPathVolume>::iterator end = volumes.end();
+  
+  while (it != end)
+  {      
+    const nglPathVolume vol(*it);
+    if (vol.mPath == parent)
+    {
+      isParentVolume = true;
+      break;
+    }
+    
+    ++it;
+  }
+  
+  if (isParentVolume)
+  {
+    parent = ROOTPATH_ALLVOLUMES;
+    path = mRootPath;
+  }
+  
+  SetRootPath(parent);
+  SetPath(path);
+  return true;
 }
 
 
@@ -104,8 +159,13 @@ nglString nuiFileTree::GetFileInfo(const nglPath& rPath)
 
 bool nuiFileTree::SetRootPath(const nglPath& rPath)
 {
+  mRootPath = rPath;
+  
   if (rPath == nglPath(ROOTPATH_ALLVOLUMES))
   {
+    mpFileBox->SetCell(0, NULL);
+//    mpFileBox->SetCellPixels(0, 0);
+    
     nuiTreeNodePtr pRoot = new nuiTreeNode(ROOTPATH_ALLVOLUMES);
     pRoot->Open(true);
 
@@ -132,6 +192,29 @@ bool nuiFileTree::SetRootPath(const nglPath& rPath)
         
     return true;
   }
+  
+  
+  // "go to parent folder" link
+  nuiButton* pBtn = new nuiButton();
+  mpFileBox->SetCell(0, pBtn);
+  pBtn->SetDecoration(NULL);
+  pBtn->SetDrawSelf(false);
+  
+  nuiHBox* pBox = new nuiHBox(2);
+  pBtn->AddChild(pBox);
+  mpFileBox->SetCellPixels(0, 20);
+  nuiSimpleContainer* pIcon = new nuiSimpleContainer();
+  pIcon->SetObjectName(_T("nuiFileTree::ParentFolderIcon"));
+  pIcon->SetObjectClass(_T("nuiFileTree::ParentFolderIcon"));
+  pBox->SetCell(0, pIcon);
+  nuiLabel* pLabel = new nuiLabel(_T("(Parent Folder)"));
+  pBox->SetCell(1, pLabel);
+  pBox->SetCellExpand(1, nuiExpandShrinkAndGrow);
+  
+  
+  // connect link to event
+  mEventSink.Connect(pBtn->Activated, &nuiFileTree::OnGotoParentFolder);
+  
   
   nuiTreeNodePtr pNode = GetNewNode(rPath);  
   if (pNode)
@@ -261,7 +344,8 @@ nuiTreeNode* nuiFileTree::GetNewNode(const nglPath& rPath)
     return NULL;
   
   nuiFileSelectorNode* pNewNode = new nuiFileSelectorNode(this, rPath, pBox);
-  
+  mEventSink.Connect(pNewNode->Activated, &nuiFileTree::OnNodeActivated, (void*)pNewNode);
+
   return pNewNode;
 }
 

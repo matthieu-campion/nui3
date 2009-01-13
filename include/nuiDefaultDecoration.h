@@ -95,6 +95,7 @@ protected:
   static void FileTree_FileInfo(nuiWidget* pWidget);
   static void FileTree_VolumeIcon(nuiWidget* pWidget);
   static void FileTree_FolderIcon(nuiWidget* pWidget);
+  static void FileTree_ParentFolderIcon(nuiWidget* pWidget);
   static void FileTree_FileIcon(nuiWidget* pWidget);
 
 private:
