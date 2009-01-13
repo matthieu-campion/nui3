@@ -425,8 +425,9 @@ void nuiTreeView::CalcTreeSize(nuiRect& rRect, uint32 Depth, nuiTreeNode* pTree)
     WidgetRect.Set(0.0f, 0.0f, WidgetRect.GetWidth() + GetDepthInset(depthInset), (nuiSize)ToAbove(WidgetRect.GetHeight() + NUI_TREEVIEW_INTERLINE));
 
     WidgetRect.RoundToAbove();
-    rRect.Set(0.0f,0.0f, MAX(rRect.GetWidth(), WidgetRect.GetWidth()), rRect.GetHeight() + WidgetRect.GetHeight());
+    rRect.SetWidth(MAX(rRect.GetWidth(), WidgetRect.GetWidth()));
 
+    nuiSize h = WidgetRect.GetHeight();
     for (uint32 i = 0; i < mSubElements.size(); i++)
     {
       nuiWidgetPtr pWidget = pTree->GetSubElement(i);
@@ -434,9 +435,11 @@ void nuiTreeView::CalcTreeSize(nuiRect& rRect, uint32 Depth, nuiTreeNode* pTree)
       {
         nuiRect r = pWidget->GetIdealRect();
         mSubElements[i].mIdealWidth = MAX(mSubElements[i].mIdealWidth, r.GetWidth());
-        rRect.SetHeight(MAX(rRect.GetHeight(), WidgetRect.GetHeight()));
+        h = MAX(r.GetHeight(), WidgetRect.GetHeight());
       }
     }
+    rRect.SetHeight(rRect.GetHeight() + h);
+
   }
 
   if (pTree->IsOpened())

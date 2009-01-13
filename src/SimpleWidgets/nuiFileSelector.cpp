@@ -210,7 +210,7 @@ void nuiFileSelectorNode::Open(bool Opened)
       }
       else
       {
-        NGL_OUT(_T("Skipping invisible file '%ls'\n"), pathName.GetChars());
+        //NGL_OUT(_T("Skipping invisible file '%ls'\n"), pathName.GetChars());
       }
 
       ++it;
@@ -793,7 +793,7 @@ bool nuiFileSelector::OnFolderListSelectionChanged(const nuiEvent& event)
   nglString SelectedPathName;
   nuiGetTokenValue<nglString>(pToken, SelectedPathName);
   nglPath SelectedPath(SelectedPathName);
-  NGL_OUT(_T("new Path :__") + SelectedPath.GetPathName() + _T("__\n"));
+  //NGL_OUT(_T("new Path :__") + SelectedPath.GetPathName() + _T("__\n"));
   SetRootPath(SelectedPath);
   return false;
 }

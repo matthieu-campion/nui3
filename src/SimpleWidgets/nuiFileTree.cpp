@@ -41,6 +41,7 @@ void nuiFileTree::Init(const nglPath& rPath, const nglPath& rRootPath, const std
   AddChild(mpFileBox);
   
   mpTreeView = new nuiTreeView(NULL, false);
+  mpTreeView->EnableSubElements(1);
   mpFileBox->SetCell(1, mpTreeView);
   mpFileBox->SetCellExpand(1, nuiExpandShrinkAndGrow);
 
@@ -337,7 +338,7 @@ nuiTreeNode* nuiFileTree::GetNewNode(const nglPath& rPath)
   
   pBox->SetCell(0, pIcon, nuiCenter);
   pBox->SetCell(1, pLabel);
-  pBox->SetCellPixels(1, 100);
+  //pBox->SetCellPixels(1, 100);
   
   
   if (!pBox)
