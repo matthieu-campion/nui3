@@ -269,6 +269,14 @@ bool nuiTreeBase::OnChildDeleted(const nuiEvent& rEvent)
 
 uint32 nuiTreeBase::GetDepth() const
 {
+  if (!mpParent)
+    return 0;
+  
+  return mpParent->nuiTreeBase::GetDepth() +1;
+}
+
+uint32 nuiTreeBase::GetTreeDepth() const
+{
   uint32 Depth = 0;
   uint32 count = (uint32)mpChildren.size();
   for (uint32 i = 0; i < count; i++)

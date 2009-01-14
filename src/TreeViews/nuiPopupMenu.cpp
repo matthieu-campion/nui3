@@ -454,6 +454,8 @@ void nuiPopupMenu::CalcTreeSize(nuiRect& rRect, nuiTreeNode* pTree, uint32& cpt)
   {
     nuiTreeNode* pNode = dynamic_cast<nuiTreeNode*>(pTree->GetChild(i));
     NGL_ASSERT(pNode);
+    // LBDEBUG
+//    pNode->SetDepth(depth);
     pWidget = pNode->GetElement();
     NGL_ASSERT(pWidget);
     WidgetRect = pWidget->GetIdealRect();
@@ -868,7 +870,7 @@ bool nuiPopupMenu::OnSelectionTimer(const nuiEvent& rEvent)
     }
     else
     {
-      ResetScrolling(mpNewSelectedNode->GetDepth()+1);
+      ResetScrolling(mpNewSelectedNode->GetDepth()-1);
       Invalidate();
       InvalidateLayout();
     }
@@ -879,7 +881,7 @@ bool nuiPopupMenu::OnSelectionTimer(const nuiEvent& rEvent)
   {
     nuiRect WidgetRect = mpSelectedNode->GetElement()->GetRect();
     nuiRect r = WidgetRect;
-    nuiMenuRect*  pRect= mRects[mpSelectedNode->GetDepth()]; /// get the current menuRect
+    nuiMenuRect*  pRect= mRects[mpSelectedNode->GetDepth()-1]; /// get the current menuRect
     nuiSize TreeHandleSize = pRect->mHasNonEmpty ? NUI_POPUP_TREE_HANDLE_SIZE : 0.f;
     r.SetSize(WidgetRect.GetWidth()+TreeHandleSize, WidgetRect.GetHeight());
 
@@ -889,7 +891,7 @@ bool nuiPopupMenu::OnSelectionTimer(const nuiEvent& rEvent)
   if (mpNewSelectedNode)
   {
     nuiRect WidgetRect = mpNewSelectedNode->GetElement()->GetRect();
-    nuiMenuRect*  pRect= mRects[mpNewSelectedNode->GetDepth()]; /// get the current menuRect
+    nuiMenuRect*  pRect= mRects[mpNewSelectedNode->GetDepth()-1]; /// get the current menuRect
     nuiSize TreeHandleSize = pRect->mHasNonEmpty ? NUI_POPUP_TREE_HANDLE_SIZE : 0.f;
     nuiRect r = WidgetRect;
     r.SetSize(WidgetRect.GetWidth()+TreeHandleSize, WidgetRect.GetHeight());
@@ -964,13 +966,13 @@ bool nuiPopupMenu::MouseMoved(nuiSize X, nuiSize Y)
       if (!mSelectionTimer.IsRunning())
       {
         if ((!pNode->IsEmpty() && !pNode->IsOpened()) || 
-          (mpSelectedNode && ((mpSelectedNode->GetDepth() != pNode->GetDepth()) || mpSelectedNode->IsOpened())))
+          (mpSelectedNode && ((mpSelectedNode->GetDepth()-1 != pNode->GetDepth()-1) || mpSelectedNode->IsOpened())))
         {  //may be opened, so start the timer
           if (mpSelectedNode && mpSelectedNode != pNode)
           {
             nuiRect WidgetRect = mpSelectedNode->GetElement()->GetRect();
             nuiRect r = WidgetRect;
-            nuiMenuRect*  pRect= mRects[mpSelectedNode->GetDepth()]; /// get the current menuRect
+            nuiMenuRect*  pRect= mRects[mpSelectedNode->GetDepth()-1]; /// get the current menuRect
             nuiSize TreeHandleSize = pRect->mHasNonEmpty ? NUI_POPUP_TREE_HANDLE_SIZE : 0.f;
             r.SetSize(WidgetRect.GetWidth()+TreeHandleSize, WidgetRect.GetHeight());
 
@@ -983,7 +985,7 @@ bool nuiPopupMenu::MouseMoved(nuiSize X, nuiSize Y)
 
           nuiRect WidgetRect = mpNewSelectedNode->GetElement()->GetRect();
           nuiRect r = WidgetRect;
-          nuiMenuRect*  pRect= mRects[mpNewSelectedNode->GetDepth()]; /// get the current menuRect
+          nuiMenuRect*  pRect= mRects[mpNewSelectedNode->GetDepth()-1]; /// get the current menuRect
           nuiSize TreeHandleSize = pRect->mHasNonEmpty ? NUI_POPUP_TREE_HANDLE_SIZE : 0.f;
           r.SetSize(WidgetRect.GetWidth()+TreeHandleSize, WidgetRect.GetHeight());
           mpNewSelectedNode->Select(true);
@@ -1003,7 +1005,7 @@ bool nuiPopupMenu::MouseMoved(nuiSize X, nuiSize Y)
               mpSelectedNode->Select(false);
               nuiRect WidgetRect = mpSelectedNode->GetElement()->GetRect();
               nuiRect r = WidgetRect;
-              nuiMenuRect*  pRect= mRects[mpSelectedNode->GetDepth()]; /// get the current menuRect
+              nuiMenuRect*  pRect= mRects[mpSelectedNode->GetDepth()-1]; /// get the current menuRect
               nuiSize TreeHandleSize = pRect->mHasNonEmpty ? NUI_POPUP_TREE_HANDLE_SIZE : 0.f;
               r.SetSize(WidgetRect.GetWidth()+TreeHandleSize, WidgetRect.GetHeight());
               Invalidate(); //(r);
@@ -1015,7 +1017,8 @@ bool nuiPopupMenu::MouseMoved(nuiSize X, nuiSize Y)
 
             nuiRect WidgetRect = pNode->GetElement()->GetRect();
             nuiRect r = WidgetRect;
-            nuiMenuRect*  pRect= mRects[pNode->GetDepth()]; /// get the current menuRect
+            nuiMenuRect*  pRect= mRects[pNode->GetDepth()-1]; /// get the current menuRect
+            uint32 dbg = pNode->GetDepth()-1;
             nuiSize TreeHandleSize = pRect->mHasNonEmpty ? NUI_POPUP_TREE_HANDLE_SIZE : 0.f;
             r.SetSize(WidgetRect.GetWidth()+TreeHandleSize, WidgetRect.GetHeight());
 
@@ -1032,7 +1035,7 @@ bool nuiPopupMenu::MouseMoved(nuiSize X, nuiSize Y)
         {
           nuiRect WidgetRect = mpNewSelectedNode->GetElement()->GetRect();
           nuiRect r = WidgetRect;
-          nuiMenuRect*  pRect= mRects[mpNewSelectedNode->GetDepth()]; /// get the current menuRect
+          nuiMenuRect*  pRect= mRects[mpNewSelectedNode->GetDepth()-1]; /// get the current menuRect
           nuiSize TreeHandleSize = pRect->mHasNonEmpty ? NUI_POPUP_TREE_HANDLE_SIZE : 0.f;
           r.SetSize(WidgetRect.GetWidth()+TreeHandleSize, WidgetRect.GetHeight());
 
@@ -1043,7 +1046,7 @@ bool nuiPopupMenu::MouseMoved(nuiSize X, nuiSize Y)
         mpNewSelectedNode = pNode;
         nuiRect WidgetRect = mpNewSelectedNode->GetElement()->GetRect();
         nuiRect r = WidgetRect;
-        nuiMenuRect*  pRect= mRects[mpNewSelectedNode->GetDepth()]; /// get the current menuRect
+        nuiMenuRect*  pRect= mRects[mpNewSelectedNode->GetDepth()-1]; /// get the current menuRect
         nuiSize TreeHandleSize = pRect->mHasNonEmpty ? NUI_POPUP_TREE_HANDLE_SIZE : 0.f;
         r.SetSize(WidgetRect.GetWidth()+TreeHandleSize, WidgetRect.GetHeight());
 
@@ -1115,7 +1118,7 @@ bool nuiPopupMenu::MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Butt
           pNode->Open(false);
         else
         {
-          ResetScrolling(pNode->GetDepth()+1);         
+          ResetScrolling(pNode->GetDepth());         
           FillSelectedNodes();
         }
       }
@@ -1147,7 +1150,7 @@ void nuiPopupMenu::IncrementScrollBar(bool increment)
   {
     return;
   }
-  uint32 depth = pCurNode->GetDepth();
+  uint32 depth = pCurNode->GetDepth()-1;
   if (depth < mRects.size() && mRects[depth]->mpSBar->IsVisible())
   {
     pMenuRect = mRects[depth];
@@ -1217,7 +1220,7 @@ bool nuiPopupMenu::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button
           pNode->Open(false);
         else
         {
-          ResetScrolling(pNode->GetDepth()+1);         
+          ResetScrolling(pNode->GetDepth());         
           FillSelectedNodes();
         }
       }
@@ -1259,9 +1262,9 @@ void nuiPopupMenu::AdjustScrolling(nuiTreeNode* pNode)
   NGL_ASSERT(pRoot);
   nuiRect MainRect = pRoot->GetRect();
   nuiRect NodeRect = pNode->GetElement()->GetRect();
-  if (pNode->GetDepth() >= mRects.size())
+  if (pNode->GetDepth()-1 >= mRects.size())
     return;
-  nuiMenuRect* pMenuRect = mRects[pNode->GetDepth()];
+  nuiMenuRect* pMenuRect = mRects[pNode->GetDepth()-1];
   nuiRange& rRange = pMenuRect->mpSBar->GetRange();
 
   if (NodeRect.Bottom() > MainRect.Bottom())
@@ -1286,7 +1289,7 @@ bool nuiPopupMenu::KeyDown(const nglKeyEvent& rEvent)
   {
     nuiRect WidgetRect = pNode->GetElement()->GetRect();
     nuiRect r = WidgetRect;
-    nuiMenuRect*  pRect= mRects[pNode->GetDepth()]; /// get the current menuRect
+    nuiMenuRect*  pRect= mRects[pNode->GetDepth()-1]; /// get the current menuRect
     nuiSize TreeHandleSize = pRect->mHasNonEmpty ? NUI_POPUP_TREE_HANDLE_SIZE : 0.f;
     r.SetSize(WidgetRect.GetWidth()+TreeHandleSize, WidgetRect.GetHeight());
     Invalidate(); //(r);
@@ -1318,7 +1321,7 @@ bool nuiPopupMenu::KeyDown(const nglKeyEvent& rEvent)
 
     nuiRect WidgetRect = pNode->GetElement()->GetRect();
     nuiRect r = WidgetRect;
-    nuiMenuRect*  pRect= mRects[pNode->GetDepth()]; /// get the current menuRect
+    nuiMenuRect*  pRect= mRects[pNode->GetDepth()-1]; /// get the current menuRect
     nuiSize TreeHandleSize = pRect->mHasNonEmpty ? NUI_POPUP_TREE_HANDLE_SIZE : 0.f;
     r.SetSize(WidgetRect.GetWidth()+TreeHandleSize, WidgetRect.GetHeight());
     Invalidate(); //(r);
@@ -1328,7 +1331,7 @@ bool nuiPopupMenu::KeyDown(const nglKeyEvent& rEvent)
       mpSelectedNode->Select(false);
       nuiRect WidgetRect = mpSelectedNode->GetElement()->GetRect();
       nuiRect r = WidgetRect;
-      nuiMenuRect*  pRect= mRects[mpSelectedNode->GetDepth()]; /// get the current menuRect
+      nuiMenuRect*  pRect= mRects[mpSelectedNode->GetDepth()-1]; /// get the current menuRect
       nuiSize TreeHandleSize = pRect->mHasNonEmpty ? NUI_POPUP_TREE_HANDLE_SIZE : 0.f;
       r.SetSize(WidgetRect.GetWidth()+TreeHandleSize, WidgetRect.GetHeight());
       Invalidate(); //(r); 
@@ -1367,7 +1370,7 @@ bool nuiPopupMenu::KeyDown(const nglKeyEvent& rEvent)
 
     nuiRect WidgetRect = pNode->GetElement()->GetRect();
     nuiRect r = WidgetRect;
-    nuiMenuRect*  pRect= mRects[pNode->GetDepth()]; /// get the current menuRect
+    nuiMenuRect*  pRect= mRects[pNode->GetDepth()-1]; /// get the current menuRect
     nuiSize TreeHandleSize = pRect->mHasNonEmpty ? NUI_POPUP_TREE_HANDLE_SIZE : 0.f;
     r.SetSize(WidgetRect.GetWidth()+TreeHandleSize, WidgetRect.GetHeight());
     Invalidate(); //(r);
@@ -1378,7 +1381,7 @@ bool nuiPopupMenu::KeyDown(const nglKeyEvent& rEvent)
 
       nuiRect WidgetRect = mpSelectedNode->GetElement()->GetRect();
       nuiRect r = WidgetRect;
-      nuiMenuRect*  pRect= mRects[mpSelectedNode->GetDepth()]; /// get the current menuRect
+      nuiMenuRect*  pRect= mRects[mpSelectedNode->GetDepth()-1]; /// get the current menuRect
       nuiSize TreeHandleSize = pRect->mHasNonEmpty ? NUI_POPUP_TREE_HANDLE_SIZE : 0.f;
       r.SetSize(WidgetRect.GetWidth()+TreeHandleSize, WidgetRect.GetHeight());
       Invalidate(); //(r);
@@ -1427,7 +1430,7 @@ bool nuiPopupMenu::KeyDown(const nglKeyEvent& rEvent)
         mpSelectedNode->Open(false);
         return false;
       }
-      ResetScrolling(mpSelectedNode->GetDepth()+1);
+      ResetScrolling(mpSelectedNode->GetDepth());
       mpSelectedNode = dynamic_cast<nuiTreeNode*>(mpSelectedNode->GetChild(0));
       mpSelectedNode->Select(true);
       Invalidate();
@@ -1451,7 +1454,7 @@ bool nuiPopupMenu::KeyDown(const nglKeyEvent& rEvent)
       }
       else
       {
-        ResetScrolling(mpSelectedNode->GetDepth()+1);
+        ResetScrolling(mpSelectedNode->GetDepth());
         mpSelectedNode = dynamic_cast<nuiTreeNode*>(mpSelectedNode->GetChild(0));
         mpSelectedNode->Select(true);
         Invalidate();
@@ -1621,7 +1624,7 @@ int nuiPopupMenu::GetIdInTree(nuiTreeNode* pNode)
   {
     return 0;
   }
-  nuiTreeNode* pParent = mRects[pNode->GetDepth()]->mpFromNode;
+  nuiTreeNode* pParent = mRects[pNode->GetDepth()-1]->mpFromNode;
 
   if (!pParent)
   {

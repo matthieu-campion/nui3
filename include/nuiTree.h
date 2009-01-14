@@ -49,6 +49,7 @@ public:
   nuiTreeBase* FindNodeFromProperty(const nglString& rPropertyName, const nglString& rPropertyValue);
 
   int32 ComputeIndexInParent() const; ///< compute dynamically the position index of the item in its parent. take care, the cost of this method depends on the number of children in the parent. returns (-1) if error
+  uint32 GetTreeDepth() const;
   uint32 GetDepth() const;
   virtual bool IsEmpty() const;
 

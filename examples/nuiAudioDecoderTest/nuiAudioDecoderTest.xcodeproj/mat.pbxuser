@@ -83,106 +83,6 @@
 			sepNavWindowFrame = "{{15, 39}, {989, 984}}";
 		};
 	};
-	40A459BA0EFAAE4500043B1F /* nuiAudioDecoder_CoreAudio.cpp */ = {
-		isa = PBXFileReference;
-		fileEncoding = 4;
-		lastKnownFileType = sourcecode.cpp.cpp;
-		name = nuiAudioDecoder_CoreAudio.cpp;
-		path = AudioSamples/CoreAudio/nuiAudioDecoder_CoreAudio.cpp;
-		sourceTree = "<group>";
-	};
-	40D9B9F80F1515B20036BA1B /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 40A459BA0EFAAE4500043B1F /* nuiAudioDecoder_CoreAudio.cpp */;
-		rLen = 0;
-		rLoc = 125;
-		rType = 1;
-	};
-	40D9B9F90F1515B20036BA1B /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 40D9B9FA0F1515B20036BA1B /* nuiAudioDecoder_CoreAudio.cpp */;
-		name = "nuiAudioDecoder_CoreAudio.cpp: 149";
-		rLen = 0;
-		rLoc = 3056;
-		rType = 0;
-		vrLen = 744;
-		vrLoc = 2644;
-	};
-	40D9B9FA0F1515B20036BA1B /* nuiAudioDecoder_CoreAudio.cpp */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.cpp.cpp;
-		name = nuiAudioDecoder_CoreAudio.cpp;
-		path = /Users/mat/devel/nui3/src/AudioSamples/CoreAudio/nuiAudioDecoder_CoreAudio.cpp;
-		sourceTree = "<absolute>";
-	};
-	40D9BA0A0F1515BB0036BA1B /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 40D9B9FA0F1515B20036BA1B /* nuiAudioDecoder_CoreAudio.cpp */;
-		name = "nuiAudioDecoder_CoreAudio.cpp: 149";
-		rLen = 0;
-		rLoc = 3056;
-		rType = 0;
-		vrLen = 0;
-		vrLoc = 0;
-	};
-	40D9BA160F1516760036BA1B /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 40D9B9FA0F1515B20036BA1B /* nuiAudioDecoder_CoreAudio.cpp */;
-		name = "nuiAudioDecoder_CoreAudio.cpp: 149";
-		rLen = 0;
-		rLoc = 3056;
-		rType = 0;
-		vrLen = 0;
-		vrLoc = 0;
-	};
-	40D9BA190F1518850036BA1B /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 40D9B9FA0F1515B20036BA1B /* nuiAudioDecoder_CoreAudio.cpp */;
-		name = "nuiAudioDecoder_CoreAudio.cpp: 126";
-		rLen = 0;
-		rLoc = 3056;
-		rType = 0;
-		vrLen = 0;
-		vrLoc = 0;
-	};
-	40DCF1970F1B441900202C0F /* PBXBookmark */ = {
-		isa = PBXBookmark;
-		fRef = 401335D20F13B4F800140067 /* DecoderTest.cpp */;
-	};
-	40DCF1A30F1B443200202C0F /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 401335D20F13B4F800140067 /* DecoderTest.cpp */;
-		name = "DecoderTest.cpp: 187";
-		rLen = 0;
-		rLoc = 5085;
-		rType = 0;
-		vrLen = 1750;
-		vrLoc = 3486;
-	};
-	40DCF1A80F1B44A600202C0F /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 401335D20F13B4F800140067 /* DecoderTest.cpp */;
-		name = "DecoderTest.cpp: 185";
-		rLen = 0;
-		rLoc = 5010;
-		rType = 0;
-		vrLen = 1775;
-		vrLoc = 3486;
-	};
-	40DCF1AC0F1B4B5B00202C0F /* PBXBookmark */ = {
-		isa = PBXBookmark;
-		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
-	};
-	40DCF1B00F1B4B7100202C0F /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
-		name = "MainWindow.cpp: 191";
-		rLen = 0;
-		rLoc = 5893;
-		rType = 0;
-		vrLen = 2276;
-		vrLoc = 3991;
-	};
 	61A9DE3F0B833C9200BC506C /* Project object */ = {
 		activeBuildConfigurationName = Default;
 		activeExecutable = 401335AF0F13B4B700140067 /* nuiAudioDecoderTestD */;
@@ -202,7 +102,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					1207,
+					27,
 					20,
 					48,
 					43,
@@ -219,20 +119,8 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 253443983;
-			PBXWorkspaceStateSaveDate = 253443983;
-		};
-		perUserProjectItems = {
-			40D9B9F80F1515B20036BA1B = 40D9B9F80F1515B20036BA1B /* PBXTextBookmark */;
-			40D9B9F90F1515B20036BA1B = 40D9B9F90F1515B20036BA1B /* PBXTextBookmark */;
-			40D9BA0A0F1515BB0036BA1B = 40D9BA0A0F1515BB0036BA1B /* PBXTextBookmark */;
-			40D9BA160F1516760036BA1B = 40D9BA160F1516760036BA1B /* PBXTextBookmark */;
-			40D9BA190F1518850036BA1B = 40D9BA190F1518850036BA1B /* PBXTextBookmark */;
-			40DCF1970F1B441900202C0F /* PBXBookmark */ = 40DCF1970F1B441900202C0F /* PBXBookmark */;
-			40DCF1A30F1B443200202C0F /* PBXTextBookmark */ = 40DCF1A30F1B443200202C0F /* PBXTextBookmark */;
-			40DCF1A80F1B44A600202C0F /* PBXTextBookmark */ = 40DCF1A80F1B44A600202C0F /* PBXTextBookmark */;
-			40DCF1AC0F1B4B5B00202C0F /* PBXBookmark */ = 40DCF1AC0F1B4B5B00202C0F /* PBXBookmark */;
-			40DCF1B00F1B4B7100202C0F /* PBXTextBookmark */ = 40DCF1B00F1B4B7100202C0F /* PBXTextBookmark */;
+			PBXPerProjectTemplateStateSaveDate = 253457627;
+			PBXWorkspaceStateSaveDate = 253457627;
 		};
 		sourceControlManager = 401335BC0F13B4BC00140067 /* Source Control */;
 		userBuildSettings = {
