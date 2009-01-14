@@ -116,6 +116,15 @@ void nuiImage::SetTexturePath(const nglPath& rTexturePath)
   mIgnoreState = false;  
 }
 
+void nuiImage::SetTexture(nuiTexture* pTex)
+{  
+  mpTexture = pTex;
+  mUseAlpha = true;
+  mBlendFunc = nuiBlendTransp;
+  SetProperty(_T("Source"), _T("Memory Buffer"));
+  mIgnoreState = false;  
+}
+
 
 bool nuiImage::Load(const nuiXMLNode* pNode)
 {

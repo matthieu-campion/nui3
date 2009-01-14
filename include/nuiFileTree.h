@@ -54,8 +54,7 @@ public:
   
   nuiSimpleEventSource<nuiWidgetActivated> PathChanged;      ///< Event triggered when the user is navigating around the file system.
   nuiSimpleEventSource<nuiWidgetActivated> SelectionChanged; 
-  nuiSimpleEventSource<nuiWidgetActivated> FileActivated; 
-  nuiSimpleEventSource<nuiWidgetActivated> FolderActivated; 
+  nuiSimpleEventSource<nuiWidgetActivated> Activated; 
   
 private:
 

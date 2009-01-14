@@ -27,7 +27,13 @@ nuiDefaultDecoration::nuiDefaultDecoration()
 
 nuiDefaultDecoration::~nuiDefaultDecoration()
 {
-  
+  // release icons textures
+  std::list<nuiTexture*>::iterator it;
+  for (it = mIcons.begin(); it != mIcons.end(); ++it)
+  {
+    nuiTexture* pTex = *it;
+    pTex->Release();
+  }
 } 
 
 
@@ -95,6 +101,7 @@ void nuiDefaultDecoration::Init()
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileTree::FileInfo")), &nuiDefaultDecoration::FileTree_FileInfo);
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileTree::VolumeIcon")), &nuiDefaultDecoration::FileTree_VolumeIcon);
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileTree::FolderIcon")), &nuiDefaultDecoration::FileTree_FolderIcon);
+  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileTree::OpenFolderIcon")), &nuiDefaultDecoration::FileTree_OpenFolderIcon);
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileTree::ParentFolderIcon")), &nuiDefaultDecoration::FileTree_ParentFolderIcon);
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileTree::FileIcon")), &nuiDefaultDecoration::FileTree_FileIcon);
 
@@ -291,31 +298,46 @@ void nuiDefaultDecoration::InitMaps()
 //
 // InitIcons
 //
+
+// static 
+std::list<nuiTexture*> nuiDefaultDecoration::mIcons;
+
 void nuiDefaultDecoration::InitIcons()
 {
   // volume icon
   nglIMemory* pIMem = new nglIMemory(gpIconVolume, gIconVolumeSize);
   nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
-  nuiFrame* pFrame = new nuiFrame(_T("nuiDefaultDecorationIconVolume"), pTex, nuiRect(0,0,18,19));
-  pFrame->UseWidgetAlpha(true);
-  delete pIMem; 
-
+  pTex->SetSource(_T("nuiDefaultDecorationIconVolume"));
+  mIcons.push_back(pTex);
+  
   // folder icon
   pIMem = new nglIMemory(gpIconFolder, gIconFolderSize);
   pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
-  pFrame = new nuiFrame(_T("nuiDefaultDecorationIconFolder"), pTex, nuiRect(0,0,18,16));
-  pFrame->UseWidgetAlpha(true);
-  delete pIMem;  
+  pTex->SetSource(_T("nuiDefaultDecorationIconFolder"));
+  mIcons.push_back(pTex);
+
+  // open folder icon
+  pIMem = new nglIMemory(gpIconOpenFolder, gIconOpenFolderSize);
+  pTex = nuiTexture::GetTexture(pIMem);
+  NGL_ASSERT(pTex);
+  pTex->SetSource(_T("nuiDefaultDecorationIconOpenFolder"));
+  mIcons.push_back(pTex);
+
+  // parent folder icon
+  pIMem = new nglIMemory(gpIconParentFolder, gIconParentFolderSize);
+  pTex = nuiTexture::GetTexture(pIMem);
+  NGL_ASSERT(pTex);
+  pTex->SetSource(_T("nuiDefaultDecorationIconParentFolder"));
+  mIcons.push_back(pTex);
   
   // file icon
   pIMem = new nglIMemory(gpIconFile, gIconFileSize);
   pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
-  pFrame = new nuiFrame(_T("nuiDefaultDecorationIconFile"), pTex, nuiRect(0,0,16,20));
-  pFrame->UseWidgetAlpha(true);
-  delete pIMem; 
+  pTex->SetSource(_T("nuiDefaultDecorationIconFile"));
+  mIcons.push_back(pTex);
 }
 
 
@@ -887,20 +909,26 @@ void nuiDefaultDecoration::FileSelector_FolderLabel(nuiWidget* pWidget)
 
 void nuiDefaultDecoration::FileSelector_VolumeIcon(nuiWidget* pWidget)
 {
-  nuiFrame* pFrame = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationIconVolume"));
-  NGL_ASSERT(pFrame);
-  pWidget->SetDecoration(pFrame);
-  pWidget->SetUserSize(18,19);
+  nuiTexture* pTex = nuiTexture::GetTexture(nglString(_T("nuiDefaultDecorationIconVolume")));
+  NGL_ASSERT(pTex);
+
+  nuiImage* pImg = (nuiImage*)pWidget;
+  pImg->SetTexture(pTex);
+  pWidget->InvalidateLayout();
+  
 }
 
 
 void nuiDefaultDecoration::FileSelector_FolderIcon(nuiWidget* pWidget)
 {
-  nuiFrame* pFrame = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationIconFolder"));
-  NGL_ASSERT(pFrame);
-  pWidget->SetDecoration(pFrame);  
-  pWidget->SetUserSize(18,16);
+  nuiTexture* pTex = nuiTexture::GetTexture(nglString(_T("nuiDefaultDecorationIconFolder")));
+  NGL_ASSERT(pTex);
+  
+  nuiImage* pImg = (nuiImage*)pWidget;
+  pImg->SetTexture(pTex);
+  pWidget->InvalidateLayout();
 }
+
 
 
 void nuiDefaultDecoration::FileSelector_TreeView(nuiWidget* pWidget)
@@ -935,19 +963,23 @@ void nuiDefaultDecoration::FileSelector_TreeFileLabel(nuiWidget* pWidget)
 
 void nuiDefaultDecoration::FileSelector_TreeFolderIcon(nuiWidget* pWidget)
 {
-  nuiFrame* pFrame = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationIconFolder"));
-  NGL_ASSERT(pFrame);
-  pWidget->SetDecoration(pFrame);    
-  pWidget->SetUserSize(18,16);
+  nuiTexture* pTex = nuiTexture::GetTexture(nglString(_T("nuiDefaultDecorationIconFolder")));
+  NGL_ASSERT(pTex);
+  
+  nuiImage* pImg = (nuiImage*)pWidget;
+  pImg->SetTexture(pTex);
+  pWidget->InvalidateLayout();
 }
 
 
 void nuiDefaultDecoration::FileSelector_TreeFileIcon(nuiWidget* pWidget)
 {
-  nuiFrame* pFrame = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationIconFile"));
-  NGL_ASSERT(pFrame);
-  pWidget->SetDecoration(pFrame);    
-  pWidget->SetUserSize(16,20);
+  nuiTexture* pTex = nuiTexture::GetTexture(nglString(_T("nuiDefaultDecorationIconFile")));
+  NGL_ASSERT(pTex);
+  
+  nuiImage* pImg = (nuiImage*)pWidget;
+  pImg->SetTexture(pTex);
+  pWidget->InvalidateLayout();
 }
 
 
@@ -1050,37 +1082,58 @@ void nuiDefaultDecoration::FileTree_FileInfo(nuiWidget* pWidget)
 
 void nuiDefaultDecoration::FileTree_VolumeIcon(nuiWidget* pWidget)
 {
-  nuiFrame* pFrame = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationIconVolume"));
-  NGL_ASSERT(pFrame);
-  pWidget->SetDecoration(pFrame);
-  pWidget->SetUserSize(18,19);
+  nuiTexture* pTex = nuiTexture::GetTexture(nglString(_T("nuiDefaultDecorationIconVolume")));
+  NGL_ASSERT(pTex);
+  
+  nuiImage* pImg = (nuiImage*)pWidget;
+  pImg->SetTexture(pTex);
+  pWidget->InvalidateLayout();
 }
 
 
 void nuiDefaultDecoration::FileTree_FolderIcon(nuiWidget* pWidget)
 {
-  nuiFrame* pFrame = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationIconFolder"));
-  NGL_ASSERT(pFrame);
-  pWidget->SetDecoration(pFrame);  
-  pWidget->SetUserSize(18,16);
+  nuiTexture* pTex = nuiTexture::GetTexture(nglString(_T("nuiDefaultDecorationIconFolder")));
+  NGL_ASSERT(pTex);
+  
+  nuiImage* pImg = (nuiImage*)pWidget;
+  pImg->SetTexture(pTex);
+  
+  pWidget->InvalidateLayout();
 }
+
+
+void nuiDefaultDecoration::FileTree_OpenFolderIcon(nuiWidget* pWidget)
+{
+  nuiTexture* pTex = nuiTexture::GetTexture(nglString(_T("nuiDefaultDecorationIconOpenFolder")));
+  NGL_ASSERT(pTex);
+  
+  nuiImage* pImg = (nuiImage*)pWidget;
+  pImg->SetTexture(pTex);
+  pWidget->InvalidateLayout();
+}
+
 
 void nuiDefaultDecoration::FileTree_ParentFolderIcon(nuiWidget* pWidget)
 {
-  nuiFrame* pFrame = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationIconFolder"));
-  NGL_ASSERT(pFrame);
-  pWidget->SetDecoration(pFrame);  
-  pWidget->SetUserSize(18,16);
+  nuiTexture* pTex = nuiTexture::GetTexture(nglString(_T("nuiDefaultDecorationIconParentFolder")));
+  NGL_ASSERT(pTex);
+  
+  nuiImage* pImg = (nuiImage*)pWidget;
+  pImg->SetTexture(pTex);
+  pWidget->InvalidateLayout();
 }
 
 
 
 void nuiDefaultDecoration::FileTree_FileIcon(nuiWidget* pWidget)
 {
-  nuiFrame* pFrame = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationIconFile"));
-  NGL_ASSERT(pFrame);
-  pWidget->SetDecoration(pFrame);    
-  pWidget->SetUserSize(16,20);
+  nuiTexture* pTex = nuiTexture::GetTexture(nglString(_T("nuiDefaultDecorationIconFile")));
+  NGL_ASSERT(pTex);
+  
+  nuiImage* pImg = (nuiImage*)pWidget;
+  pImg->SetTexture(pTex);
+  pWidget->InvalidateLayout();
 }
 
 

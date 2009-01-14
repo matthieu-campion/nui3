@@ -20,6 +20,8 @@ licence: see nui3/LICENCE.TXT
 #include "DefaultDecoration/src/ComboUp.h"
 #include "DefaultDecoration/src/IconFile.h"
 #include "DefaultDecoration/src/IconFolder.h"
+#include "DefaultDecoration/src/IconOpenFolder.h"
+#include "DefaultDecoration/src/IconParentFolder.h"
 #include "DefaultDecoration/src/IconVolume.h"
 #include "DefaultDecoration/src/KnobSequenceBkg.h"
 #include "DefaultDecoration/src/KnobSequenceHdl.h"

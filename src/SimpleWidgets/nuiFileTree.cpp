@@ -36,16 +36,8 @@ void nuiFileTree::Init(const nglPath& rPath, const nglPath& rRootPath, const std
   SetObjectClass(_T("nuiFileTree"));
   SetObjectName(_T("nuiFileTree"));
   
-  mpFileBox = new nuiVBox(2);
-  mpFileBox->SetExpand(nuiExpandShrinkAndGrow);
-  AddChild(mpFileBox);
-  
-  mpTreeView = new nuiTreeView(NULL, false);
-  mpTreeView->EnableSubElements(1);
-  mpFileBox->SetCell(1, mpTreeView);
-  mpFileBox->SetCellExpand(1, nuiExpandShrinkAndGrow);
-
-  //mpTreeView->EnableSubElements(1);
+  mpFileBox = NULL;
+  mpTreeView = NULL;
   
   mShowHiddenFiles = showHiddenFiles;
   mFilters = rFilters;
@@ -69,8 +61,14 @@ bool nuiFileTree::OnNodeActivated(const nuiEvent& rEvent)
   nglPath path(pNode->GetProperty(_T("Path")));
   //  NGL_OUT(_T("DEBUG path '%ls'\n"), path.GetChars());
   
-  SetRootPath(path);
-  SetPath(path);
+  // send signal
+  bool res = Activated();
+  
+  if (!res && !path.IsLeaf() && !path.IsBundle())
+  {
+    SetRootPath(path);
+    SetPath(path);    
+  }
   
   return true;
 }
@@ -161,14 +159,31 @@ nglString nuiFileTree::GetFileInfo(const nglPath& rPath)
 bool nuiFileTree::SetRootPath(const nglPath& rPath)
 {
   mRootPath = rPath;
+
+  if (mpFileBox)
+    mpFileBox->Trash();
+  
+  mpFileBox = new nuiVBox(2);
+  mpFileBox->SetExpand(nuiExpandShrinkAndGrow);
+  AddChild(mpFileBox);
+  
+  mpFileBox->SetCellMinPixels(0, 20);
+  
+  nuiScrollView* pScrollView = new nuiScrollView(true,true);
+  
+  mpFileBox->SetCell(1, pScrollView);
+  mpFileBox->SetCellExpand(1, nuiExpandShrinkAndGrow);
+
   
   if (rPath == nglPath(ROOTPATH_ALLVOLUMES))
   {
     mpFileBox->SetCell(0, NULL);
-//    mpFileBox->SetCellPixels(0, 0);
     
     nuiTreeNodePtr pRoot = new nuiTreeNode(ROOTPATH_ALLVOLUMES);
     pRoot->Open(true);
+
+    mpTreeView = new nuiTreeView(pRoot, false);
+    pScrollView->AddChild(mpTreeView);
 
     std::list<nglPathVolume> volumes;
     nglPath::GetVolumes(volumes, nglPathVolume::All);
@@ -178,15 +193,20 @@ bool nuiFileTree::SetRootPath(const nglPath& rPath)
 
     while (it != end)
     {      
+      
+      
       const nglPathVolume vol(*it);
+
+      //LBDEBUG
+      NGL_OUT(_T("SETROOTPATH VOLUME '%ls'\n"), vol.mPath.GetChars());
+      ///////////////
+      
       nuiTreeNodePtr pNode = GetNewNode(vol.mPath);
       //pNode->Open(true);
       pRoot->AddChild(pNode);
       
       ++it;
     }
-    
-    mpTreeView->SetTree(pRoot);
     
     mEventSink.Connect(pRoot->Opened, &nuiFileTree::OnRootStateChanged, (void*)1);
     mEventSink.Connect(pRoot->Closed, &nuiFileTree::OnRootStateChanged, (void*)0);
@@ -197,14 +217,12 @@ bool nuiFileTree::SetRootPath(const nglPath& rPath)
   
   // "go to parent folder" link
   nuiButton* pBtn = new nuiButton();
-  mpFileBox->SetCell(0, pBtn);
-  pBtn->SetDecoration(NULL);
-  pBtn->SetDrawSelf(false);
   
   nuiHBox* pBox = new nuiHBox(2);
   pBtn->AddChild(pBox);
-  mpFileBox->SetCellPixels(0, 20);
-  nuiSimpleContainer* pIcon = new nuiSimpleContainer();
+  pBtn->InvalidateLayout();
+
+  nuiImage* pIcon = new nuiImage();
   pIcon->SetObjectName(_T("nuiFileTree::ParentFolderIcon"));
   pIcon->SetObjectClass(_T("nuiFileTree::ParentFolderIcon"));
   pBox->SetCell(0, pIcon);
@@ -217,20 +235,26 @@ bool nuiFileTree::SetRootPath(const nglPath& rPath)
   mEventSink.Connect(pBtn->Activated, &nuiFileTree::OnGotoParentFolder);
   
   
+  mpFileBox->SetCell(0, pBtn);
+
   nuiTreeNodePtr pNode = GetNewNode(rPath);  
+  
+  
+  
   if (pNode)
   {
     nuiTreeNodePtr pRoot = new nuiTreeNode(_T("HiddenRoot"));
     pRoot->AddChild(pNode);
     pRoot->Open(true);
     pNode->Open(true);
-    mpTreeView->SetTree(pRoot);
+
+    mpTreeView = new nuiTreeView(pRoot, false);
+    pScrollView->AddChild(mpTreeView);
     
     mEventSink.Connect(pRoot->Opened, &nuiFileTree::OnRootStateChanged, (void*)1);
     mEventSink.Connect(pRoot->Closed, &nuiFileTree::OnRootStateChanged, (void*)0);
-    
-    SetPath(rPath);
   }
+  
   return true;
 }
 
@@ -256,12 +280,12 @@ void nuiFileTree::AddTree(const nglPath& rPath, bool Opened)
 nuiTreeNode* nuiFileTree::GetNewNode(const nglPath& rPath)
 {
   nuiHBox* pBox = NULL;
-  nuiSimpleContainer* pIcon = NULL;
+  nuiImage* pIcon = NULL;
   nuiLabel* pLabel = NULL;
   
   nglPath pathName = rPath;
   
-  if (pathName.IsLeaf() || !pathName.GetExtension().Compare(_T("app")))
+  if (pathName.IsLeaf() || pathName.IsBundle())
   {
     // no file is filtered
     if (mFilters.size() == 0)
@@ -269,11 +293,11 @@ nuiTreeNode* nuiFileTree::GetNewNode(const nglPath& rPath)
     
     else if (IsFilterSet(_T("*")))
     {
-      if (!pathName.GetExtension().Compare(_T("app")))
+      if (pathName.IsBundle())
         pathName = pathName.GetRemovedExtension();
       
       pBox = new nuiHBox(2);
-      pIcon = new nuiSimpleContainer();
+      pIcon = new nuiImage();
       pIcon->SetObjectName(_T("nuiFileTree::FileIcon"));
       pIcon->SetObjectClass(_T("nuiFileTree::FileIcon"));
       
@@ -289,12 +313,12 @@ nuiTreeNode* nuiFileTree::GetNewNode(const nglPath& rPath)
         return NULL;
       else
       {
-        if (!pathName.GetExtension().Compare(_T("app")))
+        if (pathName.IsBundle())
           pathName = pathName.GetRemovedExtension();
         
         
         pBox = new nuiHBox(2);
-        pIcon = new nuiSimpleContainer();
+        pIcon = new nuiImage();
         nglString objectName;
         objectName.Format(_T("nuiFileTree::FileIcon::%ls"), rPath.GetExtension().GetChars());
         pIcon->SetObjectName(objectName);
@@ -328,7 +352,7 @@ nuiTreeNode* nuiFileTree::GetNewNode(const nglPath& rPath)
     
     
     pBox = new nuiHBox(2);
-    pIcon = new nuiSimpleContainer();
+    pIcon = new nuiImage();
     pIcon->SetObjectName(iconObjectName);
     pIcon->SetObjectClass(iconObjectName);
     pLabel = new nuiLabel(rPath.GetNodeName().IsEmpty()?_T("/"):rPath.GetNodeName());        
@@ -338,7 +362,6 @@ nuiTreeNode* nuiFileTree::GetNewNode(const nglPath& rPath)
   
   pBox->SetCell(0, pIcon, nuiCenter);
   pBox->SetCell(1, pLabel);
-  //pBox->SetCellPixels(1, 100);
   
   
   if (!pBox)
