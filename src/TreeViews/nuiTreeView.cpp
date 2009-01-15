@@ -645,15 +645,15 @@ void nuiTreeView::SetStartDragDelegate(const StartDragDelegate& rDelegate)
 }
 
 
-void nuiTreeView::SetStopDragDelegate(const StopDragDelegate& rDelegate)
+void nuiTreeView::SetDraggedDelegate(const DraggedDelegate& rDelegate)
 {
-  mStopDragDelegate = rDelegate;
+  mDraggedDelegate = rDelegate;
 }
 
 
-void nuiTreeView::SetCancelDragDelegate(const CancelDragDelegate& rDelegate)
+void nuiTreeView::SetStopDraggingDelegate(const StopDraggingDelegate& rDelegate)
 {
-  mCancelDragDelegate = rDelegate;
+  mStopDraggingDelegate = rDelegate;
 }
 
 
@@ -826,15 +826,36 @@ bool nuiTreeView::MouseMoved(nuiSize X, nuiSize Y)
 
 
 // virtual 
-void nuiTreeView::OnStopDragging()
+void nuiTreeView::OnDragged(nglDragAndDrop* pDragObject)
 {
-  if (mStopDragDelegate)
+  if (mDraggedDelegate)
   {
-    mStopDragDelegate(mpSelectedNode, mpDraggedObject);
+    mDraggedDelegate(mpSelectedNode, mpDraggedObject);
+  }
+  
+  switch (mpDraggedObject->GetDesiredDropEffect())
+  {
+    case eDropEffectNone:
+    case eDropEffectCopy:
+    case eDropEffectLink:
+    case eDropEffectScroll:
+      break;      
+    case eDropEffectMove:
+      delete mpSelectedNode;
+      break;
   }
   
   mDragging = false;
+  
+}
 
+void nuiTreeView::OnStopDragging()
+{  
+  if (mStopDraggingDelegate)
+  {
+    mStopDraggingDelegate(mpSelectedNode);
+  }
+  mDragging = false;
 }
 
 
