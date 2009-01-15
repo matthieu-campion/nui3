@@ -185,6 +185,7 @@ bool nuiFileTree::SetRootPath(const nglPath& rPath)
     pRoot->Open(true);
 
     mpTreeView = new nuiTreeView(pRoot, false);
+    mpTreeView->SetDeSelectable(false);
     pScrollView->AddChild(mpTreeView);
 
     std::list<nglPathVolume> volumes;
@@ -255,6 +256,7 @@ bool nuiFileTree::SetRootPath(const nglPath& rPath)
     pNode->Open(true);
 
     mpTreeView = new nuiTreeView(pRoot, false);
+    mpTreeView->SetDeSelectable(false);
     pScrollView->AddChild(mpTreeView);
     
     mEventSink.Connect(pRoot->Opened, &nuiFileTree::OnRootStateChanged, (void*)1);
@@ -605,22 +607,45 @@ bool nuiFileTree::OnRootStateChanged(const nuiEvent& rEvent)
 }
 
 
+// virtual
 nglDragAndDrop* nuiFileTree::OnStartDragDelegate(nuiTreeNode* pNode)
 {
-  NGL_OUT(_T("nuiFileTree::OnStartDragDelegate 0x%x"), pNode);
-  return false;  
+  if (!pNode)
+    return NULL;
+  
+  //LBDEBUG
+  NGL_OUT(_T("nuiFileTree::OnStartDragDelegate 0x%x\n"), pNode);
+
+  nglString iconName;
+  nglPath path(pNode->GetProperty(_T("Path")));
+
+  if (path.IsLeaf() || path.IsBundle())
+    iconName = _T("nuiFileTree::DraggedFileIcon");
+  else
+    iconName = _T("nuiFileTree::DraggedVolumeIcon");
+
+  // create drag and drop object
+  nglImage* pImage = nuiDefaultDecoration::GetImage(iconName);
+  nglDragAndDrop* pDragObject = new nglDragAndDrop(pImage, 0, 0);
+  
+  // add files data
+  nglDataFilesObject* pDataFileObject = new nglDataFilesObject(_T("ngl/Files"));
+  pDataFileObject->AddFile(path.GetPathName());
+  pDragObject->AddType(pDataFileObject);
+  
+  return pDragObject;  
 }
 
-
+// virtual
 void nuiFileTree::OnStopDragDelegate(nuiTreeNode* pNode, nglDragAndDrop* pDragObject)
 {
-  NGL_OUT(_T("nuiFileTree::OnStopDragDelegate 0x%x"), pNode);
+  NGL_OUT(_T("nuiFileTree::OnStopDragDelegate 0x%x\n"), pNode);
 }
 
-
+// virtual
 void nuiFileTree::OnCancelDragDelegate(nuiTreeNode* pNode)
 {  
-  NGL_OUT(_T("nuiFileTree::OnCancelDragDelegate 0x%x"), pNode);
+  NGL_OUT(_T("nuiFileTree::OnCancelDragDelegate 0x%x\n"), pNode);
 }
 
 

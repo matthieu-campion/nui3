@@ -231,9 +231,16 @@ protected:
   
 private:
   
+//  virtual bool Drag(nglDragAndDrop* pDragObject); ///< Starts a Drag operation, pDragObject should have its types set.
+  virtual void OnStopDragging(); ///< called when a drag operation is interupted or finished
+  
+  
   StartDragDelegate mStartDragDelegate;
   StopDragDelegate mStopDragDelegate;
   CancelDragDelegate mCancelDragDelegate;
+  
+  bool mDragging;
+  nglDragAndDrop* mpDraggedObject;
 
 };
 

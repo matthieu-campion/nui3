@@ -50,6 +50,7 @@ void nuiDefaultDecoration::Init()
   InitSelection();
   InitMaps();
   InitIcons();
+  InitImages();
     
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiWindow")), &nuiDefaultDecoration::Window);
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiBackgroundPane")), &nuiDefaultDecoration::BackgroundPane);
@@ -340,6 +341,36 @@ void nuiDefaultDecoration::InitIcons()
   mIcons.push_back(pTex);
 }
 
+
+
+
+//**************************************************************************************************************
+//
+// InitImages
+//
+
+// static 
+std::map<nglString, std::pair<char*,long> > nuiDefaultDecoration::mImages;
+
+void nuiDefaultDecoration::InitImages()
+{
+  mImages[_T("nuiFileTree::DraggedFileIcon")] = std::pair<char*,long>((char*)gpImageDraggedFile,(long)gImageDraggedFileSize);
+}
+
+
+//static 
+nglImage* nuiDefaultDecoration::GetImage(const nglString& rRef)
+{
+  std::map<nglString, std::pair<char*,long> >::iterator it = mImages.find(rRef);
+  if (it == mImages.end())
+    return NULL;
+  
+  const char* pMem = it->second.first;
+  const long size = it->second.second;
+  nglIMemory* pIMem = new nglIMemory(pMem, size);
+  nglImage* pImage = new nglImage(pIMem);
+  return pImage;
+}
 
 
 

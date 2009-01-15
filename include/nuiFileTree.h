@@ -52,6 +52,11 @@ public:
 
   virtual nuiTreeNode* GetNewNode(const nglPath& rPath);
   
+  virtual nglDragAndDrop* OnStartDragDelegate(nuiTreeNode* pNode);
+  virtual void OnStopDragDelegate(nuiTreeNode* pNode, nglDragAndDrop* pDragObj);
+  virtual void OnCancelDragDelegate(nuiTreeNode* pNode);
+  
+  
   nuiSimpleEventSource<nuiWidgetActivated> PathChanged;      ///< Event triggered when the user is navigating around the file system.
   nuiSimpleEventSource<nuiWidgetActivated> SelectionChanged; 
   nuiSimpleEventSource<nuiWidgetActivated> Activated; 
@@ -81,10 +86,6 @@ private:
   bool OnClosed   (const nuiEvent& rEvent);
   bool OnOK       (const nuiEvent& rEvent);
   bool OnSelected (const nuiEvent& rEvent);
-  
-  nglDragAndDrop* OnStartDragDelegate(nuiTreeNode* pNode);
-  void OnStopDragDelegate(nuiTreeNode* pNode, nglDragAndDrop* pDragObj);
-  void OnCancelDragDelegate(nuiTreeNode* pNode);
   
   nuiEventSink<nuiFileTree> mEventSink;
   

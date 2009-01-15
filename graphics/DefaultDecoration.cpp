@@ -23,6 +23,8 @@ licence: see nui3/LICENCE.TXT
 #include "DefaultDecoration/src/IconOpenFolder.cpp"
 #include "DefaultDecoration/src/IconParentFolder.cpp"
 #include "DefaultDecoration/src/IconVolume.cpp"
+#include "DefaultDecoration/src/ImageDraggedFile.cpp"
+#include "DefaultDecoration/src/ImageDraggedFolder.cpp"
 #include "DefaultDecoration/src/KnobSequenceBkg.cpp"
 #include "DefaultDecoration/src/KnobSequenceHdl.cpp"
 #include "DefaultDecoration/src/PaneInner.cpp"

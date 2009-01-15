@@ -174,7 +174,6 @@ vector<nglImageCodecInfo*> *nglImage::mpCodecInfos = NULL;
 /*
  * Life cycle
  */
-
 nglImage::nglImage (nglIStream* pInput, nglImageCodec* pCodec)
 {
   Init();

@@ -38,12 +38,15 @@ public:
   static void TabView_Tab(nuiTabView* pView, nuiWidget* pTab);
   static void TabView_Contents(nuiTabView* pView, nuiWidget* pContents);
   
+  static nglImage* GetImage(const nglString& rRef);
+  
 protected:
   
   static void InitColors();
   static void InitSelection();
   static void InitMaps();
   static void InitIcons();
+  static void InitImages();
   
 
   static void Window(nuiWidget* pWidget);
@@ -103,6 +106,8 @@ private:
   
   static nuiImageSequence* mpKnobSequence;
   static std::list<nuiTexture*> mIcons;
+  static std::map<nglString, std::pair<char*,long> > mImages;
+
 
 
 };
