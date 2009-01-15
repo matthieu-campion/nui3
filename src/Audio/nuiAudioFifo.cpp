@@ -256,6 +256,15 @@ void nuiAudioTrack::Process(uint32 SampleFrames, std::vector<float*>& rOutputBuf
     // read directly from the samples source to the AudioFifo buffer. Don't use ringbufer
     ReadSamples (SampleFrames, rOutputBuffer);
     
+    // set the volume
+    for (ch = 0; ch < rOutputBuffer.size(); ch++)
+    {
+      for (i=0; i < SampleFrames; i++) 
+      {
+        rOutputBuffer[ch][i] = rOutputBuffer[ch][i] * l_volume;
+      }
+    }
+    
     // event callback
     ProcessedSamples(SampleFrames, 0, 0);
     return;
