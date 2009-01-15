@@ -538,7 +538,14 @@ nglDragAndDrop* nuiFileTree::OnStartDragDelegate(nuiTreeNode* pNode)
   nglPath path(pNode->GetProperty(_T("Path")));
 
   if (path.IsLeaf() || path.IsBundle())
-    iconName = _T("nuiFileTree::DraggedFileIcon");
+  {
+    if (IsFilterSet(_T("*")))
+      iconName = _T("nuiFileTree::DraggedFileIcon");
+    else 
+      // for later update
+      iconName.Format(_T("nuiFileTree::DraggedFileIcon"));
+
+  }
   else
     iconName = _T("nuiFileTree::DraggedVolumeIcon");
 
