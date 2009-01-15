@@ -69,6 +69,7 @@ private:
   bool OnNodeActivated(const nuiEvent& rEvent);
   bool OnGotoParentFolder(const nuiEvent& rEvent);
   
+  
   nuiVBox* mpFileBox;
   nuiTreeView* mpTreeView;
   nuiTreeNode* mpTreeRoot;
@@ -80,6 +81,10 @@ private:
   bool OnClosed   (const nuiEvent& rEvent);
   bool OnOK       (const nuiEvent& rEvent);
   bool OnSelected (const nuiEvent& rEvent);
+  
+  bool OnStartDragDelegate(nuiTreeNode* pNode);
+  bool OnStopDragDelegate(nuiTreeNode* pNode);
+  bool OnCancelDragDelegate(nuiTreeNode* pNode);
   
   nuiEventSink<nuiFileTree> mEventSink;
   

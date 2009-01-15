@@ -159,6 +159,8 @@ nglString nuiFileTree::GetFileInfo(const nglPath& rPath)
 bool nuiFileTree::SetRootPath(const nglPath& rPath)
 {
   mRootPath = rPath;
+  
+  mEventSink.DisconnectAll();
 
   if (mpFileBox)
     mpFileBox->Trash();
@@ -208,9 +210,13 @@ bool nuiFileTree::SetRootPath(const nglPath& rPath)
       ++it;
     }
     
+    mpTreeView->SetStartDragDelegate(nuiMakeDelegate(this, &nuiFileTree::OnStartDragDelegate));
+    mpTreeView->SetStopDragDelegate(nuiMakeDelegate(this, &nuiFileTree::OnStopDragDelegate));
+    mpTreeView->SetCancelDragDelegate(nuiMakeDelegate(this, &nuiFileTree::OnCancelDragDelegate));
+    
     mEventSink.Connect(pRoot->Opened, &nuiFileTree::OnRootStateChanged, (void*)1);
     mEventSink.Connect(pRoot->Closed, &nuiFileTree::OnRootStateChanged, (void*)0);
-        
+
     return true;
   }
   
@@ -597,5 +603,28 @@ bool nuiFileTree::OnRootStateChanged(const nuiEvent& rEvent)
   
   return true;
 }
+
+
+bool nuiFileTree::OnStartDragDelegate(nuiTreeNode* pNode)
+{
+  NGL_OUT(_T("nuiFileTree::OnStartDragDelegate 0x%x"), pNode);
+  return false;  
+}
+
+
+bool nuiFileTree::OnStopDragDelegate(nuiTreeNode* pNode)
+{
+  NGL_OUT(_T("nuiFileTree::OnStopDragDelegate 0x%x"), pNode);
+  return false;    
+}
+
+
+bool nuiFileTree::OnCancelDragDelegate(nuiTreeNode* pNode)
+{  
+  NGL_OUT(_T("nuiFileTree::OnCancelDragDelegate 0x%x"), pNode);
+  return false;  
+}
+
+
 
 

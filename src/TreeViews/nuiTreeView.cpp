@@ -536,6 +536,7 @@ void nuiTreeView::SetTreeRect(nuiSize& Y, uint32 Depth, nuiTreeNode* pTree)
 }
 
 
+
 bool nuiTreeView::OnTreeChanged(const nuiEvent& rEvent)
 {
   InvalidateLayout();
@@ -631,6 +632,29 @@ void nuiTreeView::ReparentTree(nuiTreeNode* pTree)
     mTreeViewSink.Connect(pTree->ChildDeleted, &nuiTreeView::OnTreeChildDeleted);
   }
 }
+
+
+
+
+void nuiTreeView::SetStartDragDelegate(const StartDragDelegate& rDelegate)
+{
+  mStartDragDelegate = rDelegate;
+}
+
+
+void nuiTreeView::SetStopDragDelegate(const StopDragDelegate& rDelegate)
+{
+  mStopDragDelegate = rDelegate;
+}
+
+
+void nuiTreeView::SetCancelDragDelegate(const CancelDragDelegate& rDelegate)
+{
+  mCancelDragDelegate = rDelegate;
+}
+
+
+
 
 ////// Interaction:
 
@@ -746,6 +770,7 @@ bool nuiTreeView::MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Butto
     
     Ungrab();
     Invalidate();
+    Unclicked(X,Y,Button); // send event
     return true;
   }
   return false;

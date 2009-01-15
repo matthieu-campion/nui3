@@ -117,6 +117,11 @@ protected:
 
 
 
+typedef nuiFastDelegate1<nuiTreeNode*,bool>  StartDragDelegate;
+typedef nuiFastDelegate1<nuiTreeNode*,bool>  StopDragDelegate;
+typedef nuiFastDelegate1<nuiTreeNode*,bool>  CancelDragDelegate;
+
+
 class NUI_API nuiTreeView : public nuiSimpleContainer
 {
 public:
@@ -167,10 +172,16 @@ public:
   void EnableSubElements(uint32 count);
   
   nuiMouseClicked Clicked; ///< This event is called whenever an item is clicked.
+  
   nuiSimpleEventSource<nuiWidgetActivated> Activated; ///< This event is called whenever an item is chosen, that is to say, double clicked. This can only happend in a mono-selection tree.
   nuiSimpleEventSource<nuiWidgetSelected> SelectionChanged; ///< This event is called whenever selection of the items of the tree have changed. 
   nuiSimpleEventSource<nuiWidgetSelected> SelectionDone; ///< This event is called whenever a selection has been finished by an unclick
 
+  void SetStartDragDelegate(const StartDragDelegate& rDelegate);
+  void SetStopDragDelegate(const StopDragDelegate& rDelegate);
+  void SetCancelDragDelegate(const CancelDragDelegate& rDelegate);
+
+  
 protected:
   virtual bool DrawTree(nuiDrawContext* pContext, uint32 Depth, nuiTreeNode* pTree);
   virtual void CalcTreeSize(nuiRect& rRect, uint32 Depth, nuiTreeNode* pTree);
@@ -215,6 +226,13 @@ protected:
   nuiSize mTreeIdealWidth;
   std::vector<SubElement> mSubElements;
   static nuiSize mDefaultSubElementWidth;
+  
+private:
+  
+  StartDragDelegate mStartDragDelegate;
+  StopDragDelegate mStopDragDelegate;
+  CancelDragDelegate mCancelDragDelegate;
+
 };
 
 #endif
