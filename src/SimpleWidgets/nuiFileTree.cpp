@@ -605,24 +605,22 @@ bool nuiFileTree::OnRootStateChanged(const nuiEvent& rEvent)
 }
 
 
-bool nuiFileTree::OnStartDragDelegate(nuiTreeNode* pNode)
+nglDragAndDrop* nuiFileTree::OnStartDragDelegate(nuiTreeNode* pNode)
 {
   NGL_OUT(_T("nuiFileTree::OnStartDragDelegate 0x%x"), pNode);
   return false;  
 }
 
 
-bool nuiFileTree::OnStopDragDelegate(nuiTreeNode* pNode)
+void nuiFileTree::OnStopDragDelegate(nuiTreeNode* pNode, nglDragAndDrop* pDragObject)
 {
   NGL_OUT(_T("nuiFileTree::OnStopDragDelegate 0x%x"), pNode);
-  return false;    
 }
 
 
-bool nuiFileTree::OnCancelDragDelegate(nuiTreeNode* pNode)
+void nuiFileTree::OnCancelDragDelegate(nuiTreeNode* pNode)
 {  
   NGL_OUT(_T("nuiFileTree::OnCancelDragDelegate 0x%x"), pNode);
-  return false;  
 }
 
 

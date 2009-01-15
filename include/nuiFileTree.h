@@ -82,9 +82,9 @@ private:
   bool OnOK       (const nuiEvent& rEvent);
   bool OnSelected (const nuiEvent& rEvent);
   
-  bool OnStartDragDelegate(nuiTreeNode* pNode);
-  bool OnStopDragDelegate(nuiTreeNode* pNode);
-  bool OnCancelDragDelegate(nuiTreeNode* pNode);
+  nglDragAndDrop* OnStartDragDelegate(nuiTreeNode* pNode);
+  void OnStopDragDelegate(nuiTreeNode* pNode, nglDragAndDrop* pDragObj);
+  void OnCancelDragDelegate(nuiTreeNode* pNode);
   
   nuiEventSink<nuiFileTree> mEventSink;
   

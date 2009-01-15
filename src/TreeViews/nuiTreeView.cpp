@@ -770,7 +770,6 @@ bool nuiTreeView::MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Butto
     
     Ungrab();
     Invalidate();
-    Unclicked(X,Y,Button); // send event
     return true;
   }
   return false;

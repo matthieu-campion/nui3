@@ -10,6 +10,8 @@
 
 #include "nuiTree.h"
 #include "nuiContainer.h"
+#include "nglDragAndDropObjects.h"
+
 
 typedef class nuiTreeNode* nuiTreeNodePtr;
 
@@ -117,9 +119,9 @@ protected:
 
 
 
-typedef nuiFastDelegate1<nuiTreeNode*,bool>  StartDragDelegate;
-typedef nuiFastDelegate1<nuiTreeNode*,bool>  StopDragDelegate;
-typedef nuiFastDelegate1<nuiTreeNode*,bool>  CancelDragDelegate;
+typedef nuiFastDelegate1<nuiTreeNode*,nglDragAndDrop*>  StartDragDelegate;
+typedef nuiFastDelegate2<nuiTreeNode*,nglDragAndDrop*>  StopDragDelegate;
+typedef nuiFastDelegate1<nuiTreeNode*>  CancelDragDelegate;
 
 
 class NUI_API nuiTreeView : public nuiSimpleContainer
