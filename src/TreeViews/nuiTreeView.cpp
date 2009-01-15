@@ -811,6 +811,7 @@ bool nuiTreeView::MouseMoved(nuiSize X, nuiSize Y)
           {
             //LBEDBUG
             NGL_OUT(_T("nuiTreeView StartDragging\n"));
+            
             nuiTreeView::Drag(mpDraggedObject);
           }
         }
@@ -827,8 +828,6 @@ bool nuiTreeView::MouseMoved(nuiSize X, nuiSize Y)
 // virtual 
 void nuiTreeView::OnStopDragging()
 {
-  //LBDEBUG
-  NGL_OUT(_T("nuiTreeView::OnStopDragging\n"));
   if (mStopDragDelegate)
   {
     mStopDragDelegate(mpSelectedNode, mpDraggedObject);

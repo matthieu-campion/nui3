@@ -70,7 +70,6 @@ private:
   nglString GetFileInfo(const nglPath& rPath);
   void FormatFileSize(nuiSize size, nglString& str);
   
-//  bool OnRootOpened(const nuiEvent& rEvent);
   bool OnNodeActivated(const nuiEvent& rEvent);
   bool OnGotoParentFolder(const nuiEvent& rEvent);
   
@@ -82,14 +81,8 @@ private:
   nuiTreeNode* mpCurrentTree;
   nglPath mRootPath;
   
-
-  bool OnClosed   (const nuiEvent& rEvent);
-  bool OnOK       (const nuiEvent& rEvent);
-  bool OnSelected (const nuiEvent& rEvent);
   
   nuiEventSink<nuiFileTree> mEventSink;
-  
-  bool OnRootStateChanged(const nuiEvent& rEvent);
   
 };
 

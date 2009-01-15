@@ -200,12 +200,7 @@ bool nuiFileTree::SetRootPath(const nglPath& rPath)
       
       const nglPathVolume vol(*it);
 
-      //LBDEBUG
-      NGL_OUT(_T("SETROOTPATH VOLUME '%ls'\n"), vol.mPath.GetChars());
-      ///////////////
-      
       nuiTreeNodePtr pNode = GetNewNode(vol.mPath);
-      //pNode->Open(true);
       pRoot->AddChild(pNode);
       
       ++it;
@@ -215,9 +210,6 @@ bool nuiFileTree::SetRootPath(const nglPath& rPath)
     mpTreeView->SetStopDragDelegate(nuiMakeDelegate(this, &nuiFileTree::OnStopDragDelegate));
     mpTreeView->SetCancelDragDelegate(nuiMakeDelegate(this, &nuiFileTree::OnCancelDragDelegate));
     
-    mEventSink.Connect(pRoot->Opened, &nuiFileTree::OnRootStateChanged, (void*)1);
-    mEventSink.Connect(pRoot->Closed, &nuiFileTree::OnRootStateChanged, (void*)0);
-
     return true;
   }
   
@@ -259,8 +251,6 @@ bool nuiFileTree::SetRootPath(const nglPath& rPath)
     mpTreeView->SetDeSelectable(false);
     pScrollView->AddChild(mpTreeView);
     
-    mEventSink.Connect(pRoot->Opened, &nuiFileTree::OnRootStateChanged, (void*)1);
-    mEventSink.Connect(pRoot->Closed, &nuiFileTree::OnRootStateChanged, (void*)0);
   }
   
   return true;
@@ -479,32 +469,15 @@ bool nuiFileTree::SetPath(const nglPath& rPath)
       PathChanged();
       mpTreeView->SelectionChanged();
       mpTreeView->SetRect(mpTreeView->GetIdealRect());
-      if (pColTreeView)
-      {
-        //        pColTreeView->CalcHotRect();
-        //        pColTreeView->CalcVerticalHotRect();
-      }
+
       return false;
     }
     
-    //    if (pColTreeView)
-    //      pColTreeView->CreateScrollBars();
   }
-  
-  //  if (!pColTreeView)
-  //  {
-  //    mpTreeView->Select(pNode, true);
-  //  }
   
   PathChanged();
   mpTreeView->SelectionChanged();
   mpTreeView->SetRect(mpTreeView->GetIdealRect());
-  if (pColTreeView)
-  {
-    //    pColTreeView->CalcHotRect();
-    //    pColTreeView->CalcVerticalHotRect();
-  }  
-  
   
   // Update infos and change the edit line:
   nglPathInfo info;
@@ -553,58 +526,6 @@ nglPath nuiFileTree::GetRootPath() const
 
 
 
-//bool nuiFileTree::OnRootOpened(const nuiEvent& rEvent)
-//{
-//  nuiTreeView* pTreeView = (nuiTreeView*)rEvent.mpUser;
-//  
-//  std::map<nglPath, nuiTreeView*>::iterator it;
-//  for (it = mTreeViews.begin(); it != mTreeViews.end(); ++it)
-//  {
-//    nuiTreeView* pPtr = it->second;
-//    
-//    if (pPtr != pTreeView)
-//      pTreeView->GetTree()->Open(false);
-//  }
-//  return true;
-//}
-
-
-
-
-
-bool nuiFileTree::OnSelected (const nuiEvent& rEvent)
-{
-  nuiTreeView* pTreeView = (nuiTreeView*)rEvent.mpUser;
-  NGL_ASSERT(pTreeView);
-  
-//	nglPath curPath;
-//  nuiTreeNode* pTree = pTreeView->GetSelectedNode();
-//	if (pTree != NULL)
-//		curPath = pTree->GetProperty(_T("Path"));
-//  
-//   
-//	if (curPath.IsLeaf())
-//  {
-//		nglString addin = curPath.GetNodeName();
-//  }
-//	
-	return false;
-}
-  
-
-
-bool nuiFileTree::OnRootStateChanged(const nuiEvent& rEvent)
-{
-  uint32 opened = (uint32)rEvent.mpUser;
-  
-  // redirect event
-//  if (opened)
-//    Opened();
-//  else
-//    Closed();
-  
-  return true;
-}
 
 
 // virtual
@@ -613,9 +534,6 @@ nglDragAndDrop* nuiFileTree::OnStartDragDelegate(nuiTreeNode* pNode)
   if (!pNode)
     return NULL;
   
-  //LBDEBUG
-  NGL_OUT(_T("nuiFileTree::OnStartDragDelegate 0x%x\n"), pNode);
-
   nglString iconName;
   nglPath path(pNode->GetProperty(_T("Path")));
 
