@@ -10,8 +10,10 @@
 
 #include "nuiTree.h"
 #include "nuiContainer.h"
-#include "nglDragAndDropObjects.h"
 
+#if !defined _NODND_
+#include "nglDragAndDropObjects.h"
+#endif
 
 typedef class nuiTreeNode* nuiTreeNodePtr;
 
@@ -118,11 +120,11 @@ protected:
 
 
 
-
+#if !defined _NODND_
 typedef nuiFastDelegate1<nuiTreeNode*,nglDragAndDrop*>  StartDragDelegate;
 typedef nuiFastDelegate2<nuiTreeNode*,nglDragAndDrop*>  DraggedDelegate;
 typedef nuiFastDelegate1<nuiTreeNode*>  StopDraggingDelegate;
-
+#endif
 
 class NUI_API nuiTreeView : public nuiSimpleContainer
 {
@@ -179,10 +181,11 @@ public:
   nuiSimpleEventSource<nuiWidgetSelected> SelectionChanged; ///< This event is called whenever selection of the items of the tree have changed. 
   nuiSimpleEventSource<nuiWidgetSelected> SelectionDone; ///< This event is called whenever a selection has been finished by an unclick
 
+#if !defined _NODND_
   void SetStartDragDelegate(const StartDragDelegate& rDelegate);
   void SetDraggedDelegate(const DraggedDelegate& rDelegate);
   void SetStopDraggingDelegate(const StopDraggingDelegate& rDelegate);
-
+#endif
   
 protected:
   virtual bool DrawTree(nuiDrawContext* pContext, uint32 Depth, nuiTreeNode* pTree);
@@ -230,10 +233,9 @@ protected:
   static nuiSize mDefaultSubElementWidth;
   
 private:
-  
+#if !defined _NODND_
   virtual void OnDragged(nglDragAndDrop* pDragObject); ///< This method is called on the drag and drop source widget by the window manager whenever the drag & drop operation was accepted by the user (by releasing the mouse button on a widget that support the dragged object type). This is the last time the source widget is allowed to place data in the drag and dropped object. 
   virtual void OnStopDragging(); ///< called when a drag operation is interupted or finished
-  
   
   StartDragDelegate mStartDragDelegate;
   DraggedDelegate mDraggedDelegate;
@@ -241,7 +243,7 @@ private:
   
   bool mDragging;
   nglDragAndDrop* mpDraggedObject;
-
+#endif
 };
 
 #endif

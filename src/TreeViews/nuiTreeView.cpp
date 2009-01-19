@@ -270,10 +270,12 @@ nuiTreeView::nuiTreeView(nuiTreeNodePtr pTree, bool displayRoot)
   
   mClickX = mClickY = mNewX = mNewY= 0;
   mClicked = mDrawMarkee = false;
-  
+
+#if !defined _NODND_
   mDragging = false;
   mpDraggedObject = NULL;
-  
+#endif
+
   mpTree = pTree;
 
   ReparentTree(mpTree);
@@ -637,7 +639,7 @@ void nuiTreeView::ReparentTree(nuiTreeNode* pTree)
 }
 
 
-
+#if !defined _NODND_
 
 void nuiTreeView::SetStartDragDelegate(const StartDragDelegate& rDelegate)
 {
@@ -656,7 +658,7 @@ void nuiTreeView::SetStopDraggingDelegate(const StopDraggingDelegate& rDelegate)
   mStopDraggingDelegate = rDelegate;
 }
 
-
+#endif
 
 
 ////// Interaction:
@@ -795,7 +797,8 @@ bool nuiTreeView::MouseMoved(nuiSize X, nuiSize Y)
     }
     Invalidate();
     SetHotRect(nuiRect(mNewX, mNewY, 16.0f, 16.0f));
-    
+
+#if !defined _NODND_
     if (!mDragging)
     {
       nuiSize offsetX = abs(X - mClickX);
@@ -818,13 +821,14 @@ bool nuiTreeView::MouseMoved(nuiSize X, nuiSize Y)
         
       }
     }
+#endif
     return true;
   }
   return false;
 }
 
 
-
+#if !defined _NODND_
 // virtual 
 void nuiTreeView::OnDragged(nglDragAndDrop* pDragObject)
 {
@@ -857,8 +861,7 @@ void nuiTreeView::OnStopDragging()
   }
   mDragging = false;
 }
-
-
+#endif
 
 nuiTreeNodePtr nuiTreeView::FindNode(nuiSize X, nuiSize Y)
 {
