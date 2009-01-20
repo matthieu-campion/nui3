@@ -260,7 +260,7 @@ uint32 nuiVBox::GetNbCells() const
 
 bool nuiVBox::Clear(bool Delete)
 {
-  bool res = Clear(Delete);
+  bool res = nuiGrid::Clear(Delete);
   nuiGrid::AddColumns(0,1);
   return res;
 }
