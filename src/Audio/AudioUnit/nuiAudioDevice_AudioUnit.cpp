@@ -68,18 +68,17 @@ void nuiAudioDevice_AudioUnit::Process(uint uNumFrames, AudioBufferList* ioData)
   
 
   // copy buffers (int -> float)
-  float* ptr0 = mOutputBuffers[0];
-  float* ptr1 = mOutputBuffers[1];
+  const float* ptr0 = mOutputBuffers[0];
+  const float* ptr1 = mOutputBuffers[1];
   
-  uint32* dst0 = (uint32*)ioData->mBuffers[0].mData;
-  uint32* dst1 = (uint32*)ioData->mBuffers[1].mData;
+  int32* dst0 = (int32*)ioData->mBuffers[0].mData;
+  int32* dst1 = (int32*)ioData->mBuffers[1].mData;
   
+  const int32 mult = ((1 << 24) - 1);
   for (uint32 s = 0; s < uNumFrames; s++)
   {
-    *dst0 = *ptr0 * ((1 << 24) - 1);
-    *dst1 = *ptr1 * ((1 << 24) - 1);
-    ptr0++; ptr1++;
-    dst0++; dst1++;
+    *dst0++ = *ptr0++ * mult;
+    *dst1++ = *ptr1++ * mult;
   }
 } 
 
