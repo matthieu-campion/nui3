@@ -320,18 +320,18 @@ void nuiDefaultDecoration::InitIcons()
   mIcons.push_back(pTex);
 
   // open folder icon
-//  pIMem = new nglIMemory(gpIconOpenFolder, gIconOpenFolderSize);
-//  pTex = nuiTexture::GetTexture(pIMem);
-//  NGL_ASSERT(pTex);
-//  pTex->SetSource(_T("nuiDefaultDecorationIconOpenFolder"));
-//  mIcons.push_back(pTex);
+  pIMem = new nglIMemory(gpIconOpenFolder, gIconOpenFolderSize);
+  pTex = nuiTexture::GetTexture(pIMem);
+  NGL_ASSERT(pTex);
+  pTex->SetSource(_T("nuiDefaultDecorationIconOpenFolder"));
+  mIcons.push_back(pTex);
 
   // parent folder icon
-//  pIMem = new nglIMemory(gpIconParentFolder, gIconParentFolderSize);
-//  pTex = nuiTexture::GetTexture(pIMem);
-//  NGL_ASSERT(pTex);
-//  pTex->SetSource(_T("nuiDefaultDecorationIconParentFolder"));
-//  mIcons.push_back(pTex);
+  pIMem = new nglIMemory(gpIconParentFolder, gIconParentFolderSize);
+  pTex = nuiTexture::GetTexture(pIMem);
+  NGL_ASSERT(pTex);
+  pTex->SetSource(_T("nuiDefaultDecorationIconParentFolder"));
+  mIcons.push_back(pTex);
   
   // file icon
   pIMem = new nglIMemory(gpIconFile, gIconFileSize);
