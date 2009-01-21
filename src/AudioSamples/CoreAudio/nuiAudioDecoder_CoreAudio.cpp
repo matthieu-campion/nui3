@@ -285,6 +285,7 @@ uint32 nuiAudioDecoder::ReadDE(std::vector<void*> buffers, uint32 sampleframes, 
     for (uint32 c = 0; c < nbChannels; c++)
     {
       nuiAudioConvert_FloatBufferTo16bits(temp[c], (int16*)(buffers[c]), numFrames);
+      delete[] temp[c];
     }
   }
   

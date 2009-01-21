@@ -25,6 +25,12 @@
 		40A459AD0EFAABC400043B1F /* nuiAudioDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40A459AB0EFAABC400043B1F /* nuiAudioDecoder.cpp */; };
 		40A459BB0EFAAE4500043B1F /* nuiAudioDecoder_CoreAudio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40A459BA0EFAAE4500043B1F /* nuiAudioDecoder_CoreAudio.cpp */; };
 		40A459BC0EFAAE4500043B1F /* nuiAudioDecoder_CoreAudio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40A459BA0EFAAE4500043B1F /* nuiAudioDecoder_CoreAudio.cpp */; };
+		40EAFD750F27803A0072C6DE /* nuiAiffWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40EAFD740F27803A0072C6DE /* nuiAiffWriter.cpp */; };
+		40EAFD760F27803B0072C6DE /* nuiAiffWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40EAFD740F27803A0072C6DE /* nuiAiffWriter.cpp */; };
+		40EAFD770F27803B0072C6DE /* nuiAiffWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40EAFD740F27803A0072C6DE /* nuiAiffWriter.cpp */; };
+		40EAFD790F2780550072C6DE /* nuiAiffWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 40EAFD780F2780550072C6DE /* nuiAiffWriter.h */; };
+		40EAFD7A0F2780550072C6DE /* nuiAiffWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 40EAFD780F2780550072C6DE /* nuiAiffWriter.h */; };
+		40EAFD7B0F2780550072C6DE /* nuiAiffWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 40EAFD780F2780550072C6DE /* nuiAiffWriter.h */; };
 		5621846A0D6302A3008C7CCB /* amigaconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 5621844E0D6302A3008C7CCB /* amigaconfig.h */; };
 		5621846B0D6302A3008C7CCB /* ascii.h in Headers */ = {isa = PBXBuildFile; fileRef = 5621844F0D6302A3008C7CCB /* ascii.h */; };
 		5621846C0D6302A3008C7CCB /* asciitab.h in Headers */ = {isa = PBXBuildFile; fileRef = 562184500D6302A3008C7CCB /* asciitab.h */; };
@@ -3581,6 +3587,8 @@
 		40A459A60EFAA71F00043B1F /* nuiAudioDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiAudioDecoder.h; path = include/nuiAudioDecoder.h; sourceTree = SOURCE_ROOT; };
 		40A459AB0EFAABC400043B1F /* nuiAudioDecoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiAudioDecoder.cpp; path = AudioSamples/nuiAudioDecoder.cpp; sourceTree = "<group>"; };
 		40A459BA0EFAAE4500043B1F /* nuiAudioDecoder_CoreAudio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiAudioDecoder_CoreAudio.cpp; path = AudioSamples/CoreAudio/nuiAudioDecoder_CoreAudio.cpp; sourceTree = "<group>"; };
+		40EAFD740F27803A0072C6DE /* nuiAiffWriter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiAiffWriter.cpp; path = AudioSamples/nuiAiffWriter.cpp; sourceTree = "<group>"; };
+		40EAFD780F2780550072C6DE /* nuiAiffWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiAiffWriter.h; path = include/nuiAiffWriter.h; sourceTree = SOURCE_ROOT; };
 		5621844E0D6302A3008C7CCB /* amigaconfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = amigaconfig.h; sourceTree = "<group>"; };
 		5621844F0D6302A3008C7CCB /* ascii.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ascii.h; sourceTree = "<group>"; };
 		562184500D6302A3008C7CCB /* asciitab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asciitab.h; sourceTree = "<group>"; };
@@ -5027,6 +5035,8 @@
 				E504F0B80EFBAE5200A80C5C /* nuiChunksDefinitions.h */,
 				40182A6C0F24C74A00F11401 /* nuiChunkSampleReader.h */,
 				40182A6D0F24C74A00F11401 /* nuiChunkSampleReader.cpp */,
+				40EAFD740F27803A0072C6DE /* nuiAiffWriter.cpp */,
+				40EAFD780F2780550072C6DE /* nuiAiffWriter.h */,
 			);
 			name = AudioSamples;
 			sourceTree = "<group>";
@@ -7518,6 +7528,7 @@
 				BC586EC30F15022400703177 /* nuiFileTree.h in Headers */,
 				40182A6E0F24C74A00F11401 /* nuiChunkSampleReader.h in Headers */,
 				40182AD50F24F09500F11401 /* nuiAiffReader.h in Headers */,
+				40EAFD7B0F2780550072C6DE /* nuiAiffWriter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8192,6 +8203,7 @@
 				BC586EC20F15022400703177 /* nuiFileTree.h in Headers */,
 				40182A700F24C74A00F11401 /* nuiChunkSampleReader.h in Headers */,
 				40182AD70F24F09500F11401 /* nuiAiffReader.h in Headers */,
+				40EAFD7A0F2780550072C6DE /* nuiAiffWriter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8864,6 +8876,7 @@
 				BC586EC40F15022400703177 /* nuiFileTree.h in Headers */,
 				40182A720F24C74A00F11401 /* nuiChunkSampleReader.h in Headers */,
 				40182AD90F24F09500F11401 /* nuiAiffReader.h in Headers */,
+				40EAFD790F2780550072C6DE /* nuiAiffWriter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9462,6 +9475,7 @@
 				BC586EC70F15023300703177 /* nuiFileTree.cpp in Sources */,
 				40182A6F0F24C74A00F11401 /* nuiChunkSampleReader.cpp in Sources */,
 				40182AD40F24F09500F11401 /* nuiAiffReader.cpp in Sources */,
+				40EAFD770F27803B0072C6DE /* nuiAiffWriter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9985,6 +9999,7 @@
 				BC586EC60F15023300703177 /* nuiFileTree.cpp in Sources */,
 				40182A710F24C74A00F11401 /* nuiChunkSampleReader.cpp in Sources */,
 				40182AD60F24F09500F11401 /* nuiAiffReader.cpp in Sources */,
+				40EAFD760F27803B0072C6DE /* nuiAiffWriter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10505,6 +10520,7 @@
 				BC586EC80F15023300703177 /* nuiFileTree.cpp in Sources */,
 				40182A730F24C74A00F11401 /* nuiChunkSampleReader.cpp in Sources */,
 				40182AD80F24F09500F11401 /* nuiAiffReader.cpp in Sources */,
+				40EAFD750F27803A0072C6DE /* nuiAiffWriter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

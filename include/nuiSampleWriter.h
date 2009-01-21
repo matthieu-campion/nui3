@@ -8,7 +8,6 @@
 
 #include "nui.h"
 #include "nuiSampleInfo.h"
-#include "nuiSampleReader.h"
 
 /// Generic Class that writes in a sound file
 class nuiSampleWriter
