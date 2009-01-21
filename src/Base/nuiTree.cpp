@@ -10,7 +10,7 @@
 #include <algorithm>
 
 nuiTreeBase::nuiTreeBase()
-: mTreeNodeEventSink(this)
+: mTreeNodeEventSink(this), mRefs(0)
 {
   SetObjectClass(_T("nuiTreeBase"));
   mpParent = NULL;
@@ -31,9 +31,28 @@ nuiTreeBase::~nuiTreeBase()
   delete mpAutoSort;
 }
 
+uint32 nuiTreeBase::Acquire()
+{
+  mRefs++;
+  return mRefs;
+}
+
+uint32 nuiTreeBase::Release()
+{
+  mRefs--;
+  if (!mRefs)
+  {
+    delete this;
+    return 0;
+  }
+  
+  return mRefs;
+}
+
 
 bool nuiTreeBase::AddChild(nuiTreePtr pChild)
 {
+  pChild->Acquire();
   if (!mpAutoSort)
   {
     mpChildren.push_back(pChild);
@@ -67,8 +86,12 @@ bool nuiTreeBase::InsertChild(uint32 Index, nuiTreePtr pChild)
   std::vector<nuiTreePtr>::iterator it = mpChildren.begin();
   it+=Index;
   if (it == mpChildren.end())
-    return false;
+  {
+    mpChildren.resize(mpChildren.size() - 1);
+    return false;    
+  }
   mpChildren.insert(it, pChild);
+  pChild->Acquire();
   mTreeNodeEventSink.Connect(pChild->Changed, &nuiTreeBase::OnChildChanged, pChild);
   mTreeNodeEventSink.Connect(pChild->ChildAdded, &nuiTreeBase::OnChildAdded, pChild);
   mTreeNodeEventSink.Connect(pChild->ChildDeleted, &nuiTreeBase::OnChildRemoved, pChild);
@@ -84,10 +107,11 @@ bool nuiTreeBase::InsertChild(uint32 Index, nuiTreePtr pChild)
 
 bool nuiTreeBase::SetChild(uint32 Index, nuiTreePtr pChild, bool DeleteExistingObject)
 {
+  pChild->Acquire();
   if (mpChildren.size() < Index+1)
     mpChildren.resize(Index+1);
   if (DeleteExistingObject && mpChildren[Index])
-    delete mpChildren[Index];
+    mpChildren[Index]->Release();
   else if (mpChildren[Index])
   {
     mTreeNodeEventSink.Disconnect(mpChildren[Index]->Changed);
@@ -120,8 +144,7 @@ bool nuiTreeBase::DelChild(uint32 Index, bool DeleteObject)
     mTreeNodeEventSink.Disconnect(mpChildren[Index]->Deleted);
 
     if (DeleteObject)
-      delete mpChildren[Index];
-
+      mpChildren[Index]->Release();
 
     mpChildren.erase(mpChildren.begin()+Index);
 
@@ -144,7 +167,7 @@ bool nuiTreeBase::Clear(bool erase)
     {
       nuiTreeBase* pChild = (*it);
       it = mpChildren.erase(it);
-      delete pChild;
+      pChild->Release();
     }
   }
   else
@@ -178,7 +201,7 @@ bool nuiTreeBase::DelChild(nuiTreePtr pChild, bool DeleteObject)
 
       if (DeleteObject)
       {
-        delete mpChildren[i];
+        mpChildren[i]->Release();
       }
       else
       {

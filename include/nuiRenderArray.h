@@ -25,7 +25,7 @@ class NUI_API nuiRenderArray
 public:
   nuiRenderArray(uint32 mode, bool Static = false);
   nuiRenderArray(const nuiRenderArray& rArray);
-  ~nuiRenderArray();
+  virtual ~nuiRenderArray();
 
   struct Vertex
   {

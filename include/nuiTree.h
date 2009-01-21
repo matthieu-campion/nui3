@@ -31,6 +31,9 @@ public:
   nuiTreeBase();
   virtual ~nuiTreeBase();
 
+  uint32 Acquire();
+  uint32 Release();
+  
   bool AddChild(nuiTreePtr pChild);
   bool InsertChild(uint32 Index, nuiTreePtr pChild);
   bool SetChild(uint32 Index, nuiTreePtr pChild, bool DeleteExistingObject = true);
@@ -90,6 +93,7 @@ protected:
 private:
   void SetParent(nuiTreeBase* pParent);
   nuiTreeBase* mpParent;
+  uint32 mRefs;
 };
 
 template <class T> class NUI_API nuiTree : public nuiTreeBase
