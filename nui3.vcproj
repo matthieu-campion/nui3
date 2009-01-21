@@ -2562,6 +2562,14 @@
 				Name="AudioSamples"
 				>
 				<File
+					RelativePath=".\src\AudioSamples\nuiAiffReader.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiAiffReader.h"
+					>
+				</File>
+				<File
 					RelativePath=".\src\AudioSamples\nuiAudioDecoder.cpp"
 					>
 				</File>
@@ -2571,6 +2579,14 @@
 				</File>
 				<File
 					RelativePath=".\src\AudioSamples\Win\nuiAudioDecoder_WinXX.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\AudioSamples\nuiChunkSampleReader.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiChunkSampleReader.h"
 					>
 				</File>
 				<File

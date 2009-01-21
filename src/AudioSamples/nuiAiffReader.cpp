@@ -6,7 +6,7 @@
  *  Copyright 2009 Mxp4. All rights reserved.
  *
  */
-
+#include "nui.h"
 #include "nuiAiffReader.h"
 #include "nuiAudioConvert.h"
 #include "nuiChunksDefinitions.h"

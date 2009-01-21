@@ -73,7 +73,7 @@ public:
   SamplesQueue mQueue;
 };
 
-bool nuiAudioDecoder::Init()
+/*bool nuiAudioDecoder::Init()
 {
   if (mInitialized) //already initialized
 	return false;
@@ -98,7 +98,7 @@ bool nuiAudioDecoder::Init()
   }
 
   return result;
-}
+}*/
 
 void nuiAudioDecoder::Clear()
 {
@@ -137,8 +137,24 @@ bool nuiAudioDecoder::Seek(uint64 SampleFrame)
 
 bool nuiAudioDecoder::ReadInfo()
 {
-  bool result = false;
+  if (mInitialized) //already initialized
+	return false;
+
+  CoInitialize(NULL);
+  mpPrivate = new nuiAudioDecoderPrivate();
   HRESULT hr = S_OK;
+  mpPrivate->mpWMStream = new nglWindowsMediaIStream(mrStream);
+
+  hr = WMCreateSyncReader(NULL, WMT_RIGHT_PLAYBACK, &mpPrivate->mpWMReader);
+  if (SUCCEEDED(hr))
+  {
+	hr = mpPrivate->mpWMReader->OpenStream(mpPrivate->mpWMStream);
+	if (FAILED(hr))
+	{
+	  return false;
+	}
+  }
+  bool result = false;
   DWORD OutputNb = 0;
   DWORD FormatNb = 0;
   WORD StreamNb = 0;
@@ -285,13 +301,13 @@ bool nuiAudioDecoder::ReadInfo()
   return result;
 }
 
-uint32 nuiAudioDecoder::Read(std::vector<float*> buffers, uint32 SampleFrames)
+uint32 nuiAudioDecoder::ReadDE(std::vector<void*> buffers, uint32 sampleframes, nuiSampleBitFormat format)
 {
   NGL_ASSERT(mInitialized);
   if (!mInitialized)
 	return 0;
 
-  uint32 BytesToRead		= SampleFrames * mInfo.GetChannels() * mpPrivate->mQueue.GetInputBytesPerSample();
+  uint32 BytesToRead		= sampleframes * mInfo.GetChannels() * mpPrivate->mQueue.GetInputBytesPerSample();
   HRESULT hr				= S_OK;
   INSSBuffer* pTempBuffer	= NULL;
   QWORD SampleTime			= 0;
@@ -321,9 +337,35 @@ uint32 nuiAudioDecoder::Read(std::vector<float*> buffers, uint32 SampleFrames)
 	flags			  = 0;
   }
 
-  uint32 FramesRead = mpPrivate->mQueue.ReadDeInterleavedFloat32(buffers, SampleFrames); // we want de-interleaved samples
-  mPosition += FramesRead;
+  uint32 channels = mInfo.GetChannels();
+  std::vector<float*> temp(channels);
+  if (format == eSampleFloat32)
+  {
+	for (uint32 i = 0; i < channels; i++)
+	{
+	  temp[i] = (float*)(buffers[i]);
+	}
+  }
+  else
+  {
+	for (uint32 i = 0; i < channels; i++)
+	{
+	  temp[i] = new float[sampleframes];
+	}
+  }
 
+  uint32 FramesRead = mpPrivate->mQueue.ReadDeInterleavedFloat32(temp, sampleframes); // we want de-interleaved samples
+
+  if (format == eSampleInt16)
+  {
+	for (uint32 i = 0; i < channels; i++)
+	{
+	  nuiAudioConvert_FloatBufferTo16bits(temp[i], (int16*)(buffers[i]), FramesRead);
+	  delete[] temp[i];
+	}
+  }
+
+  mPosition += FramesRead;
   return FramesRead;
 }
 

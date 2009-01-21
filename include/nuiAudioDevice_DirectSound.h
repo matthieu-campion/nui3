@@ -26,6 +26,7 @@ public:
   virtual nuiAudioDevice* GetDefaultInputDevice();
   virtual nuiAudioDevice* GetDefaultOutputDevice();
 
+
 protected:
 
   class DeviceDesc
@@ -62,4 +63,4 @@ private:
   
 };
 
-extern nuiAudioDeviceAPI_DirectSound DirectSoundApi;
+extern nuiAudioDeviceAPI_DirectSound DirectSoundAPI;

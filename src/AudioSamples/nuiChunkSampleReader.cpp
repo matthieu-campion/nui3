@@ -6,7 +6,7 @@
  *  Copyright 2009 Mxp4. All rights reserved.
  *
  */
-
+#include "nui.h"
 #include "nuiChunkSampleReader.h"
 
 #define CHUNK_ID_BYTES 4
