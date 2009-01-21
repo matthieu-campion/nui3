@@ -474,6 +474,14 @@
 				Name="Audio"
 				>
 				<File
+					RelativePath=".\src\AudioSamples\nuiAiffWriter.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiAiffWriter.h"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Audio\nuiAudioConvert.cpp"
 					>
 				</File>
