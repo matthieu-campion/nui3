@@ -4,29 +4,24 @@
  
  licence: see nui3/LICENCE.TXT
  */
- 
- #include "nui.h"
- #include "nuiSampleReader.h"
- 
-
-
 
 #pragma once
 
+ #include "nui.h"
+ #include "nuiChunkSampleReader.h"
 
-
-
-/// Class that reads an Wave Sound File
-class nuiWaveReader : public nuiSampleReader
+class nuiWaveReader : public nuiChunkSampleReader
 {
 public:
   nuiWaveReader(nglIStream& rStream); ///< nuiWaveReader Constructor \param rStream The nglIStream in which we read
-  nuiWaveReader(const nuiSampleReader& rReader, nglIStream& rStream);
+  nuiWaveReader(const nuiWaveReader& rReader, nglIStream& rStream);
   virtual ~nuiWaveReader();
+  
   virtual nuiSampleReader* Clone(nglIStream& rStream) const;
-  virtual bool ReadInfo(nuiSampleInfo& rInfos);  ///< Method that reads Infos of the Wave Sound \param rInfos Variable that receives Sample infos read in stream \return True if method succeeded
-  virtual uint32 Read(void* pBuffer, uint32 SampleFrames, nuiSampleBitFormat format);  ///< Method that reads Wave samples from stream \param pBuffer Pointer to a buffer that retrieves samples \param SampleFrames Number of sample frames to read \param SampleBitFormat Wanted format of samples in pBuffer \return True if method succeeded
-    
-private:
-};
 
+  uint32 ReadIN(void* pBuffer, uint32 sampleframes, nuiSampleBitFormat format = eSampleFloat32);
+  
+  virtual void SetPosition(uint32 position);
+private:
+  virtual bool ReadInfo();
+};

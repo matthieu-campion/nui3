@@ -25,7 +25,7 @@ nuiSample::nuiSample(const nuiSampleInfo& rInfos)
 
 nuiSample::nuiSample(nuiSampleReader& rReader)
 {
-  mInfos = rReader.GetSampleInfo();
+  rReader.GetInfo(mInfos);
   
   uint32 Channels = mInfos.GetChannels();
   uint32 SampleFrames = mInfos.GetSampleFrames();
@@ -34,7 +34,7 @@ nuiSample::nuiSample(nuiSampleReader& rReader)
   
   float* TempBuffer = new float[SampleFrames*Channels];
   rReader.SetPosition(0);
-  rReader.Read(TempBuffer,SampleFrames,eSampleFloat32);
+  rReader.ReadIN(TempBuffer,SampleFrames,eSampleFloat32);
   
   uint32 c;
   uint32 s;

@@ -159,7 +159,20 @@ void nuiAudioConvert_16bitsBufferToFloat(float* pBuffer, uint64 SizeToRead)
   }
 }
 
-
+void nuiAudioConvert_FloatBufferTo16bits(float* pFloatBuffer, int16* pInt16Buffer, uint64 SizeToRead)
+{
+  static const float mult1 = 32768.0f;
+  static const float mult2 = 32767.0f;
+  float Temp;
+  for (uint64 i = 0; i< SizeToRead; i++)
+  {
+    Temp = pFloatBuffer[i];
+    if (Temp < 0)
+      pInt16Buffer[i] = ToBelow(Temp * mult1);
+    else
+      pInt16Buffer[i] = ToBelow(Temp * mult2);
+  }
+}
 
 
 float nuiAudioConvert_24bitsToFloatFromLittleEndian(uint8* pBytesBuf)

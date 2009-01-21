@@ -9,18 +9,18 @@
 #include "nuiSampleReader.h"
 #include "nuiChunksDefinitions.h"
 
-nuiSampleReader::nuiSampleReader(nglIStream& rStream) : mrStream(rStream)
+nuiSampleReader::nuiSampleReader(nglIStream& rStream):
+mrStream(rStream),
+mInitialized(false),
+mPosition(0)
 {
-  mIsSampleInfoRead = false;
-  
-  mPositionInStream = 0;
-  mIsChunksScanned = false;
-  mDataChunkIndex = 2; //third chunk is often data chunk
 }
 
-nuiSampleReader::nuiSampleReader(const nuiSampleReader& rReader, nglIStream& rStream)
-: mrStream(rStream), mSampleInfo(rReader.mSampleInfo), mIsChunksScanned(rReader.mIsChunksScanned), mPosition(rReader.mPosition), mDataChunkIndex(rReader.mDataChunkIndex), mIsSampleInfoRead(rReader.mIsSampleInfoRead), mChunkIDPosition(rReader.mChunkIDPosition),
-mChunkDataPosition(rReader.mChunkDataPosition), mChunkSize(rReader.mChunkSize), mChunkID(rReader.mChunkID), mPositionInStream(rReader.mPositionInStream)
+nuiSampleReader::nuiSampleReader(const nuiSampleReader& rReader, nglIStream& rStream):
+mrStream(rStream),
+mInitialized(rReader.mInitialized),
+mPosition(rReader.mPosition),
+mInfo(rReader.mInfo)
 {
 }
 
@@ -28,155 +28,53 @@ nuiSampleReader::~nuiSampleReader()
 {
 }
 
-uint64 nuiSampleReader::GetPosition() const
+bool nuiSampleReader::Init()
+{
+  mInitialized = ReadInfo();
+  if (mInitialized)
+    SetPosition(0);
+  
+  return mInitialized;
+}
+
+uint32 nuiSampleReader::GetPosition() const
 {
   return mPosition;
 }
 
-bool nuiSampleReader::SetPosition(uint64 SamplePos)
+void nuiSampleReader::SetPosition(uint32 position)
 {
-  //Make sure SamplePos is between 0 and SampleFrames
-  if (0 <= SamplePos && mSampleInfo.GetSampleFrames() >= SamplePos)
-  {
-    mPosition = SamplePos;
-    //#Mat Modif 050907
-    if (mIsSampleInfoRead)
-    {
-      mrStream.SetPos(mChunkDataPosition[mDataChunkIndex] + (mPosition * mSampleInfo.GetChannels() * mSampleInfo.GetBitsPerSample() / 8),eStreamFromStart);
-      return true;
-    }
-    else
-        return false;
-  }
-  else
-    return false;
+  NGL_ASSERT(mInitialized);
+  mPosition = position;
 }
 
-
-//
-//ReadChunkSize
-//
-//
-//Read Selected Chunk Dta section Size and go to start of data section
-//
-bool nuiSampleReader::ReadChunkSize(uint8 ChunkNum, uint32& rChunkSize)
+bool nuiSampleReader::GetInfo(nuiSampleInfo& rInfo) const
 {
-  if (ChunkNum > mChunkIDPosition.size())
+  if (!mInitialized)
+  {
     return false;
+  }
   
-  mrStream.SetPos(mChunkIDPosition[ChunkNum] + 4);
-  mPositionInStream = mChunkIDPosition[ChunkNum] + 4;
-  
-  if (1 != mrStream.ReadUInt32(&rChunkSize, 1))
-    return false;
-  if (0 != rChunkSize % 2)
-    rChunkSize += 1;
-	
+  rInfo = mInfo;
   return true;
 }
 
-
-//
-//ScanAllChunks
-//
-//
-//Scan file to find all:
-//                      -Position Of Chunk ID
-//                      -Position Of Chunk Data
-//                      -Size of Chunk Data
-//                      -Name of Chunk ID
-//
-bool nuiSampleReader::ScanAllChunks()
+bool nuiSampleReader::BytesToSampleFrames(uint64 inBytes, uint64& outSampleFrames) const
 {
-  uint32 StreamSize = 0;
-  uint32 CurrentChunkSize = 0;
-  
-  
-  //uint8 ChunkHeaderSize = 4+4;  //size of ID + Size
-  
-  //find Strea Size
-  mrStream.SetPos(0 + 4);
-  mPositionInStream = 0 + 4;
-  if (1 != mrStream.ReadUInt32(&StreamSize, 1))
+  NGL_ASSERT(mInitialized);
+  if (!mInitialized)
     return false;
   
-  //Set first chunk ID position (always 0)
-  mChunkIDPosition.push_back(0);
-  
-  //Set first chunk Size(size of rest of file)
-  mChunkSize.push_back(StreamSize);
-  
-  //Set second chunk ID position (always always 12)
-  mChunkIDPosition.push_back(CHUNK_HEADER_SIZE+4);
-  
-  //Set second chunk Size(size of parameters section)
-  if ( false == ReadChunkSize(1, CurrentChunkSize))
-    return false;
-  mChunkSize.push_back(CurrentChunkSize);
-  
-  //Set next Chunk ID positions and next Chunk Sizes
-  uint8 i = 2;
-  while ((mChunkIDPosition.back() + mChunkSize.back())< StreamSize)
-  {
-    mChunkIDPosition.push_back(mChunkIDPosition[i-1] + mChunkSize[i-1] + CHUNK_HEADER_SIZE);
-    if ( false == ReadChunkSize(i, CurrentChunkSize))
-	    return false;
-    mChunkSize.push_back(CurrentChunkSize);
-    i++;
-  }
-  
-  
-  std::vector<char> CurrentChunkID(4);
-  
-  uint8 j;
-  uint8 k;
-  
-  for(j = 0; j < mChunkIDPosition.size(); j++)
-  {
-    //Set Data Positions
-    mChunkDataPosition.push_back(mChunkIDPosition[j] + CHUNK_HEADER_SIZE);
-    
-    //Set Chunks IDs(name)
-    mrStream.SetPos(mChunkIDPosition[j]);
-    
-    for(k = 0; k < 4; k++)
-    {
-      if( 1 != mrStream.ReadUInt8((uint8*)&(CurrentChunkID[k]), 1))
-        return false;
-    }
-    
-    mChunkID.push_back(CurrentChunkID);
-    
-  }
-  
+  outSampleFrames = inBytes * 8 / (mInfo.GetChannels() * mInfo.GetBitsPerSample());
   return true;
 }
 
-//
-//GoToChunk
-//
-//
-//Go to Selected(by ChunkNum) Chunk Data Start Position
-//
-bool nuiSampleReader::GoToChunk(uint8 ChunkNum)
+bool nuiSampleReader::SampleFramesToBytes(uint64 inSampleFrames, uint64& outBytes) const
 {
-  if (ChunkNum < mChunkIDPosition.size())
-  {
-    mPositionInStream = mChunkDataPosition[ChunkNum];
-    mrStream.SetPos(mPositionInStream);
-    return true;
-  }
-  else
+  NGL_ASSERT(mInitialized);
+  if (!mInitialized)
     return false;
-}
-
-
-bool nuiSampleReader::IsInfoRead()
-{
-  return mIsSampleInfoRead;
-}
-
-const nuiSampleInfo& nuiSampleReader::GetSampleInfo() const
-{
-  return mSampleInfo;
+  
+  outBytes = inSampleFrames * mInfo.GetChannels() * mInfo.GetBitsPerSample() / 8;
+  return true;
 }

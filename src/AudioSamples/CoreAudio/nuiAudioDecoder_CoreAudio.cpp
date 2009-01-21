@@ -9,6 +9,7 @@
 
 #include "nuiAudioDecoder.h"
 #include <QuickTime/QuickTime.h>
+#include "nuiAudioConvert.h"
 
 bool CstrToPascal(const char* Cstr, Str255 PascalStr)
 {
@@ -108,41 +109,6 @@ void nuiAudioDecoderPrivate::Clear()
 }
 
 
-
-
-///////////////////////////////////////////////////////////////////////////////////
-bool nuiAudioDecoder::Init()
-{
-  if (mInitialized)
-    return false; // already initialized
-  
-  mpPrivate = new nuiAudioDecoderPrivate(mrStream);
-  
-  bool result = false;
-  
-  EnterMovies();
-    
-  //pass a fake file name to the init method, quicktime will try to recognize this file type extension, if not, try another.....
-  std::vector<const char*> FileExtensions;
-  FileExtensions.push_back("blabla.mp3");
-  FileExtensions.push_back("blabla.m4a");
-  FileExtensions.push_back("blabla.wma");
-  
-  for (uint32 i = 0; i < FileExtensions.size(); i++)
-  {
-    if (mpPrivate->Init(FileExtensions[i]))
-    {
-      return ReadInfo();
-    }
-    else
-    {
-      mpPrivate->Clear();
-    }
-  }
-  
-  return false;
-}
-
 void nuiAudioDecoder::Clear()
 {
   if (mpPrivate)
@@ -172,6 +138,40 @@ bool nuiAudioDecoder::Seek(uint64 SampleFrame)
 
 bool nuiAudioDecoder::ReadInfo()
 {
+  //Init QuickTime
+  if (mpPrivate)
+  {
+    delete mpPrivate;
+  }
+  mpPrivate = new nuiAudioDecoderPrivate(mrStream);
+  
+  EnterMovies();
+  
+  //pass a fake file name to the init method, quicktime will try to recognize this file type extension, if not, try another.....
+  std::vector<const char*> FileExtensions;
+  FileExtensions.push_back("blabla.mp3");
+  FileExtensions.push_back("blabla.m4a");
+  FileExtensions.push_back("blabla.wma");
+  FileExtensions.push_back("blabla.wav");
+  FileExtensions.push_back("blabla.aif");
+  
+  bool ready = false;
+  for (uint32 i = 0; i < FileExtensions.size() && !ready; i++)
+  {
+    if (mpPrivate->Init(FileExtensions[i]))
+    {
+      ready = true;
+    }
+    else
+    {
+      ready = false;
+      mpPrivate->Clear();
+    }
+  }
+  if (!ready)
+    return false;
+  
+  
   OSStatus err = noErr;
   
   //Set audio extraction properties
@@ -230,7 +230,10 @@ bool nuiAudioDecoder::ReadInfo()
   return true;
 }
 
-uint32 nuiAudioDecoder::Read(std::vector<float*> buffers, uint32 SampleFrames)
+//virtual uint32 ReadDE(std::vector<void*> buffers, uint32 sampleframes, nuiSampleBitFormat format = eSampleFloat32);
+//virtual uint32 ReadIN(void* pBuffer, uint32 sampleframes, nuiSampleBitFormat format = eSampleFloat32);
+
+uint32 nuiAudioDecoder::ReadDE(std::vector<void*> buffers, uint32 sampleframes, nuiSampleBitFormat format)
 {
   NGL_ASSERT(mInitialized);
   if (!mInitialized)
@@ -241,8 +244,21 @@ uint32 nuiAudioDecoder::Read(std::vector<float*> buffers, uint32 SampleFrames)
     return 0;
   
   uint64 BytestoRead = 0;
-  if (!SampleFramesToBytes(SampleFrames, BytestoRead))
+  if (!SampleFramesToBytes(sampleframes, BytestoRead))
     return 0;
+  
+  std::vector<float*> temp(nbChannels);
+  for (uint32 c = 0; c < nbChannels; c++)
+  {
+    if (format == eSampleFloat32)
+    {
+      temp[c] = (float*)(buffers[c]);
+    }
+    else
+    {
+      temp[c] = new float[sampleframes];
+    }
+  }
   
   OSStatus err = noErr;
   uint32 listSize = sizeof(AudioBufferList) + sizeof(AudioBuffer) * (nbChannels - 1);
@@ -254,14 +270,23 @@ uint32 nuiAudioDecoder::Read(std::vector<float*> buffers, uint32 SampleFrames)
     //each AudioBuffer object represents one channel since we want non-interleaved samples
     pBufList->mBuffers[ch].mNumberChannels  = 1;
     pBufList->mBuffers[ch].mDataByteSize    = BytestoRead / nbChannels;
-    pBufList->mBuffers[ch].mData            = &(buffers[ch][0]);
+    pBufList->mBuffers[ch].mData            = temp[ch];
   }
   
   UInt32 flags      = 0;
-  UInt32 numFrames  = SampleFrames;
+  UInt32 numFrames  = sampleframes;
   err = MovieAudioExtractionFillBuffer(mpPrivate->mExtractionSessionRef, &numFrames, pBufList, &flags);  //Extract
   if (err != noErr)
     return 0;
+  
+  if (format == eSampleInt16)
+  {
+    //convert from float 32 bits to int 16bits
+    for (uint32 c = 0; c < nbChannels; c++)
+    {
+      nuiAudioConvert_FloatBufferTo16bits(temp[c], (int16*)(buffers[c]), numFrames);
+    }
+  }
   
   uint32 SampleFramesRead = numFrames;
   mPosition  += SampleFramesRead;
@@ -269,6 +294,50 @@ uint32 nuiAudioDecoder::Read(std::vector<float*> buffers, uint32 SampleFrames)
   delete[] pBufList;
   
   return SampleFramesRead;
+}
+
+uint32 nuiAudioDecoder::ReadIN(void* pBuffer, uint32 sampleframes, nuiSampleBitFormat format)
+{
+  //don't increment mPosition: it's already done in ReadDE
+  uint32 channels = mInfo.GetChannels();
+  std::vector<float*> temp(channels);
+  std::vector<void*> tempVoid(channels);
+  for (uint32 c= 0; c < channels; c++)
+  {
+    temp[c] = new float[sampleframes];
+    tempVoid[c] = (void*)(temp[c]);
+  }
+  
+  uint32 sampleFramesRead = ReadDE(tempVoid, sampleframes, eSampleFloat32);
+  if (format == eSampleFloat32)
+  {
+    float* pFloatBuffer = (float*)pBuffer;
+    //just interleave samples
+    for (uint32 c = 0; c < channels; c++)
+    {
+      for (uint32 s = 0; s < sampleFramesRead; s++)
+      {
+        pFloatBuffer[s * channels + c] = temp[c][s];
+      }
+    }
+  }
+  else
+  {
+    //16 bits int are required, so interleave samples and convert them into float
+    int16* pInt16Buffer = (int16*)pBuffer;
+    for (uint32 c = 0; c < channels; c++)
+    {
+      nuiAudioConvert_DEfloatToINint16(temp[c], pInt16Buffer, c, channels, sampleFramesRead);
+    }
+    
+  }
+  
+  for (uint32 c= 0; c < channels; c++)
+  {
+    delete[] temp[c];
+  }
+  
+  return sampleFramesRead;
 }
 
 Handle nuiAudioDecoderPrivate::createPointerDataRefWithExtensions( void *data, Size dataSize, Str255 fileName, OSType fileType, StringPtr mimeTypeString)
@@ -352,6 +421,8 @@ bail:
   
   return NULL;
 }
+
+
 
 //////////
 //

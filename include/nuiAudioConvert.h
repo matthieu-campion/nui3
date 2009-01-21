@@ -21,6 +21,7 @@ void nuiAudioConvert_Signed8bitsBufferTo16Bits(int16* pBuffer, uint64 SizeToRead
 void nuiAudioConvert_Signed8bitsBufferToFloat(float* pBuffer, uint64 SizeToRead);  ///< Convert a buffer of signed 8 bits numbers in a buffer of float numbers (32 bits) \param pBuffer Buffer that gives Input and receives Output numbers \param SizeToRead Number of elements to convert
 //
 void nuiAudioConvert_16bitsBufferToFloat(float* pBuffer, uint64 SizeToRead); ///< Convert a buffer of signed 16 bits int numbers in a buffer of float numbers (32 bits) \param pBuffer Buffer that gives Input and receives Output numbers \param SizeToRead Number of elements to convert
+void nuiAudioConvert_FloatBufferTo16bits(float* pFloatBuffer, int16* pInt16Buffer, uint64 SizeToRead);
 //
 float nuiAudioConvert_24bitsToFloatFromLittleEndian(uint8* pBytesBuf); ///< Convert 24 bits int Little Endian number to float number (32 bits) \param pBytesBuf pointer to a buffer of 3 unsigned 8 bits int which represent the 24 bit int number to convert \return The float converted number
 float nuiAudioConvert_24bitsToFloatFromBigEndian(uint8* pBytesBuf);  ///< Convert 24 bits int Big Endian number to float number (32 bits) \param pBytesBuf pointer to a buffer of 3 unsigned 8 bits int which represent the 24 bit int number to convert \return The float converted number

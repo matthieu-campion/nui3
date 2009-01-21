@@ -10,14 +10,15 @@
 #include "nuiAudioDecoder.h"
 
 nuiAudioDecoder::nuiAudioDecoder(nglIStream& rStream) :
-  mInitialized(false),
-  mrStream(rStream),
-  mPosition(0),
+  nuiSampleReader(rStream),
   mpPrivate(NULL)
 {
-  mInitialized = Init();
-  if (mInitialized)
-	SetPosition(0);
+}
+
+nuiAudioDecoder::nuiAudioDecoder(const nuiAudioDecoder& rDecoder, nglIStream& rStream) :
+nuiSampleReader(rDecoder, rStream),
+mpPrivate(NULL)
+{
 }
 
 nuiAudioDecoder::~nuiAudioDecoder()
@@ -25,54 +26,25 @@ nuiAudioDecoder::~nuiAudioDecoder()
   Clear();
 }
 
-
-bool nuiAudioDecoder::GetInfo(nuiSampleInfo& rInfo) const
+nuiSampleReader* nuiAudioDecoder::Clone(nglIStream& rStream) const
 {
-  if (!mInitialized)
-    return false;
-  
-  rInfo = mInfo;
-  return true;
+  nuiAudioDecoder* pDecoder = new nuiAudioDecoder(*this, rStream);
+  pDecoder->SetPosition(0);
+  return pDecoder;
 }
 
-const uint64 nuiAudioDecoder::GetPosition() const
-{
-  return mPosition;
-}
 
-bool nuiAudioDecoder::SetPosition(uint64 pos)
+void nuiAudioDecoder::SetPosition(uint32 pos)
 {
   NGL_ASSERT(mInitialized);
   if (!mInitialized)
-    return false;
+    return;
  
   if (Seek(pos))
   {
     mPosition = pos;
-    return true;
   }
-  else
-    return false;
 }
 
-bool nuiAudioDecoder::BytesToSampleFrames(uint64 inBytes, uint64& outSampleFrames) const
-{
-  NGL_ASSERT(mInitialized);
-  if (!mInitialized)
-    return false;
-  
-  outSampleFrames = inBytes * 8 / (mInfo.GetChannels() * mInfo.GetBitsPerSample());
-  return true;
-}
-
-bool nuiAudioDecoder::SampleFramesToBytes(uint64 inSampleFrames, uint64& outBytes) const
-{
-  NGL_ASSERT(mInitialized);
-  if (!mInitialized)
-    return false;
-  
-  outBytes = inSampleFrames * mInfo.GetChannels() * mInfo.GetBitsPerSample() / 8;
-  return true;
-}
 
 

@@ -11,48 +11,20 @@
 #include "nuiChunksDefinitions.h"
 
 
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-bool CompareID(std::vector<char> ID,  char* IDname) 
-{
-  uint8 i;
-  for(i = 0; i < 4; i++)
-  {
-    if (ID[i] != IDname[i])
-      return false;
-  }
-  return true;
-}
-
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-nuiWaveReader::nuiWaveReader(nglIStream& rStream) : nuiSampleReader(rStream)
-{
-  mrStream.SetEndian(eEndianLittle);
-  
-  /*
-  mPositionInStream = 0;
-  mIsChunksScanned = false;
-   */
-}
-
-nuiWaveReader::nuiWaveReader(const nuiSampleReader& rReader, nglIStream& rStream)
-: nuiSampleReader(rReader, rStream)
+nuiWaveReader::nuiWaveReader(nglIStream& rStream) : nuiChunkSampleReader(rStream)
 {
   mrStream.SetEndian(eEndianLittle);
 }
 
+nuiWaveReader::nuiWaveReader(const nuiWaveReader& rReader, nglIStream& rStream) : 
+nuiChunkSampleReader(rReader, rStream)
+{
+  mrStream.SetEndian(eEndianLittle);
+}
 
 nuiWaveReader::~nuiWaveReader()
 {
-
 }
-
 
 nuiSampleReader* nuiWaveReader::Clone(nglIStream& rStream) const
 {
@@ -61,59 +33,50 @@ nuiSampleReader* nuiWaveReader::Clone(nglIStream& rStream) const
   return pReader;
 }
 
-
-//
-//ReadInfo
-//
-//
-//Read all wave file infos given in "fmt" chunk
-//
-bool  nuiWaveReader::ReadInfo(nuiSampleInfo& rInfos)
+void nuiWaveReader::SetPosition(uint32 position)
 {
+  if (!mInitialized)
+    return;
+  
+  Chunk* pDataChunk = GetChunk("data");
+  
+  nglFileOffset StreamPosition = pDataChunk->mDataPosition + position;
+  mrStream.SetPos(StreamPosition);
+  mPosition = position;
+}
+
+bool nuiWaveReader::ReadInfo()
+{
+  ScanAllChunks();
+  
   uint16 Format = eWaveFormatUnknown;
   uint16 NbChannels = 0;
   uint32 SamplesPerSec = 0;
   uint32 AvgBytesPerSec = 0;
   uint16 BlockAlign = 0;
   uint16 BitsPerSample = 0;
-  
   uint32 NbSamples = 0;
   
-  //Go to first Chunk "RIFF"
-  mrStream.SetPos(8);
-  //Read File Format
-  std::vector<char> TempFileFormat(4);
-
-  uint8 i;
-  for(i = 0; i < 4; i++)
-  {
-    if( 1 != mrStream.ReadUInt8((uint8*)&(TempFileFormat[i]), 1))
-      return false;
-  }
-  //Compare File format with "WAVE"
-  if ( false == CompareID(TempFileFormat, "WAVE") )
+  bool res = false;
+  
+  res = GoToChunk("RIFF");
+  if (!res)
     return false;
-  else
-    rInfos.SetFileFormat(eAudioWave);
-  
-  // This is a wav file: scan chunks
-  if (false == mIsChunksScanned)
+  std::vector<char> fileFormat(4);
+  char* waveFormat = "WAVE";
+  for(uint32 i = 0; i < 4; i++)
   {
-    ScanAllChunks();
-    mIsChunksScanned = true;
+    if( 1 != mrStream.ReadUInt8((uint8*)&(fileFormat[i]), 1))
+      return false;
+    if (fileFormat[i] != waveFormat[i])
+      return false; // this stream is not a wave stream
   }
-  
-  //Go to "fmt " Chunk
-  for(i = 0; i < mChunkID.size(); i++)
-  {
-    if( true == CompareID(mChunkID[i], "fmt "))  //attempt to reach "fmt " Chunk
-    {
-      GoToChunk(i);
-      break;
-    }
-  }
- 
-  
+  mInfo.SetFileFormat(eAudioWave);
+
+  res = GoToChunk("fmt ");
+  if (!res)
+    return false;
+   
   //Read all parameters given in "fmt" chunk
   if( 1 != mrStream.ReadUInt16(&Format,1))
     return false;
@@ -129,158 +92,129 @@ bool  nuiWaveReader::ReadInfo(nuiSampleInfo& rInfos)
     return false;
   
   
-  rInfos.SetFormatTag(Format);
-  rInfos.SetSampleRate(SamplesPerSec);
-  rInfos.SetChannels(NbChannels);
-  rInfos.SetBitsPerSample(BitsPerSample);
+  mInfo.SetFormatTag(Format);
+  mInfo.SetSampleRate(SamplesPerSec);
+  mInfo.SetChannels(NbChannels);
+  mInfo.SetBitsPerSample(BitsPerSample);
   
-  
-  for(i = 0; i < mChunkID.size(); i++)
+  //get number of sample frames
+  for(uint32 i = 0; i < mChunks.size(); i++)
   {
-    if( true == CompareID(mChunkID[i], "data"))  //attempt to reach "data" Chunk
+    if(mChunks[i]->CompareId("data"))  //attempt to reach "data" Chunk
     {
-      ReadChunkSize(i, NbSamples);  // Size given in data Chunk is number of sample frames
-      rInfos.SetSampleFrames(NbSamples * 8 / BitsPerSample / NbChannels);
-      
-      mDataChunkIndex = i;
-      
+      NbSamples = mChunks[i]->mDataSize;
+      mInfo.SetSampleFrames(NbSamples * 8 / BitsPerSample / NbChannels);
       break;
     }
   }
-  
-  
-  rInfos.SetStartFrame(0);
-  rInfos.SetStopFrame(rInfos.GetSampleFrames());
-  
-  
-  
-  // place Wave File infos in SampleInfo member (mSampleInfo)
-  mSampleInfo = rInfos;
-  mIsSampleInfoRead = true;
+
+  mInfo.SetStartFrame(0);
+  mInfo.SetStopFrame(mInfo.GetSampleFrames());
   
   return true;
 }
 
 
 
-//
-//Read
-//
-uint32 nuiWaveReader::Read(void* pBuffer, uint32 SampleFrames, nuiSampleBitFormat format)
+uint32 nuiWaveReader::ReadIN(void* pBuffer, uint32 sampleframes, nuiSampleBitFormat format)
 {
-  const uint64 NbSamplePointsToRead = SampleFrames * mSampleInfo.GetChannels();
-  uint64 nb = 0;
-  
+  const uint64 SamplePointsToRead = sampleframes * mInfo.GetChannels();
+  uint64 SampleFramesRead = 0;
+  const uint32 channels = mInfo.GetChannels();
   switch(format)
   {
-  case eSampleInt16 :
+    case eSampleInt16 :
     {
-      switch (mSampleInfo.GetBitsPerSample())
+      switch (mInfo.GetBitsPerSample())
       {
-      case 8:
+        case 8:
         {
           int16* pTempInt16 = (int16*)pBuffer;
-          
-          int64 sizeRead;
-          sizeRead = mrStream.ReadUInt8(((uint8*)pTempInt16) + NbSamplePointsToRead , NbSamplePointsToRead);
-          mPosition += sizeRead / mSampleInfo.GetChannels();
+          uint32 sizeRead = mrStream.ReadUInt8(((uint8*)pTempInt16) + SamplePointsToRead , SamplePointsToRead);
           nuiAudioConvert_Unsigned8bitsBufferTo16Bits(pTempInt16, sizeRead);
-          nb = sizeRead / mSampleInfo.GetChannels();
+          SampleFramesRead = sizeRead / channels;
         }
-        break;
-        
-      case 16:
+          break;
+          
+        case 16:
         {
-          int64 sizeRead;
-          sizeRead = mrStream.ReadInt16((int16*)pBuffer, NbSamplePointsToRead);
-          mPosition += sizeRead / mSampleInfo.GetChannels();
-          nb = sizeRead / mSampleInfo.GetChannels();
+          uint32 sizeRead = mrStream.ReadInt16((int16*)pBuffer, SamplePointsToRead);
+          SampleFramesRead = sizeRead / channels;
         }
-        break;
-        
-      case 24:
-      case 32:
-      default:
-        NGL_ASSERT(0);
-        nb = 0;
-        break;
+          break;
+          
+        case 24:
+        case 32:
+        default:
+          NGL_ASSERT(0);
+          SampleFramesRead = 0;
+          break;
       }
     }
-    break;
-    
-  case eSampleFloat32 :
+      break;
+      
+    case eSampleFloat32 :
     {
-      switch (mSampleInfo.GetBitsPerSample())
+      switch (mInfo.GetBitsPerSample())
       {
-      case 8:
+        case 8:
         {
           float* pTempFloat = (float*)pBuffer;
-          int64 sizeRead;
-          
-          sizeRead = mrStream.ReadUInt8((uint8*)pTempFloat + 3 * NbSamplePointsToRead , NbSamplePointsToRead);
-          mPosition += sizeRead / mSampleInfo.GetChannels();
+          uint32 sizeRead = mrStream.ReadUInt8((uint8*)pTempFloat + 3 * SamplePointsToRead , SamplePointsToRead);
+          SampleFramesRead = sizeRead / channels;
           nuiAudioConvert_Unsigned8bitsBufferToFloat(pTempFloat, sizeRead);
-          nb = sizeRead / mSampleInfo.GetChannels();
         }
-        break;
-        
-      case 16:
+          break;
+          
+        case 16:
         {
           float* pTempFloat = (float*)pBuffer;
-          int64 sizeRead;
-          
-          sizeRead = mrStream.ReadInt16((int16*)pTempFloat + NbSamplePointsToRead, NbSamplePointsToRead);
-          mPosition += sizeRead / mSampleInfo.GetChannels();
-          
-          nuiAudioConvert_16bitsBufferToFloat(pTempFloat, NbSamplePointsToRead);
-          nb = sizeRead / mSampleInfo.GetChannels();
+
+          uint32 sizeRead = mrStream.ReadInt16((int16*)pTempFloat + SamplePointsToRead, SamplePointsToRead);
+          SampleFramesRead = sizeRead / channels;
+          nuiAudioConvert_16bitsBufferToFloat(pTempFloat, sizeRead);
         }
-        break;
-        
-      case 24:
+          break;
+          
+        case 24:
         {
           float* pTempFloat = (float*)pBuffer;
-          int64 sizeRead;
-          
           uint8* pTempBuffer;
-          pTempBuffer = new uint8[NbSamplePointsToRead * 3]; //nb of sample points * 3 bytes (24 bits) = nb of bytes to read
+          pTempBuffer = new uint8[SamplePointsToRead * 3]; //nb of sample points * 3 bytes (24 bits) = nb of bytes to read
           
-          sizeRead = mrStream.ReadUInt8(pTempBuffer, NbSamplePointsToRead * 3) / 3; //divide by 3 to get actual number of read samples
-          mPosition += sizeRead / mSampleInfo.GetChannels();
-          
-          uint64 i;
-          for (i = 0; i < sizeRead; i++)
+          uint32 sizeRead = mrStream.ReadUInt8(pTempBuffer, SamplePointsToRead * 3) / 3; //divide by 3 to get actual number of read samples
+          SampleFramesRead = sizeRead / channels / 3;
+          for (uint64 i = 0; i < sizeRead; i++)
           {
             pTempFloat[i] = nuiAudioConvert_24bitsToFloatFromLittleEndian(pTempBuffer + (3 * i));
           }
-
-          delete[] pTempBuffer;
           
-          nb = sizeRead / mSampleInfo.GetChannels();
+          delete[] pTempBuffer;
         }
-        break;
-        
-      case 32:
+          break;
+          
+        case 32:
         {
-          int64 sizeRead;
-          sizeRead = mrStream.ReadFloat((float*)pBuffer, NbSamplePointsToRead);
-          mPosition += sizeRead / mSampleInfo.GetChannels();
-          nb = sizeRead / mSampleInfo.GetChannels();
+          uint32 sizeRead = mrStream.ReadFloat((float*)pBuffer, SamplePointsToRead);
+          SampleFramesRead = sizeRead / channels;
         }
-        break;
-        
-      default:
-        NGL_ASSERT(0);
-        nb = 0;
-        break;
+          break;
+          
+        default:
+          NGL_ASSERT(0);
+          SampleFramesRead = 0;
+          break;
       }
     }
-    break;
-  default:
-    NGL_ASSERT(0);
-    nb = 0;
-    break;
+      break;
+    default:
+      NGL_ASSERT(0);
+      SampleFramesRead = 0;
+      break;
   }
   
-  return nb;
+  mPosition += SampleFramesRead;
+  return SampleFramesRead;
 }
+
+
