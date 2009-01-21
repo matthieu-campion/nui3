@@ -832,6 +832,7 @@ bool nuiTreeView::MouseMoved(nuiSize X, nuiSize Y)
 // virtual 
 void nuiTreeView::OnDragged(nglDragAndDrop* pDragObject)
 {
+  NGL_OUT(_T("OnDragged\n"));
   if (mDraggedDelegate)
   {
     mDraggedDelegate(mpSelectedNode, mpDraggedObject);
@@ -845,7 +846,7 @@ void nuiTreeView::OnDragged(nglDragAndDrop* pDragObject)
     case eDropEffectScroll:
       break;      
     case eDropEffectMove:
-      delete mpSelectedNode;
+//       mpSelectedNode;
       break;
   }
   
@@ -855,6 +856,7 @@ void nuiTreeView::OnDragged(nglDragAndDrop* pDragObject)
 
 void nuiTreeView::OnStopDragging()
 {  
+  NGL_OUT(_T("OnStopDragging\n"));
   if (mStopDraggingDelegate)
   {
     mStopDraggingDelegate(mpSelectedNode);

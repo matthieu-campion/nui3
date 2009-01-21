@@ -11,7 +11,7 @@
 #include "nuiColor.h"
 
 /// class nuiRenderArray
-nuiRenderArray::nuiRenderArray(GLenum mode, bool Static)
+nuiRenderArray::nuiRenderArray(uint32 mode, bool Static)
 {
   for (uint i = 0; i < 4; i++)
     mEnabled[i] = false;

@@ -23,7 +23,7 @@ public:
 class NUI_API nuiRenderArray
 {
 public:
-  nuiRenderArray(GLenum mode, bool Static = false);
+  nuiRenderArray(uint32 mode, bool Static = false);
   nuiRenderArray(const nuiRenderArray& rArray);
   ~nuiRenderArray();
 
