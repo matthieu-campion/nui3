@@ -351,7 +351,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E5BEE2A20F26074E006A80A6</string>
+										<string>E5BEE2B30F260B91006A80A6</string>
 										<key>history</key>
 										<array>
 											<string>E5CD2F220ECF826F0083037A</string>
@@ -614,7 +614,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E5BEE2A30F26074E006A80A6</string>
+										<string>E5BEE2B40F260B91006A80A6</string>
 										<key>history</key>
 										<array>
 											<string>E5CD2F210ECF826F0083037A</string>
@@ -765,8 +765,6 @@
 			<key>Layout</key>
 			<array>
 				<dict>
-					<key>BecomeActive</key>
-					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXProjectModuleGUID</key>
@@ -901,7 +899,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>254150478.729238</real>
+	<real>254151569.50449699</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -914,7 +912,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E5BEE2A40F26074E006A80A6</string>
 		<string>E5BEE2490F2604D7006A80A6</string>
 		<string>E5BEE23C0F2603F3006A80A6</string>
 		<string>/Users/meeloo/work/nui3/examples/nuiDemo/nuiPhoneDemo.xcodeproj</string>

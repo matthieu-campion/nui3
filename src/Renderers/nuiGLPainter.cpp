@@ -63,6 +63,7 @@ static uint32 total = 0;
 nuiGLPainter::nuiGLPainter(nglContext* pContext, const nuiRect& rRect)
 : nuiPainter(rRect, pContext)
 {
+  m3DMode = false;
   mCanRectangleTexture = 0;
   mTextureTarget = GL_TEXTURE_2D;
 
@@ -570,7 +571,7 @@ void nuiGLPainter::DrawArray(const nuiRenderArray& rArray)
 
   NUI_RETURN_IF_RENDERING_DISABLED;
 
-  bool NeedTranslateHack = mode == GL_LINES || mode == GL_LINE_LOOP || mode == GL_LINE_STRIP;
+  bool NeedTranslateHack = (mode == GL_LINES || mode == GL_LINE_LOOP || mode == GL_LINE_STRIP) && !m3DMode;
   if (NeedTranslateHack)
     glTranslatef(.5, .5, 0);
   
@@ -1086,5 +1087,14 @@ void nuiGLPainter::InvalidateTexture(nuiTexture* pTexture, bool ForceReload)
   }
 }
 
+void nuiGLPainter::Enable3DMode(bool set)
+{
+  m3DMode = set;
+}
+
+bool nuiGLPainter::Get3DMode() const
+{
+  return m3DMode;
+}
 
 #endif //   #ifndef __NUI_NO_GL__

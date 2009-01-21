@@ -73,7 +73,7 @@ bool nuiUserArea::Draw(nuiDrawContext* pContext)
 
   #ifndef __NUI_NO_GL__
 
-    glGetIntegerv(GL_VIEWPORT,OldRect);
+    glGetIntegerv(GL_VIEWPORT, OldRect);
     glViewport((int)Rect.mLeft, (int)(RootRect.mBottom - Rect.mBottom), (int)Rect.GetWidth(), (int)Rect.GetHeight());
 
     glMatrixMode(GL_PROJECTION);
@@ -84,6 +84,8 @@ bool nuiUserArea::Draw(nuiDrawContext* pContext)
 
     glMatrixMode (GL_MODELVIEW);
     glLoadIdentity();
+    
+    glDisable(GL_SCISSOR_TEST);
   #endif
   }
 
