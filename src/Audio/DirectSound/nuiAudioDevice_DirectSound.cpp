@@ -1328,4 +1328,4 @@ BOOL CALLBACK nuiAudioDeviceAPI_DirectSound::DSEnumOutputCallback(LPGUID lpGuid,
   return pAPI->RealDSEnumOutputCallback(lpGuid, lpcstrDescription, lpcstrModule);
 }
 
- nuiAudioDeviceAPI_DirectSound DirectSoundApi;
+ nuiAudioDeviceAPI_DirectSound DirectSoundAPI;

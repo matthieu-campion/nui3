@@ -18,8 +18,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)2008"
-			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)2008"
+			OutputDirectory="$(ProjectDir)$(ConfigurationName)2008"
+			IntermediateDirectory="$(OutDir)\Objs"
 			ConfigurationType="4"
 			CharacterSet="1"
 			WholeProgramOptimization="0"
@@ -44,13 +44,14 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-Zm155"
+				AdditionalOptions="-Zm255"
 				Optimization="0"
-				AdditionalIncludeDirectories="include;deps/agg/include;deps/freetype2/include;deps/zlib;deps/libjpeg;deps/gameswf;deps/libpng;.;src\Stream\Zip;src\Application\Win;deps/harfbuzz"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;NGL_STATIC_BUILD;NGL_USE_WIN32_MMTIMER;FT_CONFIG_OPTION_SYSTEM_ZLIB"
-				MinimalRebuild="true"
+				AdditionalIncludeDirectories="include;deps/expat/lib;deps/freetype2/include;deps/zlib;deps/libjpeg;deps/gameswf;deps/libpng;deps/asio/common;deps/asio/host;deps/asio/host/pc;.;src\Stream\Zip;src\Application\Win;deps/harfbuzz;deps/tidy"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;NGL_STATIC_BUILD;NGL_USE_WIN32_MMTIMER;FT_CONFIG_OPTION_SYSTEM_ZLIB;HAVE_MEMMOVE;_CRT_SECURE_NO_WARNINGS;D3D_DEBUG_INFO"
+				MinimalRebuild="false"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
+				FloatingPointExceptions="true"
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="nui.h"
 				WarningLevel="3"
@@ -68,6 +69,8 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
+				AdditionalDependencies="Imm32.lib"
+				OutputFile="$(OutDir)\$(ProjectName)2008.lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -87,8 +90,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)2008"
-			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)2008"
+			OutputDirectory="$(ProjectDir)$(ConfigurationName)2008"
+			IntermediateDirectory="$(OutDir)\Objs"
 			ConfigurationType="4"
 			CharacterSet="1"
 			WholeProgramOptimization="0"
@@ -110,11 +113,17 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-Zm160"
-				AdditionalIncludeDirectories="include;deps/agg/include;deps/freetype2/include;deps/zlib;deps/libjpeg;deps/gameswf;deps/libpng;.;src\Stream\Zip;src\Application\Win;deps/harfbuzz;"
-				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;NGL_STATIC_BUILD;NGL_USE_WIN32_MMTIMER;FT_CONFIG_OPTION_SYSTEM_ZLIB"
+				AdditionalOptions="-Zm227"
+				Optimization="3"
+				InlineFunctionExpansion="2"
+				EnableIntrinsicFunctions="true"
+				FavorSizeOrSpeed="1"
+				AdditionalIncludeDirectories="include;deps/expat/lib;deps/freetype2/include;deps/zlib;deps/libjpeg;deps/gameswf;deps/libpng;deps/asio/common;.;src\Stream\Zip;src\Application\Win;deps/harfbuzz;deps/tidy"
+				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;NGL_STATIC_BUILD;NGL_USE_WIN32_MMTIMER;FT_CONFIG_OPTION_SYSTEM_ZLIB;HAVE_MEMMOVE;_CRT_SECURE_NO_WARNINGS"
+				StringPooling="true"
 				RuntimeLibrary="0"
 				BufferSecurityCheck="false"
+				EnableFunctionLevelLinking="false"
 				EnableEnhancedInstructionSet="1"
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="nui.h"
@@ -134,6 +143,8 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
+				AdditionalDependencies="Imm32.lib"
+				OutputFile="$(OutDir)\$(ProjectName)2008.lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -158,6 +169,358 @@
 		<Filter
 			Name="NUI"
 			>
+			<File
+				RelativePath=".\include\ngl.h"
+				>
+			</File>
+			<File
+				RelativePath="include\ngl_all.h"
+				>
+			</File>
+			<File
+				RelativePath="include\ngl_glext.h"
+				>
+			</File>
+			<Filter
+				Name="Attributes"
+				>
+				<File
+					RelativePath=".\src\Attributes\nuiAttribute.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiAttribute.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Attributes\nuiAttributeEditor.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiAttributeEditor.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Attributes\nuiBooleanAttributeEditor.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiBooleanAttributeEditor.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Attributes\nuiBorderAttributeEditor.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiBorderAttributeEditor.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Attributes\nuiColorAttributeEditor.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiColorAttributeEditor.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Attributes\nuiPathAttributeEditor.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiPathAttributeEditor.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Attributes\nuiPercentAttributeEditor.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiPercentAttributeEditor.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Attributes\nuiPointAttributeEditor.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiPointAttributeEditor.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Attributes\nuiRangeAttributeEditor.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiRangeAttributeEditor.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Attributes\nuiRectAttributeEditor.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiRectAttributeEditor.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Attributes\nuiSizeAttributeEditor.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiSizeAttributeEditor.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Attributes\nuiStringAttributeEditor.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiStringAttributeEditor.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Application"
+				>
+				<File
+					RelativePath=".\src\Application\Win\ngl.cpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="1"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\src\Application\Win\ngl_winXX.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Application\nglApplication.cpp"
+					>
+				</File>
+				<File
+					RelativePath="include\nglApplication.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Application\Win\nglApplication_WinXX.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Application\nglClipBoard.cpp"
+					>
+				</File>
+				<File
+					RelativePath="include\nglClipBoard.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Application\Win\nglClipBoard_WinXX.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Application\nglConsole.cpp"
+					>
+				</File>
+				<File
+					RelativePath="include\nglConsole.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Application\Win\nglConsole_WinXX.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Application\nglCPUInfo.cpp"
+					>
+				</File>
+				<File
+					RelativePath="include\nglCPUInfo.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Application\nglCPUInfo_x86.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Application\nglDataObjects.cpp"
+					>
+				</File>
+				<File
+					RelativePath="include\nglDataObjects.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Application\Win\nglDataObjects_WinXX.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Application\nglDataTypesRegistry.cpp"
+					>
+				</File>
+				<File
+					RelativePath="include\nglDataTypesRegistry.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Application\nglDragAndDropObjects.cpp"
+					>
+				</File>
+				<File
+					RelativePath="include\nglDragAndDropObjects.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Application\Win\nglExceptionTrace.cpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\src\Application\Win\nglExceptionTrace.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Application\nglKernel.cpp"
+					>
+				</File>
+				<File
+					RelativePath="include\nglKernel.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Application\Win\nglKernel_WinXX.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Application\nglLog.cpp"
+					>
+				</File>
+				<File
+					RelativePath="include\nglLog.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Application\Win\nglLog_WinXX.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Application\nglMimeSource.cpp"
+					>
+				</File>
+				<File
+					RelativePath="include\nglMimeSource.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Application\Win\nglMimeSource_WinXX.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Application\nglModule.cpp"
+					>
+				</File>
+				<File
+					RelativePath="include\nglModule.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Application\Win\nglModule_WinXX.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Application\Win\nglOleDragAndDropInterfaces_WinXX.h"
+					>
+				</File>
+				<File
+					RelativePath="include\nglPlugin.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Application\Win\nglPlugin_WinXX.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Application\nuiLocale.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Audio"
+				>
+				<File
+					RelativePath=".\src\AudioSamples\nuiAiffWriter.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiAiffWriter.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Audio\nuiAudioConvert.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiAudioConvert.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Audio\nuiAudioDevice.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiAudioDevice.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Audio\DirectSound\nuiAudioDevice_DirectSound.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiAudioDevice_DirectSound.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Audio\nuiAudioFifo.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiAudioFifo.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiAudioResampler.h"
+					>
+				</File>
+			</Filter>
 			<Filter
 				Name="Base"
 				>
@@ -194,6 +557,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\nuiBorder.h"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Base\nuiBuilder.cpp"
 					>
 				</File>
@@ -215,6 +582,30 @@
 				</File>
 				<File
 					RelativePath=".\include\nuiCommand.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Base\nuiCommandContainer.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiCommandContainer.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Base\nuiCommandManager.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiCommandManager.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Base\nuiCSS.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiCSS.h"
 					>
 				</File>
 				<File
@@ -250,30 +641,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\Base\nuiFont.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiFont.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Base\nuiFontBase.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiFontBase.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Base\nuiFontManager.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiFontManager.h"
-					>
-				</File>
-				<File
 					RelativePath=".\src\Base\nuiGladeLoader.cpp"
 					>
 				</File>
@@ -290,6 +657,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\Base\nuiHTML.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiHTML.h"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Base\nuiInit.cpp"
 					>
 				</File>
@@ -299,6 +674,14 @@
 				</File>
 				<File
 					RelativePath=".\include\nuiMainWindow.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Base\nuiMemoryPool.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiMemoryPool.h"
 					>
 				</File>
 				<File
@@ -374,11 +757,23 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\Base\nuiSerializeContext.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiSerializeContext.h"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Base\nuiSignalsSlots.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\include\nuiSignalsSlots.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiSingleton.h"
 					>
 				</File>
 				<File
@@ -427,74 +822,622 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="Text"
+				Name="Decorations"
 				>
 				<File
-					RelativePath=".\src\Text\nuiEditLine.cpp"
+					RelativePath=".\src\Decorations\nuiBorderDecoration.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\include\nuiEditLine.h"
+					RelativePath=".\include\nuiBorderDecoration.h"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Text\nuiEditText.cpp"
+					RelativePath=".\src\Decorations\nuiCheckerboardDecoration.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\include\nuiEditText.h"
+					RelativePath=".\include\nuiCheckerboardDecoration.h"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Text\nuiFormatedLabel.cpp"
+					RelativePath=".\src\Decorations\nuiColorDecoration.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\include\nuiFormatedLabel.h"
+					RelativePath=".\include\nuiColorDecoration.h"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Text\nuiFormater.cpp"
+					RelativePath=".\src\Decorations\nuiDecoration.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\include\nuiFormater.h"
+					RelativePath=".\include\nuiDecoration.h"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Text\nuiLabel.cpp"
+					RelativePath=".\include\nuiDecorationMode.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\nuiLabel.h"
+					RelativePath=".\src\Decorations\nuiDefaultDecoration.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Text\nuiLabelAttribute.cpp"
+					RelativePath=".\include\nuiDefaultDecoration.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\nuiLabelAttribute.h"
+					RelativePath=".\src\Decorations\nuiFrame.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\include\nuiLabelRenamer.h"
+					RelativePath=".\include\nuiFrame.h"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Text\nuiSpinnerLabel.cpp"
+					RelativePath=".\src\Decorations\nuiGradientDecoration.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\include\nuiSpinnerLabel.h"
+					RelativePath=".\include\nuiGradientDecoration.h"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Text\nuiText.cpp"
+					RelativePath=".\src\Decorations\nuiImageDecoration.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\include\nuiText.h"
+					RelativePath=".\src\Decorations\nuiMetaDecoration.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiMetaDecoration.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Decorations\nuiStateDecoration.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiStateDecoration.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Decorations\nuiTreeHandleDecoration.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiTreeHandleDecoration.h"
+					>
+				</File>
+				<Filter
+					Name="Embeded"
+					>
+					<File
+						RelativePath=".\graphics\DefaultDecoration.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\graphics\DefaultDecoration.h"
+						>
+					</File>
+				</Filter>
+			</Filter>
+			<Filter
+				Name="File"
+				>
+				<File
+					RelativePath=".\src\File\nglFile.cpp"
+					>
+				</File>
+				<File
+					RelativePath="include\nglFile.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\File\nglNativeVolume.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nglNativeVolume.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\File\nglPath.cpp"
+					>
+				</File>
+				<File
+					RelativePath="include\nglPath.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\File\nglVolume.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nglVolume.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\File\nuiNativeResourceVolume.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiNativeResourceVolume.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Font"
+				>
+				<File
+					RelativePath=".\src\Font\ngl_default_font.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Font\ngl_default_font.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Font\nglFont.cpp"
+					>
+				</File>
+				<File
+					RelativePath="include\nglFont.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Font\nglFontBase.cpp"
+					>
+				</File>
+				<File
+					RelativePath="include\nglFontBase.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Font\nglFontCache.cpp"
+					>
+				</File>
+				<File
+					RelativePath="include\nglFontCache.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Font\nglFontInstance.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Font\nglFontInstance.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Font\nglFontLayout.cpp"
+					>
+				</File>
+				<File
+					RelativePath="include\nglFontLayout.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Font\nglFontTexCache.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Font\nglFontTexCache.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Base\nuiFont.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiFont.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Base\nuiFontBase.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiFontBase.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Base\nuiFontManager.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiFontManager.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Font\nuiPanose.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiPanose.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Image"
+				>
+				<File
+					RelativePath=".\src\Image\nglBitmapTools.cpp"
+					>
+				</File>
+				<File
+					RelativePath="include\nglBitmapTools.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Image\nglImage.cpp"
+					>
+				</File>
+				<File
+					RelativePath="include\nglImage.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Image\nglImageCodec.cpp"
+					>
+				</File>
+				<File
+					RelativePath="include\nglImageCodec.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Image\nglImageJPEGCodec.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Image\nglImageJPEGCodec.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Image\nglImagePNGCodec.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Image\nglImagePNGCodec.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Image\nglImagePPMCodec.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Image\nglImagePPMCodec.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Image\nglImageTGACodec.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Image\nglImageTGACodec.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Introspector"
+				>
+				<File
+					RelativePath=".\src\Introspector\nuiFontInspector.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiFontInspector.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Introspector\nuiIntrospector.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiIntrospector.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Introspector\nuiThreadInspector.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiThreadInspector.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Introspector\nuiWidgetInspector.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiWidgetInspector.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Layout"
+				>
+				<File
+					RelativePath=".\src\Layout\nuiAnimView.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiAnimView.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Layout\nuiBackgroundPane.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiBackgroundPane.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Layout\nuiBox.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiBox.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Layout\nuiDialog.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiDialog.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiFileSelector.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiFileTable.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Layout\nuiFixed.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiFixed.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Layout\nuiFolderPane.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiFolderPane.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Layout\nuiGrid.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiGrid.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Layout\nuiHBox.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiHBox.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Layout\nuiImageSequence.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiImageSequence.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Layout\nuiList.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiList.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Layout\nuiMatrixView.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiMatrixView.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Layout\nuiModalContainer.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiModalContainer.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Layout\nuiPane.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiPane.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Layout\nuiPopupView.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiPopupView.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Layout\nuiPositioner.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiPositioner.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiScrollBar.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Layout\nuiScrollBox.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiScrollBox.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Layout\nuiScrollView.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiScrollView.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiShaderView.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiSplineEdit.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Layout\nuiSplitter.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiSplitter.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiSVGView.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiSWF.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiTabBar.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Layout\nuiTable.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiTable.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Layout\nuiTabView.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiTabView.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Layout\nuiTitledPane.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiTitledPane.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Layout\nuiUserArea.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiUserArea.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Layout\nuiVBox.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiVBox.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Layout\nuiWindow.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiWindow.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Layout\nuiZoomView.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiZoomView.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Math"
+				>
+				<File
+					RelativePath=".\src\Math\nglMath.cpp"
+					>
+				</File>
+				<File
+					RelativePath="include\nglMath.h"
+					>
+				</File>
+				<File
+					RelativePath="include\nglMatrix.h"
+					>
+				</File>
+				<File
+					RelativePath="include\nglQuaternion.h"
+					>
+				</File>
+				<File
+					RelativePath="include\nglVector.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Net"
+				>
+				<File
+					RelativePath=".\src\Net\nuiHTTP.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiHTTP.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Net\Win\nuiHTTP_WinXX.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiURL.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Net\Win\nuiURL_WinXX.cpp"
 					>
 				</File>
 			</Filter>
@@ -507,10 +1450,6 @@
 				</File>
 				<File
 					RelativePath=".\src\Renderers\AAPrimitives.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Renderers\AAUtilities.h"
 					>
 				</File>
 				<File
@@ -538,27 +1477,11 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\Renderers\nuiDecoration.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiDecoration.h"
-					>
-				</File>
-				<File
 					RelativePath=".\src\Renderers\nuiDrawContext.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\include\nuiDrawContext.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Renderers\nuiFrame.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiFrame.h"
 					>
 				</File>
 				<File
@@ -702,6 +1625,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\Renderers\nuiSurface.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiSurface.h"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Renderers\nuiSVGShape.cpp"
 					>
 				</File>
@@ -733,70 +1664,26 @@
 					RelativePath=".\include\nuiTextureHelpers.h"
 					>
 				</File>
-			</Filter>
-			<Filter
-				Name="WidgetTree"
-				>
-				<File
-					RelativePath=".\include\nuiComposite.h"
+				<Filter
+					Name="SoftwareRasterizer"
 					>
-				</File>
-				<File
-					RelativePath=".\src\WidgetTree\nuiContainer.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiContainer.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiInspector.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiInspectorTable.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\WidgetTree\nuiMainWindow.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\WidgetTree\nuiSimpleContainer.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiSimpleContainer.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\WidgetTree\nuiTopLevel.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiTopLevel.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\WidgetTree\nuiWidget.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiWidget.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\WidgetTree\nuiWidgetAnimation.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\WidgetTree\nuiWindowManager.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiWindowManager.h"
-					>
-				</File>
+					<File
+						RelativePath=".\include\nuiFixedPoint.h"
+						>
+					</File>
+					<File
+						RelativePath=".\include\nuiPixelBlender.h"
+						>
+					</File>
+					<File
+						RelativePath=".\include\nuiRasterizer.h"
+						>
+					</File>
+					<File
+						RelativePath=".\include\nuiVertex.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="SimpleWidgets"
@@ -842,11 +1729,27 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\SimpleWidgets\nuiFontBrowser.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiFontBrowser.h"
+					>
+				</File>
+				<File
 					RelativePath=".\src\SimpleWidgets\nuiFrameView.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\include\nuiFrameView.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\SimpleWidgets\nuiHotKeyEditor.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiHotKeyEditor.h"
 					>
 				</File>
 				<File
@@ -871,14 +1774,6 @@
 				</File>
 				<File
 					RelativePath=".\include\nuiImageDropZone.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\SimpleWidgets\nuiInspector.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\SimpleWidgets\nuiInspectorTable.cpp"
 					>
 				</File>
 				<File
@@ -1007,396 +1902,6 @@
 				</File>
 				<File
 					RelativePath=".\include\nuiZoomBar.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="TreeViews"
-				>
-				<File
-					RelativePath=".\src\TreeViews\nuiColumnTreeView.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiColumnTreeView.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\TreeViews\nuiPopupTree.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiPopupTree.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\TreeViews\nuiTreeView.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiTreeView.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Layout"
-				>
-				<File
-					RelativePath=".\src\Layout\nuiAnimView.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiAnimView.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Layout\nuiDialog.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiDialog.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiFileSelector.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiFileTable.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Layout\nuiFixed.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiFixed.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Layout\nuiFolderPane.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiFolderPane.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Layout\nuiGrid.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiGrid.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Layout\nuiHBox.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiHBox.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Layout\nuiList.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiList.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Layout\nuiMatrixView.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiMatrixView.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Layout\nuiModalContainer.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiModalContainer.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Layout\nuiPane.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiPane.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Layout\nuiPopupView.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiPopupView.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Layout\nuiPositioner.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiPositioner.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiScrollBar.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Layout\nuiScrollView.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiScrollView.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiShaderView.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiSplineEdit.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Layout\nuiSplitter.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiSplitter.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiSVGView.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiSWF.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiTabBar.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Layout\nuiTable.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiTable.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Layout\nuiTabView.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiTabView.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Layout\nuiTitledPane.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiTitledPane.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Layout\nuiUserArea.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiUserArea.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Layout\nuiVBox.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiVBox.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Layout\nuiWidgetBox.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiWidgetBox.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Layout\nuiWindow.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiWindow.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Layout\nuiZoomView.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiZoomView.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Audio"
-				>
-				<File
-					RelativePath=".\src\Audio\nuiAudioDevice.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiAudioDevice.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Audio\DirectSound\nuiAudioDevice_DirectSound.cpp"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Attributes"
-				>
-				<File
-					RelativePath=".\src\Attributes\nuiAttribute.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiAttribute.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Attributes\nuiAttributeEditor.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiAttributeEditor.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Attributes\nuiBooleanAttributeEditor.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiBooleanAttributeEditor.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Attributes\nuiColorAttributeEditor.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiColorAttributeEditor.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Attributes\nuiPathAttributeEditor.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiPathAttributeEditor.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Attributes\nuiPercentAttributeEditor.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiPercentAttributeEditor.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Attributes\nuiPointAttributeEditor.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiPointAttributeEditor.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Attributes\nuiRectAttributeEditor.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiRectAttributeEditor.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Attributes\nuiStringAttributeEditor.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiStringAttributeEditor.h"
-					>
-				</File>
-			</Filter>
-		</Filter>
-		<Filter
-			Name="NGL"
-			Filter="h;hpp;hxx;hm;inl;inc;xsd"
-			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
-			>
-			<File
-				RelativePath=".\include\ngl.h"
-				>
-			</File>
-			<File
-				RelativePath="include\ngl_all.h"
-				>
-			</File>
-			<File
-				RelativePath="include\ngl_glext.h"
-				>
-			</File>
-			<Filter
-				Name="String"
-				>
-				<File
-					RelativePath=".\src\String\nglString.cpp"
-					>
-				</File>
-				<File
-					RelativePath="include\nglString.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\String\nglStringConv_mlang.cpp"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Math"
-				>
-				<File
-					RelativePath=".\src\Math\nglMath.cpp"
-					>
-				</File>
-				<File
-					RelativePath="include\nglMath.h"
-					>
-				</File>
-				<File
-					RelativePath="include\nglMatrix.h"
-					>
-				</File>
-				<File
-					RelativePath="include\nglQuaternion.h"
-					>
-				</File>
-				<File
-					RelativePath="include\nglVector.h"
 					>
 				</File>
 			</Filter>
@@ -1569,166 +2074,198 @@
 				</Filter>
 			</Filter>
 			<Filter
-				Name="Image"
+				Name="String"
 				>
 				<File
-					RelativePath=".\src\Image\nglBitmapTools.cpp"
+					RelativePath=".\src\String\ConvertUTF.cpp"
 					>
 				</File>
 				<File
-					RelativePath="include\nglBitmapTools.h"
+					RelativePath=".\src\String\nglString.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Image\nglImage.cpp"
+					RelativePath="include\nglString.h"
 					>
 				</File>
 				<File
-					RelativePath="include\nglImage.h"
+					RelativePath=".\src\String\nglStringConv_mlang.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Image\nglImageCodec.cpp"
+					RelativePath=".\src\String\nglUTFStringConv.cpp"
 					>
 				</File>
 				<File
-					RelativePath="include\nglImageCodec.h"
+					RelativePath=".\include\nglUTFStringConv.h"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Image\nglImageJPEGCodec.cpp"
+					RelativePath=".\src\String\nuiTranslator.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Image\nglImageJPEGCodec.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Image\nglImagePNGCodec.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Image\nglImagePNGCodec.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Image\nglImagePPMCodec.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Image\nglImagePPMCodec.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Image\nglImageTGACodec.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Image\nglImageTGACodec.h"
+					RelativePath=".\include\nuiTranslator.h"
 					>
 				</File>
 			</Filter>
 			<Filter
-				Name="File"
+				Name="Text"
 				>
 				<File
-					RelativePath=".\src\File\nglFile.cpp"
+					RelativePath=".\src\Text\nuiEditLine.cpp"
 					>
 				</File>
 				<File
-					RelativePath="include\nglFile.h"
+					RelativePath=".\include\nuiEditLine.h"
 					>
 				</File>
 				<File
-					RelativePath=".\src\File\nglNativeVolume.cpp"
+					RelativePath=".\src\Text\nuiEditText.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\include\nglNativeVolume.h"
+					RelativePath=".\include\nuiEditText.h"
 					>
 				</File>
 				<File
-					RelativePath=".\src\File\nglPath.cpp"
+					RelativePath=".\src\Text\nuiFormatedLabel.cpp"
 					>
 				</File>
 				<File
-					RelativePath="include\nglPath.h"
+					RelativePath=".\include\nuiFormatedLabel.h"
 					>
 				</File>
 				<File
-					RelativePath=".\src\File\nglVolume.cpp"
+					RelativePath=".\src\Text\nuiFormater.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\include\nglVolume.h"
+					RelativePath=".\include\nuiFormater.h"
 					>
 				</File>
 				<File
-					RelativePath=".\src\File\nuiNativeResourceVolume.cpp"
+					RelativePath=".\src\Text\nuiHyperLink.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\include\nuiNativeResourceVolume.h"
+					RelativePath=".\include\nuiHyperLink.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Text\nuiLabel.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiLabel.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Text\nuiLabelAttribute.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiLabelAttribute.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiLabelRenamer.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Text\nuiScrollingLabel.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiScrollingLabel.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Text\nuiSpinnerLabel.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiSpinnerLabel.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Text\nuiText.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiText.h"
 					>
 				</File>
 			</Filter>
 			<Filter
-				Name="Font"
+				Name="Threading"
 				>
 				<File
-					RelativePath=".\src\Font\ngl_default_font.cpp"
+					RelativePath=".\include\nglAtomic.h"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Font\ngl_default_font.h"
+					RelativePath=".\include\nglCriticalSection.h"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Font\nglFont.cpp"
+					RelativePath=".\src\Threading\win32\nglCriticalSection_win32.cpp"
 					>
 				</File>
 				<File
-					RelativePath="include\nglFont.h"
+					RelativePath=".\include\nglGuard.h"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Font\nglFontBase.cpp"
+					RelativePath=".\src\Threading\nglLightLock.cpp"
 					>
 				</File>
 				<File
-					RelativePath="include\nglFontBase.h"
+					RelativePath=".\include\nglLightLock.h"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Font\nglFontCache.cpp"
+					RelativePath=".\src\Threading\nglLock.cpp"
 					>
 				</File>
 				<File
-					RelativePath="include\nglFontCache.h"
+					RelativePath=".\include\nglLock.h"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Font\nglFontInstance.cpp"
+					RelativePath=".\include\nglLockFreeFifo.h"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Font\nglFontInstance.h"
+					RelativePath=".\include\nglRingBuffer.h"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Font\nglFontLayout.cpp"
+					RelativePath=".\include\nglSyncEvent.h"
 					>
 				</File>
 				<File
-					RelativePath="include\nglFontLayout.h"
+					RelativePath=".\src\Threading\win32\nglSyncEvent_win32.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Font\nglFontTexCache.cpp"
+					RelativePath=".\src\Threading\nglThread.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Font\nglFontTexCache.h"
+					RelativePath=".\include\nglThread.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Threading\win32\nglThread_win32.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Threading\nglThreadChecker.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nglThreadChecker.h"
 					>
 				</File>
 			</Filter>
@@ -1757,166 +2294,126 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="Application"
+				Name="TreeViews"
 				>
 				<File
-					RelativePath=".\src\Application\Win\ngl.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="1"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="1"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\src\Application\Win\ngl_winXX.h"
+					RelativePath=".\src\TreeViews\nuiColumnTreeView.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Application\nglApplication.cpp"
+					RelativePath=".\include\nuiColumnTreeView.h"
 					>
 				</File>
 				<File
-					RelativePath="include\nglApplication.h"
+					RelativePath=".\src\TreeViews\nuiPopupMenu.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Application\Win\nglApplication_WinXX.cpp"
+					RelativePath=".\include\nuiPopupMenu.h"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Application\nglClipBoard.cpp"
+					RelativePath=".\src\TreeViews\nuiTreeView.cpp"
 					>
 				</File>
 				<File
-					RelativePath="include\nglClipBoard.h"
+					RelativePath=".\include\nuiTreeView.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Utils"
+				>
+				<File
+					RelativePath=".\src\Utils\ngl3DSLoader.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Application\Win\nglClipBoard_WinXX.cpp"
+					RelativePath="include\ngl3DSLoader.h"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Application\nglConsole.cpp"
+					RelativePath="include\nglEndian.h"
 					>
 				</File>
 				<File
-					RelativePath="include\nglConsole.h"
+					RelativePath=".\src\Utils\nglError.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Application\Win\nglConsole_WinXX.cpp"
+					RelativePath="include\nglError.h"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Application\nglCPUInfo.cpp"
+					RelativePath=".\src\Utils\nuiCSV.cpp"
 					>
 				</File>
 				<File
-					RelativePath="include\nglCPUInfo.h"
+					RelativePath=".\include\nuiCSV.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="WidgetTree"
+				>
+				<File
+					RelativePath=".\include\nuiComposite.h"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Application\nglCPUInfo_x86.cpp"
+					RelativePath=".\src\WidgetTree\nuiContainer.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Application\nglDataObjects.cpp"
+					RelativePath=".\include\nuiContainer.h"
 					>
 				</File>
 				<File
-					RelativePath="include\nglDataObjects.h"
+					RelativePath=".\include\nuiInspector.h"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Application\Win\nglDataObjects_WinXX.cpp"
+					RelativePath=".\include\nuiInspectorTable.h"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Application\nglDataTypesRegistry.cpp"
+					RelativePath=".\src\WidgetTree\nuiMainWindow.cpp"
 					>
 				</File>
 				<File
-					RelativePath="include\nglDataTypesRegistry.h"
+					RelativePath=".\src\WidgetTree\nuiSimpleContainer.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Application\nglDragAndDropObjects.cpp"
+					RelativePath=".\include\nuiSimpleContainer.h"
 					>
 				</File>
 				<File
-					RelativePath="include\nglDragAndDropObjects.h"
+					RelativePath=".\src\WidgetTree\nuiTopLevel.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Application\nglKernel.cpp"
+					RelativePath=".\include\nuiTopLevel.h"
 					>
 				</File>
 				<File
-					RelativePath="include\nglKernel.h"
+					RelativePath=".\src\WidgetTree\nuiWidget.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Application\Win\nglKernel_WinXX.cpp"
+					RelativePath=".\include\nuiWidget.h"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Application\nglLog.cpp"
+					RelativePath=".\src\WidgetTree\nuiWidgetAnimation.cpp"
 					>
 				</File>
 				<File
-					RelativePath="include\nglLog.h"
+					RelativePath=".\src\WidgetTree\nuiWindowManager.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Application\Win\nglLog_WinXX.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Application\nglMimeSource.cpp"
-					>
-				</File>
-				<File
-					RelativePath="include\nglMimeSource.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Application\Win\nglMimeSource_WinXX.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Application\nglModule.cpp"
-					>
-				</File>
-				<File
-					RelativePath="include\nglModule.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Application\Win\nglModule_WinXX.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Application\Win\nglOleDragAndDropInterfaces_WinXX.h"
-					>
-				</File>
-				<File
-					RelativePath="include\nglPlugin.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Application\Win\nglPlugin_WinXX.cpp"
+					RelativePath=".\include\nuiWindowManager.h"
 					>
 				</File>
 			</Filter>
@@ -2019,76 +2516,140 @@
 					RelativePath=".\src\Window\Win\nglWindow_WinXX.cpp"
 					>
 				</File>
-			</Filter>
-			<Filter
-				Name="Utils"
-				>
 				<File
-					RelativePath=".\src\Utils\ngl3DSLoader.cpp"
+					RelativePath=".\src\Window\nuiMainMenu.cpp"
 					>
 				</File>
 				<File
-					RelativePath="include\ngl3DSLoader.h"
+					RelativePath=".\include\nuiMainMenu.h"
 					>
 				</File>
 				<File
-					RelativePath="include\nglEndian.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Utils\nglError.cpp"
-					>
-				</File>
-				<File
-					RelativePath="include\nglError.h"
+					RelativePath=".\src\Window\Win\nuiMainMenu_WinXX.cpp"
 					>
 				</File>
 			</Filter>
 			<Filter
-				Name="Threading"
+				Name="Dialogs"
 				>
 				<File
-					RelativePath=".\include\nglAtomic.h"
+					RelativePath=".\src\Dialogs\nuiDialogSelectDirectory.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\include\nglCriticalSection.h"
+					RelativePath=".\include\nuiDialogSelectDirectory.h"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Threading\win32\nglCriticalSection_win32.cpp"
+					RelativePath=".\src\Dialogs\nuiDialogSelectFile.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\include\nglGuard.h"
+					RelativePath=".\include\nuiDialogSelectFile.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\nglLockFreeFifo.h"
+					RelativePath=".\src\Dialogs\nuiMessageBox.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\include\nglRingBuffer.h"
+					RelativePath=".\include\nuiMessageBox.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Bindings"
+				>
+				<File
+					RelativePath=".\src\Bindings\nuiBindings.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\include\nglSyncEvent.h"
+					RelativePath=".\include\nuiBindings.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="AudioSamples"
+				>
+				<File
+					RelativePath=".\src\AudioSamples\nuiAiffReader.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Threading\win32\nglSyncEvent_win32.cpp"
+					RelativePath=".\include\nuiAiffReader.h"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Threading\nglThread.cpp"
+					RelativePath=".\src\AudioSamples\nuiAudioDecoder.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\include\nglThread.h"
+					RelativePath=".\include\nuiAudioDecoder.h"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Threading\win32\nglThread_win32.cpp"
+					RelativePath=".\src\AudioSamples\Win\nuiAudioDecoder_WinXX.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\AudioSamples\nuiChunkSampleReader.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiChunkSampleReader.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\AudioSamples\nuiSample.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiSample.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiSampleDefines.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\AudioSamples\nuiSampleInfo.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiSampleInfo.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\AudioSamples\nuiSampleReader.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiSampleReader.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\AudioSamples\nuiSampleWriter.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiSampleWriter.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\AudioSamples\nuiWaveReader.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiWaveReader.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\AudioSamples\nuiWaveWriter.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiWaveWriter.h"
 					>
 				</File>
 			</Filter>
@@ -4942,8 +5503,24 @@
 				Name="gameswf"
 				>
 				<File
-					RelativePath=".\deps\gameswf\gameswf.h"
+					RelativePath=".\deps\gameswf\gameswf_abc.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\deps\gameswf\gameswf_action.cpp"
@@ -4954,7 +5531,6 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -4963,13 +5539,8 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_action.h"
-					>
 				</File>
 				<File
 					RelativePath=".\deps\gameswf\gameswf_as_sprite.cpp"
@@ -4980,7 +5551,6 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -4989,13 +5559,28 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath=".\deps\gameswf\gameswf_as_sprite.h"
+					RelativePath=".\deps\gameswf\gameswf_avm2.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\deps\gameswf\gameswf_button.cpp"
@@ -5006,7 +5591,6 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -5015,13 +5599,28 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath=".\deps\gameswf\gameswf_button.h"
+					RelativePath=".\deps\gameswf\gameswf_canvas.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\deps\gameswf\gameswf_character.cpp"
@@ -5032,7 +5631,6 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -5041,13 +5639,28 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath=".\deps\gameswf\gameswf_character.h"
+					RelativePath=".\deps\gameswf\gameswf_disasm.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\deps\gameswf\gameswf_dlist.cpp"
@@ -5058,7 +5671,6 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -5067,13 +5679,8 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_dlist.h"
-					>
 				</File>
 				<File
 					RelativePath=".\deps\gameswf\gameswf_environment.cpp"
@@ -5084,7 +5691,6 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -5093,13 +5699,28 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath=".\deps\gameswf\gameswf_environment.h"
+					RelativePath=".\deps\gameswf\gameswf_filters.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\deps\gameswf\gameswf_font.cpp"
@@ -5110,7 +5731,6 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -5119,39 +5739,8 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_font.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_fontlib.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-							WarningLevel="0"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-							WarningLevel="0"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_fontlib.h"
-					>
 				</File>
 				<File
 					RelativePath=".\deps\gameswf\gameswf_freetype.cpp"
@@ -5162,7 +5751,6 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -5171,13 +5759,8 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_freetype.h"
-					>
 				</File>
 				<File
 					RelativePath=".\deps\gameswf\gameswf_function.cpp"
@@ -5188,7 +5771,6 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -5197,13 +5779,8 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_function.h"
-					>
 				</File>
 				<File
 					RelativePath=".\deps\gameswf\gameswf_impl.cpp"
@@ -5214,7 +5791,6 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -5223,13 +5799,68 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath=".\deps\gameswf\gameswf_impl.h"
+					RelativePath=".\deps\gameswf\gameswf_jit.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\deps\gameswf\gameswf_jit_opcode.cpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\deps\gameswf\gameswf_listener.cpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\deps\gameswf\gameswf_log.cpp"
@@ -5240,7 +5871,6 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -5249,39 +5879,8 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_log.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_morph.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-							WarningLevel="0"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-							WarningLevel="0"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_morph.h"
-					>
 				</File>
 				<File
 					RelativePath=".\deps\gameswf\gameswf_morph2.cpp"
@@ -5292,7 +5891,6 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -5301,39 +5899,8 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_morph2.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_movie.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-							WarningLevel="0"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-							WarningLevel="0"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_movie.h"
-					>
 				</File>
 				<File
 					RelativePath=".\deps\gameswf\gameswf_movie_def.cpp"
@@ -5344,7 +5911,6 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -5353,17 +5919,8 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_movie_def.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_mutex.h"
-					>
 				</File>
 				<File
 					RelativePath=".\deps\gameswf\gameswf_object.cpp"
@@ -5374,7 +5931,6 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -5383,16 +5939,11 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath=".\deps\gameswf\gameswf_object.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_parser.cpp"
+					RelativePath=".\deps\gameswf\gameswf_player.cpp"
 					>
 					<FileConfiguration
 						Name="Debug|Win32"
@@ -5400,7 +5951,6 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -5409,29 +5959,6 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_processor.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-							WarningLevel="0"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 				</File>
@@ -5444,7 +5971,6 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -5453,13 +5979,8 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_render.h"
-					>
 				</File>
 				<File
 					RelativePath=".\deps\gameswf\gameswf_render_handler_ogl.cpp"
@@ -5470,7 +5991,6 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -5479,7 +5999,6 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 				</File>
@@ -5492,7 +6011,6 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -5501,13 +6019,8 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_root.h"
-					>
 				</File>
 				<File
 					RelativePath=".\deps\gameswf\gameswf_shape.cpp"
@@ -5518,7 +6031,6 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -5527,13 +6039,8 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_shape.h"
-					>
 				</File>
 				<File
 					RelativePath=".\deps\gameswf\gameswf_sound.cpp"
@@ -5544,7 +6051,6 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -5553,33 +6059,6 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_sound.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_sound_handler_mp3.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-							WarningLevel="0"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 				</File>
@@ -5592,7 +6071,6 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -5601,13 +6079,8 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_sprite.h"
-					>
 				</File>
 				<File
 					RelativePath=".\deps\gameswf\gameswf_sprite_def.cpp"
@@ -5618,7 +6091,6 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -5627,13 +6099,8 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_sprite_def.h"
-					>
 				</File>
 				<File
 					RelativePath=".\deps\gameswf\gameswf_stream.cpp"
@@ -5644,7 +6111,6 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -5653,39 +6119,8 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_stream.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_string.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-							WarningLevel="0"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-							WarningLevel="0"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_string.h"
-					>
 				</File>
 				<File
 					RelativePath=".\deps\gameswf\gameswf_styles.cpp"
@@ -5696,7 +6131,6 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -5705,13 +6139,8 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_styles.h"
-					>
 				</File>
 				<File
 					RelativePath=".\deps\gameswf\gameswf_tesselate.cpp"
@@ -5722,7 +6151,6 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -5731,13 +6159,8 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_tesselate.h"
-					>
 				</File>
 				<File
 					RelativePath=".\deps\gameswf\gameswf_text.cpp"
@@ -5748,7 +6171,6 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -5757,65 +6179,8 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_text.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_textformat.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-							WarningLevel="0"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-							WarningLevel="0"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_textformat.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_timers.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-							WarningLevel="0"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-							WarningLevel="0"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_timers.h"
-					>
 				</File>
 				<File
 					RelativePath=".\deps\gameswf\gameswf_tools.cpp"
@@ -5826,7 +6191,6 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -5835,7 +6199,6 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 				</File>
@@ -5848,7 +6211,6 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -5857,13 +6219,8 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_types.h"
-					>
 				</File>
 				<File
 					RelativePath=".\deps\gameswf\gameswf_value.cpp"
@@ -5874,7 +6231,6 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -5883,13 +6239,8 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_value.h"
-					>
 				</File>
 				<File
 					RelativePath=".\deps\gameswf\gameswf_video_base.cpp"
@@ -5900,7 +6251,6 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -5909,13 +6259,8 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_video_base.h"
-					>
 				</File>
 				<File
 					RelativePath=".\deps\gameswf\gameswf_video_impl.cpp"
@@ -5926,7 +6271,6 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -5935,13 +6279,8 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_video_impl.h"
-					>
 				</File>
 				<File
 					RelativePath=".\deps\gameswf\gameswf_video_ogl.cpp"
@@ -5952,7 +6291,6 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -5961,73 +6299,12 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
-							WarningLevel="0"
 						/>
 					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_video_ogl.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_xml.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-							WarningLevel="0"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-							WarningLevel="0"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_xml.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_xmlsocket.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-							WarningLevel="0"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-							WarningLevel="0"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\gameswf\gameswf_xmlsocket.h"
-					>
 				</File>
 				<Filter
 					Name="base"
 					>
-					<File
-						RelativePath=".\deps\gameswf\base\compatibility_include.h"
-						>
-					</File>
 					<File
 						RelativePath=".\deps\gameswf\base\component_hackery.cpp"
 						>
@@ -6037,7 +6314,6 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
 						<FileConfiguration
@@ -6046,12 +6322,11 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
 					</File>
 					<File
-						RelativePath=".\deps\gameswf\base\config.cpp"
+						RelativePath=".\deps\gameswf\base\configvars.cpp"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
@@ -6059,7 +6334,6 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
 						<FileConfiguration
@@ -6068,13 +6342,8 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\base\config.h"
-						>
 					</File>
 					<File
 						RelativePath=".\deps\gameswf\base\container.cpp"
@@ -6085,7 +6354,6 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
 						<FileConfiguration
@@ -6094,17 +6362,8 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\base\container.h"
-						>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\base\cschema.h"
-						>
 					</File>
 					<File
 						RelativePath=".\deps\gameswf\base\dlmalloc.c"
@@ -6115,7 +6374,6 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
 						<FileConfiguration
@@ -6124,17 +6382,8 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\base\dlmalloc.h"
-						>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\base\ear_clip_triangulate.h"
-						>
 					</File>
 					<File
 						RelativePath=".\deps\gameswf\base\ear_clip_triangulate_float.cpp"
@@ -6145,7 +6394,6 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
 						<FileConfiguration
@@ -6154,13 +6402,8 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\base\ear_clip_triangulate_impl.h"
-						>
 					</File>
 					<File
 						RelativePath=".\deps\gameswf\base\ear_clip_triangulate_sint16.cpp"
@@ -6171,7 +6414,6 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
 						<FileConfiguration
@@ -6180,7 +6422,6 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
 					</File>
@@ -6193,7 +6434,6 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
 						<FileConfiguration
@@ -6202,17 +6442,8 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\base\file_util.h"
-						>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\base\grid_index.h"
-						>
 					</File>
 					<File
 						RelativePath=".\deps\gameswf\base\image.cpp"
@@ -6223,7 +6454,6 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
 						<FileConfiguration
@@ -6232,13 +6462,8 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\base\image.h"
-						>
 					</File>
 					<File
 						RelativePath=".\deps\gameswf\base\image_filters.cpp"
@@ -6249,7 +6474,6 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
 						<FileConfiguration
@@ -6258,7 +6482,6 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
 					</File>
@@ -6271,7 +6494,6 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
 						<FileConfiguration
@@ -6280,13 +6502,8 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\base\jpeg.h"
-						>
 					</File>
 					<File
 						RelativePath=".\deps\gameswf\base\logger.cpp"
@@ -6297,7 +6514,6 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
 						<FileConfiguration
@@ -6306,13 +6522,8 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\base\logger.h"
-						>
 					</File>
 					<File
 						RelativePath=".\deps\gameswf\base\membuf.cpp"
@@ -6323,7 +6534,6 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
 						<FileConfiguration
@@ -6332,13 +6542,8 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\base\membuf.h"
-						>
 					</File>
 					<File
 						RelativePath=".\deps\gameswf\base\ogl.cpp"
@@ -6349,7 +6554,6 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
 						<FileConfiguration
@@ -6358,13 +6562,8 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\base\ogl.h"
-						>
 					</File>
 					<File
 						RelativePath=".\deps\gameswf\base\png_helper.cpp"
@@ -6375,7 +6574,6 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
 						<FileConfiguration
@@ -6384,13 +6582,8 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\base\png_helper.h"
-						>
 					</File>
 					<File
 						RelativePath=".\deps\gameswf\base\postscript.cpp"
@@ -6401,7 +6594,6 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
 						<FileConfiguration
@@ -6410,21 +6602,8 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\base\postscript.h"
-						>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\base\smart_ptr.h"
-						>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\base\triangulate.h"
-						>
 					</File>
 					<File
 						RelativePath=".\deps\gameswf\base\triangulate_float.cpp"
@@ -6435,7 +6614,6 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
 						<FileConfiguration
@@ -6444,13 +6622,8 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\base\triangulate_impl.h"
-						>
 					</File>
 					<File
 						RelativePath=".\deps\gameswf\base\triangulate_sint32.cpp"
@@ -6461,7 +6634,6 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
 						<FileConfiguration
@@ -6470,13 +6642,8 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\base\tu_config.h"
-						>
 					</File>
 					<File
 						RelativePath=".\deps\gameswf\base\tu_file.cpp"
@@ -6487,7 +6654,6 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
 						<FileConfiguration
@@ -6496,29 +6662,28 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
 					</File>
 					<File
-						RelativePath=".\deps\gameswf\base\tu_file.h"
+						RelativePath=".\deps\gameswf\base\tu_loadlib.cpp"
 						>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\base\tu_math.h"
-						>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\base\tu_memdebug.h"
-						>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\base\tu_opengl_includes.h"
-						>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\base\tu_queue.h"
-						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\deps\gameswf\base\tu_random.cpp"
@@ -6529,7 +6694,6 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
 						<FileConfiguration
@@ -6538,17 +6702,8 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\base\tu_random.h"
-						>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\base\tu_swap.h"
-						>
 					</File>
 					<File
 						RelativePath=".\deps\gameswf\base\tu_timer.cpp"
@@ -6559,7 +6714,6 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
 						<FileConfiguration
@@ -6568,13 +6722,8 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\base\tu_timer.h"
-						>
 					</File>
 					<File
 						RelativePath=".\deps\gameswf\base\tu_types.cpp"
@@ -6585,7 +6734,6 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
 						<FileConfiguration
@@ -6594,13 +6742,8 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\base\tu_types.h"
-						>
 					</File>
 					<File
 						RelativePath=".\deps\gameswf\base\utf8.cpp"
@@ -6611,7 +6754,6 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
 						<FileConfiguration
@@ -6620,13 +6762,8 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\base\utf8.h"
-						>
 					</File>
 					<File
 						RelativePath=".\deps\gameswf\base\utility.cpp"
@@ -6637,7 +6774,6 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
 						<FileConfiguration
@@ -6646,17 +6782,8 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\base\utility.h"
-						>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\base\vert_types.h"
-						>
 					</File>
 					<File
 						RelativePath=".\deps\gameswf\base\zlib_adapter.cpp"
@@ -6667,7 +6794,6 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
 						<FileConfiguration
@@ -6676,13 +6802,584 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
+							/>
+						</FileConfiguration>
+					</File>
+				</Filter>
+				<Filter
+					Name="platform"
+					>
+					<File
+						RelativePath=".\deps\gameswf\platforms\gameswf_jit_x86.h"
+						>
+					</File>
+					<File
+						RelativePath=".\deps\gameswf\platforms\gameswf_jit_x86.hpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="gameswf_as_classes"
+					>
+					<File
+						RelativePath=".\deps\gameswf\gameswf_as_classes\as_array.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
 					</File>
 					<File
-						RelativePath=".\deps\gameswf\base\zlib_adapter.h"
+						RelativePath=".\deps\gameswf\gameswf_as_classes\as_boolean.cpp"
 						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\deps\gameswf\gameswf_as_classes\as_broadcaster.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\deps\gameswf\gameswf_as_classes\as_color.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\deps\gameswf\gameswf_as_classes\as_color_transform.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\deps\gameswf\gameswf_as_classes\as_date.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\deps\gameswf\gameswf_as_classes\as_event.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\deps\gameswf\gameswf_as_classes\as_flash.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\deps\gameswf\gameswf_as_classes\as_geom.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\deps\gameswf\gameswf_as_classes\as_global.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\deps\gameswf\gameswf_as_classes\as_key.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\deps\gameswf\gameswf_as_classes\as_loadvars.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\deps\gameswf\gameswf_as_classes\as_math.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\deps\gameswf\gameswf_as_classes\as_matrix.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\deps\gameswf\gameswf_as_classes\as_mcloader.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\deps\gameswf\gameswf_as_classes\as_mouse_event.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\deps\gameswf\gameswf_as_classes\as_netconnection.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\deps\gameswf\gameswf_as_classes\as_netstream.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\deps\gameswf\gameswf_as_classes\as_number.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\deps\gameswf\gameswf_as_classes\as_point.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\deps\gameswf\gameswf_as_classes\as_selection.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\deps\gameswf\gameswf_as_classes\as_sound.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\deps\gameswf\gameswf_as_classes\as_string.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\deps\gameswf\gameswf_as_classes\as_textformat.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\deps\gameswf\gameswf_as_classes\as_timer.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\deps\gameswf\gameswf_as_classes\as_transform.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\deps\gameswf\gameswf_as_classes\as_xml.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\deps\gameswf\gameswf_as_classes\as_xmlsocket.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
 					</File>
 				</Filter>
 				<Filter
@@ -6697,7 +7394,6 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
 						<FileConfiguration
@@ -6706,13 +7402,8 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\net\http_client.h"
-						>
 					</File>
 					<File
 						RelativePath=".\deps\gameswf\net\http_file_handler.cpp"
@@ -6723,7 +7414,6 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
 						<FileConfiguration
@@ -6732,13 +7422,28 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
 					</File>
 					<File
-						RelativePath=".\deps\gameswf\net\http_file_handler.h"
+						RelativePath=".\deps\gameswf\net\http_helper.cpp"
 						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\deps\gameswf\net\http_server.cpp"
@@ -6749,7 +7454,6 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
 						<FileConfiguration
@@ -6758,17 +7462,8 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\net\http_server.h"
-						>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\net\net_interface.h"
-						>
 					</File>
 					<File
 						RelativePath=".\deps\gameswf\net\net_interface_tcp.cpp"
@@ -6779,7 +7474,6 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
 						<FileConfiguration
@@ -6788,13 +7482,8 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\net\net_interface_tcp.h"
-						>
 					</File>
 					<File
 						RelativePath=".\deps\gameswf\net\tu_net_file.cpp"
@@ -6805,7 +7494,6 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
 						<FileConfiguration
@@ -6814,13 +7502,8 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\net\tu_net_file.h"
-						>
 					</File>
 					<File
 						RelativePath=".\deps\gameswf\net\webtweaker.cpp"
@@ -6831,7 +7514,6 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
 						<FileConfiguration
@@ -6840,13 +7522,8 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\net\webtweaker.h"
-						>
 					</File>
 					<File
 						RelativePath=".\deps\gameswf\net\webwidgets.cpp"
@@ -6857,7 +7534,6 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
 						<FileConfiguration
@@ -6866,399 +7542,71 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
-								WarningLevel="0"
 							/>
 						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\net\webwidgets.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="as_classes"
-					>
-					<File
-						RelativePath=".\deps\gameswf\gameswf_as_classes\as_array.cpp"
-						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-								WarningLevel="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-								WarningLevel="0"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\gameswf_as_classes\as_array.h"
-						>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\gameswf_as_classes\as_color.cpp"
-						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-								WarningLevel="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-								WarningLevel="0"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\gameswf_as_classes\as_color.h"
-						>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\gameswf_as_classes\as_db.cpp"
-						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-								WarningLevel="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-								WarningLevel="0"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\gameswf_as_classes\as_db.h"
-						>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\gameswf_as_classes\as_key.cpp"
-						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-								WarningLevel="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-								WarningLevel="0"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\gameswf_as_classes\as_key.h"
-						>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\gameswf_as_classes\as_math.cpp"
-						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-								WarningLevel="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-								WarningLevel="0"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\gameswf_as_classes\as_math.h"
-						>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\gameswf_as_classes\as_mcloader.cpp"
-						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-								WarningLevel="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-								WarningLevel="0"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\gameswf_as_classes\as_mcloader.h"
-						>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\gameswf_as_classes\as_netconnection.cpp"
-						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-								WarningLevel="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-								WarningLevel="0"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\gameswf_as_classes\as_netconnection.h"
-						>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\gameswf_as_classes\as_netstream.cpp"
-						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-								WarningLevel="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-								WarningLevel="0"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\gameswf_as_classes\as_netstream.h"
-						>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\gameswf_as_classes\as_sound.cpp"
-						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-								WarningLevel="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-								WarningLevel="0"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\gameswf_as_classes\as_sound.h"
-						>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\gameswf_as_classes\as_string.cpp"
-						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-								WarningLevel="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-								WarningLevel="0"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\gameswf_as_classes\as_string.h"
-						>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\gameswf_as_classes\as_table.cpp"
-						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-								WarningLevel="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-								WarningLevel="0"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\gameswf_as_classes\as_table.h"
-						>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\gameswf_as_classes\as_textformat.cpp"
-						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-								WarningLevel="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-								WarningLevel="0"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\gameswf_as_classes\as_textformat.h"
-						>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\gameswf_as_classes\as_xml.cpp"
-						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-								WarningLevel="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-								WarningLevel="0"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\gameswf_as_classes\as_xml.h"
-						>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\gameswf_as_classes\as_xmlsocket.cpp"
-						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-								WarningLevel="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-								WarningLevel="0"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\deps\gameswf\gameswf_as_classes\as_xmlsocket.h"
-						>
 					</File>
 				</Filter>
 			</Filter>
 			<Filter
-				Name="agg"
+				Name="expat"
 				>
 				<File
-					RelativePath=".\deps\agg\include\agg_alpha_mask_u8.h"
+					RelativePath=".\deps\expat\lib\amigaconfig.h"
 					>
 				</File>
 				<File
-					RelativePath=".\deps\agg\src\agg_arc.cpp"
+					RelativePath=".\deps\expat\lib\ascii.h"
+					>
+				</File>
+				<File
+					RelativePath=".\deps\expat\lib\asciitab.h"
+					>
+				</File>
+				<File
+					RelativePath=".\deps\expat\lib\expat.h"
+					>
+				</File>
+				<File
+					RelativePath=".\deps\expat\lib\expat_external.h"
+					>
+				</File>
+				<File
+					RelativePath=".\deps\expat\lib\iasciitab.h"
+					>
+				</File>
+				<File
+					RelativePath=".\deps\expat\lib\internal.h"
+					>
+				</File>
+				<File
+					RelativePath=".\deps\expat\lib\latin1tab.h"
+					>
+				</File>
+				<File
+					RelativePath=".\deps\expat\lib\macconfig.h"
+					>
+				</File>
+				<File
+					RelativePath=".\deps\expat\lib\nametab.h"
+					>
+				</File>
+				<File
+					RelativePath=".\deps\expat\lib\utf8tab.h"
+					>
+				</File>
+				<File
+					RelativePath=".\deps\expat\lib\winconfig.h"
+					>
+				</File>
+				<File
+					RelativePath=".\deps\expat\lib\xmlparse.c"
 					>
 					<FileConfiguration
 						Name="Debug|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							PreprocessorDefinitions="XML_STATIC"
 							UsePrecompiledHeader="0"
 						/>
 					</FileConfiguration>
@@ -7267,26 +7615,20 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							PreprocessorDefinitions="XML_STATIC"
 							UsePrecompiledHeader="0"
 						/>
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath=".\deps\agg\include\agg_arc.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_array.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\src\agg_arrowhead.cpp"
+					RelativePath=".\deps\expat\lib\xmlrole.c"
 					>
 					<FileConfiguration
 						Name="Debug|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							PreprocessorDefinitions="XML_STATIC"
 							UsePrecompiledHeader="0"
 						/>
 					</FileConfiguration>
@@ -7295,26 +7637,24 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							PreprocessorDefinitions="XML_STATIC"
 							UsePrecompiledHeader="0"
 						/>
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath=".\deps\agg\include\agg_arrowhead.h"
+					RelativePath=".\deps\expat\lib\xmlrole.h"
 					>
 				</File>
 				<File
-					RelativePath=".\deps\agg\include\agg_basics.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\src\agg_bezier_arc.cpp"
+					RelativePath=".\deps\expat\lib\xmltok.c"
 					>
 					<FileConfiguration
 						Name="Debug|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							PreprocessorDefinitions="XML_STATIC"
 							UsePrecompiledHeader="0"
 						/>
 					</FileConfiguration>
@@ -7323,34 +7663,24 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							PreprocessorDefinitions="XML_STATIC"
 							UsePrecompiledHeader="0"
 						/>
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath=".\deps\agg\include\agg_bezier_arc.h"
+					RelativePath=".\deps\expat\lib\xmltok.h"
 					>
 				</File>
 				<File
-					RelativePath=".\deps\agg\include\agg_bitset_iterator.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_blur.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_bounding_rect.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\src\agg_bspline.cpp"
+					RelativePath=".\deps\expat\lib\xmltok_impl.c"
 					>
 					<FileConfiguration
 						Name="Debug|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							PreprocessorDefinitions="XML_STATIC"
 							UsePrecompiledHeader="0"
 						/>
 					</FileConfiguration>
@@ -7359,114 +7689,24 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							PreprocessorDefinitions="XML_STATIC"
 							UsePrecompiledHeader="0"
 						/>
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath=".\deps\agg\include\agg_bspline.h"
+					RelativePath=".\deps\expat\lib\xmltok_impl.h"
 					>
 				</File>
 				<File
-					RelativePath=".\deps\agg\include\agg_clip_liang_barsky.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_color_gray.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_color_rgba.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_config.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_conv_adaptor_vcgen.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_conv_adaptor_vpgen.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_conv_bspline.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_conv_clip_polygon.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_conv_clip_polyline.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_conv_close_polygon.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_conv_concat.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_conv_contour.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_conv_curve.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_conv_dash.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_conv_gpc.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_conv_marker.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_conv_marker_adaptor.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_conv_segmentator.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_conv_shorten_path.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_conv_smooth_poly1.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_conv_stroke.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_conv_transform.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_conv_unclose_polygon.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\src\agg_curves.cpp"
+					RelativePath=".\deps\expat\lib\xmltok_ns.c"
 					>
 					<FileConfiguration
 						Name="Debug|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							PreprocessorDefinitions="XML_STATIC"
 							UsePrecompiledHeader="0"
 						/>
 					</FileConfiguration>
@@ -7475,786 +7715,11 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							PreprocessorDefinitions="XML_STATIC"
 							UsePrecompiledHeader="0"
 						/>
 					</FileConfiguration>
 				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_curves.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_dda_line.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_ellipse.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_ellipse_bresenham.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\src\agg_embedded_raster_fonts.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_embedded_raster_fonts.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_font_cache_manager.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_gamma_functions.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_gamma_lut.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_glyph_raster_bin.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_gradient_lut.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\src\agg_gsv_text.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_gsv_text.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_image_accessors.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\src\agg_image_filters.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_image_filters.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\src\agg_line_aa_basics.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_line_aa_basics.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\src\agg_line_profile_aa.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_math.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_math_stroke.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_path_length.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_path_storage.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_path_storage_integer.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_pattern_filters_rgba.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_pixel_formats.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_pixfmt_amask_adaptor.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_pixfmt_gray.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_pixfmt_rgb.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_pixfmt_rgb_packed.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_pixfmt_rgba.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_pixfmt_transposer.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_rasterizer_cells_aa.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_rasterizer_compound_aa.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_rasterizer_outline.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_rasterizer_outline_aa.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_rasterizer_scanline_aa.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_rasterizer_sl_clip.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_renderer_base.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_renderer_markers.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_renderer_mclip.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_renderer_outline_aa.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_renderer_outline_image.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_renderer_primitives.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_renderer_raster_text.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_renderer_scanline.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_rendering_buffer.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_rendering_buffer_dynarow.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\src\agg_rounded_rect.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_rounded_rect.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_scanline_bin.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_scanline_boolean_algebra.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_scanline_p.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_scanline_storage_aa.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_scanline_storage_bin.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_scanline_u.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_shorten_path.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_simul_eq.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_span_allocator.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_span_converter.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_span_gouraud.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_span_gouraud_gray.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_span_gouraud_rgba.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_span_gradient.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_span_gradient_alpha.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_span_image_filter.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_span_image_filter_gray.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_span_image_filter_rgb.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_span_image_filter_rgba.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_span_interpolator_adaptor.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_span_interpolator_linear.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_span_interpolator_persp.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_span_interpolator_trans.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_span_pattern_gray.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_span_pattern_rgb.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_span_pattern_rgba.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_span_solid.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_span_subdiv_adaptor.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\src\agg_sqrt_tables.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\agg\src\agg_trans_affine.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_trans_affine.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_trans_bilinear.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\src\agg_trans_double_path.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_trans_double_path.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_trans_perspective.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\src\agg_trans_single_path.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_trans_single_path.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_trans_viewport.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\src\agg_trans_warp_magnifier.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_trans_warp_magnifier.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\src\agg_vcgen_bspline.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_vcgen_bspline.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\src\agg_vcgen_contour.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_vcgen_contour.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\src\agg_vcgen_dash.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_vcgen_dash.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\src\agg_vcgen_markers_term.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_vcgen_markers_term.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\src\agg_vcgen_smooth_poly1.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_vcgen_smooth_poly1.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\src\agg_vcgen_stroke.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_vcgen_stroke.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_vcgen_vertex_sequence.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_vertex_sequence.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\src\agg_vpgen_clip_polygon.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_vpgen_clip_polygon.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\src\agg_vpgen_clip_polyline.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_vpgen_clip_polyline.h"
-					>
-				</File>
-				<File
-					RelativePath=".\deps\agg\src\agg_vpgen_segmentator.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\deps\agg\include\agg_vpgen_segmentator.h"
-					>
-				</File>
-				<Filter
-					Name="util"
-					>
-					<File
-						RelativePath=".\deps\agg\include\util\agg_color_conv.h"
-						>
-					</File>
-					<File
-						RelativePath=".\deps\agg\include\util\agg_color_conv_rgb16.h"
-						>
-					</File>
-					<File
-						RelativePath=".\deps\agg\include\util\agg_color_conv_rgb8.h"
-						>
-					</File>
-				</Filter>
 			</Filter>
 			<Filter
 				Name="harfbuzz"
@@ -8369,6 +7834,642 @@
 				</File>
 				<File
 					RelativePath=".\deps\harfbuzz\harfbuzz.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="tidylib"
+				>
+				<File
+					RelativePath=".\deps\tidy\access.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\access.h"
+					>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\alloc.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\attrask.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\attrdict.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\attrdict.h"
+					>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\attrget.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\attrs.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\attrs.h"
+					>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\buffio.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\buffio.h"
+					>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\charsets.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\charsets.h"
+					>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\clean.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\clean.h"
+					>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\config.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\config.h"
+					>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\entities.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\entities.h"
+					>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\fileio.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\fileio.h"
+					>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\forward.h"
+					>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\iconvtc.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\iconvtc.h"
+					>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\istack.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\lexer.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\lexer.h"
+					>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\localize.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\mappedio.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\mappedio.h"
+					>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\message.h"
+					>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\parser.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\parser.h"
+					>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\platform.h"
+					>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\pprint.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\pprint.h"
+					>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\streamio.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\streamio.h"
+					>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\tagask.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\tags.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\tags.h"
+					>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\tidy-int.h"
+					>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\tidy.h"
+					>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\tidyenum.h"
+					>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\tidylib.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\tmbstr.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\tmbstr.h"
+					>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\utf8.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\utf8.h"
+					>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\version.h"
+					>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\win32tc.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\deps\tidy\win32tc.h"
 					>
 				</File>
 			</Filter>
