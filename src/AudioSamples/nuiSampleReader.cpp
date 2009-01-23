@@ -52,7 +52,8 @@ bool nuiSampleReader::GetInfo(nuiSampleInfo& rInfo) const
 {
   if (!mInitialized)
   {
-    return false;
+    if (!const_cast<nuiSampleReader*>(this)->Init()) // This is a hack but we have to do it if we want to keep on doing lazy inits
+      return false;
   }
   
   rInfo = mInfo;
@@ -62,9 +63,6 @@ bool nuiSampleReader::GetInfo(nuiSampleInfo& rInfo) const
 bool nuiSampleReader::BytesToSampleFrames(uint64 inBytes, uint64& outSampleFrames) const
 {
   NGL_ASSERT(mInitialized);
-  if (!mInitialized)
-    return false;
-  
   outSampleFrames = inBytes * 8 / (mInfo.GetChannels() * mInfo.GetBitsPerSample());
   return true;
 }
@@ -72,9 +70,6 @@ bool nuiSampleReader::BytesToSampleFrames(uint64 inBytes, uint64& outSampleFrame
 bool nuiSampleReader::SampleFramesToBytes(uint64 inSampleFrames, uint64& outBytes) const
 {
   NGL_ASSERT(mInitialized);
-  if (!mInitialized)
-    return false;
-  
   outBytes = inSampleFrames * mInfo.GetChannels() * mInfo.GetBitsPerSample() / 8;
   return true;
 }
