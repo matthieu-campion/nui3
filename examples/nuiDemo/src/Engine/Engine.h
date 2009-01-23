@@ -11,7 +11,7 @@
 #include "nuiAudioFifo.h"
 
 #include "Engine/AudioTrack.h"
-#include "Engine/BiqUad.h"
+#include "Engine/BiQuad.h"
 
 
 class Engine

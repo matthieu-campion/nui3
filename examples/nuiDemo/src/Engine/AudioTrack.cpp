@@ -30,7 +30,7 @@ AudioTrack::AudioTrack(nuiAudioFifo* pAudioFifo)
   
   // load the Wave infos
   nuiWaveReader* pWaveReader = new nuiWaveReader(*istream);
-  if (!pWaveReader->ReadInfo(mInfos))
+  if (!pWaveReader->Init() || !pWaveReader->GetInfo(mInfos))
   {
     nuiMessageBox* pBox = new nuiMessageBox((nuiMainWindow*)GetMainWindow(), _T("nuiDemo"), _T("error, source is not a wav file"), eMB_OK);
     pBox->QueryUser();
@@ -38,7 +38,7 @@ AudioTrack::AudioTrack(nuiAudioFifo* pAudioFifo)
 
   // alloc local buffer and read the wave contents
   mpSamples = new float[mInfos.GetSampleFrames() * mInfos.GetChannels()];  
-  uint32 nbReadSamples = pWaveReader->Read((void*)mpSamples, mInfos.GetSampleFrames(), eSampleFloat32);  
+  uint32 nbReadSamples = pWaveReader->ReadIN((void*)mpSamples, mInfos.GetSampleFrames(), eSampleFloat32);  
   delete pWaveReader;
   delete istream;
   
