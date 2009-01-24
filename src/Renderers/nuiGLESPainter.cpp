@@ -229,29 +229,29 @@ void nuiGLESPainter::SetState(const nuiRenderState& rState, bool ForceApply)
   }
 
 
-  if (mClip.mEnabled)    
+  if (mClip.mEnabled)
   {
     glEnable(GL_SCISSOR_TEST);
     nuiRect clip(mClip);
     clip.Move(-mClipOffsetX, -mClipOffsetY);
     
     int x,y,w,h;
-
-    if (mAngle == 90)
+    uint angle = (rState.mpSurface && rState.mpSurface->GetRenderToTexture()) ? 0 : mAngle;
+    if (angle == 90)
     {
       x = ToBelow(clip.Top());
       y = ToBelow(clip.Left());
       w = ToBelow(clip.GetHeight());
       h = ToBelow(clip.GetWidth());
     }
-    else if (mAngle == 180)
+    else if (angle == 180)
     {
       w = ToBelow(clip.GetWidth());
       h = ToBelow(clip.GetHeight());
       x = ToBelow(mWidth - w - clip.Left());
       y = ToBelow(clip.Top());
     }
-    else if (mAngle == 270)
+    else if (angle == 270)
     {
       w = ToBelow(clip.GetHeight());
       h = ToBelow(clip.GetWidth());
@@ -260,7 +260,7 @@ void nuiGLESPainter::SetState(const nuiRenderState& rState, bool ForceApply)
     }
     else
     {
-      NGL_ASSERT(!mAngle);
+      NGL_ASSERT(!angle);
       x = ToBelow(clip.Left());
       y = ToBelow(mHeight - clip.Bottom());
       w = ToBelow(clip.GetWidth());
@@ -1067,10 +1067,9 @@ void nuiGLESPainter::UploadTexture(nuiTexture* pTexture)
       else
       {
         NGL_ASSERT(pSurface);
-        type = 8;//pSurface->GetBitDepth();
+        type = 32;//8;//pSurface->GetBitDepth();
         pixelformat = GL_RGBA;//pSurface->GetPixelFormat()
-        internalPixelformat = GL_RGBA;//pSurface->GetPixelFormat();      
-        
+        internalPixelformat = GL_RGBA;//pSurface->GetPixelFormat();
       }
 
       if (type == 8)
