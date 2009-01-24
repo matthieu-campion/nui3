@@ -435,6 +435,9 @@ nuiTexture::~nuiTexture()
   if (mOwnImage)
     delete mpImage;
 
+  if (mpSurface) {
+    mpSurface->Release();
+  }
   mpTextures.erase(GetProperty(_T("Source")));
 }
 

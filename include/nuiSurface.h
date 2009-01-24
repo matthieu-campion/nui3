@@ -17,7 +17,7 @@ typedef std::set<nuiSurfaceCache*> nuiSurfaceCacheSet;
 class NUI_API nuiSurface : public nuiObject, public nuiRefCount
 {
 public:
-  static nuiSurface* GetSurface (const nglString& rName); ///< Get a surface from its ID
+  static nuiSurface* GetSurface (const nglString& rName, bool Acquired); ///< Get a surface from its ID
   static nuiSurface* CreateSurface (const nglString& rName,
                                     const nuiSize& rWidth,
                                     const nuiSize& rHeight); ///< Create a surface
@@ -37,7 +37,7 @@ public:
   void SetRenderToTexture(bool Enable);
   bool GetRenderToTexture() const;
 
-  void SetTexture(nuiTexture* pTexture, bool Acquired);
+  void SetTexture(nuiTexture* pTexture);
   nuiTexture* GetTexture() const;
 
 protected:
