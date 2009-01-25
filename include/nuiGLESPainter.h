@@ -63,7 +63,7 @@ protected:
   uint32 mCanRectangleTexture;
   GLenum mTextureTarget;
 
-  GLint mOldFramebuffer;
+  GLint mOldFramebuffer, mOldRenderbuffer;
   
   void ApplyTexture(const nuiRenderState& rState, bool ForceApply);
   
@@ -84,7 +84,8 @@ protected:
     
     bool mReload;
     GLuint mFramebuffer;
-    GLuint mTexture;
+    GLuint mTexture; ///< the framebuffer can be used to render to a texture
+    GLuint mRenderbuffer; ///< or a render buffer
     GLuint mDepthbuffer;
     GLuint mStencilbuffer;
   };

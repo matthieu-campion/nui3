@@ -524,7 +524,6 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
     nil
    ]
   ];
-//mpEAGLLayer = pLayer;
 
   rect = [(nglUIWindow*)mpUIWindow frame];
   CGSize newSize;
@@ -555,7 +554,7 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
                                GL_COLOR_ATTACHMENT0_OES,
                                GL_RENDERBUFFER_OES,
                                mRenderBuffer);
-  
+
 	if (mDepthFormat)
   {
 		glGenRenderbuffersOES(1, &mDepthBuffer);
@@ -574,19 +573,10 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
 	NGL_ASSERT (glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) == GL_FRAMEBUFFER_COMPLETE_OES);
   //  glBindFramebufferOES(GL_FRAMEBUFFER_OES, oldFramebuffer);
   //	glBindRenderbufferOES(GL_RENDERBUFFER_OES, oldRenderbuffer);
-
-  
 }
 
 nglWindow::~nglWindow()
-{
-  //  App->DelWindow (this);
-  //  App->DelEvent (this);
-  
-//  if (mTimer)
-//    RemoveEventLoopTimer(mTimer);
-  
-}
+{}
 
 
 /*
@@ -692,7 +682,7 @@ void nglWindow::EndSession()
 
   if (MakeCurrent())
   {
-    glBindRenderbufferOES(GL_RENDERBUFFER_OES, mRenderBuffer);	
+    glBindRenderbufferOES(GL_RENDERBUFFER_OES, mRenderBuffer);
 
     if ( ![(EAGLContext*)mpContext presentRenderbuffer: GL_RENDERBUFFER_OES] )
     {
