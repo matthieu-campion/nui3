@@ -161,6 +161,14 @@ public:
   {
   }
 
+  void Set(T X, T Y, T Z, T W = 1.f)
+  {
+    Elt[0] = X;
+    Elt[1] = Y;
+    Elt[2] = Z;
+    Elt[3] = W;
+  }
+  
   /// Copy operator. Third element is set to zero, fourth to one.
   void operator=(const nglVector2<T>& rVector)
   {

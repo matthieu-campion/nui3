@@ -36,6 +36,7 @@ nuiGLESPainter::nuiGLESPainter(nglContext* pContext, const nuiRect& rRect)
 : nuiPainter(rRect, pContext)
 {
 //NGL_OUT(_T("[nuiGLESPainter::nuiGLESPainter] NEW %#x\n"), this);
+  m3DMode = false;
   mCanRectangleTexture = 0;
   mTextureTarget = GL_TEXTURE_2D;
   mOldFramebuffer = 0;
@@ -745,9 +746,10 @@ void nuiGLESPainter::DrawArray(const nuiRenderArray& rArray)
   
   NUI_RETURN_IF_RENDERING_DISABLED;
   
-  bool NeedTranslateHack = mode == GL_LINES || mode == GL_LINE_LOOP || mode == GL_LINE_STRIP;
+  bool NeedTranslateHack = (mode == GL_LINES || mode == GL_LINE_LOOP || mode == GL_LINE_STRIP) && !m3DMode;
   float hackX, hackY;
-  if (NeedTranslateHack) {
+  if (NeedTranslateHack)
+  {
     if (mAngle == 0)        { hackX = 1; hackY = 1; }
     else if (mAngle == 90)  { hackX = 0; hackY = 1; }
     else if (mAngle == 180) { hackX = 0; hackY = 0; }
@@ -1240,5 +1242,15 @@ void nuiGLESPainter::InvalidateSurface(nuiSurface* pSurface, bool ForceReload)
 
 }
 
+
+void nuiGLESPainter::Enable3DMode(bool set)
+{
+  m3DMode = set;
+}
+
+bool nuiGLESPainter::Get3DMode() const
+{
+  return m3DMode;
+}
 
 #endif //   #ifndef __NUI_NO_GL__

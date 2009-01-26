@@ -53,6 +53,9 @@ public:
   virtual void DestroySurface(nuiSurface* pSurface);
   virtual void InvalidateSurface(nuiSurface* pSurface, bool ForceReload);
 
+  void Enable3DMode(bool set);
+  bool Get3DMode() const;
+
 protected:
   nglContext* mpContext;
 
@@ -95,6 +98,7 @@ protected:
 
   GLenum GetTextureTarget(bool POT) const;
 
+  bool m3DMode;
 public:
   void UploadTexture(nuiTexture* pTexture);
 };
