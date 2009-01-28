@@ -351,10 +351,7 @@ OSErr nglDragReceiveHandler(WindowRef theWindow, void * handlerRefCon, DragRef t
   NGL_ASSERT(pDnd);
   
   if (!pDnd->CanDrop())
-  {
-    pDnd->mpWin->OnStopDragging();
     return dragNotAcceptedErr;
-  }
   
   nglDragAndDrop* pDrag = pDnd->GetDropObject();
   
@@ -413,8 +410,7 @@ OSErr nglDragReceiveHandler(WindowRef theWindow, void * handlerRefCon, DragRef t
 	
   pDnd->mpWin->OnDropped(pDnd->GetDropObject(), mouse.h - XOffset, mouse.v - YOffset, Button);
   /* Clean up Done in nglDragTrackingHandler when leaving Window, which also occurs after a drop */
-  
-  pDnd->mpWin->OnStopDragging();
+
   return noErr;
 }
 
@@ -424,6 +420,7 @@ OSErr nglDragTrackingHandler (DragTrackingMessage message, WindowRef theWindow, 
   nglCarbonDragAndDrop* pDnd = (nglCarbonDragAndDrop*)handlerRefCon;
   NGL_ASSERT(pDnd);
   
+   
   switch (message)
   {
     case kDragTrackingEnterHandler:
@@ -478,6 +475,8 @@ OSErr nglDragTrackingHandler (DragTrackingMessage message, WindowRef theWindow, 
       pDnd->mpWin->OnDragEnter();
     }
       break;
+      
+      
     case kDragTrackingInWindow:
     { 
       Point mouse;
@@ -500,7 +499,6 @@ OSErr nglDragTrackingHandler (DragTrackingMessage message, WindowRef theWindow, 
       bool can = pDnd->mpWin->OnCanDrop(pDnd->GetDropObject(), mouse.h - XOffset, mouse.v - YOffset, Button);
       pDnd->SetCanDrop(can);
       
-			
       if (can)
       {
         nglDropEffect effect = pDnd->GetDropObject()->GetDesiredDropEffect();
@@ -511,6 +509,9 @@ OSErr nglDragTrackingHandler (DragTrackingMessage message, WindowRef theWindow, 
         SetDragDropAction (theDrag, kDragActionNothing);
     }
       break;
+      
+      
+      
     case kDragTrackingLeaveWindow:
       //NGL_OUT("LeaveWindow!!\n");
       pDnd->mpWin->OnDragLeave();
@@ -519,9 +520,12 @@ OSErr nglDragTrackingHandler (DragTrackingMessage message, WindowRef theWindow, 
       pDnd->SetDropObject(NULL);
       
       break;
+      
+      
     kDragTrackingLeaveHandler:
       //Dont really care ..
       NGL_OUT(_T("LeaveHandler!!\n"));
+      
       break;
       
     default:
@@ -1872,10 +1876,12 @@ bool nglWindow::GetResolution(float& rHorizontal, float& rVertical) const
 // Drag and drop:
 void nglWindow::OnDragEnter()
 {
+
 }
 
 void nglWindow::OnDragLeave()
 {
+
 }
 
 bool nglWindow::OnCanDrop (nglDragAndDrop* pDragObject, int X, int Y, nglMouseInfo::Flags Button)
@@ -1885,6 +1891,7 @@ bool nglWindow::OnCanDrop (nglDragAndDrop* pDragObject, int X, int Y, nglMouseIn
 
 void nglWindow::OnDropped (nglDragAndDrop* pDragObject, int X,int Y, nglMouseInfo::Flags Button)
 {
+
 }
 
 bool nglWindow::Drag(nglDragAndDrop* pDragObject)

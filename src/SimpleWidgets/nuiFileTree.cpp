@@ -207,7 +207,7 @@ bool nuiFileTree::SetRootPath(const nglPath& rPath)
     }
     
     mpTreeView->SetStartDragDelegate(nuiMakeDelegate(this, &nuiFileTree::OnStartDragDelegate));
-    mpTreeView->SetDraggedDelegate(nuiMakeDelegate(this, &nuiFileTree::OnStopDragDelegate));
+//    mpTreeView->SetDraggedDelegate(nuiMakeDelegate(this, &nuiFileTree::OnStopDragDelegate));
     mpTreeView->SetStopDraggingDelegate(nuiMakeDelegate(this, &nuiFileTree::OnCancelDragDelegate));
     
     return true;
