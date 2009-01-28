@@ -16,14 +16,45 @@
 
 bool nglModule::Load()
 {
-  NGL_LOG(_T("module"), NGL_LOG_WARNING, _T("Load('%ls'): not implemented"), mPath.GetChars());
-  return false;
+  if (mHandle)
+    return false;
+  
+  bool result = false;
+  
+  nglString PathNglString = mPath.GetPathName();
+  CFStringRef PathString = PathNglString.ToCFString();
+  CFURLRef Url = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, PathString, kCFURLPOSIXPathStyle, true);
+  
+	if (Url)
+  {
+		mHandle = CFBundleCreate(kCFAllocatorDefault, Url);
+		if (!mHandle) 
+    {
+			result = false;
+		}
+		else 
+    {
+			result = true;
+		}
+	}
+  
+  if (PathString)
+    CFRelease(PathString);
+  if (Url)
+    CFRelease(Url);
+  
+  return result;
 }
 
 bool nglModule::Unload()
 {
-  NGL_LOG(_T("module"), NGL_LOG_WARNING, _T("Unload('%ls'): not implemented"), mPath.GetChars());
-  return false;
+  if (!mHandle)
+    return false;
+  
+  CFRelease(mHandle);
+  mHandle = NULL;
+
+  return true;
 }
 
 
@@ -33,6 +64,19 @@ bool nglModule::Unload()
 
 void* nglModule::GetSymbol(const char* pName)
 {
-  NGL_LOG(_T("module"), NGL_LOG_WARNING, _T("GetSymbol('%ls:%ls'): not implemented"), mPath.GetChars(), pName);
-  return NULL;
+  if (!mHandle || !pName)
+    return NULL;
+
+  void* pResult = NULL;
+  
+  CFStringRef functionNameStringRef = CFStringCreateWithCString(kCFAllocatorDefault, pName, kCFStringEncodingUTF8);
+  NGL_ASSERT(functionNameStringRef);
+  
+  pResult = CFBundleGetFunctionPointerForName(mHandle, functionNameStringRef);
+  if (!pResult)
+  {
+    pResult = CFBundleGetDataPointerForName(mHandle, functionNameStringRef);
+  }
+  
+  return pResult;
 }

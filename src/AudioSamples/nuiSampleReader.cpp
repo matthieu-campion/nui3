@@ -60,16 +60,16 @@ bool nuiSampleReader::GetInfo(nuiSampleInfo& rInfo) const
   return true;
 }
 
-bool nuiSampleReader::BytesToSampleFrames(uint64 inBytes, uint64& outSampleFrames) const
+uint64 nuiSampleReader::BytesToSampleFrames(uint64 inBytes) const
 {
   NGL_ASSERT(mInitialized);
-  outSampleFrames = inBytes * 8 / (mInfo.GetChannels() * mInfo.GetBitsPerSample());
-  return true;
+  uint64 outSampleFrames = inBytes * 8 / (mInfo.GetChannels() * mInfo.GetBitsPerSample());
+  return outSampleFrames;
 }
 
-bool nuiSampleReader::SampleFramesToBytes(uint64 inSampleFrames, uint64& outBytes) const
+uint64 nuiSampleReader::SampleFramesToBytes(uint64 inSampleFrames) const
 {
   NGL_ASSERT(mInitialized);
-  outBytes = inSampleFrames * mInfo.GetChannels() * mInfo.GetBitsPerSample() / 8;
-  return true;
+  uint64 outBytes = inSampleFrames * mInfo.GetChannels() * mInfo.GetBitsPerSample() / 8;
+  return outBytes;
 }

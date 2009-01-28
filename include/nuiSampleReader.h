@@ -29,8 +29,8 @@ public:
   uint32 GetPosition() const;
   virtual void SetPosition(uint32 position);
   
-  bool BytesToSampleFrames(uint64 inBytes, uint64& outSampleFrames) const;
-  bool SampleFramesToBytes(uint64 inSampleFrames, uint64& outBytes) const;
+  uint64 BytesToSampleFrames(uint64 inBytes) const;
+  uint64 SampleFramesToBytes(uint64 inSampleFrames) const;
 protected:
   virtual bool ReadInfo() = 0;
   

@@ -38,8 +38,8 @@ public:
   /*!<
     \param rPath relocatable object file path
 
-    The module will not be loaded until Load() is called. If \a rPath is
-    a relative path, system specific automatic research mecanisms are used.
+    The module will not be loaded until Load() is called. If \a On Mac OSX, rPath must be an absolute path;
+    On Windows, rPath can be a relative path, system specific automatic research mecanisms are used.
   */
   virtual ~nglModule();
   /*!<
@@ -72,7 +72,7 @@ private:
 #ifdef _WIN32_
   HINSTANCE mHandle;
 #else
-  void*     mHandle;
+  CFBundleRef     mHandle;
 #endif // _WIN32_
 
   nglModule(const nglModule&) {} // Undefined copy constructor

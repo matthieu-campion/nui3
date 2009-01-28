@@ -55,6 +55,7 @@ mrStream(rStream),
 mpInStreamData(NULL),
 mStreamSize(0)
 {
+  mrStream.SetPos(0);
   mStreamSize  = mrStream.Available(1);
   mpInStreamData    = new uint8[mStreamSize];
   mrStream.ReadUInt8(mpInStreamData, mStreamSize);
@@ -243,9 +244,7 @@ uint32 nuiAudioDecoder::ReadDE(std::vector<void*> buffers, uint32 sampleframes, 
   if (buffers.size() != nbChannels)
     return 0;
   
-  uint64 BytestoRead = 0;
-  if (!SampleFramesToBytes(sampleframes, BytestoRead))
-    return 0;
+  uint64 BytestoRead = SampleFramesToBytes(sampleframes);
   
   std::vector<float*> temp(nbChannels);
   for (uint32 c = 0; c < nbChannels; c++)
