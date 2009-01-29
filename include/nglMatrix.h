@@ -662,15 +662,34 @@ mat1 = mat1 * mat2;
 
   bool GetValue(nglString& rDump) const
   {
-    rDump.CFormat(_T("[ %8.3f %8.3f %8.3f %8.3f ] [ %8.3f %8.3f %8.3f %8.3f ] [ %8.3f %8.3f %8.3f %8.3f ] [ %8.3f %8.3f %8.3f %8.3f ] "),
-        (T)(*this)(0,0), (T)(*this)(0,1), (T)(*this)(0,2), (T)(*this)(0,3),
-        (T)(*this)(1,0), (T)(*this)(1,1), (T)(*this)(1,2), (T)(*this)(1,3),
-        (T)(*this)(2,0), (T)(*this)(2,1), (T)(*this)(2,2), (T)(*this)(2,3),
-        (T)(*this)(3,0), (T)(*this)(3,1), (T)(*this)(3,2), (T)(*this)(3,3)
+    rDump.CFormat(_T("{ %8.3f %8.3f %8.3f %8.3f %8.3f %8.3f %8.3f %8.3f %8.3f %8.3f %8.3f %8.3f %8.3f %8.3f %8.3f %8.3f }"),
+                  (T)Array[ 0], (T)Array[ 1], (T)Array[ 2], (T)Array[ 3], 
+                  (T)Array[ 4], (T)Array[ 5], (T)Array[ 6], (T)Array[ 7], 
+                  (T)Array[ 8], (T)Array[ 9], (T)Array[10], (T)Array[11], 
+                  (T)Array[12], (T)Array[13], (T)Array[14], (T)Array[15]
         );
     return true;
   }
-
+  
+  bool SetValue(const nglString& rValue)
+  {
+    nglString val = rValue;
+    
+    val.Trim();
+    val.TrimLeft(_T('{'));
+    val.TrimRight(_T('}'));
+    
+    std::vector<nglString> tokens;
+    val.Tokenize(tokens, _T(' '));
+    
+    for (uint i = 0; i < MIN(16, tokens.size()); i++)
+    {
+      Array[i] = (T)tokens[i].GetCDouble();
+    }
+    
+    return true;
+  }
+  
 };
 
 

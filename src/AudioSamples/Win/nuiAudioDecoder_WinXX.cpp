@@ -13,291 +13,291 @@
 #define ONE_SECOND 10000000 //one second in 100 nano sec unit (unit used by Windows Media Reader)
 
 class SamplesQueue
-{
-public:
-  SamplesQueue();
-  virtual ~SamplesQueue();
-
-  uint32 GetUtilSize() const;
-  uint32 GetMemorySize() const;
-
-  void Reset();
-
-  void Append(uint8* pSrc, uint32 size);
-  uint32 ReadDeInterleavedFloat32(std::vector<float*>& rBuffers, uint32 FramesRequested);
-
-  void SetInputBytesPerSample(uint32 bytes);
-  uint32 GetInputBytesPerSample() const;
-private:
-  std::vector<uint8> mBuffer;
-  uint32 mUtilSize;
-  uint32 mInputBytesPerSample;
-};
+  {
+  public:
+    SamplesQueue();
+    virtual ~SamplesQueue();
+    
+    uint32 GetUtilSize() const;
+    uint32 GetMemorySize() const;
+    
+    void Reset();
+    
+    void Append(uint8* pSrc, uint32 size);
+    uint32 ReadDeInterleavedFloat32(std::vector<float*>& rBuffers, uint32 FramesRequested);
+    
+    void SetInputBytesPerSample(uint32 bytes);
+    uint32 GetInputBytesPerSample() const;
+  private:
+    std::vector<uint8> mBuffer;
+    uint32 mUtilSize;
+    uint32 mInputBytesPerSample;
+  };
 
 class nglWindowsMediaIStream : public IStream
-{
-public:
-  nglWindowsMediaIStream(nglIStream& rStream);
-  virtual ~nglWindowsMediaIStream();
-
-  //from IUnknown
-  virtual HRESULT STDMETHODCALLTYPE QueryInterface(REFIID riid, __RPC__deref_out void __RPC_FAR *__RPC_FAR *ppvObject);
-  virtual ULONG STDMETHODCALLTYPE AddRef();
-  virtual ULONG STDMETHODCALLTYPE Release();
-
-  //from ISequentialStream
-  virtual HRESULT STDMETHODCALLTYPE Read(void *pv, ULONG cb, ULONG *pcbRead);
-  virtual HRESULT STDMETHODCALLTYPE Write(const void *pv, ULONG cb, ULONG *pcbWritten);
-
-  //from IStream
-  virtual /* [local] */ HRESULT STDMETHODCALLTYPE Seek(LARGE_INTEGER dlibMove, DWORD dwOrigin, ULARGE_INTEGER *plibNewPosition);
-  virtual HRESULT STDMETHODCALLTYPE SetSize(ULARGE_INTEGER libNewSize);
-  virtual /* [local] */ HRESULT STDMETHODCALLTYPE CopyTo(IStream *pstm, ULARGE_INTEGER cb, ULARGE_INTEGER *pcbRead, ULARGE_INTEGER *pcbWritten);
-  virtual HRESULT STDMETHODCALLTYPE Commit(DWORD grfCommitFlags);
-  virtual HRESULT STDMETHODCALLTYPE Revert();
-  virtual HRESULT STDMETHODCALLTYPE LockRegion(ULARGE_INTEGER libOffset, ULARGE_INTEGER cb, DWORD dwLockType);
-  virtual HRESULT STDMETHODCALLTYPE UnlockRegion(ULARGE_INTEGER libOffset, ULARGE_INTEGER cb, DWORD dwLockType);
-  virtual HRESULT STDMETHODCALLTYPE Stat(__RPC__out STATSTG *pstatstg, DWORD grfStatFlag);
-  virtual HRESULT STDMETHODCALLTYPE Clone(__RPC__deref_out_opt IStream **ppstm);
-
-private:
-  ULONG mRefCount;
-  nglIStream& mrStream;
-};
+  {
+  public:
+    nglWindowsMediaIStream(nglIStream& rStream);
+    virtual ~nglWindowsMediaIStream();
+    
+    //from IUnknown
+    virtual HRESULT STDMETHODCALLTYPE QueryInterface(REFIID riid, __RPC__deref_out void __RPC_FAR *__RPC_FAR *ppvObject);
+    virtual ULONG STDMETHODCALLTYPE AddRef();
+    virtual ULONG STDMETHODCALLTYPE Release();
+    
+    //from ISequentialStream
+    virtual HRESULT STDMETHODCALLTYPE Read(void *pv, ULONG cb, ULONG *pcbRead);
+    virtual HRESULT STDMETHODCALLTYPE Write(const void *pv, ULONG cb, ULONG *pcbWritten);
+    
+    //from IStream
+    virtual /* [local] */ HRESULT STDMETHODCALLTYPE Seek(LARGE_INTEGER dlibMove, DWORD dwOrigin, ULARGE_INTEGER *plibNewPosition);
+    virtual HRESULT STDMETHODCALLTYPE SetSize(ULARGE_INTEGER libNewSize);
+    virtual /* [local] */ HRESULT STDMETHODCALLTYPE CopyTo(IStream *pstm, ULARGE_INTEGER cb, ULARGE_INTEGER *pcbRead, ULARGE_INTEGER *pcbWritten);
+    virtual HRESULT STDMETHODCALLTYPE Commit(DWORD grfCommitFlags);
+    virtual HRESULT STDMETHODCALLTYPE Revert();
+    virtual HRESULT STDMETHODCALLTYPE LockRegion(ULARGE_INTEGER libOffset, ULARGE_INTEGER cb, DWORD dwLockType);
+    virtual HRESULT STDMETHODCALLTYPE UnlockRegion(ULARGE_INTEGER libOffset, ULARGE_INTEGER cb, DWORD dwLockType);
+    virtual HRESULT STDMETHODCALLTYPE Stat(__RPC__out STATSTG *pstatstg, DWORD grfStatFlag);
+    virtual HRESULT STDMETHODCALLTYPE Clone(__RPC__deref_out_opt IStream **ppstm);
+    
+  private:
+    ULONG mRefCount;
+    nglIStream& mrStream;
+  };
 
 class nuiAudioDecoderPrivate
-{
-public:
-  nglWindowsMediaIStream* mpWMStream;
-  IWMSyncReader* mpWMReader;
-  SamplesQueue mQueue;
-};
+  {
+  public:
+    nglWindowsMediaIStream* mpWMStream;
+    IWMSyncReader* mpWMReader;
+    SamplesQueue mQueue;
+  };
 
 /*bool nuiAudioDecoder::Init()
-{
-  if (mInitialized) //already initialized
-	return false;
-
-  CoInitialize(NULL);
-
-  mpPrivate = new nuiAudioDecoderPrivate();
-
-
-  bool result = false;
-  HRESULT hr = S_OK;
-  mpPrivate->mpWMStream = new nglWindowsMediaIStream(mrStream);
-
-  hr = WMCreateSyncReader(NULL, WMT_RIGHT_PLAYBACK, &mpPrivate->mpWMReader);
-  if (SUCCEEDED(hr))
-  {
-	hr = mpPrivate->mpWMReader->OpenStream(mpPrivate->mpWMStream);
-	if (SUCCEEDED(hr))
-	{
-	  result = ReadInfo();
-	}
-  }
-
-  return result;
-}*/
+ {
+ if (mInitialized) //already initialized
+ return false;
+ 
+ CoInitialize(NULL);
+ 
+ mpPrivate = new nuiAudioDecoderPrivate();
+ 
+ 
+ bool result = false;
+ HRESULT hr = S_OK;
+ mpPrivate->mpWMStream = new nglWindowsMediaIStream(mrStream);
+ 
+ hr = WMCreateSyncReader(NULL, WMT_RIGHT_PLAYBACK, &mpPrivate->mpWMReader);
+ if (SUCCEEDED(hr))
+ {
+ hr = mpPrivate->mpWMReader->OpenStream(mpPrivate->mpWMStream);
+ if (SUCCEEDED(hr))
+ {
+ result = ReadInfo();
+ }
+ }
+ 
+ return result;
+ }*/
 
 void nuiAudioDecoder::Clear()
 {
   if (mpPrivate->mpWMReader)
   {
-	mpPrivate->mpWMReader->Close();
-	mpPrivate->mpWMReader->Release();
-	mpPrivate->mpWMReader = NULL;
+    mpPrivate->mpWMReader->Close();
+    mpPrivate->mpWMReader->Release();
+    mpPrivate->mpWMReader = NULL;
   }
-
+  
   if (mpPrivate->mpWMStream)
   {
-	mpPrivate->mpWMStream->Release();
-	mpPrivate->mpWMStream = NULL;
+    mpPrivate->mpWMStream->Release();
+    mpPrivate->mpWMStream = NULL;
   }
-
+  
   CoUninitialize();
-
+  
   if (mpPrivate)
-	delete mpPrivate;
+    delete mpPrivate;
 }
 
 bool nuiAudioDecoder::Seek(uint64 SampleFrame)
 {
   QWORD StartTime = SampleFrame / mInfo.GetSampleRate() * ONE_SECOND;
   HRESULT hr = mpPrivate->mpWMReader->SetRange(StartTime, 0/*no duration set*/);
-
+  
   if (SUCCEEDED(hr))
   {
-	mpPrivate->mQueue.Reset(); //nullify the datas already stored in the Queue
-	return true;
+    mpPrivate->mQueue.Reset(); //nullify the datas already stored in the Queue
+    return true;
   }
-
+  
   return false;
 }
 
 bool nuiAudioDecoder::ReadInfo()
 {
   if (mInitialized) //already initialized
-	return false;
-
+    return false;
+  
   CoInitialize(NULL);
   mpPrivate = new nuiAudioDecoderPrivate();
   HRESULT hr = S_OK;
   mpPrivate->mpWMStream = new nglWindowsMediaIStream(mrStream);
-
+  
   hr = WMCreateSyncReader(NULL, WMT_RIGHT_PLAYBACK, &mpPrivate->mpWMReader);
   if (SUCCEEDED(hr))
   {
-	hr = mpPrivate->mpWMReader->OpenStream(mpPrivate->mpWMStream);
-	if (FAILED(hr))
-	{
-	  return false;
-	}
+    hr = mpPrivate->mpWMReader->OpenStream(mpPrivate->mpWMStream);
+    if (FAILED(hr))
+    {
+      return false;
+    }
   }
   bool result = false;
   DWORD OutputNb = 0;
   DWORD FormatNb = 0;
   WORD StreamNb = 0;
-
+  
   DWORD OutputCount = 0;
   hr = mpPrivate->mpWMReader->GetOutputCount(&OutputCount);
-
+  
   if (FAILED(hr))
-	return false;
-
+    return false;
+  
   if (OutputCount != 1)
-	return false;
-
+    return false;
+  
   for (DWORD out = 0; out < OutputCount; out++)
   {
-	DWORD FormatCount = 0;
-	hr = mpPrivate->mpWMReader->GetOutputFormatCount(out, &FormatCount);
-
-	for (DWORD format = 0; format < FormatCount; format++)
-	{
-	  IWMOutputMediaProps* pMediaProps = NULL;
-	  hr = mpPrivate->mpWMReader->GetOutputFormat(out, format, &pMediaProps);
-
-	  if (FAILED(hr))
-	  {
-		result = false;
-		break;
-	  }
-
-	  GUID typeGUID;
-	  hr= pMediaProps->GetType( &typeGUID );
-	  if (typeGUID == WMMEDIATYPE_Audio)
-	  {
-		DWORD AllocSize = 0;
-		hr = pMediaProps->GetMediaType(NULL, &AllocSize);
-		if (FAILED(hr))
-		{
-		  result = false;
-		  break;
-		}
-
-		WM_MEDIA_TYPE* pType = (WM_MEDIA_TYPE*)malloc(AllocSize);
-		if (!pType)
-		  break;
-		hr = pMediaProps->GetMediaType(pType, &AllocSize);
-		if (FAILED(hr))
-		{
-		  free(pType);
-		  result = false;
-		  break;
-		}
-
-		//we want non compressed audio data
-		if (pType->subtype == WMMEDIASUBTYPE_PCM && pType->formattype == WMFORMAT_WaveFormatEx)
-		{
-		  WAVEFORMATEX* pWFmt = (WAVEFORMATEX*)(pType->pbFormat);
-		  
-		  //Check if the samples are PCM audio
-		  if (pWFmt->wFormatTag != PCM_AUDIO_FORMAT_TAG)
-		  {
-			free(pType);
-			result = false;
-			break;
-		  }
-		  WORD nbChannels = pWFmt->nChannels;			//retrieve the number of channels
-		  DWORD SampleRate = pWFmt->nSamplesPerSec;		//retrieve the sample rate
-		  WORD bitsPerSample = pWFmt->wBitsPerSample;   //retrieve the number of bits per sample
-
-		  //Get the stream number
-		  hr= mpPrivate->mpWMReader->GetStreamNumberForOutput(out, &StreamNb);
-		  if (FAILED(hr))
-		  {
-			free(pType);
-			result = false;
-			break;
-		  }
-
-		  // Specify this current format as the desired output format
-		  hr= mpPrivate->mpWMReader->SetOutputProps(out, pMediaProps);
-		  if (FAILED(hr))
-		  {
-			free(pType);
-			result = false;
-			break;
-		  }
-
-		  // Set the stream number for reading
-		  WMT_STREAM_SELECTION streamSelection= WMT_ON;
-		  hr= mpPrivate->mpWMReader->SetStreamsSelected( 1, &StreamNb, &streamSelection );
-		  if (FAILED(hr))
-		  {
-			free(pType);
-			result = false;
-			break;
-		  }
-
-		  // Specify that we want uncompressed samples
-		  hr= mpPrivate->mpWMReader->SetReadStreamSamples(StreamNb, FALSE );
-		  if (FAILED(hr))
-		  {
-			free(pType);
-			result = false;
-			break;
-		  }
-
-		  //estimate the length of the stream in sample using the length in time unit
-		  uint64 SampleFrames = 0;
-		  IWMHeaderInfo* pHeaderInfo = NULL;
-		  mpPrivate->mpWMReader->QueryInterface(IID_IWMHeaderInfo, (void**)(&pHeaderInfo));
-		  if (pHeaderInfo)
-		  {
-			WORD AnyStream = 0;
-			WMT_ATTR_DATATYPE dataType= WMT_TYPE_QWORD;
-			WORD length= 0;
-			hr = pHeaderInfo->GetAttributeByName(&AnyStream, g_wszWMDuration, &dataType, NULL, &length);
-			if (SUCCEEDED(hr) && dataType == WMT_TYPE_QWORD && length == sizeof(QWORD))
-			{
-			  QWORD TimeLength;
-			  hr = pHeaderInfo->GetAttributeByName(&AnyStream, g_wszWMDuration, &dataType, (BYTE*)(&TimeLength), &length);
-			  if (SUCCEEDED(hr))
-			  {
-				SampleFrames = TimeLength / ONE_SECOND * SampleRate;
-			  }
-			}
-			pHeaderInfo->Release();
-		  }
-
-		  mInfo.SetChannels(nbChannels);
-		  mInfo.SetSampleRate(SampleRate);
-		  mInfo.SetBitsPerSample(REQUESTED_BITS_PER_SAMPLE); // we want to convert to 32 bits float samples
-		  mInfo.SetSampleFrames(SampleFrames);
-
-		  mpPrivate->mQueue.SetInputBytesPerSample(bitsPerSample / 8);
-
-		  free(pType);
-		  result = true;
-		  break; //we have found the right output and format, and the Sample info object is filled
-		}
-	  }
-
-	}
+    DWORD FormatCount = 0;
+    hr = mpPrivate->mpWMReader->GetOutputFormatCount(out, &FormatCount);
+    
+    for (DWORD format = 0; format < FormatCount; format++)
+    {
+      IWMOutputMediaProps* pMediaProps = NULL;
+      hr = mpPrivate->mpWMReader->GetOutputFormat(out, format, &pMediaProps);
+      
+      if (FAILED(hr))
+      {
+        result = false;
+        break;
+      }
+      
+      GUID typeGUID;
+      hr= pMediaProps->GetType( &typeGUID );
+      if (typeGUID == WMMEDIATYPE_Audio)
+      {
+        DWORD AllocSize = 0;
+        hr = pMediaProps->GetMediaType(NULL, &AllocSize);
+        if (FAILED(hr))
+        {
+          result = false;
+          break;
+        }
+        
+        WM_MEDIA_TYPE* pType = (WM_MEDIA_TYPE*)malloc(AllocSize);
+        if (!pType)
+          break;
+        hr = pMediaProps->GetMediaType(pType, &AllocSize);
+        if (FAILED(hr))
+        {
+          free(pType);
+          result = false;
+          break;
+        }
+        
+        //we want non compressed audio data
+        if (pType->subtype == WMMEDIASUBTYPE_PCM && pType->formattype == WMFORMAT_WaveFormatEx)
+        {
+          WAVEFORMATEX* pWFmt = (WAVEFORMATEX*)(pType->pbFormat);
+          
+          //Check if the samples are PCM audio
+          if (pWFmt->wFormatTag != PCM_AUDIO_FORMAT_TAG)
+          {
+            free(pType);
+            result = false;
+            break;
+          }
+          WORD nbChannels = pWFmt->nChannels;     //retrieve the number of channels
+          DWORD SampleRate = pWFmt->nSamplesPerSec;   //retrieve the sample rate
+          WORD bitsPerSample = pWFmt->wBitsPerSample;   //retrieve the number of bits per sample
+          
+          //Get the stream number
+          hr= mpPrivate->mpWMReader->GetStreamNumberForOutput(out, &StreamNb);
+          if (FAILED(hr))
+          {
+            free(pType);
+            result = false;
+            break;
+          }
+          
+          // Specify this current format as the desired output format
+          hr= mpPrivate->mpWMReader->SetOutputProps(out, pMediaProps);
+          if (FAILED(hr))
+          {
+            free(pType);
+            result = false;
+            break;
+          }
+          
+          // Set the stream number for reading
+          WMT_STREAM_SELECTION streamSelection= WMT_ON;
+          hr= mpPrivate->mpWMReader->SetStreamsSelected( 1, &StreamNb, &streamSelection );
+          if (FAILED(hr))
+          {
+            free(pType);
+            result = false;
+            break;
+          }
+          
+          // Specify that we want uncompressed samples
+          hr= mpPrivate->mpWMReader->SetReadStreamSamples(StreamNb, FALSE );
+          if (FAILED(hr))
+          {
+            free(pType);
+            result = false;
+            break;
+          }
+          
+          //estimate the length of the stream in sample using the length in time unit
+          uint64 SampleFrames = 0;
+          IWMHeaderInfo* pHeaderInfo = NULL;
+          mpPrivate->mpWMReader->QueryInterface(IID_IWMHeaderInfo, (void**)(&pHeaderInfo));
+          if (pHeaderInfo)
+          {
+            WORD AnyStream = 0;
+            WMT_ATTR_DATATYPE dataType= WMT_TYPE_QWORD;
+            WORD length= 0;
+            hr = pHeaderInfo->GetAttributeByName(&AnyStream, g_wszWMDuration, &dataType, NULL, &length);
+            if (SUCCEEDED(hr) && dataType == WMT_TYPE_QWORD && length == sizeof(QWORD))
+            {
+              QWORD TimeLength;
+              hr = pHeaderInfo->GetAttributeByName(&AnyStream, g_wszWMDuration, &dataType, (BYTE*)(&TimeLength), &length);
+              if (SUCCEEDED(hr))
+              {
+                SampleFrames = TimeLength / ONE_SECOND * SampleRate;
+              }
+            }
+            pHeaderInfo->Release();
+          }
+          
+          mInfo.SetChannels(nbChannels);
+          mInfo.SetSampleRate(SampleRate);
+          mInfo.SetBitsPerSample(REQUESTED_BITS_PER_SAMPLE); // we want to convert to 32 bits float samples
+          mInfo.SetSampleFrames(SampleFrames);
+          
+          mpPrivate->mQueue.SetInputBytesPerSample(bitsPerSample / 8);
+          
+          free(pType);
+          result = true;
+          break; //we have found the right output and format, and the Sample info object is filled
+        }
+      }
+      
+    }
   }
-
+  
   return result;
 }
 
@@ -305,66 +305,66 @@ uint32 nuiAudioDecoder::ReadDE(std::vector<void*> buffers, uint32 sampleframes, 
 {
   NGL_ASSERT(mInitialized);
   if (!mInitialized)
-	return 0;
-
-  uint32 BytesToRead		= sampleframes * mInfo.GetChannels() * mpPrivate->mQueue.GetInputBytesPerSample();
-  HRESULT hr				= S_OK;
-  INSSBuffer* pTempBuffer	= NULL;
-  QWORD SampleTime			= 0;
-  QWORD SampleDuration		= 0;
-  DWORD flags				= 0;
-  DWORD outputNum			= 0;
-
+    return 0;
+  
+  uint32 BytesToRead    = sampleframes * mInfo.GetChannels() * mpPrivate->mQueue.GetInputBytesPerSample();
+  HRESULT hr        = S_OK;
+  INSSBuffer* pTempBuffer = NULL;
+  QWORD SampleTime      = 0;
+  QWORD SampleDuration    = 0;
+  DWORD flags       = 0;
+  DWORD outputNum     = 0;
+  
   while (SUCCEEDED(hr) && mpPrivate->mQueue.GetUtilSize() < BytesToRead)
   {
-	hr = mpPrivate->mpWMReader->GetNextSample(0, &pTempBuffer, &SampleTime, &SampleDuration, &flags, &outputNum, NULL);
-
-	if (SUCCEEDED(hr))
-	{
-	  BYTE* pBytes = NULL;
-	  DWORD length = 0;
-	  hr = pTempBuffer->GetBufferAndLength(&pBytes, &length);
-	  if (SUCCEEDED(hr))
-	  {
-		mpPrivate->mQueue.Append((uint8*)pBytes, length);
-	  }
-	  pTempBuffer->Release();
-	  pTempBuffer = NULL;
-	}
-
-	SampleTime		  = 0;
-	SampleDuration	  = 0;
-	flags			  = 0;
+    hr = mpPrivate->mpWMReader->GetNextSample(0, &pTempBuffer, &SampleTime, &SampleDuration, &flags, &outputNum, NULL);
+    
+    if (SUCCEEDED(hr))
+    {
+      BYTE* pBytes = NULL;
+      DWORD length = 0;
+      hr = pTempBuffer->GetBufferAndLength(&pBytes, &length);
+      if (SUCCEEDED(hr))
+      {
+        mpPrivate->mQueue.Append((uint8*)pBytes, length);
+      }
+      pTempBuffer->Release();
+      pTempBuffer = NULL;
+    }
+    
+    SampleTime      = 0;
+    SampleDuration    = 0;
+    flags       = 0;
   }
-
+  
   uint32 channels = mInfo.GetChannels();
   std::vector<float*> temp(channels);
   if (format == eSampleFloat32)
   {
-	for (uint32 i = 0; i < channels; i++)
-	{
-	  temp[i] = (float*)(buffers[i]);
-	}
+    for (uint32 i = 0; i < channels; i++)
+    {
+      temp[i] = (float*)(buffers[i]);
+    }
   }
   else
   {
-	for (uint32 i = 0; i < channels; i++)
-	{
-	  temp[i] = new float[sampleframes];
-	}
+    for (uint32 i = 0; i < channels; i++)
+    {
+      temp[i] = new float[sampleframes];
+    }
   }
-
+  
   uint32 FramesRead = mpPrivate->mQueue.ReadDeInterleavedFloat32(temp, sampleframes); // we want de-interleaved samples
-
+  
   if (format == eSampleInt16)
   {
-	for (uint32 i = 0; i < channels; i++)
-	{
-	  nuiAudioConvert_FloatBufferTo16bits(temp[i], (int16*)(buffers[i]), FramesRead);
-	  delete[] temp[i];
-	}
+    for (uint32 i = 0; i < channels; i++)
+    {
+      nuiAudioConvert_FloatBufferTo16bits(temp[i], (int16*)(buffers[i]), FramesRead);
+      delete[] temp[i];
+    }
   }
-
+  
   mPosition += FramesRead;
   return FramesRead;
 }
@@ -410,7 +410,7 @@ void SamplesQueue::Append(uint8* pSrc, uint32 size)
   mUtilSize += size;
   if (mBuffer.size() < mUtilSize)
   {
-	mBuffer.resize(mUtilSize);
+    mBuffer.resize(mUtilSize);
   }
   memcpy(&(mBuffer[oldUtilSize]), pSrc, size);
 }
@@ -424,47 +424,47 @@ uint32 SamplesQueue::ReadDeInterleavedFloat32(std::vector<float*>& rBuffers, uin
   uint32 FramesToRead = MIN(FramesRequested, StoredFrames);
   uint32 SamplesToRead = FramesToRead * channels;
   uint32 BytesToRead = SamplesToRead * mInputBytesPerSample;
-
+  
   float* pFloatBuffer = new float[SamplesToRead];
-
+  
   if (mInputBytesPerSample == 1)
   {
-	memcpy((int8*)pFloatBuffer + 3*SamplesToRead, &(mBuffer[0]), SamplesToRead);
-	nuiAudioConvert_Signed8bitsBufferToFloat(pFloatBuffer, SamplesToRead);
+    memcpy((int8*)pFloatBuffer + 3*SamplesToRead, &(mBuffer[0]), SamplesToRead);
+    nuiAudioConvert_Signed8bitsBufferToFloat(pFloatBuffer, SamplesToRead);
   }
   else if (mInputBytesPerSample == 2)
   {
-	memcpy((int16*)pFloatBuffer + SamplesToRead, &(mBuffer[0]), SamplesToRead * mInputBytesPerSample);
-	nuiAudioConvert_16bitsBufferToFloat(pFloatBuffer, SamplesToRead);
+    memcpy((int16*)pFloatBuffer + SamplesToRead, &(mBuffer[0]), SamplesToRead * mInputBytesPerSample);
+    nuiAudioConvert_16bitsBufferToFloat(pFloatBuffer, SamplesToRead);
   }
   else if (mInputBytesPerSample == 3)
   {
-  	for (uint32 i = 0; i < SamplesToRead; i++)
-	{
-	  pFloatBuffer[i] = nuiAudioConvert_24bitsToFloatFromLittleEndian(&(mBuffer[3 * i]));
-	}
+    for (uint32 i = 0; i < SamplesToRead; i++)
+    {
+      pFloatBuffer[i] = nuiAudioConvert_24bitsToFloatFromLittleEndian(&(mBuffer[3 * i]));
+    }
   }
   else if (mInputBytesPerSample == 4)
   {
-	nuiAudioConvert_32bitsToFloat((int32*)&(mBuffer[0]), pFloatBuffer, SamplesToRead);
+    nuiAudioConvert_32bitsToFloat((int32*)&(mBuffer[0]), pFloatBuffer, SamplesToRead);
   }
-
+  
   for (uint32 s = 0; s < FramesToRead; s++)
   {
-	for (uint32 c = 0; c < channels; c++)
-	{
-	  rBuffers[c][s] = pFloatBuffer[s * channels + c];
-	}
+    for (uint32 c = 0; c < channels; c++)
+    {
+      rBuffers[c][s] = pFloatBuffer[s * channels + c];
+    }
   }
-
+  
   mUtilSize -= BytesToRead;
   if (mUtilSize > 0)
   {
-	memmove(&(mBuffer[0]), &(mBuffer[BytesToRead]), mUtilSize);
+    memmove(&(mBuffer[0]), &(mBuffer[BytesToRead]), mUtilSize);
   }
-
+  
   delete[] pFloatBuffer;
-
+  
   return FramesToRead;
 }
 
@@ -472,7 +472,7 @@ void SamplesQueue::SetInputBytesPerSample(uint32 bytes)
 {
   mInputBytesPerSample = bytes;
 }
-  
+
 uint32 SamplesQueue::GetInputBytesPerSample() const
 {
   return mInputBytesPerSample;
@@ -505,31 +505,31 @@ HRESULT nglWindowsMediaIStream::QueryInterface(REFIID iid, __RPC__deref_out void
 {
   if(ppvObject == NULL) 
   {
-	return E_INVALIDARG;
+    return E_INVALIDARG;
   }
-
+  
   *ppvObject = NULL;
-
+  
   if(iid == IID_IUnknown)
   {
-	*ppvObject = this;
+    *ppvObject = this;
   }
   else if(iid == IID_ISequentialStream)
   {
-	*ppvObject = (ISequentialStream*)this;
+    *ppvObject = (ISequentialStream*)this;
   }
-
+  
   else if(iid == IID_IStream)
   {
-	*ppvObject = (IStream*)this;
+    *ppvObject = (IStream*)this;
   }
-
-
+  
+  
   if(*ppvObject == NULL) 
   {
-	return E_NOINTERFACE;
+    return E_NOINTERFACE;
   }
-
+  
   AddRef();
   return S_OK;
 }
@@ -543,12 +543,12 @@ ULONG nglWindowsMediaIStream::AddRef()
 ULONG nglWindowsMediaIStream::Release()
 {
   mRefCount--;
-
+  
   if (mRefCount == 0)
   {
-	delete this;
+    delete this;
   }
-
+  
   return mRefCount;
 }
 
@@ -571,24 +571,24 @@ HRESULT nglWindowsMediaIStream::Seek(LARGE_INTEGER dlibMove, DWORD dwOrigin, ULA
   nglStreamWhence fromWhere = eStreamFromStart;
   if (dwOrigin == STREAM_SEEK_SET)
   {
-	fromWhere = eStreamFromStart;
+    fromWhere = eStreamFromStart;
   }
   else if (dwOrigin == STREAM_SEEK_CUR)
   {
-	fromWhere = eStreamForward;
+    fromWhere = eStreamForward;
   }
   else if (dwOrigin = STREAM_SEEK_END)
   {
-	fromWhere = eStreamFromEnd;
+    fromWhere = eStreamFromEnd;
   }
-
+  
   nglFileOffset move = dlibMove.QuadPart;
   mrStream.SetPos(move, fromWhere);
   nglFileOffset newPos = mrStream.GetPos();
-
+  
   if (plibNewPosition)
-	plibNewPosition->QuadPart = newPos;
-
+    plibNewPosition->QuadPart = newPos;
+  
   return S_OK;
 }
 
@@ -624,29 +624,29 @@ HRESULT nglWindowsMediaIStream::UnlockRegion(ULARGE_INTEGER libOffset, ULARGE_IN
 HRESULT nglWindowsMediaIStream::Stat(__RPC__out STATSTG *pstatstg, DWORD grfStatFlag)
 {
   if (!pstatstg)
-	return STG_E_INVALIDPOINTER;
-
+    return STG_E_INVALIDPOINTER;
+  
   LPOLESTR pName = NULL;
   if (grfStatFlag & STATFLAG_DEFAULT)
   {
-	//fill the name
-	WCHAR wname[256];
-	swprintf(wname, L"0x%x", this);
-	size_t length = wcslen(wname) + 1;
-	pName = (LPOLESTR)CoTaskMemAlloc(length * sizeof(WCHAR));
-	if (!pName)
-	  return STG_E_INSUFFICIENTMEMORY;
-	memcpy(pName, wname, length);
+    //fill the name
+    WCHAR wname[256];
+    swprintf(wname, L"0x%x", this);
+    size_t length = wcslen(wname) + 1;
+    pName = (LPOLESTR)CoTaskMemAlloc(length * sizeof(WCHAR));
+    if (!pName)
+      return STG_E_INSUFFICIENTMEMORY;
+    memcpy(pName, wname, length);
   }
   else if (grfStatFlag & STATFLAG_NONAME)
   {
-	pName = NULL;
+    pName = NULL;
   }
   else
   {
-	return STG_E_INVALIDFLAG;
+    return STG_E_INVALIDFLAG;
   }
-
+  
   nglFileSize StreamSize = mrStream.Available(1);
   DWORD StorageType = STGTY_STORAGE;
   FILETIME Mtime;
@@ -661,8 +661,8 @@ HRESULT nglWindowsMediaIStream::Stat(__RPC__out STATSTG *pstatstg, DWORD grfStat
   DWORD AccessMode = 0;
   DWORD LockSupported = LOCK_WRITE;
   CLSID ClassID = CLSID_NULL;
-
-
+  
+  
   pstatstg->pwcsName = pName;
   pstatstg->type = StorageType;
   pstatstg->cbSize.QuadPart = StreamSize;
@@ -672,9 +672,9 @@ HRESULT nglWindowsMediaIStream::Stat(__RPC__out STATSTG *pstatstg, DWORD grfStat
   pstatstg->grfMode = AccessMode;
   pstatstg->grfLocksSupported = LockSupported;
   pstatstg->clsid = ClassID;
-
-
-
+  
+  
+  
   return S_OK;
 }
 

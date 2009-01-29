@@ -50,6 +50,8 @@ enum nuiAttributeUnit
 	nuiUnitExpand,
 	nuiUnitOrientation,
   nuiUnitColor,
+  nuiUnitVector,
+  nuiUnitMatrix,
   nuiUnitCustom
 };
 
@@ -1607,6 +1609,66 @@ template <>
 void nuiAttribute<nuiMouseCursor>::FormatDefault(void* pTarget, nglString& string);
 
 
+
+//********************************
+//
+// const nglVectorf&
+//
+
+template <>
+bool nuiAttribute<const nglVectorf&>::ToString(const nglVectorf& rValue, nglString& rString) const;
+
+template <>
+bool nuiAttribute<const nglVectorf&>::FromString(nglVectorf& rValue, const nglString& rString) const;
+
+template <>
+void nuiAttribute<const nglVectorf&>::FormatDefault(void* pTarget, nglString& string);
+
+//********************************
+//
+// nglVectorf
+//
+
+template <>
+bool nuiAttribute<nglVectorf>::ToString(nglVectorf Value, nglString& rString) const;
+
+template <>
+bool nuiAttribute<nglVectorf>::FromString(nglVectorf& rValue, const nglString& rString) const;
+
+template <>
+void nuiAttribute<nglVectorf>::FormatDefault(void* pTarget, nglString& string);
+
+
+
+//********************************
+//
+// const nglMatrixf&
+//
+
+template <>
+bool nuiAttribute<const nglMatrixf&>::ToString(const nglMatrixf& rValue, nglString& rString) const;
+
+template <>
+bool nuiAttribute<const nglMatrixf&>::FromString(nglMatrixf& rValue, const nglString& rString) const;
+
+
+template <>
+void nuiAttribute<const nglMatrixf&>::FormatDefault(void* pTarget, nglString& string);
+
+//********************************
+//
+// nglMatrixf
+//
+
+template <>
+bool nuiAttribute<nglMatrixf>::ToString(nglMatrixf Value, nglString& rString) const;
+
+template <>
+bool nuiAttribute<nglMatrixf>::FromString(nglMatrixf& rValue, const nglString& rString) const;
+
+
+template <>
+void nuiAttribute<nglMatrixf>::FormatDefault(void* pTarget, nglString& string);
 
 
 

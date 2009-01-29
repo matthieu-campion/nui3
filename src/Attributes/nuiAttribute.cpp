@@ -1563,6 +1563,116 @@ void nuiAttribute<nuiMouseCursor>::FormatDefault(void* pTarget, nglString& strin
   ToString(pTarget, string);
 }
 
+//********************************
+//
+// nglVectorf
+//
+
+template class nuiAttribute<nglVectorf>;
+
+template <>
+bool nuiAttribute<nglVectorf>::ToString(nglVectorf Value, nglString& rString) const
+{
+  return Value.GetValue(rString);
+}
+
+template <>
+bool nuiAttribute<nglVectorf>::FromString(nglVectorf& rValue, const nglString& rString) const
+{
+  return rValue.SetValue(rString);
+}
+
+template <>
+void nuiAttribute<nglVectorf>::FormatDefault(void* pTarget, nglString & string)
+{
+  Get(pTarget).GetValue(string);
+}
+
+
+
+
+//********************************
+//
+// const nglVectorf&
+//
+
+template class nuiAttribute<const nglVectorf&>;
+
+template <>
+void nuiAttribute<const nglVectorf&>::FormatDefault(void* pTarget, nglString & string)
+{
+  Get(pTarget).GetValue(string);
+}
+
+template <>
+bool nuiAttribute<const nglVectorf&>::ToString(const nglVectorf& rValue, nglString& rString) const
+{
+  return rValue.GetValue(rString);
+}
+
+template <>
+bool nuiAttribute<const nglVectorf&>::FromString(nglVectorf& rValue, const nglString& rString) const
+{
+  return rValue.SetValue(rString);
+}
+
+
+
+//********************************
+//
+// nglMatrixf
+//
+
+template class nuiAttribute<nglMatrixf>;
+
+template <>
+bool nuiAttribute<nglMatrixf>::ToString(nglMatrixf Value, nglString& rString) const
+{
+  return Value.GetValue(rString);
+}
+
+template <>
+bool nuiAttribute<nglMatrixf>::FromString(nglMatrixf& rValue, const nglString& rString) const
+{
+  return rValue.SetValue(rString);
+}
+
+template <>
+void nuiAttribute<nglMatrixf>::FormatDefault(void* pTarget, nglString & string)
+{
+  Get(pTarget).GetValue(string);
+}
+
+
+
+
+//********************************
+//
+// const nglMatrixf&
+//
+
+template class nuiAttribute<const nglMatrixf&>;
+
+template <>
+void nuiAttribute<const nglMatrixf&>::FormatDefault(void* pTarget, nglString & string)
+{
+  Get(pTarget).GetValue(string);
+}
+
+template <>
+bool nuiAttribute<const nglMatrixf&>::ToString(const nglMatrixf& rValue, nglString& rString) const
+{
+  return rValue.GetValue(rString);
+}
+
+template <>
+bool nuiAttribute<const nglMatrixf&>::FromString(nglMatrixf& rValue, const nglString& rString) const
+{
+  return rValue.SetValue(rString);
+}
+
+
+
 
 /////////////////////////////////
 // nuiAttribBase
