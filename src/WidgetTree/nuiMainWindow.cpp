@@ -853,18 +853,21 @@ void nuiMainWindow::OnDragFeedback(nglDropEffect eDropEffect)
   //NGL_OUT(_T("nuiMainWindow::OnDragFeedback\n"));
 }
 
-void nuiMainWindow::OnDragged (nglDragAndDrop* pDragObject)
+void nuiMainWindow::OnDragRequestData(nglDragAndDrop* pDragObject)
 {
-  //NGL_OUT(_T("nuiMainWindow::OnDragged\n"));
+  //NGL_OUT(_T("nuiMainWindow::OnDragRequestData\n"));
   NGL_ASSERT(mpDragSource);
   if (mpDragSource != this)
-    mpDragSource->OnDragged(pDragObject); ///< fill data for supported types just before drop occurs
+    mpDragSource->OnDragRequestData(pDragObject); ///< fill data for supported types just before drop occurs
 }
 
-void nuiMainWindow::OnStopDragging()
+void nuiMainWindow::OnDragStop(bool canceled)
 {
+  //LBDEBUG
+  NGL_OUT(_T("nuiMainWindow::OnDragStop\n"));
+  
   if (mpDragSource && mpDragSource != this)
-    mpDragSource->OnStopDragging(); ///< advise drag source
+    mpDragSource->OnDragStop(canceled); ///< advise drag source
 }
 #endif//_NODND_
 
@@ -998,16 +1001,19 @@ void nuiMainWindow::NGLWindow::OnDragFeedback(nglDropEffect eDropEffect)
   mpMainWindow->OnDragFeedback(eDropEffect);
 }
 
-void nuiMainWindow::NGLWindow::OnDragged (nglDragAndDrop* pDragObject)
+void nuiMainWindow::NGLWindow::OnDragRequestData(nglDragAndDrop* pDragObject)
 {
-  nglWindow::OnDragged(pDragObject);
-  mpMainWindow->OnDragged(pDragObject);
+  nglWindow::OnDragRequestData(pDragObject);
+  mpMainWindow->OnDragRequestData(pDragObject);
 }
 
-void nuiMainWindow::NGLWindow::OnStopDragging()
+void nuiMainWindow::NGLWindow::OnDragStop(bool canceled)
 {
-  nglWindow::OnStopDragging();
-  mpMainWindow->OnStopDragging();
+  //LBDEBUG
+  NGL_OUT(_T("nuiMainWindow::NGLWindow::OnDragStop\n"));
+  
+  nglWindow::OnDragStop(canceled);
+  mpMainWindow->OnDragStop(canceled);
 }
 #endif//_NODND_
 

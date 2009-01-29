@@ -641,22 +641,23 @@ void nuiTreeView::ReparentTree(nuiTreeNode* pTree)
 
 #if !defined _NODND_
 
-void nuiTreeView::SetStartDragDelegate(const StartDragDelegate& rDelegate)
+void nuiTreeView::SetDragStartDelegate(const DragStartDelegate& rDelegate)
 {
-  mStartDragDelegate = rDelegate;
+  mDragStartDelegate = rDelegate;
 }
 
 
-void nuiTreeView::SetDraggedDelegate(const DraggedDelegate& rDelegate)
+void nuiTreeView::SetDragRequestDataDelegate(const DragRequestDataDelegate& rDelegate)
 {
-  mDraggedDelegate = rDelegate;
+  mDragRequestDataDelegate = rDelegate;
 }
 
 
-void nuiTreeView::SetStopDraggingDelegate(const StopDraggingDelegate& rDelegate)
+void nuiTreeView::SetDragStopDelegate(const DragStopDelegate& rDelegate)
 {
-  mStopDraggingDelegate = rDelegate;
+  mDragStopDelegate = rDelegate;
 }
+
 
 #endif
 
@@ -805,11 +806,11 @@ bool nuiTreeView::MouseMoved(nuiSize X, nuiSize Y)
       nuiSize offsetY = abs(Y - mClickY);
       if ((offsetX > 10) || (offsetY > 10))
       {
-        if (mStartDragDelegate)
+        if (mDragStartDelegate)
         {
           mDragging = true;
 
-          mpDraggedObject = mStartDragDelegate(mpSelectedNode);
+          mpDraggedObject = mDragStartDelegate(mpSelectedNode);
           if (mpDraggedObject)
           {
             //LBEDBUG
@@ -830,12 +831,14 @@ bool nuiTreeView::MouseMoved(nuiSize X, nuiSize Y)
 
 #if !defined _NODND_
 // virtual 
-void nuiTreeView::OnDragged(nglDragAndDrop* pDragObject)
+void nuiTreeView::OnDragRequestData(nglDragAndDrop* pDragObject)
 {
-  NGL_OUT(_T("OnDragged\n"));
-  if (mDraggedDelegate)
+  //LBDEBUG
+  NGL_OUT(_T("nuiTreeView::OnDragRequestData\n"));
+  
+  if (mDragRequestDataDelegate)
   {
-    mDraggedDelegate(mpSelectedNode, mpDraggedObject);
+    mDragRequestDataDelegate(mpSelectedNode, mpDraggedObject);
   }
   
   switch (mpDraggedObject->GetDesiredDropEffect())
@@ -854,12 +857,14 @@ void nuiTreeView::OnDragged(nglDragAndDrop* pDragObject)
   
 }
 
-void nuiTreeView::OnStopDragging()
-{  
-  NGL_OUT(_T("OnStopDragging\n"));
-  if (mStopDraggingDelegate)
+void nuiTreeView::OnDragStop(bool canceled)
+{ 
+  //LBDEBUG
+  NGL_OUT(_T("nuiTreeView::OnDragStop\n"));
+  
+  if (mDragStopDelegate)
   {
-    mStopDraggingDelegate(mpSelectedNode);
+    mDragStopDelegate(mpSelectedNode, canceled);
   }
   mDragging = false;
 }

@@ -632,25 +632,32 @@ window = new nglWindow (context, info, NULL);
 
   /** @name Drag and drop */
   //@{
+
+  /*!<
+   This method is called by the system whenever the mouse is dragging an object over the window. 
+   This method should test objects for supported drag and drop types and return true if one of them is supported, false otherwise.
+   This method also should fill the effect flag of the drop by calling nglDragAndDrop::SetDesiredEffect
+   */
+  virtual bool Drag(nglDragAndDrop* pDragObject); ///< Starts a Drag operation, pDragObject should have its types set.
+  
+  virtual void OnDragFeedback(nglDropEffect eDropEffect);
+  virtual void OnDragRequestData(nglDragAndDrop* pDragObject); ///< called whenever the system request data for a drop operation after BeginDragging
+  virtual void OnDragStop(bool canceled); ///< called when a drag operation is interupted or finished
+  
+  
   virtual void OnDragEnter();
   virtual void OnDragLeave();
-  virtual bool OnCanDrop (nglDragAndDrop* pDragObject, int X, int Y, nglMouseInfo::Flags Button); 
+  virtual bool OnCanDrop(nglDragAndDrop* pDragObject, int X, int Y, nglMouseInfo::Flags Button);
+  
   /*!<
-    This method is called by the system whenever the mouse is dragging an object over the window. 
-    This method should test objects for supported drag and drop types and return true if one of them is supported, false otherwise.
-    This method also should fill the effect flag of the drop by calling nglDragAndDrop::SetDesiredEffect
-  */
-  virtual void OnDropped (nglDragAndDrop* pDragObject, int X,int Y, nglMouseInfo::Flags Button); 
-  /*!<
-  This method is called whenever the mouse is dropping an object on the application window. 
-  This method should retreive the dropped data from the system for supported drag and drop types by the widget under it.
-  The mouse flag argument contains the mouse event that initiated the drop operation. 
-  X & Y are the coordinates of the mouse inside the main window.
-  */
-  virtual bool Drag(nglDragAndDrop* pDragObject); ///< Starts a Drag operation, pDragObject should have its types set.
-  virtual void OnDragFeedback(nglDropEffect eDropEffect); 
-  virtual void OnDragged (nglDragAndDrop* pDragObject); ///< called whenever the system request data for a drop operation after BeginDragging
-  virtual void OnStopDragging(); ///< called when a drag operation is interupted or finished
+   This method is called whenever the mouse is dropping an object on the application window. 
+   This method should retreive the dropped data from the system for supported drag and drop types by the widget under it.
+   The mouse flag argument contains the mouse event that initiated the drop operation. 
+   X & Y are the coordinates of the mouse inside the main window.
+   */
+  virtual void OnDropped(nglDragAndDrop* pDragObject, int X,int Y, nglMouseInfo::Flags Button);
+  
+  
   //@}
 
 #endif//_NODND_

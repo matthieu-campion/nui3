@@ -52,9 +52,9 @@ public:
 
   virtual nuiTreeNode* GetNewNode(const nglPath& rPath);
   
-  virtual nglDragAndDrop* OnStartDragDelegate(nuiTreeNode* pNode);
-  virtual void OnStopDragDelegate(nuiTreeNode* pNode, nglDragAndDrop* pDragObj);
-  virtual void OnCancelDragDelegate(nuiTreeNode* pNode);
+  nglDragAndDrop* OnDragStartDelegate(nuiTreeNode* pNode);
+  void OnDragRequestDataDelegate(nuiTreeNode* pNode, nglDragAndDrop* pDragObj);
+  void OnDragStopDelegate(nuiTreeNode* pNode, bool canceled);
   
   
   nuiSimpleEventSource<nuiWidgetActivated> PathChanged;      ///< Event triggered when the user is navigating around the file system.

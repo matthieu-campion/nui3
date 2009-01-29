@@ -206,9 +206,9 @@ bool nuiFileTree::SetRootPath(const nglPath& rPath)
       ++it;
     }
     
-    mpTreeView->SetStartDragDelegate(nuiMakeDelegate(this, &nuiFileTree::OnStartDragDelegate));
-//    mpTreeView->SetDraggedDelegate(nuiMakeDelegate(this, &nuiFileTree::OnStopDragDelegate));
-    mpTreeView->SetStopDraggingDelegate(nuiMakeDelegate(this, &nuiFileTree::OnCancelDragDelegate));
+    mpTreeView->SetDragStartDelegate(nuiMakeDelegate(this, &nuiFileTree::OnDragStartDelegate));
+    mpTreeView->SetDragRequestDataDelegate(nuiMakeDelegate(this, &nuiFileTree::OnDragRequestDataDelegate));
+    mpTreeView->SetDragStopDelegate(nuiMakeDelegate(this, &nuiFileTree::OnDragStopDelegate));
     
     return true;
   }
@@ -529,10 +529,13 @@ nglPath nuiFileTree::GetRootPath() const
 
 
 // virtual
-nglDragAndDrop* nuiFileTree::OnStartDragDelegate(nuiTreeNode* pNode)
+nglDragAndDrop* nuiFileTree::OnDragStartDelegate(nuiTreeNode* pNode)
 {
   if (!pNode)
     return NULL;
+  
+  NGL_OUT(_T("nuiFileTree::OnDragStartDelegate pNode 0x%x\n"), pNode);
+  
   
   nglString iconName;
   nglPath path(pNode->GetProperty(_T("Path")));
@@ -562,16 +565,19 @@ nglDragAndDrop* nuiFileTree::OnStartDragDelegate(nuiTreeNode* pNode)
 }
 
 // virtual
-void nuiFileTree::OnStopDragDelegate(nuiTreeNode* pNode, nglDragAndDrop* pDragObject)
+void nuiFileTree::OnDragRequestDataDelegate(nuiTreeNode* pNode, nglDragAndDrop* pDragObject)
 {
-  NGL_OUT(_T("nuiFileTree::OnStopDragDelegate 0x%x\n"), pNode);
+  NGL_OUT(_T("nuiFileTree::OnDragRequestDataDelegate pNode 0x%x   pDragObject 0x%x\n"), pNode, pDragObject);
 }
 
-// virtual
-void nuiFileTree::OnCancelDragDelegate(nuiTreeNode* pNode)
-{  
-  NGL_OUT(_T("nuiFileTree::OnCancelDragDelegate 0x%x\n"), pNode);
+void nuiFileTree::OnDragStopDelegate(nuiTreeNode* pNode, bool canceled)
+{
+  nglString res = _T("true");
+  if (!canceled)
+    res = _T("false");
+  NGL_OUT(_T("nuiFileTree::OnDragStopDelegate 0x%x   canceled %ls\n"), pNode, res.GetChars());
 }
+
 
 
 

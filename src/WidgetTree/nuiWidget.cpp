@@ -2046,11 +2046,11 @@ bool nuiWidget::Drag(nglDragAndDrop* pDragObj)
   
   return true;
 }
-void nuiWidget::OnDragged(nglDragAndDrop* pDragObject)
+void nuiWidget::OnDragRequestData(nglDragAndDrop* pDragObject)
 {
   // Do nothing, drag and drop is not supported by default.
 }
-void nuiWidget::OnStopDragging()
+void nuiWidget::OnDragStop(bool canceled)
 {
   // Do nothing, drag and drop is not supported by default.
 }

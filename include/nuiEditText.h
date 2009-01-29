@@ -52,8 +52,9 @@ public:
 #ifndef _NODND_
   virtual bool OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y);
   virtual void OnDropped(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
-  virtual void OnDragged(nglDragAndDrop* pDragObject);
-  virtual void OnStopDragging();
+  
+  virtual void OnDragRequestData(nglDragAndDrop* pDragObject);
+  virtual void OnDragStop(bool canceled);
 #endif
 
   enum CommandId

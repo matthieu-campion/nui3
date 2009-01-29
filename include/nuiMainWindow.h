@@ -121,8 +121,8 @@ public:
   };
   virtual bool Drag(nuiWidget* pDragSource, nglDragAndDrop* pDragObject);
   virtual void OnDragFeedback(nglDropEffect eDropEffect);
-  virtual void OnDragged (nglDragAndDrop* pDragObject);
-  virtual void OnStopDragging();
+  virtual void OnDragRequestData (nglDragAndDrop* pDragObject);
+  virtual void OnDragStop(bool canceled);
   
   //@}
 #endif
@@ -215,8 +215,8 @@ private:
     // Dnd send
     virtual bool Drag(nglDragAndDrop* pDragObject);
     virtual void OnDragFeedback(nglDropEffect eDropEffect);
-    virtual void OnDragged (nglDragAndDrop* pDragObject);
-    virtual void OnStopDragging();
+    virtual void OnDragRequestData(nglDragAndDrop* pDragObject);
+    virtual void OnDragStop(bool canceled);
     //@}
 #endif
 

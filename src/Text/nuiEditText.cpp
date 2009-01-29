@@ -2263,7 +2263,7 @@ void nuiEditText::OnDropped(nglDragAndDrop* pDragObject,nuiSize X,nuiSize Y, ngl
   */
 }
 
-void nuiEditText::OnDragged(nglDragAndDrop* pDragObject)
+void nuiEditText::OnDragRequestData(nglDragAndDrop* pDragObject)
 {
   nglString data = GetSelection();
   
@@ -2274,7 +2274,7 @@ void nuiEditText::OnDragged(nglDragAndDrop* pDragObject)
   pDragObject->AddType(pText);
 }
 
-void nuiEditText::OnStopDragging()
+void nuiEditText::OnDragStop(bool canceled)
 {
   mStartDragging = false;
   mDragging = false;

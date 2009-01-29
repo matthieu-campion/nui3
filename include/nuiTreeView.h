@@ -121,9 +121,9 @@ protected:
 
 
 #if !defined _NODND_
-typedef nuiFastDelegate1<nuiTreeNode*,nglDragAndDrop*>  StartDragDelegate;
-typedef nuiFastDelegate2<nuiTreeNode*,nglDragAndDrop*>  DraggedDelegate;
-typedef nuiFastDelegate1<nuiTreeNode*>  StopDraggingDelegate;
+typedef nuiFastDelegate1<nuiTreeNode*,nglDragAndDrop*>  DragStartDelegate;
+typedef nuiFastDelegate2<nuiTreeNode*,nglDragAndDrop*>  DragRequestDataDelegate;
+typedef nuiFastDelegate2<nuiTreeNode*,bool>  DragStopDelegate;
 #endif
 
 class NUI_API nuiTreeView : public nuiSimpleContainer
@@ -182,9 +182,9 @@ public:
   nuiSimpleEventSource<nuiWidgetSelected> SelectionDone; ///< This event is called whenever a selection has been finished by an unclick
 
 #if !defined _NODND_
-  void SetStartDragDelegate(const StartDragDelegate& rDelegate);
-  void SetDraggedDelegate(const DraggedDelegate& rDelegate);
-  void SetStopDraggingDelegate(const StopDraggingDelegate& rDelegate);
+  void SetDragStartDelegate(const DragStartDelegate& rDelegate);
+  void SetDragRequestDataDelegate(const DragRequestDataDelegate& rDelegate);
+  void SetDragStopDelegate(const DragStopDelegate& rDelegate);
 #endif
   
 protected:
@@ -234,12 +234,12 @@ protected:
   
 private:
 #if !defined _NODND_
-  virtual void OnDragged(nglDragAndDrop* pDragObject); ///< This method is called on the drag and drop source widget by the window manager whenever the drag & drop operation was accepted by the user (by releasing the mouse button on a widget that support the dragged object type). This is the last time the source widget is allowed to place data in the drag and dropped object. 
-  virtual void OnStopDragging(); ///< called when a drag operation is interupted or finished
+  virtual void OnDragRequestData(nglDragAndDrop* pDragObject); ///< This method is called on the drag and drop source widget by the window manager whenever the drag & drop operation was accepted by the user (by releasing the mouse button on a widget that support the dragged object type). This is the last time the source widget is allowed to place data in the drag and dropped object. 
+  virtual void OnDragStop(bool canceled); ///< called when a drag operation is interupted or finished
   
-  StartDragDelegate mStartDragDelegate;
-  DraggedDelegate mDraggedDelegate;
-  StopDraggingDelegate mStopDraggingDelegate;
+  DragStartDelegate mDragStartDelegate;
+  DragRequestDataDelegate mDragRequestDataDelegate;
+  DragStopDelegate mDragStopDelegate;
   
   bool mDragging;
   nglDragAndDrop* mpDraggedObject;
