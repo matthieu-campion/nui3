@@ -534,6 +534,7 @@ case eImagePixelIndex: break;
   }
 }
 
+
 void nuiSoftwarePainter::DrawTriangle(const nuiRenderArray& rArray, int p1, int p2, int p3)
 {
   // Prepare the triangle points:
@@ -1088,10 +1089,5 @@ void nuiSoftwarePainter::Display(nglWindow* pWindow, const nuiRect& rRect)
   QDEndCGContext (GetWindowPort(win), &myContext);  
           
 #endif
-}
-
-class nuiRasterizer* nuiSoftwarePainter::GetRasterizer() const
-{
-  return mpRasterizer;
 }
 
