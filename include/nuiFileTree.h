@@ -53,7 +53,7 @@ public:
   virtual nuiTreeNode* GetNewNode(const nglPath& rPath);
   
   nglDragAndDrop* OnDragStartDelegate(nuiTreeNode* pNode);
-  void OnDragRequestDataDelegate(nuiTreeNode* pNode, nglDragAndDrop* pDragObj);
+  void OnDragRequestDataDelegate(nuiTreeNode* pNode, nglDragAndDrop* pDragObj, const nglString& rMimeType);
   void OnDragStopDelegate(nuiTreeNode* pNode, bool canceled);
   
   

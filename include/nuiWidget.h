@@ -272,7 +272,7 @@ public:
   virtual void OnDropped(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y, nglMouseInfo::Flags Button); ///< This method is called by the window manager whenever the mouse is dropping an object on this widget. This method should retreive the dropped data from the object for supported drag and drop types. The mouse flag argument contains the mouse event that initiated the drop operation. X & Y are the coordinates of the mouse inside the destination widget.
 
   bool Drag(nglDragAndDrop* pDragObj); ///< This method is used to initiate a Drag operation from the widget, it has to allocate pDragObj with types the source widget can provide
-  virtual void OnDragRequestData(nglDragAndDrop* pDragObject); ///< This method is called on the drag and drop source widget by the window manager whenever the drag & drop operation was accepted by the user (by releasing the mouse button on a widget that support the dragged object type). This is the last time the source widget is allowed to place data in the drag and dropped object. 
+  virtual void OnDragRequestData(nglDragAndDrop* pDragObject, const nglString& rMimeType); ///< This method is called on the drag and drop source widget by the window manager whenever the drag & drop operation was accepted by the user (by releasing the mouse button on a widget that support the dragged object type). This is the last time the source widget is allowed to place data in the drag and dropped object. 
   virtual void OnDragStop(bool canceled); ///< Called when a drag operation, initiated by the widget, is canceled or finished
   //@}
 #endif

@@ -330,7 +330,7 @@ OSErr nglDragSendData(FlavorType theType, void * dragSendRefCon, DragItemRef the
   {
     if (pDrag->IsTypeSupported(mime))
     {
-      pDnd->mpWin->OnDragRequestData(pDrag);
+      pDnd->mpWin->OnDragRequestData(pDrag, mime);
       nglDataObject* pObj = (nglDataObject*)pDrag->GetType(mime);
       NGL_ASSERT(pObj);
       
@@ -1919,7 +1919,7 @@ void nglWindow::OnDragFeedback(nglDropEffect eDropEffect)
 
 }
 
-void nglWindow::OnDragRequestData(nglDragAndDrop* pDragObject)
+void nglWindow::OnDragRequestData(nglDragAndDrop* pDragObject, const nglString& rMimeType)
 {
   //LBDEBUG
   NGL_OUT(_T("nglWindow::OnDragRequestData()\n"));  

@@ -122,7 +122,7 @@ protected:
 
 #if !defined _NODND_
 typedef nuiFastDelegate1<nuiTreeNode*,nglDragAndDrop*>  DragStartDelegate;
-typedef nuiFastDelegate2<nuiTreeNode*,nglDragAndDrop*>  DragRequestDataDelegate;
+typedef nuiFastDelegate3<nuiTreeNode*,nglDragAndDrop*,const nglString&>  DragRequestDataDelegate;
 typedef nuiFastDelegate2<nuiTreeNode*,bool>  DragStopDelegate;
 #endif
 
@@ -234,7 +234,7 @@ protected:
   
 private:
 #if !defined _NODND_
-  virtual void OnDragRequestData(nglDragAndDrop* pDragObject); ///< This method is called on the drag and drop source widget by the window manager whenever the drag & drop operation was accepted by the user (by releasing the mouse button on a widget that support the dragged object type). This is the last time the source widget is allowed to place data in the drag and dropped object. 
+  virtual void OnDragRequestData(nglDragAndDrop* pDragObject, const nglString& rMimeType); ///< This method is called on the drag and drop source widget by the window manager whenever the drag & drop operation was accepted by the user (by releasing the mouse button on a widget that support the dragged object type). This is the last time the source widget is allowed to place data in the drag and dropped object. 
   virtual void OnDragStop(bool canceled); ///< called when a drag operation is interupted or finished
   
   DragStartDelegate mDragStartDelegate;

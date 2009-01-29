@@ -2263,7 +2263,7 @@ void nuiEditText::OnDropped(nglDragAndDrop* pDragObject,nuiSize X,nuiSize Y, ngl
   */
 }
 
-void nuiEditText::OnDragRequestData(nglDragAndDrop* pDragObject)
+void nuiEditText::OnDragRequestData(nglDragAndDrop* pDragObject, const nglString& rMimeType)
 {
   nglString data = GetSelection();
   

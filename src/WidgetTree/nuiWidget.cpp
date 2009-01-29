@@ -2046,7 +2046,7 @@ bool nuiWidget::Drag(nglDragAndDrop* pDragObj)
   
   return true;
 }
-void nuiWidget::OnDragRequestData(nglDragAndDrop* pDragObject)
+void nuiWidget::OnDragRequestData(nglDragAndDrop* pDragObject, const nglString& rMimeType)
 {
   // Do nothing, drag and drop is not supported by default.
 }

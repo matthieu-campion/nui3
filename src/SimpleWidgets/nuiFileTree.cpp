@@ -565,9 +565,9 @@ nglDragAndDrop* nuiFileTree::OnDragStartDelegate(nuiTreeNode* pNode)
 }
 
 // virtual
-void nuiFileTree::OnDragRequestDataDelegate(nuiTreeNode* pNode, nglDragAndDrop* pDragObject)
+void nuiFileTree::OnDragRequestDataDelegate(nuiTreeNode* pNode, nglDragAndDrop* pDragObject, const nglString& rMimeType)
 {
-  NGL_OUT(_T("nuiFileTree::OnDragRequestDataDelegate pNode 0x%x   pDragObject 0x%x\n"), pNode, pDragObject);
+  NGL_OUT(_T("nuiFileTree::OnDragRequestDataDelegate pNode 0x%x   pDragObject 0x%x   rMimeType '%ls'\n"), pNode, pDragObject, rMimeType.GetChars());
 }
 
 void nuiFileTree::OnDragStopDelegate(nuiTreeNode* pNode, bool canceled)

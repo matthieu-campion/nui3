@@ -641,7 +641,7 @@ window = new nglWindow (context, info, NULL);
   virtual bool Drag(nglDragAndDrop* pDragObject); ///< Starts a Drag operation, pDragObject should have its types set.
   
   virtual void OnDragFeedback(nglDropEffect eDropEffect);
-  virtual void OnDragRequestData(nglDragAndDrop* pDragObject); ///< called whenever the system request data for a drop operation after BeginDragging
+  virtual void OnDragRequestData(nglDragAndDrop* pDragObject, const nglString& rMimeType); ///< called whenever the system request data for a drop operation after BeginDragging
   virtual void OnDragStop(bool canceled); ///< called when a drag operation is interupted or finished
   
   

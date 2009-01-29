@@ -831,14 +831,14 @@ bool nuiTreeView::MouseMoved(nuiSize X, nuiSize Y)
 
 #if !defined _NODND_
 // virtual 
-void nuiTreeView::OnDragRequestData(nglDragAndDrop* pDragObject)
+void nuiTreeView::OnDragRequestData(nglDragAndDrop* pDragObject, const nglString& rMimeType)
 {
   //LBDEBUG
   NGL_OUT(_T("nuiTreeView::OnDragRequestData\n"));
   
   if (mDragRequestDataDelegate)
   {
-    mDragRequestDataDelegate(mpSelectedNode, mpDraggedObject);
+    mDragRequestDataDelegate(mpSelectedNode, mpDraggedObject, rMimeType);
   }
   
   switch (mpDraggedObject->GetDesiredDropEffect())

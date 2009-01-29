@@ -53,7 +53,7 @@ public:
   virtual bool OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y);
   virtual void OnDropped(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
   
-  virtual void OnDragRequestData(nglDragAndDrop* pDragObject);
+  virtual void OnDragRequestData(nglDragAndDrop* pDragObject, const nglString& rMimeType);
   virtual void OnDragStop(bool canceled);
 #endif
 
