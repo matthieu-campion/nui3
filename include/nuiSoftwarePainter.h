@@ -31,7 +31,7 @@ public:
 
   void Display(nglWindow* pWindow, const nuiRect& rRect);
 
-  class nuiRasterizer* GetRasterizer() const
+  nuiRasterizer* GetRasterizer() const
   {
     return mpRasterizer;
   }

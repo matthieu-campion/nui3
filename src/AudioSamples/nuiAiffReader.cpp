@@ -11,7 +11,7 @@
 #include "nuiAudioConvert.h"
 #include "nuiChunksDefinitions.h"
 
-#ifdef WIN32
+#ifndef HiWord
 #define HiWord(x) ((short)((long)(x) >> 16))
 #define LoWord(x) ((short)(x))
 #endif
