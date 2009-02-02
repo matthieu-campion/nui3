@@ -13,7 +13,7 @@
 nuiAnimView::nuiAnimView()
 : nuiSimpleContainer()
 {
-  SetObjectClass(_T("nuiAnimView"));
+  nuiSimpleContainer::SetObjectClass(_T("nuiAnimView"));
 }
 
 bool nuiAnimView::Load(const nuiXMLNode* pNode)

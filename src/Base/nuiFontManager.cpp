@@ -482,6 +482,8 @@ const nuiFontDesc* nuiFontRequestResult::GetFontDesc() const
 //class nuiFontDesc
 nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
 {
+  printf("Scanning font '%ls' face %d\n", rPath.GetChars(), Face);
+
   //nglFont* pFont = NULL;
   mValid = false;
   
@@ -918,11 +920,14 @@ void nuiFontManager::GetSystemFolders(std::map<nglString, nglPath>& rFolders)
 #ifdef FONT_TEST_HACK
   rFolders[_T("System0")] = _T("/Users/meeloo/Desktop/Fonts/");
 #else
-  #ifdef _CARBON_
-    rFolders[_T("System0")] = _T("/System/Library/Fonts/");
-    rFolders[_T("System1")] = _T("/Library/Fonts/");
-  #endif
-  #ifdef _WIN32_
+#if (defined _CARBON_)
+  rFolders[_T("System0")] = _T("/System/Library/Fonts/");
+  rFolders[_T("System1")] = _T("/Library/Fonts/");
+#endif
+#if (defined _UIKIT_)
+  rFolders[_T("System0")] = _T("/System/Library/Fonts/Cache/");
+#endif
+#ifdef _WIN32_
     nglChar p[MAX_PATH];
     HRESULT hr = SHGetFolderPath(NULL, CSIDL_FONTS, NULL, 0, p);
     if (hr == S_OK)

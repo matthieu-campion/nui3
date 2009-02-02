@@ -30,7 +30,7 @@ enum nuiAnimLoop
 
 
 /// nuiAnimation is a base class that implements a basic animation framework.
-class NUI_API nuiAnimation
+class NUI_API nuiAnimation : public nuiObject
 {
 public:
   nuiAnimation();

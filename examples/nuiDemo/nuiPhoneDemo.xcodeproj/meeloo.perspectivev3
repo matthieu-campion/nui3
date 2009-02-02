@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>ActivePerspectiveName</key>
-	<string>Build</string>
+	<string>Debug</string>
 	<key>AllowedModules</key>
 	<array>
 		<dict>
@@ -592,8 +592,6 @@
 							<string>MainColumn</string>
 							<real>233</real>
 						</array>
-						<key>RubberWindowFrame</key>
-						<string>1 59 1920 1119 0 0 1920 1178 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -621,7 +619,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E5BC290D0F31F97C00727CC4</string>
+										<string>E54B3E090F3289D10087D518</string>
 										<key>history</key>
 										<array>
 											<string>E5CD2F210ECF826F0083037A</string>
@@ -643,7 +641,7 @@
 											<string>E5CD30AA0ECF8CBB0083037A</string>
 											<string>E55DBEC20F0462F600A9EC18</string>
 											<string>E55DBF2E0F04679B00A9EC18</string>
-											<string>E5BC290C0F31F97C00727CC4</string>
+											<string>E5BC290D0F31F97C00727CC4</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -681,8 +679,6 @@
 							<dict>
 								<key>Frame</key>
 								<string>{{0, 0}, {1643, 498}}</string>
-								<key>RubberWindowFrame</key>
-								<string>1 59 1920 1119 0 0 1920 1178 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -695,8 +691,6 @@
 							<key>Tabs</key>
 							<array>
 								<dict>
-									<key>BecomeActive</key>
-									<true/>
 									<key>ContentConfiguration</key>
 									<dict>
 										<key>PBXProjectModuleGUID</key>
@@ -712,8 +706,6 @@
 									<dict>
 										<key>Frame</key>
 										<string>{{10, 27}, {1643, 548}}</string>
-										<key>RubberWindowFrame</key>
-										<string>1 59 1920 1119 0 0 1920 1178 </string>
 									</dict>
 									<key>Module</key>
 									<string>PBXBuildResultsModule</string>
@@ -738,11 +730,11 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E5BC28D80F31EFA500727CC4</string>
+				<string>E54B3E0A0F3289D10087D518</string>
 				<string>1CA23EE50692099D00951B8B</string>
-				<string>E5BC28D90F31EFA500727CC4</string>
+				<string>E54B3E0B0F3289D10087D518</string>
 				<string>E59365260C7AD788001596BD</string>
-				<string>E5BC28DA0F31EFA500727CC4</string>
+				<string>E54B3E0C0F3289D10087D518</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
 			<key>ToolbarConfiguration</key>
@@ -790,6 +782,8 @@
 					<dict>
 						<key>Frame</key>
 						<string>{{0, 0}, {1920, 346}}</string>
+						<key>RubberWindowFrame</key>
+						<string>1 59 1920 1119 0 0 1920 1178 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXDebugCLIModule</string>
@@ -864,7 +858,11 @@
 							</array>
 							<key>Frame</key>
 							<string>{{0, 277}, {672, 450}}</string>
+							<key>RubberWindowFrame</key>
+							<string>1 59 1920 1119 0 0 1920 1178 </string>
 						</dict>
+						<key>RubberWindowFrame</key>
+						<string>1 59 1920 1119 0 0 1920 1178 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXDebugSessionModule</string>
@@ -887,14 +885,14 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E5BC28CD0F31EF4900727CC4</string>
+				<string>E54B3E0D0F3289D10087D518</string>
 				<string>1CCC7628064C1048000F2A68</string>
 				<string>1CCC7629064C1048000F2A68</string>
-				<string>E5BC28CE0F31EF4900727CC4</string>
-				<string>E5BC28CF0F31EF4900727CC4</string>
-				<string>E5BC28D00F31EF4900727CC4</string>
-				<string>E5BC28D10F31EF4900727CC4</string>
-				<string>E5BC28C70F31EF3A00727CC4</string>
+				<string>E54B3E0E0F3289D10087D518</string>
+				<string>E54B3E0F0F3289D10087D518</string>
+				<string>E54B3E100F3289D10087D518</string>
+				<string>E54B3E110F3289D10087D518</string>
+				<string>E59365260C7AD788001596BD</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -920,6 +918,8 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
+		<string>E54B3E120F3289D10087D518</string>
+		<string>E54B3E130F3289D10087D518</string>
 		<string>/Users/meeloo/work/nui3/examples/nuiDemo/nuiPhoneDemo.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
