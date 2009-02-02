@@ -42,7 +42,7 @@ void guiTheme::DrawSliderBackground(nuiDrawContext* pContext, nuiSlider* pSlider
   nuiSize h = pFrame->GetSourceClientRect().GetHeight();
   rect.Set(min, y, max - min, h);
 
-  pFrame->Draw(pContext, NULL, rect);  
+  pFrame->Draw(pContext, pSlider, rect);  
 }
 
 
@@ -73,7 +73,7 @@ void guiTheme::DrawSliderForeground(nuiDrawContext* pContext, nuiSlider* pSlider
   rect.mBottom = rect.mTop + srcRect.GetHeight();
   
   
-  pFrame->Draw(pContext, NULL, rect);   
+  pFrame->Draw(pContext, pSlider, rect);   
   
 }
 

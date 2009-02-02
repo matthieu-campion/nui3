@@ -358,7 +358,7 @@ bool nuiKnob::Draw(nuiDrawContext* pContext)
     mFrameIndex = (int)((mpImageSequence->GetNbFrames()-1) * (mRange.GetValue() - mRange.GetMinimum())) / (mRange.GetMaximum() - mRange.GetMinimum());
     
     mpImageSequence->SetFrameIndex(mFrameIndex);
-    mpImageSequence->Draw(pContext);
+    mpImageSequence->Draw(pContext, this);
   }
   
   return nuiSimpleContainer::Draw(pContext);

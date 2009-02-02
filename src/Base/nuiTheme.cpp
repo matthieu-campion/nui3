@@ -800,15 +800,15 @@ void nuiTheme::DrawScrollBarForeground(nuiDrawContext* pContext, nuiScrollBar* p
   pDeco->Release();
 }
 
-void nuiTheme::DrawSliderBackground(nuiDrawContext* pContext, nuiSlider* pScroll)
+void nuiTheme::DrawSliderBackground(nuiDrawContext* pContext, nuiSlider* pSlider)
 {
-  nuiRect rect = pScroll->GetRect().Size();
+  nuiRect rect = pSlider->GetRect().Size();
   nuiDecoration* pDeco = NULL;
   
-  nuiSize min = pScroll->GetHandlePosMin();
-  nuiSize max = pScroll->GetHandlePosMax();
+  nuiSize min = pSlider->GetHandlePosMin();
+  nuiSize max = pSlider->GetHandlePosMax();
 
-  if (pScroll->GetOrientation() == nuiVertical)
+  if (pSlider->GetOrientation() == nuiVertical)
   {
     pDeco = nuiDecoration::Get(_T("nuiDefaultDecorationSliderVerticalBkg"));
     nuiSize x = (int)((rect.GetWidth() - pDeco->GetIdealClientRect().GetWidth()) / 2);
@@ -823,20 +823,20 @@ void nuiTheme::DrawSliderBackground(nuiDrawContext* pContext, nuiSlider* pScroll
     rect.Set(min, y, max - min, h);
   }  
   
-  pDeco->Draw(pContext, NULL, rect);
+  pDeco->Draw(pContext, pSlider, rect);
   pDeco->Release();
 }
 
-void nuiTheme::DrawSliderForeground(nuiDrawContext* pContext, nuiSlider* pScroll)
+void nuiTheme::DrawSliderForeground(nuiDrawContext* pContext, nuiSlider* pSlider)
 {
-  nuiRect rect = pScroll->GetRect().Size();
+  nuiRect rect = pSlider->GetRect().Size();
   float start;
-  const nuiRange& Range = pScroll->GetRange();
+  const nuiRange& Range = pSlider->GetRange();
   
   start  = Range.ConvertToUnit(Range.GetValue());
   nuiDecoration* pDeco = NULL;
   
-  if (pScroll->GetOrientation() == nuiVertical)
+  if (pSlider->GetOrientation() == nuiVertical)
   {
     pDeco = nuiDecoration::Get(_T("nuiDefaultDecorationSliderVerticalHdl"));
     NGL_ASSERT(pDeco);
@@ -863,7 +863,7 @@ void nuiTheme::DrawSliderForeground(nuiDrawContext* pContext, nuiSlider* pScroll
     rect.mBottom = rect.mTop + srcRect.GetHeight();
   }
 
-  pDeco->Draw(pContext, NULL, rect);
+  pDeco->Draw(pContext, pSlider, rect);
   pDeco->Release();
 }
 

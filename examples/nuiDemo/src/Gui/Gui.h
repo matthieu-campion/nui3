@@ -23,6 +23,9 @@ protected:
   
   nuiWidget* BuildControls();
   
+  void ShowControls(bool show);
+  void ShowText(bool show);
+  
   // gui events receivers
   bool OnStartButtonPressed(const nuiEvent& rEvent);
   bool OnStartButtonDePressed(const nuiEvent& rEvent);
@@ -37,11 +40,18 @@ protected:
   
 private:
 
+  nuiSimpleContainer* mpPaneBkg;
   nuiLabel* mpText;
   nuiWidget* mpControls;
+  float mAlphaControls;
+  float mAlphaText;
+  bool mShownControls;
+  bool mShownText;
+
   nuiTimer mTimer;
-  uint32 mTextPaneWidth;
-  uint32 mControlsPaneWidth;
+//  uint32 mTextPaneWidth;
+//  uint32 mControlsPaneWidth;
+  
   
   // a sink to connect the event sources to the local event receivers.
   nuiEventSink<Gui> mEventSink;

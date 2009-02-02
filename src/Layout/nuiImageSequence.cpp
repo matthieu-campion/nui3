@@ -19,7 +19,7 @@ nuiImageSequence::nuiImageSequence()
   mNbFrames = 0;
   mpTempImage = NULL;
   mRefreshTextures = true;
-  mUseAlpha = false;
+  mUseAlpha = true;
 }
 
 nuiImageSequence::nuiImageSequence(uint32 nbFrames, nglImage* pImage, nuiOrientation orientation, const nuiColor& rColor)
@@ -33,7 +33,7 @@ mColor(rColor)
   mOrientation = orientation;
   mpTempImage = new nglImage(*pImage);
   mRefreshTextures = true;  
-  mUseAlpha = false;
+  mUseAlpha = true;
 }
 
 nuiImageSequence::nuiImageSequence(uint32 nbFrames, const nglPath& rTexturePath, nuiOrientation orientation, const nuiColor& rColor)
@@ -50,7 +50,7 @@ mGlobalTexturePath(rTexturePath)
   mNbFrames = nbFrames;
   mOrientation = orientation;  
   mRefreshTextures = true;
-  mUseAlpha = false;
+  mUseAlpha = true;
 }
 
 
@@ -355,7 +355,7 @@ void nuiImageSequence::SetTexturePath(const nglPath& rPath)
 
 
 // virtual
-bool nuiImageSequence::Draw(nuiDrawContext* pContext)
+bool nuiImageSequence::Draw(nuiDrawContext* pContext, nuiWidget* pWidget)
 {
   //  int x=0,y=0;
   if (!mTextures.size() || (mFrameIndex >= mTextures.size()))
@@ -372,9 +372,9 @@ bool nuiImageSequence::Draw(nuiDrawContext* pContext)
   pContext->EnableBlending(true);
   pContext->SetBlendFunc(nuiBlendTransp);
 
-  if (mUseAlpha)
+  if (mUseAlpha && pWidget)
   {
-    alpha = GetAlpha();
+    alpha = pWidget->GetAlpha();
   }
   
   const nuiRect& destRect = mRect.Size();

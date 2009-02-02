@@ -427,6 +427,7 @@ void nuiFrame::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect&
   array.PushVertex();
 
   nuiColor color = mColor;
+  
   if (mUseWidgetAlpha && pWidget)
   {
     float widgetAlpha = pWidget->GetAlpha();

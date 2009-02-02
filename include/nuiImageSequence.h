@@ -23,7 +23,7 @@ public:
   nuiXMLNode* Serialize(nuiXMLNode* pNode);
   
   virtual nuiRect CalcIdealSize();  
-  virtual bool Draw(nuiDrawContext* pContext);
+  virtual bool Draw(nuiDrawContext* pContext, nuiWidget* pWidget = NULL);
   
   uint32 GetFrameIndex(nuiWidget* pWidget) const;
   void SetFrameIndex(uint32 index);

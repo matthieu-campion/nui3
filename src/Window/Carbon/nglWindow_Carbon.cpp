@@ -503,6 +503,9 @@ OSErr nglDragTrackingHandler (DragTrackingMessage message, WindowRef theWindow, 
         nglDropEffect effect = pDnd->GetDropObject()->GetDesiredDropEffect();
         DragActions actions = GetDragActions(effect);
         SetDragDropAction(theDrag, actions);
+        
+        // adivse source
+        pDnd->mpWin->OnDragFeedback(effect);
       }
       else
         SetDragDropAction (theDrag, kDragActionNothing);

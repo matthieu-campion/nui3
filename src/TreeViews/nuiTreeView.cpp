@@ -646,6 +646,11 @@ void nuiTreeView::SetDragStartDelegate(const DragStartDelegate& rDelegate)
   mDragStartDelegate = rDelegate;
 }
 
+void nuiTreeView::SetDragFeedbackDelegate(const DragFeedbackDelegate& rDelegate)
+{
+  mDragFeedbackDelegate = rDelegate;
+}
+
 
 void nuiTreeView::SetDragRequestDataDelegate(const DragRequestDataDelegate& rDelegate)
 {

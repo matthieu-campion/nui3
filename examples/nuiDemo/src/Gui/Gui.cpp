@@ -18,7 +18,7 @@
 //
 
 Gui::Gui()
-: nuiVBox(0), mEventSink(this), mTimerSink(this), mTimer(0.001)
+: nuiVBox(0), mEventSink(this), mTimerSink(this), mTimer(0.020), mShownText(false), mShownControls(false)
 {
   SetObjectClass(_T("Gui"));
   SetExpand(nuiExpandShrinkAndGrow);
@@ -70,27 +70,24 @@ Gui::Gui()
   
   // row 4: sound controls and text *******************************
   //
-  nuiSimpleContainer* pPaneBkg = new nuiSimpleContainer();
-  pPaneBkg->SetObjectName(_T("PaneBkg"));
-  AddCell(pPaneBkg, nuiCenter);
+  mpPaneBkg = new nuiSimpleContainer();
+  mpPaneBkg->SetObjectName(_T("PaneBkg"));
+  AddCell(mpPaneBkg, nuiCenter);
   
-  // a box for row layout
-  nuiHBox* pPaneBox = new nuiHBox(0);
-  pPaneBox->SetExpand(nuiExpandShrinkAndGrow);
-  pPaneBkg->AddChild(pPaneBox);
   
   // area for the sound controls, in the first cell
   mpControls = BuildControls();
-  pPaneBox->AddCell(mpControls);
-  pPaneBox->SetCellExpand(pPaneBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
+  mpControls->SetUserSize(246, 160);
+  mpPaneBkg->AddChild(mpControls);
   
 
   // a text to display, in the second cell
   mpText = new nuiLabel(_T("TEXT"));
   mpText->SetObjectName(_T("Text"));
-  pPaneBox->AddCell(mpText, nuiCenter);
-  pPaneBox->SetCellExpand(pPaneBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
+  mpText->SetUserSize(246,160);
+  mpPaneBkg->AddChild(mpText);
   
+
   // load text contents from binary's resources
   nglString textContents;
   nglIStream* pTextInput = nglPath(_T("rsrc:/text.txt")).OpenRead();
@@ -98,13 +95,18 @@ Gui::Gui()
   pTextInput->ReadText(textContents);
   mpText->SetText(textContents);
   
-  // hide the second cell by default
-  mControlsPaneWidth = 246;
-  mTextPaneWidth = 0;
-  mpControls->SetUserSize(mControlsPaneWidth,160);
-  mpText->SetUserSize(mTextPaneWidth,160);
+//  // hide the second cell by default
+//  mControlsPaneWidth = 246;
+//  mTextPaneWidth = 0;
+//  mpControls->SetUserSize(mControlsPaneWidth,160);
+//  mpText->SetUserSize(mTextPaneWidth,160);
   
-  
+
+  // show audio controls by default
+  mpControls->SetVisible(true);
+  mpControls->SetEnabled(true);
+  mpText->SetVisible(false);
+  mpText->SetEnabled(false);
   
 }
 
@@ -170,15 +172,21 @@ bool Gui::OnSwitchChanged(const nuiEvent& rEvent)
   nuiToggleButton* pBtn = (nuiToggleButton*)rEvent.mpUser;
   NGL_ASSERT(pBtn);
 
-  mTimer.Stop();
-  mTimerSink.DisconnectAll();
-
-  if (!pBtn->IsPressed())
-    mTimerSink.Connect(mTimer.Tick, &Gui::OnShowText);
-  else
-    mTimerSink.Connect(mTimer.Tick, &Gui::OnShowControls);
+//  mTimer.Stop();
+//  mTimerSink.DisconnectAll();
+//
+//  if (!pBtn->IsPressed())
+//    mTimerSink.Connect(mTimer.Tick, &Gui::OnShowText);
+//  else
+//    mTimerSink.Connect(mTimer.Tick, &Gui::OnShowControls);
+//  
+//  mTimer.Start();
   
-  mTimer.Start();
+  
+  if (!pBtn->IsPressed())
+    ShowText(true);
+  else
+    ShowControls(true);
   return true;
 }
 
@@ -242,34 +250,86 @@ bool Gui::OnQKnobChanged(const nuiEvent& rEvent)
 }
 
 
+
+void Gui::ShowControls(bool show)
+{
+  mTimer.Stop();
+  mTimerSink.DisconnectAll();
+
+  mpControls->SetEnabled(false);
+  mpText->SetEnabled(false);
+
+  mpControls->SetVisible(true);
+  mpControls->SetAlpha(0.f);
+  mAlphaControls = 0.f;
+  mAlphaText = 1.f;
+
+  mTimerSink.Connect(mTimer.Tick, &Gui::OnShowControls);
+  mTimer.Start();
+}
+
+
+void Gui::ShowText(bool show)
+{
+  mTimer.Stop();
+  mTimerSink.DisconnectAll();
+  
+  mpControls->SetEnabled(false);
+  mpText->SetEnabled(false);
+  
+  mpText->SetVisible(true);
+  mpText->SetAlpha(0.f);
+  mAlphaControls = 1.f;
+  mAlphaText = 0.f;
+  
+  mTimerSink.Connect(mTimer.Tick, &Gui::OnShowText);
+  mTimer.Start();
+}
+
+
 bool Gui::OnShowText(const nuiEvent& rEvent)
 {
-  if (mControlsPaneWidth <= 0)
+  if (mAlphaText >= 1.f)
   {
     mTimer.Stop();
-    return true;
+    mpControls->SetVisible(false);
+    mpText->SetEnabled(true);
   }
   
-  mControlsPaneWidth--;
-  mTextPaneWidth++;
-  mpControls->SetUserSize(mControlsPaneWidth,160);
-  mpText->SetUserSize(mTextPaneWidth,160);
+  mAlphaControls -= 0.1f;
+  mAlphaText += 0.1f;
+  if (mAlphaControls < 0.f)
+    mAlphaControls = 0.f;
+  if (mAlphaText > 1.f)
+    mAlphaText = 1.f;
+  mpControls->SetAlpha(mAlphaControls);
+  mpText->SetAlpha(mAlphaText);
+  mpPaneBkg->Invalidate();
+  
   return true;  
 }
 
 
 bool Gui::OnShowControls(const nuiEvent& rEvent)
 {
-  if (mTextPaneWidth <= 0)
+  if (mAlphaControls >= 1.f)
   {
     mTimer.Stop();
-    return true;
+    mpText->SetVisible(false);
+    mpControls->SetEnabled(true);
   }
   
-  mControlsPaneWidth++;
-  mTextPaneWidth--;
-  mpControls->SetUserSize(mControlsPaneWidth,160);
-  mpText->SetUserSize(mTextPaneWidth,160);
+  mAlphaControls += 0.1;
+  mAlphaText -= 0.1;
+  if (mAlphaText < 0.f)
+    mAlphaText = 0.f;
+  if (mAlphaControls > 1.f)
+    mAlphaControls = 1.f;
+  
+  mpControls->SetAlpha(mAlphaControls);
+  mpText->SetAlpha(mAlphaText);
+  mpPaneBkg->Invalidate();
+
   return true;  
 }
 
