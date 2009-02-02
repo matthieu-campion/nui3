@@ -918,7 +918,7 @@ void nuiFontManager::AddSystemFolders()
 void nuiFontManager::GetSystemFolders(std::map<nglString, nglPath>& rFolders)
 {
 #ifdef FONT_TEST_HACK
-  rFolders[_T("System0")] = _T("/Users/meeloo/Desktop/Fonts/");
+  rFolders[_T("System0")] = _T("/System/Library/Fonts/Cache/");
 #else
 #if (defined _CARBON_)
   rFolders[_T("System0")] = _T("/System/Library/Fonts/");

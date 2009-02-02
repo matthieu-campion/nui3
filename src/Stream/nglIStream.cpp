@@ -278,7 +278,8 @@ int64 nglIStream::Peek (void* pData, int64 WordCount, uint WordSize)
 int64 nglIStream::PipeTo(nglOStream& rTarget)
 {
   uint8 buffer[PIPE_BUF_SIZE];  
-  nglStreamState istate = GetState(), ostate = rTarget.GetState();
+  nglStreamState istate = GetState();
+  nglStreamState ostate = rTarget.GetState();
   int64 total_piped = 0;  
   int64 piped_in, piped_out;
 

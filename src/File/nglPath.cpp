@@ -22,6 +22,10 @@
 	#include <direct.h>
 #endif
 
+#if (defined _UIKIT_) || (defined _COCOA_)
+#include "Cocoa/nglPath_Cocoa.h"
+#endif
+
 using namespace std;
 
 #ifndef MIN
@@ -255,6 +259,8 @@ nglPath::nglPath (nglPathBase Base)
 				{
 					InternalSetPath(szAppData);
 				}
+        #elif defined(_UIKIT_)
+				InternalSetPath(nuiCocoaGetPath_AppSettings());
 				#elif defined(__MACHO__)
 				InternalSetPath(nglPath(getenv("HOME")) + nglPath("Library/Application Support"));
 				#else
@@ -273,7 +279,9 @@ nglPath::nglPath (nglPathBase Base)
 				{
 					InternalSetPath(szAppData);
 				}
-				#elif defined(__MACHO__)
+        #elif defined(_UIKIT_)
+				InternalSetPath(nuiCocoaGetPath_UserDocuments());
+        #elif defined(__MACHO__)
 				InternalSetPath(nglPath(getenv("HOME")) + nglPath("Documents"));
 				#else
 				InternalSetPath(getenv("HOME"));
@@ -281,37 +289,41 @@ nglPath::nglPath (nglPathBase Base)
 			}
 			break;
 		case ePathUserPreferences:
+      {
+        #ifdef WINCE
+        InternalSetPath("/");
+        #elif defined _WIN32_
+        TCHAR szAppData[MAX_PATH];
+        if(SUCCEEDED(SHGetFolderPath(NULL, CSIDL_APPDATA|CSIDL_FLAG_CREATE, NULL, 0, szAppData))) 
         {
-            #ifdef WINCE
-            InternalSetPath("/");
-            #elif defined _WIN32_
-            TCHAR szAppData[MAX_PATH];
-            if(SUCCEEDED(SHGetFolderPath(NULL, CSIDL_APPDATA|CSIDL_FLAG_CREATE, NULL, 0, szAppData))) 
-            {
-                InternalSetPath(szAppData);
-            }
-            #elif defined(__MACHO__)
-            InternalSetPath(nglPath(getenv("HOME")) + nglPath("Library/Preferences"));
-            #else
-            InternalSetPath(getenv("HOME"));
-            #endif
+            InternalSetPath(szAppData);
         }
-        break;
+        #elif defined(_UIKIT_)
+        InternalSetPath(nuiCocoaGetPath_UserPreferences());
+        #elif defined(__MACHO__)
+        InternalSetPath(nglPath(getenv("HOME")) + nglPath("Library/Preferences"));
+        #else
+        InternalSetPath(getenv("HOME"));
+        #endif
+      }
+      break;
     case ePathUserDesktop:
       {
         #ifdef WINCE
-                InternalSetPath("/");
+        InternalSetPath("/");
         #elif defined _WIN32_
-                TCHAR szAppData[MAX_PATH];
-                
-                if(SUCCEEDED(SHGetFolderPath(NULL, CSIDL_DESKTOP|CSIDL_FLAG_CREATE, NULL, 0, szAppData))) 
-                {
-                  InternalSetPath(szAppData);
-                }
+        TCHAR szAppData[MAX_PATH];
+
+        if(SUCCEEDED(SHGetFolderPath(NULL, CSIDL_DESKTOP|CSIDL_FLAG_CREATE, NULL, 0, szAppData))) 
+        {
+        InternalSetPath(szAppData);
+        }
+        #elif defined(_UIKIT_)
+        InternalSetPath(nuiCocoaGetPath_UserDesktop());
         #elif defined(__MACHO__)
-                InternalSetPath(nglPath(getenv("HOME")) + nglPath("Desktop"));
+        InternalSetPath(nglPath(getenv("HOME")) + nglPath("Desktop"));
         #else
-                InternalSetPath(getenv("HOME"));
+        InternalSetPath(getenv("HOME"));
         #endif
       }
       break;

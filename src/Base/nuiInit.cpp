@@ -11,6 +11,11 @@
 #include "nuiFontManager.h"
 #include "nglThreadChecker.h"
 
+#if (defined _UIKIT_)
+#include "../Font/nuiPhoneFontDB.h"
+#include "nglIMemory.h"
+#endif
+
 #define NUI_FONTDB_PATH _T("nuiFonts.db4")
 
 class __NglKernel__ : public nglKernel
@@ -83,21 +88,30 @@ bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
   }
 
   gNUIReferences++;
-  
-  
+
   // Init the font manager:
+
+#if (defined _UIKIT_)
+  nglIMemory Memory(gpnuiPhoneFontDB, gnuiPhoneFontDBSize);
+  nuiFontManager::LoadManager(Memory);
+#else
+
   nglPath fontdb(ePathUserAppSettings);
   fontdb += nglString(NUI_FONTDB_PATH);
-
+  
   if (fontdb.Exists() && fontdb.IsLeaf())
   {
     nglIFile db(fontdb);
     nuiFontManager::LoadManager(db);
   }  
-  else
-  {
-    nuiFontManager::GetManager();
-  }
+  //  else // Force loading the font info (consider this as debug code
+  //  {
+  //    nuiFontManager::GetManager();
+  //  }
+
+#endif
+  
+  
   
   return App != NULL && !App->GetError();
 }
