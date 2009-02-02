@@ -43,7 +43,7 @@ protected:
 private:
 
   nuiSimpleContainer* mpPaneBkg;
-  nuiLabel* mpText;
+  nuiVBox* mpTextPanel;
   nuiWidget* mpControls;
   float mAlphaControls;
   float mAlphaText;

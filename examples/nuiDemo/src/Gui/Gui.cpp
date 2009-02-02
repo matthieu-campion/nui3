@@ -9,6 +9,7 @@
 #include "nuiHBox.h"
 #include "nuiSlider.h"
 #include "nuiKnob.h"
+#include "nuiHyperLink.h"
 #include "nuiURL.h"
 #include "Gui/guiOscillo.h"
 #include "Application.h"
@@ -85,10 +86,20 @@ Gui::Gui()
   
 
   // a text to display, in the second cell
-  mpText = new nuiLabel(_T("TEXT"));
-  mpText->SetObjectName(_T("Text"));
-  mpText->SetUserSize(246,160);
-  mpPaneBkg->AddChild(mpText);
+  mpTextPanel = new nuiVBox(2);
+  mpTextPanel->SetExpand(nuiExpandShrinkAndGrow);
+  mpTextPanel->SetUserSize(246,160);
+  mpPaneBkg->AddChild(mpTextPanel);
+  
+  nuiLabel* pText = new nuiLabel(_T("TEXT"));
+  pText->SetObjectName(_T("Text"));
+  mpTextPanel->SetCell(0, pText);
+  
+  // with a url to libnui web page
+  nuiHyperLink* pLink = new nuiHyperLink(_T("http://libnui.net"), _T("more info on http://libnui.net"));
+  pLink->SetPosition(nuiCenter);
+  pLink->SetBorder(0, 10);
+  mpTextPanel->SetCell(1, pLink);
   
 
   // load text contents from binary's resources
@@ -96,20 +107,14 @@ Gui::Gui()
   nglIStream* pTextInput = nglPath(_T("rsrc:/text.txt")).OpenRead();
   NGL_ASSERT(pTextInput);
   pTextInput->ReadText(textContents);
-  mpText->SetText(textContents);
-  
-//  // hide the second cell by default
-//  mControlsPaneWidth = 246;
-//  mTextPaneWidth = 0;
-//  mpControls->SetUserSize(mControlsPaneWidth,160);
-//  mpText->SetUserSize(mTextPaneWidth,160);
+  pText->SetText(textContents);
   
 
   // show audio controls by default
   mpControls->SetVisible(true);
   mpControls->SetEnabled(true);
-  mpText->SetVisible(false);
-  mpText->SetEnabled(false);
+  mpTextPanel->SetVisible(false);
+  mpTextPanel->SetEnabled(false);
   
 }
 
@@ -260,7 +265,7 @@ void Gui::ShowControls(bool show)
   mTimerSink.DisconnectAll();
 
   mpControls->SetEnabled(false);
-  mpText->SetEnabled(false);
+  mpTextPanel->SetEnabled(false);
 
   mpControls->SetVisible(true);
   mpControls->SetAlpha(0.f);
@@ -278,10 +283,10 @@ void Gui::ShowText(bool show)
   mTimerSink.DisconnectAll();
   
   mpControls->SetEnabled(false);
-  mpText->SetEnabled(false);
+  mpTextPanel->SetEnabled(false);
   
-  mpText->SetVisible(true);
-  mpText->SetAlpha(0.f);
+  mpTextPanel->SetVisible(true);
+  mpTextPanel->SetAlpha(0.f);
   mAlphaControls = 1.f;
   mAlphaText = 0.f;
   
@@ -296,7 +301,7 @@ bool Gui::OnShowText(const nuiEvent& rEvent)
   {
     mTimer.Stop();
     mpControls->SetVisible(false);
-    mpText->SetEnabled(true);
+    mpTextPanel->SetEnabled(true);
   }
   
   mAlphaControls -= 0.1f;
@@ -306,7 +311,7 @@ bool Gui::OnShowText(const nuiEvent& rEvent)
   if (mAlphaText > 1.f)
     mAlphaText = 1.f;
   mpControls->SetAlpha(mAlphaControls);
-  mpText->SetAlpha(mAlphaText);
+  mpTextPanel->SetAlpha(mAlphaText);
   mpPaneBkg->Invalidate();
   
   return true;  
@@ -318,7 +323,7 @@ bool Gui::OnShowControls(const nuiEvent& rEvent)
   if (mAlphaControls >= 1.f)
   {
     mTimer.Stop();
-    mpText->SetVisible(false);
+    mpTextPanel->SetVisible(false);
     mpControls->SetEnabled(true);
   }
   
@@ -330,7 +335,7 @@ bool Gui::OnShowControls(const nuiEvent& rEvent)
     mAlphaControls = 1.f;
   
   mpControls->SetAlpha(mAlphaControls);
-  mpText->SetAlpha(mAlphaText);
+  mpTextPanel->SetAlpha(mAlphaText);
   mpPaneBkg->Invalidate();
 
   return true;  
@@ -340,6 +345,8 @@ bool Gui::OnShowControls(const nuiEvent& rEvent)
 
 bool Gui::OnTitleButtonActivated(const nuiEvent& rEvent)
 {
+  NGL_OUT(_T("click\n"));
+  
   // Open libnui web page
   nuiURL url(_T("http://libnui.net"));
   url.OpenBrowser();
