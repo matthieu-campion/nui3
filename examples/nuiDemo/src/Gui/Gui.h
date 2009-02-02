@@ -38,6 +38,8 @@ protected:
   bool OnShowText(const nuiEvent& rEvent);
   bool OnShowControls(const nuiEvent& rEvent);
   
+  bool OnTitleButtonActivated(const nuiEvent& rEvent);
+  
 private:
 
   nuiSimpleContainer* mpPaneBkg;

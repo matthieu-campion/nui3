@@ -1271,7 +1271,7 @@ nuiFontManager nuiFontManager::gManager;
 nuiFontManager& nuiFontManager::GetManager(bool InitIfNeeded)
 {
   const bool FORCE_FONT_ENUM = 0;
-  if (FORCE_FONT_ENUM || InitIfNeeded && gManager.mpFonts.empty() && gManager.mFontFolders.empty())
+  if (FORCE_FONT_ENUM && InitIfNeeded && gManager.mpFonts.empty() && gManager.mFontFolders.empty())
   {
     gManager.AddSystemFolders();
     gManager.ScanFolders();

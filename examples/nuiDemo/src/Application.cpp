@@ -58,10 +58,12 @@ void Application::OnExit (int Code)
 void Application::OnInit()
 {
   nuiInit(NULL);
+  
   // build application engine
-  mpEngine = new Engine();
+  mpEngine = new Engine();  
 
   InitWindow();
+
 }
 
 
@@ -73,6 +75,12 @@ void Application::InitWindow()
   bool DebugObject = false;
   bool DebugInfo = false;
   bool ShowFPS = false;
+
+
+  // build application engine
+  mpEngine = new Engine();  
+  
+
 #ifdef _UIKIT_
   nuiRenderer Renderer = eOpenGLES; // iPhone is OpenGL ES until we merge the OGLES renderer in the more general OGL one
 #else

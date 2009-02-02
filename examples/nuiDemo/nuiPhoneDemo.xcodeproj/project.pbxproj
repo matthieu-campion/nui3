@@ -232,10 +232,10 @@
 			children = (
 				E5CD2F680ECF82BE0083037A /* Application.cpp */,
 				E5CD2F690ECF82BE0083037A /* Application.h */,
-				E5CD2F6A0ECF82BE0083037A /* Engine */,
-				E5CD2F710ECF82BE0083037A /* Gui */,
 				E5CD2F760ECF82BE0083037A /* MainWindow.cpp */,
 				E5CD2F770ECF82BE0083037A /* MainWindow.h */,
+				E5CD2F6A0ECF82BE0083037A /* Engine */,
+				E5CD2F710ECF82BE0083037A /* Gui */,
 			);
 			name = src;
 			sourceTree = "<group>";

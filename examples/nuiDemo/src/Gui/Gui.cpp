@@ -9,6 +9,7 @@
 #include "nuiHBox.h"
 #include "nuiSlider.h"
 #include "nuiKnob.h"
+#include "nuiURL.h"
 #include "Gui/guiOscillo.h"
 #include "Application.h"
 
@@ -26,9 +27,11 @@ Gui::Gui()
   
   // row 1  : title image *****************************************
   //
-  nuiImage* pTitleImg = new nuiImage();
-  pTitleImg->SetObjectName(_T("ImageTitle"));
-  AddCell(pTitleImg, nuiTopLeft);
+  nuiButton* pTitleBtn = new nuiButton();
+  pTitleBtn->SetObjectName(_T("ButtonTitle"));
+  AddCell(pTitleBtn, nuiTopLeft);
+  
+  mEventSink.Connect(pTitleBtn->Activated, &Gui::OnTitleButtonActivated);
     
 
   // row 2: oscillo ***********************************************
@@ -334,3 +337,11 @@ bool Gui::OnShowControls(const nuiEvent& rEvent)
 }
 
 
+
+bool Gui::OnTitleButtonActivated(const nuiEvent& rEvent)
+{
+  // Open libnui web page
+  nuiURL url(_T("http://libnui.net"));
+  url.OpenBrowser();
+  return true;
+}

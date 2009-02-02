@@ -28,9 +28,17 @@ Gui!
   Decoration: dGui;
 }
 
-"ImageTitle"!
+
+
+
+@nuiFrame dButtonTitle
 {
   Texture: "rsrc:/decorations/title.png";
+}
+
+"ButtonTitle"!
+{
+  Decoration: dButtonTitle;
   BorderLeft: 25;
   BorderTop: 10;
   BorderBottom: 10;
@@ -50,6 +58,10 @@ Gui!
 // above the stateDecoration (or in another css stylesheet, included before this
 // current one.
 //
+
+
+
+
 @nuiStateDecoration dButtonStartBkg
 {
   OnUp: "rsrc:/decorations/buttonStartUp.png";
