@@ -248,9 +248,18 @@ void nuiGradientDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, c
   pContext->SetBlendFunc(nuiBlendTransp);
   pContext->EnableTexturing(false);
 
+  
+  if (mUseWidgetAlpha && pWidget)
+  {
+    float widgetAlpha = pWidget->GetAlpha();
+    mColor1.Alpha() *= widgetAlpha;
+    mColor2.Alpha() *= widgetAlpha;
+    mStrokeColor.Alpha() *= widgetAlpha;
+  }
+  
   pContext->SetFillColor(mColor1);
   pContext->SetStrokeColor(mStrokeColor);
-  
+
   nuiGradient gradient;
   if (!mUserOffsets)
     InitOffsets();
@@ -258,6 +267,13 @@ void nuiGradientDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, c
   gradient.AddStop(mColor2, mOffset2);
   if (mGradientType == nuiGradient4Colors)
   {
+    if (mUseWidgetAlpha && pWidget)
+    {
+      float widgetAlpha = pWidget->GetAlpha();
+      mColor3.Alpha() *= widgetAlpha;
+      mColor4.Alpha() *= widgetAlpha;
+    }
+
     gradient.AddStop(mColor3, mOffset3);
     gradient.AddStop(mColor4, mOffset4);
   }
