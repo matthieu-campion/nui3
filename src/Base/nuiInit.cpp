@@ -94,6 +94,10 @@ bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
     nglIFile db(fontdb);
     nuiFontManager::LoadManager(db);
   }  
+  else
+  {
+    nuiFontManager::GetManager();
+  }
   
   return App != NULL && !App->GetError();
 }

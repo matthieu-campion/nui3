@@ -1000,9 +1000,6 @@ void nuiFontManager::ScanFolders(bool rescanAllFolders /* = false */)
     mScannedFolders.clear();
   }
 
-  NGL_ASSERT(gFTLibrary == NULL);
-  FT_Error error;
-  error = FT_Init_FreeType(&gFTLibrary);
   
   nglString tr = _T("BOOKOS.ttf");
   
@@ -1031,7 +1028,15 @@ void nuiFontManager::ScanFolders(bool rescanAllFolders /* = false */)
           int32 face = 0;
           while (cont)
           {
+            NGL_ASSERT(gFTLibrary == NULL);
+            FT_Error error;
+            error = FT_Init_FreeType(&gFTLibrary);
+            
             nuiFontDesc* pFontDesc = new nuiFontDesc(rPath, face);
+            
+            FT_Done_FreeType(gFTLibrary);
+            gFTLibrary = NULL;
+
             if (pFontDesc->IsValid())
             {
               mpFonts.push_back(pFontDesc);
@@ -1051,9 +1056,6 @@ void nuiFontManager::ScanFolders(bool rescanAllFolders /* = false */)
     
     ++it;
   }
-  
-  FT_Done_FreeType(gFTLibrary);
-  gFTLibrary = NULL;
 
   nglTime end_time;
   
@@ -1268,7 +1270,8 @@ nuiFontManager nuiFontManager::gManager;
 
 nuiFontManager& nuiFontManager::GetManager(bool InitIfNeeded)
 {
-  if (InitIfNeeded && gManager.mpFonts.empty() && gManager.mFontFolders.empty())
+  const bool FORCE_FONT_ENUM = 0;
+  if (FORCE_FONT_ENUM || InitIfNeeded && gManager.mpFonts.empty() && gManager.mFontFolders.empty())
   {
     gManager.AddSystemFolders();
     gManager.ScanFolders();
