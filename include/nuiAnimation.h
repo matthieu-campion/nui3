@@ -39,16 +39,17 @@ public:
   virtual bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
   virtual nuiXMLNode* Serialize(nuiXMLNode* pNode, bool CreateNewNode) const;
 
-  virtual bool SetTime(double Time, nuiAnimWhence Whence = eAnimFromStart); ///< Set the time to display. Returns false if Time is out of range (but the current time will be capped on the nearest boundary).
-  virtual double GetTime(); ///< Return the currently displayed time in the animation.
+  bool SetTime(double Time, nuiAnimWhence Whence = eAnimFromStart); ///< Set the time to display. Returns false if Time is out of range (but the current time will be capped on the nearest boundary).
+  double GetTime() const; ///< Return the currently displayed time in the animation.
+  double GetPosition() const;
 
   void SetDuration(double); ///< Set the total duration of the Animation in seconds.
-  double GetDuration(); ///< Return the total duration of the Animation in seconds.
+  double GetDuration() const; ///< Return the total duration of the Animation in seconds.
 
   virtual void Play(uint32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward); ///< Start playing the animation. Stop after count iterations. 
   virtual void Stop(); ///< Stop Playing the animation.
 
-  virtual bool IsPlaying(); ///< Return true if the animation is currently playing.
+  bool IsPlaying() const; ///< Return true if the animation is currently playing.
 
   virtual void OnFrame(); ///< Overload this method to get notified of each timer tick, for exemple to call Invalidate() in order to redraw the animation.
 
@@ -63,10 +64,12 @@ public:
   static double GetFrameRate();
   
 protected:
-  double UpdateTime(); ///< You have to call this method before drawing in order to update the animation time if you want to draw in realtime. This method returns the number time elapsed since the last call to UpdateTime.
+  void CallOnFrame();
+  double UpdateTime(); ///< This method returns the number time elapsed since the last call to UpdateTime.
   bool OnTick(const nuiEvent& rEvent);
 
   double mCurrentTime;
+  double mCurrentPosition;
   double mDuration;
   uint32 mCount;
 
@@ -82,11 +85,16 @@ protected:
 
   bool mEnableCallbacks;
 
-  void EnableCallbacks(bool enable)
-  {
-    mEnableCallbacks = enable;
-  }
+  void EnableCallbacks(bool enable);
 
+  void SetTimeFromStart(double Time);
+  void SetTimeFromNow(double Time);
+  void SetTimeFromEnd(double Time);
+  
+  double GetTimeFromStart() const;
+  double GetTimeFromNow() const;
+  double GetTimeFromEnd() const;
+  
   nuiEventSink<nuiAnimation> mAnimSink;
 };
 

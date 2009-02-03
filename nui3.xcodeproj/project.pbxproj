@@ -4437,7 +4437,7 @@
 		E5816CAB0C3CECAB00902DFE /* nglZipFS.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nglZipFS.h; path = include/nglZipFS.h; sourceTree = SOURCE_ROOT; };
 		E5816CAC0C3CECAB00902DFE /* nui.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nui.h; path = ../../include/nui.h; sourceTree = "<group>"; };
 		E5816CAD0C3CECAB00902DFE /* nui_all.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nui_all.h; path = ../../include/nui_all.h; sourceTree = "<group>"; };
-		E5816CAE0C3CECAB00902DFE /* nuiAnimation.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiAnimation.h; path = ../../include/nuiAnimation.h; sourceTree = "<group>"; };
+		E5816CAE0C3CECAB00902DFE /* nuiAnimation.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiAnimation.h; path = ../include/nuiAnimation.h; sourceTree = "<group>"; };
 		E5816CAF0C3CECAB00902DFE /* nuiAnimView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiAnimView.h; path = ../../include/nuiAnimView.h; sourceTree = "<group>"; };
 		E5816CB00C3CECAB00902DFE /* nuiApplication.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiApplication.h; path = ../../include/nuiApplication.h; sourceTree = "<group>"; };
 		E5816CB10C3CECAB00902DFE /* nuiArc.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiArc.h; path = ../../include/nuiArc.h; sourceTree = "<group>"; };
@@ -4567,7 +4567,7 @@
 		E5816D3C0C3CECAB00902DFE /* nglMimeSource.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nglMimeSource.cpp; path = src/Application/nglMimeSource.cpp; sourceTree = SOURCE_ROOT; };
 		E5816D3D0C3CECAB00902DFE /* nglModule.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nglModule.cpp; path = src/Application/nglModule.cpp; sourceTree = SOURCE_ROOT; };
 		E5816D520C3CECAB00902DFE /* nui.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nui.cpp; path = src/Base/nui.cpp; sourceTree = SOURCE_ROOT; };
-		E5816D530C3CECAB00902DFE /* nuiAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiAnimation.cpp; path = src/Base/nuiAnimation.cpp; sourceTree = SOURCE_ROOT; };
+		E5816D530C3CECAB00902DFE /* nuiAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiAnimation.cpp; path = Base/nuiAnimation.cpp; sourceTree = "<group>"; };
 		E5816D550C3CECAB00902DFE /* nuiBuilder.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiBuilder.cpp; path = src/Base/nuiBuilder.cpp; sourceTree = SOURCE_ROOT; };
 		E5816D560C3CECAB00902DFE /* nuiColor.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiColor.cpp; path = src/Base/nuiColor.cpp; sourceTree = SOURCE_ROOT; };
 		E5816D570C3CECAB00902DFE /* nuiCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiCommand.cpp; path = src/Base/nuiCommand.cpp; sourceTree = SOURCE_ROOT; };
@@ -6077,6 +6077,7 @@
 		E5816D200C3CECAB00902DFE /* src */ = {
 			isa = PBXGroup;
 			children = (
+				E5CBF87A0F38993F00D34E6F /* Animations */,
 				E5816C770C3CECAB00902DFE /* ngl.h */,
 				E5816C790C3CECAB00902DFE /* ngl_all.h */,
 				BC35D3140CF5C54B002CE274 /* Attributes */,
@@ -6176,8 +6177,6 @@
 				E5816CAC0C3CECAB00902DFE /* nui.h */,
 				E5816CAD0C3CECAB00902DFE /* nui_all.h */,
 				BC34A0720EFA870A002F35C4 /* nuiVersion.h */,
-				E5816D530C3CECAB00902DFE /* nuiAnimation.cpp */,
-				E5816CAE0C3CECAB00902DFE /* nuiAnimation.h */,
 				E5816CB00C3CECAB00902DFE /* nuiApplication.h */,
 				E5EB3A960C8226A800CF21E2 /* nuiBindingManager.cpp */,
 				E5EB3A9B0C82270400CF21E2 /* nuiBindingManager.h */,
@@ -6808,6 +6807,15 @@
 				E5BC292B0F000399009EEA3B /* nglTimer_CoreFoundation.cpp */,
 			);
 			name = CoreFoundation;
+			sourceTree = "<group>";
+		};
+		E5CBF87A0F38993F00D34E6F /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				E5816D530C3CECAB00902DFE /* nuiAnimation.cpp */,
+				E5816CAE0C3CECAB00902DFE /* nuiAnimation.h */,
+			);
+			name = Animations;
 			sourceTree = "<group>";
 		};
 		E5F796590C750430009CE779 /* harfbuzz */ = {

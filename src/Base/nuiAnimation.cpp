@@ -48,7 +48,72 @@ nuiAnimation::nuiAnimation()
   }
 
   mAnimCounter++;
+  
+  if (SetObjectClass(_T("nuiAnimation")))
+  {
+    AddAttribute(new nuiAttribute<double>
+                 (nglString(_T("CurrentTime")), nuiUnitSeconds,
+                  nuiMakeDelegate(this, &nuiAnimation::GetTimeFromStart),
+                  nuiMakeDelegate(this, &nuiAnimation::SetTimeFromStart)));
+    
+    AddAttribute(new nuiAttribute<double>
+                 (nglString(_T("SetTimeFromNow")), nuiUnitSeconds,
+                  nuiMakeDelegate(this, &nuiAnimation::GetTimeFromNow),
+                  nuiMakeDelegate(this, &nuiAnimation::SetTimeFromNow)));
+
+    AddAttribute(new nuiAttribute<double>
+                 (nglString(_T("CurrentTimeFromEnd")), nuiUnitSeconds,
+                  nuiMakeDelegate(this, &nuiAnimation::GetTimeFromEnd),
+                  nuiMakeDelegate(this, &nuiAnimation::SetTimeFromEnd)));
+    
+    AddAttribute(new nuiAttribute<double>
+                 (nglString(_T("Position")), nuiUnitSize,
+                  nuiMakeDelegate(this, &nuiAnimation::GetPosition)));
+    
+    AddAttribute(new nuiAttribute<bool>
+                 (nglString(_T("IsPlaying")), nuiUnitBoolean,
+                  nuiMakeDelegate(this, &nuiAnimation::IsPlaying)));
+        
+    AddAttribute(new nuiAttribute<double>
+                 (nglString(_T("Duration")), nuiUnitSeconds,
+                  nuiMakeDelegate(this, &nuiAnimation::GetDuration),
+                  nuiMakeDelegate(this, &nuiAnimation::SetDuration)));
+  }
 }
+
+void nuiAnimation::SetTimeFromStart(double Time)
+{
+  SetTime(Time, eAnimFromStart);
+}
+
+void nuiAnimation::SetTimeFromNow(double Time)
+{
+  if (Time >= 0)
+    SetTime(Time, eAnimForward);
+  else
+    SetTime(-Time, eAnimRewind);
+}
+
+void nuiAnimation::SetTimeFromEnd(double Time)
+{
+  SetTime(Time, eAnimFromEnd);
+}
+
+double nuiAnimation::GetTimeFromStart() const
+{
+  return GetTime();
+}
+
+double nuiAnimation::GetTimeFromNow() const
+{
+  return 0;
+}
+
+double nuiAnimation::GetTimeFromEnd() const
+{
+  return mDuration - GetTime();
+}
+
 
 bool nuiAnimation::Load(const nuiXMLNode* pNode)
 {
@@ -118,29 +183,40 @@ bool nuiAnimation::SetTime(double Time, nuiAnimWhence Whence)
   if (mCurrentTime < 0)
   {
     mCurrentTime = 0;
-    OnFrame();
+    CallOnFrame();
     return false;
   }
 
   if (mCurrentTime > GetDuration())
   {
     mCurrentTime = GetDuration();
-    OnFrame();
+    CallOnFrame();
     return false;
   }
 
-  OnFrame();
+  CallOnFrame();
   return true;
 }
 
-double nuiAnimation::GetTime()
+double nuiAnimation::GetTime() const
 {
   return mCurrentTime;
 }
 
-double nuiAnimation::GetDuration()
+double nuiAnimation::GetDuration() const
 {
   return mDuration;
+}
+
+void nuiAnimation::SetDuration(double duration)
+{
+  mDuration = duration;
+  UpdateTime();
+}
+
+double nuiAnimation::GetPosition() const
+{
+  return mCurrentPosition;
 }
 
 void nuiAnimation::Play(uint32 Count, nuiAnimLoop LoopMode)
@@ -163,7 +239,7 @@ void nuiAnimation::Stop()
   if (!mUpdatingTime)
   {
     mCount = 1;
-    OnFrame();
+    CallOnFrame();
   }
   mCount = 0;
   //NGL_OUT(_T("nuiAnimation::Stop at %f\n"), GetDuration());
@@ -171,20 +247,24 @@ void nuiAnimation::Stop()
   AnimStop();
 }
 
-bool nuiAnimation::IsPlaying()
+bool nuiAnimation::IsPlaying() const
 {
   return mCount != 0;
 }
 
 void nuiAnimation::OnFrame()
 {
-  // By defulat update the animation:
+}
+
+void nuiAnimation::CallOnFrame()
+{
   UpdateTime();
+  OnFrame();
 }
 
 bool nuiAnimation::OnTick(const nuiEvent& rEvent)
 {
-  OnFrame();
+  CallOnFrame();
   return false;
 }
 
@@ -267,6 +347,8 @@ double nuiAnimation::UpdateTime()
     }
     break;
   }
+  
+  mCurrentPosition = mCurrentTime / mDuration;
   mUpdatingTime = false;
   if (IsPlaying())
     return advance;
@@ -286,6 +368,11 @@ bool nuiAnimation::Stop(const nuiEvent& rEvent)
   if (mEnableCallbacks)
     Stop();
   return false;
+}
+
+void nuiAnimation::EnableCallbacks(bool enable)
+{
+  mEnableCallbacks = enable;
 }
 
 

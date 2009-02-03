@@ -14,6 +14,7 @@ nuiAnimView::nuiAnimView()
 : nuiSimpleContainer()
 {
   nuiSimpleContainer::SetObjectClass(_T("nuiAnimView"));
+  SetDuration(5);
 }
 
 bool nuiAnimView::Load(const nuiXMLNode* pNode)
@@ -48,7 +49,7 @@ bool nuiAnimView::Draw(nuiDrawContext* pContext)
     count--;
     UpdateTime();
   }
-  double value = (GetTime() / GetDuration()) * GetChildrenCount();
+  double value = nuiAnimation::GetPosition() * GetChildrenCount();
   count = ToBelow(value);
 
   nuiWidgetList::iterator it = mpChildren.begin();
@@ -71,9 +72,3 @@ void nuiAnimView::OnFrame()
 {
   Invalidate();
 }
-
-double nuiAnimView::GetFrameCount()
-{
-  return (double)GetChildrenCount();
-}
-

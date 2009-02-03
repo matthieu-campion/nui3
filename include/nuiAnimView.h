@@ -27,7 +27,6 @@ public:
 
   // Overloaded from nuiAnimation:
   void OnFrame();
-  double GetFrameCount();
 
 
 protected:

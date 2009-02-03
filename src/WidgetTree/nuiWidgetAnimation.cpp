@@ -51,7 +51,6 @@ nuiXMLNode* nuiMoveRectAnim::Serialize(nuiXMLNode* pNode, bool CreateNewNode) co
 
 void nuiMoveRectAnim::OnFrame()
 {
-  UpdateTime();
   nuiSize t = (nuiSize)(MIN(1.0, GetTime() / mDuration));
   nuiSize tt = 1.0f - t;
 
@@ -127,7 +126,6 @@ void nuiMoveToAnim::Play(uint32 Count, nuiAnimLoop LoopMode)
 
 void nuiMoveAnim::OnFrame()
 {
-  UpdateTime();
   nuiSize t = (nuiSize)(MIN(1.0, GetTime() / mDuration));
   nuiSize tt = 1.0f - t;
   
@@ -269,7 +267,6 @@ void nuiScaleMatrixWidgetAnim::OnFrame()
 {
   if (IsPlaying())
   {
-    UpdateTime();
     nuiSize t = (nuiSize)(MIN(1.0, GetTime() / mDuration));
     nuiSize tt = 1.0f - t;
 
@@ -349,7 +346,6 @@ void nuiFadeWidgetAnim::OnFrame()
   if (IsPlaying())
   {
     //NGL_OUT(_T("nuiFadeWidgetAnim::OnFrame()\n"));
-    UpdateTime();
     double tim = GetTime();
     double Duration = GetDuration();
     nuiSize t = MIN(1.0f, (nuiSize)tim / (nuiSize)Duration);
