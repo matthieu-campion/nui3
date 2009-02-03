@@ -1660,6 +1660,10 @@
 		E5E7CFCF0F3768EE00073CA6 /* nuiPhoneFontDB.h in Headers */ = {isa = PBXBuildFile; fileRef = E5E7CFCD0F3768EE00073CA6 /* nuiPhoneFontDB.h */; };
 		E5E7CFD00F3768EE00073CA6 /* nuiPhoneFontDB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5E7CFCC0F3768EE00073CA6 /* nuiPhoneFontDB.cpp */; };
 		E5E7CFD10F3768EE00073CA6 /* nuiPhoneFontDB.h in Headers */ = {isa = PBXBuildFile; fileRef = E5E7CFCD0F3768EE00073CA6 /* nuiPhoneFontDB.h */; };
+		E5E7D0090F376A5E00073CA6 /* nglPath_Cocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = E5E7D0070F376A5E00073CA6 /* nglPath_Cocoa.h */; };
+		E5E7D00A0F376A5E00073CA6 /* nglPath_Cocoa.mm in Sources */ = {isa = PBXBuildFile; fileRef = E5E7D0080F376A5E00073CA6 /* nglPath_Cocoa.mm */; };
+		E5E7D00B0F376A5E00073CA6 /* nglPath_Cocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = E5E7D0070F376A5E00073CA6 /* nglPath_Cocoa.h */; };
+		E5E7D00C0F376A5E00073CA6 /* nglPath_Cocoa.mm in Sources */ = {isa = PBXBuildFile; fileRef = E5E7D0080F376A5E00073CA6 /* nglPath_Cocoa.mm */; };
 		E5E8C3A00F3742100092827F /* nuiHyperLink.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5E8C39D0F3742100092827F /* nuiHyperLink.cpp */; };
 		E5E8C3A10F3742100092827F /* nuiRichText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5E8C39E0F3742100092827F /* nuiRichText.cpp */; };
 		E5E8C3A20F3742100092827F /* nuiScrollingLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5E8C39F0F3742100092827F /* nuiScrollingLabel.cpp */; };
@@ -2781,6 +2785,8 @@
 		E5CD304F0ECF88350083037A /* nuiDragAndDrop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiDragAndDrop.h; path = include/nuiDragAndDrop.h; sourceTree = SOURCE_ROOT; };
 		E5E7CFCC0F3768EE00073CA6 /* nuiPhoneFontDB.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiPhoneFontDB.cpp; path = src/Font/nuiPhoneFontDB.cpp; sourceTree = SOURCE_ROOT; };
 		E5E7CFCD0F3768EE00073CA6 /* nuiPhoneFontDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiPhoneFontDB.h; path = src/Font/nuiPhoneFontDB.h; sourceTree = SOURCE_ROOT; };
+		E5E7D0070F376A5E00073CA6 /* nglPath_Cocoa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nglPath_Cocoa.h; path = src/File/Cocoa/nglPath_Cocoa.h; sourceTree = SOURCE_ROOT; };
+		E5E7D0080F376A5E00073CA6 /* nglPath_Cocoa.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = nglPath_Cocoa.mm; path = src/File/Cocoa/nglPath_Cocoa.mm; sourceTree = SOURCE_ROOT; };
 		E5E8C39D0F3742100092827F /* nuiHyperLink.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiHyperLink.cpp; path = src/Text/nuiHyperLink.cpp; sourceTree = SOURCE_ROOT; };
 		E5E8C39E0F3742100092827F /* nuiRichText.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiRichText.cpp; path = src/Text/nuiRichText.cpp; sourceTree = SOURCE_ROOT; };
 		E5E8C39F0F3742100092827F /* nuiScrollingLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiScrollingLabel.cpp; path = src/Text/nuiScrollingLabel.cpp; sourceTree = SOURCE_ROOT; };
@@ -3104,6 +3110,7 @@
 		6126D50B0DA5716500D2641A /* File */ = {
 			isa = PBXGroup;
 			children = (
+				E5E7D0060F376A5E00073CA6 /* Cocoa */,
 				6126D50C0DA5716500D2641A /* nglFile.cpp */,
 				6126D50D0DA5716500D2641A /* nglFile.h */,
 				6126D50E0DA5716500D2641A /* nglNativeVolume.cpp */,
@@ -4633,6 +4640,16 @@
 			name = Dialogs;
 			sourceTree = "<group>";
 		};
+		E5E7D0060F376A5E00073CA6 /* Cocoa */ = {
+			isa = PBXGroup;
+			children = (
+				E5E7D0070F376A5E00073CA6 /* nglPath_Cocoa.h */,
+				E5E7D0080F376A5E00073CA6 /* nglPath_Cocoa.mm */,
+			);
+			name = Cocoa;
+			path = src/File/Cocoa;
+			sourceTree = SOURCE_ROOT;
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -5148,6 +5165,7 @@
 				E5E8C3AD0F3742390092827F /* nuiRichText.h in Headers */,
 				E5E8C3AE0F3742390092827F /* nuiScrollingLabel.h in Headers */,
 				E5E7CFD10F3768EE00073CA6 /* nuiPhoneFontDB.h in Headers */,
+				E5E7D00B0F376A5E00073CA6 /* nglPath_Cocoa.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5665,6 +5683,7 @@
 				E5E8C3AA0F3742390092827F /* nuiRichText.h in Headers */,
 				E5E8C3AB0F3742390092827F /* nuiScrollingLabel.h in Headers */,
 				E5E7CFCF0F3768EE00073CA6 /* nuiPhoneFontDB.h in Headers */,
+				E5E7D0090F376A5E00073CA6 /* nglPath_Cocoa.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6044,6 +6063,7 @@
 				E5E8C3A50F3742100092827F /* nuiScrollingLabel.cpp in Sources */,
 				BC01753E0F374BB200424AC1 /* nuiURL_UIKit.mm in Sources */,
 				E5E7CFD00F3768EE00073CA6 /* nuiPhoneFontDB.cpp in Sources */,
+				E5E7D00C0F376A5E00073CA6 /* nglPath_Cocoa.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6368,6 +6388,7 @@
 				E5E8C3A20F3742100092827F /* nuiScrollingLabel.cpp in Sources */,
 				BC01753D0F374BB200424AC1 /* nuiURL_UIKit.mm in Sources */,
 				E5E7CFCE0F3768EE00073CA6 /* nuiPhoneFontDB.cpp in Sources */,
+				E5E7D00A0F376A5E00073CA6 /* nglPath_Cocoa.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
