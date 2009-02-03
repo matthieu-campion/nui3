@@ -818,9 +818,6 @@ bool nuiTreeView::MouseMoved(nuiSize X, nuiSize Y)
           mpDraggedObject = mDragStartDelegate(mpSelectedNode);
           if (mpDraggedObject)
           {
-            //LBEDBUG
-            NGL_OUT(_T("nuiTreeView StartDragging\n"));
-            
             nuiTreeView::Drag(mpDraggedObject);
           }
         }
@@ -838,9 +835,6 @@ bool nuiTreeView::MouseMoved(nuiSize X, nuiSize Y)
 // virtual 
 void nuiTreeView::OnDragRequestData(nglDragAndDrop* pDragObject, const nglString& rMimeType)
 {
-  //LBDEBUG
-  NGL_OUT(_T("nuiTreeView::OnDragRequestData\n"));
-  
   if (mDragRequestDataDelegate)
   {
     mDragRequestDataDelegate(mpSelectedNode, mpDraggedObject, rMimeType);
@@ -864,9 +858,6 @@ void nuiTreeView::OnDragRequestData(nglDragAndDrop* pDragObject, const nglString
 
 void nuiTreeView::OnDragStop(bool canceled)
 { 
-  //LBDEBUG
-  NGL_OUT(_T("nuiTreeView::OnDragStop\n"));
-  
   if (mDragStopDelegate)
   {
     mDragStopDelegate(mpSelectedNode, canceled);

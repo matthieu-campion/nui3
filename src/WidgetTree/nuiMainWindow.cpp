@@ -863,9 +863,6 @@ void nuiMainWindow::OnDragRequestData(nglDragAndDrop* pDragObject, const nglStri
 
 void nuiMainWindow::OnDragStop(bool canceled)
 {
-  //LBDEBUG
-  NGL_OUT(_T("nuiMainWindow::OnDragStop\n"));
-  
   if (mpDragSource && mpDragSource != this)
     mpDragSource->OnDragStop(canceled); ///< advise drag source
 }
@@ -1009,9 +1006,6 @@ void nuiMainWindow::NGLWindow::OnDragRequestData(nglDragAndDrop* pDragObject, co
 
 void nuiMainWindow::NGLWindow::OnDragStop(bool canceled)
 {
-  //LBDEBUG
-  NGL_OUT(_T("nuiMainWindow::NGLWindow::OnDragStop\n"));
-  
   nglWindow::OnDragStop(canceled);
   mpMainWindow->OnDragStop(canceled);
 }

@@ -515,8 +515,6 @@ OSErr nglDragTrackingHandler (DragTrackingMessage message, WindowRef theWindow, 
       
       
     case kDragTrackingLeaveWindow:
-      //LBDEBUG
-      NGL_OUT(_T("nglDragTrackingHandler LeaveWindow!!\n"));
       pDnd->mpWin->OnDragLeave();
       NGL_ASSERT(pDnd->HasDropObject());
       delete pDnd->GetDropObject();
@@ -527,8 +525,6 @@ OSErr nglDragTrackingHandler (DragTrackingMessage message, WindowRef theWindow, 
       
     kDragTrackingLeaveHandler:
       //Dont really care ..
-      NGL_OUT(_T("nglDragTrackingHandler LeaveHandler!!\n"));
-      
       break;
       
     default:
@@ -1884,29 +1880,19 @@ void nglWindow::OnDragEnter()
 
 void nglWindow::OnDragLeave()
 {
-  //LBDEBUG
-  NGL_OUT(_T("nglWindow::OnDragLeave()\n"));
 }
 
 bool nglWindow::OnCanDrop (nglDragAndDrop* pDragObject, int X, int Y, nglMouseInfo::Flags Button)
 {
-  //LBDEBUG
-  NGL_OUT(_T("nglWindow::OnCanDrop()\n"));
-
   return false;
 }
 
 void nglWindow::OnDropped (nglDragAndDrop* pDragObject, int X,int Y, nglMouseInfo::Flags Button)
 {
-  //LBDEBUG
-  NGL_OUT(_T("nglWindow::OnDropped()\n"));
 }
 
 bool nglWindow::Drag(nglDragAndDrop* pDragObject)
 {
-  //LBDEBUG
-  NGL_OUT(_T("nglWindow::Drag()\n"));
-
   bool res = mpCarbonDragAndDrop->Drag(pDragObject);
   
   // advise drag source about result
@@ -1917,21 +1903,14 @@ bool nglWindow::Drag(nglDragAndDrop* pDragObject)
 
 void nglWindow::OnDragFeedback(nglDropEffect eDropEffect)
 {
-  //LBDEBUG
-  NGL_OUT(_T("nglWindow::OnDragFeedback()\n"));
-
 }
 
 void nglWindow::OnDragRequestData(nglDragAndDrop* pDragObject, const nglString& rMimeType)
 {
-  //LBDEBUG
-  NGL_OUT(_T("nglWindow::OnDragRequestData()\n"));  
 }
 
 void nglWindow::OnDragStop(bool canceled)
 {
-  //LBDEBUG
-  NGL_OUT(_T("nglWindow::OnDragStop()\n"));
 }
 
 bool nglWindow::MakeCurrent() const
