@@ -22,9 +22,6 @@ public:
 
   virtual nuiXMLNode* Serialize(nuiXMLNode* pNode, bool CreateNewNode = true) const;
 
-  virtual void OnFrame();
-  double GetFrameCount();
-
 protected:
   nuiWidgetPtr mpTarget;
   double mDuration;

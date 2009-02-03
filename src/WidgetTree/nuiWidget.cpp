@@ -2675,7 +2675,7 @@ void nuiWidget::AnimateAll(bool Set, bool Reset)
   for ( ; it != end; ++it)
   {
     if (Reset)
-      (*it).second->SetFrame(0);
+      (*it).second->SetTime(0);
 
     if (Set)
       (*it).second->Play();
@@ -2690,16 +2690,16 @@ void nuiWidget::ResetAnimation(const nglString& rName)
 {
   nuiAnimation* pAnim = GetAnimation(rName);
   if (pAnim)
-    pAnim->SetFrame(0);
+    pAnim->SetTime(0);
   DebugRefreshInfo();
 }
 
-void nuiWidget::StartAnimation(const nglString& rName, double Frame)
+void nuiWidget::StartAnimation(const nglString& rName, double Time)
 {
   nuiAnimation* pAnim = GetAnimation(rName);
   if (pAnim)
   {
-    pAnim->SetFrame(Frame);
+    pAnim->SetTime(Time);
     pAnim->Play();
   }
   DebugRefreshInfo();

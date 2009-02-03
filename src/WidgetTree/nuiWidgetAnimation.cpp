@@ -13,7 +13,6 @@ nuiWidgetAnimation::nuiWidgetAnimation (nuiWidgetPtr pTarget, double DurationInS
   : mpTarget(pTarget)
 {
   mDuration = DurationInSeconds;
-  SetFrameRate(30);
 }
 
 bool nuiWidgetAnimation::Load(const nuiXMLNode* pNode)
@@ -29,16 +28,6 @@ nuiXMLNode* nuiWidgetAnimation::Serialize(nuiXMLNode* pNode, bool CreateNewNode)
 {
   return nuiAnimation::Serialize(pNode, CreateNewNode);
 }
-
-void nuiWidgetAnimation::OnFrame()
-{
-}
-
-double nuiWidgetAnimation::GetFrameCount()
-{
-  return MAX(1, ToAbove(mDuration * GetFrameRate()));
-}
-
 
 //////// ACTUAL ANIMATION CLASSES IMPLEMENTATIONS:
 

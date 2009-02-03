@@ -39,21 +39,11 @@ public:
   virtual bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
   virtual nuiXMLNode* Serialize(nuiXMLNode* pNode, bool CreateNewNode) const;
 
-  virtual void SetFrameTime(double FrameTime); ///< Set the frame rate by giving the number of seconds per frame.
-  virtual void SetFrameRate(double FrameRate); ///< Set the frame rate in Hertz.
-  virtual double GetFrameRate(); ///< Get the frame rate in Hertz.
-  virtual double GetFrameTime(); ///< Get the frame rate in seconds per frame.
-
-  virtual bool SetFrame(double Frame, nuiAnimWhence Whence = eAnimFromStart); ///< Set the frame to display. Returns false if Frame is out of range (but the current time will be capped on the nearest boundary).
-  virtual bool SetTime(double Time, nuiAnimWhence Whence = eAnimFromStart); ///< Set the frame to display. Returns false if Frame is out of range (but the current time will be capped on the nearest boundary).
-  virtual double GetFrame(); ///< Return the currently displayed (non integral) frame number.
+  virtual bool SetTime(double Time, nuiAnimWhence Whence = eAnimFromStart); ///< Set the time to display. Returns false if Time is out of range (but the current time will be capped on the nearest boundary).
   virtual double GetTime(); ///< Return the currently displayed time in the animation.
 
-  virtual double TimeToFrame(double Tm); ///< Return the frame at time Tm.
-  virtual double FrameToTime(double Frame); ///< Return the time at frame Frame.
-
-  virtual double GetFrameCount(); ///< Return the number of whole frames.
-  virtual double GetDuration(); ///< Return the total duration of the Animation in seconds.
+  void SetDuration(double); ///< Set the total duration of the Animation in seconds.
+  double GetDuration(); ///< Return the total duration of the Animation in seconds.
 
   virtual void Play(uint32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward); ///< Start playing the animation. Stop after count iterations. 
   virtual void Stop(); ///< Stop Playing the animation.
@@ -69,17 +59,24 @@ public:
   bool Play(const nuiEvent& rEvent); ///< The animation will start playing as soon as this method is called. Use this method if you want to start playing an animation when an nuiEvent is fired.
   bool Stop(const nuiEvent& rEvent); ///< The animation will stop playing as soon as this method is called. Use this method if you want to stop playing an animation when an nuiEvent is fired.
 
+  static void SetFrameRate(double FPS);
+  static double GetFrameRate();
+  
 protected:
-  virtual double UpdateTime(); ///< You have to call this method before drawing in order to update the animation frame if you want to draw in realtime. This method returns the number time elapsed since the last call to UpdateTime.
+  double UpdateTime(); ///< You have to call this method before drawing in order to update the animation time if you want to draw in realtime. This method returns the number time elapsed since the last call to UpdateTime.
   bool OnTick(const nuiEvent& rEvent);
 
-  double mFrameTime;
   double mCurrentTime;
+  double mDuration;
   uint32 mCount;
 
   double mDirection; ///< Either 1 or -1. This sets the current direction of play back.
   nuiAnimLoop mLoopMode;
-  nuiTimer mTimer;
+
+  static nuiTimer* mpTimer;
+  static uint32 mAnimCounter;
+  static double mFrameRate;
+  
   nglTime mLastTime;
   bool mUpdatingTime;
 
@@ -99,7 +96,6 @@ public:
   nuiWaitAnimation(double duration)
   {
     mUserDuration = duration;
-    SetFrameRate(1.0);
   }
 
   virtual ~nuiWaitAnimation()
@@ -127,7 +123,6 @@ public:
   virtual void Play(uint32 Count = 1.0f, nuiAnimLoop LoopMode = eAnimLoopForward); ///< Start playing the animation. Stop after count iterations. 
   virtual void Stop(); ///< Stop Playing the animation.
 
-  virtual double GetFrameCount(); ///< Return the number of whole frames.
   virtual double GetDuration(); ///< Return the total duration of the Animation in seconds.
 
   void AddAnimation(nuiAnimation* pAnim);
@@ -148,7 +143,6 @@ public:
   virtual void Play(uint32 Count = 1.0f, nuiAnimLoop LoopMode = eAnimLoopForward); ///< Start playing the animation. Stop after count iterations. 
   virtual void Stop(); ///< Stop Playing the animation.
 
-  virtual double GetFrameCount(); ///< Return the number of whole frames.
   virtual double GetDuration(); ///< Return the total duration of the Animation in seconds.
 
   void AddAnimation(nuiAnimation* pAnim);

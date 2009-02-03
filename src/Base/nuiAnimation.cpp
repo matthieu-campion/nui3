@@ -10,44 +10,66 @@
 #include "nuiXML.h"
 #include "nglMath.h"
 
-nuiAnimation::nuiAnimation()
-: mTimer(0.1),
-  mAnimSink(this)
+nuiTimer* nuiAnimation::mpTimer = NULL;
+uint32 nuiAnimation::mAnimCounter = 0;
+double nuiAnimation::mFrameRate = 30; // 30 FPS by default
+
+void nuiAnimation::SetFrameRate(double FPS)
 {
-  mFrameTime = 0;
-  mCurrentTime = 0;
+  mFrameRate = FPS;
+  if (mpTimer)
+  {
+    mpTimer->Stop();
+    mpTimer->SetPeriod(1.0 / mFrameRate);
+    mpTimer->Start(false, false);
+  }
+}
+
+double nuiAnimation::GetFrameRate()
+{
+  return mFrameRate;
+}
+
+nuiAnimation::nuiAnimation()
+: mAnimSink(this)
+{
   mCount = 0;
+  mDuration = 0.5;
+  mCurrentTime = 0;
   mDirection = 1.0;
   mLoopMode = eAnimLoopForward;
   mUpdatingTime = false;
   mEnableCallbacks = true;
 
-  mAnimSink.Connect(mTimer.Tick, &nuiAnimation::OnTick);
+  if (!mAnimCounter)
+  {
+    mpTimer = new nuiTimer(1.0 / mFrameRate);
+    mpTimer->Start(false, true);
+  }
 
-  SetFrameRate(30);
-
+  mAnimCounter++;
 }
 
 bool nuiAnimation::Load(const nuiXMLNode* pNode)
 {
-  mFrameTime = 0;
-  mCurrentTime = 0;
   mCount = 0;
+  mDuration = 0.5;
+  mCurrentTime = 0;
   mDirection = 1.0;
   mLoopMode = eAnimLoopForward;
   mUpdatingTime = false;
   mEnableCallbacks = true;
-  
-  SetFrameRate(30);
 
-  mAnimSink.Connect(mTimer.Tick, &nuiAnimation::OnTick);
-  
   return true;
 }
 
 nuiAnimation::~nuiAnimation()
 {
-  mTimer.Stop();
+  mAnimCounter--;
+  if (!mAnimCounter)
+  {
+    delete mpTimer;
+  }
 }
 
 nuiXMLNode* nuiAnimation::Serialize(nuiXMLNode* pParentNode, bool CreateNewNode) const
@@ -72,81 +94,7 @@ nuiXMLNode* nuiAnimation::Serialize(nuiXMLNode* pParentNode, bool CreateNewNode)
     return NULL;
 
   pNode->SetAttribute(_T("CurrentTime"),mCurrentTime);
-  pNode->SetAttribute(_T("FrameTime"),mFrameTime);
   return pNode;
-}
-
-void nuiAnimation::SetFrameTime(double FrameTime)
-{
-  mFrameTime = FrameTime;
-
-  if (mCount != 0)
-    mTimer.Stop();
-
-  mTimer.SetPeriod(mFrameTime);
-
-  if (mCount != 0)
-   mTimer.Start();
-}
-
-void nuiAnimation::SetFrameRate(double FrameRate)
-{
-  mFrameTime = 1.0 / FrameRate;
-
-  if (mCount != 0)
-    mTimer.Stop();
-  
-  mTimer.SetPeriod(mFrameTime);
-
-  if (mCount != 0)
-    mTimer.Start();
-}
-
-double nuiAnimation::GetFrameRate()
-{
-  return 1.0 / mFrameTime;
-}
-
-double nuiAnimation::GetFrameTime()
-{
-  return mFrameTime;
-}
-
-
-bool nuiAnimation::SetFrame(double Frame, nuiAnimWhence Whence)
-{
-  switch (Whence)
-  {
-  case eAnimFromStart:
-    mCurrentTime = FrameToTime(Frame);
-    break;
-  case eAnimForward:
-    mCurrentTime += FrameToTime(Frame);
-    break;
-  case eAnimRewind:
-    mCurrentTime -= FrameToTime(Frame);
-    break;
-  case eAnimFromEnd:
-    mCurrentTime = GetDuration() - FrameToTime(Frame);
-    break;
-  }
-
-  if (mCurrentTime < 0)
-  {
-    mCurrentTime = 0;
-    OnFrame();
-    return false;
-  }
-
-  if (mCurrentTime > GetDuration())
-  {
-    mCurrentTime = GetDuration();
-    OnFrame();
-    return false;
-  }
-
-  OnFrame();
-  return true;
 }
 
 bool nuiAnimation::SetTime(double Time, nuiAnimWhence Whence)
@@ -185,36 +133,14 @@ bool nuiAnimation::SetTime(double Time, nuiAnimWhence Whence)
   return true;
 }
 
-double nuiAnimation::GetFrame()
-{
-  return TimeToFrame(mCurrentTime);
-}
-
 double nuiAnimation::GetTime()
 {
   return mCurrentTime;
 }
 
-double nuiAnimation::TimeToFrame(double Tm)
-{
-  if (mFrameTime <= 0)
-    return 0;
-  return Tm / mFrameTime;
-}
-
-double nuiAnimation::FrameToTime(double Frame)
-{
-  return Frame * mFrameTime;
-}
-
-double nuiAnimation::GetFrameCount()
-{
-  return 0;
-}
-
 double nuiAnimation::GetDuration()
 {
-  return FrameToTime(GetFrameCount());
+  return mDuration;
 }
 
 void nuiAnimation::Play(uint32 Count, nuiAnimLoop LoopMode)
@@ -226,7 +152,9 @@ void nuiAnimation::Play(uint32 Count, nuiAnimLoop LoopMode)
     mDirection = -1.0;
   else
     mDirection = 1.0;
-  mTimer.Start();
+  
+  mAnimSink.Connect(mpTimer->Tick, &nuiAnimation::OnTick);
+  
   AnimStart();
 }
 
@@ -239,7 +167,7 @@ void nuiAnimation::Stop()
   }
   mCount = 0;
   //NGL_OUT(_T("nuiAnimation::Stop at %f\n"), GetDuration());
-  mTimer.Stop();
+  mAnimSink.Disconnect(mpTimer->Tick, &nuiAnimation::OnTick);
   AnimStop();
 }
 
@@ -386,17 +314,13 @@ int PPCM(int a, int b)
   return (a * b) / PGCD(a, b);
 }
 
-#define META_FRAMES (20.0)
-
 nuiMetaAnimation::nuiMetaAnimation ()
 {
-  SetFrameRate(META_FRAMES);
 }
 
 bool nuiMetaAnimation::Load(const nuiXMLNode* pNode)
 {
   nuiAnimation::Load(pNode);
-  SetFrameRate(META_FRAMES);
   return true;
 }
 
@@ -436,11 +360,6 @@ void nuiMetaAnimation::Stop()
   nuiAnimation::Stop();
 }
 
-double nuiMetaAnimation::GetFrameCount()
-{
-  return GetDuration()*META_FRAMES;
-}
-
 double nuiMetaAnimation::GetDuration()
 {
   std::list<nuiAnimation*>::iterator it = mpAnimations.begin();
@@ -471,18 +390,15 @@ void nuiMetaAnimation::Clear()
 
 
 /////// ANIMATION SEQUENCES:
-#define SEQUENCE_FRAMES (20.0)
 
 nuiAnimationSequence::nuiAnimationSequence ()
 : mAnimSequenceSink(this)
 {
-  SetFrameRate(SEQUENCE_FRAMES);
 }
 
 bool nuiAnimationSequence::Load(const nuiXMLNode* pNode)
 {
   bool res = nuiAnimation::Load(pNode);
-  SetFrameRate(SEQUENCE_FRAMES);
   return res;
 }
 
@@ -520,11 +436,6 @@ void nuiAnimationSequence::Stop()
   }
 
   nuiAnimation::Stop();
-}
-
-double nuiAnimationSequence::GetFrameCount()
-{
-  return GetDuration()*SEQUENCE_FRAMES;
 }
 
 double nuiAnimationSequence::GetDuration()

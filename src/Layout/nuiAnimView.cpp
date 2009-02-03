@@ -48,7 +48,7 @@ bool nuiAnimView::Draw(nuiDrawContext* pContext)
     count--;
     UpdateTime();
   }
-  double value = TimeToFrame(GetTime());
+  double value = (GetTime() / GetDuration()) * GetChildrenCount();
   count = ToBelow(value);
 
   nuiWidgetList::iterator it = mpChildren.begin();
