@@ -142,9 +142,9 @@
 }
 
 
-"Icon::VisualStudio"!
+"Icon::VisualStudio2005"!
 {
-  Texture: "rsrc:/decorations/iconVisualStudio.png";
+  Texture: "rsrc:/decorations/iconVisualStudio2005.png";
   UserWidth: 48;
   UserHeight: 48;
   BorderTop: 5;
@@ -152,9 +152,31 @@
 }
 
 
-"Icon::VisualStudio::Disabled"!
+"Icon::VisualStudio2005::Disabled"!
 {
-  Texture: "rsrc:/decorations/iconVisualStudioDisabled.png";
+  Texture: "rsrc:/decorations/iconVisualStudio2005Disabled.png";
+  UserWidth: 48;
+  UserHeight: 48;
+  BorderTop: 5;
+  BorderLeft: 7;
+}
+
+
+
+
+"Icon::VisualStudio2008"!
+{
+  Texture: "rsrc:/decorations/iconVisualStudio2008.png";
+  UserWidth: 48;
+  UserHeight: 48;
+  BorderTop: 5;
+  BorderLeft: 7;
+}
+
+
+"Icon::VisualStudio2008::Disabled"!
+{
+  Texture: "rsrc:/decorations/iconVisualStudio2008Disabled.png";
   UserWidth: 48;
   UserHeight: 48;
   BorderTop: 5;

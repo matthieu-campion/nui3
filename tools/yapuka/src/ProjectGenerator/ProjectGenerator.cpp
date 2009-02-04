@@ -205,6 +205,8 @@ nuiWidget* ProjectGenerator::BuildBlocOptions()
   nuiVBox* pMainBox = new nuiVBox(0);
   pMainBox->SetBorder(0, 20);
   
+  
+  // MacOS X xcode
   nuiHBox* pBloc = new nuiHBox(3);
   pMainBox->AddCell(pBloc);
   // icon
@@ -227,28 +229,53 @@ nuiWidget* ProjectGenerator::BuildBlocOptions()
   
 
   
-  
+  // Visual Studio 2005
   pBloc = new nuiHBox(3);
   pMainBox->AddCell(pBloc);
   // icon
   pIcon = new nuiImage();
-  pIcon->SetObjectName(_T("Icon::VisualStudio"));
-  pIcon->SetToken(new nuiToken<nglString>(_T("Icon::VisualStudio")));
+  pIcon->SetObjectName(_T("Icon::VisualStudio2005"));
+  pIcon->SetToken(new nuiToken<nglString>(_T("Icon::VisualStudio2005")));
   pIcon->SetPosition(nuiTopLeft);
   pBloc->SetCell(0, pIcon);
   pBloc->SetCellPixels(0, 48);
   // check box
-  mpCheckVisualStudio = new nuiToggleButton();
-  mpCheckVisualStudio->SetToken(new nuiToken<nuiImage*>(pIcon));
-  mEventSink.Connect(mpCheckVisualStudio->ButtonPressed, &ProjectGenerator::OnIconUpdate, (void*)mpCheckVisualStudio);
-  mEventSink.Connect(mpCheckVisualStudio->ButtonDePressed, &ProjectGenerator::OnIconUpdate, (void*)mpCheckVisualStudio);
-  mpCheckVisualStudio->SetPressed(true);
-  mpCheckVisualStudio->SetBorder(25,0,0, 0);
-  pBloc->SetCell(1, mpCheckVisualStudio, nuiCenter);
+  mpCheckVisualStudio2005 = new nuiToggleButton();
+  mpCheckVisualStudio2005->SetToken(new nuiToken<nuiImage*>(pIcon));
+  mEventSink.Connect(mpCheckVisualStudio2005->ButtonPressed, &ProjectGenerator::OnIconUpdate, (void*)mpCheckVisualStudio2005);
+  mEventSink.Connect(mpCheckVisualStudio2005->ButtonDePressed, &ProjectGenerator::OnIconUpdate, (void*)mpCheckVisualStudio2005);
+  mpCheckVisualStudio2005->SetPressed(true);
+  mpCheckVisualStudio2005->SetBorder(25,0,0, 0);
+  pBloc->SetCell(1, mpCheckVisualStudio2005, nuiCenter);
   // label
   pBloc->SetCell(2, new nuiLabel(nuiTR("generate MS Visual Studio 2005 project file for Win32")));
-  
 
+  
+  
+  // Visual Studio 2008
+  pBloc = new nuiHBox(3);
+  pMainBox->AddCell(pBloc);
+  // icon
+  pIcon = new nuiImage();
+  pIcon->SetObjectName(_T("Icon::VisualStudio2008"));
+  pIcon->SetToken(new nuiToken<nglString>(_T("Icon::VisualStudio2008")));
+  pIcon->SetPosition(nuiTopLeft);
+  pBloc->SetCell(0, pIcon);
+  pBloc->SetCellPixels(0, 48);
+  // check box
+  mpCheckVisualStudio2008 = new nuiToggleButton();
+  mpCheckVisualStudio2008->SetToken(new nuiToken<nuiImage*>(pIcon));
+  mEventSink.Connect(mpCheckVisualStudio2008->ButtonPressed, &ProjectGenerator::OnIconUpdate, (void*)mpCheckVisualStudio2008);
+  mEventSink.Connect(mpCheckVisualStudio2008->ButtonDePressed, &ProjectGenerator::OnIconUpdate, (void*)mpCheckVisualStudio2008);
+  mpCheckVisualStudio2008->SetPressed(true);
+  mpCheckVisualStudio2008->SetBorder(25,0,0, 0);
+  pBloc->SetCell(1, mpCheckVisualStudio2008, nuiCenter);
+  // label
+  pBloc->SetCell(2, new nuiLabel(nuiTR("generate MS Visual Studio 2008 project file for Win32")));
+  
+  
+  
+  // iPhone xcode
   pBloc = new nuiHBox(3);
   pMainBox->AddCell(pBloc);
   // icon
@@ -666,26 +693,48 @@ bool ProjectGenerator::Make()
   
   
 
-  // generate visual studio project file
-  if (mpCheckVisualStudio->IsPressed())
+  // generate visual studio 2005 project file
+  if (mpCheckVisualStudio2005->IsPressed())
   {
-    filename = mProjectName + nglString(_T(".vcproj"));
+    filename = mProjectName + nglString(_T(".2005.vcproj"));
     projectfile = targetpath;
     projectfile += nglPath(filename);
-    if (!GenerateFile(_T("rsrc:/project/project.vcproj"), projectfile))
+    if (!GenerateFile(_T("rsrc:/project/project.2005.vcproj"), projectfile))
       return false;
   }
 
-  // generate visual studio solution file
-  if (mpCheckVisualStudio->IsPressed())
+  // generate visual studio 2005 solution file
+  if (mpCheckVisualStudio2005->IsPressed())
   {
-    filename = mProjectName + nglString(_T(".sln"));
+    filename = mProjectName + nglString(_T(".2005.sln"));
     projectfile = targetpath;
     projectfile += nglPath(filename);
-    if (!GenerateFile(_T("rsrc:/project/project.sln"), projectfile))
+    if (!GenerateFile(_T("rsrc:/project/project.2005.sln"), projectfile))
       return false;
   }
 
+  
+  // generate visual studio 2008 project file
+  if (mpCheckVisualStudio2008->IsPressed())
+  {
+    filename = mProjectName + nglString(_T(".2008.vcproj"));
+    projectfile = targetpath;
+    projectfile += nglPath(filename);
+    if (!GenerateFile(_T("rsrc:/project/project.2008.vcproj"), projectfile))
+      return false;
+  }
+  
+  // generate visual studio 2008 solution file
+  if (mpCheckVisualStudio2008->IsPressed())
+  {
+    filename = mProjectName + nglString(_T(".2008.sln"));
+    projectfile = targetpath;
+    projectfile += nglPath(filename);
+    if (!GenerateFile(_T("rsrc:/project/project.2008.sln"), projectfile))
+      return false;
+  }
+  
+  
   
   // generate dlist.plist
   if (mpCheckXcode->IsPressed() || mpCheckiPhone->IsPressed())

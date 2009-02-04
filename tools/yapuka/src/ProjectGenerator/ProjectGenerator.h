@@ -64,7 +64,8 @@ private:
   
   
   nuiToggleButton* mpCheckXcode;
-  nuiToggleButton* mpCheckVisualStudio;
+  nuiToggleButton* mpCheckVisualStudio2005;
+  nuiToggleButton* mpCheckVisualStudio2008;
   nuiToggleButton* mpCheckiPhone;
   
   
