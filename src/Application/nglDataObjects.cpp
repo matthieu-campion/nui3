@@ -50,10 +50,6 @@ nglDataObject* nglDataFilesObject::Create(const nglString& rMimeType)
   return new nglDataFilesObject(rMimeType);
 }
 
-void nglDataFilesObject::AddFile(const nglString& rPath)
-{
-  mFilePaths.push_back(rPath);
-}
 
 const std::list<nglString>& nglDataFilesObject::GetFiles()
 { 

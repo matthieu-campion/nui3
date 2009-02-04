@@ -22,6 +22,10 @@
 		61A9DFF50B83433800BC506C /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61A9DFEF0B83433800BC506C /* Application.cpp */; };
 		61A9DFF60B83433800BC506C /* MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */; };
 		BC6A09AD0EF92BAB00881ACF /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BC6A09AB0EF92BAB00881ACF /* Info.plist */; };
+		BC8929380F39ABC700D82DC9 /* DropDestination_Container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC8929340F39ABC700D82DC9 /* DropDestination_Container.cpp */; };
+		BC8929390F39ABC800D82DC9 /* DragSource_FileTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC8929370F39ABC700D82DC9 /* DragSource_FileTree.cpp */; };
+		BC89293A0F39ABC800D82DC9 /* DropDestination_Container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC8929340F39ABC700D82DC9 /* DropDestination_Container.cpp */; };
+		BC89293B0F39ABC800D82DC9 /* DragSource_FileTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC8929370F39ABC700D82DC9 /* DragSource_FileTree.cpp */; };
 		BCBCB15F0DFD45BD002E8BC3 /* libnui3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */; };
 		BCBCB1600DFD45C1002E8BC3 /* libnui3D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15C0DFD45B6002E8BC3 /* libnui3D.a */; };
 /* End PBXBuildFile section */
@@ -55,6 +59,13 @@
 			remoteGlobalIDString = E58172D70C3D103300902DFE;
 			remoteInfo = nui3D;
 		};
+		BCE01E1E0F39AB1A00C1E867 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E592C5140EFE8CCC00340B35;
+			remoteInfo = "nui3D cocoa";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -71,6 +82,10 @@
 		61A9DFF20B83433800BC506C /* MainWindow.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = MainWindow.h; path = src/MainWindow.h; sourceTree = "<group>"; };
 		BC6A09AB0EF92BAB00881ACF /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		BC6A09CB0EF9301900881ACF /* main.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = main.css; path = resources/css/main.css; sourceTree = SOURCE_ROOT; };
+		BC8929340F39ABC700D82DC9 /* DropDestination_Container.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DropDestination_Container.cpp; path = src/DropDestination_Container.cpp; sourceTree = SOURCE_ROOT; };
+		BC8929350F39ABC700D82DC9 /* DropDestination_Container.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DropDestination_Container.h; path = src/DropDestination_Container.h; sourceTree = SOURCE_ROOT; };
+		BC8929360F39ABC700D82DC9 /* DragSource_FileTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DragSource_FileTree.h; path = src/DragSource_FileTree.h; sourceTree = SOURCE_ROOT; };
+		BC8929370F39ABC700D82DC9 /* DragSource_FileTree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DragSource_FileTree.cpp; path = src/DragSource_FileTree.cpp; sourceTree = SOURCE_ROOT; };
 		BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nui3.xcodeproj; path = ../../nui3.xcodeproj; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -135,6 +150,10 @@
 				61A9DFF00B83433800BC506C /* Application.h */,
 				61A9DFF10B83433800BC506C /* MainWindow.cpp */,
 				61A9DFF20B83433800BC506C /* MainWindow.h */,
+				BC8929370F39ABC700D82DC9 /* DragSource_FileTree.cpp */,
+				BC8929360F39ABC700D82DC9 /* DragSource_FileTree.h */,
+				BC8929340F39ABC700D82DC9 /* DropDestination_Container.cpp */,
+				BC8929350F39ABC700D82DC9 /* DropDestination_Container.h */,
 			);
 			name = sources;
 			sourceTree = "<group>";
@@ -169,6 +188,7 @@
 			children = (
 				BCBCB15C0DFD45B6002E8BC3 /* libnui3D.a */,
 				BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */,
+				BCE01E1F0F39AB1A00C1E867 /* libnui3D cocoa.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -253,6 +273,13 @@
 			remoteRef = BCBCB15D0DFD45B6002E8BC3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		BCE01E1F0F39AB1A00C1E867 /* libnui3D cocoa.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libnui3D cocoa.a";
+			remoteRef = BCE01E1E0F39AB1A00C1E867 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -304,6 +331,8 @@
 			files = (
 				61A9DFF30B83433800BC506C /* Application.cpp in Sources */,
 				61A9DFF40B83433800BC506C /* MainWindow.cpp in Sources */,
+				BC8929380F39ABC700D82DC9 /* DropDestination_Container.cpp in Sources */,
+				BC8929390F39ABC800D82DC9 /* DragSource_FileTree.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -313,6 +342,8 @@
 			files = (
 				61A9DFF50B83433800BC506C /* Application.cpp in Sources */,
 				61A9DFF60B83433800BC506C /* MainWindow.cpp in Sources */,
+				BC89293A0F39ABC800D82DC9 /* DropDestination_Container.cpp in Sources */,
+				BC89293B0F39ABC800D82DC9 /* DragSource_FileTree.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

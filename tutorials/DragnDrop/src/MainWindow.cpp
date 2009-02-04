@@ -8,6 +8,8 @@
 #include "nui.h"
 #include "MainWindow.h"
 #include "Application.h"
+#include "DropDestination_Container.h"
+#include "DragSource_FileTree.h"
 #include "nuiCSS.h"
 #include "nuiVBox.h"
 
@@ -32,51 +34,47 @@ MainWindow::~MainWindow()
 
 void MainWindow::OnCreation()
 {
-  // a vertical box for page layout
-  nuiVBox* pLayoutBox = new nuiVBox(0);
+  // a box for page layout
+  nuiHBox* pLayoutBox = new nuiHBox(0);
   pLayoutBox->SetExpand(nuiExpandShrinkAndGrow);
   AddChild(pLayoutBox);
   
-  // image in the first box's cell
-  nuiImage* pImg = new nuiImage();
-  pImg->SetObjectName(_T("MyImage"));
-  pImg->SetPosition(nuiCenter);
-  pLayoutBox->AddCell(pImg);
+  // drag source file tree in left column
+  DragFileTree* pTree = new DragFileTree();
+  pLayoutBox->AddCell(pTree);
+  pLayoutBox->SetCellPixels(pLayoutBox->GetNbCells()-1, 250);
+  
+  //
+  // code writing note:
+  //
+  // again, instead of writing:
+  // myBox = new nuiHBox(0);
+  // myBox->AddCell(myWidget);
+  // myBox->SetCellExpand(myBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
+  //
+  // you can simply goes for:
+  // myBox = new nuiHBox(2);
+  // myBox->SetCell(0, myWidget);
+  // myBox->SetCellExpand(0, nuiExpandShrinkAndGrow);
+  //
+  // but I like the first version because it's completely dynamic. 
+  // You don't have to modify anything in the code you have already wrote if you choose to add/remove some cells 
+  // or change the positions of the widgets in the box.
+  // It's a simple choice of code covenience...
+  //
+
+  //
+  // another code writing note:
+  //
+  // in this application, instead of using a box to create the UI layout,
+  // you could use a nuiSplitter. This way, the user can strech the column size manually.
+  //
+  
+  
+  // drop destination container in the right column
+  DropContainer* pCont = new DropContainer();
+  pLayoutBox->AddCell(pCont);
   pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
-  
-  // button in the second cell : we use the default decoration for this button, but you could use the css to assign your own decoration
-  nuiButton* pButton = new nuiButton();
-  pButton->SetPosition(nuiCenter);
-  pLayoutBox->AddCell(pButton);
-  pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
-  
-  // click event on button
-  mEventSink.Connect(pButton->Activated, &MainWindow::OnButtonClick);
-  
-  // label with border in the button (put the label string in the button's constructor if you don't need borders)
-  nuiLabel* pButtonLabel = new nuiLabel(_T("click!"));
-  pButtonLabel->SetPosition(nuiCenter);
-  pButtonLabel->SetBorder(8,8);
-  pButton->AddChild(pButtonLabel);
-
-  // label with decoration in the third cell
-  mMyLabel = new nuiLabel(_T("my label"));
-  mMyLabel->SetObjectName(_T("MyLabel"));
-  mMyLabel->SetPosition(nuiCenter);
-  pLayoutBox->AddCell(mMyLabel);
-  pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
-}
-
-
-
-bool MainWindow::OnButtonClick(const nuiEvent& rEvent)
-{
-  nglString message;
-  double currentTime = nglTime();
-  message.Format(_T("click time: %.2f"), currentTime);
-  mMyLabel->SetText(message);
-  
-  return true; // means the event is caught and not broadcasted
 }
 
 
