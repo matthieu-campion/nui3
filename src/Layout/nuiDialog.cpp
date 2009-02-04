@@ -276,9 +276,14 @@ void nuiDialog::SetDefaultAnimations()
   nuiMetaAnimation* pMetaAnim; 
 
   pMetaAnim = new nuiMetaAnimation();
-  pMetaAnim->AddAnimation(new nuiFadeInWidgetAnim(this, 0.3, false));
-  pMetaAnim->AddAnimation(new nuiScaleMatrixWidgetAnim(this, 0.3, 0, 1));
+  nuiAnimation* pShowFade = new nuiFadeInWidgetAnim(this, 0.3, false);
+  pMetaAnim->AddAnimation(pShowFade);
+  nuiAnimation* pShowScale = new nuiScaleMatrixWidgetAnim(this, 0.3, 0, 1);
+  pMetaAnim->AddAnimation(pShowScale);
 
+  pShowScale->SetEasing(&nuiEasingSinusStartFast);
+  pShowFade->SetEasing(&nuiEasingSinusStartSlow);
+  
 //  nuiMatrix m;
 //  m.Scale(.5f,.5f, 1);
 //  SetMatrix(m);
@@ -287,8 +292,14 @@ void nuiDialog::SetDefaultAnimations()
   AddAnimation(_T("SHOW"), pMetaAnim);
 
   pMetaAnim = new nuiMetaAnimation();
-  pMetaAnim->AddAnimation(new nuiFadeOutWidgetAnim(this, 0.3, false));
-  pMetaAnim->AddAnimation(new nuiScaleMatrixWidgetAnim(this, 0.3, 1, 2.f));
+  nuiAnimation* pHideFade = new nuiFadeOutWidgetAnim(this, 0.3, false);
+  pMetaAnim->AddAnimation(pHideFade);
+  nuiAnimation* pHideScale = new nuiScaleMatrixWidgetAnim(this, 0.3, 1, 2.f);
+  pMetaAnim->AddAnimation(pHideScale);
+
+  pHideScale->SetEasing(&nuiEasingSinusStartSlow);
+  pHideFade->SetEasing(&nuiEasingSinusStartFast);
+  
   AddAnimation(_T("TRASH"), pMetaAnim);
 }
 

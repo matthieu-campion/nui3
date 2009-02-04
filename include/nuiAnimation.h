@@ -28,6 +28,56 @@ enum nuiAnimLoop
   eAnimLoopPingPong,
 };
 
+// Easing delegate:
+typedef nuiFastDelegate1<double, double> nuiEasingMethod;
+
+// Standard easing:
+inline double nuiEasingIdentity(double val)
+{
+  return val;
+}
+
+inline double nuiEasingSquare(double val)
+{
+  return val * val;
+}
+
+inline double nuiEasingCubic(double val)
+{
+  return val * val * val;
+}
+
+inline double nuiEasingQuartic(double val)
+{
+  return val * val * val * val;
+}
+
+inline double nuiEasingSlowStart(double val)
+{
+  return val * val * val * val * val * val * val * val;
+}
+
+inline double nuiEasingQuintic(double val)
+{
+  return val * val * val * val;
+}
+
+inline double nuiEasingSinusStartFast(double val)
+{
+  return sin(val * M_PI_2);
+}
+
+inline double nuiEasingSinusStartSlow(double val)
+{
+  return sin(val * M_PI_2 - M_PI_2) + 1;
+}
+
+inline double nuiEasingSinus(double val)
+{
+  return .5 * (sin(val * M_PI - M_PI_2) + 1);
+}
+
+
 
 /// nuiAnimation is a base class that implements a basic animation framework.
 class NUI_API nuiAnimation : public nuiObject
@@ -63,6 +113,8 @@ public:
   static void SetFrameRate(double FPS);
   static double GetFrameRate();
   
+  void SetEasing(const nuiEasingMethod& rMethod);
+  
 protected:
   void CallOnFrame();
   double UpdateTime(); ///< This method returns the number time elapsed since the last call to UpdateTime.
@@ -75,6 +127,7 @@ protected:
 
   double mDirection; ///< Either 1 or -1. This sets the current direction of play back.
   nuiAnimLoop mLoopMode;
+  nuiEasingMethod mEasing;
 
   static nuiTimer* mpTimer;
   static uint32 mAnimCounter;

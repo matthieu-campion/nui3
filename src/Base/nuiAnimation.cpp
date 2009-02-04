@@ -41,6 +41,8 @@ nuiAnimation::nuiAnimation()
   mUpdatingTime = false;
   mEnableCallbacks = true;
 
+  mEasing = (nuiEasingMethod)(&::nuiEasingIdentity);
+  
   if (!mAnimCounter)
   {
     mpTimer = new nuiTimer(1.0 / mFrameRate);
@@ -80,6 +82,12 @@ nuiAnimation::nuiAnimation()
                   nuiMakeDelegate(this, &nuiAnimation::SetDuration)));
   }
 }
+
+void nuiAnimation::SetEasing(const nuiEasingMethod& rMethod)
+{
+  mEasing = rMethod;
+}
+
 
 void nuiAnimation::SetTimeFromStart(double Time)
 {
@@ -348,7 +356,8 @@ double nuiAnimation::UpdateTime()
     break;
   }
   
-  mCurrentPosition = mCurrentTime / mDuration;
+  mCurrentPosition = mEasing(mCurrentTime / mDuration);
+  
   mUpdatingTime = false;
   if (IsPlaying())
     return advance;

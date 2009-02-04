@@ -119,7 +119,9 @@ void nuiWindow::InitProperties()
   
   // Standard anims:
   nuiWidgetAnimation* pScaleAnim = new nuiScaleToMatrixWidgetAnim(this, 0.3, .01f);
+  pScaleAnim->SetEasing(&nuiEasingCubic);
   nuiWidgetAnimation* pFadeAnim = new nuiFadeOutWidgetAnim(this, 0.3, false);
+  pFadeAnim->SetEasing(&nuiEasingSinusStartFast);
   nuiMetaAnimation* pAnim = new nuiMetaAnimation();
 
   pAnim->AddAnimation(pScaleAnim);

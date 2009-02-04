@@ -89,6 +89,8 @@ licence: see nui3/LICENCE.TXT
 
 #include "nuiHyperLink.h"
 
+#include "nuiColorDecoration.h"
+
 #include <iostream>
 
 using namespace std;
@@ -714,6 +716,10 @@ bool nuiWin::CreateAnimWindow(const nuiEvent& rEvent)
   nuiWindow* pAnimWin = new nuiWindow(nuiRect(10, 10, 100, 200), nuiWindow::NoFlag, nuiTR("Anim example"));
   mpManager->AddChild(pAnimWin);
   nuiAnimView* pAnim = new nuiAnimView();
+  nuiDecoration* pDeco = nuiDecoration::Get(_T("AnimBg"));
+  if (!pDeco)
+    pDeco = new nuiColorDecoration(_T("AnimBg"), nuiColor(0, 0, 0), 0, nuiColor(0, 0, 0), eStrokeAndFillShape);
+  pAnimWin->SetDecoration(pDeco);
   pAnimWin->AddChild(pAnim);
   for (int k = 0; k < 31; k++)
   {
@@ -722,11 +728,12 @@ bool nuiWin::CreateAnimWindow(const nuiEvent& rEvent)
     nuiImage* pImg = new nuiImage(kk);
     pAnim->AddChild(pImg);
     pImg->SetPosition(nuiCenter);
-    pImg->SetPosition(nuiFill);
+    //pImg->SetPosition(nuiFill);
   }
 
 
-  pAnim->SetFrameRate(30);
+  pAnim->SetDuration(2);
+  pAnim->SetEasing(nuiEasingSinus);
   pAnim->SetTime(0);
   pAnim->Play(10000, eAnimLoopPingPong);
 
