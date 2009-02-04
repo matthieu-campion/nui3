@@ -17,11 +17,12 @@
 #include "nuiBorderAttributeEditor.h"
 #include "nuiRangeAttributeEditor.h"
 
-nuiAttributeBase::nuiAttributeBase(const nglString& rName, nuiAttributeType type, nuiAttributeUnit unit, const nuiRange& rRange, bool readonly)
+nuiAttributeBase::nuiAttributeBase(const nglString& rName, nuiAttributeType type, nuiAttributeUnit unit, const nuiRange& rRange, bool readonly, bool writeonly)
 : mName(rName),
   mType(type),
   mUnit(unit),
   mReadOnly(readonly),
+  mWriteOnly(writeonly),
   mRange(rRange),
   mIgnoreAttributeChange(false),
   mOrder(0),
@@ -29,11 +30,12 @@ nuiAttributeBase::nuiAttributeBase(const nglString& rName, nuiAttributeType type
 {
 }
 
-nuiAttributeBase::nuiAttributeBase(const nglString& rName, nuiAttributeType type, nuiAttributeUnit unit, const nuiRange& rRange, bool readonly, uint32 dimension, const ArrayRangeDelegate& rRangeGetter)
+nuiAttributeBase::nuiAttributeBase(const nglString& rName, nuiAttributeType type, nuiAttributeUnit unit, const nuiRange& rRange, bool readonly, bool writeonly, uint32 dimension, const ArrayRangeDelegate& rRangeGetter)
 : mName(rName),
   mType(type),
   mUnit(unit),
   mReadOnly(readonly),
+  mWriteOnly(writeonly),
   mRange(rRange),
   mIgnoreAttributeChange(false),
   mOrder(0),
@@ -53,6 +55,21 @@ nuiAttributeBase::~nuiAttributeBase()
 bool nuiAttributeBase::IsReadOnly() const
 {  
   return mReadOnly;
+}
+
+bool nuiAttributeBase::IsWriteOnly() const
+{  
+  return mWriteOnly;
+}
+
+bool nuiAttributeBase::CanGet() const
+{  
+  return !mWriteOnly;
+}
+
+bool nuiAttributeBase::CanSet() const
+{  
+  return !mReadOnly;
 }
 
 nuiAttributeType nuiAttributeBase::GetType() const
@@ -1737,6 +1754,15 @@ bool nuiAttribBase::IsReadOnly() const
   return mpAttributeBase->IsReadOnly();
 }
 
+bool nuiAttribBase::CanSet() const
+{
+  return mpAttributeBase->CanSet();
+}
+
+bool nuiAttribBase::CanGet() const
+{
+  return mpAttributeBase->CanGet();
+}
 
 nuiAttributeType nuiAttribBase::GetType() const
 {

@@ -22,12 +22,12 @@ nuiAttributeAnimation::~nuiAttributeAnimation()
 {
 }
 
-nuiObjectPtr nuiAttributeAnimation::GetTargetObjet() const
+nuiObjectPtr nuiAttributeAnimation::GetTargetObject() const
 {
   return mpTarget;
 }
 
-void nuiAttributeAnimation::SetTargetObjet(nuiObjectPtr pTarget)
+void nuiAttributeAnimation::SetTargetObject(nuiObjectPtr pTarget)
 {
   mpTarget = pTarget;
 }

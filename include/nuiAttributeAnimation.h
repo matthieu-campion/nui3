@@ -14,8 +14,8 @@ public:
   nuiAttributeAnimation();
   virtual ~nuiAttributeAnimation();
   
-  nuiObjectPtr GetTargetObjet() const;
-  void SetTargetObjet(nuiObjectPtr pTarget);
+  nuiObjectPtr GetTargetObject() const;
+  void SetTargetObject(nuiObjectPtr pTarget);
   
   const nglString& GetTargetAttribute() const;
   void SetTargetAttribute(const nglString& rAttribute);

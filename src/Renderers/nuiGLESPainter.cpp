@@ -1115,7 +1115,8 @@ void nuiGLESPainter::UploadTexture(nuiTexture* pTexture)
       if (allocated && pBuffer)
         free(pBuffer);
    
-      if (!pTexture->IsBufferRetained()) {
+      if (!pTexture->IsBufferRetained())
+      {
         pTexture->ReleaseBuffer();
       }
     }///reload

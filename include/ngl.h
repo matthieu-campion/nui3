@@ -498,7 +498,7 @@ typedef wchar_t nglChar;
 #  elif (defined _COCOA_)
 #    define _OPENGL_
 // Make our GL and Software Painters available, and disable other Painters...
-#    define __NUI_NO_GLES__
+#    undef __NUI_NO_GLES__
 #    undef __NUI_NO_SOFTWARE__
 #    define __NUI_NO_D3D__
 #    undef __NUI_NO_GL__

@@ -64,6 +64,9 @@ public:
   virtual ~nuiAttributeBase();
 
   bool IsReadOnly() const;
+  bool IsWriteOnly() const;
+  bool CanGet() const;
+  bool CanSet() const;
   
   nuiAttributeType GetType() const;
   nuiAttributeUnit GetUnit() const;
@@ -96,14 +99,15 @@ public:
   
   virtual void KillAttributeHolder(void* pHolder) = 0;
 protected:
-  nuiAttributeBase(const nglString& rName, nuiAttributeType type, nuiAttributeUnit units, const nuiRange& rRange, bool readonly);  ///< property 
-  nuiAttributeBase(const nglString& rName, nuiAttributeType type, nuiAttributeUnit units, const nuiRange& rRange, bool readonly, uint32 dimension, const ArrayRangeDelegate& rArrayRangeGetter);  ///< property 
+  nuiAttributeBase(const nglString& rName, nuiAttributeType type, nuiAttributeUnit units, const nuiRange& rRange, bool readonly, bool writeonly);  ///< property 
+  nuiAttributeBase(const nglString& rName, nuiAttributeType type, nuiAttributeUnit units, const nuiRange& rRange, bool readonly, bool writeonly, uint32 dimension, const ArrayRangeDelegate& rArrayRangeGetter);  ///< property 
   
 private:
   nglString mName;
   nuiAttributeType mType;
   nuiAttributeUnit mUnit;
   bool mReadOnly;
+  bool mWriteOnly;
   nuiRange mRange;
   bool mIgnoreAttributeChange;
   int32 mOrder;
@@ -162,43 +166,61 @@ public:
 
   // Direct Access: (dim = 0)
   nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate& rGetter, const SetterDelegate& rSetter, const nuiRange& rRange = nuiRange()) ///< Read/write property
-    : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::GetTypeId(), units, rRange, false),
+    : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::GetTypeId(), units, rRange, false, false),
       mGetter(rGetter.GetMemento()),
       mSetter(rSetter.GetMemento())
   {
   }
   
   nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate& rGetter, const nuiRange& rRange = nuiRange()) ///< Read only property
-    : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::GetTypeId(), units, rRange, true),
+    : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::GetTypeId(), units, rRange, true, false),
     mGetter(rGetter.GetMemento())
   {
   }
 
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const SetterDelegate& rSetter, const nuiRange& rRange = nuiRange()) ///< Read only property
+    : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::GetTypeId(), units, rRange, false, true),
+    mSetter(rSetter.GetMemento())
+  {
+  }
+  
 	// Array (dim = 1)
   nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate1& rGetter, const SetterDelegate1& rSetter, const ArrayRangeDelegate& rRangeGetter, const nuiRange& rRange = nuiRange()) ///< Read/write property
-  : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::GetTypeId(), units, rRange, false, 1, rRangeGetter),
-  mGetter(rGetter.GetMemento()),
-  mSetter(rSetter.GetMemento())
+    : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::GetTypeId(), units, rRange, false, false, 1, rRangeGetter),
+    mGetter(rGetter.GetMemento()),
+    mSetter(rSetter.GetMemento())
   {
   }
   
   nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate1& rGetter, const ArrayRangeDelegate& rRangeGetter = NULL, const nuiRange& rRange = nuiRange()) ///< Read only property
-  : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::GetTypeId(), units, rRange, true, 1, rRangeGetter),
-  mGetter(rGetter.GetMemento())
+    : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::GetTypeId(), units, rRange, true, false, 1, rRangeGetter),
+    mGetter(rGetter.GetMemento())
+  {
+  }
+  
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const SetterDelegate1& rSetter, const ArrayRangeDelegate& rRangeGetter = NULL, const nuiRange& rRange = nuiRange()) ///< Read only property
+    : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::GetTypeId(), units, rRange, false, true, 1, rRangeGetter),
+    mSetter(rSetter.GetMemento())
   {
   }
   
 	// Array (dim = 2)
   nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate2& rGetter, const SetterDelegate2& rSetter, const ArrayRangeDelegate& rRangeGetter, const nuiRange& rRange = nuiRange()) ///< Read/write property
-  : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::GetTypeId(), units, rRange, false, 2, rRangeGetter),
-  mGetter(rGetter.GetMemento()),
-  mSetter(rSetter.GetMemento())
+    : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::GetTypeId(), units, rRange, false, false, 2, rRangeGetter),
+    mGetter(rGetter.GetMemento()),
+    mSetter(rSetter.GetMemento())
   {
   }
   
   nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate2& rGetter, const ArrayRangeDelegate& rRangeGetter = NULL, const nuiRange& rRange = nuiRange()) ///< Read only property
-  : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::GetTypeId(), units, rRange, true, 2, rRangeGetter),
-  mGetter(rGetter.GetMemento())
+    : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::GetTypeId(), units, rRange, true, false, 2, rRangeGetter),
+    mGetter(rGetter.GetMemento())
+  {
+  }
+  
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const SetterDelegate2& rSetter, const ArrayRangeDelegate& rRangeGetter = NULL, const nuiRange& rRange = nuiRange()) ///< Read only property
+    : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::GetTypeId(), units, rRange, false, true, 2, rRangeGetter),
+    mSetter(rSetter.GetMemento())
   {
   }
   
@@ -461,7 +483,7 @@ public:
       mAttributeChangedSignals.erase(it);
     }
   }
-  
+
 private:
   nuiDelegateMemento mGetter;
   nuiDelegateMemento mSetter;
@@ -533,43 +555,61 @@ public:
   
   // Direct Access: (dim = 0)
   nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate& rGetter, const SetterDelegate& rSetter, const nuiRange& rRange = nuiRange()) ///< Read/write property
-  : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::GetTypeId(), units, rRange, false),
-  mGetter(rGetter.GetMemento()),
-  mSetter(rSetter.GetMemento())
+    : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::GetTypeId(), units, rRange, false, false),
+    mGetter(rGetter.GetMemento()),
+    mSetter(rSetter.GetMemento())
   {
   }
   
   nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate& rGetter, const nuiRange& rRange = nuiRange()) ///< Read only property
-  : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::GetTypeId(), units, rRange, true),
-  mGetter(rGetter.GetMemento())
+    : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::GetTypeId(), units, rRange, true, false),
+    mGetter(rGetter.GetMemento())
+  {
+  }
+  
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const SetterDelegate& rSetter, const nuiRange& rRange = nuiRange()) ///< Read only property
+    : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::GetTypeId(), units, rRange, false, true),
+    mSetter(rSetter.GetMemento())
   {
   }
   
   // Array (dim = 1)
   nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate1& rGetter, const SetterDelegate1& rSetter, const ArrayRangeDelegate& rRangeGetter, const nuiRange& rRange = nuiRange()) ///< Read/write property
-  : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::GetTypeId(), units, rRange, false, 1, rRangeGetter),
-  mGetter(rGetter.GetMemento()),
-  mSetter(rSetter.GetMemento())
+    : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::GetTypeId(), units, rRange, false, false, 1, rRangeGetter),
+    mGetter(rGetter.GetMemento()),
+    mSetter(rSetter.GetMemento())
   {
   }
   
   nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate1& rGetter, const ArrayRangeDelegate& rRangeGetter = NULL, const nuiRange& rRange = nuiRange()) ///< Read only property
-  : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::GetTypeId(), units, rRange, true, 1, rRangeGetter),
-  mGetter(rGetter.GetMemento())
+    : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::GetTypeId(), units, rRange, true, false, 1, rRangeGetter),
+    mGetter(rGetter.GetMemento())
+  {
+  }
+  
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const SetterDelegate1& rSetter, const ArrayRangeDelegate& rRangeGetter = NULL, const nuiRange& rRange = nuiRange()) ///< Read only property
+    : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::GetTypeId(), units, rRange, false, true, 1, rRangeGetter),
+    mSetter(rSetter.GetMemento())
   {
   }
   
   // Array (dim = 2)
   nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate2& rGetter, const SetterDelegate2& rSetter, const ArrayRangeDelegate& rRangeGetter, const nuiRange& rRange = nuiRange()) ///< Read/write property
-  : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::GetTypeId(), units, rRange, false, 2, rRangeGetter),
-  mGetter(rGetter.GetMemento()),
-  mSetter(rSetter.GetMemento())
+    : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::GetTypeId(), units, rRange, false, false, 2, rRangeGetter),
+    mGetter(rGetter.GetMemento()),
+    mSetter(rSetter.GetMemento())
   {
   }
   
   nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate2& rGetter, const ArrayRangeDelegate& rRangeGetter = NULL, const nuiRange& rRange = nuiRange()) ///< Read only property
-  : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::GetTypeId(), units, rRange, true, 2, rRangeGetter),
-  mGetter(rGetter.GetMemento())
+    : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::GetTypeId(), units, rRange, true, false, 2, rRangeGetter),
+    mGetter(rGetter.GetMemento())
+  {
+  }
+  
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const SetterDelegate2& rSetter, const ArrayRangeDelegate& rRangeGetter = NULL, const nuiRange& rRange = nuiRange()) ///< Read only property
+  : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::GetTypeId(), units, rRange, false, true, 2, rRangeGetter),
+  mSetter(rSetter.GetMemento())
   {
   }
   
@@ -832,6 +872,17 @@ public:
       mAttributeChangedSignals.erase(it);
     }
   }
+
+  bool CanSet() const
+  {
+    return !mSetter.empty();
+  }
+  
+  bool CanGet() const
+  {
+    return !mGetter.empty();
+  }
+  
   
 private:
   nuiDelegateMemento mGetter;
@@ -903,6 +954,8 @@ public:
 
   // From nuiAttribute and nuiAttributeBase
   bool IsReadOnly() const;
+  bool CanSet() const;
+  bool CanGet() const;
   
   nuiAttributeType GetType() const;
   nuiAttributeUnit GetUnit() const;
@@ -934,6 +987,7 @@ public:
   
   bool IsValid() const;
   operator bool() const;
+  
 protected:
   nuiAttributeBase* mpAttributeBase;
   void* mpTarget;
