@@ -622,7 +622,7 @@ HRESULT STDMETHODCALLTYPE nglIDataObject::GetData(FORMATETC * pFormat, STGMEDIUM
 
   NGL_ASSERT(mpDraggedObject);
 
-  SendMessage(mHWnd, mMessageId, NGL_GET_DATA_MESSAGE, 0);
+  SendMessage(mHWnd, mMessageId, NGL_GET_DATA_MESSAGE, (LPARAM)pFormat);
 
   nglString mime;
   if (App->GetDataTypesRegistry().GetRegisteredMimeType(pFormat->cfFormat, mime))
@@ -2745,11 +2745,19 @@ LRESULT nglWindow::WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
         }
         else if (wParam == NGL_GET_DATA_MESSAGE)
         {
-          OnDragged(mpDropSource->GetDraggedObject());
+          nglString mime;
+          FORMATETC * pFormat = (FORMATETC*)lParam;
+          NGL_ASSERT(pFormat);
+
+          if (App->GetDataTypesRegistry().GetRegisteredMimeType(pFormat->cfFormat, mime))
+          {
+            OnDragRequestData(mpDropSource->GetDraggedObject(), mime);
+          }
         }
         else if (wParam == NGL_STOP_DRAGGING)
         {
-          OnStopDragging();
+          bool canceled = (bool)lParam;
+          OnDragStop(canceled);
         }
         return 0;
       }
@@ -2790,8 +2798,9 @@ static DWORD WINAPI DoDragDropThreadCallback(void *arg)
   nglDragAndDrop* pDraggedObject = pDropSource->GetDraggedObject();
   
   bool dragged = pDropSource->Drag(); ///< blocks until drop occurs or is canceled
-  
-  SendMessage(pDropSource->GetWindowHandle(), pDropSource->GetMessageId(), NGL_STOP_DRAGGING, 0);
+  bool canceled = !dragged;
+
+  SendMessage(pDropSource->GetWindowHandle(), pDropSource->GetMessageId(), NGL_STOP_DRAGGING, (LPARAM)canceled);
   
   pDraggedObject = pDropSource->GetDraggedObject();
   NGL_ASSERT(pDraggedObject);
@@ -2859,13 +2868,13 @@ void nglWindow::OnDragFeedback(nglDropEffect DropEffect)
   }
 }
 
-void nglWindow::OnDragged(nglDragAndDrop* pDragObject)
+void nglWindow::OnDragRequestData(nglDragAndDrop* pDragObject, const nglString& rMimeType)
 {
   ///< Has to fill data for supported types
   //SetEventMask( AllEvents );
 }
 
-void nglWindow::OnStopDragging()
+void nglWindow::OnDragStop(bool canceled)
 {
   SetEventMask( AllEvents );
 }

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="9,00"
 	Name="DragnDrop"
 	ProjectGUID="{D87858E8-0145-4B03-889A-3186371799DC}"
 	RootNamespace="template"
 	Keyword="Win32Proj"
+	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
 		<Platform
@@ -64,6 +65,8 @@
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -83,9 +86,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -140,6 +140,8 @@
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -161,9 +163,6 @@
 				Name="VCAppVerifierTool"
 			/>
 			<Tool
-				Name="VCWebDeploymentTool"
-			/>
-			<Tool
 				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
@@ -182,6 +181,22 @@
 			</File>
 			<File
 				RelativePath="src\Application.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\DragSource_FileTree.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\DragSource_FileTree.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\DropDestination_Container.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\DropDestination_Container.h"
 				>
 			</File>
 			<File

@@ -12,6 +12,11 @@
 #include <map>
 #include <list>
 
+
+void nglDataFilesObject::AddFile(const nglString& rPath)
+{
+  mFilePaths.push_back(rPath);
+}
 /*
  * nglDataFilesObject
  */

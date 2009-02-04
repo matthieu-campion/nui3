@@ -1729,6 +1729,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\SimpleWidgets\nuiFileTree.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiFileTree.h"
+					>
+				</File>
+				<File
 					RelativePath=".\src\SimpleWidgets\nuiFontBrowser.cpp"
 					>
 				</File>
