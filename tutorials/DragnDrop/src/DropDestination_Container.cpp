@@ -21,6 +21,9 @@ DropContainer::DropContainer()
   mpText = new nuiLabel();
   mpText->SetPosition(nuiTopLeft);
   pPane->AddChild(mpText);
+  
+  //
+  mpText->SetText(_T("From the file tree, you can:\n- drag a file to this container\n- double-click on a file\n- double-click on a folder\n\nThe drag'n drop also works with the OS,\ntry to drag something between this application\nand the system's file explorer for instance."));
 
 }
 

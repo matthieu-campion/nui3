@@ -72,8 +72,8 @@ void MainWindow::OnCreation()
   
   
   // drop destination container in the right column
-  DropContainer* pCont = new DropContainer();
-  pLayoutBox->AddCell(pCont);
+  mpDropContainer = new DropContainer();
+  pLayoutBox->AddCell(mpDropContainer);
   pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
 }
 
@@ -87,6 +87,11 @@ void MainWindow::OnClose()
   App->Quit();
 }
 
+
+DropContainer* MainWindow::GetDropContainer()
+{
+  return mpDropContainer;
+}
 
 bool MainWindow::LoadCSS(const nglPath& rPath)
 {

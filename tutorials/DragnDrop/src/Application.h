@@ -11,6 +11,7 @@
 #include "nuiApplication.h"
 
 class MainWindow;
+class DropContainer;
 
 class Application : public nuiApplication
 {
@@ -33,3 +34,4 @@ private:
 // a global call to retrieve the application object
 Application* GetApp();
 MainWindow* GetMainWindow();
+DropContainer* GetDropContainer();

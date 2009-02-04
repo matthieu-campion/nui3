@@ -9,6 +9,7 @@
 
 #include "nuiMainWindow.h"
 
+class DropContainer;
 
 class MainWindow : public nuiMainWindow
 {
@@ -18,6 +19,8 @@ public:
 
   void OnCreation();
   void OnClose();
+  
+  DropContainer* GetDropContainer();
 
 protected:
   
@@ -28,6 +31,7 @@ private:
   bool LoadCSS(const nglPath& rPath);
   
   nuiLabel* mMyLabel;
+  DropContainer* mpDropContainer;
   nuiEventSink<MainWindow> mEventSink;
 };
 

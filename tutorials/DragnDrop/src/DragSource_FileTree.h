@@ -23,6 +23,8 @@ public:
   
 private:
   
+  bool OnFileActivated(const nuiEvent& rEvent);
+  
   nuiScrollView* mpView;
   nuiEventSink<DragFileTree> mEventSink;
   

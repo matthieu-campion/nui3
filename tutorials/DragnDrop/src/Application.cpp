@@ -10,6 +10,7 @@
 #include "nuiInit.h"
 #include "Application.h"
 #include "MainWindow.h"
+#include "DropDestination_Container.h"
 
 #include "nglConsole.h"
 
@@ -168,4 +169,10 @@ Application* GetApp()
 MainWindow* GetMainWindow()
 {
   return ((Application*)App)->GetMainWindow();
+}
+
+
+DropContainer* GetDropContainer()
+{
+  return ((Application*)App)->GetMainWindow()->GetDropContainer();
 }
