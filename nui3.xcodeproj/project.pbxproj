@@ -3511,6 +3511,12 @@
 		E5B009E00C87855E004BEE4E /* nuiToggleButton.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B009DE0C87855E004BEE4E /* nuiToggleButton.h */; };
 		E5B009E40C87857A004BEE4E /* nuiRadioButton.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B009E30C87857A004BEE4E /* nuiRadioButton.h */; };
 		E5B009E50C87857A004BEE4E /* nuiRadioButton.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B009E30C87857A004BEE4E /* nuiRadioButton.h */; };
+		E5B678C50F39EFCF00DBF325 /* nuiAttributeAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5B678C40F39EFCF00DBF325 /* nuiAttributeAnimation.cpp */; };
+		E5B678C60F39EFCF00DBF325 /* nuiAttributeAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5B678C40F39EFCF00DBF325 /* nuiAttributeAnimation.cpp */; };
+		E5B678C70F39EFCF00DBF325 /* nuiAttributeAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5B678C40F39EFCF00DBF325 /* nuiAttributeAnimation.cpp */; };
+		E5B678C90F39EFE100DBF325 /* nuiAttributeAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B678C80F39EFE100DBF325 /* nuiAttributeAnimation.h */; };
+		E5B678CA0F39EFE100DBF325 /* nuiAttributeAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B678C80F39EFE100DBF325 /* nuiAttributeAnimation.h */; };
+		E5B678CB0F39EFE100DBF325 /* nuiAttributeAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B678C80F39EFE100DBF325 /* nuiAttributeAnimation.h */; };
 		E5B916C10E8A6CDC00610715 /* nuiHyperLink.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5B916C00E8A6CDC00610715 /* nuiHyperLink.cpp */; };
 		E5B916C20E8A6CDC00610715 /* nuiHyperLink.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5B916C00E8A6CDC00610715 /* nuiHyperLink.cpp */; };
 		E5B916C40E8A6CFB00610715 /* nuiHyperLink.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B916C30E8A6CFB00610715 /* nuiHyperLink.h */; };
@@ -4758,6 +4764,8 @@
 		E5B008310C871F5F004BEE4E /* nuiDrawContext.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiDrawContext.h; path = include/nuiDrawContext.h; sourceTree = SOURCE_ROOT; };
 		E5B009DE0C87855E004BEE4E /* nuiToggleButton.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiToggleButton.h; path = include/nuiToggleButton.h; sourceTree = SOURCE_ROOT; };
 		E5B009E30C87857A004BEE4E /* nuiRadioButton.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiRadioButton.h; path = include/nuiRadioButton.h; sourceTree = SOURCE_ROOT; };
+		E5B678C40F39EFCF00DBF325 /* nuiAttributeAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiAttributeAnimation.cpp; path = Animations/nuiAttributeAnimation.cpp; sourceTree = "<group>"; };
+		E5B678C80F39EFE100DBF325 /* nuiAttributeAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiAttributeAnimation.h; path = include/nuiAttributeAnimation.h; sourceTree = SOURCE_ROOT; };
 		E5B916C00E8A6CDC00610715 /* nuiHyperLink.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiHyperLink.cpp; sourceTree = "<group>"; };
 		E5B916C30E8A6CFB00610715 /* nuiHyperLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiHyperLink.h; path = include/nuiHyperLink.h; sourceTree = SOURCE_ROOT; };
 		E5BC28480EFF1132009EEA3B /* nuiHTTP_CoreFoundation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiHTTP_CoreFoundation.cpp; path = CoreFoundation/nuiHTTP_CoreFoundation.cpp; sourceTree = "<group>"; };
@@ -6077,9 +6085,9 @@
 		E5816D200C3CECAB00902DFE /* src */ = {
 			isa = PBXGroup;
 			children = (
-				E5CBF87A0F38993F00D34E6F /* Animations */,
 				E5816C770C3CECAB00902DFE /* ngl.h */,
 				E5816C790C3CECAB00902DFE /* ngl_all.h */,
+				E5CBF87A0F38993F00D34E6F /* Animations */,
 				BC35D3140CF5C54B002CE274 /* Attributes */,
 				E52E1A230CD7EE46006FBCDD /* Audio */,
 				BCCF49330EC626DE0076CD11 /* AudioSamples */,
@@ -6814,6 +6822,8 @@
 			children = (
 				E5816D530C3CECAB00902DFE /* nuiAnimation.cpp */,
 				E5816CAE0C3CECAB00902DFE /* nuiAnimation.h */,
+				E5B678C40F39EFCF00DBF325 /* nuiAttributeAnimation.cpp */,
+				E5B678C80F39EFE100DBF325 /* nuiAttributeAnimation.h */,
 			);
 			name = Animations;
 			sourceTree = "<group>";
@@ -7537,6 +7547,7 @@
 				40182A6E0F24C74A00F11401 /* nuiChunkSampleReader.h in Headers */,
 				40182AD50F24F09500F11401 /* nuiAiffReader.h in Headers */,
 				40EAFD7B0F2780550072C6DE /* nuiAiffWriter.h in Headers */,
+				E5B678C90F39EFE100DBF325 /* nuiAttributeAnimation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8212,6 +8223,7 @@
 				40182A700F24C74A00F11401 /* nuiChunkSampleReader.h in Headers */,
 				40182AD70F24F09500F11401 /* nuiAiffReader.h in Headers */,
 				40EAFD7A0F2780550072C6DE /* nuiAiffWriter.h in Headers */,
+				E5B678CB0F39EFE100DBF325 /* nuiAttributeAnimation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8885,6 +8897,7 @@
 				40182A720F24C74A00F11401 /* nuiChunkSampleReader.h in Headers */,
 				40182AD90F24F09500F11401 /* nuiAiffReader.h in Headers */,
 				40EAFD790F2780550072C6DE /* nuiAiffWriter.h in Headers */,
+				E5B678CA0F39EFE100DBF325 /* nuiAttributeAnimation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9484,6 +9497,7 @@
 				40182A6F0F24C74A00F11401 /* nuiChunkSampleReader.cpp in Sources */,
 				40182AD40F24F09500F11401 /* nuiAiffReader.cpp in Sources */,
 				40EAFD770F27803B0072C6DE /* nuiAiffWriter.cpp in Sources */,
+				E5B678C70F39EFCF00DBF325 /* nuiAttributeAnimation.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10008,6 +10022,7 @@
 				40182A710F24C74A00F11401 /* nuiChunkSampleReader.cpp in Sources */,
 				40182AD60F24F09500F11401 /* nuiAiffReader.cpp in Sources */,
 				40EAFD760F27803B0072C6DE /* nuiAiffWriter.cpp in Sources */,
+				E5B678C50F39EFCF00DBF325 /* nuiAttributeAnimation.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10529,6 +10544,7 @@
 				40182A730F24C74A00F11401 /* nuiChunkSampleReader.cpp in Sources */,
 				40182AD80F24F09500F11401 /* nuiAiffReader.cpp in Sources */,
 				40EAFD750F27803A0072C6DE /* nuiAiffWriter.cpp in Sources */,
+				E5B678C60F39EFCF00DBF325 /* nuiAttributeAnimation.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

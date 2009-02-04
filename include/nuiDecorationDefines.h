@@ -9,13 +9,13 @@
 
 enum nuiDecorationLayer
 {
-  eLayerBack=0,
+  eLayerBack = 0,
   eLayerFront
 };
 
 enum nuiDecorationMode
 {
-  eDecorationOverdraw=0,
+  eDecorationOverdraw = 0,
   eDecorationBorder,
   eDecorationClientOnly
 };
