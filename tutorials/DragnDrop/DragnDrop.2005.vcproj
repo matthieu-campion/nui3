@@ -185,6 +185,22 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\DragSource_FileTree.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\DragSource_FileTree.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\DropDestination_Container.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\DropDestination_Container.h"
+				>
+			</File>
+			<File
 				RelativePath="src\MainWindow.cpp"
 				>
 			</File>
