@@ -108,9 +108,10 @@ void nuiAttributeAnimation::Stop()
 }
 
 #define SET_ATTRIB(X) \
-nuiAttrib<X> attrib_##X(attrib); \
-if (attrib_##X.IsValid()) \
+if (nuiAttributeTypeTrait<X>::GetTypeId() == t) \
 { \
+  nuiAttrib<X> attrib_##X(attrib); \
+  NGL_ASSERT(attrib_##X.IsValid()); \
   attrib_##X.Set(pos); \
   return; \
 }
@@ -123,6 +124,7 @@ void nuiAttributeAnimation::OnFrame()
   if (!attrib.IsValid() || attrib.IsReadOnly())
     return;
   
+  nuiAttributeType t = attrib.GetType();  
   SET_ATTRIB(float);
   SET_ATTRIB(double);
   SET_ATTRIB(int32);
@@ -132,8 +134,8 @@ void nuiAttributeAnimation::OnFrame()
   SET_ATTRIB(int16);
   SET_ATTRIB(uint16);
   SET_ATTRIB(int8);
-  SET_ATTRIB(uint8);
-
+  SET_ATTRIB(uint8);               
+  
   nglString str;
   str.SetCDouble(pos);
   attrib.FromString(str);
