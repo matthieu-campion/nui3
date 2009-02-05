@@ -74,6 +74,7 @@ private:
   bool OnGotoParentFolder(const nuiEvent& rEvent);
   
   
+  
   nuiVBox* mpFileBox;
   nuiTreeView* mpTreeView;
   nuiTreeNode* mpTreeRoot;

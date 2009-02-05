@@ -149,6 +149,7 @@ void nuiDefaultDecoration::InitColors()
   nuiColor::SetColor(_T("nuiDefaultClrPaneBkg"), nuiColor(200,200,200));
 
   nuiColor::SetColor(_T("nuiDefaultClrBorder"), nuiColor(190,190,190));
+  
 
 }
 

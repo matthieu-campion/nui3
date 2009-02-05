@@ -8,5 +8,5 @@
 #pragma once
 
 extern const char* gpIconVolume;
-const long         gIconVolumeSize = 816;
+const long         gIconVolumeSize = 3518;
 

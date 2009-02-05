@@ -5,6 +5,9 @@
   licence: see nui3/LICENCE.TXT
 */
 
+
+#define FIRST_ROW_HEIGHT 50.f
+
 #include "nui.h"
 #include "nuiFileSelector.h"
 #include "nuiFileTree.h"
@@ -169,7 +172,7 @@ bool nuiFileTree::SetRootPath(const nglPath& rPath)
   mpFileBox->SetExpand(nuiExpandShrinkAndGrow);
   AddChild(mpFileBox);
   
-  mpFileBox->SetCellMinPixels(0, 20);
+  mpFileBox->SetCellMinPixels(0, FIRST_ROW_HEIGHT);
   
   nuiScrollView* pScrollView = new nuiScrollView(true,true);
   
@@ -577,8 +580,3 @@ void nuiFileTree::OnDragStopDelegate(nuiTreeNode* pNode, bool canceled)
     res = _T("false");
   NGL_OUT(_T("nuiFileTree::OnDragStopDelegate 0x%x   canceled %ls\n"), pNode, res.GetChars());
 }
-
-
-
-
-
