@@ -42,6 +42,7 @@ inline double nuiEasingSquare(double val)
   return val * val;
 }
 
+
 inline double nuiEasingCubic(double val)
 {
   return val * val * val;
@@ -77,6 +78,50 @@ inline double nuiEasingSinus(double val)
   return .5 * (sin(val * M_PI - M_PI_2) + 1);
 }
 
+template <class func> double nuiEasingReverse(double val, func f)
+{
+  return 1.0 - f(1.0 - val);
+}
+
+inline double nuiEasingSquareRev(double val)
+{
+  return nuiEasingReverse(val, nuiEasingSquare);
+}
+
+inline double nuiEasingCubicRev(double val)
+{
+  return nuiEasingReverse(val, nuiEasingCubic);
+}
+
+inline double nuiEasingQuarticRev(double val)
+{
+  return nuiEasingReverse(val, nuiEasingQuartic);
+}
+
+inline double nuiEasingSlowStartRev(double val)
+{
+  return nuiEasingReverse(val, nuiEasingSlowStart);
+}
+
+inline double nuiEasingQuinticRev(double val)
+{
+  return nuiEasingReverse(val, nuiEasingQuintic);
+}
+
+inline double nuiEasingSinusStartSlowRev(double val)
+{
+  return nuiEasingReverse(val, nuiEasingSinusStartSlow);
+}
+
+inline double nuiEasingSinusStartFastRev(double val)
+{
+  return nuiEasingReverse(val, nuiEasingSinusStartFast);
+}
+
+inline double nuiEasingSinusRev(double val)
+{
+  return nuiEasingReverse(val, nuiEasingSinus);
+}
 
 
 /// nuiAnimation is a base class that implements a basic animation framework.
