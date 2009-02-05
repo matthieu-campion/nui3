@@ -66,16 +66,16 @@
 //#elif defined(_OPENGL_)
 #else
 
-#define glCheckFramebufferStatusNUI   glCheckFramebufferStatusEXT
-#define glFramebufferRenderbufferNUI  glFramebufferRenderbufferEXT
-#define glRenderbufferStorageNUI      glRenderbufferStorageEXT
-#define glGenFramebuffersNUI          glGenFramebuffersEXT
-#define glDeleteFramebuffersNUI       glDeleteFramebuffersEXT
-#define glBindFramebufferNUI          glBindFramebufferEXT
-#define glGenRenderbuffersNUI         glGenRenderbuffersEXT
-#define glDeleteRenderbuffersNUI      glDeleteRenderbuffersEXT
-#define glBindRenderbufferNUI         glBindRenderbufferEXT
-#define glFramebufferTexture2DNUI     glFramebufferTexture2DEXT
+#define glCheckFramebufferStatusNUI   mpContext->glCheckFramebufferStatusEXT
+#define glFramebufferRenderbufferNUI  mpContext->glFramebufferRenderbufferEXT
+#define glRenderbufferStorageNUI      mpContext->glRenderbufferStorageEXT
+#define glGenFramebuffersNUI          mpContext->glGenFramebuffersEXT
+#define glDeleteFramebuffersNUI       mpContext->glDeleteFramebuffersEXT
+#define glBindFramebufferNUI          mpContext->glBindFramebufferEXT
+#define glGenRenderbuffersNUI         mpContext->glGenRenderbuffersEXT
+#define glDeleteRenderbuffersNUI      mpContext->glDeleteRenderbuffersEXT
+#define glBindRenderbufferNUI         mpContext->glBindRenderbufferEXT
+#define glFramebufferTexture2DNUI     mpContext->glFramebufferTexture2DEXT
 
 #define GL_FRAMEBUFFER_NUI                                GL_FRAMEBUFFER_EXT
 #define GL_RENDERBUFFER_NUI                               GL_RENDERBUFFER_EXT
@@ -101,6 +101,8 @@
 
 inline bool nuiCheckFramebufferStatus()
 {
+  return true;
+#if 0
   GLint status = glCheckFramebufferStatusNUI(GL_FRAMEBUFFER_NUI);
 #if defined(NGL_DEBUG)
   switch (status)
@@ -123,6 +125,7 @@ inline bool nuiCheckFramebufferStatus()
   }
 #endif  
   return (status == GL_FRAMEBUFFER_COMPLETE_NUI);
+#endif
 }
 
 
