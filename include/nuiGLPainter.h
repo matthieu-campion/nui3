@@ -41,6 +41,10 @@ public:
   virtual void CreateTexture(nuiTexture* pTexture);
   virtual void DestroyTexture(nuiTexture* pTexture);
   virtual void InvalidateTexture(nuiTexture* pTexture, bool ForceReload);
+
+  virtual void CreateSurface(nuiSurface* pSurface);
+  virtual void DestroySurface(nuiSurface* pSurface);
+  virtual void InvalidateSurface(nuiSurface* pSurface, bool ForceReload);
   
   void Enable3DMode(bool set);
   bool Get3DMode() const;
@@ -68,7 +72,23 @@ protected:
 
   GLenum GetTextureTarget(bool POT) const;
   void UploadTexture(nuiTexture* pTexture);
-  
+
+  void ApplySurface(const nuiRenderState& rState, bool ForceApply);
+  class FramebufferInfo
+  {
+  public:
+    FramebufferInfo();
+    
+    bool mReload;
+    GLuint mFramebuffer;
+    GLuint mTexture; ///< the framebuffer can be used to render to a texture
+    GLuint mRenderbuffer; ///< or a render buffer
+    GLuint mDepthbuffer;
+    GLuint mStencilbuffer;
+  };
+  std::map<nuiSurface*, FramebufferInfo> mFramebuffers;
+  GLint mOldFramebuffer, mOldRenderbuffer;
+
   bool m3DMode;
 };
 

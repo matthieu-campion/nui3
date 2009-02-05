@@ -9,7 +9,6 @@
 #include "nui.h"
 #include "nuiDrawContext.h"
 #include "nuiGLPainter.h"
-#include "nuiGLESPainter.h"
 #include "nuiD3DPainter.h"
 #include "nuiSoftwarePainter.h"
 #include "nuiWidget.h"
@@ -1453,11 +1452,6 @@ nuiDrawContext *nuiDrawContext::CreateDrawContext(const nuiRect& rRect, nuiRende
 #ifndef __NUI_NO_GL__
   case eOpenGL:
     pPainter = new nuiGLPainter(pContext, rRect);
-    break;
-#endif
-#ifndef __NUI_NO_GLES__
-  case eOpenGLES:
-    pPainter = new nuiGLESPainter(pContext, rRect);
     break;
 #endif
 #ifndef __NUI_NO_D3D__

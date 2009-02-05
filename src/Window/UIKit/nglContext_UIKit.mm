@@ -93,7 +93,7 @@ bool nglContextInfo::Enum(uint Index, nglContextInfo& rInfo)
   rInfo.RenderToTexture=0;
   rInfo.CopyOnSwap=0;
 */
-  rInfo.TargetAPI = eTargetAPI_OpenGLES;
+  rInfo.TargetAPI = eTargetAPI_OpenGL;
 /*
   NGL_OUT(
     _T("config %d: rgba=%d:%d:%d:%d(%d), ds=%d:%d, caveat=%04x, native=%d, level=%d, surface=%04x, visual=%04x, id=%d\n"),
@@ -157,7 +157,7 @@ bool nglContext::GetContextInfo(nglContextInfo& rInfo) const
 bool nglContext::Build(const nglContextInfo& rInfo, const nglContext* pShared, bool FullScreen)
 {
   mTargetAPI = rInfo.TargetAPI;
-  if (mTargetAPI != eTargetAPI_OpenGLES)
+  if (mTargetAPI != eTargetAPI_OpenGL)
     return false;
 
 #ifndef __NOGLCONTEXT__

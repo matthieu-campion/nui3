@@ -91,8 +91,9 @@ void nuiBuilder::Init()
   NUI_ADD_WIDGET_CREATOR(nuiVBox,"Container");
   NUI_ADD_WIDGET_CREATOR(nuiTitledPane,"Container");
   NUI_ADD_WIDGET_CREATOR(nuiFolderPane,"Container");
-
+#ifndef _OPENGL_ES_
   NUI_ADD_WIDGET_CREATOR(nuiUserArea,"Widget");
+#endif
   NUI_ADD_WIDGET_CREATOR(nuiLabel,"Widget");
   NUI_ADD_WIDGET_CREATOR(nuiText,"Widget");
   NUI_ADD_WIDGET_CREATOR(nuiEditText,"Widget");
@@ -103,7 +104,9 @@ void nuiBuilder::Init()
   NUI_ADD_WIDGET_CREATOR(nuiRadioButton,"Widget");
   NUI_ADD_WIDGET_CREATOR(nuiImage,"Widget");
   NUI_ADD_WIDGET_CREATOR(nuiSplineEdit,"Widget");
+#ifndef _OPENGL_ES_
   NUI_ADD_WIDGET_CREATOR(nuiMesh,"Widget");
+#endif
   NUI_ADD_WIDGET_CREATOR(nuiSVGView,"Widget");
   NUI_ADD_WIDGET_CREATOR(nuiTab,"Widget");
   NUI_ADD_WIDGET_CREATOR(nuiProgress,"Widget");

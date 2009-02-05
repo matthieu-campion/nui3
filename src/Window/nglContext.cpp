@@ -25,11 +25,7 @@ nglContextInfo::nglContextInfo()
 {
   nglVideoMode mode;
 
-#ifdef _OPENGL_ES_
-  TargetAPI = eTargetAPI_OpenGLES;
-#else
   TargetAPI = eTargetAPI_OpenGL;
-#endif
 
   FrameCnt    = 2;
   switch (mode.GetDepth())

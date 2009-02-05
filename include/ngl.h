@@ -470,10 +470,10 @@ typedef wchar_t nglChar;
 #  ifdef _UIKIT_
 #    define _OPENGL_ES_
 // Make our GLES Painter available, and disable other Painters...
-#    undef  __NUI_NO_GLES__
+#    define  __NUI_NO_GLES__
 #    undef __NUI_NO_SOFTWARE__
 #    define __NUI_NO_D3D__
-#    define __NUI_NO_GL__
+#    undef __NUI_NO_GL__
 
 // Disable Anti-Aliasing
 //#    define __NUI_NO_AA__
