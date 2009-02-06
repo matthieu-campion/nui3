@@ -6,11 +6,13 @@
 */
 
 
-#define FIRST_ROW_HEIGHT 50.f
 
 #include "nui.h"
 #include "nuiFileSelector.h"
 #include "nuiFileTree.h"
+
+
+#define FIRST_ROW_HEIGHT  50.f
 
 
 //**************************************************************************************************************
@@ -221,6 +223,7 @@ bool nuiFileTree::SetRootPath(const nglPath& rPath)
   
   // "go to parent folder" link
   nuiButton* pBtn = new nuiButton();
+  pBtn->SetPosition(nuiLeft);
   
   nuiHBox* pBox = new nuiHBox(2);
   pBtn->AddChild(pBox);

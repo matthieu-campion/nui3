@@ -8,5 +8,5 @@
 #pragma once
 
 extern const char* gpIconFile;
-const long         gIconFileSize = 419;
+const long         gIconFileSize = 3114;
 
