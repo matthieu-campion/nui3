@@ -189,6 +189,8 @@ bool nuiFileTree::SetRootPath(const nglPath& rPath)
 
     mpTreeView = new nuiTreeView(pRoot, false);
     mpTreeView->SetDeSelectable(false);
+    mpTreeView->SetMultiSelectable(true);
+
     pScrollView->AddChild(mpTreeView);
 
     std::list<nglPathVolume> volumes;
