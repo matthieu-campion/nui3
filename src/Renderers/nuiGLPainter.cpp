@@ -66,16 +66,29 @@
 //#elif defined(_OPENGL_)
 #else
 
-#define glCheckFramebufferStatusNUI   mpContext->glCheckFramebufferStatusEXT
-#define glFramebufferRenderbufferNUI  mpContext->glFramebufferRenderbufferEXT
-#define glRenderbufferStorageNUI      mpContext->glRenderbufferStorageEXT
-#define glGenFramebuffersNUI          mpContext->glGenFramebuffersEXT
-#define glDeleteFramebuffersNUI       mpContext->glDeleteFramebuffersEXT
-#define glBindFramebufferNUI          mpContext->glBindFramebufferEXT
-#define glGenRenderbuffersNUI         mpContext->glGenRenderbuffersEXT
-#define glDeleteRenderbuffersNUI      mpContext->glDeleteRenderbuffersEXT
-#define glBindRenderbufferNUI         mpContext->glBindRenderbufferEXT
-#define glFramebufferTexture2DNUI     mpContext->glFramebufferTexture2DEXT
+  #ifdef _MACOSX_
+  #define glCheckFramebufferStatusNUI   glCheckFramebufferStatusEXT
+  #define glFramebufferRenderbufferNUI  glFramebufferRenderbufferEXT
+  #define glRenderbufferStorageNUI      glRenderbufferStorageEXT
+  #define glGenFramebuffersNUI          glGenFramebuffersEXT
+  #define glDeleteFramebuffersNUI       glDeleteFramebuffersEXT
+  #define glBindFramebufferNUI          glBindFramebufferEXT
+  #define glGenRenderbuffersNUI         glGenRenderbuffersEXT
+  #define glDeleteRenderbuffersNUI      glDeleteRenderbuffersEXT
+  #define glBindRenderbufferNUI         glBindRenderbufferEXT
+  #define glFramebufferTexture2DNUI     glFramebufferTexture2DEXT
+  #else
+  #define glCheckFramebufferStatusNUI   mpContext->glCheckFramebufferStatusEXT
+  #define glFramebufferRenderbufferNUI  mpContext->glFramebufferRenderbufferEXT
+  #define glRenderbufferStorageNUI      mpContext->glRenderbufferStorageEXT
+  #define glGenFramebuffersNUI          mpContext->glGenFramebuffersEXT
+  #define glDeleteFramebuffersNUI       mpContext->glDeleteFramebuffersEXT
+  #define glBindFramebufferNUI          mpContext->glBindFramebufferEXT
+  #define glGenRenderbuffersNUI         mpContext->glGenRenderbuffersEXT
+  #define glDeleteRenderbuffersNUI      mpContext->glDeleteRenderbuffersEXT
+  #define glBindRenderbufferNUI         mpContext->glBindRenderbufferEXT
+  #define glFramebufferTexture2DNUI     mpContext->glFramebufferTexture2DEXT
+  #endif
 
 #define GL_FRAMEBUFFER_NUI                                GL_FRAMEBUFFER_EXT
 #define GL_RENDERBUFFER_NUI                               GL_RENDERBUFFER_EXT
@@ -102,7 +115,7 @@
 inline bool nuiCheckFramebufferStatus()
 {
   return true;
-#if 0
+#if 1
   GLint status = glCheckFramebufferStatusNUI(GL_FRAMEBUFFER_NUI);
 #if defined(NGL_DEBUG)
   switch (status)
@@ -126,6 +139,46 @@ inline bool nuiCheckFramebufferStatus()
 #endif  
   return (status == GL_FRAMEBUFFER_COMPLETE_NUI);
 #endif
+}
+
+void TEST_FBO_CREATION()
+{  
+  // #TEST FBO creation:
+  // create FBO object
+  GLuint					FBOid = 0;
+  GLuint					FBOTextureId = 0;
+  
+  glGenFramebuffersEXT(1, &FBOid);
+  // the texture
+  glGenTextures(1, &FBOTextureId);
+  
+  // Bind to FBO
+  glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, FBOid);
+  
+  // Sanity check against maximum OpenGL texture size
+  // If bigger adjust to maximum possible size
+  // while maintain the aspect ratio
+  GLint maxTexSize; 
+  glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTexSize);
+  
+  // Initialize FBO Texture
+  glBindTexture(GL_TEXTURE_RECTANGLE_ARB, FBOTextureId);
+  // Using GL_LINEAR because we want a linear sampling for this particular case
+  // if your intention is to simply get the bitmap data out of Core Image
+  // you might want to use a 1:1 rendering and GL_NEAREST
+  glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+  glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+  
+  // the GPUs like the GL_BGRA / GL_UNSIGNED_INT_8_8_8_8_REV combination
+  // others are also valid, but might incur a costly software translation.
+  glTexImage2D(GL_TEXTURE_RECTANGLE_ARB, 0, GL_RGBA, 256, 256, 0, GL_BGRA, GL_UNSIGNED_INT_8_8_8_8_REV, NULL);
+  nuiCheckForGLErrors();
+  
+  // and attach texture to the FBO as its color destination
+  glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_RECTANGLE_ARB, FBOTextureId, 0);
+  nuiCheckFramebufferStatus();
 }
 
 
@@ -653,6 +706,9 @@ void nuiGLPainter::ApplySurface(const nuiRenderState& rState, bool ForceApply)
     
     if (create)
     {
+      TEST_FBO_CREATION();
+
+      
       glGenFramebuffersNUI(1, &info.mFramebuffer);
       nuiCheckForGLErrors();
       glBindFramebufferNUI(GL_FRAMEBUFFER_NUI, info.mFramebuffer);
@@ -1309,39 +1365,41 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
         }
         glPixelStorei(GL_UNPACK_ALIGNMENT,1);
         nuiCheckForGLErrors();
+
+        switch (type)
+        {
+          case 16:
+          case 15:
+            type = GL_UNSIGNED_SHORT_5_5_5_1;
+            break;
+          case 8:
+          case 24:
+          case 32:
+            type = GL_UNSIGNED_BYTE;
+            break;
+        }
+        
+#ifdef _MACOSX_
+        glTexParameteri(target, GL_TEXTURE_STORAGE_HINT_APPLE, GL_STORAGE_CACHED_APPLE);
+        glPixelStorei(GL_UNPACK_CLIENT_STORAGE_APPLE, GL_TRUE);
+#endif
       }
       else
       {
         NGL_ASSERT(pSurface);
-        type = 32;//8;//pSurface->GetBitDepth();
-        pixelformat = GL_RGBA;//pSurface->GetPixelFormat()
-        internalPixelformat = GL_RGBA;//pSurface->GetPixelFormat();        
-      }
-      
-      
-      switch (type)
-      {
-        case 16:
-        case 15:
-          type = GL_UNSIGNED_SHORT_5_5_5_1;
-          break;
-        case 8:
-        case 24:
-        case 32:
-          type = GL_UNSIGNED_BYTE;
-          break;
-      }
-      
-            
-#ifdef _CARBON_
-      glTexParameteri(target,
-                      GL_TEXTURE_STORAGE_HINT_APPLE,
-                      GL_STORAGE_CACHED_APPLE);
-      glPixelStorei(GL_UNPACK_CLIENT_STORAGE_APPLE, GL_TRUE);
+#ifdef _MACOSX_
+        internalPixelformat = GL_RGBA;
+        pixelformat = GL_BGRA;
+        type = GL_UNSIGNED_INT_8_8_8_8_REV;
+#else
+        internalPixelformat = GL_RGBA;
+        pixelformat = GL_RGBA;
+        type = GL_UNSIGNED_BYTE;
 #endif
+      }
 
 
-#ifndef _CARBON_
+#ifndef _MACOSX_
       if (!firstload)
       {
         glTexSubImage2D

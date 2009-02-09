@@ -94,7 +94,7 @@ protected:
 
 inline void nuiCheckForGLErrors()
 {
-#if 0 // Globally enable/disable OpenGL error checking
+#if 1 // Globally enable/disable OpenGL error checking
 #ifdef _DEBUG_
   bool error = false;
   GLenum err = glGetError();
