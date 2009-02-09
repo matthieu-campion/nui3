@@ -90,7 +90,7 @@ nuiTexture* nuiTexture::GetTexture (nglImage* pImage, bool OwnImage)
   return pTexture;
 }
 
-nuiTexture* nuiTexture::GetTexture (const nuiXMLNode* pNode)
+nuiTexture* nuiTexture::GetTexture(const nuiXMLNode* pNode)
 {
   nuiTexture* pTexture = NULL;
   nuiTextureMap::iterator it = mpTextures.find(nuiGetString(pNode, _T("Source")));
@@ -103,15 +103,17 @@ nuiTexture* nuiTexture::GetTexture (const nuiXMLNode* pNode)
   return pTexture;
 }
 
-nuiTexture* nuiTexture::GetTexture (nuiSurface* pSurface, bool Acquired)
+nuiTexture* nuiTexture::GetTexture(nuiSurface* pSurface, bool Acquired)
 {
   nuiTexture* pTexture = NULL;
   nglString name;
   name.Format(_T("Surface 0x%x"), pSurface);
   nuiTextureMap::iterator it = mpTextures.find(name);
-  if (it == mpTextures.end()) {
+  if (it == mpTextures.end())
+  {
     pTexture = new nuiTexture(pSurface);    
-    if (!Acquired) {
+    if (!Acquired)
+    {
       pSurface->Acquire();
     }
   }
@@ -122,7 +124,7 @@ nuiTexture* nuiTexture::GetTexture (nuiSurface* pSurface, bool Acquired)
   return pTexture;  
 }
 
-nuiTexture* nuiTexture::GetTexture (const nglString& rName)
+nuiTexture* nuiTexture::GetTexture(const nglString& rName)
 {
   nuiTexture* pTexture = NULL;
   nuiTextureMap::iterator it = mpTextures.find(rName);
@@ -334,7 +336,7 @@ nuiTexture::nuiTexture(nuiSurface* pSurface)
   SetProperty(_T("Source"), name);
   mpTextures[name] = this;
 
-  Init();  
+  Init();
 }
 
 void nuiTexture::Init()
@@ -435,7 +437,8 @@ nuiTexture::~nuiTexture()
   if (mOwnImage)
     delete mpImage;
 
-  if (mpSurface) {
+  if (mpSurface)
+  {
     mpSurface->Release();
   }
   mpTextures.erase(GetProperty(_T("Source")));

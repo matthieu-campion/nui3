@@ -283,7 +283,7 @@ bool nglContext::Build(WindowRef Win, const nglContextInfo& rInfo, const nglCont
     CGLContextObj ctx = CGLGetCurrentContext();
     
     // Enable the multi-threading
-    err =  CGLEnable( ctx, kCGLCEMPEngine);
+    //err =  CGLEnable( ctx, kCGLCEMPEngine);
     
     if (err != kCGLNoError )
     {

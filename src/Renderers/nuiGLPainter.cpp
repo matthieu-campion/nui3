@@ -143,6 +143,9 @@ inline bool nuiCheckFramebufferStatus()
 
 void TEST_FBO_CREATION()
 {  
+  static uint32 prout = 0;
+  printf("prout %d\n", prout++);
+
   // #TEST FBO creation:
   // create FBO object
   GLuint					FBOid = 0;
@@ -173,6 +176,9 @@ void TEST_FBO_CREATION()
   
   // the GPUs like the GL_BGRA / GL_UNSIGNED_INT_8_8_8_8_REV combination
   // others are also valid, but might incur a costly software translation.
+#ifdef _MACOSX_  
+  glPixelStorei(GL_UNPACK_CLIENT_STORAGE_APPLE, GL_FALSE);
+#endif
   glTexImage2D(GL_TEXTURE_RECTANGLE_ARB, 0, GL_RGBA, 256, 256, 0, GL_BGRA, GL_UNSIGNED_INT_8_8_8_8_REV, NULL);
   nuiCheckForGLErrors();
   
@@ -391,11 +397,10 @@ void nuiGLPainter::StopRendering()
 
 void nuiGLPainter::SetState(const nuiRenderState& rState, bool ForceApply)
 {
+  //TEST_FBO_CREATION();
   NUI_RETURN_IF_RENDERING_DISABLED;
 
   nuiCheckForGLErrors();
-
-  ApplySurface(rState, ForceApply);
 
   // blending
   if (ForceApply || mState.mBlending != rState.mBlending)
@@ -481,7 +486,9 @@ void nuiGLPainter::SetState(const nuiRenderState& rState, bool ForceApply)
 #endif
 
   ApplyTexture(rState, ForceApply);
-
+  ApplySurface(rState, ForceApply);
+  
+  
   // Rendering buffers:
   if (ForceApply || mState.mColorBuffer != rState.mColorBuffer)
   {
@@ -705,10 +712,7 @@ void nuiGLPainter::ApplySurface(const nuiRenderState& rState, bool ForceApply)
     FramebufferInfo info;
     
     if (create)
-    {
-      TEST_FBO_CREATION();
-
-      
+    {      
       glGenFramebuffersNUI(1, &info.mFramebuffer);
       nuiCheckForGLErrors();
       glBindFramebufferNUI(GL_FRAMEBUFFER_NUI, info.mFramebuffer);
@@ -1391,6 +1395,7 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
         internalPixelformat = GL_RGBA;
         pixelformat = GL_BGRA;
         type = GL_UNSIGNED_INT_8_8_8_8_REV;
+        glPixelStorei(GL_UNPACK_CLIENT_STORAGE_APPLE, GL_FALSE);
 #else
         internalPixelformat = GL_RGBA;
         pixelformat = GL_RGBA;

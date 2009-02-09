@@ -14,7 +14,7 @@
 
 
 nuiUserArea::nuiUserArea()
- : nuiWidget()
+ : nuiWidget() 
 {
   SetObjectClass(_T("nuiUserArea"));
   mInterceptMouse = false;
@@ -50,6 +50,7 @@ nuiUserArea::~nuiUserArea()
 {
 }
 
+
 bool nuiUserArea::Draw(nuiDrawContext* pContext)
 {
   GLint OldRect[4];
@@ -61,7 +62,9 @@ bool nuiUserArea::Draw(nuiDrawContext* pContext)
   {
   //  pContext->PushState();
   #ifndef __NUI_NO_GL__
+#ifndef _UIKIT_
     glPushAttrib(GL_ALL_ATTRIB_BITS);
+#endif
   #endif
     pContext->ResetState();
     nuiRenderArray dummy(GL_POINTS);
@@ -104,8 +107,10 @@ bool nuiUserArea::Draw(nuiDrawContext* pContext)
     glPopMatrix();
 
     glMatrixMode (GL_MODELVIEW);
+#ifndef _UIKIT_
     glPopAttrib();
-  #endif  
+#endif  
+#endif  
 
   //  pContext->PopState();
   }

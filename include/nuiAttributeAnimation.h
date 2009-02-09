@@ -8,11 +8,11 @@
 
 #pragma once
 
-class nuiAttributeAnimation : public nuiAnimation
+class nuiAttributeAnimationBase : public nuiAnimation
 {
 public:
-  nuiAttributeAnimation();
-  virtual ~nuiAttributeAnimation();
+  nuiAttributeAnimationBase();
+  virtual ~nuiAttributeAnimationBase();
   
   nuiObjectPtr GetTargetObject() const;
   void SetTargetObject(nuiObjectPtr pTarget);
@@ -26,12 +26,25 @@ public:
   void SetCaptureEndOnPlay(bool set);
   bool GetCaptureEndOnPlay() const;
   
+protected:
+  bool mCaptureStartOnPlay;
+  bool mCaptureEndOnPlay;
+  nuiObjectPtr mpTarget;
+  nglString mTarget;
+};
+
+class nuiAttributeAnimation : public nuiAttributeAnimationBase
+{
+public:
+  nuiAttributeAnimation();
+  virtual ~nuiAttributeAnimation();
+
   void SetStartValue(double val);
   double GetStartValue() const;
-
+  
   void SetEndValue(double val);
   double GetEndValue() const;
-
+  
   // Inherited:
   virtual void Play(uint32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward); ///< Start playing the animation. Stop after count iterations. 
   virtual void Stop(); ///< Stop Playing the animation.
@@ -41,9 +54,5 @@ public:
 private:
   double mStartValue;
   double mEndValue;
-  bool mCaptureStartOnPlay;
-  bool mCaptureEndOnPlay;
-  nuiObjectPtr mpTarget;
-  nglString mTarget;
 };
 

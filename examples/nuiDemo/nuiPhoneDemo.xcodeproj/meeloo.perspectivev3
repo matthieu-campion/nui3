@@ -484,8 +484,6 @@
 			<key>Layout</key>
 			<array>
 				<dict>
-					<key>BecomeActive</key>
-					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -554,12 +552,14 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>E59365260C7AD788001596BD</string>
 								<key>PBXProjectModuleLabel</key>
-								<string></string>
+								<string>Application.cpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -567,7 +567,15 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>E59365270C7AD788001596BD</string>
 										<key>PBXProjectModuleLabel</key>
-										<string></string>
+										<string>Application.cpp</string>
+										<key>_historyCapacity</key>
+										<integer>0</integer>
+										<key>bookmark</key>
+										<string>E5DEDB070F3C75A1001EF94E</string>
+										<key>history</key>
+										<array>
+											<string>E5DEDB060F3C75A1001EF94E</string>
+										</array>
 									</dict>
 									<key>SplitCount</key>
 									<string>1</string>
@@ -636,11 +644,11 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E5E7CFE70F37690C00073CA6</string>
+				<string>E5DEDB080F3C75A1001EF94E</string>
 				<string>1CA23EE50692099D00951B8B</string>
-				<string>E5E7CFE80F37690C00073CA6</string>
+				<string>E5DEDB090F3C75A1001EF94E</string>
 				<string>E59365260C7AD788001596BD</string>
-				<string>E5E7CFE90F37690C00073CA6</string>
+				<string>E5DEDB0A0F3C75A1001EF94E</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
 			<key>ToolbarConfiguration</key>
@@ -785,14 +793,14 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E5E7CFEA0F37690C00073CA6</string>
+				<string>E5DEDB0B0F3C75A1001EF94E</string>
 				<string>1CCC7628064C1048000F2A68</string>
 				<string>1CCC7629064C1048000F2A68</string>
-				<string>E5E7CFEB0F37690C00073CA6</string>
-				<string>E5E7CFEC0F37690C00073CA6</string>
-				<string>E5E7CFED0F37690C00073CA6</string>
-				<string>E5E7CFEE0F37690C00073CA6</string>
-				<string>E5E7CFE50F3768FE00073CA6</string>
+				<string>E5DEDB0C0F3C75A1001EF94E</string>
+				<string>E5DEDB0D0F3C75A1001EF94E</string>
+				<string>E5DEDB0E0F3C75A1001EF94E</string>
+				<string>E5DEDB0F0F3C75A1001EF94E</string>
+				<string>E5DEDB100F3C75A1001EF94E</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -818,8 +826,8 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E5E7D0130F39031A00073CA6</string>
-		<string>E5E7D0140F39031A00073CA6</string>
+		<string>E5DEDB110F3C75A1001EF94E</string>
+		<string>E5DEDB120F3C75A1001EF94E</string>
 		<string>/Users/meeloo/work/nui3/examples/nuiDemo/nuiPhoneDemo.xcodeproj</string>
 	</array>
 	<key>WindowString</key>

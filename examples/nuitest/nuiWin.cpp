@@ -463,7 +463,11 @@ void nuiWin::OnCreation()
   pElement = new nuiTreeNode(nuiTR("Clipping Test"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateClippingTest);
   pMainTree->AddChild(pElement);
-
+  
+  pElement = new nuiTreeNode(nuiTR("Surface Test"));
+  mWinSink.Connect(pElement->Activated, &nuiWin::CreateSurfaceTest);
+  pMainTree->AddChild(pElement);
+  
   pElement = new nuiTreeNode(nuiTR("Enum audio hardware"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateAudioWindow);
   pMainTree->AddChild(pElement);
@@ -2226,6 +2230,66 @@ bool nuiWin::CreateClippingTest(const nuiEvent& rEvent)
   nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, nuiTR("Clipping test"));
   mpManager->AddChild(pWindow);
   pWindow->AddChild(new ClippingTest());
+  return false;
+}
+
+// nuiSurface test
+class SurfaceTest : public nuiWidget
+{
+public:
+  SurfaceTest()
+  {
+    SetUserSize(320, 200);
+    SetPosition(nuiCenter);
+    
+    //    nglString surfaceName;
+    //    surfaceName.CFormat(_T("%p"), this);
+    //    mpSurface = nuiSurface::CreateSurface(surfaceName, 256, 256);
+    //    mpSurfaceTexture = nuiTexture::GetTexture(mpSurface, false);  
+    //    
+    
+  }
+  
+  bool Draw(nuiDrawContext* pContext)
+  {    
+    nuiRect r(GetRect().Size());
+    int32 w = r.GetWidth();
+    int32 h = r.GetHeight();
+    
+    pContext->SetFillColor(nuiColor(_T("red")));
+    pContext->SetStrokeColor(nuiColor(_T("green")));
+    
+    //r.Move(.5, .5);
+    pContext->DrawRect(r, eStrokeAndFillShape);
+
+    //pContext->SetClearColor(nuiColor(1, 1, 1));
+    //pContext->Clear();
+//    pContext->SetFillColor(nuiColor(1, 1, 1));
+//    pContext->SetStrokeColor(nuiColor(1, 0, 0));
+//    pContext->DrawRect(GetRect().Size(), eStrokeAndFillShape);
+    pContext->SetFont(nuiFont::GetFont(50));
+    pContext->SetBlendFunc(nuiBlendTransp);
+    pContext->SetTextColor(nuiColor(0.0f, 1.0f, 0.0f));
+    pContext->DrawText(10, 50, _T("test string"));
+    
+    return true;
+  }
+  
+  nuiRect CalcIdealSize()
+  {
+    return nuiRect(0, 0, 200, 200);
+  }
+  
+  nuiSurface* mpSurface;
+  nuiTexture* mpSurfaceTexture;
+};
+
+
+bool nuiWin::CreateSurfaceTest(const nuiEvent& rEvent)
+{
+  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, nuiTR("Surface test"));
+  mpManager->AddChild(pWindow);
+  pWindow->AddChild(new SurfaceTest());
   return false;
 }
 

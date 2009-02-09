@@ -62,6 +62,7 @@ protected:
   bool CreateFontSubstitutionWindow(const nuiEvent& rEvent);
   bool CreateSignalsAndSlotsTestWindow(const nuiEvent& rEvent);
   bool CreateClippingTest(const nuiEvent& rEvent);
+  bool CreateSurfaceTest(const nuiEvent& rEvent);
   bool CreateDragZone(const nuiEvent& rEvent);
   bool CreateEnableTestWindow(const nuiEvent& rEvent);
   bool CreateButtonDecorationWindow(const nuiEvent& rEvent);

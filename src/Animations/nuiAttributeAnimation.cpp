@@ -9,55 +9,57 @@
 #include "nuiAttributeAnimation.h"
 
 //class nuiAttributeAnimation : public nuiAnimation
-nuiAttributeAnimation::nuiAttributeAnimation()
-: mStartValue(0),
-  mEndValue(0),
-  mCaptureStartOnPlay(false),
+nuiAttributeAnimationBase::nuiAttributeAnimationBase()
+: mCaptureStartOnPlay(false),
   mCaptureEndOnPlay(false),
   mpTarget(NULL)
 {
+  if (SetObjectClass(_T("nuiAttributeAnimationBase")))
+  {
+    // Init atributes
+  }
 }
 
-nuiAttributeAnimation::~nuiAttributeAnimation()
+nuiAttributeAnimationBase::~nuiAttributeAnimationBase()
 {
 }
 
-nuiObjectPtr nuiAttributeAnimation::GetTargetObject() const
+nuiObjectPtr nuiAttributeAnimationBase::GetTargetObject() const
 {
   return mpTarget;
 }
 
-void nuiAttributeAnimation::SetTargetObject(nuiObjectPtr pTarget)
+void nuiAttributeAnimationBase::SetTargetObject(nuiObjectPtr pTarget)
 {
   mpTarget = pTarget;
 }
 
-const nglString& nuiAttributeAnimation::GetTargetAttribute() const
+const nglString& nuiAttributeAnimationBase::GetTargetAttribute() const
 {
   return mTarget;
 }
 
-void nuiAttributeAnimation::SetTargetAttribute(const nglString& rAttribute)
+void nuiAttributeAnimationBase::SetTargetAttribute(const nglString& rAttribute)
 {
   mTarget = rAttribute;
 }
 
-void nuiAttributeAnimation::SetCaptureStartOnPlay(bool set)
+void nuiAttributeAnimationBase::SetCaptureStartOnPlay(bool set)
 {
   mCaptureStartOnPlay = set;
 }
 
-bool nuiAttributeAnimation::GetCaptureStartOnPlay() const
+bool nuiAttributeAnimationBase::GetCaptureStartOnPlay() const
 {
   return mCaptureStartOnPlay;
 }
 
-void nuiAttributeAnimation::SetCaptureEndOnPlay(bool set)
+void nuiAttributeAnimationBase::SetCaptureEndOnPlay(bool set)
 {
   mCaptureEndOnPlay = set;
 }
 
-bool nuiAttributeAnimation::GetCaptureEndOnPlay() const
+bool nuiAttributeAnimationBase::GetCaptureEndOnPlay() const
 {
   return mCaptureEndOnPlay;
 }
@@ -70,6 +72,24 @@ void nuiAttributeAnimation::SetStartValue(double val)
 double nuiAttributeAnimation::GetStartValue() const
 {
   return mStartValue;
+}
+
+
+
+//// nuiAttributeAnimation:
+nuiAttributeAnimation::nuiAttributeAnimation()
+: mStartValue(0),
+  mEndValue(0)
+{
+  if (SetObjectClass(_T("nuiAttributeAnimation")))
+  {
+    // Init atributes
+  }
+}
+
+nuiAttributeAnimation::~nuiAttributeAnimation()
+{
+  
 }
 
 void nuiAttributeAnimation::SetEndValue(double val)
@@ -116,7 +136,6 @@ if (nuiAttributeTypeTrait<X>::GetTypeId() == t) \
   return; \
 }
 
-
 void nuiAttributeAnimation::OnFrame()
 {
   double pos = mStartValue + GetPosition() * (mEndValue - mStartValue);
@@ -140,4 +159,7 @@ void nuiAttributeAnimation::OnFrame()
   str.SetCDouble(pos);
   attrib.FromString(str);
 }
+
+#undef SET_ATTRIB
+
 

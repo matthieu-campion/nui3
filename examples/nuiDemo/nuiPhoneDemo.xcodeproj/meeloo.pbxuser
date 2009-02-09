@@ -93,8 +93,12 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 255289593;
-			PBXWorkspaceStateSaveDate = 255289593;
+			PBXPerProjectTemplateStateSaveDate = 255620474;
+			PBXWorkspaceStateSaveDate = 255620474;
+		};
+		perUserProjectItems = {
+			E5DEDB060F3C75A1001EF94E /* PBXTextBookmark */ = E5DEDB060F3C75A1001EF94E /* PBXTextBookmark */;
+			E5DEDB070F3C75A1001EF94E /* PBXTextBookmark */ = E5DEDB070F3C75A1001EF94E /* PBXTextBookmark */;
 		};
 		sourceControlManager = E53DAA200EC2671100175F39 /* Source Control */;
 		userBuildSettings = {
@@ -154,7 +158,7 @@
 		ignoreCount = 0;
 		lineNumber = 168;
 		location = iPhone_HelloWorldD;
-		modificationTime = 255290005.041411;
+		modificationTime = 255290005.0414111;
 		state = 2;
 	};
 	E51D5C060EC3D13500182E40 /* nglWindow_UIKit.mm:168 */ = {
@@ -312,9 +316,9 @@
 	};
 	E5CD2F680ECF82BE0083037A /* Application.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1590, 2808}}";
-			sepNavSelRange = "{1105, 0}";
-			sepNavVisRange = "{587, 1183}";
+			sepNavIntBoundsRect = "{{0, 0}, {1582, 2886}}";
+			sepNavSelRange = "{1562, 0}";
+			sepNavVisRange = "{1185, 695}";
 		};
 	};
 	E5CD2F6B0ECF82BE0083037A /* AudioTrack.cpp */ = {
@@ -358,5 +362,23 @@
 			sepNavSelRange = "{437, 0}";
 			sepNavVisRange = "{0, 871}";
 		};
+	};
+	E5DEDB060F3C75A1001EF94E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "error: 'eOpenGLES' was not declared in this scope";
+		fRef = E5CD2F680ECF82BE0083037A /* Application.cpp */;
+		rLen = 0;
+		rLoc = 83;
+		rType = 1;
+	};
+	E5DEDB070F3C75A1001EF94E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5CD2F680ECF82BE0083037A /* Application.cpp */;
+		name = "Application.cpp: 87";
+		rLen = 0;
+		rLoc = 1562;
+		rType = 0;
+		vrLen = 695;
+		vrLoc = 1185;
 	};
 }

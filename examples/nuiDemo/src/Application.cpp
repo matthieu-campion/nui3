@@ -81,13 +81,9 @@ void Application::InitWindow()
   mpEngine = new Engine();  
   
 
-#ifdef _UIKIT_
-  nuiRenderer Renderer = eOpenGLES; // iPhone is OpenGL ES until we merge the OGLES renderer in the more general OGL one
-#else
   nuiRenderer Renderer = eOpenGL;
   //  nuiRenderer Renderer = eDirect3D;
   //  nuiRenderer Renderer = eSoftware;
-#endif
   
   // Accept NGL default options
   ParseDefaultArgs();

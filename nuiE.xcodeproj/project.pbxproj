@@ -1617,7 +1617,6 @@
 		E5CD2FEA0ECF86510083037A /* nuiWaveWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CD2FDE0ECF86510083037A /* nuiWaveWriter.cpp */; };
 		E5CD2FEB0ECF86770083037A /* nuiFrameView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5BF0DA5716500D2641A /* nuiFrameView.cpp */; };
 		E5CD2FEC0ECF86780083037A /* nuiFrameView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5C00DA5716500D2641A /* nuiFrameView.h */; };
-		E5CD2FF30ECF86B50083037A /* nuiSoftwarePainter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5A40DA5716500D2641A /* nuiSoftwarePainter.cpp */; };
 		E5CD2FF40ECF86B50083037A /* nuiSoftwarePainter.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5A50DA5716500D2641A /* nuiSoftwarePainter.h */; };
 		E5CD2FF50ECF86BA0083037A /* nuiRasterizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5760DA5716500D2641A /* nuiRasterizer.h */; };
 		E5CD2FF60ECF86BE0083037A /* nuiPixelBlender.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5750DA5716500D2641A /* nuiPixelBlender.h */; };
@@ -1646,6 +1645,14 @@
 		E5CD31970ED1A8730083037A /* nuiSoftwarePainter.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5A50DA5716500D2641A /* nuiSoftwarePainter.h */; };
 		E5CD319A0ED1A87A0083037A /* nuiVertex.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5770DA5716500D2641A /* nuiVertex.h */; };
 		E5CD319C0ED1A8970083037A /* nuiVertex.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5770DA5716500D2641A /* nuiVertex.h */; };
+		E5DEDA940F3C5122001EF94E /* nuiAttributeAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5DEDA930F3C5122001EF94E /* nuiAttributeAnimation.cpp */; };
+		E5DEDA950F3C5122001EF94E /* nuiAttributeAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5DEDA930F3C5122001EF94E /* nuiAttributeAnimation.cpp */; };
+		E5DEDA970F3C513E001EF94E /* nuiAttributeAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = E5DEDA960F3C513E001EF94E /* nuiAttributeAnimation.h */; };
+		E5DEDA980F3C513E001EF94E /* nuiAttributeAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = E5DEDA960F3C513E001EF94E /* nuiAttributeAnimation.h */; };
+		E5DEDA9F0F3C51BD001EF94E /* nuiScrollBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5DEDA9E0F3C51BD001EF94E /* nuiScrollBox.cpp */; };
+		E5DEDAA00F3C51BD001EF94E /* nuiScrollBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5DEDA9E0F3C51BD001EF94E /* nuiScrollBox.cpp */; };
+		E5DEDAC60F3C61DA001EF94E /* nuiUserArea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D55D0DA5716500D2641A /* nuiUserArea.cpp */; };
+		E5DEDAC70F3C61DF001EF94E /* nuiUserArea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D55D0DA5716500D2641A /* nuiUserArea.cpp */; };
 		E5E7CFCE0F3768EE00073CA6 /* nuiPhoneFontDB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5E7CFCC0F3768EE00073CA6 /* nuiPhoneFontDB.cpp */; };
 		E5E7CFCF0F3768EE00073CA6 /* nuiPhoneFontDB.h in Headers */ = {isa = PBXBuildFile; fileRef = E5E7CFCD0F3768EE00073CA6 /* nuiPhoneFontDB.h */; };
 		E5E7CFD00F3768EE00073CA6 /* nuiPhoneFontDB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5E7CFCC0F3768EE00073CA6 /* nuiPhoneFontDB.cpp */; };
@@ -2771,6 +2778,9 @@
 		E5CD304D0ECF88350083037A /* nuiDialogSelectDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiDialogSelectDirectory.h; path = include/nuiDialogSelectDirectory.h; sourceTree = SOURCE_ROOT; };
 		E5CD304E0ECF88350083037A /* nuiDialogSelectFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiDialogSelectFile.h; path = include/nuiDialogSelectFile.h; sourceTree = SOURCE_ROOT; };
 		E5CD304F0ECF88350083037A /* nuiDragAndDrop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiDragAndDrop.h; path = include/nuiDragAndDrop.h; sourceTree = SOURCE_ROOT; };
+		E5DEDA930F3C5122001EF94E /* nuiAttributeAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiAttributeAnimation.cpp; path = src/Animations/nuiAttributeAnimation.cpp; sourceTree = SOURCE_ROOT; };
+		E5DEDA960F3C513E001EF94E /* nuiAttributeAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiAttributeAnimation.h; path = include/nuiAttributeAnimation.h; sourceTree = SOURCE_ROOT; };
+		E5DEDA9E0F3C51BD001EF94E /* nuiScrollBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiScrollBox.cpp; path = src/Layout/nuiScrollBox.cpp; sourceTree = SOURCE_ROOT; };
 		E5E7CFCC0F3768EE00073CA6 /* nuiPhoneFontDB.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiPhoneFontDB.cpp; path = src/Font/nuiPhoneFontDB.cpp; sourceTree = SOURCE_ROOT; };
 		E5E7CFCD0F3768EE00073CA6 /* nuiPhoneFontDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiPhoneFontDB.h; path = src/Font/nuiPhoneFontDB.h; sourceTree = SOURCE_ROOT; };
 		E5E7D0070F376A5E00073CA6 /* nglPath_Cocoa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nglPath_Cocoa.h; path = src/File/Cocoa/nglPath_Cocoa.h; sourceTree = SOURCE_ROOT; };
@@ -2848,6 +2858,7 @@
 			children = (
 				6126D46E0DA5716500D2641A /* ngl.h */,
 				6126D46F0DA5716500D2641A /* ngl_all.h */,
+				E5DEDA920F3C5122001EF94E /* Animations */,
 				6126D4710DA5716500D2641A /* Attributes */,
 				6126D4860DA5716500D2641A /* Audio */,
 				E5CD2FD80ECF863E0083037A /* AudioSamples */,
@@ -3178,6 +3189,7 @@
 		6126D5380DA5716500D2641A /* Layout */ = {
 			isa = PBXGroup;
 			children = (
+				E5DEDA9E0F3C51BD001EF94E /* nuiScrollBox.cpp */,
 				E504F2970EFC84F800A80C5C /* nuiBox.cpp */,
 				6126D53B0DA5716500D2641A /* nuiBox.h */,
 				6126D53C0DA5716500D2641A /* nuiAnimView.cpp */,
@@ -4626,6 +4638,16 @@
 			name = Dialogs;
 			sourceTree = "<group>";
 		};
+		E5DEDA920F3C5122001EF94E /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				E5DEDA960F3C513E001EF94E /* nuiAttributeAnimation.h */,
+				E5DEDA930F3C5122001EF94E /* nuiAttributeAnimation.cpp */,
+			);
+			name = Animations;
+			path = src/Animations;
+			sourceTree = SOURCE_ROOT;
+		};
 		E5E7D0060F376A5E00073CA6 /* Cocoa */ = {
 			isa = PBXGroup;
 			children = (
@@ -5150,6 +5172,7 @@
 				E5E7CFD10F3768EE00073CA6 /* nuiPhoneFontDB.h in Headers */,
 				E5E7D00B0F376A5E00073CA6 /* nglPath_Cocoa.h in Headers */,
 				613338BF0F3A60EB003353BD /* nuiGLPainter.h in Headers */,
+				E5DEDA980F3C513E001EF94E /* nuiAttributeAnimation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5666,6 +5689,7 @@
 				E5E7CFCF0F3768EE00073CA6 /* nuiPhoneFontDB.h in Headers */,
 				E5E7D0090F376A5E00073CA6 /* nglPath_Cocoa.h in Headers */,
 				613338BC0F3A60D9003353BD /* nuiGLPainter.h in Headers */,
+				E5DEDA970F3C513E001EF94E /* nuiAttributeAnimation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6043,6 +6067,9 @@
 				E5E7CFD00F3768EE00073CA6 /* nuiPhoneFontDB.cpp in Sources */,
 				E5E7D00C0F376A5E00073CA6 /* nglPath_Cocoa.mm in Sources */,
 				613338BE0F3A60EA003353BD /* nuiGLPainter.cpp in Sources */,
+				E5DEDA950F3C5122001EF94E /* nuiAttributeAnimation.cpp in Sources */,
+				E5DEDAA00F3C51BD001EF94E /* nuiScrollBox.cpp in Sources */,
+				E5DEDAC60F3C61DA001EF94E /* nuiUserArea.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6344,7 +6371,6 @@
 				E5CD2FE90ECF86510083037A /* nuiWaveReader.cpp in Sources */,
 				E5CD2FEA0ECF86510083037A /* nuiWaveWriter.cpp in Sources */,
 				E5CD2FEB0ECF86770083037A /* nuiFrameView.cpp in Sources */,
-				E5CD2FF30ECF86B50083037A /* nuiSoftwarePainter.cpp in Sources */,
 				E5CD304A0ECF88040083037A /* nuiDialogSelectDirectory.cpp in Sources */,
 				E5CD304B0ECF88040083037A /* nuiDialogSelectFile.cpp in Sources */,
 				E5CD304C0ECF88040083037A /* nuiMessageBox.cpp in Sources */,
@@ -6365,6 +6391,9 @@
 				E5E7D00A0F376A5E00073CA6 /* nglPath_Cocoa.mm in Sources */,
 				613338730F3A5757003353BD /* nuiVBox.cpp in Sources */,
 				613338BB0F3A60D9003353BD /* nuiGLPainter.cpp in Sources */,
+				E5DEDA940F3C5122001EF94E /* nuiAttributeAnimation.cpp in Sources */,
+				E5DEDA9F0F3C51BD001EF94E /* nuiScrollBox.cpp in Sources */,
+				E5DEDAC70F3C61DF001EF94E /* nuiUserArea.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

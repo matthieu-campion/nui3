@@ -471,7 +471,7 @@ typedef wchar_t nglChar;
 #    define _OPENGL_ES_
 // Make our GLES Painter available, and disable other Painters...
 #    define  __NUI_NO_GLES__
-#    undef __NUI_NO_SOFTWARE__
+#    define __NUI_NO_SOFTWARE__
 #    define __NUI_NO_D3D__
 #    undef __NUI_NO_GL__
 
