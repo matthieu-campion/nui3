@@ -522,71 +522,62 @@ void nuiDefaultDecoration::Splitter(nuiWidget* pWidget)
   
   if (pSplitter->GetOrientation() == nuiVertical)
   {
-    pHandle->SetUserSize(6,0);
-
+    pHandle->SetUserSize(7,0);
+    
     nuiMetaDecoration* pDeco = (nuiMetaDecoration*)nuiDecoration::Get(_T("nuiDefaultDecorationVerticalSplitter"));
     if (!pDeco)
     {
-      // handle bar gradient
-      nuiGradientDecoration* pDeco1 = new nuiGradientDecoration(_T("nuiDefaultDecorationVerticalSplitterGradient"), 
-                                                                nuiRect(0, 0, 0, 0), nuiColor(232,232,232), nuiColor(196,196,196), nuiHorizontal);
-
-      // handle bar borders
-      nuiBorderDecoration* pDeco2 = new nuiBorderDecoration(_T("nuiDefaultDecorationVerticalSplitterBorders"));
-      pDeco2->SetBorderType(_T("All"));
-      pDeco2->SetStrokeSize(1);
-      pDeco2->SetStrokeLeftColor(nuiColor(190,190,190));
-      pDeco2->SetStrokeRightColor(nuiColor(170,170,170));
-      pDeco2->SetStrokeTopColor(nuiColor(180,180,180));
-      pDeco2->SetStrokeBottomColor(nuiColor(180,180,180));
-      
-      // handle control spot
-      nglIMemory* pIMem = new nglIMemory(gpSplitterHandleVertical, gSplitterHandleVerticalSize);
+      // handle bar 
+      nglIMemory* pIMem = new nglIMemory(gpSplitterVertical, gSplitterVerticalSize);
       nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
       NGL_ASSERT(pTex);
       
+      nuiFrame* pFrame = new nuiFrame(_T("nuiDefaultDecorationVerticalSplitterBar"), pTex, nuiRect(0,0,7,3));
+      pFrame->SetInterpolated(false);
+      
+      // handle spot
+      pIMem = new nglIMemory(gpSplitterVerticalHandle, gSplitterVerticalHandleSize);
+      pTex = nuiTexture::GetTexture(pIMem);
+      NGL_ASSERT(pTex);
+      
       nuiImageDecoration* pDeco3 = new nuiImageDecoration(_T("nuiDefaultDecorationVerticalSplitterHandle"), 
-                                                          pTex, nuiRect(0,0,5,5), nuiCenter);
+                                                          pTex, nuiRect(0,0,7,6), nuiCenter);
 
       // build meta decoration
       pDeco = new nuiMetaDecoration(_T("nuiDefaultDecorationVerticalSplitter"));
-      pDeco->AddDecoration(_T("nuiDefaultDecorationVerticalSplitterGradient"));
-      pDeco->AddDecoration(_T("nuiDefaultDecorationVerticalSplitterBorders"));
+      pDeco->AddDecoration(_T("nuiDefaultDecorationVerticalSplitterBar"));
       pDeco->AddDecoration(_T("nuiDefaultDecorationVerticalSplitterHandle"));
-      
+
     }
     pHandle->SetDecoration(pDeco, eDecorationBorder);  
     
   }
   else
   {
-    pHandle->SetUserSize(0,6);
+    pHandle->SetUserSize(0,7);
     
     nuiMetaDecoration* pDeco = (nuiMetaDecoration*)nuiDecoration::Get(_T("nuiDefaultDecorationHorizontalSplitter"));
     if (!pDeco)
     {
-      nuiGradientDecoration* pDeco1 = new nuiGradientDecoration(_T("nuiDefaultDecorationHorizontalSplitterGradient"), 
-                                                                nuiRect(0, 0, 0, 0), nuiColor(232,232,232), nuiColor(196,196,196), nuiVertical);
-      nuiBorderDecoration* pDeco2 = new nuiBorderDecoration(_T("nuiDefaultDecorationHorizontalSplitterBorders"));
-      pDeco2->SetBorderType(_T("All"));
-      pDeco2->SetStrokeSize(1);
-      pDeco2->SetStrokeLeftColor(nuiColor(180,180,180));
-      pDeco2->SetStrokeRightColor(nuiColor(180,180,180));
-      pDeco2->SetStrokeTopColor(nuiColor(190,190,190));
-      pDeco2->SetStrokeBottomColor(nuiColor(170,170,170));
-      
-      // handle control spot
-      nglIMemory* pIMem = new nglIMemory(gpSplitterHandleHorizontal, gSplitterHandleHorizontalSize);
+      // handle bar 
+      nglIMemory* pIMem = new nglIMemory(gpSplitterHorizontal, gSplitterHorizontalSize);
       nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
       NGL_ASSERT(pTex);
       
+      nuiFrame* pFrame = new nuiFrame(_T("nuiDefaultDecorationHorizontalSplitterBar"), pTex, nuiRect(0,0,3,7));
+      pFrame->SetInterpolated(false);
+      
+      // handle spot
+      pIMem = new nglIMemory(gpSplitterHorizontalHandle, gSplitterHorizontalHandleSize);
+      pTex = nuiTexture::GetTexture(pIMem);
+      NGL_ASSERT(pTex);
+      
       nuiImageDecoration* pDeco3 = new nuiImageDecoration(_T("nuiDefaultDecorationHorizontalSplitterHandle"), 
-                                                          pTex, nuiRect(0,0,5,5), nuiCenter);
+                                                          pTex, nuiRect(0,0,6,7), nuiCenter);
       
-      
+      // build meta decoration
       pDeco = new nuiMetaDecoration(_T("nuiDefaultDecorationHorizontalSplitter"));
-      pDeco->AddDecoration(_T("nuiDefaultDecorationHorizontalSplitterGradient"));
-      pDeco->AddDecoration(_T("nuiDefaultDecorationHorizontalSplitterBorders"));
+      pDeco->AddDecoration(_T("nuiDefaultDecorationHorizontalSplitterBar"));
       pDeco->AddDecoration(_T("nuiDefaultDecorationHorizontalSplitterHandle"));
       
     }
@@ -596,6 +587,88 @@ void nuiDefaultDecoration::Splitter(nuiWidget* pWidget)
   
 }
 
+
+//void nuiDefaultDecoration::Splitter(nuiWidget* pWidget)
+//{
+//  nuiSplitter* pSplitter = (nuiSplitter*)pWidget;
+//  nuiSplitterHandle* pHandle = pSplitter->GetHandle();
+//  NGL_ASSERT(pHandle);
+//  
+//  if (pSplitter->GetOrientation() == nuiVertical)
+//  {
+//    pHandle->SetUserSize(6,0);
+//    
+//    nuiMetaDecoration* pDeco = (nuiMetaDecoration*)nuiDecoration::Get(_T("nuiDefaultDecorationVerticalSplitter"));
+//    if (!pDeco)
+//    {
+//      // handle bar gradient
+//      nuiGradientDecoration* pDeco1 = new nuiGradientDecoration(_T("nuiDefaultDecorationVerticalSplitterGradient"), 
+//                                                                nuiRect(0, 0, 0, 0), nuiColor(232,232,232), nuiColor(196,196,196), nuiHorizontal);
+//      
+//      // handle bar borders
+//      nuiBorderDecoration* pDeco2 = new nuiBorderDecoration(_T("nuiDefaultDecorationVerticalSplitterBorders"));
+//      pDeco2->SetBorderType(_T("All"));
+//      pDeco2->SetStrokeSize(1);
+//      pDeco2->SetStrokeLeftColor(nuiColor(190,190,190));
+//      pDeco2->SetStrokeRightColor(nuiColor(170,170,170));
+//      pDeco2->SetStrokeTopColor(nuiColor(180,180,180));
+//      pDeco2->SetStrokeBottomColor(nuiColor(180,180,180));
+//      
+//      // handle control spot
+//      nglIMemory* pIMem = new nglIMemory(gpSplitterHandleVertical, gSplitterHandleVerticalSize);
+//      nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
+//      NGL_ASSERT(pTex);
+//      
+//      nuiImageDecoration* pDeco3 = new nuiImageDecoration(_T("nuiDefaultDecorationVerticalSplitterHandle"), 
+//                                                          pTex, nuiRect(0,0,5,5), nuiCenter);
+//      
+//      // build meta decoration
+//      pDeco = new nuiMetaDecoration(_T("nuiDefaultDecorationVerticalSplitter"));
+//      pDeco->AddDecoration(_T("nuiDefaultDecorationVerticalSplitterGradient"));
+//      pDeco->AddDecoration(_T("nuiDefaultDecorationVerticalSplitterBorders"));
+//      pDeco->AddDecoration(_T("nuiDefaultDecorationVerticalSplitterHandle"));
+//      
+//    }
+//    pHandle->SetDecoration(pDeco, eDecorationBorder);  
+//    
+//  }
+//  else
+//  {
+//    pHandle->SetUserSize(0,6);
+//    
+//    nuiMetaDecoration* pDeco = (nuiMetaDecoration*)nuiDecoration::Get(_T("nuiDefaultDecorationHorizontalSplitter"));
+//    if (!pDeco)
+//    {
+//      nuiGradientDecoration* pDeco1 = new nuiGradientDecoration(_T("nuiDefaultDecorationHorizontalSplitterGradient"), 
+//                                                                nuiRect(0, 0, 0, 0), nuiColor(232,232,232), nuiColor(196,196,196), nuiVertical);
+//      nuiBorderDecoration* pDeco2 = new nuiBorderDecoration(_T("nuiDefaultDecorationHorizontalSplitterBorders"));
+//      pDeco2->SetBorderType(_T("All"));
+//      pDeco2->SetStrokeSize(1);
+//      pDeco2->SetStrokeLeftColor(nuiColor(180,180,180));
+//      pDeco2->SetStrokeRightColor(nuiColor(180,180,180));
+//      pDeco2->SetStrokeTopColor(nuiColor(190,190,190));
+//      pDeco2->SetStrokeBottomColor(nuiColor(170,170,170));
+//      
+//      // handle control spot
+//      nglIMemory* pIMem = new nglIMemory(gpSplitterHandleHorizontal, gSplitterHandleHorizontalSize);
+//      nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
+//      NGL_ASSERT(pTex);
+//      
+//      nuiImageDecoration* pDeco3 = new nuiImageDecoration(_T("nuiDefaultDecorationHorizontalSplitterHandle"), 
+//                                                          pTex, nuiRect(0,0,5,5), nuiCenter);
+//      
+//      
+//      pDeco = new nuiMetaDecoration(_T("nuiDefaultDecorationHorizontalSplitter"));
+//      pDeco->AddDecoration(_T("nuiDefaultDecorationHorizontalSplitterGradient"));
+//      pDeco->AddDecoration(_T("nuiDefaultDecorationHorizontalSplitterBorders"));
+//      pDeco->AddDecoration(_T("nuiDefaultDecorationHorizontalSplitterHandle"));
+//      
+//    }
+//    pHandle->SetDecoration(pDeco, eDecorationBorder);  
+//  }
+//  
+//  
+//}
 
 
 //**************************************************************************************************************

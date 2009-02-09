@@ -7,6 +7,6 @@
 
 #pragma once
 
-extern const char* gpSplitterHandleHorizontal;
-const long         gSplitterHandleHorizontalSize = 183;
+extern const char* gpSplitterHorizontalHandle;
+const long         gSplitterHorizontalHandleSize = 213;
 
