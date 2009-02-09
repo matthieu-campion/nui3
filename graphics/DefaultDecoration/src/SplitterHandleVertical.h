@@ -8,5 +8,5 @@
 #pragma once
 
 extern const char* gpSplitterHandleVertical;
-const long         gSplitterHandleVerticalSize = 198;
+const long         gSplitterHandleVerticalSize = 188;
 
