@@ -375,8 +375,11 @@ void nuiLabel::CalcLayout()
         mFontChanged = false;
       }
 
+      NGL_ASSERT(mpLayout);
+      NGL_ASSERT(mpIdealLayout);
       mpLayout->Init(0,0);
       mpIdealLayout->Init(0,0);
+
       if (mWrapping)
       {
         //NGL_OUT(_T("Setting wrapping to %f\n"), mConstraint.mMaxWidth);
@@ -388,14 +391,21 @@ void nuiLabel::CalcLayout()
         else
           wrap = MAX(wrap1, wrap2);
         
+        NGL_ASSERT(mpLayout);
+        NGL_ASSERT(mpIdealLayout);
         mpLayout->SetWrapX(wrap - mBorderLeft - mBorderRight);
         mpIdealLayout->SetWrapX(wrap - mBorderLeft - mBorderRight);
       }
       else
       {
+        NGL_ASSERT(mpLayout);
+        NGL_ASSERT(mpIdealLayout);
         mpLayout->SetWrapX(0);
         mpIdealLayout->SetWrapX(0);
       }
+
+      NGL_ASSERT(mpLayout);
+      NGL_ASSERT(mpIdealLayout);
 
       mpLayout->Layout(mText);
       mpIdealLayout->Layout(mText);

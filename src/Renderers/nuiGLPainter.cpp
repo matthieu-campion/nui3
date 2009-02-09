@@ -173,18 +173,27 @@ nuiGLPainter::nuiGLPainter(nglContext* pContext, const nuiRect& rRect)
   if (mpContext)
   {
     mpContext->BeginSession();
+    const char* ext0 = (const char*)glGetString(GL_EXTENSIONS);
+    nglString exts(ext0);
+    NGL_OUT(_T("Extensions: %ls\n"), exts.GetChars());
+
 
     mpContext->CheckExtension(_T("GL_VERSION_1_2"));
-	nuiCheckForGLErrors();
+    nuiCheckForGLErrors();
     mpContext->CheckExtension(_T("GL_VERSION_1_3"));
-	nuiCheckForGLErrors();
+    nuiCheckForGLErrors();
     mpContext->CheckExtension(_T("GL_VERSION_1_4"));
-	nuiCheckForGLErrors();
+    nuiCheckForGLErrors();
     mpContext->CheckExtension(_T("GL_VERSION_1_5"));
-	nuiCheckForGLErrors();
+    nuiCheckForGLErrors();
     mpContext->CheckExtension(_T("GL_ARB_vertex_buffer_object"));
-	nuiCheckForGLErrors();
-    
+    nuiCheckForGLErrors();
+    mpContext->CheckExtension(_T("GL_EXT_framebuffer_object"));
+    nuiCheckForGLErrors();
+
+    mpContext->CheckExtension(_T("GL_ARB_framebuffer_object"));
+    nuiCheckForGLErrors();
+
     if (mpContext->CheckExtension(_T("GL_ARB_texture_non_power_of_two")))
     {
       mCanRectangleTexture = 1;
@@ -195,18 +204,19 @@ nuiGLPainter::nuiGLPainter(nglContext* pContext, const nuiRect& rRect)
     }
     //mCanRectangleTexture = 0;
 
-	if (!mActiveContexts)
-	{
-		glAAInit();
-		nuiCheckForGLErrors();
-//		glAAGenerateAATex(0.0f, 0.0f);
-//		nuiCheckForGLErrors();
+    
+    if (!mActiveContexts)
+    {
+      glAAInit();
+      nuiCheckForGLErrors();
+      //		glAAGenerateAATex(0.0f, 0.0f);
+      //		nuiCheckForGLErrors();
 
-		// texture init
-		//#ifndef __APPLE__
-		//glAAEnable(GLAA_VERTEX_ARRAY); // we want VAR acceleration and we will handle flushing
-		//#endif
-	}
+      // texture init
+      //#ifndef __APPLE__
+      //glAAEnable(GLAA_VERTEX_ARRAY); // we want VAR acceleration and we will handle flushing
+      //#endif
+    }
 
 
     nuiCheckForGLErrors();
