@@ -73,7 +73,7 @@ private:
   bool OnNodeActivated(const nuiEvent& rEvent);
   bool OnGotoParentFolder(const nuiEvent& rEvent);
   
-  
+  bool isRoot(const nglPath& rPath);
   
   nuiVBox* mpFileBox;
   nuiTreeView* mpTreeView;

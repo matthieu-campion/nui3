@@ -285,6 +285,8 @@ void nuiFileTree::AddTree(const nglPath& rPath, bool Opened)
 // virtual 
 nuiTreeNode* nuiFileTree::GetNewNode(const nglPath& rPath)
 {
+
+
   nuiHBox* pBox = NULL;
   nuiImage* pIcon = NULL;
   nuiLabel* pLabel = NULL;
@@ -345,7 +347,7 @@ nuiTreeNode* nuiFileTree::GetNewNode(const nglPath& rPath)
     
     nglString iconObjectName, labelObjectName;
     
-    if (rPath.GetParent().GetPathName().IsEmpty() || !rPath.GetPathName().Compare(_T("/")) || !rPath.GetParent().GetPathName().Compare(_T("/Volumes")))
+    if (isRoot(rPath))
     {
       iconObjectName = _T("nuiFileTree::VolumeIcon");
       labelObjectName = _T("nuiFileTree::FolderLabel");
@@ -361,7 +363,7 @@ nuiTreeNode* nuiFileTree::GetNewNode(const nglPath& rPath)
     pIcon = new nuiImage();
     pIcon->SetObjectName(iconObjectName);
     pIcon->SetObjectClass(iconObjectName);
-    pLabel = new nuiLabel(rPath.GetNodeName().IsEmpty()?_T("/"):rPath.GetNodeName());        
+    pLabel = new nuiLabel(rPath.GetNodeName().IsEmpty() ? rPath.GetPathName() : rPath.GetNodeName());        
     pLabel->SetObjectName(labelObjectName);
     pLabel->SetObjectClass(labelObjectName);
   }
@@ -380,8 +382,17 @@ nuiTreeNode* nuiFileTree::GetNewNode(const nglPath& rPath)
 }
 
 
-
-
+bool nuiFileTree::isRoot(const nglPath& rPath)
+{
+  const nglString& pathName = rPath.GetPathName();
+  
+  return (
+    rPath.GetParent().GetPathName().IsEmpty() || 
+    !rPath.GetPathName().Compare(_T("/")) || 
+    !rPath.GetParent().GetPathName().Compare(_T("/Volumes")) ||
+    ((pathName.GetLength() == 3) && (pathName[1] == _T(':')) && (pathName[2] == _T('/')))
+    );
+}
 
 bool nuiFileTree::SetPath(const nglPath& rPath)
 {
