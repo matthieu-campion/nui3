@@ -42,6 +42,8 @@ licence: see nui3/LICENCE.TXT
 #include "DefaultDecoration/src/SliderHorizontalHdl.cpp"
 #include "DefaultDecoration/src/SliderVerticalBkg.cpp"
 #include "DefaultDecoration/src/SliderVerticalHdl.cpp"
+#include "DefaultDecoration/src/SplitterHandleHorizontal.cpp"
+#include "DefaultDecoration/src/SplitterHandleVertical.cpp"
 #include "DefaultDecoration/src/TabBottomContents.cpp"
 #include "DefaultDecoration/src/TabBottomDown.cpp"
 #include "DefaultDecoration/src/TabBottomUp.cpp"
