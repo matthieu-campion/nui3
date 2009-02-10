@@ -23,8 +23,8 @@
 #ifdef _UIKIT_
 const bool gGlobalUseRenderCache = true;
 #else
-//const bool gGlobalUseRenderCache = false;
-const bool gGlobalUseRenderCache = true;
+const bool gGlobalUseRenderCache = false;
+//const bool gGlobalUseRenderCache = true;
 #endif
 
 bool nuiWidget::mSelfClippingDefault = true;

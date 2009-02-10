@@ -1427,8 +1427,14 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
 #ifndef _OPENGL_ES_
         if (pTexture->GetAutoMipMap())
         {
+#ifdef _MACOSX_
+          glPixelStorei(GL_UNPACK_CLIENT_STORAGE_APPLE, GL_FALSE);
+          nuiCheckForGLErrors();
+#endif
           glTexParameteri(target, GL_TEXTURE_MAX_LEVEL, (int)log2(Width));
+          nuiCheckForGLErrors();
           gluBuild2DMipmaps(target, internalPixelformat, (int)Width, (int)Height, pixelformat, type, pBuffer);          
+          nuiCheckForGLErrors();
         }
         else
 #endif
