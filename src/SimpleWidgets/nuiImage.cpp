@@ -114,6 +114,7 @@ void nuiImage::SetTexturePath(const nglPath& rTexturePath)
   mBlendFunc = nuiBlendTransp;
   SetProperty(_T("Source"),mTexturePath.GetPathName());
   mIgnoreState = false;  
+  Invalidate();
 }
 
 void nuiImage::SetTexture(nuiTexture* pTex)
@@ -123,6 +124,7 @@ void nuiImage::SetTexture(nuiTexture* pTex)
   mBlendFunc = nuiBlendTransp;
   SetProperty(_T("Source"), _T("Memory Buffer"));
   mIgnoreState = false;  
+  Invalidate();
 }
 
 
