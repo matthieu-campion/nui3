@@ -1514,7 +1514,7 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
 
   if (pSurface)
   {
-    glTranslatef(0, 1, 0);
+    glTranslatef(0, ry, 0);
     ry = -ry;    
   }
   

@@ -64,17 +64,6 @@ bool nuiAttributeAnimationBase::GetCaptureEndOnPlay() const
   return mCaptureEndOnPlay;
 }
 
-void nuiAttributeAnimation::SetStartValue(double val)
-{
-  mStartValue = val;
-}
-
-double nuiAttributeAnimation::GetStartValue() const
-{
-  return mStartValue;
-}
-
-
 
 //// nuiAttributeAnimation:
 nuiAttributeAnimation::nuiAttributeAnimation()
@@ -100,6 +89,16 @@ void nuiAttributeAnimation::SetEndValue(double val)
 double nuiAttributeAnimation::GetEndValue() const
 {
   return mEndValue;
+}
+
+void nuiAttributeAnimation::SetStartValue(double val)
+{
+  mStartValue = val;
+}
+
+double nuiAttributeAnimation::GetStartValue() const
+{
+  return mStartValue;
 }
 
 void nuiAttributeAnimation::Play(uint32 Count, nuiAnimLoop LoopMode)
@@ -162,4 +161,112 @@ void nuiAttributeAnimation::OnFrame()
 
 #undef SET_ATTRIB
 
+/////////////////////////////////
+
+// Color Attrib Animation:
+
+/////////////////////////////////
+
+//// nuiAttributeAnimation:
+nuiColorAttributeAnimation::nuiColorAttributeAnimation()
+{
+  if (SetObjectClass(_T("nuiColorAttributeAnimation")))
+  {
+    // Init atributes
+  }
+}
+
+nuiColorAttributeAnimation::~nuiColorAttributeAnimation()
+{
+}
+
+void nuiColorAttributeAnimation::SetEndValue(const nuiColor& rVal)
+{
+  mEndValue = rVal;
+}
+
+const nuiColor& nuiColorAttributeAnimation::GetEndValue() const
+{
+  return mEndValue;
+}
+
+void nuiColorAttributeAnimation::SetStartValue(const nuiColor& rVal)
+{
+  mStartValue = rVal;
+}
+
+const nuiColor& nuiColorAttributeAnimation::GetStartValue() const
+{
+  return mStartValue;
+}
+
+
+
+void nuiColorAttributeAnimation::Play(uint32 Count, nuiAnimLoop LoopMode)
+{
+  nuiAttribBase attrib(mpTarget->GetAttribute(mTarget));
+  
+  nuiAttrib<nuiColor> color_attrib(attrib);
+  nuiAttrib<const nuiColor&> const_color_attrib(attrib);
+
+  if (mCaptureStartOnPlay)
+  {
+    if (color_attrib)
+      mStartValue = color_attrib.Get();
+    else if (const_color_attrib)
+      mStartValue = const_color_attrib.Get();
+  }
+  if (mCaptureEndOnPlay)
+  {
+    if (color_attrib)
+      mEndValue = color_attrib.Get();
+    else if (const_color_attrib)
+      mEndValue = const_color_attrib.Get();
+  }
+  
+  nuiAnimation::Play(Count, LoopMode);
+}
+
+void nuiColorAttributeAnimation::Stop()
+{
+  nuiAnimation::Stop();
+}
+
+void nuiColorAttributeAnimation::OnFrame()
+{
+  const float r0 = mStartValue.Red();
+  const float g0 = mStartValue.Green();
+  const float b0 = mStartValue.Blue();
+  const float a0 = mStartValue.Alpha();
+
+  const float r1 = mEndValue.Red();
+  const float g1 = mEndValue.Green();
+  const float b1 = mEndValue.Blue();
+  const float a1 = mEndValue.Alpha();
+  
+  const float rd = r1 - r0;
+  const float gd = g1 - g0;
+  const float bd = b1 - b0;
+  const float ad = a1 - a0;
+  
+  const float pos = GetPosition();
+  const float invpos = 1.0 - pos;
+
+  const float r = r0 + invpos * rd;
+  const float g = g0 + invpos * gd;
+  const float b = b0 + invpos * bd;
+  const float a = a0 + invpos * ad;
+  
+  nuiColor col(r, g, b, a);
+  
+  nuiAttribBase attrib(mpTarget->GetAttribute(mTarget));
+  
+  nuiAttrib<nuiColor> color_attrib(attrib);
+  nuiAttrib<const nuiColor&> const_color_attrib(attrib);
+  
+  if (color_attrib)
+    color_attrib.Set(col);
+  else if (const_color_attrib)
+    const_color_attrib.Set(col);
+}
 
