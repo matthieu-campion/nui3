@@ -141,6 +141,7 @@ inline bool nuiCheckFramebufferStatus()
 #endif
 }
 
+#ifndef _OPENGL_ES_
 void TEST_FBO_CREATION()
 {  
   static uint32 prout = 0;
@@ -186,7 +187,7 @@ void TEST_FBO_CREATION()
   glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_RECTANGLE_ARB, FBOTextureId, 0);
   nuiCheckFramebufferStatus();
 }
-
+#endif;
 
 uint32 nuiGLPainter::mActiveContexts = 0;
 
@@ -1382,8 +1383,8 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
             type = GL_UNSIGNED_BYTE;
             break;
         }
-        
-#ifdef _MACOSX_
+
+#if !defined(_OPENGL_ES_) && defined(_MACOSX_)
         glTexParameteri(target, GL_TEXTURE_STORAGE_HINT_APPLE, GL_STORAGE_CACHED_APPLE);
         glPixelStorei(GL_UNPACK_CLIENT_STORAGE_APPLE, GL_TRUE);
 #endif
@@ -1391,7 +1392,7 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
       else
       {
         NGL_ASSERT(pSurface);
-#ifdef _MACOSX_
+#if !defined(_OPENGL_ES_) && defined(_MACOSX_)
         internalPixelformat = GL_RGBA;
         pixelformat = GL_BGRA;
         type = GL_UNSIGNED_INT_8_8_8_8_REV;
