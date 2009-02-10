@@ -16,6 +16,7 @@
 #include "nuiSizeAttributeEditor.h"
 #include "nuiBorderAttributeEditor.h"
 #include "nuiRangeAttributeEditor.h"
+#include "nuiRangeKnobAttributeEditor.h"
 
 nuiAttributeBase::nuiAttributeBase(const nglString& rName, nuiAttributeType type, nuiAttributeUnit unit, const nuiRange& rRange, bool readonly, bool writeonly)
 : mName(rName),
@@ -1353,14 +1354,10 @@ bool nuiAttribute<const nuiRange&>::FromString(nuiRange& rValue, const nglString
 template <>
 nuiAttributeEditor* nuiAttribute<const nuiRange&>::GetDefaultEditor(void* pTarget)
 {
-//  switch (mUnit)
-//  {
-//    case nuiUnitRangeKnob:
-//      return new nuiRangeKnobAttributeEditor(nuiAttrib<const nuiRange&>(pTarget, this));
-//    default:      
-//      return new nuiRangeAttributeEditor(nuiAttrib<const nuiRange&>(pTarget, this));
-//  }
-  return new nuiRangeAttributeEditor(nuiAttrib<const nuiRange&>(pTarget, this));
+  if (GetUnit() == nuiUnitRangeKnob)
+    return new nuiRangeKnobAttributeEditor(nuiAttrib<const nuiRange&>(pTarget, this));
+  else
+    return new nuiRangeAttributeEditor(nuiAttrib<const nuiRange&>(pTarget, this));
 }
 
 
