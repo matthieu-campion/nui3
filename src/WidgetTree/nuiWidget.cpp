@@ -910,6 +910,83 @@ bool nuiWidget::Draw(nuiDrawContext* pContext)
   return true;
 }
 
+bool nuiWidget::InternalDrawWidget(nuiDrawContext* pContext, const nuiRect& _self, const nuiRect& _self_and_decorations, bool ApplyMatrix)
+{
+  pContext->PushState();
+  pContext->ResetState();
+  if (ApplyMatrix && !mMatrixIsIdentity)
+    pContext->MultMatrix(GetMatrix());
+  
+  if (mAutoClipSelf)
+  {
+    pContext->PushClipping();
+    if (mpDecoration)
+      pContext->Clip(_self_and_decorations);
+    pContext->EnableClipping(true);
+  }
+  
+  uint32 clipdepth = pContext->GetClipStackSize();
+  
+  
+  ////////////////////// Draw the Underlay
+  if (mpDecoration)
+  {      
+    pContext->PushState();
+    nuiRect sizerect(GetRect().Size());
+    mpDecoration->ClientToGlobalRect(sizerect);
+    mpDecoration->DrawBack(pContext, this, sizerect);
+    pContext->PopState();
+  }
+  
+  if (HasFocus())
+  {
+    pContext->PushState();
+    DrawFocus(pContext, false);
+    pContext->PopState();
+  }
+  
+  ////////////////////// Draw the widget
+  if (mAutoClipSelf)
+  {
+    pContext->PushClipping();
+    pContext->Clip(_self);
+  }
+  
+  pContext->PushState();
+  Draw(pContext);
+  pContext->PopState();
+  
+  if (mAutoClipSelf)
+    pContext->PopClipping();
+  
+  ////////////////////// Draw the Overlay
+  if (mpDecoration)
+  {
+    pContext->PushState();
+    nuiRect sizerect(GetRect().Size());
+    mpDecoration->ClientToGlobalRect(sizerect);
+    mpDecoration->DrawFront(pContext, this, sizerect);
+    pContext->PopState();
+  }
+  
+  if (HasFocus())
+  {
+    pContext->PushState();
+    DrawFocus(pContext, true);
+    pContext->PopState();
+  }
+  
+  mDrawingInCache = false;
+  
+  uint32 newclipdepth = pContext->GetClipStackSize();
+  NGL_ASSERT(clipdepth == newclipdepth);
+  
+  if (mAutoClipSelf)
+    pContext->PopClipping();
+  
+  pContext->PopState();
+}
+
 bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
 {
   if (!IsVisible())
@@ -946,7 +1023,7 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
     // Create or reuse an offscreen
   }
 
-  bool identity = mMatrixIsIdentity;
+  mMatrixIsIdentity;
 
   if (gGlobalUseRenderCache && mUseRenderCache && mpRenderCache)
   {
@@ -956,80 +1033,10 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
       mpRenderCache->Reset(mpSavedPainter);
       pContext->SetPainter(mpRenderCache);
       
-      pContext->PushState();
-      pContext->ResetState();
-
-      if (mAutoClipSelf)
-      {
-        pContext->PushClipping();
-        if (mpDecoration)
-          pContext->Clip(_self_and_decorations);
-        pContext->EnableClipping(true);
-      }
-
-      uint32 clipdepth = pContext->GetClipStackSize();
-
       mDrawingInCache = true;
       
-            
-      ////////////////////// Draw the Underlay
-      if (mpDecoration)
-      {      
-        pContext->PushState();
-        nuiRect sizerect(GetRect().Size());
-        mpDecoration->ClientToGlobalRect(sizerect);
-        mpDecoration->DrawBack(pContext, this, sizerect);
-        pContext->PopState();
-      }
+      InternalDrawWidget(pContext, _self, _self_and_decorations, false);
       
-      if (HasFocus())
-      {
-        pContext->PushState();
-        DrawFocus(pContext, false);
-        pContext->PopState();
-      }
-      
-      ////////////////////// Draw the widget
-      if (mAutoClipSelf)
-      {
-        pContext->PushClipping();
-        pContext->Clip(_self);
-      }
-
-      pContext->PushState();
-      Draw(pContext);
-      pContext->PopState();
-      
-      if (mAutoClipSelf)
-        pContext->PopClipping();
-      
-      ////////////////////// Draw the Overlay
-      if (mpDecoration)
-      {
-        pContext->PushState();
-        nuiRect sizerect(GetRect().Size());
-        mpDecoration->ClientToGlobalRect(sizerect);
-        mpDecoration->DrawFront(pContext, this, sizerect);
-        pContext->PopState();
-      }
-
-      if (HasFocus())
-      {
-        pContext->PushState();
-        DrawFocus(pContext, true);
-        pContext->PopState();
-      }
-      
-      mDrawingInCache = false;
-
-      uint32 newclipdepth = pContext->GetClipStackSize();
-      NGL_ASSERT(clipdepth == newclipdepth);
-
-      if (mAutoClipSelf)
-        pContext->PopClipping();
-
-      pContext->PopState();
-
       pContext->SetPainter(mpSavedPainter);
       mNeedSelfRedraw = false;
     }
@@ -1037,7 +1044,7 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
     if (!drawingincache && !pContext->GetPainter()->GetDummyMode())
     {
       Validate();
-      if (!identity)
+      if (!mMatrixIsIdentity)
       {
         pContext->PushMatrix();
         pContext->MultMatrix(GetMatrix());
@@ -1045,7 +1052,7 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
 
       mpRenderCache->ReDraw(pContext);
       
-      if (!identity)
+      if (!mMatrixIsIdentity)
         pContext->PopMatrix();
     }
 
@@ -1056,60 +1063,7 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
     {
       Validate();
 
-      pContext->PushState();
-      pContext->ResetState();
-      if (!identity)
-        pContext->MultMatrix(GetMatrix());
-      
-      if (mAutoClipSelf)
-      {
-        pContext->PushClipping();
-        pContext->Clip(_self);
-        pContext->EnableClipping(true);
-      }
-
-      ////////////////////// Draw the Underlay
-      if (mpDecoration)
-      {
-        pContext->PushState();
-        nuiRect sizerect(GetRect().Size());
-        mpDecoration->ClientToGlobalRect(sizerect);
-        mpDecoration->DrawBack(pContext, this, sizerect);
-        pContext->PopState();
-      }
-      
-      if (HasFocus())
-      {
-        pContext->PushState();
-        DrawFocus(pContext, false);
-        pContext->PopState();
-      }
-
-      ////////////////////// Draw the widget
-      pContext->PushState();
-      Draw(pContext);
-      pContext->PopState();
-      
-      ////////////////////// Draw the Overlay
-      if (mpDecoration)
-      {
-        pContext->PushState();
-        nuiRect sizerect(GetRect().Size());
-        mpDecoration->ClientToGlobalRect(sizerect);
-        mpDecoration->DrawFront(pContext, this, sizerect);
-        pContext->PopState();
-      }
-      
-      if (HasFocus())
-      {
-        pContext->PushState();
-        DrawFocus(pContext, true);
-        pContext->PopState();
-      }
-
-      if (mAutoClipSelf)
-        pContext->PopClipping();
-      pContext->PopState();
+      InternalDrawWidget(pContext, _self, _self_and_decorations, true);
       mNeedSelfRedraw = false;
     }
   }
@@ -2718,6 +2672,7 @@ void nuiWidget::LoadIdentityMatrix()
 {
   Invalidate();
   mMatrix.SetIdentity();
+  mMatrixIsIdentity = true;
   Invalidate();
   DebugRefreshInfo();
 }

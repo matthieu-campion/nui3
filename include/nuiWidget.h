@@ -475,6 +475,7 @@ protected:
   virtual void BroadcastInvalidateLayout(nuiWidgetPtr pSender, bool BroadCastOnly);
   virtual void CallConnectTopLevel(nuiTopLevel* pTopLevel); ///< This method is called when the widget is connected to the Top Level. Overload it to perform specific actions in a widget.
   virtual void CallDisconnectTopLevel(nuiTopLevel* pTopLevel); ///< This method is called when the widget is disconnected from the Top Level. Overload it to perform specific actions in a widget.
+  bool InternalDrawWidget(nuiDrawContext* pContext, const nuiRect& _self, const nuiRect& _self_and_decorations, bool ApplyMatrix);
 
   virtual void CallOnTrash(); ///< This method is called whenever a Trash occurred on the widget tree branch. It performs some clean up and then calls nuiWidget::OnTrash to enable the user to handle the trash.
 
