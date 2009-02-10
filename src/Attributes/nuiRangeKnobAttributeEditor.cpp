@@ -44,7 +44,7 @@ void nuiRangeKnobAttributeEditor::Update()
   if (mpKnob)
     mpKnob->Trash();
     
-  mpKnob = new nuiKnob(mRange, false /*no background*/);
+  mpKnob = new nuiKnob(mRange);
   AddChild(mpKnob);
   
   mEventSink.Connect(mpKnob->InteractiveValueChanged, &nuiRangeKnobAttributeEditor::OnChanged);

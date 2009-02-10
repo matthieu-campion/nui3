@@ -14,7 +14,6 @@
 // decoration classes
 //
 // nuiKnob
-// nuiKnob::Background
 //
 
 
@@ -22,9 +21,9 @@
 class NUI_API nuiKnob : public nuiSimpleContainer
 {
 public:
-  nuiKnob(const nuiRange& rRange = nuiRange(), bool showDefaultBackground = true);
-  nuiKnob(const nuiRange& rRange, nuiImageSequence* pImageSequence, bool showDefaultBackground);
-  void Init(const nuiRange& rRange, bool showDefaultBackground);
+  nuiKnob(const nuiRange& rRange = nuiRange());
+  nuiKnob(const nuiRange& rRange, nuiImageSequence* pImageSequence);
+  void Init(const nuiRange& rRange);
   void InitAttributes();
 
   
@@ -34,7 +33,6 @@ public:
   
   void SetImageSequence(nuiImageSequence* pImageSequence);
   nuiImageSequence* GetImageSequence();
-  bool GetShowDefaultBackground();
   
   // attributes
   const nglPath& GetSequencePath();
@@ -104,8 +102,6 @@ protected:
   uint32 mFrameIndex;
 
   nuiEventSink<nuiKnob> mKnobSink;
-  
-  bool mShowDefaultBackground;
   
   nglPath mSequencePath;
   uint32 mSequenceNbFrames;

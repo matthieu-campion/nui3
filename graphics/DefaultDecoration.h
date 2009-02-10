@@ -25,7 +25,6 @@ licence: see nui3/LICENCE.TXT
 #include "DefaultDecoration/src/IconVolume.h"
 #include "DefaultDecoration/src/ImageDraggedFile.h"
 #include "DefaultDecoration/src/ImageDraggedFolder.h"
-#include "DefaultDecoration/src/KnobSequenceBkg.h"
 #include "DefaultDecoration/src/KnobSequenceHdl.h"
 #include "DefaultDecoration/src/PaneInner.h"
 #include "DefaultDecoration/src/PaneOutter.h"

@@ -982,22 +982,6 @@ void nuiDefaultDecoration::KnobSequence(nuiWidget* pWidget)
     delete pImage;
   }
 
-  if (pKnob->GetShowDefaultBackground())
-  {
-    nuiFrame* pBkgDeco = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationKnobSequenceBkg"));
-    if (!pBkgDeco)
-    {
-      nglIMemory* pIMem = new nglIMemory(gpKnobSequenceBkg, gKnobSequenceBkgSize);
-      nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
-      NGL_ASSERT(pTex);
-      pBkgDeco = new nuiFrame(_T("nuiDefaultDecorationKnobSequenceBkg"), pTex, nuiRect(0,0,64,64));
-      pBkgDeco->UseWidgetAlpha(true);
-      pBkgDeco->SetLayer(eLayerBack);
-      delete pIMem;  
-    }
-    pKnob->SetDecoration(pBkgDeco, eDecorationBorder);
-  }
-  
   if (!pKnob->GetImageSequence())
     pKnob->SetImageSequence(mpKnobSequence);
 }

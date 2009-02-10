@@ -18,30 +18,29 @@ nuiSize nuiKnob::mDefaultSensitivity = 10;
 nuiSize nuiKnob::mDefaultFineSensitivityRatio = 10;
 nglKeyCode nuiKnob::mDefaultFineSensitivityKey = NK_LSHIFT;
 
-nuiKnob::nuiKnob(const nuiRange& rRange, bool showDefaultBackground)
+nuiKnob::nuiKnob(const nuiRange& rRange)
   : nuiSimpleContainer(),
     mKnobSink(this)
 {
   if (SetObjectClass(_T("nuiKnob")))
     InitAttributes();
-  Init(rRange, showDefaultBackground);
+  Init(rRange);
 }
 
-nuiKnob::nuiKnob(const nuiRange& rRange, nuiImageSequence* pImageSequence, bool showDefaultBackground)
+nuiKnob::nuiKnob(const nuiRange& rRange, nuiImageSequence* pImageSequence)
 : nuiSimpleContainer(),
 mKnobSink(this)
 {
   if (SetObjectClass(_T("nuiKnob")))
     InitAttributes();
-  Init(rRange, showDefaultBackground);
+  Init(rRange);
   SetImageSequence(pImageSequence);
 }
 
 
-void nuiKnob::Init(const nuiRange& rRange, bool showDefaultBackground)
+void nuiKnob::Init(const nuiRange& rRange)
 {
   mRange = rRange;
-  mShowDefaultBackground = showDefaultBackground;
   mpImageSequence = NULL;
   mClicked = false;
   mRange.SetPageSize(0);
@@ -180,12 +179,6 @@ void nuiKnob::SetImageSequence(nuiImageSequence* pImageSequence)
 nuiImageSequence* nuiKnob::GetImageSequence()
 {
   return mpImageSequence;
-}
-
-
-bool nuiKnob::GetShowDefaultBackground()
-{
-  return mShowDefaultBackground;
 }
 
 
