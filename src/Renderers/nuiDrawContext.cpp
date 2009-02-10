@@ -1149,7 +1149,7 @@ void nuiDrawContext::DrawShade(const nuiRect& rSourceRect, const nuiRect& rShade
 
   nuiSize ShadeSize = rSourceRect.mLeft - rShadeRect.mLeft;
 
-  nuiTexture* pShade = ::nuiTexture::GetTexture(nglString("NUI_Shade_LUT"));
+  nuiTexture* pShade = ::nuiTexture::GetTexture(nglString(_T("NUI_Shade_LUT")));
 
   if (!pShade)
   {
@@ -1177,6 +1177,7 @@ void nuiDrawContext::DrawShade(const nuiRect& rSourceRect, const nuiRect& rShade
     info.mPixelFormat = eImagePixelRGBA;
 
     pShade = nuiTexture::GetTexture(info, true);
+    pShade->SetSource(_T("NUI_Shade_LUT"));
 
     NGL_ASSERT(pShade);
 

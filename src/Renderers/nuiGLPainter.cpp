@@ -1495,24 +1495,34 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
   
   uint32 rectangle = GetRectangleTextureSupport();
   nuiCheckForGLErrors();
+
+  double rx = 1;
+  double ry = 1;
   if (rectangle != 1)
   {
-    double rx = pTexture->GetWidth() / Width;
-    double ry = pTexture->GetHeight() / Height;
+    rx = pTexture->GetWidth() / Width;
+    ry = pTexture->GetHeight() / Height;
 #ifndef _OPENGL_ES_
     if (target == GL_TEXTURE_RECTANGLE_ARB)
     {
       rx *= pTexture->GetWidth();
       ry *= pTexture->GetHeight();
     }
-    glScaled(rx, ry, 1);
-#else
-    glScalef((float)rx, (float)ry, 1);
 #endif
-    
-
-    nuiCheckForGLErrors();
   }
+
+  if (pSurface)
+  {
+    glTranslatef(0, 1, 0);
+    ry = -ry;    
+  }
+  
+#ifndef _OPENGL_ES_
+  glScaled(rx, ry, 1);
+#else
+  glScalef((float)rx, (float)ry, 1);
+#endif
+  nuiCheckForGLErrors();
   
   glMatrixMode(GL_MODELVIEW);
   nuiCheckForGLErrors();
