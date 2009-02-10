@@ -71,6 +71,18 @@ bool nuiVBox::SetCell(uint32 cell, nuiWidget* pWidget, nuiPosition position, boo
 
 }
 
+nuiLabel* nuiVBox::SetCell(uint32 cell, const nglString& rLabel, const nglString& rObjectName, nuiPosition position, bool ReplaceExisting, bool TrashExisting)
+{
+  nuiLabel* pLabel = new nuiLabel(rLabel);
+  if (rObjectName != nglString::Null)
+    pLabel->SetObjectName(rObjectName);
+  bool res = nuiGrid::SetCell(0, cell, pLabel, position, ReplaceExisting, TrashExisting);
+  if (!res)
+    return NULL;
+  
+  return pLabel;
+}
+
 
 
 void nuiVBox::SetCellPosition(uint32 cell, nuiPosition position)
@@ -245,6 +257,19 @@ void nuiVBox::AddCell(nuiWidget* pWidget, nuiPosition position)
   
   nuiGrid::SetCell(0, pos, pWidget, position); 
 }
+
+
+
+nuiLabel* nuiVBox::AddCell(const nglString& rLabel, const nglString& rObjectName, nuiPosition position)
+{
+  nuiLabel* pLabel = new nuiLabel(rLabel);
+  if (rObjectName != nglString::Null)
+    pLabel->SetObjectName(rObjectName);
+  nuiVBox::AddCell(pLabel, position);
+  
+  return pLabel;
+}
+
 
 
 void nuiVBox::RemoveCells(uint32 pos, uint32 cells)

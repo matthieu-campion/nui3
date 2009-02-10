@@ -71,6 +71,17 @@ bool nuiHBox::SetCell(uint32 cell, nuiWidget* pWidget, nuiPosition position, boo
   return nuiGrid::SetCell(cell, 0, pWidget, position, ReplaceExisting, TrashExisting);
 }
 
+nuiLabel* nuiHBox::SetCell(uint32 cell, const nglString& rLabel, const nglString& rObjectName, nuiPosition position, bool ReplaceExisting, bool TrashExisting)
+{
+  nuiLabel* pLabel = new nuiLabel(rLabel);
+  if (rObjectName != nglString::Null)
+    pLabel->SetObjectName(rObjectName);
+  bool res = nuiGrid::SetCell(cell, 0, pLabel, position, ReplaceExisting, TrashExisting);
+  if (!res)
+    return NULL;
+  
+  return pLabel;
+}
 
 
 void nuiHBox::SetCellPosition(uint32 cell, nuiPosition position)
@@ -242,6 +253,8 @@ void nuiHBox::AddCells(uint32 pos, uint32 cells)
   nuiGrid::AddColumns(pos, cells);
 }
 
+
+
 void nuiHBox::AddCell(nuiWidget* pWidget, nuiPosition position)
 {
   uint32 pos = nuiGrid::GetNbColumns();
@@ -250,6 +263,17 @@ void nuiHBox::AddCell(nuiWidget* pWidget, nuiPosition position)
     nuiGrid::AddRows(0,1);
   
   nuiGrid::SetCell(pos, 0, pWidget, position); 
+}
+
+
+nuiLabel* nuiHBox::AddCell(const nglString& rLabel, const nglString& rObjectName, nuiPosition position)
+{
+  nuiLabel* pLabel = new nuiLabel(rLabel);
+  if (rObjectName != nglString::Null)
+    pLabel->SetObjectName(rObjectName);
+  nuiHBox::AddCell(pLabel, position);
+  
+  return pLabel;
 }
 
 

@@ -52,7 +52,8 @@ enum nuiAttributeUnit
   nuiUnitColor,
   nuiUnitVector,
   nuiUnitMatrix,
-  nuiUnitCustom
+  nuiUnitRangeKnob,
+  nuiUnitCustom,
 };
 
 

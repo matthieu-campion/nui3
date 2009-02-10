@@ -1353,6 +1353,13 @@ bool nuiAttribute<const nuiRange&>::FromString(nuiRange& rValue, const nglString
 template <>
 nuiAttributeEditor* nuiAttribute<const nuiRange&>::GetDefaultEditor(void* pTarget)
 {
+//  switch (mUnit)
+//  {
+//    case nuiUnitRangeKnob:
+//      return new nuiRangeKnobAttributeEditor(nuiAttrib<const nuiRange&>(pTarget, this));
+//    default:      
+//      return new nuiRangeAttributeEditor(nuiAttrib<const nuiRange&>(pTarget, this));
+//  }
   return new nuiRangeAttributeEditor(nuiAttrib<const nuiRange&>(pTarget, this));
 }
 
