@@ -501,6 +501,15 @@ void nuiGLPainter::SetState(const nuiRenderState& rState, bool ForceApply)
 
   if (mClip.mEnabled)    
   {
+    uint32 width = mWidth;
+    uint32 height = mHeight;
+    
+    if (mState.mpSurface)
+    {
+      width = mState.mpSurface->GetWidth();
+      height = mState.mpSurface->GetHeight();
+    }
+    
     glEnable(GL_SCISSOR_TEST);
     nuiRect clip(mClip);
     clip.Move(-mClipOffsetX, -mClipOffsetY);
@@ -518,21 +527,21 @@ void nuiGLPainter::SetState(const nuiRenderState& rState, bool ForceApply)
     {
       w = ToBelow(clip.GetWidth());
       h = ToBelow(clip.GetHeight());
-      x = ToBelow(mWidth - w - clip.Left());
+      x = ToBelow(width - w - clip.Left());
       y = ToBelow(clip.Top());
     }
     else if (angle == 270)
     {
       w = ToBelow(clip.GetHeight());
       h = ToBelow(clip.GetWidth());
-      x = ToBelow(mHeight - clip.Top() - w);
-      y = ToBelow(mWidth - clip.Left() - h);
+      x = ToBelow(height - clip.Top() - w);
+      y = ToBelow(width - clip.Left() - h);
     }
     else
     {
       NGL_ASSERT(!angle);
       x = ToBelow(clip.Left());
-      y = ToBelow(mHeight - clip.Bottom());
+      y = ToBelow(height - clip.Bottom());
       w = ToBelow(clip.GetWidth());
       h = ToBelow(clip.GetHeight());
     }
