@@ -8,5 +8,5 @@
 #pragma once
 
 extern const char* gpKnobSequenceHdl;
-const long         gKnobSequenceHdlSize = 60783;
+const long         gKnobSequenceHdlSize = 36632;
 

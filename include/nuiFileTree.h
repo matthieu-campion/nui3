@@ -81,6 +81,7 @@ private:
   std::map<nglPath, nuiTreeNode*> mTrees; // rootpath => treeview
   nuiTreeNode* mpCurrentTree;
   nglPath mRootPath;
+  std::stack<nglPath> mWalkthrough;
   
   
   nuiEventSink<nuiFileTree> mEventSink;

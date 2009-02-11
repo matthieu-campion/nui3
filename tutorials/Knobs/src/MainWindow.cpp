@@ -37,35 +37,22 @@ void MainWindow::OnCreation()
   pMainBox->SetPosition(nuiCenter);
   AddChild(pMainBox);
   
-  // bloc 1 : knob with background
+  
+  // bloc  : knob 
   nuiVBox* pBloc = new nuiVBox(0);
   pMainBox->AddCell(pBloc);
   pMainBox->SetCellExpand(pMainBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
   
-  nuiKnob* pKnob = new nuiKnob(nuiRange(0, 0, 30, 1, 10, 10));
-  pKnob->SetPosition(nuiCenter);
-  pBloc->AddCell(pKnob);
-  
-  nuiLabel* pLabel = new nuiLabel(_T("with background"), nuiFont::GetFont(9));
-  pBloc->AddCell(pLabel);
-
-  
-  
-  // bloc 2 : knob without background
-  pBloc = new nuiVBox(0);
-  pMainBox->AddCell(pBloc);
-  pMainBox->SetCellExpand(pMainBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
-  
-  pKnob = new nuiKnob(nuiRange(0, 0, 30, 1, 10, 10), false/*no background*/);
+  nuiKnob* pKnob = new nuiKnob(nuiRange(0, 0, 30, 1, 10, 10), false/*no background*/);
   pKnob->SetPosition(nuiCenter);
   pBloc->AddCell(pKnob);
   pBloc->SetCellExpand(pBloc->GetNbCells()-1, nuiExpandShrinkAndGrow);
   
-  pLabel = new nuiLabel(_T("without background"), nuiFont::GetFont(9));
+  nuiLabel* pLabel = new nuiLabel(_T("simple knob"), nuiFont::GetFont(9));
   pBloc->AddCell(pLabel);
 
   
-  // bloc 3 : knob with a label to display the value
+  // bloc : knob with a label to display the value
   pBloc = new nuiVBox(0);
   pMainBox->AddCell(pBloc);
   pMainBox->SetCellExpand(pMainBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
