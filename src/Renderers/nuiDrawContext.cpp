@@ -105,9 +105,9 @@ bool nuiDrawContext::EnableClipping(bool set)
   return true;
 }
 
-bool nuiDrawContext::GetClipRect(nuiRect& rRect) const
+bool nuiDrawContext::GetClipRect(nuiRect& rRect, bool LocalRect) const
 {
-  return mpPainter->GetClipRect(rRect);
+  return mpPainter->GetClipRect(rRect, LocalRect);
 }
 
 bool nuiDrawContext::AddClipShape(nuiShape& rShape, bool Invert)

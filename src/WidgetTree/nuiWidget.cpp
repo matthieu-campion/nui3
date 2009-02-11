@@ -23,8 +23,8 @@
 #ifdef _UIKIT_
 const bool gGlobalUseRenderCache = true;
 #else
-//const bool gGlobalUseRenderCache = false;
-const bool gGlobalUseRenderCache = true;
+const bool gGlobalUseRenderCache = false;
+//const bool gGlobalUseRenderCache = true;
 #endif
 
 bool nuiWidget::mSelfClippingDefault = true;
@@ -999,22 +999,14 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
   bool drawingincache = mpParent ? mpParent->IsDrawingInCache(true) : false;
 
   nuiRect clip;
-  pContext->GetClipRect(clip);
+  pContext->GetClipRect(clip, true);
   nuiRect _self = GetOverDrawRect(true, false);
   _self.Intersect(_self, mVisibleRect);
   nuiRect _self_and_decorations = GetOverDrawRect(true, true);
   _self_and_decorations.Intersect(_self_and_decorations, mVisibleRect);
-  nuiRect self = _self;
-  nuiRect self_and_decorations = _self_and_decorations;
-  
-  LocalToGlobal(self);
-  if (_self == _self_and_decorations)
-    self_and_decorations = self;
-  else
-    LocalToGlobal(self_and_decorations);
 
   nuiRect inter;
-  if (!inter.Intersect(self_and_decorations, clip)) // Only render at the last needed moment. As we are currently offscreen or clipped entirely we will redraw another day.
+  if (!inter.Intersect(_self_and_decorations, clip)) // Only render at the last needed moment. As we are currently offscreen or clipped entirely we will redraw another day.
     return false;
 
 
@@ -1022,8 +1014,6 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
   {
     // Create or reuse an offscreen
   }
-
-  mMatrixIsIdentity;
 
   if (gGlobalUseRenderCache && mUseRenderCache && mpRenderCache)
   {

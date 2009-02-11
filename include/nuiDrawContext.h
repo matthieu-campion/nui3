@@ -90,7 +90,7 @@ public:
   void PopClipping();
   bool Clip(const nuiRect& rRect); ///< This method restricts all the rendering operation to the given rectangle. The global rectangle is calculated by applying the current matrix to the rRect parameter.
   bool EnableClipping(bool set); ///< Enables or disable clipping.
-  bool GetClipRect(nuiRect& rRect) const; ///< Fills rRect with the current clipping rect if clipping is enabled, or with the complete Draw Context rect otherwise.
+  bool GetClipRect(nuiRect& rRect, bool LocalRect) const; ///< Fills rRect with the current clipping rect if clipping is enabled, or with the complete Draw Context rect otherwise.
   bool ResetClipRect(); ///< This method reset the clipping rect to the original size of the window.
   uint32 GetClipStackSize() const; ///< Return the number of Clip state saved on the clip stack.
 

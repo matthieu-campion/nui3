@@ -42,7 +42,7 @@ class NUI_API nuiRect
 public:
   nuiRect()
   {
-    Set(0.0f, 0.0f, 0.0f, 0.0f ,false);
+    Set(0.0f, 0.0f, 0.0f, 0.0f, false);
   }
 
   explicit nuiRect(nuiSize x1, nuiSize y1, nuiSize x2, nuiSize y2, bool SecondPairIsSize = true)
@@ -220,6 +220,7 @@ public:
   bool Intersect(const nuiRect& rRect1, const nuiRect& rRect2);
   void Union (const nuiRect& rRect1, const nuiRect& rRect2);
   void Grow(nuiSize x, nuiSize y);
+  void Scale(nuiSize x, nuiSize y);
   nuiRect Size() const;
   bool IsInside(nuiSize x, nuiSize y) const;
   enum DrawMode

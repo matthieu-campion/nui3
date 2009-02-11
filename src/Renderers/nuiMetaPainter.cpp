@@ -279,7 +279,7 @@ void nuiMetaPainter::AddBreakPoint()
   StoreOpCode(eBreak);
 }
 
-//bool nuiMetaPainter::GetClipRect(nuiRect& rRect);
+//bool nuiMetaPainter::GetClipRect(nuiRect& rRect, bool LocalRect);
 
 
 void nuiMetaPainter::ReDraw(nuiDrawContext* pContext)
@@ -501,7 +501,7 @@ void nuiMetaPainter::Reset(nuiPainter const * pFrom)
     mState = pFrom->GetState();
     pFrom->GetClipOffset(mClipOffsetX, mClipOffsetY);
     pFrom->GetSize(mWidth, mHeight);
-    bool clip = pFrom->GetClipRect(mClip);
+    bool clip = pFrom->GetClipRect(mClip, false);
     
     nuiMatrix m(pFrom->GetMatrix());
     mClip.Move(-m.Elt.M14, -m.Elt.M24);

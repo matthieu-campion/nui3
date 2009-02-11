@@ -95,7 +95,7 @@ public:
   virtual void Clip(const nuiRect& rRect);
   virtual void ResetClipRect();
   virtual void EnableClipping(bool set);
-  virtual bool GetClipRect(nuiRect& rRect) const;
+  virtual bool GetClipRect(nuiRect& rRect, bool LocalRect) const;
 
   virtual uint32 GetClipStackSize() const;
 

@@ -119,7 +119,7 @@ void nuiPainter::EnableClipping(bool set)
   mClip.mEnabled = set;
 }
 
-bool nuiPainter::GetClipRect(nuiRect& rRect) const
+bool nuiPainter::GetClipRect(nuiRect& rRect, bool LocalRect) const
 {
   if (mClip.mEnabled)
   {
@@ -128,6 +128,18 @@ bool nuiPainter::GetClipRect(nuiRect& rRect) const
   else
   {
     rRect.Set(0, 0, mWidth, mHeight);
+  }
+  
+  if (LocalRect)
+  {
+    // Transform the rect with the inverse of the current matrix
+    nglMatrixf m(GetMatrix());
+    m.InvertHomogenous();
+    nglVectorf v1(rRect.Left(), rRect.Top(), 0, 1);
+    nglVectorf v2(rRect.Right(), rRect.Bottom(), 0, 1);
+    v1 = m * v1;
+    v2 = m * v2;
+    rRect.Set(v1[0], v1[1], v2[0], v2[1], false);
   }
   return mClip.mEnabled;
 }

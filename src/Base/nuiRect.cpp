@@ -74,7 +74,23 @@ void nuiRect::Grow(nuiSize x, nuiSize y)
   mTop      -= y;
   mRight    += x;
   mBottom   += y;
+  
+#ifdef USE_NUIVALUETYPES  
+  Changed();
+#endif
+}
 
+void nuiRect::Scale(nuiSize x, nuiSize y)
+{
+  nuiSize w = GetWidth();
+  w = ((w * x) - w) * .5f;
+  nuiSize h = GetHeight();
+  h = ((h * y) - h) * .5f;
+  mLeft     -= w;
+  mTop      -= h;
+  mRight    += w;
+  mBottom   += h;
+  
 #ifdef USE_NUIVALUETYPES  
   Changed();
 #endif
