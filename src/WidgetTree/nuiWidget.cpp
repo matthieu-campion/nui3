@@ -1996,9 +1996,6 @@ bool nuiWidget::Drag(nglDragAndDrop* pDragObj)
 void nuiWidget::OnDragFeedback(nglDropEffect dropEffect)
 {
   // Do nothing, drag and drop is not supported by default.
-  
-  //LBDEBUG
-  NGL_OUT(_T("nuiWidget::OnDragFeedback\n"));
 }
 
 
