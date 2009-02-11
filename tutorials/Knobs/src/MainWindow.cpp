@@ -43,7 +43,7 @@ void MainWindow::OnCreation()
   pMainBox->AddCell(pBloc);
   pMainBox->SetCellExpand(pMainBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
   
-  nuiKnob* pKnob = new nuiKnob(nuiRange(0, 0, 30, 1, 10, 10), false/*no background*/);
+  nuiKnob* pKnob = new nuiKnob(nuiRange(0, 0, 30, 1, 10, 10));
   pKnob->SetPosition(nuiCenter);
   pBloc->AddCell(pKnob);
   pBloc->SetCellExpand(pBloc->GetNbCells()-1, nuiExpandShrinkAndGrow);
@@ -57,7 +57,7 @@ void MainWindow::OnCreation()
   pMainBox->AddCell(pBloc);
   pMainBox->SetCellExpand(pMainBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
   
-  mpKnob = new nuiKnob(nuiRange(0, 0, 30, 1, 10, 10), false/*no background*/);
+  mpKnob = new nuiKnob(nuiRange(0, 0, 30, 1, 10, 10));
   mpKnob->SetPosition(nuiCenter);
   pBloc->AddCell(mpKnob);
   pBloc->SetCellExpand(pBloc->GetNbCells()-1, nuiExpandShrinkAndGrow);
