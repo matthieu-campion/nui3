@@ -1522,6 +1522,9 @@
 		E561099B0EF5ED83000170A7 /* nuiUnicode.h in Headers */ = {isa = PBXBuildFile; fileRef = E56109990EF5ED82000170A7 /* nuiUnicode.h */; };
 		E561099D0EF5F3F1000170A7 /* nuiUnicode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E561099C0EF5F3F1000170A7 /* nuiUnicode.cpp */; };
 		E561099E0EF5F3F1000170A7 /* nuiUnicode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E561099C0EF5F3F1000170A7 /* nuiUnicode.cpp */; };
+		E561CCB10F432B1F003B042C /* nuiOffscreenView.h in Headers */ = {isa = PBXBuildFile; fileRef = E561CCB00F432B1F003B042C /* nuiOffscreenView.h */; };
+		E561CCB20F432B1F003B042C /* nuiOffscreenView.h in Headers */ = {isa = PBXBuildFile; fileRef = E561CCB00F432B1F003B042C /* nuiOffscreenView.h */; };
+		E561CCB30F432B1F003B042C /* nuiOffscreenView.h in Headers */ = {isa = PBXBuildFile; fileRef = E561CCB00F432B1F003B042C /* nuiOffscreenView.h */; };
 		E57465150D634B5600A2D66B /* nuiSerializeContext.h in Headers */ = {isa = PBXBuildFile; fileRef = E57465140D634B5600A2D66B /* nuiSerializeContext.h */; };
 		E57465160D634B5600A2D66B /* nuiSerializeContext.h in Headers */ = {isa = PBXBuildFile; fileRef = E57465140D634B5600A2D66B /* nuiSerializeContext.h */; };
 		E57465180D634B6B00A2D66B /* nuiSerializeContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E57465170D634B6B00A2D66B /* nuiSerializeContext.cpp */; };
@@ -4072,6 +4075,7 @@
 		E55FFC7B0C8EF78000C8DDE0 /* nuiFormater.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiFormater.h; path = include/nuiFormater.h; sourceTree = SOURCE_ROOT; };
 		E56109990EF5ED82000170A7 /* nuiUnicode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiUnicode.h; path = include/nuiUnicode.h; sourceTree = SOURCE_ROOT; };
 		E561099C0EF5F3F1000170A7 /* nuiUnicode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiUnicode.cpp; sourceTree = "<group>"; };
+		E561CCB00F432B1F003B042C /* nuiOffscreenView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiOffscreenView.h; path = include/nuiOffscreenView.h; sourceTree = SOURCE_ROOT; };
 		E57465140D634B5600A2D66B /* nuiSerializeContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiSerializeContext.h; path = include/nuiSerializeContext.h; sourceTree = SOURCE_ROOT; };
 		E57465170D634B6B00A2D66B /* nuiSerializeContext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiSerializeContext.cpp; sourceTree = "<group>"; };
 		E57502A30E77EF6800D240DE /* nuiBindings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiBindings.cpp; path = Bindings/nuiBindings.cpp; sourceTree = "<group>"; };
@@ -6523,6 +6527,7 @@
 				E5816DD30C3CECAB00902DFE /* nuiMeshEngine.cpp */,
 				E5816CDC0C3CECAB00902DFE /* nuiMeshEngine.h */,
 				E5816DD40C3CECAB00902DFE /* nuiOffscreenView.cpp */,
+				E561CCB00F432B1F003B042C /* nuiOffscreenView.h */,
 				E5816DD50C3CECAB00902DFE /* nuiProgress.cpp */,
 				E5816CEF0C3CECAB00902DFE /* nuiProgress.h */,
 				E5816DD60C3CECAB00902DFE /* nuiRadioButton.cpp */,
@@ -7559,6 +7564,7 @@
 				40EAFD7B0F2780550072C6DE /* nuiAiffWriter.h in Headers */,
 				E5B678C90F39EFE100DBF325 /* nuiAttributeAnimation.h in Headers */,
 				BC97B41A0F41E14100CCA06C /* nuiRangeKnobAttributeEditor.h in Headers */,
+				E561CCB10F432B1F003B042C /* nuiOffscreenView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8236,6 +8242,7 @@
 				40EAFD7A0F2780550072C6DE /* nuiAiffWriter.h in Headers */,
 				E5B678CB0F39EFE100DBF325 /* nuiAttributeAnimation.h in Headers */,
 				BC97B4190F41E14100CCA06C /* nuiRangeKnobAttributeEditor.h in Headers */,
+				E561CCB30F432B1F003B042C /* nuiOffscreenView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8911,6 +8918,7 @@
 				40EAFD790F2780550072C6DE /* nuiAiffWriter.h in Headers */,
 				E5B678CA0F39EFE100DBF325 /* nuiAttributeAnimation.h in Headers */,
 				BC97B41B0F41E14100CCA06C /* nuiRangeKnobAttributeEditor.h in Headers */,
+				E561CCB20F432B1F003B042C /* nuiOffscreenView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

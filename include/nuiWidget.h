@@ -18,6 +18,7 @@
 #include "nuiHotKey.h"
 #include "nuiDecorationDefines.h"
 #include "nuiDefaultDecoration.h"
+#include "nuiSurface.h"
 
 typedef std::vector<uint8> nuiRenderCache;
 
@@ -350,13 +351,18 @@ public:
   void SetMatrix(const nuiMatrix& rMatrix);
   //@}
 
-  /** @name Automatic Offscreen Rendering Support */
+  /** @name Render Cache */
   //@{
   void EnableRenderCache(bool set); ///< Enable or disable the rendering cache that speeds up Widget rendering. Disable the cache if you need to use OpenGL directly in this widget.
   bool IsRenderCacheEnabled(); ///< See EnableRenderCache.
-  void EnableOffscreen(bool Set); ///< Declare that this widget can use offscreen rendering to speed up display. 
-  bool IsOffscreenEnabled(); ///< Returns true if offscreen rendering is permited on this widget.
-  bool IsOffscreenUsed(); ///< Returns true if offscreen rendering is actually used by the system to display this widget. Offscreen Rendering may be permited by the programmer but not used because of hardware limitations (such as insuficient memory or no offscreen capabilities).
+  //@}
+
+  /** @name Rendering the widget in a surface */
+  //@{
+  void EnableSurface(bool Set); ///< Declare that this widget can use offscreen rendering to speed up display. 
+  bool IsSurfaceEnabled(); ///< Returns true if offscreen rendering is permited on this widget.
+  void DrawSurface(nuiDrawContext* pContext);
+  void InvalidateSurface();
   //@}
 
   virtual nuiWidgetPtr GetChild(const nglString& rName, bool DeepSearch) { return NULL; } ///< Dummy implementation of the GetChild Method for easy widget/Container interaction.
@@ -495,7 +501,6 @@ protected:
   bool mHasUserHeight;
   bool mForceIdealSize;
   bool mSelectionExclusive;
-  bool mOffscreenEnabled;
   bool mSelected;
   bool mEnabled;
   bool mStateLocked;
@@ -511,6 +516,11 @@ protected:
   bool mNeedSelfRedraw;
   bool mAutoClipSelf;
 
+  bool mNeedSurfaceRedraw;
+  bool mSurfaceEnabled;
+  nuiSurface* mpSurface;
+  void UpdateSurfaceRect(const nuiRect& rRect);
+  
   bool mMouseEventEnabled;
   bool mLocalMouseEventEnabled;
   bool mWantKeyboardFocus;

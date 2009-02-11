@@ -11,7 +11,8 @@ nuiSurface* nuiSurface::GetSurface (const nglString& rName, bool Acquired)
   nuiSurface* pSurface = NULL;
 
   nuiSurfaceMap::const_iterator it = mpSurfaces.find(rName);
-  if (it != mpSurfaces.end()) {
+  if (it != mpSurfaces.end())
+  {
     pSurface = it->second;
     if (!Acquired)
       pSurface->Acquire();

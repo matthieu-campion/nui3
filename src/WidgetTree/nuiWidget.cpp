@@ -102,7 +102,10 @@ nuiWidget::nuiWidget()
   mCSSPasses(0),
   mpParent(NULL),
   mpTheme(NULL),
-  mDecorationEnabled(true)
+  mDecorationEnabled(true),
+  mNeedSurfaceRedraw(false),
+  mSurfaceEnabled(false),
+  mpSurface(NULL)
 {
   if (SetObjectClass(_T("nuiWidget")))
     InitAttributes();
@@ -545,6 +548,8 @@ nuiWidget::~nuiWidget()
     mpDecoration->Release();
   }
 
+  if (mpSurface)
+    mpSurface->Release();
   delete mpRenderCache;
 }
 
@@ -780,6 +785,7 @@ void nuiWidget::InvalidateRect(const nuiRect& rRect)
     BroadcastInvalidateRect(this, tmp);
   }
   mNeedSelfRedraw = true;
+  mNeedSurfaceRedraw = mpSurface ? true : false;
   DebugRefreshInfo();
 }
 
@@ -824,6 +830,7 @@ void nuiWidget::Invalidate()
   if (!IsVisible(true))
   {
     mNeedSelfRedraw = true;
+    mNeedSurfaceRedraw = mpSurface ? true : false;
     return;
   }
 
@@ -836,10 +843,24 @@ void nuiWidget::Invalidate()
   DebugRefreshInfo();
 }
 
+void nuiWidget::InvalidateSurface()
+{
+  if (mNeedSurfaceRedraw)
+    return;
+  
+  mNeedSurfaceRedraw = true;
+  if (mpParent)
+    mpParent->InvalidateRect(GetRect());
+  DebugRefreshInfo();
+}
+
+
+
 void nuiWidget::SilentInvalidate()
 {
   mNeedRender = true;
   mNeedSelfRedraw = true;
+  mNeedSurfaceRedraw = mpSurface ? true : false;
   if (mpRenderCache)
     mpRenderCache->Reset(NULL);
   DebugRefreshInfo();
@@ -1009,10 +1030,24 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
   if (!inter.Intersect(_self_and_decorations, clip)) // Only render at the last needed moment. As we are currently offscreen or clipped entirely we will redraw another day.
     return false;
 
-
-  if (mOffscreenEnabled)
+  bool used_surface = false;
+  if (mNeedSelfRedraw && mpSurface)
   {
-    // Create or reuse an offscreen
+    used_surface = true;
+    
+    pContext->PushState();
+    pContext->ResetState();
+    pContext->PushMatrix();
+    pContext->PushClipping();
+    pContext->ResetClipRect();
+    pContext->LoadMatrix(nglMatrixf());
+    
+    NGL_ASSERT(mpSurface);
+    pContext->SetSurface(mpSurface);
+    
+    // clear the surface with transparent black:
+    pContext->SetClearColor(nuiColor(0.0f, 0.0f, 0.0f, 0.0f));
+    pContext->Clear();  
   }
 
   if (gGlobalUseRenderCache && mUseRenderCache && mpRenderCache)
@@ -1058,16 +1093,39 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
     }
   }
 
-  if (mOffscreenEnabled)
+  if (used_surface)
   {
-    // Render the offscreen back to the original render target.
+    pContext->SetSurface(NULL);
+    pContext->PopState();
+    pContext->PopMatrix();
+    pContext->PopClipping();
   }
-
-
+  
+  if (mNeedSurfaceRedraw)
+  {
+    mNeedSurfaceRedraw = false;
+    DrawSurface(pContext);
+  }
+  
   DebugRefreshInfo();
   return true;
 }
 
+void nuiWidget::DrawSurface(nuiDrawContext* pContext)
+{
+  pContext->PushState();
+  pContext->SetTexture(mpSurface->GetTexture());
+  pContext->EnableTexturing(true);
+//  nuiRect _self = GetOverDrawRect(true, false);
+//  _self.Intersect(_self, mVisibleRect);
+
+  nuiRect src, dst;
+  src = GetRect().Size();
+  dst = src;
+  dst.Scale(0.5, 0.5);
+  pContext->DrawImage(dst, src);
+  pContext->PopState();
+}
 
 bool nuiWidget::IsKeyDown (nglKeyCode Key) const
 {
@@ -2246,6 +2304,27 @@ const nuiRect& nuiWidget::GetVisibleRect() const
   return mVisibleRect;
 }
 
+static nglString GetSurfaceName(nuiWidget* pWidget)
+{
+  static uint32 gSurfaceCount = 0;
+  nglString str;
+  str.CFormat(_T("'%ls'/'%ls' %x %d"), pWidget->GetObjectClass().GetChars(), pWidget->GetObjectName().GetChars(), pWidget, gSurfaceCount++); 
+}
+
+void nuiWidget::UpdateSurfaceRect(const nuiRect& rRect)
+{
+  if (mpSurface)
+  {
+    nglString str(GetSurfaceName(this));
+    mpSurface->Release();
+    mpSurface = nuiSurface::CreateSurface(str, rRect.GetWidth(), rRect.GetHeight());
+    mpSurface->SetRenderToTexture(true);
+    nuiTexture* pSurfaceTexture = nuiTexture::GetTexture(mpSurface, false);
+    mpSurface->SetTexture(pSurfaceTexture);
+    //#FIXME what should we do about overdraw here?
+  }
+}
+
 bool nuiWidget::SetLayout(const nuiRect& rRect)
 {
   bool res = false;
@@ -2304,6 +2383,7 @@ bool nuiWidget::SetLayout(const nuiRect& rRect)
 
   if (mNeedSelfLayout)
   {
+    UpdateSurfaceRect(rect);
     res = SetRect(rect);
     Invalidate();
   }
@@ -2371,6 +2451,7 @@ void nuiWidget::SetUserRect(const nuiRect& rRect)
 
     if (optim)
     {
+      UpdateSurfaceRect(rRect);
       SetRect(rRect);
       mpParent->Invalidate();
       Invalidate();
@@ -2729,23 +2810,33 @@ bool nuiWidget::IsRenderCacheEnabled()
   return mUseRenderCache;
 }
 
-void nuiWidget::EnableOffscreen(bool Set)
+void nuiWidget::EnableSurface(bool Set)
 {
-  if (mOffscreenEnabled == Set)
+  if (mSurfaceEnabled == Set)
     return;
-  mOffscreenEnabled = Set;
+  mSurfaceEnabled = Set;
+  if (mSurfaceEnabled)
+  {
+    nglString str(GetSurfaceName(this));
+    nuiRect r(GetRect());
+    mpSurface = nuiSurface::CreateSurface(str, r.GetWidth(), r.GetHeight());
+    mpSurface->SetRenderToTexture(true);
+    nuiTexture* pSurfaceTexture = nuiTexture::GetTexture(mpSurface, false);
+    mpSurface->SetTexture(pSurfaceTexture);
+    //#FIXME what should we do about overdraw here?
+  }
+  else
+  {
+    mpSurface->Release();
+    mpSurface = NULL;
+  }
   Invalidate();
   DebugRefreshInfo();
 }
 
-bool nuiWidget::IsOffscreenEnabled()
+bool nuiWidget::IsSurfaceEnabled()
 {
-  return mOffscreenEnabled;
-}
-
-bool nuiWidget::IsOffscreenUsed()
-{
-  return false; // not implemented right now.
+  return mSurfaceEnabled;
 }
 
 void nuiWidget::SetColor(nuiWidgetElement element, const nuiColor& rColor)
@@ -3053,7 +3144,9 @@ void nuiWidget::AddEvent(const nglString& rName, nuiEventSource& rEvent)
 void nuiWidget::UpdateLayout()
 {
   GetIdealRect();
-  SetRect(GetBorderedRect());
+  nuiRect r(GetBorderedRect());
+  UpdateSurfaceRect(r);
+  SetRect(r);
   Invalidate();
 }
 
