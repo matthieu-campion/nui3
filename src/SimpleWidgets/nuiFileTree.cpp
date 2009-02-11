@@ -565,11 +565,17 @@ nglDragAndDrop* nuiFileTree::OnDragStartDelegate(nuiTreeNode* pNode)
   return pDragObject;  
 }
 
+
+
+
+
+
 // virtual
 void nuiFileTree::OnDragRequestDataDelegate(nuiTreeNode* pNode, nglDragAndDrop* pDragObject, const nglString& rMimeType)
 {
 }
 
+// virtual
 void nuiFileTree::OnDragStopDelegate(nuiTreeNode* pNode, bool canceled)
 {
   nglString res = _T("true");

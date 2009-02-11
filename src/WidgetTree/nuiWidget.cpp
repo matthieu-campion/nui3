@@ -1990,6 +1990,18 @@ bool nuiWidget::Drag(nglDragAndDrop* pDragObj)
   
   return true;
 }
+
+
+// virtual 
+void nuiWidget::OnDragFeedback(nglDropEffect dropEffect)
+{
+  // Do nothing, drag and drop is not supported by default.
+  
+  //LBDEBUG
+  NGL_OUT(_T("nuiWidget::OnDragFeedback\n"));
+}
+
+
 void nuiWidget::OnDragRequestData(nglDragAndDrop* pDragObject, const nglString& rMimeType)
 {
   // Do nothing, drag and drop is not supported by default.

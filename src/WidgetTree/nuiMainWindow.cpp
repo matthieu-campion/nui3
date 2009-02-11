@@ -850,7 +850,8 @@ bool nuiMainWindow::Drag(nuiWidget* pDragSource, nglDragAndDrop* pDragObject)
 
 void nuiMainWindow::OnDragFeedback(nglDropEffect eDropEffect)
 {
-  //NGL_OUT(_T("nuiMainWindow::OnDragFeedback\n"));
+  if (mpDragSource != this)
+    mpDragSource->OnDragFeedback(eDropEffect);
 }
 
 void nuiMainWindow::OnDragRequestData(nglDragAndDrop* pDragObject, const nglString& rMimeType)

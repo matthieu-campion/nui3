@@ -23,7 +23,7 @@
 
 enum nglDropEffect
 {
-  eDropEffectNone,
+  eDropEffectNone=0,
   eDropEffectCopy,
   eDropEffectMove,
   eDropEffectLink,

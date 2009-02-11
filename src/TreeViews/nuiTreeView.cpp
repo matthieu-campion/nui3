@@ -646,12 +646,6 @@ void nuiTreeView::SetDragStartDelegate(const DragStartDelegate& rDelegate)
   mDragStartDelegate = rDelegate;
 }
 
-void nuiTreeView::SetDragFeedbackDelegate(const DragFeedbackDelegate& rDelegate)
-{
-  mDragFeedbackDelegate = rDelegate;
-}
-
-
 void nuiTreeView::SetDragRequestDataDelegate(const DragRequestDataDelegate& rDelegate)
 {
   mDragRequestDataDelegate = rDelegate;
@@ -832,6 +826,8 @@ bool nuiTreeView::MouseMoved(nuiSize X, nuiSize Y)
 
 
 #if !defined _NODND_
+
+
 // virtual 
 void nuiTreeView::OnDragRequestData(nglDragAndDrop* pDragObject, const nglString& rMimeType)
 {
