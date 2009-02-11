@@ -42,6 +42,7 @@ void nuiKnob::Init(const nuiRange& rRange)
 {
   mRange = rRange;
   mpImageSequence = NULL;
+  
   mClicked = false;
   mRange.SetPageSize(0);
   mFrameIndex = 0;
@@ -194,7 +195,7 @@ bool nuiKnob::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
     Grab();
     Invalidate();
     mClickValue = mRange.GetValue();
-
+    
     return true;
   }
   else if (Button & nglMouseInfo::ButtonWheelUp)
@@ -237,7 +238,7 @@ bool nuiKnob::MouseUnclicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
     mClicked = false;
 
     Ungrab();
-   
+    
     Invalidate();
     return true;
   }
@@ -266,7 +267,7 @@ bool nuiKnob::MouseMoved(nuiSize X, nuiSize Y)
     start += (mRange.GetRange() - mRange.GetPageSize()) * (movement/range);
 
     mRange.SetValue(start);
-
+    
     // Rotate the contained widget if there is only one:
     /* unused: nuiWidget* pItem = NULL; */
 

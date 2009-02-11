@@ -55,6 +55,6 @@ void nuiRangeKnobAttributeEditor::Update()
 void nuiRangeKnobAttributeEditor::OnAttributeChanged(const nuiRange& rRange)
 {
   mRange = rRange;
-  Update();
+  Invalidate();
 }
 
