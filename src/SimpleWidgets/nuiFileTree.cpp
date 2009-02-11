@@ -63,7 +63,6 @@ bool nuiFileTree::OnNodeActivated(const nuiEvent& rEvent)
 {
   nuiFileSelectorNode* pNode = (nuiFileSelectorNode*)rEvent.mpUser;
   nglPath path(pNode->GetProperty(_T("Path")));
-  //  NGL_OUT(_T("DEBUG path '%ls'\n"), path.GetChars());
   
   // send signal
   bool res = Activated();
@@ -380,8 +379,6 @@ bool nuiFileTree::isRoot(const nglPath& rPath)
 
 bool nuiFileTree::SetPath(const nglPath& rPath)
 {
-  //NGL_OUT(_T("nuiFileTree::SetPath('%ls')\n"), rPath.GetChars());
-  
   
   nglPath path(rPath);
   path.MakeRelativeTo(GetRootPath());
@@ -400,10 +397,6 @@ bool nuiFileTree::SetPath(const nglPath& rPath)
       nglPath p(pBNode->GetProperty(_T("Path")));
       
       
-      
-      NGL_OUT(_T("%d compare '%ls'(from path '%ls') with '%ls'\n"), i, p.GetNodeName().GetChars(), p.GetChars(), tokens.at(0).GetChars());
-      
-      
       if (p.GetNodeName() == tokens.at(0))
         pRes = pBNode;
       else
@@ -414,8 +407,6 @@ bool nuiFileTree::SetPath(const nglPath& rPath)
         {
           nuiTreeNodePtr pBNode2 = (nuiTreeNodePtr)pBNode->GetChild(j);
           nglPath p(pBNode2->GetProperty(_T("Path")));
-          
-          NGL_OUT(_T("%d %d compare '%ls' with '%ls'\n"), i, j, p.GetNodeName().GetChars(), tokens.at(0).GetChars());
           
           if (p.GetNodeName() == tokens.at(0))
             pRes = pBNode2;
@@ -547,9 +538,6 @@ nglDragAndDrop* nuiFileTree::OnDragStartDelegate(nuiTreeNode* pNode)
   if (!pNode)
     return NULL;
   
-  NGL_OUT(_T("nuiFileTree::OnDragStartDelegate pNode 0x%x\n"), pNode);
-  
-  
   nglString iconName;
   nglPath path(pNode->GetProperty(_T("Path")));
 
@@ -580,7 +568,6 @@ nglDragAndDrop* nuiFileTree::OnDragStartDelegate(nuiTreeNode* pNode)
 // virtual
 void nuiFileTree::OnDragRequestDataDelegate(nuiTreeNode* pNode, nglDragAndDrop* pDragObject, const nglString& rMimeType)
 {
-  NGL_OUT(_T("nuiFileTree::OnDragRequestDataDelegate pNode 0x%x   pDragObject 0x%x   rMimeType '%ls'\n"), pNode, pDragObject, rMimeType.GetChars());
 }
 
 void nuiFileTree::OnDragStopDelegate(nuiTreeNode* pNode, bool canceled)
@@ -588,5 +575,4 @@ void nuiFileTree::OnDragStopDelegate(nuiTreeNode* pNode, bool canceled)
   nglString res = _T("true");
   if (!canceled)
     res = _T("false");
-  NGL_OUT(_T("nuiFileTree::OnDragStopDelegate 0x%x   canceled %ls\n"), pNode, res.GetChars());
 }
