@@ -1365,7 +1365,8 @@ void nuiGLPainter::CreateSurface(nuiSurface* pSurface)
 void nuiGLPainter::DestroySurface(nuiSurface* pSurface)
 {
   std::map<nuiSurface*, FramebufferInfo>::iterator it = mFramebuffers.find(pSurface);
-  if (it == mFramebuffers.end()) {
+  if (it == mFramebuffers.end())
+  {
     return;
   }
   FramebufferInfo info = it->second;

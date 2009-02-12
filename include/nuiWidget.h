@@ -361,7 +361,7 @@ public:
   //@{
   void EnableSurface(bool Set); ///< Declare that this widget can use offscreen rendering to speed up display. 
   bool IsSurfaceEnabled(); ///< Returns true if offscreen rendering is permited on this widget.
-  void DrawSurface(nuiDrawContext* pContext);
+  virtual void DrawSurface(nuiDrawContext* pContext);
   void InvalidateSurface();
   //@}
 
