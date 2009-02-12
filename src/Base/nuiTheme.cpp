@@ -238,7 +238,7 @@ nuiTheme::~nuiTheme()
 #define ACTIVE_SHADE_SIZE 15
 #define SHADE_ALPHA .2f
 
-void nuiTheme::DrawWindowShade(nuiDrawContext* pContext, const nuiRect& rRect, bool Active)
+void nuiTheme::DrawWindowShade(nuiDrawContext* pContext, const nuiRect& rRect, const nuiColor& rColor, bool Active)
 {
   int ShadeSize = Active? ACTIVE_SHADE_SIZE : INACTIVE_SHADE_SIZE;
   nuiRect ShadeRect = rRect;
@@ -247,7 +247,7 @@ void nuiTheme::DrawWindowShade(nuiDrawContext* pContext, const nuiRect& rRect, b
   ShadeRect.mTop += ShadeSize;
   ShadeRect.mBottom += ShadeSize;
 
-  pContext->DrawShade(rRect,ShadeRect);
+  pContext->DrawShade(rRect,ShadeRect, rColor);
 }
 
 #define CAPTION_SIZE 24
@@ -641,7 +641,7 @@ void nuiTheme::DrawButton(nuiDrawContext* pContext, nuiButton* pButton)
   float ShadeSize = pButton->GetShadeSize();
   Rect.Set(ShadeSize, 0.0f, Rect.Right()-ShadeSize, Rect.Bottom()-ShadeSize, false);
   
-  DrawWindowShade(pContext, Rect, !pButton->GetHover() && c);
+  DrawWindowShade(pContext, Rect, nuiColor(1.0f, 1.0f, 1.0f, alpha), !pButton->GetHover() && c);
 
   pContext->EnableBlending(true);
   pContext->SetBlendFunc(nuiBlendTransp);
@@ -671,7 +671,7 @@ void nuiTheme::DrawTab(nuiDrawContext* pContext, nuiTab* pTab)
   nuiRect Rect = pTab->GetRect().Size();
   int ShadeSize = INACTIVE_SHADE_SIZE;
   Rect.Set(Rect.Left()+ShadeSize, Rect.Top(), Rect.Right()-ShadeSize, Rect.Bottom()-ShadeSize, false);
-  DrawWindowShade(pContext, Rect, !pTab->GetHover() && c);
+  DrawWindowShade(pContext, Rect, nuiColor(1.0f, 1.0f, 1.0f, alpha), !pTab->GetHover() && c);
 
   pContext->SetStrokeColor(border);
   pContext->DrawRect(Rect,eStrokeShape);
@@ -694,7 +694,7 @@ void nuiTheme::DrawMenuWindow(nuiDrawContext* pContext, const nuiRect& rRect, nu
            rRect.GetWidth() + pFrame->GetBorder(nuiLeft) + pFrame->GetBorder(nuiRight),
            rRect.GetHeight() + pFrame->GetBorder(nuiTop) + pFrame->GetBorder(nuiBottom));
   
-  pFrame->Draw(pContext, NULL, rect);
+  pFrame->Draw(pContext, pWidget, rect);
   pFrame->Release();
 }
 
@@ -779,7 +779,7 @@ void nuiTheme::DrawScrollBarBackground(nuiDrawContext* pContext, nuiScrollBar* p
   NGL_ASSERT(pDeco);
   
   nuiRect rectDest(0.0f, 0.0f, rRect.GetWidth(), rRect.GetHeight());
-  pDeco->Draw(pContext, NULL, rectDest);
+  pDeco->Draw(pContext, pScroll, rectDest);
   pDeco->Release();
 }
 
@@ -796,7 +796,7 @@ void nuiTheme::DrawScrollBarForeground(nuiDrawContext* pContext, nuiScrollBar* p
   nuiRect rRect = pScroll->GetThumbRect();
   rRect.Grow(-1.f, -1.f);
   
-  pDeco->Draw(pContext, NULL, rRect);
+  pDeco->Draw(pContext, pScroll, rRect);
   pDeco->Release();
 }
 

@@ -1132,7 +1132,7 @@ uint32 nuiDrawContext::GetClipStackSize() const
 
 #define SHADE_ALPHA 0.3f
 
-void nuiDrawContext::DrawShade(const nuiRect& rSourceRect, const nuiRect& rShadeRect)
+void nuiDrawContext::DrawShade(const nuiRect& rSourceRect, const nuiRect& rShadeRect, const nuiColor& rTint)
 {
   bool texturing = mCurrentState.mTexturing;
   bool blending = mCurrentState.mBlending;
@@ -1190,8 +1190,10 @@ void nuiDrawContext::DrawShade(const nuiRect& rSourceRect, const nuiRect& rShade
     pShade->SetEnvMode(GL_MODULATE);
   }
 
-  nuiColor transp(0.0f,0.0f,0.0f,0.0f);
-  nuiColor opaque(0.0f,0.0f,0.0f,SHADE_ALPHA);
+  nuiColor transp(rTint);
+  nuiColor opaque(rTint);
+  transp.Alpha() = 0.0f;
+  opaque.Alpha() *= SHADE_ALPHA;
 
   if (!texturing)
     EnableTexturing(true);

@@ -52,7 +52,7 @@ public:
   };
 
   // Window decorations:
-  virtual void DrawWindowShade (nuiDrawContext* pContext, const nuiRect& rRect, bool Active);
+  virtual void DrawWindowShade (nuiDrawContext* pContext, const nuiRect& rRect, const nuiColor& rColor, bool Active);
   virtual void DrawWindow(nuiDrawContext* pContext, nuiWindow* pWindow); ///< Render a normal window border
   virtual void DrawActiveWindow(nuiDrawContext* pContext, nuiWindow* pWindow); ///< Render a Top Level window border
   virtual void DrawMovingWindow(nuiDrawContext* pContext, nuiWindow* pWindow);
