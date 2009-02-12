@@ -41,7 +41,8 @@ public:
   virtual void ResetClipRect();
   virtual void EnableClipping(bool set);
 //  virtual bool GetClipRect(nuiRect& rRect, bool LocalRect);
-
+  virtual void SetSurface(nuiSurface* pSurface);
+  
   void DrawChild(nuiWidget* pChild);
 
   /** @name Render operation storage management */
@@ -83,6 +84,7 @@ protected:
     eEnableClipping,
 
     eDrawChild,
+    eSetSurface,
     
     eBreak
   };

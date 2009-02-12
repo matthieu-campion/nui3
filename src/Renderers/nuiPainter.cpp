@@ -244,11 +244,8 @@ void nuiPainter::PopSurface()
 {
   nuiSurface* pSurface = mpSurfaceStack.top();
   mpSurfaceStack.pop();
+  SetSurface(pSurface);
   if (pSurface)
-  {
-    if (mpSurface != pSurface)
-      SetSurface(pSurface);
     pSurface->Release();
-  }
 }
 

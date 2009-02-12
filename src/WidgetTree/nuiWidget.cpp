@@ -1045,11 +1045,14 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
       pContext->LoadMatrix(nglMatrixf());
       
       NGL_ASSERT(mpSurface);
+      pContext->PushSurface();
       pContext->SetSurface(mpSurface);
       
       // clear the surface with transparent black:
+      pContext->PushState();
       pContext->SetClearColor(nuiColor(0.0f, 0.0f, 0.0f, 0.0f));
       pContext->Clear();  
+      pContext->PopState();
     }
     
     if (gGlobalUseRenderCache && mUseRenderCache && mpRenderCache)
@@ -1097,7 +1100,7 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
 
     if (used_surface)
     {
-      pContext->SetSurface(NULL);
+      pContext->PopSurface();
       pContext->PopState();
       pContext->PopMatrix();
       pContext->PopClipping();
@@ -1105,7 +1108,7 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
   }
 
   
-  if (mNeedSurfaceRedraw && mpSurface)
+  if (mpSurface)
   {
     mNeedSurfaceRedraw = false;
     DrawSurface(pContext);
@@ -1117,16 +1120,22 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
 
 void nuiWidget::DrawSurface(nuiDrawContext* pContext)
 {
+  NGL_OUT(_T("nuiWidget::DrawSurface %d x %d\n"), (uint32)mpSurface->GetWidth(), (uint32)mpSurface->GetHeight());
   pContext->PushState();
-  pContext->SetTexture(mpSurface->GetTexture());
+  pContext->ResetState();
   pContext->EnableTexturing(true);
-//  nuiRect _self = GetOverDrawRect(true, false);
-//  _self.Intersect(_self, mVisibleRect);
+  nuiTexture* pTexture = mpSurface->GetTexture();
+  NGL_ASSERT(pTexture);
+  pContext->SetTexture(pTexture);
+  pContext->EnableBlending(true);
+  pContext->SetFillColor(nuiColor(1.0f, 1.0f, 1.0f, GetAlpha()));
+  pContext->SetBlendFunc(nuiBlendTransp);
 
   nuiRect src, dst;
   src = GetRect().Size();
   dst = src;
-  dst.Scale(0.5, 0.5);
+  //dst.Scale(0.5, 0.5);
+  //dst.Scale(2, 2);
   pContext->DrawImage(dst, src);
   pContext->PopState();
 }
@@ -2835,6 +2844,7 @@ void nuiWidget::EnableSurface(bool Set)
     mpSurface->SetTexture(pSurfaceTexture);
     //#FIXME what should we do about overdraw here?
     //NGL_OUT(_T("EnableSurfaceOK\n"));
+    InvalidateSurface();
   }
   else
   {

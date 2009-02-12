@@ -200,6 +200,14 @@ void nuiMetaPainter::DrawChild(nuiWidget* pChild)
   mNbDrawChild++;
 }
 
+void nuiMetaPainter::SetSurface(nuiSurface* pSurface)
+{
+  StoreOpCode(eSetSurface);
+  StorePointer(pSurface);
+  if (pSurface)
+    pSurface->Acquire();
+}
+
 void nuiMetaPainter::LoadMatrix(const nuiMatrix& rMatrix)
 {
   StoreOpCode(eLoadMatrix);
@@ -341,6 +349,12 @@ void nuiMetaPainter::ReDraw(nuiDrawContext* pContext)
         pChild->DrawWidget(pContext);
       }
       break;
+    case eSetSurface:
+      {
+        nuiSurface* pSurface = (nuiSurface*)FetchPointer();
+        pContext->SetSurface(pSurface);
+      }
+      break;
     case eLoadMatrix:
       {
         nuiMatrix m;
@@ -442,6 +456,13 @@ void nuiMetaPainter::Reset(nuiPainter const * pFrom)
     case eDrawChild:
       FetchPointer();
       break;
+    case eSetSurface:
+      {
+        nuiSurface* pSurface = (nuiSurface*)FetchPointer();
+        if (pSurface)
+          pSurface->Release();
+        break;
+      }
     case eLoadMatrix:
       {
         nuiMatrix m;
