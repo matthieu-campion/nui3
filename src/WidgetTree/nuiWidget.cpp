@@ -1006,6 +1006,8 @@ bool nuiWidget::InternalDrawWidget(nuiDrawContext* pContext, const nuiRect& _sel
     pContext->PopClipping();
   
   pContext->PopState();
+  
+  return true;
 }
 
 bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
