@@ -73,8 +73,8 @@ label.SetPosition(8);
 button.SetToolTip("This button was created from an nui script.\nIt is composed of some text over an image.\nIf you click on it it will destroy its parent window.");
 button.SetProperty("ToolTipFollowMouse", "false");
 button.SetProperty("ToolTipPosition", "Center");
-windowclass = button.GetProperty("Class");
-windowname  = MainWindow.GetProperty("Name");
+windowclass = button.GetObjectClass();
+windowname  = MainWindow.GetObjectName();
 dump("registered the new button!");
 
 funk OnButtonClick(btn)

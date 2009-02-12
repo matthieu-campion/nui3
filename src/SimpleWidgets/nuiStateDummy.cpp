@@ -45,13 +45,13 @@ nuiXMLNode* nuiStateDummy::Serialize(nuiXMLNode* pParentNode, bool Recursive) co
   nuiXMLNode* pNode = nuiSimpleContainer::Serialize(pParentNode, Recursive);
 
   if (mpState[1 + 0])
-    pNode->SetAttribute(_T("NormalChild"),   mpState[1 + 0]->GetProperty(_T("Name")));
+    pNode->SetAttribute(_T("NormalChild"),   mpState[1 + 0]->GetObjectName());
   if (mpState[1 + 2])
-    pNode->SetAttribute(_T("SelectedChild"), mpState[1 + 2]->GetProperty(_T("Name")));
+    pNode->SetAttribute(_T("SelectedChild"), mpState[1 + 2]->GetObjectName());
   if (mpState[0 + 0])
-    pNode->SetAttribute(_T("DisabledChild"), mpState[0 + 0]->GetProperty(_T("Name")));
+    pNode->SetAttribute(_T("DisabledChild"), mpState[0 + 0]->GetObjectName());
   if (mpState[0 + 2])
-    pNode->SetAttribute(_T("DisabledSelectedChild"), mpState[0 + 2]->GetProperty(_T("Name")));
+    pNode->SetAttribute(_T("DisabledSelectedChild"), mpState[0 + 2]->GetObjectName());
 
   return pNode;
 }

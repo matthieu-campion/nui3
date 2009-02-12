@@ -24,7 +24,7 @@ nuiObject::nuiObject()
 
   nglString name;
   name.CFormat(_T("%p"), this);
-  SetProperty(_T("Name"), name);
+  SetObjectName(name);
 
   mSerializeMode = eSaveNode;
   
@@ -106,18 +106,18 @@ nuiXMLNode* nuiObject::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
   {
     if (pParentNode)
     {
-      pNode = new nuiXMLNode(GetProperty(_T("Class")),pParentNode);
+      pNode = new nuiXMLNode(GetObjectClass(),pParentNode);
     }
     else
     {
-      pNode = new nuiXML(GetProperty(_T("Class")));
+      pNode = new nuiXML(GetObjectClass());
     }
 
     if (!pNode)
       return NULL;
 
-    pNode->SetAttribute(_T("Name"), GetProperty(_T("Name")));
-    pNode->SetAttribute(_T("Class"), GetProperty(_T("Class")));
+    pNode->SetAttribute(_T("Name"), GetObjectName());
+    pNode->SetAttribute(_T("Class"), GetObjectClass());
 
     nuiPropertyMap::const_iterator it;
     nuiPropertyMap::const_iterator end = mProperties.end();
@@ -203,8 +203,6 @@ const nglString& nuiObject::GetObjectName() const
 
 void nuiObject::SetObjectName(const nglString& rName)
 {
-	const nglString propname = _T("Name");
-  mProperties[propname] = rName;
   mObjectName = rName;
   
   DebugRefreshInfo();

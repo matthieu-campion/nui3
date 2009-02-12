@@ -13,7 +13,7 @@ nuiDecoration::nuiDecoration(const nglString& rName)
   if (SetObjectClass(_T("nuiDecoration")))
     InitAttributes();
 
-  SetProperty(_T("Name"), rName);
+  SetObjectName(rName);
     
   mUseWidgetAlpha = true;
   
@@ -65,7 +65,7 @@ void nuiDecoration::SetName(const nglString& rName)
 {
   nglString name(GetName());
   DelDecoration(this);
-  SetProperty(_T("Name"), rName);
+  SetObjectName(rName);
   AddDecoration(this);
 }
 
@@ -103,7 +103,7 @@ nuiDecoration* nuiDecoration::Get(const nglString& rName, bool silent)
 
 void nuiDecoration::AddDecoration(nuiDecoration* pDecoration)
 {
-  const nglString& name(pDecoration->GetProperty(_T("Name")));
+  const nglString& name(pDecoration->GetObjectName());
   std::map<nglString, nuiDecoration*>::iterator it = mDecorations.find(name);
   if (it != mDecorations.end())
     it->second->Release();
@@ -113,7 +113,7 @@ void nuiDecoration::AddDecoration(nuiDecoration* pDecoration)
 
 void nuiDecoration::DelDecoration(nuiDecoration* pDecoration)
 {
-  nglString name(pDecoration->GetProperty(_T("Name")));
+  nglString name(pDecoration->GetObjectName());
   
   std::map<nglString, nuiDecoration*>::iterator it = mDecorations.find(name);
   if (it != mDecorations.end() && pDecoration == it->second)

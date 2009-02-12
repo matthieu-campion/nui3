@@ -109,14 +109,14 @@ void nuiDialog::CreateGrids()
   mpLayoutContainer->AddChild(mpGlobalGrid);
   mpGlobalGrid->SetColumnExpand(0,  nuiExpandShrinkAndGrow);
   mpGlobalGrid->SetRowExpand(0,     nuiExpandShrinkAndGrow);
-  mpGlobalGrid->SetProperty("Name", "GlobalGrid");
+  mpGlobalGrid->SetObjectName(_T("GlobalGrid"));
 
   nuiPositioner* pPositioner = new nuiPositioner(nuiRight);
   mpButtonsGrid = new nuiGrid(1, 1);
   mpButtonsGrid->SetRowExpand(0, nuiExpandShrinkAndGrow);
   pPositioner->AddChild(mpButtonsGrid);
   mpGlobalGrid->SetCell(0,2, pPositioner);
-  mpButtonsGrid->SetProperty("Name", "ButtonsGrid");
+  mpButtonsGrid->SetObjectName(_T("ButtonsGrid"));
 }
 
 void nuiDialog::SetContents(nuiWidget * pWidget, nuiPosition Position)
@@ -170,7 +170,7 @@ void nuiDialog::SetDefaultButton(DialogButtonType button)
 nuiButton* nuiDialog::AddButton(const nglString& rButtonLabel, DialogButtonType button, bool IsDefaultButton)
 {
   nuiButton* pButton = new nuiButton(rButtonLabel);
-//  pButton->SetProperty("Name", rButtonLabel);
+//  pButton->SetObjectName(rButtonLabel);
   pButton->SetObjectName(_T("nuiDialog::Button"));
 
   if (button & eDialogButtonCustom)

@@ -13,11 +13,6 @@ nuiVBox::nuiVBox(uint32 nbcells)
 {
   if (SetObjectClass(_T("nuiVBox")))
     InitAttributes();
-  
-  //mpGrid = new nuiGrid(1, nbcells);
-  //AddChild(mpGrid);
-  //nuiGrid::SetProperty(_T("Name"), _T("nuiVBox::Grid"));
-
 }
 
 

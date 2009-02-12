@@ -10,12 +10,12 @@
 
 nuiNotification::nuiNotification(const nglString& rName)
 {
-  SetProperty(_T("Name"), rName);
+  SetObjectName(rName);
 }
 
 const nglString& nuiNotification::GetName() const
 {
-  return GetProperty(_T("Name"));
+  return GetObjectName();
 }
 
 //////////////////////////////////////////
@@ -92,7 +92,7 @@ void nuiNotificationManager::PostNotification(nuiNotification* pNotification)
 
 void nuiNotificationManager::BroadcastNotification(const nuiNotification& rNotification)
 {
-  std::map<nglString, std::set<nuiNotificationObserver*> >::iterator _it  = mObservers.find(rNotification.GetProperty(_T("Name")));
+  std::map<nglString, std::set<nuiNotificationObserver*> >::iterator _it  = mObservers.find(rNotification.GetObjectName());
   if (_it != mObservers.end())
   {
     std::set<nuiNotificationObserver*> rObservers(_it->second);

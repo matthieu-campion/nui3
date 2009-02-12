@@ -38,7 +38,7 @@ private:
 ///////// nuiWidgetInspectorNode:
 
 nuiWidgetInspectorNode::nuiWidgetInspectorNode(nuiWidget* pTarget)
-: nuiTreeNode(pTarget ? (pTarget->GetProperty("Class") + nglString(" - ") + pTarget->GetProperty("Name")) : _T("Empty"), false, false),
+: nuiTreeNode(pTarget ? (pTarget->GetObjectClass() + nglString(_T(" - ")) + pTarget->GetObjectName()) : nglString(_T("Empty")), false, false),
   mInspectorNodeSink(this),
   mpTarget(pTarget),
   mpTree(NULL)
@@ -58,7 +58,7 @@ bool nuiWidgetInspectorNode::UpdateInfos(const nuiEvent& rEvent)
   float b = 0;
   nuiLabel* pLabel = (nuiLabel*)GetElement();
 
-  nglString str = mpTarget->GetProperty("Class") + nglString(" - ") + mpTarget->GetProperty("Name");
+  nglString str = mpTarget->GetObjectClass() + nglString(" - ") + mpTarget->GetObjectName();
   if (mpTarget->HasGrab())
     str.Insert(_T("[Grab] "), 0);
   if (mpTarget->HasFocus())
@@ -332,10 +332,10 @@ void nuiWidgetInfo::RebuildInfo()
 {
   if (mpTarget)
   {
-    nglString text = mpTarget->GetProperty(_T("Name"));
+    nglString text = mpTarget->GetObjectName();
     mpName->SetText(text);
 
-    //text = mpTarget->GetProperty(_T("Class"));
+    //text = mpTarget->GetObjectClass();
     std::vector<nglString> classes;
     mpTarget->GetObjectInheritance(classes);
     text.Wipe();

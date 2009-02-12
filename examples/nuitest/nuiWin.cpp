@@ -1304,9 +1304,9 @@ public:
       pWidget->AddCell(new nuiLabel(str));
       str.Format(_T("Element pointer: 0x%x"), pItem);
       pWidget->AddCell(new nuiLabel(str));
-      str.Format(_T("Item class: %ls"), pItem->GetProperty(_T("Class")).GetChars());
+      str.Format(_T("Item class: %ls"), pItem->GetObjectClass().GetChars());
       pWidget->AddCell(new nuiLabel(str));
-      str.Format(_T("Item name: %ls"), pItem->GetProperty(_T("Name")).GetChars());
+      str.Format(_T("Item name: %ls"), pItem->GetObjectName().GetChars());
       pWidget->AddCell(new nuiLabel(str));
 
       str.Format(_T("Is open: %ls"), pSelectedNode->IsOpened()?_T("yes"):_T("no"));

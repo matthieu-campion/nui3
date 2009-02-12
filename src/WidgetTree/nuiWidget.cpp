@@ -64,7 +64,7 @@ public:
     
     while (it != end)
     {
-      printf("%ls: %d\n", it->first.GetChars(), it->second);
+      NGL_OUT(_T("%ls: %d\n", it->first.GetChars(), it->second));
       ++it;
     }
   }
@@ -113,7 +113,7 @@ nuiWidget::nuiWidget()
 #ifdef NUI_WIDGET_STATS
   wcount++;
   maxwcount = MAX(wcount, maxwcount);
-  printf("max widgets: %d (total %d)\n", maxwcount, wcount);
+  NGL_OUT(_T("max widgets: %d (total %d)\n"), maxwcount, wcount);
 #endif
   
   Init();
@@ -135,7 +135,7 @@ bool nuiWidget::Load(const nuiXMLNode* pNode)
 #ifdef NUI_WIDGET_STATS
   wcount++;
   maxwcount = MAX(wcount, maxwcount);
-  printf("max widgets: %d (total %d)\n", maxwcount, wcount);
+  NGL_OUT(_T("max widgets: %d (total %d)\n", maxwcount, wcount));
 #endif
   
   Init();
@@ -785,7 +785,7 @@ void nuiWidget::InvalidateRect(const nuiRect& rRect)
     BroadcastInvalidateRect(this, tmp);
   }
   mNeedSelfRedraw = true;
-  mNeedSurfaceRedraw = mpSurface ? true : false;
+  InvalidateSurface();
   DebugRefreshInfo();
 }
 
@@ -830,7 +830,7 @@ void nuiWidget::Invalidate()
   if (!IsVisible(true))
   {
     mNeedSelfRedraw = true;
-    mNeedSurfaceRedraw = mpSurface ? true : false;
+    InvalidateSurface();
     return;
   }
 
@@ -860,7 +860,7 @@ void nuiWidget::SilentInvalidate()
 {
   mNeedRender = true;
   mNeedSelfRedraw = true;
-  mNeedSurfaceRedraw = mpSurface ? true : false;
+  InvalidateSurface();
   if (mpRenderCache)
     mpRenderCache->Reset(NULL);
   DebugRefreshInfo();
@@ -1030,78 +1030,82 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
   if (!inter.Intersect(_self_and_decorations, clip)) // Only render at the last needed moment. As we are currently offscreen or clipped entirely we will redraw another day.
     return false;
 
-  bool used_surface = false;
-  if (mNeedSelfRedraw && mpSurface)
+  if (mNeedRender || !mpSurface)
   {
-    used_surface = true;
-    
-    pContext->PushState();
-    pContext->ResetState();
-    pContext->PushMatrix();
-    pContext->PushClipping();
-    pContext->ResetClipRect();
-    pContext->LoadMatrix(nglMatrixf());
-    
-    NGL_ASSERT(mpSurface);
-    pContext->SetSurface(mpSurface);
-    
-    // clear the surface with transparent black:
-    pContext->SetClearColor(nuiColor(0.0f, 0.0f, 0.0f, 0.0f));
-    pContext->Clear();  
-  }
-
-  if (gGlobalUseRenderCache && mUseRenderCache && mpRenderCache)
-  {
-    if (mNeedSelfRedraw)
+    bool used_surface = false;
+    if (mNeedSelfRedraw && mpSurface)
     {
-      mpSavedPainter = pContext->GetPainter();
-      mpRenderCache->Reset(mpSavedPainter);
-      pContext->SetPainter(mpRenderCache);
+      used_surface = true;
       
-      mDrawingInCache = true;
+      pContext->PushState();
+      pContext->ResetState();
+      pContext->PushMatrix();
+      pContext->PushClipping();
+      pContext->ResetClipRect();
+      pContext->LoadMatrix(nglMatrixf());
       
-      InternalDrawWidget(pContext, _self, _self_and_decorations, false);
+      NGL_ASSERT(mpSurface);
+      pContext->SetSurface(mpSurface);
       
-      pContext->SetPainter(mpSavedPainter);
-      mNeedSelfRedraw = false;
+      // clear the surface with transparent black:
+      pContext->SetClearColor(nuiColor(0.0f, 0.0f, 0.0f, 0.0f));
+      pContext->Clear();  
     }
-
-    if (!drawingincache && !pContext->GetPainter()->GetDummyMode())
+    
+    if (gGlobalUseRenderCache && mUseRenderCache && mpRenderCache)
     {
-      Validate();
-      if (!mMatrixIsIdentity)
+      if (mNeedSelfRedraw)
       {
-        pContext->PushMatrix();
-        pContext->MultMatrix(GetMatrix());
+        mpSavedPainter = pContext->GetPainter();
+        mpRenderCache->Reset(mpSavedPainter);
+        pContext->SetPainter(mpRenderCache);
+        
+        mDrawingInCache = true;
+        
+        InternalDrawWidget(pContext, _self, _self_and_decorations, false);
+        
+        pContext->SetPainter(mpSavedPainter);
+        mNeedSelfRedraw = false;
       }
-
-      mpRenderCache->ReDraw(pContext);
       
-      if (!mMatrixIsIdentity)
-        pContext->PopMatrix();
+      if (!drawingincache && !pContext->GetPainter()->GetDummyMode())
+      {
+        Validate();
+        if (!mMatrixIsIdentity)
+        {
+          pContext->PushMatrix();
+          pContext->MultMatrix(GetMatrix());
+        }
+        
+        mpRenderCache->ReDraw(pContext);
+        
+        if (!mMatrixIsIdentity)
+          pContext->PopMatrix();
+      }
+      
     }
-
-  }
-  else
-  {
-    if (!drawingincache && !pContext->GetPainter()->GetDummyMode())
+    else
     {
-      Validate();
+      if (!drawingincache && !pContext->GetPainter()->GetDummyMode())
+      {
+        Validate();
+        
+        InternalDrawWidget(pContext, _self, _self_and_decorations, true);
+        mNeedSelfRedraw = false;
+      }
+    }
 
-      InternalDrawWidget(pContext, _self, _self_and_decorations, true);
-      mNeedSelfRedraw = false;
+    if (used_surface)
+    {
+      pContext->SetSurface(NULL);
+      pContext->PopState();
+      pContext->PopMatrix();
+      pContext->PopClipping();
     }
   }
 
-  if (used_surface)
-  {
-    pContext->SetSurface(NULL);
-    pContext->PopState();
-    pContext->PopMatrix();
-    pContext->PopClipping();
-  }
   
-  if (mNeedSurfaceRedraw)
+  if (mNeedSurfaceRedraw && mpSurface)
   {
     mNeedSurfaceRedraw = false;
     DrawSurface(pContext);
@@ -2139,9 +2143,9 @@ const nuiRect& nuiWidget::GetIdealRect()
   uint32 parentcount = GetParentCount(this);
   _log .Add(_T("|  "), parentcount)
     .Add(mNeedIdealRect?_T(">>> "):_T(""))
-    .Add(GetProperty(_T("Class")))
+    .Add(GetObjectClass())
     .Add(_T(" / "))
-    .Add(GetProperty(_T("Name")))
+    .Add(GetObjectName())
     .Add(_T(" [GetIdealRect] => "))
     .Add(mIdealRect.GetValue())
     .AddNewLine();
@@ -2308,20 +2312,24 @@ static nglString GetSurfaceName(nuiWidget* pWidget)
 {
   static uint32 gSurfaceCount = 0;
   nglString str;
-  str.CFormat(_T("'%ls'/'%ls' %x %d"), pWidget->GetObjectClass().GetChars(), pWidget->GetObjectName().GetChars(), pWidget, gSurfaceCount++); 
+  str.CFormat(_T("'%ls'/'%ls' %x %d"), pWidget->GetObjectClass().GetChars(), pWidget->GetObjectName().GetChars(), pWidget, gSurfaceCount++);
+  return str;
 }
 
 void nuiWidget::UpdateSurfaceRect(const nuiRect& rRect)
 {
   if (mpSurface)
   {
+    NGL_OUT(_T("UpdateSurfaceRect...\n"));
     nglString str(GetSurfaceName(this));
     mpSurface->Release();
     mpSurface = nuiSurface::CreateSurface(str, rRect.GetWidth(), rRect.GetHeight());
+    mpSurface->Acquire();
     mpSurface->SetRenderToTexture(true);
     nuiTexture* pSurfaceTexture = nuiTexture::GetTexture(mpSurface, false);
     mpSurface->SetTexture(pSurfaceTexture);
     //#FIXME what should we do about overdraw here?
+    NGL_OUT(_T("OK\n"));
   }
 }
 
@@ -2817,13 +2825,16 @@ void nuiWidget::EnableSurface(bool Set)
   mSurfaceEnabled = Set;
   if (mSurfaceEnabled)
   {
+    NGL_OUT(_T("EnableSurface...\n"));
     nglString str(GetSurfaceName(this));
     nuiRect r(GetRect());
     mpSurface = nuiSurface::CreateSurface(str, r.GetWidth(), r.GetHeight());
+    mpSurface->Acquire();
     mpSurface->SetRenderToTexture(true);
     nuiTexture* pSurfaceTexture = nuiTexture::GetTexture(mpSurface, false);
     mpSurface->SetTexture(pSurfaceTexture);
     //#FIXME what should we do about overdraw here?
+    NGL_OUT(_T("OK\n"));
   }
   else
   {

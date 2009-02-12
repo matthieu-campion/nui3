@@ -41,9 +41,9 @@ nuiXMLNode* nuiHoverDummy::Serialize(nuiXMLNode* pParentNode, bool Recursive) co
   nuiXMLNode* pNode = nuiSimpleContainer::Serialize(pParentNode, Recursive);
 
   if (mpHover[0])
-    pNode->SetAttribute(_T("HoverOffChild"), mpHover[0]->GetProperty(_T("Name")));
+    pNode->SetAttribute(_T("HoverOffChild"), mpHover[0]->GetObjectName());
   if (mpHover[1])
-    pNode->SetAttribute(_T("HoverOnChild"),  mpHover[1]->GetProperty(_T("Name")));
+    pNode->SetAttribute(_T("HoverOnChild"),  mpHover[1]->GetObjectName());
 
   return pNode;
 }

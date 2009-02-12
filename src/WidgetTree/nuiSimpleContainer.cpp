@@ -85,7 +85,7 @@ bool nuiSimpleContainer::AddChild(nuiWidgetPtr pChild)
 {
   if (GetDebug())
   {
-    NGL_OUT(_T("[%ls] Add Child 0x%x <--- 0x%x\n"), GetProperty(_T("Class")).GetChars(), this, pChild);
+    NGL_OUT(_T("[%ls] Add Child 0x%x <--- 0x%x\n"), GetObjectClass().GetChars(), this, pChild);
   }
   nuiContainer* pParent = pChild->GetParent();
   NGL_ASSERT(pParent != this);

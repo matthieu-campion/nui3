@@ -14,13 +14,11 @@ class nuiTexture;
 typedef std::map<nglString, nuiSurface*, nglString::LessFunctor> nuiSurfaceMap;
 typedef std::set<nuiSurfaceCache*> nuiSurfaceCacheSet;
 
-class NUI_API nuiSurface : public nuiObject, public nuiRefCount
+class NUI_API nuiSurface : public nuiObject
 {
 public:
   static nuiSurface* GetSurface (const nglString& rName, bool Acquired); ///< Get a surface from its ID
-  static nuiSurface* CreateSurface (const nglString& rName,
-                                    const nuiSize& rWidth,
-                                    const nuiSize& rHeight); ///< Create a surface
+  static nuiSurface* CreateSurface (const nglString& rName, nuiSize Width, nuiSize Height); ///< Create a surface
 
   static void AddCache(nuiSurfaceCache* pCache);
   static void DelCache(nuiSurfaceCache* pCache);
@@ -40,11 +38,20 @@ public:
   void SetTexture(nuiTexture* pTexture);
   nuiTexture* GetTexture() const;
 
+  uint32 Acquire();    
+  uint32 Release();
+  uint GetRefCount();
+  void SetPermanent(bool Permanent = true);
+  bool IsPermanent();
+  
 protected:
-  nuiSurface(const nuiSize& rWidth, const nuiSize& rHeight);
+  nuiSurface(const nglString& rName, nuiSize Width, nuiSize Height);
   virtual ~nuiSurface();
 
 private:
+  uint32 mCount;
+  bool mPermanent;
+
   nuiSize mWidth;
   nuiSize mHeight;
   

@@ -504,8 +504,8 @@ void nuiMainWindow::DBG_DisplayMouseOverInfo()
     text.CFormat
       (
         _T("Class: '%ls'\nName: '%ls'\n"),
-        pWidget->GetProperty(_T("Class")).GetChars(),
-        pWidget->GetProperty(_T("Name")).GetChars()
+        pWidget->GetObjectClass().GetChars(),
+        pWidget->GetObjectName().GetChars()
       );
     nuiXMLNode* pNode = pWidget->Serialize(NULL,false);
     if (!pNode) // We have no information

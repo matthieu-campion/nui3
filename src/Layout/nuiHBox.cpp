@@ -14,11 +14,6 @@ nuiHBox::nuiHBox(uint32 nbcells)
 {
   if (SetObjectClass(_T("nuiHBox")))
     InitAttributes();
-  
-//  mpGrid = new nuiGrid(nbcells, 1);
-//  AddChild(mpGrid);
-//  nuiGrid::SetProperty(_T("Name"), _T("nuiHBox::Grid"));
-
 }
 
 

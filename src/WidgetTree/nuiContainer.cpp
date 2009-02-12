@@ -212,7 +212,7 @@ nuiWidgetPtr nuiContainer::GetChild(const nglString& rName, bool recurse )
   for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
   {
     nuiWidgetPtr pItem = pIt->GetWidget();
-    if (pItem->GetProperty(nglString(_T("Name"))) == rName)
+    if (pItem->GetObjectName() == rName)
     {
       delete pIt;
       return pItem;
@@ -265,7 +265,7 @@ nuiWidgetPtr nuiContainer::SearchForChild(const nglString& rName, bool recurse )
   for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
   {
     nuiWidgetPtr pItem = pIt->GetWidget();
-    if (pItem->GetProperty(nglString(_T("Name"))) == rName)
+    if (pItem->GetObjectName() == rName)
     {
       delete pIt;
       return pItem;

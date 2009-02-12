@@ -548,15 +548,15 @@ bool nuiTopLevel::Grab(nuiWidgetPtr pWidget)
 
   NGL_TOUCHES_DEBUG( NGL_OUT(_T("TouchId[%d] "), mMouseInfo.mTouchId) );
   NGL_TOUCHES_DEBUG( NGL_OUT(_T("%ls of type %ls already grabbed on touch id[%d]\n"), 
-          pWidget->GetProperty(_T("Name")).GetChars(),
-          pWidget->GetProperty(_T("Class")).GetChars(), GetGrabId(pWidget)) );
+          pWidget->GetObjectName().GetChars(),
+          pWidget->GetObjectClass().GetChars(), GetGrabId(pWidget)) );
 
     return false;
   }
   if (pWidget) {
     NGL_TOUCHES_DEBUG( NGL_OUT(_T("TouchId[%d] "), mMouseInfo.mTouchId) );
     NGL_TOUCHES_DEBUG( NGL_OUT(_T("Grab from %ls of type %ls\n"),
-            pWidget->GetProperty(_T("Name")).GetChars(), pWidget->GetProperty(_T("Class")).GetChars()) );
+            pWidget->GetObjectName().GetChars(), pWidget->GetObjectClass().GetChars()) );
   }
 
   nuiWidgetPtr pGrab = GetGrab();
@@ -614,7 +614,7 @@ NGL_TOUCHES_DEBUG( NGL_OUT(_T("nuiTopLevel::Ungrab 0x%x\n"), pWidget) );
 if (pWidget) {
 //  NGL_TOUCHES_DEBUG( NGL_OUT(_T("TouchId[%d] "), mMouseInfo.mTouchId) );
   NGL_TOUCHES_DEBUG( NGL_OUT(_T("Ungrab from %ls of type %ls\n"),
-          pWidget->GetProperty(_T("Name")).GetChars(), pWidget->GetProperty(_T("Class")).GetChars()) );
+          pWidget->GetObjectName().GetChars(), pWidget->GetObjectClass().GetChars()) );
 }
 
 #ifdef _MULTI_TOUCHES_
@@ -749,7 +749,7 @@ void nuiTopLevel::PushGrab(nglTouchId touchId, nuiWidgetPtr pWidget)
 {
   NGL_ASSERT(pWidget);
   NGL_TOUCHES_DEBUG( NGL_OUT(_T("Push[%d] Grabstack: [%ls] of type [%ls]\n"),
-          pWidget->GetProperty(_T("Name")).GetChars(), pWidget->GetProperty(_T("Class")).GetChars()) );
+          pWidget->GetObjectName().GetChars(), pWidget->GetObjectClass().GetChars()) );
   mpGrabStack[touchId].push_back(pWidget);
 }
 
@@ -763,8 +763,8 @@ nuiWidgetPtr nuiTopLevel::PopGrab(nglTouchId touchId)
 
   nuiWidgetPtr pWidget = rGrabStack.back();
   NGL_TOUCHES_DEBUG( NGL_OUT(_T("->%ls of type %ls\n"),
-                              pWidget->GetProperty(_T("Name")).GetChars(),
-                              pWidget->GetProperty(_T("Class")).GetChars()) );
+                              pWidget->GetObjectName().GetChars(),
+                              pWidget->GetObjectClass().GetChars()) );
   rGrabStack.pop_back();
   return pWidget;
 }
