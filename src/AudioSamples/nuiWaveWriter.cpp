@@ -229,8 +229,8 @@ uint32 nuiWaveWriter::Write(const void* pBuffer, uint32 SampleFrames, nuiSampleB
   uint64 NbFrames = mrSampleInfo.GetSampleFrames() + SampleFrames;
   mrSampleInfo.SetSampleFrames( NbFrames );
   
-  
-  const uint64 NbSamplePointsToRead = SampleFrames * mrSampleInfo.GetChannels();
+  const uint32 SamplePointsToWrite = SampleFrames * mrSampleInfo.GetChannels();
+  uint32 SampleFramesWritten = 0;
   
   switch(format)
   {
@@ -240,12 +240,12 @@ uint32 nuiWaveWriter::Write(const void* pBuffer, uint32 SampleFrames, nuiSampleB
       {
         case 16 :
           {
-            return mrStream.WriteInt16( (int16*)pBuffer, NbSamplePointsToRead) / mrSampleInfo.GetChannels();
+            SampleFramesWritten = mrStream.WriteInt16( (int16*)pBuffer, SamplePointsToWrite) / mrSampleInfo.GetChannels();
           }
           break;
           
         default:
-          return false;
+          SampleFramesWritten = 0;
           break;
       }
     }
@@ -260,34 +260,33 @@ uint32 nuiWaveWriter::Write(const void* pBuffer, uint32 SampleFrames, nuiSampleB
             float* pTempFloat = (float*)pBuffer;
             
             std::vector<uint8> TempBuffer;
-            TempBuffer.resize(NbSamplePointsToRead * 3); //nb of sample points * 3 bytes (24 bits) = nb of bytes to read
+            TempBuffer.resize(SamplePointsToWrite * 3); //nb of sample points * 3 bytes (24 bits) = nb of bytes to read
             
-            nuiAudioConvert_FloatTo24bitsLittleEndian(pTempFloat,&TempBuffer[0],NbSamplePointsToRead);
+            nuiAudioConvert_FloatTo24bitsLittleEndian(pTempFloat,&TempBuffer[0],SamplePointsToWrite);
             
-            return mrStream.WriteUInt8(&TempBuffer[0], NbSamplePointsToRead * 3) / (3 * mrSampleInfo.GetChannels());
+            SampleFramesWritten =  mrStream.WriteUInt8(&TempBuffer[0], SamplePointsToWrite * 3) / (3 * mrSampleInfo.GetChannels());
           }
           break;
           
         case 32 :
           {
-            //mrSampleInfo.SetFormatTag(WAVE_FORMAT_IEEE_FLOAT);
             float* pTempFloat = (float*)pBuffer;
-            return mrStream.WriteFloat(pTempFloat, NbSamplePointsToRead) / mrSampleInfo.GetChannels();
+            SampleFramesWritten = mrStream.WriteFloat(pTempFloat, SamplePointsToWrite) / mrSampleInfo.GetChannels();
           }
           break;
           
         default:
-          return false;
+          SampleFramesWritten = 0;
           break;
       }
     }
       break;
       
     default :
-      return false;
+      SampleFramesWritten = 0;
       break;
   }
   
   
-  return true;
+  return SampleFramesWritten;
 }

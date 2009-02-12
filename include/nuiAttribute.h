@@ -1146,7 +1146,7 @@ private:
 
 
 
-#define DECLARE_NUIATTRIBUTE_TYPE(X)  template<> uint64 nuiAttributeTypeTrait<X>::mTypeId = GetNewAttributeUniqueId();
+#define NUI_DECLARE_ATTRIBUTE_TYPE(X)  template<> uint64 nuiAttributeTypeTrait<X>::mTypeId = GetNewAttributeUniqueId();
 
 ///////////////////////////// Specializations for simple types:
 
