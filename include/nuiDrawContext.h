@@ -102,7 +102,7 @@ public:
   //@}
 
   void SetPainter(nuiPainter* pPainter);
-  nuiPainter* GetPainter();
+  nuiPainter* GetPainter() const;
 
   /** @name Render state manipulation */
   //@{
@@ -110,7 +110,7 @@ public:
   void PopState();
 
   bool ResetState();
-  const nuiRenderState& GetState();
+  const nuiRenderState& GetState() const;
   virtual void SetState(const nuiRenderState& rState)
   {
     mpPainter->SetState(rState);
@@ -125,16 +125,18 @@ public:
 
   /** @name Texture manipulation */
   //@{
-  bool IsTextureCurrent  ( nuiTexture* pTex );
-  nuiTexture* GetTexture ( );
-  void SetTexture ( nuiTexture* pTex );
+  bool IsTextureCurrent(nuiTexture* pTex) const;
+  nuiTexture* GetTexture() const;
+  void SetTexture(nuiTexture* pTex);
   //@}
   
   /** @name Surface manipulation */
   //@{
-  bool IsSurfaceCurrent  ( nuiSurface* pSurface );
-  nuiSurface* GetSurface ( );
-  void SetSurface ( nuiSurface* pSurface );
+  bool IsSurfaceCurrent(nuiSurface* pSurface) const;
+  nuiSurface* GetSurface() const;
+  void SetSurface(nuiSurface* pSurface);
+  void PushSurface();
+  void PopSurface();
   //@}
   
   /** @name Matrix operations */
@@ -142,7 +144,7 @@ public:
   void PushMatrix();
   void PopMatrix();
   void LoadMatrix(const nuiMatrix& Matrix);
-  void GetMatrix(nuiMatrix& Matrix);
+  void GetMatrix(nuiMatrix& Matrix) const;
   const nuiMatrix& GetMatrix() const;
   void MultMatrix(const nuiMatrix& Matrix);
   void Translate(const nuiVector2& Vector);
@@ -155,15 +157,15 @@ public:
   //@{
   void SetFillColor(const nuiColor& rColor);
   void SetStrokeColor(const nuiColor& rColor);
-  const nuiColor& GetFillColor();
-  const nuiColor& GetStrokeColor();
+  const nuiColor& GetFillColor() const;
+  const nuiColor& GetStrokeColor() const;
 
   void SetLineWidth(nuiSize Width);
   void EnableAntialiasing(bool set);
-  bool GetAntialiasing();
+  bool GetAntialiasing() const;
 
   virtual void SetWinding(nuiShape::Winding Rule); ///< Set the shapes filling/rasterization rule. This one is used only if the rendering shape have their rule set to nuiShape::eNone
-  nuiShape::Winding GetWinding(); ///< Get the shapes filling/rasterization rule.
+  nuiShape::Winding GetWinding() const; ///< Get the shapes filling/rasterization rule.
   //@}
 
   /** @name Drawing function */
@@ -187,16 +189,16 @@ public:
   //@}
 
   void SetSize(uint w, uint h); ///< Set the size of the drawing surface (for clipping calculus).
-  int GetWidth();
-  int GetHeight();
+  int GetWidth() const;
+  int GetHeight() const;
 
   /** @name Fonts and text handling */
   //@{
   bool SetFont (nuiFont* pFont, bool AlreadyAcquired=false); ///< Set the font that will be used by the subsequent calls to DrawText.
-  nuiFont* GetFont(); ///< Retrieve the current font.
+  nuiFont* GetFont() const; ///< Retrieve the current font.
 
   void SetTextColor(const nuiColor& rColor);
-  nuiColor GetTextColor();
+  nuiColor GetTextColor() const;
   void DrawText(nuiSize x, nuiSize y, const nglString& rString); /// Draw text at the given coordinates and the current font.
   void DrawText(nuiSize x, nuiSize y, const nuiFontLayout& rLayout); /// Draw text layout at the given coordinates and the current font. The given layout must use the same font as the current font otherwise the results are unpredictable.
   //@}
@@ -204,13 +206,13 @@ public:
   /** @name Global Draw Settings Manipulation */
   //@{
   void PermitAntialiasing(bool Set);
-  bool IsAntialiasingPermited();
+  bool IsAntialiasingPermited() const;
   //@}
 
   /** @name OpenGL Shading Language support */
   //@{
   void SetShader(nuiShader* pShader) { mCurrentState.mpShader = pShader; }
-  nuiShader* GetShader() { return mCurrentState.mpShader; }
+  nuiShader* GetShader() const { return mCurrentState.mpShader; }
   void DisableShader() { SetShader(NULL); }
   //@}
 

@@ -18,7 +18,6 @@ nuiRenderState::nuiRenderState()
   mTexturing = false;
   mColorBuffer = true;
   mStencilBuffer = false;
-  mRenderToSurface = false;
 
   mLineCap = nuiLineCapBut;
   mLineJoin = nuiLineJoinBevel;
@@ -26,8 +25,6 @@ nuiRenderState::nuiRenderState()
   mBlendFunc = nuiBlendTransp;
 
   mpTexture = NULL;
-
-  mpSurface = NULL;
 
   mAntialiasing = false;
   mWinding = nuiShape::eNonZero;
@@ -45,7 +42,6 @@ nuiRenderState::nuiRenderState(const nuiRenderState& rState)
   mpTexture = NULL;
   mpFont = NULL;
   mpShader = NULL;
-  mpSurface = NULL;
 
   Copy(rState);
 }
@@ -62,7 +58,6 @@ void nuiRenderState::Copy(const nuiRenderState& rState)
   mTexturing      = rState.mTexturing;
   mColorBuffer    = rState.mColorBuffer;
   mStencilBuffer  = rState.mStencilBuffer;
-  mRenderToSurface= rState.mRenderToSurface;
   mWinding        = rState.mWinding;
   mAntialiasing   = rState.mAntialiasing;
   mLineWidth      = rState.mLineWidth;
@@ -93,12 +88,6 @@ void nuiRenderState::Copy(const nuiRenderState& rState)
     pOldFont->Release();
 
   mpShader = rState.mpShader;
-
-  if (rState.mpSurface)
-    rState.mpSurface->Acquire();
-  if (mpSurface)
-    mpSurface->Release();
-  mpSurface = rState.mpSurface;
 }
 
 nuiRenderState::~nuiRenderState()
@@ -108,9 +97,6 @@ nuiRenderState::~nuiRenderState()
 
   if (mpFont)
     mpFont->Release();
-
-  if (mpSurface)
-    mpSurface->Release();
 }
 
 bool nuiRenderState::operator==(const nuiRenderState& rState) const
@@ -120,7 +106,6 @@ bool nuiRenderState::operator==(const nuiRenderState& rState) const
     (mTexturing      == rState.mTexturing)        &&
     (mColorBuffer    == rState.mColorBuffer)      &&
     (mStencilBuffer  == rState.mStencilBuffer)    &&
-    (mRenderToSurface== rState.mRenderToSurface)  &&
     (mWinding        == rState.mWinding)          &&
     (mAntialiasing   == rState.mAntialiasing)     &&
     (mLineWidth      == rState.mLineWidth)        &&
@@ -135,8 +120,7 @@ bool nuiRenderState::operator==(const nuiRenderState& rState) const
     (mStencilMode    == rState.mStencilMode)      &&
     (mpTexture       == rState.mpTexture)         &&
     (mpFont          == rState.mpFont)            &&
-    (mpShader        == rState.mpShader)          &&
-    (mpSurface       == rState.mpSurface);
+    (mpShader        == rState.mpShader);
   
   return state;
 }

@@ -37,6 +37,7 @@ public:
   virtual void PushMatrix();
   virtual void PopMatrix();
   virtual uint32 GetRectangleTextureSupport() const;
+  virtual void SetSurface(nuiSurface* pSurface);
 
   virtual void CreateTexture(nuiTexture* pTexture);
   virtual void DestroyTexture(nuiTexture* pTexture);
@@ -45,6 +46,8 @@ public:
   virtual void CreateSurface(nuiSurface* pSurface);
   virtual void DestroySurface(nuiSurface* pSurface);
   virtual void InvalidateSurface(nuiSurface* pSurface, bool ForceReload);
+  
+  
   
   void Enable3DMode(bool set);
   bool Get3DMode() const;
@@ -73,7 +76,6 @@ protected:
   GLenum GetTextureTarget(bool POT) const;
   void UploadTexture(nuiTexture* pTexture);
 
-  void ApplySurface(const nuiRenderState& rState, bool ForceApply);
   class FramebufferInfo
   {
   public:

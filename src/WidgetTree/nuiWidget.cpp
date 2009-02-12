@@ -2320,7 +2320,7 @@ void nuiWidget::UpdateSurfaceRect(const nuiRect& rRect)
 {
   if (mpSurface)
   {
-    NGL_OUT(_T("UpdateSurfaceRect...\n"));
+    //NGL_OUT(_T("UpdateSurfaceRect...\n"));
     nglString str(GetSurfaceName(this));
     mpSurface->Release();
     mpSurface = nuiSurface::CreateSurface(str, rRect.GetWidth(), rRect.GetHeight());
@@ -2329,7 +2329,7 @@ void nuiWidget::UpdateSurfaceRect(const nuiRect& rRect)
     nuiTexture* pSurfaceTexture = nuiTexture::GetTexture(mpSurface, false);
     mpSurface->SetTexture(pSurfaceTexture);
     //#FIXME what should we do about overdraw here?
-    NGL_OUT(_T("OK\n"));
+    //NGL_OUT(_T("UpdateSurfaceRectOK\n"));
   }
 }
 
@@ -2825,7 +2825,7 @@ void nuiWidget::EnableSurface(bool Set)
   mSurfaceEnabled = Set;
   if (mSurfaceEnabled)
   {
-    NGL_OUT(_T("EnableSurface...\n"));
+    //NGL_OUT(_T("EnableSurface...\n"));
     nglString str(GetSurfaceName(this));
     nuiRect r(GetRect());
     mpSurface = nuiSurface::CreateSurface(str, r.GetWidth(), r.GetHeight());
@@ -2834,7 +2834,7 @@ void nuiWidget::EnableSurface(bool Set)
     nuiTexture* pSurfaceTexture = nuiTexture::GetTexture(mpSurface, false);
     mpSurface->SetTexture(pSurfaceTexture);
     //#FIXME what should we do about overdraw here?
-    NGL_OUT(_T("OK\n"));
+    //NGL_OUT(_T("EnableSurfaceOK\n"));
   }
   else
   {

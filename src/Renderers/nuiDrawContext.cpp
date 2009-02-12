@@ -62,7 +62,7 @@ void nuiDrawContext::SetPainter(nuiPainter* pPainter)
   mpPainter = pPainter;
 }
 
-nuiPainter* nuiDrawContext::GetPainter()
+nuiPainter* nuiDrawContext::GetPainter() const
 {
   return mpPainter;
 }
@@ -194,7 +194,7 @@ void nuiDrawContext::PopState()
   mStateChanges++;
 }
 
-const nuiRenderState& nuiDrawContext::GetState()
+const nuiRenderState& nuiDrawContext::GetState() const
 {
   return mCurrentState;
 }
@@ -203,13 +203,9 @@ bool nuiDrawContext::ResetState()
 {
   nuiRenderState Dummy;
   nuiShader* pShader = mCurrentState.mpShader;
-  nuiSurface* pSurface = mCurrentState.mpSurface;
-  if (pSurface)
-    pSurface->Acquire();
 
   mCurrentState = Dummy;
   mCurrentState.mpShader = pShader;
-  mCurrentState.mpSurface = pSurface;
   mStateChanges++;
   return true;
 }
@@ -282,12 +278,12 @@ void nuiDrawContext::SetTexture (nuiTexture* pTex)
   mStateChanges++;
 }
 
-bool nuiDrawContext::IsTextureCurrent(nuiTexture* pTex) 
+bool nuiDrawContext::IsTextureCurrent(nuiTexture* pTex) const
 { 
   return mCurrentState.mpTexture == pTex;
 }
 
-nuiTexture* nuiDrawContext::GetTexture()
+nuiTexture* nuiDrawContext::GetTexture() const
 { 
   return mCurrentState.mpTexture; 
 }
@@ -298,28 +294,29 @@ nuiTexture* nuiDrawContext::GetTexture()
  *
  ****************************************************************************/
 
-void nuiDrawContext::SetSurface (nuiSurface* pSurface) 
+void nuiDrawContext::SetSurface(nuiSurface* pSurface) 
 {
-  nuiSurface* pOld = mCurrentState.mpSurface;
-  if (pSurface == pOld)
-    return;
-  
-  mCurrentState.mpSurface = pSurface ;
-  if (pSurface)
-    pSurface->Acquire();
-  if (pOld)
-    pOld->Release();
-  mStateChanges++;
+  mpPainter->SetSurface(pSurface);
 }
 
-bool nuiDrawContext::IsSurfaceCurrent(nuiSurface* pSurface) 
-{ 
-  return mCurrentState.mpSurface == pSurface;
+void nuiDrawContext::PushSurface() 
+{
+  mpPainter->PushSurface();
 }
 
-nuiSurface* nuiDrawContext::GetSurface()
+void nuiDrawContext::PopSurface() 
+{
+  mpPainter->PopSurface();
+}
+
+bool nuiDrawContext::IsSurfaceCurrent(nuiSurface* pSurface) const
 { 
-  return mCurrentState.mpSurface; 
+  return GetSurface() == pSurface;
+}
+
+nuiSurface* nuiDrawContext::GetSurface() const
+{ 
+  return mpPainter->GetSurface(); 
 }
 
 /****************************************************************************
@@ -340,12 +337,12 @@ void nuiDrawContext::SetStrokeColor(const nuiColor& rColor)
   mStateChanges++;
 }
 
-const nuiColor& nuiDrawContext::GetFillColor()
+const nuiColor& nuiDrawContext::GetFillColor() const
 {
   return mCurrentState.mFillColor;
 }
 
-const nuiColor& nuiDrawContext::GetStrokeColor()
+const nuiColor& nuiDrawContext::GetStrokeColor() const
 {
   return mCurrentState.mStrokeColor;
 }
@@ -366,7 +363,7 @@ void nuiDrawContext::EnableAntialiasing(bool set)
   mStateChanges++;
 }
 
-bool nuiDrawContext::GetAntialiasing()
+bool nuiDrawContext::GetAntialiasing() const
 {
   return mCurrentState.mAntialiasing;
 }
@@ -377,7 +374,7 @@ void nuiDrawContext::SetWinding(nuiShape::Winding Rule)
 //  mStateChanges++;
 }
 
-nuiShape::Winding nuiDrawContext::GetWinding()
+nuiShape::Winding nuiDrawContext::GetWinding() const
 {
   return mCurrentState.mWinding;
 }
@@ -477,7 +474,7 @@ bool nuiDrawContext::SetFont (nuiFont* pFont, bool AlreadyAcquired)
   return true;
 }
 
-nuiFont* nuiDrawContext::GetFont()
+nuiFont* nuiDrawContext::GetFont() const
 {
   return mCurrentState.mpFont;
 }
@@ -487,7 +484,7 @@ void nuiDrawContext::SetTextColor(const nuiColor& rColor)
   mCurrentState.mTextColor = rColor;
 }
 
-nuiColor nuiDrawContext::GetTextColor()
+nuiColor nuiDrawContext::GetTextColor() const
 {
   return mCurrentState.mTextColor;
 }
@@ -507,7 +504,7 @@ void nuiDrawContext::PermitAntialiasing(bool Set)
   mPermitAntialising = Set;
 }
 
-bool nuiDrawContext::IsAntialiasingPermited()
+bool nuiDrawContext::IsAntialiasingPermited() const
 {
   return mPermitAntialising;
 }
@@ -1112,7 +1109,7 @@ void nuiDrawContext::LoadIdentity()
   LoadMatrix(m);
 }
 
-void nuiDrawContext::GetMatrix(nuiMatrix& rMatrix)
+void nuiDrawContext::GetMatrix(nuiMatrix& rMatrix) const
 {
   rMatrix = mpPainter->GetMatrix();
 }
@@ -1476,12 +1473,12 @@ void nuiDrawContext::SetSize(uint w, uint h)
   mpPainter->SetSize(w, h);
 }
 
-int nuiDrawContext::GetWidth()
+int nuiDrawContext::GetWidth() const
 {
   return (int)mWidth;
 }
 
-int nuiDrawContext::GetHeight()
+int nuiDrawContext::GetHeight() const
 {
   return (int)mHeight;
 }

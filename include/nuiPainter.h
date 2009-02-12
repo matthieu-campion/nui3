@@ -84,6 +84,8 @@ public:
   virtual void ClearColor() = 0;
   virtual void ClearStencil(uint8 value) = 0;
 
+  virtual void SetSurface(nuiSurface* pSurface);
+  
   virtual void LoadMatrix(const nuiMatrix& rMatrix);
   virtual void MultMatrix(const nuiMatrix& rMatrix);
   virtual void PushMatrix();
@@ -97,6 +99,10 @@ public:
   virtual void EnableClipping(bool set);
   virtual bool GetClipRect(nuiRect& rRect, bool LocalRect) const;
 
+  virtual nuiSurface* GetSurface() const;
+  virtual void PushSurface();
+  virtual void PopSurface();
+  
   virtual uint32 GetClipStackSize() const;
 
   virtual uint32 GetRectangleTextureSupport() const;
@@ -130,7 +136,8 @@ public:
   
 protected:
   nuiRenderState mState;
-  std::stack <nuiClipper*> mpClippingStack;
+  std::stack<nuiClipper*> mpClippingStack;
+  std::stack<nuiSurface*> mpSurfaceStack;
   nuiSize mClipOffsetX;
   nuiSize mClipOffsetY;
   uint32 mWidth;
@@ -146,6 +153,8 @@ protected:
 
   bool mDummyMode;
 
+  nuiSurface* mpSurface;
+  
   mutable bool mEnableDrawArray;
   static uint32 mNeedTextureBackingStore;
   void AddNeedTextureBackingStore();

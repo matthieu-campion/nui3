@@ -17,6 +17,7 @@ nuiPainter::nuiPainter(const nuiRect& rRect, nglContext* pContext)
   mHeight = ToNearest(rRect.GetHeight());
   mMatrixStack.push(nuiMatrix());
   mDummyMode = false;
+  mpSurface = NULL;
 
   mAngle=0;
 
@@ -31,6 +32,12 @@ nuiPainter::~nuiPainter()
     delete mpClippingStack.top();
     mpClippingStack.pop();
   }
+
+  while (!mpSurfaceStack.empty())
+  {
+    PopSurface();
+  }
+  SetSurface(NULL);
 }
 
 void nuiPainter::StartRendering(nuiSize ClipOffsetX, nuiSize ClipOffsetY)
@@ -207,3 +214,41 @@ void nuiPainter::DelNeedTextureBackingStore()
     nuiTexture::RetainBuffers(false);
   }
 }
+
+nuiSurface* nuiPainter::GetSurface() const
+{
+  return mpSurface;
+}
+
+void nuiPainter::SetSurface(nuiSurface* pSurface)
+{
+  if (pSurface == mpSurface)
+    return;
+  
+  if (pSurface)
+    pSurface->Acquire();
+  if (mpSurface)
+    mpSurface->Release();
+  
+  mpSurface = pSurface;
+}
+
+void nuiPainter::PushSurface()
+{
+  if (mpSurface)
+    mpSurface->Acquire();
+  mpSurfaceStack.push(mpSurface);
+}
+
+void nuiPainter::PopSurface()
+{
+  nuiSurface* pSurface = mpSurfaceStack.top();
+  mpSurfaceStack.pop();
+  if (pSurface)
+  {
+    if (mpSurface != pSurface)
+      SetSurface(pSurface);
+    pSurface->Release();
+  }
+}
+
