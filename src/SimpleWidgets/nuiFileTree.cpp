@@ -241,8 +241,12 @@ bool nuiFileTree::SetRootPath(const nglPath& rPath)
     mpTreeView = new nuiTreeView(pRoot, false);
     mpTreeView->SetDeSelectable(false);
     pScrollView->AddChild(mpTreeView);
-    
   }
+
+  mpTreeView->SetDragStartDelegate(nuiMakeDelegate(this, &nuiFileTree::OnDragStartDelegate));
+  mpTreeView->SetDragRequestDataDelegate(nuiMakeDelegate(this, &nuiFileTree::OnDragRequestDataDelegate));
+  mpTreeView->SetDragStopDelegate(nuiMakeDelegate(this, &nuiFileTree::OnDragStopDelegate));
+  
   
   return true;
 }
