@@ -23,8 +23,8 @@
 #ifdef _UIKIT_
 const bool gGlobalUseRenderCache = true;
 #else
-const bool gGlobalUseRenderCache = false;
-//const bool gGlobalUseRenderCache = true;
+//const bool gGlobalUseRenderCache = false;
+const bool gGlobalUseRenderCache = true;
 #endif
 
 bool nuiWidget::mSelfClippingDefault = true;
@@ -1120,7 +1120,7 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
 
 void nuiWidget::DrawSurface(nuiDrawContext* pContext)
 {
-  NGL_OUT(_T("nuiWidget::DrawSurface %d x %d\n"), (uint32)mpSurface->GetWidth(), (uint32)mpSurface->GetHeight());
+  //NGL_OUT(_T("nuiWidget::DrawSurface %d x %d\n"), (uint32)mpSurface->GetWidth(), (uint32)mpSurface->GetHeight());
   pContext->PushState();
   pContext->ResetState();
   pContext->EnableTexturing(true);

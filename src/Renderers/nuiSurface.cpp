@@ -23,7 +23,7 @@ nuiSurface* nuiSurface::GetSurface (const nglString& rName, bool Acquired)
 nuiSurface* nuiSurface::CreateSurface (const nglString& rName, nuiSize Width, nuiSize Height)
 {
   nuiSurface* pSurface = NULL;
-  NGL_OUT(_T("nuiSurface::CreateSurface(%ls, %.1f, %.1f)\n"), rName.GetChars(), Width, Height);
+  //NGL_OUT(_T("nuiSurface::CreateSurface(%ls, %.1f, %.1f)\n"), rName.GetChars(), Width, Height);
   NGL_ASSERT(mpSurfaces.find(rName) == mpSurfaces.end());
   pSurface = new nuiSurface(rName, Width, Height);
   pSurface->Acquire();
@@ -35,7 +35,7 @@ nuiSurface* nuiSurface::CreateSurface (const nglString& rName, nuiSize Width, nu
 nuiSurface::nuiSurface(const nglString& rName, nuiSize Width, nuiSize Height)
   : nuiObject()
 {
-  NGL_OUT(_T("nuiSurface CTOR 0x%x (%f x %f\n"), this, Width, Height);
+  //NGL_OUT(_T("nuiSurface CTOR 0x%x (%f x %f\n"), this, Width, Height);
   SetObjectClass(_T("nuiSurface"));
   SetObjectName(rName);
   mCount = 0;
@@ -68,7 +68,7 @@ nuiSurface::~nuiSurface()
     ++it;
   }
   mpSurfaces.erase(GetObjectName());
-  NGL_OUT(_T("nuiSurface DTOR 0x%x\n"), this);
+  //NGL_OUT(_T("nuiSurface DTOR 0x%x\n"), this);
 }
 
 nuiSize nuiSurface::GetWidth() const
