@@ -257,6 +257,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\Attributes\nuiRangeKnobAttributeEditor.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Attributes\nuiRectAttributeEditor.cpp"
 					>
 				</File>

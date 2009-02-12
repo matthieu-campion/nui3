@@ -112,7 +112,7 @@
 //#error "bleh"
 #endif
 
-inline bool nuiCheckFramebufferStatus()
+bool nuiGLPainter::CheckFramebufferStatus()
 {
   return true;
 #if 1
@@ -140,54 +140,6 @@ inline bool nuiCheckFramebufferStatus()
   return (status == GL_FRAMEBUFFER_COMPLETE_NUI);
 #endif
 }
-
-#ifndef _OPENGL_ES_
-void TEST_FBO_CREATION()
-{  
-  static uint32 prout = 0;
-  printf("prout %d\n", prout++);
-
-  // #TEST FBO creation:
-  // create FBO object
-  GLuint					FBOid = 0;
-  GLuint					FBOTextureId = 0;
-  
-  glGenFramebuffersEXT(1, &FBOid);
-  // the texture
-  glGenTextures(1, &FBOTextureId);
-  
-  // Bind to FBO
-  glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, FBOid);
-  
-  // Sanity check against maximum OpenGL texture size
-  // If bigger adjust to maximum possible size
-  // while maintain the aspect ratio
-  GLint maxTexSize; 
-  glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTexSize);
-  
-  // Initialize FBO Texture
-  glBindTexture(GL_TEXTURE_RECTANGLE_ARB, FBOTextureId);
-  // Using GL_LINEAR because we want a linear sampling for this particular case
-  // if your intention is to simply get the bitmap data out of Core Image
-  // you might want to use a 1:1 rendering and GL_NEAREST
-  glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-  glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-  glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-  glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-  
-  // the GPUs like the GL_BGRA / GL_UNSIGNED_INT_8_8_8_8_REV combination
-  // others are also valid, but might incur a costly software translation.
-#ifdef _MACOSX_  
-  glPixelStorei(GL_UNPACK_CLIENT_STORAGE_APPLE, GL_FALSE);
-#endif
-  glTexImage2D(GL_TEXTURE_RECTANGLE_ARB, 0, GL_RGBA, 256, 256, 0, GL_BGRA, GL_UNSIGNED_INT_8_8_8_8_REV, NULL);
-  nuiCheckForGLErrors();
-  
-  // and attach texture to the FBO as its color destination
-  glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_RECTANGLE_ARB, FBOTextureId, 0);
-  nuiCheckFramebufferStatus();
-}
-#endif;
 
 uint32 nuiGLPainter::mActiveContexts = 0;
 
@@ -1581,13 +1533,13 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
         glRenderbufferStorageNUI(GL_RENDERBUFFER_NUI, GL_RGBA, width, height);
         nuiCheckForGLErrors();
         
-        glFramebufferRenderbufferNUI( GL_FRAMEBUFFER_NUI,
+        glFramebufferRenderbufferNUI(GL_FRAMEBUFFER_NUI,
                                      GL_COLOR_ATTACHMENT0_NUI,
                                      GL_RENDERBUFFER_NUI,
                                      info.mRenderbuffer);
         nuiCheckForGLErrors();
       }
-      nuiCheckFramebufferStatus();
+      CheckFramebufferStatus();
       nuiCheckForGLErrors();
       mFramebuffers[pSurface] = info;
     }
@@ -1599,7 +1551,7 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
       glBindRenderbufferNUI(GL_RENDERBUFFER_NUI, info.mRenderbuffer);
       
       nuiCheckForGLErrors();
-      nuiCheckFramebufferStatus();
+      CheckFramebufferStatus();
     }
     nuiSetViewport(0, pSurface->GetWidth(), pSurface->GetHeight());
   }
@@ -1610,7 +1562,7 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
     glBindRenderbufferNUI(GL_RENDERBUFFER_NUI, mOldRenderbuffer);
     
     nuiCheckForGLErrors();
-    nuiCheckFramebufferStatus();
+    CheckFramebufferStatus();
     
     nuiSetViewport(mAngle, mWidth, mHeight);
     

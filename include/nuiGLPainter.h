@@ -92,6 +92,7 @@ protected:
   GLint mOldFramebuffer, mOldRenderbuffer;
 
   bool m3DMode;
+  bool CheckFramebufferStatus();
 };
 
 inline void nuiCheckForGLErrors()
