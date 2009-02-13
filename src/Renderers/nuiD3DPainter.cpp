@@ -212,7 +212,10 @@ static void ConvertMatrix(D3DMATRIX& rResult, const nuiMatrix& rSource)
 }
 
 nuiD3DPainter::nuiD3DPainter(nglContext* pContext, const nuiRect& rRect)
-: nuiPainter(rRect, pContext)
+: nuiPainter(rRect, pContext),
+  mpRenderTexture(NULL),
+  mpRenderSurface(NULL),
+  mpBackBuffer(NULL)
 {
   mpVB = NULL;
   mnCurrentVBOffset = 0;
@@ -541,28 +544,38 @@ void nuiD3DPainter::SetState(const nuiRenderState& rState, bool ForceApply)
   //pDev->SetRenderState( D3DRS_DIFFUSEMATERIALSOURCE, D3DMCS_COLOR1 );
   if (mState.mTexturing)
   {
-    //selon le type de texture, on prend la texture ou on add la texture à la diffuse
-    //attention au blending avec les textures 8 bits !!!
-    if (mState.mpTexture->GetImage()->GetBitDepth() == 8)
+    nuiSurface* pSurface = mState.mpTexture->GetSurface();
+    nglImage* pImage = mState.mpTexture->GetImage();
+    if (pImage)
     {
-      hr = pDev->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_ADD); 
+      //selon le type de texture, on prend la texture ou on add la texture à la diffuse
+      //attention au blending avec les textures 8 bits !!!
+      if (mState.mpTexture->GetImage()->GetBitDepth() == 8)
+      {
+        hr = pDev->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_ADD); 
+      }
+      else
+      {
+        hr = pDev->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG2); 
+      }
+       
+
+      hr = pDev->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
     }
     else
     {
-      hr = pDev->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_SELECTARG2); 
+      hr = pDev->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG2);
+      hr = pDev->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
     }
-     
-
-    hr = pDev->SetTextureStageState( 0, D3DTSS_ALPHAOP, D3DTOP_MODULATE); 
   }
   else
   {
     //select diffuse color
     
-    hr = pDev->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_SELECTARG1); //D3DTOP_MODULATE SELECT1
+    hr = pDev->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1); //D3DTOP_MODULATE SELECT1
      
     
-    hr = pDev->SetTextureStageState( 0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1); //D3DTOP_MODULATE SELECT1 //D3DTOP_SELECTARG1
+    hr = pDev->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1); //D3DTOP_MODULATE SELECT1 //D3DTOP_SELECTARG1
 
   }
 
@@ -615,6 +628,9 @@ void nuiD3DPainter::CreateDeviceObjects()
       PROFILE_CHRONO_RESET(i);
 #endif
   }
+
+  pDev->GetRenderTarget(0, &mpBackBuffer);
+
 }
 
 
@@ -1493,33 +1509,33 @@ void nuiD3DPainter::ApplyTextureFiltering(LPDIRECT3DDEVICE9 pDev, GLuint minfilt
   switch (minfilter)
 	{
 	  case GL_NEAREST:
-      NGL_OUT(_T("MINFILTER GL_NEAREST"));
+      //NGL_OUT(_T("MINFILTER GL_NEAREST"));
       hr = pDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_POINT);
       hr = pDev->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_NONE);
       
 		  break;
 	  case GL_LINEAR:
-      NGL_OUT(_T("MINFILTER GL_LINEAR"));
+      //NGL_OUT(_T("MINFILTER GL_LINEAR"));
       hr = pDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
       hr = pDev->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_NONE);
 		  break;
     case GL_NEAREST_MIPMAP_NEAREST:
-      NGL_OUT(_T("MINFILTER GL_NEAREST_MIPMAP_NEAREST"));
+      //NGL_OUT(_T("MINFILTER GL_NEAREST_MIPMAP_NEAREST"));
       hr = pDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_POINT);
       hr = pDev->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_POINT);
       break;
     case GL_LINEAR_MIPMAP_NEAREST:
-      NGL_OUT(_T("MINFILTER GL_LINEAR_MIPMAP_NEAREST"));
+      //NGL_OUT(_T("MINFILTER GL_LINEAR_MIPMAP_NEAREST"));
       hr = pDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_POINT);
       hr = pDev->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
       break;
     case GL_NEAREST_MIPMAP_LINEAR:
-      NGL_OUT(_T("MINFILTER GL_NEAREST_MIPMAP_LINEAR"));
+      //NGL_OUT(_T("MINFILTER GL_NEAREST_MIPMAP_LINEAR"));
       hr = pDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
       hr = pDev->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_POINT);
       break;
     case GL_LINEAR_MIPMAP_LINEAR:
-      NGL_OUT(_T("MINFILTER GL_LINEAR_MIPMAP_LINEAR"));
+      //NGL_OUT(_T("MINFILTER GL_LINEAR_MIPMAP_LINEAR"));
       hr = pDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
       hr = pDev->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
       break;
@@ -1530,15 +1546,15 @@ void nuiD3DPainter::ApplyTextureFiltering(LPDIRECT3DDEVICE9 pDev, GLuint minfilt
   switch (magfilter)
 	{
 	  case GL_NEAREST:
-      NGL_OUT(_T("MAGFILTER GL_NEAREST"));
+      //NGL_OUT(_T("MAGFILTER GL_NEAREST"));
       pDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_POINT);
 		  break;
 	  case GL_LINEAR:
-      NGL_OUT(_T("MAGFILTER GL_LINEAR"));
+      //NGL_OUT(_T("MAGFILTER GL_LINEAR"));
       pDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 		  break;
 	  default:
-      NGL_OUT(_T("MAGFILTER default !"));
+      //NGL_OUT(_T("MAGFILTER default !"));
       pDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 		  return;
 		  break;
@@ -1664,77 +1680,6 @@ void nuiD3DPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
       hr = pDev->SetTexture(0, NULL); //disable texturing
     }
     //NGL_OUT(_T("Change texture from 0x%x to 0x%x\n"), outtarget, intarget);
-/*
-    mTextureTarget = intarget;
-    if (intarget != outtarget)
-    {
-      // Texture Target has changed
-      if (outtarget)
-      {
-        glDisable(outtarget);
-        nuiCheckForGLErrors();
-      }
-      //NGL_OUT(_T("disable outtarget\n"));
-      if (intarget && mState.mTexturing && mState.mpTexture)
-      {
-        mState.mTexturing = rState.mTexturing;
-        //NGL_OUT(_T("enable intarget\n"));
-        glEnable(intarget);
-        nuiCheckForGLErrors();
-      }
-    }
-    else
-    {
-      // Texture Target have not changed     
-      if (mState.mTexturing != rState.mTexturing) // Have texture on/off changed?
-      {
-        // Should enable or disable texturing
-        mState.mTexturing = rState.mTexturing;
-        if (mState.mTexturing)
-        {
-          glEnable(mTextureTarget);
-          nuiCheckForGLErrors();
-        }
-        else
-        {
-          glDisable(mTextureTarget);
-          nuiCheckForGLErrors();
-        }
-      }
-    }
-  }
-
-  if (ForceApply || (mState.mTexturing != rState.mTexturing))
-  {
-    // Texture have not changed, but texturing may have been enabled / disabled
-    mState.mTexturing = rState.mTexturing;
-
-    GLenum target = 0;
-    if (mState.mpTexture)
-    {
-      target = GetTextureTarget(mState.mpTexture->IsPowerOfTwo());
-
-      if (target && mState.mTexturing)
-      {
-        //NGL_OUT(_T("Enable 0x%x\n"), target);
-        glEnable(mTextureTarget);
-        nuiCheckForGLErrors();
-      }
-      else
-      {
-        //NGL_OUT(_T("Disable 0x%x\n"), target);
-        glDisable(mTextureTarget);
-        nuiCheckForGLErrors();
-      }
-    }
-    else
-    {
-      //NGL_OUT(_T("Disable 0x%x\n"), target);
-      if (mTextureTarget)
-        glDisable(mTextureTarget);
-      nuiCheckForGLErrors();
-    }
-	*/
   } 
 }
 
@@ -1743,6 +1688,80 @@ void nuiD3DPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
 uint32 nuiD3DPainter::GetRectangleTextureSupport() const
 {
   return mCanRectangleTexture;
+}
+
+void nuiD3DPainter::SetSurface(nuiSurface* pSurface)
+{
+  NGL_OUT(_T("SetSurface(0x%x)\n"), pSurface);
+
+  LPDIRECT3DDEVICE9 pDev = mpContext->GetDirect3DDevice();
+  if (pSurface)
+  {
+    uint32 width = pSurface->GetWidth();
+    uint32 height = pSurface->GetHeight();
+    std::map<nuiSurface*, FramebufferInfo>::const_iterator it = mFramebuffers.find(pSurface);
+
+    FramebufferInfo info;
+    if (it == mFramebuffers.end())
+    {
+      // Create the rendertarget
+      info.mpRenderTexture = NULL;
+      info.mpRenderSurface = NULL;
+      pDev->CreateTexture(width, height, 1, D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &info.mpRenderTexture, NULL);
+      info.mpRenderTexture->GetSurfaceLevel(0, &info.mpRenderSurface);
+      //pDev->GetTransform(D3DTS_PROJECTION,&matOldProjection);
+
+      mFramebuffers[pSurface] = info;
+      TextureInfo tinfo;
+      tinfo.mpTexture = mpRenderTexture;
+      tinfo.mReload = false;
+      mTextures[pSurface->GetTexture()] = tinfo;
+
+    }
+    else
+    {
+      info = it->second;
+    }
+
+    pDev->SetRenderTarget(0, info.mpRenderSurface);
+  }
+  else
+  {
+    pDev->SetRenderTarget(0, mpBackBuffer);
+  }
+}
+
+void nuiD3DPainter::CreateSurface(nuiSurface* pSurface)
+{
+}
+
+nuiD3DPainter::FramebufferInfo::FramebufferInfo()
+{
+  bool mReload = true;
+  mpRenderTexture = NULL;
+  mpRenderSurface = NULL;
+}
+
+void nuiD3DPainter::DestroySurface(nuiSurface* pSurface)
+{
+  LPDIRECT3DDEVICE9 pDev = mpContext->GetDirect3DDevice();
+  std::map<nuiSurface*, FramebufferInfo>::const_iterator it = mFramebuffers.find(pSurface);
+
+  if (it != mFramebuffers.end())
+  {
+    FramebufferInfo info = it->second;
+    info.mpRenderSurface->Release();
+    //info.mpRenderTexture->Release();
+    DestroyTexture(pSurface->GetTexture());
+  }
+  else
+  {
+    // Surface not found...
+  }
+}
+
+void nuiD3DPainter::InvalidateSurface(nuiSurface* pSurface, bool ForceReload)
+{
 }
 
 #endif //   #ifndef __NUI_NO_D3D__

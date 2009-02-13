@@ -37,6 +37,11 @@ public:
   virtual void MultMatrix(const nuiMatrix& rMatrix);
   virtual void PushMatrix();
   virtual void PopMatrix();
+  virtual void SetSurface(nuiSurface* pSurface);
+
+  virtual void CreateSurface(nuiSurface* pSurface);
+  virtual void DestroySurface(nuiSurface* pSurface);
+  virtual void InvalidateSurface(nuiSurface* pSurface, bool ForceReload);
 
   virtual void CreateDeviceObjects();
   virtual void ReleaseDeviceObjects();
@@ -88,6 +93,21 @@ protected:
   void UploadTexture(nuiTexture* pTexture);
 
   uint32 mCanRectangleTexture;
+
+  // Surfaces:
+  class FramebufferInfo
+  {
+  public:
+    FramebufferInfo();
+    
+    bool mReload;
+    LPDIRECT3DTEXTURE9 mpRenderTexture;
+    LPDIRECT3DSURFACE9 mpRenderSurface;
+  };
+  std::map<nuiSurface*, FramebufferInfo> mFramebuffers;
+  LPDIRECT3DTEXTURE9 mpRenderTexture;
+  LPDIRECT3DSURFACE9 mpRenderSurface;
+  LPDIRECT3DSURFACE9 mpBackBuffer;
 
 };
 #endif //   #ifndef __NUI_NO_D3D__
