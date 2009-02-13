@@ -213,8 +213,6 @@ static void ConvertMatrix(D3DMATRIX& rResult, const nuiMatrix& rSource)
 
 nuiD3DPainter::nuiD3DPainter(nglContext* pContext, const nuiRect& rRect)
 : nuiPainter(rRect, pContext),
-  mpRenderTexture(NULL),
-  mpRenderSurface(NULL),
   mpBackBuffer(NULL)
 {
   mpVB = NULL;
@@ -1692,6 +1690,13 @@ uint32 nuiD3DPainter::GetRectangleTextureSupport() const
 
 void nuiD3DPainter::SetSurface(nuiSurface* pSurface)
 {
+  if (pSurface == mpSurface)
+  {
+    nuiPainter::SetSurface(pSurface);
+  }
+  
+  nuiPainter::SetSurface(pSurface);
+
   NGL_OUT(_T("SetSurface(0x%x)\n"), pSurface);
 
   LPDIRECT3DDEVICE9 pDev = mpContext->GetDirect3DDevice();
@@ -1705,15 +1710,13 @@ void nuiD3DPainter::SetSurface(nuiSurface* pSurface)
     if (it == mFramebuffers.end())
     {
       // Create the rendertarget
-      info.mpRenderTexture = NULL;
-      info.mpRenderSurface = NULL;
       pDev->CreateTexture(width, height, 1, D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &info.mpRenderTexture, NULL);
       info.mpRenderTexture->GetSurfaceLevel(0, &info.mpRenderSurface);
       //pDev->GetTransform(D3DTS_PROJECTION,&matOldProjection);
 
       mFramebuffers[pSurface] = info;
       TextureInfo tinfo;
-      tinfo.mpTexture = mpRenderTexture;
+      tinfo.mpTexture = info.mpRenderTexture;
       tinfo.mReload = false;
       mTextures[pSurface->GetTexture()] = tinfo;
 
@@ -1723,11 +1726,15 @@ void nuiD3DPainter::SetSurface(nuiSurface* pSurface)
       info = it->second;
     }
 
+    pDev->EndScene();
     pDev->SetRenderTarget(0, info.mpRenderSurface);
+    pDev->BeginScene();
   }
   else
   {
+    pDev->EndScene();
     pDev->SetRenderTarget(0, mpBackBuffer);
+    pDev->BeginScene();
   }
 }
 

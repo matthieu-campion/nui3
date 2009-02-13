@@ -105,8 +105,6 @@ protected:
     LPDIRECT3DSURFACE9 mpRenderSurface;
   };
   std::map<nuiSurface*, FramebufferInfo> mFramebuffers;
-  LPDIRECT3DTEXTURE9 mpRenderTexture;
-  LPDIRECT3DSURFACE9 mpRenderSurface;
   LPDIRECT3DSURFACE9 mpBackBuffer;
 
 };
