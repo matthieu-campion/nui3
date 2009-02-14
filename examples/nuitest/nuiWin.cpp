@@ -708,6 +708,7 @@ bool nuiWin::CreateTreeViewWindow(const nuiEvent& rEvent)
 
   nuiTreeView* pTreeView = new nuiTreeView(pTreeNode);
   pScrollView->AddChild(pTreeView);
+  pTreeView->EnableSurface(true);
 
   return false;
 }
