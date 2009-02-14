@@ -534,7 +534,7 @@ void nuiTabView::SetFolded( bool set, bool Animate )
     mSliding = false;
     StopAutoDraw();
     if (mRect.GetSurface() > 0.0f)
-      SetRect(mRect);
+      UpdateLayout();
     else
       InvalidateLayout();
   }

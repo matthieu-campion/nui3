@@ -476,7 +476,7 @@ bool nuiFileTree::SetPath(const nglPath& rPath)
     {
       PathChanged();
       mpTreeView->SelectionChanged();
-      mpTreeView->SetRect(mpTreeView->GetIdealRect());
+      mpTreeView->SetLayout(mpTreeView->GetIdealRect());
 
       return false;
     }
@@ -485,7 +485,7 @@ bool nuiFileTree::SetPath(const nglPath& rPath)
   
   PathChanged();
   mpTreeView->SelectionChanged();
-  mpTreeView->SetRect(mpTreeView->GetIdealRect());
+  mpTreeView->SetLayout(mpTreeView->GetIdealRect());
   
   // Update infos and change the edit line:
   nglPathInfo info;

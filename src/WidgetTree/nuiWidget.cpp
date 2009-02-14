@@ -1024,18 +1024,23 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
   nuiRect clip;
   pContext->GetClipRect(clip, true);
   nuiRect _self = GetOverDrawRect(true, false);
-  _self.Intersect(_self, mVisibleRect);
   nuiRect _self_and_decorations = GetOverDrawRect(true, true);
-  _self_and_decorations.Intersect(_self_and_decorations, mVisibleRect);
-
   nuiRect inter;
-  if (!inter.Intersect(_self_and_decorations, clip)) // Only render at the last needed moment. As we are currently offscreen or clipped entirely we will redraw another day.
-    return false;
+  
+  if (!mSurfaceEnabled)
+  {
+    _self.Intersect(_self, mVisibleRect);
+    _self_and_decorations.Intersect(_self_and_decorations, mVisibleRect);
+    if (!inter.Intersect(_self_and_decorations, clip)) // Only render at the last needed moment. As we are currently offscreen or clipped entirely we will redraw another day.
+      return false;
+  }
 
+  UpdateSurfaceRect(mRect);
+  
   if (mNeedRender || !mpSurface)
   {
     bool used_surface = false;
-    if (mNeedSelfRedraw && mpSurface)
+    if (mNeedSelfRedraw && mSurfaceEnabled)
     {
       used_surface = true;
       
@@ -1110,7 +1115,7 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
   }
 
   
-  if (mpSurface)
+  if (mSurfaceEnabled)
   {
     mNeedSurfaceRedraw = false;
     DrawSurface(pContext);
@@ -1131,6 +1136,7 @@ void nuiWidget::DrawSurface(nuiDrawContext* pContext)
   pContext->SetTexture(pTexture);
   pContext->EnableBlending(true);
   pContext->SetFillColor(nuiColor(1.0f, 1.0f, 1.0f, GetAlpha()));
+  //pContext->SetFillColor(nuiColor(1.0f, 1.0f, 1.0f, 1.0f));
   pContext->SetBlendFunc(nuiBlendTransp);
 
   nuiRect src, dst;
@@ -2329,7 +2335,7 @@ static nglString GetSurfaceName(nuiWidget* pWidget)
 
 void nuiWidget::UpdateSurfaceRect(const nuiRect& rRect)
 {
-  if (mpSurface)
+  if (mSurfaceEnabled && (mpSurface->GetWidth() != mRect.GetWidth() || mpSurface->GetHeight() != mRect.GetHeight()))
   {
     NGL_OUT(_T("UpdateSurfaceRect... %f * %f\n"), rRect.GetWidth(), rRect.GetHeight());
     nglString str(GetSurfaceName(this));
@@ -2402,7 +2408,6 @@ bool nuiWidget::SetLayout(const nuiRect& rRect)
 
   if (mNeedSelfLayout)
   {
-    UpdateSurfaceRect(rect);
     res = SetRect(rect);
     Invalidate();
   }
@@ -2470,7 +2475,6 @@ void nuiWidget::SetUserRect(const nuiRect& rRect)
 
     if (optim)
     {
-      UpdateSurfaceRect(rRect);
       SetRect(rRect);
       mpParent->Invalidate();
       Invalidate();
@@ -3168,7 +3172,6 @@ void nuiWidget::UpdateLayout()
 {
   GetIdealRect();
   nuiRect r(GetBorderedRect());
-  UpdateSurfaceRect(r);
   SetRect(r);
   Invalidate();
 }

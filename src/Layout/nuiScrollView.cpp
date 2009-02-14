@@ -487,7 +487,7 @@ bool nuiScrollView::Scrolled(const nuiEvent& rEvent)
   if (mSmoothScrolling && !mHThumbPressed && !mVThumbPressed)
     OnSmoothScrolling(NULL);
   else
-    SetRect(GetRect());
+    UpdateLayout();
   Invalidate();
   return false;
 }
@@ -550,7 +550,7 @@ bool nuiScrollView::OnChildRemoved(const nuiEvent& rEvent)
 
 bool nuiScrollView::OnHotRectChanged(const nuiEvent& rEvent)
 {
-  SetRect(GetRect());
+  UpdateLayout();
   nuiWidgetPtr pChild = (nuiWidgetPtr)rEvent.mpUser;
 
   if (!pChild)
@@ -733,7 +733,7 @@ bool nuiScrollView::OnSmoothScrolling(const nuiEvent& rEvent)
       mpSmoothTimer->Start(false, true);
   }
 
-  SetRect(GetRect());
+  UpdateLayout();
   Invalidate();
 
   OffsetsChanged();

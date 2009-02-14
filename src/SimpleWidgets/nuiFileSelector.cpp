@@ -600,7 +600,7 @@ bool nuiFileSelector::SetPath(const nglPath& rPath)
     {
       PathChanged();
       mpTreeView->SelectionChanged();
-      mpTreeView->SetRect(mpTreeView->GetIdealRect());
+      mpTreeView->SetLayout(mpTreeView->GetIdealRect());
       if (pColTreeView)
       {
 //        pColTreeView->CalcHotRect();
@@ -620,7 +620,7 @@ bool nuiFileSelector::SetPath(const nglPath& rPath)
   
   PathChanged();
   mpTreeView->SelectionChanged();
-  mpTreeView->SetRect(mpTreeView->GetIdealRect());
+  mpTreeView->SetLayout(mpTreeView->GetIdealRect());
   if (pColTreeView)
   {
 //    pColTreeView->CalcHotRect();

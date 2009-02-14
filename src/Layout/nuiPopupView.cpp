@@ -55,7 +55,7 @@ bool nuiPopupView::SetRect(const nuiRect& rRect)
   for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
   {
     nuiWidgetPtr pItem = pIt->GetWidget();
-    pItem->SetRect(mChildrenRect);
+    pItem->SetLayout(mChildrenRect);
   }
   delete pIt;
   
