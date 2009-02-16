@@ -138,12 +138,14 @@ bool nuiColorAttributeEditor::OnChanged(const nuiEvent& rEvent)
 
 void nuiColorAttributeEditor::OnAttributeChanged(nuiColor value)
 {
-  mpColorPane->SetColor(eShapeFill, value);
+//  mpColorPane->SetColor(eShapeFill, value);
+  mpColorPane->SetFillColor(value);
   mpColorPane->Invalidate();
 }
 
 void nuiColorAttributeEditor::OnConstAttributeChanged(const nuiColor& value)
 {
-  mpColorPane->SetColor(eShapeFill, value);
+//  mpColorPane->SetColor(eShapeFill, value);
+  mpColorPane->SetFillColor(value);
   mpColorPane->Invalidate();
 }
