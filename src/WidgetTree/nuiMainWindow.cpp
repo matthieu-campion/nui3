@@ -848,11 +848,6 @@ bool nuiMainWindow::Drag(nuiWidget* pDragSource, nglDragAndDrop* pDragObject)
   return mpNGLWindow->Drag(pDragObject); 
 }
 
-void nuiMainWindow::OnDragFeedback(nglDropEffect eDropEffect)
-{
-  if (mpDragSource != this)
-    mpDragSource->OnDragFeedback(eDropEffect);
-}
 
 void nuiMainWindow::OnDragRequestData(nglDragAndDrop* pDragObject, const nglString& rMimeType)
 {
@@ -993,11 +988,6 @@ bool nuiMainWindow::NGLWindow::Drag(nglDragAndDrop* pDragObject)
   return nglWindow::Drag(pDragObject);
 }
 
-void nuiMainWindow::NGLWindow::OnDragFeedback(nglDropEffect eDropEffect)
-{
-  nglWindow::OnDragFeedback(eDropEffect);
-  mpMainWindow->OnDragFeedback(eDropEffect);
-}
 
 void nuiMainWindow::NGLWindow::OnDragRequestData(nglDragAndDrop* pDragObject, const nglString& rMimeType)
 {

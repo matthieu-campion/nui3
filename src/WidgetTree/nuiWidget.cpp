@@ -2071,11 +2071,6 @@ bool nuiWidget::Drag(nglDragAndDrop* pDragObj)
 }
 
 
-// virtual 
-void nuiWidget::OnDragFeedback(nglDropEffect dropEffect)
-{
-  // Do nothing, drag and drop is not supported by default.
-}
 
 
 void nuiWidget::OnDragRequestData(nglDragAndDrop* pDragObject, const nglString& rMimeType)

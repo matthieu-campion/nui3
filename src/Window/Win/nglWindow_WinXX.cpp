@@ -2739,11 +2739,7 @@ LRESULT nglWindow::WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
     {
       if (mDragMessageId == message)
       {
-        if (wParam == NGL_GIVE_FEEDBACK_MESSAGE)
-        {
-          OnDragFeedback((nglDropEffect)lParam);
-        }
-        else if (wParam == NGL_GET_DATA_MESSAGE)
+        if (wParam == NGL_GET_DATA_MESSAGE)
         {
           nglString mime;
           FORMATETC * pFormat = (FORMATETC*)lParam;
@@ -2844,29 +2840,6 @@ bool nglWindow::Drag(nglDragAndDrop* pDragObject)
   return true;
 }
 
-void nglWindow::OnDragFeedback(nglDropEffect DropEffect)
-{
-  switch (DropEffect)
-  {
-    //#FIXME had different cursors whether a drag operation should copy or move data...
-  case eDropEffectCopy:
-    SetCursor(eCursorDnD);
-    //NGL_OUT(_T("nglWindow::OnDragFeedback( COPY )\n"));
-    break;
-  case eDropEffectMove:
-    SetCursor(eCursorDnD);
-    //NGL_OUT(_T("nglWindow::OnDragFeedback( MOVE )\n"));
-    break;
-  case eDropEffectNone:
-    //NGL_OUT(_T("nglWindow::OnDragFeedback( FORBID )\n"));
-    SetCursor(eCursorForbid);
-    break;
-  default:
-    SetCursor(eCursorArrow);
-    //NGL_OUT(_T("nglWindow::OnDragFeedback( DEFAULT )\n"));
-    break;
-  }
-}
 
 void nglWindow::OnDragRequestData(nglDragAndDrop* pDragObject, const nglString& rMimeType)
 {

@@ -503,9 +503,6 @@ OSErr nglDragTrackingHandler (DragTrackingMessage message, WindowRef theWindow, 
         nglDropEffect effect = pDnd->GetDropObject()->GetDesiredDropEffect();
         DragActions actions = GetDragActions(effect);
         SetDragDropAction(theDrag, actions);
-        
-        // adivse source
-        pDnd->mpWin->OnDragFeedback(effect);
       }
       else
         SetDragDropAction (theDrag, kDragActionNothing);
@@ -1901,9 +1898,6 @@ bool nglWindow::Drag(nglDragAndDrop* pDragObject)
   return res;
 }
 
-void nglWindow::OnDragFeedback(nglDropEffect eDropEffect)
-{
-}
 
 void nglWindow::OnDragRequestData(nglDragAndDrop* pDragObject, const nglString& rMimeType)
 {

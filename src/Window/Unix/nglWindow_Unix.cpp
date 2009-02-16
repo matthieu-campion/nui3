@@ -671,7 +671,6 @@ void nglWindow::OnDragLeave() {}
 bool nglWindow::OnCanDrop(nglDragAndDrop* pDragObject, int X, int Y, nglMouseInfo::Flags Button) { return false; }
 void nglWindow::OnDropped (nglDragAndDrop* pDragObject, int X,int Y, nglMouseInfo::Flags Button) {}
 bool nglWindow::Drag(nglDragAndDrop* pDragObject) { return false; }
-void nglWindow::OnDragFeedback(nglDropEffect eDropEffect) {}
 void nglWindow::OnDragged (nglDragAndDrop* pDragObject) {}
 void nglWindow::OnStopDragging() {}
 

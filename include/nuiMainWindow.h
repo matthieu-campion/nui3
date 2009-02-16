@@ -120,7 +120,6 @@ public:
     nuiSize mX, mY;
   };
   virtual bool Drag(nuiWidget* pDragSource, nglDragAndDrop* pDragObject);
-  virtual void OnDragFeedback(nglDropEffect eDropEffect);
   virtual void OnDragRequestData (nglDragAndDrop* pDragObject, const nglString& rMimeType);
   virtual void OnDragStop(bool canceled);
   
@@ -214,7 +213,6 @@ private:
 
     // Dnd send
     virtual bool Drag(nglDragAndDrop* pDragObject);
-    virtual void OnDragFeedback(nglDropEffect eDropEffect);
     virtual void OnDragRequestData(nglDragAndDrop* pDragObject, const nglString& rMimeType);
     virtual void OnDragStop(bool canceled);
     //@}
