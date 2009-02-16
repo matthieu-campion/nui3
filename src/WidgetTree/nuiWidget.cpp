@@ -1062,7 +1062,7 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
       pContext->PopState();
     }
     
-    if (gGlobalUseRenderCache && mUseRenderCache && mpRenderCache)
+    if (gGlobalUseRenderCache && !mSurfaceEnabled && mUseRenderCache && mpRenderCache)
     {
       if (mNeedSelfRedraw)
       {

@@ -348,7 +348,7 @@ void nuiWidgetInfo::RebuildInfo()
       text.Add(classes[i]);
     }
     mpClass->SetText(text);
-    printf("Inheritance: %ls\n", text.GetChars());
+    //printf("Inheritance: %ls\n", text.GetChars());
 
     nglString str(typeid(mpTarget).name());
     mpCType->SetText(str);
