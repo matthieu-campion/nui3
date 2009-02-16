@@ -2337,7 +2337,7 @@ void nuiWidget::UpdateSurfaceRect(const nuiRect& rRect)
 {
   if (mSurfaceEnabled && (mpSurface->GetWidth() != mRect.GetWidth() || mpSurface->GetHeight() != mRect.GetHeight()))
   {
-    NGL_OUT(_T("UpdateSurfaceRect... %f * %f\n"), rRect.GetWidth(), rRect.GetHeight());
+    //NGL_OUT(_T("UpdateSurfaceRect... %f * %f\n"), rRect.GetWidth(), rRect.GetHeight());
     nglString str(GetSurfaceName(this));
     mpSurface->Release();
     mpSurface = nuiSurface::CreateSurface(str, rRect.GetWidth(), rRect.GetHeight());
@@ -2842,7 +2842,7 @@ void nuiWidget::EnableSurface(bool Set)
   {
     nglString str(GetSurfaceName(this));
     nuiRect r(GetRect());
-    NGL_OUT(_T("EnableSurface... %f * %f\n"), r.GetWidth(), r.GetHeight());
+    //NGL_OUT(_T("EnableSurface... %f * %f\n"), r.GetWidth(), r.GetHeight());
     mpSurface = nuiSurface::CreateSurface(str, r.GetWidth(), r.GetHeight());
     mpSurface->Acquire();
     mpSurface->SetRenderToTexture(true);

@@ -28,14 +28,14 @@ void nuiVBox::InitAttributes()
   // VerticalSpacing in "common sens" corresponds to DefaultHSpacing in "nuiGrid sens". It's better for css understanding
   AddAttribute(new nuiAttribute<nuiSize>
    (nglString(_T("VerticalSpacing")), nuiUnitSize,
-    nuiAttribute<nuiSize>::GetterDelegate(this, &nuiVBox::GetDefaultSpacing),
-    nuiAttribute<nuiSize>::SetterDelegate(this, &nuiVBox::SetDefaultSpacing)));                
+    nuiMakeDelegate(this, &nuiVBox::GetDefaultSpacing),
+    nuiMakeDelegate(this, &nuiVBox::SetDefaultSpacing)));                
 
   // Spacing is a shorcut for VerticalSpacing, in nuiVBox
   AddAttribute(new nuiAttribute<nuiSize>
    (nglString(_T("Spacing")), nuiUnitSize,
-    nuiAttribute<nuiSize>::GetterDelegate(this, &nuiVBox::GetDefaultSpacing),
-    nuiAttribute<nuiSize>::SetterDelegate(this, &nuiVBox::SetDefaultSpacing)));                
+    nuiMakeDelegate(this, &nuiVBox::GetDefaultSpacing),
+    nuiMakeDelegate(this, &nuiVBox::SetDefaultSpacing)));                
        
 }
 

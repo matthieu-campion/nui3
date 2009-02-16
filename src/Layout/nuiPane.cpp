@@ -15,7 +15,18 @@
 nuiPane::nuiPane(const nuiColor& rFillColor, const nuiColor& rStrokeColor, nuiShapeMode ShapeMode, nuiBlendFunc BlendFunc)
  : nuiSimpleContainer()
 {
-  SetObjectClass(_T("nuiPane"));
+  if (SetObjectClass(_T("nuiPane")))
+  {
+    AddAttribute(new nuiAttribute<const nuiColor&>
+                 (nglString(_T("FillColor")), nuiUnitColor,
+                  nuiMakeDelegate(this, &nuiPane::GetFillColor),
+                  nuiMakeDelegate(this, &nuiPane::SetFillColor)));                
+    
+    AddAttribute(new nuiAttribute<const nuiColor&>
+                 (nglString(_T("StrokeColor")), nuiUnitColor,
+                  nuiMakeDelegate(this, &nuiPane::GetStrokeColor),
+                  nuiMakeDelegate(this, &nuiPane::SetStrokeColor)));                
+  }
   mInterceptMouse = false;
   
   mFillColor = rFillColor;
