@@ -22,7 +22,6 @@ public:
 
 	nuiColorAttributeEditor(const nuiAttrib<nuiColor>& rAttribute);
 	nuiColorAttributeEditor(const nuiAttrib<const nuiColor&>& rAttribute);
-  nuiHBox* Init();
 	virtual ~nuiColorAttributeEditor();
 	
 protected : 
@@ -36,7 +35,8 @@ protected :
 	std::vector<nuiColor> mColors;
 
 private : 
-
+  void Init(const nuiColor& rColor);
+  
 	nuiEventSink<nuiColorAttributeEditor> mEventSink;
 	nuiSlotsSink mSink;
 	nuiAttrib<nuiColor> mAttribute;

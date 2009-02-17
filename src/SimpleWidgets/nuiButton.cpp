@@ -247,6 +247,7 @@ bool nuiButton::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
     return false;
   if (Button & nglMouseInfo::ButtonLeft)
   {
+//    printf("clicked\n");
     mClicked = true;
     SetPressed(true);
     Grab();
@@ -258,17 +259,21 @@ bool nuiButton::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
 
 bool nuiButton::MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
 {
+//  printf("unclicked\n");
   if ( (Button & nglMouseInfo::ButtonLeft) && mClicked)
   {
+//    printf("was clicked\n");
     mClicked = false;
     Ungrab();
     SetPressed(false);
     if (mRect.Size().IsInside(X,Y))
     {
+//      printf("activated\n");
       Activated();
     }
     else
     {
+//      printf("unclicked inactive\n");
       ButtonDePressedInactive();
     }
 

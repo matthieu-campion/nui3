@@ -428,85 +428,85 @@ OSErr nglDragTrackingHandler (DragTrackingMessage message, WindowRef theWindow, 
       break;
       
     case kDragTrackingEnterWindow:
-    {
-      NGL_ASSERT(!pDnd->HasDropObject());
-      
-      nglDragAndDrop* pDrag = new nglDragAndDrop();
-      pDnd->SetDropObject(pDrag);
-      
-      DragActions actions;
-      err = GetDragAllowableActions(theDrag, &actions);
-      NGL_ASSERT(!err);
-      SetAllowedDropEffects(pDrag, actions);
-      
-      UInt16 numItems;
-      err = CountDragItems (theDrag, &numItems);
-      NGL_ASSERT(!err);
-      
-      for (UInt16 i = 1; i <= numItems; i++)
       {
-        DragItemRef theItemRef;
-        err = GetDragItemReferenceNumber (theDrag, i, &theItemRef);
+        NGL_ASSERT(!pDnd->HasDropObject());
+        
+        nglDragAndDrop* pDrag = new nglDragAndDrop();
+        pDnd->SetDropObject(pDrag);
+        
+        DragActions actions;
+        err = GetDragAllowableActions(theDrag, &actions);
         NGL_ASSERT(!err);
-        UInt16 numFlavors;
-        err = CountDragItemFlavors (theDrag, theItemRef, &numFlavors);
+        SetAllowedDropEffects(pDrag, actions);
+        
+        UInt16 numItems;
+        err = CountDragItems (theDrag, &numItems);
         NGL_ASSERT(!err);
         
-        for (UInt16 f = 1; f <= numFlavors; f++)
+        for (UInt16 i = 1; i <= numItems; i++)
         {
-          FlavorType theType;
-          err = GetFlavorType (theDrag, theItemRef, f, &theType);
+          DragItemRef theItemRef;
+          err = GetDragItemReferenceNumber (theDrag, i, &theItemRef);
+          NGL_ASSERT(!err);
+          UInt16 numFlavors;
+          err = CountDragItemFlavors (theDrag, theItemRef, &numFlavors);
           NGL_ASSERT(!err);
           
-          nglString mime;
-          if (App->GetDataTypesRegistry().GetRegisteredMimeType(theType, mime))
+          for (UInt16 f = 1; f <= numFlavors; f++)
           {
-            nglDataObject* pObj = pDrag->GetType(mime);
-            if (!pObj)
+            FlavorType theType;
+            err = GetFlavorType (theDrag, theItemRef, f, &theType);
+            NGL_ASSERT(!err);
+            
+            nglString mime;
+            if (App->GetDataTypesRegistry().GetRegisteredMimeType(theType, mime))
             {
-              pObj = App->GetDataTypesRegistry().Create(mime);
-              pDrag->AddType(pObj);
+              nglDataObject* pObj = pDrag->GetType(mime);
+              if (!pObj)
+              {
+                pObj = App->GetDataTypesRegistry().Create(mime);
+                pDrag->AddType(pObj);
+              }
+              pObj->GetFlavorData(theDrag, theItemRef, theType);
             }
-            pObj->GetFlavorData(theDrag, theItemRef, theType);
           }
         }
+        pDnd->mpWin->OnDragEnter();
       }
-      pDnd->mpWin->OnDragEnter();
-    }
       break;
       
       
     case kDragTrackingInWindow:
-    { 
-      Point mouse;
-      err = GetDragMouse (theDrag, &mouse, NULL);
-			SetPort(GetWindowPort(pDnd->mpWin->mWindow));
-      GlobalToLocal(&mouse);
-      nglMouseInfo::Flags Button;
-      
-      NGL_ASSERT(pDnd->GetDropObject());
-			DragAttributes flags;
-			err = GetDragAttributes(theDrag, &flags);
-			int XOffset = pDnd->mpWin->mXOffset;
-			int YOffset = pDnd->mpWin->mYOffset;
-			if (flags & kDragInsideSenderWindow)
-			{
-				XOffset = 0;
-				YOffset = 0;
-			}
-			
-      bool can = pDnd->mpWin->OnCanDrop(pDnd->GetDropObject(), mouse.h - XOffset, mouse.v - YOffset, Button);
-      pDnd->SetCanDrop(can);
-      
-      if (can)
-      {
-        nglDropEffect effect = pDnd->GetDropObject()->GetDesiredDropEffect();
-        DragActions actions = GetDragActions(effect);
-        SetDragDropAction(theDrag, actions);
+      { 
+        Point mouse;
+        err = GetDragMouse (theDrag, &mouse, NULL);
+        SetPort(GetWindowPort(pDnd->mpWin->mWindow));
+        GlobalToLocal(&mouse);
+        nglMouseInfo::Flags Button;
+        
+        NGL_ASSERT(pDnd->GetDropObject());
+        DragAttributes flags;
+        err = GetDragAttributes(theDrag, &flags);
+        int XOffset = pDnd->mpWin->mXOffset;
+        int YOffset = pDnd->mpWin->mYOffset;
+        if (flags & kDragInsideSenderWindow)
+        {
+          XOffset = 0;
+          YOffset = 0;
+        }
+        
+        bool can = pDnd->mpWin->OnCanDrop(pDnd->GetDropObject(), mouse.h - XOffset, mouse.v - YOffset, Button);
+        pDnd->SetCanDrop(can);
+        
+        if (can)
+        {
+          nglDropEffect effect = pDnd->GetDropObject()->GetDesiredDropEffect();
+          DragActions actions = GetDragActions(effect);
+          SetDragDropAction(theDrag, actions);
+        }
+        else
+          SetDragDropAction (theDrag, kDragActionNothing);
       }
-      else
-        SetDragDropAction (theDrag, kDragActionNothing);
-    }
       break;
       
       
