@@ -169,6 +169,7 @@ NUI_DECLARE_ATTRIBUTE_TYPE(const nglVectorf&);
 NUI_DECLARE_ATTRIBUTE_TYPE(nglVectorf);
 NUI_DECLARE_ATTRIBUTE_TYPE(const nglMatrixf&);
 NUI_DECLARE_ATTRIBUTE_TYPE(nglMatrixf);
+NUI_DECLARE_ATTRIBUTE_TYPE(nuiBlendFunc);
 
 
 
@@ -1886,4 +1887,176 @@ uint32 nuiAttribBase::GetDimension() const
 {
   return mpAttributeBase->GetDimension();
 }
+
+//********************************
+//
+// BlendFunc
+//
+
+template class nuiAttribute<nuiBlendFunc>;
+
+template <>
+void nuiAttribute<nuiBlendFunc>::FormatDefault(void* pTarget, nglString & string)
+{
+  nuiBlendFunc mode = Get(pTarget);
+  ToString(mode, string);
+}
+
+template <>
+bool nuiAttribute<nuiBlendFunc>::ToString(nuiBlendFunc Value, nglString& rString) const
+{
+  switch (Value)
+  {
+    case nuiBlendSource:
+      rString = _T("Source"); break;
+    case nuiBlendTransp:
+      rString = _T("Transp"); break;
+    case nuiBlendClear:
+      rString = _T("Clear"); break;
+    case nuiBlendDest:
+      rString = _T("Dest"); break;
+    case nuiBlendOver:
+      rString = _T("Over"); break;
+    case nuiBlendOverRev:
+      rString = _T("OverRev"); break;
+    case nuiBlendIn:
+      rString = _T("In"); break;
+    case nuiBlendInRev:
+      rString = _T("InRev"); break;
+    case nuiBlendOut:
+      rString = _T("Out"); break;
+    case nuiBlendOutRev:
+      rString = _T("OutRev"); break;
+    case nuiBlendTop:
+      rString = _T("Top"); break;
+    case nuiBlendTopRev:
+      rString = _T("TopRev"); break;
+    case nuiBlendXOR:
+      rString = _T("XOR"); break;
+    case nuiBlendAdd:
+      rString = _T("Add"); break;
+    case nuiBlendSaturate:
+      rString = _T("Saturate"); break;
+      
+    case nuiBlendTranspClear:
+      rString = _T("Clear"); break;
+    case nuiBlendTranspAdd:
+      rString = _T("TranspAdd"); break;
+    case nuiBlendTranspOver:
+      rString = _T("TranspOver"); break;
+    case nuiBlendTranspInRev:
+      rString = _T("TranspInRev"); break;
+
+    default:
+      rString = _T("UnknownBlendFunc");
+      return false;
+  }
+  
+  return true;
+  
+}
+
+template <>
+bool nuiAttribute<nuiBlendFunc>::FromString(nuiBlendFunc& rValue, const nglString& rString) const
+{
+  if (!rString.Compare(_T("Source"), false))
+  {
+    rValue = nuiBlendSource;
+    return true;
+  }
+  else if (!rString.Compare(_T("Transp"), false))
+  {
+    rValue = nuiBlendTransp;
+    return true;
+  }
+  else if (!rString.Compare(_T("Clear"), false))
+  {
+    rValue = nuiBlendClear;
+    return true;
+  }
+  else if (!rString.Compare(_T("Dest"), false))
+  {
+    rValue = nuiBlendDest;
+    return true;
+  }
+  else if (!rString.Compare(_T("Over"), false))
+  {
+    rValue = nuiBlendOver;
+    return true;
+  }
+  else if (!rString.Compare(_T("OverRev"), false))
+  {
+    rValue = nuiBlendOverRev;
+    return true;
+  }
+  else if (!rString.Compare(_T("In"), false))
+  {
+    rValue = nuiBlendIn;
+    return true;
+  }
+  else if (!rString.Compare(_T("InRev"), false))
+  {
+    rValue = nuiBlendInRev;
+    return true;
+  }
+  else if (!rString.Compare(_T("Out"), false))
+  {
+    rValue = nuiBlendOut;
+    return true;
+  }
+  else if (!rString.Compare(_T("OutRev"), false))
+  {
+    rValue = nuiBlendOutRev;
+    return true;
+  }
+  else if (!rString.Compare(_T("Top"), false))
+  {
+    rValue = nuiBlendTop;
+    return true;
+  }
+  else if (!rString.Compare(_T("TopRev"), false))
+  {
+    rValue = nuiBlendTopRev;
+    return true;
+  }
+  else if (!rString.Compare(_T("XOR"), false))
+  {
+    rValue = nuiBlendXOR;
+    return true;
+  }
+  else if (!rString.Compare(_T("Add"), false))
+  {
+    rValue = nuiBlendAdd;
+    return true;
+  }
+  else if (!rString.Compare(_T("Saturate"), false))
+  {
+    rValue = nuiBlendSaturate;
+    return true;
+  }
+  else if (!rString.Compare(_T("Clear"), false))
+  {
+    rValue = nuiBlendClear;
+    return true;
+  }
+  else if (!rString.Compare(_T("TranspAdd"), false))
+  {
+    rValue = nuiBlendTranspAdd;
+    return true;
+  }
+  else if (!rString.Compare(_T("TranspOver"), false))
+  {
+    rValue = nuiBlendTranspOver;
+    return true;
+  }
+  else if (!rString.Compare(_T("TranspInRev"), false))
+  {
+    rValue = nuiBlendTranspInRev;
+    return true;
+  }
+
+  rValue = nuiBlendTransp;
+  return false;
+}
+
 

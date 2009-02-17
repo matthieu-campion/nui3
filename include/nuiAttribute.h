@@ -16,6 +16,7 @@
 #include "nuiShape.h"
 #include "nuiDecorationDefines.h"
 #include "nuiMouseCursor.h"
+#include "nuiRenderState.h"
 
 class nuiAttributeEditor;
 class nuiPoint;
@@ -1725,5 +1726,19 @@ bool nuiAttribute<nglMatrixf>::FromString(nglMatrixf& rValue, const nglString& r
 template <>
 void nuiAttribute<nglMatrixf>::FormatDefault(void* pTarget, nglString& string);
 
+
+//********************************
+//
+// BlendFunc
+//
+
+template <>
+bool nuiAttribute<nuiBlendFunc>::ToString(nuiBlendFunc Value, nglString& rString) const;
+
+template <>
+bool nuiAttribute<nuiBlendFunc>::FromString(nuiBlendFunc& rValue, const nglString& rString) const;
+
+template <>
+void nuiAttribute<nuiBlendFunc>::FormatDefault(void* pTarget, nglString& string);
 
 

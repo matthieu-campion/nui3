@@ -19,6 +19,7 @@
 #include "nuiDecorationDefines.h"
 #include "nuiDefaultDecoration.h"
 #include "nuiSurface.h"
+#include "nuiRenderState.h"
 
 typedef std::vector<uint8> nuiRenderCache;
 
@@ -359,9 +360,17 @@ public:
   /** @name Rendering the widget in a surface */
   //@{
   void EnableSurface(bool Set); ///< Declare that this widget can use offscreen rendering to speed up display. 
-  bool IsSurfaceEnabled(); ///< Returns true if offscreen rendering is permited on this widget.
+  bool IsSurfaceEnabled() const; ///< Returns true if offscreen rendering is permited on this widget.
   virtual void DrawSurface(nuiDrawContext* pContext);
   void InvalidateSurface();
+  nuiSurface* GetSurface() const;
+  const nuiMatrix& GetSurfaceMatrix() const;
+  void SetSurfaceMatrix(const nuiMatrix& rMatrix);
+  const nuiColor& GetSurfaceColor() const;
+  void SetSurfaceColor(const nuiColor& rColor);
+  nuiBlendFunc GetSurfaceBlendFunc() const;
+  void SetSurfaceBlendFunc(nuiBlendFunc BlendFunc);
+  
   //@}
 
   virtual nuiWidgetPtr GetChild(const nglString& rName, bool DeepSearch) { return NULL; } ///< Dummy implementation of the GetChild Method for easy widget/Container interaction.
@@ -537,6 +546,10 @@ protected:
 
   nuiMatrix mMatrix;
   bool mMatrixIsIdentity;
+
+  nuiMatrix mSurfaceMatrix;
+  nuiColor mSurfaceColor;
+  nuiBlendFunc mSurfaceBlendFunc;
 
   bool Animate(const nuiEvent& rEvent);
   

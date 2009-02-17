@@ -105,7 +105,9 @@ nuiWidget::nuiWidget()
   mDecorationEnabled(true),
   mNeedSurfaceRedraw(false),
   mSurfaceEnabled(false),
-  mpSurface(NULL)
+  mpSurface(NULL),
+  mSurfaceColor(255, 255, 255, 255),
+  mSurfaceBlendFunc(nuiBlendTransp)
 {
   if (SetObjectClass(_T("nuiWidget")))
     InitAttributes();
@@ -210,18 +212,18 @@ void nuiWidget::InitAttributes()
 {
   AddAttribute(new nuiAttribute<bool>
     (nglString(_T("Enabled")), nuiUnitBoolean,
-     nuiAttribute<bool>::GetterDelegate(this, &nuiWidget::AttrIsEnabled),
-     nuiAttribute<bool>::SetterDelegate(this, &nuiWidget::SetEnabled)));
+     nuiMakeDelegate(this, &nuiWidget::AttrIsEnabled),
+     nuiMakeDelegate(this, &nuiWidget::SetEnabled)));
   
   AddAttribute(new nuiAttribute<bool>
     (nglString(_T("Visible")), nuiUnitBoolean,
-     nuiAttribute<bool>::GetterDelegate(this, &nuiWidget::AttrIsVisible),
-     nuiAttribute<bool>::SetterDelegate(this, &nuiWidget::SetVisible)));
+     nuiMakeDelegate(this, &nuiWidget::AttrIsVisible),
+     nuiMakeDelegate(this, &nuiWidget::SetVisible)));
 
   AddAttribute(new nuiAttribute<bool>
     (nglString(_T("Selected")), nuiUnitBoolean,
-     nuiAttribute<bool>::GetterDelegate(this, &nuiWidget::AttrIsSelected),
-     nuiAttribute<bool>::SetterDelegate(this, &nuiWidget::SetSelected)));
+     nuiMakeDelegate(this, &nuiWidget::AttrIsSelected),
+     nuiMakeDelegate(this, &nuiWidget::SetSelected)));
 
   
   
@@ -247,23 +249,23 @@ void nuiWidget::InitAttributes()
   
 
   AddAttribute(new nuiAttribute<bool>
-    (nglString(_T("UseRenderCache")), nuiUnitBoolean,
-     nuiAttribute<bool>::GetterDelegate(this, &nuiWidget::IsRenderCacheEnabled),
-     nuiAttribute<bool>::SetterDelegate(this, &nuiWidget::EnableRenderCache)));
+              (nglString(_T("UseRenderCache")), nuiUnitBoolean,
+               nuiMakeDelegate(this, &nuiWidget::IsRenderCacheEnabled),
+               nuiMakeDelegate(this, &nuiWidget::EnableRenderCache)));
 
 
   AddAttribute(new nuiAttribute<bool>
-   (nglString(_T("RedrawOnHover")), nuiUnitBoolean,
-    nuiAttribute<bool>::GetterDelegate(this, &nuiWidget::GetRedrawOnHover),
-    nuiAttribute<bool>::SetterDelegate(this, &nuiWidget::SetRedrawOnHover)));
+               (nglString(_T("RedrawOnHover")), nuiUnitBoolean,
+                nuiMakeDelegate(this, &nuiWidget::GetRedrawOnHover),
+                nuiMakeDelegate(this, &nuiWidget::SetRedrawOnHover)));
 	
   AddAttribute(new nuiAttribute<bool>
-   (nglString(_T("Hover")), nuiUnitBoolean,
-    nuiAttribute<bool>::GetterDelegate(this, &nuiWidget::GetHover)));
+               (nglString(_T("Hover")), nuiUnitBoolean,
+                nuiMakeDelegate(this, &nuiWidget::GetHover)));
 
   AddAttribute(new nuiAttribute<bool>
-   (nglString(_T("Focus")), nuiUnitBoolean,
-    nuiAttribute<bool>::GetterDelegate(this, &nuiWidget::HasFocus)));
+               (nglString(_T("Focus")), nuiUnitBoolean,
+                nuiMakeDelegate(this, &nuiWidget::HasFocus)));
   
 	// Decoration:
   AddAttribute(new nuiAttribute<const nglString&>
@@ -291,8 +293,8 @@ void nuiWidget::InitAttributes()
   
   AddAttribute(new nuiAttribute<bool>
                (nglString(_T("FocusVisible")), nuiUnitBoolean,
-                nuiAttribute<bool>::GetterDelegate(this, &nuiWidget::IsFocusVisible),
-                nuiAttribute<bool>::SetterDelegate(this, &nuiWidget::SetFocusVisible)));
+                nuiMakeDelegate(this, &nuiWidget::IsFocusVisible),
+                nuiMakeDelegate(this, &nuiWidget::SetFocusVisible)));
   
   
   // nuiAttribute<nuiSize> <=> nuiAttribute<double>
@@ -334,16 +336,16 @@ void nuiWidget::InitAttributes()
                 nuiMakeDelegate(this, &nuiWidget::GetActualBorderBottom)));
   
   nuiAttribute<nuiPosition>* AttributePosition = new nuiAttribute<nuiPosition>
-  (nglString(_T("Position")), nuiUnitPosition,
-   nuiMakeDelegate(this, &nuiWidget::GetPosition), 
-   nuiMakeDelegate(this, &nuiWidget::SetPosition));
+              (nglString(_T("Position")), nuiUnitPosition,
+               nuiMakeDelegate(this, &nuiWidget::GetPosition), 
+               nuiMakeDelegate(this, &nuiWidget::SetPosition));
   AddAttribute(_T("Position"), AttributePosition);
   
   nuiAttribute<nuiPosition>* AttributeFillRule = new nuiAttribute<nuiPosition>
-  (nglString(_T("FillRule")), nuiUnitPosition,
-   nuiMakeDelegate(this, &nuiWidget::GetFillRule), 
-   nuiMakeDelegate(this, &nuiWidget::SetFillRule));
-  AddAttribute(_T("FillRule"), AttributeFillRule);
+              (nglString(_T("FillRule")), nuiUnitPosition,
+               nuiMakeDelegate(this, &nuiWidget::GetFillRule), 
+               nuiMakeDelegate(this, &nuiWidget::SetFillRule));
+              AddAttribute(_T("FillRule"), AttributeFillRule);
 
   AddAttribute(new nuiAttribute<nuiMouseCursor>
                (nglString(_T("Cursor")), nuiUnitNone,
@@ -353,9 +355,28 @@ void nuiWidget::InitAttributes()
   
   AddAttribute(new nuiAttribute<bool>
                (nglString(_T("WantKeyBoardFocus")), nuiUnitBoolean,
-                nuiAttribute<bool>::GetterDelegate(this, &nuiWidget::GetWantKeyboardFocus),
-                nuiAttribute<bool>::SetterDelegate(this, &nuiWidget::SetWantKeyboardFocus)));
+                nuiMakeDelegate(this, &nuiWidget::GetWantKeyboardFocus),
+                nuiMakeDelegate(this, &nuiWidget::SetWantKeyboardFocus)));
   
+  AddAttribute(new nuiAttribute<bool>
+               (nglString(_T("EnableSurface")), nuiUnitBoolean,
+                nuiMakeDelegate(this, &nuiWidget::IsSurfaceEnabled),
+                nuiMakeDelegate(this, &nuiWidget::EnableSurface)));
+  
+  AddAttribute(new nuiAttribute<const nuiColor&>
+               (nglString(_T("SurfaceColor")), nuiUnitColor,
+                nuiMakeDelegate(this, &nuiWidget::GetSurfaceColor),
+                nuiMakeDelegate(this, &nuiWidget::SetSurfaceColor)));
+
+  AddAttribute(new nuiAttribute<const nuiMatrix&>
+               (nglString(_T("SurfaceMatrix")), nuiUnitMatrix,
+                nuiMakeDelegate(this, &nuiWidget::GetSurfaceMatrix),
+                nuiMakeDelegate(this, &nuiWidget::SetSurfaceMatrix)));
+
+  AddAttribute(new nuiAttribute<nuiBlendFunc>
+               (nglString(_T("SurfaceBlendFunc")), nuiUnitCustom,
+                nuiMakeDelegate(this, &nuiWidget::GetSurfaceBlendFunc),
+                nuiMakeDelegate(this, &nuiWidget::SetSurfaceBlendFunc)));
 }
 
  
@@ -854,6 +875,43 @@ void nuiWidget::InvalidateSurface()
   DebugRefreshInfo();
 }
 
+nuiSurface* nuiWidget::GetSurface() const
+{
+  return mpSurface;
+}
+
+const nuiMatrix& nuiWidget::GetSurfaceMatrix() const
+{
+  return mSurfaceMatrix;
+}
+
+void nuiWidget::SetSurfaceMatrix(const nuiMatrix& rMatrix)
+{
+  mSurfaceMatrix = rMatrix;
+  InvalidateSurface();
+}
+
+const nuiColor& nuiWidget::GetSurfaceColor() const
+{
+  return mSurfaceColor;
+}
+
+void nuiWidget::SetSurfaceColor(const nuiColor& rColor)
+{
+  mSurfaceColor = rColor;
+  InvalidateSurface();
+}
+
+nuiBlendFunc nuiWidget::GetSurfaceBlendFunc() const
+{
+  return mSurfaceBlendFunc;
+}
+
+void nuiWidget::SetSurfaceBlendFunc(nuiBlendFunc BlendFunc)
+{
+  mSurfaceBlendFunc = BlendFunc;
+  InvalidateSurface();
+}
 
 
 void nuiWidget::SilentInvalidate()
@@ -1128,6 +1186,7 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
 void nuiWidget::DrawSurface(nuiDrawContext* pContext)
 {
   //NGL_OUT(_T("nuiWidget::DrawSurface %d x %d\n"), (uint32)mpSurface->GetWidth(), (uint32)mpSurface->GetHeight());
+  pContext->PushMatrix();
   pContext->PushState();
   pContext->ResetState();
   pContext->EnableTexturing(true);
@@ -1135,9 +1194,10 @@ void nuiWidget::DrawSurface(nuiDrawContext* pContext)
   NGL_ASSERT(pTexture);
   pContext->SetTexture(pTexture);
   pContext->EnableBlending(true);
-  pContext->SetFillColor(nuiColor(1.0f, 1.0f, 1.0f, GetAlpha()));
+  pContext->SetFillColor(mSurfaceColor);
   //pContext->SetFillColor(nuiColor(1.0f, 1.0f, 1.0f, 1.0f));
-  pContext->SetBlendFunc(nuiBlendTransp);
+  pContext->SetBlendFunc(mSurfaceBlendFunc);
+  pContext->MultMatrix(mSurfaceMatrix);
 
   nuiRect src, dst;
   src = GetRect().Size();
@@ -1146,6 +1206,7 @@ void nuiWidget::DrawSurface(nuiDrawContext* pContext)
   //dst.Scale(2, 2);
   pContext->DrawImage(dst, src);
   pContext->PopState();
+  pContext->PopMatrix();
 }
 
 bool nuiWidget::IsKeyDown (nglKeyCode Key) const
@@ -2856,7 +2917,7 @@ void nuiWidget::EnableSurface(bool Set)
   DebugRefreshInfo();
 }
 
-bool nuiWidget::IsSurfaceEnabled()
+bool nuiWidget::IsSurfaceEnabled() const
 {
   return mSurfaceEnabled;
 }

@@ -127,6 +127,63 @@ public:
   }
 };
 
+template <class Param0, class Param1, class Ret>
+class nuiAction
+{
+private:
+  typedef nuiFastDelegate2<Ret, Param0, Param1> ActionDelegate;
+  ActionDelegate mDelegate;
+  Param0 mParam0;
+  Param1 mParam1;
+public:
+  nuiAction(const ActionDelegate& rDelegate, Param0 p0, Param1 p1)
+  : mDelegate(rDelegate), mParam0(p0), mParam1(p1)
+  {
+  }
+  
+  Ret operator()() const
+  {
+    return mDelegate(mParam0, mParam1);
+  }
+};
+
+
+template <class Param0, class Param1, class Ret>
+class nuiAdaptedAction
+{
+private:
+  typedef nuiFastDelegate2<Ret, Param0, Param1> ActionDelegate;
+  ActionDelegate mDelegate;
+  Param1 mParam1;
+public:
+  nuiAdaptedAction(const ActionDelegate& rDelegate, Param1 p1)
+  : mDelegate(rDelegate), mParam1(p1)
+  {
+  }
+  
+  Ret operator()(Param0 p0) const
+  {
+    return mDelegate(p0, mParam1);
+  }
+};
+
+int prouttest(int a, int b)
+{
+  printf("A = %d , B = %d\n", a, b);
+  return 13;
+}
+
+void prout()
+{
+  nuiAction<int, int, int> action(&::prouttest, 1, 42);
+  int res = action();
+  printf("result: %d\n", res);
+
+  nuiAdaptedAction<int, int, int> aaction(&::prouttest, 42);
+  res = aaction(12);
+  printf("result: %d\n", res);
+}
+
 /*
 * nuiWin
 */
