@@ -40,7 +40,7 @@ public:
   virtual ~nuiWidgetInfo();
 
   void SetTarget(nuiWidget* pWidget);
-  void RebuildInfo();
+  void RebuildInfo(bool Reconstruct);
 protected:
   bool OnTimerTick(const nuiEvent& rEvent);
   bool OnDebugUpdate(const nuiEvent& rEvent);
