@@ -480,6 +480,20 @@ bool nglPath::Move(const nglPath& PathTarget)
 #endif
 }
 
+bool nglPath::Copy(const nglPath& PathTarget)
+{
+  nglIStream* pInStream = OpenRead();
+  nglIOStream* pOutStream = PathTarget.OpenWrite();
+  
+  nglFileSize available = pInStream->Available();
+  int64 piped = pInStream->PipeTo(*pOutStream);
+  
+  delete pInStream;
+  delete pOutStream;
+  
+  return (piped == available);
+}
+
 bool nglPath::Create(bool Recurse) const
 {
 	//SetError("path", NGL_PATH_ENONE);

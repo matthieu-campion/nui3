@@ -134,6 +134,12 @@ public:
 	\param PathTarget new path to use
 	\return True if the operation completed successfully.
 	*/
+  //@{
+	bool Copy(const nglPath& PathTarget);
+	/*!< Copy the file
+   \param PathTarget new path to use
+   \return True if the operation completed successfully.
+   */
 	bool Delete(bool Recurse = false) const;
 	/*!< Delete the current node, and optionally its children if any
 	\param Recurse if the node is a folder, delete all its content (files and folders) recursively
