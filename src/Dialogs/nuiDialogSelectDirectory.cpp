@@ -118,8 +118,8 @@ bool nuiDialogSelectDirectory::OnCreateNewFolderDone(const nuiEvent& rEvent)
     mPath += nglPath(mpCreateEditLine->GetText());
     mPath.Create();
     
-    //mRootPath = mpSelector->GetRootPath();
     mpSelector->SetRootPath(mPath.GetParent());
+    mpSelector->SetPath(mPath);
   }  
   return false;
 }

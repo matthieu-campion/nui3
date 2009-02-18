@@ -93,7 +93,8 @@ nuiDialog::~nuiDialog()
 //  virtual 
 void nuiDialog::SetDecoration(const nglString& rName)
 {
-  mpPane->SetDecoration(rName);
+  if (mpPane)
+    mpPane->SetDecoration(rName);
 }
 
 //  virtual 
