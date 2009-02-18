@@ -135,7 +135,7 @@ public:
 	\return True if the operation completed successfully.
 	*/
   //@{
-	bool Copy(const nglPath& PathTarget);
+	bool Copy(const nglPath& PathTarget) const;
 	/*!< Copy the file
    \param PathTarget new path to use
    \return True if the operation completed successfully.

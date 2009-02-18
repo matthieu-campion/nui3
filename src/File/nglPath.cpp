@@ -480,7 +480,7 @@ bool nglPath::Move(const nglPath& PathTarget)
 #endif
 }
 
-bool nglPath::Copy(const nglPath& PathTarget)
+bool nglPath::Copy(const nglPath& PathTarget) const
 {
   nglIStream* pInStream = OpenRead();
   nglIOStream* pOutStream = PathTarget.OpenWrite();
