@@ -54,6 +54,8 @@ void nuiPainter::StartRendering(nuiSize ClipOffsetX, nuiSize ClipOffsetY)
   mClip.Set(ToNearest(mClipOffsetX), ToNearest(mClipOffsetY), w, h);
   while (!mMatrixStack.empty())
     mMatrixStack.pop();
+  while (!mProjectionMatrixStack.empty())
+    mProjectionMatrixStack.pop();
   mMatrixStack.push(nuiMatrix());
 }
 
@@ -84,6 +86,36 @@ void nuiPainter::MultMatrix(const nuiMatrix& Matrix)
 const nuiMatrix& nuiPainter::GetMatrix() const
 {
   return mMatrixStack.top();
+}
+
+///////
+void nuiPainter::PushProjectionMatrix()
+{
+  NGL_ASSERT(!mProjectionMatrixStack.empty());
+  mProjectionMatrixStack.push(mProjectionMatrixStack.top());
+}
+
+void nuiPainter::PopProjectionMatrix()
+{
+  NGL_ASSERT(!mProjectionMatrixStack.empty());
+  mProjectionMatrixStack.pop();
+}
+
+void nuiPainter::LoadProjectionMatrix(const nuiMatrix& Matrix)
+{
+  NGL_ASSERT(!mProjectionMatrixStack.empty());
+  mProjectionMatrixStack.top() = Matrix;
+}
+
+void nuiPainter::MultProjectionMatrix(const nuiMatrix& Matrix)
+{
+  NGL_ASSERT(!mProjectionMatrixStack.empty());
+  mProjectionMatrixStack.top() *= Matrix;
+}
+
+const nuiMatrix& nuiPainter::GetProjectionMatrix() const
+{
+  return mProjectionMatrixStack.top();
 }
 
 

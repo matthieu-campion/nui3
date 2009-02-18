@@ -1170,15 +1170,64 @@ void nuiD3DPainter::PopMatrix()
   LoadCurrentMatrix();
 }
 
+void nuiD3DPainter::LoadProjectionMatrix(const nuiMatrix& rMatrix)
+{
+  NUI_RETURN_IF_RENDERING_DISABLED;
+  
+  nuiPainter::LoadProjectionMatrix(rMatrix);
+  /*
+   glLoadMatrixf(rMatrix.Array);
+   CheckForGLErrors();
+   */
+  LoadCurrentMatrix();
+}
+
+void nuiD3DPainter::MultProjectionMatrix(const nuiMatrix& rMatrix)
+{
+  NUI_RETURN_IF_RENDERING_DISABLED;
+  
+  nuiPainter::MultProjectionMatrix(rMatrix);
+  /*
+   glMultMatrixf(rMatrix.Array);
+   CheckForGLErrors();
+   */
+  LoadCurrentMatrix();
+}
+
+void nuiD3DPainter::PushProjectionMatrix()
+{
+  NUI_RETURN_IF_RENDERING_DISABLED;
+  nuiPainter::PushProjectionMatrix();
+  /*
+   glPushMatrix();
+   CheckForGLErrors();
+   */
+}
+
+void nuiD3DPainter::PopProjectionMatrix()
+{
+  NUI_RETURN_IF_RENDERING_DISABLED;
+  nuiPainter::PopProjectionMatrix();
+  LoadCurrentMatrix();
+}
+
 void nuiD3DPainter::LoadCurrentMatrix()
 {
   NUI_RETURN_IF_RENDERING_DISABLED;
-  D3DMATRIX m;
-  nuiMatrix rM(mMatrixStack.top());
-  rM.Transpose();
-  ConvertMatrix(m, rM);
   LPDIRECT3DDEVICE9 pDev = mpContext->GetDirect3DDevice();
-  pDev->SetTransform(D3DTS_WORLD, &m);
+  D3DMATRIX m;
+  {
+    nuiMatrix rM(mMatrixStack.top());
+    rM.Transpose();
+    ConvertMatrix(m, rM);
+    pDev->SetTransform(D3DTS_WORLD, &m);
+  }
+  {
+    nuiMatrix rM(mProjectionMatrixStack.top());
+    rM.Transpose();
+    ConvertMatrix(m, rM);
+    pDev->SetTransform(D3DTS_PROJECTION, &m);
+  }
 }
 
 void nuiD3DPainter::ReleaseCacheObject(void* pHandle)

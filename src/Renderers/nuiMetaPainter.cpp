@@ -238,6 +238,57 @@ void nuiMetaPainter::PopMatrix()
   nuiPainter::PopMatrix();
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+void nuiMetaPainter::LoadProjectionMatrix(const nuiMatrix& rMatrix)
+{
+  StoreOpCode(eLoadProjectionMatrix);
+  StoreBuffer(rMatrix.Array, sizeof(nuiSize), 16);
+  
+  nuiPainter::LoadProjectionMatrix(rMatrix);
+}
+
+void nuiMetaPainter::MultProjectionMatrix(const nuiMatrix& rMatrix)
+{
+  StoreOpCode(eMultProjectionMatrix);
+  StoreBuffer(rMatrix.Array, sizeof(nuiSize), 16);
+  
+  nuiPainter::MultProjectionMatrix(rMatrix);
+}
+
+void nuiMetaPainter::PushProjectionMatrix()
+{
+  StoreOpCode(ePushProjectionMatrix);
+  
+  nuiPainter::PushProjectionMatrix();
+}
+
+void nuiMetaPainter::PopProjectionMatrix()
+{
+  StoreOpCode(ePopProjectionMatrix);
+  
+  nuiPainter::PopProjectionMatrix();
+}
+
+
+
+
+
+
+
+
+
 void nuiMetaPainter::PushClipping()
 {
   StoreOpCode(ePushClipping);
@@ -375,6 +426,37 @@ void nuiMetaPainter::ReDraw(nuiDrawContext* pContext)
     case ePushMatrix:
       pPainter->PushMatrix();
       break;
+
+      
+      
+      
+      
+    case eLoadProjectionMatrix:
+      {
+        nuiMatrix m;
+        FetchBuffer(m.Array, sizeof(nuiSize), 16);
+        pPainter->LoadProjectionMatrix(m);
+      }
+      break;
+    case eMultProjectionMatrix:
+      {
+        nuiMatrix m;
+        FetchBuffer(m.Array, sizeof(nuiSize), 16);
+        pPainter->MultProjectionMatrix(m);
+      }
+      break;
+    case ePopProjectionMatrix:
+      pPainter->PopProjectionMatrix();
+      break;
+    case ePushProjectionMatrix:
+      pPainter->PushProjectionMatrix();
+      break;
+        
+      
+      
+      
+      
+      
     case ePushClipping:
       pPainter->PushClipping();
       break;
@@ -479,6 +561,28 @@ void nuiMetaPainter::Reset(nuiPainter const * pFrom)
       break;
     case ePushMatrix:
       break;
+
+    
+    case eLoadProjectionMatrix:
+      {
+        nuiMatrix m;
+        FetchBuffer(m.Array, sizeof(nuiSize), 16);
+      }
+      break;
+    case eMultProjectionMatrix:
+      {
+        nuiMatrix m;
+        FetchBuffer(m.Array, sizeof(nuiSize), 16);
+      }
+      break;
+    case ePopProjectionMatrix:
+      break;
+    case ePushProjectionMatrix:
+      break;
+        
+        
+        
+        
     case ePushClipping:
       break;
     case ePopClipping:

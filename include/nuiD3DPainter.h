@@ -37,6 +37,10 @@ public:
   virtual void MultMatrix(const nuiMatrix& rMatrix);
   virtual void PushMatrix();
   virtual void PopMatrix();
+  virtual void LoadProjectionMatrix(const nuiMatrix& rMatrix);
+  virtual void MultProjectionMatrix(const nuiMatrix& rMatrix);
+  virtual void PushProjectionMatrix();
+  virtual void PopProjectionMatrix();
   virtual void SetSurface(nuiSurface* pSurface);
 
   virtual void CreateSurface(nuiSurface* pSurface);

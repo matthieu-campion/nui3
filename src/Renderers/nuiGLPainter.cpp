@@ -1011,6 +1011,56 @@ void nuiGLPainter::PopMatrix()
   nuiCheckForGLErrors();
 }
 
+
+
+
+
+
+
+void nuiGLPainter::LoadProjectionMatrix(const nuiMatrix& rMatrix)
+{
+  NUI_RETURN_IF_RENDERING_DISABLED;
+  
+  nuiPainter::LoadProjectionMatrix(rMatrix);
+  glMatrixMode(GL_PROJECTION);
+  nuiGLLoadMatrix(rMatrix.Array);
+  glMatrixMode(GL_MODELVIEW);
+  
+  nuiCheckForGLErrors();
+}
+
+void nuiGLPainter::MultProjectionMatrix(const nuiMatrix& rMatrix)
+{
+  NUI_RETURN_IF_RENDERING_DISABLED;
+  
+  nuiPainter::MultProjectionMatrix(rMatrix);
+  //glMultMatrixf(rMatrix.Array);
+  LoadProjectionMatrix(mProjectionMatrixStack.top());
+  nuiCheckForGLErrors();
+}
+
+void nuiGLPainter::PushProjectionMatrix()
+{
+  NUI_RETURN_IF_RENDERING_DISABLED;
+  
+  nuiPainter::PushProjectionMatrix();
+  //glPushMatrix();
+  LoadProjectionMatrix(mProjectionMatrixStack.top());
+  nuiCheckForGLErrors();
+}
+
+void nuiGLPainter::PopProjectionMatrix()
+{
+  NUI_RETURN_IF_RENDERING_DISABLED;
+  
+  nuiPainter::PopProjectionMatrix();
+  //glPopMatrix();
+  LoadProjectionMatrix(mProjectionMatrixStack.top());
+  nuiCheckForGLErrors();
+}
+
+
+
 #ifdef glDeleteBuffersARB
   #undef glDeleteBuffersARB
 #endif

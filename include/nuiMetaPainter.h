@@ -34,7 +34,11 @@ public:
   virtual void MultMatrix(const nuiMatrix& rMatrix);
   virtual void PushMatrix();
   virtual void PopMatrix();
-
+  virtual void LoadProjectionMatrix(const nuiMatrix& rMatrix);
+  virtual void MultProjectionMatrix(const nuiMatrix& rMatrix);
+  virtual void PushProjectionMatrix();
+  virtual void PopProjectionMatrix();
+  
   virtual void PushClipping();
   virtual void PopClipping();
   virtual void Clip(const nuiRect& rRect);
@@ -76,7 +80,11 @@ protected:
     eMultMatrix,
     ePushMatrix,
     ePopMatrix,
-
+    eLoadProjectionMatrix,
+    eMultProjectionMatrix,
+    ePushProjectionMatrix,
+    ePopProjectionMatrix,
+    
     ePushClipping,
     ePopClipping,
     eClip,

@@ -92,6 +92,12 @@ public:
   virtual void PopMatrix();
   virtual const nuiMatrix& GetMatrix() const;
 
+  virtual void LoadProjectionMatrix(const nuiMatrix& rMatrix);
+  virtual void MultProjectionMatrix(const nuiMatrix& rMatrix);
+  virtual void PushProjectionMatrix();
+  virtual void PopProjectionMatrix();
+  virtual const nuiMatrix& GetProjectionMatrix() const;
+  
   virtual void PushClipping();
   virtual void PopClipping();
   virtual void Clip(const nuiRect& rRect);
@@ -146,6 +152,7 @@ protected:
 
   nuiClipper mClip;
   std::stack<nuiMatrix> mMatrixStack;
+  std::stack<nuiMatrix> mProjectionMatrixStack;
 
   uint32 mRenderOperations;
   uint32 mVertices;
