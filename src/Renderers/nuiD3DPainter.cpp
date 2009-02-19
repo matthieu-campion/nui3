@@ -649,6 +649,10 @@ void nuiD3DPainter::ReleaseDeviceObjects()
     mpVB = NULL;
 
   }
+
+  if (mpBackBuffer)
+    mpBackBuffer->Release();
+  mpBackBuffer = NULL;
   //PROFILE_CHRONO_OUT(8, "ReleaseDeviceObjects");
 }
 
@@ -1793,8 +1797,8 @@ void nuiD3DPainter::SetSurface(nuiSurface* pSurface)
     viewport.Y = 0;
     viewport.Width = width;
     viewport.Height = height;
-    viewport.MinZ = 0.5;         /* Min/max of clip Volume */
-    viewport.MaxZ = 10;
+    viewport.MinZ = 0;         /* Min/max of clip Volume */
+    viewport.MaxZ = 1;
     pDev->SetViewport(&viewport);
     pDev->BeginScene();
   }

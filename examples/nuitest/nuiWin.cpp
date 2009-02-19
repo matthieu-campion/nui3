@@ -4026,7 +4026,7 @@ bool nuiWin::CreateWidgetTexture(const nuiEvent& rEvent)
   EnablePartialRedraw(false);
 
   pSource->LocalToGlobal(r);
-  pContext->StartRendering(-r.Left(), -r.Top());
+  pContext->StartRendering();
   pContext->LoadIdentity();
   pContext->Translate(r.Left(), r.Top());
   pContext->SetClearColor(nuiColor(255,255,255,255));
