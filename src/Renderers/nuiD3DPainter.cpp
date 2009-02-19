@@ -515,7 +515,6 @@ void nuiD3DPainter::SetState(const nuiRenderState& rState, bool ForceApply)
     //PROFILE_CHRONO_IN(22);
     hr = pDev->SetRenderState(D3DRS_SCISSORTESTENABLE, TRUE);
     nuiRect clip(mClip);
-    clip.Move(-mClipOffsetX, -mClipOffsetY);
     RECT r = {ToBelow(clip.Left()),
       ToBelow(clip.Top()),
       ToBelow(clip.Left() + clip.GetWidth()),
@@ -755,10 +754,10 @@ void nuiD3DPainter::ClearColor()
 
   //clear only the clip area
   D3DRECT rectClear;
-  rectClear.x1 = mClip.Left()-mClipOffsetX;
-  rectClear.x2 = mClip.Right()-mClipOffsetX;
-  rectClear.y1 = mClip.Top()-mClipOffsetY;
-  rectClear.y2 = mClip.Bottom()-mClipOffsetY;
+  rectClear.x1 = mClip.Left();
+  rectClear.x2 = mClip.Right();
+  rectClear.y1 = mClip.Top();
+  rectClear.y2 = mClip.Bottom();
 
   HRESULTChecker hr = pDev->Clear(1, &rectClear, D3DCLEAR_TARGET | D3DCLEAR_STENCIL | D3DCLEAR_ZBUFFER, D3DCOLOR_ARGB(a, r, g, b), 1.0f, 0);
 
@@ -781,10 +780,10 @@ void nuiD3DPainter::ClearStencil(uint8 value)
 
   //clear only the clip area
   D3DRECT rectClear;
-  rectClear.x1 = mClip.Left()-mClipOffsetX;
-  rectClear.x2 = mClip.Right()-mClipOffsetX;
-  rectClear.y1 = mClip.Top()-mClipOffsetY;
-  rectClear.y2 = mClip.Bottom()-mClipOffsetY;
+  rectClear.x1 = mClip.Left();
+  rectClear.x2 = mClip.Right();
+  rectClear.y1 = mClip.Top();
+  rectClear.y2 = mClip.Bottom();
 
   hr = pDev->SetRenderState(D3DRS_STENCILMASK, ~0); 
   hr = pDev->Clear(1, &rectClear, D3DCLEAR_STENCIL, 0, 1.0f, value);
@@ -1222,12 +1221,12 @@ void nuiD3DPainter::LoadCurrentMatrix()
     ConvertMatrix(m, rM);
     pDev->SetTransform(D3DTS_WORLD, &m);
   }
-  {
-    nuiMatrix rM(mProjectionMatrixStack.top());
-    rM.Transpose();
-    ConvertMatrix(m, rM);
-    pDev->SetTransform(D3DTS_PROJECTION, &m);
-  }
+//   {
+//     nuiMatrix rM(mProjectionMatrixStack.top());
+//     rM.Transpose();
+//     ConvertMatrix(m, rM);
+//     pDev->SetTransform(D3DTS_PROJECTION, &m);
+//   }
 }
 
 void nuiD3DPainter::ReleaseCacheObject(void* pHandle)
