@@ -270,14 +270,14 @@ inline void nuiSetViewport(GLuint Angle, GLuint Width, GLuint Height)
   glLoadIdentity();  
 }
 
-void nuiGLPainter::StartRendering(nuiSize ClipOffsetX, nuiSize ClipOffsetY)
+void nuiGLPainter::StartRendering()
 {
   BeginSession();
   nuiCheckForGLErrors();
 
   //NUI_RETURN_IF_RENDERING_DISABLED;
 
-  nuiPainter::StartRendering(ClipOffsetX, ClipOffsetY);
+  nuiPainter::StartRendering();
   
   nuiSetViewport(mAngle, mWidth, mHeight);
 
@@ -462,7 +462,6 @@ void nuiGLPainter::SetState(const nuiRenderState& rState, bool ForceApply)
     
     glEnable(GL_SCISSOR_TEST);
     nuiRect clip(mClip);
-    clip.Move(-mClipOffsetX, -mClipOffsetY);
 
     int x,y,w,h;
     uint angle = (mpSurface && mpSurface->GetRenderToTexture()) ? 0 : mAngle;

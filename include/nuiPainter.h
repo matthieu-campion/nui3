@@ -75,7 +75,7 @@ public:
   virtual ~nuiPainter();
 
   virtual void SetSize(uint32 sizex, uint32 sizey) = 0;
-  virtual void StartRendering(nuiSize ClipOffsetX, nuiSize ClipOffsetY);
+  virtual void StartRendering();
   virtual void BeginSession() = 0;
   virtual void EndSession() = 0;
 
@@ -113,12 +113,11 @@ public:
 
   virtual uint32 GetRectangleTextureSupport() const;
 
-  void GetClipOffset(nuiSize& rX, nuiSize& rY) const { rX = mClipOffsetX; rY = mClipOffsetY; }
-  void GetSize(uint32& rX, uint32& rY) const { rX = mWidth; rY = mHeight; }
-  const nuiRenderState& GetState() const { return mState; }
+  void GetSize(uint32& rX, uint32& rY) const;
+  const nuiRenderState& GetState() const;
 
-  void SetDummyMode(bool set) { mDummyMode = set; }
-  bool GetDummyMode() const { return mDummyMode; }
+  void SetDummyMode(bool set);
+  bool GetDummyMode() const;
 
   // Stats:
   void ResetStats();
@@ -127,15 +126,12 @@ public:
   uint32 GetBatches() const;
 
   // Display rotation
-  void SetAngle(uint32 Angle) { mAngle = Angle; }
-  uint32 GetAngle() { return mAngle; }
+  void SetAngle(uint32 Angle);
+  uint32 GetAngle();
   
 
   // Debug:
-  virtual void AddBreakPoint()
-  {
-    // do nothing by default, this is only used to debug defered rendering (i.e. nuiMetaPainter).
-  }
+  virtual void AddBreakPoint();
   
   void DEBUG_EnableDrawArray(bool set) const;
   bool DEBUG_GetEnableDrawArray() const;
@@ -144,8 +140,6 @@ protected:
   nuiRenderState mState;
   std::stack<nuiClipper*> mpClippingStack;
   std::stack<nuiSurface*> mpSurfaceStack;
-  nuiSize mClipOffsetX;
-  nuiSize mClipOffsetY;
   uint32 mWidth;
   uint32 mHeight;
   uint32 mAngle;

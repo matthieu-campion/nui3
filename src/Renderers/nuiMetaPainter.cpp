@@ -100,13 +100,11 @@ void nuiMetaPainter::FetchBuffer(void* pBuffer, uint ElementSize, uint ElementCo
 }
 
 // Rendering operations:
-void nuiMetaPainter::StartRendering(nuiSize ClipOffsetX, nuiSize ClipOffsetY)
+void nuiMetaPainter::StartRendering()
 {
   StoreOpCode(eStartRendering);
-  StoreFloat(ClipOffsetX);
-  StoreFloat(ClipOffsetY);
 
-  nuiPainter::StartRendering(ClipOffsetX, ClipOffsetY);
+  nuiPainter::StartRendering();
 }
 
 void nuiMetaPainter::BeginSession()
@@ -363,10 +361,7 @@ void nuiMetaPainter::ReDraw(nuiDrawContext* pContext)
       break;
     case eStartRendering:
       {
-        nuiSize a, b;
-        FetchFloat(a);
-        FetchFloat(b);
-        pPainter->StartRendering(a, b);
+        pPainter->StartRendering();
       }
       break;
     case eSetState:
@@ -624,7 +619,6 @@ void nuiMetaPainter::Reset(nuiPainter const * pFrom)
   if (pFrom)
   {
     mState = pFrom->GetState();
-    pFrom->GetClipOffset(mClipOffsetX, mClipOffsetY);
     pFrom->GetSize(mWidth, mHeight);
     bool clip = pFrom->GetClipRect(mClip, false);
     

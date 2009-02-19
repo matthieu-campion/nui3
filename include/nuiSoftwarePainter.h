@@ -20,7 +20,7 @@ public:
   virtual ~nuiSoftwarePainter();
 
   virtual void SetSize(uint32 sizex, uint32 sizey);
-  virtual void StartRendering(nuiSize ClipOffsetX, nuiSize ClipOffsetY);
+  virtual void StartRendering();
   virtual void SetState(const nuiRenderState& rState, bool ForceApply = false);
   virtual void DrawArray(const nuiRenderArray& rArray);
   virtual void ClearColor();

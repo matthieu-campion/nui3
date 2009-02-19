@@ -247,7 +247,7 @@ nuiD3DPainter::~nuiD3DPainter()
 }
 
 
-void nuiD3DPainter::StartRendering(nuiSize ClipOffsetX, nuiSize ClipOffsetY)
+void nuiD3DPainter::StartRendering()
 {
   PROFILE_CHRONO_IN(0);
 #ifdef NUI_PROFILE_DIRECTX
@@ -295,7 +295,7 @@ void nuiD3DPainter::StartRendering(nuiSize ClipOffsetX, nuiSize ClipOffsetY)
     SetDefaultRenderStates(pDev);
   }
 
-  nuiPainter::StartRendering(ClipOffsetX, ClipOffsetY);
+  nuiPainter::StartRendering();
   //NGL_OUT(_T("StartRendering (%d x %d)\n"), mWidth, mHeight);
   D3DVIEWPORT9 vp;
   vp.X = 0;

@@ -130,9 +130,9 @@ void nuiSoftwarePainter::SetSize(uint sizex, uint sizey)
   mpRasterizer->Resize(mWidth, mHeight);
 }
 
-void nuiSoftwarePainter::StartRendering(nuiSize ClipOffsetX, nuiSize ClipOffsetY)
+void nuiSoftwarePainter::StartRendering()
 {
-  nuiPainter::StartRendering(ClipOffsetX, ClipOffsetY);
+  nuiPainter::StartRendering();
 }
 
 void nuiSoftwarePainter::SetState(const nuiRenderState& rState, bool ForceApply)

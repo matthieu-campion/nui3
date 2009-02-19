@@ -831,6 +831,8 @@ void nuiMainWindow::OnDropped (nglDragAndDrop* pDragObject, int X,int Y, nglMous
 
   WidgetCanDrop Functor(pDragObject, x, y);
   nuiWidget* pWidget = GetChildIf(x,y, &Functor);
+  if (!pWidget)
+    return;
   NGL_ASSERT(pWidget);
 
   NGL_ASSERT(mpWidgetCanDrop == pWidget);

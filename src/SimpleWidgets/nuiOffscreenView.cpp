@@ -70,7 +70,7 @@ bool nuiOffscreenView::Draw(nuiDrawContext* pContext)
     OffX = OffY = 0;
     LocalToGlobal(OffX, OffY);
 /*  FIXME: disabled during the transition to the new rendering system
-    mpContext->StartRendering(OffX, OffY);
+    mpContext->StartRendering();
     mpContext->SetState(State);
     mpContext->ResetClipRect(true);
     mpContext->EnableClipping(false);

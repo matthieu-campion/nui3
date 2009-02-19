@@ -40,10 +40,8 @@ nuiPainter::~nuiPainter()
   SetSurface(NULL);
 }
 
-void nuiPainter::StartRendering(nuiSize ClipOffsetX, nuiSize ClipOffsetY)
+void nuiPainter::StartRendering()
 {
-  mClipOffsetX = ClipOffsetX;
-  mClipOffsetY = ClipOffsetY;
   while (!mpClippingStack.empty())
   {
     delete mpClippingStack.top();
@@ -51,7 +49,7 @@ void nuiPainter::StartRendering(nuiSize ClipOffsetX, nuiSize ClipOffsetY)
   }
 
   uint32 w=mWidth, h=mHeight;
-  mClip.Set(ToNearest(mClipOffsetX), ToNearest(mClipOffsetY), w, h);
+  mClip.Set(0, 0, w, h);
   while (!mMatrixStack.empty())
     mMatrixStack.pop();
   while (!mProjectionMatrixStack.empty())
@@ -150,7 +148,7 @@ void nuiPainter::Clip(const nuiRect& rRect)
 void nuiPainter::ResetClipRect()
 {
   uint32 w=mWidth, h=mHeight;
-  mClip.Set(ToNearest(mClipOffsetX), ToNearest(mClipOffsetY), w, h);
+  mClip.Set(0, 0, w, h);
 }
 
 void nuiPainter::EnableClipping(bool set)
@@ -281,3 +279,39 @@ void nuiPainter::PopSurface()
     pSurface->Release();
 }
 
+void nuiPainter::GetSize(uint32& rX, uint32& rY) const
+{
+  rX = mWidth; rY = mHeight;
+}
+
+const nuiRenderState& nuiPainter::GetState() const
+{
+  return mState;
+}
+
+void nuiPainter::SetDummyMode(bool set)
+{
+  mDummyMode = set;
+}
+
+bool nuiPainter::GetDummyMode() const
+{
+  return mDummyMode;
+}
+
+void nuiPainter::SetAngle(uint32 Angle)
+{
+  mAngle = Angle;
+}
+
+uint32 nuiPainter::GetAngle()
+{
+  return mAngle;
+}
+
+
+// Debug:
+void nuiPainter::AddBreakPoint()
+{
+  // do nothing by default, this is only used to debug defered rendering (i.e. nuiMetaPainter).
+}

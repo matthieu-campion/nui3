@@ -82,8 +82,8 @@ void nglDataFilesObject::SetDragItemFlavorData(DragRef dragRef, DragItemRef& ite
       int32 start = 0;
       int32 len = 1023;
       char str[1024];
+      memset(str, 0, 1024);
       i->Export(start, str, len, eUTF8);
-      str[i->GetLength()] = 0;
       err = FSPathMakeRef((const UInt8*)str, &fileRef, NULL);
       NGL_ASSERT(!err);
       

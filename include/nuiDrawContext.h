@@ -64,20 +64,25 @@ public:
 
   /** @name Rendering sessions: */
   //@{
-  virtual void StartRendering(nuiSize ClipOffsetX = 0, nuiSize ClipOffsetY = 0)  
+  virtual void StartRendering()
   { 
-    mpPainter->StartRendering(ClipOffsetX, ClipOffsetY); 
+    mpPainter->StartRendering(); 
   }
+  
   void BeginSession()
   {
     mpPainter->BeginSession();
   }
+  
   void EndSession()
   {
     mpPainter->EndSession();
   }
 
-  void StopRendering() { SetTexture(NULL); }
+  void StopRendering()
+  {
+    SetTexture(NULL);
+  }
   //@}
 
   void EnableColorBuffer(bool set);
