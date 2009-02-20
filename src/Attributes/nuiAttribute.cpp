@@ -242,9 +242,8 @@ nuiAttributeEditor* nuiAttribute<int8>::GetDefaultEditor(void* pTarget)
 template <>
 void nuiAttribute<int8>::FormatDefault(void* pTarget, nglString& string)
 {
-	//#FIXME TODO
-	// if this code is executed, it means a case processing is missing
-	NGL_ASSERT(0);
+  string.SetCInt(Get(pTarget));
+
 	return;
 }
 
@@ -285,9 +284,8 @@ nuiAttributeEditor* nuiAttribute<int16>::GetDefaultEditor(void* pTarget)
 template <>
 void nuiAttribute<int16>::FormatDefault(void* pTarget, nglString & string)
 {
-	//#FIXME TODO
-	// if this code is executed, it means a case processing is missing
-	NGL_ASSERT(0);
+  string.SetCInt(Get(pTarget));
+
 	return;
 }
 
@@ -329,9 +327,8 @@ nuiAttributeEditor* nuiAttribute<int32>::GetDefaultEditor(void* pTarget)
 template <>
 void nuiAttribute<int32>::FormatDefault(void* pTarget, nglString & string)
 {
-	//#FIXME TODO
-	// if this code is executed, it means a case processing is missing
-	NGL_ASSERT(0);
+  string.SetCInt(Get(pTarget));
+
 	return;
 }
 
@@ -372,9 +369,8 @@ nuiAttributeEditor* nuiAttribute<int64>::GetDefaultEditor(void* pTarget)
 template <>
 void nuiAttribute<int64>::FormatDefault(void* pTarget, nglString & string)
 {
-	//#FIXME TODO
-	// if this code is executed, it means a case processing is missing
-	NGL_ASSERT(0);
+  string.SetCInt(Get(pTarget));
+
 	return;
 }
 
@@ -416,9 +412,8 @@ nuiAttributeEditor* nuiAttribute<uint8>::GetDefaultEditor(void* pTarget)
 template <>
 void nuiAttribute<uint8>::FormatDefault(void* pTarget, nglString & string)
 {
-	//#FIXME TODO
-	// if this code is executed, it means a case processing is missing
-	NGL_ASSERT(0);
+  string.SetCInt(Get(pTarget));
+
 	return;
 }
 
@@ -459,9 +454,8 @@ nuiAttributeEditor* nuiAttribute<uint16>::GetDefaultEditor(void* pTarget)
 template <>
 void nuiAttribute<uint16>::FormatDefault(void* pTarget, nglString & string)
 {
-	//#FIXME TODO
-	// if this code is executed, it means a case processing is missing
-	NGL_ASSERT(0);
+  string.SetCInt(Get(pTarget));
+
 	return;
 }
 
@@ -503,9 +497,7 @@ nuiAttributeEditor* nuiAttribute<uint32>::GetDefaultEditor(void* pTarget)
 template <>
 void nuiAttribute<uint32>::FormatDefault(void* pTarget, nglString & string)
 {
-	//#FIXME TODO
-	// if this code is executed, it means a case processing is missing
-	NGL_ASSERT(0);
+  string.SetCInt(Get(pTarget));
 	return;
 }
 
@@ -548,9 +540,7 @@ nuiAttributeEditor* nuiAttribute<uint64>::GetDefaultEditor(void* pTarget)
 template <>
 void nuiAttribute<uint64>::FormatDefault(void* pTarget, nglString & string)
 {
-	//#FIXME TODO
-	// if this code is executed, it means a case processing is missing
-	NGL_ASSERT(0);
+  string.SetCInt(Get(pTarget));
 	return;
 }
 
@@ -612,9 +602,7 @@ nuiAttributeEditor* nuiAttribute<float>::GetDefaultEditor(void* pTarget)
 template <>
 void nuiAttribute<float>::FormatDefault(void* pTarget, nglString & string)
 {
-	//#FIXME TODO
-	// if this code is executed, it means a case processing is missing
-	NGL_ASSERT(0);
+  string.SetCFloat(Get(pTarget));
 	return;
 }
 
