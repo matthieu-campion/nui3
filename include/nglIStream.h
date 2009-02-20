@@ -154,6 +154,18 @@ nglSize ReadText (nglString& rText, nglTextFormat* pFormat);
     to pump bytes immediately until there is no more to read or the target
     stream is no more accepting data.
   */
+  
+  int64 PipeTo(nglOStream& rTarget, double MaxDuration);
+  /*!< Pipe to an output stream during a period of time
+    \param rTarget target stream
+    \param MaxDuration max processing time (in seconds)
+    \return number of transfered bytes
+   
+     Transfer content from this input stream to the \p rTarget stream. Starts
+     to pump bytes immediately until the \p MaxDuration time has expired or there is no more to read or the target
+     stream is no more accepting data.
+   */
+  
   //@}
 
 private:

@@ -301,6 +301,36 @@ int64 nglIStream::PipeTo(nglOStream& rTarget)
   return total_piped;
 }
 
+int64 nglIStream::PipeTo(nglOStream& rTarget, double MaxDuration)
+{
+  nglTime starttime;
+  uint8 buffer[PIPE_BUF_SIZE];  
+  nglStreamState istate = GetState();
+  nglStreamState ostate = rTarget.GetState();
+  int64 total_piped = 0;  
+  int64 piped_in, piped_out;
+  
+  nglTime currenttime;
+  while ( ((currenttime - starttime).GetValue() < MaxDuration) && ( istate == eStreamReady || istate == eStreamWait ) && ( ostate == eStreamEnd || ostate == eStreamWait ))
+  {    
+    piped_in = Read( buffer, PIPE_BUF_SIZE, 1 );
+    istate = this->GetState();
+    
+    while ( piped_in > 0 && ( ostate == eStreamEnd || ostate == eStreamWait ) )
+    {
+      piped_out = rTarget.Write( buffer, piped_in, 1 );
+      
+      ostate = rTarget.GetState();
+      piped_in -= piped_out;
+      total_piped += piped_out;
+    }
+    nglTime now;
+    currenttime = now;
+  }
+  
+  return total_piped;
+}
+
 
 /*
 * Internals
