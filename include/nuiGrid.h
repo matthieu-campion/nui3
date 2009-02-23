@@ -126,6 +126,11 @@ public:
   nuiSize GetDefaultSpacing() const;
   void SetDefaultSpacing(nuiSize set);
 
+  void SetEqualizeColumns(bool set);
+  void SetEqualizeRows(bool set);
+  bool GetEqualizeColumns() const;
+  bool GetEqualizeRows() const;
+  
 protected:
 
   uint32 GetDimensionRange(uint32 dimension) const;
@@ -186,6 +191,8 @@ protected:
   nuiSize mDefaultHSpacing;
   nuiSize mDefaultVSpacing;
 
+  bool mEqualizeColumns;
+  bool mEqualizeRows;
 };
 
 #endif//__nuiGrid_h__

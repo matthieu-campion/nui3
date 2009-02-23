@@ -85,6 +85,10 @@ public:
   nuiSize GetDefaultSpacing() const;
   void SetDefaultSpacing(nuiSize set);
 
+  void SetEqualizeCells(bool set);
+  bool GetEqualizeCells() const;
+  
+  
 };
 
 #endif

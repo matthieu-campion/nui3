@@ -78,6 +78,8 @@ public:
   virtual nuiSize GetDefaultSpacing() const = 0;
   virtual void SetDefaultSpacing(nuiSize set) = 0;
   
+  virtual void SetEqualizeCells(bool set) = 0;
+  virtual bool GetEqualizeCells() const = 0;
   
   virtual ~nuiBox();
   

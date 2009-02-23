@@ -319,4 +319,13 @@ nuiSize nuiVBox::GetCellPixels(uint32 cell) const
 }
 
 
+void nuiVBox::SetEqualizeCells(bool set)
+{
+  SetEqualizeRows(set);
+}
+
+bool nuiVBox::GetEqualizeCells() const
+{
+  return nuiGrid::GetEqualizeRows();
+}
 

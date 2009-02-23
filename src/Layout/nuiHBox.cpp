@@ -323,3 +323,13 @@ void nuiHBox::SetSize(nuiSize size)
 }
 
 
+void nuiHBox::SetEqualizeCells(bool set)
+{
+  SetEqualizeColumns(set);
+}
+
+bool nuiHBox::GetEqualizeCells() const
+{
+  return nuiGrid::GetEqualizeColumns();
+}
+

@@ -282,6 +282,26 @@ nuiRect nuiGrid::CalcIdealSize()
 
 void nuiGrid::AdjustToExpand(nuiSize width, nuiSize height, std::vector<nuiSize>& Widths, std::vector<nuiSize>& Heights)
 {
+  if (mEqualizeColumns && !mColumnWidths.empty())
+  {
+    nuiSize w = 0;
+    for (uint32 i = 0; i < mColumnWidths.size(); i++)
+      w += mColumnWidths[i];
+    w /= (nuiSize)mColumnWidths.size();
+    for (uint32 i = 0; i < mColumnWidths.size(); i++)
+      mColumnWidths[i] = w;
+  }
+
+  if (mEqualizeRows && !mRowHeights.empty())
+  {
+    nuiSize h = 0;
+    for (uint32 i = 0; i < mRowHeights.size(); i++)
+      h += mRowHeights[i];
+    h /= (nuiSize)mRowHeights.size();
+    for (uint32 i = 0; i < mRowHeights.size(); i++)
+      mRowHeights[i] = h;
+  }
+  
   Widths.clear();
   Heights.clear();
 
@@ -1267,4 +1287,28 @@ void nuiGrid::SetDefaultSpacing(nuiSize set)
   SetDefaultHSpacing(set);
   SetDefaultVSpacing(set);
 }
+
+void nuiGrid::SetEqualizeColumns(bool set)
+{
+  mEqualizeColumns = set;
+  InvalidateLayout();
+}
+
+void nuiGrid::SetEqualizeRows(bool set)
+{
+  mEqualizeRows = set;
+  InvalidateLayout();
+}
+
+bool nuiGrid::GetEqualizeColumns() const
+{
+  return mEqualizeColumns;
+}
+
+bool nuiGrid::GetEqualizeRows() const
+{
+  return mEqualizeRows;
+}
+
+
 
