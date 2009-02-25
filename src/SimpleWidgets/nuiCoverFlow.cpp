@@ -32,7 +32,12 @@ bool nuiCoverFlow::Draw(nuiDrawContext* pContext)
     pContext->SetFillColor(mBackground);
     pContext->DrawRect(r, eFillShape);          
   }
+  
+  if (mImages.empty())
+    return true;
 
+  
+  
   nuiTexture* pTex = mImages[mSelectedImage];
   // Draw the selected image:
   float height = mRect.GetHeight();
