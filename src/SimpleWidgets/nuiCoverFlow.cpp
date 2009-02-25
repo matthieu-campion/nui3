@@ -60,42 +60,49 @@ bool nuiCoverFlow::Draw(nuiDrawContext* pContext)
   float th = imgh;
   pTex->ImageToTextureCoord(tw, th);
   
+  float vx0 = imgrect.Left();
+  float vy0 = imgrect.Top();
+  float vx1 = imgrect.Right();
+  float vy1 = imgrect.Bottom();
+  float vw = imgrect.GetWidth();
+  float vh = imgrect.GetHeight();
+  
   nuiRenderArray array(GL_TRIANGLE_STRIP);
   array.EnableArray(nuiRenderArray::eColor, true);
   array.EnableArray(nuiRenderArray::eTexCoord, true);
   array.SetColor(nuiColor(255, 255, 255, 255));
-  array.SetVertex(imgrect.Left(), imgrect.Top());
+  array.SetVertex(vx0, vy0);
   array.SetTexCoords(0, 0);
   array.PushVertex();
   
-  array.SetVertex(imgrect.Right(), imgrect.Top());
+  array.SetVertex(vx1, vy0);
   array.SetTexCoords(tw, 0);
   array.PushVertex();
 
-  array.SetVertex(imgrect.Left(), imgrect.Bottom());
+  array.SetVertex(vx0, vy1);
   array.SetTexCoords(0, th);
   array.PushVertex();
 
-  array.SetVertex(imgrect.Right(), imgrect.Bottom());
+  array.SetVertex(vx1, vy1);
   array.SetTexCoords(tw, th);
   array.PushVertex();
   
   ////
   array.SetColor(nuiColor(1.0, 1.0, 1.0, mReflectionStart));
-  array.SetVertex(imgrect.Left(), imgrect.Bottom());
+  array.SetVertex(vx0, vy1);
   array.SetTexCoords(0, th);
   array.PushVertex();
   
-  array.SetVertex(imgrect.Right(), imgrect.Bottom());
+  array.SetVertex(vx1, vy1);
   array.SetTexCoords(tw, th);
   array.PushVertex();
   
   array.SetColor(nuiColor(1.0, 1.0, 1.0, mReflectionEnd));
-  array.SetVertex(imgrect.Left(), imgrect.Bottom() + imgrect.GetHeight());
+  array.SetVertex(vx0, vy1 + vh);
   array.SetTexCoords(0, 0);
   array.PushVertex();
 
-  array.SetVertex(imgrect.Right(), imgrect.Bottom() + imgrect.GetHeight());
+  array.SetVertex(vx1, vy1 + vh);
   array.SetTexCoords(tw, 0);
   array.PushVertex();
   
