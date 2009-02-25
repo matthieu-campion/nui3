@@ -23,6 +23,9 @@ nuiGrid::nuiGrid(uint32 nbcolumns, uint32 nbrows)
   if (SetObjectClass(_T("nuiGrid")))
     InitAttributes();
 
+  mEqualizeColumns = false;
+  mEqualizeRows = false;
+
   mDefaultHSpacing = 0.0f;
   mDefaultVSpacing = 0.0f;
 
