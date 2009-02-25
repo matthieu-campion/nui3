@@ -53,9 +53,6 @@ void nuiGrid::InitAttributes()
     nuiMakeDelegate(this, &nuiGrid::GetDefaultSpacing),
     nuiMakeDelegate(this, &nuiGrid::SetDefaultSpacing)));                
 
-  //void SetColumnSpacing(uint32 column, nuiSize hgap); ///< Sets the horizontal spacing to hgap around widgets in the given column.
-  //void SetRowSpacing(uint32 row, nuiSize vgap);       ///< Sets the vertical spacing to hgap  around widgets in the given column.
-  
   AddAttribute(new nuiAttribute<nuiSize>
                (nglString(_T("ColumnSpacing")), nuiUnitSize,
                 nuiMakeDelegate(this, &nuiGrid::GetColumnSpacing),
@@ -68,6 +65,15 @@ void nuiGrid::InitAttributes()
                 nuiMakeDelegate(this, &nuiGrid::SetRowSpacing),
                 nuiMakeDelegate(this, &nuiGrid::GetRowDimensionRange)));                
   
+  AddAttribute(new nuiAttribute<bool>
+               (nglString(_T("EqualizeRows")), nuiUnitSize,
+                nuiMakeDelegate(this, &nuiGrid::GetEqualizeRows),
+                nuiMakeDelegate(this, &nuiGrid::SetEqualizeRows)));                
+  
+  AddAttribute(new nuiAttribute<bool>
+               (nglString(_T("EqualizeColumns")), nuiUnitSize,
+                nuiMakeDelegate(this, &nuiGrid::GetEqualizeColumns),
+                nuiMakeDelegate(this, &nuiGrid::SetEqualizeColumns)));                
 }
 
 uint32 nuiGrid::GetDimensionRange(uint32 dimension) const

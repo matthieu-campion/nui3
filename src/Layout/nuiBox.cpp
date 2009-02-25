@@ -39,6 +39,12 @@ void nuiBox::InitBoxAttributes()
                 nuiMakeDelegate(this, &nuiBox::GetCellPixels),
                 nuiMakeDelegate(this, &nuiBox::SetCellPixels),
                 nuiMakeDelegate(this, &nuiBox::GetBoxDimensionRange)));
+
+  AddAttribute(new nuiAttribute<bool>
+               (nglString(_T("EqualizeCells")), nuiUnitSize,
+                nuiMakeDelegate(this, &nuiBox::GetEqualizeCells),
+                nuiMakeDelegate(this, &nuiBox::SetEqualizeCells)));                
+  
 }
 
 uint32 nuiBox::GetBoxDimensionRange(uint32 dimension) const
