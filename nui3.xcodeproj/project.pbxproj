@@ -3571,6 +3571,12 @@
 		E5D66E4F0CF433A4004783D4 /* nuiNativeResource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5D66E4D0CF433A4004783D4 /* nuiNativeResource.cpp */; };
 		E5D66E510CF433BA004783D4 /* nuiNativeResource.h in Headers */ = {isa = PBXBuildFile; fileRef = E5D66E500CF433BA004783D4 /* nuiNativeResource.h */; };
 		E5D66E520CF433BA004783D4 /* nuiNativeResource.h in Headers */ = {isa = PBXBuildFile; fileRef = E5D66E500CF433BA004783D4 /* nuiNativeResource.h */; };
+		E5EA30190F55926F0057CCA7 /* nuiCoverFlow.h in Headers */ = {isa = PBXBuildFile; fileRef = E5EA30180F55926F0057CCA7 /* nuiCoverFlow.h */; };
+		E5EA301A0F55926F0057CCA7 /* nuiCoverFlow.h in Headers */ = {isa = PBXBuildFile; fileRef = E5EA30180F55926F0057CCA7 /* nuiCoverFlow.h */; };
+		E5EA301B0F55926F0057CCA7 /* nuiCoverFlow.h in Headers */ = {isa = PBXBuildFile; fileRef = E5EA30180F55926F0057CCA7 /* nuiCoverFlow.h */; };
+		E5EA301D0F55963C0057CCA7 /* nuiCoverFlow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5EA301C0F55963C0057CCA7 /* nuiCoverFlow.cpp */; };
+		E5EA301E0F55963C0057CCA7 /* nuiCoverFlow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5EA301C0F55963C0057CCA7 /* nuiCoverFlow.cpp */; };
+		E5EA301F0F55963C0057CCA7 /* nuiCoverFlow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5EA301C0F55963C0057CCA7 /* nuiCoverFlow.cpp */; };
 		E5EB3A980C8226A800CF21E2 /* nuiBindingManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5EB3A960C8226A800CF21E2 /* nuiBindingManager.cpp */; };
 		E5EB3A9A0C8226A800CF21E2 /* nuiBindingManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5EB3A960C8226A800CF21E2 /* nuiBindingManager.cpp */; };
 		E5EB3A9C0C82270400CF21E2 /* nuiBindingManager.h in Headers */ = {isa = PBXBuildFile; fileRef = E5EB3A9B0C82270400CF21E2 /* nuiBindingManager.h */; };
@@ -4805,6 +4811,8 @@
 		E5D053F90D318DFF00B1A021 /* nuiMetaDecoration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiMetaDecoration.h; path = include/nuiMetaDecoration.h; sourceTree = SOURCE_ROOT; };
 		E5D66E4D0CF433A4004783D4 /* nuiNativeResource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiNativeResource.cpp; path = src/Base/nuiNativeResource.cpp; sourceTree = SOURCE_ROOT; };
 		E5D66E500CF433BA004783D4 /* nuiNativeResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiNativeResource.h; path = include/nuiNativeResource.h; sourceTree = SOURCE_ROOT; };
+		E5EA30180F55926F0057CCA7 /* nuiCoverFlow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiCoverFlow.h; path = include/nuiCoverFlow.h; sourceTree = SOURCE_ROOT; };
+		E5EA301C0F55963C0057CCA7 /* nuiCoverFlow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiCoverFlow.cpp; sourceTree = "<group>"; };
 		E5EB3A960C8226A800CF21E2 /* nuiBindingManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiBindingManager.cpp; sourceTree = "<group>"; };
 		E5EB3A9B0C82270400CF21E2 /* nuiBindingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiBindingManager.h; path = include/nuiBindingManager.h; sourceTree = SOURCE_ROOT; };
 		E5EC5E780CA0924A00272CE6 /* nuiFrameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiFrameView.h; path = include/nuiFrameView.h; sourceTree = SOURCE_ROOT; };
@@ -6494,6 +6502,7 @@
 		E5816DC70C3CECAB00902DFE /* SimpleWidgets */ = {
 			isa = PBXGroup;
 			children = (
+				E5EA30180F55926F0057CCA7 /* nuiCoverFlow.h */,
 				E5816DC80C3CECAB00902DFE /* nuiButton.cpp */,
 				E5816CB40C3CECAB00902DFE /* nuiButton.h */,
 				562294E40CD78F6100FD1CC0 /* nuiColorSelector.cpp */,
@@ -6562,6 +6571,7 @@
 				BC3919860CBA5B1A00C56FD2 /* nuiZoomBar.cpp */,
 				BC3919890CBA5B2F00C56FD2 /* nuiZoomBar.h */,
 				E5B009DE0C87855E004BEE4E /* nuiToggleButton.h */,
+				E5EA301C0F55963C0057CCA7 /* nuiCoverFlow.cpp */,
 			);
 			name = SimpleWidgets;
 			path = src/SimpleWidgets;
@@ -7565,6 +7575,7 @@
 				E5B678C90F39EFE100DBF325 /* nuiAttributeAnimation.h in Headers */,
 				BC97B41A0F41E14100CCA06C /* nuiRangeKnobAttributeEditor.h in Headers */,
 				E561CCB10F432B1F003B042C /* nuiOffscreenView.h in Headers */,
+				E5EA30190F55926F0057CCA7 /* nuiCoverFlow.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8243,6 +8254,7 @@
 				E5B678CB0F39EFE100DBF325 /* nuiAttributeAnimation.h in Headers */,
 				BC97B4190F41E14100CCA06C /* nuiRangeKnobAttributeEditor.h in Headers */,
 				E561CCB30F432B1F003B042C /* nuiOffscreenView.h in Headers */,
+				E5EA301B0F55926F0057CCA7 /* nuiCoverFlow.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8919,6 +8931,7 @@
 				E5B678CA0F39EFE100DBF325 /* nuiAttributeAnimation.h in Headers */,
 				BC97B41B0F41E14100CCA06C /* nuiRangeKnobAttributeEditor.h in Headers */,
 				E561CCB20F432B1F003B042C /* nuiOffscreenView.h in Headers */,
+				E5EA301A0F55926F0057CCA7 /* nuiCoverFlow.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9520,6 +9533,7 @@
 				40EAFD770F27803B0072C6DE /* nuiAiffWriter.cpp in Sources */,
 				E5B678C70F39EFCF00DBF325 /* nuiAttributeAnimation.cpp in Sources */,
 				BC97B4160F41E13300CCA06C /* nuiRangeKnobAttributeEditor.cpp in Sources */,
+				E5EA301D0F55963C0057CCA7 /* nuiCoverFlow.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10046,6 +10060,7 @@
 				40EAFD760F27803B0072C6DE /* nuiAiffWriter.cpp in Sources */,
 				E5B678C50F39EFCF00DBF325 /* nuiAttributeAnimation.cpp in Sources */,
 				BC97B4150F41E13300CCA06C /* nuiRangeKnobAttributeEditor.cpp in Sources */,
+				E5EA301F0F55963C0057CCA7 /* nuiCoverFlow.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10569,6 +10584,7 @@
 				40EAFD750F27803A0072C6DE /* nuiAiffWriter.cpp in Sources */,
 				E5B678C60F39EFCF00DBF325 /* nuiAttributeAnimation.cpp in Sources */,
 				BC97B4170F41E13300CCA06C /* nuiRangeKnobAttributeEditor.cpp in Sources */,
+				E5EA301E0F55963C0057CCA7 /* nuiCoverFlow.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

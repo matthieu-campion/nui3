@@ -100,6 +100,8 @@ using namespace std;
 
 #include "nuiBindings.h"
 
+#include "nuiCoverFlow.h"
+
 /*
 
 * Simple console based on nuiText
@@ -543,6 +545,10 @@ void nuiWin::OnCreation()
   
   pElement = new nuiTreeNode(nuiTR("nglImage Resize test"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateImageResizeWindow);
+  pMainTree->AddChild(pElement);
+
+  pElement = new nuiTreeNode(nuiTR("CoverFlow test"));
+  mWinSink.Connect(pElement->Activated, &nuiWin::CreateCoverFlowWindow);
   pMainTree->AddChild(pElement);
   
   pElement = new nuiTreeNode(nuiTR("Enum native resources"));
@@ -2742,6 +2748,16 @@ bool nuiWin::CreateImageResizeWindow(const nuiEvent& rEvent)
   return false;
 }
 
+bool nuiWin::CreateCoverFlowWindow(const nuiEvent& rEvent)
+{
+  nuiWindow* pWin = new nuiWindow(nuiRect(10, 10, 320, 320));
+  nuiCoverFlow* pFlow = new nuiCoverFlow();
+  pWin->AddChild(pFlow);
+  pFlow->AddImage(nuiTexture::GetTexture(nglPath(_T("rsrc:/jpeg.jpg"))));
+  pFlow->SetBackground(nuiColor(255, 255, 255, 0));
+  mpManager->AddChild(pWin);
+  return false;
+}
 
 #include "nuiMemoryPool.h"
 
