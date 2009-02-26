@@ -261,19 +261,7 @@ inline void nuiSetViewport(GLuint Angle, GLuint Width, GLuint Height, const nuiM
   glLoadIdentity();
   glRotatef(Angle, 0.f,0.f,1.f);
   
-  //glTranslatef(-1.0f, 1.0f, 0.0f );
-  //glScalef (2.0f/(float)Width, -2.0f/(float)Height, 1.0f);
-  
-  nuiMatrix m;
-  m.Translate(-1.0f, 1.0f, 0.0f);
-  m.Scale(2.0f/(float)Width, -2.0f/(float)Height, 1.0f);
   glMultMatrixf(rMatrix.Array);
-  //glMultMatrixf(m.Array);
-  
-  nglString str1, str2;
-  m.GetValue(str1);
-  rMatrix.GetValue(str2);
-  NGL_OUT(_T("First matrix: %ls\nSecond Matrix: %ls\n\n"), str1.GetChars(), str2.GetChars());
   
   nuiCheckForGLErrors();
   
