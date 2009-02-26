@@ -36,10 +36,6 @@ bool nuiCoverFlow::Draw(nuiDrawContext* pContext)
   if (mImages.empty())
     return true;
 
-  
-  
-  nuiTexture* pTex = mImages[mSelectedImage];
-  // Draw the selected image:
   float height = mRect.GetHeight();
   float width = mRect.GetWidth();
   float top = height * .05;
@@ -48,14 +44,93 @@ bool nuiCoverFlow::Draw(nuiDrawContext* pContext)
   float w = h;
   float left = (width - w) * .5;
   float right = width - left;
+  float halfwidth = left * .8;
+  float sidewidth = w * .1;
+  float sidespace = sidewidth * .5;
+  uint32 maxcount = ToBelow(halfwidth / sidespace);
+
+  uint32 maxcountleft  = MIN(maxcount, MAX(0, mSelectedImage));
+  uint32 maxcountright = MIN(maxcount, MIN(mImages.size(), mSelectedImage + 1));
   nuiRect r(left, top, w, h);
+  
+  for (uint32 l = mSelectedImage - maxcountleft; l < mSelectedImage; l++)
+  {
+    nuiTexture* pTex = mImages[l];
+    // Draw the selected image:
+    float offset = h * .2;
+    nuiRect rr(w * .5 - halfwidth + sidespace * l, top + offset, sidewidth, h - offset * 2);
+    float imgw = pTex->GetWidth();
+    float imgh = pTex->GetHeight();
+    float s = MAX(imgw, imgh);
+    float ratiow = imgw / s;
+    float ratioh = imgh / s;
+    nuiRect imgrect(0.0f, 0.0f, ratiow * w * .6, ratioh * h * .8);
+    imgrect.SetPosition(nuiBottom, rr);
+    float tw = imgw;
+    float th = imgh;
+    pTex->ImageToTextureCoord(tw, th);
+    
+    float vx0 = imgrect.Left();
+    float vy0 = imgrect.Top();
+    float vx1 = imgrect.Right();
+    float vy1 = imgrect.Bottom();
+    float vw = imgrect.GetWidth();
+    float vh = imgrect.GetHeight();
+        
+    nuiRenderArray array(GL_TRIANGLE_STRIP);
+    array.EnableArray(nuiRenderArray::eColor, true);
+    array.EnableArray(nuiRenderArray::eTexCoord, true);
+    array.SetColor(nuiColor(255, 255, 255, 255));
+    array.SetVertex(vx0, vy0);
+    array.SetTexCoords(0, 0);
+    array.PushVertex();
+    
+    array.SetVertex(vx1, vy0 + offset);
+    array.SetTexCoords(tw, 0);
+    array.PushVertex();
+    
+    array.SetVertex(vx0, vy1);
+    array.SetTexCoords(0, th);
+    array.PushVertex();
+    
+    array.SetVertex(vx1, vy1 - offset);
+    array.SetTexCoords(tw, th);
+    array.PushVertex();
+    
+    ////
+    array.SetColor(nuiColor(1.0, 1.0, 1.0, mReflectionStart));
+    array.SetVertex(vx0, vy1);
+    array.SetTexCoords(0, th);
+    array.PushVertex();
+    
+    array.SetVertex(vx1, vy1 - offset);
+    array.SetTexCoords(tw, th);
+    array.PushVertex();
+    
+    array.SetColor(nuiColor(1.0, 1.0, 1.0, mReflectionEnd));
+    array.SetVertex(vx0, vy1 + vh);
+    array.SetTexCoords(0, 0);
+    array.PushVertex();
+    
+    array.SetVertex(vx1, vy1 + vh - offset * 2);
+    array.SetTexCoords(tw, 0);
+    array.PushVertex();
+    
+    pContext->EnableTexturing(true);
+    pContext->SetTexture(pTex);
+    pContext->DrawArray(array);
+  }
+  
+  
+  nuiTexture* pTex = mImages[mSelectedImage];
+  // Draw the selected image:
   float imgw = pTex->GetWidth();
   float imgh = pTex->GetHeight();
   float s = MAX(imgw, imgh);
   float ratiow = imgw / s;
   float ratioh = imgh / s;
   nuiRect imgrect(0.0f, 0.0f, ratiow * w, ratioh * h);
-  imgrect.SetPosition(nuiCenter, r);
+  imgrect.SetPosition(nuiBottom, r);
   float tw = imgw;
   float th = imgh;
   pTex->ImageToTextureCoord(tw, th);

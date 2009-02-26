@@ -34,7 +34,7 @@ public:
   const nuiColor& GetBackground() const;
 protected:
   std::vector<nuiTexture*> mImages;
-  uint32 mSelectedImage;
+  int32 mSelectedImage;
   nuiColor mBackground;
   float mReflectionStart;
   float mReflectionEnd;

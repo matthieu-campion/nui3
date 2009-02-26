@@ -6502,7 +6502,6 @@
 		E5816DC70C3CECAB00902DFE /* SimpleWidgets */ = {
 			isa = PBXGroup;
 			children = (
-				E5EA30180F55926F0057CCA7 /* nuiCoverFlow.h */,
 				E5816DC80C3CECAB00902DFE /* nuiButton.cpp */,
 				E5816CB40C3CECAB00902DFE /* nuiButton.h */,
 				562294E40CD78F6100FD1CC0 /* nuiColorSelector.cpp */,
@@ -6510,14 +6509,16 @@
 				E5816DC90C3CECAB00902DFE /* nuiComboBox.cpp */,
 				E5816CB70C3CECAB00902DFE /* nuiComboBox.h */,
 				E5816CB90C3CECAB00902DFE /* nuiComposite.h */,
+				E5EA301C0F55963C0057CCA7 /* nuiCoverFlow.cpp */,
+				E5EA30180F55926F0057CCA7 /* nuiCoverFlow.h */,
 				E5816DCA0C3CECAB00902DFE /* nuiFileList.cpp */,
 				E5816CC40C3CECAB00902DFE /* nuiFileList.h */,
 				E5816DCB0C3CECAB00902DFE /* nuiFileSelector.cpp */,
 				E5816CC50C3CECAB00902DFE /* nuiFileSelector.h */,
-				BC586EC50F15023300703177 /* nuiFileTree.cpp */,
-				BC586EC10F15022400703177 /* nuiFileTree.h */,
 				E5816DCC0C3CECAB00902DFE /* nuiFileTable.cpp */,
 				E5816CC60C3CECAB00902DFE /* nuiFileTable.h */,
+				BC586EC50F15023300703177 /* nuiFileTree.cpp */,
+				BC586EC10F15022400703177 /* nuiFileTree.h */,
 				E5BCF2E90D88226100D6EAEF /* nuiFontBrowser.cpp */,
 				E5BCF2EC0D88227D00D6EAEF /* nuiFontBrowser.h */,
 				E5EC5E7C0CA0925500272CE6 /* nuiFrameView.cpp */,
@@ -6528,10 +6529,10 @@
 				E5816CD00C3CECAB00902DFE /* nuiHoverDummy.h */,
 				E5816DCE0C3CECAB00902DFE /* nuiImage.cpp */,
 				E5816CD10C3CECAB00902DFE /* nuiImage.h */,
-				BCCFC44B0E9E655B004A487E /* nuiKnob.cpp */,
-				BCCFC44E0E9E656B004A487E /* nuiKnob.h */,
 				BCBD68750CD79C9B004CD415 /* nuiImageDropZone.cpp */,
 				BCBD68780CD79CB5004CD415 /* nuiImageDropZone.h */,
+				BCCFC44B0E9E655B004A487E /* nuiKnob.cpp */,
+				BCCFC44E0E9E656B004A487E /* nuiKnob.h */,
 				E5816DD20C3CECAB00902DFE /* nuiMesh.cpp */,
 				E5816DD30C3CECAB00902DFE /* nuiMeshEngine.cpp */,
 				E5816CDC0C3CECAB00902DFE /* nuiMeshEngine.h */,
@@ -6571,7 +6572,6 @@
 				BC3919860CBA5B1A00C56FD2 /* nuiZoomBar.cpp */,
 				BC3919890CBA5B2F00C56FD2 /* nuiZoomBar.h */,
 				E5B009DE0C87855E004BEE4E /* nuiToggleButton.h */,
-				E5EA301C0F55963C0057CCA7 /* nuiCoverFlow.cpp */,
 			);
 			name = SimpleWidgets;
 			path = src/SimpleWidgets;

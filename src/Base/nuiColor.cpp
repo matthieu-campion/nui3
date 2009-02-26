@@ -417,6 +417,13 @@ void RGBtoHSV( float r, float g, float b, float& h, float& s, float& v )
 	while (h >= 360)
 		h -= 360;
   h /= 360;
+  
+  if (isnan(h))
+    h = 0;
+  if (isnan(s))
+    s = 0;
+  if (isnan(v))
+    v = 0;
 }
 
 void HSVtoRGB( float& r, float& g, float& b, float h, float s, float v )
@@ -475,6 +482,12 @@ void HSVtoRGB( float& r, float& g, float& b, float h, float s, float v )
 			break;
 	}
   
+  if (isnan(r))
+    r = 0;
+  if (isnan(g))
+    g = 0;
+  if (isnan(b))
+    b = 0;
   
 }
 
@@ -550,6 +563,15 @@ void nuiColor::SetHSL(float h, float s, float l, float a)
     }
   }
   
+  if (isnan(r))
+    r = 0;
+  if (isnan(g))
+    g = 0;
+  if (isnan(b))
+    b = 0;
+  if (isnan(a))
+    a = 0;
+  
   mRed = r;
   mGreen = g;
   mBlue = b;
@@ -606,5 +628,12 @@ void nuiColor::GetHSL(float& h, float& s, float& l) const
     h = (r == m ? 3.0 + g2 : 5.0 - r2);
   }
   h /= 6.0;
+
+  if (isnan(h))
+    h = 0;
+  if (isnan(s))
+    s = 0;
+  if (isnan(l))
+    l = 0;
 }
 

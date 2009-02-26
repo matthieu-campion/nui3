@@ -2756,6 +2756,7 @@ bool nuiWin::CreateCoverFlowWindow(const nuiEvent& rEvent)
   pFlow->AddImage(nuiTexture::GetTexture(nglPath(_T("rsrc:/gnu.png"))));
   pFlow->AddImage(nuiTexture::GetTexture(nglPath(_T("rsrc:/jpeg.jpg"))));
   //  pFlow->SetBackground(nuiColor(255, 255, 255, 0));
+  pFlow->SelectImage(1);
   pFlow->SetBackground(nuiColor(0, 0, 0, 255));
   mpManager->AddChild(pWin);
   return false;
