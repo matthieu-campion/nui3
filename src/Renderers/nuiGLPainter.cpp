@@ -120,19 +120,24 @@ bool nuiGLPainter::CheckFramebufferStatus()
 #if defined(NGL_DEBUG)
   switch (status)
   {
-    case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT_NUI: {
+    case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT_NUI:
+    {
       NGL_OUT(_T("GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT\n"));
     } break;
-    case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT_NUI: {
+    case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT_NUI:
+    {
       NGL_OUT(_T("GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT\n"));
     } break;
-    case GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS_NUI: {
+    case GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS_NUI:
+    {
       NGL_OUT(_T("GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS\n"));
     } break;
-    case GL_FRAMEBUFFER_INCOMPLETE_FORMATS_NUI: {
+    case GL_FRAMEBUFFER_INCOMPLETE_FORMATS_NUI:
+    {
       NGL_OUT(_T("GL_FRAMEBUFFER_INCOMPLETE_FORMATS\n"));
     } break;
-    case GL_FRAMEBUFFER_UNSUPPORTED_NUI: {
+    case GL_FRAMEBUFFER_UNSUPPORTED_NUI:
+    {
       NGL_OUT(_T("GL_FRAMEBUFFER_UNSUPPORTED\n"));
     } break;
   }
@@ -244,7 +249,7 @@ nuiGLPainter::~nuiGLPainter()
     glAAExit();
 }
 
-inline void nuiSetViewport(GLuint Angle, GLuint Width, GLuint Height)
+inline void nuiSetViewport(GLuint Angle, GLuint Width, GLuint Height, const nuiMatrix& rMatrix)
 {
   if (Angle == 90 || Angle == 270)
     glViewport(0,0, Height, Width);
@@ -254,16 +259,22 @@ inline void nuiSetViewport(GLuint Angle, GLuint Width, GLuint Height)
   
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-
-#if 0//#ifndef _OPENGL_ES_
-  glOrtho(0, Width, Height, 0, -1, 1);
-#else
   glRotatef(Angle, 0.f,0.f,1.f);
   
-  glTranslatef(-1.0f, 1.0f, 0.0f );
-  glScalef (2.0f/(float)Width, -2.0f/(float)Height, 1.0f);
-#endif
-
+  //glTranslatef(-1.0f, 1.0f, 0.0f );
+  //glScalef (2.0f/(float)Width, -2.0f/(float)Height, 1.0f);
+  
+  nuiMatrix m;
+  m.Translate(-1.0f, 1.0f, 0.0f);
+  m.Scale(2.0f/(float)Width, -2.0f/(float)Height, 1.0f);
+  glMultMatrixf(rMatrix.Array);
+  //glMultMatrixf(m.Array);
+  
+  nglString str1, str2;
+  m.GetValue(str1);
+  rMatrix.GetValue(str2);
+  NGL_OUT(_T("First matrix: %ls\nSecond Matrix: %ls\n\n"), str1.GetChars(), str2.GetChars());
+  
   nuiCheckForGLErrors();
   
   glMatrixMode (GL_MODELVIEW);
@@ -279,7 +290,7 @@ void nuiGLPainter::StartRendering()
 
   nuiPainter::StartRendering();
   
-  nuiSetViewport(mAngle, mWidth, mHeight);
+  nuiSetViewport(mAngle, mWidth, mHeight, mProjectionMatrixStack.top());
 
 /*
   glViewport(0, 0, mWidth, mHeight);
@@ -515,7 +526,7 @@ void nuiGLPainter::SetSize(uint32 w, uint32 h)
   mWidth = w;
   mHeight = h;
 
-  nuiSetViewport (mAngle, w, h);
+  nuiSetViewport (mAngle, w, h, mProjectionMatrixStack.top());
 
   nuiCheckForGLErrors();
 }
@@ -1022,7 +1033,9 @@ void nuiGLPainter::LoadProjectionMatrix(const nuiMatrix& rMatrix)
   
   nuiPainter::LoadProjectionMatrix(rMatrix);
   glMatrixMode(GL_PROJECTION);
-  nuiGLLoadMatrix(rMatrix.Array);
+  glLoadIdentity();
+  glRotatef(mAngle, 0, 0, 1);
+  glMultMatrixf(rMatrix.Array);
   glMatrixMode(GL_MODELVIEW);
   
   nuiCheckForGLErrors();
@@ -1603,7 +1616,7 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
       nuiCheckForGLErrors();
       CheckFramebufferStatus();
     }
-    nuiSetViewport(0, pSurface->GetWidth(), pSurface->GetHeight());
+    nuiSetViewport(0, pSurface->GetWidth(), pSurface->GetHeight(), mProjectionMatrixStack.top());
   }
   else
   {
@@ -1614,7 +1627,7 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
     nuiCheckForGLErrors();
     CheckFramebufferStatus();
     
-    nuiSetViewport(mAngle, mWidth, mHeight);
+    nuiSetViewport(mAngle, mWidth, mHeight, mProjectionMatrixStack.top());
     
     LoadMatrix(mMatrixStack.top());
   }

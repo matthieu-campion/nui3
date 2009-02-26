@@ -2711,7 +2711,6 @@
 		E592C1FC0EFE8CCC00340B35 /* nuiDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = E591D80B0C83272700844D3E /* nuiDialog.h */; };
 		E592C1FD0EFE8CCC00340B35 /* nuiHBox.h in Headers */ = {isa = PBXBuildFile; fileRef = E517B0DC0C85704900190FF9 /* nuiHBox.h */; };
 		E592C1FE0EFE8CCC00340B35 /* nuiVBox.h in Headers */ = {isa = PBXBuildFile; fileRef = E517B0DD0C85704900190FF9 /* nuiVBox.h */; };
-		E592C1FF0EFE8CCC00340B35 /* nuiDrawContext.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B008310C871F5F004BEE4E /* nuiDrawContext.h */; };
 		E592C2000EFE8CCC00340B35 /* nuiToggleButton.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B009DE0C87855E004BEE4E /* nuiToggleButton.h */; };
 		E592C2010EFE8CCC00340B35 /* nuiRadioButton.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B009E30C87857A004BEE4E /* nuiRadioButton.h */; };
 		E592C2020EFE8CCC00340B35 /* nuiSimpleContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = E577AB430C8C071B00CE9A7A /* nuiSimpleContainer.h */; };
@@ -3514,8 +3513,6 @@
 		E5A2A6E80C7F2877008E2827 /* nuiTreeView.h in Headers */ = {isa = PBXBuildFile; fileRef = E5A2A6E60C7F2877008E2827 /* nuiTreeView.h */; };
 		E5A2CBD80D3AF30900FC2180 /* nuiWidgetMatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = E5A2CBD70D3AF30900FC2180 /* nuiWidgetMatcher.h */; };
 		E5A2CBD90D3AF30900FC2180 /* nuiWidgetMatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = E5A2CBD70D3AF30900FC2180 /* nuiWidgetMatcher.h */; };
-		E5B008320C871F5F004BEE4E /* nuiDrawContext.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B008310C871F5F004BEE4E /* nuiDrawContext.h */; };
-		E5B008330C871F5F004BEE4E /* nuiDrawContext.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B008310C871F5F004BEE4E /* nuiDrawContext.h */; };
 		E5B009DF0C87855E004BEE4E /* nuiToggleButton.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B009DE0C87855E004BEE4E /* nuiToggleButton.h */; };
 		E5B009E00C87855E004BEE4E /* nuiToggleButton.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B009DE0C87855E004BEE4E /* nuiToggleButton.h */; };
 		E5B009E40C87857A004BEE4E /* nuiRadioButton.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B009E30C87857A004BEE4E /* nuiRadioButton.h */; };
@@ -4779,7 +4776,6 @@
 		E5A1704D0C907095005DC748 /* nuiToken.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiToken.cpp; sourceTree = "<group>"; };
 		E5A2A6E60C7F2877008E2827 /* nuiTreeView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiTreeView.h; path = include/nuiTreeView.h; sourceTree = SOURCE_ROOT; };
 		E5A2CBD70D3AF30900FC2180 /* nuiWidgetMatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiWidgetMatcher.h; path = include/nuiWidgetMatcher.h; sourceTree = SOURCE_ROOT; };
-		E5B008310C871F5F004BEE4E /* nuiDrawContext.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiDrawContext.h; path = include/nuiDrawContext.h; sourceTree = SOURCE_ROOT; };
 		E5B009DE0C87855E004BEE4E /* nuiToggleButton.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiToggleButton.h; path = include/nuiToggleButton.h; sourceTree = SOURCE_ROOT; };
 		E5B009E30C87857A004BEE4E /* nuiRadioButton.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiRadioButton.h; path = include/nuiRadioButton.h; sourceTree = SOURCE_ROOT; };
 		E5B678C40F39EFCF00DBF325 /* nuiAttributeAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiAttributeAnimation.cpp; path = Animations/nuiAttributeAnimation.cpp; sourceTree = "<group>"; };
@@ -6493,7 +6489,6 @@
 				E5816D0E0C3CECAB00902DFE /* nuiTexture.h */,
 				E5816DC60C3CECAB00902DFE /* nuiTextureHelpers.cpp */,
 				E5816D0F0C3CECAB00902DFE /* nuiTextureHelpers.h */,
-				E5B008310C871F5F004BEE4E /* nuiDrawContext.h */,
 			);
 			name = Renderers;
 			path = src/Renderers;
@@ -7297,7 +7292,6 @@
 				E591D80C0C83272700844D3E /* nuiDialog.h in Headers */,
 				E517B0DE0C85704900190FF9 /* nuiHBox.h in Headers */,
 				E517B0DF0C85704900190FF9 /* nuiVBox.h in Headers */,
-				E5B008320C871F5F004BEE4E /* nuiDrawContext.h in Headers */,
 				E5B009DF0C87855E004BEE4E /* nuiToggleButton.h in Headers */,
 				E5B009E40C87857A004BEE4E /* nuiRadioButton.h in Headers */,
 				E577AB440C8C071B00CE9A7A /* nuiSimpleContainer.h in Headers */,
@@ -7974,7 +7968,6 @@
 				E591D80D0C83272700844D3E /* nuiDialog.h in Headers */,
 				E517B0E00C85704900190FF9 /* nuiHBox.h in Headers */,
 				E517B0E10C85704900190FF9 /* nuiVBox.h in Headers */,
-				E5B008330C871F5F004BEE4E /* nuiDrawContext.h in Headers */,
 				E5B009E00C87855E004BEE4E /* nuiToggleButton.h in Headers */,
 				E5B009E50C87857A004BEE4E /* nuiRadioButton.h in Headers */,
 				E577AB450C8C071B00CE9A7A /* nuiSimpleContainer.h in Headers */,
@@ -8649,7 +8642,6 @@
 				E592C1FC0EFE8CCC00340B35 /* nuiDialog.h in Headers */,
 				E592C1FD0EFE8CCC00340B35 /* nuiHBox.h in Headers */,
 				E592C1FE0EFE8CCC00340B35 /* nuiVBox.h in Headers */,
-				E592C1FF0EFE8CCC00340B35 /* nuiDrawContext.h in Headers */,
 				E592C2000EFE8CCC00340B35 /* nuiToggleButton.h in Headers */,
 				E592C2010EFE8CCC00340B35 /* nuiRadioButton.h in Headers */,
 				E592C2020EFE8CCC00340B35 /* nuiSimpleContainer.h in Headers */,

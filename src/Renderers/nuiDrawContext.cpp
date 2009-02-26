@@ -1119,6 +1119,78 @@ const nuiMatrix& nuiDrawContext::GetMatrix() const
   return mpPainter->GetMatrix();
 }
 
+//////// Projection matrix:
+
+void nuiDrawContext::PushProjectionMatrix()
+{
+  mpPainter->PushProjectionMatrix();
+}
+
+void nuiDrawContext::PopProjectionMatrix()
+{
+  mpPainter->PopProjectionMatrix();
+}
+
+void nuiDrawContext::LoadProjectionMatrix(const nuiMatrix& Matrix)
+{
+  mpPainter->LoadProjectionMatrix(Matrix);
+}
+
+void nuiDrawContext::MultProjectionMatrix(const nuiMatrix& Matrix)
+{
+  if (Matrix.IsIdentity())
+    return;
+  mpPainter->MultProjectionMatrix(Matrix);
+}
+
+void nuiDrawContext::LoadProjectionIdentity()
+{
+  nuiMatrix m;
+  LoadProjectionMatrix(m);
+}
+
+void nuiDrawContext::GetProjectionMatrix(nuiMatrix& rMatrix) const
+{
+  rMatrix = mpPainter->GetProjectionMatrix();
+}
+
+const nuiMatrix& nuiDrawContext::GetProjectionMatrix() const
+{
+  return mpPainter->GetProjectionMatrix();
+}
+
+void nuiDrawContext::Set2DProjectionMatrix()
+{
+  nuiMatrix m;
+  m.Translate(-1.0f, 1.0f, 0.0f);
+  uint32 w, h;
+  mpPainter->GetSize(w, h);
+  m.Scale(2.0f/(float)w, -2.0f/(float)h, 1.0f);
+  LoadProjectionMatrix(m);
+}
+
+void nuiDrawContext::SetPerspectiveProjectionMatrix(float FovY, float Aspect, float Near, float Far)
+{
+  nuiMatrix m;
+  m.SetPerspective(FovY, Aspect, Near, Far);
+  LoadProjectionMatrix(m);
+}
+
+void nuiDrawContext::SetOrthoProjectionMatrix(float Left, float Right, float Bottom, float Top, float Near, float Far)
+{
+  nuiMatrix m;
+  m.SetOrtho(Left, Right, Bottom, Top, Near, Far);
+  LoadProjectionMatrix(m);
+}
+
+void nuiDrawContext::SetFrustumProjectionMatrix(float Left, float Right, float Bottom, float Top, float Near, float Far)
+{
+  nuiMatrix m;
+  m.SetFrustum(Left, Right, Bottom, Top, Near, Far);
+  LoadProjectionMatrix(m);
+}
+
+///////
 void nuiDrawContext::EnableColorBuffer(bool set)
 {
   mCurrentState.mColorBuffer = set;
@@ -1466,6 +1538,7 @@ nuiDrawContext *nuiDrawContext::CreateDrawContext(const nuiRect& rRect, nuiRende
 #endif
   }
   pC->SetPainter(pPainter);
+  pC->Set2DProjectionMatrix();
   return pC;
 }
 

@@ -158,6 +158,21 @@ public:
   void LoadIdentity();
   //@}
 
+  /** @name Matrix operations */
+  //@{
+  void PushProjectionMatrix();
+  void PopProjectionMatrix();
+  void Set2DProjectionMatrix();
+  void SetPerspectiveProjectionMatrix(float FovY, float Aspect, float Near, float Far);
+  void SetOrthoProjectionMatrix(float Left, float Right, float Bottom, float Top, float Near, float Far);
+  void SetFrustumProjectionMatrix(float Left, float Right, float Bottom, float Top, float Near, float Far);
+  void LoadProjectionMatrix(const nuiMatrix& Matrix);
+  void GetProjectionMatrix(nuiMatrix& Matrix) const;
+  const nuiMatrix& GetProjectionMatrix() const;
+  void MultProjectionMatrix(const nuiMatrix& Matrix);
+  void LoadProjectionIdentity();
+  //@}
+  
   /** @name Brush manipulation */
   //@{
   void SetFillColor(const nuiColor& rColor);

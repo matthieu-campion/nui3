@@ -16,6 +16,7 @@ nuiPainter::nuiPainter(const nuiRect& rRect, nglContext* pContext)
   mWidth = ToNearest(rRect.GetWidth());
   mHeight = ToNearest(rRect.GetHeight());
   mMatrixStack.push(nuiMatrix());
+  mProjectionMatrixStack.push(nuiMatrix());
   mDummyMode = false;
   mpSurface = NULL;
 
@@ -47,14 +48,19 @@ void nuiPainter::StartRendering()
     delete mpClippingStack.top();
     mpClippingStack.pop();
   }
-
   uint32 w=mWidth, h=mHeight;
   mClip.Set(0, 0, w, h);
+  
   while (!mMatrixStack.empty())
     mMatrixStack.pop();
+  mMatrixStack.push(nuiMatrix());
+
   while (!mProjectionMatrixStack.empty())
     mProjectionMatrixStack.pop();
-  mMatrixStack.push(nuiMatrix());
+  nuiMatrix m;
+  m.Translate(-1.0f, 1.0f, 0.0f);
+  m.Scale(2.0f/(float)mWidth, -2.0f/(float)mHeight, 1.0f);
+  mProjectionMatrixStack.push(m);
 }
 
 void nuiPainter::PushMatrix()
