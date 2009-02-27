@@ -166,7 +166,7 @@ public:
   void SetPerspectiveProjectionMatrix(const nuiRect& rRect, float FovY, float Aspect, float Near, float Far);
   void SetOrthoProjectionMatrix(const nuiRect& rRect, float Left, float Right, float Bottom, float Top, float Near, float Far);
   void SetFrustumProjectionMatrix(const nuiRect& rRect, float Left, float Right, float Bottom, float Top, float Near, float Far);
-  void LoadProjectionMatrix(const nuiMatrix& Matrix);
+  void LoadProjectionMatrix(const nuiRect& rViewport, const nuiMatrix& Matrix);
   void GetProjectionMatrix(nuiMatrix& Matrix) const;
   const nuiMatrix& GetProjectionMatrix() const;
   void MultProjectionMatrix(const nuiMatrix& Matrix);

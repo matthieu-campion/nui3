@@ -1173,7 +1173,7 @@ void nuiD3DPainter::PopMatrix()
   LoadCurrentMatrix();
 }
 
-void nuiD3DPainter::LoadProjectionMatrix(const nuiMatrix& rMatrix)
+void nuiD3DPainter::LoadProjectionMatrix(const nuiRect& rViewport, const nuiMatrix& rMatrix)
 {
   NUI_RETURN_IF_RENDERING_DISABLED;
   
@@ -1182,6 +1182,7 @@ void nuiD3DPainter::LoadProjectionMatrix(const nuiMatrix& rMatrix)
    glLoadMatrixf(rMatrix.Array);
    CheckForGLErrors();
    */
+  LoadCurrentViewport();
   LoadCurrentMatrix();
 }
 
@@ -1211,6 +1212,7 @@ void nuiD3DPainter::PopProjectionMatrix()
 {
   NUI_RETURN_IF_RENDERING_DISABLED;
   nuiPainter::PopProjectionMatrix();
+  LoadCurrentViewport();
   LoadCurrentMatrix();
 }
 
@@ -1231,6 +1233,23 @@ void nuiD3DPainter::LoadCurrentMatrix()
 //     ConvertMatrix(m, rM);
 //     pDev->SetTransform(D3DTS_PROJECTION, &m);
 //   }
+}
+
+void nuiD3DPainter::LoadCurrentViewport()
+{
+  NUI_RETURN_IF_RENDERING_DISABLED;
+
+  LPDIRECT3DDEVICE9 pDev = mpContext->GetDirect3DDevice();
+  D3DVIEWPORT9 viewport;
+  viewport.X = mProjectionViewport.top().Left();
+  viewport.Y = mProjectionViewport.top().Top();
+  viewport.Width = mProjectionViewport.top().GetWidth();
+  viewport.Height = mProjectionViewport.top().GetHeight();
+  viewport.MinZ = 0;         /* Min/max of clip Volume */
+  viewport.MaxZ = 1;
+  pDev->EndScene();
+  pDev->SetViewport(&viewport);
+  pDev->BeginScene();  
 }
 
 void nuiD3DPainter::ReleaseCacheObject(void* pHandle)
@@ -1783,9 +1802,7 @@ void nuiD3DPainter::SetSurface(nuiSurface* pSurface)
 
     D3DMATRIX projection;
     nuiMatrix m, m0, m1;
-    float shiftX = -1.0f;
-    float shiftY = 1.0f;
-    m0.SetTranslation(shiftX, shiftY, 0.0f);
+    m0.SetTranslation(-1.0f, 1.0f, 0.0f);
     m0.Transpose();
     m1.SetScaling(2.0f / (float)width, -2.0f / (float)height, 1.0f);
     m = m1 * m0;

@@ -36,7 +36,7 @@ public:
   virtual void MultMatrix(const nuiMatrix& rMatrix);
   virtual void PushMatrix();
   virtual void PopMatrix();
-  virtual void LoadProjectionMatrix(const nuiMatrix& rMatrix);
+  virtual void LoadProjectionMatrix(const nuiRect& rViewport, const nuiMatrix& rMatrix);
   virtual void MultProjectionMatrix(const nuiMatrix& rMatrix);
   virtual void PushProjectionMatrix();
   virtual void PopProjectionMatrix();

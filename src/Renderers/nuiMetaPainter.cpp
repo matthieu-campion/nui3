@@ -249,12 +249,16 @@ void nuiMetaPainter::PopMatrix()
 
 
 
-void nuiMetaPainter::LoadProjectionMatrix(const nuiMatrix& rMatrix)
+void nuiMetaPainter::LoadProjectionMatrix(const nuiRect& rViewport, const nuiMatrix& rMatrix)
 {
   StoreOpCode(eLoadProjectionMatrix);
-  StoreBuffer(rMatrix.Array, sizeof(nuiSize), 16);
+  StoreFloat(rViewport.Left());
+  StoreFloat(rViewport.Top());
+  StoreFloat(rViewport.GetWidth());
+  StoreFloat(rViewport.GetHeight());
+  StoreBuffer(rMatrix.Array, sizeof(nuiSize), 16);  
   
-  nuiPainter::LoadProjectionMatrix(rMatrix);
+  nuiPainter::LoadProjectionMatrix(rViewport, rMatrix);
 }
 
 void nuiMetaPainter::MultProjectionMatrix(const nuiMatrix& rMatrix)
@@ -429,8 +433,13 @@ void nuiMetaPainter::ReDraw(nuiDrawContext* pContext)
     case eLoadProjectionMatrix:
       {
         nuiMatrix m;
+        float Left, Top, Width, Height;
+        FetchFloat(Left);
+        FetchFloat(Top);
+        FetchFloat(Width);
+        FetchFloat(Height);
         FetchBuffer(m.Array, sizeof(nuiSize), 16);
-        pPainter->LoadProjectionMatrix(m);
+        pPainter->LoadProjectionMatrix(nuiRect(Left, Top, Width, Height), m);
       }
       break;
     case eMultProjectionMatrix:
@@ -561,6 +570,11 @@ void nuiMetaPainter::Reset(nuiPainter const * pFrom)
     case eLoadProjectionMatrix:
       {
         nuiMatrix m;
+        nuiSize tmp;
+        FetchFloat(tmp);
+        FetchFloat(tmp);
+        FetchFloat(tmp);
+        FetchFloat(tmp);
         FetchBuffer(m.Array, sizeof(nuiSize), 16);
       }
       break;

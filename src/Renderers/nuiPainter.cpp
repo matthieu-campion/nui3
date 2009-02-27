@@ -17,6 +17,8 @@ nuiPainter::nuiPainter(const nuiRect& rRect, nglContext* pContext)
   mHeight = ToNearest(rRect.GetHeight());
   mMatrixStack.push(nuiMatrix());
   mProjectionMatrixStack.push(nuiMatrix());
+  mProjectionViewportStack.push(nuiRect());
+  
   mDummyMode = false;
   mpSurface = NULL;
 
@@ -48,7 +50,7 @@ void nuiPainter::StartRendering()
     delete mpClippingStack.top();
     mpClippingStack.pop();
   }
-  uint32 w=mWidth, h=mHeight;
+  uint32 w = mWidth, h = mHeight;
   mClip.Set(0, 0, w, h);
   
   while (!mMatrixStack.empty())
@@ -56,11 +58,15 @@ void nuiPainter::StartRendering()
   mMatrixStack.push(nuiMatrix());
 
   while (!mProjectionMatrixStack.empty())
+  {
     mProjectionMatrixStack.pop();
+    mProjectionViewportStack.pop();
+  }
   nuiMatrix m;
   m.Translate(-1.0f, 1.0f, 0.0f);
   m.Scale(2.0f/(float)mWidth, -2.0f/(float)mHeight, 1.0f);
   mProjectionMatrixStack.push(m);
+  mProjectionViewportStack.push(nuiRect(0, 0, mWidth, mHeight));
 }
 
 void nuiPainter::PushMatrix()
@@ -97,24 +103,27 @@ void nuiPainter::PushProjectionMatrix()
 {
   NGL_ASSERT(!mProjectionMatrixStack.empty());
   mProjectionMatrixStack.push(mProjectionMatrixStack.top());
+  mProjectionViewportStack.push(mProjectionViewportStack.top());
 }
 
 void nuiPainter::PopProjectionMatrix()
 {
   NGL_ASSERT(!mProjectionMatrixStack.empty());
   mProjectionMatrixStack.pop();
+  mProjectionViewportStack.pop();
 }
 
-void nuiPainter::LoadProjectionMatrix(const nuiMatrix& Matrix)
+void nuiPainter::LoadProjectionMatrix(const nuiRect& rViewport, const nuiMatrix& rMatrix)
 {
   NGL_ASSERT(!mProjectionMatrixStack.empty());
-  mProjectionMatrixStack.top() = Matrix;
+  mProjectionMatrixStack.top() = rMatrix;
+  mProjectionViewportStack.top() = rViewport;
 }
 
-void nuiPainter::MultProjectionMatrix(const nuiMatrix& Matrix)
+void nuiPainter::MultProjectionMatrix(const nuiMatrix& rMatrix)
 {
   NGL_ASSERT(!mProjectionMatrixStack.empty());
-  mProjectionMatrixStack.top() *= Matrix;
+  mProjectionMatrixStack.top() *= rMatrix;
 }
 
 const nuiMatrix& nuiPainter::GetProjectionMatrix() const
@@ -122,6 +131,10 @@ const nuiMatrix& nuiPainter::GetProjectionMatrix() const
   return mProjectionMatrixStack.top();
 }
 
+const nuiRect& nuiPainter::GetProjectionViewport() const
+{
+  return mProjectionViewportStack.top();
+}
 
 
 // Clipping using Scissor :

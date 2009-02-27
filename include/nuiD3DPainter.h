@@ -37,7 +37,7 @@ public:
   virtual void MultMatrix(const nuiMatrix& rMatrix);
   virtual void PushMatrix();
   virtual void PopMatrix();
-  virtual void LoadProjectionMatrix(const nuiMatrix& rMatrix);
+  virtual void LoadProjectionMatrix(const nuiRect& rViewport, const nuiMatrix& rMatrix);
   virtual void MultProjectionMatrix(const nuiMatrix& rMatrix);
   virtual void PushProjectionMatrix();
   virtual void PopProjectionMatrix();
@@ -72,6 +72,7 @@ protected:
   virtual void ReleaseCacheObject(void* pHandle);
   //void DrawSmallArray(const nuiRenderArray& rArray);
   void LoadCurrentMatrix();
+  void LoadCurrentViewport();
 
   class TextureInfo
   {
