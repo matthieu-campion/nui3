@@ -1102,6 +1102,8 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
     {
       used_surface = true;
       
+      pContext->PushProjectionMatrix();
+      pContext->Set2DProjectionMatrix(nuiRect(0.0f, 0.0f, mpSurface->GetWidth(), mpSurface->GetHeight()));
       pContext->PushState();
       pContext->ResetState();
       pContext->PushMatrix();
@@ -1169,6 +1171,7 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
       pContext->PopState();
       pContext->PopMatrix();
       pContext->PopClipping();
+      pContext->PopProjectionMatrix();
     }
   }
 
@@ -1186,6 +1189,7 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
 void nuiWidget::DrawSurface(nuiDrawContext* pContext)
 {
   //NGL_OUT(_T("nuiWidget::DrawSurface %d x %d\n"), (uint32)mpSurface->GetWidth(), (uint32)mpSurface->GetHeight());
+  pContext->PushProjectionMatrix();
   pContext->PushMatrix();
   pContext->PushState();
   pContext->ResetState();
@@ -1207,6 +1211,7 @@ void nuiWidget::DrawSurface(nuiDrawContext* pContext)
   pContext->DrawImage(dst, src);
   pContext->PopState();
   pContext->PopMatrix();
+  pContext->PopProjectionMatrix();
 }
 
 bool nuiWidget::IsKeyDown (nglKeyCode Key) const
