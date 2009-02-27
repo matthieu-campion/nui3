@@ -22,6 +22,8 @@ nuiCoverFlow::~nuiCoverFlow()
 
 bool nuiCoverFlow::Draw(nuiDrawContext* pContext)
 {
+  pContext->PushProjectionMatrix();
+  
   pContext->EnableBlending(true);
   pContext->SetBlendFunc(nuiBlendTransp);
 
@@ -34,7 +36,10 @@ bool nuiCoverFlow::Draw(nuiDrawContext* pContext)
   }
   
   if (mImages.empty())
+  {
+    pContext->PopProjectionMatrix();
     return true;
+  }
 
   float height = mRect.GetHeight();
   float width = mRect.GetWidth();
@@ -185,6 +190,7 @@ bool nuiCoverFlow::Draw(nuiDrawContext* pContext)
   pContext->SetTexture(pTex);
   pContext->DrawArray(array);
   
+  pContext->PopProjectionMatrix();
   return false;
 }
 

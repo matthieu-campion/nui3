@@ -1159,31 +1159,30 @@ const nuiMatrix& nuiDrawContext::GetProjectionMatrix() const
   return mpPainter->GetProjectionMatrix();
 }
 
-void nuiDrawContext::Set2DProjectionMatrix()
+void nuiDrawContext::Set2DProjectionMatrix(const nuiRect& rRect)
 {
   nuiMatrix m;
   m.Translate(-1.0f, 1.0f, 0.0f);
-  uint32 w, h;
-  mpPainter->GetSize(w, h);
-  m.Scale(2.0f/(float)w, -2.0f/(float)h, 1.0f);
+  m.Scale(2.0f/rRect.GetWidth(), -2.0f/rRect.GetHeight(), 1.0f);
   LoadProjectionMatrix(m);
 }
 
-void nuiDrawContext::SetPerspectiveProjectionMatrix(float FovY, float Aspect, float Near, float Far)
+void nuiDrawContext::SetPerspectiveProjectionMatrix(const nuiRect& rRect, float FovY, float Aspect, float Near, float Far)
 {
   nuiMatrix m;
   m.SetPerspective(FovY, Aspect, Near, Far);
   LoadProjectionMatrix(m);
 }
 
-void nuiDrawContext::SetOrthoProjectionMatrix(float Left, float Right, float Bottom, float Top, float Near, float Far)
+void nuiDrawContext::SetOrthoProjectionMatrix(const nuiRect& rRect, float Left, float Right, float Bottom, float Top, float Near, float Far)
 {
   nuiMatrix m;
   m.SetOrtho(Left, Right, Bottom, Top, Near, Far);
+  m.Translate(-1.0f, 1.0f, 0.0f);
   LoadProjectionMatrix(m);
 }
 
-void nuiDrawContext::SetFrustumProjectionMatrix(float Left, float Right, float Bottom, float Top, float Near, float Far)
+void nuiDrawContext::SetFrustumProjectionMatrix(const nuiRect& rRect, float Left, float Right, float Bottom, float Top, float Near, float Far)
 {
   nuiMatrix m;
   m.SetFrustum(Left, Right, Bottom, Top, Near, Far);
@@ -1538,7 +1537,7 @@ nuiDrawContext *nuiDrawContext::CreateDrawContext(const nuiRect& rRect, nuiRende
 #endif
   }
   pC->SetPainter(pPainter);
-  pC->Set2DProjectionMatrix();
+  pC->Set2DProjectionMatrix(rRect);
   return pC;
 }
 
