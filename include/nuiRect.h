@@ -50,10 +50,22 @@ public:
     Set(x1,y1,x2,y2,SecondPairIsSize);
   }
 
+  explicit nuiRect(nuiSize Width, nuiSize Height)
+  {
+    Set(0.0f, 0.0f, Width, Height, true);
+  }
+  
   nuiRect(int32 x1, int32 y1, int32 x2, int32 y2, bool SecondPairIsSize = true)
   {
     Set(x1,y1,x2,y2,SecondPairIsSize);
   }
+  
+  nuiRect(int32 Width, int32 Height)
+  {
+    Set(0, 0, Width, Height);
+  }
+  
+  
 /*
   nuiRect(int x1, int y1, int x2, int y2, bool SecondPairIsSize = true)
   {

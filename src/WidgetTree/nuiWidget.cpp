@@ -1102,18 +1102,19 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
     {
       used_surface = true;
       
-      pContext->PushProjectionMatrix();
-      pContext->Set2DProjectionMatrix(nuiRect(0.0f, 0.0f, mpSurface->GetWidth(), mpSurface->GetHeight()));
-      pContext->PushState();
-      pContext->ResetState();
-      pContext->PushMatrix();
       pContext->PushClipping();
+      pContext->PushState();
+      pContext->PushProjectionMatrix();
+      pContext->PushMatrix();
+      pContext->PushSurface();
+
+      pContext->ResetState();
       pContext->ResetClipRect();
       pContext->LoadMatrix(nglMatrixf());
       
       NGL_ASSERT(mpSurface);
-      pContext->PushSurface();
       pContext->SetSurface(mpSurface);
+      pContext->Set2DProjectionMatrix(nuiRect(0.0f, 0.0f, mpSurface->GetWidth(), mpSurface->GetHeight()));
       
       // clear the surface with transparent black:
       pContext->PushState();
@@ -1168,10 +1169,10 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
     if (used_surface)
     {
       pContext->PopSurface();
-      pContext->PopState();
-      pContext->PopMatrix();
-      pContext->PopClipping();
       pContext->PopProjectionMatrix();
+      pContext->PopMatrix();
+      pContext->PopState();
+      pContext->PopClipping();
     }
   }
 

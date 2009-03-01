@@ -289,7 +289,14 @@ void nuiGLPainter::StartRendering()
 
   nuiPainter::StartRendering();
   
-  nuiSetViewport(mAngle, mWidth, mHeight, mProjectionViewportStack.top(), mProjectionMatrixStack.top());
+  uint32 width = mWidth;
+  uint32 height = mHeight;
+  if (mpSurface)
+  {
+    width = mpSurface->GetWidth();
+    height = mpSurface->GetHeight();
+  }
+  nuiSetViewport(mAngle, width, height, mProjectionViewportStack.top(), mProjectionMatrixStack.top());
 
 /*
   glViewport(0, 0, mWidth, mHeight);
@@ -525,7 +532,7 @@ void nuiGLPainter::SetSize(uint32 w, uint32 h)
   mWidth = w;
   mHeight = h;
 
-  nuiSetViewport(mAngle, w, h, mProjectionViewportStack.top(), mProjectionMatrixStack.top());
+  //nuiSetViewport(mAngle, w, h, mProjectionViewportStack.top(), mProjectionMatrixStack.top());
 
   nuiCheckForGLErrors();
 }
@@ -1031,6 +1038,16 @@ void nuiGLPainter::LoadProjectionMatrix(const nuiRect& rViewport, const nuiMatri
   NUI_RETURN_IF_RENDERING_DISABLED;
   
   nuiPainter::LoadProjectionMatrix(rViewport, rMatrix);
+
+  uint32 width = mWidth;
+  uint32 height = mHeight;
+  if (mpSurface)
+  {
+    width = mpSurface->GetWidth();
+    height = mpSurface->GetHeight();
+  }
+  nuiSetViewport(mAngle, width, height, mProjectionViewportStack.top(), mProjectionMatrixStack.top());
+
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
   glRotatef(mAngle, 0, 0, 1);
@@ -1066,6 +1083,14 @@ void nuiGLPainter::PopProjectionMatrix()
   
   nuiPainter::PopProjectionMatrix();
   //glPopMatrix();
+  uint32 width = mWidth;
+  uint32 height = mHeight;
+  if (mpSurface)
+  {
+    width = mpSurface->GetWidth();
+    height = mpSurface->GetHeight();
+  }
+  nuiSetViewport(mAngle, width, height, mProjectionViewportStack.top(), mProjectionMatrixStack.top());
   LoadProjectionMatrix(mProjectionViewportStack.top(), mProjectionMatrixStack.top());
   nuiCheckForGLErrors();
 }
@@ -1615,7 +1640,7 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
       nuiCheckForGLErrors();
       CheckFramebufferStatus();
     }
-    nuiSetViewport(0, pSurface->GetWidth(), pSurface->GetHeight(), mProjectionViewportStack.top(), mProjectionMatrixStack.top());
+//    nuiSetViewport(0, pSurface->GetWidth(), pSurface->GetHeight(), mProjectionViewportStack.top(), mProjectionMatrixStack.top());
   }
   else
   {
@@ -1626,9 +1651,9 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
     nuiCheckForGLErrors();
     CheckFramebufferStatus();
     
-    nuiSetViewport(mAngle, mWidth, mHeight, mProjectionViewportStack.top(), mProjectionMatrixStack.top());
+//    nuiSetViewport(mAngle, mWidth, mHeight, mProjectionViewportStack.top(), mProjectionMatrixStack.top());
     
-    LoadMatrix(mMatrixStack.top());
+//    LoadMatrix(mMatrixStack.top());
   }
 }
 
