@@ -10,12 +10,23 @@
 #include "nuiCoverFlow.h"
 
 nuiCoverFlow::nuiCoverFlow()
-: mSelectedImage(0), mBackground(0, 0, 0, 255), mReflectionStart(0.3), mReflectionEnd(0.0), mDrawBackground(true), mYOffset(0.0f)
+: mSelectedImage(0),
+  mBackground(0, 0, 0, 255),
+  mReflectionStart(0.3),
+  mReflectionEnd(0.0),
+  mDrawBackground(true),
+  mYOffset(0.0f),
+  mPos(0.0f),
+  mLastTime(nglTime()),
+  mTimer(1.0f / 30.0f),
+  mFlowSink(this)
 {
+  mFlowSink.Connect(mTimer.Tick, &nuiCoverFlow::OnUpdateTime);
 }
 
 nuiCoverFlow::~nuiCoverFlow()
 {
+  mTimer.Stop();
   for (uint32 i = 0; i < mImages.size(); i++)
     mImages[i]->Release();
 }
@@ -77,6 +88,9 @@ void nuiCoverFlow::DrawCard(nuiDrawContext* pContext, uint32 index, float start,
 
 bool nuiCoverFlow::Draw(nuiDrawContext* pContext)
 {
+  uint32 image = ToNearest(mPos);
+  float fractional = mPos - image;
+  float fract = 1.0 - fractional;
   pContext->EnableBlending(true);
   pContext->SetBlendFunc(nuiBlendTransp);
 
@@ -115,8 +129,8 @@ bool nuiCoverFlow::Draw(nuiDrawContext* pContext)
   float sidespace = sidewidth * .5;
   uint32 maxcount = ToBelow(halfwidth / sidespace);
 
-  int32 maxcountleft  = MIN(maxcount, MAX(0, mSelectedImage));
-  int32 maxcountright = MIN(maxcount, MIN(mImages.size(), mSelectedImage + 1));
+  int32 maxcountleft  = MIN(maxcount, MAX(0, image));
+  int32 maxcountright = MIN(maxcount, MIN(mImages.size(), image + 1));
   nuiRect r(left, top, w, h);
 
   pContext->PushMatrix();
@@ -128,15 +142,22 @@ bool nuiCoverFlow::Draw(nuiDrawContext* pContext)
   for (uint32 i = 0; i < 2; i++)
   {
     {
-      int32 s = mSelectedImage - maxcountleft;
-      for (int32 l = s, c = 0; l < mSelectedImage; l++, c++)
+      int32 s = image - maxcountleft;
+      for (int32 l = s, c = 0; l < image; l++, c++)
       {
         pContext->PushMatrix();
-        float shiftx = (c - maxcountleft) * SIDE_GAP - SIDE_SHIFT;
+        float shiftx = (c - maxcountleft) * SIDE_GAP - SIDE_SHIFT - SIDE_GAP * fractional;
         float shiftz = -.4;
+        float angle = 90;
+        if (l == image - 1)
+        {
+          angle *= 1.0 - fractional;
+          shiftx *= fract;
+          shiftz *= fract;
+        }
         pContext->Translate(shiftx, 0, shiftz);
         nuiMatrix m;
-        m.SetRotation(90, 0, 1, 0);
+        m.SetRotation(angle, 0, 1, 0);
         pContext->MultMatrix(m);
         DrawCard(pContext, l, start, end);
         pContext->PopMatrix();
@@ -144,22 +165,30 @@ bool nuiCoverFlow::Draw(nuiDrawContext* pContext)
     }
     
     {
-      int32 s = mSelectedImage + 1;
+      int32 s = image + 1;
       for (int32 l = s + maxcountright - 1, c = maxcountright - 1; c >= 0; l--, c--)
       {
         pContext->PushMatrix();
-        float shiftx = c * SIDE_GAP + SIDE_SHIFT;
+        float shiftx = c * SIDE_GAP + SIDE_SHIFT - SIDE_GAP * fractional;
         float shiftz = -.4;
+        float angle = -90;
+        if (l == image + 1)
+        {
+          angle *= fract;
+          shiftx *= fract;
+          shiftz *= fract;
+        }
         pContext->Translate(shiftx, 0, shiftz);
         nuiMatrix m;
-        m.SetRotation(-90, 0, 1, 0);
+        m.SetRotation(angle, 0, 1, 0);
         pContext->MultMatrix(m);
         DrawCard(pContext, l, start, end);
         pContext->PopMatrix();
       }
     }
     
-    DrawCard(pContext, mSelectedImage, start, end);
+//    if (fractional == 0)
+      DrawCard(pContext, image, start, end);
     start = 1.0f;
     end = 1.0f;
     pContext->Scale(1.0f, -1.0f, 1.0f);
@@ -251,6 +280,8 @@ void nuiCoverFlow::SelectImage(int32 index)
     index = 0;
   mSelectedImage = index;
   
+  mLastTime = nglTime();
+  mTimer.Start();
   Invalidate();
 }
 
@@ -269,4 +300,51 @@ void nuiCoverFlow::SetBackground(const nuiColor& rColor)
 const nuiColor& nuiCoverFlow::GetBackground() const
 {
   return mBackground;
+}
+
+bool nuiCoverFlow::OnUpdateTime(const nuiEvent& rEvent)
+{
+  float diff = (float)mSelectedImage - mPos;
+  double t = nglTime() - mLastTime;
+  const double TIME_RATIO = 0.001f;
+  
+  if (diff < 0.001)
+  {
+    mTimer.Stop();
+  }
+  else
+  {
+    mPos += diff * t * TIME_RATIO;
+  }
+  
+  Invalidate();
+  return false;
+}
+
+bool nuiCoverFlow::KeyDown(const nglKeyEvent& rEvent)
+{
+  if (rEvent.mKey == NK_LEFT)
+  {
+    SelectImage(mSelectedImage - 1);
+    return true;
+  }
+  else if (rEvent.mKey == NK_RIGHT)
+  {
+    SelectImage(mSelectedImage + 1);
+    return true;
+  }
+  return false;
+}
+
+bool nuiCoverFlow::KeyUp(const nglKeyEvent& rEvent)
+{
+  if (rEvent.mKey == NK_LEFT)
+  {
+    return true;
+  }
+  else if (rEvent.mKey == NK_RIGHT)
+  {
+    return true;
+  }
+  return false;
 }

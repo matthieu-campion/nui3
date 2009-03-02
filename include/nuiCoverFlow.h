@@ -32,9 +32,13 @@ public:
   
   void SetBackground(const nuiColor& rColor);
   const nuiColor& GetBackground() const;
+  
+  bool KeyDown(const nglKeyEvent& rEvent);
+  bool KeyUp(const nglKeyEvent& rEvent);
 protected:
   void DrawCard(nuiDrawContext* pContext, uint32 index, float start, float end);
-
+  bool OnUpdateTime(const nuiEvent& rEvent);
+  
   std::vector<nuiTexture*> mImages;
   int32 mSelectedImage;
   nuiColor mBackground;
@@ -42,4 +46,8 @@ protected:
   float mReflectionEnd;
   bool mDrawBackground;
   float mYOffset;
+  float mPos;
+  nuiTimer mTimer;
+  double mLastTime;
+  nuiEventSink<nuiCoverFlow> mFlowSink;
 };

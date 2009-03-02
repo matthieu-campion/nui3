@@ -343,7 +343,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E54BECFE0F5C460D007F2871</string>
+										<string>E54BEDB20F5C4F6D007F2871</string>
 										<key>history</key>
 										<array>
 											<string>E54BEAEF0F5C2FE9007F2871</string>
@@ -351,7 +351,7 @@
 											<string>E54BEB710F5C3538007F2871</string>
 											<string>E54BEC690F5C3E1F007F2871</string>
 											<string>E54BECC20F5C441C007F2871</string>
-											<string>E54BECF80F5C45F7007F2871</string>
+											<string>E54BED9A0F5C4E5A007F2871</string>
 										</array>
 										<key>nextStack</key>
 										<array>
@@ -532,8 +532,6 @@
 			<key>Layout</key>
 			<array>
 				<dict>
-					<key>BecomeActive</key>
-					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXProjectModuleGUID</key>
@@ -670,7 +668,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>257705485.828899</real>
+	<real>257707885.967832</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -685,7 +683,7 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E54BECFF0F5C460D007F2871</string>
+		<string>E54BEDA00F5C4E6B007F2871</string>
 		<string>E54BEB010F5C2FEF007F2871</string>
 		<string>E54BEB020F5C2FEF007F2871</string>
 		<string>/Users/meeloo/work/nui3/tutorials/CoverFlow/CoverFlow.xcodeproj</string>
