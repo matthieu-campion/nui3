@@ -33,6 +33,8 @@ public:
   void SetBackground(const nuiColor& rColor);
   const nuiColor& GetBackground() const;
 protected:
+  void DrawCard(nuiDrawContext* pContext, uint32 index, float start, float end);
+
   std::vector<nuiTexture*> mImages;
   int32 mSelectedImage;
   nuiColor mBackground;
