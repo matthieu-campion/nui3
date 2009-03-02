@@ -306,7 +306,7 @@ bool nuiCoverFlow::OnUpdateTime(const nuiEvent& rEvent)
 {
   float diff = (float)mSelectedImage - mPos;
   double t = nglTime() - mLastTime;
-  const double TIME_RATIO = 0.001f;
+  const double TIME_RATIO = 0.1f;
   
   if (diff < 0.001)
   {
