@@ -20,6 +20,14 @@ nuiEvent::nuiEvent(int Type)
   mpUser = NULL;
 }
 
+nuiEvent::nuiEvent(const nuiEvent& rEvent)
+{ 
+  mpSource = rEvent.mpSource; 
+  mType = rEvent.mType; 
+  mpUser = rEvent.mpUser;
+}
+
+
 nuiEvent::~nuiEvent() 
 {
 }

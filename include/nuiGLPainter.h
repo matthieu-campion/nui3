@@ -51,10 +51,6 @@ public:
   virtual void DestroySurface(nuiSurface* pSurface);
   virtual void InvalidateSurface(nuiSurface* pSurface, bool ForceReload);
   
-  
-  
-  void Enable3DMode(bool set);
-  bool Get3DMode() const;
 protected:
   nglContext* mpContext;
 
@@ -95,7 +91,6 @@ protected:
   std::map<nuiSurface*, FramebufferInfo> mFramebuffers;
   GLint mOldFramebuffer, mOldRenderbuffer;
 
-  bool m3DMode;
   bool CheckFramebufferStatus();
 };
 

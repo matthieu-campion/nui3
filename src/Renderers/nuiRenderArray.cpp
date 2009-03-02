@@ -11,13 +11,14 @@
 #include "nuiColor.h"
 
 /// class nuiRenderArray
-nuiRenderArray::nuiRenderArray(uint32 mode, bool Static)
+nuiRenderArray::nuiRenderArray(uint32 mode, bool Static, bool _3dmesh)
 {
   for (uint i = 0; i < 4; i++)
     mEnabled[i] = false;
   mEnabled[eVertex] = true; // Enable Vertices by default
   mStatic = Static;
   mMode = mode;
+  m3DMesh = _3dmesh;
 
   mVertexElements = 2;
   mColorElements = 4;
@@ -45,6 +46,7 @@ nuiRenderArray::nuiRenderArray(const nuiRenderArray& rArray)
     mEnabled[i] = rArray.mEnabled[i];
   mStatic = rArray.mStatic;
   mMode = rArray.mMode;
+  m3DMesh = rArray.m3DMesh;
 
   mVertexElements = rArray.mVertexElements;
   mColorElements = rArray.mColorElements;
@@ -214,3 +216,14 @@ void nuiRenderArray::SetTexCoords(float tx, float ty)
   mCurrentVertex.mTX = tx;
   mCurrentVertex.mTY = ty;
 }
+
+bool nuiRenderArray::Is3DMesh() const
+{
+  return m3DMesh;
+}
+
+void nuiRenderArray::Set3DMesh(bool set)
+{
+  m3DMesh = set;
+}
+

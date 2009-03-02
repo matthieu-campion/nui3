@@ -23,7 +23,7 @@ public:
 class NUI_API nuiRenderArray
 {
 public:
-  nuiRenderArray(uint32 mode, bool Static = false);
+  nuiRenderArray(uint32 mode, bool Static = false, bool _3dmesh = false);
   nuiRenderArray(const nuiRenderArray& rArray);
   virtual ~nuiRenderArray();
 
@@ -63,6 +63,9 @@ public:
 
   void EnableArray(DataType tpe, bool Set = true);
   bool IsArrayEnabled(DataType tpe) const;
+  
+  bool Is3DMesh() const;
+  void Set3DMesh(bool set);
 
   uint32 GetSize() const;
   void Reserve(uint Count);
@@ -91,6 +94,7 @@ private:
   GLenum mMode;
   bool mEnabled[4];
   bool mStatic;
+  bool m3DMesh;
   mutable void* mpCacheHandle;
   mutable nuiCacheManager* mpCacheManager;
 

@@ -18,6 +18,7 @@ class NUI_API nuiEvent
 {
 public:
   nuiEvent(int Type = -1);  
+  nuiEvent(const nuiEvent& rEvent);  
   virtual ~nuiEvent();
 
   int GetType() const;

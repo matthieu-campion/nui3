@@ -17,11 +17,18 @@ class NUI_API nuiDrawEvent : public nuiEvent
 {
 public:
   nuiDrawEvent(nuiDrawContext* pContext)
-    : nuiEvent(nuiUserDraw)
+  : nuiEvent(nuiUserDraw)
   {
     mpContext = pContext;
   }
-
+  
+  nuiDrawEvent(const nuiEvent& rEvent)
+  : nuiEvent(rEvent)
+  {
+    NGL_ASSERT(dynamic_cast<const nuiDrawEvent*> (&rEvent));
+    mpContext = (*(const nuiDrawEvent*)(&rEvent)).mpContext;
+  }
+  
   nuiDrawContext* mpContext;
 };
 
