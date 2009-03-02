@@ -41,4 +41,5 @@ protected:
   float mReflectionStart;
   float mReflectionEnd;
   bool mDrawBackground;
+  float mYOffset;
 };

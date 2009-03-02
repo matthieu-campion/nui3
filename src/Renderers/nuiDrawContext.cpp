@@ -1056,7 +1056,7 @@ void nuiDrawContext::DrawObject(const nuiRenderObject& rObject)
   }
 }
 
-void nuiDrawContext::Translate(const nuiVector2& Vector)
+void nuiDrawContext::Translate(const nuiVector& Vector)
 {
   Translate(Vector[0],Vector[1]);
 }
@@ -1083,23 +1083,23 @@ void nuiDrawContext::MultMatrix(const nuiMatrix& Matrix)
   mpPainter->MultMatrix(Matrix);
 }
 
-void nuiDrawContext::Translate(nuiSize X, nuiSize Y)
+void nuiDrawContext::Translate(nuiSize X, nuiSize Y, nuiSize Z)
 {
-  if (X == 0 && Y == 0)
+  if (X == 0 && Y == 0 && Z == 0)
     return;
   
   nuiMatrix m;
-  m.SetTranslation(X, Y, 0);
+  m.SetTranslation(X, Y, Z);
   MultMatrix(m);
 }
 
-void nuiDrawContext::Scale(nuiSize X, nuiSize Y)
+void nuiDrawContext::Scale(nuiSize X, nuiSize Y, nuiSize Z)
 {
-  if (X == 1.0 && Y == 1.0)
+  if (X == 1.0 && Y == 1.0 && Z == 1.0)
     return;
   
   nuiMatrix m;
-  m.SetScaling(X, Y, 1);
+  m.SetScaling(X, Y, Z);
   MultMatrix(m);
 }
 

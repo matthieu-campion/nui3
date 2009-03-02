@@ -109,6 +109,24 @@ public:
     Crop();
   }
 
+  void Mix(const nuiColor& rColor, float ratio)
+  {
+    mRed   *= ratio;
+    mGreen *= ratio;
+    mBlue  *= ratio;
+    mAlpha *= ratio;
+    
+    ratio = 1.0f - ratio;
+    
+    mRed += rColor.mRed * ratio;
+    mGreen += rColor.mGreen * ratio;
+    mBlue += rColor.mBlue * ratio;
+    mAlpha += rColor.mAlpha * ratio;
+    
+    Crop();
+  }
+  
+  
   void Add(float Value, bool WithAlpha = false)
   {
     mRed   += Value;

@@ -152,9 +152,9 @@ public:
   void GetMatrix(nuiMatrix& Matrix) const;
   const nuiMatrix& GetMatrix() const;
   void MultMatrix(const nuiMatrix& Matrix);
-  void Translate(const nuiVector2& Vector);
-  void Translate(nuiSize X, nuiSize Y);
-  void Scale(nuiSize X, nuiSize Y);
+  void Translate(const nuiVector& Vector);
+  void Translate(nuiSize X, nuiSize Y, nuiSize Z = 0.0f);
+  void Scale(nuiSize X, nuiSize Y, nuiSize Z = 1.0f);
   void LoadIdentity();
   //@}
 
