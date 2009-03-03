@@ -19,11 +19,12 @@ public:
   
   bool Draw(nuiDrawContext* pContext);
   bool SetRect(const nuiRect& rRect);
+  nuiRect CalcIdealSize();
   
-  uint32 AddImage(nuiTexture* pTexture, nuiTexture* pBefore = NULL);
-  uint32 AddImage(nuiTexture* pTexture, uint32 index);
+  int32 AddImage(nuiTexture* pTexture, nuiTexture* pBefore = NULL);
+  int32 AddImage(nuiTexture* pTexture, int32 index);
   void DelImage(nuiTexture* pTexture);
-  void DelImage(uint32 index);
+  void DelImage(int32 index);
 
   void SelectImage(nuiTexture* pTexture);
   void SelectImage(int32 index);
@@ -39,7 +40,7 @@ public:
   bool KeyUp(const nglKeyEvent& rEvent);
   
 protected:
-  void DrawCard(nuiDrawContext* pContext, uint32 index, float start, float end);
+  void DrawCard(nuiDrawContext* pContext, int32 index, float start, float end);
   bool OnUpdateTime(const nuiEvent& rEvent);
   
   std::vector<nuiTexture*> mImages;

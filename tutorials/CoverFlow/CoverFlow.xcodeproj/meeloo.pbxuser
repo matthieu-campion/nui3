@@ -474,6 +474,102 @@
 			E5678F840F5CAB4500BEDF85 /* PBXTextBookmark */ = E5678F840F5CAB4500BEDF85 /* PBXTextBookmark */;
 			E5678F850F5CAB5200BEDF85 /* PBXTextBookmark */ = E5678F850F5CAB5200BEDF85 /* PBXTextBookmark */;
 			E5678F860F5CAB5800BEDF85 /* PBXTextBookmark */ = E5678F860F5CAB5800BEDF85 /* PBXTextBookmark */;
+			E5678F8B0F5CAC9700BEDF85 /* PBXTextBookmark */ = E5678F8B0F5CAC9700BEDF85 /* PBXTextBookmark */;
+			E5678F8C0F5CAC9700BEDF85 /* PBXTextBookmark */ = E5678F8C0F5CAC9700BEDF85 /* PBXTextBookmark */;
+			E5678F8D0F5CAC9700BEDF85 /* PBXTextBookmark */ = E5678F8D0F5CAC9700BEDF85 /* PBXTextBookmark */;
+			E5678F8E0F5CAC9700BEDF85 /* PBXTextBookmark */ = E5678F8E0F5CAC9700BEDF85 /* PBXTextBookmark */;
+			E5678F8F0F5CAC9700BEDF85 /* PBXTextBookmark */ = E5678F8F0F5CAC9700BEDF85 /* PBXTextBookmark */;
+			E5678F900F5CAC9700BEDF85 /* PBXTextBookmark */ = E5678F900F5CAC9700BEDF85 /* PBXTextBookmark */;
+			E5678F910F5CAC9D00BEDF85 /* PBXTextBookmark */ = E5678F910F5CAC9D00BEDF85 /* PBXTextBookmark */;
+			E5678F940F5CAD2500BEDF85 /* PBXTextBookmark */ = E5678F940F5CAD2500BEDF85 /* PBXTextBookmark */;
+			E5678F950F5CAD2500BEDF85 /* PBXTextBookmark */ = E5678F950F5CAD2500BEDF85 /* PBXTextBookmark */;
+			E5678F960F5CAD2500BEDF85 /* PBXTextBookmark */ = E5678F960F5CAD2500BEDF85 /* PBXTextBookmark */;
+			E5678F970F5CAD2500BEDF85 /* PBXTextBookmark */ = E5678F970F5CAD2500BEDF85 /* PBXTextBookmark */;
+			E5678F980F5CAD2500BEDF85 /* PBXTextBookmark */ = E5678F980F5CAD2500BEDF85 /* PBXTextBookmark */;
+			E5678F990F5CAD3700BEDF85 /* PBXTextBookmark */ = E5678F990F5CAD3700BEDF85 /* PBXTextBookmark */;
+			E5678F9A0F5CAD3D00BEDF85 /* PBXTextBookmark */ = E5678F9A0F5CAD3D00BEDF85 /* PBXTextBookmark */;
+			E5678FA30F5CAD6B00BEDF85 /* PBXTextBookmark */ = E5678FA30F5CAD6B00BEDF85 /* PBXTextBookmark */;
+			E5678FA40F5CAD7900BEDF85 /* PBXTextBookmark */ = E5678FA40F5CAD7900BEDF85 /* PBXTextBookmark */;
+			E5678FA50F5CAD7A00BEDF85 /* PBXTextBookmark */ = E5678FA50F5CAD7A00BEDF85 /* PBXTextBookmark */;
+			E5678FAA0F5CADD700BEDF85 /* PBXTextBookmark */ = E5678FAA0F5CADD700BEDF85 /* PBXTextBookmark */;
+			E5678FAB0F5CADE400BEDF85 /* PBXTextBookmark */ = E5678FAB0F5CADE400BEDF85 /* PBXTextBookmark */;
+			E5678FAC0F5CADEB00BEDF85 /* PBXTextBookmark */ = E5678FAC0F5CADEB00BEDF85 /* PBXTextBookmark */;
+			E5678FB10F5CAF5E00BEDF85 /* PBXTextBookmark */ = E5678FB10F5CAF5E00BEDF85 /* PBXTextBookmark */;
+			E5678FB30F5CAF7400BEDF85 /* PBXTextBookmark */ = E5678FB30F5CAF7400BEDF85 /* PBXTextBookmark */;
+			E5678FB40F5CAF7400BEDF85 /* PBXTextBookmark */ = E5678FB40F5CAF7400BEDF85 /* PBXTextBookmark */;
+			E5678FB50F5CAF7B00BEDF85 /* PBXTextBookmark */ = E5678FB50F5CAF7B00BEDF85 /* PBXTextBookmark */;
+			E5678FBA0F5CAFAF00BEDF85 /* PBXTextBookmark */ = E5678FBA0F5CAFAF00BEDF85 /* PBXTextBookmark */;
+			E5678FBB0F5CAFBC00BEDF85 /* PBXTextBookmark */ = E5678FBB0F5CAFBC00BEDF85 /* PBXTextBookmark */;
+			E5678FBC0F5CAFC200BEDF85 /* PBXTextBookmark */ = E5678FBC0F5CAFC200BEDF85 /* PBXTextBookmark */;
+			E5678FC10F5CAFE600BEDF85 /* PBXTextBookmark */ = E5678FC10F5CAFE600BEDF85 /* PBXTextBookmark */;
+			E5678FC20F5CAFF400BEDF85 /* PBXTextBookmark */ = E5678FC20F5CAFF400BEDF85 /* PBXTextBookmark */;
+			E5678FC30F5CAFFA00BEDF85 /* PBXTextBookmark */ = E5678FC30F5CAFFA00BEDF85 /* PBXTextBookmark */;
+			E5678FC80F5CBEB700BEDF85 /* PBXTextBookmark */ = E5678FC80F5CBEB700BEDF85 /* PBXTextBookmark */;
+			E5678FC90F5CBEB700BEDF85 /* PBXTextBookmark */ = E5678FC90F5CBEB700BEDF85 /* PBXTextBookmark */;
+			E5678FCA0F5CBEB700BEDF85 /* PBXTextBookmark */ = E5678FCA0F5CBEB700BEDF85 /* PBXTextBookmark */;
+			E5678FCB0F5CBEBD00BEDF85 /* PBXTextBookmark */ = E5678FCB0F5CBEBD00BEDF85 /* PBXTextBookmark */;
+			E5678FCC0F5CBEBD00BEDF85 /* PBXTextBookmark */ = E5678FCC0F5CBEBD00BEDF85 /* PBXTextBookmark */;
+			E5678FCD0F5CBEC200BEDF85 /* PBXTextBookmark */ = E5678FCD0F5CBEC200BEDF85 /* PBXTextBookmark */;
+			E5678FD00F5CBF0500BEDF85 /* PBXTextBookmark */ = E5678FD00F5CBF0500BEDF85 /* PBXTextBookmark */;
+			E5678FD10F5CBF0A00BEDF85 /* PBXTextBookmark */ = E5678FD10F5CBF0A00BEDF85 /* PBXTextBookmark */;
+			E5678FD20F5CBF1000BEDF85 /* PBXTextBookmark */ = E5678FD20F5CBF1000BEDF85 /* PBXTextBookmark */;
+			E5678FD50F5CBF2000BEDF85 /* PBXTextBookmark */ = E5678FD50F5CBF2000BEDF85 /* PBXTextBookmark */;
+			E5678FD60F5CBF2500BEDF85 /* PBXTextBookmark */ = E5678FD60F5CBF2500BEDF85 /* PBXTextBookmark */;
+			E5678FD70F5CBF2B00BEDF85 /* PBXTextBookmark */ = E5678FD70F5CBF2B00BEDF85 /* PBXTextBookmark */;
+			E5678FDA0F5CBF3400BEDF85 /* PBXTextBookmark */ = E5678FDA0F5CBF3400BEDF85 /* PBXTextBookmark */;
+			E5678FDB0F5CBF3A00BEDF85 /* PBXTextBookmark */ = E5678FDB0F5CBF3A00BEDF85 /* PBXTextBookmark */;
+			E5678FDC0F5CBF3F00BEDF85 /* PBXTextBookmark */ = E5678FDC0F5CBF3F00BEDF85 /* PBXTextBookmark */;
+			E5678FDF0F5CBF9500BEDF85 /* PBXTextBookmark */ = E5678FDF0F5CBF9500BEDF85 /* PBXTextBookmark */;
+			E5678FE00F5CBF9500BEDF85 /* PBXTextBookmark */ = E5678FE00F5CBF9500BEDF85 /* PBXTextBookmark */;
+			E5678FE10F5CBF9500BEDF85 /* PBXTextBookmark */ = E5678FE10F5CBF9500BEDF85 /* PBXTextBookmark */;
+			E5678FE20F5CBFA200BEDF85 /* PBXTextBookmark */ = E5678FE20F5CBFA200BEDF85 /* PBXTextBookmark */;
+			E5678FE30F5CBFA200BEDF85 /* PBXTextBookmark */ = E5678FE30F5CBFA200BEDF85 /* PBXTextBookmark */;
+			E5678FE40F5CBFA800BEDF85 /* PBXTextBookmark */ = E5678FE40F5CBFA800BEDF85 /* PBXTextBookmark */;
+			E5678FE90F5CBFC700BEDF85 /* PBXTextBookmark */ = E5678FE90F5CBFC700BEDF85 /* PBXTextBookmark */;
+			E5678FEA0F5CBFD500BEDF85 /* PBXTextBookmark */ = E5678FEA0F5CBFD500BEDF85 /* PBXTextBookmark */;
+			E5678FEB0F5CBFDB00BEDF85 /* PBXTextBookmark */ = E5678FEB0F5CBFDB00BEDF85 /* PBXTextBookmark */;
+			E5678FF00F5CBFF400BEDF85 /* PBXTextBookmark */ = E5678FF00F5CBFF400BEDF85 /* PBXTextBookmark */;
+			E5678FF10F5CBFF400BEDF85 /* PBXTextBookmark */ = E5678FF10F5CBFF400BEDF85 /* PBXTextBookmark */;
+			E5678FF20F5CBFF400BEDF85 /* PBXTextBookmark */ = E5678FF20F5CBFF400BEDF85 /* PBXTextBookmark */;
+			E5678FF30F5CBFF400BEDF85 /* PBXTextBookmark */ = E5678FF30F5CBFF400BEDF85 /* PBXTextBookmark */;
+			E5678FF40F5CBFF400BEDF85 /* PBXTextBookmark */ = E5678FF40F5CBFF400BEDF85 /* PBXTextBookmark */;
+			E5678FF50F5CBFF400BEDF85 /* PBXTextBookmark */ = E5678FF50F5CBFF400BEDF85 /* PBXTextBookmark */;
+			E5678FF60F5CBFF400BEDF85 /* PBXTextBookmark */ = E5678FF60F5CBFF400BEDF85 /* PBXTextBookmark */;
+			E5678FF70F5CBFF400BEDF85 /* PBXTextBookmark */ = E5678FF70F5CBFF400BEDF85 /* PBXTextBookmark */;
+			E5678FF80F5CBFF400BEDF85 /* PBXTextBookmark */ = E5678FF80F5CBFF400BEDF85 /* PBXTextBookmark */;
+			E5678FF90F5CBFFA00BEDF85 /* PBXTextBookmark */ = E5678FF90F5CBFFA00BEDF85 /* PBXTextBookmark */;
+			E5678FFA0F5CBFFA00BEDF85 /* PBXTextBookmark */ = E5678FFA0F5CBFFA00BEDF85 /* PBXTextBookmark */;
+			E5678FFB0F5CC00000BEDF85 /* PBXTextBookmark */ = E5678FFB0F5CC00000BEDF85 /* PBXTextBookmark */;
+			E56790060F5CC0F900BEDF85 /* PBXTextBookmark */ = E56790060F5CC0F900BEDF85 /* PBXTextBookmark */;
+			E56790070F5CC0F900BEDF85 /* PBXTextBookmark */ = E56790070F5CC0F900BEDF85 /* PBXTextBookmark */;
+			E56790080F5CC0F900BEDF85 /* PBXTextBookmark */ = E56790080F5CC0F900BEDF85 /* PBXTextBookmark */;
+			E56790090F5CC0F900BEDF85 /* PBXTextBookmark */ = E56790090F5CC0F900BEDF85 /* PBXTextBookmark */;
+			E567900A0F5CC0F900BEDF85 /* PBXTextBookmark */ = E567900A0F5CC0F900BEDF85 /* PBXTextBookmark */;
+			E567900B0F5CC0F900BEDF85 /* PBXTextBookmark */ = E567900B0F5CC0F900BEDF85 /* PBXTextBookmark */;
+			E567900C0F5CC10900BEDF85 /* PBXTextBookmark */ = E567900C0F5CC10900BEDF85 /* PBXTextBookmark */;
+			E567900D0F5CC10900BEDF85 /* PBXTextBookmark */ = E567900D0F5CC10900BEDF85 /* PBXTextBookmark */;
+			E567900E0F5CC10F00BEDF85 /* PBXTextBookmark */ = E567900E0F5CC10F00BEDF85 /* PBXTextBookmark */;
+			E56790130F5CC14400BEDF85 /* PBXTextBookmark */ = E56790130F5CC14400BEDF85 /* PBXTextBookmark */;
+			E56790140F5CC15200BEDF85 /* PBXTextBookmark */ = E56790140F5CC15200BEDF85 /* PBXTextBookmark */;
+			E56790150F5CC15800BEDF85 /* PBXTextBookmark */ = E56790150F5CC15800BEDF85 /* PBXTextBookmark */;
+			E567901A0F5CC16C00BEDF85 /* PBXTextBookmark */ = E567901A0F5CC16C00BEDF85 /* PBXTextBookmark */;
+			E567901B0F5CC16C00BEDF85 /* PBXTextBookmark */ = E567901B0F5CC16C00BEDF85 /* PBXTextBookmark */;
+			E567901C0F5CC16C00BEDF85 /* PBXTextBookmark */ = E567901C0F5CC16C00BEDF85 /* PBXTextBookmark */;
+			E567901D0F5CC16C00BEDF85 /* PBXTextBookmark */ = E567901D0F5CC16C00BEDF85 /* PBXTextBookmark */;
+			E567901E0F5CC16C00BEDF85 /* PBXTextBookmark */ = E567901E0F5CC16C00BEDF85 /* PBXTextBookmark */;
+			E567901F0F5CC17C00BEDF85 /* PBXTextBookmark */ = E567901F0F5CC17C00BEDF85 /* PBXTextBookmark */;
+			E56790200F5CC17C00BEDF85 /* PBXTextBookmark */ = E56790200F5CC17C00BEDF85 /* PBXTextBookmark */;
+			E56790210F5CC18200BEDF85 /* PBXTextBookmark */ = E56790210F5CC18200BEDF85 /* PBXTextBookmark */;
+			E56790260F5CC1B100BEDF85 /* PBXTextBookmark */ = E56790260F5CC1B100BEDF85 /* PBXTextBookmark */;
+			E56790270F5CC1B700BEDF85 /* PBXTextBookmark */ = E56790270F5CC1B700BEDF85 /* PBXTextBookmark */;
+			E56790280F5CC1BC00BEDF85 /* PBXTextBookmark */ = E56790280F5CC1BC00BEDF85 /* PBXTextBookmark */;
+			E567902B0F5CC22E00BEDF85 /* PBXTextBookmark */ = E567902B0F5CC22E00BEDF85 /* PBXTextBookmark */;
+			E567902C0F5CC22E00BEDF85 /* PBXTextBookmark */ = E567902C0F5CC22E00BEDF85 /* PBXTextBookmark */;
+			E567902D0F5CC22E00BEDF85 /* PBXTextBookmark */ = E567902D0F5CC22E00BEDF85 /* PBXTextBookmark */;
+			E567902E0F5CC22E00BEDF85 /* PBXTextBookmark */ = E567902E0F5CC22E00BEDF85 /* PBXTextBookmark */;
+			E567902F0F5CC23D00BEDF85 /* PBXTextBookmark */ = E567902F0F5CC23D00BEDF85 /* PBXTextBookmark */;
+			E56790300F5CC23D00BEDF85 /* PBXTextBookmark */ = E56790300F5CC23D00BEDF85 /* PBXTextBookmark */;
+			E56790310F5CC24400BEDF85 /* PBXTextBookmark */ = E56790310F5CC24400BEDF85 /* PBXTextBookmark */;
 		};
 		sourceControlManager = E54BEAE20F5C2D5F007F2871 /* Source Control */;
 		userBuildSettings = {
@@ -493,15 +589,15 @@
 	};
 	61A9DFF10B83433800BC506C /* MainWindow.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1652, 882}}";
-			sepNavSelRange = "{681, 0}";
-			sepNavVisRange = "{0, 1322}";
+			sepNavIntBoundsRect = "{{0, 0}, {1652, 896}}";
+			sepNavSelRange = "{1121, 0}";
+			sepNavVisRange = "{155, 1230}";
 		};
 	};
 	61A9DFF20B83433800BC506C /* MainWindow.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1245, 832}}";
-			sepNavSelRange = "{436, 0}";
+			sepNavSelRange = "{451, 0}";
 			sepNavVisRange = "{0, 494}";
 		};
 	};
@@ -591,7 +687,7 @@
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 36";
 		rLen = 0;
-		rLoc = 1234;
+		rLoc = 1275;
 		rType = 0;
 		vrLen = 1244;
 		vrLoc = 3;
@@ -611,7 +707,7 @@
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 61";
 		rLen = 0;
-		rLoc = 1344;
+		rLoc = 1385;
 		rType = 0;
 		vrLen = 1071;
 		vrLoc = 0;
@@ -713,16 +809,16 @@
 		path = /Users/meeloo/work/nui3/include/nuiCoverFlow.h;
 		sourceTree = "<absolute>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1652, 793}}";
-			sepNavSelRange = "{841, 0}";
-			sepNavVisRange = "{0, 1470}";
+			sepNavIntBoundsRect = "{{0, 0}, {1245, 832}}";
+			sepNavSelRange = "{406, 27}";
+			sepNavVisRange = "{0, 1492}";
 		};
 	};
 	E54BEB070F5C301D007F2871 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		rLen = 0;
-		rLoc = 8826;
+		rLoc = 9170;
 		rType = 0;
 	};
 	E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */ = {
@@ -732,9 +828,9 @@
 		path = /Users/meeloo/work/nui3/src/SimpleWidgets/nuiCoverFlow.cpp;
 		sourceTree = "<absolute>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1652, 5460}}";
-			sepNavSelRange = "{760, 0}";
-			sepNavVisRange = "{150, 1463}";
+			sepNavIntBoundsRect = "{{0, 0}, {1652, 5124}}";
+			sepNavSelRange = "{4421, 0}";
+			sepNavVisRange = "{3593, 1720}";
 		};
 	};
 	E54BEB090F5C301D007F2871 /* PBXTextBookmark */ = {
@@ -769,7 +865,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 91";
 		rLen = 0;
-		rLoc = 2958;
+		rLoc = 3010;
 		rType = 0;
 		vrLen = 1519;
 		vrLoc = 1264;
@@ -796,7 +892,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 91";
 		rLen = 0;
-		rLoc = 2958;
+		rLoc = 3010;
 		rType = 0;
 		vrLen = 1361;
 		vrLoc = 1264;
@@ -806,7 +902,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 91";
 		rLen = 0;
-		rLoc = 2958;
+		rLoc = 3010;
 		rType = 0;
 		vrLen = 1460;
 		vrLoc = 1639;
@@ -816,7 +912,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 91";
 		rLen = 0;
-		rLoc = 2958;
+		rLoc = 3010;
 		rType = 0;
 		vrLen = 1602;
 		vrLoc = 1116;
@@ -826,7 +922,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 91";
 		rLen = 0;
-		rLoc = 2958;
+		rLoc = 3010;
 		rType = 0;
 		vrLen = 1373;
 		vrLoc = 1314;
@@ -836,7 +932,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 91";
 		rLen = 0;
-		rLoc = 2958;
+		rLoc = 3010;
 		rType = 0;
 		vrLen = 1459;
 		vrLoc = 1639;
@@ -846,7 +942,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 91";
 		rLen = 0;
-		rLoc = 2958;
+		rLoc = 3010;
 		rType = 0;
 		vrLen = 1539;
 		vrLoc = 1210;
@@ -856,7 +952,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 91";
 		rLen = 0;
-		rLoc = 2958;
+		rLoc = 3010;
 		rType = 0;
 		vrLen = 1378;
 		vrLoc = 1343;
@@ -866,7 +962,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 91";
 		rLen = 0;
-		rLoc = 2958;
+		rLoc = 3010;
 		rType = 0;
 		vrLen = 1462;
 		vrLoc = 1639;
@@ -876,7 +972,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 52";
 		rLen = 0;
-		rLoc = 1664;
+		rLoc = 1662;
 		rType = 0;
 		vrLen = 1620;
 		vrLoc = 298;
@@ -886,7 +982,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 52";
 		rLen = 0;
-		rLoc = 1664;
+		rLoc = 1662;
 		rType = 0;
 		vrLen = 1588;
 		vrLoc = 329;
@@ -896,7 +992,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 52";
 		rLen = 0;
-		rLoc = 1664;
+		rLoc = 1662;
 		rType = 0;
 		vrLen = 1586;
 		vrLoc = 329;
@@ -906,7 +1002,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 52";
 		rLen = 0;
-		rLoc = 1664;
+		rLoc = 1662;
 		rType = 0;
 		vrLen = 1545;
 		vrLoc = 501;
@@ -916,7 +1012,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 58";
 		rLen = 0;
-		rLoc = 1777;
+		rLoc = 1775;
 		rType = 0;
 		vrLen = 1660;
 		vrLoc = 499;
@@ -926,7 +1022,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 58";
 		rLen = 0;
-		rLoc = 1777;
+		rLoc = 1775;
 		rType = 0;
 		vrLen = 1545;
 		vrLoc = 501;
@@ -936,7 +1032,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 58";
 		rLen = 0;
-		rLoc = 1777;
+		rLoc = 1775;
 		rType = 0;
 		vrLen = 1500;
 		vrLoc = 700;
@@ -946,7 +1042,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 92";
 		rLen = 0;
-		rLoc = 2954;
+		rLoc = 3006;
 		rType = 0;
 		vrLen = 1563;
 		vrLoc = 1372;
@@ -956,7 +1052,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 92";
 		rLen = 0;
-		rLoc = 2954;
+		rLoc = 3006;
 		rType = 0;
 		vrLen = 1351;
 		vrLoc = 1372;
@@ -966,7 +1062,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 92";
 		rLen = 0;
-		rLoc = 2954;
+		rLoc = 3006;
 		rType = 0;
 		vrLen = 1463;
 		vrLoc = 1671;
@@ -976,7 +1072,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 92";
 		rLen = 0;
-		rLoc = 2952;
+		rLoc = 3004;
 		rType = 0;
 		vrLen = 1553;
 		vrLoc = 1264;
@@ -986,7 +1082,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 92";
 		rLen = 0;
-		rLoc = 2952;
+		rLoc = 3004;
 		rType = 0;
 		vrLen = 1387;
 		vrLoc = 1394;
@@ -996,7 +1092,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 92";
 		rLen = 0;
-		rLoc = 2952;
+		rLoc = 3004;
 		rType = 0;
 		vrLen = 1462;
 		vrLoc = 1671;
@@ -1006,7 +1102,7 @@
 		fRef = E54BEB0B0F5C301D007F2871 /* nuiCoverFlow.h */;
 		name = "nuiCoverFlow.h: 44";
 		rLen = 0;
-		rLoc = 1467;
+		rLoc = 1489;
 		rType = 0;
 		vrLen = 1096;
 		vrLoc = 0;
@@ -1016,7 +1112,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 39";
 		rLen = 0;
-		rLoc = 1172;
+		rLoc = 1170;
 		rType = 0;
 		vrLen = 1629;
 		vrLoc = 329;
@@ -1026,7 +1122,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 39";
 		rLen = 0;
-		rLoc = 1172;
+		rLoc = 1170;
 		rType = 0;
 		vrLen = 1629;
 		vrLoc = 329;
@@ -1036,7 +1132,7 @@
 		fRef = E54BEB0B0F5C301D007F2871 /* nuiCoverFlow.h */;
 		name = "nuiCoverFlow.h: 44";
 		rLen = 0;
-		rLoc = 1467;
+		rLoc = 1489;
 		rType = 0;
 		vrLen = 1096;
 		vrLoc = 0;
@@ -1076,7 +1172,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 33";
 		rLen = 0;
-		rLoc = 1045;
+		rLoc = 1043;
 		rType = 0;
 		vrLen = 1607;
 		vrLoc = 0;
@@ -1086,7 +1182,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 33";
 		rLen = 0;
-		rLoc = 1045;
+		rLoc = 1043;
 		rType = 0;
 		vrLen = 1477;
 		vrLoc = 0;
@@ -1096,7 +1192,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 33";
 		rLen = 0;
-		rLoc = 1045;
+		rLoc = 1043;
 		rType = 0;
 		vrLen = 1537;
 		vrLoc = 70;
@@ -1106,7 +1202,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 91";
 		rLen = 0;
-		rLoc = 2958;
+		rLoc = 3010;
 		rType = 0;
 		vrLen = 1546;
 		vrLoc = 1780;
@@ -1116,7 +1212,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 91";
 		rLen = 0;
-		rLoc = 2958;
+		rLoc = 3010;
 		rType = 0;
 		vrLen = 1448;
 		vrLoc = 1780;
@@ -1126,7 +1222,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 91";
 		rLen = 0;
-		rLoc = 2958;
+		rLoc = 3010;
 		rType = 0;
 		vrLen = 1461;
 		vrLoc = 1661;
@@ -1136,7 +1232,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 91";
 		rLen = 0;
-		rLoc = 2954;
+		rLoc = 3006;
 		rType = 0;
 		vrLen = 1570;
 		vrLoc = 1712;
@@ -1146,7 +1242,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 91";
 		rLen = 0;
-		rLoc = 2954;
+		rLoc = 3006;
 		rType = 0;
 		vrLen = 1465;
 		vrLoc = 1712;
@@ -1156,7 +1252,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 91";
 		rLen = 0;
-		rLoc = 2954;
+		rLoc = 3006;
 		rType = 0;
 		vrLen = 1463;
 		vrLoc = 1661;
@@ -1166,7 +1262,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 120";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1612;
 		vrLoc = 1943;
@@ -1198,7 +1294,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 120";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1585;
 		vrLoc = 1943;
@@ -1225,7 +1321,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 123";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1576;
 		vrLoc = 1943;
@@ -1235,7 +1331,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 123";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1399;
 		vrLoc = 2472;
@@ -1245,7 +1341,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 119";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1656;
 		vrLoc = 1867;
@@ -1255,7 +1351,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 119";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1577;
 		vrLoc = 1943;
@@ -1265,7 +1361,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 119";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1388;
 		vrLoc = 2402;
@@ -1275,7 +1371,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 119";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1656;
 		vrLoc = 1867;
@@ -1285,7 +1381,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 119";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1577;
 		vrLoc = 1943;
@@ -1295,7 +1391,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 119";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1388;
 		vrLoc = 2402;
@@ -1305,7 +1401,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 118";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1656;
 		vrLoc = 1867;
@@ -1315,7 +1411,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 118";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1577;
 		vrLoc = 1943;
@@ -1325,7 +1421,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 118";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1391;
 		vrLoc = 2366;
@@ -1335,7 +1431,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 124";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1655;
 		vrLoc = 1867;
@@ -1345,7 +1441,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 124";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1576;
 		vrLoc = 1943;
@@ -1355,7 +1451,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 124";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1392;
 		vrLoc = 2483;
@@ -1365,7 +1461,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 90";
 		rLen = 0;
-		rLoc = 2901;
+		rLoc = 2899;
 		rType = 0;
 		vrLen = 1655;
 		vrLoc = 1867;
@@ -1375,7 +1471,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 90";
 		rLen = 0;
-		rLoc = 2901;
+		rLoc = 2899;
 		rType = 0;
 		vrLen = 1576;
 		vrLoc = 1943;
@@ -1385,7 +1481,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 90";
 		rLen = 0;
-		rLoc = 2901;
+		rLoc = 2899;
 		rType = 0;
 		vrLen = 1513;
 		vrLoc = 1632;
@@ -1395,7 +1491,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 91";
 		rLen = 0;
-		rLoc = 2958;
+		rLoc = 3010;
 		rType = 0;
 		vrLen = 1657;
 		vrLoc = 1944;
@@ -1405,7 +1501,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 91";
 		rLen = 0;
-		rLoc = 2958;
+		rLoc = 3010;
 		rType = 0;
 		vrLen = 1575;
 		vrLoc = 1944;
@@ -1415,7 +1511,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 91";
 		rLen = 0;
-		rLoc = 2958;
+		rLoc = 3010;
 		rType = 0;
 		vrLen = 1572;
 		vrLoc = 1944;
@@ -1425,7 +1521,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 91";
 		rLen = 0;
-		rLoc = 2954;
+		rLoc = 3006;
 		rType = 0;
 		vrLen = 1702;
 		vrLoc = 1867;
@@ -1435,7 +1531,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 91";
 		rLen = 0;
-		rLoc = 2954;
+		rLoc = 3006;
 		rType = 0;
 		vrLen = 1634;
 		vrLoc = 1867;
@@ -1445,7 +1541,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 91";
 		rLen = 0;
-		rLoc = 2954;
+		rLoc = 3006;
 		rType = 0;
 		vrLen = 1596;
 		vrLoc = 1867;
@@ -1455,7 +1551,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 91";
 		rLen = 0;
-		rLoc = 2958;
+		rLoc = 3010;
 		rType = 0;
 		vrLen = 1704;
 		vrLoc = 1814;
@@ -1465,7 +1561,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 91";
 		rLen = 0;
-		rLoc = 2958;
+		rLoc = 3010;
 		rType = 0;
 		vrLen = 1600;
 		vrLoc = 1814;
@@ -1475,7 +1571,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 91";
 		rLen = 0;
-		rLoc = 2958;
+		rLoc = 3010;
 		rType = 0;
 		vrLen = 1593;
 		vrLoc = 1814;
@@ -1485,7 +1581,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 118";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1715;
 		vrLoc = 1750;
@@ -1495,7 +1591,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 118";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1563;
 		vrLoc = 1750;
@@ -1505,7 +1601,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 118";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1390;
 		vrLoc = 2366;
@@ -1515,7 +1611,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 118";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1717;
 		vrLoc = 1690;
@@ -1525,7 +1621,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 118";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1600;
 		vrLoc = 1780;
@@ -1535,7 +1631,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 118";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1389;
 		vrLoc = 2366;
@@ -1545,7 +1641,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 118";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1453;
 		vrLoc = 2366;
@@ -1555,7 +1651,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 118";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1696;
 		vrLoc = 1715;
@@ -1565,7 +1661,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 118";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1595;
 		vrLoc = 1812;
@@ -1575,7 +1671,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 118";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1389;
 		vrLoc = 2366;
@@ -1585,7 +1681,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 25";
 		rLen = 0;
-		rLoc = 790;
+		rLoc = 788;
 		rType = 0;
 		vrLen = 1620;
 		vrLoc = 314;
@@ -1595,7 +1691,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 25";
 		rLen = 0;
-		rLoc = 790;
+		rLoc = 788;
 		rType = 0;
 		vrLen = 1545;
 		vrLoc = 347;
@@ -1605,7 +1701,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 25";
 		rLen = 0;
-		rLoc = 790;
+		rLoc = 788;
 		rType = 0;
 		vrLen = 1468;
 		vrLoc = 0;
@@ -1615,7 +1711,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 119";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1599;
 		vrLoc = 2147;
@@ -1625,7 +1721,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 119";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1465;
 		vrLoc = 2147;
@@ -1635,7 +1731,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 119";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1387;
 		vrLoc = 2392;
@@ -1645,7 +1741,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 118";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1602;
 		vrLoc = 2088;
@@ -1655,7 +1751,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 118";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1541;
 		vrLoc = 2147;
@@ -1665,7 +1761,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 118";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1392;
 		vrLoc = 2357;
@@ -1675,7 +1771,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 116";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1585;
 		vrLoc = 2140;
@@ -1685,7 +1781,7 @@
 		comments = "error: expected initializer before 'c'";
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		rLen = 0;
-		rLoc = 203;
+		rLoc = 206;
 		rType = 1;
 	};
 	E54BEBF10F5C3967007F2871 /* PBXTextBookmark */ = {
@@ -1693,7 +1789,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 116";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1546;
 		vrLoc = 2170;
@@ -1703,7 +1799,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 116";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1495;
 		vrLoc = 2246;
@@ -1713,7 +1809,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 119";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1599;
 		vrLoc = 2144;
@@ -1723,7 +1819,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 119";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1556;
 		vrLoc = 2187;
@@ -1733,7 +1829,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 119";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1533;
 		vrLoc = 2187;
@@ -1743,7 +1839,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 119";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1387;
 		vrLoc = 2392;
@@ -1753,7 +1849,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 119";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1607;
 		vrLoc = 2147;
@@ -1763,7 +1859,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 119";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1566;
 		vrLoc = 2188;
@@ -1773,7 +1869,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 119";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1550;
 		vrLoc = 2188;
@@ -1783,7 +1879,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 119";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1600;
 		vrLoc = 2170;
@@ -1793,7 +1889,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 119";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1508;
 		vrLoc = 2246;
@@ -1803,7 +1899,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 119";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1382;
 		vrLoc = 2392;
@@ -1813,7 +1909,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 116";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1595;
 		vrLoc = 2246;
@@ -1823,7 +1919,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 115";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1380;
 		vrLoc = 2392;
@@ -1833,7 +1929,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 115";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1525;
 		vrLoc = 2188;
@@ -1843,7 +1939,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 112";
 		rLen = 0;
-		rLoc = 3534;
+		rLoc = 3508;
 		rType = 0;
 		vrLen = 1592;
 		vrLoc = 2246;
@@ -1853,7 +1949,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 112";
 		rLen = 0;
-		rLoc = 3534;
+		rLoc = 3508;
 		rType = 0;
 		vrLen = 1488;
 		vrLoc = 2246;
@@ -1863,7 +1959,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 112";
 		rLen = 0;
-		rLoc = 3534;
+		rLoc = 3508;
 		rType = 0;
 		vrLen = 1488;
 		vrLoc = 2147;
@@ -1873,7 +1969,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 119";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1599;
 		vrLoc = 2170;
@@ -1883,7 +1979,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 119";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1540;
 		vrLoc = 2170;
@@ -1893,7 +1989,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 119";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1465;
 		vrLoc = 2170;
@@ -1903,7 +1999,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 123";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1570;
 		vrLoc = 2140;
@@ -1913,7 +2009,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 123";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1540;
 		vrLoc = 2170;
@@ -1923,7 +2019,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 123";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1538;
 		vrLoc = 2170;
@@ -1933,7 +2029,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 140";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1597;
 		vrLoc = 2473;
@@ -1943,7 +2039,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 140";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1524;
 		vrLoc = 2546;
@@ -1953,7 +2049,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 140";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1509;
 		vrLoc = 2546;
@@ -1963,7 +2059,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 120";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1596;
 		vrLoc = 2476;
@@ -1973,7 +2069,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 136";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1496;
 		vrLoc = 2574;
@@ -1983,7 +2079,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 136";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1405;
 		vrLoc = 2798;
@@ -1993,7 +2089,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 140";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1562;
 		vrLoc = 2512;
@@ -2003,7 +2099,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 140";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1499;
 		vrLoc = 2574;
@@ -2013,7 +2109,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 140";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1497;
 		vrLoc = 2574;
@@ -2023,7 +2119,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 140";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1282;
 		vrLoc = 2994;
@@ -2033,7 +2129,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 133";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1587;
 		vrLoc = 2512;
@@ -2043,7 +2139,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 133";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1522;
 		vrLoc = 2574;
@@ -2053,7 +2149,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 133";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1471;
 		vrLoc = 2703;
@@ -2063,7 +2159,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 124";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1587;
 		vrLoc = 2512;
@@ -2073,7 +2169,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 124";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1522;
 		vrLoc = 2574;
@@ -2083,7 +2179,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 124";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1525;
 		vrLoc = 2473;
@@ -2093,7 +2189,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 145";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1439;
 		vrLoc = 3025;
@@ -2103,7 +2199,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 145";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1439;
 		vrLoc = 3025;
@@ -2123,7 +2219,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 124";
 		rLen = 0;
-		rLoc = 5369;
+		rLoc = 5619;
 		rType = 0;
 		vrLen = 1575;
 		vrLoc = 2473;
@@ -2193,7 +2289,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 34";
 		rLen = 0;
-		rLoc = 1088;
+		rLoc = 1086;
 		rType = 0;
 		vrLen = 1651;
 		vrLoc = 393;
@@ -2213,7 +2309,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 34";
 		rLen = 0;
-		rLoc = 1088;
+		rLoc = 1086;
 		rType = 0;
 		vrLen = 1496;
 		vrLoc = 393;
@@ -2223,7 +2319,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 34";
 		rLen = 0;
-		rLoc = 1088;
+		rLoc = 1086;
 		rType = 0;
 		vrLen = 1501;
 		vrLoc = 116;
@@ -2233,7 +2329,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 90";
 		rLen = 0;
-		rLoc = 2901;
+		rLoc = 2899;
 		rType = 0;
 		vrLen = 1696;
 		vrLoc = 1678;
@@ -2243,7 +2339,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 90";
 		rLen = 0;
-		rLoc = 2901;
+		rLoc = 2899;
 		rType = 0;
 		vrLen = 1488;
 		vrLoc = 1678;
@@ -2253,7 +2349,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 90";
 		rLen = 0;
-		rLoc = 2901;
+		rLoc = 2899;
 		rType = 0;
 		vrLen = 1510;
 		vrLoc = 1620;
@@ -2263,7 +2359,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 91";
 		rLen = 0;
-		rLoc = 2958;
+		rLoc = 3010;
 		rType = 0;
 		vrLen = 1651;
 		vrLoc = 1567;
@@ -2273,7 +2369,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 91";
 		rLen = 0;
-		rLoc = 2958;
+		rLoc = 3010;
 		rType = 0;
 		vrLen = 1510;
 		vrLoc = 1620;
@@ -2283,7 +2379,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 91";
 		rLen = 0;
-		rLoc = 2958;
+		rLoc = 3010;
 		rType = 0;
 		vrLen = 1487;
 		vrLoc = 1649;
@@ -2293,7 +2389,7 @@
 		fRef = E54BEB0B0F5C301D007F2871 /* nuiCoverFlow.h */;
 		name = "nuiCoverFlow.h: 44";
 		rLen = 0;
-		rLoc = 1467;
+		rLoc = 1489;
 		rType = 0;
 		vrLen = 1096;
 		vrLoc = 0;
@@ -2303,7 +2399,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 151";
 		rLen = 0;
-		rLoc = 5270;
+		rLoc = 5520;
 		rType = 0;
 		vrLen = 1695;
 		vrLoc = 2459;
@@ -2313,7 +2409,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 151";
 		rLen = 0;
-		rLoc = 5270;
+		rLoc = 5520;
 		rType = 0;
 		vrLen = 1695;
 		vrLoc = 2459;
@@ -2323,7 +2419,7 @@
 		fRef = E54BEB0B0F5C301D007F2871 /* nuiCoverFlow.h */;
 		name = "nuiCoverFlow.h: 44";
 		rLen = 0;
-		rLoc = 1467;
+		rLoc = 1489;
 		rType = 0;
 		vrLen = 1096;
 		vrLoc = 0;
@@ -2333,7 +2429,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 155";
 		rLen = 0;
-		rLoc = 5339;
+		rLoc = 5589;
 		rType = 0;
 		vrLen = 1693;
 		vrLoc = 2599;
@@ -2343,7 +2439,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 155";
 		rLen = 0;
-		rLoc = 5339;
+		rLoc = 5589;
 		rType = 0;
 		vrLen = 1611;
 		vrLoc = 2599;
@@ -2353,7 +2449,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 155";
 		rLen = 0;
-		rLoc = 5339;
+		rLoc = 5589;
 		rType = 0;
 		vrLen = 1271;
 		vrLoc = 3411;
@@ -2363,7 +2459,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 155";
 		rLen = 0;
-		rLoc = 5288;
+		rLoc = 5538;
 		rType = 0;
 		vrLen = 1767;
 		vrLoc = 2509;
@@ -2373,7 +2469,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 155";
 		rLen = 0;
-		rLoc = 5288;
+		rLoc = 5538;
 		rType = 0;
 		vrLen = 1651;
 		vrLoc = 2622;
@@ -2383,7 +2479,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 155";
 		rLen = 0;
-		rLoc = 5288;
+		rLoc = 5538;
 		rType = 0;
 		vrLen = 1291;
 		vrLoc = 3423;
@@ -2393,7 +2489,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 155";
 		rLen = 0;
-		rLoc = 5288;
+		rLoc = 5538;
 		rType = 0;
 		vrLen = 1325;
 		vrLoc = 3421;
@@ -2403,7 +2499,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 156";
 		rLen = 0;
-		rLoc = 5288;
+		rLoc = 5538;
 		rType = 0;
 		vrLen = 1480;
 		vrLoc = 3097;
@@ -2413,7 +2509,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 156";
 		rLen = 0;
-		rLoc = 5288;
+		rLoc = 5538;
 		rType = 0;
 		vrLen = 1439;
 		vrLoc = 3040;
@@ -2423,7 +2519,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 88";
 		rLen = 0;
-		rLoc = 2761;
+		rLoc = 2759;
 		rType = 0;
 		vrLen = 1671;
 		vrLoc = 1490;
@@ -2433,7 +2529,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 88";
 		rLen = 0;
-		rLoc = 2761;
+		rLoc = 2759;
 		rType = 0;
 		vrLen = 1514;
 		vrLoc = 1617;
@@ -2443,7 +2539,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 88";
 		rLen = 0;
-		rLoc = 2761;
+		rLoc = 2759;
 		rType = 0;
 		vrLen = 1476;
 		vrLoc = 1595;
@@ -2475,7 +2571,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 58";
 		rLen = 0;
-		rLoc = 1802;
+		rLoc = 1800;
 		rType = 0;
 		vrLen = 1549;
 		vrLoc = 992;
@@ -2502,7 +2598,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 67";
 		rLen = 0;
-		rLoc = 1949;
+		rLoc = 1947;
 		rType = 0;
 		vrLen = 1554;
 		vrLoc = 992;
@@ -2512,7 +2608,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 67";
 		rLen = 0;
-		rLoc = 1949;
+		rLoc = 1947;
 		rType = 0;
 		vrLen = 1458;
 		vrLoc = 1088;
@@ -2530,7 +2626,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 46";
 		rLen = 0;
-		rLoc = 1405;
+		rLoc = 1403;
 		rType = 0;
 		vrLen = 1468;
 		vrLoc = 1088;
@@ -2540,7 +2636,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 46";
 		rLen = 0;
-		rLoc = 1405;
+		rLoc = 1403;
 		rType = 0;
 		vrLen = 1446;
 		vrLoc = 1088;
@@ -2550,7 +2646,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 46";
 		rLen = 0;
-		rLoc = 1405;
+		rLoc = 1403;
 		rType = 0;
 		vrLen = 1484;
 		vrLoc = 347;
@@ -2560,7 +2656,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 46";
 		rLen = 0;
-		rLoc = 1394;
+		rLoc = 1392;
 		rType = 0;
 		vrLen = 1557;
 		vrLoc = 680;
@@ -2570,7 +2666,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 46";
 		rLen = 0;
-		rLoc = 1394;
+		rLoc = 1392;
 		rType = 0;
 		vrLen = 1402;
 		vrLoc = 680;
@@ -2580,7 +2676,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 46";
 		rLen = 0;
-		rLoc = 1394;
+		rLoc = 1392;
 		rType = 0;
 		vrLen = 1484;
 		vrLoc = 347;
@@ -2590,7 +2686,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 52";
 		rLen = 0;
-		rLoc = 1605;
+		rLoc = 1603;
 		rType = 0;
 		vrLen = 1602;
 		vrLoc = 584;
@@ -2600,7 +2696,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 52";
 		rLen = 0;
-		rLoc = 1605;
+		rLoc = 1603;
 		rType = 0;
 		vrLen = 1392;
 		vrLoc = 893;
@@ -2610,7 +2706,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 52";
 		rLen = 0;
-		rLoc = 1605;
+		rLoc = 1603;
 		rType = 0;
 		vrLen = 1439;
 		vrLoc = 517;
@@ -2650,7 +2746,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 151";
 		rLen = 0;
-		rLoc = 4727;
+		rLoc = 4825;
 		rType = 0;
 		vrLen = 1791;
 		vrLoc = 2564;
@@ -2660,7 +2756,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 151";
 		rLen = 0;
-		rLoc = 4727;
+		rLoc = 4825;
 		rType = 0;
 		vrLen = 1665;
 		vrLoc = 2564;
@@ -2670,7 +2766,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 151";
 		rLen = 0;
-		rLoc = 4727;
+		rLoc = 4825;
 		rType = 0;
 		vrLen = 1435;
 		vrLoc = 3232;
@@ -2680,7 +2776,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 127";
 		rLen = 0;
-		rLoc = 3807;
+		rLoc = 3755;
 		rType = 0;
 		vrLen = 1858;
 		vrLoc = 2478;
@@ -2690,7 +2786,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 127";
 		rLen = 0;
-		rLoc = 3807;
+		rLoc = 3755;
 		rType = 0;
 		vrLen = 1750;
 		vrLoc = 2586;
@@ -2700,7 +2796,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 127";
 		rLen = 0;
-		rLoc = 3807;
+		rLoc = 3755;
 		rType = 0;
 		vrLen = 1719;
 		vrLoc = 2586;
@@ -2710,7 +2806,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 127";
 		rLen = 0;
-		rLoc = 3807;
+		rLoc = 3755;
 		rType = 0;
 		vrLen = 1650;
 		vrLoc = 2542;
@@ -2720,7 +2816,7 @@
 		fRef = E54BEB0B0F5C301D007F2871 /* nuiCoverFlow.h */;
 		name = "nuiCoverFlow.h: 49";
 		rLen = 0;
-		rLoc = 1456;
+		rLoc = 1478;
 		rType = 0;
 		vrLen = 1236;
 		vrLoc = 0;
@@ -2740,7 +2836,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 127";
 		rLen = 0;
-		rLoc = 3807;
+		rLoc = 3755;
 		rType = 0;
 		vrLen = 1819;
 		vrLoc = 2186;
@@ -2750,7 +2846,7 @@
 		fRef = E54BEB0B0F5C301D007F2871 /* nuiCoverFlow.h */;
 		name = "nuiCoverFlow.h: 45";
 		rLen = 4;
-		rLoc = 1383;
+		rLoc = 1405;
 		rType = 0;
 		vrLen = 1110;
 		vrLoc = 0;
@@ -2760,7 +2856,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 241";
 		rLen = 0;
-		rLoc = 6810;
+		rLoc = 7124;
 		rType = 0;
 		vrLen = 1572;
 		vrLoc = 0;
@@ -2770,7 +2866,7 @@
 		fRef = E54BEB0B0F5C301D007F2871 /* nuiCoverFlow.h */;
 		name = "nuiCoverFlow.h: 46";
 		rLen = 6;
-		rLoc = 1400;
+		rLoc = 1422;
 		rType = 0;
 		vrLen = 1129;
 		vrLoc = 0;
@@ -2780,7 +2876,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 242";
 		rLen = 0;
-		rLoc = 6816;
+		rLoc = 7130;
 		rType = 0;
 		vrLen = 1089;
 		vrLoc = 5326;
@@ -2790,7 +2886,7 @@
 		fRef = E54BEB0B0F5C301D007F2871 /* nuiCoverFlow.h */;
 		name = "nuiCoverFlow.h: 37";
 		rLen = 45;
-		rLoc = 1151;
+		rLoc = 1173;
 		rType = 0;
 		vrLen = 1176;
 		vrLoc = 0;
@@ -2800,7 +2896,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 279";
 		rLen = 0;
-		rLoc = 7551;
+		rLoc = 7895;
 		rType = 0;
 		vrLen = 991;
 		vrLoc = 5617;
@@ -2810,7 +2906,7 @@
 		fRef = E54BEB0B0F5C301D007F2871 /* nuiCoverFlow.h */;
 		name = "nuiCoverFlow.h: 37";
 		rLen = 45;
-		rLoc = 1151;
+		rLoc = 1173;
 		rType = 0;
 		vrLen = 1176;
 		vrLoc = 0;
@@ -2820,7 +2916,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 283";
 		rLen = 0;
-		rLoc = 7601;
+		rLoc = 7945;
 		rType = 0;
 		vrLen = 992;
 		vrLoc = 5664;
@@ -2830,7 +2926,7 @@
 		fRef = E54BEB0B0F5C301D007F2871 /* nuiCoverFlow.h */;
 		name = "nuiCoverFlow.h: 48";
 		rLen = 9;
-		rLoc = 1417;
+		rLoc = 1439;
 		rType = 0;
 		vrLen = 1196;
 		vrLoc = 0;
@@ -2850,7 +2946,7 @@
 		fRef = E54BEB0B0F5C301D007F2871 /* nuiCoverFlow.h */;
 		name = "nuiCoverFlow.h: 49";
 		rLen = 9;
-		rLoc = 1457;
+		rLoc = 1479;
 		rType = 0;
 		vrLen = 1222;
 		vrLoc = 0;
@@ -2870,7 +2966,7 @@
 		fRef = E54BEB0B0F5C301D007F2871 /* nuiCoverFlow.h */;
 		name = "nuiCoverFlow.h: 49";
 		rLen = 0;
-		rLoc = 1456;
+		rLoc = 1478;
 		rType = 0;
 		vrLen = 1236;
 		vrLoc = 0;
@@ -2880,7 +2976,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 105";
 		rLen = 0;
-		rLoc = 2734;
+		rLoc = 2732;
 		rType = 0;
 		vrLen = 1666;
 		vrLoc = 1951;
@@ -2948,7 +3044,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 292";
 		rLen = 0;
-		rLoc = 7497;
+		rLoc = 7841;
 		rType = 0;
 		vrLen = 955;
 		vrLoc = 5977;
@@ -2958,7 +3054,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 292";
 		rLen = 0;
-		rLoc = 7497;
+		rLoc = 7841;
 		rType = 0;
 		vrLen = 918;
 		vrLoc = 5977;
@@ -2968,7 +3064,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 292";
 		rLen = 0;
-		rLoc = 7497;
+		rLoc = 7841;
 		rType = 0;
 		vrLen = 865;
 		vrLoc = 6067;
@@ -2978,7 +3074,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 292";
 		rLen = 0;
-		rLoc = 7497;
+		rLoc = 7841;
 		rType = 0;
 		vrLen = 1010;
 		vrLoc = 5921;
@@ -2988,7 +3084,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 292";
 		rLen = 0;
-		rLoc = 7497;
+		rLoc = 7841;
 		rType = 0;
 		vrLen = 936;
 		vrLoc = 5979;
@@ -2998,7 +3094,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 292";
 		rLen = 0;
-		rLoc = 7497;
+		rLoc = 7841;
 		rType = 0;
 		vrLen = 866;
 		vrLoc = 6067;
@@ -3008,7 +3104,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 92";
 		rLen = 0;
-		rLoc = 2260;
+		rLoc = 2258;
 		rType = 0;
 		vrLen = 1662;
 		vrLoc = 1921;
@@ -3018,7 +3114,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 92";
 		rLen = 0;
-		rLoc = 2260;
+		rLoc = 2258;
 		rType = 0;
 		vrLen = 1578;
 		vrLoc = 1975;
@@ -3028,7 +3124,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 92";
 		rLen = 0;
-		rLoc = 2260;
+		rLoc = 2258;
 		rType = 0;
 		vrLen = 1366;
 		vrLoc = 1567;
@@ -3038,7 +3134,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 148";
 		rLen = 0;
-		rLoc = 4092;
+		rLoc = 4039;
 		rType = 0;
 		vrLen = 1713;
 		vrLoc = 3185;
@@ -3048,7 +3144,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 148";
 		rLen = 0;
-		rLoc = 4092;
+		rLoc = 4039;
 		rType = 0;
 		vrLen = 1613;
 		vrLoc = 3185;
@@ -3058,7 +3154,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 148";
 		rLen = 0;
-		rLoc = 4092;
+		rLoc = 4039;
 		rType = 0;
 		vrLen = 1680;
 		vrLoc = 2961;
@@ -3068,7 +3164,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 164";
 		rLen = 0;
-		rLoc = 4742;
+		rLoc = 4840;
 		rType = 0;
 		vrLen = 1760;
 		vrLoc = 3090;
@@ -3078,7 +3174,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 164";
 		rLen = 0;
-		rLoc = 4742;
+		rLoc = 4840;
 		rType = 0;
 		vrLen = 1654;
 		vrLoc = 3090;
@@ -3088,7 +3184,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 164";
 		rLen = 0;
-		rLoc = 4742;
+		rLoc = 4840;
 		rType = 0;
 		vrLen = 1447;
 		vrLoc = 3454;
@@ -3098,7 +3194,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 164";
 		rLen = 0;
-		rLoc = 4742;
+		rLoc = 4840;
 		rType = 0;
 		vrLen = 1786;
 		vrLoc = 3012;
@@ -3108,7 +3204,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 164";
 		rLen = 0;
-		rLoc = 4742;
+		rLoc = 4840;
 		rType = 0;
 		vrLen = 1661;
 		vrLoc = 3121;
@@ -3118,7 +3214,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 164";
 		rLen = 0;
-		rLoc = 4742;
+		rLoc = 4840;
 		rType = 0;
 		vrLen = 1447;
 		vrLoc = 3454;
@@ -3128,7 +3224,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 164";
 		rLen = 0;
-		rLoc = 4742;
+		rLoc = 4840;
 		rType = 0;
 		vrLen = 1740;
 		vrLoc = 3060;
@@ -3138,7 +3234,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 164";
 		rLen = 0;
-		rLoc = 4742;
+		rLoc = 4840;
 		rType = 0;
 		vrLen = 1649;
 		vrLoc = 3149;
@@ -3148,7 +3244,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 164";
 		rLen = 0;
-		rLoc = 4742;
+		rLoc = 4840;
 		rType = 0;
 		vrLen = 1447;
 		vrLoc = 3454;
@@ -3158,7 +3254,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 293";
 		rLen = 0;
-		rLoc = 7496;
+		rLoc = 7840;
 		rType = 0;
 		vrLen = 955;
 		vrLoc = 6060;
@@ -3168,7 +3264,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 293";
 		rLen = 0;
-		rLoc = 7496;
+		rLoc = 7840;
 		rType = 0;
 		vrLen = 918;
 		vrLoc = 6060;
@@ -3178,7 +3274,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 293";
 		rLen = 0;
-		rLoc = 7496;
+		rLoc = 7840;
 		rType = 0;
 		vrLen = 865;
 		vrLoc = 6150;
@@ -3188,7 +3284,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 174";
 		rLen = 0;
-		rLoc = 4853;
+		rLoc = 4951;
 		rType = 0;
 		vrLen = 1833;
 		vrLoc = 3090;
@@ -3198,7 +3294,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 174";
 		rLen = 0;
-		rLoc = 4853;
+		rLoc = 4951;
 		rType = 0;
 		vrLen = 1707;
 		vrLoc = 3185;
@@ -3208,7 +3304,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 174";
 		rLen = 0;
-		rLoc = 4853;
+		rLoc = 4951;
 		rType = 0;
 		vrLen = 1472;
 		vrLoc = 3724;
@@ -3218,7 +3314,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 93";
 		rLen = 0;
-		rLoc = 2293;
+		rLoc = 2291;
 		rType = 0;
 		vrLen = 1528;
 		vrLoc = 1596;
@@ -3228,7 +3324,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 93";
 		rLen = 0;
-		rLoc = 2293;
+		rLoc = 2291;
 		rType = 0;
 		vrLen = 1415;
 		vrLoc = 1679;
@@ -3238,7 +3334,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 93";
 		rLen = 0;
-		rLoc = 2293;
+		rLoc = 2291;
 		rType = 0;
 		vrLen = 1371;
 		vrLoc = 1596;
@@ -3248,7 +3344,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 309";
 		rLen = 0;
-		rLoc = 7496;
+		rLoc = 7840;
 		rType = 0;
 		vrLen = 956;
 		vrLoc = 6437;
@@ -3258,7 +3354,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 309";
 		rLen = 0;
-		rLoc = 7496;
+		rLoc = 7840;
 		rType = 0;
 		vrLen = 919;
 		vrLoc = 6437;
@@ -3268,7 +3364,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 309";
 		rLen = 0;
-		rLoc = 7496;
+		rLoc = 7840;
 		rType = 0;
 		vrLen = 866;
 		vrLoc = 6527;
@@ -3278,7 +3374,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 309";
 		rLen = 0;
-		rLoc = 7496;
+		rLoc = 7840;
 		rType = 0;
 		vrLen = 1011;
 		vrLoc = 6381;
@@ -3288,7 +3384,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 309";
 		rLen = 0;
-		rLoc = 7496;
+		rLoc = 7840;
 		rType = 0;
 		vrLen = 937;
 		vrLoc = 6439;
@@ -3298,7 +3394,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 309";
 		rLen = 0;
-		rLoc = 7496;
+		rLoc = 7840;
 		rType = 0;
 		vrLen = 867;
 		vrLoc = 6527;
@@ -3308,7 +3404,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 156";
 		rLen = 0;
-		rLoc = 4296;
+		rLoc = 4243;
 		rType = 0;
 		vrLen = 1773;
 		vrLoc = 3023;
@@ -3318,7 +3414,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 156";
 		rLen = 0;
-		rLoc = 4296;
+		rLoc = 4243;
 		rType = 0;
 		vrLen = 1681;
 		vrLoc = 3094;
@@ -3328,7 +3424,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 156";
 		rLen = 0;
-		rLoc = 4296;
+		rLoc = 4243;
 		rType = 0;
 		vrLen = 1652;
 		vrLoc = 3183;
@@ -3338,7 +3434,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 156";
 		rLen = 0;
-		rLoc = 4286;
+		rLoc = 4233;
 		rType = 0;
 		vrLen = 1804;
 		vrLoc = 3046;
@@ -3348,7 +3444,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 156";
 		rLen = 0;
-		rLoc = 4286;
+		rLoc = 4233;
 		rType = 0;
 		vrLen = 1687;
 		vrLoc = 3124;
@@ -3358,7 +3454,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 156";
 		rLen = 0;
-		rLoc = 4286;
+		rLoc = 4233;
 		rType = 0;
 		vrLen = 1667;
 		vrLoc = 3183;
@@ -3368,7 +3464,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 154";
 		rLen = 0;
-		rLoc = 4222;
+		rLoc = 4169;
 		rType = 0;
 		vrLen = 1864;
 		vrLoc = 3094;
@@ -3378,7 +3474,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 154";
 		rLen = 0;
-		rLoc = 4222;
+		rLoc = 4169;
 		rType = 0;
 		vrLen = 1696;
 		vrLoc = 3155;
@@ -3388,7 +3484,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 154";
 		rLen = 0;
-		rLoc = 4222;
+		rLoc = 4169;
 		rType = 0;
 		vrLen = 1667;
 		vrLoc = 3124;
@@ -3398,7 +3494,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 155";
 		rLen = 0;
-		rLoc = 4264;
+		rLoc = 4211;
 		rType = 0;
 		vrLen = 1818;
 		vrLoc = 3046;
@@ -3408,7 +3504,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 155";
 		rLen = 0;
-		rLoc = 4264;
+		rLoc = 4211;
 		rType = 0;
 		vrLen = 1647;
 		vrLoc = 3124;
@@ -3418,7 +3514,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 155";
 		rLen = 0;
-		rLoc = 4264;
+		rLoc = 4211;
 		rType = 0;
 		vrLen = 1637;
 		vrLoc = 3155;
@@ -3428,7 +3524,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 155";
 		rLen = 0;
-		rLoc = 4264;
+		rLoc = 4211;
 		rType = 0;
 		vrLen = 1637;
 		vrLoc = 3155;
@@ -3438,7 +3534,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 162";
 		rLen = 0;
-		rLoc = 4478;
+		rLoc = 4574;
 		rType = 0;
 		vrLen = 1285;
 		vrLoc = 4633;
@@ -3458,7 +3554,7 @@
 		fRef = E54BEB0B0F5C301D007F2871 /* nuiCoverFlow.h */;
 		name = "nuiCoverFlow.h: 36";
 		rLen = 0;
-		rLoc = 974;
+		rLoc = 997;
 		rType = 0;
 		vrLen = 1258;
 		vrLoc = 0;
@@ -3468,7 +3564,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 162";
 		rLen = 0;
-		rLoc = 4478;
+		rLoc = 4574;
 		rType = 0;
 		vrLen = 1285;
 		vrLoc = 4633;
@@ -3488,7 +3584,7 @@
 		fRef = E54BEB0B0F5C301D007F2871 /* nuiCoverFlow.h */;
 		name = "nuiCoverFlow.h: 38";
 		rLen = 0;
-		rLoc = 1059;
+		rLoc = 1082;
 		rType = 0;
 		vrLen = 1323;
 		vrLoc = 0;
@@ -3498,7 +3594,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 155";
 		rLen = 0;
-		rLoc = 4264;
+		rLoc = 4211;
 		rType = 0;
 		vrLen = 1709;
 		vrLoc = 3155;
@@ -3508,7 +3604,7 @@
 		fRef = E54BEB0B0F5C301D007F2871 /* nuiCoverFlow.h */;
 		name = "nuiCoverFlow.h: 38";
 		rLen = 0;
-		rLoc = 1059;
+		rLoc = 1082;
 		rType = 0;
 		vrLen = 1323;
 		vrLoc = 0;
@@ -3518,7 +3614,7 @@
 		fRef = E54BEB0B0F5C301D007F2871 /* nuiCoverFlow.h */;
 		name = "nuiCoverFlow.h: 38";
 		rLen = 0;
-		rLoc = 1059;
+		rLoc = 1082;
 		rType = 0;
 		vrLen = 1323;
 		vrLoc = 0;
@@ -3528,7 +3624,7 @@
 		fRef = E54BEB0B0F5C301D007F2871 /* nuiCoverFlow.h */;
 		name = "nuiCoverFlow.h: 47";
 		rLen = 0;
-		rLoc = 1356;
+		rLoc = 1378;
 		rType = 0;
 		vrLen = 1323;
 		vrLoc = 0;
@@ -3538,7 +3634,7 @@
 		fRef = E54BEB0B0F5C301D007F2871 /* nuiCoverFlow.h */;
 		name = "nuiCoverFlow.h: 47";
 		rLen = 0;
-		rLoc = 1356;
+		rLoc = 1378;
 		rType = 0;
 		vrLen = 1323;
 		vrLoc = 0;
@@ -3548,7 +3644,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 309";
 		rLen = 0;
-		rLoc = 7496;
+		rLoc = 7840;
 		rType = 0;
 		vrLen = 948;
 		vrLoc = 6909;
@@ -3558,7 +3654,7 @@
 		fRef = E54BEB0B0F5C301D007F2871 /* nuiCoverFlow.h */;
 		name = "nuiCoverFlow.h: 38";
 		rLen = 0;
-		rLoc = 1059;
+		rLoc = 1082;
 		rType = 0;
 		vrLen = 1323;
 		vrLoc = 0;
@@ -3568,7 +3664,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 309";
 		rLen = 0;
-		rLoc = 7496;
+		rLoc = 7840;
 		rType = 0;
 		vrLen = 909;
 		vrLoc = 6909;
@@ -3578,7 +3674,7 @@
 		fRef = E54BEB0D0F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 309";
 		rLen = 0;
-		rLoc = 7496;
+		rLoc = 7840;
 		rType = 0;
 		vrLen = 907;
 		vrLoc = 6759;
@@ -3588,7 +3684,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 309";
 		rLen = 0;
-		rLoc = 7496;
+		rLoc = 7840;
 		rType = 0;
 		vrLen = 933;
 		vrLoc = 6733;
@@ -3598,7 +3694,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 309";
 		rLen = 0;
-		rLoc = 7496;
+		rLoc = 7840;
 		rType = 0;
 		vrLen = 907;
 		vrLoc = 6759;
@@ -3768,7 +3864,7 @@
 		fRef = E54BEB060F5C301D007F2871 /* nuiCoverFlow.h */;
 		name = "nuiCoverFlow.h: 36";
 		rLen = 0;
-		rLoc = 835;
+		rLoc = 858;
 		rType = 0;
 		vrLen = 1399;
 		vrLoc = 0;
@@ -3778,7 +3874,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 369";
 		rLen = 84;
-		rLoc = 8516;
+		rLoc = 8860;
 		rType = 0;
 		vrLen = 1217;
 		vrLoc = 7399;
@@ -3798,7 +3894,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 369";
 		rLen = 84;
-		rLoc = 8516;
+		rLoc = 8860;
 		rType = 0;
 		vrLen = 1217;
 		vrLoc = 7399;
@@ -3808,7 +3904,7 @@
 		fRef = E54BEB060F5C301D007F2871 /* nuiCoverFlow.h */;
 		name = "nuiCoverFlow.h: 36";
 		rLen = 0;
-		rLoc = 835;
+		rLoc = 858;
 		rType = 0;
 		vrLen = 1399;
 		vrLoc = 0;
@@ -3818,7 +3914,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 369";
 		rLen = 0;
-		rLoc = 8533;
+		rLoc = 8877;
 		rType = 0;
 		vrLen = 1221;
 		vrLoc = 7396;
@@ -3838,7 +3934,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 353";
 		rLen = 82;
-		rLoc = 8098;
+		rLoc = 8442;
 		rType = 0;
 		vrLen = 1202;
 		vrLoc = 7415;
@@ -3848,7 +3944,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 353";
 		rLen = 82;
-		rLoc = 8098;
+		rLoc = 8442;
 		rType = 0;
 		vrLen = 1202;
 		vrLoc = 7415;
@@ -3858,7 +3954,7 @@
 		fRef = E54BEB060F5C301D007F2871 /* nuiCoverFlow.h */;
 		name = "nuiCoverFlow.h: 36";
 		rLen = 0;
-		rLoc = 841;
+		rLoc = 864;
 		rType = 0;
 		vrLen = 1468;
 		vrLoc = 0;
@@ -3868,7 +3964,7 @@
 		fRef = E54BEB060F5C301D007F2871 /* nuiCoverFlow.h */;
 		name = "nuiCoverFlow.h: 36";
 		rLen = 0;
-		rLoc = 841;
+		rLoc = 864;
 		rType = 0;
 		vrLen = 1467;
 		vrLoc = 3;
@@ -3878,7 +3974,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 369";
 		rLen = 0;
-		rLoc = 8533;
+		rLoc = 8877;
 		rType = 0;
 		vrLen = 1219;
 		vrLoc = 7399;
@@ -3888,7 +3984,7 @@
 		fRef = E54BEB060F5C301D007F2871 /* nuiCoverFlow.h */;
 		name = "nuiCoverFlow.h: 36";
 		rLen = 0;
-		rLoc = 841;
+		rLoc = 864;
 		rType = 0;
 		vrLen = 1470;
 		vrLoc = 0;
@@ -3898,7 +3994,7 @@
 		fRef = E54BEB060F5C301D007F2871 /* nuiCoverFlow.h */;
 		name = "nuiCoverFlow.h: 36";
 		rLen = 0;
-		rLoc = 841;
+		rLoc = 864;
 		rType = 0;
 		vrLen = 1468;
 		vrLoc = 0;
@@ -3908,7 +4004,7 @@
 		fRef = E54BEB060F5C301D007F2871 /* nuiCoverFlow.h */;
 		name = "nuiCoverFlow.h: 36";
 		rLen = 0;
-		rLoc = 841;
+		rLoc = 864;
 		rType = 0;
 		vrLen = 1467;
 		vrLoc = 3;
@@ -3918,7 +4014,7 @@
 		fRef = E54BEB060F5C301D007F2871 /* nuiCoverFlow.h */;
 		name = "nuiCoverFlow.h: 36";
 		rLen = 0;
-		rLoc = 841;
+		rLoc = 864;
 		rType = 0;
 		vrLen = 1470;
 		vrLoc = 0;
@@ -3951,7 +4047,7 @@
 		fRef = E54BEB060F5C301D007F2871 /* nuiCoverFlow.h */;
 		name = "nuiCoverFlow.h: 36";
 		rLen = 0;
-		rLoc = 841;
+		rLoc = 864;
 		rType = 0;
 		vrLen = 1470;
 		vrLoc = 0;
@@ -3968,6 +4064,7 @@
 	};
 	E5678EA40F5C751F00BEDF85 /* nuiTexture.cpp */ = {
 		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
 		name = nuiTexture.cpp;
 		path = /Users/meeloo/work/nui3/src/Renderers/nuiTexture.cpp;
 		sourceTree = "<absolute>";
@@ -3982,7 +4079,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 355";
 		rLen = 0;
-		rLoc = 8224;
+		rLoc = 8568;
 		rType = 0;
 		vrLen = 1217;
 		vrLoc = 7399;
@@ -3992,7 +4089,7 @@
 		fRef = E54BEB060F5C301D007F2871 /* nuiCoverFlow.h */;
 		name = "nuiCoverFlow.h: 36";
 		rLen = 0;
-		rLoc = 841;
+		rLoc = 864;
 		rType = 0;
 		vrLen = 1470;
 		vrLoc = 0;
@@ -4002,7 +4099,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 355";
 		rLen = 0;
-		rLoc = 8224;
+		rLoc = 8568;
 		rType = 0;
 		vrLen = 1195;
 		vrLoc = 7399;
@@ -4012,7 +4109,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 355";
 		rLen = 0;
-		rLoc = 8224;
+		rLoc = 8568;
 		rType = 0;
 		vrLen = 1128;
 		vrLoc = 7488;
@@ -4039,7 +4136,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 355";
 		rLen = 0;
-		rLoc = 8224;
+		rLoc = 8568;
 		rType = 0;
 		vrLen = 1258;
 		vrLoc = 7357;
@@ -4059,7 +4156,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 37";
 		rLen = 0;
-		rLoc = 738;
+		rLoc = 736;
 		rType = 0;
 		vrLen = 1500;
 		vrLoc = 3;
@@ -4069,7 +4166,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 37";
 		rLen = 0;
-		rLoc = 738;
+		rLoc = 736;
 		rType = 0;
 		vrLen = 1382;
 		vrLoc = 70;
@@ -4079,7 +4176,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 37";
 		rLen = 0;
-		rLoc = 738;
+		rLoc = 736;
 		rType = 0;
 		vrLen = 1461;
 		vrLoc = 124;
@@ -4096,7 +4193,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 37";
 		rLen = 0;
-		rLoc = 738;
+		rLoc = 736;
 		rType = 0;
 		vrLen = 1524;
 		vrLoc = 33;
@@ -4106,7 +4203,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 193";
 		rLen = 0;
-		rLoc = 5221;
+		rLoc = 5471;
 		rType = 0;
 		vrLen = 1589;
 		vrLoc = 3722;
@@ -4116,7 +4213,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 193";
 		rLen = 0;
-		rLoc = 5221;
+		rLoc = 5471;
 		rType = 0;
 		vrLen = 1519;
 		vrLoc = 3722;
@@ -4126,7 +4223,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 193";
 		rLen = 0;
-		rLoc = 5221;
+		rLoc = 5471;
 		rType = 0;
 		vrLen = 1251;
 		vrLoc = 4358;
@@ -4136,7 +4233,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 193";
 		rLen = 0;
-		rLoc = 5221;
+		rLoc = 5471;
 		rType = 0;
 		vrLen = 1605;
 		vrLoc = 3655;
@@ -4146,7 +4243,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 368";
 		rLen = 0;
-		rLoc = 8473;
+		rLoc = 8817;
 		rType = 0;
 		vrLen = 1272;
 		vrLoc = 7440;
@@ -4156,7 +4253,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 368";
 		rLen = 0;
-		rLoc = 8473;
+		rLoc = 8817;
 		rType = 0;
 		vrLen = 1112;
 		vrLoc = 7440;
@@ -4166,7 +4263,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 368";
 		rLen = 0;
-		rLoc = 8473;
+		rLoc = 8817;
 		rType = 0;
 		vrLen = 1169;
 		vrLoc = 7561;
@@ -4176,7 +4273,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 368";
 		rLen = 0;
-		rLoc = 8473;
+		rLoc = 8817;
 		rType = 0;
 		vrLen = 1294;
 		vrLoc = 7398;
@@ -4186,7 +4283,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 370";
 		rLen = 0;
-		rLoc = 8473;
+		rLoc = 8817;
 		rType = 0;
 		vrLen = 1232;
 		vrLoc = 7433;
@@ -4196,7 +4293,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 370";
 		rLen = 0;
-		rLoc = 8473;
+		rLoc = 8817;
 		rType = 0;
 		vrLen = 1163;
 		vrLoc = 7456;
@@ -4206,7 +4303,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 370";
 		rLen = 0;
-		rLoc = 8473;
+		rLoc = 8817;
 		rType = 0;
 		vrLen = 1175;
 		vrLoc = 7623;
@@ -4223,7 +4320,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 370";
 		rLen = 0;
-		rLoc = 8473;
+		rLoc = 8817;
 		rType = 0;
 		vrLen = 1274;
 		vrLoc = 7437;
@@ -4233,7 +4330,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 135";
 		rLen = 0;
-		rLoc = 3586;
+		rLoc = 3560;
 		rType = 0;
 		vrLen = 1819;
 		vrLoc = 3162;
@@ -4243,7 +4340,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 135";
 		rLen = 0;
-		rLoc = 3586;
+		rLoc = 3560;
 		rType = 0;
 		vrLen = 1687;
 		vrLoc = 3251;
@@ -4253,7 +4350,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 135";
 		rLen = 0;
-		rLoc = 3586;
+		rLoc = 3560;
 		rType = 0;
 		vrLen = 1646;
 		vrLoc = 2610;
@@ -4263,7 +4360,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 135";
 		rLen = 0;
-		rLoc = 3586;
+		rLoc = 3560;
 		rType = 0;
 		vrLen = 1820;
 		vrLoc = 3192;
@@ -4273,7 +4370,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 97";
 		rLen = 0;
-		rLoc = 2398;
+		rLoc = 2396;
 		rType = 0;
 		vrLen = 1558;
 		vrLoc = 1856;
@@ -4283,7 +4380,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 97";
 		rLen = 0;
-		rLoc = 2398;
+		rLoc = 2396;
 		rType = 0;
 		vrLen = 1454;
 		vrLoc = 1907;
@@ -4293,7 +4390,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 97";
 		rLen = 0;
-		rLoc = 2398;
+		rLoc = 2396;
 		rType = 0;
 		vrLen = 1360;
 		vrLoc = 1715;
@@ -4303,7 +4400,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 93";
 		rLen = 0;
-		rLoc = 2218;
+		rLoc = 2216;
 		rType = 0;
 		vrLen = 1581;
 		vrLoc = 1830;
@@ -4313,7 +4410,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 93";
 		rLen = 0;
-		rLoc = 2218;
+		rLoc = 2216;
 		rType = 0;
 		vrLen = 1404;
 		vrLoc = 1830;
@@ -4323,7 +4420,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 93";
 		rLen = 0;
-		rLoc = 2218;
+		rLoc = 2216;
 		rType = 0;
 		vrLen = 1387;
 		vrLoc = 1613;
@@ -4333,7 +4430,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 154";
 		rLen = 0;
-		rLoc = 4046;
+		rLoc = 3993;
 		rType = 0;
 		vrLen = 1724;
 		vrLoc = 3466;
@@ -4343,7 +4440,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 154";
 		rLen = 0;
-		rLoc = 4046;
+		rLoc = 3993;
 		rType = 0;
 		vrLen = 1621;
 		vrLoc = 3466;
@@ -4353,7 +4450,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 154";
 		rLen = 0;
-		rLoc = 4046;
+		rLoc = 3993;
 		rType = 0;
 		vrLen = 1639;
 		vrLoc = 3135;
@@ -4363,7 +4460,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 154";
 		rLen = 0;
-		rLoc = 4046;
+		rLoc = 3993;
 		rType = 0;
 		vrLen = 1757;
 		vrLoc = 3107;
@@ -4373,7 +4470,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 161";
 		rLen = 0;
-		rLoc = 4296;
+		rLoc = 4243;
 		rType = 0;
 		vrLen = 1724;
 		vrLoc = 3411;
@@ -4383,7 +4480,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 161";
 		rLen = 0;
-		rLoc = 4296;
+		rLoc = 4243;
 		rType = 0;
 		vrLen = 1647;
 		vrLoc = 3411;
@@ -4393,7 +4490,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 161";
 		rLen = 0;
-		rLoc = 4296;
+		rLoc = 4243;
 		rType = 0;
 		vrLen = 1659;
 		vrLoc = 3323;
@@ -4403,7 +4500,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 161";
 		rLen = 0;
-		rLoc = 4296;
+		rLoc = 4243;
 		rType = 0;
 		vrLen = 1855;
 		vrLoc = 3234;
@@ -4413,7 +4510,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 94";
 		rLen = 0;
-		rLoc = 2242;
+		rLoc = 2240;
 		rType = 0;
 		vrLen = 1636;
 		vrLoc = 1935;
@@ -4423,7 +4520,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 94";
 		rLen = 0;
-		rLoc = 2242;
+		rLoc = 2240;
 		rType = 0;
 		vrLen = 1552;
 		vrLoc = 1989;
@@ -4433,7 +4530,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 94";
 		rLen = 0;
-		rLoc = 2242;
+		rLoc = 2240;
 		rType = 0;
 		vrLen = 1388;
 		vrLoc = 1635;
@@ -4443,7 +4540,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 161";
 		rLen = 0;
-		rLoc = 4291;
+		rLoc = 4238;
 		rType = 0;
 		vrLen = 1742;
 		vrLoc = 3359;
@@ -4453,7 +4550,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 161";
 		rLen = 0;
-		rLoc = 4291;
+		rLoc = 4238;
 		rType = 0;
 		vrLen = 1649;
 		vrLoc = 3359;
@@ -4463,7 +4560,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 161";
 		rLen = 0;
-		rLoc = 4291;
+		rLoc = 4238;
 		rType = 0;
 		vrLen = 1652;
 		vrLoc = 3323;
@@ -4473,7 +4570,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 97";
 		rLen = 0;
-		rLoc = 2381;
+		rLoc = 2379;
 		rType = 0;
 		vrLen = 1567;
 		vrLoc = 1503;
@@ -4483,7 +4580,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 97";
 		rLen = 0;
-		rLoc = 2381;
+		rLoc = 2379;
 		rType = 0;
 		vrLen = 1435;
 		vrLoc = 1635;
@@ -4493,7 +4590,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 97";
 		rLen = 0;
-		rLoc = 2381;
+		rLoc = 2379;
 		rType = 0;
 		vrLen = 1432;
 		vrLoc = 1635;
@@ -4503,7 +4600,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 97";
 		rLen = 0;
-		rLoc = 2381;
+		rLoc = 2379;
 		rType = 0;
 		vrLen = 1391;
 		vrLoc = 1715;
@@ -4513,7 +4610,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 147";
 		rLen = 0;
-		rLoc = 3846;
+		rLoc = 3794;
 		rType = 0;
 		vrLen = 1760;
 		vrLoc = 3140;
@@ -4523,7 +4620,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 147";
 		rLen = 0;
-		rLoc = 3846;
+		rLoc = 3794;
 		rType = 0;
 		vrLen = 1660;
 		vrLoc = 3140;
@@ -4533,7 +4630,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 147";
 		rLen = 0;
-		rLoc = 3846;
+		rLoc = 3794;
 		rType = 0;
 		vrLen = 1592;
 		vrLoc = 3011;
@@ -4543,7 +4640,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 157";
 		rLen = 0;
-		rLoc = 4191;
+		rLoc = 4138;
 		rType = 0;
 		vrLen = 1792;
 		vrLoc = 3067;
@@ -4553,7 +4650,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 157";
 		rLen = 0;
-		rLoc = 4191;
+		rLoc = 4138;
 		rType = 0;
 		vrLen = 1701;
 		vrLoc = 3067;
@@ -4563,7 +4660,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 157";
 		rLen = 0;
-		rLoc = 4191;
+		rLoc = 4138;
 		rType = 0;
 		vrLen = 1646;
 		vrLoc = 3067;
@@ -4573,7 +4670,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 157";
 		rLen = 0;
-		rLoc = 4191;
+		rLoc = 4138;
 		rType = 0;
 		vrLen = 1789;
 		vrLoc = 3070;
@@ -4583,7 +4680,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 138";
 		rLen = 0;
-		rLoc = 3568;
+		rLoc = 3542;
 		rType = 0;
 		vrLen = 1777;
 		vrLoc = 2685;
@@ -4593,7 +4690,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 138";
 		rLen = 0;
-		rLoc = 3568;
+		rLoc = 3542;
 		rType = 0;
 		vrLen = 1699;
 		vrLoc = 2732;
@@ -4603,7 +4700,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 138";
 		rLen = 0;
-		rLoc = 3568;
+		rLoc = 3542;
 		rType = 0;
 		vrLen = 1640;
 		vrLoc = 2715;
@@ -4613,7 +4710,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 154";
 		rLen = 0;
-		rLoc = 4104;
+		rLoc = 4051;
 		rType = 0;
 		vrLen = 1786;
 		vrLoc = 3070;
@@ -4623,7 +4720,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 154";
 		rLen = 0;
-		rLoc = 4104;
+		rLoc = 4051;
 		rType = 0;
 		vrLen = 1668;
 		vrLoc = 3070;
@@ -4633,7 +4730,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 154";
 		rLen = 0;
-		rLoc = 4104;
+		rLoc = 4051;
 		rType = 0;
 		vrLen = 1635;
 		vrLoc = 3168;
@@ -4643,7 +4740,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 145";
 		rLen = 0;
-		rLoc = 3777;
+		rLoc = 3725;
 		rType = 0;
 		vrLen = 1754;
 		vrLoc = 3011;
@@ -4653,7 +4750,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 145";
 		rLen = 0;
-		rLoc = 3777;
+		rLoc = 3725;
 		rType = 0;
 		vrLen = 1671;
 		vrLoc = 3067;
@@ -4663,7 +4760,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 145";
 		rLen = 0;
-		rLoc = 3777;
+		rLoc = 3725;
 		rType = 0;
 		vrLen = 1532;
 		vrLoc = 2960;
@@ -4680,7 +4777,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 145";
 		rLen = 0;
-		rLoc = 3777;
+		rLoc = 3725;
 		rType = 0;
 		vrLen = 1760;
 		vrLoc = 3033;
@@ -4690,7 +4787,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 138";
 		rLen = 0;
-		rLoc = 3586;
+		rLoc = 3560;
 		rType = 0;
 		vrLen = 1759;
 		vrLoc = 2480;
@@ -4700,7 +4797,7 @@
 		comments = "error: expected ',' or ';' before ')' token";
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		rLen = 1;
-		rLoc = 138;
+		rLoc = 136;
 		rType = 1;
 	};
 	E5678F450F5CA89100BEDF85 /* PBXTextBookmark */ = {
@@ -4708,7 +4805,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 138";
 		rLen = 0;
-		rLoc = 3587;
+		rLoc = 3561;
 		rType = 0;
 		vrLen = 1661;
 		vrLoc = 2541;
@@ -4718,7 +4815,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 138";
 		rLen = 0;
-		rLoc = 3587;
+		rLoc = 3561;
 		rType = 0;
 		vrLen = 1637;
 		vrLoc = 2715;
@@ -4728,7 +4825,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 138";
 		rLen = 0;
-		rLoc = 3587;
+		rLoc = 3561;
 		rType = 0;
 		vrLen = 1730;
 		vrLoc = 2514;
@@ -4738,7 +4835,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 138";
 		rLen = 0;
-		rLoc = 3578;
+		rLoc = 3552;
 		rType = 0;
 		vrLen = 1730;
 		vrLoc = 2514;
@@ -4748,7 +4845,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 138";
 		rLen = 0;
-		rLoc = 3578;
+		rLoc = 3552;
 		rType = 0;
 		vrLen = 1642;
 		vrLoc = 2592;
@@ -4758,7 +4855,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 138";
 		rLen = 0;
-		rLoc = 3578;
+		rLoc = 3552;
 		rType = 0;
 		vrLen = 1637;
 		vrLoc = 2715;
@@ -4767,7 +4864,7 @@
 		isa = PBXTextBookmark;
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		rLen = 0;
-		rLoc = 191;
+		rLoc = 194;
 		rType = 1;
 	};
 	E5678F560F5CA94500BEDF85 /* PBXTextBookmark */ = {
@@ -4775,7 +4872,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 138";
 		rLen = 0;
-		rLoc = 3578;
+		rLoc = 3552;
 		rType = 0;
 		vrLen = 1746;
 		vrLoc = 2850;
@@ -4785,7 +4882,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 174";
 		rLen = 0;
-		rLoc = 4617;
+		rLoc = 4715;
 		rType = 0;
 		vrLen = 1525;
 		vrLoc = 3926;
@@ -4795,7 +4892,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 174";
 		rLen = 0;
-		rLoc = 4617;
+		rLoc = 4715;
 		rType = 0;
 		vrLen = 1474;
 		vrLoc = 3926;
@@ -4805,7 +4902,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 174";
 		rLen = 0;
-		rLoc = 4617;
+		rLoc = 4715;
 		rType = 0;
 		vrLen = 1510;
 		vrLoc = 3784;
@@ -4822,7 +4919,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 174";
 		rLen = 0;
-		rLoc = 4617;
+		rLoc = 4715;
 		rType = 0;
 		vrLen = 1621;
 		vrLoc = 3827;
@@ -4832,7 +4929,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 138";
 		rLen = 0;
-		rLoc = 3508;
+		rLoc = 3482;
 		rType = 0;
 		vrLen = 1722;
 		vrLoc = 2684;
@@ -4842,7 +4939,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 138";
 		rLen = 0;
-		rLoc = 3508;
+		rLoc = 3482;
 		rType = 0;
 		vrLen = 1659;
 		vrLoc = 2714;
@@ -4852,7 +4949,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 138";
 		rLen = 0;
-		rLoc = 3508;
+		rLoc = 3482;
 		rType = 0;
 		vrLen = 1620;
 		vrLoc = 2714;
@@ -4861,8 +4958,8 @@
 		isa = PBXTextBookmark;
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 292";
-		rLen = 6;
-		rLoc = 7027;
+		rLen = 0;
+		rLoc = 7397;
 		rType = 0;
 		vrLen = 1016;
 		vrLoc = 6256;
@@ -4871,8 +4968,8 @@
 		isa = PBXTextBookmark;
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 292";
-		rLen = 6;
-		rLoc = 7027;
+		rLen = 0;
+		rLoc = 7397;
 		rType = 0;
 		vrLen = 935;
 		vrLoc = 6256;
@@ -4881,8 +4978,8 @@
 		isa = PBXTextBookmark;
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 292";
-		rLen = 6;
-		rLoc = 7027;
+		rLen = 0;
+		rLoc = 7397;
 		rType = 0;
 		vrLen = 935;
 		vrLoc = 6256;
@@ -4892,7 +4989,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 319";
 		rLen = 0;
-		rLoc = 7519;
+		rLoc = 7863;
 		rType = 0;
 		vrLen = 1045;
 		vrLoc = 6772;
@@ -4902,7 +4999,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 319";
 		rLen = 0;
-		rLoc = 7519;
+		rLoc = 7863;
 		rType = 0;
 		vrLen = 910;
 		vrLoc = 6772;
@@ -4912,7 +5009,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 319";
 		rLen = 0;
-		rLoc = 7519;
+		rLoc = 7863;
 		rType = 0;
 		vrLen = 890;
 		vrLoc = 6967;
@@ -4922,7 +5019,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 317";
 		rLen = 0;
-		rLoc = 7497;
+		rLoc = 7841;
 		rType = 0;
 		vrLen = 1000;
 		vrLoc = 6941;
@@ -4932,7 +5029,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 317";
 		rLen = 0;
-		rLoc = 7497;
+		rLoc = 7841;
 		rType = 0;
 		vrLen = 890;
 		vrLoc = 6967;
@@ -4942,7 +5039,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 317";
 		rLen = 0;
-		rLoc = 7497;
+		rLoc = 7841;
 		rType = 0;
 		vrLen = 913;
 		vrLoc = 6941;
@@ -4952,7 +5049,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 148";
 		rLen = 0;
-		rLoc = 3840;
+		rLoc = 3788;
 		rType = 0;
 		vrLen = 1756;
 		vrLoc = 2790;
@@ -4962,7 +5059,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 148";
 		rLen = 0;
-		rLoc = 3840;
+		rLoc = 3788;
 		rType = 0;
 		vrLen = 1581;
 		vrLoc = 2959;
@@ -4972,7 +5069,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 148";
 		rLen = 0;
-		rLoc = 3840;
+		rLoc = 3788;
 		rType = 0;
 		vrLen = 1541;
 		vrLoc = 3032;
@@ -4982,7 +5079,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 38";
 		rLen = 0;
-		rLoc = 760;
+		rLoc = 758;
 		rType = 0;
 		vrLen = 1574;
 		vrLoc = 119;
@@ -4992,7 +5089,7 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 38";
 		rLen = 0;
-		rLoc = 760;
+		rLoc = 758;
 		rType = 0;
 		vrLen = 1513;
 		vrLoc = 151;
@@ -5002,9 +5099,967 @@
 		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
 		name = "nuiCoverFlow.cpp: 38";
 		rLen = 0;
-		rLoc = 760;
+		rLoc = 758;
 		rType = 0;
 		vrLen = 1463;
 		vrLoc = 150;
+	};
+	E5678F8B0F5CAC9700BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB060F5C301D007F2871 /* nuiCoverFlow.h */;
+		name = "nuiCoverFlow.h: 46";
+		rLen = 24;
+		rLoc = 1257;
+		rType = 0;
+		vrLen = 1470;
+		vrLoc = 0;
+	};
+	E5678F8C0F5CAC9700BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 370";
+		rLen = 14;
+		rLoc = 8796;
+		rType = 0;
+		vrLen = 1235;
+		vrLoc = 7552;
+	};
+	E5678F8D0F5CAC9700BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 370";
+		rLen = 14;
+		rLoc = 8796;
+		rType = 0;
+		vrLen = 1235;
+		vrLoc = 7552;
+	};
+	E5678F8E0F5CAC9700BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB060F5C301D007F2871 /* nuiCoverFlow.h */;
+		name = "nuiCoverFlow.h: 46";
+		rLen = 24;
+		rLoc = 1257;
+		rType = 0;
+		vrLen = 1470;
+		vrLoc = 0;
+	};
+	E5678F8F0F5CAC9700BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 287";
+		rLen = 0;
+		rLoc = 7257;
+		rType = 0;
+		vrLen = 993;
+		vrLoc = 6613;
+	};
+	E5678F900F5CAC9700BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 287";
+		rLen = 0;
+		rLoc = 7257;
+		rType = 0;
+		vrLen = 920;
+		vrLoc = 6613;
+	};
+	E5678F910F5CAC9D00BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 287";
+		rLen = 0;
+		rLoc = 7257;
+		rType = 0;
+		vrLen = 917;
+		vrLoc = 6464;
+	};
+	E5678F940F5CAD2500BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB060F5C301D007F2871 /* nuiCoverFlow.h */;
+		name = "nuiCoverFlow.h: 42";
+		rLen = 0;
+		rLoc = 1135;
+		rType = 0;
+		vrLen = 1465;
+		vrLoc = 0;
+	};
+	E5678F950F5CAD2500BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 365";
+		rLen = 14;
+		rLoc = 8636;
+		rType = 0;
+		vrLen = 1217;
+		vrLoc = 7609;
+	};
+	E5678F960F5CAD2500BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 365";
+		rLen = 14;
+		rLoc = 8636;
+		rType = 0;
+		vrLen = 1217;
+		vrLoc = 7609;
+	};
+	E5678F970F5CAD2500BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB060F5C301D007F2871 /* nuiCoverFlow.h */;
+		name = "nuiCoverFlow.h: 42";
+		rLen = 0;
+		rLoc = 1135;
+		rType = 0;
+		vrLen = 1465;
+		vrLoc = 0;
+	};
+	E5678F980F5CAD2500BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 387";
+		rLen = 0;
+		rLoc = 9169;
+		rType = 0;
+		vrLen = 1217;
+		vrLoc = 7599;
+	};
+	E5678F990F5CAD3700BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 387";
+		rLen = 0;
+		rLoc = 9169;
+		rType = 0;
+		vrLen = 935;
+		vrLoc = 6300;
+	};
+	E5678F9A0F5CAD3D00BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 387";
+		rLen = 0;
+		rLoc = 9169;
+		rType = 0;
+		vrLen = 933;
+		vrLoc = 6300;
+	};
+	E5678FA30F5CAD6B00BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 284";
+		rLen = 0;
+		rLoc = 7206;
+		rType = 0;
+		vrLen = 1031;
+		vrLoc = 6264;
+	};
+	E5678FA40F5CAD7900BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 284";
+		rLen = 0;
+		rLoc = 7206;
+		rType = 0;
+		vrLen = 940;
+		vrLoc = 6300;
+	};
+	E5678FA50F5CAD7A00BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 284";
+		rLen = 0;
+		rLoc = 7206;
+		rType = 0;
+		vrLen = 887;
+		vrLoc = 6432;
+	};
+	E5678FAA0F5CADD700BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 296";
+		rLen = 0;
+		rLoc = 7393;
+		rType = 0;
+		vrLen = 1090;
+		vrLoc = 6459;
+	};
+	E5678FAB0F5CADE400BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 296";
+		rLen = 0;
+		rLoc = 7393;
+		rType = 0;
+		vrLen = 942;
+		vrLoc = 6459;
+	};
+	E5678FAC0F5CADEB00BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 296";
+		rLen = 0;
+		rLoc = 7393;
+		rType = 0;
+		vrLen = 931;
+		vrLoc = 6622;
+	};
+	E5678FB10F5CAF5E00BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 169";
+		rLen = 0;
+		rLoc = 4432;
+		rType = 0;
+		vrLen = 1830;
+		vrLoc = 3807;
+	};
+	E5678FB30F5CAF7400BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "error: expected `)' before ';' token";
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		rLen = 1;
+		rLoc = 165;
+		rType = 1;
+	};
+	E5678FB40F5CAF7400BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 169";
+		rLen = 0;
+		rLoc = 4432;
+		rType = 0;
+		vrLen = 1751;
+		vrLoc = 3881;
+	};
+	E5678FB50F5CAF7B00BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 169";
+		rLen = 0;
+		rLoc = 4432;
+		rType = 0;
+		vrLen = 1736;
+		vrLoc = 3618;
+	};
+	E5678FBA0F5CAFAF00BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 169";
+		rLen = 0;
+		rLoc = 4471;
+		rType = 0;
+		vrLen = 1888;
+		vrLoc = 3327;
+	};
+	E5678FBB0F5CAFBC00BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 169";
+		rLen = 0;
+		rLoc = 4471;
+		rType = 0;
+		vrLen = 1703;
+		vrLoc = 3473;
+	};
+	E5678FBC0F5CAFC200BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 169";
+		rLen = 0;
+		rLoc = 4471;
+		rType = 0;
+		vrLen = 1746;
+		vrLoc = 3618;
+	};
+	E5678FC10F5CAFE600BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 197";
+		rLen = 0;
+		rLoc = 5334;
+		rType = 0;
+		vrLen = 1602;
+		vrLoc = 4353;
+	};
+	E5678FC20F5CAFF400BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 197";
+		rLen = 0;
+		rLoc = 5334;
+		rType = 0;
+		vrLen = 1473;
+		vrLoc = 4353;
+	};
+	E5678FC30F5CAFFA00BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 197";
+		rLen = 0;
+		rLoc = 5334;
+		rType = 0;
+		vrLen = 1416;
+		vrLoc = 4523;
+	};
+	E5678FC80F5CBEB700BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 195";
+		rLen = 13;
+		rLoc = 5234;
+		rType = 0;
+		vrLen = 1753;
+		vrLoc = 3972;
+	};
+	E5678FC90F5CBEB700BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 195";
+		rLen = 13;
+		rLoc = 5234;
+		rType = 0;
+		vrLen = 1753;
+		vrLoc = 3972;
+	};
+	E5678FCA0F5CBEB700BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 41";
+		rLen = 0;
+		rLoc = 1172;
+		rType = 0;
+		vrLen = 1373;
+		vrLoc = 0;
+	};
+	E5678FCB0F5CBEBD00BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 197";
+		rLen = 0;
+		rLoc = 5334;
+		rType = 0;
+		vrLen = 1436;
+		vrLoc = 4523;
+	};
+	E5678FCC0F5CBEBD00BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 41";
+		rLen = 0;
+		rLoc = 1172;
+		rType = 0;
+		vrLen = 1299;
+		vrLoc = 0;
+	};
+	E5678FCD0F5CBEC200BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 41";
+		rLen = 0;
+		rLoc = 1172;
+		rType = 0;
+		vrLen = 1181;
+		vrLoc = 196;
+	};
+	E5678FD00F5CBF0500BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 42";
+		rLen = 0;
+		rLoc = 1172;
+		rType = 0;
+		vrLen = 1381;
+		vrLoc = 0;
+	};
+	E5678FD10F5CBF0A00BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 42";
+		rLen = 0;
+		rLoc = 1172;
+		rType = 0;
+		vrLen = 1295;
+		vrLoc = 0;
+	};
+	E5678FD20F5CBF1000BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 42";
+		rLen = 0;
+		rLoc = 1172;
+		rType = 0;
+		vrLen = 1179;
+		vrLoc = 221;
+	};
+	E5678FD50F5CBF2000BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 42";
+		rLen = 0;
+		rLoc = 1172;
+		rType = 0;
+		vrLen = 1387;
+		vrLoc = 0;
+	};
+	E5678FD60F5CBF2500BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 42";
+		rLen = 0;
+		rLoc = 1172;
+		rType = 0;
+		vrLen = 1266;
+		vrLoc = 118;
+	};
+	E5678FD70F5CBF2B00BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 42";
+		rLen = 0;
+		rLoc = 1172;
+		rType = 0;
+		vrLen = 1185;
+		vrLoc = 221;
+	};
+	E5678FDA0F5CBF3400BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 42";
+		rLen = 0;
+		rLoc = 1172;
+		rType = 0;
+		vrLen = 1399;
+		vrLoc = 3;
+	};
+	E5678FDB0F5CBF3A00BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 42";
+		rLen = 0;
+		rLoc = 1172;
+		rType = 0;
+		vrLen = 1268;
+		vrLoc = 119;
+	};
+	E5678FDC0F5CBF3F00BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 42";
+		rLen = 0;
+		rLoc = 1172;
+		rType = 0;
+		vrLen = 1185;
+		vrLoc = 221;
+	};
+	E5678FDF0F5CBF9500BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 42";
+		rLen = 0;
+		rLoc = 1172;
+		rType = 0;
+		vrLen = 1329;
+		vrLoc = 75;
+	};
+	E5678FE00F5CBF9500BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 42";
+		rLen = 0;
+		rLoc = 1172;
+		rType = 0;
+		vrLen = 1329;
+		vrLoc = 75;
+	};
+	E5678FE10F5CBF9500BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 139";
+		rLen = 0;
+		rLoc = 3594;
+		rType = 0;
+		vrLen = 1847;
+		vrLoc = 2826;
+	};
+	E5678FE20F5CBFA200BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 42";
+		rLen = 0;
+		rLoc = 1172;
+		rType = 0;
+		vrLen = 1234;
+		vrLoc = 172;
+	};
+	E5678FE30F5CBFA200BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 139";
+		rLen = 0;
+		rLoc = 3594;
+		rType = 0;
+		vrLen = 1682;
+		vrLoc = 2991;
+	};
+	E5678FE40F5CBFA800BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 139";
+		rLen = 0;
+		rLoc = 3594;
+		rType = 0;
+		vrLen = 1742;
+		vrLoc = 2731;
+	};
+	E5678FE90F5CBFC700BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 119";
+		rLen = 0;
+		rLoc = 2978;
+		rType = 0;
+		vrLen = 1857;
+		vrLoc = 2688;
+	};
+	E5678FEA0F5CBFD500BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 119";
+		rLen = 0;
+		rLoc = 2978;
+		rType = 0;
+		vrLen = 1742;
+		vrLoc = 2731;
+	};
+	E5678FEB0F5CBFDB00BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 119";
+		rLen = 0;
+		rLoc = 2978;
+		rType = 0;
+		vrLen = 1630;
+		vrLoc = 2191;
+	};
+	E5678FF00F5CBFF400BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF20B83433800BC506C /* MainWindow.h */;
+		name = "MainWindow.h: 25";
+		rLen = 0;
+		rLoc = 451;
+		rType = 0;
+		vrLen = 494;
+		vrLoc = 0;
+	};
+	E5678FF10F5CBFF400BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5678EA40F5C751F00BEDF85 /* nuiTexture.cpp */;
+		name = "nuiTexture.cpp: 610";
+		rLen = 0;
+		rLoc = 13468;
+		rType = 0;
+		vrLen = 927;
+		vrLoc = 12859;
+	};
+	E5678FF20F5CBFF400BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB060F5C301D007F2871 /* nuiCoverFlow.h */;
+		name = "nuiCoverFlow.h: 42";
+		rLen = 0;
+		rLoc = 1135;
+		rType = 0;
+		vrLen = 1465;
+		vrLoc = 0;
+	};
+	E5678FF30F5CBFF400BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 52";
+		rLen = 0;
+		rLoc = 1170;
+		rType = 0;
+		vrLen = 1575;
+		vrLoc = 383;
+	};
+	E5678FF40F5CBFF400BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF20B83433800BC506C /* MainWindow.h */;
+		name = "MainWindow.h: 25";
+		rLen = 0;
+		rLoc = 451;
+		rType = 0;
+		vrLen = 494;
+		vrLoc = 0;
+	};
+	E5678FF50F5CBFF400BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5678EA40F5C751F00BEDF85 /* nuiTexture.cpp */;
+		name = "nuiTexture.cpp: 610";
+		rLen = 0;
+		rLoc = 13468;
+		rType = 0;
+		vrLen = 927;
+		vrLoc = 12859;
+	};
+	E5678FF60F5CBFF400BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB060F5C301D007F2871 /* nuiCoverFlow.h */;
+		name = "nuiCoverFlow.h: 42";
+		rLen = 0;
+		rLoc = 1135;
+		rType = 0;
+		vrLen = 1465;
+		vrLoc = 0;
+	};
+	E5678FF70F5CBFF400BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 52";
+		rLen = 0;
+		rLoc = 1170;
+		rType = 0;
+		vrLen = 1575;
+		vrLoc = 383;
+	};
+	E5678FF80F5CBFF400BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 41";
+		rLen = 0;
+		rLoc = 1142;
+		rType = 0;
+		vrLen = 1301;
+		vrLoc = 75;
+	};
+	E5678FF90F5CBFFA00BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 119";
+		rLen = 0;
+		rLoc = 2978;
+		rType = 0;
+		vrLen = 1640;
+		vrLoc = 2191;
+	};
+	E5678FFA0F5CBFFA00BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 41";
+		rLen = 0;
+		rLoc = 1142;
+		rType = 0;
+		vrLen = 1266;
+		vrLoc = 75;
+	};
+	E5678FFB0F5CC00000BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 41";
+		rLen = 0;
+		rLoc = 1142;
+		rType = 0;
+		vrLen = 1181;
+		vrLoc = 196;
+	};
+	E56790060F5CC0F900BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 34";
+		rLen = 0;
+		rLoc = 936;
+		rType = 0;
+		vrLen = 1373;
+		vrLoc = 0;
+	};
+	E56790070F5CC0F900BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB060F5C301D007F2871 /* nuiCoverFlow.h */;
+		name = "nuiCoverFlow.h: 22";
+		rLen = 27;
+		rLoc = 406;
+		rType = 0;
+		vrLen = 1492;
+		vrLoc = 0;
+	};
+	E56790080F5CC0F900BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 52";
+		rLen = 0;
+		rLoc = 1170;
+		rType = 0;
+		vrLen = 1575;
+		vrLoc = 383;
+	};
+	E56790090F5CC0F900BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 52";
+		rLen = 0;
+		rLoc = 1170;
+		rType = 0;
+		vrLen = 1575;
+		vrLoc = 383;
+	};
+	E567900A0F5CC0F900BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB060F5C301D007F2871 /* nuiCoverFlow.h */;
+		name = "nuiCoverFlow.h: 22";
+		rLen = 27;
+		rLoc = 406;
+		rType = 0;
+		vrLen = 1492;
+		vrLoc = 0;
+	};
+	E567900B0F5CC0F900BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 220";
+		rLen = 0;
+		rLoc = 5843;
+		rType = 0;
+		vrLen = 1323;
+		vrLoc = 4928;
+	};
+	E567900C0F5CC10900BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 41";
+		rLen = 0;
+		rLoc = 1142;
+		rType = 0;
+		vrLen = 1222;
+		vrLoc = 155;
+	};
+	E567900D0F5CC10900BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 220";
+		rLen = 0;
+		rLoc = 5843;
+		rType = 0;
+		vrLen = 1196;
+		vrLoc = 5019;
+	};
+	E567900E0F5CC10F00BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 220";
+		rLen = 0;
+		rLoc = 5843;
+		rType = 0;
+		vrLen = 1103;
+		vrLoc = 5275;
+	};
+	E56790130F5CC14400BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 14";
+		rLen = 0;
+		rLoc = 222;
+		rType = 0;
+		vrLen = 1409;
+		vrLoc = 0;
+	};
+	E56790140F5CC15200BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 14";
+		rLen = 0;
+		rLoc = 222;
+		rType = 0;
+		vrLen = 1373;
+		vrLoc = 33;
+	};
+	E56790150F5CC15800BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 14";
+		rLen = 0;
+		rLoc = 222;
+		rType = 0;
+		vrLen = 1294;
+		vrLoc = 0;
+	};
+	E567901A0F5CC16C00BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB060F5C301D007F2871 /* nuiCoverFlow.h */;
+		name = "nuiCoverFlow.h: 22";
+		rLen = 27;
+		rLoc = 406;
+		rType = 0;
+		vrLen = 1492;
+		vrLoc = 0;
+	};
+	E567901B0F5CC16C00BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 14";
+		rLen = 0;
+		rLoc = 222;
+		rType = 0;
+		vrLen = 1407;
+		vrLoc = 0;
+	};
+	E567901C0F5CC16C00BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB060F5C301D007F2871 /* nuiCoverFlow.h */;
+		name = "nuiCoverFlow.h: 22";
+		rLen = 27;
+		rLoc = 406;
+		rType = 0;
+		vrLen = 1492;
+		vrLoc = 0;
+	};
+	E567901D0F5CC16C00BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 14";
+		rLen = 0;
+		rLoc = 222;
+		rType = 0;
+		vrLen = 1407;
+		vrLoc = 0;
+	};
+	E567901E0F5CC16C00BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 40";
+		rLen = 0;
+		rLoc = 1131;
+		rType = 0;
+		vrLen = 1375;
+		vrLoc = 0;
+	};
+	E567901F0F5CC17C00BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 14";
+		rLen = 0;
+		rLoc = 222;
+		rType = 0;
+		vrLen = 1359;
+		vrLoc = 0;
+	};
+	E56790200F5CC17C00BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 40";
+		rLen = 0;
+		rLoc = 1131;
+		rType = 0;
+		vrLen = 1301;
+		vrLoc = 0;
+	};
+	E56790210F5CC18200BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 40";
+		rLen = 0;
+		rLoc = 1131;
+		rType = 0;
+		vrLen = 1183;
+		vrLoc = 196;
+	};
+	E56790260F5CC1B100BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 40";
+		rLen = 0;
+		rLoc = 1121;
+		rType = 0;
+		vrLen = 1379;
+		vrLoc = 0;
+	};
+	E56790270F5CC1B700BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 40";
+		rLen = 0;
+		rLoc = 1121;
+		rType = 0;
+		vrLen = 1246;
+		vrLoc = 118;
+	};
+	E56790280F5CC1BC00BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 40";
+		rLen = 0;
+		rLoc = 1121;
+		rType = 0;
+		vrLen = 1187;
+		vrLoc = 196;
+	};
+	E567902B0F5CC22E00BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 40";
+		rLen = 0;
+		rLoc = 1088;
+		rType = 0;
+		vrLen = 1380;
+		vrLoc = 3;
+	};
+	E567902C0F5CC22E00BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 41";
+		rLen = 0;
+		rLoc = 1172;
+		rType = 0;
+		vrLen = 1309;
+		vrLoc = 75;
+	};
+	E567902D0F5CC22E00BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 40";
+		rLen = 0;
+		rLoc = 1088;
+		rType = 0;
+		vrLen = 1380;
+		vrLoc = 3;
+	};
+	E567902E0F5CC22E00BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 166";
+		rLen = 0;
+		rLoc = 4421;
+		rType = 0;
+		vrLen = 1971;
+		vrLoc = 3452;
+	};
+	E567902F0F5CC23D00BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 40";
+		rLen = 0;
+		rLoc = 1121;
+		rType = 0;
+		vrLen = 1230;
+		vrLoc = 155;
+	};
+	E56790300F5CC23D00BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 166";
+		rLen = 0;
+		rLoc = 4421;
+		rType = 0;
+		vrLen = 1798;
+		vrLoc = 3594;
+	};
+	E56790310F5CC24400BEDF85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E54BEB080F5C301D007F2871 /* nuiCoverFlow.cpp */;
+		name = "nuiCoverFlow.cpp: 166";
+		rLen = 0;
+		rLoc = 4421;
+		rType = 0;
+		vrLen = 1720;
+		vrLoc = 3593;
 	};
 }

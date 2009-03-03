@@ -28,11 +28,11 @@ nuiCoverFlow::nuiCoverFlow()
 nuiCoverFlow::~nuiCoverFlow()
 {
   mTimer.Stop();
-  for (uint32 i = 0; i < mImages.size(); i++)
+  for (int32 i = 0; i < mImages.size(); i++)
     mImages[i]->Release();
 }
 
-void nuiCoverFlow::DrawCard(nuiDrawContext* pContext, uint32 index, float start, float end)
+void nuiCoverFlow::DrawCard(nuiDrawContext* pContext, int32 index, float start, float end)
 {
   NGL_ASSERT(index < mImages.size());
   nuiTexture* pTex = mImages[index];
@@ -114,12 +114,10 @@ bool nuiCoverFlow::Draw(nuiDrawContext* pContext)
   pContext->PushProjectionMatrix();
   LocalToGlobal(rect);
   pContext->SetPerspectiveProjectionMatrix(rect, 30, aspectratio, .2, 20);
+  pContext->PushMatrix();
+  pContext->LoadIdentity();
   pContext->Translate(0, -.5, -2);
   pContext->ResetClipRect();
-  glBegin(GL_POINTS);
-  glColor3f(1, 0, 0);
-  glVertex3f(0, 0, 0);
-  glEnd();
   
   float height = mRect.GetHeight();
   float width = mRect.GetWidth();
@@ -139,14 +137,13 @@ bool nuiCoverFlow::Draw(nuiDrawContext* pContext)
   int32 maxcountright = MIN(maxcount, size - 2 - image);
   nuiRect r(left, top, w, h);
 
-  pContext->PushMatrix();
   float start = mReflectionStart;
   float end = mReflectionEnd;
   pContext->Scale(1.0f, -1.0f, 1.0f);
   const float SIDE_SHIFT = .8;
   const float SIDE_GAP = .22;
   const float DEPTH_SHIFT = .7;
-  for (uint32 i = 0; i < 2; i++)
+  for (int32 i = 0; i < 2; i++)
   {
     {
       int32 s = image - maxcountleft;
@@ -166,7 +163,10 @@ bool nuiCoverFlow::Draw(nuiDrawContext* pContext)
         nuiMatrix m;
         m.SetRotation(angle, 0, 1, 0);
         pContext->MultMatrix(m);
-        DrawCard(pContext, l, start, end);
+        float shade = 1 + (shiftx / (maxcountleft * SIDE_GAP + SIDE_SHIFT));
+        float sstart = start * shade;
+        float send = end * shade;
+        DrawCard(pContext, l, sstart, send);
         pContext->PopMatrix();
       }
     }
@@ -189,7 +189,10 @@ bool nuiCoverFlow::Draw(nuiDrawContext* pContext)
         nuiMatrix m;
         m.SetRotation(angle, 0, 1, 0);
         pContext->MultMatrix(m);
-        DrawCard(pContext, l, start, end);
+        float shade = 1 - (shiftx / (maxcountright * SIDE_GAP + SIDE_SHIFT));
+        float sstart = start * shade;
+        float send = end * shade;
+        DrawCard(pContext, l, sstart, send);
         pContext->PopMatrix();
       }
     }
@@ -212,7 +215,12 @@ bool nuiCoverFlow::SetRect(const nuiRect& rRect)
   return true;
 }
 
-uint32 nuiCoverFlow::AddImage(nuiTexture* pTexture, nuiTexture* pBefore)
+nuiRect nuiCoverFlow::CalcIdealSize()
+{
+  return nuiRect(800, 400);
+}
+
+int32 nuiCoverFlow::AddImage(nuiTexture* pTexture, nuiTexture* pBefore)
 {
   pTexture->Acquire();
   Invalidate();
@@ -222,7 +230,7 @@ uint32 nuiCoverFlow::AddImage(nuiTexture* pTexture, nuiTexture* pBefore)
     return mImages.size() - 1;
   }
 
-  for (uint32 i = 0; i < mImages.size(); i++)
+  for (int32 i = 0; i < mImages.size(); i++)
   {
     if (mImages[i] == pBefore)
     {
@@ -236,7 +244,7 @@ uint32 nuiCoverFlow::AddImage(nuiTexture* pTexture, nuiTexture* pBefore)
   return mImages.size() - 1;
 }
 
-uint32 nuiCoverFlow::AddImage(nuiTexture* pTexture, uint32 index)
+int32 nuiCoverFlow::AddImage(nuiTexture* pTexture, int32 index)
 {
   pTexture->Acquire();
   Invalidate();
@@ -246,7 +254,7 @@ uint32 nuiCoverFlow::AddImage(nuiTexture* pTexture, uint32 index)
 
 void nuiCoverFlow::DelImage(nuiTexture* pTexture)
 {
-  for (uint32 i = 0; i < mImages.size(); i++)
+  for (int32 i = 0; i < mImages.size(); i++)
   {
     if (mImages[i] == pTexture)
     {
@@ -259,7 +267,7 @@ void nuiCoverFlow::DelImage(nuiTexture* pTexture)
   }
 }
 
-void nuiCoverFlow::DelImage(uint32 index)
+void nuiCoverFlow::DelImage(int32 index)
 {
   mImages[index]->Release();
   mImages.erase(mImages.begin() + index);
@@ -269,7 +277,7 @@ void nuiCoverFlow::DelImage(uint32 index)
 
 void nuiCoverFlow::SelectImage(nuiTexture* pTexture)
 {
-  for (uint32 i = 0; i < mImages.size(); i++)
+  for (int32 i = 0; i < mImages.size(); i++)
   {
     if (mImages[i] == pTexture)
     {
@@ -281,7 +289,7 @@ void nuiCoverFlow::SelectImage(nuiTexture* pTexture)
 
 void nuiCoverFlow::SelectImage(int32 index)
 {
-  if (index >= mImages.size())
+  if (index >= (int32)mImages.size())
     index = mImages.size() - 1;
 
   if (index < 0)
@@ -289,9 +297,11 @@ void nuiCoverFlow::SelectImage(int32 index)
 
   mSelectedImage = index;
 
-  mLastTime = nglTime();
-  mTimer.Start();
-  Invalidate();
+  if (!mTimer.IsRunning())
+  {
+    mLastTime = nglTime();
+    mTimer.Start();
+  }
 }
 
 
