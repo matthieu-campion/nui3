@@ -94,7 +94,7 @@ bool nuiCoverFlow::Draw(nuiDrawContext* pContext)
   float fractional = mPos - image;
   float fract = 1.0 - fractional;
   
-  //NGL_OUT(_T("image: %d\npos: %f\nfractionnal: %f\nfract: %f\n\n"), image, mPos, fractional, fract);
+  NGL_OUT(_T("image: %d\npos: %f\nfractionnal: %f\nfract: %f\n\n"), image, mPos, fractional, fract);
   
   pContext->EnableBlending(true);
   pContext->SetBlendFunc(nuiBlendTransp);
@@ -140,25 +140,64 @@ bool nuiCoverFlow::Draw(nuiDrawContext* pContext)
   float start = mReflectionStart;
   float end = mReflectionEnd;
   pContext->Scale(1.0f, -1.0f, 1.0f);
-  const float SIDE_SHIFT = .8;
+  const float SIDE_SHIFT = 1.0;
   const float SIDE_GAP = .22;
   const float DEPTH_SHIFT = .7;
+  const float ANGLE = 60;
   for (int32 i = 0; i < 2; i++)
   {
+    {
+      int32 s = image + 1;
+      for (int32 l = s + maxcountright, c = maxcountright; c >= 0; l--, c--)
+      {
+        pContext->PushMatrix();
+        float shiftx = c * SIDE_GAP + SIDE_SHIFT - SIDE_GAP * fractional;
+        float shiftz = -DEPTH_SHIFT;
+        float angle = -ANGLE;
+        if (l == image + 1)
+        {
+          angle *= fract;
+          shiftx *= fract;
+          shiftz *= fract;
+        }
+        
+        if (!i)
+        {
+          NGL_OUT(_T("  Right %d pos: %f\n"), l, shiftx);
+        }
+        
+        pContext->Translate(shiftx, 0, shiftz);
+        nuiMatrix m;
+        m.SetRotation(angle, 0, 1, 0);
+        pContext->MultMatrix(m);
+        float shade = 1 - (shiftx / (maxcountright * SIDE_GAP + SIDE_SHIFT));
+        float sstart = start * shade;
+        float send = end * shade;
+        DrawCard(pContext, l, sstart, send);
+        pContext->PopMatrix();
+      }
+    }
+
     {
       int32 s = image - maxcountleft;
       for (int32 l = s, c = 0; l <= image; l++, c++)
       {
         pContext->PushMatrix();
-        float shiftx = (c - maxcountleft) * SIDE_GAP - SIDE_SHIFT - SIDE_GAP * fractional;
+        float shiftx = (c - maxcountleft + 1) * SIDE_GAP - SIDE_SHIFT - SIDE_GAP * fractional;
         float shiftz = -DEPTH_SHIFT;
-        float angle = 90;
+        float angle = ANGLE;
         if (l == image)
         {
           angle *= fractional;
           shiftx *= fractional;
           shiftz *= fractional;
         }
+
+        if (!i)
+        {
+          NGL_OUT(_T("  Left %d pos: %f\n"), l, shiftx);
+        }
+        
         pContext->Translate(shiftx, 0, shiftz);
         nuiMatrix m;
         m.SetRotation(angle, 0, 1, 0);
@@ -171,31 +210,6 @@ bool nuiCoverFlow::Draw(nuiDrawContext* pContext)
       }
     }
     
-    {
-      int32 s = image + 1;
-      for (int32 l = s + maxcountright, c = maxcountright; c >= 0; l--, c--)
-      {
-        pContext->PushMatrix();
-        float shiftx = c * SIDE_GAP + SIDE_SHIFT - SIDE_GAP * fractional;
-        float shiftz = -DEPTH_SHIFT;
-        float angle = -90;
-        if (l == image + 1)
-        {
-          angle *= fract;
-          shiftx *= fract;
-          shiftz *= fract;
-        }
-        pContext->Translate(shiftx, 0, shiftz);
-        nuiMatrix m;
-        m.SetRotation(angle, 0, 1, 0);
-        pContext->MultMatrix(m);
-        float shade = 1 - (shiftx / (maxcountright * SIDE_GAP + SIDE_SHIFT));
-        float sstart = start * shade;
-        float send = end * shade;
-        DrawCard(pContext, l, sstart, send);
-        pContext->PopMatrix();
-      }
-    }
     
 //    if (fractional == 0)
 //      DrawCard(pContext, image, start, end);
@@ -206,6 +220,14 @@ bool nuiCoverFlow::Draw(nuiDrawContext* pContext)
   pContext->PopMatrix();
   
   pContext->PopProjectionMatrix();
+
+//  pContext->EnableTexturing(false);
+//  pContext->SetStrokeColor(nuiColor(_T("red")));
+//  pContext->DrawLine(mRect.GetWidth() / 2, 0, mRect.GetWidth() / 2, mRect.GetHeight());
+//  pContext->SetStrokeColor(nuiColor(_T("blue")));
+//  pContext->DrawLine(mRect.GetWidth() * .25, 0, mRect.GetWidth() * .25, mRect.GetHeight());
+//  pContext->DrawLine(mRect.GetWidth() * .75, 0, mRect.GetWidth() * .75, mRect.GetHeight());
+  
   return false;
 }
 
@@ -329,6 +351,7 @@ bool nuiCoverFlow::OnUpdateTime(const nuiEvent& rEvent)
   
   if (fabs(diff) < 0.001)
   {
+    mPos = mSelectedImage;
     mTimer.Stop();
   }
   else

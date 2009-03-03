@@ -38,7 +38,7 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
   //  pFlow->SetBackground(nuiColor(255, 255, 255, 0));
   pFlow->SelectImage(4);
   //pFlow->SetBackground(nuiColor(255, 255, 255, 255));
-  pFlow->SetPosition(nuiCenter);
+  //pFlow->SetPosition(nuiCenter);
 }
 
 MainWindow::~MainWindow()
