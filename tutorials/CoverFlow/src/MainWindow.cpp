@@ -23,7 +23,9 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
 #endif
   
   nuiCoverFlow* pFlow = new nuiCoverFlow();
-  AddChild(pFlow);
+  nuiSimpleContainer* pContainer = new nuiSimpleContainer();
+  AddChild(pContainer);
+  pContainer->AddChild(pFlow);
   nglPath p(_T("rsrc:/decorations"));
   std::list<nglPath> children;
   p.GetChildren(&children);

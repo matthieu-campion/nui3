@@ -1169,8 +1169,8 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
     if (used_surface)
     {
       pContext->PopSurface();
-      pContext->PopProjectionMatrix();
       pContext->PopMatrix();
+      pContext->PopProjectionMatrix();
       pContext->PopState();
       pContext->PopClipping();
     }

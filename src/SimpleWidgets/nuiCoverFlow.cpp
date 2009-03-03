@@ -22,6 +22,7 @@ nuiCoverFlow::nuiCoverFlow()
   mFlowSink(this)
 {
   mFlowSink.Connect(mTimer.Tick, &nuiCoverFlow::OnUpdateTime);
+  SetWantKeyboardFocus(true);
 }
 
 nuiCoverFlow::~nuiCoverFlow()
@@ -33,6 +34,7 @@ nuiCoverFlow::~nuiCoverFlow()
 
 void nuiCoverFlow::DrawCard(nuiDrawContext* pContext, uint32 index, float start, float end)
 {
+  NGL_ASSERT(index < mImages.size());
   nuiTexture* pTex = mImages[index];
   // Draw the selected image:
   float imgw = pTex->GetWidth();
@@ -88,9 +90,12 @@ void nuiCoverFlow::DrawCard(nuiDrawContext* pContext, uint32 index, float start,
 
 bool nuiCoverFlow::Draw(nuiDrawContext* pContext)
 {
-  uint32 image = ToNearest(mPos);
+  int32 image = ToBelow(mPos);
   float fractional = mPos - image;
   float fract = 1.0 - fractional;
+  
+  //NGL_OUT(_T("image: %d\npos: %f\nfractionnal: %f\nfract: %f\n\n"), image, mPos, fractional, fract);
+  
   pContext->EnableBlending(true);
   pContext->SetBlendFunc(nuiBlendTransp);
 
@@ -127,33 +132,35 @@ bool nuiCoverFlow::Draw(nuiDrawContext* pContext)
   float halfwidth = left * .8;
   float sidewidth = w * .1;
   float sidespace = sidewidth * .5;
-  uint32 maxcount = ToBelow(halfwidth / sidespace);
-
+  int32 maxcount = ToBelow(halfwidth / sidespace);
+  int32 size = mImages.size();
+  
   int32 maxcountleft  = MIN(maxcount, MAX(0, image));
-  int32 maxcountright = MIN(maxcount, MIN(mImages.size(), image + 1));
+  int32 maxcountright = MIN(maxcount, size - 2 - image);
   nuiRect r(left, top, w, h);
 
   pContext->PushMatrix();
   float start = mReflectionStart;
   float end = mReflectionEnd;
   pContext->Scale(1.0f, -1.0f, 1.0f);
-  const float SIDE_SHIFT = .6;
+  const float SIDE_SHIFT = .8;
   const float SIDE_GAP = .22;
+  const float DEPTH_SHIFT = .7;
   for (uint32 i = 0; i < 2; i++)
   {
     {
       int32 s = image - maxcountleft;
-      for (int32 l = s, c = 0; l < image; l++, c++)
+      for (int32 l = s, c = 0; l <= image; l++, c++)
       {
         pContext->PushMatrix();
         float shiftx = (c - maxcountleft) * SIDE_GAP - SIDE_SHIFT - SIDE_GAP * fractional;
-        float shiftz = -.4;
+        float shiftz = -DEPTH_SHIFT;
         float angle = 90;
-        if (l == image - 1)
+        if (l == image)
         {
-          angle *= 1.0 - fractional;
-          shiftx *= fract;
-          shiftz *= fract;
+          angle *= fractional;
+          shiftx *= fractional;
+          shiftz *= fractional;
         }
         pContext->Translate(shiftx, 0, shiftz);
         nuiMatrix m;
@@ -166,11 +173,11 @@ bool nuiCoverFlow::Draw(nuiDrawContext* pContext)
     
     {
       int32 s = image + 1;
-      for (int32 l = s + maxcountright - 1, c = maxcountright - 1; c >= 0; l--, c--)
+      for (int32 l = s + maxcountright, c = maxcountright; c >= 0; l--, c--)
       {
         pContext->PushMatrix();
         float shiftx = c * SIDE_GAP + SIDE_SHIFT - SIDE_GAP * fractional;
-        float shiftz = -.4;
+        float shiftz = -DEPTH_SHIFT;
         float angle = -90;
         if (l == image + 1)
         {
@@ -188,7 +195,7 @@ bool nuiCoverFlow::Draw(nuiDrawContext* pContext)
     }
     
 //    if (fractional == 0)
-      DrawCard(pContext, image, start, end);
+//      DrawCard(pContext, image, start, end);
     start = 1.0f;
     end = 1.0f;
     pContext->Scale(1.0f, -1.0f, 1.0f);
@@ -276,10 +283,12 @@ void nuiCoverFlow::SelectImage(int32 index)
 {
   if (index >= mImages.size())
     index = mImages.size() - 1;
-  else if (index < 0)
+
+  if (index < 0)
     index = 0;
+
   mSelectedImage = index;
-  
+
   mLastTime = nglTime();
   mTimer.Start();
   Invalidate();
@@ -304,11 +313,11 @@ const nuiColor& nuiCoverFlow::GetBackground() const
 
 bool nuiCoverFlow::OnUpdateTime(const nuiEvent& rEvent)
 {
-  float diff = (float)mSelectedImage - mPos;
+  float diff = ((float)mSelectedImage) - mPos;
   double t = nglTime() - mLastTime;
-  const double TIME_RATIO = 0.1f;
+  const double TIME_RATIO = 0.5f;
   
-  if (diff < 0.001)
+  if (fabs(diff) < 0.001)
   {
     mTimer.Stop();
   }
@@ -348,3 +357,31 @@ bool nuiCoverFlow::KeyUp(const nglKeyEvent& rEvent)
   }
   return false;
 }
+
+bool nuiCoverFlow::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
+{
+  if (Button & nglMouseInfo::ButtonWheelUp || Button & nglMouseInfo::ButtonWheelLeft)
+  {    
+    SelectImage(mSelectedImage - 1);
+    return true;
+  }
+  else if (Button & nglMouseInfo::ButtonWheelDown || Button & nglMouseInfo::ButtonWheelRight)
+  {    
+    SelectImage(mSelectedImage + 1);
+    return true;
+  }
+  
+  return false;
+}
+
+bool nuiCoverFlow::MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
+{
+  if (Button & nglMouseInfo::ButtonWheelDown
+    || Button & nglMouseInfo::ButtonWheelLeft
+    || Button & nglMouseInfo::ButtonWheelDown
+    || Button & nglMouseInfo::ButtonWheelRight)
+    return true;
+  
+  return false;
+}
+

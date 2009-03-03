@@ -33,8 +33,11 @@ public:
   void SetBackground(const nuiColor& rColor);
   const nuiColor& GetBackground() const;
   
+  bool MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
+  bool MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
   bool KeyDown(const nglKeyEvent& rEvent);
   bool KeyUp(const nglKeyEvent& rEvent);
+  
 protected:
   void DrawCard(nuiDrawContext* pContext, uint32 index, float start, float end);
   bool OnUpdateTime(const nuiEvent& rEvent);
