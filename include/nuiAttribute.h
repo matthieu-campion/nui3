@@ -17,6 +17,7 @@
 #include "nuiDecorationDefines.h"
 #include "nuiMouseCursor.h"
 #include "nuiRenderState.h"
+#include "nuiEvent.h"
 
 
 class nuiAttributeEditor;
@@ -65,6 +66,7 @@ class nuiAttributeBase
 {
 public:
   typedef nuiFastDelegate1<uint32 /*dimension */, uint32> ArrayRangeDelegate;
+  typedef std::map<void*, nuiSimpleEventSource<0>*> AttributeEventMap;
   
   virtual ~nuiAttributeBase();
 
@@ -82,6 +84,8 @@ public:
   int32 GetOrder() const;
   void SetOrder(int32 order);
 
+  nuiSimpleEventSource<0>& GetChangedEvent(void* pTarget) const;
+  
 	
 	
 	virtual bool Load(void* pTarget, const nuiXMLNode* pNode) = 0;
@@ -118,6 +122,8 @@ private:
   int32 mOrder;
   uint32 mDimension;
   ArrayRangeDelegate mRangeGetter;
+protected:
+  mutable AttributeEventMap mAttributeChangedEvents;
 };
 
 inline uint64 GetNewAttributeUniqueId()
@@ -480,13 +486,27 @@ public:
   
   void KillAttributeHolder(void* pHolder)
   {
-    AttributeSignalMap::iterator it  = mAttributeChangedSignals.find(pHolder);
-    AttributeSignalMap::iterator end = mAttributeChangedSignals.end();
-    if (it != end)
+    // Events:
     {
-      delete it->second;
-      mAttributeChangedSignals.erase(it);
+      AttributeEventMap::iterator it  = mAttributeChangedEvents.find(pHolder);
+      AttributeEventMap::iterator end = mAttributeChangedEvents.end();
+      if (it != end)
+      {
+        delete it->second;
+        mAttributeChangedEvents.erase(it);
+      }
     }
+
+    {
+      AttributeSignalMap::iterator it  = mAttributeChangedSignals.find(pHolder);
+      AttributeSignalMap::iterator end = mAttributeChangedSignals.end();
+      if (it != end)
+      {
+        delete it->second;
+        mAttributeChangedSignals.erase(it);
+      }
+    }
+    // Signals:
   }
 
 private:
@@ -498,34 +518,71 @@ private:
   
   void SendAttributeChanged(void* pTarget, Contents value) const
   {
-    const AttributeSignalMap::iterator it  = mAttributeChangedSignals.find(pTarget);
-    const AttributeSignalMap::iterator end = mAttributeChangedSignals.end();
-    if (it != end)
     {
-      nuiSignal1<Contents>* pSignal = (nuiSignal1<Contents>*)it->second;
-      (*pSignal)(value);
+      const AttributeEventMap::iterator it  = mAttributeChangedEvents.find(pTarget);
+      const AttributeEventMap::iterator end = mAttributeChangedEvents.end();
+      if (it != end)
+      {
+        nuiSimpleEventSource<0>* pSignal = (nuiSimpleEventSource<0>*)it->second;
+        (*pSignal)();
+      }
     }
-  }	
+
+    {
+      const AttributeSignalMap::iterator it  = mAttributeChangedSignals.find(pTarget);
+      const AttributeSignalMap::iterator end = mAttributeChangedSignals.end();
+      if (it != end)
+      {
+        nuiSignal1<Contents>* pSignal = (nuiSignal1<Contents>*)it->second;
+        (*pSignal)(value);
+      }
+    }	
+    
+  }
 
   void SendAttributeChanged(void* pTarget, uint32 index, Contents value) const
   {
-    const AttributeSignalMap::iterator it  = mAttributeChangedSignals.find(pTarget);
-    const AttributeSignalMap::iterator end = mAttributeChangedSignals.end();
-    if (it != end)
     {
-      nuiSignal2<uint32, Contents>* pSignal = (nuiSignal2<uint32, Contents>*)it->second;
-      (*pSignal)(index, value);
+      const AttributeEventMap::iterator it  = mAttributeChangedEvents.find(pTarget);
+      const AttributeEventMap::iterator end = mAttributeChangedEvents.end();
+      if (it != end)
+      {
+        nuiSimpleEventSource<0>* pSignal = (nuiSimpleEventSource<0>*)it->second;
+        (*pSignal)();
+      }
+    }
+    
+    {
+      const AttributeSignalMap::iterator it  = mAttributeChangedSignals.find(pTarget);
+      const AttributeSignalMap::iterator end = mAttributeChangedSignals.end();
+      if (it != end)
+      {
+        nuiSignal2<uint32, Contents>* pSignal = (nuiSignal2<uint32, Contents>*)it->second;
+        (*pSignal)(index, value);
+      }
     }
   }	
 
   void SendAttributeChanged(void* pTarget, uint32 index0, uint32 index1, Contents value) const
   {
-    const AttributeSignalMap::iterator it  = mAttributeChangedSignals.find(pTarget);
-    const AttributeSignalMap::iterator end = mAttributeChangedSignals.end();
-    if (it != end)
     {
-      nuiSignal3<uint32, uint32, Contents>* pSignal = (nuiSignal3<uint32, uint32, Contents>*)it->second;
-      (*pSignal)(index0, index1, value);
+      const AttributeEventMap::iterator it  = mAttributeChangedEvents.find(pTarget);
+      const AttributeEventMap::iterator end = mAttributeChangedEvents.end();
+      if (it != end)
+      {
+        nuiSimpleEventSource<0>* pSignal = (nuiSimpleEventSource<0>*)it->second;
+        (*pSignal)();
+      }
+    }
+    
+    {
+      const AttributeSignalMap::iterator it  = mAttributeChangedSignals.find(pTarget);
+      const AttributeSignalMap::iterator end = mAttributeChangedSignals.end();
+      if (it != end)
+      {
+        nuiSignal3<uint32, uint32, Contents>* pSignal = (nuiSignal3<uint32, uint32, Contents>*)it->second;
+        (*pSignal)(index0, index1, value);
+      }
     }
   }	
 };
@@ -869,12 +926,24 @@ public:
   
   void KillAttributeHolder(void* pHolder)
   {
-    AttributeSignalMap::iterator it  = mAttributeChangedSignals.find(pHolder);
-    AttributeSignalMap::iterator end = mAttributeChangedSignals.end();
-    if (it != end)
+    {    
+      AttributeEventMap::iterator it  = mAttributeChangedEvents.find(pHolder);
+      AttributeEventMap::iterator end = mAttributeChangedEvents.end();
+      if (it != end)
+      {
+        delete it->second;
+        mAttributeChangedEvents.erase(it);
+      }
+    }
+
     {
-      delete it->second;
-      mAttributeChangedSignals.erase(it);
+      AttributeSignalMap::iterator it  = mAttributeChangedSignals.find(pHolder);
+      AttributeSignalMap::iterator end = mAttributeChangedSignals.end();
+      if (it != end)
+      {
+        delete it->second;
+        mAttributeChangedSignals.erase(it);
+      }
     }
   }
 
@@ -898,34 +967,70 @@ private:
   
   void SendAttributeChanged(void* pTarget, const Contents& value) const
   {
-    const AttributeSignalMap::iterator it  = mAttributeChangedSignals.find(pTarget);
-    const AttributeSignalMap::iterator end = mAttributeChangedSignals.end();
-    if (it != end)
     {
-      nuiSignal1<const Contents&>* pSignal = (nuiSignal1<const Contents&>*)it->second;
-      (*pSignal)(value);
+      const AttributeEventMap::iterator it  = mAttributeChangedEvents.find(pTarget);
+      const AttributeEventMap::iterator end = mAttributeChangedEvents.end();
+      if (it != end)
+      {
+        nuiSimpleEventSource<0>* pSignal = (nuiSimpleEventSource<0>*)it->second;
+        (*pSignal)();
+      }
+    }
+
+    {
+      const AttributeSignalMap::iterator it  = mAttributeChangedSignals.find(pTarget);
+      const AttributeSignalMap::iterator end = mAttributeChangedSignals.end();
+      if (it != end)
+      {
+        nuiSignal1<const Contents&>* pSignal = (nuiSignal1<const Contents&>*)it->second;
+        (*pSignal)(value);
+      }
     }
   }	
   
   void SendAttributeChanged(void* pTarget, uint32 index, const Contents& value) const
   {
-    const AttributeSignalMap::iterator it  = mAttributeChangedSignals.find(pTarget);
-    const AttributeSignalMap::iterator end = mAttributeChangedSignals.end();
-    if (it != end)
     {
-      nuiSignal2<uint32, const Contents&>* pSignal = (nuiSignal2<uint32, const Contents&>*)it->second;
-      (*pSignal)(index, value);
+      const AttributeEventMap::iterator it  = mAttributeChangedEvents.find(pTarget);
+      const AttributeEventMap::iterator end = mAttributeChangedEvents.end();
+      if (it != end)
+      {
+        nuiSimpleEventSource<0>* pSignal = (nuiSimpleEventSource<0>*)it->second;
+        (*pSignal)();
+      }
+    }
+
+    {
+      const AttributeSignalMap::iterator it  = mAttributeChangedSignals.find(pTarget);
+      const AttributeSignalMap::iterator end = mAttributeChangedSignals.end();
+      if (it != end)
+      {
+        nuiSignal2<uint32, const Contents&>* pSignal = (nuiSignal2<uint32, const Contents&>*)it->second;
+        (*pSignal)(index, value);
+      }
     }
   }	
   
   void SendAttributeChanged(void* pTarget, uint32 index0, uint32 index1, const Contents& value) const
   {
-    const AttributeSignalMap::iterator it  = mAttributeChangedSignals.find(pTarget);
-    const AttributeSignalMap::iterator end = mAttributeChangedSignals.end();
-    if (it != end)
     {
-      nuiSignal3<uint32, uint32, const Contents&>* pSignal = (nuiSignal3<uint32, uint32, const Contents&>*)it->second;
-      (*pSignal)(index0, index1, value);
+      const AttributeEventMap::iterator it  = mAttributeChangedEvents.find(pTarget);
+      const AttributeEventMap::iterator end = mAttributeChangedEvents.end();
+      if (it != end)
+      {
+        nuiSimpleEventSource<0>* pSignal = (nuiSimpleEventSource<0>*)it->second;
+        (*pSignal)();
+      }
+    }
+
+    {
+      const AttributeSignalMap::iterator it  = mAttributeChangedSignals.find(pTarget);
+      const AttributeSignalMap::iterator end = mAttributeChangedSignals.end();
+      if (it != end)
+      {
+        nuiSignal3<uint32, uint32, const Contents&>* pSignal = (nuiSignal3<uint32, uint32, const Contents&>*)it->second;
+        (*pSignal)(index0, index1, value);
+      }
     }
   }	
 };
@@ -980,6 +1085,8 @@ public:
   bool FromString(uint32 index, const nglString& rString) const;
   bool ToString(uint32 index0, uint32 index1, nglString& rString) const;
   bool FromString(uint32 index0, uint32 index1, const nglString& rString) const;
+  
+  nuiSimpleEventSource<0>& GetChangedEvent();
   
   void IgnoreAttributeChange(bool ignore);
   

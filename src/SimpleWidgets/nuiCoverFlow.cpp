@@ -368,6 +368,9 @@ void nuiCoverFlow::SelectImage(nuiTexture* pTexture)
 
 void nuiCoverFlow::SelectImage(int32 index)
 {
+  if (index == mSelectedImage)
+    return;
+  
   if (index >= (int32)mImages.size())
     index = mImages.size() - 1;
 
@@ -375,7 +378,8 @@ void nuiCoverFlow::SelectImage(int32 index)
     index = 0;
 
   mSelectedImage = index;
-
+  SelectionChanged();
+  
   if (!mTimer.IsRunning())
   {
     mLastTime = nglTime();

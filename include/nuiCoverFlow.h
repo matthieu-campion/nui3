@@ -69,6 +69,8 @@ public:
   bool KeyDown(const nglKeyEvent& rEvent);
   bool KeyUp(const nglKeyEvent& rEvent);
   
+  nuiSimpleEventSource<0> SelectionChanged;
+  
 protected:
   void DrawCard(nuiDrawContext* pContext, int32 index, float start, float end);
   bool OnUpdateTime(const nuiEvent& rEvent);

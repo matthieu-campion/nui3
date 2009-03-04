@@ -138,7 +138,17 @@ bool nuiAttributeBase::IsAttributeChangeIgnored() const
   return mIgnoreAttributeChange;
 }
 
-
+nuiSimpleEventSource<0>& nuiAttributeBase::GetChangedEvent(void* pTarget) const
+{
+  AttributeEventMap::iterator it = mAttributeChangedEvents.find(pTarget);
+  if (it == mAttributeChangedEvents.end())
+  {
+    nuiSimpleEventSource<0>* pS = new nuiSimpleEventSource<0>;
+    mAttributeChangedEvents[pTarget] = pS;
+    return *pS;
+  }
+  return *(it->second);
+}
 
 
 ////////////////// 
@@ -1882,6 +1892,12 @@ uint32 nuiAttribBase::GetDimension() const
 {
   return mpAttributeBase->GetDimension();
 }
+
+nuiSimpleEventSource<0>& nuiAttribBase::GetChangedEvent()
+{
+  return mpAttributeBase->GetChangedEvent(mpTarget);
+}
+
 
 //********************************
 //
