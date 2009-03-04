@@ -94,7 +94,7 @@ bool nuiCoverFlow::Draw(nuiDrawContext* pContext)
   float fractional = mPos - image;
   float fract = 1.0 - fractional;
   
-  NGL_OUT(_T("image: %d\npos: %f\nfractionnal: %f\nfract: %f\n\n"), image, mPos, fractional, fract);
+  //NGL_OUT(_T("image: %d\npos: %f\nfractionnal: %f\nfract: %f\n\n"), image, mPos, fractional, fract);
   
   pContext->EnableBlending(true);
   pContext->SetBlendFunc(nuiBlendTransp);
@@ -113,7 +113,7 @@ bool nuiCoverFlow::Draw(nuiDrawContext* pContext)
   float aspectratio = rect.GetWidth() / rect.GetHeight();
   pContext->PushProjectionMatrix();
   LocalToGlobal(rect);
-  pContext->SetPerspectiveProjectionMatrix(rect, 30, aspectratio, .2, 20);
+  pContext->SetPerspectiveProjectionMatrix(rect, 25, aspectratio, .2, 20);
   pContext->PushMatrix();
   pContext->LoadIdentity();
   pContext->Translate(0, -.5, -2);
@@ -140,8 +140,8 @@ bool nuiCoverFlow::Draw(nuiDrawContext* pContext)
   float start = mReflectionStart;
   float end = mReflectionEnd;
   pContext->Scale(1.0f, -1.0f, 1.0f);
-  const float SIDE_SHIFT = 1.0;
-  const float SIDE_GAP = .22;
+  const float SIDE_SHIFT = 1.1;
+  const float SIDE_GAP = .19;
   const float DEPTH_SHIFT = .7;
   const float ANGLE = 60;
   for (int32 i = 0; i < 2; i++)
