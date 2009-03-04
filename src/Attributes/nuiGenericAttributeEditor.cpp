@@ -37,7 +37,7 @@ nuiGenericAttributeEditor::nuiGenericAttributeEditor(const nuiAttribBase& rAttri
     AddChild(mpLabel);
 	}
 	
-//	mSink.Connect(mAttribute.GetChangedSignal(), nuiMakeDelegate(this, &nuiGenericAttributeEditor::OnAttributeChanged));
+	mEventSink.Connect(mAttribute.GetChangedEvent(), &nuiGenericAttributeEditor::OnAttributeChanged);
 }
 
 nuiGenericAttributeEditor::~nuiGenericAttributeEditor()
@@ -46,11 +46,13 @@ nuiGenericAttributeEditor::~nuiGenericAttributeEditor()
 }
 
 
-void nuiGenericAttributeEditor::OnAttributeChanged(nglString string)
+bool nuiGenericAttributeEditor::OnAttributeChanged(const nuiEvent& rEvent)
 {
 	nglString contents;
 	mAttribute.ToString(contents);
 	mpLabel->SetText(contents);
+  
+  return false;
 }
 
 bool nuiGenericAttributeEditor::OnActivated(const nuiEvent& rEvent)

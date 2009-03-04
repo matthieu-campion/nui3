@@ -23,12 +23,11 @@ public:
   
 	bool OnActivated(const nuiEvent& rEvent);
 	bool OnRenamed(const nuiEvent& rEvent);
-	void OnAttributeChanged(nglString string);
+	bool OnAttributeChanged(const nuiEvent& rEvent);
   
   private : 
   
 	nuiEventSink<nuiGenericAttributeEditor> mEventSink;
-	nuiSlotsSink mSink;
 	nuiLabel* mpLabel;
 	nuiAttribBase mAttribute;  
 };

@@ -23,9 +23,7 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
 #endif
   
   nuiCoverFlow* pFlow = new nuiCoverFlow();
-  nuiSimpleContainer* pContainer = new nuiSimpleContainer();
-  AddChild(pContainer);
-  pContainer->AddChild(pFlow);
+  AddChild(pFlow);
   nglPath p(_T("rsrc:/decorations"));
   std::list<nglPath> children;
   p.GetChildren(&children);
@@ -35,10 +33,7 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
     if (pTexture)
       pFlow->AddImage(pTexture);
   }
-  //  pFlow->SetBackground(nuiColor(255, 255, 255, 0));
   pFlow->SelectImage(4);
-  //pFlow->SetBackground(nuiColor(255, 255, 255, 255));
-  //pFlow->SetPosition(nuiCenter);
 }
 
 MainWindow::~MainWindow()
