@@ -18,7 +18,10 @@
 #include "nuiMouseCursor.h"
 #include "nuiRenderState.h"
 
+
 class nuiAttributeEditor;
+class nuiAttributeBase;
+class nuiAttribBase;
 class nuiPoint;
 class nuiRect;
 class nuiBorder;
@@ -26,7 +29,7 @@ class nuiBorder;
 
 typedef uint64 nuiAttributeType;
 
-
+nuiAttributeEditor* nuiCreateGenericAttributeEditor(void* pTarget, nuiAttributeBase* pAttribute);
 
 
 // don't forget to update your application source code if
@@ -391,7 +394,7 @@ public:
 	nuiAttributeEditor* GetDefaultEditor(void* pTarget)
 	{
 		// if this code is executed, it means a template trait specialization is missing in nuiAttribute.cpp.
-		return NULL;
+		return nuiCreateGenericAttributeEditor(pTarget, this);
 	}
 	
 	void SetFormater(const FormaterDelegate& rFormater)

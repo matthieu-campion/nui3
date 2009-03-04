@@ -31,7 +31,7 @@ public:
     nuiSize shadeSize = 10.f;
     nuiRect rect = pLabel->GetRect().Size();
     pLabel->LocalToGlobal(rect);
-    rect.SetSize(rect.GetWidth() + shadeSize*2.f, rect.GetHeight() + shadeSize);
+    rect.SetSize(rect.GetWidth() + shadeSize*2.f, rect.GetHeight() + shadeSize * 2.0f);
     rect.Move(-shadeSize, 0.f);
     
     nuiFixed* pFixed = new nuiFixed();
@@ -55,6 +55,7 @@ public:
     mpEditLine->SetColor(eSelectedTextFg, nuiColor("#3EFEFE"));
     mpEditLine->SetFollowModifications(true);
     mpEditLine->Do(nuiEditText::eSelectAll, NULL);
+    mpEditLine->SetDecoration(NULL);
     
     mSink.Connect(mpEditLine->Aborted,  &nuiLabelRenamer::OnEditLineCanceled, mpEditLine);
     mSink.Connect(mpEditLine->Selected, &nuiLabelRenamer::OnEditLineSelected, mpEditLine);

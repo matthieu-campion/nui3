@@ -18,7 +18,7 @@ public:
   virtual bool Load(const nuiXMLNode* pNode);
   virtual ~nuiEditLine();
   
-  void LimitCharacterNumber(int maxDisplayedChar);
+  void LimitCharacterCount(int maxDisplayedChar);
   
   virtual nuiRect CalcIdealSize();
   

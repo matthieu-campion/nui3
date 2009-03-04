@@ -1514,6 +1514,12 @@
 		E554C6D70DC1478E00C5D69A /* nuiFontInspector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E554C6D50DC1478E00C5D69A /* nuiFontInspector.cpp */; };
 		E554C6D90DC1480700C5D69A /* nuiFontInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = E554C6D80DC1480700C5D69A /* nuiFontInspector.h */; };
 		E554C6DA0DC1480700C5D69A /* nuiFontInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = E554C6D80DC1480700C5D69A /* nuiFontInspector.h */; };
+		E55C02D30F5E99A00045FBFE /* nuiGenericAttributeEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = E55C02D20F5E99A00045FBFE /* nuiGenericAttributeEditor.h */; };
+		E55C02D40F5E99A00045FBFE /* nuiGenericAttributeEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = E55C02D20F5E99A00045FBFE /* nuiGenericAttributeEditor.h */; };
+		E55C02D50F5E99A00045FBFE /* nuiGenericAttributeEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = E55C02D20F5E99A00045FBFE /* nuiGenericAttributeEditor.h */; };
+		E55C02E30F5E9A310045FBFE /* nuiGenericAttributeEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E55C02E20F5E9A310045FBFE /* nuiGenericAttributeEditor.cpp */; };
+		E55C02E40F5E9A310045FBFE /* nuiGenericAttributeEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E55C02E20F5E9A310045FBFE /* nuiGenericAttributeEditor.cpp */; };
+		E55C02E50F5E9A310045FBFE /* nuiGenericAttributeEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E55C02E20F5E9A310045FBFE /* nuiGenericAttributeEditor.cpp */; };
 		E55FFC7C0C8EF78000C8DDE0 /* nuiFormatedLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = E55FFC7A0C8EF78000C8DDE0 /* nuiFormatedLabel.h */; };
 		E55FFC7D0C8EF78000C8DDE0 /* nuiFormater.h in Headers */ = {isa = PBXBuildFile; fileRef = E55FFC7B0C8EF78000C8DDE0 /* nuiFormater.h */; };
 		E55FFC7E0C8EF78000C8DDE0 /* nuiFormatedLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = E55FFC7A0C8EF78000C8DDE0 /* nuiFormatedLabel.h */; };
@@ -4074,6 +4080,8 @@
 		E55236EB0CD3382B00BF0B87 /* nuiBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiBox.h; path = include/nuiBox.h; sourceTree = SOURCE_ROOT; };
 		E554C6D50DC1478E00C5D69A /* nuiFontInspector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiFontInspector.cpp; path = Introspector/nuiFontInspector.cpp; sourceTree = "<group>"; };
 		E554C6D80DC1480700C5D69A /* nuiFontInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiFontInspector.h; path = include/nuiFontInspector.h; sourceTree = SOURCE_ROOT; };
+		E55C02D20F5E99A00045FBFE /* nuiGenericAttributeEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiGenericAttributeEditor.h; path = include/nuiGenericAttributeEditor.h; sourceTree = SOURCE_ROOT; };
+		E55C02E20F5E9A310045FBFE /* nuiGenericAttributeEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiGenericAttributeEditor.cpp; path = Attributes/nuiGenericAttributeEditor.cpp; sourceTree = "<group>"; };
 		E55FFC7A0C8EF78000C8DDE0 /* nuiFormatedLabel.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiFormatedLabel.h; path = include/nuiFormatedLabel.h; sourceTree = SOURCE_ROOT; };
 		E55FFC7B0C8EF78000C8DDE0 /* nuiFormater.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiFormater.h; path = include/nuiFormater.h; sourceTree = SOURCE_ROOT; };
 		E56109990EF5ED82000170A7 /* nuiUnicode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiUnicode.h; path = include/nuiUnicode.h; sourceTree = SOURCE_ROOT; };
@@ -4978,6 +4986,8 @@
 				BC1CE4B60DC2A4A600DAF677 /* nuiRangeAttributeEditor.h */,
 				BC97B4140F41E13300CCA06C /* nuiRangeKnobAttributeEditor.cpp */,
 				BC97B4180F41E14100CCA06C /* nuiRangeKnobAttributeEditor.h */,
+				E55C02D20F5E99A00045FBFE /* nuiGenericAttributeEditor.h */,
+				E55C02E20F5E9A310045FBFE /* nuiGenericAttributeEditor.cpp */,
 			);
 			name = Attributes;
 			sourceTree = "<group>";
@@ -7570,6 +7580,7 @@
 				BC97B41A0F41E14100CCA06C /* nuiRangeKnobAttributeEditor.h in Headers */,
 				E561CCB10F432B1F003B042C /* nuiOffscreenView.h in Headers */,
 				E5EA30190F55926F0057CCA7 /* nuiCoverFlow.h in Headers */,
+				E55C02D50F5E99A00045FBFE /* nuiGenericAttributeEditor.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8248,6 +8259,7 @@
 				BC97B4190F41E14100CCA06C /* nuiRangeKnobAttributeEditor.h in Headers */,
 				E561CCB30F432B1F003B042C /* nuiOffscreenView.h in Headers */,
 				E5EA301B0F55926F0057CCA7 /* nuiCoverFlow.h in Headers */,
+				E55C02D30F5E99A00045FBFE /* nuiGenericAttributeEditor.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8924,6 +8936,7 @@
 				BC97B41B0F41E14100CCA06C /* nuiRangeKnobAttributeEditor.h in Headers */,
 				E561CCB20F432B1F003B042C /* nuiOffscreenView.h in Headers */,
 				E5EA301A0F55926F0057CCA7 /* nuiCoverFlow.h in Headers */,
+				E55C02D40F5E99A00045FBFE /* nuiGenericAttributeEditor.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9526,6 +9539,7 @@
 				E5B678C70F39EFCF00DBF325 /* nuiAttributeAnimation.cpp in Sources */,
 				BC97B4160F41E13300CCA06C /* nuiRangeKnobAttributeEditor.cpp in Sources */,
 				E5EA301D0F55963C0057CCA7 /* nuiCoverFlow.cpp in Sources */,
+				E55C02E50F5E9A310045FBFE /* nuiGenericAttributeEditor.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10053,6 +10067,7 @@
 				E5B678C50F39EFCF00DBF325 /* nuiAttributeAnimation.cpp in Sources */,
 				BC97B4150F41E13300CCA06C /* nuiRangeKnobAttributeEditor.cpp in Sources */,
 				E5EA301F0F55963C0057CCA7 /* nuiCoverFlow.cpp in Sources */,
+				E55C02E30F5E9A310045FBFE /* nuiGenericAttributeEditor.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10577,6 +10592,7 @@
 				E5B678C60F39EFCF00DBF325 /* nuiAttributeAnimation.cpp in Sources */,
 				BC97B4170F41E13300CCA06C /* nuiRangeKnobAttributeEditor.cpp in Sources */,
 				E5EA301E0F55963C0057CCA7 /* nuiCoverFlow.cpp in Sources */,
+				E55C02E40F5E9A310045FBFE /* nuiGenericAttributeEditor.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -28,11 +28,41 @@ public:
 
   void SelectImage(nuiTexture* pTexture);
   void SelectImage(int32 index);
+
+  int32 GetSelectedIndex() const;
+  nuiTexture* GetSelectedTexture() const;
+  
+  void SetReflectionStart(float set);
+  float GetReflectionStart() const;
+  
+  void SetReflectionEnd(float set);
+  float GetReflectionEnd() const;
+  
+  void SetDrawBackground(bool set);
+  bool GetDrawBackground() const;
+
+  void SetYOffset(float set);
+  float GetYOffset() const;
+  
+  void SetSelectionYOffset(float set);
+  float GetSelectionYOffset() const;
+  
+  void SetAngle(float set);
+  float GetAngle() const;
+  
+  void SetSideShift(float set);
+  float GetSideShift() const;
+
+  void SetSideGap(float set);
+  float GetSideGap() const;
+
+  void SetSideDepth(float set);
+  float GetSideDepth() const;
   
   const std::vector<nuiTexture*>& GetImages() const;
   
-  void SetBackground(const nuiColor& rColor);
-  const nuiColor& GetBackground() const;
+  void SetBackgroundColor(const nuiColor& rColor);
+  const nuiColor& GetBackgroundColor() const;
   
   bool MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
   bool MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
@@ -50,8 +80,15 @@ protected:
   float mReflectionEnd;
   bool mDrawBackground;
   float mYOffset;
+  float mSelectionYOffset;
+  float mAngle;
+  float mSideShift;
+  float mSideGap;
+  float mSideDepth;
+  
   float mPos;
   nuiTimer mTimer;
   double mLastTime;
   nuiEventSink<nuiCoverFlow> mFlowSink;
+  void SelectImageIndex(int32 index);
 };

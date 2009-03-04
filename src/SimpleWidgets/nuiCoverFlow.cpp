@@ -16,11 +16,74 @@ nuiCoverFlow::nuiCoverFlow()
   mReflectionEnd(0.0),
   mDrawBackground(true),
   mYOffset(0.0f),
+  mSelectionYOffset(0.0f),
+  mAngle(60),
+  mSideShift(1.1),
+  mSideGap(.19),
+  mSideDepth(.7),
   mPos(0.0f),
   mLastTime(nglTime()),
   mTimer(1.0f / 30.0f),
   mFlowSink(this)
 {
+  if (SetObjectClass(_T("nuiCoverFlow")))
+  {
+    AddAttribute(new nuiAttribute<int32>
+                 (nglString(_T("SelectedImage")), nuiUnitNone,
+                  nuiMakeDelegate(this, &nuiCoverFlow::GetSelectedIndex), 
+                  nuiMakeDelegate(this, &nuiCoverFlow::SelectImageIndex)));
+
+    AddAttribute(new nuiAttribute<float>
+                 (nglString(_T("ReflectionStart")), nuiUnitNone,
+                  nuiMakeDelegate(this, &nuiCoverFlow::GetReflectionStart), 
+                  nuiMakeDelegate(this, &nuiCoverFlow::SetReflectionStart)));
+
+    AddAttribute(new nuiAttribute<float>
+                 (nglString(_T("ReflectionEnd")), nuiUnitNone,
+                  nuiMakeDelegate(this, &nuiCoverFlow::GetReflectionEnd), 
+                  nuiMakeDelegate(this, &nuiCoverFlow::SetReflectionEnd)));
+
+    AddAttribute(new nuiAttribute<bool>
+                 (nglString(_T("DrawBackground")), nuiUnitNone,
+                  nuiMakeDelegate(this, &nuiCoverFlow::GetDrawBackground), 
+                  nuiMakeDelegate(this, &nuiCoverFlow::SetDrawBackground)));
+
+    AddAttribute(new nuiAttribute<float>
+                 (nglString(_T("YOffset")), nuiUnitNone,
+                  nuiMakeDelegate(this, &nuiCoverFlow::GetYOffset), 
+                  nuiMakeDelegate(this, &nuiCoverFlow::SetYOffset)));
+    
+    AddAttribute(new nuiAttribute<float>
+                 (nglString(_T("SelectionYOffset")), nuiUnitNone,
+                  nuiMakeDelegate(this, &nuiCoverFlow::GetSelectionYOffset), 
+                  nuiMakeDelegate(this, &nuiCoverFlow::SetSelectionYOffset)));
+    
+    AddAttribute(new nuiAttribute<float>
+                 (nglString(_T("Angle")), nuiUnitNone,
+                  nuiMakeDelegate(this, &nuiCoverFlow::GetAngle), 
+                  nuiMakeDelegate(this, &nuiCoverFlow::SetAngle)));
+    
+    AddAttribute(new nuiAttribute<float>
+                 (nglString(_T("SideShift")), nuiUnitNone,
+                  nuiMakeDelegate(this, &nuiCoverFlow::GetSideShift), 
+                  nuiMakeDelegate(this, &nuiCoverFlow::SetSideShift)));
+    
+    AddAttribute(new nuiAttribute<float>
+                 (nglString(_T("SideGap")), nuiUnitNone,
+                  nuiMakeDelegate(this, &nuiCoverFlow::GetSideGap), 
+                  nuiMakeDelegate(this, &nuiCoverFlow::SetSideGap)));
+    
+    AddAttribute(new nuiAttribute<float>
+                 (nglString(_T("SideDepth")), nuiUnitNone,
+                  nuiMakeDelegate(this, &nuiCoverFlow::GetSideDepth), 
+                  nuiMakeDelegate(this, &nuiCoverFlow::SetSideDepth)));
+    
+    AddAttribute(new nuiAttribute<const nuiColor&>
+                 (nglString(_T("BackgroundColor")), nuiUnitNone,
+                  nuiMakeDelegate(this, &nuiCoverFlow::GetBackgroundColor), 
+                  nuiMakeDelegate(this, &nuiCoverFlow::SetBackgroundColor)));
+  }
+  
   mFlowSink.Connect(mTimer.Tick, &nuiCoverFlow::OnUpdateTime);
   SetWantKeyboardFocus(true);
 }
@@ -43,7 +106,7 @@ void nuiCoverFlow::DrawCard(nuiDrawContext* pContext, int32 index, float start, 
   float ratiow = imgw / s;
   float ratioh = imgh / s;
   nuiRect imgrect(0.0f, 0.0f, ratiow, ratioh);
-  nuiRect r(-.5, mYOffset, 1.0f, 1.0f);
+  nuiRect r(-.5, 0.0f, 1.0f, 1.0f);
   imgrect.SetPosition(nuiTop, r);
   float tw = imgw;
   float th = imgh;
@@ -140,10 +203,10 @@ bool nuiCoverFlow::Draw(nuiDrawContext* pContext)
   float start = mReflectionStart;
   float end = mReflectionEnd;
   pContext->Scale(1.0f, -1.0f, 1.0f);
-  const float SIDE_SHIFT = 1.1;
-  const float SIDE_GAP = .19;
-  const float DEPTH_SHIFT = .7;
-  const float ANGLE = 60;
+  const float SIDE_SHIFT = mSideShift;
+  const float SIDE_GAP = mSideGap;
+  const float DEPTH_SHIFT = mSideDepth;
+  const float ANGLE = mAngle;
   for (int32 i = 0; i < 2; i++)
   {
     {
@@ -152,21 +215,18 @@ bool nuiCoverFlow::Draw(nuiDrawContext* pContext)
       {
         pContext->PushMatrix();
         float shiftx = c * SIDE_GAP + SIDE_SHIFT - SIDE_GAP * fractional;
+        float shifty = mYOffset;
         float shiftz = -DEPTH_SHIFT;
         float angle = -ANGLE;
         if (l == image + 1)
         {
           angle *= fract;
           shiftx *= fract;
+          shifty = (mYOffset * fract + mSelectionYOffset * fractional);
           shiftz *= fract;
         }
-        
-        if (!i)
-        {
-          NGL_OUT(_T("  Right %d pos: %f\n"), l, shiftx);
-        }
-        
-        pContext->Translate(shiftx, 0, shiftz);
+       
+        pContext->Translate(shiftx, shifty, shiftz);
         nuiMatrix m;
         m.SetRotation(angle, 0, 1, 0);
         pContext->MultMatrix(m);
@@ -184,21 +244,18 @@ bool nuiCoverFlow::Draw(nuiDrawContext* pContext)
       {
         pContext->PushMatrix();
         float shiftx = (c - maxcountleft + 1) * SIDE_GAP - SIDE_SHIFT - SIDE_GAP * fractional;
+        float shifty = mYOffset;
         float shiftz = -DEPTH_SHIFT;
         float angle = ANGLE;
         if (l == image)
         {
           angle *= fractional;
           shiftx *= fractional;
+          shifty = (mYOffset * fractional + mSelectionYOffset * fract);
           shiftz *= fractional;
         }
-
-        if (!i)
-        {
-          NGL_OUT(_T("  Left %d pos: %f\n"), l, shiftx);
-        }
         
-        pContext->Translate(shiftx, 0, shiftz);
+        pContext->Translate(shiftx, shifty, shiftz);
         nuiMatrix m;
         m.SetRotation(angle, 0, 1, 0);
         pContext->MultMatrix(m);
@@ -332,13 +389,13 @@ const std::vector<nuiTexture*>& nuiCoverFlow::GetImages() const
   return mImages;
 }
 
-void nuiCoverFlow::SetBackground(const nuiColor& rColor)
+void nuiCoverFlow::SetBackgroundColor(const nuiColor& rColor)
 {
   mBackground = rColor;
   Invalidate();
 }
 
-const nuiColor& nuiCoverFlow::GetBackground() const
+const nuiColor& nuiCoverFlow::GetBackgroundColor() const
 {
   return mBackground;
 }
@@ -418,3 +475,119 @@ bool nuiCoverFlow::MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Butt
   return false;
 }
 
+int32 nuiCoverFlow::GetSelectedIndex() const
+{
+  return mSelectedImage;
+}
+
+nuiTexture* nuiCoverFlow::GetSelectedTexture() const
+{
+  if (mSelectedImage >= 0 && mSelectedImage < mImages.size())
+    return mImages[mSelectedImage];
+  
+  return NULL;
+}
+
+void nuiCoverFlow::SetReflectionStart(float set)
+{
+  mReflectionStart = set;
+  Invalidate();
+}
+
+float nuiCoverFlow::GetReflectionStart() const
+{
+  return mReflectionStart;
+}
+
+void nuiCoverFlow::SetReflectionEnd(float set)
+{
+  mReflectionEnd = set;
+  Invalidate();
+}
+
+float nuiCoverFlow::GetReflectionEnd() const
+{
+  return mReflectionEnd;
+}
+
+void nuiCoverFlow::SetDrawBackground(bool set)
+{
+  mDrawBackground = set;
+  Invalidate();
+}
+
+bool nuiCoverFlow::GetDrawBackground() const
+{
+  return mDrawBackground;
+}
+
+void nuiCoverFlow::SetYOffset(float set)
+{
+  mYOffset = set;
+  Invalidate();
+}
+
+float nuiCoverFlow::GetYOffset() const
+{
+  return mYOffset;
+}
+
+void nuiCoverFlow::SetSelectionYOffset(float set)
+{
+  mSelectionYOffset = set;
+  Invalidate();
+}
+
+float nuiCoverFlow::GetSelectionYOffset() const
+{
+  return mSelectionYOffset;
+}
+
+void nuiCoverFlow::SetAngle(float set)
+{
+  mAngle = set;
+  Invalidate();
+}
+
+float nuiCoverFlow::GetAngle() const
+{
+  return mAngle;
+}
+
+void nuiCoverFlow::SetSideShift(float set)
+{
+  mSideShift = set;
+  Invalidate();
+}
+
+float nuiCoverFlow::GetSideShift() const
+{
+  return mSideShift;
+}
+
+void nuiCoverFlow::SetSideGap(float set)
+{
+  mSideGap = set;
+  Invalidate();
+}
+
+float nuiCoverFlow::GetSideGap() const
+{
+  return mSideGap;
+}
+
+void nuiCoverFlow::SetSideDepth(float set)
+{
+  mSideDepth = set;
+  Invalidate();
+}
+
+float nuiCoverFlow::GetSideDepth() const
+{
+  return mSideDepth;
+}
+
+void nuiCoverFlow::SelectImageIndex(int32 index)
+{
+  SelectImage(index);
+}

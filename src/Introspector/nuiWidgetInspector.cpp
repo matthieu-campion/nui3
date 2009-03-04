@@ -451,7 +451,6 @@ void nuiWidgetInfo::RebuildInfo(bool Reconstruct)
         //printf("\tattr: %ls\n", pname.GetChars());
         nuiAttribBase Base = it_a->second;
         nuiAttributeEditor* pEditor = Base.GetEditor();
-        
         mpAttributeGrid->SetCell(0, i, new nuiLabel(pname + nglString(":")));
         
         if (!pEditor)
@@ -495,7 +494,9 @@ void nuiWidgetInfo::RebuildInfo(bool Reconstruct)
           mpAttributeGrid->SetCell(1, i, pLabel, nuiLeft);
         }
         else
-          mpAttributeGrid->SetCell(1, i, pEditor, nuiLeft);
+        {
+          mpAttributeGrid->SetCell(1, i, pEditor, nuiFill);
+        }
         
         ++it_a;
         i++;

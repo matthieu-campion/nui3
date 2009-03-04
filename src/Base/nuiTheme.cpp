@@ -572,6 +572,11 @@ void nuiTheme::DrawCheckBox(nuiDrawContext* pContext, nuiToggleButton* pButton)
   pContext->SetFillColor(border);
 
   nuiRect Rect = pButton->GetRect().Size();
+  float s = MIN(Rect.GetWidth(), Rect.GetHeight());
+  if (s > 30)
+    s = 30;
+  Rect = nuiRect(s, s);
+  
   nuiSize topPos = Rect.Top() + ((Rect.GetHeight() - size) / 2.f);
   Rect.Set(Rect.Left(), topPos, size, size);
   Rect.RoundToNearest();

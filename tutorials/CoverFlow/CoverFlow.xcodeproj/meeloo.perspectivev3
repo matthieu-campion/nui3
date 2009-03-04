@@ -508,20 +508,19 @@
 			<array>
 				<string>XCToolbarPerspectiveControl</string>
 				<string>NSToolbarSeparatorItem</string>
-				<string>build-and-go</string>
-				<string>go</string>
-				<string>active-target-popup</string>
-				<string>active-executable-popup</string>
+				<string>active-combo-popup</string>
 				<string>NSToolbarFlexibleSpaceItem</string>
-				<string>debugger-fix-and-continue</string>
+				<string>build-and-go</string>
+				<string>com.apple.ide.PBXToolbarStopButton</string>
 				<string>debugger-restart-executable</string>
 				<string>debugger-pause</string>
 				<string>debugger-step-over</string>
 				<string>debugger-step-into</string>
 				<string>debugger-step-out</string>
-				<string>debugger-step-instruction</string>
-				<string>clear-log</string>
+				<string>debugger-enable-breakpoints</string>
 				<string>NSToolbarFlexibleSpaceItem</string>
+				<string>com.apple.ide.XCBreakpointsToolbarItem</string>
+				<string>clear-log</string>
 			</array>
 			<key>ControllerClassBaseName</key>
 			<string>PBXDebugSessionModule</string>
@@ -650,14 +649,14 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E56790890F5DEBDC00BEDF85</string>
+				<string>E55C02890F5E8BF40045FBFE</string>
 				<string>1CCC7628064C1048000F2A68</string>
 				<string>1CCC7629064C1048000F2A68</string>
-				<string>E567908A0F5DEBDC00BEDF85</string>
-				<string>E567908B0F5DEBDC00BEDF85</string>
-				<string>E567908C0F5DEBDC00BEDF85</string>
-				<string>E567908D0F5DEBDC00BEDF85</string>
-				<string>E567906C0F5DEB6B00BEDF85</string>
+				<string>E55C028A0F5E8BF40045FBFE</string>
+				<string>E55C028B0F5E8BF40045FBFE</string>
+				<string>E55C028C0F5E8BF40045FBFE</string>
+				<string>E55C028D0F5E8BF40045FBFE</string>
+				<string>E55C028E0F5E8BF40045FBFE</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -672,7 +671,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>257852116.027435</real>
+	<real>257854451.006107</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -687,8 +686,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E567908F0F5DEBDC00BEDF85</string>
-		<string>E56790900F5DEBDC00BEDF85</string>
 		<string>/Users/meeloo/work/nui3/tutorials/CoverFlow/CoverFlow.xcodeproj</string>
 	</array>
 	<key>WindowString</key>

@@ -116,7 +116,7 @@ nuiRect nuiEditLine::CalcIdealSize()
   return mIdealRect;
 }
 
-void nuiEditLine::LimitCharacterNumber(int maxDisplayedChar)
+void nuiEditLine::LimitCharacterCount(int maxDisplayedChar)
 {
   mMaxDisplayedChar = maxDisplayedChar;
 }
