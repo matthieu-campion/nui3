@@ -32,7 +32,12 @@ nuiCoverFlow::nuiCoverFlow()
                  (nglString(_T("SelectedImage")), nuiUnitNone,
                   nuiMakeDelegate(this, &nuiCoverFlow::GetSelectedIndex), 
                   nuiMakeDelegate(this, &nuiCoverFlow::SelectImageIndex)));
-
+    
+    AddAttribute(new nuiAttribute<int32>
+                 (nglString(_T("SelectedImageNow")), nuiUnitNone,
+                  nuiMakeDelegate(this, &nuiCoverFlow::GetSelectedIndex), 
+                  nuiMakeDelegate(this, &nuiCoverFlow::SelectImageIndexNow)));
+    
     AddAttribute(new nuiAttribute<float>
                  (nglString(_T("ReflectionStart")), nuiUnitNone,
                   nuiMakeDelegate(this, &nuiCoverFlow::GetReflectionStart), 
@@ -387,6 +392,23 @@ void nuiCoverFlow::SelectImage(int32 index)
   }
 }
 
+void nuiCoverFlow::SelectImageNow(nuiTexture* pTexture)
+{
+  SelectImage(pTexture);
+  mPos = mSelectedImage;
+  mTimer.Stop();
+  Invalidate();
+}
+
+void nuiCoverFlow::SelectImageNow(int32 index)
+{
+  SelectImage(index);
+  mPos = mSelectedImage;
+  mTimer.Stop();
+  Invalidate();
+}
+
+
 
 const std::vector<nuiTexture*>& nuiCoverFlow::GetImages() const
 {
@@ -594,4 +616,9 @@ float nuiCoverFlow::GetSideDepth() const
 void nuiCoverFlow::SelectImageIndex(int32 index)
 {
   SelectImage(index);
+}
+
+void nuiCoverFlow::SelectImageIndexNow(int32 index)
+{
+  SelectImageNow(index);
 }

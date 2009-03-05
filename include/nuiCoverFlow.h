@@ -29,6 +29,9 @@ public:
   void SelectImage(nuiTexture* pTexture);
   void SelectImage(int32 index);
 
+  void SelectImageNow(nuiTexture* pTexture);
+  void SelectImageNow(int32 index);
+
   int32 GetSelectedIndex() const;
   nuiTexture* GetSelectedTexture() const;
   
@@ -93,4 +96,5 @@ protected:
   double mLastTime;
   nuiEventSink<nuiCoverFlow> mFlowSink;
   void SelectImageIndex(int32 index);
+  void SelectImageIndexNow(int32 index);
 };

@@ -9,6 +9,7 @@
 #include "MainWindow.h"
 #include "Application.h"
 #include "nuiCoverFlow.h"
+#include "nuiAttributeAnimation.h"
 
 
 /*
@@ -33,7 +34,31 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
     if (pTexture)
       pFlow->AddImage(pTexture);
   }
-  pFlow->SelectImage(4);
+  pFlow->SelectImageNow(4);
+
+  { // Bounce
+    nuiAttributeAnimation* pAnim = new nuiAttributeAnimation();
+    pAnim->SetTargetObject(pFlow);
+    pAnim->SetTargetAttribute(_T("SelectionYOffset"));
+    pAnim->SetStartValue(0);
+    pAnim->SetEndValue(0.2);
+    pAnim->SetDuration(.5);
+    pAnim->SetEasing(&nuiEasingSquareRev);
+    pFlow->AddAnimation(_T("Bounce"), pAnim);
+    pAnim->Play(-1, eAnimLoopPingPong);
+  }
+
+  { // Appear
+    nuiAttributeAnimation* pAnim = new nuiAttributeAnimation();
+    pAnim->SetTargetObject(pFlow);
+    pAnim->SetTargetAttribute(_T("SideDepth"));
+    pAnim->SetStartValue(5);
+    pAnim->SetEndValue(.7);
+    pAnim->SetDuration(1.5);
+    pAnim->SetEasing(&nuiEasingCubicRev);
+    pFlow->AddAnimation(_T("Appear"), pAnim);
+    pAnim->Play();
+  }
 }
 
 MainWindow::~MainWindow()
