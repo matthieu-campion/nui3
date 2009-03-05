@@ -252,17 +252,19 @@ inline void nuiSetViewport(GLuint Angle, GLuint Width, GLuint Height, const nuiR
 {
   uint32 x, y, w, h;
   
+  nuiRect r(rViewport);
   if (Angle == 90 || Angle == 270)
   {
     uint32 tmp = Width;
     Width = Height;
-    Height = tmp;    
+    Height = tmp;
+    r.Set(r.Top(), r.Left(), r.GetHeight(), r.GetWidth());
   }
   
-  x = ToBelow(rViewport.Left());
-  w = ToBelow(rViewport.GetWidth());
-  y = Height - ToBelow(rViewport.Bottom());
-  h = ToBelow(rViewport.GetHeight());
+  x = ToBelow(r.Left());
+  w = ToBelow(r.GetWidth());
+  y = Height - ToBelow(r.Bottom());
+  h = ToBelow(r.GetHeight());
   
   glViewport(x, y, w, h);
   nuiCheckForGLErrors();

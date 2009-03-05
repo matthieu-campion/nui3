@@ -424,10 +424,10 @@ nuiRect nuiLabel::CalcIdealSize()
   if (mpLayout)
   {
     mIdealRect = mIdealLayoutRect;
-    if (GetDebug(1))
-    {
-      printf("New ideal rect: %ls\n", mIdealRect.GetValue().GetChars());
-    }
+//    if (GetDebug(1))
+//    {
+//      printf("New ideal rect: %ls\n", mIdealRect.GetValue().GetChars());
+//    }
   }
 
   mIdealRect.RoundToBiggest();
@@ -486,10 +486,10 @@ nuiRect nuiLabel::GetLayoutRect()
   mIdealLayoutRect = mpIdealLayout->GetRect();
   mIdealLayoutRect.Grow(mHMargin, mVMargin);
   mIdealLayoutRect = mIdealLayoutRect.Size();
-  if (GetDebug())
-  {
-    printf("New layout rect: %ls\n", mIdealLayoutRect.GetValue().GetChars());
-  }
+//  if (GetDebug())
+//  {
+//    printf("New layout rect: %ls\n", mIdealLayoutRect.GetValue().GetChars());
+//  }
   
   if (!(mIdealLayoutRect == mIdealRect))
     InvalidateLayout();
