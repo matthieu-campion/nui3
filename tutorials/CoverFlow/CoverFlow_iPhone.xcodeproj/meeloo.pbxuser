@@ -1,0 +1,154 @@
+// !$*UTF8*$!
+{
+	29B97313FDCFA39411CA2CEA /* Project object */ = {
+		activeBuildConfigurationName = Default;
+		activeExecutable = E5C4DD4A0F6009F100ACBA6A /* CoverFlow_iPhone */;
+		activeTarget = C99995F80DA6EE97001A7116 /* CoverFlow_iPhone */;
+		codeSenseManager = E5C4DD520F600A1000ACBA6A /* Code sense */;
+		executables = (
+			E5C4DD4A0F6009F100ACBA6A /* CoverFlow_iPhone */,
+			E5C4DD4B0F6009F100ACBA6A /* CoverFlow_iPhoneD */,
+		);
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					1474,
+					20,
+					48.16259765625,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 257952241;
+			PBXWorkspaceStateSaveDate = 257952241;
+		};
+		perUserProjectItems = {
+			E5C4DD750F600B8700ACBA6A /* PBXTextBookmark */ = E5C4DD750F600B8700ACBA6A /* PBXTextBookmark */;
+			E5C4DD760F600B8700ACBA6A /* PBXTextBookmark */ = E5C4DD760F600B8700ACBA6A /* PBXTextBookmark */;
+			E5C4DD770F600BA600ACBA6A /* PBXTextBookmark */ = E5C4DD770F600BA600ACBA6A /* PBXTextBookmark */;
+		};
+		sourceControlManager = E5C4DD510F600A1000ACBA6A /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	BC6A0A430EF93F9700881ACF /* Application.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1652, 2506}}";
+			sepNavSelRange = "{782, 0}";
+			sepNavVisRange = "{536, 407}";
+		};
+	};
+	C99995F80DA6EE97001A7116 /* CoverFlow_iPhone */ = {
+		activeExec = 0;
+		executables = (
+			E5C4DD4A0F6009F100ACBA6A /* CoverFlow_iPhone */,
+		);
+	};
+	C9F5F9070DA84CAB00E078ED /* CoverFlow_iPhoneD */ = {
+		activeExec = 0;
+		executables = (
+			E5C4DD4B0F6009F100ACBA6A /* CoverFlow_iPhoneD */,
+		);
+	};
+	E5C4DD4A0F6009F100ACBA6A /* CoverFlow_iPhone */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 1;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = CoverFlow_iPhone;
+		sourceDirectories = (
+		);
+	};
+	E5C4DD4B0F6009F100ACBA6A /* CoverFlow_iPhoneD */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 1;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = CoverFlow_iPhoneD;
+		sourceDirectories = (
+		);
+	};
+	E5C4DD510F600A1000ACBA6A /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+		};
+	};
+	E5C4DD520F600A1000ACBA6A /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	E5C4DD750F600B8700ACBA6A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = BC6A0A430EF93F9700881ACF /* Application.cpp */;
+		name = "Application.cpp: 51";
+		rLen = 0;
+		rLoc = 782;
+		rType = 0;
+		vrLen = 445;
+		vrLoc = 536;
+	};
+	E5C4DD760F600B8700ACBA6A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = BC6A0A430EF93F9700881ACF /* Application.cpp */;
+		name = "Application.cpp: 51";
+		rLen = 0;
+		rLoc = 782;
+		rType = 0;
+		vrLen = 445;
+		vrLoc = 536;
+	};
+	E5C4DD770F600BA600ACBA6A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = BC6A0A430EF93F9700881ACF /* Application.cpp */;
+		name = "Application.cpp: 51";
+		rLen = 0;
+		rLoc = 782;
+		rType = 0;
+		vrLen = 407;
+		vrLoc = 536;
+	};
+}
