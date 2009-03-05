@@ -341,7 +341,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E5C4DD770F600BA600ACBA6A</string>
+										<string>E5C4DD840F6013F200ACBA6A</string>
 										<key>history</key>
 										<array>
 											<string>E5C4DD750F600B8700ACBA6A</string>
@@ -644,7 +644,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>257952678.345303</real>
+	<real>257954802.480591</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -660,7 +660,6 @@
 	<key>WindowOrderList</key>
 	<array>
 		<string>E5C4DD810F600BA600ACBA6A</string>
-		<string>E5C4DD820F600BA600ACBA6A</string>
 		<string>E5C4DD830F600BA600ACBA6A</string>
 		<string>/Users/meeloo/work/nui3/tutorials/CoverFlow/CoverFlow_iPhone.xcodeproj</string>
 	</array>

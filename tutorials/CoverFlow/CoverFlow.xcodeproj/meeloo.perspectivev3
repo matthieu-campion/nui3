@@ -331,7 +331,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>E54BEADC0F5C2D5F007F2871</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>MainWindow.cpp</string>
+								<string>MainWindow.h</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -339,27 +339,16 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>E54BEADD0F5C2D5F007F2871</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>MainWindow.cpp</string>
+										<string>MainWindow.h</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E5C4DCCF0F5FF05300ACBA6A</string>
+										<string>E5C4DD8A0F60170D00ACBA6A</string>
 										<key>history</key>
 										<array>
-											<string>E59673D70F5EF59B0043E8F0</string>
 											<string>E5B6C2D10F5F1EB100E0DFFD</string>
 											<string>E5B6C3550F5F440B00E0DFFD</string>
-											<string>E5C4DCCD0F5FF04A00ACBA6A</string>
-										</array>
-										<key>nextStack</key>
-										<array>
-											<string>E5B6C2D40F5F1EB100E0DFFD</string>
-											<string>E5B6C3580F5F440B00E0DFFD</string>
-										</array>
-										<key>prevStack</key>
-										<array>
 											<string>E59673D90F5EF59B0043E8F0</string>
-											<string>E54BEAF10F5C2FE9007F2871</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -521,8 +510,6 @@
 			<key>Layout</key>
 			<array>
 				<dict>
-					<key>BecomeActive</key>
-					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXProjectModuleGUID</key>
@@ -659,7 +646,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>257945683.26448199</real>
+	<real>257955597.487845</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -674,7 +661,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E5C4DCD00F5FF05300ACBA6A</string>
 		<string>E5C4DCCA0F5FF04500ACBA6A</string>
 		<string>E5C4DCCB0F5FF04500ACBA6A</string>
 		<string>/Users/meeloo/work/nui3/tutorials/CoverFlow/CoverFlow.xcodeproj</string>

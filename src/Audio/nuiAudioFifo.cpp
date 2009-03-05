@@ -52,18 +52,18 @@ void nuiAudioTrack::Init(uint32 bufSize, double sampleRate, uint32 nbChannels, f
 	mNbChannels	= nbChannels;
 	mSampleRate	= sampleRate;
   mBufferingEnabled = bufferingEnabled;
-	mVolume		= volume;
-	delete  (mpRingBuf); // in case of register/unregister/register on the same track
+	mVolume = volume;
+	delete mpRingBuf; // in case of register/unregister/register on the same track
   
   // init ringbuffer
   mpRingBuf = NULL;
   if (bufSize)
   {
-    mpRingBuf		= new nglRingBuffer (bufSize, sizeof(float), mNbChannels);
+    mpRingBuf = new nglRingBuffer (bufSize, sizeof(float), mNbChannels);
   }
-	mPaused		= false; // start the stuff
+	mPaused = false; // start the stuff
 	
-	mBufSize	= bufSize;
+	mBufSize = bufSize;
 }
 
 
@@ -72,12 +72,12 @@ void nuiAudioTrack::Init(uint32 bufSize, double sampleRate, uint32 nbChannels, f
 
 
 
-uint32 nuiAudioTrack::CanRead ()
+uint32 nuiAudioTrack::CanRead()
 {
   uint32 value;
   if (mpRingBuf)
   {
-    value = mpRingBuf->GetWritable ();
+    value = mpRingBuf->GetWritable();
   }
   else
   {
@@ -165,7 +165,7 @@ void nuiAudioTrack::Read(uint32 sampleFrames)
   //
   // second pass writing in ringBuffer
   //
-  nbWrite2  = mpRingBuf->GetWritableToEnd ();
+  nbWrite2  = mpRingBuf->GetWritableToEnd();
   if (nbWrite2 < (nbRead - nbWrite))
   {
     NGL_OUT(_T("nuiAudioTrack ERROR : ringbuffer could not locked enough space to write data (%d requested, %d provided!)"), (nbRead-nbWrite), nbWrite2);

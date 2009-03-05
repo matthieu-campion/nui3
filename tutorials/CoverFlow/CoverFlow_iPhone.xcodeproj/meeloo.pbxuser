@@ -37,8 +37,7 @@
 		};
 		perUserProjectItems = {
 			E5C4DD750F600B8700ACBA6A /* PBXTextBookmark */ = E5C4DD750F600B8700ACBA6A /* PBXTextBookmark */;
-			E5C4DD760F600B8700ACBA6A /* PBXTextBookmark */ = E5C4DD760F600B8700ACBA6A /* PBXTextBookmark */;
-			E5C4DD770F600BA600ACBA6A /* PBXTextBookmark */ = E5C4DD770F600BA600ACBA6A /* PBXTextBookmark */;
+			E5C4DD840F6013F200ACBA6A /* PBXTextBookmark */ = E5C4DD840F6013F200ACBA6A /* PBXTextBookmark */;
 		};
 		sourceControlManager = E5C4DD510F600A1000ACBA6A /* Source Control */;
 		userBuildSettings = {
@@ -48,7 +47,7 @@
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1652, 2506}}";
 			sepNavSelRange = "{782, 0}";
-			sepNavVisRange = "{536, 407}";
+			sepNavVisRange = "{536, 445}";
 		};
 	};
 	C99995F80DA6EE97001A7116 /* CoverFlow_iPhone */ = {
@@ -84,6 +83,8 @@
 		executableUserSymbolLevel = 0;
 		libgmallocEnabled = 0;
 		name = CoverFlow_iPhone;
+		savedGlobals = {
+		};
 		sourceDirectories = (
 		);
 	};
@@ -131,7 +132,7 @@
 		vrLen = 445;
 		vrLoc = 536;
 	};
-	E5C4DD760F600B8700ACBA6A /* PBXTextBookmark */ = {
+	E5C4DD840F6013F200ACBA6A /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = BC6A0A430EF93F9700881ACF /* Application.cpp */;
 		name = "Application.cpp: 51";
@@ -139,16 +140,6 @@
 		rLoc = 782;
 		rType = 0;
 		vrLen = 445;
-		vrLoc = 536;
-	};
-	E5C4DD770F600BA600ACBA6A /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = BC6A0A430EF93F9700881ACF /* Application.cpp */;
-		name = "Application.cpp: 51";
-		rLen = 0;
-		rLoc = 782;
-		rType = 0;
-		vrLen = 407;
 		vrLoc = 536;
 	};
 }
