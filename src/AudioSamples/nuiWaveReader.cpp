@@ -40,7 +40,7 @@ void nuiWaveReader::SetPosition(uint32 position)
   
   Chunk* pDataChunk = GetChunk("data");
   
-  nglFileOffset StreamPosition = pDataChunk->mDataPosition + mInfo.GetChannels() * mInfo.GetBitsPerSample() * position;
+  nglFileOffset StreamPosition = pDataChunk->mDataPosition + mInfo.GetChannels() * (mInfo.GetBitsPerSample() / 8) * position;
   mrStream.SetPos(StreamPosition);
   mPosition = position;
 }
