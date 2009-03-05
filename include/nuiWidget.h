@@ -50,7 +50,8 @@ class NUI_API nuiWidget : public nuiObject
 public:
   /** @name Life */
   //@{
-  nuiWidget(); ///< Create an nuiObject and give him his parent.
+  nuiWidget(); ///< Create an nuiObject
+  nuiWidget(const nglString& rObjectName); ///< constructor with an objectName by default
 	void InitAttributes();
   virtual ~nuiWidget(); 
   //@}
@@ -583,6 +584,7 @@ private:
   nuiTimer* mpAnimationTimer;
   bool mAnimateLayout;
 
+  void InitDefaultValues();
   void InitProperties(); ///< Init the property bindings.
   void Init(); ///< Initialise the basic parameters of the class.
   bool mRedrawOnHover;

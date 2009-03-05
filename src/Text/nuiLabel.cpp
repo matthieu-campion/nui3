@@ -17,31 +17,12 @@
 
 nuiLabel::nuiLabel(const nglString& Text, nuiTheme::FontStyle FontStyle)
   : nuiWidget(),
-    mLabelSink(this),
-    mUnderline(false),
-    mStrikeThrough(false)
+    mLabelSink(this)
 {
+  InitDefaultValues();
+
   if (SetObjectClass(_T("nuiLabel")))
     InitAttributes();
-
-  mTextChanged = false;
-  mFontChanged = true;
-  mOrientation = nuiHorizontal;
-  mpLayout = NULL;
-  mpIdealLayout = NULL;
-  mpFont = NULL;
-
-  mTextColorSet = false;
-  mBackColorSet = false;  
-  
-  mUseEllipsis = false;
-  mClearBg = false;
-  mTextPosition = nuiLeft;
-
-  mVMargin = NUI_LABEL_VMARGIN;
-  mHMargin = NUI_LABEL_HMARGIN;
-  mWrapping = false;
-  mIgnoreState = false;
 
   InitProperties();
 
@@ -51,37 +32,61 @@ nuiLabel::nuiLabel(const nglString& Text, nuiTheme::FontStyle FontStyle)
 
 nuiLabel::nuiLabel(const nglString& Text, nuiFont* pFont, bool AlreadyAcquired)
   : nuiWidget(),
-    mLabelSink(this),
-    mUnderline(false),
-    mStrikeThrough(false)
+    mLabelSink(this)
 {
+  InitDefaultValues();
+
   if (SetObjectClass(_T("nuiLabel")))
     InitAttributes();
-
-  mTextChanged = false;
-  mFontChanged = true;
-  mOrientation = nuiHorizontal;
-  mpLayout = NULL;
-  mpIdealLayout = NULL;
-  mpFont = NULL;
-
-  mTextColorSet = false;
-  mBackColorSet = false;  
-  
-  mUseEllipsis = false;
-  mClearBg = false;
-  mTextPosition = nuiLeft;
-
-  mVMargin = NUI_LABEL_VMARGIN;
-  mHMargin = NUI_LABEL_HMARGIN;
-  mWrapping = false;
-  mIgnoreState = false;
 
   InitProperties();
 
   SetText(Text);
   SetFont(pFont, AlreadyAcquired);
 }
+
+
+nuiLabel::nuiLabel(const nglString& Text, const nglString& rObjectName, nuiTheme::FontStyle FontStyle)
+: nuiWidget(rObjectName), mLabelSink(this)
+{
+  InitDefaultValues();
+  
+  if (SetObjectClass(_T("nuiLabel")))
+    InitAttributes();
+  
+  InitProperties();
+  
+  SetFont(FontStyle);
+  SetText(Text);
+}
+
+
+
+void nuiLabel::InitDefaultValues()
+{
+  mUnderline = false;
+  mStrikeThrough = false;
+  
+  mTextChanged = false;
+  mFontChanged = true;
+  mOrientation = nuiHorizontal;
+  mpLayout = NULL;
+  mpIdealLayout = NULL;
+  mpFont = NULL;
+  
+  mTextColorSet = false;
+  mBackColorSet = false;  
+  
+  mUseEllipsis = false;
+  mClearBg = false;
+  mTextPosition = nuiLeft;
+  
+  mVMargin = NUI_LABEL_VMARGIN;
+  mHMargin = NUI_LABEL_HMARGIN;
+  mWrapping = false;
+  mIgnoreState = false;  
+}
+
 
 bool nuiLabel::Load(const nuiXMLNode* pNode)
 {

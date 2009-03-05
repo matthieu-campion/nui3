@@ -86,29 +86,10 @@ static nuiWidgetCounter gWidgetCounter;
 #endif
 
 nuiWidget::nuiWidget()
-: mGenericWidgetSink(this),
-  mODLeft(0),
-  mODRight(0),
-  mODTop(0),
-  mODBottom(0),
-  mInteractiveOD(false),
-  mInteractiveDecoration(false),
-  mpDecoration(NULL),
-  mpFocusDecoration(NULL),
-  mShowFocus(true),
-  mPosition(nuiFill),
-  mFillRule(nuiFill),
-  mMatrixIsIdentity(true),
-  mCSSPasses(0),
-  mpParent(NULL),
-  mpTheme(NULL),
-  mDecorationEnabled(true),
-  mNeedSurfaceRedraw(false),
-  mSurfaceEnabled(false),
-  mpSurface(NULL),
-  mSurfaceColor(255, 255, 255, 255),
-  mSurfaceBlendFunc(nuiBlendTransp)
+: nuiObject(), mGenericWidgetSink(this)
 {
+  InitDefaultValues();
+  
   if (SetObjectClass(_T("nuiWidget")))
     InitAttributes();
     
@@ -127,6 +108,56 @@ nuiWidget::nuiWidget()
   
 }
 
+
+
+nuiWidget::nuiWidget(const nglString& rObjectName)
+: nuiObject(rObjectName), mGenericWidgetSink(this)
+{
+  InitDefaultValues();
+  
+  if (SetObjectClass(_T("nuiWidget")))
+    InitAttributes();
+  
+#ifdef NUI_WIDGET_STATS
+  wcount++;
+  maxwcount = MAX(wcount, maxwcount);
+  NGL_OUT(_T("max widgets: %d (total %d)\n"), maxwcount, wcount);
+#endif
+  
+  Init();
+  
+  InitDefaultDecorations();
+  
+  // Property bindings:
+  InitProperties();
+  
+}
+
+
+void nuiWidget::InitDefaultValues()
+{
+  mODLeft = 0;
+  mODRight = 0;
+  mODTop = 0;
+  mODBottom = 0;
+  mInteractiveOD = false;
+  mInteractiveDecoration = false;
+  mpDecoration = NULL;
+  mpFocusDecoration = NULL;
+  mShowFocus = true;
+  mPosition = nuiFill;
+  mFillRule = nuiFill;
+  mMatrixIsIdentity = true;
+  mCSSPasses = 0;
+  mpParent = NULL;
+  mpTheme = NULL;
+  mDecorationEnabled = true;
+  mNeedSurfaceRedraw = false;
+  mSurfaceEnabled = false;
+  mpSurface = NULL;
+  mSurfaceColor = nuiColor(255, 255, 255, 255);
+  mSurfaceBlendFunc = nuiBlendTransp;  
+}
 
 
 

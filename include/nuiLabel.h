@@ -21,6 +21,7 @@ class NUI_API nuiLabel : public nuiWidget
 {
 public:
   nuiLabel(const nglString& Text = nglString::Empty, nuiTheme::FontStyle FontStyle=nuiTheme::Default);
+  nuiLabel(const nglString& Text, const nglString& rObjectName, nuiTheme::FontStyle FontStyle=nuiTheme::Default);
   nuiLabel(const nglString& Text, nuiFont* pFont, bool AlreadyAcquired = false);
   virtual bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
   virtual ~nuiLabel();
@@ -31,6 +32,7 @@ public:
 
   void InitAttributes();
   void InitProperties();
+  void InitDefaultValues();
 
   virtual bool Draw(nuiDrawContext* pContext);
   virtual nuiRect CalcIdealSize();

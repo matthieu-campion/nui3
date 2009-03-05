@@ -82,6 +82,7 @@ private:
   nuiTreeNode* mpCurrentTree;
   nglPath mRootPath;
   std::stack<nglPath> mWalkthrough;
+  nuiScrollView* mpScrollView;
   
   
   nuiEventSink<nuiFileTree> mEventSink;

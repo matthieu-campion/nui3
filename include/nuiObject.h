@@ -35,7 +35,8 @@ class NUI_API nuiObject
 public:
   /** @name Life */
   //@{
-  nuiObject(); ///< Create an nuiObject and give him his parent.
+  nuiObject(); ///< Create an nuiObject
+  nuiObject(const nglString& rObjectName); ///< constructor with an object name by default
   bool Load(const nuiXMLNode* pNode); ///< Create an nuiObject from an XML description.
   virtual ~nuiObject(); 
   //@}
@@ -115,6 +116,7 @@ protected:
   nuiSerializeMode mSerializeMode;
   
 private : 
+  void Init(const nglString& rObjectName);
   void InitAttributes();
 
   nuiTokenBase* mpToken;

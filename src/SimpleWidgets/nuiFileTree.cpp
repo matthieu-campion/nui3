@@ -159,9 +159,9 @@ bool nuiFileTree::SetRootPath(const nglPath& rPath)
   
   mpFileBox->SetCellMinPixels(0, FIRST_ROW_HEIGHT);
   
-  nuiScrollView* pScrollView = new nuiScrollView(true,true);
+  mpScrollView = new nuiScrollView(true,true);
   
-  mpFileBox->SetCell(1, pScrollView);
+  mpFileBox->SetCell(1, mpScrollView);
   mpFileBox->SetCellExpand(1, nuiExpandShrinkAndGrow);
 
   
@@ -176,7 +176,7 @@ bool nuiFileTree::SetRootPath(const nglPath& rPath)
     mpTreeView->SetDeSelectable(false);
     mpTreeView->SetMultiSelectable(true);
 
-    pScrollView->AddChild(mpTreeView);
+    mpScrollView->AddChild(mpTreeView);
 
     std::list<nglPathVolume> volumes;
     nglPath::GetVolumes(volumes, nglPathVolume::All);
@@ -240,7 +240,7 @@ bool nuiFileTree::SetRootPath(const nglPath& rPath)
 
     mpTreeView = new nuiTreeView(pRoot, false);
     mpTreeView->SetDeSelectable(false);
-    pScrollView->AddChild(mpTreeView);
+    mpScrollView->AddChild(mpTreeView);
   }
 
   mpTreeView->SetDragStartDelegate(nuiMakeDelegate(this, &nuiFileTree::OnDragStartDelegate));
@@ -263,10 +263,6 @@ void nuiFileTree::AddTree(const nglPath& rPath, bool Opened)
   mTrees[rPath] = pNode;  
 }
 
-
-//pInfo = new nuiLabel(GetFileInfo(rPath));
-//pInfo->SetObjectName(_T("nuiFileTree::FileInfo"));      
-//pInfo->SetObjectClass(_T("nuiFileTree::FileInfo"));      
 
 
 // virtual 

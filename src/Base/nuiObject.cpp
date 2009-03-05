@@ -18,18 +18,29 @@ using namespace std;
 
 nuiObject::nuiObject()
 {	
+  nglString name;
+  name.CFormat(_T("%p"), this);
+  Init(name);
+}
+
+nuiObject::nuiObject(const nglString& rObjectName)
+{
+  Init(rObjectName);
+}
+
+
+void nuiObject::Init(const nglString& rObjectName)
+{	
   mClassNameIndex = -1;
   if (SetObjectClass(_T("nuiObject")))
     InitAttributes();
-
-  nglString name;
-  name.CFormat(_T("%p"), this);
-  SetObjectName(name);
-
+  
+  SetObjectName(rObjectName);
+  
   mSerializeMode = eSaveNode;
   
   mpToken = NULL;
-
+  
 }
 
 
