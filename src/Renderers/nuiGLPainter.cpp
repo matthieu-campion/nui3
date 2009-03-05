@@ -153,31 +153,6 @@ static uint32 maxs = 0;
 static uint32 totalinframe = 0;
 static uint32 total = 0;
 
-//
-//  //	generate the buffer ID and bind it
-//  glGenBuffersARB( 1, &vertexBufferID );
-//  glBindBufferARB( GL_ARRAY_BUFFER_ARB, vertexBufferID );
-//
-//  //	tell OpenGL how much data you've got
-//  //	and whether it is static (GL_STATIC_DRAW_ARB),
-//  //	dynamic (GL_DYNAMIC_DRAW_ARB),
-//  //	or streamed (GL_STREAM_DRAW_ARB)
-//  //	according to the ARB spec, streamed means
-//  //	"specify once and use once or perhaps only a few times"
-//  glBufferDataARB( GL_ARRAY_BUFFER_ARB, dataSize,
-//                  NULL, GL_STATIC_DRAW_ARB );
-//
-//  //	ask OpenGL for a buffer to store your data
-//  GLubyte *dest = glMapBufferARB( GL_ARRAY_BUFFER_ARB, GL_WRITE_ONLY_ARB );
-//
-//  //	write your data into the buffer once
-//
-//  //	flush the buffer object and let OpenGL cache it
-//  glUnmapBufferARB( GL_ARRAY_BUFFER_ARB );
-//
-//  //	unbind the VBO
-//  glBindBufferARB( GL_ARRAY_BUFFER_ARB, 0 );
-
 nuiGLPainter::nuiGLPainter(nglContext* pContext, const nuiRect& rRect)
 : nuiPainter(rRect, pContext)
 {
@@ -225,13 +200,6 @@ nuiGLPainter::nuiGLPainter(nglContext* pContext, const nuiRect& rRect)
     {
       glAAInit();
       nuiCheckForGLErrors();
-      //		glAAGenerateAATex(0.0f, 0.0f);
-      //		nuiCheckForGLErrors();
-
-      // texture init
-      //#ifndef __APPLE__
-      //glAAEnable(GLAA_VERTEX_ARRAY); // we want VAR acceleration and we will handle flushing
-      //#endif
     }
 
 
@@ -283,34 +251,14 @@ inline void nuiSetViewport(GLuint Angle, GLuint Width, GLuint Height, const nuiR
 void nuiGLPainter::StartRendering()
 {
   BeginSession();
+  //NUI_RETURN_IF_RENDERING_DISABLED;
   nuiCheckForGLErrors();
 
-  //NUI_RETURN_IF_RENDERING_DISABLED;
 
   nuiPainter::StartRendering();
   
-  uint32 width = mWidth;
-  uint32 height = mHeight;
-  if (mpSurface)
-  {
-    width = mpSurface->GetWidth();
-    height = mpSurface->GetHeight();
-  }
-  nuiSetViewport(mAngle, width, height, mProjectionViewportStack.top(), mProjectionMatrixStack.top());
+  nuiSetViewport(GetAngle(), GetCurrentWidth(), GetCurrentHeight(), mProjectionViewportStack.top(), mProjectionMatrixStack.top());
 
-/*
-  glViewport(0, 0, mWidth, mHeight);
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-  glOrtho(0, mWidth, mHeight, 0, -1, 1);
-  glMatrixMode(GL_MODELVIEW);
-  glLoadIdentity();
-
-  nuiCheckForGLErrors();
-
-  glMatrixMode(GL_MODELVIEW);
-  glLoadIdentity();
-*/
   glDisable(GL_DEPTH_TEST);
   glDisable(GL_SCISSOR_TEST);
   glDisable(GL_TEXTURE_2D);
@@ -328,42 +276,7 @@ void nuiGLPainter::StartRendering()
   glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   nuiCheckForGLErrors();
-  
-  
-  //#TEST pourri!
-//  glClearColor(1, 1, 1, 1);
-//  glClear(GL_COLOR_BUFFER_BIT);
-//  
-//  glColor3f(0, 0, 255);
-//  
-//  float x = 0;
-//  float y = 0;
-//  
-//  glBegin(GL_LINE_STRIP);
-//  glVertex2f(x, y);
-//  glVertex2f(mWidth, y);
-//  glVertex2f(mWidth, mHeight);
-//  glVertex2f(x, mHeight);
-//  glVertex2f(x, y);
-//  glEnd();
-//  
-//  mEnableDrawArray = false;
 }
-
-/*
-void nuiGLPainter::BeginSession()
-{ 
-  mpContext->BeginSession();
-}
-
-
-void nuiGLPainter::StopRendering()
-{
-  //glFlush();
-
-}
-*/
-
 
 void nuiGLPainter::SetState(const nuiRenderState& rState, bool ForceApply)
 {
@@ -531,8 +444,6 @@ void nuiGLPainter::SetSize(uint32 w, uint32 h)
 
   mWidth = w;
   mHeight = h;
-
-  //nuiSetViewport(mAngle, w, h, mProjectionViewportStack.top(), mProjectionMatrixStack.top());
 
   nuiCheckForGLErrors();
 }
@@ -786,13 +697,31 @@ void nuiGLPainter::DrawArray(const nuiRenderArray& rArray)
   NUI_RETURN_IF_RENDERING_DISABLED;
 
   bool NeedTranslateHack = (mode == GL_LINES || mode == GL_LINE_LOOP || mode == GL_LINE_STRIP) && !rArray.Is3DMesh();
-  float hackX, hackY;
+  float hackX;
+  float hackY;
   if (NeedTranslateHack)
-  { const float ratio=0.5f;
-    if (mAngle == 0)        { hackX = ratio; hackY = ratio; }
-    else if (mAngle == 90)  { hackX = 0; hackY = ratio; }
-    else if (mAngle == 180) { hackX = 0; hackY = 0; }
-    else/*mAngle == 270*/   { hackX = ratio; hackY = 0; }
+  {
+    const float ratio=0.5f;
+    if (mAngle == 0)
+    {
+      hackX = ratio;
+      hackY = ratio;
+    }
+    else if (mAngle == 90)
+    {
+      hackX = 0;
+      hackY = ratio;
+    }
+    else if (mAngle == 180)
+    {
+      hackX = 0;
+      hackY = 0;
+    }
+    else/*mAngle == 270*/
+    {
+      hackX = ratio;
+      hackY = 0;
+    }
     glTranslatef(hackX, hackY, 0);
   }
 
@@ -1036,14 +965,7 @@ void nuiGLPainter::LoadProjectionMatrix(const nuiRect& rViewport, const nuiMatri
   
   nuiPainter::LoadProjectionMatrix(rViewport, rMatrix);
 
-  uint32 width = mWidth;
-  uint32 height = mHeight;
-  if (mpSurface)
-  {
-    width = mpSurface->GetWidth();
-    height = mpSurface->GetHeight();
-  }
-  nuiSetViewport(mAngle, width, height, mProjectionViewportStack.top(), mProjectionMatrixStack.top());
+  nuiSetViewport(GetAngle(), GetCurrentWidth(), GetCurrentHeight(), mProjectionViewportStack.top(), mProjectionMatrixStack.top());
   nuiCheckForGLErrors();
 }
 
@@ -1053,14 +975,7 @@ void nuiGLPainter::MultProjectionMatrix(const nuiMatrix& rMatrix)
   
   nuiPainter::MultProjectionMatrix(rMatrix);
 
-  uint32 width = mWidth;
-  uint32 height = mHeight;
-  if (mpSurface)
-  {
-    width = mpSurface->GetWidth();
-    height = mpSurface->GetHeight();
-  }
-  nuiSetViewport(mAngle, width, height, mProjectionViewportStack.top(), mProjectionMatrixStack.top());
+  nuiSetViewport(GetAngle(), GetCurrentWidth(), GetCurrentHeight(), mProjectionViewportStack.top(), mProjectionMatrixStack.top());
   nuiCheckForGLErrors();
 }
 
@@ -1077,17 +992,7 @@ void nuiGLPainter::PopProjectionMatrix()
   NUI_RETURN_IF_RENDERING_DISABLED;
   
   nuiPainter::PopProjectionMatrix();
-  //glPopMatrix();
-  uint32 width = mWidth;
-  uint32 height = mHeight;
-  uint32 angle = mAngle;
-  if (mpSurface)
-  {
-    width = mpSurface->GetWidth();
-    height = mpSurface->GetHeight();
-    mAngle = 0;
-  }
-  nuiSetViewport(angle, width, height, mProjectionViewportStack.top(), mProjectionMatrixStack.top());
+  nuiSetViewport(GetAngle(), GetCurrentWidth(), GetCurrentHeight(), mProjectionViewportStack.top(), mProjectionMatrixStack.top());
   nuiCheckForGLErrors();
 }
 
@@ -1624,7 +1529,6 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
       nuiCheckForGLErrors();
       CheckFramebufferStatus();
     }
-//    nuiSetViewport(0, pSurface->GetWidth(), pSurface->GetHeight(), mProjectionViewportStack.top(), mProjectionMatrixStack.top());
   }
   else
   {
@@ -1634,13 +1538,28 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
     
     nuiCheckForGLErrors();
     CheckFramebufferStatus();
-    
-//    nuiSetViewport(mAngle, mWidth, mHeight, mProjectionViewportStack.top(), mProjectionMatrixStack.top());
-    
-//    LoadMatrix(mMatrixStack.top());
   }
 }
 
+int32 nuiGLPainter::GetAngle() const
+{
+  if (mpSurface)
+    return 0;
+  return mAngle;
+}
 
+int32 nuiGLPainter::GetCurrentWidth() const
+{
+  if (mpSurface)
+    return mpSurface->GetWidth();
+  return mWidth;
+}
+
+int32 nuiGLPainter::GetCurrentHeight() const
+{
+  if (mpSurface)
+    return mpSurface->GetHeight();
+  return mHeight;
+}
 
 #endif //   #ifndef __NUI_NO_GL__
