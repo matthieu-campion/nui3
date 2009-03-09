@@ -164,7 +164,7 @@ public:
   typedef nuiFastDelegate3<uint32, uint32, Contents> SetterDelegate2;
 
   typedef nuiFastDelegate2<void*, nuiAttribute<Contents>*, nuiAttributeEditor* > NewEditorDelegate;
-  typedef nuiFastDelegate3<void*, nglString&, Contents> FormaterDelegate;
+  typedef nuiFastDelegate2<nglString&, Contents> FormaterDelegate;
 
   typedef nuiSignal1<Contents> Signal;
   typedef nuiSignal2<uint32, Contents> Signal0;
@@ -414,7 +414,7 @@ public:
 		if (mFormater)
 		{
 			// the user has specified its own formater.
-			return mFormater(pTarget, string, Get(pTarget));
+			return mFormater(string, Get(pTarget));
 		}
 		
 		return FormatDefault(pTarget, string);
@@ -425,7 +425,7 @@ public:
 		if (mFormater)
 		{
 			// the user has specified its own formater.
-			return mFormater(pTarget, string, Get(pTarget, index));
+			return mFormater(string, Get(pTarget, index));
 		}
 		
 		return FormatDefault(pTarget, string);
@@ -436,7 +436,7 @@ public:
 		if (mFormater)
 		{
 			// the user has specified its own formater.
-			return mFormater(pTarget, string, Get(pTarget, index0, index1));
+			return mFormater(string, Get(pTarget, index0, index1));
 		}
 		
 		return FormatDefault(pTarget, string);
@@ -604,7 +604,7 @@ public:
   typedef nuiFastDelegate3<uint32, uint32, const Contents&> SetterDelegate2;
   
   typedef nuiFastDelegate2<void*, nuiAttribute<const Contents&>*, nuiAttributeEditor* > NewEditorDelegate;
-  typedef nuiFastDelegate3<void*, nglString&, const Contents&> FormaterDelegate;
+  typedef nuiFastDelegate2<nglString&, const Contents&> FormaterDelegate;
   
   typedef nuiSignal1<const Contents&> Signal;
   typedef nuiSignal2<uint32, const Contents&> Signal0;
@@ -854,7 +854,7 @@ public:
     if (mFormater)
     {
       // the user has specified its own formater.
-      return mFormater(pTarget, string, Get(pTarget));
+      return mFormater(string, Get(pTarget));
     }
     
     return FormatDefault(pTarget, string);
@@ -865,7 +865,7 @@ public:
     if (mFormater)
     {
       // the user has specified its own formater.
-      return mFormater(pTarget, string, Get(pTarget, index));
+      return mFormater(string, Get(pTarget, index));
     }
     
     return FormatDefault(pTarget, string);
@@ -876,7 +876,7 @@ public:
     if (mFormater)
     {
       // the user has specified its own formater.
-      return mFormater(pTarget, string, Get(pTarget, index0, index1));
+      return mFormater(string, Get(pTarget, index0, index1));
     }
     
     return FormatDefault(pTarget, string);
