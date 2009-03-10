@@ -417,7 +417,7 @@ public:
 			return mFormater(string, Get(pTarget));
 		}
 		
-		return FormatDefault(pTarget, string);
+		return FormatDefault(Get(pTarget), string);
 	}
 	
 	void Format(void* pTarget, uint32 index, nglString& string)
@@ -428,7 +428,7 @@ public:
 			return mFormater(string, Get(pTarget, index));
 		}
 		
-		return FormatDefault(pTarget, string);
+		return FormatDefault(Get(pTarget, index), string);
 	}
 	
 	void Format(void* pTarget, uint32 index0, uint32 index1, nglString& string)
@@ -439,12 +439,13 @@ public:
 			return mFormater(string, Get(pTarget, index0, index1));
 		}
 		
-		return FormatDefault(pTarget, string);
+		return FormatDefault(Get(pTarget, index0, index1), string);
 	}
 	
-	void FormatDefault(void* pTarget, nglString& string)
+	void FormatDefault(Contents value, nglString& string)
 	{
 		// if don't want to use this default formater for your attribute, simply create a template trait specialization in attribute.cpp
+    string = value;
 		return;
 	}
 	
@@ -857,7 +858,7 @@ public:
       return mFormater(string, Get(pTarget));
     }
     
-    return FormatDefault(pTarget, string);
+    return FormatDefault(Get(pTarget), string);
   }
   
   void Format(void* pTarget, uint32 index, nglString& string)
@@ -868,7 +869,7 @@ public:
       return mFormater(string, Get(pTarget, index));
     }
     
-    return FormatDefault(pTarget, string);
+    return FormatDefault(Get(pTarget, index), string);
   }
   
   void Format(void* pTarget, uint32 index0, uint32 index1, nglString& string)
@@ -879,12 +880,13 @@ public:
       return mFormater(string, Get(pTarget, index0, index1));
     }
     
-    return FormatDefault(pTarget, string);
+    return FormatDefault(Get(pTarget, index0, index1), string);
   }
   
-  void FormatDefault(void* pTarget, nglString& string)
+  void FormatDefault(const Contents& value, nglString& string)
   {
     // if don't want to use this default formater for your attribute, simply create a template trait specialization in attribute.cpp
+    string = value;
     return;
   }
   
@@ -1207,30 +1209,30 @@ public:
     mpAttribute->Format(mpTarget, rString);
 	}
 	
-	void FormatDefault(nglString& rString)
-	{
-		mpAttribute->FormatDefault(mpTarget, rString);
-	}
+//	void FormatDefault(nglString& rString)
+//	{
+//		mpAttribute->FormatDefault(mpTarget, rString);
+//	}
 
 	void Format(uint32 index, nglString& rString)
 	{
     mpAttribute->Format(mpTarget, index, rString);
 	}
 	
-	void FormatDefault(uint32 index, nglString& rString)
-	{
-		mpAttribute->FormatDefault(mpTarget, index, rString);
-	}
+//	void FormatDefault(uint32 index, nglString& rString)
+//	{
+//		mpAttribute->FormatDefault(mpTarget, index, rString);
+//	}
 	
 	void Format(uint32 index0, uint32 index1, nglString& rString)
 	{
     mpAttribute->Format(mpTarget, index0, index1, rString);
 	}
 	
-	void FormatDefault(uint32 index0, uint32 index1, nglString& rString)
-	{
-		mpAttribute->FormatDefault(mpTarget, index0, index1, rString);
-	}
+//	void FormatDefault(uint32 index0, uint32 index1, nglString& rString)
+//	{
+//		mpAttribute->FormatDefault(mpTarget, index0, index1, rString);
+//	}
 	
 	
   nuiSignal1<Contents>& GetChangedSignal() const
@@ -1271,7 +1273,7 @@ template <>
 nuiAttributeEditor* nuiAttribute<bool>::GetDefaultEditor(void* pTarget);
 
 template <>
-void nuiAttribute<bool>::FormatDefault(void* pTarget, nglString& string);
+void nuiAttribute<bool>::FormatDefault(bool value, nglString& string);
 
 
 
@@ -1284,7 +1286,7 @@ template <>
 nuiAttributeEditor* nuiAttribute<int8>::GetDefaultEditor(void* pTarget);
 
 template <>
-void nuiAttribute<int8>::FormatDefault(void* pTarget, nglString& string);
+void nuiAttribute<int8>::FormatDefault(int8 value, nglString& string);
 
 template <>
 bool nuiAttribute<int8>::ToString(int8 Value, nglString& rString) const;
@@ -1303,7 +1305,7 @@ template <>
 nuiAttributeEditor* nuiAttribute<int16>::GetDefaultEditor(void* pTarget);
 
 template <>
-void nuiAttribute<int16>::FormatDefault(void* pTarget, nglString& string);
+void nuiAttribute<int16>::FormatDefault(int16 value, nglString& string);
 
 template <>
 bool nuiAttribute<int16>::ToString(int16 rValue, nglString& rString) const;
@@ -1321,7 +1323,7 @@ template <>
 nuiAttributeEditor* nuiAttribute<int32>::GetDefaultEditor(void* pTarget);
 
 template <>
-void nuiAttribute<int32>::FormatDefault(void* pTarget, nglString& string);
+void nuiAttribute<int32>::FormatDefault(int32 value, nglString& string);
 
 template <>
 bool nuiAttribute<int32>::ToString(int32 rValue, nglString& rString) const;
@@ -1338,7 +1340,7 @@ template <>
 nuiAttributeEditor* nuiAttribute<int64>::GetDefaultEditor(void* pTarget);
 
 template <>
-void nuiAttribute<int64>::FormatDefault(void* pTarget, nglString& string);
+void nuiAttribute<int64>::FormatDefault(int64 value, nglString& string);
 
 template <>
 bool nuiAttribute<int64>::ToString(int64 rValue, nglString& rString) const;
@@ -1356,7 +1358,7 @@ template <>
 nuiAttributeEditor* nuiAttribute<uint8>::GetDefaultEditor(void* pTarget);
 
 template <>
-void nuiAttribute<uint8>::FormatDefault(void* pTarget, nglString& string);
+void nuiAttribute<uint8>::FormatDefault(uint8 value, nglString& string);
 
 template <>
 bool nuiAttribute<uint8>::ToString(uint8 rValue, nglString& rString) const;
@@ -1374,7 +1376,7 @@ template <>
 nuiAttributeEditor* nuiAttribute<uint16>::GetDefaultEditor(void* pTarget);
 
 template <>
-void nuiAttribute<uint16>::FormatDefault(void* pTarget, nglString& string);
+void nuiAttribute<uint16>::FormatDefault(uint16 value, nglString& string);
 
 template <>
 bool nuiAttribute<uint16>::ToString(uint16 rValue, nglString& rString) const;
@@ -1393,7 +1395,7 @@ template <>
 nuiAttributeEditor* nuiAttribute<uint32>::GetDefaultEditor(void* pTarget);
 
 template <>
-void nuiAttribute<uint32>::FormatDefault(void* pTarget, nglString& string);
+void nuiAttribute<uint32>::FormatDefault(uint32 value, nglString& string);
 
 template <>
 bool nuiAttribute<uint32>::ToString(uint32 rValue, nglString& rString) const;
@@ -1413,7 +1415,7 @@ template <>
 nuiAttributeEditor* nuiAttribute<uint64>::GetDefaultEditor(void* pTarget);
 
 template <>
-void nuiAttribute<uint64>::FormatDefault(void* pTarget, nglString& string);
+void nuiAttribute<uint64>::FormatDefault(uint64 value, nglString& string);
 
 template <>
 bool nuiAttribute<uint64>::ToString(uint64 Value, nglString& rString) const;
@@ -1433,7 +1435,7 @@ template <>
 nuiAttributeEditor* nuiAttribute<float>::GetDefaultEditor(void* pTarget);
 
 template <>
-void nuiAttribute<float>::FormatDefault(void* pTarget, nglString& string);
+void nuiAttribute<float>::FormatDefault(float value, nglString& string);
 
 template <>
 bool nuiAttribute<float>::ToString(float Value, nglString& rString) const;
@@ -1452,7 +1454,7 @@ template <>
 nuiAttributeEditor* nuiAttribute<double>::GetDefaultEditor(void* pTarget);
 
 template <>
-void nuiAttribute<double>::FormatDefault(void* pTarget, nglString& string);
+void nuiAttribute<double>::FormatDefault(double value, nglString& string);
 
 template <>
 bool nuiAttribute<double>::ToString(double Value, nglString& rString) const;
@@ -1471,7 +1473,7 @@ template <>
 nuiAttributeEditor* nuiAttribute<nuiPosition>::GetDefaultEditor(void* pTarget);
 
 template <>
-void nuiAttribute<nuiPosition>::FormatDefault(void* pTarget, nglString& string);
+void nuiAttribute<nuiPosition>::FormatDefault(nuiPosition value, nglString& string);
 
 template <>
 bool nuiAttribute<nuiPosition>::ToString(nuiPosition Value, nglString& rString) const;
@@ -1498,7 +1500,7 @@ bool nuiAttribute<nglString>::FromString(nglString& rValue, const nglString& rSt
 template <>
 nuiAttributeEditor* nuiAttribute<nglString>::GetDefaultEditor(void* pTarget);
 template <>
-void nuiAttribute<nglString>::FormatDefault(void* pTarget, nglString& string);
+void nuiAttribute<nglString>::FormatDefault(nglString value, nglString& string);
 
 
 
@@ -1517,7 +1519,7 @@ template <>
 nuiAttributeEditor* nuiAttribute<const nglString&>::GetDefaultEditor(void* pTarget);
 
 template <>
-void nuiAttribute<const nglString&>::FormatDefault(void* pTarget, nglString& string);
+void nuiAttribute<const nglString&>::FormatDefault(const nglString& rValue, nglString& string);
 
 
 
@@ -1537,7 +1539,7 @@ bool nuiAttribute<nuiColor>::FromString(nuiColor& rValue, const nglString& rStri
 template <>
 nuiAttributeEditor* nuiAttribute<nuiColor>::GetDefaultEditor(void* pTarget);
 template <>
-void nuiAttribute<nuiColor>::FormatDefault(void* pTarget, nglString& string);
+void nuiAttribute<nuiColor>::FormatDefault(nuiColor value, nglString& string);
 
 
 
@@ -1555,7 +1557,7 @@ bool nuiAttribute<const nuiColor&>::FromString(nuiColor& rValue, const nglString
 template <>
 nuiAttributeEditor* nuiAttribute<const nuiColor&>::GetDefaultEditor(void* pTarget);
 template <>
-void nuiAttribute<const nuiColor&>::FormatDefault(void* pTarget, nglString& string);
+void nuiAttribute<const nuiColor&>::FormatDefault(const nuiColor& rColor, nglString& string);
 
 
 
@@ -1574,7 +1576,7 @@ bool nuiAttribute<nuiPoint>::FromString(nuiPoint& rValue, const nglString& rStri
 template <>
 nuiAttributeEditor* nuiAttribute<nuiPoint>::GetDefaultEditor(void* pTarget);
 template <>
-void nuiAttribute<nuiPoint>::FormatDefault(void* pTarget, nglString& string);
+void nuiAttribute<nuiPoint>::FormatDefault(nuiPoint value, nglString& string);
 
 
 
@@ -1592,7 +1594,7 @@ bool nuiAttribute<nuiRect>::FromString(nuiRect& rValue, const nglString& rString
 template <>
 nuiAttributeEditor* nuiAttribute<nuiRect>::GetDefaultEditor(void* pTarget);
 template <>
-void nuiAttribute<nuiRect>::FormatDefault(void* pTarget, nglString& string);
+void nuiAttribute<nuiRect>::FormatDefault(nuiRect value, nglString& string);
 
 
 //********************************
@@ -1610,7 +1612,7 @@ template <>
 nuiAttributeEditor* nuiAttribute<const nuiRect&>::GetDefaultEditor(void* pTarget);
 
 template <>
-void nuiAttribute<const nuiRect&>::FormatDefault(void* pTarget, nglString& string);
+void nuiAttribute<const nuiRect&>::FormatDefault(const nuiRect& rValue, nglString& string);
 
 
 
@@ -1628,7 +1630,7 @@ bool nuiAttribute<nuiBorder>::FromString(nuiBorder& rValue, const nglString& rSt
 template <>
 nuiAttributeEditor* nuiAttribute<nuiBorder>::GetDefaultEditor(void* pTarget);
 template <>
-void nuiAttribute<nuiBorder>::FormatDefault(void* pTarget, nglString& string);
+void nuiAttribute<nuiBorder>::FormatDefault(nuiBorder value, nglString& string);
 
 
 //********************************
@@ -1646,7 +1648,7 @@ template <>
 nuiAttributeEditor* nuiAttribute<const nuiBorder&>::GetDefaultEditor(void* pTarget);
 
 template <>
-void nuiAttribute<const nuiBorder&>::FormatDefault(void* pTarget, nglString& string);
+void nuiAttribute<const nuiBorder&>::FormatDefault(const nuiBorder& rValue, nglString& string);
 
 
 
@@ -1663,7 +1665,7 @@ template <>
 bool nuiAttribute<nglPath>::FromString(nglPath& rValue, const nglString& rString) const;
 
 template <>
-void nuiAttribute<nglPath>::FormatDefault(void* pTarget, nglString& string);
+void nuiAttribute<nglPath>::FormatDefault(nglPath value, nglString& string);
 
 
 
@@ -1679,7 +1681,7 @@ template <>
 bool nuiAttribute<const nglPath&>::FromString(nglPath& rValue, const nglString& rString) const;
 
 template <>
-void nuiAttribute<const nglPath&>::FormatDefault(void* pTarget, nglString& string);
+void nuiAttribute<const nglPath&>::FormatDefault(const nglPath& rValue, nglString& string);
 
 
 
@@ -1696,7 +1698,7 @@ template <>
 bool nuiAttribute<nuiDecorationMode>::FromString(nuiDecorationMode& rValue, const nglString& rString) const;
 
 template <>
-void nuiAttribute<nuiDecorationMode>::FormatDefault(void* pTarget, nglString& string);
+void nuiAttribute<nuiDecorationMode>::FormatDefault(nuiDecorationMode value, nglString& string);
 
 
 
@@ -1712,7 +1714,7 @@ template <>
 bool nuiAttribute<nuiShapeMode>::FromString(nuiShapeMode& rValue, const nglString& rString) const;
 
 template <>
-void nuiAttribute<nuiShapeMode>::FormatDefault(void* pTarget, nglString& string);
+void nuiAttribute<nuiShapeMode>::FormatDefault(nuiShapeMode value, nglString& string);
 
 
 
@@ -1732,7 +1734,7 @@ template <>
 nuiAttributeEditor* nuiAttribute<const nuiRange&>::GetDefaultEditor(void* pTarget);
 
 template <>
-void nuiAttribute<const nuiRange&>::FormatDefault(void* pTarget, nglString& string);
+void nuiAttribute<const nuiRange&>::FormatDefault(const nuiRange& rValue, nglString& string);
 
 
 
@@ -1753,7 +1755,7 @@ template <>
 nuiAttributeEditor* nuiAttribute<nuiDecorationLayer>::GetDefaultEditor(void* pTarget);
 
 template <>
-void nuiAttribute<nuiDecorationLayer>::FormatDefault(void* pTarget, nglString& string);
+void nuiAttribute<nuiDecorationLayer>::FormatDefault(nuiDecorationLayer value, nglString& string);
 
 
 
@@ -1772,7 +1774,7 @@ template <>
 nuiAttributeEditor* nuiAttribute<nuiMouseCursor>::GetDefaultEditor(void* pTarget);
 
 template <>
-void nuiAttribute<nuiMouseCursor>::FormatDefault(void* pTarget, nglString& string);
+void nuiAttribute<nuiMouseCursor>::FormatDefault(nuiMouseCursor value, nglString& string);
 
 
 
@@ -1788,7 +1790,7 @@ template <>
 bool nuiAttribute<const nglVectorf&>::FromString(nglVectorf& rValue, const nglString& rString) const;
 
 template <>
-void nuiAttribute<const nglVectorf&>::FormatDefault(void* pTarget, nglString& string);
+void nuiAttribute<const nglVectorf&>::FormatDefault(const nglVectorf& rValue, nglString& string);
 
 //********************************
 //
@@ -1802,7 +1804,7 @@ template <>
 bool nuiAttribute<nglVectorf>::FromString(nglVectorf& rValue, const nglString& rString) const;
 
 template <>
-void nuiAttribute<nglVectorf>::FormatDefault(void* pTarget, nglString& string);
+void nuiAttribute<nglVectorf>::FormatDefault(nglVectorf value, nglString& string);
 
 
 
@@ -1819,7 +1821,7 @@ bool nuiAttribute<const nglMatrixf&>::FromString(nglMatrixf& rValue, const nglSt
 
 
 template <>
-void nuiAttribute<const nglMatrixf&>::FormatDefault(void* pTarget, nglString& string);
+void nuiAttribute<const nglMatrixf&>::FormatDefault(const nglMatrixf& value, nglString& string);
 
 //********************************
 //
@@ -1834,7 +1836,7 @@ bool nuiAttribute<nglMatrixf>::FromString(nglMatrixf& rValue, const nglString& r
 
 
 template <>
-void nuiAttribute<nglMatrixf>::FormatDefault(void* pTarget, nglString& string);
+void nuiAttribute<nglMatrixf>::FormatDefault(nglMatrixf value, nglString& string);
 
 
 //********************************
@@ -1849,6 +1851,6 @@ template <>
 bool nuiAttribute<nuiBlendFunc>::FromString(nuiBlendFunc& rValue, const nglString& rString) const;
 
 template <>
-void nuiAttribute<nuiBlendFunc>::FormatDefault(void* pTarget, nglString& string);
+void nuiAttribute<nuiBlendFunc>::FormatDefault(nuiBlendFunc value, nglString& string);
 
 
