@@ -113,6 +113,20 @@ bool nuiImageDropZone::SetImage(const nglPath& rPath, nuiImage* pImage)
 }
 
 
+bool nuiImageDropZone::SetImage(const nglPath& rPath)
+{
+	if (!rPath.Exists())
+		return false;
+	
+	mPath	 = rPath;
+	mpImage->Trash();
+	
+  mpImage = new nuiImage(mPath);
+	AddChild(mpImage);
+	
+	return true;
+}
+
 
 
 bool nuiImageDropZone::Draw(nuiDrawContext* pContext)

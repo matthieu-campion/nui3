@@ -30,6 +30,7 @@ public:
   nuiSignal2<const nglPath&, nuiImage*> ImageDropped; ///< warns the user that an image has been dropped in the zone. returns true or false to tells the zone to accept the image or not.
 
 	bool SetImage(const nglPath& rPath, nuiImage* pImage);
+	bool SetImage(const nglPath& rPath);
 
 protected:
 
