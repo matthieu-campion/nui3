@@ -268,6 +268,9 @@ bool nuiKnob::MouseMoved(nuiSize X, nuiSize Y)
 
     mRange.SetValue(start);
     
+    mInteractiveValueChanged = true;
+    InteractiveValueChanged();
+    
     // Rotate the contained widget if there is only one:
     /* unused: nuiWidget* pItem = NULL; */
 
@@ -314,9 +317,6 @@ bool nuiKnob::DoInvalidate(const nuiEvent& rEvent)
     mpImageSequence->SetOrientation(mSequenceOrientation);
     mSequenceNeedRefresh = false;
   }
-  
-  mInteractiveValueChanged = true;
-  InteractiveValueChanged();
   
   Invalidate();
   return false;

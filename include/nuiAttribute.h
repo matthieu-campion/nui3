@@ -442,6 +442,18 @@ public:
 		return FormatDefault(Get(pTarget, index0, index1), string);
 	}
 	
+  
+  void FormatValue(Contents value, nglString& rString)
+  {
+    if (mFormater)
+    {
+      // the user has specified its own formater.
+      return mFormater(rString, value);
+    }
+    
+    return FormatDefault(value, rString);
+  }
+  
 	void FormatDefault(Contents value, nglString& string)
 	{
 		// if don't want to use this default formater for your attribute, simply create a template trait specialization in attribute.cpp
@@ -883,6 +895,18 @@ public:
     return FormatDefault(Get(pTarget, index0, index1), string);
   }
   
+  
+  void FormatValue(const Contents& value, nglString& rString)
+  {
+    if (mFormater)
+    {
+      // the user has specified its own formater.
+      return mFormater(rString, value);
+    }
+    
+    return FormatDefault(value, rString);
+  }
+  
   void FormatDefault(const Contents& value, nglString& string)
   {
     // if don't want to use this default formater for your attribute, simply create a template trait specialization in attribute.cpp
@@ -1228,6 +1252,11 @@ public:
 	{
     mpAttribute->Format(mpTarget, index0, index1, rString);
 	}
+  
+  void FormatValue(Contents value, nglString& rString)
+  {
+    mpAttribute->FormatValue(value, rString);
+  }
 	
 //	void FormatDefault(uint32 index0, uint32 index1, nglString& rString)
 //	{
