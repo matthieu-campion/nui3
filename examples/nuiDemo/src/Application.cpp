@@ -58,9 +58,6 @@ void Application::OnExit (int Code)
 void Application::OnInit()
 {
   nuiInit(NULL);
-  
-  // build application engine
-  mpEngine = new Engine();  
 
   InitWindow();
 

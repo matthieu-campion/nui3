@@ -23,6 +23,11 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
   SetDebugMode(true);
 #endif
   
+  EnableAutoRotation(false);
+#ifdef _UIKIT_
+  SetRotation(90);
+#endif
+  
   nuiCoverFlow* pFlow = new nuiCoverFlow();
   AddChild(pFlow);
   nglPath p(_T("rsrc:/decorations"));
