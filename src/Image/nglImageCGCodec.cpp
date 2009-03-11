@@ -151,13 +151,11 @@ CGImageRef nglImageCGCodec::ReadInfo(nglIStream* pIStream)
   const bool shouldInterpolate = true;
   if (ProbePNG(pIStream))
   {
-    pCGImage =
-      CGImageCreateWithPNGDataProvider(mpCGProvider, NULL, shouldInterpolate, kCGRenderingIntentDefault);
+    pCGImage = CGImageCreateWithPNGDataProvider(mpCGProvider, NULL, shouldInterpolate, kCGRenderingIntentDefault);
   }
   else if (ProbeJPEG(pIStream))
   {
-    pCGImage =
-      CGImageCreateWithJPEGDataProvider(mpCGProvider, NULL, false, kCGRenderingIntentDefault);
+    pCGImage = CGImageCreateWithJPEGDataProvider(mpCGProvider, NULL, false, kCGRenderingIntentDefault);
   }
   if (pCGImage)
   {

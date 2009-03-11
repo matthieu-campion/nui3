@@ -26,6 +26,4 @@ protected:
   virtual void DrawSliderBackground(nuiDrawContext* pContext, nuiSlider* pScroll);
   virtual void DrawSliderForeground(nuiDrawContext* pContext, nuiSlider* pScroll);
 
-  
-  
 };

@@ -82,7 +82,8 @@ precompiled header central file and everything should be rolling. (lookup precom
 #include "nuiTextureHelpers.h"
 #include "nuiWidgetAnimation.h"
 #include "nuiApplication.h"
-
+#include "nuiAttribute.h"
+#include "nuiAttributeEditor.h"
 #include "nuiTranslator.h"
 
 #endif // __nui_all_h__
