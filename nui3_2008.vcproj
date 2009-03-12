@@ -225,6 +225,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\Attributes\nuiGenericAttributeEditor.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiGenericAttributeEditor.h"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Attributes\nuiPathAttributeEditor.cpp"
 					>
 				</File>
@@ -1717,6 +1725,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\SimpleWidgets\nuiCoverFlow.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiCoverFlow.h"
+					>
+				</File>
+				<File
 					RelativePath=".\src\SimpleWidgets\nuiFileList.cpp"
 					>
 				</File>
@@ -1809,11 +1825,11 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\SimpleWidgets\nuiProgress.cpp"
+					RelativePath=".\src\SimpleWidgets\nuiProgressBar.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\include\nuiProgress.h"
+					RelativePath=".\include\nuiProgressBar.h"
 					>
 				</File>
 				<File

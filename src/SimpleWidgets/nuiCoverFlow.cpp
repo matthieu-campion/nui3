@@ -1,12 +1,11 @@
 /*
- *  nuiCoverFlow.cpp
- *  nui3
- *
- *  Created by meeloo on 2/25/09.
- *  Copyright 2009 mxp4. All rights reserved.
- *
- */
+NUI3 - C++ cross-platform GUI framework for OpenGL based applications
+Copyright (C) 2002-2003 Sebastien Metrot
 
+licence: see nui3/LICENCE.TXT
+*/
+
+#include "nui.h"
 #include "nuiCoverFlow.h"
 
 nuiCoverFlow::nuiCoverFlow()

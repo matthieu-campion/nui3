@@ -1241,10 +1241,10 @@ void nuiD3DPainter::LoadCurrentViewport()
 
   LPDIRECT3DDEVICE9 pDev = mpContext->GetDirect3DDevice();
   D3DVIEWPORT9 viewport;
-  viewport.X = mProjectionViewport.top().Left();
-  viewport.Y = mProjectionViewport.top().Top();
-  viewport.Width = mProjectionViewport.top().GetWidth();
-  viewport.Height = mProjectionViewport.top().GetHeight();
+  viewport.X = mProjectionViewportStack.top().Left();
+  viewport.Y = mProjectionViewportStack.top().Top();
+  viewport.Width = mProjectionViewportStack.top().GetWidth();
+  viewport.Height = mProjectionViewportStack.top().GetHeight();
   viewport.MinZ = 0;         /* Min/max of clip Volume */
   viewport.MaxZ = 1;
   pDev->EndScene();
