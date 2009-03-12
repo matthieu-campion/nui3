@@ -1177,7 +1177,7 @@ void nuiD3DPainter::LoadProjectionMatrix(const nuiRect& rViewport, const nuiMatr
 {
   NUI_RETURN_IF_RENDERING_DISABLED;
   
-  nuiPainter::LoadProjectionMatrix(rMatrix);
+  nuiPainter::LoadProjectionMatrix(rViewport, rMatrix);
   /*
    glLoadMatrixf(rMatrix.Array);
    CheckForGLErrors();
