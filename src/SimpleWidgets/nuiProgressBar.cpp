@@ -6,7 +6,7 @@
 */
 
 #include "nui.h"
-#include "nuiProgress.h"
+#include "nuiProgressBar.h"
 #include "nuiShape.h"
 #include "nuiDrawContext.h"
 
@@ -14,9 +14,9 @@
 #define AMP 0.15f
 #define INC 2.5f
 
-nuiProgress::nuiProgress(float Progress)
+nuiProgressBar::nuiProgressBar(float Progress)
 {
-  if (SetObjectClass(_T("nuiProgress")))
+  if (SetObjectClass(_T("nuiProgressBar")))
     InitAttributes();
   
   nuiColor::GetColor(_T("nuiDefaultClrProgressFg"), mFGColor);
@@ -33,9 +33,9 @@ nuiProgress::nuiProgress(float Progress)
     StartAutoDraw(FPS);
 }
 
-nuiProgress::nuiProgress()
+nuiProgressBar::nuiProgressBar()
 {
-  if (SetObjectClass(_T("nuiProgress")))
+  if (SetObjectClass(_T("nuiProgressBar")))
     InitAttributes();
   
   nuiColor::GetColor(_T("nuiDefaultClrProgressFg"), mFGColor);
@@ -52,7 +52,7 @@ nuiProgress::nuiProgress()
     StartAutoDraw(FPS);
 }
 
-bool nuiProgress::Load(const nuiXMLNode* pNode)
+bool nuiProgressBar::Load(const nuiXMLNode* pNode)
 {
   nuiWidget::Load(pNode);
   SetProgress(0);
@@ -65,74 +65,74 @@ bool nuiProgress::Load(const nuiXMLNode* pNode)
   return true;
 }
 
-nuiProgress::~nuiProgress()
+nuiProgressBar::~nuiProgressBar()
 {
 }
 
 
 
-void nuiProgress::InitAttributes()
+void nuiProgressBar::InitAttributes()
 {
   AddAttribute(new nuiAttribute<const nuiColor&>
                (nglString(_T("ForegroundColor")), nuiUnitNone,
-                nuiMakeDelegate(this, &nuiProgress::GetFGColor), 
-                nuiMakeDelegate(this, &nuiProgress::SetFGColor)));
+                nuiMakeDelegate(this, &nuiProgressBar::GetFGColor), 
+                nuiMakeDelegate(this, &nuiProgressBar::SetFGColor)));
 
   AddAttribute(new nuiAttribute<const nuiColor&>
                (nglString(_T("BackgroundColor")), nuiUnitNone,
-                nuiMakeDelegate(this, &nuiProgress::GetBGColor), 
-                nuiMakeDelegate(this, &nuiProgress::SetBGColor)));
+                nuiMakeDelegate(this, &nuiProgressBar::GetBGColor), 
+                nuiMakeDelegate(this, &nuiProgressBar::SetBGColor)));
 
   AddAttribute(new nuiAttribute<float>
                (nglString(_T("Glow")), nuiUnitNone,
-                nuiMakeDelegate(this, &nuiProgress::GetGlow), 
-                nuiMakeDelegate(this, &nuiProgress::SetGlow)));
+                nuiMakeDelegate(this, &nuiProgressBar::GetGlow), 
+                nuiMakeDelegate(this, &nuiProgressBar::SetGlow)));
   
   
 }
 
 
-void nuiProgress::SetFGColor(const nuiColor& Color)
+void nuiProgressBar::SetFGColor(const nuiColor& Color)
 {
   mFGColor = Color;
   Invalidate();
 }
 
-const nuiColor& nuiProgress::GetFGColor() const
+const nuiColor& nuiProgressBar::GetFGColor() const
 {
   return mFGColor;
 }
 
-void nuiProgress::SetBGColor(const nuiColor& Color)
+void nuiProgressBar::SetBGColor(const nuiColor& Color)
 {
   mBGColor = Color;
   Invalidate();
 }
 
-const nuiColor& nuiProgress::GetBGColor() const
+const nuiColor& nuiProgressBar::GetBGColor() const
 {
   return mBGColor;
 }
 
 
-void nuiProgress::SetGlow(float value)
+void nuiProgressBar::SetGlow(float value)
 {
   mGlowStrength = value;
 }
 
-float nuiProgress::GetGlow() const
+float nuiProgressBar::GetGlow() const
 {
   return mGlowStrength;
 }
 
 
 
-nuiRect nuiProgress::CalcIdealSize()
+nuiRect nuiProgressBar::CalcIdealSize()
 {
   return nuiRect(0,0,150,16);
 }
 
-bool nuiProgress::Draw(nuiDrawContext* pContext)
+bool nuiProgressBar::Draw(nuiDrawContext* pContext)
 {
   float alpha = 0;
   
@@ -232,7 +232,7 @@ bool nuiProgress::Draw(nuiDrawContext* pContext)
 }
 
 
-void nuiProgress::SetProgress(float Progress)
+void nuiProgressBar::SetProgress(float Progress)
 {
   if (mProgress != Progress)
   {
@@ -241,12 +241,12 @@ void nuiProgress::SetProgress(float Progress)
   }
 }
 
-float nuiProgress::GetProgress() const
+float nuiProgressBar::GetProgress() const
 {
   return mProgress;
 }
 
-void nuiProgress::SetGlowStrength(float Strength)
+void nuiProgressBar::SetGlowStrength(float Strength)
 {
   mGlowStrength = Strength;
   if (mGlowStrength != 0)
@@ -258,17 +258,17 @@ void nuiProgress::SetGlowStrength(float Strength)
   }
 }
 
-float nuiProgress::GetGlowStrength() const
+float nuiProgressBar::GetGlowStrength() const
 {
   return mGlowStrength;
 }
 
-bool nuiProgress::IsEndless() const
+bool nuiProgressBar::IsEndless() const
 {
   return mEndless;
 }
 
-void nuiProgress::SetEndless(bool endless)
+void nuiProgressBar::SetEndless(bool endless)
 {
   if (mEndless != endless)
   {

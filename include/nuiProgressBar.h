@@ -5,20 +5,20 @@
   licence: see nui3/LICENCE.TXT
 */
 
-#ifndef __nuiProgress_h__
-#define __nuiProgress_h__
+#ifndef __nuiProgressBar_h__
+#define __nuiProgressBar_h__
 
 //#include "nui.h"
 #include "nuiWidget.h"
 #include "nuiContainer.h"
 
-class NUI_API nuiProgress : public nuiWidget
+class NUI_API nuiProgressBar : public nuiWidget
 {
 public:
-  nuiProgress(float Progress);
-  nuiProgress();
+  nuiProgressBar(float Progress);
+  nuiProgressBar();
   virtual bool Load(const nuiXMLNode* pNode);
-  virtual ~nuiProgress();
+  virtual ~nuiProgressBar();
 
   virtual nuiRect CalcIdealSize();
   virtual bool Draw(nuiDrawContext* pContext);
@@ -58,5 +58,5 @@ protected:
 };
 
 
-#endif // #ifndef __nuiProgress_h__
+#endif // #ifndef __nuiProgressBar_h__
 

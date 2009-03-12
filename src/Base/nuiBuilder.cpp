@@ -43,7 +43,7 @@
 #include "nuiColumnTreeView.h"
 #include "nuiSlider.h"
 #include "nuiPane.h"
-#include "nuiProgress.h"
+#include "nuiProgressBar.h"
 #include "nuiGrid.h"
 #include "nuiHBox.h"
 #include "nuiVBox.h"
@@ -109,7 +109,7 @@ void nuiBuilder::Init()
 #endif
   NUI_ADD_WIDGET_CREATOR(nuiSVGView,"Widget");
   NUI_ADD_WIDGET_CREATOR(nuiTab,"Widget");
-  NUI_ADD_WIDGET_CREATOR(nuiProgress,"Widget");
+  NUI_ADD_WIDGET_CREATOR(nuiProgressBar,"Widget");
   NUI_ADD_WIDGET_CREATOR(nuiFormatedLabel,"Widget");
 }
 
