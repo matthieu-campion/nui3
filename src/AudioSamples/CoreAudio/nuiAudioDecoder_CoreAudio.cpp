@@ -149,7 +149,11 @@ bool nuiAudioDecoder::CreateAudioDecoderPrivate()
     }
   }
   if (!ready)
+  {
+    delete mpPrivate;
+    mpPrivate = NULL;
     return false;
+  }
   
   
   OSStatus err = noErr;
@@ -160,7 +164,11 @@ bool nuiAudioDecoder::CreateAudioDecoderPrivate()
   // Get the default audio extraction ASBD
   err = MovieAudioExtractionGetProperty(mpPrivate->mExtractionSessionRef, kQTPropertyClass_MovieAudioExtraction_Audio, kQTMovieAudioExtractionAudioPropertyID_AudioStreamBasicDescription, sizeof (asbd), &asbd, nil);
   if (err != noErr)
+  {
+    delete mpPrivate;
+    mpPrivate = NULL;
     return false;
+  }
   
   // Convert the ASBD to return non-interleaved Float32.
   uint32 nbChannels     = asbd.mChannelsPerFrame;
@@ -182,8 +190,13 @@ bool nuiAudioDecoder::CreateAudioDecoderPrivate()
   // Set the new audio extraction ASBD
   err = MovieAudioExtractionSetProperty(mpPrivate->mExtractionSessionRef, kQTPropertyClass_MovieAudioExtraction_Audio, kQTMovieAudioExtractionAudioPropertyID_AudioStreamBasicDescription, sizeof (asbd), &asbd);
   if (err != noErr)
+  {
+    delete mpPrivate;
+    mpPrivate = NULL;
     return false;
+  }
   
+  return true;
 }
 
 
@@ -212,7 +225,8 @@ bool nuiAudioDecoder::Seek(uint64 SampleFrame)
 
 bool nuiAudioDecoder::ReadInfo()
 {
-  NGL_ASSERT(mpPrivate);  
+  if (!mpPrivate)
+    return false;
   
   OSStatus err = noErr;
   AudioStreamBasicDescription asbd;
@@ -250,7 +264,7 @@ bool nuiAudioDecoder::ReadInfo()
   mInfo.SetSampleRate(SampleRate);
   mInfo.SetBitsPerSample(BitsPerSample);
   mInfo.SetSampleFrames(SampleFrames);
-  
+  mInfo.SetFileFormat(eAudioCompressed);
   return true;
 }
 

@@ -12,6 +12,7 @@ enum nuiAudioFileFormat
   eAudioWave,
   eAudioAiff,
   eAudioRex,
+  eAudioCompressed,
   eAudioUnknown,
 };
 
