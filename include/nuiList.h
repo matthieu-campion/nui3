@@ -69,12 +69,18 @@ public:
   nuiMouseClicked DoubleClicked; ///< This event is called whenever an item is chosen, that is to say, double clicked. This can only happend in a mono-selection list.
   nuiSimpleEventSource<nuiWidgetActivated> Activated; ///< This event is called whenever an item is chosen, that is to say, double clicked. This can only happend in a mono-selection list.
   nuiSimpleEventSource<nuiWidgetSelected> SelectionChanged; ///< This event is called whenever selection of the items of the list have changed. 
+  nuiSignal2<nuiWidget*,nuiWidget*> SelectionMoved;
 
   // Incomming events:
   bool KeyDown(const nglKeyEvent& rEvent);
   bool KeyUp(const nglKeyEvent& rEvent);
-  bool MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
-  bool MouseMoved  (nuiSize X, nuiSize Y);
+  bool MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
+  bool MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
+  bool MouseMoved(nuiSize X, nuiSize Y);
+  
+  // temp.
+  void MoveChild(nuiWidget* pSelectedChild, nuiWidget* pDestinationChild);
+
 
 protected:
   nuiOrientation mOrientation; /// mHorizontal is true if the containers' layout if horizontal, false if vertical.
@@ -88,12 +94,16 @@ protected:
   bool mDisplayCursor;
   uint32 mSelectionStart;
   bool mSelection;
+  
+  bool mClicked;
+  bool mMoved;
 
   static nuiSize    mDefaultBorderSize;
   bool           mMultiSelectable;
   bool           mUnselectable;
   bool           mFixedAspectRatio;
   nuiWidgetPtr     mpLastItem;
+  nuiWidgetPtr     mpLastDestinationItem;
   nuiEventSink<nuiList> mEventSink;
 };
 

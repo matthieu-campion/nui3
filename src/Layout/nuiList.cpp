@@ -27,6 +27,9 @@ nuiList::nuiList(nuiOrientation Orientation)
   mUnselectable = false;
   mFixedAspectRatio = false;
   mpLastItem = NULL;
+  mpLastDestinationItem = NULL;
+  mClicked = false;
+  mMoved = false;
 
   mCursorLine = 0;
   mSelection = false;
@@ -52,6 +55,9 @@ bool nuiList::Load(const nuiXMLNode* pNode)
   mUnselectable = pNode->GetAttribute(nglString(_T("Unselectable"))) == _T("true");
   mFixedAspectRatio = pNode->GetAttribute(nglString(_T("FixedAspectRatio"))) != _T("false");
   mpLastItem =  NULL;
+  mpLastDestinationItem = NULL;
+  mClicked = false;
+  mMoved = false;
 
   mCursorLine = 0;
   mSelection = false;
@@ -621,6 +627,7 @@ bool nuiList::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
           }
         }
         mpLastItem = pItem; 
+        mClicked = true;
       }
       SelectionChanged();
       Invalidate();
@@ -631,6 +638,71 @@ bool nuiList::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
 }            
 
 
+bool nuiList::MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
+{
+  mClicked = false;
+  
+  if (mMoved)
+  {
+    mMoved = false;
+    // send signal
+    SelectionMoved(mpLastItem, mpLastDestinationItem);
+  }
+  return false;
+}
+
+bool nuiList::MouseMoved  (nuiSize X, nuiSize Y)
+{
+  if (!mClicked)
+    return false;
+  
+  nuiWidgetPtr pItem = GetItem(X,Y);
+
+  if ((pItem == mpLastItem) || (pItem == mpLastDestinationItem))
+    return false;
+  
+  mpLastDestinationItem = pItem;
+
+  // reorganize children
+  MoveChild(mpLastItem, mpLastDestinationItem);
+  
+  mMoved = true;
+  
+  UpdateLayout();
+  
+  return false;
+}            
+      
+void nuiList::MoveChild(nuiWidget* pSelectedChild, nuiWidget* pDestinationChild)
+{
+  nuiWidgetList::iterator it;
+  for (it = mpChildren.begin(); it != mpChildren.end(); ++it)
+  {
+    nuiWidget* pItem = *it;
+    if (pItem == pSelectedChild)
+    {
+      mpChildren.erase(it);
+      break;
+    }
+  }
+  
+  if (!pDestinationChild)
+  {
+    mpChildren.push_back(pSelectedChild);
+    return;
+  }
+  
+  for (it = mpChildren.begin(); it != mpChildren.end(); ++it)
+  {
+    nuiWidget* pItem = *it;
+    if (pItem == pDestinationChild)
+    {
+      mpChildren.insert(it, pSelectedChild);
+      break;
+    }
+  }
+  
+}
 
 void nuiList::SelectItem(uint ItemNumber)
 {
@@ -733,10 +805,6 @@ void nuiList::SelectItemSilent(nuiWidgetPtr pItem)
 
 
 
-bool nuiList::MouseMoved  (nuiSize X, nuiSize Y)
-{
-  return false;
-}            
 
 // nuiList path management helper:
 bool nuiList::PopulateFiles(const nglPath& rPath)
