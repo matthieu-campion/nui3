@@ -318,14 +318,32 @@ bool nuiPainter::GetDummyMode() const
   return mDummyMode;
 }
 
-void nuiPainter::SetAngle(uint32 Angle)
+void nuiPainter::SetAngle(int32 Angle)
 {
-  mAngle = Angle;
+  mAngle = Angle % 360;
+  while (mAngle < 0)
+    mAngle += 360;
 }
 
-uint32 nuiPainter::GetAngle()
+int32 nuiPainter::GetAngle() const
 {
+  if (mpSurface)
+    return 0;
   return mAngle;
+}
+
+int32 nuiPainter::GetCurrentWidth() const
+{
+  if (mpSurface)
+    return mpSurface->GetWidth();
+  return mWidth;
+}
+
+int32 nuiPainter::GetCurrentHeight() const
+{
+  if (mpSurface)
+    return mpSurface->GetHeight();
+  return mHeight;
 }
 
 

@@ -253,6 +253,7 @@ void nuiGLPainter::SetViewport()
   nuiCheckForGLErrors();
   
   glMatrixMode (GL_MODELVIEW);
+  nuiCheckForGLErrors();
 }
 
 void nuiGLPainter::StartRendering()
@@ -973,7 +974,6 @@ void nuiGLPainter::LoadProjectionMatrix(const nuiRect& rViewport, const nuiMatri
   nuiPainter::LoadProjectionMatrix(rViewport, rMatrix);
 
   SetViewport();
-  nuiCheckForGLErrors();
 }
 
 void nuiGLPainter::MultProjectionMatrix(const nuiMatrix& rMatrix)
@@ -983,7 +983,6 @@ void nuiGLPainter::MultProjectionMatrix(const nuiMatrix& rMatrix)
   nuiPainter::MultProjectionMatrix(rMatrix);
 
   SetViewport();
-  nuiCheckForGLErrors();
 }
 
 void nuiGLPainter::PushProjectionMatrix()
@@ -991,7 +990,6 @@ void nuiGLPainter::PushProjectionMatrix()
   NUI_RETURN_IF_RENDERING_DISABLED;
   
   nuiPainter::PushProjectionMatrix();
-  nuiCheckForGLErrors();
 }
 
 void nuiGLPainter::PopProjectionMatrix()
@@ -1000,7 +998,6 @@ void nuiGLPainter::PopProjectionMatrix()
   
   nuiPainter::PopProjectionMatrix();
   SetViewport();
-  nuiCheckForGLErrors();
 }
 
 
@@ -1548,25 +1545,5 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
   }
 }
 
-int32 nuiGLPainter::GetAngle() const
-{
-  if (mpSurface)
-    return 0;
-  return mAngle;
-}
-
-int32 nuiGLPainter::GetCurrentWidth() const
-{
-  if (mpSurface)
-    return mpSurface->GetWidth();
-  return mWidth;
-}
-
-int32 nuiGLPainter::GetCurrentHeight() const
-{
-  if (mpSurface)
-    return mpSurface->GetHeight();
-  return mHeight;
-}
 
 #endif //   #ifndef __NUI_NO_GL__

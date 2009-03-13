@@ -92,9 +92,6 @@ protected:
   GLint mOldFramebuffer, mOldRenderbuffer;
 
   bool CheckFramebufferStatus();
-  int32 GetAngle() const;
-  int32 GetCurrentWidth() const;
-  int32 GetCurrentHeight() const;
   void SetViewport();
 };
 

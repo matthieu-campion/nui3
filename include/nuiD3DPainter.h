@@ -72,7 +72,6 @@ protected:
   virtual void ReleaseCacheObject(void* pHandle);
   //void DrawSmallArray(const nuiRenderArray& rArray);
   void LoadCurrentMatrix();
-  void LoadCurrentViewport();
 
   class TextureInfo
   {
@@ -111,7 +110,7 @@ protected:
   };
   std::map<nuiSurface*, FramebufferInfo> mFramebuffers;
   LPDIRECT3DSURFACE9 mpBackBuffer;
-
+  void SetViewport();
 };
 #endif //   #ifndef __NUI_NO_D3D__
 

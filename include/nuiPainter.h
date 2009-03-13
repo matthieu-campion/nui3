@@ -127,8 +127,8 @@ public:
   uint32 GetBatches() const;
 
   // Display rotation
-  void SetAngle(uint32 Angle);
-  uint32 GetAngle();
+  void SetAngle(int32 Angle);
+  int32 GetAngle() const;
   
 
   // Debug:
@@ -162,6 +162,9 @@ protected:
   static uint32 mNeedTextureBackingStore;
   void AddNeedTextureBackingStore();
   void DelNeedTextureBackingStore();
+
+  int32 GetCurrentWidth() const;
+  int32 GetCurrentHeight() const;
 };
 
 #endif

@@ -2035,7 +2035,6 @@ void nglWindow::EndSession()
 
 
     HRESULT hr = mpDirect3DDevice->EndScene();
-    NGL_OUT(_T("EndScene\n"));
     hr = mpDirect3DDevice->Present(NULL, NULL, NULL, NULL);
     NGL_ASSERT(S_OK == hr);
   }
