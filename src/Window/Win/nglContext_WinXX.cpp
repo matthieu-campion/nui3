@@ -653,8 +653,10 @@ bool nglContext::BuildDirect3D(HWND hwnd, const nglContextInfo& rInfo, const ngl
 
 
   hr = mpDirect3DDevice->BeginScene();
+  NGL_OUT(_T("BeginScene\n"));
   hr = mpDirect3DDevice->Clear(0,NULL,D3DCLEAR_TARGET /*| D3DCLEAR_ZBUFFER*/, D3DCOLOR_XRGB(0,0,0),1.0f,0);
   hr = mpDirect3DDevice->EndScene();
+  NGL_OUT(_T("EndScene\n"));
   hr = mpDirect3DDevice->Present(NULL, NULL, NULL, NULL);
   return true;
 }

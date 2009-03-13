@@ -1248,8 +1248,10 @@ void nuiD3DPainter::LoadCurrentViewport()
   viewport.MinZ = 0;         /* Min/max of clip Volume */
   viewport.MaxZ = 1;
   pDev->EndScene();
+  NGL_OUT(_T("EndScene\n"));
   pDev->SetViewport(&viewport);
-  pDev->BeginScene();  
+  pDev->BeginScene();
+  NGL_OUT(_T("BeginScene\n"));
 }
 
 void nuiD3DPainter::ReleaseCacheObject(void* pHandle)
@@ -1798,6 +1800,7 @@ void nuiD3DPainter::SetSurface(nuiSurface* pSurface)
     }
 
     pDev->EndScene();
+    NGL_OUT(_T("EndScene\n"));
     pDev->SetRenderTarget(0, info.mpRenderSurface);
 
     D3DMATRIX projection;
@@ -1818,10 +1821,12 @@ void nuiD3DPainter::SetSurface(nuiSurface* pSurface)
     viewport.MaxZ = 1;
     pDev->SetViewport(&viewport);
     pDev->BeginScene();
+    NGL_OUT(_T("BeginScene\n"));
   }
   else
   {
     pDev->EndScene();
+    NGL_OUT(_T("EndScene\n"));
     pDev->SetRenderTarget(0, mpBackBuffer);
 
     D3DMATRIX projection;
@@ -1844,6 +1849,8 @@ void nuiD3DPainter::SetSurface(nuiSurface* pSurface)
     viewport.MaxZ = 10;
     pDev->SetViewport(&viewport);
     pDev->BeginScene();
+    NGL_OUT(_T("BeginScene\n"));
+
   }
 }
 

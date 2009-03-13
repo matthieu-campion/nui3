@@ -216,8 +216,15 @@ nuiGLPainter::~nuiGLPainter()
     glAAExit();
 }
 
-inline void nuiSetViewport(GLuint Angle, GLuint Width, GLuint Height, const nuiRect& rViewport, const nuiMatrix& rMatrix)
+void nuiGLPainter::SetViewport()
 {
+  //GetAngle(), GetCurrentWidth(), GetCurrentHeight(), mProjectionViewportStack.top(), mProjectionMatrixStack.top());
+  GLuint Angle = GetAngle();
+  GLuint Width = GetCurrentWidth();
+  GLuint Height = GetCurrentHeight();
+  const nuiRect& rViewport = mProjectionViewportStack.top();
+  const nuiMatrix& rMatrix = mProjectionMatrixStack.top();
+
   uint32 x, y, w, h;
   
   nuiRect r(rViewport);
@@ -257,7 +264,7 @@ void nuiGLPainter::StartRendering()
 
   nuiPainter::StartRendering();
   
-  nuiSetViewport(GetAngle(), GetCurrentWidth(), GetCurrentHeight(), mProjectionViewportStack.top(), mProjectionMatrixStack.top());
+  SetViewport();
 
   glDisable(GL_DEPTH_TEST);
   glDisable(GL_SCISSOR_TEST);
@@ -965,7 +972,7 @@ void nuiGLPainter::LoadProjectionMatrix(const nuiRect& rViewport, const nuiMatri
   
   nuiPainter::LoadProjectionMatrix(rViewport, rMatrix);
 
-  nuiSetViewport(GetAngle(), GetCurrentWidth(), GetCurrentHeight(), mProjectionViewportStack.top(), mProjectionMatrixStack.top());
+  SetViewport();
   nuiCheckForGLErrors();
 }
 
@@ -975,7 +982,7 @@ void nuiGLPainter::MultProjectionMatrix(const nuiMatrix& rMatrix)
   
   nuiPainter::MultProjectionMatrix(rMatrix);
 
-  nuiSetViewport(GetAngle(), GetCurrentWidth(), GetCurrentHeight(), mProjectionViewportStack.top(), mProjectionMatrixStack.top());
+  SetViewport();
   nuiCheckForGLErrors();
 }
 
@@ -992,7 +999,7 @@ void nuiGLPainter::PopProjectionMatrix()
   NUI_RETURN_IF_RENDERING_DISABLED;
   
   nuiPainter::PopProjectionMatrix();
-  nuiSetViewport(GetAngle(), GetCurrentWidth(), GetCurrentHeight(), mProjectionViewportStack.top(), mProjectionMatrixStack.top());
+  SetViewport();
   nuiCheckForGLErrors();
 }
 

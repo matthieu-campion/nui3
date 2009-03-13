@@ -1537,7 +1537,9 @@ nuiDrawContext *nuiDrawContext::CreateDrawContext(const nuiRect& rRect, nuiRende
 #endif
   }
   pC->SetPainter(pPainter);
+  pContext->BeginSession();
   pC->Set2DProjectionMatrix(rRect);
+  pContext->EndSession();
   return pC;
 }
 
