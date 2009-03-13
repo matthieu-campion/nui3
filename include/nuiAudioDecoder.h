@@ -27,6 +27,7 @@ public:
   virtual void SetPosition(uint32 position);
   
 private:
+  bool CreateAudioDecoderPrivate();
   virtual bool ReadInfo();
   bool Seek(uint64 SampleFrame);
   void Clear();

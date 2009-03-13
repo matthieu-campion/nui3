@@ -116,28 +116,7 @@ void nuiAudioDecoder::Clear()
     delete mpPrivate;
 }
 
-
-bool nuiAudioDecoder::Seek(uint64 SampleFrame)
-{
-  NGL_ASSERT(mInitialized);
-  if (!mInitialized)
-    return false;
-  
-  OSStatus err = noErr;
-  TimeRecord timeRec;
-  timeRec.scale       = GetMovieTimeScale(mpPrivate->mMovie);
-  timeRec.base        = NULL;
-  timeRec.value.hi    = 0;
-  timeRec.value.lo    = SampleFrame / mInfo.GetSampleRate() * timeRec.scale;
-  
-  // Set the extraction current time.  The duration will 
-  // be determined by how much is pulled.
-  err = MovieAudioExtractionSetProperty(mpPrivate->mExtractionSessionRef, kQTPropertyClass_MovieAudioExtraction_Movie, kQTMovieAudioExtractionMoviePropertyID_CurrentTime, sizeof(TimeRecord), &timeRec);
-  return (err == noErr);
-}
-
-
-bool nuiAudioDecoder::ReadInfo()
+bool nuiAudioDecoder::CreateAudioDecoderPrivate()
 {
   //Init QuickTime
   if (mpPrivate)
@@ -189,7 +168,7 @@ bool nuiAudioDecoder::ReadInfo()
   uint32 BytesPerSample = sizeof(Float32);
   uint32 BitsPerSample  = BytesPerSample * 8;
   
-
+  
   //We want non-interleaved audio samples,
   //so, in this case, the asbd object represents the samples format of only one channel
   //the extraction method will fill an AudioBufferList structure which contains one AudioBuffer per channel
@@ -204,6 +183,50 @@ bool nuiAudioDecoder::ReadInfo()
   err = MovieAudioExtractionSetProperty(mpPrivate->mExtractionSessionRef, kQTPropertyClass_MovieAudioExtraction_Audio, kQTMovieAudioExtractionAudioPropertyID_AudioStreamBasicDescription, sizeof (asbd), &asbd);
   if (err != noErr)
     return false;
+  
+}
+
+
+bool nuiAudioDecoder::Seek(uint64 SampleFrame)
+{
+  NGL_ASSERT(mInitialized);
+  if (!mInitialized)
+    return false;
+  
+  if (!mpPrivate)
+    return false;
+  
+  OSStatus err = noErr;
+  TimeRecord timeRec;
+  timeRec.scale       = GetMovieTimeScale(mpPrivate->mMovie);
+  timeRec.base        = NULL;
+  timeRec.value.hi    = 0;
+  timeRec.value.lo    = SampleFrame / mInfo.GetSampleRate() * timeRec.scale;
+  
+  // Set the extraction current time.  The duration will 
+  // be determined by how much is pulled.
+  err = MovieAudioExtractionSetProperty(mpPrivate->mExtractionSessionRef, kQTPropertyClass_MovieAudioExtraction_Movie, kQTMovieAudioExtractionMoviePropertyID_CurrentTime, sizeof(TimeRecord), &timeRec);
+  return (err == noErr);
+}
+
+
+bool nuiAudioDecoder::ReadInfo()
+{
+  NGL_ASSERT(mpPrivate);  
+  
+  OSStatus err = noErr;
+  AudioStreamBasicDescription asbd;
+  
+  // Get the audio extraction ASBD
+  err = MovieAudioExtractionGetProperty(mpPrivate->mExtractionSessionRef, kQTPropertyClass_MovieAudioExtraction_Audio, kQTMovieAudioExtractionAudioPropertyID_AudioStreamBasicDescription, sizeof (asbd), &asbd, nil);
+  if (err != noErr)
+    return false;
+  
+  // Convert the ASBD to return non-interleaved Float32.
+  uint32 nbChannels     = asbd.mChannelsPerFrame;
+  double SampleRate     = asbd.mSampleRate;
+  uint32 BytesPerSample = sizeof(Float32);
+  uint32 BitsPerSample  = BytesPerSample * 8;
   
   //retrieve the length of the stream
   TimeValue maxDuration = 0;
@@ -231,11 +254,9 @@ bool nuiAudioDecoder::ReadInfo()
   return true;
 }
 
-//virtual uint32 ReadDE(std::vector<void*> buffers, uint32 sampleframes, nuiSampleBitFormat format = eSampleFloat32);
-//virtual uint32 ReadIN(void* pBuffer, uint32 sampleframes, nuiSampleBitFormat format = eSampleFloat32);
-
 uint32 nuiAudioDecoder::ReadDE(std::vector<void*> buffers, uint32 sampleframes, nuiSampleBitFormat format)
 {
+  NGL_ASSERT(mpPrivate);
   NGL_ASSERT(mInitialized);
   if (!mInitialized)
     return 0;
