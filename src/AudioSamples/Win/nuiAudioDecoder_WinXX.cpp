@@ -121,6 +121,31 @@ void nuiAudioDecoder::Clear()
     delete mpPrivate;
 }
 
+bool nuiAudioDecoder::CreateAudioDecoderPrivate()
+{
+  if (mpPrivate)
+  {
+	if (mpPrivate->mpWMReader)
+	  delete mpPrivate->mpWMReader;
+	delete mpPrivate;
+  }
+
+  CoInitialize(NULL);
+  mpPrivate = new nuiAudioDecoderPrivate();
+  HRESULT hr = S_OK;
+  mpPrivate->mpWMStream = new nglWindowsMediaIStream(mrStream);
+  
+  hr = WMCreateSyncReader(NULL, WMT_RIGHT_PLAYBACK, &mpPrivate->mpWMReader);
+  if (SUCCEEDED(hr))
+  {
+    hr = mpPrivate->mpWMReader->OpenStream(mpPrivate->mpWMStream);
+    if (FAILED(hr))
+    {
+      return false;
+    }
+  }
+}
+
 bool nuiAudioDecoder::Seek(uint64 SampleFrame)
 {
   QWORD StartTime = SampleFrame / mInfo.GetSampleRate() * ONE_SECOND;
@@ -140,20 +165,10 @@ bool nuiAudioDecoder::ReadInfo()
   if (mInitialized) //already initialized
     return false;
   
-  CoInitialize(NULL);
-  mpPrivate = new nuiAudioDecoderPrivate();
+  if (!mpPrivate)
+	return false;
+
   HRESULT hr = S_OK;
-  mpPrivate->mpWMStream = new nglWindowsMediaIStream(mrStream);
-  
-  hr = WMCreateSyncReader(NULL, WMT_RIGHT_PLAYBACK, &mpPrivate->mpWMReader);
-  if (SUCCEEDED(hr))
-  {
-    hr = mpPrivate->mpWMReader->OpenStream(mpPrivate->mpWMStream);
-    if (FAILED(hr))
-    {
-      return false;
-    }
-  }
   bool result = false;
   DWORD OutputNb = 0;
   DWORD FormatNb = 0;
