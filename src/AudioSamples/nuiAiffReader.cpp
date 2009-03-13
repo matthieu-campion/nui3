@@ -101,6 +101,9 @@ void nuiAiffReader::SetPosition(uint32 position)
   if (!mInitialized)
     return;
   
+  if (mPosition == position)
+    return;
+  
   Chunk* pDataChunk = GetChunk("SSND");
   NGL_ASSERT(pDataChunk);
   nglFileOffset StreamPosition = pDataChunk->mDataPosition + mInfo.GetChannels() * (mInfo.GetBitsPerSample() / 8) * position;

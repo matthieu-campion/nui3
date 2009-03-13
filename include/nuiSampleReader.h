@@ -36,7 +36,7 @@ protected:
   
   bool mInitialized;
   nglIStream& mrStream; 
-  uint64 mPosition;
+  int64 mPosition;
   nuiSampleInfo mInfo;
   
 };

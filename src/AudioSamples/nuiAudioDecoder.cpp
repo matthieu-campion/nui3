@@ -41,6 +41,9 @@ void nuiAudioDecoder::SetPosition(uint32 pos)
 {
   if (!mInitialized)
     return;
+  
+  if (mPosition == pos)
+    return;
  
   if (Seek(pos))
   {

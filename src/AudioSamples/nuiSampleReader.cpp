@@ -12,7 +12,7 @@
 nuiSampleReader::nuiSampleReader(nglIStream& rStream):
 mrStream(rStream),
 mInitialized(false),
-mPosition(0)
+mPosition(-1)
 {
 }
 
