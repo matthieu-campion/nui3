@@ -64,12 +64,15 @@ public:
   static nuiSize GetDefaultBorderSize(); ///< Retreive the default border around the area of the enclosed widget of every button that will be created.
   static void SetDefaultBorderSize(nuiSize BorderSize); ///< Set the default border around the area of the enclosed widget of every button that will be created.
 
+  bool CanMoveItems();
+  void SetCanMoveItems(bool set);
+  
   // Outgoing event:
   nuiMouseClicked Clicked; ///< This event is called whenever an item is clicked.
   nuiMouseClicked DoubleClicked; ///< This event is called whenever an item is chosen, that is to say, double clicked. This can only happend in a mono-selection list.
   nuiSimpleEventSource<nuiWidgetActivated> Activated; ///< This event is called whenever an item is chosen, that is to say, double clicked. This can only happend in a mono-selection list.
   nuiSimpleEventSource<nuiWidgetSelected> SelectionChanged; ///< This event is called whenever selection of the items of the list have changed. 
-  nuiSignal2<nuiWidget*,nuiWidget*> SelectionMoved;
+  nuiSignal2<nuiWidget*,nuiWidget*> ItemMoved;
 
   // Incomming events:
   bool KeyDown(const nglKeyEvent& rEvent);
@@ -96,6 +99,7 @@ protected:
   bool mSelection;
   
   bool mClicked;
+  bool mCanMoveItems;
   bool mMoved;
 
   static nuiSize    mDefaultBorderSize;

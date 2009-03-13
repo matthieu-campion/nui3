@@ -30,6 +30,7 @@ nuiList::nuiList(nuiOrientation Orientation)
   mpLastDestinationItem = NULL;
   mClicked = false;
   mMoved = false;
+  mCanMoveItems = false;
 
   mCursorLine = 0;
   mSelection = false;
@@ -58,6 +59,7 @@ bool nuiList::Load(const nuiXMLNode* pNode)
   mpLastDestinationItem = NULL;
   mClicked = false;
   mMoved = false;
+  mCanMoveItems = false;
 
   mCursorLine = 0;
   mSelection = false;
@@ -250,6 +252,17 @@ bool nuiList::SetRect(const nuiRect& rRect)
 
   return true;
 }
+
+bool nuiList::CanMoveItems()
+{
+  return mCanMoveItems;
+}
+
+void nuiList::SetCanMoveItems(bool set)
+{
+  mCanMoveItems = set;
+}
+
 
 void nuiList::SetOrientation(nuiOrientation orientation)
 {
@@ -642,11 +655,11 @@ bool nuiList::MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
 {
   mClicked = false;
   
-  if (mMoved)
+  if (mMoved && mCanMoveItems)
   {
     mMoved = false;
     // send signal
-    SelectionMoved(mpLastItem, mpLastDestinationItem);
+    ItemMoved(mpLastItem, mpLastDestinationItem);
   }
   return false;
 }
@@ -654,6 +667,9 @@ bool nuiList::MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
 bool nuiList::MouseMoved  (nuiSize X, nuiSize Y)
 {
   if (!mClicked)
+    return false;
+  
+  if (!mCanMoveItems)
     return false;
   
   nuiWidgetPtr pItem = GetItem(X,Y);
