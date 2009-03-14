@@ -3,17 +3,26 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
-	<string>en</string>
-	<key>CFBundleDisplayName</key>
-	<string>nuiDemo</string>
+	<string>English</string>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeIconFile</key>
+			<string>icon.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>nuiDemo project</string>
+			<key>LSTypeIsPackage</key>
+			<true/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>Binary</string>
+		</dict>
+	</array>
 	<key>CFBundleExecutable</key>
-	<string>${EXECUTABLE_NAME}</string>
+	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIconFile</key>
-	<string>Icon.png</string>
+	<string>icon</string>
 	<key>CFBundleIdentifier</key>
-	<string>net.libnui.nuiDemo</string>
-	<key>CFBundleShortVersionString</key>
-	<string></string>
+	<string>com.myCompany.nuiDemo</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -23,12 +32,8 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1.0.2</string>
-	<key>UIStatusBarHidden</key>
+	<string>1.0</string>
+	<key>CSResourcesFileMapped</key>
 	<true/>
-	<key>NSHumanReadableCopyright</key>
-	<string>libnui.net</string>
-	<key>UIInterfaceOrientation</key>
-	<string>UIDeviceOrientationPortrait</string>
 </dict>
 </plist>
