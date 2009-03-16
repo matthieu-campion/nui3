@@ -20,24 +20,23 @@ nuiGenericAttributeEditor::nuiGenericAttributeEditor(const nuiAttribBase& rAttri
 {
 	SetObjectClass(_T("nuiGenericAttributeEditor"));
 	
-	nglString contents;
-	mAttribute.ToString(contents);
 	//NGL_OUT(_T("Generic Attrib editor '%ls': '%ls'\n"), rAttribute.GetName().GetChars(), contents.GetChars());
 	if (!mAttribute.IsReadOnly())
 	{
 		nuiPane* pPane = new nuiPane();
-		mpLabel = new nuiLabel(contents);
+		mpLabel = new nuiLabel();
 		pPane->AddChild(mpLabel);
     AddChild(pPane);
 		mEventSink.Connect(mpLabel->Clicked, &nuiGenericAttributeEditor::OnActivated);
 	}
 	else
 	{
-		mpLabel = new nuiLabel(contents);
+		mpLabel = new nuiLabel();
     AddChild(mpLabel);
 	}
 	
 	mEventSink.Connect(mAttribute.GetChangedEvent(), &nuiGenericAttributeEditor::OnAttributeChanged);
+  OnAttributeChanged(nuiEvent());
 }
 
 nuiGenericAttributeEditor::~nuiGenericAttributeEditor()
@@ -49,9 +48,39 @@ nuiGenericAttributeEditor::~nuiGenericAttributeEditor()
 bool nuiGenericAttributeEditor::OnAttributeChanged(const nuiEvent& rEvent)
 {
 	nglString contents;
-	mAttribute.ToString(contents);
-	mpLabel->SetText(contents);
   
+  switch (mAttribute.GetDimension())
+  {
+    case 0:
+      {
+        mAttribute.ToString(contents);
+        mpLabel->SetText(contents);
+      }
+      break;
+    case 1:
+      {
+//        for (uint32 i = 0; i < mAttribute.GetDimensionRange(0); i++)
+//        {
+//          mAttribute.FromString(i, pRenamer->GetText());
+//        }
+        mpLabel->SetText(_T("MultiDimension attribute not supported"));
+
+      }
+      break;
+    case 2:
+    {
+//      for (uint32 i = 0; i < mAttribute.GetDimensionRange(0); i++)
+//      {
+//        for (uint32 j = 0; j < mAttribute.GetDimensionRange(1); i++)
+//        {
+//          mAttribute.FromString(i, j, pRenamer->GetText());
+//          
+//        }
+//      }
+      mpLabel->SetText(_T("MultiDimension attribute not supported"));
+    }
+      break;
+  }
   return false;
 }
 
@@ -67,7 +96,34 @@ bool nuiGenericAttributeEditor::OnActivated(const nuiEvent& rEvent)
 bool nuiGenericAttributeEditor::OnRenamed(const nuiEvent& rEvent)
 {
 	nuiLabelRenamer* pRenamer = (nuiLabelRenamer*)rEvent.mpUser;
-  mAttribute.FromString(pRenamer->GetText());
+  switch (mAttribute.GetDimension())
+  {
+    case 0:
+      {
+        mAttribute.FromString(pRenamer->GetText());
+      }
+      break;
+    case 1:
+      {
+//        for (uint32 i = 0; i < mAttribute.GetDimensionRange(0); i++)
+//        {
+//          mAttribute.FromString(i, pRenamer->GetText());
+//        }
+      }
+      break;
+    case 2:
+      {
+//        for (uint32 i = 0; i < mAttribute.GetDimensionRange(0); i++)
+//        {
+//          for (uint32 j = 0; j < mAttribute.GetDimensionRange(1); i++)
+//          {
+//            mAttribute.FromString(i, j, pRenamer->GetText());
+//            
+//          }
+//        }
+      }
+      break;
+  }
 	return true;
 }
 

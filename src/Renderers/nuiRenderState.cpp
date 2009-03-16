@@ -18,6 +18,8 @@ nuiRenderState::nuiRenderState()
   mTexturing = false;
   mColorBuffer = true;
   mStencilBuffer = false;
+  mDepthTest = false;
+  mDepthWrite = false;
 
   mLineCap = nuiLineCapBut;
   mLineJoin = nuiLineJoinBevel;
@@ -58,6 +60,8 @@ void nuiRenderState::Copy(const nuiRenderState& rState)
   mTexturing      = rState.mTexturing;
   mColorBuffer    = rState.mColorBuffer;
   mStencilBuffer  = rState.mStencilBuffer;
+  mDepthTest      = rState.mDepthTest;
+  mDepthWrite     = rState.mDepthWrite;
   mWinding        = rState.mWinding;
   mAntialiasing   = rState.mAntialiasing;
   mLineWidth      = rState.mLineWidth;
@@ -106,6 +110,8 @@ bool nuiRenderState::operator==(const nuiRenderState& rState) const
     (mTexturing      == rState.mTexturing)        &&
     (mColorBuffer    == rState.mColorBuffer)      &&
     (mStencilBuffer  == rState.mStencilBuffer)    &&
+    (mDepthTest      == rState.mDepthTest)        &&
+    (mDepthWrite     == rState.mDepthWrite)       &&
     (mWinding        == rState.mWinding)          &&
     (mAntialiasing   == rState.mAntialiasing)     &&
     (mLineWidth      == rState.mLineWidth)        &&

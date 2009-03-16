@@ -316,6 +316,21 @@ void nuiGLPainter::SetState(const nuiRenderState& rState, bool ForceApply)
     nuiCheckForGLErrors();
   }
 
+  if (ForceApply || mState.mDepthTest != rState.mDepthTest)
+  {
+    mState.mDepthTest = rState.mDepthTest;
+    if (mState.mDepthTest)
+      glEnable(GL_DEPTH_TEST);
+    else
+      glDisable(GL_DEPTH_TEST);
+  }
+  
+  if (ForceApply || mState.mDepthWrite != rState.mDepthWrite)
+  {
+    mState.mDepthWrite = rState.mDepthWrite;
+    glDepthMask(mState.mDepthWrite);
+  }
+  
   // Stencil test:
   if (ForceApply || mState.mStencilMode != rState.mStencilMode || mState.mStencilValue != rState.mStencilValue)
   {

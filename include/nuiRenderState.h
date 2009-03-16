@@ -64,6 +64,9 @@ public:
   bool mBlending;
   nuiBlendFunc mBlendFunc;
 
+  bool mDepthTest;
+  bool mDepthWrite;
+  
   nuiStencilMode mStencilMode;
   uint mStencilValue;
 
