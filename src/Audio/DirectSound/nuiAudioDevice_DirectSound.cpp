@@ -420,7 +420,7 @@ bool nuiAudioDevice_DirectSound::Open(std::vector<uint32>& rInputChannels, std::
     return false;
 
   // init ringbuffer
-  mpRingBuffer = new nglRingBuffer(BufferSize*2, sizeof(float), rOutputChannels.size());
+  mpRingBuffer = new nglRingBuffer(BufferSize*3, sizeof(float), rOutputChannels.size());
 
 
   // init input buffers
@@ -625,11 +625,8 @@ bool nuiAudioDevice_DirectSound::Close()
     mpInputBuffer=NULL;
   }
 
-  if (mpRingBuffer)
-  {
-    delete mpRingBuffer;
-    mpRingBuffer = NULL;
-  }
+  delete mpRingBuffer;
+  mpRingBuffer = NULL;
 
 
   if (mNotifInputEvent[0])

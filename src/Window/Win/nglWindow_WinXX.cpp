@@ -1808,7 +1808,6 @@ void nglWindow::BeginSession()
     NGL_ASSERT(mpDirect3DDevice);
     HRESULT hr;
     hr = mpDirect3DDevice->BeginScene();
-    NGL_OUT(_T("BeginScene\n"));
 
     NGL_ASSERT(S_OK == hr);
   }

@@ -554,11 +554,11 @@ void nuiD3DPainter::SetState(const nuiRenderState& rState, bool ForceApply)
       //attention au blending avec les textures 8 bits !!!
       if (mState.mpTexture->GetImage()->GetBitDepth() == 8)
       {
-        hr = pDev->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_ADD); 
+        hr = pDev->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_ADD);
       }
       else
       {
-        hr = pDev->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG2); 
+        hr = pDev->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG2);
       }
 
 
@@ -829,45 +829,9 @@ void nuiD3DPainter::DrawArray(const nuiRenderArray& rArray)
   mVertices += size;
 
   NUI_RETURN_IF_RENDERING_DISABLED;
-  {  //#FIXME Set up Antialiasing texture
-    //     if (rArray.UseGLAATexture())
-    //     {
-    //       //NGL_OUT(_T("GLAA"));
-    //       //return; //@@@     
-    //       //int a=0;
-    //       //pDev->SetTexture()
-    //       /*
-    //       if (!mState.mBlending)
-    //       //if (1)
-    //       {
-    //         //glEnable(GL_BLEND);
-    //         hr = pDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-    //       }
-    //       if (mState.mBlendFunc != nuiBlendTransp) 
-    //       //if (1)
-    //       {
-    //         //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    //         hr = pDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-    //         hr = pDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-    //       }
-    // 
-    //       //glBindTexture(GL_TEXTURE_2D, glAA_texture[0]);
-    //       */
-    //       /*
-    //       glMatrixMode(GL_TEXTURE);
-    //       glPushMatrix();
-    //       glLoadIdentity();
-    //       glMatrixMode(GL_MODELVIEW);
-    //       glPushMatrix();
-    //       glTranslatef(0.5f, 0.5f, 0);
-    //       */
-    //      
-    //     }
-    //     else
+  {
     if (!mState.mTexturing)
     {
-      //glPushMatrix();
-      //glTranslatef(0.5f, 0.5f, 0); 
       int a=0;
     }
   }
@@ -1840,7 +1804,7 @@ void nuiD3DPainter::SetViewport()
 
   x = ToBelow(r.Left());
   w = ToBelow(r.GetWidth());
-  y = Height - ToBelow(r.Bottom());
+  y = ToBelow(r.Top());
   h = ToBelow(r.GetHeight());
 
   D3DMATRIX projection;

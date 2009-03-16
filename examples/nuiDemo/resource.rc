@@ -21,5 +21,3 @@ decorations/sliderHandle.png        NUI_RESOURCE    "resources/decorations/slide
 decorations/switchDown.png        NUI_RESOURCE    "resources/decorations/switchDown.png"
 decorations/switchUp.png        NUI_RESOURCE    "resources/decorations/switchUp.png"
 decorations/title.png        NUI_RESOURCE    "resources/decorations/title.png"
-0 ICON "resources/nuiDemo.ico"
-1 ICON "resources/nuiDemo.ico"

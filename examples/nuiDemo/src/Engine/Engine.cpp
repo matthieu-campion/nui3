@@ -7,23 +7,12 @@
 
 #include "Engine/Engine.h"
 
-#ifdef _WIN32_
-  #include "nuiAudioDevice_DirectSound.h"
-#endif
-
 #ifdef _CARBON_
   #include "nuiAudioDevice_CoreAudio.h"
 #endif
 
 Engine::Engine()
 {
-#ifdef _WIN32_
-  NGL_OUT(DirectSoundApi.GetAPIName() + _T(" API loaded."));
-#endif
-#ifdef _CARBON_
-  NGL_OUT(CoreAudioAPI.GetAPIName() + _T(" API loaded."));
-#endif
-
   mVolume = 1.f;
   mpAudioFifo = InitEngineAudio();
   mpAudioTrack = new AudioTrack(mpAudioFifo);
