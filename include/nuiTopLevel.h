@@ -74,7 +74,7 @@ public:
   nuiDrawContext* GetDrawContext();
   static void SetRenderer(nuiRenderer Renderer = eOpenGL);
   static nuiRenderer GetRenderer();
-  virtual nglContext* GetNGLContext() = 0;
+  virtual nglContext* GetNGLContext() const = 0;
   //@}
 
   nuiTopLevel* GetTopLevel() const;

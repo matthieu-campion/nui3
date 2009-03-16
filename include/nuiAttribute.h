@@ -1144,21 +1144,21 @@ public:
   : nuiAttribBase(rAttribBase),
     mpAttribute(nuiAttributeCast<Contents>(mpAttributeBase))
   {
-    NGL_ASSERT(mpAttribute);
+//    NGL_ASSERT(mpAttribute);
   }
   
   nuiAttrib(void* pTarget, nuiAttribute<Contents>* pAttribute)
   : nuiAttribBase(pTarget, pAttribute),
     mpAttribute(pAttribute)
   {
-    NGL_ASSERT(mpAttribute);
+//    NGL_ASSERT(mpAttribute);
   }
   
   nuiAttrib(const nuiAttrib<Contents>& rOriginal)
   : nuiAttribBase(rOriginal), 
     mpAttribute(rOriginal.mpAttribute)
   {
-    NGL_ASSERT(mpAttribute);
+//    NGL_ASSERT(mpAttribute);
   }
   
   ~nuiAttrib()

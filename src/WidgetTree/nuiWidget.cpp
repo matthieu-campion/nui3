@@ -2849,8 +2849,8 @@ void nuiWidget::StartAnimation(const nglString& rName, double Time)
   nuiAnimation* pAnim = GetAnimation(rName);
   if (pAnim)
   {
-    pAnim->SetTime(Time);
     pAnim->Play();
+    pAnim->SetTime(Time);
   }
   DebugRefreshInfo();
 }

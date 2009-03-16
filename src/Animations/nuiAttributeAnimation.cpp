@@ -250,12 +250,11 @@ void nuiColorAttributeAnimation::OnFrame()
   const float ad = a1 - a0;
   
   const float pos = GetPosition();
-  const float invpos = 1.0 - pos;
 
-  const float r = r0 + invpos * rd;
-  const float g = g0 + invpos * gd;
-  const float b = b0 + invpos * bd;
-  const float a = a0 + invpos * ad;
+  const float r = r0 + pos * rd;
+  const float g = g0 + pos * gd;
+  const float b = b0 + pos * bd;
+  const float a = a0 + pos * ad;
   
   nuiColor col(r, g, b, a);
   
@@ -269,4 +268,126 @@ void nuiColorAttributeAnimation::OnFrame()
   else if (const_color_attrib)
     const_color_attrib.Set(col);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/////////////////////////////////
+
+// Rect Attrib Animation:
+
+/////////////////////////////////
+
+//// nuiAttributeAnimation:
+nuiRectAttributeAnimation::nuiRectAttributeAnimation()
+{
+  if (SetObjectClass(_T("nuiRectAttributeAnimation")))
+  {
+    // Init atributes
+  }
+}
+
+nuiRectAttributeAnimation::~nuiRectAttributeAnimation()
+{
+}
+
+void nuiRectAttributeAnimation::SetEndValue(const nuiRect& rVal)
+{
+  mEndValue = rVal;
+}
+
+const nuiRect& nuiRectAttributeAnimation::GetEndValue() const
+{
+  return mEndValue;
+}
+
+void nuiRectAttributeAnimation::SetStartValue(const nuiRect& rVal)
+{
+  mStartValue = rVal;
+}
+
+const nuiRect& nuiRectAttributeAnimation::GetStartValue() const
+{
+  return mStartValue;
+}
+
+
+
+void nuiRectAttributeAnimation::Play(uint32 Count, nuiAnimLoop LoopMode)
+{
+  nuiAttribBase attrib(mpTarget->GetAttribute(mTarget));
+  
+  nuiAttrib<nuiRect> rect_attrib(attrib);
+  nuiAttrib<const nuiRect&> const_rect_attrib(attrib);
+  
+  if (mCaptureStartOnPlay)
+  {
+    if (rect_attrib)
+      mStartValue = rect_attrib.Get();
+    else if (const_rect_attrib)
+      mStartValue = const_rect_attrib.Get();
+  }
+  if (mCaptureEndOnPlay)
+  {
+    if (rect_attrib)
+      mEndValue = rect_attrib.Get();
+    else if (const_rect_attrib)
+      mEndValue = const_rect_attrib.Get();
+  }
+  
+  nuiAnimation::Play(Count, LoopMode);
+}
+
+void nuiRectAttributeAnimation::Stop()
+{
+  nuiAnimation::Stop();
+}
+
+void nuiRectAttributeAnimation::OnFrame()
+{
+  const float x0 = mStartValue.Left();
+  const float y0 = mStartValue.Top();
+  const float w0 = mStartValue.GetWidth();
+  const float h0 = mStartValue.GetHeight();
+  
+  const float x1 = mEndValue.Left();
+  const float y1 = mEndValue.Top();
+  const float w1 = mEndValue.GetWidth();
+  const float h1 = mEndValue.GetHeight();
+  
+  const float xd = x1 - x0;
+  const float yd = y1 - y0;
+  const float wd = w1 - w0;
+  const float hd = h1 - h0;
+  
+  const float pos = GetPosition();
+  
+  const float x = x0 + pos * xd;
+  const float y = y0 + pos * yd;
+  const float w = w0 + pos * wd;
+  const float h = h0 + pos * hd;
+  
+  nuiRect rect(x, y, w, h);
+  //NGL_OUT(_T("rect anim: %ls\n"), rect.GetValue().GetChars());
+  nuiAttribBase attrib(mpTarget->GetAttribute(mTarget));
+  
+  nuiAttrib<nuiRect> rect_attrib(attrib);
+  nuiAttrib<const nuiRect&> const_rect_attrib(attrib);
+  
+  if (rect_attrib)
+    rect_attrib.Set(rect);
+  else if (const_rect_attrib)
+    const_rect_attrib.Set(rect);
+}
+
 

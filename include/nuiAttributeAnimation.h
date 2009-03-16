@@ -79,3 +79,28 @@ private:
   nuiColor mEndValue;
 };
 
+
+class nuiRectAttributeAnimation : public nuiAttributeAnimationBase
+{
+public:
+  nuiRectAttributeAnimation();
+  virtual ~nuiRectAttributeAnimation();
+  
+  void SetStartValue(const nuiRect& rRect);
+  const nuiRect& GetStartValue() const;
+  
+  void SetEndValue(const nuiRect& rRect);
+  const nuiRect& GetEndValue() const;
+  
+  // Inherited:
+  virtual void Play(uint32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward); ///< Start playing the animation. Stop after count iterations. 
+  virtual void Stop(); ///< Stop Playing the animation.
+  
+  virtual void OnFrame(); ///< Overload this method to get notified of each timer tick, for exemple to call Invalidate() in order to redraw the animation.
+  
+private:
+  nuiRect mStartValue;
+  nuiRect mEndValue;
+};
+
+

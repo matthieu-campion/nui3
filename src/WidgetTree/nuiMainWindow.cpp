@@ -76,7 +76,8 @@ nuiMainWindow::nuiMainWindow(uint Width, uint Height, bool Fullscreen, const ngl
 
   nuiRect rect(0.0f, 0.0f, (nuiSize)Width, (nuiSize)Height);
   //nuiSimpleContainer::SetRect(rect);
-  SetObjectClass(_T("nuiMainWindow"));
+  if (SetObjectClass(_T("nuiMainWindow")))
+    InitAttributes();
   mMaxFPS = 0.0f;
 
   uint w,h;
@@ -112,7 +113,8 @@ nuiMainWindow::nuiMainWindow(const nglContextInfo& rContextInfo, const nglWindow
   mpNGLWindow = new NGLWindow(this, rContextInfo, rInfo, pShared);
   nuiRect rect(0.0f, 0.0f, (nuiSize)rInfo.Width, (nuiSize)rInfo.Height);
   //nuiSimpleContainer::SetRect(rect);
-  SetObjectClass(_T("nuiMainWindow"));
+  if (SetObjectClass(_T("nuiMainWindow")))
+    InitAttributes();
 
   mMaxFPS = 0.0f;
 
@@ -238,6 +240,16 @@ nuiMainWindow::~nuiMainWindow()
   delete mpNGLWindow;
   mpNGLWindow = NULL;
   //OnDestruction();
+}
+
+
+void nuiMainWindow::InitAttributes()
+{
+  AddAttribute(new nuiAttribute<nuiRect>
+               (nglString(_T("WindowRect")), nuiUnitNone,
+                nuiMakeDelegate(this, &nuiMainWindow::GetWindowRect),
+                nuiMakeDelegate(this, &nuiMainWindow::SetWindowRect)));
+  
 }
 
 nuiXMLNode* nuiMainWindow::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
@@ -721,7 +733,7 @@ void nuiMainWindow::BeginSession()
   mpNGLWindow->BeginSession();
 }
 
-nglContext* nuiMainWindow::GetNGLContext()
+nglContext* nuiMainWindow::GetNGLContext() const
 {
   return mpNGLWindow;
 }
@@ -732,27 +744,49 @@ void nuiMainWindow::SetState(nglWindow::StateChange State)
 }
 
 
-uint32 nuiMainWindow::GetWidth()
+uint32 nuiMainWindow::GetWidth() const
 {
   return mpNGLWindow->GetWidth();
 }
 
-uint32 nuiMainWindow::GetHeight()
+uint32 nuiMainWindow::GetHeight() const
 {
   return mpNGLWindow->GetHeight();
 }
+
+int32 nuiMainWindow::GetPosX() const
+{
+  int x, y;
+  mpNGLWindow->GetPosition(x, y);
+  return x;
+}
+
+int32 nuiMainWindow::GetPosY() const
+{
+  int x, y;
+  mpNGLWindow->GetPosition(x, y);
+  return y;
+}
+
+
 
 bool nuiMainWindow::SetSize (uint Width, uint Height)
 {
   return mpNGLWindow->SetSize(Width, Height);
 }
 
+bool nuiMainWindow::SetPos(int x, int y)
+{
+  return mpNGLWindow->SetPosition(x, y);
+}
+
+
 void nuiMainWindow::SetRotation(uint Angle)
 {
   mpNGLWindow->SetRotation(Angle);
 }
 
-uint nuiMainWindow::GetRotation()
+uint nuiMainWindow::GetRotation() const
 {
   return mpNGLWindow->GetRotation();
 }
@@ -772,7 +806,7 @@ const nglChar* nuiMainWindow::GetErrorStr(uint Error) const
   return mpNGLWindow->GetErrorStr(Error);
 }
 
-nglWindow* nuiMainWindow::GetNGLWindow()
+nglWindow* nuiMainWindow::GetNGLWindow() const
 {
   return mpNGLWindow;
 }
@@ -1040,4 +1074,17 @@ nuiMainMenu* nuiMainWindow::GetMainMenu()
 {
   return mpNGLWindow->GetMainMenu();
 }
+
+
+nuiRect nuiMainWindow::GetWindowRect() const
+{
+  return nuiRect((int32)GetPosX(), (int32)GetPosY(), (int32)GetWidth(), (int32)GetHeight());
+}
+
+void nuiMainWindow::SetWindowRect(nuiRect rect)
+{
+  SetSize(rect.GetWidth(), rect.GetHeight());
+  SetPos(rect.Left(), rect.Top());
+}
+
 

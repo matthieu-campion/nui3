@@ -81,14 +81,17 @@ public:
   /** @name Redirected to nglWindow via nuiMainWindow::NGLWindow */
   //@{
   void BeginSession();
-  nglContext* GetNGLContext();
-  nglWindow* GetNGLWindow();
+  nglContext* GetNGLContext() const;
+  nglWindow* GetNGLWindow() const;
   void SetState (nglWindow::StateChange State);
-  uint32 GetWidth();
-  uint32 GetHeight();
-  bool SetSize (uint Width, uint Height);
+  uint32 GetWidth() const;
+  uint32 GetHeight() const;
+  int32 GetPosX() const;
+  int32 GetPosY() const;
+  bool SetSize(uint Width, uint Height);
+  bool SetPos(int x, int y);
   void SetRotation(uint Angle);
-  uint GetRotation();
+  uint GetRotation() const;
   void EnableAutoRotation(bool set); ///< Change the rotation and size of the screen to follow the device's screen orientation (this is the default behaviour).
   bool GetAutoRotation() const; ///< Change the rotation and size of the screen to follow the device's screen orientation (this is the default behaviour).
   uint GetError() const;               ///< Retrieve the current error code
@@ -131,6 +134,10 @@ public:
   
   void SetMainMenu(nuiMainMenu* pMainMenu);
   nuiMainMenu* GetMainMenu();
+  
+  // attributes
+  nuiRect GetWindowRect() const;
+  void SetWindowRect(nuiRect rect);
 
 protected:
   /* @name Redirected from nglWindow via nuiMainWindow::NGLWindow */
@@ -165,6 +172,10 @@ protected:
   nuiWidget*      mpDragSource; ///< widget that has initialized a drag operation
   nuiWidget*      mpWidgetCanDrop; ///< if not NULL, this is the last widget that return true to an OnCanDrop call (used for DragLeave)
 private:
+  
+  // attributes
+  void InitAttributes();
+  
   /* @name Debugging */
   //@{
   bool mDisplayMouseOverInfo;
