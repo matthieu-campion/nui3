@@ -335,7 +335,7 @@ void nuiFileSelector::InitSelector (const nglPath& rPath, const nglPath& rRootPa
     mpInfoBox = new nuiVBox(1);
     mpInfoBox->SetExpand(nuiExpandShrinkAndGrow);
     mpMainBox->SetCell(0, mpInfoBox);
-    mpMainBox->SetCellMinPixels(0, 200);
+    mpMainBox->SetCellMinPixels(0, 160);
 
     
     mpFolderList = new nuiList(nuiVertical);

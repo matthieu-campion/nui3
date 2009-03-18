@@ -15,7 +15,7 @@
 class nuiDialogSelectDirectory : public nuiDialog
 {
 public:
-  nuiDialogSelectDirectory(nuiMainWindow* pParent, const nglString& rTitle, const nglPath& rPath, const nglPath& rRootPath);
+  nuiDialogSelectDirectory(nuiMainWindow* pParent, const nglString& rTitle, const nglPath& rPath, const nglPath& rRootPath, nuiSize Left=0.f, nuiSize Top=0.f, nuiSize Width=0.f, nuiSize Height=0.f);
   virtual ~nuiDialogSelectDirectory();
   
   const nglPath& GetSelectedDirectory();

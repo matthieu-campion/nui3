@@ -9,11 +9,15 @@
 #include "nuiDialogSelectDirectory.h"
 
 
-nuiDialogSelectDirectory::nuiDialogSelectDirectory(nuiMainWindow* pParent, const nglString& rTitle, const nglPath& rPath, const nglPath& rRootPath)
+nuiDialogSelectDirectory::nuiDialogSelectDirectory(nuiMainWindow* pParent, const nglString& rTitle, const nglPath& rPath, const nglPath& rRootPath, nuiSize Left, nuiSize Top, nuiSize Width, nuiSize Height)
 : nuiDialog(pParent), mpParent(pParent), mPath(rPath), mEventSink(this)
 {
   mpContainer = new nuiSimpleContainer();
-  mpContainer->SetUserSize(mpParent->GetWidth() * .8, mpParent->GetHeight() * .8);
+
+  nuiSize userWidth = (Width == 0.f) ? mpParent->GetWidth() * .8 : Width;
+  nuiSize userHeight = (Height == 0.f) ? mpParent->GetHeight() * .8 : Height;
+  
+  mpContainer->SetUserSize(userWidth, userHeight);
   
   mpSelector = new nuiFileSelector(mPath, rRootPath);
   mpContainer->AddChild(mpSelector);
@@ -30,7 +34,12 @@ nuiDialogSelectDirectory::nuiDialogSelectDirectory(nuiMainWindow* pParent, const
   mEventSink.Connect(pButton->Activated, &nuiDialogSelectDirectory::OnCreateNewFolder);
   
   SetContents(mpContainer);
-  SetDefaultPos();
+  
+  if ((Top == 0.f) && (Left == 0.f) && (Width == 0.f) && (Height == 0.f))
+    SetDefaultPos();
+  else
+    SetUserPos(Left, Top);
+
   mEventSink.Connect(DialogDone, &nuiDialogSelectDirectory::OnDialogDone);
   
   mpSelector->UpdateLayout();
@@ -40,7 +49,6 @@ nuiDialogSelectDirectory::~nuiDialogSelectDirectory()
 {
   
 }
-
 
 
 bool nuiDialogSelectDirectory::OnSelectorOK(const nuiEvent& rEvent)
