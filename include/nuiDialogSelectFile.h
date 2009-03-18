@@ -16,8 +16,8 @@
 class nuiDialogSelectFile : public nuiDialog
   {
   public:
-    nuiDialogSelectFile(nuiMainWindow* pParent, const nglString& rTitle, const nglPath& rPath = nglPath(nglString::Null), const nglPath& rRootPath  = nglPath(nglString::Null), const nglString& defaultEntry = nglString::Null, const nglString& rFilter = _T("*"), bool showHiddenFiles = false);
-    nuiDialogSelectFile(nuiMainWindow* pParent, const nglString& rTitle, const nglPath& rPath = nglPath(nglString::Null), const nglPath& rRootPath  = nglPath(nglString::Null), const nglString& defaultEntry = nglString::Null, const std::list<nglString>& rFilters = std::list<nglString>(), bool showHiddenFiles = false);
+    nuiDialogSelectFile(nuiMainWindow* pParent, const nglString& rTitle, const nglPath& rPath = nglPath(nglString::Null), const nglPath& rRootPath  = nglPath(nglString::Null), const nglString& defaultEntry = nglString::Null, const nglString& rFilter = _T("*"), bool showHiddenFiles = false, nuiSize Left=0.f, nuiSize Top=0.f, nuiSize Width=0.f, nuiSize Height=0.f);
+    nuiDialogSelectFile(nuiMainWindow* pParent, const nglString& rTitle, const nglPath& rPath = nglPath(nglString::Null), const nglPath& rRootPath  = nglPath(nglString::Null), const nglString& defaultEntry = nglString::Null, const std::list<nglString>& rFilters = std::list<nglString>(), bool showHiddenFiles = false, nuiSize Left=0.f, nuiSize Top=0.f, nuiSize Width=0.f, nuiSize Height=0.f);
     virtual ~nuiDialogSelectFile();
     
     bool OnCreateNewFolder(const nuiEvent& rEvent);
@@ -30,7 +30,7 @@ class nuiDialogSelectFile : public nuiDialog
     
   private:
     
-    void Init(nuiMainWindow* pParent, const nglString& rTitle, const nglPath& rPath, const nglPath& rRootPath, const nglString& defaultEntry, const std::list<nglString>& rFilters, bool showHiddenFiles);
+    void Init(nuiMainWindow* pParent, const nglString& rTitle, const nglPath& rPath, const nglPath& rRootPath, const nglString& defaultEntry, const std::list<nglString>& rFilters, bool showHiddenFiles, nuiSize Left, nuiSize Top, nuiSize Width, nuiSize Height);
 
     bool OnSelectorOK(const nuiEvent& rEvent);
     bool OnDialogDone(const nuiEvent& rEvent);

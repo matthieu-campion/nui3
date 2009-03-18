@@ -11,22 +11,22 @@
 #include "nuiHBox.h"
 
 
-nuiDialogSelectFile::nuiDialogSelectFile(nuiMainWindow* pParent, const nglString& rTitle, const nglPath& rPath, const nglPath& rRootPath, const nglString& defaultEntry, const nglString& rFilter, bool showHiddenFiles)
+nuiDialogSelectFile::nuiDialogSelectFile(nuiMainWindow* pParent, const nglString& rTitle, const nglPath& rPath, const nglPath& rRootPath, const nglString& defaultEntry, const nglString& rFilter, bool showHiddenFiles, nuiSize Left, nuiSize Top, nuiSize Width, nuiSize Height)
 : nuiDialog(pParent), mpParent(pParent), mPath(rPath), mEventSink(this)
 {
   std::list<nglString> filters;
   filters.push_back(rFilter);
-  Init(pParent, rTitle, rPath, rRootPath, defaultEntry, filters, showHiddenFiles);
+  Init(pParent, rTitle, rPath, rRootPath, defaultEntry, filters, showHiddenFiles, Left, Top, Width, Height);
 }
 
-nuiDialogSelectFile::nuiDialogSelectFile(nuiMainWindow* pParent, const nglString& rTitle, const nglPath& rPath, const nglPath& rRootPath, const nglString& defaultEntry, const std::list<nglString>& rFilters, bool showHiddenFiles)
+nuiDialogSelectFile::nuiDialogSelectFile(nuiMainWindow* pParent, const nglString& rTitle, const nglPath& rPath, const nglPath& rRootPath, const nglString& defaultEntry, const std::list<nglString>& rFilters, bool showHiddenFiles, nuiSize Left, nuiSize Top, nuiSize Width, nuiSize Height)
 : nuiDialog(pParent), mpParent(pParent), mPath(rPath), mEventSink(this)
 {
-  Init(pParent, rTitle, rPath, rRootPath, defaultEntry, rFilters, showHiddenFiles);
+  Init(pParent, rTitle, rPath, rRootPath, defaultEntry, rFilters, showHiddenFiles, Left, Top, Width, Height);
 }
 
 
-void nuiDialogSelectFile::Init(nuiMainWindow* pParent, const nglString& rTitle, const nglPath& rPath, const nglPath& rRootPath, const nglString& defaultEntry, const std::list<nglString>& rFilters, bool showHiddenFiles)
+void nuiDialogSelectFile::Init(nuiMainWindow* pParent, const nglString& rTitle, const nglPath& rPath, const nglPath& rRootPath, const nglString& defaultEntry, const std::list<nglString>& rFilters, bool showHiddenFiles, nuiSize Left, nuiSize Top, nuiSize Width, nuiSize Height)
 {
   mPath = rPath;
   mRootPath = rRootPath;
@@ -54,7 +54,9 @@ void nuiDialogSelectFile::Init(nuiMainWindow* pParent, const nglString& rTitle, 
   pBox->AddCell(mpContainer);
   pBox->AddCell(pEditContainer);
   
-  mpContainer->SetUserSize(mpParent->GetWidth() * .8, mpParent->GetHeight() * .8);
+  nuiSize userWidth = (Width == 0.f) ? mpParent->GetWidth() * .8 : Width;
+  nuiSize userHeight = (Height == 0.f) ? mpParent->GetHeight() * .8 : Height;
+  mpContainer->SetUserSize(userWidth, userHeight);
   
   
   pBox->SetCellExpand(0, nuiExpandShrinkAndGrow);
@@ -85,7 +87,10 @@ void nuiDialogSelectFile::Init(nuiMainWindow* pParent, const nglString& rTitle, 
   nuiDialog::GetButtonsGrid()->SetBorder(0,10,0,10);
   
   SetContents(pBox, nuiCenter);
-  SetDefaultPos();
+  if ((Top == 0.f) && (Left == 0.f) && (Width == 0.f) && (Height == 0.f))
+    SetDefaultPos();
+  else
+    SetUserPos(Left, Top);
   mEventSink.Connect(DialogDone, &nuiDialogSelectFile::OnDialogDone);
   
   mpSelector->UpdateLayout();
