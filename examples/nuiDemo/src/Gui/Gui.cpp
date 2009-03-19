@@ -150,7 +150,7 @@ nuiWidget* Gui::BuildControls()
   pFreqKnob->SetObjectName(_T("KnobFrequency"));
 //  pFreqKnob->SetUserSize(100,100);
   pBox->AddCell(pFreqKnob, nuiCenter);
-  pBox->SetCellExpand(pBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
+  pBox->SetCellExpand(pBox->GetNbCells() - 1, nuiExpandShrinkAndGrow);
   
   // connect knob event to receiver
   mEventSink.Connect(pFreqKnob->InteractiveValueChanged, &Gui::OnFreqKnobChanged, (void*)pFreqKnob);

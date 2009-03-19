@@ -405,7 +405,7 @@ bool nglFile::Write(double rData)
 nglFileSize nglFile::GetSize() const
 {
 #ifdef WINCE
-	if(mFD==INVALID_HANDLE_VALUE)
+	if(mFD == INVALID_HANDLE_VALUE)
 		return 0;
 	
 	DWORD	high = 0;
@@ -413,10 +413,10 @@ nglFileSize nglFile::GetSize() const
 	if(low==0xFFFFFFFF)		return 0;
 	int64	filesize = (((int64)high)<<32) + ((int64)low);
 #else
-	if(mFD==NULL)
+	if (mFD == NULL)
 		return 0;
 	int64	previousPosition = ngl_ftell(mFD);
-	if(ngl_fseek(mFD, 0, SEEK_END)!=0)
+	if (ngl_fseek(mFD, 0, SEEK_END)!=0)
 		return 0;
 
 	int64	filesize = ngl_ftell(mFD);
@@ -589,7 +589,7 @@ bool nglFile::IsEOF() const
 nglFileOffset nglFile::GetPos() const
 {
 #ifdef WINCE
-	if(mFD==INVALID_HANDLE_VALUE)
+	if (mFD == INVALID_HANDLE_VALUE)
 		return 0;
 
 	// PDA : to test !
@@ -599,7 +599,7 @@ nglFileOffset nglFile::GetPos() const
 
 	return result;
 #else
-	if(mFD==NULL)	return 0;
+	if (mFD == NULL)	return 0;
 	return ngl_ftell(mFD);
 #endif
 }

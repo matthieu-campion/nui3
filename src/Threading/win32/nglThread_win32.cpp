@@ -33,6 +33,9 @@ public:
       
       // Now, the thread is closed
       pThread->mState = nglThread::Closed;
+      
+      if (pThread->GetAutoDelete())
+        delete pThread;
     }
 
     //

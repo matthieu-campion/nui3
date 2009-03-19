@@ -62,6 +62,8 @@ public:
   bool IsCurrent() const; ///< Return true if the call is made from this thread.
   ID GetID() const; ///< Return thread ID
   const nglString& GetName() const;
+  void SetAutoDelete(bool set);
+  bool GetAutoDelete() const;
   
   inline nglThreadPrivate* GetThreadPrivate() const
 	{
@@ -85,6 +87,7 @@ private:
   Priority mPriority; ///< Priority
   nglThreadPrivate* mpData; ///< Plateform dependent data
   nglString mName;
+  bool mAutoDelete;
 };
 
 

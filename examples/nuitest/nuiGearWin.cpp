@@ -70,7 +70,7 @@ BlendMode ModeDesc[]=
   SETFUNC(TranspOver),
   SETFUNC(TranspInRev),
   
-  {NULL,(nuiBlendFunc)0}
+  { NULL, (nuiBlendFunc)0 }
 };
 
 void SetImageMode(nuiImage* pImage, int mode)

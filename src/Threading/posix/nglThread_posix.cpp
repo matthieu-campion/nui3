@@ -30,6 +30,8 @@ public:
   {
     pThread->OnStart();
     pThread->mState = nglThread::Closed;
+    if (pThread->GetAutoDelete())
+      delete pThread;
   }
 
   static inline void exit(nglThread * pThread)
