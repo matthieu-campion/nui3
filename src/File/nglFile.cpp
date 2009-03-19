@@ -99,7 +99,18 @@ nglFile::nglFile (const nglPath& rPath, nglFileMode Mode, bool OpenNow)
 
 nglFile::~nglFile()
 {
-	Close();
+  bool close = true;
+#if (defined _LINUX_) || (defined __APPLE__)
+	close = (mFD != -1);
+#endif
+#ifdef WINCE
+  close = (mFD != INVALID_HANDLE_VALUE);
+#elif defined _WIN32_
+  close = (mFD != NULL);
+#endif
+  
+  if (close)
+    Close();
 }
 
 
@@ -855,6 +866,7 @@ bool nglFile::Open()
   flags += _O_BINARY;
 #endif
   mFD = open (filename, flags, 00644);
+  
   free(const_cast<char *>(filename));
   if (mFD == -1)
   {
@@ -871,6 +883,7 @@ void nglFile::Close()
   if (mAutoFlush)
     Flush();
   close(mFD);
+  mFD = -1;
 }
 
 bool nglFile::IsOpen() const
@@ -919,7 +932,8 @@ nglFileOffset nglFile::SetPos(nglFileOffset Offset, nglFileWhence Whence)
       break;
   }
   if (pos < 0) pos = 0;
-  return lseek (mFD, pos, SEEK_SET);
+  nglFileOffset newPos = lseek (mFD, pos, SEEK_SET);
+  return newPos;
 }
 
 void nglFile::Flush()
