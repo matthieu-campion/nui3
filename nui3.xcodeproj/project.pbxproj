@@ -1535,6 +1535,7 @@
 		E561CCB10F432B1F003B042C /* nuiOffscreenView.h in Headers */ = {isa = PBXBuildFile; fileRef = E561CCB00F432B1F003B042C /* nuiOffscreenView.h */; };
 		E561CCB20F432B1F003B042C /* nuiOffscreenView.h in Headers */ = {isa = PBXBuildFile; fileRef = E561CCB00F432B1F003B042C /* nuiOffscreenView.h */; };
 		E561CCB30F432B1F003B042C /* nuiOffscreenView.h in Headers */ = {isa = PBXBuildFile; fileRef = E561CCB00F432B1F003B042C /* nuiOffscreenView.h */; };
+		E567ADF70F73D14D009A9D6F /* nui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D520C3CECAB00902DFE /* nui.cpp */; };
 		E57465150D634B5600A2D66B /* nuiSerializeContext.h in Headers */ = {isa = PBXBuildFile; fileRef = E57465140D634B5600A2D66B /* nuiSerializeContext.h */; };
 		E57465160D634B5600A2D66B /* nuiSerializeContext.h in Headers */ = {isa = PBXBuildFile; fileRef = E57465140D634B5600A2D66B /* nuiSerializeContext.h */; };
 		E57465180D634B6B00A2D66B /* nuiSerializeContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E57465170D634B6B00A2D66B /* nuiSerializeContext.cpp */; };
@@ -2198,7 +2199,6 @@
 		E58177440C3D112C00902DFE /* nglTime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816E070C3CECAB00902DFE /* nglTime.cpp */; };
 		E58177450C3D112C00902DFE /* nuiObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D620C3CECAB00902DFE /* nuiObject.cpp */; };
 		E58177460C3D112C00902DFE /* nuiShaderView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DD90C3CECAB00902DFE /* nuiShaderView.cpp */; };
-		E58177470C3D112C00902DFE /* nui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D520C3CECAB00902DFE /* nui.cpp */; };
 		E58177480C3D112C00902DFE /* nuiSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DDB0C3CECAB00902DFE /* nuiSlider.cpp */; };
 		E58177490C3D112C00902DFE /* nuiGradient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DB10C3CECAB00902DFE /* nuiGradient.cpp */; };
 		E581774A0C3D112C00902DFE /* nuiText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816E030C3CECAB00902DFE /* nuiText.cpp */; };
@@ -9704,7 +9704,6 @@
 				E58177440C3D112C00902DFE /* nglTime.cpp in Sources */,
 				E58177450C3D112C00902DFE /* nuiObject.cpp in Sources */,
 				E58177460C3D112C00902DFE /* nuiShaderView.cpp in Sources */,
-				E58177470C3D112C00902DFE /* nui.cpp in Sources */,
 				E58177480C3D112C00902DFE /* nuiSlider.cpp in Sources */,
 				E58177490C3D112C00902DFE /* nuiGradient.cpp in Sources */,
 				E581774A0C3D112C00902DFE /* nuiText.cpp in Sources */,
@@ -10068,6 +10067,7 @@
 				E5EA301F0F55963C0057CCA7 /* nuiCoverFlow.cpp in Sources */,
 				E55C02E30F5E9A310045FBFE /* nuiGenericAttributeEditor.cpp in Sources */,
 				BC2A8A590F691D7A00502BAB /* nuiProgressBar.cpp in Sources */,
+				E567ADF70F73D14D009A9D6F /* nui.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
