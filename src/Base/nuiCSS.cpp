@@ -615,30 +615,52 @@ protected:
       
       nglString type;
       if (!GetSymbol(type))
+      {
+        SetError(_T("expected a symbol"));
         return false;
+      }
       
       if (!SkipBlank())
-        return false;
+      {
+        SetError(_T("unexpected end of file"));
+        return false;        
+      }
 
       nglString name;
       if (!GetSymbol(name))
+      {
+        SetError(_T("expected a symbol"));
         return false;
+      }
       
       if (!SkipBlank())
-        return false;
-        
+      {
+        SetError(_T("unexpected end of file"));
+        return false;        
+      }
+      
       // special case. create color
       if (mChar == _T('='))
       {
         if ((type == _T("nuiColor")) || !type.Compare(_T("color"), false))
         {
           if (!CreateColor(name))
+          {
+            nglString str;
+            str.CFormat(_T("Unable to parse a color with name '%ls'"), name);
+            SetError(str);
             return false;
+          }
         }
         else if (!type.Compare(_T("var"), false))
         {
           if (!CreateVariable(name))
+          {
+            nglString str;
+            str.CFormat(_T("Unable to parse a variable with name '%ls'"), name);
+            SetError(str);
             return false;
+          }
         }
           
         return true;
@@ -646,7 +668,10 @@ protected:
 
       // create an object
       if (mChar != _T('{'))
-        return false;
+      {
+        SetError(_T("'{' expected"));
+        return false;        
+      }
       
       res = ReadActionList();
       if (!res)
@@ -658,6 +683,9 @@ protected:
       // Create the object from the type and the name
       if (!CreateObject(type, name))
       {
+        nglString str;
+        str.CFormat(_T("Unable to create an object of type '%ls' and name '%ls'"), type, name);
+        SetError(str);
         Clear();
         return false;
       }
@@ -675,6 +703,7 @@ protected:
       
       if (!SkipBlank())
       {
+        SetError(_T("unexpected end of file"));
         Clear();
         return false;
       }

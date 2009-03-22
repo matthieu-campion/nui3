@@ -23,6 +23,14 @@
 		C9F5F92E0DA84CAB00E078ED /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C999972E0DA6F405001A7116 /* OpenGLES.framework */; };
 		C9F5F92F0DA84CAB00E078ED /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C99997710DA6F9F2001A7116 /* AudioToolbox.framework */; };
 		C9F5F9300DA84CAB00E078ED /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C99998F50DA7CAF2001A7116 /* QuartzCore.framework */; };
+		E51D34B40F69F33400AD41DD /* css in Resources */ = {isa = PBXBuildFile; fileRef = E51D34990F69F33400AD41DD /* css */; };
+		E51D34B50F69F33400AD41DD /* decorations in Resources */ = {isa = PBXBuildFile; fileRef = E51D349F0F69F33400AD41DD /* decorations */; };
+		E51D34B60F69F33400AD41DD /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = E51D34AE0F69F33400AD41DD /* Default.png */; };
+		E51D34B70F69F33400AD41DD /* drums.wav in Resources */ = {isa = PBXBuildFile; fileRef = E51D34AF0F69F33400AD41DD /* drums.wav */; };
+		E51D34B80F69F33400AD41DD /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = E51D34B00F69F33400AD41DD /* Icon.icns */; };
+		E51D34B90F69F33400AD41DD /* Icon.ico in Resources */ = {isa = PBXBuildFile; fileRef = E51D34B10F69F33400AD41DD /* Icon.ico */; };
+		E51D34BA0F69F33400AD41DD /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E51D34B20F69F33400AD41DD /* Icon.png */; };
+		E51D34BB0F69F33400AD41DD /* text.txt in Resources */ = {isa = PBXBuildFile; fileRef = E51D34B30F69F33400AD41DD /* text.txt */; };
 		E5CD2F610ECF82860083037A /* libnuiE.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E5CD2F5E0ECF82810083037A /* libnuiE.a */; };
 		E5CD2F620ECF828B0083037A /* libnuiEd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E5CD2F600ECF82810083037A /* libnuiEd.a */; };
 		E5CD2F780ECF82BE0083037A /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CD2F680ECF82BE0083037A /* Application.cpp */; };
@@ -92,6 +100,14 @@
 		C9EA04FD0E2917FA0067EF48 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		C9F2587A0E5861EA00687021 /* dlist.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = dlist.plist; sourceTree = "<group>"; };
 		C9F5F9330DA84CAB00E078ED /* iPhoneDemoD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iPhoneDemoD.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E51D34990F69F33400AD41DD /* css */ = {isa = PBXFileReference; lastKnownFileType = folder; name = css; path = resources/css; sourceTree = SOURCE_ROOT; };
+		E51D349F0F69F33400AD41DD /* decorations */ = {isa = PBXFileReference; lastKnownFileType = folder; name = decorations; path = resources/decorations; sourceTree = SOURCE_ROOT; };
+		E51D34AE0F69F33400AD41DD /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = resources/Default.png; sourceTree = SOURCE_ROOT; };
+		E51D34AF0F69F33400AD41DD /* drums.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = drums.wav; path = resources/drums.wav; sourceTree = SOURCE_ROOT; };
+		E51D34B00F69F33400AD41DD /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = Icon.icns; path = resources/Icon.icns; sourceTree = SOURCE_ROOT; };
+		E51D34B10F69F33400AD41DD /* Icon.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; name = Icon.ico; path = resources/Icon.ico; sourceTree = SOURCE_ROOT; };
+		E51D34B20F69F33400AD41DD /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = resources/Icon.png; sourceTree = SOURCE_ROOT; };
+		E51D34B30F69F33400AD41DD /* text.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = text.txt; path = resources/text.txt; sourceTree = SOURCE_ROOT; };
 		E5CD2F680ECF82BE0083037A /* Application.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Application.cpp; path = src/Application.cpp; sourceTree = SOURCE_ROOT; };
 		E5CD2F690ECF82BE0083037A /* Application.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Application.h; path = src/Application.h; sourceTree = SOURCE_ROOT; };
 		E5CD2F6B0ECF82BE0083037A /* AudioTrack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioTrack.cpp; path = src/Engine/AudioTrack.cpp; sourceTree = SOURCE_ROOT; };
@@ -194,6 +210,14 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E51D34990F69F33400AD41DD /* css */,
+				E51D349F0F69F33400AD41DD /* decorations */,
+				E51D34AE0F69F33400AD41DD /* Default.png */,
+				E51D34AF0F69F33400AD41DD /* drums.wav */,
+				E51D34B00F69F33400AD41DD /* Icon.icns */,
+				E51D34B10F69F33400AD41DD /* Icon.ico */,
+				E51D34B20F69F33400AD41DD /* Icon.png */,
+				E51D34B30F69F33400AD41DD /* text.txt */,
 				C9DCE4C20DA7F4FF008AC45D /* Info.plist */,
 			);
 			name = Resources;
@@ -287,6 +311,7 @@
 				C99995FA0DA6EE97001A7116 /* Sources */,
 				C99995FB0DA6EE97001A7116 /* Frameworks */,
 				E5CD306B0ECF89170083037A /* ShellScript */,
+				E51D344A0F69E8BB00AD41DD /* Resources */,
 			);
 			buildRules = (
 			);
@@ -357,6 +382,24 @@
 		};
 /* End PBXReferenceProxy section */
 
+/* Begin PBXResourcesBuildPhase section */
+		E51D344A0F69E8BB00AD41DD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E51D34B40F69F33400AD41DD /* css in Resources */,
+				E51D34B50F69F33400AD41DD /* decorations in Resources */,
+				E51D34B60F69F33400AD41DD /* Default.png in Resources */,
+				E51D34B70F69F33400AD41DD /* drums.wav in Resources */,
+				E51D34B80F69F33400AD41DD /* Icon.icns in Resources */,
+				E51D34B90F69F33400AD41DD /* Icon.ico in Resources */,
+				E51D34BA0F69F33400AD41DD /* Icon.png in Resources */,
+				E51D34BB0F69F33400AD41DD /* text.txt in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXShellScriptBuildPhase section */
 		E5CD30690ECF88F30083037A /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -382,7 +425,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "rsync -rC ./resources/ --exclude \".*\" \"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"\n";
+			shellScript = "
+";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -458,7 +502,7 @@
 				);
 				OTHER_LDFLAGS = "-lz";
 				PREBINDING = NO;
-				PROVISIONING_PROFILE = "2E645D4A-0A04-40B2-A62E-E74C6BADF064";
+				PROVISIONING_PROFILE = "BDEA1422-D478-4C5D-8DDC-CBD0FD14164F";
 				SDKROOT = iphoneos2.1;
 				USE_HEADERMAP = NO;
 			};

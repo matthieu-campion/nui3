@@ -267,8 +267,8 @@
 		6126D7D00DA5716500D2641A /* nuiImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5C40DA5716500D2641A /* nuiImage.h */; };
 		6126D7D70DA5716500D2641A /* nuiKnob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5CB0DA5716500D2641A /* nuiKnob.cpp */; };
 		6126D7DA0DA5716500D2641A /* nuiKnob.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5CE0DA5716500D2641A /* nuiKnob.h */; };
-		6126D7DD0DA5716500D2641A /* nuiProgress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5D10DA5716500D2641A /* nuiProgress.cpp */; };
-		6126D7DE0DA5716500D2641A /* nuiProgress.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5D20DA5716500D2641A /* nuiProgress.h */; };
+		6126D7DD0DA5716500D2641A /* nuiProgressBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5D10DA5716500D2641A /* nuiProgressBar.cpp */; };
+		6126D7DE0DA5716500D2641A /* nuiProgressBar.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5D20DA5716500D2641A /* nuiProgressBar.h */; };
 		6126D7DF0DA5716500D2641A /* nuiRadioButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5D30DA5716500D2641A /* nuiRadioButton.cpp */; };
 		6126D7E00DA5716500D2641A /* nuiRadioButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5D40DA5716500D2641A /* nuiRadioButton.h */; };
 		6126D7E10DA5716500D2641A /* nuiRadioButtonGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5D50DA5716500D2641A /* nuiRadioButtonGroup.cpp */; };
@@ -862,7 +862,7 @@
 		614B640F0DA7BA67000F4C22 /* nuiFileTable.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5BE0DA5716500D2641A /* nuiFileTable.h */; };
 		614B64100DA7BA67000F4C22 /* nuiImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5C40DA5716500D2641A /* nuiImage.h */; };
 		614B64130DA7BA67000F4C22 /* nuiKnob.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5CE0DA5716500D2641A /* nuiKnob.h */; };
-		614B64140DA7BA67000F4C22 /* nuiProgress.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5D20DA5716500D2641A /* nuiProgress.h */; };
+		614B64140DA7BA67000F4C22 /* nuiProgressBar.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5D20DA5716500D2641A /* nuiProgressBar.h */; };
 		614B64150DA7BA67000F4C22 /* nuiRadioButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5D40DA5716500D2641A /* nuiRadioButton.h */; };
 		614B64160DA7BA67000F4C22 /* nuiRadioButtonGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5D60DA5716500D2641A /* nuiRadioButtonGroup.h */; };
 		614B64170DA7BA67000F4C22 /* nuiRectView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5D80DA5716500D2641A /* nuiRectView.h */; };
@@ -1365,7 +1365,7 @@
 		614B66750DA7BA67000F4C22 /* nuiFileTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5BD0DA5716500D2641A /* nuiFileTable.cpp */; };
 		614B66760DA7BA67000F4C22 /* nuiImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5C30DA5716500D2641A /* nuiImage.cpp */; };
 		614B66790DA7BA67000F4C22 /* nuiKnob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5CB0DA5716500D2641A /* nuiKnob.cpp */; };
-		614B667A0DA7BA67000F4C22 /* nuiProgress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5D10DA5716500D2641A /* nuiProgress.cpp */; };
+		614B667A0DA7BA67000F4C22 /* nuiProgressBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5D10DA5716500D2641A /* nuiProgressBar.cpp */; };
 		614B667B0DA7BA67000F4C22 /* nuiRadioButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5D30DA5716500D2641A /* nuiRadioButton.cpp */; };
 		614B667C0DA7BA67000F4C22 /* nuiRadioButtonGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5D50DA5716500D2641A /* nuiRadioButtonGroup.cpp */; };
 		614B667D0DA7BA67000F4C22 /* nuiRectView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5D70DA5716500D2641A /* nuiRectView.cpp */; };
@@ -2022,8 +2022,8 @@
 		6126D5CE0DA5716500D2641A /* nuiKnob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiKnob.h; path = include/nuiKnob.h; sourceTree = SOURCE_ROOT; };
 		6126D5CF0DA5716500D2641A /* nuiMeshEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiMeshEngine.h; path = include/nuiMeshEngine.h; sourceTree = SOURCE_ROOT; };
 		6126D5D00DA5716500D2641A /* nuiOffscreenView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiOffscreenView.cpp; sourceTree = "<group>"; };
-		6126D5D10DA5716500D2641A /* nuiProgress.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiProgress.cpp; sourceTree = "<group>"; };
-		6126D5D20DA5716500D2641A /* nuiProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiProgress.h; path = include/nuiProgress.h; sourceTree = SOURCE_ROOT; };
+		6126D5D10DA5716500D2641A /* nuiProgressBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiProgressBar.cpp; sourceTree = "<group>"; };
+		6126D5D20DA5716500D2641A /* nuiProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiProgressBar.h; path = include/nuiProgressBar.h; sourceTree = SOURCE_ROOT; };
 		6126D5D30DA5716500D2641A /* nuiRadioButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiRadioButton.cpp; sourceTree = "<group>"; };
 		6126D5D40DA5716500D2641A /* nuiRadioButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiRadioButton.h; path = include/nuiRadioButton.h; sourceTree = SOURCE_ROOT; };
 		6126D5D50DA5716500D2641A /* nuiRadioButtonGroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiRadioButtonGroup.cpp; sourceTree = "<group>"; };
@@ -3402,8 +3402,8 @@
 				6126D5CF0DA5716500D2641A /* nuiMeshEngine.h */,
 				6126D5D00DA5716500D2641A /* nuiOffscreenView.cpp */,
 				6126D46C0DA5716500D2641A /* nuiOffscreenView.h */,
-				6126D5D10DA5716500D2641A /* nuiProgress.cpp */,
-				6126D5D20DA5716500D2641A /* nuiProgress.h */,
+				6126D5D10DA5716500D2641A /* nuiProgressBar.cpp */,
+				6126D5D20DA5716500D2641A /* nuiProgressBar.h */,
 				6126D5D30DA5716500D2641A /* nuiRadioButton.cpp */,
 				6126D5D40DA5716500D2641A /* nuiRadioButton.h */,
 				6126D5D50DA5716500D2641A /* nuiRadioButtonGroup.cpp */,
@@ -4828,7 +4828,7 @@
 				614B640F0DA7BA67000F4C22 /* nuiFileTable.h in Headers */,
 				614B64100DA7BA67000F4C22 /* nuiImage.h in Headers */,
 				614B64130DA7BA67000F4C22 /* nuiKnob.h in Headers */,
-				614B64140DA7BA67000F4C22 /* nuiProgress.h in Headers */,
+				614B64140DA7BA67000F4C22 /* nuiProgressBar.h in Headers */,
 				614B64150DA7BA67000F4C22 /* nuiRadioButton.h in Headers */,
 				614B64160DA7BA67000F4C22 /* nuiRadioButtonGroup.h in Headers */,
 				614B64170DA7BA67000F4C22 /* nuiRectView.h in Headers */,
@@ -5345,7 +5345,7 @@
 				6126D7CA0DA5716500D2641A /* nuiFileTable.h in Headers */,
 				6126D7D00DA5716500D2641A /* nuiImage.h in Headers */,
 				6126D7DA0DA5716500D2641A /* nuiKnob.h in Headers */,
-				6126D7DE0DA5716500D2641A /* nuiProgress.h in Headers */,
+				6126D7DE0DA5716500D2641A /* nuiProgressBar.h in Headers */,
 				6126D7E00DA5716500D2641A /* nuiRadioButton.h in Headers */,
 				6126D7E20DA5716500D2641A /* nuiRadioButtonGroup.h in Headers */,
 				6126D7E40DA5716500D2641A /* nuiRectView.h in Headers */,
@@ -5980,7 +5980,7 @@
 				614B66750DA7BA67000F4C22 /* nuiFileTable.cpp in Sources */,
 				614B66760DA7BA67000F4C22 /* nuiImage.cpp in Sources */,
 				614B66790DA7BA67000F4C22 /* nuiKnob.cpp in Sources */,
-				614B667A0DA7BA67000F4C22 /* nuiProgress.cpp in Sources */,
+				614B667A0DA7BA67000F4C22 /* nuiProgressBar.cpp in Sources */,
 				614B667B0DA7BA67000F4C22 /* nuiRadioButton.cpp in Sources */,
 				614B667C0DA7BA67000F4C22 /* nuiRadioButtonGroup.cpp in Sources */,
 				614B667D0DA7BA67000F4C22 /* nuiRectView.cpp in Sources */,
@@ -6308,7 +6308,7 @@
 				6126D7C90DA5716500D2641A /* nuiFileTable.cpp in Sources */,
 				6126D7CF0DA5716500D2641A /* nuiImage.cpp in Sources */,
 				6126D7D70DA5716500D2641A /* nuiKnob.cpp in Sources */,
-				6126D7DD0DA5716500D2641A /* nuiProgress.cpp in Sources */,
+				6126D7DD0DA5716500D2641A /* nuiProgressBar.cpp in Sources */,
 				6126D7DF0DA5716500D2641A /* nuiRadioButton.cpp in Sources */,
 				6126D7E10DA5716500D2641A /* nuiRadioButtonGroup.cpp in Sources */,
 				6126D7E30DA5716500D2641A /* nuiRectView.cpp in Sources */,
