@@ -384,9 +384,9 @@ void nuiCoverFlow::SelectImage(int32 index)
   mSelectedImage = index;
   SelectionChanged();
   
+  mLastTime = nglTime();
   if (!mTimer.IsRunning())
   {
-    mLastTime = nglTime();
     mTimer.Start();
   }
 }
@@ -428,8 +428,10 @@ const nuiColor& nuiCoverFlow::GetBackgroundColor() const
 bool nuiCoverFlow::OnUpdateTime(const nuiEvent& rEvent)
 {
   float diff = ((float)mSelectedImage) - mPos;
-  double t = nglTime() - mLastTime;
-  const double TIME_RATIO = 0.5f;
+  double _t = nglTime();
+  double t = _t - mLastTime;
+  mLastTime = _t;
+  const double TIME_RATIO = 8.0f;
   
   if (fabs(diff) < 0.001)
   {
@@ -486,7 +488,7 @@ bool nuiCoverFlow::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button
     return true;
   }
   
-  return false;
+  return true;
 }
 
 bool nuiCoverFlow::MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
@@ -497,7 +499,7 @@ bool nuiCoverFlow::MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Butt
     || Button & nglMouseInfo::ButtonWheelRight)
     return true;
   
-  return false;
+  return true;
 }
 
 int32 nuiCoverFlow::GetSelectedIndex() const

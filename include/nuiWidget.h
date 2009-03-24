@@ -582,25 +582,26 @@ protected:
 
 private:    
   nuiTimer* mpAnimationTimer;
-  bool mAnimateLayout;
 
+  bool mAnimateLayout : 1;
+  bool mRedrawOnHover : 1;
+  bool mMixAlpha : 1;
+  bool mInheritAlpha : 1;
+  bool mVisible : 1;
+  bool mUseRenderCache : 1;
+  bool mDrawingInCache : 1;
+  bool mClippingOptims : 1;
+  bool mNeedInvalidateOnSetRect : 1;
+  bool mInteractiveOD : 1;
+  bool mInteractiveDecoration : 1;
+  bool mShowFocus : 1;
+  
+  
   void InitDefaultValues();
   void InitProperties(); ///< Init the property bindings.
   void Init(); ///< Initialise the basic parameters of the class.
-  bool mRedrawOnHover;
-
-  bool mMixAlpha;
-  bool mInheritAlpha;
-  bool mVisible;
 
   nuiMetaPainter* mpRenderCache;
-
-  bool mUseRenderCache;
-  bool mDrawingInCache;
-
-  bool mClippingOptims;
-
-  bool mNeedInvalidateOnSetRect;
 
   uint32 mDebugLevel;
   
@@ -617,8 +618,6 @@ private:
   nuiSize mODRight;
   nuiSize mODTop;
   nuiSize mODBottom;
-  bool mInteractiveOD;
-  bool mInteractiveDecoration;
   
   // Normal decoration:
   nuiDecoration* mpDecoration;
@@ -627,7 +626,6 @@ private:
   // Focus decoration:
   nuiDecoration* mpFocusDecoration;
   nuiDecorationMode mFocusDecorationMode;
-  bool mShowFocus;
   
   static std::vector<nuiDecorationDelegate> mDefaultDecorations;
 
