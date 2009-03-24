@@ -189,7 +189,11 @@ bool nuiKnob::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
   mClickX = X;
   mClickY = Y;
 
-  if (Button & nglMouseInfo::ButtonLeft)
+  if ((Button & nglMouseInfo::ButtonLeft) && (Button & nglMouseInfo::ButtonDoubleClick))
+  {
+    return false;
+  }
+  else if (Button & nglMouseInfo::ButtonLeft)
   {
     mClicked = true;
     Grab();
