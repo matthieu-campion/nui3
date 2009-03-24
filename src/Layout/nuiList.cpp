@@ -492,7 +492,7 @@ bool nuiList::KeyDown(const nglKeyEvent& rEvent)
   }
   else if (rEvent.mKey == NK_DOWN)
   {
-    if (mCursorLine < mpChildren.size() - 1)
+    if ((int32)mCursorLine < (int32)(mpChildren.size() - 1))
     {
       mCursorLine++;
       if (!mMoveOnly)
@@ -527,7 +527,7 @@ bool nuiList::KeyDown(const nglKeyEvent& rEvent)
   {
     uint incr = 0;//(uint)mpScrollBar->GetRange().GetPageIncrement();
     if (mCursorLine + incr >= mpChildren.size())
-      mCursorLine = mpChildren.size()-1;
+      mCursorLine = mpChildren.size() - 1;
     else
       mCursorLine += incr;
 
@@ -723,7 +723,7 @@ void nuiList::MoveChild(nuiWidget* pSelectedChild, nuiWidget* pDestinationChild)
 void nuiList::SelectItem(uint ItemNumber)
 {
   nuiWidgetPtr pItem = NULL;
-  uint32 i = 0;
+  int32 i = 0;
   IteratorPtr pIt;
   for (pIt = GetFirstChild(); pIt && pIt->IsValid() && i <= ItemNumber; GetNextChild(pIt))
   {
@@ -742,7 +742,7 @@ void nuiList::SelectItem(uint ItemNumber)
 void nuiList::SelectItemSilent(uint ItemNumber)
 {
   nuiWidgetPtr pItem = NULL;
-  uint32 i = 0;
+  int32 i = 0;
   IteratorPtr pIt;
   for (pIt = GetFirstChild(); pIt && pIt->IsValid() && i <= ItemNumber; GetNextChild(pIt))
   {
@@ -907,8 +907,10 @@ bool nuiList::Populate(const nglPath& rPath, bool Files, bool Dirs)
   return true;
 }
 
-bool nuiList::ShowRow(uint32 number)
+bool nuiList::ShowRow(int32 number)
 {
+  if (number >= mpChildren.size())
+    return false;
   nuiWidget* pItem = mpChildren[number];
   SetHotRect(pItem->GetRect());
   return true;

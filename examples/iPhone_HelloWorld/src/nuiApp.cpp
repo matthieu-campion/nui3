@@ -26,7 +26,7 @@ void nuiApp::OnInit()
 {
   nuiInit(NULL);
 
-  nuiRenderer Renderer = eOpenGLES;
+  nuiRenderer Renderer = eOpenGL;
 
 // Accept NGL default options
   ParseDefaultArgs();

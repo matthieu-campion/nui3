@@ -47,7 +47,7 @@ public:
   nuiWidget* GetSelected (); ///< return the first selected item.
   nuiTokenBase* GetSelectedToken ();///< return the nuiTokenBase of the first selected item. (it's to be casted into the expected nuiToken<T>).
   uint GetUnselected(nuiWidgetList& unselitems); ///< Populate \param unselitems with all the not selected items.
-  bool ShowRow(uint32 number); ///< Make the given row visible by setting the hot rect.  
+  bool ShowRow(int32 number); ///< Make the given row visible by setting the hot rect.  
   
   // Helper function to make lists of files:
   bool PopulateFiles(const nglPath& rPath); ///< Fill the list box with the list of the files contained in the given path.
@@ -93,9 +93,9 @@ protected:
   // Keyboard handling variables:
   bool mMoveOnly;
   bool mKeyboardSelect;
-  uint32 mCursorLine;
+  int32 mCursorLine;
   bool mDisplayCursor;
-  uint32 mSelectionStart;
+  int32 mSelectionStart;
   bool mSelection;
   
   bool mClicked;

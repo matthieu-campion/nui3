@@ -34,17 +34,17 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 257989552;
-			PBXWorkspaceStateSaveDate = 257989552;
+			PBXPerProjectTemplateStateSaveDate = 259591685;
+			PBXWorkspaceStateSaveDate = 259591685;
 		};
 		perUserProjectItems = {
-			E5B6C3550F5F440B00E0DFFD /* PBXTextBookmark */ = E5B6C3550F5F440B00E0DFFD /* PBXTextBookmark */;
-			E5B6C3A10F617E0B00E0DFFD /* PBXTextBookmark */ = E5B6C3A10F617E0B00E0DFFD /* PBXTextBookmark */;
-			E5B6C3A30F617E0B00E0DFFD /* PBXTextBookmark */ = E5B6C3A30F617E0B00E0DFFD /* PBXTextBookmark */;
-			E5B6C3A40F617E0B00E0DFFD /* PBXTextBookmark */ = E5B6C3A40F617E0B00E0DFFD /* PBXTextBookmark */;
-			E5B6C3A50F617E0B00E0DFFD /* PBXTextBookmark */ = E5B6C3A50F617E0B00E0DFFD /* PBXTextBookmark */;
-			E5B6C3A70F617E0B00E0DFFD /* PBXTextBookmark */ = E5B6C3A70F617E0B00E0DFFD /* PBXTextBookmark */;
-			E5B6C3B50F617E2100E0DFFD /* PBXTextBookmark */ = E5B6C3B50F617E2100E0DFFD /* PBXTextBookmark */;
+			E5B6C3550F5F440B00E0DFFD = E5B6C3550F5F440B00E0DFFD /* PBXTextBookmark */;
+			E5B6C3A10F617E0B00E0DFFD = E5B6C3A10F617E0B00E0DFFD /* PBXTextBookmark */;
+			E5B6C3A30F617E0B00E0DFFD = E5B6C3A30F617E0B00E0DFFD /* PBXTextBookmark */;
+			E5B6C3A40F617E0B00E0DFFD = E5B6C3A40F617E0B00E0DFFD /* PBXTextBookmark */;
+			E5B6C3A50F617E0B00E0DFFD = E5B6C3A50F617E0B00E0DFFD /* PBXTextBookmark */;
+			E5B6C3A70F617E0B00E0DFFD = E5B6C3A70F617E0B00E0DFFD /* PBXTextBookmark */;
+			E5B6C3B50F617E2100E0DFFD = E5B6C3B50F617E2100E0DFFD /* PBXTextBookmark */;
 		};
 		sourceControlManager = E54BEAE20F5C2D5F007F2871 /* Source Control */;
 		userBuildSettings = {
@@ -171,6 +171,7 @@
 	};
 	E5B6C3A20F617E0B00E0DFFD /* nuiMainWindow.h */ = {
 		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
 		name = nuiMainWindow.h;
 		path = /Users/meeloo/work/nui3/include/nuiMainWindow.h;
 		sourceTree = "<absolute>";
@@ -205,6 +206,7 @@
 	};
 	E5B6C3A60F617E0B00E0DFFD /* nuiMainWindow.h */ = {
 		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
 		name = nuiMainWindow.h;
 		path = /Users/meeloo/work/nui3/include/nuiMainWindow.h;
 		sourceTree = "<absolute>";
