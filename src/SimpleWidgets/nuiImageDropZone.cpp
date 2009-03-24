@@ -20,6 +20,17 @@ nuiImageDropZone::nuiImageDropZone(const nglPath& rImagePath)
 }
 
 
+nuiImageDropZone::nuiImageDropZone(const nglPath& rPath, nuiTexture* pTex)
+{
+  SetObjectClass(_T("nuiImageDropZone"));
+  
+	mPath = rPath;
+	mpImage = new nuiImage(pTex);
+	AddChild(mpImage);
+  mDrawDndFrame=false;
+}
+
+
 nuiImageDropZone::~nuiImageDropZone()
 {
 

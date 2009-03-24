@@ -15,6 +15,7 @@ class NUI_API nuiImageDropZone : public nuiSimpleContainer
 {
 public:
 	nuiImageDropZone(const nglPath& rImagePath);
+	nuiImageDropZone(const nglPath& rPath, nuiTexture* pTex);
   virtual ~nuiImageDropZone();
 	
 	const nglPath& GetPath() const;
