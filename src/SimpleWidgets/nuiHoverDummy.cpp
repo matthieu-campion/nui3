@@ -99,7 +99,7 @@ bool nuiHoverDummy::SetRect(const nuiRect& rRect)
   nuiWidget::SetRect(rRect);
   nuiWidgetPtr pWidget = mpHover[GetHover()?1:0];
   if (pWidget)
-    return pWidget->SetLayout(rRect.Size());
+    pWidget->SetLayout(rRect.Size());
   return true;
 }
 

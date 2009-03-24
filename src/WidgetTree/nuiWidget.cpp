@@ -259,6 +259,11 @@ void nuiWidget::InitAttributes()
   
   
   AddAttribute(new nuiAttribute<const nuiRect&>
+               (nglString(_T("LayoutRect")), nuiUnitNone,
+                nuiAttribute<const nuiRect&>::GetterDelegate(this, &nuiWidget::GetRect),
+                nuiAttribute<const nuiRect&>::SetterDelegate(this, &nuiWidget::SetLayout)));
+  
+  AddAttribute(new nuiAttribute<const nuiRect&>
                (nglString(_T("UserRect")), nuiUnitNone,
                 nuiAttribute<const nuiRect&>::GetterDelegate(this, &nuiWidget::GetUserRect),
                 nuiAttribute<const nuiRect&>::SetterDelegate(this, &nuiWidget::SetUserRect)));
@@ -2443,9 +2448,8 @@ void nuiWidget::UpdateSurfaceRect(const nuiRect& rRect)
   }
 }
 
-bool nuiWidget::SetLayout(const nuiRect& rRect)
+void nuiWidget::SetLayout(const nuiRect& rRect)
 {
-  bool res = false;
   nuiRect rect(GetIdealRect().Size());
   nuiRect tmp(rRect.Size());
   rect.Intersect(rect, tmp);
@@ -2499,16 +2503,8 @@ bool nuiWidget::SetLayout(const nuiRect& rRect)
   bool SizeChanged = !rect.Size().IsEqual(mRect.Size());
   mNeedSelfLayout = mNeedSelfLayout || mClippingOptims || SizeChanged;
 
-  if (mNeedSelfLayout)
-  {
-    res = SetRect(rect);
-    Invalidate();
-  }
-  else
-  {
-    // Is this case the widget has just been moved inside its parent. No need to re layout it, only change the rect...
-    mRect = rect;
-  }
+  InternalSetLayout(rect, PositionChanged, SizeChanged);
+
   mVisibleRect = GetOverDrawRect(true, true);
 
   if (PositionChanged && mpParent)
@@ -2517,7 +2513,20 @@ bool nuiWidget::SetLayout(const nuiRect& rRect)
   mNeedSelfLayout = false;
   mNeedLayout = false;
   DebugRefreshInfo();
-  return res;
+}
+
+void nuiWidget::InternalSetLayout(const nuiRect& rect, bool PositionChanged, bool SizeChanged)
+{
+  if (mNeedSelfLayout)
+  {
+    SetRect(rect);
+    Invalidate();
+  }
+  else
+  {
+    // Is this case the widget has just been moved inside its parent. No need to re layout it, only change the rect...
+    mRect = rect;
+  }
 }
 
 nuiRect nuiWidget::CalcIdealSize()
@@ -2736,10 +2745,15 @@ void nuiWidget::StartAutoDraw(double FrameRate)
   DebugRefreshInfo();
 }
 
-void nuiWidget::AnimateLayout(bool RecalcLayout)
+void nuiWidget::SetAutoDrawAnimateLayout(bool RecalcLayout)
 {
   mAnimateLayout = RecalcLayout;
   DebugRefreshInfo();
+}
+
+bool nuiWidget::GetAutoDrawAnimateLayout() const
+{
+  return mAnimateLayout;
 }
 
 void nuiWidget::StopAutoDraw()

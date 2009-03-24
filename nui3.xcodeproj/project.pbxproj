@@ -4563,7 +4563,7 @@
 		E5816D150C3CECAB00902DFE /* nuiTreeEvent.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiTreeEvent.h; path = include/nuiTreeEvent.h; sourceTree = SOURCE_ROOT; };
 		E5816D170C3CECAB00902DFE /* nuiUserArea.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiUserArea.h; path = ../../include/nuiUserArea.h; sourceTree = "<group>"; };
 		E5816D180C3CECAB00902DFE /* nuiWidget.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiWidget.h; path = include/nuiWidget.h; sourceTree = SOURCE_ROOT; };
-		E5816D190C3CECAB00902DFE /* nuiWidgetAnimation.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiWidgetAnimation.h; path = ../../include/nuiWidgetAnimation.h; sourceTree = "<group>"; };
+		E5816D190C3CECAB00902DFE /* nuiWidgetAnimation.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiWidgetAnimation.h; path = ../include/nuiWidgetAnimation.h; sourceTree = "<group>"; };
 		E5816D1B0C3CECAB00902DFE /* nuiWidgetElements.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiWidgetElements.h; path = ../../include/nuiWidgetElements.h; sourceTree = "<group>"; };
 		E5816D1C0C3CECAB00902DFE /* nuiWindow.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiWindow.h; path = ../../include/nuiWindow.h; sourceTree = "<group>"; };
 		E5816D1D0C3CECAB00902DFE /* nuiWindowManager.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiWindowManager.h; path = ../../include/nuiWindowManager.h; sourceTree = "<group>"; };
@@ -4737,7 +4737,7 @@
 		E5816E170C3CECAB00902DFE /* nuiMainWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiMainWindow.cpp; path = src/WidgetTree/nuiMainWindow.cpp; sourceTree = SOURCE_ROOT; };
 		E5816E180C3CECAB00902DFE /* nuiTopLevel.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiTopLevel.cpp; path = src/WidgetTree/nuiTopLevel.cpp; sourceTree = SOURCE_ROOT; };
 		E5816E190C3CECAB00902DFE /* nuiWidget.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiWidget.cpp; path = src/WidgetTree/nuiWidget.cpp; sourceTree = SOURCE_ROOT; };
-		E5816E1A0C3CECAB00902DFE /* nuiWidgetAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiWidgetAnimation.cpp; path = src/WidgetTree/nuiWidgetAnimation.cpp; sourceTree = SOURCE_ROOT; };
+		E5816E1A0C3CECAB00902DFE /* nuiWidgetAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiWidgetAnimation.cpp; path = Animations/nuiWidgetAnimation.cpp; sourceTree = "<group>"; };
 		E5816E1B0C3CECAB00902DFE /* nuiWindowManager.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiWindowManager.cpp; path = src/WidgetTree/nuiWindowManager.cpp; sourceTree = SOURCE_ROOT; };
 		E5816E1E0C3CECAB00902DFE /* nglContext_Carbon.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nglContext_Carbon.cpp; path = src/Window/Carbon/nglContext_Carbon.cpp; sourceTree = SOURCE_ROOT; };
 		E5816E1F0C3CECAB00902DFE /* nglEvent_Carbon.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nglEvent_Carbon.cpp; path = src/Window/Carbon/nglEvent_Carbon.cpp; sourceTree = SOURCE_ROOT; };
@@ -6742,8 +6742,6 @@
 				E5816D130C3CECAB00902DFE /* nuiTopLevel.h */,
 				E5816E190C3CECAB00902DFE /* nuiWidget.cpp */,
 				E5816D180C3CECAB00902DFE /* nuiWidget.h */,
-				E5816E1A0C3CECAB00902DFE /* nuiWidgetAnimation.cpp */,
-				E5816D190C3CECAB00902DFE /* nuiWidgetAnimation.h */,
 				E5816E1B0C3CECAB00902DFE /* nuiWindowManager.cpp */,
 				E5816D1D0C3CECAB00902DFE /* nuiWindowManager.h */,
 				E5A2CBD70D3AF30900FC2180 /* nuiWidgetMatcher.h */,
@@ -6850,6 +6848,8 @@
 		E5CBF87A0F38993F00D34E6F /* Animations */ = {
 			isa = PBXGroup;
 			children = (
+				E5816E1A0C3CECAB00902DFE /* nuiWidgetAnimation.cpp */,
+				E5816D190C3CECAB00902DFE /* nuiWidgetAnimation.h */,
 				E5816D530C3CECAB00902DFE /* nuiAnimation.cpp */,
 				E5816CAE0C3CECAB00902DFE /* nuiAnimation.h */,
 				E5B678C40F39EFCF00DBF325 /* nuiAttributeAnimation.cpp */,

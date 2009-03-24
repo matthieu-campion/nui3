@@ -110,7 +110,7 @@ bool nuiStateDummy::SetRect(const nuiRect& rRect)
   nuiWidget::SetRect(rRect);
   nuiWidgetPtr pWidget = mpState[(IsEnabled(mCombined)?1:0) + (IsSelected(mCombined)?2:0)];
   if (pWidget)
-    return pWidget->SetLayout(rRect.Size());
+    pWidget->SetLayout(rRect.Size());
   return true;
 }
 

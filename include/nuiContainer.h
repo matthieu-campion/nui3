@@ -174,7 +174,6 @@ public:
   virtual bool Draw(nuiDrawContext* pContext);
   virtual nuiRect CalcIdealSize();
   virtual bool SetRect(const nuiRect& rRect);
-  virtual bool SetLayout(const nuiRect& rRect);
   virtual void SetAlpha(float Alpha);
   virtual void SetEnabled(bool set);
   virtual void SetSelected(bool set);
@@ -203,6 +202,7 @@ protected:
   virtual void CallOnTrash();
   void ChildrenCallOnTrash();
   virtual void InternalResetCSSPass();
+  void InternalSetLayout(const nuiRect& rect, bool PositionChanged, bool SizeChanged);
 
 };
 

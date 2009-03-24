@@ -674,70 +674,18 @@ bool nuiContainer::SetRect(const nuiRect& rRect)
   return true;
 }
 
-bool nuiContainer::SetLayout(const nuiRect& rRect)
+void nuiContainer::InternalSetLayout(const nuiRect& rect, bool PositionChanged, bool SizeChanged)
 {
-  bool res = false;
-  nuiRect rect(GetIdealRect().Size());
-  
-  if (mPosition != nuiFill)
-  {
-    rect.SetPosition(mPosition, rRect);
-  }
-  else
-  {
-    if (mFillRule == nuiFill)
-    {
-      rect.SetPosition(mPosition, rRect);
-    }
-    else if (mFillRule == nuiTile)
-    {
-      rect = rRect;
-    }
-    else
-    {
-      nuiRect r = rRect;
-      float ratio,rratio,rw,rh;
-      ratio  = (float)r.GetWidth()    / (float)r.GetHeight();
-      rratio = (float)rect.GetWidth() / (float)rect.GetHeight();
-      
-      if (ratio < rratio) 
-      {
-        rw = (float)r.GetWidth();
-        rh = rw / rratio;
-      }
-      
-      else 
-      {
-        rh = (float)r.GetHeight();
-        rw = rratio * rh;
-      }
-      
-      rect = nuiRect(0.0f, 0.0f, rw, rh);
-      rect.SetPosition(mFillRule, rRect);
-    }
-  }
-  
-  rect.Left()   += GetActualBorderLeft();
-  rect.Right()  -= GetActualBorderRight();
-  rect.Top()    += GetActualBorderTop();
-  rect.Bottom() -= GetActualBorderBottom();
-  
-  rect.RoundToNearest();
-
-  bool PositionChanged = (rect.Left() != mRect.Left()) || (rect.Top() != mRect.Top());
-  bool SizeChanged = !rect.Size().IsEqual(mRect.Size());
-  mNeedSelfLayout = mNeedSelfLayout || mClippingOptims || SizeChanged;
-
   if (mNeedSelfLayout)
   {
-    res = SetRect(rect);
+    SetRect(rect);
     Invalidate();
   }
   else
   {
     // Is this case the widget have just been moved inside its parent. No need to re layout it, only change the rect...
     mRect = rect;
-
+    
     if (mNeedLayout)
     {
       // The children need to be re layed out (at least one of them!).
@@ -750,7 +698,7 @@ bool nuiContainer::SetLayout(const nuiRect& rRect)
           // The rect of each child doesn't change BUT we still ask for its ideal rect.
           nuiRect rect(pItem->GetBorderedRect());
           nuiRect ideal(pItem->GetIdealRect());
-
+          
           if (pItem->HasUserPos()) 	 
           { 	 
             rect = ideal; 	 
@@ -763,15 +711,15 @@ bool nuiContainer::SetLayout(const nuiRect& rRect)
           {
             // Set the widget to the size of the parent
           }
-
+          
           pItem->SetLayout(rect);
         }
       } while (GetNextChild(pIt));
       delete pIt;
-
+      
     }
   }
-
+  
   //#TEST:
 #ifdef NUI_CHECK_LAYOUTS
   IteratorPtr pIt;
@@ -786,14 +734,6 @@ bool nuiContainer::SetLayout(const nuiRect& rRect)
   delete pIt;
   //#TEST end
 #endif
-
-  if (PositionChanged && mpParent)
-    mpParent->Invalidate();
-  
-  mNeedSelfLayout = false;
-  mNeedLayout = false;
-  DebugRefreshInfo();
-  return res;
 }
 
 

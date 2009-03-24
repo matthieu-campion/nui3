@@ -99,7 +99,7 @@ public:
   //@{
   virtual nuiRect CalcIdealSize(); ///< This method asks the object to recalculate its layout freely. On return mIdealRect is modified to contain the bounding rectangle needed by the widget and returned to the caller. You will probably have to override this method if you create new widgets, how ever you are never supposed to call it directly and use GetIdealRect instead.
   virtual bool SetRect(const nuiRect& rRect); ///< This method asks the object to recalculate its layout and to force using the given bounding rectangle. You will probably have to overridden this method if inherited widgets, you should then call the original nuiWidget::SetRect as soon as possible when entering the new method. Failure to do so will be prosecuted. 
-  virtual bool SetLayout(const nuiRect& rRect); ///< This method asks the object to recalculate its layout with the given nuiRect. It will NOT force a SetRect. SetRect will be called if the widget asked for a re-layout (InvalidateLayout()) or if the given rectangle is different than the current rectangle of the widget. Returns the value returned by the SetRect method or false.
+  virtual void SetLayout(const nuiRect& rRect); ///< This method asks the object to recalculate its layout with the given nuiRect. It will NOT force a SetRect. SetRect will be called if the widget asked for a re-layout (InvalidateLayout()) or if the given rectangle is different than the current rectangle of the widget. Returns the value returned by the SetRect method or false.
   void SetBorder(nuiSize X, nuiSize Y); ///< Sets the empty space around the widget itself
   void GetBorder(nuiSize& rXLeft, nuiSize& rXRight, nuiSize& rYTop, nuiSize& rYBottom);
   void SetBorder(nuiSize XLeft, nuiSize XRight, nuiSize YTop, nuiSize YBottom); ///< Sets the empty space around the widget itself
@@ -325,7 +325,8 @@ public:
   /** @name Simple Animation Support */
   //@{
   void StartAutoDraw(double FrameRate); ///< This method prepares a timer that will ask that this widget be redrawn every \param FrameRate by calling Invalidate() on it.
-  void AnimateLayout(bool RecalcLayout = false); ///< If RecalcLayout is true the layout of the widget will be recalculated on every animation tick.
+  void SetAutoDrawAnimateLayout(bool RecalcLayout = false); ///< If RecalcLayout is true the layout of the widget will be recalculated on every animation tick.
+  bool GetAutoDrawAnimateLayout() const; ///< If is true the layout of the widget will be recalculated on every animation tick.
   void StopAutoDraw(); ///< This method stops animating the widget. 
   //@}
 
@@ -642,6 +643,8 @@ private:
   nuiSize GetActualBorderTop() const;
   nuiSize GetActualBorderRight() const;
   nuiSize GetActualBorderBottom() const;
+  
+  virtual void InternalSetLayout(const nuiRect& rect, bool PositionChanged, bool SizeChanged);
   
   nuiPosition mPosition;
   nuiPosition mFillRule;

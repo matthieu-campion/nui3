@@ -431,7 +431,7 @@ bool nuiTabView::OnIconClicked(const nuiEvent& rEvent)
           // Slide in or out
           mFolded = !mFolded;
           mSliding = true;
-          AnimateLayout(true);
+          SetAutoDrawAnimateLayout(true);
           StartAutoDraw(30);
         }
       }
@@ -526,7 +526,7 @@ void nuiTabView::SetFolded( bool set, bool Animate )
   if (Animate)
   {
     mSliding = true;
-    AnimateLayout(true);
+    SetAutoDrawAnimateLayout(true);
     StartAutoDraw(30.0f);
   }
   else
