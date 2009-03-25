@@ -20,6 +20,7 @@
 #include "nuiDefaultDecoration.h"
 #include "nuiSurface.h"
 #include "nuiRenderState.h"
+#include "nuiAnimation.h"
 
 typedef std::vector<uint8> nuiRenderCache;
 
@@ -254,8 +255,8 @@ public:
 
   virtual void SetPosition(nuiPosition mode); ///< Set the position of the widget inside its give rect. nuiTiled is not supported at the moment.
   virtual nuiPosition GetPosition() const; ///< Get the position where the widget will be layed out in the rectangle given by its parent container.
-  virtual void SetFillRule(nuiPosition mode); ///< If the widget's position if nuiFill, this method sets the behaviour of the object when the drawing region doesn't repects the 1:1 ratio of the widget's ideal rect. 
-  virtual nuiPosition GetFillRule() const; ///< If the widget's position if nuiFill, this method gets the behaviour of the object when the drawing region doesn't repects the 1:1 ratio of the widget's ideal rect. 
+  virtual void SetFillRule(nuiPosition mode); ///< If the widget's position if nuiFill, this method sets the behaviour of the object when the drawing region doesn't respects the 1:1 ratio of the widget's ideal rect. 
+  virtual nuiPosition GetFillRule() const; ///< If the widget's position if nuiFill, this method gets the behaviour of the object when the drawing region doesn't respects the 1:1 ratio of the widget's ideal rect. 
   //@}
 
 
@@ -347,6 +348,7 @@ public:
   nuiRectAttributeAnimation* GetLayoutAnimation(bool CreateIfNotAvailable);
   void SetLayoutAnimationDuration(float duration);
   float GetLayoutAnimationDuration();
+  void SetLayoutAnimationEasing(const nuiEasingMethod& rMethod);
   //@}
 
   /** @name Matrix Transformation Support */

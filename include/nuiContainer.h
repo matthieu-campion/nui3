@@ -167,7 +167,8 @@ public:
   nuiWidgetDeletedEventSource ChildDeleted;
   //@}
 
-  // from nuiWidget:
+  /** @name Inherited from nuiWidget: */
+  //@{
   virtual void EnableAutoClipSelf(bool Set, bool Recurse = false);
   virtual void InvalidateChildren(bool Recurse);
   virtual void SilentInvalidateChildren(bool Recurse);
@@ -181,6 +182,7 @@ public:
 
   virtual void OnChildHotRectChanged(nuiWidget* pChild, const nuiRect& rChildHotRect);
   virtual void SetVisible(bool Visible); ///< Show or hide the widget
+  //@}
 
   /** @name Private event management system (do not override unless you know what you're doing!!!) */
   //@{
@@ -191,6 +193,13 @@ public:
   //@}
 
   virtual bool DelChild(nuiWidgetPtr pChild,bool Delete=false) = 0;
+
+  /** @name Children Layout animations: */
+   //@{
+  void SetChildrenLayoutAnimationDuration(float duration);
+  void SetChildrenLayoutAnimationEasing(const nuiEasingMethod& rMethod);
+   //@}
+  
 
 protected:
   

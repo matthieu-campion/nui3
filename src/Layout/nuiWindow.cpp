@@ -456,7 +456,10 @@ bool nuiWindow::MouseMoved (nuiSize X, nuiSize Y)
   if (mMoving == ePreMove)
   {
     if (abs((int)dx) > WINDOW_MINIMOVE || abs((int)dy) > WINDOW_MINIMOVE)
+    {
       mMoving = eMove;
+      SetAlpha(0.5f);
+    }
     else
       return true;
   }
@@ -549,8 +552,6 @@ bool nuiWindow::MouseMoved (nuiSize X, nuiSize Y)
       return true;
       break;
     }
-
-    SetAlpha(0.5f);
 
     wRect.RoundToNearest();
     if (mpManager)

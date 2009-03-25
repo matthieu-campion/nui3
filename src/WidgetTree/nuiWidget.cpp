@@ -587,10 +587,12 @@ nuiWidget::~nuiWidget()
   gWidgetCounter.Add(GetProperty("Class"));
 #endif
 	
+#ifdef _DEBUG_
   if (GetDebug())
   {
     NGL_OUT(_T("nuiWidget::~nuiWidget() [0x%x '%ls':'%ls']\n"), this, GetObjectClass().GetChars(), GetObjectName().GetChars());
   }
+#endif
   
   ClearAnimations();
 
@@ -840,13 +842,20 @@ nuiRect nuiWidget::GetBorderedRect() const
 
 void nuiWidget::InvalidateRect(const nuiRect& rRect)
 {
-  //NGL_OUT(_T("  nuiWidget::InvalidateRect '%ls' [%ls] %ls\n"), GetProperty("Class").GetChars(), GetProperty("Name").GetChars(), rRect.GetValue().GetChars());
+#ifdef _DEBUG_
+  if (GetDebug())
+  {
+    NGL_OUT(_T("  nuiWidget::InvalidateRect '%ls' [%ls] %ls\n"), GetObjectClass().GetChars(), GetObjectName().GetChars(), rRect.GetValue().GetChars());
+  }
+#endif
+  
   if (IsVisible(true))
   {
     nuiRect tmp(rRect);
     tmp.RoundToBiggest();
     BroadcastInvalidateRect(this, tmp);
   }
+  
   mNeedSelfRedraw = true;
   InvalidateSurface();
   DebugRefreshInfo();
@@ -892,6 +901,12 @@ void nuiWidget::Invalidate()
   
   if (!IsVisible(true))
   {
+#ifdef _DEBUG_
+    if (GetDebug())
+    {
+      NGL_OUT(_T("  nuiWidget::Invalidate '%ls' [%ls]\n"), GetObjectClass().GetChars(), GetObjectName().GetChars());
+    }
+#endif
     mNeedSelfRedraw = true;
     InvalidateSurface();
     return;
@@ -959,6 +974,13 @@ void nuiWidget::SetSurfaceBlendFunc(nuiBlendFunc BlendFunc)
 void nuiWidget::SilentInvalidate()
 {
   mNeedRender = true;
+#ifdef _DEBUG_
+  if (GetDebug())
+  {
+    NGL_OUT(_T("  nuiWidget::SilentInvalidate '%ls' [%ls]\n"), GetObjectClass().GetChars(), GetObjectName().GetChars());
+  }
+#endif
+  
   mNeedSelfRedraw = true;
   InvalidateSurface();
   if (mpRenderCache)
@@ -980,6 +1002,12 @@ void nuiWidget::BroadcastInvalidate(nuiWidgetPtr pSender)
 
 void nuiWidget::SilentInvalidateLayout()
 {
+#ifdef _DEBUG_
+  if (GetDebug())
+  {
+    NGL_OUT(_T("  nuiWidget::SilentInvalidateLayout '%ls' [%ls]\n"), GetObjectClass().GetChars(), GetObjectName().GetChars());
+  }
+#endif
   mNeedSelfLayout = true;
   mNeedLayout = true;
   mNeedIdealRect = true;
@@ -2457,8 +2485,6 @@ void nuiWidget::UpdateSurfaceRect(const nuiRect& rRect)
 void nuiWidget::SetLayout(const nuiRect& rRect)
 {
   nuiRect rect(GetIdealRect().Size());
-  nuiRect tmp(rRect.Size());
-  rect.Intersect(rect, tmp);
   
   if (mPosition != nuiFill)
   {
@@ -2540,6 +2566,13 @@ void nuiWidget::InternalSetLayout(const nuiRect& rect)
 
 void nuiWidget::InternalSetLayout(const nuiRect& rect, bool PositionChanged, bool SizeChanged)
 {
+#ifdef _DEBUG_
+  if (GetDebug())
+  {
+    NGL_OUT(_T("InternalSetLayout\n"));
+  }
+#endif
+  
   if (mNeedSelfLayout)
   {
     SetRect(rect);
@@ -2931,6 +2964,13 @@ float nuiWidget::GetLayoutAnimationDuration()
   if (pAnim)
     return pAnim->GetDuration();
   return 0;
+}
+
+void nuiWidget::SetLayoutAnimationEasing(const nuiEasingMethod& rMethod)
+{
+  nuiRectAttributeAnimation* pAnim = pAnim = GetLayoutAnimation(true);
+  if (pAnim)
+    pAnim->SetEasing(rMethod);
 }
 
 

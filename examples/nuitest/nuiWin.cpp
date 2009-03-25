@@ -823,6 +823,8 @@ bool nuiWin::CreateSVGTigerWindow(const nuiEvent& rEvent)
   //  pSVGView = new nuiSVGView(pSVGWin,_T("rsrc:/butterfly.svg"));
   //  pSVGView = new nuiSVGView(pSVGWin,_T("rsrc:/cubic02.svg"));
   pSVGView->EnableSurface(true);
+  //pSVGView->SetDebug(1);
+
   pSVGWin->AddChild(pSVGView);
   NGL_OUT((_T("Loaded SVG file in %f seconds\n")), (double)(nglTime()-before));
 

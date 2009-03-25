@@ -42,6 +42,9 @@ nuiList::nuiList(nuiOrientation Orientation)
   SetWantKeyboardFocus(true);
 
   InitProperties();
+  mEventSink.Connect(ChildAdded, &nuiList::OnChildAdded);
+  mMoveAnimDuration = .25;
+  mMoveAnimEasing = nuiEasingCubicRev;
 }
 
 bool nuiList::Load(const nuiXMLNode* pNode)
@@ -439,6 +442,46 @@ nuiWidgetPtr nuiList::GetItem(nuiSize X,nuiSize Y)
   return NULL;
 }
 
+nuiWidgetPtr nuiList::GetIdealItem(nuiSize X,nuiSize Y)
+{
+  if (mOrientation == nuiVertical)
+  {
+    IteratorPtr pIt;
+    float y = 0;
+    for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
+    {
+      nuiWidgetPtr pItem = pIt->GetWidget();
+      nuiRect r(pItem->GetIdealRect());
+      if (Y >= y && Y < y + r.GetHeight())
+      {
+        delete pIt;
+        return pItem;
+      }
+      y += r.GetHeight();
+    }
+    delete pIt;
+  }
+  else if (mOrientation == nuiHorizontal)
+  {
+    IteratorPtr pIt;
+    float x = 0;
+    for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
+    {
+      nuiWidgetPtr pItem = pIt->GetWidget();
+      nuiRect r(pItem->GetIdealRect());
+      if (X >= x && X < x + r.GetWidth())
+      {
+        delete pIt;
+        return pItem;
+      }
+      x += r.GetWidth();
+    }
+    delete pIt;
+  }
+  
+  return NULL;
+}
+
 
 bool nuiList::KeyDown(const nglKeyEvent& rEvent)
 {
@@ -602,7 +645,7 @@ int32 nuiList::GetItemNumber(nuiWidgetPtr pWidget)
 }
 
 
-bool nuiList::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
+bool nuiList::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
 {
   if (IsDisabled())
     return false;
@@ -672,7 +715,7 @@ bool nuiList::MouseMoved  (nuiSize X, nuiSize Y)
   if (!mCanMoveItems)
     return false;
   
-  nuiWidgetPtr pItem = GetItem(X,Y);
+  nuiWidgetPtr pItem = GetIdealItem(X,Y);
 
   if ((pItem == mpLastItem) || (pItem == mpLastDestinationItem))
     return false;
@@ -931,3 +974,25 @@ bool nuiList::GetFixedAspectRatio()
   return mFixedAspectRatio;
 }
 
+bool nuiList::OnChildAdded(const nuiEvent& rEvent)
+{
+  if (mMoveAnimDuration)
+  {
+    const nuiTreeEvent<nuiWidget>& rTreeEvent((const nuiTreeEvent<nuiWidget>&)rEvent);
+    rTreeEvent.mpChild->SetLayoutAnimationDuration(mMoveAnimDuration);
+    rTreeEvent.mpChild->SetLayoutAnimationEasing(mMoveAnimEasing);
+  }
+  return false;
+}
+
+void nuiList::SetMoveAnimationDuration(float duration)
+{
+  mMoveAnimDuration = duration;
+  SetChildrenLayoutAnimationDuration(duration);
+}
+
+void nuiList::SetMoveAnimationEasing(const nuiEasingMethod& rMethod)
+{
+  mMoveAnimEasing = rMethod;
+  SetChildrenLayoutAnimationEasing(rMethod);
+}

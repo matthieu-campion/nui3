@@ -32,6 +32,7 @@ public:
   void SetOrientation(nuiOrientation orientation); /// Set the widget orientation.
   nuiOrientation GetOrientation(); ///< Get the widget orientation.
   nuiWidgetPtr GetItem(nuiSize X,nuiSize Y); ///< Return a pointer to the child pointed by X,Y or NULL.
+  nuiWidgetPtr GetIdealItem(nuiSize X,nuiSize Y); ///< Return the item pointed to by the given coordinates without taking any ongoing animation into account.
   int32 GetItemNumber(nuiWidgetPtr pWidget); ///< Return the index of the child pointed by pWidget.
   bool GetUnselectable(); ///< Return true if the list items are unselectable by clicking on it.
   bool GetMultiSelectable(); ///< Return true if multiple list items can be selected.
@@ -84,6 +85,8 @@ public:
   // temp.
   void MoveChild(nuiWidget* pSelectedChild, nuiWidget* pDestinationChild);
 
+  void SetMoveAnimationDuration(float duration);
+  void SetMoveAnimationEasing(const nuiEasingMethod& rMethod);
 
 protected:
   nuiOrientation mOrientation; /// mHorizontal is true if the containers' layout if horizontal, false if vertical.
@@ -109,6 +112,12 @@ protected:
   nuiWidgetPtr     mpLastItem;
   nuiWidgetPtr     mpLastDestinationItem;
   nuiEventSink<nuiList> mEventSink;
+  
+  bool OnChildAdded(const nuiEvent& rEvent);
+  
+  float mMoveAnimDuration;
+  nuiEasingMethod mMoveAnimEasing;
+
 };
 
 #endif // __nuiList_h__

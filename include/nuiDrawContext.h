@@ -42,9 +42,10 @@ class nuiSurface;
 
 enum nuiRenderer
 {
-  eOpenGL = eTargetAPI_OpenGL,
-  eDirect3D = eTargetAPI_Direct3D,
-  eSoftware = eTargetAPI_None
+  eSoftware,
+  eOpenGL,
+  eDirect3D,
+  eMeta
 };
 
 #ifdef DrawText

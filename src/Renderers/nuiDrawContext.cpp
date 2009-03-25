@@ -8,6 +8,7 @@
 #include "nui.h"
 #include "nui.h"
 #include "nuiDrawContext.h"
+#include "nuiMetaPainter.h"
 #include "nuiGLPainter.h"
 #include "nuiD3DPainter.h"
 #include "nuiSoftwarePainter.h"
@@ -1535,11 +1536,16 @@ nuiDrawContext *nuiDrawContext::CreateDrawContext(const nuiRect& rRect, nuiRende
     pPainter = new nuiSoftwarePainter(rRect, pContext);
     break;
 #endif
+  case eMeta:
+    pPainter = new nuiMetaPainter(rRect, pContext);
+    break;
   }
   pC->SetPainter(pPainter);
-  pContext->BeginSession();
+  if (pContext)
+    pContext->BeginSession();
   pC->Set2DProjectionMatrix(rRect);
-  pContext->EndSession();
+  if (pContext)
+    pContext->EndSession();
   return pC;
 }
 

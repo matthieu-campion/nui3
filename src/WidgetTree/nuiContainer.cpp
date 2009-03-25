@@ -931,3 +931,25 @@ nuiWidgetPtr nuiContainer::GetPreviousFocussableChild(nuiWidgetPtr pChild) const
   return NULL;
 }
 
+void nuiContainer::SetChildrenLayoutAnimationDuration(float duration)
+{
+  IteratorPtr pIt;
+  for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
+  {
+    nuiWidgetPtr pItem = pIt->GetWidget();
+    pItem->SetLayoutAnimationDuration(duration);
+  }
+  delete pIt;
+}
+
+void nuiContainer::SetChildrenLayoutAnimationEasing(const nuiEasingMethod& rMethod)
+{
+  IteratorPtr pIt;
+  for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
+  {
+    nuiWidgetPtr pItem = pIt->GetWidget();
+    pItem->SetLayoutAnimationEasing(rMethod);
+  }
+  delete pIt;
+}
+

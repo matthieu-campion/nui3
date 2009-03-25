@@ -37,26 +37,25 @@ void MainWindow::OnCreation()
   pLayoutBox->SetExpand(nuiExpandShrinkAndGrow);
   AddChild(pLayoutBox);
   
-  // image in the first box's cell
-  nuiImage* pImg = new nuiImage();
-  pImg->SetObjectName(_T("MyImage"));
-  pImg->SetPosition(nuiCenter);
-  pLayoutBox->AddCell(pImg);
-  pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
-  
   nuiList* pList = new nuiList();
   for (uint32 i = 0; i < 16; i++)
   {
     nglString str;
     str.CFormat(_T("Item %d"), i);
     nuiLabel* pItem = new nuiLabel(str);
-    pItem->SetLayoutAnimationDuration(1);
     pList->AddChild(pItem);
   }
   pList->SetCanMoveItems(true);
   nuiScrollView* pScroll = new nuiScrollView();
   pScroll->AddChild(pList);
   pLayoutBox->AddCell(pScroll);
+  pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
+  
+  // image in the last box's cell
+  nuiImage* pImg = new nuiImage();
+  pImg->SetObjectName(_T("MyImage"));
+  pImg->SetPosition(nuiCenter);
+  pLayoutBox->AddCell(pImg);
   pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
 }
 
