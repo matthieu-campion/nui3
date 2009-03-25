@@ -37,6 +37,7 @@ class nuiAnimation;
 class nuiPainter;
 
 class nuiTheme;
+class nuiRectAttributeAnimation;
 
 typedef nuiWidget* nuiWidgetPtr;
 typedef std::vector<nuiWidgetPtr> nuiWidgetList;
@@ -343,6 +344,9 @@ public:
   void ResetAnimation(const nglString& rName); ///< Set the given animation to it's first frame.
   void StartAnimation(const nglString& rName, double Time = 0.0); ///< Start playing the given animation from the given time.
   void StopAnimation(const nglString& rName); ///< Stop playing the given animation if it exists.
+  nuiRectAttributeAnimation* GetLayoutAnimation(bool CreateIfNotAvailable);
+  void SetLayoutAnimationDuration(float duration);
+  float GetLayoutAnimationDuration();
   //@}
 
   /** @name Matrix Transformation Support */
@@ -644,6 +648,7 @@ private:
   nuiSize GetActualBorderRight() const;
   nuiSize GetActualBorderBottom() const;
   
+  void InternalSetLayout(const nuiRect& rect);
   virtual void InternalSetLayout(const nuiRect& rect, bool PositionChanged, bool SizeChanged);
   
   nuiPosition mPosition;

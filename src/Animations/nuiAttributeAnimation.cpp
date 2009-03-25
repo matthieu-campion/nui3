@@ -332,7 +332,7 @@ void nuiRectAttributeAnimation::Play(uint32 Count, nuiAnimLoop LoopMode)
   
   if (mCaptureStartOnPlay)
   {
-    if (rect_attrib)
+    if (rect_attrib.IsValid())
       mStartValue = rect_attrib.Get();
     else if (const_rect_attrib)
       mStartValue = const_rect_attrib.Get();

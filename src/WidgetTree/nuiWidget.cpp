@@ -12,6 +12,7 @@
 #include "nuiTopLevel.h"
 #include "nuiXML.h"
 #include "nuiAnimation.h"
+#include "nuiAttributeAnimation.h"
 #include "nuiDrawContext.h"
 #include "nuiMetaPainter.h"
 #include "nuiMainWindow.h"
@@ -262,6 +263,11 @@ void nuiWidget::InitAttributes()
                (nglString(_T("LayoutRect")), nuiUnitNone,
                 nuiAttribute<const nuiRect&>::GetterDelegate(this, &nuiWidget::GetRect),
                 nuiAttribute<const nuiRect&>::SetterDelegate(this, &nuiWidget::SetLayout)));
+  
+  AddAttribute(new nuiAttribute<const nuiRect&>
+               (nglString(_T("LayoutRectUnsafe")), nuiUnitNone,
+                nuiAttribute<const nuiRect&>::GetterDelegate(this, &nuiWidget::GetRect),
+                nuiAttribute<const nuiRect&>::SetterDelegate(this, &nuiWidget::InternalSetLayout)));
   
   AddAttribute(new nuiAttribute<const nuiRect&>
                (nglString(_T("UserRect")), nuiUnitNone,
@@ -2499,17 +2505,34 @@ void nuiWidget::SetLayout(const nuiRect& rRect)
 
   rect.RoundToNearest();
     
+  if (GetLayoutAnimationDuration() > 0)
+  {
+    nuiRectAttributeAnimation* pAnim = GetLayoutAnimation(true);
+    if (pAnim->IsPlaying())
+      pAnim->Stop();
+    pAnim->SetEndValue(rect);
+    pAnim->Play();
+    pAnim->SetTime(0);
+  }
+  else
+  {
+    InternalSetLayout(rect);
+  }
+}
+
+void nuiWidget::InternalSetLayout(const nuiRect& rect)
+{
   bool PositionChanged = (rect.Left() != mRect.Left()) || (rect.Top() != mRect.Top());
   bool SizeChanged = !rect.Size().IsEqual(mRect.Size());
   mNeedSelfLayout = mNeedSelfLayout || mClippingOptims || SizeChanged;
-
+  
   InternalSetLayout(rect, PositionChanged, SizeChanged);
-
+  
   mVisibleRect = GetOverDrawRect(true, true);
-
+  
   if (PositionChanged && mpParent)
-      mpParent->Invalidate();
-
+    mpParent->Invalidate();
+  
   mNeedSelfLayout = false;
   mNeedLayout = false;
   DebugRefreshInfo();
@@ -2876,6 +2899,40 @@ void nuiWidget::StopAnimation(const nglString& rName)
     pAnim->Stop();
   DebugRefreshInfo();
 }
+
+#define LAYOUT_ANIM_NAME _T("LAYOUT_ANIM")
+
+nuiRectAttributeAnimation* nuiWidget::GetLayoutAnimation(bool CreateIfNotAvailable)
+{
+  nuiRectAttributeAnimation* pAnim = (nuiRectAttributeAnimation*)GetAnimation(LAYOUT_ANIM_NAME);
+  if (!pAnim && CreateIfNotAvailable)
+  {
+    pAnim = new nuiRectAttributeAnimation();
+    pAnim->SetDuration(0);
+    pAnim->SetTargetObject(this);
+    pAnim->SetTargetAttribute(_T("LayoutRectUnsafe"));
+    pAnim->SetCaptureStartOnPlay(true);
+    AddAnimation(LAYOUT_ANIM_NAME, pAnim);
+  }
+
+  return pAnim;
+}
+
+void nuiWidget::SetLayoutAnimationDuration(float duration)
+{
+  nuiRectAttributeAnimation* pAnim = pAnim = GetLayoutAnimation(duration > 0);
+  if (pAnim)
+    pAnim->SetDuration(duration);
+}
+
+float nuiWidget::GetLayoutAnimationDuration()
+{
+  nuiRectAttributeAnimation* pAnim = GetLayoutAnimation(false);
+  if (pAnim)
+    return pAnim->GetDuration();
+  return 0;
+}
+
 
 /// Matrix Operations:
 void nuiWidget::LoadIdentityMatrix()

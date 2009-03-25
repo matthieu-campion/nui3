@@ -219,7 +219,6 @@ double nuiAnimation::GetDuration() const
 void nuiAnimation::SetDuration(double duration)
 {
   mDuration = duration;
-  UpdateTime();
 }
 
 double nuiAnimation::GetPosition() const

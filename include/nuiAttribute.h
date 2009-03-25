@@ -1066,7 +1066,10 @@ template <class Type>
 nuiAttribute<Type>* nuiAttributeCast(const nuiAttributeBase* pBase)
 {
   if (pBase->GetType() == nuiAttributeTypeTrait<Type>::GetTypeId())
+  {
+    NGL_ASSERT(dynamic_cast<const nuiAttribute<Type>*>(pBase) != NULL);
     return (nuiAttribute<Type>*)pBase;
+  }
   
   return NULL;
 }
@@ -1123,7 +1126,7 @@ public:
   uint32 GetDimension() const;
   uint32 GetIndexRange(uint32 Dimension) const;
   
-  bool IsValid() const;
+  virtual bool IsValid() const;
   operator bool() const;
   
 protected:
@@ -1280,6 +1283,11 @@ public:
   {
     NGL_ASSERT(mpAttribute->GetDimension() == 2);
     return mpAttribute->GetChangedSignal1(mpTarget);
+  }
+
+  virtual bool IsValid() const
+  {
+    return nuiAttribBase::IsValid() && mpAttribute;
   }
   
 private:
