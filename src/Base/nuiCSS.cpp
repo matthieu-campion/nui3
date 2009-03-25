@@ -647,7 +647,7 @@ protected:
           if (!CreateColor(name))
           {
             nglString str;
-            str.CFormat(_T("Unable to parse a color with name '%ls'"), name);
+            str.CFormat(_T("Unable to parse a color with name '%ls'"), name.GetChars());
             SetError(str);
             return false;
           }
@@ -657,7 +657,7 @@ protected:
           if (!CreateVariable(name))
           {
             nglString str;
-            str.CFormat(_T("Unable to parse a variable with name '%ls'"), name);
+            str.CFormat(_T("Unable to parse a variable with name '%ls'"), name.GetChars());
             SetError(str);
             return false;
           }
@@ -684,7 +684,7 @@ protected:
       if (!CreateObject(type, name))
       {
         nglString str;
-        str.CFormat(_T("Unable to create an object of type '%ls' and name '%ls'"), type, name);
+        str.CFormat(_T("Unable to create an object of type '%ls' and name '%ls'"), type.GetChars(), name.GetChars());
         SetError(str);
         Clear();
         return false;
