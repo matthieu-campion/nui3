@@ -765,7 +765,9 @@ private:
   bool           mInvalidatePosted;
   bool           mRedrawing;
   bool           mIsFakeChildWindow;
-  int             mXOffset, mYOffset, mWindowWidth, mWindowHeight; //< those values are only valid in the case of a fake child window
+  int            mXOffset, mYOffset, mWindowWidth, mWindowHeight; //< those values are only valid in the case of a fake child window
+  nglMouseInfo::Flags mLastButtonDown;
+  
 
   EventLoopTimerRef mTimer;
   EventHandlerRef   mEventHandlerRef;

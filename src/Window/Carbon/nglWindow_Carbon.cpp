@@ -544,7 +544,8 @@ nglWindow::nglWindow (uint Width, uint Height, bool IsFullScreen)
   
   mEventHandlerRef = NULL;
   mKeyboardEventHandlerRef = NULL;
-	mpCarbonDragAndDrop = NULL;
+  mpCarbonDragAndDrop = NULL;
+  mLastButtonDown = nglMouseInfo::ButtonNone;
   
   mpMainMenu = NULL;
 	
@@ -1026,8 +1027,14 @@ OSStatus nglWindow::WindowEventHandler (EventHandlerCallRef eventHandlerCallRef,
           
           UInt32 count;
           GetEventParameter (eventRef, kEventParamClickCount, typeUInt32, NULL, sizeof(count), NULL, &count);
-          if (count>1) 
-            minfo.Buttons |= nglMouseInfo::ButtonDoubleClick;
+          if (count>1)
+          {
+				 if (minfo.Buttons & mLastButtonDown)
+             {
+               minfo.Buttons |= nglMouseInfo::ButtonDoubleClick;
+             }
+          }
+			  mLastButtonDown = minfo.Buttons;
           
           minfo.X = mouseLocation.h - mXOffset;
           minfo.Y = mouseLocation.v - mYOffset;
