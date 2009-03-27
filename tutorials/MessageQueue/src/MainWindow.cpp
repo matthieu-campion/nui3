@@ -179,11 +179,13 @@ bool MainWindow::OnStop(const nuiEvent& rEvent)
   {
     mpThread1->Post(new nuiNotification (NOTIF_KILL));
     mpThread2->Post(new nuiNotification (NOTIF_KILL));
+
     mpThread1->Join();
     mpThread2->Join();
     
     delete mpThread1;
     delete mpThread2;  
+
     mpThread1 = NULL;
     mpThread2 = NULL;
   }

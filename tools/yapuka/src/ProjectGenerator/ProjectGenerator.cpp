@@ -98,7 +98,7 @@ nuiWidget* ProjectGenerator::BuildBlocSourceDirectory()
   nuiHBox* pBox = new nuiHBox(2);
   pBloc->AddCell(pBox);
   mpNuiSource = new nuiEditLine(mNuiSourcePath);
-  mpNuiSource->SetEnabled(false);
+  mpNuiSource->SetEnabled(true);
   mpNuiSource->SetPosition(nuiFillHorizontal);
   mEventSink.Connect(mpNuiSource->TextChanged, &ProjectGenerator::OnSourceTextChanged);
   
@@ -170,7 +170,7 @@ nuiWidget* ProjectGenerator::BuildBlocProjectDirectory()
   pBloc->AddCell(pBox);
   mpProjectTarget = new nuiEditLine(mProjectTargetPath);
   mpProjectTarget->SetPosition(nuiFillHorizontal);
-  mpProjectTarget->SetEnabled(false);
+  mpProjectTarget->SetEnabled(true);
   mEventSink.Connect(mpProjectTarget->TextChanged, &ProjectGenerator::OnTargetTextChanged);
   
   pBox->SetCell(0, mpProjectTarget);

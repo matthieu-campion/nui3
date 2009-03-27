@@ -6,7 +6,7 @@
  */
 
  
-#include "./Commands/cmdFirstSample.h"
+#include "Commands/cmdFirstSample.h"
 #include "MainWindow.h"
 #include "Application.h"
  

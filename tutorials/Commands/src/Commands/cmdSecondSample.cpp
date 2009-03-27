@@ -7,7 +7,7 @@
 
 
 
-#include "./Commands/cmdSecondSample.h"
+#include "Commands/cmdSecondSample.h"
 #include "MainWindow.h"
 #include "Application.h"
 
