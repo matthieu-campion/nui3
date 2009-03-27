@@ -66,7 +66,6 @@ nuiSVGView::~nuiSVGView()
 void nuiSVGView::Init()
 {
   SetObjectClass(_T("nuiSVGView"));
-  EnableRenderCache(false);
   mpShape = NULL;
   mAntialias = true;
 }

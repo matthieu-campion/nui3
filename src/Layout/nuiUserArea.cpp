@@ -20,8 +20,6 @@ nuiUserArea::nuiUserArea()
   mInterceptMouse = false;
   mPrepareGLContext = false;
   
-  EnableRenderCache(false);
-
   NUI_ADD_EVENT(UserDraw);
   NUI_ADD_EVENT(ClickedMouse);
   NUI_ADD_EVENT(UnclickedMouse);
@@ -36,8 +34,6 @@ bool nuiUserArea::Load(const nuiXMLNode* pNode)
   mInterceptMouse = nuiGetBool ( pNode, _T("InterceptMouse"), false);
   mPrepareGLContext = nuiGetBool ( pNode, _T("PrepareGLContext"), false);
   
-  EnableRenderCache(false);
-
   NUI_ADD_EVENT(UserDraw);
   NUI_ADD_EVENT(ClickedMouse);
   NUI_ADD_EVENT(UnclickedMouse);

@@ -22,8 +22,6 @@
 #include "nuiRenderState.h"
 #include "nuiAnimation.h"
 
-typedef std::vector<uint8> nuiRenderCache;
-
 class nuiContainer;
 class nuiDrawContext;
 class nuiWidget;

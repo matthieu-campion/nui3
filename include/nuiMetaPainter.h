@@ -15,6 +15,8 @@
 
 class nuiDrawContext;
 
+typedef std::vector<uint8> nuiRenderCache;
+
 // 
 class NUI_API nuiMetaPainter : public nuiPainter
 {
