@@ -83,6 +83,7 @@ nglThread::nglThread(Priority priority)
   mpData->mThreadID	= 0;
   mState				= Stopped;
   mPriority			= priority;
+  mAutoDelete = false;
 }
 
 nglThread::nglThread(const nglString& rName, Priority priority)
@@ -94,6 +95,7 @@ nglThread::nglThread(const nglString& rName, Priority priority)
   mpData->mThreadID	= 0;
   mState				= Stopped;
   mPriority			= priority;
+  mAutoDelete = false;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
