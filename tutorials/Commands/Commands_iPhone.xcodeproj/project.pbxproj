@@ -9,10 +9,16 @@
 /* Begin PBXBuildFile section */
 		BC540B430EF940C5007E66FC /* libnuiE.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC6A0A3E0EF93F7800881ACF /* libnuiE.a */; };
 		BC540B440EF940C9007E66FC /* libnuiEd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC6A0A400EF93F7800881ACF /* libnuiEd.a */; };
-		BC6A0A450EF93F9700881ACF /* MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC6A0A420EF93F9700881ACF /* MainWindow.cpp */; };
-		BC6A0A460EF93F9700881ACF /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC6A0A430EF93F9700881ACF /* Application.cpp */; };
-		BC6A0A470EF93F9700881ACF /* MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC6A0A420EF93F9700881ACF /* MainWindow.cpp */; };
-		BC6A0A480EF93F9700881ACF /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC6A0A430EF93F9700881ACF /* Application.cpp */; };
+		BCAD1A680F7CFDA8001FCB9B /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCAD1A620F7CFDA8001FCB9B /* Application.cpp */; };
+		BCAD1A690F7CFDA8001FCB9B /* MainMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCAD1A650F7CFDA8001FCB9B /* MainMenu.cpp */; };
+		BCAD1A6A0F7CFDA8001FCB9B /* MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCAD1A670F7CFDA8001FCB9B /* MainWindow.cpp */; };
+		BCAD1A6B0F7CFDA8001FCB9B /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCAD1A620F7CFDA8001FCB9B /* Application.cpp */; };
+		BCAD1A6C0F7CFDA8001FCB9B /* MainMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCAD1A650F7CFDA8001FCB9B /* MainMenu.cpp */; };
+		BCAD1A6D0F7CFDA8001FCB9B /* MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCAD1A670F7CFDA8001FCB9B /* MainWindow.cpp */; };
+		BCAD1A7A0F7CFDC2001FCB9B /* cmdFirstSample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCAD1A760F7CFDC2001FCB9B /* cmdFirstSample.cpp */; };
+		BCAD1A7B0F7CFDC2001FCB9B /* cmdSecondSample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCAD1A780F7CFDC2001FCB9B /* cmdSecondSample.cpp */; };
+		BCAD1A7C0F7CFDC2001FCB9B /* cmdFirstSample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCAD1A760F7CFDC2001FCB9B /* cmdFirstSample.cpp */; };
+		BCAD1A7D0F7CFDC2001FCB9B /* cmdSecondSample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCAD1A780F7CFDC2001FCB9B /* cmdSecondSample.cpp */; };
 		C99995FC0DA6EE97001A7116 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		C99995FD0DA6EE97001A7116 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		C99995FE0DA6EE97001A7116 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
@@ -68,10 +74,16 @@
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		BC540B7E0EF94188007E66FC /* main.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = main.css; path = resources/css/main.css; sourceTree = SOURCE_ROOT; };
 		BC6A0A350EF93F7800881ACF /* nuiE.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nuiE.xcodeproj; path = ../../nuiE.xcodeproj; sourceTree = SOURCE_ROOT; };
-		BC6A0A410EF93F9700881ACF /* MainWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainWindow.h; path = src/MainWindow.h; sourceTree = SOURCE_ROOT; };
-		BC6A0A420EF93F9700881ACF /* MainWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MainWindow.cpp; path = src/MainWindow.cpp; sourceTree = SOURCE_ROOT; };
-		BC6A0A430EF93F9700881ACF /* Application.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Application.cpp; path = src/Application.cpp; sourceTree = SOURCE_ROOT; };
-		BC6A0A440EF93F9700881ACF /* Application.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Application.h; path = src/Application.h; sourceTree = SOURCE_ROOT; };
+		BCAD1A620F7CFDA8001FCB9B /* Application.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Application.cpp; path = src/Application.cpp; sourceTree = SOURCE_ROOT; };
+		BCAD1A630F7CFDA8001FCB9B /* MainWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainWindow.h; path = src/MainWindow.h; sourceTree = SOURCE_ROOT; };
+		BCAD1A640F7CFDA8001FCB9B /* Application.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Application.h; path = src/Application.h; sourceTree = SOURCE_ROOT; };
+		BCAD1A650F7CFDA8001FCB9B /* MainMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MainMenu.cpp; path = src/MainMenu.cpp; sourceTree = SOURCE_ROOT; };
+		BCAD1A660F7CFDA8001FCB9B /* MainMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainMenu.h; path = src/MainMenu.h; sourceTree = SOURCE_ROOT; };
+		BCAD1A670F7CFDA8001FCB9B /* MainWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MainWindow.cpp; path = src/MainWindow.cpp; sourceTree = SOURCE_ROOT; };
+		BCAD1A760F7CFDC2001FCB9B /* cmdFirstSample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cmdFirstSample.cpp; path = src/Commands/cmdFirstSample.cpp; sourceTree = SOURCE_ROOT; };
+		BCAD1A770F7CFDC2001FCB9B /* cmdFirstSample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cmdFirstSample.h; path = src/Commands/cmdFirstSample.h; sourceTree = SOURCE_ROOT; };
+		BCAD1A780F7CFDC2001FCB9B /* cmdSecondSample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cmdSecondSample.cpp; path = src/Commands/cmdSecondSample.cpp; sourceTree = SOURCE_ROOT; };
+		BCAD1A790F7CFDC2001FCB9B /* cmdSecondSample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cmdSecondSample.h; path = src/Commands/cmdSecondSample.h; sourceTree = SOURCE_ROOT; };
 		C99996020DA6EE97001A7116 /* Commands_iPhone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Commands_iPhone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C999972E0DA6F405001A7116 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		C99997710DA6F9F2001A7116 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -198,6 +210,17 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		BCAD1A6F0F7CFDAE001FCB9B /* Commands */ = {
+			isa = PBXGroup;
+			children = (
+				BCAD1A760F7CFDC2001FCB9B /* cmdFirstSample.cpp */,
+				BCAD1A770F7CFDC2001FCB9B /* cmdFirstSample.h */,
+				BCAD1A780F7CFDC2001FCB9B /* cmdSecondSample.cpp */,
+				BCAD1A790F7CFDC2001FCB9B /* cmdSecondSample.h */,
+			);
+			name = Commands;
+			sourceTree = "<group>";
+		};
 		C99996230DA6EED8001A7116 /* dependencies */ = {
 			isa = PBXGroup;
 			children = (
@@ -209,10 +232,13 @@
 		C99996330DA6EED8001A7116 /* sources */ = {
 			isa = PBXGroup;
 			children = (
-				BC6A0A430EF93F9700881ACF /* Application.cpp */,
-				BC6A0A440EF93F9700881ACF /* Application.h */,
-				BC6A0A420EF93F9700881ACF /* MainWindow.cpp */,
-				BC6A0A410EF93F9700881ACF /* MainWindow.h */,
+				BCAD1A6F0F7CFDAE001FCB9B /* Commands */,
+				BCAD1A620F7CFDA8001FCB9B /* Application.cpp */,
+				BCAD1A630F7CFDA8001FCB9B /* MainWindow.h */,
+				BCAD1A640F7CFDA8001FCB9B /* Application.h */,
+				BCAD1A650F7CFDA8001FCB9B /* MainMenu.cpp */,
+				BCAD1A660F7CFDA8001FCB9B /* MainMenu.h */,
+				BCAD1A670F7CFDA8001FCB9B /* MainWindow.cpp */,
 			);
 			name = sources;
 			sourceTree = "<group>";
@@ -344,8 +370,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC6A0A450EF93F9700881ACF /* MainWindow.cpp in Sources */,
-				BC6A0A460EF93F9700881ACF /* Application.cpp in Sources */,
+				BCAD1A6B0F7CFDA8001FCB9B /* Application.cpp in Sources */,
+				BCAD1A6C0F7CFDA8001FCB9B /* MainMenu.cpp in Sources */,
+				BCAD1A6D0F7CFDA8001FCB9B /* MainWindow.cpp in Sources */,
+				BCAD1A7C0F7CFDC2001FCB9B /* cmdFirstSample.cpp in Sources */,
+				BCAD1A7D0F7CFDC2001FCB9B /* cmdSecondSample.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -353,8 +382,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC6A0A470EF93F9700881ACF /* MainWindow.cpp in Sources */,
-				BC6A0A480EF93F9700881ACF /* Application.cpp in Sources */,
+				BCAD1A680F7CFDA8001FCB9B /* Application.cpp in Sources */,
+				BCAD1A690F7CFDA8001FCB9B /* MainMenu.cpp in Sources */,
+				BCAD1A6A0F7CFDA8001FCB9B /* MainWindow.cpp in Sources */,
+				BCAD1A7A0F7CFDC2001FCB9B /* cmdFirstSample.cpp in Sources */,
+				BCAD1A7B0F7CFDC2001FCB9B /* cmdSecondSample.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -388,7 +420,10 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../include";
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../../include",
+					./src,
+				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-x",

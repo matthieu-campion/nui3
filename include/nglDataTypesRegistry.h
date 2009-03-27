@@ -28,6 +28,9 @@ typedef uint        nglNativeObjectType;
 #ifdef _COCOA_
 typedef uint        nglNativeObjectType;
 #endif
+#ifdef _UIKIT_
+typedef uint        nglNativeObjectType;
+#endif
 #ifdef _CARBON_
 typedef FlavorType  nglNativeObjectType;
 #endif

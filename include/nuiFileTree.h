@@ -15,6 +15,7 @@
 #include "nuiVBox.h"
 #include "nuiList.h"
 #include "nuiSplitter.h"
+#include "nglDragAndDropObjects.h"
 
 /*
 NOTE ABOUT DECORATIONS:

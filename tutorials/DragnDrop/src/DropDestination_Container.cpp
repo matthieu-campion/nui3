@@ -7,6 +7,7 @@
 
 #include "DropDestination_Container.h"
 #include "nuiBackgroundPane.h"
+#include "nglDataObjects.h"
 
 DropContainer::DropContainer()
 {

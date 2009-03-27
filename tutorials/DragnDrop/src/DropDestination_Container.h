@@ -10,6 +10,7 @@
  
 
 #include "nui.h"
+#include "nglDragAndDropObjects.h"
 
 class DropContainer : public nuiSimpleContainer
 {

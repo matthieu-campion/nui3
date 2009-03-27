@@ -48,11 +48,7 @@ void Application::OnInit()
   bool ShowFPS = false;
 
   
-#ifdef NUI_IPHONE
-  nuiRenderer Renderer = eOpenGLES;
-#else
   nuiRenderer Renderer = eOpenGL;
-#endif
 //  nuiRenderer Renderer = eSoftware;
 //  nuiRenderer Renderer = eDirect3D;
 
