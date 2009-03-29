@@ -179,12 +179,12 @@ bool nuiCoverFlow::Draw(nuiDrawContext* pContext)
 
   float aspectratio = rect.GetWidth() / rect.GetHeight();
   pContext->PushProjectionMatrix();
-  LocalToGlobal(rect);
+  //LocalToGlobal(rect);
   pContext->SetPerspectiveProjectionMatrix(rect, 25, aspectratio, .2, 20);
   pContext->PushMatrix();
   pContext->LoadIdentity();
   pContext->Translate(0, -.5, -2);
-  pContext->ResetClipRect();
+//  pContext->ResetClipRect();
   
   float height = mRect.GetHeight();
   float width = mRect.GetWidth();
@@ -278,6 +278,7 @@ bool nuiCoverFlow::Draw(nuiDrawContext* pContext)
     end = 1.0f;
     pContext->Scale(1.0f, -1.0f, 1.0f);
   }
+
   pContext->PopMatrix();
   
   pContext->PopProjectionMatrix();

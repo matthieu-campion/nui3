@@ -222,9 +222,9 @@ void nuiGLPainter::SetViewport()
   GLuint Angle = GetAngle();
   GLuint Width = GetCurrentWidth();
   GLuint Height = GetCurrentHeight();
-  const nuiRect& rViewport = mProjectionViewportStack.top();
+  const nuiRect& rViewport(mProjectionViewportStack.top());
   const nuiMatrix& rMatrix = mProjectionMatrixStack.top();
-
+  
   uint32 x, y, w, h;
   
   nuiRect r(rViewport);

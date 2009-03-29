@@ -117,7 +117,13 @@ void nuiPainter::LoadProjectionMatrix(const nuiRect& rViewport, const nuiMatrix&
 {
   NGL_ASSERT(!mProjectionMatrixStack.empty());
   mProjectionMatrixStack.top() = rMatrix;
-  mProjectionViewportStack.top() = rViewport;
+
+  nuiMatrix LocalMatrix(mMatrixStack.top());
+  nuiVector vec1(rViewport.Left(), rViewport.Top(), 0.0f);
+  nuiVector vec2(rViewport.Right(), rViewport.Bottom(), 0.0f);
+  vec1 = LocalMatrix * vec1;
+  vec2 = LocalMatrix * vec2;
+  mProjectionViewportStack.top().Set(vec1[0], vec1[1], vec2[0], vec2[1], false);
 }
 
 void nuiPainter::MultProjectionMatrix(const nuiMatrix& rMatrix)
