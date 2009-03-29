@@ -155,44 +155,49 @@ void nuiSoftwarePainter::SetState(const nuiRenderState& rState, bool ForceApply)
     mpRasterizer->SetClipRect(0,0, mWidth, mHeight);  
 }
 
-void nuiSoftwarePainter::DrawArray(const nuiRenderArray& rArray)
+void nuiSoftwarePainter::DrawArray(nuiRenderArray* pArray)
 {
   if (!mEnableDrawArray)
+  {
+    pArray->Release();
     return;
+  }
   
-  switch (rArray.GetMode())
+  switch (pArray->GetMode())
   {
   case GL_POINTS:
     //NGL_OUT(_T("GL_POINTS Not Implemented\n"));
     break;
   case GL_LINES:
-    DrawLines(rArray);
+    DrawLines(pArray);
     break;
   case GL_LINE_STRIP:
-    DrawLineStrip(rArray);
+    DrawLineStrip(pArray);
     break;
   case GL_LINE_LOOP:
-    DrawLineLoop(rArray);
+    DrawLineLoop(pArray);
     break;
   case GL_TRIANGLES:
-    DrawTriangles(rArray);
+    DrawTriangles(pArray);
     break;
   case GL_TRIANGLE_FAN:
-    DrawTrianglesFan(rArray);
+    DrawTrianglesFan(pArray);
     break;
   case GL_TRIANGLE_STRIP:
-    DrawTrianglesStrip(rArray);
+    DrawTrianglesStrip(pArray);
     break;
 //  case GL_QUADS:
-//    DrawQuads(rArray);
+//    DrawQuads(pArray);
 //    break;
 //  case GL_QUAD_STRIP:
-//    DrawQuadStrip(rArray);
+//    DrawQuadStrip(pArray);
 //    break;
 //  case GL_POLYGON:
 //    //NGL_OUT(_T("GL_POLYGON Not Implemented\n"));
 //    break;
   }
+
+  pArray->Release();
 }
 
 void nuiSoftwarePainter::ClearColor()
@@ -222,85 +227,85 @@ void nuiSoftwarePainter::ReleaseCacheObject(void* pHandle)
 
 
 
-void nuiSoftwarePainter::DrawLines(const nuiRenderArray& rArray)
+void nuiSoftwarePainter::DrawLines(const nuiRenderArray* pArray)
 {
-  int32 count = rArray.GetSize() / 2;
+  int32 count = pArray->GetSize() / 2;
   for (int32 i = 0; i < count; i++)
   {
     int32 ii = i << 1;
-    DrawLine(rArray, ii, ii+1);
+    DrawLine(pArray, ii, ii+1);
   }
 }
 
-void nuiSoftwarePainter::DrawLineStrip(const nuiRenderArray& rArray)
+void nuiSoftwarePainter::DrawLineStrip(const nuiRenderArray* pArray)
 {
-  int32 count = rArray.GetSize() - 1;
+  int32 count = pArray->GetSize() - 1;
   for (int32 i = 0; i < count; i++)
   {
-    DrawLine(rArray, i, i + 1);
+    DrawLine(pArray, i, i + 1);
   }
 }
 
-void nuiSoftwarePainter::DrawLineLoop(const nuiRenderArray& rArray)
+void nuiSoftwarePainter::DrawLineLoop(const nuiRenderArray* pArray)
 {
-  int32 s = rArray.GetSize();
+  int32 s = pArray->GetSize();
   int32 count = s / 2;
 
   for (int32 i = 0; i < count; i++)
   {
     int32 ii = i << 1;
-    DrawLine(rArray, ii, (ii + 1) % s);
+    DrawLine(pArray, ii, (ii + 1) % s);
   }
 }
 
 // DrawTriangles (GL_TRIANGLES)
-void nuiSoftwarePainter::DrawTriangles(const nuiRenderArray& rArray)
+void nuiSoftwarePainter::DrawTriangles(const nuiRenderArray* pArray)
 {
   int32 i;
-  int32 count = rArray.GetSize() / 3;
+  int32 count = pArray->GetSize() / 3;
   for (i = 0; i < count; i++)
   {
     uint32 ii = i *3;
-    DrawTriangle(rArray, ii, ii+1, ii+2);
+    DrawTriangle(pArray, ii, ii+1, ii+2);
   }
 }
 
 // DrawTrianglesFan (GL_TRIANGLE_FAN)
-void nuiSoftwarePainter::DrawTrianglesFan(const nuiRenderArray& rArray)
+void nuiSoftwarePainter::DrawTrianglesFan(const nuiRenderArray* pArray)
 {
   int32 i;
-  int32 count = rArray.GetSize() - 1;
+  int32 count = pArray->GetSize() - 1;
   for (i = 1; i < count; i++)
   {
-    DrawTriangle(rArray, 0, i, i + 1);
+    DrawTriangle(pArray, 0, i, i + 1);
   }
 }
 
 // DrawTrianglesStrip (GL_TRIANGLE_STRIP)
-void nuiSoftwarePainter::DrawTrianglesStrip(const nuiRenderArray& rArray)
+void nuiSoftwarePainter::DrawTrianglesStrip(const nuiRenderArray* pArray)
 {
   int32 i;
-  int32 count = rArray.GetSize() - 2;
+  int32 count = pArray->GetSize() - 2;
   for (i = 0; i < count; i++)
   {
     if (i & 1)
-      DrawTriangle(rArray, i, i + 1, i + 2);
+      DrawTriangle(pArray, i, i + 1, i + 2);
     else
-      DrawTriangle(rArray, i + 1, i, i + 2);
+      DrawTriangle(pArray, i + 1, i, i + 2);
   }
 }
 
 // DrawQuads (GL_QUADS)
-void nuiSoftwarePainter::DrawQuads(const nuiRenderArray& rArray)
+void nuiSoftwarePainter::DrawQuads(const nuiRenderArray* pArray)
 {
   int32 i;
-  int32 count = rArray.GetSize() / 4;
+  int32 count = pArray->GetSize() / 4;
   for (i = 0; i < count; i++)
   {
     int32 ii = i << 2;
 
     // Is the quad a special case?
-    const std::vector<nuiRenderArray::Vertex>& rCoords = rArray.GetVertices();
+    const std::vector<nuiRenderArray::Vertex>& rCoords = pArray->GetVertices();
 
     float x0 = rCoords[ii].mX, y0 = rCoords[ii].mY;
     float x1 = rCoords[(ii+1)].mX, y1 = rCoords[(ii+1)].mY;
@@ -310,28 +315,28 @@ void nuiSoftwarePainter::DrawQuads(const nuiRenderArray& rArray)
     if (x0 == x3 && x1 == x2 && y0 == y1 && y2 == y3)
     {
       // This is an axis aligned rectangle
-      DrawRectangle(rArray, ii, ii+1, ii+2, ii+3);
+      DrawRectangle(pArray, ii, ii+1, ii+2, ii+3);
     }
     else
     {
       // This is not a special quad, draw two triangles:
-      DrawTriangle(rArray, ii, ii+1, ii+2);
-      DrawTriangle(rArray, ii, ii+2, ii+3);
+      DrawTriangle(pArray, ii, ii+1, ii+2);
+      DrawTriangle(pArray, ii, ii+2, ii+3);
     }
   }
 }
 
 // DrawQuads (GL_QUADS)
-void nuiSoftwarePainter::DrawQuadStrip(const nuiRenderArray& rArray)
+void nuiSoftwarePainter::DrawQuadStrip(const nuiRenderArray* pArray)
 {
   int32 i;
-  int32 count = (rArray.GetSize() - 2) / 2;
+  int32 count = (pArray->GetSize() - 2) / 2;
   for (i = 0; i < count; i++)
   {
     int32 ii = i << 1;
 
     // Is the quad a special case?
-    const std::vector<nuiRenderArray::Vertex>& rCoords = rArray.GetVertices();
+    const std::vector<nuiRenderArray::Vertex>& rCoords = pArray->GetVertices();
 
     float x0 = rCoords[ii].mX, y0 = rCoords[ii+1].mY;
     float x1 = rCoords[(ii+1)].mX, y1 = rCoords[(ii+1)].mY;
@@ -340,23 +345,23 @@ void nuiSoftwarePainter::DrawQuadStrip(const nuiRenderArray& rArray)
     if (x0 == x3 && x1 == x2 && y0 == y1 && y2 == y3)
     {
       // This is an axis aligned rectangle
-      DrawRectangle(rArray, ii, ii+1, ii+3, ii+2);
+      DrawRectangle(pArray, ii, ii+1, ii+3, ii+2);
     }
     else
     {
       // This is not a special quad, draw two triangles:
-      DrawTriangle(rArray, ii, ii+1, ii+2);
-      DrawTriangle(rArray, ii+1, ii+3, ii+2);
+      DrawTriangle(pArray, ii, ii+1, ii+2);
+      DrawTriangle(pArray, ii+1, ii+3, ii+2);
     }
   }
 }
 
-void nuiSoftwarePainter::DrawLine(const nuiRenderArray& rArray, int p1, int p2)
+void nuiSoftwarePainter::DrawLine(const nuiRenderArray* pArray, int p1, int p2)
 {
   // Prepare the line points:
 
   // Coordinates:
-  const std::vector<nuiRenderArray::Vertex>& rVertices(rArray.GetVertices());
+  const std::vector<nuiRenderArray::Vertex>& rVertices(pArray->GetVertices());
 
   const float xbias = 0;
   const float ybias = 0;
@@ -376,7 +381,7 @@ void nuiSoftwarePainter::DrawLine(const nuiRenderArray& rArray, int p1, int p2)
   // Vertices Colors:
   nuiColor c1, c2;
 
-  if (rArray.IsArrayEnabled(nuiRenderArray::eColor))
+  if (pArray->IsArrayEnabled(nuiRenderArray::eColor))
   {
     c1 = nuiColor(rVertices[p1].mR, rVertices[p1].mG, rVertices[p1].mB, rVertices[p1].mA);
     c2 = nuiColor(rVertices[p2].mR, rVertices[p2].mG, rVertices[p2].mB, rVertices[p2].mA);
@@ -390,7 +395,7 @@ void nuiSoftwarePainter::DrawLine(const nuiRenderArray& rArray, int p1, int p2)
   float u1 = 0, v1 = 0;
   float u2 = 0, v2 = 0;
 
-  if (rArray.IsArrayEnabled(nuiRenderArray::eTexCoord))
+  if (pArray->IsArrayEnabled(nuiRenderArray::eTexCoord))
   {
     u1 = rVertices[p1].mTX;
     v1 = rVertices[p1].mTY;
@@ -535,12 +540,12 @@ case eImagePixelIndex: break;
 }
 
 
-void nuiSoftwarePainter::DrawTriangle(const nuiRenderArray& rArray, int p1, int p2, int p3)
+void nuiSoftwarePainter::DrawTriangle(const nuiRenderArray* pArray, int p1, int p2, int p3)
 {
   // Prepare the triangle points:
 
   // Coordinates:
-  const std::vector<nuiRenderArray::Vertex>& rVertices(rArray.GetVertices());
+  const std::vector<nuiRenderArray::Vertex>& rVertices(pArray->GetVertices());
 
   float x1 = rVertices[p1].mX, y1 = rVertices[p1].mY;
   float x2 = rVertices[p2].mX, y2 = rVertices[p2].mY;
@@ -561,7 +566,7 @@ void nuiSoftwarePainter::DrawTriangle(const nuiRenderArray& rArray, int p1, int 
   // Vertice Colors:
   nuiColor c1, c2, c3;
 
-  if (rArray.IsArrayEnabled(nuiRenderArray::eColor))
+  if (pArray->IsArrayEnabled(nuiRenderArray::eColor))
   {
     c1 = nuiColor(rVertices[p1].mR, rVertices[p1].mG, rVertices[p1].mB, rVertices[p1].mA);
     c2 = nuiColor(rVertices[p2].mR, rVertices[p2].mG, rVertices[p2].mB, rVertices[p2].mA);
@@ -569,7 +574,7 @@ void nuiSoftwarePainter::DrawTriangle(const nuiRenderArray& rArray, int p1, int 
   }
   else
   {
-    switch (rArray.GetMode())
+    switch (pArray->GetMode())
     {
       case GL_POINTS:
       case GL_LINES:
@@ -594,7 +599,7 @@ void nuiSoftwarePainter::DrawTriangle(const nuiRenderArray& rArray, int p1, int 
   float u2 = 0, v2 = 0;
   float u3 = 0, v3 = 0;
 
-  if (rArray.IsArrayEnabled(nuiRenderArray::eTexCoord))
+  if (pArray->IsArrayEnabled(nuiRenderArray::eTexCoord))
   {
     u1 = rVertices[p1].mTX;
     v1 = rVertices[p1].mTY;
@@ -755,10 +760,10 @@ void nuiSoftwarePainter::DrawTriangle(const nuiRenderArray& rArray, int p1, int 
   }
 }
 
-void nuiSoftwarePainter::DrawRectangle(const nuiRenderArray& rArray, int p1, int p2, int p3, int p4)
+void nuiSoftwarePainter::DrawRectangle(const nuiRenderArray* pArray, int p1, int p2, int p3, int p4)
 {
   // Coordinates:
-  const std::vector<nuiRenderArray::Vertex>& rVertices(rArray.GetVertices());
+  const std::vector<nuiRenderArray::Vertex>& rVertices(pArray->GetVertices());
 
   float bias = 0.0f;
 
@@ -788,7 +793,7 @@ void nuiSoftwarePainter::DrawRectangle(const nuiRenderArray& rArray, int p1, int
   // Vertice Colors:
   nuiColor c1, c2, c3, c4;
 
-  if (rArray.IsArrayEnabled(nuiRenderArray::eColor))
+  if (pArray->IsArrayEnabled(nuiRenderArray::eColor))
   {
     c1 = nuiColor(rVertices[p1].mR, rVertices[p1].mG, rVertices[p1].mB, rVertices[p1].mA);
     c2 = nuiColor(rVertices[p2].mR, rVertices[p2].mG, rVertices[p2].mB, rVertices[p2].mA);
@@ -806,7 +811,7 @@ void nuiSoftwarePainter::DrawRectangle(const nuiRenderArray& rArray, int p1, int
   float u3 = 0, v3 = 0;
   float u4 = 0, v4 = 0;
 
-  if (rArray.IsArrayEnabled(nuiRenderArray::eTexCoord))
+  if (pArray->IsArrayEnabled(nuiRenderArray::eTexCoord))
   {
     u1 = rVertices[p1].mTX;
     v1 = rVertices[p1].mTY;

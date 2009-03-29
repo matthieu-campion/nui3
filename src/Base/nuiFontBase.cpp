@@ -1116,9 +1116,9 @@ bool nuiFontBase::PrintGlyphs(nuiDrawContext *pContext, const std::map<nuiTextur
 
     if (1)
     {
-      nuiRenderArray array(GL_TRIANGLES);
-      array.EnableArray(nuiRenderArray::eVertex);
-      array.EnableArray(nuiRenderArray::eTexCoord);
+      nuiRenderArray* pArray = new nuiRenderArray(GL_TRIANGLES);
+      pArray->EnableArray(nuiRenderArray::eVertex);
+      pArray->EnableArray(nuiRenderArray::eTexCoord);
       for (i = 0; i < size; i++)
       {
         const nuiRect& rDest = it->second[i].mDestRect;
@@ -1135,33 +1135,33 @@ bool nuiFontBase::PrintGlyphs(nuiDrawContext *pContext, const std::map<nuiTextur
         pTexture->ImageToTextureCoord(tw,th);
 
         ///////////////////////////////////////////
-        array.SetVertex(rDest.mLeft, rDest.mTop);
-        array.SetTexCoords(tx, ty);
-        array.PushVertex();
+        pArray->SetVertex(rDest.mLeft, rDest.mTop);
+        pArray->SetTexCoords(tx, ty);
+        pArray->PushVertex();
         
-        array.SetVertex(rDest.mRight, rDest.mTop);
-        array.SetTexCoords(tw, ty);
-        array.PushVertex();
+        pArray->SetVertex(rDest.mRight, rDest.mTop);
+        pArray->SetTexCoords(tw, ty);
+        pArray->PushVertex();
         
-        array.SetVertex(rDest.mRight, rDest.mBottom);
-        array.SetTexCoords(tw, th);
-        array.PushVertex();
+        pArray->SetVertex(rDest.mRight, rDest.mBottom);
+        pArray->SetTexCoords(tw, th);
+        pArray->PushVertex();
 
         ///////////////////////////////////////////
-        array.SetVertex(rDest.mLeft, rDest.mTop);
-        array.SetTexCoords(tx, ty);
-        array.PushVertex();
+        pArray->SetVertex(rDest.mLeft, rDest.mTop);
+        pArray->SetTexCoords(tx, ty);
+        pArray->PushVertex();
 
-        array.SetVertex(rDest.mRight, rDest.mBottom);
-        array.SetTexCoords(tw, th);
-        array.PushVertex();
+        pArray->SetVertex(rDest.mRight, rDest.mBottom);
+        pArray->SetTexCoords(tw, th);
+        pArray->PushVertex();
 
-        array.SetVertex(rDest.mLeft, rDest.mBottom);
-        array.SetTexCoords(tx, th);
-        array.PushVertex();
+        pArray->SetVertex(rDest.mLeft, rDest.mBottom);
+        pArray->SetTexCoords(tx, th);
+        pArray->PushVertex();
       }
 
-      pContext->DrawArray(array);
+      pContext->DrawArray(pArray);
     }
     else
     {

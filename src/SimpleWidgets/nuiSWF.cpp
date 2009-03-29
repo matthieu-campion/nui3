@@ -379,8 +379,8 @@ bool nuiSWF::Draw(nuiDrawContext* pContext)
   /* double advance = lap * mFPS; unused */
 
   pContext->ResetClipShape(true);
-  nuiRenderArray dummy(GL_POINTS);
-  pContext->DrawArray(dummy);
+  nuiRenderArray* pDummy = new nuiRenderArray(GL_POINTS);
+  pContext->DrawArray(pDummy);
 
   glPushAttrib(GL_ALL_ATTRIB_BITS);
   

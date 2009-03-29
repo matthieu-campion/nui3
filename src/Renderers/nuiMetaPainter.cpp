@@ -160,12 +160,12 @@ void nuiMetaPainter::ClearStencil(uint8 value)
   mNbClearStencil++;
 }
 
-void nuiMetaPainter::DrawArray(const nuiRenderArray& rRenderArray)
+void nuiMetaPainter::DrawArray(nuiRenderArray* pRenderArray)
 {
   if (mDummyMode)
     return;
   StoreOpCode(eDrawArray);
-  StorePointer(new nuiRenderArray(rRenderArray));
+  StorePointer(pRenderArray);
 
   mNbDrawArray++;
   
@@ -377,7 +377,11 @@ void nuiMetaPainter::ReDraw(nuiDrawContext* pContext)
       }
       break;
     case eDrawArray:
-      pPainter->DrawArray(*((nuiRenderArray*) FetchPointer()));
+      {
+        nuiRenderArray* pRenderArray = (nuiRenderArray*) FetchPointer();
+        pRenderArray->Acquire(); // Pre acquire the render array as the painter will release it
+        pPainter->DrawArray(pRenderArray);
+      }
       break;
     case eClearColor:
       pPainter->ClearColor();
@@ -528,7 +532,7 @@ void nuiMetaPainter::Reset(nuiPainter const * pFrom)
       FetchInt();
       break;
     case eDrawArray:
-      delete ((nuiRenderArray*)FetchPointer());
+      ((nuiRenderArray*)FetchPointer())->Release();
       break;
     case eClearColor:
       break;

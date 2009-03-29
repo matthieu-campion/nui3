@@ -1487,24 +1487,6 @@ bool nuiWin::Draw(nuiDrawContext* pContext)
 
   }
 
-  /*
-  const float V = 100.f;
-  nuiRenderArray r(GL_TRIANGLE_STRIP);
-  r.SetColor(1.0f, 1.0f, 1.0f, 1.0f);
-  r.SetVertex(0, 0, 0);
-  r.PushVertex();
-  r.SetColor(0.0f, 1.0f, 0.0f, 1.0f);
-  r.SetVertex(V, 0, 0);
-  r.PushVertex();
-  r.SetColor(0.0f, 0.0f, 1.0f, 1.0f);
-  r.SetVertex(0, V, 0);
-  r.PushVertex();
-  r.SetColor(1.0f, 0.0f, 1.0f, 1.0f);
-  r.SetVertex(V, V, 0);
-  r.PushVertex();
-
-  pContext->DrawArray(r);
-  */
   return res;
 }
 

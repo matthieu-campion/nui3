@@ -125,34 +125,34 @@ void nuiCoverFlow::DrawCard(nuiDrawContext* pContext, int32 index, float start, 
   
   nuiColor blank(1.0f, 1.0f, 1.0f, 1.0f);
   
-  nuiRenderArray array(GL_TRIANGLE_STRIP);
-  array.EnableArray(nuiRenderArray::eColor, true);
-  array.EnableArray(nuiRenderArray::eTexCoord, true);
+  nuiRenderArray* pArray = new nuiRenderArray(GL_TRIANGLE_STRIP);
+  pArray->EnableArray(nuiRenderArray::eColor, true);
+  pArray->EnableArray(nuiRenderArray::eTexCoord, true);
   nuiColor c0(mBackground);
   c0.Mix(blank, 1.0-start);
-  array.SetColor(c0);
-  array.SetVertex(vx0, vy0);
-  array.SetTexCoords(0, th);
-  array.PushVertex();
+  pArray->SetColor(c0);
+  pArray->SetVertex(vx0, vy0);
+  pArray->SetTexCoords(0, th);
+  pArray->PushVertex();
   
-  array.SetVertex(vx1, vy0);
-  array.SetTexCoords(tw, th);
-  array.PushVertex();
+  pArray->SetVertex(vx1, vy0);
+  pArray->SetTexCoords(tw, th);
+  pArray->PushVertex();
   
   nuiColor c1(mBackground);
   c1.Mix(blank, 1.0-end);
-  array.SetColor(c1);
-  array.SetVertex(vx0, vy1);
-  array.SetTexCoords(0, 0);
-  array.PushVertex();
+  pArray->SetColor(c1);
+  pArray->SetVertex(vx0, vy1);
+  pArray->SetTexCoords(0, 0);
+  pArray->PushVertex();
   
-  array.SetVertex(vx1, vy1);
-  array.SetTexCoords(tw, 0);
-  array.PushVertex();
+  pArray->SetVertex(vx1, vy1);
+  pArray->SetTexCoords(tw, 0);
+  pArray->PushVertex();
   
   pContext->EnableTexturing(true);
   pContext->SetTexture(pTex);
-  pContext->DrawArray(array);  
+  pContext->DrawArray(pArray);  
 }
 
 bool nuiCoverFlow::Draw(nuiDrawContext* pContext)

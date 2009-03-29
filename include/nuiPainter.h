@@ -80,7 +80,7 @@ public:
   virtual void EndSession() = 0;
 
   virtual void SetState(const nuiRenderState& rState, bool ForceApply = false) = 0;
-  virtual void DrawArray(const nuiRenderArray& rArray) = 0;
+  virtual void DrawArray(nuiRenderArray* pArray) = 0;
   virtual void ClearColor() = 0;
   virtual void ClearStencil(uint8 value) = 0;
 

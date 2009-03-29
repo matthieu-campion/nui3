@@ -674,15 +674,18 @@ void nuiGLPainter::BlurRect(const nuiRect& rRect, uint Strength)
 
 #define LOGENUM(XXX) case XXX: { NGL_OUT(_T("%ls\n"), #XXX); } break;
 
-void nuiGLPainter::DrawArray(const nuiRenderArray& rArray)
+void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
 {
   mRenderOperations++;
   mBatches++;
 
   if (!mEnableDrawArray)
+  {
+    pArray->Release();
     return;
+  }
   
-  uint32 s = rArray.GetSize();
+  uint32 s = pArray->GetSize();
   
   total += s;
   totalinframe += s;
@@ -691,17 +694,23 @@ void nuiGLPainter::DrawArray(const nuiRenderArray& rArray)
   //printf("DA (%d) min = %d  max = %d\n", s, mins, maxs);
   
   if (!s)
+  {
+    pArray->Release();
     return;
-
+  }
+  
   if (mClip.GetWidth() <= 0 || mClip.GetHeight() <= 0)
+  {
+    pArray->Release();
     return;
-
+  }
+  
   mVertices += s;
-  GLenum mode = rArray.GetMode();
+  GLenum mode = pArray->GetMode();
   //NGL_OUT(_T("GL Array Mode: %d   vertice count %d\n"), mode, size);
 
 /*
-  switch (rArray.GetMode())
+  switch (pArray->GetMode())
   {
   LOGENUM(GL_POINTS);
   LOGENUM(GL_LINES);
@@ -719,7 +728,7 @@ void nuiGLPainter::DrawArray(const nuiRenderArray& rArray)
 
   NUI_RETURN_IF_RENDERING_DISABLED;
 
-  bool NeedTranslateHack = (mode == GL_LINES || mode == GL_LINE_LOOP || mode == GL_LINE_STRIP) && !rArray.Is3DMesh();
+  bool NeedTranslateHack = (mode == GL_LINES || mode == GL_LINE_LOOP || mode == GL_LINE_STRIP) && !pArray->Is3DMesh();
   float hackX;
   float hackY;
   if (NeedTranslateHack)
@@ -767,27 +776,27 @@ void nuiGLPainter::DrawArray(const nuiRenderArray& rArray)
 
   {
 
-    if (rArray.IsArrayEnabled(nuiRenderArray::eVertex))
+    if (pArray->IsArrayEnabled(nuiRenderArray::eVertex))
     {
       glEnableClientState(GL_VERTEX_ARRAY);
-      glVertexPointer(3, GL_FLOAT, sizeof(nuiRenderArray::Vertex), &rArray.GetVertices()[0].mX);
+      glVertexPointer(3, GL_FLOAT, sizeof(nuiRenderArray::Vertex), &pArray->GetVertices()[0].mX);
       nuiCheckForGLErrors();
     }
     else
       glDisableClientState(GL_VERTEX_ARRAY);
 
 
-    if (rArray.IsArrayEnabled(nuiRenderArray::eColor))
+    if (pArray->IsArrayEnabled(nuiRenderArray::eColor))
     {
       glEnableClientState(GL_COLOR_ARRAY);
-      glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(nuiRenderArray::Vertex), &rArray.GetVertices()[0].mR);
+      glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(nuiRenderArray::Vertex), &pArray->GetVertices()[0].mR);
       nuiCheckForGLErrors();
     }
     else
     {
       glDisableClientState(GL_COLOR_ARRAY);
       nuiColor c;
-      switch (rArray.GetMode())
+      switch (pArray->GetMode())
       {
       case GL_POINTS:
       case GL_LINES:
@@ -811,10 +820,10 @@ void nuiGLPainter::DrawArray(const nuiRenderArray& rArray)
       nuiCheckForGLErrors();
     }
 
-    if (rArray.IsArrayEnabled(nuiRenderArray::eTexCoord))
+    if (pArray->IsArrayEnabled(nuiRenderArray::eTexCoord))
     {
       glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-      glTexCoordPointer(2, GL_FLOAT, sizeof(nuiRenderArray::Vertex), &rArray.GetVertices()[0].mTX);
+      glTexCoordPointer(2, GL_FLOAT, sizeof(nuiRenderArray::Vertex), &pArray->GetVertices()[0].mTX);
       nuiCheckForGLErrors();
     }
     else
@@ -823,10 +832,10 @@ void nuiGLPainter::DrawArray(const nuiRenderArray& rArray)
     }
     
 /*
-    if (rArray.IsArrayEnabled(nuiRenderArray::eNormal))
+    if (pArray->IsArrayEnabled(nuiRenderArray::eNormal))
     {
       glEnableClientState(GL_NORMAL_ARRAY);
-      glNormalPointer(GL_FLOAT, sizeof(nuiRenderArray::Vertex)-12, &rArray.GetVertices()[0].mNX);
+      glNormalPointer(GL_FLOAT, sizeof(nuiRenderArray::Vertex)-12, &pArray->GetVertices()[0].mNX);
       nuiCheckForGLErrors();
     }
     else
@@ -834,10 +843,10 @@ void nuiGLPainter::DrawArray(const nuiRenderArray& rArray)
 */
 
 /*
-    if (rArray.IsArrayEnabled(nuiRenderArray::eEdgeFlag))
+    if (pArray->IsArrayEnabled(nuiRenderArray::eEdgeFlag))
     {
       glEnableClientState(GL_EDGE_FLAG_ARRAY);
-      glEdgeFlagPointer(sizeof(nuiRenderArray::Vertex), &rArray.GetVertices()[0].mEdgeFlag);
+      glEdgeFlagPointer(sizeof(nuiRenderArray::Vertex), &pArray->GetVertices()[0].mEdgeFlag);
       nuiCheckForGLErrors();
     }
     else
@@ -865,7 +874,7 @@ void nuiGLPainter::DrawArray(const nuiRenderArray& rArray)
 #endif // NUI_USE_ANTIALIASING
   {
 //#TEST meeloo disabling AA texture
-//     if (rArray.UseGLAATexture())
+//     if (pArray->UseGLAATexture())
 //     {
 //       glMatrixMode(GL_TEXTURE);
 //       glPopMatrix();
@@ -906,6 +915,7 @@ void nuiGLPainter::DrawArray(const nuiRenderArray& rArray)
 //  glColor3f(1.0f, 1.0f, 1.0f);
   glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 
+  pArray->Release();
   nuiCheckForGLErrors();
 }
 

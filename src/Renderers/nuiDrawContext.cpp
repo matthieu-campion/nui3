@@ -535,68 +535,68 @@ void nuiDrawContext::DrawImageQuad(float x0, float y0, float x1, float y1, float
   mCurrentState.mpTexture->ImageToTextureCoord(tx, ty);
   mCurrentState.mpTexture->ImageToTextureCoord(tw, th);
 
-  nuiRenderArray array(GL_TRIANGLES);
-  array.EnableArray(nuiRenderArray::eVertex, true);
-  array.EnableArray(nuiRenderArray::eTexCoord, true);
-  array.EnableArray(nuiRenderArray::eColor, true);
+  nuiRenderArray* pArray = new nuiRenderArray(GL_TRIANGLES);
+  pArray->EnableArray(nuiRenderArray::eVertex, true);
+  pArray->EnableArray(nuiRenderArray::eTexCoord, true);
+  pArray->EnableArray(nuiRenderArray::eColor, true);
 
 //  // 1
-//  array.SetTexCoords(tx,ty); 
-//  array.SetVertex(x0, y0);
-//  array.SetColor(mCurrentState.mFillColor);
-//  array.PushVertex();
+//  pArray->SetTexCoords(tx,ty); 
+//  pArray->SetVertex(x0, y0);
+//  pArray->SetColor(mCurrentState.mFillColor);
+//  pArray->PushVertex();
 //
-//  array.SetTexCoords(tw,ty); 
-//  array.SetVertex(x1, y1);
-//  array.PushVertex();
+//  pArray->SetTexCoords(tw,ty); 
+//  pArray->SetVertex(x1, y1);
+//  pArray->PushVertex();
 //
-//  array.SetTexCoords(tw,th); 
-//  array.SetVertex(x2, y2);
-//  array.PushVertex();
+//  pArray->SetTexCoords(tw,th); 
+//  pArray->SetVertex(x2, y2);
+//  pArray->PushVertex();
 //
 //  // 2
-//  array.SetTexCoords(tx,ty); 
-//  array.SetVertex(x0, y0);
-//  array.SetColor(mCurrentState.mFillColor);
-//  array.PushVertex();
+//  pArray->SetTexCoords(tx,ty); 
+//  pArray->SetVertex(x0, y0);
+//  pArray->SetColor(mCurrentState.mFillColor);
+//  pArray->PushVertex();
 //
-//  array.SetTexCoords(tw,th); 
-//  array.SetVertex(x2, y2);
-//  array.PushVertex();
+//  pArray->SetTexCoords(tw,th); 
+//  pArray->SetVertex(x2, y2);
+//  pArray->PushVertex();
 //
-//  array.SetTexCoords(tx,th); 
-//  array.SetVertex(x3, y3);
-//  array.PushVertex();
+//  pArray->SetTexCoords(tx,th); 
+//  pArray->SetVertex(x3, y3);
+//  pArray->PushVertex();
 
   // 1
-  array.SetTexCoords(tx,ty); 
-  array.SetVertex(x0, y0);
-  array.SetColor(mCurrentState.mFillColor);
-  array.PushVertex();
+  pArray->SetTexCoords(tx,ty); 
+  pArray->SetVertex(x0, y0);
+  pArray->SetColor(mCurrentState.mFillColor);
+  pArray->PushVertex();
 
-  array.SetTexCoords(tw,ty); 
-  array.SetVertex(x1, y1);
-  array.PushVertex();
+  pArray->SetTexCoords(tw,ty); 
+  pArray->SetVertex(x1, y1);
+  pArray->PushVertex();
 
-  array.SetTexCoords(tx,th); 
-  array.SetVertex(x3, y3);
-  array.PushVertex();
+  pArray->SetTexCoords(tx,th); 
+  pArray->SetVertex(x3, y3);
+  pArray->PushVertex();
 
   // 2
-  array.SetTexCoords(tw,ty); 
-  array.SetVertex(x1, y1);
-  array.SetColor(mCurrentState.mFillColor);
-  array.PushVertex();
+  pArray->SetTexCoords(tw,ty); 
+  pArray->SetVertex(x1, y1);
+  pArray->SetColor(mCurrentState.mFillColor);
+  pArray->PushVertex();
 
-  array.SetTexCoords(tw,th); 
-  array.SetVertex(x2, y2);
-  array.PushVertex();
+  pArray->SetTexCoords(tw,th); 
+  pArray->SetVertex(x2, y2);
+  pArray->PushVertex();
 
-  array.SetTexCoords(tx,th); 
-  array.SetVertex(x3, y3);
-  array.PushVertex();
+  pArray->SetTexCoords(tx,th); 
+  pArray->SetVertex(x3, y3);
+  pArray->PushVertex();
   
-  DrawArray(array);
+  DrawArray(pArray);
 
   if (!texturing)
     EnableTexturing(texturing);
@@ -772,20 +772,20 @@ void nuiDrawContext::DrawGradient(const nuiGradient& rGradient, const nuiRect& r
   Clip(rEnclosingRect);
   EnableClipping(true);
 
-  nuiRenderArray Array(GL_TRIANGLE_STRIP);
-  Array.EnableArray(nuiRenderArray::eVertex);
-  Array.EnableArray(nuiRenderArray::eColor);
+  nuiRenderArray* pArray = new nuiRenderArray(GL_TRIANGLE_STRIP);
+  pArray->EnableArray(nuiRenderArray::eVertex);
+  pArray->EnableArray(nuiRenderArray::eColor);
   
   //  nuiRenderArray Array(GL_LINES);
-//  Array.SetVertexElements(3);
-//  Array.SetColorElements(4);
+//  pArray->SetVertexElements(3);
+//  pArray->SetColorElements(4);
 
   nuiColor col = it->second;
-  Array.SetVertex(x, y);
-  Array.SetColor(col);
-  Array.PushVertex();
-  Array.SetVertex(xp, yp);
-  Array.PushVertex();
+  pArray->SetVertex(x, y);
+  pArray->SetColor(col);
+  pArray->PushVertex();
+  pArray->SetVertex(xp, yp);
+  pArray->PushVertex();
 
   for ( ; it != end; ++it)
   {
@@ -797,19 +797,19 @@ void nuiDrawContext::DrawGradient(const nuiGradient& rGradient, const nuiRect& r
     py2 = startyp * rm + stopyp * r;
 
     col = it->second;
-    Array.SetColor(col);
-    Array.SetVertex(px2, py2);
-    Array.PushVertex();
-    Array.SetVertex(px1, py1);
-    Array.PushVertex();
+    pArray->SetColor(col);
+    pArray->SetVertex(px2, py2);
+    pArray->PushVertex();
+    pArray->SetVertex(px1, py1);
+    pArray->PushVertex();
   }
 
-  Array.SetVertex(xx, yy);
-  Array.PushVertex();
-  Array.SetVertex(xxp, yyp);
-  Array.PushVertex();
+  pArray->SetVertex(xx, yy);
+  pArray->PushVertex();
+  pArray->SetVertex(xxp, yyp);
+  pArray->PushVertex();
 
-  DrawArray(Array);
+  DrawArray(pArray);
 
   PopClipping();
 }
@@ -845,55 +845,55 @@ void nuiDrawContext::DrawRect(const nuiRect& rRect, nuiShapeMode Mode)
     if (mode == GL_TRIANGLES)
     {
       //rect.Move(-.5,-.5); // Adjust to have a correct position on ATI and Matrox cards, this should work with nVidia too
-      nuiRenderArray strokearray(mode);
-      strokearray.EnableArray(nuiRenderArray::eVertex, true);
-      strokearray.EnableArray(nuiRenderArray::eColor, true);
+      nuiRenderArray* pStrokeArray = new nuiRenderArray(mode);
+      pStrokeArray->EnableArray(nuiRenderArray::eVertex, true);
+      pStrokeArray->EnableArray(nuiRenderArray::eColor, true);
 
-      strokearray.SetColor(mCurrentState.mStrokeColor);
-      strokearray.SetVertex(rect.mLeft, rect.mTop);
-      strokearray.PushVertex();
-      strokearray.SetVertex(rect.mRight, rect.mTop);
-      strokearray.PushVertex();
-      strokearray.SetVertex(rect.mRight, rect.mBottom);
-      strokearray.PushVertex();
+      pStrokeArray->SetColor(mCurrentState.mStrokeColor);
+      pStrokeArray->SetVertex(rect.mLeft, rect.mTop);
+      pStrokeArray->PushVertex();
+      pStrokeArray->SetVertex(rect.mRight, rect.mTop);
+      pStrokeArray->PushVertex();
+      pStrokeArray->SetVertex(rect.mRight, rect.mBottom);
+      pStrokeArray->PushVertex();
 
-      strokearray.SetVertex(rect.mLeft, rect.mTop);
-      strokearray.PushVertex();
-      strokearray.SetVertex(rect.mRight, rect.mBottom);
-      strokearray.PushVertex();
-      strokearray.SetVertex(rect.mLeft, rect.mBottom);
-      strokearray.PushVertex();
+      pStrokeArray->SetVertex(rect.mLeft, rect.mTop);
+      pStrokeArray->PushVertex();
+      pStrokeArray->SetVertex(rect.mRight, rect.mBottom);
+      pStrokeArray->PushVertex();
+      pStrokeArray->SetVertex(rect.mLeft, rect.mBottom);
+      pStrokeArray->PushVertex();
 
-      DrawArray(strokearray);
+      DrawArray(pStrokeArray);
     }
     else
     {
-      nuiRenderArray strokearray(mode);
-      strokearray.EnableArray(nuiRenderArray::eVertex, true);
-      strokearray.EnableArray(nuiRenderArray::eColor, true);
+      nuiRenderArray* pStrokeArray = new nuiRenderArray(mode);
+      pStrokeArray->EnableArray(nuiRenderArray::eVertex, true);
+      pStrokeArray->EnableArray(nuiRenderArray::eColor, true);
 
-      strokearray.SetColor(mCurrentState.mStrokeColor);
-      strokearray.SetVertex(rect.mLeft, rect.mTop);
-      strokearray.PushVertex();
-      strokearray.SetVertex(rect.mRight, rect.mTop);
-      strokearray.PushVertex();
+      pStrokeArray->SetColor(mCurrentState.mStrokeColor);
+      pStrokeArray->SetVertex(rect.mLeft, rect.mTop);
+      pStrokeArray->PushVertex();
+      pStrokeArray->SetVertex(rect.mRight, rect.mTop);
+      pStrokeArray->PushVertex();
       
-      strokearray.SetVertex(rect.mRight, rect.mTop);
-      strokearray.PushVertex();
-      strokearray.SetVertex(rect.mRight, rect.mBottom);
-      strokearray.PushVertex();
+      pStrokeArray->SetVertex(rect.mRight, rect.mTop);
+      pStrokeArray->PushVertex();
+      pStrokeArray->SetVertex(rect.mRight, rect.mBottom);
+      pStrokeArray->PushVertex();
       
-      strokearray.SetVertex(rect.mRight, rect.mBottom);
-      strokearray.PushVertex();
-      strokearray.SetVertex(rect.mLeft, rect.mBottom);
-      strokearray.PushVertex();
+      pStrokeArray->SetVertex(rect.mRight, rect.mBottom);
+      pStrokeArray->PushVertex();
+      pStrokeArray->SetVertex(rect.mLeft, rect.mBottom);
+      pStrokeArray->PushVertex();
 
-      strokearray.SetVertex(rect.mLeft, rect.mBottom);
-      strokearray.PushVertex();
-      strokearray.SetVertex(rect.mLeft, rect.mTop);
-      strokearray.PushVertex();
+      pStrokeArray->SetVertex(rect.mLeft, rect.mBottom);
+      pStrokeArray->PushVertex();
+      pStrokeArray->SetVertex(rect.mLeft, rect.mTop);
+      pStrokeArray->PushVertex();
 
-      DrawArray(strokearray);
+      DrawArray(pStrokeArray);
     }
   }
 
@@ -905,62 +905,62 @@ void nuiDrawContext::DrawRect(const nuiRect& rRect, nuiShapeMode Mode)
     nuiRect rect(rRect);
     //rect.Move(-.5,-.5); // Adjust to have a correct position on ATI and Matrox cards, this should work with nVidia too
     // Draw the filled part:
-    nuiRenderArray fillarray(GL_TRIANGLES);
-    fillarray.EnableArray(nuiRenderArray::eVertex, true);
-    fillarray.EnableArray(nuiRenderArray::eColor, true);
+    nuiRenderArray* pFillArray = new nuiRenderArray(GL_TRIANGLES);
+    pFillArray->EnableArray(nuiRenderArray::eVertex, true);
+    pFillArray->EnableArray(nuiRenderArray::eColor, true);
 
-    fillarray.SetColor(mCurrentState.mFillColor);
-    fillarray.SetVertex(rect.mLeft+1, rect.mTop+1);
-    fillarray.PushVertex();
+    pFillArray->SetColor(mCurrentState.mFillColor);
+    pFillArray->SetVertex(rect.mLeft+1, rect.mTop+1);
+    pFillArray->PushVertex();
 
-    fillarray.SetVertex(rect.mRight-1, rect.mTop+1);
-    fillarray.PushVertex();
+    pFillArray->SetVertex(rect.mRight-1, rect.mTop+1);
+    pFillArray->PushVertex();
 
-    fillarray.SetVertex(rect.mRight-1, rect.mBottom-1);
-    fillarray.PushVertex();
+    pFillArray->SetVertex(rect.mRight-1, rect.mBottom-1);
+    pFillArray->PushVertex();
 
     //
-    fillarray.SetVertex(rect.mLeft+1, rect.mTop+1);
-    fillarray.PushVertex();
+    pFillArray->SetVertex(rect.mLeft+1, rect.mTop+1);
+    pFillArray->PushVertex();
     
-    fillarray.SetVertex(rect.mRight-1, rect.mBottom-1);
-    fillarray.PushVertex();
+    pFillArray->SetVertex(rect.mRight-1, rect.mBottom-1);
+    pFillArray->PushVertex();
     
-    fillarray.SetVertex(rect.mLeft+1, rect.mBottom-1);
-    fillarray.PushVertex();
+    pFillArray->SetVertex(rect.mLeft+1, rect.mBottom-1);
+    pFillArray->PushVertex();
 
-    DrawArray(fillarray);
+    DrawArray(pFillArray);
   }
   else if (Mode == eFillShape)
   {
     nuiRect rect(rRect);
     //rect.Move(0,-.5); // Adjust to have a correct position on ATI cards, this should work on nvidia too
     // Draw the filled rectangle:
-    nuiRenderArray fillarray(GL_TRIANGLES);
-    fillarray.EnableArray(nuiRenderArray::eVertex, true);
-    fillarray.EnableArray(nuiRenderArray::eColor, true);
+    nuiRenderArray* pFillArray = new nuiRenderArray(GL_TRIANGLES);
+    pFillArray->EnableArray(nuiRenderArray::eVertex, true);
+    pFillArray->EnableArray(nuiRenderArray::eColor, true);
 
-    fillarray.SetColor(mCurrentState.mFillColor);
-    fillarray.SetVertex(rect.mLeft, rect.mTop);
-    fillarray.PushVertex();
+    pFillArray->SetColor(mCurrentState.mFillColor);
+    pFillArray->SetVertex(rect.mLeft, rect.mTop);
+    pFillArray->PushVertex();
 
-    fillarray.SetVertex(rect.mRight, rect.mTop);
-    fillarray.PushVertex();
+    pFillArray->SetVertex(rect.mRight, rect.mTop);
+    pFillArray->PushVertex();
 
-    fillarray.SetVertex(rect.mRight, rect.mBottom);
-    fillarray.PushVertex();
+    pFillArray->SetVertex(rect.mRight, rect.mBottom);
+    pFillArray->PushVertex();
 
     //
-    fillarray.SetVertex(rect.mLeft, rect.mTop);
-    fillarray.PushVertex();
+    pFillArray->SetVertex(rect.mLeft, rect.mTop);
+    pFillArray->PushVertex();
     
-    fillarray.SetVertex(rect.mRight, rect.mBottom);
-    fillarray.PushVertex();
+    pFillArray->SetVertex(rect.mRight, rect.mBottom);
+    pFillArray->PushVertex();
     
-    fillarray.SetVertex(rect.mLeft, rect.mBottom);
-    fillarray.PushVertex();
+    pFillArray->SetVertex(rect.mLeft, rect.mBottom);
+    pFillArray->PushVertex();
 
-    DrawArray(fillarray);
+    DrawArray(pFillArray);
   }
 }
 
@@ -994,16 +994,19 @@ void nuiDrawContext::DrawPoint(const nuiVector2& rPoint)
   DrawPoint(rPoint[0], rPoint[1]);
 }
 
-void nuiDrawContext::DrawArray(const nuiRenderArray& rArray)
+void nuiDrawContext::DrawArray(nuiRenderArray* pArray)
 {
-  uint32 size = rArray.GetSize();
+  uint32 size = pArray->GetSize();
   if (!size)
+  {
+    pArray->Release();
     return;
+  }
 
 #ifdef _DEBUG_
   {
     // Error checking:
-    switch (rArray.GetMode())
+    switch (pArray->GetMode())
     {
     case GL_POINTS:
       NGL_ASSERT(size);
@@ -1045,7 +1048,7 @@ void nuiDrawContext::DrawArray(const nuiRenderArray& rArray)
     mpPainter->SetState(mCurrentState);
   mStateChanges = 0;
 
-  mpPainter->DrawArray(rArray);
+  mpPainter->DrawArray(pArray);
 }
 
 void nuiDrawContext::DrawObject(const nuiRenderObject& rObject)
@@ -1053,7 +1056,7 @@ void nuiDrawContext::DrawObject(const nuiRenderObject& rObject)
   uint32 count = rObject.GetSize();
   for (uint32 i = 0; i < count; i++)
   {
-    DrawArray(*(rObject.GetArray(i)));
+    DrawArray(rObject.GetArray(i));
   }
 }
 
@@ -1272,237 +1275,237 @@ void nuiDrawContext::DrawShade(const nuiRect& rSourceRect, const nuiRect& rShade
   
   SetTexture(pShade);
 
-  nuiRenderArray array(GL_TRIANGLES);
-  array.EnableArray(nuiRenderArray::eVertex);
-  array.EnableArray(nuiRenderArray::eColor);
-  array.EnableArray(nuiRenderArray::eTexCoord);
+  nuiRenderArray* pArray = new nuiRenderArray(GL_TRIANGLES);
+  pArray->EnableArray(nuiRenderArray::eVertex);
+  pArray->EnableArray(nuiRenderArray::eColor);
+  pArray->EnableArray(nuiRenderArray::eTexCoord);
 
   // Top Left:
-  array.SetColor(transp);
-  array.SetTexCoords(0, 0);
-  array.SetVertex(rSourceRect.mLeft-ShadeSize,rSourceRect.mTop);
-  array.PushVertex();
+  pArray->SetColor(transp);
+  pArray->SetTexCoords(0, 0);
+  pArray->SetVertex(rSourceRect.mLeft-ShadeSize,rSourceRect.mTop);
+  pArray->PushVertex();
 
-  array.SetColor(transp);
-  array.SetTexCoords(1, 0);
-  array.SetVertex(rSourceRect.mLeft,rSourceRect.mTop);
-  array.PushVertex();
+  pArray->SetColor(transp);
+  pArray->SetTexCoords(1, 0);
+  pArray->SetVertex(rSourceRect.mLeft,rSourceRect.mTop);
+  pArray->PushVertex();
 
-  array.SetColor(opaque);
-  array.SetTexCoords(1, 0);
-  array.SetVertex(rSourceRect.mLeft,rSourceRect.mTop+ShadeSize);
-  array.PushVertex();
+  pArray->SetColor(opaque);
+  pArray->SetTexCoords(1, 0);
+  pArray->SetVertex(rSourceRect.mLeft,rSourceRect.mTop+ShadeSize);
+  pArray->PushVertex();
 
   ///
-  array.SetColor(transp);
-  array.SetTexCoords(0, 0);
-  array.SetVertex(rSourceRect.mLeft-ShadeSize,rSourceRect.mTop);
-  array.PushVertex();
+  pArray->SetColor(transp);
+  pArray->SetTexCoords(0, 0);
+  pArray->SetVertex(rSourceRect.mLeft-ShadeSize,rSourceRect.mTop);
+  pArray->PushVertex();
 
-  array.SetColor(opaque);
-  array.SetTexCoords(1, 0);
-  array.SetVertex(rSourceRect.mLeft,rSourceRect.mTop+ShadeSize);
-  array.PushVertex();
+  pArray->SetColor(opaque);
+  pArray->SetTexCoords(1, 0);
+  pArray->SetVertex(rSourceRect.mLeft,rSourceRect.mTop+ShadeSize);
+  pArray->PushVertex();
 
-  array.SetTexCoords(0, 0);
-  array.SetColor(opaque);
-  array.SetVertex(rSourceRect.mLeft-ShadeSize,rSourceRect.mTop+ShadeSize);
-  array.PushVertex();
+  pArray->SetTexCoords(0, 0);
+  pArray->SetColor(opaque);
+  pArray->SetVertex(rSourceRect.mLeft-ShadeSize,rSourceRect.mTop+ShadeSize);
+  pArray->PushVertex();
 
   // Left
-  array.SetColor(opaque);
-  array.SetTexCoords(0, 0);
-  array.SetVertex(rSourceRect.mLeft-ShadeSize,rSourceRect.mTop+ShadeSize);
-  array.PushVertex();
+  pArray->SetColor(opaque);
+  pArray->SetTexCoords(0, 0);
+  pArray->SetVertex(rSourceRect.mLeft-ShadeSize,rSourceRect.mTop+ShadeSize);
+  pArray->PushVertex();
 
-  array.SetColor(opaque);
-  array.SetTexCoords(1, 0);
-  array.SetVertex(rSourceRect.mLeft,rSourceRect.mTop+ShadeSize);
-  array.PushVertex();
+  pArray->SetColor(opaque);
+  pArray->SetTexCoords(1, 0);
+  pArray->SetVertex(rSourceRect.mLeft,rSourceRect.mTop+ShadeSize);
+  pArray->PushVertex();
 
-  array.SetColor(opaque);
-  array.SetTexCoords(1, 0);
-  array.SetVertex(rSourceRect.mLeft,rSourceRect.mBottom);
-  array.PushVertex();
+  pArray->SetColor(opaque);
+  pArray->SetTexCoords(1, 0);
+  pArray->SetVertex(rSourceRect.mLeft,rSourceRect.mBottom);
+  pArray->PushVertex();
 
   ///
-  array.SetColor(opaque);
-  array.SetTexCoords(0, 0);
-  array.SetVertex(rSourceRect.mLeft-ShadeSize,rSourceRect.mTop+ShadeSize);
-  array.PushVertex();
+  pArray->SetColor(opaque);
+  pArray->SetTexCoords(0, 0);
+  pArray->SetVertex(rSourceRect.mLeft-ShadeSize,rSourceRect.mTop+ShadeSize);
+  pArray->PushVertex();
 
-  array.SetColor(opaque);
-  array.SetTexCoords(1, 0);
-  array.SetVertex(rSourceRect.mLeft,rSourceRect.mBottom);
-  array.PushVertex();
+  pArray->SetColor(opaque);
+  pArray->SetTexCoords(1, 0);
+  pArray->SetVertex(rSourceRect.mLeft,rSourceRect.mBottom);
+  pArray->PushVertex();
 
-  array.SetColor(opaque);
-  array.SetTexCoords(0, 0);
-  array.SetVertex(rSourceRect.mLeft-ShadeSize,rSourceRect.mBottom);
-  array.PushVertex();
+  pArray->SetColor(opaque);
+  pArray->SetTexCoords(0, 0);
+  pArray->SetVertex(rSourceRect.mLeft-ShadeSize,rSourceRect.mBottom);
+  pArray->PushVertex();
 
   // Left Corner:
-  array.SetColor(opaque);
-  array.SetTexCoords(0, 0);
-  array.SetVertex(rSourceRect.mLeft-ShadeSize,rSourceRect.mBottom);
-  array.PushVertex();
+  pArray->SetColor(opaque);
+  pArray->SetTexCoords(0, 0);
+  pArray->SetVertex(rSourceRect.mLeft-ShadeSize,rSourceRect.mBottom);
+  pArray->PushVertex();
 
-  array.SetColor(opaque);
-  array.SetTexCoords(1, 0);
-  array.SetVertex(rSourceRect.mLeft,rSourceRect.mBottom);
-  array.PushVertex();
+  pArray->SetColor(opaque);
+  pArray->SetTexCoords(1, 0);
+  pArray->SetVertex(rSourceRect.mLeft,rSourceRect.mBottom);
+  pArray->PushVertex();
 
-  array.SetColor(transp);
-  array.SetTexCoords(1, 0);
-  array.SetVertex(rSourceRect.mLeft,rSourceRect.mBottom+ShadeSize);
-  array.PushVertex();
+  pArray->SetColor(transp);
+  pArray->SetTexCoords(1, 0);
+  pArray->SetVertex(rSourceRect.mLeft,rSourceRect.mBottom+ShadeSize);
+  pArray->PushVertex();
 
   ///
-  array.SetColor(opaque);
-  array.SetTexCoords(0, 0);
-  array.SetVertex(rSourceRect.mLeft-ShadeSize,rSourceRect.mBottom);
-  array.PushVertex();
+  pArray->SetColor(opaque);
+  pArray->SetTexCoords(0, 0);
+  pArray->SetVertex(rSourceRect.mLeft-ShadeSize,rSourceRect.mBottom);
+  pArray->PushVertex();
 
-  array.SetColor(transp);
-  array.SetTexCoords(1, 0);
-  array.SetVertex(rSourceRect.mLeft,rSourceRect.mBottom+ShadeSize);
-  array.PushVertex();
+  pArray->SetColor(transp);
+  pArray->SetTexCoords(1, 0);
+  pArray->SetVertex(rSourceRect.mLeft,rSourceRect.mBottom+ShadeSize);
+  pArray->PushVertex();
 
-  array.SetColor(transp);
-  array.SetTexCoords(0, 0);
-  array.SetVertex(rSourceRect.mLeft-ShadeSize,rSourceRect.mBottom+ShadeSize);
-  array.PushVertex();
+  pArray->SetColor(transp);
+  pArray->SetTexCoords(0, 0);
+  pArray->SetVertex(rSourceRect.mLeft-ShadeSize,rSourceRect.mBottom+ShadeSize);
+  pArray->PushVertex();
 
   // bottom shadow
-  array.SetColor(opaque);
-  array.SetTexCoords(1, 0);
-  array.SetVertex(rSourceRect.mLeft,rSourceRect.mBottom);
-  array.PushVertex();
+  pArray->SetColor(opaque);
+  pArray->SetTexCoords(1, 0);
+  pArray->SetVertex(rSourceRect.mLeft,rSourceRect.mBottom);
+  pArray->PushVertex();
 
-  array.SetColor(opaque);
-  array.SetTexCoords(1, 0);
-  array.SetVertex(rSourceRect.mRight,rSourceRect.mBottom);
-  array.PushVertex();
+  pArray->SetColor(opaque);
+  pArray->SetTexCoords(1, 0);
+  pArray->SetVertex(rSourceRect.mRight,rSourceRect.mBottom);
+  pArray->PushVertex();
 
-  array.SetColor(opaque);
-  array.SetTexCoords(0, 0);
-  array.SetVertex(rSourceRect.mRight,rSourceRect.mBottom+ShadeSize);
-  array.PushVertex();
+  pArray->SetColor(opaque);
+  pArray->SetTexCoords(0, 0);
+  pArray->SetVertex(rSourceRect.mRight,rSourceRect.mBottom+ShadeSize);
+  pArray->PushVertex();
 
   ///
-  array.SetColor(opaque);
-  array.SetTexCoords(1, 0);
-  array.SetVertex(rSourceRect.mLeft,rSourceRect.mBottom);
-  array.PushVertex();
+  pArray->SetColor(opaque);
+  pArray->SetTexCoords(1, 0);
+  pArray->SetVertex(rSourceRect.mLeft,rSourceRect.mBottom);
+  pArray->PushVertex();
 
-  array.SetColor(opaque);
-  array.SetTexCoords(0, 0);
-  array.SetVertex(rSourceRect.mRight,rSourceRect.mBottom+ShadeSize);
-  array.PushVertex();
+  pArray->SetColor(opaque);
+  pArray->SetTexCoords(0, 0);
+  pArray->SetVertex(rSourceRect.mRight,rSourceRect.mBottom+ShadeSize);
+  pArray->PushVertex();
 
-  array.SetColor(opaque);
-  array.SetTexCoords(0, 0);
-  array.SetVertex(rSourceRect.mLeft,rSourceRect.mBottom+ShadeSize);
-  array.PushVertex();
+  pArray->SetColor(opaque);
+  pArray->SetTexCoords(0, 0);
+  pArray->SetVertex(rSourceRect.mLeft,rSourceRect.mBottom+ShadeSize);
+  pArray->PushVertex();
 
   // Right Corner
-  array.SetColor(opaque);
-  array.SetTexCoords(1, 0);
-  array.SetVertex(rSourceRect.mRight,rSourceRect.mBottom);
-  array.PushVertex();
+  pArray->SetColor(opaque);
+  pArray->SetTexCoords(1, 0);
+  pArray->SetVertex(rSourceRect.mRight,rSourceRect.mBottom);
+  pArray->PushVertex();
 
-  array.SetColor(opaque);
-  array.SetTexCoords(0, 0);
-  array.SetVertex(rSourceRect.mRight+ShadeSize,rSourceRect.mBottom);
-  array.PushVertex();
+  pArray->SetColor(opaque);
+  pArray->SetTexCoords(0, 0);
+  pArray->SetVertex(rSourceRect.mRight+ShadeSize,rSourceRect.mBottom);
+  pArray->PushVertex();
 
-  array.SetColor(transp);
-  array.SetTexCoords(0, 0);
-  array.SetVertex(rSourceRect.mRight+ShadeSize,rSourceRect.mBottom+ShadeSize);
-  array.PushVertex();
+  pArray->SetColor(transp);
+  pArray->SetTexCoords(0, 0);
+  pArray->SetVertex(rSourceRect.mRight+ShadeSize,rSourceRect.mBottom+ShadeSize);
+  pArray->PushVertex();
 
   ///
-  array.SetColor(opaque);
-  array.SetTexCoords(1, 0);
-  array.SetVertex(rSourceRect.mRight,rSourceRect.mBottom);
-  array.PushVertex();
+  pArray->SetColor(opaque);
+  pArray->SetTexCoords(1, 0);
+  pArray->SetVertex(rSourceRect.mRight,rSourceRect.mBottom);
+  pArray->PushVertex();
 
-  array.SetColor(transp);
-  array.SetTexCoords(0, 0);
-  array.SetVertex(rSourceRect.mRight+ShadeSize,rSourceRect.mBottom+ShadeSize);
-  array.PushVertex();
+  pArray->SetColor(transp);
+  pArray->SetTexCoords(0, 0);
+  pArray->SetVertex(rSourceRect.mRight+ShadeSize,rSourceRect.mBottom+ShadeSize);
+  pArray->PushVertex();
 
-  array.SetColor(transp);
-  array.SetTexCoords(1, 0);
-  array.SetVertex(rSourceRect.mRight,rSourceRect.mBottom+ShadeSize);
-  array.PushVertex();
+  pArray->SetColor(transp);
+  pArray->SetTexCoords(1, 0);
+  pArray->SetVertex(rSourceRect.mRight,rSourceRect.mBottom+ShadeSize);
+  pArray->PushVertex();
 
   // Right
-  array.SetColor(opaque);
-  array.SetTexCoords(1, 0);
-  array.SetVertex(rSourceRect.mRight,rSourceRect.mTop+ShadeSize);
-  array.PushVertex();
+  pArray->SetColor(opaque);
+  pArray->SetTexCoords(1, 0);
+  pArray->SetVertex(rSourceRect.mRight,rSourceRect.mTop+ShadeSize);
+  pArray->PushVertex();
   
-  array.SetColor(opaque);
-  array.SetTexCoords(0, 0);
-  array.SetVertex(rSourceRect.mRight+ShadeSize,rSourceRect.mTop+ShadeSize);
-  array.PushVertex();
+  pArray->SetColor(opaque);
+  pArray->SetTexCoords(0, 0);
+  pArray->SetVertex(rSourceRect.mRight+ShadeSize,rSourceRect.mTop+ShadeSize);
+  pArray->PushVertex();
   
-  array.SetColor(opaque);
-  array.SetTexCoords(0, 0);
-  array.SetVertex(rSourceRect.mRight+ShadeSize,rSourceRect.mBottom);
-  array.PushVertex();
+  pArray->SetColor(opaque);
+  pArray->SetTexCoords(0, 0);
+  pArray->SetVertex(rSourceRect.mRight+ShadeSize,rSourceRect.mBottom);
+  pArray->PushVertex();
 
   ///
-  array.SetColor(opaque);
-  array.SetTexCoords(1, 0);
-  array.SetVertex(rSourceRect.mRight,rSourceRect.mTop+ShadeSize);
-  array.PushVertex();
+  pArray->SetColor(opaque);
+  pArray->SetTexCoords(1, 0);
+  pArray->SetVertex(rSourceRect.mRight,rSourceRect.mTop+ShadeSize);
+  pArray->PushVertex();
 
-  array.SetColor(opaque);
-  array.SetTexCoords(0, 0);
-  array.SetVertex(rSourceRect.mRight+ShadeSize,rSourceRect.mBottom);
-  array.PushVertex();
+  pArray->SetColor(opaque);
+  pArray->SetTexCoords(0, 0);
+  pArray->SetVertex(rSourceRect.mRight+ShadeSize,rSourceRect.mBottom);
+  pArray->PushVertex();
 
-  array.SetColor(opaque);
-  array.SetTexCoords(1, 0);
-  array.SetVertex(rSourceRect.mRight,rSourceRect.mBottom);
-  array.PushVertex();
+  pArray->SetColor(opaque);
+  pArray->SetTexCoords(1, 0);
+  pArray->SetVertex(rSourceRect.mRight,rSourceRect.mBottom);
+  pArray->PushVertex();
 
   // Top Right
-  array.SetColor(transp);
-  array.SetTexCoords(1, 0);
-  array.SetVertex(rSourceRect.mRight,rSourceRect.mTop);
-  array.PushVertex();
+  pArray->SetColor(transp);
+  pArray->SetTexCoords(1, 0);
+  pArray->SetVertex(rSourceRect.mRight,rSourceRect.mTop);
+  pArray->PushVertex();
 
-  array.SetColor(transp);
-  array.SetTexCoords(0, 0);
-  array.SetVertex(rSourceRect.mRight+ShadeSize,rSourceRect.mTop);
-  array.PushVertex();
+  pArray->SetColor(transp);
+  pArray->SetTexCoords(0, 0);
+  pArray->SetVertex(rSourceRect.mRight+ShadeSize,rSourceRect.mTop);
+  pArray->PushVertex();
 
-  array.SetColor(opaque);
-  array.SetTexCoords(0, 0);
-  array.SetVertex(rSourceRect.mRight+ShadeSize,rSourceRect.mTop+ShadeSize);
-  array.PushVertex();
+  pArray->SetColor(opaque);
+  pArray->SetTexCoords(0, 0);
+  pArray->SetVertex(rSourceRect.mRight+ShadeSize,rSourceRect.mTop+ShadeSize);
+  pArray->PushVertex();
 
   ///
-  array.SetColor(transp);
-  array.SetTexCoords(1, 0);
-  array.SetVertex(rSourceRect.mRight,rSourceRect.mTop);
-  array.PushVertex();
+  pArray->SetColor(transp);
+  pArray->SetTexCoords(1, 0);
+  pArray->SetVertex(rSourceRect.mRight,rSourceRect.mTop);
+  pArray->PushVertex();
 
-  array.SetColor(opaque);
-  array.SetTexCoords(0, 0);
-  array.SetVertex(rSourceRect.mRight+ShadeSize,rSourceRect.mTop+ShadeSize);
-  array.PushVertex();
+  pArray->SetColor(opaque);
+  pArray->SetTexCoords(0, 0);
+  pArray->SetVertex(rSourceRect.mRight+ShadeSize,rSourceRect.mTop+ShadeSize);
+  pArray->PushVertex();
 
-  array.SetColor(opaque);
-  array.SetTexCoords(1, 0);
-  array.SetVertex(rSourceRect.mRight,rSourceRect.mTop+ShadeSize);
-  array.PushVertex();
+  pArray->SetColor(opaque);
+  pArray->SetTexCoords(1, 0);
+  pArray->SetVertex(rSourceRect.mRight,rSourceRect.mTop+ShadeSize);
+  pArray->PushVertex();
 
 
-  DrawArray(array);
+  DrawArray(pArray);
 
   if (!texturing)
     EnableTexturing(false);

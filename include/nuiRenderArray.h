@@ -20,7 +20,7 @@ public:
   virtual void ReleaseCacheObject(void* pHandle) = 0;
 };
 
-class NUI_API nuiRenderArray
+class NUI_API nuiRenderArray : public nuiRefCount
 {
 public:
   nuiRenderArray(uint32 mode, bool Static = false, bool _3dmesh = false);
@@ -115,40 +115,29 @@ public:
     mpArrays.reserve(size);
     for (size_t i = 0; i < size; i++)
     {
-      AddArray(new nuiRenderArray(*rObject.GetArray((uint)i)));
+      AddArray(rObject.GetArray((uint)i));
     }
   }
 
   ~nuiRenderObject()
   {
     for (uint i = 0; i < mpArrays.size(); i++)
-      delete mpArrays[i];
+      mpArrays[i]->Release();
   }
 
   void AddArray(nuiRenderArray* pArray)
   {
+    pArray->Acquire();
     mpArrays.push_back(pArray);
   }
 
-  nuiRenderArray* GetArray(uint i)
+  nuiRenderArray* GetArray(uint i) const
   {
     NGL_ASSERT(i < mpArrays.size());
     return mpArrays[i];
   }
 
-  nuiRenderArray* GetLastArray()
-  {
-    NGL_ASSERT(!mpArrays.empty());
-    return mpArrays.back();
-  }
-
-  const nuiRenderArray* GetArray(uint i) const
-  {
-    NGL_ASSERT(i < mpArrays.size());
-    return mpArrays[i];
-  }
-
-  const nuiRenderArray* GetLastArray() const
+  nuiRenderArray* GetLastArray() const
   {
     NGL_ASSERT(!mpArrays.empty());
     return mpArrays.back();

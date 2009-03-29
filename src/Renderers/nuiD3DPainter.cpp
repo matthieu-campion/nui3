@@ -801,7 +801,7 @@ void nuiD3DPainter::ClearStencil(uint8 value)
 
 
 
-void nuiD3DPainter::DrawArray(const nuiRenderArray& rArray)
+void nuiD3DPainter::DrawArray(const nuiRenderArray* pArray)
 {
   //if (drawArrayCount > 3)
   //  return;
@@ -814,18 +814,27 @@ void nuiD3DPainter::DrawArray(const nuiRenderArray& rArray)
   //NGL_OUT(_T("DrawArray() "));
 
   if (!mEnableDrawArray)
+  {
+    pArray->Release();
     return;
-
+  }
+  
   LPDIRECT3DDEVICE9 pDev = mpContext->GetDirect3DDevice();
   mRenderOperations++;
   mBatches++;
-  uint32 size = rArray.GetSize();
+  uint32 size = pArray->GetSize();
   if (!size)
+  {
+    pArray->Release();
     return;
-
+  }
+  
   if (mClip.GetWidth() <= 0 || mClip.GetHeight() <= 0)
+  {
+    pArray->Release();
     return;
-
+  }
+  
   mVertices += size;
 
   NUI_RETURN_IF_RENDERING_DISABLED;
@@ -842,7 +851,7 @@ void nuiD3DPainter::DrawArray(const nuiRenderArray& rArray)
   int primitivecount = 0;
   nuiColor c;
   bool translate_hack = false;
-  switch (rArray.GetMode())
+  switch (pArray->GetMode())
   {
   case GL_POINTS:
     primtype = D3DPT_POINTLIST;
@@ -932,7 +941,7 @@ void nuiD3DPainter::DrawArray(const nuiRenderArray& rArray)
   {
     NGL_OUT(_T("TEXTURING DISABLED"));
   }
-  if (rArray.IsArrayEnabled(nuiRenderArray::eColor))
+  if (pArray->IsArrayEnabled(nuiRenderArray::eColor))
   {
     NGL_OUT(_T("COLOR ARRAY ENABLED"));
   }
@@ -943,7 +952,7 @@ void nuiD3DPainter::DrawArray(const nuiRenderArray& rArray)
 #endif
 
   UINT stride = sizeof(nuiRenderArray::Vertex);
-  void* pData = (void*)&rArray.GetVertices()[0];
+  void* pData = (void*)&pArray->GetVertices()[0];
   //#define DRAW_PUP
 #ifdef DRAW_PUP
   hr = pDev->DrawPrimitiveUP(primtype, primitivecount, pData, stride);				//draw triangle ( NEW )
@@ -1016,7 +1025,7 @@ void nuiD3DPainter::DrawArray(const nuiRenderArray& rArray)
     pDst->tv = pSrc->tv;
     uint8* pDstColor = (uint8*)&pDst->diffuse;
     uint8* pSrcColor = (uint8*)&pSrc->diffuse;
-    if (rArray.IsArrayEnabled(nuiRenderArray::eColor))
+    if (pArray->IsArrayEnabled(nuiRenderArray::eColor))
     {
       pDstColor[0] = pSrcColor[2];
       pDstColor[1] = pSrcColor[1];
@@ -1033,7 +1042,7 @@ void nuiD3DPainter::DrawArray(const nuiRenderArray& rArray)
   }
   //#endif
 
-  if (rArray.GetMode() == GL_LINE_LOOP)
+  if (pArray->GetMode() == GL_LINE_LOOP)
   {
     // there is no line loop in D3D so we need to emulate it by adding one vertex.
     primitivecount+=1;
@@ -1061,6 +1070,8 @@ void nuiD3DPainter::DrawArray(const nuiRenderArray& rArray)
   }
   PROFILE_CHRONO_OUT(2);
   //NGL_OUT(_T("--------------"));
+
+  pArray->Release();
 }
 
 

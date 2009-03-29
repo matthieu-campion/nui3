@@ -231,7 +231,7 @@ public:
     for (uint i = 0; i < mrData.size(); i++)
       mData[i].resize(mrData[i].size());
     
-    mMaxDB = 60;
+    mMaxDB = 40;
   }
   
   virtual ~Spectrum()
@@ -274,9 +274,12 @@ public:
         float re = fft[i];
         float im = fft[i + s1/2];
         float value = sqrt(re * re + im * im) ;
+        //float value = re * re + im * im;
         value = GainToDB(value);
         value = (value + mMaxDB) / mMaxDB;
-        float x = incr * i;
+        //float x = incr * i;
+        float x = s2 * (i == 0 ? 0.0f : nuiEasingQuarticRev((float)i / ((float)s1 / 2)));
+
         array.SetVertex(x, hi - hi * value);
         array.PushVertex();
       }

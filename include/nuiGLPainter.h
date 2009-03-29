@@ -27,7 +27,7 @@ public:
   virtual void SetSize(uint32 sizex, uint32 sizey);
   virtual void StartRendering();
   virtual void SetState(const nuiRenderState& rState, bool ForceApply = false);
-  virtual void DrawArray(const nuiRenderArray& rArray);
+  virtual void DrawArray(nuiRenderArray* pArray);
   virtual void ClearColor();
   virtual void ClearStencil(uint8 value);
   virtual void BeginSession();

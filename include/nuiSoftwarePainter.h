@@ -22,7 +22,7 @@ public:
   virtual void SetSize(uint32 sizex, uint32 sizey);
   virtual void StartRendering();
   virtual void SetState(const nuiRenderState& rState, bool ForceApply = false);
-  virtual void DrawArray(const nuiRenderArray& rArray);
+  virtual void DrawArray(nuiRenderArray* pArray);
   virtual void ClearColor();
   virtual void ClearStencil(uint8 value);
   virtual void BeginSession();
@@ -42,18 +42,18 @@ protected:
 
   class nuiRasterizer* mpRasterizer;
 
-  void DrawLines(const nuiRenderArray& rArray);
-  void DrawLineStrip(const nuiRenderArray& rArray);
-  void DrawLineLoop(const nuiRenderArray& rArray);
-  void DrawTriangles(const nuiRenderArray& rArray);
-  void DrawTrianglesFan(const nuiRenderArray& rArray);
-  void DrawTrianglesStrip(const nuiRenderArray& rArray);
-  void DrawQuads(const nuiRenderArray& rArray);
-  void DrawQuadStrip(const nuiRenderArray& rArray);
+  void DrawLines(const nuiRenderArray* pArray);
+  void DrawLineStrip(const nuiRenderArray* pArray);
+  void DrawLineLoop(const nuiRenderArray* pArray);
+  void DrawTriangles(const nuiRenderArray* pArray);
+  void DrawTrianglesFan(const nuiRenderArray* pArray);
+  void DrawTrianglesStrip(const nuiRenderArray* pArray);
+  void DrawQuads(const nuiRenderArray* pArray);
+  void DrawQuadStrip(const nuiRenderArray* pArray);
 
-  void DrawLine(const nuiRenderArray& rArray, int p1, int p2);
-  void DrawTriangle(const nuiRenderArray& rArray, int p1, int p2, int p3);
-  void DrawRectangle(const nuiRenderArray& rArray, int p1, int p2, int p3, int p4);
+  void DrawLine(const nuiRenderArray* pArray, int p1, int p2);
+  void DrawTriangle(const nuiRenderArray* pArray, int p1, int p2, int p3);
+  void DrawRectangle(const nuiRenderArray* pArray, int p1, int p2, int p3, int p4);
 };
 
 #endif //__nuiSoftwarePainter_h__

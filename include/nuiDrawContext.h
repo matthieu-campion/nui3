@@ -205,7 +205,7 @@ public:
   void BlurRect(const nuiRect& rRect, uint Strength) {}; ///< Blur a rectangle on screen.
   void DrawGradient(const nuiGradient& rGradient, const nuiRect& rEnclosingRect, const nuiVector2& rP1, const nuiVector2& rP2);
   void DrawGradient(const nuiGradient& rGradient, const nuiRect& rEnclosingRect, nuiSize x1, nuiSize y1, nuiSize x2, nuiSize y2);
-  virtual void DrawArray(const nuiRenderArray& rArray);
+  virtual void DrawArray(nuiRenderArray* pArray);
   void DrawObject(const nuiRenderObject& rObject);
   //@}
 
