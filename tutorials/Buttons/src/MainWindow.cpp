@@ -50,7 +50,6 @@ void MainWindow::OnCreation()
   nuiVBox* pMainBox = new nuiVBox(0);
   pMainBox->SetExpand(nuiExpandShrinkAndGrow);
   pMainBox->SetPosition(nuiFillVertical);
-  pMainBox->SetUserWidth(500);
   AddChild(pMainBox);
   
   // create a label width background for information display 
@@ -59,11 +58,22 @@ void MainWindow::OnCreation()
   pMainBox->AddCell(pPane, nuiFillHorizontal);
   mpLabel = new nuiLabel();
   pPane->AddChild(mpLabel);
-  pPane->SetUserHeight(20);
+  pPane->SetUserHeight(40);
   
+  nuiLabel* pLabel = new nuiLabel(_T("nuiButton:"), nuiFont::GetFont(16));
+  pMainBox->AddCell(pLabel, nuiLeft);
   pMainBox->AddCell(Tutorial_Buttons());
+
+  pLabel = new nuiLabel(_T("nuiToggleButton:"), nuiFont::GetFont(16));
+  pMainBox->AddCell(pLabel, nuiLeft);
   pMainBox->AddCell(Tutorial_ToggleButtons());
+
+  pLabel = new nuiLabel(_T("nuiRadioButton:"), nuiFont::GetFont(16));
+  pMainBox->AddCell(pLabel, nuiLeft);
   pMainBox->AddCell(Tutorial_RadioButtons1());
+
+  pLabel = new nuiLabel(_T("nuiRadioButton:"), nuiFont::GetFont(16));
+  pMainBox->AddCell(pLabel, nuiLeft);
   pMainBox->AddCell(Tutorial_RadioButtons2());
 
   // make the mainbox's layout fill the entire user size (c.f. line #33)
@@ -93,10 +103,6 @@ nuiWidget* MainWindow::Tutorial_Buttons()
 {
   nuiHBox* pBox = new nuiHBox(0);
   
-  nuiLabel* pLabel = new nuiLabel(_T("nuiButton:"), nuiFont::GetFont(16));
-  pBox->AddCell(pLabel, nuiLeft);
-  pBox->SetCellExpand(0, nuiExpandShrinkAndGrow);
-  
   // a simple button
   nuiButton* pBtn = new nuiButton(_T("button"));
   pBox->AddCell(pBtn, nuiCenter);
@@ -116,9 +122,9 @@ nuiWidget* MainWindow::Tutorial_Buttons()
 
   
   // a roll-over button using decorations
-  nuiColorDecoration* pDecoUp = new nuiColorDecoration(_T("DecoUpHover"), nuiColor(255,0,0,128), 1, nuiColor(0,0,0));
-  nuiGradientDecoration* pDecoUpHover = new nuiGradientDecoration(_T("DecoUp"), nuiColor(192,192,192), nuiColor(128,128,128), 1, nuiColor(0,0,0), eStrokeAndFillShape);
-  nuiFrame* pFrame = new nuiFrame(_T("DecoDown"), _T("rsrc:/button1.png"), nuiRect(0,0,57,54));
+  nuiGradientDecoration* pDecoUp = new nuiGradientDecoration(_T("DecoUp"), nuiColor(192,192,192), nuiColor(128,128,128), 1, nuiColor(0,0,0), eStrokeAndFillShape);
+  nuiColorDecoration* pDecoUpHover = new nuiColorDecoration(_T("DecoUpHover"), nuiColor(255,0,0,128), 1, nuiColor(0,0,0));
+  nuiFrame* pFrame = new nuiFrame(_T("DecoDown"), _T("rsrc:/decorations/button1.png"), nuiRect(0,0,57,54));
   
   // create a nuiStateDecoration using the three previous decorations for the rollover's three states : up, hover and done
   nuiStateDecoration* pStateDeco = new nuiStateDecoration(_T("Deco"), _T("DecoUp"), _T("DecoDown"), _T("DecoUpHover"));
@@ -150,10 +156,6 @@ nuiWidget* MainWindow::Tutorial_ToggleButtons()
 {
   nuiHBox* pBox = new nuiHBox(0);
   
-  nuiLabel* pLabel = new nuiLabel(_T("nuiToggleButton:"), nuiFont::GetFont(16));
-  pBox->AddCell(pLabel, nuiLeft);
-  pBox->SetCellExpand(0, nuiExpandShrinkAndGrow);
-  
   // a simple togglebutton
   nuiToggleButton* pBtn = new nuiToggleButton(_T("toggleButton"));
   pBox->AddCell(pBtn);
@@ -183,11 +185,6 @@ nuiWidget* MainWindow::Tutorial_RadioButtons1()
 {
   nuiHBox* pBox = new nuiHBox(0);
   
-  nuiLabel* pLabel = new nuiLabel(_T("nuiRadioButton:"), nuiFont::GetFont(16));
-  pBox->AddCell(pLabel, nuiLeft);
-  pBox->SetCellExpand(0, nuiExpandShrinkAndGrow);
-
-    
   for (int index = 0; index < 3; index++)                // will create 3 radiobuttons,
   {
     nglString tmp;
@@ -210,10 +207,6 @@ nuiWidget* MainWindow::Tutorial_RadioButtons2()
 {
   nuiHBox* pBox = new nuiHBox(0);
 
-  nuiLabel* pLabel = new nuiLabel(_T("nuiRadioButton:"), nuiFont::GetFont(16));
-  pBox->AddCell(pLabel, nuiLeft);
-  pBox->SetCellExpand(0, nuiExpandShrinkAndGrow);
-    
   for (int index = 0; index < 3; index++)
   {
     nuiRadioButton* pRadioBut = new nuiRadioButton(); // leave it without any child : it'll get a class "radio" look
@@ -253,16 +246,16 @@ bool MainWindow::OnButtonPressed(const nuiEvent& rEvent)
   switch (tag)
   {
     case TAG_BUTTON1:
-      msg = _T("a simple button, with a 'nuiCenter' position");
+      msg = _T("a simple button\nwith a 'nuiCenter' position");
       break;
     case TAG_BUTTON2:
-      msg = _T("the same simple button but with a 'nuiFill' position");
+      msg = _T("the same simple button\nbut with a 'nuiFill' position");
       break;
     case TAG_BUTTON3:
-      msg = _T("a simple button with an image inside");
+      msg = _T("a simple button\nwith an image inside");
       break;
     case TAG_BUTTON4:
-      msg = _T("a rollover button using three decorations");
+      msg = _T("a rollover button\nusing three decorations");
       break;
   }
 
