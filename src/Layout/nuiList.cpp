@@ -652,8 +652,6 @@ bool nuiList::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
 
   if (Button & nglMouseInfo::ButtonLeft)
   {
-    Grab();
-    
     nuiWidgetPtr pItem = GetItem(X,Y);
     if (pItem && pItem->IsEnabled(false))
     {
@@ -685,12 +683,14 @@ bool nuiList::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
           }
         }
         mpLastItem = pItem; 
+        Grab();
         mClicked = true;
       }
       SelectionChanged();
       Invalidate();
     }
-    return true;
+    return false;
+
   }
   return false;
 }            
@@ -702,7 +702,7 @@ bool nuiList::MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
   {
     Ungrab();
   }
-
+  
   mClicked = false;
   
   if (mMoved && mCanMoveItems)
@@ -724,6 +724,9 @@ bool nuiList::MouseMoved  (nuiSize X, nuiSize Y)
   
   nuiWidgetPtr pItem = GetIdealItem(X,Y);
 
+  if (!pItem)
+    return false;
+  
   if ((pItem == mpLastItem) || (pItem == mpLastDestinationItem))
     return false;
   
