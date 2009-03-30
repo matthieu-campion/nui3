@@ -8,7 +8,7 @@
 #pragma once
 
 #include "nuiMainWindow.h"
-
+#include "nuiList.h"
 
 class MainWindow : public nuiMainWindow
 {
@@ -20,14 +20,16 @@ public:
   void OnClose();
 
 protected:
-  
-  bool OnButtonClick(const nuiEvent& rEvent);
-  
+
+  bool OnItemSelected(const nuiEvent& rEvent);
+  bool OnItemActivated(const nuiEvent& rEvent);
+
 private:
   
   bool LoadCSS(const nglPath& rPath);
-  
-  nuiLabel* mMyLabel;
+
+  nuiList* mpList;
+  nuiLabel* mpOutput;
   nuiEventSink<MainWindow> mEventSink;
 };
 

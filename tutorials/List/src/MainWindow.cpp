@@ -10,7 +10,7 @@
 #include "Application.h"
 #include "nuiCSS.h"
 #include "nuiVBox.h"
-
+#include "nuiBackgroundPane.h"
 
 /*
  * MainWindow
@@ -32,44 +32,82 @@ MainWindow::~MainWindow()
 
 void MainWindow::OnCreation()
 {
-  // a vertical box for page layout
-  nuiVBox* pLayoutBox = new nuiVBox(0);
-  pLayoutBox->SetExpand(nuiExpandShrinkAndGrow);
-  AddChild(pLayoutBox);
+  nuiVBox* pBox = new nuiVBox(0);
+  pBox->SetPosition(nuiCenter);
+  AddChild(pBox);
   
-  nuiList* pList = new nuiList();
+  // output label
+  nuiBackgroundPane* pPane = new nuiBackgroundPane(eInnerBackground);
+  pPane->SetUserSize(300, 30);
+  pBox->AddCell(pPane);
+  
+  mpOutput = new nuiLabel();
+  pPane->AddChild(mpOutput);
+  
+  // comment
+  pBox->AddCell(_T("- Drag the elements to move them in the list\n- Click to select\n- Double click to activate"));
+  
+
+  // input list
+  pPane = new nuiBackgroundPane();
+  pPane->SetUserSize(300,380);
+  pBox->AddCell(pPane);
+  
+  nuiScrollView* pScroll = new nuiScrollView();
+  pPane->AddChild(pScroll);
+  
+  mpList = new nuiList();
+  pScroll->AddChild(mpList);
+  
   for (uint32 i = 0; i < 16; i++)
   {
     nglString str;
     str.CFormat(_T("Item %d"), i);
     nuiLabel* pItem = new nuiLabel(str);
-    pList->AddChild(pItem);
+    
+    // bind a user data to the item's widget
+    pItem->SetToken(new nuiToken<uint32>(i));
+    
+    mpList->AddChild(pItem);
   }
-  pList->SetCanMoveItems(true);
-  nuiScrollView* pScroll = new nuiScrollView();
-  pScroll->AddChild(pList);
-  pLayoutBox->AddCell(pScroll);
-  pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
   
-  // image in the last box's cell
-  nuiImage* pImg = new nuiImage();
-  pImg->SetObjectName(_T("MyImage"));
-  pImg->SetPosition(nuiCenter);
-  pLayoutBox->AddCell(pImg);
-  pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
+  mpList->SetCanMoveItems(true);
+  
+
+  mEventSink.Connect(mpList->SelectionChanged, &MainWindow::OnItemSelected);
+  mEventSink.Connect(mpList->Activated, &MainWindow::OnItemActivated);
+  
 }
 
 
-
-bool MainWindow::OnButtonClick(const nuiEvent& rEvent)
+bool MainWindow::OnItemSelected(const nuiEvent& rEvent)
 {
-  nglString message;
-  double currentTime = nglTime();
-  message.Format(_T("click time: %.2f"), currentTime);
-  mMyLabel->SetText(message);
+  nuiWidget* pSelectedWidget = mpList->GetSelected();
+  uint32 token;
+  nuiGetTokenValue<uint32>(pSelectedWidget->GetToken(), token);
   
-  return true; // means the event is caught and not broadcasted
+  // or, use the shortcut mpList->GetSelectedToken :)
+  
+  nglString message;
+  message.Format(_T("selected item num %d"), token);
+  mpOutput->SetText(message);
+  
+  return false;
 }
+
+
+bool MainWindow::OnItemActivated(const nuiEvent& rEvent)
+{
+  uint32 token;
+  nuiGetTokenValue<uint32>(mpList->GetSelectedToken(), token);
+  
+  nglString message;
+  message.Format(_T("activated item num %d"), token);
+  mpOutput->SetText(message);
+
+  return true;  
+}
+
 
 
 void MainWindow::OnClose()

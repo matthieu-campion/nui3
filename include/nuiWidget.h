@@ -34,7 +34,7 @@ class nuiTimer;
 class nuiAnimation;
 
 class nuiPainter;
-
+ 
 class nuiTheme;
 class nuiRectAttributeAnimation;
 

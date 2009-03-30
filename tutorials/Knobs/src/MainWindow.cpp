@@ -33,13 +33,15 @@ MainWindow::~MainWindow()
 void MainWindow::OnCreation()
 {
   // mainbox for layout
-  nuiHBox* pMainBox = new nuiHBox(0);
-  pMainBox->SetPosition(nuiCenter);
+  nuiVBox* pMainBox = new nuiVBox(0);
+  pMainBox->SetBorder(0, 20);
+  pMainBox->SetExpand(nuiExpandShrinkAndGrow);
   AddChild(pMainBox);
   
   
   // bloc  : knob 
   nuiVBox* pBloc = new nuiVBox(0);
+  pBloc->SetPosition(nuiCenter);
   pMainBox->AddCell(pBloc);
   pMainBox->SetCellExpand(pMainBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
   
@@ -54,6 +56,7 @@ void MainWindow::OnCreation()
   
   // bloc : knob with a label to display the value
   pBloc = new nuiVBox(0);
+  pBloc->SetPosition(nuiCenter);
   pMainBox->AddCell(pBloc);
   pMainBox->SetCellExpand(pMainBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
   
