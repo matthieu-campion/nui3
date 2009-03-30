@@ -32,6 +32,9 @@ public:
   const nglPath& GetTexturePath();
   void SetTexturePath(const nglPath& rTexturePath);
   void SetTexture(nuiTexture* pTex);
+
+  void SetTextureRect(const nuiRect& rRect);
+  const nuiRect& GetTextureRect() const;
   
   virtual bool Load (const nuiXMLNode* pNode); ///< Create an image from an xml description.
 
@@ -58,6 +61,7 @@ protected:
   nglPath mTexturePath;
   bool mUseAlpha;
   bool mIgnoreState;
+  nuiRect mTextureRect;
 
   nuiBlendFunc mBlendFunc;
 };

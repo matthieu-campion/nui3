@@ -27,6 +27,8 @@ nuiImage::nuiImage (nuiTexture* pTexture, bool AlreadyAcquired)
 
   mBlendFunc = nuiBlendTransp;
   mIgnoreState = false;
+  if (mpTexture)
+    mTextureRect.Set(0, 0, mpTexture->GetWidth(), mpTexture->GetHeight());
 }
 
 nuiImage::nuiImage (nglIStream* pInput, nglImageCodec* pCodec)
@@ -39,6 +41,8 @@ nuiImage::nuiImage (nglIStream* pInput, nglImageCodec* pCodec)
   mUseAlpha = true;
   mBlendFunc = nuiBlendTransp;
   mIgnoreState = false;
+  if (mpTexture)
+    mTextureRect.Set(0, 0, mpTexture->GetWidth(), mpTexture->GetHeight());
 }
 
 nuiImage::nuiImage (const nglPath& rPath, nglImageCodec* pCodec)
@@ -52,6 +56,8 @@ nuiImage::nuiImage (const nglPath& rPath, nglImageCodec* pCodec)
   mBlendFunc = nuiBlendTransp;
   SetProperty(_T("Source"),rPath.GetPathName());
   mIgnoreState = false;
+  if (mpTexture)
+    mTextureRect.Set(0, 0, mpTexture->GetWidth(), mpTexture->GetHeight());
 }
 
 nuiImage::nuiImage (nglImageInfo& rInfo, bool Clone)
@@ -64,6 +70,8 @@ nuiImage::nuiImage (nglImageInfo& rInfo, bool Clone)
   mUseAlpha = true;
   mBlendFunc = nuiBlendTransp;
   mIgnoreState = false;
+  if (mpTexture)
+    mTextureRect.Set(0, 0, mpTexture->GetWidth(), mpTexture->GetHeight());
 }
 
 nuiImage::nuiImage (const nglImage& rImage)
@@ -76,6 +84,8 @@ nuiImage::nuiImage (const nglImage& rImage)
   mUseAlpha = true;
   mBlendFunc = nuiBlendTransp;
   mIgnoreState = false;
+  if (mpTexture)
+    mTextureRect.Set(0, 0, mpTexture->GetWidth(), mpTexture->GetHeight());
 }
 
 nuiImage::nuiImage (nglImage* pImage, bool OwnImage)
@@ -88,15 +98,21 @@ nuiImage::nuiImage (nglImage* pImage, bool OwnImage)
   mUseAlpha = true;
   mBlendFunc = nuiBlendTransp;
   mIgnoreState = false;
+  if (mpTexture)
+    mTextureRect.Set(0, 0, mpTexture->GetWidth(), mpTexture->GetHeight());
 }
 
 
 void nuiImage::InitAttributes()
 {
   AddAttribute(new nuiAttribute<const nglPath&>
-   (nglString(_T("Texture")), nuiUnitNone,
-    nuiMakeDelegate(this, &nuiImage::GetTexturePath), 
-    nuiMakeDelegate(this, &nuiImage::SetTexturePath)));
+               (nglString(_T("Texture")), nuiUnitNone,
+                nuiMakeDelegate(this, &nuiImage::GetTexturePath), 
+                nuiMakeDelegate(this, &nuiImage::SetTexturePath)));
+  AddAttribute(new nuiAttribute<const nuiRect&>
+               (nglString(_T("TextureRect")), nuiUnitNone,
+                nuiMakeDelegate(this, &nuiImage::GetTextureRect), 
+                nuiMakeDelegate(this, &nuiImage::SetTextureRect)));
 }
 
 
@@ -169,6 +185,19 @@ nuiImage::~nuiImage()
     mpTexture->Release();
 }
 
+void nuiImage::SetTextureRect(const nuiRect& rRect)
+{
+  mTextureRect = rRect;
+  InvalidateLayout();
+}
+
+const nuiRect& nuiImage::GetTextureRect() const
+{
+  return mTextureRect;
+}
+
+
+
 void nuiImage::ForceReload()
 {
   mpTexture->ForceReload();
@@ -187,9 +216,6 @@ bool nuiImage::Draw(nuiDrawContext* pContext)
 //  mpTexture->Apply(pContext);
   pContext->EnableTexturing(true);
   nglImage* pImage = mpTexture->GetImage();
-  nuiSize w,h;
-  w = (nuiSize)pImage->GetWidth();
-  h = (nuiSize)pImage->GetHeight();
 
   float alpha = 1.0f;
 
@@ -222,7 +248,7 @@ bool nuiImage::Draw(nuiDrawContext* pContext)
 
   //pContext->EnableClipping(false);
   pContext->SetFillColor(color);
-  pContext->DrawImage(rect, nuiRect(0.0f, 0.0f, w, h));
+  pContext->DrawImage(rect, mTextureRect);
 
   pContext->EnableBlending(false);
   pContext->EnableTexturing(false);
@@ -246,13 +272,7 @@ nuiBlendFunc nuiImage::GetBlendFunc()
 
 nuiRect nuiImage::CalcIdealSize()
 {
-  if (!mpTexture)
-    return mIdealRect;
-  nglImage* pImage = mpTexture->GetImage();
-  if (!pImage)
-    return mIdealRect;
-
-  mIdealRect.Set(0.0f,0.0f,(nuiSize) pImage->GetWidth(),(nuiSize) pImage->GetHeight());
+  mIdealRect = mTextureRect.Size();
   return mIdealRect;
 }
 

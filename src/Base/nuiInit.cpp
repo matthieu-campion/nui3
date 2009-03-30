@@ -91,7 +91,7 @@ bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
 
   // Init the font manager:
 
-#if (defined _UIKIT_)
+#if (defined _UIKIT_) && !(defined TARGET_IPHONE_SIMULATOR)
   nglIMemory Memory(gpnuiPhoneFontDB, gnuiPhoneFontDBSize);
   nuiFontManager::LoadManager(Memory);
 #else

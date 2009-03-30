@@ -53,18 +53,18 @@ bool guiOscillo::Draw(nuiDrawContext* pContext)
   for (uint32 c = 0; c < mrData.size(); c++)
   {
     
-    nuiRenderArray array(GL_LINE_STRIP);
-    array.EnableArray(nuiRenderArray::eColor, true);
+    nuiRenderArray* pArray = new nuiRenderArray(GL_LINE_STRIP);
+    pArray->EnableArray(nuiRenderArray::eColor, true);
     
-    array.SetColor(color[c]);
+    pArray->SetColor(color[c]);
     for (uint32 s = 0; s < count; s++)
     {
       float value = mrData[c][s];
-      array.SetVertex(s, mid + hi * value);
-      array.PushVertex();
+      pArray->SetVertex(s, mid + hi * value);
+      pArray->PushVertex();
     }
     
-    pContext->DrawArray(array);
+    pContext->DrawArray(pArray);
   }
   
   return true;

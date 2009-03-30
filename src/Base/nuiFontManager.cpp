@@ -919,41 +919,39 @@ void nuiFontManager::GetSystemFolders(std::map<nglString, nglPath>& rFolders)
 {
 #ifdef FONT_TEST_HACK
   rFolders[_T("System0")] = _T("/System/Library/Fonts/Cache/");
-#else
-#if (defined _CARBON_)
+#elif (defined _CARBON_)
   rFolders[_T("System0")] = _T("/System/Library/Fonts/");
   rFolders[_T("System1")] = _T("/Library/Fonts/");
-#endif
-#if (defined _UIKIT_)
+#elif (defined TARGET_IPHONE_SIMULATOR)
+  rFolders[_T("System0")] = _T("/System/Library/Fonts/");
+  //rFolders[_T("System1")] = _T("/Library/Fonts/");
+#elif (defined _UIKIT_)
   rFolders[_T("System0")] = _T("/System/Library/Fonts/Cache/");
-#endif
-#ifdef _WIN32_
-    nglChar p[MAX_PATH];
-    HRESULT hr = SHGetFolderPath(NULL, CSIDL_FONTS, NULL, 0, p);
-    if (hr == S_OK)
-    {
-      rFolders[_T("System0")] = p;
-      
-      NGL_DEBUG( NGL_OUT(_T("Adding System0 font folder: '%ls'\n"), p); )
-    }
-    else
-    {
-      rFolders[_T("System0")] = _T("/c:/windows/fonts/");
-    }
-  #endif
-  #ifdef _LINUX_
-    int count = 0;
-    Display* pDisplay = XOpenDisplay(NULL);
-    char** pPathes = XGetFontPath(pDisplay, &count);
-    for (uint i = 0; i < count; i++)
-    {
-      nglString str;
-      str.CFormat(_T("System%d"), i);
-      rFolders[str] = nglString(pPathes[i]);
-    }
-    XFreeFontPath(pPathes);
-    XCloseDisplay(pDisplay);
-  #endif
+#elif (defined _WIN32_)
+  nglChar p[MAX_PATH];
+  HRESULT hr = SHGetFolderPath(NULL, CSIDL_FONTS, NULL, 0, p);
+  if (hr == S_OK)
+  {
+    rFolders[_T("System0")] = p;
+    
+    NGL_DEBUG( NGL_OUT(_T("Adding System0 font folder: '%ls'\n"), p); )
+  }
+  else
+  {
+    rFolders[_T("System0")] = _T("/c:/windows/fonts/");
+  }
+#elif (defined _LINUX_)
+  int count = 0;
+  Display* pDisplay = XOpenDisplay(NULL);
+  char** pPathes = XGetFontPath(pDisplay, &count);
+  for (uint i = 0; i < count; i++)
+  {
+    nglString str;
+    str.CFormat(_T("System%d"), i);
+    rFolders[str] = nglString(pPathes[i]);
+  }
+  XFreeFontPath(pPathes);
+  XCloseDisplay(pDisplay);
 #endif
 }
 
