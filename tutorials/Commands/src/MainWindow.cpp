@@ -36,6 +36,7 @@ MainWindow::~MainWindow()
 void MainWindow::OnCreation()
 {
   nuiGrid* pGrid = new nuiGrid(2,2);
+  pGrid->SetBorder(40,40);
   pGrid->SetRowExpand(1, nuiExpandShrinkAndGrow);
   pGrid->SetColumnExpand(0, nuiExpandShrinkAndGrow);
   pGrid->SetColumnExpand(1, nuiExpandShrinkAndGrow);
