@@ -760,7 +760,11 @@ bool nglPath::GetInfo(nglPathInfo& rInfo) const
 	WIN32_FILE_ATTRIBUTE_DATA	dataInfo;
 
 	BOOL	result = GetFileAttributesEx(mPathName.GetChars(), GetFileExInfoStandard, &dataInfo);
-	if(result==0)	{ rInfo.Exists=false;  return false; }
+	if (result==0)
+	{
+    rInfo.Exists=false;
+    return false;
+  }
 
   SYSTEMTIME lastAccess; 
   bool res = FileTimeToSystemTime(&dataInfo.ftLastAccessTime, &lastAccess);
