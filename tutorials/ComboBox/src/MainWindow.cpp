@@ -10,8 +10,8 @@
 #include "Application.h"
 #include "nuiLabel.h"
 #include "nuiComboBox.h"
-#include "nuiGrid.h"
-#include "nuiPane.h"
+#include "nuiBackgroundPane.h"
+#include "nuiCSS.h"
 /*
  * MainWindow
  */
@@ -22,6 +22,12 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
 #ifdef _DEBUG_
   SetDebugMode(true);
 #endif
+  
+#ifdef _WIN32_
+  LoadCSS(_T("rsrc:/css/MXEditor-Win32.css"));
+#else
+  LoadCSS(_T("rsrc:/css/main.css"));
+#endif  
 }
 
 MainWindow::~MainWindow()
@@ -37,7 +43,7 @@ void MainWindow::OnCreation()
   {
     nglString str;
     str.Format(_T("Choice #%d"), i);
-    pNode = new nuiTreeNode(str, false);
+    pNode = new nuiTreeNode(new nuiLabel(str,_T("Tutorial::Label")), false);
     pTree->AddChild(pNode);
   }
   
@@ -46,25 +52,29 @@ void MainWindow::OnCreation()
   {
     nglString str;
     str.Format(_T("Choice %c"), (char)(_T('A') + i));
-    nuiTreeNode* pNode2 = new nuiTreeNode(str, false);
+    nuiTreeNode* pNode2 = new nuiTreeNode(new nuiLabel(str,_T("Tutorial::Label")), false);
     pNode->AddChild(pNode2);
   }
-  nuiTreeNode* pNode2 = new nuiTreeNode(_T("my last long choice"), true);
-  pNode->AddChild(pNode2);
   
   
   // create combo box
   nuiComboBox* pCombo = new nuiComboBox(pTree, true);
+  pCombo->SetUserSize(150,25);
   mEventSink.Connect(pCombo->ValueChanged, &MainWindow::OnComboChanged, (void*)pCombo);
   
   pCombo->SetPosition(nuiCenter);
   AddChild(pCombo);
   
   // create label for output display
+  nuiBackgroundPane* pPane = new nuiBackgroundPane(eInnerBackground);
+  pPane->SetBorder(20,30);
+  pPane->SetPosition(nuiTop);
+  pPane->SetUserWidth(280);
+  pPane->SetUserHeight(40);
+  AddChild(pPane);
   mpLabel = new nuiLabel(_T(" "));
-  mpLabel->SetPosition(nuiTopLeft);
-  mpLabel->SetBorder(20,20);
-  AddChild(mpLabel);
+  mpLabel->SetObjectName(_T("Tutorial::Label"));
+  pPane->AddChild(mpLabel);
 
 }
 
@@ -77,7 +87,7 @@ bool MainWindow::OnComboChanged(const nuiEvent& rEvent)
   uint32 index = pCombo->GetValue();
   
   nglString msg;
-  msg.Format(_T("the user choice is : '%ls' (index %d)"), pLabel->GetText().GetChars(), index);
+  msg.Format(_T("the user choice is:\n '%ls' (index %d)"), pLabel->GetText().GetChars(), index);
   mpLabel->SetText(msg);
   
   return true;
@@ -93,5 +103,30 @@ void MainWindow::OnClose()
   App->Quit();
 }
 
+
+bool MainWindow::LoadCSS(const nglPath& rPath)
+{
+  nglIStream* pF = rPath.OpenRead();
+  if (!pF)
+  {
+    NGL_OUT(_T("Unable to open CSS source file '%ls'\n"), rPath.GetChars());
+    return false;
+  }
+  
+  nuiCSS* pCSS = new nuiCSS();
+  bool res = pCSS->Load(*pF, rPath);
+  delete pF;
+  
+  if (res)
+  {
+    nuiMainWindow::SetCSS(pCSS);
+    return true;
+  }
+  
+  NGL_OUT(_T("%ls\n"), pCSS->GetErrorString().GetChars());
+  
+  delete pCSS;
+  return false;
+}
 
 

@@ -8,27 +8,17 @@
 // remember each stylesheet file must have at least a blank ending line, 
 // or the stylehsheet parsing may not work properly
 
-
-"MyImage"!
+@Font fontFileSelector
 {
-  Texture: "rsrc:/decorations/image.png";
-  UserWidth: 100;
-  UserHeight: 100;
+  Name: "Lucida Grande";
+  Size: 12;
+  Bold: false;
+  Italic: false;
 }
 
-
-@nuiColorDecoration dMyLabel
+"Tutorial::Label"!
 {
-  FillColor: rgb(220,220,220);
-  StrokeColor: black;
-  ShapeMode: StrokeAndFill;
-  ClientRect: "{10 10 0 0}";
-}
-
-"MyLabel"!
-{
-  DecorationMode: Border;
-  Decoration: dMyLabel;
+  Font: fontFileSelector;
 }
 
 // blank ending line following

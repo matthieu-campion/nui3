@@ -108,8 +108,13 @@ void Application::OnInit()
     }
     else
     {
-      Width = 600;
-      Height = 400;
+#ifdef _UIKIT_
+      Width = 320;
+      Height = 480;
+#else
+      Width = 800;
+      Height = 600;
+#endif
     }
   }
 

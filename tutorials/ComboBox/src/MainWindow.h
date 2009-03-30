@@ -23,6 +23,7 @@ public:
 private:
 
   bool OnComboChanged(const nuiEvent& rEvent);
+  bool LoadCSS(const nglPath& rPath);
   
   nuiLabel* mpLabel;
   nuiEventSink<MainWindow> mEventSink;
