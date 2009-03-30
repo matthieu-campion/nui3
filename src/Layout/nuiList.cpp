@@ -689,7 +689,7 @@ bool nuiList::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
       SelectionChanged();
       Invalidate();
     }
-    return false;
+    return true;
 
   }
   return false;
@@ -724,9 +724,6 @@ bool nuiList::MouseMoved  (nuiSize X, nuiSize Y)
   
   nuiWidgetPtr pItem = GetIdealItem(X,Y);
 
-  if (!pItem)
-    return false;
-  
   if ((pItem == mpLastItem) || (pItem == mpLastDestinationItem))
     return false;
   
