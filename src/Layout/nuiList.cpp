@@ -652,6 +652,8 @@ bool nuiList::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
 
   if (Button & nglMouseInfo::ButtonLeft)
   {
+    Grab();
+    
     nuiWidgetPtr pItem = GetItem(X,Y);
     if (pItem && pItem->IsEnabled(false))
     {
@@ -696,6 +698,11 @@ bool nuiList::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
 
 bool nuiList::MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
 {
+  if (mClicked && (Button & nglMouseInfo::ButtonLeft))
+  {
+    Ungrab();
+  }
+
   mClicked = false;
   
   if (mMoved && mCanMoveItems)
