@@ -199,5 +199,7 @@ private:
   std::set<nglPath> mScannedFolders;
   
   static nuiFontManager gManager;
+  
+  bool ScanSubFolder(const nglPath& rPath);
 };
 

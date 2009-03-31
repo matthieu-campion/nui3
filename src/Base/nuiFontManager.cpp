@@ -999,8 +999,6 @@ void nuiFontManager::ScanFolders(bool rescanAllFolders /* = false */)
   }
 
   
-  nglString tr = _T("BOOKOS.ttf");
-  
   while (it != end)
   {
     nglPath path(it->second);
@@ -1008,48 +1006,7 @@ void nuiFontManager::ScanFolders(bool rescanAllFolders /* = false */)
     if (mScannedFolders.find(path) == mScannedFolders.end())
     {
       mScannedFolders.insert(path);
-      
-      std::list<nglPath> children;
-      path.GetChildren(&children);
-      
-      std::list<nglPath>::const_iterator cit = children.begin();
-      std::list<nglPath>::const_iterator cend = children.end();
-      
-      if (path.GetNodeName().Compare(tr, false) != 0)
-      {
-        while (cit != cend)
-        {
-          // enumerate all the faces of all the fonts:
-          const nglPath& rPath(*cit);
-          
-          bool cont = true;
-          int32 face = 0;
-          while (cont)
-          {
-            NGL_ASSERT(gFTLibrary == NULL);
-            FT_Error error;
-            error = FT_Init_FreeType(&gFTLibrary);
-            
-            nuiFontDesc* pFontDesc = new nuiFontDesc(rPath, face);
-            
-            FT_Done_FreeType(gFTLibrary);
-            gFTLibrary = NULL;
-
-            if (pFontDesc->IsValid())
-            {
-              mpFonts.push_back(pFontDesc);
-            }
-            else
-            {
-              delete pFontDesc;
-              cont = false;
-            }
-            face++;
-          }
-          
-          ++cit;
-        }
-      }
+      ScanSubFolder(path);
     }
     
     ++it;
@@ -1059,6 +1016,57 @@ void nuiFontManager::ScanFolders(bool rescanAllFolders /* = false */)
   
   double t = end_time - start_time;
   printf("Scanning the system fonts took %f seconds\n", t);
+}
+
+bool nuiFontManager::ScanSubFolder(const nglPath& rBasePath)
+{
+  std::list<nglPath> children;
+  rBasePath.GetChildren(&children);
+  
+  std::list<nglPath>::const_iterator cit = children.begin();
+  std::list<nglPath>::const_iterator cend = children.end();
+  
+  while (cit != cend)
+  {
+    // enumerate all the faces of all the fonts:
+    const nglPath& rPath(*cit);
+    
+    if (rPath.IsLeaf())
+    {
+      bool cont = true;
+      int32 face = 0;
+      while (cont)
+      {
+        NGL_ASSERT(gFTLibrary == NULL);
+        FT_Error error;
+        error = FT_Init_FreeType(&gFTLibrary);
+        
+        nuiFontDesc* pFontDesc = new nuiFontDesc(rPath, face);
+        
+        FT_Done_FreeType(gFTLibrary);
+        gFTLibrary = NULL;
+        
+        if (pFontDesc->IsValid())
+        {
+          mpFonts.push_back(pFontDesc);
+        }
+        else
+        {
+          delete pFontDesc;
+          cont = false;
+        }
+        face++;
+      }
+    }
+    else
+    {
+      ScanSubFolder(rPath);
+    }
+    
+    ++cit;
+  }
+  
+  return true;
 }
 
 void nuiFontManager::GetFolderList(std::vector<nglString>& rList) const
