@@ -22,6 +22,7 @@ project/project_iPhone.pbxproj        NUI_RESOURCE    "resources/project/project
 project/resource.rc        NUI_RESOURCE    "resources/project/resource.rc"
 project/resources/icon.icns        NUI_RESOURCE    "resources/project/resources/icon.icns"
 project/resources/icon.ico        NUI_RESOURCE    "resources/project/resources/icon.ico"
+project/resources/icon.png        NUI_RESOURCE    "resources/project/resources/icon.png"
 project/resources/css/main.css        NUI_RESOURCE    "resources/project/resources/css/main.css"
 project/resources/decorations/image.png        NUI_RESOURCE    "resources/project/resources/decorations/image.png"
 project/src/Application.cpp        NUI_RESOURCE    "resources/project/src/Application.cpp"

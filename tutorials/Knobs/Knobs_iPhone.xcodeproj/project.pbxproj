@@ -7,16 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BC1DAD6F0F83643300773749 /* css in Resources */ = {isa = PBXBuildFile; fileRef = BC1DAD660F83643300773749 /* css */; };
-		BC1DAD700F83643300773749 /* decorations in Resources */ = {isa = PBXBuildFile; fileRef = BC1DAD690F83643300773749 /* decorations */; };
-		BC1DAD710F83643300773749 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = BC1DAD6C0F83643300773749 /* icon.icns */; };
-		BC1DAD720F83643300773749 /* icon.ico in Resources */ = {isa = PBXBuildFile; fileRef = BC1DAD6D0F83643300773749 /* icon.ico */; };
-		BC1DAD730F83643300773749 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = BC1DAD6E0F83643300773749 /* icon.png */; };
-		BC1DAD740F83643300773749 /* css in Resources */ = {isa = PBXBuildFile; fileRef = BC1DAD660F83643300773749 /* css */; };
-		BC1DAD750F83643300773749 /* decorations in Resources */ = {isa = PBXBuildFile; fileRef = BC1DAD690F83643300773749 /* decorations */; };
-		BC1DAD760F83643300773749 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = BC1DAD6C0F83643300773749 /* icon.icns */; };
-		BC1DAD770F83643300773749 /* icon.ico in Resources */ = {isa = PBXBuildFile; fileRef = BC1DAD6D0F83643300773749 /* icon.ico */; };
-		BC1DAD780F83643300773749 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = BC1DAD6E0F83643300773749 /* icon.png */; };
 		BC540B430EF940C5007E66FC /* libnuiE.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC6A0A3E0EF93F7800881ACF /* libnuiE.a */; };
 		BC540B440EF940C9007E66FC /* libnuiEd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC6A0A400EF93F7800881ACF /* libnuiEd.a */; };
 		BC6A0A450EF93F9700881ACF /* MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC6A0A420EF93F9700881ACF /* MainWindow.cpp */; };
@@ -76,18 +66,13 @@
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		BC1DAD660F83643300773749 /* css */ = {isa = PBXFileReference; lastKnownFileType = folder; name = css; path = resources/css; sourceTree = SOURCE_ROOT; };
-		BC1DAD690F83643300773749 /* decorations */ = {isa = PBXFileReference; lastKnownFileType = folder; name = decorations; path = resources/decorations; sourceTree = SOURCE_ROOT; };
-		BC1DAD6C0F83643300773749 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = icon.icns; path = resources/icon.icns; sourceTree = SOURCE_ROOT; };
-		BC1DAD6D0F83643300773749 /* icon.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; name = icon.ico; path = resources/icon.ico; sourceTree = SOURCE_ROOT; };
-		BC1DAD6E0F83643300773749 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = resources/icon.png; sourceTree = SOURCE_ROOT; };
 		BC540B7E0EF94188007E66FC /* main.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = main.css; path = resources/css/main.css; sourceTree = SOURCE_ROOT; };
-		BC6A0A350EF93F7800881ACF /* nuiE.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nuiE.xcodeproj; path = %NUI_GENERATOR_NUI%/nuiE.xcodeproj; sourceTree = SOURCE_ROOT; };
+		BC6A0A350EF93F7800881ACF /* nuiE.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nuiE.xcodeproj; path = ../../nuiE.xcodeproj; sourceTree = SOURCE_ROOT; };
 		BC6A0A410EF93F9700881ACF /* MainWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainWindow.h; path = src/MainWindow.h; sourceTree = SOURCE_ROOT; };
 		BC6A0A420EF93F9700881ACF /* MainWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MainWindow.cpp; path = src/MainWindow.cpp; sourceTree = SOURCE_ROOT; };
 		BC6A0A430EF93F9700881ACF /* Application.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Application.cpp; path = src/Application.cpp; sourceTree = SOURCE_ROOT; };
 		BC6A0A440EF93F9700881ACF /* Application.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Application.h; path = src/Application.h; sourceTree = SOURCE_ROOT; };
-		C99996020DA6EE97001A7116 /* %NUI_GENERATOR_PROJECT_IPHONE%.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = %NUI_GENERATOR_PROJECT_IPHONE%.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C99996020DA6EE97001A7116 /* Knobs_iPhone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Knobs_iPhone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C999972E0DA6F405001A7116 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		C99997710DA6F9F2001A7116 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		C99998F50DA7CAF2001A7116 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -95,7 +80,7 @@
 		C9DCE4C20DA7F4FF008AC45D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C9EA04FD0E2917FA0067EF48 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		C9F2587A0E5861EA00687021 /* dlist.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = dlist.plist; sourceTree = "<group>"; };
-		C9F5F9330DA84CAB00E078ED /* %NUI_GENERATOR_PROJECT_IPHONE%D.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = %NUI_GENERATOR_PROJECT_IPHONE%D.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9F5F9330DA84CAB00E078ED /* Knobs_iPhoneD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Knobs_iPhoneD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,8 +144,8 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C99996020DA6EE97001A7116 /* %NUI_GENERATOR_PROJECT_IPHONE%.app */,
-				C9F5F9330DA84CAB00E078ED /* %NUI_GENERATOR_PROJECT_IPHONE%D.app */,
+				C99996020DA6EE97001A7116 /* Knobs_iPhone.app */,
+				C9F5F9330DA84CAB00E078ED /* Knobs_iPhoneD.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -182,11 +167,6 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				BC1DAD660F83643300773749 /* css */,
-				BC1DAD690F83643300773749 /* decorations */,
-				BC1DAD6C0F83643300773749 /* icon.icns */,
-				BC1DAD6D0F83643300773749 /* icon.ico */,
-				BC1DAD6E0F83643300773749 /* icon.png */,
 				C9DCE4C20DA7F4FF008AC45D /* Info.plist */,
 			);
 			name = Resources;
@@ -240,40 +220,41 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C99995F80DA6EE97001A7116 /* %NUI_GENERATOR_PROJECT_IPHONE% */ = {
+		C99995F80DA6EE97001A7116 /* Knobs_iPhone */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C99995FF0DA6EE97001A7116 /* Build configuration list for PBXNativeTarget "%NUI_GENERATOR_PROJECT_IPHONE%" */;
+			buildConfigurationList = C99995FF0DA6EE97001A7116 /* Build configuration list for PBXNativeTarget "Knobs_iPhone" */;
 			buildPhases = (
+				C99995F90DA6EE97001A7116 /* Resources */,
 				C99995FA0DA6EE97001A7116 /* Sources */,
 				C99995FB0DA6EE97001A7116 /* Frameworks */,
-				C99995F90DA6EE97001A7116 /* Resources */,
+				BC540B910EF946F9007E66FC /* Copy Resources Script */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				BC540B480EF940E3007E66FC /* PBXTargetDependency */,
 			);
-			name = %NUI_GENERATOR_PROJECT_IPHONE%;
+			name = Knobs_iPhone;
 			productName = beatmaker;
-			productReference = C99996020DA6EE97001A7116 /* %NUI_GENERATOR_PROJECT_IPHONE%.app */;
+			productReference = C99996020DA6EE97001A7116 /* Knobs_iPhone.app */;
 			productType = "com.apple.product-type.application";
 		};
-		C9F5F9070DA84CAB00E078ED /* %NUI_GENERATOR_PROJECT_IPHONE%D */ = {
+		C9F5F9070DA84CAB00E078ED /* Knobs_iPhoneD */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C9F5F9310DA84CAB00E078ED /* Build configuration list for PBXNativeTarget "%NUI_GENERATOR_PROJECT_IPHONE%D" */;
+			buildConfigurationList = C9F5F9310DA84CAB00E078ED /* Build configuration list for PBXNativeTarget "Knobs_iPhoneD" */;
 			buildPhases = (
 				C9F5F90E0DA84CAB00E078ED /* Sources */,
 				C9F5F9290DA84CAB00E078ED /* Frameworks */,
-				BC1DAD650F83641200773749 /* Resources */,
+				BC540B8F0EF946C6007E66FC /* Copy Resources Script */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				BC540B460EF940DB007E66FC /* PBXTargetDependency */,
 			);
-			name = %NUI_GENERATOR_PROJECT_IPHONE%D;
+			name = Knobs_iPhoneD;
 			productName = beatmaker;
-			productReference = C9F5F9330DA84CAB00E078ED /* %NUI_GENERATOR_PROJECT_IPHONE%D.app */;
+			productReference = C9F5F9330DA84CAB00E078ED /* Knobs_iPhoneD.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -281,7 +262,7 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
-			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "%NUI_GENERATOR_PROJECT_IPHONE%" */;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Knobs_iPhone" */;
 			compatibilityVersion = "Xcode 3.1";
 			hasScannedForEncodings = 1;
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
@@ -294,8 +275,8 @@
 			);
 			projectRoot = "";
 			targets = (
-				C99995F80DA6EE97001A7116 /* %NUI_GENERATOR_PROJECT_IPHONE% */,
-				C9F5F9070DA84CAB00E078ED /* %NUI_GENERATOR_PROJECT_IPHONE%D */,
+				C99995F80DA6EE97001A7116 /* Knobs_iPhone */,
+				C9F5F9070DA84CAB00E078ED /* Knobs_iPhoneD */,
 			);
 		};
 /* End PBXProject section */
@@ -318,31 +299,45 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
-		BC1DAD650F83641200773749 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BC1DAD740F83643300773749 /* css in Resources */,
-				BC1DAD750F83643300773749 /* decorations in Resources */,
-				BC1DAD760F83643300773749 /* icon.icns in Resources */,
-				BC1DAD770F83643300773749 /* icon.ico in Resources */,
-				BC1DAD780F83643300773749 /* icon.png in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C99995F90DA6EE97001A7116 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC1DAD6F0F83643300773749 /* css in Resources */,
-				BC1DAD700F83643300773749 /* decorations in Resources */,
-				BC1DAD710F83643300773749 /* icon.icns in Resources */,
-				BC1DAD720F83643300773749 /* icon.ico in Resources */,
-				BC1DAD730F83643300773749 /* icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		BC540B8F0EF946C6007E66FC /* Copy Resources Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Resources Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "rsync -rC ./resources/ --exclude \".*\" \"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"\n../../tools/make_rc.py resources resource.rc\necho 0 ICON \\\"resources/icon.ico\\\" >> resource.rc\n";
+		};
+		BC540B910EF946F9007E66FC /* Copy Resources Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Resources Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "rsync -rC ./resources/ --exclude \".*\" \"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"\n../../tools/make_rc.py resources resource.rc\necho 0 ICON \\\"resources/icon.ico\\\" >> resource.rc\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C99995FA0DA6EE97001A7116 /* Sources */ = {
@@ -393,7 +388,7 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/%NUI_GENERATOR_NUI%/include";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../include";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-x",
@@ -426,7 +421,7 @@
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_LDFLAGS = "-lz";
 				PREBINDING = NO;
-				PRODUCT_NAME = %NUI_GENERATOR_PROJECT_IPHONE%;
+				PRODUCT_NAME = Knobs_iPhone;
 				STRIPFLAGS = "-SXx";
 				STRIP_INSTALLED_PRODUCT = YES;
 			};
@@ -453,14 +448,14 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LIBRARY_SEARCH_PATHS = "";
 				PREBINDING = NO;
-				PRODUCT_NAME = %NUI_GENERATOR_PROJECT_IPHONE%D;
+				PRODUCT_NAME = Knobs_iPhoneD;
 			};
 			name = Default;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "%NUI_GENERATOR_PROJECT_IPHONE%" */ = {
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Knobs_iPhone" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Default */,
@@ -468,7 +463,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Default;
 		};
-		C99995FF0DA6EE97001A7116 /* Build configuration list for PBXNativeTarget "%NUI_GENERATOR_PROJECT_IPHONE%" */ = {
+		C99995FF0DA6EE97001A7116 /* Build configuration list for PBXNativeTarget "Knobs_iPhone" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C99996000DA6EE97001A7116 /* Default */,
@@ -476,7 +471,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Default;
 		};
-		C9F5F9310DA84CAB00E078ED /* Build configuration list for PBXNativeTarget "%NUI_GENERATOR_PROJECT_IPHONE%D" */ = {
+		C9F5F9310DA84CAB00E078ED /* Build configuration list for PBXNativeTarget "Knobs_iPhoneD" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C9F5F9320DA84CAB00E078ED /* Default */,
