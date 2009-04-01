@@ -74,11 +74,13 @@ void MainWindow::OnCreation()
 {
   // mainbox for layout
   nuiVBox* pMainBox = new nuiVBox(0);
+  pMainBox->SetExpand(nuiExpandShrinkAndGrow);
+  pMainBox->SetBorder(20,20);
   AddChild(pMainBox);
   
   // a button to start/stop the process
   nuiButton* pBtn = new nuiToggleButton(_T("Start/Stop"));
-  pBtn->SetBorder(40,0,0,0);
+  pBtn->SetBorder(20,0,0,0);
   mEventSink.Connect(pBtn->ButtonPressed, &MainWindow::OnStart);
   mEventSink.Connect(pBtn->ButtonDePressed, &MainWindow::OnStop);
   pMainBox->AddCell(pBtn, nuiLeft);
@@ -98,7 +100,7 @@ void MainWindow::OnCreation()
   
   // decorated pane for background
   nuiBackgroundPane* pane = new nuiBackgroundPane();
-  pane->SetBorder(40,20, 40, 40);
+  pane->SetBorder(20,10, 20, 20);
   hbox->SetCell(0, pane);
   hbox->SetCellExpand(0, nuiExpandShrinkAndGrow);
 
@@ -108,7 +110,7 @@ void MainWindow::OnCreation()
   pane->AddChild(mpViews[0]);
 
   // label for output
-  mLabels[0] = _T("THREAD1 : hey I wanna play!\n");
+  mLabels[0] = _T("THREAD1:\nhey I wanna play!\n");
   mpLabels[0] = new nuiLabel(mLabels[0]);
   mpLabels[0]->SetPosition(nuiTop);
   mpViews[0]->AddChild(mpLabels[0]);
@@ -117,13 +119,13 @@ void MainWindow::OnCreation()
   //** THREAD2 : same thing **********************************************
 
   pane = new nuiBackgroundPane();
-  pane->SetBorder(40,20, 40, 40);
+  pane->SetBorder(20,10, 20, 20);
   hbox->SetCell(1, pane);
   hbox->SetCellExpand(1, nuiExpandShrinkAndGrow);
   mpViews[1] = new nuiScrollView(false/* horiz. bar*/, true/* vert. bar*/);
   mEventSink.Connect(mpViews[1]->OffsetsChanged, &MainWindow::OnScrollbarMoved, (void*)mpViews[1]);
   pane->AddChild(mpViews[1]);
-  mLabels[1] = _T("THREAD2 : yeah, let's play ping pong!\n");
+  mLabels[1] = _T("THREAD2:\nyeah, let's play ping pong!\n");
   mpLabels[1] = new nuiLabel(mLabels[1]);
   mpLabels[1]->SetPosition(nuiTop);
   mpViews[1]->AddChild(mpLabels[1]);
