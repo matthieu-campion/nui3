@@ -35,6 +35,7 @@ public:
 
   void SetTextureRect(const nuiRect& rRect);
   const nuiRect& GetTextureRect() const;
+  void ResetTextureRect();
   
   virtual bool Load (const nuiXMLNode* pNode); ///< Create an image from an xml description.
 
