@@ -6,6 +6,7 @@ set(SOURCES
 
   graphics/DefaultDecoration.cpp
 
+  src/Animations/nuiWidgetAnimation.cpp
   src/Base/nui.cpp
   src/Base/nuiAnimation.cpp
   src/Base/nuiBindingManager.cpp

@@ -666,13 +666,35 @@ bool nglWindow::IsKeyDown (nglKeyCode Key) const
  * Drag and drop
  */
 
-void nglWindow::OnDragEnter() {}
-void nglWindow::OnDragLeave() {}
-bool nglWindow::OnCanDrop(nglDragAndDrop* pDragObject, int X, int Y, nglMouseInfo::Flags Button) { return false; }
-void nglWindow::OnDropped (nglDragAndDrop* pDragObject, int X,int Y, nglMouseInfo::Flags Button) {}
-bool nglWindow::Drag(nglDragAndDrop* pDragObject) { return false; }
-void nglWindow::OnDragged (nglDragAndDrop* pDragObject) {}
-void nglWindow::OnStopDragging() {}
+void nglWindow::OnDragEnter()
+{
+}
+
+void nglWindow::OnDragLeave()
+{
+}
+
+bool nglWindow::OnCanDrop(nglDragAndDrop* pDragObject, int X, int Y, nglMouseInfo::Flags Button)
+{
+  return false;
+}
+
+void nglWindow::OnDropped (nglDragAndDrop* pDragObject, int X,int Y, nglMouseInfo::Flags Button)
+{
+}
+
+bool nglWindow::Drag(nglDragAndDrop* pDragObject)
+{
+  return false;
+}
+
+void nglWindow::OnDragged (nglDragAndDrop* pDragObject)
+{
+}
+
+void nglWindow::OnStopDragging()
+{
+}
 
 
 /*

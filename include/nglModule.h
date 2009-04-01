@@ -71,8 +71,10 @@ private:
   nglPath   mPath;
 #ifdef _WIN32_
   HINSTANCE mHandle;
-#else
+#elif (defined _CARBON_)
   CFBundleRef     mHandle;
+#else
+  void* mHandle;
 #endif // _WIN32_
 
   nglModule(const nglModule&) {} // Undefined copy constructor
