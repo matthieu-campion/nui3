@@ -197,7 +197,7 @@ void nuiImage::ResetTextureRect()
   if (mpTexture)
     SetTextureRect(nuiRect(0, 0, mpTexture->GetWidth(), mpTexture->GetHeight()));
   else
-    SetTextureRect(nuiRect());               
+    SetTextureRect(nuiRect());
 }
 
 

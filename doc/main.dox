@@ -9,6 +9,8 @@ In other words, its purpose is to help programmers write multi-platform GUI appl
 that deals with buttons, windows, listbox, menus, and other UI services -
 with a simple knowledge in C++.
 
-NUI3 is built on top of NGL. NGL used to be a separate crossplatform library aimed at creating crossplatorm OpenGL application easily. NGL ad NUI have been merged into the NUI3 project. All the external dependencies are also merged into the project now, to ease compilation and dev (freetype2, libjpeg, libpng, zlib...)
+NUI3 is built on top of NGL. NGL used to be a separate crossplatform library aimed at creating crossplatorm OpenGL application easily.
+NGL ad NUI have been merged into the NUI3 project.
+All the external dependencies are also merged into the project now, to ease compilation and dev (freetype2, libjpeg, libpng, zlib...)
 .
 */

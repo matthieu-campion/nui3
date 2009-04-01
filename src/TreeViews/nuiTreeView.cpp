@@ -814,6 +814,7 @@ bool nuiTreeView::MouseMoved(nuiSize X, nuiSize Y)
           {
             nuiTreeView::Drag(mpDraggedObject);
           }
+          mDragging = false;
         }
         
       }
@@ -847,9 +848,6 @@ void nuiTreeView::OnDragRequestData(nglDragAndDrop* pDragObject, const nglString
 //       mpSelectedNode;
       break;
   }
-  
-  mDragging = false;
-  
 }
 
 void nuiTreeView::OnDragStop(bool canceled)
