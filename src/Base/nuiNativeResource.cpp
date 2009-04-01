@@ -92,6 +92,7 @@ static nglPath GetResourcePath()
 		ResourcePathName += App->GetName();
 	else
 		ResourcePathName += _T('/')+App->GetName();
+	NGL_OUT(_T("NUI_RESOURCE_PATH: %ls\n"), ResourcePathName.GetChars());
 	return nglPath(ResourcePathName);
 }
 #endif //_LINUX_
