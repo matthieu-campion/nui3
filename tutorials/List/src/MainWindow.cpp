@@ -34,11 +34,12 @@ void MainWindow::OnCreation()
 {
   nuiVBox* pBox = new nuiVBox(0);
   pBox->SetPosition(nuiCenter);
+  pBox->SetBorder(10,10);
   AddChild(pBox);
   
   // output label
   nuiBackgroundPane* pPane = new nuiBackgroundPane(eInnerBackground);
-  pPane->SetUserSize(300, 30);
+  pPane->SetUserSize(280, 30);
   pBox->AddCell(pPane);
   
   mpOutput = new nuiLabel();
@@ -50,7 +51,6 @@ void MainWindow::OnCreation()
 
   // input list
   pPane = new nuiBackgroundPane();
-  pPane->SetUserSize(300,380);
   pBox->AddCell(pPane);
   
   nuiScrollView* pScroll = new nuiScrollView();
