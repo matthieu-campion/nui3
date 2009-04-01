@@ -36,6 +36,8 @@ set(SOURCES
   src/Base/nuiXML.cpp
   src/Base/nuiHTML.cpp
   src/Bindings/nuiBindings.cpp
+  src/Animations/nuiAttributeAnimation.cpp
+  src/Animations/nuiWidgetAnimation.cpp
   src/Text/nuiHyperLink.cpp
   src/Text/nuiEditLine.cpp
   src/Text/nuiEditText.cpp
@@ -77,10 +79,10 @@ set(SOURCES
   src/WidgetTree/nuiSimpleContainer.cpp
   src/WidgetTree/nuiTopLevel.cpp
   src/WidgetTree/nuiWidget.cpp
-  src/WidgetTree/nuiWidgetAnimation.cpp
   src/WidgetTree/nuiWindowManager.cpp
   src/SimpleWidgets/nuiButton.cpp
   src/SimpleWidgets/nuiColorSelector.cpp
+  src/SimpleWidgets/nuiCoverFlow.cpp
   src/SimpleWidgets/nuiComboBox.cpp
   src/SimpleWidgets/nuiFontBrowser.cpp
   src/SimpleWidgets/nuiFileList.cpp
@@ -94,8 +96,8 @@ set(SOURCES
   src/SimpleWidgets/nuiMesh.cpp
   src/SimpleWidgets/nuiMeshEngine.cpp
   src/SimpleWidgets/nuiOffscreenView.cpp
-  src/SimpleWidgets/nuiProgress.cpp
   src/SimpleWidgets/nuiRadioButton.cpp
+  src/SimpleWidgets/nuiProgressBar.cpp
   src/SimpleWidgets/nuiRadioButtonGroup.cpp
   src/SimpleWidgets/nuiRectView.cpp
   src/SimpleWidgets/nuiScrollBar.cpp
@@ -115,6 +117,7 @@ set(SOURCES
   src/TreeViews/nuiTreeView.cpp
   src/Layout/nuiImageSequence.cpp
   src/Layout/nuiBackgroundPane.cpp
+  src/Layout/nuiBox.cpp
   src/Layout/nuiAnimView.cpp
   src/Layout/nuiDialog.cpp
   src/Layout/nuiFixed.cpp
@@ -124,6 +127,7 @@ set(SOURCES
   src/Layout/nuiList.cpp
   src/Layout/nuiMatrixView.cpp
   src/Layout/nuiModalContainer.cpp
+  src/Layout/nuiVBox.cpp
   src/Dialogs/nuiMessageBox.cpp
   src/Dialogs/nuiDialogSelectFile.cpp
   src/Dialogs/nuiDialogSelectDirectory.cpp
@@ -144,11 +148,13 @@ set(SOURCES
   src/Audio/nuiAudioFifo.cpp
   src/Attributes/nuiAttribute.cpp
   src/Attributes/nuiRangeAttributeEditor.cpp
+  src/Attributes/nuiRangeKnobAttributeEditor.cpp
   src/Attributes/nuiSizeAttributeEditor
   src/Attributes/nuiAttributeEditor.cpp
   src/Attributes/nuiBooleanAttributeEditor.cpp
   src/Attributes/nuiBorderAttributeEditor.cpp
   src/Attributes/nuiColorAttributeEditor.cpp
+  src/Attributes/nuiGenericAttributeEditor.cpp
   src/Attributes/nuiPathAttributeEditor.cpp
   src/Attributes/nuiPercentAttributeEditor.cpp
   src/Attributes/nuiPointAttributeEditor.cpp
@@ -279,6 +285,7 @@ set(SOURCES
   src/Application/Unix/nglApplication_Unix.cpp
   src/Application/Unix/nglClipBoard_Unix.cpp
   src/Application/Unix/nglConsole_Unix.cpp
+  src/Application/Unix/nglDataObjects_Unix.cpp
   src/Application/Unix/nglKernel_Unix.cpp
   src/Application/Unix/nglModule_Unix.cpp
   src/Window/Unix/nglContext_Unix.cpp
