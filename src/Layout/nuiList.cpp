@@ -31,6 +31,7 @@ nuiList::nuiList(nuiOrientation Orientation)
   mClicked = false;
   mMoved = false;
   mCanMoveItems = false;
+  mpGrabedItem = NULL;
 
   mCursorLine = 0;
   mSelection = false;
@@ -63,6 +64,7 @@ bool nuiList::Load(const nuiXMLNode* pNode)
   mClicked = false;
   mMoved = false;
   mCanMoveItems = false;
+  mpGrabedItem = NULL;
 
   mCursorLine = 0;
   mSelection = false;
@@ -683,7 +685,9 @@ bool nuiList::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
           }
         }
         mpLastItem = pItem; 
+
         Grab();
+        mpGrabedItem = pItem;
         mClicked = true;
       }
       SelectionChanged();
@@ -700,6 +704,7 @@ bool nuiList::MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
 {
   if (mClicked && (Button & nglMouseInfo::ButtonLeft))
   {
+    mpGrabedItem = NULL;
     Ungrab();
   }
   

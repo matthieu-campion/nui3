@@ -109,6 +109,7 @@ protected:
   bool           mMultiSelectable;
   bool           mUnselectable;
   bool           mFixedAspectRatio;
+  nuiWidget* mpGrabedItem;
   nuiWidgetPtr     mpLastItem;
   nuiWidgetPtr     mpLastDestinationItem;
   nuiEventSink<nuiList> mEventSink;

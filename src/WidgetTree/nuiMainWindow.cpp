@@ -896,7 +896,9 @@ void nuiMainWindow::OnDragRequestData(nglDragAndDrop* pDragObject, const nglStri
 void nuiMainWindow::OnDragStop(bool canceled)
 {
   if (mpDragSource && mpDragSource != this)
+  {
     mpDragSource->OnDragStop(canceled); ///< advise drag source
+  }
 }
 #endif//_NODND_
 
