@@ -537,6 +537,7 @@ OSErr nglDragTrackingHandler (DragTrackingMessage message, WindowRef theWindow, 
       SendEventToEventTarget (event, eventDispatcher);
       ReleaseEvent(event);
     }
+    
   }
   
 	return err;

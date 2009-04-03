@@ -1,0 +1,4 @@
+icon.icns        NUI_RESOURCE    "resources/icon.icns"
+icon.ico        NUI_RESOURCE    "resources/icon.ico"
+image.png        NUI_RESOURCE    "resources/image.png"
+0 ICON "resources/icon.ico"
