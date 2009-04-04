@@ -65,6 +65,7 @@ public:
 
   /** @name Rendering: */
   //@{
+  bool DrawTree(class nuiDrawContext *pContext);
   bool Draw(class nuiDrawContext *pContext);
   bool SetRect(const nuiRect& rRect);
   //@}

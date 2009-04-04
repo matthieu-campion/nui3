@@ -1377,6 +1377,11 @@ static const bool DISPLAY_PARTIAL_RECTS = false;
 
 bool nuiTopLevel::Draw(class nuiDrawContext *pContext)
 {
+  return DrawTree(pContext);
+}
+
+bool nuiTopLevel::DrawTree(class nuiDrawContext *pContext)
+{
   uint32 clipWidth, clipHeight;
   {
     clipWidth=pContext->GetWidth();
@@ -1387,32 +1392,6 @@ bool nuiTopLevel::Draw(class nuiDrawContext *pContext)
   {
     // Prepare the layout changes:
     pContext->ResetState();
-
-#if 0
-    pContext->EnableClipping(false);
-    pContext->EnableBlending(true);
-    pContext->SetBlendFunc(nuiBlendTransp);
-    pContext->SetFillColor(nuiColor(.1f,.1f,.1f, .1f));
-    pContext->DrawRect(GetRect().Size(), eFillShape);
-#endif
-
-#if 0
-    pContext->ResetState();
-    pContext->ResetClipRect();
-    pContext->ResetClipShape();
-    pContext->SetStrokeColor(nuiColor(1.0f,0.0f,0.0f,0.0f));
-    pContext->SetFillColor(nuiColor(1.0f,0.0f,0.0f,.5f));
-    pContext->EnableBlending(true);
-    pContext->SetBlendFunc(nuiBlendTransp);
-    pContext->DrawRect(GetRect().Size(), eFillShape);
-/*
-    for (int i=0; i < count; i++)
-    {
-      pContext->DrawRect(mRedrawList[i], eStrokeAndFillShape);
-    }
-*/
-    pContext->ResetState();
-#endif
 
     // Update the widget informations:
     {
@@ -1475,21 +1454,6 @@ bool nuiTopLevel::Draw(class nuiDrawContext *pContext)
       DisplayToolTips(pContext);
     }
 
-#if 0
-    pContext->ResetState();
-    pContext->ResetClipRect();
-    pContext->ResetClipShape();
-    pContext->SetStrokeColor(nuiColor(1.0f,0.0f,0.0f,0.0f));
-    pContext->SetFillColor(nuiColor(1.0f,0.0f,0.0f,.5f));
-    pContext->EnableBlending(true);
-    pContext->SetBlendFunc(nuiBlendTransp);
-    for (int i=0; i < count; i++)
-    {
-      pContext->DrawRect(mRedrawList[i], eStrokeAndFillShape);
-    }
-    pContext->ResetState();
-#endif
-
   }
   else
   {
@@ -1530,17 +1494,6 @@ bool nuiTopLevel::Draw(class nuiDrawContext *pContext)
       pContext->ResetState();    
     }
     
-#if 0
-    pContext->ResetState();
-    pContext->ResetClipRect();
-    pContext->ResetClipShape();
-    pContext->SetStrokeColor(nuiColor(0.0f,0.0f,1.0f,0.0f));
-    pContext->SetFillColor(nuiColor(0.0f,0.0f,1.0f,.5f));
-    pContext->EnableBlending(true);
-    pContext->SetBlendFunc(nuiBlendTransp);
-    pContext->DrawRect(mRect.Size(), eStrokeAndFillShape);
-    pContext->ResetState();
-#endif
   }
 
   mRedrawList.clear();

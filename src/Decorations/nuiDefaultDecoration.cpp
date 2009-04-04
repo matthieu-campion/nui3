@@ -881,26 +881,26 @@ void nuiDefaultDecoration::ToggleButton(nuiWidget* pWidget)
   nglIMemory* pIMem = new nglIMemory(gpToggleButtonUp, gToggleButtonUpSize);
   nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
-  nuiFrame* pFrame = new nuiFrame(_T("nuiDefaultDecorationToggleButtonUp"), pTex, nuiRect(10,10,13,13));
+  nuiImageDecoration* pFrame = new nuiImageDecoration(_T("nuiDefaultDecorationToggleButtonUp"), pTex, nuiRect(10,10,13,13));
   delete pIMem;
   
   
   pIMem = new nglIMemory(gpToggleButtonDown, gToggleButtonDownSize);
   pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
-  pFrame = new nuiFrame(_T("nuiDefaultDecorationToggleButtonDown"), pTex, nuiRect(10,10,13,13));
+  pFrame = new nuiImageDecoration(_T("nuiDefaultDecorationToggleButtonDown"), pTex, nuiRect(10,10,13,13));
   delete pIMem;
   
   pIMem = new nglIMemory(gpToggleButtonUpDisabled, gToggleButtonUpDisabledSize);
   pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
-  pFrame = new nuiFrame(_T("nuiDefaultDecorationToggleButtonUpDisabled"), pTex, nuiRect(10,10,13,13));
+  pFrame = new nuiImageDecoration(_T("nuiDefaultDecorationToggleButtonUpDisabled"), pTex, nuiRect(10,10,13,13));
   delete pIMem;
   
   pIMem = new nglIMemory(gpToggleButtonDownDisabled, gToggleButtonDownDisabledSize);
   pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
-  pFrame = new nuiFrame(_T("nuiDefaultDecorationToggleButtonDownDisabled"), pTex, nuiRect(10,10,13,13));
+  pFrame = new nuiImageDecoration(_T("nuiDefaultDecorationToggleButtonDownDisabled"), pTex, nuiRect(10,10,13,13));
   delete pIMem;
   
   
