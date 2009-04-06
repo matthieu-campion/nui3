@@ -929,6 +929,10 @@ Title     = App->GetName();
   int                     YPos;       ///< Y position
   uint                    Width;      ///< Rendering area Width
   uint                    Height;     ///< Rendering area Height
+  int                     MaxWidth;   ///< Rendering area Width
+  int                     MaxHeight;  ///< Rendering area Height
+  int                     MinWidth;   ///< Rendering area Width
+  int                     MinHeight;  ///< Rendering area Height
   uint                    Rotate;     ///< Rendering area Rotation Angle
   nglWindow::Flags        Flags;      ///< Window flags
   nglWindow::EventMask    Events;     ///< Event mask

@@ -274,9 +274,9 @@ nuiRange& nuiSlider::GetRange()
 bool nuiSlider::DoInvalidate(const nuiEvent& rEvent)
 {
   //ValueChanged();
-  if (mInteractiveValueChanged)
-    InteractiveValueChanged();
-  else ValueChanged();
+  InteractiveValueChanged();
+  if (!mInteractiveValueChanged)
+    ValueChanged();
   
  // mInteractiveValueChanged = true;
 

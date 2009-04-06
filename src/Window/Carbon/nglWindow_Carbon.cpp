@@ -1299,7 +1299,7 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
   {    
     WindowClass windowClass = kDocumentWindowClass;
     WindowAttributes attributes = kWindowStandardHandlerAttribute | kWindowLiveResizeAttribute | kWindowCollapseBoxAttribute | 
-    kWindowAsyncDragAttribute | kWindowFullZoomAttribute;
+      kWindowAsyncDragAttribute;
     
     //if (rInfo.Flags & FullScreen)
     //    {
@@ -1352,7 +1352,7 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
     else
     {
       if (!(rInfo.Flags & NoResize))
-        attributes |= kWindowResizableAttribute;
+        attributes |= kWindowResizableAttribute | kWindowFullZoomAttribute;
       attributes |= kWindowCloseBoxAttribute; 
     }
     

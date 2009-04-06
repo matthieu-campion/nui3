@@ -212,6 +212,7 @@ bool nuiKnob::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
     {
       mRange.Increment();
     }
+    InteractiveValueChanged();
     ActivateToolTip(this, true);
     return true;
   }
@@ -225,6 +226,7 @@ bool nuiKnob::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
     {
       mRange.Decrement();
     }
+    InteractiveValueChanged();
     ActivateToolTip(this, true);
     return true;
   }

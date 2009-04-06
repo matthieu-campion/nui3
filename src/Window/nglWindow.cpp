@@ -49,6 +49,11 @@ nglWindowInfo::nglWindowInfo(uint UserWidth, uint UserHeight, bool IsFullScreen)
   YPos      = 0;
   Width     = UserWidth;
   Height    = UserHeight;
+  MinWidth  = -1;
+  MinHeight = -1;
+  MaxWidth  = -1;
+  MaxHeight = -1;
+  
   Rotate    = 0;
   Flags     = IsFullScreen ? nglWindow::FullScreen : nglWindow::NoFlag;
   Events    = nglWindow::AllEvents;

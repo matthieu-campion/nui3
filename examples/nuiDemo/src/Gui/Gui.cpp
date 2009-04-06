@@ -59,8 +59,8 @@ Gui::Gui()
   pSwitch->SetPressed(true); // by default
   
   // connect switch event to receiver
-  mEventSink.Connect(pSwitch->ButtonPressed, &Gui::OnSwitchChanged, (void*)pSwitch);  
-  mEventSink.Connect(pSwitch->ButtonDePressed, &Gui::OnSwitchChanged, (void*)pSwitch);  
+  mEventSink.Connect(pSwitch->Activated, &Gui::OnSwitchChanged, (void*)pSwitch);  
+  mEventSink.Connect(pSwitch->Deactivated, &Gui::OnSwitchChanged, (void*)pSwitch);  
   
   // on/off button
   nuiToggleButton* pStartBtn = new nuiToggleButton();
@@ -69,8 +69,8 @@ Gui::Gui()
   
   // connect the button event to the gui controller.
   // <=> in the nui-way-of-thinking : connect the button event source you're interessted in to the event receiver of your choice
-  mEventSink.Connect(pStartBtn->ButtonPressed, &Gui::OnStartButtonPressed);
-  mEventSink.Connect(pStartBtn->ButtonDePressed, &Gui::OnStartButtonDePressed);
+  mEventSink.Connect(pStartBtn->Activated, &Gui::OnStartButtonPressed);
+  mEventSink.Connect(pStartBtn->Deactivated, &Gui::OnStartButtonDePressed);
   
   // row 4: sound controls and text *******************************
   //

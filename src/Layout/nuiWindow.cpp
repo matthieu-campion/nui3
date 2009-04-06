@@ -27,11 +27,12 @@ const nuiWindowFlags nuiWindow::NoFlag = 0;
 const nuiWindowFlags nuiWindow::StaticChildren = 1;
 const nuiWindowFlags nuiWindow::NoMove = 2;
 const nuiWindowFlags nuiWindow::NoResize = 4;
-const nuiWindowFlags nuiWindow::Raw = RAWFLAG | NoCaption;
-const nuiWindowFlags nuiWindow::NoCaption = NOCAPTIONFLAG | NoClose;
 const nuiWindowFlags nuiWindow::NoClose = 32;
 const nuiWindowFlags nuiWindow::Modal = 64;
 const nuiWindowFlags nuiWindow::DecoratedBackground = 128;
+
+const nuiWindowFlags nuiWindow::NoCaption = NOCAPTIONFLAG | NoClose;
+const nuiWindowFlags nuiWindow::Raw = RAWFLAG | NoCaption;
 
 nuiWindow::nuiWindow()
 : nuiSimpleContainer(),

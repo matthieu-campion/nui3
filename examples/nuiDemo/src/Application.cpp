@@ -153,7 +153,7 @@ void Application::InitWindow()
   nuiContextInfo ContextInfo(nuiContextInfo::StandardContext3D);
   nglWindowInfo Info;
   
-  Info.Flags = IsFullScreen ? nglWindow::FullScreen : 0;
+  Info.Flags = nglWindow::NoResize | (IsFullScreen ? nglWindow::FullScreen : 0);
   Info.Width = Width;
   Info.Height = Height;
   Info.Pos = nglWindowInfo::ePosCenter;
