@@ -893,7 +893,7 @@ void nuiWidget::BroadcastInvalidateRect(nuiWidgetPtr pSender, const nuiRect& rRe
 
 void nuiWidget::Invalidate()
 {
-  if (mNeedRender && mNeedSelfRedraw)
+  if ((mNeedRender && mNeedSelfRedraw))
     return;
 
   //printf("nuiWidget::Invalidate '%ls [%ls]'\n", GetProperty("Class").GetChars() , GetProperty("Name").GetChars());

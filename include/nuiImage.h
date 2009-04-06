@@ -59,10 +59,10 @@ public:
 
 protected:
   nuiTexture* mpTexture;
+  nuiRect mTextureRect;
   nglPath mTexturePath;
   bool mUseAlpha;
   bool mIgnoreState;
-  nuiRect mTextureRect;
 
   nuiBlendFunc mBlendFunc;
 };

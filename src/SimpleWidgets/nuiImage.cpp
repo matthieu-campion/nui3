@@ -302,3 +302,5 @@ nuiTexture* nuiImage::GetTexture()
 {
   return mpTexture;
 }
+
+
