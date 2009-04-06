@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BCEEAF4C0F8A2F6200490178 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = BCEEAF490F8A2F6200490178 /* icon.icns */; };
+		BCEEAF4D0F8A2F6200490178 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = BCEEAF4A0F8A2F6200490178 /* icon.png */; };
+		BCEEAF4E0F8A2F6200490178 /* icon.ico in Resources */ = {isa = PBXBuildFile; fileRef = BCEEAF4B0F8A2F6200490178 /* icon.ico */; };
 		C99995FC0DA6EE97001A7116 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		C99995FD0DA6EE97001A7116 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		C99995FE0DA6EE97001A7116 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
@@ -27,9 +30,6 @@
 		E51D34B50F69F33400AD41DD /* decorations in Resources */ = {isa = PBXBuildFile; fileRef = E51D349F0F69F33400AD41DD /* decorations */; };
 		E51D34B60F69F33400AD41DD /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = E51D34AE0F69F33400AD41DD /* Default.png */; };
 		E51D34B70F69F33400AD41DD /* drums.wav in Resources */ = {isa = PBXBuildFile; fileRef = E51D34AF0F69F33400AD41DD /* drums.wav */; };
-		E51D34B80F69F33400AD41DD /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = E51D34B00F69F33400AD41DD /* Icon.icns */; };
-		E51D34B90F69F33400AD41DD /* Icon.ico in Resources */ = {isa = PBXBuildFile; fileRef = E51D34B10F69F33400AD41DD /* Icon.ico */; };
-		E51D34BA0F69F33400AD41DD /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E51D34B20F69F33400AD41DD /* Icon.png */; };
 		E51D34BB0F69F33400AD41DD /* text.txt in Resources */ = {isa = PBXBuildFile; fileRef = E51D34B30F69F33400AD41DD /* text.txt */; };
 		E5CD2F610ECF82860083037A /* libnuiE.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E5CD2F5E0ECF82810083037A /* libnuiE.a */; };
 		E5CD2F620ECF828B0083037A /* libnuiEd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E5CD2F600ECF82810083037A /* libnuiEd.a */; };
@@ -87,6 +87,9 @@
 		1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		61DF35C60EC25BCD00051F43 /* nuiE.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nuiE.xcodeproj; path = ../../nuiE.xcodeproj; sourceTree = SOURCE_ROOT; };
+		BCEEAF490F8A2F6200490178 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = icon.icns; path = resources/icon.icns; sourceTree = SOURCE_ROOT; };
+		BCEEAF4A0F8A2F6200490178 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = resources/icon.png; sourceTree = SOURCE_ROOT; };
+		BCEEAF4B0F8A2F6200490178 /* icon.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; name = icon.ico; path = resources/icon.ico; sourceTree = SOURCE_ROOT; };
 		BCEFD6A40F01B2260077E593 /* nuiDemo.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = nuiDemo.css; path = resources/css/nuiDemo.css; sourceTree = SOURCE_ROOT; };
 		BCEFD6A50F01B2260077E593 /* Gui.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = Gui.css; path = resources/css/Gui.css; sourceTree = SOURCE_ROOT; };
 		BCEFD6A60F01B2260077E593 /* Colors.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = Colors.css; path = resources/css/Colors.css; sourceTree = SOURCE_ROOT; };
@@ -104,9 +107,6 @@
 		E51D349F0F69F33400AD41DD /* decorations */ = {isa = PBXFileReference; lastKnownFileType = folder; name = decorations; path = resources/decorations; sourceTree = SOURCE_ROOT; };
 		E51D34AE0F69F33400AD41DD /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = resources/Default.png; sourceTree = SOURCE_ROOT; };
 		E51D34AF0F69F33400AD41DD /* drums.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = drums.wav; path = resources/drums.wav; sourceTree = SOURCE_ROOT; };
-		E51D34B00F69F33400AD41DD /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = Icon.icns; path = resources/Icon.icns; sourceTree = SOURCE_ROOT; };
-		E51D34B10F69F33400AD41DD /* Icon.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; name = Icon.ico; path = resources/Icon.ico; sourceTree = SOURCE_ROOT; };
-		E51D34B20F69F33400AD41DD /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = resources/Icon.png; sourceTree = SOURCE_ROOT; };
 		E51D34B30F69F33400AD41DD /* text.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = text.txt; path = resources/text.txt; sourceTree = SOURCE_ROOT; };
 		E5CD2F680ECF82BE0083037A /* Application.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Application.cpp; path = src/Application.cpp; sourceTree = SOURCE_ROOT; };
 		E5CD2F690ECF82BE0083037A /* Application.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Application.h; path = src/Application.h; sourceTree = SOURCE_ROOT; };
@@ -214,11 +214,11 @@
 				E51D349F0F69F33400AD41DD /* decorations */,
 				E51D34AE0F69F33400AD41DD /* Default.png */,
 				E51D34AF0F69F33400AD41DD /* drums.wav */,
-				E51D34B00F69F33400AD41DD /* Icon.icns */,
-				E51D34B10F69F33400AD41DD /* Icon.ico */,
-				E51D34B20F69F33400AD41DD /* Icon.png */,
 				E51D34B30F69F33400AD41DD /* text.txt */,
 				C9DCE4C20DA7F4FF008AC45D /* Info.plist */,
+				BCEEAF490F8A2F6200490178 /* icon.icns */,
+				BCEEAF4A0F8A2F6200490178 /* icon.png */,
+				BCEEAF4B0F8A2F6200490178 /* icon.ico */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -391,10 +391,10 @@
 				E51D34B50F69F33400AD41DD /* decorations in Resources */,
 				E51D34B60F69F33400AD41DD /* Default.png in Resources */,
 				E51D34B70F69F33400AD41DD /* drums.wav in Resources */,
-				E51D34B80F69F33400AD41DD /* Icon.icns in Resources */,
-				E51D34B90F69F33400AD41DD /* Icon.ico in Resources */,
-				E51D34BA0F69F33400AD41DD /* Icon.png in Resources */,
 				E51D34BB0F69F33400AD41DD /* text.txt in Resources */,
+				BCEEAF4C0F8A2F6200490178 /* icon.icns in Resources */,
+				BCEEAF4D0F8A2F6200490178 /* icon.png in Resources */,
+				BCEEAF4E0F8A2F6200490178 /* icon.ico in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
