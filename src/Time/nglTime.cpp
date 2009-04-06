@@ -22,7 +22,7 @@
 #endif // _POSIX_WORLD_
 
 #ifdef _WIN32_
-  #define NUI_WIN32_TIMESHIFT
+//  #define NUI_WIN32_TIMESHIFT
 #endif
 
 const nglTime nglTime::Zero   = 0;

@@ -801,7 +801,7 @@ void nuiD3DPainter::ClearStencil(uint8 value)
 
 
 
-void nuiD3DPainter::DrawArray(const nuiRenderArray* pArray)
+void nuiD3DPainter::DrawArray(nuiRenderArray* pArray)
 {
   //if (drawArrayCount > 3)
   //  return;
