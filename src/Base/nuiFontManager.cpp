@@ -9,6 +9,7 @@
 #include "nuiFontManager.h"
 #include "nglPath.h"
 #include "nglIStream.h"
+#include "nuiVBox.h"
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -529,7 +530,7 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
  
   if (error || pFace->num_faces <= Face)
     return;
-  NGL_DEBUG( NGL_OUT(_T("Scanning font '%ls' face %d\n"), rPath.GetChars(), Face); )
+  //NGL_DEBUG( NGL_OUT(_T("Scanning font '%ls' face %d\n"), rPath.GetChars(), Face); )
   
   NGL_ASSERT(pFace->num_faces > Face);
   
@@ -552,11 +553,11 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
     uint8* pBytes = (uint8*)&mPanoseBytes;
     for (uint i = 0; i < 10; i++)
       str.Add(pBytes[i]).Add(_T(" "));
-    NGL_DEBUG( NGL_OUT(_T("\tpanose bytes: %ls\n"), str.GetChars()); )
+    //NGL_DEBUG( NGL_OUT(_T("\tpanose bytes: %ls\n"), str.GetChars()); )
   }
   else
   {
-    NGL_DEBUG( NGL_OUT(_T("Warning: font '%ls' has no panose information.\n"), mPath.GetChars()); )
+    //NGL_DEBUG( NGL_OUT(_T("Warning: font '%ls' has no panose information.\n"), mPath.GetChars()); )
     memset(&mPanoseBytes, 0, 10);
   }
 
@@ -625,7 +626,7 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
 //    rangecount++;
 //  }
   
-  NGL_DEBUG( NGL_OUT(_T("\t%d glyph ranges (%d glyphs)\n"), rangecount, glyphcount); )
+  //NGL_DEBUG( NGL_OUT(_T("\t%d glyph ranges (%d glyphs)\n"), rangecount, glyphcount); )
   
   FT_Done_Face(pFace);
   delete pBuffer;
@@ -934,7 +935,7 @@ void nuiFontManager::GetSystemFolders(std::map<nglString, nglPath>& rFolders)
   {
     rFolders[_T("System0")] = p;
     
-    NGL_DEBUG( NGL_OUT(_T("Adding System0 font folder: '%ls'\n"), p); )
+    //NGL_DEBUG( NGL_OUT(_T("Adding System0 font folder: '%ls'\n"), p); )
   }
   else
   {
@@ -982,8 +983,33 @@ const nglPath& nuiFontManager::GetFolder(const nglString& rId) const
   return it->second;
 }
 
+static nuiLabel* gpFontPathLabel;
+
 void nuiFontManager::ScanFolders(bool rescanAllFolders /* = false */)
 {
+  nuiMainWindow* pWin;
+  nuiContextInfo ContextInfo(nuiContextInfo::StandardContext3D);
+  nglWindowInfo Info;
+  
+  Info.Flags = nglWindow::NoBorder;
+  Info.Width = 320;
+  Info.Height = 60;
+  Info.Pos = nglWindowInfo::ePosCenter;
+  Info.Title = _T("nui test");
+  Info.XPos = 0;
+  Info.YPos = 0;
+
+  pWin = new nuiMainWindow(ContextInfo, Info);
+  nuiVBox* pBox = new nuiVBox();
+  pBox->SetPosition(nuiCenter);
+  nuiLabel* pLabel = new nuiLabel(_T("Please wait. Scaning fonts..."));
+  gpFontPathLabel = new nuiLabel(_T("...searchin..."));
+  //pLabel->SetTextColor(nuiColor(255, 255, 255));
+  pBox->AddCell(pLabel, nuiCenter);
+  pBox->AddCell(gpFontPathLabel, nuiCenter);
+  pWin->AddChild(pBox);
+  pWin->SetState(nglWindow::eShow);
+    
   NGL_DEBUG( NGL_OUT(_T("Scan system fonts....\n")); )
   nglTime start_time;
   
@@ -1016,6 +1042,8 @@ void nuiFontManager::ScanFolders(bool rescanAllFolders /* = false */)
   
   double t = end_time - start_time;
   printf("Scanning the system fonts took %f seconds\n", t);
+
+  delete pWin;
 }
 
 bool nuiFontManager::ScanSubFolder(const nglPath& rBasePath)
@@ -1030,6 +1058,9 @@ bool nuiFontManager::ScanSubFolder(const nglPath& rBasePath)
   {
     // enumerate all the faces of all the fonts:
     const nglPath& rPath(*cit);
+    
+    gpFontPathLabel->SetText(nglString().Add(_T("Found ")).Add((int32)mpFonts.size()));
+    App->NonBlockingHeartBeat();
     
     if (rPath.IsLeaf())
     {

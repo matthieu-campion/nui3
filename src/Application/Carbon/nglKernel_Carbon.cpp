@@ -165,3 +165,14 @@ bool nglKernel::SysInit()
   return true;
 }
 
+void nglKernel::NonBlockingHeartBeat()
+{
+  EventRef event;
+  EventTargetRef eventDispatcher = GetEventDispatcherTarget();
+  
+  while (ReceiveNextEvent(0, NULL, 0.0, TRUE, &event) == noErr)
+  {
+    SendEventToEventTarget (event, eventDispatcher);
+    ReleaseEvent(event);
+  }
+}

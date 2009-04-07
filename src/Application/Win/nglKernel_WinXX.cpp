@@ -420,3 +420,14 @@ LPDIRECT3D9 nglKernel::GetDirect3D() const
 
   return mpDirect3D;
 }
+
+void nglKernel::NonBlockingHeartBeat()
+{
+  MSG msg;
+  while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE) && msg.message != WM_QUIT)
+  {
+    TranslateMessage( &msg );
+    DispatchMessage( &msg );
+  }
+}
+
