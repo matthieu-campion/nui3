@@ -77,6 +77,13 @@ bool nglKernel::SysInit()
   return true;
 }
 
+void nglKernel::NonBlockingHeartBeat()
+{
+  // #TODO #FIXME
+  // How can we keep the UI alive in cocoa?
+}
+
+
 void objCCallOnInit(void* pUIApplication)
 {
   NGL_ASSERT(App);
