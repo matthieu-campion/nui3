@@ -44,6 +44,8 @@
 		BC6A09AD0EF92BAB00881ACF /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BC6A09AB0EF92BAB00881ACF /* Info.plist */; };
 		BCBCB15F0DFD45BD002E8BC3 /* libnui3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */; };
 		BCBCB1600DFD45C1002E8BC3 /* libnui3D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15C0DFD45B6002E8BC3 /* libnui3D.a */; };
+		E5F8CC5B0F8B980E00FE8F8A /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5F8CC5A0F8B980E00FE8F8A /* ApplicationServices.framework */; };
+		E5F8CC5C0F8B980E00FE8F8A /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5F8CC5A0F8B980E00FE8F8A /* ApplicationServices.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -115,6 +117,7 @@
 		BC6A09AB0EF92BAB00881ACF /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		BC6A09CB0EF9301900881ACF /* main.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = main.css; path = resources/css/main.css; sourceTree = SOURCE_ROOT; };
 		BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nui3.xcodeproj; path = ../../nui3.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E5F8CC5A0F8B980E00FE8F8A /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +135,7 @@
 				BC1D9B910F8A2A6B0081B53D /* CoreServices.framework in Frameworks */,
 				BC1D9B920F8A2A6B0081B53D /* Carbon.framework in Frameworks */,
 				BC1D9B930F8A2A6B0081B53D /* OpenGL.framework in Frameworks */,
+				E5F8CC5B0F8B980E00FE8F8A /* ApplicationServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,6 +153,7 @@
 				BC1D9B9A0F8A2A6B0081B53D /* CoreServices.framework in Frameworks */,
 				BC1D9B9B0F8A2A6B0081B53D /* Carbon.framework in Frameworks */,
 				BC1D9B9C0F8A2A6B0081B53D /* OpenGL.framework in Frameworks */,
+				E5F8CC5C0F8B980E00FE8F8A /* ApplicationServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -161,14 +166,15 @@
 				BC6A09CA0EF9300600881ACF /* css */,
 				BC6A09A20EF92B4B00881ACF /* resources */,
 				61A9DE4A0B833CD000BC506C /* sources */,
-				61A9DE490B833CB000BC506C /* dependancies */,
+				61A9DE490B833CB000BC506C /* dependencies */,
 				61A9DFB50B833DE500BC506C /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		61A9DE490B833CB000BC506C /* dependancies */ = {
+		61A9DE490B833CB000BC506C /* dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				E5F8CC5A0F8B980E00FE8F8A /* ApplicationServices.framework */,
 				BC1D9B820F8A2A6B0081B53D /* CoreAudioKit.framework */,
 				BC1D9B830F8A2A6B0081B53D /* AudioToolbox.framework */,
 				BC1D9B840F8A2A6B0081B53D /* AudioUnit.framework */,
@@ -180,7 +186,7 @@
 				BC1D9B8A0F8A2A6B0081B53D /* OpenGL.framework */,
 				BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */,
 			);
-			name = dependancies;
+			name = dependencies;
 			sourceTree = "<group>";
 		};
 		61A9DE4A0B833CD000BC506C /* sources */ = {
@@ -444,6 +450,7 @@
 					./src,
 				);
 				INFOPLIST_FILE = Info.plist;
+				SDKROOT = macosx10.4;
 			};
 			name = Default;
 		};
