@@ -1718,6 +1718,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\SimpleWidgets\nuiCoverFlow.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiCoverFlow.h"
+					>
+				</File>
+				<File
 					RelativePath=".\src\SimpleWidgets\nuiFileList.cpp"
 					>
 				</File>
