@@ -931,6 +931,53 @@ nuiWidgetPtr nuiContainer::GetPreviousFocussableChild(nuiWidgetPtr pChild) const
   return NULL;
 }
 
+
+nuiWidgetPtr nuiContainer::GetNextChild(nuiWidgetPtr pChild) const
+{
+  ConstIteratorPtr pIt = pChild ? GetChildIterator(pChild) : GetFirstChild();
+  if (!pIt->IsValid())
+    return NULL;
+  
+  if (pChild)
+    GetNextChild(pIt);
+  
+  while (pIt->IsValid() && pIt->GetWidget())
+    GetNextChild(pIt);
+  
+  if (pIt->IsValid())
+  {
+    nuiWidgetPtr pW = pIt->GetWidget();
+    delete pIt;
+    return pW;
+  }
+  
+  delete pIt;
+  return NULL;
+}
+
+nuiWidgetPtr nuiContainer::GetPreviousChild(nuiWidgetPtr pChild) const
+{
+  ConstIteratorPtr pIt = pChild ? GetChildIterator(pChild) : GetLastChild();
+  if (!pIt->IsValid())
+    return NULL;
+  
+  if (pChild)
+    GetPreviousChild(pIt);
+  
+  while (pIt->IsValid() && pIt->GetWidget())
+    GetPreviousChild(pIt);
+  
+  if (pIt->IsValid())
+  {
+    nuiWidgetPtr pW = pIt->GetWidget();
+    delete pIt;
+    return pW;
+  }
+  
+  delete pIt;
+  return NULL;
+}
+
 void nuiContainer::SetChildrenLayoutAnimationDuration(float duration)
 {
   IteratorPtr pIt;
