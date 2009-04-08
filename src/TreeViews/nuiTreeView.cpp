@@ -1043,9 +1043,9 @@ nuiTreeNodePtr nuiTreeNode::GetNextInParent()
       if (pParent->GetChild(i) == this && (i+1<count))
       {
         // Return the next sibbling:
-        nuiTreeNodePtr pSibbling = (nuiTreeNodePtr)pParent->GetChild(i+1);
-        if (pSibbling)
-          return pSibbling;
+        nuiTreeNodePtr pSibling = (nuiTreeNodePtr)pParent->GetChild(i+1);
+        if (pSibling)
+          return pSibling;
       }
     }
     
@@ -1066,9 +1066,9 @@ nuiTreeNodePtr nuiTreeNode::GetPreviousInParent()
       if (pParent->GetChild(i) == this)
       {
         // Return the previous sibbling:
-        nuiTreeNodePtr pSibbling = (nuiTreeNodePtr)pParent->GetChild(i-1);
-        if (pSibbling)
-          return pSibbling;
+        nuiTreeNodePtr pSibling = (nuiTreeNodePtr)pParent->GetChild(i-1);
+        if (pSibling)
+          return pSibling;
       }
     }
   }
