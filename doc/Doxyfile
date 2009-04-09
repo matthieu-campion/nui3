@@ -102,14 +102,14 @@ ABBREVIATE_BRIEF       = "The $name class" \
 # Doxygen will generate a detailed section even if there is only a brief 
 # description.
 
-ALWAYS_DETAILED_SEC    = YES
+ALWAYS_DETAILED_SEC    = NO
 
 # If the INLINE_INHERITED_MEMB tag is set to YES, doxygen will show all 
 # inherited members of a class in the documentation of that class as if those 
 # members were ordinary class members. Constructors, destructors and assignment 
 # operators of the base classes will not be shown.
 
-INLINE_INHERITED_MEMB  = NO
+INLINE_INHERITED_MEMB  = YES
 
 # If the FULL_PATH_NAMES tag is set to YES then Doxygen will prepend the full 
 # path before files name in the file list and in the header files. If set 
@@ -196,7 +196,7 @@ ALIASES                =
 # For instance, some of the names that are used will be different. The list 
 # of all members will be omitted, etc.
 
-OPTIMIZE_OUTPUT_FOR_C  = YES
+OPTIMIZE_OUTPUT_FOR_C  = NO
 
 # Set the OPTIMIZE_OUTPUT_JAVA tag to YES if your project consists of Java 
 # sources only. Doxygen will then generate output that is more tailored for 
@@ -307,7 +307,7 @@ SYMBOL_CACHE_SIZE      = 0
 # Private class members and static file members will be hidden unless 
 # the EXTRACT_PRIVATE and EXTRACT_STATIC tags are set to YES
 
-EXTRACT_ALL            = NO
+EXTRACT_ALL            = YES
 
 # If the EXTRACT_PRIVATE tag is set to YES all private members of a class 
 # will be included in the documentation.
@@ -317,13 +317,13 @@ EXTRACT_PRIVATE        = NO
 # If the EXTRACT_STATIC tag is set to YES all static members of a file 
 # will be included in the documentation.
 
-EXTRACT_STATIC         = YES
+EXTRACT_STATIC         = NO
 
 # If the EXTRACT_LOCAL_CLASSES tag is set to YES classes (and structs) 
 # defined locally in source files will be included in the documentation. 
 # If set to NO only classes defined in header files are included.
 
-EXTRACT_LOCAL_CLASSES  = YES
+EXTRACT_LOCAL_CLASSES  = NO
 
 # This flag is only useful for Objective-C code. When set to YES local 
 # methods, which are defined in the implementation section but not in 
@@ -480,7 +480,7 @@ SHOW_USED_FILES        = NO
 # then setting the SHOW_DIRECTORIES tag to YES will show the directory hierarchy 
 # in the documentation. The default is NO.
 
-SHOW_DIRECTORIES       = NO
+SHOW_DIRECTORIES       = YES
 
 # Set the SHOW_FILES tag to NO to disable the generation of the Files page. 
 # This will remove the Files entry from the Quick Index and from the 
@@ -597,7 +597,7 @@ FILE_PATTERNS          =
 # should be searched for input files as well. Possible values are YES and NO. 
 # If left blank NO is used.
 
-RECURSIVE              = NO
+RECURSIVE              = YES
 
 # The EXCLUDE tag can be used to specify files and/or directories that should 
 # excluded from the INPUT source files. This way you can easily exclude a 
@@ -639,7 +639,7 @@ EXAMPLE_PATH           = ../examples \
 # and *.h) to filter out the source-files in the directories. If left 
 # blank all files are included.
 
-EXAMPLE_PATTERNS       = 
+EXAMPLE_PATTERNS       = *.cpp *.h
 
 # If the EXAMPLE_RECURSIVE tag is set to YES then subdirectories will be 
 # searched for input files to be used with the \include or \dontinclude 
@@ -958,7 +958,7 @@ ENUM_VALUES_PER_LINE   = 1
 # releases of Doxygen, the values YES and NO are equivalent to FRAME and NONE 
 # respectively.
 
-GENERATE_TREEVIEW      = ALL
+GENERATE_TREEVIEW      = NONE
 
 # If the treeview is enabled (see GENERATE_TREEVIEW) then this tag can be 
 # used to set the initial width (in pixels) of the frame in which the tree 
@@ -1379,7 +1379,7 @@ CLASS_GRAPH            = YES
 # indirect implementation dependencies (inheritance, containment, and 
 # class references variables) of the class with other documented classes.
 
-COLLABORATION_GRAPH    = YES
+COLLABORATION_GRAPH    = NO
 
 # If the GROUP_GRAPHS and HAVE_DOT tags are set to YES then doxygen 
 # will generate a graph for groups, showing the direct groups dependencies
