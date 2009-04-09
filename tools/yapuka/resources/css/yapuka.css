@@ -204,5 +204,23 @@
 }
 
 
+// File Selector
+
+"nuiFileSelector::FolderLabel"!
+{
+  Font: fontFileSelector;
+}
+  
+"nuiFileSelector::TreeFolderLabel"!
+{
+  Font: fontFileSelector;
+}
+  
+"nuiFileSelector::TreeFileLabel"!
+{
+  Font: fontFileSelector;
+}
+  
+
 // blank ending line following
 

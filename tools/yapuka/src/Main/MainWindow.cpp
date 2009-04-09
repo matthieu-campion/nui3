@@ -10,6 +10,7 @@
 #include "nuiTabView.h"
 
 #include "Main/MainWindow.h"
+#include "Main/Yapuka.h"
 #include "ElementEditor/ElementEditorGui.h"
 #include "ProjectGenerator/ProjectGenerator.h"
 
@@ -28,7 +29,11 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
 
 	InitAttributes();	
   
-  LoadCSS(_T("rsrc:/css/yapuka.css"));  
+#ifdef _WIN32_ 
+  LoadCSS(_T("rsrc:/css/win32.css"));  
+#else
+  LoadCSS(_T("rsrc:/css/macosx.css"));  
+#endif
 }
 
 
@@ -71,10 +76,13 @@ void MainWindow::OnCreation()
   pLabel->SetObjectName(_T("TabView::Title"));
   ProjectGenerator* pGenerator = new ProjectGenerator();
   pTabView->AddTab(pLabel, pGenerator);
-    
-  pLabel = new nuiLabel(nuiTR("Element Editor"));
-  pLabel->SetObjectName(_T("TabView::Title"));
-  pTabView->AddTab(pLabel, new ElementEditorGui());
+  
+  if (GetApp()->IsFullVersion())
+  {
+    pLabel = new nuiLabel(nuiTR("Element Editor"));
+    pLabel->SetObjectName(_T("TabView::Title"));
+    pTabView->AddTab(pLabel, new ElementEditorGui());
+  }
 
   pTabView->SelectTab(0);
   

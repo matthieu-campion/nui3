@@ -1,3 +1,8 @@
+icon.icns        NUI_RESOURCE    "resources/icon.icns"
+icon.ico        NUI_RESOURCE    "resources/icon.ico"
+icon.png        NUI_RESOURCE    "resources/icon.png"
+css/macosx.css        NUI_RESOURCE    "resources/css/macosx.css"
+css/win32.css        NUI_RESOURCE    "resources/css/win32.css"
 css/yapuka.css        NUI_RESOURCE    "resources/css/yapuka.css"
 decorations/iconKO.png        NUI_RESOURCE    "resources/decorations/iconKO.png"
 decorations/iconNui.png        NUI_RESOURCE    "resources/decorations/iconNui.png"

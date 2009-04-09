@@ -11,6 +11,10 @@
 		91CC2B320744CFC80018CBED /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91CC2B310744CFC80018CBED /* Carbon.framework */; };
 		91CC2B4F0744D00F0018CBED /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91CC2B4D0744D00F0018CBED /* CoreFoundation.framework */; };
 		91CC2B500744D00F0018CBED /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91CC2B4E0744D00F0018CBED /* CoreServices.framework */; };
+		BC13B6C90F8EA2360019B881 /* macosx.css in Resources */ = {isa = PBXBuildFile; fileRef = BC13B6C70F8EA2360019B881 /* macosx.css */; };
+		BC13B6CA0F8EA2360019B881 /* win32.css in Resources */ = {isa = PBXBuildFile; fileRef = BC13B6C80F8EA2360019B881 /* win32.css */; };
+		BC13B6CB0F8EA2360019B881 /* macosx.css in Resources */ = {isa = PBXBuildFile; fileRef = BC13B6C70F8EA2360019B881 /* macosx.css */; };
+		BC13B6CC0F8EA2360019B881 /* win32.css in Resources */ = {isa = PBXBuildFile; fileRef = BC13B6C80F8EA2360019B881 /* win32.css */; };
 		BC1A622A0E63321D00BDD037 /* libnui3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC1A62250E63320C00BDD037 /* libnui3.a */; };
 		BC1A622B0E63322000BDD037 /* libnui3D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC1A62230E63320C00BDD037 /* libnui3D.a */; };
 		BCE4C35B0EFA622000ABC3C6 /* MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCE4C3550EFA622000ABC3C6 /* MainWindow.cpp */; };
@@ -92,7 +96,10 @@
 		91CC2B4D0744D00F0018CBED /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
 		91CC2B4E0744D00F0018CBED /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		BC0B24000E01301200536AC9 /* yapuka.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = yapuka.css; path = resources/css/yapuka.css; sourceTree = SOURCE_ROOT; };
+		BC13B6C70F8EA2360019B881 /* macosx.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = macosx.css; path = resources/css/macosx.css; sourceTree = SOURCE_ROOT; };
+		BC13B6C80F8EA2360019B881 /* win32.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = win32.css; path = resources/css/win32.css; sourceTree = SOURCE_ROOT; };
 		BC1A621A0E63320C00BDD037 /* nui3.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nui3.xcodeproj; path = ../../nui3.xcodeproj; sourceTree = SOURCE_ROOT; };
+		BC357F840F8EA036006C70E9 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		BCE4C3550EFA622000ABC3C6 /* MainWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MainWindow.cpp; path = src/Main/MainWindow.cpp; sourceTree = SOURCE_ROOT; };
 		BCE4C3560EFA622000ABC3C6 /* MainWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainWindow.h; path = src/Main/MainWindow.h; sourceTree = SOURCE_ROOT; };
 		BCE4C3570EFA622000ABC3C6 /* Preferences.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Preferences.cpp; path = src/Main/Preferences.cpp; sourceTree = SOURCE_ROOT; };
@@ -156,6 +163,7 @@
 		91CC2AFB0744CE480018CBED = {
 			isa = PBXGroup;
 			children = (
+				BC357F820F8EA024006C70E9 /* Resources */,
 				BC0B23FE0E012FC800536AC9 /* css */,
 				91CC2B0C0744CE7B0018CBED /* Dependency */,
 				91CC2B030744CE540018CBED /* Source */,
@@ -199,6 +207,8 @@
 		BC0B23FE0E012FC800536AC9 /* css */ = {
 			isa = PBXGroup;
 			children = (
+				BC13B6C70F8EA2360019B881 /* macosx.css */,
+				BC13B6C80F8EA2360019B881 /* win32.css */,
 				BC0B24000E01301200536AC9 /* yapuka.css */,
 			);
 			name = css;
@@ -212,6 +222,14 @@
 				BC09B0310F0E5A8700956432 /* libnui3D cocoa.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		BC357F820F8EA024006C70E9 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				BC357F840F8EA036006C70E9 /* Info.plist */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		BCE4C3510EFA61DD00ABC3C6 /* Main */ = {
@@ -278,6 +296,7 @@
 				91CC2B0F0744CEA30018CBED /* Sources */,
 				91CC2B100744CEA30018CBED /* Frameworks */,
 				BC0B23C10E012F4200536AC9 /* ShellScript */,
+				BC357F900F8EA086006C70E9 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -296,6 +315,7 @@
 				E5C9EE090781B71C00629D4E /* Sources */,
 				E5C9EE0E0781B71C00629D4E /* Frameworks */,
 				BC0B23BE0E012F2000536AC9 /* ShellScript */,
+				BC357F910F8EA086006C70E9 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -355,6 +375,27 @@
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BC357F900F8EA086006C70E9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BC13B6C90F8EA2360019B881 /* macosx.css in Resources */,
+				BC13B6CA0F8EA2360019B881 /* win32.css in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BC357F910F8EA086006C70E9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BC13B6CB0F8EA2360019B881 /* macosx.css in Resources */,
+				BC13B6CC0F8EA2360019B881 /* win32.css in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		BC0B23BE0E012F2000536AC9 /* ShellScript */ = {

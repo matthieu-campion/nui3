@@ -29,11 +29,17 @@ public:
     return mPreferences;
   }
   
+  bool IsFullVersion()
+  {
+    return mFullVersion;
+  }
+  
 protected:
    MainWindow *win;
   
 private:
   Preferences mPreferences;
+  bool mFullVersion;
 };
 
 nuiApp* GetApp();

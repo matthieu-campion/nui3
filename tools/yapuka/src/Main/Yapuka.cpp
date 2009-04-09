@@ -65,6 +65,7 @@ void nuiApp::OnInit()
 
   uint Width = 0, Height = 0;
   bool HasSize = false;
+  mFullVersion = false;
   bool IsFullScreen = false;
   bool DebugObject = false;
   bool DebugInfo = false;
@@ -105,6 +106,7 @@ void nuiApp::OnInit()
       HasSize = true;
       i++;
     }
+    else if (!arg.Compare(_T("--fullversion")) || !arg.Compare(_T("-full"))) mFullVersion = true;
     else if (!arg.Compare(_T("--showfps")) || !arg.Compare(_T("-fps"))) ShowFPS = true;
     else if (!arg.Compare(_T("--fullscreen")) || !arg.Compare(_T("-f"))) IsFullScreen = true;
     else if (!arg.Compare(_T("--debugobject")) || !arg.Compare(_T("-d"))) DebugObject = true;
