@@ -186,9 +186,9 @@ uint32 nuiWaveReader::ReadIN(void* pBuffer, uint32 sampleframes, nuiSampleBitFor
           uint8* pTempBuffer;
           pTempBuffer = new uint8[SamplePointsToRead * 3]; //nb of sample points * 3 bytes (24 bits) = nb of bytes to read
           
-          uint32 sizeRead = mrStream.ReadUInt8(pTempBuffer, SamplePointsToRead * 3) / 3; //divide by 3 to get actual number of read samples
-          SampleFramesRead = sizeRead / channels / 3;
-          for (uint64 i = 0; i < sizeRead; i++)
+          uint32 sizeRead = mrStream.ReadUInt8(pTempBuffer, SamplePointsToRead * 3);
+          SampleFramesRead = (sizeRead / channels) / 3;
+          for (uint64 i = 0; i < sizeRead / 3; i++)
           {
             pTempFloat[i] = nuiAudioConvert_24bitsToFloatFromLittleEndian(pTempBuffer + (3 * i));
           }
