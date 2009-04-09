@@ -2146,15 +2146,15 @@ void TranslateKey(WORD wParam,DWORD lParam,int *ascii, int* rawAscii, int *code,
 
 bool nglWindow::IsKeyDown (nglKeyCode Key) const
 {
-  /*
-  uint8 ks[256];
-
-  GetKeyboardState(ks);
-  uint vk =0;
-  for (vk = 0;  vk < 128 && (uint)ngl_scode_table[vk]!=Key; )
-    vk++;
-  return ks[vk] != 0;
-  */
+  if (Key == NK_META)
+    return IsKeyDown(NK_LMETA) || IsKeyDown(NK_RMETA);
+  else if (Key == NK_CTRL)
+    return IsKeyDown(NK_LCTRL) || IsKeyDown(NK_RCTRL);
+  else if (Key == NK_SHIFT)
+    return IsKeyDown(NK_LSHIFT) || IsKeyDown(NK_RSHIFT);
+  else if (Key == NK_ALT)
+    return IsKeyDown(NK_LALT) || IsKeyDown(NK_RALT);
+  
   
   if ((Key > 0) && (Key <= NGL_KEY_MAX))
     return mpKeyState[Key-1];

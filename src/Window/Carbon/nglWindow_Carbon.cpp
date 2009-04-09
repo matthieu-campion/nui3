@@ -665,13 +665,13 @@ bool IsShiftKeyDown()
 
 bool nglWindow::IsKeyDown (nglKeyCode Key) const
 {
-  if (Key == NK_LMETA || Key == NK_RMETA)
+  if (Key == NK_LMETA || Key == NK_RMETA || Key == NK_META)
     return IsCommandKeyDown();
-  else if (Key == NK_LCTRL || Key == NK_RCTRL)
+  else if (Key == NK_LCTRL || Key == NK_RCTRL || Key == NK_CTRL)
     return IsControlKeyDown();
-  else if (Key == NK_LSHIFT || Key == NK_RSHIFT)
+  else if (Key == NK_LSHIFT || Key == NK_RSHIFT || Key == NK_SHIFT)
     return IsShiftKeyDown();
-  else if (Key == NK_LALT || Key == NK_RALT)
+  else if (Key == NK_LALT || Key == NK_RALT || Key == NK_ALT)
     return IsOptionKeyDown();
   else if ((Key > 0) && (Key <= NGL_KEY_MAX))
     return mpKeyState[Key-1];

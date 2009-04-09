@@ -154,15 +154,22 @@ __NGL_KEY_DECL (NK_LMETA         , 103);
 __NGL_KEY_DECL (NK_RMETA         , 104);
 __NGL_KEY_DECL (NK_MENU          , 105);
 
+__NGL_KEY_DECL (NK_SHIFT         , 106); ///< This combo is only available when used with IsKeyDown / IsKeyUp methods
+__NGL_KEY_DECL (NK_ALT           , 107); ///< This combo is only available when used with IsKeyDown / IsKeyUp methods
+__NGL_KEY_DECL (NK_CTRL          , 108); ///< This combo is only available when used with IsKeyDown / IsKeyUp methods
+__NGL_KEY_DECL (NK_META          , 109); ///< This combo is only available when used with IsKeyDown / IsKeyUp methods
+
 /* PC/MAC modifier key trick
  */
 #if defined _WIN32_ || defined _UNIX_
 __NGL_KEY_DECL (NK_LMOD, NK_LCTRL);
 __NGL_KEY_DECL (NK_RMOD, NK_RCTRL);
+__NGL_KEY_DECL (NK_MOD,  NK_CTRL); ///< This combo is only available when used with IsKeyDown / IsKeyUp methods
 #endif
 #ifdef __APPLE__
 __NGL_KEY_DECL (NK_LMOD, NK_LMETA);
 __NGL_KEY_DECL (NK_RMOD, NK_RMETA);
+__NGL_KEY_DECL (NK_MOD,  NK_META); ///< This combo is only available when used with IsKeyDown / IsKeyUp methods
 #endif
 
 

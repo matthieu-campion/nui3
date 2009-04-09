@@ -653,8 +653,17 @@ void nglWindow::SetKeyRepeat(bool AllowRepeat)
 }
 
 
-bool nglWindow::IsKeyDown (nglKeyCode Key) const
+bool nglWindow::IsKeyDown(nglKeyCode Key) const
 {
+  if (Key == NK_META)
+    return IsKeyDown(NK_LMETA) || IsKeyDown(NK_RMETA);
+  else if (Key == NK_CTRL)
+    return IsKeyDown(NK_LCTRL) || IsKeyDown(NK_RCTRL);
+  else if (Key == NK_SHIFT)
+    return IsKeyDown(NK_LSHIFT) || IsKeyDown(NK_RSHIFT);
+  else if (Key == NK_ALT)
+    return IsKeyDown(NK_LALT) || IsKeyDown(NK_RALT);
+
   if ((Key > 0) && (Key <= NGL_KEY_MAX))
     return mpKeyState[Key-1];
   else
