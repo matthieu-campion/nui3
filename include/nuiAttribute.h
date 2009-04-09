@@ -271,6 +271,10 @@ public:
   {
     Contents val;
     bool res = FromString(val, rString);
+    if (!res)
+    {
+      return false;
+    }
     Set(pTarget, val);
     return res;
   }
@@ -284,6 +288,10 @@ public:
   {
     Contents val;
     bool res = FromString(val, rString);
+    if (!res)
+    {
+      return false;
+    }
     Set(pTarget, index, val);
     return res;
   }
@@ -297,6 +305,10 @@ public:
   {
     Contents val;
     bool res = FromString(val, rString);
+    if (!res)
+    {
+      return false;
+    }
     Set(pTarget, index0, index1, val);
     return res;
   }

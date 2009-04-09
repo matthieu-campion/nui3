@@ -273,11 +273,19 @@ bool nuiAttribute<int8>::ToString(int8 Value, nglString& rString) const
 template <>
 bool nuiAttribute<int8>::FromString(int8& rValue, const nglString& rString) const
 {
-  if (!rString.IsInt())
-    return false;
-
-  rValue = rString.GetCInt();
-  return true;
+  if (rString.IsInt())
+  {
+    rValue = rString.GetCInt();
+    return true;
+  }
+  else if (rString.IsFloat())
+  {
+    double dValue = rString.GetCDouble();
+    rValue = ToZero(dValue);
+    return true;
+  }
+  
+  return false;
 }
 
 
@@ -315,11 +323,19 @@ bool nuiAttribute<int16>::ToString(int16 Value, nglString& rString) const
 template <>
 bool nuiAttribute<int16>::FromString(int16& rValue, const nglString& rString) const
 {
-  if (!rString.IsInt())
-    return false;
+  if (rString.IsInt())
+  {
+    rValue = rString.GetCInt();
+    return true;
+  }
+  else if (rString.IsFloat())
+  {
+    double dValue = rString.GetCDouble();
+    rValue = ToZero(dValue);
+    return true;
+  }
   
-  rValue = rString.GetCInt();
-  return true;
+  return false;
 }
 
 
@@ -358,11 +374,19 @@ bool nuiAttribute<int32>::ToString(int32 Value, nglString& rString) const
 template <>
 bool nuiAttribute<int32>::FromString(int32& rValue, const nglString& rString) const
 {
-  if (!rString.IsInt())
-    return false;
+  if (rString.IsInt())
+  {
+    rValue = rString.GetCInt();
+    return true;
+  }
+  else if (rString.IsFloat())
+  {
+    double dValue = rString.GetCDouble();
+    rValue = ToZero(dValue);
+    return true;
+  }
   
-  rValue = rString.GetCInt();
-  return true;
+  return false;
 }
 
 
@@ -400,11 +424,19 @@ bool nuiAttribute<int64>::ToString(int64 Value, nglString& rString) const
 template <>
 bool nuiAttribute<int64>::FromString(int64& rValue, const nglString& rString) const
 {
-  if (!rString.IsInt())
-    return false;
+  if (rString.IsInt())
+  {
+    rValue = rString.GetCInt64();
+    return true;
+  }
+  else if (rString.IsFloat())
+  {
+    double dValue = rString.GetCDouble();
+    rValue = ToZero(dValue);
+    return true;
+  }
   
-  rValue = rString.GetCInt64();
-  return true;
+  return false;
 }
 
 
@@ -443,11 +475,26 @@ bool nuiAttribute<uint8>::ToString(uint8 Value, nglString& rString) const
 template <>
 bool nuiAttribute<uint8>::FromString(uint8& rValue, const nglString& rString) const
 {
-  if (!rString.IsInt())
-    return false;
+  if (rString.IsInt())
+  {
+    int32 iValue = rString.GetCInt();
+    if (iValue >= 0)
+    {
+      rValue = iValue;
+      return true;
+    }
+  }
+  else if (rString.IsFloat())
+  {
+    double dValue = rString.GetCDouble();
+    if (dValue >= 0)
+    {
+      rValue = ToZero(dValue);
+      return true;
+    }
+  }
   
-  rValue = rString.GetCUInt();
-  return true;
+  return false;
 }
 
 
@@ -485,11 +532,26 @@ bool nuiAttribute<uint16>::ToString(uint16 Value, nglString& rString) const
 template <>
 bool nuiAttribute<uint16>::FromString(uint16& rValue, const nglString& rString) const
 {
-  if (!rString.IsInt())
-    return false;
+  if (rString.IsInt())
+  {
+    int32 iValue = rString.GetCInt();
+    if (iValue >= 0)
+    {
+      rValue = iValue;
+      return true;
+    }
+  }
+  else if (rString.IsFloat())
+  {
+    double dValue = rString.GetCDouble();
+    if (dValue >= 0)
+    {
+      rValue = ToZero(dValue);
+      return true;
+    }
+  }
   
-  rValue = rString.GetCUInt();
-  return true;
+  return false;
 }
 
 
@@ -527,11 +589,26 @@ bool nuiAttribute<uint32>::ToString(uint32 Value, nglString& rString) const
 template <>
 bool nuiAttribute<uint32>::FromString(uint32& rValue, const nglString& rString) const
 {
-  if (!rString.IsInt())
-    return false;
+  if (rString.IsInt())
+  {
+    int32 iValue = rString.GetCInt();
+    if (iValue >= 0)
+    {
+      rValue = iValue;
+      return true;
+    }
+  }
+  else if (rString.IsFloat())
+  {
+    double dValue = rString.GetCDouble();
+    if (dValue >= 0)
+    {
+      rValue = ToZero(dValue);
+      return true;
+    }
+  }
   
-  rValue = rString.GetCUInt();
-  return true;
+  return false;
 }
 
 
@@ -570,11 +647,26 @@ bool nuiAttribute<uint64>::ToString(uint64 Value, nglString& rString) const
 template <>
 bool nuiAttribute<uint64>::FromString(uint64& rValue, const nglString& rString) const
 {
-  if (!rString.IsInt())
-    return false;
+  if (rString.IsInt())
+  {
+    int64 iValue = rString.GetCInt64();
+    if (iValue >= 0)
+    {
+      rValue = iValue;
+      return true;
+    }
+  }
+  else if (rString.IsFloat())
+  {
+    double dValue = rString.GetCDouble();
+    if (dValue >= 0)
+    {
+      rValue = ToZero(dValue);
+      return true;
+    }
+  }
   
-  rValue = rString.GetCUInt64();
-  return true;
+  return false;
 }
 
 
