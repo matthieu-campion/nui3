@@ -825,6 +825,12 @@ wchar_t prout[1024];
 	return true;
 
 #else
+  if (mPathName.GetLeft(4) == _T("/net"))
+  {
+    rInfo.Exists	 = false;
+    rInfo.IsLeaf   = true;
+    return false;
+  }
   
   struct stat info;
   std::string tmp(mPathName.GetStdString());
