@@ -1,12 +1,15 @@
 cmake_minimum_required(VERSION 2.4)
 
+if(COMMAND cmake_policy)
+  cmake_policy(SET CMP0003 NEW)
+endif(COMMAND cmake_policy)
+
 project( nui3 )
 
 set(SOURCES 
 
   graphics/DefaultDecoration.cpp
 
-  src/Animations/nuiWidgetAnimation.cpp
   src/Base/nui.cpp
   src/Base/nuiAnimation.cpp
   src/Base/nuiBindingManager.cpp
@@ -128,7 +131,6 @@ set(SOURCES
   src/Layout/nuiList.cpp
   src/Layout/nuiMatrixView.cpp
   src/Layout/nuiModalContainer.cpp
-  src/Layout/nuiVBox.cpp
   src/Dialogs/nuiMessageBox.cpp
   src/Dialogs/nuiDialogSelectFile.cpp
   src/Dialogs/nuiDialogSelectDirectory.cpp
