@@ -454,7 +454,8 @@ nuiWidgetPtr nuiList::GetIdealItem(nuiSize X,nuiSize Y)
     {
       nuiWidgetPtr pItem = pIt->GetWidget();
       nuiRect r(pItem->GetIdealRect());
-      if (Y >= y && Y < y + r.GetHeight())
+
+      if (Y >= y && Y < (y + r.GetHeight()))
       {
         delete pIt;
         return pItem;

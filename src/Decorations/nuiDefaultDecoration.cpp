@@ -1024,6 +1024,7 @@ void nuiDefaultDecoration::FileSelector_VolumeIcon(nuiWidget* pWidget)
   nuiTexture* pTex = nuiTexture::GetTexture(nglString(_T("nuiDefaultDecorationIconVolume")));
   NGL_ASSERT(pTex);
 
+  NGL_ASSERT(dynamic_cast<nuiImage*>(pWidget));
   nuiImage* pImg = (nuiImage*)pWidget;
   pImg->SetTexture(pTex);
   pWidget->InvalidateLayout();
@@ -1036,6 +1037,7 @@ void nuiDefaultDecoration::FileSelector_FolderIcon(nuiWidget* pWidget)
   nuiTexture* pTex = nuiTexture::GetTexture(nglString(_T("nuiDefaultDecorationIconFolder")));
   NGL_ASSERT(pTex);
   
+  NGL_ASSERT(dynamic_cast<nuiImage*>(pWidget));
   nuiImage* pImg = (nuiImage*)pWidget;
   pImg->SetTexture(pTex);
   pWidget->InvalidateLayout();
@@ -1078,6 +1080,7 @@ void nuiDefaultDecoration::FileSelector_TreeFolderIcon(nuiWidget* pWidget)
   nuiTexture* pTex = nuiTexture::GetTexture(nglString(_T("nuiDefaultDecorationIconFolder")));
   NGL_ASSERT(pTex);
   
+  NGL_ASSERT(dynamic_cast<nuiImage*>(pWidget));
   nuiImage* pImg = (nuiImage*)pWidget;
   pImg->SetTexture(pTex);
   pWidget->InvalidateLayout();
@@ -1089,6 +1092,7 @@ void nuiDefaultDecoration::FileSelector_TreeFileIcon(nuiWidget* pWidget)
   nuiTexture* pTex = nuiTexture::GetTexture(nglString(_T("nuiDefaultDecorationIconFile")));
   NGL_ASSERT(pTex);
   
+  NGL_ASSERT(dynamic_cast<nuiImage*>(pWidget));
   nuiImage* pImg = (nuiImage*)pWidget;
   pImg->SetTexture(pTex);
   pWidget->InvalidateLayout();
@@ -1197,6 +1201,7 @@ void nuiDefaultDecoration::FileTree_VolumeIcon(nuiWidget* pWidget)
   nuiTexture* pTex = nuiTexture::GetTexture(nglString(_T("nuiDefaultDecorationIconVolume")));
   NGL_ASSERT(pTex);
   
+  NGL_ASSERT(dynamic_cast<nuiImage*>(pWidget));
   nuiImage* pImg = (nuiImage*)pWidget;
   pImg->SetTexture(pTex);
   pWidget->InvalidateLayout();
@@ -1208,6 +1213,7 @@ void nuiDefaultDecoration::FileTree_FolderIcon(nuiWidget* pWidget)
   nuiTexture* pTex = nuiTexture::GetTexture(nglString(_T("nuiDefaultDecorationIconFolder")));
   NGL_ASSERT(pTex);
   
+  NGL_ASSERT(dynamic_cast<nuiImage*>(pWidget));
   nuiImage* pImg = (nuiImage*)pWidget;
   pImg->SetTexture(pTex);
   
@@ -1220,6 +1226,7 @@ void nuiDefaultDecoration::FileTree_OpenFolderIcon(nuiWidget* pWidget)
   nuiTexture* pTex = nuiTexture::GetTexture(nglString(_T("nuiDefaultDecorationIconOpenFolder")));
   NGL_ASSERT(pTex);
   
+  NGL_ASSERT(dynamic_cast<nuiImage*>(pWidget));
   nuiImage* pImg = (nuiImage*)pWidget;
   pImg->SetTexture(pTex);
   pWidget->InvalidateLayout();
@@ -1231,6 +1238,7 @@ void nuiDefaultDecoration::FileTree_ParentFolderIcon(nuiWidget* pWidget)
   nuiTexture* pTex = nuiTexture::GetTexture(nglString(_T("nuiDefaultDecorationIconParentFolder")));
   NGL_ASSERT(pTex);
   
+  NGL_ASSERT(dynamic_cast<nuiImage*>(pWidget));
   nuiImage* pImg = (nuiImage*)pWidget;
   pImg->SetTexture(pTex);
   pWidget->InvalidateLayout();
@@ -1243,6 +1251,7 @@ void nuiDefaultDecoration::FileTree_FileIcon(nuiWidget* pWidget)
   nuiTexture* pTex = nuiTexture::GetTexture(nglString(_T("nuiDefaultDecorationIconFile")));
   NGL_ASSERT(pTex);
   
+  NGL_ASSERT(dynamic_cast<nuiImage*>(pWidget));
   nuiImage* pImg = (nuiImage*)pWidget;
   pImg->SetTexture(pTex);
   pWidget->InvalidateLayout();

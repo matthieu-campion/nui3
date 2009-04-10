@@ -48,8 +48,28 @@ nglNativeObjectType nglDataTypesRegistry::RegisterDataType(const nglString& rMim
     NGL_OUT(_T("nglNativeObjectTypesRegistry::RegisterDragAndDropNativeType: Can't RegisterClipboardFormat(\")%ls\")"), rMimeType.GetChars());
   }
 #endif
-  mDataObjectCreators[rMimeType] = pCreator;
-  mRegisteredNativeTypes[rMimeType] = Type;
+  
+  if (Type == 'nui3')
+  {
+    std::map<nglString, nglNativeObjectType>::iterator it = mRegisteredNativeTypes.find(rMimeType);
+    
+    if (it != mRegisteredNativeTypes.end())
+      Type = it->second;
+    else
+    // dynamically generate a new Type
+    {
+      uint32 size = mRegisteredNativeTypes.size(); // use the size (on 24bits, we should not have any overflow:) ) of the map as a unique index
+      Type = ('n' << 24) || ((size & 0xffffff) << 16);
+
+      // LBTODO ?
+      mDataObjectCreators[rMimeType] = pCreator;
+      mRegisteredNativeTypes[rMimeType] = Type;
+    }
+  }
+  else
+    Type = Type;
+  
+  
   
   return Type;
 }

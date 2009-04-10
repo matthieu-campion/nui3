@@ -59,7 +59,7 @@ public:
 #ifdef _CARBON_
   /** @name CARBON Platform specific methods */
   //@{
-  virtual void AddDragItemFlavor    (DragRef dragRef, DragItemRef& itemRef)                         = 0;
+  virtual void AddDragItemFlavor    (DragRef dragRef, DragItemRef& itemRef, nglNativeObjectType Type) = 0;
   virtual void SetDragItemFlavorData(DragRef dragRef, DragItemRef& itemRef, FlavorType flavorType)  = 0;
   virtual void GetFlavorData        (DragRef dragRef, DragItemRef& itemRef, FlavorType flavorType)  = 0;
   //@}
@@ -105,7 +105,7 @@ public:
 #endif
 #ifdef _CARBON_
   std::list<DragItemRef> mItemRefs;
-  virtual void AddDragItemFlavor    (DragRef dragRef, DragItemRef& itemRef);
+  virtual void AddDragItemFlavor    (DragRef dragRef, DragItemRef& itemRef, nglNativeObjectType Type);
   virtual void SetDragItemFlavorData(DragRef dragRef, DragItemRef& itemRef, FlavorType flavorType);
   virtual void GetFlavorData        (DragRef dragRef, DragItemRef& itemRef, FlavorType flavorType);
 #endif
@@ -148,7 +148,7 @@ public:
   virtual void GetFormatData(FORMATETC* pFormat, STGMEDIUM* pMedium);
 #endif
 #ifdef _CARBON_
-  virtual void AddDragItemFlavor    (DragRef dragRef, DragItemRef& itemRef);
+  virtual void AddDragItemFlavor    (DragRef dragRef, DragItemRef& itemRef, nglNativeObjectType Type);
   virtual void SetDragItemFlavorData(DragRef dragRef, DragItemRef& itemRef, FlavorType flavorType);
   virtual void GetFlavorData        (DragRef dragRef, DragItemRef& itemRef, FlavorType flavorType);
 #endif
@@ -240,10 +240,11 @@ public:
 #endif
 
 #ifdef _CARBON_
-  virtual void AddDragItemFlavor(DragRef dragRef, DragItemRef& itemRef)
+  virtual void AddDragItemFlavor(DragRef dragRef, DragItemRef& itemRef, nglNativeObjectType Type)
   {
     OSErr err = noErr;
-    err = ::AddDragItemFlavor(dragRef, itemRef++, 'nui3', NULL, 0, 0);
+    
+    err = ::AddDragItemFlavor(dragRef, itemRef++, Type, NULL, 0, 0);
     //PrintErr(err);
     NGL_ASSERT(!err);
   }
@@ -259,7 +260,11 @@ public:
     Size dataSize;
     err = GetFlavorDataSize (dragRef, itemRef, flavorType, &dataSize);
 
-    NGL_ASSERT(!err);
+    if (err != noErr)
+    {
+      NGL_OUT(_T("Error GetFlavorDataSize: code %d\n"), err);
+      NGL_ASSERT(0);
+    }
 
     //NGL_OUT("ReceiveData: dataSize: %d\n", dataSize);
     err = ::GetFlavorData(dragRef, itemRef, flavorType, &mData, &dataSize, 0);

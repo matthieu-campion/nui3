@@ -56,7 +56,7 @@ void nglDataFilesObject::AddFile(const nglString& rPath)
 }
   
 
-void nglDataFilesObject::AddDragItemFlavor(DragRef dragRef, DragItemRef& itemRef)
+void nglDataFilesObject::AddDragItemFlavor(DragRef dragRef, DragItemRef& itemRef, nglNativeObjectType Type)
 {
   OSErr err = noErr;
   size_t n = mNumberOfFiles ? mNumberOfFiles : mFilePaths.size();
@@ -230,7 +230,7 @@ void nglDataFilesObject::GetFlavorData(DragRef dragRef, DragItemRef& itemRef, Fl
 }
 
 ///////////////////////////
-void nglDataTextObject::AddDragItemFlavor(DragRef dragRef, DragItemRef& itemRef)
+void nglDataTextObject::AddDragItemFlavor(DragRef dragRef, DragItemRef& itemRef, nglNativeObjectType Type)
 {
   OSErr err = noErr;
   err = ::AddDragItemFlavor(dragRef, itemRef++, 'TEXT', NULL, 0, 0);

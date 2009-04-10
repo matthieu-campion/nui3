@@ -941,41 +941,29 @@ nuiWidgetPtr nuiContainer::GetNextSibling(nuiWidgetPtr pChild) const
   if (pChild)
     GetNextChild(pIt);
   
-  while (pIt->IsValid() && pIt->GetWidget())
-    GetNextChild(pIt);
-  
+  nuiWidgetPtr pW = NULL;
   if (pIt->IsValid())
-  {
-    nuiWidgetPtr pW = pIt->GetWidget();
-    delete pIt;
-    return pW;
-  }
+    pW = pIt->GetWidget();
   
   delete pIt;
-  return NULL;
+  return pW;
 }
 
 nuiWidgetPtr nuiContainer::GetPreviousSibling(nuiWidgetPtr pChild) const
 {
-  ConstIteratorPtr pIt = pChild ? GetChildIterator(pChild) : GetLastChild();
+  ConstIteratorPtr pIt = pChild ? GetChildIterator(pChild) : GetFirstChild();
   if (!pIt->IsValid())
     return NULL;
   
   if (pChild)
     GetPreviousChild(pIt);
   
-  while (pIt->IsValid() && pIt->GetWidget())
-    GetPreviousChild(pIt);
-  
+  nuiWidgetPtr pW = NULL;
   if (pIt->IsValid())
-  {
-    nuiWidgetPtr pW = pIt->GetWidget();
-    delete pIt;
-    return pW;
-  }
+    pW = pIt->GetWidget();
   
   delete pIt;
-  return NULL;
+  return pW;
 }
 
 void nuiContainer::SetChildrenLayoutAnimationDuration(float duration)

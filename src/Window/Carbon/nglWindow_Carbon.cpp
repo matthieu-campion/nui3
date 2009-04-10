@@ -246,7 +246,7 @@ bool nglCarbonDragAndDrop::Drag(nglDragAndDrop* pDragObject)
     if (pObj)
     {
       nglNativeObjectType type = pObj->GetNativeType();
-      pObj->AddDragItemFlavor(mDragRef, item);
+      pObj->AddDragItemFlavor(mDragRef, item, type);
     }
   }
   
