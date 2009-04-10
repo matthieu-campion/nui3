@@ -337,19 +337,27 @@ bool nuiColorSelector::OnTabSelected(const nuiEvent& rEvent)
 void nuiColorSelector::Tab_RGB_Update()
 {
   mpRedSlider->ValueChanged.Disable();
+  mpRedSlider->InteractiveValueChanged.Disable();
   mpRedSlider->GetRange().SetValue(mCurrentColor.Red());
+  mpRedSlider->InteractiveValueChanged.Enable();
   mpRedSlider->ValueChanged.Enable();
   
   mpGreenSlider->ValueChanged.Disable();
+  mpGreenSlider->InteractiveValueChanged.Disable();
   mpGreenSlider->GetRange().SetValue(mCurrentColor.Green());
+  mpGreenSlider->InteractiveValueChanged.Enable();
   mpGreenSlider->ValueChanged.Enable();
   
   mpBlueSlider->ValueChanged.Disable();
+  mpBlueSlider->InteractiveValueChanged.Disable();
   mpBlueSlider->GetRange().SetValue(mCurrentColor.Blue());
+  mpBlueSlider->InteractiveValueChanged.Enable();
   mpBlueSlider->ValueChanged.Enable();
   
   mpRGBAlphaSlider->ValueChanged.Disable();
+  mpRGBAlphaSlider->InteractiveValueChanged.Disable();
   mpRGBAlphaSlider->GetRange().SetValue(mCurrentColor.Alpha());
+  mpRGBAlphaSlider->InteractiveValueChanged.Enable();
   mpRGBAlphaSlider->ValueChanged.Enable();
 
 }
@@ -359,19 +367,27 @@ void nuiColorSelector::Tab_HSV_Update()
   float h, s ,v;
   mCurrentColor.GetHSV(h, s, v);
   mpHueSlider->ValueChanged.Disable();
+  mpHueSlider->InteractiveValueChanged.Disable();
   mpHueSlider->GetRange().SetValue(h);
+  mpHueSlider->InteractiveValueChanged.Enable();
   mpHueSlider->ValueChanged.Enable();
   
   mpSaturationSlider->ValueChanged.Disable();
+  mpSaturationSlider->InteractiveValueChanged.Disable();
   mpSaturationSlider->GetRange().SetValue(s);
+  mpSaturationSlider->InteractiveValueChanged.Enable();
   mpSaturationSlider->ValueChanged.Enable();
   
   mpSaturationSlider->ValueChanged.Disable();
+  mpSaturationSlider->InteractiveValueChanged.Disable();
   mpSaturationSlider->GetRange().SetValue(v);
+  mpSaturationSlider->InteractiveValueChanged.Enable();
   mpSaturationSlider->ValueChanged.Enable();
   
   mpHSVAlphaSlider->ValueChanged.Disable();
+  mpHSVAlphaSlider->InteractiveValueChanged.Disable();
   mpHSVAlphaSlider->GetRange().SetValue(mCurrentColor.Alpha());
+  mpHSVAlphaSlider->InteractiveValueChanged.Enable();
   mpHSVAlphaSlider->ValueChanged.Enable();
 }
 
