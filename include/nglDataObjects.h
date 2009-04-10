@@ -168,7 +168,7 @@ public:
   nglInternalDataObject<C>(const nglString& rMimeType, const C& data)
   : nglDataObject(rMimeType), mData(data)
   {
-    nglInternalDataObject::RegisterInternalMimeType(rMimeType);
+    mNativeType = nglInternalDataObject::RegisterInternalMimeType(rMimeType);
   }
   
   virtual ~nglInternalDataObject()
@@ -190,7 +190,7 @@ public:
     return new nglInternalDataObject<C>(rMimeType);
   }
   
-  static void RegisterInternalMimeType(const nglString& rMimeType)
+  static nglNativeObjectType RegisterInternalMimeType(const nglString& rMimeType)
   {
     bool res = App->GetDataTypesRegistry().IsTypeRegistered(rMimeType);
     if (!res)
@@ -203,6 +203,11 @@ public:
       App->GetDataTypesRegistry().RegisterDataType(rMimeType, 'nui3', &nglInternalDataObject<C>::Create);
 #endif
     }
+    
+    nglNativeObjectType type;
+    res = App->GetDataTypesRegistry().GetRegisteredFormatType(rMimeType, type);
+    NGL_ASSERT(res);
+    return type;
   }
 
 #ifdef _WIN32_
