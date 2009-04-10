@@ -186,3 +186,7 @@ void nglKernel::EnterModalState()
 void nglKernel::ExitModalState()
 {
 }
+
+void nglKernel::NonBlockingHeartBeat()
+{
+}
