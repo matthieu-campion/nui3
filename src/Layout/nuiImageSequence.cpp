@@ -39,7 +39,7 @@ mColor(rColor)
 nuiImageSequence::nuiImageSequence(uint32 nbFrames, const nglPath& rTexturePath, nuiOrientation orientation, const nuiColor& rColor)
 : nuiWidget(), mFrameIndex(0),
 mColor(rColor),
-mGlobalTexturePath(rTexturePath)
+mTexturePath(rTexturePath)
 {
   if (SetObjectClass(_T("nuiImageSequence")))
     InitAttributes();
@@ -338,16 +338,14 @@ nglString nuiImageSequence::GetOrientation()
 
 const nglPath& nuiImageSequence::GetTexturePath() const
 {
-  if (HasProperty(_T("Texture")))
-    return GetProperty(_T("Texture"));
-  
-  return mGlobalTexturePath;
+  return mTexturePath;
 }
 
 void nuiImageSequence::SetTexturePath(const nglPath& rPath)
 {
-  SetProperty(_T("Texture"), mGlobalTexturePath);
+  delete mpTempImage;
   mpTempImage = new nglImage(rPath);
+  mTexturePath = rPath;
   NGL_ASSERT(mpTempImage);
   mRefreshTextures = true;
   

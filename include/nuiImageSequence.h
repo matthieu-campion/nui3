@@ -48,7 +48,7 @@ private:
 
   bool CreateTextures(); // return true if the textures have been properly created
 
-  nglString mGlobalTexturePath;
+  nglPath mTexturePath;
   std::vector<nuiTexture*> mTextures;
   
   // attributes ***********************************
