@@ -20,7 +20,7 @@
 class NUI_API nuiRange
 {
 public:
-  nuiRange(double Value=0, double Min=0, double Max=50, double Increment=1, double PageIncrement=10, double PageSize=10, double Origin = std::numeric_limits<double>::quiet_NaN());
+  nuiRange(double Value=0, double Min=0, double Max=50, double Increment=1, double PageIncrement=10, double PageSize=0, double Origin = std::numeric_limits<double>::quiet_NaN());
   nuiRange(const nuiRange& rRange);
   virtual ~nuiRange();
 
