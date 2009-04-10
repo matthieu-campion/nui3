@@ -59,7 +59,7 @@ nglNativeObjectType nglDataTypesRegistry::RegisterDataType(const nglString& rMim
     // dynamically generate a new Type
     {
       uint32 size = mRegisteredNativeTypes.size(); // use the size (on 24bits, we should not have any overflow:) ) of the map as a unique index
-      Type = ('n' << 24) || ((size & 0xffffff) << 16);
+      Type = ('n' << 24) | (size & 0xffffff);
 
       // LBTODO ?
       mDataObjectCreators[rMimeType] = pCreator;
