@@ -34,3 +34,4 @@ project/src/Application.cpp        NUI_RESOURCE    "resources/project/src/Applic
 project/src/Application.h        NUI_RESOURCE    "resources/project/src/Application.h"
 project/src/MainWindow.cpp        NUI_RESOURCE    "resources/project/src/MainWindow.cpp"
 project/src/MainWindow.h        NUI_RESOURCE    "resources/project/src/MainWindow.h"
+0 ICON "resources/icon.ico"

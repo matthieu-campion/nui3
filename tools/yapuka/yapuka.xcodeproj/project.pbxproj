@@ -3,573 +3,566 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 42;
+	objectVersion = 45;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		91CC2B2B0744CF9E0018CBED /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91CC2B290744CF9E0018CBED /* OpenGL.framework */; };
-		91CC2B320744CFC80018CBED /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91CC2B310744CFC80018CBED /* Carbon.framework */; };
-		91CC2B4F0744D00F0018CBED /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91CC2B4D0744D00F0018CBED /* CoreFoundation.framework */; };
-		91CC2B500744D00F0018CBED /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91CC2B4E0744D00F0018CBED /* CoreServices.framework */; };
-		BC13B6C90F8EA2360019B881 /* macosx.css in Resources */ = {isa = PBXBuildFile; fileRef = BC13B6C70F8EA2360019B881 /* macosx.css */; };
-		BC13B6CA0F8EA2360019B881 /* win32.css in Resources */ = {isa = PBXBuildFile; fileRef = BC13B6C80F8EA2360019B881 /* win32.css */; };
-		BC13B6CB0F8EA2360019B881 /* macosx.css in Resources */ = {isa = PBXBuildFile; fileRef = BC13B6C70F8EA2360019B881 /* macosx.css */; };
-		BC13B6CC0F8EA2360019B881 /* win32.css in Resources */ = {isa = PBXBuildFile; fileRef = BC13B6C80F8EA2360019B881 /* win32.css */; };
-		BC1A622A0E63321D00BDD037 /* libnui3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC1A62250E63320C00BDD037 /* libnui3.a */; };
-		BC1A622B0E63322000BDD037 /* libnui3D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC1A62230E63320C00BDD037 /* libnui3D.a */; };
-		BCE4C35B0EFA622000ABC3C6 /* MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCE4C3550EFA622000ABC3C6 /* MainWindow.cpp */; };
-		BCE4C35C0EFA622000ABC3C6 /* Preferences.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCE4C3570EFA622000ABC3C6 /* Preferences.cpp */; };
-		BCE4C35D0EFA622000ABC3C6 /* Yapuka.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCE4C3590EFA622000ABC3C6 /* Yapuka.cpp */; };
-		BCE4C35E0EFA622000ABC3C6 /* MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCE4C3550EFA622000ABC3C6 /* MainWindow.cpp */; };
-		BCE4C35F0EFA622000ABC3C6 /* Preferences.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCE4C3570EFA622000ABC3C6 /* Preferences.cpp */; };
-		BCE4C3600EFA622000ABC3C6 /* Yapuka.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCE4C3590EFA622000ABC3C6 /* Yapuka.cpp */; };
-		BCE4C3630EFA622E00ABC3C6 /* ProjectGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCE4C3610EFA622E00ABC3C6 /* ProjectGenerator.cpp */; };
-		BCE4C3640EFA622E00ABC3C6 /* ProjectGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCE4C3610EFA622E00ABC3C6 /* ProjectGenerator.cpp */; };
-		BCE4C36F0EFA623B00ABC3C6 /* ElementDesc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCE4C3650EFA623B00ABC3C6 /* ElementDesc.cpp */; };
-		BCE4C3700EFA623B00ABC3C6 /* ElementEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCE4C3670EFA623B00ABC3C6 /* ElementEditor.cpp */; };
-		BCE4C3710EFA623B00ABC3C6 /* FrameEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCE4C3690EFA623B00ABC3C6 /* FrameEditor.cpp */; };
-		BCE4C3720EFA623B00ABC3C6 /* WidgetDelegates.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCE4C36B0EFA623B00ABC3C6 /* WidgetDelegates.cpp */; };
-		BCE4C3730EFA623B00ABC3C6 /* WidgetEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCE4C36D0EFA623B00ABC3C6 /* WidgetEditor.cpp */; };
-		BCE4C3740EFA623B00ABC3C6 /* ElementDesc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCE4C3650EFA623B00ABC3C6 /* ElementDesc.cpp */; };
-		BCE4C3750EFA623B00ABC3C6 /* ElementEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCE4C3670EFA623B00ABC3C6 /* ElementEditor.cpp */; };
-		BCE4C3760EFA623B00ABC3C6 /* FrameEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCE4C3690EFA623B00ABC3C6 /* FrameEditor.cpp */; };
-		BCE4C3770EFA623B00ABC3C6 /* WidgetDelegates.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCE4C36B0EFA623B00ABC3C6 /* WidgetDelegates.cpp */; };
-		BCE4C3780EFA623B00ABC3C6 /* WidgetEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCE4C36D0EFA623B00ABC3C6 /* WidgetEditor.cpp */; };
-		BCE4C37F0EFA624800ABC3C6 /* ElementInspector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCE4C3790EFA624800ABC3C6 /* ElementInspector.cpp */; };
-		BCE4C3800EFA624800ABC3C6 /* ToolPane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCE4C37B0EFA624800ABC3C6 /* ToolPane.cpp */; };
-		BCE4C3810EFA624800ABC3C6 /* ToolPaneAttributes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCE4C37D0EFA624800ABC3C6 /* ToolPaneAttributes.cpp */; };
-		BCE4C3820EFA624800ABC3C6 /* ElementInspector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCE4C3790EFA624800ABC3C6 /* ElementInspector.cpp */; };
-		BCE4C3830EFA624800ABC3C6 /* ToolPane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCE4C37B0EFA624800ABC3C6 /* ToolPane.cpp */; };
-		BCE4C3840EFA624800ABC3C6 /* ToolPaneAttributes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCE4C37D0EFA624800ABC3C6 /* ToolPaneAttributes.cpp */; };
-		BCE4C3B90EFA650100ABC3C6 /* ElementEditorGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCE4C3B70EFA650100ABC3C6 /* ElementEditorGui.cpp */; };
-		BCE4C3BA0EFA650100ABC3C6 /* ElementEditorGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCE4C3B70EFA650100ABC3C6 /* ElementEditorGui.cpp */; };
-		E585FDB4086C3E3200CBD5E1 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E585FDB3086C3E3200CBD5E1 /* AGL.framework */; };
-		E585FDB5086C3E3200CBD5E1 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E585FDB3086C3E3200CBD5E1 /* AGL.framework */; };
-		E5C9EE100781B71C00629D4E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91CC2B290744CF9E0018CBED /* OpenGL.framework */; };
-		E5C9EE110781B71C00629D4E /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91CC2B310744CFC80018CBED /* Carbon.framework */; };
-		E5C9EE120781B71C00629D4E /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91CC2B4D0744D00F0018CBED /* CoreFoundation.framework */; };
-		E5C9EE130781B71C00629D4E /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91CC2B4E0744D00F0018CBED /* CoreServices.framework */; };
+		61A9DFD70B833F1500BC506C /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD20B833F1500BC506C /* AGL.framework */; };
+		61A9DFD80B833F1500BC506C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD30B833F1500BC506C /* CoreFoundation.framework */; };
+		61A9DFD90B833F1500BC506C /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD40B833F1500BC506C /* CoreServices.framework */; };
+		61A9DFDA0B833F1500BC506C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD50B833F1500BC506C /* Carbon.framework */; };
+		61A9DFDB0B833F1500BC506C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD60B833F1500BC506C /* OpenGL.framework */; };
+		61A9DFDC0B833F1500BC506C /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD20B833F1500BC506C /* AGL.framework */; };
+		61A9DFDD0B833F1500BC506C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD30B833F1500BC506C /* CoreFoundation.framework */; };
+		61A9DFDE0B833F1500BC506C /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD40B833F1500BC506C /* CoreServices.framework */; };
+		61A9DFDF0B833F1500BC506C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD50B833F1500BC506C /* Carbon.framework */; };
+		61A9DFE00B833F1500BC506C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD60B833F1500BC506C /* OpenGL.framework */; };
+		BC39AF4C0F8F70C500568C99 /* ToolPaneAttributes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC39AF480F8F70C500568C99 /* ToolPaneAttributes.cpp */; };
+		BC39AF4D0F8F70C500568C99 /* ToolPane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC39AF490F8F70C500568C99 /* ToolPane.cpp */; };
+		BC39AF4E0F8F70C500568C99 /* ElementInspector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC39AF4A0F8F70C500568C99 /* ElementInspector.cpp */; };
+		BC39AF4F0F8F70C500568C99 /* ToolPaneAttributes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC39AF480F8F70C500568C99 /* ToolPaneAttributes.cpp */; };
+		BC39AF500F8F70C500568C99 /* ToolPane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC39AF490F8F70C500568C99 /* ToolPane.cpp */; };
+		BC39AF510F8F70C500568C99 /* ElementInspector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC39AF4A0F8F70C500568C99 /* ElementInspector.cpp */; };
+		BC39AF540F8F70CA00568C99 /* ProjectGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC39AF520F8F70CA00568C99 /* ProjectGenerator.cpp */; };
+		BC39AF550F8F70CA00568C99 /* ProjectGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC39AF520F8F70CA00568C99 /* ProjectGenerator.cpp */; };
+		BC39AF5C0F8F70D000568C99 /* Yapuka.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC39AF580F8F70D000568C99 /* Yapuka.cpp */; };
+		BC39AF5D0F8F70D000568C99 /* Preferences.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC39AF5A0F8F70D000568C99 /* Preferences.cpp */; };
+		BC39AF5E0F8F70D000568C99 /* MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC39AF5B0F8F70D000568C99 /* MainWindow.cpp */; };
+		BC39AF5F0F8F70D000568C99 /* Yapuka.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC39AF580F8F70D000568C99 /* Yapuka.cpp */; };
+		BC39AF600F8F70D000568C99 /* Preferences.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC39AF5A0F8F70D000568C99 /* Preferences.cpp */; };
+		BC39AF610F8F70D000568C99 /* MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC39AF5B0F8F70D000568C99 /* MainWindow.cpp */; };
+		BC39AF6E0F8F70DA00568C99 /* WidgetEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC39AF620F8F70DA00568C99 /* WidgetEditor.cpp */; };
+		BC39AF6F0F8F70DA00568C99 /* WidgetDelegates.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC39AF640F8F70DA00568C99 /* WidgetDelegates.cpp */; };
+		BC39AF700F8F70DA00568C99 /* ElementDesc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC39AF660F8F70DA00568C99 /* ElementDesc.cpp */; };
+		BC39AF710F8F70DA00568C99 /* ElementEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC39AF680F8F70DA00568C99 /* ElementEditor.cpp */; };
+		BC39AF720F8F70DA00568C99 /* ElementEditorGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC39AF6A0F8F70DA00568C99 /* ElementEditorGui.cpp */; };
+		BC39AF730F8F70DA00568C99 /* FrameEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC39AF6C0F8F70DA00568C99 /* FrameEditor.cpp */; };
+		BC39AF740F8F70DA00568C99 /* WidgetEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC39AF620F8F70DA00568C99 /* WidgetEditor.cpp */; };
+		BC39AF750F8F70DA00568C99 /* WidgetDelegates.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC39AF640F8F70DA00568C99 /* WidgetDelegates.cpp */; };
+		BC39AF760F8F70DA00568C99 /* ElementDesc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC39AF660F8F70DA00568C99 /* ElementDesc.cpp */; };
+		BC39AF770F8F70DA00568C99 /* ElementEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC39AF680F8F70DA00568C99 /* ElementEditor.cpp */; };
+		BC39AF780F8F70DA00568C99 /* ElementEditorGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC39AF6A0F8F70DA00568C99 /* ElementEditorGui.cpp */; };
+		BC39AF790F8F70DA00568C99 /* FrameEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC39AF6C0F8F70DA00568C99 /* FrameEditor.cpp */; };
+		BC6A09AD0EF92BAB00881ACF /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BC6A09AB0EF92BAB00881ACF /* Info.plist */; };
+		BCBCB15F0DFD45BD002E8BC3 /* libnui3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */; };
+		BCBCB1600DFD45C1002E8BC3 /* libnui3D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15C0DFD45B6002E8BC3 /* libnui3D.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		BC09B0300F0E5A8700956432 /* PBXContainerItemProxy */ = {
+		BC39AF370F8F708C00568C99 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = BC1A621A0E63320C00BDD037 /* nui3.xcodeproj */;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E592C5140EFE8CCC00340B35;
+			remoteGlobalIDString = E592C5140EFE8CCC00340B35 /* libnui3D cocoa.a */;
 			remoteInfo = "nui3D cocoa";
 		};
-		BC1A62220E63320C00BDD037 /* PBXContainerItemProxy */ = {
+		BCBCB15B0DFD45B6002E8BC3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = BC1A621A0E63320C00BDD037 /* nui3.xcodeproj */;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = E58172D80C3D103300902DFE;
 			remoteInfo = nui3D;
 		};
-		BC1A62240E63320C00BDD037 /* PBXContainerItemProxy */ = {
+		BCBCB15D0DFD45B6002E8BC3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = BC1A621A0E63320C00BDD037 /* nui3.xcodeproj */;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = E542A1AE0C3F0A5900225219;
 			remoteInfo = nui3;
 		};
-		BC1A62260E63321200BDD037 /* PBXContainerItemProxy */ = {
+		BCBCB1630DFD45FA002E8BC3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = BC1A621A0E63320C00BDD037 /* nui3.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = E58172D70C3D103300902DFE;
-			remoteInfo = nui3D;
-		};
-		BC1A62280E63321800BDD037 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BC1A621A0E63320C00BDD037 /* nui3.xcodeproj */;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = E5429F110C3F0A5900225219;
 			remoteInfo = nui3;
 		};
+		BCBCB1650DFD4605002E8BC3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = E58172D70C3D103300902DFE;
+			remoteInfo = nui3D;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		91CC2B120744CEA30018CBED /* Yapuka.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yapuka.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		91CC2B290744CF9E0018CBED /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
-		91CC2B310744CFC80018CBED /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
-		91CC2B4D0744D00F0018CBED /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
-		91CC2B4E0744D00F0018CBED /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
-		BC0B24000E01301200536AC9 /* yapuka.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = yapuka.css; path = resources/css/yapuka.css; sourceTree = SOURCE_ROOT; };
-		BC13B6C70F8EA2360019B881 /* macosx.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = macosx.css; path = resources/css/macosx.css; sourceTree = SOURCE_ROOT; };
-		BC13B6C80F8EA2360019B881 /* win32.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = win32.css; path = resources/css/win32.css; sourceTree = SOURCE_ROOT; };
-		BC1A621A0E63320C00BDD037 /* nui3.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nui3.xcodeproj; path = ../../nui3.xcodeproj; sourceTree = SOURCE_ROOT; };
-		BC357F840F8EA036006C70E9 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
-		BCE4C3550EFA622000ABC3C6 /* MainWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MainWindow.cpp; path = src/Main/MainWindow.cpp; sourceTree = SOURCE_ROOT; };
-		BCE4C3560EFA622000ABC3C6 /* MainWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainWindow.h; path = src/Main/MainWindow.h; sourceTree = SOURCE_ROOT; };
-		BCE4C3570EFA622000ABC3C6 /* Preferences.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Preferences.cpp; path = src/Main/Preferences.cpp; sourceTree = SOURCE_ROOT; };
-		BCE4C3580EFA622000ABC3C6 /* Preferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Preferences.h; path = src/Main/Preferences.h; sourceTree = SOURCE_ROOT; };
-		BCE4C3590EFA622000ABC3C6 /* Yapuka.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Yapuka.cpp; path = src/Main/Yapuka.cpp; sourceTree = SOURCE_ROOT; };
-		BCE4C35A0EFA622000ABC3C6 /* Yapuka.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Yapuka.h; path = src/Main/Yapuka.h; sourceTree = SOURCE_ROOT; };
-		BCE4C3610EFA622E00ABC3C6 /* ProjectGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ProjectGenerator.cpp; path = src/ProjectGenerator/ProjectGenerator.cpp; sourceTree = SOURCE_ROOT; };
-		BCE4C3620EFA622E00ABC3C6 /* ProjectGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProjectGenerator.h; path = src/ProjectGenerator/ProjectGenerator.h; sourceTree = SOURCE_ROOT; };
-		BCE4C3650EFA623B00ABC3C6 /* ElementDesc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ElementDesc.cpp; path = src/ElementEditor/ElementDesc.cpp; sourceTree = SOURCE_ROOT; };
-		BCE4C3660EFA623B00ABC3C6 /* ElementDesc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ElementDesc.h; path = src/ElementEditor/ElementDesc.h; sourceTree = SOURCE_ROOT; };
-		BCE4C3670EFA623B00ABC3C6 /* ElementEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ElementEditor.cpp; path = src/ElementEditor/ElementEditor.cpp; sourceTree = SOURCE_ROOT; };
-		BCE4C3680EFA623B00ABC3C6 /* ElementEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ElementEditor.h; path = src/ElementEditor/ElementEditor.h; sourceTree = SOURCE_ROOT; };
-		BCE4C3690EFA623B00ABC3C6 /* FrameEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FrameEditor.cpp; path = src/ElementEditor/FrameEditor.cpp; sourceTree = SOURCE_ROOT; };
-		BCE4C36A0EFA623B00ABC3C6 /* FrameEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FrameEditor.h; path = src/ElementEditor/FrameEditor.h; sourceTree = SOURCE_ROOT; };
-		BCE4C36B0EFA623B00ABC3C6 /* WidgetDelegates.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WidgetDelegates.cpp; path = src/ElementEditor/WidgetDelegates.cpp; sourceTree = SOURCE_ROOT; };
-		BCE4C36C0EFA623B00ABC3C6 /* WidgetDelegates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WidgetDelegates.h; path = src/ElementEditor/WidgetDelegates.h; sourceTree = SOURCE_ROOT; };
-		BCE4C36D0EFA623B00ABC3C6 /* WidgetEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WidgetEditor.cpp; path = src/ElementEditor/WidgetEditor.cpp; sourceTree = SOURCE_ROOT; };
-		BCE4C36E0EFA623B00ABC3C6 /* WidgetEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WidgetEditor.h; path = src/ElementEditor/WidgetEditor.h; sourceTree = SOURCE_ROOT; };
-		BCE4C3790EFA624800ABC3C6 /* ElementInspector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ElementInspector.cpp; path = src/Tools/ElementInspector.cpp; sourceTree = SOURCE_ROOT; };
-		BCE4C37A0EFA624800ABC3C6 /* ElementInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ElementInspector.h; path = src/Tools/ElementInspector.h; sourceTree = SOURCE_ROOT; };
-		BCE4C37B0EFA624800ABC3C6 /* ToolPane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ToolPane.cpp; path = src/Tools/ToolPane.cpp; sourceTree = SOURCE_ROOT; };
-		BCE4C37C0EFA624800ABC3C6 /* ToolPane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ToolPane.h; path = src/Tools/ToolPane.h; sourceTree = SOURCE_ROOT; };
-		BCE4C37D0EFA624800ABC3C6 /* ToolPaneAttributes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ToolPaneAttributes.cpp; path = src/Tools/ToolPaneAttributes.cpp; sourceTree = SOURCE_ROOT; };
-		BCE4C37E0EFA624800ABC3C6 /* ToolPaneAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ToolPaneAttributes.h; path = src/Tools/ToolPaneAttributes.h; sourceTree = SOURCE_ROOT; };
-		BCE4C3B70EFA650100ABC3C6 /* ElementEditorGui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ElementEditorGui.cpp; path = src/ElementEditor/ElementEditorGui.cpp; sourceTree = SOURCE_ROOT; };
-		BCE4C3B80EFA650100ABC3C6 /* ElementEditorGui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ElementEditorGui.h; path = src/ElementEditor/ElementEditorGui.h; sourceTree = SOURCE_ROOT; };
-		E585FDB3086C3E3200CBD5E1 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
-		E5C9EE150781B71C00629D4E /* YapukaD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YapukaD.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		61A9DFBF0B833E9600BC506C /* yapuka.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = yapuka.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		61A9DFC90B833EF200BC506C /* yapukaD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = yapukaD.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		61A9DFD20B833F1500BC506C /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
+		61A9DFD30B833F1500BC506C /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
+		61A9DFD40B833F1500BC506C /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
+		61A9DFD50B833F1500BC506C /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		61A9DFD60B833F1500BC506C /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
+		BC39AF3B0F8F70A100568C99 /* macosx.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = macosx.css; path = resources/css/macosx.css; sourceTree = SOURCE_ROOT; };
+		BC39AF3C0F8F70A100568C99 /* win32.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = win32.css; path = resources/css/win32.css; sourceTree = SOURCE_ROOT; };
+		BC39AF3D0F8F70A100568C99 /* yapuka.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = yapuka.css; path = resources/css/yapuka.css; sourceTree = SOURCE_ROOT; };
+		BC39AF460F8F70C500568C99 /* ToolPaneAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ToolPaneAttributes.h; path = src/Tools/ToolPaneAttributes.h; sourceTree = SOURCE_ROOT; };
+		BC39AF470F8F70C500568C99 /* ToolPane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ToolPane.h; path = src/Tools/ToolPane.h; sourceTree = SOURCE_ROOT; };
+		BC39AF480F8F70C500568C99 /* ToolPaneAttributes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ToolPaneAttributes.cpp; path = src/Tools/ToolPaneAttributes.cpp; sourceTree = SOURCE_ROOT; };
+		BC39AF490F8F70C500568C99 /* ToolPane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ToolPane.cpp; path = src/Tools/ToolPane.cpp; sourceTree = SOURCE_ROOT; };
+		BC39AF4A0F8F70C500568C99 /* ElementInspector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ElementInspector.cpp; path = src/Tools/ElementInspector.cpp; sourceTree = SOURCE_ROOT; };
+		BC39AF4B0F8F70C500568C99 /* ElementInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ElementInspector.h; path = src/Tools/ElementInspector.h; sourceTree = SOURCE_ROOT; };
+		BC39AF520F8F70CA00568C99 /* ProjectGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ProjectGenerator.cpp; path = src/ProjectGenerator/ProjectGenerator.cpp; sourceTree = SOURCE_ROOT; };
+		BC39AF530F8F70CA00568C99 /* ProjectGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProjectGenerator.h; path = src/ProjectGenerator/ProjectGenerator.h; sourceTree = SOURCE_ROOT; };
+		BC39AF560F8F70D000568C99 /* Yapuka.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Yapuka.h; path = src/Main/Yapuka.h; sourceTree = SOURCE_ROOT; };
+		BC39AF570F8F70D000568C99 /* Preferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Preferences.h; path = src/Main/Preferences.h; sourceTree = SOURCE_ROOT; };
+		BC39AF580F8F70D000568C99 /* Yapuka.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Yapuka.cpp; path = src/Main/Yapuka.cpp; sourceTree = SOURCE_ROOT; };
+		BC39AF590F8F70D000568C99 /* MainWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainWindow.h; path = src/Main/MainWindow.h; sourceTree = SOURCE_ROOT; };
+		BC39AF5A0F8F70D000568C99 /* Preferences.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Preferences.cpp; path = src/Main/Preferences.cpp; sourceTree = SOURCE_ROOT; };
+		BC39AF5B0F8F70D000568C99 /* MainWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MainWindow.cpp; path = src/Main/MainWindow.cpp; sourceTree = SOURCE_ROOT; };
+		BC39AF620F8F70DA00568C99 /* WidgetEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WidgetEditor.cpp; path = src/ElementEditor/WidgetEditor.cpp; sourceTree = SOURCE_ROOT; };
+		BC39AF630F8F70DA00568C99 /* WidgetEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WidgetEditor.h; path = src/ElementEditor/WidgetEditor.h; sourceTree = SOURCE_ROOT; };
+		BC39AF640F8F70DA00568C99 /* WidgetDelegates.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WidgetDelegates.cpp; path = src/ElementEditor/WidgetDelegates.cpp; sourceTree = SOURCE_ROOT; };
+		BC39AF650F8F70DA00568C99 /* WidgetDelegates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WidgetDelegates.h; path = src/ElementEditor/WidgetDelegates.h; sourceTree = SOURCE_ROOT; };
+		BC39AF660F8F70DA00568C99 /* ElementDesc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ElementDesc.cpp; path = src/ElementEditor/ElementDesc.cpp; sourceTree = SOURCE_ROOT; };
+		BC39AF670F8F70DA00568C99 /* ElementDesc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ElementDesc.h; path = src/ElementEditor/ElementDesc.h; sourceTree = SOURCE_ROOT; };
+		BC39AF680F8F70DA00568C99 /* ElementEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ElementEditor.cpp; path = src/ElementEditor/ElementEditor.cpp; sourceTree = SOURCE_ROOT; };
+		BC39AF690F8F70DA00568C99 /* ElementEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ElementEditor.h; path = src/ElementEditor/ElementEditor.h; sourceTree = SOURCE_ROOT; };
+		BC39AF6A0F8F70DA00568C99 /* ElementEditorGui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ElementEditorGui.cpp; path = src/ElementEditor/ElementEditorGui.cpp; sourceTree = SOURCE_ROOT; };
+		BC39AF6B0F8F70DA00568C99 /* ElementEditorGui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ElementEditorGui.h; path = src/ElementEditor/ElementEditorGui.h; sourceTree = SOURCE_ROOT; };
+		BC39AF6C0F8F70DA00568C99 /* FrameEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FrameEditor.cpp; path = src/ElementEditor/FrameEditor.cpp; sourceTree = SOURCE_ROOT; };
+		BC39AF6D0F8F70DA00568C99 /* FrameEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FrameEditor.h; path = src/ElementEditor/FrameEditor.h; sourceTree = SOURCE_ROOT; };
+		BC6A09AB0EF92BAB00881ACF /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
+		BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nui3.xcodeproj; path = ../../nui3.xcodeproj; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		91CC2B100744CEA30018CBED /* Frameworks */ = {
+		61A9DFBD0B833E9600BC506C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				91CC2B2B0744CF9E0018CBED /* OpenGL.framework in Frameworks */,
-				91CC2B320744CFC80018CBED /* Carbon.framework in Frameworks */,
-				91CC2B4F0744D00F0018CBED /* CoreFoundation.framework in Frameworks */,
-				91CC2B500744D00F0018CBED /* CoreServices.framework in Frameworks */,
-				E585FDB4086C3E3200CBD5E1 /* AGL.framework in Frameworks */,
-				BC1A622A0E63321D00BDD037 /* libnui3.a in Frameworks */,
+				61A9DFD70B833F1500BC506C /* AGL.framework in Frameworks */,
+				61A9DFD80B833F1500BC506C /* CoreFoundation.framework in Frameworks */,
+				61A9DFD90B833F1500BC506C /* CoreServices.framework in Frameworks */,
+				61A9DFDA0B833F1500BC506C /* Carbon.framework in Frameworks */,
+				61A9DFDB0B833F1500BC506C /* OpenGL.framework in Frameworks */,
+				BCBCB15F0DFD45BD002E8BC3 /* libnui3.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E5C9EE0E0781B71C00629D4E /* Frameworks */ = {
+		61A9DFC70B833EF200BC506C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E5C9EE100781B71C00629D4E /* OpenGL.framework in Frameworks */,
-				E5C9EE110781B71C00629D4E /* Carbon.framework in Frameworks */,
-				E5C9EE120781B71C00629D4E /* CoreFoundation.framework in Frameworks */,
-				E5C9EE130781B71C00629D4E /* CoreServices.framework in Frameworks */,
-				E585FDB5086C3E3200CBD5E1 /* AGL.framework in Frameworks */,
-				BC1A622B0E63322000BDD037 /* libnui3D.a in Frameworks */,
+				61A9DFDC0B833F1500BC506C /* AGL.framework in Frameworks */,
+				61A9DFDD0B833F1500BC506C /* CoreFoundation.framework in Frameworks */,
+				61A9DFDE0B833F1500BC506C /* CoreServices.framework in Frameworks */,
+				61A9DFDF0B833F1500BC506C /* Carbon.framework in Frameworks */,
+				61A9DFE00B833F1500BC506C /* OpenGL.framework in Frameworks */,
+				BCBCB1600DFD45C1002E8BC3 /* libnui3D.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		91CC2AFB0744CE480018CBED = {
+		61A9DE3D0B833C9200BC506C = {
 			isa = PBXGroup;
 			children = (
-				BC357F820F8EA024006C70E9 /* Resources */,
-				BC0B23FE0E012FC800536AC9 /* css */,
-				91CC2B0C0744CE7B0018CBED /* Dependency */,
-				91CC2B030744CE540018CBED /* Source */,
-				91CC2B130744CEA30018CBED /* Products */,
+				BC6A09CA0EF9300600881ACF /* css */,
+				BC6A09A20EF92B4B00881ACF /* resources */,
+				61A9DE4A0B833CD000BC506C /* sources */,
+				61A9DE490B833CB000BC506C /* dependancies */,
+				61A9DFB50B833DE500BC506C /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		91CC2B030744CE540018CBED /* Source */ = {
+		61A9DE490B833CB000BC506C /* dependancies */ = {
 			isa = PBXGroup;
 			children = (
-				BCE4C3510EFA61DD00ABC3C6 /* Main */,
-				BCE4C3530EFA61EC00ABC3C6 /* ProjectGenerator */,
-				BCE4C3520EFA61E400ABC3C6 /* ElementEditor */,
-				BCE4C3540EFA61F500ABC3C6 /* Tools */,
+				BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */,
+				61A9DFD20B833F1500BC506C /* AGL.framework */,
+				61A9DFD30B833F1500BC506C /* CoreFoundation.framework */,
+				61A9DFD40B833F1500BC506C /* CoreServices.framework */,
+				61A9DFD50B833F1500BC506C /* Carbon.framework */,
+				61A9DFD60B833F1500BC506C /* OpenGL.framework */,
 			);
-			name = Source;
+			name = dependancies;
 			sourceTree = "<group>";
 		};
-		91CC2B0C0744CE7B0018CBED /* Dependency */ = {
+		61A9DE4A0B833CD000BC506C /* sources */ = {
 			isa = PBXGroup;
 			children = (
-				BC1A621A0E63320C00BDD037 /* nui3.xcodeproj */,
-				E585FDB3086C3E3200CBD5E1 /* AGL.framework */,
-				91CC2B4D0744D00F0018CBED /* CoreFoundation.framework */,
-				91CC2B4E0744D00F0018CBED /* CoreServices.framework */,
-				91CC2B310744CFC80018CBED /* Carbon.framework */,
-				91CC2B290744CF9E0018CBED /* OpenGL.framework */,
+				BC39AF3F0F8F70AC00568C99 /* ElementEditor */,
+				BC39AF430F8F70B100568C99 /* Main */,
+				BC39AF440F8F70B500568C99 /* ProjectGenerator */,
+				BC39AF450F8F70BA00568C99 /* Tools */,
 			);
-			name = Dependency;
+			name = sources;
 			sourceTree = "<group>";
 		};
-		91CC2B130744CEA30018CBED /* Products */ = {
+		61A9DFB50B833DE500BC506C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				91CC2B120744CEA30018CBED /* Yapuka.app */,
-				E5C9EE150781B71C00629D4E /* YapukaD.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		BC0B23FE0E012FC800536AC9 /* css */ = {
-			isa = PBXGroup;
-			children = (
-				BC13B6C70F8EA2360019B881 /* macosx.css */,
-				BC13B6C80F8EA2360019B881 /* win32.css */,
-				BC0B24000E01301200536AC9 /* yapuka.css */,
-			);
-			name = css;
-			sourceTree = "<group>";
-		};
-		BC1A621B0E63320C00BDD037 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				BC1A62230E63320C00BDD037 /* libnui3D.a */,
-				BC1A62250E63320C00BDD037 /* libnui3.a */,
-				BC09B0310F0E5A8700956432 /* libnui3D cocoa.a */,
+				61A9DFBF0B833E9600BC506C /* yapuka.app */,
+				61A9DFC90B833EF200BC506C /* yapukaD.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		BC357F820F8EA024006C70E9 /* Resources */ = {
+		BC39AF3F0F8F70AC00568C99 /* ElementEditor */ = {
 			isa = PBXGroup;
 			children = (
-				BC357F840F8EA036006C70E9 /* Info.plist */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
-		BCE4C3510EFA61DD00ABC3C6 /* Main */ = {
-			isa = PBXGroup;
-			children = (
-				BCE4C3550EFA622000ABC3C6 /* MainWindow.cpp */,
-				BCE4C3560EFA622000ABC3C6 /* MainWindow.h */,
-				BCE4C3570EFA622000ABC3C6 /* Preferences.cpp */,
-				BCE4C3580EFA622000ABC3C6 /* Preferences.h */,
-				BCE4C3590EFA622000ABC3C6 /* Yapuka.cpp */,
-				BCE4C35A0EFA622000ABC3C6 /* Yapuka.h */,
-			);
-			name = Main;
-			sourceTree = "<group>";
-		};
-		BCE4C3520EFA61E400ABC3C6 /* ElementEditor */ = {
-			isa = PBXGroup;
-			children = (
-				BCE4C3B70EFA650100ABC3C6 /* ElementEditorGui.cpp */,
-				BCE4C3B80EFA650100ABC3C6 /* ElementEditorGui.h */,
-				BCE4C3650EFA623B00ABC3C6 /* ElementDesc.cpp */,
-				BCE4C3660EFA623B00ABC3C6 /* ElementDesc.h */,
-				BCE4C3670EFA623B00ABC3C6 /* ElementEditor.cpp */,
-				BCE4C3680EFA623B00ABC3C6 /* ElementEditor.h */,
-				BCE4C3690EFA623B00ABC3C6 /* FrameEditor.cpp */,
-				BCE4C36A0EFA623B00ABC3C6 /* FrameEditor.h */,
-				BCE4C36B0EFA623B00ABC3C6 /* WidgetDelegates.cpp */,
-				BCE4C36C0EFA623B00ABC3C6 /* WidgetDelegates.h */,
-				BCE4C36D0EFA623B00ABC3C6 /* WidgetEditor.cpp */,
-				BCE4C36E0EFA623B00ABC3C6 /* WidgetEditor.h */,
+				BC39AF620F8F70DA00568C99 /* WidgetEditor.cpp */,
+				BC39AF630F8F70DA00568C99 /* WidgetEditor.h */,
+				BC39AF640F8F70DA00568C99 /* WidgetDelegates.cpp */,
+				BC39AF650F8F70DA00568C99 /* WidgetDelegates.h */,
+				BC39AF660F8F70DA00568C99 /* ElementDesc.cpp */,
+				BC39AF670F8F70DA00568C99 /* ElementDesc.h */,
+				BC39AF680F8F70DA00568C99 /* ElementEditor.cpp */,
+				BC39AF690F8F70DA00568C99 /* ElementEditor.h */,
+				BC39AF6A0F8F70DA00568C99 /* ElementEditorGui.cpp */,
+				BC39AF6B0F8F70DA00568C99 /* ElementEditorGui.h */,
+				BC39AF6C0F8F70DA00568C99 /* FrameEditor.cpp */,
+				BC39AF6D0F8F70DA00568C99 /* FrameEditor.h */,
 			);
 			name = ElementEditor;
 			sourceTree = "<group>";
 		};
-		BCE4C3530EFA61EC00ABC3C6 /* ProjectGenerator */ = {
+		BC39AF430F8F70B100568C99 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				BCE4C3610EFA622E00ABC3C6 /* ProjectGenerator.cpp */,
-				BCE4C3620EFA622E00ABC3C6 /* ProjectGenerator.h */,
+				BC39AF560F8F70D000568C99 /* Yapuka.h */,
+				BC39AF570F8F70D000568C99 /* Preferences.h */,
+				BC39AF580F8F70D000568C99 /* Yapuka.cpp */,
+				BC39AF590F8F70D000568C99 /* MainWindow.h */,
+				BC39AF5A0F8F70D000568C99 /* Preferences.cpp */,
+				BC39AF5B0F8F70D000568C99 /* MainWindow.cpp */,
+			);
+			name = Main;
+			sourceTree = "<group>";
+		};
+		BC39AF440F8F70B500568C99 /* ProjectGenerator */ = {
+			isa = PBXGroup;
+			children = (
+				BC39AF520F8F70CA00568C99 /* ProjectGenerator.cpp */,
+				BC39AF530F8F70CA00568C99 /* ProjectGenerator.h */,
 			);
 			name = ProjectGenerator;
 			sourceTree = "<group>";
 		};
-		BCE4C3540EFA61F500ABC3C6 /* Tools */ = {
+		BC39AF450F8F70BA00568C99 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
-				BCE4C3790EFA624800ABC3C6 /* ElementInspector.cpp */,
-				BCE4C37A0EFA624800ABC3C6 /* ElementInspector.h */,
-				BCE4C37B0EFA624800ABC3C6 /* ToolPane.cpp */,
-				BCE4C37C0EFA624800ABC3C6 /* ToolPane.h */,
-				BCE4C37D0EFA624800ABC3C6 /* ToolPaneAttributes.cpp */,
-				BCE4C37E0EFA624800ABC3C6 /* ToolPaneAttributes.h */,
+				BC39AF460F8F70C500568C99 /* ToolPaneAttributes.h */,
+				BC39AF470F8F70C500568C99 /* ToolPane.h */,
+				BC39AF480F8F70C500568C99 /* ToolPaneAttributes.cpp */,
+				BC39AF490F8F70C500568C99 /* ToolPane.cpp */,
+				BC39AF4A0F8F70C500568C99 /* ElementInspector.cpp */,
+				BC39AF4B0F8F70C500568C99 /* ElementInspector.h */,
 			);
 			name = Tools;
+			sourceTree = "<group>";
+		};
+		BC6A09A20EF92B4B00881ACF /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				BC6A09AB0EF92BAB00881ACF /* Info.plist */,
+			);
+			name = resources;
+			sourceTree = "<group>";
+		};
+		BC6A09CA0EF9300600881ACF /* css */ = {
+			isa = PBXGroup;
+			children = (
+				BC39AF3B0F8F70A100568C99 /* macosx.css */,
+				BC39AF3C0F8F70A100568C99 /* win32.css */,
+				BC39AF3D0F8F70A100568C99 /* yapuka.css */,
+			);
+			name = css;
+			sourceTree = "<group>";
+		};
+		BCBCB1530DFD45B5002E8BC3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BCBCB15C0DFD45B6002E8BC3 /* libnui3D.a */,
+				BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */,
+				BC39AF380F8F708C00568C99 /* libnui3D cocoa.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		91CC2B110744CEA30018CBED /* Yapuka */ = {
+		61A9DFBE0B833E9600BC506C /* yapuka */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E5A754BB08551A26002B185C /* Build configuration list for PBXNativeTarget "Yapuka" */;
+			buildConfigurationList = 61A9DFC20B833E9600BC506C /* Build configuration list for PBXNativeTarget "yapuka" */;
 			buildPhases = (
-				91CC2B0F0744CEA30018CBED /* Sources */,
-				91CC2B100744CEA30018CBED /* Frameworks */,
-				BC0B23C10E012F4200536AC9 /* ShellScript */,
-				BC357F900F8EA086006C70E9 /* Resources */,
+				61A9DFBB0B833E9600BC506C /* Resources */,
+				61A9DFBC0B833E9600BC506C /* Sources */,
+				61A9DFBD0B833E9600BC506C /* Frameworks */,
+				BC6A09BE0EF92F1B00881ACF /* Copy Resources Script */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				BC1A62290E63321800BDD037 /* PBXTargetDependency */,
+				BCBCB1640DFD45FA002E8BC3 /* PBXTargetDependency */,
 			);
-			name = Yapuka;
-			productName = nuitest;
-			productReference = 91CC2B120744CEA30018CBED /* Yapuka.app */;
+			name = yapuka;
+			productName = Temp;
+			productReference = 61A9DFBF0B833E9600BC506C /* yapuka.app */;
 			productType = "com.apple.product-type.application";
 		};
-		E5C9EE030781B71C00629D4E /* YapukaD */ = {
+		61A9DFC80B833EF200BC506C /* yapukaD */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E5A754C308551A26002B185C /* Build configuration list for PBXNativeTarget "YapukaD" */;
+			buildConfigurationList = 61A9DFCC0B833EF300BC506C /* Build configuration list for PBXNativeTarget "yapukaD" */;
 			buildPhases = (
-				E5C9EE090781B71C00629D4E /* Sources */,
-				E5C9EE0E0781B71C00629D4E /* Frameworks */,
-				BC0B23BE0E012F2000536AC9 /* ShellScript */,
-				BC357F910F8EA086006C70E9 /* Resources */,
+				61A9DFC60B833EF200BC506C /* Sources */,
+				61A9DFC70B833EF200BC506C /* Frameworks */,
+				BC6A09BC0EF92EBF00881ACF /* Copy Resources Script */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				BC1A62270E63321200BDD037 /* PBXTargetDependency */,
+				BCBCB1660DFD4605002E8BC3 /* PBXTargetDependency */,
 			);
-			name = YapukaD;
-			productName = nuitest;
-			productReference = E5C9EE150781B71C00629D4E /* YapukaD.app */;
+			name = yapukaD;
+			productName = Tempd;
+			productReference = 61A9DFC90B833EF200BC506C /* yapukaD.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		91CC2AFF0744CE480018CBED /* Project object */ = {
+		61A9DE3F0B833C9200BC506C /* Project object */ = {
 			isa = PBXProject;
-			buildConfigurationList = E5A754C708551A26002B185C /* Build configuration list for PBXProject "yapuka" */;
-			compatibilityVersion = "Xcode 2.4";
-			hasScannedForEncodings = 1;
-			mainGroup = 91CC2AFB0744CE480018CBED;
-			productRefGroup = 91CC2B130744CEA30018CBED /* Products */;
+			buildConfigurationList = 61A9DE400B833C9200BC506C /* Build configuration list for PBXProject "yapuka" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 0;
+			mainGroup = 61A9DE3D0B833C9200BC506C;
+			productRefGroup = 61A9DFB50B833DE500BC506C /* Products */;
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = BC1A621B0E63320C00BDD037 /* Products */;
-					ProjectRef = BC1A621A0E63320C00BDD037 /* nui3.xcodeproj */;
+					ProductGroup = BCBCB1530DFD45B5002E8BC3 /* Products */;
+					ProjectRef = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
 				},
 			);
 			projectRoot = "";
 			targets = (
-				91CC2B110744CEA30018CBED /* Yapuka */,
-				E5C9EE030781B71C00629D4E /* YapukaD */,
+				61A9DFBE0B833E9600BC506C /* yapuka */,
+				61A9DFC80B833EF200BC506C /* yapukaD */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		BC09B0310F0E5A8700956432 /* libnui3D cocoa.a */ = {
+		BC39AF380F8F708C00568C99 /* libnui3D cocoa.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libnui3D cocoa.a";
-			remoteRef = BC09B0300F0E5A8700956432 /* PBXContainerItemProxy */;
+			remoteRef = BC39AF370F8F708C00568C99 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		BC1A62230E63320C00BDD037 /* libnui3D.a */ = {
+		BCBCB15C0DFD45B6002E8BC3 /* libnui3D.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libnui3D.a;
-			remoteRef = BC1A62220E63320C00BDD037 /* PBXContainerItemProxy */;
+			remoteRef = BCBCB15B0DFD45B6002E8BC3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		BC1A62250E63320C00BDD037 /* libnui3.a */ = {
+		BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libnui3.a;
-			remoteRef = BC1A62240E63320C00BDD037 /* PBXContainerItemProxy */;
+			remoteRef = BCBCB15D0DFD45B6002E8BC3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
-		BC357F900F8EA086006C70E9 /* Resources */ = {
+		61A9DFBB0B833E9600BC506C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC13B6C90F8EA2360019B881 /* macosx.css in Resources */,
-				BC13B6CA0F8EA2360019B881 /* win32.css in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		BC357F910F8EA086006C70E9 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BC13B6CB0F8EA2360019B881 /* macosx.css in Resources */,
-				BC13B6CC0F8EA2360019B881 /* win32.css in Resources */,
+				BC6A09AD0EF92BAB00881ACF /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		BC0B23BE0E012F2000536AC9 /* ShellScript */ = {
+		BC6A09BC0EF92EBF00881ACF /* Copy Resources Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Copy Resources Script";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "rsync -rC ./resources/ --exclude \".*\" $BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\n../../../nui3/tools/make_rc.py resources resource.rc\n";
+			shellScript = "rsync -rC ./resources/ --exclude \".*\" \"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"\n../../tools/make_rc.py resources resource.rc\necho 0 ICON \\\"resources/icon.ico\\\" >> resource.rc\n";
 		};
-		BC0B23C10E012F4200536AC9 /* ShellScript */ = {
+		BC6A09BE0EF92F1B00881ACF /* Copy Resources Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Copy Resources Script";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "rsync -rC ./resources/ --exclude \".*\" $BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\n../../../nui3/tools/make_rc.py resources resource.rc";
+			shellScript = "rsync -rC ./resources/ --exclude \".*\" \"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"\n../../tools/make_rc.py resources resource.rc\necho 0 ICON \\\"resources/icon.ico\\\" >> resource.rc\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		91CC2B0F0744CEA30018CBED /* Sources */ = {
+		61A9DFBC0B833E9600BC506C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BCE4C35E0EFA622000ABC3C6 /* MainWindow.cpp in Sources */,
-				BCE4C35F0EFA622000ABC3C6 /* Preferences.cpp in Sources */,
-				BCE4C3600EFA622000ABC3C6 /* Yapuka.cpp in Sources */,
-				BCE4C3640EFA622E00ABC3C6 /* ProjectGenerator.cpp in Sources */,
-				BCE4C3740EFA623B00ABC3C6 /* ElementDesc.cpp in Sources */,
-				BCE4C3750EFA623B00ABC3C6 /* ElementEditor.cpp in Sources */,
-				BCE4C3760EFA623B00ABC3C6 /* FrameEditor.cpp in Sources */,
-				BCE4C3770EFA623B00ABC3C6 /* WidgetDelegates.cpp in Sources */,
-				BCE4C3780EFA623B00ABC3C6 /* WidgetEditor.cpp in Sources */,
-				BCE4C3820EFA624800ABC3C6 /* ElementInspector.cpp in Sources */,
-				BCE4C3830EFA624800ABC3C6 /* ToolPane.cpp in Sources */,
-				BCE4C3840EFA624800ABC3C6 /* ToolPaneAttributes.cpp in Sources */,
-				BCE4C3BA0EFA650100ABC3C6 /* ElementEditorGui.cpp in Sources */,
+				BC39AF4C0F8F70C500568C99 /* ToolPaneAttributes.cpp in Sources */,
+				BC39AF4D0F8F70C500568C99 /* ToolPane.cpp in Sources */,
+				BC39AF4E0F8F70C500568C99 /* ElementInspector.cpp in Sources */,
+				BC39AF540F8F70CA00568C99 /* ProjectGenerator.cpp in Sources */,
+				BC39AF5C0F8F70D000568C99 /* Yapuka.cpp in Sources */,
+				BC39AF5D0F8F70D000568C99 /* Preferences.cpp in Sources */,
+				BC39AF5E0F8F70D000568C99 /* MainWindow.cpp in Sources */,
+				BC39AF6E0F8F70DA00568C99 /* WidgetEditor.cpp in Sources */,
+				BC39AF6F0F8F70DA00568C99 /* WidgetDelegates.cpp in Sources */,
+				BC39AF700F8F70DA00568C99 /* ElementDesc.cpp in Sources */,
+				BC39AF710F8F70DA00568C99 /* ElementEditor.cpp in Sources */,
+				BC39AF720F8F70DA00568C99 /* ElementEditorGui.cpp in Sources */,
+				BC39AF730F8F70DA00568C99 /* FrameEditor.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E5C9EE090781B71C00629D4E /* Sources */ = {
+		61A9DFC60B833EF200BC506C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BCE4C35B0EFA622000ABC3C6 /* MainWindow.cpp in Sources */,
-				BCE4C35C0EFA622000ABC3C6 /* Preferences.cpp in Sources */,
-				BCE4C35D0EFA622000ABC3C6 /* Yapuka.cpp in Sources */,
-				BCE4C3630EFA622E00ABC3C6 /* ProjectGenerator.cpp in Sources */,
-				BCE4C36F0EFA623B00ABC3C6 /* ElementDesc.cpp in Sources */,
-				BCE4C3700EFA623B00ABC3C6 /* ElementEditor.cpp in Sources */,
-				BCE4C3710EFA623B00ABC3C6 /* FrameEditor.cpp in Sources */,
-				BCE4C3720EFA623B00ABC3C6 /* WidgetDelegates.cpp in Sources */,
-				BCE4C3730EFA623B00ABC3C6 /* WidgetEditor.cpp in Sources */,
-				BCE4C37F0EFA624800ABC3C6 /* ElementInspector.cpp in Sources */,
-				BCE4C3800EFA624800ABC3C6 /* ToolPane.cpp in Sources */,
-				BCE4C3810EFA624800ABC3C6 /* ToolPaneAttributes.cpp in Sources */,
-				BCE4C3B90EFA650100ABC3C6 /* ElementEditorGui.cpp in Sources */,
+				BC39AF4F0F8F70C500568C99 /* ToolPaneAttributes.cpp in Sources */,
+				BC39AF500F8F70C500568C99 /* ToolPane.cpp in Sources */,
+				BC39AF510F8F70C500568C99 /* ElementInspector.cpp in Sources */,
+				BC39AF550F8F70CA00568C99 /* ProjectGenerator.cpp in Sources */,
+				BC39AF5F0F8F70D000568C99 /* Yapuka.cpp in Sources */,
+				BC39AF600F8F70D000568C99 /* Preferences.cpp in Sources */,
+				BC39AF610F8F70D000568C99 /* MainWindow.cpp in Sources */,
+				BC39AF740F8F70DA00568C99 /* WidgetEditor.cpp in Sources */,
+				BC39AF750F8F70DA00568C99 /* WidgetDelegates.cpp in Sources */,
+				BC39AF760F8F70DA00568C99 /* ElementDesc.cpp in Sources */,
+				BC39AF770F8F70DA00568C99 /* ElementEditor.cpp in Sources */,
+				BC39AF780F8F70DA00568C99 /* ElementEditorGui.cpp in Sources */,
+				BC39AF790F8F70DA00568C99 /* FrameEditor.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		BC1A62270E63321200BDD037 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = nui3D;
-			targetProxy = BC1A62260E63321200BDD037 /* PBXContainerItemProxy */;
-		};
-		BC1A62290E63321800BDD037 /* PBXTargetDependency */ = {
+		BCBCB1640DFD45FA002E8BC3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = nui3;
-			targetProxy = BC1A62280E63321800BDD037 /* PBXContainerItemProxy */;
+			targetProxy = BCBCB1630DFD45FA002E8BC3 /* PBXContainerItemProxy */;
+		};
+		BCBCB1660DFD4605002E8BC3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = nui3D;
+			targetProxy = BCBCB1650DFD4605002E8BC3 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		E5A754BE08551A26002B185C /* Default */ = {
+		61A9DE410B833C9200BC506C /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
-				INSTALL_PATH = "$(USER_APPS_DIR)";
-				OTHER_CFLAGS = "";
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = Yapuka;
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
+				COPY_PHASE_STRIP = NO;
+				HEADER_SEARCH_PATHS = ../../include;
+				INFOPLIST_FILE = Info.plist;
 			};
 			name = Default;
 		};
-		E5A754C608551A26002B185C /* Default */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH)";
-				GCC_DEBUGGING_SYMBOLS = used;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					_DEBUG_,
-					_DEBUG,
-				);
-				INSTALL_PATH = "$(USER_APPS_DIR)";
-				OTHER_CFLAGS = "";
-				PRODUCT_NAME = YapukaD;
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-			};
-			name = Default;
-		};
-		E5A754CA08551A26002B185C /* Default */ = {
+		61A9DFC30B833E9600BC506C /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = (
 					ppc,
 					i386,
 				);
-				COPY_PHASE_STRIP = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/src/**",
-					"$(SRCROOT)/../../include/",
-				);
+				COPY_PHASE_STRIP = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = s;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = "-lz";
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+				PREBINDING = YES;
+				PRODUCT_NAME = yapuka;
+				STRIP_INSTALLED_PRODUCT = YES;
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = NO;
+			};
+			name = Default;
+		};
+		61A9DFCD0B833EF300BC506C /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DEBUGGING_SYMBOLS = full;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = _DEBUG;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = "-lz";
+				PREBINDING = YES;
+				PRODUCT_NAME = yapukaD;
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = NO;
 			};
 			name = Default;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E5A754BB08551A26002B185C /* Build configuration list for PBXNativeTarget "Yapuka" */ = {
+		61A9DE400B833C9200BC506C /* Build configuration list for PBXProject "yapuka" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E5A754BE08551A26002B185C /* Default */,
+				61A9DE410B833C9200BC506C /* Default */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Default;
 		};
-		E5A754C308551A26002B185C /* Build configuration list for PBXNativeTarget "YapukaD" */ = {
+		61A9DFC20B833E9600BC506C /* Build configuration list for PBXNativeTarget "yapuka" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E5A754C608551A26002B185C /* Default */,
+				61A9DFC30B833E9600BC506C /* Default */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Default;
 		};
-		E5A754C708551A26002B185C /* Build configuration list for PBXProject "yapuka" */ = {
+		61A9DFCC0B833EF300BC506C /* Build configuration list for PBXNativeTarget "yapukaD" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E5A754CA08551A26002B185C /* Default */,
+				61A9DFCD0B833EF300BC506C /* Default */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Default;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 91CC2AFF0744CE480018CBED /* Project object */;
+	rootObject = 61A9DE3F0B833C9200BC506C /* Project object */;
 }
