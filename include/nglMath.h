@@ -325,7 +325,7 @@ inline int32 nuiSign(float f)
 
 inline double nuiAbs(double f) 
 {
-  int64 i = ((*(int64*)&f) & (((int64)1 << 63)-1));
+  uint64 i = ((*(uint64*)&f) & (((uint64)1 << 63)-1));
   return (*(double*)&i);
 }
 
