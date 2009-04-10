@@ -1047,19 +1047,28 @@ void nuiDefaultDecoration::FileSelector_FolderIcon(nuiWidget* pWidget)
 
 void nuiDefaultDecoration::FileSelector_TreeView(nuiWidget* pWidget)
 {
-  nuiGradientDecoration* pDeco = (nuiGradientDecoration*)nuiDecoration::Get(_T("nuiDefaultDecorationWindow"));
+//  nuiGradientDecoration* pDeco = (nuiGradientDecoration*)nuiDecoration::Get(_T("nuiDefaultDecorationFileSelectorWindow"));
+//  if (!pDeco)
+//  {
+////  nuiGradientDecoration* pDeco;
+//    nuiColor color1, color2;
+//    nuiColor::GetColor(_T("nuiDefaultClrWindowBkg1"), color1);
+//    nuiColor::GetColor(_T("nuiDefaultClrWindowBkg2"), color2);
+//    
+//    pDeco = new nuiGradientDecoration(_T("nuiDefaultDecorationFileSelectorWindow"), 
+//                                      nuiRect(0,0, 0,0), color1, color2, nuiVertical, 1, nuiColor(175,175,175), eStrokeAndFillShape);
+//    pDeco->SetOffset1(0.f);
+//    pDeco->SetOffset2(0.5f);
+//  }
+//  pWidget->SetDecoration(pDeco, eDecorationBorder);  
+
+  nuiColorDecoration* pDeco = (nuiColorDecoration*)nuiDecoration::Get(_T("nuiDefaultDecorationFileSelectorWindow"));
   if (!pDeco)
   {
-    nuiColor color1, color2;
-    nuiColor::GetColor(_T("nuiDefaultClrWindowBkg1"), color1);
-    nuiColor::GetColor(_T("nuiDefaultClrWindowBkg2"), color2);
-    
-    pDeco = new nuiGradientDecoration(_T("nuiDefaultDecorationWindow"), 
-                                      nuiRect(0,0, 0,0), color1, color2, nuiVertical, 1, nuiColor(175,175,175), eStrokeAndFillShape);
-    pDeco->SetOffset1(0.f);
-    pDeco->SetOffset2(0.5f);
+    pDeco = new nuiColorDecoration(_T("nuiDefaultDecorationFileSelectorWindow"), nuiColor(250,250,250), 1, nuiColor(175,175,175), eStrokeAndFillShape);
   }
   pWidget->SetDecoration(pDeco, eDecorationBorder);  
+  
 }
 
 

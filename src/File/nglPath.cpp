@@ -825,7 +825,7 @@ wchar_t prout[1024];
 	return true;
 
 #else
-  if (mPathName.GetLeft(4) == _T("/net"))
+  if ((mPathName.GetLeft(4) == _T("/net")) || (mPathName.GetLeft(4) == _T("/home")))
   {
     rInfo.Exists	 = false;
     rInfo.IsLeaf   = true;
