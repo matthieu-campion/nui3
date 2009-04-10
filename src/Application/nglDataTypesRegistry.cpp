@@ -49,7 +49,6 @@ nglNativeObjectType nglDataTypesRegistry::RegisterDataType(const nglString& rMim
   }
 #endif
   
-  if (Type == 'nui3')
   {
     std::map<nglString, nglNativeObjectType>::iterator it = mRegisteredNativeTypes.find(rMimeType);
     
@@ -58,25 +57,24 @@ nglNativeObjectType nglDataTypesRegistry::RegisterDataType(const nglString& rMim
     else
     // dynamically generate a new Type
     {
-      uint32 size = mRegisteredNativeTypes.size(); // use the size (on 24bits, we should not have any overflow:) ) of the map as a unique index
-      Type = ('n' << 24) | (size & 0xffffff);
+      if (Type == 'nui3')
+      {
+        uint32 size = mRegisteredNativeTypes.size(); // use the size (on 24bits, we should not have any overflow:) ) of the map as a unique index
+        Type = ('n' << 24) | (size & 0xffffff);
+      }
 
       // LBTODO ?
       mDataObjectCreators[rMimeType] = pCreator;
       mRegisteredNativeTypes[rMimeType] = Type;
     }
   }
-  else
-    Type = Type;
-  
-  
   
   return Type;
 }
 
 bool nglDataTypesRegistry::GetRegisteredMimeType(nglNativeObjectType Type, nglString& rMimeType)
 {
-  for (std::map<nglString, nglNativeObjectType>::iterator it = mRegisteredNativeTypes.begin(); it != mRegisteredNativeTypes.end(); it++)
+  for (std::map<nglString, nglNativeObjectType>::iterator it = mRegisteredNativeTypes.begin(); it != mRegisteredNativeTypes.end(); ++it)
   {
     if (it->second == Type)
     {
