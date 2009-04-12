@@ -923,7 +923,7 @@ void nuiFontManager::GetSystemFolders(std::map<nglString, nglPath>& rFolders)
 #elif (defined _CARBON_)
   rFolders[_T("System0")] = _T("/System/Library/Fonts/");
   rFolders[_T("System1")] = _T("/Library/Fonts/");
-#elif (defined TARGET_IPHONE_SIMULATOR)
+#elif TARGET_IPHONE_SIMULATOR
   rFolders[_T("System0")] = _T("/System/Library/Fonts/");
   //rFolders[_T("System1")] = _T("/Library/Fonts/");
 #elif (defined _UIKIT_)

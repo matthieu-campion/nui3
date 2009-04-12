@@ -62,32 +62,52 @@ OSStatus AudioUnitCallback(void* inRefCon,
 
 void nuiAudioDevice_AudioUnit::Process(uint uNumFrames, AudioBufferList* ioData)
 {
-  NGL_OUT(_T("nuiAudioDevice_AudioUnit::Process uNumFrames %d    %d %d\n"),uNumFrames, ioData->mBuffers[0].mNumberChannels, ioData->mBuffers[1].mNumberChannels );
+  //NGL_OUT(_T("nuiAudioDevice_AudioUnit::Process uNumFrames %d    %d %d\n"),uNumFrames, ioData->mBuffers[0].mNumberChannels, ioData->mBuffers[1].mNumberChannels );
   
-  int32* dst0 = (int32*)ioData->mBuffers[0].mData;
-  int32* dst1 = (int32*)ioData->mBuffers[1].mData;
+  mAudioProcessFn(mInputBuffers, mOutputBuffers, uNumFrames);
 
   const float* ptr0 = mOutputBuffers[0];
   const float* ptr1 = mOutputBuffers[1];
 
-  mAudioProcessFn(mInputBuffers, mOutputBuffers, uNumFrames);
-
   // copy buffers (int -> float)
-    
-  const int32 mult = ((1 << 24) - 1);
-  for (uint32 s = 0; s < uNumFrames; s++)
+  if (ioData->mNumberBuffers == 2)
   {
-    const float sl = *ptr0;
-    const float sr = *ptr1;
+    int32* dst0 = (int32*)ioData->mBuffers[0].mData;
+    int32* dst1 = (int32*)ioData->mBuffers[1].mData;
     
-    *dst0 = sl * mult;
-    *dst1 = sr * mult;
+    const int32 mult = ((1 << 24) - 1);
+    for (uint32 s = 0; s < uNumFrames; s++)
+    {
+      const float sl = *ptr0;
+      const float sr = *ptr1;
+      
+      *dst0 = sl * mult;
+      *dst1 = sr * mult;
+      
+      dst0++;
+      dst1++;
+      
+      ptr0++;
+      ptr1++;
+    }
+  }
+  else
+  {
+    int32* dst0 = (int32*)ioData->mBuffers[0].mData;
     
-    dst0++;
-    dst1++;
-
-    ptr0++;
-    ptr1++;
+    const int32 mult = ((1 << 24) - 2);
+    for (uint32 s = 0; s < uNumFrames; s++)
+    {
+      const float sl = *ptr0;
+      const float sr = *ptr1;
+      
+      *dst0 = (sl + sr) * mult;
+      
+      dst0++;
+      
+      ptr0++;
+      ptr1++;
+    }
   }
 } 
 

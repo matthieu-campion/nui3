@@ -66,7 +66,7 @@ and in NGL user application code.
 	#include <TargetConditionals.h>
 
 	// Using UIKit for iPhone and iPhone simulator
-	#if (defined (TARGET_IPHONE_SIMULATOR) || defined (TARGET_OS_IPHONE))
+	#if (TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE)
     #define _UIKIT_
     #define _CORE_FOUNDATION_
     #define _NOCLIPBOARD_

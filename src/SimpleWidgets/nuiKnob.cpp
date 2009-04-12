@@ -10,7 +10,7 @@
 #include "nuiDrawContext.h"
 #include "nuiXML.h"
 
-#if (defined (TARGET_IPHONE_SIMULATOR) || defined (TARGET_OS_IPHONE))
+#if TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE
 nuiSize nuiKnob::mDefaultSensitivity = 4;
 #else
 nuiSize nuiKnob::mDefaultSensitivity = 10;

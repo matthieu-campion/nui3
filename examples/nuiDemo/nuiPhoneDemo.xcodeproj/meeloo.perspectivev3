@@ -341,7 +341,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>E5CCBB220C7A385900EB6BD1</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>guiOscillo.cpp</string>
+								<string>asm __dyld__dyld_start  0x2fe01028</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -349,11 +349,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>E5CCBB230C7A385900EB6BD1</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>guiOscillo.cpp</string>
+										<string>asm __dyld__dyld_start  0x2fe01028</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E50890500F91F52D009A428B</string>
+										<string>E50890C60F92433D009A428B</string>
 										<key>history</key>
 										<array>
 											<string>E53BA99A0F67DF010081250C</string>
@@ -366,6 +366,7 @@
 											<string>E508902A0F91F22B009A428B</string>
 											<string>E50890410F91F2CF009A428B</string>
 											<string>E508903F0F91F2C5009A428B</string>
+											<string>E508905D0F91F7A7009A428B</string>
 										</array>
 										<key>nextStack</key>
 										<array>
@@ -611,7 +612,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>E59365260C7AD788001596BD</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>nuiAudioDevice_AudioUnit.cpp</string>
+								<string>nuiInit.cpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -619,11 +620,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>E59365270C7AD788001596BD</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>nuiAudioDevice_AudioUnit.cpp</string>
+										<string>nuiInit.cpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E50890520F91F52D009A428B</string>
+										<string>E50890C70F92433D009A428B</string>
 										<key>history</key>
 										<array>
 											<string>E53BA99A0F67DF010081250C</string>
@@ -634,16 +635,10 @@
 											<string>E50890020F919581009A428B</string>
 											<string>E50890280F91F22B009A428B</string>
 											<string>E50890350F91F254009A428B</string>
-											<string>E50890510F91F52D009A428B</string>
-											<string>E508904F0F91F526009A428B</string>
-										</array>
-										<key>nextStack</key>
-										<array>
-											<string>E508902E0F91F22B009A428B</string>
-											<string>E50890300F91F22B009A428B</string>
-											<string>E50890310F91F22B009A428B</string>
-											<string>E50890320F91F22B009A428B</string>
-											<string>E50890330F91F22B009A428B</string>
+											<string>E508905D0F91F7A7009A428B</string>
+											<string>E50890BA0F9242CD009A428B</string>
+											<string>E50890BB0F9242CD009A428B</string>
+											<string>E50890C50F92433A009A428B</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -653,6 +648,8 @@
 											<string>E52F06510F80E841009DD7B3</string>
 											<string>E52F06850F80F03B009DD7B3</string>
 											<string>E5088FFF0F919580009A428B</string>
+											<string>E50890BE0F9242CD009A428B</string>
+											<string>E50890C40F92433A009A428B</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -893,7 +890,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>261223725.22988799</real>
+	<real>261243709.55711401</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
