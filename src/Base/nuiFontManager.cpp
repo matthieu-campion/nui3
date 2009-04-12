@@ -983,11 +983,11 @@ const nglPath& nuiFontManager::GetFolder(const nglString& rId) const
   return it->second;
 }
 
+static nuiMainWindow* gpWin;
 static nuiLabel* gpFontPathLabel;
 
 void nuiFontManager::ScanFolders(bool rescanAllFolders /* = false */)
 {
-  nuiMainWindow* pWin;
   nuiContextInfo ContextInfo(nuiContextInfo::StandardContext3D);
   nglWindowInfo Info;
   
@@ -999,7 +999,7 @@ void nuiFontManager::ScanFolders(bool rescanAllFolders /* = false */)
   Info.XPos = 0;
   Info.YPos = 0;
 
-  pWin = new nuiMainWindow(ContextInfo, Info);
+  gpWin = new nuiMainWindow(ContextInfo, Info);
   nuiVBox* pBox = new nuiVBox();
   pBox->SetPosition(nuiCenter);
   nuiLabel* pLabel = new nuiLabel(_T("Please wait. Scaning fonts..."));
@@ -1007,8 +1007,8 @@ void nuiFontManager::ScanFolders(bool rescanAllFolders /* = false */)
   //pLabel->SetTextColor(nuiColor(255, 255, 255));
   pBox->AddCell(pLabel, nuiCenter);
   pBox->AddCell(gpFontPathLabel, nuiCenter);
-  pWin->AddChild(pBox);
-  pWin->SetState(nglWindow::eShow);
+  gpWin->AddChild(pBox);
+  gpWin->SetState(nglWindow::eShow);
     
   NGL_DEBUG( NGL_OUT(_T("Scan system fonts....\n")); )
   nglTime start_time;
@@ -1043,7 +1043,7 @@ void nuiFontManager::ScanFolders(bool rescanAllFolders /* = false */)
   double t = end_time - start_time;
   printf("Scanning the system fonts took %f seconds\n", t);
 
-  delete pWin;
+  delete gpWin;
 }
 
 bool nuiFontManager::ScanSubFolder(const nglPath& rBasePath)
@@ -1059,8 +1059,11 @@ bool nuiFontManager::ScanSubFolder(const nglPath& rBasePath)
     // enumerate all the faces of all the fonts:
     const nglPath& rPath(*cit);
     
-    gpFontPathLabel->SetText(nglString().Add(_T("Found ")).Add((int32)mpFonts.size()));
-    App->NonBlockingHeartBeat();
+    if (gpWin)
+    {
+      gpFontPathLabel->SetText(nglString().Add(_T("Found ")).Add((int32)mpFonts.size()));
+      gpWin->ForceRepaint();
+    }
     
     if (rPath.IsLeaf())
     {

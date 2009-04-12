@@ -375,3 +375,8 @@ const nglChar* nglWindow::OnError (uint& rError) const
 {
   return FetchError(gpWindowErrorTable, nglContext::OnError(rError), rError);
 }
+
+void nglWindow::ForceRepaint()
+{
+  CallOnPaint();
+}

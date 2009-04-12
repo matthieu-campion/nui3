@@ -664,6 +664,8 @@ window = new nglWindow (context, info, NULL);
   void EnterModalState();
   bool IsInModalState();
   void ExitModalState();
+
+  void ForceRepaint(); ///< Force the window to call OnPaint and to repaint itself NOW. Unlike Invalidate(), this call is blocking and returns only when the window has been repaint. Beware, most application don't need this!
   
   void SetMainMenu(nuiMainMenu* pMenu); ///< associate a nuiMainMenu to this window, to perform automatic deleting
   nuiMainMenu* GetMainMenu();

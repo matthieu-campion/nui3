@@ -1067,6 +1067,11 @@ void nuiMainWindow::ExitModalState()
   mpNGLWindow->ExitModalState();
 }
 
+void nuiMainWindow::ForceRepaint()
+{
+  mpNGLWindow->ForceRepaint();
+}
+
 void nuiMainWindow::SetMainMenu(nuiMainMenu* pMainMenu)
 {
   mpNGLWindow->SetMainMenu(pMainMenu);

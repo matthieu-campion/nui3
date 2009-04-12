@@ -65,7 +65,6 @@ NULL
 
 TSMDocumentID nuiTSMDocument;
 
-
 /*
  * OS specific info
  */
@@ -960,7 +959,7 @@ void nglWindow::InitDragAndDrop()
 OSStatus nglWindow::WindowEventHandler (EventHandlerCallRef eventHandlerCallRef, EventRef eventRef, void* userData)
 {
   InitDragAndDrop();
-  
+
   OSStatus result = eventNotHandledErr;
   UInt32 eventKind;
   eventKind = GetEventKind(eventRef);
@@ -1975,3 +1974,4 @@ void nglWindow::ExitModalState()
   
   OSStatus err = QuitAppModalLoopForWindow(mWindow);
 }
+

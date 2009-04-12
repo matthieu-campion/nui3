@@ -131,6 +131,7 @@ public:
 
   virtual void EnterModalState();
   virtual void ExitModalState();
+  virtual void ForceRepaint(); ///< Process events that have already arrived on this window's event queue (but don't process events that are not for THIS particular window).
   
   void SetMainMenu(nuiMainMenu* pMainMenu);
   nuiMainMenu* GetMainMenu();
