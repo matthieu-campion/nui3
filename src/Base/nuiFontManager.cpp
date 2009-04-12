@@ -983,8 +983,8 @@ const nglPath& nuiFontManager::GetFolder(const nglString& rId) const
   return it->second;
 }
 
-static nuiMainWindow* gpWin;
-static nuiLabel* gpFontPathLabel;
+static nuiMainWindow* gpWin = NULL;
+static nuiLabel* gpFontPathLabel = NULL;
 
 void nuiFontManager::ScanFolders(bool rescanAllFolders /* = false */)
 {
@@ -999,6 +999,7 @@ void nuiFontManager::ScanFolders(bool rescanAllFolders /* = false */)
   Info.XPos = 0;
   Info.YPos = 0;
 
+#ifndef _UIKIT_
   gpWin = new nuiMainWindow(ContextInfo, Info);
   nuiVBox* pBox = new nuiVBox();
   pBox->SetPosition(nuiCenter);
@@ -1009,7 +1010,8 @@ void nuiFontManager::ScanFolders(bool rescanAllFolders /* = false */)
   pBox->AddCell(gpFontPathLabel, nuiCenter);
   gpWin->AddChild(pBox);
   gpWin->SetState(nglWindow::eShow);
-    
+#endif  
+  
   NGL_DEBUG( NGL_OUT(_T("Scan system fonts....\n")); )
   nglTime start_time;
   
@@ -1044,6 +1046,7 @@ void nuiFontManager::ScanFolders(bool rescanAllFolders /* = false */)
   printf("Scanning the system fonts took %f seconds\n", t);
 
   delete gpWin;
+  gpWin = NULL;
 }
 
 bool nuiFontManager::ScanSubFolder(const nglPath& rBasePath)
