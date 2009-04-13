@@ -93,17 +93,19 @@ void nuiAudioDevice_AudioUnit::Process(uint uNumFrames, AudioBufferList* ioData)
   }
   else
   {
-    int32* dst0 = (int32*)ioData->mBuffers[0].mData;
+    int16* dst0 = (int16*)ioData->mBuffers[0].mData;
     
-    const int32 mult = ((1 << 23) - 1);
+    const int32 mult = ((1 << 16) - 1);
     for (uint32 s = 0; s < uNumFrames; s++)
     {
       const float sl = *ptr0;
       const float sr = *ptr1;
       
-      *dst0 = (sl * mult + sr * mult) ;
-      
+      *dst0 = sl * mult;
       dst0++;
+      *dst0 = sr * mult;
+      dst0++;
+      
       
       ptr0++;
       ptr1++;
