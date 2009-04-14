@@ -166,6 +166,7 @@ set(SOURCES
   src/Decorations/nuiDefaultDecoration.cpp
   src/Decorations/nuiImageDecoration.cpp
   src/Decorations/nuiDecoration.cpp
+  src/Decorations/nuiCheckerboardDecoration.cpp
   src/Decorations/nuiBorderDecoration.cpp
   src/Decorations/nuiTreeHandleDecoration.cpp
   src/Decorations/nuiFrame.cpp
@@ -367,4 +368,5 @@ add_library( nui3 STATIC ${SOURCES} )
 target_link_libraries(nui3 gameswf tidy ${EXPAT_LIBRARIES} ${JPEG_LIBRARIES} ${PNG_LIBRARIES})
 
 add_subdirectory(examples)
+add_subdirectory(tutorials)
 
