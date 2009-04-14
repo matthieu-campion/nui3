@@ -401,6 +401,9 @@ nuiAudioDevice_DirectSound::~nuiAudioDevice_DirectSound()
 
 bool nuiAudioDevice_DirectSound::Open(std::vector<uint32>& rInputChannels, std::vector<uint32>& rOutputChannels, double SampleRate, uint32 BufferSize, nuiAudioProcessFn pProcessFunction)
 {
+  if (!mpDirectSound)
+    return false;
+  
   HRESULT hr = S_OK;
   mAudioProcessFn = pProcessFunction;
 
