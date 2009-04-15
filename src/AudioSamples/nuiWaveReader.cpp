@@ -119,9 +119,7 @@ bool nuiWaveReader::ReadInfo()
 
 uint32 nuiWaveReader::ReadIN(void* pBuffer, uint32 sampleframes, nuiSampleBitFormat format)
 {
-  nglFileOffset oldPos = mrStream.GetPos();
   SetPosition(mPosition);
-  nglFileOffset newPos = mrStream.GetPos();
   const uint64 SamplePointsToRead = sampleframes * mInfo.GetChannels();
   uint64 SampleFramesRead = 0;
   const uint32 channels = mInfo.GetChannels();

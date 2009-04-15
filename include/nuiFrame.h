@@ -53,7 +53,7 @@ public:
 	
 private:
   nuiTexture* mpTexture;
-
+  nglPath mTexturePath;
 	// attributes ***********************************
   nuiColor mColor;
   nuiRect mClientRect;

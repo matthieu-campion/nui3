@@ -44,9 +44,7 @@ nuiFrame::nuiFrame(const nglString& rName, const nglPath& rTexturePath, const nu
   if (SetObjectClass(_T("nuiFrame")))
     InitAttributes();
 	
-  mpTexture = nuiTexture::GetTexture(rTexturePath);
-  if (mpTexture)
-    SetProperty(_T("Texture"), rTexturePath.GetPathName());
+  SetTexturePath(rTexturePath.GetPathName());
   mDebug = false;
   mInterpolated = true;
 }
@@ -121,15 +119,12 @@ nuiXMLNode* nuiFrame::Serialize(nuiXMLNode* pNode)
 
 const nglPath& nuiFrame::GetTexturePath() const
 {
-  if (HasProperty(_T("Texture")))
-    return GetProperty(_T("Texture"));
-
-  return mpTexture->GetSource();
+  return mTexturePath;
 }
 
 void nuiFrame::SetTexturePath(const nglPath& rPath)
 {
-  SetProperty(_T("Texture"), rPath.GetPathName());
+  mTexturePath = rPath;
   nuiTexture* pOld = mpTexture;
   mpTexture = nuiTexture::GetTexture(rPath);
   if (GetSourceClientRect() == nuiRect(0,0,0,0))

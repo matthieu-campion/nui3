@@ -153,7 +153,7 @@ void nuiRect::SetPosition(nuiPosition Position, const nuiRect& Inside)
     break;
   case nuiFillRight:
     mLeft = rw-w;
-    mRight = w;
+    mRight = rw;
     mTop = 0;
     mBottom = rh;
     break;
