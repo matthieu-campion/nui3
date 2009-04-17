@@ -41,7 +41,10 @@ void MainWindow::OnCreation()
     nuiVBox* pBox = new nuiVBox();
     pBox->SetExpand(nuiExpandShrinkAndGrow);
     
-    nuiButton* pButton = new nuiButton(nglString(_T("Press Me!")));
+    nuiButton* pButton = new nuiButton();
+    nuiLabel* pLabel = new nuiLabel(nglString(_T("Press Me!")), nuiFont::GetFont(35));
+    pLabel->SetPosition(nuiCenter);
+    pButton->AddChild(pLabel);
     pBox->AddCell(pButton, nuiLeft);
     pBox->SetCellExpand(0, nuiExpandShrinkAndGrow);
     mEventSink.Connect(pButton->Activated, &MainWindow::ChangeLayout, pButton);

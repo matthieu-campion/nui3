@@ -75,25 +75,25 @@ nglContextInfo::nglContextInfo()
 
 nglContextInfo::nglContextInfo(const nglContextInfo& rInfo)
 {
-  FrameCnt    = rInfo.FrameCnt;
-  FrameBitsR  = rInfo.FrameBitsR;
-  FrameBitsG  = rInfo.FrameBitsG;
-  FrameBitsB  = rInfo.FrameBitsB;
-  FrameBitsA  = rInfo.FrameBitsA;
-  DepthBits   = rInfo.DepthBits;
-  StencilBits = rInfo.StencilBits;
-  AccumBitsR  = rInfo.AccumBitsR;
-  AccumBitsG  = rInfo.AccumBitsG;
-  AccumBitsB  = rInfo.AccumBitsB;
-  AccumBitsA  = rInfo.AccumBitsA;
-  AuxCnt      = rInfo.AuxCnt;
-  AABufferCnt = rInfo.AABufferCnt;
-  AASampleCnt = rInfo.AASampleCnt;
-  Stereo      = rInfo.Stereo;
-  Offscreen   = rInfo.Offscreen;
+  FrameCnt        = rInfo.FrameCnt;
+  FrameBitsR      = rInfo.FrameBitsR;
+  FrameBitsG      = rInfo.FrameBitsG;
+  FrameBitsB      = rInfo.FrameBitsB;
+  FrameBitsA      = rInfo.FrameBitsA;
+  DepthBits       = rInfo.DepthBits;
+  StencilBits     = rInfo.StencilBits;
+  AccumBitsR      = rInfo.AccumBitsR;
+  AccumBitsG      = rInfo.AccumBitsG;
+  AccumBitsB      = rInfo.AccumBitsB;
+  AccumBitsA      = rInfo.AccumBitsA;
+  AuxCnt          = rInfo.AuxCnt;
+  AABufferCnt     = rInfo.AABufferCnt;
+  AASampleCnt     = rInfo.AASampleCnt;
+  Stereo          = rInfo.Stereo;
+  Offscreen       = rInfo.Offscreen;
   RenderToTexture = rInfo.RenderToTexture;
-  CopyOnSwap  = rInfo.CopyOnSwap;
-  VerticalSync = rInfo.VerticalSync;
+  CopyOnSwap      = rInfo.CopyOnSwap;
+  VerticalSync    = rInfo.VerticalSync;
 
 #ifdef _WIN32_
   mPFD = 0;
@@ -121,6 +121,8 @@ void nglContextInfo::Dump(uint Level) const
   NGL_LOG(_T("context"), Level, _T("  Offscreen    : %ls\n"), YESNO(Offscreen));
   NGL_LOG(_T("context"), Level, _T("  Copy On Swap : %ls\n"), YESNO(CopyOnSwap));
   NGL_LOG(_T("context"), Level, _T("  Vertical Sync: %ls\n"), YESNO(VerticalSync));
+  NGL_LOG(_T("context"), Level, _T("  CopyOnSwap  : %ls\n"), YESNO(CopyOnSwap));
+  NGL_LOG(_T("context"), Level, _T("  VerticalSync: %ls\n"), YESNO(VerticalSync));
 }
 
 

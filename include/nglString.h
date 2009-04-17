@@ -552,6 +552,13 @@ public:
 	//@}
   
   uint32 GetLevenshteinDistance(const nglString& rSource, bool CaseSensitive);
+  /*!< Returns the Levenshtein distance in between two strings.
+      This metric is very useful to create smart searching UIs.
+      Excerpt form the wikipedia entry about this algorithm:
+      "The Levenshtein distance between two strings is given by the minimum number of operations needed to transform one string into the other,
+      where an operation is an insertion, deletion, or substitution of a single character."
+      For more information consult http://en.wikipedia.org/wiki/Levenshtein_distance
+   */
 
 	/** @name Substring search */
 	//@{

@@ -50,7 +50,7 @@ public:
   virtual nuiSerializeMode GetSerializeMode () const; ///< Get the serialization mode for this object (see nuiSerializeMode enum documentation).
   //@}
 
-  /** @name Properties system */
+  /** @name Object Mode basis (class and name) */
   //@{
   const nglString& GetObjectName() const; ///< adapter to GetProperty("Name") for nuiAttribute
   virtual void SetObjectName(const nglString& rName); ///< does a SetProperty("Name"...)
@@ -58,6 +58,13 @@ public:
   void GetObjectInheritance(std::vector<nglString>& rClasses) const;
   bool IsOfClass(const nglString& rClass) const;
   bool IsOfClass(int32 ClassIndex) const;
+  int32 GetObjectClassNameIndex() const;
+  static int32 GetClassNameIndex(const nglString& rName);
+  static const nglString& GetClassNameFromIndex(int32 index);
+  //@}
+  
+  /** @name Properties system */
+  //@{
   void SetProperty(const nglString& rName, const nglString& rValue); ///< Add or change a property of the object.
   void SetProperty(const char* pName, const nglString& rValue); ///< Add or change a property of the object.
   void SetProperty(const char* pName, const char* pValue); ///< Add or change a property of the object.
@@ -81,10 +88,6 @@ public:
 	void GetAttributes(std::map<nglString, nuiAttribBase>& rAttributeMap) const;
 	void GetSortedAttributes(std::list<nuiAttribBase>& rListToFill) const;
   nuiAttribBase GetAttribute(const nglString& rName) const;
-
-  int32 GetObjectClassNameIndex() const;
-  static int32 GetClassNameIndex(const nglString& rName);
-  static const nglString& GetClassNameFromIndex(int32 index);
 
   ///! Global Properties:
   static void SetGlobalProperty(const nglString& rName, const nglString& rValue); ///< Add or change a Global property.

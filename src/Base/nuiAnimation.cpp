@@ -12,7 +12,7 @@
 
 nuiTimer* nuiAnimation::mpTimer = NULL;
 uint32 nuiAnimation::mAnimCounter = 0;
-double nuiAnimation::mFrameRate = 30; // 30 FPS by default
+double nuiAnimation::mFrameRate = 60; // 30 FPS by default
 
 void nuiAnimation::SetFrameRate(double FPS)
 {
