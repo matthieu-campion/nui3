@@ -19,9 +19,7 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
   : nuiMainWindow(rContextInfo, rInfo, pShared, nglPath(ePathCurrent)),
     mEventSink(this)
 {
-#ifdef _DEBUG_
   SetDebugMode(true);
-#endif
 }
 
 MainWindow::~MainWindow()
@@ -33,7 +31,7 @@ void MainWindow::OnCreation()
   nuiWidget* pBg = new nuiImage(_T("rsrc:/decorations/image.png"));
   pBg->SetRect(nuiRect(-(float)GetWidth(), -(float)GetHeight(), (float)GetWidth() * 3, (float)GetHeight() * 3));
   pBg->SetPosition(nuiCenter);
-  pBg->SetAlpha(.02);
+  pBg->SetAlpha(.1);
   pBg->SetLayoutAnimationEasing(nuiEasingCubicRev);
   pBg->SetLayoutAnimationDuration(1);
                

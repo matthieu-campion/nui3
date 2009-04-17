@@ -349,7 +349,8 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
         
         mpNGLWindow->CallOnMouseMove(info);
       }
-      else {
+      else
+      {
         NGL_ASSERT(touchPhase == UITouchPhaseStationary);
       }
     }

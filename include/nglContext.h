@@ -64,10 +64,11 @@ public:
   uint AABufferCnt;  ///< Number of anti-aliasing buffers
   uint AASampleCnt;  ///< Anti-alisaing oversampling count
   bool Stereo;       ///< Stereoscopic display
-  bool Offscreen;       ///< This context can render in memory instead of to a window. (false by default).
-  bool RenderToTexture; ///< This context must be able to be bound as a texture. (false by default)
-  bool CopyOnSwap;  ///< This context must be able to use copy the back buffer to the front buffer instead of swaping them. (false by default)
-
+  bool Offscreen;         ///< This context can render in memory instead of to a window. (false by default).
+  bool RenderToTexture;   ///< This context must be able to be bound as a texture. (false by default)
+  bool CopyOnSwap;        ///< This context must be able to use copy the back buffer to the front buffer instead of swaping them. (false by default)
+  bool VerticalSync;      ///< Synchronize backbuffer swap to screen with the vertical sync of the screen. Makes animations much smoother.
+  
   nglTargetAPI TargetAPI; 
 
   /** @name Life cycle */

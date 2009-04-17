@@ -1736,7 +1736,8 @@ void nglWindow::Invalidate()
     err = SetEventParameter(outEvent, kEventParamPostTarget, typeEventTargetRef, sizeof(void*), &Target);
     if (outEvent)
 		{
-			err = PostEventToQueue(GetMainEventQueue(), outEvent, kEventPriorityLow);
+			//err = PostEventToQueue(GetMainEventQueue(), outEvent, kEventPriorityLow); /// Normal window update events are low priority.
+			err = PostEventToQueue(GetMainEventQueue(), outEvent, kEventPriorityStandard);
 			ReleaseEvent(outEvent);
 		}
 #endif

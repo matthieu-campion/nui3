@@ -414,6 +414,7 @@ void nuiFileSelector::InitSelector (const nglPath& rPath, const nglPath& rRootPa
     case eTree:
       {
         mpTreeView = new nuiTreeView(pTree);
+        mpTreeView->SetMultiSelectable(false);
         mpTreeView->SetObjectName(_T("nuiFileSelector::TreeView"));
         mpTreeView->SetObjectClass(_T("nuiFileSelector::TreeView"));
 
@@ -724,6 +725,7 @@ void nuiFileSelector::SetDisplayMode(nuiFileSelector::DisplayMode mode)
     case eTree:
       {
         mpTreeView = new nuiTreeView(pTree);
+        mpTreeView->SetMultiSelectable(false);
         mpTreeView->SetObjectName(_T("nuiFileSelector::TreeView"));
         mpTreeView->SetObjectClass(_T("nuiFileSelector::TreeView"));
 

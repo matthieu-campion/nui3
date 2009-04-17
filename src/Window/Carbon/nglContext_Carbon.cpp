@@ -271,6 +271,9 @@ bool nglContext::Build(WindowRef Win, const nglContextInfo& rInfo, const nglCont
     return false;
   }
 
+  GLint vsync = rInfo.VerticalSync ? 1 : 0;
+  aglSetInteger(mCtx, AGL_SWAP_INTERVAL, &vsync);
+  
   /* Attach the context to the window */
   if (!aglSetDrawable(mCtx, GetWindowPort (Win)))
   {

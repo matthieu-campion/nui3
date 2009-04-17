@@ -1388,9 +1388,9 @@
 		path = /Users/meeloo/work/nui3/src/Audio/AudioUnit/nuiAudioDevice_AudioUnit.cpp;
 		sourceTree = "<group>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1116, 4472}}";
-			sepNavSelRange = "{2644, 0}";
-			sepNavVisRange = "{2141, 1035}";
+			sepNavIntBoundsRect = "{{0, 0}, {1590, 4485}}";
+			sepNavSelRange = "{2836, 0}";
+			sepNavVisRange = "{2296, 1115}";
 		};
 	};
 	E50890EA0F92AF45009A428B /* nuiAudioDevice_AudioUnit.cpp:73 */ = {
@@ -1407,7 +1407,7 @@
 		ignoreCount = 0;
 		lineNumber = 73;
 		location = iPhoneDemoD;
-		modificationTime = 261275041.656736;
+		modificationTime = 261440925.936165;
 		state = 2;
 	};
 	E50890EC0F92AF48009A428B /* PBXTextBookmark */ = {
@@ -1650,9 +1650,8 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 96;
-		location = iPhoneDemo;
-		modificationTime = 261275041.658126;
-		state = 1;
+		modificationTime = 261440928.595889;
+		state = 0;
 	};
 	E508910E0F92B5E8009A428B /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -1764,11 +1763,11 @@
 		delayBeforeContinue = 0;
 		fileReference = E50890E80F92AF45009A428B /* nuiAudioDevice_AudioUnit.cpp */;
 		functionName = "nuiAudioDevice_AudioUnit::Process(uint uNumFrames, AudioBufferList* ioData)";
-		hitCount = 1;
+		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 75;
 		location = iPhoneDemo;
-		modificationTime = 261275062.098134;
+		modificationTime = 261440925.937977;
 		state = 2;
 	};
 	E50891220F92BC2F009A428B /* PBXTextBookmark */ = {

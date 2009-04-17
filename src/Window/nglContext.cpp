@@ -64,6 +64,7 @@ nglContextInfo::nglContextInfo()
   Offscreen   = false;
   RenderToTexture = false;
   CopyOnSwap = false;
+  VerticalSync = true;
 #ifdef _WIN32_
   mPFD = 0;
 #endif
@@ -92,6 +93,7 @@ nglContextInfo::nglContextInfo(const nglContextInfo& rInfo)
   Offscreen   = rInfo.Offscreen;
   RenderToTexture = rInfo.RenderToTexture;
   CopyOnSwap  = rInfo.CopyOnSwap;
+  VerticalSync = rInfo.VerticalSync;
 
 #ifdef _WIN32_
   mPFD = 0;
@@ -108,15 +110,17 @@ void nglContextInfo::Dump(uint Level) const
   uint fbcount = (FrameCnt <= 4) ? FrameCnt : 4;
 
   NGL_LOG(_T("context"), Level, _T("GL Context description :"));
-  NGL_LOG(_T("context"), Level, _T("  Frame buffer: %ls"), human_readable[fbcount]);
-  NGL_LOG(_T("context"), Level, _T("  Frame bits  : %d:%d:%d:%d\n"), FrameBitsR, FrameBitsG, FrameBitsB, FrameBitsA);
-  NGL_LOG(_T("context"), Level, _T("  Depth bits  : %d\n"), DepthBits);
-  NGL_LOG(_T("context"), Level, _T("  Stencil bits: %d\n"), StencilBits);
-  NGL_LOG(_T("context"), Level, _T("  Accum bits  : %d:%d:%d:%d\n"), AccumBitsR, AccumBitsG, AccumBitsB, AccumBitsA);
-  NGL_LOG(_T("context"), Level, _T("  Aux buffer  : %d\n"), AuxCnt);
-  NGL_LOG(_T("context"), Level, _T("  Multisample : %d buffer%ls, %d sample%ls\n"), AABufferCnt, PLURAL(AABufferCnt), AASampleCnt, PLURAL(AASampleCnt));
-  NGL_LOG(_T("context"), Level, _T("  Stereo      : %ls\n"), YESNO(Stereo));
-  NGL_LOG(_T("context"), Level, _T("  Offscreen   : %ls\n"), YESNO(Offscreen));
+  NGL_LOG(_T("context"), Level, _T("  Frame buffer : %ls"), human_readable[fbcount]);
+  NGL_LOG(_T("context"), Level, _T("  Frame bits   : %d:%d:%d:%d\n"), FrameBitsR, FrameBitsG, FrameBitsB, FrameBitsA);
+  NGL_LOG(_T("context"), Level, _T("  Depth bits   : %d\n"), DepthBits);
+  NGL_LOG(_T("context"), Level, _T("  Stencil bits : %d\n"), StencilBits);
+  NGL_LOG(_T("context"), Level, _T("  Accum bits   : %d:%d:%d:%d\n"), AccumBitsR, AccumBitsG, AccumBitsB, AccumBitsA);
+  NGL_LOG(_T("context"), Level, _T("  Aux buffer   : %d\n"), AuxCnt);
+  NGL_LOG(_T("context"), Level, _T("  Multisample  : %d buffer%ls, %d sample%ls\n"), AABufferCnt, PLURAL(AABufferCnt), AASampleCnt, PLURAL(AASampleCnt));
+  NGL_LOG(_T("context"), Level, _T("  Stereo       : %ls\n"), YESNO(Stereo));
+  NGL_LOG(_T("context"), Level, _T("  Offscreen    : %ls\n"), YESNO(Offscreen));
+  NGL_LOG(_T("context"), Level, _T("  Copy On Swap : %ls\n"), YESNO(CopyOnSwap));
+  NGL_LOG(_T("context"), Level, _T("  Vertical Sync: %ls\n"), YESNO(VerticalSync));
 }
 
 
