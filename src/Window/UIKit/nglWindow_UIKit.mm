@@ -175,6 +175,47 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
       }
     }
   }
+  else
+  {
+		UIApplication* pApp = [UIApplication sharedApplication];
+    UIDevice* pUIDev = [UIDevice currentDevice];
+    int angle = -1;
+    int w, h;
+    w = [UIScreen mainScreen].applicationFrame.size.width;
+    h = [UIScreen mainScreen].applicationFrame.size.height;
+    int ww, hh;
+    ww = w;
+    hh = h;
+
+    switch (mpNGLWindow->GetRotation())
+    {
+      case 0:
+        //UIDeviceOrientationPortrait
+				pApp.statusBarOrientation = UIInterfaceOrientationPortrait;
+        break;
+      case 180:
+        //UIDeviceOrientationPortraitUpsideDown
+				pApp.statusBarOrientation = UIInterfaceOrientationPortraitUpsideDown;
+        break;
+      case 270:
+        //UIDeviceOrientationLandscapeLeft
+				pApp.statusBarOrientation = (UIInterfaceOrientation) UIDeviceOrientationLandscapeLeft;
+        ww = h;
+        hh = w;
+        break;
+      case 90:
+        //UIDeviceOrientationLandscapeRight
+				pApp.statusBarOrientation = (UIInterfaceOrientation) UIDeviceOrientationLandscapeRight;
+        ww = h;
+        hh = w;
+        break;
+    }
+    
+    if (mpNGLWindow->GetWidth() != ww || mpNGLWindow->GetHeight() != hh)
+    {
+      mpNGLWindow->SetSize(ww, hh);
+    }
+  }
   
   if (!mInited)
   {

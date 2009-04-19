@@ -64,7 +64,7 @@ bool nuiUserArea::Draw(nuiDrawContext* pContext)
   #endif
     pContext->PushState();
     pContext->ResetState();
-    nuiRenderArray* pDummy(GL_POINTS);
+    nuiRenderArray* pDummy = new nuiRenderArray(GL_POINTS);
     pContext->DrawArray(pDummy);
 
     nuiRect Rect = mRect.Size(), RootRect = pRoot->GetRect();

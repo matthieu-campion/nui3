@@ -8,6 +8,7 @@
 #include "nui.h"
 #include "MainWindow.h"
 #include "Application.h"
+#include "nuiVBox.h"
 #include "nuiCoverFlow.h"
 #include "nuiAttributeAnimation.h"
 
@@ -25,7 +26,7 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
   
   EnableAutoRotation(false);
 #ifdef _UIKIT_
-  SetRotation(90);
+  SetRotation(270);
 #endif
   
   nuiCoverFlow* pFlow = new nuiCoverFlow();

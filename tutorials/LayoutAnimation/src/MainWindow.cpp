@@ -45,6 +45,7 @@ void MainWindow::OnCreation()
     nuiLabel* pLabel = new nuiLabel(nglString(_T("Press Me!")), nuiFont::GetFont(35));
     pLabel->SetPosition(nuiCenter);
     pButton->AddChild(pLabel);
+    pButton->SetAlpha(.5);
     pBox->AddCell(pButton, nuiLeft);
     pBox->SetCellExpand(0, nuiExpandShrinkAndGrow);
     mEventSink.Connect(pButton->Activated, &MainWindow::ChangeLayout, pButton);
