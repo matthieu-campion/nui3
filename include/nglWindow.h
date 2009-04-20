@@ -33,7 +33,7 @@ This class is not available if the _NOGFX_ symbol is defined.
 #endif
 
 #ifdef _MULTI_TOUCHES_
-typedef int nglTouchId;
+typedef int32 nglTouchId;
 #endif
 
 class nuiMainMenu;
@@ -42,6 +42,32 @@ class nuiMainMenu;
 class NGL_API nglMouseInfo  ///< Mouse status description
 {
 public:
+  nglMouseInfo()
+  {
+    X = 0;
+    Y = 0;
+    Buttons = 0;
+    
+#ifdef _MULTI_TOUCHES_
+    TouchId = 0;
+    
+    SwipeDirection SwipeInfo = eNoSwipe;
+#endif //_MULTI_TOUCHES_
+  }
+
+  nglMouseInfo(const nglMouseInfo& rInfo)
+  {
+    X = rInfo.X;
+    Y = rInfo.Y;
+    Buttons = rInfo.Buttons;
+    
+#ifdef _MULTI_TOUCHES_
+    TouchId = rInfo.TouchId;
+    
+    SwipeDirection SwipeInfo = rInfo.SwipeInfo;
+#endif //_MULTI_TOUCHES_
+  }
+  
   enum Mode     ///< Select the metrics returned by mouse events (relative vs. absolute)
   {
     eAbsolute,  ///< Use absolute coordinates (ie. screen relative)
@@ -60,27 +86,25 @@ public:
   static const Flags ButtonWheelRight;  ///< Mouse wheel went one step 'right'
   static const Flags ButtonDoubleClick; ///< The current button has been hit consecutively twice in a short delay
 
-  int   X;        ///< Horizontal coordinate
-  int   Y;        ///< Vertical coordinate
+  int32   X;        ///< Horizontal coordinate
+  int32   Y;        ///< Vertical coordinate
   Flags Buttons;  ///< Buttons state
 
 #ifdef _MULTI_TOUCHES_
-  nglTouchId    mTouchId; ///< used to retrieve which finger acting
-#endif
+  nglTouchId    TouchId; ///< used to retrieve which finger acting
 
-#ifdef _UIKIT_
   // Handle  specific touch screen events
-  typedef enum
+  enum SwipeDirection
   {
     eNoSwipe = 0,
     eSwipeUp = 1,
     eSwipeDown = 2,
     eSwipeLeft = 4,
     eSwipeRight = 8
-  } SwipeDirection;
+  };
 
   SwipeDirection SwipeInfo;
-#endif //_UIKIT_
+#endif //_MULTI_TOUCHES_
 };
 
 
@@ -684,7 +708,7 @@ private:
   bool               mKeyRepeat;
   bool               mpKeyState[NGL_KEY_MAX];
   uint32             mInModalState;
-  uint               mAngle;
+  uint32             mAngle;
   bool               mAutoRotate;
 
   nglWindow(const nglWindow&) {} // Undefined copy constructor
@@ -714,7 +738,7 @@ public:
   void           OnXEvent (const XEvent& rXEvent);
 
 private:
-  int            mScreen;
+  int32          mScreen;
   GC             mGC;
   Colormap       mColormap;
   Atom           mWMProtocol;
@@ -729,14 +753,14 @@ private:
   bool           mIsHidden;
   bool           mNeedGrab;
   bool           mWaitExpose;
-  int            mXPos, mYPos;
+  int32          mXPos, mYPos;
   uint           mWidth, mHeight;
-  int            mLastMouseX, mLastMouseY;
+  int32          mLastMouseX, mLastMouseY;
   bool           mWasMapped;
-  int            mLastMappedX, mLastMappedY;
+  int32          mLastMappedX, mLastMappedY;
   Time           mLastClick;
   uint           mLastButton;
-  int            mClickCnt;
+  int32          mClickCnt;
   nglVideoMode   mSavedVideoMode;
   nglVideoMode   mVideoMode;
   bool           mFullScreen;
@@ -767,7 +791,7 @@ private:
   bool           mInvalidatePosted;
   bool           mRedrawing;
   bool           mIsFakeChildWindow;
-  int            mXOffset, mYOffset, mWindowWidth, mWindowHeight; //< those values are only valid in the case of a fake child window
+  int32          mXOffset, mYOffset, mWindowWidth, mWindowHeight; //< those values are only valid in the case of a fake child window
   nglMouseInfo::Flags mLastButtonDown;
   
 
@@ -794,7 +818,7 @@ class nglCarbonDragAndDrop* mpCarbonDragAndDrop;
 
 #ifdef _UIKIT_
 private:
-  uint mWidth, mHeight;
+  uint32 mWidth, mHeight;
   void InternalInit(const nglContextInfo& rContext, const nglWindowInfo& rInfo,
                     const nglContext* pShared);
 
@@ -818,8 +842,8 @@ protected:
   nglVideoMode  mSavedVideoMode;
   StateInfo     mState;
   bool          mFullScreen;
-  int           mOldMouseX;
-  int           mOldMouseY;
+  int32         mOldMouseX;
+  int32         mOldMouseY;
   nglMouseInfo::Flags mMouseButtonStatus;
 
   bool InternalInit(const nglContextInfo& rContext, const nglWindowInfo& rInfo, const nglContext* pShared);
@@ -927,15 +951,15 @@ Title     = App->GetName();
   */
 
   Position                Pos;        ///< Initial position hint
-  int                     XPos;       ///< X position 
-  int                     YPos;       ///< Y position
-  uint                    Width;      ///< Rendering area Width
-  uint                    Height;     ///< Rendering area Height
-  int                     MaxWidth;   ///< Rendering area Width
-  int                     MaxHeight;  ///< Rendering area Height
-  int                     MinWidth;   ///< Rendering area Width
-  int                     MinHeight;  ///< Rendering area Height
-  uint                    Rotate;     ///< Rendering area Rotation Angle
+  int32                   XPos;       ///< X position 
+  int32                   YPos;       ///< Y position
+  uint32                  Width;      ///< Rendering area Width
+  uint32                  Height;     ///< Rendering area Height
+  int32                   MaxWidth;   ///< Rendering area Width
+  int32                   MaxHeight;  ///< Rendering area Height
+  int32                   MinWidth;   ///< Rendering area Width
+  int32                   MinHeight;  ///< Rendering area Height
+  uint32                  Rotate;     ///< Rendering area Rotation Angle
   nglWindow::Flags        Flags;      ///< Window flags
   nglWindow::EventMask    Events;     ///< Event mask
   nuiMouseCursor          Cursor;     ///< Cursor shape

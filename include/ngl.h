@@ -456,10 +456,10 @@ typedef wchar_t nglChar;
 
 /* Multitouch support if any
  */
-#ifdef _UIKIT_
+//#ifdef _UIKIT_
   #define _MULTI_TOUCHES_
   #define _NUI_MAX_TOUCHES_ 5
-#endif
+//#endif
 
 /* At last, include GL and GLU headers if necessary
  */
