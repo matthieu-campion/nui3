@@ -353,7 +353,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
         AdjustFromAngle(mpNGLWindow->GetRotation(), rect, info);
 
         info.SwipeInfo = nglMouseInfo::eNoSwipe;
-        info.mTouchId = rTouch.mTouchId;
+        info.TouchId = rTouch.mTouchId;
 
 ///< if tapcount > 1, unclicked from a double click
 //        if (touchTapCount > 1)// && ([pTouch timestamp] - sOldTimestamp < DOUBLE_TAP_DELAY))
@@ -383,7 +383,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
         AdjustFromAngle(mpNGLWindow->GetRotation(), rect, info);
 
         info.SwipeInfo = nglMouseInfo::eNoSwipe;
-        info.mTouchId = rTouch.mTouchId;
+        info.TouchId = rTouch.mTouchId;
 ///< if tapcount > 1, moved from a double click
 //        if (touchTapCount > 1)// && ([pTouch timestamp] - sOldTimestamp < DOUBLE_TAP_DELAY))
 //          info.Buttons |= nglMouseInfo::ButtonDoubleClick;
@@ -433,7 +433,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
       AdjustFromAngle(mpNGLWindow->GetRotation(), rect, info);
 
       info.SwipeInfo = nglMouseInfo::eNoSwipe;
-      info.mTouchId = newTouch.mTouchId;
+      info.TouchId = newTouch.mTouchId;
 
       mpNGLWindow->CallOnMouseClick(info);
     }
