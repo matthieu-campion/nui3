@@ -438,7 +438,6 @@ void nuiWidget::Init()
   mMixAlpha = true;
   mInheritAlpha = true;
 
-  mpAnimationTimer = NULL;
   mAnimateLayout = false;
   mObjCursor = eCursorDoNotSet;
   mAlpha = 1.0f;
@@ -594,9 +593,6 @@ nuiWidget::~nuiWidget()
 #endif
   
   ClearAnimations();
-
-  if (mpAnimationTimer)
-    delete mpAnimationTimer;
 
   nuiTopLevel* pRoot = GetTopLevel();
   if (pRoot)
@@ -2791,12 +2787,9 @@ nuiWidgetPtr nuiWidget::Find(const nglString& rName)
 } 
 
 /* Animation Support: */
-void nuiWidget::StartAutoDraw(double FrameRate)
+void nuiWidget::StartAutoDraw()
 {
-  StopAutoDraw();
-  mpAnimationTimer = new nuiTimer(1.0/FrameRate);
-  mGenericWidgetSink.Connect(mpAnimationTimer->Tick, &nuiWidget::Animate);
-  mpAnimationTimer->Start();
+  mGenericWidgetSink.Connect(nuiAnimation::AcquireTimer()->Tick, &nuiWidget::Animate);
   DebugRefreshInfo();
 }
 
@@ -2813,9 +2806,8 @@ bool nuiWidget::GetAutoDrawAnimateLayout() const
 
 void nuiWidget::StopAutoDraw()
 {
-  if (mpAnimationTimer)
-    delete mpAnimationTimer;
-  mpAnimationTimer = NULL;
+  mGenericWidgetSink.Disconnect(nuiAnimation::GetTimer()->Tick);
+  nuiAnimation::ReleaseTimer();
   DebugRefreshInfo();
 }
 

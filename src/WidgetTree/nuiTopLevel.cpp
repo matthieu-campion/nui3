@@ -13,7 +13,7 @@
 #include "nuiNotification.h"
 #include "nuiCSS.h"
 
-#define PARTIAL_REDRAW_DEFAULT false
+#define PARTIAL_REDRAW_DEFAULT true
 
 #if 0 //defined(_MULTI_TOUCHES_) && defined(_DEBUG_)
 # define NGL_TOUCHES_DEBUG(X) (X)

@@ -10,7 +10,6 @@
 #include "nuiShape.h"
 #include "nuiDrawContext.h"
 
-#define FPS 10
 #define AMP 0.15f
 #define INC 2.5f
 
@@ -30,7 +29,7 @@ nuiProgressBar::nuiProgressBar(float Progress)
   mEndlessAnim = 0.f;
   mEndlessIncr = INC;
   if (mGlowStrength != 0 || mAlphaIncr != 0 || mEndless)
-    StartAutoDraw(FPS);
+    StartAutoDraw();
 }
 
 nuiProgressBar::nuiProgressBar()
@@ -49,7 +48,7 @@ nuiProgressBar::nuiProgressBar()
   mEndlessAnim = 0.f;
   mEndlessIncr = INC;
   if (mGlowStrength != 0 || mAlphaIncr != 0 || mEndless)
-    StartAutoDraw(FPS);
+    StartAutoDraw();
 }
 
 bool nuiProgressBar::Load(const nuiXMLNode* pNode)
@@ -60,7 +59,7 @@ bool nuiProgressBar::Load(const nuiXMLNode* pNode)
   mAlphaAnim = 0;
   mGlowStrength = 0;
   if (mGlowStrength != 0 || mAlphaIncr != 0)
-    StartAutoDraw(FPS);
+    StartAutoDraw();
   
   return true;
 }
@@ -250,7 +249,7 @@ void nuiProgressBar::SetGlowStrength(float Strength)
 {
   mGlowStrength = Strength;
   if (mGlowStrength != 0)
-    StartAutoDraw(FPS);
+    StartAutoDraw();
   else
   {
     StopAutoDraw();
@@ -276,7 +275,7 @@ void nuiProgressBar::SetEndless(bool endless)
     if (endless)
     {
       mEndlessAnim = 0.f;
-      StartAutoDraw(FPS);
+      StartAutoDraw();
     }
     else if (mGlowStrength == 0)
     {

@@ -51,7 +51,7 @@ public:
 #ifdef _MULTI_TOUCHES_
     TouchId = 0;
     
-    SwipeDirection SwipeInfo = eNoSwipe;
+    SwipeInfo = eNoSwipe;
 #endif //_MULTI_TOUCHES_
   }
 
@@ -64,7 +64,7 @@ public:
 #ifdef _MULTI_TOUCHES_
     TouchId = rInfo.TouchId;
     
-    SwipeDirection SwipeInfo = rInfo.SwipeInfo;
+    SwipeInfo = rInfo.SwipeInfo;
 #endif //_MULTI_TOUCHES_
   }
   

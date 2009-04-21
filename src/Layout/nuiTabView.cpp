@@ -432,7 +432,7 @@ bool nuiTabView::OnIconClicked(const nuiEvent& rEvent)
           mFolded = !mFolded;
           mSliding = true;
           SetAutoDrawAnimateLayout(true);
-          StartAutoDraw(30);
+          StartAutoDraw();
         }
       }
 
@@ -527,7 +527,7 @@ void nuiTabView::SetFolded( bool set, bool Animate )
   {
     mSliding = true;
     SetAutoDrawAnimateLayout(true);
-    StartAutoDraw(30.0f);
+    StartAutoDraw();
   }
   else
   {

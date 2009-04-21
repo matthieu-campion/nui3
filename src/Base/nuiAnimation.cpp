@@ -30,6 +30,32 @@ double nuiAnimation::GetFrameRate()
   return mFrameRate;
 }
 
+nuiTimer* nuiAnimation::AcquireTimer()
+{
+  mAnimCounter++;
+  if (!mpTimer)
+  {
+    mpTimer = new nuiTimer(1.0 / mFrameRate);
+    mpTimer->Start(false, false);
+  }
+  return mpTimer;
+}
+
+nuiTimer* nuiAnimation::GetTimer()
+{
+  return mpTimer;
+}
+
+void nuiAnimation::ReleaseTimer()
+{
+  mAnimCounter--;
+  if (!mAnimCounter)
+  {
+    delete mpTimer;
+    mpTimer = NULL;
+  }
+}
+
 nuiAnimation::nuiAnimation()
 : mAnimSink(this)
 {
@@ -43,13 +69,7 @@ nuiAnimation::nuiAnimation()
 
   mEasing = (nuiEasingMethod)(&::nuiEasingIdentity);
   
-  if (!mAnimCounter)
-  {
-    mpTimer = new nuiTimer(1.0 / mFrameRate);
-    mpTimer->Start(false, true);
-  }
-
-  mAnimCounter++;
+  AcquireTimer();
   
   if (SetObjectClass(_T("nuiAnimation")))
   {
@@ -138,11 +158,7 @@ bool nuiAnimation::Load(const nuiXMLNode* pNode)
 
 nuiAnimation::~nuiAnimation()
 {
-  mAnimCounter--;
-  if (!mAnimCounter)
-  {
-    delete mpTimer;
-  }
+  ReleaseTimer();
 }
 
 nuiXMLNode* nuiAnimation::Serialize(nuiXMLNode* pParentNode, bool CreateNewNode) const
@@ -236,7 +252,7 @@ void nuiAnimation::Play(uint32 Count, nuiAnimLoop LoopMode)
   else
     mDirection = 1.0;
   
-  mAnimSink.Connect(mpTimer->Tick, &nuiAnimation::OnTick);
+  mAnimSink.Connect(GetTimer()->Tick, &nuiAnimation::OnTick);
   
   AnimStart();
 }
@@ -250,7 +266,7 @@ void nuiAnimation::Stop()
   }
   mCount = 0;
   //NGL_OUT(_T("nuiAnimation::Stop at %f\n"), GetDuration());
-  mAnimSink.Disconnect(mpTimer->Tick, &nuiAnimation::OnTick);
+  mAnimSink.Disconnect(GetTimer()->Tick, &nuiAnimation::OnTick);
   AnimStop();
 }
 

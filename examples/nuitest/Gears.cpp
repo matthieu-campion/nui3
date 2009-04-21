@@ -247,16 +247,20 @@ void Gears::MakeGear (GLfloat InnerRadius, GLfloat OuterRadius,
   /* draw front face */
   if (!IsWire)
     glBegin(GL_QUAD_STRIP);
-  for (i = 0; i <= ToothCnt; i++) {
+  for (i = 0; i <= ToothCnt; i++)
+  {
     if (IsWire)
       glBegin(GL_LINES);
     angle = i * 2.0f * (float)M_PI / ToothCnt;
     glVertex3f(r0 * (float)cos(angle), r0 * (float)sin(angle), Width * 0.5f);
     glVertex3f(r1 * (float)cos(angle), r1 * (float)sin(angle), Width * 0.5f);
-    if (!IsWire) {
+    if (!IsWire)
+    {
       glVertex3f(r0 * (float)cos(angle), r0 * (float)sin(angle), Width * 0.5f);
       glVertex3f(r1 * (float)cos(angle + 3 * da), r1 * (float)sin(angle + 3 * da), Width * 0.5f);
-    } else {
+    }
+    else
+    {
       glVertex3f(r1 * (float)cos(angle + 3 * da), r1 * (float)sin(angle + 3 * da), Width * 0.5f);
       glVertex3f(r1 * (float)cos(angle + 4 * da), r1 * (float)sin(angle + 4 * da), Width * 0.5f);
       glEnd();
@@ -291,16 +295,20 @@ void Gears::MakeGear (GLfloat InnerRadius, GLfloat OuterRadius,
   /* draw back face */
   if (!IsWire)
     glBegin(GL_QUAD_STRIP);
-  for (i = 0; i <= ToothCnt; i++) {
+  for (i = 0; i <= ToothCnt; i++)
+  {
     angle = i * 2.0f * (float)M_PI / ToothCnt;
     if (IsWire)
       glBegin(GL_LINES);
     glVertex3f(r1 * (float)cos(angle), r1 * (float)sin(angle), -Width * 0.5f);
     glVertex3f(r0 * (float)cos(angle), r0 * (float)sin(angle), -Width * 0.5f);
-    if (!IsWire) {
+    if (!IsWire)
+    {
       glVertex3f(r1 * (float)cos(angle + 3 * da), r1 * (float)sin(angle + 3 * da), -Width * 0.5f);
       glVertex3f(r0 * (float)cos(angle), r0 * (float)sin(angle), -Width * 0.5f);
-    } else {
+    }
+    else
+    {
       glVertex3f(r1 * (float)cos(angle + 3 * da), r1 * (float)sin(angle + 3 * da), -Width * 0.5f);
       glVertex3f(r1 * (float)cos(angle + 4 * da), r1 * (float)sin(angle + 4 * da), -Width * 0.5f);
       glEnd();
@@ -332,7 +340,8 @@ void Gears::MakeGear (GLfloat InnerRadius, GLfloat OuterRadius,
   /* draw outward faces of ToothCnt */
   if (!IsWire)
     glBegin(GL_QUAD_STRIP);
-  for (i = 0; i < ToothCnt; i++) {
+  for (i = 0; i < ToothCnt; i++)
+  {
     angle = i * 2.0f * (float)M_PI / ToothCnt;
 
     if (IsWire)
@@ -360,7 +369,8 @@ void Gears::MakeGear (GLfloat InnerRadius, GLfloat OuterRadius,
       glEnd();
   }
 
-  if (!IsWire) {
+  if (!IsWire)
+  {
     glVertex3f(r1 * (float)cos(0.0f), r1 * (float)sin(0.0f), Width * 0.5f);
     glVertex3f(r1 * (float)cos(0.0f), r1 * (float)sin(0.0f), -Width * 0.5f);
     glEnd();
@@ -371,14 +381,16 @@ void Gears::MakeGear (GLfloat InnerRadius, GLfloat OuterRadius,
   /* draw inside radius cylinder */
   if (!IsWire)
     glBegin(GL_QUAD_STRIP);
-  for (i = 0; i <= ToothCnt; i++) {
+  for (i = 0; i <= ToothCnt; i++)
+  {
     angle = i * 2.0f * (float)M_PI / ToothCnt;
     if (IsWire)
       glBegin(GL_LINES);
     glNormal3f(-(float)cos(angle), -(float)sin(angle), 0.0f);
     glVertex3f(r0 * (float)cos(angle), r0 * (float)sin(angle), -Width * 0.5f);
     glVertex3f(r0 * (float)cos(angle), r0 * (float)sin(angle), Width * 0.5f);
-    if (IsWire) {
+    if (IsWire)
+    {
       glVertex3f(r0 * (float)cos(angle), r0 * (float)sin(angle), -Width * 0.5f);
       glVertex3f(r0 * (float)cos(angle + 4 * da), r0 * (float)sin(angle + 4 * da), -Width * 0.5f);
       glVertex3f(r0 * (float)cos(angle), r0 * (float)sin(angle), Width * 0.5f);

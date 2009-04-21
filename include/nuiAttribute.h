@@ -1094,7 +1094,7 @@ public:
   nuiAttribBase();
   nuiAttribBase(void* pTarget, nuiAttributeBase* pAttribute);
   nuiAttribBase(const nuiAttribBase& rOriginal);
-  ~nuiAttribBase();
+  virtual ~nuiAttribBase();
 
   nuiAttribBase& operator=(const nuiAttribBase& rOriginal);
 

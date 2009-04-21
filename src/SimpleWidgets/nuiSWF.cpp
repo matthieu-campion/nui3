@@ -437,7 +437,7 @@ void nuiSWF::Play()
   NGL_ASSERT(mpMovie && mpMovieInterface);
   mpMovieInterface->set_play_state(gameswf::character::PLAY);
   mLastTime = -1;
-  StartAutoDraw(mFPS);
+  StartAutoDraw();
 }
 
 void nuiSWF::Loop(bool set)
@@ -484,7 +484,7 @@ void nuiSWF::SetFrameRate(float fps)
   if (IsPlaying())
   {
     StopAutoDraw();
-    StartAutoDraw(mFPS);
+    StartAutoDraw();
   }
 }
 

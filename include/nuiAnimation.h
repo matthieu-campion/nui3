@@ -160,6 +160,10 @@ public:
   
   void SetEasing(const nuiEasingMethod& rMethod);
   
+  static nuiTimer* AcquireTimer(); ///< You must pair each call to AcquireTimer() with a call to ReleaseTimer().
+  static nuiTimer* GetTimer(); ///< GetTimer doesn't allocate the timer and you must not pair it with ReleaseTimer(). It may return NULL if the timer was never created.
+  static void ReleaseTimer();
+  
 protected:
   void CallOnFrame();
   double UpdateTime(); ///< This method returns the number time elapsed since the last call to UpdateTime.

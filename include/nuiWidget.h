@@ -29,7 +29,6 @@ class nuiMetaPainter;
 class nuiDecoration;
 
 class nuiTopLevel;
-class nuiTimer;
 
 class nuiAnimation;
 
@@ -324,7 +323,7 @@ public:
 
   /** @name Simple Animation Support */
   //@{
-  void StartAutoDraw(double FrameRate); ///< This method prepares a timer that will ask that this widget be redrawn every \param FrameRate by calling Invalidate() on it.
+  void StartAutoDraw(); ///< This method acquires the nuiAnimation timer that will ask that this widget be redrawn every animation tick by calling Invalidate() on it.
   void SetAutoDrawAnimateLayout(bool RecalcLayout = false); ///< If RecalcLayout is true the layout of the widget will be recalculated on every animation tick.
   bool GetAutoDrawAnimateLayout() const; ///< If is true the layout of the widget will be recalculated on every animation tick.
   void StopAutoDraw(); ///< This method stops animating the widget. 
@@ -586,8 +585,6 @@ protected:
   void DispatchFocus(nuiWidgetPtr pWidget); ///< Advise the objet of a change of focus object. pWidget can be null.
 
 private:    
-  nuiTimer* mpAnimationTimer;
-
   bool mAnimateLayout : 1;
   bool mRedrawOnHover : 1;
   bool mMixAlpha : 1;
