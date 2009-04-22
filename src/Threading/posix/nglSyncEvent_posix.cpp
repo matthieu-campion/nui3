@@ -39,10 +39,12 @@ nglSyncEvent::~nglSyncEvent()
   pthread_cond_destroy(&mpData->mCondition);
   pthread_mutex_destroy(&mpData->mMutex);
   delete mpData;
+  mpData = NULL;
 }
 
 void nglSyncEvent::Set()
 {
+  NGL_ASSERT(mpData);
   pthread_mutex_lock(&mpData->mMutex);
   mpData->mSet = true;
   pthread_mutex_unlock(&mpData->mMutex);
@@ -51,6 +53,7 @@ void nglSyncEvent::Set()
 
 void nglSyncEvent::Reset()
 {
+  NGL_ASSERT(mpData);
   pthread_mutex_lock(&mpData->mMutex);
   mpData->mSet = false;
   pthread_mutex_unlock(&mpData->mMutex);
@@ -58,6 +61,7 @@ void nglSyncEvent::Reset()
 
 bool nglSyncEvent::Wait(uint32 time)
 {
+  NGL_ASSERT(mpData);
   pthread_mutex_lock(&mpData->mMutex);
   bool test = mpData->mSet;
   
