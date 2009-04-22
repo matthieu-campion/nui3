@@ -22,8 +22,7 @@ guiOscillo::guiOscillo(const std::vector<std::vector<float> >& rData)
   // Have a look to Gui.css, you've got some examples.)
   SetObjectClass(_T("guiOscillo"));
   
-  // we ask for a 30fps rendering of this object, that's enough for our needs
-  StartAutoDraw(30);
+  StartAutoDraw();
 }  
 
 guiOscillo::~guiOscillo()

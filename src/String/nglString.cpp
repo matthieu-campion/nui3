@@ -1860,9 +1860,10 @@ int32 nglString::HexDump(const char* pBuffer, int32 ByteCount, bool PrintChar, i
 
 int32 nglString::Compare(const nglChar* pSource, bool CaseSensitive) const
 {
+  const nglChar* pLocal = &mString[0];
   int result = (CaseSensitive) ?
-    ngl_strcmp(&mString[0], pSource) :
-  ngl_stricmp(&mString[0], pSource);
+    ngl_strcmp(pLocal, pSource) :
+  ngl_stricmp(pLocal, pSource);
 
   if (result < 0) result = -1;
   if (result > 0) result = 1;
