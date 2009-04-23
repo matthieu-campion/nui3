@@ -280,8 +280,31 @@ uint32 nuiVBox::GetNbCells() const
 
 bool nuiVBox::Clear(bool Delete)
 {
+  nuiSize spacing = nuiGrid::GetColumnSpacing(0);
+  nuiSize growRatio = nuiGrid::GetColumnGrowRatio(0);
+  nuiSize shrinkRatio = nuiGrid::GetColumnShrinkRatio(0);
+  nuiSize maxGrow = nuiGrid::GetColumnMaxGrow(0);
+  nuiSize maxShrink = nuiGrid::GetColumnMaxShrink(0);
+  nuiSize maxPixels = nuiGrid::GetColumnMaxPixels(0);
+  nuiSize minPixels = nuiGrid::GetColumnMinPixels(0);
+  
   bool res = nuiGrid::Clear(Delete);
   nuiGrid::AddColumns(0,1);
+  
+  nuiGrid::SetColumnSpacing(0, spacing);
+  if (growRatio > 0)
+    nuiGrid::SetColumnExpand(0, nuiExpandGrow, growRatio);
+  if (shrinkRatio > 0)
+    nuiGrid::SetColumnExpand(0, nuiExpandShrink, shrinkRatio);
+  if (maxGrow >= 1.f)
+    nuiGrid::SetColumnMaxGrow(0, maxGrow);
+  if (maxShrink >= 0.f)
+    nuiGrid::SetColumnMaxShrink(0, maxShrink);
+  if (maxPixels >= 0.f)
+    nuiGrid::SetColumnMaxPixels(0, maxPixels);
+  if (minPixels >= 0.f)    
+    nuiGrid::SetColumnMinPixels(0, minPixels);
+
   return res;
 }
 

@@ -286,8 +286,31 @@ uint32 nuiHBox::GetNbCells() const
 
 bool nuiHBox::Clear(bool Delete)
 {
+  nuiSize spacing = nuiGrid::GetRowSpacing(0);
+  nuiSize growRatio = nuiGrid::GetRowGrowRatio(0);
+  nuiSize shrinkRatio = nuiGrid::GetRowShrinkRatio(0);
+  nuiSize maxGrow = nuiGrid::GetRowMaxGrow(0);
+  nuiSize maxShrink = nuiGrid::GetRowMaxShrink(0);
+  nuiSize maxPixels = nuiGrid::GetRowMaxPixels(0);
+  nuiSize minPixels = nuiGrid::GetRowMinPixels(0);
+
   bool res = nuiGrid::Clear(Delete);
   nuiGrid::AddRows(0,1);
+
+  nuiGrid::SetRowSpacing(0, spacing);
+  if (growRatio > 0.f)
+    nuiGrid::SetRowExpand(0, nuiExpandGrow, growRatio);
+  if (shrinkRatio > 0.f)
+    nuiGrid::SetRowExpand(0, nuiExpandShrink, shrinkRatio);
+  if (maxGrow >= 1.f)
+    nuiGrid::SetRowMaxGrow(0, maxGrow);
+  if (maxShrink >= 0.f)
+    nuiGrid::SetRowMaxShrink(0, maxShrink);
+  if (maxPixels >= 0.f)
+    nuiGrid::SetRowMaxPixels(0, maxPixels);
+  if (minPixels >= 0.f)
+    nuiGrid::SetRowMinPixels(0, minPixels);
+
   return res;
 }
 
