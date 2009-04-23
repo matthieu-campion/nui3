@@ -12,6 +12,7 @@
 #include "nuiMainWindow.h"
 #include "nuiXML.h"
 #include "nuiLabel.h"
+#include "nuiAttributeAnimation.h"
 
 using namespace std;
 
@@ -994,6 +995,15 @@ bool nuiList::OnChildAdded(const nuiEvent& rEvent)
     const nuiTreeEvent<nuiWidget>& rTreeEvent((const nuiTreeEvent<nuiWidget>&)rEvent);
     rTreeEvent.mpChild->SetLayoutAnimationDuration(mMoveAnimDuration);
     rTreeEvent.mpChild->SetLayoutAnimationEasing(mMoveAnimEasing);
+    nuiRectAttributeAnimation* pAnim = rTreeEvent.mpChild->GetLayoutAnimation(true);
+    if (mOrientation == nuiVertical)
+    {
+      pAnim->SetWidthAnim(false);
+    }
+    else
+    {
+      pAnim->SetHeightAnim(false);
+    }
   }
   return false;
 }

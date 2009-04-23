@@ -215,19 +215,33 @@ bool nuiAudioDevice_AudioUnit::Open(std::vector<uint32>& rInputChannels, std::ve
 	
 	//find out about the device's format (but I can save you the suspense:
 	//integer | non-interleaved | packed | little endian | 32 bits (8.24 fixed)
-	AudioStreamBasicDescription fmt_desc;
-	size = sizeof(fmt_desc);
+	AudioStreamBasicDescription out_fmt_desc;
+	size = sizeof(out_fmt_desc);
 	
 	err = AudioUnitGetProperty(mAudioUnit, 
                              kAudioUnitProperty_StreamFormat, 
                              kAudioUnitScope_Output, 
-                             0, &fmt_desc, &size);
+                             0, &out_fmt_desc, &size);
 	if( err != noErr )
   {
     NGL_ASSERT(0);
     return false;
   }
 	
+
+	// same for input device:
+	AudioStreamBasicDescription in_fmt_desc;
+	size = sizeof(in_fmt_desc);
+	
+	err = AudioUnitGetProperty(mAudioUnit, 
+                             kAudioUnitProperty_StreamFormat, 
+                             kAudioUnitScope_Input, 
+                             0, &in_fmt_desc, &size);
+	if( err != noErr )
+  {
+    NGL_ASSERT(0);
+    return false;
+  }
 	
 	
 	

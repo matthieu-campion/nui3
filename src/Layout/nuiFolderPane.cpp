@@ -11,7 +11,7 @@
 #include "nuiDrawContext.h"
 #include "nuiHBox.h"
 #include "nuiTreeHandleDecoration.h"
-
+#include "nuiAttributeAnimation.h"
 
 #define CELL_CONTENTS 1
 #define CELL_CLOSINGCONTENTS 2
@@ -22,7 +22,7 @@ nuiFolderPane::nuiFolderPane(nuiWidget* pTitleWidget, bool opened)
 {
   SetObjectClass(_T("nuiFolderPane"));
   SetTitleWithHandle(pTitleWidget, nuiLeft);
-  Init (opened);
+  Init(opened);
 }
 
 
@@ -32,7 +32,7 @@ nuiFolderPane::nuiFolderPane(const nglString& rText, bool opened)
 {
   SetObjectClass(_T("nuiFolderPane"));
   SetTitleWithHandle(rText, nuiLeft);
-  Init (opened);
+  Init(opened);
   
 }
 
@@ -42,12 +42,13 @@ nuiFolderPane::nuiFolderPane(nuiLabelAttribute* pLabel, bool opened)
 {
   SetObjectClass(_T("nuiFolderPane"));
   SetTitleWithHandle(pLabel, nuiLeft);
-  Init (opened);
+  Init(opened);
   
 }
 
 void nuiFolderPane::Init (bool opened)
 {
+  mClicked = false;
   mIsOpened = opened;
   mInteractiveCloseEnabled = true;
   nuiWidget* pTitle = GetTitle();
@@ -58,6 +59,12 @@ void nuiFolderPane::Init (bool opened)
   pTitle->SetColor(eSelectedTextFg, pTitle->GetColor(eNormalTextFg));
   
   AddCell(NULL); // a third cell to the titledpane for the WidgetOnClosing
+  
+  SetLayoutAnimationDuration(0.1f);
+  SetLayoutAnimationEasing(nuiEasingSinus);
+  nuiRectAttributeAnimation* pAnim = GetLayoutAnimation(false);
+  pAnim->SetWidthAnim(false);
+  pAnim->SetAutoRound(true);
 }
 
 
@@ -67,11 +74,11 @@ nuiFolderPane::~nuiFolderPane()
 }
 
 
-
-bool nuiFolderPane::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
-{    
-  if (Button & nglMouseInfo::ButtonLeft)
+bool nuiFolderPane::MouseUnclicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
+{
+  if (mClicked && Button & nglMouseInfo::ButtonLeft)
   {
+    Ungrab();
     nuiRect rect = GetTitle()->GetRect();
     rect.SetSize (GetRect().GetWidth(), rect.GetHeight());
     rect.MoveTo (0, rect.Top());
@@ -80,7 +87,7 @@ bool nuiFolderPane::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags But
     {
       if (!mInteractiveCloseEnabled)
         return false;
-
+      
       if (mIsOpened)
         Close();
       else
@@ -89,6 +96,22 @@ bool nuiFolderPane::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags But
     return true;
   }
   return false;
+}
+
+bool nuiFolderPane::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
+{
+  if (Button & nglMouseInfo::ButtonLeft)
+  {
+    nuiRect rect = GetTitle()->GetRect();
+    rect.SetSize (GetRect().GetWidth(), rect.GetHeight());
+    rect.MoveTo (0, rect.Top());
+    
+    if (rect.IsInside (X, Y))
+    {
+      mClicked = true;
+      Grab();
+    }
+  }
 }
 
 

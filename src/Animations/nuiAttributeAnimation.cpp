@@ -295,6 +295,15 @@ nuiRectAttributeAnimation::nuiRectAttributeAnimation()
   {
     // Init atributes
   }
+  
+  mAnimLeft = true;
+  mAnimRight = true;
+  mAnimTop = true;
+  mAnimBottom = true;
+  mAnimWidth = true;
+  mAnimHeight = true;
+
+  mAutoRound = false;
 }
 
 nuiRectAttributeAnimation::~nuiRectAttributeAnimation()
@@ -355,15 +364,28 @@ void nuiRectAttributeAnimation::Stop()
 
 void nuiRectAttributeAnimation::OnFrame()
 {
-  const float x0 = mStartValue.Left();
-  const float y0 = mStartValue.Top();
-  const float w0 = mStartValue.GetWidth();
-  const float h0 = mStartValue.GetHeight();
+  float x0 = mStartValue.Left();
+  float y0 = mStartValue.Top();
+  float w0 = mStartValue.GetWidth();
+  float h0 = mStartValue.GetHeight();
   
   const float x1 = mEndValue.Left();
   const float y1 = mEndValue.Top();
   const float w1 = mEndValue.GetWidth();
   const float h1 = mEndValue.GetHeight();
+
+  if (!mAnimLeft)
+    x0 = x1;
+  if (!mAnimTop)
+    y0 = y1;
+  if (!mAnimWidth)
+    w0 = w1;
+  if (!mAnimHeight)
+    h0 = h1;
+  if (!mAnimRight)
+    x0 = mEndValue.Right() - w0;
+  if (!mAnimBottom)
+    y0 = mEndValue.Bottom() - h0;
   
   const float xd = x1 - x0;
   const float yd = y1 - y0;
@@ -378,6 +400,10 @@ void nuiRectAttributeAnimation::OnFrame()
   const float h = h0 + pos * hd;
   
   nuiRect rect(x, y, w, h);
+  
+  if (mAutoRound)
+    rect.RoundToNearest();
+  
   //NGL_OUT(_T("rect anim: %ls\n"), rect.GetValue().GetChars());
   nuiAttribBase attrib(mpTarget->GetAttribute(mTarget));
   
@@ -391,3 +417,73 @@ void nuiRectAttributeAnimation::OnFrame()
 }
 
 
+void nuiRectAttributeAnimation::SetLeftAnim(bool set)
+{
+  mAnimLeft = set;
+}
+
+void nuiRectAttributeAnimation::SetRightAnim(bool set)
+{
+  mAnimRight = set;
+}
+
+void nuiRectAttributeAnimation::SetTopAnim(bool set)
+{
+  mAnimTop = set;
+}
+
+void nuiRectAttributeAnimation::SetBottomAnim(bool set)
+{
+  mAnimBottom = set;
+}
+
+void nuiRectAttributeAnimation::SetWidthAnim(bool set)
+{
+  mAnimWidth = set;
+}
+
+void nuiRectAttributeAnimation::SetHeightAnim(bool set)
+{
+  mAnimHeight = set;
+}
+
+
+bool nuiRectAttributeAnimation::GetLeftAnim() const
+{
+  return mAnimLeft;
+}
+
+bool nuiRectAttributeAnimation::GetRightAnim() const
+{
+  return mAnimRight;
+}
+
+bool nuiRectAttributeAnimation::GetTopAnim() const
+{
+  return mAnimTop;
+}
+
+bool nuiRectAttributeAnimation::GetBottomAnim() const
+{
+  return mAnimBottom;
+}
+
+bool nuiRectAttributeAnimation::GetWidthAnim() const
+{
+  return mAnimWidth;
+}
+
+bool nuiRectAttributeAnimation::GetHeightAnim() const
+{
+  return mAnimHeight;
+}
+
+void nuiRectAttributeAnimation::SetAutoRound(bool set)
+{
+  mAutoRound = set;
+}
+
+bool nuiRectAttributeAnimation::GetAutoRound() const
+{
+  return mAutoRound;
+}

@@ -44,10 +44,11 @@ public:
 protected:
 
   virtual bool MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
+  virtual bool MouseUnclicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
   
   bool mIsOpened;
   bool mInteractiveCloseEnabled;
-
+  bool mClicked;
 };
 
 #endif // __nuiFolderPane_h__
