@@ -10,6 +10,7 @@
 #include "nui.h"
 #include "nuiSimpleContainer.h"
 
+class nuiGrid;
 
 class nuiDecorationInspector : public nuiSimpleContainer
 {
@@ -25,4 +26,6 @@ protected:
   void UpdateDecos();
   
   nuiLabel* mpLabel;
+  nuiLabel* mpInfoLabel;
+  nuiGrid* mpAttributeGrid;
 };
