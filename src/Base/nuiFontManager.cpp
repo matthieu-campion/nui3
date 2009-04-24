@@ -991,7 +991,7 @@ void nuiFontManager::ScanFolders(bool rescanAllFolders /* = false */)
   nuiContextInfo ContextInfo(nuiContextInfo::StandardContext3D);
   nglWindowInfo Info;
   
-  Info.Flags = nglWindow::NoBorder;
+  Info.Flags = nglWindow::NoBorder | nglWindow::NoResize;
   Info.Width = 320;
   Info.Height = 60;
   Info.Pos = nglWindowInfo::ePosCenter;
@@ -1004,7 +1004,7 @@ void nuiFontManager::ScanFolders(bool rescanAllFolders /* = false */)
   nuiVBox* pBox = new nuiVBox();
   pBox->SetPosition(nuiCenter);
   nuiLabel* pLabel = new nuiLabel(_T("Please wait. Scaning fonts..."));
-  gpFontPathLabel = new nuiLabel(_T("...searchin..."));
+  gpFontPathLabel = new nuiLabel(_T("...searching..."));
   //pLabel->SetTextColor(nuiColor(255, 255, 255));
   pBox->AddCell(pLabel, nuiCenter);
   pBox->AddCell(gpFontPathLabel, nuiCenter);

@@ -62,6 +62,11 @@ nglContextInfo::nglContextInfo (HDC hDC, int PFD)
   HGLRC rc = wglCreateContext(tmpDC);
   wglMakeCurrent(tmpDC, rc);
 
+  PFNWGLSWAPINTERVALEXTPROC wglSwapIntervalEXT = NULL;
+  PFNWGLGETSWAPINTERVALEXTPROC wglGetSwapIntervalEXT = NULL;
+  wglSwapIntervalEXT = (PFNWGLSWAPINTERVALEXTPROC)wglGetProcAddress("wglSwapIntervalEXT");
+  wglGetSwapIntervalEXT = (PFNWGLGETSWAPINTERVALEXTPROC)wglGetProcAddress("wglGetSwapIntervalEXT");
+
   PFNWGLCHOOSEPIXELFORMATARBPROC wglChoosePixelFormatARB = NULL;
   PFNWGLGETPIXELFORMATATTRIBIVARBPROC wglGetPixelFormatAttribivARB = NULL;
   PFNWGLGETPIXELFORMATATTRIBFVARBPROC wglGetPixelFormatAttribfvARB = NULL;
@@ -202,6 +207,11 @@ nglContextInfo::nglContextInfo (HDC hDC, int PFD)
   if (vendor && !strcmp(vendor, "Matrox Graphics Inc."))
   {
     CopyOnSwap = true;
+  }
+
+  if (wglGetSwapIntervalEXT)
+  {
+    VerticalSync = wglGetSwapIntervalEXT() != 0;
   }
   
   wglMakeCurrent(NULL, NULL);
@@ -501,6 +511,17 @@ int nglContextInfo::GetPFD(HDC hDC) const
       wglDeleteContext(rc);
       DestroyWindow(tmpWin);
     }
+
+    PFNWGLSWAPINTERVALEXTPROC wglSwapIntervalEXT = NULL;
+    PFNWGLGETSWAPINTERVALEXTPROC wglGetSwapIntervalEXT = NULL;
+    wglSwapIntervalEXT = (PFNWGLSWAPINTERVALEXTPROC)wglGetProcAddress("wglSwapIntervalEXT");
+    wglGetSwapIntervalEXT = (PFNWGLGETSWAPINTERVALEXTPROC)wglGetProcAddress("wglGetSwapIntervalEXT");
+
+    if (wglSwapIntervalEXT)
+    {
+      wglSwapIntervalEXT( VerticalSync ? 1 : 0);
+    }
+
     return format;
   }
 }
