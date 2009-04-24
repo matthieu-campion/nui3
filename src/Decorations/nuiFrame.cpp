@@ -32,6 +32,8 @@ nuiFrame::nuiFrame(const nglString& rName, nuiTexture* pTexture, const nuiRect& 
     InitAttributes();
   mDebug = false;
   mInterpolated = true;
+  if (mpTexture)
+    mTexturePath = mpTexture->GetSource();
 }
 
 nuiFrame::nuiFrame(const nglString& rName, const nglPath& rTexturePath, const nuiRect& rClientRect, const nuiColor& rColor)

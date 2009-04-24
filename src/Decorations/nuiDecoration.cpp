@@ -220,13 +220,13 @@ nuiRect nuiDecoration::GetMaximumClientRect() const
 
 bool ShouldSkipAttrib(const nglString& rName)
 {
-  return rName != _T("Class");
+  return rName == _T("Class") || rName == _T("Name");
 }
 
 nglString nuiDecoration::GetCSSDeclaration() const
 {
   nglString decl;
-  decl.Add(_T("@")).Add(GetObjectClass()).Add(_T(" ")).AddNewLine().Add(_T("{")).AddNewLine();
+  decl.Add(_T("@")).Add(GetObjectClass()).Add(_T(" ")).Add(GetObjectName()).AddNewLine().Add(_T("{")).AddNewLine();
   
   // build attributes list
   std::map<nglString, nuiAttribBase> attributes;
@@ -282,6 +282,8 @@ nglString nuiDecoration::GetCSSDeclaration() const
 
       if (value.Find(' ') >= 0)
         value = nglString(_T("\"")).Add(value).Add(_T("\""));
+      if (value.IsEmpty())
+        value = _T("\"\"");
       decl.Add(_T("  ")).Add(Base.GetName()).Add(_T(" : ")).Add(value).Add(_T(";")).AddNewLine();
     }
     
