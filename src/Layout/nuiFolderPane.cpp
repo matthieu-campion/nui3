@@ -111,7 +111,9 @@ bool nuiFolderPane::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags But
       mClicked = true;
       Grab();
     }
+    return true;
   }
+  return false;
 }
 
 

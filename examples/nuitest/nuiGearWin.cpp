@@ -146,8 +146,8 @@ nuiGearWin::nuiGearWin(const nuiRect& rRect)
 
   mGearWinSink.Connect(Clicked, &nuiGearWin::ShowMenu, NULL);
   mGearWinSink.Connect(mpUserArea->UserDraw, &nuiGearWin::UserDraw, NULL);
-  mpUserArea->StartAutoDraw(60);
-  mpFPSLabel->StartAutoDraw(2);
+  mpUserArea->StartAutoDraw();
+  mpFPSLabel->StartAutoDraw();
 
   mpGears = new Gears(GetDrawContext(),10,10,false);
   mLastDraw = nglTime(0);
@@ -309,8 +309,8 @@ bool nuiGearWin::ToggleAnimation(const nuiEvent& rEvent)
   mAnimate = !mAnimate;
   if (mAnimate)
   {
-    mpUserArea->StartAutoDraw(60);
-    //mpFPSLabel->StartAutoDraw(2);
+    mpUserArea->StartAutoDraw();
+    //mpFPSLabel->StartAutoDraw();
   }
   else
   {

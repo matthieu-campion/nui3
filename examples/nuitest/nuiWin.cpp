@@ -1706,7 +1706,7 @@ public:
     mAmplitude = 0.3f;
     mPhase = 0;
 
-    StartAutoDraw(20);
+    StartAutoDraw();
   }
 
   virtual ~nuiWhizzAnim()
