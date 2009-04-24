@@ -17,6 +17,7 @@ nuiFrame::nuiFrame(const nglString& rName)
   if (SetObjectClass(_T("nuiFrame")))
     InitAttributes();
   mColor = nuiColor(255,255,255);
+  mUseWidgetFrameColor = false;
   mDebug = false;
   mInterpolated = true;
 }
@@ -25,6 +26,7 @@ nuiFrame::nuiFrame(const nglString& rName, nuiTexture* pTexture, const nuiRect& 
 : nuiDecoration(rName),
   mpTexture(pTexture),
   mColor(rColor),
+  mUseWidgetFrameColor(false),
   mClientRect(rClientRect),
   mBorderEnabled(true)
 {
@@ -40,6 +42,7 @@ nuiFrame::nuiFrame(const nglString& rName, const nglPath& rTexturePath, const nu
 : nuiDecoration(rName),
   mpTexture(NULL),
   mColor(rColor),
+  mUseWidgetFrameColor(false),
   mClientRect(rClientRect),
   mBorderEnabled(true)
 {
@@ -70,6 +73,11 @@ void nuiFrame::InitAttributes()
    (nglString(_T("Color")), nuiUnitNone,
     nuiAttribute<const nuiColor&>::GetterDelegate(this, &nuiFrame::GetColor), 
     nuiAttribute<const nuiColor&>::SetterDelegate(this, &nuiFrame::SetColor));
+
+  nuiAttribute<bool>* AttributeFrameColor = new nuiAttribute<bool>
+  (nglString(_T("UseWidgetFrameColor")), nuiUnitBoolean,
+   nuiAttribute<bool>::GetterDelegate(this, &nuiFrame::IsWidgetFrameColorUsed),
+   nuiAttribute<bool>::SetterDelegate(this, &nuiFrame::UseWidgetFrameColor));
   
   nuiAttribute<const nglPath&>* AttributeTexture = new nuiAttribute<const nglPath&>
    (nglString(_T("Texture")), nuiUnitNone,
@@ -85,6 +93,7 @@ void nuiFrame::InitAttributes()
 	AddAttribute(_T("EnableBorder"), AttributeBorder);
 	AddAttribute(_T("ClientRect"), AttributeRect);
 	AddAttribute(_T("Color"), AttributeColor);
+  AddAttribute(_T("UseWidgetFrameColor"), AttributeFrameColor);
 	AddAttribute(_T("Texture"), AttributeTexture);
 	AddAttribute(_T("Interpolation"), AttributeInterpolation);
 }
@@ -426,15 +435,21 @@ void nuiFrame::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect&
 
   nuiColor color = mColor;
   
-  if (mUseWidgetAlpha && pWidget)
+  if (pWidget)
   {
-    float widgetAlpha = pWidget->GetAlpha();
-    color.Alpha() *= widgetAlpha;
-    
-//    wprintf(_T("nuiFrame::Draw (0x%x) alpha %.2f => color (%.2f, %.2f, %.2f, %.2f)\n"), this, widgetAlpha,
-//    color.Alpha(), color.Red(), color.Green(), color.Blue());
+    if (mUseWidgetFrameColor)
+    {
+      nuiAttrib<const nuiColor&> colorAttr(pWidget->GetAttribute(_T("FrameColor")));
+      if (colorAttr.IsValid()) {
+        color = colorAttr.Get();
+      }
+    }
+    if (mUseWidgetAlpha)
+    {
+      float widgetAlpha = pWidget->GetAlpha();
+      color.Alpha() *= widgetAlpha;
+    }
   }
-  
   pContext->EnableTexturing(true);
   pContext->EnableBlending(true);
   pContext->SetBlendFunc(nuiBlendTransp);
@@ -442,9 +457,6 @@ void nuiFrame::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect&
   pContext->SetFillColor(color);
   pContext->DrawArray(pArray);
 }
-
-
-
 
 
 const nuiRect& nuiFrame::GetSourceClientRect() const
@@ -530,6 +542,17 @@ void nuiFrame::SetColor(const nuiColor& color)
 	mColor = color;
   Changed();
 }
+
+bool nuiFrame::IsWidgetFrameColorUsed() const
+{
+  return mUseWidgetFrameColor;
+}
+
+void nuiFrame::UseWidgetFrameColor(bool Use)
+{
+  mUseWidgetFrameColor = Use;
+}
+
 
 nuiRect nuiFrame::GetIdealClientRect() const
 {

@@ -47,6 +47,9 @@ public:
 	const nuiColor& GetColor() const;
 	void SetColor(const nuiColor& color);
 
+  void UseWidgetFrameColor(bool);
+  bool IsWidgetFrameColorUsed() const;
+
   void SetDebug(bool set);
 
   
@@ -56,6 +59,7 @@ private:
   nglPath mTexturePath;
 	// attributes ***********************************
   nuiColor mColor;
+  bool mUseWidgetFrameColor;
   nuiRect mClientRect;
   bool mBorderEnabled;
   bool mDebug;
