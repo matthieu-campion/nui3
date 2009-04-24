@@ -115,6 +115,7 @@ bool nuiDecorationInspector::OnDecoSelection(const nuiEvent& rEvent)
   mSlot.DisconnectAll();
   mSlot.Connect(pDeco->Changed, nuiMakeDelegate(mpLabel, &nuiWidget::Invalidate));
   mSlot.Connect(pDeco->Changed, nuiMakeDelegate(mpLabel->GetParent(), &nuiWidget::Invalidate));
+  mSlot.Connect(pDeco->Changed, nuiMakeDelegate(this, &nuiDecorationInspector::DumpDecl));
   mpLabel->SetDecoration(pDeco);
   mpInfoLabel->SetText(info);
 
@@ -192,6 +193,17 @@ bool nuiDecorationInspector::OnDecoSelection(const nuiEvent& rEvent)
     i++;
   }
   
+  DumpDecl();
   
   return false;
+}
+
+void nuiDecorationInspector::DumpDecl()
+{
+  nuiDecoration* pDeco = mpLabel->GetDecoration();
+  if (pDeco)
+  {
+    nglString decl = pDeco->GetCSSDeclaration();
+    NGL_OUT(_T("Decoration Declaration:\n%ls\n"), decl.GetChars());
+  }
 }

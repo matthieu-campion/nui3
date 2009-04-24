@@ -218,3 +218,78 @@ nuiRect nuiDecoration::GetMaximumClientRect() const
   return GetIdealClientRect().Size();
 }
 
+bool ShouldSkipAttrib(const nglString& rName)
+{
+  return rName != _T("Class");
+}
+
+nglString nuiDecoration::GetCSSDeclaration() const
+{
+  nglString decl;
+  decl.Add(_T("@")).Add(GetObjectClass()).Add(_T(" ")).AddNewLine().Add(_T("{")).AddNewLine();
+  
+  // build attributes list
+  std::map<nglString, nuiAttribBase> attributes;
+  GetAttributes(attributes);
+  uint32 i = 0;
+  std::map<nglString, nuiAttribBase>::const_iterator it_a = attributes.begin();
+  std::map<nglString, nuiAttribBase>::const_iterator end_a = attributes.end();
+  
+  while (it_a != end_a)
+  {
+    nglString pname(it_a->first);
+    if (!ShouldSkipAttrib(pname))
+    {
+      
+      //printf("\tattr: %ls\n", pname.GetChars());
+      nuiAttribBase Base = it_a->second;
+      
+      nglString value;
+      switch (Base.GetDimension())
+      {
+        case 0:
+          Base.ToString(value);
+          break;
+        case 1:
+        {
+          nglString str;
+          uint32 count = Base.GetIndexRange(0);
+          for (uint32 i = 0; i < count; i++)
+          {
+            Base.ToString(i, str);
+            value.Add(i).Add(_T(":")).Add(str).Add("\t");
+          }
+          value.Trim(_T('\t'));
+        }
+          break;
+        case 2:
+        {
+          nglString str;
+          uint32 counti = Base.GetIndexRange(0);
+          uint32 countj = Base.GetIndexRange(1);
+          for (uint32 i = 0; i < MIN(10, counti); i++)
+          {
+            for (uint32 j = 0; j < MIN(10, countj); j++)
+            {
+              Base.ToString(i, j, str);
+              value.Add(i).Add(",").Add(j).Add(_T(":")).Add(str).Add("\t");
+            }
+          }
+          value.Trim(_T('\t'));
+        }
+          
+      }
+
+      if (value.Find(' ') >= 0)
+        value = nglString(_T("\"")).Add(value).Add(_T("\""));
+      decl.Add(_T("  ")).Add(Base.GetName()).Add(_T(" : ")).Add(value).Add(_T(";")).AddNewLine();
+    }
+    
+    ++it_a;
+    i++;
+  }
+  
+  decl.Add(_T("}")).AddNewLine().AddNewLine();
+  return decl;
+}
+

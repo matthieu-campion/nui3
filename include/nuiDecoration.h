@@ -52,6 +52,8 @@ public:
   static nuiDecoration* Get(const nglString& rName, bool silent=false);
   static const DecorationMap& Enum();
   static nuiSimpleEventSource<0> DecorationsChanged;
+  
+  nglString GetCSSDeclaration() const;
 protected:
 
   bool mUseWidgetAlpha;

@@ -24,6 +24,7 @@ protected:
   bool OnDecosChanged(const nuiEvent& rEvent);
   bool OnDecoSelection(const nuiEvent& rEvent);
   void UpdateDecos();
+  void DumpDecl();
   
   nuiLabel* mpLabel;
   nuiLabel* mpInfoLabel;
