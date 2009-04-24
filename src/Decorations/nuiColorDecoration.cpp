@@ -217,6 +217,7 @@ const nuiRect& nuiColorDecoration::GetSourceClientRect() const
 void nuiColorDecoration::SetSourceClientRect(const nuiRect& rRect)
 {
   mClientRect = rRect;
+  Changed();
 }
 
 const nuiColor& nuiColorDecoration::GetFillColor() const
@@ -227,6 +228,7 @@ const nuiColor& nuiColorDecoration::GetFillColor() const
 void nuiColorDecoration::SetFillColor(const nuiColor& color)
 {
   mFillColor = color;
+  Changed();
 }
 
 
@@ -239,12 +241,14 @@ const nuiColor& nuiColorDecoration::GetStrokeColor() const
 void nuiColorDecoration::SetStrokeColor(const nuiColor& color)
 {
   mStrokeColor = color;
+  Changed();
 }
 
 
 void nuiColorDecoration::SetStrokeSize(uint32 size)
 {
   mStrokeSize = size;
+  Changed();
 }
 
 
@@ -257,6 +261,7 @@ uint32 nuiColorDecoration::GetStrokeSize() const
 void nuiColorDecoration::SetShapeMode(nuiShapeMode mode)
 {
   mShapeMode = mode;
+  Changed();
 }
 
 

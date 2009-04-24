@@ -152,6 +152,7 @@ nuiSize nuiMetaDecoration::GetBorder(nuiPosition position) const
 void nuiMetaDecoration::AddDecoration(nuiDecoration* pDeco)
 {
   mDecorations.push_back(pDeco);
+  Changed();
 }
 
 void nuiMetaDecoration::AddDecoration(const nglString& rDecoName)
@@ -195,5 +196,6 @@ void nuiMetaDecoration::Clear()
 
   mDecorations.clear();
 
+  Changed();
 }
 

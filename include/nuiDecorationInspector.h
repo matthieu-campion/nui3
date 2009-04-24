@@ -28,4 +28,5 @@ protected:
   nuiLabel* mpLabel;
   nuiLabel* mpInfoLabel;
   nuiGrid* mpAttributeGrid;
+  nuiSlotsSink mSlot;
 };

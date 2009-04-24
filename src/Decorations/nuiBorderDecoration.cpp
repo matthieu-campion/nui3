@@ -230,6 +230,7 @@ const nuiRect& nuiBorderDecoration::GetSourceClientRect() const
 void nuiBorderDecoration::SetSourceClientRect(const nuiRect& rRect)
 {
   mClientRect = rRect;
+  Changed();
 }
 
 
@@ -243,6 +244,7 @@ const nuiColor& nuiBorderDecoration::GetStrokeColor() const
 void nuiBorderDecoration::SetStrokeColor(const nuiColor& color)
 {
   mStrokeColor = color;
+  Changed();
 }
 
 
@@ -259,6 +261,7 @@ void nuiBorderDecoration::SetStrokeLeftColor(const nuiColor& color)
   mStrokeLeftColor = color;
   mUseStrokeLeftColor = true;
   mUseStrokeGlobalColor = false;
+  Changed();
 }
 
 
@@ -275,6 +278,7 @@ void nuiBorderDecoration::SetStrokeRightColor(const nuiColor& color)
   mStrokeRightColor = color;
   mUseStrokeRightColor = true;
   mUseStrokeGlobalColor = false;
+  Changed();
 }
 
 
@@ -291,6 +295,7 @@ void nuiBorderDecoration::SetStrokeTopColor(const nuiColor& color)
   mStrokeTopColor = color;
   mUseStrokeTopColor = true;
   mUseStrokeGlobalColor = false;
+  Changed();
 }
 
 
@@ -307,6 +312,7 @@ void nuiBorderDecoration::SetStrokeBottomColor(const nuiColor& color)
   mStrokeBottomColor = color;
   mUseStrokeBottomColor = true;
   mUseStrokeGlobalColor = false;
+  Changed();
 }
 
 
@@ -314,6 +320,7 @@ void nuiBorderDecoration::SetStrokeBottomColor(const nuiColor& color)
 void nuiBorderDecoration::SetStrokeSize(uint32 size)
 {
   mStrokeSize = size;
+  Changed();
 }
 
 
@@ -369,6 +376,7 @@ void nuiBorderDecoration::SetBorderType(nglString type)
     mBorderType = eBorderNone;
   else
     mBorderType = eBorderNone;
+  Changed();
 }
 
 
@@ -399,4 +407,5 @@ void nuiBorderDecoration::SetBorderMode(nglString mode)
     mBorderMode = eBorder3DOut;
   else
     mBorderMode = eBorderNormal;
+  Changed();
 }

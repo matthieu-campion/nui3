@@ -76,6 +76,7 @@ uint32 nuiTreeHandleDecoration::GetHandleSize()
 void nuiTreeHandleDecoration::SetHandleSize(uint32 size)
 {
   mHandleSize = size;
+  Changed();
 }
 
 const nuiColor& nuiTreeHandleDecoration::GetHandleColor()
@@ -86,6 +87,7 @@ const nuiColor& nuiTreeHandleDecoration::GetHandleColor()
 void nuiTreeHandleDecoration::SetHandleColor(const nuiColor& handleColor)
 {
   mHandleColor = handleColor;
+  Changed();
 }
 
 
@@ -180,4 +182,5 @@ const nuiBorder& nuiTreeHandleDecoration::GetHandleBorder() const
 void nuiTreeHandleDecoration::SetHandleBorder(const nuiBorder& rHandleBorder)
 {
   mBorder = rHandleBorder;
+  Changed();
 }

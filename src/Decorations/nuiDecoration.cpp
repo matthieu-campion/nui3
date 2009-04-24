@@ -50,6 +50,7 @@ nuiDecoration::~nuiDecoration()
 void nuiDecoration::SetLayer(nuiDecorationLayer layer)
 {
   mLayer = layer;
+  Changed();
 }
 
 
@@ -67,6 +68,7 @@ void nuiDecoration::SetName(const nglString& rName)
   DelDecoration(this);
   SetObjectName(rName);
   AddDecoration(this);
+  Changed();
 }
 
 const nglString& nuiDecoration::GetName() const
@@ -77,6 +79,7 @@ const nglString& nuiDecoration::GetName() const
 void nuiDecoration::UseWidgetAlpha(bool use)
 {
   mUseWidgetAlpha = use;
+  Changed();
 }
 
 bool nuiDecoration::IsWidgetAlphaUsed()

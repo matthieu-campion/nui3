@@ -313,6 +313,7 @@ void nuiGradientDecoration::SetOrientation(nglString orientation)
   else
     mOrientation = nuiHorizontal;
     
+  Changed();
 }
 
 nglString nuiGradientDecoration::GetOrientation()
@@ -377,6 +378,7 @@ const nuiRect& nuiGradientDecoration::GetSourceClientRect() const
 void nuiGradientDecoration::SetSourceClientRect(const nuiRect& rRect)
 {
   mClientRect = rRect;
+  Changed();
 }
 
 
@@ -399,6 +401,7 @@ void nuiGradientDecoration::SetColors(const nuiColor& color1, const nuiColor& co
 {
   mColor1 = color1;
   mColor2 = color2;
+  Changed();
 }
 
 void nuiGradientDecoration::SetColors(const nuiColor& color1, const nuiColor& color2, const nuiColor& color3, const nuiColor& color4)
@@ -407,6 +410,7 @@ void nuiGradientDecoration::SetColors(const nuiColor& color1, const nuiColor& co
   mColor2 = color2;
   mColor3 = color3;
   mColor4 = color4;
+  Changed();
 }
 
 const nuiColor& nuiGradientDecoration::GetColor1() const
@@ -417,6 +421,7 @@ const nuiColor& nuiGradientDecoration::GetColor1() const
 void nuiGradientDecoration::SetColor1(const nuiColor& color)
 {
   mColor1 = color;
+  Changed();
 }
 
 const nuiColor& nuiGradientDecoration::GetColor2() const
@@ -427,6 +432,7 @@ const nuiColor& nuiGradientDecoration::GetColor2() const
 void nuiGradientDecoration::SetColor2(const nuiColor& color)
 {
   mColor2 = color;
+  Changed();
 }
 
 const nuiColor& nuiGradientDecoration::GetColor3() const
@@ -438,6 +444,7 @@ void nuiGradientDecoration::SetColor3(const nuiColor& color)
 {
   mColor3 = color;
   mGradientType = nuiGradient4Colors;
+  Changed();
 }
 
 const nuiColor& nuiGradientDecoration::GetColor4() const
@@ -449,6 +456,7 @@ void nuiGradientDecoration::SetColor4(const nuiColor& color)
 {
   mColor4 = color;
   mGradientType = nuiGradient4Colors;
+  Changed();
 }
 
 const nuiColor& nuiGradientDecoration::GetStrokeColor() const
@@ -483,6 +491,7 @@ void nuiGradientDecoration::SetOffset1(double offset)
 {
   mOffset1 = offset;
   mUserOffsets = true;
+  Changed();
 }
 
 
@@ -490,6 +499,7 @@ void nuiGradientDecoration::SetOffset2(double offset)
 {
   mOffset2 = offset;
   mUserOffsets = true;
+  Changed();
 }
 
 
@@ -497,6 +507,7 @@ void nuiGradientDecoration::SetOffset3(double offset)
 {
   mOffset3 = offset;
   mUserOffsets = true;
+  Changed();
 }
 
 
@@ -504,6 +515,7 @@ void nuiGradientDecoration::SetOffset4(double offset)
 {
   mOffset4 = offset;
   mUserOffsets = true;
+  Changed();
 }
 
 
@@ -513,6 +525,7 @@ void nuiGradientDecoration::SetOffset4(double offset)
 void nuiGradientDecoration::SetStrokeColor(const nuiColor& color)
 {
   mStrokeColor = color;
+  Changed();
 }
 
 uint32 nuiGradientDecoration::GetStrokeSize() const
@@ -523,11 +536,13 @@ uint32 nuiGradientDecoration::GetStrokeSize() const
 void nuiGradientDecoration::SetStrokeSize(uint32 size)
 {
   mStrokeSize = size;
+  Changed();
 }
 
 void nuiGradientDecoration::SetShapeMode(nuiShapeMode mode)
 {
   mShapeMode = mode;
+  Changed();
 }
 
 

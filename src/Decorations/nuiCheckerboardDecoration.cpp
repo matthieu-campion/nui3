@@ -181,6 +181,7 @@ const nuiRect& nuiCheckerboardDecoration::GetSourceClientRect() const
 void nuiCheckerboardDecoration::SetSourceClientRect(const nuiRect& rRect)
 {
   mClientRect = rRect;
+  Changed();
 }
 
 
@@ -194,6 +195,7 @@ const nuiColor& nuiCheckerboardDecoration::GetStrokeColor() const
 void nuiCheckerboardDecoration::SetStrokeColor(const nuiColor& color)
 {
   mStrokeColor = color;
+  Changed();
 }
 
 
@@ -207,6 +209,7 @@ const nuiColor& nuiCheckerboardDecoration::GetTileColor() const
 void nuiCheckerboardDecoration::SetTileColor(const nuiColor& color)
 {
   mTileColor = color;
+  Changed();
 }
 
 
@@ -222,6 +225,7 @@ const nuiColor& nuiCheckerboardDecoration::GetBackgroundColor() const
 void nuiCheckerboardDecoration::SetBackgroundColor(const nuiColor& color)
 {
   mBackgroundColor = color;
+  Changed();
 }
 
 
@@ -231,6 +235,7 @@ void nuiCheckerboardDecoration::SetBackgroundColor(const nuiColor& color)
 void nuiCheckerboardDecoration::SetStrokeSize(uint32 size)
 {
   mStrokeSize = size;
+  Changed();
 }
 
 
@@ -243,6 +248,7 @@ uint32 nuiCheckerboardDecoration::GetStrokeSize() const
 void nuiCheckerboardDecoration::SetTilesPerLine(uint32 nb)
 {
   mTilesPerLine = nb;
+  Changed();
 }
 
 

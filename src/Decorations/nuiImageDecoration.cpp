@@ -118,6 +118,7 @@ nuiPosition nuiImageDecoration::GetPosition()
 void nuiImageDecoration::SetPosition(nuiPosition pos)
 {
   mPosition = pos;
+  Changed();
 }
 
 
@@ -138,6 +139,7 @@ void nuiImageDecoration::SetTexturePath(nglPath path)
     SetSourceClientRect(nuiRect(0, 0, mpTexture->GetWidth(), mpTexture->GetHeight()));
   if (pOld)
     pOld->Release();
+  Changed();
 }
 
 const nuiColor& nuiImageDecoration::GetColor() const
@@ -148,6 +150,7 @@ const nuiColor& nuiImageDecoration::GetColor() const
 void nuiImageDecoration::SetColor(const nuiColor& rColor)
 {
   mColor = rColor;
+  Changed();
 }
 
 void nuiImageDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rDestRect)
@@ -179,11 +182,13 @@ const nuiRect& nuiImageDecoration::GetSourceClientRect() const
 void nuiImageDecoration::SetSourceClientRect(const nuiRect& rRect)
 {
   mClientRect = rRect;
+  Changed();
 }
 
 void nuiImageDecoration::EnableBorder(bool set)
 {
   mBorderEnabled = set;
+  Changed();
 }
 
 bool nuiImageDecoration::IsBorderEnabled() const

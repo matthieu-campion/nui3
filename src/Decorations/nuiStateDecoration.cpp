@@ -406,6 +406,8 @@ void nuiStateDecoration::SetState(nuiStateDescription State, nuiDecoration* pDec
     mStates[State] = pDecoration;
   else
     mStates.erase(State);
+  
+  Changed();
 }
 
 void nuiStateDecoration::SetState(nuiStateDescription State, const nglString& rDecorationName)
@@ -436,6 +438,7 @@ void nuiStateDecoration::SetSourceClientRect(const nuiRect& rRect)
 {
   mClientRect = rRect;
   mUseSourceClientRect = true;
+  Changed();
 }
 
 

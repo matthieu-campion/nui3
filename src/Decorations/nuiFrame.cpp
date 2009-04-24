@@ -142,6 +142,7 @@ void nuiFrame::SetTexturePath(const nglPath& rPath)
     mpTexture->SetMinFilter(GL_NEAREST);
     mpTexture->SetMagFilter(GL_NEAREST);
   }
+  Changed();
 }
 
 
@@ -452,11 +453,13 @@ const nuiRect& nuiFrame::GetSourceClientRect() const
 void nuiFrame::SetSourceClientRect(const nuiRect& rRect)
 {
   mClientRect = rRect;
+  Changed();
 }
 
 void nuiFrame::EnableBorder(bool set)
 {
   mBorderEnabled = set;
+  Changed();
 }
 
 bool nuiFrame::IsBorderEnabled() const
@@ -523,6 +526,7 @@ const nuiColor& nuiFrame::GetColor() const
 void nuiFrame::SetColor(const nuiColor& color)
 {
 	mColor = color;
+  Changed();
 }
 
 nuiRect nuiFrame::GetIdealClientRect() const
@@ -553,6 +557,7 @@ void nuiFrame::SetInterpolated(bool set)
       mpTexture->SetMagFilter(GL_NEAREST);    
     }
   }
+  Changed();
 }
 
 

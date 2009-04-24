@@ -111,6 +111,10 @@ bool nuiDecorationInspector::OnDecoSelection(const nuiEvent& rEvent)
     info = nglString::Empty;
     info.Add(name).AddNewLine().Add(pDeco->GetObjectClass());
   }
+
+  mSlot.DisconnectAll();
+  mSlot.Connect(pDeco->Changed, nuiMakeDelegate(mpLabel, &nuiWidget::Invalidate));
+  mSlot.Connect(pDeco->Changed, nuiMakeDelegate(mpLabel->GetParent(), &nuiWidget::Invalidate));
   mpLabel->SetDecoration(pDeco);
   mpInfoLabel->SetText(info);
 

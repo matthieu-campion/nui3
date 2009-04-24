@@ -46,6 +46,8 @@ public:
   virtual nuiRect GetMinimumClientRect() const;
   virtual nuiRect GetMaximumClientRect() const;
 
+  nuiSignal0<> Changed;
+  
   typedef std::map<nglString, nuiDecoration*> DecorationMap;
   static nuiDecoration* Get(const nglString& rName, bool silent=false);
   static const DecorationMap& Enum();
