@@ -46,8 +46,10 @@ public:
   virtual nuiRect GetMinimumClientRect() const;
   virtual nuiRect GetMaximumClientRect() const;
 
+  typedef std::map<nglString, nuiDecoration*> DecorationMap;
   static nuiDecoration* Get(const nglString& rName, bool silent=false);
-
+  static const DecorationMap& Enum();
+  static nuiSimpleEventSource<0> DecorationsChanged;
 protected:
 
   bool mUseWidgetAlpha;
@@ -58,7 +60,7 @@ private:
   static void AddDecoration(nuiDecoration* pDecoration);
   static void DelDecoration(nuiDecoration* pDecoration);
 
-  static std::map<nglString, nuiDecoration*> mDecorations;
+  static DecorationMap mDecorations;
   
 
   

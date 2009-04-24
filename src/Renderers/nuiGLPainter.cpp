@@ -1199,13 +1199,18 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
       {
         NGL_ASSERT(pSurface);
 #if !defined(_OPENGL_ES_) && defined(_MACOSX_)
-        internalPixelformat = GL_RGBA;
-        pixelformat = GL_BGRA;
+        internalPixelformat = pSurface->GetPixelFormat();
+        if (internalPixelformat == GL_RGBA)
+          pixelformat = GL_BGRA;
+        else if (internalPixelformat == GL_RGB)
+          pixelformat = GL_BGR;
+        else
+          pixelformat = pSurface->GetPixelFormat();
         type = GL_UNSIGNED_INT_8_8_8_8_REV;
         glPixelStorei(GL_UNPACK_CLIENT_STORAGE_APPLE, GL_FALSE);
 #else
-        internalPixelformat = GL_RGBA;
-        pixelformat = GL_RGBA;
+        internalPixelformat = pSurface->GetPixelFormat();
+        pixelformat = pSurface->GetPixelFormat();
         type = GL_UNSIGNED_BYTE;
 #endif
       }
@@ -1535,7 +1540,7 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
         glBindRenderbufferNUI(GL_RENDERBUFFER_NUI, info.mRenderbuffer);
         nuiCheckForGLErrors();
         
-        glRenderbufferStorageNUI(GL_RENDERBUFFER_NUI, GL_RGBA, width, height);
+        glRenderbufferStorageNUI(GL_RENDERBUFFER_NUI, pSurface->GetPixelFormat(), width, height);
         nuiCheckForGLErrors();
         
         glFramebufferRenderbufferNUI(GL_FRAMEBUFFER_NUI,

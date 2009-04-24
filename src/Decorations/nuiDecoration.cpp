@@ -86,8 +86,8 @@ bool nuiDecoration::IsWidgetAlphaUsed()
 
 nuiDecoration* nuiDecoration::Get(const nglString& rName, bool silent)
 {
-  std::map<nglString, nuiDecoration*>::iterator it = mDecorations.find(rName);
-  std::map<nglString, nuiDecoration*>::iterator end = mDecorations.end();
+  DecorationMap::iterator it = mDecorations.find(rName);
+  DecorationMap::iterator end = mDecorations.end();
   
   if (it == end)
   {
@@ -104,24 +104,31 @@ nuiDecoration* nuiDecoration::Get(const nglString& rName, bool silent)
 void nuiDecoration::AddDecoration(nuiDecoration* pDecoration)
 {
   const nglString& name(pDecoration->GetObjectName());
-  std::map<nglString, nuiDecoration*>::iterator it = mDecorations.find(name);
+  DecorationMap::iterator it = mDecorations.find(name);
   if (it != mDecorations.end())
     it->second->Release();
   mDecorations[name] = pDecoration;
   pDecoration->Acquire();
+  DecorationsChanged();
 }
 
 void nuiDecoration::DelDecoration(nuiDecoration* pDecoration)
 {
   nglString name(pDecoration->GetObjectName());
   
-  std::map<nglString, nuiDecoration*>::iterator it = mDecorations.find(name);
+  DecorationMap::iterator it = mDecorations.find(name);
   if (it != mDecorations.end() && pDecoration == it->second)
     mDecorations.erase(it);
+  DecorationsChanged();
 }
 
-std::map<nglString, nuiDecoration*> nuiDecoration::mDecorations;
+nuiDecoration::DecorationMap nuiDecoration::mDecorations;
+nuiSimpleEventSource<0> nuiDecoration::DecorationsChanged;
 
+const nuiDecoration::DecorationMap& nuiDecoration::Enum()
+{
+  return mDecorations;
+}
 
 
 //virtual 

@@ -10,6 +10,24 @@
 #include "nuiAudioDevice_AudioUnit.h"
 #include "nuiAudioConvert.h"
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //class nuiAudioDevice_AudioUnit : public nuiAudioDevice
 nuiAudioDevice_AudioUnit::nuiAudioDevice_AudioUnit()
 {  
@@ -66,49 +84,56 @@ void nuiAudioDevice_AudioUnit::Process(uint uNumFrames, AudioBufferList* ioData)
   
   mAudioProcessFn(mInputBuffers, mOutputBuffers, uNumFrames);
 
-  const float* ptr0 = mOutputBuffers[0];
-  const float* ptr1 = mOutputBuffers[1];
 
   // copy buffers (int -> float)
   if (ioData->mNumberBuffers == 2)
   {
-    int32* dst0 = (int32*)ioData->mBuffers[0].mData;
-    int32* dst1 = (int32*)ioData->mBuffers[1].mData;
-    
-    const int32 mult = ((1 << 24) - 1);
-    for (uint32 s = 0; s < uNumFrames; s++)
+    if (mOutputBuffers.size())
     {
-      const float sl = *ptr0;
-      const float sr = *ptr1;
-      
-      *dst0 = sl * mult;
-      *dst1 = sr * mult;
-      
-      dst0++;
-      dst1++;
-      
-      ptr0++;
-      ptr1++;
+      const int32 mult = ((1 << 24) - 1);
+      int32* dst0 = (int32*)ioData->mBuffers[0].mData;
+      int32* dst1 = (int32*)ioData->mBuffers[1].mData;
+      const float* ptr0 = mOutputBuffers[0];
+      const float* ptr1 = mOutputBuffers[1];
+      for (uint32 s = 0; s < uNumFrames; s++)
+      {
+        const float sl = *ptr0;
+        const float sr = *ptr1;
+        
+        *dst0 = sl * mult;
+        *dst1 = sr * mult;
+        
+        dst0++;
+        dst1++;
+        
+        ptr0++;
+        ptr1++;
+      }
     }
   }
   else
   {
-    int16* dst0 = (int16*)ioData->mBuffers[0].mData;
-    
-    const int32 mult = ((1 << 16) - 1);
-    for (uint32 s = 0; s < uNumFrames; s++)
+    if (mOutputBuffers.size())
     {
-      const float sl = *ptr0;
-      const float sr = *ptr1;
+      int16* dst0 = (int16*)ioData->mBuffers[0].mData;
+      const float* ptr0 = mOutputBuffers[0];
+      const float* ptr1 = mOutputBuffers[1];
       
-      *dst0 = sl * mult;
-      dst0++;
-      *dst0 = sr * mult;
-      dst0++;
-      
-      
-      ptr0++;
-      ptr1++;
+      const int32 mult = ((1 << 16) - 1);
+      for (uint32 s = 0; s < uNumFrames; s++)
+      {
+        const float sl = *ptr0;
+        const float sr = *ptr1;
+        
+        *dst0 = sl * mult;
+        dst0++;
+        *dst0 = sr * mult;
+        dst0++;
+        
+        
+        ptr0++;
+        ptr1++;
+      }
     }
   }
 } 

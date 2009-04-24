@@ -26,6 +26,8 @@ public:
   nuiSize GetWidth() const;
   nuiSize GetHeight() const;
 
+  nglImagePixelFormat GetPixelFormat() const;
+  
   void SetDepth(bool Enable);
   bool GetDepth() const;
 
@@ -45,7 +47,7 @@ public:
   bool IsPermanent();
   
 protected:
-  nuiSurface(const nglString& rName, nuiSize Width, nuiSize Height);
+  nuiSurface(const nglString& rName, nuiSize Width, nuiSize Height, nglImagePixelFormat PixelFormat = eImagePixelRGBA);
   virtual ~nuiSurface();
 
 private:
@@ -58,6 +60,8 @@ private:
   bool mDepth;
   bool mStencil;
   bool mRenderToTexture;
+
+  nglImagePixelFormat mPixelFormat;
   
   nuiTexture* mpTexture;
 

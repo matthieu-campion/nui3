@@ -3507,6 +3507,12 @@
 		E59CD8020CDAAAE100B1C729 /* CoreAudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E59CD7FA0CDAAAE100B1C729 /* CoreAudioKit.framework */; };
 		E59CD8A60CDAB25800B1C729 /* nuiAudioDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52E1A270CD7F397006FBCDD /* nuiAudioDevice.cpp */; };
 		E59CDA380CDABB5900B1C729 /* nuiAudioDevice_CoreAudio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52E1A550CD80280006FBCDD /* nuiAudioDevice_CoreAudio.cpp */; };
+		E5A0FE440FA1336500D934F6 /* nuiDecorationInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = E5A0FE430FA1336500D934F6 /* nuiDecorationInspector.h */; };
+		E5A0FE450FA1336500D934F6 /* nuiDecorationInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = E5A0FE430FA1336500D934F6 /* nuiDecorationInspector.h */; };
+		E5A0FE460FA1336500D934F6 /* nuiDecorationInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = E5A0FE430FA1336500D934F6 /* nuiDecorationInspector.h */; };
+		E5A0FE4A0FA133BA00D934F6 /* nuiDecorationInspector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5A0FE480FA133BA00D934F6 /* nuiDecorationInspector.cpp */; };
+		E5A0FE4C0FA133BA00D934F6 /* nuiDecorationInspector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5A0FE480FA133BA00D934F6 /* nuiDecorationInspector.cpp */; };
+		E5A0FE4E0FA133BA00D934F6 /* nuiDecorationInspector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5A0FE480FA133BA00D934F6 /* nuiDecorationInspector.cpp */; };
 		E5A16F100C902AB5005DC748 /* nuiTitledPane.h in Headers */ = {isa = PBXBuildFile; fileRef = E5A16F0F0C902AB5005DC748 /* nuiTitledPane.h */; };
 		E5A16F110C902AB5005DC748 /* nuiTitledPane.h in Headers */ = {isa = PBXBuildFile; fileRef = E5A16F0F0C902AB5005DC748 /* nuiTitledPane.h */; };
 		E5A16F130C902AD5005DC748 /* nuiTitledPane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5A16F120C902AD5005DC748 /* nuiTitledPane.cpp */; };
@@ -4778,6 +4784,8 @@
 		E59CD7F80CDAAAE100B1C729 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = /System/Library/Frameworks/AudioUnit.framework; sourceTree = "<absolute>"; };
 		E59CD7F90CDAAAE100B1C729 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = /System/Library/Frameworks/CoreAudio.framework; sourceTree = "<absolute>"; };
 		E59CD7FA0CDAAAE100B1C729 /* CoreAudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudioKit.framework; path = /System/Library/Frameworks/CoreAudioKit.framework; sourceTree = "<absolute>"; };
+		E5A0FE430FA1336500D934F6 /* nuiDecorationInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiDecorationInspector.h; path = include/nuiDecorationInspector.h; sourceTree = SOURCE_ROOT; };
+		E5A0FE480FA133BA00D934F6 /* nuiDecorationInspector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiDecorationInspector.cpp; path = Introspector/nuiDecorationInspector.cpp; sourceTree = "<group>"; };
 		E5A16F0F0C902AB5005DC748 /* nuiTitledPane.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiTitledPane.h; path = include/nuiTitledPane.h; sourceTree = SOURCE_ROOT; };
 		E5A16F120C902AD5005DC748 /* nuiTitledPane.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiTitledPane.cpp; path = src/Layout/nuiTitledPane.cpp; sourceTree = SOURCE_ROOT; };
 		E5A16FF60C90656A005DC748 /* nuiToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiToken.h; path = include/nuiToken.h; sourceTree = SOURCE_ROOT; };
@@ -5043,6 +5051,8 @@
 				BCC51BF00DC0E72C00563B7E /* nuiThreadInspector.h */,
 				E554C6D50DC1478E00C5D69A /* nuiFontInspector.cpp */,
 				E554C6D80DC1480700C5D69A /* nuiFontInspector.h */,
+				E5A0FE430FA1336500D934F6 /* nuiDecorationInspector.h */,
+				E5A0FE480FA133BA00D934F6 /* nuiDecorationInspector.cpp */,
 			);
 			name = Introspector;
 			sourceTree = "<group>";
@@ -7581,6 +7591,7 @@
 				E5EA30190F55926F0057CCA7 /* nuiCoverFlow.h in Headers */,
 				E55C02D50F5E99A00045FBFE /* nuiGenericAttributeEditor.h in Headers */,
 				BC2A8A5E0F691D8800502BAB /* nuiProgressBar.h in Headers */,
+				E5A0FE450FA1336500D934F6 /* nuiDecorationInspector.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8260,6 +8271,7 @@
 				E5EA301B0F55926F0057CCA7 /* nuiCoverFlow.h in Headers */,
 				E55C02D30F5E99A00045FBFE /* nuiGenericAttributeEditor.h in Headers */,
 				BC2A8A5D0F691D8800502BAB /* nuiProgressBar.h in Headers */,
+				E5A0FE440FA1336500D934F6 /* nuiDecorationInspector.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8937,6 +8949,7 @@
 				E5EA301A0F55926F0057CCA7 /* nuiCoverFlow.h in Headers */,
 				E55C02D40F5E99A00045FBFE /* nuiGenericAttributeEditor.h in Headers */,
 				BC2A8A5F0F691D8800502BAB /* nuiProgressBar.h in Headers */,
+				E5A0FE460FA1336500D934F6 /* nuiDecorationInspector.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9540,6 +9553,7 @@
 				E5EA301D0F55963C0057CCA7 /* nuiCoverFlow.cpp in Sources */,
 				E55C02E50F5E9A310045FBFE /* nuiGenericAttributeEditor.cpp in Sources */,
 				BC2A8A5A0F691D7A00502BAB /* nuiProgressBar.cpp in Sources */,
+				E5A0FE4A0FA133BA00D934F6 /* nuiDecorationInspector.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10068,6 +10082,7 @@
 				E55C02E30F5E9A310045FBFE /* nuiGenericAttributeEditor.cpp in Sources */,
 				BC2A8A590F691D7A00502BAB /* nuiProgressBar.cpp in Sources */,
 				E567ADF70F73D14D009A9D6F /* nui.cpp in Sources */,
+				E5A0FE4E0FA133BA00D934F6 /* nuiDecorationInspector.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10593,6 +10608,7 @@
 				E5EA301E0F55963C0057CCA7 /* nuiCoverFlow.cpp in Sources */,
 				E55C02E40F5E9A310045FBFE /* nuiGenericAttributeEditor.cpp in Sources */,
 				BC2A8A5B0F691D7A00502BAB /* nuiProgressBar.cpp in Sources */,
+				E5A0FE4C0FA133BA00D934F6 /* nuiDecorationInspector.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

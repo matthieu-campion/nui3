@@ -32,7 +32,7 @@ nuiSurface* nuiSurface::CreateSurface (const nglString& rName, nuiSize Width, nu
   return pSurface;
 }
 
-nuiSurface::nuiSurface(const nglString& rName, nuiSize Width, nuiSize Height)
+nuiSurface::nuiSurface(const nglString& rName, nuiSize Width, nuiSize Height, nglImagePixelFormat PixelFormat)
   : nuiObject()
 {
   //NGL_OUT(_T("nuiSurface CTOR 0x%x (%f x %f\n"), this, Width, Height);
@@ -42,6 +42,7 @@ nuiSurface::nuiSurface(const nglString& rName, nuiSize Width, nuiSize Height)
   mPermanent = false;
   mWidth = Width;
   mHeight= Height;
+  mPixelFormat = PixelFormat;
   mDepth = false;
   mStencil = false;
   mRenderToTexture = false;
@@ -79,6 +80,12 @@ nuiSize nuiSurface::GetHeight() const
 {
   return mHeight;
 }
+
+nglImagePixelFormat nuiSurface::GetPixelFormat() const
+{
+  return mPixelFormat;
+}
+
 
 void nuiSurface::SetDepth(bool Enable)
 {

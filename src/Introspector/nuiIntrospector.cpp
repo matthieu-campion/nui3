@@ -11,6 +11,7 @@
 #include "nuiWidgetInspector.h"
 #include "nuiThreadInspector.h"
 #include "nuiFontInspector.h"
+#include "nuiDecorationInspector.h"
 #include "nuiColorDecoration.h"
 #include "nuiGradientDecoration.h"
 #include "nuiMetaDecoration.h"
@@ -93,7 +94,16 @@ nuiWidget* nuiIntrospector::GetToolbar()
   pFontBtn->SetDecoration(nuiDecoration::Get(INTROSPECTOR_DECO_BUTTON), eDecorationBorder);
   mEventSink.Connect(pFontBtn->ButtonPressed, &nuiIntrospector::ShowFontInspector);
   pBox->AddCell(pFontBtn);
-    
+
+  nuiRadioButton* pDecoBtn = new nuiRadioButton(_T("Decorations"));
+  pDecoBtn->SetColor(eNormalTextFg, textColor);
+  pDecoBtn->SetColor(eSelectedTextFg, textColor);
+  pDecoBtn->SetShadeSize(0);
+  pDecoBtn->SetDecoration(nuiDecoration::Get(INTROSPECTOR_DECO_BUTTON), eDecorationBorder);
+  mEventSink.Connect(pDecoBtn->ButtonPressed, &nuiIntrospector::ShowDecorationInspector);
+  pBox->AddCell(pDecoBtn);
+  
+  
   // for visual comfort :).... doesn't work..!!?!
 //  nuiSeparator* pSeparator2 = new nuiSeparator(nuiHorizontal);
 //  pSeparator2->SetPosition(nuiFill);
@@ -131,6 +141,12 @@ bool nuiIntrospector::ShowThreadInspector(const nuiEvent& rEvent)
 bool nuiIntrospector::ShowFontInspector(const nuiEvent& rEvent)
 {
   SetCell(CELL_CLIENT, new nuiFontInspector()); 
+  return true;
+}
+
+bool nuiIntrospector::ShowDecorationInspector(const nuiEvent& rEvent)
+{
+  SetCell(CELL_CLIENT, new nuiDecorationInspector()); 
   return true;
 }
 
