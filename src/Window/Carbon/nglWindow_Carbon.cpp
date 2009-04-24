@@ -1568,6 +1568,7 @@ void nglWindow::SetState (StateChange State)
       HideWindow(mWindow);
       break;
     case eShow:
+      CallOnPaint();
       ShowWindow(mWindow);
       CollapseWindow(mWindow, false);
       break;

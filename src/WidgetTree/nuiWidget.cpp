@@ -419,6 +419,16 @@ void nuiWidget::InitAttributes()
                (nglString(_T("SurfaceBlendFunc")), nuiUnitCustom,
                 nuiMakeDelegate(this, &nuiWidget::GetSurfaceBlendFunc),
                 nuiMakeDelegate(this, &nuiWidget::SetSurfaceBlendFunc)));
+  
+  AddAttribute(new nuiAttribute<bool>
+               (nglString(_T("InterativeDecoration")), nuiUnitYesNo,
+                nuiMakeDelegate(this, &nuiWidget::IsDecorationInteractive),
+                nuiMakeDelegate(this, &nuiWidget::EnableInteractiveDecoration)));
+  
+  AddAttribute(new nuiAttribute<bool>
+               (nglString(_T("InterativeOverDraw")), nuiUnitYesNo,
+                nuiMakeDelegate(this, &nuiWidget::IsOverDrawInteractive),
+                nuiMakeDelegate(this, &nuiWidget::EnableInteractiveOverDraw)));
 }
 
  

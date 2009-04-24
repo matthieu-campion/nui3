@@ -338,8 +338,8 @@ bool nuiSplitter::SetRectHorizontal(const nuiRect& rRect)
   nuiWidgetList::iterator it;
   nuiWidgetList::iterator end = mpChildren.end();
 
-  list<nuiRect>::iterator rit=mPositions.begin();
-  Rect=(*rit);
+  list<nuiRect>::iterator rit = mPositions.begin();
+  Rect = (*rit);
 
   ++rit;
 
@@ -349,8 +349,8 @@ bool nuiSplitter::SetRectHorizontal(const nuiRect& rRect)
   Height = 0;
   // We only care about the first two widgets!
   int i;
-  it=mpChildren.begin();
-  i=0;
+  it = mpChildren.begin();
+  i = 0;
   nuiSize h;
   
   // don't process the splitter handle before the first child (we need the size of the first child)
@@ -365,7 +365,7 @@ bool nuiSplitter::SetRectHorizontal(const nuiRect& rRect)
   if (it != end)
   {
     pItem = (*it);
-          
+
     //*****************************************************
     //
     // MASTERCHILD TRUE
@@ -373,10 +373,13 @@ bool nuiSplitter::SetRectHorizontal(const nuiRect& rRect)
     {
       h = pItem->GetIdealRect().GetHeight();
 
-      mHandlePos =  h;
+      mHandlePos = h;
       if (mMode == eModePercentage) 
-        mHandlePos = (mHandlePos / rRect.GetHeight()) * 100.0f; 
-
+      {
+        mHandlePos = (mHandlePos / (rRect.GetHeight() * (mHandlePosMax / 100.0f))) * 100.0f; 
+        h = mHandlePos;
+      }
+      
       Rect.Set(0.f, Height, Width, h);
       Rect.RoundToBelow();
     }
@@ -384,11 +387,10 @@ bool nuiSplitter::SetRectHorizontal(const nuiRect& rRect)
     // MASTERCHILD FALSE
     else
     {
-
       h = mHandlePos;
 
       if (mMode == eModePercentage) 
-        h = mRect.GetHeight() * (h/100.0f);
+        h = mRect.GetHeight() * (h / 100.0f);
 
       h = MAX(h, mFirstWidgetMinPixels);
 
@@ -405,7 +407,7 @@ bool nuiSplitter::SetRectHorizontal(const nuiRect& rRect)
       Rect.RoundToBelow();
     }
 
-    Height+=h;
+    Height += h;
     pItem->SetLayout(Rect);
   }
 
@@ -413,7 +415,7 @@ bool nuiSplitter::SetRectHorizontal(const nuiRect& rRect)
   //******************************************
   //
   // handle
-  nuiSize handleSize=0;
+  nuiSize handleSize =0;
   if (mpHandle)
   {
     const nuiRect& handleRect = mpHandle->GetIdealRect();
@@ -424,7 +426,6 @@ bool nuiSplitter::SetRectHorizontal(const nuiRect& rRect)
     mpHandle->SetLayout(Rect);
     Height += handleSize;
   }
-
 
   if (it != end)
   {
@@ -453,7 +454,7 @@ bool nuiSplitter::SetRectHorizontal(const nuiRect& rRect)
 
     if (mMasterChild)
     {
-      h = mRect.GetHeight()-h ;
+      h = mRect.GetHeight() - h ;
       NGL_ASSERT(h >= mSeconWidgetMinPixels);
 
       Rect.Set(0.f, Height + handleSize, Width, h - handleSize);
