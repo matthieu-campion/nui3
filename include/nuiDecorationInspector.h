@@ -11,6 +11,7 @@
 #include "nuiSimpleContainer.h"
 
 class nuiGrid;
+class nuiText;
 
 class nuiDecorationInspector : public nuiSimpleContainer
 {
@@ -28,6 +29,7 @@ protected:
   
   nuiLabel* mpLabel;
   nuiLabel* mpInfoLabel;
+  nuiText* mpCSSLabel;
   nuiGrid* mpAttributeGrid;
   nuiSlotsSink mSlot;
 };

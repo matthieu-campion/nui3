@@ -14,6 +14,7 @@
 #include "nuiFont.h"
 #include "nuiIntrospector.h"
 #include "nuiGrid.h"
+#include "nuiText.h"
 
 nuiDecorationInspector::nuiDecorationInspector()
 : mSink(this)
@@ -83,9 +84,11 @@ void nuiDecorationInspector::UpdateDecos()
 
   pScrollView2->AddChild(mpAttributeGrid);
   
-  
+  nuiSplitter* pSplit2 = new nuiSplitter(nuiHorizontal);
+  pSplit2->SetMasterChild(false);
+  pSplitter->AddChild(pSplit2);
   nuiSimpleContainer* pCont = new nuiSimpleContainer();
-  pSplitter->AddChild(pCont);
+  pSplit2->AddChild(pCont);
   mpLabel = new nuiLabel(_T("Test Widget.\nApply decorations\nto me, from the list\non the left"), nuiFont::GetFont(16));
   mpLabel->SetPosition(nuiCenter);
   pCont->AddChild(mpLabel);
@@ -94,6 +97,11 @@ void nuiDecorationInspector::UpdateDecos()
   mpInfoLabel->SetPosition(nuiTopLeft);
   mpInfoLabel->SetBorder(10, 10);
   pCont->AddChild(mpInfoLabel);
+  
+  nuiScrollView* pScrollCSS = new nuiScrollView();
+  mpCSSLabel = new nuiText();
+  pScrollCSS->AddChild(mpCSSLabel);
+  pSplit2->AddChild(pScrollCSS);
   
   mSink.Connect(pList->SelectionChanged, &nuiDecorationInspector::OnDecoSelection, (void*)pList);
 }
@@ -204,6 +212,7 @@ void nuiDecorationInspector::DumpDecl()
   if (pDeco)
   {
     nglString decl = pDeco->GetCSSDeclaration();
+    mpCSSLabel->SetText(decl);
     NGL_OUT(_T("Decoration Declaration:\n%ls\n"), decl.GetChars());
   }
 }
