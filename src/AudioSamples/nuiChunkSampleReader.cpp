@@ -178,7 +178,8 @@ uint32 nuiChunkSampleReader::ReadDE(std::vector<void*> buffers, uint32 samplefra
       {
         for (uint32 c = 0; c < channels; c++)
         {
-          ((float*)(buffers[c]))[s] = pFloatBuffer[channels * s + c];
+          float* pDest = (float*)buffers[c];
+          pDest[s] = pFloatBuffer[channels * s + c];
         }
       }
       if (deleteBuffer)
