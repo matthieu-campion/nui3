@@ -75,7 +75,8 @@ namespace jpeg
 				// Is the file completely empty?
 				if (src->m_start_of_file) {
 					// Treat this as a fatal error.
-					throw "empty jpeg source stream.";
+					//throw "empty jpeg source stream.";
+          return FALSE;
 				}
 				// warn("jpeg end-of-stream");
 
@@ -206,7 +207,8 @@ namespace jpeg
 			{
 				// Error.
 				// @@ bah, exceptions suck.  TODO consider alternatives.
-				throw "jpeg::rw_dest couldn't write data.";
+				//throw "jpeg::rw_dest couldn't write data.";
+        return FALSE;
 			}
 
 			dest->m_pub.next_output_byte = dest->m_buffer;
@@ -228,7 +230,9 @@ namespace jpeg
 				if (dest->m_out_stream->write_bytes(dest->m_buffer, datacount) != datacount)
 				{
 					// Error.
-					throw "jpeg::rw_dest::term_destination couldn't write data.";
+					//throw "jpeg::rw_dest::term_destination couldn't write data.";
+          assert(0);
+          return;
 				}
 			}
 
