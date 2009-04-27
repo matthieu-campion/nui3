@@ -244,7 +244,7 @@ bool nglImageJPEGCodec::Save(nglOStream* pOStream)
   struct jpeg_error_mgr jerr;
   /* More stuff */
   JSAMPROW row_pointer[1];  /* pointer to JSAMPLE row[s] */
-  int row_stride;  /* physical row width in image buffer */
+  int32 row_stride;  /* physical row width in image buffer */
 
   /* Step 1: allocate and initialize JPEG compression object */
 
@@ -303,12 +303,14 @@ bool nglImageJPEGCodec::Save(nglOStream* pOStream)
    */
   row_stride = Info.mWidth * 3;  /* JSAMPLEs per row in image_buffer */
 
-  while (cinfo.next_scanline < cinfo.image_height) {
+  while (cinfo.next_scanline < cinfo.image_height)
+  {
     /* jpeg_write_scanlines expects an array of pointers to scanlines.
      * Here the array is only one element long, but you could pass
      * more than one scanline at a time if that's more convenient.
      */
-    row_pointer[0] = & image_buffer[cinfo.next_scanline * row_stride];
+    const int32 index = cinfo.image_height - cinfo.next_scanline - 1;
+    row_pointer[0] = & image_buffer[index * row_stride];
     (void) jpeg_write_scanlines(&cinfo, row_pointer, 1);
   }
 
