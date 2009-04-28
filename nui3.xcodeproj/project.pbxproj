@@ -4770,12 +4770,7 @@
 		E591D61A0C82DBF600844D3E /* nuiFormatedLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiFormatedLabel.cpp; path = src/Text/nuiFormatedLabel.cpp; sourceTree = SOURCE_ROOT; };
 		E591D61B0C82DBF600844D3E /* nuiFormater.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiFormater.cpp; path = src/Text/nuiFormater.cpp; sourceTree = SOURCE_ROOT; };
 		E591D80B0C83272700844D3E /* nuiDialog.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiDialog.h; path = include/nuiDialog.h; sourceTree = SOURCE_ROOT; };
-		E592C05C0EFE8AEB00340B35 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = System/Library/Frameworks/AGL.framework; sourceTree = SDKROOT; };
-		E592C05E0EFE8AEB00340B35 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		E592C0600EFE8AEB00340B35 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		E592C0620EFE8AEB00340B35 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		E592C0640EFE8AEB00340B35 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
-		E592C0660EFE8AEB00340B35 /* CoreAudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudioKit.framework; path = System/Library/Frameworks/CoreAudioKit.framework; sourceTree = SDKROOT; };
 		E592C5140EFE8CCC00340B35 /* libnui3D cocoa.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libnui3D cocoa.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E592C5AB0EFEC90600340B35 /* nglStringConv_CoreFoundation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nglStringConv_CoreFoundation.cpp; sourceTree = "<group>"; };
 		E592C5AE0EFEC93600340B35 /* nglStringConv_Carbon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nglStringConv_Carbon.cpp; sourceTree = "<group>"; };
@@ -5391,12 +5386,6 @@
 				E58167440C3CECA700902DFE /* deps */,
 				E5816D200C3CECAB00902DFE /* src */,
 				E58167400C3CEC1300902DFE /* Products */,
-				E592C05C0EFE8AEB00340B35 /* AGL.framework */,
-				E592C05E0EFE8AEB00340B35 /* AudioToolbox.framework */,
-				E592C0600EFE8AEB00340B35 /* AudioUnit.framework */,
-				E592C0620EFE8AEB00340B35 /* Cocoa.framework */,
-				E592C0640EFE8AEB00340B35 /* CoreAudio.framework */,
-				E592C0660EFE8AEB00340B35 /* CoreAudioKit.framework */,
 			);
 			sourceTree = "<group>";
 		};
@@ -5413,7 +5402,7 @@
 		E58167440C3CECA700902DFE /* deps */ = {
 			isa = PBXGroup;
 			children = (
-				E50DB7750D75D894005B9316 /* tidyhtml */,
+				E592C0620EFE8AEB00340B35 /* Cocoa.framework */,
 				E59CD7F70CDAAAE100B1C729 /* AudioToolbox.framework */,
 				E59CD7F80CDAAAE100B1C729 /* AudioUnit.framework */,
 				E59CD7F90CDAAAE100B1C729 /* CoreAudio.framework */,
@@ -5427,6 +5416,7 @@
 				E5F796590C750430009CE779 /* harfbuzz */,
 				E5816A400C3CECA900902DFE /* libjpeg */,
 				E5816AD50C3CECAA00902DFE /* libpng */,
+				E50DB7750D75D894005B9316 /* tidyhtml */,
 			);
 			path = deps;
 			sourceTree = SOURCE_ROOT;

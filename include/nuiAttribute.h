@@ -88,8 +88,8 @@ public:
   
 	
 	
-	virtual bool Load(void* pTarget, const nuiXMLNode* pNode) = 0;
-	virtual nuiXMLNode* Serialize(void* pTarget, nuiXMLNode* pParentNode) const = 0;
+	virtual bool Load(void* pTarget, const nuiXMLNode* pNode);
+	virtual nuiXMLNode* Serialize(void* pTarget, nuiXMLNode* pParentNode) const;
 
   virtual bool ToString(void* pTarget, nglString& rString) const = 0;
   virtual bool FromString(void* pTarget, const nglString& rString) const = 0;
@@ -106,7 +106,7 @@ public:
 
 	virtual nuiAttributeEditor* GetEditor(void* pTarget) = 0;
   
-  virtual void KillAttributeHolder(void* pHolder) = 0;
+  virtual void KillAttributeHolder(void* pHolder);
 protected:
   nuiAttributeBase(const nglString& rName, nuiAttributeType type, nuiAttributeUnit units, const nuiRange& rRange, bool readonly, bool writeonly);  ///< property 
   nuiAttributeBase(const nglString& rName, nuiAttributeType type, nuiAttributeUnit units, const nuiRange& rRange, bool readonly, bool writeonly, uint32 dimension, const ArrayRangeDelegate& rArrayRangeGetter);  ///< property 
@@ -126,24 +126,13 @@ protected:
   mutable AttributeEventMap mAttributeChangedEvents;
 };
 
-inline uint64 GetNewAttributeUniqueId()
-{
-  static uint64 IdCounter = 0;
-  return IdCounter++;
-}
-
+uint64 nuiGetNewAttributeUniqueId();
 
 
 template <class Type>
 class nuiAttributeTypeTrait
 {
 public:
-  static nuiAttributeType GetTypeId()
-  {
-    return nuiAttributeTypeTrait<Type>::mTypeId;
-  }
-    
-private:
   static uint64 mTypeId;
 };
 
@@ -177,81 +166,64 @@ public:
 
   // Direct Access: (dim = 0)
   nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate& rGetter, const SetterDelegate& rSetter, const nuiRange& rRange = nuiRange()) ///< Read/write property
-    : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::GetTypeId(), units, rRange, false, false),
+    : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::mTypeId, units, rRange, false, false),
       mGetter(rGetter.GetMemento()),
       mSetter(rSetter.GetMemento())
   {
   }
   
   nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate& rGetter, const nuiRange& rRange = nuiRange()) ///< Read only property
-    : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::GetTypeId(), units, rRange, true, false),
+    : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::mTypeId, units, rRange, true, false),
     mGetter(rGetter.GetMemento())
   {
   }
 
   nuiAttribute(const nglString& rName, nuiAttributeUnit units, const SetterDelegate& rSetter, const nuiRange& rRange = nuiRange()) ///< Read only property
-    : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::GetTypeId(), units, rRange, false, true),
+    : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::mTypeId, units, rRange, false, true),
     mSetter(rSetter.GetMemento())
   {
   }
   
 	// Array (dim = 1)
   nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate1& rGetter, const SetterDelegate1& rSetter, const ArrayRangeDelegate& rRangeGetter, const nuiRange& rRange = nuiRange()) ///< Read/write property
-    : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::GetTypeId(), units, rRange, false, false, 1, rRangeGetter),
+    : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::mTypeId, units, rRange, false, false, 1, rRangeGetter),
     mGetter(rGetter.GetMemento()),
     mSetter(rSetter.GetMemento())
   {
   }
   
   nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate1& rGetter, const ArrayRangeDelegate& rRangeGetter = NULL, const nuiRange& rRange = nuiRange()) ///< Read only property
-    : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::GetTypeId(), units, rRange, true, false, 1, rRangeGetter),
+    : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::mTypeId, units, rRange, true, false, 1, rRangeGetter),
     mGetter(rGetter.GetMemento())
   {
   }
   
   nuiAttribute(const nglString& rName, nuiAttributeUnit units, const SetterDelegate1& rSetter, const ArrayRangeDelegate& rRangeGetter = NULL, const nuiRange& rRange = nuiRange()) ///< Read only property
-    : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::GetTypeId(), units, rRange, false, true, 1, rRangeGetter),
+    : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::mTypeId, units, rRange, false, true, 1, rRangeGetter),
     mSetter(rSetter.GetMemento())
   {
   }
   
 	// Array (dim = 2)
   nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate2& rGetter, const SetterDelegate2& rSetter, const ArrayRangeDelegate& rRangeGetter, const nuiRange& rRange = nuiRange()) ///< Read/write property
-    : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::GetTypeId(), units, rRange, false, false, 2, rRangeGetter),
+    : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::mTypeId, units, rRange, false, false, 2, rRangeGetter),
     mGetter(rGetter.GetMemento()),
     mSetter(rSetter.GetMemento())
   {
   }
   
   nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate2& rGetter, const ArrayRangeDelegate& rRangeGetter = NULL, const nuiRange& rRange = nuiRange()) ///< Read only property
-    : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::GetTypeId(), units, rRange, true, false, 2, rRangeGetter),
+    : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::mTypeId, units, rRange, true, false, 2, rRangeGetter),
     mGetter(rGetter.GetMemento())
   {
   }
   
   nuiAttribute(const nglString& rName, nuiAttributeUnit units, const SetterDelegate2& rSetter, const ArrayRangeDelegate& rRangeGetter = NULL, const nuiRange& rRange = nuiRange()) ///< Read only property
-    : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::GetTypeId(), units, rRange, false, true, 2, rRangeGetter),
+    : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::mTypeId, units, rRange, false, true, 2, rRangeGetter),
     mSetter(rSetter.GetMemento())
   {
   }
   
-	// inherited from AttributeBase, to be specialized for each type of Attribute
-	virtual bool Load(void* pTarget, const nuiXMLNode* pNode)
-	{
-    if (pNode->HasAttribute(GetName()))
-      return FromString(pTarget, pNode->GetAttribute(GetName()));
-    return false;
-	}
-
-	// inherited from AttributeBase, to be specialized for each type of Attribute
-	virtual nuiXMLNode* Serialize(void* pTarget, nuiXMLNode* pParentNode) const
-	{
-    nglString str;
-    if (ToString(pTarget, str))
-      pParentNode->SetAttribute(GetName(), str);
-    return pParentNode;
-	}
-
   bool ToString(Contents Value, nglString& rString) const
   {
     return rString = Value;
@@ -511,17 +483,9 @@ public:
   
   void KillAttributeHolder(void* pHolder)
   {
-    // Events:
-    {
-      AttributeEventMap::iterator it  = mAttributeChangedEvents.find(pHolder);
-      AttributeEventMap::iterator end = mAttributeChangedEvents.end();
-      if (it != end)
-      {
-        delete it->second;
-        mAttributeChangedEvents.erase(it);
-      }
-    }
+    nuiAttributeBase::KillAttributeHolder(pHolder);
 
+    // Signals:
     {
       AttributeSignalMap::iterator it  = mAttributeChangedSignals.find(pHolder);
       AttributeSignalMap::iterator end = mAttributeChangedSignals.end();
@@ -531,7 +495,6 @@ public:
         mAttributeChangedSignals.erase(it);
       }
     }
-    // Signals:
   }
 
 private:
@@ -642,79 +605,62 @@ public:
   
   // Direct Access: (dim = 0)
   nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate& rGetter, const SetterDelegate& rSetter, const nuiRange& rRange = nuiRange()) ///< Read/write property
-    : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::GetTypeId(), units, rRange, false, false),
+    : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::mTypeId, units, rRange, false, false),
     mGetter(rGetter.GetMemento()),
     mSetter(rSetter.GetMemento())
   {
   }
   
   nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate& rGetter, const nuiRange& rRange = nuiRange()) ///< Read only property
-    : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::GetTypeId(), units, rRange, true, false),
+    : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::mTypeId, units, rRange, true, false),
     mGetter(rGetter.GetMemento())
   {
   }
   
   nuiAttribute(const nglString& rName, nuiAttributeUnit units, const SetterDelegate& rSetter, const nuiRange& rRange = nuiRange()) ///< Read only property
-    : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::GetTypeId(), units, rRange, false, true),
+    : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::mTypeId, units, rRange, false, true),
     mSetter(rSetter.GetMemento())
   {
   }
   
   // Array (dim = 1)
   nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate1& rGetter, const SetterDelegate1& rSetter, const ArrayRangeDelegate& rRangeGetter, const nuiRange& rRange = nuiRange()) ///< Read/write property
-    : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::GetTypeId(), units, rRange, false, false, 1, rRangeGetter),
+    : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::mTypeId, units, rRange, false, false, 1, rRangeGetter),
     mGetter(rGetter.GetMemento()),
     mSetter(rSetter.GetMemento())
   {
   }
   
   nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate1& rGetter, const ArrayRangeDelegate& rRangeGetter = NULL, const nuiRange& rRange = nuiRange()) ///< Read only property
-    : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::GetTypeId(), units, rRange, true, false, 1, rRangeGetter),
+    : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::mTypeId, units, rRange, true, false, 1, rRangeGetter),
     mGetter(rGetter.GetMemento())
   {
   }
   
   nuiAttribute(const nglString& rName, nuiAttributeUnit units, const SetterDelegate1& rSetter, const ArrayRangeDelegate& rRangeGetter = NULL, const nuiRange& rRange = nuiRange()) ///< Read only property
-    : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::GetTypeId(), units, rRange, false, true, 1, rRangeGetter),
+    : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::mTypeId, units, rRange, false, true, 1, rRangeGetter),
     mSetter(rSetter.GetMemento())
   {
   }
   
   // Array (dim = 2)
   nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate2& rGetter, const SetterDelegate2& rSetter, const ArrayRangeDelegate& rRangeGetter, const nuiRange& rRange = nuiRange()) ///< Read/write property
-    : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::GetTypeId(), units, rRange, false, false, 2, rRangeGetter),
+    : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::mTypeId, units, rRange, false, false, 2, rRangeGetter),
     mGetter(rGetter.GetMemento()),
     mSetter(rSetter.GetMemento())
   {
   }
   
   nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate2& rGetter, const ArrayRangeDelegate& rRangeGetter = NULL, const nuiRange& rRange = nuiRange()) ///< Read only property
-    : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::GetTypeId(), units, rRange, true, false, 2, rRangeGetter),
+    : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::mTypeId, units, rRange, true, false, 2, rRangeGetter),
     mGetter(rGetter.GetMemento())
   {
   }
   
   nuiAttribute(const nglString& rName, nuiAttributeUnit units, const SetterDelegate2& rSetter, const ArrayRangeDelegate& rRangeGetter = NULL, const nuiRange& rRange = nuiRange()) ///< Read only property
-  : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::GetTypeId(), units, rRange, false, true, 2, rRangeGetter),
+  : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::mTypeId, units, rRange, false, true, 2, rRangeGetter),
   mSetter(rSetter.GetMemento())
   {
-  }
-  
-  // inherited from AttributeBase, to be specialized for each type of Attribute
-  virtual bool Load(void* pTarget, const nuiXMLNode* pNode)
-  {
-    if (pNode->HasAttribute(GetName()))
-      return FromString(pTarget, pNode->GetAttribute(GetName()));
-    return false;
-  }
-  
-  // inherited from AttributeBase, to be specialized for each type of Attribute
-  virtual nuiXMLNode* Serialize(void* pTarget, nuiXMLNode* pParentNode) const
-  {
-    nglString str;
-    if (ToString(pTarget, str))
-      pParentNode->SetAttribute(GetName(), str);
-    return pParentNode;
   }
   
   bool ToString(const Contents& rValue, nglString& rString) const
@@ -964,16 +910,8 @@ public:
   
   void KillAttributeHolder(void* pHolder)
   {
-    {    
-      AttributeEventMap::iterator it  = mAttributeChangedEvents.find(pHolder);
-      AttributeEventMap::iterator end = mAttributeChangedEvents.end();
-      if (it != end)
-      {
-        delete it->second;
-        mAttributeChangedEvents.erase(it);
-      }
-    }
-
+    nuiAttributeBase::KillAttributeHolder(pHolder);
+    
     {
       AttributeSignalMap::iterator it  = mAttributeChangedSignals.find(pHolder);
       AttributeSignalMap::iterator end = mAttributeChangedSignals.end();
@@ -1077,7 +1015,7 @@ private:
 template <class Type> 
 nuiAttribute<Type>* nuiAttributeCast(const nuiAttributeBase* pBase)
 {
-  if (pBase->GetType() == nuiAttributeTypeTrait<Type>::GetTypeId())
+  if (pBase->GetType() == nuiAttributeTypeTrait<Type>::mTypeId)
   {
     NGL_ASSERT(dynamic_cast<const nuiAttribute<Type>*>(pBase) != NULL);
     return (nuiAttribute<Type>*)pBase;
@@ -1178,7 +1116,6 @@ public:
   
   ~nuiAttrib()
   {
-    ~nuiAttribBase();
   }
 
   nuiAttrib<Contents>& operator=(const nuiAttrib<Contents>& rOriginal)
@@ -1219,11 +1156,6 @@ public:
     mpAttribute->Set(mpTarget, index0, index1, rValue);
   }
 
-  //	void SetEditor(const nuiAttribute<Contents>::NewEditorDelegate& rNewEditor)
-//	{
-//		mpAttribute->SetEditor(rNewEditor);
-//	}
-  
 	nuiAttributeEditor* GetEditor()
 	{
     return mpAttribute->GetEditor(mpTarget);
@@ -1238,30 +1170,15 @@ public:
 		return mpAttribute->GetDefaultEditor(mpTarget);
 	}
 	
-//	void SetFormater(const nuiAttribute<Contents>::FormaterDelegate& rFormater)
-//	{
-//		mpAttribute->SetFormater(rFormater);
-//	}
-	
 	void Format(nglString& rString)
 	{
     mpAttribute->Format(mpTarget, rString);
 	}
 	
-//	void FormatDefault(nglString& rString)
-//	{
-//		mpAttribute->FormatDefault(mpTarget, rString);
-//	}
-
 	void Format(uint32 index, nglString& rString)
 	{
     mpAttribute->Format(mpTarget, index, rString);
 	}
-	
-//	void FormatDefault(uint32 index, nglString& rString)
-//	{
-//		mpAttribute->FormatDefault(mpTarget, index, rString);
-//	}
 	
 	void Format(uint32 index0, uint32 index1, nglString& rString)
 	{
@@ -1272,12 +1189,6 @@ public:
   {
     mpAttribute->FormatValue(value, rString);
   }
-	
-//	void FormatDefault(uint32 index0, uint32 index1, nglString& rString)
-//	{
-//		mpAttribute->FormatDefault(mpTarget, index0, index1, rString);
-//	}
-	
 	
   nuiSignal1<Contents>& GetChangedSignal() const
   {
@@ -1308,7 +1219,7 @@ private:
 
 
 
-#define NUI_DECLARE_ATTRIBUTE_TYPE(X)  template<> uint64 nuiAttributeTypeTrait<X>::mTypeId = GetNewAttributeUniqueId();
+#define NUI_DECLARE_ATTRIBUTE_TYPE(X)  template<> uint64 nuiAttributeTypeTrait<X>::mTypeId = nuiGetNewAttributeUniqueId();
 
 ///////////////////////////// Specializations for simple types:
 

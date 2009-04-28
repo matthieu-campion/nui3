@@ -117,12 +117,12 @@
 				BC6A09CA0EF9300600881ACF /* css */,
 				BC6A09A20EF92B4B00881ACF /* resources */,
 				61A9DE4A0B833CD000BC506C /* sources */,
-				61A9DE490B833CB000BC506C /* dependancies */,
+				61A9DE490B833CB000BC506C /* dependencies */,
 				61A9DFB50B833DE500BC506C /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		61A9DE490B833CB000BC506C /* dependancies */ = {
+		61A9DE490B833CB000BC506C /* dependencies */ = {
 			isa = PBXGroup;
 			children = (
 				BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */,
@@ -132,7 +132,7 @@
 				61A9DFD50B833F1500BC506C /* Carbon.framework */,
 				61A9DFD60B833F1500BC506C /* OpenGL.framework */,
 			);
-			name = dependancies;
+			name = dependencies;
 			sourceTree = "<group>";
 		};
 		61A9DE4A0B833CD000BC506C /* sources */ = {

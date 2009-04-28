@@ -127,7 +127,7 @@ void nuiAttributeAnimation::Stop()
 }
 
 #define SET_ATTRIB(X) \
-if (nuiAttributeTypeTrait<X>::GetTypeId() == t) \
+if (nuiAttributeTypeTrait<X>::mTypeId == t) \
 { \
   nuiAttrib<X> attrib_##X(attrib); \
   NGL_ASSERT(attrib_##X.IsValid()); \

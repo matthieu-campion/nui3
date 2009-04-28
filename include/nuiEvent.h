@@ -78,7 +78,8 @@ private:
 };
 
 
-template <class T> class NUI_API nuiEventTarget : public nuiEventTargetBase
+template <class T>
+class NUI_API nuiEventTarget : public nuiEventTargetBase
 {
 public:
   typedef bool (T::*TargetFunc) (const nuiEvent& rEvent);

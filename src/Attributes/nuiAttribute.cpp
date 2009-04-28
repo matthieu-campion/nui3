@@ -19,6 +19,13 @@
 #include "nuiRangeKnobAttributeEditor.h"
 #include "nuiGenericAttributeEditor.h"
 
+uint64 nuiGetNewAttributeUniqueId()
+{
+  static uint64 IdCounter = 0;
+  return IdCounter++;
+}
+
+
 nuiAttributeEditor* nuiCreateGenericAttributeEditor(void* pTarget, nuiAttributeBase* pAttribute)
 {
   return new nuiGenericAttributeEditor(nuiAttribBase(pTarget, pAttribute));
@@ -151,11 +158,42 @@ nuiSimpleEventSource<0>& nuiAttributeBase::GetChangedEvent(void* pTarget) const
 }
 
 
+// inherited from AttributeBase, to be specialized for each type of Attribute
+bool nuiAttributeBase::Load(void* pTarget, const nuiXMLNode* pNode)
+{
+  if (pNode->HasAttribute(GetName()))
+    return FromString(pTarget, pNode->GetAttribute(GetName()));
+  return false;
+}
+
+// inherited from AttributeBase, to be specialized for each type of Attribute
+nuiXMLNode* nuiAttributeBase::Serialize(void* pTarget, nuiXMLNode* pParentNode) const
+{
+  nglString str;
+  if (ToString(pTarget, str))
+    pParentNode->SetAttribute(GetName(), str);
+  return pParentNode;
+}
+
+void nuiAttributeBase::KillAttributeHolder(void* pHolder)
+{
+  // Events:
+  {
+    AttributeEventMap::iterator it  = mAttributeChangedEvents.find(pHolder);
+    AttributeEventMap::iterator end = mAttributeChangedEvents.end();
+    if (it != end)
+    {
+      delete it->second;
+      mAttributeChangedEvents.erase(it);
+    }
+  }
+}  
+
 ////////////////// 
 // Declaration of some property types specializations:
 //template<uint32> nuiAttributeTypeTrait<uint32> nuiAttributeTypeTrait<uint32>::singleton;
 template <typename T>
-uint64 nuiAttributeTypeTrait<T>::mTypeId = GetNewAttributeUniqueId();
+uint64 nuiAttributeTypeTrait<T>::mTypeId = nuiGetNewAttributeUniqueId();
 
 NUI_DECLARE_ATTRIBUTE_TYPE(bool);
 
@@ -2151,3 +2189,133 @@ bool nuiAttribute<nuiBlendFunc>::FromString(nuiBlendFunc& rValue, const nglStrin
 }
 
 
+#if 0
+
+// The primary template
+template<class T>
+class Stack
+{
+  T* data;
+  std::size_t count;
+  std::size_t capacity;
+  enum { INIT = 5 };
+public:
+  Stack()
+  {
+    count = 0;
+    capacity = INIT;
+    data = new T[INIT];
+  }
+  
+  void push(const T& t)
+  {
+    if(count == capacity)
+    {
+      // Grow array store
+      std::size_t newCapacity = 2 * capacity;
+      T* newData = new T[newCapacity];
+      for(size_t i = 0; i < count; ++i)
+        newData[i] = data[i];
+      delete [] data;
+      data = newData;
+      capacity = newCapacity;
+    }
+    assert(count < capacity);
+    data[count++] = t;
+  }
+  
+  void pop()
+  {
+    assert(count > 0);
+    --count;
+  }
+  
+  T top() const
+  {
+    assert(count > 0);
+    return data[count-1];
+  }
+  
+  std::size_t size() const
+  {
+    return count;
+  }
+};
+
+// Full specialization for void*
+template<>
+class Stack<void *>
+{
+  void** data;
+  std::size_t count;
+  std::size_t capacity;
+  enum { INIT = 5 };
+public:
+  Stack()
+  {
+    count = 0;
+    capacity = INIT;
+    data = new void*[INIT];
+  }
+  
+  void push(void* const & t)
+  {
+    if(count == capacity)
+    {
+      std::size_t newCapacity = 2*capacity;
+      void** newData = new void*[newCapacity];
+      std::memcpy(newData, data, count*sizeof(void*));
+      delete [] data;
+      data = newData;
+      capacity = newCapacity;
+    }
+    assert(count < capacity);
+    data[count++] = t;
+  }
+  
+  void pop()
+  {
+    assert(count > 0);
+    --count;
+  }
+  
+  void* top() const
+  {
+    assert(count > 0);
+    return data[count-1];
+  }
+  
+  std::size_t size() const
+  {
+    return count;
+  }
+};
+
+// Partial specialization for other pointer types
+template<class T>
+class Stack<T*> : private Stack<void *>
+{
+  typedef Stack<void *> Base;
+public:
+  void push(T* const & t)
+  {
+    Base::push(t);
+  }
+
+  void pop()
+  {
+    Base::pop();
+  }
+  
+  T* top() const
+  {
+    return static_cast<T*>(Base::top());
+  }
+  
+  std::size_t size()
+  {
+    return Base::size();
+  }
+};
+
+#endif
