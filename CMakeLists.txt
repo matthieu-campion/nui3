@@ -246,6 +246,7 @@ set(SOURCES
   src/Net/nuiHTTP.cpp
   src/Net/Unix/nuiURL_Unix.cpp
   src/Introspector/nuiFontInspector.cpp
+  src/Introspector/nuiDecorationInspector.cpp
   src/Introspector/nuiIntrospector.cpp
   src/Introspector/nuiThreadInspector.cpp
   src/Introspector/nuiWidgetInspector.cpp
