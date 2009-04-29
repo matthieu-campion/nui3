@@ -14,6 +14,93 @@ nuiTimer* nuiAnimation::mpTimer = NULL;
 uint32 nuiAnimation::mAnimCounter = 0;
 double nuiAnimation::mFrameRate = 60; // 30 FPS by default
 
+// Standard easing:
+double nuiEasingIdentity(double val)
+{
+  return val;
+}
+
+double nuiEasingSquare(double val)
+{
+  return val * val;
+}
+
+
+double nuiEasingCubic(double val)
+{
+  return val * val * val;
+}
+
+double nuiEasingQuartic(double val)
+{
+  return val * val * val * val;
+}
+
+double nuiEasingSlowStart(double val)
+{
+  return val * val * val * val * val * val * val * val;
+}
+
+double nuiEasingQuintic(double val)
+{
+  return val * val * val * val;
+}
+
+double nuiEasingSinusStartFast(double val)
+{
+  return sin(val * M_PI_2);
+}
+
+double nuiEasingSinusStartSlow(double val)
+{
+  return sin(val * M_PI_2 - M_PI_2) + 1;
+}
+
+double nuiEasingSinus(double val)
+{
+  return .5 * (sin(val * M_PI - M_PI_2) + 1);
+}
+
+double nuiEasingSquareRev(double val)
+{
+  return nuiEasingReverse(val, nuiEasingSquare);
+}
+
+double nuiEasingCubicRev(double val)
+{
+  return nuiEasingReverse(val, nuiEasingCubic);
+}
+
+double nuiEasingQuarticRev(double val)
+{
+  return nuiEasingReverse(val, nuiEasingQuartic);
+}
+
+double nuiEasingSlowStartRev(double val)
+{
+  return nuiEasingReverse(val, nuiEasingSlowStart);
+}
+
+double nuiEasingQuinticRev(double val)
+{
+  return nuiEasingReverse(val, nuiEasingQuintic);
+}
+
+double nuiEasingSinusStartSlowRev(double val)
+{
+  return nuiEasingReverse(val, nuiEasingSinusStartSlow);
+}
+
+double nuiEasingSinusStartFastRev(double val)
+{
+  return nuiEasingReverse(val, nuiEasingSinusStartFast);
+}
+
+double nuiEasingSinusRev(double val)
+{
+  return nuiEasingReverse(val, nuiEasingSinus);
+}
+
 void nuiAnimation::SetFrameRate(double FPS)
 {
   mFrameRate = FPS;

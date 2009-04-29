@@ -140,7 +140,6 @@ bool nuiKnob::Load(const nuiXMLNode* pNode)
   nuiSimpleContainer::Load(pNode);
 
   SetObjectClass(_T("nuiKnob"));
-  mKnobSink.SetTarget(this);
   mClicked = false;
   mInteractiveValueChanged = false;
 

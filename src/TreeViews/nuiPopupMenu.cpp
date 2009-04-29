@@ -630,7 +630,7 @@ bool nuiPopupMenu::SetRect(const nuiRect& rRect)
   return true;
 }
 
-inline nuiSize nuiPopupMenu::AdjustRectsPos(nuiSize& rX, nuiSize& rY, uint depth, nuiRect CurRect)
+nuiSize nuiPopupMenu::AdjustRectsPos(nuiSize& rX, nuiSize& rY, uint depth, nuiRect CurRect)
 {
   nuiTopLevel* pRoot = GetTopLevel();
   NGL_ASSERT(pRoot);
@@ -688,7 +688,7 @@ inline nuiSize nuiPopupMenu::AdjustRectsPos(nuiSize& rX, nuiSize& rY, uint depth
   return (0.f);
 }
 
-inline void nuiPopupMenu::SetTreeRect(uint depth, nuiSize X, nuiSize Y, nuiTreeNode* pTree)
+void nuiPopupMenu::SetTreeRect(uint depth, nuiSize X, nuiSize Y, nuiTreeNode* pTree)
 {
   NGL_ASSERT(pTree);
   NGL_ASSERT(depth < mRects.size());
@@ -816,7 +816,7 @@ void nuiPopupMenu::UnparentTree(nuiTreeNode* pTree)
   mPopupTreeSink.Disconnect(pTree->ChildDeleted);
 }
 
-inline void nuiPopupMenu::FillSelectedNodes()
+void nuiPopupMenu::FillSelectedNodes()
 {
   mSelectedNodes.clear();
 
@@ -1230,7 +1230,7 @@ bool nuiPopupMenu::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button
   return true;
 }
 
-inline nuiTreeNode* nuiPopupMenu::GetNextNode(nuiTreeNode* pParent, nuiTreeNode* pNode, int increment)
+nuiTreeNode* nuiPopupMenu::GetNextNode(nuiTreeNode* pParent, nuiTreeNode* pNode, int increment)
 {
   NGL_ASSERT(pParent);
   uint32 nchilds = pParent->GetChildrenCount();

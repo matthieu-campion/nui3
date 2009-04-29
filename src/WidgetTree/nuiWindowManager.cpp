@@ -22,7 +22,6 @@ nuiWindowManager::nuiWindowManager()
 bool nuiWindowManager::Load(const nuiXMLNode* pNode)
 {
   nuiSimpleContainer::Load(pNode);
-  mWMSink.SetTarget(this);
   SetObjectClass(_T("nuiWindowManager"));
   return true;
 }

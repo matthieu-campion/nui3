@@ -65,52 +65,52 @@ public:
     Set(mLeft, h/2.f, mRight, h/2.f);
   }
   
-  inline nuiSize GetWidth() const
+  nuiSize GetWidth() const
   {
     return mLeft+mRight;
   }
 
-  inline nuiSize GetHeight() const
+  nuiSize GetHeight() const
   {
     return mTop+mBottom;
   }
 
-  inline nuiSize& Left()
+  nuiSize& Left()
   {
     return mLeft;
   }
 
-  inline nuiSize& Right()
+  nuiSize& Right()
   {
     return mRight;
   }
 
-  inline nuiSize& Top()
+  nuiSize& Top()
   {
     return mTop;
   }
 
-  inline nuiSize& Bottom()
+  nuiSize& Bottom()
   {
     return mBottom;
   }
 
-  inline const nuiSize& Left() const
+  const nuiSize& Left() const
   {
     return mLeft;
   }
 
-  inline const nuiSize& Right() const
+  const nuiSize& Right() const
   {
     return mRight;
   }
 
-  inline const nuiSize& Top() const
+  const nuiSize& Top() const
   {
     return mTop;
   }
 
-  inline const nuiSize& Bottom() const
+  const nuiSize& Bottom() const
   {
     return mBottom;
   }

@@ -130,6 +130,160 @@ nuiEventSource::nuiEventSource(const nuiEventSource& rSource)
 {
 }
 
+////////////////////////////////////////////////////
+//class NUI_API nuiEventTargetBase
+nuiEventTargetBase::nuiEventTargetBase(void* pTarget)
+{
+  mpTarget = pTarget;
+}
+
+nuiEventTargetBase::~nuiEventTargetBase()
+{
+  DisconnectAll();
+}
+
+void nuiEventTargetBase::DisconnectAll()
+{
+  LinksMap links(mpLinks);
+  LinksMap::iterator it;
+  LinksMap::iterator end = links.end();
+  for (it = links.begin(); it != end; ++it)
+  {
+    Disconnect(*(it->first));
+  }
+}
+
+bool nuiEventTargetBase::OnEvent(const nuiEvent& rEvent)
+{
+  NGL_ASSERT(mpTarget);
+  
+  bool handled = false;
+  
+  nuiEventSource* pSource = (nuiEventSource*)rEvent.GetSource();
+  LinksMap::const_iterator it_source = mpLinks.find(pSource);
+  
+  if (it_source != mpLinks.end())
+  {
+    LinkList links(it_source->second);
+    LinkList::const_iterator it   = links.begin();
+    LinkList::const_iterator end  = links.end();
+    
+    for (; (it != end) && !handled; ++it)
+    {
+      Link* pLink = (*it);
+      nuiDelegateMemento pFunc = pLink->mTargetFunc;
+      rEvent.mpUser = pLink->mpUser;
+      
+      handled = CallEvent((void*)mpTarget, pFunc, rEvent);
+    }
+  }
+  return handled;
+}
+
+bool nuiEventTargetBase::CallEvent(void* pTarget, nuiDelegateMemento pFunc, const nuiEvent& rEvent)
+{
+  Delegate del;
+  del.SetMemento(pFunc);
+  return del(rEvent);
+}
+
+void nuiEventTargetBase::Connect(nuiEventSource& rSource, const nuiDelegateMemento& rTargetFunc, void* pUser)
+{
+  NGL_ASSERT(mpTarget);
+  
+  Link* pLink = new Link;
+  pLink->mTargetFunc = rTargetFunc;
+  pLink->mpUser = pUser;
+  
+  rSource.Connect(this);
+  
+  LinkList& rLinkList(mpLinks[&rSource]);
+  rLinkList.insert(rLinkList.begin(), pLink);
+}
+
+void nuiEventTargetBase::Disconnect(nuiEventSource& rSource)
+{
+  NGL_ASSERT(mpTarget);
+  LinksMap::iterator it_source = mpLinks.find(&rSource);
+  if (it_source != mpLinks.end())
+  {
+    const LinkList& rLinks = it_source->second;
+    
+    LinkList::const_iterator end = rLinks.end();
+    for (LinkList::const_iterator it = rLinks.begin(); it != end; ++it)
+      delete *it;
+    
+    mpLinks.erase(it_source);
+  }
+  rSource.Disconnect(this);
+}
+
+void nuiEventTargetBase::Disconnect(const nuiDelegateMemento& rTFunc)
+{
+  NGL_ASSERT(mpTarget);
+  
+  std::vector<nuiEventSource*> toErase;
+  LinksMap::const_iterator end_source = mpLinks.end();
+  for (LinksMap::iterator it_source = mpLinks.begin(); it_source != end_source; ++it_source)
+  {
+    LinkList& rLinks = it_source->second;
+    
+    LinkList::iterator end = rLinks.end();
+    LinkList::iterator it = rLinks.begin();
+    while (it != end)
+    {
+      Link* pLink = *it;
+      if (pLink->mTargetFunc.IsEqual(rTFunc))
+      {
+        delete pLink;
+        it = rLinks.erase(it);
+      }
+      else
+        ++it;
+    }
+    if (rLinks.empty())
+      toErase.push_back(it_source->first);
+  }
+  
+  for (uint32 i = 0; i < toErase.size(); i++)
+  {
+    nuiEventSource* pSource = toErase[i];
+    pSource->Disconnect(this);
+    mpLinks.erase(pSource);
+  }
+}
+
+void nuiEventTargetBase::Disconnect(nuiEventSource& rSource, const nuiDelegateMemento& rTFunc)
+{
+  NGL_ASSERT(mpTarget);
+  
+  LinksMap::iterator it_source = mpLinks.find(&rSource);
+  if (it_source != mpLinks.end())
+  {
+    LinkList& rLinks(it_source->second);
+    
+    LinkList::const_iterator end = rLinks.end();
+    for (LinkList::iterator it = rLinks.begin(); it != end;)
+    {
+      Link* pLink = *it;
+      if (pLink->mTargetFunc.IsEqual(rTFunc))
+      {
+        delete pLink;
+        it = rLinks.erase(it);
+        break; // assumes no one will connect the same target func to the same source?
+      }
+      else
+        ++it;
+    }
+    
+    if (rLinks.empty())
+    {
+      mpLinks.erase(it_source);
+      rSource.Disconnect(this);
+    }
+  }
+}
+
 
 
 

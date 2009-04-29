@@ -66,7 +66,6 @@ nuiTabBar::nuiTabBar()
 bool nuiTabBar::Load(const nuiXMLNode* pNode)
 {
   nuiSimpleContainer::Load(pNode);
-  mTabsSink.SetTarget(this);
   return true;
 }
 

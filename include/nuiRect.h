@@ -134,74 +134,74 @@ public:
     Set(mLeft, mTop, GetWidth(), h ,true);
   }
   
-  inline nuiSize GetWidth() const
+  nuiSize GetWidth() const
   {
     return mRight - mLeft;
   }
 
-  inline nuiSize GetHeight() const
+  nuiSize GetHeight() const
   {
     return mBottom - mTop;
   }
 
-  inline void GetSize(nuiSize& rWidth, nuiSize& rHeight) const
+  void GetSize(nuiSize& rWidth, nuiSize& rHeight) const
   {
     rWidth  = GetWidth();
     rHeight = GetHeight();
   }
 
-  inline void GetSize(long& rWidth, long& rHeight) const
+  void GetSize(long& rWidth, long& rHeight) const
   {
     rWidth  = (long)GetWidth();
     rHeight = (long)GetHeight();
   }
 
-  inline nuiSize GetSurface() const
+  nuiSize GetSurface() const
   {
     return GetWidth()*GetHeight();
   }
 
-  inline nuiSize& Left()
+  nuiSize& Left()
   {
     return mLeft;
   }
 
-  inline nuiSize& Right()
+  nuiSize& Right()
   {
     return mRight;
   }
 
-  inline nuiSize& Top()
+  nuiSize& Top()
   {
     return mTop;
   }
 
-  inline nuiSize& Bottom()
+  nuiSize& Bottom()
   {
     return mBottom;
   }
 
-  inline const nuiSize& Left() const
+  const nuiSize& Left() const
   {
     return mLeft;
   }
 
-  inline const nuiSize& Right() const
+  const nuiSize& Right() const
   {
     return mRight;
   }
 
-  inline const nuiSize& Top() const
+  const nuiSize& Top() const
   {
     return mTop;
   }
 
-  inline const nuiSize& Bottom() const
+  const nuiSize& Bottom() const
   {
     return mBottom;
   }
 
-  inline void Move(nuiSize DeltaX, nuiSize DeltaY)
+  void Move(nuiSize DeltaX, nuiSize DeltaY)
   {
     mLeft += DeltaX;
     mRight += DeltaX;
@@ -213,7 +213,7 @@ public:
 #endif
   }
 
-  inline void MoveTo(nuiSize X, nuiSize Y)
+  void MoveTo(nuiSize X, nuiSize Y)
   {
     nuiSize w,h;
     w = mRight - mLeft;

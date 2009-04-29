@@ -358,6 +358,36 @@ void nuiAudioTrack::ProcessedSamples(uint32 sampleFrames, uint32 bufSize, uint32
 
 
 
+void nuiAudioTrack::Pause(bool pause)
+{
+  nglCriticalSectionGuard guard(mPausedCS); 
+  mPaused=pause;
+}
+
+bool	nuiAudioTrack::IsPaused() const
+{
+  return mPaused;
+}
+
+void nuiAudioTrack::SetVolume(float volume)
+{
+  mVolume = volume;
+}
+
+float nuiAudioTrack::GetVolume() const
+{
+  return mVolume;
+}
+
+double nuiAudioTrack::GetSampleRate() const
+{
+  return mSampleRate;
+}
+
+uint32 nuiAudioTrack::GetNbChannels() const
+{
+  return mNbChannels;
+}
 
 
 

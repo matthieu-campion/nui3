@@ -32,96 +32,29 @@ enum nuiAnimLoop
 typedef nuiFastDelegate1<double, double> nuiEasingMethod;
 
 // Standard easing:
-inline double nuiEasingIdentity(double val)
-{
-  return val;
-}
-
-inline double nuiEasingSquare(double val)
-{
-  return val * val;
-}
-
-
-inline double nuiEasingCubic(double val)
-{
-  return val * val * val;
-}
-
-inline double nuiEasingQuartic(double val)
-{
-  return val * val * val * val;
-}
-
-inline double nuiEasingSlowStart(double val)
-{
-  return val * val * val * val * val * val * val * val;
-}
-
-inline double nuiEasingQuintic(double val)
-{
-  return val * val * val * val;
-}
-
-inline double nuiEasingSinusStartFast(double val)
-{
-  return sin(val * M_PI_2);
-}
-
-inline double nuiEasingSinusStartSlow(double val)
-{
-  return sin(val * M_PI_2 - M_PI_2) + 1;
-}
-
-inline double nuiEasingSinus(double val)
-{
-  return .5 * (sin(val * M_PI - M_PI_2) + 1);
-}
+double nuiEasingIdentity(double val);
+double nuiEasingSquare(double val);
+double nuiEasingCubic(double val);
+double nuiEasingQuartic(double val);
+double nuiEasingSlowStart(double val);
+double nuiEasingQuintic(double val);
+double nuiEasingSinusStartFast(double val);
+double nuiEasingSinusStartSlow(double val);
+double nuiEasingSinus(double val);
 
 template <class func> double nuiEasingReverse(double val, func f)
 {
   return 1.0 - f(1.0 - val);
 }
 
-inline double nuiEasingSquareRev(double val)
-{
-  return nuiEasingReverse(val, nuiEasingSquare);
-}
-
-inline double nuiEasingCubicRev(double val)
-{
-  return nuiEasingReverse(val, nuiEasingCubic);
-}
-
-inline double nuiEasingQuarticRev(double val)
-{
-  return nuiEasingReverse(val, nuiEasingQuartic);
-}
-
-inline double nuiEasingSlowStartRev(double val)
-{
-  return nuiEasingReverse(val, nuiEasingSlowStart);
-}
-
-inline double nuiEasingQuinticRev(double val)
-{
-  return nuiEasingReverse(val, nuiEasingQuintic);
-}
-
-inline double nuiEasingSinusStartSlowRev(double val)
-{
-  return nuiEasingReverse(val, nuiEasingSinusStartSlow);
-}
-
-inline double nuiEasingSinusStartFastRev(double val)
-{
-  return nuiEasingReverse(val, nuiEasingSinusStartFast);
-}
-
-inline double nuiEasingSinusRev(double val)
-{
-  return nuiEasingReverse(val, nuiEasingSinus);
-}
+double nuiEasingSquareRev(double val);
+double nuiEasingCubicRev(double val);
+double nuiEasingQuarticRev(double val);
+double nuiEasingSlowStartRev(double val);
+double nuiEasingQuinticRev(double val);
+double nuiEasingSinusStartSlowRev(double val);
+double nuiEasingSinusStartFastRev(double val);
+double nuiEasingSinusRev(double val);
 
 
 /// nuiAnimation is a base class that implements a basic animation framework.

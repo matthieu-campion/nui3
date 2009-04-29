@@ -154,7 +154,6 @@ bool nuiMainWindow::Load(const nuiXMLNode* pNode)
   nuiRect rect((nuiSize)0, (nuiSize)0, (nuiSize)W, (nuiSize)H);
   nuiSimpleContainer::SetRect(rect);
   SetObjectClass(_T("nuiMainWindow"));
-  mMainWinSink.SetTarget(this);
 
   if (pNode->HasAttribute("Renderer"))
   {

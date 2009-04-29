@@ -65,7 +65,7 @@ public:
   void SetAutoDelete(bool set);
   bool GetAutoDelete() const;
   
-  inline nglThreadPrivate* GetThreadPrivate() const
+  nglThreadPrivate* GetThreadPrivate() const
 	{
     return mpData;
   }

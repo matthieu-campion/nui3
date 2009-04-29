@@ -320,10 +320,7 @@ protected:
   
 };
 
-inline bool operator<(const nglPath& rLeft, const nglPath& rRight)
-{
-  return rLeft.GetPathName() < rRight.GetPathName();
-}
+bool operator<(const nglPath& rLeft, const nglPath& rRight);
 
 //! Volume description
 /*!

@@ -242,7 +242,7 @@ void glAAExit()
 // For a 32 x 32 circle, this means a  64x 64 alpha mip pyramid, or ~  5k of VRAM.
 // For a 256x256 circle, this means a 512x512 alpha mip pyramid, or ~341k of VRAM.
 //
-inline float ifun(float x, float y, float F) 
+float ifun(float x, float y, float F) 
 {
   // compute falloff at x,y with exponent F [-1..1]
   float S = (x * x + y);

@@ -205,7 +205,6 @@ bool nuiTopLevel::Load(const nuiXMLNode* pNode)
   mNeedInvalidateOnSetRect = false;
   mReleased = false;
   SetObjectClass(_T("nuiTopLevel"));
-  mTopLevelSink.SetTarget(this);
 
   mResPath = nglPath(pNode->GetAttribute("Path"));
   nuiTheme::InitTheme(mResPath);

@@ -35,9 +35,37 @@ private:
 class NUI_API nuiEventTargetBase
 {
 public:
-  virtual ~nuiEventTargetBase() {}
-  virtual bool OnEvent(const nuiEvent& rEvent) = 0;
-  virtual void Disconnect(nuiEventSource& rSource) = 0;
+  typedef nuiFastDelegate1<const nuiEvent&, bool> Delegate;
+  
+  nuiEventTargetBase(void* pTarget);
+  virtual ~nuiEventTargetBase();
+  
+  void DisconnectAll();
+  bool OnEvent(const nuiEvent& rEvent);
+  bool CallEvent(void* pTarget, nuiDelegateMemento pFunc, const nuiEvent& rEvent);
+  void Connect(nuiEventSource& rSource, const nuiDelegateMemento& rTargetFunc, void* pUser = NULL);
+  void Disconnect(nuiEventSource& rSource);
+  void Disconnect(const nuiDelegateMemento& rTFunc);
+  void Disconnect(nuiEventSource& rSource, const nuiDelegateMemento& rTFunc);
+  
+protected:
+  class NUI_API Link
+  {
+  public:
+    nuiDelegateMemento  mTargetFunc;
+    void* mpUser;
+  };
+  
+  typedef std::vector<Link*> LinkList;
+  typedef std::map<nuiEventSource*, LinkList> LinksMap;
+  LinksMap mpLinks;
+  
+  void* mpTarget;
+  
+  nuiEventTargetBase(const nuiEventTargetBase& rTarget)
+  {
+    // There is NO way to copy a target properly. 
+  }
 };
 
 /// Do not touch this either!
@@ -78,211 +106,41 @@ private:
 };
 
 
-template <class T>
-class NUI_API nuiEventTarget : public nuiEventTargetBase
-{
-public:
-  typedef bool (T::*TargetFunc) (const nuiEvent& rEvent);
-
-  nuiEventTarget (T* pTarget)
-    : nuiEventTargetBase()
-  {
-    mpTarget = pTarget;
-  }
-
-  virtual ~nuiEventTarget()
-  {
-    DisconnectAll();
-  }
-
-  virtual void DisconnectAll()
-  {
-    LinksMap links(mpLinks);
-		typename LinksMap::iterator it;
-		typename LinksMap::iterator end = links.end();
-    for (it = links.begin(); it != end; ++it)
-    {
-      Disconnect(*(it->first));
-    }
-  }
-
-  virtual bool OnEvent(const nuiEvent& rEvent)
-  {
-    // Beware!! If the debugger brings you here its probably that you forgot to call nuiEventSink<...>::SetTarget in some of your constructor code!!!
-    NGL_ASSERT(mpTarget);
-    
-    bool handled = false;
-
-    nuiEventSource* pSource = (nuiEventSource*)rEvent.GetSource();
-    typename LinksMap::const_iterator it_source = mpLinks.find(pSource);
-
-    if (it_source != mpLinks.end())
-    {
-      LinkList links(it_source->second);
-      typename LinkList::const_iterator it   = links.begin();
-      typename LinkList::const_iterator end  = links.end();
-
-      for (; (it != end) && !handled; ++it)
-      {
-        Link* pLink = (*it);
-        TargetFunc pFunc = pLink->mpTargetFunc;
-        rEvent.mpUser = pLink->mpUser;
-        // Beware!! If the debugger brings you here its probably that you forgot to call nuiEventSink<...>::SetTarget in some of your constructor code!!!
-        handled = (((T*)mpTarget)->*pFunc)( rEvent );
-      }
-    }
-    return handled;
-  }
-
-  virtual void Connect(nuiEventSource& rSource, TargetFunc pTargetFunc, void* pUser=NULL)
-  {
-    NGL_ASSERT(mpTarget);
-    // Beware!! If the debugger brings you here its probably that you forgot to call nuiEventSink<...>::SetTarget in some of your constructor code!!!
-    Link* pLink = new Link;
-    pLink->mpTargetFunc = pTargetFunc;
-    pLink->mpUser = pUser;
-
-    rSource.Connect(this);
-
-    LinkList& rLinkList(mpLinks[&rSource]);
-    rLinkList.insert(rLinkList.begin(), pLink);
-  }
-
-  virtual void Disconnect(nuiEventSource& rSource)
-  {
-    NGL_ASSERT(mpTarget);
-    // Beware!! If the debugger brings you here its probably that you forgot to call nuiEventSink<...>::SetTarget in some of your constructor code!!!
-    typename LinksMap::iterator it_source = mpLinks.find(&rSource);
-    if (it_source != mpLinks.end())
-    {
-      const LinkList& rLinks = it_source->second;
-      
-      typename LinkList::const_iterator end = rLinks.end();
-      for (typename LinkList::const_iterator it = rLinks.begin(); it != end; ++it)
-        delete *it;
-
-      mpLinks.erase(it_source);
-    }
-    rSource.Disconnect(this);
-  }
-
-  virtual void Disconnect(TargetFunc pTargetFunc)
-  {
-    NGL_ASSERT(mpTarget);
-    // Beware!! If the debugger brings you here its probably that you forgot to call nuiEventSink<...>::SetTarget in some of your constructor code!!!
-
-    std::vector<nuiEventSource*> toErase;
-    typename LinksMap::const_iterator end_source = mpLinks.end();
-    for (typename LinksMap::iterator it_source = mpLinks.begin(); it_source != end_source; ++it_source)
-    {
-      LinkList& rLinks = it_source->second;
-
-      typename LinkList::iterator end = rLinks.end();
-      typename LinkList::iterator it = rLinks.begin();
-      while (it != end)
-      {
-        Link* pLink = *it;
-        if (pLink->mpTargetFunc == pTargetFunc)
-        {
-          delete pLink;
-          it = rLinks.erase(it);
-        }
-        else
-          ++it;
-      }
-      if (rLinks.empty())
-        toErase.push_back(it_source->first);
-    }
-    
-    for (uint32 i = 0; i < toErase.size(); i++)
-    {
-      nuiEventSource* pSource = toErase[i];
-      pSource->Disconnect(this);
-      mpLinks.erase(pSource);
-    }
-  }
-
-  virtual void Disconnect(nuiEventSource& rSource, TargetFunc pTargetFunc)
-  {
-    NGL_ASSERT(mpTarget);
-    // Beware!! If the debugger brings you here its probably that you forgot to call nuiEventSink<...>::SetTarget in some of your constructor code!!!
-
-    typename LinksMap::iterator it_source = mpLinks.find(&rSource);
-    if (it_source != mpLinks.end())
-    {
-      LinkList& rLinks(it_source->second);
-      
-      typename LinkList::const_iterator end = rLinks.end();
-      for (typename LinkList::iterator it = rLinks.begin(); it != end;)
-      {
-        Link* pLink = *it;
-        if (pLink->mpTargetFunc == pTargetFunc)
-        {
-          delete pLink;
-          it = rLinks.erase(it);
-          break; // assumes no one will connect the same target func to the same source?
-        }
-        else
-          ++it;
-      }
-
-      if (rLinks.empty())
-      {
-        mpLinks.erase(it_source);
-        rSource.Disconnect(this);
-      }
-    }
-  }
-
-protected:
-  
-  // Target handling:
-  void SetTarget(T* pTarget)
-  {
-    mpTarget = pTarget;
-  }
-  T* GetTarget()
-  {
-    return mpTarget;
-  }
-  
-private:
-  class NUI_API Link
-  {
-  public:
-    TargetFunc  mpTargetFunc;
-    void*       mpUser;
-  };
-
-  typedef std::vector<Link*> LinkList;
-  typedef std::map<nuiEventSource*, LinkList> LinksMap;
-  LinksMap mpLinks;
-
-  T* mpTarget;
-  
-  nuiEventTarget(const nuiEventTarget<T>& rTarget)
-  {
-    // There is NO way to copy a target properly. 
-  }
-};
-
 /// This template is the basis of the event reception system of nui.
-template <class T> class NUI_API nuiEventSink : public nuiEventTarget<T>
+template <class T> class NUI_API nuiEventSink : public nuiEventTargetBase
 {
+private:
+  typedef bool (T::*TargetFunc)(const nuiEvent&);
 public:
   nuiEventSink(T* pTarget)
-  : nuiEventTarget<T>(pTarget)
+  : nuiEventTargetBase((void*)pTarget)
   {
-    SetTarget(pTarget);
   }
+
   virtual ~nuiEventSink()
   {
   }
 
-  void SetTarget(T* pTarget)
+  void Connect(nuiEventSource& rSource, TargetFunc pTargetFunc, void* pUser=NULL)
   {
-    nuiEventTarget<T>::SetTarget(pTarget);
+    nuiEventTargetBase::Connect(rSource, nuiMakeDelegate((T*)mpTarget, pTargetFunc).GetMemento(), pUser);
   }
+  
+  void Disconnect(nuiEventSource& rSource)
+  {
+    nuiEventTargetBase::Disconnect(rSource);
+  }
+  
+  void Disconnect(TargetFunc pTargetFunc)
+  {
+    nuiEventTargetBase::Disconnect(nuiMakeDelegate((T*)mpTarget, pTargetFunc).GetMemento());
+  }
+  
+  void Disconnect(nuiEventSource& rSource, TargetFunc pTargetFunc)
+  {
+    nuiEventTargetBase::Disconnect(rSource, nuiMakeDelegate((T*)mpTarget, pTargetFunc).GetMemento());
+  }
+  
 private:
   nuiEventSink(const nuiEventSink& rSink)
   {

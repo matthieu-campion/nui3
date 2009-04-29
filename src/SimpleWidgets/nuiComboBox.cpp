@@ -56,8 +56,6 @@ bool nuiComboBox::Load(nuiXMLNode* pNode)
   mHandleHeight = DEFAULT_HANDLE_HEIGHT;
   mHandleOffset = DEFAULT_HANDLE_OFFSET;
 
-  mComboBoxEvents.SetTarget(this);
-
   return true;
 }
 

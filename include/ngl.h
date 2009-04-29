@@ -152,14 +152,14 @@ and in NGL user application code.
     // Some missing math.h functions in VC7 2002
     inline float abs(float& a)
     {
-      if (a<0)
+      if (a < 0)
         return -a;
       return a;
     }
 
     inline float abs(float a)
     {
-      if (a<0)
+      if (a < 0)
         return -a;
       return a;
     }

@@ -28,7 +28,7 @@
 #endif
 
 #if 0
-inline uint32 NUI_RGBA(uint8 R, uint8 G, uint8 B, uint8 A)
+uint32 NUI_RGBA(uint8 R, uint8 G, uint8 B, uint8 A)
 {
   uint32 c;
   uint8* pC = (uint8*)&c;
@@ -40,7 +40,7 @@ inline uint32 NUI_RGBA(uint8 R, uint8 G, uint8 B, uint8 A)
   return c;
 }
 #else
-inline uint32 NUI_RGBA(uint8 R, uint8 G, uint8 B, uint8 A)
+uint32 NUI_RGBA(uint8 R, uint8 G, uint8 B, uint8 A)
 {
 #ifdef _WIN32_
   return  ( (A << 24) + (R << 16) + (G << 8) + B );
@@ -50,7 +50,7 @@ inline uint32 NUI_RGBA(uint8 R, uint8 G, uint8 B, uint8 A)
 }
 #endif
 
-inline uint32 NUI_RGBA_F(float R, float G, float B, float A)
+uint32 NUI_RGBA_F(float R, float G, float B, float A)
 {
   const uint8 r = FastToNearest(255.f * R);
   const uint8 g = FastToNearest(255.f * G);
@@ -59,7 +59,7 @@ inline uint32 NUI_RGBA_F(float R, float G, float B, float A)
   return NUI_RGBA(r, g, b, a);
 }
 
-inline uint32 NUI_RGBA(const nuiColor& rColor)
+uint32 NUI_RGBA(const nuiColor& rColor)
 {
   const uint8 r = FastToNearest(255.f * rColor.Red());
   const uint8 g = FastToNearest(255.f * rColor.Green());
@@ -100,7 +100,7 @@ public:
     return *this;
   }  
   
-  inline uint32 GetColor() const
+  uint32 GetColor() const
   {
     return mColor;
   }
@@ -156,7 +156,7 @@ public:
     return *this;
   }  
   
-  inline uint32 GetColor() const
+  uint32 GetColor() const
   {
     const uint32 col0 = mSrc0.GetColor();
     const uint32 col1 = mSrc1.GetColor();
@@ -255,7 +255,7 @@ public:
     return *this;
   }  
   
-  inline uint32 GetColor() const
+  uint32 GetColor() const
   {
     return NUI_RGBA(ToNearest(mR), ToNearest(mG), ToNearest(mB), ToNearest(mA));
   }
@@ -309,7 +309,7 @@ public:
 class nuiTexelAccessor_Lum
 {
 public:
-  inline static uint32 GetTexelColor(nuiTexture* mpTexture, uint8* pBuffer, int32 width, int32 height, ifp32 U, ifp32 V)
+  static uint32 GetTexelColor(nuiTexture* mpTexture, uint8* pBuffer, int32 width, int32 height, ifp32 U, ifp32 V)
   {
     U = ToAbove(U);
     V = ToAbove(V);
@@ -335,7 +335,7 @@ public:
 class nuiTexelAccessor_LumA
 {
 public:
-  inline static uint32 GetTexelColor(nuiTexture* mpTexture, uint8* pBuffer, int32 width, int32 height, ifp32 U, ifp32 V)
+  static uint32 GetTexelColor(nuiTexture* mpTexture, uint8* pBuffer, int32 width, int32 height, ifp32 U, ifp32 V)
   {
     U = ToAbove(U);
     V = ToAbove(V);
@@ -349,7 +349,7 @@ public:
 class nuiTexelAccessor_RGB24
 {
 public:
-  inline static uint32 GetTexelColor(nuiTexture* mpTexture, uint8* pBuffer, int32 width, int32 height, ifp32 U, ifp32 V)
+  static uint32 GetTexelColor(nuiTexture* mpTexture, uint8* pBuffer, int32 width, int32 height, ifp32 U, ifp32 V)
   {
     U = ToAbove(U);
     V = ToAbove(V);
@@ -373,7 +373,7 @@ public:
 class nuiTexelAccessor_RGBA32
 {
 public:
-  inline static uint32 GetTexelColor(nuiTexture* mpTexture, uint8* pBuffer, int32 width, int32 height, ifp32 U, ifp32 V)
+  static uint32 GetTexelColor(nuiTexture* mpTexture, uint8* pBuffer, int32 width, int32 height, ifp32 U, ifp32 V)
   {
     U = ToAbove(U);
     V = ToAbove(V);
@@ -429,7 +429,7 @@ public:
     return *this;
   }  
   
-  inline uint32 GetColor() const
+  uint32 GetColor() const
   {
     //return NUI_RGBA(ToNearest(mR), ToNearest(mG), ToNearest(mB), ToNearest(mA));
     return TexelAccessor::GetTexelColor(mpTexture, mpBuffer, mWidth, mHeight, mU, mV);
@@ -584,7 +584,7 @@ public:
     mValue.Clear();
   }
 
-  inline uint32 GetColor()
+  uint32 GetColor()
   {
     return mValue.GetColor();
   }

@@ -60,7 +60,6 @@ bool nuiScrollBar::Load(const nuiXMLNode* pNode)
   mTimer.SetPeriod(.2);
       
   SetObjectClass(_T("nuiScrollBar"));
-  mScrollBarSink.SetTarget(this);
   SetRedrawOnHover(true);
   mClicked = false;
   mThumbClicked = false;

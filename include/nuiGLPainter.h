@@ -95,50 +95,7 @@ protected:
   void SetViewport();
 };
 
-inline void nuiCheckForGLErrors()
-{
-#if 0 // Globally enable/disable OpenGL error checking
-#ifdef _DEBUG_
-  bool error = false;
-  GLenum err = glGetError();
-  while (err != GL_NO_ERROR)
-  {
-    switch (err)
-    {
-      /*
-      case GL_NO_ERROR:
-      NGL_LOG(_T("nuiGLPainter"), NGL_LOG_ALWAYS, "error has been recorded. The value of this symbolic constant is guaranteed to be zero.");
-      */
-      break;
-    case GL_INVALID_ENUM: 
-      NGL_LOG(_T("nuiGLPainter"), NGL_LOG_ALWAYS, _T("An unacceptable value is specified for an enumerated argument. The offending function is ignored, having no side effect other than to set the error flag."));
-      break;
-    case GL_INVALID_VALUE: 
-      NGL_LOG(_T("nuiGLPainter"), NGL_LOG_ALWAYS, _T("A numeric argument is out of range. The offending function is ignored, having no side effect other than to set the error flag."));
-      break;
-    case GL_INVALID_OPERATION:
-      NGL_LOG(_T("nuiGLPainter"), NGL_LOG_ALWAYS, _T("The specified operation is not allowed in the current state. The offending function is ignored, having no side effect other than to set the error flag."));
-      break;
-    case GL_STACK_OVERFLOW:
-      NGL_LOG(_T("nuiGLPainter"), NGL_LOG_ALWAYS, _T("This function would cause a stack overflow. The offending function is ignored, having no side effect other than to set the error flag."));
-      break;
-    case GL_STACK_UNDERFLOW:
-      NGL_LOG(_T("nuiGLPainter"), NGL_LOG_ALWAYS, _T("This function would cause a stack underflow. The offending function is ignored, having no side effect other than to set the error flag."));
-      break;
-    case GL_OUT_OF_MEMORY:
-      NGL_LOG(_T("nuiGLPainter"), NGL_LOG_ALWAYS, _T("There is not enough memory left to execute the function. The state of OpenGL is undefined, except for the state of the error flags, after this error is recorded."));
-      break;
-    }
-#ifdef _WIN32_
-    __asm int 3;
-#else
-    NGL_ASSERT(0);
-#endif
-    err = glGetError();
-  }
-#endif
-#endif
-}
+void nuiCheckForGLErrors();
 
 #endif //   #ifndef __NUI_NO_GL__
 

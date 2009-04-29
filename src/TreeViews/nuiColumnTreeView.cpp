@@ -54,8 +54,6 @@ bool nuiColumnTreeView::Load(const nuiXMLNode* pNode)
   nuiTreeView::Load(pNode);
   mKey.Wipe();
 
-  mColumnTreeViewSink.SetTarget(this);
-
   mpPreview = NULL;
   mActivateOnUnclick = false;
   mNeedCalcVerticalHotRect = true;

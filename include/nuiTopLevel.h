@@ -184,12 +184,12 @@ protected:
   nuiGrabStackMap mpGrabStack;
 
 ///< Helpers:
-  inline bool HasGrab(nuiWidgetPtr pWidget);
-  inline nuiWidgetPtr GetGrab(nglTouchId touchId) const;
-  inline void PushGrab(nglTouchId touchId, nuiWidgetPtr pWidget);
-  inline nuiWidgetPtr PopGrab(nglTouchId touchId);
-  inline std::list<nuiWidgetPtr>& GetGrabStack(nglTouchId touchId);
-  inline nglTouchId GetGrabId(nuiWidgetPtr pWidget) const;
+  bool HasGrab(nuiWidgetPtr pWidget);
+  nuiWidgetPtr GetGrab(nglTouchId touchId) const;
+  void PushGrab(nglTouchId touchId, nuiWidgetPtr pWidget);
+  nuiWidgetPtr PopGrab(nglTouchId touchId);
+  std::list<nuiWidgetPtr>& GetGrabStack(nglTouchId touchId);
+  nglTouchId GetGrabId(nuiWidgetPtr pWidget) const;
 #else
   nuiWidgetPtr mpGrab;
   std::list<nuiWidgetPtr> mpGrabStack;

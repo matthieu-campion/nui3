@@ -40,7 +40,7 @@ public:
 class nuiPixelBlender_Transp
 {
 public:
-  static inline uint32 lerpRGBA(const uint32 d, const uint32 s, uint32 ti)
+  static uint32 lerpRGBA(const uint32 d, const uint32 s, uint32 ti)
   {
     uint32 dstga = d      & 0xFF00FF;
     uint32 dstrb = d >> 8 & 0xFF00FF;

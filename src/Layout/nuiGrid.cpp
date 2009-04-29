@@ -128,7 +128,7 @@ bool nuiGrid::Load(const nuiXMLNode* pNode)
   return true;
 }
 
-inline void nuiGrid::Reset(uint32 nbcolumns, uint32 nbrows, bool clear)
+void nuiGrid::Reset(uint32 nbcolumns, uint32 nbrows, bool clear)
 {
   if (clear)
     Clear(false);

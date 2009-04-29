@@ -30,12 +30,12 @@ public:
 	virtual ~nuiAudioTrack();
 
 	// inline
-	inline void Pause(bool pause=true)    { nglCriticalSectionGuard guard(mPausedCS); mPaused=pause;  }
-	inline bool	IsPaused()                { return mPaused; }
-	inline void	SetVolume(float volume)		{ mVolume = volume;}
-	inline float GetVolume()              { return mVolume;}
-  double GetSampleRate()                { return mSampleRate;}
-  uint32 GetNbChannels()                { return mNbChannels;}
+	void Pause(bool pause = true);
+	bool IsPaused() const;
+	void SetVolume(float volume);
+	float GetVolume() const;
+  double GetSampleRate() const;
+  uint32 GetNbChannels() const;
   
 
 protected : 

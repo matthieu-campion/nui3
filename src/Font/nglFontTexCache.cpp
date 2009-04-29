@@ -172,7 +172,7 @@ bool nglFontTexCache::Draw (const nglGlyphLayout& rGlyph)
   mModelView.Elt.M14 = mX0 + rGlyph.X + mScaleX * glyph->mBearingX;
   mModelView.Elt.M24 = mY0 + rGlyph.Y - mScaleY * glyph->mBearingY;
   glMatrixMode(GL_MODELVIEW);
-  mModelView.LoadMatrix();
+  glLoadMatrixf(mModelView.Array);
 
   return glyph->Draw();
 }
@@ -182,7 +182,7 @@ void nglFontTexCache::PushContext()
   glMatrixMode(GL_MODELVIEW);
   glPushMatrix();
 
-  mModelView.GetMatrix(GL_MODELVIEW_MATRIX);
+  glGetFloatv(GL_MODELVIEW_MATRIX, mModelView.Array);
   mX0 = mModelView.Elt.M14;
   mY0 = mModelView.Elt.M24;
 }

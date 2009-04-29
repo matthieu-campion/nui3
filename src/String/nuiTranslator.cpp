@@ -249,3 +249,13 @@ nuiTranslator& nuiTranslator::GetTranslator()
   return *gpTranslator;
 }
 
+const nglString& nuiTR(const nglString& rStringToTranslate, const nglString& rDomain)
+{
+  return nuiTranslator::GetTranslator().Translate(rStringToTranslate, rDomain);
+}
+
+const nglString nuiTR(const char* pStringToTranslate, const char* pDomain)
+{
+  return nuiTranslator::GetTranslator().Translate(nglString(pStringToTranslate), pDomain ? nglString(pDomain) : nglString::Null);
+}
+

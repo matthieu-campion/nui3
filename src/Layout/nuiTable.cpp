@@ -836,7 +836,6 @@ bool nuiTable::Load(const nuiXMLNode* pNode)
   mClicked = false;
   mResize = false;
   mHeader.SetParent(this);
-  mEventSink.SetTarget(this);
 
 //  mCursorLine = 0;
   mpCursorRow = NULL;

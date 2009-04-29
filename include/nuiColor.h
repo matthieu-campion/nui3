@@ -56,17 +56,17 @@ public:
   {
   }
 
-  inline float& Red()   { return mRed;   }
-  inline float& Green() { return mGreen; }
-  inline float& Blue()  { return mBlue;  }
-  inline float& Alpha() { return mAlpha; }
+  float& Red()   { return mRed;   }
+  float& Green() { return mGreen; }
+  float& Blue()  { return mBlue;  }
+  float& Alpha() { return mAlpha; }
   
-  inline float Red() const   { return mRed;   }
-  inline float Green() const { return mGreen; }
-  inline float Blue() const  { return mBlue;  }
-  inline float Alpha() const { return mAlpha; }
+  float Red() const   { return mRed;   }
+  float Green() const { return mGreen; }
+  float Blue() const  { return mBlue;  }
+  float Alpha() const { return mAlpha; }
 
-  inline void Set(float r=0.0f,float g=0.0f, float b=0.0f, float a=1.0f)
+  void Set(float r=0.0f,float g=0.0f, float b=0.0f, float a=1.0f)
   {
     mRed   = r;
     mGreen = g;
@@ -142,7 +142,7 @@ public:
   void Get(nglString& rString) const;
   nglString GetValue() const;
   
-  inline void Apply() const
+  void Apply() const
   {
     glColor4f(mRed,mGreen,mBlue,mAlpha);
   }

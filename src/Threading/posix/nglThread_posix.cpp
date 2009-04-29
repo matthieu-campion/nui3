@@ -26,7 +26,7 @@ class nglThreadPrivate
   friend class nglThread;
   
 public:
-  static inline void Start(nglThread * pThread) 
+  static void Start(nglThread * pThread) 
   {
     pThread->OnStart();
     pThread->mState = nglThread::Closed;
@@ -34,7 +34,7 @@ public:
       delete pThread;
   }
 
-  static inline void exit(nglThread * pThread)
+  static void exit(nglThread * pThread)
   {
     pThread->mpData->thread = NULL;
   }

@@ -27,7 +27,6 @@ bool nuiFileList::Load(const nuiXMLNode* pNode)
 {
   nuiList::Load(pNode);
   SetObjectClass(_T("nuiFileList"));
-  mFileListSink.SetTarget(this);
   nglString path;
   path = nuiGetString(pNode, _T("Path"), _T("."));
   if (path.GetRight(2) == _T("/.") || path.GetRight(2) == _T("\\."))

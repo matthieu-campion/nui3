@@ -1659,3 +1659,10 @@ nglIOStream* nglPath::OpenWrite(bool OverWrite) const
   
   return pFile;
 }
+
+bool operator<(const nglPath& rLeft, const nglPath& rRight)
+{
+  return rLeft.GetPathName() < rRight.GetPathName();
+}
+
+

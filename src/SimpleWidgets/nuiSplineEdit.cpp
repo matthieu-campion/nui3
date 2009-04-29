@@ -48,7 +48,6 @@ nuiSplineEdit::nuiSplineEdit( nuiSpline* pSpline, bool OwnSpline )
 bool nuiSplineEdit::Load(const nuiXMLNode* pNode)
 {
   nuiWidget::Load(pNode);
-  mEventsink.SetTarget(this);
   SetObjectClass(_T("nuiSplineEdit"));
 
   mpSelectedNode = NULL;

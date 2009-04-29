@@ -74,8 +74,6 @@ bool nuiWindow::Load(const nuiXMLNode* pNode)
   mpCloseButton = NULL;
   mMoving = eNoMove;
 
-  mNuiWindowSink.SetTarget(this);
-
   // FIXME: interpret other attributes...
 
   nuiWindowFlags Flags = NoFlag;

@@ -44,31 +44,6 @@ column first. Illustration :
   //   Elt.M31  Elt.M32  Elt.M33  Elt.M34
   //   Elt.M41  Elt.M42  Elt.M43  Elt.M44
 \endcode
-
-You have some helpers to integrate nglMatrix<> usage seamlessly with OpenGL :
-
-\code
-nglMatrix<float> mat;
-
-mat.SetRotation(45, nuiVector(1, 0, 0));
-mat.LoadMatrix();
-\endcode
-
-... does the same job as :
-
-\code
-nglMatrix<float> mat;
-
-mat.SetRotation(45, nuiVector(1, 0, 0));
-glLoadMatrixf(mat.Array);
-\endcode
-
-... and again the same thing :
-
-\code
-glLoadIdentity();
-glRotatef(45, 1, 0, 0);
-\endcode
 */
 template <class T> class nglMatrix
 {
@@ -520,29 +495,6 @@ public:
     return true;
   }
 
-/* These methods require OpenGL, we only implement them if it is available.
- * They are only implemented in the float and double specialized versions.
- */
-#ifdef GL_VERSION_1_1
-  /// Load into OpenGL current matrix (see glMatrixMode() and glLoadMatrix{d,f}())
-  void LoadMatrix() const
-  {
-    NGL_ASSERT(!"nglMatrix::LoadMatrix<T> not implemented");
-  }
-
-  /// Retrieve the current OpenGL matrix for the given \a Type
-  void GetMatrix(GLenum Type = GL_MODELVIEW_MATRIX)
-  {
-    NGL_ASSERT(!"nglMatrix::GetMatrix<T> not implemented");
-  }
-
-  /// Left multiply with current OpenGL matrix, result on the OpenGL side
-  void MultMatrix() const
-  {
-    NGL_ASSERT(!"nglMatrix::MultMatrix<T> not implemented");
-  }
-#endif // GL_VERSION_1_1
-
   /*
    * Operators
    */
@@ -692,44 +644,6 @@ mat1 = mat1 * mat2;
   
 };
 
-
-/*
- * Specializations
- */
-
-/* These methods require OpenGL, we only implement them if it is available
- */
-#ifdef GL_VERSION_1_1
-template<> inline void nglMatrix<float>::LoadMatrix() const
-{
-  glLoadMatrixf(Array); 
-}
-
-template<> inline void nglMatrix<double>::LoadMatrix() const
-{
-  glLoadMatrixd(Array); 
-}
-
-template<> inline void nglMatrix<float>::GetMatrix(GLenum Type)
-{
-  glGetFloatv(Type, Array);
-}
-
-template<> inline void nglMatrix<double>::GetMatrix(GLenum Type)
-{
-  glGetDoublev(Type, Array);
-}
-
-template<> inline void nglMatrix<float>::MultMatrix() const
-{
-  glMultMatrixf(Array); 
-}
-
-template<> inline void nglMatrix<double>::MultMatrix() const
-{
-  glMultMatrixd(Array); 
-}
-#endif // GL_VERSION_1_1
 
 
 typedef nglMatrix<float> nglMatrixf;

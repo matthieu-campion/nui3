@@ -2540,3 +2540,136 @@ nglString::nglString(CFStringRef str)
 }
 #endif
 
+
+// Appending to
+#ifndef _DOXYGEN_
+#define _OP_(x) Append(x); return *this;
+#endif
+const nglString& nglString::operator+=(const nglChar nglChar)       { _OP_(nglChar)    }
+const nglString& nglString::operator+=(const nglChar* pSource)   { _OP_(pSource) }
+const nglString& nglString::operator+=(const nglString& rSource) { _OP_(rSource) }
+#undef _OP_
+
+// Concatenation
+#ifndef _DOXYGEN_
+#define _OP_(x, y) nglString result(x); result.Append(y); return result;
+#endif
+nglString operator+(const nglString& rLeft, const nglChar Right)     { _OP_(rLeft, Right)  }
+nglString operator+(const nglString& rLeft, const nglChar* pRight)   { _OP_(rLeft, pRight) }
+nglString operator+(const nglString& rLeft, const nglString& rRight) { _OP_(rLeft, rRight) }
+nglString operator+(const nglChar Left, const nglString& rRight)     { _OP_(Left, rRight)  }
+nglString operator+(const nglChar* pLeft, const nglString& rRight)   { _OP_(pLeft, rRight) }
+#undef _OP_
+
+// Comparison (equal)
+#ifndef _DOXYGEN_
+#define _OP_(x, y) return (x.Compare(y) == 0);
+#endif
+bool operator==(const nglString& rLeft, const nglChar Right)     { _OP_(rLeft, nglString(Right))  }
+bool operator==(const nglString& rLeft, const nglChar* pRight)   { _OP_(rLeft, pRight) }
+bool operator==(const nglString& rLeft, const nglString& rRight) { _OP_(rLeft, rRight) }
+bool operator==(const nglChar Left, const nglString& rRight)     { _OP_(rRight, nglString(Left))  }
+bool operator==(const nglChar* pLeft, const nglString& rRight)   { _OP_(rRight, pLeft) }
+#undef _OP_
+
+// Comparison (different)
+#ifndef _DOXYGEN_
+#define _OP_(x, y) return (x.Compare(y) != 0);
+#endif
+bool operator!=(const nglString& rLeft, const nglChar Right)     { _OP_(rLeft, nglString(Right))  }
+bool operator!=(const nglString& rLeft, const nglChar* pRight)   { _OP_(rLeft, pRight) }
+bool operator!=(const nglString& rLeft, const nglString& rRight) { _OP_(rLeft, rRight) }
+bool operator!=(const nglChar Left, const nglString& rRight)     { _OP_(rRight, nglString(Left))  }
+bool operator!=(const nglChar* pLeft, const nglString& rRight)   { _OP_(rRight, pLeft) }
+#undef _OP_
+
+// Comparison (less than)
+#ifndef _DOXYGEN_
+#define _OP_(x, y) return (x.Compare(y) < 0);
+#endif
+bool operator<(const nglString& rLeft, const nglChar Right)      { _OP_(rLeft, nglString(Right))  }
+bool operator<(const nglString& rLeft, const nglChar* pRight)    { _OP_(rLeft, pRight) }
+bool operator<(const nglString& rLeft, const nglString& rRight)  { _OP_(rLeft, rRight) }
+#undef _OP_
+
+#ifndef _DOXYGEN_
+#define _OP_(x, y) return (x.Compare(y) > 0);
+#endif
+bool operator<(const nglChar Left, const nglString& rRight)      { _OP_(rRight, nglString(Left))  }
+bool operator<(const nglChar* pLeft, const nglString& rRight)    { _OP_(rRight, pLeft) }
+#undef _OP_
+
+// Comparison (less or equal)
+#ifndef _DOXYGEN_
+#define _OP_(x, y) return (x.Compare(y) <= 0);
+#endif
+bool operator<=(const nglString& rLeft, const nglChar Right)     { _OP_(rLeft, nglString(Right))  }
+bool operator<=(const nglString& rLeft, const nglChar* pRight)   { _OP_(rLeft, pRight) }
+bool operator<=(const nglString& rLeft, const nglString& rRight) { _OP_(rLeft, rRight) }
+#undef _OP_
+
+#ifndef _DOXYGEN_
+#define _OP_(x, y) return (x.Compare(y) >= 0);
+#endif
+bool operator<=(const nglChar Left, const nglString& rRight)     { _OP_(rRight, nglString(Left))  }
+bool operator<=(const nglChar* pLeft, const nglString& rRight)   { _OP_(rRight, pLeft) }
+#undef _OP_
+
+// Comparison (more than)
+#ifndef _DOXYGEN_
+#define _OP_(x, y) return (x.Compare(y) > 0);
+#endif
+bool operator>(const nglString& rLeft, const nglChar Right)      { _OP_(rLeft, nglString(Right))  }
+bool operator>(const nglString& rLeft, const nglChar* pRight)    { _OP_(rLeft, pRight) }
+bool operator>(const nglString& rLeft, const nglString& rRight)  { _OP_(rLeft, rRight) }
+#undef _OP_
+
+#ifndef _DOXYGEN_
+#define _OP_(x, y) return (x.Compare(y) < 0);
+#endif
+bool operator>(const nglChar Left, const nglString& rRight)      { _OP_(rRight, nglString(Left))  }
+bool operator>(const nglChar* pLeft, const nglString& rRight)    { _OP_(rRight, pLeft) }
+#undef _OP_
+
+// Comparison (more or equal)
+#ifndef _DOXYGEN_
+#define _OP_(x, y) return (x.Compare(y) >= 0);
+#endif
+bool operator>=(const nglString& rLeft, const nglChar Right)     { _OP_(rLeft, nglString(Right))  }
+bool operator>=(const nglString& rLeft, const nglChar* pRight)   { _OP_(rLeft, pRight) }
+bool operator>=(const nglString& rLeft, const nglString& rRight) { _OP_(rLeft, rRight) }
+#undef _OP_
+
+#ifndef _DOXYGEN_
+#define _OP_(x, y) return (x.Compare(y) <= 0);
+#endif
+bool operator>=(const nglChar Left, const nglString& rRight)     { _OP_(rRight, nglString(Left))  }
+bool operator>=(const nglChar* pLeft, const nglString& rRight)   { _OP_(rRight, pLeft) }
+#undef _OP_
+
+nglChar nglString::operator[](uint32 Index) const
+{
+#ifdef _DEBUG_
+	if ((Index < 0) || ((int32)Index >= GetLength())) return Zero;
+	return mString[Index];
+#else
+	// Relaxed checking, still buffer overflow safe
+	return (Index >= 0 && (int32)Index < (int32)mString.size()) ? mString[Index] : Zero;
+#endif // _DEBUG_
+}
+
+// Array access
+nglChar& nglString::operator[](uint32 Index)
+{
+	return mString[Index];
+}
+
+nglChar  nglString::operator[](int32 Index) const
+{
+  return this->operator[]((uint32)Index);
+}
+
+nglChar& nglString::operator[](int32 Index)
+{
+  return this->operator[]((uint32)Index);
+}

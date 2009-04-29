@@ -225,7 +225,6 @@ bool nuiSplitter::Load(const nuiXMLNode* pNode)
   mMasterChild  = nuiGetBool(pNode,_T("MasterChild"),true);
   mOrientation  = nuiGetOrientation ( pNode, nuiHorizontal);
 
-  mSplitterSink.SetTarget(this);
   mpTimer = NULL;
   mHandleHover = false;
 

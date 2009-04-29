@@ -195,7 +195,7 @@ public:
 	/** @name Fetch string content */
 	//@{
 	nglChar GetChar(uint32 Index)	const;  ///< Returns the char at position \p Index. If \p Index is out of range, returns zero. See operator[]()
-	inline nglChar GetChar(int32 Index)		const { return GetChar((uint32)Index); }  ///< Returns the char at position \p Index. If \p Index is out of range, returns zero. See operator[]()
+	nglChar GetChar(int32 Index)		const { return GetChar((uint32)Index); }  ///< Returns the char at position \p Index. If \p Index is out of range, returns zero. See operator[]()
 	nglChar GetLastChar() const;        ///< Returns last char of string. Returns zero if the string is \e null or \e empty
 	const nglChar* GetChars() const;           ///< Returns the string content as a char array. Returns null if the string is \e null
 	std::string GetStdString(const nglTextEncoding Encoding=eUTF8) const;    ///< Returns the string content as an std::string. Return an empty string if the string is \e null.
@@ -258,7 +258,7 @@ public:
   */
 
 	nglString Extract(uint32 Index) const;
-	inline nglString Extract(int32 Index) const
+	nglString Extract(int32 Index) const
 	{
     return Extract((uint32)Index);
   }
@@ -279,8 +279,8 @@ public:
 	nglString      GetLeft(int32 Count) const;  ///< Returns \p Count leftmost chars
 	nglString      GetRight(int32 Count) const;  ///< Returns \p Count rightmost chars
 
-	inline int32   GetInt   (int Base = 10) const { return (int32) GetInt64 (Base); }  ///< Parse the string as an integer written in base \p Base
-	inline uint32  GetUInt  (int Base = 10) const { return (uint32)GetUInt64(Base); }  ///< Parse the string as an unsigned integer written in base \p Base
+	int32   GetInt   (int Base = 10) const { return (int32) GetInt64 (Base); }  ///< Parse the string as an integer written in base \p Base
+	uint32  GetUInt  (int Base = 10) const { return (uint32)GetUInt64(Base); }  ///< Parse the string as an unsigned integer written in base \p Base
 	int64          GetInt64 (int Base = 10) const;  ///< Parse the string as an integer written in base \p Base
 	uint64         GetUInt64(int Base = 10) const;  ///< Parse the string as an unsigned integer written in base \p Base
 	float          GetFloat () const;               ///< Parse the string as a float decimal representation
@@ -290,8 +290,8 @@ public:
   bool IsFloat() const;
   
   
-	inline int32   GetCInt   (int Base = 10) const { return (int32) GetCInt64(Base); } /*!< Parse the string as an integer written in base \p Base, using the 'C' locale (american numeric conventions) */
-	inline uint32  GetCUInt  (int Base = 10) const { return (uint32)GetCUInt64(Base); } /*!< Parse the string as an unsigned integer written in base \p Base, using the 'C' locale (american numeric conventions) */
+	int32   GetCInt   (int Base = 10) const { return (int32) GetCInt64(Base); } /*!< Parse the string as an integer written in base \p Base, using the 'C' locale (american numeric conventions) */
+	uint32  GetCUInt  (int Base = 10) const { return (uint32)GetCUInt64(Base); } /*!< Parse the string as an unsigned integer written in base \p Base, using the 'C' locale (american numeric conventions) */
 	int64          GetCInt64 (int Base = 10) const; /*!< Parse the string as an integer written in base \p Base, using the 'C' locale (american numeric conventions) */
 	uint64         GetCUInt64(int Base = 10) const; /*!< Parse the string as an unsigned integer written in base \p Base, using the 'C' locale (american numeric conventions) */
 	float          GetCFloat () const;              /*!< Parse the string as a float decimal representation, using the 'C' locale (american numeric conventions) */
@@ -715,67 +715,67 @@ public:
 	const nglString& operator=(const nglString& rSource);
 
 	// Appending
-	const inline nglString& operator+=(const nglChar nglChar);
-	const inline nglString& operator+=(const nglChar* pSource);
-	const inline nglString& operator+=(const nglString& rSource);
+	const nglString& operator+=(const nglChar nglChar);
+	const nglString& operator+=(const nglChar* pSource);
+	const nglString& operator+=(const nglString& rSource);
 
 	// Concatenation
-	friend inline nglString operator+(const nglString& rLeft, const nglChar Right);
-	friend inline nglString operator+(const nglString& rLeft, const nglChar* pRight);
-	friend inline nglString operator+(const nglString& rLeft, const nglString& rRight);
-	friend inline nglString operator+(const nglChar Left, const nglString& rRight);
-	friend inline nglString operator+(const nglChar* pLeft, const nglString& rRight);
+	friend nglString operator+(const nglString& rLeft, const nglChar Right);
+	friend nglString operator+(const nglString& rLeft, const nglChar* pRight);
+	friend nglString operator+(const nglString& rLeft, const nglString& rRight);
+	friend nglString operator+(const nglChar Left, const nglString& rRight);
+	friend nglString operator+(const nglChar* pLeft, const nglString& rRight);
 
 	// Comparison (equal)
-	friend inline bool operator==(const nglString& rLeft, const nglChar Right);
-	friend inline bool operator==(const nglString& rLeft, const nglChar* pRight);
-	friend inline bool operator==(const nglString& rLeft, const nglString& rRight);
-	friend inline bool operator==(const nglChar Left, const nglString& rRight);
-	friend inline bool operator==(const nglChar* pLeft, const nglString& rRight);
+	friend bool operator==(const nglString& rLeft, const nglChar Right);
+	friend bool operator==(const nglString& rLeft, const nglChar* pRight);
+	friend bool operator==(const nglString& rLeft, const nglString& rRight);
+	friend bool operator==(const nglChar Left, const nglString& rRight);
+	friend bool operator==(const nglChar* pLeft, const nglString& rRight);
 
 	// Comparison (different)
-	friend inline bool operator!=(const nglString& rLeft, const nglChar Right);
-	friend inline bool operator!=(const nglString& rLeft, const nglChar* pRight);
-	friend inline bool operator!=(const nglString& rLeft, const nglString& rRight);
-	friend inline bool operator!=(const nglChar Left, const nglString& rRight);
-	friend inline bool operator!=(const nglChar* pLeft, const nglString& rRight);
+	friend bool operator!=(const nglString& rLeft, const nglChar Right);
+	friend bool operator!=(const nglString& rLeft, const nglChar* pRight);
+	friend bool operator!=(const nglString& rLeft, const nglString& rRight);
+	friend bool operator!=(const nglChar Left, const nglString& rRight);
+	friend bool operator!=(const nglChar* pLeft, const nglString& rRight);
 
 	// Comparison (less than)
-	friend inline bool operator<(const nglString& rLeft, const nglChar Right);
-	friend inline bool operator<(const nglString& rLeft, const nglChar* pRight);
-	friend inline bool operator<(const nglString& rLeft, const nglString& rRight);
-	friend inline bool operator<(const nglChar Left, const nglString& rRight);
-	friend inline bool operator<(const nglChar* pLeft, const nglString& rRight);
+	friend bool operator<(const nglString& rLeft, const nglChar Right);
+	friend bool operator<(const nglString& rLeft, const nglChar* pRight);
+	friend bool operator<(const nglString& rLeft, const nglString& rRight);
+	friend bool operator<(const nglChar Left, const nglString& rRight);
+	friend bool operator<(const nglChar* pLeft, const nglString& rRight);
 
 	// Comparison (less or equal)
-	friend inline bool operator<=(const nglString& rLeft, const nglChar Right);
-	friend inline bool operator<=(const nglString& rLeft, const nglChar* pRight);
-	friend inline bool operator<=(const nglString& rLeft, const nglString& rRight);
-	friend inline bool operator<=(const nglChar Left, const nglString& rRight);
-	friend inline bool operator<=(const nglChar* pLeft, const nglString& rRight);
+	friend bool operator<=(const nglString& rLeft, const nglChar Right);
+	friend bool operator<=(const nglString& rLeft, const nglChar* pRight);
+	friend bool operator<=(const nglString& rLeft, const nglString& rRight);
+	friend bool operator<=(const nglChar Left, const nglString& rRight);
+	friend bool operator<=(const nglChar* pLeft, const nglString& rRight);
 
 	// Comparison (more than)
-	friend inline bool operator>(const nglString& rLeft, const nglChar Right);
-	friend inline bool operator>(const nglString& rLeft, const nglChar* pRight);
-	friend inline bool operator>(const nglString& rLeft, const nglString& rRight);
-	friend inline bool operator>(const nglChar Left, const nglString& rRight);
-	friend inline bool operator>(const nglChar* pLeft, const nglString& rRight);
+	friend bool operator>(const nglString& rLeft, const nglChar Right);
+	friend bool operator>(const nglString& rLeft, const nglChar* pRight);
+	friend bool operator>(const nglString& rLeft, const nglString& rRight);
+	friend bool operator>(const nglChar Left, const nglString& rRight);
+	friend bool operator>(const nglChar* pLeft, const nglString& rRight);
 
 	// Comparison (more or equal)
-	friend inline bool operator>=(const nglString& rLeft, const nglChar Right);
-	friend inline bool operator>=(const nglString& rLeft, const nglChar* pRight);
-	friend inline bool operator>=(const nglString& rLeft, const nglString& rRight);
-	friend inline bool operator>=(const nglChar Left, const nglString& rRight);
-	friend inline bool operator>=(const nglChar* pLeft, const nglString& rRight);
+	friend bool operator>=(const nglString& rLeft, const nglChar Right);
+	friend bool operator>=(const nglString& rLeft, const nglChar* pRight);
+	friend bool operator>=(const nglString& rLeft, const nglString& rRight);
+	friend bool operator>=(const nglChar Left, const nglString& rRight);
+	friend bool operator>=(const nglChar* pLeft, const nglString& rRight);
 
 	// Array access
-	inline nglChar  operator[](uint32 Index) const;
-	inline nglChar& operator[](uint32 Index);
-	inline nglChar  operator[](int32 Index) const	{ return this->operator[]((uint32)Index); }
-	inline nglChar& operator[](int32 Index)		{ return this->operator[]((uint32)Index); }
+	nglChar  operator[](uint32 Index) const;
+	nglChar& operator[](uint32 Index);
+	nglChar  operator[](int32 Index) const;
+	nglChar& operator[](int32 Index);
 
 	// Type cast
-	//inline operator const nglChar*() const;
+	//operator const nglChar*() const;
 	//@}
   static nglStringConv* GetStringConv(const nglEncodingPair& rEncodings);
   
@@ -798,131 +798,6 @@ private:
 /*
 * Inline code
 */
-
-// Appending to
-#ifndef _DOXYGEN_
-#define _OP_(x) Append(x); return *this;
-#endif
-const inline nglString& nglString::operator+=(const nglChar nglChar)       { _OP_(nglChar)    }
-const inline nglString& nglString::operator+=(const nglChar* pSource)   { _OP_(pSource) }
-const inline nglString& nglString::operator+=(const nglString& rSource) { _OP_(rSource) }
-#undef _OP_
-
-// Concatenation
-#ifndef _DOXYGEN_
-#define _OP_(x, y) nglString result(x); result.Append(y); return result;
-#endif
-inline nglString operator+(const nglString& rLeft, const nglChar Right)     { _OP_(rLeft, Right)  }
-inline nglString operator+(const nglString& rLeft, const nglChar* pRight)   { _OP_(rLeft, pRight) }
-inline nglString operator+(const nglString& rLeft, const nglString& rRight) { _OP_(rLeft, rRight) }
-inline nglString operator+(const nglChar Left, const nglString& rRight)     { _OP_(Left, rRight)  }
-inline nglString operator+(const nglChar* pLeft, const nglString& rRight)   { _OP_(pLeft, rRight) }
-#undef _OP_
-
-// Comparison (equal)
-#ifndef _DOXYGEN_
-#define _OP_(x, y) return (x.Compare(y) == 0);
-#endif
-inline bool operator==(const nglString& rLeft, const nglChar Right)     { _OP_(rLeft, nglString(Right))  }
-inline bool operator==(const nglString& rLeft, const nglChar* pRight)   { _OP_(rLeft, pRight) }
-inline bool operator==(const nglString& rLeft, const nglString& rRight) { _OP_(rLeft, rRight) }
-inline bool operator==(const nglChar Left, const nglString& rRight)     { _OP_(rRight, nglString(Left))  }
-inline bool operator==(const nglChar* pLeft, const nglString& rRight)   { _OP_(rRight, pLeft) }
-#undef _OP_
-
-// Comparison (different)
-#ifndef _DOXYGEN_
-#define _OP_(x, y) return (x.Compare(y) != 0);
-#endif
-inline bool operator!=(const nglString& rLeft, const nglChar Right)     { _OP_(rLeft, nglString(Right))  }
-inline bool operator!=(const nglString& rLeft, const nglChar* pRight)   { _OP_(rLeft, pRight) }
-inline bool operator!=(const nglString& rLeft, const nglString& rRight) { _OP_(rLeft, rRight) }
-inline bool operator!=(const nglChar Left, const nglString& rRight)     { _OP_(rRight, nglString(Left))  }
-inline bool operator!=(const nglChar* pLeft, const nglString& rRight)   { _OP_(rRight, pLeft) }
-#undef _OP_
-
-// Comparison (less than)
-#ifndef _DOXYGEN_
-#define _OP_(x, y) return (x.Compare(y) < 0);
-#endif
-inline bool operator<(const nglString& rLeft, const nglChar Right)      { _OP_(rLeft, nglString(Right))  }
-inline bool operator<(const nglString& rLeft, const nglChar* pRight)    { _OP_(rLeft, pRight) }
-inline bool operator<(const nglString& rLeft, const nglString& rRight)  { _OP_(rLeft, rRight) }
-#undef _OP_
-
-#ifndef _DOXYGEN_
-#define _OP_(x, y) return (x.Compare(y) > 0);
-#endif
-inline bool operator<(const nglChar Left, const nglString& rRight)      { _OP_(rRight, nglString(Left))  }
-inline bool operator<(const nglChar* pLeft, const nglString& rRight)    { _OP_(rRight, pLeft) }
-#undef _OP_
-
-// Comparison (less or equal)
-#ifndef _DOXYGEN_
-#define _OP_(x, y) return (x.Compare(y) <= 0);
-#endif
-inline bool operator<=(const nglString& rLeft, const nglChar Right)     { _OP_(rLeft, nglString(Right))  }
-inline bool operator<=(const nglString& rLeft, const nglChar* pRight)   { _OP_(rLeft, pRight) }
-inline bool operator<=(const nglString& rLeft, const nglString& rRight) { _OP_(rLeft, rRight) }
-#undef _OP_
-
-#ifndef _DOXYGEN_
-#define _OP_(x, y) return (x.Compare(y) >= 0);
-#endif
-inline bool operator<=(const nglChar Left, const nglString& rRight)     { _OP_(rRight, nglString(Left))  }
-inline bool operator<=(const nglChar* pLeft, const nglString& rRight)   { _OP_(rRight, pLeft) }
-#undef _OP_
-
-// Comparison (more than)
-#ifndef _DOXYGEN_
-#define _OP_(x, y) return (x.Compare(y) > 0);
-#endif
-inline bool operator>(const nglString& rLeft, const nglChar Right)      { _OP_(rLeft, nglString(Right))  }
-inline bool operator>(const nglString& rLeft, const nglChar* pRight)    { _OP_(rLeft, pRight) }
-inline bool operator>(const nglString& rLeft, const nglString& rRight)  { _OP_(rLeft, rRight) }
-#undef _OP_
-
-#ifndef _DOXYGEN_
-#define _OP_(x, y) return (x.Compare(y) < 0);
-#endif
-inline bool operator>(const nglChar Left, const nglString& rRight)      { _OP_(rRight, nglString(Left))  }
-inline bool operator>(const nglChar* pLeft, const nglString& rRight)    { _OP_(rRight, pLeft) }
-#undef _OP_
-
-// Comparison (more or equal)
-#ifndef _DOXYGEN_
-#define _OP_(x, y) return (x.Compare(y) >= 0);
-#endif
-inline bool operator>=(const nglString& rLeft, const nglChar Right)     { _OP_(rLeft, nglString(Right))  }
-inline bool operator>=(const nglString& rLeft, const nglChar* pRight)   { _OP_(rLeft, pRight) }
-inline bool operator>=(const nglString& rLeft, const nglString& rRight) { _OP_(rLeft, rRight) }
-#undef _OP_
-
-#ifndef _DOXYGEN_
-#define _OP_(x, y) return (x.Compare(y) <= 0);
-#endif
-inline bool operator>=(const nglChar Left, const nglString& rRight)     { _OP_(rRight, nglString(Left))  }
-inline bool operator>=(const nglChar* pLeft, const nglString& rRight)   { _OP_(rRight, pLeft) }
-#undef _OP_
-
-// Array access
-inline nglChar nglString::operator[](uint32 Index) const
-{
-#ifdef _DEBUG_
-	if ((Index < 0) || ((int32)Index >= GetLength())) return Zero;
-	return mString[Index];
-#else
-	// Relaxed checking, still buffer overflow safe
-	return (Index >= 0 && (int32)Index < (int32)mString.size()) ? mString[Index] : Zero;
-#endif // _DEBUG_
-}
-
-// Array access
-inline nglChar& nglString::operator[](uint32 Index)
-{
-	return mString[Index];
-}
-
 
 bool nglIsDigit(nglChar a);
 

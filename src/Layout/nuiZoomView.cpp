@@ -48,7 +48,6 @@ nuiZoomView::nuiZoomView(nuiScrollBar *pHorizontalScrollbar, nuiScrollBar *pVert
 bool nuiZoomView::Load(const nuiXMLNode* pNode)
 {
   nuiComposite::Load(pNode);
-  mSVSink.SetTarget(this);
   
   mAlwaysDisplayVScrollbar = false;
   mAlwaysDisplayHScrollbar = false;

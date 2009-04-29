@@ -91,7 +91,6 @@ void nuiLabel::InitDefaultValues()
 bool nuiLabel::Load(const nuiXMLNode* pNode)
 {
   nuiWidget::Load(pNode);
-  mLabelSink.SetTarget(this);
   mpLayout = NULL;
   mpIdealLayout = NULL;
   mpFont = NULL;

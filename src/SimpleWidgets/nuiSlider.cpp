@@ -57,7 +57,6 @@ bool nuiSlider::Load(const nuiXMLNode* pNode)
 {
   nuiSimpleContainer::Load(pNode);
   SetObjectClass(_T("nuiSlider"));
-  mSliderSink.SetTarget(this);
   mClicked = false;
   mThumbClicked = false;
   

@@ -50,13 +50,6 @@ protected:
   static nuiTranslator* gpTranslator;
 };
 
-inline const nglString& nuiTR(const nglString& rStringToTranslate, const nglString& rDomain = nglString::Null)
-{
-  return nuiTranslator::GetTranslator().Translate(rStringToTranslate, rDomain);
-}
-
-inline const nglString nuiTR(const char* pStringToTranslate, const char* pDomain = NULL)
-{
-  return nuiTranslator::GetTranslator().Translate(nglString(pStringToTranslate), pDomain ? nglString(pDomain) : nglString::Null);
-}
+const nglString& nuiTR(const nglString& rStringToTranslate, const nglString& rDomain = nglString::Null);
+const nglString nuiTR(const char* pStringToTranslate, const char* pDomain = NULL);
 

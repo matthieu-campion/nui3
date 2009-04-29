@@ -48,12 +48,12 @@ public:
     eNormal
   };
 
-  inline std::vector<Vertex>& GetVertices()
+  std::vector<Vertex>& GetVertices()
   { 
     return mVertices; 
   }
   
-  inline const std::vector<Vertex>& GetVertices() const
+  const std::vector<Vertex>& GetVertices() const
   { 
     return mVertices; 
   }
