@@ -28,7 +28,7 @@
 #endif
 
 #if 0
-uint32 NUI_RGBA(uint8 R, uint8 G, uint8 B, uint8 A)
+inline uint32 NUI_RGBA(uint8 R, uint8 G, uint8 B, uint8 A)
 {
   uint32 c;
   uint8* pC = (uint8*)&c;
@@ -40,7 +40,7 @@ uint32 NUI_RGBA(uint8 R, uint8 G, uint8 B, uint8 A)
   return c;
 }
 #else
-uint32 NUI_RGBA(uint8 R, uint8 G, uint8 B, uint8 A)
+inline uint32 NUI_RGBA(uint8 R, uint8 G, uint8 B, uint8 A)
 {
 #ifdef _WIN32_
   return  ( (A << 24) + (R << 16) + (G << 8) + B );
@@ -50,7 +50,7 @@ uint32 NUI_RGBA(uint8 R, uint8 G, uint8 B, uint8 A)
 }
 #endif
 
-uint32 NUI_RGBA_F(float R, float G, float B, float A)
+inline uint32 NUI_RGBA_F(float R, float G, float B, float A)
 {
   const uint8 r = FastToNearest(255.f * R);
   const uint8 g = FastToNearest(255.f * G);
@@ -59,7 +59,7 @@ uint32 NUI_RGBA_F(float R, float G, float B, float A)
   return NUI_RGBA(r, g, b, a);
 }
 
-uint32 NUI_RGBA(const nuiColor& rColor)
+inline uint32 NUI_RGBA(const nuiColor& rColor)
 {
   const uint8 r = FastToNearest(255.f * rColor.Red());
   const uint8 g = FastToNearest(255.f * rColor.Green());

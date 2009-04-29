@@ -17,38 +17,38 @@ const int32 NUI_FP_HALF = (NUI_FP_ONE >> 1);
 
 typedef int32 ifp32;
 
-ifp32 Frac(ifp32 i)
+inline ifp32 Frac(ifp32 i)
 {
   return i & NUI_FP_MASK;
 }
 
-ifp32 Trunc(ifp32 i)
+inline ifp32 Trunc(ifp32 i)
 {
   return i & (~NUI_FP_MASK);
 }
 
-ifp32 ToZero(int32 i)
+inline ifp32 ToZero(int32 i)
 {
   return i >> NUI_FP_SHIFT;
 }
 
-int32 ToBelow(ifp32 i)
+inline int32 ToBelow(ifp32 i)
 {
   return i >> NUI_FP_SHIFT;
 }
 
-int32 ToAbove(ifp32 i)
+inline int32 ToAbove(ifp32 i)
 {
   return (i + NUI_FP_MASK) >> NUI_FP_SHIFT;
 }
 
-int32 ToNearest(ifp32 i)
+inline int32 ToNearest(ifp32 i)
 {
   return ToBelow(i + (NUI_FP_ONE >> 1));
 }
 
 
-int32 nuiFPDiv(ifp32 a, ifp32 b)
+inline int32 nuiFPDiv(ifp32 a, ifp32 b)
 {
   if (b <= NUI_FP_ONE)
   {
@@ -66,7 +66,7 @@ int32 nuiFPDiv(ifp32 a, ifp32 b)
   return ret;
 }
 
-ifp32 nuiFPMul(ifp32 a, ifp32 b)
+inline ifp32 nuiFPMul(ifp32 a, ifp32 b)
 {
   const int64 aa = a;
   const int64 bb = b;
@@ -75,7 +75,7 @@ ifp32 nuiFPMul(ifp32 a, ifp32 b)
   return (ifp32)cc;
 }
 
-ifp32 nuiFPMulT(ifp32 a, ifp32 b)
+inline ifp32 nuiFPMulT(ifp32 a, ifp32 b)
 {
   const int64 aa = a;
   const int64 bb = b;
