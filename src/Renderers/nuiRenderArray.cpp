@@ -116,6 +116,11 @@ void nuiRenderArray::Reserve(uint Count)
   mVertices.reserve(Count);
 }
 
+void nuiRenderArray::Resize(uint Count)
+{
+  mVertices.resize(Count);
+}
+
 void nuiRenderArray::Reset()
 {
   mVertices.clear();
@@ -231,3 +236,129 @@ void nuiRenderArray::Set3DMesh(bool set)
   m3DMesh = set;
 }
 
+//////////////
+// Indexed accessors:
+void nuiRenderArray::SetVertex(uint32 index, float x, float y, float z)
+{
+  mVertices[index].mX = x;
+  mVertices[index].mY = y;
+  mVertices[index].mZ = z;
+}
+
+void nuiRenderArray::SetVertex(uint32 index, const nuiVector& rVf)
+{
+  mVertices[index].mX = rVf[0];
+  mVertices[index].mY = rVf[1];
+  mVertices[index].mZ = rVf[2];
+}
+
+void nuiRenderArray::SetVertex(uint32 index, const nuiVector3& rV3f)
+{
+  mVertices[index].mX = rV3f[0];
+  mVertices[index].mY = rV3f[1];
+  mVertices[index].mZ = rV3f[2];
+}
+
+void nuiRenderArray::SetVertex(uint32 index, const nuiVector2& rV2f)
+{
+  mVertices[index].mX = rV2f[0];
+  mVertices[index].mY = rV2f[1];
+  mVertices[index].mZ = 0;
+}
+
+void nuiRenderArray::SetColor(uint32 index, float r, float g, float b, float a)
+{
+  NGL_ASSERT(r <= 1.0);
+  NGL_ASSERT(r >= 0.0);
+  NGL_ASSERT(g <= 1.0);
+  NGL_ASSERT(g >= 0.0);
+  NGL_ASSERT(b <= 1.0);
+  NGL_ASSERT(b >= 0.0);
+  NGL_ASSERT(a <= 1.0);
+  NGL_ASSERT(a >= 0.0);
+  NGL_ASSERT(!isnan(r));
+  NGL_ASSERT(!isnan(g));
+  NGL_ASSERT(!isnan(b));
+  NGL_ASSERT(!isnan(a));
+  
+  mVertices[index].mR = (uint8)ToBelow(r * 255.0f);
+  mVertices[index].mG = (uint8)ToBelow(g * 255.0f);
+  mVertices[index].mB = (uint8)ToBelow(b * 255.0f);
+  mVertices[index].mA = (uint8)ToBelow(a * 255.0f);
+}
+
+void nuiRenderArray::SetColor(uint32 index, uint8 r, uint8 g, uint8 b, uint8 a)
+{
+  mVertices[index].mR = r;
+  mVertices[index].mG = g;
+  mVertices[index].mB = b;
+  mVertices[index].mA = a;
+}
+
+void nuiRenderArray::SetColor(uint32 index, uint32 Color)
+{
+  uint8* pCol = (uint8*)&Color;
+  SetColor(index, pCol[0], pCol[1], pCol[2], pCol[3]);
+}
+
+
+void nuiRenderArray::SetColor(uint32 index, const nuiColor& rColor)
+{
+  SetColor(index, rColor.Red(), rColor.Green(), rColor.Blue(), rColor.Alpha());
+}
+
+void nuiRenderArray::SetTexCoords(uint32 index, float tx, float ty)
+{
+  mVertices[index].mTX = tx;
+  mVertices[index].mTY = ty;
+}
+
+//////////////////////////
+// Indexed rendering
+
+nuiRenderArray::IndexArray::IndexArray(GLenum mode, uint32 reserve_count, bool resize_reserve)
+{
+  mMode = mode;
+  if (reserve_count)
+  {
+    if (resize_reserve)
+      mIndices.resize(reserve_count);
+    else
+      mIndices.reserve(reserve_count);
+  }
+}
+
+void nuiRenderArray::AddIndexArray(GLenum mode, uint32 reserve_count, bool resize_reserve)
+{
+  return mIndexedArrays.push_back(IndexArray(mode, reserve_count, resize_reserve));
+}
+
+nuiRenderArray::IndexArray& nuiRenderArray::GetIndexArray(uint32 ArrayIndex)
+{
+  return mIndexedArrays[ArrayIndex];
+}
+
+uint32 nuiRenderArray::GetIndexArrayCount() const
+{
+  return mIndexedArrays.size();
+}
+
+void nuiRenderArray::PushIndex(uint32 VertexIndex)
+{
+  
+}
+
+void nuiRenderArray::PushIndex(uint32 ArrayIndex, uint32 VertexIndex)
+{
+  
+}
+
+void nuiRenderArray::SetIndex(uint32 IndexInArray, uint32 VertexIndex)
+{
+  
+}
+
+void nuiRenderArray::SetIndex(uint32 ArrayIndex, uint32 IndexInArray, uint32 VertexIndex)
+{
+  
+}

@@ -27,7 +27,7 @@ private:
     
     void Update(float ElapsedTime);
     void Init(float MaxAge);
-    void Recycle();
+    void Recycle(float MaxAge);
     
     float mX, mY; // Current position
     float mVX, mVY; // Current vector
@@ -38,5 +38,6 @@ private:
   float mParticleSize;
   std::vector<Particle> mParticles;
   nuiTexture* mpTexture;
+  nuiRenderArray* mpArray;
 };
 
