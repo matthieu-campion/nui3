@@ -58,7 +58,6 @@ bool MainWindow::Draw(nuiDrawContext* pContext)
   float xoffset = GetRect().GetWidth() / 2;
   float yoffset = GetRect().GetHeight() / 2;
   
-  float halfsize = mParticleSize / 2;
   
   for (uint32 i = 0; i < MAX_PARTICLES; i++)
   {
@@ -71,6 +70,7 @@ bool MainWindow::Draw(nuiDrawContext* pContext)
     else if (age < 0.0f)
       age = 0.0f;
 
+    float halfsize = (1.0 - age * .8) * mParticleSize; // Grow the particles as they age
     nuiColor col(1.0f, 1.0f, 1.0f, age);
     
     pArray->SetColor(col); 
@@ -127,12 +127,12 @@ void MainWindow::Particle::Recycle()
   const float ydirection = -1.0;
   
   const float MAX_SPEED = 100.0f;
-  const float rx = ((float)random()) / (float)0x7FFFFFFF;
-  const float ry = ((float)random()) / (float)0x7FFFFFFF;
-  const float rrx = (rx - 0.5f) * 2.0f + xdirection;
-  const float rry = (ry - 0.5f) * 2.0f + ydirection;
-  mVX = rrx * MAX_SPEED;
-  mVY = rry * MAX_SPEED;
+  const float angle = 360.0 * ((float)random()) / (float)0x7FFFFFFF;
+  const float speed = MAX_SPEED * ((float)random()) / (float)0x7FFFFFFF;
+  const float rx = speed * sin(angle);
+  const float ry = speed * cos(angle);
+  mVX = rx + xdirection * MAX_SPEED;
+  mVY = ry + ydirection * MAX_SPEED;
   //printf("%f\n", mVX * mVX + mVY * mVY);
 }
 
