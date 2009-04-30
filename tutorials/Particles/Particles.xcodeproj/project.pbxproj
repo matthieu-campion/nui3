@@ -55,11 +55,18 @@
 			remoteGlobalIDString = E58172D70C3D103300902DFE;
 			remoteInfo = nui3D;
 		};
+		E51F47320FA9A23B00AB3F0D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E592C5140EFE8CCC00340B35 /* libnui3D cocoa.a */;
+			remoteInfo = "nui3D cocoa";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		61A9DFBF0B833E9600BC506C /* %NUI_GENERATOR_PROJECT%.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = %NUI_GENERATOR_PROJECT%.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		61A9DFC90B833EF200BC506C /* %NUI_GENERATOR_PROJECT%D.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = %NUI_GENERATOR_PROJECT%D.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		61A9DFBF0B833E9600BC506C /* Particles.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Particles.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		61A9DFC90B833EF200BC506C /* ParticlesD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ParticlesD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61A9DFD20B833F1500BC506C /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
 		61A9DFD30B833F1500BC506C /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
 		61A9DFD40B833F1500BC506C /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
@@ -71,7 +78,7 @@
 		61A9DFF20B83433800BC506C /* MainWindow.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = MainWindow.h; path = src/MainWindow.h; sourceTree = "<group>"; };
 		BC6A09AB0EF92BAB00881ACF /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		BC6A09CB0EF9301900881ACF /* main.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = main.css; path = resources/css/main.css; sourceTree = SOURCE_ROOT; };
-		BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nui3.xcodeproj; path = %NUI_GENERATOR_NUI%/nui3.xcodeproj; sourceTree = SOURCE_ROOT; };
+		BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nui3.xcodeproj; path = ../../nui3.xcodeproj; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,8 +149,8 @@
 		61A9DFB50B833DE500BC506C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				61A9DFBF0B833E9600BC506C /* %NUI_GENERATOR_PROJECT%.app */,
-				61A9DFC90B833EF200BC506C /* %NUI_GENERATOR_PROJECT%D.app */,
+				61A9DFBF0B833E9600BC506C /* Particles.app */,
+				61A9DFC90B833EF200BC506C /* ParticlesD.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -169,6 +176,7 @@
 			children = (
 				BCBCB15C0DFD45B6002E8BC3 /* libnui3D.a */,
 				BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */,
+				E51F47330FA9A23B00AB3F0D /* libnui3D cocoa.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -176,9 +184,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		61A9DFBE0B833E9600BC506C /* %NUI_GENERATOR_PROJECT% */ = {
+		61A9DFBE0B833E9600BC506C /* Particles */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 61A9DFC20B833E9600BC506C /* Build configuration list for PBXNativeTarget "%NUI_GENERATOR_PROJECT%" */;
+			buildConfigurationList = 61A9DFC20B833E9600BC506C /* Build configuration list for PBXNativeTarget "Particles" */;
 			buildPhases = (
 				61A9DFBB0B833E9600BC506C /* Resources */,
 				61A9DFBC0B833E9600BC506C /* Sources */,
@@ -190,14 +198,14 @@
 			dependencies = (
 				BCBCB1640DFD45FA002E8BC3 /* PBXTargetDependency */,
 			);
-			name = %NUI_GENERATOR_PROJECT%;
+			name = Particles;
 			productName = Temp;
-			productReference = 61A9DFBF0B833E9600BC506C /* %NUI_GENERATOR_PROJECT%.app */;
+			productReference = 61A9DFBF0B833E9600BC506C /* Particles.app */;
 			productType = "com.apple.product-type.application";
 		};
-		61A9DFC80B833EF200BC506C /* %NUI_GENERATOR_PROJECT%D */ = {
+		61A9DFC80B833EF200BC506C /* ParticlesD */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 61A9DFCC0B833EF300BC506C /* Build configuration list for PBXNativeTarget "%NUI_GENERATOR_PROJECT%D" */;
+			buildConfigurationList = 61A9DFCC0B833EF300BC506C /* Build configuration list for PBXNativeTarget "ParticlesD" */;
 			buildPhases = (
 				61A9DFC60B833EF200BC506C /* Sources */,
 				61A9DFC70B833EF200BC506C /* Frameworks */,
@@ -208,9 +216,9 @@
 			dependencies = (
 				BCBCB1660DFD4605002E8BC3 /* PBXTargetDependency */,
 			);
-			name = %NUI_GENERATOR_PROJECT%D;
+			name = ParticlesD;
 			productName = Tempd;
-			productReference = 61A9DFC90B833EF200BC506C /* %NUI_GENERATOR_PROJECT%D.app */;
+			productReference = 61A9DFC90B833EF200BC506C /* ParticlesD.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -218,7 +226,7 @@
 /* Begin PBXProject section */
 		61A9DE3F0B833C9200BC506C /* Project object */ = {
 			isa = PBXProject;
-			buildConfigurationList = 61A9DE400B833C9200BC506C /* Build configuration list for PBXProject "%NUI_GENERATOR_PROJECT%" */;
+			buildConfigurationList = 61A9DE400B833C9200BC506C /* Build configuration list for PBXProject "Particles" */;
 			compatibilityVersion = "Xcode 3.1";
 			hasScannedForEncodings = 0;
 			mainGroup = 61A9DE3D0B833C9200BC506C;
@@ -232,8 +240,8 @@
 			);
 			projectRoot = "";
 			targets = (
-				61A9DFBE0B833E9600BC506C /* %NUI_GENERATOR_PROJECT% */,
-				61A9DFC80B833EF200BC506C /* %NUI_GENERATOR_PROJECT%D */,
+				61A9DFBE0B833E9600BC506C /* Particles */,
+				61A9DFC80B833EF200BC506C /* ParticlesD */,
 			);
 		};
 /* End PBXProject section */
@@ -251,6 +259,13 @@
 			fileType = archive.ar;
 			path = libnui3.a;
 			remoteRef = BCBCB15D0DFD45B6002E8BC3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51F47330FA9A23B00AB3F0D /* libnui3D cocoa.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libnui3D cocoa.a";
+			remoteRef = E51F47320FA9A23B00AB3F0D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -279,7 +294,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "rsync -rC ./resources/ --exclude \".*\" \"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"\n%NUI_GENERATOR_NUI%/tools/make_rc.py resources resource.rc\necho 0 ICON \\\"resources/icon.ico\\\" >> resource.rc\n";
+			shellScript = "rsync -rC ./resources/ --exclude \".*\" \"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"\n../../tools/make_rc.py resources resource.rc\necho 0 ICON \\\"resources/icon.ico\\\" >> resource.rc\n";
 		};
 		BC6A09BE0EF92F1B00881ACF /* Copy Resources Script */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -293,7 +308,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "rsync -rC ./resources/ --exclude \".*\" \"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"\n%NUI_GENERATOR_NUI%/tools/make_rc.py resources resource.rc\necho 0 ICON \\\"resources/icon.ico\\\" >> resource.rc\n";
+			shellScript = "rsync -rC ./resources/ --exclude \".*\" \"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"\n../../tools/make_rc.py resources resource.rc\necho 0 ICON \\\"resources/icon.ico\\\" >> resource.rc\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -336,7 +351,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
-				HEADER_SEARCH_PATHS = %NUI_GENERATOR_NUI%/include;
+				HEADER_SEARCH_PATHS = ../../include;
 				INFOPLIST_FILE = Info.plist;
 			};
 			name = Default;
@@ -358,7 +373,7 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = "-lz";
 				PREBINDING = YES;
-				PRODUCT_NAME = %NUI_GENERATOR_PROJECT%;
+				PRODUCT_NAME = Particles;
 				STRIP_INSTALLED_PRODUCT = YES;
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -385,7 +400,7 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = "-lz";
 				PREBINDING = YES;
-				PRODUCT_NAME = %NUI_GENERATOR_PROJECT%D;
+				PRODUCT_NAME = ParticlesD;
 				WARNING_CFLAGS = (
 					"-Wmost",
 					"-Wno-four-char-constants",
@@ -399,7 +414,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		61A9DE400B833C9200BC506C /* Build configuration list for PBXProject "%NUI_GENERATOR_PROJECT%" */ = {
+		61A9DE400B833C9200BC506C /* Build configuration list for PBXProject "Particles" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				61A9DE410B833C9200BC506C /* Default */,
@@ -407,7 +422,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Default;
 		};
-		61A9DFC20B833E9600BC506C /* Build configuration list for PBXNativeTarget "%NUI_GENERATOR_PROJECT%" */ = {
+		61A9DFC20B833E9600BC506C /* Build configuration list for PBXNativeTarget "Particles" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				61A9DFC30B833E9600BC506C /* Default */,
@@ -415,7 +430,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Default;
 		};
-		61A9DFCC0B833EF300BC506C /* Build configuration list for PBXNativeTarget "%NUI_GENERATOR_PROJECT%D" */ = {
+		61A9DFCC0B833EF300BC506C /* Build configuration list for PBXNativeTarget "ParticlesD" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				61A9DFCD0B833EF300BC506C /* Default */,
