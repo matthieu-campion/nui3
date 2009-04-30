@@ -62,7 +62,7 @@ nuiEventSource::~nuiEventSource()
   while (it != mpTargets.end()) 
   {
     nuiEventTargetBase* pETB = *it;
-    pETB->Disconnect(*this);
+    pETB->DisconnectSource(*this);
     it = mpTargets.begin();
   }
 }
@@ -149,7 +149,7 @@ void nuiEventTargetBase::DisconnectAll()
   LinksMap::iterator end = links.end();
   for (it = links.begin(); it != end; ++it)
   {
-    Disconnect(*(it->first));
+    DisconnectSource(*(it->first));
   }
 }
 
@@ -201,7 +201,7 @@ void nuiEventTargetBase::Connect(nuiEventSource& rSource, const nuiDelegateMemen
   rLinkList.insert(rLinkList.begin(), pLink);
 }
 
-void nuiEventTargetBase::Disconnect(nuiEventSource& rSource)
+void nuiEventTargetBase::DisconnectSource(nuiEventSource& rSource)
 {
   NGL_ASSERT(mpTarget);
   LinksMap::iterator it_source = mpLinks.find(&rSource);

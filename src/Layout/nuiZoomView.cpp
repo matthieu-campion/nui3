@@ -261,7 +261,7 @@ bool nuiZoomView::OnChildRemoved(const nuiEvent& rEvent)
 
   if (pNode)
   {
-    mSVSink.Disconnect(pNode->HotRectChanged);
+    mSVSink.DisconnectSource(pNode->HotRectChanged);
   }
 
   return false;

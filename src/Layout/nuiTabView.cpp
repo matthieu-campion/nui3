@@ -386,7 +386,7 @@ void nuiTabView::RemoveTab(nuiWidget* pTab, bool trashit)
     if (*it == pTab)
     {
       DelChild((*it), trashit);
-      mTabViewEvents.Disconnect((*i)->Clicked);
+      mTabViewEvents.DisconnectSource((*i)->Clicked);
       DelChild((*i), trashit);
 
       mTabs.erase(it);     
@@ -407,7 +407,7 @@ void nuiTabView::RemoveTab(const uint& tab_index, bool trashit)
     if (t == tab_index)
     {
       DelChild(*it, trashit);
-      mTabViewEvents.Disconnect((*i)->Clicked);
+      mTabViewEvents.DisconnectSource((*i)->Clicked);
       DelChild(*i, trashit);
 
       mTabs.erase(it);     

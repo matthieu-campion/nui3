@@ -104,7 +104,7 @@ int nuiTabBar::InsertTab(nuiTab * pNewTab, int index)
 void nuiTabBar::RemoveTab (nuiTab * pTab)
 {
   std::remove(mTabs.begin(), mTabs.end(), pTab);
-  mTabsSink.Disconnect(pTab->ButtonPressed);
+  mTabsSink.DisconnectSource(pTab->ButtonPressed);
 }
 
 bool nuiTabBar::Draw(nuiDrawContext* pContext)

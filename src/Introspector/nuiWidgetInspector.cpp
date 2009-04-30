@@ -293,8 +293,8 @@ void nuiWidgetInfo::SetTarget(nuiWidget* pWidget)
     mWISink.Connect(mpTarget->Destroyed, &nuiWidgetInfo::OnTrashed);  
     if (pTarget)
     {
-      mWISink.Disconnect(pTarget->DebugRefreshInfo);
-      mWISink.Disconnect(pTarget->Destroyed);
+      mWISink.DisconnectSource(pTarget->DebugRefreshInfo);
+      mWISink.DisconnectSource(pTarget->Destroyed);
     }
     
     nuiTopLevel* pTop = mpTarget->GetTopLevel();

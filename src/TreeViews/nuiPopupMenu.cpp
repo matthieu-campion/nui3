@@ -381,7 +381,7 @@ nuiRect nuiPopupMenu::CalcIdealSize()
         {
           (*it)->mpSBar->SetVisible(false);
           (*it)->mpSBar->SetEnabled(false);
-          mPopupTreeSink.Disconnect((*it)->mpSBar->ValueChanged);
+          mPopupTreeSink.DisconnectSource((*it)->mpSBar->ValueChanged);
           mSBarsPool.push_back((*it)->mpSBar);
         }
         delete *it;
@@ -811,9 +811,9 @@ void nuiPopupMenu::UnparentTree(nuiTreeNode* pTree)
     UnparentTree(pNode);
   }
   NGL_ASSERT(mpTree);
-  mPopupTreeSink.Disconnect(pTree->Changed);
-  mPopupTreeSink.Disconnect(pTree->ChildAdded);
-  mPopupTreeSink.Disconnect(pTree->ChildDeleted);
+  mPopupTreeSink.DisconnectSource(pTree->Changed);
+  mPopupTreeSink.DisconnectSource(pTree->ChildAdded);
+  mPopupTreeSink.DisconnectSource(pTree->ChildDeleted);
 }
 
 void nuiPopupMenu::FillSelectedNodes()

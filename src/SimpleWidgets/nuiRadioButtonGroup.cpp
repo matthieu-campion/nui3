@@ -48,7 +48,7 @@ void nuiRadioButtonGroup::RemoveRadioButton(nuiRadioButton *pRadioButton)
 {
   mRadioButtons.erase(pRadioButton);
   pRadioButton->SetGroupManager(NULL);
-  mSink.Disconnect(pRadioButton->Activated);
+  mSink.DisconnectSource(pRadioButton->Activated);
 }
 
 bool nuiRadioButtonGroup::OnActivated(const nuiEvent& rEvent)

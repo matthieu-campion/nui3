@@ -44,7 +44,7 @@ public:
   bool OnEvent(const nuiEvent& rEvent);
   bool CallEvent(void* pTarget, nuiDelegateMemento pFunc, const nuiEvent& rEvent);
   void Connect(nuiEventSource& rSource, const nuiDelegateMemento& rTargetFunc, void* pUser = NULL);
-  void Disconnect(nuiEventSource& rSource);
+  void DisconnectSource(nuiEventSource& rSource);
   void Disconnect(const nuiDelegateMemento& rTFunc);
   void Disconnect(nuiEventSource& rSource, const nuiDelegateMemento& rTFunc);
   
@@ -124,11 +124,6 @@ public:
   void Connect(nuiEventSource& rSource, TargetFunc pTargetFunc, void* pUser=NULL)
   {
     nuiEventTargetBase::Connect(rSource, nuiMakeDelegate((T*)mpTarget, pTargetFunc).GetMemento(), pUser);
-  }
-  
-  void Disconnect(nuiEventSource& rSource)
-  {
-    nuiEventTargetBase::Disconnect(rSource);
   }
   
   void Disconnect(TargetFunc pTargetFunc)

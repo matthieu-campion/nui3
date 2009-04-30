@@ -114,7 +114,7 @@ bool nuiTreeBase::SetChild(uint32 Index, nuiTreePtr pChild, bool DeleteExistingO
     mpChildren[Index]->Release();
   else if (mpChildren[Index])
   {
-    mTreeNodeEventSink.Disconnect(mpChildren[Index]->Changed);
+    mTreeNodeEventSink.DisconnectSource(mpChildren[Index]->Changed);
     mpChildren[Index]->SetParent(NULL);
   }
   mpChildren[Index] = pChild;  
@@ -138,10 +138,10 @@ bool nuiTreeBase::DelChild(uint32 Index, bool DeleteObject)
   {
     ChildDeleted(this, mpChildren[Index]);
     
-    mTreeNodeEventSink.Disconnect(mpChildren[Index]->Changed);
-    mTreeNodeEventSink.Disconnect(mpChildren[Index]->ChildAdded);
-    mTreeNodeEventSink.Disconnect(mpChildren[Index]->ChildDeleted);
-    mTreeNodeEventSink.Disconnect(mpChildren[Index]->Deleted);
+    mTreeNodeEventSink.DisconnectSource(mpChildren[Index]->Changed);
+    mTreeNodeEventSink.DisconnectSource(mpChildren[Index]->ChildAdded);
+    mTreeNodeEventSink.DisconnectSource(mpChildren[Index]->ChildDeleted);
+    mTreeNodeEventSink.DisconnectSource(mpChildren[Index]->Deleted);
 
     if (DeleteObject)
       mpChildren[Index]->Release();
@@ -175,10 +175,10 @@ bool nuiTreeBase::Clear(bool erase)
     for (uint32 i = 0; i < mpChildren.size(); i++)
     {
       mpChildren[i]->SetParent(NULL);
-      mTreeNodeEventSink.Disconnect(mpChildren[i]->Changed);
-      mTreeNodeEventSink.Disconnect(mpChildren[i]->ChildAdded);
-      mTreeNodeEventSink.Disconnect(mpChildren[i]->ChildDeleted);
-      mTreeNodeEventSink.Disconnect(mpChildren[i]->Deleted);
+      mTreeNodeEventSink.DisconnectSource(mpChildren[i]->Changed);
+      mTreeNodeEventSink.DisconnectSource(mpChildren[i]->ChildAdded);
+      mTreeNodeEventSink.DisconnectSource(mpChildren[i]->ChildDeleted);
+      mTreeNodeEventSink.DisconnectSource(mpChildren[i]->Deleted);
     }
   }
   mpChildren.clear();
@@ -194,10 +194,10 @@ bool nuiTreeBase::DelChild(nuiTreePtr pChild, bool DeleteObject)
     {
       ChildDeleted(this, pChild);
       
-      mTreeNodeEventSink.Disconnect(pChild->Changed);
-      mTreeNodeEventSink.Disconnect(pChild->ChildAdded);
-      mTreeNodeEventSink.Disconnect(pChild->ChildDeleted);
-      mTreeNodeEventSink.Disconnect(pChild->Deleted);
+      mTreeNodeEventSink.DisconnectSource(pChild->Changed);
+      mTreeNodeEventSink.DisconnectSource(pChild->ChildAdded);
+      mTreeNodeEventSink.DisconnectSource(pChild->ChildDeleted);
+      mTreeNodeEventSink.DisconnectSource(pChild->Deleted);
 
       if (DeleteObject)
       {
@@ -226,7 +226,7 @@ void nuiTreeBase::DelChildOnEvent(nuiEventSource& rEvent, nuiTreePtr pChild)
 bool nuiTreeBase::OnDelChildRequest(const nuiEvent& rEvent)
 {
   nuiTreePtr pChild = (nuiTreePtr)rEvent.mpUser;
-  mTreeNodeEventSink.Disconnect(*const_cast<nuiEventSource*>(rEvent.GetSource()));
+  mTreeNodeEventSink.DisconnectSource(*const_cast<nuiEventSource*>(rEvent.GetSource()));
   DelChild(pChild);
   return false;
 }

@@ -2816,7 +2816,7 @@ bool nuiWidget::GetAutoDrawAnimateLayout() const
 
 void nuiWidget::StopAutoDraw()
 {
-  mGenericWidgetSink.Disconnect(nuiAnimation::GetTimer()->Tick);
+  mGenericWidgetSink.DisconnectSource(nuiAnimation::GetTimer()->Tick);
   nuiAnimation::ReleaseTimer();
   DebugRefreshInfo();
 }

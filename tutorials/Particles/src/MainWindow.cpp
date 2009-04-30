@@ -16,7 +16,7 @@
  * MainWindow
  */
 
-const float MAX_PARTICLES = 800;
+const float MAX_PARTICLES = 200;
 
 MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& rInfo, bool ShowFPS, const nglContext* pShared )
   : nuiMainWindow(rContextInfo, rInfo, pShared, nglPath(ePathCurrent))

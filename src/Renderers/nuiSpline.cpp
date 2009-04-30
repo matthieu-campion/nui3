@@ -474,7 +474,7 @@ void nuiSpline::DeleteNode(uint32 index)
   for (it = mNodes.begin(); it != end && index; ++it)
     index --;
   
-  mEventSink.Disconnect( (*it).Changed );
+  mEventSink.DisconnectSource( (*it).Changed );
   mNodes.erase(it);
   InternalChanged();
 }
@@ -487,7 +487,7 @@ void nuiSpline::DeleteNodes(uint32 index,uint32 count)
     vector<nuiSplineNode>::iterator end = mNodes.end();
     for (it = mNodes.begin(); it != end && index; ++it)
       index --;
-    mEventSink.Disconnect( (*it).Changed );
+    mEventSink.DisconnectSource( (*it).Changed );
     mNodes.erase(it);
   }
   InternalChanged();
