@@ -1006,40 +1006,43 @@ void nuiDrawContext::DrawArray(nuiRenderArray* pArray)
 #ifdef _DEBUG_
   {
     // Error checking:
-    switch (pArray->GetMode())
+    if (!pArray->GetIndexArrayCount())
     {
-    case GL_POINTS:
-      NGL_ASSERT(size);
-      break;
-    case GL_LINES:
-      NGL_ASSERT(!(size & 1));
-      break;
-    case GL_LINE_LOOP:
-      NGL_ASSERT(size > 1);
-      break;
-    case GL_LINE_STRIP:
-      NGL_ASSERT(size > 1);
-      break;
-    case GL_TRIANGLES:
-      NGL_ASSERT(size > 2 && !(size % 3));
-      break;
-    case GL_TRIANGLE_STRIP:
-      NGL_ASSERT(size > 2);
-      break;
-    case GL_TRIANGLE_FAN:
-      NGL_ASSERT(size > 2);
-      break;
+      switch (pArray->GetMode())
+      {
+        case GL_POINTS:
+          NGL_ASSERT(size);
+          break;
+        case GL_LINES:
+          NGL_ASSERT(!(size & 1));
+          break;
+        case GL_LINE_LOOP:
+          NGL_ASSERT(size > 1);
+          break;
+        case GL_LINE_STRIP:
+          NGL_ASSERT(size > 1);
+          break;
+        case GL_TRIANGLES:
+          NGL_ASSERT(size > 2 && !(size % 3));
+          break;
+        case GL_TRIANGLE_STRIP:
+          NGL_ASSERT(size > 2);
+          break;
+        case GL_TRIANGLE_FAN:
+          NGL_ASSERT(size > 2);
+          break;
 #ifndef _OPENGL_ES_
-    case GL_QUADS:
-      NGL_ASSERT(size > 3 && !(size % 4));
-      break;
-    case GL_QUAD_STRIP:
-      NGL_ASSERT(size > 3);
-      break;
-    case GL_POLYGON:
-      NGL_ASSERT(size > 3);
-      break;
+        case GL_QUADS:
+          NGL_ASSERT(size > 3 && !(size % 4));
+          break;
+        case GL_QUAD_STRIP:
+          NGL_ASSERT(size > 3);
+          break;
+        case GL_POLYGON:
+          NGL_ASSERT(size > 3);
+          break;
 #endif
+      }
     }
   }
 #endif

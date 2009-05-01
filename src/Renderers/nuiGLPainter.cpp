@@ -854,7 +854,23 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
 */
     
     nuiCheckForGLErrors();
-    glDrawArrays(mode, 0, s);
+    uint32 arraycount = pArray->GetIndexArrayCount();
+    if (!arraycount)
+    {
+      glDrawArrays(mode, 0, s);
+    }
+    else
+    {
+      for (uint32 i = 0; i < arraycount; i++)
+      {
+        nuiRenderArray::IndexArray& array(pArray->GetIndexArray(i));
+#ifdef _UIKIT_
+        glDrawElements(array.mMode, array.mIndices.size(), GL_UNSIGNED_SHORT, &(array.mIndices[0]));
+#else
+        glDrawElements(array.mMode, array.mIndices.size(), GL_UNSIGNED_INT, &(array.mIndices[0]));
+#endif
+      }
+    }
     nuiCheckForGLErrors();
   }
 

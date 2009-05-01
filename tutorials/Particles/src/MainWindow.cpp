@@ -16,7 +16,7 @@
  * MainWindow
  */
 
-const float MAX_PARTICLES = 200;
+const float MAX_PARTICLES = 300;
 
 MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& rInfo, bool ShowFPS, const nglContext* pShared )
   : nuiMainWindow(rContextInfo, rInfo, pShared, nglPath(ePathCurrent))
@@ -36,21 +36,30 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
   mpArray = new nuiRenderArray(GL_TRIANGLES, false, false); // Create the array as static and 3d
   mpArray->EnableArray(nuiRenderArray::eTexCoord, true);
   mpArray->EnableArray(nuiRenderArray::eColor, true);
-  mpArray->Resize(MAX_PARTICLES * 2 * 3); /// 2 triangles per particle, 3 vertices per triangle
+  mpArray->Resize(MAX_PARTICLES * 4); /// 2 triangles per particle, 4 vertices per triangle
   
   for (uint32 i = 0; i < MAX_PARTICLES; i++)
   {
-    uint32 idx = i * 6;
+    const uint32 idx = i * 4;
     mpArray->SetTexCoords(idx + 0, 0, 0);// mpArray->PushVertex();
     mpArray->SetTexCoords(idx + 1, 1, 0);// mpArray->PushVertex();
     mpArray->SetTexCoords(idx + 2, 0, 1);// mpArray->PushVertex();
-    
-    mpArray->SetTexCoords(idx + 3, 1, 0);// mpArray->PushVertex();
-    mpArray->SetTexCoords(idx + 4, 1, 1);// mpArray->PushVertex();
-    mpArray->SetTexCoords(idx + 5, 0, 1);// mpArray->PushVertex();
-    
+    mpArray->SetTexCoords(idx + 3, 1, 1);// mpArray->PushVertex();
   }
-    
+
+  mpArray->AddIndicesArray(GL_TRIANGLES);
+  for (uint32 i = 0; i < MAX_PARTICLES; i++)
+  {
+    const uint32 idx = i * 4;
+    mpArray->PushIndex(idx);
+    mpArray->PushIndex(idx + 1);
+    mpArray->PushIndex(idx + 2);
+
+    mpArray->PushIndex(idx + 1);
+    mpArray->PushIndex(idx + 3);
+    mpArray->PushIndex(idx + 2);
+  }
+  
   StartAutoDraw();
 }
 
@@ -84,25 +93,22 @@ bool MainWindow::Draw(nuiDrawContext* pContext)
     else if (age < 0.0f)
       age = 0.0f;
 
-    float halfsize = (1.0 - age * .8) * mParticleSize; // Grow the particles as they age
-    nuiColor col(1.0f, 1.0f, 1.0f, age);
+    const float halfsize = (1.0 - age * .8) * mParticleSize; // Grow the particles as they age
+    const nuiColor col(1.0f, 1.0f, 1.0f, age);
 
-    uint32 idx = i * 6;
+    const uint32 idx = i * 4;
 
+    mpArray->SetVertex(idx + 0, x - halfsize, y - halfsize);
     mpArray->SetColor(idx + 0, col);
+
+    mpArray->SetVertex(idx + 1, x + halfsize, y - halfsize);
     mpArray->SetColor(idx + 1, col);
+
+    mpArray->SetVertex(idx + 2, x - halfsize, y + halfsize);
     mpArray->SetColor(idx + 2, col);
+
+    mpArray->SetVertex(idx + 3, x + halfsize, y + halfsize);
     mpArray->SetColor(idx + 3, col);
-    mpArray->SetColor(idx + 4, col);
-    mpArray->SetColor(idx + 5, col);
-
-    mpArray->SetVertex(idx + 0, x - halfsize, y - halfsize); mpArray->SetTexCoords(idx + 0, 0, 0);
-    mpArray->SetVertex(idx + 1, x + halfsize, y - halfsize); mpArray->SetTexCoords(idx + 1, 1, 0);
-    mpArray->SetVertex(idx + 2, x - halfsize, y + halfsize); mpArray->SetTexCoords(idx + 2, 0, 1);
-
-    mpArray->SetVertex(idx + 3, x + halfsize, y - halfsize); mpArray->SetTexCoords(idx + 3, 1, 0);
-    mpArray->SetVertex(idx + 4, x + halfsize, y + halfsize); mpArray->SetTexCoords(idx + 4, 1, 1);
-    mpArray->SetVertex(idx + 5, x - halfsize, y + halfsize); mpArray->SetTexCoords(idx + 5, 0, 1);
 
     if (mParticles[i].mAge >= mMaxAge)
       mParticles[i].Recycle(mMaxAge);

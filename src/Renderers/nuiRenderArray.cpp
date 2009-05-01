@@ -67,6 +67,9 @@ nuiRenderArray::~nuiRenderArray()
   mpCacheHandle = NULL;
   if (mpCacheManager)
     mpCacheManager->ReleaseCacheObject(mpCacheHandle);
+  
+  for (uint32 i = 0; i < mIndexedArrays.size(); i++)
+    delete mIndexedArrays[i];
 }
 
 void nuiRenderArray::SetMode(GLenum mode)
@@ -315,7 +318,6 @@ void nuiRenderArray::SetTexCoords(uint32 index, float tx, float ty)
 
 //////////////////////////
 // Indexed rendering
-
 nuiRenderArray::IndexArray::IndexArray(GLenum mode, uint32 reserve_count, bool resize_reserve)
 {
   mMode = mode;
@@ -328,14 +330,14 @@ nuiRenderArray::IndexArray::IndexArray(GLenum mode, uint32 reserve_count, bool r
   }
 }
 
-void nuiRenderArray::AddIndexArray(GLenum mode, uint32 reserve_count, bool resize_reserve)
+void nuiRenderArray::AddIndicesArray(uint32 mode, uint32 reserve_count, bool resize_reserve)
 {
-  return mIndexedArrays.push_back(IndexArray(mode, reserve_count, resize_reserve));
+  mIndexedArrays.push_back(new IndexArray(mode, reserve_count, resize_reserve));
 }
 
 nuiRenderArray::IndexArray& nuiRenderArray::GetIndexArray(uint32 ArrayIndex)
 {
-  return mIndexedArrays[ArrayIndex];
+  return *mIndexedArrays[ArrayIndex];
 }
 
 uint32 nuiRenderArray::GetIndexArrayCount() const
@@ -345,20 +347,23 @@ uint32 nuiRenderArray::GetIndexArrayCount() const
 
 void nuiRenderArray::PushIndex(uint32 VertexIndex)
 {
-  
+  uint32 size = mIndexedArrays.size();
+  mIndexedArrays[size - 1]->mIndices.push_back(VertexIndex);
 }
 
 void nuiRenderArray::PushIndex(uint32 ArrayIndex, uint32 VertexIndex)
 {
-  
+  mIndexedArrays[ArrayIndex]->mIndices.push_back(VertexIndex);
 }
 
 void nuiRenderArray::SetIndex(uint32 IndexInArray, uint32 VertexIndex)
 {
-  
+  uint32 size = mIndexedArrays.size();
+  mIndexedArrays[size - 1]->mIndices[IndexInArray] = VertexIndex;
 }
 
 void nuiRenderArray::SetIndex(uint32 ArrayIndex, uint32 IndexInArray, uint32 VertexIndex)
 {
-  
+  mIndexedArrays[ArrayIndex]->mIndices[IndexInArray] = VertexIndex;
 }
+

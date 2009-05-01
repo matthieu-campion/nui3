@@ -53,7 +53,11 @@ public:
   public:
     IndexArray(GLenum mode, uint32 reserve_count, bool resize_reserve);
     GLenum mMode;
+#ifdef _UIKIT_
+    std::vector<GLushort> mIndices;
+#else
     std::vector<GLuint> mIndices;
+#endif
   };
   
   std::vector<Vertex>& GetVertices()
@@ -129,8 +133,8 @@ public:
   
   void PushVertex();
   
-  void AddIndexArray(GLenum mode, uint32 reserve_count = 0, bool resize_reserve = false);
   IndexArray& GetIndexArray(uint32 ArrayIndex);
+  void AddIndicesArray(uint32 mode, uint32 reserve_count = 0, bool resize_reserve = false);
   uint32 GetIndexArrayCount() const;
   void PushIndex(uint32 VertexIndex);
   void PushIndex(uint32 ArrayIndex, uint32 VertexIndex);
@@ -152,7 +156,7 @@ private:
   Vertex mCurrentVertex;
   std::vector<Vertex> mVertices;
 
-  std::vector<IndexArray> mIndexedArrays;
+  std::vector<IndexArray*> mIndexedArrays;
 };
 
 class NUI_API nuiRenderObject
