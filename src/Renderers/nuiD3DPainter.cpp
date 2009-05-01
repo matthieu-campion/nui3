@@ -838,12 +838,6 @@ void nuiD3DPainter::DrawArray(nuiRenderArray* pArray)
   mVertices += size;
 
   NUI_RETURN_IF_RENDERING_DISABLED;
-  {
-    if (!mState.mTexturing)
-    {
-      int a=0;
-    }
-  }
 
 
   //PROFILE_CHRONO_IN(18);
@@ -962,7 +956,7 @@ void nuiD3DPainter::DrawArray(nuiRenderArray* pArray)
   DWORD nSectionSize = size; //vertices count
   DWORD flagLock = 0;
   //#HACK +1 in case of line loops thast we emulate by adding one vertex...
-  if (nSectionSize+1>mnCurrentVBSize)
+  if (nSectionSize + 1 > mnCurrentVBSize)
   {
     //buffer too small, release and allocate a bigger one...
     mnCurrentVBSize = nSectionSize*2; //2 fois la taille max
@@ -978,7 +972,7 @@ void nuiD3DPainter::DrawArray(nuiRenderArray* pArray)
       mnCurrentVBOffset = 0;
     }
   }
-  if ((mnCurrentVBOffset+nSectionSize+1)<=mnCurrentVBSize)
+  if ((mnCurrentVBOffset + nSectionSize + 1) <= mnCurrentVBSize)
   {
     flagLock=D3DLOCK_NOOVERWRITE;
   }
@@ -989,7 +983,7 @@ void nuiD3DPainter::DrawArray(nuiRenderArray* pArray)
     mnCurrentVBOffset = 0;
   }
   hr = mpVB->Lock( mnCurrentVBOffset * sizeof(NuiD3DVertex), // Offset to lock
-    (nSectionSize+1) * sizeof(NuiD3DVertex),    // Size to lock
+    (nSectionSize + 1) * sizeof(NuiD3DVertex),    // Size to lock
     (void**) &pVertices, 
     flagLock);
   const uint8 R = ToBelow(c.Red()  * 255.0);
@@ -1057,17 +1051,109 @@ void nuiD3DPainter::DrawArray(nuiRenderArray* pArray)
   }
 
   hr = mpVB->Unlock();
-  hr = pDev->DrawPrimitive(primtype, mnCurrentVBOffset, primitivecount);
-  mnCurrentVBOffset += nSectionSize;
-
-#endif
-  if (mState.mAntialiasing)
+  if (!pArray->GetIndexArrayCount())
   {
-    NGL_ASSERT(0);
+    hr = pDev->DrawPrimitive(primtype, mnCurrentVBOffset, primitivecount);
   }
   else
   {
+    for (uint32 i = 0; i < pArray->GetIndexArrayCount())
+    {
+      size = pArray->GetIndexArray(i).mIndices.size();
+      switch (pArray->GetMode())
+      {
+        case GL_POINTS:
+          primtype = D3DPT_POINTLIST;
+          c = mState.mStrokeColor;
+          primitivecount = size;
+          translate_hack = true;
+          //NGL_OUT(_T("Primitive : Point list %d "), size);
+          break;
+          
+        case GL_LINES:
+          primtype = D3DPT_LINELIST;
+          c = mState.mStrokeColor;
+          primitivecount = size/2;
+          translate_hack = true;
+          //NGL_OUT(_T("Primitive : Line list %d "), size);
+          break;
+          
+        case GL_LINE_LOOP:
+          //NGL_ASSERT(0);
+          //return;
+          primtype = D3DPT_LINESTRIP; //#FIXME : close the loop 
+          c = mState.mStrokeColor;
+          primitivecount = size-1;
+          translate_hack = true;
+          //NGL_OUT(_T("Primitive : Line loop %d "), size);
+          break;
+          
+        case GL_LINE_STRIP:
+          primtype = D3DPT_LINESTRIP;
+          c = mState.mStrokeColor;
+          primitivecount = size-1;
+          translate_hack = true;
+          //NGL_OUT(_T("Primitive : Line strip %d "), size);
+          break;
+          
+        case GL_TRIANGLES:
+          primtype = D3DPT_TRIANGLELIST;
+          c = mState.mFillColor;
+          primitivecount = size/3;
+          //NGL_OUT(_T("Primitive : Triangle list %d "), size);
+          break;
+          
+        case GL_TRIANGLE_STRIP:
+          primtype = D3DPT_TRIANGLESTRIP;
+          c = mState.mFillColor;
+          primitivecount = size-2;
+          //NGL_OUT(_T("Primitive : Triangle strip %d "), size);
+          //return; //@@@
+          break;
+          
+        case GL_TRIANGLE_FAN:
+          primtype = D3DPT_TRIANGLEFAN;
+          c = mState.mFillColor;
+          primitivecount = size-1;
+          //NGL_OUT(_T("Primitive : Triangle fan %d "), size);
+          break;
+          
+        case GL_QUADS:
+          NGL_OUT(_T("Primitive : Quads %d "), size);
+          NGL_ASSERT(0);
+          break;
+          
+        case GL_QUAD_STRIP:
+          NGL_OUT(_T("Primitive : Quad strip %d "), size);
+          NGL_ASSERT(0);
+          break;
+          
+        case GL_POLYGON:
+          NGL_OUT(_T("Primitive : Polygon %d "), size);
+          NGL_ASSERT(0);
+          break;
+        default:
+          NGL_OUT(_T("ERROR : Unknown Primitive !"));
+          NGL_ASSERT(0);
+          break;
+      }
+      
+      IDirect3DIndexBuffer9* pIndices = NULL;
+      const uint32 sizebytes = rArray.size() * sizeof(uint32);
+      hr = pDev->CreateIndexBuffer(sizebytes, 0, D3DFMT_INDEX32, D3DPOOL_DEFAULT, &pIndices);
+      void* pData = NULL;
+      hr = pIndices->Lock(0, sizebytes, &pData, 0);
+      memcpy(pData, &rArray[0], sizebytes);
+      hr = pIndices->Unlock();
+      hr = SetIndices(pIndices);
+      hr = DrawIndexedPrimitive(primtype, 0, 0, size, 0, primitivecount);
+      pIndices->Release();
+    }
+    
   }
+  mnCurrentVBOffset += nSectionSize;
+
+#endif
   PROFILE_CHRONO_OUT(2);
   //NGL_OUT(_T("--------------"));
 
