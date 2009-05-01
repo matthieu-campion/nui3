@@ -1057,9 +1057,10 @@ void nuiD3DPainter::DrawArray(nuiRenderArray* pArray)
   }
   else
   {
-    for (uint32 i = 0; i < pArray->GetIndexArrayCount())
+    for (uint32 i = 0; i < pArray->GetIndexArrayCount(); i++)
     {
-      size = pArray->GetIndexArray(i).mIndices.size();
+		std::vector<GLuint>& rArray = pArray->GetIndexArray(i).mIndices;
+      size = rArray.size();
       switch (pArray->GetMode())
       {
         case GL_POINTS:
@@ -1140,13 +1141,13 @@ void nuiD3DPainter::DrawArray(nuiRenderArray* pArray)
       
       IDirect3DIndexBuffer9* pIndices = NULL;
       const uint32 sizebytes = rArray.size() * sizeof(uint32);
-      hr = pDev->CreateIndexBuffer(sizebytes, 0, D3DFMT_INDEX32, D3DPOOL_DEFAULT, &pIndices);
+      hr = pDev->CreateIndexBuffer(sizebytes, 0, D3DFMT_INDEX32, D3DPOOL_DEFAULT, &pIndices, NULL);
       void* pData = NULL;
       hr = pIndices->Lock(0, sizebytes, &pData, 0);
       memcpy(pData, &rArray[0], sizebytes);
       hr = pIndices->Unlock();
-      hr = SetIndices(pIndices);
-      hr = DrawIndexedPrimitive(primtype, 0, 0, size, 0, primitivecount);
+      hr = pDev->SetIndices(pIndices);
+      hr = pDev->DrawIndexedPrimitive(primtype, 0, 0, size, 0, primitivecount);
       pIndices->Release();
     }
     

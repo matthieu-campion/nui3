@@ -147,7 +147,7 @@ void MainWindow::Particle::Update(float ElapsedTime)
 
 void MainWindow::Particle::Recycle(float MaxAge)
 {
-  mAge = MaxAge * ((float)random() / (float)0x7FFFFFFF);
+  mAge = MaxAge * ((float)rand() / (float)RAND_MAX);
   mX = 0;
   mY = 0;
 
@@ -155,8 +155,8 @@ void MainWindow::Particle::Recycle(float MaxAge)
   const float ydirection = -1.0;
   
   const float MAX_SPEED = 100.0f;
-  const float angle = 360.0 * ((float)random()) / (float)0x7FFFFFFF;
-  const float speed = MAX_SPEED * ((float)random()) / (float)0x7FFFFFFF;
+  const float angle = 360.0 * ((float)rand()) / (float)RAND_MAX;
+  const float speed = MAX_SPEED * ((float)rand()) / (float)RAND_MAX;
   const float rx = speed * sin(angle);
   const float ry = speed * cos(angle);
   mVX = rx + xdirection * MAX_SPEED;
@@ -167,6 +167,6 @@ void MainWindow::Particle::Recycle(float MaxAge)
 void MainWindow::Particle::Init(float MaxAge)
 {
   Recycle(MaxAge);
-  mAge = MaxAge * ((float)random() / (float)0x7FFFFFFF);
+  mAge = MaxAge * ((float)rand() / (float)RAND_MAX);
 }
 

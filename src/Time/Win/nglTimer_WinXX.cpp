@@ -46,6 +46,9 @@ nglTimer::nglTimer(nglTime Period)
   //mTimerID = 0;
   mRunning = false;
   SetPeriod(Period);
+
+  mCounter = mRoundsPerTick;
+
   mLastTick = nglTime::GetTime();
   mTimers.push_back(this);
   InitMainTimer();
