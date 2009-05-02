@@ -336,7 +336,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>E51F47360FA9AA0900AB3F0D</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>nuiRenderArray.cpp</string>
+								<string>MainWindow.cpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -344,31 +344,32 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>E51F47370FA9AA0900AB3F0D</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>nuiRenderArray.cpp</string>
+										<string>MainWindow.cpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E5867C3C0FAA613E00B454D8</string>
+										<string>E5EF7E8D0FAC248300B7166B</string>
 										<key>history</key>
 										<array>
 											<string>E51F479B0FA9BC5A00AB3F0D</string>
 											<string>E51F48A20FA9CB8D00AB3F0D</string>
 											<string>E51F48A30FA9CB8D00AB3F0D</string>
-											<string>E5867BCC0FAA489200B454D8</string>
 											<string>E5867C370FAA613400B454D8</string>
-											<string>E5867C380FAA613400B454D8</string>
-											<string>E5867C390FAA613400B454D8</string>
-											<string>E5867C0F0FAA5F6600B454D8</string>
+											<string>E5EF7E840FAC247900B7166B</string>
+											<string>E5EF7E850FAC247900B7166B</string>
+											<string>E5EF7E860FAC247900B7166B</string>
 										</array>
 										<key>prevStack</key>
 										<array>
 											<string>E51F473F0FA9B12500AB3F0D</string>
 											<string>E51F47A10FA9BC5A00AB3F0D</string>
-											<string>E5867BCF0FAA489200B454D8</string>
 											<string>E51F491E0FA9E49C00AB3F0D</string>
-											<string>E51F48940FA9CAAC00AB3F0D</string>
 											<string>E5867C2B0FAA5FFA00B454D8</string>
-											<string>E5867C3A0FAA613400B454D8</string>
+											<string>E5EF7E870FAC247900B7166B</string>
+											<string>E5EF7E880FAC247900B7166B</string>
+											<string>E5EF7E890FAC247900B7166B</string>
+											<string>E5EF7E8A0FAC247900B7166B</string>
+											<string>E5EF7E8B0FAC247900B7166B</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -405,7 +406,7 @@
 									<key>GeometryConfiguration</key>
 									<dict>
 										<key>Frame</key>
-										<string>{{10, 27}, {377, -27}}</string>
+										<string>{{10, 27}, {1713, 289}}</string>
 									</dict>
 									<key>Module</key>
 									<string>XCDetailModule</string>
@@ -436,11 +437,11 @@
 											<key>PBXCVSModuleTreeModuleColumnWidthsKey</key>
 											<array>
 												<real>200</real>
-												<real>56.66162109375</real>
+												<real>56</real>
 												<real>63</real>
 												<real>60</real>
 												<real>63</real>
-												<real>139.556640625</real>
+												<real>139</real>
 											</array>
 											<key>PBXCVSModuleTreeModuleColumnsKey</key>
 											<array>
@@ -508,11 +509,11 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E5867BAF0FAA39FB00B454D8</string>
+				<string>E5EF7E8E0FAC248300B7166B</string>
 				<string>1CA23ED40692098700951B8B</string>
-				<string>E5867BB00FAA39FB00B454D8</string>
+				<string>E5EF7E8F0FAC248300B7166B</string>
 				<string>E51F47360FA9AA0900AB3F0D</string>
-				<string>E5867BB10FAA39FB00B454D8</string>
+				<string>E5EF7E900FAC248300B7166B</string>
 				<string>1CA23EDF0692099D00951B8B</string>
 				<string>1CA23EE00692099D00951B8B</string>
 				<string>1CA23EE10692099D00951B8B</string>
@@ -590,8 +591,8 @@
 								<string>yes</string>
 								<key>sizes</key>
 								<array>
-									<string>{{0, 0}, {770, 384}}</string>
-									<string>{{0, 384}, {770, 422}}</string>
+									<string>{{0, 0}, {768, 384}}</string>
+									<string>{{0, 384}, {768, 422}}</string>
 								</array>
 							</dict>
 							<key>VerticalSplitView</key>
@@ -606,8 +607,8 @@
 								<string>yes</string>
 								<key>sizes</key>
 								<array>
-									<string>{{0, 0}, {770, 806}}</string>
-									<string>{{770, 0}, {1150, 806}}</string>
+									<string>{{0, 0}, {768, 806}}</string>
+									<string>{{768, 0}, {1152, 806}}</string>
 								</array>
 							</dict>
 						</dict>
@@ -637,10 +638,10 @@
 								<string>Value</string>
 								<real>85</real>
 								<string>Summary</string>
-								<real>404</real>
+								<real>402</real>
 							</array>
 							<key>Frame</key>
-							<string>{{0, 384}, {770, 422}}</string>
+							<string>{{0, 384}, {768, 422}}</string>
 							<key>RubberWindowFrame</key>
 							<string>0 59 1920 1119 0 0 1920 1178 </string>
 						</dict>
@@ -668,14 +669,14 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E5867BB20FAA39FB00B454D8</string>
+				<string>E5EF7E910FAC248300B7166B</string>
 				<string>1CCC7628064C1048000F2A68</string>
 				<string>1CCC7629064C1048000F2A68</string>
-				<string>E5867BB30FAA39FB00B454D8</string>
-				<string>E5867BB40FAA39FB00B454D8</string>
-				<string>E5867BB50FAA39FB00B454D8</string>
-				<string>E5867BB60FAA39FB00B454D8</string>
-				<string>E51F47360FA9AA0900AB3F0D</string>
+				<string>E5EF7E920FAC248300B7166B</string>
+				<string>E5EF7E930FAC248300B7166B</string>
+				<string>E5EF7E940FAC248300B7166B</string>
+				<string>E5EF7E950FAC248300B7166B</string>
+				<string>E5EF7E7E0FAC230300B7166B</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -690,7 +691,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>262824254.319116</real>
+	<real>262939779.452885</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -705,9 +706,9 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E5867C3D0FAA613E00B454D8</string>
-		<string>E5867BB80FAA39FB00B454D8</string>
-		<string>E5867BB90FAA39FB00B454D8</string>
+		<string>E5EF7E960FAC248300B7166B</string>
+		<string>E5EF7E970FAC248300B7166B</string>
+		<string>E5EF7E980FAC248300B7166B</string>
 		<string>/Users/meeloo/work/nui3/tutorials/Particles/Particles.xcodeproj</string>
 	</array>
 	<key>WindowString</key>

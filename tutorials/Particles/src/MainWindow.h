@@ -16,28 +16,5 @@ public:
   MainWindow(const nglContextInfo& rContext, const nglWindowInfo& rInfo, bool ShowFPS = false, const nglContext* pShared = NULL);
   ~MainWindow();
 
-  bool Draw(nuiDrawContext* pContext);
-  
-private:
-  double mLastTime;
-  class Particle
-  {
-  public:
-    Particle();
-    
-    void Update(float ElapsedTime);
-    void Init(float MaxAge);
-    void Recycle(float MaxAge);
-    
-    float mX, mY; // Current position
-    float mVX, mVY; // Current vector
-    float mAge;
-  };
-  
-  float mMaxAge;
-  float mParticleSize;
-  std::vector<Particle> mParticles;
-  nuiTexture* mpTexture;
-  nuiRenderArray* mpArray;
 };
 

@@ -340,6 +340,16 @@ inline int64 nuiSign(double f)
   return 1 + (((*(int64*)&f) >> 63) << 1);
 }
 
+template <class T>
+inline T Clamp(T value, T Low, T High)
+{
+  if (value <= Low)
+    return Low;
+  if (value >= High)
+    return High;
+  return value;
+}
+
 #undef __iexp
 #undef __iman
 
