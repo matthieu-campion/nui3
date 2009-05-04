@@ -348,7 +348,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E5EF7E8D0FAC248300B7166B</string>
+										<string>E5EF7E9C0FAC254300B7166B</string>
 										<key>history</key>
 										<array>
 											<string>E51F479B0FA9BC5A00AB3F0D</string>
@@ -357,7 +357,7 @@
 											<string>E5867C370FAA613400B454D8</string>
 											<string>E5EF7E840FAC247900B7166B</string>
 											<string>E5EF7E850FAC247900B7166B</string>
-											<string>E5EF7E860FAC247900B7166B</string>
+											<string>E5EF7E9A0FAC253D00B7166B</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -691,7 +691,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>262939779.452885</real>
+	<real>262939971.54687601</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -706,7 +706,7 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E5EF7E960FAC248300B7166B</string>
+		<string>E5EF7E9D0FAC254300B7166B</string>
 		<string>E5EF7E970FAC248300B7166B</string>
 		<string>E5EF7E980FAC248300B7166B</string>
 		<string>/Users/meeloo/work/nui3/tutorials/Particles/Particles.xcodeproj</string>

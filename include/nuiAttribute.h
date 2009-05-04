@@ -107,6 +107,9 @@ public:
 	virtual nuiAttributeEditor* GetEditor(void* pTarget) = 0;
   
   virtual void KillAttributeHolder(void* pHolder);
+  
+  void SetAsInstanceAttribute(bool set);
+  bool IsInstanceAttribute() const;
 protected:
   nuiAttributeBase(const nglString& rName, nuiAttributeType type, nuiAttributeUnit units, const nuiRange& rRange, bool readonly, bool writeonly);  ///< property 
   nuiAttributeBase(const nglString& rName, nuiAttributeType type, nuiAttributeUnit units, const nuiRange& rRange, bool readonly, bool writeonly, uint32 dimension, const ArrayRangeDelegate& rArrayRangeGetter);  ///< property 
@@ -117,8 +120,9 @@ private:
   nuiAttributeUnit mUnit;
   bool mReadOnly;
   bool mWriteOnly;
-  nuiRange mRange;
   bool mIgnoreAttributeChange;
+  bool mInstanceAttribute;
+  nuiRange mRange;
   int32 mOrder;
   uint32 mDimension;
   ArrayRangeDelegate mRangeGetter;
@@ -292,7 +296,8 @@ public:
     NGL_ASSERT(GetDimension() == 0);
     GetterDelegate Getter;
     Getter.SetMemento(mGetter);
-    Getter.SetThis(pTarget);
+    if (!IsInstanceAttribute())
+      Getter.SetThis(pTarget);
     return Getter();
   }
   
@@ -302,7 +307,8 @@ public:
     NGL_ASSERT(GetDimension() == 1);
     GetterDelegate1 Getter;
     Getter.SetMemento(mGetter);
-    Getter.SetThis(pTarget);
+    if (!IsInstanceAttribute())
+      Getter.SetThis(pTarget);
     return Getter(index);
   }
   
@@ -312,7 +318,8 @@ public:
     NGL_ASSERT(GetDimension() == 2);
     GetterDelegate2 Getter;
     Getter.SetMemento(mGetter);
-    Getter.SetThis(pTarget);
+    if (!IsInstanceAttribute())
+      Getter.SetThis(pTarget);
     return Getter(index0, index1);
   }
   
@@ -323,7 +330,8 @@ public:
     NGL_ASSERT(GetDimension() == 0);
     SetterDelegate Setter;
     Setter.SetMemento(mSetter);
-    Setter.SetThis(pTarget);
+    if (!IsInstanceAttribute())
+      Setter.SetThis(pTarget);
     Setter(rValue);
     
     if (!IsAttributeChangeIgnored())
@@ -338,7 +346,8 @@ public:
     NGL_ASSERT(GetDimension() == 1);
     SetterDelegate1 Setter;
     Setter.SetMemento(mSetter);
-    Setter.SetThis(pTarget);
+    if (!IsInstanceAttribute())
+      Setter.SetThis(pTarget);
     Setter(index, rValue);
     
     if (!IsAttributeChangeIgnored())
@@ -353,7 +362,8 @@ public:
     NGL_ASSERT(GetDimension() == 2);
     SetterDelegate2 Setter;
     Setter.SetMemento(mSetter);
-    Setter.SetThis(pTarget);
+    if (!IsInstanceAttribute())
+      Setter.SetThis(pTarget);
     Setter(index0, index1, rValue);
     
     if (!IsAttributeChangeIgnored())
@@ -719,7 +729,8 @@ public:
     NGL_ASSERT(GetDimension() == 0);
     GetterDelegate Getter;
     Getter.SetMemento(mGetter);
-    Getter.SetThis(pTarget);
+    if (!IsInstanceAttribute())
+      Getter.SetThis(pTarget);
     return Getter();
   }
   
@@ -729,7 +740,8 @@ public:
     NGL_ASSERT(GetDimension() == 1);
     GetterDelegate1 Getter;
     Getter.SetMemento(mGetter);
-    Getter.SetThis(pTarget);
+    if (!IsInstanceAttribute())
+      Getter.SetThis(pTarget);
     return Getter(index);
   }
   
@@ -739,7 +751,8 @@ public:
     NGL_ASSERT(GetDimension() == 2);
     GetterDelegate2 Getter;
     Getter.SetMemento(mGetter);
-    Getter.SetThis(pTarget);
+    if (!IsInstanceAttribute())
+      Getter.SetThis(pTarget);
     return Getter(index0, index1);
   }
   
@@ -750,7 +763,8 @@ public:
     NGL_ASSERT(GetDimension() == 0);
     SetterDelegate Setter;
     Setter.SetMemento(mSetter);
-    Setter.SetThis(pTarget);
+    if (!IsInstanceAttribute())
+      Setter.SetThis(pTarget);
     Setter(rValue);
     
     if (!IsAttributeChangeIgnored())
@@ -765,7 +779,8 @@ public:
     NGL_ASSERT(GetDimension() == 1);
     SetterDelegate1 Setter;
     Setter.SetMemento(mSetter);
-    Setter.SetThis(pTarget);
+    if (!IsInstanceAttribute())
+      Setter.SetThis(pTarget);
     Setter(index, rValue);
     
     if (!IsAttributeChangeIgnored())
@@ -780,7 +795,8 @@ public:
     NGL_ASSERT(GetDimension() == 2);
     SetterDelegate2 Setter;
     Setter.SetMemento(mSetter);
-    Setter.SetThis(pTarget);
+    if (!IsInstanceAttribute())
+      Setter.SetThis(pTarget);
     Setter(index0, index1, rValue);
     
     if (!IsAttributeChangeIgnored())

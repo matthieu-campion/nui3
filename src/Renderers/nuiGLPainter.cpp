@@ -285,6 +285,8 @@ void nuiGLPainter::StartRendering()
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 #ifndef _OPENGL_ES_
   glBlendEquationSeparate(GL_FUNC_ADD, GL_MAX);
+#else
+  //glBlendEquationSeparateOES(GL_FUNC_ADD, GL_MAX);
 #endif
   nuiCheckForGLErrors();
 }

@@ -38,8 +38,9 @@ nuiAttributeBase::nuiAttributeBase(const nglString& rName, nuiAttributeType type
   mUnit(unit),
   mReadOnly(readonly),
   mWriteOnly(writeonly),
-  mRange(rRange),
   mIgnoreAttributeChange(false),
+  mInstanceAttribute(false),
+  mRange(rRange),
   mOrder(0),
   mDimension(0)
 {
@@ -51,8 +52,9 @@ nuiAttributeBase::nuiAttributeBase(const nglString& rName, nuiAttributeType type
   mUnit(unit),
   mReadOnly(readonly),
   mWriteOnly(writeonly),
-  mRange(rRange),
   mIgnoreAttributeChange(false),
+  mInstanceAttribute(false),
+  mRange(rRange),
   mOrder(0),
   mDimension(dimension),
   mRangeGetter(rRangeGetter)
@@ -131,7 +133,8 @@ uint32 nuiAttributeBase::GetIndexRange(void* pTarget, uint32 Dimension) const
 {
   NGL_ASSERT(GetDimension() > Dimension && mRangeGetter);
   ArrayRangeDelegate getter(mRangeGetter);
-  getter.SetThis(pTarget);
+  if (!IsInstanceAttribute())
+    getter.SetThis(pTarget);
   return getter(Dimension);
 }
 
@@ -157,6 +160,15 @@ nuiSimpleEventSource<0>& nuiAttributeBase::GetChangedEvent(void* pTarget) const
   return *(it->second);
 }
 
+void nuiAttributeBase::SetAsInstanceAttribute(bool set)
+{
+  mInstanceAttribute = set;
+}
+
+bool nuiAttributeBase::IsInstanceAttribute() const
+{
+  return mInstanceAttribute;
+}
 
 // inherited from AttributeBase, to be specialized for each type of Attribute
 bool nuiAttributeBase::Load(void* pTarget, const nuiXMLNode* pNode)

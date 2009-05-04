@@ -524,6 +524,7 @@ void nuiObject::AddInstanceAttribute(const nglString& rName, nuiAttributeBase* p
 {
   mUniqueAttributeOrder++;
   pAttribute->SetOrder(mUniqueAttributeOrder);
+  pAttribute->SetAsInstanceAttribute(true);
   
   mInstanceAttributes[rName] = pAttribute;
 }
@@ -532,6 +533,7 @@ void nuiObject::AddInstanceAttribute(nuiAttributeBase* pAttribute)
 {
   mUniqueAttributeOrder++;
   pAttribute->SetOrder(mUniqueAttributeOrder);
+  pAttribute->SetAsInstanceAttribute(true);
   
   mInstanceAttributes[pAttribute->GetName()] = pAttribute;
 }
