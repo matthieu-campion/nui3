@@ -37,7 +37,7 @@ public:
   bool MouseMoved  (nuiSize X, nuiSize Y);
   
   bool UpdateValue  (nuiSize movX, nuiSize movY); ///< update the value if function of the mouse position. it's called by the MouseMoved event, and also by the MatrixViewer mouse events.
-  virtual bool SetValue  (nuiSize value);
+  virtual bool SetValue  (const double& value);
   bool Increment ();
   bool Decrement ();
 
@@ -75,7 +75,7 @@ protected:
   bool HandleClicked(const nuiEvent& rEvent);
   bool HandleUnclicked(const nuiEvent& rEvent);
 
-  nuiSize mClickValue;
+  double mClickValue;
   nglString mValueString;
 
   bool mClicked;

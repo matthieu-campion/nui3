@@ -279,9 +279,8 @@ bool nuiSpinnerLabel::UpdateValue(nuiSize movX, nuiSize movY)
     sensitivity *= mFineSensitivityRatio;
   }
 
-  nuiSize start= mClickValue;
-  nuiSize movement = ( movX + movY ) / sensitivity;
-
+  double start = mClickValue;
+  double movement = ( movX + movY ) / sensitivity;
   start+= movement;
 
   return SetValue(start);
@@ -293,12 +292,9 @@ bool nuiSpinnerLabel::UpdateValue(nuiSize movX, nuiSize movY)
 // SetValue
 //
 //
-bool nuiSpinnerLabel::SetValue  (nuiSize value)
+bool nuiSpinnerLabel::SetValue  (const double& value)
 {
   mRange.SetValue(value);
-
-  mFormater.Format(mRange.GetValue(), mValueString);
-  SetText (mValueString);
   return true;
 }
 
@@ -312,13 +308,9 @@ bool nuiSpinnerLabel::SetValue  (nuiSize value)
 // Increment
 //
 //
-bool nuiSpinnerLabel::Increment  ()
+bool nuiSpinnerLabel::Increment()
 {
-
   mRange.Increment();
-
-  mFormater.Format (mRange.GetValue(), mValueString);
-  SetText (mValueString);
   return true;
 }
 
@@ -328,13 +320,9 @@ bool nuiSpinnerLabel::Increment  ()
 // Decrement
 //
 //
-bool nuiSpinnerLabel::Decrement  ()
+bool nuiSpinnerLabel::Decrement()
 {
-
   mRange.Decrement();
-
-  mFormater.Format (mRange.GetValue(), mValueString);
-  SetText (mValueString);
   return true;
 }
 
@@ -375,7 +363,8 @@ bool nuiSpinnerLabel::DoInvalidate(const nuiEvent& rEvent)
 bool nuiSpinnerLabel::OnValueChanging(const nuiEvent& rEvent)
 {
   ValueChanging();
-  Invalidate();
+  mFormater.Format (mRange.GetValue(), mValueString);
+  SetText (mValueString);
   return false;
 }
 
