@@ -9,7 +9,7 @@
 
 enum nuiUnicodeRange
 {
-  eNone,
+  eNone = 0,
   eUndefined,
   eUnused,
   eBasicLatin,
@@ -140,6 +140,7 @@ enum nuiUnicodeRange
 
 nuiUnicodeRange nuiGetUnicodeRange(nglChar ch);
 nuiUnicodeRange nuiGetUnicodeRange(nglChar ch, uint32& rLow, uint32& rHigh);
+nglString nuiGetUnicodeRangeName(nuiUnicodeRange range);
 
 enum nuiUnicodeDirection
 {

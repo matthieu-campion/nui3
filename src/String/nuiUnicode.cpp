@@ -168,6 +168,7 @@ nuiUnicodeRangeDesc nuiUnicodeRanges[] =
   { 0x100000,	0x10FFFD,	eSupplementaryPrivateUseAreaB }
 }; 
 
+
 nuiUnicodeRange nuiGetUnicodeRange(nglChar ch)
 {
   uint32 l, h;
@@ -188,6 +189,144 @@ nuiUnicodeRange nuiGetUnicodeRange(nglChar ch, uint32& rLow, uint32& rHigh)
   }
   
   return eNone;
+}
+
+#define NAME(X) case e##X: return _T(#X); break;
+nglString nuiGetUnicodeRangeName(nuiUnicodeRange range)
+{
+  switch (range)
+  {
+  NAME(None);
+  NAME(Undefined);
+  NAME(Unused);
+  NAME(BasicLatin);
+  NAME(C1ControlsAndLatin1Supplement);
+  NAME(LatinExtendedA);
+  NAME(LatinExtendedB);
+  NAME(IPAExtensions);
+  NAME(SpacingModifierLetters);
+  NAME(CombiningDiacriticalMarks);
+  NAME(GreekAndCoptic);
+  NAME(Cyrillic);
+  NAME(CyrillicSupplement);
+  NAME(Armenian);
+  NAME(Hebrew);
+  NAME(Arabic);
+  NAME(Syriac);
+  NAME(Thaana);
+  NAME(Devanagari);
+  NAME(BengaliAndAssamese);
+  NAME(Gurmukhi);
+  NAME(Gujarati);
+  NAME(Oriya);
+  NAME(Tamil);
+  NAME(Telugu);
+  NAME(Kannada);
+  NAME(Malayalam);
+  NAME(Sinhala);
+  NAME(Thai);
+  NAME(Lao);
+  NAME(Tibetan);
+  NAME(Myanmar);
+  NAME(Georgian);
+  NAME(HangulJamo);
+  NAME(Ethiopic);
+  NAME(Cherokee);
+  NAME(UnifiedCanadianAboriginalSyllabics);
+  NAME(Ogham);
+  NAME(Runic);
+  NAME(Tagalog);
+  NAME(Hanunoo);
+  NAME(Buhid);
+  NAME(Tagbanwa);
+  NAME(Khmer);
+  NAME(Mongolian);
+  NAME(Limbu);
+  NAME(TaiLe);
+  NAME(KhmerSymbols);
+  NAME(PhoneticExtensions);
+  NAME(LatinExtendedAdditional);
+  NAME(GreekExtended);
+  NAME(GeneralPunctuation);
+  NAME(SuperscriptsAndSubscripts);
+  NAME(CurrencySymbols);
+  NAME(CombiningDiacriticalMarksForSymbols);
+  NAME(LetterlikeSymbols);
+  NAME(NumberForms);
+  NAME(Arrows);
+  NAME(MathematicalOperators);
+  NAME(MiscellaneousTechnical);
+  NAME(ControlPictures);
+  NAME(OpticalCharacterRecognition);
+  NAME(EnclosedAlphanumerics);
+  NAME(BoxDrawing);
+  NAME(BlockElements);
+  NAME(GeometricShapes);
+  NAME(MiscellaneousSymbols);
+  NAME(Dingbats);
+  NAME(MiscellaneousMathematicalSymbolsA);
+  NAME(SupplementalArrowsA);
+  NAME(BraillePatterns);
+  NAME(SupplementalArrowsB);
+  NAME(MiscellaneousMathematicalSymbolsB);
+  NAME(SupplementalMathematicalOperators);
+  NAME(MiscellaneousSymbolsAndArrows);
+  NAME(CJKRadicalsSupplement);
+  NAME(KangxiRadicals);
+  NAME(IdeographicDescriptionCharacters);
+  NAME(CJKSymbolsAndPunctuation);
+  NAME(Hiragana);
+  NAME(Katakana);
+  NAME(Bopomofo);
+  NAME(HangulCompatibilityJamo);
+  NAME(Kanbun);
+  NAME(BopomofoExtended);
+  NAME(KatakanaPhoneticExtensions);
+  NAME(EnclosedCJKLettersAndMonths);
+  NAME(CJKCompatibility);
+  NAME(CJKUnifiedIdeographsExtensionA);
+  NAME(YijingHexagramSymbols);
+  NAME(CJKUnifiedIdeographs);
+  NAME(YiSyllables);
+  NAME(YiRadicals);
+  NAME(HangulSyllables);
+  NAME(HighSurrogateArea);
+  NAME(LowSurrogateArea);
+  NAME(PrivateUseArea);
+  NAME(CJKCompatibilityIdeographs);
+  NAME(AlphabeticPresentationForms);
+  NAME(ArabicPresentationFormsA);
+  NAME(VariationSelectors);
+  NAME(CombiningHalfMarks);
+  NAME(CJKCompatibilityForms);
+  NAME(SmallFormVariants);
+  NAME(ArabicPresentationFormsB);
+  NAME(HalfwidthAndFullwidthForms);
+  NAME(Specials);
+  NAME(LinearBSyllabary);
+  NAME(LinearBIdeograms);
+  NAME(AegeanNumbers);
+  NAME(OldItalic);
+  NAME(Gothic);
+  NAME(Ugaritic);
+  NAME(Deseret);
+  NAME(Shavian);
+  NAME(Osmanya);
+  NAME(CypriotSyllabary);
+  NAME(ByzantineMusicalSymbols);
+  NAME(MusicalSymbols);
+  NAME(TaiXuanJingSymbols);
+  NAME(MathematicalAlphanumericSymbols);
+  NAME(CJKUnifiedIdeographsExtensionB);
+  NAME(CJKCompatibilityIdeographsSupplement);
+  NAME(Tags);
+  NAME(VariationSelectorsSupplement);
+  NAME(SupplementaryPrivateUseAreaA);
+  NAME(SupplementaryPrivateUseAreaB);
+  }
+  
+  NGL_ASSERT(0);
+  return nglString::Null;
 }
 
 nuiUnicodeDirection nuiGetUnicodeDirection(nglChar ch)
