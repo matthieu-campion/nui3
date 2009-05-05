@@ -9,6 +9,7 @@
 
 enum nuiUnicodeRange
 {
+  eNone,
   eUndefined,
   eUnused,
   eBasicLatin,
@@ -138,5 +139,36 @@ enum nuiUnicodeRange
 };
 
 nuiUnicodeRange nuiGetUnicodeRange(nglChar ch);
+nuiUnicodeRange nuiGetUnicodeRange(nglChar ch, uint32& rLow, uint32& rHigh);
 
+enum nuiUnicodeDirection
+{
+  eLeftToRight,
+  eRightToLeft
+};
+
+nuiUnicodeDirection nuiGetUnicodeDirection(nglChar ch);
+
+bool nuiIsUnicodeBlank(nglChar ch);
+
+class nuiTextRange
+{
+public:
+  nuiTextRange();
+  
+  uint32 mLength; // count of unicode code points
+  int32 mDirection; // even: Left to right, odd: right to left
+  nuiUnicodeRange mScript; // What script if this range of text
+  bool mBlank; // Does this range contains strictly blank (space, tab, return, etc.) code points.
+};
+
+typedef std::list<nuiTextRange> nuiTextRangeList;
+typedef uint32 nuiSplitTextFlag;
+
+const nuiSplitTextFlag nuiST_ScriptChange    = 1 << 0;
+const nuiSplitTextFlag nuiST_WordBoundary    = 1 << 1;
+const nuiSplitTextFlag nuiST_DirectionChange = 1 << 2;
+const nuiSplitTextFlag nuiST_All    = nuiST_ScriptChange | nuiST_WordBoundary | nuiST_DirectionChange;
+
+bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nuiSplitTextFlag flags = nuiST_All);
 

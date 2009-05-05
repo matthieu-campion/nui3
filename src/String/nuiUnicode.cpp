@@ -170,13 +170,122 @@ nuiUnicodeRangeDesc nuiUnicodeRanges[] =
 
 nuiUnicodeRange nuiGetUnicodeRange(nglChar ch)
 {
+  uint32 l, h;
+  return nuiGetUnicodeRange(ch, l, h);
+}
+
+nuiUnicodeRange nuiGetUnicodeRange(nglChar ch, uint32& rLow, uint32& rHigh)
+{
   const uint32 count = sizeof(nuiUnicodeRanges) / sizeof(nuiUnicodeRangeDesc);
   for (uint32 i = 0; i < count; i++)
   {
     if (nuiUnicodeRanges[i].RangeStart <= ch && nuiUnicodeRanges[i].RangeEnd >= ch)
-      return nuiUnicodeRanges[i].Range;
+    {
+      rLow = nuiUnicodeRanges[i].RangeStart;
+      rHigh = nuiUnicodeRanges[i].RangeEnd;
+      return nuiUnicodeRanges[i].Range;      
+    }
   }
   
-  return eUndefined;
+  return eNone;
 }
+
+nuiUnicodeDirection nuiGetUnicodeDirection(nglChar ch)
+{
+  //#FIXME need to add BiDi algo here
+  return eLeftToRight;
+}
+
+bool nuiIsUnicodeBlank(nglChar ch)
+{
+  //#FIXME add the actual unicode blank detection algo here
+  return ch < 32;
+}
+
+
+bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nuiSplitTextFlag flags)
+{
+  uint32 size = rSourceString.GetLength();
+
+  rRanges.clear();
+  if (!size)
+    return true;
+
+  const bool scriptchange = flags & nuiST_ScriptChange;
+  const bool wordboundary = flags & nuiST_WordBoundary;
+  const bool directionchange = flags & nuiST_DirectionChange;
+  uint32 lastpos = 0;
+  uint32 curpos = 0;
+  nglChar ch = rSourceString[curpos];
+  int32 direction = nuiGetUnicodeDirection(ch);
+  int32 newdirection = direction;
+  uint32 low = 0;
+  uint32 hi = 0;
+  nuiUnicodeRange range = nuiGetUnicodeRange(ch, low, hi);
+  nuiUnicodeRange newrange = range;
+  bool blank = nuiIsUnicodeBlank(ch);
+  bool newblank = blank;
+  curpos++;
+  
+  while (curpos != size)
+  {
+    bool brk = false;
+    ch = rSourceString[curpos];
+    
+    if (scriptchange)
+    {
+      if (ch < low || ch > hi) // still in the last range?
+      {
+        newrange = nuiGetUnicodeRange(ch, low, hi);
+        if (newrange != range)
+          brk = true;
+      }
+    }
+    
+    if (wordboundary)
+    {
+      newblank = nuiIsUnicodeBlank(ch);
+      if (newblank != blank)
+        brk = true;
+    }
+    
+    if (directionchange)
+    {
+      newdirection = nuiGetUnicodeDirection(ch);
+      if (newdirection != direction)
+        brk = true;
+    }
+    
+    if (brk)
+    {
+      nuiTextRange r;
+      r.mLength = curpos - lastpos; // count of unicode code points
+      r.mDirection = direction; // even: Left to right, odd: right to left
+      r.mScript = range; // What script if this range of text
+      r.mBlank = blank; // Does this range contains strictly blank (space, tab, return, etc.) code points.
+      
+      rRanges.push_back(r);
+      
+      lastpos = curpos;
+      direction = newdirection;
+      range = newrange;
+      blank = newblank;
+    }
+    
+    curpos++;
+  }
+
+  // Last range:
+  nuiTextRange r;
+  r.mLength = curpos - lastpos; // count of unicode code points
+  r.mDirection = direction; // even: Left to right, odd: right to left
+  r.mScript = range; // What script if this range of text
+  r.mBlank = blank; // Does this range contains strictly blank (space, tab, return, etc.) code points.
+  
+  rRanges.push_back(r);
+  
+  
+  return true;
+}
+
 
