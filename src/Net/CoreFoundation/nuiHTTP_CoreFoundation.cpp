@@ -64,39 +64,27 @@ nuiHTTPResponse* nuiHTTPRequest::SendRequest()
   
   std::vector<char> buf;
   CFIndex pos = 0;
-  
-  uint32 const BUFSIZE = 1024;
-  bool done = false;
-  while (!done)
+  CFIndex size = 0;
+  bool cont = true;
+  do
   {
-    if (CFReadStreamHasBytesAvailable(readStream))
+    buf.resize(pos + 1024);
+    size = CFReadStreamRead(readStream, (UInt8*)&buf[pos], 1024);
+    if (size == -1)
     {
-      UInt8 _buf[BUFSIZE];
-      CFIndex bytesRead = CFReadStreamRead(readStream, _buf, BUFSIZE);
-      if (bytesRead < 0)
-      {
-        CFStreamError error = CFReadStreamGetError(readStream);
-        //reportError(error);
-      }
-      else if (bytesRead == 0)
-      {
-        if (CFReadStreamGetStatus(readStream) == kCFStreamStatusAtEnd)
-        {
-          done = TRUE;
-        }
-      }
+      return NULL;
+    }
+    else if (size == 0)
+    {
+      if (CFReadStreamGetStatus(readStream) == kCFStreamStatusAtEnd)
+        cont = false;
       else
-      {
-        buf.resize(pos + bytesRead);
-        memcpy(&buf[pos], _buf, bytesRead);
-        pos += bytesRead;
-      }
+        nglThread::MsSleep(10);
     }
-    else
-    {
-      nglThread::MsSleep(1);
-    }
-  }  
+    
+    pos += size;
+  }
+  while (cont);
   
   CFHTTPMessageRef responseHeader = (CFHTTPMessageRef)CFReadStreamCopyProperty(readStream, kCFStreamPropertyHTTPResponseHeader);
   
