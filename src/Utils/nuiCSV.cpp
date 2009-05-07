@@ -29,7 +29,7 @@ nuiCSV::~nuiCSV()
 
 
 
-bool nuiCSV::Load(nglIStream* pStream)
+bool nuiCSV::Load(nglIStream* pStream, bool CheckNbColumns)
 {  
   if (!pStream)
   {
@@ -55,8 +55,8 @@ bool nuiCSV::Load(nglIStream* pStream)
   nglString lineUTF8;
   nglString separationString(mSeparationChar);
   std::vector<nglString> tokens;
-  uint32 numlines=0;
-  uint32 numcols=0;
+  uint32 numlines = 0;
+  uint32 numcols = 0;
 
 
   // for each line from input stream
@@ -131,19 +131,22 @@ bool nuiCSV::Load(nglIStream* pStream)
     
     // check number of columns
     uint32 nbcols = tokens.size();
-    if (nbcols < numcols)
+    if (CheckNbColumns)
     {
-      NGL_OUT(_T("nuiCSV syntax error : not enough columns from the csv document in line %d! Could not process it!\n"), numlines);
-      return false;
-    }
-    else if (numcols == 0)
-    {
-      numcols = nbcols;
-    }
-    else if (nbcols > numcols)
-    {
-      NGL_OUT(_T("nuiCSV syntax error : the number of columns in line %d (%d columns) doesn't match (%d columns)! Could not process it!\n"), numlines, nbcols, numcols);
-      return false;
+      if (nbcols < numcols)
+      {
+        NGL_OUT(_T("nuiCSV syntax error : not enough columns from the csv document in line %d! Could not process it!\n"), numlines);
+        return false;
+      }
+      else if (numcols == 0)
+      {
+        numcols = nbcols;
+      }
+      else if (nbcols > numcols)
+      {
+        NGL_OUT(_T("nuiCSV syntax error : the number of columns in line %d (%d columns) doesn't match (%d columns)! Could not process it!\n"), numlines, nbcols, numcols);
+        return false;
+      }
     }
     
     // for all columns,

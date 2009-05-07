@@ -348,7 +348,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E5EF7E9C0FAC254300B7166B</string>
+										<string>E53631D90FB0E94000E37C8C</string>
 										<key>history</key>
 										<array>
 											<string>E51F479B0FA9BC5A00AB3F0D</string>
@@ -357,7 +357,7 @@
 											<string>E5867C370FAA613400B454D8</string>
 											<string>E5EF7E840FAC247900B7166B</string>
 											<string>E5EF7E850FAC247900B7166B</string>
-											<string>E5EF7E9A0FAC253D00B7166B</string>
+											<string>E53631D60FB0E90B00E37C8C</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -366,10 +366,6 @@
 											<string>E51F491E0FA9E49C00AB3F0D</string>
 											<string>E5867C2B0FAA5FFA00B454D8</string>
 											<string>E5EF7E870FAC247900B7166B</string>
-											<string>E5EF7E880FAC247900B7166B</string>
-											<string>E5EF7E890FAC247900B7166B</string>
-											<string>E5EF7E8A0FAC247900B7166B</string>
-											<string>E5EF7E8B0FAC247900B7166B</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -509,11 +505,11 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E5EF7E8E0FAC248300B7166B</string>
+				<string>E53631300FAFA9E000E37C8C</string>
 				<string>1CA23ED40692098700951B8B</string>
-				<string>E5EF7E8F0FAC248300B7166B</string>
+				<string>E53631310FAFA9E000E37C8C</string>
 				<string>E51F47360FA9AA0900AB3F0D</string>
-				<string>E5EF7E900FAC248300B7166B</string>
+				<string>E53631320FAFA9E000E37C8C</string>
 				<string>1CA23EDF0692099D00951B8B</string>
 				<string>1CA23EE00692099D00951B8B</string>
 				<string>1CA23EE10692099D00951B8B</string>
@@ -669,14 +665,14 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E5EF7E910FAC248300B7166B</string>
+				<string>E53631230FAFA9A900E37C8C</string>
 				<string>1CCC7628064C1048000F2A68</string>
 				<string>1CCC7629064C1048000F2A68</string>
-				<string>E5EF7E920FAC248300B7166B</string>
-				<string>E5EF7E930FAC248300B7166B</string>
-				<string>E5EF7E940FAC248300B7166B</string>
-				<string>E5EF7E950FAC248300B7166B</string>
-				<string>E5EF7E7E0FAC230300B7166B</string>
+				<string>E53631240FAFA9A900E37C8C</string>
+				<string>E53631250FAFA9A900E37C8C</string>
+				<string>E53631260FAFA9A900E37C8C</string>
+				<string>E53631270FAFA9A900E37C8C</string>
+				<string>E53631280FAFA9A900E37C8C</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -691,7 +687,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>262939971.54687601</real>
+	<real>263252288.76709601</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -706,9 +702,9 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E5EF7E9D0FAC254300B7166B</string>
-		<string>E5EF7E970FAC248300B7166B</string>
-		<string>E5EF7E980FAC248300B7166B</string>
+		<string>E53631DA0FB0E94000E37C8C</string>
+		<string>E53631DB0FB0E94000E37C8C</string>
+		<string>E53631DC0FB0E94000E37C8C</string>
 		<string>/Users/meeloo/work/nui3/tutorials/Particles/Particles.xcodeproj</string>
 	</array>
 	<key>WindowString</key>

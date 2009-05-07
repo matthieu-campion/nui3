@@ -18,7 +18,7 @@ public:
   nuiCSV(nglChar separationChar);
   ~nuiCSV();
   
-  bool Load(nglIStream* pStream); ///< load the cvs contents from an input stream
+  bool Load(nglIStream* pStream, bool CheckNbColumns = true); ///< load the cvs contents from an input stream
   bool Save(nglOStream* oStream); ///< save the formated csv contents to an output stream
   nglString Dump(); ///< return a string with the formated csv contents
 

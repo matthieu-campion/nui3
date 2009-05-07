@@ -84,11 +84,14 @@ public:
   nuiTokenBase* GetToken() const;
 	
 	/** @name Attributes system */
-	//#{
+	//@{
 	void GetAttributes(std::map<nglString, nuiAttribBase>& rAttributeMap) const;
 	void GetSortedAttributes(std::list<nuiAttribBase>& rListToFill) const;
   nuiAttribBase GetAttribute(const nglString& rName) const;
-
+  void AddInstanceAttribute(const nglString& rName, nuiAttributeBase* pProperty); ///< Add an attribute to this object (beware, only this instance of this class will have this attribute. If you wnat the attribute to be global to all instances of the class use AddAttribute instead).
+  void AddInstanceAttribute(nuiAttributeBase* pAttribute); ///< Add an attribute to this object (beware, only this instance of this class will have this attribute. If you wnat the attribute to be global to all instances of the class use AddAttribute instead).
+  //@}
+  
   ///! Global Properties:
   static void SetGlobalProperty(const nglString& rName, const nglString& rValue); ///< Add or change a Global property.
   static void SetGlobalProperty(const char* pName, const nglString& rValue); ///< Add or change a Global property.
@@ -108,10 +111,11 @@ protected:
   virtual bool SetObjectClass(const nglString& rClass); ///< does a SetProperty("Class"...). Returns true if this is the first time an object of this class is registered.
   void InitProperties(); ///< Take care of the property bindings.
 
+	/** @name Attributes system */
+	//@{
   void AddAttribute(const nglString& rName, nuiAttributeBase* pProperty); ///< Add an attribute to this class (beware, all instances of this class will have this attribute. If you wnat the attribute to be private to this instance of the class use AddInstanceAttribute instead).
   void AddAttribute(nuiAttributeBase* pAttribute); ///< Add an attribute to this class (beware, all instances of this class will have this attribute. If you wnat the attribute to be private to this instance of the class use AddInstanceAttribute instead).
-  void AddInstanceAttribute(const nglString& rName, nuiAttributeBase* pProperty); ///< Add an attribute to this object (beware, only this instance of this class will have this attribute. If you wnat the attribute to be global to all instances of the class use AddAttribute instead).
-  void AddInstanceAttribute(nuiAttributeBase* pAttribute); ///< Add an attribute to this object (beware, only this instance of this class will have this attribute. If you wnat the attribute to be global to all instances of the class use AddAttribute instead).
+  //@}
   
   nuiPropertyMap mProperties;
   static nuiPropertyMap mGlobalProperties;
