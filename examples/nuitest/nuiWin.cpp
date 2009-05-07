@@ -102,6 +102,8 @@ using namespace std;
 
 #include "nuiCoverFlow.h"
 
+#include "nuiUnicode.h"
+
 /*
 
 * Simple console based on nuiText
@@ -549,6 +551,10 @@ void nuiWin::OnCreation()
 
   pElement = new nuiTreeNode(nuiTR("CoverFlow test"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateCoverFlowWindow);
+  pMainTree->AddChild(pElement);
+
+  pElement = new nuiTreeNode(nuiTR("Unicode Text Analysis"));
+  mWinSink.Connect(pElement->Activated, &nuiWin::CreateUnicodeTextWindow);
   pMainTree->AddChild(pElement);
   
   pElement = new nuiTreeNode(nuiTR("Enum native resources"));
@@ -2749,6 +2755,72 @@ bool nuiWin::CreateCoverFlowWindow(const nuiEvent& rEvent)
   mpManager->AddChild(pWin);
   return false;
 }
+
+bool nuiWin::CreateUnicodeTextWindow(const nuiEvent& rEvent)
+{
+  nuiWindow* pWin = new nuiWindow(nuiRect(10, 10, 320, 320));
+  nuiScrollView* pView = new nuiScrollView();
+  pWin->AddChild(pView);
+  nuiText* pText = new nuiText();
+  pView->AddChild(pText);
+  mpManager->AddChild(pWin);
+  
+  //nglPath path(_T("rsrc:/font_tests/test-japanese.txt"));
+  nglPath path(_T("rsrc:/GLASS.txt"));
+  nglIStream* pFile = path.OpenRead();
+  if (!pFile)
+    return false;
+  
+  pFile->SetTextEncoding(eUTF8);
+  nglString text;
+  
+  bool r = pFile->ReadText(text);
+  delete pFile;
+
+  if (!r)
+    return false;
+
+  nuiTextRangeList Ranges;
+  bool res = nuiSplitText(text, Ranges, nuiST_ScriptChange);
+  if (!res)
+  {
+    NGL_OUT(_T("Error while splitting the text\n"));
+    return false;
+  }
+
+  nuiTextRangeList::iterator it = Ranges.begin();
+  nuiTextRangeList::iterator end = Ranges.end();
+  
+  uint32 i = 0;
+  uint32 current = 0;
+  uint32 len = 0;
+  while (it != end)
+  {
+    const nuiTextRange& rRange(*it);
+
+    len = rRange.mLength;
+    
+    nglString str;
+    str.CFormat(_T("Text range %4d\t[%4d to %4d - %3d glyphs]\t%ls - %ls - %ls'\n"), 
+            i, current, current + len, len, 
+            rRange.mBlank?_T("blank"):_T("     "),
+            rRange.mDirection?_T("RtL"):_T("LtR"),
+            nuiGetUnicodeRangeName(rRange.mScript).GetChars()
+    );
+    
+    NGL_OUT(str.GetChars());
+    pText->AddText(str);
+
+    current += len;
+    
+    i++;
+    ++it;
+  }
+  
+  //pText->AddText(text);
+  return false;
+}
+
 
 #include "nuiMemoryPool.h"
 

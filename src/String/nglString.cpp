@@ -2649,13 +2649,14 @@ bool operator>=(const nglChar* pLeft, const nglString& rRight)   { _OP_(rRight, 
 
 nglChar nglString::operator[](uint32 Index) const
 {
-#ifdef _DEBUG_
-	if ((Index < 0) || ((int32)Index >= GetLength())) return Zero;
+//#ifdef _DEBUG_
+//	if ((Index < 0) || ((int32)Index >= GetLength())) return Zero;
+//	return mString[Index];
+//#else
+//	// Relaxed checking, still buffer overflow safe
+//	return (Index >= 0 && (int32)Index < (int32)mString.size()) ? mString[Index] : Zero;
+//#endif // _DEBUG_
 	return mString[Index];
-#else
-	// Relaxed checking, still buffer overflow safe
-	return (Index >= 0 && (int32)Index < (int32)mString.size()) ? mString[Index] : Zero;
-#endif // _DEBUG_
 }
 
 // Array access
@@ -2666,10 +2667,10 @@ nglChar& nglString::operator[](uint32 Index)
 
 nglChar  nglString::operator[](int32 Index) const
 {
-  return this->operator[]((uint32)Index);
+	return mString[Index];
 }
 
 nglChar& nglString::operator[](int32 Index)
 {
-  return this->operator[]((uint32)Index);
+	return mString[Index];
 }

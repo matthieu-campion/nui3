@@ -139,7 +139,7 @@ enum nuiUnicodeRange
 };
 
 nuiUnicodeRange nuiGetUnicodeRange(nglChar ch);
-nuiUnicodeRange nuiGetUnicodeRange(nglChar ch, uint32& rLow, uint32& rHigh);
+nuiUnicodeRange nuiGetUnicodeRange(nglChar ch, nglChar& rLow, nglChar& rHigh);
 nglString nuiGetUnicodeRangeName(nuiUnicodeRange range);
 
 enum nuiUnicodeDirection

@@ -72,6 +72,7 @@ protected:
   bool CreateHTMLWindow(const nuiEvent& rEvent);
   bool CreateImageResizeWindow(const nuiEvent& rEvent);
   bool CreateCoverFlowWindow(const nuiEvent& rEvent);
+  bool CreateUnicodeTextWindow(const nuiEvent& rEvent);
 
   bool CreateNewWindow(const nuiEvent& rEvent);
   bool ShowMenu(const nuiEvent& rEvent);

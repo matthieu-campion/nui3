@@ -10,8 +10,8 @@
 
 typedef struct nuiUnicodeRangeDesc
 {
-  uint32 RangeStart;
-  uint32 RangeEnd;
+  nglChar RangeStart;
+  nglChar RangeEnd;
   nuiUnicodeRange Range;
 };
 
@@ -171,11 +171,11 @@ nuiUnicodeRangeDesc nuiUnicodeRanges[] =
 
 nuiUnicodeRange nuiGetUnicodeRange(nglChar ch)
 {
-  uint32 l, h;
+  nglChar l, h;
   return nuiGetUnicodeRange(ch, l, h);
 }
 
-nuiUnicodeRange nuiGetUnicodeRange(nglChar ch, uint32& rLow, uint32& rHigh)
+nuiUnicodeRange nuiGetUnicodeRange(nglChar ch, nglChar& rLow, nglChar& rHigh)
 {
   const uint32 count = sizeof(nuiUnicodeRanges) / sizeof(nuiUnicodeRangeDesc);
   for (uint32 i = 0; i < count; i++)
@@ -341,6 +341,13 @@ bool nuiIsUnicodeBlank(nglChar ch)
   return ch < 32;
 }
 
+nuiTextRange::nuiTextRange()
+{
+  mLength = 0; // count of unicode code points
+  mDirection = 0; // even: Left to right, odd: right to left
+  mScript = eNone; // What script if this range of text
+  mBlank = false; // Does this range contains strictly blank (space, tab, return, etc.) code points.
+}
 
 bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nuiSplitTextFlag flags)
 {
@@ -355,11 +362,11 @@ bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nui
   const bool directionchange = flags & nuiST_DirectionChange;
   uint32 lastpos = 0;
   uint32 curpos = 0;
-  nglChar ch = rSourceString[curpos];
+  const nglChar& ch = rSourceString[curpos];
   int32 direction = nuiGetUnicodeDirection(ch);
   int32 newdirection = direction;
-  uint32 low = 0;
-  uint32 hi = 0;
+  nglChar low = 0;
+  nglChar hi = 0;
   nuiUnicodeRange range = nuiGetUnicodeRange(ch, low, hi);
   nuiUnicodeRange newrange = range;
   bool blank = nuiIsUnicodeBlank(ch);
@@ -369,23 +376,28 @@ bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nui
   while (curpos != size)
   {
     bool brk = false;
-    ch = rSourceString[curpos];
-    
-    if (scriptchange)
-    {
-      if (ch < low || ch > hi) // still in the last range?
-      {
-        newrange = nuiGetUnicodeRange(ch, low, hi);
-        if (newrange != range)
-          brk = true;
-      }
-    }
-    
+    const nglChar& ch = rSourceString[curpos];
+
     if (wordboundary)
     {
       newblank = nuiIsUnicodeBlank(ch);
       if (newblank != blank)
         brk = true;
+    }
+    
+    if (scriptchange)
+    {
+      if (ch < low || ch > hi) // still in the last range?
+      {
+        if (!wordboundary)
+          newblank = nuiIsUnicodeBlank(ch);
+        if (!newblank)
+        {
+          newrange = nuiGetUnicodeRange(ch, low, hi);
+          if (newrange != range)
+            brk = true;
+        }
+      }
     }
     
     if (directionchange)
