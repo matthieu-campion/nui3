@@ -9,6 +9,8 @@
 #include "MainWindow.h"
 #include "Application.h"
 #include "nuiCSV.h"
+#include "nuiHTTP.h"
+#include "nuiParser.h"
 
 /*
  * MainWindow
@@ -26,24 +28,77 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
   
   mpText->AddText(_T("unicode script parser\n"));
   
-  nuiCSV csv(_T(','));
-  nglIStream* pStream = nglPath(_T("/Users/meeloo/Desktop/scripts.txt")).OpenRead();
-  
-  if (!pStream)
+  nglString url = _T("http://www.unicode.org/Public/UNIDATA/Scripts.txt");
+  nuiHTTPRequest req(url);
+  nuiHTTPResponse* pResponse = req.SendRequest();
+  if (!pResponse)
   {
-    mpText->AddText(_T("Error loading text file"));
+    mpText->AddText(_T("Unable to connect to ") + url);
     return;
   }
+
+  nglIMemory stream(&pResponse->GetBody()[0], pResponse->GetBody().size());
+  nuiParser parser(&stream, url);
   
-  bool res = csv.Load(pStream, false);
-  
-  if (!res)
+#define ERROR(x) { mpText->AddText(x); mpText->AddText(_T("\n")); NGL_OUT(x); NGL_ASSERT(0); return; }
+  parser.NextChar();
+  while (!parser.IsDone())
   {
-    mpText->AddText(_T("Error parsing csv file"));
-    return;
+    if (!parser.SkipBlank())
+      ERROR(_T("parser error\n"));
+    
+    if (parser.GetChar() == '#')
+    {
+      if (!parser.SkipToNextLine())
+        ERROR(_T("parser error in comment"));
+    }
+    else
+    {
+      uint32 low = 0;
+      uint32 high = 0;
+      if (!parser.GetInteger(low, 16))
+        ERROR(_T("parser error while looking for low code point"));
+      
+      high = low;
+      
+      if (parser.GetChar() == '.')
+      {
+        if (!(parser.NextChar() && parser.GetChar() == '.'))
+          ERROR(_T("parser error while looking for range separator (..)"));
+        
+        if (!parser.NextChar())
+          ERROR(_T("parser error while looking for range end (after ..)"));
+        
+        if (!parser.GetInteger(high, 16))
+          ERROR(_T("parser error while looking for high code point"));
+      }
+      
+      // now parse the script name
+      if (!parser.SkipBlank())
+        ERROR(_T("parser error while looking for ;\n"));
+      
+      if (parser.GetChar() != ';')
+        ERROR(_T("parser error while looking for ;\n"));
+
+      if (!parser.NextChar())
+        ERROR(_T("parser error while looking script"));
+
+      if (!parser.SkipBlank())
+        ERROR(_T("parser error while looking for script name\n"));
+      
+      nglString script;
+      if (!parser.GetSymbol(script))
+        ERROR(_T("parser error while reading script name\n"));
+      
+      NGL_OUT(_T("found %ls %04x..%04x\n"), script.GetChars(), low, high);
+      
+      if (!parser.SkipToNextLine())
+        ERROR(_T("parser error skipping to next line"));
+
+    }
   }
   
-  
+/*  
   std::map<nglString, std::vector< std::pair<nglChar, nglChar> > > scripts;
   const std::vector<std::vector<nglString> >& rDoc(csv.GetDocument());
 
@@ -105,7 +160,7 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
     
     ++it;
   }
-  
+  */
 }
 
 MainWindow::~MainWindow()

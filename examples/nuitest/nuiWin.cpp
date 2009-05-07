@@ -2689,7 +2689,7 @@ bool nuiWin::CreateHTTPWindow(const nuiEvent& rEvent)
 bool nuiWin::SendHTTPRequest(const nuiEvent& rEvent)
 {
   nglString url = mpURLText->GetText();
-  nuiHTTPRequest req(url, _T("GET"));
+  nuiHTTPRequest req(url);
   nuiHTTPResponse* pResponse = req.SendRequest();
   if (pResponse)
   {

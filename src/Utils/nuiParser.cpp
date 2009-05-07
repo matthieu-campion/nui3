@@ -45,9 +45,14 @@ const nglString& nuiParser::GetErrorStr() const
 bool nuiParser::PeekChar()
 {
   nglFileOffset ofs = mpStream->GetPos();
-  bool res = GetChar();
+  bool res = NextChar();
   mpStream->SetPos(ofs);
   return res;
+}
+
+bool nuiParser::IsDone() const
+{
+  return mpStream->GetState() != eStreamReady;
 }
 
 bool nuiParser::NextChar()
@@ -113,7 +118,7 @@ bool nuiParser::NextChar()
     mLine++;
   }
   
-  //NGL_OUT(_T("%lc"), mChar);
+  //wprintf(_T("%lc"), mChar);
   
   return true;
 }
@@ -142,20 +147,32 @@ bool nuiParser::SkipBlank()
       
       if (mChar == '/')
       {
-        res = GetChar();
+        res = NextChar();
         // Skip to the end of the line:
-        res = GetChar();
+        res = NextChar();
         while (res && mChar != 0xa && mChar != 0xd)
         {
-          res = GetChar();
+          res = NextChar();
         }
       }
     }
     
-    res = GetChar();
+    res = NextChar();
   }
   return res;
 }
+
+bool nuiParser::SkipToNextLine()
+{
+  bool res = NextChar();
+  if (!res)
+    return false;
+  // Skip to the end of the line:
+  while (res && mChar != 0xa && mChar != 0xd)
+    res = NextChar();
+  return res;
+}
+
 
 bool nuiParser::GetQuoted(nglString& rResult)
 {
@@ -180,7 +197,7 @@ bool nuiParser::GetQuoted(nglString& rResult)
     rResult.Add(mChar);
   }
   
-  GetChar();
+  NextChar();
   return true;
 }
 
@@ -190,10 +207,18 @@ bool nuiParser::GetSymbol(nglString& rResult)
   if (!SkipBlank())
     return false;
   
+  if (!IsValidInSymbolStart(mChar))
+    return false;
+  rResult.Add(mChar);
+  
+  if (!NextChar())
+    return false;
+  
   while (IsValidInSymbol(mChar))
   {
     rResult.Add(mChar);
-    GetChar();
+    if (!NextChar())
+      return false;
   }
   
   return !rResult.IsEmpty();
@@ -208,7 +233,7 @@ bool nuiParser::GetValue(nglString& rResult, bool AllowBlank)
   while ((AllowBlank && IsBlank(mChar)) || IsValidInValue(mChar))
   {
     rResult.Add(mChar);
-    GetChar();
+    NextChar();
   }
   
   return true;
@@ -297,7 +322,7 @@ bool nuiParser::GetInteger(uint8&  rResult, uint8 Base)
   uint64 r;
   bool res = GetInteger(r, Base);
   rResult = r;
-  return res & (r < (1 << 8));
+  return res && (r < (1 << 8));
 }
 
 bool nuiParser::GetInteger(uint16& rResult, uint8 Base)
@@ -305,7 +330,7 @@ bool nuiParser::GetInteger(uint16& rResult, uint8 Base)
   uint64 r;
   bool res = GetInteger(r, Base);
   rResult = r;
-  return res & (r < (1 << 16));
+  return res && (r < (1 << 16));
 }
 
 bool nuiParser::GetInteger(uint32& rResult, uint8 Base)
@@ -313,7 +338,8 @@ bool nuiParser::GetInteger(uint32& rResult, uint8 Base)
   uint64 r;
   bool res = GetInteger(r, Base);
   rResult = r;
-  return res & (r < (1 << 32));
+  bool res2 = r == rResult;
+  return res && res2;
 }
 
 bool nuiParser::GetInteger(uint64& rResult, uint8 Base)
@@ -325,9 +351,13 @@ bool nuiParser::GetInteger(uint64& rResult, uint8 Base)
   while (GetNumberDigit(digit, mChar, Base))
   {
     rResult *= Base;
+    old = rResult;
     rResult += digit;
     
-    if ((rResult - digit) != (old * Base))
+    if ((rResult - digit) != old)
+      return false;
+    
+    if (!NextChar())
       return false;
   }
   return true;
@@ -338,7 +368,7 @@ bool nuiParser::GetInteger(int8&  rResult, uint8 Base)
   uint64 r;
   bool res = GetInteger(r, Base);
   rResult = r;
-  return res & (r < (1 << 8));
+  return res && (r < (1 << 8));
 }
 
 bool nuiParser::GetInteger(int16& rResult, uint8 Base)
@@ -346,7 +376,7 @@ bool nuiParser::GetInteger(int16& rResult, uint8 Base)
   uint64 r;
   bool res = GetInteger(r, Base);
   rResult = r;
-  return res & (r < (1 << 16));
+  return res && (r < (1 << 16));
 }
 
 bool nuiParser::GetInteger(int32& rResult, uint8 Base)
@@ -354,7 +384,7 @@ bool nuiParser::GetInteger(int32& rResult, uint8 Base)
   uint64 r;
   bool res = GetInteger(r, Base);
   rResult = r;
-  return res & (r < (1 << 32));
+  return res && (r < (1 << 32));
 }
 
 bool nuiParser::GetInteger(int64& rResult, uint8 Base)
@@ -417,9 +447,14 @@ void nuiParser::SetValidInBlank(const nglString& rValidChars)
 
 bool nuiParser::IsValidInSymbolStart(nglChar c) const
 {
-  if (mValidInSymbolStart.find(c) != mValidInSymbolStart.end())
+  return (mValidInSymbolStart.find(c) != mValidInSymbolStart.end());
+}
+
+bool nuiParser::IsValidInSymbol(nglChar c) const
+{
+  if (mValidInSymbol.find(c) != mValidInSymbol.end())
     return true;
-  return IsValidInSymbol(c);
+  return IsValidInSymbolStart(c);
 }
 
 bool nuiParser::IsNumberDigit(nglChar c, uint32 Base) const
@@ -439,9 +474,9 @@ bool nuiParser::GetNumberDigit(uint8& res, nglChar c, uint32 Base) const
   }
   else if (c >= 'A' && c <= 'Z')
   {
-    c -= 'a';
+    c -= 'A';
     c += 10;
   }
   res = c;
-  return c < Base;
+  return res < Base;
 }

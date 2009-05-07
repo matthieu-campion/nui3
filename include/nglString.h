@@ -653,31 +653,35 @@ public:
 
 	/** @name STL functors */
 	//@{
-	class LessFunctor : public std::binary_function <nglString, nglString, bool> 
-	{
-	public:
+  template <bool CaseSensitive>
+  class LessFunctorBase : public std::binary_function <nglString, nglString, bool> 
+  {
+  public:
 		/*! Comparison functor for STL containers
-		\param rLeft left operand
-		\param rRight right operand
-		\return result of rLeft < rRight
-
-		This functor can be used when nglString is involved in a STL container
-		or algorithm. Example :
-
-		\code
-		std::map<nglString, int, nglString::LessFunctor> AgeOfPeople;
-		nglString someone("John Doe");
-		int age;
-
-		AgeOfPeople[someone] = 33;
-		age = AgeOfPeople[someone];
-		\endcode
-		*/
-		bool operator()(const nglString& rLeft, const nglString& rRight) const
-		{
-			return rLeft < rRight;
-		}
-	};
+     \param rLeft left operand
+     \param rRight right operand
+     \return result of rLeft < rRight
+     
+     This functor can be used when nglString is involved in a STL container
+     or algorithm. Example :
+     
+     \code
+     std::map<nglString, int, nglString::LessFunctor> AgeOfPeople;
+     nglString someone("John Doe");
+     int age;
+     
+     AgeOfPeople[someone] = 33;
+     age = AgeOfPeople[someone];
+     \endcode
+     */
+    bool operator()(const nglString& rLeft, const nglString& rRight) const
+    {
+      return rLeft.Compare(rRight, CaseSensitive) < 0;
+    }
+  };  
+  
+	typedef LessFunctorBase<true> LessFunctor;
+	typedef LessFunctorBase<false> CaseInsensitiveLessFunctor;
 
 	class NaturalLessFunctor : public std::binary_function <nglString, nglString, bool> 
 	{
@@ -704,7 +708,7 @@ public:
 			return rLeft.CompareNatural(rRight) < 0;
 		}
 	};
-	//@}
+  //@}
 
 	/** @name Operators */
 	//@{

@@ -9,22 +9,13 @@
 
 class nuiHTTPResponse;
 
-class CaseInsensitiveLessFunctor : public std::binary_function <nglString, nglString, bool> 
-{
-public:
-  bool operator()(const nglString& rLeft, const nglString& rRight) const
-  {
-    return rLeft.Compare(rRight, false) < 0;
-  }
-};
-
-typedef std::map<nglString, nglString, CaseInsensitiveLessFunctor> HTTPHeaderMap;
+typedef std::map<nglString, nglString, nglString::CaseInsensitiveLessFunctor> nuiHTTPHeaderMap;
 class nuiHTTPMessage
 {
 public:
   virtual ~nuiHTTPMessage();
 
-  const HTTPHeaderMap& GetHeaders() const;
+  const nuiHTTPHeaderMap& GetHeaders() const;
   nglString GetHeadersRep() const; ///< Return a representation of headers as a multi-line string. 
   void AddHeader(const nglString& rFieldName, const nglString& rFieldValue); ///< Add new or replace existing header.
   bool AddHeader(const nglString& rHeader); ///< Add new or replace existing header. String must be of form "<field-name>: <field-value>" as per HTTP 1.1 specification (IETF RFC 2616). Returns true in case of success.
@@ -36,14 +27,14 @@ public:
 protected:
   nuiHTTPMessage();
 
-  HTTPHeaderMap mHeaders;
+  nuiHTTPHeaderMap mHeaders;
   std::vector<char> mBody;
 };
 
 class nuiHTTPRequest : public nuiHTTPMessage
 {
 public:
-  nuiHTTPRequest(const nglString& rUrl, const nglString& rMethod);
+  nuiHTTPRequest(const nglString& rUrl, const nglString& rMethod = _T("GET"));
   virtual ~nuiHTTPRequest();
 
   nuiHTTPResponse* SendRequest();

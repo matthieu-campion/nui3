@@ -10,11 +10,13 @@ class nuiParser
 public:
   nuiParser(nglIStream* pStream, const nglPath& rSourcePath);
 
+  bool IsDone() const; ///< Returns true if all the source data has been consumed
   bool PeekChar(); ///< Read the next char but don't advance the read index.
   bool NextChar(); ///< Read the next char and advance the read index.
   nglChar GetChar() const; ///< Get the current char.
 
   bool SkipBlank(); ///< Advance the read pointer until the current char is not a blank.  Returns false is there is a problem.
+  bool SkipToNextLine(); ///< Advance the read pointer until the start of the next line.  Returns false is there is a problem.
   bool GetQuoted(nglString& rResult); ///< Read a Quoted string. Returns false is there is a problem.
   bool GetSymbol(nglString& rResult); ///< Read a symbol. Returns false is there is a problem.
   bool GetValue(nglString& rResult, bool AllowBlank = false); ///< Read a value. Returns false is there is a problem.

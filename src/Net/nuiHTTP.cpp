@@ -18,7 +18,7 @@ nuiHTTPMessage::~nuiHTTPMessage()
 {
 }
 
-const HTTPHeaderMap& nuiHTTPMessage::GetHeaders() const
+const nuiHTTPHeaderMap& nuiHTTPMessage::GetHeaders() const
 {
   return mHeaders;
 }
@@ -26,8 +26,8 @@ const HTTPHeaderMap& nuiHTTPMessage::GetHeaders() const
 nglString nuiHTTPMessage::GetHeadersRep() const
 {
   nglString str;
-  HTTPHeaderMap::const_iterator end = mHeaders.end();
-  for (HTTPHeaderMap::const_iterator it = mHeaders.begin(); it != end; ++it)
+  nuiHTTPHeaderMap::const_iterator end = mHeaders.end();
+  for (nuiHTTPHeaderMap::const_iterator it = mHeaders.begin(); it != end; ++it)
   {
     str.Append(it->first + _T(" : ") + it->second);
     str.AddNewLine();

@@ -36,8 +36,8 @@ nuiHTTPResponse* nuiHTTPRequest::SendRequest()
   CFRelease(userAgentField);
   CFRelease(userAgentName);
   
-  HTTPHeaderMap::const_iterator end = mHeaders.end();
-  for (HTTPHeaderMap::const_iterator it = mHeaders.begin(); it != end; ++it)
+  nuiHTTPHeaderMap::const_iterator end = mHeaders.end();
+  for (nuiHTTPHeaderMap::const_iterator it = mHeaders.begin(); it != end; ++it)
   {
     char* pName = it->first.Export();
     char* pVal = it->second.Export();
