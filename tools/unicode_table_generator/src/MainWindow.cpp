@@ -16,6 +16,27 @@
  * MainWindow
  */
 
+class Range
+{
+public:
+  Range(const nglString& rName, int32 low, int32 hi)
+  {
+    mLow = low;
+    mHi = hi;
+    mName = rName;
+  }
+  
+public:
+  int32 mLow;
+  int32 mHi;
+  nglString mName;
+};
+
+bool RangeLess(const Range& rLeft, const Range& rRight)
+{
+  return rLeft.mLow < rRight.mLow;
+}
+
 MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& rInfo, bool ShowFPS, const nglContext* pShared )
   : nuiMainWindow(rContextInfo, rInfo, pShared, nglPath(ePathCurrent))
 {
@@ -39,6 +60,8 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
 
   nglIMemory stream(&pResponse->GetBody()[0], pResponse->GetBody().size());
   nuiParser parser(&stream, url);
+  
+  std::list<Range> Ranges;
   
 #define ERROR(x) { mpText->AddText(x); mpText->AddText(_T("\n")); NGL_OUT(x); NGL_ASSERT(0); return; }
   parser.NextChar();
@@ -90,7 +113,8 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
       if (!parser.GetSymbol(script))
         ERROR(_T("parser error while reading script name\n"));
       
-      NGL_OUT(_T("found %ls %04x..%04x\n"), script.GetChars(), low, high);
+      //NGL_OUT(_T("found %ls %04x..%04x\n"), script.GetChars(), low, high);
+      Ranges.push_back(Range(script, low, high));
       
       if (!parser.SkipToNextLine())
         ERROR(_T("parser error skipping to next line"));
@@ -98,6 +122,42 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
     }
   }
   
+  Ranges.sort(RangeLess);
+
+  std::list<Range> miniranges;
+  
+  
+  std::list<Range>::iterator it = Ranges.begin();
+  std::list<Range>::iterator end = Ranges.end();
+  Range old(nglString::Empty, 0, 0);
+  old = *it;
+  ++it;
+  while (it != end)
+  {
+    Range& r(*it);
+    
+    if (r.mName == old.mName)
+    {
+      // merge this
+      old.mHi = r.mHi;
+    }
+    else
+    {
+      miniranges.push_back(old);
+      old = r;
+    }
+    
+    ++it;
+  }
+  
+  it = miniranges.begin();
+  end = miniranges.end();
+  while (it != end)
+  {
+    Range& r(*it);
+    NGL_OUT(_T("found %20ls\t\t %04x..%04x\n"), r.mName.GetChars(), r.mLow, r.mHi);
+    ++it;
+  }    
 /*  
   std::map<nglString, std::vector< std::pair<nglChar, nglChar> > > scripts;
   const std::vector<std::vector<nglString> >& rDoc(csv.GetDocument());
