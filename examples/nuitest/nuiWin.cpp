@@ -2805,7 +2805,7 @@ bool nuiWin::CreateUnicodeTextWindow(const nuiEvent& rEvent)
             i, current, current + len, len, 
             rRange.mBlank?_T("blank"):_T("     "),
             rRange.mDirection?_T("RtL"):_T("LtR"),
-            nuiGetUnicodeRangeName(rRange.mScript).GetChars()
+            nuiGetUnicodeScriptName(rRange.mScript).GetChars()
     );
     
     NGL_OUT(str.GetChars());

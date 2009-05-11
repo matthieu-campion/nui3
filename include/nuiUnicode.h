@@ -7,6 +7,92 @@
 
 #pragma once
 
+enum nuiUnicodeScript
+{
+  eScriptCommon,
+  eScriptLatin,
+  eScriptArabic,
+  eScriptArmenian,
+  eScriptBalinese,
+  eScriptBengali,
+  eScriptBopomofo,
+  eScriptBraille,
+  eScriptBuginese,
+  eScriptBuhid,
+  eScriptCanadian_Aboriginal,
+  eScriptCarian,
+  eScriptCham,
+  eScriptCherokee,
+  eScriptCoptic,
+  eScriptCuneiform,
+  eScriptCypriot,
+  eScriptCyrillic,
+  eScriptDeseret,
+  eScriptDevanagari,
+  eScriptEthiopic,
+  eScriptGeorgian,
+  eScriptGlagolitic,
+  eScriptGothic,
+  eScriptGreek,
+  eScriptGujarati,
+  eScriptGurmukhi,
+  eScriptHan,
+  eScriptHangul,
+  eScriptHanunoo,
+  eScriptHebrew,
+  eScriptHiragana,
+  eScriptInherited,
+  eScriptKannada,
+  eScriptKatakana,
+  eScriptKayah_Li,
+  eScriptKharoshthi,
+  eScriptKhmer,
+  eScriptLao,
+  eScriptLepcha,
+  eScriptLimbu,
+  eScriptLinear_B,
+  eScriptLycian,
+  eScriptLydian,
+  eScriptMalayalam,
+  eScriptMongolian,
+  eScriptMyanmar,
+  eScriptNew_Tai_Lue,
+  eScriptNko,
+  eScriptOgham,
+  eScriptOl_Chiki,
+  eScriptOld_Italic,
+  eScriptOld_Persian,
+  eScriptOriya,
+  eScriptOsmanya,
+  eScriptPhags_Pa,
+  eScriptPhoenician,
+  eScriptRejang,
+  eScriptRunic,
+  eScriptSaurashtra,
+  eScriptShavian,
+  eScriptSinhala,
+  eScriptSundanese,
+  eScriptSyloti_Nagri,
+  eScriptSyriac,
+  eScriptTagalog,
+  eScriptTagbanwa,
+  eScriptTai_Le,
+  eScriptTamil,
+  eScriptTelugu,
+  eScriptThaana,
+  eScriptThai,
+  eScriptTibetan,
+  eScriptTifinagh,
+  eScriptUgaritic,
+  eScriptVai,
+  eScriptYi
+};
+
+nuiUnicodeScript nuiGetUnicodeScript(nglChar ch);
+nuiUnicodeScript nuiGetUnicodeScript(nglChar ch, nglChar& rLow, nglChar& rHigh);
+nglString nuiGetUnicodeScriptName(nuiUnicodeScript script);
+
+
 enum nuiUnicodeRange
 {
   eNone = 0,
@@ -151,90 +237,6 @@ enum nuiUnicodeDirection
 nuiUnicodeDirection nuiGetUnicodeDirection(nglChar ch);
 
 
-enum nuiUnicodeScript
-{
-  eScriptCommon,
-  eScriptLatin,
-  eScriptArabic,
-  eScriptArmenian,
-  eScriptBalinese,
-  eScriptBengali,
-  eScriptBopomofo,
-  eScriptBraille,
-  eScriptBuginese,
-  eScriptBuhid,
-  eScriptCanadian_Aboriginal,
-  eScriptCarian,
-  eScriptCham,
-  eScriptCherokee,
-  eScriptCoptic,
-  eScriptCuneiform,
-  eScriptCypriot,
-  eScriptCyrillic,
-  eScriptDeseret,
-  eScriptDevanagari,
-  eScriptEthiopic,
-  eScriptGeorgian,
-  eScriptGlagolitic,
-  eScriptGothic,
-  eScriptGreek,
-  eScriptGujarati,
-  eScriptGurmukhi,
-  eScriptHan,
-  eScriptHangul,
-  eScriptHanunoo,
-  eScriptHebrew,
-  eScriptHiragana,
-  eScriptInherited,
-  eScriptKannada,
-  eScriptKatakana,
-  eScriptKayah_Li,
-  eScriptKharoshthi,
-  eScriptKhmer,
-  eScriptLao,
-  eScriptLepcha,
-  eScriptLimbu,
-  eScriptLinear_B,
-  eScriptLycian,
-  eScriptLydian,
-  eScriptMalayalam,
-  eScriptMongolian,
-  eScriptMyanmar,
-  eScriptNew_Tai_Lue,
-  eScriptNko,
-  eScriptOgham,
-  eScriptOl_Chiki,
-  eScriptOld_Italic,
-  eScriptOld_Persian,
-  eScriptOriya,
-  eScriptOsmanya,
-  eScriptPhags_Pa,
-  eScriptPhoenician,
-  eScriptRejang,
-  eScriptRunic,
-  eScriptSaurashtra,
-  eScriptShavian,
-  eScriptSinhala,
-  eScriptSundanese,
-  eScriptSyloti_Nagri,
-  eScriptSyriac,
-  eScriptTagalog,
-  eScriptTagbanwa,
-  eScriptTai_Le,
-  eScriptTamil,
-  eScriptTelugu,
-  eScriptThaana,
-  eScriptThai,
-  eScriptTibetan,
-  eScriptTifinagh,
-  eScriptUgaritic,
-  eScriptVai,
-  eScriptYi
-};
-
-nuiUnicodeScript nuiGetUnicodeScript(nglChar ch);
-nuiUnicodeScript nuiGetUnicodeScript(nglChar ch, int32& rLow, int32& rHigh);
-
 
 bool nuiIsUnicodeBlank(nglChar ch);
 
@@ -243,19 +245,24 @@ class nuiTextRange
 public:
   nuiTextRange();
   
-  uint32 mLength; // count of unicode code points
-  int32 mDirection; // even: Left to right, odd: right to left
-  nuiUnicodeRange mScript; // What script if this range of text
+  uint32 mLength; // Count of unicode code points
+  int32 mDirection; // Even: Left to right, Odd: right to left
+  nuiUnicodeScript mScript; // What script is this range of text
+  nuiUnicodeRange mRange; // What unicode range is this range of text
   bool mBlank; // Does this range contains strictly blank (space, tab, return, etc.) code points.
 };
 
 typedef std::list<nuiTextRange> nuiTextRangeList;
 typedef uint32 nuiSplitTextFlag;
 
-const nuiSplitTextFlag nuiST_ScriptChange    = 1 << 0;
+const nuiSplitTextFlag nuiST_StrictScriptChange = 1 << 0;
 const nuiSplitTextFlag nuiST_WordBoundary    = 1 << 1;
 const nuiSplitTextFlag nuiST_DirectionChange = 1 << 2;
-const nuiSplitTextFlag nuiST_All    = nuiST_ScriptChange | nuiST_WordBoundary | nuiST_DirectionChange;
+const nuiSplitTextFlag nuiST_RangeChange     = 1 << 3;
+const nuiSplitTextFlag nuiST_MergeCommonScript = 1 << 4;
+const nuiSplitTextFlag nuiST_ScriptChange    = nuiST_StrictScriptChange | nuiST_MergeCommonScript;
+const nuiSplitTextFlag nuiST_Natural         = nuiST_ScriptChange | nuiST_WordBoundary | nuiST_DirectionChange | nuiST_MergeCommonScript;
+const nuiSplitTextFlag nuiST_All             = nuiST_Natural | nuiST_RangeChange;
 
-bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nuiSplitTextFlag flags = nuiST_All);
+bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nuiSplitTextFlag flags = nuiST_Natural);
 

@@ -16,7 +16,7 @@ typedef struct nuiUnicodeRangeDesc
 };
 
 nuiUnicodeRangeDesc nuiUnicodeRanges[] =
-{// Start , End   , Enum                                   
+{// Start  End   , Enum                                   
   { 0x0000,	0x007F,	eBasicLatin },
   { 0x0080,	0x00FF,	eC1ControlsAndLatin1Supplement },
   { 0x0100,	0x017F,	eLatinExtendedA },
@@ -328,6 +328,7 @@ nglString nuiGetUnicodeRangeName(nuiUnicodeRange range)
   NGL_ASSERT(0);
   return nglString::Null;
 }
+#undef NAME
 
 nuiUnicodeDirection nuiGetUnicodeDirection(nglChar ch)
 {
@@ -338,15 +339,16 @@ nuiUnicodeDirection nuiGetUnicodeDirection(nglChar ch)
 bool nuiIsUnicodeBlank(nglChar ch)
 {
   //#FIXME add the actual unicode blank detection algo here
-  return ch < 32;
+  return ch <= 32;
 }
 
 nuiTextRange::nuiTextRange()
 {
-  mLength = 0; // count of unicode code points
-  mDirection = 0; // even: Left to right, odd: right to left
-  mScript = eNone; // What script if this range of text
-  mBlank = false; // Does this range contains strictly blank (space, tab, return, etc.) code points.
+  mLength = 0;
+  mDirection = 0;
+  mScript = eScriptCommon;
+  mRange = eNone;
+  mBlank = false;
 }
 
 bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nuiSplitTextFlag flags)
@@ -358,16 +360,24 @@ bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nui
     return true;
 
   const bool scriptchange = flags & nuiST_ScriptChange;
+  const bool rangechange = flags & nuiST_RangeChange;
   const bool wordboundary = flags & nuiST_WordBoundary;
   const bool directionchange = flags & nuiST_DirectionChange;
+  const bool mergecommonscript = flags & nuiST_MergeCommonScript;
   uint32 lastpos = 0;
   uint32 curpos = 0;
   const nglChar& ch = rSourceString[curpos];
   int32 direction = nuiGetUnicodeDirection(ch);
   int32 newdirection = direction;
-  nglChar low = 0;
-  nglChar hi = 0;
-  nuiUnicodeRange range = nuiGetUnicodeRange(ch, low, hi);
+  
+  nglChar scriptlow = 0;
+  nglChar scripthi = 0;
+  nuiUnicodeScript script = nuiGetUnicodeScript(ch, scriptlow, scripthi);
+  nuiUnicodeScript newscript = script;
+
+  nglChar rangelow = 0;
+  nglChar rangehi = 0;
+  nuiUnicodeRange range = nuiGetUnicodeRange(ch, rangelow, rangehi);
   nuiUnicodeRange newrange = range;
   bool blank = nuiIsUnicodeBlank(ch);
   bool newblank = blank;
@@ -387,18 +397,36 @@ bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nui
     
     if (scriptchange)
     {
-      if (ch < low || ch > hi) // still in the last range?
+      if (ch < scriptlow || ch > scripthi) // still in the last range?
       {
         if (!wordboundary)
           newblank = nuiIsUnicodeBlank(ch);
         if (!newblank)
         {
-          newrange = nuiGetUnicodeRange(ch, low, hi);
+          newscript = nuiGetUnicodeScript(ch, scriptlow, scripthi);
+          if ((newscript != script) && !(mergecommonscript && newscript == eScriptCommon))
+          {
+            brk = true;
+          }
+        }
+      }
+    }
+    
+    if (rangechange)
+    {
+      if (ch < rangelow || ch > rangehi) // still in the last range?
+      {
+        if (!wordboundary)
+          newblank = nuiIsUnicodeBlank(ch);
+        if (!newblank)
+        {
+          newrange = nuiGetUnicodeRange(ch, rangelow, rangehi);
           if (newrange != range)
             brk = true;
         }
       }
     }
+    
     
     if (directionchange)
     {
@@ -412,13 +440,15 @@ bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nui
       nuiTextRange r;
       r.mLength = curpos - lastpos; // count of unicode code points
       r.mDirection = direction; // even: Left to right, odd: right to left
-      r.mScript = range; // What script if this range of text
+      r.mScript = script; // What script if this range of text
+      r.mRange = range; // What script if this range of text
       r.mBlank = blank; // Does this range contains strictly blank (space, tab, return, etc.) code points.
       
       rRanges.push_back(r);
       
       lastpos = curpos;
       direction = newdirection;
+      script = newscript;
       range = newrange;
       blank = newblank;
     }
@@ -430,7 +460,8 @@ bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nui
   nuiTextRange r;
   r.mLength = curpos - lastpos; // count of unicode code points
   r.mDirection = direction; // even: Left to right, odd: right to left
-  r.mScript = range; // What script if this range of text
+  r.mScript = script; // What script if this range of text
+  r.mRange = range; // What script if this range of text
   r.mBlank = blank; // Does this range contains strictly blank (space, tab, return, etc.) code points.
   
   rRanges.push_back(r);
@@ -713,11 +744,11 @@ nuiScriptRange nuiScriptRanges[] =
 
 nuiUnicodeScript nuiGetUnicodeScript(nglChar ch)
 {
-  int32 low, hi;
+  nglChar low, hi;
   return nuiGetUnicodeScript(ch, low, hi);
 }
 
-nuiUnicodeScript nuiGetUnicodeScript(nglChar ch, int32& rLow, int32& rHigh)
+nuiUnicodeScript nuiGetUnicodeScript(nglChar ch, nglChar& rLow, nglChar& rHigh)
 {
   const int32 count = sizeof(nuiScriptRanges) / sizeof(nuiScriptRange);
   
@@ -737,3 +768,91 @@ nuiUnicodeScript nuiGetUnicodeScript(nglChar ch, int32& rLow, int32& rHigh)
   return eScriptCommon;
 }
 
+#define NAME(X) case eScript##X: return _T(#X); break;
+nglString nuiGetUnicodeScriptName(nuiUnicodeScript script)
+{
+  switch (script)
+  {
+    NAME(Common);
+    NAME(Latin);
+    NAME(Arabic);
+    NAME(Armenian);
+    NAME(Balinese);
+    NAME(Bengali);
+    NAME(Bopomofo);
+    NAME(Braille);
+    NAME(Buginese);
+    NAME(Buhid);
+    NAME(Canadian_Aboriginal);
+    NAME(Carian);
+    NAME(Cham);
+    NAME(Cherokee);
+    NAME(Coptic);
+    NAME(Cuneiform);
+    NAME(Cypriot);
+    NAME(Cyrillic);
+    NAME(Deseret);
+    NAME(Devanagari);
+    NAME(Ethiopic);
+    NAME(Georgian);
+    NAME(Glagolitic);
+    NAME(Gothic);
+    NAME(Greek);
+    NAME(Gujarati);
+    NAME(Gurmukhi);
+    NAME(Han);
+    NAME(Hangul);
+    NAME(Hanunoo);
+    NAME(Hebrew);
+    NAME(Hiragana);
+    NAME(Inherited);
+    NAME(Kannada);
+    NAME(Katakana);
+    NAME(Kayah_Li);
+    NAME(Kharoshthi);
+    NAME(Khmer);
+    NAME(Lao);
+    NAME(Lepcha);
+    NAME(Limbu);
+    NAME(Linear_B);
+    NAME(Lycian);
+    NAME(Lydian);
+    NAME(Malayalam);
+    NAME(Mongolian);
+    NAME(Myanmar);
+    NAME(New_Tai_Lue);
+    NAME(Nko);
+    NAME(Ogham);
+    NAME(Ol_Chiki);
+    NAME(Old_Italic);
+    NAME(Old_Persian);
+    NAME(Oriya);
+    NAME(Osmanya);
+    NAME(Phags_Pa);
+    NAME(Phoenician);
+    NAME(Rejang);
+    NAME(Runic);
+    NAME(Saurashtra);
+    NAME(Shavian);
+    NAME(Sinhala);
+    NAME(Sundanese);
+    NAME(Syloti_Nagri);
+    NAME(Syriac);
+    NAME(Tagalog);
+    NAME(Tagbanwa);
+    NAME(Tai_Le);
+    NAME(Tamil);
+    NAME(Telugu);
+    NAME(Thaana);
+    NAME(Thai);
+    NAME(Tibetan);
+    NAME(Tifinagh);
+    NAME(Ugaritic);
+    NAME(Vai);
+    NAME(Yi);
+  }
+  
+  NGL_ASSERT(0);
+  return nglString::Null;
+}
+#undef NAME
