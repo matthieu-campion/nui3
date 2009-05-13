@@ -205,7 +205,7 @@ int nglImagePNGCodec::initialize_png_reader()
 #elif (defined _UNIX_)
   double ScreenGamma = 2.2 / 1.7;
 #elif (defined _CARBON_)
-  double ScreenGamma = 1.8;
+  double ScreenGamma = 2.2 / 1.45;
 #endif //ifdef _WIN32_
   double FileGamma = 1.0 / 2.2;
   if (png_get_gAMA(png_ptr, info_ptr, &FileGamma))
