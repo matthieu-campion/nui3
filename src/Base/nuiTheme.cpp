@@ -882,21 +882,23 @@ void nuiTheme::SetElementColor(nuiWidgetElement Element,const nuiColor& rColor)
   mElementColors[Element] = rColor;
 }
 
-void nuiTheme::DrawTreeHandle(nuiDrawContext* pContext, const nuiRect& rRect, bool IsOpened, nuiSize TREE_HANDLE_SIZE)
+void nuiTheme::DrawTreeHandle(nuiDrawContext* pContext, const nuiRect& rRect, bool IsOpened, nuiSize TREE_HANDLE_SIZE, const nuiColor& rColor)
 {
-  nuiDecoration* pDeco = NULL;
+  nuiFrame* pDeco = NULL;
   if (IsOpened)
-    pDeco = nuiDecoration::Get(_T("nuiDefaultDecorationArrowOpen"));
+    pDeco = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationArrowOpen"));
   else
-    pDeco = nuiDecoration::Get(_T("nuiDefaultDecorationArrowClose"));
+    pDeco = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationArrowClose"));
   NGL_ASSERT(pDeco);
-  
+
   const nuiRect& rectSrc = pDeco->GetIdealClientRect();
   
   nuiSize x,y;
   x = rRect.Left() + (int)((rRect.GetWidth() - rectSrc.GetWidth()) / 2.f);
   y = rRect.Top() + (int)((rRect.GetHeight() - rectSrc.GetHeight()) / 2.f);
   nuiRect rectDest(x, y, rectSrc.GetWidth() , rectSrc.GetHeight());
+  
+  pDeco->SetColor(rColor);
   pDeco->Draw(pContext, NULL, rectDest);
 
   pDeco->Release();

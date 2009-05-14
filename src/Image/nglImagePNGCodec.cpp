@@ -208,10 +208,10 @@ int nglImagePNGCodec::initialize_png_reader()
   double ScreenGamma = 2.2 / 1.45;
 #endif //ifdef _WIN32_
   double FileGamma = 1.0 / 2.2;
-  if (png_get_gAMA(png_ptr, info_ptr, &FileGamma))
-    png_set_gamma(png_ptr, ScreenGamma, FileGamma);
-  else
-    png_set_gamma(png_ptr, ScreenGamma, 1.0 / 2.2);
+//  if (png_get_gAMA(png_ptr, info_ptr, &FileGamma))
+//    png_set_gamma(png_ptr, ScreenGamma, FileGamma);
+//  else
+//    png_set_gamma(png_ptr, ScreenGamma, 1.0 / 2.2);
   
   /* This one's new.  You can provide functions to be called when the header info is valid,
     when each row is completed, and when the image is finished.  If you aren't using all functions,

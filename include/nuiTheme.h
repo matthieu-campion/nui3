@@ -84,7 +84,7 @@ public:
   virtual void DrawMenuItem(nuiDrawContext* pContext, const nuiRect& rRect, bool Hover); ///< Draw the background of a menu item.
 
   // Tree Elements:
-  virtual void DrawTreeHandle(nuiDrawContext* pContext, const nuiRect& rRect, bool IsOpened, nuiSize TreeHandleSize); ///< Draw the typical nuiTreeView node widget as opened or closed inside the given rectangle.
+  virtual void DrawTreeHandle(nuiDrawContext* pContext, const nuiRect& rRect, bool IsOpened, nuiSize TreeHandleSize, const nuiColor& rColor = nuiColor(0,0,0)); ///< Draw the typical nuiTreeView node widget as opened or closed inside the given rectangle.
 
   // Generic Selection Rectangles:
   virtual void DrawSelectionBackground(nuiDrawContext* pContext, const nuiRect& rRect, nuiWidget* pWidget = NULL);

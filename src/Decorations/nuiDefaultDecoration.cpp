@@ -267,7 +267,7 @@ void nuiDefaultDecoration::InitMaps()
   pIMem = new nglIMemory(gpArrowClose, gArrowCloseSize);
   pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
-  pFrame = new nuiFrame(_T("nuiDefaultDecorationArrowClose"), pTex, nuiRect(0,0,7,6));
+  pFrame = new nuiFrame(_T("nuiDefaultDecorationArrowClose"), pTex, nuiRect(0,0,7,6), nuiColor(0,0,0));
   pFrame->UseWidgetAlpha(true);
 
   delete pIMem;  
@@ -277,9 +277,10 @@ void nuiDefaultDecoration::InitMaps()
   pIMem = new nglIMemory(gpArrowOpen, gArrowOpenSize);
   pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
-  pFrame = new nuiFrame(_T("nuiDefaultDecorationArrowOpen"), pTex, nuiRect(0,0,6,7));
+  pFrame = new nuiFrame(_T("nuiDefaultDecorationArrowOpen"), pTex, nuiRect(0,0,6,7), nuiColor(0,0,0));
   pFrame->UseWidgetAlpha(true);
   delete pIMem;  
+  
   
   
   

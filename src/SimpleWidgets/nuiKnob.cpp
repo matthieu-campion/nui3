@@ -346,7 +346,10 @@ nuiRect nuiKnob::CalcIdealSize()
 bool nuiKnob::SetRect(const nuiRect& rRect)
 {
   nuiWidget::SetRect(rRect);
-  mpImageSequence->SetLayout(rRect);
+  
+  if (mpImageSequence)
+    mpImageSequence->SetLayout(rRect);
+  
   return true;
 }
 

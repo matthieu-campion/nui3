@@ -27,6 +27,7 @@ nuiFileTree::nuiFileTree(const nglPath& rPath, const nglPath& rRootPath, const n
   std::list<nglString> filters;
   if (rFilter != nglString::Null)
     filters.push_back(rFilter);
+  
   Init(rPath, rRootPath, filters, showHiddenFiles);
 }
 
@@ -38,7 +39,8 @@ nuiFileTree::nuiFileTree(const nglPath& rPath, const nglPath& rRootPath, const s
 
 void nuiFileTree::Init(const nglPath& rPath, const nglPath& rRootPath, const std::list<nglString>& rFilters, bool showHiddenFiles)
 {
-  SetObjectClass(_T("nuiFileTree"));
+  if (SetObjectClass(_T("nuiFileTree")))
+    InitAttributes();
   SetObjectName(_T("nuiFileTree"));
   
   mpFileBox = NULL;
@@ -53,9 +55,37 @@ void nuiFileTree::Init(const nglPath& rPath, const nglPath& rRootPath, const std
 }
 
 
+
 nuiFileTree::~nuiFileTree()
 {
 }
+
+
+void nuiFileTree::InitAttributes()
+{
+  AddAttribute(new nuiAttribute<nuiColor>
+               (nglString(_T("HandleColor")), nuiUnitNone,
+                nuiMakeDelegate(this, &nuiFileTree::GetHandleColor), 
+                nuiMakeDelegate(this, &nuiFileTree::SetHandleColor)));    
+}
+
+nuiColor nuiFileTree::GetHandleColor()
+{
+  if (!mpTreeView)
+    return nuiColor(0,0,0);
+  
+  return mpTreeView->GetHandleColor();
+}
+
+
+void nuiFileTree::SetHandleColor(nuiColor rColor)
+{
+  if (!mpTreeView)
+    return;
+
+  mpTreeView->SetHandleColor(rColor);
+}
+
 
 
 

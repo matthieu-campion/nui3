@@ -173,6 +173,9 @@ public:
   const nuiTreeNode* GetSelectedNode() const;
   nuiTreeNode* GetSelectedNode();
 
+  const nuiColor& GetHandleColor();
+  void SetHandleColor(const nuiColor& rColor);
+  
   void EnableSubElements(uint32 count);
   
   nuiMouseClicked Clicked; ///< This event is called whenever an item is clicked.
@@ -199,11 +202,18 @@ protected:
   virtual bool OnTreeChanged(const nuiEvent& rEvent);
   virtual bool OnTreeChildAdded(const nuiEvent& rEvent);
   virtual bool OnTreeChildDeleted(const nuiEvent& rEvent);
+  
+  void InitAttributes();
+
+
     
   bool mDisplayRoot;  
   bool mMultiSelectable;
   bool mInMultiSelection;
   bool mDeSelectable;
+  
+  nuiColor mHandleColor;
+
 
   nuiSize mClickX;
   nuiSize mClickY;
@@ -233,6 +243,8 @@ protected:
   static nuiSize mDefaultSubElementWidth;
   
 private:
+  
+  
 #if !defined _NODND_
   
   virtual void OnDragRequestData(nglDragAndDrop* pDragObject, const nglString& rMimeType); ///< This method is called on the drag and drop source widget by the window manager whenever the drag & drop operation was accepted by the user (by releasing the mouse button on a widget that support the dragged object type). This is the last time the source widget is allowed to place data in the drag and dropped object. 

@@ -57,6 +57,8 @@ public:
   virtual void OnDragRequestDataDelegate(nuiTreeNode* pNode, nglDragAndDrop* pDragObj, const nglString& rMimeType);
   virtual void OnDragStopDelegate(nuiTreeNode* pNode, bool canceled);
   
+  nuiColor GetHandleColor();
+  void SetHandleColor(nuiColor rColor);
   
   nuiSimpleEventSource<nuiWidgetActivated> PathChanged;      ///< Event triggered when the user is navigating around the file system.
   nuiSimpleEventSource<nuiWidgetActivated> SelectionChanged; 
@@ -65,9 +67,11 @@ public:
 private:
 
   void Init(const nglPath& rPath, const nglPath& rRootPath, const std::list<nglString>& rFilters, bool showHiddenFiles);
+
+  void InitAttributes();
+  
   void AddTree(const nglPath& rPath, bool Opened);
 
-  
   nglString GetFileInfo(const nglPath& rPath);
   void FormatFileSize(nuiSize size, nglString& str);
   
@@ -84,7 +88,6 @@ private:
   nglPath mRootPath;
   std::stack<nglPath> mWalkthrough;
   nuiScrollView* mpScrollView;
-  
   
   nuiEventSink<nuiFileTree> mEventSink;
   

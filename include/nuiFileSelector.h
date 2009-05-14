@@ -56,9 +56,14 @@ class nuiFileSelector;
 class nuiFileSelectorBase : public nuiComposite
 {
 public:
+  
+  nuiFileSelectorBase();
+  virtual ~nuiFileSelectorBase();
+  
   virtual nuiTreeNode* GetNewNode(const nglPath& rPath);
 
 protected:
+  
   // attributes
   const std::list<nglString>& GetFilters();
   void SetFilters(const std::list<nglString>& rFilters);
@@ -66,10 +71,14 @@ protected:
   void AddFilter(nglString filter);
   std::list<nglString> mFilters;
   
+  
   bool IsFilterSet(const nglString& rFilter);
   bool IsFileFiltered(const nglPath& rFile);
-  
+
   bool mShowHiddenFiles;
+  
+private:
+  void InitAttributes();
 };
 
 class nuiFileSelectorNode : public nuiTreeNode
@@ -105,9 +114,12 @@ public:
     \param rPath initial path displayed by the file browser
   */
   
-  void InitAttributes();
-  
   virtual ~nuiFileSelector();
+
+  
+  nuiColor GetHandleColor();
+  void SetHandleColor(nuiColor rColor);
+  
   
   void InitSelector(const nglPath& rPath, const nglPath& rRootPath, nuiEditLine* pEntry = NULL, DisplayMode mode = eColumn, bool ShowVolumes = true, bool Opened = true);
 
@@ -123,6 +135,8 @@ public:
   void SetDisplayMode(DisplayMode mode);
   DisplayMode GetDisplayMode() const;
   
+  
+  
   nuiSimpleEventSource<nuiWidgetActivated> PathChanged;      ///< Event triggered when the user is navigating around the file system.
   nuiSimpleEventSource<nuiWidgetActivated> OK;      ///< Event triggered when the user was done (file selected)
   nuiSimpleEventSource<nuiActionAborted>   Cancel;  ///< Event triggered when the user was done (closed/cancelled)
@@ -131,6 +145,7 @@ public:
   
 private:
 
+  void InitAttributes();
   void Init(const nglPath& rPath, const nglPath& rRootPath, const std::list<nglString>& rFilters, nuiEditLine* pEntry, bool showHiddenFiles, DisplayMode mode, bool ShowVolumes, bool Opened);
   
   void SetInfoView(nuiWidget* pWidget);

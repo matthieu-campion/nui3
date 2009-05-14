@@ -8,5 +8,5 @@
 #pragma once
 
 extern const char* gpArrowOpen;
-const long         gArrowOpenSize = 182;
+const long         gArrowOpenSize = 178;
 

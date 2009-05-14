@@ -260,6 +260,7 @@ nuiTreeView::nuiTreeView(nuiTreeNodePtr pTree, bool displayRoot)
 : nuiSimpleContainer(),
   mTreeViewSink(this),
   mDisplayRoot(displayRoot),
+  mHandleColor(nuiColor(0,0,0)),
   mpSelectedNode(NULL)
 {
   SetObjectClass(_T("nuiTreeView"));
@@ -309,6 +310,26 @@ nuiTreeView::~nuiTreeView()
   if (mpTree)
     delete mpTree;
 }
+
+void nuiTreeView::InitAttributes()
+{
+  AddAttribute(new nuiAttribute<const nuiColor&>
+               (nglString(_T("HandleColor")), nuiUnitNone,
+                nuiMakeDelegate(this, &nuiTreeView::GetHandleColor), 
+                nuiMakeDelegate(this, &nuiTreeView::SetHandleColor)));    
+}
+
+const nuiColor& nuiTreeView::GetHandleColor()
+{
+  return mHandleColor;
+}
+
+void nuiTreeView::SetHandleColor(const nuiColor& rColor)
+{
+  mHandleColor = rColor;
+  Invalidate();
+}
+
 
 
 nuiXMLNode* nuiTreeView::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
@@ -364,7 +385,7 @@ bool nuiTreeView::DrawTree(nuiDrawContext* pContext, uint32 Depth, nuiTreeNode* 
       pContext->SetFillColor(GetColor(eTreeViewHandle));
       pContext->SetStrokeColor(GetColor(eTreeViewHandle));
       if (pTree->IsTreeHandleDrawned())
-        pTheme->DrawTreeHandle(pContext, r, pTree->IsOpened(), NUI_TREEVIEW_HANDLE_SIZE);
+        pTheme->DrawTreeHandle(pContext, r, pTree->IsOpened(), NUI_TREEVIEW_HANDLE_SIZE, mHandleColor);
     }
     DrawChild(pContext, pWidget);
 

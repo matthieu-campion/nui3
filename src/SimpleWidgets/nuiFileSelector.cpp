@@ -15,6 +15,26 @@
 
 //
 
+nuiFileSelectorBase::nuiFileSelectorBase()
+{
+  if (SetObjectClass(_T("nuiFileSelectorBase")))
+    InitAttributes();
+}
+
+nuiFileSelectorBase::~nuiFileSelectorBase()
+{
+  
+}
+
+void nuiFileSelectorBase::InitAttributes()
+{
+  AddAttribute(new nuiAttribute<nglString>
+               (nglString(_T("Filter")), nuiUnitName,
+                nuiAttribute<nglString>::GetterDelegate(this, &nuiFileSelectorBase::GetLastFilter),
+                nuiAttribute<nglString>::SetterDelegate(this, &nuiFileSelectorBase::AddFilter)));
+  
+}
+
 nuiTreeNode* nuiFileSelectorBase::GetNewNode(const nglPath& rPath)
 {
   nuiWidget* pWidget= NULL;
@@ -161,14 +181,15 @@ bool nuiFileSelectorBase::IsFileFiltered(const nglPath& rFile)
 }
 
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 nuiFileSelectorNode::nuiFileSelectorNode(nuiFileSelectorBase* pSelector, const nglPath& rPath, nuiWidget* pWidget)
-: nuiTreeNode(pWidget)
+: nuiTreeNode(pWidget, false, false, true, false)
 {
   mpSelector = pSelector;
   SetProperty(_T("Path"), rPath.GetPathName());
@@ -311,12 +332,28 @@ nuiFileSelector::~nuiFileSelector()
 
 void nuiFileSelector::InitAttributes()
 {
-  AddAttribute(new nuiAttribute<nglString>
-  (nglString(_T("Filter")), nuiUnitName,
-    nuiAttribute<nglString>::GetterDelegate(this, &nuiFileSelector::GetLastFilter),
-    nuiAttribute<nglString>::SetterDelegate(this, &nuiFileSelector::AddFilter)));
+  AddAttribute(new nuiAttribute<nuiColor>
+               (nglString(_T("HandleColor")), nuiUnitNone,
+                nuiMakeDelegate(this, &nuiFileSelector::GetHandleColor), 
+                nuiMakeDelegate(this, &nuiFileSelector::SetHandleColor)));    
 }
 
+nuiColor nuiFileSelector::GetHandleColor()
+{
+  if (!mpTreeView)
+    return nuiColor(0,0,0);
+  
+  return mpTreeView->GetHandleColor();
+}
+
+
+void nuiFileSelector::SetHandleColor(nuiColor color)
+{
+  if (!mpTreeView)
+    return;
+  
+  mpTreeView->SetHandleColor(color);
+}
 
 
 //******************************************************************
@@ -407,13 +444,13 @@ void nuiFileSelector::InitSelector (const nglPath& rPath, const nglPath& rRootPa
     mEventSink.Connect(mpFolderList->SelectionChanged, &nuiFileSelector::OnFolderListSelectionChanged);
   }
   
-    
+  
   nuiTreeNode* pTree = new nuiTreeNode(new nuiLabel(_T("Loading...")));
   switch (mode)
   {
     case eTree:
       {
-        mpTreeView = new nuiTreeView(pTree);
+        mpTreeView = new nuiTreeView(pTree, true);
         mpTreeView->SetMultiSelectable(false);
         mpTreeView->SetObjectName(_T("nuiFileSelector::TreeView"));
         mpTreeView->SetObjectClass(_T("nuiFileSelector::TreeView"));
@@ -724,7 +761,7 @@ void nuiFileSelector::SetDisplayMode(nuiFileSelector::DisplayMode mode)
   {
     case eTree:
       {
-        mpTreeView = new nuiTreeView(pTree);
+        mpTreeView = new nuiTreeView(pTree, true);
         mpTreeView->SetMultiSelectable(false);
         mpTreeView->SetObjectName(_T("nuiFileSelector::TreeView"));
         mpTreeView->SetObjectClass(_T("nuiFileSelector::TreeView"));
