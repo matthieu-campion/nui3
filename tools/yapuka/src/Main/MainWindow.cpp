@@ -62,7 +62,6 @@ void MainWindow::OnCreation()
   pMainCont->SetObjectName(_T("MainContainer"));
   AddChild(pMainCont);
 
-  
   nuiTabView* pTabView = new nuiTabView(nuiTop);
   pMainCont->AddChild(pTabView);
   
@@ -82,7 +81,6 @@ void MainWindow::OnCreation()
 
   pTabView->SelectTab(0);
   
-  
   // nui version number
   nglString version;
   version.Format(_T("nui %d.%d r%d %ls"), NUI_VERSION_MAJOR, NUI_VERSION_MINOR, NUI_VERSION_RELEASE, NUI_VERSION_BETA.GetChars());
@@ -90,9 +88,7 @@ void MainWindow::OnCreation()
   pLabel->SetPosition(nuiTopRight);
   pLabel->SetObjectName(_T("VersionNumber"));
   pMainCont->AddChild(pLabel);
-  
-  
-}  
+}
 
 
 

@@ -803,7 +803,7 @@ void nuiWidget::GlobalToLocal(nuiRect& rRect) const
   }
 }
 
-void nuiWidget::LocalToLocal(nuiWidgetPtr pWidget,int& x, int& y)
+void nuiWidget::LocalToLocal(nuiWidgetPtr pWidget,int& x, int& y) const
 {                           
   if (GetRoot() != pWidget->GetRoot())
     return;
@@ -812,7 +812,7 @@ void nuiWidget::LocalToLocal(nuiWidgetPtr pWidget,int& x, int& y)
   pWidget->GlobalToLocal(x,y);
 }
 
-void nuiWidget::LocalToLocal(nuiWidgetPtr pWidget, nuiSize& x, nuiSize& y)
+void nuiWidget::LocalToLocal(nuiWidgetPtr pWidget, nuiSize& x, nuiSize& y) const
 {                           
   if (GetRoot() != pWidget->GetRoot())
     return;
@@ -821,7 +821,7 @@ void nuiWidget::LocalToLocal(nuiWidgetPtr pWidget, nuiSize& x, nuiSize& y)
   pWidget->GlobalToLocal(x,y);
 }
 
-void nuiWidget::LocalToLocal(nuiWidgetPtr pWidget,nuiRect& rRect)
+void nuiWidget::LocalToLocal(nuiWidgetPtr pWidget,nuiRect& rRect) const
 {                           
   if (GetRoot() != pWidget->GetRoot())
     return;

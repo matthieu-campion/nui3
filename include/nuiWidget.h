@@ -89,9 +89,9 @@ public:
   void GlobalToLocal(int& x, int& y) const; ///< This method recursively calculate the coordinate of the given point if the system of the top parent. (x,y) will be interpreted as main window coordinate and translated to client coordinates.
   void GlobalToLocal(nuiSize& x, nuiSize& y) const; ///< This method recursively calculate the coordinate of the given point if the system of the top parent. (x,y) will be interpreted as main window coordinate and translated to client coordinates.
   void GlobalToLocal(nuiRect& rRect) const;
-  void LocalToLocal(nuiWidgetPtr pWidget, int& x, int& y); ///< This method translates (x,y) from the Local coordinate system of this object to the local coordinate system of pWidget. They must be both owned by the same top level object.
-  void LocalToLocal(nuiWidgetPtr pWidget, nuiSize& x, nuiSize& y); ///< This method translates (x,y) from the Local coordinate system of this object to the local coordinate system of pWidget. They must be both owned by the same top level object.
-  void LocalToLocal(nuiWidgetPtr pWidget, nuiRect& rRect); ///< This method translates rRect from the Local coordinate system of this object to the local coordinate system of pWidget. They must be both owned by the same top level object.
+  void LocalToLocal(nuiWidgetPtr pWidget, int& x, int& y) const; ///< This method translates (x,y) from the Local coordinate system of this object to the local coordinate system of pWidget. They must be both owned by the same top level object.
+  void LocalToLocal(nuiWidgetPtr pWidget, nuiSize& x, nuiSize& y) const; ///< This method translates (x,y) from the Local coordinate system of this object to the local coordinate system of pWidget. They must be both owned by the same top level object.
+  void LocalToLocal(nuiWidgetPtr pWidget, nuiRect& rRect) const; ///< This method translates rRect from the Local coordinate system of this object to the local coordinate system of pWidget. They must be both owned by the same top level object.
   //@}
 
   /** @name Object size management */

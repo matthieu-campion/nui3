@@ -166,6 +166,31 @@ nuiWidgetPtr nuiContainer::GetChild(nuiSize X, nuiSize Y)
   return this;
 }
 
+void nuiContainer::GetChildren(nuiSize X, nuiSize Y, std::vector<nuiWidgetPtr>& rChildren, bool DeepSearch)
+{
+  X -= mRect.mLeft;
+  Y -= mRect.mTop;
+  
+  IteratorPtr pIt;
+  for (pIt = GetLastChild(); pIt && pIt->IsValid(); GetPreviousChild(pIt))
+  {
+    nuiWidgetPtr pItem = pIt->GetWidget();
+    if (pItem && pItem->IsInsideLocal(X,Y))
+    {
+      rChildren.push_back(pItem);
+      if (DeepSearch)
+      {
+        nuiContainerPtr pContainer = dynamic_cast<nuiContainerPtr>(pItem);
+        if (pContainer)
+          pContainer->GetChildren(X, Y, rChildren, DeepSearch);
+      }
+    }
+  }
+  delete pIt;
+}
+
+
+
 nuiWidgetPtr nuiContainer::GetChildIf(nuiSize X, nuiSize Y, TestWidgetFunctor* pFunctor)
 {
   X -= mRect.mLeft;
