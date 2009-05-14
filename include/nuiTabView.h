@@ -90,24 +90,14 @@ protected:
   
 private:
   class Tab : public nuiSimpleContainer
-    {
-    public:
-      Tab(nuiWidget* pWidget)
-      {
-        AddChild(pWidget);
-      }
+  {
+  public:
+    Tab(nuiWidget* pWidget);
 #ifndef _NODND_      
-      virtual bool OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y)
-      {
-        if (!IsSelected())
-        {
-          EnterDrag();
-        }
-        return false;
-      }
+    virtual bool OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y);
 #endif
-      nuiSimpleEventSource<0> EnterDrag;
-    };
+    nuiSimpleEventSource<0> EnterDrag;
+  };
 };
 
 #endif//__nuiTabView_h__

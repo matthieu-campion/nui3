@@ -306,7 +306,6 @@ void nuiTabView::AddTab(nuiWidget* pTitle, nuiWidget* pContents)
 
 void nuiTabView::InsertTab(nuiWidget* pTitle, nuiWidget* pContents, uint pos)
 {
-  nuiSimpleContainer* pDecoTab;
   nuiSimpleContainer* pDecoContents;
   
   NGL_ASSERT(pTitle);
@@ -317,29 +316,21 @@ void nuiTabView::InsertTab(nuiWidget* pTitle, nuiWidget* pContents, uint pos)
   
   if (mDecoratedBackground)
   {
-    pDecoTab = new nuiSimpleContainer();
-    pDecoTab->SetObjectName(_T("nuiTabView::Tab"));
-    pDecoTab->SetObjectClass(_T("nuiTabView::Tab"));
-    pDecoTab->AddChild(pTitle);
-
     pDecoContents = new nuiSimpleContainer();
     pDecoContents->SetObjectName(_T("nuiTabView::Contents"));
     pDecoContents->SetObjectClass(_T("nuiTabView::Contents"));
     pDecoContents->AddChild(pContents);
     
-    pTitleWidget = new Tab(pDecoTab);
     pContentsWidget = pDecoContents;
   }
-  else
-  {
-    pTitleWidget = new Tab(pTitle);
-  }
+
+  pTitleWidget = new Tab(pTitle);
   
   nuiColor color;
   nuiColor::GetColor(_T("nuiDefaultClrNormalTab"), color);
-  pTitle->SetColor(eNormalTextFg, color);
+  pTitleWidget->SetColor(eNormalTextFg, color);
   nuiColor::GetColor(_T("nuiDefaultClrSelectedTab"), color);
-  pTitle->SetColor(eSelectedTextFg, color);
+  pTitleWidget->SetColor(eSelectedTextFg, color);
   
   AddChild(pContentsWidget);
   AddChild(pTitleWidget);
@@ -347,7 +338,7 @@ void nuiTabView::InsertTab(nuiWidget* pTitle, nuiWidget* pContents, uint pos)
   if (!mTabs.empty())
     pContentsWidget->SetEnabled(false);
   pTitleWidget->SetSelected(false);
-  mTabViewEvents.Connect(pTitle->Clicked, &nuiTabView::OnIconClicked, pTitleWidget);
+  mTabViewEvents.Connect(pTitleWidget->Clicked, &nuiTabView::OnIconClicked, pTitleWidget);
   mTabViewEvents.Connect(pTitleWidget->EnterDrag, &nuiTabView::OnTabEnterDrag, pTitleWidget);
   
   if (pos >= mIcons.size())
@@ -559,3 +550,24 @@ TabEvent::TabEvent(const uint& index) : nuiEvent(), mTabIndex(index)
 {
 
 }
+
+/////////
+//class Tab : public nuiSimpleContainer
+nuiTabView::Tab::Tab(nuiWidget* pWidget)
+{
+  SetObjectName(_T("nuiTabView::Tab"));
+  SetObjectClass(_T("nuiTabView::Tab"));
+  AddChild(pWidget);
+}
+
+#ifndef _NODND_
+bool nuiTabView::Tab::OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y)
+{
+  if (!IsSelected())
+  {
+    EnterDrag();
+  }
+  return false;
+}
+#endif
+
