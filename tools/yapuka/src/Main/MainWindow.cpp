@@ -29,11 +29,7 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
 
 	InitAttributes();	
   
-#ifdef _WIN32_ 
-  LoadCSS(_T("rsrc:/css/win32.css"));  
-#else
-  LoadCSS(_T("rsrc:/css/macosx.css"));  
-#endif
+  LoadCSS(_T("rsrc:/css/yapuka.css"));
 }
 
 

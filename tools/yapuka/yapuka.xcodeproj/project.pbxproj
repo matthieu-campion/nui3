@@ -94,8 +94,6 @@
 		61A9DFD40B833F1500BC506C /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		61A9DFD50B833F1500BC506C /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		61A9DFD60B833F1500BC506C /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
-		BC39AF3B0F8F70A100568C99 /* macosx.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = macosx.css; path = resources/css/macosx.css; sourceTree = SOURCE_ROOT; };
-		BC39AF3C0F8F70A100568C99 /* win32.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = win32.css; path = resources/css/win32.css; sourceTree = SOURCE_ROOT; };
 		BC39AF3D0F8F70A100568C99 /* yapuka.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = yapuka.css; path = resources/css/yapuka.css; sourceTree = SOURCE_ROOT; };
 		BC39AF460F8F70C500568C99 /* ToolPaneAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ToolPaneAttributes.h; path = src/Tools/ToolPaneAttributes.h; sourceTree = SOURCE_ROOT; };
 		BC39AF470F8F70C500568C99 /* ToolPane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ToolPane.h; path = src/Tools/ToolPane.h; sourceTree = SOURCE_ROOT; };
@@ -266,8 +264,6 @@
 		BC6A09CA0EF9300600881ACF /* css */ = {
 			isa = PBXGroup;
 			children = (
-				BC39AF3B0F8F70A100568C99 /* macosx.css */,
-				BC39AF3C0F8F70A100568C99 /* win32.css */,
 				BC39AF3D0F8F70A100568C99 /* yapuka.css */,
 			);
 			name = css;

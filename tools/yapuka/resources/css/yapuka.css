@@ -6,6 +6,15 @@
 // remember each stylesheet file must have at least a blank ending line, 
 // or the stylehsheet parsing may not work properly
 
+@Font fontFileSelector
+{
+  GenericName: sans-serif;
+  Size: 12;
+  Bold: false;
+  Italic: false;
+}
+
+
 @nuiGradientDecoration dMainContainer
 {
   Color1: rgb(190,190,190);
