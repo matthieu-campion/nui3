@@ -1857,8 +1857,6 @@ nuiAttribBase::nuiAttribBase(const nuiAttribBase& rOriginal)
 : mpAttributeBase(rOriginal.mpAttributeBase),
   mpTarget(rOriginal.mpTarget)
 {
-  NGL_ASSERT(mpTarget);
-  NGL_ASSERT(mpAttributeBase);
 }
 
 nuiAttribBase::~nuiAttribBase()

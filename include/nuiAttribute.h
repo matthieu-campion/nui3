@@ -1111,7 +1111,7 @@ public:
   
   nuiAttrib(const nuiAttribBase& rAttribBase)
   : nuiAttribBase(rAttribBase),
-    mpAttribute(nuiAttributeCast<Contents>(mpAttributeBase))
+    mpAttribute(mpAttributeBase != NULL ? nuiAttributeCast<Contents>(mpAttributeBase) : NULL)
   {
 //    NGL_ASSERT(mpAttribute);
   }
