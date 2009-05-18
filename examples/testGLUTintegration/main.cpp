@@ -220,6 +220,11 @@ public:
     
   }
   
+  nglContext* GetNGLContext() const
+  {
+    return const_cast<nglContext*>((nglContext*)this);
+  }
+  
 protected:
   uint32 mWidth, mHeight;
 };

@@ -65,7 +65,14 @@ public:
   void ReDraw(nuiDrawContext* pContext);
   void Reset(nuiPainter const * pFrom);
 
+  // Debugging and profiling
   virtual void AddBreakPoint();
+  int32 GetNbOperations() const;
+  void PartialReDraw(nuiDrawContext* pContext, int32 first, int32 last) const;
+  nglString GetOperationDescription(int32 OperationIndex) const;
+  void SetName(const nglString& rName);
+  const nglString& GetName() const;
+  
 protected:
   // Rendering Operations OpCodes:
   enum OpCode
@@ -109,25 +116,29 @@ protected:
   void StoreFloat(float Val);
   void StoreFloat(double Val);
 
-  OpCode FetchOpCode();
-  int32 FetchInt();
-  void* FetchPointer();
-  void FetchBuffer(void* pBuffer, uint ElementSize, uint ElementCount);
-  void FetchFloat(double& rDouble);
-  void FetchFloat(float& rFloat);
+  OpCode FetchOpCode() const;
+  int32 FetchInt() const;
+  void* FetchPointer() const;
+  void FetchBuffer(void* pBuffer, uint ElementSize, uint ElementCount) const;
+  void FetchFloat(double& rDouble) const;
+  void FetchFloat(float& rFloat) const;
 
-  uint mOperationPos;
-
+  int32 GetOffsetFromOperationIndex(int32 index) const;
+  
   nuiRenderCache* mpCache;
   nuiRenderState mLastState;
   bool mLastStateValid;
 
   nuiRenderArray mVertices;
   
-  uint32 mNbDrawChild;
-  uint32 mNbDrawArray;
-  uint32 mNbClearStencil;
-  uint32 mNbClearColor;
+  int32 mNbDrawChild;
+  int32 mNbDrawArray;
+  int32 mNbClearStencil;
+  int32 mNbClearColor;
+  mutable int32 mOperationPos;
+  int32 mNbOperations;
+    
+  nglString mName;
 };
 
 #endif // __nuiMetaPainter_h__

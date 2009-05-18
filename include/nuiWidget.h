@@ -360,6 +360,7 @@ public:
   //@{
   void EnableRenderCache(bool set); ///< Enable or disable the rendering cache that speeds up Widget rendering. Disable the cache if you need to use OpenGL directly in this widget.
   bool IsRenderCacheEnabled(); ///< See EnableRenderCache.
+  const nuiMetaPainter* GetRenderCache() const;
   //@}
 
   /** @name Rendering the widget in a surface */

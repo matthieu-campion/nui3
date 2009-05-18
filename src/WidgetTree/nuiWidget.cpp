@@ -3038,6 +3038,11 @@ bool nuiWidget::IsRenderCacheEnabled()
   return mUseRenderCache;
 }
 
+const nuiMetaPainter* nuiWidget::GetRenderCache() const
+{
+  return mpRenderCache;
+}
+
 void nuiWidget::EnableSurface(bool Set)
 {
   if (mSurfaceEnabled == Set)

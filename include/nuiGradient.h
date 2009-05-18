@@ -39,7 +39,7 @@ protected:
 class NUI_API nuiReflection
 {
 public:
-  nuiReflection(float Intensity, float Center, float Curve = 0, bool RoundLeft = false, bool RoundRight = false);
+  nuiReflection(float Intensity, float Center);
   virtual ~nuiReflection();
 
   void Draw(nuiDrawContext* pContext, const nuiRect& rRect, nuiShape* pShp = NULL);
@@ -48,11 +48,6 @@ private:
   nuiRect mRect;
   nuiColor mColor;
   float mCenter;
-  float mCurve;
-  bool mRoundLeft;
-  bool mRoundRight;
-  nuiShape* mpSkyShape;
-  nuiShape* mpGroundShape;
   nuiGradient* mpSkyGradient;
   nuiGradient* mpGroundGradient;
   bool mRecalc;

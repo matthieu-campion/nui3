@@ -87,15 +87,10 @@ const nuiColor nuiGradient::GetColorAt(nuiSize position) const
 
 //////////////
 
-nuiReflection::nuiReflection(float Intensity, float Center, float Curve, bool RoundLeft, bool RoundRight)
+nuiReflection::nuiReflection(float Intensity, float Center)
 {
   mColor = nuiColor(1.f,1.f,1.f, Intensity);
   mCenter = Center;
-  mCurve = Curve;
-  mRoundLeft = RoundLeft;
-  mRoundRight = RoundRight;
-  mpSkyShape = NULL;
-  mpGroundShape = NULL;
   mpSkyGradient = NULL;
   mpGroundGradient = NULL;
   mRecalc = true;
@@ -105,8 +100,6 @@ nuiReflection::~nuiReflection()
 {
   delete mpSkyGradient;
   delete mpGroundGradient;
-  delete mpSkyShape;
-  delete mpGroundShape;
 }
 
 void nuiReflection::Draw(nuiDrawContext* pContext, const nuiRect& rRect, nuiShape* pShp)
@@ -123,32 +116,13 @@ void nuiReflection::Draw(nuiDrawContext* pContext, const nuiRect& rRect, nuiShap
     Recalc();
 
   // Draw the sky:
-  pContext->ResetClipShape();
-  pContext->AddClipShape(*mpSkyShape);
-
-  if (pShp)
-    pContext->BlendClipShape(*pShp);
-
   pContext->SetBlendFunc(nuiBlendTransp);
   pContext->DrawGradient(*mpSkyGradient, mRect, x, y, x, y+mCenter * h);
 
-/*
-  pContext->SetFillColor(nuiColor(1.0f, 0.0f, 0.0f));
-  pContext->DrawRect(rRect, eFillShape);
-  return;
-*/
 
   // Draw the ground:
   pContext->SetBlendFunc(nuiBlendTransp);
-  pContext->ResetClipShape();
-  pContext->AddClipShape(*mpGroundShape);
-  if (pShp)
-    pContext->BlendClipShape(*pShp);
-
   pContext->DrawGradient(*mpGroundGradient, mRect, x, y + mCenter * h, x, y + h);
-
-  // Reset the clipping:
-  pContext->ResetClipShape();
 }
 
 void nuiReflection::Recalc()
@@ -161,34 +135,10 @@ void nuiReflection::Recalc()
 
   mRecalc = false;
 
-  delete mpSkyShape;
-  delete mpGroundShape;
   delete mpSkyGradient;
   delete mpGroundGradient;
-
-  // Prepare the sky shape
-  mpSkyShape = new nuiShape();
-  nuiContour* pContour = new nuiContour();
-
-  pContour->LineTo(nuiPoint(x,y,0));
-  pContour->LineTo(nuiPoint(x+w,y,0));
-  pContour->LineTo(nuiPoint(x+w,y+h_2,0));
-  pContour->LineTo(nuiPoint(x,y+h_2,0));
-
-  mpSkyShape->AddContour(pContour);
-
-  // Prepare the ground shape
-  mpGroundShape = new nuiShape();
-  pContour = new nuiContour();
-
-  pContour->LineTo(nuiPoint(x,y+h_2,0));
-  pContour->LineTo(nuiPoint(x+w,y+h_2,0));
-  pContour->LineTo(nuiPoint(x+w,y+h,0));
-  pContour->LineTo(nuiPoint(x,y+h,0));
-
-  mpGroundShape->AddContour(pContour);
-
   mpSkyGradient = new nuiGradient();
+  mpGroundGradient = new nuiGradient();
 
   nuiColor tmp;
   

@@ -151,12 +151,6 @@ bool nuiProgressBar::Draw(nuiDrawContext* pContext)
   
   nuiRect size = GetRect().Size();
   
-  nuiShape shp;
-  shp.AddRoundRect(size, GetRect().GetHeight()/2);
-  
-  pContext->ResetClipShape();
-  pContext->AddClipShape(shp);
-  
   pContext->EnableBlending(true);
   pContext->SetBlendFunc(nuiBlendTransp);
   pContext->SetFillColor(mBGColor);
@@ -218,14 +212,12 @@ bool nuiProgressBar::Draw(nuiDrawContext* pContext)
   
   pContext->SetBlendFunc(nuiBlendTransp);
   nuiReflection ref(.5f, .3f);
-  ref.Draw(pContext, size, &shp);
-  
-  pContext->ResetClipShape();
+  ref.Draw(pContext, size, NULL);
   
   pContext->SetBlendFunc(nuiBlendTransp);
   pContext->EnableAntialiasing(true);
   pContext->SetStrokeColor(nuiColor(0,0,0));
-  pContext->DrawShape(&shp, eStrokeShape);
+  pContext->DrawRect(GetRect().Size(), eStrokeShape);
   
   return true;
 }
