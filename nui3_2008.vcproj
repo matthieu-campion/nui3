@@ -2144,6 +2144,14 @@
 					RelativePath=".\include\nuiTranslator.h"
 					>
 				</File>
+				<File
+					RelativePath=".\src\String\nuiUnicode.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiUnicode.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Text"

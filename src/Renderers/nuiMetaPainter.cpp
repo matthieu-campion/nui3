@@ -717,8 +717,10 @@ nglString nuiMetaPainter::GetOperationDescription(int32 OperationIndex) const
       str = _T("SetState");
       break;
     case eDrawArray:
-      nuiRenderArray* pArray = (nuiRenderArray*)FetchPointer();
-      str.CFormat(_T("DrawArray 0x%x"), pArray);
+      {
+        nuiRenderArray* pArray = (nuiRenderArray*)FetchPointer();
+        str.CFormat(_T("DrawArray 0x%x"), pArray);
+      }
       break;
     case eClearColor:
       str = _T("ClearColor");
@@ -734,32 +736,34 @@ nglString nuiMetaPainter::GetOperationDescription(int32 OperationIndex) const
       str = _T("EndSession");
       break;
     case eDrawChild:
-      nuiWidget* pS = (nuiWidget*)FetchPointer();
-      str.CFormat(_T("DrawChild 0x%x / '%ls'"), pS, pS->GetObjectName().GetChars());
+      {
+        nuiWidget* pS = (nuiWidget*)FetchPointer();
+        str.CFormat(_T("DrawChild 0x%x / '%ls'"), pS, pS->GetObjectName().GetChars());
+      }
       break;
     case eSetSurface:
-    {
-      nuiSurface* pS = (nuiSurface*)FetchPointer();
-      str.CFormat(_T("SetSurface 0x%x / '%ls'"), pS, pS->GetObjectName().GetChars());
+      {
+        nuiSurface* pS = (nuiSurface*)FetchPointer();
+        str.CFormat(_T("SetSurface 0x%x / '%ls'"), pS, pS->GetObjectName().GetChars());
+      }
       break;
-    }
     case eLoadMatrix:
-    {
-      nuiMatrix m;
-      FetchBuffer(m.Array, sizeof(nuiSize), 16);
-      nglString v;
-      m.GetValue(v);
-      str = _T("LoadMatrix") + v;
-    }
+      {
+        nuiMatrix m;
+        FetchBuffer(m.Array, sizeof(nuiSize), 16);
+        nglString v;
+        m.GetValue(v);
+        str = _T("LoadMatrix") + v;
+      }
       break;
     case eMultMatrix:
-    {
-      nuiMatrix m;
-      FetchBuffer(m.Array, sizeof(nuiSize), 16);
-      nglString v;
-      m.GetValue(v);
-      str = _T("MultMatrix") + v;
-    }
+      {
+        nuiMatrix m;
+        FetchBuffer(m.Array, sizeof(nuiSize), 16);
+        nglString v;
+        m.GetValue(v);
+        str = _T("MultMatrix") + v;
+      }
       break;
     case ePopMatrix:
       str = _T("PopMatrix");
@@ -770,27 +774,27 @@ nglString nuiMetaPainter::GetOperationDescription(int32 OperationIndex) const
       
       
     case eLoadProjectionMatrix:
-    {
-      nuiMatrix m;
-      nuiSize a, b, c, d;
-      FetchFloat(a);
-      FetchFloat(b);
-      FetchFloat(c);
-      FetchFloat(d);
-      FetchBuffer(m.Array, sizeof(nuiSize), 16);
-      nglString v;
-      m.GetValue(v);
-      str.CFormat(_T("LoadProjectionMatrix(%f, %f, %f, %f) / %ls"), a, b, d, c, v.GetChars());
-    }
+      {
+        nuiMatrix m;
+        nuiSize a, b, c, d;
+        FetchFloat(a);
+        FetchFloat(b);
+        FetchFloat(c);
+        FetchFloat(d);
+        FetchBuffer(m.Array, sizeof(nuiSize), 16);
+        nglString v;
+        m.GetValue(v);
+        str.CFormat(_T("LoadProjectionMatrix(%f, %f, %f, %f) / %ls"), a, b, d, c, v.GetChars());
+      }
       break;
     case eMultProjectionMatrix:
-    {
-      nuiMatrix m;
-      FetchBuffer(m.Array, sizeof(nuiSize), 16);
-      nglString v;
-      m.GetValue(v);
-      str = _T("MultProjectionMatrix") + v;
-    }
+      {
+        nuiMatrix m;
+        FetchBuffer(m.Array, sizeof(nuiSize), 16);
+        nglString v;
+        m.GetValue(v);
+        str = _T("MultProjectionMatrix") + v;
+      }
       break;
     case ePopProjectionMatrix:
       str = _T("PopProjectionMatrix");
@@ -809,14 +813,14 @@ nglString nuiMetaPainter::GetOperationDescription(int32 OperationIndex) const
       str = _T("PopClipping");
       break;
     case eClip:
-    {
-      nuiSize a, b, c, d;
-      FetchFloat(a);
-      FetchFloat(b);
-      FetchFloat(c);
-      FetchFloat(d);
-      str.CFormat(_T("Clip(%f, %f, %f, %f)"), a, b, d, c);
-    }
+      {
+        nuiSize a, b, c, d;
+        FetchFloat(a);
+        FetchFloat(b);
+        FetchFloat(c);
+        FetchFloat(d);
+        str.CFormat(_T("Clip(%f, %f, %f, %f)"), a, b, d, c);
+      }
       break;
     case eResetClipRect:
       str = _T("ResetClipRect");

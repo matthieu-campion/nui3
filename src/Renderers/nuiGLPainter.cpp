@@ -284,9 +284,8 @@ void nuiGLPainter::StartRendering()
   glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 #ifndef _OPENGL_ES_
-#ifdef GL_VERSION_2_0
-  glBlendEquationSeparate(GL_FUNC_ADD, GL_MAX);
-#endif
+  //if (mpContext->glBlendEquationSeparate)
+  //  mpContext->glBlendEquationSeparate(GL_FUNC_ADD, GL_MAX);
 #else
   //glBlendEquationSeparateOES(GL_FUNC_ADD, GL_MAX);
 #endif
