@@ -133,6 +133,11 @@ public:
   virtual void ExitModalState();
   virtual void ForceRepaint(); ///< Process events that have already arrived on this window's event queue (but don't process events that are not for THIS particular window).
   
+  void StartTextInput(int32 X, int32 Y, int32 W, int32 H);
+  void EndTextInput();
+  bool IsEnteringText() const;
+  
+  
   void SetMainMenu(nuiMainMenu* pMainMenu);
   nuiMainMenu* GetMainMenu();
   

@@ -465,6 +465,25 @@ window = new nglWindow (context, info, NULL);
     \param AllowRepeat if false, disable auto key repeat for this window
   */
 
+  void StartTextInput(int32 X, int32 Y, int32 W, int32 H);
+  /*!<
+   Show the text input device for the given window coordinates. This is useful for complex script languages and small devices such as the iPhone.
+   \param X left coordinate of the input box in the window in pixels
+   \param Y right coordinate of the input box in the window in pixels
+   \param W width of the input box pixel
+   \param H height of the input box in pixels
+   */
+  
+  void EndTextInput();
+  /*!<
+   Hide the text input device.
+   */
+
+  bool IsEnteringText() const;
+  /*!<
+   Return true if StartTextInput has been called and EndTextInput hasn't.
+   */
+  
   bool IsKeyDown (nglKeyCode rEvent) const;
   /*!<
     Test a physical key state.

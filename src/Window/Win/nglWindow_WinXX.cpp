@@ -3076,3 +3076,20 @@ void nglWindow::ExitModalState()
 {
   mInModalState--;
 }
+
+void nglWindow::StartTextInput(int32 X, int32 Y, int32 W, int32 H)
+{
+  //#FIXME
+}
+
+void nglWindow::EndTextInput()
+{
+  //#FIXME
+}
+
+bool nglWindow::IsEnteringText() const
+{
+  //#FIXME
+  return false;
+}
+

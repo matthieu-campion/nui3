@@ -1094,3 +1094,17 @@ void nuiMainWindow::SetWindowRect(nuiRect rect)
 }
 
 
+void nuiMainWindow::StartTextInput(int32 X, int32 Y, int32 W, int32 H)
+{
+  mpNGLWindow->StartTextInput(X, Y, W, H);
+}
+
+void nuiMainWindow::EndTextInput()
+{
+  mpNGLWindow->EndTextInput();
+}
+
+bool nuiMainWindow::IsEnteringText() const
+{
+  return mpNGLWindow->IsEnteringText();
+}
