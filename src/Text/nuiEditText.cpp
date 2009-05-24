@@ -2284,3 +2284,25 @@ void nuiEditText::OnDragStop(bool canceled)
 
 
 
+void nuiEditText::OnSetFocus(nuiWidgetPtr pWidget)
+{
+  if (pWidget == this)
+  {
+    nuiTopLevel* pTop = GetTopLevel();
+    if (pTop)
+    {
+      nuiRect r(GetRect().Size());
+      LocalToGlobal(r);
+      pTop->StartTextInput(r.Left(), r.Top(), r.GetWidth(), r.GetHeight());
+    }
+  }
+  else if (!pWidget)
+  {
+    nuiTopLevel* pTop = GetTopLevel();
+    if (pTop)
+    {
+      pTop->EndTextInput();
+    }
+  }
+}
+

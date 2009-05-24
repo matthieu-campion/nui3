@@ -151,6 +151,8 @@ public:
   // events
   nuiSimpleEventSource<0> TextChanged;
 
+  virtual void OnSetFocus(nuiWidgetPtr pWidget);
+  
 protected:
   
   void InitAttributes();

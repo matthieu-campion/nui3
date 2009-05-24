@@ -2069,3 +2069,17 @@ void nuiTopLevel::GetTabBackwardSources(nuiWidget* pDestination, std::set<nuiWid
   rSources.clear();
 }
 
+void nuiTopLevel::StartTextInput(int32 X, int32 Y, int32 W, int32 H)
+{
+  
+}
+
+void nuiTopLevel::EndTextInput()
+{
+  
+}
+
+bool nuiTopLevel::IsEnteringText() const
+{
+  return false;
+}

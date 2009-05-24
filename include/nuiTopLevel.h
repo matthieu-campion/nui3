@@ -155,6 +155,11 @@ public:
   
   virtual void EnterModalState();
   virtual void ExitModalState();
+  
+  virtual void StartTextInput(int32 X, int32 Y, int32 W, int32 H);
+  virtual void EndTextInput();
+  virtual bool IsEnteringText() const;
+  
 protected:
   void Exit();
   void SetDrawContext(nuiDrawContext* pDrawContext);
