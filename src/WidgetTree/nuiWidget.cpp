@@ -158,6 +158,7 @@ void nuiWidget::InitDefaultValues()
   mpSurface = NULL;
   mSurfaceColor = nuiColor(255, 255, 255, 255);
   mSurfaceBlendFunc = nuiBlendTransp;  
+  mDecorationMode = eDecorationOverdraw;
 }
 
 
