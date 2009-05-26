@@ -62,7 +62,6 @@ void nuiColorAttributeEditor::Init(const nuiColor& rColor)
 	hbox->SetCellExpand(0, nuiExpandShrinkAndGrow);
 	
   mpButton = new nuiButton();
-  mpButton->SetDrawSelf(false);
 
   mpColorPane = new nuiPane(rColor, nuiColor(0.f, 0.f, 0.f, 1.f));
   mpColorPane->SetUserSize(10.f, 10.f);

@@ -22,9 +22,6 @@ nuiButton::nuiButton()
   SetObjectClass(_T("nuiButton"));
   mClicked = false;
   mPressed = false;
-  mDrawSelf = true;
-  mBorderSize = mDefaultBorderSize;
-  mShadeSize = INACTIVE_SHADE_SIZE;
   SetRedrawOnHover(true);
   
   NUI_ADD_EVENT(ButtonPressed);
@@ -38,10 +35,7 @@ nuiButton::nuiButton(const nglString& rText)
 {
   SetObjectClass(_T("nuiButton"));
   mClicked = false;
-  mDrawSelf = true;
   mPressed = false;
-  mBorderSize = mDefaultBorderSize;
-  mShadeSize = INACTIVE_SHADE_SIZE;
   nuiLabel* pLabel = new nuiLabel(rText);
   AddChild(pLabel);
   pLabel->SetPosition(nuiCenter);
@@ -58,10 +52,7 @@ nuiButton::nuiButton(const nglImage& rImage)
 {
   SetObjectClass(_T("nuiButton"));
   mClicked = false;
-  mDrawSelf = true;
   mPressed = false;
-  mBorderSize = mDefaultBorderSize;
-  mShadeSize = INACTIVE_SHADE_SIZE;
   SetRedrawOnHover(true);
 
   nuiImage* pImage = new nuiImage(rImage);
@@ -70,8 +61,6 @@ nuiButton::nuiButton(const nglImage& rImage)
 
 #ifdef NGL_USE_COMPLEX_PROPERTIES
   mProperties["Clicked"].Bind(&mClicked,false,true);
-  mProperties["DrawSelf"].Bind(&mDrawSelf,true,false);
-  mProperties["BorderSize"].Bind(&mBorderSize,true, false);
 #endif
   
   NUI_ADD_EVENT(ButtonPressed);
@@ -85,18 +74,13 @@ nuiButton::nuiButton(nuiDecoration* pDeco, bool AlreadyAcquired)
 {
   SetObjectClass(_T("nuiButton"));
   mClicked = false;
-  mDrawSelf = true;
   mPressed = false;
-  mBorderSize = mDefaultBorderSize;
-  mShadeSize = INACTIVE_SHADE_SIZE;
   SetRedrawOnHover(true);
   
   SetDecoration(pDeco, eDecorationOverdraw, AlreadyAcquired);
   
 #ifdef NGL_USE_COMPLEX_PROPERTIES
   mProperties["Clicked"].Bind(&mClicked,false,true);
-  mProperties["DrawSelf"].Bind(&mDrawSelf,true,false);
-  mProperties["BorderSize"].Bind(&mBorderSize,true, false);
 #endif
   
   NUI_ADD_EVENT(ButtonPressed);
@@ -110,17 +94,11 @@ bool nuiButton::Load(const nuiXMLNode* pNode)
 {
   nuiSimpleContainer::Load(pNode);
   SetObjectClass(_T("nuiButton"));
-  mDrawSelf = true;
   mClicked = false;
   mPressed = false;
-  mBorderSize = nuiGetVal ( pNode, _T("BorderSize"), mDefaultBorderSize);
-  mShadeSize = nuiGetVal ( pNode, _T("ShadeSize"), INACTIVE_SHADE_SIZE);
-  mDrawSelf = nuiGetBool ( pNode, _T("DrawSelf"), true);
 
 #ifdef NGL_USE_COMPLEX_PROPERTIES
   mProperties["Clicked"].Bind(&mClicked,false,true);
-  mProperties["DrawSelf"].Bind(&mDrawSelf,true,false);
-  mProperties["BorderSize"].Bind(&mBorderSize,true, false);
 #endif
   
   NUI_ADD_EVENT(ButtonPressed);
@@ -137,26 +115,7 @@ nuiButton::~nuiButton()
 
 bool nuiButton::Draw(nuiDrawContext* pContext)
 {
-  nuiDecoration* pDeco = GetDecoration();
-
-
-  if (pDeco)
-  {
-    DrawChildren(pContext);    
-  }
-  else 
-  {
-    if (mDrawSelf)
-    {
-      pContext->ResetState();
-      nuiTheme* pTheme = GetTheme();
-      NGL_ASSERT(pTheme);
-      pTheme->DrawButton(pContext,this);
-      pTheme->Release();
-    }
-    
-    DrawChildren(pContext);
-  }
+  DrawChildren(pContext);    
   return true;
 }
 
@@ -194,16 +153,7 @@ nuiRect nuiButton::CalcIdealSize()
       mIdealRect = mRect;
 
   if (pDeco)
-  {
-  
     mIdealRect.Union(mIdealRect, pDeco->GetIdealClientRect());
-  }
-  else if (mDrawSelf)
-  {
-    mIdealRect.SetSize(mIdealRect.GetWidth()+ 2*(mBorderSize + mShadeSize),
-    mIdealRect.GetHeight()+ 2*mBorderSize + mShadeSize);
-  }
-
 
   return mIdealRect;
 }
@@ -212,21 +162,6 @@ bool nuiButton::SetRect(const nuiRect& rRect)
 {
   nuiWidget::SetRect(rRect);
   nuiRect Rect = rRect.Size();
-
-  if (mDrawSelf && !GetDecoration())
-  {
-    if ( Rect.GetWidth() >= (int)( 2 * mBorderSize ) )
-    {
-      Rect.mLeft += (int)mBorderSize + mShadeSize;
-      Rect.mRight -= (int)mBorderSize + mShadeSize;
-    }
-
-    if (Rect.GetHeight()>= (int)( 2 * mBorderSize ) )
-    {
-      Rect.mTop += (int)mBorderSize;
-      Rect.mBottom -= (int)mBorderSize + mShadeSize;
-    }
-  }
 
   IteratorPtr pIt;
   for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
@@ -318,41 +253,6 @@ bool nuiButton::MouseMoved(nuiSize X, nuiSize Y)
   return false;
 }
 
-nuiSize nuiButton::GetBorderSize() const
-{
-  return mBorderSize;
-}
-
-void nuiButton::SetBorderSize(nuiSize BorderSize)
-{
-  if (mBorderSize == BorderSize)
-    return;
-  mBorderSize = BorderSize;
-  Invalidate();
-}
-
-nuiSize nuiButton::mDefaultBorderSize = 1;
-
-nuiSize nuiButton::GetDefaultBorderSize()
-{
-  return mDefaultBorderSize;
-}
-
-void nuiButton::SetDefaultBorderSize(nuiSize BorderSize)
-{
-  mDefaultBorderSize = BorderSize;
-}
-
-void nuiButton::SetDrawSelf(bool val)
-{
-  mDrawSelf = val;
-  InvalidateLayout();
-}
-
-bool nuiButton::GetDrawSelf() const
-{
-  return mDrawSelf;
-}
 
 bool nuiButton::IsPressed() const
 {
@@ -377,15 +277,4 @@ void nuiButton::SetPressed(bool Pressed)
     Invalidate();
   }
 }
-
-nuiSize nuiButton::GetShadeSize() const
-{
-  return mShadeSize;
-}
-
-void nuiButton::SetShadeSize(nuiSize ShadeSize)
-{
-  mShadeSize = ShadeSize;
-}
-
 

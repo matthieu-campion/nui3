@@ -41,17 +41,7 @@ nuiTab::~nuiTab()
 
 bool nuiTab::Draw(nuiDrawContext* pContext)
 {
-  if (mDrawSelf)
-  {
-    pContext->ResetState();
-    nuiTheme* pTheme = GetTheme();
-    NGL_ASSERT(pTheme);
-    pTheme->DrawTab(pContext,this);
-    pTheme->Release();
-  }
-
   DrawChildren(pContext);
-
   return true;
 }
 

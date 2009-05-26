@@ -73,7 +73,6 @@ nuiWidget* nuiIntrospector::GetToolbar()
   nuiRadioButton* pWBtn = new nuiRadioButton(_T("Widget Tree"));
   pWBtn->SetColor(eNormalTextFg, textColor);
   pWBtn->SetColor(eSelectedTextFg, textColor);
-  pWBtn->SetShadeSize(0);
   pWBtn->SetDecoration(nuiDecoration::Get(INTROSPECTOR_DECO_BUTTON), eDecorationBorder);
 
   mEventSink.Connect(pWBtn->ButtonPressed, &nuiIntrospector::ShowWidgetInspector);
@@ -82,7 +81,6 @@ nuiWidget* nuiIntrospector::GetToolbar()
   nuiRadioButton* pTBtn = new nuiRadioButton(_T("Threads"));
   pTBtn->SetColor(eNormalTextFg, textColor);
   pTBtn->SetColor(eSelectedTextFg, textColor);
-  pTBtn->SetShadeSize(0);
   pTBtn->SetDecoration(nuiDecoration::Get(INTROSPECTOR_DECO_BUTTON), eDecorationBorder);
   mEventSink.Connect(pTBtn->ButtonPressed, &nuiIntrospector::ShowThreadInspector);
   pBox->AddCell(pTBtn);
@@ -90,7 +88,6 @@ nuiWidget* nuiIntrospector::GetToolbar()
   nuiRadioButton* pFontBtn = new nuiRadioButton(_T("Fonts"));
   pFontBtn->SetColor(eNormalTextFg, textColor);
   pFontBtn->SetColor(eSelectedTextFg, textColor);
-  pFontBtn->SetShadeSize(0);
   pFontBtn->SetDecoration(nuiDecoration::Get(INTROSPECTOR_DECO_BUTTON), eDecorationBorder);
   mEventSink.Connect(pFontBtn->ButtonPressed, &nuiIntrospector::ShowFontInspector);
   pBox->AddCell(pFontBtn);
@@ -98,7 +95,6 @@ nuiWidget* nuiIntrospector::GetToolbar()
   nuiRadioButton* pDecoBtn = new nuiRadioButton(_T("Decorations"));
   pDecoBtn->SetColor(eNormalTextFg, textColor);
   pDecoBtn->SetColor(eSelectedTextFg, textColor);
-  pDecoBtn->SetShadeSize(0);
   pDecoBtn->SetDecoration(nuiDecoration::Get(INTROSPECTOR_DECO_BUTTON), eDecorationBorder);
   mEventSink.Connect(pDecoBtn->ButtonPressed, &nuiIntrospector::ShowDecorationInspector);
   pBox->AddCell(pDecoBtn);

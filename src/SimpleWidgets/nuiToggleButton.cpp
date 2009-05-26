@@ -204,7 +204,6 @@ void nuiToggleButton::SetDisplayAsCheckBox(bool set)
   }
   
   mDisplayAsCheckBox = set;
-  mDrawSelf = !set;
   IteratorPtr pIt = GetFirstChild();
   nuiLabel* pItem = dynamic_cast<nuiLabel*>(pIt->GetWidget());
   
@@ -234,7 +233,6 @@ void nuiToggleButton::SetDisplayAsFrameBox(bool set)
 
   mDisplayAsFrameBox = set;
   
-  mDrawSelf = !set;
   IteratorPtr pIt = GetFirstChild();
   nuiLabel* pItem = dynamic_cast<nuiLabel*>(pIt->GetWidget());
   

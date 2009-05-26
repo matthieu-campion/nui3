@@ -73,12 +73,6 @@ public:
   // CheckBox:
   virtual void DrawCheckBox(nuiDrawContext* pContext, nuiToggleButton* pButton);  ///< Render a CheckBox
 
-  // Buttons
-  virtual void DrawButton(nuiDrawContext* pContext, nuiButton* pButton);  ///< Render a button border
-
-  // Buttons
-  virtual void DrawTab(nuiDrawContext* pContext, nuiTab* pTab);  ///< Render a tab border
-
   // Menus a Menu items:
   virtual void DrawMenuWindow(nuiDrawContext* pContext, const nuiRect& rRect, nuiWidget* pWidget = NULL); ///< draw the a menu window (border, shadow, etc...).
   virtual void DrawMenuItem(nuiDrawContext* pContext, const nuiRect& rRect, bool Hover); ///< Draw the background of a menu item.

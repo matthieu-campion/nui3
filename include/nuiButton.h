@@ -46,17 +46,6 @@ public:
   virtual bool MouseMoved(nuiSize X, nuiSize Y);
   virtual bool MouseUngrabbed();
 
-  // Other attributes:
-  nuiSize GetBorderSize() const; ///< Retrieve the current border around the area of the enclosed widget.
-  void SetBorderSize(nuiSize BorderSize); ///< Set the current border around the area of the enclosed widget.
-  void SetDrawSelf(bool val); ///< Permits to enable and disable the drawing of the button background and frame.
-  bool GetDrawSelf() const; ///< See SetDrawSelf
-  nuiSize GetShadeSize() const; ///< Retrieve the current size of the shading
-  void SetShadeSize(nuiSize ShadeSize); /// Set the current shading size below the button
-
-  // Class attributes:
-  static nuiSize GetDefaultBorderSize(); ///< Retrieve the default border around the area of the enclosed widget of every button that will be created.
-  static void SetDefaultBorderSize(nuiSize BorderSize); ///< Set the default border around the area of the enclosed widget of every button that will be created.
 
   bool IsPressed() const;
   virtual void SetPressed(bool Pressed = true);
@@ -64,12 +53,8 @@ public:
   
 protected:
   bool mClicked;
-  nuiSize mBorderSize;
-  nuiSize mShadeSize;
-  bool mDrawSelf;
   bool mPressed;
 
-  static nuiSize mDefaultBorderSize;
 };
 
 

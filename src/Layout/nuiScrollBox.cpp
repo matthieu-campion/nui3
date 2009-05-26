@@ -19,10 +19,8 @@ nuiScrollBox::nuiScrollBox(nuiWidget* pBackward, nuiWidget* pForward, nuiOrienta
   mOrientation = Orientation;
   mpBackwardButton = new nuiButton();
   mpBackwardButton->AddChild(pBackward);
-  mpBackwardButton->SetDrawSelf(false);
   mpForwardButton = new nuiButton();
   mpForwardButton->AddChild(pBackward);
-  mpForwardButton->SetDrawSelf(false);
   mpScrolledWidget = pScrolledWidget;
   mShowDisabledButtons = false;
   
@@ -68,9 +66,7 @@ nuiScrollBox::nuiScrollBox(const nglPath& rBackwardIconPath, const nglPath& rFor
   
   mOrientation = Orientation;
   mpBackwardButton = new nuiButton(rBackwardIconPath);
-  mpBackwardButton->SetDrawSelf(false);
   mpForwardButton = new nuiButton(rForwardIconPath);
-  mpForwardButton->SetDrawSelf(false);
   mpScrolledWidget = pScrolledWidget;
   mShowDisabledButtons = false;
   

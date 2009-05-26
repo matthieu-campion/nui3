@@ -237,6 +237,8 @@ bool nuiFileTree::SetRootPath(const nglPath& rPath)
   // "go to parent folder" link
   nuiButton* pBtn = new nuiButton();
   pBtn->SetPosition(nuiLeft);
+  pBtn->SetObjectClass(_T("nuiFileTree::ParentFolderButton"));
+  pBtn->SetObjectName(_T("nuiFileTree::ParentFolderButton"));
   
   nuiHBox* pBox = new nuiHBox(2);
   pBtn->AddChild(pBox);

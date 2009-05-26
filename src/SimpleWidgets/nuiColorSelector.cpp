@@ -239,7 +239,6 @@ void nuiColorSelector::MakeSwatchGrid()
     pSwatchPane = new nuiPane(*it, nuiColor(32,32,32));
     nuiButton* pButton = new nuiButton();
     pButton->SetUserSize(16,16);
-    pButton->SetDrawSelf(false);
     pButton->SetBorder(2,2);
     pButton->AddChild(pSwatchPane);
     
