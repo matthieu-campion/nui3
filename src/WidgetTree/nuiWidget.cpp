@@ -1883,6 +1883,7 @@ void nuiWidget::OnSetFocus(nuiWidgetPtr pWidget)
 void nuiWidget::DispatchFocus(nuiWidgetPtr pWidget)
 {
   mHasFocus = (pWidget == this);
+  OnSetFocus(pWidget);
   FocusChanged();
   ApplyCSSForStateChange(NUI_WIDGET_MATCHTAG_STATE);
   DebugRefreshInfo();

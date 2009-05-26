@@ -20,16 +20,18 @@ typedef std::map<UITouch*,nglTouchInfo> TouchesInfo;
 /*
 ** nglUIWindow
 */
-@interface nglUIWindow : UIWindow
+@interface nglUIWindow : UIWindow<UITextFieldDelegate>
 {
-  nglWindow*  mpNGLWindow;
-  TouchesInfo mTouches;
-  TouchesInfo mpTouches[_NUI_MAX_TOUCHES_];
-  uint8       mTouchCount;
-  nglTime mLastEventTime;
-  bool        mInited;
-  bool        mInvalidated;
-  NSTimer*    mInvalidationTimer;
+  nglWindow*    mpNGLWindow;
+  TouchesInfo   mTouches;
+  TouchesInfo   mpTouches[_NUI_MAX_TOUCHES_];
+  uint8         mTouchCount;
+  nglTime       mLastEventTime;
+  bool          mInited;
+  bool          mInvalidated;
+  NSTimer*      mInvalidationTimer;
+	UITextField*  mpTextField;
+	BOOL          mKeyboardVisible;
 }
 
 + (Class) layerClass;
@@ -43,6 +45,10 @@ typedef std::map<UITouch*,nglTouchInfo> TouchesInfo;
 - (void) handleEvent: (UIEvent*) pEvent;
 - (nglWindow *) getNGLWindow;
 
+- (void)showKeyboard;
+- (void)hideKeyboard;
+- (void)initializeKeyboard;
+@property (readonly) BOOL mKeyboardVisible;
 @end///< nglUIWindow
 
 #endif//__nglWindow_UIKit_h__

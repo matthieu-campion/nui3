@@ -111,6 +111,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
   mInvalidationTimer = [NSTimer scheduledTimerWithTimeInterval:(1.0f/60.0f) target:self selector:@selector(Paint) userInfo:nil repeats:YES];
 
+	[self initializeKeyboard];
   return self;
 }
 
@@ -459,6 +460,67 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   mInvalidated = true;
 }
 
+/////// Keyboard support:
+- (void)initializeKeyboard
+{
+	mpTextField = [[[UITextField alloc] initWithFrame: CGRectZero] autorelease];
+	mpTextField.delegate = self;
+	/* placeholder so there is something to delete! */
+	mpTextField.text = @" ";	
+	
+	/* set UITextInputTrait properties, mostly to defaults */
+	mpTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+	mpTextField.autocorrectionType = UITextAutocorrectionTypeNo;
+	mpTextField.enablesReturnKeyAutomatically = NO;
+	mpTextField.keyboardAppearance = UIKeyboardAppearanceDefault;
+	mpTextField.keyboardType = UIKeyboardTypeDefault;
+	mpTextField.returnKeyType = UIReturnKeyDefault;
+	mpTextField.secureTextEntry = NO;	
+	
+	mpTextField.hidden = YES;
+	mKeyboardVisible = NO;
+	/* add the UITextField (hidden) to our view */
+	[self addSubview: mpTextField];
+}
+
+// Show Keyboard
+- (void)showKeyboard
+{
+	mKeyboardVisible = YES;
+	[mpTextField becomeFirstResponder];
+}
+
+// hide onscreen virtual keyboard
+- (void)hideKeyboard
+{
+	mKeyboardVisible = NO;
+	[mpTextField resignFirstResponder];
+}
+
+// UITextFieldDelegate method.  Invoked when user types something.
+- (BOOL)textField:(UITextField *)_textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+	if ([string length] == 0)
+  {
+    mpNGLWindow->CallOnKeyDown(nglKeyEvent(NK_BACKSPACE, 8, 8)); // 8 = BS = BackSpace
+    mpNGLWindow->CallOnKeyUp(nglKeyEvent(NK_BACKSPACE, 8, 8));
+	}
+	else
+  {
+    nglString str((CFStringRef)string);
+    mpNGLWindow->CallOnTextInput(str);
+	}
+	return NO; /* don't allow the edit! (keep placeholder text there) */
+}
+
+/* Terminates the editing session */
+- (BOOL)textFieldShouldReturn:(UITextField*)_textField
+{
+	[self hideKeyboard];
+	return YES;
+}
+
+
 @end///< nglUIWindow
 
 
@@ -477,7 +539,7 @@ nglWindow::OSInfo::OSInfo()
 
 nglWindow::nglWindow (uint Width, uint Height, bool IsFullScreen)
 {
-  mpUIWindow=NULL;
+  mpUIWindow = NULL;
   nglContextInfo context; // Get default context
   nglWindowInfo info(Width, Height, IsFullScreen);
   InternalInit (context, info, NULL); 
@@ -485,7 +547,7 @@ nglWindow::nglWindow (uint Width, uint Height, bool IsFullScreen)
 
 nglWindow::nglWindow (const nglContextInfo& rContext, const nglWindowInfo& rInfo, const nglContext* pShared)
 {
-  mpUIWindow=NULL;
+  mpUIWindow = NULL;
   InternalInit (rContext, rInfo, pShared);
 }
 
@@ -791,17 +853,19 @@ void nglWindow::ExitModalState()
 
 void nglWindow::StartTextInput(int32 X, int32 Y, int32 W, int32 H)
 {
-  //#FIXME
+  [(nglUIWindow*)mpUIWindow showKeyboard];
 }
 
 void nglWindow::EndTextInput()
 {
-  //#FIXME
+  [(nglUIWindow*)mpUIWindow hideKeyboard];
 }
 
 bool nglWindow::IsEnteringText() const
 {
-  //#FIXME
+  //[(nglUIWindow*)mpUIWindow frame]
   return false;
 }
+
+
 
