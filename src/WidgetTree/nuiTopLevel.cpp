@@ -939,6 +939,18 @@ bool nuiTopLevel::CallTextInput (const nglString& rUnicodeText)
   return false;
 }
 
+void nuiTopLevel::CallTextInputCancelled ()
+{
+  if (mpFocus && mpFocus->IsEnabled())
+  {
+    mpFocus->DispatchTextInputCancelled();
+  }
+  else
+  {
+    DispatchTextInputCancelled();
+  }
+}
+
 
 bool nuiTopLevel::CallKeyDown (const nglKeyEvent& rEvent)
 {

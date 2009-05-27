@@ -517,6 +517,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 - (BOOL)textFieldShouldReturn:(UITextField*)_textField
 {
 	[self hideKeyboard];
+  mpNGLWindow->CallOnTextInputCancelled();
 	return YES;
 }
 

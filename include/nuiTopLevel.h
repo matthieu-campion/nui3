@@ -111,6 +111,7 @@ public:
 
   // Events entry points:
   bool CallTextInput (const nglString& rUnicodeText);
+  void CallTextInputCancelled ();
   bool CallKeyDown (const nglKeyEvent& rEvent);
   bool CallKeyUp (const nglKeyEvent& rEvent);
   bool CallMouseClick (nglMouseInfo& rInfo);

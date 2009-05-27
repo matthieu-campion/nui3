@@ -607,6 +607,10 @@ window = new nglWindow (context, info, NULL);
    \param rUnicodeTextInput an nglString containing the input from the user. Beware that this string may contain more than one characters.
    \return true is the key was handled and false otherwise. If the key wasn't handled it is potentially sent back to the system or hosting application.
    */
+  virtual void OnTextInputCancelled();
+  /*!<
+   This method is called when the user dismisses an onscreen keyboard or the IME window.
+   */
   virtual bool OnKeyDown(const nglKeyEvent& rEvent);
   /*!<
   This method is called when a key is pressed. Use this method only to get Low Level keyboard input: if you are making a game or to catch dead keys/system keys (cursor keys).
@@ -745,6 +749,7 @@ public:
   void CallOnState      (StateInfo State);
   void CallOnResize     (uint Width, uint Height);
   bool CallOnTextInput  (const nglString& rUnicodeString);
+  void CallOnTextInputCancelled();
   bool CallOnKeyDown    (const nglKeyEvent& rEvent);
   bool CallOnKeyUp      (const nglKeyEvent& rEvent);
   bool CallOnMouseClick (nglMouseInfo& rInfo);

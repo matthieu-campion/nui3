@@ -158,7 +158,8 @@ protected:
   virtual void OnDesactivation();
   virtual void OnClose();
   virtual void OnState(nglWindow::StateInfo State);
-  virtual bool OnTextInput   (const nglString& rUnicodeText);
+  virtual bool OnTextInput(const nglString& rUnicodeText);
+  virtual void OnTextInputCancelled();
   virtual bool OnKeyDown     (const nglKeyEvent& rEvent);
   virtual bool OnKeyUp       (const nglKeyEvent& rEvent);
   virtual bool OnMouseClick  (nglMouseInfo& rInfo);
@@ -214,6 +215,7 @@ private:
     virtual void OnClose();
     virtual void OnState(StateInfo State);
     virtual bool OnTextInput(const nglString& rUnicodeText);
+    virtual void OnTextInputCancelled();
     virtual bool OnKeyDown(const nglKeyEvent& rEvent);
     virtual bool OnKeyUp(const nglKeyEvent& rEvent);
     virtual bool OnMouseClick(nglMouseInfo& rInfo);

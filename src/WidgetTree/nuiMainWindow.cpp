@@ -633,6 +633,11 @@ bool nuiMainWindow::OnTextInput(const nglString& rUnicodeText)
   return CallTextInput(rUnicodeText);
 }
 
+void nuiMainWindow::OnTextInputCancelled()
+{
+  CallTextInputCancelled();
+}
+
 bool nuiMainWindow::OnKeyUp(const nglKeyEvent& rEvent)
 {
   return CallKeyUp(rEvent);
@@ -962,6 +967,11 @@ void nuiMainWindow::NGLWindow::OnState(StateInfo State)
 bool nuiMainWindow::NGLWindow::OnTextInput(const nglString& rUnicodeText)
 {
   return mpMainWindow->OnTextInput(rUnicodeText);
+}
+
+void nuiMainWindow::NGLWindow::OnTextInputCancelled()
+{
+  mpMainWindow->OnTextInputCancelled();
 }
 
 bool nuiMainWindow::NGLWindow::OnKeyDown(const nglKeyEvent& rEvent)

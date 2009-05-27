@@ -179,10 +179,12 @@ public:
   //@{
   virtual bool IsKeyDown (nglKeyCode Key) const;
   virtual bool DispatchTextInput(const nglString& rUnicodeText);
+  virtual void DispatchTextInputCancelled();
   virtual bool DispatchKeyDown(const nglKeyEvent& rEvent);
   virtual bool DispatchKeyUp(const nglKeyEvent& rEvent);
 
   virtual bool TextInput(const nglString& rUnicodeText);
+  virtual void TextInputCancelled();
   virtual bool KeyDown(const nglKeyEvent& rEvent);
   virtual bool KeyUp(const nglKeyEvent& rEvent);
   //@}

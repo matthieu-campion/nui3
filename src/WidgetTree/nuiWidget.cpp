@@ -1313,6 +1313,13 @@ bool nuiWidget::DispatchTextInput(const nglString& rUnicodeText)
   return false;
 }
 
+void nuiWidget::DispatchTextInputCancelled()
+{
+  TextInputCancelled();
+  if (mpParent)
+    mpParent->DispatchTextInputCancelled();
+}
+
 nuiWidgetPtr DeepSearchNextFocussableWidget(nuiWidgetPtr pWidget, bool TryThisNode)
 {
   if (TryThisNode && pWidget->GetWantKeyboardFocus())
@@ -1522,6 +1529,11 @@ bool nuiWidget::DispatchKeyUp(const nglKeyEvent& rEvent)
 bool nuiWidget::TextInput(const nglString& rUnicodeText)
 {
   return false;
+}
+
+void nuiWidget::TextInputCancelled()
+{
+  UnFocus();
 }
 
 bool nuiWidget::KeyDown(const nglKeyEvent& rEvent)

@@ -189,6 +189,10 @@ bool nglWindow::OnTextInput(const nglString& rUnicodeTextInput)
   return false;
 }
 
+void nglWindow::OnTextInputCancelled()
+{
+}
+
 bool nglWindow::OnKeyDown(const nglKeyEvent& rEvent)
 {
   return false;
@@ -311,6 +315,14 @@ bool nglWindow::CallOnTextInput (const nglString& rUnicodeString)
   //NGL_LOG(_T("window"), NGL_LOG_DEBUG, _T("TextInput: '%ls' [%d chars]"), rUnicodeString.GetChars(), rUnicodeString.GetLength());
 #endif // _DEBUG_
   return OnTextInput(rUnicodeString);
+}
+
+void nglWindow::CallOnTextInputCancelled ()
+{
+#ifdef _DEBUG_
+  //NGL_LOG(_T("window"), NGL_LOG_DEBUG, _T("TextInputCancelled"));
+#endif // _DEBUG_
+  OnTextInputCancelled();
 }
 
 bool nglWindow::CallOnMouseClick (nglMouseInfo& rInfo)
