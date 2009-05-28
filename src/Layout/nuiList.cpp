@@ -210,7 +210,7 @@ bool nuiList::SetRect(const nuiRect& rRect)
         h=(nuiSize)Rect.GetHeight();
       }
       
-      Rect.Set(mBorderSize + 1,Height,Width - 2*mBorderSize -2,h);
+      Rect.Set(mBorderSize, Height, Width - 2 * mBorderSize, h);
       Rect.RoundToAbove();
 
       Height += h + mBorderSize;
@@ -245,7 +245,7 @@ bool nuiList::SetRect(const nuiRect& rRect)
         w=(nuiSize)(int)((nuiSize)Rect.GetWidth());
       }
       
-      Rect.Set(Width, mBorderSize+1, w, Height - 2*mBorderSize -2);
+      Rect.Set(Width, mBorderSize, w, Height - 2 * mBorderSize);
       Rect.RoundToAbove();
       Width += w + mBorderSize;
       Width = (nuiSize)ToAbove(Width);

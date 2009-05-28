@@ -1513,8 +1513,16 @@ bool nuiTopLevel::DrawTree(class nuiDrawContext *pContext)
 
   if (mpWatchedWidget)
   {
-    nuiRect r(mpWatchedWidget->GetRect().Size());
-    mpWatchedWidget->LocalToGlobal(r);
+    nuiRect r(mpWatchedWidget->GetRect());
+    nuiRect r2(mpWatchedWidget->GetBorderedRect().Size());
+    nuiRect r3(mpWatchedWidget->GetOverDrawRect(true, true).Size());
+    if (IsKeyDown(NK_ALT))
+      r = r2;
+    else if (IsKeyDown(NK_META))
+      r = r3;
+    
+    if (mpWatchedWidget->GetParent())
+      mpWatchedWidget->GetParent()->LocalToGlobal(r);
     
     pContext->ResetState();
     pContext->ResetClipRect();

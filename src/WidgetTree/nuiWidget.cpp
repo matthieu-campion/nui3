@@ -361,6 +361,26 @@ void nuiWidget::InitAttributes()
                 nuiMakeDelegate(this, &nuiWidget::GetBorderBottom),
                 nuiMakeDelegate(this, &nuiWidget::SetBorderBottom)));
   
+  AddAttribute(new nuiAttribute<nuiSize>
+               (nglString(_T("OverDrawLeft")), nuiUnitSize,
+                nuiMakeDelegate(this, &nuiWidget::GetOverDrawLeft),
+                nuiMakeDelegate(this, &nuiWidget::SetOverDrawLeft)));
+  
+  AddAttribute(new nuiAttribute<nuiSize>
+               (nglString(_T("OverDrawTop")), nuiUnitSize,
+                nuiMakeDelegate(this, &nuiWidget::GetOverDrawTop),
+                nuiMakeDelegate(this, &nuiWidget::SetOverDrawTop)));
+  
+  AddAttribute(new nuiAttribute<nuiSize>
+               (nglString(_T("OverDrawRight")), nuiUnitSize,
+                nuiMakeDelegate(this, &nuiWidget::GetOverDrawRight),
+                nuiMakeDelegate(this, &nuiWidget::SetOverDrawRight)));
+  
+  AddAttribute(new nuiAttribute<nuiSize>
+               (nglString(_T("OverDrawBottom")), nuiUnitSize,
+                nuiMakeDelegate(this, &nuiWidget::GetOverDrawBottom),
+                nuiMakeDelegate(this, &nuiWidget::SetOverDrawBottom)));
+  
   // nuiAttribute<nuiSize> <=> nuiAttribute<double>
   AddAttribute(new nuiAttribute<nuiSize>
                (nglString(_T("ActualBorderLeft")), nuiUnitSize,
@@ -3412,6 +3432,55 @@ void nuiWidget::SetOverDraw(nuiSize Left, nuiSize Top, nuiSize Right, nuiSize Bo
     Invalidate();
   }
 }
+
+void nuiWidget::SetOverDrawLeft(nuiSize border)
+{
+  mODLeft = border;
+  InvalidateLayout();
+  DebugRefreshInfo();
+}
+
+void nuiWidget::SetOverDrawTop(nuiSize border)
+{
+  mODTop = border;
+  InvalidateLayout();
+  DebugRefreshInfo();
+}
+
+void nuiWidget::SetOverDrawRight(nuiSize border)
+{
+  mODRight = border;
+  InvalidateLayout();
+  DebugRefreshInfo();
+}
+
+void nuiWidget::SetOverDrawBottom(nuiSize border)
+{
+  mODBottom = border;
+  InvalidateLayout();
+  DebugRefreshInfo();
+}
+
+nuiSize nuiWidget::GetOverDrawLeft() const
+{
+  return mODLeft;
+}
+
+nuiSize nuiWidget::GetOverDrawTop() const
+{
+  return mODTop;
+}
+
+nuiSize nuiWidget::GetOverDrawRight() const
+{
+  return mODRight;
+}
+
+nuiSize nuiWidget::GetOverDrawBottom() const
+{
+  return mODBottom;
+}
+
 
 void nuiWidget::ResetOverDraw()
 {

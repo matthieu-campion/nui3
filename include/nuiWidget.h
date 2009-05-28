@@ -647,6 +647,15 @@ private:
   nuiSize GetActualBorderTop() const;
   nuiSize GetActualBorderRight() const;
   nuiSize GetActualBorderBottom() const;
+
+  void SetOverDrawLeft(nuiSize border);
+  void SetOverDrawTop(nuiSize border);
+  void SetOverDrawRight(nuiSize border);
+  void SetOverDrawBottom(nuiSize border);
+  nuiSize GetOverDrawLeft() const;
+  nuiSize GetOverDrawTop() const;
+  nuiSize GetOverDrawRight() const;
+  nuiSize GetOverDrawBottom() const;
   
   void InternalSetLayout(const nuiRect& rect);
   virtual void InternalSetLayout(const nuiRect& rect, bool PositionChanged, bool SizeChanged);

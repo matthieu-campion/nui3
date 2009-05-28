@@ -431,7 +431,7 @@ bool nuiGrid::SetRect(const nuiRect& rRect)
       if (pWidget)
       {
         nuiRect rect(X, Y, sizeX, sizeY);
-
+        rect.RoundToNearest();
         pWidget->GetIdealRect();
         pWidget->SetLayout(rect);
       }
