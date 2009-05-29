@@ -1036,7 +1036,7 @@ nuiSplineMode nuiSpline::GetMode() const
   return mMode;
 }
 
-bool nuiSpline::Tessellate(nuiPath& rVertices, float Quality)
+bool nuiSpline::Tessellate(nuiPath& rVertices, float Quality) const
 {
   if (mCacheValid && mLastQuality == Quality)
   {

@@ -19,8 +19,8 @@ public:
   nuiOutliner(nuiPathGenerator* pPath, float linewidth = 1.0f);
   virtual ~nuiOutliner();
 
-  virtual bool Tessellate(nuiPath& rPoints, float Quality);
-  virtual bool TessellateObj(nuiRenderObject& rObject, float Quality);
+  virtual bool Tessellate(nuiPath& rPoints, float Quality) const;
+  virtual bool TessellateObj(nuiRenderObject& rObject, float Quality) const;
 
   void SetLineWidth(float width);
   float GetLineWidth() const;
@@ -33,11 +33,11 @@ public:
 
   void SetPath(nuiPathGenerator* pPath);
 private:
-  void Tessellate(nuiPath& rPoints, const nuiPath& rVertices, uint offset, int count, float Quality);
-  void AddJoin(const nuiPoint& Point0, const nuiPoint& Point1, const nuiPoint& Point2, const nuiPoint& Point3, nuiPath& rPoints);
-  void AddCap(const nuiPoint& rFirstPoint, const nuiPoint& rLastPoint, nuiPath& rPoints);
+  void Tessellate(nuiPath& rPoints, const nuiPath& rVertices, uint offset, int count, float Quality) const;
+  void AddJoin(const nuiPoint& Point0, const nuiPoint& Point1, const nuiPoint& Point2, const nuiPoint& Point3, nuiPath& rPoints) const;
+  void AddCap(const nuiPoint& rFirstPoint, const nuiPoint& rLastPoint, nuiPath& rPoints) const;
 
-  void TessellateObj(nuiRenderObject& rObject, const nuiPath& rVertices, uint offset, int count, float Quality);
+  void TessellateObj(nuiRenderObject& rObject, const nuiPath& rVertices, uint offset, int count, float Quality) const;
 
   float mLineWidth;
   nuiLineJoin mLineJoin;

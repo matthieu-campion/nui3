@@ -96,7 +96,7 @@ nuiXMLNode* nuiArc::Serialize(nuiXMLNode* pParentNode) const
   return pNode;
 }
 
-bool nuiArc::Tessellate(nuiPath& rVertices, float Quality)
+bool nuiArc::Tessellate(nuiPath& rVertices, float Quality) const
 {
   // I shamelessly stole this code from svgl
   double x1, y1, x2, y2;
@@ -117,32 +117,32 @@ bool nuiArc::Tessellate(nuiPath& rVertices, float Quality)
   }
 
   // be sure mXRadius or mYRadius are non-zero
-  if( mXRadius==0 || mYRadius==0) 
+  if( mXRadius == 0 || mYRadius == 0) 
   {
     rVertices.AddVertexOptim(nuiPoint((float)x2, (float)y2));
     return true;
   }
 
   // make sure mXRadius and mYRadius are positive
-  if(xr<0)
-    xr=-xr;
-  if(yr<0)
-    yr=-yr;
+  if(xr < 0)
+    xr = -xr;
+  if(yr < 0)
+    yr = -yr;
 
   const double cosa = cos(angle * M_PI / 180.0);
   const double sina = sin(angle * M_PI / 180.0);
 
 
   // compute the center (see svg.pdf)
-  const double xp1 = cosa * (x1-x2)/2.0 + sina * (y1-y2)/2.f;
-  const double yp1 = -sina * (x1-x2)/2.0 + cosa * (y1-y2)/2.f;
+  const double xp1 = cosa * (x1 - x2) / 2.0 + sina * (y1 - y2) / 2.f;
+  const double yp1 = -sina * (x1 - x2) / 2.0 + cosa * (y1 - y2) / 2.f;
 
-  double rx2 = xr*xr, ry2 = yr*yr, xp12=xp1*xp1, yp12=yp1*yp1;
+  double rx2 = xr * xr, ry2 = yr * yr, xp12 = xp1 * xp1, yp12 = yp1 * yp1;
 
   // make sure xr and yr are large enough
   {
-    double tmp = xp12/rx2 + yp12/ry2;
-    if (tmp>1) 
+    double tmp = xp12 / rx2 + yp12 / ry2;
+    if (tmp > 1)
     {
       rx2 *= tmp;
       ry2 *= tmp;
@@ -152,10 +152,10 @@ bool nuiArc::Tessellate(nuiPath& rVertices, float Quality)
     }
   }
 
-  double fact = ( rx2*ry2 / (rx2*yp12 + ry2*xp12))-1;
-  if (fact<0) 
+  double fact = ( rx2 * ry2 / (rx2 * yp12 + ry2 * xp12)) - 1;
+  if (fact < 0) 
   {
-    fact=0;
+    fact = 0;
   }
 
   fact = sqrt(fact);
@@ -168,8 +168,8 @@ bool nuiArc::Tessellate(nuiPath& rVertices, float Quality)
   xpc *= fact;
   ypc *= fact;
 
-  double xc = xpc * cosa - ypc * sina + (x1+x2)/2.f;
-  double yc = xpc * sina + ypc * cosa + (y1+y2)/2.f;
+  double xc = xpc * cosa - ypc * sina + (x1 + x2) / 2.f;
+  double yc = xpc * sina + ypc * cosa + (y1 + y2) / 2.f;
 
   // determine t1 and t2, limits given by (x1, y1) (x2, y2)
 
@@ -177,37 +177,37 @@ bool nuiArc::Tessellate(nuiPath& rVertices, float Quality)
   double deltat;
   //    double t2;
   {
-    double xv1 = (xp1-xpc)/xr;
-    double yv1 = (yp1-ypc)/yr;
-    double norm1 = xv1*xv1 + yv1*yv1;
+    double xv1 = (xp1 - xpc) / xr;
+    double yv1 = (yp1 - ypc) / yr;
+    double norm1 = xv1 * xv1 + yv1 * yv1;
 
-    double cosangle1 = xv1/sqrt(norm1);
+    double cosangle1 = xv1 / sqrt(norm1);
     if (cosangle1 < -1.0f)
       cosangle1 = -1.0f;
     if (cosangle1 > 1.0f)
       cosangle1 = 1.0f;
     t1 = acos(cosangle1);
-    if(yv1<0)
+    if (yv1 < 0)
       t1 = -t1;
 
-    double xv2 = (-xp1-xpc)/xr;
-    double yv2 = (-yp1-ypc)/yr;
-    double norm2 = xv2*xv2 + yv2*yv2;
-    deltat = xv1*xv2+yv1*yv2;
-    deltat = deltat/sqrt(norm1*norm2);
+    double xv2 = (-xp1 - xpc) / xr;
+    double yv2 = (-yp1 - ypc) / yr;
+    double norm2 = xv2 * xv2 + yv2 * yv2;
+    deltat = xv1 * xv2 + yv1 * yv2;
+    deltat = deltat / sqrt(norm1 * norm2);
     if (deltat < -1.0)
       deltat = -1.0;
     if (deltat > 1.0)
       deltat = 1.0;
     deltat = acos(deltat);
-    if ( (xv1*yv2-yv1*xv2)<0)
+    if ( (xv1 * yv2 - yv1 * xv2) < 0)
       deltat = -deltat;
 
     if (!mSweep && (deltat > 0))
-      deltat -= 2.0*M_PI;
+      deltat -= 2.0 * M_PI;
 
     if (mSweep && (deltat < 0))
-      deltat += 2.0*M_PI;
+      deltat += 2.0 * M_PI;
   }
 
 
@@ -215,22 +215,22 @@ bool nuiArc::Tessellate(nuiPath& rVertices, float Quality)
   /*
   fast incremental cos and sin generation
 
-  cos(a+dt) = cos(a)cos(dt)-sin(a)sin(dt);
-  sin(a+dt) = cos(a)sin(dt) + cos(dt)sin(a);
+  cos(a+dt) = cos(a) cos(dt) - sin(a)  sin(dt);
+  sin(a+dt) = cos(a) sin(dt) + cos(dt) sin(a);
 
   <=>
-  cos(a+2*dt) = cos(a+dt)cos(dt) - sin(a+dt)sin(dt)
-  sin(a+2*dt) = cos(a+dt)sin(dt) + cos(a+dt)sin(a)
+  cos(a+2*dt) = cos(a + dt) cos(dt) - sin(a + dt) sin(dt)
+  sin(a+2*dt) = cos(a + dt) sin(dt) + cos(a + dt) sin(a)
   */
 
-  const int nb = ToBelow(M_PI*(xr+yr) * Quality);
-  const double dt = (deltat)/nb;
+  const int nb = ToBelow(M_PI * (xr + yr) * Quality);
+  const double dt = deltat / nb;
   const double cosdt = cos(dt);
   const double sindt = sin(dt);
-  double cost1_plus_ndt = cos(t1+dt);
-  double sint1_plus_ndt = sin(t1+dt);
+  double cost1_plus_ndt = cos(t1 + dt);
+  double sint1_plus_ndt = sin(t1 + dt);
 
-  for(int i=0; i<nb; ++i) 
+  for (int i = 0; i < nb; ++i) 
   {
     /*
       ellipsoid:
@@ -258,8 +258,8 @@ bool nuiArc::Tessellate(nuiPath& rVertices, float Quality)
     }
 
     // translate
-    x+=xc;
-    y+=yc;
+    x += xc;
+    y += yc;
 
     rVertices.AddVertexOptim(nuiPoint((float)x, (float)y));
   }

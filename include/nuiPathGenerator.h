@@ -28,7 +28,7 @@ public:
   virtual nuiXMLNode* Serialize(nuiXMLNode* pParentNode) const; ///< This method saves the state in the given XML Node.
   //@}
 
-  virtual bool Tessellate(nuiPath& rVertices, float Quality = 0.5f) = 0;
+  virtual bool Tessellate(nuiPath& rVertices, float Quality = 0.5f) const = 0;
 
   virtual nuiPoint GetStartPoint() const;
   virtual nuiPoint GetEndPoint() const;

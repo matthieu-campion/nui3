@@ -388,4 +388,77 @@ typedef nglVector2<double> nglVector2d;
 typedef nglVector3<double> nglVector3d;
 typedef nglVector<double>  nglVectord;
 
+
+template <class T>
+void nuiDistanceFromLineAndSegment(T px, T py, T x0, T y0 , T x1, T y1, T &rDistanceFromLine, T &rDistanceFromSegment)
+{
+  T r_numerator = (px - x0) * (x1 - x0) + (py - y0) * (y1 - y0);
+  T r_denominator = (x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0);
+  T r = r_numerator / r_denominator;
+  //
+  //    
+  T s =  ((y0 - py) * (x1 - x0) - (x0 - px) * (y1 - y0) ) / r_denominator;
+  
+  rDistanceFromLine = fabs(s) * sqrt(r_denominator);
+  
+  //
+  // (xx,yy) is the point on the lineSegment closest to (px,py)
+  //
+  
+  if ( (r >= 0.0) && (r <= 1.0) )
+  {
+    rDistanceFromSegment = rDistanceFromLine;
+  }
+  else
+  {
+    
+    T dist1 = (px - x0) * (px - x0) + (py - y0) * (py - y0);
+    T dist2 = (px - x1) * (px - x1) + (py - y1) * (py - y1);
+    if (dist1 < dist2)
+      rDistanceFromSegment = sqrt(dist1);
+    else
+      rDistanceFromSegment = sqrt(dist2);
+  }
+  
+  return;
+}
+
+template <class T>
+T nuiDistanceFromLine(T px, T py, T x0, T y0 , T x1, T y1)
+{
+  T r_numerator = (px - x0) * (x1 - x0) + (py - y0) * (y1 - y0);
+  T r_denominator = (x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0);
+
+  T s =  ((y0 - py) * (x1 - x0) - (x0 - px) * (y1 - y0) ) / r_denominator;
+  
+  return fabs(s) * sqrt(r_denominator);
+}
+
+template <class T>
+T nuiDistanceFromSegment(T px, T py, T x0, T y0 , T x1, T y1)
+{
+  T l, s;
+  nuiDistanceFromLineAndSegment(px, py, x0, y0, x1, y1, l, s);
+  return s;
+}
+
+
+template <class T>
+void nuiDistanceFromLineAndSegment(const nglVector2<T>& p, const nglVector2<T>& p0 , const nglVector2<T>& p1, T &rDistanceFromLine, T &rDistanceFromSegment)
+{
+  nuiDistanceFromLineAndSegment(p[0], p[1], p0[0], p0[1], p1[0], p1[1], rDistanceFromLine, rDistanceFromSegment);
+}
+
+template <class T>
+T nuiDistanceFromLine(const nglVector2<T>& p, const nglVector2<T>& p0 , const nglVector2<T>& p1)
+{
+  return nuiDistanceFromLine(p[0], p[1], p0[0], p0[1], p1[0], p1[1]);
+}
+
+template <class T>
+T nuiDistanceFromSegment(const nglVector2<T>& p, const nglVector2<T>& p0 , const nglVector2<T>& p1)
+{
+  return nuiDistanceFromSegment(p[0], p[1], p0[0], p0[1], p1[0], p1[1]);
+}
+
 #endif // __nglVector_h__

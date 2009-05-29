@@ -179,7 +179,7 @@ void nuiContour::AddSpline(const nuiSpline& rSpline)
 }
 
 
-bool nuiContour::Tessellate(nuiPath& rVertices, float Quality)
+bool nuiContour::Tessellate(nuiPath& rVertices, float Quality) const
 {
   bool res = true;
   std::list<nuiPathGenerator*>::const_iterator it;

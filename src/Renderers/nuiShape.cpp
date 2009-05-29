@@ -259,11 +259,11 @@ uint nuiShape::GetContourCount() const
 }
 
 
-bool nuiShape::Tessellate(nuiPath& rVertices, float Quality)
+bool nuiShape::Tessellate(nuiPath& rVertices, float Quality) const
 {
   bool res = true;
-  std::vector<nuiContour*>::iterator it;
-  std::vector<nuiContour*>::iterator end = mpContours.end();
+  std::vector<nuiContour*>::const_iterator it;
+  std::vector<nuiContour*>::const_iterator end = mpContours.end();
 
   for (it = mpContours.begin(); it != end; ++it)
   {
@@ -510,3 +510,14 @@ void nuiShape::AddArc(float cX, float cY, float rX, float rY, float Theta1InDegr
   AddContour();
   mpContours.back()->AddArc(cX, cY, rX, rY, Theta1InDegree, Theta2InDegree, Phi);
 }
+
+
+float nuiShape::GetDistanceFromPoint(float X, float Y, float Quality) const
+{
+  nuiPath path;
+  if (!Tessellate(path, Quality))
+    return std::numeric_limits<float>::infinity();
+  
+  return path.GetDistanceFromPoint(X, Y);
+}
+

@@ -7,6 +7,7 @@
 
 #include "nui.h"
 #include "nuiPath.h"
+#include "nglMath.h"
 
 nuiPath::nuiPath()
 {
@@ -156,3 +157,29 @@ bool nuiPath::IsEmpty() const
 {
   return mVertices.empty();
 }
+
+float nuiPath::GetDistanceFromPoint(float X, float Y) const
+{
+  if (mVertices.empty())
+    return std::numeric_limits<float>::infinity();
+  
+  float dist = std::numeric_limits<float>::max();
+  int32 size = mVertices.size();
+  int32 total = size + (IsClosed() ? 0 : -1);
+  for (int32 i = 0; i < total; i++)
+  {
+    int32 index1 = i % size;
+    int32 index2 = (i + 1) % size;
+    
+    const nuiPoint& rP1(mVertices[index1]);
+    const nuiPoint& rP2(mVertices[index2]);
+    
+    dist = MIN(dist, nuiDistanceFromSegment(X, Y, rP1[0], rP1[1] , rP2[0], rP2[1]));
+    
+    if (dist == 0.0f)
+      return dist;
+  }
+  
+  return dist;
+}
+

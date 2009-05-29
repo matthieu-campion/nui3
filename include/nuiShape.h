@@ -74,7 +74,7 @@ public:
 
   nuiRect GetRect();
 
-  virtual bool Tessellate(nuiPath& rVertices, float Quality = 0.5f);
+  virtual bool Tessellate(nuiPath& rVertices, float Quality = 0.5f) const;
   virtual nuiPoint GetStartPoint() const;
   virtual nuiPoint GetEndPoint() const;
 
@@ -98,6 +98,8 @@ public:
 
   //nuiSimpleEventSource<nuiChanged> Changed; ///< This event is fired each time the Shape is changed.
 
+  float GetDistanceFromPoint(float X, float Y, float Quality = 0.5f) const;
+  
 private:
   std::vector<nuiContour*> mpContours;
   nuiShape(const nuiShape& rShape);

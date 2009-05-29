@@ -38,7 +38,7 @@ public:
 
   void Close();
 
-  virtual bool Tessellate(nuiPath& rVertices, float Quality = 0.5f);
+  virtual bool Tessellate(nuiPath& rVertices, float Quality = 0.5f) const;
   uint GetElementsCount() const;
   const std::list<nuiPathGenerator*>* GetElements() const;
 

@@ -51,7 +51,7 @@ nuiXMLNode* nuiRectPath::Serialize(nuiXMLNode* pParentNode) const
 }
 
 
-bool nuiRectPath::Tessellate(nuiPath& rVertices, float Quality)
+bool nuiRectPath::Tessellate(nuiPath& rVertices, float Quality) const
 {
   if (mCCW)
   {

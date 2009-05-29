@@ -46,6 +46,8 @@ public:
 
   void Clear();
 
+  float GetDistanceFromPoint(float X, float Y) const;
+  
 private:
   std::vector<nuiPoint> mVertices;
 };

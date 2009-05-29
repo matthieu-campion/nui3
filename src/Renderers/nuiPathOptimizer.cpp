@@ -24,7 +24,7 @@ nuiPathOptimizer::~nuiPathOptimizer()
   delete mpPath;
 }
 
-bool nuiPathOptimizer::Tessellate(nuiPath& rVertices, float Quality)
+bool nuiPathOptimizer::Tessellate(nuiPath& rVertices, float Quality) const
 {
   nuiPath Points;
 

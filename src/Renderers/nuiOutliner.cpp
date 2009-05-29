@@ -28,7 +28,7 @@ nuiOutliner::~nuiOutliner()
 {
 }
 
-void nuiOutliner::AddJoin(const nuiPoint& Point0, const nuiPoint& Point1, const nuiPoint& Point2, const nuiPoint& Point3, nuiPath& rPoints)
+void nuiOutliner::AddJoin(const nuiPoint& Point0, const nuiPoint& Point1, const nuiPoint& Point2, const nuiPoint& Point3, nuiPath& rPoints) const
 {
   const double x1 = Point0[0];
   const double y1 = Point0[1];
@@ -80,7 +80,7 @@ void nuiOutliner::AddJoin(const nuiPoint& Point0, const nuiPoint& Point1, const 
   }
 }
 
-void nuiOutliner::AddCap(const nuiPoint& rFirstPoint, const nuiPoint& rLastPoint, nuiPath& rPoints)
+void nuiOutliner::AddCap(const nuiPoint& rFirstPoint, const nuiPoint& rLastPoint, nuiPath& rPoints) const
 {
   switch (mLineCap)
   {
@@ -111,7 +111,7 @@ void nuiOutliner::AddCap(const nuiPoint& rFirstPoint, const nuiPoint& rLastPoint
   }
 }
 
-void nuiOutliner::Tessellate(nuiPath& rPoints, const nuiPath& rVertices, uint offset, int count, float Quality)
+void nuiOutliner::Tessellate(nuiPath& rPoints, const nuiPath& rVertices, uint offset, int count, float Quality) const
 {
   nuiPath Left;
   nuiPath Right;
@@ -252,7 +252,7 @@ void nuiOutliner::Tessellate(nuiPath& rPoints, const nuiPath& rVertices, uint of
   }
 }
 
-bool nuiOutliner::Tessellate(nuiPath& rPoints, float Quality)
+bool nuiOutliner::Tessellate(nuiPath& rPoints, float Quality) const
 {
   nuiPath Vertices;
   bool res = mpPath->Tessellate(Vertices, Quality);
@@ -377,7 +377,7 @@ void nui_glVertex2f(GLfloat x, GLfloat y)
 }
 
 #ifndef __NUI_NO_AA__
-void nuiOutliner::TessellateObj(nuiRenderObject& rObject, const nuiPath& rVertices, uint offset, int count, float Quality)
+void nuiOutliner::TessellateObj(nuiRenderObject& rObject, const nuiPath& rVertices, uint offset, int count, float Quality) const
 {
   NGL_ASSERT(count);
 
@@ -462,7 +462,7 @@ void nuiOutliner::TessellateObj(nuiRenderObject& rObject, const nuiPath& rVertic
 }
 #endif
 
-bool nuiOutliner::TessellateObj(nuiRenderObject& rObject, float Quality)
+bool nuiOutliner::TessellateObj(nuiRenderObject& rObject, float Quality) const
 {
   gpCurrentObject = &rObject;
 

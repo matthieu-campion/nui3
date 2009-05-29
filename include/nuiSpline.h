@@ -159,7 +159,7 @@ public:
 
   nuiSpline& operator=(const nuiSpline& rSpline);
 
-  virtual bool Tessellate(nuiPath& rVertices, float Quality = 0.5f);
+  virtual bool Tessellate(nuiPath& rVertices, float Quality = 0.5f) const;
 
   virtual nuiPoint GetStartPoint() const;
   virtual nuiPoint GetEndPoint() const;

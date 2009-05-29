@@ -18,7 +18,7 @@ public:
   nuiPathOptimizer(nuiPathGenerator* pPath, float AngleThreshold = .007f, float DistThreshold = 4.0f);
   virtual ~nuiPathOptimizer();
 
-  bool Tessellate(nuiPath& rVertices, float Quality = 0.5f);
+  bool Tessellate(nuiPath& rVertices, float Quality = 0.5f) const;
 
 
 private:

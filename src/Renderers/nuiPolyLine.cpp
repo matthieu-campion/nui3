@@ -57,7 +57,7 @@ nuiXMLNode* nuiPolyLine::Serialize(nuiXMLNode* pParentNode) const
 }
 
 
-bool nuiPolyLine::Tessellate(nuiPath& rVertices, float Quality)
+bool nuiPolyLine::Tessellate(nuiPath& rVertices, float Quality) const
 {
   for (uint32 i = 0; i < mVertices.GetCount(); i++)
     rVertices.AddVertex(mVertices[i]);
