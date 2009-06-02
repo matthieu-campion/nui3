@@ -158,6 +158,8 @@ bool nuiPath::IsEmpty() const
   return mVertices.empty();
 }
 
+#undef max
+
 float nuiPath::GetDistanceFromPoint(float X, float Y) const
 {
   if (mVertices.empty())

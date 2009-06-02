@@ -1357,14 +1357,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\Layout\nuiTable.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiTable.h"
-					>
-				</File>
-				<File
 					RelativePath=".\src\Layout\nuiTabView.cpp"
 					>
 				</File>
@@ -1750,10 +1742,6 @@
 				</File>
 				<File
 					RelativePath=".\src\SimpleWidgets\nuiFileSelector.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\SimpleWidgets\nuiFileTable.cpp"
 					>
 				</File>
 				<File
