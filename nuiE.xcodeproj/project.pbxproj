@@ -187,8 +187,6 @@
 		6126D7650DA5716500D2641A /* nuiShadeContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5540DA5716500D2641A /* nuiShadeContainer.h */; };
 		6126D7660DA5716500D2641A /* nuiSplitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5550DA5716500D2641A /* nuiSplitter.cpp */; };
 		6126D7670DA5716500D2641A /* nuiSplitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5560DA5716500D2641A /* nuiSplitter.h */; };
-		6126D7680DA5716500D2641A /* nuiTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5570DA5716500D2641A /* nuiTable.cpp */; };
-		6126D7690DA5716500D2641A /* nuiTable.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5580DA5716500D2641A /* nuiTable.h */; };
 		6126D76A0DA5716500D2641A /* nuiTabView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5590DA5716500D2641A /* nuiTabView.cpp */; };
 		6126D76B0DA5716500D2641A /* nuiTabView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D55A0DA5716500D2641A /* nuiTabView.h */; };
 		6126D76C0DA5716500D2641A /* nuiTitledPane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D55B0DA5716500D2641A /* nuiTitledPane.cpp */; };
@@ -259,8 +257,6 @@
 		6126D7C60DA5716500D2641A /* nuiFileList.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5BA0DA5716500D2641A /* nuiFileList.h */; };
 		6126D7C70DA5716500D2641A /* nuiFileSelector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5BB0DA5716500D2641A /* nuiFileSelector.cpp */; };
 		6126D7C80DA5716500D2641A /* nuiFileSelector.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5BC0DA5716500D2641A /* nuiFileSelector.h */; };
-		6126D7C90DA5716500D2641A /* nuiFileTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5BD0DA5716500D2641A /* nuiFileTable.cpp */; };
-		6126D7CA0DA5716500D2641A /* nuiFileTable.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5BE0DA5716500D2641A /* nuiFileTable.h */; };
 		6126D7CF0DA5716500D2641A /* nuiImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5C30DA5716500D2641A /* nuiImage.cpp */; };
 		6126D7D00DA5716500D2641A /* nuiImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5C40DA5716500D2641A /* nuiImage.h */; };
 		6126D7D70DA5716500D2641A /* nuiKnob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5CB0DA5716500D2641A /* nuiKnob.cpp */; };
@@ -816,7 +812,6 @@
 		614B63E40DA7BA67000F4C22 /* nuiScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5530DA5716500D2641A /* nuiScrollView.h */; };
 		614B63E50DA7BA67000F4C22 /* nuiShadeContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5540DA5716500D2641A /* nuiShadeContainer.h */; };
 		614B63E60DA7BA67000F4C22 /* nuiSplitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5560DA5716500D2641A /* nuiSplitter.h */; };
-		614B63E70DA7BA67000F4C22 /* nuiTable.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5580DA5716500D2641A /* nuiTable.h */; };
 		614B63E80DA7BA67000F4C22 /* nuiTabView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D55A0DA5716500D2641A /* nuiTabView.h */; };
 		614B63E90DA7BA67000F4C22 /* nuiTitledPane.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D55C0DA5716500D2641A /* nuiTitledPane.h */; };
 		614B63EA0DA7BA67000F4C22 /* nuiVBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5600DA5716500D2641A /* nuiVBox.h */; };
@@ -854,7 +849,6 @@
 		614B640C0DA7BA67000F4C22 /* nuiComposite.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5B80DA5716500D2641A /* nuiComposite.h */; };
 		614B640D0DA7BA67000F4C22 /* nuiFileList.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5BA0DA5716500D2641A /* nuiFileList.h */; };
 		614B640E0DA7BA67000F4C22 /* nuiFileSelector.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5BC0DA5716500D2641A /* nuiFileSelector.h */; };
-		614B640F0DA7BA67000F4C22 /* nuiFileTable.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5BE0DA5716500D2641A /* nuiFileTable.h */; };
 		614B64100DA7BA67000F4C22 /* nuiImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5C40DA5716500D2641A /* nuiImage.h */; };
 		614B64130DA7BA67000F4C22 /* nuiKnob.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5CE0DA5716500D2641A /* nuiKnob.h */; };
 		614B64140DA7BA67000F4C22 /* nuiProgressBar.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5D20DA5716500D2641A /* nuiProgressBar.h */; };
@@ -1320,7 +1314,6 @@
 		614B664C0DA7BA67000F4C22 /* nuiPositioner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5500DA5716500D2641A /* nuiPositioner.cpp */; };
 		614B664D0DA7BA67000F4C22 /* nuiScrollView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5520DA5716500D2641A /* nuiScrollView.cpp */; };
 		614B664E0DA7BA67000F4C22 /* nuiSplitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5550DA5716500D2641A /* nuiSplitter.cpp */; };
-		614B664F0DA7BA67000F4C22 /* nuiTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5570DA5716500D2641A /* nuiTable.cpp */; };
 		614B66500DA7BA67000F4C22 /* nuiTabView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5590DA5716500D2641A /* nuiTabView.cpp */; };
 		614B66510DA7BA67000F4C22 /* nuiTitledPane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D55B0DA5716500D2641A /* nuiTitledPane.cpp */; };
 		614B66520DA7BA67000F4C22 /* nuiVBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D55F0DA5716500D2641A /* nuiVBox.cpp */; };
@@ -1355,7 +1348,6 @@
 		614B66720DA7BA67000F4C22 /* nuiComboBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5B60DA5716500D2641A /* nuiComboBox.cpp */; };
 		614B66730DA7BA67000F4C22 /* nuiFileList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5B90DA5716500D2641A /* nuiFileList.cpp */; };
 		614B66740DA7BA67000F4C22 /* nuiFileSelector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5BB0DA5716500D2641A /* nuiFileSelector.cpp */; };
-		614B66750DA7BA67000F4C22 /* nuiFileTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5BD0DA5716500D2641A /* nuiFileTable.cpp */; };
 		614B66760DA7BA67000F4C22 /* nuiImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5C30DA5716500D2641A /* nuiImage.cpp */; };
 		614B66790DA7BA67000F4C22 /* nuiKnob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5CB0DA5716500D2641A /* nuiKnob.cpp */; };
 		614B667A0DA7BA67000F4C22 /* nuiProgressBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5D10DA5716500D2641A /* nuiProgressBar.cpp */; };
@@ -1941,8 +1933,6 @@
 		6126D5540DA5716500D2641A /* nuiShadeContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiShadeContainer.h; path = include/nuiShadeContainer.h; sourceTree = SOURCE_ROOT; };
 		6126D5550DA5716500D2641A /* nuiSplitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiSplitter.cpp; sourceTree = "<group>"; };
 		6126D5560DA5716500D2641A /* nuiSplitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiSplitter.h; path = include/nuiSplitter.h; sourceTree = SOURCE_ROOT; };
-		6126D5570DA5716500D2641A /* nuiTable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiTable.cpp; sourceTree = "<group>"; };
-		6126D5580DA5716500D2641A /* nuiTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiTable.h; path = include/nuiTable.h; sourceTree = SOURCE_ROOT; };
 		6126D5590DA5716500D2641A /* nuiTabView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiTabView.cpp; sourceTree = "<group>"; };
 		6126D55A0DA5716500D2641A /* nuiTabView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiTabView.h; path = include/nuiTabView.h; sourceTree = SOURCE_ROOT; };
 		6126D55B0DA5716500D2641A /* nuiTitledPane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiTitledPane.cpp; sourceTree = "<group>"; };
@@ -2032,8 +2022,6 @@
 		6126D5BA0DA5716500D2641A /* nuiFileList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiFileList.h; path = include/nuiFileList.h; sourceTree = SOURCE_ROOT; };
 		6126D5BB0DA5716500D2641A /* nuiFileSelector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiFileSelector.cpp; sourceTree = "<group>"; };
 		6126D5BC0DA5716500D2641A /* nuiFileSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiFileSelector.h; path = include/nuiFileSelector.h; sourceTree = SOURCE_ROOT; };
-		6126D5BD0DA5716500D2641A /* nuiFileTable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiFileTable.cpp; sourceTree = "<group>"; };
-		6126D5BE0DA5716500D2641A /* nuiFileTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiFileTable.h; path = include/nuiFileTable.h; sourceTree = SOURCE_ROOT; };
 		6126D5BF0DA5716500D2641A /* nuiFrameView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiFrameView.cpp; sourceTree = "<group>"; };
 		6126D5C00DA5716500D2641A /* nuiFrameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiFrameView.h; path = include/nuiFrameView.h; sourceTree = SOURCE_ROOT; };
 		6126D5C10DA5716500D2641A /* nuiHoverDummy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiHoverDummy.cpp; sourceTree = "<group>"; };
@@ -3293,8 +3281,6 @@
 				6126D5540DA5716500D2641A /* nuiShadeContainer.h */,
 				6126D5550DA5716500D2641A /* nuiSplitter.cpp */,
 				6126D5560DA5716500D2641A /* nuiSplitter.h */,
-				6126D5570DA5716500D2641A /* nuiTable.cpp */,
-				6126D5580DA5716500D2641A /* nuiTable.h */,
 				6126D5590DA5716500D2641A /* nuiTabView.cpp */,
 				6126D55A0DA5716500D2641A /* nuiTabView.h */,
 				6126D55B0DA5716500D2641A /* nuiTitledPane.cpp */,
@@ -3431,8 +3417,6 @@
 				6126D5BA0DA5716500D2641A /* nuiFileList.h */,
 				6126D5BB0DA5716500D2641A /* nuiFileSelector.cpp */,
 				6126D5BC0DA5716500D2641A /* nuiFileSelector.h */,
-				6126D5BD0DA5716500D2641A /* nuiFileTable.cpp */,
-				6126D5BE0DA5716500D2641A /* nuiFileTable.h */,
 				6126D5BF0DA5716500D2641A /* nuiFrameView.cpp */,
 				6126D5C00DA5716500D2641A /* nuiFrameView.h */,
 				6126D5C10DA5716500D2641A /* nuiHoverDummy.cpp */,
@@ -4842,7 +4826,6 @@
 				614B63E40DA7BA67000F4C22 /* nuiScrollView.h in Headers */,
 				614B63E50DA7BA67000F4C22 /* nuiShadeContainer.h in Headers */,
 				614B63E60DA7BA67000F4C22 /* nuiSplitter.h in Headers */,
-				614B63E70DA7BA67000F4C22 /* nuiTable.h in Headers */,
 				614B63E80DA7BA67000F4C22 /* nuiTabView.h in Headers */,
 				614B63E90DA7BA67000F4C22 /* nuiTitledPane.h in Headers */,
 				614B63EA0DA7BA67000F4C22 /* nuiVBox.h in Headers */,
@@ -4880,7 +4863,6 @@
 				614B640C0DA7BA67000F4C22 /* nuiComposite.h in Headers */,
 				614B640D0DA7BA67000F4C22 /* nuiFileList.h in Headers */,
 				614B640E0DA7BA67000F4C22 /* nuiFileSelector.h in Headers */,
-				614B640F0DA7BA67000F4C22 /* nuiFileTable.h in Headers */,
 				614B64100DA7BA67000F4C22 /* nuiImage.h in Headers */,
 				614B64130DA7BA67000F4C22 /* nuiKnob.h in Headers */,
 				614B64140DA7BA67000F4C22 /* nuiProgressBar.h in Headers */,
@@ -5366,7 +5348,6 @@
 				6126D7640DA5716500D2641A /* nuiScrollView.h in Headers */,
 				6126D7650DA5716500D2641A /* nuiShadeContainer.h in Headers */,
 				6126D7670DA5716500D2641A /* nuiSplitter.h in Headers */,
-				6126D7690DA5716500D2641A /* nuiTable.h in Headers */,
 				6126D76B0DA5716500D2641A /* nuiTabView.h in Headers */,
 				6126D76D0DA5716500D2641A /* nuiTitledPane.h in Headers */,
 				6126D7710DA5716500D2641A /* nuiVBox.h in Headers */,
@@ -5404,7 +5385,6 @@
 				6126D7C40DA5716500D2641A /* nuiComposite.h in Headers */,
 				6126D7C60DA5716500D2641A /* nuiFileList.h in Headers */,
 				6126D7C80DA5716500D2641A /* nuiFileSelector.h in Headers */,
-				6126D7CA0DA5716500D2641A /* nuiFileTable.h in Headers */,
 				6126D7D00DA5716500D2641A /* nuiImage.h in Headers */,
 				6126D7DA0DA5716500D2641A /* nuiKnob.h in Headers */,
 				6126D7DE0DA5716500D2641A /* nuiProgressBar.h in Headers */,
@@ -6011,7 +5991,6 @@
 				614B664C0DA7BA67000F4C22 /* nuiPositioner.cpp in Sources */,
 				614B664D0DA7BA67000F4C22 /* nuiScrollView.cpp in Sources */,
 				614B664E0DA7BA67000F4C22 /* nuiSplitter.cpp in Sources */,
-				614B664F0DA7BA67000F4C22 /* nuiTable.cpp in Sources */,
 				614B66500DA7BA67000F4C22 /* nuiTabView.cpp in Sources */,
 				614B66510DA7BA67000F4C22 /* nuiTitledPane.cpp in Sources */,
 				614B66520DA7BA67000F4C22 /* nuiVBox.cpp in Sources */,
@@ -6046,7 +6025,6 @@
 				614B66720DA7BA67000F4C22 /* nuiComboBox.cpp in Sources */,
 				614B66730DA7BA67000F4C22 /* nuiFileList.cpp in Sources */,
 				614B66740DA7BA67000F4C22 /* nuiFileSelector.cpp in Sources */,
-				614B66750DA7BA67000F4C22 /* nuiFileTable.cpp in Sources */,
 				614B66760DA7BA67000F4C22 /* nuiImage.cpp in Sources */,
 				614B66790DA7BA67000F4C22 /* nuiKnob.cpp in Sources */,
 				614B667A0DA7BA67000F4C22 /* nuiProgressBar.cpp in Sources */,
@@ -6347,7 +6325,6 @@
 				6126D7610DA5716500D2641A /* nuiPositioner.cpp in Sources */,
 				6126D7630DA5716500D2641A /* nuiScrollView.cpp in Sources */,
 				6126D7660DA5716500D2641A /* nuiSplitter.cpp in Sources */,
-				6126D7680DA5716500D2641A /* nuiTable.cpp in Sources */,
 				6126D76A0DA5716500D2641A /* nuiTabView.cpp in Sources */,
 				6126D76C0DA5716500D2641A /* nuiTitledPane.cpp in Sources */,
 				6126D7740DA5716500D2641A /* nuiWindow.cpp in Sources */,
@@ -6381,7 +6358,6 @@
 				6126D7C20DA5716500D2641A /* nuiComboBox.cpp in Sources */,
 				6126D7C50DA5716500D2641A /* nuiFileList.cpp in Sources */,
 				6126D7C70DA5716500D2641A /* nuiFileSelector.cpp in Sources */,
-				6126D7C90DA5716500D2641A /* nuiFileTable.cpp in Sources */,
 				6126D7CF0DA5716500D2641A /* nuiImage.cpp in Sources */,
 				6126D7D70DA5716500D2641A /* nuiKnob.cpp in Sources */,
 				6126D7DD0DA5716500D2641A /* nuiProgressBar.cpp in Sources */,
