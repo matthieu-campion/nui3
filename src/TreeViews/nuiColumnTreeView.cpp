@@ -568,9 +568,9 @@ bool nuiColumnTreeView::KeyUp (const nglKeyEvent& rEvent)
 }
 
 
-bool nuiColumnTreeView::DispatchMouseClick (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
+bool nuiColumnTreeView::DispatchMouseClick(const nglMouseInfo& rInfo)
 {
-  return nuiSimpleContainer::DispatchMouseClick(X, Y, Button);
+  return nuiSimpleContainer::DispatchMouseClick(rInfo);
 }
 
 bool nuiColumnTreeView::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)

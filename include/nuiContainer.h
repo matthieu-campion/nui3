@@ -190,9 +190,9 @@ public:
   /** @name Private event management system (do not override unless you know what you're doing!!!) */
   //@{
   /// Beware: these three methods receive the mouse coordinates in the repair of the root object!
-  virtual bool DispatchMouseClick (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
-  virtual bool DispatchMouseUnclick (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
-  virtual nuiWidgetPtr DispatchMouseMove (nuiSize X, nuiSize Y);
+  virtual bool DispatchMouseClick(const nglMouseInfo& rInfo);
+  virtual bool DispatchMouseUnclick(const nglMouseInfo& rInfo);
+  virtual nuiWidgetPtr DispatchMouseMove(const nglMouseInfo& rInfo);
   //@}
 
   virtual bool DelChild(nuiWidgetPtr pChild,bool Delete=false) = 0;

@@ -27,7 +27,6 @@ licence: see nui3/LICENCE.TXT
 #include "nuiList.h"
 #include "nuiFileList.h"
 #include "nuiEditLine.h"
-#include "nuiTable.h"
 #include "nuiSplineEdit.h"
 #include "nuiHoverDummy.h"
 #include "nuiStateDummy.h"
@@ -282,11 +281,6 @@ void nuiWin::OnCreation()
   // Anim Tester:
   pElement = new nuiTreeNode(nuiTR("Simple Anim"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateAnimWindow, NULL);
-  pMainTree->AddChild(pElement);
-
-  // Table Tester:
-  pElement = new nuiTreeNode(nuiTR("Table View"));
-  mWinSink.Connect(pElement->Activated, &nuiWin::CreateTableViewWindow, NULL);
   pMainTree->AddChild(pElement);
 
   // Save XML Desc:
@@ -840,91 +834,6 @@ bool nuiWin::CreateSVGTigerWindow(const nuiEvent& rEvent)
   return false;
 }
 
-bool nuiWin::CreateTableViewWindow(const nuiEvent& rEvent)
-{
-  nuiSimpleContainer* pTableWin = new nuiWindow(nuiRect(10.0f,10.0f,250.0f,250.0f)); 
-  mpManager->AddChild(pTableWin);
-  //  nuiOffscreenView* pView = new nuiOffscreenView(pTableWin); pTableWin = pView;
-
-  nuiSplitter* pTableBox = new nuiSplitter(nuiHorizontal);
-  pTableWin->AddChild(pTableBox);
-  //LBDEBUG pTableBox->SetFixed(true);
-  pTableBox->SetMasterChild(true);
-  nuiButton* pClear = new nuiButton((nuiTR("Clear all")));
-  pTableBox->AddChild(pClear);
-  nuiTable* pTable = new nuiTable();
-  nuiScrollView* pScrollView = new nuiScrollView();
-  pTableBox->AddChild(pScrollView);
-  pScrollView->AddChild(pTable);
-
-  pTable->SetMultiSelectable(true);
-  pTable->InsertColumn(0,(nuiTR("First Column")));
-  pTable->InsertColumn(1,(nuiTR("Second Column")));
-  pTable->InsertColumn(2,(nuiTR("Third Column")));
-  pTable->InsertColumn(3,(nuiTR("Empty Column")));
-
-  int i;
-  for (i=0; i<10; i++)
-  {
-    nglString str;
-    pTable->InsertRow(i);
-    str.Format(_T("%d"),i);
-    pTable->SetCell(i,0,new nuiLabel(str));
-    str.Format(_T("0x%x"),i);
-    pTable->SetCell(i,1,new nuiLabel(str));
-    str.Format(_T("0o%o"),i);
-    pTable->SetCell(i,2,new nuiLabel(str));
-  }
-
-  pTable->InsertRow(5);
-  pTable->SetCell(5,0,new nuiLabel((nuiTR("this row contains an image and a button"))));
-  nuiImage* pCellImage = new nuiImage(nglPath(_T("rsrc:/small_ngl.png")));
-  pCellImage->SetFillRule(nuiCenter);
-  pTable->SetCell(5,1,pCellImage);
-  pTable->SetCell(5,2,new nuiButton(nuiTR("Button!")));
-
-  nuiTableRowPtr pRow = pTable->GetRow((uint)0);
-
-  nuiLabel* pRowLabel = new nuiLabel((nuiTR("Tree row!!!")));
-  nuiWidgetList WidgetList;
-  WidgetList.push_back(pRowLabel);
-  pRowLabel = new nuiLabel((nuiTR("Tree row element...")));
-  WidgetList.push_back(pRowLabel);
-  nuiTableRowPtr pNewRow = new nuiTableRow(pTable, WidgetList); 
-  pRow->AddRow(pNewRow);
-
-  pRow = pNewRow;
-  pRowLabel = new nuiLabel((nuiTR("Tree row2!!!")));
-  WidgetList.clear();
-  WidgetList.push_back(pRowLabel);
-  pRowLabel = new nuiLabel((nuiTR("Tree row element...2")));
-  WidgetList.push_back(pRowLabel);
-  pNewRow = new nuiTableRow(pTable, WidgetList); 
-  pRow->AddRow(pNewRow);
-
-  nuiTableRowPtr pOldRow = pRow; 
-  pRow = pNewRow;
-  pRowLabel = new nuiLabel((nuiTR("Tree row2!!!")));
-  WidgetList.clear();
-  WidgetList.push_back(pRowLabel);
-  pRowLabel = new nuiLabel((nuiTR("Tree row element...2")));
-  WidgetList.push_back(pRowLabel);
-  pNewRow = new nuiTableRow(pTable, WidgetList); 
-  pRow->AddRow(pNewRow);
-
-  pRowLabel = new nuiLabel((nuiTR("Another row!!!")));
-  WidgetList.clear();
-  WidgetList.push_back(pRowLabel);
-  WidgetList.push_back(NULL); // test to see if this works?
-  pRowLabel = new nuiLabel((nuiTR("Yet another tree row element...")));
-  WidgetList.push_back(pRowLabel);
-  pNewRow = new nuiTableRow(pTable, WidgetList); 
-  pOldRow->AddRow(pNewRow);
-
-  mWinSink.Connect(pClear->Selected, &nuiWin::ClearTable,pTable);
-
-  return false;
-}
 
 bool nuiWin::CreateMessedUpWindow(const nuiEvent& rEvent)
 {
@@ -3935,14 +3844,6 @@ bool nuiWin::LogText(const nuiEvent& rEvent)
   nuiEditLine* pLine = (nuiEditLine*)rEvent.mpUser;
   NGL_OUT(_T("From Edit Line: %ls\n"),pLine->GetText().GetChars());
   pLine->SetText((_T("")));
-  return false;
-}
-
-bool nuiWin::ClearTable(const nuiEvent& rEvent)
-{
-  nuiTable* pTable = (nuiTable*)rEvent.mpUser;
-
-  pTable->Clear();
   return false;
 }
 

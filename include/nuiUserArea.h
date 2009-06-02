@@ -61,9 +61,6 @@ public:
 
   // Out going Events
   nuiDrawEventSource UserDraw;
-  nuiMouseClicked   ClickedMouse;
-  nuiMouseUnclicked UnclickedMouse;
-  nuiMouseMoved     MovedMouse;
 
   virtual bool MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
   virtual bool MouseUnclicked (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);

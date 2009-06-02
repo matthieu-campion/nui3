@@ -148,7 +148,7 @@ public:
   bool MouseUnclicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
   bool MouseMoved  (nuiSize X, nuiSize Y);
 
-  bool DispatchMouseClick (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
+  bool DispatchMouseClick(const nglMouseInfo& rInfo);
 
   //! Rendering modifiers:
   void SetDepthInset(uint32 depth, nuiSize inset);

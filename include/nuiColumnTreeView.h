@@ -58,7 +58,7 @@ public:
   virtual nuiTreeNodePtr FindNode(nuiSize X, nuiSize Y);
 
 protected:
-  bool DispatchMouseClick (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
+  bool DispatchMouseClick(const nglMouseInfo& rInfo);
   nuiTreeNode* CalcColumnSize(nuiRect& rRect, nuiTreeNode* pTree);
   nuiTreeNode* SetColumnRect(const nuiRect& rRect, nuiTreeNode* pTree);
   bool InvalidateColumn(const nuiEvent& rEvent);

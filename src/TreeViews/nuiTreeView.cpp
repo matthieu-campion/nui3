@@ -1027,7 +1027,7 @@ nuiSize nuiTreeView::GetDepthInset(uint32 depth)
   return inset;
 }
 
-bool nuiTreeView::DispatchMouseClick (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
+bool nuiTreeView::DispatchMouseClick(const nglMouseInfo& rInfo)
 {
   if (!mMouseEventEnabled)
     return false;
@@ -1036,18 +1036,22 @@ bool nuiTreeView::DispatchMouseClick (nuiSize X, nuiSize Y, nglMouseInfo::Flags 
   if (IsDisabled() && !hasgrab)
     return false;
 
-  if (IsInside(X,Y) || hasgrab)
+  if (IsInside(rInfo.X, rInfo.Y) || hasgrab)
   {
-    nuiSize x=X, y=Y;
-    GlobalToLocal(x,y);
+    nuiSize X = rInfo.X;
+    nuiSize Y = rInfo.Y;
+    GlobalToLocal(X, Y);
+    nglMouseInfo info(rInfo);
+    info.X = X;
+    info.Y = Y;
     if (!hasgrab)
     {
-      nuiTreeNode* pNode = FindNode(x,y);
-      if (pNode && pNode->GetElement() && pNode->GetElement()->DispatchMouseClick(X,Y, Button))
+      nuiTreeNode* pNode = FindNode(X, Y);
+      if (pNode && pNode->GetElement() && pNode->GetElement()->DispatchMouseClick(info))
         return true;
     }
-    bool ret = MouseClicked(x,y,Button);
-    ret |= Clicked(x,y,Button);
+    bool ret = ((nuiWidget*)this)->MouseClicked(info);
+    ret |= Clicked(info);
     return ret;
   }
   return false;

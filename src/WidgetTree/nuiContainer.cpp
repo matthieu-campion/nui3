@@ -451,7 +451,7 @@ void nuiContainer::DrawChild(nuiDrawContext* pContext, nuiWidget* pChild)
 }
 
 ////// Private event management:
-bool nuiContainer::DispatchMouseClick (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
+bool nuiContainer::DispatchMouseClick(const nglMouseInfo& rInfo)
 {
   if (!mMouseEventEnabled || mTrashed)
     return false;
@@ -460,7 +460,7 @@ bool nuiContainer::DispatchMouseClick (nuiSize X, nuiSize Y, nglMouseInfo::Flags
   if (IsDisabled() && !hasgrab)
     return false;
 
-  if (IsInside(X,Y) || hasgrab)
+  if (IsInside(rInfo.X, rInfo.Y) || hasgrab)
   {
     if (!hasgrab)
     {
@@ -472,7 +472,7 @@ bool nuiContainer::DispatchMouseClick (nuiSize X, nuiSize Y, nglMouseInfo::Flags
         {
           if (IsEnabled() && !HasGrab())
           {
-            if (pItem->DispatchMouseClick(X,Y, Button))
+            if (pItem->DispatchMouseClick(rInfo))
             {
               delete pIt;
               return true;
@@ -483,17 +483,18 @@ bool nuiContainer::DispatchMouseClick (nuiSize X, nuiSize Y, nglMouseInfo::Flags
       delete pIt;
     }
 
-    GlobalToLocal(X,Y);
-    if (PreClicked(X,Y, Button))
+    nglMouseInfo info(rInfo);
+    GlobalToLocal(info.X, info.Y);
+    if (PreClicked(info))
       return true;
-    bool ret = MouseClicked(X,Y,Button);
-    ret |= Clicked(X,Y,Button);
+    bool ret = MouseClicked(info);
+    ret |= Clicked(info);
     return ret;
   }
   return false;
 }
 
-bool nuiContainer::DispatchMouseUnclick (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
+bool nuiContainer::DispatchMouseUnclick(const nglMouseInfo& rInfo)
 {
   if (!mMouseEventEnabled || mTrashed)
     return false;
@@ -502,7 +503,7 @@ bool nuiContainer::DispatchMouseUnclick (nuiSize X, nuiSize Y, nglMouseInfo::Fla
   if (IsDisabled() && !hasgrab)
     return false;
 
-  if (IsInside(X,Y) || hasgrab)
+  if (IsInside(rInfo.X, rInfo.Y) || hasgrab)
   {
     if (!hasgrab)
     {
@@ -514,7 +515,7 @@ bool nuiContainer::DispatchMouseUnclick (nuiSize X, nuiSize Y, nglMouseInfo::Fla
         {
           if (IsEnabled())
           {
-            if ((pItem)->DispatchMouseUnclick(X,Y, Button))
+            if ((pItem)->DispatchMouseUnclick(rInfo))
             {
               delete pIt;
               return true;
@@ -525,15 +526,16 @@ bool nuiContainer::DispatchMouseUnclick (nuiSize X, nuiSize Y, nglMouseInfo::Fla
       delete pIt;
     }
 
-    GlobalToLocal(X,Y);
-    bool res = PreUnclicked(X,Y, Button);
+    nglMouseInfo info(rInfo);
+    GlobalToLocal(info.X, info.Y);
+    bool res = PreUnclicked(info);
     if (!res)
     {
-      res = MouseUnclicked(X,Y,Button);
-      res |= Unclicked(X,Y,Button);
+      res = MouseUnclicked(info);
+      res |= Unclicked(info);
     }
     
-    if (mWantKeyboardFocus && (Button == nglMouseInfo::ButtonLeft || Button == nglMouseInfo::ButtonRight))
+    if (mWantKeyboardFocus && (rInfo.Buttons == nglMouseInfo::ButtonLeft || rInfo.Buttons == nglMouseInfo::ButtonRight))
     {
       Focus();
       return true;
@@ -544,7 +546,7 @@ bool nuiContainer::DispatchMouseUnclick (nuiSize X, nuiSize Y, nglMouseInfo::Fla
   return false;
 }
 
-nuiWidgetPtr nuiContainer::DispatchMouseMove(nuiSize X, nuiSize Y)
+nuiWidgetPtr nuiContainer::DispatchMouseMove(const nglMouseInfo& rInfo)
 {
   if (!mMouseEventEnabled || mTrashed)
     return false;
@@ -556,7 +558,7 @@ nuiWidgetPtr nuiContainer::DispatchMouseMove(nuiSize X, nuiSize Y)
   if (IsDisabled() && !hasgrab)
     return false;
 
-  if (IsInside(X,Y) || hasgrab)
+  if (IsInside(rInfo.X, rInfo.Y) || hasgrab)
   {
     inside = true;
 
@@ -569,7 +571,7 @@ nuiWidgetPtr nuiContainer::DispatchMouseMove(nuiSize X, nuiSize Y)
         nuiWidgetPtr pItem = pIt->GetWidget();
         if (pItem)
           if (pItem->IsVisible())
-            pHandled = pItem->DispatchMouseMove(X,Y);
+            pHandled = pItem->DispatchMouseMove(rInfo);
         if (pHandled)
         {
           // stop as soon as someone caught the event
@@ -580,21 +582,23 @@ nuiWidgetPtr nuiContainer::DispatchMouseMove(nuiSize X, nuiSize Y)
       delete pIt;
     }
 
-    GlobalToLocal(X,Y);
-    if (PreMouseMoved(X,Y))
+    nglMouseInfo info(rInfo);
+    GlobalToLocal(info.X, info.Y);
+    if (PreMouseMoved(info))
       return this;
-    res = MouseMoved(X,Y);
-    res |= MovedMouse(X,Y);
+    res = MouseMoved(info);
+    res |= MovedMouse(info);
   }
   else
   {
     if (GetHover())
     {
-      GlobalToLocal(X,Y);
-      if (PreMouseMoved(X,Y))
+      nglMouseInfo info(rInfo);
+      GlobalToLocal(info.X, info.Y);
+      if (PreMouseMoved(info))
         return this;
-      res = MouseMoved(X,Y);
-      res |= MovedMouse(X,Y);
+      res = MouseMoved(info);
+      res |= MovedMouse(info);
     }
   }
 

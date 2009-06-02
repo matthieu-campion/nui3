@@ -29,8 +29,6 @@
 #include "nuiPositioner.h"
 #include "nuiUserArea.h"
 #include "nuiImage.h"
-#include "nuiTable.h"
-#include "nuiFileTable.h"
 #include "nuiSplineEdit.h"
 #include "nuiStateDummy.h"
 #include "nuiHoverDummy.h"
@@ -74,8 +72,6 @@ void nuiBuilder::Init()
   NUI_ADD_WIDGET_CREATOR(nuiScrollBar,"Container");
   NUI_ADD_WIDGET_CREATOR(nuiFixed,"Container");
   NUI_ADD_WIDGET_CREATOR(nuiPositioner,"Container");
-  NUI_ADD_WIDGET_CREATOR(nuiTable,"Container");
-  NUI_ADD_WIDGET_CREATOR(nuiFileTable,"Container");
   NUI_ADD_WIDGET_CREATOR(nuiMainWindow,"Container");
   NUI_ADD_WIDGET_CREATOR(nuiStateDummy,"Container");
   NUI_ADD_WIDGET_CREATOR(nuiHoverDummy,"Container");

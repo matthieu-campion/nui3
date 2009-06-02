@@ -1627,23 +1627,50 @@ bool nuiWidget::LocalMouseEventsEnabled() const
   return mLocalMouseEventEnabled;
 }
 
-bool nuiWidget::MouseClicked (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
+bool nuiWidget::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
 {
   return false;
 }
 
-bool nuiWidget::MouseUnclicked (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
+bool nuiWidget::MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
 {
   return false;
 }
 
-bool nuiWidget::MouseMoved (nuiSize X, nuiSize Y)
+bool nuiWidget::MouseMoved(nuiSize X, nuiSize Y)
 {
   return false;
 }
+
+// Multitouch events:
+bool nuiWidget::MouseClicked(const nglMouseInfo& rInfo)
+{
+  return MouseClicked(rInfo.X, rInfo.Y, rInfo.Buttons);
+}
+
+bool nuiWidget::MouseUnclicked(const nglMouseInfo& rInfo)
+{
+  return MouseUnclicked(rInfo.X, rInfo.Y, rInfo.Buttons);
+}
+
+bool nuiWidget::MouseMoved(const nglMouseInfo& rInfo)
+{
+  return MouseMoved(rInfo.X, rInfo.Y);
+}
+
+bool nuiWidget::MouseGrabbed(nglTouchId id)
+{
+  return MouseGrabbed();
+}
+
+bool nuiWidget::MouseUngrabbed(nglTouchId id)
+{
+  return MouseUngrabbed();
+}
+
 
 ////// Private event management:
-bool nuiWidget::DispatchMouseClick (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
+bool nuiWidget::DispatchMouseClick(const nglMouseInfo& rInfo)
 {
   if (!mMouseEventEnabled || mTrashed)
     return false;
@@ -1652,14 +1679,21 @@ bool nuiWidget::DispatchMouseClick (nuiSize X, nuiSize Y, nglMouseInfo::Flags Bu
   if (IsDisabled() && !hasgrab)
     return false;
 
+  float X = rInfo.X;
+  float Y = rInfo.Y;
+
   if (IsInside(X,Y) || hasgrab)
   {
     GlobalToLocal(X,Y);
-    bool res = PreClicked(X,Y, Button);
+    nglMouseInfo info(rInfo);
+    info.X = X;
+    info.Y = Y;
+
+    bool res = PreClicked(info);
     if (!res)
     {
-      res = MouseClicked(X,Y,Button);
-      res |= Clicked(X,Y,Button);
+      res = MouseClicked(info);
+      res |= Clicked(info);
     }
 
     return res;
@@ -1667,7 +1701,7 @@ bool nuiWidget::DispatchMouseClick (nuiSize X, nuiSize Y, nglMouseInfo::Flags Bu
   return false;
 }
 
-bool nuiWidget::DispatchMouseUnclick (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
+bool nuiWidget::DispatchMouseUnclick(const nglMouseInfo& rInfo)
 {
   if (!mMouseEventEnabled || mTrashed)
     return false;
@@ -1676,47 +1710,60 @@ bool nuiWidget::DispatchMouseUnclick (nuiSize X, nuiSize Y, nglMouseInfo::Flags 
   if (IsDisabled() && !hasgrab)
     return false;
 
+  float X = rInfo.X;
+  float Y = rInfo.Y;
+
   if (IsInside(X,Y) || hasgrab)
   {
     GlobalToLocal(X,Y);
-    bool res = PreUnclicked(X,Y, Button);
+    nglMouseInfo info(rInfo);
+    info.X = X;
+    info.Y = Y;
+    
+    bool res = PreUnclicked(info);
     if (!res)
     {
-      res = MouseUnclicked(X,Y,Button);
-      res |= Unclicked(X,Y,Button);
+      res = MouseUnclicked(info);
+      res |= Unclicked(info);
     }
 
-    if (mWantKeyboardFocus && (Button == nglMouseInfo::ButtonLeft || Button == nglMouseInfo::ButtonRight))
+    if (mWantKeyboardFocus && (rInfo.Buttons == nglMouseInfo::ButtonLeft || rInfo.Buttons == nglMouseInfo::ButtonRight))
       Focus();
     return res;
   }
   return false;
 }
 
-nuiWidgetPtr nuiWidget::DispatchMouseMove(nuiSize X, nuiSize Y)
+nuiWidgetPtr nuiWidget::DispatchMouseMove(const nglMouseInfo& rInfo)
 {
   if (!mMouseEventEnabled || mTrashed)
     return NULL;
 
-  bool inside=false,res=false;
+  bool inside = false;
+  bool res = false;
   bool hasgrab = HasGrab();
+  float X = rInfo.X;
+  float Y = rInfo.Y;
 
   if (IsDisabled() && !hasgrab)
     return NULL;
     
   SetMouseCursor(eCursorHand);
 
-  if (IsInside(X,Y))
+  if (IsInside(X, Y))
   {
     inside = true;
   }
 
-  GlobalToLocal(X,Y);
-
-  if (PreMouseMoved(X,Y))
+  GlobalToLocal(X, Y);
+  nglMouseInfo info(rInfo);
+  info.X = X;
+  info.Y = Y;
+  
+  if (PreMouseMoved(info))
     return this;
-  res = MouseMoved(X,Y);
-  res |= MovedMouse(X,Y);
+  res = MouseMoved(info);
+  res |= MovedMouse(info);
   return (res && inside) ? this : NULL;
 }
 
@@ -2169,7 +2216,7 @@ bool nuiWidget::IsInside(nuiSize X, nuiSize Y)
   if (!IsVisible(false))
     return false;
 
-  GlobalToLocal(X,Y);
+  GlobalToLocal(X, Y);
   if (mpParent)
   {
     nuiRect rect = mRect;

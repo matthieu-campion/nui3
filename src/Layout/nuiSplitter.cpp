@@ -93,7 +93,7 @@ bool nuiSplitterHandle::MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags
 }
 
 
-nuiWidgetPtr nuiSplitterHandle::DispatchMouseMove(nuiSize X, nuiSize Y)
+nuiWidgetPtr nuiSplitterHandle::DispatchMouseMove(const nglMouseInfo& rInfo)
 {
   if (!mMouseEventEnabled || mTrashed)
     return false;
@@ -106,7 +106,7 @@ nuiWidgetPtr nuiSplitterHandle::DispatchMouseMove(nuiSize X, nuiSize Y)
   if (IsDisabled())
     return false;
 
-  if (IsInside(X,Y))
+  if (IsInside(rInfo.X, rInfo.Y))
     inside = true;
   
   if (inside)
@@ -123,11 +123,17 @@ nuiWidgetPtr nuiSplitterHandle::DispatchMouseMove(nuiSize X, nuiSize Y)
   {
     inside = true;
 
-    mpParent->GlobalToLocal(X,Y);
-    if (PreMouseMoved(X,Y))
+    nuiSize X = rInfo.X;
+    nuiSize Y = rInfo.Y;
+    mpParent->GlobalToLocal(X, Y);
+    nglMouseInfo info(rInfo);
+    info.X = X;
+    info.Y = Y;
+    if (PreMouseMoved(info))
       return this;
-    res = MouseMoved(X,Y);
-    res |= MovedMouse(X,Y);
+    nuiWidget* pThis = this;
+    res = pThis->MouseMoved(info);
+    res |= MovedMouse(info);
   }
 
   return (res && inside) ? this : NULL;

@@ -23,9 +23,9 @@ public:
 
   void SetModal(bool enable_modal=true);
 
-  virtual bool DispatchMouseClick (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
-  virtual bool DispatchMouseUnclick (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
-  virtual nuiWidgetPtr DispatchMouseMove (nuiSize X, nuiSize Y);
+  virtual bool DispatchMouseClick(const nglMouseInfo& rInfo);
+  virtual bool DispatchMouseUnclick(const nglMouseInfo& rInfo);
+  virtual nuiWidgetPtr DispatchMouseMove(const nglMouseInfo& rInfo);
   
   virtual bool DispatchTextInput(const nglString& rUnicodeText);
   virtual bool DispatchKeyDown(const nglKeyEvent& rEvent);

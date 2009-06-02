@@ -95,30 +95,7 @@ bool nuiWindowManager::KeyUp(const nglKeyEvent& rEvent)
   return false;
 }
 
-/*
-bool nuiWindowManager::DispatchMouseClick (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
-{
-  //OUT("OnMouseClick\n");
-
-  IteratorPtr pIt;
-  for (pIt = GetLastChild(); pIt && pIt->IsValid(); GetPreviousChild(pIt))
-  {
-    nuiWidgetPtr pItem = pIt->GetWidget();
-    if (pItem && pItem->IsVisible() && pItem->GetState()!=nuiDisabled)
-    {
-      if (pItem->DispatchMouseClick(X, Y, Button))
-        return true;
-      //      if (pItem->IsModal()) ///< Do not allow other windows to handle mouse events if this nuiWindow is modal.
-      //        return true;
-    }
-  }
-  delete pIt;
-
-  return nuiSimpleContainer::DispatchMouseClick(X, Y, Button);
-}
-*/
-
-bool nuiWindowManager::DispatchMouseUnclick(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
+bool nuiWindowManager::DispatchMouseUnclick(const nglMouseInfo& rInfo)
 {
   //OUT("OnMouseUnclick\n");
   IteratorPtr pIt;
@@ -127,15 +104,13 @@ bool nuiWindowManager::DispatchMouseUnclick(nuiSize X, nuiSize Y, nglMouseInfo::
     nuiWidgetPtr pItem = pIt->GetWidget();
     if (pItem && pItem->IsVisible() && pItem->IsEnabled())
     {
-      if (pItem->DispatchMouseUnclick(X, Y, Button))
+      if (pItem->DispatchMouseUnclick(rInfo))
         return true;
-      //      if (((nuiWindow*)pItem)->IsModal()) ///< Do not allow other windows to handle mouse events if this nuiWindow is modal.
-      //        return true;
     }
   }
   delete pIt;
 
-  return nuiSimpleContainer::DispatchMouseUnclick(X, Y, Button);
+  return nuiSimpleContainer::DispatchMouseUnclick(rInfo);
 }
 
 #ifdef STUPIDBASE
@@ -149,18 +124,6 @@ float rot2 = 0;
 bool nuiWindowManager::Draw(class nuiDrawContext *pContext)
 {
   // Draw the windows:
-//  std::list<nuiWindow*>::iterator it;
-//  std::list<nuiWindow*>::iterator end = mWindows.end();
-//  for (it = mWindows.begin(); it!=end; ++it)
-//  {
-//    nuiRect rect;
-//    nuiWindow* win = *it;
-//
-//    if (win && win->IsVisible())
-//    {
-//      DrawChild(pContext, win);
-//    }
-//  }
   DrawChildren(pContext);
   return true;
 }
@@ -168,17 +131,17 @@ bool nuiWindowManager::Draw(class nuiDrawContext *pContext)
 nuiWidgetPtr nuiWindowManager::GetChild(nuiSize X, nuiSize Y)
 {
   nuiWidgetPtr pChild = NULL;
-  nuiWindow* pWin = GetWindow(X,Y);
+  nuiWindow* pWin = GetWindow(X, Y);
   if (pWin)
-    pChild = pWin->GetChild(X,Y);
+    pChild = pWin->GetChild(X, Y);
   if (!pChild) 
-    pChild = nuiSimpleContainer::GetChild(X,Y);
+    pChild = nuiSimpleContainer::GetChild(X, Y);
   return pChild;
 }
 
 nuiWindow* nuiWindowManager::GetActiveWindow() const
 {
-  if ( !mWindows.empty() )
+  if (!mWindows.empty())
   {
     return (mWindows.back());
   }
@@ -362,12 +325,12 @@ bool nuiWindowManager::DelChild(nuiWidgetPtr pChild, bool Delete)
   return nuiSimpleContainer::DelChild(pChild, Delete);
 }
 
-bool nuiWindowManager::DispatchMouseClick (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
+bool nuiWindowManager::DispatchMouseClick(const nglMouseInfo& rInfo)
 {
   if (!IsEnabled())
     return false;
 
-  if (IsInside(X,Y))
+  if (IsInside(rInfo.X, rInfo.Y))
   {
     if (!mWindows.empty())
     {
@@ -378,7 +341,7 @@ bool nuiWindowManager::DispatchMouseClick (nuiSize X, nuiSize Y, nglMouseInfo::F
       {
         it--;
         nuiWindow* win = *it;
-        if (win->IsInside(X,Y))
+        if (win->IsInside(rInfo.X, rInfo.Y))
         {
           if (GetActiveWindow() != win)
             ActivateWindow(win);
@@ -393,20 +356,19 @@ bool nuiWindowManager::DispatchMouseClick (nuiSize X, nuiSize Y, nglMouseInfo::F
       nuiWidgetPtr pItem = pIt->GetWidget();
       if (pItem && pItem->IsVisible() && pItem->IsEnabled())
       {
-        if (pItem->DispatchMouseClick(X, Y, Button))
+        if (pItem->DispatchMouseClick(rInfo))
         {
           delete pIt;
           return true;
         }
-        //      if (pItem->IsModal()) ///< Do not allow other windows to handle mouse events if this nuiWindow is modal.
-        //        return true;
       }
     }
     delete pIt;
 
-    GlobalToLocal(X,Y);
-    bool ret = MouseClicked(X,Y,Button);
-    ret |= Clicked(X,Y,Button);
+    nglMouseInfo info(rInfo);
+    GlobalToLocal(info.X, info.Y);
+    bool ret = MouseClicked(info);
+    ret |= Clicked(info);
     return ret;
   }
   return false;

@@ -191,9 +191,7 @@ public:
 
   /** @name Incomming mouse events */
   //@{
-#ifdef _MULTI_TOUCHES_
   virtual bool AcceptsMultipleGrabs() { return false; }
-#endif
   // These three methods receive the mouse coordinates in this object referential
   void EnableMouseEvent(bool enable);
   bool MouseEventsEnabled() const;
@@ -204,6 +202,13 @@ public:
   virtual bool MouseMoved    (nuiSize X, nuiSize Y);
   virtual bool MouseGrabbed();
   virtual bool MouseUngrabbed();
+
+  // Multitouch interface:
+  virtual bool MouseClicked(const nglMouseInfo& rInfo);
+  virtual bool MouseUnclicked(const nglMouseInfo& rInfo);
+  virtual bool MouseMoved(const nglMouseInfo& rInfo);
+  virtual bool MouseGrabbed(nglTouchId Id);
+  virtual bool MouseUngrabbed(nglTouchId Id);
   //@}
 
   /** @name Other Incomming events */
@@ -318,9 +323,9 @@ public:
   /** @name Private event management system (do not override unless you know what you're doing!!!) */
   //@{
   /// Beware: these three methods receive the mouse coordinates in the repair of the root object!
-  virtual bool DispatchMouseClick  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
-  virtual bool DispatchMouseUnclick(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
-  virtual nuiWidgetPtr DispatchMouseMove   (nuiSize X, nuiSize Y);
+  virtual bool DispatchMouseClick(const nglMouseInfo& rInfo);
+  virtual bool DispatchMouseUnclick(const nglMouseInfo& rInfo);
+  virtual nuiWidgetPtr DispatchMouseMove(const nglMouseInfo& rInfo);
   //@}
 
   /** @name Simple Animation Support */

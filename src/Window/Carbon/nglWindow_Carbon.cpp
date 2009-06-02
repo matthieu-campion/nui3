@@ -989,6 +989,7 @@ OSStatus nglWindow::WindowEventHandler (EventHandlerCallRef eventHandlerCallRef,
           minfo.X = mouseLocation.h - mXOffset;
           minfo.Y = mouseLocation.v - mYOffset;
           minfo.Buttons = 0; // FIXME
+          minfo.TouchId = 0;
           bool res = CallOnMouseMove(minfo);
           result = res ? (OSStatus)noErr : (OSStatus)eventNotHandledErr;
         }
@@ -999,6 +1000,7 @@ OSStatus nglWindow::WindowEventHandler (EventHandlerCallRef eventHandlerCallRef,
           UInt16 button;
           GetEventParameter (eventRef, kEventParamMouseButton, typeMouseButton, NULL, sizeof(button), NULL, &button);
           minfo.Buttons = nglMouseInfo::ButtonLeft;
+          minfo.TouchId = 0;
           switch (button)
           {
             case kEventMouseButtonPrimary: 
@@ -1024,6 +1026,7 @@ OSStatus nglWindow::WindowEventHandler (EventHandlerCallRef eventHandlerCallRef,
           UInt16 button;
           GetEventParameter (eventRef, kEventParamMouseButton, typeMouseButton, NULL, sizeof(button), NULL, &button);
           minfo.Buttons = nglMouseInfo::ButtonLeft;
+          minfo.TouchId = 0;
           switch (button)
           {
             case kEventMouseButtonPrimary: 
@@ -1041,12 +1044,12 @@ OSStatus nglWindow::WindowEventHandler (EventHandlerCallRef eventHandlerCallRef,
           GetEventParameter (eventRef, kEventParamClickCount, typeUInt32, NULL, sizeof(count), NULL, &count);
           if (count>1)
           {
-				 if (minfo.Buttons & mLastButtonDown)
-             {
-               minfo.Buttons |= nglMouseInfo::ButtonDoubleClick;
-             }
+            if (minfo.Buttons & mLastButtonDown)
+            {
+              minfo.Buttons |= nglMouseInfo::ButtonDoubleClick;
+            }
           }
-			  mLastButtonDown = minfo.Buttons;
+			    mLastButtonDown = minfo.Buttons;
           
           minfo.X = mouseLocation.h - mXOffset;
           minfo.Y = mouseLocation.v - mYOffset;

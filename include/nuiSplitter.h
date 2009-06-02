@@ -34,11 +34,12 @@ public:
 private:
   
   // Received Mouse events:
-  virtual bool MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
-  virtual bool MouseUnclicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
-  virtual nuiWidgetPtr DispatchMouseMove (nuiSize X, nuiSize Y);
-  virtual bool MouseMoved  (nuiSize X, nuiSize Y);
+  virtual bool MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
+  virtual bool MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
+  virtual bool MouseMoved(nuiSize X, nuiSize Y);
   
+  virtual nuiWidgetPtr DispatchMouseMove(const nglMouseInfo& rInfo);
+
   
   nuiSplitter* mpParent;
   double mClickPos;

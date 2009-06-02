@@ -32,9 +32,7 @@ This class is not available if the _NOGFX_ symbol is defined.
 #include "nglDragAndDropObjects.h"
 #endif
 
-#ifdef _MULTI_TOUCHES_
 typedef int32 nglTouchId;
-#endif
 
 class nuiMainMenu;
 
@@ -48,11 +46,9 @@ public:
     Y = 0;
     Buttons = 0;
     
-#ifdef _MULTI_TOUCHES_
     TouchId = 0;
     
     SwipeInfo = eNoSwipe;
-#endif //_MULTI_TOUCHES_
   }
 
   nglMouseInfo(const nglMouseInfo& rInfo)
@@ -61,11 +57,9 @@ public:
     Y = rInfo.Y;
     Buttons = rInfo.Buttons;
     
-#ifdef _MULTI_TOUCHES_
     TouchId = rInfo.TouchId;
     
     SwipeInfo = rInfo.SwipeInfo;
-#endif //_MULTI_TOUCHES_
   }
   
   enum Mode     ///< Select the metrics returned by mouse events (relative vs. absolute)
@@ -90,7 +84,6 @@ public:
   int32   Y;        ///< Vertical coordinate
   Flags Buttons;  ///< Buttons state
 
-#ifdef _MULTI_TOUCHES_
   nglTouchId    TouchId; ///< used to retrieve which finger acting
 
   // Handle  specific touch screen events
@@ -104,7 +97,6 @@ public:
   };
 
   SwipeDirection SwipeInfo;
-#endif //_MULTI_TOUCHES_
 };
 
 

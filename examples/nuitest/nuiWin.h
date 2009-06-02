@@ -43,7 +43,6 @@ protected:
   bool CreateTreeViewWindow(const nuiEvent& rEvent);
   bool CreateSVGTigerWindow(const nuiEvent& rEvent);
   bool CreateAnimWindow(const nuiEvent& rEvent);
-  bool CreateTableViewWindow(const nuiEvent& rEvent);
   bool CreateMessedUpWindow(const nuiEvent& rEvent);
   bool CreateTextWindow(const nuiEvent& rEvent);
   bool CreateText2Window(const nuiEvent& rEvent);

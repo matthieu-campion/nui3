@@ -21,9 +21,6 @@ nuiUserArea::nuiUserArea()
   mPrepareGLContext = false;
   
   NUI_ADD_EVENT(UserDraw);
-  NUI_ADD_EVENT(ClickedMouse);
-  NUI_ADD_EVENT(UnclickedMouse);
-  NUI_ADD_EVENT(MovedMouse);
 }
 
 bool nuiUserArea::Load(const nuiXMLNode* pNode)
@@ -35,9 +32,6 @@ bool nuiUserArea::Load(const nuiXMLNode* pNode)
   mPrepareGLContext = nuiGetBool ( pNode, _T("PrepareGLContext"), false);
   
   NUI_ADD_EVENT(UserDraw);
-  NUI_ADD_EVENT(ClickedMouse);
-  NUI_ADD_EVENT(UnclickedMouse);
-  NUI_ADD_EVENT(MovedMouse);
   
   return true;
 }
@@ -125,19 +119,16 @@ bool nuiUserArea::Draw(nuiDrawContext* pContext)
 
 bool nuiUserArea::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
 {
-  ClickedMouse(X,Y,Button);
   return mInterceptMouse;
 }
 
 bool nuiUserArea::MouseUnclicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
 {
-  UnclickedMouse(X,Y,Button);
   return mInterceptMouse;
 }
 
 bool nuiUserArea::MouseMoved  (nuiSize X, nuiSize Y)
 {
-  MovedMouse(X,Y);
   return mInterceptMouse;
 }
 

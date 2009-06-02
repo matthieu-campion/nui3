@@ -61,7 +61,7 @@ void nuiModalContainer::SetModal(bool enable_modal)
   mIsModal = enable_modal;
 }
 
-bool nuiModalContainer::DispatchMouseClick (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
+bool nuiModalContainer::DispatchMouseClick(const nglMouseInfo& rInfo)
 {
   if (!mMouseEventEnabled || mTrashed)
     return false;
@@ -81,7 +81,7 @@ bool nuiModalContainer::DispatchMouseClick (nuiSize X, nuiSize Y, nglMouseInfo::
         {
           if (IsEnabled())
           {
-            if (pItem->DispatchMouseClick(X,Y, Button))
+            if (pItem->DispatchMouseClick(rInfo))
             {
               delete pIt;
               return true;
@@ -92,18 +92,23 @@ bool nuiModalContainer::DispatchMouseClick (nuiSize X, nuiSize Y, nglMouseInfo::
       delete pIt;
     }
 
+    nuiSize X = rInfo.X;
+    nuiSize Y = rInfo.Y;
     GlobalToLocal(X,Y);
-    if (PreClicked(X,Y, Button))
+    nglMouseInfo info(rInfo);
+    info.X = X;
+    info.Y = Y;
+    if (PreClicked(rInfo))
       return true;
-    bool ret = MouseClicked(X,Y,Button);
-    ret |= Clicked(X,Y,Button);
+    bool ret = MouseClicked(rInfo);
+    ret |= Clicked(rInfo);
     
     return mIsModal || ret;
   }
   return false;
 }
 
-bool nuiModalContainer::DispatchMouseUnclick (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
+bool nuiModalContainer::DispatchMouseUnclick(const nglMouseInfo& rInfo)
 {  
   if (!mMouseEventEnabled || mTrashed)
     return false;
@@ -122,7 +127,7 @@ bool nuiModalContainer::DispatchMouseUnclick (nuiSize X, nuiSize Y, nglMouseInfo
         if (pItem)
         {
           if (IsEnabled())
-            if ((pItem)->DispatchMouseUnclick(X,Y, Button))
+            if ((pItem)->DispatchMouseUnclick(rInfo))
             {
               delete pIt;
               return true;
@@ -132,15 +137,20 @@ bool nuiModalContainer::DispatchMouseUnclick (nuiSize X, nuiSize Y, nglMouseInfo
       delete pIt;
     }
 
-    GlobalToLocal(X,Y);
-    bool res = PreUnclicked(X,Y, Button);
+    nuiSize X = rInfo.X;
+    nuiSize Y = rInfo.Y;
+    GlobalToLocal(X, Y);
+    nglMouseInfo info(rInfo);
+    info.X = X;
+    info.Y = Y;
+    bool res = PreUnclicked(info);
     if (!res)
     {
-      res = MouseUnclicked(X,Y,Button);
-      res |= Unclicked(X,Y,Button);
+      res = MouseUnclicked(info);
+      res |= Unclicked(info);
     }
     
-    if (mWantKeyboardFocus && (Button == nglMouseInfo::ButtonLeft || Button == nglMouseInfo::ButtonRight))
+    if (mWantKeyboardFocus && (rInfo.Buttons == nglMouseInfo::ButtonLeft || rInfo.Buttons == nglMouseInfo::ButtonRight))
       Focus();
     
     return mIsModal || res;
@@ -148,7 +158,7 @@ bool nuiModalContainer::DispatchMouseUnclick (nuiSize X, nuiSize Y, nglMouseInfo
   return false;
 }
 
-nuiWidgetPtr nuiModalContainer::DispatchMouseMove (nuiSize X, nuiSize Y)
+nuiWidgetPtr nuiModalContainer::DispatchMouseMove(const nglMouseInfo& rInfo)
 {
   if (!mMouseEventEnabled || mTrashed)
     return false;
@@ -167,16 +177,22 @@ nuiWidgetPtr nuiModalContainer::DispatchMouseMove (nuiSize X, nuiSize Y)
         nuiWidgetPtr pItem = pIt->GetWidget();
         if (pItem)
           if (pItem->IsVisible())
-            pItem->DispatchMouseMove(X,Y);
+            pItem->DispatchMouseMove(rInfo);
       }
       delete pIt;
     }
   }
 
-  GlobalToLocal(X,Y);
-  if (PreMouseMoved(X,Y))
+  nuiSize X = rInfo.X;
+  nuiSize Y = rInfo.Y;
+  GlobalToLocal(X, Y);
+  nglMouseInfo info(rInfo);
+  info.X = X;
+  info.Y = Y;
+  if (PreMouseMoved(info))
     return this;
-
+  //  if (MouseMoved(info))
+  //    return this;
   return mIsModal ? this : NULL;
 }
 

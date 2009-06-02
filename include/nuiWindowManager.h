@@ -43,8 +43,8 @@ public:
   //@{
   virtual bool KeyDown     (const nglKeyEvent& rEvent);
   virtual bool KeyUp       (const nglKeyEvent& rEvent);
-  virtual bool DispatchMouseClick  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
-  virtual bool DispatchMouseUnclick(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
+  virtual bool DispatchMouseClick  (const nglMouseInfo& rInfo);
+  virtual bool DispatchMouseUnclick(const nglMouseInfo& rInfo);
   //@}
 
   /* @name Background methods*/

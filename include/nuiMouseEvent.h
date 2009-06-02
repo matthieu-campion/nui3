@@ -19,17 +19,15 @@
 template<nuiEventId eventId>  class NUI_API nuiMouseEvent: public nuiEvent
 {
 public:
-  nuiMouseEvent(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button = 0)
-    : nuiEvent(eventId)
+  nuiMouseEvent(const nglMouseInfo& rInfo)
+    : nuiEvent(eventId), mInfo(rInfo), mX(rInfo.X), mY(rInfo.Y), mButton(rInfo.Buttons)
   {
-    mX = X;
-    mY = Y;
-    mButton = Button;
   }
 
   nuiSize mX;
   nuiSize mY;
   nglMouseInfo::Flags mButton;
+  nglMouseInfo mInfo;
 };
 
 typedef nuiMouseEvent<nuiClicked> nuiMouseClickedEvent;
@@ -46,9 +44,19 @@ public:
   {
   }
 
+  virtual bool operator() (const nglMouseInfo& rInfo)
+  {
+    return SendEvent(nuiMouseEvent<eventId>(rInfo));
+  }
+
   virtual bool operator() (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button = 0)
   {
-    return SendEvent(nuiMouseEvent<eventId>(X, Y, Button));
+    nglMouseInfo info;
+    info.X = X;
+    info.Y = Y;
+    info.Buttons = Button;
+    info.TouchId = Button;
+    return SendEvent(nuiMouseEvent<eventId>(info));
   }
 };
 

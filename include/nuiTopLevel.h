@@ -183,7 +183,6 @@ protected:
 
   nuiTimer mMessageQueueTimer;
 
-#ifdef _MULTI_TOUCHES_
   typedef std::map<nglTouchId, nuiWidgetPtr> nuiGrabMap;
   nuiGrabMap mpGrab;
   typedef std::map<nglTouchId, std::list<nuiWidgetPtr> > nuiGrabStackMap;
@@ -196,10 +195,6 @@ protected:
   nuiWidgetPtr PopGrab(nglTouchId touchId);
   std::list<nuiWidgetPtr>& GetGrabStack(nglTouchId touchId);
   nglTouchId GetGrabId(nuiWidgetPtr pWidget) const;
-#else
-  nuiWidgetPtr mpGrab;
-  std::list<nuiWidgetPtr> mpGrabStack;
-#endif
 
   nglPath mResPath;
 
