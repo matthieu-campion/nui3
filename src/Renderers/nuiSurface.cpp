@@ -47,6 +47,7 @@ nuiSurface::nuiSurface(const nglString& rName, nuiSize Width, nuiSize Height, ng
   mStencil = false;
   mRenderToTexture = false;
   mpTexture = NULL;
+  mpPainter = NULL;
   
   nuiSurfaceCacheSet::iterator it = mpSurfaceCaches.begin();
   nuiSurfaceCacheSet::iterator end = mpSurfaceCaches.end();
@@ -203,3 +204,7 @@ bool nuiSurface::IsPermanent()
   return mPermanent;
 }
 
+nuiMetaPainter* nuiSurface::GetPainter()
+{
+  return mpPainter;
+}

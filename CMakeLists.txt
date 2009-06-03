@@ -91,7 +91,6 @@ set(SOURCES
   src/SimpleWidgets/nuiFontBrowser.cpp
   src/SimpleWidgets/nuiFileList.cpp
   src/SimpleWidgets/nuiFileSelector.cpp
-  src/SimpleWidgets/nuiFileTable.cpp
   src/SimpleWidgets/nuiFrameView.cpp
   src/SimpleWidgets/nuiHoverDummy.cpp
   src/SimpleWidgets/nuiImage.cpp
@@ -139,7 +138,6 @@ set(SOURCES
   src/Layout/nuiPositioner.cpp
   src/Layout/nuiScrollView.cpp
   src/Layout/nuiSplitter.cpp
-  src/Layout/nuiTable.cpp
   src/Layout/nuiTabView.cpp
   src/Layout/nuiTitledPane.cpp
   src/Layout/nuiUserArea.cpp

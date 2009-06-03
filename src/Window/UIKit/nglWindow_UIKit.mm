@@ -472,7 +472,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 	mpTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
 	mpTextField.autocorrectionType = UITextAutocorrectionTypeNo;
 	mpTextField.enablesReturnKeyAutomatically = NO;
-	mpTextField.keyboardAppearance = UIKeyboardAppearanceDefault;
+	mpTextField.keyboardAppearance = UIKeyboardAppearanceAlert;
 	mpTextField.keyboardType = UIKeyboardTypeDefault;
 	mpTextField.returnKeyType = UIReturnKeyDefault;
 	mpTextField.secureTextEntry = NO;	
@@ -500,6 +500,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 // UITextFieldDelegate method.  Invoked when user types something.
 - (BOOL)textField:(UITextField *)_textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
+  NGL_OUT(_T("change chars in range %d - %d\n"), range.location, range.length);
 	if ([string length] == 0)
   {
     mpNGLWindow->CallOnKeyDown(nglKeyEvent(NK_BACKSPACE, 8, 8)); // 8 = BS = BackSpace

@@ -35,6 +35,7 @@ nuiDrawContext::nuiDrawContext(const nuiRect& rRect)
   mPermitAntialising = true;
 
   mpPainter = NULL;
+  mpOldPainter = NULL;
   mpAATexture = nuiTexture::GetAATexture();
   
   mStateChanges = 1;
@@ -51,6 +52,7 @@ nuiDrawContext::~nuiDrawContext()
 
   delete mpPainter;
   mpPainter = NULL;
+  mpOldPainter = NULL;
   while (!mpRenderStateStack.empty())
   {
     PopState();
@@ -297,7 +299,17 @@ nuiTexture* nuiDrawContext::GetTexture() const
 
 void nuiDrawContext::SetSurface(nuiSurface* pSurface) 
 {
-  mpPainter->SetSurface(pSurface);
+  if (pSurface)
+  {
+    if (!mpOldPainter)
+      mpOldPainter = mpPainter;
+    mpPainter = pSurface->GetPainter();
+  }
+  else
+  { 
+    mpPainter = mpOldPainter;
+    mpOldPainter = NULL;
+  }
 }
 
 void nuiDrawContext::PushSurface() 

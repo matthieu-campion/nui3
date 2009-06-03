@@ -265,6 +265,7 @@ protected:
   bool mPermitAntialising;
 
   nuiPainter* mpPainter;
+  nuiPainter* mpOldPainter;
   nuiTexture* mpAATexture;
   GLint mClipShapeValue;
   

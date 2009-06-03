@@ -9,6 +9,7 @@
 class nuiSurface;
 class nuiSurfaceCache;
 class nuiPainter;
+class nuiMetaPainter;
 class nuiTexture;
 
 typedef std::map<nglString, nuiSurface*, nglString::LessFunctor> nuiSurfaceMap;
@@ -46,6 +47,7 @@ public:
   void SetPermanent(bool Permanent = true);
   bool IsPermanent();
   
+  nuiMetaPainter* GetPainter();
 protected:
   nuiSurface(const nglString& rName, nuiSize Width, nuiSize Height, nglImagePixelFormat PixelFormat = eImagePixelRGBA);
   virtual ~nuiSurface();
@@ -64,6 +66,7 @@ private:
   nglImagePixelFormat mPixelFormat;
   
   nuiTexture* mpTexture;
+  nuiMetaPainter* mpPainter;
 
   static nuiSurfaceMap mpSurfaces;
   static nuiSurfaceCacheSet mpSurfaceCaches;
