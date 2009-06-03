@@ -114,7 +114,7 @@
 
 bool nuiGLPainter::CheckFramebufferStatus()
 {
-  return true;
+//  return true;
 #if 1
   GLint status = glCheckFramebufferStatusNUI(GL_FRAMEBUFFER_NUI);
 #if defined(NGL_DEBUG)
@@ -506,10 +506,61 @@ void nuiGLPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
       intarget = GetTextureTarget(mState.mpTexture->IsPowerOfTwo());
 
       mState.mpTexture->Acquire();
+  
+      nuiSurface* pSurface = mState.mpTexture->GetSurface();
+      if (pSurface)
+      {
+        std::map<nuiSurface*, FramebufferInfo>::const_iterator it = mFramebuffers.find(pSurface);
+        bool create = (it == mFramebuffers.end()) ? true : false;  
+        if (create)
+        {
+          PushClipping();
+          nuiRenderState s(mState);// PushState();
+          PushProjectionMatrix();
+          PushMatrix();
+          PushSurface();
+          
+          
+          SetState(nuiRenderState());
+          ResetClipRect();
+          LoadMatrix(nglMatrixf());
+          
+          NGL_ASSERT(pSurface);
+          SetSurface(pSurface);
+          //Set2DProjectionMatrix(nuiRect(0.0f, 0.0f, pSurface->GetWidth(), pSurface->GetHeight()));
+          nuiMatrix m;
+          m.Translate(-1.0f, 1.0f, 0.0f);
+          m.Scale(2.0f / pSurface->GetWidth(), -2.0f / pSurface->GetHeight(), 1.0f);
+          LoadProjectionMatrix(nuiRect(pSurface->GetWidth(), pSurface->GetHeight()), m);
+          
+          // clear the surface with transparent black:
+          nuiRenderState s2(mState);// PushState();
+          mState.mClearColor = nuiColor(0.0f, 0.0f, 0.0f, 0.0f);
+          SetState(mState);
+          ClearColor();  
+          SetState(s2);
+          
+//////////////////////////////          
+          nuiDrawContext Ctx(nuiRect(pSurface->GetWidth(), pSurface->GetHeight()));
+          Ctx.SetPainter(this);
+          pSurface->Realize(&Ctx);
+          Ctx.SetPainter(NULL);
+//////////////////////////////
+          
+          PopSurface();
+          PopMatrix();
+          PopProjectionMatrix();
+          //PopState();
+          SetState(s);
+          PopClipping();
+        }
+      }
+      
       UploadTexture(mState.mpTexture);
       nuiCheckForGLErrors();
 #ifndef _OPENGL_ES_
-      if (mState.mpShader) {
+      if (mState.mpShader)
+      {
         std::map<nuiTexture*, TextureInfo>::const_iterator it = mTextures.find(rState.mpTexture);
         mState.mpShader->SetTexture2D(0, it->second.mTexture);
       }
@@ -1089,6 +1140,8 @@ void nuiGLPainter::CreateTexture(nuiTexture* pTexture)
 
 void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
 {
+  nuiSurface* pSurface = pTexture->GetSurface();
+  
   float Width = pTexture->GetWidth();
   float Height = pTexture->GetHeight();
   GLenum target = GetTextureTarget(pTexture->IsPowerOfTwo());
@@ -1119,7 +1172,6 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
   
   //NGL_OUT(_T("Apply Target: 0x%x\n"), target);
   nglImage* pImage = pTexture->GetImage();
-  nuiSurface* pSurface = pTexture->GetSurface();
 
   {
     bool firstload = false;
