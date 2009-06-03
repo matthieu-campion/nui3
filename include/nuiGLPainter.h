@@ -29,7 +29,6 @@ public:
   virtual void SetState(const nuiRenderState& rState, bool ForceApply = false);
   virtual void DrawArray(nuiRenderArray* pArray);
   virtual void ClearColor();
-  virtual void ClearStencil(uint8 value);
   virtual void BeginSession();
   virtual void EndSession();
   virtual void LoadMatrix(const nuiMatrix& rMatrix);
