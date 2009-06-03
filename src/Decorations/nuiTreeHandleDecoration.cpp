@@ -131,14 +131,14 @@ void nuiTreeHandleDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget,
 
 
 
-nuiRect nuiTreeHandleDecoration::GetIdealClientRect() const
+nuiRect nuiTreeHandleDecoration::GetIdealClientRect(const nuiWidget* pWidget) const
 {
   return nuiRect(0.f,0.f,0.f,0.f);
 }
 
 
 
-nuiSize nuiTreeHandleDecoration::GetBorder(nuiPosition position) const
+nuiSize nuiTreeHandleDecoration::GetBorder(nuiPosition position, const nuiWidget* pWidget) const
 {
   switch (position)
   {

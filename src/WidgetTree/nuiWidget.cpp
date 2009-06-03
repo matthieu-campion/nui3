@@ -1108,7 +1108,7 @@ bool nuiWidget::InternalDrawWidget(nuiDrawContext* pContext, const nuiRect& _sel
   {      
     pContext->PushState();
     nuiRect sizerect(GetRect().Size());
-    mpDecoration->ClientToGlobalRect(sizerect);
+    mpDecoration->ClientToGlobalRect(sizerect, this);
     mpDecoration->DrawBack(pContext, this, sizerect);
     pContext->PopState();
   }
@@ -1139,7 +1139,7 @@ bool nuiWidget::InternalDrawWidget(nuiDrawContext* pContext, const nuiRect& _sel
   {
     pContext->PushState();
     nuiRect sizerect(GetRect().Size());
-    mpDecoration->ClientToGlobalRect(sizerect);
+    mpDecoration->ClientToGlobalRect(sizerect, this);
     mpDecoration->DrawFront(pContext, this, sizerect);
     pContext->PopState();
   }
@@ -2477,9 +2477,9 @@ nuiSize nuiWidget::GetActualBorderLeft() const
 {
   nuiSize Left = mBorderLeft;
   if (mpDecoration && mDecorationMode == eDecorationBorder)
-    Left = MAX(Left, mpDecoration->GetBorder(nuiLeft));
+    Left = MAX(Left, mpDecoration->GetBorder(nuiLeft, this));
   if (mpFocusDecoration && mFocusDecorationMode == eDecorationBorder)
-    Left = MAX(Left, mpFocusDecoration->GetBorder(nuiLeft));
+    Left = MAX(Left, mpFocusDecoration->GetBorder(nuiLeft, this));
   return Left;
 }
 
@@ -2487,9 +2487,9 @@ nuiSize nuiWidget::GetActualBorderTop() const
 {
   nuiSize Top = mBorderTop;
   if (mpDecoration && mDecorationMode == eDecorationBorder)
-    Top = MAX(Top, mpDecoration->GetBorder(nuiTop));
+    Top = MAX(Top, mpDecoration->GetBorder(nuiTop, this));
   if (mpFocusDecoration && mFocusDecorationMode == eDecorationBorder)
-    Top = MAX(Top, mpFocusDecoration->GetBorder(nuiTop));
+    Top = MAX(Top, mpFocusDecoration->GetBorder(nuiTop, this));
   return Top;
 }
 
@@ -2497,9 +2497,9 @@ nuiSize nuiWidget::GetActualBorderRight() const
 {
   nuiSize Right = mBorderRight;
   if (mpDecoration && mDecorationMode == eDecorationBorder)
-    Right = MAX(Right, mpDecoration->GetBorder(nuiRight));
+    Right = MAX(Right, mpDecoration->GetBorder(nuiRight, this));
   if (mpFocusDecoration && mFocusDecorationMode == eDecorationBorder)
-    Right = MAX(Right, mpFocusDecoration->GetBorder(nuiRight));
+    Right = MAX(Right, mpFocusDecoration->GetBorder(nuiRight, this));
   return Right;
 }
 
@@ -2507,9 +2507,9 @@ nuiSize nuiWidget::GetActualBorderBottom() const
 {
   nuiSize Bottom = mBorderBottom;
   if (mpDecoration && mDecorationMode == eDecorationBorder)
-    Bottom = MAX(Bottom, mpDecoration->GetBorder(nuiBottom));
+    Bottom = MAX(Bottom, mpDecoration->GetBorder(nuiBottom, this));
   if (mpFocusDecoration && mFocusDecorationMode == eDecorationBorder)
-    Bottom = MAX(Bottom, mpFocusDecoration->GetBorder(nuiBottom));
+    Bottom = MAX(Bottom, mpFocusDecoration->GetBorder(nuiBottom, this));
   return Bottom;
 }
 
@@ -3545,10 +3545,10 @@ void nuiWidget::GetOverDraw(nuiSize& Left, nuiSize& Top, nuiSize& Right, nuiSize
   {    
     if (mDecorationMode == eDecorationOverdraw || mDecorationMode == eDecorationBorder)
     {
-      Left   = MAX(Left  , mpDecoration->GetBorder(nuiLeft));
-      Top    = MAX(Top   , mpDecoration->GetBorder(nuiTop));
-      Right  = MAX(Right , mpDecoration->GetBorder(nuiRight));
-      Bottom = MAX(Bottom, mpDecoration->GetBorder(nuiBottom));
+      Left   = MAX(Left  , mpDecoration->GetBorder(nuiLeft, this));
+      Top    = MAX(Top   , mpDecoration->GetBorder(nuiTop, this));
+      Right  = MAX(Right , mpDecoration->GetBorder(nuiRight, this));
+      Bottom = MAX(Bottom, mpDecoration->GetBorder(nuiBottom, this));
     }
   }
   
@@ -3556,10 +3556,10 @@ void nuiWidget::GetOverDraw(nuiSize& Left, nuiSize& Top, nuiSize& Right, nuiSize
   {    
     if (mFocusDecorationMode == eDecorationOverdraw || mFocusDecorationMode == eDecorationBorder)
     {
-      Left   = MAX(Left  , mpFocusDecoration->GetBorder(nuiLeft));
-      Top    = MAX(Top   , mpFocusDecoration->GetBorder(nuiTop));
-      Right  = MAX(Right , mpFocusDecoration->GetBorder(nuiRight));
-      Bottom = MAX(Bottom, mpFocusDecoration->GetBorder(nuiBottom));
+      Left   = MAX(Left  , mpFocusDecoration->GetBorder(nuiLeft, this));
+      Top    = MAX(Top   , mpFocusDecoration->GetBorder(nuiTop, this));
+      Right  = MAX(Right , mpFocusDecoration->GetBorder(nuiRight, this));
+      Bottom = MAX(Bottom, mpFocusDecoration->GetBorder(nuiBottom, this));
     }
   }
   
@@ -3831,7 +3831,7 @@ return;
   if (mpFocusDecoration)
   {
     nuiRect sizerect(GetRect().Size());
-    mpFocusDecoration->ClientToGlobalRect(sizerect);
+    mpFocusDecoration->ClientToGlobalRect(sizerect, this);
     if (FrontOrBack)
       mpFocusDecoration->DrawFront(pContext, this, sizerect);
     else

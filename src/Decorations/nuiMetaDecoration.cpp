@@ -71,7 +71,7 @@ void nuiMetaDecoration::DrawBack(nuiDrawContext* pContext, nuiWidget* pWidget, c
     }
     
     nuiRect rect = r;
-    pDecoration->ClientToGlobalRect(rect);
+    pDecoration->ClientToGlobalRect(rect, pWidget);
     pDecoration->DrawBack(pContext, pWidget, rect);
     
     ++it;
@@ -99,7 +99,7 @@ void nuiMetaDecoration::DrawFront(nuiDrawContext* pContext, nuiWidget* pWidget, 
     }
 
     nuiRect rect = r;
-    pDecoration->ClientToGlobalRect(rect);
+    pDecoration->ClientToGlobalRect(rect, pWidget);
     pDecoration->DrawFront(pContext, pWidget, rect);
     
     ++it;
@@ -107,7 +107,7 @@ void nuiMetaDecoration::DrawFront(nuiDrawContext* pContext, nuiWidget* pWidget, 
 }
 
   
-nuiRect nuiMetaDecoration::GetIdealClientRect() const
+nuiRect nuiMetaDecoration::GetIdealClientRect(const nuiWidget* pWidget) const
 {
   std::vector<nuiDecoration*>::const_iterator it = mDecorations.begin();
   std::vector<nuiDecoration*>::const_iterator end = mDecorations.end();
@@ -119,7 +119,7 @@ nuiRect nuiMetaDecoration::GetIdealClientRect() const
     nuiDecoration* pDecoration = (*it);
     NGL_ASSERT(pDecoration);
     
-    rect.Union(rect, pDecoration->GetIdealClientRect());
+    rect.Union(rect, pDecoration->GetIdealClientRect(pWidget));
     
     ++it;
   }
@@ -127,7 +127,7 @@ nuiRect nuiMetaDecoration::GetIdealClientRect() const
   return rect;
 }
 
-nuiSize nuiMetaDecoration::GetBorder(nuiPosition position) const
+nuiSize nuiMetaDecoration::GetBorder(nuiPosition position, const nuiWidget* pWidget) const
 {
   std::vector<nuiDecoration*>::const_iterator it = mDecorations.begin();
   std::vector<nuiDecoration*>::const_iterator end = mDecorations.end();
@@ -140,7 +140,7 @@ nuiSize nuiMetaDecoration::GetBorder(nuiPosition position) const
     nuiDecoration* pDecoration = (*it);
     NGL_ASSERT(pDecoration);
     
-    border = MAX(border, pDecoration->GetBorder(position));
+    border = MAX(border, pDecoration->GetBorder(position, pWidget));
     
     ++it;
   }

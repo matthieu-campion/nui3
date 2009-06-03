@@ -127,7 +127,7 @@ nuiRect nuiButton::CalcIdealSize()
     
   if (pDeco)
   {
-    mIdealRect = pDeco->GetIdealClientRect();
+    mIdealRect = pDeco->GetIdealClientRect(this);
   }
   
   nuiRect Rect;
@@ -153,7 +153,7 @@ nuiRect nuiButton::CalcIdealSize()
       mIdealRect = mRect;
 
   if (pDeco)
-    mIdealRect.Union(mIdealRect, pDeco->GetIdealClientRect());
+    mIdealRect.Union(mIdealRect, pDeco->GetIdealClientRect(this));
 
   return mIdealRect;
 }

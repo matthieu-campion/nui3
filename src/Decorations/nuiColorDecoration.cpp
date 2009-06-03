@@ -159,14 +159,14 @@ void nuiColorDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, cons
 
 
 
-nuiRect nuiColorDecoration::GetIdealClientRect() const
+nuiRect nuiColorDecoration::GetIdealClientRect(const nuiWidget* pWidget) const
 {
   return mClientRect.Size();
 }
 
 
 
-nuiSize nuiColorDecoration::GetBorder(nuiPosition position) const
+nuiSize nuiColorDecoration::GetBorder(nuiPosition position, const nuiWidget* pWidget) const
 {
   switch (position)
   {

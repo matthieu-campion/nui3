@@ -123,14 +123,14 @@ void nuiCheckerboardDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidge
 
 
 
-nuiRect nuiCheckerboardDecoration::GetIdealClientRect() const
+nuiRect nuiCheckerboardDecoration::GetIdealClientRect(const nuiWidget* pWidget) const
 {
   return mClientRect.Size();
 }
 
 
 
-nuiSize nuiCheckerboardDecoration::GetBorder(nuiPosition position) const
+nuiSize nuiCheckerboardDecoration::GetBorder(nuiPosition position, const nuiWidget* pWidget) const
 {
   switch (position)
   {

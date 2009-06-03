@@ -326,14 +326,14 @@ nglString nuiGradientDecoration::GetOrientation()
 
 
 
-nuiRect nuiGradientDecoration::GetIdealClientRect() const
+nuiRect nuiGradientDecoration::GetIdealClientRect(const nuiWidget* pWidget) const
 {
   return nuiRect(0,0,0,0);
 }
 
 
 
-nuiSize nuiGradientDecoration::GetBorder(nuiPosition position) const
+nuiSize nuiGradientDecoration::GetBorder(nuiPosition position, const nuiWidget* pWidget) const
 {
   switch (position)
   {

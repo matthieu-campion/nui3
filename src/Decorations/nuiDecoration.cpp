@@ -159,13 +159,13 @@ void nuiDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nui
 }
 
 
-void nuiDecoration::GlobalToClientRect(nuiRect& rRect) const
+void nuiDecoration::GlobalToClientRect(nuiRect& rRect, const nuiWidget* pWidget) const
 {
-  nuiRect clientRect = GetIdealClientRect();
-//  nuiSize bordertop = GetBorder(nuiTop);
-//  nuiSize borderleft = GetBorder(nuiLeft);
-  nuiSize borderright = GetBorder(nuiRight);
-  nuiSize borderbottom = GetBorder(nuiBottom);
+  nuiRect clientRect = GetIdealClientRect(pWidget);
+//  nuiSize bordertop = GetBorder(nuiTop, pWidget);
+//  nuiSize borderleft = GetBorder(nuiLeft, pWidget);
+  nuiSize borderright = GetBorder(nuiRight, pWidget);
+  nuiSize borderbottom = GetBorder(nuiBottom, pWidget);
   
 
   float X1 = (float)clientRect.Left();
@@ -189,12 +189,12 @@ void nuiDecoration::GlobalToClientRect(nuiRect& rRect) const
   rRect.Set(x1, y1, x2, y2, false);
 }
 
-void nuiDecoration::ClientToGlobalRect(nuiRect& rRect) const
+void nuiDecoration::ClientToGlobalRect(nuiRect& rRect, const nuiWidget* pWidget) const
 {
-  nuiSize bordertop = GetBorder(nuiTop);
-  nuiSize borderleft = GetBorder(nuiLeft);
-  nuiSize borderright = GetBorder(nuiRight);
-  nuiSize borderbottom = GetBorder(nuiBottom);
+  nuiSize bordertop = GetBorder(nuiTop, pWidget);
+  nuiSize borderleft = GetBorder(nuiLeft, pWidget);
+  nuiSize borderright = GetBorder(nuiRight, pWidget);
+  nuiSize borderbottom = GetBorder(nuiBottom, pWidget);
 
   rRect.Set(rRect.Left() - borderleft,
             rRect.Top() - bordertop,
@@ -208,14 +208,14 @@ void nuiDecoration::ClientToGlobalRect(nuiRect& rRect) const
 
 
 
-nuiRect nuiDecoration::GetMinimumClientRect() const
+nuiRect nuiDecoration::GetMinimumClientRect(const nuiWidget* pWidget) const
 {
-  return GetIdealClientRect().Size();
+  return GetIdealClientRect(pWidget).Size();
 }
 
-nuiRect nuiDecoration::GetMaximumClientRect() const
+nuiRect nuiDecoration::GetMaximumClientRect(const nuiWidget* pWidget) const
 {
-  return GetIdealClientRect().Size();
+  return GetIdealClientRect(pWidget).Size();
 }
 
 bool ShouldSkipAttrib(const nglString& rName)

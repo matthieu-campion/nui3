@@ -54,9 +54,9 @@ public:
   virtual nuiXMLNode* Serialize(nuiXMLNode* pNode);
   
   
-  virtual nuiRect GetIdealClientRect() const;
+  virtual nuiRect GetIdealClientRect(const nuiWidget* pWidget) const;
           nuiRect GetIdealSourceClientRect() const;
-  virtual nuiSize GetBorder(nuiPosition position) const;
+  virtual nuiSize GetBorder(nuiPosition position, const nuiWidget* pWidget) const;
           nuiSize GetSourceBorder(nuiPosition position) const;
 
   void SetSourceClientRect(const nuiRect& rRect);
@@ -97,6 +97,7 @@ private:
   virtual void DrawFront(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rRect);
   nuiDecoration* GetState(nuiStateDescription state) const;
   nuiDecoration* GetDecoration(const nglString& rName) const;
+  nuiDecoration* GetDecorationForWidgetState(const nuiWidget* pWidget) const;
   
   // attributes
   void InitAttributes();

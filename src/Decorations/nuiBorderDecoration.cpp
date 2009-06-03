@@ -172,14 +172,14 @@ void nuiBorderDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, con
 
 
 
-nuiRect nuiBorderDecoration::GetIdealClientRect() const
+nuiRect nuiBorderDecoration::GetIdealClientRect(const nuiWidget* pWidget) const
 {
   return mClientRect.Size();
 }
 
 
 
-nuiSize nuiBorderDecoration::GetBorder(nuiPosition position) const
+nuiSize nuiBorderDecoration::GetBorder(nuiPosition position, const nuiWidget* pWidget) const
 {
   switch (position)
   {

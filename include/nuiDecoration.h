@@ -38,13 +38,13 @@ public:
   virtual void Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rRect);
   
   
-  virtual void GlobalToClientRect(nuiRect& rRect) const;
-  virtual void ClientToGlobalRect(nuiRect& rRect) const;
+  virtual void GlobalToClientRect(nuiRect& rRect, const nuiWidget* pWidget) const;
+  virtual void ClientToGlobalRect(nuiRect& rRect, const nuiWidget* pWidget) const;
   
-  virtual nuiSize GetBorder(nuiPosition postion) const = 0;
-  virtual nuiRect GetIdealClientRect() const = 0;
-  virtual nuiRect GetMinimumClientRect() const;
-  virtual nuiRect GetMaximumClientRect() const;
+  virtual nuiSize GetBorder(nuiPosition postion, const nuiWidget* pWidget) const = 0;
+  virtual nuiRect GetIdealClientRect(const nuiWidget* pWidget) const = 0;
+  virtual nuiRect GetMinimumClientRect(const nuiWidget* pWidget) const;
+  virtual nuiRect GetMaximumClientRect(const nuiWidget* pWidget) const;
 
   nuiSignal0<> Changed;
   

@@ -26,8 +26,8 @@ public:
   virtual void DrawBack(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rRect);
   virtual void DrawFront(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rRect);
   
-  virtual nuiRect GetIdealClientRect() const;
-  virtual nuiSize GetBorder(nuiPosition position) const;
+  virtual nuiRect GetIdealClientRect(const nuiWidget* pWidget) const;
+  virtual nuiSize GetBorder(nuiPosition position, const nuiWidget* pWidget) const;
   
   void AddDecoration(const nglString& rDecoName);
   const nglString& GetDecoration();

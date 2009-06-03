@@ -44,8 +44,8 @@ public:
   
 
   
-  virtual nuiSize GetBorder(nuiPosition position) const;
-  virtual nuiRect GetIdealClientRect() const;
+  virtual nuiSize GetBorder(nuiPosition position, const nuiWidget* pWidget) const;
+  virtual nuiRect GetIdealClientRect(const nuiWidget* pWidget) const;
 
   void SetSourceClientRect(const nuiRect& rRect);
   const nuiRect& GetSourceClientRect() const;

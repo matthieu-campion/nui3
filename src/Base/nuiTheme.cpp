@@ -605,9 +605,9 @@ void nuiTheme::DrawMenuWindow(nuiDrawContext* pContext, const nuiRect& rRect, nu
   NGL_ASSERT(pFrame);
   
   nuiRect rect;
-  rect.Set(rRect.Left() - pFrame->GetBorder(nuiLeft), rRect.Top() - pFrame->GetBorder(nuiTop), 
-           rRect.GetWidth() + pFrame->GetBorder(nuiLeft) + pFrame->GetBorder(nuiRight),
-           rRect.GetHeight() + pFrame->GetBorder(nuiTop) + pFrame->GetBorder(nuiBottom));
+  rect.Set(rRect.Left() - pFrame->GetBorder(nuiLeft, pWidget), rRect.Top() - pFrame->GetBorder(nuiTop, pWidget), 
+           rRect.GetWidth() + pFrame->GetBorder(nuiLeft, pWidget) + pFrame->GetBorder(nuiRight, pWidget),
+           rRect.GetHeight() + pFrame->GetBorder(nuiTop, pWidget) + pFrame->GetBorder(nuiBottom, pWidget));
   
   pFrame->Draw(pContext, pWidget, rect);
   pFrame->Release();
@@ -726,15 +726,15 @@ void nuiTheme::DrawSliderBackground(nuiDrawContext* pContext, nuiSlider* pSlider
   if (pSlider->GetOrientation() == nuiVertical)
   {
     pDeco = nuiDecoration::Get(_T("nuiDefaultDecorationSliderVerticalBkg"));
-    nuiSize x = (int)((rect.GetWidth() - pDeco->GetIdealClientRect().GetWidth()) / 2);
-    nuiSize w = pDeco->GetIdealClientRect().GetWidth();
+    nuiSize x = (int)((rect.GetWidth() - pDeco->GetIdealClientRect(pSlider).GetWidth()) / 2);
+    nuiSize w = pDeco->GetIdealClientRect(pSlider).GetWidth();
     rect.Set(x, min, w, max-min);
   }
   else
   {
     pDeco = nuiDecoration::Get(_T("nuiDefaultDecorationSliderHorizontalBkg"));
-    nuiSize y = (int)((rect.GetHeight() - pDeco->GetIdealClientRect().GetHeight()) / 2);
-    nuiSize h = pDeco->GetIdealClientRect().GetHeight();
+    nuiSize y = (int)((rect.GetHeight() - pDeco->GetIdealClientRect(pSlider).GetHeight()) / 2);
+    nuiSize h = pDeco->GetIdealClientRect(pSlider).GetHeight();
     rect.Set(min, y, max - min, h);
   }  
   
@@ -755,7 +755,7 @@ void nuiTheme::DrawSliderForeground(nuiDrawContext* pContext, nuiSlider* pSlider
   {
     pDeco = nuiDecoration::Get(_T("nuiDefaultDecorationSliderVerticalHdl"));
     NGL_ASSERT(pDeco);
-    const nuiRect& srcRect = pDeco->GetIdealClientRect();
+    const nuiRect& srcRect = pDeco->GetIdealClientRect(pSlider);
     
     nuiSize h = rect.GetHeight() - srcRect.GetHeight();
     rect.mTop = h - (start * h);
@@ -769,7 +769,7 @@ void nuiTheme::DrawSliderForeground(nuiDrawContext* pContext, nuiSlider* pSlider
   {
     pDeco = nuiDecoration::Get(_T("nuiDefaultDecorationSliderHorizontalHdl"));
     NGL_ASSERT(pDeco);
-    const nuiRect& srcRect = pDeco->GetIdealClientRect();
+    const nuiRect& srcRect = pDeco->GetIdealClientRect(pSlider);
 
     rect.mLeft = (start * (rect.GetWidth() - srcRect.GetWidth()));
     rect.mRight = rect.mLeft + srcRect.GetWidth();
@@ -801,7 +801,7 @@ void nuiTheme::DrawTreeHandle(nuiDrawContext* pContext, const nuiRect& rRect, bo
     pDeco = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationArrowClose"));
   NGL_ASSERT(pDeco);
 
-  const nuiRect& rectSrc = pDeco->GetIdealClientRect();
+  const nuiRect& rectSrc = pDeco->GetIdealClientRect(NULL);
   
   nuiSize x,y;
   x = rRect.Left() + (int)((rRect.GetWidth() - rectSrc.GetWidth()) / 2.f);

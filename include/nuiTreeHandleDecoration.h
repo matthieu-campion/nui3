@@ -24,8 +24,8 @@ public:
   
   virtual void Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rRect);  
   
-  virtual nuiSize GetBorder(nuiPosition position) const;
-  virtual nuiRect GetIdealClientRect() const;
+  virtual nuiSize GetBorder(nuiPosition position, const nuiWidget* pWidget) const;
+  virtual nuiRect GetIdealClientRect(const nuiWidget* pWidget) const;
 
   void SetHandleBorder(const nuiBorder& rHandleBorder);
   const nuiBorder& GetHandleBorder() const;

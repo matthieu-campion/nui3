@@ -49,7 +49,7 @@ nuiRect nuiFrameView::CalcIdealSize()
   if (mpFrame)
   {
     nuiRect ideal = nuiSimpleContainer::CalcIdealSize();
-    ideal.Grow(mpFrame->GetBorder(nuiFillHorizontal) * 0.5, mpFrame->GetBorder(nuiFillVertical) * 0.5);
+    ideal.Grow(mpFrame->GetBorder(nuiFillHorizontal, this) * 0.5, mpFrame->GetBorder(nuiFillVertical, this) * 0.5);
     ideal.MoveTo(0, 0);
     ideal.RoundToNearest();
     return ideal;
@@ -62,7 +62,7 @@ bool nuiFrameView::SetRect(const nuiRect& rRect)
 {
   nuiRect r(rRect.Size());
   if (mpFrame)
-    mpFrame->GlobalToClientRect(r);
+    mpFrame->GlobalToClientRect(r, this);
   nuiWidget::SetRect(rRect);
   
   IteratorPtr pIt;

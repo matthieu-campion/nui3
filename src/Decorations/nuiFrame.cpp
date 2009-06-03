@@ -481,7 +481,7 @@ bool nuiFrame::IsBorderEnabled() const
   return mBorderEnabled;
 }
 
-nuiSize nuiFrame::GetBorder(nuiPosition position) const
+nuiSize nuiFrame::GetBorder(nuiPosition position, const nuiWidget* pWidget) const
 {
   if (!mBorderEnabled)
     return 0;
@@ -554,7 +554,7 @@ void nuiFrame::UseWidgetFrameColor(bool Use)
 }
 
 
-nuiRect nuiFrame::GetIdealClientRect() const
+nuiRect nuiFrame::GetIdealClientRect(const nuiWidget* pWidget) const
 {
   return mClientRect.Size();
 }

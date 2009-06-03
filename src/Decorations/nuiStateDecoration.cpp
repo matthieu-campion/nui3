@@ -165,11 +165,9 @@ nuiDecoration* nuiStateDecoration::GetDecoration(const nglString& rName) const
 }
 
 
-  
-//virtual
-void nuiStateDecoration::DrawBack(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rRect)
+nuiDecoration* nuiStateDecoration::GetDecorationForWidgetState(const nuiWidget* pWidget) const
 {
-  nuiButton* pButton = dynamic_cast<nuiButton*>(pWidget);
+  const nuiButton* pButton = dynamic_cast<const nuiButton*>(pWidget);
   
   nuiStateDescription state = 0;
   nuiDecoration* pChoice4 = GetState(state);
@@ -177,8 +175,7 @@ void nuiStateDecoration::DrawBack(nuiDrawContext* pContext, nuiWidget* pWidget, 
 
   nuiDecoration* pChoice3 = NULL;
   nuiDecoration* pChoice2 = NULL;
-  
-  
+
   if (pButton)
   {
     state += pButton->IsPressed() ? nuiStatePressed : nuiStateReleased;
@@ -190,13 +187,9 @@ void nuiStateDecoration::DrawBack(nuiDrawContext* pContext, nuiWidget* pWidget, 
     pChoice2 = GetState(state);  
   }
 
-
   state += pWidget->IsEnabled(true) ? nuiStateEnabled : nuiStateDisabled;
   nuiDecoration* pChoice1 = GetState(state);
 
-  
-
-  
   state += pWidget->GetHover() ? nuiStateHoverOn : nuiStateHoverOff;
   nuiDecoration* pChoice0 = GetState(state);  
   
@@ -212,6 +205,15 @@ void nuiStateDecoration::DrawBack(nuiDrawContext* pContext, nuiWidget* pWidget, 
     pChoice = pChoice3;
   else if (pChoice4)
     pChoice = pChoice4;
+
+  return pChoice;
+}
+
+
+//virtual
+void nuiStateDecoration::DrawBack(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rRect)
+{
+  nuiDecoration* pChoice = GetDecorationForWidgetState(pWidget);
   
   if (pChoice)
   {
@@ -229,44 +231,7 @@ void nuiStateDecoration::DrawBack(nuiDrawContext* pContext, nuiWidget* pWidget, 
 //virtual
 void nuiStateDecoration::DrawFront(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rRect)
 {
-  nuiButton* pButton = dynamic_cast<nuiButton*>(pWidget);
-
-  nuiStateDescription state = 0;
-  nuiDecoration* pChoice4 = GetState(state);
-
-
-  nuiDecoration* pChoice3 = NULL;
-  nuiDecoration* pChoice2 = NULL;
-  
-  if (pButton)
-  {
-    state += pButton->IsPressed() ? nuiStatePressed : nuiStateReleased;
-    pChoice3 = GetState(state);
-  }
-  else
-  {
-    state += pWidget->IsSelected() ? nuiStateSelected : nuiStateUnselected;
-    pChoice2 = GetState(state);  
-  }
-  
-  state += pWidget->IsEnabled(true) ? nuiStateEnabled : nuiStateDisabled;
-  nuiDecoration* pChoice1 = GetState(state);
-  
-  state += pWidget->GetHover() ? nuiStateHoverOn : nuiStateHoverOff;
-  nuiDecoration* pChoice0 = GetState(state);  
-  
-  nuiDecoration* pChoice = NULL;
-  
-  if (pChoice0)
-    pChoice = pChoice0;
-  else if (pChoice1)
-    pChoice = pChoice1;
-  else if (pChoice2)
-    pChoice = pChoice2;
-  else if (pChoice3)
-    pChoice = pChoice3;
-  else if (pChoice4)
-    pChoice = pChoice4;
+  nuiDecoration* pChoice = GetDecorationForWidgetState(pWidget);
   
   if (pChoice)
   {
@@ -303,9 +268,8 @@ nuiRect nuiStateDecoration::GetIdealSourceClientRect() const
 
 
 
-nuiRect nuiStateDecoration::GetIdealClientRect() const
+nuiRect nuiStateDecoration::GetIdealClientRect(const nuiWidget* pWidget) const
 {
-
   if (mUseSourceClientRect)
     return GetIdealSourceClientRect();
     
@@ -314,15 +278,25 @@ nuiRect nuiStateDecoration::GetIdealClientRect() const
   
   nuiRect rect;
 
-  
-  while (it != end)
+  if (!pWidget)
   {
-    nuiDecoration* pDecoration = it->second;
-    NGL_ASSERT(pDecoration);
-    
-    rect.Union(rect, pDecoration->GetIdealClientRect());
-    
-    ++it;
+    while (it != end)
+    {
+      nuiDecoration* pDecoration = it->second;
+      NGL_ASSERT(pDecoration);
+      
+      rect.Union(rect, pDecoration->GetIdealClientRect(pWidget));
+      
+      ++it;
+    }
+  }
+  else
+  {
+    nuiDecoration* pChoice = GetDecorationForWidgetState(pWidget);
+    if (pChoice)
+    {
+      return pChoice->GetIdealClientRect(pWidget);
+    }
   }
 
   return rect;
@@ -332,7 +306,7 @@ nuiRect nuiStateDecoration::GetIdealClientRect() const
 
 
 nuiSize nuiStateDecoration::GetSourceBorder(nuiPosition position) const
-{
+{  
   switch (position)
   {
   case nuiLeft:
@@ -366,11 +340,22 @@ nuiSize nuiStateDecoration::GetSourceBorder(nuiPosition position) const
   return NULL;
 }
 
-nuiSize nuiStateDecoration::GetBorder(nuiPosition position) const
+nuiSize nuiStateDecoration::GetBorder(nuiPosition position, const nuiWidget* pWidget) const
 {
   if (mUseSourceClientRect)
     return GetSourceBorder(position);
 
+  if (pWidget)
+  {
+    nuiDecoration* pChoice = GetDecorationForWidgetState(pWidget);
+    if (pChoice)
+    {
+      return pChoice->GetBorder(position, pWidget);
+    }
+    
+    return 0;
+  }
+  
   nuiSize border = 0;
   std::map<uint32, nuiDecoration*>::const_iterator it = mStates.begin();
   std::map<uint32, nuiDecoration*>::const_iterator end = mStates.end();
@@ -380,7 +365,7 @@ nuiSize nuiStateDecoration::GetBorder(nuiPosition position) const
     nuiDecoration* pDecoration = it->second;
     NGL_ASSERT(pDecoration);
     
-    border = MAX(border, pDecoration->GetBorder(position));
+    border = MAX(border, pDecoration->GetBorder(position, pWidget));
     
     ++it;
   }

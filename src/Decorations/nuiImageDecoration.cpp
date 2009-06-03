@@ -196,7 +196,7 @@ bool nuiImageDecoration::IsBorderEnabled() const
   return mBorderEnabled;
 }
 
-nuiSize nuiImageDecoration::GetBorder(nuiPosition position) const
+nuiSize nuiImageDecoration::GetBorder(nuiPosition position, const nuiWidget* pWidget) const
 {
   if (!mBorderEnabled)
     return 0;
@@ -248,7 +248,7 @@ nuiTexture* nuiImageDecoration::GetTexture() const
 
 
 
-nuiRect nuiImageDecoration::GetIdealClientRect() const
+nuiRect nuiImageDecoration::GetIdealClientRect(const nuiWidget* pWidget) const
 {
   return mClientRect.Size();
 }
