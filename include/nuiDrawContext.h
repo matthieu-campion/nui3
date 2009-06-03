@@ -65,25 +65,10 @@ public:
 
   /** @name Rendering sessions: */
   //@{
-  virtual void StartRendering()
-  { 
-    mpPainter->StartRendering(); 
-  }
-  
-  void BeginSession()
-  {
-    mpPainter->BeginSession();
-  }
-  
-  void EndSession()
-  {
-    mpPainter->EndSession();
-  }
-
-  void StopRendering()
-  {
-    SetTexture(NULL);
-  }
+  void StartRendering();
+  void BeginSession();
+  void EndSession();
+  void StopRendering();
   //@}
 
   void EnableColorBuffer(bool set);
@@ -109,10 +94,7 @@ public:
 
   bool ResetState();
   const nuiRenderState& GetState() const;
-  virtual void SetState(const nuiRenderState& rState)
-  {
-    mpPainter->SetState(rState);
-  }
+  void SetState(const nuiRenderState& rState);
 
   void EnableBlending (bool val);
   void EnableAlphaTest (bool val);
@@ -177,7 +159,7 @@ public:
   void EnableAntialiasing(bool set);
   bool GetAntialiasing() const;
 
-  virtual void SetWinding(nuiShape::Winding Rule); ///< Set the shapes filling/rasterization rule. This one is used only if the rendering shape have their rule set to nuiShape::eNone
+  void SetWinding(nuiShape::Winding Rule); ///< Set the shapes filling/rasterization rule. This one is used only if the rendering shape have their rule set to nuiShape::eNone
   nuiShape::Winding GetWinding() const; ///< Get the shapes filling/rasterization rule.
   //@}
 
@@ -197,7 +179,7 @@ public:
   void BlurRect(const nuiRect& rRect, uint Strength) {}; ///< Blur a rectangle on screen.
   void DrawGradient(const nuiGradient& rGradient, const nuiRect& rEnclosingRect, const nuiVector2& rP1, const nuiVector2& rP2);
   void DrawGradient(const nuiGradient& rGradient, const nuiRect& rEnclosingRect, nuiSize x1, nuiSize y1, nuiSize x2, nuiSize y2);
-  virtual void DrawArray(nuiRenderArray* pArray);
+  void DrawArray(nuiRenderArray* pArray);
   void DrawObject(const nuiRenderObject& rObject);
   //@}
 
@@ -224,15 +206,12 @@ public:
 
   /** @name OpenGL Shading Language support */
   //@{
-  void SetShader(nuiShader* pShader) { mCurrentState.mpShader = pShader; }
-  nuiShader* GetShader() const { return mCurrentState.mpShader; }
-  void DisableShader() { SetShader(NULL); }
+  void SetShader(nuiShader* pShader);
+  nuiShader* GetShader() const;
+  void DisableShader();
   //@}
 
-  void AddBreakPoint()
-  {
-    mpPainter->AddBreakPoint();
-  }
+  void AddBreakPoint();
   
 protected:
   // Render state stack:

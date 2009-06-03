@@ -59,6 +59,26 @@ nuiDrawContext::~nuiDrawContext()
   }
 }
 
+void nuiDrawContext::StartRendering()
+{ 
+  mpPainter->StartRendering(); 
+}
+
+void nuiDrawContext::BeginSession()
+{
+  mpPainter->BeginSession();
+}
+
+void nuiDrawContext::EndSession()
+{
+  mpPainter->EndSession();
+}
+
+void nuiDrawContext::StopRendering()
+{
+  SetTexture(NULL);
+}
+
 
 void nuiDrawContext::SetPainter(nuiPainter* pPainter)
 {
@@ -68,6 +88,31 @@ void nuiDrawContext::SetPainter(nuiPainter* pPainter)
 nuiPainter* nuiDrawContext::GetPainter() const
 {
   return mpPainter;
+}
+
+void nuiDrawContext::SetState(const nuiRenderState& rState)
+{
+  mpPainter->SetState(rState);
+}
+
+void nuiDrawContext::SetShader(nuiShader* pShader)
+{
+  mCurrentState.mpShader = pShader;
+}
+
+nuiShader* nuiDrawContext::GetShader() const
+{
+  return mCurrentState.mpShader;
+}
+
+void nuiDrawContext::DisableShader()
+{
+  SetShader(NULL);
+}
+
+void nuiDrawContext::AddBreakPoint()
+{
+  mpPainter->AddBreakPoint();
 }
 
 /****************************************************************************

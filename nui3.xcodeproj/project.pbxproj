@@ -6434,9 +6434,6 @@
 		E5816DA50C3CECAB00902DFE /* Renderers */ = {
 			isa = PBXGroup;
 			children = (
-				61D085130EAFAA5400B73835 /* nuiSurface.h */,
-				61D085100EAFAA3F00B73835 /* nuiSurface.cpp */,
-				E55DEDF90D350FE3002DA5BD /* SoftwareRasterizer */,
 				E5816DA60C3CECAB00902DFE /* AAPrimitives.cpp */,
 				E5816DA70C3CECAB00902DFE /* AAPrimitives.h */,
 				E5816DAB0C3CECAB00902DFE /* nuiArc.cpp */,
@@ -6481,6 +6478,8 @@
 				E5816D010C3CECAB00902DFE /* nuiSoftwarePainter.h */,
 				E5816DC20C3CECAB00902DFE /* nuiSpline.cpp */,
 				E5816D020C3CECAB00902DFE /* nuiSpline.h */,
+				61D085100EAFAA3F00B73835 /* nuiSurface.cpp */,
+				61D085130EAFAA5400B73835 /* nuiSurface.h */,
 				E5816DC30C3CECAB00902DFE /* nuiSVGShape.cpp */,
 				E5816D060C3CECAB00902DFE /* nuiSVGShape.h */,
 				E5816DC40C3CECAB00902DFE /* nuiTessellator.cpp */,
@@ -6489,6 +6488,7 @@
 				E5816D0E0C3CECAB00902DFE /* nuiTexture.h */,
 				E5816DC60C3CECAB00902DFE /* nuiTextureHelpers.cpp */,
 				E5816D0F0C3CECAB00902DFE /* nuiTextureHelpers.h */,
+				E55DEDF90D350FE3002DA5BD /* SoftwareRasterizer */,
 			);
 			name = Renderers;
 			path = src/Renderers;
