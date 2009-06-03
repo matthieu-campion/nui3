@@ -17,7 +17,6 @@ nuiRenderState::nuiRenderState()
   mBlending = false;
   mTexturing = false;
   mColorBuffer = true;
-  mStencilBuffer = false;
   mDepthTest = false;
   mDepthWrite = false;
 
@@ -35,8 +34,6 @@ nuiRenderState::nuiRenderState()
   mpFont = NULL;
   mpShader = NULL;
 
-  mStencilValue = 1;
-  mStencilMode = nuiIgnoreStencil;
 }
 
 nuiRenderState::nuiRenderState(const nuiRenderState& rState)
@@ -59,7 +56,6 @@ void nuiRenderState::Copy(const nuiRenderState& rState)
   mBlending       = rState.mBlending;
   mTexturing      = rState.mTexturing;
   mColorBuffer    = rState.mColorBuffer;
-  mStencilBuffer  = rState.mStencilBuffer;
   mDepthTest      = rState.mDepthTest;
   mDepthWrite     = rState.mDepthWrite;
   mWinding        = rState.mWinding;
@@ -73,9 +69,6 @@ void nuiRenderState::Copy(const nuiRenderState& rState)
   mLineCap        = rState.mLineCap;
   mLineJoin       = rState.mLineJoin;
 
-
-  mStencilValue = rState.mStencilValue;
-  mStencilMode = rState.mStencilMode;
 
   nuiTexture* pOldTexture = mpTexture;
   mpTexture = rState.mpTexture;
@@ -109,7 +102,6 @@ bool nuiRenderState::operator==(const nuiRenderState& rState) const
     (mBlending       == rState.mBlending)         &&
     (mTexturing      == rState.mTexturing)        &&
     (mColorBuffer    == rState.mColorBuffer)      &&
-    (mStencilBuffer  == rState.mStencilBuffer)    &&
     (mDepthTest      == rState.mDepthTest)        &&
     (mDepthWrite     == rState.mDepthWrite)       &&
     (mWinding        == rState.mWinding)          &&
@@ -122,8 +114,6 @@ bool nuiRenderState::operator==(const nuiRenderState& rState) const
     (mFillColor      == rState.mFillColor)        &&
     (mLineCap        == rState.mLineCap)          &&
     (mLineJoin       == rState.mLineJoin)         &&
-    (mStencilValue   == rState.mStencilValue)     &&
-    (mStencilMode    == rState.mStencilMode)      &&
     (mpTexture       == rState.mpTexture)         &&
     (mpFont          == rState.mpFont)            &&
     (mpShader        == rState.mpShader);

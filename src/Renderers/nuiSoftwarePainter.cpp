@@ -207,11 +207,6 @@ void nuiSoftwarePainter::ClearColor()
 
 }
 
-void nuiSoftwarePainter::ClearStencil(uint8 value)
-{
-  mpRasterizer->ClearStencil(value);
-}
-
 void nuiSoftwarePainter::BeginSession()
 {
 }

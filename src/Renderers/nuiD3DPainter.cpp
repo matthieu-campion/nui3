@@ -417,7 +417,7 @@ void nuiD3DPainter::SetState(const nuiRenderState& rState, bool ForceApply)
   //----------------------------
   //stencil test ---------------
   //----------------------------
-  //#ifdef STENCIL_ENABLED
+  #ifdef STENCIL_ENABLED
   if (ForceApply || mState.mStencilMode != rState.mStencilMode || mState.mStencilValue != rState.mStencilValue)
   {
     //NGL_OUT(_T("Stencil mode"));
@@ -476,7 +476,7 @@ void nuiD3DPainter::SetState(const nuiRenderState& rState, bool ForceApply)
       break;
     }
   }
-  //#endif
+  #endif
 
   //----------------------------
   //shaders (not used) ---------
@@ -776,28 +776,6 @@ void nuiD3DPainter::ClearColor()
 #endif
 }
 
-
-
-
-
-void nuiD3DPainter::ClearStencil(uint8 value)
-{
-  mRenderOperations++;
-  NUI_RETURN_IF_RENDERING_DISABLED;
-  LPDIRECT3DDEVICE9 pDev = mpContext->GetDirect3DDevice();
-  HRESULTChecker hr = S_OK;
-
-  //clear only the clip area
-  D3DRECT rectClear;
-  rectClear.x1 = mClip.Left();
-  rectClear.x2 = mClip.Right();
-  rectClear.y1 = mClip.Top();
-  rectClear.y2 = mClip.Bottom();
-
-  hr = pDev->SetRenderState(D3DRS_STENCILMASK, ~0); 
-  hr = pDev->Clear(1, &rectClear, D3DCLEAR_STENCIL, 0, 1.0f, value);
-  hr = pDev->SetRenderState(D3DRS_STENCILMASK, 0);
-}
 
 
 

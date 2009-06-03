@@ -39,14 +39,6 @@ enum nuiBlendFunc
   nuiBlendTranspInRev,   //GL_SRC_ALPHA             GL_SRC_ALPHA
 };
 
-enum nuiStencilMode
-{
-  nuiIgnoreStencil,
-  nuiReadStencil,
-  nuiAddToStencil,
-  nuiBlendToStencil
-};
-
 void nuiGetBlendFuncFactors(nuiBlendFunc Func, GLenum& src, GLenum& dst);
 
 class NUI_API nuiRenderState
@@ -67,15 +59,11 @@ public:
   bool mDepthTest;
   bool mDepthWrite;
   
-  nuiStencilMode mStencilMode;
-  uint mStencilValue;
-
   bool mTexturing;
   nuiTexture* mpTexture;
 
   // Rendering buffers:
   bool mColorBuffer;
-  bool mStencilBuffer;
 
   // Actual drawing params:
   nuiColor mStrokeColor;

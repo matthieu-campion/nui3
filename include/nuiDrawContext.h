@@ -87,8 +87,6 @@ public:
   //@}
 
   void EnableColorBuffer(bool set);
-  void SetStencilMode(nuiStencilMode, uint8 value);
-  void ClearStencil(uint8 value);
 
   /** @name Clipping support */
   //@{
@@ -99,12 +97,6 @@ public:
   bool GetClipRect(nuiRect& rRect, bool LocalRect) const; ///< Fills rRect with the current clipping rect if clipping is enabled, or with the complete Draw Context rect otherwise.
   bool ResetClipRect(); ///< This method reset the clipping rect to the original size of the window.
   uint32 GetClipStackSize() const; ///< Return the number of Clip state saved on the clip stack.
-
-  bool AddClipShape(nuiShape& rShape, bool Invert = false); /// Adding the clip shape draw the shape in a stencil buffer to use it as a mask for subsequent draw operations. The shape may overwrite any existing clip shape, and then extend the drawing enabled area. Until another clip shape is set or shape clipping is reset with ResetClipShape.
-  bool BlendClipShape(nuiShape& rShape, bool Invert = false); /// Blending the clip shape draw the shape in a stencil buffer to use it as a mask for subsequent draw operations but not erasing existing clip shapes already present. This operation can only restric subsequent drawings, never extend the rendering area. Until another clip shape is set or shape clipping is reset with ResetClipShape.
-  bool ResetClipShape(bool Invert = false); ///< Disable the last shape clipping that was set via AddClipShape.
-  nuiStencilMode GetStencilMode() const; ///< Get the current stencil mode
-  uint32 GetStencilValue() const; ///< Get the current stencil mode
   //@}
 
   void SetPainter(nuiPainter* pPainter);

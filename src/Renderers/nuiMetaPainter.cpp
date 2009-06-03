@@ -18,7 +18,6 @@ nuiMetaPainter::nuiMetaPainter(const nuiRect& rRect, nglContext* pContext)
   mpCache = &mOperations;
   mNbDrawChild = 0;
   mNbDrawArray = 0;
-  mNbClearStencil = 0;
   mNbClearColor = 0;
   mNbOperations = 0;
 }
@@ -153,13 +152,6 @@ void nuiMetaPainter::ClearColor()
 {
   StoreOpCode(eClearColor);
   mNbClearColor++;
-}
-
-void nuiMetaPainter::ClearStencil(uint8 value)
-{
-  StoreOpCode(eClearStencil);
-  StoreInt((int32)value);
-  mNbClearStencil++;
 }
 
 void nuiMetaPainter::DrawArray(nuiRenderArray* pRenderArray)
@@ -356,7 +348,6 @@ void nuiMetaPainter::Reset(nuiPainter const * pFrom)
   mLastStateValid = false;
   mNbDrawChild = 0;
   mNbDrawArray = 0;
-  mNbClearStencil = 0;
   mNbClearColor = 0;
 
   uint size = mOperations.size();
@@ -384,9 +375,6 @@ void nuiMetaPainter::Reset(nuiPainter const * pFrom)
       ((nuiRenderArray*)FetchPointer())->Release();
       break;
     case eClearColor:
-      break;
-    case eClearStencil:
-      FetchInt();
       break;
     case eBeginSession:
       break;
@@ -510,7 +498,7 @@ void nuiMetaPainter::PartialReDraw(nuiDrawContext* pContext, int32 first, int32 
   
   const bool DoDrawChild = mNbDrawChild;
   const bool DoDrawArray = mNbDrawArray;
-  const bool DoDrawSelf = DoDrawArray || mNbClearStencil || mNbClearColor;
+  const bool DoDrawSelf = DoDrawArray || mNbClearColor;
   if (!(DoDrawChild || DoDrawSelf))
     return;
   
@@ -552,10 +540,6 @@ void nuiMetaPainter::PartialReDraw(nuiDrawContext* pContext, int32 first, int32 
       case eClearColor:
         if (draw)
           pPainter->ClearColor();
-        break;
-      case eClearStencil:
-        if (draw)
-          pPainter->ClearStencil((uint32)FetchInt());
         break;
       case eBeginSession:
         if (draw)
@@ -725,10 +709,6 @@ nglString nuiMetaPainter::GetOperationDescription(int32 OperationIndex) const
     case eClearColor:
       str = _T("ClearColor");
       break;
-    case eClearStencil:
-      FetchInt();
-      str = _T("ClearStencil");
-      break;
     case eBeginSession:
       str = _T("BeginSession");
       break;
@@ -878,9 +858,6 @@ int32 nuiMetaPainter::GetOffsetFromOperationIndex(int32 index) const
         FetchPointer();
         break;
       case eClearColor:
-        break;
-      case eClearStencil:
-        FetchInt();
         break;
       case eBeginSession:
         break;

@@ -338,6 +338,7 @@ void nuiGLPainter::SetState(const nuiRenderState& rState, bool ForceApply)
   }
   
   // Stencil test:
+#if 0
   if (ForceApply || mState.mStencilMode != rState.mStencilMode || mState.mStencilValue != rState.mStencilValue)
   {
     mState.mStencilMode = rState.mStencilMode;
@@ -378,7 +379,8 @@ void nuiGLPainter::SetState(const nuiRenderState& rState, bool ForceApply)
     }
     nuiCheckForGLErrors();
   }
-
+#endif
+  
   // We don't care about the font in the lower layer of rendering
   //nuiFont* mpFont;
   // 
@@ -596,23 +598,9 @@ void nuiGLPainter::ClearColor()
   NUI_RETURN_IF_RENDERING_DISABLED;
 
   glClearColor(mState.mClearColor.Red(),mState.mClearColor.Green(),mState.mClearColor.Blue(),mState.mClearColor.Alpha());
-  glClearStencil(0);
-  glClear(GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+  glClear(GL_COLOR_BUFFER_BIT);
   nuiCheckForGLErrors();
 }
-
-void nuiGLPainter::ClearStencil(uint8 value)
-{
-  mRenderOperations++;
-  NUI_RETURN_IF_RENDERING_DISABLED;
-
-  glStencilMask(~0);
-  glClearStencil(value);
-  glClear(GL_STENCIL_BUFFER_BIT);
-  glStencilMask(0);
-  nuiCheckForGLErrors();
-}
-
 
 /*
 void nuiGLPainter::BlurRect(const nuiRect& rRect, uint Strength)

@@ -1281,7 +1281,6 @@ bool nuiTopLevel::DrawTree(class nuiDrawContext *pContext)
 
       pContext->ResetState();
       pContext->ResetClipRect();
-      pContext->ResetClipShape();
       pContext->SetStrokeColor(nuiColor(1.0f,0.0f,0.0f,0.0f));
       pContext->SetFillColor(nuiColor(1.0f,0.0f,0.0f,.5f));
       pContext->EnableBlending(true);
@@ -1309,7 +1308,6 @@ bool nuiTopLevel::DrawTree(class nuiDrawContext *pContext)
     {
       pContext->ResetState();
       pContext->ResetClipRect();
-      pContext->ResetClipShape();
       pContext->SetStrokeColor(nuiColor(1.0f,0.0f,0.0f,0.0f));
       pContext->SetFillColor(nuiColor(1.0f,0.0f,0.0f,.5f));
       pContext->Clip(mRedrawList[i]);
@@ -1361,7 +1359,6 @@ bool nuiTopLevel::DrawTree(class nuiDrawContext *pContext)
       int count = mRedrawList.size();
       pContext->ResetState();
       pContext->ResetClipRect();
-      pContext->ResetClipShape();
       pContext->SetStrokeColor(nuiColor(1.0f,0.0f,0.0f,0.0f));
       pContext->SetFillColor(nuiColor(1.0f,0.0f,0.0f,.5f));
       pContext->EnableBlending(true);
@@ -1392,7 +1389,6 @@ bool nuiTopLevel::DrawTree(class nuiDrawContext *pContext)
     
     pContext->ResetState();
     pContext->ResetClipRect();
-    pContext->ResetClipShape();
     pContext->SetStrokeColor(nuiColor(0.0f,0.0f,1.0f,0.5f));
     pContext->SetFillColor(nuiColor(0.0f,0.0f,1.0f,.25f));
     pContext->EnableBlending(true);

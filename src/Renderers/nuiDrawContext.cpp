@@ -113,69 +113,6 @@ bool nuiDrawContext::GetClipRect(nuiRect& rRect, bool LocalRect) const
   return mpPainter->GetClipRect(rRect, LocalRect);
 }
 
-bool nuiDrawContext::AddClipShape(nuiShape& rShape, bool Invert)
-{
-  EnableColorBuffer(false);
-
-  // Now draw the shape in the stencil buffer:
-  GLuint value = Invert? 0: mClipShapeValue;
-  SetStencilMode(nuiAddToStencil, value);
-  DrawShape(&rShape, eFillShape);
-
-  // Now lets get back to the mode we were in before the stencil fun:
-  EnableColorBuffer(true);
-  SetStencilMode(nuiReadStencil, mClipShapeValue);
-  return true;
-}
-
-bool nuiDrawContext::BlendClipShape(nuiShape& rShape, bool Invert)
-{
-  EnableColorBuffer(false);
-
-  // Now draw the shape in the stencil buffer:
-  GLuint value = Invert? 0: mClipShapeValue;
-  SetStencilMode(nuiBlendToStencil, value);
-  DrawShape(&rShape, eFillShape);
-
-  mClipShapeValue += Invert?-1:1;
-
-  // Now lets get back to the mode we were in before the stencil fun:
-  EnableColorBuffer(true);
-  SetStencilMode(nuiReadStencil, mClipShapeValue);
-  return true;
-}
-
-bool nuiDrawContext::ResetClipShape(bool Invert)
-{
-  mClipShapeValue = 1;
-  ClearStencil(Invert?mClipShapeValue:0);
-  SetStencilMode(nuiIgnoreStencil, mClipShapeValue);
-  return true;
-}
-
-void nuiDrawContext::SetStencilMode(nuiStencilMode mode, uint8 value)
-{
-  mCurrentState.mStencilValue = value;
-  mCurrentState.mStencilMode = mode;
-  mStateChanges++;
-}
-
-uint32 nuiDrawContext::GetStencilValue() const
-{
-  return mCurrentState.mStencilValue;
-}
-
-nuiStencilMode nuiDrawContext::GetStencilMode() const
-{
-  return mCurrentState.mStencilMode;
-}
-
-void nuiDrawContext::ClearStencil(uint8 value)
-{
-  mpPainter->ClearStencil(value);
-}
-
-
 /****************************************************************************
  *
  * Render state manipulation

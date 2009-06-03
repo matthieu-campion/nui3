@@ -29,7 +29,6 @@ public:
   virtual void SetState(const nuiRenderState& rState, bool ForceApply = false);
   virtual void DrawArray(nuiRenderArray* pArray);
   virtual void ClearColor();
-  virtual void ClearStencil(uint8 stencil);
   virtual void BeginSession();
   virtual void EndSession();
   virtual void LoadMatrix(const nuiMatrix& rMatrix);
@@ -82,7 +81,6 @@ protected:
     eSetState,
     eDrawArray,
     eClearColor,
-    eClearStencil,
     eBeginSession,
     eEndSession,
     eLoadMatrix,
@@ -133,7 +131,6 @@ protected:
   
   int32 mNbDrawChild;
   int32 mNbDrawArray;
-  int32 mNbClearStencil;
   int32 mNbClearColor;
   mutable int32 mOperationPos;
   int32 mNbOperations;

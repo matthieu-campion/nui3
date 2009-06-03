@@ -112,7 +112,6 @@ nuiPane::~nuiPane()
 bool nuiPane::Draw(nuiDrawContext* pContext)
 {
   pContext->PushState();
-  pContext->ResetClipShape();
 
   pContext->EnableBlending(true);
   pContext->SetBlendFunc(mBlendFunc);

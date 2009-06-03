@@ -30,7 +30,6 @@ public:
   virtual void DrawArray(nuiRenderArray* pArray);
   void         DrawPrimitiveBatch();
   virtual void ClearColor();
-  virtual void ClearStencil(uint8 value);
   virtual void BeginSession();
   virtual void EndSession();
   virtual void LoadMatrix(const nuiMatrix& rMatrix);

@@ -378,7 +378,6 @@ bool nuiSWF::Draw(nuiDrawContext* pContext)
   mLastTime = now;
   /* double advance = lap * mFPS; unused */
 
-  pContext->ResetClipShape(true);
   nuiRenderArray* pDummy = new nuiRenderArray(GL_POINTS);
   pContext->DrawArray(pDummy);
 
@@ -1052,7 +1051,6 @@ void render_handler_nui::end_submit_mask()
 
 void render_handler_nui::disable_mask()
 {         
-  mpContext->ResetClipShape();
   mMasking = false;
 
 /*
