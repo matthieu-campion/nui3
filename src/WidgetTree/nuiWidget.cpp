@@ -1191,32 +1191,31 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
 
   UpdateSurfaceRect(mRect);
   
+  nuiDrawContext* pCtx = pContext;
+  
   if (mNeedRender || !mpSurface)
   {
     bool used_surface = false;
     if (mNeedSelfRedraw && mSurfaceEnabled)
     {
       used_surface = true;
-      
-      pContext->PushClipping();
-      pContext->PushState();
-      pContext->PushProjectionMatrix();
-      pContext->PushMatrix();
-      pContext->PushSurface();
 
-      pContext->ResetState();
-      pContext->ResetClipRect();
-      pContext->LoadMatrix(nglMatrixf());
+      mpSurface->Wipe();
+
+      mpSurface->ResetState();
+      mpSurface->ResetClipRect();
+      mpSurface->LoadMatrix(nglMatrixf());
       
       NGL_ASSERT(mpSurface);
-      pContext->SetSurface(mpSurface);
-      pContext->Set2DProjectionMatrix(nuiRect(0.0f, 0.0f, mpSurface->GetWidth(), mpSurface->GetHeight()));
+      mpSurface->Set2DProjectionMatrix(nuiRect(0.0f, 0.0f, mpSurface->GetWidth(), mpSurface->GetHeight()));
       
       // clear the surface with transparent black:
-      pContext->PushState();
-      pContext->SetClearColor(nuiColor(0.0f, 0.0f, 0.0f, 0.0f));
-      pContext->Clear();  
-      pContext->PopState();
+      mpSurface->PushState();
+      mpSurface->SetClearColor(nuiColor(0.0f, 0.0f, 0.0f, 0.0f));
+      mpSurface->Clear();  
+      mpSurface->PopState();
+      
+      pContext = mpSurface;
     }
     
     if (gGlobalUseRenderCache && !mSurfaceEnabled && mUseRenderCache && mpRenderCache)
@@ -1264,11 +1263,12 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
 
     if (used_surface)
     {
-      pContext->PopSurface();
-      pContext->PopMatrix();
-      pContext->PopProjectionMatrix();
-      pContext->PopState();
-      pContext->PopClipping();
+      //pContext->PopSurface();
+//      mpSurface->PopMatrix();
+//      mpSurface->PopProjectionMatrix();
+//      mpSurface->PopState();
+//      mpSurface->PopClipping();
+      pContext = pCtx;
     }
   }
 

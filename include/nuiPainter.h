@@ -30,7 +30,32 @@
 
 #include "nuiRenderArray.h"
 #include "nuiRenderState.h"
-#include "nuiSurface.h"
+
+class nuiSurface;
+
+class nuiSurfaceCache
+{
+public:
+  nuiSurfaceCache();
+  virtual ~nuiSurfaceCache();
+  
+  virtual void CreateSurface(nuiSurface* pSurface);
+  virtual void DestroySurface(nuiSurface* pSurface);
+  virtual void InvalidateSurface(nuiSurface* pSurface, bool ForceReload);
+};
+
+
+class nuiTextureCache
+{
+public:
+  nuiTextureCache();
+  virtual ~nuiTextureCache();
+  
+  virtual void CreateTexture(nuiTexture* pTexture);
+  virtual void DestroyTexture(nuiTexture* pTexture);
+  virtual void InvalidateTexture(nuiTexture* pTexture, bool ForceReload);
+};
+
 
 class NUI_API nuiClipper : public nuiRect
 {
@@ -83,8 +108,6 @@ public:
   virtual void DrawArray(nuiRenderArray* pArray) = 0;
   virtual void ClearColor() = 0;
 
-  virtual void SetSurface(nuiSurface* pSurface);
-  
   virtual void LoadMatrix(const nuiMatrix& rMatrix);
   virtual void MultMatrix(const nuiMatrix& rMatrix);
   virtual void PushMatrix();
@@ -105,10 +128,6 @@ public:
   virtual void EnableClipping(bool set);
   virtual bool GetClipRect(nuiRect& rRect, bool LocalRect) const;
 
-  virtual nuiSurface* GetSurface() const;
-  virtual void PushSurface();
-  virtual void PopSurface();
-  
   virtual uint32 GetClipStackSize() const;
 
   virtual uint32 GetRectangleTextureSupport() const;
@@ -137,9 +156,14 @@ public:
   bool DEBUG_GetEnableDrawArray() const;
   
 protected:
+  virtual void SetSurface(nuiSurface* pSurface);
+  virtual void PushSurface();
+  virtual void PopSurface();
+  nuiSurface* mpSurface;
+  std::stack<nuiSurface*> mpSurfaceStack;
+  
   nuiRenderState mState;
   std::stack<nuiClipper*> mpClippingStack;
-  std::stack<nuiSurface*> mpSurfaceStack;
   uint32 mWidth;
   uint32 mHeight;
   uint32 mAngle;
@@ -155,8 +179,6 @@ protected:
 
   bool mDummyMode;
 
-  nuiSurface* mpSurface;
-  
   mutable bool mEnableDrawArray;
   static uint32 mNeedTextureBackingStore;
   void AddNeedTextureBackingStore();

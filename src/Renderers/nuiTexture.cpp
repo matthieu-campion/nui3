@@ -658,32 +658,6 @@ void nuiTexture::DelCache(nuiTextureCache* pCache)
   mTextureCaches.erase(pCache);
 }
 
-// class nuiTextureCache
-nuiTextureCache::nuiTextureCache()
-{
-  nuiTexture::AddCache(this);
-}
-
-nuiTextureCache::~nuiTextureCache()
-{
-  nuiTexture::DelCache(this);
-}
-    
-void nuiTextureCache::CreateTexture(nuiTexture* pTexture)
-{  
-}
-
-void nuiTextureCache::DestroyTexture(nuiTexture* pTexture)
-{  
-}
-
-void nuiTextureCache::InvalidateTexture(nuiTexture* pTexture, bool ForceReload)
-{  
-}
-
-
-nuiTextureCacheSet nuiTexture::mTextureCaches;
-
 bool nuiTexture::mRetainBuffers = false;
 
 void nuiTexture::RetainBuffers(bool Set)

@@ -40,7 +40,6 @@ public:
   virtual void MultProjectionMatrix(const nuiMatrix& rMatrix);
   virtual void PushProjectionMatrix();
   virtual void PopProjectionMatrix();
-  virtual void SetSurface(nuiSurface* pSurface);
 
   virtual void CreateSurface(nuiSurface* pSurface);
   virtual void DestroySurface(nuiSurface* pSurface);
@@ -62,6 +61,8 @@ public:
   void        SetDefaultRenderStates(LPDIRECT3DDEVICE9 pDev);
 
 protected:
+  void SetSurface(nuiSurface* pSurface);
+
   nglContext* mpContext;
 
   static uint32 mActiveContexts;

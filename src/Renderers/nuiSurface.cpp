@@ -2,6 +2,7 @@
 
 #include "nuiSurface.h"
 #include "nuiTexture.h"
+#include "nuiMetaPainter.h"
 
 nuiSurfaceMap nuiSurface::mpSurfaces;
 nuiSurfaceCacheSet nuiSurface::mpSurfaceCaches;
@@ -33,7 +34,7 @@ nuiSurface* nuiSurface::CreateSurface (const nglString& rName, nuiSize Width, nu
 }
 
 nuiSurface::nuiSurface(const nglString& rName, nuiSize Width, nuiSize Height, nglImagePixelFormat PixelFormat)
-  : nuiObject()
+  : nuiObject(), nuiDrawContext(nuiRect(Width, Height))
 {
   //NGL_OUT(_T("nuiSurface CTOR 0x%x (%f x %f\n"), this, Width, Height);
   SetObjectClass(_T("nuiSurface"));
@@ -47,7 +48,9 @@ nuiSurface::nuiSurface(const nglString& rName, nuiSize Width, nuiSize Height, ng
   mStencil = false;
   mRenderToTexture = false;
   mpTexture = NULL;
-  mpPainter = NULL;
+  mpSurfacePainter = new nuiMetaPainter(nuiRect(Width, Height), NULL);
+  
+  SetPainter(mpSurfacePainter);
   
   nuiSurfaceCacheSet::iterator it = mpSurfaceCaches.begin();
   nuiSurfaceCacheSet::iterator end = mpSurfaceCaches.end();
@@ -70,6 +73,7 @@ nuiSurface::~nuiSurface()
     ++it;
   }
   mpSurfaces.erase(GetObjectName());
+  delete mpSurfacePainter;
   //NGL_OUT(_T("nuiSurface DTOR 0x%x\n"), this);
 }
 
@@ -136,29 +140,6 @@ void nuiSurface::DelCache(nuiSurfaceCache* pCache)
   mpSurfaceCaches.erase(pCache);
 }
 
-// nuiSurfaceCache
-nuiSurfaceCache::nuiSurfaceCache()
-{
-  nuiSurface::AddCache(this);
-}
-
-nuiSurfaceCache::~nuiSurfaceCache()
-{
-  nuiSurface::DelCache(this);
-}
-
-void nuiSurfaceCache::CreateSurface(nuiSurface* pSurface)
-{  
-}
-
-void nuiSurfaceCache::DestroySurface(nuiSurface* pSurface)
-{  
-}
-
-void nuiSurfaceCache::InvalidateSurface(nuiSurface* pSurface, bool ForceReload)
-{  
-}
-
 uint32 nuiSurface::Acquire()    
 { 
   return ++mCount; 
@@ -204,7 +185,18 @@ bool nuiSurface::IsPermanent()
   return mPermanent;
 }
 
-nuiMetaPainter* nuiSurface::GetPainter()
+nuiMetaPainter* nuiSurface::GetSurfacePainter() const
 {
-  return mpPainter;
+  return mpSurfacePainter;
 }
+
+void nuiSurface::Wipe()
+{
+  mpSurfacePainter->Reset(NULL);
+}
+
+void nuiSurface::Realize(nuiDrawContext* pDestinationPainter)
+{
+  mpSurfacePainter->ReDraw(pDestinationPainter);
+}
+

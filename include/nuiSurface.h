@@ -3,6 +3,7 @@
 
 #include "nuiObject.h"
 #include "nuiRefCount.h"
+#include "nuiDrawContext.h"
 
 #include <map>
 
@@ -15,7 +16,7 @@ class nuiTexture;
 typedef std::map<nglString, nuiSurface*, nglString::LessFunctor> nuiSurfaceMap;
 typedef std::set<nuiSurfaceCache*> nuiSurfaceCacheSet;
 
-class NUI_API nuiSurface : public nuiObject
+class NUI_API nuiSurface : public nuiObject, public nuiDrawContext
 {
 public:
   static nuiSurface* GetSurface (const nglString& rName, bool Acquired); ///< Get a surface from its ID
@@ -46,8 +47,12 @@ public:
   uint GetRefCount();
   void SetPermanent(bool Permanent = true);
   bool IsPermanent();
+
+  void Wipe(); ///< Completely reset the surface and all associated operations
   
-  nuiMetaPainter* GetPainter();
+  nuiMetaPainter* GetSurfacePainter() const;
+  void Realize(nuiDrawContext* pDestinationPainter);
+
 protected:
   nuiSurface(const nglString& rName, nuiSize Width, nuiSize Height, nglImagePixelFormat PixelFormat = eImagePixelRGBA);
   virtual ~nuiSurface();
@@ -66,21 +71,10 @@ private:
   nglImagePixelFormat mPixelFormat;
   
   nuiTexture* mpTexture;
-  nuiMetaPainter* mpPainter;
+  nuiMetaPainter* mpSurfacePainter;
 
   static nuiSurfaceMap mpSurfaces;
   static nuiSurfaceCacheSet mpSurfaceCaches;
-};
-
-class nuiSurfaceCache
-{
-public:
-  nuiSurfaceCache();
-  virtual ~nuiSurfaceCache();
-  
-  virtual void CreateSurface(nuiSurface* pSurface);
-  virtual void DestroySurface(nuiSurface* pSurface);
-  virtual void InvalidateSurface(nuiSurface* pSurface, bool ForceReload);
 };
 
 #endif//__nuiSurface_h__

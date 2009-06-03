@@ -46,7 +46,6 @@ nuiDrawContext::~nuiDrawContext()
   SetTexture(NULL);
   SetFont(NULL);
   SetShader(NULL);
-  SetSurface(NULL);
   if (mpAATexture)
     mpAATexture->Release();
 
@@ -271,47 +270,6 @@ bool nuiDrawContext::IsTextureCurrent(nuiTexture* pTex) const
 nuiTexture* nuiDrawContext::GetTexture() const
 { 
   return mCurrentState.mpTexture; 
-}
-
-/****************************************************************************
- *
- * Surface manipulation
- *
- ****************************************************************************/
-
-void nuiDrawContext::SetSurface(nuiSurface* pSurface) 
-{
-  if (pSurface)
-  {
-    if (!mpOldPainter)
-      mpOldPainter = mpPainter;
-    mpPainter = pSurface->GetPainter();
-  }
-  else
-  { 
-    mpPainter = mpOldPainter;
-    mpOldPainter = NULL;
-  }
-}
-
-void nuiDrawContext::PushSurface() 
-{
-  mpPainter->PushSurface();
-}
-
-void nuiDrawContext::PopSurface() 
-{
-  mpPainter->PopSurface();
-}
-
-bool nuiDrawContext::IsSurfaceCurrent(nuiSurface* pSurface) const
-{ 
-  return GetSurface() == pSurface;
-}
-
-nuiSurface* nuiDrawContext::GetSurface() const
-{ 
-  return mpPainter->GetSurface(); 
 }
 
 /****************************************************************************

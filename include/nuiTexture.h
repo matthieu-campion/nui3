@@ -127,17 +127,6 @@ protected:
   static bool mRetainBuffers;
 };
 
-class nuiTextureCache
-{
-public:
-  nuiTextureCache();
-  virtual ~nuiTextureCache();
-  
-  virtual void CreateTexture(nuiTexture* pTexture);
-  virtual void DestroyTexture(nuiTexture* pTexture);
-  virtual void InvalidateTexture(nuiTexture* pTexture, bool ForceReload);
-};
-
 
 
 #endif // __nuiTexture_h__

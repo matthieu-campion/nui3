@@ -40,7 +40,6 @@ public:
   virtual void PushProjectionMatrix();
   virtual void PopProjectionMatrix();
   virtual uint32 GetRectangleTextureSupport() const;
-  virtual void SetSurface(nuiSurface* pSurface);
 
   virtual void CreateTexture(nuiTexture* pTexture);
   virtual void DestroyTexture(nuiTexture* pTexture);
@@ -51,6 +50,7 @@ public:
   virtual void InvalidateSurface(nuiSurface* pSurface, bool ForceReload);
   
 protected:
+  void SetSurface(nuiSurface* pSurface);
   nglContext* mpContext;
 
   static uint32 mActiveContexts;

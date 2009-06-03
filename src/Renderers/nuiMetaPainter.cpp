@@ -192,14 +192,6 @@ void nuiMetaPainter::DrawChild(nuiWidget* pChild)
   mNbDrawChild++;
 }
 
-void nuiMetaPainter::SetSurface(nuiSurface* pSurface)
-{
-  StoreOpCode(eSetSurface);
-  StorePointer(pSurface);
-  if (pSurface)
-    pSurface->Acquire();
-}
-
 void nuiMetaPainter::LoadMatrix(const nuiMatrix& rMatrix)
 {
   StoreOpCode(eLoadMatrix);
@@ -383,13 +375,6 @@ void nuiMetaPainter::Reset(nuiPainter const * pFrom)
     case eDrawChild:
       FetchPointer();
       break;
-    case eSetSurface:
-      {
-        nuiSurface* pSurface = (nuiSurface*)FetchPointer();
-        if (pSurface)
-          pSurface->Release();
-        break;
-      }
     case eLoadMatrix:
       {
         nuiMatrix m;
@@ -558,13 +543,6 @@ void nuiMetaPainter::PartialReDraw(nuiDrawContext* pContext, int32 first, int32 
           pChild->DrawWidget(pContext);
         }
         break;
-      case eSetSurface:
-        if (draw)
-        {
-          nuiSurface* pSurface = (nuiSurface*)FetchPointer();
-          pContext->SetSurface(pSurface);
-        }
-        break;
       case eLoadMatrix:
         if (draw)
         {
@@ -721,12 +699,6 @@ nglString nuiMetaPainter::GetOperationDescription(int32 OperationIndex) const
         str.CFormat(_T("DrawChild 0x%x / '%ls'"), pS, pS->GetObjectName().GetChars());
       }
       break;
-    case eSetSurface:
-      {
-        nuiSurface* pS = (nuiSurface*)FetchPointer();
-        str.CFormat(_T("SetSurface 0x%x / '%ls'"), pS, pS->GetObjectName().GetChars());
-      }
-      break;
     case eLoadMatrix:
       {
         nuiMatrix m;
@@ -866,11 +838,6 @@ int32 nuiMetaPainter::GetOffsetFromOperationIndex(int32 index) const
       case eDrawChild:
         FetchPointer();
         break;
-      case eSetSurface:
-      {
-        FetchPointer();
-        break;
-      }
       case eLoadMatrix:
       {
         nuiMatrix m;

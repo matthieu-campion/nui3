@@ -38,7 +38,6 @@
 #include <vector>
 
 class nuiTexture;
-class nuiSurface;
 
 enum nuiRenderer
 {
@@ -109,16 +108,7 @@ public:
   nuiTexture* GetTexture() const;
   void SetTexture(nuiTexture* pTex);
   //@}
-  
-  /** @name Surface manipulation */
-  //@{
-  bool IsSurfaceCurrent(nuiSurface* pSurface) const;
-  nuiSurface* GetSurface() const;
-  void SetSurface(nuiSurface* pSurface);
-  void PushSurface();
-  void PopSurface();
-  //@}
-  
+
   /** @name Matrix operations */
   //@{
   void PushMatrix();

@@ -40,7 +40,6 @@ nuiPainter::~nuiPainter()
   {
     PopSurface();
   }
-  SetSurface(NULL);
 }
 
 void nuiPainter::StartRendering()
@@ -270,11 +269,6 @@ void nuiPainter::DelNeedTextureBackingStore()
   }
 }
 
-nuiSurface* nuiPainter::GetSurface() const
-{
-  return mpSurface;
-}
-
 void nuiPainter::SetSurface(nuiSurface* pSurface)
 {
   if (pSurface == mpSurface)
@@ -303,6 +297,7 @@ void nuiPainter::PopSurface()
   if (pSurface)
     pSurface->Release();
 }
+
 
 void nuiPainter::GetSize(uint32& rX, uint32& rY) const
 {
@@ -358,3 +353,55 @@ void nuiPainter::AddBreakPoint()
 {
   // do nothing by default, this is only used to debug defered rendering (i.e. nuiMetaPainter).
 }
+
+
+// class nuiTextureCache
+nuiTextureCache::nuiTextureCache()
+{
+  nuiTexture::AddCache(this);
+}
+
+nuiTextureCache::~nuiTextureCache()
+{
+  nuiTexture::DelCache(this);
+}
+
+void nuiTextureCache::CreateTexture(nuiTexture* pTexture)
+{  
+}
+
+void nuiTextureCache::DestroyTexture(nuiTexture* pTexture)
+{  
+}
+
+void nuiTextureCache::InvalidateTexture(nuiTexture* pTexture, bool ForceReload)
+{  
+}
+
+
+nuiTextureCacheSet nuiTexture::mTextureCaches;
+
+
+// nuiSurfaceCache
+nuiSurfaceCache::nuiSurfaceCache()
+{
+  nuiSurface::AddCache(this);
+}
+
+nuiSurfaceCache::~nuiSurfaceCache()
+{
+  nuiSurface::DelCache(this);
+}
+
+void nuiSurfaceCache::CreateSurface(nuiSurface* pSurface)
+{  
+}
+
+void nuiSurfaceCache::DestroySurface(nuiSurface* pSurface)
+{  
+}
+
+void nuiSurfaceCache::InvalidateSurface(nuiSurface* pSurface, bool ForceReload)
+{  
+}
+
