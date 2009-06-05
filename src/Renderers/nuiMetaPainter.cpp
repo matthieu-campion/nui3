@@ -20,6 +20,7 @@ nuiMetaPainter::nuiMetaPainter(const nuiRect& rRect, nglContext* pContext)
   mNbDrawArray = 0;
   mNbClearColor = 0;
   mNbOperations = 0;
+  mLastSize = -1;
 }
 
 nuiMetaPainter::~nuiMetaPainter()
@@ -336,6 +337,8 @@ void nuiMetaPainter::ReDraw(nuiDrawContext* pContext)
 
 void nuiMetaPainter::Reset(nuiPainter const * pFrom)
 {
+  mOperationIndices.clear();
+  mLastSize = -1;
   mOperationPos = 0;
   mLastStateValid = false;
   mNbDrawChild = 0;
@@ -655,7 +658,7 @@ void nuiMetaPainter::PartialReDraw(nuiDrawContext* pContext, int32 first, int32 
 nglString nuiMetaPainter::GetOperationDescription(int32 OperationIndex) const
 {
   nglString str;
-  int32 index = GetOffsetFromOperationIndex(OperationIndex);
+  int32 mOperationPos = GetOffsetFromOperationIndex(OperationIndex);
   
   OpCode code = FetchOpCode();
   switch (code)
@@ -666,11 +669,11 @@ nglString nuiMetaPainter::GetOperationDescription(int32 OperationIndex) const
       str = _T("SetSize");
       break;
     case eStartRendering:
-    {
-      nuiSize tmp;
-      FetchFloat(tmp);
-      FetchFloat(tmp);
-    }
+      {
+        nuiSize tmp;
+        FetchFloat(tmp);
+        FetchFloat(tmp);
+      }
       str = _T("StartRendering");
       break;
     case eSetState:
@@ -788,7 +791,7 @@ nglString nuiMetaPainter::GetOperationDescription(int32 OperationIndex) const
       break;
   }
   
-  return str;
+  return nglString().Add(OperationIndex).Add(_T(": ")).Add(str);
 }
 
 void nuiMetaPainter::SetName(const nglString& rName)
@@ -803,11 +806,23 @@ const nglString& nuiMetaPainter::GetName() const
 
 int32 nuiMetaPainter::GetOffsetFromOperationIndex(int32 index) const
 {
+  UpdateIndices();
+  return mOperationIndices[index];
+}
+
+
+void nuiMetaPainter::UpdateIndices() const
+{
+  if (!mOperationIndices.empty()) // || mLastSize == mOperations.size())
+    return;
+  
+  mOperationIndices.clear();
   mOperationPos = 0;
   uint size = mOperations.size();
-  int32 currentop = 0;
-  while (mOperationPos < size && currentop < index)
+  mLastSize = size;
+  while (mOperationPos < size)
   {
+    mOperationIndices.push_back(mOperationPos);
     OpCode code = FetchOpCode();
     switch (code)
     {
@@ -816,11 +831,6 @@ int32 nuiMetaPainter::GetOffsetFromOperationIndex(int32 index) const
         FetchInt();
         break;
       case eStartRendering:
-      {
-        nuiSize tmp;
-        FetchFloat(tmp);
-        FetchFloat(tmp);
-      }
         break;
       case eSetState:
         FetchPointer();
@@ -906,8 +916,5 @@ int32 nuiMetaPainter::GetOffsetFromOperationIndex(int32 index) const
         break;
     }
   }
-  
-  return mOperationPos;
 }
-
 

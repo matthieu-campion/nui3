@@ -68,6 +68,7 @@ public:
   int32 GetNbOperations() const;
   void PartialReDraw(nuiDrawContext* pContext, int32 first, int32 last) const;
   nglString GetOperationDescription(int32 OperationIndex) const;
+  nglString GetNextDescription() const;
   void SetName(const nglString& rName);
   const nglString& GetName() const;
   
@@ -134,6 +135,9 @@ protected:
   int32 mNbOperations;
     
   nglString mName;
+  mutable std::vector<int32> mOperationIndices;
+  mutable int32 mLastSize;
+  void UpdateIndices() const;
 };
 
 #endif // __nuiMetaPainter_h__

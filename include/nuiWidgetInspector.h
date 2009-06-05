@@ -15,6 +15,7 @@ class nuiVBox;
 class nuiGrid;
 class nuiWidgetProxy;
 class nuiFolderPane;
+class nuiMetaPainterInspector;
 
 class NUI_API nuiWidgetInspectorNode : public nuiTreeNode
 {
@@ -73,7 +74,7 @@ protected:
   nuiGrid* mpPropertyGrid;
   nuiGrid* mpAttributeGrid;
   nuiWidgetProxy* mpProxy;
-  nuiFolderPane* mpMetaPainterPane;
+  nuiMetaPainterInspector* mpPainterInspector;
   void BuildInfo();
 };
 

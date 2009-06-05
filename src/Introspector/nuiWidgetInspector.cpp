@@ -21,18 +21,40 @@
 #include "nuiColorDecoration.h"
 #include "nuiAttributeEditor.h"
 #include "nuiIntrospector.h"
+#include "nuiMetaPainter.h"
 #include <typeinfo>
 
 class nuiMetaPainterInspector : public nuiSimpleContainer
   {
   public:
-    nuiMetaPainterInspector(nuiMetaPainter* pPainter)
+    nuiMetaPainterInspector()
     {
+      mpBox = new nuiVBox();
+      AddChild(mpBox);
+    }
+
+    void SetTarget(const nuiWidget* pTarget)
+    {
+      mpBox->Clear();
+      if (!pTarget)
+        return;
+
+      const nuiMetaPainter* pPainter = pTarget->GetRenderCache();
+      if (!pPainter)
+        return;
       
+      int32 count = pPainter->GetNbOperations();
+      for (int32 i = 0; i < count; i++)
+      {
+        nglString str;
+        str = pPainter->GetOperationDescription(i);
+        mpBox->AddCell(new nuiLabel(str));
+      }
     }
     
   private:
     nuiMetaPainter* mpPainter;
+    nuiVBox* mpBox;
   };
 
 ///////// nuiWidgetInspectorNode:
@@ -262,7 +284,7 @@ mWISink(this)
   mpPropertyGrid = NULL;
   mpAttributeGrid = NULL;
   mpProxy = NULL;
-  mpMetaPainterPane = NULL;
+  mpPainterInspector = NULL;
   
   BuildInfo();
   
@@ -507,13 +529,7 @@ void nuiWidgetInfo::RebuildInfo(bool Reconstruct)
     
     
     mpProxy->SetTarget(mpTarget);
-    
-    if (mpTarget->IsRenderCacheEnabled() && mpMetaPainterPane)
-    {
-      mpMetaPainterPane->Clear(true);
-      nuiMetaPainterInspector* pMetaPainterInspector = new nuiMetaPainterInspector(mpTarget->mpRenderCache);
-      mpMetaPainterPane->AddChild(pMetaPainterInspector);
-    }
+    mpPainterInspector->SetTarget(mpTarget);
     
     mpDummy->SetVisible(false);
     mpInfos->SetVisible(true);
@@ -734,10 +750,34 @@ void nuiWidgetInfo::BuildInfo()
     pProxyScroll->AddChild(mpProxy);
     pProxyScroll->SetForceNoSmartScroll(true);
     pMainBox->AddCell(pProxyPane);
+
+    {
+      // Widget rendering list
+      nuiFolderPane* pCachePane = new nuiFolderPane(_T("Render cache"), true);
+      nuiLabel* pLabel = new nuiLabel(_T("Render Cache"), nuiFont::GetFont(_T("INTROSPECTOR_FONT_BOLD")));
+      pLabel->SetColor(eNormalTextFg, INTROSPECTOR_COLOR_FOLDERPANE_TITLE);
+      pLabel->SetColor(eSelectedTextFg, INTROSPECTOR_COLOR_FOLDERPANE_TITLE);
+      pCachePane->SetTitleWithHandle(pLabel);
+      if (pTitlePaneDeco)
+        pCachePane->GetTitle()->SetDecoration(pTitlePaneDeco, eDecorationBorder);
+      
+      
+      nuiDecoration* pDeco = nuiDecoration::Get(_T("InspectorRenderingDeco"));
+      if (!pDeco)
+        pDeco = new nuiColorDecoration(_T("InspectorRenderingDeco"), nuiRect(0,0,0,0),  nuiColor(255, 255, 255, 255));
+      pProxyPane->SetDecoration(pDeco);
+      
+      mpPainterInspector = new nuiMetaPainterInspector();
+      nuiScrollView* pScroll = new nuiScrollView(true, false);
+      pCachePane->AddChild(pScroll);
+      pScroll->AddChild(mpPainterInspector);
+      pScroll->SetForceNoSmartScroll(true);
+      pMainBox->AddCell(pCachePane);
+      
+    }
     
-    // nuiMetaPainterInspector container
-    //     mpMetaPainterPane = new nuiFolderPane(_T("Render cache inspector"), false, nuiColor(255, 255, 255, 255));
-    //     pMainBox->AddCell(mpMetaPainterPane);
+
+    
     
     pMainBox->SetExpand(nuiExpandShrinkAndGrow);
   }
