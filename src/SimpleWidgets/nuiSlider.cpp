@@ -158,6 +158,24 @@ nuiRect nuiSlider::CalcIdealSize()
   return mIdealRect;
 }
 
+
+void nuiSlider::HookMouse()
+{
+  mClicked = true;
+  mThumbClicked = true;
+  mInteractiveValueChanged = true;
+  Grab();
+  Invalidate();
+  mClickValue = mRange.GetValue();
+  nglMouseInfo info;
+  GetTopLevel()->GetMouseInfo(info);
+  mClickX = info.X;
+  mClickY = info.Y;
+//  GlobalToLocal(mClickX, mClickY);
+}
+
+
+
 // Received Mouse events:
 bool nuiSlider::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
 {
@@ -244,7 +262,7 @@ bool nuiSlider::MouseMoved  (nuiSize X, nuiSize Y)
     }
 
     start += (mRange.GetRange() - mRange.GetPageSize()) * (movement/range);
-
+    
     mRange.SetValue(start);
     return true;
   }

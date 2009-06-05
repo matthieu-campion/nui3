@@ -52,6 +52,9 @@ public:
   virtual void SetAutoAdjustHandle(bool Adjust); ///< when enabled, the handle offset, min and max position are automatically adjusted when an operation on them is made. The default is true.
 
   virtual void DrawBackground(bool DrawBackground);
+  
+  void HookMouse();
+  
 
   //Received Events:
   bool MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
