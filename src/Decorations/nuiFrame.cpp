@@ -11,8 +11,7 @@
 
 nuiFrame::nuiFrame(const nglString& rName)
 : nuiDecoration(rName),
-  mpTexture(NULL),
-  mBorderEnabled(true)
+  mpTexture(NULL)
 {
   if (SetObjectClass(_T("nuiFrame")))
     InitAttributes();
@@ -27,8 +26,7 @@ nuiFrame::nuiFrame(const nglString& rName, nuiTexture* pTexture, const nuiRect& 
   mpTexture(pTexture),
   mColor(rColor),
   mUseWidgetFrameColor(false),
-  mClientRect(rClientRect),
-  mBorderEnabled(true)
+  mClientRect(rClientRect)
 {
   if (SetObjectClass(_T("nuiFrame")))
     InitAttributes();
@@ -43,8 +41,7 @@ nuiFrame::nuiFrame(const nglString& rName, const nglPath& rTexturePath, const nu
   mpTexture(NULL),
   mColor(rColor),
   mUseWidgetFrameColor(false),
-  mClientRect(rClientRect),
-  mBorderEnabled(true)
+  mClientRect(rClientRect)
 {
   if (SetObjectClass(_T("nuiFrame")))
     InitAttributes();
@@ -59,11 +56,6 @@ nuiFrame::nuiFrame(const nglString& rName, const nglPath& rTexturePath, const nu
 
 void nuiFrame::InitAttributes()
 {
-  nuiAttribute<bool>* AttributeBorder = new nuiAttribute<bool>
-   (nglString(_T("EnableBorder")), nuiUnitBoolean,
-    nuiAttribute<bool>::GetterDelegate(this, &nuiFrame::IsBorderEnabled),
-    nuiAttribute<bool>::SetterDelegate(this, &nuiFrame::EnableBorder));
-  
   nuiAttribute<const nuiRect&>* AttributeRect = new nuiAttribute<const nuiRect&>
    (nglString(_T("ClientRect")), nuiUnitNone,
     nuiAttribute<const nuiRect&>::GetterDelegate(this, &nuiFrame::GetSourceClientRect),
@@ -90,7 +82,6 @@ void nuiFrame::InitAttributes()
     nuiAttribute<bool>::SetterDelegate(this, &nuiFrame::SetInterpolated));
   
 
-	AddAttribute(_T("EnableBorder"), AttributeBorder);
 	AddAttribute(_T("ClientRect"), AttributeRect);
 	AddAttribute(_T("Color"), AttributeColor);
   AddAttribute(_T("UseWidgetFrameColor"), AttributeFrameColor);
@@ -470,16 +461,6 @@ void nuiFrame::SetSourceClientRect(const nuiRect& rRect)
   Changed();
 }
 
-void nuiFrame::EnableBorder(bool set)
-{
-  mBorderEnabled = set;
-  Changed();
-}
-
-bool nuiFrame::IsBorderEnabled() const
-{
-  return mBorderEnabled;
-}
 
 nuiSize nuiFrame::GetBorder(nuiPosition position, const nuiWidget* pWidget) const
 {

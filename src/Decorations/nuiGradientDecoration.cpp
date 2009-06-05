@@ -335,6 +335,9 @@ nuiRect nuiGradientDecoration::GetIdealClientRect(const nuiWidget* pWidget) cons
 
 nuiSize nuiGradientDecoration::GetBorder(nuiPosition position, const nuiWidget* pWidget) const
 {
+  if (!mBorderEnabled)
+    return 0;
+  
   switch (position)
   {
   case nuiLeft:

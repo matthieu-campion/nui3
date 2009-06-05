@@ -140,6 +140,9 @@ nuiRect nuiTreeHandleDecoration::GetIdealClientRect(const nuiWidget* pWidget) co
 
 nuiSize nuiTreeHandleDecoration::GetBorder(nuiPosition position, const nuiWidget* pWidget) const
 {
+  if (!mBorderEnabled)
+    return 0;
+  
   switch (position)
   {
   case nuiLeft:

@@ -33,6 +33,10 @@ public:
   void SetLayer(nuiDecorationLayer layer);
   nuiDecorationLayer GetLayer();
   
+  void EnableBorder(bool set);
+  bool IsBorderEnabled() const;
+  
+  
   virtual void DrawBack(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rRect);
   virtual void DrawFront(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rRect);
   virtual void Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rRect);
@@ -57,6 +61,8 @@ public:
 protected:
 
   bool mUseWidgetAlpha;
+  bool mBorderEnabled;
+
   nuiDecorationLayer mLayer;
     
 private:

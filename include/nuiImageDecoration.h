@@ -27,9 +27,6 @@ public:
   void SetSourceClientRect(const nuiRect& rRect);
   const nuiRect& GetSourceClientRect() const;
 
-  void EnableBorder(bool set);
-  bool IsBorderEnabled() const;
-  
   virtual nuiSize GetBorder(nuiPosition position, const nuiWidget* pWidget) const;
   virtual nuiRect GetIdealClientRect(const nuiWidget* pWidget) const;
   
@@ -54,7 +51,6 @@ private:
 
 	// attributes ***********************************
   nuiRect mClientRect;
-  bool mBorderEnabled;
   nuiPosition mPosition;
   nuiColor mColor;
 };

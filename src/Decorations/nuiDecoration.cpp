@@ -16,6 +16,8 @@ nuiDecoration::nuiDecoration(const nglString& rName)
   SetObjectName(rName);
     
   mUseWidgetAlpha = true;
+  mBorderEnabled = true;
+
   
   mLayer = eLayerBack;
 
@@ -26,11 +28,17 @@ nuiDecoration::nuiDecoration(const nglString& rName)
 
 void nuiDecoration::InitAttributes()
 {
-  nuiAttribute<bool>* attUseWidgetAlpha = new nuiAttribute<bool>
+  AddAttribute(new nuiAttribute<bool>
+  (nglString(_T("EnableBorder")), nuiUnitBoolean,
+   nuiAttribute<bool>::GetterDelegate(this, &nuiDecoration::IsBorderEnabled),
+   nuiAttribute<bool>::SetterDelegate(this, &nuiDecoration::EnableBorder)));
+  
+  
+  AddAttribute(new nuiAttribute<bool>
   (nglString(_T("UseWidgetAlpha")), nuiUnitNone,
    nuiAttribute<bool>::GetterDelegate(this, &nuiDecoration::IsWidgetAlphaUsed),
-   nuiAttribute<bool>::SetterDelegate(this, &nuiDecoration::UseWidgetAlpha));
-	AddAttribute(_T("UseWidgetAlpha"), attUseWidgetAlpha);
+   nuiAttribute<bool>::SetterDelegate(this, &nuiDecoration::UseWidgetAlpha)));
+
   
   AddAttribute(new nuiAttribute<nuiDecorationLayer>
   (nglString(_T("Layer")), nuiUnitNone,
@@ -57,6 +65,16 @@ void nuiDecoration::SetLayer(nuiDecorationLayer layer)
 nuiDecorationLayer nuiDecoration::GetLayer()
 {
   return mLayer;
+}
+
+void nuiDecoration::EnableBorder(bool set)
+{
+  mBorderEnabled = set;
+}
+
+bool nuiDecoration::IsBorderEnabled() const
+{
+  return mBorderEnabled;
 }
 
 

@@ -342,6 +342,9 @@ nuiSize nuiStateDecoration::GetSourceBorder(nuiPosition position) const
 
 nuiSize nuiStateDecoration::GetBorder(nuiPosition position, const nuiWidget* pWidget) const
 {
+  if (!mBorderEnabled)
+    return 0;
+  
   if (mUseSourceClientRect)
     return GetSourceBorder(position);
 

@@ -129,6 +129,7 @@ nuiRect nuiMetaDecoration::GetIdealClientRect(const nuiWidget* pWidget) const
 
 nuiSize nuiMetaDecoration::GetBorder(nuiPosition position, const nuiWidget* pWidget) const
 {
+  
   std::vector<nuiDecoration*>::const_iterator it = mDecorations.begin();
   std::vector<nuiDecoration*>::const_iterator end = mDecorations.end();
   
@@ -140,7 +141,8 @@ nuiSize nuiMetaDecoration::GetBorder(nuiPosition position, const nuiWidget* pWid
     nuiDecoration* pDecoration = (*it);
     NGL_ASSERT(pDecoration);
     
-    border = MAX(border, pDecoration->GetBorder(position, pWidget));
+    if (pDecoration->IsBorderEnabled())
+      border = MAX(border, pDecoration->GetBorder(position, pWidget));
     
     ++it;
   }

@@ -13,7 +13,6 @@ nuiImageDecoration::nuiImageDecoration(const nglString& rName)
 : nuiDecoration(rName),
   mpTexture(NULL),
   mPosition(nuiCenter),
-  mBorderEnabled(true),
   mColor(255,255,255,255)
 {
   if (SetObjectClass(_T("nuiImageDecoration")))
@@ -25,7 +24,6 @@ nuiImageDecoration::nuiImageDecoration(const nglString& rName, nuiTexture* pText
   mpTexture(pTexture),
   mPosition(position),
   mClientRect(rClientRect),
-  mBorderEnabled(true),
   mColor(rColor)
 {
   if (SetObjectClass(_T("nuiImageDecoration")))
@@ -37,7 +35,6 @@ nuiImageDecoration::nuiImageDecoration(const nglString& rName, const nglPath& rT
   mpTexture(NULL),
   mPosition(position),
   mClientRect(rClientRect),
-  mBorderEnabled(true),
   mColor(rColor)
 {
   if (SetObjectClass(_T("nuiImageDecoration")))
@@ -54,11 +51,6 @@ nuiImageDecoration::nuiImageDecoration(const nglString& rName, const nglPath& rT
 void nuiImageDecoration::InitAttributes()
 {
 
-  nuiAttribute<bool>* AttributeBorder = new nuiAttribute<bool>
-   (nglString(_T("EnableBorder")), nuiUnitBoolean,
-    nuiAttribute<bool>::GetterDelegate(this, &nuiImageDecoration::IsBorderEnabled),
-    nuiAttribute<bool>::SetterDelegate(this, &nuiImageDecoration::EnableBorder));
-  
   nuiAttribute<const nuiRect&>* AttributeRect = new nuiAttribute<const nuiRect&>
    (nglString(_T("ClientRect")), nuiUnitNone,
     nuiAttribute<const nuiRect&>::GetterDelegate(this, &nuiImageDecoration::GetSourceClientRect),
@@ -79,7 +71,6 @@ void nuiImageDecoration::InitAttributes()
    nuiAttribute<const nuiColor&>::GetterDelegate(this, &nuiImageDecoration::GetColor), 
    nuiAttribute<const nuiColor&>::SetterDelegate(this, &nuiImageDecoration::SetColor));
   
-	AddAttribute(_T("EnableBorder"), AttributeBorder);
 	AddAttribute(_T("ClientRect"), AttributeRect);
 	AddAttribute(_T("Texture"), AttributeTexture);
 	AddAttribute(_T("Position"), AttributePosition);
@@ -185,16 +176,6 @@ void nuiImageDecoration::SetSourceClientRect(const nuiRect& rRect)
   Changed();
 }
 
-void nuiImageDecoration::EnableBorder(bool set)
-{
-  mBorderEnabled = set;
-  Changed();
-}
-
-bool nuiImageDecoration::IsBorderEnabled() const
-{
-  return mBorderEnabled;
-}
 
 nuiSize nuiImageDecoration::GetBorder(nuiPosition position, const nuiWidget* pWidget) const
 {

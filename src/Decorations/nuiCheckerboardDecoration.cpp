@@ -132,6 +132,9 @@ nuiRect nuiCheckerboardDecoration::GetIdealClientRect(const nuiWidget* pWidget) 
 
 nuiSize nuiCheckerboardDecoration::GetBorder(nuiPosition position, const nuiWidget* pWidget) const
 {
+  if (!mBorderEnabled)
+    return 0;
+  
   switch (position)
   {
   case nuiLeft:
