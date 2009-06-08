@@ -97,6 +97,7 @@ void* nuiMetaPainter::FetchPointer() const
 void nuiMetaPainter::FetchBuffer(void* pBuffer, uint ElementSize, uint ElementCount) const
 {
   uint size = ElementSize * ElementCount;
+  NGL_ASSERT(mOperationPos + size <= mOperations.size());
   memcpy(pBuffer, &mOperations[mOperationPos], size);
   mOperationPos += size;
 }
@@ -655,36 +656,57 @@ void nuiMetaPainter::PartialReDraw(nuiDrawContext* pContext, int32 first, int32 
   }
 }
 
+static const nglChar* GetGLMode(GLenum mode)
+{
+  switch (mode)
+  {
+    case GL_POINTS: return _T("GL_POINTS");
+    case GL_LINES: return _T("GL_LINES");
+    case GL_LINE_LOOP: return _T("GL_LINE_LOOP");
+    case GL_LINE_STRIP: return _T("GL_LINE_STRIP");
+    case GL_TRIANGLES: return _T("GL_TRIANGLES");
+    case GL_TRIANGLE_FAN: return _T("GL_TRIANGLE_FAN");
+    case GL_TRIANGLE_STRIP: return _T("GL_TRIANGLE_STRIP");
+    case GL_QUADS: return _T("GL_QUADS");
+    case GL_QUAD_STRIP: return _T("GL_QUAD_STRIP");
+    case GL_POLYGON: return _T("GL_POLYGON");
+  }
+  return _T("unknown");
+}
+
 nglString nuiMetaPainter::GetOperationDescription(int32 OperationIndex) const
 {
   nglString str;
-  int32 mOperationPos = GetOffsetFromOperationIndex(OperationIndex);
+  mOperationPos = GetOffsetFromOperationIndex(OperationIndex);
   
   OpCode code = FetchOpCode();
   switch (code)
   {
     case eSetSize:
-      FetchInt();
-      FetchInt();
-      str = _T("SetSize");
+      {
+        int32 w = FetchInt();
+        int32 h = FetchInt();
+        str.CFormat(_T("SetSize(%d, %d)"), w, h);
+      }
       break;
     case eStartRendering:
       {
-        nuiSize tmp;
-        FetchFloat(tmp);
-        FetchFloat(tmp);
+        nuiSize x, y;
+        FetchFloat(x);
+        FetchFloat(y);
+        str.CFormat(_T("StartRendering(%f, %f)"), x, y);
       }
-      str = _T("StartRendering");
       break;
     case eSetState:
       FetchPointer();
-      FetchInt();
-      str = _T("SetState");
+      bool force = FetchInt();
+      str.CFormat(_T("SetState(%ls)"), TRUEFALSE(force));
       break;
     case eDrawArray:
       {
         nuiRenderArray* pArray = (nuiRenderArray*)FetchPointer();
-        str.CFormat(_T("DrawArray 0x%x"), pArray);
+        const nglChar* pMode = GetGLMode(pArray->GetMode());
+        str.CFormat(_T("DrawArray 0x%x (size %d mode:%ls)"), pArray, pArray->GetVertices().size(), pMode);
       }
       break;
     case eClearColor:
@@ -781,13 +803,13 @@ nglString nuiMetaPainter::GetOperationDescription(int32 OperationIndex) const
       str = _T("ResetClipRect");
       break;
     case eEnableClipping:
-      str.CFormat(_T("EnableClipping(%d)"), FetchInt());
+      str.CFormat(_T("EnableClipping(%ls)"), TRUEFALSE(FetchInt()));
       break;
     case eBreak:
       str = _T("Break");
       break;
     default:
-      str = _T("Unknown operation");
+      str.CFormat(_T("Unknown operation %d"), code);
       break;
   }
   
@@ -807,6 +829,7 @@ const nglString& nuiMetaPainter::GetName() const
 int32 nuiMetaPainter::GetOffsetFromOperationIndex(int32 index) const
 {
   UpdateIndices();
+  NGL_ASSERT(index < mOperationIndices.size());
   return mOperationIndices[index];
 }
 
