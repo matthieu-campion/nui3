@@ -699,9 +699,11 @@ nglString nuiMetaPainter::GetOperationDescription(int32 OperationIndex) const
       }
       break;
     case eSetState:
-      FetchPointer();
-      bool force = FetchInt();
-      str.CFormat(_T("SetState(%ls)"), TRUEFALSE(force));
+      {
+        FetchPointer();
+        bool force = FetchInt();
+        str.CFormat(_T("SetState(%ls)"), TRUEFALSE(force));
+      }
       break;
     case eDrawArray:
       {
