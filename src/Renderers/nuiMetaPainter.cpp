@@ -339,6 +339,7 @@ void nuiMetaPainter::ReDraw(nuiDrawContext* pContext)
 void nuiMetaPainter::Reset(nuiPainter const * pFrom)
 {
   mOperationIndices.clear();
+  mNbOperations = 0;
   mLastSize = -1;
   mOperationPos = 0;
   mLastStateValid = false;
