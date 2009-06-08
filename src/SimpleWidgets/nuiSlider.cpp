@@ -171,7 +171,7 @@ void nuiSlider::HookMouse()
   GetTopLevel()->GetMouseInfo(info);
   mClickX = info.X;
   mClickY = info.Y;
-//  GlobalToLocal(mClickX, mClickY);
+  GlobalToLocal(mClickX, mClickY);
 }
 
 
@@ -248,11 +248,17 @@ bool nuiSlider::MouseMoved  (nuiSize X, nuiSize Y)
 {
   if (mThumbClicked)
   {
+    
+    
     nuiSize x,y;
     nuiSize range = (nuiSize)fabs(mHandlePosMax - mHandlePosMin);
     x = X - mClickX;
     y = mClickY - Y;
 
+    //LBDEBUG
+    NGL_OUT(_T("MouseMoved : %.2f %.2f     %.2f %.2f\n"), X, Y,x,y);
+
+    
     nuiSize start= mClickValue;
     nuiSize movement = (mOrientation == nuiHorizontal) ? x : y;
 
