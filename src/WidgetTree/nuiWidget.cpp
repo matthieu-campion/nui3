@@ -28,18 +28,6 @@ const bool gGlobalUseRenderCache = true;
 const bool gGlobalUseRenderCache = true;
 #endif
 
-bool nuiWidget::mSelfClippingDefault = true;
-
-void nuiWidget::SetSelfClippingDefault(bool set)
-{
-  mSelfClippingDefault = set;
-}
-
-bool nuiWidget::GetSelfClippingDefault()
-{
-  return mSelfClippingDefault;
-}
-
 //#define NUI_LOG_GETIDEALRECT
 
 #ifdef NUI_WIDGET_STATS
@@ -459,7 +447,6 @@ void nuiWidget::Init()
   mCanRespectConstraint = false; ///< By default the widgets don't care about the constraints imposed by their parents. Only few ones care about this.
   mNeedInvalidateOnSetRect = true;
   mDrawingInCache = false;
-  mAutoClipSelf = mSelfClippingDefault;
   mpRenderCache = NULL;
 	mUseRenderCache = false;
 
@@ -1092,7 +1079,7 @@ bool nuiWidget::InternalDrawWidget(nuiDrawContext* pContext, const nuiRect& _sel
   if (ApplyMatrix && !mMatrixIsIdentity)
     pContext->MultMatrix(GetMatrix());
   
-  if (mAutoClipSelf)
+//  if (mAutoClipSelf)
   {
     pContext->PushClipping();
     if (mpDecoration)
@@ -1121,7 +1108,7 @@ bool nuiWidget::InternalDrawWidget(nuiDrawContext* pContext, const nuiRect& _sel
   }
   
   ////////////////////// Draw the widget
-  if (mAutoClipSelf)
+//  if (mAutoClipSelf)
   {
     pContext->PushClipping();
     pContext->Clip(_self);
@@ -1131,7 +1118,7 @@ bool nuiWidget::InternalDrawWidget(nuiDrawContext* pContext, const nuiRect& _sel
   Draw(pContext);
   pContext->PopState();
   
-  if (mAutoClipSelf)
+//  if (mAutoClipSelf)
     pContext->PopClipping();
   
   ////////////////////// Draw the Overlay
@@ -1156,7 +1143,7 @@ bool nuiWidget::InternalDrawWidget(nuiDrawContext* pContext, const nuiRect& _sel
   uint32 newclipdepth = pContext->GetClipStackSize();
   NGL_ASSERT(clipdepth == newclipdepth);
   
-  if (mAutoClipSelf)
+//  if (mAutoClipSelf)
     pContext->PopClipping();
   
   pContext->PopState();
@@ -3237,21 +3224,6 @@ bool nuiWidget::AutoTrash(const nuiEvent& rEvent)
 {
   Trash();
   return false;
-}
-
-void nuiWidget::EnableAutoClipSelf(bool Set, bool Recurse)
-{
-  if (mAutoClipSelf != Set)
-  {
-    mAutoClipSelf = Set;
-    Invalidate();
-    DebugRefreshInfo();
-  }
-}
-
-bool nuiWidget::IsAutoClipSelfEnabled() const
-{
-  return mAutoClipSelf;
 }
 
 bool nuiWidget::IsDrawingInCache(bool Recurse) 

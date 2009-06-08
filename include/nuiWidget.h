@@ -162,8 +162,6 @@ public:
   float GetAlpha(bool MixWithParent = true) const; ///< Returns the current alpha transparency value of this object, mixed with the one of its parents if MixWithParent==true.
   virtual void SetAlpha(float Alpha); ///< The the alpha transparency value of this object. 
   virtual nuiDrawContext* GetDrawContext(); ///< Retrieve the draw context from the root object (the main window).
-  virtual void EnableAutoClipSelf(bool Set, bool Recurse = false);
-  bool IsAutoClipSelfEnabled() const;
 
   void SetOverDraw(nuiSize Left, nuiSize Top, nuiSize Right, nuiSize Bottom); ///< Set the amount of over draw for each border of the widget.
   void ResetOverDraw(); ///< Reset the overdraw borders to 0. Equivalent to SetOverDraw(0, 0, 0, 0);
@@ -491,9 +489,6 @@ public:
   uint32 GetCSSPass() const;
   //@}
 
-  static void SetSelfClippingDefault(bool set);
-  static bool GetSelfClippingDefault();
-  
 protected:
   std::map<nglString, nuiEventSource*, nglString::LessFunctor> mEventMap;
   
@@ -535,7 +530,6 @@ protected:
   bool mNeedIdealRect;
   bool mNeedRender;
   bool mNeedSelfRedraw;
-  bool mAutoClipSelf;
 
   bool mNeedSurfaceRedraw;
   bool mSurfaceEnabled;
@@ -670,7 +664,6 @@ private:
   
   uint32 mCSSPasses;
   virtual void InternalResetCSSPass();
-  static bool mSelfClippingDefault;
 };
 
 #define NUI_ADD_EVENT(NAME) { AddEvent(_T(#NAME), NAME); }

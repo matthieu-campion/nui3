@@ -111,8 +111,7 @@ nuiWindow::~nuiWindow()
 
 void nuiWindow::InitProperties()
 {
-  EnableAutoClipSelf(false);
-  EnableInteractiveOverDraw(true);
+  SetOverDraw(16, 0, 16, 16);
 
   SetObjectClass(_T("nuiWindow"));
   

@@ -172,7 +172,6 @@ public:
 
   /** @name Inherited from nuiWidget: */
   //@{
-  virtual void EnableAutoClipSelf(bool Set, bool Recurse = false);
   virtual void InvalidateChildren(bool Recurse);
   virtual void SilentInvalidateChildren(bool Recurse);
   virtual bool Draw(nuiDrawContext* pContext);
