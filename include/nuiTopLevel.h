@@ -82,6 +82,10 @@ public:
 
   /* @name Mouse & keyboard focus management */
   //@{
+  virtual bool DispatchGrab(nuiWidgetPtr pWidget);
+  virtual bool DispatchUngrab(nuiWidgetPtr pWidget);
+  virtual bool DispatchHasGrab(nuiWidgetPtr pWidget);
+  
   virtual bool Grab(nuiWidgetPtr pWidget); ///< Redirect all mouse event to this object.
   virtual bool Ungrab(nuiWidgetPtr pWidget); ///< Stop redirecting all mouse event to the given grab object.
   virtual nuiWidgetPtr GetGrab() const; ///< Returns the object that currently has the mouse focus.

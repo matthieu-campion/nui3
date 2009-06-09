@@ -324,6 +324,11 @@ public:
   virtual bool DispatchMouseClick(const nglMouseInfo& rInfo);
   virtual bool DispatchMouseUnclick(const nglMouseInfo& rInfo);
   virtual nuiWidgetPtr DispatchMouseMove(const nglMouseInfo& rInfo);
+  virtual bool DispatchGrab(nuiWidgetPtr pWidget);
+  virtual bool DispatchUngrab(nuiWidgetPtr pWidget);
+  virtual bool DispatchHasGrab(nuiWidgetPtr pWidget);
+
+
   //@}
 
   /** @name Simple Animation Support */

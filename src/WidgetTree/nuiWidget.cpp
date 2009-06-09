@@ -1754,34 +1754,51 @@ nuiWidgetPtr nuiWidget::DispatchMouseMove(const nglMouseInfo& rInfo)
   return (res && inside) ? this : NULL;
 }
 
+
+bool nuiWidget::DispatchGrab(nuiWidgetPtr pWidget)
+{
+  if (mpParent)
+    return mpParent->DispatchGrab(pWidget);
+  return false;
+}
+
+bool nuiWidget::DispatchUngrab(nuiWidgetPtr pWidget)
+{
+  if (mpParent)
+    return mpParent->DispatchUngrab(pWidget);
+  return false;
+}
+
+bool nuiWidget::DispatchHasGrab(nuiWidgetPtr pWidget)
+{
+  if (mpParent)
+    return mpParent->DispatchHasGrab(pWidget);
+  return false;  
+}
+
 bool nuiWidget::HasGrab()
 {
-  nuiTopLevel* pTop = GetTopLevel();
-  if (!pTop) 
-    return false;
-  return pTop->GetGrab() == this;
+  return DispatchHasGrab(this);
 }
 
 bool nuiWidget::Grab()
 {
-  nuiTopLevelPtr pRoot = GetTopLevel();
-
-  if (pRoot)
-    return pRoot->Grab(this);
-
-  ApplyCSSForStateChange(NUI_WIDGET_MATCHTAG_STATE);
-  return false;
+  if (!DispatchGrab(this))
+  {
+    ApplyCSSForStateChange(NUI_WIDGET_MATCHTAG_STATE);
+    return false;
+  }
+  return true;
 }
 
 bool nuiWidget::Ungrab()
 {
-  nuiTopLevelPtr pRoot = GetTopLevel();
-
-  if (pRoot)
-    return pRoot->Ungrab(this);
-
-  ApplyCSSForStateChange(NUI_WIDGET_MATCHTAG_STATE);
-  return false;
+  if (!DispatchUngrab(this))
+  {
+    ApplyCSSForStateChange(NUI_WIDGET_MATCHTAG_STATE);
+    return false;
+  }  
+  return true;
 }
 
 

@@ -507,6 +507,22 @@ nuiTrashElement::~nuiTrashElement()
 {
 }
 
+bool nuiTopLevel::DispatchGrab(nuiWidgetPtr pWidget)
+{
+  return Grab(pWidget);
+}
+
+bool nuiTopLevel::DispatchUngrab(nuiWidgetPtr pWidget)
+{
+  return Ungrab(pWidget);
+}
+
+bool nuiTopLevel::DispatchHasGrab(nuiWidgetPtr pWidget)
+{
+  return GetGrab() == pWidget;
+}
+
+
 bool nuiTopLevel::Grab(nuiWidgetPtr pWidget)
 {
   NGL_TOUCHES_DEBUG( NGL_OUT(_T("nuiTopLevel::Grab 0x%x\n"), pWidget) );
