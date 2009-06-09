@@ -668,9 +668,11 @@ static const nglChar* GetGLMode(GLenum mode)
     case GL_TRIANGLES: return _T("GL_TRIANGLES");
     case GL_TRIANGLE_FAN: return _T("GL_TRIANGLE_FAN");
     case GL_TRIANGLE_STRIP: return _T("GL_TRIANGLE_STRIP");
+#ifndef _OPENGL_ES_
     case GL_QUADS: return _T("GL_QUADS");
     case GL_QUAD_STRIP: return _T("GL_QUAD_STRIP");
     case GL_POLYGON: return _T("GL_POLYGON");
+#endif
   }
   return _T("unknown");
 }
