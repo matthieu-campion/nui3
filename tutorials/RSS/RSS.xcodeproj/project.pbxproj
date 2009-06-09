@@ -1,0 +1,444 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		61A9DFD70B833F1500BC506C /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD20B833F1500BC506C /* AGL.framework */; };
+		61A9DFD80B833F1500BC506C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD30B833F1500BC506C /* CoreFoundation.framework */; };
+		61A9DFD90B833F1500BC506C /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD40B833F1500BC506C /* CoreServices.framework */; };
+		61A9DFDA0B833F1500BC506C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD50B833F1500BC506C /* Carbon.framework */; };
+		61A9DFDB0B833F1500BC506C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD60B833F1500BC506C /* OpenGL.framework */; };
+		61A9DFDC0B833F1500BC506C /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD20B833F1500BC506C /* AGL.framework */; };
+		61A9DFDD0B833F1500BC506C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD30B833F1500BC506C /* CoreFoundation.framework */; };
+		61A9DFDE0B833F1500BC506C /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD40B833F1500BC506C /* CoreServices.framework */; };
+		61A9DFDF0B833F1500BC506C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD50B833F1500BC506C /* Carbon.framework */; };
+		61A9DFE00B833F1500BC506C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD60B833F1500BC506C /* OpenGL.framework */; };
+		61A9DFF30B83433800BC506C /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61A9DFEF0B83433800BC506C /* Application.cpp */; };
+		61A9DFF40B83433800BC506C /* MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */; };
+		61A9DFF50B83433800BC506C /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61A9DFEF0B83433800BC506C /* Application.cpp */; };
+		61A9DFF60B83433800BC506C /* MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */; };
+		BC6A09AD0EF92BAB00881ACF /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BC6A09AB0EF92BAB00881ACF /* Info.plist */; };
+		BCBCB15F0DFD45BD002E8BC3 /* libnui3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */; };
+		BCBCB1600DFD45C1002E8BC3 /* libnui3D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15C0DFD45B6002E8BC3 /* libnui3D.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		BCBCB15B0DFD45B6002E8BC3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E58172D80C3D103300902DFE;
+			remoteInfo = nui3D;
+		};
+		BCBCB15D0DFD45B6002E8BC3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E542A1AE0C3F0A5900225219;
+			remoteInfo = nui3;
+		};
+		BCBCB1630DFD45FA002E8BC3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = E5429F110C3F0A5900225219;
+			remoteInfo = nui3;
+		};
+		BCBCB1650DFD4605002E8BC3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = E58172D70C3D103300902DFE;
+			remoteInfo = nui3D;
+		};
+		E5D2D16F0FDE929400143480 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E592C5140EFE8CCC00340B35 /* libnui3D cocoa.a */;
+			remoteInfo = "nui3D cocoa";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		61A9DFBF0B833E9600BC506C /* RSS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RSS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		61A9DFC90B833EF200BC506C /* RSSD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RSSD.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		61A9DFD20B833F1500BC506C /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
+		61A9DFD30B833F1500BC506C /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
+		61A9DFD40B833F1500BC506C /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
+		61A9DFD50B833F1500BC506C /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		61A9DFD60B833F1500BC506C /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
+		61A9DFEF0B83433800BC506C /* Application.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = Application.cpp; path = src/Application.cpp; sourceTree = "<group>"; };
+		61A9DFF00B83433800BC506C /* Application.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = Application.h; path = src/Application.h; sourceTree = "<group>"; };
+		61A9DFF10B83433800BC506C /* MainWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = MainWindow.cpp; path = src/MainWindow.cpp; sourceTree = "<group>"; };
+		61A9DFF20B83433800BC506C /* MainWindow.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = MainWindow.h; path = src/MainWindow.h; sourceTree = "<group>"; };
+		BC6A09AB0EF92BAB00881ACF /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
+		BC6A09CB0EF9301900881ACF /* main.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = main.css; path = resources/css/main.css; sourceTree = SOURCE_ROOT; };
+		BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nui3.xcodeproj; path = ../../nui3.xcodeproj; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		61A9DFBD0B833E9600BC506C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				61A9DFD70B833F1500BC506C /* AGL.framework in Frameworks */,
+				61A9DFD80B833F1500BC506C /* CoreFoundation.framework in Frameworks */,
+				61A9DFD90B833F1500BC506C /* CoreServices.framework in Frameworks */,
+				61A9DFDA0B833F1500BC506C /* Carbon.framework in Frameworks */,
+				61A9DFDB0B833F1500BC506C /* OpenGL.framework in Frameworks */,
+				BCBCB15F0DFD45BD002E8BC3 /* libnui3.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		61A9DFC70B833EF200BC506C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				61A9DFDC0B833F1500BC506C /* AGL.framework in Frameworks */,
+				61A9DFDD0B833F1500BC506C /* CoreFoundation.framework in Frameworks */,
+				61A9DFDE0B833F1500BC506C /* CoreServices.framework in Frameworks */,
+				61A9DFDF0B833F1500BC506C /* Carbon.framework in Frameworks */,
+				61A9DFE00B833F1500BC506C /* OpenGL.framework in Frameworks */,
+				BCBCB1600DFD45C1002E8BC3 /* libnui3D.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		61A9DE3D0B833C9200BC506C = {
+			isa = PBXGroup;
+			children = (
+				BC6A09CA0EF9300600881ACF /* css */,
+				BC6A09A20EF92B4B00881ACF /* resources */,
+				61A9DE4A0B833CD000BC506C /* sources */,
+				61A9DE490B833CB000BC506C /* dependencies */,
+				61A9DFB50B833DE500BC506C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		61A9DE490B833CB000BC506C /* dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */,
+				61A9DFD20B833F1500BC506C /* AGL.framework */,
+				61A9DFD30B833F1500BC506C /* CoreFoundation.framework */,
+				61A9DFD40B833F1500BC506C /* CoreServices.framework */,
+				61A9DFD50B833F1500BC506C /* Carbon.framework */,
+				61A9DFD60B833F1500BC506C /* OpenGL.framework */,
+			);
+			name = dependencies;
+			sourceTree = "<group>";
+		};
+		61A9DE4A0B833CD000BC506C /* sources */ = {
+			isa = PBXGroup;
+			children = (
+				61A9DFEF0B83433800BC506C /* Application.cpp */,
+				61A9DFF00B83433800BC506C /* Application.h */,
+				61A9DFF10B83433800BC506C /* MainWindow.cpp */,
+				61A9DFF20B83433800BC506C /* MainWindow.h */,
+			);
+			name = sources;
+			sourceTree = "<group>";
+		};
+		61A9DFB50B833DE500BC506C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				61A9DFBF0B833E9600BC506C /* RSS.app */,
+				61A9DFC90B833EF200BC506C /* RSSD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BC6A09A20EF92B4B00881ACF /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				BC6A09AB0EF92BAB00881ACF /* Info.plist */,
+			);
+			name = resources;
+			sourceTree = "<group>";
+		};
+		BC6A09CA0EF9300600881ACF /* css */ = {
+			isa = PBXGroup;
+			children = (
+				BC6A09CB0EF9301900881ACF /* main.css */,
+			);
+			name = css;
+			sourceTree = "<group>";
+		};
+		BCBCB1530DFD45B5002E8BC3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BCBCB15C0DFD45B6002E8BC3 /* libnui3D.a */,
+				BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */,
+				E5D2D1700FDE929400143480 /* libnui3D cocoa.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		61A9DFBE0B833E9600BC506C /* RSS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 61A9DFC20B833E9600BC506C /* Build configuration list for PBXNativeTarget "RSS" */;
+			buildPhases = (
+				61A9DFBB0B833E9600BC506C /* Resources */,
+				61A9DFBC0B833E9600BC506C /* Sources */,
+				61A9DFBD0B833E9600BC506C /* Frameworks */,
+				BC6A09BE0EF92F1B00881ACF /* Copy Resources Script */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BCBCB1640DFD45FA002E8BC3 /* PBXTargetDependency */,
+			);
+			name = RSS;
+			productName = Temp;
+			productReference = 61A9DFBF0B833E9600BC506C /* RSS.app */;
+			productType = "com.apple.product-type.application";
+		};
+		61A9DFC80B833EF200BC506C /* RSSD */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 61A9DFCC0B833EF300BC506C /* Build configuration list for PBXNativeTarget "RSSD" */;
+			buildPhases = (
+				61A9DFC60B833EF200BC506C /* Sources */,
+				61A9DFC70B833EF200BC506C /* Frameworks */,
+				BC6A09BC0EF92EBF00881ACF /* Copy Resources Script */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BCBCB1660DFD4605002E8BC3 /* PBXTargetDependency */,
+			);
+			name = RSSD;
+			productName = Tempd;
+			productReference = 61A9DFC90B833EF200BC506C /* RSSD.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		61A9DE3F0B833C9200BC506C /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 61A9DE400B833C9200BC506C /* Build configuration list for PBXProject "RSS" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 0;
+			mainGroup = 61A9DE3D0B833C9200BC506C;
+			productRefGroup = 61A9DFB50B833DE500BC506C /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = BCBCB1530DFD45B5002E8BC3 /* Products */;
+					ProjectRef = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				61A9DFBE0B833E9600BC506C /* RSS */,
+				61A9DFC80B833EF200BC506C /* RSSD */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		BCBCB15C0DFD45B6002E8BC3 /* libnui3D.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnui3D.a;
+			remoteRef = BCBCB15B0DFD45B6002E8BC3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnui3.a;
+			remoteRef = BCBCB15D0DFD45B6002E8BC3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E5D2D1700FDE929400143480 /* libnui3D cocoa.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libnui3D cocoa.a";
+			remoteRef = E5D2D16F0FDE929400143480 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		61A9DFBB0B833E9600BC506C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BC6A09AD0EF92BAB00881ACF /* Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		BC6A09BC0EF92EBF00881ACF /* Copy Resources Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Resources Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "rsync -rC ./resources/ --exclude \".*\" \"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"\n../../tools/make_rc.py resources resource.rc\necho 0 ICON \\\"resources/icon.ico\\\" >> resource.rc\n";
+		};
+		BC6A09BE0EF92F1B00881ACF /* Copy Resources Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Resources Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "rsync -rC ./resources/ --exclude \".*\" \"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"\n../../tools/make_rc.py resources resource.rc\necho 0 ICON \\\"resources/icon.ico\\\" >> resource.rc\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		61A9DFBC0B833E9600BC506C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				61A9DFF30B83433800BC506C /* Application.cpp in Sources */,
+				61A9DFF40B83433800BC506C /* MainWindow.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		61A9DFC60B833EF200BC506C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				61A9DFF50B83433800BC506C /* Application.cpp in Sources */,
+				61A9DFF60B83433800BC506C /* MainWindow.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		BCBCB1640DFD45FA002E8BC3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = nui3;
+			targetProxy = BCBCB1630DFD45FA002E8BC3 /* PBXContainerItemProxy */;
+		};
+		BCBCB1660DFD4605002E8BC3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = nui3D;
+			targetProxy = BCBCB1650DFD4605002E8BC3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		61A9DE410B833C9200BC506C /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				HEADER_SEARCH_PATHS = ../../include;
+				INFOPLIST_FILE = Info.plist;
+			};
+			name = Default;
+		};
+		61A9DFC30B833E9600BC506C /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				COPY_PHASE_STRIP = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = s;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = "-lz";
+				PREBINDING = YES;
+				PRODUCT_NAME = RSS;
+				STRIP_INSTALLED_PRODUCT = YES;
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = NO;
+			};
+			name = Default;
+		};
+		61A9DFCD0B833EF300BC506C /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DEBUGGING_SYMBOLS = full;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = _DEBUG;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = "-lz";
+				PREBINDING = YES;
+				PRODUCT_NAME = RSSD;
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = NO;
+			};
+			name = Default;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		61A9DE400B833C9200BC506C /* Build configuration list for PBXProject "RSS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				61A9DE410B833C9200BC506C /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		61A9DFC20B833E9600BC506C /* Build configuration list for PBXNativeTarget "RSS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				61A9DFC30B833E9600BC506C /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		61A9DFCC0B833EF300BC506C /* Build configuration list for PBXNativeTarget "RSSD" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				61A9DFCD0B833EF300BC506C /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 61A9DE3F0B833C9200BC506C /* Project object */;
+}

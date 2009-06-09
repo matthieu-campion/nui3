@@ -83,7 +83,7 @@ public:
 
   bool HasAttribute(const nglString& rName) const; ///< Return true if the given attribute is present on the node.
   
-  const nglString& GetAttribute(const nglString& rName) const; ///< Return the value of the given attribute. If the attribute doesn't exists on this object the returned string will be empty.
+  const nglString& GetAttribute(const nglString& rName) const; ///< Return the value of the given attribute. If the attribute doesn't exists on this object the returned string will be nglString::Null.
 
   // char* versions:
   void SetName(const char* pName); ///< Set the name of the node.
@@ -157,7 +157,7 @@ private:
 class NUI_API nuiXML : public nuiXMLNode
 {
 public:
-  nuiXML(const nglString& rName);
+  nuiXML(const nglString& rName = nglString::Null);
   nuiXML(const char* pName);
   virtual ~nuiXML();
 
