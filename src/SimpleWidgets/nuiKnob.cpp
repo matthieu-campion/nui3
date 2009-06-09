@@ -270,7 +270,7 @@ bool nuiKnob::MouseMoved(nuiSize X, nuiSize Y)
     nuiSize movement = ( x + y ) / sensitivity;
 
     start += (mRange.GetRange() - mRange.GetPageSize()) * (movement/range);
-
+    
     mRange.SetValue(start);
     
     mInteractiveValueChanged = true;

@@ -724,7 +724,7 @@ nglImage* nglImage::Crop(uint32 x, uint32 y, uint32 width, uint32 height)
   // build new image
   nglImage* pNew = new nglImage(newInfo, eTransfert);
   
-  char* pSrc = GetBuffer() + (x * mInfo.mBytesPerPixel);
+  char* pSrc = GetBuffer() + (y * mInfo.mBytesPerLine) + (x * mInfo.mBytesPerPixel);
   char* pDst = pNew->GetBuffer();
   
   for (uint i = 0; i < height; i++, pSrc += mInfo.mBytesPerLine, pDst += newInfo.mBytesPerLine)
