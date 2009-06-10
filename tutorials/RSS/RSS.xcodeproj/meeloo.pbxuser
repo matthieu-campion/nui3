@@ -102,6 +102,7 @@
 			E5B74ACD0FE01BBF00476F43 /* PBXTextBookmark */ = E5B74ACD0FE01BBF00476F43 /* PBXTextBookmark */;
 			E5B74ACE0FE01BC800476F43 /* PBXTextBookmark */ = E5B74ACE0FE01BC800476F43 /* PBXTextBookmark */;
 			E5B74ACF0FE01BCD00476F43 /* PBXTextBookmark */ = E5B74ACF0FE01BCD00476F43 /* PBXTextBookmark */;
+			E5B74ADC0FE021A500476F43 /* PBXTextBookmark */ = E5B74ADC0FE021A500476F43 /* PBXTextBookmark */;
 		};
 		sourceControlManager = E5D2D1840FDE929500143480 /* Source Control */;
 		userBuildSettings = {
@@ -227,9 +228,9 @@
 		path = /Users/meeloo/work/nui3/src/Utils/nuiRSS.cpp;
 		sourceTree = "<absolute>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1293, 4970}}";
+			sepNavIntBoundsRect = "{{0, 0}, {906, 5054}}";
 			sepNavSelRange = "{2475, 0}";
-			sepNavVisRange = "{2064, 862}";
+			sepNavVisRange = "{1917, 1126}";
 		};
 	};
 	E5983F0E0FDF121500533854 /* PBXTextBookmark */ = {
@@ -599,6 +600,16 @@
 		rType = 0;
 		vrLen = 862;
 		vrLoc = 2064;
+	};
+	E5B74ADC0FE021A500476F43 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5983F0C0FDF121000533854 /* nuiRSS.cpp */;
+		name = "nuiRSS.cpp: 117";
+		rLen = 0;
+		rLoc = 2475;
+		rType = 0;
+		vrLen = 1126;
+		vrLoc = 1917;
 	};
 	E5D2D1690FDE929400143480 /* RSS */ = {
 		isa = PBXExecutable;

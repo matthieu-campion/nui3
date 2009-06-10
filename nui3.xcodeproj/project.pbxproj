@@ -3529,6 +3529,9 @@
 		E5B678C90F39EFE100DBF325 /* nuiAttributeAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B678C80F39EFE100DBF325 /* nuiAttributeAnimation.h */; };
 		E5B678CA0F39EFE100DBF325 /* nuiAttributeAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B678C80F39EFE100DBF325 /* nuiAttributeAnimation.h */; };
 		E5B678CB0F39EFE100DBF325 /* nuiAttributeAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B678C80F39EFE100DBF325 /* nuiAttributeAnimation.h */; };
+		E5B74ADF0FE021C900476F43 /* nuiRSSView.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B74ADE0FE021C900476F43 /* nuiRSSView.h */; };
+		E5B74AE00FE021C900476F43 /* nuiRSSView.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B74ADE0FE021C900476F43 /* nuiRSSView.h */; };
+		E5B74AE10FE021C900476F43 /* nuiRSSView.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B74ADE0FE021C900476F43 /* nuiRSSView.h */; };
 		E5B916C10E8A6CDC00610715 /* nuiHyperLink.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5B916C00E8A6CDC00610715 /* nuiHyperLink.cpp */; };
 		E5B916C20E8A6CDC00610715 /* nuiHyperLink.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5B916C00E8A6CDC00610715 /* nuiHyperLink.cpp */; };
 		E5B916C40E8A6CFB00610715 /* nuiHyperLink.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B916C30E8A6CFB00610715 /* nuiHyperLink.h */; };
@@ -4789,6 +4792,7 @@
 		E5B009E30C87857A004BEE4E /* nuiRadioButton.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiRadioButton.h; path = include/nuiRadioButton.h; sourceTree = SOURCE_ROOT; };
 		E5B678C40F39EFCF00DBF325 /* nuiAttributeAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiAttributeAnimation.cpp; path = Animations/nuiAttributeAnimation.cpp; sourceTree = "<group>"; };
 		E5B678C80F39EFE100DBF325 /* nuiAttributeAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiAttributeAnimation.h; path = include/nuiAttributeAnimation.h; sourceTree = SOURCE_ROOT; };
+		E5B74ADE0FE021C900476F43 /* nuiRSSView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiRSSView.h; path = include/nuiRSSView.h; sourceTree = SOURCE_ROOT; };
 		E5B916C00E8A6CDC00610715 /* nuiHyperLink.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiHyperLink.cpp; sourceTree = "<group>"; };
 		E5B916C30E8A6CFB00610715 /* nuiHyperLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiHyperLink.h; path = include/nuiHyperLink.h; sourceTree = SOURCE_ROOT; };
 		E5BC28480EFF1132009EEA3B /* nuiHTTP_CoreFoundation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiHTTP_CoreFoundation.cpp; path = CoreFoundation/nuiHTTP_CoreFoundation.cpp; sourceTree = "<group>"; };
@@ -6573,6 +6577,7 @@
 				BC3919860CBA5B1A00C56FD2 /* nuiZoomBar.cpp */,
 				BC3919890CBA5B2F00C56FD2 /* nuiZoomBar.h */,
 				E5B009DE0C87855E004BEE4E /* nuiToggleButton.h */,
+				E5B74ADE0FE021C900476F43 /* nuiRSSView.h */,
 			);
 			name = SimpleWidgets;
 			path = src/SimpleWidgets;
@@ -7582,6 +7587,7 @@
 				E5A0FE450FA1336500D934F6 /* nuiDecorationInspector.h in Headers */,
 				E556973A0FB2D71600324321 /* nuiParser.h in Headers */,
 				E5D2D18D0FDE949C00143480 /* nuiRSS.h in Headers */,
+				E5B74AE00FE021C900476F43 /* nuiRSSView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8262,6 +8268,7 @@
 				E5A0FE440FA1336500D934F6 /* nuiDecorationInspector.h in Headers */,
 				E55697380FB2D71600324321 /* nuiParser.h in Headers */,
 				E5D2D18E0FDE949C00143480 /* nuiRSS.h in Headers */,
+				E5B74ADF0FE021C900476F43 /* nuiRSSView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8940,6 +8947,7 @@
 				E5A0FE460FA1336500D934F6 /* nuiDecorationInspector.h in Headers */,
 				E556973C0FB2D71600324321 /* nuiParser.h in Headers */,
 				E5D2D18F0FDE949C00143480 /* nuiRSS.h in Headers */,
+				E5B74AE10FE021C900476F43 /* nuiRSSView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
