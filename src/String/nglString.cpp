@@ -1410,15 +1410,15 @@ void nglString::DecodeFromXML()
   Replace(nglString("&gt;")   , nglString((nglChar)'>'));
 }
 
-void nglString::EncodeToWeb()
-{
-  Replace(nglString((nglChar)'&'), nglString("&amp;"));
-}
-
-void nglString::DecodeFromWeb()
-{
-  Replace(nglString("&amp;")  , nglString((nglChar)'&'));
-}
+//void nglString::EncodeToWeb()
+//{
+//  Replace(nglString((nglChar)'&'), nglString("&amp;"));
+//}
+//
+//void nglString::DecodeFromWeb()
+//{
+//  Replace(nglString("&amp;")  , nglString((nglChar)'&'));
+//}
 
 
 nglString& nglString::Format(const nglString& rFormat, ...)
