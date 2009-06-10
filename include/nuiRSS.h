@@ -92,8 +92,8 @@ protected:
   
   nuiTimer* mpNotificationTimer;
   bool TimeToNotify(const nuiEvent& rEvent);
+
   nglThreadDelegate* mpHTTPThread;
-  
   void StartHTTPThread();
   
   nglString mTitle;

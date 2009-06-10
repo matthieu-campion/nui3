@@ -114,6 +114,8 @@ const nglString& nuiRSSItem::GetSourceURL() const
 nuiRSS::nuiRSS(const nglString& rURL, int32 SecondsBetweenUpdates, nglIStream* pOriginalStream)
 : mSink(this), mRSSURL(rURL), mUpdating(false)
 {
+  mpXML = NULL;
+  mpHTTPThread = NULL;
   if (pOriginalStream)
   {
     nuiXML xml;
@@ -336,8 +338,12 @@ void nuiRSS::StartHTTPThread()
 
 bool nuiRSS::TimeToUpdate(const nuiEvent& rEvent)
 {
+  if (mpHTTPThread)
+    return false;
+  
   mpNotificationTimer->Start();
-  StartHTTPThread();
+  mpHTTPThread = new nglThreadDelegate(nuiMakeDelegate(this, &nuiRSS::StartHTTPThread));
+  mpHTTPThread->Start();
   return false;
 }
 
@@ -345,12 +351,14 @@ bool nuiRSS::TimeToNotify(const nuiEvent& rEvent)
 {
   if (mUpdating && mpXML)
   {
-    mUpdating = false;
-    
     UpdateFromXML(mpXML);
     
     delete mpXML;
     mpXML = NULL;
+    
+    delete mpHTTPThread;
+    mpHTTPThread = NULL;
+    mUpdating = false;
   }
   return false;
 }

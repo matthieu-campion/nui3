@@ -15,7 +15,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					1474,
+					138,
 					20,
 					48,
 					43,
@@ -54,8 +54,8 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 266316654;
-			PBXWorkspaceStateSaveDate = 266316654;
+			PBXPerProjectTemplateStateSaveDate = 266344872;
+			PBXWorkspaceStateSaveDate = 266344872;
 		};
 		perUserProjectItems = {
 			E5983EF70FDF113F00533854 = E5983EF70FDF113F00533854 /* PBXTextBookmark */;
@@ -96,6 +96,12 @@
 			E5983F460FDF1A8400533854 = E5983F460FDF1A8400533854 /* PBXTextBookmark */;
 			E5983F470FDF1A9100533854 = E5983F470FDF1A9100533854 /* PBXTextBookmark */;
 			E5983F480FDF1A9700533854 = E5983F480FDF1A9700533854 /* PBXTextBookmark */;
+			E5B74AC80FE01BBF00476F43 /* PBXTextBookmark */ = E5B74AC80FE01BBF00476F43 /* PBXTextBookmark */;
+			E5B74ACA0FE01BBF00476F43 /* PBXTextBookmark */ = E5B74ACA0FE01BBF00476F43 /* PBXTextBookmark */;
+			E5B74ACB0FE01BBF00476F43 /* PBXTextBookmark */ = E5B74ACB0FE01BBF00476F43 /* PBXTextBookmark */;
+			E5B74ACD0FE01BBF00476F43 /* PBXTextBookmark */ = E5B74ACD0FE01BBF00476F43 /* PBXTextBookmark */;
+			E5B74ACE0FE01BC800476F43 /* PBXTextBookmark */ = E5B74ACE0FE01BC800476F43 /* PBXTextBookmark */;
+			E5B74ACF0FE01BCD00476F43 /* PBXTextBookmark */ = E5B74ACF0FE01BCD00476F43 /* PBXTextBookmark */;
 		};
 		sourceControlManager = E5D2D1840FDE929500143480 /* Source Control */;
 		userBuildSettings = {
@@ -209,7 +215,7 @@
 		fRef = E5983F0C0FDF121000533854 /* nuiRSS.cpp */;
 		name = "nuiRSS.cpp: 276";
 		rLen = 0;
-		rLoc = 5078;
+		rLoc = 5117;
 		rType = 0;
 		vrLen = 832;
 		vrLoc = 4562;
@@ -220,6 +226,11 @@
 		name = nuiRSS.cpp;
 		path = /Users/meeloo/work/nui3/src/Utils/nuiRSS.cpp;
 		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1293, 4970}}";
+			sepNavSelRange = "{2475, 0}";
+			sepNavVisRange = "{2064, 862}";
+		};
 	};
 	E5983F0E0FDF121500533854 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -236,7 +247,7 @@
 		fRef = E5983F0C0FDF121000533854 /* nuiRSS.cpp */;
 		name = "nuiRSS.cpp: 276";
 		rLen = 0;
-		rLoc = 5078;
+		rLoc = 5117;
 		rType = 0;
 		vrLen = 421;
 		vrLoc = 4562;
@@ -246,7 +257,7 @@
 		fRef = E5983F0C0FDF121000533854 /* nuiRSS.cpp */;
 		name = "nuiRSS.cpp: 276";
 		rLen = 0;
-		rLoc = 5078;
+		rLoc = 5117;
 		rType = 0;
 		vrLen = 1561;
 		vrLoc = 4286;
@@ -256,7 +267,7 @@
 		fRef = E5983F0C0FDF121000533854 /* nuiRSS.cpp */;
 		name = "nuiRSS.cpp: 276";
 		rLen = 0;
-		rLoc = 5078;
+		rLoc = 5117;
 		rType = 0;
 		vrLen = 1562;
 		vrLoc = 4287;
@@ -282,7 +293,7 @@
 		isa = PBXTextBookmark;
 		fRef = E5983F0C0FDF121000533854 /* nuiRSS.cpp */;
 		rLen = 0;
-		rLoc = 275;
+		rLoc = 277;
 		rType = 1;
 	};
 	E5983F1E0FDF12EB00533854 /* PBXTextBookmark */ = {
@@ -290,7 +301,7 @@
 		fRef = E5983F0C0FDF121000533854 /* nuiRSS.cpp */;
 		name = "nuiRSS.cpp: 276";
 		rLen = 0;
-		rLoc = 5078;
+		rLoc = 5117;
 		rType = 0;
 		vrLen = 678;
 		vrLoc = 4477;
@@ -317,7 +328,7 @@
 		fRef = E5983F0C0FDF121000533854 /* nuiRSS.cpp */;
 		name = "nuiRSS.cpp: 276";
 		rLen = 0;
-		rLoc = 5059;
+		rLoc = 5098;
 		rType = 0;
 		vrLen = 798;
 		vrLoc = 4550;
@@ -327,7 +338,7 @@
 		fRef = E5983F0C0FDF121000533854 /* nuiRSS.cpp */;
 		name = "nuiRSS.cpp: 276";
 		rLen = 0;
-		rLoc = 5059;
+		rLoc = 5098;
 		rType = 0;
 		vrLen = 1622;
 		vrLoc = 4287;
@@ -337,7 +348,7 @@
 		fRef = E5983F0C0FDF121000533854 /* nuiRSS.cpp */;
 		name = "nuiRSS.cpp: 276";
 		rLen = 0;
-		rLoc = 5059;
+		rLoc = 5098;
 		rType = 0;
 		vrLen = 1622;
 		vrLoc = 4287;
@@ -347,7 +358,7 @@
 		fRef = E5983F0C0FDF121000533854 /* nuiRSS.cpp */;
 		name = "nuiRSS.cpp: 285";
 		rLen = 0;
-		rLoc = 5130;
+		rLoc = 5169;
 		rType = 0;
 		vrLen = 1080;
 		vrLoc = 4725;
@@ -357,7 +368,7 @@
 		fRef = E5983F0C0FDF121000533854 /* nuiRSS.cpp */;
 		name = "nuiRSS.cpp: 285";
 		rLen = 0;
-		rLoc = 5130;
+		rLoc = 5169;
 		rType = 0;
 		vrLen = 1659;
 		vrLoc = 4287;
@@ -367,7 +378,7 @@
 		fRef = E5983F0C0FDF121000533854 /* nuiRSS.cpp */;
 		name = "nuiRSS.cpp: 285";
 		rLen = 0;
-		rLoc = 5130;
+		rLoc = 5169;
 		rType = 0;
 		vrLen = 1617;
 		vrLoc = 4419;
@@ -519,6 +530,75 @@
 		rType = 0;
 		vrLen = 630;
 		vrLoc = 5661;
+	};
+	E5B74AC80FE01BBF00476F43 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5B74AC90FE01BBF00476F43 /* nglString.cpp */;
+		name = "nglString.cpp: 1892";
+		rLen = 0;
+		rLoc = 36712;
+		rType = 0;
+		vrLen = 595;
+		vrLoc = 36414;
+	};
+	E5B74AC90FE01BBF00476F43 /* nglString.cpp */ = {
+		isa = PBXFileReference;
+		name = nglString.cpp;
+		path = /Users/meeloo/work/nui3/src/String/nglString.cpp;
+		sourceTree = "<absolute>";
+	};
+	E5B74ACA0FE01BBF00476F43 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5983F0C0FDF121000533854 /* nuiRSS.cpp */;
+		rLen = 0;
+		rLoc = 274;
+		rType = 1;
+	};
+	E5B74ACB0FE01BBF00476F43 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5B74ACC0FE01BBF00476F43 /* nglString.cpp */;
+		name = "nglString.cpp: 1892";
+		rLen = 0;
+		rLoc = 36712;
+		rType = 0;
+		vrLen = 595;
+		vrLoc = 36414;
+	};
+	E5B74ACC0FE01BBF00476F43 /* nglString.cpp */ = {
+		isa = PBXFileReference;
+		name = nglString.cpp;
+		path = /Users/meeloo/work/nui3/src/String/nglString.cpp;
+		sourceTree = "<absolute>";
+	};
+	E5B74ACD0FE01BBF00476F43 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5983F0C0FDF121000533854 /* nuiRSS.cpp */;
+		name = "nuiRSS.cpp: 117";
+		rLen = 0;
+		rLoc = 2475;
+		rType = 0;
+		vrLen = 721;
+		vrLoc = 2205;
+	};
+	E5B74ACE0FE01BC800476F43 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5983F0C0FDF121000533854 /* nuiRSS.cpp */;
+		name = "nuiRSS.cpp: 117";
+		rLen = 0;
+		rLoc = 2475;
+		rType = 0;
+		vrLen = 879;
+		vrLoc = 2067;
+	};
+	E5B74ACF0FE01BCD00476F43 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5983F0C0FDF121000533854 /* nuiRSS.cpp */;
+		name = "nuiRSS.cpp: 117";
+		rLen = 0;
+		rLoc = 2475;
+		rType = 0;
+		vrLen = 862;
+		vrLoc = 2064;
 	};
 	E5D2D1690FDE929400143480 /* RSS */ = {
 		isa = PBXExecutable;
