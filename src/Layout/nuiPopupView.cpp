@@ -11,6 +11,9 @@
 nuiPopupView::nuiPopupView(nuiWidget* pWidget, nuiSize X, nuiSize Y)
 {
   SetObjectClass(_T("nuiPopupView"));
+
+  mpPopupDecoration = NULL;
+  
   mX = X;
   mY = Y;
   pWidget->LocalToGlobal(mX, mY);
@@ -62,17 +65,43 @@ bool nuiPopupView::SetRect(const nuiRect& rRect)
   return true;
 }
 
+
+nuiDecoration* nuiPopupView::GetPopupDecoration()
+{
+  return mpPopupDecoration;
+}
+
+void nuiPopupView::SetPopupDecoration(const nglString& rDecorationName)
+{
+  nuiDecoration* pDeco = nuiDecoration::Get(rDecorationName);
+  SetPopupDecoration(pDeco);
+}
+
+void nuiPopupView::SetPopupDecoration(nuiDecoration* pDeco)
+{
+  mpPopupDecoration = pDeco;
+}
+
 bool nuiPopupView::Draw(nuiDrawContext* pContext)
 {
-  nuiTheme* pTheme = GetTheme();
-  NGL_ASSERT(pTheme);
-  pTheme->DrawWindowShade(pContext, mChildrenRect, nuiColor(1.0f, 1.0f, 1.0f, GetAlpha()), true);
-  pTheme->Release();
+  if (!mpPopupDecoration) 
+  {
+    nuiTheme* pTheme = GetTheme();
+    NGL_ASSERT(pTheme);
+    pTheme->DrawWindowShade(pContext, mChildrenRect, nuiColor(1.0f, 1.0f, 1.0f, GetAlpha()), true);
+    pTheme->Release();
+    
+    SetFillColor(pContext, eActiveWindowBg);
+    SetStrokeColor(pContext, eActiveWindowFg);
+    
+    pContext->DrawRect(mChildrenRect, eStrokeAndFillShape);
+  }
+  else
+  {
+     mpPopupDecoration->Draw(pContext, this, mChildrenRect);
+  }
   
-  SetFillColor(pContext, eActiveWindowBg);
-  SetStrokeColor(pContext, eActiveWindowFg);
   
-  pContext->DrawRect(mChildrenRect, eStrokeAndFillShape);
   
   return DrawChildren(pContext);
 }

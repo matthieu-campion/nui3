@@ -28,10 +28,15 @@ public:
   
   bool Draw(nuiDrawContext* pContext);
   
+  void SetPopupDecoration(const nglString& rDecorationName);
+  void SetPopupDecoration(nuiDecoration* pDecoration);
+  nuiDecoration* GetPopupDecoration();
+  
   void ConnectTopLevel();
 protected:
   //#TODO Add some way to give focus back to the previous focussed widget
   nuiSize mX, mY;
   nuiRect mChildrenRect;
+  nuiDecoration* mpPopupDecoration;
 };
 

@@ -26,7 +26,7 @@ nuiColorSelector::nuiColorSelector(const nuiColor& rInitialColor, const std::vec
   mpMainBox->SetObjectName(_T("nuiColorSelector::MainBox"));
   mpMainBox->SetExpand(nuiExpandShrinkAndGrow);
   AddChild(mpMainBox);
-  
+
   mpColorPane = new nuiSimpleContainer();
   mpColorPane->SetBorder(2.f, 2.f);
   mpColorPane->SetUserSize(20.f, 20.f);
