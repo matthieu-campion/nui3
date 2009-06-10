@@ -18,20 +18,12 @@ using namespace std;
 void XMLizeString(nglString& str, const nglString& src)
 {
   str = src;
-  str.Replace(nglString((nglChar)'&'), nglString("&amp;"));
-  str.Replace(nglString((nglChar)'\"'), nglString("&quot;"));
-  str.Replace(nglString((nglChar)'\''), nglString("&apos;"));
-  str.Replace(nglString((nglChar)'<'), nglString("&lt;"));
-  str.Replace(nglString((nglChar)'>'), nglString("&gt;"));
+  str.EncodeToXML();
 }
 
 void DeXMLizeString(nglString& str)
 {
-  str.Replace(nglString("&amp;")  , nglString((nglChar)'&'));
-  str.Replace(nglString("&quot;") , nglString((nglChar)'\"'));
-  str.Replace(nglString("&apos;") , nglString((nglChar)'\''));
-  str.Replace(nglString("&lt;")   , nglString((nglChar)'<'));
-  str.Replace(nglString("&gt;")   , nglString((nglChar)'>'));
+  str.DecodeFromXML();
 }
 
 class xmlLexer

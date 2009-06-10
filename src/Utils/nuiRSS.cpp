@@ -13,7 +13,7 @@
 #include "nglThread.h"
 
 #define STARTELEM for (int32 i = 0; i < pNode->GetChildrenCount(); i++) { nuiXMLNode* pN = pNode->GetChild(i); const nglString& name(pN->GetName()); 
-#define GETELEM(X, STR) if (name == _T(X)) STR = pN->GetValue(); else
+#define GETELEM(X, STR) if (name == _T(X)) { nuiXMLNode* pp = pN->GetChild(0); STR = pp->GetValue(); printf(X ": '%ls'\n", STR.GetChars()); } else
 #define GETELEMATTR(X, Y, STR) if (name == _T(X)) STR = pN->GetAttribute(_T(Y)); else
 #define ENDELEM {} }
 
@@ -112,7 +112,7 @@ const nglString& nuiRSSItem::GetSourceURL() const
 /////////////////////////////////////////////////////////////////////////
 // nuiRSS
 nuiRSS::nuiRSS(const nglString& rURL, int32 SecondsBetweenUpdates, nglIStream* pOriginalStream)
-: mSink(this)
+: mSink(this), mRSSURL(rURL), mUpdating(false)
 {
   if (pOriginalStream)
   {
@@ -134,7 +134,8 @@ nuiRSS::nuiRSS(const nglString& rURL, int32 SecondsBetweenUpdates, nglIStream* p
 
 nuiRSS::~nuiRSS()
 {
-  
+  delete mpUpdateTimer;
+  delete mpNotificationTimer;
 }
 
 nglTime nuiRSS::GetLastUpdate() const
@@ -264,39 +265,73 @@ void nuiRSS::SetItemRead(int32 index, bool set)
   // #FIXME
 }
 
-bool nuiRSS::UpdateFromXML(nuiXMLNode* pNode)
+bool nuiRSS::UpdateFromXML(nuiXMLNode* pXML)
 {
-  pNode = pNode->GetChild(_T("rss"));
-  if (!pNode)
+  if (!pXML)
+    return false;
+
+  if (pXML->GetName() != _T("rss"))
     return false;
   
-  STARTELEM;
-  GETELEM("title", mTitle);
-  GETELEM("url", mURL);
-  GETELEM("description", mDescription);
-  GETELEM("language", mLanguage);
-  GETELEM("copyright", mCopyright);
-  GETELEM("managingEditor", mManagingEditor);
-  GETELEM("webMaster", mWebMaster);
-  GETELEM("pubDate", mPublishingDate);
-  GETELEM("lastBuildDate", mLastBuildDate);
-  GETELEM("category", mCategory);
-  GETELEM("generator", mGenerator);
-  GETELEM("docs", mDocs);
-  GETELEM("ttl", mTimeToLive);
-  //GETSUBELEM("image", "title", mImageTitle);
-  //GETSUBELEM("image", "url", mImageURL);
-  //GETSUBELEM("image", "link", mImageLink);
-  GETELEM("rating", mRating);
-  GETELEM("skipHours", mSkipHours);
-  GETELEM("skipDays", mSkipDays);
-  ENDELEM;
+  for (int32 j = 0; j < pXML->GetChildrenCount(); j++)
+  {
+    nuiXMLNode* pNode = pXML->GetChild(j);
+    if (!pNode)
+      return false;
+
+    printf("xml item: '%ls'\n", pNode->GetName().GetChars());
+    if (pNode->GetName() == _T("channel"))
+    {
+      mItems.clear();
+      
+      STARTELEM;
+      GETELEM("title", mTitle);
+      GETELEM("url", mURL);
+      GETELEM("description", mDescription);
+      GETELEM("language", mLanguage);
+      GETELEM("copyright", mCopyright);
+      GETELEM("managingEditor", mManagingEditor);
+      GETELEM("webMaster", mWebMaster);
+      GETELEM("pubDate", mPublishingDate);
+      GETELEM("lastBuildDate", mLastBuildDate);
+      GETELEM("category", mCategory);
+      GETELEM("generator", mGenerator);
+      GETELEM("docs", mDocs);
+      GETELEM("ttl", mTimeToLive);
+      //GETSUBELEM("image", "title", mImageTitle);
+      //GETSUBELEM("image", "url", mImageURL);
+      //GETSUBELEM("image", "link", mImageLink);
+      GETELEM("rating", mRating);
+      GETELEM("skipHours", mSkipHours);
+      GETELEM("skipDays", mSkipDays);
+      if (name == _T("item"))
+      {
+        mItems.push_back(nuiRSSItem(pN));
+      }
+      ENDELEM;
+      
+      return true;
+    }
+    
+  }
   return true;
 }
 
 void nuiRSS::StartHTTPThread()
 {
-  // Bleh
+  mUpdating = true;
+  nglString url(mRSSURL);
+  url.Replace(_T("feed://"), _T("http://"));
+  nuiHTTPRequest request(url);
+  nuiHTTPResponse* pResponse = request.SendRequest();
+  nuiXML* pXML = new nuiXML();
+  nglIMemory mem(&pResponse->GetBody()[0], pResponse->GetBody().size());
+  if (!pXML->Load(mem))
+  {
+    delete pXML;
+    return;
+  }
+  mpXML = pXML;
 }
 
 bool nuiRSS::TimeToUpdate(const nuiEvent& rEvent)
@@ -308,5 +343,14 @@ bool nuiRSS::TimeToUpdate(const nuiEvent& rEvent)
 
 bool nuiRSS::TimeToNotify(const nuiEvent& rEvent)
 {
+  if (mUpdating && mpXML)
+  {
+    mUpdating = false;
+    
+    UpdateFromXML(mpXML);
+    
+    delete mpXML;
+    mpXML = NULL;
+  }
   return false;
 }

@@ -86,6 +86,7 @@ public:
   void SetItemRead(int32 index, bool set);
   
 protected:
+  nglString mRSSURL;
   nuiTimer* mpUpdateTimer;
   bool TimeToUpdate(const nuiEvent& rEvent);
   
@@ -120,4 +121,8 @@ protected:
   bool UpdateFromXML(nuiXMLNode* pNode);
   
   nuiEventSink<nuiRSS> mSink;
+  
+  bool mUpdating;
+  nuiXML* mpXML;
 };
+

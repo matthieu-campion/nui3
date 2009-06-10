@@ -11,6 +11,7 @@
 #include "nuiCSS.h"
 #include "nuiVBox.h"
 
+#include "nuiRSS.h"
 
 /*
  * MainWindow
@@ -24,6 +25,8 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
 #endif
   
   LoadCSS(_T("rsrc:/css/main.css"));
+  
+  nuiRSS* pRSS = new nuiRSS(_T("feed://feeds.macbidouille.com/macbidouille/"));
 }
 
 MainWindow::~MainWindow()

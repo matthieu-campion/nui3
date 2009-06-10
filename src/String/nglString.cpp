@@ -1392,6 +1392,35 @@ char* nglString::EncodeUrl()
 }
 
 
+void nglString::EncodeToXML()
+{
+  Replace(nglString((nglChar)'&'), nglString("&amp;"));
+  Replace(nglString((nglChar)'\"'), nglString("&quot;"));
+  Replace(nglString((nglChar)'\''), nglString("&apos;"));
+  Replace(nglString((nglChar)'<'), nglString("&lt;"));
+  Replace(nglString((nglChar)'>'), nglString("&gt;"));
+}
+
+void nglString::DecodeFromXML()
+{
+  Replace(nglString("&amp;")  , nglString((nglChar)'&'));
+  Replace(nglString("&quot;") , nglString((nglChar)'\"'));
+  Replace(nglString("&apos;") , nglString((nglChar)'\''));
+  Replace(nglString("&lt;")   , nglString((nglChar)'<'));
+  Replace(nglString("&gt;")   , nglString((nglChar)'>'));
+}
+
+void nglString::EncodeToWeb()
+{
+  Replace(nglString((nglChar)'&'), nglString("&amp;"));
+}
+
+void nglString::DecodeFromWeb()
+{
+  Replace(nglString("&amp;")  , nglString((nglChar)'&'));
+}
+
+
 nglString& nglString::Format(const nglString& rFormat, ...)
 {
   if (rFormat.IsNull())
