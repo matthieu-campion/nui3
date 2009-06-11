@@ -40,8 +40,9 @@ bool nuiHyperLink::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button
   {
     mClicked++;
     Grab();
+    return true;
   }
-  return true;
+  return false;
 }
 
 bool nuiHyperLink::MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
@@ -57,8 +58,9 @@ bool nuiHyperLink::MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Butt
       url.OpenBrowser();
       SetUnderline(false);
     }
+    return true;
   }
-  return true;
+  return false;
 }
 
 void nuiHyperLink::SetHover(bool Hover)

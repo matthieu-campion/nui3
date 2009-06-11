@@ -85,6 +85,10 @@ public:
   bool GetItemRead(int32 index) const;
   void SetItemRead(int32 index, bool set);
   
+  bool ForceUpdate();
+  
+  nuiSimpleEventSource<0> UpdateStarted;
+  nuiSimpleEventSource<0> UpdateDone;
 protected:
   nglString mRSSURL;
   nuiTimer* mpUpdateTimer;

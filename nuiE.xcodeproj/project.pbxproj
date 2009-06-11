@@ -439,26 +439,6 @@
 		6126DAE00DA574C500D2641A /* version.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126DAAC0DA574C500D2641A /* version.h */; };
 		6126DAE10DA574C500D2641A /* win32tc.c in Sources */ = {isa = PBXBuildFile; fileRef = 6126DAAD0DA574C500D2641A /* win32tc.c */; };
 		6126DAE20DA574C500D2641A /* win32tc.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126DAAE0DA574C500D2641A /* win32tc.h */; };
-		6126DB2D0DA5751300D2641A /* amigaconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126DB190DA5751300D2641A /* amigaconfig.h */; };
-		6126DB2E0DA5751300D2641A /* ascii.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126DB1A0DA5751300D2641A /* ascii.h */; };
-		6126DB2F0DA5751300D2641A /* asciitab.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126DB1B0DA5751300D2641A /* asciitab.h */; };
-		6126DB300DA5751300D2641A /* expat.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126DB1C0DA5751300D2641A /* expat.h */; };
-		6126DB310DA5751300D2641A /* expat_external.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126DB1D0DA5751300D2641A /* expat_external.h */; };
-		6126DB320DA5751300D2641A /* iasciitab.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126DB1E0DA5751300D2641A /* iasciitab.h */; };
-		6126DB330DA5751300D2641A /* internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126DB1F0DA5751300D2641A /* internal.h */; };
-		6126DB340DA5751300D2641A /* latin1tab.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126DB200DA5751300D2641A /* latin1tab.h */; };
-		6126DB350DA5751300D2641A /* macconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126DB210DA5751300D2641A /* macconfig.h */; };
-		6126DB360DA5751300D2641A /* nametab.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126DB220DA5751300D2641A /* nametab.h */; };
-		6126DB370DA5751300D2641A /* utf8tab.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126DB230DA5751300D2641A /* utf8tab.h */; };
-		6126DB380DA5751300D2641A /* winconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126DB240DA5751300D2641A /* winconfig.h */; };
-		6126DB390DA5751300D2641A /* xmlparse.c in Sources */ = {isa = PBXBuildFile; fileRef = 6126DB250DA5751300D2641A /* xmlparse.c */; };
-		6126DB3A0DA5751300D2641A /* xmlrole.c in Sources */ = {isa = PBXBuildFile; fileRef = 6126DB260DA5751300D2641A /* xmlrole.c */; };
-		6126DB3B0DA5751300D2641A /* xmlrole.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126DB270DA5751300D2641A /* xmlrole.h */; };
-		6126DB3C0DA5751300D2641A /* xmltok.c in Sources */ = {isa = PBXBuildFile; fileRef = 6126DB280DA5751300D2641A /* xmltok.c */; };
-		6126DB3D0DA5751300D2641A /* xmltok.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126DB290DA5751300D2641A /* xmltok.h */; };
-		6126DB3E0DA5751300D2641A /* xmltok_impl.c in Sources */ = {isa = PBXBuildFile; fileRef = 6126DB2A0DA5751300D2641A /* xmltok_impl.c */; };
-		6126DB3F0DA5751300D2641A /* xmltok_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126DB2B0DA5751300D2641A /* xmltok_impl.h */; };
-		6126DB400DA5751300D2641A /* xmltok_ns.c in Sources */ = {isa = PBXBuildFile; fileRef = 6126DB2C0DA5751300D2641A /* xmltok_ns.c */; };
 		6126DCB90DA5752200D2641A /* dict-list.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126DBFA0DA5752200D2641A /* dict-list.h */; };
 		6126DCBA0DA5752200D2641A /* dict.c in Sources */ = {isa = PBXBuildFile; fileRef = 6126DBFB0DA5752200D2641A /* dict.c */; };
 		6126DCBB0DA5752200D2641A /* dict.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126DBFC0DA5752200D2641A /* dict.h */; };
@@ -942,21 +922,6 @@
 		614B64700DA7BA67000F4C22 /* utf8.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126DAAB0DA574C500D2641A /* utf8.h */; };
 		614B64710DA7BA67000F4C22 /* version.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126DAAC0DA574C500D2641A /* version.h */; };
 		614B64720DA7BA67000F4C22 /* win32tc.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126DAAE0DA574C500D2641A /* win32tc.h */; };
-		614B64730DA7BA67000F4C22 /* amigaconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126DB190DA5751300D2641A /* amigaconfig.h */; };
-		614B64740DA7BA67000F4C22 /* ascii.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126DB1A0DA5751300D2641A /* ascii.h */; };
-		614B64750DA7BA67000F4C22 /* asciitab.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126DB1B0DA5751300D2641A /* asciitab.h */; };
-		614B64760DA7BA67000F4C22 /* expat.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126DB1C0DA5751300D2641A /* expat.h */; };
-		614B64770DA7BA67000F4C22 /* expat_external.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126DB1D0DA5751300D2641A /* expat_external.h */; };
-		614B64780DA7BA67000F4C22 /* iasciitab.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126DB1E0DA5751300D2641A /* iasciitab.h */; };
-		614B64790DA7BA67000F4C22 /* internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126DB1F0DA5751300D2641A /* internal.h */; };
-		614B647A0DA7BA67000F4C22 /* latin1tab.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126DB200DA5751300D2641A /* latin1tab.h */; };
-		614B647B0DA7BA67000F4C22 /* macconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126DB210DA5751300D2641A /* macconfig.h */; };
-		614B647C0DA7BA67000F4C22 /* nametab.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126DB220DA5751300D2641A /* nametab.h */; };
-		614B647D0DA7BA67000F4C22 /* utf8tab.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126DB230DA5751300D2641A /* utf8tab.h */; };
-		614B647E0DA7BA67000F4C22 /* winconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126DB240DA5751300D2641A /* winconfig.h */; };
-		614B647F0DA7BA67000F4C22 /* xmlrole.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126DB270DA5751300D2641A /* xmlrole.h */; };
-		614B64800DA7BA67000F4C22 /* xmltok.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126DB290DA5751300D2641A /* xmltok.h */; };
-		614B64810DA7BA67000F4C22 /* xmltok_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126DB2B0DA5751300D2641A /* xmltok_impl.h */; };
 		614B64820DA7BA67000F4C22 /* dict-list.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126DBFA0DA5752200D2641A /* dict-list.h */; };
 		614B64830DA7BA67000F4C22 /* dict.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126DBFC0DA5752200D2641A /* dict.h */; };
 		614B64840DA7BA67000F4C22 /* geom.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126DBFE0DA5752200D2641A /* geom.h */; };
@@ -1186,11 +1151,6 @@
 		614B65780DA7BA67000F4C22 /* tmbstr.c in Sources */ = {isa = PBXBuildFile; fileRef = 6126DAA80DA574C500D2641A /* tmbstr.c */; };
 		614B65790DA7BA67000F4C22 /* utf8.c in Sources */ = {isa = PBXBuildFile; fileRef = 6126DAAA0DA574C500D2641A /* utf8.c */; };
 		614B657A0DA7BA67000F4C22 /* win32tc.c in Sources */ = {isa = PBXBuildFile; fileRef = 6126DAAD0DA574C500D2641A /* win32tc.c */; };
-		614B657B0DA7BA67000F4C22 /* xmlparse.c in Sources */ = {isa = PBXBuildFile; fileRef = 6126DB250DA5751300D2641A /* xmlparse.c */; };
-		614B657C0DA7BA67000F4C22 /* xmlrole.c in Sources */ = {isa = PBXBuildFile; fileRef = 6126DB260DA5751300D2641A /* xmlrole.c */; };
-		614B657D0DA7BA67000F4C22 /* xmltok.c in Sources */ = {isa = PBXBuildFile; fileRef = 6126DB280DA5751300D2641A /* xmltok.c */; };
-		614B657E0DA7BA67000F4C22 /* xmltok_impl.c in Sources */ = {isa = PBXBuildFile; fileRef = 6126DB2A0DA5751300D2641A /* xmltok_impl.c */; };
-		614B657F0DA7BA67000F4C22 /* xmltok_ns.c in Sources */ = {isa = PBXBuildFile; fileRef = 6126DB2C0DA5751300D2641A /* xmltok_ns.c */; };
 		614B65800DA7BA67000F4C22 /* dict.c in Sources */ = {isa = PBXBuildFile; fileRef = 6126DBFB0DA5752200D2641A /* dict.c */; };
 		614B65810DA7BA67000F4C22 /* geom.c in Sources */ = {isa = PBXBuildFile; fileRef = 6126DBFD0DA5752200D2641A /* geom.c */; };
 		614B65820DA7BA67000F4C22 /* mesh.c in Sources */ = {isa = PBXBuildFile; fileRef = 6126DC010DA5752200D2641A /* mesh.c */; };
@@ -4956,21 +4916,6 @@
 				614B64700DA7BA67000F4C22 /* utf8.h in Headers */,
 				614B64710DA7BA67000F4C22 /* version.h in Headers */,
 				614B64720DA7BA67000F4C22 /* win32tc.h in Headers */,
-				614B64730DA7BA67000F4C22 /* amigaconfig.h in Headers */,
-				614B64740DA7BA67000F4C22 /* ascii.h in Headers */,
-				614B64750DA7BA67000F4C22 /* asciitab.h in Headers */,
-				614B64760DA7BA67000F4C22 /* expat.h in Headers */,
-				614B64770DA7BA67000F4C22 /* expat_external.h in Headers */,
-				614B64780DA7BA67000F4C22 /* iasciitab.h in Headers */,
-				614B64790DA7BA67000F4C22 /* internal.h in Headers */,
-				614B647A0DA7BA67000F4C22 /* latin1tab.h in Headers */,
-				614B647B0DA7BA67000F4C22 /* macconfig.h in Headers */,
-				614B647C0DA7BA67000F4C22 /* nametab.h in Headers */,
-				614B647D0DA7BA67000F4C22 /* utf8tab.h in Headers */,
-				614B647E0DA7BA67000F4C22 /* winconfig.h in Headers */,
-				614B647F0DA7BA67000F4C22 /* xmlrole.h in Headers */,
-				614B64800DA7BA67000F4C22 /* xmltok.h in Headers */,
-				614B64810DA7BA67000F4C22 /* xmltok_impl.h in Headers */,
 				614B64820DA7BA67000F4C22 /* dict-list.h in Headers */,
 				614B64830DA7BA67000F4C22 /* dict.h in Headers */,
 				614B64840DA7BA67000F4C22 /* geom.h in Headers */,
@@ -5478,21 +5423,6 @@
 				6126DADF0DA574C500D2641A /* utf8.h in Headers */,
 				6126DAE00DA574C500D2641A /* version.h in Headers */,
 				6126DAE20DA574C500D2641A /* win32tc.h in Headers */,
-				6126DB2D0DA5751300D2641A /* amigaconfig.h in Headers */,
-				6126DB2E0DA5751300D2641A /* ascii.h in Headers */,
-				6126DB2F0DA5751300D2641A /* asciitab.h in Headers */,
-				6126DB300DA5751300D2641A /* expat.h in Headers */,
-				6126DB310DA5751300D2641A /* expat_external.h in Headers */,
-				6126DB320DA5751300D2641A /* iasciitab.h in Headers */,
-				6126DB330DA5751300D2641A /* internal.h in Headers */,
-				6126DB340DA5751300D2641A /* latin1tab.h in Headers */,
-				6126DB350DA5751300D2641A /* macconfig.h in Headers */,
-				6126DB360DA5751300D2641A /* nametab.h in Headers */,
-				6126DB370DA5751300D2641A /* utf8tab.h in Headers */,
-				6126DB380DA5751300D2641A /* winconfig.h in Headers */,
-				6126DB3B0DA5751300D2641A /* xmlrole.h in Headers */,
-				6126DB3D0DA5751300D2641A /* xmltok.h in Headers */,
-				6126DB3F0DA5751300D2641A /* xmltok_impl.h in Headers */,
 				6126DCB90DA5752200D2641A /* dict-list.h in Headers */,
 				6126DCBB0DA5752200D2641A /* dict.h in Headers */,
 				6126DCBD0DA5752200D2641A /* geom.h in Headers */,
@@ -5863,11 +5793,6 @@
 				614B65780DA7BA67000F4C22 /* tmbstr.c in Sources */,
 				614B65790DA7BA67000F4C22 /* utf8.c in Sources */,
 				614B657A0DA7BA67000F4C22 /* win32tc.c in Sources */,
-				614B657B0DA7BA67000F4C22 /* xmlparse.c in Sources */,
-				614B657C0DA7BA67000F4C22 /* xmlrole.c in Sources */,
-				614B657D0DA7BA67000F4C22 /* xmltok.c in Sources */,
-				614B657E0DA7BA67000F4C22 /* xmltok_impl.c in Sources */,
-				614B657F0DA7BA67000F4C22 /* xmltok_ns.c in Sources */,
 				614B65800DA7BA67000F4C22 /* dict.c in Sources */,
 				614B65810DA7BA67000F4C22 /* geom.c in Sources */,
 				614B65820DA7BA67000F4C22 /* mesh.c in Sources */,
@@ -6196,11 +6121,6 @@
 				6126DADC0DA574C500D2641A /* tmbstr.c in Sources */,
 				6126DADE0DA574C500D2641A /* utf8.c in Sources */,
 				6126DAE10DA574C500D2641A /* win32tc.c in Sources */,
-				6126DB390DA5751300D2641A /* xmlparse.c in Sources */,
-				6126DB3A0DA5751300D2641A /* xmlrole.c in Sources */,
-				6126DB3C0DA5751300D2641A /* xmltok.c in Sources */,
-				6126DB3E0DA5751300D2641A /* xmltok_impl.c in Sources */,
-				6126DB400DA5751300D2641A /* xmltok_ns.c in Sources */,
 				6126DCBA0DA5752200D2641A /* dict.c in Sources */,
 				6126DCBC0DA5752200D2641A /* geom.c in Sources */,
 				6126DCC00DA5752200D2641A /* mesh.c in Sources */,
@@ -6519,6 +6439,7 @@
 					"-O5",
 					"-funroll-loops",
 				);
+				PRELINK_LIBS = expat;
 				PRODUCT_NAME = nuiE;
 				SKIP_INSTALL = YES;
 				STRIPFLAGS = "-SXx";
@@ -6561,10 +6482,8 @@
 					deps/,
 					deps/glu,
 					deps/libpng,
-					deps/expat/lib,
 					deps/tidy,
 					deps/gameswf,
-					deps/zlib,
 					deps/libjpeg,
 					src/Application/UIKit,
 					src/Application/Carbon,
@@ -6607,6 +6526,7 @@
 				GCC_THUMB_SUPPORT = NO;
 				INSTALL_PATH = /usr/local/lib;
 				OTHER_CFLAGS = "";
+				PRELINK_LIBS = expat;
 				PRODUCT_NAME = nuiEd;
 				SKIP_INSTALL = NO;
 				STRIP_INSTALLED_PRODUCT = NO;

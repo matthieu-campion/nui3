@@ -410,7 +410,10 @@
 				GENERATE_PROFILING_CODE = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LIBRARY_SEARCH_PATHS = "";
-				OTHER_LDFLAGS = "-lz";
+				OTHER_LDFLAGS = (
+					"-lexpat",
+					"-lz",
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = SimpleTouch_iPhone;
 				STRIPFLAGS = "-SXx";
@@ -438,6 +441,10 @@
 				GENERATE_PROFILING_CODE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LIBRARY_SEARCH_PATHS = "";
+				OTHER_LDFLAGS = (
+					"-lexpat",
+					"-lz",
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = SimpleTouch_iPhoneD;
 			};

@@ -817,6 +817,9 @@
 		E505C8960C958C98001D802C /* nglCriticalSection.h in Headers */ = {isa = PBXBuildFile; fileRef = E505C8940C958C98001D802C /* nglCriticalSection.h */; };
 		E505C89A0C958D29001D802C /* nglGuard.h in Headers */ = {isa = PBXBuildFile; fileRef = E505C8990C958D29001D802C /* nglGuard.h */; };
 		E505C89B0C958D29001D802C /* nglGuard.h in Headers */ = {isa = PBXBuildFile; fileRef = E505C8990C958D29001D802C /* nglGuard.h */; };
+		E507CEBE0FE078EE00D80E79 /* nuiRSSView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E507CEBD0FE078EE00D80E79 /* nuiRSSView.cpp */; };
+		E507CEBF0FE078EE00D80E79 /* nuiRSSView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E507CEBD0FE078EE00D80E79 /* nuiRSSView.cpp */; };
+		E507CEC00FE078EE00D80E79 /* nuiRSSView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E507CEBD0FE078EE00D80E79 /* nuiRSSView.cpp */; };
 		E50A2B0F0C8DBD8200C58F94 /* nuiMatrixView.h in Headers */ = {isa = PBXBuildFile; fileRef = E50A2B0D0C8DBD8200C58F94 /* nuiMatrixView.h */; };
 		E50A2B100C8DBD8200C58F94 /* nuiMatrixView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E50A2B0E0C8DBD8200C58F94 /* nuiMatrixView.cpp */; };
 		E50A2B110C8DBD8200C58F94 /* nuiMatrixView.h in Headers */ = {isa = PBXBuildFile; fileRef = E50A2B0D0C8DBD8200C58F94 /* nuiMatrixView.h */; };
@@ -4009,6 +4012,7 @@
 		E505C88A0C958C54001D802C /* nglThread.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nglThread.h; path = include/nglThread.h; sourceTree = SOURCE_ROOT; };
 		E505C8940C958C98001D802C /* nglCriticalSection.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nglCriticalSection.h; path = include/nglCriticalSection.h; sourceTree = SOURCE_ROOT; };
 		E505C8990C958D29001D802C /* nglGuard.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nglGuard.h; path = include/nglGuard.h; sourceTree = SOURCE_ROOT; };
+		E507CEBD0FE078EE00D80E79 /* nuiRSSView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiRSSView.cpp; sourceTree = "<group>"; };
 		E50A2B0D0C8DBD8200C58F94 /* nuiMatrixView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiMatrixView.h; path = include/nuiMatrixView.h; sourceTree = SOURCE_ROOT; };
 		E50A2B0E0C8DBD8200C58F94 /* nuiMatrixView.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiMatrixView.cpp; path = src/Layout/nuiMatrixView.cpp; sourceTree = SOURCE_ROOT; };
 		E50DB77A0D75D8E7005B9316 /* config.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = config.c; path = deps/tidy/config.c; sourceTree = SOURCE_ROOT; };
@@ -6578,6 +6582,7 @@
 				BC3919890CBA5B2F00C56FD2 /* nuiZoomBar.h */,
 				E5B009DE0C87855E004BEE4E /* nuiToggleButton.h */,
 				E5B74ADE0FE021C900476F43 /* nuiRSSView.h */,
+				E507CEBD0FE078EE00D80E79 /* nuiRSSView.cpp */,
 			);
 			name = SimpleWidgets;
 			path = src/SimpleWidgets;
@@ -9552,6 +9557,7 @@
 				E5A0FE4A0FA133BA00D934F6 /* nuiDecorationInspector.cpp in Sources */,
 				E556973B0FB2D71600324321 /* nuiParser.cpp in Sources */,
 				E5D2D18A0FDE946E00143480 /* nuiRSS.cpp in Sources */,
+				E507CEBF0FE078EE00D80E79 /* nuiRSSView.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10081,6 +10087,7 @@
 				E5A0FE4E0FA133BA00D934F6 /* nuiDecorationInspector.cpp in Sources */,
 				E55697390FB2D71600324321 /* nuiParser.cpp in Sources */,
 				E5D2D1890FDE946E00143480 /* nuiRSS.cpp in Sources */,
+				E507CEBE0FE078EE00D80E79 /* nuiRSSView.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10607,6 +10614,7 @@
 				E5A0FE4C0FA133BA00D934F6 /* nuiDecorationInspector.cpp in Sources */,
 				E556973D0FB2D71600324321 /* nuiParser.cpp in Sources */,
 				E5D2D18B0FDE946E00143480 /* nuiRSS.cpp in Sources */,
+				E507CEC00FE078EE00D80E79 /* nuiRSSView.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -275,6 +275,7 @@ bool nuiRSS::UpdateFromXML(nuiXMLNode* pXML)
   if (pXML->GetName() != _T("rss"))
     return false;
   
+  mItems.clear();
   for (int32 j = 0; j < pXML->GetChildrenCount(); j++)
   {
     nuiXMLNode* pNode = pXML->GetChild(j);
@@ -284,7 +285,6 @@ bool nuiRSS::UpdateFromXML(nuiXMLNode* pXML)
     printf("xml item: '%ls'\n", pNode->GetName().GetChars());
     if (pNode->GetName() == _T("channel"))
     {
-      mItems.clear();
       
       STARTELEM;
       GETELEM("title", mTitle);
@@ -311,6 +311,8 @@ bool nuiRSS::UpdateFromXML(nuiXMLNode* pXML)
         mItems.push_back(nuiRSSItem(pN));
       }
       ENDELEM;
+
+      printf("%d item found", mItems.size());
       
       return true;
     }
@@ -338,13 +340,20 @@ void nuiRSS::StartHTTPThread()
 
 bool nuiRSS::TimeToUpdate(const nuiEvent& rEvent)
 {
+  ForceUpdate();
+  return false;
+}
+
+bool nuiRSS::ForceUpdate()
+{
   if (mpHTTPThread)
     return false;
   
+  UpdateStarted();
   mpNotificationTimer->Start();
   mpHTTPThread = new nglThreadDelegate(nuiMakeDelegate(this, &nuiRSS::StartHTTPThread));
   mpHTTPThread->Start();
-  return false;
+  return true;
 }
 
 bool nuiRSS::TimeToNotify(const nuiEvent& rEvent)
@@ -359,6 +368,7 @@ bool nuiRSS::TimeToNotify(const nuiEvent& rEvent)
     delete mpHTTPThread;
     mpHTTPThread = NULL;
     mUpdating = false;
+    UpdateDone();
   }
   return false;
 }

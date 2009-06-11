@@ -12,20 +12,21 @@
 #include "nuiSimpleContainer.h"
 #include "nuiRSS.h"
 
+class nuiVBox;
+
 class nuiRSSView : public nuiSimpleContainer
 {
 public:
   nuiRSSView(const nglString& rURL, int32 SecondsBetweenUpdates = (30*60), nglIStream* pOriginalStream = NULL);
   virtual ~nuiRSSView();
+  
+  virtual nuiRect CalcIdealSize();
+  virtual bool SetRect(const nuiRect& rRect);
+  
+  void ForceUpdate();
 protected:
   bool Update(const nuiEvent& rEvent);
-  nuiEventSink<nuiRSSView> mView;
-  class Item
-  {
-  public:
-    nglString mGUID;
-    nuiHyperLink* mpHyperLink;
-  };
-  std::vector<Item>;
+  nuiEventSink<nuiRSSView> mViewSink;
   nuiRSS* mpRSS;
+  nuiVBox* mpBox;
 };

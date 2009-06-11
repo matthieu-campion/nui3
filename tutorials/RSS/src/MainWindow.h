@@ -9,6 +9,7 @@
 
 #include "nuiMainWindow.h"
 
+class nuiRSSView;
 
 class MainWindow : public nuiMainWindow
 {
@@ -26,8 +27,7 @@ protected:
 private:
   
   bool LoadCSS(const nglPath& rPath);
-  
-  nuiLabel* mMyLabel;
+  nuiRSSView* mpRSSView;
   nuiEventSink<MainWindow> mEventSink;
 };
 

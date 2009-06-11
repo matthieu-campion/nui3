@@ -11,7 +11,7 @@
 #include "nuiCSS.h"
 #include "nuiVBox.h"
 
-#include "nuiRSS.h"
+#include "nuiRSSView.h"
 
 /*
  * MainWindow
@@ -25,8 +25,6 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
 #endif
   
   LoadCSS(_T("rsrc:/css/main.css"));
-  
-  nuiRSS* pRSS = new nuiRSS(_T("feed://feeds.macbidouille.com/macbidouille/"));
 }
 
 MainWindow::~MainWindow()
@@ -45,28 +43,29 @@ void MainWindow::OnCreation()
   pImg->SetObjectName(_T("MyImage"));
   pImg->SetPosition(nuiCenter);
   pLayoutBox->AddCell(pImg);
-  pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
+  pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandFixed);
   
   // button in the second cell : we use the default decoration for this button, but you could use the css to assign your own decoration
   nuiButton* pButton = new nuiButton();
   pButton->SetPosition(nuiCenter);
   pLayoutBox->AddCell(pButton);
-  pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
+  pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandFixed);
   
   // click event on button
   mEventSink.Connect(pButton->Activated, &MainWindow::OnButtonClick);
   
   // label with border in the button (put the label string in the button's constructor if you don't need borders)
-  nuiLabel* pButtonLabel = new nuiLabel(_T("click!"));
+  nuiLabel* pButtonLabel = new nuiLabel(_T("Update RSS!"));
   pButtonLabel->SetPosition(nuiCenter);
   pButtonLabel->SetBorder(8,8);
   pButton->AddChild(pButtonLabel);
 
-  // label with decoration in the third cell
-  mMyLabel = new nuiLabel(_T("my label"));
-  mMyLabel->SetObjectName(_T("MyLabel"));
-  mMyLabel->SetPosition(nuiCenter);
-  pLayoutBox->AddCell(mMyLabel);
+  //  mpRSSView = new nuiRSSView(_T("feed://feeds.macbidouille.com/macbidouille/"));
+  mpRSSView = new nuiRSSView(_T("http://twitter.com/statuses/user_timeline/21746237.rss"));
+  
+  nuiScrollView* pScroll = new nuiScrollView();
+  pScroll->AddChild(mpRSSView);
+  pLayoutBox->AddCell(pScroll);
   pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
 }
 
@@ -77,7 +76,7 @@ bool MainWindow::OnButtonClick(const nuiEvent& rEvent)
   nglString message;
   double currentTime = nglTime();
   message.Format(_T("click time: %.2f"), currentTime);
-  mMyLabel->SetText(message);
+  mpRSSView->ForceUpdate();
   
   return true; // means the event is caught and not broadcasted
 }
