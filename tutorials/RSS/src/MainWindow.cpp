@@ -10,6 +10,7 @@
 #include "Application.h"
 #include "nuiCSS.h"
 #include "nuiVBox.h"
+#include "nuiHBox.h"
 
 #include "nuiRSSView.h"
 
@@ -40,27 +41,32 @@ void MainWindow::OnCreation()
   nuiVBox* pLayoutBox = new nuiVBox(0);
   pLayoutBox->SetExpand(nuiExpandShrinkAndGrow);
   AddChild(pLayoutBox);
-  
+
+  nuiHBox* pHLayoutBox = new nuiHBox(0);
+  pHLayoutBox->SetExpand(nuiExpandShrinkAndGrow);
+  pLayoutBox->AddCell(pHLayoutBox);
+//  pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
+
   // image in the first box's cell
   nuiImage* pImg = new nuiImage();
   pImg->SetObjectName(_T("MyImage"));
   pImg->SetPosition(nuiCenter);
-  pLayoutBox->AddCell(pImg);
-  pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandFixed);
+  pHLayoutBox->AddCell(pImg);
+  pHLayoutBox->SetCellExpand(pHLayoutBox->GetNbCells()-1, nuiExpandFixed);
 
   // button in the second cell : we use the default decoration for this button, but you could use the css to assign your own decoration
   mpInput = new nuiEditLine(url);
-  mpInput->SetPosition(nuiFill);
+  mpInput->SetPosition(nuiCenter);
   mpInput->SetObjectName(_T("RSSURL"));
   mEventSink.Connect(mpInput->Activated, &MainWindow::OnButtonClick);
-  pLayoutBox->AddCell(mpInput);
-  pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandFixed);
+  pHLayoutBox->AddCell(mpInput);
+  pHLayoutBox->SetCellExpand(pHLayoutBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
   
   // button in the second cell : we use the default decoration for this button, but you could use the css to assign your own decoration
   nuiButton* pButton = new nuiButton();
   pButton->SetPosition(nuiCenter);
-  pLayoutBox->AddCell(pButton);
-  pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandFixed);
+  pHLayoutBox->AddCell(pButton);
+  pHLayoutBox->SetCellExpand(pHLayoutBox->GetNbCells()-1, nuiExpandFixed);
   
   // click event on button
   mEventSink.Connect(pButton->Activated, &MainWindow::OnButtonClick);

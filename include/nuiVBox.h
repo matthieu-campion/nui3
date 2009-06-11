@@ -43,7 +43,8 @@ public:
   void SetBoxSize(uint32 cells);        ///< Sets the grid size in number of cells, you have use this before inserting any element in the grid (via SetCell).
   void SetCellExpand(uint32 cell, nuiExpandMode mode, nuiSize ratio = 1.f);///< Sets the expand mode and ratio to the given cell. Ratio has to be equal or superior to 1.0, and is used to expand proportionnaly to other cell ratios
   void SetAllCellsExpand(nuiExpandMode mode); ///< Sets the expand mode and ratio to all cells.
-  void SetExpand(nuiExpandMode mode, nuiSize ratio=1.f);///< Sets the expand mode and ratio to the vbox column
+  void SetExpand(nuiExpandMode mode);///< Sets the expand mode and ratio to the vbox column
+  nuiExpandMode GetExpand() const;
   
   void SetCellMaxGrow(uint32 cell, nuiSize ratio);        ///< Sets the maximum growing percentage ratio for the given cell 
   void SetCellMaxPixels(uint32 cell, nuiSize size);       ///< Sets the maximum size in pixels for the given cell

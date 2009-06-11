@@ -23,7 +23,6 @@ public:
   
   void InitAttributes();
   
-  
   void DisplayGridBorder(bool enable, nuiSize gridBorderSize = 1.f); ///< Allow to display the grid border
   void DisplayWidgetBoundingRect(bool enable); ///< Allow to display widget's bounding rect
   void PlaceInvisibleWidgets(bool enable);
@@ -45,7 +44,8 @@ public:
   void SetCellExpand(uint32 cell, nuiExpandMode mode, nuiSize ratio = 1.f);///< Sets the expand mode and ratio to the given cell. Ratio has to be equal or superior to 1.0, and is used to expand proportionnaly to other cell ratios
   void SetAllCellsExpand(nuiExpandMode mode); ///< Sets the expand mode and ratio to all cells.
   
-  void SetExpand(nuiExpandMode mode, nuiSize ratio=1.f);///< Sets the expand mode and ratio to the hbox row
+  void SetExpand(nuiExpandMode mode);///< Sets the expand mode and ratio to the hbox row
+  nuiExpandMode GetExpand() const;
   
   void SetCellMaxGrow(uint32 cell, nuiSize ratio);        ///< Sets the maximum growing percentage ratio for the given cell 
   void SetCellMaxPixels(uint32 cell, nuiSize size);       ///< Sets the maximum size in pixels for the given cell

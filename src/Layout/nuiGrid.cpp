@@ -576,6 +576,8 @@ void nuiGrid::SetGridSize(uint32 columns, uint32 rows)
 
 void nuiGrid::SetColumnExpand(uint32 col, nuiExpandMode mode, nuiSize ratio)
 {
+  if (col >= GetNbColumns())
+    return;
   NGL_ASSERT(ratio >= 1.f);
   NGL_ASSERT(col < mNbColumns);
 
@@ -608,6 +610,8 @@ void nuiGrid::SetColumnExpand(uint32 col, nuiExpandMode mode, nuiSize ratio)
 
 void nuiGrid::SetRowExpand(uint32 row, nuiExpandMode mode, nuiSize ratio)
 {
+  if (row >= GetNbRows())
+    return;
   NGL_ASSERT(ratio >= 1.f);
   NGL_ASSERT(row < mNbRows);
 
@@ -637,6 +641,33 @@ void nuiGrid::SetRowExpand(uint32 row, nuiExpandMode mode, nuiSize ratio)
 
   InvalidateLayout();
 }
+
+nuiExpandMode nuiGrid::GetColumnExpand(uint32 column) const
+{
+  if (column >= GetNbColumns())
+    return nuiExpandFixed;
+  if ((mExpandShrinkColumns[column] != 0) && (mExpandGrowColumns[column] != 0))
+    return nuiExpandShrinkAndGrow;
+  if (mExpandShrinkColumns[column] != 0)
+    return nuiExpandShrink;
+  if (mExpandGrowColumns[column] != 0)
+    return nuiExpandGrow;
+  return nuiExpandFixed;
+}
+
+nuiExpandMode nuiGrid::GetRowExpand(uint32 row) const
+{
+  if (row >= GetNbRows())
+    return nuiExpandFixed;
+  if ((mExpandShrinkRows[row] != 0) && (mExpandGrowRows[row] != 0))
+    return nuiExpandShrinkAndGrow;
+  if (mExpandShrinkRows[row] != 0)
+    return nuiExpandShrink;
+  if (mExpandGrowRows[row] != 0)
+    return nuiExpandGrow;
+  return nuiExpandFixed;
+}
+
 
 void nuiGrid::UpdateExpandRatio(std::vector<nuiSize>& rRatios, nuiSize& rCoeff)
 {

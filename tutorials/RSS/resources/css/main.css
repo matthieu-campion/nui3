@@ -14,29 +14,78 @@
   Texture: "rsrc:/decorations/image.png";
   UserWidth: 100;
   UserHeight: 100;
+  BorderLeft: 10;
 }
 
 
-@nuiColorDecoration dMyLabel
+@nuiGradientDecoration dFolderHead
 {
-  FillColor: rgb(220,220,220);
-  StrokeColor: black;
-  ShapeMode: StrokeAndFill;
-  ClientRect: "{10 10 0 0}";
+  Color1: rgb(200,200,200);
+  Color2: rgb(150,150,150);
+  StrokeColor: lightgray;
+  ShapeMode: Stroke;
+  StrokeSize: 1;
+  ClientRect: "{5 5 0 0}";
+}
+
+@nuiGradientDecoration BgDeco
+{
+  Color1: rgb(230,230,230);
+  Color2: rgb(210,210,210);
+  StrokeColor: rgb(180,180,180);
+  ShapeMode: Stroke;
+  StrokeSize: 0;
+}
+
+@nuiColorDecoration BoxDeco
+{
+  StrokeColor: rgb(150,150,150);
+  ShapeMode: Stroke;
+  StrokeSize: 1;
+}
+
+nuiVBox!
+{
+  Decoration: BgDeco;
+}
+
+"nuiFolderPane::Title"!
+{
+  DecorationMode: border;
+  Decoration: dFolderHead;
+}
+
+"nuiRSSView::Description"!
+{
+  DecorationMode: border;
+  Decoration: dRSSDesc;
+  //BorderBottom: 4;
 }
 
 "RSSURL"!
 {
-  BorderLeft : 40;
-  BorderRight : 40;
+  BorderLeft : 8;
+  BorderRight : 8;
+  Position: FillHorizontal;
 }
 
-nuiScrollView
+nuiRSSView!
+{
+  Decoration: BoxDeco;
+  BorderRight : 2;
+}
+
+nuiScrollView!
 {
   BorderLeft: 10;
   BorderRight: 10;
   BorderTop: 10;
   BorderBottom: 10;
+}
+
+nuiVBox!
+{
+  Expand: ShrinkAndGrow;
 }
 
 // blank ending line following

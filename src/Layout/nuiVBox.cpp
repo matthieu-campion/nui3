@@ -150,12 +150,17 @@ void nuiVBox::SetAllCellsExpand(nuiExpandMode mode)
 }
 
 
-void nuiVBox::SetExpand(nuiExpandMode mode, nuiSize ratio)
+void nuiVBox::SetExpand(nuiExpandMode mode)
 {
-  nuiGrid::SetColumnExpand(0, mode, ratio);
+  nuiGrid::SetColumnExpand(0, mode, 1.0f);
 }
 
-  
+
+nuiExpandMode nuiVBox::GetExpand() const
+{
+  return nuiGrid::GetColumnExpand(0);
+}
+
 void nuiVBox::SetCellMaxGrow(uint32 cell, nuiSize ratio)
 {
   nuiGrid::SetRowMaxGrow(cell, ratio);

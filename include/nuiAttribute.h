@@ -1830,3 +1830,17 @@ template <>
 void nuiAttribute<nuiBlendFunc>::FormatDefault(nuiBlendFunc value, nglString& string);
 
 
+//********************************
+//
+// ExpandMode
+//
+
+template <>
+bool nuiAttribute<nuiExpandMode>::ToString(nuiExpandMode Value, nglString& rString) const;
+
+template <>
+bool nuiAttribute<nuiExpandMode>::FromString(nuiExpandMode& rValue, const nglString& rString) const;
+
+template <>
+void nuiAttribute<nuiExpandMode>::FormatDefault(nuiExpandMode value, nglString& string);
+

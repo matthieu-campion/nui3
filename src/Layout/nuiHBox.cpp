@@ -150,9 +150,14 @@ void nuiHBox::SetAllCellsExpand(nuiExpandMode mode)
 }
 
 
-void nuiHBox::SetExpand(nuiExpandMode mode, nuiSize ratio)
+void nuiHBox::SetExpand(nuiExpandMode mode)
 {
-  nuiGrid::SetRowExpand(0, mode, ratio);
+  nuiGrid::SetRowExpand(0, mode, 1.0f);
+}
+
+nuiExpandMode nuiHBox::GetExpand() const
+{
+  return nuiGrid::GetRowExpand(0);
 }
 
 

@@ -45,6 +45,11 @@ void nuiBox::InitBoxAttributes()
                 nuiMakeDelegate(this, &nuiBox::GetEqualizeCells),
                 nuiMakeDelegate(this, &nuiBox::SetEqualizeCells)));                
   
+  AddAttribute(new nuiAttribute<nuiExpandMode>
+               (nglString(_T("Expand")), nuiUnitNone,
+                nuiMakeDelegate(this, &nuiBox::GetExpand),
+                nuiMakeDelegate(this, &nuiBox::SetExpand)));                
+  
 }
 
 uint32 nuiBox::GetBoxDimensionRange(uint32 dimension) const

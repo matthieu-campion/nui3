@@ -237,6 +237,7 @@ NUI_DECLARE_ATTRIBUTE_TYPE(nglVectorf);
 NUI_DECLARE_ATTRIBUTE_TYPE(const nglMatrixf&);
 NUI_DECLARE_ATTRIBUTE_TYPE(nglMatrixf);
 NUI_DECLARE_ATTRIBUTE_TYPE(nuiBlendFunc);
+NUI_DECLARE_ATTRIBUTE_TYPE(nuiExpandMode);
 
 
 
@@ -2195,6 +2196,70 @@ bool nuiAttribute<nuiBlendFunc>::FromString(nuiBlendFunc& rValue, const nglStrin
   }
 
   rValue = nuiBlendTransp;
+  return false;
+}
+
+//********************************
+//
+// ExpandMode
+//
+
+template class nuiAttribute<nuiExpandMode>;
+
+template <>
+void nuiAttribute<nuiExpandMode>::FormatDefault(nuiExpandMode value, nglString & string)
+{
+  ToString(value, string);
+}
+
+template <>
+bool nuiAttribute<nuiExpandMode>::ToString(nuiExpandMode Value, nglString& rString) const
+{
+  switch (Value)
+  {
+    case nuiExpandFixed:
+      rString = _T("Fixed"); break;
+    case nuiExpandGrow:
+      rString = _T("Grow"); break;
+    case nuiExpandShrink:
+      rString = _T("Shrink"); break;
+    case nuiExpandShrinkAndGrow:
+      rString = _T("ShrinkAndGrow"); break;
+      
+    default:
+      rString = _T("UnknownExpandMode");
+      return false;
+  }
+  
+  return true;
+  
+}
+
+template <>
+bool nuiAttribute<nuiExpandMode>::FromString(nuiExpandMode& rValue, const nglString& rString) const
+{
+  if (!rString.Compare(_T("Fixed"), false))
+  {
+    rValue = nuiExpandFixed;
+    return true;
+  }
+  else if (!rString.Compare(_T("Grow"), false))
+  {
+    rValue = nuiExpandGrow;
+    return true;
+  }
+  else if (!rString.Compare(_T("Shrink"), false))
+  {
+    rValue = nuiExpandShrink;
+    return true;
+  }
+  else if (!rString.Compare(_T("ShrinkAndGrow"), false))
+  {
+    rValue = nuiExpandShrinkAndGrow;
+    return true;
+  }
+  
+  rValue = nuiExpandFixed;
   return false;
 }
 

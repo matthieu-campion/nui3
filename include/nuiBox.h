@@ -38,7 +38,8 @@ public:
   virtual void SetCellExpand(uint32 cell, nuiExpandMode mode, nuiSize ratio = 1.f) = 0; ///< Sets the expand mode and ratio to the given cell. Ratio has to be equal or superior to 1.0, and is used to expand proportionnaly to other cell ratios
   virtual void SetAllCellsExpand(nuiExpandMode mode)=0; ///< Sets the expand mode and ratio to all cells.
   
-  virtual void SetExpand(nuiExpandMode mode, nuiSize ratio=1.f) = 0; ///< Sets the expand mode and ratio (hbox: vertically / vbox: horizontally)
+  virtual void SetExpand(nuiExpandMode mode) = 0; ///< Sets the expand mode and ratio (hbox: vertically / vbox: horizontally)
+  virtual nuiExpandMode GetExpand() const = 0;
   
   virtual void SetCellMaxGrow(uint32 cell, nuiSize ratio) = 0;         ///< Sets the maximum growing percentage ratio for the given cell 
   virtual void SetCellMaxPixels(uint32 cell, nuiSize size) = 0;        ///< Sets the maximum size in pixels for the given cell

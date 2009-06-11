@@ -17,14 +17,6 @@
 #include <vector>
 #include <map>
 
-enum nuiExpandMode
-{
-  nuiExpandFixed,
-  nuiExpandGrow,
-  nuiExpandShrink,
-  nuiExpandShrinkAndGrow
-};
-
 /// This class is a simple placement grid that adjusts its columns and rows sizes according to contained nuiWidget objects
 class NUI_API nuiGrid : public nuiSimpleContainer
 {
@@ -58,6 +50,8 @@ public:
   void SetGridSize(uint32 columns, uint32 rows);        ///< Sets the grid size in number of columns and rows, you have use this before inserting any element in the grid (via SetCell).
   void SetColumnExpand(uint32 col, nuiExpandMode mode, nuiSize ratio = 1.f);///< Sets the expand mode and ratio to the given column. Ratio has to be equal or superior to 1.0, and is used to expand proportionnaly to other column ratios
   void SetRowExpand(uint32 row, nuiExpandMode mode, nuiSize ratio = 1.f);   ///< Sets the expand mode and ratio to the given row. Ratio has to be equal or superior to 1.0, and is used to expand proportionnaly to other row ratios
+  nuiExpandMode GetColumnExpand(uint32 column) const;
+  nuiExpandMode GetRowExpand(uint32 row) const;
   
   void SetRowMaxGrow(uint32 row, nuiSize ratio);        ///< Sets the maximum growing percentage ratio for the given row 
   void SetColumnMaxGrow(uint32 col, nuiSize ratio);     ///< Sets the maximum growing percentage ratio for the given column 

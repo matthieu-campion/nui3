@@ -70,6 +70,16 @@ enum nuiCopyPolicy
 };
 
 
+enum nuiExpandMode
+{
+  nuiExpandFixed,
+  nuiExpandGrow,
+  nuiExpandShrink,
+  nuiExpandShrinkAndGrow
+};
+
+
+
 // This is just plain ugly; i know...
 typedef uint nuiWindowFlags;
 

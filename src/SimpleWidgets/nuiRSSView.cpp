@@ -45,12 +45,11 @@ bool nuiRSSView::SetRect(const nuiRect& rRect)
 
 bool nuiRSSView::Update(const nuiEvent& rEvent)
 {
-  printf("nuiRSSVew::Update\n");
   mpBox->Clear();
   for (uint32 i = 0; i < mpRSS->GetItemCount(); i++)
   {
     const nuiRSSItem& rItem(mpRSS->GetItem(i));
-    printf("%ls / %ls\n", rItem.GetLink().GetChars(), rItem.GetTitle().GetChars());
+    //printf("%ls / %ls\n", rItem.GetLink().GetChars(), rItem.GetTitle().GetChars());
     nuiHyperLink* pLink = new nuiHyperLink(rItem.GetLink(), rItem.GetTitle());
     pLink->UseEllipsis(true);
     nuiFolderPane* pPane = new nuiFolderPane(pLink, true);
@@ -66,10 +65,11 @@ bool nuiRSSView::Update(const nuiEvent& rEvent)
       // Contents is valid HTML
       desc = nglString::Empty;
       html.GetSimpleText(desc);
-      printf("%d - Could parse HTML tags:\n%ls\n", i, desc.GetChars());
+      //printf("%d - Could parse HTML tags:\n%ls\n", i, desc.GetChars());
     }
     
     nuiLabel* pLabel = new nuiLabel(desc);
+    pLabel->SetObjectName(_T("nuiRSSView::Description"));
     pLabel->SetWrapping(true);
     pPane->AddChild(pLabel);
     mpBox->AddCell(pPane);
@@ -86,3 +86,4 @@ void nuiRSSView::SetURL(const nglString& rURL)
 {
   mpRSS->SetURL(rURL);
 }
+
