@@ -59,3 +59,8 @@ void nuiRSSView::ForceUpdate()
 {
   mpRSS->ForceUpdate();
 }
+
+void nuiRSSView::SetURL(const nglString& rURL)
+{
+  mpRSS->SetURL(rURL);
+}

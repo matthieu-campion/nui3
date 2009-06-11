@@ -372,3 +372,12 @@ bool nuiRSS::TimeToNotify(const nuiEvent& rEvent)
   }
   return false;
 }
+
+void nuiRSS::SetURL(const nglString& rURL)
+{
+  if (rURL != GetURL())
+  {
+    mRSSURL = rURL;
+    ForceUpdate();
+  }
+}

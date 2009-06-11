@@ -27,6 +27,7 @@ public:
   virtual bool KeyUp  (const nglKeyEvent& rEvent);
   
   nuiSimpleEventSource<nuiActionAborted> Aborted;
+  nuiSimpleEventSource<nuiWidgetActivated> Activated;
   nuiSimpleEventSource<0> HistoryUp;
   nuiSimpleEventSource<0> HistoryDown;
   nuiSimpleEventSource<0> AutoComplete;

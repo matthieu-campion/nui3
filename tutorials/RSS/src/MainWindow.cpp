@@ -33,6 +33,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::OnCreation()
 {
+  nglString url(_T("http://twitter.com/statuses/user_timeline/21746237.rss"));
+  
   // a vertical box for page layout
   nuiVBox* pLayoutBox = new nuiVBox(0);
   pLayoutBox->SetExpand(nuiExpandShrinkAndGrow);
@@ -43,6 +45,14 @@ void MainWindow::OnCreation()
   pImg->SetObjectName(_T("MyImage"));
   pImg->SetPosition(nuiCenter);
   pLayoutBox->AddCell(pImg);
+  pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandFixed);
+
+  // button in the second cell : we use the default decoration for this button, but you could use the css to assign your own decoration
+  mpInput = new nuiEditLine(url);
+  mpInput->SetPosition(nuiFill);
+  mpInput->SetObjectName(_T("RSSURL"));
+  mEventSink.Connect(mpInput->Activated, &MainWindow::OnButtonClick);
+  pLayoutBox->AddCell(mpInput);
   pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandFixed);
   
   // button in the second cell : we use the default decoration for this button, but you could use the css to assign your own decoration
@@ -61,7 +71,7 @@ void MainWindow::OnCreation()
   pButton->AddChild(pButtonLabel);
 
   //  mpRSSView = new nuiRSSView(_T("feed://feeds.macbidouille.com/macbidouille/"));
-  mpRSSView = new nuiRSSView(_T("http://twitter.com/statuses/user_timeline/21746237.rss"));
+  mpRSSView = new nuiRSSView(url);
   
   nuiScrollView* pScroll = new nuiScrollView();
   pScroll->AddChild(mpRSSView);
@@ -76,6 +86,7 @@ bool MainWindow::OnButtonClick(const nuiEvent& rEvent)
   nglString message;
   double currentTime = nglTime();
   message.Format(_T("click time: %.2f"), currentTime);
+  mpRSSView->SetURL(mpInput->GetText());
   mpRSSView->ForceUpdate();
   
   return true; // means the event is caught and not broadcasted

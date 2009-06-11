@@ -60,7 +60,7 @@ bool nuiEditLine::KeyDown (const nglKeyEvent& rEvent)
   }
   else if (rEvent.mKey == NK_ENTER || rEvent.mKey == NK_PAD_ENTER)
   {
-    Selected();
+    Activated();
     Invalidate();
     return true;
   }

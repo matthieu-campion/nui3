@@ -25,10 +25,18 @@
   ClientRect: "{10 10 0 0}";
 }
 
-"MyLabel"!
+"RSSURL"!
 {
-  DecorationMode: Border;
-  Decoration: dMyLabel;
+  BorderLeft : 40;
+  BorderRight : 40;
+}
+
+nuiScrollView
+{
+  BorderLeft: 10;
+  BorderRight: 10;
+  BorderTop: 10;
+  BorderBottom: 10;
 }
 
 // blank ending line following

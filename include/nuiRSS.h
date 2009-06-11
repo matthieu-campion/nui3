@@ -85,6 +85,7 @@ public:
   bool GetItemRead(int32 index) const;
   void SetItemRead(int32 index, bool set);
   
+  void SetURL(const nglString& rURL);
   bool ForceUpdate();
   
   nuiSimpleEventSource<0> UpdateStarted;

@@ -23,6 +23,8 @@ public:
   virtual nuiRect CalcIdealSize();
   virtual bool SetRect(const nuiRect& rRect);
   
+  void SetURL(const nglString& rURL);
+  
   void ForceUpdate();
 protected:
   bool Update(const nuiEvent& rEvent);

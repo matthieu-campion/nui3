@@ -25,7 +25,7 @@ protected:
   bool OnButtonClick(const nuiEvent& rEvent);
   
 private:
-  
+  nuiEditLine* mpInput;
   bool LoadCSS(const nglPath& rPath);
   nuiRSSView* mpRSSView;
   nuiEventSink<MainWindow> mEventSink;
