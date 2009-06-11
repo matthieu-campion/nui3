@@ -8,6 +8,9 @@
 #include "nui.h"
 #include "nuiRSSView.h"
 #include "nuiVBox.h"
+#include "nuiFolderPane.h"
+#include "nglIMemory.h"
+#include "nuiHTML.h"
 
 //class nuiRSSView : public nuiSimpleContainer
 nuiRSSView::nuiRSSView(const nglString& rURL, int32 SecondsBetweenUpdates, nglIStream* pOriginalStream)
@@ -49,8 +52,27 @@ bool nuiRSSView::Update(const nuiEvent& rEvent)
     const nuiRSSItem& rItem(mpRSS->GetItem(i));
     printf("%ls / %ls\n", rItem.GetLink().GetChars(), rItem.GetTitle().GetChars());
     nuiHyperLink* pLink = new nuiHyperLink(rItem.GetLink(), rItem.GetTitle());
-    pLink->SetToolTip(rItem.GetDescription());
-    mpBox->AddCell(pLink);
+    pLink->UseEllipsis(true);
+    nuiFolderPane* pPane = new nuiFolderPane(pLink, true);
+    
+    nglString desc(rItem.GetDescription());
+    std::string str(desc.GetStdString());
+    nglIMemory mem(&str[0], str.size());
+    nuiHTML html;
+    bool res = html.Load(mem);
+    
+    //if (res)
+    {
+      // Contents is valid HTML
+      desc = nglString::Empty;
+      html.GetSimpleText(desc);
+      printf("%d - Could parse HTML tags:\n%ls\n", i, desc.GetChars());
+    }
+    
+    nuiLabel* pLabel = new nuiLabel(desc);
+    pLabel->SetWrapping(true);
+    pPane->AddChild(pLabel);
+    mpBox->AddCell(pPane);
   }
   return false;
 }

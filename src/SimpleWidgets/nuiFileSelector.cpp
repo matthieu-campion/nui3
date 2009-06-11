@@ -482,7 +482,7 @@ void nuiFileSelector::InitSelector (const nglPath& rPath, const nglPath& rRootPa
   if (mpEntry)
   {
     mpEntry->Focus();
-    mEventSink.Connect(mpEntry->Selected, &nuiFileSelector::OnActivated);
+    mEventSink.Connect(mpEntry->Activated, &nuiFileSelector::OnActivated);
   }
 
   SetRootPath(rRootPath, Opened);

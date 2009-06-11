@@ -146,7 +146,7 @@ void nuiHTMLNode::BuildTree(const void* _tdoc, const void* _tnod)
   for (child = tidyGetChild(tnod); child; child = tidyGetNext(child))
   {
     nuiHTMLNode* pNode = new nuiHTMLNode(_tdoc, child);
-    
+    mChildren.push_back(pNode);
     pNode->BuildTree(tdoc, child);
   }
 }
@@ -231,16 +231,25 @@ bool nuiHTML::Load(nglIStream& rStream)
   
   int res = tidyParseSource(tdoc, &source);
   
-  if (res < 0)
-  {
-    tidyRelease(tdoc);
-    return false;
-  }
- 
   BuildTree(tdoc, tidyGetRoot(tdoc));
   
   tidyRelease(tdoc);
   
-  return res == 0;
+  return res < 2;
 }
  
+void nuiHTMLNode::GetSimpleText(nglString& rString) const
+{
+  if (!mText.IsNull())
+  {
+    rString.Add(mText);
+  }
+  
+  uint32 count = GetNbChildren();
+  
+  for (uint32 i = 0; i < count; i++)
+  {
+    const nuiHTMLNode* pNode = GetChild(i);
+    pNode->GetSimpleText(rString);
+  }
+}

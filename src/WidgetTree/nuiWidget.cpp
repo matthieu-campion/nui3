@@ -3451,7 +3451,7 @@ void nuiWidget::AddEvent(const nglString& rName, nuiEventSource& rEvent)
 void nuiWidget::UpdateLayout()
 {
   GetIdealRect();
-  nuiRect r(GetBorderedRect());
+  nuiRect r(GetRect());
   SetRect(r);
   Invalidate();
 }

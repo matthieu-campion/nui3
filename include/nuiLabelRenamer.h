@@ -58,7 +58,7 @@ public:
     mpEditLine->SetDecoration(NULL);
     
     mSink.Connect(mpEditLine->Aborted,  &nuiLabelRenamer::OnEditLineCanceled, mpEditLine);
-    mSink.Connect(mpEditLine->Selected, &nuiLabelRenamer::OnEditLineSelected, mpEditLine);
+    mSink.Connect(mpEditLine->Activated, &nuiLabelRenamer::OnEditLineSelected, mpEditLine);
   }
 
   nuiSimpleEventSource<0> Renamed;

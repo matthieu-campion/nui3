@@ -33,7 +33,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::OnCreation()
 {
-  nglString url(_T("http://twitter.com/statuses/user_timeline/21746237.rss"));
+  //nglString url(_T("http://twitter.com/statuses/user_timeline/21746237.rss"));
+  nglString url(_T("feed://feeds.macbidouille.com/macbidouille/"));
   
   // a vertical box for page layout
   nuiVBox* pLayoutBox = new nuiVBox(0);
@@ -70,10 +71,9 @@ void MainWindow::OnCreation()
   pButtonLabel->SetBorder(8,8);
   pButton->AddChild(pButtonLabel);
 
-  //  mpRSSView = new nuiRSSView(_T("feed://feeds.macbidouille.com/macbidouille/"));
   mpRSSView = new nuiRSSView(url);
   
-  nuiScrollView* pScroll = new nuiScrollView();
+  nuiScrollView* pScroll = new nuiScrollView(false, true);
   pScroll->AddChild(mpRSSView);
   pLayoutBox->AddCell(pScroll);
   pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
