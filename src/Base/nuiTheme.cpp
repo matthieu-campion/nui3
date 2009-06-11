@@ -720,22 +720,24 @@ void nuiTheme::DrawSliderBackground(nuiDrawContext* pContext, nuiSlider* pSlider
   nuiRect rect = pSlider->GetRect().Size();
   nuiDecoration* pDeco = NULL;
   
-  nuiSize min = pSlider->GetHandlePosMin();
-  nuiSize max = pSlider->GetHandlePosMax();
-
   if (pSlider->GetOrientation() == nuiVertical)
   {
     pDeco = nuiDecoration::Get(_T("nuiDefaultDecorationSliderVerticalBkg"));
     nuiSize x = (int)((rect.GetWidth() - pDeco->GetIdealClientRect(pSlider).GetWidth()) / 2);
     nuiSize w = pDeco->GetIdealClientRect(pSlider).GetWidth();
-    rect.Set(x, min, w, max-min);
+    nuiSize h = rect.GetHeight();
+    rect.Set(x, 0.f, w, h);
+    
+    pDeco->Draw(pContext, pSlider, rect);
+    pDeco->Release();    
   }
   else
   {
     pDeco = nuiDecoration::Get(_T("nuiDefaultDecorationSliderHorizontalBkg"));
     nuiSize y = (int)((rect.GetHeight() - pDeco->GetIdealClientRect(pSlider).GetHeight()) / 2);
+    nuiSize w = rect.GetWidth();
     nuiSize h = pDeco->GetIdealClientRect(pSlider).GetHeight();
-    rect.Set(min, y, max - min, h);
+    rect.Set(0.f, y, w, h);
   }  
   
   pDeco->Draw(pContext, pSlider, rect);
