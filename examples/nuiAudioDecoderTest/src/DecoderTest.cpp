@@ -39,12 +39,8 @@ bool ConvertCompressedAudioFile(nglPath inPath, nglPath outPath)
     PrintAudioInfos(inInfo);
     
     uint32 channels = inInfo.GetChannels();
-    std::vector<float*> buffers(channels);
-    for (uint32 c = 0; c < channels; c++)
-    {
-      buffers[c] = new float[FRAMES_PACKET];
-    }
-	float* pDeInterleavedBuffer = new float[channels * FRAMES_PACKET];
+
+    float* pInterleavedBuffer = new float[channels * FRAMES_PACKET];
     
     //write output samples infos
     outInfo.SetChannels(inInfo.GetChannels());
@@ -61,18 +57,10 @@ bool ConvertCompressedAudioFile(nglPath inPath, nglPath outPath)
     uint32 TotalFramesWritten = 0;
     do
     {
-      FramesRead = pDecoder->Read(buffers, FramesToRead);
+      FramesRead = pDecoder->ReadIN(pInterleavedBuffer, FramesToRead);
+
       
-      //deinterleave samples
-      for (uint32 s = 0; s < FramesRead; s++)
-      {
-        for (uint32 c = 0; c < channels; c++)
-        {
-          pDeInterleavedBuffer[s * channels + c] = buffers[c][s];
-        }
-      }
-      
-      FramesWritten = pWriter->Write(pDeInterleavedBuffer, FramesRead, eSampleFloat32);
+      FramesWritten = pWriter->Write(pInterleavedBuffer, FramesRead, eSampleFloat32);
       
       TotalFramesRead += FramesRead;
       TotalFramesWritten += FramesWritten;
@@ -85,13 +73,9 @@ bool ConvertCompressedAudioFile(nglPath inPath, nglPath outPath)
     //finalize wave file writing
     if (!pWriter->Finalize())
       NGL_OUT(_T("nuiWaveWriter: Failed to finalize!!!!!!!\n"));
-      
-    //deallocate pointers
-    delete[] pDeInterleavedBuffer;
-    for (uint32 c = 0; c < channels; c++)
-    {
-      delete[] buffers[c];
-    }
+
+    delete[] pInterleavedBuffer;
+    
     res = true;
   }
   else
@@ -142,12 +126,8 @@ bool TestSeek(nglPath inPath, nglPath outPath)
     PrintAudioInfos(inInfo);
     
     uint32 channels = inInfo.GetChannels();
-    std::vector<float*> buffers(channels);
-    for (uint32 c = 0; c < channels; c++)
-    {
-      buffers[c] = new float[FRAMES_PACKET];
-    }
-    float* pDeInterleavedBuffer = new float[channels * FRAMES_PACKET];
+
+    float* pInterleavedBuffer = new float[channels * FRAMES_PACKET];
     
     //write output samples infos
     outInfo.SetChannels(inInfo.GetChannels());
@@ -165,18 +145,9 @@ bool TestSeek(nglPath inPath, nglPath outPath)
 
     for (uint32 i= 0; i < 5; i++)
     {
-      FramesRead = pDecoder->Read(buffers, FramesToRead);
-      
-      //deinterleave samples
-      for (uint32 s = 0; s < FramesRead; s++)
-      {
-        for (uint32 c = 0; c < channels; c++)
-        {
-          pDeInterleavedBuffer[s * channels + c] = buffers[c][s];
-        }
-      }
-      
-      FramesWritten = pWriter->Write(pDeInterleavedBuffer, FramesRead, eSampleFloat32);
+      FramesRead = pDecoder->ReadIN(pInterleavedBuffer, FramesToRead);
+
+      FramesWritten = pWriter->Write(pInterleavedBuffer, FramesRead, eSampleFloat32);
       
       TotalFramesRead += FramesRead;
       TotalFramesWritten += FramesWritten;
@@ -186,18 +157,8 @@ bool TestSeek(nglPath inPath, nglPath outPath)
     
     for (uint32 i= 0; i < 5; i++)
     {
-      FramesRead = pDecoder->Read(buffers, FramesToRead);
       
-      //deinterleave samples
-      for (uint32 s = 0; s < FramesRead; s++)
-      {
-        for (uint32 c = 0; c < channels; c++)
-        {
-          pDeInterleavedBuffer[s * channels + c] = buffers[c][s];
-        }
-      }
-      
-      FramesWritten = pWriter->Write(pDeInterleavedBuffer, FramesRead, eSampleFloat32);
+      FramesWritten = pWriter->Write(pInterleavedBuffer, FramesRead, eSampleFloat32);
       
       TotalFramesRead += FramesRead;
       TotalFramesWritten += FramesWritten;
@@ -212,11 +173,7 @@ bool TestSeek(nglPath inPath, nglPath outPath)
       NGL_OUT(_T("nuiWaveWriter: Failed to finalize!!!!!!!\n"));
     
     //deallocate pointers
-    delete[] pDeInterleavedBuffer;
-    for (uint32 c = 0; c < channels; c++)
-    {
-      delete[] buffers[c];
-    }
+    delete[] pInterleavedBuffer;
     res = true;
   }
   else
