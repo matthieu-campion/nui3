@@ -9,6 +9,7 @@
 			E5D426DC0FE163E70034EB49 /* nuiRSSView.cpp:67 */,
 			E5D427150FE167330034EB49 /* nuiHTML.cpp:248 */,
 			E5D4271E0FE167560034EB49 /* nuiHTML.cpp:252 */,
+			E50AB97C0FE26F5A009085B8 /* MainWindow.cpp:62 */,
 		);
 		codeSenseManager = E5D2D1850FDE929500143480 /* Code sense */;
 		executables = (
@@ -141,9 +142,9 @@
 	};
 	BC6A09CB0EF9301900881ACF /* main.css */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1652, 1144}}";
+			sepNavIntBoundsRect = "{{0, 0}, {899, 1209}}";
 			sepNavSelRange = "{1005, 0}";
-			sepNavVisRange = "{598, 403}";
+			sepNavVisRange = "{570, 758}";
 		};
 	};
 	E580F03A0FE2799F006AC2E1 /* PBXTextBookmark */ = {
@@ -304,6 +305,9 @@
 		configStateDict = {
 		};
 		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
 		debuggerPlugin = GDBDebugging;
 		disassemblyDisplayState = 0;
 		dylibVariantSuffix = "";
@@ -330,6 +334,9 @@
 		configStateDict = {
 		};
 		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
 		debuggerPlugin = GDBDebugging;
 		disassemblyDisplayState = 0;
 		dylibVariantSuffix = "";
@@ -342,6 +349,7 @@
 		name = RSSD;
 		savedGlobals = {
 		};
+		showTypeColumn = 0;
 		sourceDirectories = (
 		);
 		variableFormatDictionary = {
@@ -353,6 +361,9 @@
 		isSCMEnabled = 0;
 		scmConfiguration = {
 			repositoryName = nui;
+			repositoryNamesForRoots = {
+				"" = nui;
+			};
 		};
 	};
 	E5D2D1850FDE929500143480 /* Code sense */ = {
