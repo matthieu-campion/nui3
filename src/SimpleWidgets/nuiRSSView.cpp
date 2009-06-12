@@ -60,10 +60,10 @@ bool nuiRSSView::Update(const nuiEvent& rEvent)
     nuiHTML html;
     bool res = html.Load(mem);
     
-    //if (res)
+    if (res)
     {
       // Contents is valid HTML
-      desc = nglString::Empty;
+      desc.Wipe();
       html.GetSimpleText(desc);
       //printf("%d - Could parse HTML tags:\n%ls\n", i, desc.GetChars());
     }

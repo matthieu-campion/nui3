@@ -1010,6 +1010,8 @@ void nuiGrid::AddRows(uint32 pos, uint32 rows)
 
 void nuiGrid::RemoveRows(uint32 pos, uint32 rows)
 {
+  if (!rows)
+    return;
   NGL_ASSERT(pos < mNbRows);
   NGL_ASSERT(rows >= 0);
 
@@ -1224,6 +1226,8 @@ void nuiGrid::AddColumns(uint32 pos, uint32 columns)
 
 void nuiGrid::RemoveColumns(uint32 pos, uint32 columns)
 {
+  if (!columns)
+    return;
 
   NGL_ASSERT(pos < mNbColumns);
   NGL_ASSERT(columns >= 0);

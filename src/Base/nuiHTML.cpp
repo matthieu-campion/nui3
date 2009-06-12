@@ -136,6 +136,15 @@ const nuiHTMLAttrib* nuiHTMLNode::GetAttribute(uint32 index) const
   return mAttributes.at(index);
 }
 
+const nuiHTMLAttrib* nuiHTMLNode::GetAttribute(const nglString& rAttribName) const
+{
+  for (uint32 i = 0; i < mAttributes.size(); i++)
+  {
+    if (mAttributes.at(i)->GetName() == rAttribName)
+      return mAttributes.at(i);
+  }
+}
+
 void nuiHTMLNode::BuildTree(const void* _tdoc, const void* _tnod)
 {
   TidyDoc tdoc = (TidyDoc)_tdoc;

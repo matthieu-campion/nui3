@@ -355,6 +355,7 @@ public:
 
   uint32 GetNbAttributes() const;
   const nuiHTMLAttrib* GetAttribute(uint32 index) const;
+  const nuiHTMLAttrib* GetAttribute(const nglString& rAttribName) const;
 
   void GetSimpleText(nglString& rString) const; ///< Add the text contents of this node to rString and then do the same for this its children. This is only needed to create a simple text only preview ignoring all the actual markup.
 protected:

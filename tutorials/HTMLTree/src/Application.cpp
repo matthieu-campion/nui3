@@ -13,7 +13,7 @@
 
 #include "nglConsole.h"
 
-#define APPLICATION_TITLE _T("nui RSS Reader - http://libnui.net")
+#define APPLICATION_TITLE _T("hello world!")
 
 
 NGL_APP_CREATE(Application);

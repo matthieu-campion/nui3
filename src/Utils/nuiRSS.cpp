@@ -333,9 +333,11 @@ void nuiRSS::StartHTTPThread()
   if (!pXML->Load(mem))
   {
     delete pXML;
+    delete pResponse;
     return;
   }
   mpXML = pXML;
+  delete pResponse;
 }
 
 bool nuiRSS::TimeToUpdate(const nuiEvent& rEvent)
