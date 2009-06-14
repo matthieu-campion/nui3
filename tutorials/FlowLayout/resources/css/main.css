@@ -1,0 +1,21 @@
+//
+// main nui3 stylesheet
+//
+
+// you can include your stylesheets this way:
+// #include "myStylesheet.css"
+
+// remember each stylesheet file must have at least a blank ending line, 
+// or the stylehsheet parsing may not work properly
+
+
+nuiScrollView!
+{
+  BorderLeft: 10;
+  BorderRight: 10;
+  BorderTop: 10;
+  BorderBottom: 10;
+}
+
+// blank ending line following
+
