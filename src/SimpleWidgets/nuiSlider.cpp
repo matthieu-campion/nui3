@@ -1,9 +1,9 @@
 /*
-  NUI3 - C++ cross-platform GUI framework for OpenGL based applications
-  Copyright (C) 2002-2003 Sebastien Metrot
-
-  licence: see nui3/LICENCE.TXT
-*/
+ NUI3 - C++ cross-platform GUI framework for OpenGL based applications
+ Copyright (C) 2002-2003 Sebastien Metrot
+ 
+ licence: see nui3/LICENCE.TXT
+ */
 
 
 
@@ -17,15 +17,16 @@
 #include "nuiTheme.h"
 
 #define SLIDER_IDEAL_WIDTH 12
-#define HANDLE_IDEAL_WIDTH 12
+#define SLIDER_IDEAL_SIZE 100
+#define HANDLE_SIZE SLIDER_IDEAL_WIDTH
 
 nuiSize nuiSlider::mDefaultFineSensitivityRatio = 10;
 nglKeyCode nuiSlider::mDefaultFineSensitivityKey = NK_LSHIFT;
 
 nuiSlider::nuiSlider(nuiOrientation orientation, const nuiRange& rRange)
-  : nuiSimpleContainer(),
-    mRange(rRange),
-    mSliderSink(this)
+: nuiSimpleContainer(),
+mRange(rRange),
+mSliderSink(this)
 {
   SetObjectClass(_T("nuiSlider"));
   mOrientation = orientation;
@@ -36,21 +37,18 @@ nuiSlider::nuiSlider(nuiOrientation orientation, const nuiRange& rRange)
   mRange.SetPageSize(0);
   mInteractiveValueChanged = false;
   
-  mIdealWidth = SLIDER_IDEAL_WIDTH;
-  mHandleIdealWidth = HANDLE_IDEAL_WIDTH;
-
   mFineSensitivityRatio = mDefaultFineSensitivityRatio;
   mFineSensitivityKey = mDefaultFineSensitivityKey;
-
+  
   mSliderSink.Connect(mRange.Changed, &nuiSlider::DoInvalidate);
   mSliderSink.Connect(mRange.ValueChanged, &nuiSlider::DoInvalidate);
-
+  
   mpHandle = NULL;
   mpBackground = NULL;
   SetHandleOffset(0);
   SetHandlePosMin(0);
   SetHandlePosMax(100);
-
+  
   NUI_ADD_EVENT(ValueChanged);
   NUI_ADD_EVENT(InteractiveValueChanged);
 }
@@ -63,7 +61,7 @@ bool nuiSlider::Load(const nuiXMLNode* pNode)
   mThumbClicked = false;
   
   mAutoAdjustHandle = true;
-
+  
   // FIXME: interpret other attributes...
   mOrientation = nuiGetOrientation(pNode);
   mSliderSink.Connect(mRange.Changed, &nuiSlider::DoInvalidate);
@@ -71,14 +69,14 @@ bool nuiSlider::Load(const nuiXMLNode* pNode)
   
   mpHandle = NULL;
   mpBackground = NULL;
-
+  
   mFineSensitivityRatio = mDefaultFineSensitivityRatio;
   mFineSensitivityKey = mDefaultFineSensitivityKey;
-
+  
   SetHandleOffset(0);
   SetHandlePosMin(0);
   SetHandlePosMax(100);
-
+  
   // Look for children elements
   long children = GetChildrenCount();
   if (children >= 2)
@@ -87,7 +85,7 @@ bool nuiSlider::Load(const nuiXMLNode* pNode)
     mpBackground = GetChild(0);
   AdjustHandle();
   mAutoAdjustHandle = nuiGetBool(pNode, _T("AutoAdjustHandle"), true);
-
+  
   NUI_ADD_EVENT(ValueChanged);
   NUI_ADD_EVENT(InteractiveValueChanged);
   
@@ -99,7 +97,7 @@ nuiXMLNode* nuiSlider::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
   nuiXMLNode* pNode = nuiWidget::Serialize(pParentNode,true);
   if (!pNode) 
     return NULL;
-
+  
   pNode->SetAttribute(_T("Orientation"),mOrientation);
   return pNode;
 }
@@ -107,16 +105,6 @@ nuiXMLNode* nuiSlider::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
 
 nuiSlider::~nuiSlider()
 {
-}
-
-void nuiSlider::SetIdealWidth(nuiSize width)
-{
-  mIdealWidth = width;
-}
-
-void nuiSlider::SetHandleIdealWidth(nuiSize width)
-{
-  mHandleIdealWidth = width;
 }
 
 #define SHADESIZE 4 
@@ -127,7 +115,7 @@ bool nuiSlider::Draw(nuiDrawContext* pContext)
   pContext->ResetState();
   nuiTheme* pTheme = GetTheme();
   NGL_ASSERT(pTheme);
-
+  
   if (mDrawBackground)
   {
     if (!mpBackground)
@@ -135,37 +123,38 @@ bool nuiSlider::Draw(nuiDrawContext* pContext)
     else
       DrawChild(pContext, mpBackground);
   }
-
+  
   if (!mpHandle)
     pTheme->DrawSliderForeground(pContext,this);
   else
     DrawChild(pContext, mpHandle);
-
+  
   //pContext->PopState();
   pTheme->Release();
-
+  
   return true;
 }
 
 nuiRect nuiSlider::CalcIdealSize()
 {
   nuiRect Rect;
-  nuiRect BgRect = mpBackground ? mpBackground->GetRect() : nuiRect();
-  nuiRect HnRect = mpHandle ? mpHandle->GetRect() : nuiRect();
-
+  nuiRect BgRect = mpBackground ? mpBackground->GetIdealRect() : nuiRect();
+  nuiRect HnRect = mpHandle ? mpHandle->GetIdealRect() : nuiRect();
+  
+  
   if (mOrientation == nuiHorizontal)
   {
-    Rect.mRight  = mpBackground ? BgRect.GetWidth() : MAX(mRange.GetRange(), mIdealWidth);
-    Rect.mBottom = mpHandle ? HnRect.GetHeight()    : mIdealWidth;
+    Rect.mRight  = mpBackground ? BgRect.GetWidth() : MAX(mRange.GetRange(),SLIDER_IDEAL_SIZE);
+    Rect.mBottom = mpHandle ? HnRect.GetHeight()    : SLIDER_IDEAL_WIDTH;
   }
   else
   {
-    Rect.mRight  = mpHandle ? HnRect.GetWidth() : mIdealWidth;
-    Rect.mBottom = mpBackground ? BgRect.GetHeight()      : MAX(mRange.GetRange(), mIdealWidth);
+    Rect.mRight  = mpHandle ? HnRect.GetWidth() : SLIDER_IDEAL_WIDTH;
+    Rect.mBottom = mpBackground ? BgRect.GetHeight()      : MAX(mRange.GetRange(),SLIDER_IDEAL_SIZE);
   }
-
+  
   mIdealRect = Rect;
-
+  
   return mIdealRect;
 }
 
@@ -192,7 +181,7 @@ bool nuiSlider::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
 {
   mClickX = X;
   mClickY = Y;
-
+  
   if (Button == nglMouseInfo::ButtonLeft)
   {
     mClicked = true;
@@ -201,12 +190,12 @@ bool nuiSlider::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
     Grab();
     Invalidate();
     mClickValue = mRange.GetValue();
-
+    
     return true;
   }
   else if (Button == nglMouseInfo::ButtonWheelUp)
   {
-     mInteractiveValueChanged = false;
+    mInteractiveValueChanged = false;
     
     if (IsKeyDown(mFineSensitivityKey))
     {
@@ -221,7 +210,7 @@ bool nuiSlider::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
   }
   else if (Button == nglMouseInfo::ButtonWheelDown)
   {
-     mInteractiveValueChanged = false;
+    mInteractiveValueChanged = false;
     
     if (IsKeyDown(mFineSensitivityKey))
     {
@@ -243,12 +232,12 @@ bool nuiSlider::MouseUnclicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Butto
   {
     mInteractiveValueChanged = false;
     ValueChanged();
- 
+    
     mClicked = false;
-
+    
     mThumbClicked = false;
     Ungrab();
-   
+    
     Invalidate();
     return true;
   }
@@ -265,21 +254,25 @@ bool nuiSlider::MouseMoved  (nuiSize X, nuiSize Y)
     nuiSize range = (nuiSize)fabs(mHandlePosMax - mHandlePosMin);
     x = X - mClickX;
     y = mClickY - Y;
-
+    
+    //LBDEBUG
+    NGL_OUT(_T("MouseMoved : %.2f %.2f     %.2f %.2f\n"), X, Y,x,y);
+    
+    
     nuiSize start= mClickValue;
     nuiSize movement = (mOrientation == nuiHorizontal) ? x : y;
-
+    
     if (IsKeyDown(mFineSensitivityKey))
     {
       movement /= mFineSensitivityRatio;
     }
-
+    
     start += (mRange.GetRange() - mRange.GetPageSize()) * (movement/range);
     
     mRange.SetValue(start);
     return true;
   }
-
+  
   return false;
 }
 
@@ -308,8 +301,8 @@ bool nuiSlider::DoInvalidate(const nuiEvent& rEvent)
   if (!mInteractiveValueChanged)
     ValueChanged();
   
- // mInteractiveValueChanged = true;
-
+  // mInteractiveValueChanged = true;
+  
   UpdateLayout();
   return false;
 }
@@ -348,7 +341,7 @@ bool nuiSlider::SetBackground(nuiWidget* pWidget)
   }
   else
   {
-     mpBackground = NULL;
+    mpBackground = NULL;
   }
   AdjustHandle();
   return true;
@@ -368,7 +361,7 @@ nuiWidget* nuiSlider::GetBackground()
 {
   return mpBackground;
 }
-  
+
 bool nuiSlider::SetHandleOffset(nuiSize Offset)
 {
   mHandleOffset = Offset;
@@ -424,17 +417,17 @@ void nuiSlider::AdjustHandle()
     }
     else
     {
-      offset = mHandleIdealWidth/2;
-      offset2 = mHandleIdealWidth/2;
+      offset = HANDLE_SIZE/2;
+      offset2 = HANDLE_SIZE/2;
     }
-
+    
     if (mpBackground)
     {
       nuiRect r = mpBackground->GetIdealRect();
       nuiSize s;
-
+      
       s = (mOrientation == nuiHorizontal) ? r.GetWidth() : r.GetHeight();
-
+      
       nuiSize Min = mpBackground->HasProperty("HandlePosMin") ? mpBackground->GetProperty("HandlePosMin").GetFloat() : offset;
       nuiSize Max = mpBackground->HasProperty("HandlePosMax") ? mpBackground->GetProperty("HandlePosMax").GetFloat() : s - offset2;
       
@@ -463,27 +456,27 @@ bool nuiSlider::SetRect(const nuiRect& rRect)
 {
   nuiWidget::SetRect(rRect);
   AdjustHandle();
-
+  
   if (mpHandle)
   {
     nuiRect rect = GetRect().Size();
     nuiOrientation Orientation = GetOrientation();
     float start;
-
+    
     start  = mRange.ConvertToUnit(mRange.GetValue());
-
+    
     nuiRect HandleRect = mpHandle->GetIdealRect().Size();
-
+    
     nuiSize Range = mHandlePosMax - mHandlePosMin;
     nuiSize Pos = mHandlePosMin + start * Range;
-
+    
     if (Orientation == nuiHorizontal)
       HandleRect.MoveTo(Pos - mHandleOffset, rect.Bottom()/2 - HandleRect.Bottom()/2);
     else
       HandleRect.MoveTo(rect.Right()/2 - HandleRect.Right()/2, rect.Bottom() - Pos - mHandleOffset);
-
+    
     HandleRect.RoundToNearest();
-
+    
     mpHandle->SetLayout(HandleRect);
   }
   
@@ -491,7 +484,7 @@ bool nuiSlider::SetRect(const nuiRect& rRect)
   {
     mpBackground->SetLayout(GetRect().Size());
   }
-
+  
   return true;
 }
 
