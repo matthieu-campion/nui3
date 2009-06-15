@@ -62,14 +62,15 @@ nuiHTMLNode::nuiHTMLNode(const void* _tdoc, const void* _tnod)
   TidyNode tnod = (TidyNode)_tnod;
   
   nglString text;
-  if (tidyNodeHasText(tdoc, tnod))
+  TidyBuffer buf;
+  tidyBufInit(&buf);
+  if (tidyNodeGetValue(tdoc, tnod, &buf))
   {
-    TidyBuffer buf;
-    tidyBufInit(&buf);
-    tidyNodeGetText(tdoc, tnod, &buf);
     mText.Import((const char*)buf.bp, (int32)buf.size, eUTF8);
-    tidyBufFree(&buf);
+    //NGL_OUT(_T("text: %ls\n"), mText.GetChars());
   }
+  tidyBufFree(&buf);
+
   mName = nglString(tidyNodeGetName(tnod));
   mType = (NodeType)tidyNodeGetType(tnod);
   
@@ -161,6 +162,23 @@ void nuiHTMLNode::BuildTree(const void* _tdoc, const void* _tnod)
   }
 }
 
+void nuiHTMLNode::GetSimpleText(nglString& rString) const
+{
+  if (!mText.IsNull())
+  {
+    rString += mText;
+//    NGL_OUT(_T("text: %ls\n"), mText.GetChars());
+//    NGL_OUT(_T("tmp: %ls\n"), rString.GetChars());
+  }
+  
+  uint32 count = GetNbChildren();
+  
+  for (uint32 i = 0; i < count; i++)
+  {
+    const nuiHTMLNode* pNode = GetChild(i);
+    pNode->GetSimpleText(rString);
+  }
+}
 
 
 //class nuiHTML : public nuiHTMLNode
@@ -248,18 +266,3 @@ bool nuiHTML::Load(nglIStream& rStream)
   return res < 2;
 }
  
-void nuiHTMLNode::GetSimpleText(nglString& rString) const
-{
-  if (!mText.IsNull())
-  {
-    rString.Add(mText);
-  }
-  
-  uint32 count = GetNbChildren();
-  
-  for (uint32 i = 0; i < count; i++)
-  {
-    const nuiHTMLNode* pNode = GetChild(i);
-    pNode->GetSimpleText(rString);
-  }
-}

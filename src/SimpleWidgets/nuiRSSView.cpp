@@ -60,15 +60,20 @@ bool nuiRSSView::Update(const nuiEvent& rEvent)
     nuiHTML html;
     bool res = html.Load(mem);
     
+    nglString text;
     if (res)
     {
       // Contents is valid HTML
-      desc.Wipe();
-      html.GetSimpleText(desc);
-      //printf("%d - Could parse HTML tags:\n%ls\n", i, desc.GetChars());
+      html.GetSimpleText(text);
+      NGL_OUT(_T("%d - Could parse HTML tags:\n%ls\n"), i, text.GetChars());
+    }
+    else
+    {
+      text = rItem.GetDescription();
+      NGL_OUT(_T("%d - Couldn't parse HTML tags:\n%ls\n"), i, text.GetChars());
     }
     
-    nuiLabel* pLabel = new nuiLabel(desc);
+    nuiLabel* pLabel = new nuiLabel(text);
     pLabel->SetObjectName(_T("nuiRSSView::Description"));
     pLabel->SetWrapping(true);
     pPane->AddChild(pLabel);
