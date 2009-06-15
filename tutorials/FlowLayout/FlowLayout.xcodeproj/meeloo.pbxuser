@@ -119,7 +119,7 @@
 	};
 	BC6A09CB0EF9301900881ACF /* main.css */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1652, 533}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1652, 556}}";
 			sepNavSelRange = "{322, 0}";
 			sepNavVisRange = "{0, 363}";
 		};
@@ -131,7 +131,7 @@
 		path = nuiFlowView.cpp;
 		sourceTree = "<group>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1582, 1742}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1582, 1716}}";
 			sepNavSelRange = "{781, 0}";
 			sepNavVisRange = "{514, 1229}";
 		};

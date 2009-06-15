@@ -998,7 +998,7 @@ bool nuiWin::CreateSliderWindow(const nuiEvent& rEvent)
 
   nuiVBox* pVBox = new nuiVBox(5);
   pVBox->SetAllCellsSpacing(5);
-  pVBox->SetExpand(nuiExpandShrinkAndGrow, 1);
+  pVBox->SetExpand(nuiExpandShrinkAndGrow);
   pVBox->SetCellExpand(0, nuiExpandShrinkAndGrow, 1);
   pVBox->SetCellExpand(1, nuiExpandShrinkAndGrow, 1);
   pVBox->SetCellExpand(2, nuiExpandShrinkAndGrow, 1);
@@ -1008,12 +1008,12 @@ bool nuiWin::CreateSliderWindow(const nuiEvent& rEvent)
   //Default Drawing
   {
     nuiHBox* pDefaultBox = new nuiHBox(2);
-    pDefaultBox->SetExpand(nuiExpandShrinkAndGrow, 1);
+    pDefaultBox->SetExpand(nuiExpandShrinkAndGrow);
     pDefaultBox->SetCellExpand(0, nuiExpandShrinkAndGrow, 1);
     pDefaultBox->SetCellExpand(1, nuiExpandShrinkAndGrow, 1);
 
     nuiVBox* pLabelBox = new nuiVBox(2);
-    pLabelBox->SetExpand(nuiExpandShrinkAndGrow, 1);
+    pLabelBox->SetExpand(nuiExpandShrinkAndGrow);
     pLabelBox->SetCellExpand(0, nuiExpandShrinkAndGrow, 1);
     pLabelBox->SetCellExpand(1, nuiExpandShrinkAndGrow, 1);
     pLabelBox->SetCell(0, new nuiLabel(nuiTR("Default drawing:")));
@@ -1067,12 +1067,12 @@ bool nuiWin::CreateSliderWindow(const nuiEvent& rEvent)
   //Discreet Step
   {
     nuiHBox* pDefaultBox = new nuiHBox(2);
-    pDefaultBox->SetExpand(nuiExpandShrinkAndGrow, 1);
+    pDefaultBox->SetExpand(nuiExpandShrinkAndGrow);
     pDefaultBox->SetCellExpand(0, nuiExpandShrinkAndGrow, 1);
     pDefaultBox->SetCellExpand(1, nuiExpandShrinkAndGrow, 1);
 
     nuiVBox* pLabelBox = new nuiVBox(2);
-    pLabelBox->SetExpand(nuiExpandShrinkAndGrow, 1);
+    pLabelBox->SetExpand(nuiExpandShrinkAndGrow);
     pLabelBox->SetCellExpand(0, nuiExpandShrinkAndGrow, 1);
     pLabelBox->SetCellExpand(1, nuiExpandShrinkAndGrow, 1);
     pLabelBox->SetCell(0, new nuiLabel(nuiTR("Discreet Step:")));
@@ -1130,12 +1130,12 @@ bool nuiWin::CreateSliderWindow(const nuiEvent& rEvent)
   //Handle with Image + Background Deco
   {
     nuiHBox* pHandleBox = new nuiHBox(2);
-    pHandleBox->SetExpand(nuiExpandShrinkAndGrow, 1);
+    pHandleBox->SetExpand(nuiExpandShrinkAndGrow);
     pHandleBox->SetCellExpand(0, nuiExpandShrinkAndGrow, 1);
     pHandleBox->SetCellExpand(1, nuiExpandShrinkAndGrow, 1);
 
     nuiVBox* pLabelBox = new nuiVBox(2);
-    pLabelBox->SetExpand(nuiExpandShrinkAndGrow, 1);
+    pLabelBox->SetExpand(nuiExpandShrinkAndGrow);
     pLabelBox->SetCellExpand(0, nuiExpandShrinkAndGrow, 1);
     pLabelBox->SetCellExpand(1, nuiExpandShrinkAndGrow, 1);
     pLabelBox->SetCell(0, new nuiLabel(nuiTR("Handle with Image + Background Deco:")));
@@ -1165,7 +1165,7 @@ bool nuiWin::CreateSliderWindow(const nuiEvent& rEvent)
       pBox->SetCell(1, pText);
       pBox->SetCell(2, pText2);
 
-      pBox->SetExpand(nuiExpandShrinkAndGrow, 1);
+      pBox->SetExpand(nuiExpandShrinkAndGrow);
 
       mWinSink.Connect(pSlider->InteractiveValueChanged, &nuiWin::OnSliderChanged, new std::pair<nuiSlider*, nuiLabel*>(pSlider, pText));
       mWinSink.Connect(pSlider->ValueChanged, &nuiWin::OnSliderChanged, new std::pair<nuiSlider*, nuiLabel*>(pSlider, pText2));
@@ -1192,7 +1192,7 @@ bool nuiWin::CreateSliderWindow(const nuiEvent& rEvent)
       pBox->SetCell(1, pText);
       pBox->SetCell(2, pText2);
 
-      pBox->SetExpand(nuiExpandShrinkAndGrow, 1);
+      pBox->SetExpand(nuiExpandShrinkAndGrow);
 
       mWinSink.Connect(pSlider->InteractiveValueChanged, &nuiWin::OnSliderChanged, new std::pair<nuiSlider*, nuiLabel*>(pSlider, pText));
       mWinSink.Connect(pSlider->ValueChanged, &nuiWin::OnSliderChanged, new std::pair<nuiSlider*, nuiLabel*>(pSlider, pText2));
