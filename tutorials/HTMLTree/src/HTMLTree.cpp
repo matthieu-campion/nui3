@@ -19,8 +19,26 @@ class HTMLTreeNode : public nuiTreeNode
 {
 public:
   HTMLTreeNode(const nuiHTMLNode* pNode)
-  : nuiTreeNode(pNode->GetName().IsEmpty() ? _T("\"") + pNode->GetText() + _T("\"") : _T("<") + pNode->GetName() + (pNode->GetAttribute(_T("id")) ? _T(" id=\"") + pNode->GetAttribute(_T("id"))->GetValue()  + _T("\""): nglString::Empty) + _T(">"))
+    : nuiTreeNode(_T("TEMP"))
   {
+    nuiLabel* pLabel = (nuiLabel*)mpElement;
+    nglString str;
+    if (pNode->GetName().IsEmpty())
+    {
+      str = _T("\"") + pNode->GetText() + _T("\"");
+    }
+    else
+    {
+      nglString id(nglString::Empty);
+      const nuiHTMLAttrib* pAttrib = pNode->GetAttribute(_T("id"));
+      if (pAttrib)
+      {
+        nglString val = pAttrib->GetValue();
+        id.Add(_T(" id=\"")).Add(val).Add(_T("\""));
+      }
+      str = _T("<") + pNode->GetName() + id + _T(">");
+    }
+    pLabel->SetText(str);
     mpNode = pNode;
   }
   virtual ~HTMLTreeNode()
@@ -35,7 +53,8 @@ public:
       uint32 count = mpNode->GetNbChildren();
       for (uint32 i = 0; i < count; i++)
       {
-        HTMLTreeNode* pChild = new HTMLTreeNode(mpNode->GetChild(i));
+        const nuiHTMLNode* pNode = mpNode->GetChild(i);
+        HTMLTreeNode* pChild = new HTMLTreeNode(pNode);
         AddChild(pChild);
       }
     }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="HTMLTree"
 	ProjectGUID="{D87858E8-0145-4B03-889A-3186371799DC}"
 	RootNamespace="template"
@@ -181,6 +181,14 @@
 			</File>
 			<File
 				RelativePath="src\Application.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\HTMLTree.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\HTMLTree.h"
 				>
 			</File>
 			<File

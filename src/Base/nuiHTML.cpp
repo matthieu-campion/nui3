@@ -143,6 +143,7 @@ const nuiHTMLAttrib* nuiHTMLNode::GetAttribute(const nglString& rAttribName) con
     if (mAttributes.at(i)->GetName() == rAttribName)
       return mAttributes.at(i);
   }
+  return NULL;
 }
 
 void nuiHTMLNode::BuildTree(const void* _tdoc, const void* _tnod)
