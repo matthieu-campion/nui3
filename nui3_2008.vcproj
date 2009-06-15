@@ -1229,6 +1229,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\Layout\nuiFlowView.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiFlowView.h"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Layout\nuiFolderPane.cpp"
 					>
 				</File>
@@ -1853,6 +1861,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\SimpleWidgets\nuiRSSView.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiRSSView.h"
+					>
+				</File>
+				<File
 					RelativePath=".\src\SimpleWidgets\nuiScrollBar.cpp"
 					>
 				</File>
@@ -2382,6 +2398,14 @@
 				</File>
 				<File
 					RelativePath=".\include\nuiCSV.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Utils\nuiRSS.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiRSS.h"
 					>
 				</File>
 			</Filter>
