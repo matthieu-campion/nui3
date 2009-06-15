@@ -54,8 +54,6 @@ public:
   virtual void DrawBackground(bool DrawBackground);
   
   void HookMouse();
-  void SetIdealWidth(nuiSize width);
-  void SetHandleIdealWidth(nuiSize width);
   
 
   //Received Events:
