@@ -333,7 +333,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>E56D24CA0FE4727E00C16F53</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>main.css</string>
+								<string>MainWindow.h</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -341,28 +341,22 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>E56D24CB0FE4727E00C16F53</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>main.css</string>
+										<string>MainWindow.h</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E56D25290FE4763B00C16F53</string>
+										<string>E56D267C0FE6A00400C16F53</string>
 										<key>history</key>
 										<array>
-											<string>E56D24CC0FE4727E00C16F53</string>
 											<string>E56D250C0FE4743000C16F53</string>
-											<string>E56D25170FE474CB00C16F53</string>
-											<string>E56D251E0FE474FE00C16F53</string>
-										</array>
-										<key>nextStack</key>
-										<array>
-											<string>E56D250A0FE4742B00C16F53</string>
+											<string>E56D26780FE69FA900C16F53</string>
+											<string>E56D26770FE69FA600C16F53</string>
 										</array>
 										<key>prevStack</key>
 										<array>
 											<string>E56D24CF0FE4727E00C16F53</string>
 											<string>E56D24D00FE4727E00C16F53</string>
 											<string>E56D24D10FE4727E00C16F53</string>
-											<string>E56D25190FE474CB00C16F53</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -663,7 +657,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>266630715.659852</real>
+	<real>266772484.41773701</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -678,7 +672,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E56D252A0FE4763B00C16F53</string>
 		<string>E56D24DE0FE4728900C16F53</string>
 		<string>E56D24DF0FE4728900C16F53</string>
 		<string>/Users/meeloo/work/nui3/tutorials/FlowLayout/FlowLayout.xcodeproj</string>

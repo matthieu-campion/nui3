@@ -345,7 +345,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E56D26500FE69A6500C16F53</string>
+										<string>E56D26990FE6A02C00C16F53</string>
 										<key>history</key>
 										<array>
 											<string>E5B74B6F0FE126B700476F43</string>
@@ -359,7 +359,7 @@
 											<string>E56D260A0FE6983B00C16F53</string>
 											<string>E56D262D0FE698BB00C16F53</string>
 											<string>E56D264C0FE69A1100C16F53</string>
-											<string>E56D264B0FE69A0F00C16F53</string>
+											<string>E56D26520FE69C8E00C16F53</string>
 										</array>
 										<key>nextStack</key>
 										<array>
@@ -375,7 +375,6 @@
 											<string>E580F03C0FE2799F006AC2E1</string>
 											<string>E580F03D0FE2799F006AC2E1</string>
 											<string>E580F03E0FE2799F006AC2E1</string>
-											<string>E56D25790FE6920700C16F53</string>
 											<string>E56D25C40FE6948600C16F53</string>
 											<string>E56D25C60FE6948600C16F53</string>
 											<string>E56D260F0FE6983B00C16F53</string>
@@ -447,11 +446,11 @@
 											<key>PBXCVSModuleTreeModuleColumnWidthsKey</key>
 											<array>
 												<real>200</real>
-												<real>56.66162109375</real>
+												<real>56</real>
 												<real>63</real>
 												<real>60</real>
 												<real>63</real>
-												<real>139.556640625</real>
+												<real>139</real>
 											</array>
 											<key>PBXCVSModuleTreeModuleColumnsKey</key>
 											<array>
@@ -519,11 +518,11 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E56D254B0FE67B2000C16F53</string>
+				<string>E56D268D0FE6A01600C16F53</string>
 				<string>1CA23ED40692098700951B8B</string>
-				<string>E56D254C0FE67B2000C16F53</string>
+				<string>E56D268E0FE6A01600C16F53</string>
 				<string>E5D2D17E0FDE929500143480</string>
-				<string>E56D254D0FE67B2000C16F53</string>
+				<string>E56D268F0FE6A01600C16F53</string>
 				<string>1CA23EDF0692099D00951B8B</string>
 				<string>1CA23EE00692099D00951B8B</string>
 				<string>1CA23EE10692099D00951B8B</string>
@@ -603,8 +602,8 @@
 								<string>yes</string>
 								<key>sizes</key>
 								<array>
-									<string>{{0, 0}, {450, 398}}</string>
-									<string>{{0, 398}, {450, 392}}</string>
+									<string>{{0, 0}, {450, 397}}</string>
+									<string>{{0, 397}, {450, 393}}</string>
 								</array>
 							</dict>
 							<key>VerticalSplitView</key>
@@ -646,14 +645,14 @@
 							<key>DebugVariablesTableConfiguration</key>
 							<array>
 								<string>Name</string>
-								<real>295</real>
+								<real>206</real>
 								<string>Value</string>
-								<real>228</real>
+								<real>139</real>
 								<string>Summary</string>
 								<real>80</real>
 							</array>
 							<key>Frame</key>
-							<string>{{0, 398}, {450, 392}}</string>
+							<string>{{0, 397}, {450, 393}}</string>
 							<key>RubberWindowFrame</key>
 							<string>0 59 1561 1119 0 0 1920 1178 </string>
 						</dict>
@@ -681,14 +680,14 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E56D254E0FE67B2000C16F53</string>
+				<string>E56D26900FE6A01600C16F53</string>
 				<string>1CCC7628064C1048000F2A68</string>
 				<string>1CCC7629064C1048000F2A68</string>
-				<string>E56D254F0FE67B2000C16F53</string>
-				<string>E56D25500FE67B2000C16F53</string>
-				<string>E56D25510FE67B2000C16F53</string>
-				<string>E56D25520FE67B2000C16F53</string>
-				<string>E56D25460FE67AD000C16F53</string>
+				<string>E56D26910FE6A01600C16F53</string>
+				<string>E56D26920FE6A01600C16F53</string>
+				<string>E56D26930FE6A01600C16F53</string>
+				<string>E56D26940FE6A01600C16F53</string>
+				<string>E56D26890FE6A00D00C16F53</string>
 			</array>
 			<key>ToolbarConfigUserDefaultsMinorVersion</key>
 			<string>2</string>
@@ -705,7 +704,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>266771045.11663699</real>
+	<real>266772524.29872301</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -720,9 +719,8 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E56D26510FE69A6500C16F53</string>
-		<string>E56D25540FE67B2000C16F53</string>
-		<string>E56D25550FE67B2000C16F53</string>
+		<string>E56D26960FE6A01600C16F53</string>
+		<string>E56D26970FE6A01600C16F53</string>
 		<string>/Users/meeloo/work/nui3/tutorials/RSS/RSS.xcodeproj</string>
 	</array>
 	<key>WindowString</key>

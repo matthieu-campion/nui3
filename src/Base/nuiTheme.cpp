@@ -726,6 +726,8 @@ void nuiTheme::DrawSliderBackground(nuiDrawContext* pContext, nuiSlider* pSlider
   if (pSlider->GetOrientation() == nuiVertical)
   {
     pDeco = nuiDecoration::Get(_T("nuiDefaultDecorationSliderVerticalBkg"));
+    if (!pDeco)
+      return;
     nuiSize x = (int)((rect.GetWidth() - pDeco->GetIdealClientRect(pSlider).GetWidth()) / 2);
     nuiSize w = pDeco->GetIdealClientRect(pSlider).GetWidth();
     rect.Set(x, min, w, max-min);
@@ -733,13 +735,18 @@ void nuiTheme::DrawSliderBackground(nuiDrawContext* pContext, nuiSlider* pSlider
   else
   {
     pDeco = nuiDecoration::Get(_T("nuiDefaultDecorationSliderHorizontalBkg"));
+    if (!pDeco)
+      return;
     nuiSize y = (int)((rect.GetHeight() - pDeco->GetIdealClientRect(pSlider).GetHeight()) / 2);
     nuiSize h = pDeco->GetIdealClientRect(pSlider).GetHeight();
     rect.Set(min, y, max - min, h);
   }  
   
-  pDeco->Draw(pContext, pSlider, rect);
-  pDeco->Release();
+  if (pDeco)
+  {
+    pDeco->Draw(pContext, pSlider, rect);
+    pDeco->Release();
+  }
 }
 
 void nuiTheme::DrawSliderForeground(nuiDrawContext* pContext, nuiSlider* pSlider)

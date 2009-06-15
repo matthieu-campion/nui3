@@ -1567,6 +1567,16 @@
 		E556976D0FB30E0600324321 /* nuiParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E556976B0FB30E0600324321 /* nuiParser.cpp */; };
 		E556976F0FB30E2200324321 /* nuiParser.h in Headers */ = {isa = PBXBuildFile; fileRef = E556976E0FB30E2200324321 /* nuiParser.h */; };
 		E55697700FB30E2200324321 /* nuiParser.h in Headers */ = {isa = PBXBuildFile; fileRef = E556976E0FB30E2200324321 /* nuiParser.h */; };
+		E56D29890FE6ED6F00C16F53 /* xmlparse.c in Sources */ = {isa = PBXBuildFile; fileRef = 6126DB250DA5751300D2641A /* xmlparse.c */; };
+		E56D298A0FE6ED7300C16F53 /* xmlrole.c in Sources */ = {isa = PBXBuildFile; fileRef = 6126DB260DA5751300D2641A /* xmlrole.c */; };
+		E56D298B0FE6ED7900C16F53 /* xmltok_ns.c in Sources */ = {isa = PBXBuildFile; fileRef = 6126DB2C0DA5751300D2641A /* xmltok_ns.c */; };
+		E56D298C0FE6ED7D00C16F53 /* xmltok_impl.c in Sources */ = {isa = PBXBuildFile; fileRef = 6126DB2A0DA5751300D2641A /* xmltok_impl.c */; };
+		E56D298D0FE6ED7F00C16F53 /* xmltok.c in Sources */ = {isa = PBXBuildFile; fileRef = 6126DB280DA5751300D2641A /* xmltok.c */; };
+		E56D29920FE6EDA800C16F53 /* xmltok_ns.c in Sources */ = {isa = PBXBuildFile; fileRef = 6126DB2C0DA5751300D2641A /* xmltok_ns.c */; };
+		E56D29930FE6EDA900C16F53 /* xmltok_impl.c in Sources */ = {isa = PBXBuildFile; fileRef = 6126DB2A0DA5751300D2641A /* xmltok_impl.c */; };
+		E56D29940FE6EDAB00C16F53 /* xmltok.c in Sources */ = {isa = PBXBuildFile; fileRef = 6126DB280DA5751300D2641A /* xmltok.c */; };
+		E56D29950FE6EDAF00C16F53 /* xmlrole.c in Sources */ = {isa = PBXBuildFile; fileRef = 6126DB260DA5751300D2641A /* xmlrole.c */; };
+		E56D29960FE6EDB200C16F53 /* xmlparse.c in Sources */ = {isa = PBXBuildFile; fileRef = 6126DB250DA5751300D2641A /* xmlparse.c */; };
 		E5A0FFBC0FA1EB1300D934F6 /* nuiDecorationInspector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5A0FFBB0FA1EB1200D934F6 /* nuiDecorationInspector.cpp */; };
 		E5A0FFBD0FA1EB1300D934F6 /* nuiDecorationInspector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5A0FFBB0FA1EB1200D934F6 /* nuiDecorationInspector.cpp */; };
 		E5A0FFBF0FA1EB8500D934F6 /* nuiDecorationInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = E5A0FFBE0FA1EB8500D934F6 /* nuiDecorationInspector.h */; };
@@ -6088,6 +6098,11 @@
 				BC3E8D0A0F7D081300C97E27 /* nuiUnicode.cpp in Sources */,
 				E5A0FFBD0FA1EB1300D934F6 /* nuiDecorationInspector.cpp in Sources */,
 				E556976D0FB30E0600324321 /* nuiParser.cpp in Sources */,
+				E56D29920FE6EDA800C16F53 /* xmltok_ns.c in Sources */,
+				E56D29930FE6EDA900C16F53 /* xmltok_impl.c in Sources */,
+				E56D29940FE6EDAB00C16F53 /* xmltok.c in Sources */,
+				E56D29950FE6EDAF00C16F53 /* xmlrole.c in Sources */,
+				E56D29960FE6EDB200C16F53 /* xmlparse.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6416,6 +6431,11 @@
 				BC3E8D060F7D081300C97E27 /* nuiUnicode.cpp in Sources */,
 				E5A0FFBC0FA1EB1300D934F6 /* nuiDecorationInspector.cpp in Sources */,
 				E556976C0FB30E0600324321 /* nuiParser.cpp in Sources */,
+				E56D29890FE6ED6F00C16F53 /* xmlparse.c in Sources */,
+				E56D298A0FE6ED7300C16F53 /* xmlrole.c in Sources */,
+				E56D298B0FE6ED7900C16F53 /* xmltok_ns.c in Sources */,
+				E56D298C0FE6ED7D00C16F53 /* xmltok_impl.c in Sources */,
+				E56D298D0FE6ED7F00C16F53 /* xmltok.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6480,6 +6500,7 @@
 					.,
 					include,
 					deps/,
+					deps/expat/lib,
 					deps/glu,
 					deps/libpng,
 					deps/tidy,
