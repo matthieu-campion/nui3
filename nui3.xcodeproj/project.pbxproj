@@ -952,6 +952,18 @@
 		E51B69500C4E564D008EF7A3 /* ConvertUTF.h in Headers */ = {isa = PBXBuildFile; fileRef = E51B694E0C4E564D008EF7A3 /* ConvertUTF.h */; };
 		E51B69510C4E564D008EF7A3 /* ConvertUTF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E51B694D0C4E564D008EF7A3 /* ConvertUTF.cpp */; };
 		E51B69520C4E564D008EF7A3 /* ConvertUTF.h in Headers */ = {isa = PBXBuildFile; fileRef = E51B694E0C4E564D008EF7A3 /* ConvertUTF.h */; };
+		E52B20310FE792F400187CB1 /* svcid.h in Headers */ = {isa = PBXBuildFile; fileRef = E52B202F0FE792F400187CB1 /* svcid.h */; };
+		E52B20320FE792F400187CB1 /* svttglyf.h in Headers */ = {isa = PBXBuildFile; fileRef = E52B20300FE792F400187CB1 /* svttglyf.h */; };
+		E52B20330FE792F400187CB1 /* svcid.h in Headers */ = {isa = PBXBuildFile; fileRef = E52B202F0FE792F400187CB1 /* svcid.h */; };
+		E52B20340FE792F400187CB1 /* svttglyf.h in Headers */ = {isa = PBXBuildFile; fileRef = E52B20300FE792F400187CB1 /* svttglyf.h */; };
+		E52B20350FE792F400187CB1 /* svcid.h in Headers */ = {isa = PBXBuildFile; fileRef = E52B202F0FE792F400187CB1 /* svcid.h */; };
+		E52B20360FE792F400187CB1 /* svttglyf.h in Headers */ = {isa = PBXBuildFile; fileRef = E52B20300FE792F400187CB1 /* svttglyf.h */; };
+		E52B20390FE7930D00187CB1 /* ftadvanc.h in Headers */ = {isa = PBXBuildFile; fileRef = E52B20370FE7930D00187CB1 /* ftadvanc.h */; };
+		E52B203A0FE7930D00187CB1 /* ftcid.h in Headers */ = {isa = PBXBuildFile; fileRef = E52B20380FE7930D00187CB1 /* ftcid.h */; };
+		E52B203B0FE7930D00187CB1 /* ftadvanc.h in Headers */ = {isa = PBXBuildFile; fileRef = E52B20370FE7930D00187CB1 /* ftadvanc.h */; };
+		E52B203C0FE7930D00187CB1 /* ftcid.h in Headers */ = {isa = PBXBuildFile; fileRef = E52B20380FE7930D00187CB1 /* ftcid.h */; };
+		E52B203D0FE7930D00187CB1 /* ftadvanc.h in Headers */ = {isa = PBXBuildFile; fileRef = E52B20370FE7930D00187CB1 /* ftadvanc.h */; };
+		E52B203E0FE7930D00187CB1 /* ftcid.h in Headers */ = {isa = PBXBuildFile; fileRef = E52B20380FE7930D00187CB1 /* ftcid.h */; };
 		E52E1A250CD7EEAF006FBCDD /* nuiAudioDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = E52E1A240CD7EEAF006FBCDD /* nuiAudioDevice.h */; };
 		E52E1A260CD7EEAF006FBCDD /* nuiAudioDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = E52E1A240CD7EEAF006FBCDD /* nuiAudioDevice.h */; };
 		E52E1A280CD7F397006FBCDD /* nuiAudioDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52E1A270CD7F397006FBCDD /* nuiAudioDevice.cpp */; };
@@ -1649,8 +1661,6 @@
 		E57BC2E40C5E6DD10026DE07 /* cffparse.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC2D20C5E6DD10026DE07 /* cffparse.h */; };
 		E57BC2E50C5E6DD10026DE07 /* cfftoken.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC2D30C5E6DD10026DE07 /* cfftoken.h */; };
 		E57BC2E60C5E6DD10026DE07 /* cfftypes.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC2D40C5E6DD10026DE07 /* cfftypes.h */; };
-		E57BC2E80C5E6DF20026DE07 /* ft_zlib.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC2E70C5E6DF20026DE07 /* ft_zlib.h */; };
-		E57BC2E90C5E6DF20026DE07 /* ft_zlib.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC2E70C5E6DF20026DE07 /* ft_zlib.h */; };
 		E57BC2EF0C5E6E0F0026DE07 /* otvalid.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC2EA0C5E6E0F0026DE07 /* otvalid.h */; };
 		E57BC2F00C5E6E0F0026DE07 /* otvcommn.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC2EB0C5E6E0F0026DE07 /* otvcommn.h */; };
 		E57BC2F10C5E6E0F0026DE07 /* otverror.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC2EC0C5E6E0F0026DE07 /* otverror.h */; };
@@ -2642,7 +2652,6 @@
 		E592C1AB0EFE8CCC00340B35 /* cffparse.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC2D20C5E6DD10026DE07 /* cffparse.h */; };
 		E592C1AC0EFE8CCC00340B35 /* cfftoken.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC2D30C5E6DD10026DE07 /* cfftoken.h */; };
 		E592C1AD0EFE8CCC00340B35 /* cfftypes.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC2D40C5E6DD10026DE07 /* cfftypes.h */; };
-		E592C1AE0EFE8CCC00340B35 /* ft_zlib.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC2E70C5E6DF20026DE07 /* ft_zlib.h */; };
 		E592C1AF0EFE8CCC00340B35 /* otvalid.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC2EA0C5E6E0F0026DE07 /* otvalid.h */; };
 		E592C1B00EFE8CCC00340B35 /* otvcommn.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC2EB0C5E6E0F0026DE07 /* otvcommn.h */; };
 		E592C1B10EFE8CCC00340B35 /* otverror.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC2EC0C5E6E0F0026DE07 /* otverror.h */; };
@@ -4085,6 +4094,10 @@
 		E517B0DD0C85704900190FF9 /* nuiVBox.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiVBox.h; path = include/nuiVBox.h; sourceTree = SOURCE_ROOT; };
 		E51B694D0C4E564D008EF7A3 /* ConvertUTF.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = ConvertUTF.cpp; path = src/String/ConvertUTF.cpp; sourceTree = SOURCE_ROOT; };
 		E51B694E0C4E564D008EF7A3 /* ConvertUTF.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ConvertUTF.h; path = include/ConvertUTF.h; sourceTree = SOURCE_ROOT; };
+		E52B202F0FE792F400187CB1 /* svcid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = svcid.h; path = deps/freetype2/include/freetype/internal/services/svcid.h; sourceTree = SOURCE_ROOT; };
+		E52B20300FE792F400187CB1 /* svttglyf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = svttglyf.h; path = deps/freetype2/include/freetype/internal/services/svttglyf.h; sourceTree = SOURCE_ROOT; };
+		E52B20370FE7930D00187CB1 /* ftadvanc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ftadvanc.h; path = deps/freetype2/include/freetype/ftadvanc.h; sourceTree = SOURCE_ROOT; };
+		E52B20380FE7930D00187CB1 /* ftcid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ftcid.h; path = deps/freetype2/include/freetype/ftcid.h; sourceTree = SOURCE_ROOT; };
 		E52E1A240CD7EEAF006FBCDD /* nuiAudioDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiAudioDevice.h; path = include/nuiAudioDevice.h; sourceTree = SOURCE_ROOT; };
 		E52E1A270CD7F397006FBCDD /* nuiAudioDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiAudioDevice.cpp; path = Audio/nuiAudioDevice.cpp; sourceTree = "<group>"; };
 		E52E1A550CD80280006FBCDD /* nuiAudioDevice_CoreAudio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiAudioDevice_CoreAudio.cpp; path = Audio/CoreAudio/nuiAudioDevice_CoreAudio.cpp; sourceTree = "<group>"; };
@@ -4162,7 +4175,6 @@
 		E57BC2D20C5E6DD10026DE07 /* cffparse.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = cffparse.h; path = deps/freetype2/src/cff/cffparse.h; sourceTree = SOURCE_ROOT; };
 		E57BC2D30C5E6DD10026DE07 /* cfftoken.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = cfftoken.h; path = deps/freetype2/src/cff/cfftoken.h; sourceTree = SOURCE_ROOT; };
 		E57BC2D40C5E6DD10026DE07 /* cfftypes.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = cfftypes.h; path = deps/freetype2/src/cff/cfftypes.h; sourceTree = SOURCE_ROOT; };
-		E57BC2E70C5E6DF20026DE07 /* ft_zlib.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ft_zlib.h; path = deps/freetype2/src/gzip/ft_zlib.h; sourceTree = SOURCE_ROOT; };
 		E57BC2EA0C5E6E0F0026DE07 /* otvalid.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = otvalid.h; path = deps/freetype2/src/otvalid/otvalid.h; sourceTree = SOURCE_ROOT; };
 		E57BC2EB0C5E6E0F0026DE07 /* otvcommn.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = otvcommn.h; path = deps/freetype2/src/otvalid/otvcommn.h; sourceTree = SOURCE_ROOT; };
 		E57BC2EC0C5E6E0F0026DE07 /* otverror.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = otverror.h; path = deps/freetype2/src/otvalid/otverror.h; sourceTree = SOURCE_ROOT; };
@@ -5491,6 +5503,8 @@
 		E58168020C3CECA800902DFE /* freetype */ = {
 			isa = PBXGroup;
 			children = (
+				E52B20370FE7930D00187CB1 /* ftadvanc.h */,
+				E52B20380FE7930D00187CB1 /* ftcid.h */,
 				E58168030C3CECA800902DFE /* config */,
 				E58168090C3CECA800902DFE /* freetype.h */,
 				E581680A0C3CECA800902DFE /* ftbbox.h */,
@@ -5581,6 +5595,8 @@
 		E581683C0C3CECA800902DFE /* services */ = {
 			isa = PBXGroup;
 			children = (
+				E52B202F0FE792F400187CB1 /* svcid.h */,
+				E52B20300FE792F400187CB1 /* svttglyf.h */,
 				E581683D0C3CECA800902DFE /* svbdf.h */,
 				E581683E0C3CECA800902DFE /* svgldict.h */,
 				E581683F0C3CECA800902DFE /* svgxval.h */,
@@ -5731,7 +5747,6 @@
 		E58169010C3CECA900902DFE /* gzip */ = {
 			isa = PBXGroup;
 			children = (
-				E57BC2E70C5E6DF20026DE07 /* ft_zlib.h */,
 				E58169030C3CECA900902DFE /* ftgzip.c */,
 			);
 			name = gzip;
@@ -7238,7 +7253,6 @@
 				E57BC2E40C5E6DD10026DE07 /* cffparse.h in Headers */,
 				E57BC2E50C5E6DD10026DE07 /* cfftoken.h in Headers */,
 				E57BC2E60C5E6DD10026DE07 /* cfftypes.h in Headers */,
-				E57BC2E90C5E6DF20026DE07 /* ft_zlib.h in Headers */,
 				E57BC2F40C5E6E0F0026DE07 /* otvalid.h in Headers */,
 				E57BC2F50C5E6E0F0026DE07 /* otvcommn.h in Headers */,
 				E57BC2F60C5E6E0F0026DE07 /* otverror.h in Headers */,
@@ -7604,6 +7618,10 @@
 				E5D2D18D0FDE949C00143480 /* nuiRSS.h in Headers */,
 				E5B74AE00FE021C900476F43 /* nuiRSSView.h in Headers */,
 				E56D24040FE2F3AD00C16F53 /* nuiFlowView.h in Headers */,
+				E52B20330FE792F400187CB1 /* svcid.h in Headers */,
+				E52B20340FE792F400187CB1 /* svttglyf.h in Headers */,
+				E52B203B0FE7930D00187CB1 /* ftadvanc.h in Headers */,
+				E52B203C0FE7930D00187CB1 /* ftcid.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7918,7 +7936,6 @@
 				E57BC2DB0C5E6DD10026DE07 /* cffparse.h in Headers */,
 				E57BC2DC0C5E6DD10026DE07 /* cfftoken.h in Headers */,
 				E57BC2DD0C5E6DD10026DE07 /* cfftypes.h in Headers */,
-				E57BC2E80C5E6DF20026DE07 /* ft_zlib.h in Headers */,
 				E57BC2EF0C5E6E0F0026DE07 /* otvalid.h in Headers */,
 				E57BC2F00C5E6E0F0026DE07 /* otvcommn.h in Headers */,
 				E57BC2F10C5E6E0F0026DE07 /* otverror.h in Headers */,
@@ -8286,6 +8303,10 @@
 				E5D2D18E0FDE949C00143480 /* nuiRSS.h in Headers */,
 				E5B74ADF0FE021C900476F43 /* nuiRSSView.h in Headers */,
 				E56D24050FE2F3AD00C16F53 /* nuiFlowView.h in Headers */,
+				E52B20310FE792F400187CB1 /* svcid.h in Headers */,
+				E52B20320FE792F400187CB1 /* svttglyf.h in Headers */,
+				E52B20390FE7930D00187CB1 /* ftadvanc.h in Headers */,
+				E52B203A0FE7930D00187CB1 /* ftcid.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8596,7 +8617,6 @@
 				E592C1AB0EFE8CCC00340B35 /* cffparse.h in Headers */,
 				E592C1AC0EFE8CCC00340B35 /* cfftoken.h in Headers */,
 				E592C1AD0EFE8CCC00340B35 /* cfftypes.h in Headers */,
-				E592C1AE0EFE8CCC00340B35 /* ft_zlib.h in Headers */,
 				E592C1AF0EFE8CCC00340B35 /* otvalid.h in Headers */,
 				E592C1B00EFE8CCC00340B35 /* otvcommn.h in Headers */,
 				E592C1B10EFE8CCC00340B35 /* otverror.h in Headers */,
@@ -8966,6 +8986,10 @@
 				E5D2D18F0FDE949C00143480 /* nuiRSS.h in Headers */,
 				E5B74AE10FE021C900476F43 /* nuiRSSView.h in Headers */,
 				E56D24030FE2F3AD00C16F53 /* nuiFlowView.h in Headers */,
+				E52B20350FE792F400187CB1 /* svcid.h in Headers */,
+				E52B20360FE792F400187CB1 /* svttglyf.h in Headers */,
+				E52B203D0FE7930D00187CB1 /* ftadvanc.h in Headers */,
+				E52B203E0FE7930D00187CB1 /* ftcid.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
