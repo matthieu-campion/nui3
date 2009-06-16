@@ -4,7 +4,7 @@
 /*                                                                         */
 /*    PostScript Type 1 decoding routines (body).                          */
 /*                                                                         */
-/*  Copyright 2000-2001, 2002, 2003, 2004, 2005, 2006, 2007 by             */
+/*  Copyright 2000-2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009 by */
 /*  David Turner, Robert Wilhelm, and Werner Lemberg.                      */
 /*                                                                         */
 /*  This file is part of the FreeType project, and may only be used,       */
@@ -354,10 +354,9 @@
                ( decoder->buildchar == NULL ) );
 
     if ( decoder->len_buildchar > 0 )
-      memset( &decoder->buildchar[0],
-              0,
-              sizeof( decoder->buildchar[0] ) *
-                decoder->len_buildchar );
+      ft_memset( &decoder->buildchar[0],
+                 0,
+                 sizeof( decoder->buildchar[0] ) * decoder->len_buildchar );
 
     FT_TRACE4(( "\nStart charstring\n" ));
 
@@ -777,10 +776,10 @@
                  idx + blend->num_designs > decoder->face->len_buildchar )
               goto Unexpected_OtherSubr;
 
-            memcpy( &decoder->buildchar[idx],
-                    blend->weight_vector,
-                    blend->num_designs *
-                      sizeof( blend->weight_vector[ 0 ] ) );
+            ft_memcpy( &decoder->buildchar[idx],
+                       blend->weight_vector,
+                       blend->num_designs *
+                         sizeof( blend->weight_vector[0] ) );
           }
           break;
 
@@ -1062,10 +1061,11 @@
         case op_closepath:
           FT_TRACE4(( " closepath" ));
 
-          close_contour( builder );
-          if ( !( builder->parse_state == T1_Parse_Have_Path   ||
-                  builder->parse_state == T1_Parse_Have_Moveto ) )
-            goto Syntax_Error;
+          /* if there is no path, `closepath' is a no-op */
+          if ( builder->parse_state == T1_Parse_Have_Path   ||
+               builder->parse_state == T1_Parse_Have_Moveto )
+            close_contour( builder );
+
           builder->parse_state = T1_Parse_Have_Width;
           break;
 

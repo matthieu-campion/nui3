@@ -29,14 +29,14 @@ public:
     }
     else
     {
-      nglString id(nglString::Empty);
+      nglString Id(nglString::Empty);
       const nuiHTMLAttrib* pAttrib = pNode->GetAttribute(_T("id"));
       if (pAttrib)
       {
         nglString val = pAttrib->GetValue();
-        id.Add(_T(" id=\"")).Add(val).Add(_T("\""));
+        Id.Add(_T(" id=\"")).Add(val).Add(_T("\""));
       }
-      str = _T("<") + pNode->GetName() + id + _T(">");
+      str = _T("<") + pNode->GetName() + Id + _T(">");
     }
     pLabel->SetText(str);
     mpNode = pNode;

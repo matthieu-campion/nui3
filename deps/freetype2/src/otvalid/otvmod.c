@@ -4,7 +4,7 @@
 /*                                                                         */
 /*    FreeType's OpenType validation module implementation (body).         */
 /*                                                                         */
-/*  Copyright 2004, 2005, 2006 by                                          */
+/*  Copyright 2004, 2005, 2006, 2007, 2008 by                              */
 /*  David Turner, Robert Wilhelm, and Werner Lemberg.                      */
 /*                                                                         */
 /*  This file is part of the FreeType project, and may only be used,       */
@@ -79,12 +79,14 @@
     FT_Byte* volatile         gpos;
     FT_Byte* volatile         gsub;
     FT_Byte* volatile         jstf;
+    FT_Byte* volatile         math;
     FT_ULong                  len_base, len_gdef, len_gpos, len_gsub, len_jstf;
+    FT_ULong                  len_math;
     FT_ValidatorRec volatile  valid;
 
 
-    base     = gdef     = gpos     = gsub     = jstf     = NULL;
-    len_base = len_gdef = len_gpos = len_gsub = len_jstf = 0;
+    base     = gdef     = gpos     = gsub     = jstf     = math     = NULL;
+    len_base = len_gdef = len_gpos = len_gsub = len_jstf = len_math = 0;
 
     /* load tables */
 
@@ -119,6 +121,13 @@
     if ( ot_flags & FT_VALIDATE_JSTF )
     {
       error = otv_load_table( face, TTAG_JSTF, &jstf, &len_jstf );
+      if ( error )
+        goto Exit;
+    }
+
+    if ( ot_flags & FT_VALIDATE_MATH )
+    {
+      error = otv_load_table( face, TTAG_MATH, &math, &len_math );
       if ( error )
         goto Exit;
     }
@@ -159,7 +168,7 @@
     {
       ft_validator_init( &valid, gdef, gdef + len_gdef, FT_VALIDATE_DEFAULT );
       if ( ft_setjmp( valid.jump_buffer ) == 0 )
-        otv_GDEF_validate( gdef, gsub, gpos, &valid );
+        otv_GDEF_validate( gdef, gsub, gpos, face->num_glyphs, &valid );
       error = valid.error;
       if ( error )
         goto Exit;
@@ -170,6 +179,16 @@
       ft_validator_init( &valid, jstf, jstf + len_jstf, FT_VALIDATE_DEFAULT );
       if ( ft_setjmp( valid.jump_buffer ) == 0 )
         otv_JSTF_validate( jstf, gsub, gpos, face->num_glyphs, &valid );
+      error = valid.error;
+      if ( error )
+        goto Exit;
+    }
+
+    if ( math )
+    {
+      ft_validator_init( &valid, math, math + len_math, FT_VALIDATE_DEFAULT );
+      if ( ft_setjmp( valid.jump_buffer ) == 0 )
+        otv_MATH_validate( math, face->num_glyphs, &valid );
       error = valid.error;
       if ( error )
         goto Exit;
@@ -191,6 +210,12 @@
       FT_FREE( gpos );
       FT_FREE( gsub );
       FT_FREE( jstf );
+    }
+    {
+      FT_Memory  memory = FT_FACE_MEMORY( face );
+
+
+      FT_FREE( math );                 /* Can't return this as API is frozen */
     }
 
     return error;

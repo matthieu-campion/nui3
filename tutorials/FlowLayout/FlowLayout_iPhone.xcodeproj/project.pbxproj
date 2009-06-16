@@ -39,6 +39,8 @@
 		C9F5F92E0DA84CAB00E078ED /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C999972E0DA6F405001A7116 /* OpenGLES.framework */; };
 		C9F5F92F0DA84CAB00E078ED /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C99997710DA6F9F2001A7116 /* AudioToolbox.framework */; };
 		C9F5F9300DA84CAB00E078ED /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C99998F50DA7CAF2001A7116 /* QuartzCore.framework */; };
+		E56D2A400FE709D900C16F53 /* sample.txt in Resources */ = {isa = PBXBuildFile; fileRef = E56D2A3F0FE709D900C16F53 /* sample.txt */; };
+		E56D2A410FE709D900C16F53 /* sample.txt in Resources */ = {isa = PBXBuildFile; fileRef = E56D2A3F0FE709D900C16F53 /* sample.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +98,7 @@
 		C9EA04FD0E2917FA0067EF48 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		C9F2587A0E5861EA00687021 /* dlist.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = dlist.plist; sourceTree = "<group>"; };
 		C9F5F9330DA84CAB00E078ED /* FlowLayout_iPhoneD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlowLayout_iPhoneD.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E56D2A3F0FE709D900C16F53 /* sample.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = sample.txt; path = resources/sample.txt; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,6 +185,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E56D2A3F0FE709D900C16F53 /* sample.txt */,
 				BC1DAD660F83643300773749 /* css */,
 				BC1DAD690F83643300773749 /* decorations */,
 				BC1DAD6C0F83643300773749 /* icon.icns */,
@@ -327,6 +331,7 @@
 				BC1DAD760F83643300773749 /* icon.icns in Resources */,
 				BC1DAD770F83643300773749 /* icon.ico in Resources */,
 				BC1DAD780F83643300773749 /* icon.png in Resources */,
+				E56D2A400FE709D900C16F53 /* sample.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,6 +344,7 @@
 				BC1DAD710F83643300773749 /* icon.icns in Resources */,
 				BC1DAD720F83643300773749 /* icon.ico in Resources */,
 				BC1DAD730F83643300773749 /* icon.png in Resources */,
+				E56D2A410FE709D900C16F53 /* sample.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

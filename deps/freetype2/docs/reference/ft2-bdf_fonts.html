@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>FreeType-2.3.5 API Reference</title>
+<title>FreeType-2.3.9 API Reference</title>
 <style type="text/css">
   body { font-family: Verdana, Geneva, Arial, Helvetica, serif;
          color: #000000;
@@ -12,7 +12,9 @@
   p { text-align: justify; }
   h1 { text-align: center; }
   li { text-align: justify; }
-  td { padding: 0 0.5em 0 0.5em }
+  td { padding: 0 0.5em 0 0.5em; }
+  td.left { padding: 0 0.5em 0 0.5em;
+            text-align: left; }
 
   a:link { color: #0000EF; }
   a:visited { color: #51188E; }
@@ -29,10 +31,14 @@
 </style>
 </head>
 <body>
-<center><h1>FreeType-2.3.5 API Reference</h1></center>
+
+<table align=center><tr><td><font size=-1>[<a href="ft2-index.html">Index</a>]</font></td>
+<td width="100%"></td>
+<td><font size=-1>[<a href="ft2-toc.html">TOC</a>]</font></td></tr></table>
+<center><h1>FreeType-2.3.9 API Reference</h1></center>
 
 <center><h1>
-BDF Files
+BDF and PCF Files
 </h1></center>
 <h2>Synopsis</h2>
 <table align=center cellspacing=5 cellpadding=0 border=0>
@@ -41,10 +47,13 @@ BDF Files
 </table><br><br>
 
 <table align=center width="87%"><tr><td>
-<p>This section contains the declaration of BDF specific functions.</p>
+<p>This section contains the declaration of functions specific to BDF and PCF fonts.</p>
 </td></tr></table><br>
 <table align=center width="75%"><tr><td>
 <h4><a name="FT_PropertyType">FT_PropertyType</a></h4>
+<table align=center width="87%"><tr><td>
+Defined in FT_BDF_H (freetype/ftbdf.h).
+</td></tr></table><br>
 <table align=center width="87%"><tr bgcolor="#D6E8FF"><td><pre>
 
   <span class="keyword">typedef</span> <span class="keyword">enum</span>  BDF_PropertyType_
@@ -61,9 +70,10 @@ BDF Files
 <p>A list of BDF property types.</p>
 </td></tr></table><br>
 <table align=center width="87%" cellpadding=5><tr bgcolor="#EEEEFF"><td><em><b>values</b></em></td></tr><tr><td>
+<p></p>
 <table cellpadding=3 border=0>
 <tr valign=top><td><b>BDF_PROPERTY_TYPE_NONE</b></td><td>
-<p>Value 0 is used to indicate a missing property.</p>
+<p>Value&nbsp;0 is used to indicate a missing property.</p>
 </td></tr>
 <tr valign=top><td><b>BDF_PROPERTY_TYPE_ATOM</b></td><td>
 <p>Property is a string atom.</p>
@@ -80,32 +90,26 @@ BDF Files
 </td></tr></table>
 </td></tr></table>
 <hr width="75%">
-<table align=center width="75%"><tr><td><font size=-2>[<a href="
-ft2-index.html">Index</a>]</font></td>
+<table align=center width="75%"><tr><td><font size=-2>[<a href="ft2-index.html">Index</a>]</font></td>
 <td width="100%"></td>
-<td><font size=-2>[<a href="
-ft2-toc.html">TOC</a>]</font></td></tr></table>
+<td><font size=-2>[<a href="ft2-toc.html">TOC</a>]</font></td></tr></table>
 
 <table align=center width="75%"><tr><td>
 <h4><a name="BDF_Property">BDF_Property</a></h4>
-<table align=center width="87%"><tr bgcolor="#D6E8FF"><td><pre>
-
-  <span class="keyword">typedef</span> <span class="keyword">struct</span> BDF_PropertyRec_*  <b>BDF_Property</b>;
-
-</pre></table><br>
 <table align=center width="87%"><tr><td>
 <p>A handle to a <a href="ft2-bdf_fonts.html#BDF_PropertyRec">BDF_PropertyRec</a> structure to model a given BDF/PCF property.</p>
 </td></tr></table><br>
 </td></tr></table>
 <hr width="75%">
-<table align=center width="75%"><tr><td><font size=-2>[<a href="
-ft2-index.html">Index</a>]</font></td>
+<table align=center width="75%"><tr><td><font size=-2>[<a href="ft2-index.html">Index</a>]</font></td>
 <td width="100%"></td>
-<td><font size=-2>[<a href="
-ft2-toc.html">TOC</a>]</font></td></tr></table>
+<td><font size=-2>[<a href="ft2-toc.html">TOC</a>]</font></td></tr></table>
 
 <table align=center width="75%"><tr><td>
 <h4><a name="BDF_PropertyRec">BDF_PropertyRec</a></h4>
+<table align=center width="87%"><tr><td>
+Defined in FT_BDF_H (freetype/ftbdf.h).
+</td></tr></table><br>
 <table align=center width="87%"><tr bgcolor="#D6E8FF"><td><pre>
 
   <span class="keyword">typedef</span> <span class="keyword">struct</span>  BDF_PropertyRec_
@@ -113,8 +117,8 @@ ft2-toc.html">TOC</a>]</font></td></tr></table>
     BDF_PropertyType  type;
     <span class="keyword">union</span> {
       <span class="keyword">const</span> <span class="keyword">char</span>*     atom;
-      FT_Int32        integer;
-      FT_UInt32       cardinal;
+      <a href="ft2-basic_types.html#FT_Int32">FT_Int32</a>        integer;
+      <a href="ft2-basic_types.html#FT_UInt32">FT_UInt32</a>       cardinal;
 
     } u;
 
@@ -125,6 +129,7 @@ ft2-toc.html">TOC</a>]</font></td></tr></table>
 <p>This structure models a given BDF/PCF property.</p>
 </td></tr></table><br>
 <table align=center width="87%" cellpadding=5><tr bgcolor="#EEEEFF"><td><em><b>fields</b></em></td></tr><tr><td>
+<p></p>
 <table cellpadding=3 border=0>
 <tr valign=top><td><b>type</b></td><td>
 <p>The property type.</p>
@@ -142,14 +147,15 @@ ft2-toc.html">TOC</a>]</font></td></tr></table>
 </td></tr></table>
 </td></tr></table>
 <hr width="75%">
-<table align=center width="75%"><tr><td><font size=-2>[<a href="
-ft2-index.html">Index</a>]</font></td>
+<table align=center width="75%"><tr><td><font size=-2>[<a href="ft2-index.html">Index</a>]</font></td>
 <td width="100%"></td>
-<td><font size=-2>[<a href="
-ft2-toc.html">TOC</a>]</font></td></tr></table>
+<td><font size=-2>[<a href="ft2-toc.html">TOC</a>]</font></td></tr></table>
 
 <table align=center width="75%"><tr><td>
 <h4><a name="FT_Get_BDF_Charset_ID">FT_Get_BDF_Charset_ID</a></h4>
+<table align=center width="87%"><tr><td>
+Defined in FT_BDF_H (freetype/ftbdf.h).
+</td></tr></table><br>
 <table align=center width="87%"><tr bgcolor="#D6E8FF"><td><pre>
 
   FT_EXPORT( <a href="ft2-basic_types.html#FT_Error">FT_Error</a> )
@@ -159,9 +165,10 @@ ft2-toc.html">TOC</a>]</font></td></tr></table>
 
 </pre></table><br>
 <table align=center width="87%"><tr><td>
-<p>Retrieves a BDF font character set identity, according to the BDF specification.</p>
+<p>Retrieve a BDF font character set identity, according to the BDF specification.</p>
 </td></tr></table><br>
 <table align=center width="87%" cellpadding=5><tr bgcolor="#EEEEFF"><td><em><b>input</b></em></td></tr><tr><td>
+<p></p>
 <table cellpadding=3 border=0>
 <tr valign=top><td><b>face</b></td><td>
 <p>A handle to the input face.</p>
@@ -169,31 +176,33 @@ ft2-toc.html">TOC</a>]</font></td></tr></table>
 </table>
 </td></tr></table>
 <table align=center width="87%" cellpadding=5><tr bgcolor="#EEEEFF"><td><em><b>output</b></em></td></tr><tr><td>
+<p></p>
 <table cellpadding=3 border=0>
 <tr valign=top><td><b>acharset_encoding</b></td><td>
-<p>Charset encoding, as a C string, owned by the face.</p>
+<p>Charset encoding, as a C&nbsp;string, owned by the face.</p>
 </td></tr>
 <tr valign=top><td><b>acharset_registry</b></td><td>
-<p>Charset registry, as a C string, owned by the face.</p>
+<p>Charset registry, as a C&nbsp;string, owned by the face.</p>
 </td></tr>
 </table>
 </td></tr></table>
 <table align=center width="87%" cellpadding=5><tr bgcolor="#EEEEFF"><td><em><b>return</b></em></td></tr><tr><td>
-<p>FreeType error code. 0 means success.</p>
+<p>FreeType error code. 0&nbsp;means success.</p>
 </td></tr></table>
 <table align=center width="87%" cellpadding=5><tr bgcolor="#EEEEFF"><td><em><b>note</b></em></td></tr><tr><td>
 <p>This function only works with BDF faces, returning an error otherwise.</p>
 </td></tr></table>
 </td></tr></table>
 <hr width="75%">
-<table align=center width="75%"><tr><td><font size=-2>[<a href="
-ft2-index.html">Index</a>]</font></td>
+<table align=center width="75%"><tr><td><font size=-2>[<a href="ft2-index.html">Index</a>]</font></td>
 <td width="100%"></td>
-<td><font size=-2>[<a href="
-ft2-toc.html">TOC</a>]</font></td></tr></table>
+<td><font size=-2>[<a href="ft2-toc.html">TOC</a>]</font></td></tr></table>
 
 <table align=center width="75%"><tr><td>
 <h4><a name="FT_Get_BDF_Property">FT_Get_BDF_Property</a></h4>
+<table align=center width="87%"><tr><td>
+Defined in FT_BDF_H (freetype/ftbdf.h).
+</td></tr></table><br>
 <table align=center width="87%"><tr bgcolor="#D6E8FF"><td><pre>
 
   FT_EXPORT( <a href="ft2-basic_types.html#FT_Error">FT_Error</a> )
@@ -203,9 +212,10 @@ ft2-toc.html">TOC</a>]</font></td></tr></table>
 
 </pre></table><br>
 <table align=center width="87%"><tr><td>
-<p>Retrieves a BDF property from a BDF or PCF font file.</p>
+<p>Retrieve a BDF property from a BDF or PCF font file.</p>
 </td></tr></table><br>
 <table align=center width="87%" cellpadding=5><tr bgcolor="#EEEEFF"><td><em><b>input</b></em></td></tr><tr><td>
+<p></p>
 <table cellpadding=3 border=0>
 <tr valign=top><td><b>face</b></td><td>
 <p>A handle to the input face.</p>
@@ -216,6 +226,7 @@ ft2-toc.html">TOC</a>]</font></td></tr></table>
 </table>
 </td></tr></table>
 <table align=center width="87%" cellpadding=5><tr bgcolor="#EEEEFF"><td><em><b>output</b></em></td></tr><tr><td>
+<p></p>
 <table cellpadding=3 border=0>
 <tr valign=top><td><b>aproperty</b></td><td>
 <p>The property.</p>
@@ -223,19 +234,19 @@ ft2-toc.html">TOC</a>]</font></td></tr></table>
 </table>
 </td></tr></table>
 <table align=center width="87%" cellpadding=5><tr bgcolor="#EEEEFF"><td><em><b>return</b></em></td></tr><tr><td>
-<p>FreeType error code. 0 means success.</p>
+<p>FreeType error code. 0&nbsp;means success.</p>
 </td></tr></table>
 <table align=center width="87%" cellpadding=5><tr bgcolor="#EEEEFF"><td><em><b>note</b></em></td></tr><tr><td>
 <p>This function works with BDF <i>and</i> PCF fonts. It returns an error otherwise. It also returns an error if the property is not in the font.</p>
+<p>A &lsquo;property&rsquo; is a either key-value pair within the STARTPROPERTIES ... ENDPROPERTIES block of a BDF font or a key-value pair from the &lsquo;info-&gt;props&rsquo; array within a &lsquo;FontRec&rsquo; structure of a PCF font.</p>
+<p>Integer properties are always stored as &lsquo;signed&rsquo; within PCF fonts; consequently, <a href="ft2-bdf_fonts.html#FT_PropertyType">BDF_PROPERTY_TYPE_CARDINAL</a> is a possible return value for BDF fonts only.</p>
 <p>In case of error, &lsquo;aproperty-&gt;type&rsquo; is always set to <a href="ft2-bdf_fonts.html#FT_PropertyType">BDF_PROPERTY_TYPE_NONE</a>.</p>
 </td></tr></table>
 </td></tr></table>
 <hr width="75%">
-<table align=center width="75%"><tr><td><font size=-2>[<a href="
-ft2-index.html">Index</a>]</font></td>
+<table align=center width="75%"><tr><td><font size=-2>[<a href="ft2-index.html">Index</a>]</font></td>
 <td width="100%"></td>
-<td><font size=-2>[<a href="
-ft2-toc.html">TOC</a>]</font></td></tr></table>
+<td><font size=-2>[<a href="ft2-toc.html">TOC</a>]</font></td></tr></table>
 
 </body>
 </html>

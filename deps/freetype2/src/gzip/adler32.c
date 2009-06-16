@@ -3,7 +3,7 @@
  * For conditions of distribution and use, see copyright notice in zlib.h
  */
 
-/* @(#) $Id: adler32.c,v 1.2 2008-04-11 13:53:50 meeloo Exp $ */
+/* @(#) $Id: adler32.c,v 1.5 2007/06/01 06:56:17 wl Exp $ */
 
 #include "zlib.h"
 

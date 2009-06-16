@@ -39,6 +39,8 @@
 		C9F5F92E0DA84CAB00E078ED /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C999972E0DA6F405001A7116 /* OpenGLES.framework */; };
 		C9F5F92F0DA84CAB00E078ED /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C99997710DA6F9F2001A7116 /* AudioToolbox.framework */; };
 		C9F5F9300DA84CAB00E078ED /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C99998F50DA7CAF2001A7116 /* QuartzCore.framework */; };
+		E56D2AF70FE720B300C16F53 /* HTMLTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E56D2AF50FE720B300C16F53 /* HTMLTree.cpp */; };
+		E56D2AF80FE720B300C16F53 /* HTMLTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E56D2AF50FE720B300C16F53 /* HTMLTree.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +98,8 @@
 		C9EA04FD0E2917FA0067EF48 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		C9F2587A0E5861EA00687021 /* dlist.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = dlist.plist; sourceTree = "<group>"; };
 		C9F5F9330DA84CAB00E078ED /* HTMLTree_iPhoneD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HTMLTree_iPhoneD.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E56D2AF50FE720B300C16F53 /* HTMLTree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HTMLTree.cpp; path = src/HTMLTree.cpp; sourceTree = SOURCE_ROOT; };
+		E56D2AF60FE720B300C16F53 /* HTMLTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HTMLTree.h; path = src/HTMLTree.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -229,6 +233,8 @@
 		C99996330DA6EED8001A7116 /* sources */ = {
 			isa = PBXGroup;
 			children = (
+				E56D2AF50FE720B300C16F53 /* HTMLTree.cpp */,
+				E56D2AF60FE720B300C16F53 /* HTMLTree.h */,
 				BC6A0A430EF93F9700881ACF /* Application.cpp */,
 				BC6A0A440EF93F9700881ACF /* Application.h */,
 				BC6A0A420EF93F9700881ACF /* MainWindow.cpp */,
@@ -351,6 +357,7 @@
 			files = (
 				BC6A0A450EF93F9700881ACF /* MainWindow.cpp in Sources */,
 				BC6A0A460EF93F9700881ACF /* Application.cpp in Sources */,
+				E56D2AF70FE720B300C16F53 /* HTMLTree.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -360,6 +367,7 @@
 			files = (
 				BC6A0A470EF93F9700881ACF /* MainWindow.cpp in Sources */,
 				BC6A0A480EF93F9700881ACF /* Application.cpp in Sources */,
+				E56D2AF80FE720B300C16F53 /* HTMLTree.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
