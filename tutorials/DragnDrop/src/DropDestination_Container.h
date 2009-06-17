@@ -23,7 +23,8 @@ public:
   virtual void OnDropped(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
   
   void Log(const nglString& rMsg);
-  
+
+  bool Draw(nuiDrawContext* pContext);
 private:
   
   nglPath mDnDPath;
@@ -31,4 +32,8 @@ private:
   bool mDnDValid;
   
   nuiLabel* mpText;
+  nglDragAndDrop* mpLastDND;
+  
+  nuiSize mLastX;
+  nuiSize mLastY;
 };

@@ -38,26 +38,27 @@ void nglDragAndDrop::AddType(nglDataObject* pObject)
   mObjects[pObject->GetMimeType()] = pObject;
 }
 
-nglDataObject* nglDragAndDrop::GetType(const nglString& rMimeType)
+nglDataObject* nglDragAndDrop::GetType(const nglString& rMimeType) const
 {
-  std::map<nglString, nglDataObject*>::iterator it = mObjects.find(rMimeType);
+  std::map<nglString, nglDataObject*>::const_iterator it = mObjects.find(rMimeType);
   if (it != mObjects.end() && it->second)
     return it->second;
   return NULL;
 }
 
-bool nglDragAndDrop::IsTypeSupported(const nglString& rMimeType)
+bool nglDragAndDrop::IsTypeSupported(const nglString& rMimeType) const
 {
-  std::map<nglString,nglDataObject*>::iterator it = mObjects.find(rMimeType);
+  std::map<nglString,nglDataObject*>::const_iterator it = mObjects.find(rMimeType);
   if (it != mObjects.end())
     return true;
   return false;
 }
 
-std::list<nglDropEffect>& nglDragAndDrop::GetSupportedDropEffects()
+const std::list<nglDropEffect>& nglDragAndDrop::GetSupportedDropEffects() const
 { 
   return mSupportedDropEffects; 
 }
+
 void nglDragAndDrop::AddSupportedDropEffect(nglDropEffect effect)
 { 
   mSupportedDropEffects.push_back(effect);
@@ -68,12 +69,12 @@ void nglDragAndDrop::SetDesiredDropEffect(nglDropEffect effect)
   mDesiredDropEffect = effect;
 }
 
-nglDropEffect nglDragAndDrop::GetDesiredDropEffect()
+nglDropEffect nglDragAndDrop::GetDesiredDropEffect() const
 { 
   return mDesiredDropEffect; 
 }
 
-std::map<nglString, nglDataObject*>& nglDragAndDrop::GetSupportedTypesMap()
+const std::map<nglString, nglDataObject*>& nglDragAndDrop::GetSupportedTypesMap() const
 { 
   return mObjects;
 }
@@ -93,7 +94,7 @@ uint nglDragAndDrop::GetFeedbackImageOffsetY() const
   return mOffsetY;
 }
 
-int& nglDragAndDrop::GetModifiers()
+int32 nglDragAndDrop::GetModifiers() const
 {
   return mModifiers;
 }

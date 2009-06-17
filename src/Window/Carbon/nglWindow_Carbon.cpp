@@ -238,8 +238,8 @@ bool nglCarbonDragAndDrop::Drag(nglDragAndDrop* pDragObject)
   
   DragItemRef item = 1;
   
-  std::map<nglString, nglDataObject*>& typesMap( pDragObject->GetSupportedTypesMap() );
-  for ( std::map<nglString, nglDataObject*>::iterator it = typesMap.begin(); it != typesMap.end(); it++ )
+  const std::map<nglString, nglDataObject*>& typesMap( pDragObject->GetSupportedTypesMap() );
+  for ( std::map<nglString, nglDataObject*>::const_iterator it = typesMap.begin(); it != typesMap.end(); it++ )
   {
     nglDataObject* pObj = it->second;
     if (pObj)
@@ -526,18 +526,26 @@ OSErr nglDragTrackingHandler (DragTrackingMessage message, WindowRef theWindow, 
     default:
       break;
   }
-  
-  {  
-    EventRef event;
-    EventTargetRef eventDispatcher = GetEventDispatcherTarget();
+
+  // We try to keep events flowing but only in order to keep the window updated, so we watch for Invalidate events:
+//  EventRef event;
+//  EventTargetRef eventDispatcher = GetEventDispatcherTarget();
+//  
+//  while ( pDnd->mpWin->mInvalidatePosted && ReceiveNextEvent( 0, NULL, 0.0, TRUE, &event ) == noErr )
+//  {
+//    SendEventToEventTarget (event, eventDispatcher);
+//    ReleaseEvent(event);
+//  }
+  if (pDnd->mpWin->mInvalidatePosted)
+  {
+    pDnd->mpWin->mInvalidatePosted = false;
+    //BeginUpdate(mWindow);                /* this sets up the visRgn */
+    pDnd->mpWin->CallOnPaint();
+    //EndUpdate(mWindow);
     
-    while ( ReceiveNextEvent( 0, NULL, 0.0, TRUE, &event ) == noErr )
-    {
-      SendEventToEventTarget (event, eventDispatcher);
-      ReleaseEvent(event);
-    }
-    
+    pDnd->mpWin->mRedrawing = false;
   }
+  
   
 	return err;
 }
@@ -1111,12 +1119,6 @@ OSStatus nglWindow::WindowEventHandler (EventHandlerCallRef eventHandlerCallRef,
       case kEventWindowDrawContent:
       case kEventWindowUpdate:
         //          printf("Event: Paint\n");
-      {
-        Rect bounds;
-        //            GetWindowBounds(mWindow, kWindowContentRgn, &bounds);
-        GetWindowPortBounds(mWindow, &bounds);
-        //ValidWindowRect(mWindow, &bounds);
-      }
         mInvalidatePosted = false;
         
         //BeginUpdate(mWindow);                /* this sets up the visRgn */

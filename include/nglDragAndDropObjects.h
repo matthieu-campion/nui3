@@ -56,14 +56,14 @@ public:
     \param rMimeType is the mime type string associated to this type \b Caution \b the type has to had been registred in the nglDataTypesRegistry member of nglKernel
     \param pObject is the object containing datas and procedures to share them between platform specific dnd operations and ngl users
   */
-  nglDataObject* GetType(const nglString& rMimeType);
+  nglDataObject* GetType(const nglString& rMimeType) const;
   /*!<
     Get the DataObject associated to this particular mime type
     \param rMimeType is the mime type string associated to this type \b Caution \b the type has to had been registred in the nglDataTypesRegistry member of nglKernel
     \return the DataObject associated to this particular mime type
   */
   
-  bool IsTypeSupported(const nglString& rMimeType);
+  bool IsTypeSupported(const nglString& rMimeType) const;
   /*!<
     Check if the type rMimeType has been added
     \param rMimeType is the mime type string associated to this type \b Caution \b the type has to had been registred in the nglDataTypesRegistry member of nglKernel
@@ -71,7 +71,7 @@ public:
   */
   
 
-  std::list<nglDropEffect>& GetSupportedDropEffects();
+  const std::list<nglDropEffect>& GetSupportedDropEffects() const;
   /*!<
     Accessor to supported drop effects considered by the current drag and drop operation
     \return a reference on the list of supported nglDropEffect
@@ -89,13 +89,13 @@ public:
     \param effect is the drop effect
   */
 
-  nglDropEffect GetDesiredDropEffect();
+  nglDropEffect GetDesiredDropEffect() const;
   /*!<
     Get the effect of a drop when it occurs
     \return is the drop effect
   */
 
-  std::map<nglString, nglDataObject*>& GetSupportedTypesMap();
+  const std::map<nglString, nglDataObject*>& GetSupportedTypesMap() const;
   
   const nglImage *GetFeedbackImage() const;
   /*!<
@@ -112,15 +112,15 @@ public:
     Returns the Y offset in the image used for feedback visualization of the dragging if there is one
   */
   
-  int& GetModifiers();
+  int32 GetModifiers() const;
   //@}
 
 
 protected:
   friend class nglDropTarget;
-  int mModifiers;
+  int32 mModifiers;
   nglImage *mpFeedbackImage;
-  uint mOffsetX, mOffsetY;
+  uint32 mOffsetX, mOffsetY;
   std::map<nglString, nglDataObject*>         mObjects;
   std::list<nglDropEffect>                    mSupportedDropEffects;
   nglDropEffect                               mDesiredDropEffect;

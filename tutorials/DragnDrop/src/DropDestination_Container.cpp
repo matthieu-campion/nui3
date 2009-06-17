@@ -15,6 +15,9 @@ DropContainer::DropContainer()
 
   mDnDing = false;
   mDnDValid = false;
+  mLastX = 0;
+  mLastY = 0;
+
 
   nuiBackgroundPane* pPane = new nuiBackgroundPane();
   AddChild(pPane);
@@ -47,10 +50,32 @@ void DropContainer::Log(const nglString& rMsg)
 // virtual 
 bool DropContainer::OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y)
 {
-
+  mLastX = X;
+  mLastY = Y;
+  Invalidate();
+  
   // drop denied
   if (!pDragObject->IsTypeSupported(_T("ngl/Files")) && !pDragObject->IsTypeSupported(_T("ngl/PromiseFiles")))
+  {
+    if (pDragObject != mpLastDND)
+    {
+      mpLastDND = pDragObject;
+      Log(_T("\nCan't accept this drop operation. Types:\n"));
+      const std::map<nglString, nglDataObject*>& objects(pDragObject->GetSupportedTypesMap());
+      std::map<nglString, nglDataObject*>::const_iterator it = objects.begin();
+      std::map<nglString, nglDataObject*>::const_iterator end = objects.end();
+      uint32 i = 0;
+      for ( ; it != end; ++it)
+      {
+        nglString str;
+        str.CFormat(_T("\t%d - '%ls'\n"), i, it->first.GetChars());
+        Log(str.GetChars());
+        i++;
+      }
+    }
+    Log(_T("\n"));
     return false;
+  }
   
   if (mDnDing)
   {
@@ -101,6 +126,9 @@ bool DropContainer::OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y)
 // virtual 
 void DropContainer::OnDropped(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
 {
+  mLastX = X;
+  mLastY = Y;
+  Invalidate();
   mDnDing = false;
   if (!mDnDValid)
     return;
@@ -126,16 +154,38 @@ void DropContainer::OnDropped(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y,
     const nglString& rPath = *it;
     tmp.Format(_T("%ls\n"), rPath.GetChars());
     msg.Append(tmp);
-    
+
     // you can do what u want with the files now
   }
-  
+
   Log(msg);
 
   mDnDing = false;
-  
-  Invalidate();
-  
 }
 
 
+bool DropContainer::Draw(nuiDrawContext* pContext)
+{
+  bool res = nuiSimpleContainer::Draw(pContext);
+
+  pContext->SetBlendFunc(nuiBlendTransp);
+  if (mDnDing)
+  {
+    if (mDnDValid)
+    {
+      pContext->SetStrokeColor(nuiColor(0,1,0));
+    }
+    else
+    {
+      pContext->SetStrokeColor(nuiColor(1,0,0));
+    }
+  }
+  else
+  {
+    pContext->SetStrokeColor(nuiColor(0,0,1));
+  }
+
+  pContext->DrawLine(mLastX - 60, mLastY, mLastX + 60, mLastY);
+  pContext->DrawLine(mLastX, mLastY - 60, mLastX, mLastY + 60);
+  return res;
+}
