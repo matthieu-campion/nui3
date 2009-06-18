@@ -422,12 +422,13 @@ OSErr nglDragTrackingHandler (DragTrackingMessage message, WindowRef theWindow, 
   switch (message)
   {
     case kDragTrackingEnterHandler:
-      //NGL_OUT("EnterHandler!!\n");
+      NGL_OUT(_T("nglDragTrackingHandler(kDragTrackingEnterHandler, 0x%x, 0x%x, 0x%x)\n"), theWindow, handlerRefCon, theDrag);
       //Dont really care ..
       break;
       
     case kDragTrackingEnterWindow:
       {
+        NGL_OUT(_T("nglDragTrackingHandler(kDragTrackingEnterWindow, 0x%x, 0x%x, 0x%x)\n"), theWindow, handlerRefCon, theDrag);
         NGL_ASSERT(!pDnd->HasDropObject());
         
         nglDragAndDrop* pDrag = new nglDragAndDrop();
@@ -477,6 +478,7 @@ OSErr nglDragTrackingHandler (DragTrackingMessage message, WindowRef theWindow, 
       
     case kDragTrackingInWindow:
       { 
+        NGL_OUT(_T("nglDragTrackingHandler(kDragTrackingInWindow, 0x%x, 0x%x, 0x%x)\n"), theWindow, handlerRefCon, theDrag);
         Point mouse;
         err = GetDragMouse (theDrag, &mouse, NULL);
         SetPort(GetWindowPort(pDnd->mpWin->mWindow));
@@ -505,22 +507,29 @@ OSErr nglDragTrackingHandler (DragTrackingMessage message, WindowRef theWindow, 
         }
         else
           SetDragDropAction (theDrag, kDragActionNothing);
+
+
       }
       break;
       
       
       
     case kDragTrackingLeaveWindow:
-      pDnd->mpWin->OnDragLeave();
-      NGL_ASSERT(pDnd->HasDropObject());
-      delete pDnd->GetDropObject();
-      pDnd->SetDropObject(NULL);
-      
+      {
+        NGL_OUT(_T("nglDragTrackingHandler(kDragTrackingLeaveWindow, 0x%x, 0x%x, 0x%x)\n"), theWindow, handlerRefCon, theDrag);
+        pDnd->mpWin->OnDragLeave();
+        NGL_ASSERT(pDnd->HasDropObject());
+        delete pDnd->GetDropObject();
+        pDnd->SetDropObject(NULL);
+      }
       break;
       
       
-    kDragTrackingLeaveHandler:
-      //Dont really care ..
+    case kDragTrackingLeaveHandler:
+      {
+        //Dont really care ..
+        NGL_OUT(_T("nglDragTrackingHandler(kDragTrackingLeaveHandler, 0x%x, 0x%x, 0x%x)\n"), theWindow, handlerRefCon, theDrag);
+      }
       break;
       
     default:

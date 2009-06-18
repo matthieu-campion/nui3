@@ -7,29 +7,29 @@
 
 #include "nui.h"
 
-#include "nuiFlowView.h"
+#include "nuiHTMLView.h"
 
-nuiFlowView::nuiFlowView(float IdealWidth, float HSpace, float VSpace)
+nuiHTMLView::nuiHTMLView(float IdealWidth, float HSpace, float VSpace)
 {
   mIdealWidth = IdealWidth;
   mVSpace = VSpace;
   mHSpace = HSpace;
 }
 
-nuiFlowView::~nuiFlowView()
+nuiHTMLView::~nuiHTMLView()
 {
-  
+  delete mpHTML;
 }
 
-nuiRect nuiFlowView::CalcIdealSize()
+nuiRect nuiHTMLView::CalcIdealSize()
 {
   float IdealWidth = mIdealWidth;
   if (mRect.GetWidth() > 0)
     IdealWidth = mRect.GetWidth();
-  return Layout(false, mIdealWidth);
+  return Layout(mpHTML, false, mIdealWidth);
 }
 
-void nuiFlowView::LayoutLine(nuiWidgetList& line, float& x, float &y, float& w, float& h, float& HSpace, float &VSpace, bool setLayout)
+void nuiHTMLView::LayoutLine(nuiWidgetList& line, float& x, float &y, float& w, float& h, float& HSpace, float &VSpace, bool setLayout)
 {
   // Process the line
   if (setLayout)
@@ -54,7 +54,7 @@ void nuiFlowView::LayoutLine(nuiWidgetList& line, float& x, float &y, float& w, 
   
 }
 
-nuiRect nuiFlowView::Layout(bool setLayout, float IdealWidth)
+nuiRect nuiHTMLView::Layout(nuiHTMLNode* pNode, bool setLayout, float IdealWidth)
 {
   float x = 0;
   float y = 0;
@@ -63,12 +63,19 @@ nuiRect nuiFlowView::Layout(bool setLayout, float IdealWidth)
   
   nuiWidgetList line;
   
-  int32 count = mpChildren.size();
   float w = 0;
   float h = 0;
-  for (int32 i = 0; i < count; i++)
+
+  
+  while (pNode)
   {
-    nuiWidgetPtr pWidget = mpChildren[i];
+    switch (pNode->GetTagType())
+    {
+    default:
+      break;
+    }
+    
+    nuiWidgetPtr pWidget = NULL; //mpChildren[i];
     
     nuiRect r(pWidget->GetIdealRect());
     if (w + r.GetWidth() > IdealWidth)
@@ -81,59 +88,75 @@ nuiRect nuiFlowView::Layout(bool setLayout, float IdealWidth)
     if (!line.empty())
       w += HSpace;
     line.push_back(pWidget);
+    
   }
+  
   if (!line.empty())
     LayoutLine(line, x, y, w, h, HSpace, VSpace, setLayout);
   
   if (y > 0)
     y -= VSpace;
-
+  
   return nuiRect(mIdealWidth, y);
 }
 
-bool nuiFlowView::SetRect(const nuiRect& rRect)
+bool nuiHTMLView::SetRect(const nuiRect& rRect)
 {
   nuiWidget::SetRect(rRect);
-  Layout(true, rRect.GetWidth());
+  Layout(mpHTML, true, rRect.GetWidth());
   return true;
 }
 
-bool nuiFlowView::Draw(nuiDrawContext* pContext)
+bool nuiHTMLView::Draw(nuiDrawContext* pContext)
 {
   nuiSimpleContainer::Draw(pContext);
   return true;
 }
 
-void nuiFlowView::SetIdealWidth(float IdealWidth)
+void nuiHTMLView::SetIdealWidth(float IdealWidth)
 {
   mIdealWidth = IdealWidth;
   InvalidateLayout();
 }
 
-float nuiFlowView::GetIdealWidth() const
+float nuiHTMLView::GetIdealWidth() const
 {
   return mIdealWidth;
 }
 
-float nuiFlowView::GetVSpace() const
+float nuiHTMLView::GetVSpace() const
 {
   return mVSpace;
 }
 
-float nuiFlowView::GetHSpace() const
+float nuiHTMLView::GetHSpace() const
 {
   return mHSpace;
 }
 
-void nuiFlowView::SetVSpace(float VSpace)
+void nuiHTMLView::SetVSpace(float VSpace)
 {
   mVSpace = VSpace;
   InvalidateLayout();
 }
 
-void nuiFlowView::SetHSpace(float HSpace)
+void nuiHTMLView::SetHSpace(float HSpace)
 {
   mHSpace = HSpace;
   InvalidateLayout();
+}
+
+bool nuiHTMLView::SetText(const nglString& rHTMLText)
+{
+  Clear();
+  delete mpHTML;
+  mpHTML = new nuiHTML();
+  
+  std::string str(rHTMLText.GetStdString());
+  nglIMemory mem(&str[0], str.size());
+  bool res = mpHTML->Load(mem);
+  
+  InvalidateLayout();
+  return res;
 }
 

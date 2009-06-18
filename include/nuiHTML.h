@@ -197,7 +197,7 @@ private:
   nglString mValue;
 };
 
-class nuiHTMLNode
+class nuiHTMLNode : public nuiTokenHolder // We make nuiHTMLNode an nuiTokenHolder in order to store private date on the object (might be needed by a HTML renderer)
 {
 public:
   /// Node types

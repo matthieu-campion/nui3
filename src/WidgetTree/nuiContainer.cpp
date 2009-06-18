@@ -166,7 +166,7 @@ nuiWidgetPtr nuiContainer::GetChild(nuiSize X, nuiSize Y)
   return this;
 }
 
-void nuiContainer::GetChildren(nuiSize X, nuiSize Y, std::vector<nuiWidgetPtr>& rChildren, bool DeepSearch)
+void nuiContainer::GetChildren(nuiSize X, nuiSize Y, nuiWidgetList& rChildren, bool DeepSearch)
 {
   X -= mRect.mLeft;
   Y -= mRect.mTop;

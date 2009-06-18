@@ -93,7 +93,7 @@ public:
   virtual nuiWidgetPtr GetSubElement(uint32 index);
 private:
   nuiFileSelectorBase* mpSelector;
-  std::vector<nuiWidgetPtr> mSubElements;
+  nuiWidgetList mSubElements;
 };
 
 class NUI_API nuiFileSelector : public nuiFileSelectorBase
