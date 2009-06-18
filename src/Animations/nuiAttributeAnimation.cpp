@@ -131,7 +131,7 @@ if (nuiAttributeTypeTrait<X>::mTypeId == t) \
 { \
   nuiAttrib<X> attrib_##X(attrib); \
   NGL_ASSERT(attrib_##X.IsValid()); \
-  attrib_##X.Set(pos); \
+  attrib_##X.Set((X)pos); \
   return; \
 }
 
@@ -249,7 +249,7 @@ void nuiColorAttributeAnimation::OnFrame()
   const float bd = b1 - b0;
   const float ad = a1 - a0;
   
-  const float pos = GetPosition();
+  const float pos = (float)GetPosition();
 
   const float r = r0 + pos * rd;
   const float g = g0 + pos * gd;
@@ -392,7 +392,7 @@ void nuiRectAttributeAnimation::OnFrame()
   const float wd = w1 - w0;
   const float hd = h1 - h0;
   
-  const float pos = GetPosition();
+  const float pos = (float)GetPosition();
   
   const float x = x0 + pos * xd;
   const float y = y0 + pos * yd;

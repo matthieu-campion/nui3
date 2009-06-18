@@ -20,7 +20,7 @@ template<nuiEventId eventId>  class NUI_API nuiMouseEvent: public nuiEvent
 {
 public:
   nuiMouseEvent(const nglMouseInfo& rInfo)
-    : nuiEvent(eventId), mInfo(rInfo), mX(rInfo.X), mY(rInfo.Y), mButton(rInfo.Buttons)
+    : nuiEvent(eventId), mInfo(rInfo), mX((nuiSize)rInfo.X), mY((nuiSize)rInfo.Y), mButton(rInfo.Buttons)
   {
   }
 
@@ -52,8 +52,8 @@ public:
   virtual bool operator() (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button = 0)
   {
     nglMouseInfo info;
-    info.X = X;
-    info.Y = Y;
+    info.X = ToZero(X);
+    info.Y = ToZero(Y);
     info.Buttons = Button;
     info.TouchId = Button;
     return SendEvent(nuiMouseEvent<eventId>(info));

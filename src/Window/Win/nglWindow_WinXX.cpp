@@ -506,9 +506,9 @@ void nglEnumFormat::CreateFormatEtcArray(nglDragAndDrop* pDraggedObject)
   //NGL_OUT(_T("nglEnumFormat::CreateFormatEtcArray()\n"));
   
   NGL_ASSERT(pDraggedObject);
-  std::map<nglString, nglDataObject*>& rTypesMap = pDraggedObject->GetSupportedTypesMap();
-  std::map<nglString, nglDataObject*>::iterator end = rTypesMap.end();
-  std::map<nglString, nglDataObject*>::iterator it = rTypesMap.begin();
+  const std::map<nglString, nglDataObject*>& rTypesMap = pDraggedObject->GetSupportedTypesMap();
+  std::map<nglString, nglDataObject*>::const_iterator it = rTypesMap.begin();
+  std::map<nglString, nglDataObject*>::const_iterator end = rTypesMap.end();
   while (it != end)
   {
     FORMATETC format;
@@ -725,9 +725,9 @@ bool nglDropSource::Drag()
 
   mpIDataObject->SetDraggedObject(mpDraggedObject);
   
-  std::list<nglDropEffect>& dropEffects(mpDraggedObject->GetSupportedDropEffects());
+  const std::list<nglDropEffect>& dropEffects(mpDraggedObject->GetSupportedDropEffects());
   DWORD allowedDropEffects = 0;
-  for (std::list<nglDropEffect>::iterator i = dropEffects.begin(); i != dropEffects.end(); i++)
+  for (std::list<nglDropEffect>::const_iterator i = dropEffects.begin(); i != dropEffects.end(); i++)
     SetDropEffect(*i, &allowedDropEffects);
 
   // Find the window under the mouse pointer.
@@ -3015,7 +3015,7 @@ nglDropEffect GetDropEffect(DWORD* pEffect)
 
 void GetDropEffects(nglDragAndDrop* pObj, DWORD* pEffect)
 {
-  pObj->GetSupportedDropEffects().clear();
+  pObj->ClearSupportedDropEffects();
 
   if ( *pEffect & DROPEFFECT_NONE )
     pObj->AddSupportedDropEffect(eDropEffectNone);

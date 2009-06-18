@@ -39,7 +39,7 @@ bool nuiSampleReader::Init()
 
 uint32 nuiSampleReader::GetPosition() const
 {
-  return mPosition;
+  return (uint32)mPosition;
 }
 
 void nuiSampleReader::SetPosition(uint32 position)

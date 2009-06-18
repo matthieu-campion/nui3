@@ -148,7 +148,7 @@ bool nuiAudioDecoder::CreateAudioDecoderPrivate()
 
 bool nuiAudioDecoder::Seek(uint64 SampleFrame)
 {
-  QWORD StartTime = SampleFrame / mInfo.GetSampleRate() * ONE_SECOND;
+  QWORD StartTime = (QWORD)(SampleFrame / mInfo.GetSampleRate() * ONE_SECOND);
   HRESULT hr = mpPrivate->mpWMReader->SetRange(StartTime, 0/*no duration set*/);
   
   if (SUCCEEDED(hr))
@@ -411,7 +411,7 @@ uint32 SamplesQueue::GetUtilSize() const
 
 uint32 SamplesQueue::GetMemorySize() const
 {
-  return mBuffer.size();
+  return (uint32)mBuffer.size();
 }
 
 void SamplesQueue::Reset()
@@ -432,7 +432,7 @@ void SamplesQueue::Append(uint8* pSrc, uint32 size)
 
 uint32 SamplesQueue::ReadDeInterleavedFloat32(std::vector<float*>& rBuffers, uint32 FramesRequested)
 {
-  uint32 channels = rBuffers.size();
+  uint32 channels = (uint32)rBuffers.size();
   uint32 StoredSamples = mUtilSize / mInputBytesPerSample;
   uint32 StoredFrames = StoredSamples / channels;
   
@@ -571,7 +571,7 @@ ULONG nglWindowsMediaIStream::Release()
 HRESULT nglWindowsMediaIStream::Read(void *pv, ULONG cb, ULONG *pcbRead)
 {
   int64 sizeRead = mrStream.ReadInt8((int8*)pv, cb);
-  *pcbRead = sizeRead;
+  *pcbRead = (ULONG)sizeRead;
   return S_OK;
 }
 
@@ -646,7 +646,7 @@ HRESULT nglWindowsMediaIStream::Stat(__RPC__out STATSTG *pstatstg, DWORD grfStat
   {
     //fill the name
     WCHAR wname[256];
-    swprintf(wname, L"0x%x", this);
+    swprintf(wname, L"0x%p", this);
     size_t length = wcslen(wname) + 1;
     pName = (LPOLESTR)CoTaskMemAlloc(length * sizeof(WCHAR));
     if (!pName)

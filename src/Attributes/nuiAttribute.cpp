@@ -1483,7 +1483,7 @@ template class nuiAttribute<const nuiRange&>;
 template <>
 bool nuiAttribute<const nuiRange&>::ToString(const nuiRange& rValue, nglString& rString) const
 {
-  rString = rValue.GetValue();
+  rString.SetCDouble(rValue.GetValue());
   return true;
 }
 

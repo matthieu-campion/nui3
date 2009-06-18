@@ -104,12 +104,12 @@ bool nuiWaveWriter::WriteInfo(const nuiSampleInfo& rInfos)
     return false;
   
   //Write Sample Rate
-  Data32 = rInfos.GetSampleRate();
+  Data32 = ToNearest(rInfos.GetSampleRate());
   if ( 1 != mrStream.WriteInt32(&Data32,1))
     return false;
   
   //Write Average bytes per second
-  Data32 = rInfos.GetSampleRate() * rInfos.GetBitsPerSample() / 8 * rInfos.GetChannels();
+  Data32 = ToNearest(rInfos.GetSampleRate()) * rInfos.GetBitsPerSample() / 8 * rInfos.GetChannels();
   if ( 1 != mrStream.WriteInt32(&Data32,1))
     return false;
   
@@ -170,7 +170,7 @@ Finalize
 ////////////////////////////////////////////////////////////////////
 bool nuiWaveWriter::Finalize()
 {
-  int32 Size = mrSampleInfo.GetSampleFrames() * mrSampleInfo.GetChannels();
+  int32 Size = (int32)mrSampleInfo.GetSampleFrames() * mrSampleInfo.GetChannels();
   
   
   //position of datas depends on wave format
@@ -197,7 +197,7 @@ bool nuiWaveWriter::Finalize()
     return false;
   
   //Write wave data Size
-  Size = mrSampleInfo.GetSampleFrames() * mrSampleInfo.GetBitsPerSample() / 8 * mrSampleInfo.GetChannels();
+  Size = (int32)mrSampleInfo.GetSampleFrames() * mrSampleInfo.GetBitsPerSample() / 8 * mrSampleInfo.GetChannels();
   
   if ( 1 != mrStream.WriteInt32(&Size,1))
     return false;
@@ -240,7 +240,7 @@ uint32 nuiWaveWriter::Write(const void* pBuffer, uint32 SampleFrames, nuiSampleB
       {
         case 16 :
           {
-            SampleFramesWritten = mrStream.WriteInt16( (int16*)pBuffer, SamplePointsToWrite) / mrSampleInfo.GetChannels();
+            SampleFramesWritten = (uint32)mrStream.WriteInt16( (int16*)pBuffer, SamplePointsToWrite) / mrSampleInfo.GetChannels();
           }
           break;
           
@@ -264,14 +264,14 @@ uint32 nuiWaveWriter::Write(const void* pBuffer, uint32 SampleFrames, nuiSampleB
             
             nuiAudioConvert_FloatTo24bitsLittleEndian(pTempFloat,&TempBuffer[0],SamplePointsToWrite);
             
-            SampleFramesWritten =  mrStream.WriteUInt8(&TempBuffer[0], SamplePointsToWrite * 3) / (3 * mrSampleInfo.GetChannels());
+            SampleFramesWritten = (uint32)mrStream.WriteUInt8(&TempBuffer[0], SamplePointsToWrite * 3) / (3 * mrSampleInfo.GetChannels());
           }
           break;
           
         case 32 :
           {
             float* pTempFloat = (float*)pBuffer;
-            SampleFramesWritten = mrStream.WriteFloat(pTempFloat, SamplePointsToWrite) / mrSampleInfo.GetChannels();
+            SampleFramesWritten = (uint32)mrStream.WriteFloat(pTempFloat, SamplePointsToWrite) / mrSampleInfo.GetChannels();
           }
           break;
           

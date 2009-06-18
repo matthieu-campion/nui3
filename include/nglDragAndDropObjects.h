@@ -77,6 +77,12 @@ public:
     \return a reference on the list of supported nglDropEffect
   */
   
+  void ClearSupportedDropEffects();
+  /*!<
+    remove all drop effects from the supported list of drop operation
+  */
+
+
   void AddSupportedDropEffect(nglDropEffect effect);
   /*!<
     Add a drop effect to the supported list of a drop operation

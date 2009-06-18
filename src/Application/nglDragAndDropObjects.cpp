@@ -59,6 +59,11 @@ const std::list<nglDropEffect>& nglDragAndDrop::GetSupportedDropEffects() const
   return mSupportedDropEffects; 
 }
 
+void nglDragAndDrop::ClearSupportedDropEffects()
+{
+  mSupportedDropEffects.clear();
+}
+
 void nglDragAndDrop::AddSupportedDropEffect(nglDropEffect effect)
 { 
   mSupportedDropEffects.push_back(effect);

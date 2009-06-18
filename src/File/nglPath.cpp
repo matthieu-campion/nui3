@@ -755,8 +755,6 @@ bool nglPath::GetInfo(nglPathInfo& rInfo) const
   
 
 #ifdef _WIN32_
-
-  
 	WIN32_FILE_ATTRIBUTE_DATA	dataInfo;
 
 	BOOL	result = GetFileAttributesEx(mPathName.GetChars(), GetFileExInfoStandard, &dataInfo);
@@ -767,7 +765,7 @@ bool nglPath::GetInfo(nglPathInfo& rInfo) const
   }
 
   SYSTEMTIME lastAccess; 
-  bool res = FileTimeToSystemTime(&dataInfo.ftLastAccessTime, &lastAccess);
+  BOOL res = FileTimeToSystemTime(&dataInfo.ftLastAccessTime, &lastAccess);
   SystemTimeToTzSpecificLocalTime(NULL, &lastAccess, &lastAccess);
   NGL_ASSERT(res);
 
@@ -821,8 +819,7 @@ wchar_t prout[1024];
 	rInfo.CanRead    = true; 
 	rInfo.CanWrite   = (dataInfo.dwFileAttributes & FILE_ATTRIBUTE_READONLY)==0;
   rInfo.Visible    = nglIsFileVisible(mPathName);
-  
-	return true;
+ 	return true;
 
 #else
   if ((mPathName.GetLeft(4) == _T("/net")) || (mPathName.GetLeft(4) == _T("/home")))
@@ -1310,7 +1307,6 @@ uint64 nglPath::GetVolumes(list<nglPathVolume>& rVolumes, uint64 Flags)
 #else
 bool nglGetDriveInfo(nglChar* name, nglPathVolume& rVol)
 {
-	UINT error_mode = SetErrorMode(SEM_FAILCRITICALERRORS);
 	rVol.mComment = "";
 	rVol.mPath = name;
 	rVol.mFlags = 0;
@@ -1386,13 +1382,11 @@ bool nglGetDriveInfo(nglChar* name, nglPathVolume& rVol)
     rVol.mComment = RootPathName;
   }
 
-	SetErrorMode(error_mode);
 	return type != DRIVE_NO_ROOT_DIR;
 }
 
 uint64 nglPath::GetVolumes(list<nglPathVolume>& rVolumes, uint64 Flags)
 {
-	UINT error_mode = SetErrorMode(SEM_FAILCRITICALERRORS);
 	DWORD drives = GetLogicalDrives();
 
   //MS-DOS drives
@@ -1413,8 +1407,6 @@ uint64 nglPath::GetVolumes(list<nglPathVolume>& rVolumes, uint64 Flags)
 
 		drives >>= 1;
 	}
-
-	SetErrorMode(error_mode);
   
   nglVolume::GetVolumes(rVolumes, Flags);
   
@@ -1587,14 +1579,14 @@ bool nglPath::MakeRelativeTo(const nglPath& rOriginal)
   std::vector<nglString> RootTokens;
   rOriginal.mPathName.Tokenize(RootTokens, nglChar('/'));
   
-  int NumTokens     = Tokens.size();
-  int NumRootTokens = RootTokens.size();
+  uint32 NumTokens     = (uint32)Tokens.size();
+  uint32 NumRootTokens = (uint32)RootTokens.size();
   
   if (rOriginal.IsLeaf())
     NumRootTokens--;
   
-  int min = MIN(RootTokens.size(), Tokens.size());
-  int common = 0;
+  uint32 min = (uint32)MIN(RootTokens.size(), Tokens.size());
+  uint32 common = 0;
   while (common < min && RootTokens[common] == Tokens[common])
     common++;
   

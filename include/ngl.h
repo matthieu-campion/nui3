@@ -134,7 +134,7 @@ and in NGL user application code.
   #ifdef NGL_DLL_EXPORTS
   #  define NGL_API __declspec(dllexport)
   #endif // NGL_DLL_EXPORTS
-
+#pragma warning(disable : 4355) // Disable 'this' : used in base member initializer list warning
   #if (_MSC_VER >= 1400) && (_MSC_VER < 1500)  // Is this VC8.0?
   # define _CRT_SECURE_NO_DEPRECATE
   # pragma warning( disable : 4996 )

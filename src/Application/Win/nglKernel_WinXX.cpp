@@ -190,6 +190,9 @@ bool nglKernel::SysInit (HINSTANCE Inst)
   // Import current host/user locale
   setlocale(LC_ALL, ""); // FIXME: this call creates a bunch of memory leaks, or so boundchecker says...
 
+  // Tell the system not to bother the user with file and path error dialogs, fail in the code instead.
+  SetErrorMode(SEM_FAILCRITICALERRORS);
+
 #ifdef HAVE_MLANG
   /* If nglStringConv relies on MLang, we need to initialize COM state.
    * See nglStringConv.cpp for more info.
