@@ -657,14 +657,14 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E56D27EF0FE6AC1B00C16F53</string>
+				<string>E56D2D590FE997F500C16F53</string>
 				<string>1CCC7628064C1048000F2A68</string>
 				<string>1CCC7629064C1048000F2A68</string>
-				<string>E56D27F00FE6AC1B00C16F53</string>
-				<string>E56D27F10FE6AC1B00C16F53</string>
-				<string>E56D27F20FE6AC1B00C16F53</string>
-				<string>E56D27F30FE6AC1B00C16F53</string>
-				<string>E51F47360FA9AA0900AB3F0D</string>
+				<string>E56D2D5A0FE997F500C16F53</string>
+				<string>E56D2D5B0FE997F500C16F53</string>
+				<string>E56D2D5C0FE997F500C16F53</string>
+				<string>E56D2D5D0FE997F500C16F53</string>
+				<string>E56D2D5E0FE997F500C16F53</string>
 			</array>
 			<key>ToolbarConfigUserDefaultsMinorVersion</key>
 			<string>2</string>
@@ -681,7 +681,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>266775609.73657799</real>
+	<real>266967027.500718</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -696,8 +696,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E56D27F50FE6AC1B00C16F53</string>
-		<string>E56D27F60FE6AC1B00C16F53</string>
 		<string>/Users/meeloo/work/nui3/tutorials/Particles/Particles.xcodeproj</string>
 	</array>
 	<key>WindowString</key>

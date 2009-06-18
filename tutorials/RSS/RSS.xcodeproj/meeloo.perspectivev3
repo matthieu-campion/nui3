@@ -333,7 +333,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>E5D2D17E0FDE929500143480</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>MainWindow.cpp</string>
+								<string>nglString.h</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -341,11 +341,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>E5D2D17F0FDE929500143480</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>MainWindow.cpp</string>
+										<string>nglString.h</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E56D26990FE6A02C00C16F53</string>
+										<string>E56D2DA60FEA1E7D00C16F53</string>
 										<key>history</key>
 										<array>
 											<string>E5B74B6F0FE126B700476F43</string>
@@ -353,32 +353,21 @@
 											<string>E5B74BA70FE12AD500476F43</string>
 											<string>E5B74B5A0FE1255500476F43</string>
 											<string>E580F0420FE279B7006AC2E1</string>
-											<string>E56D258D0FE692DE00C16F53</string>
 											<string>E56D25BD0FE6948600C16F53</string>
 											<string>E56D25C00FE6948600C16F53</string>
 											<string>E56D260A0FE6983B00C16F53</string>
-											<string>E56D262D0FE698BB00C16F53</string>
 											<string>E56D264C0FE69A1100C16F53</string>
-											<string>E56D26520FE69C8E00C16F53</string>
-										</array>
-										<key>nextStack</key>
-										<array>
-											<string>E56D256A0FE68F6000C16F53</string>
-											<string>E56D25850FE6928900C16F53</string>
-											<string>E56D25900FE692DE00C16F53</string>
-											<string>E56D25D80FE6955A00C16F53</string>
-											<string>E56D26460FE69A0F00C16F53</string>
+											<string>E56D2D810FE998A300C16F53</string>
+											<string>E56D26200FE6987900C16F53</string>
 										</array>
 										<key>prevStack</key>
 										<array>
 											<string>E5B74AFF0FE0FF9100476F43</string>
 											<string>E580F03C0FE2799F006AC2E1</string>
 											<string>E580F03D0FE2799F006AC2E1</string>
-											<string>E580F03E0FE2799F006AC2E1</string>
 											<string>E56D25C40FE6948600C16F53</string>
 											<string>E56D25C60FE6948600C16F53</string>
 											<string>E56D260F0FE6983B00C16F53</string>
-											<string>E56D26200FE6987900C16F53</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -518,11 +507,11 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E56D268D0FE6A01600C16F53</string>
+				<string>E56D2D6D0FE9981200C16F53</string>
 				<string>1CA23ED40692098700951B8B</string>
-				<string>E56D268E0FE6A01600C16F53</string>
+				<string>E56D2D6E0FE9981200C16F53</string>
 				<string>E5D2D17E0FDE929500143480</string>
-				<string>E56D268F0FE6A01600C16F53</string>
+				<string>E56D2D6F0FE9981200C16F53</string>
 				<string>1CA23EDF0692099D00951B8B</string>
 				<string>1CA23EE00692099D00951B8B</string>
 				<string>1CA23EE10692099D00951B8B</string>
@@ -564,8 +553,6 @@
 			<key>Layout</key>
 			<array>
 				<dict>
-					<key>BecomeActive</key>
-					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXProjectModuleGUID</key>
@@ -680,14 +667,14 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E56D26900FE6A01600C16F53</string>
+				<string>E56D2D700FE9981200C16F53</string>
 				<string>1CCC7628064C1048000F2A68</string>
 				<string>1CCC7629064C1048000F2A68</string>
-				<string>E56D26910FE6A01600C16F53</string>
-				<string>E56D26920FE6A01600C16F53</string>
-				<string>E56D26930FE6A01600C16F53</string>
-				<string>E56D26940FE6A01600C16F53</string>
-				<string>E56D26890FE6A00D00C16F53</string>
+				<string>E56D2D710FE9981200C16F53</string>
+				<string>E56D2D720FE9981200C16F53</string>
+				<string>E56D2D730FE9981200C16F53</string>
+				<string>E56D2D740FE9981200C16F53</string>
+				<string>E56D2D6A0FE9980000C16F53</string>
 			</array>
 			<key>ToolbarConfigUserDefaultsMinorVersion</key>
 			<string>2</string>
@@ -704,7 +691,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>266772524.29872301</real>
+	<real>267001469.30505601</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -719,9 +706,8 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E56D26960FE6A01600C16F53</string>
-		<string>E56D26970FE6A01600C16F53</string>
-		<string>/Users/meeloo/work/nui3/tutorials/RSS/RSS.xcodeproj</string>
+		<string>E56D2D790FE9987200C16F53</string>
+		<string>E56D2D7A0FE9987200C16F53</string>
 	</array>
 	<key>WindowString</key>
 	<string>0 59 1561 1119 0 0 1920 1178 </string>

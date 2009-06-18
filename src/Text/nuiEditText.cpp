@@ -421,9 +421,10 @@ bool nuiEditText::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
 
   if (Button & nglMouseInfo::ButtonLeft || Button & nglMouseInfo::ButtonRight)
   {
+    uint pos = GetPosFromCoords(X, Y, true);
     if ( mAnchorPos != mCursorPos && 
-         MIN(mAnchorPos, mCursorPos) < GetPosFromCoords(X,Y,true) && 
-         GetPosFromCoords(X,Y,true) < MAX(mAnchorPos, mCursorPos)  )
+         MIN(mAnchorPos, mCursorPos) < pos && 
+         pos < MAX(mAnchorPos, mCursorPos)  )
     {
       mStartDragging = true;
       mDragging = false;

@@ -63,18 +63,8 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 266775538;
-			PBXWorkspaceStateSaveDate = 266775538;
-		};
-		perUserProjectItems = {
-			E50AB9C30FE27588009085B8 /* PBXTextBookmark */ = E50AB9C30FE27588009085B8 /* PBXTextBookmark */;
-			E51F479B0FA9BC5A00AB3F0D /* PBXTextBookmark */ = E51F479B0FA9BC5A00AB3F0D /* PBXTextBookmark */;
-			E51F48A20FA9CB8D00AB3F0D /* PBXTextBookmark */ = E51F48A20FA9CB8D00AB3F0D /* PBXTextBookmark */;
-			E51F48A30FA9CB8D00AB3F0D /* PBXTextBookmark */ = E51F48A30FA9CB8D00AB3F0D /* PBXTextBookmark */;
-			E56D27E70FE6ABF500C16F53 /* PBXTextBookmark */ = E56D27E70FE6ABF500C16F53 /* PBXTextBookmark */;
-			E56D27F70FE6AC3900C16F53 /* PBXTextBookmark */ = E56D27F70FE6AC3900C16F53 /* PBXTextBookmark */;
-			E5867C370FAA613400B454D8 /* PBXTextBookmark */ = E5867C370FAA613400B454D8 /* PBXTextBookmark */;
-			E5EF7E840FAC247900B7166B /* PBXTextBookmark */ = E5EF7E840FAC247900B7166B /* PBXTextBookmark */;
+			PBXPerProjectTemplateStateSaveDate = 266967027;
+			PBXWorkspaceStateSaveDate = 266967027;
 		};
 		sourceControlManager = E51F47340FA9A25900AB3F0D /* Source Control */;
 		userBuildSettings = {
@@ -105,16 +95,6 @@
 			sepNavSelRange = "{396, 0}";
 			sepNavVisRange = "{0, 400}";
 		};
-	};
-	E50AB9C30FE27588009085B8 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 61A9DFF20B83433800BC506C /* MainWindow.h */;
-		name = "MainWindow.h: 19";
-		rLen = 0;
-		rLoc = 396;
-		rType = 0;
-		vrLen = 400;
-		vrLoc = 0;
 	};
 	E51F472C0FA9A23A00AB3F0D /* Particles */ = {
 		isa = PBXExecutable;
@@ -187,13 +167,6 @@
 		isa = PBXCodeSenseManager;
 		indexTemplatePath = "";
 	};
-	E51F474D0FA9B29F00AB3F0D /* nuiRenderArray.h */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.c.h;
-		name = nuiRenderArray.h;
-		path = /Users/meeloo/work/nui3/include/nuiRenderArray.h;
-		sourceTree = "<absolute>";
-	};
 	E51F47930FA9BB9700AB3F0D /* MainWindow.cpp:200 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
@@ -210,23 +183,6 @@
 		location = ParticlesD;
 		modificationTime = 266775557.029655;
 		state = 2;
-	};
-	E51F479B0FA9BC5A00AB3F0D /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E51F479C0FA9BC5A00AB3F0D /* stl_vector.h */;
-		name = "stl_vector.h: 495";
-		rLen = 0;
-		rLoc = 17451;
-		rType = 0;
-		vrLen = 2066;
-		vrLoc = 16315;
-	};
-	E51F479C0FA9BC5A00AB3F0D /* stl_vector.h */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.c.h;
-		name = stl_vector.h;
-		path = "/usr/include/c++/4.0.0/bits/stl_vector.h";
-		sourceTree = "<absolute>";
 	};
 	E51F47A80FA9BCA000AB3F0D /* MainWindow.cpp:200 */ = {
 		isa = PBXFileBreakpoint;
@@ -294,86 +250,5 @@
 		lineNumber = 194;
 		modificationTime = 266775557.034314;
 		state = 2;
-	};
-	E51F48930FA9CAAC00AB3F0D /* nuiTexture.h */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.c.h;
-		name = nuiTexture.h;
-		path = /Users/meeloo/work/nui3/include/nuiTexture.h;
-		sourceTree = "<absolute>";
-	};
-	E51F489C0FA9CB2A00AB3F0D /* nuiTexture.cpp */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.cpp.cpp;
-		name = nuiTexture.cpp;
-		path = /Users/meeloo/work/nui3/src/Renderers/nuiTexture.cpp;
-		sourceTree = "<absolute>";
-	};
-	E51F48A20FA9CB8D00AB3F0D /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E51F489C0FA9CB2A00AB3F0D /* nuiTexture.cpp */;
-		name = "nuiTexture.cpp: 400";
-		rLen = 0;
-		rLoc = 9729;
-		rType = 0;
-		vrLen = 1162;
-		vrLoc = 9278;
-	};
-	E51F48A30FA9CB8D00AB3F0D /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E51F48930FA9CAAC00AB3F0D /* nuiTexture.h */;
-		name = "nuiTexture.h: 73";
-		rLen = 0;
-		rLoc = 4001;
-		rType = 0;
-		vrLen = 4069;
-		vrLoc = 2137;
-	};
-	E56D27E70FE6ABF500C16F53 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
-		name = "MainWindow.cpp: 63";
-		rLen = 0;
-		rLoc = 1730;
-		rType = 0;
-		vrLen = 1646;
-		vrLoc = 850;
-	};
-	E56D27F70FE6AC3900C16F53 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
-		name = "MainWindow.cpp: 63";
-		rLen = 0;
-		rLoc = 1730;
-		rType = 0;
-		vrLen = 1646;
-		vrLoc = 850;
-	};
-	E5867C220FAA5FCD00B454D8 /* nuiDrawContext.cpp */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.cpp.cpp;
-		name = nuiDrawContext.cpp;
-		path = /Users/meeloo/work/nui3/src/Renderers/nuiDrawContext.cpp;
-		sourceTree = "<absolute>";
-	};
-	E5867C370FAA613400B454D8 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E5867C220FAA5FCD00B454D8 /* nuiDrawContext.cpp */;
-		name = "nuiDrawContext.cpp: 1009";
-		rLen = 0;
-		rLoc = 26124;
-		rType = 0;
-		vrLen = 1287;
-		vrLoc = 25569;
-	};
-	E5EF7E840FAC247900B7166B /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E51F474D0FA9B29F00AB3F0D /* nuiRenderArray.h */;
-		name = "nuiRenderArray.h: 137";
-		rLen = 0;
-		rLoc = 3406;
-		rType = 0;
-		vrLen = 2226;
-		vrLoc = 1515;
 	};
 }

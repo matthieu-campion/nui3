@@ -10,10 +10,12 @@
 #include "nui.h"
 #include "nuiHTML.h"
 
+class nuiHTMLContext;
+
 class nuiHTMLView : public nuiSimpleContainer
 {
 public:
-  nuiHTMLView(float IdealWidth, float HSpace = 0.0f, float VSpace = 2.0f);
+  nuiHTMLView(float IdealWidth);
   ~nuiHTMLView();
   
   virtual nuiRect CalcIdealSize();
@@ -28,8 +30,10 @@ public:
   void SetHSpace(float InterWidget);
   
   bool SetText(const nglString& rHTMLText);
-  
+  bool SetURL(const nglString& rURL);
 protected:
+  void WalkTree(nuiHTMLNode* pNode, const nuiHTMLContext& rContext);
+  bool InterpretTree(nuiHTMLNode* pNode, nuiHTMLContext& rContext);
   nuiRect Layout(nuiHTMLNode* pNode, bool setLayout, float IdealWidth);
   void LayoutLine(nuiWidgetList& line, float& x, float &y, float& w, float& h, float& HSpace, float &VSpace, bool setLayout);
   float mIdealWidth;

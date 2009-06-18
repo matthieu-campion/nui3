@@ -58,6 +58,34 @@ nuiHTMLNode::nuiHTMLNode(const nglString& rName, nuiHTMLNode::NodeType Type, nui
 
 nuiHTMLNode::nuiHTMLNode(const void* _tdoc, const void* _tnod)
 {
+  SetFromNode(_tdoc, _tnod);
+}
+
+
+nuiHTMLNode::~nuiHTMLNode()
+{
+  Clear();
+}
+
+void nuiHTMLNode::Clear()
+{
+  for (uint32 i = 0; i < mChildren.size(); i++)
+  {
+    delete mChildren[i];
+  }
+  mChildren.clear();
+  
+  for (uint32 j = 0; j < mAttributes.size(); j++)
+  {
+    delete mAttributes[j];
+  }
+  mAttributes.clear();
+}
+
+void nuiHTMLNode::SetFromNode(const void* _tdoc, const void* _tnod)
+{
+  Clear();
+  
   TidyDoc tdoc = (TidyDoc)_tdoc;
   TidyNode tnod = (TidyNode)_tnod;
   
@@ -70,7 +98,7 @@ nuiHTMLNode::nuiHTMLNode(const void* _tdoc, const void* _tnod)
     //NGL_OUT(_T("text: %ls\n"), mText.GetChars());
   }
   tidyBufFree(&buf);
-
+  
   mName = nglString(tidyNodeGetName(tnod));
   mType = (NodeType)tidyNodeGetType(tnod);
   
@@ -80,20 +108,6 @@ nuiHTMLNode::nuiHTMLNode(const void* _tdoc, const void* _tnod)
   {
     nuiHTMLAttrib* pAttrib = new nuiHTMLAttrib(tattr);
     mAttributes.push_back(pAttrib);
-  }
-}
-
-
-nuiHTMLNode::~nuiHTMLNode()
-{
-  for (uint32 i = 0; i < mChildren.size(); i++)
-  {
-    delete mChildren[i];
-  }
-  
-  for (uint32 j = 0; j < mAttributes.size(); j++)
-  {
-    delete mAttributes[j];
   }
 }
 
@@ -127,6 +141,11 @@ const nuiHTMLNode* nuiHTMLNode::GetChild(uint32 index) const
   return mChildren.at(index);
 }
 
+nuiHTMLNode* nuiHTMLNode::GetChild(uint32 index)
+{
+  return mChildren.at(index);
+}
+
 uint32 nuiHTMLNode::GetNbAttributes() const
 {
   return mAttributes.size();
@@ -147,11 +166,27 @@ const nuiHTMLAttrib* nuiHTMLNode::GetAttribute(const nglString& rAttribName) con
   return NULL;
 }
 
+nuiHTMLAttrib* nuiHTMLNode::GetAttribute(uint32 index)
+{
+  return mAttributes.at(index);
+}
+
+nuiHTMLAttrib* nuiHTMLNode::GetAttribute(const nglString& rAttribName)
+{
+  for (uint32 i = 0; i < mAttributes.size(); i++)
+  {
+    if (mAttributes.at(i)->GetName() == rAttribName)
+      return mAttributes.at(i);
+  }
+  return NULL;
+}
+
 void nuiHTMLNode::BuildTree(const void* _tdoc, const void* _tnod)
 {
   TidyDoc tdoc = (TidyDoc)_tdoc;
   TidyNode tnod = (TidyNode)_tnod;
-
+  SetFromNode(_tdoc, _tnod);
+  
   TidyNode child;
   
   for (child = tidyGetChild(tnod); child; child = tidyGetNext(child))

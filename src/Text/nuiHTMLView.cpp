@@ -6,14 +6,31 @@
  */
 
 #include "nui.h"
-
 #include "nuiHTMLView.h"
+#include "nuiHTTP.h"
 
-nuiHTMLView::nuiHTMLView(float IdealWidth, float HSpace, float VSpace)
+class nuiHTMLContext
 {
+public:
+  nuiHTMLContext()
+  {
+    
+  }
+  
+  nuiHTMLContext(const nuiHTMLContext& rContext)
+  {
+    
+  }
+  
+  
+};
+
+nuiHTMLView::nuiHTMLView(float IdealWidth)
+{
+  mpHTML = NULL;
   mIdealWidth = IdealWidth;
-  mVSpace = VSpace;
-  mHSpace = HSpace;
+  mVSpace = 2.0f;
+  mHSpace = 0.0f;
 }
 
 nuiHTMLView::~nuiHTMLView()
@@ -56,6 +73,10 @@ void nuiHTMLView::LayoutLine(nuiWidgetList& line, float& x, float &y, float& w, 
 
 nuiRect nuiHTMLView::Layout(nuiHTMLNode* pNode, bool setLayout, float IdealWidth)
 {
+  nuiHTMLContext context;
+  WalkTree(pNode, context);
+  return nuiRect(640, 480);
+  
   float x = 0;
   float y = 0;
   float VSpace = mVSpace;
@@ -71,6 +92,7 @@ nuiRect nuiHTMLView::Layout(nuiHTMLNode* pNode, bool setLayout, float IdealWidth
   {
     switch (pNode->GetTagType())
     {
+        
     default:
       break;
     }
@@ -158,5 +180,70 @@ bool nuiHTMLView::SetText(const nglString& rHTMLText)
   
   InvalidateLayout();
   return res;
+}
+
+bool nuiHTMLView::SetURL(const nglString& rURL)
+{
+  nuiHTTPRequest request(rURL);
+  nuiHTTPResponse* pResponse = request.SendRequest();
+  if (!pResponse)
+    return false;
+  
+  nuiHTML* pHTML = new nuiHTML();
+  nglIMemory mem(&pResponse->GetBody()[0], pResponse->GetBody().size());
+  
+  bool res = pHTML->Load(mem);
+  
+  if (res)
+  {
+    Clear();
+    delete mpHTML;
+    mpHTML = pHTML;
+    InvalidateLayout();
+  }
+  return res;
+}
+
+
+
+bool nuiHTMLView::InterpretTree(nuiHTMLNode* pNode, nuiHTMLContext& rContext)
+{
+  switch (pNode->GetType())
+  {
+    case nuiHTML::eNode_Root:
+    case nuiHTML::eNode_Text:
+    case nuiHTML::eNode_Start:
+    case nuiHTML::eNode_End:
+    case nuiHTML::eNode_StartEnd:
+      NGL_OUT(_T("Interpret %ls - %ls\n"), pNode->GetName().GetChars(), pNode->GetText().GetChars());
+      return true;
+    case nuiHTML::eNode_ProcIns:
+    case nuiHTML::eNode_Comment:
+    case nuiHTML::eNode_DocType:
+    case nuiHTML::eNode_CDATA:
+    case nuiHTML::eNode_Section:
+    case nuiHTML::eNode_Asp:
+    case nuiHTML::eNode_Jste:
+    case nuiHTML::eNode_Php:
+    case nuiHTML::eNode_XmlDecl:
+    default:
+      return false;
+      break;
+  }
+  return true;
+}
+
+void nuiHTMLView::WalkTree(nuiHTMLNode* pNode, const nuiHTMLContext& rContext)
+{
+  nuiHTMLContext context(rContext);
+  if (!InterpretTree(pNode, context))
+    return;
+  
+  uint32 count = pNode->GetNbChildren();
+  for (uint32 i = 0; i < count; i++)
+  {
+    nuiHTMLNode* pChild = pNode->GetChild(i);
+    WalkTree(pChild, context);
+  }
 }
 
