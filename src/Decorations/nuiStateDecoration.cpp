@@ -210,35 +210,16 @@ nuiDecoration* nuiStateDecoration::GetDecorationForWidgetState(const nuiWidget* 
 }
 
 
+
+
 //virtual
-void nuiStateDecoration::DrawBack(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rRect)
+void nuiStateDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rRect)
 {
+  NGL_ASSERT(pWidget);
   nuiDecoration* pChoice = GetDecorationForWidgetState(pWidget);
   
   if (pChoice)
   {
-    if (pChoice->GetLayer() != eLayerBack)
-      return;
-      
-    nuiRect r = rRect;  
-    r.SetPosition(nuiCenter, pWidget->GetRect().Size());
-    pChoice->Draw(pContext, pWidget, r);
-  }
-
-}
-
-
-//virtual
-void nuiStateDecoration::DrawFront(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rRect)
-{
-  nuiDecoration* pChoice = GetDecorationForWidgetState(pWidget);
-  
-  if (pChoice)
-  {
-  
-    if (pChoice->GetLayer() != eLayerFront)
-      return;
-  
     nuiRect r = rRect;  
     r.SetPosition(nuiCenter, pWidget->GetRect().Size());
     pChoice->Draw(pContext, pWidget, r);

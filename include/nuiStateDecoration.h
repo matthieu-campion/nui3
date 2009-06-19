@@ -93,8 +93,7 @@ public:
   
 private:
   std::map<uint32, nuiDecoration*> mStates;
-  virtual void DrawBack(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rRect);
-  virtual void DrawFront(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rRect);
+  virtual void Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rRect);
   nuiDecoration* GetState(nuiStateDescription state) const;
   nuiDecoration* GetDecoration(const nglString& rName) const;
   nuiDecoration* GetDecorationForWidgetState(const nuiWidget* pWidget) const;

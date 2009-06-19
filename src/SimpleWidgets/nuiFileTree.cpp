@@ -240,17 +240,12 @@ bool nuiFileTree::SetRootPath(const nglPath& rPath)
   pBtn->SetObjectClass(_T("nuiFileTree::ParentFolderButton"));
   pBtn->SetObjectName(_T("nuiFileTree::ParentFolderButton"));
   
-  nuiHBox* pBox = new nuiHBox(2);
-  pBtn->AddChild(pBox);
   pBtn->InvalidateLayout();
 
   nuiImage* pIcon = new nuiImage();
   pIcon->SetObjectName(_T("nuiFileTree::ParentFolderIcon"));
   pIcon->SetObjectClass(_T("nuiFileTree::ParentFolderIcon"));
-  pBox->SetCell(0, pIcon);
-  nuiLabel* pLabel = new nuiLabel(_T("(Parent Folder)"));
-  pBox->SetCell(1, pLabel);
-  pBox->SetCellExpand(1, nuiExpandShrinkAndGrow);
+  pBtn->AddChild(pIcon);
   
   
   // connect link to event
