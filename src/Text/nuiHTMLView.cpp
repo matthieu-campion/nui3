@@ -8,21 +8,71 @@
 #include "nui.h"
 #include "nuiHTMLView.h"
 #include "nuiHTTP.h"
+#include "nuiFontManager.h"
 
 class nuiHTMLContext
 {
 public:
   nuiHTMLContext()
   {
+    mX = 0;
+    mY = 0;
+    mW = 0;
+    mH = 0;
+
+    mLeftMargin = 0;
+
+    mIdealWidth = 800;
+    mMaxWidth = 0;
+    mMaxHeight = 0;
     
+    mVSpace = 0;
+    mHSpace = 0;
+    
+    mSetLayout = false;
+    //mLine;
+    mpNode = NULL;
   }
   
   nuiHTMLContext(const nuiHTMLContext& rContext)
   {
+    mX = rContext.mX;
+    mY = rContext.mY;
+    mW = rContext.mW;
+    mH = rContext.mH;
     
+    mLeftMargin = rContext.mLeftMargin;
+
+    mIdealWidth = rContext.mIdealWidth;
+    mMaxWidth = rContext.mMaxWidth;
+    mMaxHeight = rContext.mMaxHeight;
+    
+    mVSpace = rContext.mVSpace;
+    mHSpace = rContext.mHSpace;
+    
+    mSetLayout = rContext.mSetLayout;
+    mLine = rContext.mLine;
+    mpNode = rContext.mpNode;
   }
   
+  float mX;
+  float mY;
+  float mW;
+  float mH;
+
+  float mLeftMargin;
+
+  float mIdealWidth;
+  float mMaxWidth;
+  float mMaxHeight;
   
+  float mVSpace;
+  float mHSpace;
+  
+  nuiWidgetList mLine;  
+  nuiFontRequest mFont;
+  bool mSetLayout;
+  nuiHTMLNode* mpNode;
 };
 
 nuiHTMLView::nuiHTMLView(float IdealWidth)
@@ -43,89 +93,62 @@ nuiRect nuiHTMLView::CalcIdealSize()
   float IdealWidth = mIdealWidth;
   if (mRect.GetWidth() > 0)
     IdealWidth = mRect.GetWidth();
-  return Layout(mpHTML, false, mIdealWidth);
+  Clear();
+  nuiHTMLContext context;
+  context.mSetLayout = true;
+  WalkTree(mpHTML, context);
+//  return nuiRect(context.mMaxWidth, context.mH);
+  return nuiRect(800, 600);
 }
 
-void nuiHTMLView::LayoutLine(nuiWidgetList& line, float& x, float &y, float& w, float& h, float& HSpace, float &VSpace, bool setLayout)
+void nuiHTMLView::AddElement(nuiHTMLContext& rContext, nuiWidgetPtr pWidget)
+{
+  AddChild(pWidget);
+  
+  nuiRect r(pWidget->GetIdealRect());
+  if ((rContext.mW != rContext.mLeftMargin) && (rContext.mW + r.GetWidth() > rContext.mIdealWidth))
+    LayoutLine(rContext);
+  
+  rContext.mH = MAX(rContext.mH, r.GetHeight());
+  rContext.mW += r.GetWidth();
+  if (!rContext.mLine.empty())
+    rContext.mW += rContext.mHSpace;
+  rContext.mLine.push_back(pWidget);
+}
+
+void nuiHTMLView::LayoutLine(nuiHTMLContext& rContext)
 {
   // Process the line
-  if (setLayout)
+  if (rContext.mSetLayout)
   {
-    int32 size = line.size();
-    x = 0;
+    int32 size = rContext.mLine.size();
+    rContext.mX = rContext.mLeftMargin;
     for (int32 j = 0; j < size; j++)
     {
-      nuiWidgetPtr pWidget = line[j];
+      nuiWidgetPtr pWidget = rContext.mLine[j];
       nuiRect r(pWidget->GetIdealRect());
-      r.SetHeight(h);
-      r.MoveTo(x, y);
+      r.SetHeight(rContext.mH);
+      r.MoveTo(rContext.mX, rContext.mY);
       pWidget->SetLayout(r);
-      x += r.GetWidth();
-      x += HSpace;
+      NGL_OUT(_T("%ls\n"), r.GetValue().GetChars());
+      rContext.mX += r.GetWidth();
+      rContext.mY += rContext.mHSpace;
     }
   }
-  line.clear();
-  y += h +VSpace;
-  h = 0;
-  w = 0;
-  
-}
-
-nuiRect nuiHTMLView::Layout(nuiHTMLNode* pNode, bool setLayout, float IdealWidth)
-{
-  nuiHTMLContext context;
-  WalkTree(pNode, context);
-  return nuiRect(640, 480);
-  
-  float x = 0;
-  float y = 0;
-  float VSpace = mVSpace;
-  float HSpace = mHSpace;
-  
-  nuiWidgetList line;
-  
-  float w = 0;
-  float h = 0;
-
-  
-  while (pNode)
-  {
-    switch (pNode->GetTagType())
-    {
-        
-    default:
-      break;
-    }
-    
-    nuiWidgetPtr pWidget = NULL; //mpChildren[i];
-    
-    nuiRect r(pWidget->GetIdealRect());
-    if (w + r.GetWidth() > IdealWidth)
-    {
-      LayoutLine(line, x, y, w, h, HSpace, VSpace, setLayout);
-    }
-    
-    h = MAX(h, r.GetHeight());
-    w += r.GetWidth();
-    if (!line.empty())
-      w += HSpace;
-    line.push_back(pWidget);
-    
-  }
-  
-  if (!line.empty())
-    LayoutLine(line, x, y, w, h, HSpace, VSpace, setLayout);
-  
-  if (y > 0)
-    y -= VSpace;
-  
-  return nuiRect(mIdealWidth, y);
+  rContext.mMaxWidth = MAX(rContext.mMaxWidth, rContext.mW);
+  rContext.mLine.clear();
+  rContext.mY += rContext.mH + rContext.mVSpace;
+  rContext.mH = 0;
+  rContext.mW = 0;
 }
 
 bool nuiHTMLView::SetRect(const nuiRect& rRect)
 {
   nuiWidget::SetRect(rRect);
-  Layout(mpHTML, true, rRect.GetWidth());
+  Clear();
+  nuiHTMLContext context;
+  context.mSetLayout = true;
+  WalkTree(mpHTML, context);
   return true;
 }
 
@@ -206,8 +229,10 @@ bool nuiHTMLView::SetURL(const nglString& rURL)
 
 
 
-bool nuiHTMLView::InterpretTree(nuiHTMLNode* pNode, nuiHTMLContext& rContext)
+bool nuiHTMLView::InterpretTree(nuiHTMLContext& rContext)
 {
+  nuiHTMLNode* pNode = rContext.mpNode;
+  
   switch (pNode->GetType())
   {
     case nuiHTML::eNode_Root:
@@ -216,6 +241,8 @@ bool nuiHTMLView::InterpretTree(nuiHTMLNode* pNode, nuiHTMLContext& rContext)
     case nuiHTML::eNode_End:
     case nuiHTML::eNode_StartEnd:
       NGL_OUT(_T("Interpret %ls - %ls\n"), pNode->GetName().GetChars(), pNode->GetText().GetChars());
+      if (!pNode->GetText().IsEmpty())
+        AddElement(rContext, new nuiLabel(pNode->GetText()));
       return true;
     case nuiHTML::eNode_ProcIns:
     case nuiHTML::eNode_Comment:
@@ -236,7 +263,8 @@ bool nuiHTMLView::InterpretTree(nuiHTMLNode* pNode, nuiHTMLContext& rContext)
 void nuiHTMLView::WalkTree(nuiHTMLNode* pNode, const nuiHTMLContext& rContext)
 {
   nuiHTMLContext context(rContext);
-  if (!InterpretTree(pNode, context))
+  context.mpNode = pNode;
+  if (!InterpretTree(context))
     return;
   
   uint32 count = pNode->GetNbChildren();
@@ -245,5 +273,6 @@ void nuiHTMLView::WalkTree(nuiHTMLNode* pNode, const nuiHTMLContext& rContext)
     nuiHTMLNode* pChild = pNode->GetChild(i);
     WalkTree(pChild, context);
   }
+  LayoutLine(context);
 }
 

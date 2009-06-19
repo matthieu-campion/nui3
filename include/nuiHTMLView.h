@@ -33,13 +33,13 @@ public:
   bool SetURL(const nglString& rURL);
 protected:
   void WalkTree(nuiHTMLNode* pNode, const nuiHTMLContext& rContext);
-  bool InterpretTree(nuiHTMLNode* pNode, nuiHTMLContext& rContext);
-  nuiRect Layout(nuiHTMLNode* pNode, bool setLayout, float IdealWidth);
-  void LayoutLine(nuiWidgetList& line, float& x, float &y, float& w, float& h, float& HSpace, float &VSpace, bool setLayout);
+  bool InterpretTree(nuiHTMLContext& rContext);
+  void LayoutLine(nuiHTMLContext& rContext);
   float mIdealWidth;
   float mVSpace;
   float mHSpace;
   
+  void AddElement(nuiHTMLContext& rContext, nuiWidgetPtr pWidget);
+  
   nuiHTML* mpHTML;
-  std::stack<nuiWidgetList> mFrameStack;
 };
