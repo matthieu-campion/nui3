@@ -42,29 +42,26 @@ void MainWindow::OnCreation()
   pImg->SetObjectName(_T("MyImage"));
   pImg->SetPosition(nuiCenter);
   pLayoutBox->AddCell(pImg);
-  pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
+  pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandFixed);
   
   // button in the second cell : we use the default decoration for this button, but you could use the css to assign your own decoration
   nuiButton* pButton = new nuiButton();
   pButton->SetPosition(nuiCenter);
   pLayoutBox->AddCell(pButton);
-  pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
+  pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandFixed);
   
   // click event on button
   mEventSink.Connect(pButton->Activated, &MainWindow::OnButtonClick);
   
-  // label with border in the button (put the label string in the button's constructor if you don't need borders)
-  nuiLabel* pButtonLabel = new nuiLabel(_T("click!"));
-  pButtonLabel->SetPosition(nuiCenter);
-  pButtonLabel->SetBorder(8,8);
-  pButton->AddChild(pButtonLabel);
-
-  nuiScrollView* pScroll = new nuiScrollView();
+  nuiScrollView* pScroll = new nuiScrollView(false, true);
   pLayoutBox->AddCell(pScroll);
   mpHTMLView = new nuiHTMLView(GetWidth());
   pScroll->AddChild(mpHTMLView);
   
-  mpHTMLView->SetURL(_T("http://www.libnui.net/pages/about.php"));
+  //mpHTMLView->SetURL(_T("http://redmine.libnui.net/projects/show/libnui"));
+  //mpHTMLView->SetURL(_T("http://viewvc.libnui.net/cgi-bin/viewvc.cgi/nui/trunk/nui3/"));
+  mpHTMLView->SetURL(_T("http://www.google.fr/search?hl=fr&q=libnui&btnG=Recherche+Google&meta=&aq=f&oq="));
+
 }
 
 

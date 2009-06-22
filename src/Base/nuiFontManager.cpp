@@ -444,6 +444,30 @@ void nuiFontRequest::_SetSize(int32 size)
   MustHaveSize(size, 1.0f);
 }
 
+void nuiFontRequest::ClearMustHaveGlyphs()
+{
+  mMustHaveGlyphs.Clear();
+  mMustHaveGlyphs.mElement.clear();
+}
+
+void nuiFontRequest::ClearMustHaveEncoding()
+{
+  mMustHaveEncoding.Clear();
+  mMustHaveEncoding.mElement.clear();
+}
+
+void nuiFontRequest::ClearMustHaveSize()
+{
+  mMustHaveSizes.Clear();
+  mMustHaveSizes.mElement.clear();
+}
+
+void nuiFontRequest::ClearMustBeSimilar()
+{
+  mPanose.Clear();
+}
+
+
 
 ///! FontRequestResult:
 nuiFontRequestResult::nuiFontRequestResult(const nglPath& rPath, int32 Face, float Score, nuiFontDesc* pFontDesc)

@@ -43,6 +43,9 @@ protected:
   void ParseText(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
   void ParseBody(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
   void ParseDiv(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
+  void ParseTable(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
+  void ParseTableRow(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
+  void ParseList(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
   void ParseP(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
   void ParseFormatTag(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
   void ParseA(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
@@ -72,6 +75,10 @@ public:
   float mHSpace;
   
   nuiFontRequest mFont;
+  bool mUnderline;
+  bool mStrikeThrough;
+  nuiColor mTextFgColor;
+  nuiColor mTextBgColor;
 };
 
 class nuiHTMLItem
@@ -80,6 +87,7 @@ public:
   nuiHTMLItem(nuiHTMLNode* pNode, bool Inline = true);
   ~nuiHTMLItem();
 
+  void CallDraw(nuiDrawContext* pContext);
   virtual void Draw(nuiDrawContext* pContext);
   virtual void Layout(nuiHTMLContext& rContext);
 
@@ -100,6 +108,8 @@ public:
   void SetInline(bool set);
   bool IsEndTag() const;
   void SetEndTag(bool set);
+
+  bool IsLineBreak() const;
   
 protected:
   nuiHTMLNode* mpNode;
@@ -108,6 +118,7 @@ protected:
   nuiHTMLBox* mpParent;
   bool mInline;
   bool mEndTag;
+  bool mLineBreak;
 };
 
 class nuiHTMLBox : public nuiHTMLItem
@@ -126,6 +137,8 @@ public:
   void PopContext(nuiHTMLContext& rContext);
     
 protected:
+  float LayoutLine(uint32& start, uint32& end, float& y, float& h, nuiHTMLContext& rContext);
+
   std::vector<nuiHTMLItem*> mItems;
   std::stack<nuiHTMLContext> mContextStack;
 };
@@ -146,5 +159,8 @@ private:
   nglString mText;
   nuiFontLayout* mpLayout;
   nuiFont* mpFont;
+
+  nuiColor mTextFgColor;
+  nuiColor mTextBgColor;
 };
 

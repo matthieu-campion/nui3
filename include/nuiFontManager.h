@@ -45,11 +45,20 @@ public:
   void MustHaveSize(int32 size, float Score, bool Strict = false);
   void MustBeSimilar(const nuiPanose& rPanose, float Score, bool Strict = false);
 
+  void ClearMustHaveGlyphs();
+  void ClearMustHaveEncoding();
+  void ClearMustHaveSize();
+  void ClearMustBeSimilar();
 private:
   template <class T> class ScoredElement
   {
   public:
     ScoredElement()
+    {
+      Clear();
+    }
+    
+    void Clear()
     {
       mScore = 0.0f;
       mStrict = false;
