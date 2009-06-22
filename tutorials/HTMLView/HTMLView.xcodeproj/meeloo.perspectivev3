@@ -344,7 +344,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E58989060FF047F4002C0F81</string>
+										<string>E58989260FF04C72002C0F81</string>
 										<key>history</key>
 										<array>
 											<string>E57CEDB80FEAFBD10002C681</string>
@@ -368,25 +368,18 @@
 											<string>E58986B90FEF0611002C0F81</string>
 											<string>E589882E0FF02D34002C0F81</string>
 											<string>E58988410FF03208002C0F81</string>
-											<string>E58988D60FF046AF002C0F81</string>
 											<string>E58988F20FF047DF002C0F81</string>
 											<string>E58988F40FF047DF002C0F81</string>
 											<string>E58988F60FF047DF002C0F81</string>
 											<string>E58989040FF047EE002C0F81</string>
-											<string>E58989030FF047DF002C0F81</string>
-										</array>
-										<key>nextStack</key>
-										<array>
-											<string>E589887D0FF033F0002C0F81</string>
-											<string>E58988AF0FF042B2002C0F81</string>
-											<string>E58988D80FF046AF002C0F81</string>
+											<string>E589891D0FF04C55002C0F81</string>
+											<string>E589891E0FF04C55002C0F81</string>
 										</array>
 										<key>prevStack</key>
 										<array>
 											<string>E57CEDBA0FEAFBD10002C681</string>
 											<string>E57CEDBF0FEAFCBB0002C681</string>
 											<string>E589863D0FEB0A8C002C0F81</string>
-											<string>E58986BE0FEF0611002C0F81</string>
 											<string>E58986CC0FEF0611002C0F81</string>
 											<string>E58986CE0FEF0611002C0F81</string>
 											<string>E58986D00FEF0611002C0F81</string>
@@ -403,15 +396,12 @@
 											<string>E58986E60FEF0611002C0F81</string>
 											<string>E58986EC0FEF0611002C0F81</string>
 											<string>E589878B0FF00C2A002C0F81</string>
-											<string>E589878D0FF00C2A002C0F81</string>
-											<string>E58987C30FF01978002C0F81</string>
-											<string>E58988050FF02562002C0F81</string>
 											<string>E58988450FF03208002C0F81</string>
-											<string>E58988D30FF04698002C0F81</string>
-											<string>E58988E10FF046EE002C0F81</string>
 											<string>E58988FA0FF047DF002C0F81</string>
 											<string>E58988FC0FF047DF002C0F81</string>
 											<string>E58988FE0FF047DF002C0F81</string>
+											<string>E589891F0FF04C55002C0F81</string>
+											<string>E58989200FF04C55002C0F81</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -733,7 +723,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>267405300.630734</real>
+	<real>267406450.75756899</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -748,7 +738,7 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E58989070FF047F4002C0F81</string>
+		<string>E58989270FF04C72002C0F81</string>
 		<string>E58987830FF00A80002C0F81</string>
 		<string>E58987840FF00A80002C0F81</string>
 		<string>/Users/meeloo/work/nui3/tutorials/HTMLView/HTMLView.xcodeproj</string>

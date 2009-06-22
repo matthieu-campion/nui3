@@ -642,6 +642,9 @@ void nuiHTMLView::ParseBody(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
       case nuiHTML::eTag_SPAN:
         ParseSpan(pChild, pBox);
         break;
+      case nuiHTML::eTag_FONT:
+        ParseFont(pChild, pBox);
+        break;
       case nuiHTML::eTag_SCRIPT:
       case nuiHTML::eTag_COMMENT:
         // Skip those tags
@@ -801,4 +804,60 @@ void nuiHTMLView::ParseSpan(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
   //printf("html /span\n");
 }
 
+void nuiHTMLView::ParseFont(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
+{
+  pBox->AddItem(new nuiHTMLFont(pNode));
+  
+  ParseBody(pNode, pBox);
+  pBox->AddItemEnd(new nuiHTMLFont(pNode));
+}
+
+//class nuiHTMLFont : public nuiHTMLItem
+nuiHTMLFont::nuiHTMLFont(nuiHTMLNode* pNode)
+: nuiHTMLItem(pNode, true)
+{
+  //nuiFontRequest mFontRequest;
+
+  mSize = 14;
+  mUnderline = false;
+  mStrikeThrough = false;
+  mTextFgColor = nuiColor(0, 0, 0, 255);
+  mTextBgColor = nuiColor(0, 0, 0, 0);
+}
+
+nuiHTMLFont::~nuiHTMLFont()
+{
+  
+}
+
+void nuiHTMLFont::Draw(nuiDrawContext* pContext)
+{
+  
+}
+
+void nuiHTMLFont::Layout(nuiHTMLContext& rContext)
+{
+  if (!IsEndTag())
+  {
+    mBackup = rContext.mFont;
+    if (!mFamilyName.IsEmpty())
+      rContext.mFont.SetName(mFamilyName, 1.0f);
+    if (!mGenericName.IsEmpty())
+      rContext.mFont.SetGenericName(mGenericName, 1.0f);
+    if (mSize > 0)
+      rContext.mFont.MustHaveSize(mSize, 1.0f);
+    if (mUnderline >= 0)
+      rContext.mUnderline = mUnderline;
+    if (mStrikeThrough >= 0)
+      rContext.mStrikeThrough = mStrikeThrough;
+    
+    rContext.mTextFgColor = mTextFgColor;
+    rContext.mTextBgColor = mTextBgColor;
+  }
+  else
+  {
+    rContext.mFont = mBackup;
+  }
+  
+}
 

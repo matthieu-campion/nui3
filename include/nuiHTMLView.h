@@ -14,6 +14,7 @@
 class nuiHTMLContext;
 class nuiHTMLItem;
 class nuiHTMLBox;
+class nuiHTMLFont;
 
 class nuiHTMLView : public nuiSimpleContainer
 {
@@ -51,6 +52,7 @@ protected:
   void ParseA(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
   void ParseBr(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
   void ParseSpan(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
+  void ParseFont(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
   nuiHTMLBox* mpRootBox;
 
   float mIdealWidth;
@@ -162,5 +164,26 @@ private:
 
   nuiColor mTextFgColor;
   nuiColor mTextBgColor;
+};
+
+class nuiHTMLFont : public nuiHTMLItem
+{
+public:
+  nuiHTMLFont(nuiHTMLNode* pNode);
+  virtual ~nuiHTMLFont();
+  
+  virtual void Draw(nuiDrawContext* pContext);
+  virtual void Layout(nuiHTMLContext& rContext);
+  
+private:
+  nglString mFamilyName;
+  nglString mGenericName;
+  nglString mStyle;
+  float mSize;
+  int32 mUnderline;
+  int32 mStrikeThrough;
+  nuiColor mTextFgColor;
+  nuiColor mTextBgColor;
+  nuiFontRequest mBackup;
 };
 
