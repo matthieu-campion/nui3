@@ -349,10 +349,22 @@ void nglFontLayout::InitMetrics()
 {
   mXMin = mYMin = 1E32f;
   mXMax = mYMax = -1E32f;
+  nglFontInfo infos;
+  mFont.GetInfo(infos);
+  mAscender = infos.Ascender;
+  mDescender = infos.Descender;
 }
 
 void nglFontLayout::CallOnGlyph (nglFontBase* pFont, const nglString& rString, int Pos, nglGlyphInfo* pGlyph)
 {
+  if (pFont != &mFont)
+  {
+    nglFontInfo infos;
+    mFont.GetInfo(infos);
+    mAscender = MAX(mAscender, infos.Ascender);
+    mDescender = MAX(mDescender, infos.Descender);
+  }
+  
   OnGlyph(pFont, rString, Pos, pGlyph);
 }
 
@@ -370,6 +382,16 @@ void nglFontLayout::SetDownAxis(float UpDown)
 float nglFontLayout::GetDownAxis()
 {
   return mDownAxis;
+}
+
+float nglFontLayout::GetAscender() const
+{
+  return mAscender;
+}
+
+float nglFontLayout::GetDescender() const
+{
+  return mDescender;
 }
 
 

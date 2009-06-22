@@ -10,71 +10,253 @@
 #include "nuiHTTP.h"
 #include "nuiFontManager.h"
 
-class nuiHTMLContext
+///////////class nuiHTMLContext
+nuiHTMLContext::nuiHTMLContext()
 {
-public:
-  nuiHTMLContext()
+  mX = 0;
+  mY = 0;
+  mW = 0;
+  mH = 0;
+  
+  mLeftMargin = 0;
+  
+  mIdealWidth = 800;
+  mMaxWidth = 0;
+  mMaxHeight = 0;
+  
+  mVSpace = 0;
+  mHSpace = 0;
+  
+  mSetLayout = false;
+  //mLine;
+  mpNode = NULL;
+}
+
+nuiHTMLContext::nuiHTMLContext(const nuiHTMLContext& rContext)
+{
+  *this = rContext;
+}
+
+nuiHTMLContext& nuiHTMLContext::operator=(const nuiHTMLContext& rContext)
+{
+  mX = rContext.mX;
+  mY = rContext.mY;
+  mW = rContext.mW;
+  mH = rContext.mH;
+  
+  mLeftMargin = rContext.mLeftMargin;
+  
+  mIdealWidth = rContext.mIdealWidth;
+  mMaxWidth = rContext.mMaxWidth;
+  mMaxHeight = rContext.mMaxHeight;
+  
+  mVSpace = rContext.mVSpace;
+  mHSpace = rContext.mHSpace;
+  
+  mSetLayout = rContext.mSetLayout;
+  mLine = rContext.mLine;
+  mpNode = rContext.mpNode;  
+}
+
+
+/////////////////class nuiHTMLItem
+nuiHTMLItem::nuiHTMLItem(nuiHTMLNode* pNode, bool Inline)
+: mpNode(pNode), mInline(Inline)
+{
+}
+
+nuiHTMLItem::~nuiHTMLItem()
+{
+}
+
+void nuiHTMLItem::Draw(nuiDrawContext* pContext)
+{
+}
+
+void nuiHTMLItem::Layout(nuiHTMLContext& rContext)
+{
+  
+}
+
+const nuiRect& nuiHTMLItem::GetRect() const
+{
+  return mRect;
+}
+
+void nuiHTMLItem::SetRect(const nuiRect& rRect)
+{
+  mRect = rRect;
+}
+
+const nuiRect& nuiHTMLItem::GetIdealRect() const
+{
+  return mIdealRect;
+}
+
+void nuiHTMLItem::MoveTo(float x, float y)
+{
+  mRect.MoveTo(x, y);
+}
+
+void nuiHTMLItem::SetWidth(float w)
+{
+  mRect.SetWidth(w);
+}
+
+void nuiHTMLItem::SetHeight(float h)
+{
+  mRect.SetHeight(h);
+}
+
+void nuiHTMLItem::SetParent(nuiHTMLBox* pBox)
+{
+  mpParent = pBox;
+}
+
+nuiHTMLBox* nuiHTMLItem::GetParent() const
+{
+  return mpParent;
+}
+
+float nuiHTMLItem::GetAscender() const
+{
+  return mIdealRect.GetHeight();
+}
+
+float nuiHTMLItem::GetDescender() const
+{
+  return 0;
+}
+
+bool nuiHTMLItem::IsInline() const
+{
+  return mInline;
+}
+
+void nuiHTMLItem::SetInline(bool set)
+{
+  mInline = set;
+}
+
+////////////////////class nuiHTMLBox
+nuiHTMLBox::nuiHTMLBox(nuiHTMLNode* pNode, bool Inline)
+: nuiHTMLItem(pNode, Inline)
+{
+  
+}
+
+nuiHTMLBox::~nuiHTMLBox()
+{
+  for (uint32 i = 0 ; i < mItems.size(); i++)
   {
-    mX = 0;
-    mY = 0;
-    mW = 0;
-    mH = 0;
+    delete mItems[i];
+  }
+}
 
-    mLeftMargin = 0;
+void nuiHTMLBox::AddItem(nuiHTMLItem* pItem)
+{
+  mItems.push_back(pItem);
+  pItem->SetParent(this);
+}
 
-    mIdealWidth = 800;
-    mMaxWidth = 0;
-    mMaxHeight = 0;
-    
-    mVSpace = 0;
-    mHSpace = 0;
-    
-    mSetLayout = false;
-    //mLine;
-    mpNode = NULL;
+void nuiHTMLBox::Draw(nuiDrawContext* pContext)
+{
+  for (uint32 i = 0; i < mItems.size(); i++)
+  {
+    mItems[i]->Draw(pContext);
+  }
+}
+
+void nuiHTMLBox::Layout(nuiHTMLContext& rContext)
+{
+  for (uint32 i = 0; i < mItems.size(); i++)
+  {
+    mItems[i]->Layout(rContext);
   }
   
-  nuiHTMLContext(const nuiHTMLContext& rContext)
+  if (IsInline())
   {
-    mX = rContext.mX;
-    mY = rContext.mY;
-    mW = rContext.mW;
-    mH = rContext.mH;
-    
-    mLeftMargin = rContext.mLeftMargin;
-
-    mIdealWidth = rContext.mIdealWidth;
-    mMaxWidth = rContext.mMaxWidth;
-    mMaxHeight = rContext.mMaxHeight;
-    
-    mVSpace = rContext.mVSpace;
-    mHSpace = rContext.mHSpace;
-    
-    mSetLayout = rContext.mSetLayout;
-    mLine = rContext.mLine;
-    mpNode = rContext.mpNode;
+    //#TODO #FIXME  Wrap the children 
+    for (uint32 i = 0; i < mItems.size(); i++)
+    {
+      nuiHTMLItem* pItem = mItems[i];
+      nuiRect r(pItem->GetIdealRect());
+      r.MoveTo(rContext.mX, rContext.mY);
+      pItem->SetRect(r);
+      rContext.mY += r.GetHeight();
+    }
   }
-  
-  float mX;
-  float mY;
-  float mW;
-  float mH;
+  else
+  {
+    rContext.mX = rContext.mLeftMargin;
+    // Put each children on a new line
+    for (uint32 i = 0; i < mItems.size(); i++)
+    {
+      nuiHTMLItem* pItem = mItems[i];
+      nuiRect r(pItem->GetIdealRect());
+      r.MoveTo(rContext.mX, rContext.mY);
+      pItem->SetRect(r);
+      rContext.mY += r.GetHeight();
+    }
+  }
+}
 
-  float mLeftMargin;
+void nuiHTMLBox::PushContext(const nuiHTMLContext& rContext)
+{
+  mContextStack.push(rContext);
+}
 
-  float mIdealWidth;
-  float mMaxWidth;
-  float mMaxHeight;
-  
-  float mVSpace;
-  float mHSpace;
-  
-  nuiWidgetList mLine;  
-  nuiFontRequest mFont;
-  bool mSetLayout;
-  nuiHTMLNode* mpNode;
-};
+void nuiHTMLBox::PopContext(nuiHTMLContext& rContext)
+{
+  rContext = mContextStack.top();
+  mContextStack.pop();
+}
 
+///////////////////////////////////////// nuiHTMLText
+nuiHTMLText::nuiHTMLText(nuiHTMLNode* pNode, const nglString& rText)
+: nuiHTMLItem(pNode, true), mText(rText), mpLayout(NULL), mpFont(NULL)
+{
+  
+}
+
+nuiHTMLText::~nuiHTMLText()
+{
+  if (mpFont)
+    mpFont->Release();
+  delete mpLayout;
+}
+
+void nuiHTMLText::Draw(nuiDrawContext* pContext)
+{
+  pContext->DrawText(mRect.Left(), mRect.Right(), *mpLayout);
+}
+
+void nuiHTMLText::Layout(nuiHTMLContext& rContext)
+{
+  delete mpLayout;
+  nuiFont* pFont = nuiFontManager::GetManager().GetFont(rContext.mFont);
+  pFont->Acquire();
+  mpFont->Release();
+  mpFont = pFont;
+  
+  mpLayout = new nuiFontLayout(*mpFont, 0, 0, nuiHorizontal);
+  mpLayout->Layout(mText);
+  mIdealRect = mpLayout->GetRect();
+}
+
+float nuiHTMLText::GetAscender() const
+{
+  return mpLayout->GetAscender();
+}
+
+float nuiHTMLText::GetDescender() const
+{
+  return mpLayout->GetDescender();
+}
+
+
+
+/////////////////////////////// nuiHTMLView
 nuiHTMLView::nuiHTMLView(float IdealWidth)
 {
   mpHTML = NULL;
@@ -97,7 +279,7 @@ nuiRect nuiHTMLView::CalcIdealSize()
   nuiHTMLContext context;
   context.mSetLayout = true;
   WalkTree(mpHTML, context);
-//  return nuiRect(context.mMaxWidth, context.mH);
+  //  return nuiRect(context.mMaxWidth, context.mH);
   return nuiRect(800, 600);
 }
 
@@ -275,4 +457,171 @@ void nuiHTMLView::WalkTree(nuiHTMLNode* pNode, const nuiHTMLContext& rContext)
   }
   LayoutLine(context);
 }
+
+void nuiHTMLView::ParseTree(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
+{
+  uint32 count = pNode->GetNbChildren();
+  for (uint32 i = 0; i < count; i++)
+  {
+    nuiHTMLNode* pChild = pNode->GetChild(i);
+    switch (pChild->GetTagType())
+    {
+      case nuiHTML::eTag_HTML:
+        ParseHTML(pNode, pBox);
+        break;
+    }
+  }
+}
+
+void nuiHTMLView::ParseHTML(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
+{
+  uint32 count = pNode->GetNbChildren();
+  for (uint32 i = 0; i < count; i++)
+  {
+    nuiHTMLNode* pChild = pNode->GetChild(i);
+    switch (pChild->GetTagType())
+    {
+      case nuiHTML::eTag_HEAD:
+        ParseHead(pNode, pBox);
+        break;
+        
+      case nuiHTML::eTag_BODY:
+        ParseBody(pNode, pBox);
+        break;
+    }
+  }
+}
+
+void nuiHTMLView::ParseHead(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
+{
+  uint32 count = pNode->GetNbChildren();
+  for (uint32 i = 0; i < count; i++)
+  {
+    nuiHTMLNode* pChild = pNode->GetChild(i);
+    switch (pChild->GetTagType())
+    {
+      case nuiHTML::eTag_TITLE:
+        ParseTitle(pNode, pBox);
+        break;
+    }
+  }
+}
+
+void nuiHTMLView::ParseTitle(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
+{
+  
+}
+
+void nuiHTMLView::ParseBody(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
+{
+  uint32 count = pNode->GetNbChildren();
+  for (uint32 i = 0; i < count; i++)
+  {
+    nuiHTMLNode* pChild = pNode->GetChild(i);
+    switch (pChild->GetTagType())
+    {
+      case nuiHTML::eTag_DIV:
+        ParseDiv(pNode, pBox);
+        break;
+      case nuiHTML::eTag_P:
+        ParseP(pNode, pBox);
+        break;
+      case nuiHTML::eTag_I:
+        ParseI(pNode, pBox);
+        break;
+      case nuiHTML::eTag_A:
+        ParseA(pNode, pBox);
+        break;
+      case nuiHTML::eTag_B:
+        ParseB(pNode, pBox);
+        break;
+      case nuiHTML::eTag_BR:
+        ParseBr(pNode, pBox);
+        break;
+      case nuiHTML::eTag_SPAN:
+        ParseI(pNode, pBox);
+        break;
+      case nuiHTML::eTag_U:
+        ParseI(pNode, pBox);
+        break;
+      default:
+        ParseText(pNode, pBox);
+        break;
+    }
+  }
+}
+
+void nuiHTMLView::ParseText(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
+{
+  const nglString& rText(pNode->GetText());
+  std::vector<nglString> words;
+  rText.Tokenize(words);
+  
+  for (uint32 i = 0; i < words.size(); i++)
+  {
+    pBox->AddItem(new nuiHTMLText(pNode, words[i]));
+  }
+  //ParseBody(pNode, pBox);
+}
+
+void nuiHTMLView::ParseDiv(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
+{
+  nuiHTMLBox* pNewBox = new nuiHTMLBox(pNode);
+  pBox->AddItem(pNewBox);
+  
+  ParseBody(pNode, pNewBox);
+}
+
+void nuiHTMLView::ParseP(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
+{
+  nuiHTMLBox* pNewBox = new nuiHTMLBox(pNode);
+  pBox->AddItem(pNewBox);
+  
+  ParseBody(pNode, pNewBox);
+}
+
+void nuiHTMLView::ParseI(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
+{
+  nuiHTMLBox* pNewBox = new nuiHTMLBox(pNode);
+  pBox->AddItem(pNewBox);
+  
+  ParseBody(pNode, pNewBox);
+}
+
+void nuiHTMLView::ParseA(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
+{
+  
+  ParseBody(pNode, pBox);
+}
+
+void nuiHTMLView::ParseB(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
+{
+  nuiHTMLBox* pNewBox = new nuiHTMLBox(pNode);
+  pBox->AddItem(pNewBox);
+  
+  ParseBody(pNode, pNewBox);
+}
+
+void nuiHTMLView::ParseBr(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
+{
+  
+  ParseBody(pNode, pBox);
+}
+
+void nuiHTMLView::ParseSpan(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
+{
+  nuiHTMLBox* pNewBox = new nuiHTMLBox(pNode);
+  pBox->AddItem(pNewBox);
+  
+  ParseBody(pNode, pNewBox);
+}
+
+void nuiHTMLView::ParseU(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
+{
+  nuiHTMLBox* pNewBox = new nuiHTMLBox(pNode);
+  pBox->AddItem(pNewBox);
+  
+  ParseBody(pNode, pNewBox);
+}
+
 

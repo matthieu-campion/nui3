@@ -71,6 +71,9 @@ public:
   */
   //@}
 
+  float GetAscender() const;
+  float GetDescender() const;
+  
   /** @name Layout */
   //@{
   int          Layout (const nglString& rText, bool FinalizeLayout = true);
@@ -178,6 +181,8 @@ protected:
 
   float mDownAxis;
 
+  float mAscender;
+  float mDescender;
 private:
   float mXMin, mXMax;
   float mYMin, mYMax;

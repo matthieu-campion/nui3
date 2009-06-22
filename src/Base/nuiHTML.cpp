@@ -293,6 +293,10 @@ bool nuiHTML::Load(nglIStream& rStream)
   tidyInitSource( &source, &strm, &HTMLStream::TidyGetByte, &HTMLStream::TidyUngetByte, &HTMLStream::TidyEOF);
   
   int res = tidyParseSource(tdoc, &source);
+  if ( res >= 0 )
+    res = tidyCleanAndRepair(tdoc);               // Tidy it up!
+  if ( res >= 0 )
+    res = tidyRunDiagnostics(tdoc);               // Kvetch
   
   BuildTree(tdoc, tidyGetRoot(tdoc));
   
