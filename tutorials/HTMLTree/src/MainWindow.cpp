@@ -36,7 +36,7 @@ void MainWindow::OnCreation()
   HTMLTree* pTree = new HTMLTree();
   AddChild(pTree);
   
-  pTree->ParseURL(_T("http://trac.libnui.net/projects/show/libnui"));
+  pTree->ParseURL(_T("http://www.google.fr"));
   
 #if 0
   // a vertical box for page layout

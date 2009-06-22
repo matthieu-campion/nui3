@@ -64,7 +64,7 @@ void MainWindow::OnCreation()
   mpHTMLView = new nuiHTMLView(GetWidth());
   pScroll->AddChild(mpHTMLView);
   
-  mpHTMLView->SetURL(_T("http://trac.libnui.net/projects/show/libnui"));
+  mpHTMLView->SetURL(_T("http://www.libnui.net/pages/about.php"));
 }
 
 

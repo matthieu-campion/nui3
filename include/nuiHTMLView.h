@@ -12,6 +12,7 @@
 #include "nuiFontManager.h"
 
 class nuiHTMLContext;
+class nuiHTMLItem;
 class nuiHTMLBox;
 
 class nuiHTMLView : public nuiSimpleContainer
@@ -43,22 +44,15 @@ protected:
   void ParseBody(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
   void ParseDiv(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
   void ParseP(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
-  void ParseI(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
+  void ParseFormatTag(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
   void ParseA(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
-  void ParseB(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
   void ParseBr(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
   void ParseSpan(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
-  void ParseU(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
   nuiHTMLBox* mpRootBox;
 
-  void WalkTree(nuiHTMLNode* pNode, const nuiHTMLContext& rContext);
-  bool InterpretTree(nuiHTMLContext& rContext);
-  void LayoutLine(nuiHTMLContext& rContext);
   float mIdealWidth;
   float mVSpace;
   float mHSpace;
-  
-  void AddElement(nuiHTMLContext& rContext, nuiWidgetPtr pWidget);
   
   nuiHTML* mpHTML;
 };
@@ -70,30 +64,20 @@ public:
   nuiHTMLContext(const nuiHTMLContext& rContext);
   nuiHTMLContext& operator=(const nuiHTMLContext& rContext);
   
-  float mX;
-  float mY;
-  float mW;
-  float mH;
-  
   float mLeftMargin;
   
-  float mIdealWidth;
   float mMaxWidth;
-  float mMaxHeight;
   
   float mVSpace;
   float mHSpace;
   
-  nuiWidgetList mLine;  
   nuiFontRequest mFont;
-  bool mSetLayout;
-  nuiHTMLNode* mpNode;
 };
 
 class nuiHTMLItem
 {
 public:
-  nuiHTMLItem(nuiHTMLNode* pNode, bool Inline);
+  nuiHTMLItem(nuiHTMLNode* pNode, bool Inline = true);
   ~nuiHTMLItem();
 
   virtual void Draw(nuiDrawContext* pContext);
@@ -114,12 +98,16 @@ public:
 
   bool IsInline() const;
   void SetInline(bool set);
+  bool IsEndTag() const;
+  void SetEndTag(bool set);
+  
 protected:
   nuiHTMLNode* mpNode;
   nuiRect mIdealRect;
   nuiRect mRect;
   nuiHTMLBox* mpParent;
   bool mInline;
+  bool mEndTag;
 };
 
 class nuiHTMLBox : public nuiHTMLItem
@@ -132,6 +120,7 @@ public:
   virtual void Layout(nuiHTMLContext& rContext);
   
   void AddItem(nuiHTMLItem* pItem);
+  void AddItemEnd(nuiHTMLItem* pItem);
 
   void PushContext(const nuiHTMLContext& rContext);
   void PopContext(nuiHTMLContext& rContext);

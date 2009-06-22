@@ -48,11 +48,11 @@ const nglString& nuiHTMLAttrib::GetValue() const
 
 /////////////////////////////////
 // class nuiHTMLNode
-nuiHTMLNode::nuiHTMLNode(const nglString& rName, nuiHTMLNode::NodeType Type, nuiHTMLNode::TagType TagType, const nglString& rText)
+nuiHTMLNode::nuiHTMLNode(const nglString& rName, nuiHTMLNode::NodeType Type, nuiHTMLNode::TagType _tagType, const nglString& rText)
 {
   mName = rName;
   mType = Type;
-  mTagType = TagType;
+  mTagType = _tagType;
   mText = rText;
 }
 
@@ -101,6 +101,7 @@ void nuiHTMLNode::SetFromNode(const void* _tdoc, const void* _tnod)
   
   mName = nglString(tidyNodeGetName(tnod));
   mType = (NodeType)tidyNodeGetType(tnod);
+  mTagType = (TagType)tidyNodeGetId(tnod);
   
   // Fill the attributes:
   TidyAttr tattr;

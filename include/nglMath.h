@@ -341,7 +341,7 @@ inline int64 nuiSign(double f)
 }
 
 template <class T>
-inline T Clamp(T value, T Low, T High)
+inline T nuiClamp(T value, T Low, T High)
 {
   if (value <= Low)
     return Low;
