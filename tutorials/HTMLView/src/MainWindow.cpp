@@ -87,6 +87,8 @@ void MainWindow::OnCreation()
   pScroll->AddChild(mpHTMLView);
   
   mpHTMLView->SetURL(url);
+  if (!mpHTMLView->GetURL().IsNull())
+    mpInput->SetText(mpHTMLView->GetURL());
   //mpHTMLView->SetText(_T("<img src='http://www.libnui.net/maps/menu/hover/01.png' alt='bleh'/><p>Petit text de test. Je viens de sauter une ligne<img src='rsrc:/decorations/jpeg.jpg' alt='bleh'/>Et une image...</p>"));
 
 }
@@ -96,6 +98,8 @@ void MainWindow::OnCreation()
 bool MainWindow::OnButtonClick(const nuiEvent& rEvent)
 {  
   mpHTMLView->SetURL(mpInput->GetText());
+  if (!mpHTMLView->GetURL().IsNull())
+    mpInput->SetText(mpHTMLView->GetURL());
   
   return true; // means the event is caught and not broadcasted
 }

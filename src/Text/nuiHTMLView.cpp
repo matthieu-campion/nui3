@@ -11,390 +11,12 @@
 #include "nuiFontManager.h"
 #include "nuiHTTP.h"
 
-///////////class nuiHTMLContext
-nuiHTMLContext::nuiHTMLContext()
-{
-  mLeftMargin = 0;
-  
-  mMaxWidth = 640;
-  
-  mVSpace = 0;
-  mHSpace = 8;
-
-  mFont.SetName(_T("arial"), 0.8f);
-  mFont.SetGenericName(_T("sans-serif"), 0.8f);
-  mFont.SetStyle(_T("regular"), 0.5f);
-  mFont.SetProportionnal(1.0f);
-
-  mFont.SetScalable(1.0f);
-  mFont.MustHaveSize(14.0f, 1.0f);
-  mFont.SetItalic(false, 1.0f);
-  mFont.SetBold(false, 1.0f);
-  mUnderline = false;
-  mStrikeThrough = false;
-  mTextFgColor = nuiColor(0,0,0,255);
-  mTextBgColor = nuiColor(0,0,0,0);
-}
-
-nuiHTMLContext::nuiHTMLContext(const nuiHTMLContext& rContext)
-{
-  *this = rContext;
-}
-
-nuiHTMLContext& nuiHTMLContext::operator=(const nuiHTMLContext& rContext)
-{
-  mLeftMargin = rContext.mLeftMargin;
-  
-  mMaxWidth = rContext.mMaxWidth;
-  
-  mVSpace = rContext.mVSpace;
-  mHSpace = rContext.mHSpace;
-  
-  mFont = rContext.mFont;
-  mUnderline = rContext.mUnderline;
-  mStrikeThrough = rContext.mStrikeThrough;
-  mTextFgColor = rContext.mTextFgColor;
-  mTextBgColor = rContext.mTextBgColor;
-}
-
-
-/////////////////class nuiHTMLItem
-nuiHTMLItem::nuiHTMLItem(nuiHTMLNode* pNode, bool Inline)
-: mpNode(pNode), mInline(Inline), mEndTag(false), mLineBreak(false)
-{
-  mLineBreak = (pNode->GetTagType() == nuiHTMLNode::eTag_BR);
-}
-
-nuiHTMLItem::~nuiHTMLItem()
-{
-}
-
-void nuiHTMLItem::Draw(nuiDrawContext* pContext)
-{
-}
-
-void nuiHTMLItem::CallDraw(nuiDrawContext* pContext)
-{
-  pContext->PushMatrix();
-  pContext->Translate(mRect.Left(), mRect.Top());
-  //pContext->DrawRect(GetRect().Size(), eStrokeShape);
-  Draw(pContext);
-  pContext->PopMatrix();
-}
-
-void nuiHTMLItem::Layout(nuiHTMLContext& rContext)
-{
-  bool set = !IsEndTag();
-  switch (mpNode->GetTagType())
-  {
-  case nuiHTML::eTag_I:
-    {
-      rContext.mFont.SetItalic(set, 1.0f);
-    }
-    break;
-  case nuiHTML::eTag_B:
-    {
-      rContext.mFont.SetBold(set, 1.0f);
-    }
-    break;
-  case nuiHTML::eTag_U:
-    {
-      rContext.mUnderline = set;
-    }
-    break;
-  case nuiHTML::eTag_STRIKE:
-    {
-      rContext.mUnderline = set;
-    }
-    break;
-  }
-}
-
-const nuiRect& nuiHTMLItem::GetRect() const
-{
-  return mRect;
-}
-
-void nuiHTMLItem::SetRect(const nuiRect& rRect)
-{
-  //printf("nuiHTMLItem::SetRect %ls\n", rRect.GetValue().GetChars());
-  mRect = rRect;
-}
-
-#undef max
-
-const nuiRect& nuiHTMLItem::GetIdealRect() const
-{
-  return mIdealRect;
-}
-
-void nuiHTMLItem::MoveTo(float x, float y)
-{
-  mRect.MoveTo(x, y);
-}
-
-void nuiHTMLItem::SetWidth(float w)
-{
-  mRect.SetWidth(w);
-}
-
-void nuiHTMLItem::SetHeight(float h)
-{
-  mRect.SetHeight(h);
-}
-
-void nuiHTMLItem::SetParent(nuiHTMLBox* pBox)
-{
-  mpParent = pBox;
-}
-
-nuiHTMLBox* nuiHTMLItem::GetParent() const
-{
-  return mpParent;
-}
-
-float nuiHTMLItem::GetAscender() const
-{
-  return mIdealRect.GetHeight();
-}
-
-float nuiHTMLItem::GetDescender() const
-{
-  return 0;
-}
-
-bool nuiHTMLItem::IsInline() const
-{
-  return mInline;
-}
-
-void nuiHTMLItem::SetInline(bool set)
-{
-  mInline = set;
-}
-
-bool nuiHTMLItem::IsEndTag() const
-{
-  return mEndTag;
-}
-
-void nuiHTMLItem::SetEndTag(bool set)
-{
-  mEndTag = set;
-}
-
-bool nuiHTMLItem::IsLineBreak() const
-{
-  return mLineBreak;
-}
-
-nglString nuiHTMLItem::GetAbsoluteURL(const nglString& rString) const
-{
-  if (rString[0] == '/' || rString.Extract(0, 7) != _T("http://"))
-    return mpNode->GetSourceURL() + rString;
-  return rString;
-}
-
-////////////////////class nuiHTMLBox
-nuiHTMLBox::nuiHTMLBox(nuiHTMLNode* pNode, bool Inline)
-: nuiHTMLItem(pNode, Inline)
-{
-  
-}
-
-nuiHTMLBox::~nuiHTMLBox()
-{
-  for (uint32 i = 0 ; i < mItems.size(); i++)
-  {
-    delete mItems[i];
-  }
-}
-
-void nuiHTMLBox::AddItem(nuiHTMLItem* pItem)
-{
-  mItems.push_back(pItem);
-  pItem->SetParent(this);
-}
-
-void nuiHTMLBox::AddItemEnd(nuiHTMLItem* pItem)
-{
-  pItem->SetEndTag(true);
-  mItems.push_back(pItem);
-  pItem->SetParent(this);
-}
-
-void nuiHTMLBox::Draw(nuiDrawContext* pContext)
-{
-  for (uint32 i = 0; i < mItems.size(); i++)
-  {
-    mItems[i]->CallDraw(pContext);
-  }
-}
-
-float nuiHTMLBox::LayoutLine(uint32& start, uint32& end, float& y, float& h, nuiHTMLContext& rContext)
-{
-  float x = 0;
-  //printf("box layout item process line\n");
-  // Process the line
-  x = rContext.mLeftMargin;
-  for (int32 j = start; j <= end; j++)
-  {
-    nuiHTMLItem* pIt = mItems[j];
-    nuiRect r(pIt->GetIdealRect());
-    r.SetHeight(h);
-    r.MoveTo(x, y);
-    pIt->SetRect(r);
-    //NGL_OUT(_T("%ls\n"), r.GetValue().GetChars());
-    x += r.GetWidth() + rContext.mHSpace;
-  }
-  y += h + rContext.mVSpace;
-  h = 0;
-  start = end + 1;
-  
-  return x;
-}
-
-void nuiHTMLBox::Layout(nuiHTMLContext& rContext)
-{
-  nuiHTMLContext context(rContext);
-  float X = 0;
-  float Y = 0;
-  float W = 0;
-  
-  //printf("box layout start\n");
-  uint32 line_start = 0;
-  uint32 line_end = 0;
-  float lineh = 0;
-  
-  for (uint32 i = 0; i < mItems.size(); i++)
-  {
-    mItems[i]->Layout(context);
-  }
-  
-  if (IsInline())
-  {
-    //#TODO #FIXME  Wrap the children 
-    for (uint32 i = 0; i < mItems.size(); i++)
-    {
-      //printf("box layout item %d start\n", i);
-
-      nuiHTMLItem* pItem = mItems[i];
-      nuiRect r(pItem->GetIdealRect());
-
-      // Layout the line if needed:
-      if ((X + r.GetWidth() > context.mMaxWidth) || pItem->IsLineBreak())
-      {
-        float w = LayoutLine(line_start, line_end, Y, lineh, context);
-
-        W = MAX(W, w);
-        lineh = 0;
-        X = 0;
-      }
-      
-      lineh = MAX(lineh, r.GetHeight());
-      X += r.GetWidth() + context.mVSpace;
-      
-      line_end = i;
-      //printf("box layout item %d done\n", i);
-    }
-
-    if (line_end)
-    {
-      float w = LayoutLine(line_start, line_end, Y, lineh, context);
-      
-      W = MAX(W, w);
-      lineh = 0;
-      X = 0;
-    }
-  }
-  else
-  {
-    float x = context.mLeftMargin;
-    // Put each children on a new line
-    for (uint32 i = 0; i < mItems.size(); i++)
-    {
-      //printf("box layout item block line %d\n", i);
-      nuiHTMLItem* pItem = mItems[i];
-      nuiRect r(pItem->GetIdealRect());
-      r.MoveTo(X + x, Y);
-      pItem->SetRect(r);
-      Y += r.GetHeight() + context.mVSpace;
-      W = MAX(W, r.Right());
-    }
-  }
-  mIdealRect.Set(0.0f, 0.0f, W, Y);
-  //printf("text layout done (%ls)\n", mIdealRect.GetValue().GetChars());
-}
-
-
-
-
-
-void nuiHTMLBox::PushContext(const nuiHTMLContext& rContext)
-{
-  mContextStack.push(rContext);
-}
-
-void nuiHTMLBox::PopContext(nuiHTMLContext& rContext)
-{
-  rContext = mContextStack.top();
-  mContextStack.pop();
-}
-
-///////////////////////////////////////// nuiHTMLText
-nuiHTMLText::nuiHTMLText(nuiHTMLNode* pNode, const nglString& rText)
-: nuiHTMLItem(pNode, true), mText(rText), mpLayout(NULL), mpFont(NULL)
-{
-  
-}
-
-nuiHTMLText::~nuiHTMLText()
-{
-  if (mpFont)
-    mpFont->Release();
-  delete mpLayout;
-}
-
-void nuiHTMLText::Draw(nuiDrawContext* pContext)
-{
-  pContext->SetTextColor(mTextFgColor);
-  //nuiColor mTextBgColor;
-  pContext->SetFont(mpFont, false);
-  pContext->DrawText(0, mpLayout->GetAscender() , *mpLayout);
-}
-
-void nuiHTMLText::Layout(nuiHTMLContext& rContext)
-{
-  if (mpLayout)
-  {
-    return;
-  }
-  delete mpLayout;
-  nuiFont* pFont = nuiFontManager::GetManager().GetFont(rContext.mFont);
-  //nuiFont* pFont = nuiFont::GetFont(12);
-  pFont->Acquire();
-  if (mpFont)
-    mpFont->Release();
-  mpFont = pFont;
-  
-  mpLayout = new nuiFontLayout(*mpFont, 0, 0, nuiHorizontal);
-  mpLayout->SetUnderline(rContext.mUnderline);
-  mpLayout->SetStrikeThrough(rContext.mStrikeThrough);
-  mpLayout->Layout(mText);
-  mIdealRect = mpLayout->GetRect();
-  //printf("text layout done (%ls)\n", mIdealRect.GetValue().GetChars());
-}
-
-float nuiHTMLText::GetAscender() const
-{
-  return mpLayout->GetAscender();
-}
-
-float nuiHTMLText::GetDescender() const
-{
-  return mpLayout->GetDescender();
-}
-
+#include "nuiHTMLContext.h"
+#include "nuiHTMLItem.h"
+#include "nuiHTMLBox.h"
+#include "nuiHTMLText.h"
+#include "nuiHTMLImage.h"
+#include "nuiHTMLFont.h"
 
 
 /////////////////////////////// nuiHTMLView
@@ -506,13 +128,35 @@ bool nuiHTMLView::SetText(const nglString& rHTMLText)
 
 bool nuiHTMLView::SetURL(const nglString& rURL)
 {
+  nglString url(rURL);
   nuiHTTPRequest request(rURL);
   nuiHTTPResponse* pResponse = request.SendRequest();
   if (!pResponse)
     return false;
   
+  //NGL_OUT(_T("HTTP Response\n%ls\n\n"), pResponse->GetHeadersRep().GetChars());
+  const nuiHTTPHeaderMap& rHeaders(pResponse->GetHeaders());
+  nuiHTTPHeaderMap::const_iterator it = rHeaders.find(_T("location"));
+  if (it != rHeaders.end())
+  {
+    nglString newurl = it->second;
+    if (newurl[0] == '/')
+    {
+      url.TrimRight('/');
+      url += newurl;
+    }
+    else
+    {
+      url = newurl;
+    }
+    NGL_OUT(_T("\n\nNew location: %ls\n\n"), url.GetChars());
+    
+    delete pResponse;
+    return SetURL(url);
+  }
+  
   nuiHTML* pHTML = new nuiHTML();
-  pHTML->SetSourceURL(rURL);
+  pHTML->SetSourceURL(url);
   nglIMemory mem(&pResponse->GetBody()[0], pResponse->GetBody().size());
   
   bool res = pHTML->Load(mem);
@@ -529,6 +173,13 @@ bool nuiHTMLView::SetURL(const nglString& rURL)
     InvalidateLayout();
   }
   return res;
+}
+
+const nglString& nuiHTMLView::GetURL() const
+{
+  if (mpHTML)
+    return mpHTML->GetSourceURL();
+  return nglString::Null;
 }
 
 //void nuiHTMLView::WalkTree(nuiHTMLNode* pNode, const nuiHTMLContext& rContext)
@@ -654,6 +305,8 @@ void nuiHTMLView::ParseBody(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
       case nuiHTML::eTag_B:
       case nuiHTML::eTag_U:
       case nuiHTML::eTag_STRIKE:
+      case nuiHTML::eTag_STRONG:
+      case nuiHTML::eTag_EM:
         ParseFormatTag(pChild, pBox);
         break;
       case nuiHTML::eTag_BR:
@@ -826,10 +479,7 @@ void nuiHTMLView::ParseBr(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 void nuiHTMLView::ParseSpan(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 {
   //printf("html span\n");
-  nuiHTMLBox* pNewBox = new nuiHTMLBox(pNode);
-  pBox->AddItem(pNewBox);
-  
-  ParseBody(pNode, pNewBox);
+  ParseBody(pNode, pBox);
   //printf("html /span\n");
 }
 
@@ -841,140 +491,3 @@ void nuiHTMLView::ParseFont(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
   pBox->AddItemEnd(new nuiHTMLFont(pNode));
 }
 
-//class nuiHTMLFont : public nuiHTMLItem
-nuiHTMLFont::nuiHTMLFont(nuiHTMLNode* pNode)
-: nuiHTMLItem(pNode, true)
-{
-  //nuiFontRequest mFontRequest;
-
-  mSize = 14;
-  mUnderline = false;
-  mStrikeThrough = false;
-  mTextFgColor = nuiColor(0, 0, 0, 255);
-  mTextBgColor = nuiColor(0, 0, 0, 0);
-}
-
-nuiHTMLFont::~nuiHTMLFont()
-{
-  
-}
-
-void nuiHTMLFont::Draw(nuiDrawContext* pContext)
-{
-  
-}
-
-void nuiHTMLFont::Layout(nuiHTMLContext& rContext)
-{
-  if (!IsEndTag())
-  {
-    mBackup = rContext.mFont;
-    if (!mFamilyName.IsEmpty())
-      rContext.mFont.SetName(mFamilyName, 1.0f);
-    if (!mGenericName.IsEmpty())
-      rContext.mFont.SetGenericName(mGenericName, 1.0f);
-    if (mSize > 0)
-      rContext.mFont.MustHaveSize(mSize, 1.0f);
-    if (mUnderline >= 0)
-      rContext.mUnderline = mUnderline;
-    if (mStrikeThrough >= 0)
-      rContext.mStrikeThrough = mStrikeThrough;
-    
-    rContext.mTextFgColor = mTextFgColor;
-    rContext.mTextBgColor = mTextBgColor;
-  }
-  else
-  {
-    rContext.mFont = mBackup;
-  }
-  
-}
-
-/////////////
-//class nuiHTMLImage : public nuiHTMLItem
-nuiHTMLImage::nuiHTMLImage(nuiHTMLNode* pNode)
-: nuiHTMLItem(pNode), mpTexture(NULL), mWidth(0), mHeight(0)
-{
-  const nuiHTMLAttrib* pSrc = pNode->GetAttribute(nuiHTMLAttrib::eAttrib_SRC);
-  const nuiHTMLAttrib* pAlt = pNode->GetAttribute(nuiHTMLAttrib::eAttrib_ALT);
-
-  if (!pSrc || !pAlt)
-    return;
-  
-  nglString url = pSrc->GetValue();
-  printf("incomming url: %ls\n", url.GetChars());
-  
-  int32 colon = url.Find(':');
-  if (colon > 0)
-  {
-    // complete url link
-  }
-  else if (url[0] == '/')
-  {
-    // Site absolute
-    nglString str(GetAbsoluteURL(nglString::Empty));
-    int32 col = str.Find(_T("://"));
-    if (col > 0)
-    {
-      int32 end = str.Find('/', col + 3);
-      url = str.Extract(0, end) + url;
-    }
-  }
-  else
-  {
-    // Site relative
-    url = GetAbsoluteURL(url);
-  }
-  
-  nglString absurl = GetAbsoluteURL(url);
-  printf("url: %ls\n", url.GetChars());
-
-  // First look up the cache:
-  mpTexture = nuiTexture::GetTexture(nglString(url));
-  if (!mpTexture)
-  {
-    mpTexture = nuiTexture::GetTexture(url, NULL);
-    if (!mpTexture->IsValid())
-    {
-      mpTexture->Release();
-      mpTexture = NULL;
-      nuiHTTPRequest request(url);
-      nuiHTTPResponse* pResponse = request.SendRequest();
-      if (!pResponse)
-        return;
-      
-      nglIMemory mem(&pResponse->GetBody()[0], pResponse->GetBody().size());
-      mpTexture = nuiTexture::GetTexture(&mem);
-      delete pResponse;
-    }
-  }
-
-  mpTexture->SetSource(url);
-  
-  mWidth = mpTexture->GetWidth();
-  mHeight = mpTexture->GetHeight();
-}
-
-nuiHTMLImage::~nuiHTMLImage()
-{
-  
-}
-    
-void nuiHTMLImage::Draw(nuiDrawContext* pContext)
-{
-  if (!mpTexture || !mpTexture->IsValid())
-    return;
-
-  pContext->PushState();
-  pContext->SetTexture(mpTexture);  
-  pContext->SetFillColor(nuiColor(255, 255, 255));
-  pContext->DrawImage(mRect.Size(), nuiRect((float)mpTexture->GetWidth(), (float)mpTexture->GetHeight()));
-  pContext->PopState();
-}
-
-void nuiHTMLImage::Layout(nuiHTMLContext& rContext)
-{    
-  if (!mpTexture)
-    return;
-  mIdealRect.Set(0.0f, 0.0f, mWidth, mHeight);
-}
