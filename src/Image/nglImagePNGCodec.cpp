@@ -183,8 +183,7 @@ void end_callback(png_structp png_ptr, png_infop info)
 /*  An example code fragment of how you would initialize the progressive reader in your application. */
 int nglImagePNGCodec::initialize_png_reader() 
 {
-  png_ptr = png_create_read_struct
-    (PNG_LIBPNG_VER_STRING, (png_voidp)NULL, NULL, NULL);
+  png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, (png_voidp)NULL, NULL, NULL);
   if (!png_ptr)
     return -1;
   info_ptr = png_create_info_struct(png_ptr);

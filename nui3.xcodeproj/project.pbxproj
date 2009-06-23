@@ -952,6 +952,27 @@
 		E51B69500C4E564D008EF7A3 /* ConvertUTF.h in Headers */ = {isa = PBXBuildFile; fileRef = E51B694E0C4E564D008EF7A3 /* ConvertUTF.h */; };
 		E51B69510C4E564D008EF7A3 /* ConvertUTF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E51B694D0C4E564D008EF7A3 /* ConvertUTF.cpp */; };
 		E51B69520C4E564D008EF7A3 /* ConvertUTF.h in Headers */ = {isa = PBXBuildFile; fileRef = E51B694E0C4E564D008EF7A3 /* ConvertUTF.h */; };
+		E51E549F0FF11FE000FDF3BE /* dgif_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = E51E549C0FF11FE000FDF3BE /* dgif_lib.c */; };
+		E51E54A00FF11FE000FDF3BE /* gif_lib.h in Headers */ = {isa = PBXBuildFile; fileRef = E51E549D0FF11FE000FDF3BE /* gif_lib.h */; };
+		E51E54A10FF11FE000FDF3BE /* gif_lib_private.h in Headers */ = {isa = PBXBuildFile; fileRef = E51E549E0FF11FE000FDF3BE /* gif_lib_private.h */; };
+		E51E54A20FF11FE000FDF3BE /* dgif_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = E51E549C0FF11FE000FDF3BE /* dgif_lib.c */; };
+		E51E54A30FF11FE000FDF3BE /* gif_lib.h in Headers */ = {isa = PBXBuildFile; fileRef = E51E549D0FF11FE000FDF3BE /* gif_lib.h */; };
+		E51E54A40FF11FE000FDF3BE /* gif_lib_private.h in Headers */ = {isa = PBXBuildFile; fileRef = E51E549E0FF11FE000FDF3BE /* gif_lib_private.h */; };
+		E51E54A50FF11FE000FDF3BE /* dgif_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = E51E549C0FF11FE000FDF3BE /* dgif_lib.c */; };
+		E51E54A60FF11FE000FDF3BE /* gif_lib.h in Headers */ = {isa = PBXBuildFile; fileRef = E51E549D0FF11FE000FDF3BE /* gif_lib.h */; };
+		E51E54A70FF11FE000FDF3BE /* gif_lib_private.h in Headers */ = {isa = PBXBuildFile; fileRef = E51E549E0FF11FE000FDF3BE /* gif_lib_private.h */; };
+		E51E54AC0FF1237F00FDF3BE /* nglImageGIFCodec.h in Headers */ = {isa = PBXBuildFile; fileRef = E51E54AA0FF1237F00FDF3BE /* nglImageGIFCodec.h */; };
+		E51E54AD0FF1237F00FDF3BE /* nglImageGIFCodec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E51E54AB0FF1237F00FDF3BE /* nglImageGIFCodec.cpp */; };
+		E51E54AE0FF1237F00FDF3BE /* nglImageGIFCodec.h in Headers */ = {isa = PBXBuildFile; fileRef = E51E54AA0FF1237F00FDF3BE /* nglImageGIFCodec.h */; };
+		E51E54AF0FF1237F00FDF3BE /* nglImageGIFCodec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E51E54AB0FF1237F00FDF3BE /* nglImageGIFCodec.cpp */; };
+		E51E54B00FF1237F00FDF3BE /* nglImageGIFCodec.h in Headers */ = {isa = PBXBuildFile; fileRef = E51E54AA0FF1237F00FDF3BE /* nglImageGIFCodec.h */; };
+		E51E54B10FF1237F00FDF3BE /* nglImageGIFCodec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E51E54AB0FF1237F00FDF3BE /* nglImageGIFCodec.cpp */; };
+		E51E54F00FF12E8D00FDF3BE /* gifalloc.c in Sources */ = {isa = PBXBuildFile; fileRef = E51E54EF0FF12E8D00FDF3BE /* gifalloc.c */; };
+		E51E54F10FF12E8D00FDF3BE /* gifalloc.c in Sources */ = {isa = PBXBuildFile; fileRef = E51E54EF0FF12E8D00FDF3BE /* gifalloc.c */; };
+		E51E54F20FF12E8D00FDF3BE /* gifalloc.c in Sources */ = {isa = PBXBuildFile; fileRef = E51E54EF0FF12E8D00FDF3BE /* gifalloc.c */; };
+		E51E54F50FF12EB600FDF3BE /* gif_err.c in Sources */ = {isa = PBXBuildFile; fileRef = E51E54F40FF12EB600FDF3BE /* gif_err.c */; };
+		E51E54F60FF12EB600FDF3BE /* gif_err.c in Sources */ = {isa = PBXBuildFile; fileRef = E51E54F40FF12EB600FDF3BE /* gif_err.c */; };
+		E51E54F70FF12EB600FDF3BE /* gif_err.c in Sources */ = {isa = PBXBuildFile; fileRef = E51E54F40FF12EB600FDF3BE /* gif_err.c */; };
 		E52B20310FE792F400187CB1 /* svcid.h in Headers */ = {isa = PBXBuildFile; fileRef = E52B202F0FE792F400187CB1 /* svcid.h */; };
 		E52B20320FE792F400187CB1 /* svttglyf.h in Headers */ = {isa = PBXBuildFile; fileRef = E52B20300FE792F400187CB1 /* svttglyf.h */; };
 		E52B20330FE792F400187CB1 /* svcid.h in Headers */ = {isa = PBXBuildFile; fileRef = E52B202F0FE792F400187CB1 /* svcid.h */; };
@@ -4094,6 +4115,13 @@
 		E517B0DD0C85704900190FF9 /* nuiVBox.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiVBox.h; path = include/nuiVBox.h; sourceTree = SOURCE_ROOT; };
 		E51B694D0C4E564D008EF7A3 /* ConvertUTF.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = ConvertUTF.cpp; path = src/String/ConvertUTF.cpp; sourceTree = SOURCE_ROOT; };
 		E51B694E0C4E564D008EF7A3 /* ConvertUTF.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ConvertUTF.h; path = include/ConvertUTF.h; sourceTree = SOURCE_ROOT; };
+		E51E549C0FF11FE000FDF3BE /* dgif_lib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dgif_lib.c; path = deps/ungif/dgif_lib.c; sourceTree = SOURCE_ROOT; };
+		E51E549D0FF11FE000FDF3BE /* gif_lib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gif_lib.h; path = deps/ungif/gif_lib.h; sourceTree = SOURCE_ROOT; };
+		E51E549E0FF11FE000FDF3BE /* gif_lib_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gif_lib_private.h; path = deps/ungif/gif_lib_private.h; sourceTree = SOURCE_ROOT; };
+		E51E54AA0FF1237F00FDF3BE /* nglImageGIFCodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nglImageGIFCodec.h; path = src/Image/nglImageGIFCodec.h; sourceTree = SOURCE_ROOT; };
+		E51E54AB0FF1237F00FDF3BE /* nglImageGIFCodec.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nglImageGIFCodec.cpp; path = src/Image/nglImageGIFCodec.cpp; sourceTree = SOURCE_ROOT; };
+		E51E54EF0FF12E8D00FDF3BE /* gifalloc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = gifalloc.c; path = deps/ungif/gifalloc.c; sourceTree = SOURCE_ROOT; };
+		E51E54F40FF12EB600FDF3BE /* gif_err.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = gif_err.c; path = deps/ungif/gif_err.c; sourceTree = SOURCE_ROOT; };
 		E52B202F0FE792F400187CB1 /* svcid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = svcid.h; path = deps/freetype2/include/freetype/internal/services/svcid.h; sourceTree = SOURCE_ROOT; };
 		E52B20300FE792F400187CB1 /* svttglyf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = svttglyf.h; path = deps/freetype2/include/freetype/internal/services/svttglyf.h; sourceTree = SOURCE_ROOT; };
 		E52B20370FE7930D00187CB1 /* ftadvanc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ftadvanc.h; path = deps/freetype2/include/freetype/ftadvanc.h; sourceTree = SOURCE_ROOT; };
@@ -5373,6 +5401,19 @@
 			name = tidyhtml;
 			sourceTree = "<group>";
 		};
+		E51E549B0FF11FE000FDF3BE /* ungif */ = {
+			isa = PBXGroup;
+			children = (
+				E51E549C0FF11FE000FDF3BE /* dgif_lib.c */,
+				E51E549D0FF11FE000FDF3BE /* gif_lib.h */,
+				E51E549E0FF11FE000FDF3BE /* gif_lib_private.h */,
+				E51E54EF0FF12E8D00FDF3BE /* gifalloc.c */,
+				E51E54F40FF12EB600FDF3BE /* gif_err.c */,
+			);
+			name = ungif;
+			path = deps/ungif;
+			sourceTree = SOURCE_ROOT;
+		};
 		E52E1A230CD7EE46006FBCDD /* Audio */ = {
 			isa = PBXGroup;
 			children = (
@@ -5445,6 +5486,7 @@
 				E5816A400C3CECA900902DFE /* libjpeg */,
 				E5816AD50C3CECAA00902DFE /* libpng */,
 				E50DB7750D75D894005B9316 /* tidyhtml */,
+				E51E549B0FF11FE000FDF3BE /* ungif */,
 			);
 			path = deps;
 			sourceTree = SOURCE_ROOT;
@@ -6393,6 +6435,8 @@
 				E5816D8F0C3CECAB00902DFE /* nglImagePPMCodec.h */,
 				E5816D900C3CECAB00902DFE /* nglImageTGACodec.cpp */,
 				E5816D910C3CECAB00902DFE /* nglImageTGACodec.h */,
+				E51E54AA0FF1237F00FDF3BE /* nglImageGIFCodec.h */,
+				E51E54AB0FF1237F00FDF3BE /* nglImageGIFCodec.cpp */,
 			);
 			name = Image;
 			path = src/Image;
@@ -7622,6 +7666,9 @@
 				E52B20340FE792F400187CB1 /* svttglyf.h in Headers */,
 				E52B203B0FE7930D00187CB1 /* ftadvanc.h in Headers */,
 				E52B203C0FE7930D00187CB1 /* ftcid.h in Headers */,
+				E51E54A30FF11FE000FDF3BE /* gif_lib.h in Headers */,
+				E51E54A40FF11FE000FDF3BE /* gif_lib_private.h in Headers */,
+				E51E54AE0FF1237F00FDF3BE /* nglImageGIFCodec.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8307,6 +8354,9 @@
 				E52B20320FE792F400187CB1 /* svttglyf.h in Headers */,
 				E52B20390FE7930D00187CB1 /* ftadvanc.h in Headers */,
 				E52B203A0FE7930D00187CB1 /* ftcid.h in Headers */,
+				E51E54A00FF11FE000FDF3BE /* gif_lib.h in Headers */,
+				E51E54A10FF11FE000FDF3BE /* gif_lib_private.h in Headers */,
+				E51E54AC0FF1237F00FDF3BE /* nglImageGIFCodec.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8990,6 +9040,9 @@
 				E52B20360FE792F400187CB1 /* svttglyf.h in Headers */,
 				E52B203D0FE7930D00187CB1 /* ftadvanc.h in Headers */,
 				E52B203E0FE7930D00187CB1 /* ftcid.h in Headers */,
+				E51E54A60FF11FE000FDF3BE /* gif_lib.h in Headers */,
+				E51E54A70FF11FE000FDF3BE /* gif_lib_private.h in Headers */,
+				E51E54B00FF1237F00FDF3BE /* nglImageGIFCodec.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9596,6 +9649,10 @@
 				E5D2D18A0FDE946E00143480 /* nuiRSS.cpp in Sources */,
 				E507CEBF0FE078EE00D80E79 /* nuiRSSView.cpp in Sources */,
 				E56D24080FE2F3C000C16F53 /* nuiFlowView.cpp in Sources */,
+				E51E54A20FF11FE000FDF3BE /* dgif_lib.c in Sources */,
+				E51E54AF0FF1237F00FDF3BE /* nglImageGIFCodec.cpp in Sources */,
+				E51E54F10FF12E8D00FDF3BE /* gifalloc.c in Sources */,
+				E51E54F60FF12EB600FDF3BE /* gif_err.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10127,6 +10184,10 @@
 				E5D2D1890FDE946E00143480 /* nuiRSS.cpp in Sources */,
 				E507CEBE0FE078EE00D80E79 /* nuiRSSView.cpp in Sources */,
 				E56D24070FE2F3C000C16F53 /* nuiFlowView.cpp in Sources */,
+				E51E549F0FF11FE000FDF3BE /* dgif_lib.c in Sources */,
+				E51E54AD0FF1237F00FDF3BE /* nglImageGIFCodec.cpp in Sources */,
+				E51E54F00FF12E8D00FDF3BE /* gifalloc.c in Sources */,
+				E51E54F50FF12EB600FDF3BE /* gif_err.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10655,6 +10716,10 @@
 				E5D2D18B0FDE946E00143480 /* nuiRSS.cpp in Sources */,
 				E507CEC00FE078EE00D80E79 /* nuiRSSView.cpp in Sources */,
 				E56D24090FE2F3C000C16F53 /* nuiFlowView.cpp in Sources */,
+				E51E54A50FF11FE000FDF3BE /* dgif_lib.c in Sources */,
+				E51E54B10FF1237F00FDF3BE /* nglImageGIFCodec.cpp in Sources */,
+				E51E54F20FF12E8D00FDF3BE /* gifalloc.c in Sources */,
+				E51E54F70FF12EB600FDF3BE /* gif_err.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10708,7 +10773,7 @@
 				GENERATE_MASTER_OBJECT_FILE = NO;
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 				STRIP_INSTALLED_PRODUCT = NO;
-				USER_HEADER_SEARCH_PATHS = ". include deps/libpng deps/gameswf deps/zlib deps/libjpeg src/Application/Carbon src/Stream/Zip deps/freetype2/include deps/expat/include deps/harfbuzz deps/expat/lib";
+				USER_HEADER_SEARCH_PATHS = ". include deps/libpng deps/gameswf deps/zlib deps/ungif deps/libjpeg src/Application/Carbon src/Stream/Zip deps/freetype2/include deps/expat/include deps/harfbuzz deps/expat/lib";
 			};
 			name = Default;
 		};

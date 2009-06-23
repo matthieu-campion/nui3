@@ -29,6 +29,7 @@
 #endif
 #ifdef HAVE_LIBJPEG
 #include "nglImageJPEGCodec.h"
+#include "nglImageGIFCodec.h"
 #endif
 
 
@@ -776,14 +777,15 @@ void nglImage::Init()
     mpCodecInfos->push_back(new nglImagePPMCodecInfo());
   #endif
 
-  #ifdef HAVE_COREGRAPHICS
-    mpCodecInfos->push_back(new nglImageCGCodecInfo());
-  #endif
   #ifdef HAVE_LIBPNG
     mpCodecInfos->push_back(new nglImagePNGCodecInfo());
   #endif
   #ifdef HAVE_LIBJPEG
     mpCodecInfos->push_back(new nglImageJPEGCodecInfo());
+  #endif
+    mpCodecInfos->push_back(new nglImageGIFCodecInfo());
+  #ifdef HAVE_COREGRAPHICS
+    mpCodecInfos->push_back(new nglImageCGCodecInfo());
   #endif
   }
 }

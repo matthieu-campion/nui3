@@ -904,38 +904,52 @@ nuiHTMLImage::nuiHTMLImage(nuiHTMLNode* pNode)
   nglString url = pSrc->GetValue();
   nglString absurl = GetAbsoluteURL(url);
   printf("url: %ls\t%ls\n", url.GetChars(), absurl.GetChars());
-  mpTexture = nuiTexture::GetTexture(url, NULL);
-  if (!mpTexture->IsValid())
+
+  // First look up the cache:
+  mpTexture = nuiTexture::GetTexture(nglString(url));
+  if (!mpTexture)
   {
-    mpTexture->Release();
-    mpTexture = nuiTexture::GetTexture(absurl, NULL);
-    url = absurl;
+    mpTexture = nuiTexture::GetTexture(nglString(absurl));
+    if (!mpTexture)
+    {
+      mpTexture = nuiTexture::GetTexture(url, NULL);
+      if (!mpTexture->IsValid())
+      {
+        mpTexture->Release();
+        mpTexture = NULL;
+        mpTexture = nuiTexture::GetTexture(absurl, NULL);
+        url = absurl;
+      }
+      
+      if (!mpTexture->IsValid())
+      {
+        mpTexture->Release();
+        mpTexture = NULL;
+        nuiHTTPRequest request(url);
+        nuiHTTPResponse* pResponse = request.SendRequest();
+        if (!pResponse)
+        {
+          url = GetAbsoluteURL(url);
+          nuiHTTPRequest request(url);
+          pResponse = request.SendRequest();
+          if (!pResponse)
+            return;
+        }
+        
+        nglIMemory mem(&pResponse->GetBody()[0], pResponse->GetBody().size());
+        mpTexture = nuiTexture::GetTexture(&mem);
+        delete pResponse;
+        if (!mpTexture->IsValid())
+        {
+          mpTexture->Release();
+          mpTexture = NULL;
+          return;
+        }
+      }
+    }
   }
 
-  if (!mpTexture->IsValid())
-  {
-    mpTexture->Release();
-    nuiHTTPRequest request(url);
-    nuiHTTPResponse* pResponse = request.SendRequest();
-    if (!pResponse)
-    {
-      url = GetAbsoluteURL(url);
-      nuiHTTPRequest request(url);
-      pResponse = request.SendRequest();
-      if (!pResponse)
-        return;
-    }
-    
-    nglIMemory mem(&pResponse->GetBody()[0], pResponse->GetBody().size());
-    mpTexture = nuiTexture::GetTexture(&mem);
-    delete pResponse;
-    if (!mpTexture->IsValid())
-    {
-      mpTexture->Release();
-      return;
-    }
-    mpTexture->SetSource(url);
-  }
+  mpTexture->SetSource(url);
   
   mWidth = mpTexture->GetWidth();
   mHeight = mpTexture->GetHeight();
