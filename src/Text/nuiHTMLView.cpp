@@ -415,6 +415,8 @@ nuiRect nuiHTMLView::CalcIdealSize()
   //  return nuiRect(context.mMaxWidth, context.mH);
   nuiHTMLContext context;
   context.mMaxWidth = IdealWidth;
+  if (!mpRootBox)
+    return nuiRect(IdealWidth, 400.0f);
   mpRootBox->Layout(context);
   return nuiRect(mpRootBox->GetIdealRect().GetWidth(), mpRootBox->GetIdealRect().GetHeight());
 }

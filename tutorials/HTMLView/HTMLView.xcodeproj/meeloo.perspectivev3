@@ -332,7 +332,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>E57CEDAD0FEAFA800002C681</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>nuiHTMLView.cpp</string>
+								<string>MainWindow.cpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -340,11 +340,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>E57CEDAE0FEAFA800002C681</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>nuiHTMLView.cpp</string>
+										<string>MainWindow.cpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E58989260FF04C72002C0F81</string>
+										<string>E58989850FF0EFA2002C0F81</string>
 										<key>history</key>
 										<array>
 											<string>E57CEDB80FEAFBD10002C681</string>
@@ -368,12 +368,12 @@
 											<string>E58986B90FEF0611002C0F81</string>
 											<string>E589882E0FF02D34002C0F81</string>
 											<string>E58988410FF03208002C0F81</string>
-											<string>E58988F20FF047DF002C0F81</string>
-											<string>E58988F40FF047DF002C0F81</string>
-											<string>E58988F60FF047DF002C0F81</string>
-											<string>E58989040FF047EE002C0F81</string>
-											<string>E589891D0FF04C55002C0F81</string>
-											<string>E589891E0FF04C55002C0F81</string>
+											<string>E589895F0FF0EED9002C0F81</string>
+											<string>E58989600FF0EED9002C0F81</string>
+											<string>E58989610FF0EED9002C0F81</string>
+											<string>E58989620FF0EED9002C0F81</string>
+											<string>E58989630FF0EED9002C0F81</string>
+											<string>E58989830FF0EF97002C0F81</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -397,11 +397,11 @@
 											<string>E58986EC0FEF0611002C0F81</string>
 											<string>E589878B0FF00C2A002C0F81</string>
 											<string>E58988450FF03208002C0F81</string>
-											<string>E58988FA0FF047DF002C0F81</string>
-											<string>E58988FC0FF047DF002C0F81</string>
-											<string>E58988FE0FF047DF002C0F81</string>
-											<string>E589891F0FF04C55002C0F81</string>
-											<string>E58989200FF04C55002C0F81</string>
+											<string>E58989650FF0EED9002C0F81</string>
+											<string>E58989660FF0EED9002C0F81</string>
+											<string>E58989670FF0EED9002C0F81</string>
+											<string>E58989680FF0EED9002C0F81</string>
+											<string>E58989690FF0EED9002C0F81</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -723,7 +723,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>267406450.75756899</real>
+	<real>267448226.86807501</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -738,7 +738,7 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E58989270FF04C72002C0F81</string>
+		<string>E58989860FF0EFA2002C0F81</string>
 		<string>E58987830FF00A80002C0F81</string>
 		<string>E58987840FF00A80002C0F81</string>
 		<string>/Users/meeloo/work/nui3/tutorials/HTMLView/HTMLView.xcodeproj</string>

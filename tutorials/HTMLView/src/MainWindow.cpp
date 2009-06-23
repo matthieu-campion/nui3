@@ -59,8 +59,9 @@ void MainWindow::OnCreation()
   pScroll->AddChild(mpHTMLView);
   
   //mpHTMLView->SetURL(_T("http://redmine.libnui.net/projects/show/libnui"));
-  //mpHTMLView->SetURL(_T("http://viewvc.libnui.net/cgi-bin/viewvc.cgi/nui/trunk/nui3/"));
-  mpHTMLView->SetURL(_T("http://www.google.fr/search?hl=fr&q=libnui&btnG=Recherche+Google&meta=&aq=f&oq="));
+  //mpHTMLView->SetURL(_T("http://www.w3.org/Consortium/siteindex"));
+  mpHTMLView->SetURL(_T("http://viewvc.libnui.net/cgi-bin/viewvc.cgi/nui/trunk/nui3/"));
+  //mpHTMLView->SetURL(_T("http://www.google.fr/search?hl=fr&q=libnui&btnG=Recherche+Google&meta=&aq=f&oq="));
 
 }
 
