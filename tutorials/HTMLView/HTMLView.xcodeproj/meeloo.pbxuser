@@ -6,7 +6,7 @@
 		activeTarget = 61A9DFC80B833EF200BC506C /* HTMLViewD */;
 		breakpoints = (
 			E53A4F260FEFD59A0084EA30 /* nuiHTMLView.cpp:264 */,
-			E51E552E0FF132D500FDF3BE /* nuiHTMLView.cpp:909 */,
+			E51E552E0FF132D500FDF3BE /* nuiHTMLView.cpp:933 */,
 			E51E553E0FF1331800FDF3BE /* nuiTexture.cpp:135 */,
 		);
 		codeSenseManager = E57CEDB40FEAFA810002C681 /* Code sense */;
@@ -287,6 +287,29 @@
 			E51E55370FF132DA00FDF3BE /* PBXTextBookmark */ = E51E55370FF132DA00FDF3BE /* PBXTextBookmark */;
 			E51E55390FF132DB00FDF3BE /* PBXTextBookmark */ = E51E55390FF132DB00FDF3BE /* PBXTextBookmark */;
 			E51E553A0FF132DD00FDF3BE /* PBXTextBookmark */ = E51E553A0FF132DD00FDF3BE /* PBXTextBookmark */;
+			E51E55400FF139C200FDF3BE /* PBXTextBookmark */ = E51E55400FF139C200FDF3BE /* PBXTextBookmark */;
+			E51E55410FF139C200FDF3BE /* PBXTextBookmark */ = E51E55410FF139C200FDF3BE /* PBXTextBookmark */;
+			E51E55420FF139C200FDF3BE /* PBXTextBookmark */ = E51E55420FF139C200FDF3BE /* PBXTextBookmark */;
+			E51E55440FF139C200FDF3BE /* PBXTextBookmark */ = E51E55440FF139C200FDF3BE /* PBXTextBookmark */;
+			E51E55450FF139C200FDF3BE /* PBXTextBookmark */ = E51E55450FF139C200FDF3BE /* PBXTextBookmark */;
+			E51E55460FF139C200FDF3BE /* PBXTextBookmark */ = E51E55460FF139C200FDF3BE /* PBXTextBookmark */;
+			E51E55470FF139C200FDF3BE /* PBXTextBookmark */ = E51E55470FF139C200FDF3BE /* PBXTextBookmark */;
+			E51E55490FF139C200FDF3BE /* PBXTextBookmark */ = E51E55490FF139C200FDF3BE /* PBXTextBookmark */;
+			E51E554B0FF139D300FDF3BE /* PBXTextBookmark */ = E51E554B0FF139D300FDF3BE /* PBXTextBookmark */;
+			E51E554C0FF139DA00FDF3BE /* PBXTextBookmark */ = E51E554C0FF139DA00FDF3BE /* PBXTextBookmark */;
+			E51E55510FF13A4300FDF3BE /* PBXTextBookmark */ = E51E55510FF13A4300FDF3BE /* PBXTextBookmark */;
+			E51E55520FF13A4D00FDF3BE /* PBXTextBookmark */ = E51E55520FF13A4D00FDF3BE /* PBXTextBookmark */;
+			E51E55530FF13A5300FDF3BE /* PBXTextBookmark */ = E51E55530FF13A5300FDF3BE /* PBXTextBookmark */;
+			E51E55570FF13A9200FDF3BE /* PBXTextBookmark */ = E51E55570FF13A9200FDF3BE /* PBXTextBookmark */;
+			E51E55590FF13AE700FDF3BE /* PBXTextBookmark */ = E51E55590FF13AE700FDF3BE /* PBXTextBookmark */;
+			E51E555A0FF13AE700FDF3BE /* PBXTextBookmark */ = E51E555A0FF13AE700FDF3BE /* PBXTextBookmark */;
+			E51E555B0FF13AE700FDF3BE /* PBXTextBookmark */ = E51E555B0FF13AE700FDF3BE /* PBXTextBookmark */;
+			E51E555C0FF13AE700FDF3BE /* PBXTextBookmark */ = E51E555C0FF13AE700FDF3BE /* PBXTextBookmark */;
+			E51E555D0FF13AF300FDF3BE /* PBXTextBookmark */ = E51E555D0FF13AF300FDF3BE /* PBXTextBookmark */;
+			E51E555E0FF13AFA00FDF3BE /* PBXTextBookmark */ = E51E555E0FF13AFA00FDF3BE /* PBXTextBookmark */;
+			E51E55630FF13B4700FDF3BE /* PBXTextBookmark */ = E51E55630FF13B4700FDF3BE /* PBXTextBookmark */;
+			E51E55640FF13B5600FDF3BE /* PBXTextBookmark */ = E51E55640FF13B5600FDF3BE /* PBXTextBookmark */;
+			E51E55650FF13B5D00FDF3BE /* PBXTextBookmark */ = E51E55650FF13B5D00FDF3BE /* PBXTextBookmark */;
 			E57CEDBA0FEAFBD10002C681 = E57CEDBA0FEAFBD10002C681 /* PBXTextBookmark */;
 			E57CEDBF0FEAFCBB0002C681 = E57CEDBF0FEAFCBB0002C681 /* PBXTextBookmark */;
 			E57CEDD30FEAFD4B0002C681 = E57CEDD30FEAFD4B0002C681 /* PBXTextBookmark */;
@@ -394,7 +417,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 924";
 		rLen = 9;
-		rLoc = 21004;
+		rLoc = 20826;
 		rType = 0;
 		vrLen = 1151;
 		vrLoc = 18714;
@@ -420,7 +443,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 925";
 		rLen = 0;
-		rLoc = 21007;
+		rLoc = 20829;
 		rType = 0;
 		vrLen = 1285;
 		vrLoc = 18765;
@@ -438,7 +461,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 933";
 		rLen = 0;
-		rLoc = 21241;
+		rLoc = 21063;
 		rType = 0;
 		vrLen = 1305;
 		vrLoc = 18765;
@@ -448,7 +471,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 933";
 		rLen = 0;
-		rLoc = 21241;
+		rLoc = 21063;
 		rType = 0;
 		vrLen = 1305;
 		vrLoc = 18765;
@@ -458,7 +481,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 924";
 		rLen = 0;
-		rLoc = 20941;
+		rLoc = 20763;
 		rType = 0;
 		vrLen = 1060;
 		vrLoc = 19010;
@@ -468,7 +491,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 924";
 		rLen = 0;
-		rLoc = 20941;
+		rLoc = 20763;
 		rType = 0;
 		vrLen = 1305;
 		vrLoc = 18765;
@@ -486,7 +509,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 924";
 		rLen = 0;
-		rLoc = 20941;
+		rLoc = 20763;
 		rType = 0;
 		vrLen = 1305;
 		vrLoc = 18765;
@@ -506,7 +529,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 924";
 		rLen = 0;
-		rLoc = 20941;
+		rLoc = 20763;
 		rType = 0;
 		vrLen = 981;
 		vrLoc = 19089;
@@ -794,7 +817,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 910";
 		rLen = 0;
-		rLoc = 20623;
+		rLoc = 20445;
 		rType = 0;
 		vrLen = 1219;
 		vrLoc = 18918;
@@ -804,7 +827,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 910";
 		rLen = 0;
-		rLoc = 20623;
+		rLoc = 20445;
 		rType = 0;
 		vrLen = 1228;
 		vrLoc = 18907;
@@ -814,7 +837,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 943";
 		rLen = 0;
-		rLoc = 20771;
+		rLoc = 20593;
 		rType = 0;
 		vrLen = 1209;
 		vrLoc = 19431;
@@ -824,7 +847,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 943";
 		rLen = 0;
-		rLoc = 20771;
+		rLoc = 20593;
 		rType = 0;
 		vrLen = 1209;
 		vrLoc = 19431;
@@ -844,7 +867,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 910";
 		rLen = 0;
-		rLoc = 20623;
+		rLoc = 20445;
 		rType = 0;
 		vrLen = 1272;
 		vrLoc = 18865;
@@ -894,7 +917,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 951";
 		rLen = 0;
-		rLoc = 21026;
+		rLoc = 20848;
 		rType = 0;
 		vrLen = 1220;
 		vrLoc = 19427;
@@ -914,7 +937,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 951";
 		rLen = 0;
-		rLoc = 21026;
+		rLoc = 20848;
 		rType = 0;
 		vrLen = 1167;
 		vrLoc = 19478;
@@ -924,7 +947,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 951";
 		rLen = 0;
-		rLoc = 21026;
+		rLoc = 20848;
 		rType = 0;
 		vrLen = 1093;
 		vrLoc = 19554;
@@ -934,7 +957,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 951";
 		rLen = 0;
-		rLoc = 21010;
+		rLoc = 20832;
 		rType = 0;
 		vrLen = 1216;
 		vrLoc = 19431;
@@ -944,7 +967,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 951";
 		rLen = 0;
-		rLoc = 21010;
+		rLoc = 20832;
 		rType = 0;
 		vrLen = 1216;
 		vrLoc = 19431;
@@ -964,7 +987,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 951";
 		rLen = 0;
-		rLoc = 21026;
+		rLoc = 20848;
 		rType = 0;
 		vrLen = 1115;
 		vrLoc = 19532;
@@ -1081,7 +1104,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 946";
 		rLen = 0;
-		rLoc = 20877;
+		rLoc = 20699;
 		rType = 0;
 		vrLen = 1259;
 		vrLoc = 18911;
@@ -1101,7 +1124,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 946";
 		rLen = 0;
-		rLoc = 20877;
+		rLoc = 20699;
 		rType = 0;
 		vrLen = 1246;
 		vrLoc = 18922;
@@ -1111,7 +1134,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 946";
 		rLen = 0;
-		rLoc = 20877;
+		rLoc = 20699;
 		rType = 0;
 		vrLen = 1216;
 		vrLoc = 18922;
@@ -1121,7 +1144,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 905";
 		rLen = 0;
-		rLoc = 20623;
+		rLoc = 20445;
 		rType = 0;
 		vrLen = 1259;
 		vrLoc = 18911;
@@ -1131,7 +1154,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 905";
 		rLen = 0;
-		rLoc = 20623;
+		rLoc = 20445;
 		rType = 0;
 		vrLen = 1216;
 		vrLoc = 18922;
@@ -1141,7 +1164,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 905";
 		rLen = 0;
-		rLoc = 20623;
+		rLoc = 20445;
 		rType = 0;
 		vrLen = 1286;
 		vrLoc = 18741;
@@ -1193,7 +1216,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 905";
 		rLen = 0;
-		rLoc = 20623;
+		rLoc = 20445;
 		rType = 0;
 		vrLen = 1261;
 		vrLoc = 18907;
@@ -1273,7 +1296,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 939";
 		rLen = 0;
-		rLoc = 20656;
+		rLoc = 20478;
 		rType = 0;
 		vrLen = 1203;
 		vrLoc = 19569;
@@ -1283,7 +1306,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 939";
 		rLen = 0;
-		rLoc = 20656;
+		rLoc = 20478;
 		rType = 0;
 		vrLen = 1142;
 		vrLoc = 19569;
@@ -1301,7 +1324,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 939";
 		rLen = 0;
-		rLoc = 20656;
+		rLoc = 20478;
 		rType = 0;
 		vrLen = 1142;
 		vrLoc = 19569;
@@ -1406,7 +1429,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 906";
 		rLen = 0;
-		rLoc = 19465;
+		rLoc = 19900;
 		rType = 0;
 		vrLen = 1395;
 		vrLoc = 18959;
@@ -1426,7 +1449,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 906";
 		rLen = 0;
-		rLoc = 19465;
+		rLoc = 19900;
 		rType = 0;
 		vrLen = 1362;
 		vrLoc = 18959;
@@ -1436,7 +1459,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 906";
 		rLen = 0;
-		rLoc = 19465;
+		rLoc = 19900;
 		rType = 0;
 		vrLen = 1324;
 		vrLoc = 18959;
@@ -1463,7 +1486,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 906";
 		rLen = 0;
-		rLoc = 19465;
+		rLoc = 19900;
 		rType = 0;
 		vrLen = 1369;
 		vrLoc = 18952;
@@ -1483,7 +1506,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 919";
 		rLen = 0;
-		rLoc = 20623;
+		rLoc = 20445;
 		rType = 0;
 		vrLen = 1290;
 		vrLoc = 19126;
@@ -1493,7 +1516,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 919";
 		rLen = 0;
-		rLoc = 20623;
+		rLoc = 20445;
 		rType = 0;
 		vrLen = 1231;
 		vrLoc = 19126;
@@ -1503,7 +1526,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 919";
 		rLen = 0;
-		rLoc = 20623;
+		rLoc = 20445;
 		rType = 0;
 		vrLen = 1376;
 		vrLoc = 18976;
@@ -1523,7 +1546,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 906";
 		rLen = 0;
-		rLoc = 19465;
+		rLoc = 19900;
 		rType = 0;
 		vrLen = 1369;
 		vrLoc = 18952;
@@ -1583,7 +1606,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 919";
 		rLen = 0;
-		rLoc = 20623;
+		rLoc = 20445;
 		rType = 0;
 		vrLen = 1346;
 		vrLoc = 19018;
@@ -1603,7 +1626,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 906";
 		rLen = 0;
-		rLoc = 19465;
+		rLoc = 19900;
 		rType = 0;
 		vrLen = 1369;
 		vrLoc = 18952;
@@ -1643,7 +1666,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 919";
 		rLen = 0;
-		rLoc = 20623;
+		rLoc = 20445;
 		rType = 0;
 		vrLen = 1392;
 		vrLoc = 18962;
@@ -1700,7 +1723,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 951";
 		rLen = 0;
-		rLoc = 20864;
+		rLoc = 20686;
 		rType = 0;
 		vrLen = 1210;
 		vrLoc = 19646;
@@ -1720,7 +1743,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 951";
 		rLen = 0;
-		rLoc = 20864;
+		rLoc = 20686;
 		rType = 0;
 		vrLen = 1203;
 		vrLoc = 19651;
@@ -1730,7 +1753,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 951";
 		rLen = 0;
-		rLoc = 20864;
+		rLoc = 20686;
 		rType = 0;
 		vrLen = 1146;
 		vrLoc = 19710;
@@ -1740,7 +1763,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 951";
 		rLen = 0;
-		rLoc = 20864;
+		rLoc = 20686;
 		rType = 0;
 		vrLen = 1206;
 		vrLoc = 19650;
@@ -1750,7 +1773,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 951";
 		rLen = 0;
-		rLoc = 20864;
+		rLoc = 20686;
 		rType = 0;
 		vrLen = 1203;
 		vrLoc = 19651;
@@ -1760,7 +1783,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 951";
 		rLen = 0;
-		rLoc = 20864;
+		rLoc = 20686;
 		rType = 0;
 		vrLen = 1146;
 		vrLoc = 19710;
@@ -1770,7 +1793,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 951";
 		rLen = 0;
-		rLoc = 20864;
+		rLoc = 20686;
 		rType = 0;
 		vrLen = 1206;
 		vrLoc = 19650;
@@ -1780,7 +1803,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 951";
 		rLen = 0;
-		rLoc = 20864;
+		rLoc = 20686;
 		rType = 0;
 		vrLen = 1203;
 		vrLoc = 19651;
@@ -1790,7 +1813,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 951";
 		rLen = 0;
-		rLoc = 20864;
+		rLoc = 20686;
 		rType = 0;
 		vrLen = 1146;
 		vrLoc = 19710;
@@ -1800,7 +1823,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 951";
 		rLen = 0;
-		rLoc = 20864;
+		rLoc = 20686;
 		rType = 0;
 		vrLen = 1206;
 		vrLoc = 19650;
@@ -1842,7 +1865,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 951";
 		rLen = 0;
-		rLoc = 20864;
+		rLoc = 20686;
 		rType = 0;
 		vrLen = 1206;
 		vrLoc = 19650;
@@ -1900,7 +1923,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 951";
 		rLen = 0;
-		rLoc = 20864;
+		rLoc = 20686;
 		rType = 0;
 		vrLen = 1176;
 		vrLoc = 19680;
@@ -2179,7 +2202,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 951";
 		rLen = 0;
-		rLoc = 20823;
+		rLoc = 20645;
 		rType = 0;
 		vrLen = 1206;
 		vrLoc = 19650;
@@ -2199,7 +2222,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 918";
 		rLen = 0;
-		rLoc = 20623;
+		rLoc = 20445;
 		rType = 0;
 		vrLen = 1271;
 		vrLoc = 19574;
@@ -2219,7 +2242,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 918";
 		rLen = 0;
-		rLoc = 20623;
+		rLoc = 20445;
 		rType = 0;
 		vrLen = 1212;
 		vrLoc = 19574;
@@ -2229,7 +2252,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 918";
 		rLen = 0;
-		rLoc = 20623;
+		rLoc = 20445;
 		rType = 0;
 		vrLen = 1186;
 		vrLoc = 19574;
@@ -2239,7 +2262,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 918";
 		rLen = 0;
-		rLoc = 20623;
+		rLoc = 20445;
 		rType = 0;
 		vrLen = 1186;
 		vrLoc = 19574;
@@ -2249,7 +2272,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 918";
 		rLen = 0;
-		rLoc = 20623;
+		rLoc = 20445;
 		rType = 0;
 		vrLen = 1265;
 		vrLoc = 19574;
@@ -2259,7 +2282,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 918";
 		rLen = 0;
-		rLoc = 20623;
+		rLoc = 20445;
 		rType = 0;
 		vrLen = 1186;
 		vrLoc = 19574;
@@ -2269,7 +2292,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 918";
 		rLen = 0;
-		rLoc = 20623;
+		rLoc = 20445;
 		rType = 0;
 		vrLen = 1186;
 		vrLoc = 19574;
@@ -2279,7 +2302,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 918";
 		rLen = 0;
-		rLoc = 20623;
+		rLoc = 20445;
 		rType = 0;
 		vrLen = 1265;
 		vrLoc = 19574;
@@ -2302,7 +2325,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 918";
 		rLen = 0;
-		rLoc = 20623;
+		rLoc = 20445;
 		rType = 0;
 		vrLen = 1186;
 		vrLoc = 19574;
@@ -2312,7 +2335,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 918";
 		rLen = 0;
-		rLoc = 20623;
+		rLoc = 20445;
 		rType = 0;
 		vrLen = 1186;
 		vrLoc = 19574;
@@ -2322,7 +2345,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 918";
 		rLen = 0;
-		rLoc = 20623;
+		rLoc = 20445;
 		rType = 0;
 		vrLen = 1265;
 		vrLoc = 19574;
@@ -2339,7 +2362,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 918";
 		rLen = 0;
-		rLoc = 20623;
+		rLoc = 20445;
 		rType = 0;
 		vrLen = 1265;
 		vrLoc = 19574;
@@ -2371,7 +2394,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 918";
 		rLen = 0;
-		rLoc = 20623;
+		rLoc = 20445;
 		rType = 0;
 		vrLen = 1212;
 		vrLoc = 19574;
@@ -2401,7 +2424,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 927";
 		rLen = 0;
-		rLoc = 19888;
+		rLoc = 20012;
 		rType = 0;
 		vrLen = 1462;
 		vrLoc = 19286;
@@ -2421,7 +2444,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 927";
 		rLen = 0;
-		rLoc = 19888;
+		rLoc = 20012;
 		rType = 0;
 		vrLen = 1421;
 		vrLoc = 19321;
@@ -2431,7 +2454,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 927";
 		rLen = 0;
-		rLoc = 19888;
+		rLoc = 20012;
 		rType = 0;
 		vrLen = 1425;
 		vrLoc = 19309;
@@ -2460,7 +2483,7 @@
 		isa = PBXTextBookmark;
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		rLen = 0;
-		rLoc = 909;
+		rLoc = 933;
 		rType = 1;
 	};
 	E51E55140FF131E000FDF3BE /* PBXTextBookmark */ = {
@@ -2468,7 +2491,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 909";
 		rLen = 10;
-		rLoc = 19523;
+		rLoc = 19958;
 		rType = 0;
 		vrLen = 1462;
 		vrLoc = 19286;
@@ -2498,7 +2521,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 910";
 		rLen = 0;
-		rLoc = 19567;
+		rLoc = 20002;
 		rType = 0;
 		vrLen = 1478;
 		vrLoc = 18918;
@@ -2508,7 +2531,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 920";
 		rLen = 0;
-		rLoc = 19678;
+		rLoc = 20012;
 		rType = 0;
 		vrLen = 1418;
 		vrLoc = 18952;
@@ -2518,7 +2541,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 915";
 		rLen = 0;
-		rLoc = 19650;
+		rLoc = 20008;
 		rType = 0;
 		vrLen = 1487;
 		vrLoc = 18918;
@@ -2528,7 +2551,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 915";
 		rLen = 0;
-		rLoc = 19650;
+		rLoc = 20008;
 		rType = 0;
 		vrLen = 1429;
 		vrLoc = 18956;
@@ -2538,7 +2561,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 915";
 		rLen = 0;
-		rLoc = 19650;
+		rLoc = 20008;
 		rType = 0;
 		vrLen = 1429;
 		vrLoc = 18956;
@@ -2563,7 +2586,7 @@
 		isa = PBXTextBookmark;
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		rLen = 0;
-		rLoc = 911;
+		rLoc = 935;
 		rType = 1;
 	};
 	E51E55240FF1322800FDF3BE /* PBXTextBookmark */ = {
@@ -2571,7 +2594,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 915";
 		rLen = 0;
-		rLoc = 19650;
+		rLoc = 20008;
 		rType = 0;
 		vrLen = 1493;
 		vrLoc = 18922;
@@ -2597,7 +2620,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 915";
 		rLen = 0;
-		rLoc = 19658;
+		rLoc = 20008;
 		rType = 0;
 		vrLen = 1555;
 		vrLoc = 18952;
@@ -2607,7 +2630,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 915";
 		rLen = 0;
-		rLoc = 19658;
+		rLoc = 20008;
 		rType = 0;
 		vrLen = 1365;
 		vrLoc = 18952;
@@ -2617,12 +2640,12 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 915";
 		rLen = 0;
-		rLoc = 19658;
+		rLoc = 20008;
 		rType = 0;
 		vrLen = 1490;
 		vrLoc = 18956;
 	};
-	E51E552E0FF132D500FDF3BE /* nuiHTMLView.cpp:909 */ = {
+	E51E552E0FF132D500FDF3BE /* nuiHTMLView.cpp:933 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
 		);
@@ -2632,11 +2655,11 @@
 		delayBeforeContinue = 0;
 		fileReference = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		functionName = "nuiHTMLImage::nuiHTMLImage(nuiHTMLNode* pNode)";
-		hitCount = 3;
+		hitCount = 0;
 		ignoreCount = 0;
-		lineNumber = 909;
+		lineNumber = 933;
 		location = HTMLViewD;
-		modificationTime = 267465521.604993;
+		modificationTime = 267467607.242681;
 		state = 2;
 	};
 	E51E55320FF132DA00FDF3BE /* PBXTextBookmark */ = {
@@ -2664,7 +2687,7 @@
 		fRef = E53A4F240FEFD59A0084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 909";
 		rLen = 10;
-		rLoc = 19523;
+		rLoc = 19958;
 		rType = 0;
 		vrLen = 1585;
 		vrLoc = 18922;
@@ -2694,7 +2717,7 @@
 		fRef = E51E55380FF132DA00FDF3BE /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 909";
 		rLen = 0;
-		rLoc = 19497;
+		rLoc = 19932;
 		rType = 0;
 		vrLen = 1550;
 		vrLoc = 18922;
@@ -2706,9 +2729,9 @@
 		path = /Users/meeloo/work/nui3/src/Text/nuiHTMLView.cpp;
 		sourceTree = "<absolute>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {899, 13258}}";
-			sepNavSelRange = "{19497, 0}";
-			sepNavVisRange = "{18918, 1528}";
+			sepNavIntBoundsRect = "{{0, 0}, {1652, 13328}}";
+			sepNavSelRange = "{19730, 0}";
+			sepNavVisRange = "{19018, 1268}";
 		};
 	};
 	E51E55390FF132DB00FDF3BE /* PBXTextBookmark */ = {
@@ -2716,7 +2739,7 @@
 		fRef = E51E55380FF132DA00FDF3BE /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 909";
 		rLen = 0;
-		rLoc = 19497;
+		rLoc = 19932;
 		rType = 0;
 		vrLen = 1444;
 		vrLoc = 18952;
@@ -2726,7 +2749,7 @@
 		fRef = E51E55380FF132DA00FDF3BE /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 909";
 		rLen = 0;
-		rLoc = 19497;
+		rLoc = 19932;
 		rType = 0;
 		vrLen = 1387;
 		vrLoc = 18865;
@@ -2738,9 +2761,9 @@
 		path = /Users/meeloo/work/nui3/src/Renderers/nuiTexture.cpp;
 		sourceTree = "<group>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {899, 9016}}";
-			sepNavSelRange = "{3050, 0}";
-			sepNavVisRange = "{2505, 1563}";
+			sepNavIntBoundsRect = "{{0, 0}, {899, 8834}}";
+			sepNavSelRange = "{2543, 0}";
+			sepNavVisRange = "{2096, 1270}";
 		};
 	};
 	E51E553E0FF1331800FDF3BE /* nuiTexture.cpp:135 */ = {
@@ -2757,8 +2780,250 @@
 		ignoreCount = 0;
 		lineNumber = 135;
 		location = HTMLViewD;
-		modificationTime = 267465496.149283;
-		state = 1;
+		modificationTime = 267467607.243284;
+		state = 2;
+	};
+	E51E55400FF139C200FDF3BE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E58986480FEB0B2B002C0F81 /* nglString.cpp */;
+		name = "nglString.cpp: 535";
+		rLen = 0;
+		rLoc = 9381;
+		rType = 0;
+		vrLen = 866;
+		vrLoc = 8790;
+	};
+	E51E55410FF139C200FDF3BE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E51E553C0FF1331800FDF3BE /* nuiTexture.cpp */;
+		name = "nuiTexture.cpp: 129";
+		rLen = 0;
+		rLoc = 3050;
+		rType = 0;
+		vrLen = 1563;
+		vrLoc = 2505;
+	};
+	E51E55420FF139C200FDF3BE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E51E55430FF139C200FDF3BE /* nglString.h */;
+		name = "nglString.h: 576";
+		rLen = 80;
+		rLoc = 27896;
+		rType = 0;
+		vrLen = 3016;
+		vrLoc = 26636;
+	};
+	E51E55430FF139C200FDF3BE /* nglString.h */ = {
+		isa = PBXFileReference;
+		name = nglString.h;
+		path = /Users/meeloo/work/nui3/include/nglString.h;
+		sourceTree = "<absolute>";
+	};
+	E51E55440FF139C200FDF3BE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E51E55380FF132DA00FDF3BE /* nuiHTMLView.cpp */;
+		name = "nuiHTMLView.cpp: 907";
+		rLen = 0;
+		rLoc = 19450;
+		rType = 0;
+		vrLen = 1224;
+		vrLoc = 18918;
+	};
+	E51E55450FF139C200FDF3BE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E58986480FEB0B2B002C0F81 /* nglString.cpp */;
+		name = "nglString.cpp: 535";
+		rLen = 0;
+		rLoc = 9381;
+		rType = 0;
+		vrLen = 866;
+		vrLoc = 8790;
+	};
+	E51E55460FF139C200FDF3BE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E51E553C0FF1331800FDF3BE /* nuiTexture.cpp */;
+		name = "nuiTexture.cpp: 129";
+		rLen = 0;
+		rLoc = 3050;
+		rType = 0;
+		vrLen = 1563;
+		vrLoc = 2505;
+	};
+	E51E55470FF139C200FDF3BE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E51E55480FF139C200FDF3BE /* nglString.h */;
+		name = "nglString.h: 576";
+		rLen = 80;
+		rLoc = 27896;
+		rType = 0;
+		vrLen = 3016;
+		vrLoc = 26636;
+	};
+	E51E55480FF139C200FDF3BE /* nglString.h */ = {
+		isa = PBXFileReference;
+		name = nglString.h;
+		path = /Users/meeloo/work/nui3/include/nglString.h;
+		sourceTree = "<absolute>";
+	};
+	E51E55490FF139C200FDF3BE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E51E55380FF132DA00FDF3BE /* nuiHTMLView.cpp */;
+		name = "nuiHTMLView.cpp: 929";
+		rLen = 0;
+		rLoc = 19898;
+		rType = 0;
+		vrLen = 1195;
+		vrLoc = 18907;
+	};
+	E51E554B0FF139D300FDF3BE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E51E55380FF132DA00FDF3BE /* nuiHTMLView.cpp */;
+		name = "nuiHTMLView.cpp: 929";
+		rLen = 0;
+		rLoc = 19898;
+		rType = 0;
+		vrLen = 1156;
+		vrLoc = 18922;
+	};
+	E51E554C0FF139DA00FDF3BE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E51E55380FF132DA00FDF3BE /* nuiHTMLView.cpp */;
+		name = "nuiHTMLView.cpp: 929";
+		rLen = 0;
+		rLoc = 19898;
+		rType = 0;
+		vrLen = 1192;
+		vrLoc = 19324;
+	};
+	E51E55510FF13A4300FDF3BE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E51E55380FF132DA00FDF3BE /* nuiHTMLView.cpp */;
+		name = "nuiHTMLView.cpp: 948";
+		rLen = 0;
+		rLoc = 20435;
+		rType = 0;
+		vrLen = 1228;
+		vrLoc = 19440;
+	};
+	E51E55520FF13A4D00FDF3BE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E51E55380FF132DA00FDF3BE /* nuiHTMLView.cpp */;
+		name = "nuiHTMLView.cpp: 948";
+		rLen = 0;
+		rLoc = 20435;
+		rType = 0;
+		vrLen = 1159;
+		vrLoc = 19440;
+	};
+	E51E55530FF13A5300FDF3BE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E51E55380FF132DA00FDF3BE /* nuiHTMLView.cpp */;
+		name = "nuiHTMLView.cpp: 948";
+		rLen = 0;
+		rLoc = 20435;
+		rType = 0;
+		vrLen = 1135;
+		vrLoc = 19766;
+	};
+	E51E55570FF13A9200FDF3BE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E51E55380FF132DA00FDF3BE /* nuiHTMLView.cpp */;
+		name = "nuiHTMLView.cpp: 948";
+		rLen = 0;
+		rLoc = 20435;
+		rType = 0;
+		vrLen = 1135;
+		vrLoc = 19766;
+	};
+	E51E55590FF13AE700FDF3BE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E51E553C0FF1331800FDF3BE /* nuiTexture.cpp */;
+		name = "nuiTexture.cpp: 106";
+		rLen = 0;
+		rLoc = 2543;
+		rType = 0;
+		vrLen = 1270;
+		vrLoc = 2096;
+	};
+	E51E555A0FF13AE700FDF3BE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E51E55380FF132DA00FDF3BE /* nuiHTMLView.cpp */;
+		name = "nuiHTMLView.cpp: 948";
+		rLen = 0;
+		rLoc = 20435;
+		rType = 0;
+		vrLen = 1226;
+		vrLoc = 19411;
+	};
+	E51E555B0FF13AE700FDF3BE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E51E553C0FF1331800FDF3BE /* nuiTexture.cpp */;
+		name = "nuiTexture.cpp: 106";
+		rLen = 0;
+		rLoc = 2543;
+		rType = 0;
+		vrLen = 1270;
+		vrLoc = 2096;
+	};
+	E51E555C0FF13AE700FDF3BE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E51E55380FF132DA00FDF3BE /* nuiHTMLView.cpp */;
+		name = "nuiHTMLView.cpp: 905";
+		rLen = 0;
+		rLoc = 19409;
+		rType = 0;
+		vrLen = 1293;
+		vrLoc = 18952;
+	};
+	E51E555D0FF13AF300FDF3BE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E51E55380FF132DA00FDF3BE /* nuiHTMLView.cpp */;
+		name = "nuiHTMLView.cpp: 905";
+		rLen = 0;
+		rLoc = 19409;
+		rType = 0;
+		vrLen = 1228;
+		vrLoc = 18959;
+	};
+	E51E555E0FF13AFA00FDF3BE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E51E55380FF132DA00FDF3BE /* nuiHTMLView.cpp */;
+		name = "nuiHTMLView.cpp: 905";
+		rLen = 0;
+		rLoc = 19409;
+		rType = 0;
+		vrLen = 1164;
+		vrLoc = 18741;
+	};
+	E51E55630FF13B4700FDF3BE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E51E55380FF132DA00FDF3BE /* nuiHTMLView.cpp */;
+		name = "nuiHTMLView.cpp: 920";
+		rLen = 0;
+		rLoc = 19730;
+		rType = 0;
+		vrLen = 1311;
+		vrLoc = 18952;
+	};
+	E51E55640FF13B5600FDF3BE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E51E55380FF132DA00FDF3BE /* nuiHTMLView.cpp */;
+		name = "nuiHTMLView.cpp: 920";
+		rLen = 0;
+		rLoc = 19730;
+		rType = 0;
+		vrLen = 1172;
+		vrLoc = 18952;
+	};
+	E51E55650FF13B5D00FDF3BE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E51E55380FF132DA00FDF3BE /* nuiHTMLView.cpp */;
+		name = "nuiHTMLView.cpp: 920";
+		rLen = 0;
+		rLoc = 19730;
+		rType = 0;
+		vrLen = 1268;
+		vrLoc = 19018;
 	};
 	E52B28AF0FEBD8E700187CB1 /* nuiHTML.cpp */ = {
 		isa = PBXFileReference;
@@ -2805,7 +3070,7 @@
 		ignoreCount = 0;
 		lineNumber = 264;
 		location = HTMLViewD;
-		modificationTime = 267465436.381883;
+		modificationTime = 267467607.242106;
 		state = 2;
 	};
 	E53A4F5D0FEFDC780084EA30 /* PBXTextBookmark */ = {
@@ -3238,7 +3503,7 @@
 		fRef = E53A4FB90FEFE8D60084EA30 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 888";
 		rLen = 0;
-		rLoc = 19497;
+		rLoc = 19932;
 		rType = 0;
 		vrLen = 1144;
 		vrLoc = 17880;
@@ -3288,7 +3553,7 @@
 		fRef = E59CA2020FF101420024F411 /* nuiHTMLView.cpp */;
 		name = "nuiHTMLView.cpp: 896";
 		rLen = 0;
-		rLoc = 20653;
+		rLoc = 20475;
 		rType = 0;
 		vrLen = 1141;
 		vrLoc = 18241;

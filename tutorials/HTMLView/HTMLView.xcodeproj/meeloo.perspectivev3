@@ -341,7 +341,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E51E553A0FF132DD00FDF3BE</string>
+										<string>E51E55650FF13B5D00FDF3BE</string>
 										<key>history</key>
 										<array>
 											<string>E57CEDD30FEAFD4B0002C681</string>
@@ -364,12 +364,14 @@
 											<string>E51E54530FF1193600FDF3BE</string>
 											<string>E51E550C0FF1318C00FDF3BE</string>
 											<string>E51E55210FF1322800FDF3BE</string>
-											<string>E51E55370FF132DA00FDF3BE</string>
+											<string>E51E55420FF139C200FDF3BE</string>
+											<string>E51E55630FF13B4700FDF3BE</string>
 										</array>
 										<key>nextStack</key>
 										<array>
 											<string>E51E55350FF132DA00FDF3BE</string>
 											<string>E51E55360FF132DA00FDF3BE</string>
+											<string>E51E55470FF139C200FDF3BE</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -392,6 +394,7 @@
 											<string>E51E54230FF1159600FDF3BE</string>
 											<string>E51E55150FF131E000FDF3BE</string>
 											<string>E51E55250FF1322800FDF3BE</string>
+											<string>E51E55450FF139C200FDF3BE</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -691,7 +694,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>267465437.035146</real>
+	<real>267467613.23940101</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -706,7 +709,7 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E51E553B0FF132DD00FDF3BE</string>
+		<string>E51E55660FF13B5D00FDF3BE</string>
 		<string>E51E53DE0FF110D400FDF3BE</string>
 		<string>E51E53BE0FF10C2100FDF3BE</string>
 		<string>E51E52FB0FF1043B00FDF3BE</string>

@@ -902,50 +902,50 @@ nuiHTMLImage::nuiHTMLImage(nuiHTMLNode* pNode)
     return;
   
   nglString url = pSrc->GetValue();
+  printf("incomming url: %ls\n", url.GetChars());
+  
+  int32 colon = url.Find(':');
+  if (colon > 0)
+  {
+    // complete url link
+  }
+  else if (url[0] == '/')
+  {
+    // Site absolute
+    nglString str(GetAbsoluteURL(nglString::Empty));
+    int32 col = str.Find(_T("://"));
+    if (col > 0)
+    {
+      int32 end = str.Find('/', col + 3);
+      url = str.Extract(0, end) + url;
+    }
+  }
+  else
+  {
+    // Site relative
+    url = GetAbsoluteURL(url);
+  }
+  
   nglString absurl = GetAbsoluteURL(url);
-  printf("url: %ls\t%ls\n", url.GetChars(), absurl.GetChars());
+  printf("url: %ls\n", url.GetChars());
 
   // First look up the cache:
   mpTexture = nuiTexture::GetTexture(nglString(url));
   if (!mpTexture)
   {
-    mpTexture = nuiTexture::GetTexture(nglString(absurl));
-    if (!mpTexture)
+    mpTexture = nuiTexture::GetTexture(url, NULL);
+    if (!mpTexture->IsValid())
     {
-      mpTexture = nuiTexture::GetTexture(url, NULL);
-      if (!mpTexture->IsValid())
-      {
-        mpTexture->Release();
-        mpTexture = NULL;
-        mpTexture = nuiTexture::GetTexture(absurl, NULL);
-        url = absurl;
-      }
+      mpTexture->Release();
+      mpTexture = NULL;
+      nuiHTTPRequest request(url);
+      nuiHTTPResponse* pResponse = request.SendRequest();
+      if (!pResponse)
+        return;
       
-      if (!mpTexture->IsValid())
-      {
-        mpTexture->Release();
-        mpTexture = NULL;
-        nuiHTTPRequest request(url);
-        nuiHTTPResponse* pResponse = request.SendRequest();
-        if (!pResponse)
-        {
-          url = GetAbsoluteURL(url);
-          nuiHTTPRequest request(url);
-          pResponse = request.SendRequest();
-          if (!pResponse)
-            return;
-        }
-        
-        nglIMemory mem(&pResponse->GetBody()[0], pResponse->GetBody().size());
-        mpTexture = nuiTexture::GetTexture(&mem);
-        delete pResponse;
-        if (!mpTexture->IsValid())
-        {
-          mpTexture->Release();
-          mpTexture = NULL;
-          return;
-        }
-      }
+      nglIMemory mem(&pResponse->GetBody()[0], pResponse->GetBody().size());
+      mpTexture = nuiTexture::GetTexture(&mem);
+      delete pResponse;
     }
   }
 
