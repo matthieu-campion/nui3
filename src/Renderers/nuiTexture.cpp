@@ -410,6 +410,12 @@ void nuiTexture::Init()
   }
 }
 
+bool nuiTexture::IsValid() const
+{
+  return GetWidth() && GetHeight();
+}
+
+
 nuiXMLNode* nuiTexture::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
 {
   nuiXMLNode* pNode = nuiObject::Serialize(pParentNode,true);

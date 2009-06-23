@@ -232,7 +232,6 @@
 				<string>active-target-popup</string>
 				<string>active-buildstyle-popup</string>
 				<string>action</string>
-				<string>active-combo-popup</string>
 				<string>NSToolbarFlexibleSpaceItem</string>
 				<string>buildOrClean</string>
 				<string>build-and-goOrGo</string>
@@ -333,7 +332,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>E5D2D17E0FDE929500143480</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>nglString.h</string>
+								<string>nuiRSS.cpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -341,33 +340,45 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>E5D2D17F0FDE929500143480</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>nglString.h</string>
+										<string>nuiRSS.cpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E56D2DA60FEA1E7D00C16F53</string>
+										<string>E51E54120FF1135E00FDF3BE</string>
 										<key>history</key>
 										<array>
 											<string>E5B74B6F0FE126B700476F43</string>
 											<string>E5B74B710FE126B700476F43</string>
-											<string>E5B74BA70FE12AD500476F43</string>
 											<string>E5B74B5A0FE1255500476F43</string>
 											<string>E580F0420FE279B7006AC2E1</string>
 											<string>E56D25BD0FE6948600C16F53</string>
 											<string>E56D25C00FE6948600C16F53</string>
 											<string>E56D260A0FE6983B00C16F53</string>
-											<string>E56D264C0FE69A1100C16F53</string>
-											<string>E56D2D810FE998A300C16F53</string>
-											<string>E56D26200FE6987900C16F53</string>
+											<string>E59CA2030FF101420024F411</string>
+											<string>E51E533B0FF106A000FDF3BE</string>
+											<string>E51E53590FF1071E00FDF3BE</string>
+											<string>E51E535A0FF1071E00FDF3BE</string>
+											<string>E51E536A0FF1077000FDF3BE</string>
+											<string>E51E53690FF1076700FDF3BE</string>
+										</array>
+										<key>nextStack</key>
+										<array>
+											<string>E51E535B0FF1071E00FDF3BE</string>
+											<string>E51E535C0FF1071E00FDF3BE</string>
 										</array>
 										<key>prevStack</key>
 										<array>
-											<string>E5B74AFF0FE0FF9100476F43</string>
 											<string>E580F03C0FE2799F006AC2E1</string>
 											<string>E580F03D0FE2799F006AC2E1</string>
 											<string>E56D25C40FE6948600C16F53</string>
 											<string>E56D25C60FE6948600C16F53</string>
 											<string>E56D260F0FE6983B00C16F53</string>
+											<string>E59CA2050FF101420024F411</string>
+											<string>E51E533E0FF106A000FDF3BE</string>
+											<string>E51E53470FF106D400FDF3BE</string>
+											<string>E5B74AFF0FE0FF9100476F43</string>
+											<string>E51E53510FF106F400FDF3BE</string>
+											<string>E51E53670FF1076700FDF3BE</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -430,27 +441,6 @@
 									<dict>
 										<key>PBXCVSModuleFilterTypeKey</key>
 										<integer>1032</integer>
-										<key>PBXCVSModuleTreeModuleColumnData</key>
-										<dict>
-											<key>PBXCVSModuleTreeModuleColumnWidthsKey</key>
-											<array>
-												<real>200</real>
-												<real>56</real>
-												<real>63</real>
-												<real>60</real>
-												<real>63</real>
-												<real>139</real>
-											</array>
-											<key>PBXCVSModuleTreeModuleColumnsKey</key>
-											<array>
-												<string>Name</string>
-												<string>Status</string>
-												<string>Update</string>
-												<string>Revision</string>
-												<string>Author</string>
-												<string>Date</string>
-											</array>
-										</dict>
 										<key>PBXProjectModuleGUID</key>
 										<string>1CA23EE10692099D00951B8B</string>
 										<key>PBXProjectModuleLabel</key>
@@ -472,7 +462,7 @@
 										<key>PBXProjectModuleLabel</key>
 										<string>Build</string>
 										<key>XCBuildResultsTrigger_Collapse</key>
-										<integer>1021</integer>
+										<integer>1023</integer>
 										<key>XCBuildResultsTrigger_Open</key>
 										<integer>1010</integer>
 									</dict>
@@ -507,11 +497,11 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E56D2D6D0FE9981200C16F53</string>
+				<string>E51E532A0FF105CD00FDF3BE</string>
 				<string>1CA23ED40692098700951B8B</string>
-				<string>E56D2D6E0FE9981200C16F53</string>
+				<string>E51E532B0FF105CD00FDF3BE</string>
 				<string>E5D2D17E0FDE929500143480</string>
-				<string>E56D2D6F0FE9981200C16F53</string>
+				<string>E51E532C0FF105CD00FDF3BE</string>
 				<string>1CA23EDF0692099D00951B8B</string>
 				<string>1CA23EE00692099D00951B8B</string>
 				<string>1CA23EE10692099D00951B8B</string>
@@ -527,20 +517,19 @@
 			<array>
 				<string>XCToolbarPerspectiveControl</string>
 				<string>NSToolbarSeparatorItem</string>
-				<string>build-and-go</string>
-				<string>go</string>
-				<string>active-target-popup</string>
-				<string>active-executable-popup</string>
+				<string>active-combo-popup</string>
 				<string>NSToolbarFlexibleSpaceItem</string>
-				<string>debugger-fix-and-continue</string>
+				<string>build-and-go</string>
+				<string>com.apple.ide.PBXToolbarStopButton</string>
 				<string>debugger-restart-executable</string>
 				<string>debugger-pause</string>
 				<string>debugger-step-over</string>
 				<string>debugger-step-into</string>
 				<string>debugger-step-out</string>
-				<string>debugger-step-instruction</string>
-				<string>clear-log</string>
+				<string>debugger-enable-breakpoints</string>
 				<string>NSToolbarFlexibleSpaceItem</string>
+				<string>com.apple.ide.XCBreakpointsToolbarItem</string>
+				<string>clear-log</string>
 			</array>
 			<key>ControllerClassBaseName</key>
 			<string>PBXDebugSessionModule</string>
@@ -553,6 +542,8 @@
 			<key>Layout</key>
 			<array>
 				<dict>
+					<key>BecomeActive</key>
+					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXProjectModuleGUID</key>
@@ -667,14 +658,14 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E56D2D700FE9981200C16F53</string>
+				<string>E51E532D0FF105CD00FDF3BE</string>
 				<string>1CCC7628064C1048000F2A68</string>
 				<string>1CCC7629064C1048000F2A68</string>
-				<string>E56D2D710FE9981200C16F53</string>
-				<string>E56D2D720FE9981200C16F53</string>
-				<string>E56D2D730FE9981200C16F53</string>
-				<string>E56D2D740FE9981200C16F53</string>
-				<string>E56D2D6A0FE9980000C16F53</string>
+				<string>E51E532E0FF105CD00FDF3BE</string>
+				<string>E51E532F0FF105CD00FDF3BE</string>
+				<string>E51E53300FF105CD00FDF3BE</string>
+				<string>E51E53310FF105CD00FDF3BE</string>
+				<string>E51E531E0FF1054800FDF3BE</string>
 			</array>
 			<key>ToolbarConfigUserDefaultsMinorVersion</key>
 			<string>2</string>
@@ -691,7 +682,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>267001469.30505601</real>
+	<real>267457374.50354999</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -706,8 +697,8 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E56D2D790FE9987200C16F53</string>
-		<string>E56D2D7A0FE9987200C16F53</string>
+		<string>E51E53330FF105CD00FDF3BE</string>
+		<string>E51E53340FF105CD00FDF3BE</string>
 	</array>
 	<key>WindowString</key>
 	<string>0 59 1561 1119 0 0 1920 1178 </string>

@@ -10,6 +10,8 @@
 #include "Application.h"
 #include "nuiCSS.h"
 #include "nuiVBox.h"
+#include "nuiHBox.h"
+#include "nuiEditLine.h"
 
 
 /*
@@ -32,36 +34,59 @@ MainWindow::~MainWindow()
 
 void MainWindow::OnCreation()
 {
+  nglString url(_T("http://redmine.libnui.net/projects/show/libnui"));
+  //nglString url(_T("http://www.w3.org/Consortium/siteindex"));
+  //nglString url(_T("http://viewvc.libnui.net/cgi-bin/viewvc.cgi/nui/trunk/nui3/"));
+  //nglString url(_T("http://www.google.fr/search?hl=fr&q=libnui&btnG=Recherche+Google&meta=&aq=f&oq="));
+
   // a vertical box for page layout
   nuiVBox* pLayoutBox = new nuiVBox(0);
   pLayoutBox->SetExpand(nuiExpandShrinkAndGrow);
   AddChild(pLayoutBox);
   
+  nuiHBox* pHLayoutBox = new nuiHBox(0);
+  pHLayoutBox->SetExpand(nuiExpandShrinkAndGrow);
+  pLayoutBox->AddCell(pHLayoutBox);
+  //  pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
+  
   // image in the first box's cell
   nuiImage* pImg = new nuiImage();
   pImg->SetObjectName(_T("MyImage"));
   pImg->SetPosition(nuiCenter);
-  pLayoutBox->AddCell(pImg);
-  pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandFixed);
+  pHLayoutBox->AddCell(pImg);
+  pHLayoutBox->SetCellExpand(pHLayoutBox->GetNbCells()-1, nuiExpandFixed);
+  
+  // button in the second cell : we use the default decoration for this button, but you could use the css to assign your own decoration
+  mpInput = new nuiEditLine(url);
+  mpInput->SetPosition(nuiCenter);
+  mpInput->SetObjectName(_T("RSSURL"));
+  mEventSink.Connect(mpInput->Activated, &MainWindow::OnButtonClick);
+  pHLayoutBox->AddCell(mpInput);
+  pHLayoutBox->SetCellExpand(pHLayoutBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
   
   // button in the second cell : we use the default decoration for this button, but you could use the css to assign your own decoration
   nuiButton* pButton = new nuiButton();
   pButton->SetPosition(nuiCenter);
-  pLayoutBox->AddCell(pButton);
-  pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandFixed);
+  pHLayoutBox->AddCell(pButton);
+  pHLayoutBox->SetCellExpand(pHLayoutBox->GetNbCells()-1, nuiExpandFixed);
   
   // click event on button
   mEventSink.Connect(pButton->Activated, &MainWindow::OnButtonClick);
+  mEventSink.Connect(mpInput->Activated, &MainWindow::OnButtonClick);
+  
+  // label with border in the button (put the label string in the button's constructor if you don't need borders)
+  nuiLabel* pButtonLabel = new nuiLabel(_T("Go"));
+  pButtonLabel->SetPosition(nuiCenter);
+  pButtonLabel->SetBorder(8,8);
+  pButton->AddChild(pButtonLabel);
   
   nuiScrollView* pScroll = new nuiScrollView(false, true);
   pLayoutBox->AddCell(pScroll);
   mpHTMLView = new nuiHTMLView(GetWidth());
   pScroll->AddChild(mpHTMLView);
   
-  //mpHTMLView->SetURL(_T("http://redmine.libnui.net/projects/show/libnui"));
-  //mpHTMLView->SetURL(_T("http://www.w3.org/Consortium/siteindex"));
-  mpHTMLView->SetURL(_T("http://viewvc.libnui.net/cgi-bin/viewvc.cgi/nui/trunk/nui3/"));
-  //mpHTMLView->SetURL(_T("http://www.google.fr/search?hl=fr&q=libnui&btnG=Recherche+Google&meta=&aq=f&oq="));
+  mpHTMLView->SetURL(url);
+  //mpHTMLView->SetText(_T("<img src='http://www.libnui.net/maps/menu/hover/01.png' alt='bleh'/><p>Petit text de test. Je viens de sauter une ligne<img src='rsrc:/decorations/jpeg.jpg' alt='bleh'/>Et une image...</p>"));
 
 }
 
@@ -69,6 +94,8 @@ void MainWindow::OnCreation()
 
 bool MainWindow::OnButtonClick(const nuiEvent& rEvent)
 {  
+  mpHTMLView->SetURL(mpInput->GetText());
+  
   return true; // means the event is caught and not broadcasted
 }
 

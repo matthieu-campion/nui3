@@ -53,6 +53,7 @@ protected:
   void ParseBr(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
   void ParseSpan(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
   void ParseFont(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
+  void ParseImage(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
   nuiHTMLBox* mpRootBox;
 
   float mIdealWidth;
@@ -113,6 +114,7 @@ public:
 
   bool IsLineBreak() const;
   
+  nglString GetAbsoluteURL(const nglString& rString) const;
 protected:
   nuiHTMLNode* mpNode;
   nuiRect mIdealRect;
@@ -165,6 +167,23 @@ private:
   nuiColor mTextFgColor;
   nuiColor mTextBgColor;
 };
+
+class nuiHTMLImage : public nuiHTMLItem
+{
+public:
+  nuiHTMLImage(nuiHTMLNode* pNode);
+  virtual ~nuiHTMLImage();
+  
+  virtual void Draw(nuiDrawContext* pContext);
+  virtual void Layout(nuiHTMLContext& rContext);
+  
+private:
+  nuiTexture* mpTexture;
+
+  float mWidth;
+  float mHeight;
+};
+
 
 class nuiHTMLFont : public nuiHTMLItem
 {

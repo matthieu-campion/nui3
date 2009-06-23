@@ -85,6 +85,8 @@ public:
   bool IsPowerOfTwo() const; // Returns true if the width and the height of the texture are powers of two.
   bool IsBufferRetained() const { return mRetainBuffer; } ///< returns true if the texture doesn't try to destroy the image source upon uploading to OpenGL
 
+  bool IsValid() const;
+  
   static void AddCache(nuiTextureCache* pCache);
   static void DelCache(nuiTextureCache* pCache);
   

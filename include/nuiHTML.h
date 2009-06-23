@@ -359,8 +359,13 @@ public:
   nuiHTMLAttrib* GetAttribute(uint32 index);
   const nuiHTMLAttrib* GetAttribute(const nglString& rAttribName) const;
   nuiHTMLAttrib* GetAttribute(const nglString& rAttribName);
+  const nuiHTMLAttrib* GetAttribute(nuiHTMLAttrib::AttributeType attr_type) const;
+  nuiHTMLAttrib* GetAttribute(nuiHTMLAttrib::AttributeType attr_type);
 
   void GetSimpleText(nglString& rString) const; ///< Add the text contents of this node to rString and then do the same for this its children. This is only needed to create a simple text only preview ignoring all the actual markup.
+  
+  virtual const nglString& GetSourceURL() const;
+  nuiHTMLNode* GetParent() const;
 protected:
   nuiHTMLNode(const nglString& rName, NodeType Type, TagType TagType, const nglString& rText);
   nuiHTMLNode(const void* _tdoc, const void* _tnod);
@@ -375,6 +380,8 @@ protected:
   nglString mName;
   nglString mText;
   
+  nuiHTMLNode* SetParent(nuiHTMLNode* pParent);
+  nuiHTMLNode* mpParent;
   std::vector<nuiHTMLNode*> mChildren;
   std::vector<nuiHTMLAttrib*> mAttributes;
 };
@@ -386,4 +393,10 @@ public:
   ~nuiHTML();
   
   bool Load(nglIStream& rStream);
+
+  const nglString& GetSourceURL() const;
+  void SetSourceURL(const nglString& rURL);
+
+private:
+  nglString mSourceURL;
 };

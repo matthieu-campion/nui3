@@ -54,11 +54,13 @@ nuiHTMLNode::nuiHTMLNode(const nglString& rName, nuiHTMLNode::NodeType Type, nui
   mType = Type;
   mTagType = _tagType;
   mText = rText;
+  mpParent = NULL;
 }
 
 nuiHTMLNode::nuiHTMLNode(const void* _tdoc, const void* _tnod)
 {
   SetFromNode(_tdoc, _tnod);
+  mpParent = NULL;
 }
 
 
@@ -182,6 +184,26 @@ nuiHTMLAttrib* nuiHTMLNode::GetAttribute(const nglString& rAttribName)
   return NULL;
 }
 
+const nuiHTMLAttrib* nuiHTMLNode::GetAttribute(nuiHTMLAttrib::AttributeType attrib_type) const
+{
+  for (uint32 i = 0; i < mAttributes.size(); i++)
+  {
+    if (mAttributes.at(i)->GetType() == attrib_type)
+      return mAttributes.at(i);
+  }
+  return NULL;
+}
+
+nuiHTMLAttrib* nuiHTMLNode::GetAttribute(nuiHTMLAttrib::AttributeType attrib_type)
+{
+  for (uint32 i = 0; i < mAttributes.size(); i++)
+  {
+    if (mAttributes.at(i)->GetType() == attrib_type)
+      return mAttributes.at(i);
+  }
+  return NULL;
+}
+
 void nuiHTMLNode::BuildTree(const void* _tdoc, const void* _tnod)
 {
   TidyDoc tdoc = (TidyDoc)_tdoc;
@@ -193,6 +215,7 @@ void nuiHTMLNode::BuildTree(const void* _tdoc, const void* _tnod)
   for (child = tidyGetChild(tnod); child; child = tidyGetNext(child))
   {
     nuiHTMLNode* pNode = new nuiHTMLNode(_tdoc, child);
+    pNode->SetParent(this);
     mChildren.push_back(pNode);
     pNode->BuildTree(tdoc, child);
   }
@@ -215,6 +238,24 @@ void nuiHTMLNode::GetSimpleText(nglString& rString) const
     pNode->GetSimpleText(rString);
   }
 }
+
+const nglString& nuiHTMLNode::GetSourceURL() const
+{
+  if (mpParent)
+    return mpParent->GetSourceURL();
+  return nglString::Null;
+}
+
+nuiHTMLNode* nuiHTMLNode::GetParent() const
+{
+  return mpParent;
+}
+
+nuiHTMLNode* nuiHTMLNode::SetParent(nuiHTMLNode* pParent)
+{
+  mpParent = pParent;
+}
+
 
 
 //class nuiHTML : public nuiHTMLNode
@@ -306,3 +347,14 @@ bool nuiHTML::Load(nglIStream& rStream)
   return res < 2;
 }
  
+const nglString& nuiHTML::GetSourceURL() const
+{
+  return mSourceURL;
+  
+}
+
+void nuiHTML::SetSourceURL(const nglString& rURL)
+{
+  mSourceURL = rURL;
+}
+

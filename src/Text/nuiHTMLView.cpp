@@ -9,6 +9,7 @@
 #include "nuiHTMLView.h"
 #include "nuiHTTP.h"
 #include "nuiFontManager.h"
+#include "nuiHTTP.h"
 
 ///////////class nuiHTMLContext
 nuiHTMLContext::nuiHTMLContext()
@@ -185,6 +186,13 @@ void nuiHTMLItem::SetEndTag(bool set)
 bool nuiHTMLItem::IsLineBreak() const
 {
   return mLineBreak;
+}
+
+nglString nuiHTMLItem::GetAbsoluteURL(const nglString& rString) const
+{
+  if (rString[0] == '/' || rString.Extract(0, 7) != _T("http://"))
+    return mpNode->GetSourceURL() + rString;
+  return rString;
 }
 
 ////////////////////class nuiHTMLBox
@@ -476,14 +484,23 @@ void nuiHTMLView::SetHSpace(float HSpace)
 bool nuiHTMLView::SetText(const nglString& rHTMLText)
 {
   Clear();
-  delete mpHTML;
-  mpHTML = new nuiHTML();
+  nuiHTML* pHTML = new nuiHTML();
   
   std::string str(rHTMLText.GetStdString());
   nglIMemory mem(&str[0], str.size());
-  bool res = mpHTML->Load(mem);
+  bool res = pHTML->Load(mem);
   
-  InvalidateLayout();
+  if (res)
+  {
+    Clear();
+    delete mpHTML;
+    mpHTML = pHTML;
+    mpRootBox = new nuiHTMLBox(mpHTML);
+    ParseTree(mpHTML, mpRootBox);
+    nuiHTMLContext context;
+    mpRootBox->Layout(context);
+    InvalidateLayout();
+  }
   return res;
 }
 
@@ -495,6 +512,7 @@ bool nuiHTMLView::SetURL(const nglString& rURL)
     return false;
   
   nuiHTML* pHTML = new nuiHTML();
+  pHTML->SetSourceURL(rURL);
   nglIMemory mem(&pResponse->GetBody()[0], pResponse->GetBody().size());
   
   bool res = pHTML->Load(mem);
@@ -621,6 +639,9 @@ void nuiHTMLView::ParseBody(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
       case nuiHTML::eTag_TABLE:
         ParseTable(pChild, pBox);
         break;
+      case nuiHTML::eTag_IMG:
+        ParseImage(pChild, pBox);
+        break;
       case nuiHTML::eTag_UL:
       case nuiHTML::eTag_OL:
       case nuiHTML::eTag_DL:
@@ -708,6 +729,12 @@ void nuiHTMLView::ParseTable(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
     }
   }
   //printf("html /table\n");
+}
+
+void nuiHTMLView::ParseImage(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
+{
+  nuiHTMLImage* pImg = new nuiHTMLImage(pNode);
+  pBox->AddItem(pImg);
 }
 
 void nuiHTMLView::ParseTableRow(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
@@ -863,3 +890,77 @@ void nuiHTMLFont::Layout(nuiHTMLContext& rContext)
   
 }
 
+/////////////
+//class nuiHTMLImage : public nuiHTMLItem
+nuiHTMLImage::nuiHTMLImage(nuiHTMLNode* pNode)
+: nuiHTMLItem(pNode), mpTexture(NULL), mWidth(0), mHeight(0)
+{
+  const nuiHTMLAttrib* pSrc = pNode->GetAttribute(nuiHTMLAttrib::eAttrib_SRC);
+  const nuiHTMLAttrib* pAlt = pNode->GetAttribute(nuiHTMLAttrib::eAttrib_ALT);
+
+  if (!pSrc || !pAlt)
+    return;
+  
+  nglString url = pSrc->GetValue();
+  nglString absurl = GetAbsoluteURL(url);
+  printf("url: %ls\t%ls\n", url.GetChars(), absurl.GetChars());
+  mpTexture = nuiTexture::GetTexture(url, NULL);
+  if (!mpTexture->IsValid())
+  {
+    mpTexture->Release();
+    mpTexture = nuiTexture::GetTexture(absurl, NULL);
+    url = absurl;
+  }
+
+  if (!mpTexture->IsValid())
+  {
+    mpTexture->Release();
+    nuiHTTPRequest request(url);
+    nuiHTTPResponse* pResponse = request.SendRequest();
+    if (!pResponse)
+    {
+      url = GetAbsoluteURL(url);
+      nuiHTTPRequest request(url);
+      pResponse = request.SendRequest();
+      if (!pResponse)
+        return;
+    }
+    
+    nglIMemory mem(&pResponse->GetBody()[0], pResponse->GetBody().size());
+    mpTexture = nuiTexture::GetTexture(&mem);
+    delete pResponse;
+    if (!mpTexture->IsValid())
+    {
+      mpTexture->Release();
+      return;
+    }
+    mpTexture->SetSource(url);
+  }
+  
+  mWidth = mpTexture->GetWidth();
+  mHeight = mpTexture->GetHeight();
+}
+
+nuiHTMLImage::~nuiHTMLImage()
+{
+  
+}
+    
+void nuiHTMLImage::Draw(nuiDrawContext* pContext)
+{
+  if (!mpTexture || !mpTexture->IsValid())
+    return;
+
+  pContext->PushState();
+  pContext->SetTexture(mpTexture);  
+  pContext->SetFillColor(nuiColor(255, 255, 255));
+  pContext->DrawImage(mRect.Size(), nuiRect((float)mpTexture->GetWidth(), (float)mpTexture->GetHeight()));
+  pContext->PopState();
+}
+
+void nuiHTMLImage::Layout(nuiHTMLContext& rContext)
+{    
+  if (!mpTexture)
+    return;
+  mIdealRect.Set(0.0f, 0.0f, mWidth, mHeight);
+}

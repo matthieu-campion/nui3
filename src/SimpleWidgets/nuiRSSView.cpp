@@ -11,6 +11,7 @@
 #include "nuiFolderPane.h"
 #include "nglIMemory.h"
 #include "nuiHTML.h"
+#include "nuiHTMLView.h"
 
 //class nuiRSSView : public nuiSimpleContainer
 nuiRSSView::nuiRSSView(const nglString& rURL, int32 SecondsBetweenUpdates, nglIStream* pOriginalStream)
@@ -73,9 +74,11 @@ bool nuiRSSView::Update(const nuiEvent& rEvent)
       NGL_OUT(_T("%d - Couldn't parse HTML tags:\n%ls\n"), i, text.GetChars());
     }
     
-    nuiLabel* pLabel = new nuiLabel(text);
-    pLabel->SetObjectName(_T("nuiRSSView::Description"));
-    pLabel->SetWrapping(true);
+//    nuiLabel* pLabel = new nuiLabel(text);
+//    pLabel->SetObjectName(_T("nuiRSSView::Description"));
+//    pLabel->SetWrapping(true);
+    nuiHTMLView* pLabel = new nuiHTMLView(480);
+    pLabel->SetText(desc);
     pPane->AddChild(pLabel);
     mpBox->AddCell(pPane);
   }

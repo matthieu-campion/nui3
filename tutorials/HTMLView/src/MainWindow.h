@@ -10,6 +10,8 @@
 #include "nuiMainWindow.h"
 #include "nuiHTMLView.h"
 
+class nuiEditLine;
+
 class MainWindow : public nuiMainWindow
 {
 public:
@@ -28,6 +30,9 @@ private:
   bool LoadCSS(const nglPath& rPath);
 
   nuiHTMLView* mpHTMLView;
+  nuiEditLine* mpInput;
+  
   nuiEventSink<MainWindow> mEventSink;
+  
 };
 

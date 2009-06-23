@@ -27,7 +27,7 @@ nuiRSSItem::nuiRSSItem(const nuiXMLNode* pNode)
   GETELEM("author", mAuthor);
   GETELEM("category", mCategory);
   //GETSUBELEM("category", "domain", mCategoryDomain);
-  GETELEM("comments", mComments);
+  //GETELEM("comments", mComments);
   //GETSUBELEM("enclosure", "url", mEnclosureURL);
   //GETSUBELEM("enclosure", "length", mEnclosureLength);
   //GETSUBELEM("enclosure", "type", mEnclosureType);
