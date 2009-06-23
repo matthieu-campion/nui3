@@ -412,7 +412,7 @@ void nuiTexture::Init()
 
 bool nuiTexture::IsValid() const
 {
-  return GetWidth() && GetHeight();
+  return mpImage && mpImage->IsValid() && GetWidth() && GetHeight();
 }
 
 

@@ -266,6 +266,8 @@ public:
   uint  GetBytesPerLine() const;  ///< Pixel row allocation size in bytes (>= pixel size * image width). Returns 0 if the info is not available.
   char* GetBuffer() const;        ///< Image buffer data. Returns NULL if the info is not available.
 
+  bool IsValid() const;
+  
   nglImageCodec* GetCodec() const;
   /*!< Fetch current codec
     \return current codec instance pointer

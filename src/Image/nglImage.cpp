@@ -310,6 +310,10 @@ nglImage::nglImage (const nglImage& rImage)
 }
 
 
+bool nglImage::IsValid() const
+{
+  return GetBuffer() != NULL;
+}
 
 
 

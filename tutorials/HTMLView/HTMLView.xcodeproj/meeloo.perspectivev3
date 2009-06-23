@@ -330,7 +330,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>E57CEDAD0FEAFA800002C681</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>nuiHTMLView.cpp</string>
+								<string>MainWindow.cpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -338,11 +338,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>E57CEDAE0FEAFA800002C681</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>nuiHTMLView.cpp</string>
+										<string>MainWindow.cpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E51E54100FF1135E00FDF3BE</string>
+										<string>E51E54420FF1180300FDF3BE</string>
 										<key>history</key>
 										<array>
 											<string>E57CEDD30FEAFD4B0002C681</string>
@@ -359,16 +359,17 @@
 											<string>E51E52E50FF1040900FDF3BE</string>
 											<string>E51E53C50FF1103C00FDF3BE</string>
 											<string>E51E53E10FF1113F00FDF3BE</string>
-											<string>E51E53E90FF1114900FDF3BE</string>
-											<string>E51E540E0FF1135800FDF3BE</string>
-											<string>E51E540D0FF1134E00FDF3BE</string>
+											<string>E51E54200FF1159600FDF3BE</string>
+											<string>E51E54290FF1169E00FDF3BE</string>
+											<string>E51E542A0FF1169E00FDF3BE</string>
+											<string>E51E542B0FF1169E00FDF3BE</string>
+											<string>E51E54390FF1177900FDF3BE</string>
+											<string>E51E54400FF117F700FDF3BE</string>
 										</array>
 										<key>nextStack</key>
 										<array>
-											<string>E51E53FE0FF1124D00FDF3BE</string>
-											<string>E51E53FF0FF1124D00FDF3BE</string>
-											<string>E51E54010FF1124D00FDF3BE</string>
-											<string>E51E54020FF1124D00FDF3BE</string>
+											<string>E51E542E0FF1169E00FDF3BE</string>
+											<string>E51E542F0FF1169E00FDF3BE</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -385,8 +386,11 @@
 											<string>E51E53750FF1095600FDF3BE</string>
 											<string>E51E53CB0FF1103C00FDF3BE</string>
 											<string>E51E53D70FF1109A00FDF3BE</string>
-											<string>E51E53E40FF1113F00FDF3BE</string>
 											<string>E51E53E60FF1113F00FDF3BE</string>
+											<string>E51E54250FF1159600FDF3BE</string>
+											<string>E51E53E40FF1113F00FDF3BE</string>
+											<string>E51E54230FF1159600FDF3BE</string>
+											<string>E51E543A0FF1177900FDF3BE</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -686,7 +690,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>267457374.43561399</real>
+	<real>267458563.317541</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -701,7 +705,7 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E51E54110FF1135E00FDF3BE</string>
+		<string>E51E54430FF1180300FDF3BE</string>
 		<string>E51E53DE0FF110D400FDF3BE</string>
 		<string>E51E53BE0FF10C2100FDF3BE</string>
 		<string>E51E52FB0FF1043B00FDF3BE</string>
