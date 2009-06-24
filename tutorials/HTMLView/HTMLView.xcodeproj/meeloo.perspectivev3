@@ -342,7 +342,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E51E57310FF2609700FDF3BE</string>
+										<string>E51E57370FF2676600FDF3BE</string>
 										<key>history</key>
 										<array>
 											<string>E51E566C0FF24C3100FDF3BE</string>
@@ -529,8 +529,6 @@
 			<key>Layout</key>
 			<array>
 				<dict>
-					<key>BecomeActive</key>
-					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXProjectModuleGUID</key>
@@ -667,7 +665,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>267542679.50209099</real>
+	<real>267544422.124208</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -682,7 +680,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E51E57320FF2609700FDF3BE</string>
 		<string>E51E56130FF22D0E00FDF3BE</string>
 		<string>E51E56140FF22D0E00FDF3BE</string>
 		<string>/Users/meeloo/work/nui3/tutorials/HTMLView/HTMLView.xcodeproj</string>
