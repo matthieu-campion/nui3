@@ -78,6 +78,7 @@ void nuiHTMLBox::Layout(nuiHTMLContext& rContext)
   uint32 line_start = 0;
   uint32 line_end = 0;
   float lineh = 0;
+  float lastlineh = 0;
   
   for (uint32 i = 0; i < mItems.size(); i++)
   {
@@ -94,20 +95,30 @@ void nuiHTMLBox::Layout(nuiHTMLContext& rContext)
       nuiHTMLItem* pItem = mItems[i];
       nuiRect r(pItem->GetIdealRect());
       
+      bool linebreak = pItem->IsLineBreak();
+      if (linebreak)
+        printf("\nlinebreak\n\n");
+      
       // Layout the line if needed:
-      if ((X + r.GetWidth() > context.mMaxWidth) || pItem->IsLineBreak())
+      if ((X + r.GetWidth() > context.mMaxWidth) || linebreak)
       {
         float w = LayoutLine(line_start, line_end, Y, lineh, context);
         
         W = MAX(W, w);
+        lastlineh = lineh;
         lineh = 0;
         X = 0;
       }
+
+      if (linebreak && lineh == 0)
+        Y += lastlineh;
       
-      lineh = MAX(lineh, r.GetHeight());
-      X += r.GetWidth() + context.mVSpace;
-      
-      line_end = i;
+      {
+        lineh = MAX(lineh, r.GetHeight());
+        X += r.GetWidth() + context.mVSpace;
+        
+        line_end = i;
+      }
       //printf("box layout item %d done\n", i);
     }
     

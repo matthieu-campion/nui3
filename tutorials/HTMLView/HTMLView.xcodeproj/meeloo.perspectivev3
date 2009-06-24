@@ -332,7 +332,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>E57CEDAD0FEAFA800002C681</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>nuiHTMLView.cpp</string>
+								<string>nuiHTMLBox.cpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -340,35 +340,40 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>E57CEDAE0FEAFA800002C681</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>nuiHTMLView.cpp</string>
+										<string>nuiHTMLBox.cpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E591C18C0FF198FA005E5E3D</string>
+										<string>E591C1F00FF1AA13005E5E3D</string>
 										<key>history</key>
 										<array>
 											<string>E591C0700FF17F2D005E5E3D</string>
 											<string>E591C0C30FF18631005E5E3D</string>
-											<string>E591C0D90FF1866E005E5E3D</string>
 											<string>E591C0E50FF1867A005E5E3D</string>
 											<string>E591C1120FF18A48005E5E3D</string>
 											<string>E591C1290FF18AAC005E5E3D</string>
 											<string>E591C1450FF19112005E5E3D</string>
-											<string>E591C16A0FF19419005E5E3D</string>
-											<string>E591C18A0FF198E8005E5E3D</string>
+											<string>E591C1950FF19AAB005E5E3D</string>
+											<string>E591C1A30FF19B0F005E5E3D</string>
+											<string>E591C1C60FF1A788005E5E3D</string>
+											<string>E591C1D70FF1A8B8005E5E3D</string>
+											<string>E591C1E00FF1A952005E5E3D</string>
+											<string>E591C1EE0FF1AA0F005E5E3D</string>
 										</array>
 										<key>prevStack</key>
 										<array>
 											<string>E591C0640FF17EFB005E5E3D</string>
 											<string>E591C0650FF17EFB005E5E3D</string>
-											<string>E591C0670FF17EFB005E5E3D</string>
 											<string>E591C0720FF17F2D005E5E3D</string>
 											<string>E591C0C70FF18631005E5E3D</string>
-											<string>E591C0C80FF18631005E5E3D</string>
 											<string>E591C1370FF18B3C005E5E3D</string>
 											<string>E591C1420FF19101005E5E3D</string>
-											<string>E591C16C0FF19419005E5E3D</string>
 											<string>E591C16D0FF19419005E5E3D</string>
+											<string>E591C1970FF19AAB005E5E3D</string>
+											<string>E591C1C70FF1A788005E5E3D</string>
+											<string>E591C1D10FF1A896005E5E3D</string>
+											<string>E591C1E30FF1A952005E5E3D</string>
+											<string>E591C1E40FF1A952005E5E3D</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -421,7 +426,7 @@
 									<key>GeometryConfiguration</key>
 									<dict>
 										<key>Frame</key>
-										<string>{{10, 31}, {603, 297}}</string>
+										<string>{{10, 27}, {1713, 295}}</string>
 									</dict>
 									<key>Module</key>
 									<string>PBXProjectFindModule</string>
@@ -690,7 +695,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>267491578.53754401</real>
+	<real>267495955.893704</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -705,7 +710,7 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E591C18D0FF198FA005E5E3D</string>
+		<string>E591C1F10FF1AA13005E5E3D</string>
 		<string>E591C1270FF18A8D005E5E3D</string>
 		<string>E591C00A0FF13DFE005E5E3D</string>
 		<string>E591C00B0FF13DFE005E5E3D</string>

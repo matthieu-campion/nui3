@@ -65,6 +65,8 @@ bool nuiHTMLView::SetRect(const nuiRect& rRect)
 bool nuiHTMLView::Draw(nuiDrawContext* pContext)
 {
   nuiSimpleContainer::Draw(pContext);
+  pContext->SetBlendFunc(nuiBlendTransp);
+  pContext->EnableBlending(true);
   if (mpRootBox)
     mpRootBox->CallDraw(pContext);
   return true;
@@ -445,42 +447,34 @@ void nuiHTMLView::ParseList(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 
 void nuiHTMLView::ParseP(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 {
-  //printf("html p\n");
   nuiHTMLBox* pNewBox = new nuiHTMLBox(pNode);
   pBox->AddItem(pNewBox);
   
   ParseBody(pNode, pNewBox);
-  //printf("html /p\n");
 }
 
 void nuiHTMLView::ParseFormatTag(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 {
-  //printf("html format\n");
   pBox->AddItem(new nuiHTMLItem(pNode));
-  
   ParseBody(pNode, pBox);
   pBox->AddItemEnd(new nuiHTMLItem(pNode, false));
-  //printf("html /format\n");
 }
 
 void nuiHTMLView::ParseA(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 {
-  //printf("html anchor\n");
+  pBox->AddItem(new nuiHTMLItem(pNode));
   ParseBody(pNode, pBox);
-  //printf("html /anchor\n");
+  pBox->AddItemEnd(new nuiHTMLItem(pNode, false));
 }
 
 void nuiHTMLView::ParseBr(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 {
-  //printf("html break\n");
   pBox->AddItem(new nuiHTMLItem(pNode));
 }
 
 void nuiHTMLView::ParseSpan(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 {
-  //printf("html span\n");
   ParseBody(pNode, pBox);
-  //printf("html /span\n");
 }
 
 void nuiHTMLView::ParseFont(nuiHTMLNode* pNode, nuiHTMLBox* pBox)

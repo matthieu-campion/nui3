@@ -29,8 +29,8 @@
 #endif
 #ifdef HAVE_LIBJPEG
 #include "nglImageJPEGCodec.h"
-#include "nglImageGIFCodec.h"
 #endif
+#include "nglImageGIFCodec.h"
 
 
 using namespace std;

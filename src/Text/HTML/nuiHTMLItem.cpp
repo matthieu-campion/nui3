@@ -60,6 +60,15 @@ void nuiHTMLItem::Layout(nuiHTMLContext& rContext)
       rContext.mUnderline = set;
     }
     break;
+  case nuiHTML::eTag_A:
+    {
+      rContext.mUnderline = set;
+      if (set)
+        rContext.mTextFgColor = nuiColor(0, 0, 200);
+      else
+        rContext.mTextFgColor = nuiColor(0, 0, 0);
+    }
+    break;
   }
 }
 
