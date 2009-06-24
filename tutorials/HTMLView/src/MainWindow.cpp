@@ -85,11 +85,17 @@ void MainWindow::OnCreation()
   pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
   mpHTMLView = new nuiHTMLView(GetWidth());
   pScroll->AddChild(mpHTMLView);
-  
-  mpHTMLView->SetURL(url);
-  if (!mpHTMLView->GetURL().IsNull())
-    mpInput->SetText(mpHTMLView->GetURL());
-  //mpHTMLView->SetText(_T("<img src='http://www.libnui.net/maps/menu/hover/01.png' alt='bleh'/><p>Petit text de test. Je viens de sauter une ligne<img src='rsrc:/decorations/jpeg.jpg' alt='bleh'/>Et une image...</p>"));
+
+  if (1)
+  {
+    mpHTMLView->SetURL(url);
+    if (!mpHTMLView->GetURL().IsNull())
+      mpInput->SetText(mpHTMLView->GetURL());
+  }
+  else
+  {
+    mpHTMLView->SetText(_T("<p>Petit</p><p><i>texte</i> de <b>test</b>.</p><p>&eacute;couter le vent</p><p>Je viens de sauter une ligne</p>"));
+  }
 
 }
 

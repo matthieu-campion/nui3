@@ -16,7 +16,7 @@ class nuiHTMLBox;
 class nuiHTMLItem
 {
 public:
-  nuiHTMLItem(nuiHTMLNode* pNode, bool Inline = true);
+  nuiHTMLItem(nuiHTMLNode* pNode, bool Inline);
   ~nuiHTMLItem();
   
   void CallDraw(nuiDrawContext* pContext);
@@ -42,6 +42,7 @@ public:
   void SetEndTag(bool set);
   
   bool IsLineBreak() const;
+  void ForceLineBreak(bool s);
   
   nglString GetAbsoluteURL(const nglString& rString) const;
 protected:

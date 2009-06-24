@@ -85,66 +85,53 @@ void nuiHTMLBox::Layout(nuiHTMLContext& rContext)
     mItems[i]->Layout(context);
   }
   
-  if (IsInline())
+  for (uint32 i = 0; i < mItems.size(); i++)
   {
-    //#TODO #FIXME  Wrap the children 
-    for (uint32 i = 0; i < mItems.size(); i++)
-    {
-      //printf("box layout item %d start\n", i);
-      
-      nuiHTMLItem* pItem = mItems[i];
-      nuiRect r(pItem->GetIdealRect());
-      
-      bool linebreak = pItem->IsLineBreak();
-      if (linebreak)
-        printf("\nlinebreak\n\n");
-      
-      // Layout the line if needed:
-      if ((X + r.GetWidth() > context.mMaxWidth) || linebreak)
-      {
-        float w = LayoutLine(line_start, line_end, Y, lineh, context);
-        
-        W = MAX(W, w);
-        lastlineh = lineh;
-        lineh = 0;
-        X = 0;
-      }
-
-      if (linebreak && lineh == 0)
-        Y += lastlineh;
-      
-      {
-        lineh = MAX(lineh, r.GetHeight());
-        X += r.GetWidth() + context.mVSpace;
-        
-        line_end = i;
-      }
-      //printf("box layout item %d done\n", i);
-    }
+    //printf("box layout item %d start\n", i);
     
-    if (line_end)
+    nuiHTMLItem* pItem = mItems[i];
+    nuiRect r(pItem->GetIdealRect());
+    
+    bool linebreak = pItem->IsLineBreak();
+//    if (linebreak)
+//      printf("\nlinebreak\n\n");
+    
+    // Layout the line if needed:
+    if ((X + r.GetWidth() > context.mMaxWidth) || linebreak || !pItem->IsInline())
     {
       float w = LayoutLine(line_start, line_end, Y, lineh, context);
       
       W = MAX(W, w);
+      lastlineh = lineh;
       lineh = 0;
       X = 0;
     }
-  }
-  else
-  {
-    float x = context.mLeftMargin;
-    // Put each children on a new line
-    for (uint32 i = 0; i < mItems.size(); i++)
+
+    if (linebreak)
     {
-      //printf("box layout item block line %d\n", i);
-      nuiHTMLItem* pItem = mItems[i];
-      nuiRect r(pItem->GetIdealRect());
-      r.MoveTo(X + x, Y);
-      pItem->SetRect(r);
-      Y += r.GetHeight() + context.mVSpace;
-      W = MAX(W, r.Right());
+      nuiFont* pFont = nuiFontManager::GetManager().GetFont(rContext.mFont);
+      NGL_ASSERT(pFont);
+      nglFontInfo info;
+      pFont->GetInfo(info);
+      Y += info.Height;
     }
+    
+    {
+      lineh = MAX(lineh, r.GetHeight());
+      X += r.GetWidth() + context.mVSpace;
+      
+      line_end = i;
+    }
+    //printf("box layout item %d done\n", i);
+  }
+  
+  if (line_end)
+  {
+    float w = LayoutLine(line_start, line_end, Y, lineh, context);
+    
+    W = MAX(W, w);
+    lineh = 0;
+    X = 0;
   }
   mIdealRect.Set(0.0f, 0.0f, W, Y);
   //printf("text layout done (%ls)\n", mIdealRect.GetValue().GetChars());

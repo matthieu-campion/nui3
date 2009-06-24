@@ -14,6 +14,7 @@
 #include "nuiHTMLContext.h"
 #include "nuiHTMLItem.h"
 #include "nuiHTMLBox.h"
+#include "nuiHTMLHeader.h"
 #include "nuiHTMLText.h"
 #include "nuiHTMLImage.h"
 #include "nuiHTMLFont.h"
@@ -119,7 +120,7 @@ bool nuiHTMLView::SetText(const nglString& rHTMLText)
     Clear();
     delete mpHTML;
     mpHTML = pHTML;
-    mpRootBox = new nuiHTMLBox(mpHTML);
+    mpRootBox = new nuiHTMLBox(mpHTML, false);
     ParseTree(mpHTML, mpRootBox);
     nuiHTMLContext context;
     mpRootBox->Layout(context);
@@ -136,7 +137,6 @@ bool nuiHTMLView::SetURL(const nglString& rURL)
   if (!pResponse)
     return false;
   
-  //NGL_OUT(_T("HTTP Response\n%ls\n\n"), pResponse->GetHeadersRep().GetChars());
   const nuiHTTPHeaderMap& rHeaders(pResponse->GetHeaders());
   nuiHTTPHeaderMap::const_iterator it = rHeaders.find(_T("location"));
   if (it != rHeaders.end())
@@ -168,7 +168,7 @@ bool nuiHTMLView::SetURL(const nglString& rURL)
     Clear();
     delete mpHTML;
     mpHTML = pHTML;
-    mpRootBox = new nuiHTMLBox(mpHTML);
+    mpRootBox = new nuiHTMLBox(mpHTML, false);
     ParseTree(mpHTML, mpRootBox);
     nuiHTMLContext context;
     mpRootBox->Layout(context);
@@ -183,23 +183,6 @@ const nglString& nuiHTMLView::GetURL() const
     return mpHTML->GetSourceURL();
   return nglString::Null;
 }
-
-//void nuiHTMLView::WalkTree(nuiHTMLNode* pNode, const nuiHTMLContext& rContext)
-//{
-//  nuiHTMLContext context(rContext);
-//  context.mpNode = pNode;
-//  if (!InterpretTree(context))
-//    return;
-//  
-//  uint32 count = pNode->GetNbChildren();
-//  for (uint32 i = 0; i < count; i++)
-//  {
-//    nuiHTMLNode* pChild = pNode->GetChild(i);
-//    WalkTree(pChild, context);
-//  }
-//  LayoutLine(context);
-//}
-//
 
 void nuiHTMLView::ParseTree(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 {
@@ -227,7 +210,6 @@ void nuiHTMLView::ParseTree(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 
 void nuiHTMLView::ParseHTML(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 {
-  //printf("html\n");
   uint32 count = pNode->GetNbChildren();
   for (uint32 i = 0; i < count; i++)
   {
@@ -249,7 +231,6 @@ void nuiHTMLView::ParseHTML(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
         break;
     }
   }
-  //printf("/html\n");
 }
 
 void nuiHTMLView::ParseHead(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
@@ -274,12 +255,10 @@ void nuiHTMLView::ParseHead(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 
 void nuiHTMLView::ParseTitle(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 {
-  //printf("html title\n");
 }
 
 void nuiHTMLView::ParseBody(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 {
-  //printf("html body\n");
   uint32 count = pNode->GetNbChildren();
   for (uint32 i = 0; i < count; i++)
   {
@@ -302,6 +281,14 @@ void nuiHTMLView::ParseBody(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
         break;
       case nuiHTML::eTag_P:
         ParseP(pChild, pBox);
+        break;
+      case nuiHTML::eTag_H1:
+      case nuiHTML::eTag_H2:
+      case nuiHTML::eTag_H3:
+      case nuiHTML::eTag_H4:
+      case nuiHTML::eTag_H5:
+      case nuiHTML::eTag_H6:
+        ParseHeader(pChild, pBox);
         break;
       case nuiHTML::eTag_I:
       case nuiHTML::eTag_B:
@@ -338,12 +325,10 @@ void nuiHTMLView::ParseBody(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
         break;
     }
   }
-  //printf("body /body\n");
 }
 
 void nuiHTMLView::ParseText(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 {
-  //printf("html text\n");
   const nglString& rText(pNode->GetText());
   std::vector<nglString> words;
   rText.Tokenize(words);
@@ -353,22 +338,18 @@ void nuiHTMLView::ParseText(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
     pBox->AddItem(new nuiHTMLText(pNode, words[i]));
   }
   //ParseBody(pNode, pBox);
-  //printf("html /text\n");
 }
 
 void nuiHTMLView::ParseDiv(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 {
-  //printf("html div\n");
-  nuiHTMLBox* pNewBox = new nuiHTMLBox(pNode);
+  nuiHTMLBox* pNewBox = new nuiHTMLBox(pNode, false);
   pBox->AddItem(pNewBox);
   
   ParseBody(pNode, pNewBox);
-  //printf("html /div\n");
 }
 
 void nuiHTMLView::ParseTable(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 {
-  //printf("html table\n");
   nuiHTMLBox* pNewBox = new nuiHTMLBox(pNode, false);
   pBox->AddItem(pNewBox);
   
@@ -383,7 +364,6 @@ void nuiHTMLView::ParseTable(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
         break;
     }
   }
-  //printf("html /table\n");
 }
 
 void nuiHTMLView::ParseImage(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
@@ -394,8 +374,7 @@ void nuiHTMLView::ParseImage(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 
 void nuiHTMLView::ParseTableRow(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 {
-  //printf("html table row\n");
-  nuiHTMLBox* pNewBox = new nuiHTMLBox(pNode, true);
+  nuiHTMLBox* pNewBox = new nuiHTMLBox(pNode, false);
   pBox->AddItem(pNewBox);
   
   uint32 count = pNode->GetNbChildren();
@@ -409,7 +388,6 @@ void nuiHTMLView::ParseTableRow(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
         break;
     }
   }
-  //printf("html /table row\n");
 }
 
 
@@ -427,17 +405,9 @@ void nuiHTMLView::ParseList(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
     {
       case nuiHTML::eTag_LI:
       {
-        uint32 count2 = pChild->GetNbChildren();
-        for (uint32 j = 0; j < count2; j++)
-        {
-          nuiHTMLNode* pChild2 = pChild->GetChild(j);
-          switch (pChild2->GetTagType())
-          {
-            case nuiHTML::eTag_LI:
-              ParseBody(pChild2, pNewBox);
-              break;
-          }
-        }
+        nuiHTMLBox* pLineBox = new nuiHTMLBox(pChild, false);
+        pNewBox->AddItem(pLineBox);
+        ParseBody(pChild, pLineBox);
       }
       break;
     }
@@ -447,7 +417,16 @@ void nuiHTMLView::ParseList(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 
 void nuiHTMLView::ParseP(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 {
-  nuiHTMLBox* pNewBox = new nuiHTMLBox(pNode);
+  nuiHTMLBox* pNewBox = new nuiHTMLBox(pNode, false);
+  pNewBox->ForceLineBreak(true);
+  pBox->AddItem(pNewBox);
+  
+  ParseBody(pNode, pNewBox);
+}
+
+void nuiHTMLView::ParseHeader(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
+{
+  nuiHTMLBox* pNewBox = new nuiHTMLHeader(pNode);
   pBox->AddItem(pNewBox);
   
   ParseBody(pNode, pNewBox);
@@ -455,21 +434,21 @@ void nuiHTMLView::ParseP(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 
 void nuiHTMLView::ParseFormatTag(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 {
-  pBox->AddItem(new nuiHTMLItem(pNode));
+  pBox->AddItem(new nuiHTMLItem(pNode, true));
   ParseBody(pNode, pBox);
-  pBox->AddItemEnd(new nuiHTMLItem(pNode, false));
+  pBox->AddItemEnd(new nuiHTMLItem(pNode, true));
 }
 
 void nuiHTMLView::ParseA(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 {
-  pBox->AddItem(new nuiHTMLItem(pNode));
+  pBox->AddItem(new nuiHTMLItem(pNode, true));
   ParseBody(pNode, pBox);
-  pBox->AddItemEnd(new nuiHTMLItem(pNode, false));
+  pBox->AddItemEnd(new nuiHTMLItem(pNode, true));
 }
 
 void nuiHTMLView::ParseBr(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 {
-  pBox->AddItem(new nuiHTMLItem(pNode));
+  pBox->AddItem(new nuiHTMLItem(pNode, false));
 }
 
 void nuiHTMLView::ParseSpan(nuiHTMLNode* pNode, nuiHTMLBox* pBox)

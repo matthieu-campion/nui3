@@ -12,7 +12,7 @@
 /////////////
 //class nuiHTMLImage : public nuiHTMLItem
 nuiHTMLImage::nuiHTMLImage(nuiHTMLNode* pNode)
-: nuiHTMLItem(pNode), mpTexture(NULL), mWidth(0), mHeight(0)
+: nuiHTMLItem(pNode, true), mpTexture(NULL), mWidth(0), mHeight(0)
 {
   const nuiHTMLAttrib* pSrc = pNode->GetAttribute(nuiHTMLAttrib::eAttrib_SRC);
   const nuiHTMLAttrib* pAlt = pNode->GetAttribute(nuiHTMLAttrib::eAttrib_ALT);

@@ -49,6 +49,7 @@ protected:
   void ParseTableRow(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
   void ParseList(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
   void ParseP(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
+  void ParseHeader(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
   void ParseFormatTag(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
   void ParseA(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
   void ParseBr(nuiHTMLNode* pNode, nuiHTMLBox* pBox);

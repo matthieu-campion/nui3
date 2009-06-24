@@ -344,7 +344,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E51E55670FF13B5D00FDF3BE</string>
+										<string>E51E55780FF13DD800FDF3BE</string>
 										<key>history</key>
 										<array>
 											<string>E5B74B6F0FE126B700476F43</string>
@@ -359,7 +359,7 @@
 											<string>E51E53590FF1071E00FDF3BE</string>
 											<string>E51E535A0FF1071E00FDF3BE</string>
 											<string>E51E536A0FF1077000FDF3BE</string>
-											<string>E51E53690FF1076700FDF3BE</string>
+											<string>E51E55740FF13D5300FDF3BE</string>
 										</array>
 										<key>nextStack</key>
 										<array>
@@ -682,7 +682,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>267467613.386998</real>
+	<real>267468248.244914</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -699,6 +699,7 @@
 	<array>
 		<string>E51E53330FF105CD00FDF3BE</string>
 		<string>E51E53340FF105CD00FDF3BE</string>
+		<string>/Users/meeloo/work/nui3/tutorials/RSS/RSS.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
 	<string>0 59 1561 1119 0 0 1920 1178 </string>

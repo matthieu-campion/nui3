@@ -13,7 +13,7 @@
 nuiHTMLItem::nuiHTMLItem(nuiHTMLNode* pNode, bool Inline)
 : mpNode(pNode), mInline(Inline), mEndTag(false), mLineBreak(false)
 {
-  mLineBreak = (pNode->GetTagType() == nuiHTMLNode::eTag_BR);
+  ForceLineBreak(pNode->GetTagType() == nuiHTMLNode::eTag_BR);
 }
 
 nuiHTMLItem::~nuiHTMLItem()
@@ -148,6 +148,11 @@ void nuiHTMLItem::SetEndTag(bool set)
 bool nuiHTMLItem::IsLineBreak() const
 {
   return mLineBreak;
+}
+
+void nuiHTMLItem::ForceLineBreak(bool s)
+{
+  mLineBreak = s;
 }
 
 nglString nuiHTMLItem::GetAbsoluteURL(const nglString& rString) const
