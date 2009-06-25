@@ -189,7 +189,7 @@ public:
 private:
   friend class nuiHTMLNode;
   nuiHTMLAttrib(AttributeType type, const nglString& rName, const nglString& rValue);
-  nuiHTMLAttrib(const void* tattrib);
+  nuiHTMLAttrib(const void* tattrib, nglTextEncoding encoding);
   ~nuiHTMLAttrib();
 
   AttributeType mType;
@@ -368,10 +368,10 @@ public:
   nuiHTMLNode* GetParent() const;
 protected:
   nuiHTMLNode(const nglString& rName, NodeType Type, TagType TagType, const nglString& rText);
-  nuiHTMLNode(const void* _tdoc, const void* _tnod);
+  nuiHTMLNode(const void* _tdoc, const void* _tnod, nglTextEncoding encoding);
   ~nuiHTMLNode();
-  void BuildTree(const void* _tdoc, const void* _tnod);
-  void SetFromNode(const void* _tdoc, const void* _tnod);
+  void BuildTree(const void* _tdoc, const void* _tnod, nglTextEncoding encoding);
+  void SetFromNode(const void* _tdoc, const void* _tnod, nglTextEncoding encoding);
 
   void Clear();
 

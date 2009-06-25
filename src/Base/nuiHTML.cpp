@@ -19,12 +19,12 @@ mValue(rValue)
 {
 }
 
-nuiHTMLAttrib::nuiHTMLAttrib(const void* _tattrib)
+nuiHTMLAttrib::nuiHTMLAttrib(const void* _tattrib, nglTextEncoding encoding)
 {
   TidyAttr tattr = (TidyAttr)_tattrib;
   mType = (AttributeType)tidyAttrGetId(tattr);
-  mName = tidyAttrName(tattr);
-  mValue = tidyAttrValue(tattr);
+  mName.Import(tidyAttrName(tattr), encoding);
+  mValue.Import(tidyAttrValue(tattr), encoding);
 }
 
 nuiHTMLAttrib::~nuiHTMLAttrib()
@@ -57,9 +57,9 @@ nuiHTMLNode::nuiHTMLNode(const nglString& rName, nuiHTMLNode::NodeType Type, nui
   mpParent = NULL;
 }
 
-nuiHTMLNode::nuiHTMLNode(const void* _tdoc, const void* _tnod)
+nuiHTMLNode::nuiHTMLNode(const void* _tdoc, const void* _tnod, nglTextEncoding encoding)
 {
-  SetFromNode(_tdoc, _tnod);
+  SetFromNode(_tdoc, _tnod, encoding);
   mpParent = NULL;
 }
 
@@ -84,7 +84,7 @@ void nuiHTMLNode::Clear()
   mAttributes.clear();
 }
 
-void nuiHTMLNode::SetFromNode(const void* _tdoc, const void* _tnod)
+void nuiHTMLNode::SetFromNode(const void* _tdoc, const void* _tnod, nglTextEncoding encoding)
 {
   Clear();
   
@@ -96,12 +96,12 @@ void nuiHTMLNode::SetFromNode(const void* _tdoc, const void* _tnod)
   tidyBufInit(&buf);
   if (tidyNodeGetValue(tdoc, tnod, &buf))
   {
-    mText.Import((const char*)buf.bp, (int32)buf.size, eUTF8);
+    mText.Import((const char*)buf.bp, (int32)buf.size, encoding);
     //NGL_OUT(_T("text: %ls\n"), mText.GetChars());
   }
   tidyBufFree(&buf);
   
-  mName = nglString(tidyNodeGetName(tnod));
+  mName = nglString(tidyNodeGetName(tnod), encoding);
   mType = (NodeType)tidyNodeGetType(tnod);
   mTagType = (TagType)tidyNodeGetId(tnod);
   
@@ -109,7 +109,7 @@ void nuiHTMLNode::SetFromNode(const void* _tdoc, const void* _tnod)
   TidyAttr tattr;
   for (tattr = tidyAttrFirst(tnod); tattr; tattr = tidyAttrNext(tattr))
   {
-    nuiHTMLAttrib* pAttrib = new nuiHTMLAttrib(tattr);
+    nuiHTMLAttrib* pAttrib = new nuiHTMLAttrib(tattr, encoding);
     mAttributes.push_back(pAttrib);
   }
 }
@@ -204,20 +204,20 @@ nuiHTMLAttrib* nuiHTMLNode::GetAttribute(nuiHTMLAttrib::AttributeType attrib_typ
   return NULL;
 }
 
-void nuiHTMLNode::BuildTree(const void* _tdoc, const void* _tnod)
+void nuiHTMLNode::BuildTree(const void* _tdoc, const void* _tnod, nglTextEncoding encoding)
 {
   TidyDoc tdoc = (TidyDoc)_tdoc;
   TidyNode tnod = (TidyNode)_tnod;
-  SetFromNode(_tdoc, _tnod);
+  SetFromNode(_tdoc, _tnod, encoding);
   
   TidyNode child;
   
   for (child = tidyGetChild(tnod); child; child = tidyGetNext(child))
   {
-    nuiHTMLNode* pNode = new nuiHTMLNode(_tdoc, child);
+    nuiHTMLNode* pNode = new nuiHTMLNode(_tdoc, child, encoding);
     pNode->SetParent(this);
     mChildren.push_back(pNode);
-    pNode->BuildTree(tdoc, child);
+    pNode->BuildTree(tdoc, child, encoding);
   }
 }
 
@@ -326,21 +326,87 @@ private:
   std::stack<uint8> mStack; 
 };
 
+static nglString GetEncodingString(TidyNode tnod)
+{
+  if (tidyNodeGetId(tnod) == TidyTag_META)
+  {
+    // Search for the encoding attribute
+    TidyAttr attr_content = tidyAttrGetById(tnod, TidyAttr_CONTENT);
+    TidyAttr attr_httpequiv = tidyAttrGetById(tnod, TidyAttr_HTTP_EQUIV);
+    if (attr_content && attr_httpequiv)
+    {
+      nglString contenttype(tidyAttrValue(attr_content));
+      if (contenttype.Compare(_T("content-type"), false) != 0)
+      {
+        // bleh...
+      }
+      nglString encoding(tidyAttrValue(attr_content));
+      int32 col = encoding.Find(_T("charset="));
+      encoding = encoding.Extract(col + 8);
+      NGL_OUT(_T("encoding found in the tree: %ls"), encoding.GetChars());
+      return encoding;
+    }
+  }
+  
+  TidyNode child;
+  
+  for (child = tidyGetChild(tnod); child; child = tidyGetNext(child))
+  {
+    nglString str(GetEncodingString(child));
+    if (!str.IsNull())
+      return str;
+  }
+  
+  
+  return nglString::Null;
+}
+
 bool nuiHTML::Load(nglIStream& rStream)
 {
   HTMLStream strm(rStream);
   TidyDoc tdoc = tidyCreate();
+  tidySetCharEncoding(tdoc, "utf8");
 
   TidyInputSource source;
   tidyInitSource( &source, &strm, &HTMLStream::TidyGetByte, &HTMLStream::TidyUngetByte, &HTMLStream::TidyEOF);
-  
   int res = tidyParseSource(tdoc, &source);
+    
   if ( res >= 0 )
     res = tidyCleanAndRepair(tdoc);               // Tidy it up!
   if ( res >= 0 )
     res = tidyRunDiagnostics(tdoc);               // Kvetch
+
+  nglTextEncoding encoding = eUTF8;
+  nglString encoding_string(GetEncodingString(tidyGetRoot(tdoc)));
+
+  //ascii, latin1, raw, utf8, iso2022, mac, win1252, utf16le, utf16be, utf16, big5 shiftjis
+  if (encoding_string.Compare(_T("utf8"), false) == 0 || encoding_string.Compare(_T("utf-8"), false) == 0)
+    encoding = eUTF8;
+  else if (encoding_string.Compare(_T("ascii"), false) == 0)
+    encoding = eUTF8;
+  else if (encoding_string.Compare(_T("latin1"), false) == 0)
+    encoding = eISO8859_1;
+  else if (encoding_string.Compare(_T("raw"), false) == 0)
+    encoding = eUTF8;
+  else if (encoding_string.Compare(_T("mac"), false) == 0)
+    encoding = eAppleRoman;
+  else if (encoding_string.Compare(_T("win1252"), false) == 0)
+    encoding = eCP1252;
+  else if (encoding_string.Compare(_T("iso2022"), false) == 0)
+    encoding = eUTF8; // ???
+  else if (encoding_string.Compare(_T("utf16le"), false) == 0 || encoding_string.Compare(_T("utf16-le"), false) == 0)
+    encoding = eUCS2; // ???
+  else if (encoding_string.Compare(_T("utf16be"), false) == 0 || encoding_string.Compare(_T("utf16-be"), false) == 0)
+    encoding = eUCS2; // ???
+  else if (encoding_string.Compare(_T("utf16"), false) == 0 || encoding_string.Compare(_T("utf-16"), false) == 0)
+    encoding = eUCS2; // ???
+  else if (encoding_string.Compare(_T("big5"), false) == 0)
+    encoding = eBig5;
+  else if (encoding_string.Compare(_T("shiftjis"), false) == 0)
+    encoding = eSJIS;
   
-  BuildTree(tdoc, tidyGetRoot(tdoc));
+    
+  BuildTree(tdoc, tidyGetRoot(tdoc), encoding);
   
   tidyRelease(tdoc);
   

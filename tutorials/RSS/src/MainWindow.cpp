@@ -35,9 +35,10 @@ MainWindow::~MainWindow()
 void MainWindow::OnCreation()
 {
   //nglString url(_T("http://twitter.com/statuses/user_timeline/21746237.rss"));
-  //nglString url(_T("feed://feeds.macbidouille.com/macbidouille/"));
+  nglString url(_T("feed://feeds.macbidouille.com/macbidouille/"));
   //nglString url(_T("feed://www.lemonde.fr/rss/une.xml"));
-  nglString url(_T("feed://newsrss.bbc.co.uk/rss/newsonline_world_edition/front_page/rss.xml"));
+  //nglString url(_T("feed://newsrss.bbc.co.uk/rss/newsonline_world_edition/front_page/rss.xml"));
+  
   
   // a vertical box for page layout
   nuiVBox* pLayoutBox = new nuiVBox(0);

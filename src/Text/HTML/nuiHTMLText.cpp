@@ -51,6 +51,8 @@ void nuiHTMLText::Layout(nuiHTMLContext& rContext)
   mpLayout->SetStrikeThrough(rContext.mStrikeThrough);
   mpLayout->Layout(mText);
   mIdealRect = mpLayout->GetRect();
+  mTextFgColor = rContext.mTextFgColor;
+  mTextBgColor = rContext.mTextBgColor;
   //printf("text layout done (%ls)\n", mIdealRect.GetValue().GetChars());
 }
 
