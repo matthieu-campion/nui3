@@ -93,6 +93,10 @@ void nuiHTMLNode::SetFromNode(const void* _tdoc, const void* _tnod, nglTextEncod
   
   TidyDoc tdoc = (TidyDoc)_tdoc;
   TidyNode tnod = (TidyNode)_tnod;
+
+  mName = nglString(tidyNodeGetName(tnod), encoding);
+  mType = (NodeType)tidyNodeGetType(tnod);
+  mTagType = (TagType)tidyNodeGetId(tnod);
   
   nglString text;
   TidyBuffer buf;
@@ -100,13 +104,9 @@ void nuiHTMLNode::SetFromNode(const void* _tdoc, const void* _tnod, nglTextEncod
   if (tidyNodeGetValue(tdoc, tnod, &buf))
   {
     mText.Import((const char*)buf.bp, (int32)buf.size, encoding);
-    //NGL_OUT(_T("text: %ls\n"), mText.GetChars());
+    //NGL_OUT(_T("<%ls> %ls\n"), mName.GetChars(), mText.GetChars());
   }
   tidyBufFree(&buf);
-  
-  mName = nglString(tidyNodeGetName(tnod), encoding);
-  mType = (NodeType)tidyNodeGetType(tnod);
-  mTagType = (TagType)tidyNodeGetId(tnod);
   
   // Fill the attributes:
   TidyAttr tattr;
@@ -344,10 +344,10 @@ static nglString GetEncodingString(TidyNode tnod)
         // bleh...
       }
       nglString encoding(tidyAttrValue(attr_content));
-      NGL_OUT(_T("content found in the tree: %ls"), encoding.GetChars());
+      //NGL_OUT(_T("content found in the tree: %ls"), encoding.GetChars());
       int32 col = encoding.Find(_T("charset="));
       encoding = encoding.Extract(col + 8);
-      NGL_OUT(_T("encoding found in the tree: %ls"), encoding.GetChars());
+      //NGL_OUT(_T("encoding found in the tree: %ls"), encoding.GetChars());
       return encoding;
     }
   }
@@ -397,6 +397,8 @@ bool nuiHTML::Load(nglIStream& rStream, nglTextEncoding OverrideContentsEncoding
     }
   }
   
+  char* pStr = NULL;
+
   if (encoding != eUTF8)
   {
     // Release the doc to create a new one
@@ -407,10 +409,8 @@ bool nuiHTML::Load(nglIStream& rStream, nglTextEncoding OverrideContentsEncoding
     rStream.PipeTo(omem);
     nglString decoded;
     decoded.Import(omem.GetBufferData(), omem.GetSize(), encoding);
-    std::string str(decoded.GetStdString(), eUTF8);
-    printf("result:\n\n");
-    write(0, str.c_str(), str.size());
-    nglIMemory imem(str.c_str(), str.size());
+    pStr = decoded.Export(eUTF8);
+    nglIMemory imem(pStr, strlen(pStr));
     
     HTMLStream strm(imem);
     tdoc = tidyCreate();
@@ -428,6 +428,9 @@ bool nuiHTML::Load(nglIStream& rStream, nglTextEncoding OverrideContentsEncoding
   BuildTree(tdoc, tidyGetRoot(tdoc), eUTF8);
   
   tidyRelease(tdoc);
+  
+  if (pStr)
+    free(pStr);
   
   return res < 2;
 }

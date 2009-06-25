@@ -331,7 +331,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>E580F0790FE29947006AC2E1</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>nuiHTMLView.cpp</string>
+								<string>MainWindow.cpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -339,26 +339,23 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>E580F07A0FE29947006AC2E1</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>nuiHTMLView.cpp</string>
+										<string>MainWindow.cpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E51E59360FF3BB4900FDF3BE</string>
+										<string>E51E5A3A0FF3D1A800FDF3BE</string>
 										<key>history</key>
 										<array>
 											<string>E580F07F0FE29947006AC2E1</string>
 											<string>E580F13D0FE2A93F006AC2E1</string>
 											<string>E580F1550FE2AA4F006AC2E1</string>
-											<string>E51E58D00FF3B3EF00FDF3BE</string>
 											<string>E51E58D10FF3B3EF00FDF3BE</string>
 											<string>E51E58D20FF3B3EF00FDF3BE</string>
-											<string>E51E58F00FF3B4D400FDF3BE</string>
-											<string>E51E58F10FF3B4D400FDF3BE</string>
+											<string>E51E5A380FF3D19C00FDF3BE</string>
 										</array>
 										<key>prevStack</key>
 										<array>
 											<string>E580F0810FE29947006AC2E1</string>
-											<string>E51E58F30FF3B4D400FDF3BE</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -658,7 +655,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>267631433.264575</real>
+	<real>267637160.361992</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -673,8 +670,10 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
+		<string>E51E5A3B0FF3D1A800FDF3BE</string>
 		<string>E51E58E20FF3B40000FDF3BE</string>
 		<string>E51E58E30FF3B40000FDF3BE</string>
+		<string>/Users/meeloo/work/nui3/tutorials/HTMLTree/HTMLTree.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
 	<string>0 59 1920 1119 0 0 1920 1178 </string>

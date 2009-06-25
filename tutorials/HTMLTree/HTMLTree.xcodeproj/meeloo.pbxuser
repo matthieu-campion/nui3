@@ -61,6 +61,9 @@
 			E51E58F70FF3B4E300FDF3BE /* PBXTextBookmark */ = E51E58F70FF3B4E300FDF3BE /* PBXTextBookmark */;
 			E51E590C0FF3BA5100FDF3BE /* PBXTextBookmark */ = E51E590C0FF3BA5100FDF3BE /* PBXTextBookmark */;
 			E51E59360FF3BB4900FDF3BE /* PBXTextBookmark */ = E51E59360FF3BB4900FDF3BE /* PBXTextBookmark */;
+			E51E5A380FF3D19C00FDF3BE /* PBXTextBookmark */ = E51E5A380FF3D19C00FDF3BE /* PBXTextBookmark */;
+			E51E5A390FF3D1A200FDF3BE /* PBXTextBookmark */ = E51E5A390FF3D1A200FDF3BE /* PBXTextBookmark */;
+			E51E5A3A0FF3D1A800FDF3BE /* PBXTextBookmark */ = E51E5A3A0FF3D1A800FDF3BE /* PBXTextBookmark */;
 			E580F07B0FE29947006AC2E1 = E580F07B0FE29947006AC2E1 /* PBXTextBookmark */;
 			E580F07F0FE29947006AC2E1 = E580F07F0FE29947006AC2E1 /* PBXTextBookmark */;
 			E580F0810FE29947006AC2E1 = E580F0810FE29947006AC2E1 /* PBXTextBookmark */;
@@ -92,9 +95,9 @@
 	};
 	61A9DFF10B83433800BC506C /* MainWindow.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1652, 1610}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1652, 1596}}";
 			sepNavSelRange = "{779, 0}";
-			sepNavVisRange = "{155, 1679}";
+			sepNavVisRange = "{221, 1680}";
 		};
 	};
 	61A9DFF20B83433800BC506C /* MainWindow.h */ = {
@@ -305,6 +308,36 @@
 		vrLen = 1394;
 		vrLoc = 2632;
 	};
+	E51E5A380FF3D19C00FDF3BE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 39";
+		rLen = 0;
+		rLoc = 779;
+		rType = 0;
+		vrLen = 1532;
+		vrLoc = 262;
+	};
+	E51E5A390FF3D1A200FDF3BE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 39";
+		rLen = 0;
+		rLoc = 779;
+		rType = 0;
+		vrLen = 1645;
+		vrLoc = 221;
+	};
+	E51E5A3A0FF3D1A800FDF3BE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 39";
+		rLen = 0;
+		rLoc = 779;
+		rType = 0;
+		vrLen = 1680;
+		vrLoc = 221;
+	};
 	E580F04E0FE27B10006AC2E1 /* HTMLTree */ = {
 		isa = PBXExecutable;
 		activeArgIndices = (
@@ -461,7 +494,7 @@
 		ignoreCount = 0;
 		lineNumber = 108;
 		location = HTMLTreeD;
-		modificationTime = 267634029.779139;
+		modificationTime = 267637155.379833;
 		state = 2;
 	};
 	E580F0F40FE29EFE006AC2E1 /* nuiTreeView.h */ = {
