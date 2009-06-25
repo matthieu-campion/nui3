@@ -47,6 +47,7 @@ bool nglImageGIFCodec::Probe(nglIStream* pIStream)
       return true;
     }
   }
+  return false;
 }
 
 static int getTransparentColor(GifFileType * gft, int32 framenum)
