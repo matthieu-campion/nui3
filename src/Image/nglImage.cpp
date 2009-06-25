@@ -783,10 +783,10 @@ void nglImage::Init()
   #ifdef HAVE_LIBJPEG
     mpCodecInfos->push_back(new nglImageJPEGCodecInfo());
   #endif
-    mpCodecInfos->push_back(new nglImageGIFCodecInfo());
   #ifdef HAVE_COREGRAPHICS
     mpCodecInfos->push_back(new nglImageCGCodecInfo());
   #endif
+    mpCodecInfos->push_back(new nglImageGIFCodecInfo());
   }
 }
 
