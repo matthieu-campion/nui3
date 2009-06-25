@@ -3,14 +3,14 @@
 
 /* platform.h -- Platform specifics
 
-  (c) 1998-2007 (W3C) MIT, ERCIM, Keio University
+  (c) 1998-2008 (W3C) MIT, ERCIM, Keio University
   See tidy.h for the copyright notice.
 
   CVS Info :
 
-    $Author: meeloo $ 
-    $Date: 2008-03-12 13:04:01 $ 
-    $Revision: 1.4 $ 
+    $Author: arnaud02 $ 
+    $Date: 2008/03/17 12:57:01 $ 
+    $Revision: 1.66 $ 
 
 */
 
@@ -121,6 +121,12 @@ extern "C" {
 #define BSD_BASED_OS
 #ifndef PLATFORM_NAME
 #define PLATFORM_NAME "OpenBSD"
+#endif
+
+#elif defined(__DragonFly__)
+#define BSD_BASED_OS
+#ifndef PLATFORM_NAME
+#define PLATFORM_NAME "DragonFly"
 #endif
 
 #elif defined(__MINT__)
@@ -502,9 +508,7 @@ extern "C" {
 #  define TIDY_CALL __stdcall
 #endif
 #endif
-#else
-#define TIDY_EXPORT
-#define TIDY_CALL
+
 #endif /* _WIN32 */
 
 /* hack for gnu sys/types.h file which defines uint and ulong */
@@ -577,19 +581,16 @@ typedef const tmbchar* ctmbstr; /* Ditto, but const */
   work around is to avoid bool altogether
   by introducing a new enum called Bool
 */
-
-// We could use the C99 definition where supported
-#ifdef linux
-  //typedef bool Bool;
-#define no false 
-#define yes true 
-#else 
+/* We could use the C99 definition where supported
+typedef _Bool Bool;
+#define no (_Bool)0
+#define yes (_Bool)1
+*/
 typedef enum
 {
    no,
    yes
 } Bool;
-#endif
 
 /* for NULL pointers 
 #define null ((const void*)0)

@@ -10,9 +10,9 @@
   See tidy.h for the copyright notice.
 
   CVS Info:
-    $Author: meeloo $ 
-    $Date: 2008-02-27 17:58:54 $ 
-    $Revision: 1.1 $ 
+    $Author: arnaud02 $ 
+    $Date: 2007/05/30 16:47:31 $ 
+    $Revision: 1.8 $ 
 */
 
 #include "buffio.h"

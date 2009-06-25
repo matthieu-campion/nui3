@@ -392,7 +392,7 @@ public:
   nuiHTML();
   ~nuiHTML();
   
-  bool Load(nglIStream& rStream);
+  bool Load(nglIStream& rStream, nglTextEncoding OverrideContentsEncoding = eEncodingUnknown); ///< By default we don't override the encoding indicated by the contents
 
   const nglString& GetSourceURL() const;
   void SetSourceURL(const nglString& rURL);

@@ -5,9 +5,9 @@
 
   CVS Info :
 
-    $Author: meeloo $ 
-    $Date: 2008-02-27 17:58:54 $ 
-    $Revision: 1.1 $ 
+    $Author: arnaud02 $ 
+    $Date: 2007/05/30 16:47:31 $ 
+    $Revision: 1.10 $ 
 
   Uses public interfaces to abstract input source and output
   sink, which may be user supplied or either FILE* or memory

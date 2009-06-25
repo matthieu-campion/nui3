@@ -5,9 +5,9 @@
 
   CVS Info :
 
-    $Author: meeloo $ 
-    $Date: 2008-02-27 17:58:54 $ 
-    $Revision: 1.1 $ 
+    $Author: arnaud02 $ 
+    $Date: 2007/01/23 11:17:46 $ 
+    $Revision: 1.14 $ 
 
   Requires buffer to automatically grow as bytes are added.
   Must keep track of current read and write points.

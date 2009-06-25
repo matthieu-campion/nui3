@@ -1,13 +1,13 @@
 /* attrs.c -- recognize HTML attributes
 
-  (c) 1998-2007 (W3C) MIT, ERCIM, Keio University
+  (c) 1998-2009 (W3C) MIT, ERCIM, Keio University
   See tidy.h for the copyright notice.
   
   CVS Info :
 
-    $Author: meeloo $ 
-    $Date: 2008-02-27 17:58:54 $ 
-    $Revision: 1.1 $ 
+    $Author: arnaud02 $ 
+    $Date: 2009/03/26 13:05:22 $ 
+    $Revision: 1.132 $ 
 
 */
 
@@ -516,7 +516,7 @@ static const struct _colors fancy_colors[] =
 #endif
 
 #if ATTRIBUTE_HASH_LOOKUP
-static uint hash(ctmbstr s)
+static uint attrsHash(ctmbstr s)
 {
     uint hashval;
 
@@ -526,7 +526,7 @@ static uint hash(ctmbstr s)
     return hashval % ATTRIBUTE_HASH_SIZE;
 }
 
-static const Attribute *install(TidyDocImpl* doc, TidyAttribImpl * attribs,
+static const Attribute *attrsInstall(TidyDocImpl* doc, TidyAttribImpl * attribs,
                                 const Attribute* old)
 {
     AttrHash *np;
@@ -537,7 +537,7 @@ static const Attribute *install(TidyDocImpl* doc, TidyAttribImpl * attribs,
         np = (AttrHash *)TidyDocAlloc(doc, sizeof(*np));
         np->attr = old;
 
-        hashval = hash(old->name);
+        hashval = attrsHash(old->name);
         np->next = attribs->hashtab[hashval];
         attribs->hashtab[hashval] = np;
     }
@@ -545,10 +545,10 @@ static const Attribute *install(TidyDocImpl* doc, TidyAttribImpl * attribs,
     return old;
 }
 
-static void removeFromHash( TidyDocImpl* doc, TidyAttribImpl *attribs,
+static void attrsRemoveFromHash( TidyDocImpl* doc, TidyAttribImpl *attribs,
                             ctmbstr s )
 {
-    uint h = hash(s);
+    uint h = attrsHash(s);
     AttrHash *p, *prev = NULL;
     for (p = attribs->hashtab[h]; p && p->attr; p = p->next)
     {
@@ -566,7 +566,7 @@ static void removeFromHash( TidyDocImpl* doc, TidyAttribImpl *attribs,
     }
 }
 
-static void emptyHash( TidyDocImpl* doc, TidyAttribImpl * attribs )
+static void attrsEmptyHash( TidyDocImpl* doc, TidyAttribImpl * attribs )
 {
     AttrHash *dict, *next;
     uint i;
@@ -587,7 +587,7 @@ static void emptyHash( TidyDocImpl* doc, TidyAttribImpl * attribs )
 }
 #endif
 
-static const Attribute* lookup(TidyDocImpl* doc,
+static const Attribute* attrsLookup(TidyDocImpl* doc,
                                TidyAttribImpl* ARG_UNUSED(attribs),
                                ctmbstr atnam)
 {
@@ -600,13 +600,13 @@ static const Attribute* lookup(TidyDocImpl* doc,
         return NULL;
 
 #if ATTRIBUTE_HASH_LOOKUP
-    for (p = attribs->hashtab[hash(atnam)]; p && p->attr; p = p->next)
+    for (p = attribs->hashtab[attrsHash(atnam)]; p && p->attr; p = p->next)
         if (TY_(tmbstrcmp)(atnam, p->attr->name) == 0)
             return p->attr;
 
     for (np = attribute_defs; np && np->name; ++np)
         if (TY_(tmbstrcmp)(atnam, np->name) == 0)
-            return install(doc, attribs, np);
+            return attrsInstall(doc, attribs, np);
 #else
     for (np = attribute_defs; np && np->name; ++np)
         if (TY_(tmbstrcmp)(atnam, np->name) == 0)
@@ -633,7 +633,7 @@ AttVal* TY_(AttrGetById)( Node* node, TidyAttrId id )
 const Attribute* TY_(FindAttribute)( TidyDocImpl* doc, AttVal *attval )
 {
     if ( attval )
-       return lookup( doc, &doc->attribs, attval->attribute );
+       return attrsLookup( doc, &doc->attribs, attval->attribute );
     return NULL;
 }
 
@@ -660,7 +660,7 @@ AttVal* TY_(AddAttribute)( TidyDocImpl* doc,
     else
         av->value = NULL;
 
-    av->dict = lookup(doc, &doc->attribs, name);
+    av->dict = attrsLookup(doc, &doc->attribs, name);
 
     TY_(InsertAttributeAtEnd)(node, av);
     return av;
@@ -688,7 +688,7 @@ AttVal* TY_(RepairAttrValue)(TidyDocImpl* doc, Node* node, ctmbstr name, ctmbstr
 static Bool CheckAttrType( TidyDocImpl* doc,
                            ctmbstr attrname, AttrCheck type )
 {
-    const Attribute* np = lookup( doc, &doc->attribs, attrname );
+    const Attribute* np = attrsLookup( doc, &doc->attribs, attrname );
     return (Bool)( np && np->attrchk == type );
 }
 
@@ -894,7 +894,7 @@ static void FreeDeclaredAttributes( TidyDocImpl* doc )
     {
         attribs->declared_attr_list = dict->next;
 #if ATTRIBUTE_HASH_LOOKUP
-        removeFromHash( doc, &doc->attribs, dict->name );
+        attrsRemoveFromHash( doc, &doc->attribs, dict->name );
 #endif
         TidyDocFree( doc, dict->name );
         TidyDocFree( doc, dict );
@@ -904,7 +904,7 @@ static void FreeDeclaredAttributes( TidyDocImpl* doc )
 void TY_(FreeAttrTable)( TidyDocImpl* doc )
 {
 #if ATTRIBUTE_HASH_LOOKUP
-    emptyHash( doc, &doc->attribs );
+    attrsEmptyHash( doc, &doc->attribs );
 #endif
     TY_(FreeAnchors)( doc );
     FreeDeclaredAttributes( doc );
@@ -1180,6 +1180,7 @@ void TY_(CheckUrl)( TidyDocImpl* doc, Node *node, AttVal *attval)
     uint escape_count = 0, backslash_count = 0;
     uint i, pos = 0;
     uint len;
+    Bool isJavascript = no;
     
     if (!AttrHasValue(attval))
     {
@@ -1189,12 +1190,15 @@ void TY_(CheckUrl)( TidyDocImpl* doc, Node *node, AttVal *attval)
 
     p = attval->value;
     
+    isJavascript =
+        TY_(tmbstrncmp)(p,"javascript:",sizeof("javascript:")-1)==0;
+
     for (i = 0; '\0' != (c = p[i]); ++i)
     {
         if (c == '\\')
         {
             ++backslash_count;
-            if ( cfgBool(doc, TidyFixBackslash) )
+            if ( cfgBool(doc, TidyFixBackslash) && !isJavascript)
                 p[i] = '/';
         }
         else if ((c > 0x7e) || (c <= 0x20) || (strchr("<>", c)))
@@ -1220,7 +1224,7 @@ void TY_(CheckUrl)( TidyDocImpl* doc, Node *node, AttVal *attval)
     }
     if ( backslash_count )
     {
-        if ( cfgBool(doc, TidyFixBackslash) )
+        if ( cfgBool(doc, TidyFixBackslash) && !isJavascript )
             TY_(ReportAttrError)( doc, node, attval, FIXED_BACKSLASH );
         else
             TY_(ReportAttrError)( doc, node, attval, BACKSLASH_IN_URI );

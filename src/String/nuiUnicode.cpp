@@ -856,3 +856,129 @@ nglString nuiGetUnicodeScriptName(nuiUnicodeScript script)
   return nglString::Null;
 }
 #undef NAME
+
+static std::vector<std::pair<nglString, nglTextEncoding> > encodings;
+
+nglTextEncoding nuiGetTextEncodingFromString(const nglString& WebString)
+{
+  if (encodings.empty())
+  {
+    // ISO standards
+    encodings.push_back(std::make_pair(_T("ISO_8859_1"), eISO8859_1));    ///< Latin1 (West European)
+    encodings.push_back(std::make_pair(_T("ISO_8859_2"), eISO8859_2));  ///< Latin2 (East European)
+    encodings.push_back(std::make_pair(_T("ISO_8859_3"), eISO8859_3));  ///< Latin3 (South European)
+    encodings.push_back(std::make_pair(_T("ISO_8859_4"), eISO8859_4));  ///< Latin4 (North European)
+    encodings.push_back(std::make_pair(_T("ISO_8859_5"), eISO8859_5));  ///< Cyrillic (see also KOI8)
+    encodings.push_back(std::make_pair(_T("ISO_8859_6"), eISO8859_6));  ///< Arabic
+    encodings.push_back(std::make_pair(_T("ISO_8859_7"), eISO8859_7));  ///< Greek
+    encodings.push_back(std::make_pair(_T("ISO_8859_8"), eISO8859_8));  ///< Hebrew
+    encodings.push_back(std::make_pair(_T("ISO_8859_9"), eISO8859_9));  ///< Latin5 (Turkish)
+    encodings.push_back(std::make_pair(_T("ISO_8859_10"), eISO8859_10)); ///< Latin6 (Nordic)
+    encodings.push_back(std::make_pair(_T("ISO_8859_11"), eISO8859_11)); ///< Thai
+    encodings.push_back(std::make_pair(_T("ISO_8859_12"), eISO8859_12)); ///< reserved
+    encodings.push_back(std::make_pair(_T("ISO_8859_13"), eISO8859_13)); ///< Latin7 (Baltic Rim)
+    encodings.push_back(std::make_pair(_T("ISO_8859_14"), eISO8859_14)); ///< Latin8 (Celtic)
+    encodings.push_back(std::make_pair(_T("ISO_8859_15"), eISO8859_15)); ///< Latin15 or Latin0 (Latin1 replacement, with 'euro')
+    
+    encodings.push_back(std::make_pair(_T("8859_1"), eISO8859_1));    ///< Latin1 (West European)
+    encodings.push_back(std::make_pair(_T("8859_2"), eISO8859_2));  ///< Latin2 (East European)
+    encodings.push_back(std::make_pair(_T("8859_3"), eISO8859_3));  ///< Latin3 (South European)
+    encodings.push_back(std::make_pair(_T("8859_4"), eISO8859_4));  ///< Latin4 (North European)
+    encodings.push_back(std::make_pair(_T("8859_5"), eISO8859_5));  ///< Cyrillic (see also KOI8)
+    encodings.push_back(std::make_pair(_T("8859_6"), eISO8859_6));  ///< Arabic
+    encodings.push_back(std::make_pair(_T("8859_7"), eISO8859_7));  ///< Greek
+    encodings.push_back(std::make_pair(_T("8859_8"), eISO8859_8));  ///< Hebrew
+    encodings.push_back(std::make_pair(_T("8859_9"), eISO8859_9));  ///< Latin5 (Turkish)
+    encodings.push_back(std::make_pair(_T("8859_10"), eISO8859_10)); ///< Latin6 (Nordic)
+    encodings.push_back(std::make_pair(_T("8859_11"), eISO8859_11)); ///< Thai
+    encodings.push_back(std::make_pair(_T("8859_12"), eISO8859_12)); ///< reserved
+    encodings.push_back(std::make_pair(_T("8859_13"), eISO8859_13)); ///< Latin7 (Baltic Rim)
+    encodings.push_back(std::make_pair(_T("8859_14"), eISO8859_14)); ///< Latin8 (Celtic)
+    encodings.push_back(std::make_pair(_T("8859_15"), eISO8859_15)); ///< Latin15 or Latin0 (Latin1 replacement, with 'euro')
+    
+    
+    // Mac
+    encodings.push_back(std::make_pair(_T("APPLEROMAN"), eAppleRoman)); ///< Apple Roman
+    encodings.push_back(std::make_pair(_T("MACINTOSH"), eAppleRoman)); ///< Apple Roman
+    encodings.push_back(std::make_pair(_T("MAC"), eAppleRoman)); ///< Apple Roman
+    
+    // Windows code pages
+    encodings.push_back(std::make_pair(_T("CP_1250"), eCP1250));     ///< Code page 1250 (Central Europe)
+    encodings.push_back(std::make_pair(_T("CP_1251"), eCP1251));     ///< Code page 1251 (Cyrillic)
+    encodings.push_back(std::make_pair(_T("CP_1252"), eCP1252));     ///< Code page 1252 (Latin I)
+    encodings.push_back(std::make_pair(_T("CP_1253"), eCP1253));     ///< Code page 1253 (Greek)
+    encodings.push_back(std::make_pair(_T("CP_1254"), eCP1254));     ///< Code page 1254 (Turkish)
+    encodings.push_back(std::make_pair(_T("CP_1255"), eCP1255));     ///< Code page 1255 (Hebrew)
+    encodings.push_back(std::make_pair(_T("CP_1256"), eCP1256));     ///< Code page 1256 (Arabic)
+    encodings.push_back(std::make_pair(_T("CP_1257"), eCP1257));     ///< Code page 1257 (Baltic)
+    encodings.push_back(std::make_pair(_T("CP_1258"), eCP1258));     ///< Code page 1258 (Viet Nam)
+    encodings.push_back(std::make_pair(_T("CP_874"),  eCP874));      ///< Code page 874 (Thai)
+    
+    encodings.push_back(std::make_pair(_T("1250"), eCP1250));     ///< Code page 1250 (Central Europe)
+    encodings.push_back(std::make_pair(_T("1251"), eCP1251));     ///< Code page 1251 (Cyrillic)
+    encodings.push_back(std::make_pair(_T("1252"), eCP1252));     ///< Code page 1252 (Latin I)
+    encodings.push_back(std::make_pair(_T("1253"), eCP1253));     ///< Code page 1253 (Greek)
+    encodings.push_back(std::make_pair(_T("1254"), eCP1254));     ///< Code page 1254 (Turkish)
+    encodings.push_back(std::make_pair(_T("1255"), eCP1255));     ///< Code page 1255 (Hebrew)
+    encodings.push_back(std::make_pair(_T("1256"), eCP1256));     ///< Code page 1256 (Arabic)
+    encodings.push_back(std::make_pair(_T("1257"), eCP1257));     ///< Code page 1257 (Baltic)
+    encodings.push_back(std::make_pair(_T("1258"), eCP1258));     ///< Code page 1258 (Viet Nam)
+    encodings.push_back(std::make_pair(_T("874"),  eCP874));      ///< Code page 874 (Thai)
+    
+    // Multi-byte encodings_
+    encodings.push_back(std::make_pair(_T("KOI8_R"),   eKOI8R));      ///< KOI8-R (Cyrillic)
+    encodings.push_back(std::make_pair(_T("S_JIS"),    eSJIS));       ///< Shift-JIS (Japanese)
+    encodings.push_back(std::make_pair(_T("SHIFT_JIS"),    eSJIS));       ///< Shift-JIS (Japanese)
+    encodings.push_back(std::make_pair(_T("EUC_JP"),   eEUCJP));      ///< EUC-JP (Japanese)
+    encodings.push_back(std::make_pair(_T("GB_2312"),  eGB2312));     ///< GB-2312 (Chinese)
+    encodings.push_back(std::make_pair(_T("BIG_5"),    eBig5));       ///< Big5 (Traditional chinese)
+    
+    // Windows code pages
+    encodings.push_back(std::make_pair(_T("CP_932"),   eCP932));      ///< Code page 932 (Japanese Shift-JIS)
+    encodings.push_back(std::make_pair(_T("CP_936"),   eCP936));      ///< Code page 936 (Simplified Chinese GBK, \e not GB2312)
+    encodings.push_back(std::make_pair(_T("CP_949"),   eCP949));      ///< Code page 949 (Korean)
+    encodings.push_back(std::make_pair(_T("CP_950"),   eCP950));      ///< Code page 950 (big5)
+    encodings.push_back(std::make_pair(_T("CP_1200"),  eCP1200));     ///< Code page 1200 (Unicode BMP, UCS-2, native endian)
+    
+    encodings.push_back(std::make_pair(_T("932"),   eCP932));      ///< Code page 932 (Japanese Shift-JIS)
+    encodings.push_back(std::make_pair(_T("936"),   eCP936));      ///< Code page 936 (Simplified Chinese GBK, \e not GB2312)
+    encodings.push_back(std::make_pair(_T("949"),   eCP949));      ///< Code page 949 (Korean)
+    encodings.push_back(std::make_pair(_T("950"),   eCP950));      ///< Code page 950 (big5)
+    encodings.push_back(std::make_pair(_T("1200"),  eCP1200));     ///< Code page 1200 (Unicode BMP, UCS-2, native endian)
+    
+    
+    // Unicode variants
+    encodings.push_back(std::make_pair(_T("UTF_7"), eUTF7));       ///< UTF-7 (Unicode)
+    encodings.push_back(std::make_pair(_T("UTF_8"), eUTF8));       ///< UTF-8 (Unicode)
+    encodings.push_back(std::make_pair(_T("UCS_2"), eUCS2));       ///< UCS-2 (Unicode)
+    encodings.push_back(std::make_pair(_T("UCS_4"), eUCS4));       ///< UCS-4 (Unicode)
+  }
+  
+  for (uint32 i = 0; i < encodings.size(); i++)
+  {
+    nglTextEncoding res = encodings[i].second;
+    nglString input(encodings[i].first);
+    nglString source(WebString);
+    source.Replace(_T(" "), nglString::Empty);
+    source.ToUpper();
+    
+    //NGL_OUT(_T("1) Web: '%ls' Source: '%ls' Input: '%ls'\n"), WebString.GetChars(), source.GetChars(), input.GetChars());
+    if (source == input)
+      return res;
+    
+    // Try - instead of _
+    input.Replace('_', '-');
+    //NGL_OUT(_T("2) Web: '%ls' Source: '%ls' Input: '%ls'\n"), WebString.GetChars(), source.GetChars(), input.GetChars());
+    if (source == input)
+      return res;
+    
+    // Try ' ' instead of _
+    input.Replace(_T("-"), nglString::Empty);
+    //NGL_OUT(_T("3) Web: '%ls' Source: '%ls' Input: '%ls'\n"), WebString.GetChars(), source.GetChars(), input.GetChars());
+    if (source == input)
+      return res;
+  }
+  
+  return eUTF8;
+}
+

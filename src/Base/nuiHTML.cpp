@@ -7,6 +7,9 @@
 
 #include "nui.h"
 #include "nuiHTML.h"
+#include "nglIMemory.h"
+#include "nglOMemory.h"
+#include "nuiUnicode.h"
 
 #include "tidy.h"
 #include "buffio.h"
@@ -341,6 +344,7 @@ static nglString GetEncodingString(TidyNode tnod)
         // bleh...
       }
       nglString encoding(tidyAttrValue(attr_content));
+      NGL_OUT(_T("content found in the tree: %ls"), encoding.GetChars());
       int32 col = encoding.Find(_T("charset="));
       encoding = encoding.Extract(col + 8);
       NGL_OUT(_T("encoding found in the tree: %ls"), encoding.GetChars());
@@ -361,52 +365,67 @@ static nglString GetEncodingString(TidyNode tnod)
   return nglString::Null;
 }
 
-bool nuiHTML::Load(nglIStream& rStream)
+bool nuiHTML::Load(nglIStream& rStream, nglTextEncoding OverrideContentsEncoding)
 {
-  HTMLStream strm(rStream);
-  TidyDoc tdoc = tidyCreate();
-  tidySetCharEncoding(tdoc, "utf8");
-
-  TidyInputSource source;
-  tidyInitSource( &source, &strm, &HTMLStream::TidyGetByte, &HTMLStream::TidyUngetByte, &HTMLStream::TidyEOF);
-  int res = tidyParseSource(tdoc, &source);
-    
-  if ( res >= 0 )
-    res = tidyCleanAndRepair(tdoc);               // Tidy it up!
-  if ( res >= 0 )
-    res = tidyRunDiagnostics(tdoc);               // Kvetch
-
+  int res = -1;
   nglTextEncoding encoding = eUTF8;
-  nglString encoding_string(GetEncodingString(tidyGetRoot(tdoc)));
-
-  //ascii, latin1, raw, utf8, iso2022, mac, win1252, utf16le, utf16be, utf16, big5 shiftjis
-  if (encoding_string.Compare(_T("utf8"), false) == 0 || encoding_string.Compare(_T("utf-8"), false) == 0)
-    encoding = eUTF8;
-  else if (encoding_string.Compare(_T("ascii"), false) == 0)
-    encoding = eUTF8;
-  else if (encoding_string.Compare(_T("latin1"), false) == 0)
-    encoding = eISO8859_1;
-  else if (encoding_string.Compare(_T("raw"), false) == 0)
-    encoding = eUTF8;
-  else if (encoding_string.Compare(_T("mac"), false) == 0)
-    encoding = eAppleRoman;
-  else if (encoding_string.Compare(_T("win1252"), false) == 0)
-    encoding = eCP1252;
-  else if (encoding_string.Compare(_T("iso2022"), false) == 0)
-    encoding = eUTF8; // ???
-  else if (encoding_string.Compare(_T("utf16le"), false) == 0 || encoding_string.Compare(_T("utf16-le"), false) == 0)
-    encoding = eUCS2; // ???
-  else if (encoding_string.Compare(_T("utf16be"), false) == 0 || encoding_string.Compare(_T("utf16-be"), false) == 0)
-    encoding = eUCS2; // ???
-  else if (encoding_string.Compare(_T("utf16"), false) == 0 || encoding_string.Compare(_T("utf-16"), false) == 0)
-    encoding = eUCS2; // ???
-  else if (encoding_string.Compare(_T("big5"), false) == 0)
-    encoding = eBig5;
-  else if (encoding_string.Compare(_T("shiftjis"), false) == 0)
-    encoding = eSJIS;
-  
+  TidyDoc tdoc = NULL;
+  {
+    HTMLStream strm(rStream);
+    tdoc = tidyCreate();
+    tidySetCharEncoding(tdoc, "utf8");
     
-  BuildTree(tdoc, tidyGetRoot(tdoc), encoding);
+    TidyInputSource source;
+    tidyInitSource( &source, &strm, &HTMLStream::TidyGetByte, &HTMLStream::TidyUngetByte, &HTMLStream::TidyEOF);
+    res = tidyParseSource(tdoc, &source);
+    
+    if ( res >= 0 )
+      res = tidyCleanAndRepair(tdoc);               // Tidy it up!
+    if ( res >= 0 )
+      res = tidyRunDiagnostics(tdoc);               // Kvetch
+  
+    if (OverrideContentsEncoding == eEncodingUnknown)
+    {
+      nglString encoding_string(GetEncodingString(tidyGetRoot(tdoc)));
+      
+      //ascii, latin1, raw, utf8, iso2022, mac, win1252, utf16le, utf16be, utf16, big5 shiftjis
+      encoding = nuiGetTextEncodingFromString(encoding_string);
+    }
+    else
+    {
+      encoding = OverrideContentsEncoding;
+    }
+  }
+  
+  if (encoding != eUTF8)
+  {
+    // Release the doc to create a new one
+    tidyRelease(tdoc);
+    
+    nglOMemory omem;
+    rStream.SetPos(0, eStreamFromStart);
+    rStream.PipeTo(omem);
+    nglString decoded;
+    decoded.Import(omem.GetBufferData(), omem.GetSize(), encoding);
+    std::string str(decoded.GetStdString(), eUTF8);
+    printf("result:\n\n");
+    write(0, str.c_str(), str.size());
+    nglIMemory imem(str.c_str(), str.size());
+    
+    HTMLStream strm(imem);
+    tdoc = tidyCreate();
+    tidySetCharEncoding(tdoc, "utf8");
+
+    TidyInputSource source;
+    tidyInitSource( &source, &strm, &HTMLStream::TidyGetByte, &HTMLStream::TidyUngetByte, &HTMLStream::TidyEOF);
+    res = tidyParseSource(tdoc, &source);
+    if ( res >= 0 )
+      res = tidyCleanAndRepair(tdoc);               // Tidy it up!
+    if ( res >= 0 )
+      res = tidyRunDiagnostics(tdoc);               // Kvetch
+  }    
+    
+  BuildTree(tdoc, tidyGetRoot(tdoc), eUTF8);
   
   tidyRelease(tdoc);
   

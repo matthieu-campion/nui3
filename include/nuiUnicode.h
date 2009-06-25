@@ -266,3 +266,5 @@ const nuiSplitTextFlag nuiST_All             = nuiST_Natural | nuiST_RangeChange
 
 bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nuiSplitTextFlag flags = nuiST_Natural);
 
+nglTextEncoding nuiGetTextEncodingFromString(const nglString& WebString);
+

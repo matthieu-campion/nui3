@@ -4,9 +4,9 @@
   See tidy.h for the copyright notice.
   
   CVS Info:
-    $Author: meeloo $ 
-    $Date: 2008-02-27 17:58:54 $ 
-    $Revision: 1.1 $ 
+    $Author: arnaud02 $ 
+    $Date: 2006/09/12 15:14:44 $ 
+    $Revision: 1.6 $ 
 
 */
 

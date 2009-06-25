@@ -6,9 +6,9 @@
   
   CVS Info :
 
-    $Author: meeloo $ 
-    $Date: 2008-02-27 17:58:54 $ 
-    $Revision: 1.1 $ 
+    $Author: arnaud02 $ 
+    $Date: 2008/03/22 20:23:37 $ 
+    $Revision: 1.119 $ 
 
 */
 
@@ -257,6 +257,7 @@ static WrapPoint CharacterWrapPoint(tchar c)
     int i;
     for (i = 0; unicode4cat[i].code && unicode4cat[i].code <= c; ++i)
         if (unicode4cat[i].code == c)
+        {
             /* wrapping before opening punctuation and initial quotes */
             if (unicode4cat[i].category == UCPS ||
                 unicode4cat[i].category == UCPI)
@@ -264,6 +265,7 @@ static WrapPoint CharacterWrapPoint(tchar c)
             /* else wrapping after this character */
             else
                 return WrapAfter;
+        }
     /* character has no effect on line wrapping */
     return NoWrapPoint;
 }

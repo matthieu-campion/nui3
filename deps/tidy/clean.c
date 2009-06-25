@@ -1,14 +1,14 @@
 /*
   clean.c -- clean up misuse of presentation markup
 
-  (c) 1998-2006 (W3C) MIT, ERCIM, Keio University
+  (c) 1998-2008 (W3C) MIT, ERCIM, Keio University
   See tidy.h for the copyright notice.
 
   CVS Info :
 
-    $Author: meeloo $ 
-    $Date: 2008-02-27 17:58:54 $ 
-    $Revision: 1.1 $ 
+    $Author: arnaud02 $ 
+    $Date: 2008/10/14 12:18:10 $ 
+    $Revision: 1.111 $ 
 
   Filters from other formats such as Microsoft Word
   often make excessive use of presentation markup such
@@ -1691,8 +1691,11 @@ static Node* PruneSection( TidyDocImpl* doc, Node *node )
           }
         }
 
-        /* discard node and returns next */
-        node = TY_(DiscardElement)( doc, node );
+        /* discard node and returns next, unless it is a text node */
+        if ( node->type == TextNode )
+            node = node->next;
+        else
+            node = TY_(DiscardElement)( doc, node );
 
         if (node == NULL)
             return NULL;
@@ -2598,6 +2601,10 @@ void TY_(FixAnchors)(TidyDocImpl* doc, Node *node, Bool wantName, Bool wantId)
         {
             AttVal *name = TY_(AttrGetById)(node, TidyAttr_NAME);
             AttVal *id = TY_(AttrGetById)(node, TidyAttr_ID);
+            Bool hadName = name!=NULL;
+            Bool hadId = id!=NULL;
+            Bool IdEmitted = no;
+            Bool NameEmitted = no;
 
             /* todo: how are empty name/id attributes handled? */
 
@@ -2618,25 +2625,31 @@ void TY_(FixAnchors)(TidyDocImpl* doc, Node *node, Bool wantName, Bool wantId)
                     if (TY_(IsValidHTMLID)(name->value))
                     {
                         TY_(RepairAttrValue)(doc, node, "id", name->value);
+                        IdEmitted = yes;
                     }
                     else
-                    {
                         TY_(ReportAttrError)(doc, node, name, INVALID_XML_ID);
-                    }
                  }
             }
             else if (id && wantName)
             {
                 if (TY_(NodeAttributeVersions)( node, TidyAttr_NAME )
                     & doc->lexer->versionEmitted)
+                {
                     /* todo: do not assume id is valid */
                     TY_(RepairAttrValue)(doc, node, "name", id->value);
+                    NameEmitted = yes;
+                }
             }
 
-            if (id && !wantId)
+            if (id && !wantId
+                /* make sure that Name has been emitted if requested */
+                && (hadName || !wantName || NameEmitted) )
                 TY_(RemoveAttribute)(doc, node, id);
-            
-            if (name && !wantName)
+
+            if (name && !wantName
+                /* make sure that Id has been emitted if requested */
+                && (hadId || !wantId || IdEmitted) )
                 TY_(RemoveAttribute)(doc, node, name);
 
             if (TY_(AttrGetById)(node, TidyAttr_NAME) == NULL &&

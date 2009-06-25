@@ -5,9 +5,9 @@
 
   CVS Info :
 
-    $Author: meeloo $ 
-    $Date: 2008-02-27 17:58:54 $ 
-    $Revision: 1.1 $ 
+    $Author: arnaud02 $ 
+    $Date: 2008/06/18 20:18:54 $ 
+    $Revision: 1.75 $ 
 
   Defines HTML Tidy API implemented by tidy library.
   
@@ -1245,6 +1245,7 @@ int         tidyDocCleanAndRepair( TidyDocImpl* doc )
     Bool xmlDecl  = cfgBool( doc, TidyXmlDecl );
     Bool tidyMark = cfgBool( doc, TidyMark );
     Bool tidyXmlTags = cfgBool( doc, TidyXmlTags );
+    Bool wantNameAttr = cfgBool( doc, TidyAnchorAsName );
     Node* node;
 
     if (tidyXmlTags)
@@ -1321,14 +1322,14 @@ int         tidyDocCleanAndRepair( TidyDocImpl* doc )
         if (xhtmlOut && !htmlOut)
         {
             TY_(SetXHTMLDocType)(doc);
-            TY_(FixAnchors)(doc, &doc->root, yes, yes);
+            TY_(FixAnchors)(doc, &doc->root, wantNameAttr, yes);
             TY_(FixXhtmlNamespace)(doc, yes);
             TY_(FixLanguageInformation)(doc, &doc->root, yes, yes);
         }
         else
         {
             TY_(FixDocType)(doc);
-            TY_(FixAnchors)(doc, &doc->root, yes, yes);
+            TY_(FixAnchors)(doc, &doc->root, wantNameAttr, yes);
             TY_(FixXhtmlNamespace)(doc, no);
             TY_(FixLanguageInformation)(doc, &doc->root, no, yes);
         }
@@ -1453,7 +1454,10 @@ int         tidyDocSaveStream( TidyDocImpl* doc, StreamOut* out )
 TidyNode TIDY_CALL   tidyGetRoot( TidyDoc tdoc )
 {
     TidyDocImpl* impl = tidyDocToImpl( tdoc );
-    return tidyImplToNode( &impl->root );
+    Node* node = NULL;
+    if ( impl )
+        node = &impl->root;
+    return tidyImplToNode( node );
 }
 
 TidyNode TIDY_CALL   tidyGetHtml( TidyDoc tdoc )

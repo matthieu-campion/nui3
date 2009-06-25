@@ -10,6 +10,7 @@
 #include "nuiHTTP.h"
 #include "nuiFontManager.h"
 #include "nuiHTTP.h"
+#include "nuiUnicode.h"
 
 #include "nuiHTMLContext.h"
 #include "nuiHTMLItem.h"
@@ -136,6 +137,8 @@ bool nuiHTMLView::SetURL(const nglString& rURL)
   nuiHTTPResponse* pResponse = request.SendRequest();
   if (!pResponse)
     return false;
+
+  NGL_OUT(_T("\n\nHTTP Headers:\n%ls\n\n"), pResponse->GetHeadersRep().GetChars());
   
   const nuiHTTPHeaderMap& rHeaders(pResponse->GetHeaders());
   nuiHTTPHeaderMap::const_iterator it = rHeaders.find(_T("location"));
@@ -156,12 +159,31 @@ bool nuiHTMLView::SetURL(const nglString& rURL)
     delete pResponse;
     return SetURL(url);
   }
+
+  it = rHeaders.find(_T("content-type"));
+
+  nglTextEncoding encoding = eEncodingUnknown;
+  if (it != rHeaders.end())
+  {  
+    nglString contents(it->second);
+    contents.ToUpper();
+    int32 pos = contents.Find(_T("CHARSET="));
+    if (pos >= 0)
+    {
+      nglString enc(contents.Extract(pos + 8));
+      enc.Trim();
+      encoding = nuiGetTextEncodingFromString(enc);
+      NGL_OUT(_T("\n\nHTTP Encoding: %ls - %d\n\n"), enc.GetChars(), encoding);
+
+    }
+  }
+  
   
   nuiHTML* pHTML = new nuiHTML();
   pHTML->SetSourceURL(url);
   nglIMemory mem(&pResponse->GetBody()[0], pResponse->GetBody().size());
   
-  bool res = pHTML->Load(mem);
+  bool res = pHTML->Load(mem, encoding);
   
   if (res)
   {

@@ -26,7 +26,8 @@ nglOMemory::nglOMemory()
 
 nglOMemory::~nglOMemory()
 {
-  if (mpBuffer) free (mpBuffer);
+  if (mpBuffer)
+    free (mpBuffer);
 }
 
 

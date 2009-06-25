@@ -1,14 +1,14 @@
 /* access.c -- carry out accessibility checks
 
   Copyright University of Toronto
-  Portions (c) 1998-2007 (W3C) MIT, ERCIM, Keio University
+  Portions (c) 1998-2009 (W3C) MIT, ERCIM, Keio University
   See tidy.h for the copyright notice.
   
   CVS Info :
 
-    $Author: meeloo $ 
-    $Date: 2008-02-27 17:58:53 $ 
-    $Revision: 1.1 $ 
+    $Author: arnaud02 $ 
+    $Date: 2009/03/25 22:04:35 $ 
+    $Revision: 1.42 $ 
 
 */
 
@@ -1580,21 +1580,6 @@ static void CheckMultiHeaders( TidyDocImpl* doc, Node* node )
                     {
                         temp = TNode->content;
 
-                        if ( nodeIsTH(temp) )
-                        {
-                            AttVal* av;
-                            for (av = temp->attributes; av != NULL; av = av->next)
-                            {
-                                if ( attrIsROWSPAN(av) )
-                                {
-                                    if (atoi(av->value) > 1)
-                                    {
-                                        validColSpanRows = no;
-                                    }
-                                }
-                            }
-                        }
-
                         /* The number of TH elements found within TR element */
                         if (flag == 0)
                         {
@@ -1609,13 +1594,13 @@ static void CheckMultiHeaders( TidyDocImpl* doc, Node* node )
                                     AttVal* av;
                                     for (av = temp->attributes; av != NULL; av = av->next)
                                     {
-                                        if ( attrIsCOLSPAN(av) )
-                                        {
-                                            if (atoi(av->value) > 1)
-                                            {
-                                                validColSpanColumns = no;
-                                            }
-                                        }
+                                        if ( attrIsCOLSPAN(av)
+                                             && (atoi(av->value) > 1) )
+                                            validColSpanColumns = no;
+
+                                        if ( attrIsROWSPAN(av)
+                                             && (atoi(av->value) > 1) )
+                                            validColSpanRows = no;
                                     }
                                 }
 
@@ -1721,7 +1706,7 @@ static void CheckTable( TidyDocImpl* doc, Node* node )
         {
             TNode = node->content;
 
-            if (TNode->content->tag == NULL)
+            if (TNode->content && TNode->content->tag == NULL)
             {
                 word = getTextNodeClear( doc, TNode);
             }
@@ -2509,7 +2494,7 @@ static void AccessibleCompatible( TidyDocImpl* doc, Node* node )
 * It seems like a bad idea to emit this message for
 * every document with _more_ than 3 words!
 ********************************************************/
-
+#if 0
 static int WordCount( TidyDocImpl* doc, Node* node )
 {
     int wc = 0;
@@ -2539,7 +2524,7 @@ static int WordCount( TidyDocImpl* doc, Node* node )
     }
     return wc;
 }
-
+#endif
 
 /**************************************************
 * CheckFlicker
@@ -2772,7 +2757,7 @@ static Bool CheckMetaData( TidyDocImpl* doc, Node* node, Bool HasMetaData )
         }
             
         if ( !HasMetaData &&
-             nodeIsTITLE(node) &&
+             !nodeIsTITLE(node) &&
              TY_(nodeIsText)(node->content) )
         {
             ctmbstr word = textFromOneNode( doc, node->content );
