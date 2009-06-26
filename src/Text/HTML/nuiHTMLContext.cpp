@@ -24,7 +24,7 @@ nuiHTMLContext::nuiHTMLContext()
   mFont.SetProportionnal(1.0f);
   
   mFont.SetScalable(1.0f);
-  mFont.MustHaveSize(14.0f, 1.0f);
+  mFont.MustHaveSize(12.0f, 1.0f);
   mFont.SetItalic(false, 1.0f);
   mFont.SetBold(false, 1.0f);
   mUnderline = false;
