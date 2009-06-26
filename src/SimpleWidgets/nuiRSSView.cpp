@@ -81,6 +81,8 @@ bool nuiRSSView::Update(const nuiEvent& rEvent)
     pLabel->SetText(desc);
     pPane->AddChild(pLabel);
     mpBox->AddCell(pPane);
+    
+    pLabel->SetObjectClass(_T("nuiRSSContents"));
   }
   return false;
 }
