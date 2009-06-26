@@ -251,6 +251,11 @@ void nuiVBox::AddCells(uint32 pos, uint32 cells)
 void nuiVBox::AddCell(nuiWidget* pWidget, nuiPosition position)
 {
   uint32 pos = nuiGrid::GetNbRows();
+  AddCell(pos, pWidget, position);
+}
+
+void nuiVBox::AddCell(uint32 pos, nuiWidget* pWidget, nuiPosition position)
+{
   nuiGrid::AddRows(pos, 1);
   if (GetNbColumns() == 0)
     nuiGrid::AddColumns(0,1);
@@ -272,9 +277,9 @@ nuiLabel* nuiVBox::AddCell(const nglString& rLabel, const nglString& rObjectName
 
 
 
-void nuiVBox::RemoveCells(uint32 pos, uint32 cells)
+void nuiVBox::RemoveCells(uint32 pos, uint32 cells, bool Delete)
 {
-  nuiGrid::RemoveRows(pos, cells);
+  nuiGrid::RemoveRows(pos, cells, Delete);
 }
 
 

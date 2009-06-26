@@ -1008,7 +1008,7 @@ void nuiGrid::AddRows(uint32 pos, uint32 rows)
   InvalidateLayout();
 }
 
-void nuiGrid::RemoveRows(uint32 pos, uint32 rows)
+void nuiGrid::RemoveRows(uint32 pos, uint32 rows, bool Delete)
 {
   if (!rows)
     return;
@@ -1025,7 +1025,7 @@ void nuiGrid::RemoveRows(uint32 pos, uint32 rows)
     while (erasor != end)
     {
       nuiWidget* pWidget = *erasor;
-      if (pWidget)
+      if (pWidget && Delete)
         pWidget->Trash();
       erasor++;
     }
@@ -1224,7 +1224,7 @@ void nuiGrid::AddColumns(uint32 pos, uint32 columns)
   InvalidateLayout();
 }
 
-void nuiGrid::RemoveColumns(uint32 pos, uint32 columns)
+void nuiGrid::RemoveColumns(uint32 pos, uint32 columns, bool Delete)
 {
   if (!columns)
     return;
@@ -1241,7 +1241,7 @@ void nuiGrid::RemoveColumns(uint32 pos, uint32 columns)
     while (row != end)
     {
       nuiWidget* pWidget = *row;
-      if (pWidget)
+      if (pWidget && Delete)
         pWidget->Trash(); //< Trash the current widget
       row++;
     }

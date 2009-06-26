@@ -253,16 +253,20 @@ void nuiHBox::AddCells(uint32 pos, uint32 cells)
   nuiGrid::AddColumns(pos, cells);
 }
 
-
-
-void nuiHBox::AddCell(nuiWidget* pWidget, nuiPosition position)
+void nuiHBox::AddCell(uint32 pos, nuiWidget* pWidget, nuiPosition position)
 {
-  uint32 pos = nuiGrid::GetNbColumns();
   nuiGrid::AddColumns(pos, 1);
   if (GetNbRows() == 0)
     nuiGrid::AddRows(0,1);
   
   nuiGrid::SetCell(pos, 0, pWidget, position); 
+}
+
+
+void nuiHBox::AddCell(nuiWidget* pWidget, nuiPosition position)
+{
+  uint32 pos = nuiGrid::GetNbColumns();
+  AddCell(pos, pWidget, position);
 }
 
 
@@ -278,9 +282,9 @@ nuiLabel* nuiHBox::AddCell(const nglString& rLabel, const nglString& rObjectName
 
 
 
-void nuiHBox::RemoveCells(uint32 pos, uint32 cells)
+void nuiHBox::RemoveCells(uint32 pos, uint32 cells, bool Delete)
 {
-  nuiGrid::RemoveColumns(pos, cells);
+  nuiGrid::RemoveColumns(pos, cells, Delete);
 }
 
 

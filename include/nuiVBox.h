@@ -72,12 +72,13 @@ public:
 
   // Add cells:
   void AddCells(uint32 pos, uint32 cells);
+  void AddCell(uint32 pos, nuiWidget* pWidget, nuiPosition position = nuiNoPosition);
   void AddCell(nuiWidget* pWidget, nuiPosition position = nuiNoPosition);
   nuiLabel* AddCell(const nglString& rLabel, const nglString& rObjectName = nglString::Null, nuiPosition position = nuiNoPosition); ///< create a nuiLabel with a specific objectname and store it in the box. Usefull to add a simple label to a box, using a css decoration.   
 
   uint32 GetNbCells() const;
 
-  void RemoveCells(uint32 pos, uint32 cells);
+  void RemoveCells(uint32 pos, uint32 cells, bool Delete = true);
 
   virtual bool Clear(bool Delete = true);
 

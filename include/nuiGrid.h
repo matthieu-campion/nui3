@@ -108,8 +108,8 @@ public:
   uint32 GetNbRows() const    { return mNbRows;     }
   uint32 GetNbColumns() const { return mNbColumns;  }
 
-  void RemoveRows(uint32 pos, uint32 rows);
-  void RemoveColumns(uint32 pos, uint32 columns);
+  void RemoveRows(uint32 pos, uint32 rows, bool Delete = true);
+  void RemoveColumns(uint32 pos, uint32 columns, bool Delete = true);
 
   virtual bool Clear(bool Delete = true);
 
