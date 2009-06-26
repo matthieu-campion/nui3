@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="nuiTest2008"
 	ProjectGUID="{B9AD9964-3DC0-4F11-AB36-ED42977036C5}"
 	RootNamespace="nuiTest2008"
@@ -187,11 +187,10 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
-				AdditionalDependencies="opengl32.lib glu32.lib winmm.lib wsock32.lib"
 				OutputFile="$(OutDir)/$(ProjectName).exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="../../../stlport/lib;../../../ngl/lib"
+				AdditionalLibraryDirectories=""
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(IntDir)/nuiTest2008.pdb"
 				GenerateMapFile="true"

@@ -185,10 +185,11 @@ and in NGL user application code.
   #pragma comment( lib , "glu32.lib" )
   #pragma comment( lib , "winmm.lib" )
   #pragma comment( lib , "Ws2_32.lib" )
-  #pragma comment( lib,  "winhttp.lib")
+  #pragma comment( lib,  "winhttp.lib" )
+  #pragma comment( lib, "wsock32.lib" )
 
 //#define _WINSOCKAPI_  // Prevent inclusion of winsock.h in windows.h
-  #define NODRAWTEXT // Prevent includsion of DrawText defines in windows.h. 
+  #define NODRAWTEXT // Prevent inclusion of DrawText defines in windows.h. 
 
   #ifndef _WIN32_WINNT
     #define _WIN32_WINNT _WIN32_WINNT_WINXP
