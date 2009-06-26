@@ -380,7 +380,7 @@ protected:
   nglString mName;
   nglString mText;
   
-  nuiHTMLNode* SetParent(nuiHTMLNode* pParent);
+  void SetParent(nuiHTMLNode* pParent);
   nuiHTMLNode* mpParent;
   std::vector<nuiHTMLNode*> mChildren;
   std::vector<nuiHTMLAttrib*> mAttributes;

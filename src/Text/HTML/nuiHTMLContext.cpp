@@ -52,6 +52,8 @@ nuiHTMLContext& nuiHTMLContext::operator=(const nuiHTMLContext& rContext)
   mStrikeThrough = rContext.mStrikeThrough;
   mTextFgColor = rContext.mTextFgColor;
   mTextBgColor = rContext.mTextBgColor;
+
+  return *this;
 }
 
 

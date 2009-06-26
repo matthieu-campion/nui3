@@ -254,7 +254,7 @@ nuiHTMLNode* nuiHTMLNode::GetParent() const
   return mpParent;
 }
 
-nuiHTMLNode* nuiHTMLNode::SetParent(nuiHTMLNode* pParent)
+void nuiHTMLNode::SetParent(nuiHTMLNode* pParent)
 {
   mpParent = pParent;
 }

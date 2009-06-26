@@ -110,6 +110,9 @@ nuiHTTPResponse* nuiHTTPRequest::SendRequest()
     statusLine = *it;
     ++it;
   }
+
+  nuiHTTPResponse* pResponse = new nuiHTTPResponse(statusCode, statusLine);
+
   for (; it != end; ++it)
   {
     pos = it->Find(_T(":"));
@@ -117,7 +120,7 @@ nuiHTTPResponse* nuiHTTPRequest::SendRequest()
     fieldName.Trim();
     nglString fieldValue(it->Extract(pos+1));
     fieldValue.Trim();
-    AddHeader(fieldName, fieldValue);
+    pResponse->AddHeader(fieldName, fieldValue);
   }
 
   size = 0;
@@ -134,7 +137,6 @@ nuiHTTPResponse* nuiHTTPRequest::SendRequest()
     }
   } while( size > 0 );
 
-  nuiHTTPResponse* pResponse = new nuiHTTPResponse(statusCode, statusLine);
   pResponse->SetBody(&buf[0], buf.size());
 
   WinHttpCloseHandle(hRequest);
