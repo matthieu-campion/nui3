@@ -1,0 +1,85 @@
+// !$*UTF8*$!
+{
+	08FB7793FE84155DC02AAC07 /* Project object */ = {
+		activeBuildConfigurationName = Debug;
+		activeTarget = D2AAC045055464E500DB518D /* nuiSWF */;
+		addToTargets = (
+			D2AAC045055464E500DB518D /* nuiSWF */,
+		);
+		codeSenseManager = E5A1AB710FF50BCA0035ADED /* Code sense */;
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					364,
+					20,
+					48.16259765625,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 267717547;
+			PBXWorkspaceStateSaveDate = 267717547;
+		};
+		perUserProjectItems = {
+			E5A1AD480FF50CB40035ADED /* PBXTextBookmark */ = E5A1AD480FF50CB40035ADED /* PBXTextBookmark */;
+			E5A1AD490FF50CB40035ADED /* PBXTextBookmark */ = E5A1AD490FF50CB40035ADED /* PBXTextBookmark */;
+		};
+		sourceControlManager = E5A1AB700FF50BCA0035ADED /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	D2AAC045055464E500DB518D /* nuiSWF */ = {
+		activeExec = 0;
+	};
+	E5A1AB700FF50BCA0035ADED /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+		};
+	};
+	E5A1AB710FF50BCA0035ADED /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	E5A1AD3E0FF50C950035ADED /* nuiSWF.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {542, 1232}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 159}";
+		};
+	};
+	E5A1AD480FF50CB40035ADED /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5A1AD3E0FF50C950035ADED /* nuiSWF.h */;
+		name = "nuiSWF.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 159;
+		vrLoc = 0;
+	};
+	E5A1AD490FF50CB40035ADED /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5A1AD3E0FF50C950035ADED /* nuiSWF.h */;
+		name = "nuiSWF.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 159;
+		vrLoc = 0;
+	};
+}

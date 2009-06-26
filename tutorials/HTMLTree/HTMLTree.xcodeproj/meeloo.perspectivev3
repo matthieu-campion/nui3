@@ -343,7 +343,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E51E5A3A0FF3D1A800FDF3BE</string>
+										<string>E51E5A8B0FF4CD5200FDF3BE</string>
 										<key>history</key>
 										<array>
 											<string>E580F07F0FE29947006AC2E1</string>
@@ -655,7 +655,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>267637160.361992</real>
+	<real>267701586.769371</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -670,7 +670,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E51E5A3B0FF3D1A800FDF3BE</string>
 		<string>E51E58E20FF3B40000FDF3BE</string>
 		<string>E51E58E30FF3B40000FDF3BE</string>
 		<string>/Users/meeloo/work/nui3/tutorials/HTMLTree/HTMLTree.xcodeproj</string>

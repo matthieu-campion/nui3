@@ -52,7 +52,9 @@ protected:
   bool CreateScrolledImageWindow(const nuiEvent& rEvent);
   bool CreateScrolledImageWindow2(const nuiEvent& rEvent);
   bool CreateGLSLTest1Window(const nuiEvent& rEvent);
+#ifdef USE_SWF
   bool CreateSWFTest1Window(const nuiEvent& rEvent);
+#endif
   bool CreateShapeWindow(const nuiEvent& rEvent);
   bool TogglePartialRedraw(const nuiEvent& rEvent);
   bool CreateWrappedLabelWindow(const nuiEvent& rEvent);

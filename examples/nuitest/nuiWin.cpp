@@ -39,7 +39,9 @@ licence: see nui3/LICENCE.TXT
 #include "nuiShader.h"
 #include "nuiShaderView.h"
 #include "nuiPositioner.h"
+#ifdef USE_SWF
 #include "nuiSWF.h"
+#endif
 #include "nuiShapeView.h"
 #include "nuiModalContainer.h"
 #include "nuiPane.h"
@@ -401,11 +403,13 @@ void nuiWin::OnCreation()
     pMainTree->AddChild(pElement);
   }
 
+#ifdef USE_SWF
   // CreateSWFTest1Window:
   pElement = new nuiTreeNode(nuiTR("SWF widget Test 1 Window"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateSWFTest1Window);
   pMainTree->AddChild(pElement);
-
+#endif
+  
   // CreateShapeWindow:
   pElement = new nuiTreeNode(nuiTR("Shapes Window"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateShapeWindow);
@@ -1476,6 +1480,7 @@ bool nuiWin::CreateGLSLTest1Window(const nuiEvent& rEvent)
   return false;
 }
 
+#ifdef USE_SWF
 bool nuiWin::CreateSWFTest1Window(const nuiEvent& rEvent)
 {
   nuiWindow* pWin = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, nuiTR("SWF Movie..."));
@@ -1514,7 +1519,7 @@ bool nuiWin::CreateSWFTest1Window(const nuiEvent& rEvent)
   }
   return false;
 }
-
+#endif
 
 
 bool nuiWin::CreateShapeWindow(const nuiEvent& rEvent)
