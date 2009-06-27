@@ -30,6 +30,7 @@ public:
   void SetWidth(float w);
   void SetHeight(float h);
   
+  nuiHTMLNode* GetNode() const;
   void SetParent(nuiHTMLBox* pBox);
   nuiHTMLBox* GetParent() const;
   
@@ -45,7 +46,11 @@ public:
   void ForceLineBreak(bool s);
   
   nglString GetAbsoluteURL(const nglString& rString) const;
+
+  bool mSetRectCalled;
 protected:
+  uint32 nuiHTMLItem::GetDepth() const;
+
   nuiHTMLNode* mpNode;
   nuiRect mIdealRect;
   nuiRect mRect;

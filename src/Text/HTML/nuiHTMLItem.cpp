@@ -8,11 +8,13 @@
 
 #include "nui.h"
 #include "nuiHTMLItem.h"
+#include "nuiHTMLBox.h"
 
 /////////////////class nuiHTMLItem
 nuiHTMLItem::nuiHTMLItem(nuiHTMLNode* pNode, bool Inline)
-: mpNode(pNode), mInline(Inline), mEndTag(false), mLineBreak(false)
+: mpNode(pNode), mInline(Inline), mEndTag(false), mLineBreak(false), mpParent(NULL)
 {
+  mSetRectCalled = false;
   ForceLineBreak(pNode->GetTagType() == nuiHTMLNode::eTag_BR);
 }
 
@@ -24,8 +26,26 @@ void nuiHTMLItem::Draw(nuiDrawContext* pContext)
 {
 }
 
+uint32 nuiHTMLItem::GetDepth() const
+{
+  if (mpParent)
+    return 1 + mpParent->GetDepth();
+  return 0;
+}
+
 void nuiHTMLItem::CallDraw(nuiDrawContext* pContext)
 {
+#if 0
+  for (uint32 i = 0; i < GetDepth(); i++)
+    printf("  ");
+  nglString id;
+  nuiHTMLAttrib* pAttrib = mpNode->GetAttribute(nuiHTMLAttrib::eAttrib_ID);
+  if (pAttrib)
+    id.Add(_T(" id='")).Add(pAttrib->GetValue()).Add(_T("'"));
+  printf("nuiHTMLItem::CallDraw <%ls%ls> %ls\n", mpNode->GetName().GetChars(), id.GetChars(), mRect.GetValue().GetChars());
+#endif
+  
+  NGL_ASSERT(mSetRectCalled);
   pContext->PushMatrix();
   pContext->Translate(mRect.Left(), mRect.Top());
   //pContext->DrawRect(GetRect().Size(), eStrokeShape);
@@ -79,7 +99,7 @@ const nuiRect& nuiHTMLItem::GetRect() const
 
 void nuiHTMLItem::SetRect(const nuiRect& rRect)
 {
-  //printf("nuiHTMLItem::SetRect %ls\n", rRect.GetValue().GetChars());
+  mSetRectCalled = true;
   mRect = rRect;
 }
 
@@ -103,6 +123,11 @@ void nuiHTMLItem::SetWidth(float w)
 void nuiHTMLItem::SetHeight(float h)
 {
   mRect.SetHeight(h);
+}
+
+nuiHTMLNode* nuiHTMLItem::GetNode() const
+{
+  return mpNode;
 }
 
 void nuiHTMLItem::SetParent(nuiHTMLBox* pBox)

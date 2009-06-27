@@ -44,42 +44,58 @@ void nuiHTMLBox::Draw(nuiDrawContext* pContext)
   }
 }
 
-float nuiHTMLBox::LayoutLine(uint32& start, uint32& end, float& y, float& h, nuiHTMLContext& rContext)
+float nuiHTMLBox::LayoutLine(uint32& start, uint32& count, float& y, float& h, nuiHTMLContext& rContext)
 {
   float x = 0;
   //printf("box layout item process line\n");
   // Process the line
   x = rContext.mLeftMargin;
-  for (int32 j = start; j <= end; j++)
+  h = ToAbove(h);
+  for (int32 j = start; j < start + count; j++)
   {
     nuiHTMLItem* pIt = mItems[j];
     nuiRect r(pIt->GetIdealRect());
     r.SetHeight(h);
     r.MoveTo(x, y);
+    r.RoundToAbove();
     pIt->SetRect(r);
-    //NGL_OUT(_T("%ls\n"), r.GetValue().GetChars());
-    x += r.GetWidth() + rContext.mHSpace;
+    //NGL_OUT(_T("<%ls> %ls\n"), pIt->GetNode()->GetName().GetChars(), r.GetValue().GetChars());
+    x += ToAbove(r.GetWidth() + rContext.mHSpace);
   }
-  y += h + rContext.mVSpace;
-  h = 0;
-  start = end + 1;
-  
+  y += ToAbove(h + rContext.mVSpace);
+  start += count;
+  count = 0;
   return x;
 }
 
 void nuiHTMLBox::Layout(nuiHTMLContext& rContext)
 {
+#if 0 // This is some debug code that helps pointing out layout problems:
+//  for (uint32 i = 0; i < GetDepth(); i++)
+//    printf("  ");
+//  nglString id;
+//  nuiHTMLAttrib* pAttrib = mpNode->GetAttribute(nuiHTMLAttrib::eAttrib_ID);
+//  if (pAttrib)
+//    id.Add(_T(" id='")).Add(pAttrib->GetValue()).Add(_T("'"));
+//  printf("nuiHTMLBox::Layout <%ls%ls> %ls\n", mpNode->GetName().GetChars(), id.GetChars(), mRect.GetValue().GetChars());
+//
+//  if (mpNode->GetTagType() == nuiHTMLNode::eTag_LI)
+//  {
+//    printf("list item\n");
+//  }
+#endif
+  
   nuiHTMLContext context(rContext);
   float X = 0;
   float Y = 0;
   float W = 0;
   
   //printf("box layout start\n");
+  int32 done = 0;
   uint32 line_start = 0;
-  uint32 line_end = 0;
+  uint32 count_in_line = 0;
   float lineh = 0;
   float lastlineh = 0;
-  
   for (uint32 i = 0; i < mItems.size(); i++)
   {
     mItems[i]->Layout(context);
@@ -99,8 +115,8 @@ void nuiHTMLBox::Layout(nuiHTMLContext& rContext)
     // Layout the line if needed:
     if ((X + r.GetWidth() > context.mMaxWidth) || linebreak || !pItem->IsInline())
     {
-      float w = LayoutLine(line_start, line_end, Y, lineh, context);
-      
+      done += count_in_line;
+      float w = LayoutLine(line_start, count_in_line, Y, lineh, context);
       W = MAX(W, w);
       lastlineh = lineh;
       lineh = 0;
@@ -116,24 +132,33 @@ void nuiHTMLBox::Layout(nuiHTMLContext& rContext)
       Y += info.Height;
     }
     
-    {
-      lineh = MAX(lineh, r.GetHeight());
-      X += r.GetWidth() + context.mVSpace;
-      
-      line_end = i;
-    }
+    lineh = MAX(lineh, r.GetHeight());
+    X += r.GetWidth() + context.mVSpace;
+    
+    count_in_line++;
     //printf("box layout item %d done\n", i);
   }
   
-  if (line_end)
+  if (done != mItems.size())
   {
-    float w = LayoutLine(line_start, line_end, Y, lineh, context);
+    float w = LayoutLine(line_start, count_in_line, Y, lineh, context);
     
     W = MAX(W, w);
+    lastlineh = lineh;
     lineh = 0;
     X = 0;
   }
-  mIdealRect.Set(0.0f, 0.0f, W, Y);
+  
+  nuiRect total;
+  for (uint32 i = 0; i < mItems.size(); i++)
+  {
+    NGL_ASSERT(mItems[i]->mSetRectCalled);
+    total.Union(total, mItems[i]->GetRect());
+  }
+  
+  
+  //mIdealRect.Set(0.0f, 0.0f, W, Y);
+  mIdealRect = total;
   //printf("text layout done (%ls)\n", mIdealRect.GetValue().GetChars());
 }
 

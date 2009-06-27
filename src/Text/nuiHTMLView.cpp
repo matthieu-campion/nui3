@@ -61,6 +61,7 @@ bool nuiHTMLView::SetRect(const nuiRect& rRect)
   nuiHTMLContext context;
   context.mMaxWidth = mRect.GetWidth();
   mpRootBox->Layout(context);
+  mpRootBox->SetRect(mpRootBox->GetIdealRect());
   return true;
 }
 
@@ -70,7 +71,10 @@ bool nuiHTMLView::Draw(nuiDrawContext* pContext)
   pContext->SetBlendFunc(nuiBlendTransp);
   pContext->EnableBlending(true);
   if (mpRootBox)
+  {
     mpRootBox->CallDraw(pContext);
+    
+  }
   return true;
 }
 
@@ -138,7 +142,7 @@ bool nuiHTMLView::SetURL(const nglString& rURL)
   if (!pResponse)
     return false;
 
-  NGL_OUT(_T("\n\nHTTP Headers:\n%ls\n\n"), pResponse->GetHeadersRep().GetChars());
+  //NGL_OUT(_T("\n\nHTTP Headers:\n%ls\n\n"), pResponse->GetHeadersRep().GetChars());
   
   const nuiHTTPHeaderMap& rHeaders(pResponse->GetHeaders());
   nuiHTTPHeaderMap::const_iterator it = rHeaders.find(_T("location"));
@@ -154,7 +158,7 @@ bool nuiHTMLView::SetURL(const nglString& rURL)
     {
       url = newurl;
     }
-    NGL_OUT(_T("\n\nNew location: %ls\n\n"), url.GetChars());
+    //NGL_OUT(_T("\n\nNew location: %ls\n\n"), url.GetChars());
     
     delete pResponse;
     return SetURL(url);
@@ -173,7 +177,7 @@ bool nuiHTMLView::SetURL(const nglString& rURL)
       nglString enc(contents.Extract(pos + 8));
       enc.Trim();
       encoding = nuiGetTextEncodingFromString(enc);
-      NGL_OUT(_T("\n\nHTTP Encoding: %ls - %d\n\n"), enc.GetChars(), encoding);
+      //NGL_OUT(_T("\n\nHTTP Encoding: %ls - %d\n\n"), enc.GetChars(), encoding);
 
     }
   }
@@ -416,20 +420,20 @@ void nuiHTMLView::ParseTableRow(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 void nuiHTMLView::ParseList(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 {
   //printf("html list\n");
-  nuiHTMLBox* pNewBox = new nuiHTMLBox(pNode, false);
-  pBox->AddItem(pNewBox);
+  nuiHTMLBox* pListBox = new nuiHTMLBox(pNode, false);
+  pBox->AddItem(pListBox);
   
   uint32 count = pNode->GetNbChildren();
   for (uint32 i = 0; i < count; i++)
   {
-    nuiHTMLNode* pChild = pNode->GetChild(i);
-    switch (pChild->GetTagType())
+    nuiHTMLNode* pListItem = pNode->GetChild(i);
+    switch (pListItem->GetTagType())
     {
       case nuiHTML::eTag_LI:
       {
-        nuiHTMLBox* pLineBox = new nuiHTMLBox(pChild, false);
-        pNewBox->AddItem(pLineBox);
-        ParseBody(pChild, pLineBox);
+        nuiHTMLBox* pListItemBox = new nuiHTMLBox(pListItem, false);
+        pListBox->AddItem(pListItemBox);
+        ParseBody(pListItem, pListItemBox);
       }
       break;
     }

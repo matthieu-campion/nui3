@@ -26,7 +26,7 @@ public:
   void PopContext(nuiHTMLContext& rContext);
   
 protected:
-  float LayoutLine(uint32& start, uint32& end, float& y, float& h, nuiHTMLContext& rContext);
+  float LayoutLine(uint32& start, uint32& count, float& y, float& h, nuiHTMLContext& rContext);
   
   std::vector<nuiHTMLItem*> mItems;
   std::stack<nuiHTMLContext> mContextStack;

@@ -328,6 +328,10 @@ void nuiRSS::StartHTTPThread()
   url.Replace(_T("feed://"), _T("http://"));
   nuiHTTPRequest request(url);
   nuiHTTPResponse* pResponse = request.SendRequest();
+  if (!pResponse)
+  {
+    return;
+  }
   nuiXML* pXML = new nuiXML();
   nglIMemory mem(&pResponse->GetBody()[0], pResponse->GetBody().size());
   if (!pXML->Load(mem))
