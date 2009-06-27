@@ -38,7 +38,7 @@ set(SOURCES
   src/Base/nuiTimer.cpp
   src/Base/nuiTree.cpp
   src/Base/nuiXML.cpp
-  src/Base/nuiHTML.cpp
+  #src/Base/nuiHTML.cpp
   src/Bindings/nuiBindings.cpp
   src/Animations/nuiAttributeAnimation.cpp
   src/Animations/nuiWidgetAnimation.cpp
@@ -111,7 +111,6 @@ set(SOURCES
   src/SimpleWidgets/nuiSplineEdit.cpp
   src/SimpleWidgets/nuiStateDummy.cpp
   src/SimpleWidgets/nuiSVGView.cpp
-  src/SimpleWidgets/nuiSWF.cpp
   src/SimpleWidgets/nuiTabBar.cpp
   src/SimpleWidgets/nuiToggleButton.cpp
   src/SimpleWidgets/nuiZoomBar.cpp
@@ -195,6 +194,7 @@ set(SOURCES
   src/Image/nglBitmapTools.cpp
   src/Image/nglImage.cpp
   src/Image/nglImageCodec.cpp
+  src/Image/nglImageGIFCodec.cpp
   src/Image/nglImageJPEGCodec.cpp
   src/Image/nglImagePNGCodec.cpp
   src/Image/nglImagePPMCodec.cpp
@@ -253,7 +253,6 @@ set(SOURCES
 include_directories(
   deps/freetype2/include
   deps/agg/include
-  deps/gameswf
   deps/harfbuzz
   deps/tidy
   include
@@ -324,6 +323,7 @@ src/Application/Win
 src/Window/Win
 deps/expat/lib
 deps/freetype2/include
+deps/ungif
 deps/libjpeg
 deps/libpng
 deps/zlib/
@@ -364,7 +364,7 @@ add_subdirectory(deps)
 
 add_library( nui3 STATIC ${SOURCES} )
 
-target_link_libraries(nui3 gameswf tidy ${EXPAT_LIBRARIES} ${JPEG_LIBRARIES} ${PNG_LIBRARIES})
+target_link_libraries(nui3 tidy ${EXPAT_LIBRARIES} ${JPEG_LIBRARIES} ${PNG_LIBRARIES} ${UNGIF_LIBRARIES})
 
 add_subdirectory(examples)
 add_subdirectory(tutorials)

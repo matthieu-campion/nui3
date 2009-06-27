@@ -12,7 +12,6 @@ ELSE ( EXPAT_FOUND )
 ENDIF( EXPAT_FOUND )
 
 
-         
-add_subdirectory (gameswf)
+add_subdirectory (ungif)         
 add_subdirectory (harfbuzz)
 
