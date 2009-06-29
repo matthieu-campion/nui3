@@ -81,7 +81,7 @@ void MainWindow::OnCreation()
   pButtonLabel->SetBorder(8,8);
   pButton->AddChild(pButtonLabel);
   
-  nuiScrollView* pScroll = new nuiScrollView(true, true);
+  nuiScrollView* pScroll = new nuiScrollView(false, true);
   pLayoutBox->AddCell(pScroll);
   pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
   mpHTMLView = new nuiHTMLView(GetWidth());

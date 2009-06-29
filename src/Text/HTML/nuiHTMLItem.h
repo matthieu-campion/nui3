@@ -58,5 +58,6 @@ protected:
   bool mInline;
   bool mEndTag;
   bool mLineBreak;
+  
 };
 
