@@ -88,7 +88,7 @@ public:
       const float x = mParticles[i].mX + xoffset;
       const float y = mParticles[i].mY + yoffset;
       float age = 1.0 - (mParticles[i].mAge / mMaxAge);
-      age = Clamp(age, 0.0f, 1.0f);
+      age = nuiClamp(age, 0.0f, 1.0f);
       
       const float halfsize = (1.0 - age * .8) * mParticleSize; // Grow the particles as they age
       const nuiColor col(1.0f, 1.0f, 1.0f, age);
