@@ -294,8 +294,7 @@ and in NGL user application code.
   typedef u_int32_t uint32;
   typedef u_int64_t uint64;
 
-    
-  #define NGL_API __attribute__((visibility("hidden"))) 
+	#define NGL_API
   
 #endif//_UIKIT_
 

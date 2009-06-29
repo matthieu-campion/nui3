@@ -22,6 +22,12 @@
 
 #include "nglImageCodec.h"
 
+//! Functions prototypes
+size_t	CGGetBytesCallback(void* pInfo, void* pBuffer, size_t Count);
+void		CGReleaseInfoCallback(void* pInfo);
+void		CGRewindCallback(void* pInfo);
+off_t		CGSkipForwardBytesCallback(void* pInfo, off_t Count);
+
 class nglImageCGCodecInfo : public nglImageCodecInfo
 {
 public:

@@ -12,6 +12,8 @@ using namespace std;
 ** nglUIApplication
 */
 
+void objCCallOnInit(void* pUIApplication);
+void objCCallOnExit(int code);
 void objCCallOnWillExit();
 
 @implementation nglUIApplication

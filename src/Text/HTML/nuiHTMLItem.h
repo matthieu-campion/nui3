@@ -49,7 +49,7 @@ public:
 
   bool mSetRectCalled;
 protected:
-  uint32 nuiHTMLItem::GetDepth() const;
+  uint32 GetDepth() const;
 
   nuiHTMLNode* mpNode;
   nuiRect mIdealRect;
