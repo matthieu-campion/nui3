@@ -15,21 +15,21 @@ public:
   bool NextChar(); ///< Read the next char and advance the read index.
   nglChar GetChar() const; ///< Get the current char.
 
-  bool SkipBlank(); ///< Advance the read pointer until the current char is not a blank.  Returns false is there is a problem.
-  bool SkipToNextLine(); ///< Advance the read pointer until the start of the next line.  Returns false is there is a problem.
-  bool GetQuoted(nglString& rResult); ///< Read a Quoted string. Returns false is there is a problem.
-  bool GetSymbol(nglString& rResult); ///< Read a symbol. Returns false is there is a problem.
-  bool GetValue(nglString& rResult, bool AllowBlank = false); ///< Read a value. Returns false is there is a problem.
-  bool GetFloat(float& rResult); ///< Read a float. Returns false is there is a problem.
-  bool GetFloat(double& rResult); ///< Read a float. Returns false is there is a problem.
-  bool GetInteger(uint8&  rResult, uint8 Base = 10); ///< Read an integer. Returns false is there is a problem.
-  bool GetInteger(uint16& rResult, uint8 Base = 10); ///< Read an integer. Returns false is there is a problem.
-  bool GetInteger(uint32& rResult, uint8 Base = 10); ///< Read an integer. Returns false is there is a problem.
-  bool GetInteger(uint64& rResult, uint8 Base = 10); ///< Read an integer. Returns false is there is a problem.
-  bool GetInteger(int8&   rResult, uint8 Base = 10); ///< Read an integer. Returns false is there is a problem.
-  bool GetInteger(int16&  rResult, uint8 Base = 10); ///< Read an integer. Returns false is there is a problem.
-  bool GetInteger(int32&  rResult, uint8 Base = 10); ///< Read an integer. Returns false is there is a problem.
-  bool GetInteger(int64&  rResult, uint8 Base = 10); ///< Read an integer. Returns false is there is a problem.
+  bool SkipBlank(); ///< Advance the read pointer until the current char is not a blank.  Returns false if there is a problem.
+  bool SkipToNextLine(); ///< Advance the read pointer until the start of the next line.  Returns false if there is a problem.
+  bool GetQuoted(nglString& rResult); ///< Read a Quoted string. Returns false if there is a problem.
+  bool GetSymbol(nglString& rResult); ///< Read a symbol. Returns false if there is a problem.
+  bool GetValue(nglString& rResult, bool AllowBlank = false); ///< Read a value. Returns false if there is a problem.
+  bool GetFloat(float& rResult); ///< Read a float. Returns false if there is a problem.
+  bool GetFloat(double& rResult); ///< Read a float. Returns false if there is a problem.
+  bool GetInteger(uint8&  rResult, uint8 Base = 10); ///< Read an integer. Returns false if there is a problem.
+  bool GetInteger(uint16& rResult, uint8 Base = 10); ///< Read an integer. Returns false if there is a problem.
+  bool GetInteger(uint32& rResult, uint8 Base = 10); ///< Read an integer. Returns false if there is a problem.
+  bool GetInteger(uint64& rResult, uint8 Base = 10); ///< Read an integer. Returns false if there is a problem.
+  bool GetInteger(int8&   rResult, uint8 Base = 10); ///< Read an integer. Returns false if there is a problem.
+  bool GetInteger(int16&  rResult, uint8 Base = 10); ///< Read an integer. Returns false if there is a problem.
+  bool GetInteger(int32&  rResult, uint8 Base = 10); ///< Read an integer. Returns false if there is a problem.
+  bool GetInteger(int64&  rResult, uint8 Base = 10); ///< Read an integer. Returns false if there is a problem.
   
   void SetError(const nglString& rError); ///< Change the error message.
   int32 GetLine() const; ///< Return the current line number

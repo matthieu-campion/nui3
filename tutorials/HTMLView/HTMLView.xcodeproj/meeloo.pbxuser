@@ -2,8 +2,8 @@
 {
 	61A9DE3F0B833C9200BC506C /* Project object */ = {
 		activeBuildConfigurationName = Default;
-		activeExecutable = E57CED970FEAFA670002C681 /* HTMLView */;
-		activeTarget = 61A9DFBE0B833E9600BC506C /* HTMLView */;
+		activeExecutable = E57CED980FEAFA670002C681 /* HTMLViewD */;
+		activeTarget = 61A9DFC80B833EF200BC506C /* HTMLViewD */;
 		breakpoints = (
 			E53A4F260FEFD59A0084EA30 /* nuiHTMLView.cpp:23 */,
 			E51E552E0FF132D500FDF3BE /* nuiHTMLView.cpp:493 */,
@@ -86,15 +86,14 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 267983172;
-			PBXWorkspaceStateSaveDate = 267983172;
+			PBXPerProjectTemplateStateSaveDate = 268146916;
+			PBXWorkspaceStateSaveDate = 268146916;
 		};
 		perUserProjectItems = {
-			E5C6CD300FF6B63D003E6002 /* PBXTextBookmark */ = E5C6CD300FF6B63D003E6002 /* PBXTextBookmark */;
-			E5C6CDB00FF6BF52003E6002 /* PBXTextBookmark */ = E5C6CDB00FF6BF52003E6002 /* PBXTextBookmark */;
-			E5C6CDEC0FF6C91B003E6002 /* PBXTextBookmark */ = E5C6CDEC0FF6C91B003E6002 /* PBXTextBookmark */;
-			E5C6CDF00FF6C91B003E6002 /* PBXTextBookmark */ = E5C6CDF00FF6C91B003E6002 /* PBXTextBookmark */;
-			E5C6CE110FF6CBB4003E6002 /* PBXTextBookmark */ = E5C6CE110FF6CBB4003E6002 /* PBXTextBookmark */;
+			E5C6CD300FF6B63D003E6002 = E5C6CD300FF6B63D003E6002 /* PBXTextBookmark */;
+			E5C6CDEC0FF6C91B003E6002 = E5C6CDEC0FF6C91B003E6002 /* PBXTextBookmark */;
+			E5C6CDF00FF6C91B003E6002 = E5C6CDF00FF6C91B003E6002 /* PBXTextBookmark */;
+			E5C6CE110FF6CBB4003E6002 = E5C6CE110FF6CBB4003E6002 /* PBXTextBookmark */;
 		};
 		sourceControlManager = E57CEDB30FEAFA810002C681 /* Source Control */;
 		userBookmarkGroup = E53A4D980FEFA8060084EA30 /* PBXBookmarkGroup */;
@@ -148,8 +147,7 @@
 		ignoreCount = 0;
 		lineNumber = 493;
 		location = HTMLViewD;
-		modificationTime = 267983204.536943;
-		originalNumberOfMultipleMatches = 0;
+		modificationTime = 268139664.440121;
 		state = 2;
 	};
 	E51E553C0FF1331800FDF3BE /* nuiTexture.cpp */ = {
@@ -173,8 +171,7 @@
 		ignoreCount = 0;
 		lineNumber = 135;
 		location = HTMLViewD;
-		modificationTime = 267983204.537136;
-		originalNumberOfMultipleMatches = 0;
+		modificationTime = 268139664.44076;
 		state = 2;
 	};
 	E51E5A0E0FF3CD3E00FDF3BE /* tidylib.c */ = {
@@ -198,8 +195,7 @@
 		ignoreCount = 0;
 		lineNumber = 1605;
 		location = HTMLViewD;
-		modificationTime = 267983204.53734;
-		originalNumberOfMultipleMatches = 0;
+		modificationTime = 268139664.441346;
 		state = 2;
 	};
 	E53A4D980FEFA8060084EA30 /* PBXBookmarkGroup */ = {
@@ -230,8 +226,7 @@
 		ignoreCount = 0;
 		lineNumber = 23;
 		location = HTMLViewD;
-		modificationTime = 267983204.536508;
-		originalNumberOfMultipleMatches = 0;
+		modificationTime = 268139664.439307;
 		state = 2;
 	};
 	E53A4F5D0FEFDC780084EA30 /* PBXTextBookmark */ = {
@@ -255,9 +250,6 @@
 		configStateDict = {
 		};
 		customDataFormattersEnabled = 1;
-		dataTipCustomDataFormattersEnabled = 1;
-		dataTipShowTypeColumn = 1;
-		dataTipSortType = 0;
 		debuggerPlugin = GDBDebugging;
 		disassemblyDisplayState = 0;
 		dylibVariantSuffix = "";
@@ -270,7 +262,6 @@
 		name = HTMLView;
 		savedGlobals = {
 		};
-		showTypeColumn = 0;
 		sourceDirectories = (
 		);
 	};
@@ -285,9 +276,6 @@
 		configStateDict = {
 		};
 		customDataFormattersEnabled = 1;
-		dataTipCustomDataFormattersEnabled = 1;
-		dataTipShowTypeColumn = 1;
-		dataTipSortType = 0;
 		debuggerPlugin = GDBDebugging;
 		disassemblyDisplayState = 0;
 		dylibVariantSuffix = "";
@@ -300,7 +288,6 @@
 		name = HTMLViewD;
 		savedGlobals = {
 		};
-		showTypeColumn = 0;
 		sourceDirectories = (
 		);
 		variableFormatDictionary = {
@@ -338,29 +325,12 @@
 		path = /Users/meeloo/work/nui3/include/nuiHTML.h;
 		sourceTree = "<absolute>";
 	};
-	E5C6CD6D0FF6BBD6003E6002 /* nuiHTMLItem.h */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.c.h;
-		name = nuiHTMLItem.h;
-		path = /Users/meeloo/work/nui3/src/Text/HTML/nuiHTMLItem.h;
-		sourceTree = "<absolute>";
-	};
 	E5C6CDA40FF6BE3A003E6002 /* nuiHTMLItem.cpp */ = {
 		isa = PBXFileReference;
 		lastKnownFileType = sourcecode.cpp.cpp;
 		name = nuiHTMLItem.cpp;
 		path = /Users/meeloo/work/nui3/src/Text/HTML/nuiHTMLItem.cpp;
 		sourceTree = "<absolute>";
-	};
-	E5C6CDB00FF6BF52003E6002 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E5C6CD6D0FF6BBD6003E6002 /* nuiHTMLItem.h */;
-		name = "nuiHTMLItem.h: 52";
-		rLen = 0;
-		rLoc = 1180;
-		rType = 0;
-		vrLen = 1173;
-		vrLoc = 149;
 	};
 	E5C6CDEC0FF6C91B003E6002 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
