@@ -16,9 +16,9 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					364,
+					770,
 					20,
-					48.16259765625,
+					48,
 					43,
 					43,
 					20,
@@ -33,8 +33,14 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 267982997;
-			PBXWorkspaceStateSaveDate = 267982997;
+			PBXPerProjectTemplateStateSaveDate = 268228376;
+			PBXWorkspaceStateSaveDate = 268228376;
+		};
+		perUserProjectItems = {
+			E52C83960FFCE91C00B7779C /* PBXTextBookmark */ = E52C83960FFCE91C00B7779C /* PBXTextBookmark */;
+			E52C83970FFCE91C00B7779C /* PBXTextBookmark */ = E52C83970FFCE91C00B7779C /* PBXTextBookmark */;
+			E52C83990FFCE91C00B7779C /* PBXTextBookmark */ = E52C83990FFCE91C00B7779C /* PBXTextBookmark */;
+			E52C839A0FFCE91C00B7779C /* PBXTextBookmark */ = E52C839A0FFCE91C00B7779C /* PBXTextBookmark */;
 		};
 		sourceControlManager = E5954AED0FF918B3005F7E87 /* Source Control */;
 		userBuildSettings = {
@@ -52,6 +58,68 @@
 			E5954AD60FF91895005F7E87 /* RSSD */,
 		);
 	};
+	61A9DFF10B83433800BC506C /* MainWindow.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {948, 1834}}";
+			sepNavSelRange = "{2778, 10}";
+			sepNavVisRange = "{699, 2305}";
+		};
+	};
+	E52C83960FFCE91C00B7779C /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 83";
+		rLen = 10;
+		rLoc = 2778;
+		rType = 0;
+		vrLen = 2305;
+		vrLoc = 699;
+	};
+	E52C83970FFCE91C00B7779C /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E52C83980FFCE91C00B7779C /* nuiRSSView.h */;
+		rLen = 1;
+		rLoc = 19;
+		rType = 1;
+	};
+	E52C83980FFCE91C00B7779C /* nuiRSSView.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = nuiRSSView.h;
+		path = /Users/meeloo/work/nui3/include/nuiRSSView.h;
+		sourceTree = "<absolute>";
+	};
+	E52C83990FFCE91C00B7779C /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 83";
+		rLen = 10;
+		rLoc = 2778;
+		rType = 0;
+		vrLen = 2305;
+		vrLoc = 699;
+	};
+	E52C839A0FFCE91C00B7779C /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E52C839B0FFCE91C00B7779C /* nuiRSSView.h */;
+		name = "nuiRSSView.h: 20";
+		rLen = 112;
+		rLoc = 335;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	E52C839B0FFCE91C00B7779C /* nuiRSSView.h */ = {
+		isa = PBXFileReference;
+		name = nuiRSSView.h;
+		path = /Users/meeloo/work/nui3/include/nuiRSSView.h;
+		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {948, 476}}";
+			sepNavSelRange = "{335, 112}";
+			sepNavVisRange = "{0, 0}";
+		};
+	};
 	E5954AD50FF91895005F7E87 /* RSS */ = {
 		isa = PBXExecutable;
 		activeArgIndices = (
@@ -63,9 +131,6 @@
 		configStateDict = {
 		};
 		customDataFormattersEnabled = 1;
-		dataTipCustomDataFormattersEnabled = 1;
-		dataTipShowTypeColumn = 1;
-		dataTipSortType = 0;
 		debuggerPlugin = GDBDebugging;
 		disassemblyDisplayState = 0;
 		dylibVariantSuffix = "";
@@ -78,7 +143,6 @@
 		name = RSS;
 		savedGlobals = {
 		};
-		showTypeColumn = 0;
 		sourceDirectories = (
 		);
 	};
@@ -93,9 +157,6 @@
 		configStateDict = {
 		};
 		customDataFormattersEnabled = 1;
-		dataTipCustomDataFormattersEnabled = 1;
-		dataTipShowTypeColumn = 1;
-		dataTipSortType = 0;
 		debuggerPlugin = GDBDebugging;
 		disassemblyDisplayState = 0;
 		enableDebugStr = 1;
@@ -105,7 +166,6 @@
 		executableUserSymbolLevel = 0;
 		libgmallocEnabled = 0;
 		name = RSSD;
-		showTypeColumn = 0;
 		sourceDirectories = (
 		);
 	};

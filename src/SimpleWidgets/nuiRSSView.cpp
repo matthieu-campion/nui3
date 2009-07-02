@@ -66,12 +66,12 @@ bool nuiRSSView::Update(const nuiEvent& rEvent)
     {
       // Contents is valid HTML
       html.GetSimpleText(text);
-      NGL_OUT(_T("%d - Could parse HTML tags:\n%ls\n"), i, text.GetChars());
+      //NGL_OUT(_T("%d - Could parse HTML tags:\n%ls\n"), i, text.GetChars());
     }
     else
     {
       text = rItem.GetDescription();
-      NGL_OUT(_T("%d - Couldn't parse HTML tags:\n%ls\n"), i, text.GetChars());
+      //NGL_OUT(_T("%d - Couldn't parse HTML tags:\n%ls\n"), i, text.GetChars());
     }
     
 //    nuiLabel* pLabel = new nuiLabel(text);

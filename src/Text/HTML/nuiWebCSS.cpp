@@ -33,12 +33,12 @@ bool nuiWebCSS::Load(nglIStream* pStream, const nglString& rSourceURL)
   return res;
 }
 
-bool nuiWebCSS::Load(const nglString& rString)
+bool nuiWebCSS::Load(const nglString& rString, const nglString& rSourceURL)
 {
   bool res = false;
   char* utf8 = rString.Export(eUTF8);
   nglIMemory* pMem = new nglIMemory(utf8, strlen(utf8));
-  mpParser = new nuiParser(pMem, _T("inline"));
+  mpParser = new nuiParser(pMem, rSourceURL);
   
   res = ParseBody();
   
@@ -48,14 +48,79 @@ bool nuiWebCSS::Load(const nglString& rString)
   return res;
 }
 
+bool nuiWebCSS::ParseComment()
+{
+  return true;
+}
+
+bool nuiWebCSS::ParseProperty()
+{
+  return true;
+}
+
+bool nuiWebCSS::ParseValue()
+{
+  return true;
+}
+
+bool nuiWebCSS::ParseAction()
+{
+  if (!ParseProperty())
+    return false;
+  if (!ParseValue())
+    return false;
+  return true;
+}
+
+
+bool nuiWebCSS::ParseActions()
+{
+  while (1)
+  {
+    if (!ParseAction())
+      return false;
+  }
+  return true;
+}
+
+bool nuiWebCSS::ParseSelector()
+{
+  return true;
+}
+
+bool nuiWebCSS::ParseSelectors()
+{
+  while (1)
+  {
+    if (!ParseSelector())
+      return false;
+  }
+  return true;
+}
+
+bool nuiWebCSS::ParseRule()
+{
+  if (!ParseSelectors())
+    return false;
+  if (!ParseActions())
+    return false;
+  return true;
+}
+
+bool nuiWebCSS::ParseCharset()
+{
+  return true;
+}
 
 bool nuiWebCSS::ParseBody()
 {
+  if (!ParseCharset())
+    return false;
   while (!mpParser->IsDone())
   {
     if (!mpParser->SkipBlank())
       return false;
-//    if (!mpParser->())
+    if (!ParseRule())
       return false;
   }
   return true; 
