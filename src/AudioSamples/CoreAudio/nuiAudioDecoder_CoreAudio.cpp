@@ -13,6 +13,11 @@
 
 bool CstrToPascal(const char* Cstr, Str255 PascalStr)
 {
+  if (Cstr == NULL)
+  {
+    PascalStr = NULL;
+    return true;
+  }
   int size = strlen(Cstr);
   if (size > 255)
     return false;
@@ -117,12 +122,27 @@ void nuiAudioDecoder::Clear()
 }
 
 bool nuiAudioDecoder::CreateAudioDecoderPrivate()
-{
+{  
   //Init QuickTime
   if (mpPrivate)
   {
     delete mpPrivate;
+    mpPrivate = NULL;
   }
+  
+//  {
+//    // ANTI_BUG HACK: there is a problem when we try to create a QuickTime movie from a '.png' file (I don't know why...)
+//    nglFileOffset old = mrStream.GetPos();
+//    uint8 head[4];
+//    mrStream.ReadUInt8(head, 4);
+//    if (head[1] == 'P' && head[2] == 'N' && head[3] == 'G')
+//      return false;
+//    else
+//      mrStream.SetPos(old);
+//    //
+//  }
+  
+  
   mpPrivate = new nuiAudioDecoderPrivate(mrStream);
   
   EnterMovies();
@@ -130,8 +150,8 @@ bool nuiAudioDecoder::CreateAudioDecoderPrivate()
   //pass a fake file name to the init method, quicktime will try to recognize this file type extension, if not, try another.....
   std::vector<const char*> FileExtensions;
   FileExtensions.push_back("blabla.mp3");
-  FileExtensions.push_back("blabla.m4a");
   FileExtensions.push_back("blabla.wma");
+  FileExtensions.push_back("blabla.m4a");
   FileExtensions.push_back("blabla.wav");
   FileExtensions.push_back("blabla.aif");
   

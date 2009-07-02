@@ -91,55 +91,7 @@
 		rLoc = 147;
 		rType = 1;
 	};
-	40972DD50FE286E500D5FB8B /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 401335D20F13B4F800140067 /* DecoderTest.cpp */;
-		name = "DecoderTest.cpp: 77";
-		rLen = 0;
-		rLoc = 2040;
-		rType = 0;
-		vrLen = 1622;
-		vrLoc = 616;
-	};
-	40972DDA0FE2870B00D5FB8B /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 40A459BA0EFAAE4500043B1F /* nuiAudioDecoder_CoreAudio.cpp */;
-		rLen = 0;
-		rLoc = 562;
-		rType = 1;
-	};
-	40972DDB0FE2870B00D5FB8B /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 40972DDC0FE2870B00D5FB8B /* nuiAudioDecoder_CoreAudio.cpp */;
-		name = "nuiAudioDecoder_CoreAudio.cpp: 563";
-		rLen = 0;
-		rLoc = 15753;
-		rType = 0;
-		vrLen = 310;
-		vrLoc = 15541;
-	};
-	40972DDC0FE2870B00D5FB8B /* nuiAudioDecoder_CoreAudio.cpp */ = {
-		isa = PBXFileReference;
-		name = nuiAudioDecoder_CoreAudio.cpp;
-		path = /Users/mat/work/dev/mxp4/nui3/src/AudioSamples/CoreAudio/nuiAudioDecoder_CoreAudio.cpp;
-		sourceTree = "<absolute>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1277, 7994}}";
-			sepNavSelRange = "{15753, 0}";
-			sepNavVisRange = "{0, 0}";
-		};
-	};
-	40972DDD0FE2872500D5FB8B /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 40972DDC0FE2870B00D5FB8B /* nuiAudioDecoder_CoreAudio.cpp */;
-		name = "nuiAudioDecoder_CoreAudio.cpp: 563";
-		rLen = 0;
-		rLoc = 15753;
-		rType = 0;
-		vrLen = 0;
-		vrLoc = 0;
-	};
-	40972DDE0FE2872500D5FB8B /* PBXTextBookmark */ = {
+	40972DE90FE2875300D5FB8B /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 401335D20F13B4F800140067 /* DecoderTest.cpp */;
 		name = "DecoderTest.cpp: 77";
@@ -148,20 +100,6 @@
 		rType = 0;
 		vrLen = 1682;
 		vrLoc = 616;
-	};
-	40A459BA0EFAAE4500043B1F /* nuiAudioDecoder_CoreAudio.cpp */ = {
-		isa = PBXFileReference;
-		fileEncoding = 4;
-		lastKnownFileType = sourcecode.cpp.cpp;
-		name = nuiAudioDecoder_CoreAudio.cpp;
-		path = AudioSamples/CoreAudio/nuiAudioDecoder_CoreAudio.cpp;
-		sourceTree = "<group>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1296, 8218}}";
-			sepNavSelRange = "{15712, 0}";
-			sepNavVisRange = "{1751, 908}";
-			sepNavWindowFrame = "{{107, 75}, {1177, 1014}}";
-		};
 	};
 	61A9DE3F0B833C9200BC506C /* Project object */ = {
 		activeBuildConfigurationName = Default;
@@ -228,11 +166,7 @@
 		};
 		perUserProjectItems = {
 			40972DC60FE2867900D5FB8B /* PBXTextBookmark */ = 40972DC60FE2867900D5FB8B /* PBXTextBookmark */;
-			40972DD50FE286E500D5FB8B /* PBXTextBookmark */ = 40972DD50FE286E500D5FB8B /* PBXTextBookmark */;
-			40972DDA0FE2870B00D5FB8B /* PBXTextBookmark */ = 40972DDA0FE2870B00D5FB8B /* PBXTextBookmark */;
-			40972DDB0FE2870B00D5FB8B /* PBXTextBookmark */ = 40972DDB0FE2870B00D5FB8B /* PBXTextBookmark */;
-			40972DDD0FE2872500D5FB8B /* PBXTextBookmark */ = 40972DDD0FE2872500D5FB8B /* PBXTextBookmark */;
-			40972DDE0FE2872500D5FB8B /* PBXTextBookmark */ = 40972DDE0FE2872500D5FB8B /* PBXTextBookmark */;
+			40972DE90FE2875300D5FB8B /* PBXTextBookmark */ = 40972DE90FE2875300D5FB8B /* PBXTextBookmark */;
 		};
 		sourceControlManager = 401335BC0F13B4BC00140067 /* Source Control */;
 		userBuildSettings = {

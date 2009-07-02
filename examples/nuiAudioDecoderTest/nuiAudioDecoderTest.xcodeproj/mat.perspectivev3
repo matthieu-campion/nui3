@@ -241,7 +241,7 @@
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>40972DDE0FE2872500D5FB8B</string>
+						<string>40972DE90FE2875300D5FB8B</string>
 						<key>history</key>
 						<array>
 							<string>40972DC60FE2867900D5FB8B</string>
@@ -379,23 +379,13 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>401335B60F13B4BC00140067</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>nuiAudioDecoder_CoreAudio.cpp</string>
+								<string>&lt;No Editor&gt;</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
 									<dict>
 										<key>PBXProjectModuleGUID</key>
 										<string>401335B70F13B4BC00140067</string>
-										<key>PBXProjectModuleLabel</key>
-										<string>nuiAudioDecoder_CoreAudio.cpp</string>
-										<key>_historyCapacity</key>
-										<integer>0</integer>
-										<key>bookmark</key>
-										<string>40972DDD0FE2872500D5FB8B</string>
-										<key>history</key>
-										<array>
-											<string>40972DDB0FE2870B00D5FB8B</string>
-										</array>
 									</dict>
 									<key>SplitCount</key>
 									<string>1</string>
@@ -692,7 +682,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>266503973.118099</real>
+	<real>266504019.94994199</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -709,8 +699,8 @@
 	<array>
 		<string>40972DD70FE286E500D5FB8B</string>
 		<string>40972DD80FE286E500D5FB8B</string>
-		<string>40972DD30FE286E500D5FB8B</string>
 		<string>/Users/mat/work/dev/mxp4/nui3/examples/nuiAudioDecoderTest/nuiAudioDecoderTest.xcodeproj</string>
+		<string>40972DD30FE286E500D5FB8B</string>
 	</array>
 	<key>WindowString</key>
 	<string>252 595 1572 559 0 0 1920 1178 </string>
