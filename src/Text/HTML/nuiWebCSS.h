@@ -81,4 +81,5 @@ protected:
   bool ParseCharset();
   bool ParseProperty();
   bool ParseValue();
+  bool ParseAtCommand();
 };

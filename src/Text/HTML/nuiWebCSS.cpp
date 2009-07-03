@@ -102,12 +102,20 @@ bool nuiWebCSS::ParseRule()
 {
   if (!ParseSelectors())
     return false;
+
+  if (!mpParser->SkipBlank())
+    return false;
   if (!ParseActions())
     return false;
   return true;
 }
 
 bool nuiWebCSS::ParseCharset()
+{
+  return true;
+}
+
+bool nuiWebCSS::ParseAtCommand()
 {
   return true;
 }
@@ -120,7 +128,10 @@ bool nuiWebCSS::ParseBody()
   {
     if (!mpParser->SkipBlank())
       return false;
-    if (!ParseRule())
+
+    if (mpParser->GetChar() == '@' && !ParseAtCommand())
+      return false;
+    else if (!ParseRule())
       return false;
   }
   return true; 
