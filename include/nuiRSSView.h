@@ -17,7 +17,7 @@ class nuiVBox;
 class nuiRSSView : public nuiSimpleContainer
 {
 public:
-  nuiRSSView(const nglString& rURL, int32 SecondsBetweenUpdates = (30*60), nglIStream* pOriginalStream = NULL);
+  nuiRSSView(const nglString& rURL, int32 SecondsBetweenUpdates = (30*60), nglIStream* pOriginalStream = NULL, bool ForceNoHTML = false);
   virtual ~nuiRSSView();
   
   virtual nuiRect CalcIdealSize();
@@ -31,4 +31,5 @@ protected:
   nuiEventSink<nuiRSSView> mViewSink;
   nuiRSS* mpRSS;
   nuiVBox* mpBox;
+  bool mForceNoHTML;
 };

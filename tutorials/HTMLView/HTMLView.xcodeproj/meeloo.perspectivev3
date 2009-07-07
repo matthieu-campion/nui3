@@ -393,6 +393,8 @@
 									<dict>
 										<key>Frame</key>
 										<string>{{10, 27}, {1713, 295}}</string>
+										<key>RubberWindowFrame</key>
+										<string>0 59 1920 1119 0 0 1920 1178 </string>
 									</dict>
 									<key>Module</key>
 									<string>XCDetailModule</string>
@@ -468,8 +470,6 @@
 									<dict>
 										<key>Frame</key>
 										<string>{{10, 27}, {1713, 295}}</string>
-										<key>RubberWindowFrame</key>
-										<string>0 59 1920 1119 0 0 1920 1178 </string>
 									</dict>
 									<key>Module</key>
 									<string>PBXBuildResultsModule</string>
@@ -497,11 +497,11 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E52415170FFD617A00A1BFBA</string>
+				<string>E5A1C1411001F89200FC4EBF</string>
 				<string>1CA23ED40692098700951B8B</string>
-				<string>E52415180FFD617A00A1BFBA</string>
+				<string>E5A1C1421001F89200FC4EBF</string>
 				<string>E57CEDAD0FEAFA800002C681</string>
-				<string>E52415190FFD617A00A1BFBA</string>
+				<string>E5A1C1431001F89200FC4EBF</string>
 				<string>1CA23EDF0692099D00951B8B</string>
 				<string>1CA23EE00692099D00951B8B</string>
 				<string>1CA23EE10692099D00951B8B</string>
@@ -649,14 +649,14 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E524151A0FFD617A00A1BFBA</string>
+				<string>E5A1C1441001F89200FC4EBF</string>
 				<string>1CCC7628064C1048000F2A68</string>
 				<string>1CCC7629064C1048000F2A68</string>
-				<string>E524151B0FFD617A00A1BFBA</string>
-				<string>E524151C0FFD617A00A1BFBA</string>
-				<string>E524151D0FFD617A00A1BFBA</string>
-				<string>E524151E0FFD617A00A1BFBA</string>
-				<string>E524151F0FFD617A00A1BFBA</string>
+				<string>E5A1C1451001F89200FC4EBF</string>
+				<string>E5A1C1461001F89200FC4EBF</string>
+				<string>E5A1C1471001F89200FC4EBF</string>
+				<string>E5A1C1481001F89200FC4EBF</string>
+				<string>E5A1C1491001F89200FC4EBF</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -671,7 +671,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>268263802.14320299</real>
+	<real>268564626.02730799</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>

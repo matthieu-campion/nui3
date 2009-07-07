@@ -14,6 +14,7 @@ public:
   bool PeekChar(); ///< Read the next char but don't advance the read index.
   bool NextChar(); ///< Read the next char and advance the read index.
   nglChar GetChar() const; ///< Get the current char.
+  bool PeekString(uint32 len, nglString& rResult);
 
   bool SkipBlank(); ///< Advance the read pointer until the current char is not a blank.  Returns false if there is a problem.
   bool SkipToNextLine(); ///< Advance the read pointer until the start of the next line.  Returns false if there is a problem.
@@ -30,6 +31,9 @@ public:
   bool GetInteger(int16&  rResult, uint8 Base = 10); ///< Read an integer. Returns false if there is a problem.
   bool GetInteger(int32&  rResult, uint8 Base = 10); ///< Read an integer. Returns false if there is a problem.
   bool GetInteger(int64&  rResult, uint8 Base = 10); ///< Read an integer. Returns false if there is a problem.
+  
+  bool Expect(const nglString& rString, bool CaseSensitive = true);
+  bool Expect(nglChar ch, bool CaseSensitive = true);
   
   void SetError(const nglString& rError); ///< Change the error message.
   int32 GetLine() const; ///< Return the current line number

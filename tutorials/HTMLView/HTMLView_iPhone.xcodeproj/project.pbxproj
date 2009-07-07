@@ -70,6 +70,20 @@
 			remoteGlobalIDString = 614B66C30DA7BA67000F4C22;
 			remoteInfo = nuiEd;
 		};
+		E5A1C13B0FFEA21F00FC4EBF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BC6A0A350EF93F7800881ACF /* nuiE.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 735F703F0FF2747500E66B1D /* libnuiE.a */;
+			remoteInfo = "nuiE-iPhone 3.0";
+		};
+		E5A1C13D0FFEA21F00FC4EBF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BC6A0A350EF93F7800881ACF /* nuiE.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 735F73A30FF2747500E66B1D /* libnuiEd.a */;
+			remoteInfo = "nuiEd-iPhone 3.0";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -214,6 +228,8 @@
 			children = (
 				BC6A0A3E0EF93F7800881ACF /* libnuiE.a */,
 				BC6A0A400EF93F7800881ACF /* libnuiEd.a */,
+				E5A1C13C0FFEA21F00FC4EBF /* libnuiE.a */,
+				E5A1C13E0FFEA21F00FC4EBF /* libnuiEd.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -313,6 +329,20 @@
 			fileType = archive.ar;
 			path = libnuiEd.a;
 			remoteRef = BC6A0A3F0EF93F7800881ACF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E5A1C13C0FFEA21F00FC4EBF /* libnuiE.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnuiE.a;
+			remoteRef = E5A1C13B0FFEA21F00FC4EBF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E5A1C13E0FFEA21F00FC4EBF /* libnuiEd.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnuiEd.a;
+			remoteRef = E5A1C13D0FFEA21F00FC4EBF /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

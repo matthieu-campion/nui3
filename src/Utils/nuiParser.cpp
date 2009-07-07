@@ -50,6 +50,20 @@ bool nuiParser::PeekChar()
   return res;
 }
 
+bool nuiParser::PeekString(uint32 len, nglString& rResult)
+{
+  nglFileOffset ofs = mpStream->GetPos();
+  rResult.Wipe();
+  while (len && NextChar())
+  {
+    rResult.Add(GetChar());
+    len--;
+  }
+  mpStream->SetPos(ofs);
+  return !len;
+}
+
+
 bool nuiParser::IsDone() const
 {
   return mpStream->GetState() != eStreamReady;
@@ -479,4 +493,33 @@ bool nuiParser::GetNumberDigit(uint8& res, nglChar c, uint32 Base) const
   }
   res = c;
   return res < Base;
+}
+
+bool nuiParser::Expect(const nglString& rString, bool CaseSensitive)
+{
+  nglString tmp;
+  if (!PeekString(rString.GetLength(), tmp))
+    return false;
+  return tmp.Compare(rString, CaseSensitive);
+}
+
+bool nuiParser::Expect(nglChar ch, bool CaseSensitive)
+{
+  if (CaseSensitive)
+  {
+    if (GetChar() == ch)
+    {
+      NextChar();
+      return true;
+    }
+  }
+  else
+  {
+    if (tolower(GetChar()) == tolower(ch))
+    {
+      NextChar();
+      return true;
+    }
+  }
+  return false;
 }

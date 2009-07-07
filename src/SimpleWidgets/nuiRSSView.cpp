@@ -14,13 +14,14 @@
 #include "nuiHTMLView.h"
 
 //class nuiRSSView : public nuiSimpleContainer
-nuiRSSView::nuiRSSView(const nglString& rURL, int32 SecondsBetweenUpdates, nglIStream* pOriginalStream)
+nuiRSSView::nuiRSSView(const nglString& rURL, int32 SecondsBetweenUpdates, nglIStream* pOriginalStream, bool ForceNoHTML)
 : mViewSink(this)
 {
   if (SetObjectClass(_T("nuiRSSView")))
   {
     // Init Attributes
   }
+  mForceNoHTML = ForceNoHTML;
   mpRSS = new nuiRSS(rURL, SecondsBetweenUpdates, pOriginalStream);
   mpBox = new nuiVBox();
   AddChild(mpBox);
@@ -77,12 +78,23 @@ bool nuiRSSView::Update(const nuiEvent& rEvent)
 //    nuiLabel* pLabel = new nuiLabel(text);
 //    pLabel->SetObjectName(_T("nuiRSSView::Description"));
 //    pLabel->SetWrapping(true);
-    nuiHTMLView* pLabel = new nuiHTMLView(480);
-    pLabel->SetText(desc);
-    pPane->AddChild(pLabel);
+    if (!mForceNoHTML)
+    {
+      nuiHTMLView* pLabel = new nuiHTMLView(480);
+      pLabel->SetText(desc);
+      pLabel->SetObjectClass(_T("nuiRSSContents"));
+      pPane->AddChild(pLabel);
+    }
+    else
+    {
+      nuiLabel* pLabel = new nuiLabel(text);
+      pLabel->SetObjectClass(_T("nuiRSSContents"));
+      pLabel->SetWrapping(true);
+      pPane->AddChild(pLabel);
+      
+    }
     mpBox->AddCell(pPane);
     
-    pLabel->SetObjectClass(_T("nuiRSSContents"));
   }
   return false;
 }
