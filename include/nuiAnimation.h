@@ -99,7 +99,7 @@ public:
   
 protected:
   void CallOnFrame();
-  double UpdateTime(); ///< This method returns the number time elapsed since the last call to UpdateTime.
+  bool UpdateTime(); ///< This method returns the number time elapsed since the last call to UpdateTime.
   bool OnTick(const nuiEvent& rEvent);
 
   double mCurrentTime;

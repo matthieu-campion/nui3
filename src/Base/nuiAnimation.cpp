@@ -368,8 +368,14 @@ void nuiAnimation::OnFrame()
 
 void nuiAnimation::CallOnFrame()
 {
-  UpdateTime();
+  bool ShouldStop = UpdateTime();
   OnFrame();
+  if (ShouldStop)
+  {
+    mUpdatingTime = true;
+    Stop();
+    mUpdatingTime = false;
+  }
 }
 
 bool nuiAnimation::OnTick(const nuiEvent& rEvent)
@@ -378,8 +384,9 @@ bool nuiAnimation::OnTick(const nuiEvent& rEvent)
   return false;
 }
 
-double nuiAnimation::UpdateTime()
+bool nuiAnimation::UpdateTime()
 {
+  bool ShouldStop = false;
   mUpdatingTime = true;
 
   nglTime now;
@@ -402,7 +409,8 @@ double nuiAnimation::UpdateTime()
       {
         mCurrentTime = duration;
         //NGL_OUT(_T("Stop anim (time has come: %f > %f)\n"), mCurrentTime, duration);
-        Stop();
+        //Stop();
+        ShouldStop = true;
       }
       else
       {
@@ -417,7 +425,8 @@ double nuiAnimation::UpdateTime()
       if (!mCount)
       {
         mCurrentTime = 0;
-        Stop();
+        //Stop();
+        ShouldStop = true;
       }
       else
       {
@@ -432,7 +441,8 @@ double nuiAnimation::UpdateTime()
       if (!mCount--)
       {
         mCurrentTime = duration;
-        Stop();
+        //Stop();
+        ShouldStop = true;
       }
       else
       {
@@ -446,7 +456,8 @@ double nuiAnimation::UpdateTime()
       if (!mCount--)
       {
         mCurrentTime = 0;
-        Stop();
+        //Stop();
+        ShouldStop = true;
       }
       else
       {
@@ -461,10 +472,7 @@ double nuiAnimation::UpdateTime()
   mCurrentPosition = mEasing(mCurrentTime / mDuration);
   
   mUpdatingTime = false;
-  if (IsPlaying())
-    return advance;
-  else
-    return 0;
+  return ShouldStop;
 }
 
 bool nuiAnimation::Play(const nuiEvent& rEvent)
