@@ -323,7 +323,7 @@ bool nglImagePNGCodec::Feed(nglIStream* pIStream)
 #ifdef _CARBON_
 void nglWritePNG( png_structp png_ptr, png_bytep data, long unsigned int length )
 #else
-void nglWritePNG( png_structp png_ptr, png_bytep data, unsigned int length )
+void nglWritePNG( png_structp png_ptr, png_bytep data, png_size_t length )
 #endif
 {
   ((nglOStream*)(png_get_io_ptr(png_ptr)))->Write( (png_byte *)data, (long int) length, 1 );

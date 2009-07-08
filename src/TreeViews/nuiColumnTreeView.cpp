@@ -932,7 +932,7 @@ bool nuiColumnTreeView::OnButtonTimerTick(const nuiEvent& rEvent)
 bool nuiColumnTreeView::StopButtonTimer(const nuiEvent& rEvent)
 {
   mpButtonTimer->Stop();
-  mButtonDepth = (int)rEvent.mpUser;
+  mButtonDepth = (unsigned long int)rEvent.mpUser;
   mpButtonTimer->SetPeriod(INITIAL_TIMER_PERIOD);
   return true;
 }
@@ -940,7 +940,7 @@ bool nuiColumnTreeView::StopButtonTimer(const nuiEvent& rEvent)
 bool nuiColumnTreeView::ArrowUpClicked(const nuiEvent& rEvent)
 {
   mTimedButtonEvent = eUpPressed;
-  mButtonDepth = (int)rEvent.mpUser;
+  mButtonDepth = (unsigned long int)rEvent.mpUser;
   mpButtonTimer->Start();
   return true;
 }
@@ -948,7 +948,7 @@ bool nuiColumnTreeView::ArrowUpClicked(const nuiEvent& rEvent)
 bool nuiColumnTreeView::ArrowDownClicked(const nuiEvent& rEvent)
 {
   mTimedButtonEvent = eDownPressed;
-  mButtonDepth = (int)rEvent.mpUser;
+  mButtonDepth = (unsigned long int)rEvent.mpUser;
   mpButtonTimer->Start();
   return true;
 }

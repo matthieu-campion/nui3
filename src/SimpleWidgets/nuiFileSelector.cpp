@@ -842,7 +842,7 @@ bool nuiFileSelector::OnFolderListSelectionChanged(const nuiEvent& event)
 
 bool nuiFileSelector::OnRootStateChanged(const nuiEvent& rEvent)
 {
-  uint32 opened = (uint32)rEvent.mpUser;
+  uint32 opened = (unsigned long int)rEvent.mpUser;
   
   // redirect event
   if (opened)

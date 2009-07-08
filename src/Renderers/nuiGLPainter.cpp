@@ -1094,9 +1094,11 @@ void nuiGLPainter::PopProjectionMatrix()
 
 void nuiGLPainter::ReleaseCacheObject(void* pHandle)
 {
+  /* Not 64 bit-safe and 'dead code' as Meeloo said
   GLuint array = (GLuint)pHandle;
   mpContext->glDeleteBuffersARB(1, &array);
   nuiCheckForGLErrors();
+  */
 }
 
 uint32 nuiGLPainter::GetRectangleTextureSupport() const

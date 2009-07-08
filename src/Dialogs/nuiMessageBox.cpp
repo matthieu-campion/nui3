@@ -252,7 +252,7 @@ bool nuiMessageBox::OnRetry(const nuiEvent& rEvent)
 
 bool nuiMessageBox::OnCustom(const nuiEvent& rEvent)
 {
-  Button btn = (Button)rEvent.mpUser; 
+  Button btn = (Button)(unsigned long int)rEvent.mpUser; 
   mClickedButton = btn;
   ExitModal();
   return false;

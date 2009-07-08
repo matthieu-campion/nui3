@@ -261,7 +261,7 @@ void TessellatorInfo::InternalTessEdgeFlag(GLboolean flag)
 void TessellatorInfo::InternalTessVertex(void* vertex_data)
 {
   nuiRenderArray* pArray = mpObject->GetLastArray();
-  pArray->SetVertex(mTempPoints[(uint32)vertex_data]);
+  pArray->SetVertex(mTempPoints[(unsigned long int)vertex_data]);
   //pArray->SetEdgeFlag(mEdgeFlag);
   pArray->PushVertex();
 }
