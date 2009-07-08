@@ -2686,6 +2686,9 @@ void nuiWidget::SetUserWidth(nuiSize s)
 {
   mUserRect.SetWidth(s);
   mHasUserWidth = true;
+  UserRectChanged();
+  InvalidateLayout();
+  DebugRefreshInfo();
 }
 
 nuiSize nuiWidget::GetUserWidth()
@@ -2697,6 +2700,9 @@ void nuiWidget::SetUserHeight(nuiSize s)
 {
   mUserRect.SetHeight(s);
   mHasUserHeight = true;
+  UserRectChanged();
+  InvalidateLayout();
+  DebugRefreshInfo();
 }
 
 nuiSize nuiWidget::GetUserHeight()
