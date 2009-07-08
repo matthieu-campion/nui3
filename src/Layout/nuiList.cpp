@@ -677,6 +677,7 @@ bool nuiList::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
           {
             DoubleClicked(X,Y,Button);
             Activated();
+            return true;
           }
           else
           {
