@@ -3018,6 +3018,9 @@
 		E5D2D18D0FDE949C00143480 /* nuiRSS.h in Headers */ = {isa = PBXBuildFile; fileRef = E5D2D18C0FDE949C00143480 /* nuiRSS.h */; };
 		E5D2D18E0FDE949C00143480 /* nuiRSS.h in Headers */ = {isa = PBXBuildFile; fileRef = E5D2D18C0FDE949C00143480 /* nuiRSS.h */; };
 		E5D2D18F0FDE949C00143480 /* nuiRSS.h in Headers */ = {isa = PBXBuildFile; fileRef = E5D2D18C0FDE949C00143480 /* nuiRSS.h */; };
+		E5D435971004DC5400388BF5 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5D435961004DC5300388BF5 /* ApplicationServices.framework */; };
+		E5D435981004DC5400388BF5 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5D435961004DC5300388BF5 /* ApplicationServices.framework */; };
+		E5D435991004DC5400388BF5 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5D435961004DC5300388BF5 /* ApplicationServices.framework */; };
 		E5D66E4E0CF433A4004783D4 /* nuiNativeResource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5D66E4D0CF433A4004783D4 /* nuiNativeResource.cpp */; };
 		E5D66E4F0CF433A4004783D4 /* nuiNativeResource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5D66E4D0CF433A4004783D4 /* nuiNativeResource.cpp */; };
 		E5D66E510CF433BA004783D4 /* nuiNativeResource.h in Headers */ = {isa = PBXBuildFile; fileRef = E5D66E500CF433BA004783D4 /* nuiNativeResource.h */; };
@@ -4072,6 +4075,7 @@
 		E5D053F90D318DFF00B1A021 /* nuiMetaDecoration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiMetaDecoration.h; path = include/nuiMetaDecoration.h; sourceTree = SOURCE_ROOT; };
 		E5D2D1880FDE946E00143480 /* nuiRSS.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiRSS.cpp; sourceTree = "<group>"; };
 		E5D2D18C0FDE949C00143480 /* nuiRSS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiRSS.h; path = include/nuiRSS.h; sourceTree = SOURCE_ROOT; };
+		E5D435961004DC5300388BF5 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
 		E5D66E4D0CF433A4004783D4 /* nuiNativeResource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiNativeResource.cpp; path = src/Base/nuiNativeResource.cpp; sourceTree = SOURCE_ROOT; };
 		E5D66E500CF433BA004783D4 /* nuiNativeResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiNativeResource.h; path = include/nuiNativeResource.h; sourceTree = SOURCE_ROOT; };
 		E5EA30180F55926F0057CCA7 /* nuiCoverFlow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiCoverFlow.h; path = include/nuiCoverFlow.h; sourceTree = SOURCE_ROOT; };
@@ -4136,6 +4140,7 @@
 				E59CD7FC0CDAAAE100B1C729 /* AudioUnit.framework in Frameworks */,
 				E59CD7FD0CDAAAE100B1C729 /* CoreAudio.framework in Frameworks */,
 				E59CD7FE0CDAAAE100B1C729 /* CoreAudioKit.framework in Frameworks */,
+				E5D435991004DC5400388BF5 /* ApplicationServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4149,6 +4154,7 @@
 				E59CD8000CDAAAE100B1C729 /* AudioUnit.framework in Frameworks */,
 				E59CD8010CDAAAE100B1C729 /* CoreAudio.framework in Frameworks */,
 				E59CD8020CDAAAE100B1C729 /* CoreAudioKit.framework in Frameworks */,
+				E5D435971004DC5400388BF5 /* ApplicationServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4163,6 +4169,7 @@
 				E592C50F0EFE8CCC00340B35 /* AudioUnit.framework in Frameworks */,
 				E592C5100EFE8CCC00340B35 /* CoreAudio.framework in Frameworks */,
 				E592C5110EFE8CCC00340B35 /* CoreAudioKit.framework in Frameworks */,
+				E5D435981004DC5400388BF5 /* ApplicationServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4504,6 +4511,7 @@
 		E58167440C3CECA700902DFE /* deps */ = {
 			isa = PBXGroup;
 			children = (
+				E5D435961004DC5300388BF5 /* ApplicationServices.framework */,
 				E592C0620EFE8AEB00340B35 /* Cocoa.framework */,
 				E59CD7F70CDAAAE100B1C729 /* AudioToolbox.framework */,
 				E59CD7F80CDAAAE100B1C729 /* AudioUnit.framework */,
