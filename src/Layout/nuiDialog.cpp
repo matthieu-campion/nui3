@@ -100,7 +100,9 @@ void nuiDialog::SetDecoration(const nglString& rName)
 //  virtual 
 const nglString& nuiDialog::GetDecorationName()
 {
-  return mpPane->GetDecorationName();
+  if (mpPane)
+    return mpPane->GetDecorationName();
+  return nglString::Null;
 }
 
 

@@ -41,7 +41,7 @@ void nuiAudioConvert_DEfloatToINint16(const float* input, int16* output, uint32 
   for (j=0; j < nbSampleFrames; j++)
   {
     float in = *input++;
-    
+    in = nuiClamp(in, -1.0f, 1.0f);
     if (in < 0)
       *output = ToZero(in * mult1);
     else
@@ -167,6 +167,7 @@ void nuiAudioConvert_FloatBufferTo16bits(float* pFloatBuffer, int16* pInt16Buffe
   for (uint64 i = 0; i< SizeToRead; i++)
   {
     Temp = pFloatBuffer[i];
+    Temp = nuiClamp(Temp, -1.0f, 1.0f);
     if (Temp < 0)
       pInt16Buffer[i] = ToZero(Temp * mult1);
     else
@@ -219,10 +220,21 @@ void nuiAudioConvert_FloatTo24bitsLittleEndian(float* pInBuffer, uint8* pOutBuff
   uint64 i;
   for ( i = 0; i < SizeToRead; i++)
   {
+    float value = pInBuffer[i];
+    value = nuiClamp(value, -1.0f, 1.0f);
     if ( pInBuffer[i] < 0 )
-      TempInt32 = ToZero( pInBuffer[i] * mult1 );
+    {
+      TempInt32 = ToZero( value * mult1 );
+      NGL_ASSERT(TempInt32 <= 0);
+      NGL_ASSERT(TempInt32 >= -8388608);
+    }
     else
-      TempInt32 = ToZero( pInBuffer[i] * mult2 );
+    {
+      TempInt32 = ToZero( value * mult2 );
+      NGL_ASSERT(TempInt32 >= 0);
+      NGL_ASSERT(TempInt32 <= 8388607);
+    }
+      
     
     pOutBuffer[ 3 * i] = (uint8)(TempInt32);
     pOutBuffer[ 3 * i + 1] = (uint8)(TempInt32>>8);
@@ -240,10 +252,20 @@ void nuiAudioConvert_FloatTo24bitsBigEndian(float* pInBuffer, uint8* pOutBuffer,
   uint64 i;
   for ( i = 0; i < SizeToRead; i++)
   {
+    float value = pInBuffer[i];
+    value = nuiClamp(value, -1.0f, 1.0f);
     if ( pInBuffer[i] < 0 )
-      TempInt32 = ToZero( pInBuffer[i] * mult1 );
+    {
+      TempInt32 = ToZero( value * mult1 );
+      NGL_ASSERT(TempInt32 <= 0);
+      NGL_ASSERT(TempInt32 >= -8388608);
+    }
     else
-      TempInt32 = ToZero( pInBuffer[i] * mult2 );
+    {
+      TempInt32 = ToZero( value * mult2 );
+      NGL_ASSERT(TempInt32 >= 0);
+      NGL_ASSERT(TempInt32 <= 8388607);
+    }
     
     pOutBuffer[ 3 * i] = (uint8)(TempInt32>>16);
     pOutBuffer[ 3 * i + 1] = (uint8)(TempInt32>>8);
@@ -259,10 +281,11 @@ void nuiAudioConvert_FloatTo32bits(float* pInBuffer, int32* pOutBuffer, uint64 S
   uint64 i;
   for ( i = 0; i < SizeToRead; i++)
   {
-    if ( pInBuffer[i] < 0 )
-      pOutBuffer[i] = ToZero(pInBuffer[i] * mult1);
+    float value = nuiClamp(value, -1.0f, 1.0f);
+    if (value < 0 )
+      pOutBuffer[i] = ToZero(value * mult1);
     else
-      pOutBuffer[i] = ToZero(pInBuffer[i] * mult2);
+      pOutBuffer[i] = ToZero(value * mult2);
   }  
 }
 
