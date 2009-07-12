@@ -81,7 +81,9 @@ and in NGL user application code.
     #define __MACHO__
     #define __NGL_MACHO__
     #include <CoreFoundation/CoreFoundation.h>
+#if !__LP64__
     #include <CoreServices/CoreServices.h>
+#endif
 
 // Make Carbon the default choice when compiling on a Mac, even when using gcc
   #elif (!defined(_CARBON_) && !defined(_DARWIN_) && !defined(_COCOA_))

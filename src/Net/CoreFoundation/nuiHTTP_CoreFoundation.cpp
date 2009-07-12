@@ -13,7 +13,7 @@
 #endif//_UIKIT_
 
 #ifdef _COCOA_
-#include <CFNetwork/CFNetwork.h>
+#include <CoreServices/CoreServices.h>
 #endif//_UIKIT_
 
 nuiHTTPResponse* nuiHTTPRequest::SendRequest()

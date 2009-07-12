@@ -634,6 +634,11 @@
 #  define PNG_EASY_ACCESS_SUPPORTED
 #endif
 
+#if (defined __LP64__) && __LP64__
+#  define PNG_NO_ASSEMBLER_CODE 1
+#  define PNG_NO_MMX_CODE 1
+#endif
+
 /* PNG_ASSEMBLER_CODE was enabled by default in version 1.2.0 
    even when PNG_USE_PNGVCRD or PNG_USE_PNGGCCRD is not defined */
 #if defined(PNG_READ_SUPPORTED) && !defined(PNG_NO_ASSEMBLER_CODE)
@@ -645,7 +650,7 @@
 #    define PNG_MMX_CODE_SUPPORTED
 #  endif
 #  if !defined(PNG_USE_PNGGCCRD) && !defined(PNG_NO_MMX_CODE) && \
-     !defined(PNG_USE_PNGVCRD) && defined(__MMX__)
+     !defined(PNG_USE_PNGVCRD) && defined(__MMX__) && !__LP64__
 #    define PNG_USE_PNGGCCRD
 #  endif
 #endif

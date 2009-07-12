@@ -52,7 +52,11 @@ static CFBundleRef _CFXBundleCreateFromImageName(CFAllocatorRef allocator, const
 
 static nglPath GetResourcePath()
 {
+#if __LP64__
+  const mach_header* header = (mach_header*)&_mh_execute_header;
+#else
   const mach_header* header = &_mh_execute_header;
+#endif
   
   const char* imagename = 0;
   /* determine the image name */

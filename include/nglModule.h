@@ -71,7 +71,7 @@ private:
   nglPath   mPath;
 #ifdef _WIN32_
   HINSTANCE mHandle;
-#elif (defined _CARBON_)
+#elif (defined _CARBON_) || (defined _COCOA_)
   CFBundleRef     mHandle;
 #else
   void* mHandle;
