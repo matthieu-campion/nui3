@@ -227,7 +227,7 @@ private:
   uint32 mEffectiveSize; // Size if number of elements
   uint32 mSizeOfElement; // Size in byte of ONE element
 
-  nglAtomic mReadIndex; // Read index in number of elements
-  nglAtomic mWriteIndex; // Write index in number of elements
+  nglAtomic32 mReadIndex; // Read index in number of elements
+  nglAtomic32 mWriteIndex; // Write index in number of elements
 };
 
