@@ -41,7 +41,11 @@ nglStringConv::~nglStringConv()
 
 int nglStringConv::Process (const char*& pSource, int& rToRead, char*& pTarget, int& rToWrite)
 {
+#ifdef __UIKIT__
   char* in = const_cast<char*>(pSource);
+#else
+  const char* in = pSource;
+#endif
   char* out = pTarget;
   size_t inbytes = rToRead;
   size_t outbytes = rToWrite;

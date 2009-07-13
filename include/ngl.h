@@ -27,6 +27,14 @@ and in NGL user application code.
  * Platform detection
  */
 
+#if (defined __X86_64__) || (defined _M_X64) || (defined __ppc64__)
+// 64bits platform
+#define __NUI64__
+#else
+// 32bits platform
+#define __NUI32__
+#endif
+
 /* MS Windows flavours
 */
 #if defined (_WIN32) || defined (WIN32)
