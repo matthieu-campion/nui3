@@ -72,6 +72,20 @@
 			remoteGlobalIDString = 614B66C30DA7BA67000F4C22;
 			remoteInfo = nuiEd;
 		};
+		E5795637100ACC8800821E44 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BC6A0A350EF93F7800881ACF /* nuiE.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 735F703F0FF2747500E66B1D /* libnuiE.a */;
+			remoteInfo = "nuiE-iPhone 3.0";
+		};
+		E5795639100ACC8800821E44 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BC6A0A350EF93F7800881ACF /* nuiE.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 735F73A30FF2747500E66B1D /* libnuiEd.a */;
+			remoteInfo = "nuiEd-iPhone 3.0";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -218,6 +232,8 @@
 			children = (
 				BC6A0A3E0EF93F7800881ACF /* libnuiE.a */,
 				BC6A0A400EF93F7800881ACF /* libnuiEd.a */,
+				E5795638100ACC8800821E44 /* libnuiE.a */,
+				E579563A100ACC8800821E44 /* libnuiEd.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -321,6 +337,20 @@
 			remoteRef = BC6A0A3F0EF93F7800881ACF /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		E5795638100ACC8800821E44 /* libnuiE.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnuiE.a;
+			remoteRef = E5795637100ACC8800821E44 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E579563A100ACC8800821E44 /* libnuiEd.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnuiEd.a;
+			remoteRef = E5795639100ACC8800821E44 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -408,8 +438,10 @@
 					"objective-c++",
 					"-ObjC++",
 				);
-				OTHER_LDFLAGS = "-lz";
-				PREBINDING = NO;
+				OTHER_LDFLAGS = (
+					"-lz",
+					"-liconv",
+				);
 				SDKROOT = iphoneos2.1;
 				USE_HEADERMAP = NO;
 			};
@@ -432,8 +464,6 @@
 				GENERATE_PROFILING_CODE = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LIBRARY_SEARCH_PATHS = "";
-				OTHER_LDFLAGS = "-lz";
-				PREBINDING = NO;
 				PRODUCT_NAME = HTMLTree_iPhone;
 				STRIPFLAGS = "-SXx";
 				STRIP_INSTALLED_PRODUCT = YES;
@@ -460,7 +490,6 @@
 				GENERATE_PROFILING_CODE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LIBRARY_SEARCH_PATHS = "";
-				PREBINDING = NO;
 				PRODUCT_NAME = HTMLTree_iPhoneD;
 			};
 			name = Default;

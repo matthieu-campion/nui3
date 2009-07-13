@@ -146,6 +146,26 @@ inline void ngl_atomic_dec(nglAtomic64 &value)
     typedef volatile nglAtomic32 nglAtomic;
 #endif
 
+#ifdef _UIKIT_
+// iPhone hack... (no 64 bit CAS available)
+  inline bool OSAtomicCompareAndSwap64Barrier(int64_t oldValue, int64_t newValue, volatile int64_t *theValue)
+  {
+    if (oldValue == newValue)
+    {
+      *theValue = newValue;
+      return true;
+    }
+    return false;
+  }
+
+  inline int64_t OSAtomicAdd64(int64_t addValue, int64_t* value)
+  {
+    *value += addValue;
+    return *value;
+  }
+
+#endif
+
     // read atomic variable
     inline uint32 ngl_atomic_read(const nglAtomic32 &value)
     {

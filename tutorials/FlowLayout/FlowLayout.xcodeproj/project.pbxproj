@@ -355,6 +355,10 @@
 				COPY_PHASE_STRIP = NO;
 				HEADER_SEARCH_PATHS = ../../include;
 				INFOPLIST_FILE = Info.plist;
+				OTHER_LDFLAGS = (
+					"-lz",
+					"-liconv",
+				);
 			};
 			name = Default;
 		};
@@ -373,8 +377,6 @@
 				GCC_OPTIMIZATION_LEVEL = s;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = "-lz";
-				PREBINDING = YES;
 				PRODUCT_NAME = FlowLayout;
 				STRIP_INSTALLED_PRODUCT = YES;
 				WARNING_CFLAGS = (
@@ -400,8 +402,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = _DEBUG;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = "-lz";
-				PREBINDING = YES;
 				PRODUCT_NAME = FlowLayoutD;
 				WARNING_CFLAGS = (
 					"-Wmost",

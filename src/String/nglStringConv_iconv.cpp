@@ -41,7 +41,7 @@ nglStringConv::~nglStringConv()
 
 int nglStringConv::Process (const char*& pSource, int& rToRead, char*& pTarget, int& rToWrite)
 {
-  char* in = (char*) pSource;
+  char* in = const_cast<char*>(pSource);
   char* out = pTarget;
   size_t inbytes = rToRead;
   size_t outbytes = rToWrite;
@@ -180,8 +180,8 @@ const char *nglStringCodec::GetName(nglTextEncoding Encoding)
     case eUCS2 : return "UCS-2";
     case eUCS4 : return "UCS-4";
     // Others
-    case eEncodingInternal: return "wchar_t";
-    case eEncodingNative  : return "";
+    case eEncodingInternal: return "UCS-4-INTERNAL";
+    case eEncodingNative  : return "UTF-8";
     case eEncodingUnknown:
     default:
       return 0;

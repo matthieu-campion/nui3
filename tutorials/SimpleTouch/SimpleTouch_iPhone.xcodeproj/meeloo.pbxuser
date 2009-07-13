@@ -61,12 +61,12 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 266365895;
-			PBXWorkspaceStateSaveDate = 266365895;
+			PBXPerProjectTemplateStateSaveDate = 269143832;
+			PBXWorkspaceStateSaveDate = 269143832;
 		};
 		perUserProjectItems = {
-			E507CE8E0FE0784100D80E79 /* PBXTextBookmark */ = E507CE8E0FE0784100D80E79 /* PBXTextBookmark */;
-			E507CE8F0FE0784700D80E79 /* PBXTextBookmark */ = E507CE8F0FE0784700D80E79 /* PBXTextBookmark */;
+			E57957C2100ACF4100821E44 /* PBXTextBookmark */ = E57957C2100ACF4100821E44 /* PBXTextBookmark */;
+			E57957C3100ACF4B00821E44 /* PBXTextBookmark */ = E57957C3100ACF4B00821E44 /* PBXTextBookmark */;
 			E5FCB20D0FD5F1AD00CE6298 /* PBXTextBookmark */ = E5FCB20D0FD5F1AD00CE6298 /* PBXTextBookmark */;
 			E5FCB20F0FD5F1AD00CE6298 /* PBXTextBookmark */ = E5FCB20F0FD5F1AD00CE6298 /* PBXTextBookmark */;
 			E5FCB24F0FD5F58600CE6298 /* PBXTextBookmark */ = E5FCB24F0FD5F58600CE6298 /* PBXTextBookmark */;
@@ -85,7 +85,7 @@
 	};
 	BC6A0A430EF93F9700881ACF /* Application.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1652, 3536}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1652, 3523}}";
 			sepNavSelRange = "{1451, 0}";
 			sepNavVisRange = "{504, 674}";
 		};
@@ -109,17 +109,17 @@
 			E5FCB1E90FD5E88200CE6298 /* SimpleTouch_iPhoneD */,
 		);
 	};
-	E507CE8E0FE0784100D80E79 /* PBXTextBookmark */ = {
+	E57957C2100ACF4100821E44 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = BC6A0A430EF93F9700881ACF /* Application.cpp */;
 		name = "Application.cpp: 65";
 		rLen = 0;
 		rLoc = 1451;
 		rType = 0;
-		vrLen = 1136;
-		vrLoc = 359;
+		vrLen = 674;
+		vrLoc = 504;
 	};
-	E507CE8F0FE0784700D80E79 /* PBXTextBookmark */ = {
+	E57957C3100ACF4B00821E44 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = BC6A0A430EF93F9700881ACF /* Application.cpp */;
 		name = "Application.cpp: 65";

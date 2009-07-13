@@ -20,7 +20,7 @@
 					20,
 					1474,
 					20,
-					48.16259765625,
+					48,
 					43,
 					43,
 					20,
@@ -43,7 +43,7 @@
 					1434,
 					60,
 					20,
-					48.16259765625,
+					48,
 					43,
 					43,
 				);
@@ -57,10 +57,11 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 264892883;
-			PBXWorkspaceStateSaveDate = 264892883;
+			PBXPerProjectTemplateStateSaveDate = 269143987;
+			PBXWorkspaceStateSaveDate = 269143987;
 		};
 		perUserProjectItems = {
+			E5795811100ACFCA00821E44 /* PBXTextBookmark */ = E5795811100ACFCA00821E44 /* PBXTextBookmark */;
 			E5F9B50D0FC9F27D00325121 /* PBXTextBookmark */ = E5F9B50D0FC9F27D00325121 /* PBXTextBookmark */;
 			E5F9B5340FCA03CE00325121 /* PBXTextBookmark */ = E5F9B5340FCA03CE00325121 /* PBXTextBookmark */;
 			E5F9B5520FCB689100325121 /* PBXTextBookmark */ = E5F9B5520FCB689100325121 /* PBXTextBookmark */;
@@ -68,9 +69,7 @@
 			E5F9B5560FCB689100325121 /* PBXTextBookmark */ = E5F9B5560FCB689100325121 /* PBXTextBookmark */;
 			E5F9B55B0FCB689100325121 /* PBXTextBookmark */ = E5F9B55B0FCB689100325121 /* PBXTextBookmark */;
 			E5F9B55D0FCB689100325121 /* PBXTextBookmark */ = E5F9B55D0FCB689100325121 /* PBXTextBookmark */;
-			E5F9B55F0FCB689100325121 /* PBXTextBookmark */ = E5F9B55F0FCB689100325121 /* PBXTextBookmark */;
 			E5F9B6130FCDE0A800325121 /* PBXTextBookmark */ = E5F9B6130FCDE0A800325121 /* PBXTextBookmark */;
-			E5F9B69E0FCF44D900325121 /* PBXTextBookmark */ = E5F9B69E0FCF44D900325121 /* PBXTextBookmark */;
 			E5F9B6B30FCFF95E00325121 /* PBXTextBookmark */ = E5F9B6B30FCFF95E00325121 /* PBXTextBookmark */;
 			E5F9B6B40FCFF95E00325121 /* PBXTextBookmark */ = E5F9B6B40FCFF95E00325121 /* PBXTextBookmark */;
 		};
@@ -103,6 +102,22 @@
 		executables = (
 			E5F9B4E00FC9F1D300325121 /* TextEdit_iPhoneD */,
 		);
+	};
+	E5795811100ACFCA00821E44 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5795812100ACFCA00821E44 /* ttkern.c */;
+		name = "ttkern.c: 181";
+		rLen = 0;
+		rLoc = 5371;
+		rType = 0;
+		vrLen = 1095;
+		vrLoc = 4712;
+	};
+	E5795812100ACFCA00821E44 /* ttkern.c */ = {
+		isa = PBXFileReference;
+		name = ttkern.c;
+		path = /Users/meeloo/work/nui3/deps/freetype2/src/sfnt/ttkern.c;
+		sourceTree = "<absolute>";
 	};
 	E5F9B4DF0FC9F1D300325121 /* TextEdit_iPhone */ = {
 		isa = PBXExecutable;
@@ -163,6 +178,7 @@
 		fallbackIsa = XCSourceControlManager;
 		isSCMEnabled = 0;
 		scmConfiguration = {
+			repositoryName = nui;
 		};
 	};
 	E5F9B5090FC9F1F200325121 /* Code sense */ = {
@@ -211,6 +227,7 @@
 	};
 	E5F9B5550FCB689100325121 /* SDL_uikitview.h */ = {
 		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
 		name = SDL_uikitview.h;
 		path = /Users/meeloo/work/SDL/src/video/uikit/SDL_uikitview.h;
 		sourceTree = "<absolute>";
@@ -227,6 +244,7 @@
 	};
 	E5F9B5570FCB689100325121 /* SDL_uikitview.m */ = {
 		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.objc;
 		name = SDL_uikitview.m;
 		path = /Users/meeloo/work/SDL/src/video/uikit/SDL_uikitview.m;
 		sourceTree = "<absolute>";
@@ -243,6 +261,7 @@
 	};
 	E5F9B55C0FCB689100325121 /* SDL_uikitview.m */ = {
 		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.objc;
 		name = SDL_uikitview.m;
 		path = /Users/meeloo/work/SDL/src/video/uikit/SDL_uikitview.m;
 		sourceTree = "<absolute>";
@@ -263,33 +282,6 @@
 		name = SDL_uikitview.h;
 		path = /Users/meeloo/work/SDL/src/video/uikit/SDL_uikitview.h;
 		sourceTree = "<absolute>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {899, 767}}";
-			sepNavSelRange = "{1509, 0}";
-			sepNavVisRange = "{0, 1508}";
-		};
-	};
-	E5F9B55F0FCB689100325121 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E5F9B5600FCB689100325121 /* SDL_uikitview.m */;
-		name = "SDL_uikitview.m: 173";
-		rLen = 2872;
-		rLoc = 4606;
-		rType = 0;
-		vrLen = 574;
-		vrLoc = 6266;
-	};
-	E5F9B5600FCB689100325121 /* SDL_uikitview.m */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.c.objc;
-		name = SDL_uikitview.m;
-		path = /Users/meeloo/work/SDL/src/video/uikit/SDL_uikitview.m;
-		sourceTree = "<absolute>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {899, 5174}}";
-			sepNavSelRange = "{0, 0}";
-			sepNavVisRange = "{0, 1282}";
-		};
 	};
 	E5F9B5F30FCDDF0000325121 /* nglWindow_UIKit.mm */ = {
 		isa = PBXFileReference;
@@ -297,11 +289,6 @@
 		name = nglWindow_UIKit.mm;
 		path = /Users/meeloo/work/nui3/src/Window/UIKit/nglWindow_UIKit.mm;
 		sourceTree = "<absolute>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1652, 11063}}";
-			sepNavSelRange = "{13179, 0}";
-			sepNavVisRange = "{12330, 1417}";
-		};
 	};
 	E5F9B6130FCDE0A800325121 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -312,28 +299,6 @@
 		rType = 0;
 		vrLen = 767;
 		vrLoc = 21127;
-	};
-	E5F9B6650FCE179B00325121 /* ttkern.c */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.c.c;
-		name = ttkern.c;
-		path = /Users/meeloo/work/nui3/deps/freetype2/src/sfnt/ttkern.c;
-		sourceTree = "<absolute>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {899, 4134}}";
-			sepNavSelRange = "{5371, 0}";
-			sepNavVisRange = "{4808, 1130}";
-		};
-	};
-	E5F9B69E0FCF44D900325121 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E5F9B6650FCE179B00325121 /* ttkern.c */;
-		name = "ttkern.c: 193";
-		rLen = 0;
-		rLoc = 5371;
-		rType = 0;
-		vrLen = 1153;
-		vrLoc = 4766;
 	};
 	E5F9B6B30FCFF95E00325121 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -357,13 +322,9 @@
 	};
 	E5F9B6B50FCFF95E00325121 /* ttkern.c */ = {
 		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.c;
 		name = ttkern.c;
 		path = /Users/meeloo/work/nui3/deps/freetype2/src/sfnt/ttkern.c;
 		sourceTree = "<absolute>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1652, 4160}}";
-			sepNavSelRange = "{5371, 0}";
-			sepNavVisRange = "{4721, 1198}";
-		};
 	};
 }

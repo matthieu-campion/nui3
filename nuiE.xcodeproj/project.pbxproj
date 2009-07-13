@@ -3143,7 +3143,6 @@
 		735F73470FF2747500E66B1D /* nuiBorderDecoration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9F4A3060E05E3E70084143E /* nuiBorderDecoration.cpp */; };
 		735F73480FF2747500E66B1D /* nuiImageDecoration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9F4A30E0E05E42D0084143E /* nuiImageDecoration.cpp */; };
 		735F73490FF2747500E66B1D /* nuiSurface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61B429740E1065C9009ACAFD /* nuiSurface.cpp */; };
-		735F734A0FF2747500E66B1D /* nglStringConv_CoreFoundation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61F5F0610E644377009FDD61 /* nglStringConv_CoreFoundation.cpp */; };
 		735F734B0FF2747500E66B1D /* nuiHoverDummy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5C10DA5716500D2641A /* nuiHoverDummy.cpp */; };
 		735F734C0FF2747500E66B1D /* nuiMemoryPool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61AB29150E64639D00623908 /* nuiMemoryPool.cpp */; };
 		735F734D0FF2747500E66B1D /* nuiPopupMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61AB291B0E6463C400623908 /* nuiPopupMenu.cpp */; };
@@ -3335,6 +3334,10 @@
 		E56D2A310FE7091500C16F53 /* nuiRSS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E56D2A2F0FE7091500C16F53 /* nuiRSS.cpp */; };
 		E56D2A350FE7092B00C16F53 /* nuiRSSView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E56D2A330FE7092B00C16F53 /* nuiRSSView.cpp */; };
 		E56D2A370FE7092B00C16F53 /* nuiRSSView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E56D2A330FE7092B00C16F53 /* nuiRSSView.cpp */; };
+		E579545C100AC5CD00821E44 /* nglStringConv_iconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E579545B100AC5CD00821E44 /* nglStringConv_iconv.cpp */; };
+		E579545D100AC5CD00821E44 /* nglStringConv_iconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E579545B100AC5CD00821E44 /* nglStringConv_iconv.cpp */; };
+		E579545E100AC5CD00821E44 /* nglStringConv_iconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E579545B100AC5CD00821E44 /* nglStringConv_iconv.cpp */; };
+		E579545F100AC5CD00821E44 /* nglStringConv_iconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E579545B100AC5CD00821E44 /* nglStringConv_iconv.cpp */; };
 		E591C2610FF1AB96005E5E3D /* dgif_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = E591C25C0FF1AB96005E5E3D /* dgif_lib.c */; };
 		E591C2620FF1AB96005E5E3D /* gif_err.c in Sources */ = {isa = PBXBuildFile; fileRef = E591C25D0FF1AB96005E5E3D /* gif_err.c */; };
 		E591C2630FF1AB96005E5E3D /* gif_lib.h in Headers */ = {isa = PBXBuildFile; fileRef = E591C25E0FF1AB96005E5E3D /* gif_lib.h */; };
@@ -4587,6 +4590,7 @@
 		E56D2A220FE708E300C16F53 /* nuiRSSView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiRSSView.h; path = include/nuiRSSView.h; sourceTree = SOURCE_ROOT; };
 		E56D2A2F0FE7091500C16F53 /* nuiRSS.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiRSS.cpp; path = src/Utils/nuiRSS.cpp; sourceTree = SOURCE_ROOT; };
 		E56D2A330FE7092B00C16F53 /* nuiRSSView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiRSSView.cpp; path = src/SimpleWidgets/nuiRSSView.cpp; sourceTree = SOURCE_ROOT; };
+		E579545B100AC5CD00821E44 /* nglStringConv_iconv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nglStringConv_iconv.cpp; path = src/String/nglStringConv_iconv.cpp; sourceTree = SOURCE_ROOT; };
 		E591C25C0FF1AB96005E5E3D /* dgif_lib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dgif_lib.c; path = deps/ungif/dgif_lib.c; sourceTree = SOURCE_ROOT; };
 		E591C25D0FF1AB96005E5E3D /* gif_err.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = gif_err.c; path = deps/ungif/gif_err.c; sourceTree = SOURCE_ROOT; };
 		E591C25E0FF1AB96005E5E3D /* gif_lib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gif_lib.h; path = deps/ungif/gif_lib.h; sourceTree = SOURCE_ROOT; };
@@ -5351,6 +5355,7 @@
 		6126D6120DA5716500D2641A /* String */ = {
 			isa = PBXGroup;
 			children = (
+				E579545B100AC5CD00821E44 /* nglStringConv_iconv.cpp */,
 				BC3E8CFF0F7D081300C97E27 /* nuiTranslator.h */,
 				BC3E8D000F7D081300C97E27 /* nuiTranslator.cpp */,
 				BC3E8D010F7D081300C97E27 /* nuiUnicode.h */,
@@ -9142,6 +9147,7 @@
 				E591C2E60FF1B06C005E5E3D /* nglImageGIFCodec.cpp in Sources */,
 				E51968050FF8F853007EDF46 /* nuiHTMLHeader.cpp in Sources */,
 				E51968070FF8F853007EDF46 /* nuiHTMLStyle.cpp in Sources */,
+				E579545D100AC5CD00821E44 /* nglStringConv_iconv.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9490,6 +9496,7 @@
 				735F70340FF2747500E66B1D /* nglImageGIFCodec.cpp in Sources */,
 				E51968090FF8F853007EDF46 /* nuiHTMLHeader.cpp in Sources */,
 				E519680B0FF8F853007EDF46 /* nuiHTMLStyle.cpp in Sources */,
+				E579545E100AC5CD00821E44 /* nglStringConv_iconv.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9757,7 +9764,6 @@
 				735F73470FF2747500E66B1D /* nuiBorderDecoration.cpp in Sources */,
 				735F73480FF2747500E66B1D /* nuiImageDecoration.cpp in Sources */,
 				735F73490FF2747500E66B1D /* nuiSurface.cpp in Sources */,
-				735F734A0FF2747500E66B1D /* nglStringConv_CoreFoundation.cpp in Sources */,
 				735F734B0FF2747500E66B1D /* nuiHoverDummy.cpp in Sources */,
 				735F734C0FF2747500E66B1D /* nuiMemoryPool.cpp in Sources */,
 				735F734D0FF2747500E66B1D /* nuiPopupMenu.cpp in Sources */,
@@ -9838,6 +9844,7 @@
 				735F73980FF2747500E66B1D /* nglImageGIFCodec.cpp in Sources */,
 				E519680D0FF8F853007EDF46 /* nuiHTMLHeader.cpp in Sources */,
 				E519680F0FF8F853007EDF46 /* nuiHTMLStyle.cpp in Sources */,
+				E579545F100AC5CD00821E44 /* nglStringConv_iconv.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10186,6 +10193,7 @@
 				E591C2E40FF1B06C005E5E3D /* nglImageGIFCodec.cpp in Sources */,
 				E51968010FF8F853007EDF46 /* nuiHTMLHeader.cpp in Sources */,
 				E51968030FF8F853007EDF46 /* nuiHTMLStyle.cpp in Sources */,
+				E579545C100AC5CD00821E44 /* nglStringConv_iconv.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

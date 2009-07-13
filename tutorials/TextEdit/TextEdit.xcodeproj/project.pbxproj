@@ -59,7 +59,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E592C5140EFE8CCC00340B35 /* libnui3D cocoa.a */;
+			remoteGlobalIDString = E592C5140EFE8CCC00340B35;
 			remoteInfo = "nui3D cocoa";
 		};
 /* End PBXContainerItemProxy section */
@@ -353,6 +353,10 @@
 				COPY_PHASE_STRIP = NO;
 				HEADER_SEARCH_PATHS = ../../include;
 				INFOPLIST_FILE = Info.plist;
+				OTHER_LDFLAGS = (
+					"-lz",
+					"-liconv",
+				);
 			};
 			name = Default;
 		};
@@ -371,8 +375,6 @@
 				GCC_OPTIMIZATION_LEVEL = s;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = "-lz";
-				PREBINDING = YES;
 				PRODUCT_NAME = TextEdit;
 				STRIP_INSTALLED_PRODUCT = YES;
 				WARNING_CFLAGS = (
@@ -398,8 +400,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = _DEBUG;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = "-lz";
-				PREBINDING = YES;
 				PRODUCT_NAME = TextEditD;
 				WARNING_CFLAGS = (
 					"-Wmost",

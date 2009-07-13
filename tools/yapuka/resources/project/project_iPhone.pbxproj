@@ -400,7 +400,7 @@
 					"objective-c++",
 					"-ObjC++",
 				);
-				OTHER_LDFLAGS = "-lz";
+				OTHER_LDFLAGS = "-liconv -lz";
 				PREBINDING = NO;
 				SDKROOT = iphoneos2.1;
 				USE_HEADERMAP = NO;
@@ -424,7 +424,7 @@
 				GENERATE_PROFILING_CODE = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LIBRARY_SEARCH_PATHS = "";
-				OTHER_LDFLAGS = "-lz";
+				OTHER_LDFLAGS = "-liconv -lz";
 				PREBINDING = NO;
 				PRODUCT_NAME = %NUI_GENERATOR_PROJECT_IPHONE%;
 				STRIPFLAGS = "-SXx";

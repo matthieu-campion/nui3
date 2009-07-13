@@ -453,7 +453,10 @@
 				);
 				COPY_PHASE_STRIP = NO;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../include/";
-				OTHER_LDFLAGS = "-lz";
+				OTHER_LDFLAGS = (
+					"-lz",
+					"-liconv",
+				);
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 				STRIP_INSTALLED_PRODUCT = NO;
 			};

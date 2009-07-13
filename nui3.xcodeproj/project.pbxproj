@@ -1181,6 +1181,9 @@
 		E578F7E30D0460FE00D2F07C /* nuiNativeResourceVolume.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E578F7E10D0460FE00D2F07C /* nuiNativeResourceVolume.cpp */; };
 		E578F7E50D04611D00D2F07C /* nuiNativeResourceVolume.h in Headers */ = {isa = PBXBuildFile; fileRef = E578F7E40D04611D00D2F07C /* nuiNativeResourceVolume.h */; };
 		E578F7E60D04611D00D2F07C /* nuiNativeResourceVolume.h in Headers */ = {isa = PBXBuildFile; fileRef = E578F7E40D04611D00D2F07C /* nuiNativeResourceVolume.h */; };
+		E5795184100AB20400821E44 /* nglStringConv_iconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5795182100AB20400821E44 /* nglStringConv_iconv.cpp */; };
+		E5795185100AB20400821E44 /* nglStringConv_iconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5795182100AB20400821E44 /* nglStringConv_iconv.cpp */; };
+		E57951D3100AB47200821E44 /* nglStringConv_iconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5795182100AB20400821E44 /* nglStringConv_iconv.cpp */; };
 		E57BBCD90C5800A30026DE07 /* nuiFontManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E57BBCD70C5800A30026DE07 /* nuiFontManager.cpp */; };
 		E57BBCDB0C5800A30026DE07 /* nuiFontManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E57BBCD70C5800A30026DE07 /* nuiFontManager.cpp */; };
 		E57BBCF90C5898320026DE07 /* nglFontBase.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BBCF80C5898320026DE07 /* nglFontBase.h */; };
@@ -2916,7 +2919,6 @@
 		E592C51F0EFE8D1300340B35 /* nglEvent_Carbon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816E1F0C3CECAB00902DFE /* nglEvent_Carbon.cpp */; };
 		E592C5200EFE8D4100340B35 /* nglConsole_Carbon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D2C0C3CECAB00902DFE /* nglConsole_Carbon.cpp */; };
 		E592C5AC0EFEC90600340B35 /* nglStringConv_CoreFoundation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E592C5AB0EFEC90600340B35 /* nglStringConv_CoreFoundation.cpp */; };
-		E592C5AF0EFEC93600340B35 /* nglStringConv_Carbon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E592C5AE0EFEC93600340B35 /* nglStringConv_Carbon.cpp */; };
 		E592C5B00EFEC93600340B35 /* nglStringConv_Carbon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E592C5AE0EFEC93600340B35 /* nglStringConv_Carbon.cpp */; };
 		E592C5BA0EFEC95F00340B35 /* nglConsole_Carbon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D2C0C3CECAB00902DFE /* nglConsole_Carbon.cpp */; };
 		E592C5BB0EFEC98000340B35 /* nglModule_Carbon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D300C3CECAB00902DFE /* nglModule_Carbon.cpp */; };
@@ -3344,6 +3346,7 @@
 		E577AEA90C8D81A100CE9A7A /* nuiContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiContainer.cpp; path = src/WidgetTree/nuiContainer.cpp; sourceTree = SOURCE_ROOT; };
 		E578F7E10D0460FE00D2F07C /* nuiNativeResourceVolume.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiNativeResourceVolume.cpp; path = src/File/nuiNativeResourceVolume.cpp; sourceTree = SOURCE_ROOT; };
 		E578F7E40D04611D00D2F07C /* nuiNativeResourceVolume.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiNativeResourceVolume.h; path = include/nuiNativeResourceVolume.h; sourceTree = SOURCE_ROOT; };
+		E5795182100AB20400821E44 /* nglStringConv_iconv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nglStringConv_iconv.cpp; path = src/String/nglStringConv_iconv.cpp; sourceTree = SOURCE_ROOT; };
 		E57BBCD70C5800A30026DE07 /* nuiFontManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiFontManager.cpp; path = ../Base/nuiFontManager.cpp; sourceTree = "<group>"; };
 		E57BBCF80C5898320026DE07 /* nglFontBase.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nglFontBase.h; path = include/nglFontBase.h; sourceTree = SOURCE_ROOT; };
 		E57BBF730C5C9FBF0026DE07 /* nglFontLayout.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nglFontLayout.h; path = include/nglFontLayout.h; sourceTree = SOURCE_ROOT; };
@@ -5629,6 +5632,7 @@
 		E5816DF50C3CECAB00902DFE /* String */ = {
 			isa = PBXGroup;
 			children = (
+				E5795182100AB20400821E44 /* nglStringConv_iconv.cpp */,
 				E52C83350FFBB2FD00B7779C /* nuiRegExp.cpp */,
 				E592C5AE0EFEC93600340B35 /* nglStringConv_Carbon.cpp */,
 				E592C5AB0EFEC90600340B35 /* nglStringConv_CoreFoundation.cpp */,
@@ -8164,6 +8168,7 @@
 				E5C6CE200FF6DC38003E6002 /* nuiHTMLStyle.cpp in Sources */,
 				E52C831B0FFB9DA800B7779C /* nuiWebCSS.cpp in Sources */,
 				E52C83370FFBB2FD00B7779C /* nuiRegExp.cpp in Sources */,
+				E5795185100AB20400821E44 /* nglStringConv_iconv.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8561,7 +8566,6 @@
 				E592C51E0EFE8D0900340B35 /* nglPlugin_Carbon.cpp in Sources */,
 				E592C51F0EFE8D1300340B35 /* nglEvent_Carbon.cpp in Sources */,
 				E592C5200EFE8D4100340B35 /* nglConsole_Carbon.cpp in Sources */,
-				E592C5AF0EFEC93600340B35 /* nglStringConv_Carbon.cpp in Sources */,
 				E5BC284C0EFF1132009EEA3B /* nuiHTTP_CoreFoundation.cpp in Sources */,
 				E53120830F0780C60081CB7E /* nuiURL_CoreFoundation.cpp in Sources */,
 				E58948700F0B0580006B3B17 /* nglApplication_Carbon.cpp in Sources */,
@@ -8605,6 +8609,7 @@
 				E5C6CE1C0FF6DC38003E6002 /* nuiHTMLStyle.cpp in Sources */,
 				E52C831F0FFB9DA800B7779C /* nuiWebCSS.cpp in Sources */,
 				E52C833B0FFBB2FD00B7779C /* nuiRegExp.cpp in Sources */,
+				E57951D3100AB47200821E44 /* nglStringConv_iconv.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9036,6 +9041,7 @@
 				E52C831D0FFB9DA800B7779C /* nuiWebCSS.cpp in Sources */,
 				E52C83390FFBB2FD00B7779C /* nuiRegExp.cpp in Sources */,
 				E5080B3C1007FB1C0048E1AB /* nuiAudioDevice_CoreAudio.cpp in Sources */,
+				E5795184100AB20400821E44 /* nglStringConv_iconv.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9064,6 +9070,7 @@
 					Carbon,
 				);
 				PREBINDING = NO;
+				PRELINK_LIBS = "-liconv";
 				PRODUCT_NAME = nui3;
 				ZERO_LINK = NO;
 			};
@@ -9086,7 +9093,6 @@
 					HAVE_BCOPY,
 				);
 				GCC_VERSION = 4.0;
-				GENERATE_MASTER_OBJECT_FILE = NO;
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = ". include deps/libpng deps/gameswf deps/zlib deps/ungif deps/libjpeg src/Application/Carbon src/Stream/Zip deps/freetype2/include deps/expat/include deps/harfbuzz deps/expat/lib";

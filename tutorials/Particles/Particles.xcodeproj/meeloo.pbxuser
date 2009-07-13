@@ -63,11 +63,33 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 267980716;
-			PBXWorkspaceStateSaveDate = 267980716;
+			PBXConfiguration.PBXTargetDataSource.PBXTargetDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					1434,
+					60,
+					20,
+					48.16259765625,
+					43,
+					43,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXTargetDataSource_PrimaryAttribute,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 269143670;
+			PBXWorkspaceStateSaveDate = 269143670;
 		};
 		perUserProjectItems = {
-			E5954ABF0FF9183C005F7E87 /* XCBuildMessageTextBookmark */ = E5954ABF0FF9183C005F7E87 /* XCBuildMessageTextBookmark */;
+			E5795756100ACE9900821E44 /* PBXTextBookmark */ = E5795756100ACE9900821E44 /* PBXTextBookmark */;
 			E5954AC00FF9183C005F7E87 /* PBXTextBookmark */ = E5954AC00FF9183C005F7E87 /* PBXTextBookmark */;
 		};
 		sourceControlManager = E51F47340FA9A25900AB3F0D /* Source Control */;
@@ -90,7 +112,7 @@
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1652, 2600}}";
 			sepNavSelRange = "{4610, 0}";
-			sepNavVisRange = "{3704, 1313}";
+			sepNavVisRange = "{3670, 1347}";
 		};
 	};
 	61A9DFF20B83433800BC506C /* MainWindow.h */ = {
@@ -111,9 +133,6 @@
 		configStateDict = {
 		};
 		customDataFormattersEnabled = 1;
-		dataTipCustomDataFormattersEnabled = 1;
-		dataTipShowTypeColumn = 1;
-		dataTipSortType = 0;
 		debuggerPlugin = GDBDebugging;
 		disassemblyDisplayState = 0;
 		dylibVariantSuffix = "";
@@ -126,7 +145,6 @@
 		name = Particles;
 		savedGlobals = {
 		};
-		showTypeColumn = 0;
 		sourceDirectories = (
 		);
 		variableFormatDictionary = {
@@ -143,9 +161,6 @@
 		configStateDict = {
 		};
 		customDataFormattersEnabled = 1;
-		dataTipCustomDataFormattersEnabled = 1;
-		dataTipShowTypeColumn = 1;
-		dataTipSortType = 0;
 		debuggerPlugin = GDBDebugging;
 		disassemblyDisplayState = 0;
 		dylibVariantSuffix = "";
@@ -158,7 +173,6 @@
 		name = ParticlesD;
 		savedGlobals = {
 		};
-		showTypeColumn = 0;
 		sourceDirectories = (
 		);
 		variableFormatDictionary = {
@@ -194,7 +208,6 @@
 		lineNumber = 200;
 		location = ParticlesD;
 		modificationTime = 267982883.043233;
-		originalNumberOfMultipleMatches = 0;
 		state = 2;
 	};
 	E51F47A80FA9BCA000AB3F0D /* MainWindow.cpp:200 */ = {
@@ -212,7 +225,6 @@
 		lineNumber = 200;
 		location = ParticlesD;
 		modificationTime = 267982883.044424;
-		originalNumberOfMultipleMatches = 0;
 		state = 2;
 	};
 	E51F47C90FA9BE6700AB3F0D /* MainWindow.cpp:200 */ = {
@@ -230,7 +242,6 @@
 		lineNumber = 200;
 		location = ParticlesD;
 		modificationTime = 267982883.044784;
-		originalNumberOfMultipleMatches = 0;
 		state = 2;
 	};
 	E51F47D00FA9BEA100AB3F0D /* MainWindow.cpp:200 */ = {
@@ -248,7 +259,6 @@
 		lineNumber = 200;
 		location = ParticlesD;
 		modificationTime = 267982883.04518;
-		originalNumberOfMultipleMatches = 0;
 		state = 2;
 	};
 	E51F48160FA9C6B600AB3F0D /* MainWindow.cpp:194 */ = {
@@ -265,17 +275,17 @@
 		ignoreCount = 0;
 		lineNumber = 194;
 		modificationTime = 267982883.045491;
-		originalNumberOfMultipleMatches = 0;
 		state = 2;
 	};
-	E5954ABF0FF9183C005F7E87 /* XCBuildMessageTextBookmark */ = {
+	E5795756100ACE9900821E44 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
-		comments = "'Clamp' was not declared in this scope";
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
-		fallbackIsa = XCBuildMessageTextBookmark;
-		rLen = 1;
-		rLoc = 90;
-		rType = 1;
+		name = "MainWindow.cpp: 181";
+		rLen = 0;
+		rLoc = 4610;
+		rType = 0;
+		vrLen = 1347;
+		vrLoc = 3670;
 	};
 	E5954AC00FF9183C005F7E87 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;

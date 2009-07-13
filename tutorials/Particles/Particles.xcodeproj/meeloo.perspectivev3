@@ -235,6 +235,7 @@
 				<string>active-combo-popup</string>
 				<string>NSToolbarFlexibleSpaceItem</string>
 				<string>buildOrClean</string>
+				<string>build-and-goOrGo</string>
 				<string>com.apple.ide.PBXToolbarStopButton</string>
 				<string>get-info</string>
 				<string>toggle-editor</string>
@@ -252,6 +253,8 @@
 			<key>Layout</key>
 			<array>
 				<dict>
+					<key>BecomeActive</key>
+					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -289,14 +292,14 @@
 						<dict>
 							<key>PBXSmartGroupTreeModuleOutlineStateExpansionKey</key>
 							<array>
-								<string>61A9DE3D0B833C9200BC506C</string>
-								<string>61A9DE4A0B833CD000BC506C</string>
+								<string>1C37FBAC04509CD000000102</string>
 								<string>1C77FABC04509CD000000102</string>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>18</integer>
+									<integer>3</integer>
+									<integer>1</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
@@ -347,10 +350,10 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E5954AC00FF9183C005F7E87</string>
+										<string>E5795756100ACE9900821E44</string>
 										<key>history</key>
 										<array>
-											<string>E5954ABF0FF9183C005F7E87</string>
+											<string>E5954AC00FF9183C005F7E87</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -390,6 +393,8 @@
 									<dict>
 										<key>Frame</key>
 										<string>{{10, 27}, {1713, 301}}</string>
+										<key>RubberWindowFrame</key>
+										<string>0 59 1920 1119 0 0 1920 1178 </string>
 									</dict>
 									<key>Module</key>
 									<string>XCDetailModule</string>
@@ -415,6 +420,27 @@
 									<dict>
 										<key>PBXCVSModuleFilterTypeKey</key>
 										<integer>1032</integer>
+										<key>PBXCVSModuleTreeModuleColumnData</key>
+										<dict>
+											<key>PBXCVSModuleTreeModuleColumnWidthsKey</key>
+											<array>
+												<real>200</real>
+												<real>56.66162109375</real>
+												<real>63</real>
+												<real>60</real>
+												<real>63</real>
+												<real>139.556640625</real>
+											</array>
+											<key>PBXCVSModuleTreeModuleColumnsKey</key>
+											<array>
+												<string>Name</string>
+												<string>Status</string>
+												<string>Update</string>
+												<string>Revision</string>
+												<string>Author</string>
+												<string>Date</string>
+											</array>
+										</dict>
 										<key>PBXProjectModuleGUID</key>
 										<string>1CA23EE10692099D00951B8B</string>
 										<key>PBXProjectModuleLabel</key>
@@ -434,7 +460,7 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>XCMainBuildResultsModuleGUID</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>Build Results</string>
+										<string>Build</string>
 										<key>XCBuildResultsTrigger_Collapse</key>
 										<integer>1021</integer>
 										<key>XCBuildResultsTrigger_Open</key>
@@ -444,8 +470,6 @@
 									<dict>
 										<key>Frame</key>
 										<string>{{10, 27}, {1713, 301}}</string>
-										<key>RubberWindowFrame</key>
-										<string>0 59 1920 1119 0 0 1920 1178 </string>
 									</dict>
 									<key>Module</key>
 									<string>PBXBuildResultsModule</string>
@@ -473,11 +497,11 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E5954AC10FF9183C005F7E87</string>
+				<string>E5795757100ACE9900821E44</string>
 				<string>1CA23ED40692098700951B8B</string>
-				<string>E5954AC20FF9183C005F7E87</string>
+				<string>E5795758100ACE9900821E44</string>
 				<string>E51F47360FA9AA0900AB3F0D</string>
-				<string>E5954AC30FF9183C005F7E87</string>
+				<string>E5795759100ACE9900821E44</string>
 				<string>1CA23EDF0692099D00951B8B</string>
 				<string>1CA23EE00692099D00951B8B</string>
 				<string>1CA23EE10692099D00951B8B</string>
@@ -650,7 +674,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>267982908.223701</real>
+	<real>269143705.057046</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -665,8 +689,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E5954AC90FF9183C005F7E87</string>
-		<string>E5954ACA0FF9183C005F7E87</string>
 		<string>/Users/meeloo/work/nui3/tutorials/Particles/Particles.xcodeproj</string>
 	</array>
 	<key>WindowString</key>

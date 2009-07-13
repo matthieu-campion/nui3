@@ -355,6 +355,10 @@
 				GCC_VERSION = 4.0;
 				HEADER_SEARCH_PATHS = ../../include;
 				INFOPLIST_FILE = Info.plist;
+				OTHER_LDFLAGS = (
+					"-lz",
+					"-liconv",
+				);
 				SDKROOT = macosx10.4;
 			};
 			name = Default;
@@ -374,8 +378,6 @@
 				GCC_OPTIMIZATION_LEVEL = s;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = "-lz";
-				PREBINDING = YES;
 				PRODUCT_NAME = RSS;
 				STRIP_INSTALLED_PRODUCT = YES;
 				WARNING_CFLAGS = (
@@ -401,8 +403,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = _DEBUG;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = "-lz";
-				PREBINDING = YES;
 				PRODUCT_NAME = RSSD;
 				WARNING_CFLAGS = (
 					"-Wmost",

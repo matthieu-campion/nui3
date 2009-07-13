@@ -33,14 +33,36 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 268228376;
-			PBXWorkspaceStateSaveDate = 268228376;
+			PBXConfiguration.PBXTargetDataSource.PBXTargetDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					730,
+					60,
+					20,
+					48.16259765625,
+					43,
+					43,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXTargetDataSource_PrimaryAttribute,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 269143732;
+			PBXWorkspaceStateSaveDate = 269143732;
 		};
 		perUserProjectItems = {
 			E52C83960FFCE91C00B7779C /* PBXTextBookmark */ = E52C83960FFCE91C00B7779C /* PBXTextBookmark */;
-			E52C83970FFCE91C00B7779C /* PBXTextBookmark */ = E52C83970FFCE91C00B7779C /* PBXTextBookmark */;
 			E52C83990FFCE91C00B7779C /* PBXTextBookmark */ = E52C83990FFCE91C00B7779C /* PBXTextBookmark */;
 			E52C839A0FFCE91C00B7779C /* PBXTextBookmark */ = E52C839A0FFCE91C00B7779C /* PBXTextBookmark */;
+			E579577F100ACED400821E44 /* PBXTextBookmark */ = E579577F100ACED400821E44 /* PBXTextBookmark */;
 		};
 		sourceControlManager = E5954AED0FF918B3005F7E87 /* Source Control */;
 		userBuildSettings = {
@@ -75,20 +97,6 @@
 		vrLen = 2305;
 		vrLoc = 699;
 	};
-	E52C83970FFCE91C00B7779C /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E52C83980FFCE91C00B7779C /* nuiRSSView.h */;
-		rLen = 1;
-		rLoc = 19;
-		rType = 1;
-	};
-	E52C83980FFCE91C00B7779C /* nuiRSSView.h */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.c.h;
-		name = nuiRSSView.h;
-		path = /Users/meeloo/work/nui3/include/nuiRSSView.h;
-		sourceTree = "<absolute>";
-	};
 	E52C83990FFCE91C00B7779C /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
@@ -111,14 +119,26 @@
 	};
 	E52C839B0FFCE91C00B7779C /* nuiRSSView.h */ = {
 		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
 		name = nuiRSSView.h;
 		path = /Users/meeloo/work/nui3/include/nuiRSSView.h;
 		sourceTree = "<absolute>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {948, 476}}";
-			sepNavSelRange = "{335, 112}";
-			sepNavVisRange = "{0, 0}";
-		};
+	};
+	E579577F100ACED400821E44 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5795780100ACED400821E44 /* nuiRSSView.h */;
+		name = "nuiRSSView.h: 20";
+		rLen = 112;
+		rLoc = 335;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	E5795780100ACED400821E44 /* nuiRSSView.h */ = {
+		isa = PBXFileReference;
+		name = nuiRSSView.h;
+		path = /Users/meeloo/work/nui3/include/nuiRSSView.h;
+		sourceTree = "<absolute>";
 	};
 	E5954AD50FF91895005F7E87 /* RSS */ = {
 		isa = PBXExecutable;
@@ -174,6 +194,7 @@
 		fallbackIsa = XCSourceControlManager;
 		isSCMEnabled = 0;
 		scmConfiguration = {
+			repositoryName = nui;
 			repositoryNamesForRoots = {
 				"" = "";
 			};

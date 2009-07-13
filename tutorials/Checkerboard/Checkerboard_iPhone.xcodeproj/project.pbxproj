@@ -70,6 +70,20 @@
 			remoteGlobalIDString = 614B66C30DA7BA67000F4C22;
 			remoteInfo = nuiEd;
 		};
+		E57954B4100AC9B700821E44 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BC6A0A350EF93F7800881ACF /* nuiE.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 735F703F0FF2747500E66B1D /* libnuiE.a */;
+			remoteInfo = "nuiE-iPhone 3.0";
+		};
+		E57954B6100AC9B700821E44 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BC6A0A350EF93F7800881ACF /* nuiE.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 735F73A30FF2747500E66B1D /* libnuiEd.a */;
+			remoteInfo = "nuiEd-iPhone 3.0";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -214,6 +228,8 @@
 			children = (
 				BC6A0A3E0EF93F7800881ACF /* libnuiE.a */,
 				BC6A0A400EF93F7800881ACF /* libnuiEd.a */,
+				E57954B5100AC9B700821E44 /* libnuiE.a */,
+				E57954B7100AC9B700821E44 /* libnuiEd.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -315,6 +331,20 @@
 			remoteRef = BC6A0A3F0EF93F7800881ACF /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		E57954B5100AC9B700821E44 /* libnuiE.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnuiE.a;
+			remoteRef = E57954B4100AC9B700821E44 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E57954B7100AC9B700821E44 /* libnuiEd.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnuiEd.a;
+			remoteRef = E57954B6100AC9B700821E44 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -400,7 +430,10 @@
 					"objective-c++",
 					"-ObjC++",
 				);
-				OTHER_LDFLAGS = "-lz";
+				OTHER_LDFLAGS = (
+					"-lz",
+					"-liconv",
+				);
 				PREBINDING = NO;
 				SDKROOT = iphoneos2.1;
 				USE_HEADERMAP = NO;
@@ -424,7 +457,6 @@
 				GENERATE_PROFILING_CODE = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LIBRARY_SEARCH_PATHS = "";
-				OTHER_LDFLAGS = "-lz";
 				PREBINDING = NO;
 				PRODUCT_NAME = Checkerboard_iPhone;
 				STRIPFLAGS = "-SXx";

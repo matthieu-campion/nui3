@@ -356,7 +356,7 @@
 				GCC_OPTIMIZATION_LEVEL = s;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = "-lz";
+				OTHER_LDFLAGS = "-liconv -lz";
 				PREBINDING = YES;
 				PRODUCT_NAME = %NUI_GENERATOR_PROJECT%;
 				STRIP_INSTALLED_PRODUCT = YES;
@@ -383,7 +383,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = _DEBUG;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = "-lz";
+				OTHER_LDFLAGS = "-liconv -lz";
 				PREBINDING = YES;
 				PRODUCT_NAME = %NUI_GENERATOR_PROJECT%D;
 				WARNING_CFLAGS = (
