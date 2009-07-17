@@ -119,6 +119,8 @@ bool nuiWaveReader::ReadInfo()
 
 uint32 nuiWaveReader::ReadIN(void* pBuffer, uint32 sampleframes, nuiSampleBitFormat format)
 {
+  if (!sampleframes)
+    return 0;
   SetPosition((uint32)mPosition);
   const uint64 SamplePointsToRead = sampleframes * mInfo.GetChannels();
   uint64 SampleFramesRead = 0;

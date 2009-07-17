@@ -177,6 +177,8 @@ bool nuiAiffReader::ReadInfo()
 
 uint32 nuiAiffReader::ReadIN(void* pBuffer, uint32 SampleFrames, nuiSampleBitFormat format)
 {
+  if (!SampleFrames)
+    return 0;
   const uint32 channels = mInfo.GetChannels();
   const uint64 SamplePointsToRead = SampleFrames * channels;
   uint32 SampleFramesRead = 0;
