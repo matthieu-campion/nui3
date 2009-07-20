@@ -379,7 +379,10 @@ void nuiTopLevel::AdviseObjectDeath(nuiWidgetPtr pWidget)
   }
 
   if (mpFocus == pWidget)
+  {
     mpFocus = NULL;
+    EndTextInput();
+  }
   if (mpUnderMouse == pWidget)
   {
     mpUnderMouse = NULL;
@@ -726,6 +729,9 @@ bool nuiTopLevel::SetFocus(nuiWidgetPtr pWidget)
     pOldFocus->Invalidate();
   if (mpFocus)
     mpFocus->Invalidate();
+  
+  if (!mpFocus)
+    EndTextInput();
   
   return true;
 }
