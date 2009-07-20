@@ -27,7 +27,7 @@ and in NGL user application code.
  * Platform detection
  */
 
-#if (defined __X86_64__) || (defined _M_X64) || (defined __ppc64__)
+#if (defined __X86_64__) || (defined _M_X64) || (defined __ppc64__) || (defined __LP64__)
 // 64bits platform
 #define __NUI64__
 #else

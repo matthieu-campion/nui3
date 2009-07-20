@@ -41,7 +41,7 @@ nglStringConv::~nglStringConv()
 
 int nglStringConv::Process (const char*& pSource, int& rToRead, char*& pTarget, int& rToWrite)
 {
-#ifdef _UIKIT_
+#if (!defined __CARBON__)
   char* in = const_cast<char*>(pSource);
 #else
   const char* in = pSource;
