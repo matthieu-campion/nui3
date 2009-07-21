@@ -38,7 +38,7 @@ set(SOURCES
   src/Base/nuiTimer.cpp
   src/Base/nuiTree.cpp
   src/Base/nuiXML.cpp
-  #src/Base/nuiHTML.cpp
+  src/Base/nuiHTML.cpp
   src/Bindings/nuiBindings.cpp
   src/Animations/nuiAttributeAnimation.cpp
   src/Animations/nuiWidgetAnimation.cpp
@@ -47,10 +47,20 @@ set(SOURCES
   src/Text/nuiEditText.cpp
   src/Text/nuiFormatedLabel.cpp
   src/Text/nuiFormater.cpp
+  src/Text/nuiHTMLView.cpp
   src/Text/nuiLabel.cpp
   src/Text/nuiLabelAttribute.cpp
   src/Text/nuiSpinnerLabel.cpp
   src/Text/nuiText.cpp
+  src/Text/HTML/nuiHTMLBox.cpp	    
+  src/Text/HTML/nuiHTMLItem.cpp
+  src/Text/HTML/nuiHTMLHeader.cpp
+  src/Text/HTML/nuiWebCSS.cpp
+  src/Text/HTML/nuiHTMLContext.cpp
+  src/Text/HTML/nuiHTMLStyle.cpp
+  src/Text/HTML/nuiHTMLImage.cpp
+  src/Text/HTML/nuiHTMLFont.cpp
+  src/Text/HTML/nuiHTMLText.cpp
   src/Renderers/nuiSurface.cpp
   src/Renderers/AAPrimitives.cpp
   src/Renderers/nuiArc.cpp
@@ -103,6 +113,7 @@ set(SOURCES
   src/SimpleWidgets/nuiProgressBar.cpp
   src/SimpleWidgets/nuiRadioButtonGroup.cpp
   src/SimpleWidgets/nuiRectView.cpp
+  src/SimpleWidgets/nuiRSSView.cpp
   src/SimpleWidgets/nuiScrollBar.cpp
   src/SimpleWidgets/nuiSeparator.cpp
   src/SimpleWidgets/nuiShaderView.cpp
@@ -172,6 +183,8 @@ set(SOURCES
   src/Decorations/nuiStateDecoration.cpp
   src/Decorations/nuiColorDecoration.cpp
   src/Utils/nuiCSV.cpp
+  src/Utils/nuiRSS.cpp
+  src/String/nuiUnicode.cpp
   src/String/nglString.cpp
   src/String/nglStringConv_iconv.cpp
   src/String/nglUTFStringConv.cpp
@@ -257,6 +270,7 @@ include_directories(
   deps/tidy
   include
   src/Stream/Zip
+  src/Text/HTML
   .
 )
 
@@ -327,6 +341,7 @@ deps/ungif
 deps/libjpeg
 deps/libpng
 deps/zlib/
+deps/tidy/
 )
 
 set(${SOURCES} ${SOURCES} 
@@ -363,8 +378,7 @@ ENDIF (${LINUX})
 add_subdirectory(deps)
 
 add_library( nui3 STATIC ${SOURCES} )
-
-target_link_libraries(nui3 tidy ${EXPAT_LIBRARIES} ${JPEG_LIBRARIES} ${PNG_LIBRARIES} ${UNGIF_LIBRARIES})
+target_link_libraries(nui3 ${CURL_LIBRARY} ${CURL_LIBRARIES} ${EXPAT_LIBRARY} ${FREETYPE_LIBRARY} ${FREETYPE_LIBRARIES} ${EXPAT_LIBRARIES} ${JPEG_LIBRARY} ${JPEG_LIBRARIES} ${PNG_LIBRARY} ${PNG_LIBRARIES} ${GIF_LIBRARY} ${GIF_LIBRARIES} tidy)
 
 add_subdirectory(examples)
 add_subdirectory(tutorials)
