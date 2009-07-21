@@ -2,6 +2,7 @@ INCLUDE(FindOpenGL)
 INCLUDE(FindGLUT)
 
 
+add_subdirectory (HTMLView)
 add_subdirectory (RSS)
 add_subdirectory (Buttons)
 add_subdirectory (Checkerboard)
