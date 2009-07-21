@@ -586,11 +586,16 @@ typedef _Bool Bool;
 #define no (_Bool)0
 #define yes (_Bool)1
 */
-typedef enum
+#ifndef Bool
+#define Bool int
+#endif
+/*typedef enum
 {
    no,
    yes
-} Bool;
+} Bool;*/
+#define no 0
+#define yes 1
 
 /* for NULL pointers 
 #define null ((const void*)0)
