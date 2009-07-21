@@ -64,6 +64,7 @@ int nglStringConv::Process (const char*& pSource, int& rToRead, char*& pTarget, 
       {
         case EILSEQ:
         {
+          done=true;
           // Invalid multibyte sequence is encountered in the input
 
           // Ignore error if the preceding error occured at the preceding input byte
@@ -184,7 +185,13 @@ const char *nglStringCodec::GetName(nglTextEncoding Encoding)
     case eUCS2 : return "UCS-2";
     case eUCS4 : return "UCS-4";
     // Others
+    //case eEncodingInternal: return "UCS-4-INTERNAL";
+    //case eEncodingNative  : return "UTF-8";
+#if (!defined __CARBON__)
+    case eEncodingInternal: return "wchar_t";
+#else
     case eEncodingInternal: return "UCS-4-INTERNAL";
+#endif
     case eEncodingNative  : return "UTF-8";
     case eEncodingUnknown:
     default:
