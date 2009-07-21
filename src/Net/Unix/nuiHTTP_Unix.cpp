@@ -93,7 +93,7 @@ nuiHTTPResponse* nuiHTTPRequest::SendRequest()
     res = curl_easy_setopt(easyhandle, CURLOPT_URL, mUrl.GetStdString().c_str());
   }
 
-
+  curl_easy_setopt(easyhandle, CURLOPT_FOLLOWLOCATION, 1);
   curl_easy_setopt(easyhandle, CURLOPT_WRITEFUNCTION, write_data);
   curl_easy_setopt(easyhandle, CURLOPT_WRITEDATA, &buffer);
   curl_easy_setopt(easyhandle, CURLOPT_WRITEHEADER, &header);
