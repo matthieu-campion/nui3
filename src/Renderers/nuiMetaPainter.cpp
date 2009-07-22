@@ -726,7 +726,8 @@ nglString nuiMetaPainter::GetOperationDescription(int32 OperationIndex) const
     case eDrawChild:
       {
         nuiWidget* pS = (nuiWidget*)FetchPointer();
-        str.CFormat(_T("DrawChild 0x%x / '%ls'"), pS, pS->GetObjectName().GetChars());
+        nglString str(pS->GetObjectName());
+        str.CFormat(_T("DrawChild 0x%x / '%ls'"), pS, str.GetChars());
       }
       break;
     case eLoadMatrix:

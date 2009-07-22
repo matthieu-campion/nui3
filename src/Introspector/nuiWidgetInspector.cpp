@@ -234,10 +234,15 @@ class nuiWidgetProxy : public nuiWidget
        pContext->DrawRect(GetRect().Size(), eFillShape);
        */
       
+      
       if (mpTarget)
         mpTarget->DrawWidget(pContext);
       else
+      {
+        nuiFont* pFont = nuiFont::GetFont(24.0f);
+        pContext->SetFont(pFont, true);
         pContext->DrawText(0, 0, _T("No widget"));
+      }
       return true;
     }
     
