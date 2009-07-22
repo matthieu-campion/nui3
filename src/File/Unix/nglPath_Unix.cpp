@@ -547,8 +547,11 @@ uint64 nglPath::GetVolumes(std::list<nglPathVolume>& rVolumes, uint64 Flags)
     nglPathVolume vol;
 
     line.Tokenize(tokens, _T(" \t"));
-    if (tokens.size() && nglPath_SetVolume(vol, tokens[1], tokens[0], tokens[2], tokens[3]))
-      rVolumes.push_front(vol);
+    if (tokens.size() < 4)
+    	continue;
+
+	if (tokens.size() && nglPath_SetVolume(vol, tokens[1], tokens[0], tokens[2], tokens[3]))
+	  rVolumes.push_front(vol);
   }
 
   // Parse /proc/mounts to list all mounted items
