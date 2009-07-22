@@ -19,6 +19,7 @@ public:
   virtual ~nuiEditLine();
   
   void LimitCharacterCount(int maxDisplayedChar);
+  int GetCharacterCountLimit();
   
   virtual nuiRect CalcIdealSize();
   
@@ -34,6 +35,11 @@ public:
   
 protected:
     int mMaxDisplayedChar;
+  
+private:
+  
+  void InitAttributes();
+  
 };
 
 #endif // __nuiEditLine_h__

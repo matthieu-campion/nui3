@@ -13,7 +13,8 @@ using namespace std;
 nuiEditLine::nuiEditLine(const nglString& rText)
 : nuiEditText(rText)
 {
-  SetObjectClass(_T("nuiEditLine"));
+  if (SetObjectClass(_T("nuiEditLine")))
+    InitAttributes();
   mMaxDisplayedChar = 0;
 }
 
@@ -23,6 +24,14 @@ bool nuiEditLine::Load(const nuiXMLNode* pNode)
   SetObjectClass(_T("nuiEditLine"));
   mMaxDisplayedChar = 0;
   return true;
+}
+
+void nuiEditLine::InitAttributes()
+{
+  AddAttribute(new nuiAttribute<int>
+               (nglString(_T("CharacterCountLimit")), nuiUnitNone,
+                nuiMakeDelegate(this, &nuiEditLine::GetCharacterCountLimit),
+                nuiMakeDelegate(this, &nuiEditLine::LimitCharacterCount)));
 }
 
 nuiEditLine::~nuiEditLine()
@@ -119,4 +128,9 @@ nuiRect nuiEditLine::CalcIdealSize()
 void nuiEditLine::LimitCharacterCount(int maxDisplayedChar)
 {
   mMaxDisplayedChar = maxDisplayedChar;
+}
+
+int nuiEditLine::GetCharacterCountLimit()
+{
+  return mMaxDisplayedChar;
 }
