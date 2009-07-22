@@ -13,7 +13,7 @@
 #include "nglThread.h"
 
 #define STARTELEM for (int32 i = 0; i < pNode->GetChildrenCount(); i++) { nuiXMLNode* pN = pNode->GetChild(i); const nglString& name(pN->GetName()); 
-#define GETELEM(X, STR) if (name == _T(X)) { nuiXMLNode* pp = pN->GetChild(0); STR = pp ? pp->GetValue() : nglString::Null; printf(X ": '%ls'\n", STR.GetChars()); } else
+#define GETELEM(X, STR) if (name == _T(X)) { nuiXMLNode* pp = pN->GetChild(0); STR = pp ? pp->GetValue() : nglString::Null; /*printf(X ": '%ls'\n", STR.GetChars());*/ } else
 #define GETELEMATTR(X, Y, STR) if (name == _T(X)) STR = pN->GetAttribute(_T(Y)); else
 #define ENDELEM {} }
 

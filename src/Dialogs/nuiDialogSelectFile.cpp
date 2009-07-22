@@ -52,6 +52,9 @@ void nuiDialogSelectFile::Init(nuiMainWindow* pParent, const nglString& rTitle, 
   nuiVBox* pBox = new nuiVBox();
   mpContainer->AddChild(mpSelector);
   pBox->AddCell(mpContainer);
+  
+
+  
   pBox->AddCell(pEditContainer);
   
   nuiSize userWidth = (Width == 0.f) ? mpParent->GetWidth() * .8 : Width;
@@ -85,6 +88,7 @@ void nuiDialogSelectFile::Init(nuiMainWindow* pParent, const nglString& rTitle, 
   mEventSink.Connect(pButton->Activated, &nuiDialogSelectFile::OnCreateNewFolder);
   
   nuiDialog::GetButtonsGrid()->SetBorder(0,10,0,10);
+  
   
   SetContents(pBox, nuiCenter);
   if ((Top == 0.f) && (Left == 0.f) && (Width == 0.f) && (Height == 0.f))

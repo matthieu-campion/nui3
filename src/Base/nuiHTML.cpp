@@ -373,6 +373,10 @@ bool nuiHTML::Load(nglIStream& rStream, nglTextEncoding OverrideContentsEncoding
   {
     HTMLStream strm(rStream);
     tdoc = tidyCreate();
+    tidyOptSetBool(tdoc, TidyShowMarkup, no);
+    tidyOptSetBool(tdoc, TidyShowWarnings, no);
+    tidyOptSetInt(tdoc, TidyShowErrors, 0);
+    tidyOptSetBool(tdoc, TidyQuiet, yes);
     tidySetCharEncoding(tdoc, "utf8");
     
     TidyInputSource source;
