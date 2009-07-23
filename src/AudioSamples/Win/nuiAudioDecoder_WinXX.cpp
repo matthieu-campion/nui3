@@ -3,7 +3,9 @@
 #include "nuiAudioConvert.h"
 
 #include "windows.h"
-#include "wmsdk.h"
+// If visual studio complains about this header you need to update to the latest windows SDK
+// http://www.microsoft.com/downloads/details.aspx?FamilyID=4377f86d-c913-4b5c-b87e-ef72e5b4e065&displaylang=en
+#include "wmsdk.h" 
 #include "objidl.h"
 
 #define PCM_AUDIO_FORMAT_TAG 0x0001

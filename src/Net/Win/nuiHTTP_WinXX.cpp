@@ -8,7 +8,9 @@
 #include "nui.h"
 #include "nuiHTTP.h"
 
-#include <WinHttp.h>
+// If this header is missong update your windows SDK to the latest:
+// http://www.microsoft.com/downloads/details.aspx?FamilyID=4377f86d-c913-4b5c-b87e-ef72e5b4e065&displaylang=en
+#include "WinHttp.h"
 
 using namespace std;
 
