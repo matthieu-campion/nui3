@@ -2253,6 +2253,10 @@ bool nuiWidget::IsInsideLocal(nuiSize X, nuiSize Y)
 
 bool nuiWidget::SetToolTip(const nglString& rToolTip)
 {
+//  if (GetDebug())
+//  {
+//    NGL_OUT(_T("nuiWidget::SetToolTip for 0x%x %ls / %ls to %ls\n"), this, GetObjectClass().GetChars(), GetObjectName().GetChars(), rToolTip.GetChars());
+//  }
   SetProperty(_T("ToolTip"), rToolTip);
   return true;
 }
@@ -2264,16 +2268,31 @@ nglString nuiWidget::GetToolTip() const
 
 bool nuiWidget::ActivateToolTip(nuiWidgetPtr pWidget, bool Now)
 {
+//  if (GetDebug())
+//  {
+//    NGL_OUT(_T("nuiWidget::ActivateToolTip for 0x%x %ls / %ls\n"), this, GetObjectClass().GetChars(), GetObjectName().GetChars());
+//  }
+  
   nglString tt = GetToolTip();
 
   if (tt.IsEmpty())
+  {
+    printf("-");
     return false;
+  }
 
   nuiTopLevelPtr pRoot = GetTopLevel();
+  NGL_ASSERT(pRoot);
+
   if (pRoot)
   {
-    return pRoot->ActivateToolTip(pWidget, Now);
+    bool res = pRoot->ActivateToolTip(pWidget, Now);
+    NGL_ASSERT(res);
+    printf("+");
+    return res;
   }
+
+  printf("--");
   return false;
 }
 

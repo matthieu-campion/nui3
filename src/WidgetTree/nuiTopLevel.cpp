@@ -1066,9 +1066,15 @@ void nuiTopLevel::UpdateHoverList(nglMouseInfo& rInfo)
   std::list<nuiWidget*>::iterator tt = HoverList.begin();
   std::list<nuiWidget*>::iterator ttend = HoverList.end();
 
+  //printf("\nHover list\n");
   bool res = false;
-  while ((tt != ttend) && !(res = (*tt)->ActivateToolTip(*tt)))
+  while ((tt != ttend) && !res)
+  {
+    nuiWidget* pWidget = *tt;
+    res = pWidget->ActivateToolTip(pWidget);
+    //printf("%3ls - %ls\n", YESNO(res), pWidget->GetObjectClass().GetChars());
     ++tt;
+  }
   if (!res && mpToolTipSource)
     ReleaseToolTip(mpToolTipSource);
 }

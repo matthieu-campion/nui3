@@ -14,6 +14,9 @@
 
 #include "nuiBuilder.h"
 
+//#define NUI_OBJECT_DEBUG_TOOLTIPS
+
+
 using namespace std;
 
 nuiObject::nuiObject()
@@ -218,6 +221,15 @@ void nuiObject::SetObjectName(const nglString& rName)
   
   DebugRefreshInfo();
 	
+#ifdef NUI_OBJECT_DEBUG_TOOLTIPS
+  {
+    // Enable this to debug your tooltips and classes
+    nglString tt;
+    tt.Add(GetObjectClass()).Add(_T(" - ")).Add(GetObjectName());
+    SetProperty(_T("ToolTip"), tt);
+  }
+#endif
+  
 }
 
 std::vector<int32> nuiObject::mInheritanceMap;
@@ -234,6 +246,15 @@ bool nuiObject::SetObjectClass(const nglString& rClass)
   mClassNameIndex = c;
 
   DebugRefreshInfo();
+  
+#ifdef NUI_OBJECT_DEBUG_TOOLTIPS
+  {
+    // Enable this to debug your tooltips and classes
+    nglString tt;
+    tt.Add(GetObjectClass()).Add(_T(" - ")).Add(GetObjectName());
+    SetProperty(_T("ToolTip"), tt);
+  }
+#endif
   return first;
 }
 
@@ -272,6 +293,11 @@ bool nuiObject::IsOfClass(int32 ClassIndex) const
 
 void nuiObject::SetProperty (const nglString& rName, const nglString& rValue)
 {
+//  if (rName == _T("ToolTip") && GetObjectClass() == _T("HelpLabel"))
+//  {
+//    NGL_OUT(_T("nuiObject::SetProperty for 0x%x %ls / %ls = %ls\n"), this, GetObjectClass().GetChars(), GetObjectName().GetChars(), rValue.GetChars());
+//  }
+  
   mProperties[rName] = rValue;
   
   DebugRefreshInfo();
