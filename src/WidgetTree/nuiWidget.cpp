@@ -2277,7 +2277,6 @@ bool nuiWidget::ActivateToolTip(nuiWidgetPtr pWidget, bool Now)
 
   if (tt.IsEmpty())
   {
-    printf("-");
     return false;
   }
 
@@ -2288,11 +2287,9 @@ bool nuiWidget::ActivateToolTip(nuiWidgetPtr pWidget, bool Now)
   {
     bool res = pRoot->ActivateToolTip(pWidget, Now);
     NGL_ASSERT(res);
-    printf("+");
     return res;
   }
 
-  printf("--");
   return false;
 }
 
