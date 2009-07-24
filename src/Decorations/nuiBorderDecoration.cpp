@@ -108,6 +108,9 @@ nuiXMLNode* nuiBorderDecoration::Serialize(nuiXMLNode* pNode)
 // virtual
 void nuiBorderDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rDestRect)
 {
+  pContext->PushState();
+  pContext->ResetState();
+
   pContext->EnableAntialiasing(false);
   pContext->EnableBlending(true);
   pContext->SetBlendFunc(mBlendFunc);
@@ -168,6 +171,7 @@ void nuiBorderDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, con
   }
   
   
+  pContext->PopState();
 }
 
 

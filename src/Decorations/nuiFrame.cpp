@@ -151,6 +151,9 @@ void nuiFrame::SetTexturePath(const nglPath& rPath)
 // virtual
 void nuiFrame::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rDestRect)
 {
+  pContext->PushState();
+  pContext->ResetState();
+
   nuiRenderArray* pArray = new nuiRenderArray(GL_TRIANGLES);
   pArray->EnableArray(nuiRenderArray::eVertex, true);
   pArray->EnableArray(nuiRenderArray::eTexCoord, true);
@@ -447,6 +450,8 @@ void nuiFrame::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect&
   pContext->SetTexture(mpTexture);
   pContext->SetFillColor(color);
   pContext->DrawArray(pArray);
+  
+  pContext->PopState();
 }
 
 

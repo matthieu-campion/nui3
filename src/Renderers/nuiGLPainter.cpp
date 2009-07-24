@@ -481,6 +481,13 @@ void nuiGLPainter::SetSize(uint32 w, uint32 h)
 
 void nuiGLPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
 {
+//  if ((rState.mTexturing && !rState.mpTexture) || (!rState.mTexturing && rState.mpTexture))
+//  {
+//    printf("bleh!\n");
+//    char* bleh = NULL;
+//    bleh[0] = 0;
+//  }
+
   // 2D Textures: 
   std::map<nuiTexture*, TextureInfo>::const_iterator it = mTextures.find(rState.mpTexture);
   bool uptodate = (it == mTextures.end()) ? false : ( !it->second.mReload && it->second.mTexture >= 0 );

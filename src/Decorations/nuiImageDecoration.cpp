@@ -149,6 +149,9 @@ void nuiImageDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, cons
   if (!mpTexture || !mpTexture->GetImage() || !mpTexture->GetImage()->GetPixelSize())
     return;
 
+  pContext->PushState();
+  pContext->ResetState();
+  
   nuiRect rect = mClientRect;
   rect.SetPosition(mPosition, rDestRect);
   rect.RoundToBelow();
@@ -159,6 +162,8 @@ void nuiImageDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, cons
   pContext->SetTexture(mpTexture);
   pContext->SetFillColor(mColor);
   pContext->DrawImage(rect, mClientRect);
+
+  pContext->PopState();
 }
 
 

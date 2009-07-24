@@ -74,6 +74,9 @@ nuiXMLNode* nuiCheckerboardDecoration::Serialize(nuiXMLNode* pNode)
 // virtual
 void nuiCheckerboardDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rDestRect)
 {
+  pContext->PushState();
+  pContext->ResetState();
+  
   pContext->EnableAntialiasing(false);
   pContext->EnableBlending(true);
   pContext->SetBlendFunc(nuiBlendTransp);
@@ -117,8 +120,8 @@ void nuiCheckerboardDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidge
     pContext->SetStrokeColor(mStrokeColor);
     pContext->DrawRect(rDestRect, eStrokeShape);
   }
-  
-  
+
+  pContext->PopState();
 }
 
 

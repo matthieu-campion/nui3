@@ -126,10 +126,12 @@ nuiXMLNode* nuiColorDecoration::Serialize(nuiXMLNode* pNode)
 // virtual
 void nuiColorDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rDestRect)
 {
+  pContext->PushState();
+  pContext->ResetState();
   pContext->EnableAntialiasing(false);
   pContext->EnableBlending(true);
   pContext->SetBlendFunc(mBlendFunc);
-  pContext->EnableTexturing(false);
+  //pContext->EnableTexturing(false);
   
   nuiColor fillColor = mFillColor;
   nuiColor strokeColor = mStrokeColor;
@@ -155,6 +157,7 @@ void nuiColorDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, cons
   }
   
   
+  pContext->PopState();
 }
 
 

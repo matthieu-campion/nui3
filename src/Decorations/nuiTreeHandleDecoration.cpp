@@ -95,6 +95,9 @@ void nuiTreeHandleDecoration::SetHandleColor(const nuiColor& handleColor)
 
 void nuiTreeHandleDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rRect)
 {
+  pContext->PushState();
+  pContext->ResetState();
+  
   bool IsOpened = pWidget->IsSelected();
 
   nuiShape Shape;
@@ -127,6 +130,8 @@ void nuiTreeHandleDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget,
 
   pContext->SetFillColor(mHandleColor);
   pContext->DrawShape(&Shape, eFillShape);
+
+  pContext->PopState();
 }
 
 

@@ -243,6 +243,9 @@ void nuiGradientDecoration::InitOffsets()
 //virtual
 void nuiGradientDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rDestRect)
 {
+  pContext->PushState();
+  pContext->ResetState();
+  
   pContext->EnableAntialiasing(false);
   pContext->EnableBlending(true);
   pContext->SetBlendFunc(nuiBlendTransp);
@@ -303,6 +306,7 @@ void nuiGradientDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, c
     
   }
 
+  pContext->PopState();
 }
 
 
