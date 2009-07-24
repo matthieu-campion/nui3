@@ -230,6 +230,7 @@ nglCarbonDragAndDrop::~nglCarbonDragAndDrop()
 
 bool nglCarbonDragAndDrop::Drag(nglDragAndDrop* pDragObject)
 {
+  NGL_OUT(_T("\n\nnglCarbonDragAndDrop::Drag\n\n"));
   OSErr err = noErr;
   mpDragObject = pDragObject; 
   
@@ -314,13 +315,17 @@ bool nglCarbonDragAndDrop::Drag(nglDragAndDrop* pDragObject)
   NGL_ASSERT(!err);
   delete mpDragObject;
   mpDragObject = NULL;
+
+  NGL_OUT(_T("\n\nnglCarbonDragAndDrop::Drag DONE\n\n"));
   return res;
   
 }
 
 OSErr nglDragSendData(FlavorType theType, void * dragSendRefCon, DragItemRef theItemRef, DragRef theDrag)
-{   nglCarbonDragAndDrop* pDnd = (nglCarbonDragAndDrop*)dragSendRefCon;
+{
+  nglCarbonDragAndDrop* pDnd = (nglCarbonDragAndDrop*)dragSendRefCon;
   
+  NGL_ASSERT(pDnd);
   NGL_ASSERT(pDnd->HasDragObject());
   nglDragAndDrop* pDrag = pDnd->GetDragObject();
   

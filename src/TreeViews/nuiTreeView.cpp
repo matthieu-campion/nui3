@@ -836,6 +836,10 @@ bool nuiTreeView::MouseMoved(nuiSize X, nuiSize Y)
             nuiTreeView::Drag(mpDraggedObject);
           }
           mDragging = false;
+          mClicked = false;
+          mDrawMarkee = false;
+          Ungrab();
+          Invalidate();
         }
         
       }
