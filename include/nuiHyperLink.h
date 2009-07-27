@@ -12,6 +12,7 @@
 class nuiHyperLink : public nuiLabel
 {
 public:
+  nuiHyperLink();
   nuiHyperLink(const nglString& rURL, const nglString& rLabel);
   
   void SetURL(const nglString& rURL);
@@ -24,6 +25,12 @@ public:
   nuiSimpleEventSource<0> Activated;
   
 protected:
+  
   nglString mURL;
   uint32 mClicked;
+  
+private:
+  
+  void InitAttributes();
+  
 };

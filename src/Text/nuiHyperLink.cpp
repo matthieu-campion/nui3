@@ -9,19 +9,36 @@
 #include "nuiHyperLink.h"
 #include "nuiURL.h"
 
+nuiHyperLink::nuiHyperLink()
+: nuiLabel(_T("")),
+mURL(_T(""))
+{
+  if (SetObjectClass(_T("nuiHyperLink")))
+    InitAttributes();
+
+  SetTextColor(nuiColor(_T("nuiHyperLink")));
+}
+
+
 nuiHyperLink::nuiHyperLink(const nglString& rURL, const nglString& rLabel)
   : nuiLabel(rLabel.IsNull() ? rURL : rLabel),
     mURL(rURL)
 {
   if (SetObjectClass(_T("nuiHyperLink")))
-  {
-    AddAttribute(new nuiAttribute<const nglString&>
-                 (nglString(_T("URL")), nuiUnitName,
-                  nuiMakeDelegate(this, &nuiHyperLink::GetURL), 
-                  nuiMakeDelegate(this, &nuiHyperLink::SetURL)));
-  }
+    InitAttributes();
+    
   SetTextColor(nuiColor(_T("nuiHyperLink")));
 }
+
+
+void nuiHyperLink::InitAttributes()
+{
+  AddAttribute(new nuiAttribute<const nglString&>
+               (nglString(_T("URL")), nuiUnitName,
+                nuiMakeDelegate(this, &nuiHyperLink::GetURL), 
+                nuiMakeDelegate(this, &nuiHyperLink::SetURL)));  
+}
+
 
 void nuiHyperLink::SetURL(const nglString& rURL)
 {
