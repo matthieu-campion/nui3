@@ -189,9 +189,11 @@ nglZipFS::nglZipFS(nglIStream* pStream, bool Own)
 {
   mpStream = pStream;
   mOwnStream = Own;
+	mIsValid = mpStream != NULL;
 
-  mpStream->SetEndian(eEndianIntel);
-
+	if (mpStream)
+		mpStream->SetEndian(eEndianIntel);
+	
   mpPrivate = new nglZipPrivate();
   NGL_ASSERT(mpPrivate);
 }
@@ -199,11 +201,13 @@ nglZipFS::nglZipFS(nglIStream* pStream, bool Own)
 nglZipFS::nglZipFS(const nglPath& rPath)
 : mRoot(_T(""), 0, 0, 0, false)
 {
-  mpStream = new nglIFile(rPath, true);
+  mpStream = rPath.OpenRead();
   mOwnStream = true;
+	mIsValid = mpStream != NULL;
 
-  mpStream->SetEndian(eEndianIntel);
-
+	if (mpStream)
+		mpStream->SetEndian(eEndianIntel);
+	
   mpPrivate = new nglZipPrivate();
   NGL_ASSERT(mpPrivate);
 }
@@ -216,8 +220,13 @@ nglZipFS::~nglZipFS()
     delete mpStream;
 }
 
-bool nglZipFS::Open()
+bool nglZipFS::IsValid() const
 {
+	return mIsValid;
+}
+
+bool nglZipFS::Open()
+{	
   zlib_filefunc.opaque = mpStream;
   zlib_filefunc.zopen_file  = &::zOpen;
   zlib_filefunc.zread_file  = &::zRead;
@@ -227,6 +236,9 @@ bool nglZipFS::Open()
   zlib_filefunc.zclose_file = &::zClose;
   zlib_filefunc.zerror_file = &::zError;
 
+	if (mpStream == NULL || mpPrivate == NULL || !mIsValid)
+		return false;
+	
   mpPrivate->mZip = unzOpen2("", &zlib_filefunc);
 
   if (mpPrivate->mZip == NULL)

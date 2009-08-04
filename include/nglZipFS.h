@@ -56,7 +56,8 @@ public:
   nglZipFS(nglIStream* pStream, bool Own = true); ///< Create a Zip FS from a stream.
   nglZipFS(const nglPath& rPath);                 ///< Create a Zip FS from a file. 
   virtual ~nglZipFS();
- 
+
+	bool IsValid() const;
   bool Open();
 
   bool CanWrite() const;
@@ -90,6 +91,7 @@ private:
 
   nglIStream*    mpStream;
   bool           mOwnStream;
+	bool					 mIsValid;
   nglZipPrivate* mpPrivate;
   Node           mRoot; ///< The zip file's root directory
 

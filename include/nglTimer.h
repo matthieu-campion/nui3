@@ -129,7 +129,7 @@ private:
   void    CallOnTick(nglTime Lap);
 #endif //_UNIX_
 
-#if defined(_CARBON_)
+#if 0 // defined(_CARBON_)
 private:
   nglTime mLastTime;
   EventLoopTimerUPP mTimerProc;
