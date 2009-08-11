@@ -39,6 +39,8 @@ void nuiMessageBox::Init(const nglString& rTitle, nuiWidget* pContents, nuiMessa
 {
   SetObjectClass(_T("nuiMessageBox"));
   mType = type;
+  
+  mKeyDown = false;
 
   mClickedButton = ButtonCancel;
   
@@ -262,9 +264,14 @@ bool nuiMessageBox::OnCustom(const nuiEvent& rEvent)
 // TODO: Add more shortcuts, default buttons, and shortcuts informations on the buttons
 bool nuiMessageBox::KeyUp(const nglKeyEvent& rEvent)
 {  
+  if (!mKeyDown)
+    return false;
+  
+  mKeyDown = false;
+  
   if (rEvent.mKey == NK_ESC)
   {
-    if ((mType == eMB_OKCancel) || (mType == eMB_Cancel))
+    if ((mType == eMB_OKCancel) || (mType == eMB_Cancel) || (mType == eMB_YesNo))
     {
       mClickedButton = ButtonCancel;
       ExitModal();
@@ -273,7 +280,7 @@ bool nuiMessageBox::KeyUp(const nglKeyEvent& rEvent)
   }
   else if (rEvent.mKey == NK_ENTER)
   {
-    if ((mType == eMB_OKCancel) || (mType == eMB_OK))
+    if ((mType == eMB_OKCancel) || (mType == eMB_OK) || (mType == eMB_YesNo))
     {
       mClickedButton = ButtonOK;
       ExitModal();
@@ -306,6 +313,7 @@ bool nuiMessageBox::KeyUp(const nglKeyEvent& rEvent)
 
 bool nuiMessageBox::KeyDown(const nglKeyEvent& rEvent)
 {
+  mKeyDown = true;
   return nuiModalContainer::KeyDown(rEvent);
 }
 

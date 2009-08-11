@@ -94,5 +94,6 @@ private:
   nuiWidget* CreateCustom(const nglString& rName, Button btn);
   nuiWidget* CreateCustom(nuiWidget* pWidget, Button btn);
   
+  bool mKeyDown;
 };
 
