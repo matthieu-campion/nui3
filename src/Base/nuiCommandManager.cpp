@@ -162,6 +162,9 @@ bool nuiCommandManager::Flatten()
   inst->mDoneStack.clear ();
   inst->mUndoneStack.clear ();
   
+  // send event
+  CommandChanged();
+  
   return true;
 }
 
@@ -183,6 +186,8 @@ bool nuiCommandManager::FlattenDoStack()
   }
   
   inst->mDoneStack.clear ();
+  // send event
+  CommandChanged();
   
   return true;
 }
@@ -205,6 +210,8 @@ bool nuiCommandManager::FlattenUndoStack()
   }
   
   inst->mUndoneStack.clear();
+  // send event
+  CommandChanged();
   
   return true;
 }
