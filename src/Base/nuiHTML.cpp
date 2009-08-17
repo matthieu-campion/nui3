@@ -365,8 +365,10 @@ static nglString GetEncodingString(TidyNode tnod)
   return nglString::Null;
 }
 
-bool nuiHTML::Load(nglIStream& rStream, nglTextEncoding OverrideContentsEncoding)
+bool nuiHTML::Load(nglIStream& rStream, nglTextEncoding OverrideContentsEncoding, const nglString& rSourceURL)
 {
+  SetSourceURL(rSourceURL);
+  
   int res = -1;
   nglTextEncoding encoding = eUTF8;
   TidyDoc tdoc = NULL;
