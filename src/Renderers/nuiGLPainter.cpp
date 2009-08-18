@@ -166,7 +166,7 @@ nuiGLPainter::nuiGLPainter(nglContext* pContext, const nuiRect& rRect)
     mpContext->BeginSession();
     const char* ext0 = (const char*)glGetString(GL_EXTENSIONS);
     nglString exts(ext0);
-    NGL_OUT(_T("Extensions: %ls\n"), exts.GetChars());
+    //NGL_OUT(_T("Extensions: %ls\n"), exts.GetChars());
 
 
     mpContext->CheckExtension(_T("GL_VERSION_1_2"));
@@ -837,7 +837,6 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
     else
       glDisableClientState(GL_VERTEX_ARRAY);
 
-
     if (pArray->IsArrayEnabled(nuiRenderArray::eColor))
     {
       glEnableClientState(GL_COLOR_ARRAY);
@@ -874,6 +873,11 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
 
     if (pArray->IsArrayEnabled(nuiRenderArray::eTexCoord))
     {
+      GLint t2d = 0;
+      GLint tr = 0;
+      glGetIntegerv(GL_TEXTURE_2D, &t2d);
+      glGetIntegerv(GL_TEXTURE_RECTANGLE_ARB, &tr);
+      NGL_ASSERT((glIsEnabled(GL_TEXTURE_2D) || glIsEnabled(GL_TEXTURE_RECTANGLE_ARB)) && (t2d || tr));
       glEnableClientState(GL_TEXTURE_COORD_ARRAY);
       glTexCoordPointer(2, GL_FLOAT, sizeof(nuiRenderArray::Vertex), &pArray->GetVertices()[0].mTX);
       nuiCheckForGLErrors();
@@ -1199,6 +1203,7 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
 //      }
       
       glGenTextures(1, &info.mTexture);
+      //NGL_OUT(_T("nuiGLPainter::UploadTexture 0x%x : '%ls' / %d\n"), pTexture, pTexture->GetSource().GetChars(), info.mTexture);
       nuiCheckForGLErrors();
       firstload = true;
       reload = true;
@@ -1417,8 +1422,13 @@ void nuiGLPainter::DestroyTexture(nuiTexture* pTexture)
   if (it == mTextures.end())
     return;
   NGL_ASSERT(it != mTextures.end());
-  
+
   TextureInfo& info(it->second);
+  if (info.mTexture <= 0)
+    return;
+  //NGL_OUT(_T("nuiGLPainter::DestroyTexture 0x%x : '%ls' / %d\n"), pTexture, pTexture->GetSource().GetChars(), info.mTexture);
+  
+  mpContext->BeginSession();
   glDeleteTextures(1, &info.mTexture);
   mTextures.erase(it);
 }
