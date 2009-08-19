@@ -873,11 +873,6 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
 
     if (pArray->IsArrayEnabled(nuiRenderArray::eTexCoord))
     {
-      GLint t2d = 0;
-      GLint tr = 0;
-      glGetIntegerv(GL_TEXTURE_2D, &t2d);
-      glGetIntegerv(GL_TEXTURE_RECTANGLE_ARB, &tr);
-      NGL_ASSERT((glIsEnabled(GL_TEXTURE_2D) || glIsEnabled(GL_TEXTURE_RECTANGLE_ARB)) && (t2d || tr));
       glEnableClientState(GL_TEXTURE_COORD_ARRAY);
       glTexCoordPointer(2, GL_FLOAT, sizeof(nuiRenderArray::Vertex), &pArray->GetVertices()[0].mTX);
       nuiCheckForGLErrors();

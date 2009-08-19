@@ -265,6 +265,8 @@ bool nuiRect::SetValue(const nglString& Value)
 #ifdef USE_NUIVALUETYPES  
     Changed();
 #endif
+    //NGL_OUT(_T("%ls\n"), GetValue().GetChars());
+
     return true;
   }
   return false;

@@ -566,6 +566,12 @@
 		E52C83370FFBB2FD00B7779C /* nuiRegExp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52C83350FFBB2FD00B7779C /* nuiRegExp.cpp */; };
 		E52C83390FFBB2FD00B7779C /* nuiRegExp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52C83350FFBB2FD00B7779C /* nuiRegExp.cpp */; };
 		E52C833B0FFBB2FD00B7779C /* nuiRegExp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52C83350FFBB2FD00B7779C /* nuiRegExp.cpp */; };
+		E52D654F10322B51005BF301 /* nuiHugeImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52D654E10322B51005BF301 /* nuiHugeImage.cpp */; };
+		E52D655010322B51005BF301 /* nuiHugeImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52D654E10322B51005BF301 /* nuiHugeImage.cpp */; };
+		E52D655110322B51005BF301 /* nuiHugeImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52D654E10322B51005BF301 /* nuiHugeImage.cpp */; };
+		E52D655310322B64005BF301 /* nuiHugeImage.h in Headers */ = {isa = PBXBuildFile; fileRef = E52D655210322B64005BF301 /* nuiHugeImage.h */; };
+		E52D655410322B64005BF301 /* nuiHugeImage.h in Headers */ = {isa = PBXBuildFile; fileRef = E52D655210322B64005BF301 /* nuiHugeImage.h */; };
+		E52D655510322B64005BF301 /* nuiHugeImage.h in Headers */ = {isa = PBXBuildFile; fileRef = E52D655210322B64005BF301 /* nuiHugeImage.h */; };
 		E52E1A250CD7EEAF006FBCDD /* nuiAudioDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = E52E1A240CD7EEAF006FBCDD /* nuiAudioDevice.h */; };
 		E52E1A260CD7EEAF006FBCDD /* nuiAudioDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = E52E1A240CD7EEAF006FBCDD /* nuiAudioDevice.h */; };
 		E52E1A280CD7F397006FBCDD /* nuiAudioDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52E1A270CD7F397006FBCDD /* nuiAudioDevice.cpp */; };
@@ -3309,6 +3315,8 @@
 		E52C83180FFB9DA800B7779C /* nuiWebCSS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nuiWebCSS.h; sourceTree = "<group>"; };
 		E52C83190FFB9DA800B7779C /* nuiWebCSS.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiWebCSS.cpp; sourceTree = "<group>"; };
 		E52C83350FFBB2FD00B7779C /* nuiRegExp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = nuiRegExp.cpp; path = src/String/nuiRegExp.cpp; sourceTree = SOURCE_ROOT; };
+		E52D654E10322B51005BF301 /* nuiHugeImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiHugeImage.cpp; sourceTree = "<group>"; };
+		E52D655210322B64005BF301 /* nuiHugeImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiHugeImage.h; path = include/nuiHugeImage.h; sourceTree = SOURCE_ROOT; };
 		E52E1A240CD7EEAF006FBCDD /* nuiAudioDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiAudioDevice.h; path = include/nuiAudioDevice.h; sourceTree = SOURCE_ROOT; };
 		E52E1A270CD7F397006FBCDD /* nuiAudioDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiAudioDevice.cpp; path = Audio/nuiAudioDevice.cpp; sourceTree = "<group>"; };
 		E52E1A550CD80280006FBCDD /* nuiAudioDevice_CoreAudio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiAudioDevice_CoreAudio.cpp; path = Audio/CoreAudio/nuiAudioDevice_CoreAudio.cpp; sourceTree = "<group>"; };
@@ -5579,6 +5587,8 @@
 				E5B009DE0C87855E004BEE4E /* nuiToggleButton.h */,
 				E5B74ADE0FE021C900476F43 /* nuiRSSView.h */,
 				E507CEBD0FE078EE00D80E79 /* nuiRSSView.cpp */,
+				E52D654E10322B51005BF301 /* nuiHugeImage.cpp */,
+				E52D655210322B64005BF301 /* nuiHugeImage.h */,
 			);
 			name = SimpleWidgets;
 			path = src/SimpleWidgets;
@@ -6493,6 +6503,7 @@
 				E51E565F0FF248AB00FDF3BE /* nuiHTMLHeader.h in Headers */,
 				E5C6CE1F0FF6DC38003E6002 /* nuiHTMLStyle.h in Headers */,
 				E52C831A0FFB9DA800B7779C /* nuiWebCSS.h in Headers */,
+				E52D655510322B64005BF301 /* nuiHugeImage.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7075,6 +7086,7 @@
 				E51E565D0FF248AB00FDF3BE /* nuiHTMLHeader.h in Headers */,
 				E5C6CE1B0FF6DC38003E6002 /* nuiHTMLStyle.h in Headers */,
 				E52C831E0FFB9DA800B7779C /* nuiWebCSS.h in Headers */,
+				E52D655310322B64005BF301 /* nuiHugeImage.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7652,6 +7664,7 @@
 				E51E56610FF248AB00FDF3BE /* nuiHTMLHeader.h in Headers */,
 				E5C6CE1D0FF6DC38003E6002 /* nuiHTMLStyle.h in Headers */,
 				E52C831C0FFB9DA800B7779C /* nuiWebCSS.h in Headers */,
+				E52D655410322B64005BF301 /* nuiHugeImage.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8169,6 +8182,7 @@
 				E52C83370FFBB2FD00B7779C /* nuiRegExp.cpp in Sources */,
 				E5795185100AB20400821E44 /* nglStringConv_iconv.cpp in Sources */,
 				E5F3E1101017DD2B00CEC731 /* nglTimer_CoreFoundation.cpp in Sources */,
+				E52D655110322B51005BF301 /* nuiHugeImage.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8610,6 +8624,7 @@
 				E52C833B0FFBB2FD00B7779C /* nuiRegExp.cpp in Sources */,
 				E57951D3100AB47200821E44 /* nglStringConv_iconv.cpp in Sources */,
 				E5F3E0CB1017DBD100CEC731 /* nglTimer_CoreFoundation.cpp in Sources */,
+				E52D654F10322B51005BF301 /* nuiHugeImage.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9042,6 +9057,7 @@
 				E52C83390FFBB2FD00B7779C /* nuiRegExp.cpp in Sources */,
 				E5080B3C1007FB1C0048E1AB /* nuiAudioDevice_CoreAudio.cpp in Sources */,
 				E5795184100AB20400821E44 /* nglStringConv_iconv.cpp in Sources */,
+				E52D655010322B51005BF301 /* nuiHugeImage.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

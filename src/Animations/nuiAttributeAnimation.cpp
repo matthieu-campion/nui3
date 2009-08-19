@@ -106,6 +106,7 @@ void nuiAttributeAnimation::Play(uint32 Count, nuiAnimLoop LoopMode)
   if (mCaptureStartOnPlay)
   {
     nuiAttribBase attrib(mpTarget->GetAttribute(mTarget));
+    NGL_ASSERT(attrib.IsValid());
     nglString str;
     if (attrib.ToString(str))
       mStartValue = str.GetCDouble();
@@ -113,6 +114,7 @@ void nuiAttributeAnimation::Play(uint32 Count, nuiAnimLoop LoopMode)
   if (mCaptureEndOnPlay)
   {
     nuiAttribBase attrib(mpTarget->GetAttribute(mTarget));
+    NGL_ASSERT(attrib.IsValid());
     nglString str;
     if (attrib.ToString(str))
       mEndValue = str.GetCDouble();
@@ -205,6 +207,7 @@ const nuiColor& nuiColorAttributeAnimation::GetStartValue() const
 void nuiColorAttributeAnimation::Play(uint32 Count, nuiAnimLoop LoopMode)
 {
   nuiAttribBase attrib(mpTarget->GetAttribute(mTarget));
+  NGL_ASSERT(attrib.IsValid());
   
   nuiAttrib<nuiColor> color_attrib(attrib);
   nuiAttrib<const nuiColor&> const_color_attrib(attrib);
@@ -259,6 +262,7 @@ void nuiColorAttributeAnimation::OnFrame()
   nuiColor col(r, g, b, a);
   
   nuiAttribBase attrib(mpTarget->GetAttribute(mTarget));
+  NGL_ASSERT(attrib.IsValid());
   
   nuiAttrib<nuiColor> color_attrib(attrib);
   nuiAttrib<const nuiColor&> const_color_attrib(attrib);
