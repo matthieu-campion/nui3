@@ -832,9 +832,8 @@ void nuiMainWindow::OnDragLeave()
 }
 
 
-bool nuiMainWindow::OnCanDrop (nglDragAndDrop* pDragObject, int X, int Y, nglMouseInfo::Flags Button)
+nglDropEffect nuiMainWindow::OnCanDrop (nglDragAndDrop* pDragObject, int X, int Y, nglMouseInfo::Flags Button)
 {
-  //NGL_OUT(_T("nuiMainWindow::OnCanDrop\n"));
   
   nuiSize x = (nuiSize)X;
   nuiSize y = (nuiSize)Y;
@@ -848,18 +847,18 @@ bool nuiMainWindow::OnCanDrop (nglDragAndDrop* pDragObject, int X, int Y, nglMou
       mpWidgetCanDrop->OnDropLeave();
       mpWidgetCanDrop = NULL;
     }
-    return false;
+    return eDropEffectNone;
   }
 
   pWidget->GlobalToLocal(x, y);
   
-  NGL_ASSERT(pWidget->OnCanDrop(pDragObject, x, y));
+  NGL_ASSERT(pWidget->OnCanDrop(pDragObject, x, y) != eDropEffectNone);
   
   if (mpWidgetCanDrop && pWidget != mpWidgetCanDrop)
     mpWidgetCanDrop->OnDropLeave();
   
   mpWidgetCanDrop = pWidget;
-  return true;
+  return eDropEffectCopy;
 }
 
 void nuiMainWindow::OnDropped (nglDragAndDrop* pDragObject, int X,int Y, nglMouseInfo::Flags Button)
@@ -1018,7 +1017,7 @@ void nuiMainWindow::NGLWindow::OnDragLeave()
   nglWindow::OnDragLeave(); mpMainWindow->OnDragLeave();
 }
 
-bool nuiMainWindow::NGLWindow::OnCanDrop(nglDragAndDrop* pDragObject, int X, int Y, nglMouseInfo::Flags Button)
+nglDropEffect nuiMainWindow::NGLWindow::OnCanDrop(nglDragAndDrop* pDragObject, int X, int Y, nglMouseInfo::Flags Button)
 {
   return mpMainWindow->OnCanDrop(pDragObject, X, Y, Button);
 }

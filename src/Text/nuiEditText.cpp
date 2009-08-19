@@ -2181,7 +2181,7 @@ void nuiEditText::TextBlock::InvalidateLayout()
 
 #ifndef _NODND_
 
-bool nuiEditText::OnCanDrop(nglDragAndDrop* pDragObject,nuiSize X,nuiSize Y)
+nglDropEffect nuiEditText::OnCanDrop(nglDragAndDrop* pDragObject,nuiSize X,nuiSize Y)
 {
   if (pDragObject->IsTypeSupported(_T("ngl/Text")))
   {
@@ -2192,16 +2192,16 @@ bool nuiEditText::OnCanDrop(nglDragAndDrop* pDragObject,nuiSize X,nuiSize Y)
          GetPosFromCoords(X,Y,true) < MAX(mAnchorPos, mCursorPos)  )
     {
       pDragObject->SetDesiredDropEffect(eDropEffectNone);
-      return false;
+      return eDropEffectNone;
     }
     if (mStartDragging && !(IsKeyDown(NK_LCTRL) || IsKeyDown(NK_RCTRL)))
       pDragObject->SetDesiredDropEffect(eDropEffectMove);
     else
       pDragObject->SetDesiredDropEffect(eDropEffectCopy);
   
-    return true;
+    return eDropEffectCopy;
   }
-  return false;
+  return eDropEffectNone;
 }
 
 void nuiEditText::OnDropped(nglDragAndDrop* pDragObject,nuiSize X,nuiSize Y, nglMouseInfo::Flags Button)

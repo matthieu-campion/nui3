@@ -50,7 +50,7 @@ public:
   virtual bool MouseMoved    (nuiSize X, nuiSize Y);
 
 #ifndef _NODND_
-  virtual bool OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y);
+  virtual nglDropEffect OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y);
   virtual void OnDropped(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
   
   virtual void OnDragRequestData(nglDragAndDrop* pDragObject, const nglString& rMimeType);

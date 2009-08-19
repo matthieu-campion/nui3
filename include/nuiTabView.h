@@ -94,7 +94,7 @@ private:
   public:
     Tab(nuiWidget* pWidget);
 #ifndef _NODND_      
-    virtual bool OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y);
+    virtual nglDropEffect OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y);
 #endif
     nuiSimpleEventSource<0> EnterDrag;
   };

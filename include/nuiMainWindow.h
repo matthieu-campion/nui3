@@ -102,8 +102,8 @@ public:
 
   virtual void OnDragEnter();
   virtual void OnDragLeave();
-  virtual bool OnCanDrop (nglDragAndDrop* pDragObject, int X, int Y, nglMouseInfo::Flags Button);
-  //virtual bool OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y) { return NULL; } ///< inherited from nuiWidget
+  virtual nglDropEffect OnCanDrop (nglDragAndDrop* pDragObject, int X, int Y, nglMouseInfo::Flags Button);
+
   virtual void OnDropped (nglDragAndDrop* pDragObject, int X,int Y, nglMouseInfo::Flags Button);
   
   class NUI_API WidgetCanDrop : public TestWidgetFunctor
@@ -112,12 +112,14 @@ public:
     WidgetCanDrop(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y) 
     { mpDragObject = pDragObject; mX = X; mY = Y; };
     ~WidgetCanDrop() {};
+    
     bool operator()(nuiWidgetPtr pWidget)
     {
       nuiSize x = mX, y = mY;
       pWidget->GlobalToLocal(x, y);
-      return pWidget->OnCanDrop(mpDragObject, x, y);
+      return (pWidget->OnCanDrop(mpDragObject, x, y) != eDropEffectNone);
     }
+
   protected:
     nglDragAndDrop* mpDragObject;
     nuiSize mX, mY;
@@ -227,7 +229,7 @@ private:
     // Dnd receive
     virtual void OnDragEnter();
     virtual void OnDragLeave();
-    virtual bool OnCanDrop(nglDragAndDrop* pDragObject, int X, int Y, nglMouseInfo::Flags Button);
+    virtual nglDropEffect OnCanDrop(nglDragAndDrop* pDragObject, int X, int Y, nglMouseInfo::Flags Button);
     virtual void OnDropped(nglDragAndDrop* pDragObject, int X,int Y, nglMouseInfo::Flags Button);
 
     // Dnd send

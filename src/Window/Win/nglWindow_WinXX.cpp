@@ -892,7 +892,13 @@ HRESULT STDMETHODCALLTYPE nglDropTarget::DragEnter(IDataObject *pDataObj, DWORD 
   mpWindow->OnDragEnter();
   GetDropEffects(mpObject, pdwEffect);
   *pdwEffect = 0;
-  if (mpWindow->OnCanDrop(mpObject, x, y, mButton))
+
+
+  nglDropEffect effect = mpWindow->OnCanDrop(mpObject, x, y, mButton);
+  mpObject->SetDesiredDropEffect(effect);
+
+
+  if (effect != eDropEffectNone)
   {
     SetDropEffect(mpObject->GetDesiredDropEffect(), pdwEffect);
   }
@@ -960,9 +966,12 @@ HRESULT STDMETHODCALLTYPE nglDropTarget::DragOver(DWORD grfKeyState, POINTL pt, 
 
   GetDropEffects(mpObject, pdwEffect);
   *pdwEffect = 0;
-  if (mpWindow->OnCanDrop(mpObject, x, y, mButton))
+  
+  nglDropEffect dropEffect = mpWindow->OnCanDrop(mpObject, x, y, mButton);
+  mpObject->SetDesiredDropEffect(dropEffect);
+  
+  if (dropEffect != eDropEffectNone)
   {
-    nglDropEffect dropEffect = mpObject->GetDesiredDropEffect();
     SetDropEffect(dropEffect, pdwEffect);
   }
   else
@@ -974,6 +983,7 @@ HRESULT STDMETHODCALLTYPE nglDropTarget::DragOver(DWORD grfKeyState, POINTL pt, 
 
 HRESULT STDMETHODCALLTYPE nglDropTarget::Drop(IDataObject *pDataObj, DWORD grfKeyState, POINTL pt, DWORD *pdwEffect)
 {
+
   int x, y;
   mpWindow->GetPosition(x,y);
   x = MAX(0, (int)pt.x - x);
@@ -989,12 +999,15 @@ HRESULT STDMETHODCALLTYPE nglDropTarget::Drop(IDataObject *pDataObj, DWORD grfKe
 
   GetDropEffects(mpObject, pdwEffect);
   *pdwEffect = 0;
-  if (mpWindow->OnCanDrop(mpObject, x, y, mButton))
+
+  nglDropEffect dropEffect = mpWindow->OnCanDrop(mpObject, x, y, mButton);
+  mpObject->SetDesiredDropEffect(dropEffect);
+
+  if (dropEffect != eDropEffectNone)
   { 
     //GetObject(pDataObj, true);
     mpWindow->OnDropped(mpObject, x, y, mButton);
     
-    nglDropEffect dropEffect = mpObject->GetDesiredDropEffect();
     SetDropEffect(dropEffect, pdwEffect);
   }
   else
@@ -2767,10 +2780,10 @@ LRESULT nglWindow::WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 
 #endif // _NOGFX_
 
-bool nglWindow::OnCanDrop(nglDragAndDrop* pDragObject, int X,int Y, nglMouseInfo::Flags Button)
+nglDropEffect nglWindow::OnCanDrop(nglDragAndDrop* pDragObject, int X,int Y, nglMouseInfo::Flags Button)
 {
   //NGL_OUT(_T("nglWindow::OnCanDrop() Button:%s, X:%d Y:%d\n"), Button & nglMouseInfo::ButtonLeft ? "Left" : Button & nglMouseInfo::ButtonRight? "Right" : "Middle", X, Y);
-  return false;
+  return eDropEffectNone;
 }
 void nglWindow::OnDragEnter()
 {
@@ -2931,6 +2944,9 @@ nglDropTarget::~nglDropTarget()
 bool nglDropTarget::InitOleDrop()
 {
   HRESULT res;
+
+  //LBDEBUG
+  NGL_OUT(_T("nglDropTarget::InitOleDrop/n"));
 
   res = OleInitialize(NULL);
   res = RegisterDragDrop(mpHwnd, this);

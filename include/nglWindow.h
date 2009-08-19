@@ -685,7 +685,7 @@ window = new nglWindow (context, info, NULL);
   
   virtual void OnDragEnter();
   virtual void OnDragLeave();
-  virtual bool OnCanDrop(nglDragAndDrop* pDragObject, int X, int Y, nglMouseInfo::Flags Button);
+  virtual nglDropEffect OnCanDrop(nglDragAndDrop* pDragObject, int X, int Y, nglMouseInfo::Flags Button);
   
   /*!<
    This method is called whenever the mouse is dropping an object on the application window. 

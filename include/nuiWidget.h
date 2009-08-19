@@ -274,7 +274,7 @@ public:
   /** @name Drag and drop */
   //@{
   //  void CancelDrag(nuiDragObject* pDragObject); ///< A widget calls this method to stop an ongoing drag and drop operation with the designated object.
-  virtual bool OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y); ///< This method is called by the window manager whenever the mouse is dragging an object over this widget. This method should test the object for supported drag and drop types and return true if one of them is supported or false otherwise.
+  virtual nglDropEffect OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y); ///< This method is called by the window manager whenever the mouse is dragging an object over this widget. This method should test the object for supported drag and drop types and return true if one of them is supported or false otherwise.
   virtual void OnDropLeave(); ///< this method is called when a drop operation leave the last widget that was responding true to OnCanDrop 
   virtual void OnDropped(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y, nglMouseInfo::Flags Button); ///< This method is called by the window manager whenever the mouse is dropping an object on this widget. This method should retreive the dropped data from the object for supported drag and drop types. The mouse flag argument contains the mouse event that initiated the drop operation. X & Y are the coordinates of the mouse inside the destination widget.
 

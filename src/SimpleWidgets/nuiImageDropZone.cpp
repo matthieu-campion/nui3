@@ -52,7 +52,7 @@ nuiImage* nuiImageDropZone::GetImage()
 
 
 
-bool nuiImageDropZone::OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y)
+nglDropEffect nuiImageDropZone::OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y)
 {
   if (pDragObject->IsTypeSupported(_T("ngl/Files")))
   {
@@ -66,10 +66,10 @@ bool nuiImageDropZone::OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X, nuiSize
     pDragObject->SetDesiredDropEffect(eDropEffectLink);
     mDrawDndFrame = true;
     Invalidate();
-    return true;
+    return eDropEffectLink;
   }
   
-  return false;
+  return eDropEffectNone;
 }
 
 

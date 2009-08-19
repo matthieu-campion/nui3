@@ -561,13 +561,13 @@ nuiTabView::Tab::Tab(nuiWidget* pWidget)
 }
 
 #ifndef _NODND_
-bool nuiTabView::Tab::OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y)
+nglDropEffect nuiTabView::Tab::OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y)
 {
   if (!IsSelected())
   {
     EnterDrag();
   }
-  return false;
+  return eDropEffectNone;
 }
 #endif
 

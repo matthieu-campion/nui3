@@ -2328,9 +2328,9 @@ void nuiWidget::OnDragStop(bool canceled)
 
 /// Drop
 
-bool nuiWidget::OnCanDrop(nglDragAndDrop* pDragObject,nuiSize X,nuiSize Y)
+nglDropEffect nuiWidget::OnCanDrop(nglDragAndDrop* pDragObject,nuiSize X,nuiSize Y)
 {
-  return false; // Or decline the DnD operation by default.
+  return eDropEffectNone; // Or decline the DnD operation by default.
 }
 
 void nuiWidget::OnDropped(nglDragAndDrop* pDragObject,nuiSize X,nuiSize Y, nglMouseInfo::Flags Button)
