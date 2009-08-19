@@ -1919,9 +1919,9 @@ void nglWindow::OnDragLeave()
 {
 }
 
-bool nglWindow::OnCanDrop (nglDragAndDrop* pDragObject, int X, int Y, nglMouseInfo::Flags Button)
+nglDropEffect nglWindow::OnCanDrop (nglDragAndDrop* pDragObject, int X, int Y, nglMouseInfo::Flags Button)
 {
-  return false;
+  return eDropEffectNone;
 }
 
 void nglWindow::OnDropped (nglDragAndDrop* pDragObject, int X,int Y, nglMouseInfo::Flags Button)
