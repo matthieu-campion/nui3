@@ -98,7 +98,7 @@ FrameEditor::~FrameEditor()
 
 
 
-bool FrameEditor::OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y)
+nglDropEffect FrameEditor::OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y)
 {
   if (pDragObject->IsTypeSupported(_T("ngl/Files")))
   {
@@ -108,10 +108,10 @@ bool FrameEditor::OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y)
     pDragObject->SetDesiredDropEffect(eDropEffectLink);
     mDrawDndFrame = true;
     Invalidate();
-    return true;
+    return eDropEffectCopy;
   }
   
-  return false;
+  return eDropEffectNone;
 }
 
 void FrameEditor::OnDropLeave()

@@ -48,7 +48,7 @@ void DropContainer::Log(const nglString& rMsg)
 
 
 // virtual 
-bool DropContainer::OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y)
+nglDropEffect DropContainer::OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y)
 {
   mLastX = X;
   mLastY = Y;
@@ -74,13 +74,13 @@ bool DropContainer::OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y)
       }
     }
     Log(_T("\n"));
-    return false;
+    return eDropEffectNone;
   }
   
   if (mDnDing)
   {
     if (!mDnDValid)
-      return true;
+      return eDropEffectCopy;
   }
   else
   {
@@ -117,7 +117,7 @@ bool DropContainer::OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y)
   }
   
   // the drop is allowed
-  return true;
+  return eDropEffectCopy;
 }
 
 

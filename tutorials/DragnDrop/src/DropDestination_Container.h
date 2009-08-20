@@ -19,7 +19,7 @@ public:
   DropContainer();
   virtual ~DropContainer();
   
-  virtual bool OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y);
+  virtual nglDropEffect OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y);
   virtual void OnDropped(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
   
   void Log(const nglString& rMsg);
