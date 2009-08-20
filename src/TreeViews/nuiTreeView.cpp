@@ -261,7 +261,8 @@ nuiTreeView::nuiTreeView(nuiTreeNodePtr pTree, bool displayRoot)
   mTreeViewSink(this),
   mDisplayRoot(displayRoot),
   mHandleColor(nuiColor(0,0,0)),
-  mpSelectedNode(NULL)
+  mpSelectedNode(NULL),
+  mpClickedNode(NULL)
 {
   SetObjectClass(_T("nuiTreeView"));
   mMultiSelectable = false;
@@ -684,6 +685,7 @@ void nuiTreeView::SetDragStopDelegate(const DragStopDelegate& rDelegate)
 
 ////// Interaction:
 
+
 bool nuiTreeView::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
 {
   if (Button & nglMouseInfo::ButtonLeft)
@@ -692,6 +694,8 @@ bool nuiTreeView::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
     mNewY = mOldY = mClickY = Y;
 
     nuiTreeNodePtr pNode = FindNode(X,Y);
+    mpClickedNode = pNode;
+
     if (pNode)
     {
       if ((!pNode->IsEmpty() && pNode->IsTreeHandleDrawned()) || pNode->mAlwaysDisplayTreeHandle)
@@ -831,7 +835,7 @@ bool nuiTreeView::MouseMoved(nuiSize X, nuiSize Y)
         {
           mDragging = true;
 
-          mpDraggedObject = mDragStartDelegate(mpSelectedNode);
+          mpDraggedObject = mDragStartDelegate(mpClickedNode);
           if (mpDraggedObject)
           {
             nuiTreeView::Drag(mpDraggedObject);

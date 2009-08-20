@@ -568,6 +568,7 @@ nglDragAndDrop* nuiFileTree::OnDragStartDelegate(nuiTreeNode* pNode)
   nglString iconName;
   nglPath path(pNode->GetProperty(_T("Path")));
 
+
   if (path.IsLeaf() || path.IsBundle())
   {
     if (IsFilterSet(_T("*")))
@@ -588,7 +589,7 @@ nglDragAndDrop* nuiFileTree::OnDragStartDelegate(nuiTreeNode* pNode)
   nglDataFilesObject* pDataFileObject = new nglDataFilesObject(_T("ngl/Files"));
   pDataFileObject->AddFile(path.GetPathName());
   pDragObject->AddType(pDataFileObject);
-  
+
   return pDragObject;  
 }
 
@@ -600,6 +601,7 @@ nglDragAndDrop* nuiFileTree::OnDragStartDelegate(nuiTreeNode* pNode)
 // virtual
 void nuiFileTree::OnDragRequestDataDelegate(nuiTreeNode* pNode, nglDragAndDrop* pDragObject, const nglString& rMimeType)
 {
+
 }
 
 // virtual

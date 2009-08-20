@@ -2831,13 +2831,10 @@ bool nglWindow::Drag(nglDragAndDrop* pDragObject)
   
   SetEventMask( NoEvents );
   HANDLE handle = CreateThread(NULL, 0, DoDragDropThreadCallback, mpDropSource, 0, &id);
-  /*
+
+  //////////////////////////
   
-  mOnDragging = true;
-  DWORD id;
-  
-  mpDropSource->SetDraggedObject(pDragObject);
-  
+    /*  
   HRESULT res = OleInitialize(NULL);
 
   bool dragged = mpDropSource->Drag(); ///< blocks until drop occurs or is canceled
@@ -2851,6 +2848,8 @@ bool nglWindow::Drag(nglDragAndDrop* pDragObject)
   
   OleUninitialize();
   */
+  ///////////////////////////
+
   return true;
 }
 
@@ -2944,9 +2943,6 @@ nglDropTarget::~nglDropTarget()
 bool nglDropTarget::InitOleDrop()
 {
   HRESULT res;
-
-  //LBDEBUG
-  NGL_OUT(_T("nglDropTarget::InitOleDrop/n"));
 
   res = OleInitialize(NULL);
   res = RegisterDragDrop(mpHwnd, this);

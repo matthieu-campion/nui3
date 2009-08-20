@@ -52,7 +52,7 @@ void nglDataFilesObject::SetFormatData(FORMATETC * pFormat, STGMEDIUM * pMedium)
       pDrop->fWide = TRUE;
   #else // ANSI
   */
-  pDrop->fWide = FALSE;
+  pDrop->fWide = TRUE;
   //#endif // Unicode/Ansi
   
   // set start of filenames list (null separated)

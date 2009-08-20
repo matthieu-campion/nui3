@@ -227,6 +227,7 @@ protected:
   std::vector<nuiSize> mDepthInsets;
 
   nuiTreeNode* mpSelectedNode;
+  nuiTreeNode* mpClickedNode;
 
   class SubElement
   {

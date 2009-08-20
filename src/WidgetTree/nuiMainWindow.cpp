@@ -852,13 +852,14 @@ nglDropEffect nuiMainWindow::OnCanDrop (nglDragAndDrop* pDragObject, int X, int 
 
   pWidget->GlobalToLocal(x, y);
   
-  NGL_ASSERT(pWidget->OnCanDrop(pDragObject, x, y) != eDropEffectNone);
+  nglDropEffect effect = pWidget->OnCanDrop(pDragObject, x, y);
+  NGL_ASSERT(effect != eDropEffectNone);
   
   if (mpWidgetCanDrop && pWidget != mpWidgetCanDrop)
     mpWidgetCanDrop->OnDropLeave();
   
   mpWidgetCanDrop = pWidget;
-  return eDropEffectCopy;
+  return effect;
 }
 
 void nuiMainWindow::OnDropped (nglDragAndDrop* pDragObject, int X,int Y, nglMouseInfo::Flags Button)
