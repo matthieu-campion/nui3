@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="nui3"
 	ProjectGUID="{A287CB70-6835-4961-BEF5-E2DCDBE2CED4}"
 	RootNamespace="nui3"
@@ -1798,6 +1798,14 @@
 				</File>
 				<File
 					RelativePath=".\include\nuiHoverDummy.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\SimpleWidgets\nuiHugeImage.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiHugeImage.h"
 					>
 				</File>
 				<File
