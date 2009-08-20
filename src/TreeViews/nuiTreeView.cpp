@@ -807,7 +807,10 @@ bool nuiTreeView::MouseMoved(nuiSize X, nuiSize Y)
   {
     mNewX = X;
     mNewY = Y;
-    if (IsMultiSelectable())
+    Invalidate();
+    SetHotRect(nuiRect(mNewX, mNewY, 16.0f, 16.0f));
+
+    if (IsMultiSelectable() && !mpSelectedNode)
     {
       mDrawMarkee = true;
       Select(nuiRect(mClickX, mClickY, mOldX, mOldY, false), false, true); ///< Unselected old temp selection
@@ -816,11 +819,9 @@ bool nuiTreeView::MouseMoved(nuiSize X, nuiSize Y)
       mOldX = mNewX;
       mOldY = mNewY;
     }
-    Invalidate();
-    SetHotRect(nuiRect(mNewX, mNewY, 16.0f, 16.0f));
 
 #if !defined _NODND_
-    if (!mDragging)
+    else if (!mDragging)
     {
       nuiSize offsetX = abs(X - mClickX);
       nuiSize offsetY = abs(Y - mClickY);
