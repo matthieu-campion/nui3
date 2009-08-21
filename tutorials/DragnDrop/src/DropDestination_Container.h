@@ -33,6 +33,7 @@ private:
   
   nuiLabel* mpText;
   nglDragAndDrop* mpLastDND;
+  nglDropEffect mEffect;
   
   nuiSize mLastX;
   nuiSize mLastY;

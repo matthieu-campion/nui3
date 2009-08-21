@@ -11,13 +11,15 @@
 
 #include "nglDataObjects.h"
 
-nglDragAndDrop::nglDragAndDrop(nglImage *pFeedbackImage, uint offsetX, uint offsetY)
+nglDragAndDrop::nglDragAndDrop(nglDropEffect defaultDropEffect, nglImage *pFeedbackImage, uint offsetX, uint offsetY)
 {
   mpFeedbackImage = pFeedbackImage;
   mOffsetX = offsetX;
   mOffsetY = offsetY;
   mDesiredDropEffect = eDropEffectNone;
   mModifiers = 0;
+
+  AddSupportedDropEffect(defaultDropEffect);
 }
 
 nglDragAndDrop::~nglDragAndDrop()
@@ -66,6 +68,16 @@ void nglDragAndDrop::ClearSupportedDropEffects()
 
 void nglDragAndDrop::AddSupportedDropEffect(nglDropEffect effect)
 { 
+  // first, check existance
+  std::list<nglDropEffect>::iterator it;
+  for (it = mSupportedDropEffects.begin(); it != mSupportedDropEffects.end(); ++it)
+  {
+    nglDropEffect ef = *it;
+    if (ef == effect)
+      return;
+  }
+
+  // add
   mSupportedDropEffects.push_back(effect);
 }
 

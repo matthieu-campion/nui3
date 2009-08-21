@@ -40,11 +40,12 @@ public:
   //@{
   /*!<
     Create a DragnDrop object
+    \param defaultDropEffect is a new mandatory parameter: win32 drag n drop system can not work properly without it. Can't be eDropEffectNone.
     \param pFeedbackImage is an optionnal image which will be displayed under the mouse cursor while dragging.
     \param offsetX is the horizontal offset inside the image that will be drawn. To horizontaly center the image under the mouse cursor use the width of the image divided by 2.
     \param offsetY is the vertical offset inside the image that will be drawn. To verticaly center the image under the mouse cursor use the height of the image divided by 2.
   */
-  nglDragAndDrop(nglImage *pFeedbackImage = NULL, uint offsetX = 0, uint offsetY = 0);
+  nglDragAndDrop(nglDropEffect defaultDropEffect, nglImage *pFeedbackImage = NULL, uint offsetX = 0, uint offsetY = 0);
   virtual ~nglDragAndDrop();
   //@}
 

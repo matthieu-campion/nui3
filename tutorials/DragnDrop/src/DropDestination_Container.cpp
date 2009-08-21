@@ -80,7 +80,7 @@ nglDropEffect DropContainer::OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X, n
   if (mDnDing)
   {
     if (!mDnDValid)
-      return eDropEffectCopy;
+      return mEffect;
   }
   else
   {
@@ -117,7 +117,11 @@ nglDropEffect DropContainer::OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X, n
   }
   
   // the drop is allowed
-  return eDropEffectCopy;
+  mEffect = eDropEffectCopy;
+  if (IsKeyDown(NK_ALT))
+    mEffect = eDropEffectMove;
+
+  return mEffect;
 }
 
 

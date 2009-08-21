@@ -472,9 +472,8 @@ bool nuiEditText::MouseMoved(nuiSize X, nuiSize Y)
   {
     Ungrab();
     mDragging = true;
-    nglDragAndDrop* pDnd = new nglDragAndDrop();
+    nglDragAndDrop* pDnd = new nglDragAndDrop(eDropEffectCopy);
     pDnd->AddType(new nglDataTextObject(_T("ngl/Text")));
-    pDnd->AddSupportedDropEffect(eDropEffectCopy);
     pDnd->AddSupportedDropEffect(eDropEffectMove);
     
     /*bool res = (unused)*/ Drag(pDnd);

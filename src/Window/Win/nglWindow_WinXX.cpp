@@ -775,18 +775,19 @@ void nglDropSource::ClearObjects()
 // From IDropSource:
 HRESULT STDMETHODCALLTYPE nglDropSource::GiveFeedback(DWORD dwEffect)
 {
-  //OutputDebugString("nglDropSource::GiveFeedback\n");
 
   nglDropEffect effect = GetDropEffect(&dwEffect);
+
   mpDraggedObject->SetDesiredDropEffect(effect);
   LPARAM lParam = (LPARAM)effect;
 
   SendMessage(mHWnd, mMessageId, NGL_GIVE_FEEDBACK_MESSAGE, lParam);
-  return S_OK;
+  //return S_OK;
+  return ResultFromScode(DRAGDROP_S_USEDEFAULTCURSORS);
 }
 HRESULT STDMETHODCALLTYPE nglDropSource::QueryContinueDrag(BOOL fEscapePressed, DWORD grfKeyState)
 {
-  //OutputDebugString("nglDropSource::QueryContinueDrag\n");
+  //NGL_OUT(_T("nglDropSource::QueryContinueDrag\n"));
 
   if (fEscapePressed)
   {
@@ -797,7 +798,7 @@ HRESULT STDMETHODCALLTYPE nglDropSource::QueryContinueDrag(BOOL fEscapePressed, 
 
   if ( !(grfKeyState & mInitialButton) ) 
   {
-    //OutputDebugString("nglDropSource::QueryContinueDrag return DRAGDROP_S_DROP\n");
+    NGL_OUT(_T("nglDropSource::QueryContinueDrag return DRAGDROP_S_DROP\n"));
     /// detach inputs now
     DWORD dwAttachThreadID  = GetWindowThreadProcessId(mHWnd, NULL);
     DWORD dwCurrentThreadID = GetCurrentThreadId();
@@ -874,7 +875,7 @@ HRESULT STDMETHODCALLTYPE nglDropTarget::DragEnter(IDataObject *pDataObj, DWORD 
   else if (grfKeyState == MK_RBUTTON)
     mButton |= nglMouseInfo::ButtonRight;
 
-  mpObject = new nglDragAndDrop();
+  mpObject = new nglDragAndDrop(eDropEffectCopy);
   //NGL_OUT(_T("NEW: DataObject from nglDropTarget\n"));
 
   HRESULT res;
@@ -896,7 +897,6 @@ HRESULT STDMETHODCALLTYPE nglDropTarget::DragEnter(IDataObject *pDataObj, DWORD 
 
   nglDropEffect effect = mpWindow->OnCanDrop(mpObject, x, y, mButton);
   mpObject->SetDesiredDropEffect(effect);
-
 
   if (effect != eDropEffectNone)
   {
@@ -969,7 +969,7 @@ HRESULT STDMETHODCALLTYPE nglDropTarget::DragOver(DWORD grfKeyState, POINTL pt, 
   
   nglDropEffect dropEffect = mpWindow->OnCanDrop(mpObject, x, y, mButton);
   mpObject->SetDesiredDropEffect(dropEffect);
-  
+ 
   if (dropEffect != eDropEffectNone)
   {
     SetDropEffect(dropEffect, pdwEffect);

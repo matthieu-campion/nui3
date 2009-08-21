@@ -583,8 +583,9 @@ nglDragAndDrop* nuiFileTree::OnDragStartDelegate(nuiTreeNode* pNode)
 
   // create drag and drop object
   nglImage* pImage = nuiDefaultDecoration::GetImage(iconName);
-  nglDragAndDrop* pDragObject = new nglDragAndDrop(pImage, 0, 0);
-  
+  nglDragAndDrop* pDragObject = new nglDragAndDrop(eDropEffectCopy, pImage, 0, 0);
+  pDragObject->AddSupportedDropEffect(eDropEffectMove);
+ 
   // add files data
   nglDataFilesObject* pDataFileObject = new nglDataFilesObject(_T("ngl/Files"));
   pDataFileObject->AddFile(path.GetPathName());
