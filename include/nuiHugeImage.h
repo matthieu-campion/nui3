@@ -29,6 +29,12 @@ public:
   void ZoomTo(float zoom);
   void SetZoom(float zoom);
   float GetZoom() const;
+  
+  float GetMinZoom() const;
+  float GetMaxZoom() const;
+  void SetMinZoom(float set);
+  void SetMaxZoom(float set);
+
 private:
   void InitAttributes();
   std::vector<std::vector<nuiTexture*> > mTextures;

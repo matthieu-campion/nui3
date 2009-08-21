@@ -250,33 +250,38 @@ void nuiWidget::InitAttributes()
   
   AddAttribute(new nuiAttribute<const nuiRect&>
                (nglString(_T("LayoutRect")), nuiUnitNone,
-                nuiAttribute<const nuiRect&>::GetterDelegate(this, &nuiWidget::GetRect),
-                nuiAttribute<const nuiRect&>::SetterDelegate(this, &nuiWidget::SetLayout)));
+                nuiMakeDelegate(this, &nuiWidget::GetRect),
+                nuiMakeDelegate(this, &nuiWidget::SetLayout)));
   
   AddAttribute(new nuiAttribute<const nuiRect&>
                (nglString(_T("LayoutRectUnsafe")), nuiUnitNone,
-                nuiAttribute<const nuiRect&>::GetterDelegate(this, &nuiWidget::GetRect),
+                nuiMakeDelegate(this, &nuiWidget::GetRect),
                 nuiAttribute<const nuiRect&>::SetterDelegate(this, &nuiWidget::InternalSetLayout)));
   
   AddAttribute(new nuiAttribute<const nuiRect&>
                (nglString(_T("UserRect")), nuiUnitNone,
-                nuiAttribute<const nuiRect&>::GetterDelegate(this, &nuiWidget::GetUserRect),
-                nuiAttribute<const nuiRect&>::SetterDelegate(this, &nuiWidget::SetUserRect)));
+                nuiMakeDelegate(this, &nuiWidget::GetUserRect),
+                nuiMakeDelegate(this, &nuiWidget::SetUserRect)));
+  
+  AddAttribute(new nuiAttribute<nuiPoint>
+               (nglString(_T("UserPos")), nuiUnitNone,
+                nuiMakeDelegate(this, &nuiWidget::GetUserPos),
+                nuiAttribute<nuiPoint>::SetterDelegate(this, &nuiWidget::SetUserPos)));
   
   AddAttribute(new nuiAttribute<const nuiRect&>
                (nglString(_T("VisibleRect")), nuiUnitNone,
-                nuiAttribute<const nuiRect&>::GetterDelegate(this, &nuiWidget::GetVisibleRect),
-                nuiAttribute<const nuiRect&>::SetterDelegate(this, &nuiWidget::SetVisibleRect)));
+                nuiMakeDelegate(this, &nuiWidget::GetVisibleRect),
+                nuiMakeDelegate(this, &nuiWidget::SetVisibleRect)));
   
   AddAttribute(new nuiAttribute<nuiSize>
                (nglString(_T("UserWidth")), nuiUnitNone,
-                nuiAttribute<nuiSize>::GetterDelegate(this, &nuiWidget::GetUserWidth),
-                nuiAttribute<nuiSize>::SetterDelegate(this, &nuiWidget::SetUserWidth)));
+                nuiMakeDelegate(this, &nuiWidget::GetUserWidth),
+                nuiMakeDelegate(this, &nuiWidget::SetUserWidth)));
 
   AddAttribute(new nuiAttribute<nuiSize>
                (nglString(_T("UserHeight")), nuiUnitNone,
-                nuiAttribute<nuiSize>::GetterDelegate(this, &nuiWidget::GetUserHeight),
-                nuiAttribute<nuiSize>::SetterDelegate(this, &nuiWidget::SetUserHeight)));
+                nuiMakeDelegate(this, &nuiWidget::GetUserHeight),
+                nuiMakeDelegate(this, &nuiWidget::SetUserHeight)));
   
 
   AddAttribute(new nuiAttribute<bool>
@@ -301,26 +306,26 @@ void nuiWidget::InitAttributes()
 	// Decoration:
   AddAttribute(new nuiAttribute<const nglString&>
                (nglString(_T("Decoration")), nuiUnitName,
-                nuiAttribute<const nglString&>::GetterDelegate(this, &nuiWidget::GetDecorationName),
+                nuiMakeDelegate(this, &nuiWidget::GetDecorationName),
                 nuiAttribute<const nglString&>::SetterDelegate(this, &nuiWidget::SetDecoration)));
 
 
   AddAttribute(new nuiAttribute<nuiDecorationMode>
                (nglString(_T("DecorationMode")), nuiUnitNone,
-                nuiAttribute<nuiDecorationMode>::GetterDelegate(this, &nuiWidget::GetDecorationMode),
-                nuiAttribute<nuiDecorationMode>::SetterDelegate(this, &nuiWidget::SetDecorationMode)));
+                nuiMakeDelegate(this, &nuiWidget::GetDecorationMode),
+                nuiMakeDelegate(this, &nuiWidget::SetDecorationMode)));
 
   // Focus Decoration:
   AddAttribute(new nuiAttribute<const nglString&>
                (nglString(_T("FocusDecoration")), nuiUnitName,
-                nuiAttribute<const nglString&>::GetterDelegate(this, &nuiWidget::GetFocusDecorationName),
+                nuiMakeDelegate(this, &nuiWidget::GetFocusDecorationName),
                 nuiAttribute<const nglString&>::SetterDelegate(this, &nuiWidget::SetFocusDecoration)));
   
   
   AddAttribute(new nuiAttribute<nuiDecorationMode>
                (nglString(_T("FocusDecorationMode")), nuiUnitNone,
-                nuiAttribute<nuiDecorationMode>::GetterDelegate(this, &nuiWidget::GetFocusDecorationMode),
-                nuiAttribute<nuiDecorationMode>::SetterDelegate(this, &nuiWidget::SetFocusDecorationMode)));
+                nuiMakeDelegate(this, &nuiWidget::GetFocusDecorationMode),
+                nuiMakeDelegate(this, &nuiWidget::SetFocusDecorationMode)));
   
   AddAttribute(new nuiAttribute<bool>
                (nglString(_T("FocusVisible")), nuiUnitBoolean,
@@ -396,7 +401,7 @@ void nuiWidget::InitAttributes()
               (nglString(_T("FillRule")), nuiUnitPosition,
                nuiMakeDelegate(this, &nuiWidget::GetFillRule), 
                nuiMakeDelegate(this, &nuiWidget::SetFillRule));
-              AddAttribute(_T("FillRule"), AttributeFillRule);
+  AddAttribute(_T("FillRule"), AttributeFillRule);
 
   AddAttribute(new nuiAttribute<nuiMouseCursor>
                (nglString(_T("Cursor")), nuiUnitNone,
@@ -2762,6 +2767,11 @@ const nuiRect& nuiWidget::GetUserRect() const
   return mUserRect;
 }
 
+nuiPoint nuiWidget::GetUserPos() const
+{
+  return nuiPoint(mUserRect.Left(), mUserRect.Top());
+}
+
 void nuiWidget::UnsetUserRect()
 {
   if (mHasUserPos || mHasUserSize)
@@ -2803,6 +2813,11 @@ void nuiWidget::SetUserPos(nuiSize X, nuiSize Y)
   mHasUserPos = true;
   InvalidateLayout();
   DebugRefreshInfo();
+}
+
+void nuiWidget::SetUserPos(nuiPoint Pos)
+{
+  SetUserPos(Pos[0], Pos[1]);
 }
 
 void nuiWidget::UnsetUserPos()

@@ -116,8 +116,10 @@ public:
   nuiSize GetUserHeight();
   
   const nuiRect& GetUserRect() const;
+  nuiPoint GetUserPos() const;
   void SetUserRect(const nuiRect& rRect); ///< Ask the widget to use the specified rect as its ideal size and position. The position and size may not be granted by the widgets parent. This method is a combination of SetUserPos and SetUserSize.
   void SetUserPos    (nuiSize X, nuiSize Y); ///< Ask the widget to use the specified position as its ideal position. The position and size may not be granted by the widgets parent.
+  void SetUserPos    (nuiPoint Pos); ///< Ask the widget to use the specified position as its ideal position. The position and size may not be granted by the widgets parent.
   void SetUserSize   (nuiSize Width, nuiSize Height); ///< Ask the widget to use the specified size as its ideal size. The position and size may not be granted by the widgets parent.
   void UnsetUserRect (); ///< Ask the widget to stop using the user provided rectangle and restart calculating its size on its own.
   void UnsetUserPos  (); ///< Ask the widget to stop using the user provided position and restart calculating its position on its own.

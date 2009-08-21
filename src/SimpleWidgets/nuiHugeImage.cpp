@@ -55,7 +55,7 @@ nuiHugeImage::nuiHugeImage(const nglPath& rImagePath)
   
   InitImage();
   Load(rImagePath);
-  StartAnimation(_T("Zoom"));
+  //StartAnimation(_T("Zoom"));
 }
 
 nuiHugeImage::~nuiHugeImage()
@@ -68,6 +68,14 @@ void nuiHugeImage::InitAttributes()
   AddAttribute(new nuiAttribute<float>(nglString(_T("Zoom")), nuiUnitCustom,
                                        nuiMakeDelegate(this, &nuiHugeImage::GetZoom),
                                        nuiMakeDelegate(this, &nuiHugeImage::SetZoom)));
+  
+  AddAttribute(new nuiAttribute<float>(nglString(_T("MinZoom")), nuiUnitCustom,
+                                       nuiMakeDelegate(this, &nuiHugeImage::GetMinZoom),
+                                       nuiMakeDelegate(this, &nuiHugeImage::SetMaxZoom)));
+  
+  AddAttribute(new nuiAttribute<float>(nglString(_T("MaxZoom")), nuiUnitCustom,
+                                       nuiMakeDelegate(this, &nuiHugeImage::GetMaxZoom),
+                                       nuiMakeDelegate(this, &nuiHugeImage::SetMaxZoom)));
   
   AddAttribute(new nuiAttribute<float>(nglString(_T("CenterX")), nuiUnitCustom,
                                        nuiMakeDelegate(this, &nuiHugeImage::GetCenterX),
@@ -310,4 +318,26 @@ float nuiHugeImage::GetCenterY() const
   return mX;
 }
 
+float nuiHugeImage::GetMinZoom() const
+{
+  return mMinZoom;
+}
 
+float nuiHugeImage::GetMaxZoom() const
+{
+  return mMaxZoom;
+}
+
+void nuiHugeImage::SetMinZoom(float set)
+{
+  mMinZoom = set;
+  mZoom = nuiClamp(mZoom, mMinZoom, mMaxZoom);
+  Invalidate();
+}
+
+void nuiHugeImage::SetMaxZoom(float set)
+{
+  mMaxZoom = set;
+  mZoom = nuiClamp(mZoom, mMinZoom, mMaxZoom);
+  Invalidate();
+}

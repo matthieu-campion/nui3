@@ -154,7 +154,7 @@ nuiDecoration* nuiStateDecoration::GetDecoration(const nglString& rName) const
   if (pDecoration)
     return pDecoration;
   nuiTexture* pTexture = nuiTexture::GetTexture(nglPath(rName));
-  if (!pTexture)
+  if (!pTexture || !pTexture->IsValid())
   {
     NGL_OUT(_T("nuiStateDecoration::GetDecoration warning : could not load graphic resource '%ls'\n"), rName.GetChars());
     return NULL;
@@ -419,7 +419,9 @@ const nglString& nuiStateDecoration::GetDecoUp()
 void nuiStateDecoration::SetDecoUp(const nglString& rPath)
 {
   mDecoUp = rPath;
-  SetState(nuiStateEnabled | nuiStateReleased, GetDecoration(mDecoUp));  
+  nuiDecoration* pDeco = GetDecoration(mDecoUp);
+  if (pDeco)
+    SetState(nuiStateEnabled | nuiStateReleased, pDeco);  
 }
 
 
@@ -432,7 +434,9 @@ const nglString& nuiStateDecoration::GetDecoDown()
 void nuiStateDecoration::SetDecoDown(const nglString& rPath)
 {
   mDecoDown = rPath;
-  SetState(nuiStateEnabled | nuiStatePressed, GetDecoration(mDecoDown));  
+  nuiDecoration* pDeco = GetDecoration(mDecoDown);
+  if (pDeco)
+    SetState(nuiStateEnabled | nuiStatePressed, pDeco);
 }
 
 
@@ -445,7 +449,9 @@ const nglString& nuiStateDecoration::GetDecoUpHover()
 void nuiStateDecoration::SetDecoUpHover(const nglString& rPath)
 {
   mDecoUpHover = rPath;
-  SetState(nuiStateEnabled | nuiStateReleased | nuiStateHoverOn, GetDecoration(mDecoUpHover));  
+  nuiDecoration* pDeco = GetDecoration(rPath);
+  if (pDeco)
+    SetState(nuiStateEnabled | nuiStateReleased | nuiStateHoverOn, pDeco);
 }
 
 
@@ -458,7 +464,9 @@ const nglString& nuiStateDecoration::GetDecoDownHover()
 void nuiStateDecoration::SetDecoDownHover(const nglString& rPath)
 {
   mDecoDownHover = rPath;
-  SetState(nuiStateEnabled | nuiStatePressed | nuiStateHoverOn, GetDecoration(mDecoDownHover));  
+  nuiDecoration* pDeco = GetDecoration(rPath);
+  if (pDeco)
+    SetState(nuiStateEnabled | nuiStatePressed | nuiStateHoverOn, pDeco);
 }
 
 
@@ -474,7 +482,9 @@ void nuiStateDecoration::SetDecoDisabled(const nglString& rPath)
 {
   mDecoUpDisabled = rPath;
   mDecoDownDisabled = rPath;
-  SetState(nuiStateDisabled, GetDecoration(mDecoUpDisabled));  
+  nuiDecoration* pDeco = GetDecoration(rPath);
+  if (pDeco)
+    SetState(nuiStateDisabled, pDeco);
 }
 
 
@@ -488,7 +498,9 @@ const nglString& nuiStateDecoration::GetDecoDisabledSelected()
 void nuiStateDecoration::SetDecoDisabledSelected(const nglString& rPath)
 {
   mDecoDisabledSelected = rPath;
-  SetState(nuiStateDisabled | nuiStateSelected, GetDecoration(mDecoDisabledSelected));  
+  nuiDecoration* pDeco = GetDecoration(rPath);
+  if (pDeco)
+    SetState(nuiStateDisabled | nuiStateSelected, pDeco);
 }
 
 
@@ -503,7 +515,9 @@ const nglString& nuiStateDecoration::GetDecoUpDisabled()
 void nuiStateDecoration::SetDecoUpDisabled(const nglString& rPath)
 {
   mDecoUpDisabled = rPath;
-  SetState(nuiStateReleased | nuiStateDisabled, GetDecoration(mDecoUpDisabled));  
+  nuiDecoration* pDeco = GetDecoration(rPath);
+  if (pDeco)
+    SetState(nuiStateReleased | nuiStateDisabled, pDeco);
 }
 
 
@@ -518,7 +532,9 @@ const nglString& nuiStateDecoration::GetDecoDownDisabled()
 void nuiStateDecoration::SetDecoDownDisabled(const nglString& rPath)
 {
   mDecoDownDisabled = rPath;
-  SetState(nuiStatePressed | nuiStateDisabled, GetDecoration(mDecoDownDisabled));  
+  nuiDecoration* pDeco = GetDecoration(rPath);
+  if (pDeco)
+    SetState(nuiStatePressed | nuiStateDisabled, pDeco);
 }
 
 
@@ -533,7 +549,9 @@ const nglString& nuiStateDecoration::GetDecoSelected()
 void nuiStateDecoration::SetDecoSelected(const nglString& rPath)
 {
   mDecoSelected = rPath;
-  SetState(nuiStateSelected, GetDecoration(mDecoSelected));  
+  nuiDecoration* pDeco = GetDecoration(rPath);
+  if (pDeco)
+    SetState(nuiStateSelected, pDeco);
 }
 
 
