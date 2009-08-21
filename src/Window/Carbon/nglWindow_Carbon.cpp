@@ -436,7 +436,7 @@ OSErr nglDragTrackingHandler (DragTrackingMessage message, WindowRef theWindow, 
         //NGL_OUT(_T("nglDragTrackingHandler(kDragTrackingEnterWindow, 0x%x, 0x%x, 0x%x)\n"), theWindow, handlerRefCon, theDrag);
         NGL_ASSERT(!pDnd->HasDropObject());
         
-        nglDragAndDrop* pDrag = new nglDragAndDrop();
+        nglDragAndDrop* pDrag = new nglDragAndDrop(eDropEffectCopy);
         pDnd->SetDropObject(pDrag);
         
         DragActions actions;
