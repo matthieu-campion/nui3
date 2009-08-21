@@ -78,7 +78,9 @@ void nuiTreeNode::Open(bool _Opened)
   mOpened = _Opened;
   Changed();
   if (mOpened)
+  {
     Opened(nuiTreeEvent<nuiTreeNode>(nuiWidgetSelected, dynamic_cast<nuiTreeNode*>(GetParent()), this));
+  }
   else
     Closed(nuiTreeEvent<nuiTreeNode>(nuiWidgetSelected, dynamic_cast<nuiTreeNode*>(GetParent()), this));
   Changed();

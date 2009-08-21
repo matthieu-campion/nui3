@@ -108,6 +108,8 @@ bool nuiFileTree::OnNodeActivated(const nuiEvent& rEvent)
   return true;
 }
 
+
+
 bool nuiFileTree::OnGotoParentFolder(const nuiEvent& rEvent)
 {
   nglPath path = mRootPath;
@@ -406,6 +408,7 @@ bool nuiFileTree::isRoot(const nglPath& rPath)
 
 bool nuiFileTree::SetPath(const nglPath& rPath)
 {
+  mPath = rPath;
   
   nglPath path(rPath);
   path.MakeRelativeTo(GetRootPath());
@@ -524,24 +527,26 @@ bool nuiFileTree::SetPath(const nglPath& rPath)
 
 nglPath nuiFileTree::GetPath() const
 {
-  nuiTreeNode* pTree = mpTreeView->GetSelectedNode();
-  if (!pTree)
-    return nglPath(nglString::Null);
-
-	nglPath pathName = pTree->GetProperty(_T("Path"));
-	nglString node = pathName.GetNodeName();
-	
-	nglString addin;
-	
-	if ((addin != nglString::Null) && (node.Compare(addin)))
-	{
-		if (pathName.IsLeaf())
-			return pathName.GetParent() + addin;
-			
-		return pathName + addin;
-	}
-	
-	return pathName;
+  return mPath;
+  
+//  nuiTreeNode* pTree = mpTreeView->GetSelectedNode();
+//  if (!pTree)
+//    return nglPath(nglString::Null);
+//
+//	nglPath pathName = pTree->GetProperty(_T("Path"));
+//	nglString node = pathName.GetNodeName();
+//	
+//	nglString addin;
+//	
+//	if ((addin != nglString::Null) && (node.Compare(addin)))
+//	{
+//		if (pathName.IsLeaf())
+//			return pathName.GetParent() + addin;
+//			
+//		return pathName + addin;
+//	}
+//	
+//	return pathName;
 }
 
 

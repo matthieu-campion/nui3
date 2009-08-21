@@ -89,6 +89,7 @@ private:
   std::stack<nglPath> mWalkthrough;
   nuiScrollView* mpScrollView;
   
+  nglString mPath;
   nuiEventSink<nuiFileTree> mEventSink;
   
 };
