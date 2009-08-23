@@ -35,6 +35,8 @@ public:
   void SetMinZoom(float set);
   void SetMaxZoom(float set);
 
+  void Pan(nuiPosition dir); ///< Pan (in response to a clic on a cursor button). 
+  
 private:
   void InitAttributes();
   std::vector<std::vector<nuiTexture*> > mTextures;

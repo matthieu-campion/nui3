@@ -341,3 +341,46 @@ void nuiHugeImage::SetMaxZoom(float set)
   mZoom = nuiClamp(mZoom, mMinZoom, mMaxZoom);
   Invalidate();
 }
+
+void nuiHugeImage::Pan(nuiPosition dir)
+{
+  float displacement = 10;
+  switch (dir)
+  {
+    case nuiTopLeft:
+      mX -= displacement;
+      mY -= displacement;
+      break;
+    case nuiTop:
+      mY -= displacement;
+      break;
+    case nuiTopRight:
+      mX += displacement;
+      mY -= displacement;
+      break;
+    case nuiRight:
+      mX += displacement;
+      break;
+    case nuiBottomRight:
+      mX += displacement;
+      mY += displacement;
+      break;
+    case nuiBottom:
+      mY += displacement;
+      break;
+    case nuiBottomLeft:
+      mX -= displacement;
+      mY += displacement;
+      break;
+    case nuiLeft:
+      mX -= displacement;
+      break;
+    default:
+      mX = mImageSize.GetWidth() / 2;
+      mY = mImageSize.GetHeight() / 2;
+      break;
+  }
+  
+  Invalidate();
+}
+
