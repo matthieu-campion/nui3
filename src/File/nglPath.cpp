@@ -196,18 +196,19 @@ nglPath::nglPath (nglPathBase Base)
 			}
 			break;
 
-		case ePathTemp:
-			{
-				#ifdef WINCE
-				InternalSetPath("/");
-				#elif defined _WIN32_
-				InternalSetPath(getenv("TEMP"));
-				#else
-				InternalSetPath(_T("/tmp"));
-				#endif
-			}
-			break;
-
+    case ePathTemp:
+      {
+        #ifdef WINCE
+        InternalSetPath("/");
+        #elif defined _WIN32_
+        InternalSetPath(getenv("TEMP"));
+        #elif defined(_UIKIT_)
+        InternalSetPath(nuiCocoaGetPath_Temp());    
+        #else
+        InternalSetPath(_T("/tmp"));
+        #endif
+      }
+      
 		case ePathApp:
 			{
 				#ifdef _WIN32_

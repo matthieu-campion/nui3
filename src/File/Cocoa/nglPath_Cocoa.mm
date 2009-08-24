@@ -25,8 +25,7 @@ nglPath nuiCocoaGetPath_UserDocuments()
 
 nglPath nuiCocoaGetPath_Temp()
 {
-  NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-  NSString* docs = [paths objectAtIndex: 0];
+  NSString* docs = NSTemporaryDirectory();
   nglString str((CFStringRef)docs);
   return nglPath(str);  
 }

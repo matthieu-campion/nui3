@@ -168,10 +168,60 @@ Finalize
 //Write wave data size and file size in Stream 
 //Finalize() is called after WriteInfo call and all Write calls
 ////////////////////////////////////////////////////////////////////
+
+#define CUE_CHUNK_DATA_SIZE 4
+
 bool nuiWaveWriter::Finalize()
 {
-  int32 Size = (int32)mrSampleInfo.GetSampleFrames() * mrSampleInfo.GetChannels();
+  // write cue chunk
+  if(mrSampleInfo.GetSlices().size() > 0)
+  { 
+    const std::vector<SliceInfo> slices = mrSampleInfo.GetSlices();
+    if ( 4 != mrStream.WriteUInt8((uint8*)"cue ",4))
+      return false;  
+    
+    int32 numCues = slices.size();  
+    int32 cueChunkSize = CUE_CHUNK_DATA_SIZE + (24 * numCues);
+    
+    if ( 1 != mrStream.WriteInt32(&cueChunkSize,1))
+      return false;  
+    
+    if ( 1 != mrStream.WriteInt32(&numCues,1))
+      return false; 
+    
+    int32 data32;
+    
+    for(int32 i=0; i<numCues; i++)
+    {
+      // cue ID
+      if ( 1 != mrStream.WriteInt32(&i,1))
+        return false;    
+      
+      // play order position..
+      data32 = (int32)slices[i].mStartFrame;
+      if ( 1 != mrStream.WriteInt32(&data32,1))
+        return false;
+      
+      if ( 4 != mrStream.WriteUInt8((uint8*)"data",4))
+        return false;
+      
+      data32 = (int32)slices[i].mStartFrame * mrSampleInfo.GetChannels() * (mrSampleInfo.GetBitsPerSample() / 8);
+      if ( 1 != mrStream.WriteInt32(&data32,1))
+        return false; 
+      
+      
+      data32 = (int32)slices[i].mStartFrame * mrSampleInfo.GetChannels() * (mrSampleInfo.GetBitsPerSample() / 8);
+      if ( 1 != mrStream.WriteInt32(&data32,1))
+        return false;
+      
+      data32 = 0;
+      if ( 1 != mrStream.WriteInt32(&data32,1))
+        return false;   
+    }
+  }
   
+  
+  int32 Size = (int32)mrSampleInfo.GetSampleFrames() * mrSampleInfo.GetChannels();
   
   //position of datas depends on wave format
   
@@ -205,6 +255,13 @@ bool nuiWaveWriter::Finalize()
   //Go to "RIFF" Chunk Data Size position in stream
   mrStream.SetPos(4,eStreamFromStart);
   
+  // add chunk size.. 
+  if(mrSampleInfo.GetSlices().size() > 0)
+  {
+    Size += CUE_CHUNK_DATA_SIZE;
+    Size += mrSampleInfo.GetSlices().size() * 24;
+  }
+  
   //Write file data Size
   if (eWaveFormatPcm == mrSampleInfo.GetFormatTag())
     Size += RIFF_CHUNK_DATA_SIZE + CHUNK_HEADER_SIZE + FMT_CHUNK_DATA_SIZE_PCM + CHUNK_HEADER_SIZE;
@@ -220,7 +277,6 @@ bool nuiWaveWriter::Finalize()
   
   return true;
 }
-
 
 
 uint32 nuiWaveWriter::Write(const void* pBuffer, uint32 SampleFrames, nuiSampleBitFormat format)
@@ -239,9 +295,9 @@ uint32 nuiWaveWriter::Write(const void* pBuffer, uint32 SampleFrames, nuiSampleB
       switch ( mrSampleInfo.GetBitsPerSample() )
       {
         case 16 :
-          {
-            SampleFramesWritten = (uint32)mrStream.WriteInt16( (int16*)pBuffer, SamplePointsToWrite) / mrSampleInfo.GetChannels();
-          }
+        {
+          SampleFramesWritten = (uint32)mrStream.WriteInt16( (int16*)pBuffer, SamplePointsToWrite) / mrSampleInfo.GetChannels();
+        }
           break;
           
         default:
@@ -256,23 +312,23 @@ uint32 nuiWaveWriter::Write(const void* pBuffer, uint32 SampleFrames, nuiSampleB
       switch ( mrSampleInfo.GetBitsPerSample() )
       {
         case 24 :
-          {
-            float* pTempFloat = (float*)pBuffer;
-            
-            std::vector<uint8> TempBuffer;
-            TempBuffer.resize(SamplePointsToWrite * 3); //nb of sample points * 3 bytes (24 bits) = nb of bytes to read
-            
-            nuiAudioConvert_FloatTo24bitsLittleEndian(pTempFloat,&TempBuffer[0],SamplePointsToWrite);
-            
-            SampleFramesWritten = (uint32)mrStream.WriteUInt8(&TempBuffer[0], SamplePointsToWrite * 3) / (3 * mrSampleInfo.GetChannels());
-          }
+        {
+          float* pTempFloat = (float*)pBuffer;
+          
+          std::vector<uint8> TempBuffer;
+          TempBuffer.resize(SamplePointsToWrite * 3); //nb of sample points * 3 bytes (24 bits) = nb of bytes to read
+          
+          nuiAudioConvert_FloatTo24bitsLittleEndian(pTempFloat,&TempBuffer[0],SamplePointsToWrite);
+          
+          SampleFramesWritten = (uint32)mrStream.WriteUInt8(&TempBuffer[0], SamplePointsToWrite * 3) / (3 * mrSampleInfo.GetChannels());
+        }
           break;
           
         case 32 :
-          {
-            float* pTempFloat = (float*)pBuffer;
-            SampleFramesWritten = (uint32)mrStream.WriteFloat(pTempFloat, SamplePointsToWrite) / mrSampleInfo.GetChannels();
-          }
+        {
+          float* pTempFloat = (float*)pBuffer;
+          SampleFramesWritten = (uint32)mrStream.WriteFloat(pTempFloat, SamplePointsToWrite) / mrSampleInfo.GetChannels();
+        }
           break;
           
         default:
@@ -290,3 +346,5 @@ uint32 nuiWaveWriter::Write(const void* pBuffer, uint32 SampleFrames, nuiSampleB
   
   return SampleFramesWritten;
 }
+
+
