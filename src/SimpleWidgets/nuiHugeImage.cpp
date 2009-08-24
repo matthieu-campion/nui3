@@ -21,8 +21,8 @@ nuiHugeImage::nuiHugeImage(const nglPath& rImagePath)
   
   mClicked = false;
   mZoom = 1.0f;
-  mMinZoom = 0.1f;
-  mMaxZoom = 2.0f;
+  mMinZoom = 0.2f;
+  mMaxZoom = 1.0f;
   mX = 0.0f;
   mY = 0.0f;
 
@@ -125,7 +125,7 @@ bool nuiHugeImage::Load(const nglPath& rImagePath)
   
   delete pImage;
   
-  mZoom = 0.2f;
+  mZoom = 1.0f;
   mX = w / 2;
   mY = h / 2;
   
@@ -254,7 +254,7 @@ void nuiHugeImage::InitImage()
 {
   for (int32 i = 0; i < mTextures.size(); i++)
   {
-    for (int32 j = 0; j < mTextures.size(); j++)
+    for (int32 j = 0; j < mTextures[i].size(); j++)
     {
       mTextures[i][j] = NULL;
     }
@@ -265,10 +265,10 @@ void nuiHugeImage::ClearImage()
 {
   for (int32 i = 0; i < mTextures.size(); i++)
   {
-    for (int32 j = 0; j < mTextures.size(); j++)
+    for (int32 j = 0; j < mTextures[i].size(); j++)
     {
       nuiTexture* pTexture = mTextures[i][j];
-      if (pTexture);
+      if (pTexture)
       {
         pTexture->Release();
         mTextures[i][j] = NULL;
@@ -287,7 +287,7 @@ void nuiHugeImage::ZoomTo(float zoom)
 
 void nuiHugeImage::SetZoom(float zoom)
 {
-  mZoom = zoom;
+  mZoom = nuiClamp(zoom, mMinZoom, mMaxZoom);
   Invalidate();
 }
 
