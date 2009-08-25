@@ -5,8 +5,7 @@
   licence: see nui3/LICENCE.TXT
 */
 
-#ifndef __nuiBuilder_h__
-#define __nuiBuilder_h__
+#pragma once
 
 //#include "nui.h"
 #include "nglString.h"
@@ -61,7 +60,7 @@ typedef std::map<nglString, nuiWidgetDesc, nglString::LessFunctor> nuiBuilderMap
 
 
 
-
+///////////////////////////////////////////////////////////////////
 
 class NUI_API nuiBuilder
 {
@@ -99,4 +98,37 @@ nuiWidgetPtr nuiWidgetCreateFunction()
 nuiWidget* nuiCreateWidget(const nglString& rClassName);
 nuiWidget* nuiCreateWidget(const nuiXMLNode* pNode);
 
-#endif // __nuiBuilder_h__
+///////////////////////////////////////////////////////////////////
+class nuiWidgetCreatorOperation;
+
+class nuiWidgetCreator
+{
+public:
+  nuiWidgetCreator(const nglString& rClassName, const nglString& rObjectName);
+  virtual ~nuiWidgetCreator();
+  
+  nuiWidget* Create(const std::map<nglString, nglString>& rParamDictionnary, nuiBuilder* pBuilder = NULL) const;
+  nuiWidget* Create(nuiBuilder* pBuilder = NULL) const;
+  
+  // For any simple container widget:
+  void AddChild(nuiWidgetCreator* pCreator);
+  
+  // For box containers (nuiBox: nuiHBox, nuiVBox):
+  void AddCell(nuiWidgetCreator* pCreator);
+  void SetCell(uint32 cell, nuiWidgetCreator* pCreator);
+
+  // For nuiGrid based containers
+  void SetCell(uint32 column, uint32 row, nuiWidgetCreator* pCreator);
+  
+  void SetProperty(const nglString& rName, const nglString& rValue);
+  void SetAttribute(const nglString& rName, const nglString& rValue);
+protected:
+  std::vector<nuiWidgetCreatorOperation> mOperations;
+  nglString mClassName;
+  nglString mObjectName;
+};
+
+
+
+
+

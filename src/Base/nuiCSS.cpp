@@ -278,7 +278,7 @@ protected:
     rResult.Nullify();
     if (!SkipBlank())
       return false;
-     
+    
     while ((AllowBlank && IsBlank(mChar)) || IsValidInValue(mChar))
     {
       rResult.Add(mChar);
@@ -1117,7 +1117,7 @@ protected:
     }
     else
     {
-      res = GetValue(rvalue);
+      res = GetValue(rvalue, true);
     }
 
     if (!res)
