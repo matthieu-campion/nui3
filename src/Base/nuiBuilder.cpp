@@ -214,6 +214,15 @@ nuiWidgetCreator::~nuiWidgetCreator()
   
 }
 
+static const nglString& LookUp(const std::map<nglString, nglString>& rParamDictionnary, const nglString& rString)
+{
+  const std::map<nglString, nglString>::const_iterator it = rParamDictionnary.find(rString);
+  if (it != rParamDictionnary.end())
+    return it->second;
+  
+  return rString;
+}
+
 nuiWidget* nuiWidgetCreator::Create(const std::map<nglString, nglString>& rParamDictionnary, nuiBuilder* pBuilder) const
 {
   if (!pBuilder)
@@ -256,13 +265,14 @@ nuiWidget* nuiWidgetCreator::Create(const std::map<nglString, nglString>& rParam
             pGrid->SetCell(mOperations[i].mIndex1, mOperations[i].mIndex2, pChild);
           break;
         case nuiWidgetCreatorOperation::eSetProperty:
-          pWidget->SetProperty(mOperations[i].mName, mOperations[i].mValue);
+          pWidget->SetProperty(LookUp(rParamDictionnary, mOperations[i].mName),
+                               LookUp(rParamDictionnary, mOperations[i].mValue));
           break;
         case nuiWidgetCreatorOperation::eSetAttribute:
           {
-            nuiAttribBase attrib(pWidget->GetAttribute(mOperations[i].mName));
+            nuiAttribBase attrib(pWidget->GetAttribute(LookUp(rParamDictionnary, mOperations[i].mName)));
             if (attrib.IsValid())
-              attrib.FromString(mOperations[i].mValue);
+              attrib.FromString(LookUp(rParamDictionnary, mOperations[i].mValue));
           }
           break;
       }
