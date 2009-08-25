@@ -214,6 +214,7 @@ bool nuiHugeImage::MouseClicked(const nglMouseInfo& rInfo)
   else if (rInfo.Buttons & nglMouseInfo::ButtonLeft)
   {
     mClicked = true;
+    Grab();
     mLastX = rInfo.X;
     mLastY = rInfo.Y;
   }
@@ -233,6 +234,7 @@ bool nuiHugeImage::MouseUnclicked(const nglMouseInfo& rInfo)
   if (rInfo.Buttons & nglMouseInfo::ButtonLeft)
   {
     mClicked = false;
+    Ungrab();
   }
   return false;
 }

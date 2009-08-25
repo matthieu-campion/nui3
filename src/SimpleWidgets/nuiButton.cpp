@@ -19,7 +19,10 @@
 nuiButton::nuiButton()
   : nuiSimpleContainer()
 {
-  SetObjectClass(_T("nuiButton"));
+  if (SetObjectClass(_T("nuiButton")))
+  {
+    InitAttributes();
+  }
   mClicked = false;
   mPressed = false;
   SetRedrawOnHover(true);
@@ -33,7 +36,10 @@ nuiButton::nuiButton()
 nuiButton::nuiButton(const nglString& rText)
   : nuiSimpleContainer()
 {
-  SetObjectClass(_T("nuiButton"));
+  if (SetObjectClass(_T("nuiButton")))
+  {
+    InitAttributes();
+  }
   mClicked = false;
   mPressed = false;
   nuiLabel* pLabel = new nuiLabel(rText);
@@ -50,7 +56,10 @@ nuiButton::nuiButton(const nglString& rText)
 nuiButton::nuiButton(const nglImage& rImage)
   : nuiSimpleContainer()
 {
-  SetObjectClass(_T("nuiButton"));
+  if (SetObjectClass(_T("nuiButton")))
+  {
+    InitAttributes();
+  }
   mClicked = false;
   mPressed = false;
   SetRedrawOnHover(true);
@@ -72,7 +81,10 @@ nuiButton::nuiButton(const nglImage& rImage)
 nuiButton::nuiButton(nuiDecoration* pDeco, bool AlreadyAcquired)
 : nuiSimpleContainer()
 {
-  SetObjectClass(_T("nuiButton"));
+  if (SetObjectClass(_T("nuiButton")))
+  {
+    InitAttributes();
+  }
   mClicked = false;
   mPressed = false;
   SetRedrawOnHover(true);
@@ -93,7 +105,10 @@ nuiButton::nuiButton(nuiDecoration* pDeco, bool AlreadyAcquired)
 bool nuiButton::Load(const nuiXMLNode* pNode)
 {
   nuiSimpleContainer::Load(pNode);
-  SetObjectClass(_T("nuiButton"));
+  if (SetObjectClass(_T("nuiButton")))
+  {
+    InitAttributes();
+  }
   mClicked = false;
   mPressed = false;
 
@@ -111,6 +126,14 @@ bool nuiButton::Load(const nuiXMLNode* pNode)
 
 nuiButton::~nuiButton()
 {
+}
+
+void nuiButton::InitAttributes()
+{
+  AddAttribute(new nuiAttribute<bool>
+               (nglString(_T("Pressed")), nuiUnitBoolean,
+                nuiMakeDelegate(this, &nuiButton::IsPressed),
+                nuiMakeDelegate(this, &nuiButton::SetPressed)));
 }
 
 bool nuiButton::Draw(nuiDrawContext* pContext)

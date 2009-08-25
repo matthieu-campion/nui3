@@ -28,6 +28,9 @@ public:
   virtual bool Load(const nuiXMLNode* pNode); ///< Create a button from an XML description.
   virtual ~nuiButton();
 
+  void InitAttributes();
+
+  
   virtual nuiRect CalcIdealSize();
   virtual bool SetRect(const nuiRect& rRect);
 
