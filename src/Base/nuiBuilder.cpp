@@ -196,7 +196,6 @@ public:
   enum Type
   {
     eAddChild,
-    eAddCell,
     eSetCell1,
     eSetCell2,
     eSetProperty,
@@ -253,14 +252,18 @@ nuiWidget* nuiWidgetCreator::Create(const std::map<nglString, nglString>& rParam
   if (!pBuilder)
     pBuilder = &nuiBuilder::Get();
   
-  nuiWidget* pWidget = pBuilder->CreateWidget(mClassName);
+  nglString classname(LookUp(rParamDictionnary, mClassName));
+  nglString objectname(LookUp(rParamDictionnary,mObjectName));
+  nuiWidget* pWidget = pBuilder->CreateWidget(classname);
   if (!pWidget)
   {
-    NGL_OUT(_T("Error while creating a %ls named %ls"), mClassName.GetChars(), mObjectName.GetChars());
+    NGL_OUT(_T("Error while creating a %ls named %ls (translated to %ls - %ls"), 
+            mClassName.GetChars(), mObjectName.GetChars(),
+            classname.GetChars(), objectname.GetChars());
     return NULL;
   }
   
-  pWidget->SetObjectName(mObjectName);
+  pWidget->SetObjectName(objectname);
   
   nuiSimpleContainer* pContainer = dynamic_cast<nuiSimpleContainer*> (pWidget);
   nuiBox* pBox = dynamic_cast<nuiBox*> (pWidget);
@@ -274,25 +277,27 @@ nuiWidget* nuiWidgetCreator::Create(const std::map<nglString, nglString>& rParam
       switch (mOperations[i].mType)
       {
         case nuiWidgetCreatorOperation::eAddChild:
-          if (pContainer)
-            pContainer->AddChild(pChild);
-          break;
-        case nuiWidgetCreatorOperation::eAddCell:
           if (pBox)
             pBox->AddCell(pChild);
+          else if (pContainer)
+            pContainer->AddChild(pChild);
           break;
+          
         case nuiWidgetCreatorOperation::eSetCell1:
           if (pBox)
             pBox->SetCell(mOperations[i].mIndex1, pChild);
           break;
+          
         case nuiWidgetCreatorOperation::eSetCell2:
           if (pGrid)
             pGrid->SetCell(mOperations[i].mIndex1, mOperations[i].mIndex2, pChild);
           break;
+          
         case nuiWidgetCreatorOperation::eSetProperty:
           pWidget->SetProperty(LookUp(rParamDictionnary, mOperations[i].mName),
                                LookUp(rParamDictionnary, mOperations[i].mValue));
           break;
+          
         case nuiWidgetCreatorOperation::eSetAttribute:
           {
             nuiAttribBase attrib(pWidget->GetAttribute(LookUp(rParamDictionnary, mOperations[i].mName)));
@@ -320,11 +325,6 @@ void nuiWidgetCreator::AddChild(nuiWidgetCreator* pCreator)
 }
 
 // For box containers (nuiBox: nuiHBox, nuiVBox):
-void nuiWidgetCreator::AddCell(nuiWidgetCreator* pCreator)
-{
-  mOperations.push_back(nuiWidgetCreatorOperation(nuiWidgetCreatorOperation::eAddCell, pCreator, 0, 0));
-}
-
 void nuiWidgetCreator::SetCell(uint32 cell, nuiWidgetCreator* pCreator)
 {
   mOperations.push_back(nuiWidgetCreatorOperation(nuiWidgetCreatorOperation::eSetCell2, pCreator, cell, 0));
@@ -346,3 +346,12 @@ void nuiWidgetCreator::SetAttribute(const nglString& rName, const nglString& rVa
   mOperations.push_back(nuiWidgetCreatorOperation(nuiWidgetCreatorOperation::eSetAttribute, rName, rValue));
 }
 
+const nglString& nuiWidgetCreator::GetObjectClass() const
+{
+  return mClassName;
+}
+
+const nglString& nuiWidgetCreator::GetObjectName() const
+{
+  return mObjectName;
+}

@@ -117,7 +117,6 @@ public:
   void AddChild(nuiWidgetCreator* pCreator);
   
   // For box containers (nuiBox: nuiHBox, nuiVBox):
-  void AddCell(nuiWidgetCreator* pCreator);
   void SetCell(uint32 cell, nuiWidgetCreator* pCreator);
 
   // For nuiGrid based containers
@@ -125,6 +124,9 @@ public:
   
   void SetProperty(const nglString& rName, const nglString& rValue);
   void SetAttribute(const nglString& rName, const nglString& rValue);
+  
+  const nglString& GetObjectClass() const;
+  const nglString& GetObjectName() const;
 protected:
   std::vector<nuiWidgetCreatorOperation> mOperations;
   nglString mClassName;

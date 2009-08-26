@@ -602,99 +602,22 @@ protected:
             
       return true;
     }
+    else if (mChar == _T('+'))
+    {
+      // Create a widget creator
+      nuiWidgetCreator* pCreator = ReadWidgetCreator();
+      if (!pCreator)
+        return false;
+      nuiBuilder::Get().SetHandler(pCreator->GetObjectClass(), pCreator);
+      return true;
+    }
     else if (mChar == _T('@'))
     {
       //******************************************
       //
-      // Read a creator
+      // Read a resource creator
       //    
-      // Eat the creator @
-      bool res = GetChar();
-      if (!res)
-        return false;
-      
-      nglString type;
-      if (!GetSymbol(type))
-      {
-        SetError(_T("expected a symbol"));
-        return false;
-      }
-      
-      if (!SkipBlank())
-      {
-        SetError(_T("unexpected end of file"));
-        return false;        
-      }
-
-      nglString name;
-      if (!GetSymbol(name))
-      {
-        SetError(_T("expected a symbol"));
-        return false;
-      }
-      
-      if (!SkipBlank())
-      {
-        SetError(_T("unexpected end of file"));
-        return false;        
-      }
-      
-      // special case. create color
-      if (mChar == _T('='))
-      {
-        if ((type == _T("nuiColor")) || !type.Compare(_T("color"), false))
-        {
-          if (!CreateColor(name))
-          {
-            nglString str;
-            str.CFormat(_T("Unable to parse a color with name '%ls'"), name.GetChars());
-            SetError(str);
-            return false;
-          }
-        }
-        else if (!type.Compare(_T("var"), false))
-        {
-          if (!CreateVariable(name))
-          {
-            nglString str;
-            str.CFormat(_T("Unable to parse a variable with name '%ls'"), name.GetChars());
-            SetError(str);
-            return false;
-          }
-        }
-          
-        return true;
-      }
-
-      // create an object
-      if (mChar != _T('{'))
-      {
-        SetError(_T("'{' expected"));
-        return false;        
-      }
-      
-      res = ReadActionList();
-      if (!res)
-      {
-        Clear();
-        return false;
-      }
-      
-      // Create the object from the type and the name
-      if (!CreateObject(type, name))
-      {
-        nglString str;
-        str.CFormat(_T("Unable to create an object of type '%ls' and name '%ls'"), type.GetChars(), name.GetChars());
-        SetError(str);
-        Clear();
-        return false;
-      }
-
-      // Clear all
-      mMatchers.clear();
-      mActions.clear();
-      
-      return res;
+      return ReadResourceCreator();
     }
     else
     {
@@ -725,6 +648,265 @@ protected:
       
       return res;
     }
+  }
+  
+  bool ReadResourceCreator()
+  {
+    // Eat the creator @
+    bool res = GetChar();
+    if (!res)
+      return false;
+    
+    nglString type;
+    if (!GetSymbol(type))
+    {
+      SetError(_T("expected a symbol"));
+      return false;
+    }
+    
+    if (!SkipBlank())
+    {
+      SetError(_T("unexpected end of file"));
+      return false;        
+    }
+    
+    nglString name;
+    if (!GetSymbol(name))
+    {
+      SetError(_T("expected a symbol"));
+      return false;
+    }
+    
+    if (!SkipBlank())
+    {
+      SetError(_T("unexpected end of file"));
+      return false;        
+    }
+    
+    // special case. create color
+    if (mChar == _T('='))
+    {
+      if ((type == _T("nuiColor")) || !type.Compare(_T("color"), false))
+      {
+        if (!CreateColor(name))
+        {
+          nglString str;
+          str.CFormat(_T("Unable to parse a color with name '%ls'"), name.GetChars());
+          SetError(str);
+          return false;
+        }
+      }
+      else if (!type.Compare(_T("var"), false))
+      {
+        if (!CreateVariable(name))
+        {
+          nglString str;
+          str.CFormat(_T("Unable to parse a variable with name '%ls'"), name.GetChars());
+          SetError(str);
+          return false;
+        }
+      }
+      
+      return true;
+    }
+    
+    // create an object
+    if (mChar != _T('{'))
+    {
+      SetError(_T("'{' expected"));
+      return false;        
+    }
+    
+    res = ReadActionList();
+    if (!res)
+    {
+      Clear();
+      return false;
+    }
+    
+    // Create the object from the type and the name
+    if (!CreateObject(type, name))
+    {
+      nglString str;
+      str.CFormat(_T("Unable to create an object of type '%ls' and name '%ls'"), type.GetChars(), name.GetChars());
+      SetError(str);
+      Clear();
+      return false;
+    }
+    
+    // Clear all
+    mMatchers.clear();
+    mActions.clear();
+    
+    return res;
+  }
+  
+  nuiWidgetCreator* ReadWidgetCreator(uint32 level = 0)
+  {
+    // Eat the creator +
+    bool res = GetChar();
+    if (!res)
+      return false;
+    
+    nglString type;
+    if (!GetSymbol(type))
+    {
+      SetError(_T("expected a widget type"));
+      return NULL;
+    }
+    
+    if (!SkipBlank())
+    {
+      SetError(_T("unexpected end of file"));
+      return NULL;        
+    }
+
+    // Try to read an optional name (the name is not optionnal for the root of the tree)
+    nglString name;
+    if (mChar != _T('{'))
+    {
+      if (!GetSymbol(name))
+      {
+        SetError(_T("expected a widget creator name"));
+        return NULL;
+      }
+
+      if (!SkipBlank())
+      {
+        SetError(_T("unexpected end of file"));
+        return NULL;        
+      }
+      
+    }
+    else if (!level)
+    {
+      // The root widget creator MUST have a name
+      SetError(_T("The root widget creator MUST have a name"));
+      return NULL;
+    }
+
+    // create an object if the declaration is empty
+    if (mChar == _T(';'))
+    {
+      GetChar();
+      return NULL;
+    }
+    
+    
+    if (mChar != _T('{'))
+    {
+      SetError(_T("'{' expected"));
+      return NULL;        
+    }
+
+    // Skip {
+    if (!GetChar())
+    {
+      SetError(_T("unexpected end of file"));
+      return NULL;
+    }
+    
+    nuiWidgetCreator* pCreator = new nuiWidgetCreator(type, name);
+        
+    while (mChar != _T('}'))
+    {
+      if (!SkipBlank())
+      {
+        SetError(_T("unexpected end of file"));
+        delete pCreator;
+        return NULL;        
+      }
+      
+      if (mChar == _T('+'))
+      {
+        if (!GetChar())
+        {
+          SetError(_T("expecting [ or a symbol"));
+          delete pCreator;
+          return NULL;
+        }
+        
+        if (!SkipBlank())
+        {
+          SetError(_T("unexpected end of file"));
+          delete pCreator;
+          return NULL;        
+        }
+        
+        uint32 nparams = 0;
+        uint32 param1 = 0;
+        uint32 param2 = 0;
+        
+        if (mChar == _T('['))
+        {
+          nparams = 1;
+          
+          // Read first param
+          
+          // Skip blank
+          // Read second param
+          // Skip blank
+          // Eat ]
+          // SkipBlank
+        }
+
+        nuiWidgetCreator* pChild = ReadWidgetCreator(level + 1);
+        if (!pChild)
+        {
+          delete pCreator;
+          return false;
+        }
+
+        if (nparams == 0)
+          pCreator->AddChild(pChild);
+        else if (nparams == 1)
+          pCreator->SetCell(param1, pChild);
+        else if (nparams == 2)
+          pCreator->SetCell(param1, param2, pChild);
+        
+        if (!GetChar())
+        {
+          SetError(_T("error in widget creator"));
+          delete pCreator;
+          delete pChild;
+          return NULL;
+        }
+        
+        
+      }
+      else
+      {
+        nglString LValue;
+        nglString RValue;
+        nglChar Operator;
+        res = ReadAction(LValue, RValue, Operator);
+        if (!res)
+        {
+          SetError(_T("error while reading an assignment"));
+          delete pCreator;
+          return NULL;
+        }
+        
+        if (Operator == _T(':')) // attribute assignment
+        {
+          pCreator->SetAttribute(LValue, RValue);
+        }
+        else if (Operator == _T('=')) // property assignment
+        {
+          pCreator->SetProperty(LValue, RValue);
+        }
+      }
+
+    }
+    
+    if (!GetChar())
+    {
+      SetError(_T("Missing widget creator declaration end"));
+      delete pCreator;
+      return NULL;
+    }
+    
+    return pCreator;
   }
   
   bool ReadMatchers(std::vector<nuiWidgetMatcher*>& rMatchers, nglChar EndChar)
@@ -1065,12 +1247,35 @@ protected:
 
   bool ReadAction()
   {
+    nglChar op = 0;
+    nglString symbol;
+    nglString rvalue;
+    
+    if (!ReadAction(symbol, rvalue, op))
+      return false;
+    
+    if (op == _T(':'))
+    {
+      nuiCSSAction_SetAttribute* pAction = new nuiCSSAction_SetAttribute(symbol, rvalue);
+      mActions.push_back(pAction);
+    }
+    else if (op == _T('='))
+    {
+      nuiCSSAction_SetProperty* pAction = new nuiCSSAction_SetProperty(symbol, rvalue);
+      mActions.push_back(pAction);
+    }
+    
+    return true;
+  }
+
+  bool ReadAction(nglString& rLValue, nglString& rRValue, nglChar& rOperator)
+  {
     if (!SkipBlank())
     {
       SetError(_T("Missing action"));
       return false;
     }
-
+    
     nglString symbol;
     bool res = GetSymbol(symbol);
     if (!res)
@@ -1078,26 +1283,26 @@ protected:
       SetError(_T("Missing symbol name (l-value)"));
       return false;
     }
-
+    
     if (!SkipBlank())
     {
       SetError(_T("Missing action operator ('=')"));
       return false;
     }
-
+    
     
     nglChar op = 0;
     if (mChar == _T('='))
       op = mChar;
     if (mChar == _T(':'))
       op = mChar;
-        
+    
     if (!op)
     {
       SetError(_T("Missing action operator ('=' or ':')"));
       return false;
     }
-
+    
     if (!GetChar()) // Eat the equal sign
     {
       SetError(_T("Missing action right side"));
@@ -1119,7 +1324,7 @@ protected:
     {
       res = GetValue(rvalue, true);
     }
-
+    
     if (!res)
     {
       SetError(_T("Error while looking for symbol or string action"));
@@ -1143,21 +1348,13 @@ protected:
       SetError(_T("Missing semi colon at the end of the action"));
       return false;
     }
-    
-    if (op == _T(':'))
-    {
-      nuiCSSAction_SetAttribute* pAction = new nuiCSSAction_SetAttribute(symbol, rvalue);
-      mActions.push_back(pAction);
-    }
-    else if (op == _T('='))
-    {
-      nuiCSSAction_SetProperty* pAction = new nuiCSSAction_SetProperty(symbol, rvalue);
-      mActions.push_back(pAction);
-    }
-    
-    
+
+    rLValue = symbol;
+    rRValue = rvalue;
+    rOperator = op;
     return true;
   }
+  
   
   std::vector<nuiWidgetMatcher*> mMatchers;
   std::vector<nuiCSSAction*> mActions;
