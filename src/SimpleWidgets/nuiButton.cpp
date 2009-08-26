@@ -17,7 +17,7 @@
 #define INACTIVE_SHADE_SIZE 8.f
 
 nuiButton::nuiButton()
-  : nuiSimpleContainer()
+  : nuiSimpleContainer(), mEventSink(this)
 {
   if (SetObjectClass(_T("nuiButton")))
   {
@@ -26,6 +26,8 @@ nuiButton::nuiButton()
   mClicked = false;
   mPressed = false;
   SetRedrawOnHover(true);
+  mAutoRepeat = false;
+  mpAutoRepeatTimer = NULL;
   
   NUI_ADD_EVENT(ButtonPressed);
   NUI_ADD_EVENT(ButtonDePressed);
@@ -34,7 +36,7 @@ nuiButton::nuiButton()
 }
 
 nuiButton::nuiButton(const nglString& rText)
-  : nuiSimpleContainer()
+  : nuiSimpleContainer(), mEventSink(this)
 {
   if (SetObjectClass(_T("nuiButton")))
   {
@@ -42,6 +44,8 @@ nuiButton::nuiButton(const nglString& rText)
   }
   mClicked = false;
   mPressed = false;
+  mAutoRepeat = false;
+  mpAutoRepeatTimer = NULL;
   nuiLabel* pLabel = new nuiLabel(rText);
   AddChild(pLabel);
   pLabel->SetPosition(nuiCenter);
@@ -54,7 +58,7 @@ nuiButton::nuiButton(const nglString& rText)
 }
 
 nuiButton::nuiButton(const nglImage& rImage)
-  : nuiSimpleContainer()
+  : nuiSimpleContainer(), mEventSink(this)
 {
   if (SetObjectClass(_T("nuiButton")))
   {
@@ -62,6 +66,8 @@ nuiButton::nuiButton(const nglImage& rImage)
   }
   mClicked = false;
   mPressed = false;
+  mAutoRepeat = false;
+  mpAutoRepeatTimer = NULL;
   SetRedrawOnHover(true);
 
   nuiImage* pImage = new nuiImage(rImage);
@@ -79,7 +85,7 @@ nuiButton::nuiButton(const nglImage& rImage)
 }
 
 nuiButton::nuiButton(nuiDecoration* pDeco, bool AlreadyAcquired)
-: nuiSimpleContainer()
+: nuiSimpleContainer(), mEventSink(this)
 {
   if (SetObjectClass(_T("nuiButton")))
   {
@@ -87,6 +93,8 @@ nuiButton::nuiButton(nuiDecoration* pDeco, bool AlreadyAcquired)
   }
   mClicked = false;
   mPressed = false;
+  mAutoRepeat = false;
+  mpAutoRepeatTimer = NULL;
   SetRedrawOnHover(true);
   
   SetDecoration(pDeco, eDecorationOverdraw, AlreadyAcquired);
@@ -111,6 +119,8 @@ bool nuiButton::Load(const nuiXMLNode* pNode)
   }
   mClicked = false;
   mPressed = false;
+  mAutoRepeat = false;
+  mpAutoRepeatTimer = NULL;
 
 #ifdef NGL_USE_COMPLEX_PROPERTIES
   mProperties["Clicked"].Bind(&mClicked,false,true);
@@ -126,6 +136,7 @@ bool nuiButton::Load(const nuiXMLNode* pNode)
 
 nuiButton::~nuiButton()
 {
+  delete mpAutoRepeatTimer;
 }
 
 void nuiButton::InitAttributes()
@@ -134,6 +145,11 @@ void nuiButton::InitAttributes()
                (nglString(_T("Pressed")), nuiUnitBoolean,
                 nuiMakeDelegate(this, &nuiButton::IsPressed),
                 nuiMakeDelegate(this, &nuiButton::SetPressed)));
+
+  AddAttribute(new nuiAttribute<bool>
+               (nglString(_T("AutoRepeat")), nuiUnitBoolean,
+                nuiMakeDelegate(this, &nuiButton::GetAutoRepeat),
+                nuiMakeDelegate(this, &nuiButton::EnableAutoRepeat)));
 }
 
 bool nuiButton::Draw(nuiDrawContext* pContext)
@@ -210,6 +226,14 @@ bool nuiButton::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
     SetPressed(true);
     Grab();
     Invalidate();
+    
+    if (mAutoRepeat)
+    {
+      mpAutoRepeatTimer = new nuiTimer(1.0f / 4.0f);
+      mEventSink.Connect(mpAutoRepeatTimer->Tick, &nuiButton::OnAutoRepeat);
+      mpAutoRepeatTimer->Start();
+      Activated();
+    }
     return true;
   }
   return false;
@@ -224,15 +248,24 @@ bool nuiButton::MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
     mClicked = false;
     Ungrab();
     SetPressed(false);
-    if (mRect.Size().IsInside(X,Y))
+    if (mpAutoRepeatTimer)
     {
-//      printf("activated\n");
-      Activated();
+      delete mpAutoRepeatTimer;
+      mpAutoRepeatTimer = NULL;
     }
     else
     {
-//      printf("unclicked inactive\n");
-      ButtonDePressedInactive();
+      if (mRect.Size().IsInside(X,Y))
+      {
+        //      printf("activated\n");
+        Activated();
+      }
+      else
+      {
+        //      printf("unclicked inactive\n");
+        ButtonDePressedInactive();
+      }
+      
     }
 
     Invalidate();
@@ -299,5 +332,22 @@ void nuiButton::SetPressed(bool Pressed)
     }
     Invalidate();
   }
+}
+
+void nuiButton::EnableAutoRepeat(bool set)
+{
+  mAutoRepeat = set;
+}
+
+bool nuiButton::GetAutoRepeat() const
+{
+  return mAutoRepeat;
+}
+
+bool nuiButton::OnAutoRepeat(const nuiEvent& rEvent)
+{
+  if (IsPressed())
+    Activated();
+  return false;
 }
 

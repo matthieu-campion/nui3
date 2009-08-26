@@ -53,11 +53,15 @@ public:
   bool IsPressed() const;
   virtual void SetPressed(bool Pressed = true);
 
-  
+  void EnableAutoRepeat(bool set);
+  bool GetAutoRepeat() const;
 protected:
   bool mClicked;
   bool mPressed;
-
+  bool mAutoRepeat;
+  nuiTimer* mpAutoRepeatTimer;
+  nuiEventSink<nuiButton> mEventSink;
+  bool OnAutoRepeat(const nuiEvent& rEvent);
 };
 
 

@@ -58,7 +58,8 @@ private :
 typedef std::map<nglString, nuiWidgetDesc, nglString::LessFunctor> nuiBuilderMap;
 
 
-
+class nuiWidgetCreator;
+typedef std::map<nglString, nuiWidgetCreator*, nglString::LessFunctor> nuiWidgetCreatorMap;
 
 ///////////////////////////////////////////////////////////////////
 
@@ -66,10 +67,12 @@ class NUI_API nuiBuilder
 {
 public:
   void SetHandler(const nglString& ClassName, const nglString& ClassGroup, nuiCreateWidgetFn pHandler); ///< This method permits to add or override a widget creation function.
+  void SetHandler(const nglString& ClassName, nuiWidgetCreator* pCreator); ///< This method permits to add or override a widget creation function.
   nuiCreateWidgetFn GetHandler(const nglString& ClassName) const; ///< This method retrieves thewidget creation function associated with a class name.
   bool GetClassList(std::list<nuiWidgetDesc>& rClassNames) const; ///< This method fills the given nuiWidgetDesc list with the description (name and group) of the classes that this map can handle. 
 
   nuiWidget* CreateWidget(const nglString& rClassName) const;
+  nuiWidget* CreateWidget(const nglString& rClassName, const std::map<nglString, nglString>& rParamDictionnary) const;
   
   static nuiBuilder& Get()
   {
@@ -77,8 +80,8 @@ public:
   }
 protected:
   nuiBuilderMap mBuilderMap;
+  nuiWidgetCreatorMap mCreatorMap;
   static nuiBuilder mBuilder;
-
 
 private:
   nuiBuilder();
@@ -107,8 +110,8 @@ public:
   nuiWidgetCreator(const nglString& rClassName, const nglString& rObjectName);
   virtual ~nuiWidgetCreator();
   
-  nuiWidget* Create(const std::map<nglString, nglString>& rParamDictionnary, nuiBuilder* pBuilder = NULL) const;
-  nuiWidget* Create(nuiBuilder* pBuilder = NULL) const;
+  nuiWidget* Create(const std::map<nglString, nglString>& rParamDictionnary, const nuiBuilder* pBuilder = NULL) const;
+  nuiWidget* Create(const nuiBuilder* pBuilder = NULL) const;
   
   // For any simple container widget:
   void AddChild(nuiWidgetCreator* pCreator);
