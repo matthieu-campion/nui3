@@ -230,12 +230,16 @@ public:
 
 nuiWidgetCreator::nuiWidgetCreator(const nglString& rClassName, const nglString& rObjectName)
 {
-  
+  mClassName = rClassName;
+  mObjectName = rObjectName;
 }
 
 nuiWidgetCreator::~nuiWidgetCreator()
 {
-  
+  for (uint32 i = 0; i < mOperations.size(); i++)
+  {
+    delete mOperations[i].mpCreator;
+  }
 }
 
 static const nglString& LookUp(const std::map<nglString, nglString>& rParamDictionnary, const nglString& rString)
@@ -263,7 +267,8 @@ nuiWidget* nuiWidgetCreator::Create(const std::map<nglString, nglString>& rParam
     return NULL;
   }
   
-  pWidget->SetObjectName(objectname);
+  if (!objectname.IsEmpty())
+    pWidget->SetObjectName(objectname);
   
   nuiSimpleContainer* pContainer = dynamic_cast<nuiSimpleContainer*> (pWidget);
   nuiBox* pBox = dynamic_cast<nuiBox*> (pWidget);
@@ -271,7 +276,10 @@ nuiWidget* nuiWidgetCreator::Create(const std::map<nglString, nglString>& rParam
   
   for (uint32 i = 0; i < mOperations.size(); i++)
   {
-    nuiWidget* pChild = mOperations[i].mpCreator->Create(rParamDictionnary, pBuilder);
+    nuiWidget* pChild = NULL;
+    if (mOperations[i].mpCreator)
+      pChild = mOperations[i].mpCreator->Create(rParamDictionnary, pBuilder);
+    
     if (pChild)
     {
       switch (mOperations[i].mType)
@@ -292,7 +300,16 @@ nuiWidget* nuiWidgetCreator::Create(const std::map<nglString, nglString>& rParam
           if (pGrid)
             pGrid->SetCell(mOperations[i].mIndex1, mOperations[i].mIndex2, pChild);
           break;
-          
+
+        default:
+          NGL_ASSERT(0);
+          break;
+      }
+    }
+    else
+    {
+      switch (mOperations[i].mType)
+      {
         case nuiWidgetCreatorOperation::eSetProperty:
           pWidget->SetProperty(LookUp(rParamDictionnary, mOperations[i].mName),
                                LookUp(rParamDictionnary, mOperations[i].mValue));
@@ -305,7 +322,12 @@ nuiWidget* nuiWidgetCreator::Create(const std::map<nglString, nglString>& rParam
               attrib.FromString(LookUp(rParamDictionnary, mOperations[i].mValue));
           }
           break;
+          
+        default:
+          NGL_ASSERT(0);
+          break;
       }
+      
     }
   }
   return pWidget;

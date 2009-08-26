@@ -282,11 +282,29 @@ protected:
     while ((AllowBlank && IsBlank(mChar)) || IsValidInValue(mChar))
     {
       rResult.Add(mChar);
-      GetChar();
+      if (!GetChar())
+        return true;
     }
     
     return true;
   }
+
+  bool GetIntValue(nglString& rResult)
+  {
+    rResult.Nullify();
+    if (!SkipBlank())
+      return false;
+    
+    while (mChar == _T('-') || (mChar >= _T('0') && mChar <= _T('9') ))
+    {
+      rResult.Add(mChar);
+      if (!GetChar())
+        return true;
+    }
+    
+    return true;
+  }
+  
   
   nglIStream* mpStream;
   nglPath mSourcePath;
@@ -605,10 +623,15 @@ protected:
     else if (mChar == _T('+'))
     {
       // Create a widget creator
+      // Eat the +
+      bool res = GetChar();
+      if (!res)
+        return false;
+      
       nuiWidgetCreator* pCreator = ReadWidgetCreator();
       if (!pCreator)
         return false;
-      nuiBuilder::Get().SetHandler(pCreator->GetObjectClass(), pCreator);
+      nuiBuilder::Get().SetHandler(pCreator->GetObjectName(), pCreator);
       return true;
     }
     else if (mChar == _T('@'))
@@ -743,10 +766,13 @@ protected:
   
   nuiWidgetCreator* ReadWidgetCreator(uint32 level = 0)
   {
-    // Eat the creator +
-    bool res = GetChar();
-    if (!res)
-      return false;
+    bool res = true;
+    
+    if (!SkipBlank())
+    {
+      SetError(_T("unexpected end of file"));
+      return NULL;        
+    }
     
     nglString type;
     if (!GetSymbol(type))
@@ -791,7 +817,6 @@ protected:
       GetChar();
       return NULL;
     }
-    
     
     if (mChar != _T('{'))
     {
@@ -842,12 +867,48 @@ protected:
           nparams = 1;
           
           // Read first param
+          nglString val;
+          GetIntValue(val);
+          param1 = val.GetCInt();
+
+          // Skip blank
+          if (!SkipBlank())
+          {
+            SetError(_T("unexpected end of file while looking for indices"));
+            delete pCreator;
+            return NULL;        
+          }
           
-          // Skip blank
-          // Read second param
-          // Skip blank
+          if (mChar != _T(']'))
+          {
+            // Read second param
+            GetIntValue(val);
+            param2 = val.GetCInt();
+            
+            // Skip blank
+            if (!SkipBlank())
+            {
+              SetError(_T("unexpected end of file while looking for ]"));
+              delete pCreator;
+              return NULL;        
+            }
+          }
+          
           // Eat ]
+          if (!GetChar())
+          {
+            SetError(_T("expecting ]"));
+            delete pCreator;
+            return NULL;
+          }
+          
           // SkipBlank
+          if (!SkipBlank())
+          {
+            SetError(_T("unexpected end of file while looking for ]"));
+            delete pCreator;
+            return NULL;        
+          }
         }
 
         nuiWidgetCreator* pChild = ReadWidgetCreator(level + 1);
@@ -864,15 +925,12 @@ protected:
         else if (nparams == 2)
           pCreator->SetCell(param1, param2, pChild);
         
-        if (!GetChar())
+        if (!SkipBlank())
         {
-          SetError(_T("error in widget creator"));
+          SetError(_T("unexpected end of file"));
           delete pCreator;
-          delete pChild;
-          return NULL;
+          return NULL;        
         }
-        
-        
       }
       else
       {
@@ -895,11 +953,19 @@ protected:
         {
           pCreator->SetProperty(LValue, RValue);
         }
+
+        if (!SkipBlank())
+        {
+          SetError(_T("unexpected end of file"));
+          delete pCreator;
+          return NULL;        
+        }
+        
       }
 
     }
     
-    if (!GetChar())
+    if (!GetChar()) // Eat the }
     {
       SetError(_T("Missing widget creator declaration end"));
       delete pCreator;
