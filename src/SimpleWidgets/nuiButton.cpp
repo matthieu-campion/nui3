@@ -229,10 +229,9 @@ bool nuiButton::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
     
     if (mAutoRepeat)
     {
-      mpAutoRepeatTimer = new nuiTimer(1.0f / 4.0f);
+      mpAutoRepeatTimer = new nuiTimer(1.0f / 10.0f);
       mEventSink.Connect(mpAutoRepeatTimer->Tick, &nuiButton::OnAutoRepeat);
       mpAutoRepeatTimer->Start();
-      Activated();
     }
     return true;
   }
