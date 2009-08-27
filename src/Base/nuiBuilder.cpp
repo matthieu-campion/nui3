@@ -50,6 +50,46 @@
 #include "nuiFormatedLabel.h"
 #include "nuiKnob.h"
 
+#include "nuiDialogSelectDirectory.h"
+#include "nuiDialogSelectFile.h"
+#include "nuiDialogSelectFile.h"
+
+#include "nuiAnimView.h"
+#include "nuiBackgroundPane.h"
+//#include "nuiDialog.h"
+#include "nuiFlowView.h"
+#include "nuiImageSequence.h"
+#include "nuiMatrixView.h"
+#include "nuiModalContainer.h"
+#include "nuiOffscreenView.h"
+#include "nuiPopupView.h"
+#include "nuiScrollBox.h"
+#include "nuiShadeContainer.h"
+#include "nuiTabView.h"
+#include "nuiColorSelector.h"
+#include "nuiComboBox.h"
+#include "nuiComposite.h"
+#include "nuiCoverFlow.h"
+#include "nuiFileList.h"
+#include "nuiFileSelector.h"
+#include "nuiFileTree.h"
+#include "nuiFontBrowser.h"
+#include "nuiFrameView.h"
+#include "nuiHotKeyEditor.h"
+#include "nuiOffscreenView.h"
+#include "nuiImageDropZone.h"
+#include "nuiRectView.h"
+#include "nuiShapeView.h"
+#include "nuiZoomBar.h"
+#include "nuiRSSView.h"
+#include "nuiHugeImage.h"
+#include "nuiHyperLink.h"
+#include "nuiLabelAttribute.h"
+#include "nuiLabelRenamer.h"
+#include "nuiHTMLView.h"
+#include "nuiScrollingLabel.h"
+#include "nuiSpinnerLabel.h"
+
 
 using namespace std;
 
@@ -92,11 +132,7 @@ void nuiBuilder::Init()
   NUI_ADD_WIDGET_CREATOR(nuiGrid,"Container");
   NUI_ADD_WIDGET_CREATOR(nuiHBox,"Container");
   NUI_ADD_WIDGET_CREATOR(nuiVBox,"Container");
-  NUI_ADD_WIDGET_CREATOR(nuiTitledPane,"Container");
   NUI_ADD_WIDGET_CREATOR(nuiFolderPane,"Container");
-#ifndef _OPENGL_ES_
-  NUI_ADD_WIDGET_CREATOR(nuiUserArea,"Widget");
-#endif
   NUI_ADD_WIDGET_CREATOR(nuiLabel,"Widget");
   NUI_ADD_WIDGET_CREATOR(nuiText,"Widget");
   NUI_ADD_WIDGET_CREATOR(nuiEditText,"Widget");
@@ -107,17 +143,60 @@ void nuiBuilder::Init()
   NUI_ADD_WIDGET_CREATOR(nuiRadioButton,"Widget");
   NUI_ADD_WIDGET_CREATOR(nuiImage,"Widget");
   NUI_ADD_WIDGET_CREATOR(nuiSplineEdit,"Widget");
-#ifndef _OPENGL_ES_
-  NUI_ADD_WIDGET_CREATOR(nuiMesh,"Widget");
-#endif
   NUI_ADD_WIDGET_CREATOR(nuiSVGView,"Widget");
   NUI_ADD_WIDGET_CREATOR(nuiTab,"Widget");
   NUI_ADD_WIDGET_CREATOR(nuiProgressBar,"Widget");
   NUI_ADD_WIDGET_CREATOR(nuiFormatedLabel,"Widget");
+  
+  //  NUI_ADD_WIDGET_CREATOR(nuiMessageBox,"Dialog");
+  //NUI_ADD_WIDGET_CREATOR(nuiDialogSelectDirectory,"Dialog");
+  //NUI_ADD_WIDGET_CREATOR(nuiDialogSelectFile,"Dialog");
+  
+  NUI_ADD_WIDGET_CREATOR(nuiAnimView, "Container");
+  NUI_ADD_WIDGET_CREATOR(nuiBackgroundPane, "Container");
+  //NUI_ADD_WIDGET_CREATOR(nuiDialog, "Dialog");
+  //NUI_ADD_WIDGET_CREATOR(nuiFlowView, "Container");
+  NUI_ADD_WIDGET_CREATOR(nuiImageSequence, "Container");
+  NUI_ADD_WIDGET_CREATOR(nuiMatrixView, "Container");
+  NUI_ADD_WIDGET_CREATOR(nuiModalContainer, "Container");
+  //NUI_ADD_WIDGET_CREATOR(nuiOffscreenView, "Container");
+  //NUI_ADD_WIDGET_CREATOR(nuiPopupView, "Container");
+  //NUI_ADD_WIDGET_CREATOR(nuiScrollBox, "Container");
+  //NUI_ADD_WIDGET_CREATOR(nuiShadeContainer, "Container");
+  //NUI_ADD_WIDGET_CREATOR(nuiTabView, "Container");
+  NUI_ADD_WIDGET_CREATOR(nuiTitledPane, "Container");
+  NUI_ADD_WIDGET_CREATOR(nuiColorSelector, "Container");
+  NUI_ADD_WIDGET_CREATOR(nuiComboBox, "Widget");
+  NUI_ADD_WIDGET_CREATOR(nuiComposite, "Container");
+  NUI_ADD_WIDGET_CREATOR(nuiCoverFlow, "Container");
+  NUI_ADD_WIDGET_CREATOR(nuiFileList, "Widget");
+  //NUI_ADD_WIDGET_CREATOR(nuiFileSelector, "Widget");
+  //NUI_ADD_WIDGET_CREATOR(nuiFileTree, "Widget");
+  NUI_ADD_WIDGET_CREATOR(nuiFontBrowser, "Widget");
+  NUI_ADD_WIDGET_CREATOR(nuiFrameView, "Widget");
+  NUI_ADD_WIDGET_CREATOR(nuiHotKeyEditor, "Widget");
+  //NUI_ADD_WIDGET_CREATOR(nuiImageDropZone, "Widget");
+  NUI_ADD_WIDGET_CREATOR(nuiRectView, "Widget");
+  //NUI_ADD_WIDGET_CREATOR(nuiShapeView, "Widget");
+  //NUI_ADD_WIDGET_CREATOR(nuiZoomBar, "Widget");
+  //NUI_ADD_WIDGET_CREATOR(nuiRSSView, "Widget");
+  //NUI_ADD_WIDGET_CREATOR(nuiHugeImage, "Widget");
+  NUI_ADD_WIDGET_CREATOR(nuiHyperLink, "Widget");
+  //NUI_ADD_WIDGET_CREATOR(nuiLabelAttribute, "Widget");
+  //NUI_ADD_WIDGET_CREATOR(nuiLabelRenamer, "Widget");
+  //NUI_ADD_WIDGET_CREATOR(nuiHTMLView, "Widget");
+  NUI_ADD_WIDGET_CREATOR(nuiScrollingLabel, "Widget");
+  NUI_ADD_WIDGET_CREATOR(nuiSpinnerLabel, "Widget");
+
+#ifndef _OPENGL_ES_
+  NUI_ADD_WIDGET_CREATOR(nuiMesh,"Widget");
+  NUI_ADD_WIDGET_CREATOR(nuiUserArea,"Widget");
+#endif
 }
 
 void nuiBuilder::SetHandler(const nglString& ClassName, const nglString& ClassGroup, nuiCreateWidgetFn pHandler)
 {
+  wprintf(_T("Adding Widget handler: %ls\n"), ClassName.GetChars());
   NGL_ASSERT(mBuilderMap.find(ClassName) == mBuilderMap.end());
   NGL_ASSERT(mCreatorMap.find(ClassName) == mCreatorMap.end());
   nuiWidgetDesc desc(ClassName, ClassGroup, pHandler);

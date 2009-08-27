@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>ActivePerspectiveName</key>
-	<string>Debug</string>
+	<string>Project</string>
 	<key>AllowedModules</key>
 	<array>
 		<dict>
@@ -323,6 +323,8 @@
 							<string>MainColumn</string>
 							<real>163</real>
 						</array>
+						<key>RubberWindowFrame</key>
+						<string>0 59 1920 1119 0 0 1920 1178 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -338,7 +340,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>E57A95871045928A0031C44B</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>main.css</string>
+								<string>nuiBuilder.cpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -346,16 +348,16 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>E57A95881045928A0031C44B</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>main.css</string>
+										<string>nuiBuilder.cpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E53B0C11104609A600BF0754</string>
+										<string>E53B0C80104614DC00BF0754</string>
 										<key>history</key>
 										<array>
-											<string>E57A95961045939F0031C44B</string>
 											<string>E57A95DE1045966F0031C44B</string>
-											<string>E53B0C0F104609A000BF0754</string>
+											<string>E53B0C421046106000BF0754</string>
+											<string>E53B0C7D104614D000BF0754</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -370,6 +372,8 @@
 							<dict>
 								<key>Frame</key>
 								<string>{{0, 0}, {1713, 840}}</string>
+								<key>RubberWindowFrame</key>
+								<string>0 59 1920 1119 0 0 1920 1178 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -468,6 +472,8 @@
 									<dict>
 										<key>Frame</key>
 										<string>{{10, 27}, {1713, 206}}</string>
+										<key>RubberWindowFrame</key>
+										<string>0 59 1920 1119 0 0 1920 1178 </string>
 									</dict>
 									<key>Module</key>
 									<string>PBXBuildResultsModule</string>
@@ -540,8 +546,6 @@
 			<key>Layout</key>
 			<array>
 				<dict>
-					<key>BecomeActive</key>
-					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXProjectModuleGUID</key>
@@ -553,8 +557,6 @@
 					<dict>
 						<key>Frame</key>
 						<string>{{0, 0}, {1920, 414}}</string>
-						<key>RubberWindowFrame</key>
-						<string>0 59 1920 1119 0 0 1920 1178 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXDebugCLIModule</string>
@@ -629,11 +631,7 @@
 							</array>
 							<key>Frame</key>
 							<string>{{0, 320}, {781, 339}}</string>
-							<key>RubberWindowFrame</key>
-							<string>0 59 1920 1119 0 0 1920 1178 </string>
 						</dict>
-						<key>RubberWindowFrame</key>
-						<string>0 59 1920 1119 0 0 1920 1178 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXDebugSessionModule</string>
@@ -680,7 +678,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>273025446.67563099</real>
+	<real>273028316.13775402</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -695,7 +693,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E53B0C12104609A600BF0754</string>
 		<string>E53B0BDD1046073600BF0754</string>
 		<string>E53B0BDE1046073600BF0754</string>
 		<string>/Users/meeloo/work/nui3/tutorials/WidgetCreatorCSS/WidgetCreatorCSS.xcodeproj</string>
