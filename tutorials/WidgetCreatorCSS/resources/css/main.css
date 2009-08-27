@@ -33,7 +33,14 @@
 
 // blank ending line following
 
-+nuiVBox WidgetFromCSS
++nuiLabel Prout
+{
+  Text: Prout;
+  TextColor: blue;
+}
+
+
++Bleh WidgetFromCSS
 {
   +nuiLabel
   {
@@ -43,7 +50,14 @@
   +nuiLabel ThisOneHasAName
   {
     Text: "Aaha!!!";
+    TextColor: MaCouleurTropCool;
   }
 
+  +Prout; // Default color
+  
+  +Prout // Overide default color!
+  {
+    TextColor: orange;
+  }
 }
 

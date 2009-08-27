@@ -767,6 +767,8 @@ protected:
   nuiWidgetCreator* ReadWidgetCreator(uint32 level = 0)
   {
     bool res = true;
+    nglString type;
+    nglString name;
     
     if (!SkipBlank())
     {
@@ -774,7 +776,6 @@ protected:
       return NULL;        
     }
     
-    nglString type;
     if (!GetSymbol(type))
     {
       SetError(_T("expected a widget type"));
@@ -787,8 +788,17 @@ protected:
       return NULL;        
     }
 
+    // create an object if the declaration is empty
+    if (mChar == _T(';'))
+    {
+      if (!level)
+        return NULL;
+      if (!GetChar())
+        return NULL;
+      return new nuiWidgetCreator(type, name);
+    }
+    
     // Try to read an optional name (the name is not optionnal for the root of the tree)
-    nglString name;
     if (mChar != _T('{'))
     {
       if (!GetSymbol(name))
@@ -811,13 +821,16 @@ protected:
       return NULL;
     }
 
-    // create an object if the declaration is empty
+    // create an object if the declaration is empty (but with a name)
     if (mChar == _T(';'))
     {
-      GetChar();
-      return NULL;
+      if (!level)
+        return NULL;
+      if (!GetChar())
+        return NULL;
+      return new nuiWidgetCreator(type, name);
     }
-    
+
     if (mChar != _T('{'))
     {
       SetError(_T("'{' expected"));
@@ -825,12 +838,12 @@ protected:
     }
 
     // Skip {
-    if (!GetChar())
+    if (!GetChar() || !SkipBlank())
     {
-      SetError(_T("unexpected end of file"));
+      SetError(_T("unexpected end of file while looking for }"));
       return NULL;
     }
-    
+
     nuiWidgetCreator* pCreator = new nuiWidgetCreator(type, name);
         
     while (mChar != _T('}'))

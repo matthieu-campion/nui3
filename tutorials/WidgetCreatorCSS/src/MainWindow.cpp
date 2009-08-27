@@ -31,43 +31,11 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::OnCreation()
-{
-  // a vertical box for page layout
-  nuiVBox* pLayoutBox = new nuiVBox(0);
-  pLayoutBox->SetExpand(nuiExpandShrinkAndGrow);
-  AddChild(pLayoutBox);
-  
-  // image in the first box's cell
-  nuiImage* pImg = new nuiImage();
-  pImg->SetObjectName(_T("MyImage"));
-  pImg->SetPosition(nuiCenter);
-  pLayoutBox->AddCell(pImg);
-  pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
-  
-  // button in the second cell : we use the default decoration for this button, but you could use the css to assign your own decoration
-  nuiButton* pButton = new nuiButton();
-  pButton->SetPosition(nuiCenter);
-  pLayoutBox->AddCell(pButton);
-  pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
-  
-  // click event on button
-  mEventSink.Connect(pButton->Activated, &MainWindow::OnButtonClick);
-  
-  // label with border in the button (put the label string in the button's constructor if you don't need borders)
-  nuiLabel* pButtonLabel = new nuiLabel(_T("click!"));
-  pButtonLabel->SetPosition(nuiCenter);
-  pButtonLabel->SetBorder(8,8);
-  pButton->AddChild(pButtonLabel);
-
-  // label with decoration in the third cell
-  mMyLabel = new nuiLabel(_T("my label"));
-  mMyLabel->SetObjectName(_T("MyLabel"));
-  mMyLabel->SetPosition(nuiCenter);
-  pLayoutBox->AddCell(mMyLabel);
-  pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
-  
-  nuiWidget* pWidget = NULL;
-  pWidget = nuiBuilder::Get().CreateWidget(_T("WidgetFromCSS"));
+{  
+  std::map<nglString, nglString> params;
+  params[_T("MaCouleurTropCool")] = _T("red");
+  params[_T("Bleh")] = _T("nuiVBox");
+  nuiWidget* pWidget = nuiBuilder::Get().CreateWidget(_T("WidgetFromCSS"), params);
   if (pWidget)
   {
     AddChild(pWidget);
