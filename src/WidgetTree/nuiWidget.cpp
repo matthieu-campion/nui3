@@ -443,6 +443,13 @@ void nuiWidget::InitAttributes()
                (nglString(_T("InterativeOverDraw")), nuiUnitYesNo,
                 nuiMakeDelegate(this, &nuiWidget::IsOverDrawInteractive),
                 nuiMakeDelegate(this, &nuiWidget::EnableInteractiveOverDraw)));
+  
+  AddAttribute(new nuiAttribute<float>
+               (nglString(_T("LayoutAnimationDuration")), nuiUnitSize,
+                nuiMakeDelegate(this, &nuiWidget::GetLayoutAnimationDuration),
+                nuiMakeDelegate(this, &nuiWidget::SetLayoutAnimationDuration)
+               ));
+  
 }
 
  

@@ -37,21 +37,27 @@
 {
   Text: Prout;
   TextColor: blue;
+  Position: center;
+  LayoutAnimationDuration: 1.0;
 }
 
 
 +Bleh WidgetFromCSS
 {
-  Position: Center;
+  //Position: Center;
   +nuiLabel
   {
     Text: "Bleh!!!";
+    Position: center;
+    LayoutAnimationDuration: 0.3;
   }
 
   +nuiLabel ThisOneHasAName
   {
     Text: "Aaha!!!";
     TextColor: MaCouleurTropCool;
+    Position: center;
+    LayoutAnimationDuration: 0.6;
   }
 
   +Prout; // Default color
@@ -59,6 +65,26 @@
   +Prout // Overide default color!
   {
     TextColor: orange;
+    LayoutAnimationDuration: 0.8;
   }
+  
+  +nuiImage TestImage
+  {
+    Texture: "rsrc:/decorations/image.png";
+    LayoutAnimationDuration: 0.5;
+    RedrawOnHover: true;
+  }
+}
+
+"TestImage"[Hover:true]
+{
+  UserWidth: 160;
+  UserHeight: 100;
+}
+
+"TestImage"[Hover:false]
+{
+  UserWidth: 120;
+  UserHeight: 80;
 }
 
