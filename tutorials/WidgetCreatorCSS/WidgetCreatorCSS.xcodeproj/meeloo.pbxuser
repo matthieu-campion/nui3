@@ -152,6 +152,17 @@
 			E53B0C7D104614D000BF0754 /* PBXTextBookmark */ = E53B0C7D104614D000BF0754 /* PBXTextBookmark */;
 			E53B0C80104614DC00BF0754 /* PBXTextBookmark */ = E53B0C80104614DC00BF0754 /* PBXTextBookmark */;
 			E53B0C81104614DC00BF0754 /* PBXTextBookmark */ = E53B0C81104614DC00BF0754 /* PBXTextBookmark */;
+			E53B0C84104615F000BF0754 /* PBXTextBookmark */ = E53B0C84104615F000BF0754 /* PBXTextBookmark */;
+			E53B0C891046160000BF0754 /* PBXTextBookmark */ = E53B0C891046160000BF0754 /* PBXTextBookmark */;
+			E53B0CBE1046805F00BF0754 /* PBXTextBookmark */ = E53B0CBE1046805F00BF0754 /* PBXTextBookmark */;
+			E53B0CBF1046806600BF0754 /* PBXTextBookmark */ = E53B0CBF1046806600BF0754 /* PBXTextBookmark */;
+			E53B0CC11046807300BF0754 /* PBXTextBookmark */ = E53B0CC11046807300BF0754 /* PBXTextBookmark */;
+			E53B0CC41046809600BF0754 /* PBXTextBookmark */ = E53B0CC41046809600BF0754 /* PBXTextBookmark */;
+			E53B0CC51046809600BF0754 /* PBXTextBookmark */ = E53B0CC51046809600BF0754 /* PBXTextBookmark */;
+			E53B0CC61046809C00BF0754 /* PBXTextBookmark */ = E53B0CC61046809C00BF0754 /* PBXTextBookmark */;
+			E53B0CC8104680B400BF0754 /* PBXTextBookmark */ = E53B0CC8104680B400BF0754 /* PBXTextBookmark */;
+			E53B0CC9104680B400BF0754 /* PBXTextBookmark */ = E53B0CC9104680B400BF0754 /* PBXTextBookmark */;
+			E53B0CCA104680B400BF0754 /* PBXTextBookmark */ = E53B0CCA104680B400BF0754 /* PBXTextBookmark */;
 			E56F19881045E80B00701D9E = E56F19881045E80B00701D9E /* PBXBookmark */;
 			E56F19A71045E8A100701D9E = E56F19A71045E8A100701D9E /* PBXTextBookmark */;
 			E56F19CA1045E9D500701D9E = E56F19CA1045E9D500701D9E /* PBXTextBookmark */;
@@ -179,17 +190,17 @@
 	};
 	61A9DFF10B83433800BC506C /* MainWindow.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1002, 1222}}";
-			sepNavSelRange = "{780, 0}";
-			sepNavVisRange = "{3, 1460}";
+			sepNavIntBoundsRect = "{{0, 0}, {1652, 1248}}";
+			sepNavSelRange = "{746, 38}";
+			sepNavVisRange = "{221, 1227}";
 			sepNavWindowFrame = "{{38, 49}, {1061, 1103}}";
 		};
 	};
 	BC6A09CB0EF9301900881ACF /* main.css */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1652, 832}}";
-			sepNavSelRange = "{851, 0}";
-			sepNavVisRange = "{0, 886}";
+			sepNavIntBoundsRect = "{{0, 0}, {1652, 845}}";
+			sepNavSelRange = "{838, 5}";
+			sepNavVisRange = "{27, 877}";
 			sepNavWindowFrame = "{{61, 28}, {1061, 1103}}";
 		};
 	};
@@ -198,7 +209,7 @@
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 52";
 		rLen = 0;
-		rLoc = 781;
+		rLoc = 799;
 		rType = 0;
 		vrLen = 783;
 		vrLoc = 0;
@@ -208,7 +219,7 @@
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 55";
 		rLen = 0;
-		rLoc = 789;
+		rLoc = 807;
 		rType = 0;
 		vrLen = 781;
 		vrLoc = 0;
@@ -218,7 +229,7 @@
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 55";
 		rLen = 0;
-		rLoc = 789;
+		rLoc = 807;
 		rType = 0;
 		vrLen = 781;
 		vrLoc = 0;
@@ -228,7 +239,7 @@
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 55";
 		rLen = 0;
-		rLoc = 789;
+		rLoc = 807;
 		rType = 0;
 		vrLen = 781;
 		vrLoc = 0;
@@ -238,7 +249,7 @@
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 42";
 		rLen = 0;
-		rLoc = 632;
+		rLoc = 630;
 		rType = 0;
 		vrLen = 781;
 		vrLoc = 0;
@@ -248,7 +259,7 @@
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 55";
 		rLen = 0;
-		rLoc = 816;
+		rLoc = 834;
 		rType = 0;
 		vrLen = 677;
 		vrLoc = 109;
@@ -258,7 +269,7 @@
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 55";
 		rLen = 0;
-		rLoc = 816;
+		rLoc = 834;
 		rType = 0;
 		vrLen = 787;
 		vrLoc = 0;
@@ -268,7 +279,7 @@
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 55";
 		rLen = 0;
-		rLoc = 816;
+		rLoc = 834;
 		rType = 0;
 		vrLen = 787;
 		vrLoc = 0;
@@ -278,7 +289,7 @@
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 42";
 		rLen = 0;
-		rLoc = 632;
+		rLoc = 630;
 		rType = 0;
 		vrLen = 787;
 		vrLoc = 0;
@@ -288,7 +299,7 @@
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 57";
 		rLen = 0;
-		rLoc = 882;
+		rLoc = 900;
 		rType = 0;
 		vrLen = 557;
 		vrLoc = 237;
@@ -298,7 +309,7 @@
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 57";
 		rLen = 0;
-		rLoc = 882;
+		rLoc = 900;
 		rType = 0;
 		vrLen = 794;
 		vrLoc = 0;
@@ -308,7 +319,7 @@
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 57";
 		rLen = 0;
-		rLoc = 882;
+		rLoc = 900;
 		rType = 0;
 		vrLen = 794;
 		vrLoc = 0;
@@ -318,7 +329,7 @@
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 42";
 		rLen = 0;
-		rLoc = 632;
+		rLoc = 630;
 		rType = 0;
 		vrLen = 794;
 		vrLoc = 0;
@@ -328,7 +339,7 @@
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 57";
 		rLen = 0;
-		rLoc = 816;
+		rLoc = 834;
 		rType = 0;
 		vrLen = 577;
 		vrLoc = 235;
@@ -338,7 +349,7 @@
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 57";
 		rLen = 0;
-		rLoc = 816;
+		rLoc = 834;
 		rType = 0;
 		vrLen = 815;
 		vrLoc = 0;
@@ -348,7 +359,7 @@
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 57";
 		rLen = 0;
-		rLoc = 816;
+		rLoc = 834;
 		rType = 0;
 		vrLen = 815;
 		vrLoc = 0;
@@ -358,7 +369,7 @@
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 42";
 		rLen = 0;
-		rLoc = 632;
+		rLoc = 630;
 		rType = 0;
 		vrLen = 815;
 		vrLoc = 0;
@@ -368,7 +379,7 @@
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 57";
 		rLen = 0;
-		rLoc = 816;
+		rLoc = 834;
 		rType = 0;
 		vrLen = 577;
 		vrLoc = 235;
@@ -378,7 +389,7 @@
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 57";
 		rLen = 0;
-		rLoc = 816;
+		rLoc = 834;
 		rType = 0;
 		vrLen = 815;
 		vrLoc = 0;
@@ -388,7 +399,7 @@
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 57";
 		rLen = 0;
-		rLoc = 816;
+		rLoc = 834;
 		rType = 0;
 		vrLen = 815;
 		vrLoc = 0;
@@ -398,7 +409,7 @@
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 39";
 		rLen = 0;
-		rLoc = 610;
+		rLoc = 608;
 		rType = 0;
 		vrLen = 575;
 		vrLoc = 235;
@@ -408,7 +419,7 @@
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 39";
 		rLen = 0;
-		rLoc = 610;
+		rLoc = 608;
 		rType = 0;
 		vrLen = 813;
 		vrLoc = 0;
@@ -418,7 +429,7 @@
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 39";
 		rLen = 0;
-		rLoc = 610;
+		rLoc = 608;
 		rType = 0;
 		vrLen = 813;
 		vrLoc = 0;
@@ -428,7 +439,7 @@
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 56";
 		rLen = 0;
-		rLoc = 882;
+		rLoc = 900;
 		rType = 0;
 		vrLen = 571;
 		vrLoc = 235;
@@ -438,7 +449,7 @@
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 56";
 		rLen = 0;
-		rLoc = 882;
+		rLoc = 900;
 		rType = 0;
 		vrLen = 806;
 		vrLoc = 0;
@@ -448,7 +459,7 @@
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 56";
 		rLen = 0;
-		rLoc = 882;
+		rLoc = 900;
 		rType = 0;
 		vrLen = 806;
 		vrLoc = 0;
@@ -458,7 +469,7 @@
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 56";
 		rLen = 0;
-		rLoc = 816;
+		rLoc = 834;
 		rType = 0;
 		vrLen = 616;
 		vrLoc = 183;
@@ -468,7 +479,7 @@
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 56";
 		rLen = 0;
-		rLoc = 816;
+		rLoc = 834;
 		rType = 0;
 		vrLen = 800;
 		vrLoc = 0;
@@ -478,7 +489,7 @@
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 56";
 		rLen = 0;
-		rLoc = 816;
+		rLoc = 834;
 		rType = 0;
 		vrLen = 800;
 		vrLoc = 0;
@@ -488,7 +499,7 @@
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 58";
 		rLen = 0;
-		rLoc = 851;
+		rLoc = 869;
 		rType = 0;
 		vrLen = 620;
 		vrLoc = 236;
@@ -498,7 +509,7 @@
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 58";
 		rLen = 0;
-		rLoc = 851;
+		rLoc = 869;
 		rType = 0;
 		vrLen = 883;
 		vrLoc = 0;
@@ -508,7 +519,7 @@
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 58";
 		rLen = 0;
-		rLoc = 851;
+		rLoc = 869;
 		rType = 0;
 		vrLen = 883;
 		vrLoc = 0;
@@ -518,7 +529,7 @@
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 58";
 		rLen = 0;
-		rLoc = 851;
+		rLoc = 869;
 		rType = 0;
 		vrLen = 620;
 		vrLoc = 236;
@@ -528,7 +539,7 @@
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 58";
 		rLen = 0;
-		rLoc = 851;
+		rLoc = 869;
 		rType = 0;
 		vrLen = 883;
 		vrLoc = 0;
@@ -538,7 +549,7 @@
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 58";
 		rLen = 0;
-		rLoc = 851;
+		rLoc = 869;
 		rType = 0;
 		vrLen = 620;
 		vrLoc = 236;
@@ -567,9 +578,9 @@
 		path = /Users/meeloo/work/nui3/src/Base/nuiBuilder.cpp;
 		sourceTree = "<absolute>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1652, 5720}}";
-			sepNavSelRange = "{5832, 0}";
-			sepNavVisRange = "{4311, 2778}";
+			sepNavIntBoundsRect = "{{0, 0}, {1652, 5759}}";
+			sepNavSelRange = "{6547, 0}";
+			sepNavVisRange = "{5259, 2494}";
 		};
 	};
 	E53B0C421046106000BF0754 /* PBXTextBookmark */ = {
@@ -577,7 +588,7 @@
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 58";
 		rLen = 0;
-		rLoc = 851;
+		rLoc = 869;
 		rType = 0;
 		vrLen = 886;
 		vrLoc = 0;
@@ -676,7 +687,7 @@
 		fRef = E53B0C3F1046104A00BF0754 /* nuiBuilder.cpp */;
 		name = "nuiBuilder.cpp: 177";
 		rLen = 0;
-		rLoc = 4931;
+		rLoc = 4929;
 		rType = 0;
 		vrLen = 2371;
 		vrLoc = 4190;
@@ -686,7 +697,7 @@
 		fRef = E53B0C3F1046104A00BF0754 /* nuiBuilder.cpp */;
 		name = "nuiBuilder.cpp: 177";
 		rLen = 0;
-		rLoc = 4931;
+		rLoc = 4929;
 		rType = 0;
 		vrLen = 3074;
 		vrLoc = 3906;
@@ -726,7 +737,7 @@
 		fRef = E53B0C3F1046104A00BF0754 /* nuiBuilder.cpp */;
 		name = "nuiBuilder.cpp: 178";
 		rLen = 0;
-		rLoc = 5153;
+		rLoc = 5151;
 		rType = 0;
 		vrLen = 2383;
 		vrLoc = 4277;
@@ -736,7 +747,7 @@
 		fRef = E53B0C3F1046104A00BF0754 /* nuiBuilder.cpp */;
 		name = "nuiBuilder.cpp: 178";
 		rLen = 0;
-		rLoc = 5153;
+		rLoc = 5151;
 		rType = 0;
 		vrLen = 3050;
 		vrLoc = 4039;
@@ -746,7 +757,7 @@
 		fRef = E53B0C3F1046104A00BF0754 /* nuiBuilder.cpp */;
 		name = "nuiBuilder.cpp: 196";
 		rLen = 0;
-		rLoc = 6305;
+		rLoc = 6303;
 		rType = 0;
 		vrLen = 2055;
 		vrLoc = 5337;
@@ -756,7 +767,7 @@
 		fRef = E53B0C3F1046104A00BF0754 /* nuiBuilder.cpp */;
 		name = "nuiBuilder.cpp: 196";
 		rLen = 0;
-		rLoc = 6305;
+		rLoc = 6303;
 		rType = 0;
 		vrLen = 2698;
 		vrLoc = 4895;
@@ -766,7 +777,7 @@
 		fRef = E53B0C3F1046104A00BF0754 /* nuiBuilder.cpp */;
 		name = "nuiBuilder.cpp: 157";
 		rLen = 11;
-		rLoc = 4460;
+		rLoc = 4458;
 		rType = 0;
 		vrLen = 2338;
 		vrLoc = 3443;
@@ -776,7 +787,7 @@
 		fRef = E53B0C3F1046104A00BF0754 /* nuiBuilder.cpp */;
 		name = "nuiBuilder.cpp: 157";
 		rLen = 11;
-		rLoc = 4460;
+		rLoc = 4458;
 		rType = 0;
 		vrLen = 3149;
 		vrLoc = 3033;
@@ -786,7 +797,7 @@
 		fRef = E53B0C3F1046104A00BF0754 /* nuiBuilder.cpp */;
 		name = "nuiBuilder.cpp: 157";
 		rLen = 11;
-		rLoc = 4460;
+		rLoc = 4458;
 		rType = 0;
 		vrLen = 3047;
 		vrLoc = 3033;
@@ -826,7 +837,7 @@
 		fRef = E53B0C3F1046104A00BF0754 /* nuiBuilder.cpp */;
 		name = "nuiBuilder.cpp: 181";
 		rLen = 0;
-		rLoc = 5832;
+		rLoc = 5830;
 		rType = 0;
 		vrLen = 2236;
 		vrLoc = 4594;
@@ -836,7 +847,7 @@
 		fRef = E53B0C3F1046104A00BF0754 /* nuiBuilder.cpp */;
 		name = "nuiBuilder.cpp: 181";
 		rLen = 0;
-		rLoc = 5832;
+		rLoc = 5830;
 		rType = 0;
 		vrLen = 2855;
 		vrLoc = 4311;
@@ -846,10 +857,120 @@
 		fRef = E53B0C3F1046104A00BF0754 /* nuiBuilder.cpp */;
 		name = "nuiBuilder.cpp: 181";
 		rLen = 0;
-		rLoc = 5832;
+		rLoc = 5830;
 		rType = 0;
 		vrLen = 2778;
 		vrLoc = 4311;
+	};
+	E53B0C84104615F000BF0754 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E53B0C3F1046104A00BF0754 /* nuiBuilder.cpp */;
+		name = "nuiBuilder.cpp: 199";
+		rLen = 0;
+		rLoc = 6545;
+		rType = 0;
+		vrLen = 2238;
+		vrLoc = 4594;
+	};
+	E53B0C891046160000BF0754 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E53B0C3F1046104A00BF0754 /* nuiBuilder.cpp */;
+		name = "nuiBuilder.cpp: 199";
+		rLen = 0;
+		rLoc = 6545;
+		rType = 0;
+		vrLen = 2857;
+		vrLoc = 4311;
+	};
+	E53B0CBE1046805F00BF0754 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E53B0C3F1046104A00BF0754 /* nuiBuilder.cpp */;
+		name = "nuiBuilder.cpp: 199";
+		rLen = 0;
+		rLoc = 6545;
+		rType = 0;
+		vrLen = 2780;
+		vrLoc = 4311;
+	};
+	E53B0CBF1046806600BF0754 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E53B0C3F1046104A00BF0754 /* nuiBuilder.cpp */;
+		name = "nuiBuilder.cpp: 199";
+		rLen = 0;
+		rLoc = 6545;
+		rType = 0;
+		vrLen = 2780;
+		vrLoc = 4311;
+	};
+	E53B0CC11046807300BF0754 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E53B0C3F1046104A00BF0754 /* nuiBuilder.cpp */;
+		name = "nuiBuilder.cpp: 199";
+		rLen = 0;
+		rLoc = 6545;
+		rType = 0;
+		vrLen = 2185;
+		vrLoc = 4648;
+	};
+	E53B0CC41046809600BF0754 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E53B0C3F1046104A00BF0754 /* nuiBuilder.cpp */;
+		name = "nuiBuilder.cpp: 199";
+		rLen = 0;
+		rLoc = 6545;
+		rType = 0;
+		vrLen = 2857;
+		vrLoc = 4311;
+	};
+	E53B0CC51046809600BF0754 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
+		name = "main.css: 45";
+		rLen = 0;
+		rLoc = 670;
+		rType = 0;
+		vrLen = 900;
+		vrLoc = 3;
+	};
+	E53B0CC61046809C00BF0754 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
+		name = "main.css: 45";
+		rLen = 0;
+		rLoc = 670;
+		rType = 0;
+		vrLen = 900;
+		vrLoc = 3;
+	};
+	E53B0CC8104680B400BF0754 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
+		name = "main.css: 43";
+		rLen = 4;
+		rLoc = 630;
+		rType = 0;
+		vrLen = 572;
+		vrLoc = 332;
+	};
+	E53B0CC9104680B400BF0754 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E53B0C3F1046104A00BF0754 /* nuiBuilder.cpp */;
+		name = "nuiBuilder.cpp: 199";
+		rLen = 0;
+		rLoc = 6545;
+		rType = 0;
+		vrLen = 2236;
+		vrLoc = 4594;
+	};
+	E53B0CCA104680B400BF0754 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E53B0C3F1046104A00BF0754 /* nuiBuilder.cpp */;
+		name = "nuiBuilder.cpp: 199";
+		rLen = 0;
+		rLoc = 6545;
+		rType = 0;
+		vrLen = 1795;
+		vrLoc = 5675;
 	};
 	E56F19881045E80B00701D9E /* PBXBookmark */ = {
 		isa = PBXBookmark;
@@ -860,7 +981,7 @@
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 52";
 		rLen = 0;
-		rLoc = 781;
+		rLoc = 799;
 		rType = 0;
 		vrLen = 661;
 		vrLoc = 108;
@@ -880,7 +1001,7 @@
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 52";
 		rLen = 0;
-		rLoc = 781;
+		rLoc = 799;
 		rType = 0;
 		vrLen = 783;
 		vrLoc = 0;
@@ -900,7 +1021,7 @@
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 42";
 		rLen = 0;
-		rLoc = 632;
+		rLoc = 630;
 		rType = 0;
 		vrLen = 783;
 		vrLoc = 0;
@@ -1009,7 +1130,7 @@
 		ignoreCount = 0;
 		lineNumber = 38;
 		location = WidgetCreatorCSSD;
-		modificationTime = 273028316.554787;
+		modificationTime = 273055894.789059;
 		originalNumberOfMultipleMatches = 0;
 		state = 2;
 	};
@@ -1038,7 +1159,7 @@
 		path = src/Base/nuiBuilder.cpp;
 		sourceTree = SOURCE_ROOT;
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1150, 5590}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1150, 5551}}";
 			sepNavSelRange = "{5675, 0}";
 			sepNavVisRange = "{4060, 2483}";
 		};

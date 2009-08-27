@@ -2124,11 +2124,11 @@ public:
     return true;
   }
 
-  virtual bool OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y)
+  virtual nglDropEffect OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y)
   {
     mDnd = true;
     Invalidate();
-    return true;
+    return eDropEffectCopy;
   }
 
   virtual void OnDropped(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)

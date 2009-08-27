@@ -22,7 +22,7 @@
   FillColor: rgb(220,220,220);
   StrokeColor: black;
   ShapeMode: StrokeAndFill;
-  ClientRect: "{10 10 0 0}";
+  ClientRect: {10 10 0 0};
 }
 
 "MyLabel"!
@@ -42,6 +42,7 @@
 
 +Bleh WidgetFromCSS
 {
+  Position: Center;
   +nuiLabel
   {
     Text: "Bleh!!!";

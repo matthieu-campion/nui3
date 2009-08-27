@@ -452,6 +452,7 @@
 					i386,
 				);
 				COPY_PHASE_STRIP = NO;
+				GCC_VERSION = 4.0;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../include/";
 				OTHER_LDFLAGS = (
 					"-lz",

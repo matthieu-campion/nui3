@@ -148,7 +148,7 @@ void nuiBuilder::Init()
   NUI_ADD_WIDGET_CREATOR(nuiProgressBar,"Widget");
   NUI_ADD_WIDGET_CREATOR(nuiFormatedLabel,"Widget");
   
-  //  NUI_ADD_WIDGET_CREATOR(nuiMessageBox,"Dialog");
+  //NUI_ADD_WIDGET_CREATOR(nuiMessageBox,"Dialog");
   //NUI_ADD_WIDGET_CREATOR(nuiDialogSelectDirectory,"Dialog");
   //NUI_ADD_WIDGET_CREATOR(nuiDialogSelectFile,"Dialog");
   
@@ -196,7 +196,7 @@ void nuiBuilder::Init()
 
 void nuiBuilder::SetHandler(const nglString& ClassName, const nglString& ClassGroup, nuiCreateWidgetFn pHandler)
 {
-  wprintf(_T("Adding Widget handler: %ls\n"), ClassName.GetChars());
+  //wprintf(_T("Adding Widget handler: %ls\n"), ClassName.GetChars());
   NGL_ASSERT(mBuilderMap.find(ClassName) == mBuilderMap.end());
   NGL_ASSERT(mCreatorMap.find(ClassName) == mCreatorMap.end());
   nuiWidgetDesc desc(ClassName, ClassGroup, pHandler);
