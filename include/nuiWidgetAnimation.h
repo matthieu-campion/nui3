@@ -24,7 +24,6 @@ public:
 
 protected:
   nuiWidgetPtr mpTarget;
-  double mDuration;
 };
 
 class NUI_API nuiMoveRectAnim : public nuiWidgetAnimation

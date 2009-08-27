@@ -12,7 +12,7 @@
 nuiWidgetAnimation::nuiWidgetAnimation (nuiWidgetPtr pTarget, double DurationInSeconds)
   : mpTarget(pTarget)
 {
-  mDuration = DurationInSeconds;
+  SetDuration(DurationInSeconds);
 }
 
 bool nuiWidgetAnimation::Load(const nuiXMLNode* pNode)
