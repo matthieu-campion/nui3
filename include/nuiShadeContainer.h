@@ -61,7 +61,7 @@ public:
     
     nuiRect shadeRect = GetRect().Size();
     
-    pContext->DrawShade(rect, shadeRect, nuiColor(1.0f, 1.0f, 1.0f, GetAlpha()));
+    pContext->DrawShade(rect, shadeRect, nuiColor(1.0f, 1.0f, 1.0f, GetMixedAlpha()));
     
     DrawChildren(pContext);
     

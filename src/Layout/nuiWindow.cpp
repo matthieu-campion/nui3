@@ -267,7 +267,7 @@ bool nuiWindow::Draw(nuiDrawContext* pContext)
   {
     nuiTheme* pTheme = GetTheme();
     NGL_ASSERT(pTheme);
-    pTheme->DrawWindowShade(pContext, mRect.Size(), nuiColor(1.0f, 1.0f, 1.0f, GetAlpha()), IsParentActive());
+    pTheme->DrawWindowShade(pContext, mRect.Size(), nuiColor(1.0f, 1.0f, 1.0f, GetMixedAlpha()), IsParentActive());
 
     pContext->PushClipping();
     pContext->Clip(GetRect().Size());

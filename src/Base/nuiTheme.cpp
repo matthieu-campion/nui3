@@ -357,7 +357,7 @@ void nuiTheme::DrawWindow(nuiDrawContext* pContext, nuiWindow* pWindow)
   nuiRect rRect = Rect;
   bool blending = pContext->GetState().mBlending;
   
-  float alpha = pWindow->GetAlpha(false);
+  float alpha = pWindow->GetAlpha();
   pContext->EnableBlending(alpha != 1);
   
   if (!(Flags & (nuiWindow::Raw & ~nuiWindow::NoCaption)))
@@ -426,7 +426,7 @@ void nuiTheme::DrawActiveWindow(nuiDrawContext* pContext, nuiWindow* pWindow)
   nuiRect rRect = Rect;
   bool blending = pContext->GetState().mBlending;
   
-  float alpha = pWindow->GetAlpha(false);
+  float alpha = pWindow->GetAlpha();
   pContext->EnableBlending(alpha != 1);
   
   if (!(Flags & (nuiWindow::Raw & ~nuiWindow::NoCaption)))
@@ -493,7 +493,7 @@ void nuiTheme::DrawMovingWindow(nuiDrawContext* pContext, nuiWindow* pWindow)
   nglString Title = pWindow->GetTitle();
   nuiRect Rect = pWindow->GetRect().Size();
   nuiRect rRect = Rect;
-  float alpha = pWindow->GetAlpha(true);
+  float alpha = pWindow->GetMixedAlpha();
   
   nuiRect rect = rRect.Size();
   pWindow->LocalToGlobal(rect);
@@ -558,7 +558,7 @@ void nuiTheme::DrawMovingWindow(nuiDrawContext* pContext, nuiWindow* pWindow)
 
 void nuiTheme::DrawCheckBox(nuiDrawContext* pContext, nuiToggleButton* pButton)
 {
-  float alpha = pButton->GetAlpha();
+  float alpha = pButton->GetMixedAlpha();
   nuiColor border;
   int c = pButton->IsPressed()?1:0;
   int h = pButton->GetHover()?1:0;

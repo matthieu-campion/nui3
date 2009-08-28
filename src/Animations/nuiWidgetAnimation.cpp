@@ -371,7 +371,7 @@ bool nuiFadeInWidgetAnim::Load(const nuiXMLNode* pNode)
 void nuiFadeInWidgetAnim::Play(uint32 Count, nuiAnimLoop LoopMode)
 {
   if (mStartFromCurrentAlpha)
-    mSourceAlpha = mpTarget->GetAlpha();
+    mSourceAlpha = mpTarget->GetMixedAlpha();
   nuiWidgetAnimation::Play(Count, LoopMode);
 }
 
@@ -389,7 +389,7 @@ bool nuiFadeOutWidgetAnim::Load(const nuiXMLNode* pNode)
 void nuiFadeOutWidgetAnim::Play(uint32 Count, nuiAnimLoop LoopMode)
 {
   if (mStartFromCurrentAlpha)
-    mSourceAlpha = mpTarget->GetAlpha();
+    mSourceAlpha = mpTarget->GetMixedAlpha();
   nuiWidgetAnimation::Play(Count, LoopMode);
 }
 

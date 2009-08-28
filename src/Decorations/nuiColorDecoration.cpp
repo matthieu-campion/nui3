@@ -136,8 +136,8 @@ void nuiColorDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, cons
   nuiColor fillColor = mFillColor;
   nuiColor strokeColor = mStrokeColor;
   if (pWidget) {
-    fillColor.Alpha() *= pWidget->GetAlpha();
-    strokeColor.Alpha() *= pWidget->GetAlpha();
+    fillColor.Alpha() *= pWidget->GetMixedAlpha();
+    strokeColor.Alpha() *= pWidget->GetMixedAlpha();
   }
   pContext->SetFillColor(fillColor);
   pContext->SetStrokeColor(strokeColor);

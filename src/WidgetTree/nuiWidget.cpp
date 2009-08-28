@@ -449,6 +449,12 @@ void nuiWidget::InitAttributes()
                 nuiMakeDelegate(this, &nuiWidget::GetLayoutAnimationDuration),
                 nuiMakeDelegate(this, &nuiWidget::SetLayoutAnimationDuration)
                ));
+
+  AddAttribute(new nuiAttribute<float>
+               (nglString(_T("Alpha")), nuiUnitSize,
+                nuiMakeDelegate(this, &nuiWidget::GetAlpha),
+                nuiMakeDelegate(this, &nuiWidget::SetAlpha)
+                ));
   
 }
 
@@ -1870,10 +1876,15 @@ bool nuiWidget::IsParentActive() const
   return false;
 }
 
-float nuiWidget::GetAlpha(bool MixWithParent) const
+float nuiWidget::GetMixedAlpha() const
 {
-  if (mpParent && MixWithParent)
-    return mpParent->GetAlpha(MixWithParent)*mAlpha; // No transparency by default
+  if (mpParent)
+    return mpParent->GetMixedAlpha() * mAlpha; // No transparency by default
+  return mAlpha; // No transparency by default
+}
+
+float nuiWidget::GetAlpha() const
+{
   return mAlpha; // No transparency by default
 }
 
@@ -3240,7 +3251,7 @@ nuiColor nuiWidget::GetColor(nuiWidgetElement element)
 
   if (mMixAlpha)
   {
-    float alpha = GetAlpha(false);
+    float alpha = GetAlpha();
     col.Alpha() *= alpha;
   }
   return col;

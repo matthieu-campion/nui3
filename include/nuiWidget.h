@@ -161,7 +161,8 @@ public:
   virtual void UpdateLayout(); ///< Force the re layout of this widget without telling the parrents that the internal geometry has changed.
   virtual void SilentInvalidateLayout(); ///< Mark this widget as invalid with invalid layout. No event is broadcast. Most of the time you really want to use InvalidateLayout instead of SilentInvalidateLayout().
   virtual void Validate(); ///< Reset the invalidate flag as the object doesn't need Redrawing anymore. ATTENTION: you must call this method once in the draw method or any Invalidate() call will be ignored (and no redraw possible)...
-  float GetAlpha(bool MixWithParent = true) const; ///< Returns the current alpha transparency value of this object, mixed with the one of its parents if MixWithParent==true.
+  float GetMixedAlpha() const; ///< Returns the current alpha transparency value of this object, mixed with the one of its parents if MixWithParent==true.
+  float GetAlpha() const; ///< Returns the current alpha transparency value of this object.
   virtual void SetAlpha(float Alpha); ///< The the alpha transparency value of this object. 
   virtual nuiDrawContext* GetDrawContext(); ///< Retrieve the draw context from the root object (the main window).
 

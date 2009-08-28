@@ -440,7 +440,7 @@ void nuiFrame::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect&
     }
     if (mUseWidgetAlpha)
     {
-      float widgetAlpha = pWidget->GetAlpha();
+      float widgetAlpha = pWidget->GetMixedAlpha();
       color.Alpha() *= widgetAlpha;
     }
   }

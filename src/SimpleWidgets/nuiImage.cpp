@@ -226,7 +226,7 @@ bool nuiImage::Draw(nuiDrawContext* pContext)
   {
     pContext->EnableBlending(true);
     pContext->SetBlendFunc(mBlendFunc);
-    alpha = GetAlpha();
+    alpha = GetMixedAlpha();
   }
 
   nuiRect rect = mRect.Size();

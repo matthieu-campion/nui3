@@ -372,7 +372,7 @@ bool nuiImageSequence::Draw(nuiDrawContext* pContext, nuiWidget* pWidget)
 
   if (mUseAlpha && pWidget)
   {
-    alpha = pWidget->GetAlpha();
+    alpha = pWidget->GetMixedAlpha();
   }
   
   const nuiRect& destRect = mRect.Size();

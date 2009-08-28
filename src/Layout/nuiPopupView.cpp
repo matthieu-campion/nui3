@@ -88,7 +88,7 @@ bool nuiPopupView::Draw(nuiDrawContext* pContext)
   {
     nuiTheme* pTheme = GetTheme();
     NGL_ASSERT(pTheme);
-    pTheme->DrawWindowShade(pContext, mChildrenRect, nuiColor(1.0f, 1.0f, 1.0f, GetAlpha()), true);
+    pTheme->DrawWindowShade(pContext, mChildrenRect, nuiColor(1.0f, 1.0f, 1.0f, GetMixedAlpha()), true);
     pTheme->Release();
     
     SetFillColor(pContext, eActiveWindowBg);
