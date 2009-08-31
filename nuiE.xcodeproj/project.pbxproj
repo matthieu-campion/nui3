@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		406287A7104BD462009790FF /* nuiFrameView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5BF0DA5716500D2641A /* nuiFrameView.cpp */; };
+		406287A8104BD463009790FF /* nuiFrameView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5C00DA5716500D2641A /* nuiFrameView.h */; };
+		406287BA104BD48A009790FF /* nuiFrameView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5BF0DA5716500D2641A /* nuiFrameView.cpp */; };
+		406287BB104BD48B009790FF /* nuiFrameView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5C00DA5716500D2641A /* nuiFrameView.h */; };
+		40C8D68C103AF81200CD95AC /* nuiAudioDecoder_UIKit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40C8D68B103AF81200CD95AC /* nuiAudioDecoder_UIKit.cpp */; };
+		40C8D68D103AF81200CD95AC /* nuiAudioDecoder_UIKit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40C8D68B103AF81200CD95AC /* nuiAudioDecoder_UIKit.cpp */; };
+		40C8D68E103AF81200CD95AC /* nuiAudioDecoder_UIKit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40C8D68B103AF81200CD95AC /* nuiAudioDecoder_UIKit.cpp */; };
+		40C8D68F103AF81200CD95AC /* nuiAudioDecoder_UIKit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40C8D68B103AF81200CD95AC /* nuiAudioDecoder_UIKit.cpp */; };
 		610FDCD60DE4504B009AFAFB /* nglImageCGCodec.h in Headers */ = {isa = PBXBuildFile; fileRef = 610FDCD40DE4504B009AFAFB /* nglImageCGCodec.h */; };
 		610FDCD70DE4504B009AFAFB /* nglImageCGCodec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 610FDCD50DE4504B009AFAFB /* nglImageCGCodec.cpp */; };
 		610FDCD80DE4504B009AFAFB /* nglImageCGCodec.h in Headers */ = {isa = PBXBuildFile; fileRef = 610FDCD40DE4504B009AFAFB /* nglImageCGCodec.h */; };
@@ -3477,6 +3485,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		40C8D68B103AF81200CD95AC /* nuiAudioDecoder_UIKit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiAudioDecoder_UIKit.cpp; path = src/AudioSamples/UIKit/nuiAudioDecoder_UIKit.cpp; sourceTree = SOURCE_ROOT; };
 		610FDCD40DE4504B009AFAFB /* nglImageCGCodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nglImageCGCodec.h; sourceTree = "<group>"; };
 		610FDCD50DE4504B009AFAFB /* nglImageCGCodec.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nglImageCGCodec.cpp; sourceTree = "<group>"; };
 		611944D70EAE8F910078D6B3 /* nuiPanose.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiPanose.cpp; sourceTree = "<group>"; };
@@ -4725,6 +4734,15 @@
 			);
 			name = Products;
 			sourceTree = "<group>";
+		};
+		40C8D68A103AF81200CD95AC /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				40C8D68B103AF81200CD95AC /* nuiAudioDecoder_UIKit.cpp */,
+			);
+			name = UIKit;
+			path = src/AudioSamples/UIKit;
+			sourceTree = SOURCE_ROOT;
 		};
 		610FDCD30DE45019009AFAFB /* CoreGraphics */ = {
 			isa = PBXGroup;
@@ -6555,6 +6573,7 @@
 		E5CD2FD80ECF863E0083037A /* AudioSamples */ = {
 			isa = PBXGroup;
 			children = (
+				40C8D68A103AF81200CD95AC /* UIKit */,
 				E54B3DE80F3200250087D518 /* nuiAiffReader.cpp */,
 				E54B3DE90F3200250087D518 /* nuiAiffWriter.cpp */,
 				E54B3DEA0F3200250087D518 /* nuiAudioDecoder.cpp */,
@@ -7131,6 +7150,7 @@
 				E591C2E70FF1B06C005E5E3D /* nglImageGIFCodec.h in Headers */,
 				E51968060FF8F853007EDF46 /* nuiHTMLHeader.h in Headers */,
 				E51968080FF8F853007EDF46 /* nuiHTMLStyle.h in Headers */,
+				406287A8104BD463009790FF /* nuiFrameView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8181,6 +8201,7 @@
 				735F72440FF2747500E66B1D /* nglImageGIFCodec.h in Headers */,
 				E519680E0FF8F853007EDF46 /* nuiHTMLHeader.h in Headers */,
 				E51968100FF8F853007EDF46 /* nuiHTMLStyle.h in Headers */,
+				406287BB104BD48B009790FF /* nuiFrameView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9148,6 +9169,8 @@
 				E51968050FF8F853007EDF46 /* nuiHTMLHeader.cpp in Sources */,
 				E51968070FF8F853007EDF46 /* nuiHTMLStyle.cpp in Sources */,
 				E579545D100AC5CD00821E44 /* nglStringConv_iconv.cpp in Sources */,
+				40C8D68D103AF81200CD95AC /* nuiAudioDecoder_UIKit.cpp in Sources */,
+				406287A7104BD462009790FF /* nuiFrameView.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9497,6 +9520,7 @@
 				E51968090FF8F853007EDF46 /* nuiHTMLHeader.cpp in Sources */,
 				E519680B0FF8F853007EDF46 /* nuiHTMLStyle.cpp in Sources */,
 				E579545E100AC5CD00821E44 /* nglStringConv_iconv.cpp in Sources */,
+				40C8D68E103AF81200CD95AC /* nuiAudioDecoder_UIKit.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9845,6 +9869,8 @@
 				E519680D0FF8F853007EDF46 /* nuiHTMLHeader.cpp in Sources */,
 				E519680F0FF8F853007EDF46 /* nuiHTMLStyle.cpp in Sources */,
 				E579545F100AC5CD00821E44 /* nglStringConv_iconv.cpp in Sources */,
+				40C8D68F103AF81200CD95AC /* nuiAudioDecoder_UIKit.cpp in Sources */,
+				406287BA104BD48A009790FF /* nuiFrameView.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10194,6 +10220,7 @@
 				E51968010FF8F853007EDF46 /* nuiHTMLHeader.cpp in Sources */,
 				E51968030FF8F853007EDF46 /* nuiHTMLStyle.cpp in Sources */,
 				E579545C100AC5CD00821E44 /* nglStringConv_iconv.cpp in Sources */,
+				40C8D68C103AF81200CD95AC /* nuiAudioDecoder_UIKit.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
