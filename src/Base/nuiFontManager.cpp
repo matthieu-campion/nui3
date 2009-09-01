@@ -507,7 +507,7 @@ const nuiFontDesc* nuiFontRequestResult::GetFontDesc() const
 //class nuiFontDesc
 nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
 {
-  printf("Scanning font '%ls' face %d\n", rPath.GetChars(), Face);
+  printf("Scaning font '%ls' face %d\n", rPath.GetChars(), Face);
 
   //nglFont* pFont = NULL;
   mValid = false;
@@ -538,7 +538,7 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
   
   if (!pStream)
   {
-    printf("Error Scanning font '%ls' face %d\n", rPath.GetChars(), Face);
+    printf("Error Scaning font '%ls' face %d\n", rPath.GetChars(), Face);
     return;
   }
   
@@ -554,7 +554,7 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
  
   if (error || pFace->num_faces <= Face)
     return;
-  //NGL_DEBUG( NGL_OUT(_T("Scanning font '%ls' face %d\n"), rPath.GetChars(), Face); )
+  //NGL_DEBUG( NGL_OUT(_T("Scaning font '%ls' face %d\n"), rPath.GetChars(), Face); )
   
   NGL_ASSERT(pFace->num_faces > Face);
   
@@ -1047,7 +1047,7 @@ void nuiFontManager::ScanFolders(bool rescanAllFolders /* = false */)
   
   if (rescanAllFolders)
   {
-    mScannedFolders.clear();
+    mScanedFolders.clear();
   }
 
   
@@ -1055,9 +1055,9 @@ void nuiFontManager::ScanFolders(bool rescanAllFolders /* = false */)
   {
     nglPath path(it->second);
     
-    if (mScannedFolders.find(path) == mScannedFolders.end())
+    if (mScanedFolders.find(path) == mScanedFolders.end())
     {
-      mScannedFolders.insert(path);
+      mScanedFolders.insert(path);
       ScanSubFolder(path);
     }
     
@@ -1067,7 +1067,7 @@ void nuiFontManager::ScanFolders(bool rescanAllFolders /* = false */)
   nglTime end_time;
   
   double t = end_time - start_time;
-  printf("Scanning the system fonts took %f seconds\n", t);
+  printf("mScaning the system fonts took %f seconds\n", t);
 
   delete gpWin;
   gpWin = NULL;
@@ -1498,12 +1498,16 @@ bool nuiFontManager::FindFontInSystemFolders(const nglString& rFontFileName, ngl
 
 nuiFont* nuiFontManager::GetFont(nuiFontRequest& rRequest, const nglString& rID) const
 {
-  std::list<nuiFontRequestResult> Fonts;
-  RequestFont(rRequest, Fonts);
-
   float size = 14.f;
   if (!rRequest.mMustHaveSizes.mElement.empty())
     size = *(rRequest.mMustHaveSizes.mElement.begin());
+  
+  nuiFont* pFont = nuiFont::GetFont(rRequest.mName.mElement, size, rRequest.mFace.mElement, rID);
+  if (pFont)
+    return pFont;
+  
+  std::list<nuiFontRequestResult> Fonts;
+  RequestFont(rRequest, Fonts);
   
   if (Fonts.empty())
   {

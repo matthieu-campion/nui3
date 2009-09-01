@@ -346,7 +346,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E57A96E51046EBD50031C44B</string>
+										<string>E57A96E71047FA820031C44B</string>
 										<key>history</key>
 										<array>
 											<string>E57A95961045939F0031C44B</string>
@@ -651,7 +651,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>273083349.90277898</real>
+	<real>273152642.77266097</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -666,7 +666,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E57A96E61046EBD50031C44B</string>
 		<string>E57A96871046B6170031C44B</string>
 		<string>E57A96881046B6170031C44B</string>
 		<string>/Users/meeloo/work/nui3/tutorials/WidgetCreatorCSS/WidgetCreatorCSS.xcodeproj</string>

@@ -205,7 +205,7 @@ public:
 private:
   std::map<nglString, nglPath> mFontFolders;
   std::vector<nuiFontDesc*> mpFonts;
-  std::set<nglPath> mScannedFolders;
+  std::set<nglPath> mScanedFolders;
   
   static nuiFontManager gManager;
   

@@ -21,13 +21,15 @@ nuiFont* nuiFont::GetFont(const nglPath& rPath, nuiSize size, int face, const ng
 
   if (mpFonts.find(id) == mpFonts.end())
   {
-    if (rPath.Exists() && rPath.IsLeaf())
-      pFont = new nuiFont(rPath, size, face, id);
+    if (!(rPath.Exists() && rPath.IsLeaf()))
+      return NULL;
+
+    pFont = new nuiFont(rPath, size, face, id);
     
-    if (pFont->GetError())
+    if (!pFont || pFont->GetError())
     {
       delete pFont;
-      pFont = NULL;
+      return NULL;
     }
 
     if (pFont && !pFont->GetError() && pFont->GetSize() == 0 && !pFont->IsScalable()) 
