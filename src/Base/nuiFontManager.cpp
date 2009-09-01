@@ -191,6 +191,9 @@ nuiFontRequest::nuiFontRequest(nglFontBase* pOriginalFont, bool ForcePanoseOnlyF
   /*mItalic.mScore = 0.05f;
   mBold.mScore = 0.05f;
   mMonospace.mScore = 0.05f;*/
+
+  mFace.mElement = 0;
+
   if (pOriginalFont)
   {
     if (pOriginalFont->HasPanoseInfo())

@@ -954,7 +954,7 @@ void nuiWidget::Invalidate()
 
 void nuiWidget::InvalidateSurface()
 {
-  if (mNeedSurfaceRedraw)
+  if (mNeedSurfaceRedraw || !mpSurface)
     return;
   
   mNeedSurfaceRedraw = true;
@@ -1169,6 +1169,40 @@ bool nuiWidget::InternalDrawWidget(nuiDrawContext* pContext, const nuiRect& _sel
   return true;
 }
 
+#if 0
+
+2 options alter the rendering:
+- RenderCache on/off
+- Surface on/off
+
+4 cases:
+
+  None:
+    InternalDrawWidget(pContext); // Draw!
+
+  RenderCache:
+    if (mNeedRender)
+      InternalDrawWidget(pRenderCache); // Fill the cache
+    DrawRenderCache(pContext); // Draw the cache to the screen
+
+  Surface:
+    if (mNeedRender) // need to update the surface contents
+      InternalDrawWidget(pSurface);
+    DrawSurface(pContext);
+
+  Surface + RenderCache:
+    if (mNeedRender)
+    {
+      InternalDrawWidget(pRenderCache);
+      DrawRenderCache(pSurface);
+    }
+    DrawSurface(pContext);
+    
+ 
+#endif
+
+
+
 bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
 {
   if (!IsVisible())
@@ -1196,7 +1230,7 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
 
   UpdateSurfaceRect(mRect);
   
-  nuiDrawContext* pCtx = pContext;
+  nuiDrawContext* pSavedCtx = pContext;
   
   if (mNeedRender || !mpSurface)
   {
@@ -1273,9 +1307,10 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
 //      mpSurface->PopProjectionMatrix();
 //      mpSurface->PopState();
 //      mpSurface->PopClipping();
-      pContext = pCtx;
     }
   }
+
+  pContext = pSavedCtx;
 
   
   if (mSurfaceEnabled)
@@ -1301,7 +1336,15 @@ void nuiWidget::DrawSurface(nuiDrawContext* pContext)
   pContext->SetTexture(pTexture);
   pContext->EnableBlending(true);
   pContext->SetFillColor(mSurfaceColor);
-  //pContext->SetFillColor(nuiColor(1.0f, 1.0f, 1.0f, 1.0f));
+  static float gg = 0.0f;
+  pContext->SetFillColor(nuiColor(1.0f, gg, 1.0f, 1.0f));
+  if (gg == 0.0f)
+    gg = 0.3f;
+  else if (gg == 0.3f)
+    gg = 0.7f;
+  else
+    gg = 0.0f;
+
   pContext->SetBlendFunc(mSurfaceBlendFunc);
   pContext->MultMatrix(mSurfaceMatrix);
 

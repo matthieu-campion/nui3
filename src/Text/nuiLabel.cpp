@@ -84,7 +84,9 @@ void nuiLabel::InitDefaultValues()
   mVMargin = NUI_LABEL_VMARGIN;
   mHMargin = NUI_LABEL_HMARGIN;
   mWrapping = false;
-  mIgnoreState = false;  
+  mIgnoreState = false; 
+  
+  EnableSurface(true);
 }
 
 

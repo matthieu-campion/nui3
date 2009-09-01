@@ -83,8 +83,8 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 273069345;
-			PBXWorkspaceStateSaveDate = 273069345;
+			PBXPerProjectTemplateStateSaveDate = 273176184;
+			PBXWorkspaceStateSaveDate = 273176184;
 		};
 		perUserProjectItems = {
 			E57A95961045939F0031C44B /* PBXTextBookmark */ = E57A95961045939F0031C44B /* PBXTextBookmark */;
@@ -135,6 +135,9 @@
 		configStateDict = {
 		};
 		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
 		debuggerPlugin = GDBDebugging;
 		disassemblyDisplayState = 0;
 		enableDebugStr = 1;
@@ -144,6 +147,7 @@
 		executableUserSymbolLevel = 0;
 		libgmallocEnabled = 0;
 		name = WidgetCreatorCSS;
+		showTypeColumn = 0;
 		sourceDirectories = (
 		);
 	};
@@ -158,6 +162,9 @@
 		configStateDict = {
 		};
 		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
 		debuggerPlugin = GDBDebugging;
 		disassemblyDisplayState = 0;
 		dylibVariantSuffix = "";
@@ -170,6 +177,7 @@
 		name = WidgetCreatorCSSD;
 		savedGlobals = {
 		};
+		showTypeColumn = 0;
 		sourceDirectories = (
 		);
 		variableFormatDictionary = {
@@ -189,23 +197,6 @@
 		isa = PBXCodeSenseManager;
 		indexTemplatePath = "";
 	};
-	E57A95961045939F0031C44B /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E57A95971045939F0031C44B /* nuiBuilder.h */;
-		name = "nuiBuilder.h: 75";
-		rLen = 12;
-		rLoc = 1990;
-		rType = 0;
-		vrLen = 960;
-		vrLoc = 1206;
-	};
-	E57A95971045939F0031C44B /* nuiBuilder.h */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.c.h;
-		name = nuiBuilder.h;
-		path = /Users/meeloo/work/nui3/include/nuiBuilder.h;
-		sourceTree = "<absolute>";
-	};
 	E57A95D01045960C0031C44B /* MainWindow.cpp:38 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
@@ -220,7 +211,8 @@
 		ignoreCount = 0;
 		lineNumber = 38;
 		location = WidgetCreatorCSSD;
-		modificationTime = 273083344.883089;
+		modificationTime = 273083344.8830889;
+		originalNumberOfMultipleMatches = 0;
 		state = 2;
 	};
 	E57A95DE1045966F0031C44B /* PBXTextBookmark */ = {
