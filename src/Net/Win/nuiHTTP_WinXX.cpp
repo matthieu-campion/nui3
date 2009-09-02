@@ -8,7 +8,7 @@
 #include "nui.h"
 #include "nuiHTTP.h"
 
-// If this header is missong update your windows SDK to the latest:
+// If this header is missing update your windows SDK to the latest:
 // http://www.microsoft.com/downloads/details.aspx?FamilyID=4377f86d-c913-4b5c-b87e-ef72e5b4e065&displaylang=en
 #include "WinHttp.h"
 
@@ -20,9 +20,18 @@ nuiHTTPResponse* nuiHTTPRequest::SendRequest()
   nglString url(mUrl);
   nglString server, objectName;
   uint port = INTERNET_DEFAULT_PORT;
+  bool secure = false; // WINHTTP_FLAG_SECURE
+
   if (url.CompareLeft(_T("http://")) == 0)
   {
     url.DeleteLeft(7);
+    port = INTERNET_DEFAULT_HTTP_PORT;
+  }
+  else if (url.CompareLeft(_T("https://")) == 0)
+  {
+    url.DeleteLeft(8);
+    secure = true;
+    port = INTERNET_DEFAULT_HTTPS_PORT;
   }
 
   int32 pos = url.Find(':');
@@ -64,7 +73,7 @@ nuiHTTPResponse* nuiHTTPRequest::SendRequest()
     return NULL;
 
   LPCWSTR types[] = {L"*/*", NULL};
-  HINTERNET hRequest = WinHttpOpenRequest(hConnect, mMethod.GetChars(), objectName.GetChars(), NULL, NULL, types, 0);
+  HINTERNET hRequest = WinHttpOpenRequest(hConnect, mMethod.GetChars(), objectName.GetChars(), NULL, NULL, types, secure ? WINHTTP_FLAG_SECURE : 0);
 
   nglString headers = GetHeadersRep();
   WinHttpAddRequestHeaders(hRequest, headers.GetChars(), -1L, WINHTTP_ADDREQ_FLAG_ADD | WINHTTP_ADDREQ_FLAG_REPLACE);

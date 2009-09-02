@@ -127,16 +127,16 @@ bool nuiAudioDecoder::CreateAudioDecoderPrivate()
 {
   if (mpPrivate)
   {
-	if (mpPrivate->mpWMReader)
-	  delete mpPrivate->mpWMReader;
-	delete mpPrivate;
+    if (mpPrivate->mpWMReader)
+      delete mpPrivate->mpWMReader;
+    delete mpPrivate;
   }
 
   CoInitialize(NULL);
   mpPrivate = new nuiAudioDecoderPrivate();
   HRESULT hr = S_OK;
   mpPrivate->mpWMStream = new nglWindowsMediaIStream(mrStream);
-  
+
   hr = WMCreateSyncReader(NULL, WMT_RIGHT_PLAYBACK, &mpPrivate->mpWMReader);
   if (SUCCEEDED(hr))
   {
@@ -146,6 +146,7 @@ bool nuiAudioDecoder::CreateAudioDecoderPrivate()
       return false;
     }
   }
+  return false;
 }
 
 bool nuiAudioDecoder::Seek(uint64 SampleFrame)
