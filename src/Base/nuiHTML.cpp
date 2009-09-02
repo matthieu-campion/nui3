@@ -367,7 +367,8 @@ static nglString GetEncodingString(TidyNode tnod)
 
 bool nuiHTML::Load(nglIStream& rStream, nglTextEncoding OverrideContentsEncoding, const nglString& rSourceURL)
 {
-  SetSourceURL(rSourceURL);
+  if (!rSourceURL.IsEmpty())
+    SetSourceURL(rSourceURL);
   
   int res = -1;
   nglTextEncoding encoding = eUTF8;
@@ -450,5 +451,6 @@ const nglString& nuiHTML::GetSourceURL() const
 void nuiHTML::SetSourceURL(const nglString& rURL)
 {
   mSourceURL = rURL;
+  printf("New source URL (0x%x): %ls\n", this, mSourceURL.GetChars());
 }
 
