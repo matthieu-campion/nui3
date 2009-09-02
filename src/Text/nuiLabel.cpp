@@ -86,7 +86,7 @@ void nuiLabel::InitDefaultValues()
   mWrapping = false;
   mIgnoreState = false; 
   
-  EnableSurface(true);
+  //EnableSurface(true);
 }
 
 
