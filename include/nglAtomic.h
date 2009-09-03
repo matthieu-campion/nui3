@@ -482,6 +482,53 @@ inline uint32 InterlockedExchange(int32* volatile Target, uint32 Value)
 
 #ifdef __NUI64__
 // 64bits #TODO Implement 64 bits CAS
+// 64 bit:
+// read atomic variable
+inline uint64 ngl_atomic_read(const nglAtomic64 &value)
+{
+  return value;
+}
+
+// compare and swap atomic variable
+inline bool ngl_atomic_compare_and_swap(nglAtomic64& value, uint64 oldValue, uint64 newValue)
+{
+  return __sync_val_compare_and_swap((int64_t*)&value, oldValue, newValue);
+}
+
+
+// set atomic variable
+inline void ngl_atomic_set(nglAtomic64& value, uint64 newValue)
+{
+  __sync_lock_test_and_set((int64_t*)&value, newValue);
+}
+
+// add integer to atomic variable
+inline void ngl_atomic_add(nglAtomic64& value, uint64 addValue)
+{
+  __sync_fetch_and_add((int64_t*)&value, addValue);
+  //value += addValue;
+}
+
+// subtract the atomic variable
+inline void ngl_atomic_sub(nglAtomic64& value, uint64 subValue)
+{
+  __sync_fetch_and_sub((int64_t*)&value, subValue);
+  //value -= subValue;
+}
+
+// increment atomic variable
+inline void ngl_atomic_inc(nglAtomic64 &value)
+{
+  ngl_atomic_add(value, 1);
+  //value++;
+}
+
+// decrement atomic variable
+inline void ngl_atomic_dec(nglAtomic64 &value)
+{
+  ngl_atomic_sub(value, 1);
+  //value--;
+}
 
 #endif
 #endif /* _LINUX_ */
