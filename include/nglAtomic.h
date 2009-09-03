@@ -484,6 +484,8 @@ inline uint32 InterlockedExchange(int32* volatile Target, uint32 Value)
 // 64bits #TODO Implement 64 bits CAS
 // 64 bit:
 // read atomic variable
+typedef volatile int64_t nglAtomic64;
+
 inline uint64 ngl_atomic_read(const nglAtomic64 &value)
 {
   return value;
