@@ -1360,6 +1360,7 @@ nuiFontManager& nuiFontManager::LoadManager(nglIStream& rStream)
   gManager.Clear();
   gManager.Load(rStream);
   
+  
   return gManager;
 }
 
@@ -1414,13 +1415,54 @@ bool nuiFontManager::Load(nglIStream& rStream)
   
   Clear();
   
+  // compile list of font files
+  std::set<nglPath> fontFiles;
+  std::set<nglPath>::iterator itf;
+  std::map<nglString, nglPath> folders;
+  std::map<nglString, nglPath>::iterator it;
+  GetSystemFolders(folders);
+  
+  for (it = folders.begin(); it != folders.end(); ++it)
+  {
+    const nglString& str = it->first;
+    const nglPath& pth = it->second;
+    
+    std::list<nglPath> children;
+    std::list<nglPath>::iterator itc;
+    pth.GetChildren(&children);
+    
+    for (itc = children.begin(); itc != children.end(); ++itc)
+    {
+      const nglPath& path = *itc;
+      if (path.IsLeaf())
+        fontFiles.insert(path);
+    }
+  }
+  
+  
+  
   while (rStream.GetState() == eStreamReady)
   {
     nuiFontDesc* pFontDesc = new nuiFontDesc(rStream);
     
     if (pFontDesc->IsValid() && pFontDesc->GetScalable())
     {
+      // check font file existence
+      if (!pFontDesc->GetPath().Exists())
+      {
+        NGL_OUT(_T("FontManager: remove font from database '%ls'\n"), pFontDesc->GetPath().GetChars());
+
+        continue;
+      }
+
+      // register the font 
       mpFonts.push_back(pFontDesc);
+      
+      // remove it from the compiled list
+      itf = fontFiles.find(pFontDesc->GetPath());
+      if (itf != fontFiles.end())
+        fontFiles.erase(itf);
+      
       
 #if 0 // #TEST this is a work in progress!
       nuiMiniTTFLoader loader(pFontDesc->GetPath());
@@ -1431,6 +1473,40 @@ bool nuiFontManager::Load(nglIStream& rStream)
       delete pFontDesc;
   }
   
+  // now, the files that are still in the compiled list are supposed to be newly installed fonts
+  // let's add'em to the font database
+  for (itf = fontFiles.begin(); itf != fontFiles.end(); ++itf)
+  {
+    const nglPath& path = *itf;
+    
+      bool cont = true;
+      int32 face = 0;
+      while (cont)
+      {
+        NGL_ASSERT(gFTLibrary == NULL);
+        FT_Error error;
+        error = FT_Init_FreeType(&gFTLibrary);
+        
+        nuiFontDesc* pFontDesc = new nuiFontDesc(path, face);
+        
+        FT_Done_FreeType(gFTLibrary);
+        gFTLibrary = NULL;
+        
+        if (pFontDesc->IsValid())
+        {
+          mpFonts.push_back(pFontDesc);
+          
+          NGL_OUT(_T("FontManager: add new font in database '%ls'\n"), path.GetChars());
+        }
+        else
+        {
+          delete pFontDesc;
+          cont = false;
+        }
+        face++;
+      }
+    
+  }
   
   return true;
 }
