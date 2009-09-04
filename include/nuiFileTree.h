@@ -46,10 +46,11 @@ public:
   nuiFileTree(const nglPath& rPath, const nglPath& rRootPath, const std::list<nglString>& rFilters, bool showHiddenFiles = false);
   virtual ~nuiFileTree();
   
-  bool SetPath(const nglPath& rPath);      ///< Change currently selected Path.
+  bool SetPath(const nglPath& rPath);      ///< Change current Path.
   bool SetRootPath(const nglPath& rPath);      ///< Change current root
-  nglPath GetPath() const;          ///< Retrieve currently selected Path
+  nglPath GetPath() const;          ///< Retrieve current Path
   nglPath GetRootPath() const;          ///< Retrieve current root.
+  const nglPath& GetActivatedPath();
 
   virtual nuiTreeNode* GetNewNode(const nglPath& rPath);
   
@@ -86,6 +87,7 @@ private:
   std::map<nglPath, nuiTreeNode*> mTrees; // rootpath => treeview
   nuiTreeNode* mpCurrentTree;
   nglPath mRootPath;
+  nglPath mActivatedPath;
   std::stack<nglPath> mWalkthrough;
   nuiScrollView* mpScrollView;
   

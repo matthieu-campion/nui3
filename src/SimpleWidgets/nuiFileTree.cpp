@@ -86,13 +86,18 @@ void nuiFileTree::SetHandleColor(nuiColor rColor)
   mpTreeView->SetHandleColor(rColor);
 }
 
-
+const nglPath& nuiFileTree::GetActivatedPath()
+{
+  return mActivatedPath;
+}
 
 
 bool nuiFileTree::OnNodeActivated(const nuiEvent& rEvent)
 {
   nuiFileSelectorNode* pNode = (nuiFileSelectorNode*)rEvent.mpUser;
   nglPath path(pNode->GetProperty(_T("Path")));
+  
+  mActivatedPath = path;
   
   // send signal
   bool res = Activated();
