@@ -29,6 +29,7 @@ public:
   const nuiTreeNode* GetChoices() const;
   uint32        GetValue();
   void          SetSelected(nuiTreeNode* pSelection);
+  void          SetSelected(const nuiTreeNode* pSelection);
   void          SetSelected(uint32 childIndex);
   void          SetValue(uint32 childIndex);
 

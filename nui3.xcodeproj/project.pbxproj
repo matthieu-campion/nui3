@@ -1140,6 +1140,18 @@
 		E556973B0FB2D71600324321 /* nuiParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E55697370FB2D71600324321 /* nuiParser.cpp */; };
 		E556973C0FB2D71600324321 /* nuiParser.h in Headers */ = {isa = PBXBuildFile; fileRef = E55697360FB2D71600324321 /* nuiParser.h */; };
 		E556973D0FB2D71600324321 /* nuiParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E55697370FB2D71600324321 /* nuiParser.cpp */; };
+		E55A479C10531814002AB5CA /* nuiClampedValueAttributeEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = E55A479B10531814002AB5CA /* nuiClampedValueAttributeEditor.h */; };
+		E55A479D10531814002AB5CA /* nuiClampedValueAttributeEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = E55A479B10531814002AB5CA /* nuiClampedValueAttributeEditor.h */; };
+		E55A479E10531814002AB5CA /* nuiClampedValueAttributeEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = E55A479B10531814002AB5CA /* nuiClampedValueAttributeEditor.h */; };
+		E55A47AE10531ABD002AB5CA /* nuiPopupValueAttributeEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E55A47AD10531ABD002AB5CA /* nuiPopupValueAttributeEditor.cpp */; };
+		E55A47AF10531ABD002AB5CA /* nuiPopupValueAttributeEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E55A47AD10531ABD002AB5CA /* nuiPopupValueAttributeEditor.cpp */; };
+		E55A47B010531ABD002AB5CA /* nuiPopupValueAttributeEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E55A47AD10531ABD002AB5CA /* nuiPopupValueAttributeEditor.cpp */; };
+		E55A47C0105321F3002AB5CA /* nuiPopupValueAttributeEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = E55A47BF105321F3002AB5CA /* nuiPopupValueAttributeEditor.h */; };
+		E55A47C1105321F3002AB5CA /* nuiPopupValueAttributeEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = E55A47BF105321F3002AB5CA /* nuiPopupValueAttributeEditor.h */; };
+		E55A47C2105321F3002AB5CA /* nuiPopupValueAttributeEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = E55A47BF105321F3002AB5CA /* nuiPopupValueAttributeEditor.h */; };
+		E55A47C81053234C002AB5CA /* nuiComboAttributeEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = E55A47C71053234C002AB5CA /* nuiComboAttributeEditor.h */; };
+		E55A47C91053234C002AB5CA /* nuiComboAttributeEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = E55A47C71053234C002AB5CA /* nuiComboAttributeEditor.h */; };
+		E55A47CA1053234C002AB5CA /* nuiComboAttributeEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = E55A47C71053234C002AB5CA /* nuiComboAttributeEditor.h */; };
 		E55C02D30F5E99A00045FBFE /* nuiGenericAttributeEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = E55C02D20F5E99A00045FBFE /* nuiGenericAttributeEditor.h */; };
 		E55C02D40F5E99A00045FBFE /* nuiGenericAttributeEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = E55C02D20F5E99A00045FBFE /* nuiGenericAttributeEditor.h */; };
 		E55C02D50F5E99A00045FBFE /* nuiGenericAttributeEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = E55C02D20F5E99A00045FBFE /* nuiGenericAttributeEditor.h */; };
@@ -3335,6 +3347,10 @@
 		E554C6D80DC1480700C5D69A /* nuiFontInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiFontInspector.h; path = include/nuiFontInspector.h; sourceTree = SOURCE_ROOT; };
 		E55697360FB2D71600324321 /* nuiParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiParser.h; path = ../../include/nuiParser.h; sourceTree = "<group>"; };
 		E55697370FB2D71600324321 /* nuiParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiParser.cpp; sourceTree = "<group>"; };
+		E55A479B10531814002AB5CA /* nuiClampedValueAttributeEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiClampedValueAttributeEditor.h; path = include/nuiClampedValueAttributeEditor.h; sourceTree = SOURCE_ROOT; };
+		E55A47AD10531ABD002AB5CA /* nuiPopupValueAttributeEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiPopupValueAttributeEditor.cpp; path = Attributes/nuiPopupValueAttributeEditor.cpp; sourceTree = "<group>"; };
+		E55A47BF105321F3002AB5CA /* nuiPopupValueAttributeEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiPopupValueAttributeEditor.h; path = include/nuiPopupValueAttributeEditor.h; sourceTree = SOURCE_ROOT; };
+		E55A47C71053234C002AB5CA /* nuiComboAttributeEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiComboAttributeEditor.h; path = include/nuiComboAttributeEditor.h; sourceTree = SOURCE_ROOT; };
 		E55C02D20F5E99A00045FBFE /* nuiGenericAttributeEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiGenericAttributeEditor.h; path = include/nuiGenericAttributeEditor.h; sourceTree = SOURCE_ROOT; };
 		E55C02E20F5E9A310045FBFE /* nuiGenericAttributeEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiGenericAttributeEditor.cpp; path = Attributes/nuiGenericAttributeEditor.cpp; sourceTree = "<group>"; };
 		E55FFC7A0C8EF78000C8DDE0 /* nuiFormatedLabel.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiFormatedLabel.h; path = include/nuiFormatedLabel.h; sourceTree = SOURCE_ROOT; };
@@ -4246,6 +4262,10 @@
 				BC1AD4660D814F7400390050 /* nuiSizeAttributeEditor.h */,
 				BCF24E460CFEF50200650944 /* nuiStringAttributeEditor.cpp */,
 				BCF24E490CFEF51500650944 /* nuiStringAttributeEditor.h */,
+				E55A479B10531814002AB5CA /* nuiClampedValueAttributeEditor.h */,
+				E55A47AD10531ABD002AB5CA /* nuiPopupValueAttributeEditor.cpp */,
+				E55A47BF105321F3002AB5CA /* nuiPopupValueAttributeEditor.h */,
+				E55A47C71053234C002AB5CA /* nuiComboAttributeEditor.h */,
 			);
 			name = Attributes;
 			sourceTree = "<group>";
@@ -6503,6 +6523,9 @@
 				E52C831A0FFB9DA800B7779C /* nuiWebCSS.h in Headers */,
 				E52D655510322B64005BF301 /* nuiHugeImage.h in Headers */,
 				E5901BED1043F2C200D3FD5F /* nuiToggleButton.h in Headers */,
+				E55A479D10531814002AB5CA /* nuiClampedValueAttributeEditor.h in Headers */,
+				E55A47C1105321F3002AB5CA /* nuiPopupValueAttributeEditor.h in Headers */,
+				E55A47CA1053234C002AB5CA /* nuiComboAttributeEditor.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7086,6 +7109,9 @@
 				E52C831E0FFB9DA800B7779C /* nuiWebCSS.h in Headers */,
 				E52D655310322B64005BF301 /* nuiHugeImage.h in Headers */,
 				E5901BEB1043F2C200D3FD5F /* nuiToggleButton.h in Headers */,
+				E55A479E10531814002AB5CA /* nuiClampedValueAttributeEditor.h in Headers */,
+				E55A47C2105321F3002AB5CA /* nuiPopupValueAttributeEditor.h in Headers */,
+				E55A47C91053234C002AB5CA /* nuiComboAttributeEditor.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7664,6 +7690,9 @@
 				E52C831C0FFB9DA800B7779C /* nuiWebCSS.h in Headers */,
 				E52D655410322B64005BF301 /* nuiHugeImage.h in Headers */,
 				E5901BEC1043F2C200D3FD5F /* nuiToggleButton.h in Headers */,
+				E55A479C10531814002AB5CA /* nuiClampedValueAttributeEditor.h in Headers */,
+				E55A47C0105321F3002AB5CA /* nuiPopupValueAttributeEditor.h in Headers */,
+				E55A47C81053234C002AB5CA /* nuiComboAttributeEditor.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8185,6 +8214,7 @@
 				E5795185100AB20400821E44 /* nglStringConv_iconv.cpp in Sources */,
 				E5F3E1101017DD2B00CEC731 /* nglTimer_CoreFoundation.cpp in Sources */,
 				E52D655110322B51005BF301 /* nuiHugeImage.cpp in Sources */,
+				E55A47AF10531ABD002AB5CA /* nuiPopupValueAttributeEditor.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8627,6 +8657,7 @@
 				E57951D3100AB47200821E44 /* nglStringConv_iconv.cpp in Sources */,
 				E5F3E0CB1017DBD100CEC731 /* nglTimer_CoreFoundation.cpp in Sources */,
 				E52D654F10322B51005BF301 /* nuiHugeImage.cpp in Sources */,
+				E55A47B010531ABD002AB5CA /* nuiPopupValueAttributeEditor.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9060,6 +9091,7 @@
 				E5080B3C1007FB1C0048E1AB /* nuiAudioDevice_CoreAudio.cpp in Sources */,
 				E5795184100AB20400821E44 /* nglStringConv_iconv.cpp in Sources */,
 				E52D655010322B51005BF301 /* nuiHugeImage.cpp in Sources */,
+				E55A47AE10531ABD002AB5CA /* nuiPopupValueAttributeEditor.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

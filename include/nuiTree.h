@@ -25,7 +25,7 @@ public:
     SortFunction();
     virtual ~SortFunction();
 
-    virtual bool Compare(nuiTreePtr& rElem1, nuiTreePtr& rElem2) = 0;
+    virtual bool Compare(const nuiTreeBase* pElem1, const nuiTreeBase* pElem2) = 0;
   };
 
   nuiTreeBase();
@@ -44,7 +44,7 @@ public:
 
   uint32 GetChildrenCount() const;
   nuiTreePtr GetChild(uint32 Index);
-  const nuiTreePtr GetChild(uint32 Index) const;
+  const nuiTreeBase* GetChild(uint32 Index) const;
   bool GetChildren(std::vector<nuiTreePtr>& rChildren);
   bool GetChildren(std::list<nuiTreePtr>& rChildren);
 
@@ -78,14 +78,14 @@ protected:
   SortFunction* mpAutoSort;
   void AutoSort();
  
-  class NUI_API PrivateSortFunction : std::binary_function<nuiTreePtr, nuiTreePtr, bool>
+  class PrivateSortFunction : std::binary_function<const nuiTreeBase*, const nuiTreeBase*, bool>
   {
   public:
     PrivateSortFunction(SortFunction* pSortFunction);
     PrivateSortFunction(const PrivateSortFunction& rRef);
     virtual ~PrivateSortFunction();
 
-    bool operator()(const nuiTreePtr& rElem1, const nuiTreePtr& rElem2);
+    bool operator()(const nuiTreeBase* pElem1, const nuiTreeBase* pElem2);
   private:
     SortFunction* mpSortFunction;
   };

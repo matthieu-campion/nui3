@@ -18,6 +18,9 @@
 #include "nuiRangeAttributeEditor.h"
 #include "nuiRangeKnobAttributeEditor.h"
 #include "nuiGenericAttributeEditor.h"
+#include "nuiClampedValueAttributeEditor.h"
+#include "nuiPopupValueAttributeEditor.h"
+#include "nuiComboAttributeEditor.h"
 
 uint64 nuiGetNewAttributeUniqueId()
 {
@@ -856,7 +859,28 @@ nuiAttributeEditor* nuiAttribute<nuiPosition>::GetDefaultEditor(void* pTarget)
 {
   //#FIXME TODO
   // if this code is executed, it means a case processing is missing
-  return nuiCreateGenericAttributeEditor(pTarget, this);
+  //return nuiCreateGenericAttributeEditor(pTarget, this);
+  
+  std::vector<std::pair<nglString, nuiPosition> > values;
+  values.push_back(std::make_pair(_T("Left"), nuiLeft));
+  values.push_back(std::make_pair(_T("Right"), nuiRight));
+  values.push_back(std::make_pair(_T("Top"), nuiTop));
+  values.push_back(std::make_pair(_T("Bottom"), nuiBottom));
+  values.push_back(std::make_pair(_T("Center"), nuiCenter));
+  values.push_back(std::make_pair(_T("Fill"), nuiFill));
+  values.push_back(std::make_pair(_T("Fill Horizontal"), nuiFillHorizontal));
+  values.push_back(std::make_pair(_T("Fill Vertical"), nuiFillVertical));
+  values.push_back(std::make_pair(_T("Fill Left"), nuiFillLeft));
+  values.push_back(std::make_pair(_T("Fill Right"), nuiFillRight));
+  values.push_back(std::make_pair(_T("Fill Top"), nuiFillTop));
+  values.push_back(std::make_pair(_T("Fill Bottom"), nuiFillBottom));
+  values.push_back(std::make_pair(_T("Top Left"), nuiTopLeft));
+  values.push_back(std::make_pair(_T("Top Right"), nuiTopRight));
+  values.push_back(std::make_pair(_T("Bottom Left"), nuiBottomLeft));
+  values.push_back(std::make_pair(_T("Bottom Right"), nuiBottomRight));
+  values.push_back(std::make_pair(_T("Tile"), nuiTile));
+  values.push_back(std::make_pair(_T("No Position"), nuiNoPosition));
+  return new nuiComboAttributeEditor<nuiPosition>(nuiAttrib<nuiPosition>(pTarget, this), values);
 }
 
 template <>

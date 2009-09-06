@@ -244,10 +244,16 @@ const nuiTreeNode* nuiComboBox::GetChoices() const
 }
 
 void nuiComboBox::SetSelected(nuiTreeNode* pSelection) 
-{ 
-  mpSelected = pSelection;
-  ReparentTree(mpChoicesTree);
+{
+  const nuiTreeNode* pCTNode = pSelection;
+  SetSelected(pCTNode);
+}
 
+void nuiComboBox::SetSelected(const nuiTreeNode* pSelection) 
+{ 
+  mpSelected = const_cast<nuiTreeNode*>(pSelection);
+  ReparentTree(mpChoicesTree);
+  
   SelectionChanged();
   InvalidateLayout();
 }

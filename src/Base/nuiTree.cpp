@@ -243,7 +243,7 @@ nuiTreePtr nuiTreeBase::GetChild(uint32 Index)
   return mpChildren[Index];
 }
 
-const nuiTreePtr nuiTreeBase::GetChild(uint32 Index) const
+const nuiTreeBase* nuiTreeBase::GetChild(uint32 Index) const
 {
   NGL_ASSERT(mpChildren.size() > Index);
   return mpChildren[Index];
@@ -420,9 +420,9 @@ nuiTreeBase::PrivateSortFunction::~PrivateSortFunction()
   mpSortFunction = NULL;
 }
 
-bool nuiTreeBase::PrivateSortFunction::operator()(const nuiTreePtr& rElem1, const nuiTreePtr& rElem2)
+bool nuiTreeBase::PrivateSortFunction::operator()(const nuiTreeBase* pElem1, const nuiTreeBase* pElem2)
 {
-  return mpSortFunction->Compare(const_cast<nuiTreePtr&>(rElem1), const_cast<nuiTreePtr&>(rElem2));
+  return mpSortFunction->Compare(pElem1, pElem2);
 }
 
 void nuiTreeBase::SetParent(nuiTreeBase* pParent)
