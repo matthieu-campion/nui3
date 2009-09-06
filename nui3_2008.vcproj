@@ -225,6 +225,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\nuiComboAttributeEditor.h"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Attributes\nuiGenericAttributeEditor.cpp"
 					>
 				</File>
@@ -254,6 +258,14 @@
 				</File>
 				<File
 					RelativePath=".\include\nuiPointAttributeEditor.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Attributes\nuiPopupValueAttributeEditor.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiPopupValueAttributeEditor.h"
 					>
 				</File>
 				<File
