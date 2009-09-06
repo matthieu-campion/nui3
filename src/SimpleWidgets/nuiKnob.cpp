@@ -58,37 +58,33 @@ void nuiKnob::Init(const nuiRange& rRange)
   
   mSequenceNeedRefresh = false;
   mSequenceNbFrames = 0;
-  mSequenceOrientation = "Vertical";
+  mSequenceOrientation = nuiVertical;
   
 }
 
 
 void nuiKnob::InitAttributes()
 {
-  nuiAttribute<const nglPath&>* AttributeTexture = new nuiAttribute<const nglPath&>
+  AddAttribute(new nuiAttribute<const nglPath&>
   (nglString(_T("Sequence")), nuiUnitNone,
    nuiMakeDelegate(this, &nuiKnob::GetSequencePath), 
-   nuiMakeDelegate(this, &nuiKnob::SetSequencePath));
+   nuiMakeDelegate(this, &nuiKnob::SetSequencePath)));
   
-  nuiAttribute<uint32>* AttributeNbFrames = new nuiAttribute<uint32>
+  AddAttribute(new nuiAttribute<uint32>
   (nglString(_T("NbFrames")), nuiUnitNone,
-   nuiAttribute<uint32>::GetterDelegate(this, &nuiKnob::GetNbFrames),
-   nuiAttribute<uint32>::SetterDelegate(this, &nuiKnob::SetNbFrames));
+   nuiMakeDelegate(this, &nuiKnob::GetNbFrames),
+   nuiMakeDelegate(this, &nuiKnob::SetNbFrames)));
   
-  nuiAttribute<nglString>* AttributeOrientation = new nuiAttribute<nglString>
+  AddAttribute(new nuiAttribute<nuiOrientation>
   (nglString(_T("Orientation")), nuiUnitNone,
-   nuiAttribute<nglString>::GetterDelegate(this, &nuiKnob::GetOrientation),
-   nuiAttribute<nglString>::SetterDelegate(this, &nuiKnob::SetOrientation));
-  
-  AddAttribute(AttributeTexture);
-  AddAttribute(AttributeNbFrames);
-  AddAttribute(AttributeOrientation);
+   nuiMakeDelegate(this, &nuiKnob::GetOrientation),
+   nuiMakeDelegate(this, &nuiKnob::SetOrientation)));
   
 }  
 
 
 // attributes
-const nglPath& nuiKnob::GetSequencePath()
+const nglPath& nuiKnob::GetSequencePath() const
 {
   return mpImageSequence->GetTexturePath();
 }
@@ -102,13 +98,13 @@ void nuiKnob::SetSequencePath(const nglPath& rPath)
 }
 
 
-nglString nuiKnob::GetOrientation()
+nuiOrientation nuiKnob::GetOrientation() const
 {
   return mpImageSequence->GetOrientation();
 }
 
 
-void nuiKnob::SetOrientation(nglString orientation)
+void nuiKnob::SetOrientation(nuiOrientation orientation)
 {
   mSequenceOrientation = orientation;
   mSequenceNeedRefresh = true;
@@ -117,7 +113,7 @@ void nuiKnob::SetOrientation(nglString orientation)
 }
 
 
-uint32 nuiKnob::GetNbFrames()
+uint32 nuiKnob::GetNbFrames() const
 {
   return mpImageSequence->GetNbFrames();
 }
@@ -176,7 +172,7 @@ void nuiKnob::SetImageSequence(nuiImageSequence* pImageSequence)
   mpImageSequence = pImageSequence;
 }
 
-nuiImageSequence* nuiKnob::GetImageSequence()
+nuiImageSequence* nuiKnob::GetImageSequence() const
 {
   return mpImageSequence;
 }

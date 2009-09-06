@@ -60,8 +60,8 @@ void nuiImageSequence::InitAttributes()
 {
   nuiAttribute<const nuiColor&>* AttributeColor = new nuiAttribute<const nuiColor&>
   (nglString(_T("Color")), nuiUnitNone,
-   nuiAttribute<const nuiColor&>::GetterDelegate(this, &nuiImageSequence::GetColor), 
-   nuiAttribute<const nuiColor&>::SetterDelegate(this, &nuiImageSequence::SetColor));
+   nuiMakeDelegate(this, &nuiImageSequence::GetColor), 
+   nuiMakeDelegate(this, &nuiImageSequence::SetColor));
   
   nuiAttribute<const nglPath&>* AttributeTexture = new nuiAttribute<const nglPath&>
   (nglString(_T("Texture")), nuiUnitNone,
@@ -70,20 +70,18 @@ void nuiImageSequence::InitAttributes()
   
   nuiAttribute<bool>* AttributeInterpolation = new nuiAttribute<bool>
   (nglString(_T("Interpolation")), nuiUnitBoolean,
-   nuiAttribute<bool>::GetterDelegate(this, &nuiImageSequence::IsInterpolated),
-   nuiAttribute<bool>::SetterDelegate(this, &nuiImageSequence::SetInterpolated));
+   nuiMakeDelegate(this, &nuiImageSequence::IsInterpolated),
+   nuiMakeDelegate(this, &nuiImageSequence::SetInterpolated));
 
   nuiAttribute<uint32>* AttributeNbFrames = new nuiAttribute<uint32>
   (nglString(_T("NbFrames")), nuiUnitNone,
-   nuiAttribute<uint32>::GetterDelegate(this, &nuiImageSequence::GetNbFrames),
-   nuiAttribute<uint32>::SetterDelegate(this, &nuiImageSequence::SetNbFrames));
+   nuiMakeDelegate(this, &nuiImageSequence::GetNbFrames),
+   nuiMakeDelegate(this, &nuiImageSequence::SetNbFrames));
 
-  nuiAttribute<nglString>* AttributeOrientation = new nuiAttribute<nglString>
+  nuiAttribute<nuiOrientation>* AttributeOrientation = new nuiAttribute<nuiOrientation>
   (nglString(_T("Orientation")), nuiUnitNone,
-   nuiAttribute<nglString>::GetterDelegate(this, &nuiImageSequence::GetOrientation),
-   nuiAttribute<nglString>::SetterDelegate(this, &nuiImageSequence::SetOrientation));
-  
-  
+   nuiMakeDelegate(this, &nuiImageSequence::GetOrientation),
+   nuiMakeDelegate(this, &nuiImageSequence::SetOrientation));
   
 	AddAttribute(_T("Color"), AttributeColor);
 	AddAttribute(_T("Texture"), AttributeTexture);
@@ -316,22 +314,15 @@ void nuiImageSequence::SetNbFrames(uint32 nbFrames)
 }
 
 
-void nuiImageSequence::SetOrientation(nglString orientation)
+void nuiImageSequence::SetOrientation(nuiOrientation orientation)
 {
-  if (!orientation.Compare(_T("Vertical"), false))
-    mOrientation = nuiVertical;
-  else
-    mOrientation = nuiHorizontal;
-  
+  mOrientation = orientation;
   mRefreshTextures = true;  
 }
 
-nglString nuiImageSequence::GetOrientation()
+nuiOrientation nuiImageSequence::GetOrientation() const
 {
-  if (mOrientation == nuiVertical)
-    return nglString(_T("Vertical"));
-  
-  return nglString(_T("Horizontal"));
+  return mOrientation;
 }
 
 
@@ -406,7 +397,7 @@ void nuiImageSequence::SetColor(const nuiColor& color)
 }
 
 
-bool nuiImageSequence::IsInterpolated()
+bool nuiImageSequence::IsInterpolated() const
 {
   return mInterpolated;
 }

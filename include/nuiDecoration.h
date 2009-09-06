@@ -58,6 +58,8 @@ public:
   static nuiSimpleEventSource<0> DecorationsChanged;
   
   nglString GetCSSDeclaration() const;
+  
+  static nuiAttributeEditor* GetAttributeEditor(void* pTarget, nuiAttribute<const nglString&>* pAttribute);
 protected:
 
   bool mUseWidgetAlpha;

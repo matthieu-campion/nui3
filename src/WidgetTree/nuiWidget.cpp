@@ -309,7 +309,13 @@ void nuiWidget::InitAttributes()
                 nuiMakeDelegate(this, &nuiWidget::GetDecorationName),
                 nuiAttribute<const nglString&>::SetterDelegate(this, &nuiWidget::SetDecoration)));
 
-
+  nuiAttribute<const nglString&>* pDecoAttrib = new nuiAttribute<const nglString&>
+    (nglString(_T("Decoration")), nuiUnitNone,
+     nuiMakeDelegate(this, &nuiWidget::GetDecorationName),
+     nuiAttribute<const nglString&>::SetterDelegate(this, &nuiWidget::SetDecoration));
+  pDecoAttrib->SetEditor(nuiAttribute<const nglString&>::NewEditorDelegate(&nuiDecoration::GetAttributeEditor));
+  AddAttribute(pDecoAttrib);
+  
   AddAttribute(new nuiAttribute<nuiDecorationMode>
                (nglString(_T("DecorationMode")), nuiUnitNone,
                 nuiMakeDelegate(this, &nuiWidget::GetDecorationMode),

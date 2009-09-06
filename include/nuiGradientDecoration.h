@@ -52,8 +52,8 @@ public:
   void GetColors(nuiColor& color1, nuiColor& color2, nuiColor& color3, nuiColor& color4) const;
   void SetColors(const nuiColor& color1, const nuiColor& color2, const nuiColor& color3, const nuiColor& color4);
   
-  void SetOrientation(nglString orientation);
-  nglString GetOrientation();
+  void SetOrientation(nuiOrientation orientation);
+  nuiOrientation GetOrientation() const;
   
   const nuiColor& GetColor1() const;
 	void SetColor1(const nuiColor& color1);

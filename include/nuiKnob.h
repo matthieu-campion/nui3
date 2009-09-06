@@ -32,14 +32,14 @@ public:
   virtual nuiXMLNode* Serialize(nuiXMLNode* pParentNode, bool Recursive) const;
   
   void SetImageSequence(nuiImageSequence* pImageSequence);
-  nuiImageSequence* GetImageSequence();
+  nuiImageSequence* GetImageSequence() const;
   
   // attributes
-  const nglPath& GetSequencePath();
+  const nglPath& GetSequencePath() const;
   void SetSequencePath(const nglPath& rPath);
-  nglString GetOrientation();
-  void SetOrientation(nglString orientation);
-  uint32 GetNbFrames();
+  nuiOrientation GetOrientation() const;
+  void SetOrientation(nuiOrientation orientation);
+  uint32 GetNbFrames() const;
   void SetNbFrames(uint32 nbFrames);
 
   virtual nuiRange& GetRange(); ///< Return the Range used by this scroll bar. 
@@ -105,7 +105,7 @@ protected:
   
   nglPath mSequencePath;
   uint32 mSequenceNbFrames;
-  nglString mSequenceOrientation;
+  nuiOrientation mSequenceOrientation;
   bool mSequenceNeedRefresh;
 };
 

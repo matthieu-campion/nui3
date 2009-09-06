@@ -70,11 +70,8 @@ public:
   void SetTextPosition(nuiPosition Position); ///< Set the position of the text in the widget's rectangle.
   nuiPosition GetTextPosition(); ///< Get the position of the text in the widget's rectangle.
 
-  void SetOrientationStr(nglString orientation);
-  nglString GetOrientationStr();
-  
   void SetOrientation(nuiOrientation Orientation); ///< Set the orientation of the text in the widget's rectangle.
-  nuiOrientation GetOrientation(); ///< Get the orientation of the text in the widget's rectangle.
+  nuiOrientation GetOrientation() const; ///< Get the orientation of the text in the widget's rectangle.
 
   void SetBackground(bool bg); ///< If \param bg is true the label will clear its background before being drawn.
   bool GetBackground() const; ///< Return true if the label will clear its background before being drawn.

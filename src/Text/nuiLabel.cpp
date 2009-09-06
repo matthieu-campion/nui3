@@ -199,10 +199,10 @@ void nuiLabel::InitAttributes()
     nuiMakeDelegate(this, &nuiLabel::_GetFont), 
     nuiMakeDelegate(this, &nuiLabel::_SetFont)));
   
-  AddAttribute(new nuiAttribute<nglString>
+  AddAttribute(new nuiAttribute<nuiOrientation>
   (nglString(_T("Orientation")), nuiUnitNone,
-   nuiAttribute<nglString>::GetterDelegate(this, &nuiLabel::GetOrientationStr),
-   nuiAttribute<nglString>::SetterDelegate(this, &nuiLabel::SetOrientationStr)));
+   nuiMakeDelegate(this, &nuiLabel::GetOrientation),
+   nuiMakeDelegate(this, &nuiLabel::SetOrientation)));
   
 }
 
@@ -682,23 +682,6 @@ void nuiLabel::UseEllipsis(bool useEllipsis)
   InvalidateLayout();
 }
 
-void nuiLabel::SetOrientationStr(nglString orientation)
-{
-  if (!orientation.Compare(_T("Vertical"), false))
-    SetOrientation(nuiVertical);
-  else
-    SetOrientation(nuiHorizontal);
-}
-
-nglString nuiLabel::GetOrientationStr()
-{
-  if (GetOrientation() == nuiVertical)
-    return nglString(_T("Vertical"));
-  
-  return nglString(_T("Horizontal"));
-}
-
-
 void nuiLabel::SetOrientation(nuiOrientation Orientation)
 {
   if (mOrientation == Orientation)
@@ -709,7 +692,7 @@ void nuiLabel::SetOrientation(nuiOrientation Orientation)
   mTextChanged = true;
 }
 
-nuiOrientation nuiLabel::GetOrientation()
+nuiOrientation nuiLabel::GetOrientation() const
 {
   return mOrientation;
 }

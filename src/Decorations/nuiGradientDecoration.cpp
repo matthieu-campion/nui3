@@ -116,14 +116,14 @@ void nuiGradientDecoration::InitAttributes()
 {
   nuiAttribute<const nuiRect&>* AttributeRect = new nuiAttribute<const nuiRect&>
    (nglString(_T("ClientRect")), nuiUnitNone,
-    nuiAttribute<const nuiRect&>::GetterDelegate(this, &nuiGradientDecoration::GetSourceClientRect),
-    nuiAttribute<const nuiRect&>::SetterDelegate(this, &nuiGradientDecoration::SetSourceClientRect));
+    nuiMakeDelegate(this, &nuiGradientDecoration::GetSourceClientRect),
+    nuiMakeDelegate(this, &nuiGradientDecoration::SetSourceClientRect));
   AddAttribute(_T("ClientRect"), AttributeRect);
 
-  nuiAttribute<nglString>* AttributeOrientation = new nuiAttribute<nglString>
+  nuiAttribute<nuiOrientation>* AttributeOrientation = new nuiAttribute<nuiOrientation>
   (nglString(_T("Orientation")), nuiUnitNone,
-    nuiAttribute<nglString>::GetterDelegate(this, &nuiGradientDecoration::GetOrientation),
-    nuiAttribute<nglString>::SetterDelegate(this, &nuiGradientDecoration::SetOrientation));
+    nuiMakeDelegate(this, &nuiGradientDecoration::GetOrientation),
+    nuiMakeDelegate(this, &nuiGradientDecoration::SetOrientation));
   AddAttribute(_T("Orientation"), AttributeOrientation);
 
   nuiAttribute<uint32>* StrokeSize= new nuiAttribute<uint32>
@@ -310,22 +310,15 @@ void nuiGradientDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, c
 }
 
 
-void nuiGradientDecoration::SetOrientation(nglString orientation)
+void nuiGradientDecoration::SetOrientation(nuiOrientation orientation)
 {
-  if (!orientation.Compare(_T("Vertical"), false))
-    mOrientation = nuiVertical;
-  else
-    mOrientation = nuiHorizontal;
-    
+  mOrientation = orientation;
   Changed();
 }
 
-nglString nuiGradientDecoration::GetOrientation()
+nuiOrientation nuiGradientDecoration::GetOrientation() const
 {
-  if (mOrientation == nuiVertical)
-    return nglString(_T("Vertical"));
-
-  return nglString(_T("Horizontal"));
+  return mOrientation;
 }
 
 

@@ -31,10 +31,10 @@ public:
   uint32 GetNbFrames() const;
   void SetNbFrames(uint32 nbFrames);
   
-  void SetOrientation(nglString orientation);
-  nglString GetOrientation();
+  void SetOrientation(nuiOrientation orientation);
+  nuiOrientation GetOrientation() const;
   
-  bool IsInterpolated();
+  bool IsInterpolated() const;
   void SetInterpolated(bool set);
   
   const nglPath& GetTexturePath() const;

@@ -7,6 +7,7 @@
 
 #include "nui.h"
 #include "nuiDecoration.h"
+#include "nuiComboAttributeEditor.h"
 
 nuiDecoration::nuiDecoration(const nglString& rName)
 {
@@ -311,5 +312,20 @@ nglString nuiDecoration::GetCSSDeclaration() const
   
   decl.Add(_T("}")).AddNewLine().AddNewLine();
   return decl;
+}
+
+nuiAttributeEditor* nuiDecoration::GetAttributeEditor(void* pTarget, nuiAttribute<const nglString&>* pAttribute)
+{
+  std::vector<std::pair<nglString, nglString> > values;
+  DecorationMap::const_iterator it = mDecorations.begin();
+  DecorationMap::const_iterator end = mDecorations.end();
+  
+  while (it != end)
+  {
+    values.push_back(std::make_pair(it->first, it->first));
+    ++it;
+  }
+
+  return new nuiComboAttributeEditor<const nglString&>(nuiAttrib<const nglString&>(pTarget, pAttribute), values);
 }
 

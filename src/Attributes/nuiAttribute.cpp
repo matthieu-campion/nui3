@@ -901,6 +901,84 @@ bool nuiAttribute<nuiPosition>::FromString(nuiPosition& rValue, const nglString&
 }
 
 
+//********************************
+//
+// nuiOrientation
+//
+
+template class nuiAttribute<nuiOrientation>;
+
+template <>
+nuiAttributeEditor* nuiAttribute<nuiOrientation>::GetDefaultEditor(void* pTarget)
+{
+  std::vector<std::pair<nglString, nuiOrientation> > values;
+  values.push_back(std::make_pair(_T("Horizontal"), nuiHorizontal));
+  values.push_back(std::make_pair(_T("Vertical"), nuiVertical));
+  return new nuiComboAttributeEditor<nuiOrientation>(nuiAttrib<nuiOrientation>(pTarget, this), values);
+}
+
+template <>
+void nuiAttribute<nuiOrientation>::FormatDefault(nuiOrientation value, nglString & string)
+{
+  string = nuiGetOrientation(value);
+}
+
+
+template <>
+bool nuiAttribute<nuiOrientation>::ToString(nuiOrientation Value, nglString& rString) const
+{
+  rString = nuiGetOrientation(Value);
+  return true;
+}
+
+template <>
+bool nuiAttribute<nuiOrientation>::FromString(nuiOrientation& rValue, const nglString& rString) const
+{
+  rValue = nuiGetOrientation(rString);
+  return true;
+}
+
+
+
+//********************************
+//
+// nuiDirection
+//
+
+template class nuiAttribute<nuiDirection>;
+
+template <>
+nuiAttributeEditor* nuiAttribute<nuiDirection>::GetDefaultEditor(void* pTarget)
+{
+  std::vector<std::pair<nglString, nuiDirection> > values;
+  values.push_back(std::make_pair(_T("Forward"), nuiForward));
+  values.push_back(std::make_pair(_T("Backward"), nuiBackward));
+  return new nuiComboAttributeEditor<nuiDirection>(nuiAttrib<nuiDirection>(pTarget, this), values);
+}
+
+template <>
+void nuiAttribute<nuiDirection>::FormatDefault(nuiDirection value, nglString & string)
+{
+  string = nuiGetDirection(value);
+}
+
+
+template <>
+bool nuiAttribute<nuiDirection>::ToString(nuiDirection Value, nglString& rString) const
+{
+  rString = nuiGetDirection(Value);
+  return true;
+}
+
+template <>
+bool nuiAttribute<nuiDirection>::FromString(nuiDirection& rValue, const nglString& rString) const
+{
+  rValue = nuiGetDirection(rString);
+  return true;
+}
+
+
+
 
 
 
@@ -1582,8 +1660,10 @@ bool nuiAttribute<nuiDecorationLayer>::FromString(nuiDecorationLayer& rValue, co
 template <>
 nuiAttributeEditor* nuiAttribute<nuiDecorationLayer>::GetDefaultEditor(void* pTarget)
 {
-  // #FIXME TODO
-  return nuiCreateGenericAttributeEditor(pTarget, this);
+  std::vector<std::pair<nglString, nuiDecorationLayer> > values;
+  values.push_back(std::make_pair(_T("Back"), eLayerBack));
+  values.push_back(std::make_pair(_T("Front"), eLayerFront));
+  return new nuiComboAttributeEditor<nuiDecorationLayer>(nuiAttrib<nuiDecorationLayer>(pTarget, this), values);
 }
 
 template <>

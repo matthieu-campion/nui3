@@ -1458,6 +1458,42 @@ template <>
 bool nuiAttribute<nuiPosition>::FromString(nuiPosition& rValue, const nglString& rString) const;
 
 
+//********************************
+//
+// nuiOrientation
+//
+
+template <>
+nuiAttributeEditor* nuiAttribute<nuiOrientation>::GetDefaultEditor(void* pTarget);
+
+template <>
+void nuiAttribute<nuiOrientation>::FormatDefault(nuiOrientation value, nglString& string);
+
+template <>
+bool nuiAttribute<nuiOrientation>::ToString(nuiOrientation Value, nglString& rString) const;
+
+template <>
+bool nuiAttribute<nuiOrientation>::FromString(nuiOrientation& rValue, const nglString& rString) const;
+
+
+
+//********************************
+//
+// nuiDirection
+//
+
+template <>
+nuiAttributeEditor* nuiAttribute<nuiDirection>::GetDefaultEditor(void* pTarget);
+
+template <>
+void nuiAttribute<nuiDirection>::FormatDefault(nuiDirection value, nglString& string);
+
+template <>
+bool nuiAttribute<nuiDirection>::ToString(nuiDirection Value, nglString& rString) const;
+
+template <>
+bool nuiAttribute<nuiDirection>::FromString(nuiDirection& rValue, const nglString& rString) const;
+
 
 
 
