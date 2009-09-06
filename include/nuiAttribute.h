@@ -1676,6 +1676,8 @@ bool nuiAttribute<nuiDecorationMode>::FromString(nuiDecorationMode& rValue, cons
 template <>
 void nuiAttribute<nuiDecorationMode>::FormatDefault(nuiDecorationMode value, nglString& string);
 
+template <>
+nuiAttributeEditor* nuiAttribute<nuiDecorationMode>::GetDefaultEditor(void* pTarget);
 
 
 //********************************
@@ -1692,6 +1694,8 @@ bool nuiAttribute<nuiShapeMode>::FromString(nuiShapeMode& rValue, const nglStrin
 template <>
 void nuiAttribute<nuiShapeMode>::FormatDefault(nuiShapeMode value, nglString& string);
 
+template <>
+nuiAttributeEditor* nuiAttribute<nuiShapeMode>::GetDefaultEditor(void* pTarget);
 
 
 
@@ -1733,6 +1737,8 @@ nuiAttributeEditor* nuiAttribute<nuiDecorationLayer>::GetDefaultEditor(void* pTa
 template <>
 void nuiAttribute<nuiDecorationLayer>::FormatDefault(nuiDecorationLayer value, nglString& string);
 
+template <>
+nuiAttributeEditor* nuiAttribute<nuiDecorationLayer>::GetDefaultEditor(void* pTarget);
 
 
 //********************************
@@ -1829,6 +1835,9 @@ bool nuiAttribute<nuiBlendFunc>::FromString(nuiBlendFunc& rValue, const nglStrin
 template <>
 void nuiAttribute<nuiBlendFunc>::FormatDefault(nuiBlendFunc value, nglString& string);
 
+template <>
+nuiAttributeEditor* nuiAttribute<nuiBlendFunc>::GetDefaultEditor(void* pTarget);
+
 
 //********************************
 //
@@ -1843,4 +1852,7 @@ bool nuiAttribute<nuiExpandMode>::FromString(nuiExpandMode& rValue, const nglStr
 
 template <>
 void nuiAttribute<nuiExpandMode>::FormatDefault(nuiExpandMode value, nglString& string);
+
+template <>
+nuiAttributeEditor* nuiAttribute<nuiExpandMode>::GetDefaultEditor(void* pTarget);
 

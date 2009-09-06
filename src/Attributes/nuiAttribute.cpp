@@ -857,10 +857,6 @@ template class nuiAttribute<nuiPosition>;
 template <>
 nuiAttributeEditor* nuiAttribute<nuiPosition>::GetDefaultEditor(void* pTarget)
 {
-  //#FIXME TODO
-  // if this code is executed, it means a case processing is missing
-  //return nuiCreateGenericAttributeEditor(pTarget, this);
-  
   std::vector<std::pair<nglString, nuiPosition> > values;
   values.push_back(std::make_pair(_T("Left"), nuiLeft));
   values.push_back(std::make_pair(_T("Right"), nuiRight));
@@ -1407,14 +1403,15 @@ bool nuiAttribute<nuiDecorationMode>::FromString(nuiDecorationMode& rValue, cons
 }
 
 
-
-
-
-
-
-
-
-
+template <>
+nuiAttributeEditor* nuiAttribute<nuiDecorationMode>::GetDefaultEditor(void* pTarget)
+{
+  std::vector<std::pair<nglString, nuiDecorationMode> > values;
+  values.push_back(std::make_pair(_T("Overdraw"), eDecorationOverdraw));
+  values.push_back(std::make_pair(_T("Border"), eDecorationBorder));
+  values.push_back(std::make_pair(_T("Client Only"), eDecorationClientOnly));
+  return new nuiComboAttributeEditor<nuiDecorationMode>(nuiAttrib<nuiDecorationMode>(pTarget, this), values);
+}
 
 
 
@@ -1491,6 +1488,17 @@ bool nuiAttribute<nuiShapeMode>::FromString(nuiShapeMode& rValue, const nglStrin
   }
 
   return false;
+}
+
+
+template <>
+nuiAttributeEditor* nuiAttribute<nuiShapeMode>::GetDefaultEditor(void* pTarget)
+{
+  std::vector<std::pair<nglString, nuiShapeMode> > values;
+  values.push_back(std::make_pair(_T("Stroke"), eStrokeShape));
+  values.push_back(std::make_pair(_T("Fill"), eFillShape));
+  values.push_back(std::make_pair(_T("Stroke and Fill"), eStrokeAndFillShape));
+  return new nuiComboAttributeEditor<nuiShapeMode>(nuiAttrib<nuiShapeMode>(pTarget, this), values);
 }
 
 
@@ -1740,9 +1748,35 @@ bool nuiAttribute<nuiMouseCursor>::FromString(nuiMouseCursor& rValue, const nglS
 template <>
 nuiAttributeEditor* nuiAttribute<nuiMouseCursor>::GetDefaultEditor(void* pTarget)
 {
-  // #FIXME TODO
-  return nuiCreateGenericAttributeEditor(pTarget, this);
+  std::vector<std::pair<nglString, nuiMouseCursor> > values;
+  values.push_back(std::make_pair(_T("Do not set"), eCursorDoNotSet));
+  values.push_back(std::make_pair(_T("None"), eCursorNone));
+  values.push_back(std::make_pair(_T("Arrow"), eCursorArrow));
+  values.push_back(std::make_pair(_T("Cross"), eCursorCross));
+  values.push_back(std::make_pair(_T("IBeam"), eCursorIBeam));
+  values.push_back(std::make_pair(_T("Hand"), eCursorHand));
+  values.push_back(std::make_pair(_T("ClosedHand"), eCursorClosedHand));
+  values.push_back(std::make_pair(_T("Help"), eCursorHelp));
+  values.push_back(std::make_pair(_T("Wait"), eCursorWait));
+  values.push_back(std::make_pair(_T("Caret"), eCursorCaret));
+  values.push_back(std::make_pair(_T("DnD"), eCursorDnD));
+  values.push_back(std::make_pair(_T("Forbid"), eCursorForbid));
+  values.push_back(std::make_pair(_T("Move"), eCursorMove));
+  values.push_back(std::make_pair(_T("Resize"), eCursorResize));
+  values.push_back(std::make_pair(_T("ResizeNS"), eCursorResizeNS));
+  values.push_back(std::make_pair(_T("ResizeWE"), eCursorResizeWE));
+  values.push_back(std::make_pair(_T("ResizeN"), eCursorResizeN));
+  values.push_back(std::make_pair(_T("ResizeS"), eCursorResizeS));
+  values.push_back(std::make_pair(_T("ResizeW"), eCursorResizeW));
+  values.push_back(std::make_pair(_T("ResizeE"), eCursorResizeE));
+  values.push_back(std::make_pair(_T("ResizeNW"), eCursorResizeNW));
+  values.push_back(std::make_pair(_T("ResizeNE"), eCursorResizeNE));
+  values.push_back(std::make_pair(_T("ResizeSW"), eCursorResizeSW));
+  values.push_back(std::make_pair(_T("ResizeSE"), eCursorResizeSE));
+  return new nuiComboAttributeEditor<nuiMouseCursor>(nuiAttrib<nuiMouseCursor>(pTarget, this), values);
 }
+
+
 
 template <>
 void nuiAttribute<nuiMouseCursor>::FormatDefault(nuiMouseCursor value, nglString& string)
@@ -2223,6 +2257,33 @@ bool nuiAttribute<nuiBlendFunc>::FromString(nuiBlendFunc& rValue, const nglStrin
   return false;
 }
 
+template <>
+nuiAttributeEditor* nuiAttribute<nuiBlendFunc>::GetDefaultEditor(void* pTarget)
+{
+  std::vector<std::pair<nglString, nuiBlendFunc> > values;
+  values.push_back(std::make_pair(_T("Source"), nuiBlendSource));
+  values.push_back(std::make_pair(_T("Transp"), nuiBlendTransp));
+  values.push_back(std::make_pair(_T("Clear"), nuiBlendClear));
+  values.push_back(std::make_pair(_T("Dest"), nuiBlendDest));
+  values.push_back(std::make_pair(_T("Over"), nuiBlendOver));
+  values.push_back(std::make_pair(_T("OverRev"), nuiBlendOverRev));
+  values.push_back(std::make_pair(_T("In"), nuiBlendIn));
+  values.push_back(std::make_pair(_T("InRev"), nuiBlendInRev));
+  values.push_back(std::make_pair(_T("Out"), nuiBlendOut));
+  values.push_back(std::make_pair(_T("OutRev"), nuiBlendOutRev));
+  values.push_back(std::make_pair(_T("Top"), nuiBlendTop));
+  values.push_back(std::make_pair(_T("TopRev"), nuiBlendTopRev));
+  values.push_back(std::make_pair(_T("XOR"), nuiBlendXOR));
+  values.push_back(std::make_pair(_T("Add"), nuiBlendAdd));
+  values.push_back(std::make_pair(_T("Saturate"), nuiBlendSaturate));
+  values.push_back(std::make_pair(_T("Clear"), nuiBlendClear));
+  values.push_back(std::make_pair(_T("TranspAdd"), nuiBlendTranspAdd));
+  values.push_back(std::make_pair(_T("TranspOver"), nuiBlendTranspOver));
+  values.push_back(std::make_pair(_T("TranspInRev"), nuiBlendTranspInRev));
+  return new nuiComboAttributeEditor<nuiBlendFunc>(nuiAttrib<nuiBlendFunc>(pTarget, this), values);
+}
+
+
 //********************************
 //
 // ExpandMode
@@ -2285,6 +2346,17 @@ bool nuiAttribute<nuiExpandMode>::FromString(nuiExpandMode& rValue, const nglStr
   
   rValue = nuiExpandFixed;
   return false;
+}
+
+template <>
+nuiAttributeEditor* nuiAttribute<nuiExpandMode>::GetDefaultEditor(void* pTarget)
+{
+  std::vector<std::pair<nglString, nuiExpandMode> > values;
+  values.push_back(std::make_pair(_T("Fixed"), nuiExpandFixed));
+  values.push_back(std::make_pair(_T("Grow"), nuiExpandGrow));
+  values.push_back(std::make_pair(_T("Shrink"), nuiExpandShrink));
+  values.push_back(std::make_pair(_T("Shrink and Grow"), nuiExpandShrinkAndGrow));
+  return new nuiComboAttributeEditor<nuiExpandMode>(nuiAttrib<nuiExpandMode>(pTarget, this), values);
 }
 
 

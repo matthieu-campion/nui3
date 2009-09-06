@@ -85,6 +85,9 @@ void CalcIdealTreeSize(nuiTreeNode* pTree, float& w, float& h)
   }
 }
 
+#define VERTICAL_MARGIN 4
+#define HORIZONTAL_MARGIN 4
+
 nuiRect nuiComboBox::CalcIdealSize()
 {
   float w=0.f, h=0.f;
@@ -94,7 +97,7 @@ nuiRect nuiComboBox::CalcIdealSize()
     CalcIdealTreeSize(mpChoicesTree, w, h);
     
   }
-  nuiRect rect(0.f,0.f, w + mHandleWidth+mHandleOffset, MAX(h,mHandleHeight));
+  nuiRect rect(0.f,0.f, w + mHandleWidth + mHandleOffset + HORIZONTAL_MARGIN, MAX(h,mHandleHeight) + VERTICAL_MARGIN);
   return rect;  
 }
 

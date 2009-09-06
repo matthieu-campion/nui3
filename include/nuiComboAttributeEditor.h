@@ -76,9 +76,8 @@ private:
     for (uint32 i = 0; i < mValues.size(); i++)
     {
       nuiTreeNode* pNode = new nuiTreeNode(mValues[i].first);
-      nglString val;
-      mAttribute.FormatValue(mValues[i].second, val);
-      pNode->SetProperty(_T("Value"), val);
+      nuiToken<T>* pToken = new nuiToken<T>(mValues[i].second);
+      pNode->SetToken(pToken);
       pTree->AddChild(pNode);
     }
     
@@ -86,21 +85,35 @@ private:
     AddChild(mpCombo);
     
     mEventSink.Connect(mpCombo->SelectionChanged, &nuiComboAttributeEditor::OnChanged);
+    
+    if (mIndexed)
+      OnAttributeChanged(mAttribute.Get(mIndex));
+    else
+      OnAttributeChanged(mAttribute.Get());
   }
   
   
   bool OnChanged(const nuiEvent& rEvent)
   {
-    mpCombo->SelectionChanged.Disable();
-    if (mIndexed)
+    const nuiTreeNode* pNode = mpCombo->GetSelected();
+    nglString str;
+    if (pNode)
     {
-      mAttribute.FromString(mIndex, mpCombo->GetSelected()->GetProperty(_T("Value")));
+      nuiToken<T>* pToken = (nuiToken<T>*)pNode->GetToken();
+      T val = pToken->Token;
+
+      mpCombo->SelectionChanged.Disable();
+      if (mIndexed)
+      {
+        mAttribute.Set(mIndex, val);
+      }
+      else
+      {
+        mAttribute.Set(val);
+      }
+      mpCombo->SelectionChanged.Enable();
     }
-    else
-    {
-      mAttribute.FromString(mpCombo->GetSelected()->GetProperty(_T("Value")));
-    }
-    mpCombo->SelectionChanged.Enable();
+    
     return true;
   }  
   
@@ -108,16 +121,17 @@ private:
   
   void OnAttributeChanged(T val)
   {
-    nglString str;
-    mAttribute.FormatValue(val, str);
-
     const nuiTreeNode* pTree = mpCombo->GetChoices();
     for (uint32 i = 0; i < pTree->GetChildrenCount(); i++)
     {
       const nuiTreeNode* pNode = (const nuiTreeNode*)pTree->GetChild(i);
-      if (pNode->GetProperty(_T("Value")) == str)
+      nuiToken<T>* pToken = (nuiToken<T>*)pNode->GetToken();
+      T tval = pToken->Token;
+      if (val == tval)
       {
+        mpCombo->SelectionChanged.Disable();
         mpCombo->SetSelected(pNode);
+        mpCombo->SelectionChanged.Enable();
         break;
       }
     }
