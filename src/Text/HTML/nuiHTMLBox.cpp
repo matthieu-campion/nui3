@@ -96,16 +96,13 @@ void nuiHTMLBox::Layout(nuiHTMLContext& rContext)
   uint32 count_in_line = 0;
   float lineh = 0;
   float lastlineh = 0;
-  for (uint32 i = 0; i < mItems.size(); i++)
-  {
-    mItems[i]->Layout(context);
-  }
   
   for (uint32 i = 0; i < mItems.size(); i++)
   {
     //printf("box layout item %d start\n", i);
     
     nuiHTMLItem* pItem = mItems[i];
+    pItem->Layout(context);
     nuiRect r(pItem->GetIdealRect());
     
     bool linebreak = pItem->IsLineBreak();
@@ -133,7 +130,7 @@ void nuiHTMLBox::Layout(nuiHTMLContext& rContext)
     }
     
     lineh = MAX(lineh, r.GetHeight());
-    X += r.GetWidth() + context.mVSpace;
+    X += r.GetWidth() + context.mHSpace;
     
     count_in_line++;
     //printf("box layout item %d done\n", i);
