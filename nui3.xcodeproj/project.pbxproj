@@ -733,7 +733,6 @@
 		E5429FCE0C3F0A5900225219 /* nuiCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816CB80C3CECAB00902DFE /* nuiCommand.h */; };
 		E5429FD00C3F0A5900225219 /* nglPath.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816CA00C3CECAB00902DFE /* nglPath.h */; };
 		E5429FD20C3F0A5900225219 /* nglOFile.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816C9D0C3CECAB00902DFE /* nglOFile.h */; };
-		E5429FD30C3F0A5900225219 /* nuiShader.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816CFC0C3CECAB00902DFE /* nuiShader.h */; };
 		E5429FD40C3F0A5900225219 /* nuiUserArea.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816D170C3CECAB00902DFE /* nuiUserArea.h */; };
 		E5429FD50C3F0A5900225219 /* nglMath.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816C990C3CECAB00902DFE /* nglMath.h */; };
 		E5429FD60C3F0A5900225219 /* nuiMeshEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816CDC0C3CECAB00902DFE /* nuiMeshEngine.h */; };
@@ -775,7 +774,6 @@
 		E5429FFE0C3F0A5900225219 /* nuiContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816CBA0C3CECAB00902DFE /* nuiContainer.h */; };
 		E5429FFF0C3F0A5900225219 /* nglStream.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816CA30C3CECAB00902DFE /* nglStream.h */; };
 		E542A0000C3F0A5900225219 /* nuiDrawContext.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816CBF0C3CECAB00902DFE /* nuiDrawContext.h */; };
-		E542A0010C3F0A5900225219 /* nuiShaderView.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816CFD0C3CECAB00902DFE /* nuiShaderView.h */; };
 		E542A0020C3F0A5900225219 /* nuiRenderArray.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816CF70C3CECAB00902DFE /* nuiRenderArray.h */; };
 		E542A0030C3F0A5900225219 /* nglKeyboard.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816C970C3CECAB00902DFE /* nglKeyboard.h */; };
 		E542A0040C3F0A5900225219 /* nglTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816CA70C3CECAB00902DFE /* nglTimer.h */; };
@@ -1019,7 +1017,6 @@
 		E542A12F0C3F0A5900225219 /* nglImageCodec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D890C3CECAB00902DFE /* nglImageCodec.cpp */; };
 		E542A1310C3F0A5900225219 /* nglTime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816E070C3CECAB00902DFE /* nglTime.cpp */; };
 		E542A1320C3F0A5900225219 /* nuiObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D620C3CECAB00902DFE /* nuiObject.cpp */; };
-		E542A1330C3F0A5900225219 /* nuiShaderView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DD90C3CECAB00902DFE /* nuiShaderView.cpp */; };
 		E542A1340C3F0A5900225219 /* nui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D520C3CECAB00902DFE /* nui.cpp */; };
 		E542A1350C3F0A5900225219 /* nuiSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DDB0C3CECAB00902DFE /* nuiSlider.cpp */; };
 		E542A1360C3F0A5900225219 /* nuiGradient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DB10C3CECAB00902DFE /* nuiGradient.cpp */; };
@@ -1102,7 +1099,6 @@
 		E542A18D0C3F0A5900225219 /* nuiAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D530C3CECAB00902DFE /* nuiAnimation.cpp */; };
 		E542A18E0C3F0A5900225219 /* nglOFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DE80C3CECAB00902DFE /* nglOFile.cpp */; };
 		E542A18F0C3F0A5900225219 /* nglFontBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D7C0C3CECAB00902DFE /* nglFontBase.cpp */; };
-		E542A1900C3F0A5900225219 /* nuiShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DBF0C3CECAB00902DFE /* nuiShader.cpp */; };
 		E542A1910C3F0A5900225219 /* nuiStateDummy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DDD0C3CECAB00902DFE /* nuiStateDummy.cpp */; };
 		E542A1930C3F0A5900225219 /* nuiDrawContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DAE0C3CECAB00902DFE /* nuiDrawContext.cpp */; };
 		E542A1940C3F0A5900225219 /* nglImageJPEGCodec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D8A0C3CECAB00902DFE /* nglImageJPEGCodec.cpp */; };
@@ -1679,7 +1675,6 @@
 		E58176850C3D110A00902DFE /* nuiCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816CB80C3CECAB00902DFE /* nuiCommand.h */; };
 		E58176870C3D110A00902DFE /* nglPath.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816CA00C3CECAB00902DFE /* nglPath.h */; };
 		E58176890C3D110A00902DFE /* nglOFile.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816C9D0C3CECAB00902DFE /* nglOFile.h */; };
-		E581768A0C3D110A00902DFE /* nuiShader.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816CFC0C3CECAB00902DFE /* nuiShader.h */; };
 		E581768B0C3D110A00902DFE /* nuiUserArea.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816D170C3CECAB00902DFE /* nuiUserArea.h */; };
 		E581768C0C3D110A00902DFE /* nglMath.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816C990C3CECAB00902DFE /* nglMath.h */; };
 		E581768D0C3D110A00902DFE /* nuiMeshEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816CDC0C3CECAB00902DFE /* nuiMeshEngine.h */; };
@@ -1721,7 +1716,6 @@
 		E58176B50C3D110A00902DFE /* nuiContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816CBA0C3CECAB00902DFE /* nuiContainer.h */; };
 		E58176B60C3D110A00902DFE /* nglStream.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816CA30C3CECAB00902DFE /* nglStream.h */; };
 		E58176B70C3D110A00902DFE /* nuiDrawContext.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816CBF0C3CECAB00902DFE /* nuiDrawContext.h */; };
-		E58176B80C3D110A00902DFE /* nuiShaderView.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816CFD0C3CECAB00902DFE /* nuiShaderView.h */; };
 		E58176B90C3D110A00902DFE /* nuiRenderArray.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816CF70C3CECAB00902DFE /* nuiRenderArray.h */; };
 		E58176BA0C3D110A00902DFE /* nglKeyboard.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816C970C3CECAB00902DFE /* nglKeyboard.h */; };
 		E58176BB0C3D110A00902DFE /* nglTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816CA70C3CECAB00902DFE /* nglTimer.h */; };
@@ -1835,7 +1829,6 @@
 		E58177420C3D112C00902DFE /* nglImageCodec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D890C3CECAB00902DFE /* nglImageCodec.cpp */; };
 		E58177440C3D112C00902DFE /* nglTime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816E070C3CECAB00902DFE /* nglTime.cpp */; };
 		E58177450C3D112C00902DFE /* nuiObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D620C3CECAB00902DFE /* nuiObject.cpp */; };
-		E58177460C3D112C00902DFE /* nuiShaderView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DD90C3CECAB00902DFE /* nuiShaderView.cpp */; };
 		E58177480C3D112C00902DFE /* nuiSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DDB0C3CECAB00902DFE /* nuiSlider.cpp */; };
 		E58177490C3D112C00902DFE /* nuiGradient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DB10C3CECAB00902DFE /* nuiGradient.cpp */; };
 		E581774A0C3D112C00902DFE /* nuiText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816E030C3CECAB00902DFE /* nuiText.cpp */; };
@@ -1913,7 +1906,6 @@
 		E58177A40C3D112C00902DFE /* nuiAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D530C3CECAB00902DFE /* nuiAnimation.cpp */; };
 		E58177A50C3D112C00902DFE /* nglOFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DE80C3CECAB00902DFE /* nglOFile.cpp */; };
 		E58177A60C3D112C00902DFE /* nglFontBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D7C0C3CECAB00902DFE /* nglFontBase.cpp */; };
-		E58177A70C3D112C00902DFE /* nuiShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DBF0C3CECAB00902DFE /* nuiShader.cpp */; };
 		E58177A80C3D112C00902DFE /* nuiStateDummy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DDD0C3CECAB00902DFE /* nuiStateDummy.cpp */; };
 		E58177AA0C3D112C00902DFE /* nuiDrawContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DAE0C3CECAB00902DFE /* nuiDrawContext.cpp */; };
 		E58177AB0C3D112C00902DFE /* nglImageJPEGCodec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D8A0C3CECAB00902DFE /* nglImageJPEGCodec.cpp */; };
@@ -2150,7 +2142,6 @@
 		E592C1040EFE8CCC00340B35 /* nuiCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816CB80C3CECAB00902DFE /* nuiCommand.h */; };
 		E592C1050EFE8CCC00340B35 /* nglPath.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816CA00C3CECAB00902DFE /* nglPath.h */; };
 		E592C1060EFE8CCC00340B35 /* nglOFile.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816C9D0C3CECAB00902DFE /* nglOFile.h */; };
-		E592C1070EFE8CCC00340B35 /* nuiShader.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816CFC0C3CECAB00902DFE /* nuiShader.h */; };
 		E592C1080EFE8CCC00340B35 /* nuiUserArea.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816D170C3CECAB00902DFE /* nuiUserArea.h */; };
 		E592C1090EFE8CCC00340B35 /* nglMath.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816C990C3CECAB00902DFE /* nglMath.h */; };
 		E592C10A0EFE8CCC00340B35 /* nuiMeshEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816CDC0C3CECAB00902DFE /* nuiMeshEngine.h */; };
@@ -2192,7 +2183,6 @@
 		E592C12F0EFE8CCC00340B35 /* nuiContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816CBA0C3CECAB00902DFE /* nuiContainer.h */; };
 		E592C1300EFE8CCC00340B35 /* nglStream.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816CA30C3CECAB00902DFE /* nglStream.h */; };
 		E592C1310EFE8CCC00340B35 /* nuiDrawContext.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816CBF0C3CECAB00902DFE /* nuiDrawContext.h */; };
-		E592C1320EFE8CCC00340B35 /* nuiShaderView.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816CFD0C3CECAB00902DFE /* nuiShaderView.h */; };
 		E592C1330EFE8CCC00340B35 /* nuiRenderArray.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816CF70C3CECAB00902DFE /* nuiRenderArray.h */; };
 		E592C1340EFE8CCC00340B35 /* nglKeyboard.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816C970C3CECAB00902DFE /* nglKeyboard.h */; };
 		E592C1350EFE8CCC00340B35 /* nglTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816CA70C3CECAB00902DFE /* nglTimer.h */; };
@@ -2695,7 +2685,6 @@
 		E592C3AD0EFE8CCC00340B35 /* nglImageCodec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D890C3CECAB00902DFE /* nglImageCodec.cpp */; };
 		E592C3AE0EFE8CCC00340B35 /* nglTime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816E070C3CECAB00902DFE /* nglTime.cpp */; };
 		E592C3AF0EFE8CCC00340B35 /* nuiObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D620C3CECAB00902DFE /* nuiObject.cpp */; };
-		E592C3B00EFE8CCC00340B35 /* nuiShaderView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DD90C3CECAB00902DFE /* nuiShaderView.cpp */; };
 		E592C3B10EFE8CCC00340B35 /* nui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D520C3CECAB00902DFE /* nui.cpp */; };
 		E592C3B20EFE8CCC00340B35 /* nuiSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DDB0C3CECAB00902DFE /* nuiSlider.cpp */; };
 		E592C3B30EFE8CCC00340B35 /* nuiGradient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DB10C3CECAB00902DFE /* nuiGradient.cpp */; };
@@ -2774,7 +2763,6 @@
 		E592C4030EFE8CCC00340B35 /* nuiAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D530C3CECAB00902DFE /* nuiAnimation.cpp */; };
 		E592C4040EFE8CCC00340B35 /* nglOFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DE80C3CECAB00902DFE /* nglOFile.cpp */; };
 		E592C4050EFE8CCC00340B35 /* nglFontBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D7C0C3CECAB00902DFE /* nglFontBase.cpp */; };
-		E592C4060EFE8CCC00340B35 /* nuiShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DBF0C3CECAB00902DFE /* nuiShader.cpp */; };
 		E592C4070EFE8CCC00340B35 /* nuiStateDummy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DDD0C3CECAB00902DFE /* nuiStateDummy.cpp */; };
 		E592C4080EFE8CCC00340B35 /* nuiDrawContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DAE0C3CECAB00902DFE /* nuiDrawContext.cpp */; };
 		E592C4090EFE8CCC00340B35 /* nglImageJPEGCodec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D8A0C3CECAB00902DFE /* nglImageJPEGCodec.cpp */; };
@@ -3806,8 +3794,6 @@
 		E5816CF90C3CECAB00902DFE /* nuiScrollBar.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiScrollBar.h; path = ../../include/nuiScrollBar.h; sourceTree = "<group>"; };
 		E5816CFA0C3CECAB00902DFE /* nuiScrollView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiScrollView.h; path = ../../include/nuiScrollView.h; sourceTree = "<group>"; };
 		E5816CFB0C3CECAB00902DFE /* nuiShadeContainer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiShadeContainer.h; path = ../../include/nuiShadeContainer.h; sourceTree = "<group>"; };
-		E5816CFC0C3CECAB00902DFE /* nuiShader.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiShader.h; path = ../../include/nuiShader.h; sourceTree = "<group>"; };
-		E5816CFD0C3CECAB00902DFE /* nuiShaderView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiShaderView.h; path = ../../include/nuiShaderView.h; sourceTree = "<group>"; };
 		E5816CFE0C3CECAB00902DFE /* nuiShape.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiShape.h; path = ../../include/nuiShape.h; sourceTree = "<group>"; };
 		E5816CFF0C3CECAB00902DFE /* nuiShapeView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiShapeView.h; path = ../../include/nuiShapeView.h; sourceTree = "<group>"; };
 		E5816D000C3CECAB00902DFE /* nuiSlider.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiSlider.h; path = ../../include/nuiSlider.h; sourceTree = "<group>"; };
@@ -3942,7 +3928,6 @@
 		E5816DBC0C3CECAB00902DFE /* nuiRectPath.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiRectPath.cpp; path = src/Renderers/nuiRectPath.cpp; sourceTree = SOURCE_ROOT; };
 		E5816DBD0C3CECAB00902DFE /* nuiRenderArray.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiRenderArray.cpp; path = src/Renderers/nuiRenderArray.cpp; sourceTree = SOURCE_ROOT; };
 		E5816DBE0C3CECAB00902DFE /* nuiRenderState.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiRenderState.cpp; path = src/Renderers/nuiRenderState.cpp; sourceTree = SOURCE_ROOT; };
-		E5816DBF0C3CECAB00902DFE /* nuiShader.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiShader.cpp; path = src/Renderers/nuiShader.cpp; sourceTree = SOURCE_ROOT; };
 		E5816DC00C3CECAB00902DFE /* nuiShape.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiShape.cpp; path = src/Renderers/nuiShape.cpp; sourceTree = SOURCE_ROOT; };
 		E5816DC10C3CECAB00902DFE /* nuiSoftwarePainter.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiSoftwarePainter.cpp; path = src/Renderers/nuiSoftwarePainter.cpp; sourceTree = SOURCE_ROOT; };
 		E5816DC20C3CECAB00902DFE /* nuiSpline.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiSpline.cpp; path = src/Renderers/nuiSpline.cpp; sourceTree = SOURCE_ROOT; };
@@ -3962,7 +3947,6 @@
 		E5816DD60C3CECAB00902DFE /* nuiRadioButton.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiRadioButton.cpp; path = src/SimpleWidgets/nuiRadioButton.cpp; sourceTree = SOURCE_ROOT; };
 		E5816DD70C3CECAB00902DFE /* nuiRadioButtonGroup.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiRadioButtonGroup.cpp; path = src/SimpleWidgets/nuiRadioButtonGroup.cpp; sourceTree = SOURCE_ROOT; };
 		E5816DD80C3CECAB00902DFE /* nuiScrollBar.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiScrollBar.cpp; path = src/SimpleWidgets/nuiScrollBar.cpp; sourceTree = SOURCE_ROOT; };
-		E5816DD90C3CECAB00902DFE /* nuiShaderView.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiShaderView.cpp; path = src/SimpleWidgets/nuiShaderView.cpp; sourceTree = SOURCE_ROOT; };
 		E5816DDA0C3CECAB00902DFE /* nuiShapeView.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiShapeView.cpp; path = src/SimpleWidgets/nuiShapeView.cpp; sourceTree = SOURCE_ROOT; };
 		E5816DDB0C3CECAB00902DFE /* nuiSlider.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiSlider.cpp; path = src/SimpleWidgets/nuiSlider.cpp; sourceTree = SOURCE_ROOT; };
 		E5816DDC0C3CECAB00902DFE /* nuiSplineEdit.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiSplineEdit.cpp; path = src/SimpleWidgets/nuiSplineEdit.cpp; sourceTree = SOURCE_ROOT; };
@@ -5512,8 +5496,6 @@
 				E5816CF70C3CECAB00902DFE /* nuiRenderArray.h */,
 				E5816DBE0C3CECAB00902DFE /* nuiRenderState.cpp */,
 				E5816CF80C3CECAB00902DFE /* nuiRenderState.h */,
-				E5816DBF0C3CECAB00902DFE /* nuiShader.cpp */,
-				E5816CFC0C3CECAB00902DFE /* nuiShader.h */,
 				E5816DC00C3CECAB00902DFE /* nuiShape.cpp */,
 				E5816CFE0C3CECAB00902DFE /* nuiShape.h */,
 				E5816DC10C3CECAB00902DFE /* nuiSoftwarePainter.cpp */,
@@ -5585,8 +5567,6 @@
 				E5816CF90C3CECAB00902DFE /* nuiScrollBar.h */,
 				E597C3100CBD00190036C9DA /* nuiSeparator.cpp */,
 				BC94B5DA0CBBE77E00B94ABF /* nuiSeparator.h */,
-				E5816DD90C3CECAB00902DFE /* nuiShaderView.cpp */,
-				E5816CFD0C3CECAB00902DFE /* nuiShaderView.h */,
 				E5816DDA0C3CECAB00902DFE /* nuiShapeView.cpp */,
 				E5816CFF0C3CECAB00902DFE /* nuiShapeView.h */,
 				E5816DDB0C3CECAB00902DFE /* nuiSlider.cpp */,
@@ -6091,7 +6071,6 @@
 				E5429FCE0C3F0A5900225219 /* nuiCommand.h in Headers */,
 				E5429FD00C3F0A5900225219 /* nglPath.h in Headers */,
 				E5429FD20C3F0A5900225219 /* nglOFile.h in Headers */,
-				E5429FD30C3F0A5900225219 /* nuiShader.h in Headers */,
 				E5429FD40C3F0A5900225219 /* nuiUserArea.h in Headers */,
 				E5429FD50C3F0A5900225219 /* nglMath.h in Headers */,
 				E5429FD60C3F0A5900225219 /* nuiMeshEngine.h in Headers */,
@@ -6133,7 +6112,6 @@
 				E5429FFE0C3F0A5900225219 /* nuiContainer.h in Headers */,
 				E5429FFF0C3F0A5900225219 /* nglStream.h in Headers */,
 				E542A0000C3F0A5900225219 /* nuiDrawContext.h in Headers */,
-				E542A0010C3F0A5900225219 /* nuiShaderView.h in Headers */,
 				E542A0020C3F0A5900225219 /* nuiRenderArray.h in Headers */,
 				E542A0030C3F0A5900225219 /* nglKeyboard.h in Headers */,
 				E542A0040C3F0A5900225219 /* nglTimer.h in Headers */,
@@ -6677,7 +6655,6 @@
 				E58176850C3D110A00902DFE /* nuiCommand.h in Headers */,
 				E58176870C3D110A00902DFE /* nglPath.h in Headers */,
 				E58176890C3D110A00902DFE /* nglOFile.h in Headers */,
-				E581768A0C3D110A00902DFE /* nuiShader.h in Headers */,
 				E581768B0C3D110A00902DFE /* nuiUserArea.h in Headers */,
 				E581768C0C3D110A00902DFE /* nglMath.h in Headers */,
 				E581768D0C3D110A00902DFE /* nuiMeshEngine.h in Headers */,
@@ -6719,7 +6696,6 @@
 				E58176B50C3D110A00902DFE /* nuiContainer.h in Headers */,
 				E58176B60C3D110A00902DFE /* nglStream.h in Headers */,
 				E58176B70C3D110A00902DFE /* nuiDrawContext.h in Headers */,
-				E58176B80C3D110A00902DFE /* nuiShaderView.h in Headers */,
 				E58176B90C3D110A00902DFE /* nuiRenderArray.h in Headers */,
 				E58176BA0C3D110A00902DFE /* nglKeyboard.h in Headers */,
 				E58176BB0C3D110A00902DFE /* nglTimer.h in Headers */,
@@ -7263,7 +7239,6 @@
 				E592C1040EFE8CCC00340B35 /* nuiCommand.h in Headers */,
 				E592C1050EFE8CCC00340B35 /* nglPath.h in Headers */,
 				E592C1060EFE8CCC00340B35 /* nglOFile.h in Headers */,
-				E592C1070EFE8CCC00340B35 /* nuiShader.h in Headers */,
 				E592C1080EFE8CCC00340B35 /* nuiUserArea.h in Headers */,
 				E592C1090EFE8CCC00340B35 /* nglMath.h in Headers */,
 				E592C10A0EFE8CCC00340B35 /* nuiMeshEngine.h in Headers */,
@@ -7305,7 +7280,6 @@
 				E592C12F0EFE8CCC00340B35 /* nuiContainer.h in Headers */,
 				E592C1300EFE8CCC00340B35 /* nglStream.h in Headers */,
 				E592C1310EFE8CCC00340B35 /* nuiDrawContext.h in Headers */,
-				E592C1320EFE8CCC00340B35 /* nuiShaderView.h in Headers */,
 				E592C1330EFE8CCC00340B35 /* nuiRenderArray.h in Headers */,
 				E592C1340EFE8CCC00340B35 /* nglKeyboard.h in Headers */,
 				E592C1350EFE8CCC00340B35 /* nglTimer.h in Headers */,
@@ -7940,7 +7914,6 @@
 				E542A12F0C3F0A5900225219 /* nglImageCodec.cpp in Sources */,
 				E542A1310C3F0A5900225219 /* nglTime.cpp in Sources */,
 				E542A1320C3F0A5900225219 /* nuiObject.cpp in Sources */,
-				E542A1330C3F0A5900225219 /* nuiShaderView.cpp in Sources */,
 				E542A1340C3F0A5900225219 /* nui.cpp in Sources */,
 				E542A1350C3F0A5900225219 /* nuiSlider.cpp in Sources */,
 				E542A1360C3F0A5900225219 /* nuiGradient.cpp in Sources */,
@@ -8023,7 +7996,6 @@
 				E542A18D0C3F0A5900225219 /* nuiAnimation.cpp in Sources */,
 				E542A18E0C3F0A5900225219 /* nglOFile.cpp in Sources */,
 				E542A18F0C3F0A5900225219 /* nglFontBase.cpp in Sources */,
-				E542A1900C3F0A5900225219 /* nuiShader.cpp in Sources */,
 				E542A1910C3F0A5900225219 /* nuiStateDummy.cpp in Sources */,
 				E542A1930C3F0A5900225219 /* nuiDrawContext.cpp in Sources */,
 				E542A1940C3F0A5900225219 /* nglImageJPEGCodec.cpp in Sources */,
@@ -8377,7 +8349,6 @@
 				E58177420C3D112C00902DFE /* nglImageCodec.cpp in Sources */,
 				E58177440C3D112C00902DFE /* nglTime.cpp in Sources */,
 				E58177450C3D112C00902DFE /* nuiObject.cpp in Sources */,
-				E58177460C3D112C00902DFE /* nuiShaderView.cpp in Sources */,
 				E58177480C3D112C00902DFE /* nuiSlider.cpp in Sources */,
 				E58177490C3D112C00902DFE /* nuiGradient.cpp in Sources */,
 				E581774A0C3D112C00902DFE /* nuiText.cpp in Sources */,
@@ -8455,7 +8426,6 @@
 				E58177A40C3D112C00902DFE /* nuiAnimation.cpp in Sources */,
 				E58177A50C3D112C00902DFE /* nglOFile.cpp in Sources */,
 				E58177A60C3D112C00902DFE /* nglFontBase.cpp in Sources */,
-				E58177A70C3D112C00902DFE /* nuiShader.cpp in Sources */,
 				E58177A80C3D112C00902DFE /* nuiStateDummy.cpp in Sources */,
 				E58177AA0C3D112C00902DFE /* nuiDrawContext.cpp in Sources */,
 				E58177AB0C3D112C00902DFE /* nglImageJPEGCodec.cpp in Sources */,
@@ -8820,7 +8790,6 @@
 				E592C3AD0EFE8CCC00340B35 /* nglImageCodec.cpp in Sources */,
 				E592C3AE0EFE8CCC00340B35 /* nglTime.cpp in Sources */,
 				E592C3AF0EFE8CCC00340B35 /* nuiObject.cpp in Sources */,
-				E592C3B00EFE8CCC00340B35 /* nuiShaderView.cpp in Sources */,
 				E592C3B10EFE8CCC00340B35 /* nui.cpp in Sources */,
 				E592C3B20EFE8CCC00340B35 /* nuiSlider.cpp in Sources */,
 				E592C3B30EFE8CCC00340B35 /* nuiGradient.cpp in Sources */,
@@ -8899,7 +8868,6 @@
 				E592C4030EFE8CCC00340B35 /* nuiAnimation.cpp in Sources */,
 				E592C4040EFE8CCC00340B35 /* nglOFile.cpp in Sources */,
 				E592C4050EFE8CCC00340B35 /* nglFontBase.cpp in Sources */,
-				E592C4060EFE8CCC00340B35 /* nuiShader.cpp in Sources */,
 				E592C4070EFE8CCC00340B35 /* nuiStateDummy.cpp in Sources */,
 				E592C4080EFE8CCC00340B35 /* nuiDrawContext.cpp in Sources */,
 				E592C4090EFE8CCC00340B35 /* nglImageJPEGCodec.cpp in Sources */,

@@ -36,8 +36,6 @@ licence: see nui3/LICENCE.TXT
 #include "nuiScrollView.h"
 #include "nuiTreeView.h"
 #include "nuiGrid.h"
-#include "nuiShader.h"
-#include "nuiShaderView.h"
 #include "nuiPositioner.h"
 #ifdef USE_SWF
 #include "nuiSWF.h"
@@ -393,15 +391,6 @@ void nuiWin::OnCreation()
   pElement = new nuiTreeNode(nuiTR("Scrolled Image Window (2)"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateScrolledImageWindow2);
   pMainTree->AddChild(pElement);
-
-
-  if (GetRenderer() == eOpenGL)
-  {
-    // CreateGLSLTest1Window:
-    pElement = new nuiTreeNode(nuiTR("GLSL Shader Test 1 Window"));
-    mWinSink.Connect(pElement->Activated, &nuiWin::CreateGLSLTest1Window);
-    pMainTree->AddChild(pElement);
-  }
 
 #ifdef USE_SWF
   // CreateSWFTest1Window:
@@ -1447,39 +1436,6 @@ bool nuiWin::CreateScrolledImageWindow2(const nuiEvent& rEvent)
 }
 
 
-bool nuiWin::CreateGLSLTest1Window(const nuiEvent& rEvent)
-{
-  nuiWindow* pWin = new nuiWindow(nuiRect(10, 10, 200, 200), nglWindow::NoFlag, nuiTR("Shaded Image..."));
-  mpManager->AddChild(pWin);
-  nuiScrollView* pScrollView = new nuiScrollView();
-  pWin->AddChild(pScrollView);
-
-  nglString VertexShader(nglString::Empty);
-  nglString FragmentShader(
-    _T("void main(void)\n")\
-    _T("{\n")\
-    _T("vec4 tcolor = texture2D(nuiTexture2D0, gl_TexCoord[0].st);\n")\
-    _T("gl_FragColor = tcolor * vec4(vec3(0, gl_TexCoord[0].st),1.0);\n")\
-    _T("}\n")\
-    );
-  nuiShader* pShader = new nuiShader(GetNGLContext(), _T("Test Shader1"), VertexShader, FragmentShader);
-  if (!pShader->Compile())
-  {
-    NGL_OUT(_T("Shader compilation status:\n%ls\n"), pShader->GetErrorMessage().GetChars());
-    pScrollView->AddChild(new nuiLabel(pShader->GetErrorMessage()));
-    delete pShader;
-    return false;
-  }
-
-  nuiShaderView* pShaderView = new nuiShaderView(pShader);
-  pScrollView->AddChild(pShaderView);
-  nuiImage* pImage = new nuiImage(_T("rsrc:/small_ngl.png"));
-  pShaderView->AddChild(pImage);
-  pImage->SetFillRule(nuiTopLeft);
-
-  return false;
-}
-
 #ifdef USE_SWF
 bool nuiWin::CreateSWFTest1Window(const nuiEvent& rEvent)
 {
@@ -2364,7 +2320,8 @@ bool nuiWin::AudioComboTrashed(const nuiEvent& rEvent)
   const nuiTreeNode* pTree = pCombo->GetChoices();
   for (uint i = 0; i < pTree->GetChildrenCount(); i++)
   {
-    bool res = nuiGetTokenValue<nuiAudioDevice*>(dynamic_cast<nuiTreeNode*>(pTree->GetChild(i))->GetElement()->GetToken(), pDev);
+    const nuiTreeNode* pChild = dynamic_cast<const nuiTreeNode*>(pTree->GetChild(i));
+    bool res = nuiGetTokenValue<nuiAudioDevice*>(pChild->GetElement()->GetToken(), pDev);
     delete pDev;
   }
 
