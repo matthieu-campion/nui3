@@ -1357,10 +1357,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\include\nuiShaderView.h"
-					>
-				</File>
-				<File
 					RelativePath=".\include\nuiSplineEdit.h"
 					>
 				</File>
@@ -1633,14 +1629,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\Renderers\nuiShader.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiShader.h"
-					>
-				</File>
-				<File
 					RelativePath=".\src\Renderers\nuiShape.cpp"
 					>
 				</File>
@@ -1910,10 +1898,6 @@
 				</File>
 				<File
 					RelativePath=".\include\nuiShadeContainer.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\SimpleWidgets\nuiShaderView.cpp"
 					>
 				</File>
 				<File

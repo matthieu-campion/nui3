@@ -45,7 +45,6 @@ nuiDrawContext::~nuiDrawContext()
 {
   SetTexture(NULL);
   SetFont(NULL);
-  SetShader(NULL);
   if (mpAATexture)
     mpAATexture->Release();
 
@@ -92,21 +91,6 @@ nuiPainter* nuiDrawContext::GetPainter() const
 void nuiDrawContext::SetState(const nuiRenderState& rState)
 {
   mpPainter->SetState(rState);
-}
-
-void nuiDrawContext::SetShader(nuiShader* pShader)
-{
-  mCurrentState.mpShader = pShader;
-}
-
-nuiShader* nuiDrawContext::GetShader() const
-{
-  return mCurrentState.mpShader;
-}
-
-void nuiDrawContext::DisableShader()
-{
-  SetShader(NULL);
 }
 
 void nuiDrawContext::AddBreakPoint()
@@ -186,10 +170,8 @@ const nuiRenderState& nuiDrawContext::GetState() const
 bool nuiDrawContext::ResetState()
 {
   nuiRenderState Dummy;
-  nuiShader* pShader = mCurrentState.mpShader;
 
   mCurrentState = Dummy;
-  mCurrentState.mpShader = pShader;
   mStateChanges++;
   return true;
 }

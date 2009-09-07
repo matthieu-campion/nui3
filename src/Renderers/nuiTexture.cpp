@@ -163,11 +163,11 @@ nuiTexture* nuiTexture::GetAATexture()
     uint8* buffer = (uint8*)info.mpBuffer;
     glAAGenerateAABuffer(0, 0, buffer);
     pTexture = nuiTexture::GetTexture(info, _T("nuiTextureAA"));
-    pTexture->SetMinFilter(GL_LINEAR_MIPMAP_LINEAR);
-    pTexture->SetMagFilter(GL_LINEAR);
     pTexture->SetWrapS(GL_REPEAT);
     pTexture->SetWrapT(GL_REPEAT);
     pTexture->EnableAutoMipMap(true);
+    pTexture->SetMinFilter(GL_LINEAR_MIPMAP_LINEAR);
+    pTexture->SetMagFilter(GL_LINEAR);
   }
   else
   {
@@ -341,8 +341,6 @@ nuiTexture::nuiTexture(nuiSurface* pSurface)
 
 void nuiTexture::Init()
 {	
-//  NGL_OUT(_T("nuiTexture::Init() (0x%x - [%f %f] source='%ls') COUNT: %d\n"), this, mRealWidth, mRealHeight, GetProperty(_T("Source")).GetChars(), mpTextures.size());
-
   mRealWidth = 0;
   mRealHeight = 0;
 
@@ -358,6 +356,8 @@ void nuiTexture::Init()
   }
   mRealWidthPOT = mRealWidth;
   mRealHeightPOT = mRealHeight;
+
+  //NGL_OUT(_T("nuiTexture::Init() (0x%x - [%f %f] source='%ls') COUNT: %d\n"), this, mRealWidth, mRealHeight, GetProperty(_T("Source")).GetChars(), mpTextures.size());
 
   if (mRealWidth > 0 && mRealHeight > 0)
   // Find the nearest bounding power of two size:

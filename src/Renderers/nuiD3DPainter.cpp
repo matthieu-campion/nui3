@@ -12,7 +12,6 @@ licence: see nui3/LICENCE.TXT
 #include "nuiTheme.h"
 #include "nglMatrix.h"
 #include "AAPrimitives.h"
-#include "nuiShader.h"
 #include "nuiTexture.h"
 #include "AAPrimitives.h"
 
@@ -477,14 +476,6 @@ void nuiD3DPainter::SetState(const nuiRenderState& rState, bool ForceApply)
     }
   }
   #endif
-
-  //----------------------------
-  //shaders (not used) ---------
-  //----------------------------
-  if (ForceApply || mState.mpShader != rState.mpShader)
-  {
-    NGL_ASSERT(0);
-  }
 
   // 2D Textures:
   ApplyTexture(rState, ForceApply);

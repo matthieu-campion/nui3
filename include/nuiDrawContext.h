@@ -194,13 +194,6 @@ public:
   bool IsAntialiasingPermited() const;
   //@}
 
-  /** @name OpenGL Shading Language support */
-  //@{
-  void SetShader(nuiShader* pShader);
-  nuiShader* GetShader() const;
-  void DisableShader();
-  //@}
-
   void AddBreakPoint();
   
 protected:

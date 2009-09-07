@@ -32,7 +32,6 @@ nuiRenderState::nuiRenderState()
   mLineWidth = 1.0f;
 
   mpFont = NULL;
-  mpShader = NULL;
 
 }
 
@@ -40,7 +39,6 @@ nuiRenderState::nuiRenderState(const nuiRenderState& rState)
 {
   mpTexture = NULL;
   mpFont = NULL;
-  mpShader = NULL;
 
   Copy(rState);
 }
@@ -84,7 +82,6 @@ void nuiRenderState::Copy(const nuiRenderState& rState)
   if (pOldFont)
     pOldFont->Release();
 
-  mpShader = rState.mpShader;
 }
 
 nuiRenderState::~nuiRenderState()
@@ -115,8 +112,7 @@ bool nuiRenderState::operator==(const nuiRenderState& rState) const
     (mLineCap        == rState.mLineCap)          &&
     (mLineJoin       == rState.mLineJoin)         &&
     (mpTexture       == rState.mpTexture)         &&
-    (mpFont          == rState.mpFont)            &&
-    (mpShader        == rState.mpShader);
+    (mpFont          == rState.mpFont);
   
   return state;
 }

@@ -74,7 +74,6 @@ public:
   nuiColor mClearColor;
   nuiColor mTextColor;
   nuiFont* mpFont;
-  nuiShader* mpShader;
 
   nuiLineCap mLineCap;
   nuiLineJoin mLineJoin;

@@ -33,7 +33,7 @@ nuiContextInfo::nuiContextInfo(Type type)
 {
   TargetAPI = (nglTargetAPI)nuiMainWindow::GetRenderer();
 
-  StencilBits = 8;
+  StencilBits = 0;
   DepthBits = 0;
   FrameBitsA = 0;
   AABufferCnt = 0;

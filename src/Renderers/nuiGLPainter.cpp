@@ -13,7 +13,6 @@
 #include "nuiTheme.h"
 #include "nglMatrix.h"
 #include "AAPrimitives.h"
-#include "nuiShader.h"
 #include "nuiTexture.h"
 
 #ifndef __NUI_NO_GL__
@@ -384,20 +383,6 @@ void nuiGLPainter::SetState(const nuiRenderState& rState, bool ForceApply)
   // We don't care about the font in the lower layer of rendering
   //nuiFont* mpFont;
   // 
-#ifndef _OPENGL_ES_
-  if (ForceApply || mState.mpShader != rState.mpShader)
-  {
-    if (mState.mpShader)
-      mState.mpShader->UnBind();
-    nuiCheckForGLErrors();
-
-    mState.mpShader = rState.mpShader; 
-
-    if (mState.mpShader)
-      mState.mpShader->Bind();
-    nuiCheckForGLErrors();
-  }
-#endif
 
   ApplyTexture(rState, ForceApply);  
   
@@ -506,6 +491,7 @@ void nuiGLPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
       nuiCheckForGLErrors();
     }
 
+    //NGL_OUT(_T("Change texture to 0x%x (%ls)\n"), rState.mpTexture, rState.mpTexture?rState.mpTexture->GetSource().GetChars() : nglString::Empty.GetChars());
     mState.mpTexture = rState.mpTexture ;
 
     if (mState.mpTexture)
@@ -565,17 +551,9 @@ void nuiGLPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
       
       UploadTexture(mState.mpTexture);
       nuiCheckForGLErrors();
-#ifndef _OPENGL_ES_
-      if (mState.mpShader)
-      {
-        std::map<nuiTexture*, TextureInfo>::const_iterator it = mTextures.find(rState.mpTexture);
-        mState.mpShader->SetTexture2D(0, it->second.mTexture);
-      }
-#endif
-      nuiCheckForGLErrors();
     }
 
-    //NGL_OUT(_T("Change texture from 0x%x to 0x%x\n"), outtarget, intarget);
+    //NGL_OUT(_T("Change texture type from 0x%x to 0x%x\n"), outtarget, intarget);
 
     mTextureTarget = intarget;
     if (intarget != outtarget)
@@ -621,29 +599,28 @@ void nuiGLPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
     // Texture have not changed, but texturing may have been enabled / disabled
     mState.mTexturing = rState.mTexturing;
 
-    GLenum target = 0;
     if (mState.mpTexture)
     {
-      target = GetTextureTarget(mState.mpTexture->IsPowerOfTwo());
-
-      if (target && mState.mTexturing)
+      if (mTextureTarget && mState.mTexturing)
       {
-        //NGL_OUT(_T("Enable 0x%x\n"), target);
+        //NGL_OUT(_T("Enable 0x%x\n"), mTextureTarget);
         glEnable(mTextureTarget);
         nuiCheckForGLErrors();
       }
       else
       {
-        //NGL_OUT(_T("Disable 0x%x\n"), target);
+        //NGL_OUT(_T("Disable 0x%x\n"), mTextureTarget);
         glDisable(mTextureTarget);
         nuiCheckForGLErrors();
       }
     }
     else
     {
-      //NGL_OUT(_T("Disable 0x%x\n"), target);
       if (mTextureTarget)
+      {
+        //NGL_OUT(_T("Disable 0x%x\n"), mTextureTarget);
         glDisable(mTextureTarget);
+      }
       nuiCheckForGLErrors();
     }
   }
@@ -730,6 +707,9 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
 {
   mRenderOperations++;
   mBatches++;
+
+  //glEnable(GL_TEXTURE_2D);
+  //glEnable(GL_TEXTURE_2D);
 
   if (!mEnableDrawArray)
   {
@@ -881,6 +861,8 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
     {
       glDisableClientState(GL_TEXTURE_COORD_ARRAY);
     }
+    //glDisableClientState(GL_COLOR_ARRAY);
+    //glColor4f(0.5,0.5,0.5,0.5);
     
 /*
     if (pArray->IsArrayEnabled(nuiRenderArray::eNormal))
@@ -1653,7 +1635,7 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
 
 void nuiCheckForGLErrors()
 {
-#if 0 // Globally enable/disable OpenGL error checking
+#if 1 // Globally enable/disable OpenGL error checking
 #ifdef _DEBUG_
   bool error = false;
   GLenum err = glGetError();

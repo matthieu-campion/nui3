@@ -1,8 +1,8 @@
 /*
-  NUI3 - C++ cross-platform GUI framework for OpenGL based applications
-  Copyright (C) 2002-2003 Sebastien Metrot
+NUI3 - C++ cross-platform GUI framework for OpenGL based applications
+Copyright (C) 2002-2003 Sebastien Metrot
 
-  licence: see nui3/LICENCE.TXT
+licence: see nui3/LICENCE.TXT
 */
 
 #include "nui.h"
@@ -24,18 +24,18 @@
 
 const nglChar* gpContextErrorTable[] =
 {
-/*  0 */ _T("No error"),
-/*  1 */ _T("No visual match your request"),
-/*  2 */ _T("Cound't set pixel format"),
-/*  3 */ _T("GL rendering context creation failed"),
-/*  4 */ _T("Couldn't bind GL context to the system window"),
-         NULL
+  /*  0 */ _T("No error"),
+  /*  1 */ _T("No visual match your request"),
+  /*  2 */ _T("Cound't set pixel format"),
+  /*  3 */ _T("GL rendering context creation failed"),
+  /*  4 */ _T("Couldn't bind GL context to the system window"),
+  NULL
 };
 
 
 /*
- * nglContextInfo
- */
+* nglContextInfo
+*/
 
 nglContextInfo::nglContextInfo (HDC hDC, int PFD)
 {
@@ -173,7 +173,7 @@ nglContextInfo::nglContextInfo (HDC hDC, int PFD)
     DepthBits = values[38]; // 38 queries.push_back(WGL_DEPTH_BITS_ARB);
     StencilBits = values[39]; // 39 queries.push_back(WGL_STENCIL_BITS_ARB);
     AuxCnt = values[40]; // 40 queries.push_back(WGL_AUX_BUFFERS_ARB);
-    
+
     Offscreen = values[41] != 0; // 41 queries.push_back(WGL_DRAW_TO_PBUFFER_ARB);
     RenderToTexture = values[42] || values[43]; // 42 queries.push_back(WGL_BIND_TO_TEXTURE_RGBA_ARB);
     // 43 queries.push_back(WGL_BIND_TO_TEXTURE_RGB_ARB);
@@ -213,7 +213,7 @@ nglContextInfo::nglContextInfo (HDC hDC, int PFD)
   {
     VerticalSync = wglGetSwapIntervalEXT() != 0;
   }
-  
+
   wglMakeCurrent(NULL, NULL);
   ReleaseDC(tmpWin, tmpDC);
   wglDeleteContext(rc);
@@ -278,9 +278,9 @@ int nglContextInfo::GetPFD(HDC hDC) const
   if (mPFD)
   {
     /* This one was fetched by Enum()
-     * This is a little shortsighted since Enum() works on the default device :
-     * we should check if mDC == hDC
-     */
+    * This is a little shortsighted since Enum() works on the default device :
+    * we should check if mDC == hDC
+    */
     return mPFD;
   }
   else
@@ -291,56 +291,57 @@ int nglContextInfo::GetPFD(HDC hDC) const
     int res = 0;
     int format = -1;
     bool stop = false;
+
+    // Create a dummy context to be able to query ARB's wglChoosePixelFormatARB
+    PIXELFORMATDESCRIPTOR pfd;
+    pfd.nSize           = sizeof(PIXELFORMATDESCRIPTOR);
+    pfd.nVersion        = 1;
+    pfd.dwFlags         = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_GENERIC_ACCELERATED;
+    pfd.iPixelType      = PFD_TYPE_RGBA;
+    pfd.cColorBits      = 0; // FIXME
+    pfd.cRedBits        = 0;
+    pfd.cRedShift       = 0;
+    pfd.cGreenBits      = 0;
+    pfd.cGreenShift     = 0;
+    pfd.cBlueBits       = 0;
+    pfd.cBlueShift      = 0;
+    pfd.cAlphaBits      = 0;
+    pfd.cAlphaShift     = 0;
+    pfd.cAccumBits      = 0;
+    pfd.cAccumRedBits   = 0;
+    pfd.cAccumGreenBits = 0;
+    pfd.cAccumBlueBits  = 0;
+    pfd.cAccumAlphaBits = 0;
+    pfd.cDepthBits      = DepthBits;
+    pfd.cStencilBits    = StencilBits;
+    pfd.cAuxBuffers     = 0;
+    pfd.iLayerType      = 0;
+    pfd.bReserved       = 0;
+    pfd.dwLayerMask     = 0;
+    pfd.dwVisibleMask   = 0;
+    pfd.dwDamageMask    = 0;
+
+    HWND tmpWin = CreateWindowEx(
+      WS_EX_APPWINDOW,
+      _T("STATIC"),
+      _T("Dummy Tmp Window from NGL"),
+      WS_POPUP,
+      0, 0, 64, 64,
+      NULL,
+      NULL,
+      NULL,
+      NULL);
+    HDC tmpDC = GetDC(tmpWin);
+    int pf = ChoosePixelFormat(tmpDC, &pfd);
+    SetPixelFormat(tmpDC, pf, &pfd);
+    HGLRC rc = wglCreateContext(tmpDC);
+    wglMakeCurrent(tmpDC, rc);
+
+    PFNWGLCHOOSEPIXELFORMATARBPROC wglChoosePixelFormatARB = NULL;
+    wglChoosePixelFormatARB = (PFNWGLCHOOSEPIXELFORMATARBPROC)wglGetProcAddress("wglChoosePixelFormatARB");
+
     for ( res = 0; !res && !stop; )
     {
-      // Create a dummy context to be able to query ARB's wglChoosePixelFormatARB
-      PIXELFORMATDESCRIPTOR pfd;
-      pfd.nSize           = sizeof(PIXELFORMATDESCRIPTOR);
-      pfd.nVersion        = 1;
-      pfd.dwFlags         = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_GENERIC_ACCELERATED;
-      pfd.iPixelType      = PFD_TYPE_RGBA;
-      pfd.cColorBits      = 0; // FIXME
-      pfd.cRedBits        = 0;
-      pfd.cRedShift       = 0;
-      pfd.cGreenBits      = 0;
-      pfd.cGreenShift     = 0;
-      pfd.cBlueBits       = 0;
-      pfd.cBlueShift      = 0;
-      pfd.cAlphaBits      = 0;
-      pfd.cAlphaShift     = 0;
-      pfd.cAccumBits      = 0;
-      pfd.cAccumRedBits   = 0;
-      pfd.cAccumGreenBits = 0;
-      pfd.cAccumBlueBits  = 0;
-      pfd.cAccumAlphaBits = 0;
-      pfd.cDepthBits      = DepthBits;
-      pfd.cStencilBits    = StencilBits;
-      pfd.cAuxBuffers     = 0;
-      pfd.iLayerType      = 0;
-      pfd.bReserved       = 0;
-      pfd.dwLayerMask     = 0;
-      pfd.dwVisibleMask   = 0;
-      pfd.dwDamageMask    = 0;
-
-      HWND tmpWin = CreateWindowEx(
-        WS_EX_APPWINDOW,
-        _T("STATIC"),
-        _T("Dummy Tmp Window from NGL"),
-        WS_POPUP,
-        0, 0, 64, 64,
-        NULL,
-        NULL,
-        NULL,
-        NULL);
-      HDC tmpDC = GetDC(tmpWin);
-      int pf = ChoosePixelFormat(tmpDC, &pfd);
-      SetPixelFormat(tmpDC, pf, &pfd);
-      HGLRC rc = wglCreateContext(tmpDC);
-      wglMakeCurrent(tmpDC, rc);
-
-      PFNWGLCHOOSEPIXELFORMATARBPROC wglChoosePixelFormatARB = NULL;
-      wglChoosePixelFormatARB = (PFNWGLCHOOSEPIXELFORMATARBPROC)wglGetProcAddress("wglChoosePixelFormatARB");
-
       if (wglChoosePixelFormatARB) 
       {
         std::vector<int> attrib;
@@ -506,11 +507,12 @@ int nglContextInfo::GetPFD(HDC hDC) const
       }
 
       // Release the dummy context
-      wglMakeCurrent(NULL, NULL);
-      ReleaseDC(tmpWin, tmpDC);
-      wglDeleteContext(rc);
-      DestroyWindow(tmpWin);
     }
+
+    wglMakeCurrent(NULL, NULL);
+    wglDeleteContext(rc);
+    ReleaseDC(tmpWin, tmpDC);
+    DestroyWindow(tmpWin);
 
     PFNWGLSWAPINTERVALEXTPROC wglSwapIntervalEXT = NULL;
     PFNWGLGETSWAPINTERVALEXTPROC wglGetSwapIntervalEXT = NULL;
@@ -528,8 +530,8 @@ int nglContextInfo::GetPFD(HDC hDC) const
 
 
 /*
- * nglContext
- */
+* nglContext
+*/
 
 nglContext::nglContext()
 {
@@ -544,10 +546,10 @@ nglContext::nglContext()
 nglContext::~nglContext()
 {
   wglMakeCurrent(NULL, NULL);
-  if (mDC)
-    ReleaseDC(mCtxWnd, mDC);
   if (mRC)
     wglDeleteContext(mRC);
+  if (mDC)
+    ReleaseDC(mCtxWnd, mDC);
   if (mpDirect3DDevice)
     mpDirect3DDevice->Release();
 }
@@ -613,7 +615,7 @@ bool nglContext::BuildDirect3D(HWND hwnd, const nglContextInfo& rInfo, const ngl
   presParams.BackBufferFormat = D3DFMT_X8R8G8B8;
   presParams.BackBufferCount = 1;
   presParams.Windowed = TRUE;
-  
+
   presParams.MultiSampleType = D3DMULTISAMPLE_NONE;//(D3DMULTISAMPLE_TYPE)rInfo.AASampleCnt;
 
   if (rInfo.CopyOnSwap)
@@ -625,7 +627,7 @@ bool nglContext::BuildDirect3D(HWND hwnd, const nglContextInfo& rInfo, const ngl
 
   presParams.EnableAutoDepthStencil = TRUE;
   presParams.AutoDepthStencilFormat = D3DFMT_D24S8;
-  
+
   presParams.Flags = D3DPRESENTFLAG_DEVICECLIP;
 
   HRESULT hr = pDirect3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hwnd, D3DCREATE_MIXED_VERTEXPROCESSING, &presParams, &mpDirect3DDevice);
@@ -684,10 +686,10 @@ bool nglContext::BuildOpenGL(HWND hWnd, const nglContextInfo& rInfo, const nglCo
 {
   if (mRC)
     return false; // We already have a context
-  
+
   mDC = GetDC(hWnd);
   mCtxWnd = hWnd; // We keep a reference for ReleaseDC() but we don't own it
-  
+
   int pfd_index = rInfo.GetPFD(mDC);
   nglContextInfo TmpInfo(mDC, pfd_index);
   mValidBackBufferRequestedNotGranted = rInfo.CopyOnSwap && !TmpInfo.CopyOnSwap;
@@ -696,7 +698,7 @@ bool nglContext::BuildOpenGL(HWND hWnd, const nglContextInfo& rInfo, const nglCo
     SetError(_T("context"), NGL_CONTEXT_ENOMATCH);
     return false;
   }
-  
+
   PIXELFORMATDESCRIPTOR pfd_dummy;
   pfd_dummy.nSize = sizeof(PIXELFORMATDESCRIPTOR);
   if (!SetPixelFormat(mDC, pfd_index, &pfd_dummy))
@@ -704,7 +706,7 @@ bool nglContext::BuildOpenGL(HWND hWnd, const nglContextInfo& rInfo, const nglCo
     SetError(_T("context"), NGL_CONTEXT_ESETPFD);
     return false;
   }
-  
+
   mRC = wglCreateContext(mDC);
   NGL_OUT(_T("DC = 0x%x / RC = 0x%x\n"), mDC, mRC);
   if (!mRC)
@@ -712,7 +714,7 @@ bool nglContext::BuildOpenGL(HWND hWnd, const nglContextInfo& rInfo, const nglCo
     SetError(_T("context"), NGL_CONTEXT_EGLCTX);
     return false;
   }
-  
+
   if (pShared)
   {
     if (!wglShareLists(pShared->mRC, mRC))
@@ -721,7 +723,7 @@ bool nglContext::BuildOpenGL(HWND hWnd, const nglContextInfo& rInfo, const nglCo
       return false;
     }
   }
-  
+
   return true;
 }
 
@@ -729,12 +731,12 @@ bool nglContext::BuildOpenGLFromExisting(HWND hWnd, HGLRC rc)
 {
   if (mRC)
     return false; // We already have a context
-  
+
   mDC = GetDC(hWnd);
   mCtxWnd = hWnd; // We keep a reference for ReleaseDC() but we don't own it
-  
+
   mValidBackBufferRequestedNotGranted = false;
-  
+
   mRC = rc;
   return true;
 }
@@ -751,15 +753,15 @@ bool nglContext::MakeCurrent() const
       return false;
 
     DWORD err = GetLastError();
-/*
+    /*
     if (err)
     {
-      LPVOID lpMsgBuf;
-      FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, err, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR)&lpMsgBuf, 0, NULL);
-      NGL_OUT(_T("context error (before make current): %s (mDC = 0x%x / mRC = 0x%x)"), lpMsgBuf, mDC, mRC);
-      LocalFree(lpMsgBuf);
+    LPVOID lpMsgBuf;
+    FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, err, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR)&lpMsgBuf, 0, NULL);
+    NGL_OUT(_T("context error (before make current): %s (mDC = 0x%x / mRC = 0x%x)"), lpMsgBuf, mDC, mRC);
+    LocalFree(lpMsgBuf);
     }
-*/
+    */
     if (wglGetCurrentContext() != mRC)
     {
       if (!wglMakeCurrent(mDC, mRC))

@@ -117,9 +117,9 @@ bool nuiHugeImage::Load(const nglPath& rImagePath)
       nglImage* pCrop = pImage->Crop(x, y, sx, sy);
       //NGL_OUT(_T("Crop[%d][%d] 0x%x\n"), i, j, pCrop);
       mTextures[i][j] = nuiTexture::GetTexture(pCrop, true);
-      mTextures[i][j]->EnableAutoMipMap(true);
-      mTextures[i][j]->SetMagFilter(GL_LINEAR_MIPMAP_LINEAR);
-      mTextures[i][j]->SetMinFilter(GL_LINEAR_MIPMAP_LINEAR);
+//       mTextures[i][j]->EnableAutoMipMap(true);
+//       mTextures[i][j]->SetMagFilter(GL_LINEAR);
+//       mTextures[i][j]->SetMinFilter(GL_LINEAR_MIPMAP_LINEAR);
     }
   }
   
