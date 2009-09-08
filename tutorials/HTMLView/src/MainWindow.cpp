@@ -59,7 +59,7 @@ void MainWindow::OnCreation()
   
   // button in the second cell : we use the default decoration for this button, but you could use the css to assign your own decoration
   mpInput = new nuiEditLine(url);
-  mpInput->SetPosition(nuiCenter);
+  mpInput->SetPosition(nuiFillHorizontal);
   mpInput->SetObjectName(_T("RSSURL"));
   mEventSink.Connect(mpInput->Activated, &MainWindow::OnButtonClick);
   pHLayoutBox->AddCell(mpInput);

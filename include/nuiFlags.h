@@ -107,7 +107,7 @@ nuiDirection    nuiGetDirection   (const nuiXMLNode* pNode, nuiDirection Default
 nuiOrientation  nuiGetOrientation (const nuiXMLNode* pNode, nuiOrientation Default = nuiVertical);
 
 bool nuiGetBool (const nuiXMLNode* pNode, const nglString Attr, bool Default = false);
-nglString nuiGetString (const nuiXMLNode* pNode, const nglString Attr, const nglString Default = nglString(""));
+const nglString& nuiGetString (const nuiXMLNode* pNode, const nglString Attr, const nglString& Default = nglString::Empty);
 
 int     nuiGetVal (const nuiXMLNode* pNode, const nglString Attr, int     Default = 0);
 int64   nuiGetVal (const nuiXMLNode* pNode, const nglString Attr, int64   Default = 0);
@@ -115,5 +115,14 @@ uint    nuiGetVal (const nuiXMLNode* pNode, const nglString Attr, uint    Defaul
 uint64  nuiGetVal (const nuiXMLNode* pNode, const nglString Attr, uint64  Default = 0);
 float   nuiGetVal (const nuiXMLNode* pNode, const nglString Attr, float   Default = 0);
 double  nuiGetVal (const nuiXMLNode* pNode, const nglString Attr, double  Default = 0);
+nglString nuiGetVal (const nuiXMLNode* pNode, const nglString Attr, const nglString& Default = nglString::Empty);
+
+template <class T>
+bool nuiGet(const nuiXMLNode* pNode, const nglString& Attr, T& rVal)
+{
+  rVal = nuiGetVal(pNode, Attr, rVal);
+  return true;
+}
+
 
 #endif // __nuiFlags_h__

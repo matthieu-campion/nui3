@@ -426,6 +426,7 @@ public:
   char* EncodeUrl(); ///< outputs a malloc'ed char* encoded as valid URL data in UTF8 as per RFC 2396
   void EncodeToXML();
   void DecodeFromXML();
+  void Unescape();
   
   
 	nglString& Format(const nglString& rFormat, ...);

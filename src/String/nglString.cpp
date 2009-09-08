@@ -1410,6 +1410,44 @@ void nglString::DecodeFromXML()
   Replace(nglString("&gt;")   , nglString((nglChar)'>'));
 }
 
+void nglString::Unescape()
+{
+  nglString res;
+  char* pExport = Export();
+  char* pRead = pExport;
+  char* pWrite = pExport;
+  
+  while (*pRead)
+  {
+    if (*pRead == '\\')
+    {
+      pRead++;
+
+      nglString number;
+      char c = *pRead++;
+      while (c >= '0' && c <= '9')
+      {
+        number += c;
+        pRead++;
+        c = *pRead;
+      }
+      
+      char unescaped = number.GetCInt();
+      *pWrite++ += unescaped;
+    }
+    else
+    {
+      *pWrite++ = *pRead++;
+    }
+  }
+  
+  *pWrite = 0;
+
+  Import(pExport);
+  delete pExport;  
+}
+
+
 //void nglString::EncodeToWeb()
 //{
 //  Replace(nglString((nglChar)'&'), nglString("&amp;"));

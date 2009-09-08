@@ -200,7 +200,7 @@ bool nuiGetBool (const nuiXMLNode* pNode, const nglString Attr, bool Default)
   return nuiGetBool(pNode->GetAttribute(Attr),Default);
 }
 
-nglString nuiGetString (const nuiXMLNode* pNode, const nglString Attr, const nglString Default)
+const nglString& nuiGetString (const nuiXMLNode* pNode, const nglString Attr, const nglString& Default)
 {
   if (!pNode->HasAttribute(Attr))
     return Default;
@@ -250,5 +250,12 @@ double nuiGetVal (const nuiXMLNode* pNode, const nglString Attr, double Default)
   if (!pNode->HasAttribute(Attr))
     return Default;
   return pNode->GetAttribute(Attr).GetCDouble();
+}
+
+nglString nuiGetVal (const nuiXMLNode* pNode, const nglString Attr, const nglString& Default)
+{
+  if (!pNode->HasAttribute(Attr))
+    return Default;
+  return pNode->GetAttribute(Attr);
 }
 

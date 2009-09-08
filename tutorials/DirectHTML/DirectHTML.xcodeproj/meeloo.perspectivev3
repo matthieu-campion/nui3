@@ -343,13 +343,13 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E55A49A01053F764002AB5CA</string>
+										<string>E55A4A291053FE3C002AB5CA</string>
 										<key>history</key>
 										<array>
 											<string>E55A496D1053F31A002AB5CA</string>
 											<string>E55A496E1053F31A002AB5CA</string>
 											<string>E55A496F1053F31A002AB5CA</string>
-											<string>E55A499E1053F757002AB5CA</string>
+											<string>E55A4A061053F983002AB5CA</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -653,7 +653,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>273938276.79027897</real>
+	<real>273940028.74304903</real>
 	<key>ToolbarConfigUserDefaultsMinorVersion</key>
 	<string>2</string>
 	<key>ToolbarDisplayMode</key>
@@ -670,7 +670,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E55A49A11053F764002AB5CA</string>
 		<string>E55A49811053F5B5002AB5CA</string>
 		<string>E55A49831053F5B5002AB5CA</string>
 		<string>/Users/meeloo/work/nui3/tutorials/DirectHTML/DirectHTML.xcodeproj</string>
