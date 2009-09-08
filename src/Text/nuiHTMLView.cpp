@@ -63,17 +63,13 @@ void nuiHTMLView::InitAttributes()
 
 void nuiHTMLView::InitContext()
 {
-  nuiFontRequest font(mpFont, false);
-  mContext.mFont = font;
-  mContext.mUnderline = false;
-  mContext.mStrikeThrough = false;
-  mContext.mTextFgColor = mTextColor;
+  if (mpFont)
+  {
+    nuiFontRequest font(mpFont, false);
+    mContext.mFont = font;
+  }
 
-  mContext.mLeftMargin = 0;
-  mContext.mMaxWidth = 0;
-  mContext.mVSpace = 0;
-  mContext.mHSpace = 0;
-  mContext.mTextBgColor = nuiColor(255,255,255);
+  mContext.mTextFgColor = mTextColor;
 }
 
 
@@ -143,7 +139,9 @@ void nuiHTMLView::SetTextColor(const nuiColor& Color)
   mTextColorSet = true;
   mTextColor = Color;
   InitContext();
-  Invalidate();
+  nuiHTMLContext context(mContext);
+  mpRootBox->Layout(context);
+  InvalidateLayout();
 }
 
 
@@ -160,7 +158,9 @@ nuiRect nuiHTMLView::CalcIdealSize()
   mContext.mMaxWidth = IdealWidth;
   if (!mpRootBox)
     return nuiRect(IdealWidth, 400.0f);
-  mpRootBox->Layout(mContext);
+  
+  nuiHTMLContext context(mContext);
+  mpRootBox->Layout(context);
   return nuiRect(mpRootBox->GetIdealRect().GetWidth(), mpRootBox->GetIdealRect().GetHeight());
 }
 
@@ -171,7 +171,9 @@ bool nuiHTMLView::SetRect(const nuiRect& rRect)
     return true;
 
   mContext.mMaxWidth = mRect.GetWidth();
-  mpRootBox->Layout(mContext);
+  
+  nuiHTMLContext context(mContext);
+  mpRootBox->Layout(context);
   mpRootBox->SetRect(mpRootBox->GetIdealRect());
   return true;
 }
@@ -238,7 +240,8 @@ bool nuiHTMLView::SetText(const nglString& rHTMLText)
     mpHTML = pHTML;
     mpRootBox = new nuiHTMLBox(mpHTML, false);
     ParseTree(mpHTML, mpRootBox);
-    nuiHTMLContext context;
+
+    nuiHTMLContext context(mContext);
     mpRootBox->Layout(context);
     InvalidateLayout();
   }
@@ -307,7 +310,8 @@ bool nuiHTMLView::SetURL(const nglString& rURL)
     mpHTML = pHTML;
     mpRootBox = new nuiHTMLBox(mpHTML, false);
     ParseTree(mpHTML, mpRootBox);
-    nuiHTMLContext context;
+
+    nuiHTMLContext context(mContext);
     mpRootBox->Layout(context);
     InvalidateLayout();
   }

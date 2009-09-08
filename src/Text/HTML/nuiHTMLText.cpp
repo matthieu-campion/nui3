@@ -12,7 +12,7 @@
 nuiHTMLText::nuiHTMLText(nuiHTMLNode* pNode, const nglString& rText)
 : nuiHTMLItem(pNode, true), mText(rText), mpLayout(NULL), mpFont(NULL)
 {
-  
+
 }
 
 nuiHTMLText::~nuiHTMLText()
