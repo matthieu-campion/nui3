@@ -26,10 +26,28 @@ public:
   void SetURL(const nglString& rURL);
   
   void ForceUpdate();
+  
+  void _SetFont(const nglString& rFontSymbol);
+  const nglString& _GetFont() const;
+  const nuiColor& GetTextColor() const;
+  void SetTextColor(const nuiColor& Color);
+  
 protected:
+  
   bool Update(const nuiEvent& rEvent);
-  nuiEventSink<nuiRSSView> mViewSink;
+  
+  
+  
   nuiRSS* mpRSS;
   nuiVBox* mpBox;
   bool mForceNoHTML;
+  
+  nglString mFont;
+  nuiColor mTextColor;
+
+private:
+  
+  void InitAttributes();
+  nuiEventSink<nuiRSSView> mViewSink;
+
 };

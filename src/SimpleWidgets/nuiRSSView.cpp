@@ -19,8 +19,12 @@ nuiRSSView::nuiRSSView(const nglString& rURL, int32 SecondsBetweenUpdates, nglIS
 {
   if (SetObjectClass(_T("nuiRSSView")))
   {
-    // Init Attributes
+    InitAttributes();
   }
+  
+  mTextColor = nuiColor(0,0,0);
+  mFont = nglString::Null;
+  
   mForceNoHTML = ForceNoHTML;
   mpRSS = new nuiRSS(rURL, SecondsBetweenUpdates, pOriginalStream);
   mpBox = new nuiVBox();
@@ -44,6 +48,22 @@ bool nuiRSSView::SetRect(const nuiRect& rRect)
   nuiSimpleContainer::SetRect(rRect);
   return true;
 }
+
+void nuiRSSView::InitAttributes()
+{
+  AddAttribute(new nuiAttribute<const nglString&>
+               (nglString(_T("Font")), nuiUnitName,
+                nuiMakeDelegate(this, &nuiRSSView::_GetFont), 
+                nuiMakeDelegate(this, &nuiRSSView::_SetFont)));
+  
+  AddAttribute(new nuiAttribute<const nuiColor&>
+               (nglString(_T("TextColor")), nuiUnitNone,
+                nuiMakeDelegate(this, &nuiRSSView::GetTextColor), 
+                nuiMakeDelegate(this, &nuiRSSView::SetTextColor)));
+  
+}
+
+
 
 bool nuiRSSView::Update(const nuiEvent& rEvent)
 {
@@ -83,6 +103,9 @@ bool nuiRSSView::Update(const nuiEvent& rEvent)
       nuiHTMLView* pLabel = new nuiHTMLView(480);
       pLabel->SetText(desc);
       pLabel->SetObjectClass(_T("nuiRSSContents"));
+      if (mFont != nglString::Null)
+        pLabel->_SetFont(mFont);
+      pLabel->SetTextColor(mTextColor);
       pPane->AddChild(pLabel);
     }
     else
@@ -108,4 +131,30 @@ void nuiRSSView::SetURL(const nglString& rURL)
 {
   mpRSS->SetURL(rURL);
 }
+
+void nuiRSSView::_SetFont(const nglString& rFontSymbol)
+{
+  mFont = rFontSymbol;
+  ForceUpdate();  
+}
+
+
+const nglString& nuiRSSView::_GetFont() const
+{
+  return mFont;
+}
+
+
+const nuiColor& nuiRSSView::GetTextColor() const
+{
+  return mTextColor;
+}
+
+
+void nuiRSSView::SetTextColor(const nuiColor& Color)
+{
+  mTextColor = Color;
+  ForceUpdate();  
+}
+
 

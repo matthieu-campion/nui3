@@ -24,6 +24,16 @@
 /////////////////////////////// nuiHTMLView
 nuiHTMLView::nuiHTMLView(float IdealWidth)
 {
+  if (SetObjectClass(_T("nuiHTMLView")))
+    InitAttributes();
+  
+  mTextColorSet = false;
+  mFontChanged = false;
+  mTextColor.Set(0,0,0);
+  mpFont = NULL;
+  
+  InitContext();
+  
   mpHTML = NULL;
   mpRootBox = NULL;
   mIdealWidth = IdealWidth;
@@ -36,6 +46,107 @@ nuiHTMLView::~nuiHTMLView()
   delete mpHTML;
 }
 
+void nuiHTMLView::InitAttributes()
+{
+  AddAttribute(new nuiAttribute<const nglString&>
+   (nglString(_T("Font")), nuiUnitName,
+    nuiMakeDelegate(this, &nuiHTMLView::_GetFont), 
+    nuiMakeDelegate(this, &nuiHTMLView::_SetFont)));
+  
+  AddAttribute(new nuiAttribute<const nuiColor&>
+   (nglString(_T("TextColor")), nuiUnitNone,
+    nuiMakeDelegate(this, &nuiHTMLView::GetTextColor), 
+    nuiMakeDelegate(this, &nuiHTMLView::SetTextColor)));
+  
+}
+
+
+void nuiHTMLView::InitContext()
+{
+  nuiFontRequest font(mpFont, false);
+  mContext.mFont = font;
+  mContext.mUnderline = false;
+  mContext.mStrikeThrough = false;
+  mContext.mTextFgColor = mTextColor;
+
+  mContext.mLeftMargin = 0;
+  mContext.mMaxWidth = 0;
+  mContext.mVSpace = 0;
+  mContext.mHSpace = 0;
+  mContext.mTextBgColor = nuiColor(255,255,255);
+}
+
+
+void nuiHTMLView::SetFont(nuiFont* pFont, bool AlreadyAcquired)
+{
+  if (!pFont)
+  {
+    AlreadyAcquired = true;
+    pFont = nuiFont::GetFont(14.0f);
+  }
+  
+  if (pFont == mpFont)
+  {
+    if (AlreadyAcquired)
+    {
+      mpFont->Release();
+    }
+    return;
+  }
+  
+  if(mpFont)
+    mpFont->Release();
+  
+  mpFont = pFont;
+  if (!AlreadyAcquired)
+    mpFont->Acquire();
+  
+  mFontChanged = true;
+  InvalidateLayout();
+}
+
+void nuiHTMLView::SetFont(nuiFontRequest& rFontRequest)
+{
+  nuiFont* pFont = nuiFontManager::GetManager().GetFont(rFontRequest);
+  if (pFont)
+    SetFont(pFont, true);
+}
+
+void nuiHTMLView::SetFont(const nglString& rFontSymbol)
+{
+  nuiFont* pFont = nuiFont::GetFont(rFontSymbol);
+  if (pFont)
+    SetFont(pFont, true);
+}
+
+
+void nuiHTMLView::_SetFont(const nglString& rFontSymbol)
+{
+  SetFont(rFontSymbol);
+  InitContext();
+}
+
+const nglString& nuiHTMLView::_GetFont() const
+{
+  if (mpFont)
+    return mpFont->GetObjectName();
+  return nglString::Null;
+}
+
+const nuiColor& nuiHTMLView::GetTextColor() const
+{
+  return mTextColor;
+}
+
+void nuiHTMLView::SetTextColor(const nuiColor& Color)
+{
+  mTextColorSet = true;
+  mTextColor = Color;
+  InitContext();
+  Invalidate();
+}
+
+
 nuiRect nuiHTMLView::CalcIdealSize()
 {
   float IdealWidth = mIdealWidth;
@@ -45,11 +156,11 @@ nuiRect nuiHTMLView::CalcIdealSize()
 //  context.mSetLayout = true;
 //  WalkTree(mpHTML, context);
   //  return nuiRect(context.mMaxWidth, context.mH);
-  nuiHTMLContext context;
-  context.mMaxWidth = IdealWidth;
+
+  mContext.mMaxWidth = IdealWidth;
   if (!mpRootBox)
     return nuiRect(IdealWidth, 400.0f);
-  mpRootBox->Layout(context);
+  mpRootBox->Layout(mContext);
   return nuiRect(mpRootBox->GetIdealRect().GetWidth(), mpRootBox->GetIdealRect().GetHeight());
 }
 
@@ -58,9 +169,9 @@ bool nuiHTMLView::SetRect(const nuiRect& rRect)
   nuiWidget::SetRect(rRect);
   if (!mpRootBox)
     return true;
-  nuiHTMLContext context;
-  context.mMaxWidth = mRect.GetWidth();
-  mpRootBox->Layout(context);
+
+  mContext.mMaxWidth = mRect.GetWidth();
+  mpRootBox->Layout(mContext);
   mpRootBox->SetRect(mpRootBox->GetIdealRect());
   return true;
 }

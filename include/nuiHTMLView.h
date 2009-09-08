@@ -10,8 +10,9 @@
 #include "nui.h"
 #include "nuiHTML.h"
 #include "nuiFontManager.h"
+#include "nuiHTMLContext.h";
 
-class nuiHTMLContext;
+
 class nuiHTMLItem;
 class nuiHTMLBox;
 class nuiHTMLFont;
@@ -37,7 +38,21 @@ public:
   bool SetURL(const nglString& rURL);
   const nglString& GetURL() const;
 
+  
+  void SetFont(nuiFont* pFont, bool AlreadyAcquired);
+  void SetFont(nuiFontRequest& rFontRequest);
+  void SetFont(const nglString& rFontSymbol);
+  void _SetFont(const nglString& rFontSymbol);
+  const nglString& _GetFont() const;
+  
+  
+  const nuiColor& GetTextColor() const;
+  void SetTextColor(const nuiColor& Color);
+  
 protected:
+  
+  void InitContext();
+  
   void ParseTree(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
   void ParseHTML(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
   void ParseHead(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
@@ -63,5 +78,16 @@ protected:
   float mHSpace;
   
   nuiHTML* mpHTML;
+  nuiHTMLContext mContext;
+
+private:
+  
+  void InitAttributes();
+  
+  bool mTextColorSet;
+  bool mFontChanged;
+  nuiColor mTextColor;
+  nuiFont* mpFont;
+
 };
 
