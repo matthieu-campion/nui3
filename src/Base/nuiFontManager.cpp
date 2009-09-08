@@ -221,6 +221,25 @@ nuiFontRequest::nuiFontRequest(nglFontBase* pOriginalFont, bool ForcePanoseOnlyF
   
 }
 
+nuiFontRequest::nuiFontRequest(const nuiFontRequest& rOriginal)
+{
+#define COPY(X) X = rOriginal.X;
+  COPY(mName);
+  COPY(mGenericName);
+  COPY(mStyle);
+  COPY(mFace);
+  COPY(mItalic);
+  COPY(mBold);
+  COPY(mMonospace);
+  COPY(mScalable);
+  COPY(mMustHaveGlyphs);
+  COPY(mMustHaveEncoding);
+  COPY(mMustHaveSizes);
+  COPY(mPanose);
+#undef COPY  
+}
+
+
 void nuiFontRequest::InitAttributes()
 {
   // Name

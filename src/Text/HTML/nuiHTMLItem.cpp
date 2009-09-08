@@ -84,9 +84,14 @@ void nuiHTMLItem::Layout(nuiHTMLContext& rContext)
     {
       rContext.mUnderline = set;
       if (set)
+      {
+        mOldTextColor = rContext.mTextFgColor;
         rContext.mTextFgColor = nuiColor(0, 0, 200);
+      }
       else
-        rContext.mTextFgColor = nuiColor(0, 0, 0);
+      {
+        rContext.mTextFgColor =  mOldTextColor;
+      }
     }
     break;
   }

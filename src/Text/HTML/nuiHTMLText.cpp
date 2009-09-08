@@ -32,10 +32,10 @@ void nuiHTMLText::Draw(nuiDrawContext* pContext)
 
 void nuiHTMLText::Layout(nuiHTMLContext& rContext)
 {
-  if (mpLayout)
-  {
-    return;
-  }
+//  if (mpLayout)
+//  {
+//    return;
+//  }
   delete mpLayout;
   nuiFont* pFont = nuiFontManager::GetManager().GetFont(rContext.mFont);
   //nuiFont* pFont = nuiFont::GetFont(12);

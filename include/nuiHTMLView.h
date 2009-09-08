@@ -51,8 +51,6 @@ public:
   
 protected:
   
-  void InitContext();
-  
   void ParseTree(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
   void ParseHTML(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
   void ParseHead(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
@@ -80,14 +78,9 @@ protected:
   nuiHTML* mpHTML;
   nuiHTMLContext mContext;
 
+  void ReLayout();
 private:
   
   void InitAttributes();
-  
-  bool mTextColorSet;
-  bool mFontChanged;
-  nuiColor mTextColor;
-  nuiFont* mpFont;
-
 };
 

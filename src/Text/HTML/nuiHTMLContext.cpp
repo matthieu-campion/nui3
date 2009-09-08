@@ -34,8 +34,16 @@ nuiHTMLContext::nuiHTMLContext()
 }
 
 nuiHTMLContext::nuiHTMLContext(const nuiHTMLContext& rContext)
+: mLeftMargin(rContext.mLeftMargin),
+  mMaxWidth(rContext.mMaxWidth),
+  mVSpace(rContext.mVSpace),
+  mHSpace(rContext.mHSpace),
+  mFont(rContext.mFont),
+  mUnderline(rContext.mUnderline),
+  mStrikeThrough(rContext.mStrikeThrough),
+  mTextFgColor(rContext.mTextFgColor),
+  mTextBgColor(rContext.mTextBgColor)
 {
-  *this = rContext;
 }
 
 nuiHTMLContext& nuiHTMLContext::operator=(const nuiHTMLContext& rContext)

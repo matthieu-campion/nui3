@@ -15,6 +15,7 @@ class nuiFontRequest : public nuiObject
 {
 public:
   nuiFontRequest(nglFontBase* pOriginalFont = NULL, bool ForcePanoseOnlyFonts = true);
+  nuiFontRequest(const nuiFontRequest& rOriginal);
   ~nuiFontRequest();
   
   /* generic font names are defined in the CSS standard
@@ -49,13 +50,27 @@ public:
   void ClearMustHaveEncoding();
   void ClearMustHaveSize();
   void ClearMustBeSimilar();
-private:
+
   template <class T> class ScoredElement
   {
   public:
     ScoredElement()
     {
       Clear();
+    }
+
+    ScoredElement(const ScoredElement<T>& rElement)
+    : mScore(rElement.mScore),
+      mStrict(rElement.mStrict),
+      mElement(rElement.mElement)
+    {
+    }
+    
+    ScoredElement<T>& operator = (const ScoredElement<T>& rElement)
+    {
+      mScore = rElement.mScore;
+      mStrict = rElement.mStrict;
+      mElement = rElement.mElement;
     }
     
     void Clear()
@@ -86,7 +101,8 @@ private:
   static std::multimap<nglString, nglString> gFontsForGenericNames;
   static std::map<nglString, nglString> gGenericNamesForFonts;
   static std::map<nglString, nglString> gDefaultFontsForGenericNames;
-  
+
+private:
   friend class nuiFontManager;
 
   void InitAttributes();

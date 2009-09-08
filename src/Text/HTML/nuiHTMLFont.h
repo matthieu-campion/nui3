@@ -25,5 +25,6 @@ private:
   nuiColor mTextFgColor;
   bool mUseColor;
   nuiFontRequest mBackup;
+  nuiColor mBackupTextFgColor;
 };
 

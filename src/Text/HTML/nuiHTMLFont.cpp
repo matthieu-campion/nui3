@@ -54,11 +54,16 @@ void nuiHTMLFont::Layout(nuiHTMLContext& rContext)
     if (mSize > 0)
       rContext.mFont.MustHaveSize(mSize, 1.0f);
     if (mUseColor)
+    {
+      mBackupTextFgColor = rContext.mTextFgColor;
       rContext.mTextFgColor = mTextFgColor;
+    }
   }
   else
   {
     rContext.mFont = mBackup;
+    if (mUseColor)
+      rContext.mTextFgColor = mBackupTextFgColor;
   }
   
 }
