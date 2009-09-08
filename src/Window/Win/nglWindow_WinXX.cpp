@@ -1728,43 +1728,21 @@ void nglWindow::BeginSession()
         {
 
           glGenFramebuffersEXT(1, &mFBO_BackBuffer);  nglCheckForGLErrors();
-          glGenTextures(1, &mFBO_BackBufferTexture);  nglCheckForGLErrors();
-          glGenRenderbuffersEXT(1, &mFBO_BackBufferDepth);  nglCheckForGLErrors();
 
           glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, mFBO_BackBuffer);  nglCheckForGLErrors();
+          glGenRenderbuffersEXT(1, &mFBO_BackBufferDepth);  nglCheckForGLErrors();
+
+          glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, 0);
 
           //if (!mFBO_BackBufferTexture)
           {
             // initialize color texture
+            glGenTextures(1, &mFBO_BackBufferTexture);  nglCheckForGLErrors();
             glBindTexture(nglFBOSwapTarget, mFBO_BackBufferTexture);  nglCheckForGLErrors();
             glTexParameterf(nglFBOSwapTarget, GL_TEXTURE_MIN_FILTER, GL_LINEAR);  nglCheckForGLErrors();
             glTexImage2D(nglFBOSwapTarget, 0, GL_RGB8, w, h, 0, GL_RGB, GL_INT, NULL);  nglCheckForGLErrors();
             glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, nglFBOSwapTarget, mFBO_BackBufferTexture, 0);  nglCheckForGLErrors();
             CHECK_FRAMEBUFFER_STATUS();
-          }
-
-          if (CheckExtension(_T("GL_EXT_packed_depth_stencil")))
-          {
-            // initialize depth/stencil renderbuffer
-            glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, mFBO_BackBufferDepth);  nglCheckForGLErrors();
-            glRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, GL_DEPTH24_STENCIL8_EXT, w, h);  nglCheckForGLErrors();
-            glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, mFBO_BackBufferDepth);  nglCheckForGLErrors();
-            glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_STENCIL_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, mFBO_BackBufferDepth);  nglCheckForGLErrors();
-          }
-          else
-          {
-            // initialize depth renderbuffer
-            glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, mFBO_BackBufferDepth);  nglCheckForGLErrors();
-            glRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, GL_DEPTH_COMPONENT, w, h);  nglCheckForGLErrors();
-            glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, mFBO_BackBufferDepth);  nglCheckForGLErrors();
-
-  /*
-            // initialize stencil renderbuffer
-            glGenRenderbuffersEXT(1, &mFBO_BackBufferStencil);  nglCheckForGLErrors();
-            glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, mFBO_BackBufferStencil);  nglCheckForGLErrors();
-            glRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, GL_STENCIL_INDEX, w, h);  nglCheckForGLErrors();
-            glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_STENCIL_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, mFBO_BackBufferStencil);  nglCheckForGLErrors();
-  */
           }
           
         }
