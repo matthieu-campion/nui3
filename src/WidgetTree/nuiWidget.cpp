@@ -341,6 +341,11 @@ void nuiWidget::InitAttributes()
   
   // nuiAttribute<nuiSize> <=> nuiAttribute<double>
   AddAttribute(new nuiAttribute<nuiSize>
+               (nglString(_T("Borders")), nuiUnitSize,
+                //nuiMakeDelegate(this, &nuiWidget::GetBorderLeft),
+                nuiMakeDelegate(this, &nuiWidget::SetBorders)));
+  
+  AddAttribute(new nuiAttribute<nuiSize>
                (nglString(_T("BorderLeft")), nuiUnitSize,
                 nuiMakeDelegate(this, &nuiWidget::GetBorderLeft),
                 nuiMakeDelegate(this, &nuiWidget::SetBorderLeft)));
@@ -2507,6 +2512,11 @@ bool nuiWidget::SetRect(const nuiRect& rRect)
   mNeedLayout = false;
   DebugRefreshInfo();
   return true;
+}
+
+void nuiWidget::SetBorders(nuiSize XY)
+{
+  SetBorder(XY, XY);
 }
 
 void nuiWidget::SetBorder(nuiSize X, nuiSize Y)

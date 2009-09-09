@@ -42,9 +42,29 @@ nuiHTMLView::~nuiHTMLView()
 void nuiHTMLView::InitAttributes()
 {
   AddAttribute(new nuiAttribute<const nglString&>
-   (nglString(_T("Font")), nuiUnitName,
-    nuiMakeDelegate(this, &nuiHTMLView::_GetFont), 
-    nuiMakeDelegate(this, &nuiHTMLView::_SetFont)));
+               (nglString(_T("Text")), nuiUnitName,
+                //nuiMakeDelegate(this, &nuiHTMLView::_GetFont), 
+                nuiMakeDelegate(this, &nuiHTMLView::_SetText)));
+  
+  AddAttribute(new nuiAttribute<float>
+               (nglString(_T("Width")), nuiUnitName,
+                nuiMakeDelegate(this, &nuiHTMLView::GetIdealWidth), 
+                nuiMakeDelegate(this, &nuiHTMLView::SetIdealWidth)));
+  
+  AddAttribute(new nuiAttribute<float>
+               (nglString(_T("VSpace")), nuiUnitName,
+                nuiMakeDelegate(this, &nuiHTMLView::GetVSpace), 
+                nuiMakeDelegate(this, &nuiHTMLView::SetVSpace)));
+  
+  AddAttribute(new nuiAttribute<float>
+               (nglString(_T("HSpace")), nuiUnitName,
+                nuiMakeDelegate(this, &nuiHTMLView::GetHSpace), 
+                nuiMakeDelegate(this, &nuiHTMLView::SetHSpace)));  
+  
+  AddAttribute(new nuiAttribute<const nglString&>
+               (nglString(_T("Font")), nuiUnitName,
+                nuiMakeDelegate(this, &nuiHTMLView::_GetFont), 
+                nuiMakeDelegate(this, &nuiHTMLView::_SetFont)));
   
   AddAttribute(new nuiAttribute<const nuiColor&>
    (nglString(_T("TextColor")), nuiUnitNone,
@@ -570,3 +590,7 @@ void nuiHTMLView::ParseFont(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
   pBox->AddItemEnd(new nuiHTMLFont(pNode));
 }
 
+void nuiHTMLView::_SetText(const nglString& rHTMLText)
+{
+  SetText(rHTMLText);
+}

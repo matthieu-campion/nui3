@@ -80,6 +80,7 @@ protected:
 
   void ReLayout();
 private:
+  void _SetText(const nglString& rHTMLText);
   
   void InitAttributes();
 };
