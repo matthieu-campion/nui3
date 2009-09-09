@@ -20,7 +20,7 @@ class nuiHTMLFont;
 class nuiHTMLView : public nuiSimpleContainer
 {
 public:
-  nuiHTMLView(float IdealWidth);
+  nuiHTMLView(float IdealWidth = 800);
   ~nuiHTMLView();
   
   virtual nuiRect CalcIdealSize();

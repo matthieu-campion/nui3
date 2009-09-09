@@ -184,7 +184,7 @@ void nuiBuilder::Init()
   NUI_ADD_WIDGET_CREATOR(nuiHyperLink, "Widget");
   //NUI_ADD_WIDGET_CREATOR(nuiLabelAttribute, "Widget");
   //NUI_ADD_WIDGET_CREATOR(nuiLabelRenamer, "Widget");
-  //NUI_ADD_WIDGET_CREATOR(nuiHTMLView, "Widget");
+  NUI_ADD_WIDGET_CREATOR(nuiHTMLView, "Widget");
   NUI_ADD_WIDGET_CREATOR(nuiScrollingLabel, "Widget");
   NUI_ADD_WIDGET_CREATOR(nuiSpinnerLabel, "Widget");
 
