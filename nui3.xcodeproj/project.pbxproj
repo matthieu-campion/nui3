@@ -19,6 +19,12 @@
 		40182AD70F24F09500F11401 /* nuiAiffReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 40182AD30F24F09500F11401 /* nuiAiffReader.h */; };
 		40182AD80F24F09500F11401 /* nuiAiffReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40182AD20F24F09500F11401 /* nuiAiffReader.cpp */; };
 		40182AD90F24F09500F11401 /* nuiAiffReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 40182AD30F24F09500F11401 /* nuiAiffReader.h */; };
+		4024358F10568E550089BA0B /* nuiStopWatch.h in Headers */ = {isa = PBXBuildFile; fileRef = 4024358E10568E550089BA0B /* nuiStopWatch.h */; };
+		4024359010568E550089BA0B /* nuiStopWatch.h in Headers */ = {isa = PBXBuildFile; fileRef = 4024358E10568E550089BA0B /* nuiStopWatch.h */; };
+		4024359110568E550089BA0B /* nuiStopWatch.h in Headers */ = {isa = PBXBuildFile; fileRef = 4024358E10568E550089BA0B /* nuiStopWatch.h */; };
+		4024359310568E6F0089BA0B /* nuiStopWatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4024359210568E6F0089BA0B /* nuiStopWatch.cpp */; };
+		4024359410568E6F0089BA0B /* nuiStopWatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4024359210568E6F0089BA0B /* nuiStopWatch.cpp */; };
+		4024359510568E6F0089BA0B /* nuiStopWatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4024359210568E6F0089BA0B /* nuiStopWatch.cpp */; };
 		40A459A70EFAA71F00043B1F /* nuiAudioDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 40A459A60EFAA71F00043B1F /* nuiAudioDecoder.h */; };
 		40A459A80EFAA71F00043B1F /* nuiAudioDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 40A459A60EFAA71F00043B1F /* nuiAudioDecoder.h */; };
 		40A459AC0EFAABC400043B1F /* nuiAudioDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40A459AB0EFAABC400043B1F /* nuiAudioDecoder.cpp */; };
@@ -3057,6 +3063,8 @@
 		40182A6D0F24C74A00F11401 /* nuiChunkSampleReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiChunkSampleReader.cpp; path = AudioSamples/nuiChunkSampleReader.cpp; sourceTree = "<group>"; };
 		40182AD20F24F09500F11401 /* nuiAiffReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiAiffReader.cpp; path = AudioSamples/nuiAiffReader.cpp; sourceTree = "<group>"; };
 		40182AD30F24F09500F11401 /* nuiAiffReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiAiffReader.h; path = ../include/nuiAiffReader.h; sourceTree = "<group>"; };
+		4024358E10568E550089BA0B /* nuiStopWatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiStopWatch.h; path = include/nuiStopWatch.h; sourceTree = SOURCE_ROOT; };
+		4024359210568E6F0089BA0B /* nuiStopWatch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiStopWatch.cpp; sourceTree = "<group>"; };
 		40A459A60EFAA71F00043B1F /* nuiAudioDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiAudioDecoder.h; path = include/nuiAudioDecoder.h; sourceTree = SOURCE_ROOT; };
 		40A459AB0EFAABC400043B1F /* nuiAudioDecoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiAudioDecoder.cpp; path = AudioSamples/nuiAudioDecoder.cpp; sourceTree = "<group>"; };
 		40A459BA0EFAAE4500043B1F /* nuiAudioDecoder_CoreAudio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiAudioDecoder_CoreAudio.cpp; path = AudioSamples/CoreAudio/nuiAudioDecoder_CoreAudio.cpp; sourceTree = "<group>"; };
@@ -5742,6 +5750,8 @@
 				E55697370FB2D71600324321 /* nuiParser.cpp */,
 				E5D2D1880FDE946E00143480 /* nuiRSS.cpp */,
 				E5D2D18C0FDE949C00143480 /* nuiRSS.h */,
+				4024358E10568E550089BA0B /* nuiStopWatch.h */,
+				4024359210568E6F0089BA0B /* nuiStopWatch.cpp */,
 			);
 			name = Utils;
 			path = src/Utils;
@@ -6504,6 +6514,7 @@
 				E55A479D10531814002AB5CA /* nuiClampedValueAttributeEditor.h in Headers */,
 				E55A47C1105321F3002AB5CA /* nuiPopupValueAttributeEditor.h in Headers */,
 				E55A47CA1053234C002AB5CA /* nuiComboAttributeEditor.h in Headers */,
+				4024359010568E550089BA0B /* nuiStopWatch.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7088,6 +7099,7 @@
 				E55A479E10531814002AB5CA /* nuiClampedValueAttributeEditor.h in Headers */,
 				E55A47C2105321F3002AB5CA /* nuiPopupValueAttributeEditor.h in Headers */,
 				E55A47C91053234C002AB5CA /* nuiComboAttributeEditor.h in Headers */,
+				4024358F10568E550089BA0B /* nuiStopWatch.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7667,6 +7679,7 @@
 				E55A479C10531814002AB5CA /* nuiClampedValueAttributeEditor.h in Headers */,
 				E55A47C0105321F3002AB5CA /* nuiPopupValueAttributeEditor.h in Headers */,
 				E55A47C81053234C002AB5CA /* nuiComboAttributeEditor.h in Headers */,
+				4024359110568E550089BA0B /* nuiStopWatch.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8187,6 +8200,7 @@
 				E5F3E1101017DD2B00CEC731 /* nglTimer_CoreFoundation.cpp in Sources */,
 				E52D655110322B51005BF301 /* nuiHugeImage.cpp in Sources */,
 				E55A47AF10531ABD002AB5CA /* nuiPopupValueAttributeEditor.cpp in Sources */,
+				4024359510568E6F0089BA0B /* nuiStopWatch.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8628,6 +8642,7 @@
 				E5F3E0CB1017DBD100CEC731 /* nglTimer_CoreFoundation.cpp in Sources */,
 				E52D654F10322B51005BF301 /* nuiHugeImage.cpp in Sources */,
 				E55A47B010531ABD002AB5CA /* nuiPopupValueAttributeEditor.cpp in Sources */,
+				4024359410568E6F0089BA0B /* nuiStopWatch.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9060,6 +9075,7 @@
 				E5795184100AB20400821E44 /* nglStringConv_iconv.cpp in Sources */,
 				E52D655010322B51005BF301 /* nuiHugeImage.cpp in Sources */,
 				E55A47AE10531ABD002AB5CA /* nuiPopupValueAttributeEditor.cpp in Sources */,
+				4024359310568E6F0089BA0B /* nuiStopWatch.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
