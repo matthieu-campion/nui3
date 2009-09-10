@@ -75,7 +75,7 @@ void nuiHotKeyEditor::ConnectTopLevel()
   mpColumnHeadersHBox->SetCellExpand(0, nuiExpandGrow);
   mpColumnHeadersHBox->SetCellPixels(1, mShortcutColumnWidth);
   mpColumnHeadersHBox->SetCellExpand(1, nuiExpandFixed);
-  mpColumnHeadersHBox->DisplayGridBorder(true);
+//  mpColumnHeadersHBox->DisplayGridBorder(true);
   
   mpMainVBox->AddCell(mpColumnHeadersHBox);
   
@@ -125,7 +125,7 @@ void nuiHotKeyEditor::FillHotKeysGrid()
     ++row;
   }
   
-  mpHotKeysGrid->DisplayGridBorder(true);
+//  mpHotKeysGrid->DisplayGridBorder(true);
   mpHotKeysGrid->SetColumnExpand(0, nuiExpandGrow);
   mpHotKeysGrid->SetColumnPixels(1, mShortcutColumnWidth);
   mpHotKeysGrid->SetColumnExpand(1, nuiExpandFixed);
