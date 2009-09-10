@@ -82,7 +82,7 @@ void nuiHTMLView::SetFont(nuiFont* pFont, bool AlreadyAcquired)
     pFont = nuiFont::GetFont(14.0f);
   }
   
-  mContext.mFont = nuiFontRequest(pFont);
+  mContext.mFont = nuiFontRequest(pFont, false);
   if (AlreadyAcquired)
     pFont->Release();
   

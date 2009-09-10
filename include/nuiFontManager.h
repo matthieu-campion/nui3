@@ -14,7 +14,7 @@
 class nuiFontRequest : public nuiObject
 {
 public:
-  nuiFontRequest(nglFontBase* pOriginalFont = NULL, bool ForcePanoseOnlyFonts = true);
+  nuiFontRequest(nglFontBase* pOriginalFont = NULL, bool ForcePanoseOnlyFonts = false);
   nuiFontRequest(const nuiFontRequest& rOriginal);
   ~nuiFontRequest();
   

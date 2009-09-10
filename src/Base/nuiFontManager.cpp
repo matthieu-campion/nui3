@@ -1600,6 +1600,7 @@ nuiFont* nuiFontManager::GetFont(nuiFontRequest& rRequest, const nglString& rID)
   if (!rRequest.mMustHaveSizes.mElement.empty())
     size = *(rRequest.mMustHaveSizes.mElement.begin());
   
+  wprintf(_T("Loading font %ls\n"), rRequest.mName.mElement.GetChars());
   nuiFont* pFont = nuiFont::GetFont(rRequest.mName.mElement, size, rRequest.mFace.mElement, rID);
   if (pFont)
     return pFont;

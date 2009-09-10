@@ -240,11 +240,16 @@ public:
   
   bool ToString(void* pTarget, nglString& rString) const
   {
+    if (mGetter.empty())
+      return false;
+
     return ToString(Get(pTarget), rString);
   }
   
   bool FromString(void* pTarget, const nglString& rString) const
   {
+    if (mSetter.empty())
+      return false;
     Contents val;
     bool res = FromString(val, rString);
     if (!res)
@@ -257,11 +262,16 @@ public:
   
   bool ToString(void* pTarget, int32 index, nglString& rString) const
   {
+    if (mGetter.empty())
+      return false;
     return ToString(Get(pTarget, index), rString);
   }
   
   bool FromString(void* pTarget, int32 index, const nglString& rString) const
   {
+    if (mSetter.empty())
+      return false;
+    
     Contents val;
     bool res = FromString(val, rString);
     if (!res)
@@ -274,11 +284,15 @@ public:
   
   bool ToString(void* pTarget, int32 index0, int32 index1, nglString& rString) const
   {
+    if (mGetter.empty())
+      return false;
     return ToString(Get(pTarget, index0, index1), rString);
   }
   
   virtual bool FromString(void* pTarget, int32 index0, int32 index1, const nglString& rString) const
   {
+    if (mSetter.empty())
+      return false;
     Contents val;
     bool res = FromString(val, rString);
     if (!res)
