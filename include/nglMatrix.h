@@ -215,10 +215,7 @@ public:
   /// Setup a translation matrix
   void SetTranslation (const nglVector<T>& rDelta)
   {
-    SetIdentity();
-    Elt.M14 = rDelta[0];
-    Elt.M24 = rDelta[1];
-    Elt.M34 = rDelta[2];
+    SetTranslation(rDelta[0], rDelta[1], rDelta[2]);
   }
 
   /// Setup a translation matrix
@@ -233,17 +230,15 @@ public:
   /// Compose with a translation
   void Translate (const nglVector<T>& rDelta)
   {
-    Elt.M14 += rDelta[0];
-    Elt.M24 += rDelta[1];
-    Elt.M34 += rDelta[2];
+    Translate(rDelta[0], rDelta[1], rDelta[2]);
   }
 
   /// Compose with a translation
   void Translate (T X, T Y, T Z)
   {
-    Elt.M14 += X;
-    Elt.M24 += Y;
-    Elt.M34 += Z;
+    nglMatrix<T> m;
+    m.SetTranslation(X, Y, Z);
+    *this *= m;
   }
 
   /// Setup a scaling transformation (homothetia)
@@ -269,15 +264,9 @@ public:
   /// Apply a scaling transformation
   void Scale (T X, T Y, T Z)
   {
-    Elt.M11 *= X;
-    Elt.M21 *= X;
-    Elt.M31 *= X;
-    Elt.M12 *= Y;
-    Elt.M22 *= Y;
-    Elt.M32 *= Y;
-    Elt.M13 *= Z;
-    Elt.M23 *= Z;
-    Elt.M33 *= Z;
+    nglMatrix<T> m;
+    m.SetScaling(X, Y, Z);
+    *this *= m;
   }
 
   /// Apply a scaling transformation
