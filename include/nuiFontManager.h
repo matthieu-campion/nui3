@@ -71,6 +71,7 @@ public:
       mScore = rElement.mScore;
       mStrict = rElement.mStrict;
       mElement = rElement.mElement;
+      return *this;
     }
     
     void Clear()
