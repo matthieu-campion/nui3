@@ -285,6 +285,8 @@ bool nuiAudioDecoder::ReadInfo()
   mInfo.SetBitsPerSample(BitsPerSample);
   mInfo.SetSampleFrames(SampleFrames);
   mInfo.SetFileFormat(eAudioCompressed);
+  mInfo.SetStartFrame(0);
+  mInfo.SetStopFrame(mInfo.GetSampleFrames());
   return true;
 }
 
