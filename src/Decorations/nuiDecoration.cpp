@@ -320,6 +320,7 @@ nuiAttributeEditor* nuiDecoration::GetAttributeEditor(void* pTarget, nuiAttribut
   DecorationMap::const_iterator it = mDecorations.begin();
   DecorationMap::const_iterator end = mDecorations.end();
   
+  values.push_back(std::make_pair(_T("-- None --"), nglString::Null));
   while (it != end)
   {
     values.push_back(std::make_pair(it->first, it->first));

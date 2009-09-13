@@ -419,6 +419,11 @@ public:
 	// Format methods for each dimensions:
 	void Format(void* pTarget, nglString& string)
 	{
+    if (!mGetter)
+    {
+      string.Nullify();
+      return;
+    }
 		if (mFormater)
 		{
 			// the user has specified its own formater.
@@ -430,6 +435,11 @@ public:
 	
 	void Format(void* pTarget, uint32 index, nglString& string)
 	{
+    if (!mGetter)
+    {
+      string.Nullify();
+      return;
+    }
 		if (mFormater)
 		{
 			// the user has specified its own formater.
@@ -441,6 +451,11 @@ public:
 	
 	void Format(void* pTarget, uint32 index0, uint32 index1, nglString& string)
 	{
+    if (!mGetter)
+    {
+      string.Nullify();
+      return;
+    }
 		if (mFormater)
 		{
 			// the user has specified its own formater.
@@ -852,6 +867,11 @@ public:
   // Format methods for each dimensions:
   void Format(void* pTarget, nglString& string)
   {
+    if (!mGetter)
+    {
+      string.Nullify();
+      return;
+    }
     if (mFormater)
     {
       // the user has specified its own formater.
@@ -863,6 +883,12 @@ public:
   
   void Format(void* pTarget, uint32 index, nglString& string)
   {
+    if (!mGetter)
+    {
+      string.Nullify();
+      return;
+    }
+
     if (mFormater)
     {
       // the user has specified its own formater.
@@ -874,6 +900,12 @@ public:
   
   void Format(void* pTarget, uint32 index0, uint32 index1, nglString& string)
   {
+    if (!mGetter)
+    {
+      string.Nullify();
+      return;
+    }
+
     if (mFormater)
     {
       // the user has specified its own formater.

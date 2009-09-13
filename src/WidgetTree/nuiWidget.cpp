@@ -304,11 +304,6 @@ void nuiWidget::InitAttributes()
                 nuiMakeDelegate(this, &nuiWidget::HasFocus)));
   
 	// Decoration:
-  AddAttribute(new nuiAttribute<const nglString&>
-               (nglString(_T("Decoration")), nuiUnitName,
-                nuiMakeDelegate(this, &nuiWidget::GetDecorationName),
-                nuiAttribute<const nglString&>::SetterDelegate(this, &nuiWidget::SetDecoration)));
-
   nuiAttribute<const nglString&>* pDecoAttrib = new nuiAttribute<const nglString&>
     (nglString(_T("Decoration")), nuiUnitNone,
      nuiMakeDelegate(this, &nuiWidget::GetDecorationName),
