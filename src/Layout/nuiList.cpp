@@ -164,7 +164,7 @@ nuiRect nuiList::CalcIdealSize()
   rect.Set(mRect.mLeft, mRect.mTop, Width, Height);
   mPositions.push_front(rect);
 //  OUT("Ideal Size: %d x %d\n",Width,Height);
-  mIdealRect = rect;
+  mIdealRect = rect.Size();
 
   return mIdealRect;
 }
