@@ -24,6 +24,7 @@ nuiImage::nuiImage (nuiTexture* pTexture, bool AlreadyAcquired)
     pTexture->Acquire();
 
   mUseAlpha = true;
+  mFixedAspectRatio = false;
 
   mBlendFunc = nuiBlendTransp;
   mIgnoreState = false;
@@ -38,6 +39,7 @@ nuiImage::nuiImage (nglIStream* pInput, nglImageCodec* pCodec)
 
   mpTexture = nuiTexture::GetTexture(pInput, pCodec);
   mUseAlpha = true;
+  mFixedAspectRatio = false;
   mBlendFunc = nuiBlendTransp;
   mIgnoreState = false;
   ResetTextureRect();
@@ -51,6 +53,7 @@ nuiImage::nuiImage (const nglPath& rPath, nglImageCodec* pCodec)
 
   mpTexture = nuiTexture::GetTexture(rPath, pCodec);
   mUseAlpha = true;
+  mFixedAspectRatio = false;
   mBlendFunc = nuiBlendTransp;
   SetProperty(_T("Source"),rPath.GetPathName());
   mIgnoreState = false;
@@ -65,6 +68,7 @@ nuiImage::nuiImage (nglImageInfo& rInfo, bool Clone)
 
   mpTexture = nuiTexture::GetTexture(rInfo, Clone);
   mUseAlpha = true;
+  mFixedAspectRatio = false;
   mBlendFunc = nuiBlendTransp;
   mIgnoreState = false;
   ResetTextureRect();
@@ -78,6 +82,7 @@ nuiImage::nuiImage (const nglImage& rImage)
 
   mpTexture = nuiTexture::GetTexture(rImage);
   mUseAlpha = true;
+  mFixedAspectRatio = false;
   mBlendFunc = nuiBlendTransp;
   mIgnoreState = false;
   ResetTextureRect();
@@ -91,6 +96,7 @@ nuiImage::nuiImage (nglImage* pImage, bool OwnImage)
 
   mpTexture = nuiTexture::GetTexture(pImage,OwnImage);
   mUseAlpha = true;
+  mFixedAspectRatio = false;
   mBlendFunc = nuiBlendTransp;
   mIgnoreState = false;
   ResetTextureRect();
@@ -103,10 +109,16 @@ void nuiImage::InitAttributes()
                (nglString(_T("Texture")), nuiUnitNone,
                 nuiMakeDelegate(this, &nuiImage::GetTexturePath), 
                 nuiMakeDelegate(this, &nuiImage::SetTexturePath)));
+
   AddAttribute(new nuiAttribute<const nuiRect&>
                (nglString(_T("TextureRect")), nuiUnitNone,
                 nuiMakeDelegate(this, &nuiImage::GetTextureRect), 
                 nuiMakeDelegate(this, &nuiImage::SetTextureRect)));
+
+  AddAttribute(new nuiAttribute<bool>
+               (nglString(_T("FixedAspectRatio")), nuiUnitOnOff,
+                nuiMakeDelegate(this, &nuiImage::GetFixedAspectRatio), 
+                nuiMakeDelegate(this, &nuiImage::SetFixedAspectRatio)));
 }
 
 
@@ -121,6 +133,7 @@ void nuiImage::SetTexturePath(const nglPath& rTexturePath)
   
   mpTexture = nuiTexture::GetTexture(mTexturePath, NULL);
   mUseAlpha = true;
+  mFixedAspectRatio = false;
   mBlendFunc = nuiBlendTransp;
   SetProperty(_T("Source"), mTexturePath.GetPathName());
   mIgnoreState = false;  
@@ -132,6 +145,7 @@ void nuiImage::SetTexture(nuiTexture* pTex)
 {  
   mpTexture = pTex;
   mUseAlpha = true;
+  mFixedAspectRatio = false;
   mBlendFunc = nuiBlendTransp;
   SetProperty(_T("Source"), _T("Memory Buffer"));
   mIgnoreState = false;  
@@ -276,6 +290,34 @@ nuiBlendFunc nuiImage::GetBlendFunc()
 nuiRect nuiImage::CalcIdealSize()
 {
   mIdealRect = mTextureRect.Size();
+  if (mHasUserWidth != mHasUserHeight && mFixedAspectRatio)
+  {
+    // Give good ratio to keep things in proportions
+    float w = mUserRect.GetWidth();
+    float h = mUserRect.GetHeight();
+    float tw = mpTexture->GetWidth();
+    float th = mpTexture->GetHeight();
+    float r = 1.0f;
+
+    if (mHasUserWidth)
+    {
+      if (w < tw)
+      {
+        r = w / tw;
+        h = tw * r;
+      }
+    }
+    else
+    {
+      if (h < th)
+      {
+        r = h / th;
+        w = tw * r;
+      }
+    }
+    mIdealRect.Set(0.0f, 0.0f, w, h);
+  }
+    
   return mIdealRect;
 }
 
@@ -303,4 +345,14 @@ nuiTexture* nuiImage::GetTexture()
   return mpTexture;
 }
 
+void nuiImage::SetFixedAspectRatio(bool set)
+{
+  mFixedAspectRatio = set;
+  InvalidateLayout();
+}
+
+bool nuiImage::GetFixedAspectRatio() const
+{
+  return mFixedAspectRatio;
+}
 

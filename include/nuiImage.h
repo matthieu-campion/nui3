@@ -57,12 +57,16 @@ public:
   virtual nglImage* GetImage(); ///< Return a pointer to the nglImage contained in this object's nuiTexture.
   virtual nuiTexture* GetTexture(); ///< Return a pointer to the nuiTexture contained in this object.
 
+  void SetFixedAspectRatio(bool set);
+  bool GetFixedAspectRatio() const;
+  
 protected:
   nuiTexture* mpTexture;
   nuiRect mTextureRect;
   nglPath mTexturePath;
   bool mUseAlpha;
   bool mIgnoreState;
+  bool mFixedAspectRatio;
 
   nuiBlendFunc mBlendFunc;
 };
