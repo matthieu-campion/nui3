@@ -160,7 +160,11 @@ void nuiImageDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, cons
   pContext->EnableBlending(true);
   pContext->SetBlendFunc(nuiBlendTransp);
   pContext->SetTexture(mpTexture);
-  pContext->SetFillColor(mColor);
+  nuiColor col(mColor);
+  if (mUseWidgetAlpha && pWidget)
+    col.Alpha() *= pWidget->GetAlpha();
+  
+  pContext->SetFillColor(col);
   pContext->DrawImage(rect, mClientRect);
 
   pContext->PopState();
