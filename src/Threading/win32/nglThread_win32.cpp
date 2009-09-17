@@ -20,22 +20,36 @@ public:
   {
     if(pThread)
     {
+      bool deleted = false;
+      NGL_ASSERT(pThread->mpData);
+      pThread->mpData->mpDeleted = &deleted;
+      nglThread::ID ThreadID = pThread->GetID();
+      nglString ThreadName = pThread->GetName();
       // register the thread by the nglThreadChecker
-      nglThreadChecker::RegisterThread(pThread->GetID(), pThread->GetName());  
+      nglThreadChecker::RegisterThread(ThreadID, ThreadName);  
 
 
       // Call main thread method (which often contains a loop inside)
       pThread->OnStart();
 
       // warn the nglThreadChecker that the thread stoped
-      nglThreadChecker::UnregisterThread(pThread->GetID());
+      nglThreadChecker::UnregisterThread(ThreadID);
 
       
       // Now, the thread is closed
       pThread->mState = nglThread::Closed;
       
-      if (pThread->GetAutoDelete())
-        delete pThread;
+      if (!deleted)
+      {
+        if (pThread->GetAutoDelete())
+        {
+          delete pThread;
+        }
+        else
+        {
+          pThread->mpData->mpDeleted = NULL;
+        }
+      }
     }
 
     //
@@ -51,11 +65,30 @@ public:
     return mThreadID;
   }
 
+  void SetDeleted()
+  {
+    *mpDeleted = true;
+  }
+
+  nglThreadPrivate()
+  {
+    mpDeleted = NULL;
+    mThread = NULL;
+    mThreadID = NULL;
+  }
+
+  ~nglThreadPrivate()
+  {
+    if (mpDeleted)
+      *mpDeleted = true;
+  }
+
 private:
 
   // Data
-  HANDLE			mThread;
-  DWORD			mThreadID;
+  HANDLE mThread;
+  DWORD mThreadID;
+  bool* mpDeleted;
 };
 
 
@@ -79,8 +112,6 @@ nglThread::nglThread(Priority priority)
 {
   mpData = new nglThreadPrivate();
   
-  mpData->mThread		= NULL;
-  mpData->mThreadID	= 0;
   mState				= Stopped;
   mPriority			= priority;
   mAutoDelete = false;
@@ -91,8 +122,6 @@ nglThread::nglThread(const nglString& rName, Priority priority)
   mName = rName;
   mpData = new nglThreadPrivate();
   
-  mpData->mThread		= NULL;
-  mpData->mThreadID	= 0;
   mState				= Stopped;
   mPriority			= priority;
   mAutoDelete = false;
@@ -106,6 +135,7 @@ nglThread::nglThread(const nglString& rName, Priority priority)
 //
 nglThread::~nglThread()
 {
+  NGL_OUT(_T("nglThread::~nglThread() [this=0x%x '%ls']\n"), this, GetName().GetChars());
   CloseHandle(mpData->mThread);
   delete mpData;
   mpData = NULL;
