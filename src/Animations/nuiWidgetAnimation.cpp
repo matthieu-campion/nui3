@@ -265,20 +265,17 @@ void nuiScaleMatrixWidgetAnim::Play(uint32 Count, nuiAnimLoop LoopMode)
 
 void nuiScaleMatrixWidgetAnim::OnFrame()
 {
-  if (IsPlaying())
-  {
-    nuiSize t = (nuiSize)GetPosition();
-    nuiSize tt = 1.0f - t;
+  nuiSize t = (nuiSize)GetPosition();
+  nuiSize tt = 1.0f - t;
 
-    float ratio = tt * mSourceRatio + t * mDestinationRatio;
+  float ratio = tt * mSourceRatio + t * mDestinationRatio;
 
-    nuiMatrix mat;
+  nuiMatrix mat;
 
-    mat.Translate(-ratio * mX, -ratio * mY, 0);
-    mat.Scale(ratio,ratio,ratio);
-    mat.Translate(mX, mY, 0);
-    mpTarget->SetMatrix(mat);
-  }
+  mat.Translate(-ratio * mX, -ratio * mY, 0);
+  mat.Scale(ratio,ratio,ratio);
+  mat.Translate(mX, mY, 0);
+  mpTarget->SetMatrix(mat);
 }
 
 //class nuiScaleToMatrixWidgetAnim
@@ -343,18 +340,15 @@ void nuiFadeWidgetAnim::Play(uint32 Count, nuiAnimLoop LoopMode)
 
 void nuiFadeWidgetAnim::OnFrame()
 {
-  if (IsPlaying())
-  {
-    //NGL_OUT(_T("nuiFadeWidgetAnim::OnFrame()\n"));
-    nuiSize t = (nuiSize)GetPosition();
-    nuiSize tt = 1.0f - t;
+  //NGL_OUT(_T("nuiFadeWidgetAnim::OnFrame()\n"));
+  nuiSize t = (nuiSize)GetPosition();
+  nuiSize tt = 1.0f - t;
 
-    float ratio = tt * mSourceAlpha + t * mDestinationAlpha;
+  float ratio = tt * mSourceAlpha + t * mDestinationAlpha;
 
-    //NGL_OUT(_T("nuiFadeWidgetAnim::OnFrame() [%f %f/%f a=%f]\n"), t, tim, Duration, ratio);
+  //NGL_OUT(_T("nuiFadeWidgetAnim::OnFrame() [%f %f/%f a=%f]\n"), t, tim, Duration, ratio);
 
-    mpTarget->SetAlpha(ratio);
-  }
+  mpTarget->SetAlpha(ratio);
 }
 
 //class nuiFadeInWidgetAnim
