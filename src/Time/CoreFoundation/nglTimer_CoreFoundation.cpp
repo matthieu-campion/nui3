@@ -100,7 +100,7 @@ bool nglTimer::Start(bool Immediate, bool Reset)
     ctx.release = NULL;
     ctx.copyDescription = NULL;
 
-    CFAbsoluteTime absTime = CFAbsoluteTimeGetCurrent() + (Immediate ? 0 : (double)mPeriod);
+    CFAbsoluteTime absTime = CFAbsoluteTimeGetCurrent() + (double)mPeriod;
     
     mpCFRunLoopTimer =
       CFRunLoopTimerCreate( kCFAllocatorDefault,
@@ -121,6 +121,9 @@ bool nglTimer::Start(bool Immediate, bool Reset)
   mRunning = true;
   CFRunLoopAddTimer(mpCFRunLoop, mpCFRunLoopTimer, kCFRunLoopCommonModes);
 
+  if (Immediate)
+    TimerAction();
+  
   return true;
 }
 
