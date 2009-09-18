@@ -48,7 +48,7 @@ void nuiFontInspector::UpdateFonts()
   
   nuiScrollView* pScrollView = new nuiScrollView();
   AddChild(pScrollView);
-  nuiGrid* pGrid = new nuiGrid(10, 0);
+  nuiGrid* pGrid = new nuiGrid(11, 0);
   // Columns:
   // FontID, FamilyName, StyleName, Size, Bold, Italic, FixedWidth, GlyphCount, Path, Preview
   pGrid->DisplayGridBorder(true, 1);
@@ -62,7 +62,7 @@ void nuiFontInspector::UpdateFonts()
   
   pGrid->AddRows(pGrid->GetNbRows(), Fonts.size() + 1);
   
-  const nglChar* Headers[] = { _T("ID"), _T("Family"), _T("Style"), _T("Size"), _T("Bold"), _T("Italic"), _T("Fixed"), _T("Scaleable"), _T("Glyphs"), _T("Preview"), NULL };
+  const nglChar* Headers[] = { _T("ID"), _T("Family"), _T("Style"), _T("Size"), _T("Bold"), _T("Italic"), _T("Fixed"), _T("Scaleable"), _T("Glyphs"), _T("Panose"), _T("Preview"), NULL };
 
   nuiDecoration* pTitleDeco = nuiDecoration::Get(INTROSPECTOR_DECO_GRID_TITLE);
 
@@ -131,6 +131,11 @@ void nuiFontInspector::UpdateFonts()
     // Glyph count
     str.SetCInt(Fonts[k]->GetGlyphCount());
     pLabel = new nuiLabel(str);
+    pGrid->SetCell(j++, i, pLabel, nuiRight);
+
+    // Panose
+    nuiPanose panose(Fonts[k]->GetPanoseBytes());
+    pLabel = new nuiLabel(panose.Dump());
     pGrid->SetCell(j++, i, pLabel, nuiRight);
 
     // Preview
