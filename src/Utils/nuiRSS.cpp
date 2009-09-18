@@ -131,7 +131,8 @@ nuiRSS::nuiRSS(const nglString& rURL, int32 SecondsBetweenUpdates, nglIStream* p
   mSink.Connect(mpUpdateTimer->Tick, &nuiRSS::TimeToUpdate);
   mSink.Connect(mpNotificationTimer->Tick, &nuiRSS::TimeToNotify);
   
-  mpUpdateTimer->Start();
+  // let the user force the first update (for him to be able to connect the events properly)
+  mpUpdateTimer->Start(false);
 }
 
 nuiRSS::~nuiRSS()
