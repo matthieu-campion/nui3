@@ -302,6 +302,11 @@ void nuiFontRequest::InitAttributes()
                 nuiFastDelegate0<bool>(),
                 nuiMakeDelegate(this, &nuiFontRequest::_SetScalable)));
   
+  // Panose
+  AddAttribute(new nuiAttribute<const nglString&>
+               (nglString(_T("Panose")), nuiUnitName,
+                nuiFastDelegate0<const nglString&>(),
+                nuiMakeDelegate(this, &nuiFontRequest::_SetPanose)));
 }
 
 nuiFontRequest::~nuiFontRequest()
@@ -487,6 +492,30 @@ void nuiFontRequest::ClearMustHaveSize()
 void nuiFontRequest::ClearMustBeSimilar()
 {
   mPanose.Clear();
+}
+
+void nuiFontRequest::_SetPanose(const nglString& rPanose)
+{
+  std::vector<nglString> tokens;
+  rPanose.Tokenize(tokens);
+  if (tokens.size() != 10)
+  {
+    NGL_OUT(_T("Error: Panose information MUST be 10 numbers from 0 to 255"));
+    return;
+  }
+  
+  uint8 PanoseBytes[10];
+  for (uint32 i = 0; i < 10; i++)
+  {
+    if (!tokens[i].IsInt())
+    {
+      NGL_OUT(_T("Error: Each of the 10 Panose values must be a number from 0 to 255"));
+      return;
+    }
+    PanoseBytes[i] = tokens[i].GetCInt();
+  }
+  nuiPanose panose(PanoseBytes);
+  MustBeSimilar(panose, 1.0f);
 }
 
 

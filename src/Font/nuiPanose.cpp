@@ -215,7 +215,19 @@ void nuiPanose::SetXHeight(nuiFontXHeight set)
 
 nglString nuiPanose::Dump() const
 {
-  return nglString::Empty;
+  nglString str;
+  str.Add(mFamily).Add(_T(" ")).
+      Add(mSerif).Add(_T(" ")).
+      Add(mWeight).Add(_T(" ")).
+      Add(mProportion).Add(_T(" ")).
+      Add(mContrast).Add(_T(" ")).
+      Add(mStrokeVariation).Add(_T(" ")).
+      Add(mArmStyle).Add(_T(" ")).
+      Add(mLetterForm).Add(_T(" ")).
+      Add(mMidLine).Add(_T(" ")).
+      Add(mXHeight);
+  
+  return str;
 }
 
 

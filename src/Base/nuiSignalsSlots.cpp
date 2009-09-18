@@ -18,7 +18,6 @@ void nuiSignal::AddConnection(nuiSlotsSink &sink, const nuiDelegateMemento &slot
   sink.AddConnection(this, slot);
 }
 
-
 /////
 
 nuiSlotsSink::nuiSlotsSink()
@@ -52,3 +51,4 @@ void nuiSlotsSink::RemoveConnection(nuiSignal* pSignal, const nuiDelegateMemento
   if (it != mConnections.end())
     mConnections.erase(it);
 }
+

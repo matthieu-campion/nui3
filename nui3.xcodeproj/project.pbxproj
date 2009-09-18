@@ -5696,9 +5696,8 @@
 				E5816E030C3CECAB00902DFE /* nuiText.cpp */,
 				E5816D0D0C3CECAB00902DFE /* nuiText.h */,
 			);
-			name = Text;
-			path = src/Text;
-			sourceTree = SOURCE_ROOT;
+			path = Text;
+			sourceTree = "<group>";
 		};
 		E5816E040C3CECAB00902DFE /* Time */ = {
 			isa = PBXGroup;

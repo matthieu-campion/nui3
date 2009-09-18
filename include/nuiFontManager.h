@@ -118,6 +118,7 @@ private:
   void _SetMonospace(bool set);
   void _SetScalable(bool set);
   void _SetSize(int32 size);  
+  void _SetPanose(const nglString& rPanose);
 };
 
 class nuiFontDesc

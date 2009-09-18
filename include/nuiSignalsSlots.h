@@ -52,6 +52,20 @@ protected:
 
   bool mDisabled;
 
+  static void UpdateStats(uint32 v)
+  {
+#ifdef _DEBUG_
+    static uint32 ref = 0;
+    
+    if (v > ref)
+    {
+      ref = v;
+      
+      NGL_OUT(_T("nuiSignal new max connection count: %d\n"), ref);
+    }
+#endif
+  }
+  
 };
 
 // N=0
@@ -103,6 +117,7 @@ private:
   {
     mSlots.insert(std::make_pair<Slot, nuiSlotsSink*>(rSlot, &rSink));
     AddConnection(rSink, rSlot.GetMemento());
+    UpdateStats(mSlots.size());
   }
 
   void Disconnect(nuiSlotsSink &rSink, const Slot &rSlot)
@@ -175,6 +190,7 @@ private:
   {
     mSlots.insert(std::make_pair<Slot, nuiSlotsSink*>(slot, &sink));
     AddConnection(sink, slot.GetMemento());
+    UpdateStats(mSlots.size());
   }
 
   void Disconnect(nuiSlotsSink &sink, const Slot &slot)
@@ -248,6 +264,7 @@ private:
   {
     mSlots.insert(std::make_pair<Slot, nuiSlotsSink*>(slot, &sink));
     AddConnection(sink, slot.GetMemento());
+    UpdateStats(mSlots.size());
   }
 
   void Disconnect(nuiSlotsSink &sink, const Slot &slot)
@@ -320,6 +337,7 @@ private:
   {
     mSlots.insert(std::make_pair<Slot, nuiSlotsSink*>(slot, &sink));
     AddConnection(sink, slot.GetMemento());
+    UpdateStats(mSlots.size());
   }
 
   void Disconnect(nuiSlotsSink &sink, const Slot &slot)

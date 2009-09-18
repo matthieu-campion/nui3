@@ -11,6 +11,7 @@
 #include "nuiGrid.h"
 #include "nuiToggleButton.h"
 #include "nuiLabel.h"
+#include "nuiText.h"
 #include "nuiFont.h"
 #include "nuiIntrospector.h"
 
@@ -135,8 +136,8 @@ void nuiFontInspector::UpdateFonts()
 
     // Panose
     nuiPanose panose(Fonts[k]->GetPanoseBytes());
-    pLabel = new nuiLabel(panose.Dump());
-    pGrid->SetCell(j++, i, pLabel, nuiRight);
+    nuiText* pText = new nuiText(panose.Dump());
+    pGrid->SetCell(j++, i, pText, nuiFillHorizontal);
 
     // Preview
     nuiLabel* pPreviewLabel = new nuiLabel(_T("ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 01234567890!@#$%^&*(){}[]\\|/?<>,.:"), nuiFont::GetFont(FontIDs[k]));
