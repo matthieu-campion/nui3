@@ -1,4 +1,5 @@
 
+#if 0
 #undef UNICODE
 #undef _UNICODE
 #define MAX(X,Y) ((X>Y)?X:Y)
@@ -33,3 +34,5 @@ void nglInitExceptionHandler()
 
   SET_STACK_TRACE_OPTS(TraceAll | t);
 }
+
+#endif

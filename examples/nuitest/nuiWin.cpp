@@ -49,8 +49,6 @@ licence: see nui3/LICENCE.TXT
 #include "nuiBackgroundPane.h"
 #include "nuiComboBox.h"
 
-#include "nuiGearWin.h"
-
 #include "nuiGladeLoader.h"
 #include "nuiBuilder.h"
 
@@ -210,7 +208,7 @@ mWinSink(this)
 
   if (rContextInfo.TargetAPI == eTargetAPI_OpenGL)
   {
-    NGL_OUT(_T("glExtensions: %ls\n"), glGetString(GL_EXTENSIONS));
+    NGL_OUT(_T("glExtensions: %s\n"), glGetString(GL_EXTENSIONS));
   }
 
 
@@ -370,12 +368,6 @@ void nuiWin::OnCreation()
   pElement = new nuiTreeNode(nuiTR("File List window"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateFileListWindow);
   pMainTree->AddChild(pElement);
-
-  // 3D Gears + compositing window:
-  pElement = new nuiTreeNode(nuiTR("3D Gears + compositing"));
-  mWinSink.Connect(pElement->Activated, &nuiWin::CreateNewWindow);
-  pMainTree->AddChild(pElement);
-
 
   // Column Tree View window:
   pElement = new nuiTreeNode(nuiTR("Column Tree View Window"));
@@ -857,7 +849,7 @@ bool nuiWin::CreateMessedUpWindow(const nuiEvent& rEvent)
 
   nuiButton* pButton1 = new nuiButton(nuiTR("Create a new window"));
   pBox->AddCell(pButton1);
-  mWinSink.Connect(pButton1->ButtonPressed, &nuiWin::CreateNewWindow);
+  //mWinSink.Connect(pButton1->ButtonPressed, &nuiWin::CreateNewWindow);
 
   nuiButton* pBtn = new nuiButton(nuiTR("add text"));
   pBox->AddCell(pBtn);
@@ -3682,18 +3674,6 @@ bool nuiWin::DumpStats(const nuiEvent& rEvent)
   }
   return false;
 }
-
-bool nuiWin::CreateNewWindow(const nuiEvent& rEvent)
-{
-  static int x=10, y=10;
-  nuiWidget* pWin = new nuiGearWin(nuiRect((nuiSize)x,(nuiSize)y,320.0f,240.0f));
-  mpManager->AddChild(pWin);
-
-  x = (x % 60 + 15);
-  y = (y % 60 + 15);
-  return false;
-}
-
 
 bool nuiWin::OnKeyDown(const nglKeyEvent& rEvent)
 { 

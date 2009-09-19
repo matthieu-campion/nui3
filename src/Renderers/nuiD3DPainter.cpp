@@ -191,7 +191,9 @@ public:
       */
     }
     if (hr != S_OK)
-      __asm int 3;
+    {
+      NGL_ASSERT(0);
+    }
 
 #endif
 #endif

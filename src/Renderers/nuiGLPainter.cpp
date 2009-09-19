@@ -1667,11 +1667,7 @@ void nuiCheckForGLErrors()
         NGL_LOG(_T("nuiGLPainter"), NGL_LOG_ALWAYS, _T("There is not enough memory left to execute the function. The state of OpenGL is undefined, except for the state of the error flags, after this error is recorded."));
         break;
     }
-#ifdef _WIN32_
-    __asm int 3;
-#else
     NGL_ASSERT(0);
-#endif
     err = glGetError();
   }
 #endif

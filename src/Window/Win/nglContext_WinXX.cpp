@@ -57,6 +57,8 @@ nglContextInfo::nglContextInfo (HDC hDC, int PFD)
     NULL,
     NULL,
     NULL);
+  NGL_OUT(_T("Create temp gl context window hwnd = 0x%x"), tmpWin);
+
   HDC tmpDC = GetDC(tmpWin);
   SetPixelFormat(tmpDC, PFD, &pfd);
   HGLRC rc = wglCreateContext(tmpDC);
@@ -331,6 +333,8 @@ int nglContextInfo::GetPFD(HDC hDC) const
       NULL,
       NULL,
       NULL);
+    NGL_OUT(_T("Create tmp gl ctx window hwnd = 0x%x"), tmpWin);
+
     HDC tmpDC = GetDC(tmpWin);
     int pf = ChoosePixelFormat(tmpDC, &pfd);
     SetPixelFormat(tmpDC, pf, &pfd);

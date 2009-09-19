@@ -64,7 +64,8 @@ typedef volatile uint64 nglAtomic64;
 #pragma warning(push) 
 #pragma warning(disable : 4035) // disable no-return warning 
 inline unsigned __int64 nuiInterlockedCompareExchange64(volatile unsigned __int64 *dest, unsigned __int64 exchange, unsigned __int64 comperand) 
-{ 
+{
+#if 0
   //value returned in eax::edx 
   __asm
   {
@@ -81,7 +82,11 @@ inline unsigned __int64 nuiInterlockedCompareExchange64(volatile unsigned __int6
     //if (ZeroFlag) *esi = ecx:ebx; 
     //else edx:eax = *esi; 
     lock CMPXCHG8B [esi]; 
-  } 
+  }
+#else
+  return InterlockedCompareExchange64((volatile LONG64*)dest, exchange, comperand);
+#endif
+
 } 
 
 #pragma warning(pop) 
@@ -95,7 +100,7 @@ inline uint64 ngl_atomic_read(const nglAtomic64 &value)
 // compare and swap atomic variable
 inline bool ngl_atomic_compare_and_swap(nglAtomic64& value, uint64 oldValue, uint64 newValue)
 {
-  uint64 res = nuiInterlockedCompareExchange64((volatile unsigned __int64 *)&value, newValue, oldValue);
+  uint64 res = nuiInterlockedCompareExchange64((volatile unsigned __int64 *)&value, oldValue, newValue);
   return (res == oldValue);
 }
 

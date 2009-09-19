@@ -1050,6 +1050,7 @@ void nglWindow::Exit()
 
 bool nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInfo& rInfo, const nglContext* pShared)
 {
+  NGL_OUT(_T("nglWindow::InternalInit this = 0x%x\n"), this);
   SetError(NGL_WINDOW_ENONE);
 
   mInModalState = 0;
@@ -1220,6 +1221,8 @@ bool nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
     NULL,
     App->GetHInstance(),
     this );
+  NGL_OUT(_T("Create nglWindow hwnd = 0x%x"), mOSInfo.WindowHandle);
+
 
   if (!mHWnd)
     return false;
@@ -2223,7 +2226,7 @@ void nglWindow::DoMouseClick( nglMouseInfo::Flags Flags, HWND hWnd, WPARAM wPara
 
 LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam )
 {
-  nglWindow* win;
+  nglWindow* win = NULL;
 
   switch ( message ) 
   {
@@ -2231,7 +2234,7 @@ LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam 
     {
       CREATESTRUCT *cs = (CREATESTRUCT*) lParam;
       win = (nglWindow*)cs->lpCreateParams;
-      SetWindowLong(hWnd, GWL_USERDATA, (long)win);
+      SetWindowLongPtr(hWnd, GWLP_USERDATA, (long)win);
       PostMessage(hWnd, WM_CREATED, 0, 0);
       return 0;
     }
@@ -2239,7 +2242,7 @@ LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam 
 
   default:
     {
-      win = (nglWindow*)GetWindowLong(hWnd, GWL_USERDATA);
+      win = (nglWindow*)GetWindowLongPtr(hWnd, GWLP_USERDATA);
       return win ?
         win->WndProc(hWnd, message, wParam, lParam) :
         DefWindowProc(hWnd, message, wParam, lParam);

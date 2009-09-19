@@ -37,7 +37,7 @@ extern void nglInitExceptionHandler();
 
 nglKernel::nglKernel()
 {
-  nglInitExceptionHandler();
+  //nglInitExceptionHandler();
 
   Init();
 
@@ -254,6 +254,9 @@ bool nglKernel::SysInit (HINSTANCE Inst)
     mHInstance,
     NULL
     );
+
+  NGL_OUT(_T("Create ngl kernel window hwnd = 0x%x"), hwnd);
+
   if (hwnd == NULL)
   {
     NGL_DEBUG( OutputDebugString(_T("NGL: error: unable to create main window\n")); )

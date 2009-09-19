@@ -39,7 +39,7 @@
   #endif
 
   #ifndef BYTE_ORDER
-    #if defined(_M_IX86) || defined(__i386)
+    #if defined(_M_IX86) || defined(__i386) || (defined _M_X64) || (defined __x86_64__)
       #define BYTE_ORDER LITTLE_ENDIAN
     #else
       // FreeBSD, Darwin (non-x86 flavour)

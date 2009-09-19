@@ -70,6 +70,7 @@ nglConsole::nglConsole(bool IsVisible)
     App->GetHInstance(),
     this);
 //  mHWnd=CreateWindowEx(WS_EX_CONTROLPARENT,"nglConsole",sName,WS_OVERLAPPEDWINDOW,xpos,ypos,width,height,NULL,NULL,app->GetHInstance(),this);
+  //NGL_OUT(_T("Create console window hwnd = 0x%x"), mHWnd);
   DWORD err = GetLastError();
 
   HMENU hmenu=GetSystemMenu(mHWnd,FALSE);
@@ -270,11 +271,11 @@ LRESULT CALLBACK ConsoleWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
   {
     CREATESTRUCT *cs = (CREATESTRUCT*) lParam;
     win = (nglConsole*)cs->lpCreateParams;
-    SetWindowLong(hwnd, GWL_USERDATA, (long)win);
+    SetWindowLongPtr(hwnd, GWLP_USERDATA, (DWORD_PTR)win);
   }
   else
   {
-    win = (nglConsole*)GetWindowLong(hwnd, GWL_USERDATA);
+    win = (nglConsole*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
   }
   return win ?
     win->WindowProc(hwnd, uMsg, wParam, lParam) :
@@ -299,12 +300,14 @@ LRESULT nglConsole::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPara
           NULL,
           App->GetHInstance(),
           this);
+      //NGL_OUT(_T("Create console output window hwnd = 0x%x"), mOutputWnd);
+
       PostMessage(mOutputWnd, WM_SETFONT,  (WPARAM)App->GetSystemFont(), 0);
       PostMessage(mOutputWnd, EM_LIMITTEXT,(WPARAM)BACKLOG_SIZE, 0);
       // Override default proc
-      mpOutputWndProc = (WNDPROC)GetWindowLong(mOutputWnd, GWL_WNDPROC);
-      SetWindowLong(mOutputWnd, GWL_WNDPROC, (DWORD)ConsoleOutputProc);
-      SetWindowLong(mOutputWnd, GWL_USERDATA, (long)this);
+      mpOutputWndProc = (WNDPROC)GetWindowLongPtr(mOutputWnd, GWLP_WNDPROC);
+      SetWindowLongPtr(mOutputWnd, GWLP_WNDPROC, (DWORD_PTR)ConsoleOutputProc);
+      SetWindowLongPtr(mOutputWnd, GWLP_USERDATA, (DWORD_PTR)this);
 
       // input accept files, todo : for scripts
       mInputWnd = CreateWindowEx(
@@ -317,11 +320,13 @@ LRESULT nglConsole::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPara
         NULL,
         App->GetHInstance(),
         this);
+      //NGL_OUT(_T("Create console input window hwnd = 0x%x"), mInputWnd);
+
       PostMessage(mInputWnd ,WM_SETFONT,(WORD)App->GetSystemFont(),0);
       // Override default proc
-      mpInputWndProc = (WNDPROC)GetWindowLong(mInputWnd, GWL_WNDPROC);
-      SetWindowLong(mInputWnd, GWL_WNDPROC, (DWORD)ConsoleInputProc);
-      SetWindowLong(mInputWnd, GWL_USERDATA, (long)this);
+      mpInputWndProc = (WNDPROC)GetWindowLongPtr(mInputWnd, GWLP_WNDPROC);
+      SetWindowLongPtr(mInputWnd, GWLP_WNDPROC, (DWORD_PTR)ConsoleInputProc);
+      SetWindowLongPtr(mInputWnd, GWLP_USERDATA, (DWORD_PTR)this);
       return 0;
     }
 
@@ -389,7 +394,7 @@ LRESULT nglConsole::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 LRESULT CALLBACK ConsoleOutputProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
   nglConsole*win = NULL;
-  win = (nglConsole*)GetWindowLong(hwnd, GWL_USERDATA);
+  win = (nglConsole*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
   return win ?
     win->OutputProc(hwnd, uMsg, wParam, lParam) :
     DefWindowProc(hwnd, uMsg, wParam, lParam);
@@ -417,7 +422,7 @@ LRESULT nglConsole::OutputProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 LRESULT CALLBACK ConsoleInputProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
   nglConsole*win = NULL;
-  win = (nglConsole*)GetWindowLong(hwnd, GWL_USERDATA);
+  win = (nglConsole*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
   return win ?
     win->InputProc(hwnd, uMsg, wParam, lParam) :
     DefWindowProc(hwnd, uMsg, wParam, lParam);

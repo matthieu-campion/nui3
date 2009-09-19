@@ -164,7 +164,7 @@ private:
   static MMRESULT mTimerID;
   static void InitMainTimer();
   static void FreeMainTimer();
-  friend void CALLBACK TimeProc(UINT uID,UINT uMsg,DWORD dwUser,DWORD dw1,DWORD dw2);
+  friend void CALLBACK TimeProc(UINT uID,UINT uMsg,DWORD_PTR dwUser,DWORD_PTR dw1,DWORD_PTR dw2);
 #else
   HANDLE mTimerHandle;
   friend VOID CALLBACK TimeProc(PVOID lpParameter, BOOLEAN TimerOrWaitFired);

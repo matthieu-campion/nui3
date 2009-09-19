@@ -36,7 +36,11 @@ the NGL_APP_CREATE macro for instance.
 # ifdef _CARBON_
 #   define __ASSERT_SYS(test) { if (!(test)) Debugger(); }
 # elif defined(_WIN32_)
+#ifdef __NUI64__
+#  define __ASSERT_SYS(test) { assert(test); }
+#else
 #  define __ASSERT_SYS(test) { if (!(test)) { __asm { int 3 } }; }
+#endif
 #else
 #  define __ASSERT_SYS(test) assert(test);
 # endif

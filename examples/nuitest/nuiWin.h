@@ -15,7 +15,6 @@
 #include "nuiMatrixView.h"
 
 
-class Gears;
 class nuiEvent;
 class nuiWindowManager;
 
@@ -74,7 +73,6 @@ protected:
   bool CreateCoverFlowWindow(const nuiEvent& rEvent);
   bool CreateUnicodeTextWindow(const nuiEvent& rEvent);
 
-  bool CreateNewWindow(const nuiEvent& rEvent);
   bool ShowMenu(const nuiEvent& rEvent);
   bool ItemSelected(const nuiEvent& rEvent);
   bool UserDraw(const nuiEvent& rEvent);
@@ -136,7 +134,6 @@ protected:
   // The window manager:
   nuiWindowManager* mpManager;
 
-  Gears* mpGears;
   bool mAnimate;
   nuiEventSink<nuiWin> mWinSink;
   nuiSlotsSink mSink;
