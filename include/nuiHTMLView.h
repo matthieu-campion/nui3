@@ -10,12 +10,12 @@
 #include "nui.h"
 #include "nuiHTML.h"
 #include "nuiFontManager.h"
-#include "nuiHTMLContext.h";
 
 
 class nuiHTMLItem;
 class nuiHTMLBox;
 class nuiHTMLFont;
+class nuiHTMLContext;
 
 class nuiHTMLView : public nuiSimpleContainer
 {
@@ -76,7 +76,7 @@ protected:
   float mHSpace;
   
   nuiHTML* mpHTML;
-  nuiHTMLContext mContext;
+  nuiHTMLContext* mpContext;
 
   void ReLayout();
 private:

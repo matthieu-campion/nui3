@@ -32,11 +32,13 @@ nuiHTMLView::nuiHTMLView(float IdealWidth)
   mIdealWidth = IdealWidth;
   mVSpace = 2.0f;
   mHSpace = 0.0f;
+  mpContext = new nuiHTMLContext();
 }
 
 nuiHTMLView::~nuiHTMLView()
 {
   delete mpHTML;
+  delete mpContext;
 }
 
 void nuiHTMLView::InitAttributes()
@@ -82,7 +84,7 @@ void nuiHTMLView::SetFont(nuiFont* pFont, bool AlreadyAcquired)
     pFont = nuiFont::GetFont(14.0f);
   }
   
-  mContext.mFont = nuiFontRequest(pFont, false);
+  mpContext->mFont = nuiFontRequest(pFont, false);
   if (AlreadyAcquired)
     pFont->Release();
   
@@ -91,7 +93,7 @@ void nuiHTMLView::SetFont(nuiFont* pFont, bool AlreadyAcquired)
 
 void nuiHTMLView::SetFont(nuiFontRequest& rFontRequest)
 {
-  mContext.mFont = rFontRequest;
+  mpContext->mFont = rFontRequest;
   InvalidateLayout();
 }
 
@@ -110,17 +112,17 @@ void nuiHTMLView::_SetFont(const nglString& rFontSymbol)
 
 const nglString& nuiHTMLView::_GetFont() const
 {
-  return mContext.mFont.mName.mElement;
+  return mpContext->mFont.mName.mElement;
 }
 
 const nuiColor& nuiHTMLView::GetTextColor() const
 {
-  return mContext.mTextFgColor;
+  return mpContext->mTextFgColor;
 }
 
 void nuiHTMLView::SetTextColor(const nuiColor& Color)
 {
-  mContext.mTextFgColor = Color;
+  mpContext->mTextFgColor = Color;
   ReLayout();
   Invalidate();
 }
@@ -136,11 +138,11 @@ nuiRect nuiHTMLView::CalcIdealSize()
 //  WalkTree(mpHTML, context);
   //  return nuiRect(context.mMaxWidth, context.mH);
 
-  mContext.mMaxWidth = IdealWidth;
+  mpContext->mMaxWidth = IdealWidth;
   if (!mpRootBox)
     return nuiRect(IdealWidth, 400.0f);
   
-  nuiHTMLContext context(mContext);
+  nuiHTMLContext context(*mpContext);
   mpRootBox->Layout(context);
   return nuiRect(mpRootBox->GetIdealRect().GetWidth(), mpRootBox->GetIdealRect().GetHeight());
 }
@@ -150,7 +152,7 @@ void nuiHTMLView::ReLayout()
   if (!mpRootBox)
     return;
   
-  nuiHTMLContext context(mContext);
+  nuiHTMLContext context(*mpContext);
   mpRootBox->Layout(context);
   mpRootBox->SetRect(mpRootBox->GetIdealRect());
 }
@@ -226,7 +228,7 @@ bool nuiHTMLView::SetText(const nglString& rHTMLText)
     mpRootBox = new nuiHTMLBox(mpHTML, false);
     ParseTree(mpHTML, mpRootBox);
 
-    nuiHTMLContext context(mContext);
+    nuiHTMLContext context(*mpContext);
     mpRootBox->Layout(context);
     InvalidateLayout();
   }
@@ -296,7 +298,7 @@ bool nuiHTMLView::SetURL(const nglString& rURL)
     mpRootBox = new nuiHTMLBox(mpHTML, false);
     ParseTree(mpHTML, mpRootBox);
 
-    nuiHTMLContext context(mContext);
+    nuiHTMLContext context(*mpContext);
     mpRootBox->Layout(context);
     InvalidateLayout();
   }
