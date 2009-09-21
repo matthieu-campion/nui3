@@ -83,8 +83,8 @@ public:
 
   ~nuiSignal0()
   {
-    typename std::map<Slot, nuiSlotsSink*>::const_iterator it = mSlots.begin();
-    typename std::map<Slot, nuiSlotsSink*>::const_iterator end = mSlots.end();
+    typename std::vector< std::pair<Slot, nuiSlotsSink*> >::const_iterator it = mSlots.begin();
+    typename std::vector< std::pair<Slot, nuiSlotsSink*> >::const_iterator end = mSlots.end();
     for(; it != end; ++it)
     {
       RemoveConnection(*(*it).second, (*it).first.GetMemento());
@@ -97,8 +97,9 @@ public:
       return;
       
     //#FIXME: temp hack to avoid modification of the map (connection/deconnection of slots) during iteration
-    typename std::map<Slot, nuiSlotsSink*>::const_iterator it = mSlots.begin();
-    typename std::map<Slot, nuiSlotsSink*>::const_iterator end = mSlots.end();
+    typename std::vector< std::pair<Slot, nuiSlotsSink*> >::const_iterator it = mSlots.begin();
+    typename std::vector< std::pair<Slot, nuiSlotsSink*> >::const_iterator end = mSlots.end();
+
     std::vector<Slot> tmp(mSlots.size());
     for(uint i = 0; it != end; ++it, i++)
       tmp[i] = (*it).first;
@@ -115,7 +116,7 @@ public:
 private:
   void Connect(nuiSlotsSink &rSink, const Slot &rSlot)
   {
-    mSlots.insert(std::make_pair<Slot, nuiSlotsSink*>(rSlot, &rSink));
+    mSlots.push_back(std::make_pair<Slot, nuiSlotsSink*>(rSlot, &rSink));
     AddConnection(rSink, rSlot.GetMemento());
     UpdateStats(mSlots.size());
   }
@@ -123,22 +124,38 @@ private:
   void Disconnect(nuiSlotsSink &rSink, const Slot &rSlot)
   {
     RemoveConnection(rSink, rSlot.GetMemento());
-    typename std::map<Slot, nuiSlotsSink*>::iterator it = mSlots.find(rSlot);
-    if (it != mSlots.end())
-      mSlots.erase(it);
+    typename std::vector< std::pair<Slot, nuiSlotsSink*> >::iterator it = mSlots.begin();
+    typename std::vector< std::pair<Slot, nuiSlotsSink*> >::iterator end = mSlots.end();
+    while (it != end)
+    {
+      if ((*it).first == rSlot)
+      {
+        mSlots.erase(it);
+        break;
+      }
+      ++it;
+    }
   }
 
   virtual void DisconnectInternal(const nuiDelegateMemento &rSlot_)
   {
     Slot slot;
     slot.SetMemento(rSlot_);
-    typename std::map<Slot, nuiSlotsSink*>::iterator it = mSlots.find(slot);
-    if (it != mSlots.end())
-      mSlots.erase(it);
+    typename std::vector< std::pair<Slot, nuiSlotsSink*> >::iterator it = mSlots.begin();
+    typename std::vector< std::pair<Slot, nuiSlotsSink*> >::iterator end = mSlots.end();
+    while (it != end)
+    {
+      if ((*it).first == slot)
+      {
+        mSlots.erase(it);
+        break;
+      }
+      ++it;
+    }
   }
 
 private:
-  std::map<Slot, nuiSlotsSink*> mSlots;
+  std::vector< std::pair<Slot, nuiSlotsSink*> > mSlots;
 };
 
 // N=1
@@ -156,8 +173,8 @@ public:
 
   ~nuiSignal1()
   {
-    typename std::map<Slot, nuiSlotsSink*>::const_iterator it = mSlots.begin();
-    typename std::map<Slot, nuiSlotsSink*>::const_iterator end = mSlots.end();
+    typename std::vector< std::pair<Slot, nuiSlotsSink*> >::const_iterator it = mSlots.begin();
+    typename std::vector< std::pair<Slot, nuiSlotsSink*> >::const_iterator end = mSlots.end();
     for(; it != end; ++it)
     {
       RemoveConnection(*(*it).second, (*it).first.GetMemento());
@@ -170,8 +187,8 @@ public:
       return;
 
     //#FIXME: temp hack to avoid modification of the map (connection/deconnection of slots) during iteration
-    typename std::map<Slot, nuiSlotsSink*>::const_iterator it = mSlots.begin();
-    typename std::map<Slot, nuiSlotsSink*>::const_iterator end = mSlots.end();
+    typename std::vector< std::pair<Slot, nuiSlotsSink*> >::const_iterator it = mSlots.begin();
+    typename std::vector< std::pair<Slot, nuiSlotsSink*> >::const_iterator end = mSlots.end();
     std::vector<Slot> tmp(mSlots.size());
     for(uint i = 0; it != end; ++it, i++)
       tmp[i] = (*it).first;
@@ -188,7 +205,7 @@ public:
 private:	
   void Connect(nuiSlotsSink &sink, const Slot &slot)
   {
-    mSlots.insert(std::make_pair<Slot, nuiSlotsSink*>(slot, &sink));
+    mSlots.push_back(std::make_pair<Slot, nuiSlotsSink*>(slot, &sink));
     AddConnection(sink, slot.GetMemento());
     UpdateStats(mSlots.size());
   }
@@ -196,22 +213,38 @@ private:
   void Disconnect(nuiSlotsSink &sink, const Slot &slot)
   {
     RemoveConnection(sink, slot.GetMemento());
-    typename std::map<Slot, nuiSlotsSink*>::iterator it = mSlots.find(slot);
-    if (it != mSlots.end())
-      mSlots.erase(it);
+    typename std::vector< std::pair<Slot, nuiSlotsSink*> >::iterator it = mSlots.begin();
+    typename std::vector< std::pair<Slot, nuiSlotsSink*> >::iterator end = mSlots.end();
+    while (it != end)
+    {
+      if ((*it).first == slot)
+      {
+        mSlots.erase(it);
+        break;
+      }
+      ++it;
+    }
   }
 
   virtual void DisconnectInternal(const nuiDelegateMemento &slot_)
   {
     Slot slot;
     slot.SetMemento(slot_);
-    typename std::map<Slot, nuiSlotsSink*>::iterator it = mSlots.find(slot);
-    if (it != mSlots.end())
-      mSlots.erase(it);
+    typename std::vector< std::pair<Slot, nuiSlotsSink*> >::iterator it = mSlots.begin();
+    typename std::vector< std::pair<Slot, nuiSlotsSink*> >::iterator end = mSlots.end();
+    while (it != end)
+    {
+      if ((*it).first == slot)
+      {
+        mSlots.erase(it);
+        break;
+      }
+      ++it;
+    }
   }
 
 private:
-  std::map<Slot, nuiSlotsSink*> mSlots;
+  std::vector< std::pair<Slot, nuiSlotsSink*> > mSlots;
 };
 
 // N=2
@@ -229,8 +262,8 @@ public:
 
   ~nuiSignal2()
   {
-    typename std::map<Slot, nuiSlotsSink*>::const_iterator it = mSlots.begin();
-    typename std::map<Slot, nuiSlotsSink*>::const_iterator end = mSlots.end();
+    typename std::vector< std::pair<Slot, nuiSlotsSink*> >::const_iterator it = mSlots.begin();
+    typename std::vector< std::pair<Slot, nuiSlotsSink*> >::const_iterator end = mSlots.end();
     for(; it != end; ++it)
     {
       RemoveConnection(*(*it).second, (*it).first.GetMemento());
@@ -243,8 +276,8 @@ public:
       return;
 
     //#FIXME: temp hack to avoid modification of the map (connection/deconnection of slots) during iteration
-    typename std::map<Slot, nuiSlotsSink*>::const_iterator it = mSlots.begin();
-    typename std::map<Slot, nuiSlotsSink*>::const_iterator end = mSlots.end();
+    typename std::vector< std::pair<Slot, nuiSlotsSink*> >::const_iterator it = mSlots.begin();
+    typename std::vector< std::pair<Slot, nuiSlotsSink*> >::const_iterator end = mSlots.end();
     std::vector<Slot> tmp(mSlots.size());
     for(uint i = 0; it != end; ++it, i++)
       tmp[i] = (*it).first;
@@ -262,7 +295,7 @@ public:
 private:	
   void Connect(nuiSlotsSink &sink, const Slot &slot)
   {
-    mSlots.insert(std::make_pair<Slot, nuiSlotsSink*>(slot, &sink));
+    mSlots.push_back(std::make_pair<Slot, nuiSlotsSink*>(slot, &sink));
     AddConnection(sink, slot.GetMemento());
     UpdateStats(mSlots.size());
   }
@@ -270,22 +303,38 @@ private:
   void Disconnect(nuiSlotsSink &sink, const Slot &slot)
   {
     RemoveConnection(sink, slot.GetMemento());
-    typename std::map<Slot, nuiSlotsSink*>::iterator it = mSlots.find(slot);
-    if (it != mSlots.end())
-      mSlots.erase(it);
+    typename std::vector< std::pair<Slot, nuiSlotsSink*> >::iterator it = mSlots.begin();
+    typename std::vector< std::pair<Slot, nuiSlotsSink*> >::iterator end = mSlots.end();
+    while (it != end)
+    {
+      if ((*it).first == slot)
+      {
+        mSlots.erase(it);
+        break;
+      }
+      ++it;
+    }
   }
 
   virtual void DisconnectInternal(const nuiDelegateMemento &slot_)
   {
     Slot slot;
     slot.SetMemento(slot_);
-    typename std::map<Slot, nuiSlotsSink*>::iterator it = mSlots.find(slot);
-    if (it != mSlots.end())
-      mSlots.erase(it);
+    typename std::vector< std::pair<Slot, nuiSlotsSink*> >::iterator it = mSlots.begin();
+    typename std::vector< std::pair<Slot, nuiSlotsSink*> >::iterator end = mSlots.end();
+    while (it != end)
+    {
+      if ((*it).first == slot)
+      {
+        mSlots.erase(it);
+        break;
+      }
+      ++it;
+    }
   }
 
 private:
-  std::map<Slot, nuiSlotsSink*> mSlots;
+  std::vector< std::pair<Slot, nuiSlotsSink*> > mSlots;
 };
 
 // N=3
@@ -303,8 +352,8 @@ public:
 
   ~nuiSignal3()
   {
-    typename std::map<Slot, nuiSlotsSink*>::const_iterator it = mSlots.begin();
-    typename std::map<Slot, nuiSlotsSink*>::const_iterator end = mSlots.end();
+    typename std::vector< std::pair<Slot, nuiSlotsSink*> >::const_iterator it = mSlots.begin();
+    typename std::vector< std::pair<Slot, nuiSlotsSink*> >::const_iterator end = mSlots.end();
     for(; it != end; ++it)
     {
       RemoveConnection(*(*it).second, (*it).first.GetMemento());
@@ -317,8 +366,8 @@ public:
       return;
 
     //#FIXME: temp hack to avoid modification of the map (connection/deconnection of slots) during iteration
-    typename std::map<Slot, nuiSlotsSink*>::const_iterator it = mSlots.begin();
-    typename std::map<Slot, nuiSlotsSink*>::const_iterator end = mSlots.end();
+    typename std::vector< std::pair<Slot, nuiSlotsSink*> >::const_iterator it = mSlots.begin();
+    typename std::vector< std::pair<Slot, nuiSlotsSink*> >::const_iterator end = mSlots.end();
     std::vector<Slot> tmp(mSlots.size());
     for(uint i = 0; it != end; ++it, i++)
       tmp[i] = (*it).first;
@@ -335,7 +384,7 @@ public:
 private:
   void Connect(nuiSlotsSink &sink, const Slot &slot)
   {
-    mSlots.insert(std::make_pair<Slot, nuiSlotsSink*>(slot, &sink));
+    mSlots.push_back(std::make_pair<Slot, nuiSlotsSink*>(slot, &sink));
     AddConnection(sink, slot.GetMemento());
     UpdateStats(mSlots.size());
   }
@@ -343,22 +392,38 @@ private:
   void Disconnect(nuiSlotsSink &sink, const Slot &slot)
   {
     RemoveConnection(sink, slot.GetMemento());
-    typename std::map<Slot, nuiSlotsSink*>::iterator it = mSlots.find(slot);
-    if (it != mSlots.end())
-      mSlots.erase(it);
+    typename std::vector< std::pair<Slot, nuiSlotsSink*> >::iterator it = mSlots.begin();
+    typename std::vector< std::pair<Slot, nuiSlotsSink*> >::iterator end = mSlots.end();
+    while (it != end)
+    {
+      if ((*it).first == slot)
+      {
+        mSlots.erase(it);
+        break;
+      }
+      ++it;
+    }
   }
 
   virtual void DisconnectInternal(const nuiDelegateMemento &slot_)
   {
     Slot slot;
     slot.SetMemento(slot_);
-    typename std::map<Slot, nuiSlotsSink*>::iterator it = mSlots.find(slot);
-    if (it != mSlots.end())
-      mSlots.erase(it);
+    typename std::vector< std::pair<Slot, nuiSlotsSink*> >::iterator it = mSlots.begin();
+    typename std::vector< std::pair<Slot, nuiSlotsSink*> >::iterator end = mSlots.end();
+    while (it != end)
+    {
+      if ((*it).first == slot)
+      {
+        mSlots.erase(it);
+        break;
+      }
+      ++it;
+    }
   }
 
 private:
-  std::map<Slot, nuiSlotsSink*> mSlots;
+std::vector< std::pair<Slot, nuiSlotsSink*> > mSlots;
 };
 
 
