@@ -355,6 +355,7 @@ public:
   void AnimateAll(bool Run = true, bool Reset = true); ///< Run/Stop all animations in parallel. If \param Reset is true then every animation will be reset to the first frame.
   void ResetAnimation(const nglString& rName); ///< Set the given animation to it's first frame.
   void StartAnimation(const nglString& rName, double Time = 0.0); ///< Start playing the given animation from the given time.
+  void StartAnimation(const nglString& rName, int32 count, nuiAnimLoop loopmode = eAnimForward , double Time = 0.0); ///< Start playing the given animation from the given time.
   void StopAnimation(const nglString& rName); ///< Stop playing the given animation if it exists.
   nuiRectAttributeAnimation* GetLayoutAnimation(bool CreateIfNotAvailable);
   void SetLayoutAnimationDuration(float duration);

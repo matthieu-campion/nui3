@@ -42,7 +42,7 @@ bool nuiURL::OpenBrowser()
   NGL_ASSERT(url);
   
   // Launch the URL
-#if __LP64__
+#ifndef _CARBON_
 #pragma message ("Implement with [NSWorkSpace openURL:]")
 #else
   OSStatus err = LSOpenCFURLRef(url, NULL);  

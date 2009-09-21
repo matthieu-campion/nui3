@@ -23,6 +23,21 @@
 		BC1A61480E632E3C00BDD037 /* libnui3D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC1A61400E632DD800BDD037 /* libnui3D.a */; };
 		BC3DEFC40DC48DDB000EEC4B /* ThreadInspectorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC3DEFC20DC48DDB000EEC4B /* ThreadInspectorTest.cpp */; };
 		BC3DEFC50DC48DDB000EEC4B /* ThreadInspectorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC3DEFC20DC48DDB000EEC4B /* ThreadInspectorTest.cpp */; };
+		E529DFAC1064D36B00C0CE08 /* Gears.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91CC2B040744CE710018CBED /* Gears.cpp */; };
+		E529DFAD1064D36B00C0CE08 /* nuiApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91CC2B060744CE710018CBED /* nuiApp.cpp */; };
+		E529DFAE1064D36B00C0CE08 /* nuiGearWin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91CC2B080744CE710018CBED /* nuiGearWin.cpp */; };
+		E529DFAF1064D36B00C0CE08 /* nuiWin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91CC2B0A0744CE710018CBED /* nuiWin.cpp */; };
+		E529DFB01064D36B00C0CE08 /* ThreadInspectorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC3DEFC20DC48DDB000EEC4B /* ThreadInspectorTest.cpp */; };
+		E529DFB21064D36B00C0CE08 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91CC2B290744CF9E0018CBED /* OpenGL.framework */; };
+		E529DFB31064D36B00C0CE08 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91CC2B310744CFC80018CBED /* Carbon.framework */; };
+		E529DFB41064D36B00C0CE08 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91CC2B4D0744D00F0018CBED /* CoreFoundation.framework */; };
+		E529DFB51064D36B00C0CE08 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91CC2B4E0744D00F0018CBED /* CoreServices.framework */; };
+		E529DFB61064D36B00C0CE08 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E585FDB3086C3E3200CBD5E1 /* AGL.framework */; };
+		E529DFB71064D36B00C0CE08 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E59CDA540CDAC2F100B1C729 /* AudioToolbox.framework */; };
+		E529DFB81064D36B00C0CE08 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E59CDA550CDAC2F100B1C729 /* AudioUnit.framework */; };
+		E529DFB91064D36B00C0CE08 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E59CDA560CDAC2F100B1C729 /* CoreAudio.framework */; };
+		E529DFBA1064D36B00C0CE08 /* CoreAudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E59CDA570CDAC2F100B1C729 /* CoreAudioKit.framework */; };
+		E529DFDE1064D46F00C0CE08 /* libnui3D cocoa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E5BC28DE0EFF249B009EEA3B /* libnui3D cocoa.a */; };
 		E585FDB4086C3E3200CBD5E1 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E585FDB3086C3E3200CBD5E1 /* AGL.framework */; };
 		E585FDB5086C3E3200CBD5E1 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E585FDB3086C3E3200CBD5E1 /* AGL.framework */; };
 		E59CDA580CDAC2F100B1C729 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E59CDA540CDAC2F100B1C729 /* AudioToolbox.framework */; };
@@ -72,6 +87,13 @@
 			remoteGlobalIDString = E58172D70C3D103300902DFE;
 			remoteInfo = nui3D;
 		};
+		E529DFC21064D39400C0CE08 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BC1A61370E632DD700BDD037 /* nui3.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = E592C0740EFE8CCC00340B35;
+			remoteInfo = "nui3D cocoa";
+		};
 		E5BC28DD0EFF249B009EEA3B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BC1A61370E632DD700BDD037 /* nui3.xcodeproj */;
@@ -90,7 +112,7 @@
 		91CC2B090744CE710018CBED /* nuiGearWin.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = nuiGearWin.h; sourceTree = SOURCE_ROOT; };
 		91CC2B0A0744CE710018CBED /* nuiWin.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = nuiWin.cpp; sourceTree = SOURCE_ROOT; };
 		91CC2B0B0744CE710018CBED /* nuiWin.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = nuiWin.h; sourceTree = SOURCE_ROOT; };
-		91CC2B120744CEA30018CBED /* nuitest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = nuitest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		91CC2B120744CEA30018CBED /* nuiTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = nuiTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		91CC2B290744CF9E0018CBED /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		91CC2B310744CFC80018CBED /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		91CC2B4D0744D00F0018CBED /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
@@ -98,13 +120,14 @@
 		BC1A61370E632DD700BDD037 /* nui3.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nui3.xcodeproj; path = ../../nui3.xcodeproj; sourceTree = SOURCE_ROOT; };
 		BC3DEFC20DC48DDB000EEC4B /* ThreadInspectorTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ThreadInspectorTest.cpp; path = tests/ThreadInspectorTest.cpp; sourceTree = SOURCE_ROOT; };
 		BC3DEFC30DC48DDB000EEC4B /* ThreadInspectorTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ThreadInspectorTest.h; path = tests/ThreadInspectorTest.h; sourceTree = SOURCE_ROOT; };
+		E529DFBF1064D36B00C0CE08 /* nuiTestD Cocoa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "nuiTestD Cocoa.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E585FDB3086C3E3200CBD5E1 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
 		E58F93F70D532235002E0CB7 /* test.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = test.css; path = ../data/test.css; sourceTree = SOURCE_ROOT; };
 		E59CDA540CDAC2F100B1C729 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = /System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<absolute>"; };
 		E59CDA550CDAC2F100B1C729 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = /System/Library/Frameworks/AudioUnit.framework; sourceTree = "<absolute>"; };
 		E59CDA560CDAC2F100B1C729 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = /System/Library/Frameworks/CoreAudio.framework; sourceTree = "<absolute>"; };
 		E59CDA570CDAC2F100B1C729 /* CoreAudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudioKit.framework; path = /System/Library/Frameworks/CoreAudioKit.framework; sourceTree = "<absolute>"; };
-		E5C9EE150781B71C00629D4E /* nuiTestd.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = nuiTestd.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E5C9EE150781B71C00629D4E /* nuiTestD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = nuiTestD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5ED3B080815D4CF002811C3 /* HelloWorld.nui */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = HelloWorld.nui; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -123,6 +146,23 @@
 				E59CDA5E0CDAC2F100B1C729 /* CoreAudio.framework in Frameworks */,
 				E59CDA5F0CDAC2F100B1C729 /* CoreAudioKit.framework in Frameworks */,
 				BC1A61470E632E3900BDD037 /* libnui3.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E529DFB11064D36B00C0CE08 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E529DFB21064D36B00C0CE08 /* OpenGL.framework in Frameworks */,
+				E529DFB31064D36B00C0CE08 /* Carbon.framework in Frameworks */,
+				E529DFB41064D36B00C0CE08 /* CoreFoundation.framework in Frameworks */,
+				E529DFB51064D36B00C0CE08 /* CoreServices.framework in Frameworks */,
+				E529DFB61064D36B00C0CE08 /* AGL.framework in Frameworks */,
+				E529DFB71064D36B00C0CE08 /* AudioToolbox.framework in Frameworks */,
+				E529DFB81064D36B00C0CE08 /* AudioUnit.framework in Frameworks */,
+				E529DFB91064D36B00C0CE08 /* CoreAudio.framework in Frameworks */,
+				E529DFBA1064D36B00C0CE08 /* CoreAudioKit.framework in Frameworks */,
+				E529DFDE1064D46F00C0CE08 /* libnui3D cocoa.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -193,8 +233,9 @@
 		91CC2B130744CEA30018CBED /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				91CC2B120744CEA30018CBED /* nuitest.app */,
-				E5C9EE150781B71C00629D4E /* nuiTestd.app */,
+				91CC2B120744CEA30018CBED /* nuiTest.app */,
+				E5C9EE150781B71C00629D4E /* nuiTestD.app */,
+				E529DFBF1064D36B00C0CE08 /* nuiTestD Cocoa.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -221,9 +262,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		91CC2B110744CEA30018CBED /* nuitest */ = {
+		91CC2B110744CEA30018CBED /* nuiTest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E5A754BB08551A26002B185C /* Build configuration list for PBXNativeTarget "nuitest" */;
+			buildConfigurationList = E5A754BB08551A26002B185C /* Build configuration list for PBXNativeTarget "nuiTest" */;
 			buildPhases = (
 				91CC2B0E0744CEA30018CBED /* Resources */,
 				91CC2B0F0744CEA30018CBED /* Sources */,
@@ -235,14 +276,33 @@
 			dependencies = (
 				BC1A614A0E632E4700BDD037 /* PBXTargetDependency */,
 			);
-			name = nuitest;
+			name = nuiTest;
 			productName = nuitest;
-			productReference = 91CC2B120744CEA30018CBED /* nuitest.app */;
+			productReference = 91CC2B120744CEA30018CBED /* nuiTest.app */;
 			productType = "com.apple.product-type.application";
 		};
-		E5C9EE030781B71C00629D4E /* nuitest debug */ = {
+		E529DFA71064D36B00C0CE08 /* nuiTestD Cocoa */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E5A754C308551A26002B185C /* Build configuration list for PBXNativeTarget "nuitest debug" */;
+			buildConfigurationList = E529DFBD1064D36B00C0CE08 /* Build configuration list for PBXNativeTarget "nuiTestD Cocoa" */;
+			buildPhases = (
+				E529DFAA1064D36B00C0CE08 /* Resources */,
+				E529DFAB1064D36B00C0CE08 /* Sources */,
+				E529DFB11064D36B00C0CE08 /* Frameworks */,
+				E529DFBC1064D36B00C0CE08 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E529DFC31064D39400C0CE08 /* PBXTargetDependency */,
+			);
+			name = "nuiTestD Cocoa";
+			productName = nuitest;
+			productReference = E529DFBF1064D36B00C0CE08 /* nuiTestD Cocoa.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E5C9EE030781B71C00629D4E /* nuiTestD */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E5A754C308551A26002B185C /* Build configuration list for PBXNativeTarget "nuiTestD" */;
 			buildPhases = (
 				E5C9EE040781B71C00629D4E /* Resources */,
 				E5C9EE090781B71C00629D4E /* Sources */,
@@ -254,9 +314,9 @@
 			dependencies = (
 				BC1A614C0E632E5000BDD037 /* PBXTargetDependency */,
 			);
-			name = "nuitest debug";
+			name = nuiTestD;
 			productName = nuitest;
-			productReference = E5C9EE150781B71C00629D4E /* nuiTestd.app */;
+			productReference = E5C9EE150781B71C00629D4E /* nuiTestD.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -278,8 +338,9 @@
 			);
 			projectRoot = "";
 			targets = (
-				91CC2B110744CEA30018CBED /* nuitest */,
-				E5C9EE030781B71C00629D4E /* nuitest debug */,
+				91CC2B110744CEA30018CBED /* nuiTest */,
+				E5C9EE030781B71C00629D4E /* nuiTestD */,
+				E529DFA71064D36B00C0CE08 /* nuiTestD Cocoa */,
 			);
 		};
 /* End PBXProject section */
@@ -320,6 +381,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E529DFAA1064D36B00C0CE08 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E5C9EE040781B71C00629D4E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -330,6 +398,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		E529DFBC1064D36B00C0CE08 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "rsync -rC ../data/ --exclude \".*\" $BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\n../../tools/make_rc.py ../data nuiTest2005.rc";
+			showEnvVarsInLog = 0;
+		};
 		E5C6AE570CFB23E800FEBC6D /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -373,6 +455,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E529DFAB1064D36B00C0CE08 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E529DFAC1064D36B00C0CE08 /* Gears.cpp in Sources */,
+				E529DFAD1064D36B00C0CE08 /* nuiApp.cpp in Sources */,
+				E529DFAE1064D36B00C0CE08 /* nuiGearWin.cpp in Sources */,
+				E529DFAF1064D36B00C0CE08 /* nuiWin.cpp in Sources */,
+				E529DFB01064D36B00C0CE08 /* ThreadInspectorTest.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E5C9EE090781B71C00629D4E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -398,9 +492,39 @@
 			name = nui3D;
 			targetProxy = BC1A614B0E632E5000BDD037 /* PBXContainerItemProxy */;
 		};
+		E529DFC31064D39400C0CE08 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "nui3D cocoa";
+			targetProxy = E529DFC21064D39400C0CE08 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		E529DFBE1064D36B00C0CE08 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = i386;
+				GCC_DEBUGGING_SYMBOLS = full;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_DEBUG,
+					_DEBUG_,
+				);
+				INSTALL_PATH = "$(USER_APPS_DIR)";
+				OTHER_CFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "nuiTestD Cocoa";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+			};
+			name = Default;
+		};
 		E5A754BE08551A26002B185C /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -409,7 +533,7 @@
 				INSTALL_PATH = "$(USER_APPS_DIR)";
 				OTHER_CFLAGS = "";
 				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = nuitest;
+				PRODUCT_NAME = nuiTest;
 				SECTORDER_FLAGS = "";
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -435,7 +559,7 @@
 				INSTALL_PATH = "$(USER_APPS_DIR)";
 				OTHER_CFLAGS = "";
 				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = nuiTestd;
+				PRODUCT_NAME = nuiTestD;
 				WARNING_CFLAGS = (
 					"-Wmost",
 					"-Wno-four-char-constants",
@@ -447,10 +571,7 @@
 		E5A754CA08551A26002B185C /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					ppc,
-					i386,
-				);
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				COPY_PHASE_STRIP = NO;
 				GCC_VERSION = 4.0;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../include/";
@@ -466,7 +587,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E5A754BB08551A26002B185C /* Build configuration list for PBXNativeTarget "nuitest" */ = {
+		E529DFBD1064D36B00C0CE08 /* Build configuration list for PBXNativeTarget "nuiTestD Cocoa" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E529DFBE1064D36B00C0CE08 /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		E5A754BB08551A26002B185C /* Build configuration list for PBXNativeTarget "nuiTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E5A754BE08551A26002B185C /* Default */,
@@ -474,7 +603,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Default;
 		};
-		E5A754C308551A26002B185C /* Build configuration list for PBXNativeTarget "nuitest debug" */ = {
+		E5A754C308551A26002B185C /* Build configuration list for PBXNativeTarget "nuiTestD" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E5A754C608551A26002B185C /* Default */,

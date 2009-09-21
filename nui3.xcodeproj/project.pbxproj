@@ -9161,7 +9161,7 @@
 		E592C5130EFE8CCC00340B35 /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = x86_64;
+				ARCHS = i386;
 				COPY_PHASE_STRIP = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
@@ -9181,7 +9181,7 @@
 				INSTALL_PATH = /usr/local/lib;
 				PREBINDING = NO;
 				PRODUCT_NAME = "nui3D cocoa";
-				SDKROOT = /Developer/SDKs/MacOSX10.5.sdk;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 				USER_HEADER_SEARCH_PATHS = ". include deps/libpng deps/gameswf deps/zlib deps/libjpeg src/Application/Cocoa src/Stream/Zip deps/freetype2/include deps/expat/include deps/harfbuzz deps/expat/lib";
 			};
 			name = Default;

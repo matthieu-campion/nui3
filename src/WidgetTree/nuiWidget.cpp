@@ -1941,8 +1941,7 @@ float nuiWidget::GetAlpha() const
 
 void nuiWidget::SetAlpha(float Alpha)
 {
-  mAlpha = Alpha;
-  NGL_ASSERT(mAlpha <= 1.f);
+  mAlpha = nuiClamp(Alpha, 0.0f, 1.0f);
   Invalidate();
   DebugRefreshInfo();
 }
@@ -3121,6 +3120,18 @@ void nuiWidget::StartAnimation(const nglString& rName, double Time)
   }
   DebugRefreshInfo();
 }
+
+void nuiWidget::StartAnimation(const nglString& rName, int32 count, nuiAnimLoop loopmode , double Time)
+{
+  nuiAnimation* pAnim = GetAnimation(rName);
+  if (pAnim)
+  {
+    pAnim->Play(count, loopmode);
+    pAnim->SetTime(Time);
+  }
+  DebugRefreshInfo();
+}
+
 
 void nuiWidget::StopAnimation(const nglString& rName)
 {
