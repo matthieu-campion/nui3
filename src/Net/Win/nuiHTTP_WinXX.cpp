@@ -82,18 +82,34 @@ nuiHTTPResponse* nuiHTTPRequest::SendRequest()
   if (mBody.size())
   {
     success = WinHttpSendRequest(hRequest, WINHTTP_NO_ADDITIONAL_HEADERS, 0, &mBody[0], mBody.size(), mBody.size(), NULL);
+    if (!success)
+    {
+      NGL_OUT(_T("WinHttpSendRequest error: %d (0x%x)\n"), GetLastError(), GetLastError());
+      return NULL;
+    }
   }
   else
   {
     success = WinHttpSendRequest(hRequest, WINHTTP_NO_ADDITIONAL_HEADERS, 0, NULL, 0, 0, NULL);
+    if (!success)
+    {
+      NGL_OUT(_T("WinHttpSendRequest error: %d (0x%x)\n"), GetLastError(), GetLastError());
+      return NULL;
+    }
   }
 
   if (!success)
+  {
+    NGL_OUT(_T("WinHttpSendRequest error: %d (0x%x)\n"), GetLastError(), GetLastError());
     return NULL;
+  }
 
   success = WinHttpReceiveResponse(hRequest, NULL);
   if (!success)
+  {
+    NGL_OUT(_T("WinHttpSendRequest error: %d (0x%x)\n"), GetLastError(), GetLastError());
     return NULL;
+  }
 
   vector<char> buf;
   DWORD size = 0;

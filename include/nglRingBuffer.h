@@ -40,9 +40,11 @@ public:
     //
     mpBuffers.resize(nbChannels);
     for (int i = 0; i < nbChannels; i++)
-      mpBuffers[i] = (uint8*)AlignedMalloc(mEffectiveSize + 1);
+    {
+      mpBuffers[i] = (uint8*)AlignedMalloc(mEffectiveSize + sizeOfElement);
+      memset(mpBuffers[i], 0, mEffectiveSize + sizeOfElement);
+    }
   }
-
 
   /////////////////////////////////////////
 

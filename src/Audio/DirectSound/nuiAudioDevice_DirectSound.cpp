@@ -424,7 +424,7 @@ bool nuiAudioDevice_DirectSound::Open(std::vector<uint32>& rInputChannels, std::
 
   // init ringbuffer
   mpRingBuffer = new nglRingBuffer(BufferSize*4, sizeof(float), rOutputChannels.size());
-
+  mpRingBuffer->AdvanceWriteIndex(BufferSize);
 
   // init input buffers
   if (mHasInput)
@@ -1102,16 +1102,16 @@ uint32 nuiAudioDevice_DS_OutputTh::ReadFromRingBuf(uint32 nbSampleFrames, std::v
   bool need2ndPass = true;
   uint32 ch, i;
   float *pRing, *pOut;
-  uint32 nbRead, nbRead2;
+  uint32 nbRead = 0, nbRead1 = 0, nbRead2 = 0;
 
   // prepare 1st pass reading
-  nbRead = mpRingBuffer->GetReadableToEnd();
+  nbRead1 = mpRingBuffer->GetReadableToEnd();
 
   // read what you need. not more! (maybe less, 'cause it's the 1st pass...)
-  if (nbRead > nbSampleFrames)
-    nbRead = nbSampleFrames;
+  if (nbRead1 > nbSampleFrames)
+    nbRead1 = nbSampleFrames;
 
-  if (nbRead == nbSampleFrames)
+  if (nbRead1 == nbSampleFrames)
   {
     need2ndPass = false;
   }
@@ -1123,29 +1123,33 @@ uint32 nuiAudioDevice_DS_OutputTh::ReadFromRingBuf(uint32 nbSampleFrames, std::v
     pOut = outbuf[ch];
 
 
-    for (i=0; i < nbRead; i++)
+    for (i=0; i < nbRead1; i++)
     {
       *(pOut++) = *(pRing++);
     }
   }
 
   // update ringbuf pointer
-  mpRingBuffer->AdvanceReadIndex (nbRead);
+  mpRingBuffer->AdvanceReadIndex (nbRead1);
 
   if (!need2ndPass)
-    return nbRead;
+    return nbRead1;
 
   // prepare 2nd pass reading
   nbRead2 = mpRingBuffer->GetReadableToEnd();
-  if (nbRead + nbRead2 > nbSampleFrames)
-    nbRead2 = nbSampleFrames - nbRead;
+  nbRead = nbRead1 + nbRead2;
+  if (nbRead > nbSampleFrames)
+  {
+    nbRead2 = nbSampleFrames - nbRead1;
+    nbRead = nbRead1 + nbRead2;
+  }
 
-  NGL_ASSERT((nbRead+nbRead2)==nbSampleFrames);
+  //NGL_ASSERT((nbRead)==nbSampleFrames);
 
   for (ch = 0; ch < nbChannels; ch++)
   {
     pRing = (float*)mpRingBuffer->GetReadPointer(ch);
-    pOut = &(outbuf[ch][nbRead]);
+    pOut = &(outbuf[ch][nbRead1]);
 
     for (i=0; i < nbRead2; i++)
     {
@@ -1156,7 +1160,7 @@ uint32 nuiAudioDevice_DS_OutputTh::ReadFromRingBuf(uint32 nbSampleFrames, std::v
   // update ringbuf pointer
   mpRingBuffer->AdvanceReadIndex(nbRead2); 
 
-  return nbRead+nbRead2;
+  return nbRead;
 
 }
 
