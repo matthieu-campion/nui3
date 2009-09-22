@@ -343,7 +343,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E5818D0810696B87001CA6D2</string>
+										<string>E5818D1B10697370001CA6D2</string>
 										<key>history</key>
 										<array>
 											<string>E5818CBB10695DC8001CA6D2</string>
@@ -656,7 +656,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>275344263.65814102</real>
+	<real>275346288.68595999</real>
 	<key>ToolbarConfigUserDefaultsMinorVersion</key>
 	<string>2</string>
 	<key>ToolbarDisplayMode</key>
@@ -673,7 +673,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E5818D0910696B87001CA6D2</string>
 		<string>E5818C9210695CE4001CA6D2</string>
 		<string>E5818C9410695CE4001CA6D2</string>
 		<string>/Users/meeloo/work/nui3/tutorials/CSSFontSelection/CSSFontSelection.xcodeproj</string>

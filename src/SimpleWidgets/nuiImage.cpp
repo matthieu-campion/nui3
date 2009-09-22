@@ -304,7 +304,7 @@ nuiRect nuiImage::CalcIdealSize()
       if (w < tw)
       {
         r = w / tw;
-        h = tw * r;
+        h = th * r;
       }
     }
     else
