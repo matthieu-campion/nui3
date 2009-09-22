@@ -417,12 +417,12 @@ void nuiFontRequest::MustBeSimilar(const nuiPanose& rPanose, float Score, bool S
 
 void nuiFontRequest::_SetName(const nglString& rName)
 {
-  SetName(rName, 1.0);
+  SetName(rName, 10.0);
 }
 
 void nuiFontRequest::_SetGenericName(const nglString& rName)
 {
-  SetGenericName(rName, 1.0);
+  SetGenericName(rName, 10.0);
 }
 
 void nuiFontRequest::_SetStyle(const nglString& rStyle)
@@ -448,17 +448,17 @@ void nuiFontRequest::_SetBold(bool Bold)
 void nuiFontRequest::_SetProportionnal(bool set)
 {
   if (set)
-    SetProportionnal(1.0f);
+    SetProportionnal(3.0f);
   else
-    SetMonospace(1.0f);
+    SetMonospace(3.0f);
 }
 
 void nuiFontRequest::_SetMonospace(bool set)
 {
   if (set)
-    SetMonospace(1.0f);
+    SetMonospace(3.0f);
   else
-    SetProportionnal(1.0f);
+    SetProportionnal(3.0f);
 }
 
 void nuiFontRequest::_SetScalable(bool set)
