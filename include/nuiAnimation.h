@@ -74,7 +74,7 @@ public:
   void SetDuration(double); ///< Set the total duration of the Animation in seconds.
   double GetDuration() const; ///< Return the total duration of the Animation in seconds.
 
-  virtual void Play(uint32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward); ///< Start playing the animation. Stop after count iterations. 
+  virtual void Play(int32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward); ///< Start playing the animation. Stop after count iterations. 
   virtual void Stop(); ///< Stop Playing the animation.
 
   bool IsPlaying() const; ///< Return true if the animation is currently playing.
@@ -105,14 +105,14 @@ protected:
   double mCurrentTime;
   double mCurrentPosition;
   double mDuration;
-  uint32 mCount;
+  int32 mCount;
 
   double mDirection; ///< Either 1 or -1. This sets the current direction of play back.
   nuiAnimLoop mLoopMode;
   nuiEasingMethod mEasing;
 
   static nuiTimer* mpTimer;
-  static uint32 mAnimCounter;
+  static int32 mAnimCounter;
   static double mFrameRate;
   
   nglTime mLastTime;
@@ -163,7 +163,7 @@ public:
 
   virtual nuiXMLNode* Serialize(nuiXMLNode* pNode, bool CreateNewNode) const;
 
-  virtual void Play(uint32 Count = 1.0f, nuiAnimLoop LoopMode = eAnimLoopForward); ///< Start playing the animation. Stop after count iterations. 
+  virtual void Play(int32 Count = 1.0f, nuiAnimLoop LoopMode = eAnimLoopForward); ///< Start playing the animation. Stop after count iterations. 
   virtual void Stop(); ///< Stop Playing the animation.
 
   virtual double GetDuration(); ///< Return the total duration of the Animation in seconds.
@@ -183,7 +183,7 @@ public:
 
   virtual nuiXMLNode* Serialize(nuiXMLNode* pNode, bool CreateNewNode) const;
 
-  virtual void Play(uint32 Count = 1.0f, nuiAnimLoop LoopMode = eAnimLoopForward); ///< Start playing the animation. Stop after count iterations. 
+  virtual void Play(int32 Count = 1.0f, nuiAnimLoop LoopMode = eAnimLoopForward); ///< Start playing the animation. Stop after count iterations. 
   virtual void Stop(); ///< Stop Playing the animation.
 
   virtual double GetDuration(); ///< Return the total duration of the Animation in seconds.

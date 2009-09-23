@@ -11,7 +11,7 @@
 #include "nglMath.h"
 
 nuiTimer* nuiAnimation::mpTimer = NULL;
-uint32 nuiAnimation::mAnimCounter = 0;
+int32 nuiAnimation::mAnimCounter = 0;
 double nuiAnimation::mFrameRate = 60; // 30 FPS by default
 
 // Standard easing:
@@ -329,7 +329,7 @@ double nuiAnimation::GetPosition() const
   return mCurrentPosition;
 }
 
-void nuiAnimation::Play(uint32 Count, nuiAnimLoop LoopMode)
+void nuiAnimation::Play(int32 Count, nuiAnimLoop LoopMode)
 {
   mCount = Count;
   mLastTime = nglTime();
@@ -359,7 +359,7 @@ void nuiAnimation::Stop()
 
 bool nuiAnimation::IsPlaying() const
 {
-  return mCount != 0;
+  return mCount > 0;
 }
 
 void nuiAnimation::OnFrame()
@@ -405,7 +405,7 @@ bool nuiAnimation::UpdateTime()
       mCount--;
       mCurrentTime = 0;
 
-      if (!mCount)
+      if (mCount <= 0)
       {
         mCurrentTime = duration;
         //NGL_OUT(_T("Stop anim (time has come: %f > %f)\n"), mCurrentTime, duration);
@@ -422,7 +422,7 @@ bool nuiAnimation::UpdateTime()
     if (mCurrentTime <= 0.0)
     {
       mCount--;
-      if (!mCount)
+      if (mCount <= 0)
       {
         mCurrentTime = 0;
         //Stop();
@@ -438,7 +438,7 @@ bool nuiAnimation::UpdateTime()
   case eAnimLoopPingPong:
     if (mCurrentTime >= duration)
     {
-      if (!mCount--)
+      if (mCount-- <= 0)
       {
         mCurrentTime = duration;
         //Stop();
@@ -453,7 +453,7 @@ bool nuiAnimation::UpdateTime()
     }
     if (mCurrentTime <= 0.0)
     {
-      if (!mCount--)
+      if (mCount-- <= 0)
       {
         mCurrentTime = 0;
         //Stop();
@@ -540,7 +540,7 @@ nuiXMLNode* nuiMetaAnimation::Serialize(nuiXMLNode* pNode, bool CreateNewNode) c
   return nuiAnimation::Serialize(pNode, CreateNewNode);
 }
 
-void nuiMetaAnimation::Play(uint32 Count, nuiAnimLoop LoopMode)
+void nuiMetaAnimation::Play(int32 Count, nuiAnimLoop LoopMode)
 {
   std::list<nuiAnimation*>::iterator it = mpAnimations.begin();
   std::list<nuiAnimation*>::iterator end = mpAnimations.end();
@@ -618,7 +618,7 @@ nuiXMLNode* nuiAnimationSequence::Serialize(nuiXMLNode* pNode, bool CreateNewNod
   return nuiAnimation::Serialize(pNode, CreateNewNode);
 }
 
-void nuiAnimationSequence::Play(uint32 Count, nuiAnimLoop LoopMode)
+void nuiAnimationSequence::Play(int32 Count, nuiAnimLoop LoopMode)
 {
   std::list<nuiAnimation*>::iterator it = mpAnimations.begin();
   std::list<nuiAnimation*>::iterator end = mpAnimations.end();
