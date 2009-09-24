@@ -101,7 +101,7 @@ double nuiAttributeAnimation::GetStartValue() const
   return mStartValue;
 }
 
-void nuiAttributeAnimation::Play(uint32 Count, nuiAnimLoop LoopMode)
+void nuiAttributeAnimation::Play(int32 Count, nuiAnimLoop LoopMode)
 {
   if (mCaptureStartOnPlay)
   {
@@ -204,7 +204,7 @@ const nuiColor& nuiColorAttributeAnimation::GetStartValue() const
 
 
 
-void nuiColorAttributeAnimation::Play(uint32 Count, nuiAnimLoop LoopMode)
+void nuiColorAttributeAnimation::Play(int32 Count, nuiAnimLoop LoopMode)
 {
   nuiAttribBase attrib(mpTarget->GetAttribute(mTarget));
   NGL_ASSERT(attrib.IsValid());
@@ -336,7 +336,7 @@ const nuiRect& nuiRectAttributeAnimation::GetStartValue() const
 
 
 
-void nuiRectAttributeAnimation::Play(uint32 Count, nuiAnimLoop LoopMode)
+void nuiRectAttributeAnimation::Play(int32 Count, nuiAnimLoop LoopMode)
 {
   nuiAttribBase attrib(mpTarget->GetAttribute(mTarget));
   

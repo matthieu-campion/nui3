@@ -33,6 +33,8 @@ protected:
   nglString mTarget;
 };
 
+
+// Simple class that treats all simple type by converting them to and from strings (ints, floats...)
 class nuiAttributeAnimation : public nuiAttributeAnimationBase
 {
 public:
@@ -46,7 +48,7 @@ public:
   double GetEndValue() const;
 
   // Inherited:
-  virtual void Play(uint32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward); ///< Start playing the animation. Stop after count iterations. 
+  virtual void Play(int32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward); ///< Start playing the animation. Stop after count iterations. 
   virtual void Stop(); ///< Stop Playing the animation.
 
   virtual void OnFrame(); ///< Overload this method to get notified of each timer tick, for exemple to call Invalidate() in order to redraw the animation.
@@ -55,6 +57,89 @@ private:
   double mStartValue;
   double mEndValue;
 };
+
+template <class T>
+class nuiAttributeAnim : public nuiAttributeAnimationBase
+{
+public:
+  nuiAttributeAnim()
+  : mStartValue(0),
+  mEndValue(0)
+  {
+    if (SetObjectClass(_T("nuiAttributeAnim")))
+    {
+      // Init atributes
+    }
+  }
+  
+  nuiAttributeAnim(T start, T end)
+  : mStartValue(start),
+  mEndValue(end)
+  {
+    if (SetObjectClass(_T("nuiAttributeAnim")))
+    {
+      // Init atributes
+    }
+  }
+  
+  ~nuiAttributeAnim()
+  {
+    
+  }
+  
+  void SetEndValue(T val)
+  {
+    mEndValue = val;
+  }
+  
+  T GetEndValue() const
+  {
+    return mEndValue;
+  }
+  
+  void SetStartValue(T val)
+  {
+    mStartValue = val;
+  }
+  
+  T GetStartValue() const
+  {
+    return mStartValue;
+  }
+  
+  void Play(int32 Count, nuiAnimLoop LoopMode)
+  {
+    if (mCaptureStartOnPlay)
+    {
+      nuiAttrib<T> attrib(mpTarget->GetAttribute(mTarget));
+      NGL_ASSERT(attrib.IsValid());
+      mStartValue = attrib.Get();
+    }
+    if (mCaptureEndOnPlay)
+    {
+      nuiAttrib<T> attrib(mpTarget->GetAttribute(mTarget));
+      NGL_ASSERT(attrib.IsValid());
+      mEndValue = attrib.Get();
+    }
+    
+    nuiAnimation::Play(Count, LoopMode);
+  }
+    
+  void OnFrame()
+  {
+    T pos = mStartValue + GetPosition() * (mEndValue - mStartValue);
+    nuiAttrib<T> attrib(mpTarget->GetAttribute(mTarget));
+    if (!attrib.IsValid() || attrib.IsReadOnly())
+      return;
+    
+    attrib.Set(pos);
+  }
+  
+private:
+  T mStartValue;
+  T mEndValue;
+};
+
 
 class nuiColorAttributeAnimation : public nuiAttributeAnimationBase
 {
@@ -69,7 +154,7 @@ public:
   const nuiColor& GetEndValue() const;
 
   // Inherited:
-  virtual void Play(uint32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward); ///< Start playing the animation. Stop after count iterations. 
+  virtual void Play(int32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward); ///< Start playing the animation. Stop after count iterations. 
   virtual void Stop(); ///< Stop Playing the animation.
 
   virtual void OnFrame(); ///< Overload this method to get notified of each timer tick, for exemple to call Invalidate() in order to redraw the animation.
@@ -95,7 +180,7 @@ public:
   const nuiRect& GetEndValue() const;
 
   // Inherited:
-  virtual void Play(uint32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward); ///< Start playing the animation. Stop after count iterations. 
+  virtual void Play(int32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward); ///< Start playing the animation. Stop after count iterations. 
   virtual void Stop(); ///< Stop Playing the animation.
 
   virtual void OnFrame(); ///< Overload this method to get notified of each timer tick, for exemple to call Invalidate() in order to redraw the animation.

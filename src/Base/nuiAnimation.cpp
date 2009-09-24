@@ -346,7 +346,7 @@ void nuiAnimation::Play(int32 Count, nuiAnimLoop LoopMode)
 
 void nuiAnimation::Stop()
 {
-  if (!mUpdatingTime)
+  if (!mUpdatingTime && IsPlaying())
   {
     mCount = 1;
     CallOnFrame();
