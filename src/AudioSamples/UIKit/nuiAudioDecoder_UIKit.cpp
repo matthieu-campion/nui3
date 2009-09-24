@@ -31,7 +31,6 @@ OSStatus MyAudioFile_ReadProc(void* pInClientData, SInt64 inPosition, UInt32 req
 OSStatus MyAudioFile_WriteProc (void* pInClientData, SInt64 inPosition,	UInt32 requestCount, const void* pBuffer,	UInt32* pActualCount)
 {
 	NGL_ASSERT(0);
-  printf("WriteProc\n");
 	*pActualCount = 0;
 	return noErr;
 }
@@ -48,7 +47,6 @@ SInt64 MyAudioFile_GetSizeProc(void* pInClientData)
 OSStatus MyAudioFile_SetSizeProc(void* pInClientData, SInt64 inSize)
 {
 	NGL_ASSERT(0);
-  printf("SetSizeProc\n");
 	return noErr;
 }
 
@@ -185,7 +183,7 @@ bool nuiAudioDecoder::ReadInfo()
 
 bool nuiAudioDecoder::Seek(uint64 SampleFrame)
 {
-  OSStatus err = ExtAudioFileSeek(mpPrivate->mExtAudioFileRef, mPosition);
+  OSStatus err = ExtAudioFileSeek(mpPrivate->mExtAudioFileRef, SampleFrame);
   return (err == noErr);
 }
 
