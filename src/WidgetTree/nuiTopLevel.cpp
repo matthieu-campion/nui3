@@ -945,17 +945,45 @@ NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseClick [%d] END\n"), rInfo.TouchId) );
   }
 
   bool res = DispatchMouseClick(rInfo);
-  nuiWidget* pWidgetUnder = GetChild((nuiSize)rInfo.X, (nuiSize)rInfo.Y);
-  if (pWidgetUnder)
-    SetMouseCursor(pWidgetUnder->GetMouseCursor());
-  else
-    SetMouseCursor(GetMouseCursor());
-
+  UpdateMouseCursor(rInfo.X, rInfo.Y);
+  
 PRINT_GRAB_IDS();
 NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseClick [%d] END\n"), rInfo.TouchId) );
 
 	return res;
 }
+
+void nuiTopLevel::UpdateMouseCursor(nuiSize X, nuiSize Y)
+{
+  nuiWidgetPtr pGrab = GetGrab(mMouseInfo.TouchId);
+  if (pGrab)
+  {
+    nuiMouseCursor cursor = pGrab->GetMouseCursor();
+    if (cursor != eCursorDoNotSet)
+    {
+      SetMouseCursor(cursor);
+      return;
+    }
+  }
+  
+  nuiWidgetList widgets;
+  GetChildren(X, Y, widgets, true);
+  int32 i = 0;
+  while (i < widgets.size())
+  {
+    nuiWidget* pWidget = widgets[i];
+    nuiMouseCursor cursor = pWidget->GetMouseCursor();
+    if (cursor != eCursorDoNotSet)
+    {
+      SetMouseCursor(cursor);
+      return;
+    }
+    i++;
+  }
+  
+  SetMouseCursor(GetMouseCursor());
+}
+
 
 bool nuiTopLevel::CallMouseUnclick(nglMouseInfo& rInfo)
 {
@@ -982,11 +1010,7 @@ NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseUnclick [%d] END\n"), rInfo.TouchId) );
   }
 
   bool res = DispatchMouseUnclick(rInfo);
-  nuiWidget* pWidgetUnder = GetChild((nuiSize)rInfo.X, (nuiSize)rInfo.Y);
-  if (pWidgetUnder)
-    SetMouseCursor(pWidgetUnder->GetMouseCursor());
-  else
-    SetMouseCursor(GetMouseCursor());
+  UpdateMouseCursor(rInfo.X, rInfo.Y);
 
 PRINT_GRAB_IDS();
 NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseUnclick [%d] END\n"), rInfo.TouchId) );
@@ -1121,7 +1145,8 @@ NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseMove [%d] BEGIN\n"), rInfo.TouchId) );
 
     NGL_ASSERT(pChild);
     // Set the mouse cursor to the right object:
-    SetMouseCursor(pChild->GetMouseCursor());
+    UpdateMouseCursor(rInfo.X, rInfo.Y);
+
     SetToolTipRect();
     
 //NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseMove [%d] END\n"), rInfo.TouchId) );
@@ -1179,11 +1204,8 @@ NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseMove [%d] BEGIN\n"), rInfo.TouchId) );
     }
   }
 
-  if (pWidgetUnder)
-    SetMouseCursor(pWidgetUnder->GetMouseCursor());
-  else
-    SetMouseCursor(GetMouseCursor());
-
+  UpdateMouseCursor(rInfo.X, rInfo.Y);
+  
   SetToolTipRect();
 //NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseMove [%d] END\n"), rInfo.TouchId) );
   return pHandled != NULL;

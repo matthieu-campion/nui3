@@ -211,7 +211,8 @@ protected:
   nuiWidgetPtr mpWatchedWidget;
 
   void UpdateWidgetsCSS();
-  
+  void UpdateMouseCursor(nuiSize X, nuiSize Y);
+
 protected:
   /* @name Trash management */
   //@{

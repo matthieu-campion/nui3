@@ -177,13 +177,13 @@ void nuiContainer::GetChildren(nuiSize X, nuiSize Y, nuiWidgetList& rChildren, b
     nuiWidgetPtr pItem = pIt->GetWidget();
     if (pItem && pItem->IsInsideLocal(X,Y))
     {
-      rChildren.push_back(pItem);
       if (DeepSearch)
       {
         nuiContainerPtr pContainer = dynamic_cast<nuiContainerPtr>(pItem);
         if (pContainer)
           pContainer->GetChildren(X, Y, rChildren, DeepSearch);
       }
+      rChildren.push_back(pItem);
     }
   }
   delete pIt;

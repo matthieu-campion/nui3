@@ -1804,8 +1804,6 @@ nuiWidgetPtr nuiWidget::DispatchMouseMove(const nglMouseInfo& rInfo)
   if (IsDisabled() && !hasgrab)
     return NULL;
     
-  SetMouseCursor(eCursorHand);
-
   if (IsInside(X, Y))
   {
     inside = true;
@@ -2280,9 +2278,6 @@ void nuiWidget::SetAttrMouseCursor(nuiMouseCursor Cursor)
 
 nuiMouseCursor nuiWidget::GetMouseCursor() const
 {
-  if (mObjCursor == eCursorDoNotSet && mpParent)
-    return mpParent->GetMouseCursor();
-
   return mObjCursor;
 }
 
