@@ -2588,7 +2588,7 @@ uint32 nglString::GetLevenshteinDistance(const nglString& rSource, bool CaseSens
 }
 
 
-#if defined _CARBON_ || defined _UIKIT_
+#if defined _CARBON_ || defined _UIKIT_ || defined _COCOA_
 CFStringRef nglString::ToCFString() const
 {
   char* pStr = Export();

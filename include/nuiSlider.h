@@ -37,9 +37,9 @@ public:
   virtual nuiOrientation GetOrientation(); ///< Return the orientation of the scroll bar
 
   /// Handle Visual Offsets:
-  virtual bool SetHandleOffset(nuiSize Offset); ///< Set Offset in the handle widget for the hotspot (in pixels).
-  virtual bool SetHandlePosMin(nuiSize Min); ///< Set the minimum position of the handle in pixels.
-  virtual bool SetHandlePosMax(nuiSize Max); ///< Set the maximum position of the handle in pixels.
+  virtual void SetHandleOffset(nuiSize Offset); ///< Set Offset in the handle widget for the hotspot (in pixels).
+  virtual void SetHandlePosMin(nuiSize Min); ///< Set the minimum position of the handle in pixels.
+  virtual void SetHandlePosMax(nuiSize Max); ///< Set the maximum position of the handle in pixels.
 
   virtual nuiSize GetHandleOffset();
   virtual nuiSize GetHandlePosMin();
@@ -77,6 +77,7 @@ public:
 
 
 protected:
+  void InitAttributes();
   bool DoInvalidate(const nuiEvent& rEvent);
   bool HandleClicked(const nuiEvent& rEvent);
   bool HandleUnclicked(const nuiEvent& rEvent);

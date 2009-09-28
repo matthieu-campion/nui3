@@ -583,6 +583,10 @@
 		E52E1A260CD7EEAF006FBCDD /* nuiAudioDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = E52E1A240CD7EEAF006FBCDD /* nuiAudioDevice.h */; };
 		E52E1A280CD7F397006FBCDD /* nuiAudioDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52E1A270CD7F397006FBCDD /* nuiAudioDevice.cpp */; };
 		E52E1A570CD80280006FBCDD /* nuiAudioDevice_CoreAudio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52E1A550CD80280006FBCDD /* nuiAudioDevice_CoreAudio.cpp */; };
+		E52EA78C106D60EC008598F5 /* nglApplication_Cocoa.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52EA78B106D60EC008598F5 /* nglApplication_Cocoa.mm */; };
+		E52EA7DE106D688C008598F5 /* nglApplication_Cocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = E52EA7DD106D688C008598F5 /* nglApplication_Cocoa.h */; };
+		E52EA7F2106D6DF5008598F5 /* nglWindow_Cocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = E52EA7F1106D6DF5008598F5 /* nglWindow_Cocoa.h */; };
+		E52EA7F5106D6E1F008598F5 /* nglWindow_Cocoa.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52EA7F4106D6E1F008598F5 /* nglWindow_Cocoa.mm */; };
 		E53120830F0780C60081CB7E /* nuiURL_CoreFoundation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E53120820F0780C60081CB7E /* nuiURL_CoreFoundation.cpp */; };
 		E53120840F0780C60081CB7E /* nuiURL_CoreFoundation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E53120820F0780C60081CB7E /* nuiURL_CoreFoundation.cpp */; };
 		E53120850F0780C60081CB7E /* nuiURL_CoreFoundation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E53120820F0780C60081CB7E /* nuiURL_CoreFoundation.cpp */; };
@@ -3329,6 +3333,10 @@
 		E52E1A240CD7EEAF006FBCDD /* nuiAudioDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiAudioDevice.h; path = include/nuiAudioDevice.h; sourceTree = SOURCE_ROOT; };
 		E52E1A270CD7F397006FBCDD /* nuiAudioDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiAudioDevice.cpp; path = Audio/nuiAudioDevice.cpp; sourceTree = "<group>"; };
 		E52E1A550CD80280006FBCDD /* nuiAudioDevice_CoreAudio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiAudioDevice_CoreAudio.cpp; path = Audio/CoreAudio/nuiAudioDevice_CoreAudio.cpp; sourceTree = "<group>"; };
+		E52EA78B106D60EC008598F5 /* nglApplication_Cocoa.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = nglApplication_Cocoa.mm; path = src/Application/Cocoa/nglApplication_Cocoa.mm; sourceTree = SOURCE_ROOT; };
+		E52EA7DD106D688C008598F5 /* nglApplication_Cocoa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nglApplication_Cocoa.h; path = Cocoa/nglApplication_Cocoa.h; sourceTree = "<group>"; };
+		E52EA7F1106D6DF5008598F5 /* nglWindow_Cocoa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nglWindow_Cocoa.h; path = src/Window/Cocoa/nglWindow_Cocoa.h; sourceTree = SOURCE_ROOT; };
+		E52EA7F4106D6E1F008598F5 /* nglWindow_Cocoa.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = nglWindow_Cocoa.mm; path = src/Window/Cocoa/nglWindow_Cocoa.mm; sourceTree = SOURCE_ROOT; };
 		E53120820F0780C60081CB7E /* nuiURL_CoreFoundation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiURL_CoreFoundation.cpp; path = src/Net/CoreFoundation/nuiURL_CoreFoundation.cpp; sourceTree = SOURCE_ROOT; };
 		E53645E20CDF7C8000838C78 /* nuiPopupView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiPopupView.cpp; sourceTree = "<group>"; };
 		E53645E80CDF7CE300838C78 /* nuiPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiPopupView.h; path = include/nuiPopupView.h; sourceTree = SOURCE_ROOT; };
@@ -4475,6 +4483,24 @@
 			name = Audio;
 			sourceTree = "<group>";
 		};
+		E52EA787106D5F2F008598F5 /* Cocoa */ = {
+			isa = PBXGroup;
+			children = (
+				E52EA78B106D60EC008598F5 /* nglApplication_Cocoa.mm */,
+				E52EA7DD106D688C008598F5 /* nglApplication_Cocoa.h */,
+			);
+			name = Cocoa;
+			sourceTree = "<group>";
+		};
+		E52EA7ED106D6DA8008598F5 /* Cocoa */ = {
+			isa = PBXGroup;
+			children = (
+				E52EA7F1106D6DF5008598F5 /* nglWindow_Cocoa.h */,
+				E52EA7F4106D6E1F008598F5 /* nglWindow_Cocoa.mm */,
+			);
+			name = Cocoa;
+			sourceTree = "<group>";
+		};
 		E55DEDF90D350FE3002DA5BD /* SoftwareRasterizer */ = {
 			isa = PBXGroup;
 			children = (
@@ -5173,6 +5199,7 @@
 		E5816D210C3CECAB00902DFE /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				E52EA787106D5F2F008598F5 /* Cocoa */,
 				E5816D220C3CECAB00902DFE /* Carbon */,
 				E5816D320C3CECAB00902DFE /* nglApplication.cpp */,
 				E5816C7B0C3CECAB00902DFE /* nglApplication.h */,
@@ -5781,6 +5808,7 @@
 		E5816E1C0C3CECAB00902DFE /* Window */ = {
 			isa = PBXGroup;
 			children = (
+				E52EA7ED106D6DA8008598F5 /* Cocoa */,
 				E5816C910C3CECAB00902DFE /* nglInputDevice.h */,
 				E5816C7A0C3CECAB00902DFE /* ngl_glext.h */,
 				E5816E1D0C3CECAB00902DFE /* Carbon */,
@@ -7680,6 +7708,8 @@
 				E55A47C0105321F3002AB5CA /* nuiPopupValueAttributeEditor.h in Headers */,
 				E55A47C81053234C002AB5CA /* nuiComboAttributeEditor.h in Headers */,
 				4024359110568E550089BA0B /* nuiStopWatch.h in Headers */,
+				E52EA7DE106D688C008598F5 /* nglApplication_Cocoa.h in Headers */,
+				E52EA7F2106D6DF5008598F5 /* nglWindow_Cocoa.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9076,6 +9106,8 @@
 				E52D655010322B51005BF301 /* nuiHugeImage.cpp in Sources */,
 				E55A47AE10531ABD002AB5CA /* nuiPopupValueAttributeEditor.cpp in Sources */,
 				4024359310568E6F0089BA0B /* nuiStopWatch.cpp in Sources */,
+				E52EA78C106D60EC008598F5 /* nglApplication_Cocoa.mm in Sources */,
+				E52EA7F5106D6E1F008598F5 /* nglWindow_Cocoa.mm in Sources */,
 				40E96FBB106D20160099D015 /* nuiAudioDecoder_OSX.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

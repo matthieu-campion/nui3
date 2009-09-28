@@ -122,6 +122,7 @@ protected:
 
   nuiSerializeMode mSerializeMode;
   
+  virtual void OnPropertyChanged(const nglString& rProperty, const nglString& rValue);
 private : 
   void Init(const nglString& rObjectName);
   void InitAttributes();

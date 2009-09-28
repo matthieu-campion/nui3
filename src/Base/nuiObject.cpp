@@ -299,7 +299,7 @@ void nuiObject::SetProperty (const nglString& rName, const nglString& rValue)
 //  }
   
   mProperties[rName] = rValue;
-  
+  OnPropertyChanged(rName, rValue);
   DebugRefreshInfo();
 }
 
@@ -679,4 +679,8 @@ bool nuiObject::ClearGlobalProperty(const char* pName)
   return ClearGlobalProperty(nglString(pName));
 }
 
+void nuiObject::OnPropertyChanged(const nglString& rProperty, const nglString& rValue)
+{
+  //...
+}
 

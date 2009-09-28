@@ -117,7 +117,6 @@ void objCCallOnWillExit();
 const nglChar* gpApplicationErrorTable[] =
 {
 /*  0 */ _T("No error"),
-/*  1 */ _T("Couldn't open the default X display. Is the DISPLAY environment variable set ?"),
   NULL
 };
 
@@ -162,6 +161,8 @@ int nglApplication::Main(int argc, char** argv)
   NSAutoreleasePool *pPool = [NSAutoreleasePool new];
 
   Init(argc, argv);
+
+  CallOnInit();
 
   UIApplicationMain(argc, argv, @"nglUIApplication", @"nglUIApplicationDelegate");
 

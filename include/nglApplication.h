@@ -278,6 +278,12 @@ public:
 	void CallOnMemoryWarning();
 #endif//_UIKIT_
 
+#ifdef _COCOA_
+  int nglApplication::Main(int ArgCount, char** pArgs);
+  bool Init(int argc, char** argv);
+  int  Run();
+#endif
+  
 #ifdef _UNIX_
 private:
   friend int main(int, char**);

@@ -28,7 +28,9 @@ nuiSlider::nuiSlider(nuiOrientation orientation, const nuiRange& rRange)
 mRange(rRange),
 mSliderSink(this)
 {
-  SetObjectClass(_T("nuiSlider"));
+  if (SetObjectClass(_T("nuiSlider")))
+    InitAttributes();
+  
   mOrientation = orientation;
   mClicked = false;
   mThumbClicked = false;
@@ -90,6 +92,25 @@ bool nuiSlider::Load(const nuiXMLNode* pNode)
   NUI_ADD_EVENT(InteractiveValueChanged);
   
   return true;
+}
+
+void nuiSlider::InitAttributes()
+{
+  AddAttribute(new nuiAttribute<float>(nglString(_T("HandleOffset")), nuiUnitPixels,
+                                       nuiMakeDelegate(this, &nuiSlider::GetHandleOffset),
+                                       nuiMakeDelegate(this, &nuiSlider::SetHandleOffset)));
+  
+  AddAttribute(new nuiAttribute<float>(nglString(_T("HandlePosMin")), nuiUnitPixels,
+                                       nuiMakeDelegate(this, &nuiSlider::GetHandlePosMin),
+                                       nuiMakeDelegate(this, &nuiSlider::SetHandlePosMin)));
+  
+  AddAttribute(new nuiAttribute<float>(nglString(_T("HandlePosMax")), nuiUnitPixels,
+                                       nuiMakeDelegate(this, &nuiSlider::GetHandlePosMax),
+                                       nuiMakeDelegate(this, &nuiSlider::SetHandlePosMax)));
+
+  AddAttribute(new nuiAttribute<nuiOrientation>(nglString(_T("Orientation")), nuiUnitOrientation,
+                                       nuiMakeDelegate(this, &nuiSlider::GetOrientation),
+                                       nuiMakeDelegate(this, &nuiSlider::SetOrientation)));
 }
 
 nuiXMLNode* nuiSlider::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
@@ -362,25 +383,22 @@ nuiWidget* nuiSlider::GetBackground()
   return mpBackground;
 }
 
-bool nuiSlider::SetHandleOffset(nuiSize Offset)
+void nuiSlider::SetHandleOffset(nuiSize Offset)
 {
   mHandleOffset = Offset;
   Invalidate();
-  return true;
 }
 
-bool nuiSlider::SetHandlePosMin(nuiSize Min)
+void nuiSlider::SetHandlePosMin(nuiSize Min)
 {
   mHandlePosMin = Min;
   UpdateLayout();
-  return true;
 }
 
-bool nuiSlider::SetHandlePosMax(nuiSize Max)
+void nuiSlider::SetHandlePosMax(nuiSize Max)
 {
   mHandlePosMax = Max;
   UpdateLayout();
-  return true;
 }
 
 

@@ -3978,6 +3978,10 @@ bool nuiWidget::IsFocusVisible() const
 }
 
 
+void nuiWidget::OnPropertyChanged(const nglString& rName, const nglString&rValue)
+{
+  ApplyCSSForStateChange(NUI_WIDGET_MATCHER_PROPERTY);
+}
 
 // ***************************************************************************
 
