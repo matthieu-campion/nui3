@@ -85,10 +85,13 @@ int nglFontLayout::Layout (const nglString& rText, bool FinalizeLayout)
     return 0;
 
   int indexes_max = len * 2 + 1; // Let's have extra space (eg. for composite glyphs)
-  uint* indexes = (uint*) alloca(indexes_max * sizeof(uint));
+  uint32* indexes = (uint32*) malloc(indexes_max * sizeof(uint32));
 
   if (!mFont.GetGlyphIndexes(rText.GetChars(), len, indexes, indexes_max))
+  {
+    free(indexes);
     return -1;
+  }
 
   int i, done = 0;
   for (i = 0; i < len; i++)
@@ -113,7 +116,7 @@ int nglFontLayout::Layout (const nglString& rText, bool FinalizeLayout)
         
         if (pFont)
         {
-          uint index = 0;
+          uint32 index = 0;
           const nglChar* pStr = rText.GetChars();
           if (pFont->GetGlyphIndexes(pStr + i, 1, &index, 1) > 0)
           {
@@ -153,6 +156,8 @@ int nglFontLayout::Layout (const nglString& rText, bool FinalizeLayout)
     OnFinalizeLayout();
   }
   // Finalize the layout (needed to handle complex layout that needs to buffer glyphs in order to manage things such as word wrapping).
+
+  free(indexes);
 
   return done;
 }

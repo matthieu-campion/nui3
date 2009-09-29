@@ -558,7 +558,7 @@ const nuiFontDesc* nuiFontRequestResult::GetFontDesc() const
 //class nuiFontDesc
 nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
 {
-  printf("Scaning font '%ls' face %d\n", rPath.GetChars(), Face);
+  NGL_OUT(_T("Scaning font '%ls' face %d\n"), rPath.GetChars(), Face);
 
   //nglFont* pFont = NULL;
   mValid = false;
@@ -589,7 +589,7 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
   
   if (!pStream)
   {
-    printf("Error Scaning font '%ls' face %d\n", rPath.GetChars(), Face);
+    NGL_OUT(_T("Error Scaning font '%ls' face %d\n"), rPath.GetChars(), Face);
     return;
   }
   
@@ -605,7 +605,7 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
  
   if (error || pFace->num_faces <= Face)
     return;
-  //NGL_DEBUG( NGL_OUT(_T("Scaning font '%ls' face %d\n"), rPath.GetChars(), Face); )
+//  NGL_DEBUG( NGL_OUT(_T("Scaning font '%ls' face %d\n"), rPath.GetChars(), Face); )
   
   NGL_ASSERT(pFace->num_faces > Face);
   
@@ -660,7 +660,6 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
   FT_UInt   gindex = 0;
     
   charcode = FT_Get_First_Char(pFace, &gindex);
-  std::set<nglChar> tmpset;
   while ( gindex != 0 )
   {
     glyphcount++;
@@ -670,7 +669,8 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
 //      rangestart = -1;
 //      rangecount++;
 //    }
-    tmpset.insert(charcode);
+    //    tmpset.push_back(charcode);
+    mGlyphs.push_back(charcode);
     prevcharcode = charcode;
 //    if (rangestart == -1)
 //      rangestart = prevcharcode;
@@ -678,21 +678,6 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
     charcode = FT_Get_Next_Char(pFace, charcode, &gindex);
   }
 
-  std::set<nglChar>::iterator it = tmpset.begin();
-  std::set<nglChar>::iterator end = tmpset.end();
-  
-  mGlyphs.resize(tmpset.size());
-  
-  uint i = 0;
-  while (it != end)
-  {
-    nglChar c = *it;
-    mGlyphs[i] = c;
-    
-    ++it;
-    i++;
-  }
-  
   std::sort(mGlyphs.begin(), mGlyphs.end());
   
 //  if (prevcharcode > 0)
@@ -1147,17 +1132,16 @@ bool nuiFontManager::ScanSubFolder(const nglPath& rBasePath)
     {
       bool cont = true;
       int32 face = 0;
+
+      NGL_ASSERT(gFTLibrary == NULL);
+      FT_Error error;
+      error = FT_Init_FreeType(&gFTLibrary);
+
       while (cont)
       {
-        NGL_ASSERT(gFTLibrary == NULL);
-        FT_Error error;
-        error = FT_Init_FreeType(&gFTLibrary);
         
         nuiFontDesc* pFontDesc = new nuiFontDesc(rPath, face);
-        
-        FT_Done_FreeType(gFTLibrary);
-        gFTLibrary = NULL;
-        
+                
         if (pFontDesc->IsValid())
         {
           mpFonts.push_back(pFontDesc);
@@ -1169,6 +1153,10 @@ bool nuiFontManager::ScanSubFolder(const nglPath& rBasePath)
         }
         face++;
       }
+      
+      FT_Done_FreeType(gFTLibrary);
+      gFTLibrary = NULL;
+
     }
     else
     {
@@ -1285,7 +1273,7 @@ void nuiFontManager::RequestFont(nuiFontRequest& rRequest, std::list<nuiFontRequ
             sscore *= rRequest.mGenericName.mScore;
           }
           else
-          {
+          {\
             sscore = 0.f;
           }
         }
@@ -1523,6 +1511,8 @@ bool nuiFontManager::Load(nglIStream& rStream)
   
   // now, the files that are still in the compiled list are supposed to be newly installed fonts
   // let's add'em to the font database
+  FT_Error error;
+  error = FT_Init_FreeType(&gFTLibrary);
   for (itf = fontFiles.begin(); itf != fontFiles.end(); ++itf)
   {
     const nglPath& path = *itf;
@@ -1532,13 +1522,9 @@ bool nuiFontManager::Load(nglIStream& rStream)
       while (cont)
       {
         NGL_ASSERT(gFTLibrary == NULL);
-        FT_Error error;
-        error = FT_Init_FreeType(&gFTLibrary);
         
         nuiFontDesc* pFontDesc = new nuiFontDesc(path, face);
         
-        FT_Done_FreeType(gFTLibrary);
-        gFTLibrary = NULL;
         
         if (pFontDesc->IsValid())
         {
@@ -1556,6 +1542,8 @@ bool nuiFontManager::Load(nglIStream& rStream)
     
   }
   
+  FT_Done_FreeType(gFTLibrary);
+  gFTLibrary = NULL;
   return true;
 }
 

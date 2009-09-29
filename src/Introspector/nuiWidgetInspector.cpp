@@ -763,6 +763,7 @@ void nuiWidgetInfo::BuildInfo()
       pLabel->SetColor(eNormalTextFg, INTROSPECTOR_COLOR_FOLDERPANE_TITLE);
       pLabel->SetColor(eSelectedTextFg, INTROSPECTOR_COLOR_FOLDERPANE_TITLE);
       pCachePane->SetTitleWithHandle(pLabel);
+      pCachePane->Close();
       if (pTitlePaneDeco)
         pCachePane->GetTitle()->SetDecoration(pTitlePaneDeco, eDecorationBorder);
       
