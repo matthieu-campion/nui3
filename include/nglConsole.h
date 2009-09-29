@@ -312,9 +312,6 @@ private:
   nglCriticalSection mCS;
 
   nglConsole(const nglConsole&)
-#ifndef _WIN32_
-    : mOutputConv(eEncodingInternal, eEncodingNative)
-#endif
   {
      // Undefined copy constructor
   }
@@ -382,9 +379,6 @@ private:
 
   static DWORD WINAPI ThreadProc(LPVOID lpParameter);
 #else
-#ifdef USE_WCHAR
-  nglStringConv mOutputConv;
-#endif
 #endif // _WIN32_
 };
 

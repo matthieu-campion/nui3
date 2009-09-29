@@ -134,7 +134,8 @@ bool nuiAudioDecoder::CreateAudioDecoderPrivate()
 
 bool nuiAudioDecoder::ReadInfo()
 {
-  NGL_ASSERT(mpPrivate);
+  if (!mpPrivate)
+    return false;
   
   AudioStreamBasicDescription FileDesc;
   AudioStreamBasicDescription ClientDesc;

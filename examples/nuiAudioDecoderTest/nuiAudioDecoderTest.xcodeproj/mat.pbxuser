@@ -69,10 +69,10 @@
 	};
 	401335D20F13B4F800140067 /* DecoderTest.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {930, 2758}}";
+			sepNavIntBoundsRect = "{{0, 0}, {930, 2730}}";
 			sepNavSelRange = "{2040, 0}";
-			sepNavVisRange = "{616, 1682}";
-			sepNavWindowFrame = "{{15, 39}, {989, 984}}";
+			sepNavVisRange = "{619, 1679}";
+			sepNavWindowFrame = "{{15, 87}, {989, 984}}";
 		};
 	};
 	401335D30F13B4F800140067 /* DecoderTest.h */ = {
@@ -82,24 +82,6 @@
 			sepNavVisRange = "{0, 334}";
 			sepNavWindowFrame = "{{15, 39}, {989, 984}}";
 		};
-	};
-	40972DC60FE2867900D5FB8B /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		comments = "error: no matching function for call to 'nuiAudioDecoder::ReadDE(std::vector<float*, std::allocator<float*> >&, u_int32_t&)'";
-		fRef = 401335D20F13B4F800140067 /* DecoderTest.cpp */;
-		rLen = 1;
-		rLoc = 147;
-		rType = 1;
-	};
-	40972DE90FE2875300D5FB8B /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 401335D20F13B4F800140067 /* DecoderTest.cpp */;
-		name = "DecoderTest.cpp: 77";
-		rLen = 0;
-		rLoc = 2040;
-		rType = 0;
-		vrLen = 1682;
-		vrLoc = 616;
 	};
 	61A9DE3F0B833C9200BC506C /* Project object */ = {
 		activeBuildConfigurationName = Default;
@@ -121,11 +103,11 @@
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
 					20,
-					395,
+					303,
 					20,
-					295,
-					295,
-					224,
+					302,
+					302,
+					302,
 					20,
 				);
 				PBXFileTableDataSourceColumnsKey = (
@@ -161,12 +143,8 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 266503586;
-			PBXWorkspaceStateSaveDate = 266503586;
-		};
-		perUserProjectItems = {
-			40972DC60FE2867900D5FB8B /* PBXTextBookmark */ = 40972DC60FE2867900D5FB8B /* PBXTextBookmark */;
-			40972DE90FE2875300D5FB8B /* PBXTextBookmark */ = 40972DE90FE2875300D5FB8B /* PBXTextBookmark */;
+			PBXPerProjectTemplateStateSaveDate = 275821015;
+			PBXWorkspaceStateSaveDate = 275821015;
 		};
 		sourceControlManager = 401335BC0F13B4BC00140067 /* Source Control */;
 		userBuildSettings = {
@@ -186,16 +164,16 @@
 	};
 	61A9DFF10B83433800BC506C /* MainWindow.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {930, 2856}}";
-			sepNavSelRange = "{5893, 0}";
-			sepNavVisRange = "{3991, 2276}";
+			sepNavIntBoundsRect = "{{0, 0}, {930, 2898}}";
+			sepNavSelRange = "{698, 49}";
+			sepNavVisRange = "{0, 1755}";
 			sepNavWindowFrame = "{{15, 39}, {989, 984}}";
 		};
 	};
 	61A9DFF20B83433800BC506C /* MainWindow.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {930, 856}}";
-			sepNavSelRange = "{845, 0}";
+			sepNavSelRange = "{196, 32}";
 			sepNavVisRange = "{0, 847}";
 		};
 	};

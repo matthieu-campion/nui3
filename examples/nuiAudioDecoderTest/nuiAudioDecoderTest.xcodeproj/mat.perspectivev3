@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>ActivePerspectiveName</key>
-	<string>Debug</string>
+	<string>Project</string>
 	<key>AllowedModules</key>
 	<array>
 		<dict>
@@ -222,48 +222,7 @@
 		</dict>
 	</array>
 	<key>OpenEditors</key>
-	<array>
-		<dict>
-			<key>Content</key>
-			<dict>
-				<key>PBXProjectModuleGUID</key>
-				<string>40972DD30FE286E500D5FB8B</string>
-				<key>PBXProjectModuleLabel</key>
-				<string>DecoderTest.cpp</string>
-				<key>PBXSplitModuleInNavigatorKey</key>
-				<dict>
-					<key>Split0</key>
-					<dict>
-						<key>PBXProjectModuleGUID</key>
-						<string>40972DD40FE286E500D5FB8B</string>
-						<key>PBXProjectModuleLabel</key>
-						<string>DecoderTest.cpp</string>
-						<key>_historyCapacity</key>
-						<integer>0</integer>
-						<key>bookmark</key>
-						<string>40972DE90FE2875300D5FB8B</string>
-						<key>history</key>
-						<array>
-							<string>40972DC60FE2867900D5FB8B</string>
-						</array>
-					</dict>
-					<key>SplitCount</key>
-					<string>1</string>
-				</dict>
-				<key>StatusBarVisibility</key>
-				<true/>
-			</dict>
-			<key>Geometry</key>
-			<dict>
-				<key>Frame</key>
-				<string>{{0, 20}, {989, 887}}</string>
-				<key>PBXModuleWindowStatusBarHidden2</key>
-				<false/>
-				<key>RubberWindowFrame</key>
-				<string>15 95 989 928 0 0 1920 1178 </string>
-			</dict>
-		</dict>
-	</array>
+	<array/>
 	<key>PerspectiveWidths</key>
 	<array>
 		<integer>1572</integer>
@@ -300,6 +259,8 @@
 			<key>Layout</key>
 			<array>
 				<dict>
+					<key>BecomeActive</key>
+					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -344,11 +305,13 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>28</integer>
+									<integer>8</integer>
+									<integer>3</integer>
+									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 78}, {212, 500}}</string>
+							<string>{{0, 0}, {212, 500}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -364,6 +327,8 @@
 							<string>MainColumn</string>
 							<real>212</real>
 						</array>
+						<key>RubberWindowFrame</key>
+						<string>252 595 1572 559 0 0 1920 1178 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -379,13 +344,15 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>401335B60F13B4BC00140067</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>&lt;No Editor&gt;</string>
+								<string></string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
 									<dict>
 										<key>PBXProjectModuleGUID</key>
 										<string>401335B70F13B4BC00140067</string>
+										<key>PBXProjectModuleLabel</key>
+										<string></string>
 									</dict>
 									<key>SplitCount</key>
 									<string>1</string>
@@ -399,6 +366,8 @@
 							<dict>
 								<key>Frame</key>
 								<string>{{0, 0}, {1338, 0}}</string>
+								<key>RubberWindowFrame</key>
+								<string>252 595 1572 559 0 0 1920 1178 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -422,6 +391,8 @@
 									<dict>
 										<key>Frame</key>
 										<string>{{10, 27}, {1338, 486}}</string>
+										<key>RubberWindowFrame</key>
+										<string>252 595 1572 559 0 0 1920 1178 </string>
 									</dict>
 									<key>Module</key>
 									<string>XCDetailModule</string>
@@ -503,11 +474,11 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>40972DCA0FE286E500D5FB8B</string>
+				<string>40D3D1371070B1DD0086C032</string>
 				<string>1CA23ED40692098700951B8B</string>
-				<string>40972DCB0FE286E500D5FB8B</string>
+				<string>40D3D1381070B1DD0086C032</string>
 				<string>401335B60F13B4BC00140067</string>
-				<string>40972DCC0FE286E500D5FB8B</string>
+				<string>40D3D1391070B1DD0086C032</string>
 				<string>1CA23EDF0692099D00951B8B</string>
 				<string>1CA23EE00692099D00951B8B</string>
 				<string>1CA23EE10692099D00951B8B</string>
@@ -531,6 +502,7 @@
 				<string>debugger-step-over</string>
 				<string>debugger-step-into</string>
 				<string>debugger-step-out</string>
+				<string>servicesModuleRefactoring</string>
 				<string>NSToolbarFlexibleSpaceItem</string>
 				<string>com.apple.ide.XCBreakpointsToolbarItem</string>
 				<string>clear-log</string>
@@ -557,8 +529,6 @@
 					<dict>
 						<key>Frame</key>
 						<string>{{0, 0}, {1572, 161}}</string>
-						<key>RubberWindowFrame</key>
-						<string>252 595 1572 559 0 0 1920 1178 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXDebugCLIModule</string>
@@ -633,11 +603,7 @@
 							</array>
 							<key>Frame</key>
 							<string>{{0, 166}, {588, 186}}</string>
-							<key>RubberWindowFrame</key>
-							<string>252 595 1572 559 0 0 1920 1178 </string>
 						</dict>
-						<key>RubberWindowFrame</key>
-						<string>252 595 1572 559 0 0 1920 1178 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXDebugSessionModule</string>
@@ -660,14 +626,14 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>40972DCD0FE286E500D5FB8B</string>
+				<string>40D3D1161070B1A50086C032</string>
 				<string>1CCC7628064C1048000F2A68</string>
 				<string>1CCC7629064C1048000F2A68</string>
-				<string>40972DCE0FE286E500D5FB8B</string>
-				<string>40972DCF0FE286E500D5FB8B</string>
-				<string>40972DD00FE286E500D5FB8B</string>
-				<string>40972DD10FE286E500D5FB8B</string>
-				<string>40972DD20FE286E500D5FB8B</string>
+				<string>40D3D1171070B1A50086C032</string>
+				<string>40D3D1181070B1A50086C032</string>
+				<string>40D3D1191070B1A50086C032</string>
+				<string>40D3D11A1070B1A50086C032</string>
+				<string>40D3D0F31070AEA90086C032</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -682,7 +648,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>266504019.94994199</real>
+	<real>275821021.538369</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -697,10 +663,8 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>40972DD70FE286E500D5FB8B</string>
-		<string>40972DD80FE286E500D5FB8B</string>
+		<string>40D3D13A1070B1DD0086C032</string>
 		<string>/Users/mat/work/dev/mxp4/nui3/examples/nuiAudioDecoderTest/nuiAudioDecoderTest.xcodeproj</string>
-		<string>40972DD30FE286E500D5FB8B</string>
 	</array>
 	<key>WindowString</key>
 	<string>252 595 1572 559 0 0 1920 1178 </string>

@@ -30,13 +30,15 @@ nglStringConv::nglStringConv (const nglTextEncoding From, const nglTextEncoding 
   mTo      = To;
   mDefault = Default;
   
+  mpCodec = NULL;
   if(!NoInit)
 	  mpCodec  = new nglStringCodec(From, To);
 }
 
 nglStringConv::~nglStringConv()
 {
-  delete mpCodec;
+  if (mpCodec)
+    delete mpCodec;
 }
 
 int nglStringConv::Process (const char*& pSource, int& rToRead, char*& pTarget, int& rToWrite)
@@ -120,7 +122,7 @@ int nglStringConv::Process (const char*& pSource, int& rToRead, char*& pTarget, 
 
 nglStringCodec::nglStringCodec(nglTextEncoding From, nglTextEncoding To)
 {
-//  printf("create string codec from %s(%d) to %s(%d)\n", GetName(From), From, GetName(To), To);
+  printf("create string codec (%p) from %s(%d) to %s(%d)\n", this, GetName(From), From, GetName(To), To);
   iconv_desc = iconv_open(GetName(To), GetName(From));
 }
 

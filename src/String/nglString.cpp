@@ -2556,6 +2556,7 @@ void nglString::ReleaseStringConvs()
 
     ++it;
   }
+  gStringConvCache.clear();
 }
 
 uint32 nglString::GetLevenshteinDistance(const nglString& rSource, bool CaseSensitive)

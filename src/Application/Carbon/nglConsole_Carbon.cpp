@@ -17,7 +17,6 @@
 
 
 nglConsole::nglConsole(bool IsVisible)
-: mOutputConv(eEncodingInternal, eEncodingNative), mCS(_T("nglConsoleCS"))
 {
   mIsVisible = IsVisible;
   if (mIsVisible) NGL_OUT (NGL_CONSOLE_PROMPT);
