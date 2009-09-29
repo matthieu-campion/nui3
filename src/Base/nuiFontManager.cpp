@@ -645,43 +645,48 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
   
   charcode = FT_Get_First_Char(pFace, &gindex);
   // Using the vector directly is very slow on gcc so we store the elements in a set and then copy the set to the vector...
-  std::set<nglChar> tmpset;
+  std::vector<nglChar> tmp;
+  tmp.reserve(10000);
+  
   while ( gindex != 0 )
   {
     glyphcount++;
-    //    if (prevcharcode > 0 && prevcharcode + 1 != charcode)
-    //    {
-    //      //NGL_OUT(_T("range: %d to %d (%d glyphs)\n"), rangestart, charcode, charcode - rangestart);
-    //      rangestart = -1;
-    //      rangecount++;
-    //    }
-    tmpset.insert(charcode);
+//    if (prevcharcode > 0 && prevcharcode + 1 != charcode)
+//    {
+//      //NGL_OUT(_T("range: %d to %d (%d glyphs)\n"), rangestart, charcode, charcode - rangestart);
+//      rangestart = -1;
+//      rangecount++;
+//    }
+    tmp.push_back(charcode);
     prevcharcode = charcode;
-    //    if (rangestart == -1)
-    //      rangestart = prevcharcode;
+//    if (rangestart == -1)
+//      rangestart = prevcharcode;
     
     charcode = FT_Get_Next_Char(pFace, charcode, &gindex);
   }
 
-  std::set<nglChar>::iterator it = tmpset.begin();
-  std::set<nglChar>::iterator end = tmpset.end();
+  std::sort(tmp.begin(), tmp.end());
+
+  std::vector<nglChar>::iterator it = tmp.begin();
+  std::vector<nglChar>::iterator end = tmp.end();
   
-  mGlyphs.resize(tmpset.size());
+  //mGlyphs.resize(tmpset.size());
   
   uint i = 0;
-  nglChar prevc = *it;
+  nglChar prevc = -1;
   while (it != end)
   {
     nglChar c = *it;
-    mGlyphs[i] = c;
+    if (prevc != c)
+      mGlyphs.push_back(c);
     
+    prevc = c;
     ++it;
     i++;
   }
   
   NGL_OUT(_T("%d glyphs\n"), glyphcount);
   
-  std::sort(mGlyphs.begin(), mGlyphs.end());
   
 //  if (prevcharcode > 0)
 //  {
