@@ -69,6 +69,13 @@ void nuiFileTree::InitAttributes()
                 nuiMakeDelegate(this, &nuiFileTree::SetHandleColor)));    
 }
 
+nuiScrollBar* nuiFileTree::GetScrollBar(nuiOrientation Orientation)
+{
+  if (!mpScrollView)
+    return NULL;
+  return mpScrollView->GetScrollBar(Orientation);
+}
+
 nuiColor nuiFileTree::GetHandleColor()
 {
   if (!mpTreeView)

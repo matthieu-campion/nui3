@@ -60,6 +60,8 @@ public:
   
   nuiColor GetHandleColor();
   void SetHandleColor(nuiColor rColor);
+
+  nuiScrollBar* GetScrollBar(nuiOrientation Orientation);
   
   nuiSimpleEventSource<nuiWidgetActivated> PathChanged;      ///< Event triggered when the user is navigating around the file system.
   nuiSimpleEventSource<nuiWidgetActivated> SelectionChanged; 
