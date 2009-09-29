@@ -254,6 +254,9 @@ void nglConsole::Outputv (const nglChar* pFormat, va_list Args)
 #ifdef _WIN32_
     OutputDebugString(out.GetChars());
 #else
+//    char* p = out.Export(eUTF8);
+//    write(0, p, strlen(p));
+//    delete p;
     printf("%ls\n", out.GetChars());
 #endif
 

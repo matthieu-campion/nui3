@@ -558,33 +558,13 @@ const nuiFontDesc* nuiFontRequestResult::GetFontDesc() const
 //class nuiFontDesc
 nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
 {
-  NGL_OUT(_T("Scaning font '%ls' face %d\n"), rPath.GetChars(), Face);
+  //  NGL_OUT(_T("Scaning font '%ls' face %d\n"), rPath.GetChars(), Face);
 
-  //nglFont* pFont = NULL;
   mValid = false;
   
   mPath = rPath;
   mFace = Face;
   
-  //pFont = new nglFont(rPath, Face);
-  
-//  if (!pFont->GetError() && (pFont->GetFaceCount() > (uint32)Face))
-//  {
-//    mValid = true;
-//    
-//    mName = pFont->GetFamilyName();
-//    mStyle = pFont->GetStyleName();
-//    
-//    mBold = pFont->IsBold();
-//    mItalic = pFont->IsItalic();
-//    mMonospace = pFont->IsMonospace();
-//    mScalable = pFont->IsScalable();
-//    pFont->GetEncodings(mEncodings);
-//    pFont->GetGlyphs(mGlyphs);
-//    pFont->GetSizes(mSizes);
-//  }
-//  delete pFont;
-
   nglIStream* pStream = rPath.OpenRead();
   
   if (!pStream)
@@ -604,8 +584,12 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
   error = FT_New_Memory_Face(gFTLibrary, pBuffer, size, Face, &pFace);
  
   if (error || pFace->num_faces <= Face)
+  {
+    delete pBuffer;
     return;
-//  NGL_DEBUG( NGL_OUT(_T("Scaning font '%ls' face %d\n"), rPath.GetChars(), Face); )
+  }
+  
+  NGL_OUT(_T("Scaning font '%ls' face %d\n"), rPath.GetChars(), Face);
   
   NGL_ASSERT(pFace->num_faces > Face);
   
@@ -658,26 +642,45 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
   uint32 rangecount = 0;
   uint32 glyphcount = 0;
   FT_UInt   gindex = 0;
-    
+  
   charcode = FT_Get_First_Char(pFace, &gindex);
+  // Using the vector directly is very slow on gcc so we store the elements in a set and then copy the set to the vector...
+  std::set<nglChar> tmpset;
   while ( gindex != 0 )
   {
     glyphcount++;
-//    if (prevcharcode > 0 && prevcharcode + 1 != charcode)
-//    {
-//      //NGL_OUT(_T("range: %d to %d (%d glyphs)\n"), rangestart, charcode, charcode - rangestart);
-//      rangestart = -1;
-//      rangecount++;
-//    }
-    //    tmpset.push_back(charcode);
-    mGlyphs.push_back(charcode);
+    //    if (prevcharcode > 0 && prevcharcode + 1 != charcode)
+    //    {
+    //      //NGL_OUT(_T("range: %d to %d (%d glyphs)\n"), rangestart, charcode, charcode - rangestart);
+    //      rangestart = -1;
+    //      rangecount++;
+    //    }
+    tmpset.insert(charcode);
     prevcharcode = charcode;
-//    if (rangestart == -1)
-//      rangestart = prevcharcode;
+    //    if (rangestart == -1)
+    //      rangestart = prevcharcode;
     
     charcode = FT_Get_Next_Char(pFace, charcode, &gindex);
   }
 
+  std::set<nglChar>::iterator it = tmpset.begin();
+  std::set<nglChar>::iterator end = tmpset.end();
+  
+  mGlyphs.resize(tmpset.size());
+  
+  uint i = 0;
+  nglChar prevc = *it;
+  while (it != end)
+  {
+    nglChar c = *it;
+    mGlyphs[i] = c;
+    
+    ++it;
+    i++;
+  }
+  
+  NGL_OUT(_T("%d glyphs\n"), glyphcount);
+  
   std::sort(mGlyphs.begin(), mGlyphs.end());
   
 //  if (prevcharcode > 0)
@@ -1133,7 +1136,7 @@ bool nuiFontManager::ScanSubFolder(const nglPath& rBasePath)
       bool cont = true;
       int32 face = 0;
 
-      NGL_ASSERT(gFTLibrary == NULL);
+      NGL_ASSERT(!gFTLibrary);
       FT_Error error;
       error = FT_Init_FreeType(&gFTLibrary);
 
@@ -1521,7 +1524,7 @@ bool nuiFontManager::Load(nglIStream& rStream)
       int32 face = 0;
       while (cont)
       {
-        NGL_ASSERT(gFTLibrary == NULL);
+        NGL_ASSERT(gFTLibrary);
         
         nuiFontDesc* pFontDesc = new nuiFontDesc(path, face);
         
