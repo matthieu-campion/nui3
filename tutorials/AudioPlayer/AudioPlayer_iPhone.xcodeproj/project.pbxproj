@@ -39,6 +39,16 @@
 		C9F5F92E0DA84CAB00E078ED /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C999972E0DA6F405001A7116 /* OpenGLES.framework */; };
 		C9F5F92F0DA84CAB00E078ED /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C99997710DA6F9F2001A7116 /* AudioToolbox.framework */; };
 		C9F5F9300DA84CAB00E078ED /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C99998F50DA7CAF2001A7116 /* QuartzCore.framework */; };
+		E543D3A11074183C00A01E51 /* TimeBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E543D3991074183C00A01E51 /* TimeBar.cpp */; };
+		E543D3A21074183C00A01E51 /* TimeLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E543D39B1074183C00A01E51 /* TimeLabel.cpp */; };
+		E543D3A31074183C00A01E51 /* TimeProgressBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E543D39D1074183C00A01E51 /* TimeProgressBar.cpp */; };
+		E543D3A41074183C00A01E51 /* VolumeController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E543D39F1074183C00A01E51 /* VolumeController.cpp */; };
+		E543D3A51074183C00A01E51 /* TimeBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E543D3991074183C00A01E51 /* TimeBar.cpp */; };
+		E543D3A61074183C00A01E51 /* TimeLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E543D39B1074183C00A01E51 /* TimeLabel.cpp */; };
+		E543D3A71074183C00A01E51 /* TimeProgressBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E543D39D1074183C00A01E51 /* TimeProgressBar.cpp */; };
+		E543D3A81074183C00A01E51 /* VolumeController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E543D39F1074183C00A01E51 /* VolumeController.cpp */; };
+		E543D3AB1074184E00A01E51 /* AudioEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E543D3A91074184E00A01E51 /* AudioEngine.cpp */; };
+		E543D3AC1074184E00A01E51 /* AudioEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E543D3A91074184E00A01E51 /* AudioEngine.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +80,20 @@
 			remoteGlobalIDString = 614B66C30DA7BA67000F4C22;
 			remoteInfo = nuiEd;
 		};
+		E543D3591074107600A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BC6A0A350EF93F7800881ACF /* nuiE.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 735F703F0FF2747500E66B1D /* libnuiE.a */;
+			remoteInfo = "nuiE-iPhone 3.0";
+		};
+		E543D35B1074107600A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BC6A0A350EF93F7800881ACF /* nuiE.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 735F73A30FF2747500E66B1D /* libnuiEd.a */;
+			remoteInfo = "nuiEd-iPhone 3.0";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -96,6 +120,16 @@
 		C9EA04FD0E2917FA0067EF48 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		C9F2587A0E5861EA00687021 /* dlist.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = dlist.plist; sourceTree = "<group>"; };
 		C9F5F9330DA84CAB00E078ED /* AudioPlayer_iPhoneD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioPlayer_iPhoneD.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E543D3991074183C00A01E51 /* TimeBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TimeBar.cpp; path = src/widgets/TimeBar.cpp; sourceTree = SOURCE_ROOT; };
+		E543D39A1074183C00A01E51 /* TimeBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimeBar.h; path = src/widgets/TimeBar.h; sourceTree = SOURCE_ROOT; };
+		E543D39B1074183C00A01E51 /* TimeLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TimeLabel.cpp; path = src/widgets/TimeLabel.cpp; sourceTree = SOURCE_ROOT; };
+		E543D39C1074183C00A01E51 /* TimeLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimeLabel.h; path = src/widgets/TimeLabel.h; sourceTree = SOURCE_ROOT; };
+		E543D39D1074183C00A01E51 /* TimeProgressBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TimeProgressBar.cpp; path = src/widgets/TimeProgressBar.cpp; sourceTree = SOURCE_ROOT; };
+		E543D39E1074183C00A01E51 /* TimeProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimeProgressBar.h; path = src/widgets/TimeProgressBar.h; sourceTree = SOURCE_ROOT; };
+		E543D39F1074183C00A01E51 /* VolumeController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VolumeController.cpp; path = src/widgets/VolumeController.cpp; sourceTree = SOURCE_ROOT; };
+		E543D3A01074183C00A01E51 /* VolumeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VolumeController.h; path = src/widgets/VolumeController.h; sourceTree = SOURCE_ROOT; };
+		E543D3A91074184E00A01E51 /* AudioEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioEngine.cpp; path = src/AudioEngine.cpp; sourceTree = SOURCE_ROOT; };
+		E543D3AA1074184E00A01E51 /* AudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioEngine.h; path = src/AudioEngine.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -214,6 +248,8 @@
 			children = (
 				BC6A0A3E0EF93F7800881ACF /* libnuiE.a */,
 				BC6A0A400EF93F7800881ACF /* libnuiEd.a */,
+				E543D35A1074107600A01E51 /* libnuiE.a */,
+				E543D35C1074107600A01E51 /* libnuiEd.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -229,12 +265,30 @@
 		C99996330DA6EED8001A7116 /* sources */ = {
 			isa = PBXGroup;
 			children = (
+				E543D3A91074184E00A01E51 /* AudioEngine.cpp */,
+				E543D3AA1074184E00A01E51 /* AudioEngine.h */,
+				E543D3981074182400A01E51 /* Widgets */,
 				BC6A0A430EF93F9700881ACF /* Application.cpp */,
 				BC6A0A440EF93F9700881ACF /* Application.h */,
 				BC6A0A420EF93F9700881ACF /* MainWindow.cpp */,
 				BC6A0A410EF93F9700881ACF /* MainWindow.h */,
 			);
 			name = sources;
+			sourceTree = "<group>";
+		};
+		E543D3981074182400A01E51 /* Widgets */ = {
+			isa = PBXGroup;
+			children = (
+				E543D3991074183C00A01E51 /* TimeBar.cpp */,
+				E543D39A1074183C00A01E51 /* TimeBar.h */,
+				E543D39B1074183C00A01E51 /* TimeLabel.cpp */,
+				E543D39C1074183C00A01E51 /* TimeLabel.h */,
+				E543D39D1074183C00A01E51 /* TimeProgressBar.cpp */,
+				E543D39E1074183C00A01E51 /* TimeProgressBar.h */,
+				E543D39F1074183C00A01E51 /* VolumeController.cpp */,
+				E543D3A01074183C00A01E51 /* VolumeController.h */,
+			);
+			name = Widgets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -315,6 +369,20 @@
 			remoteRef = BC6A0A3F0EF93F7800881ACF /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		E543D35A1074107600A01E51 /* libnuiE.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnuiE.a;
+			remoteRef = E543D3591074107600A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D35C1074107600A01E51 /* libnuiEd.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnuiEd.a;
+			remoteRef = E543D35B1074107600A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -351,6 +419,11 @@
 			files = (
 				BC6A0A450EF93F9700881ACF /* MainWindow.cpp in Sources */,
 				BC6A0A460EF93F9700881ACF /* Application.cpp in Sources */,
+				E543D3A11074183C00A01E51 /* TimeBar.cpp in Sources */,
+				E543D3A21074183C00A01E51 /* TimeLabel.cpp in Sources */,
+				E543D3A31074183C00A01E51 /* TimeProgressBar.cpp in Sources */,
+				E543D3A41074183C00A01E51 /* VolumeController.cpp in Sources */,
+				E543D3AB1074184E00A01E51 /* AudioEngine.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -360,6 +433,11 @@
 			files = (
 				BC6A0A470EF93F9700881ACF /* MainWindow.cpp in Sources */,
 				BC6A0A480EF93F9700881ACF /* Application.cpp in Sources */,
+				E543D3A51074183C00A01E51 /* TimeBar.cpp in Sources */,
+				E543D3A61074183C00A01E51 /* TimeLabel.cpp in Sources */,
+				E543D3A71074183C00A01E51 /* TimeProgressBar.cpp in Sources */,
+				E543D3A81074183C00A01E51 /* VolumeController.cpp in Sources */,
+				E543D3AC1074184E00A01E51 /* AudioEngine.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -400,7 +478,10 @@
 					"objective-c++",
 					"-ObjC++",
 				);
-				OTHER_LDFLAGS = "-liconv -lz";
+				OTHER_LDFLAGS = (
+					"-liconv",
+					"-lz",
+				);
 				PREBINDING = NO;
 				SDKROOT = iphoneos2.1;
 				USE_HEADERMAP = NO;
@@ -424,7 +505,10 @@
 				GENERATE_PROFILING_CODE = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LIBRARY_SEARCH_PATHS = "";
-				OTHER_LDFLAGS = "-liconv -lz";
+				OTHER_LDFLAGS = (
+					"-liconv",
+					"-lz",
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = AudioPlayer_iPhone;
 				STRIPFLAGS = "-SXx";

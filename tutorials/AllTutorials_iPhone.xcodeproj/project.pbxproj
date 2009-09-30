@@ -1,0 +1,1845 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 44;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		E51FACC21074018C004F6940 /* AllTutorialsDebug */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = E51FACC5107401AB004F6940 /* Build configuration list for PBXAggregateTarget "AllTutorialsDebug" */;
+			buildPhases = (
+			);
+			dependencies = (
+				E543D2F31074100B00A01E51 /* PBXTargetDependency */,
+				E543D2F51074100B00A01E51 /* PBXTargetDependency */,
+				E543D2F71074100B00A01E51 /* PBXTargetDependency */,
+				E543D2F91074100B00A01E51 /* PBXTargetDependency */,
+				E543D2FB1074100B00A01E51 /* PBXTargetDependency */,
+				E543D2FD1074100B00A01E51 /* PBXTargetDependency */,
+				E543D2FF1074100B00A01E51 /* PBXTargetDependency */,
+				E543D3011074100B00A01E51 /* PBXTargetDependency */,
+				E543D3031074100B00A01E51 /* PBXTargetDependency */,
+				E543D3051074100B00A01E51 /* PBXTargetDependency */,
+				E543D3071074100B00A01E51 /* PBXTargetDependency */,
+				E543D3091074100B00A01E51 /* PBXTargetDependency */,
+				E543D30B1074100B00A01E51 /* PBXTargetDependency */,
+				E543D30D1074100B00A01E51 /* PBXTargetDependency */,
+				E543D30F1074100B00A01E51 /* PBXTargetDependency */,
+				E543D3111074100B00A01E51 /* PBXTargetDependency */,
+				E543D3131074100B00A01E51 /* PBXTargetDependency */,
+				E543D3151074100B00A01E51 /* PBXTargetDependency */,
+				E543D3171074100B00A01E51 /* PBXTargetDependency */,
+				E543D3191074100B00A01E51 /* PBXTargetDependency */,
+				E543D31B1074100B00A01E51 /* PBXTargetDependency */,
+				E543D31D1074100B00A01E51 /* PBXTargetDependency */,
+				E543D31F1074100B00A01E51 /* PBXTargetDependency */,
+				E543D3211074100B00A01E51 /* PBXTargetDependency */,
+			);
+			name = AllTutorialsDebug;
+			productName = AllTutorialsDebug;
+		};
+		E51FACFE1074020D004F6940 /* AllTutorialsRelease */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = E51FAD011074022C004F6940 /* Build configuration list for PBXAggregateTarget "AllTutorialsRelease" */;
+			buildPhases = (
+			);
+			dependencies = (
+				E543D3231074105100A01E51 /* PBXTargetDependency */,
+				E543D3251074105100A01E51 /* PBXTargetDependency */,
+				E543D3271074105100A01E51 /* PBXTargetDependency */,
+				E543D3291074105100A01E51 /* PBXTargetDependency */,
+				E543D32B1074105100A01E51 /* PBXTargetDependency */,
+				E543D32D1074105100A01E51 /* PBXTargetDependency */,
+				E543D32F1074105100A01E51 /* PBXTargetDependency */,
+				E543D3311074105100A01E51 /* PBXTargetDependency */,
+				E543D3331074105100A01E51 /* PBXTargetDependency */,
+				E543D3351074105100A01E51 /* PBXTargetDependency */,
+				E543D3371074105100A01E51 /* PBXTargetDependency */,
+				E543D3391074105100A01E51 /* PBXTargetDependency */,
+				E543D33B1074105100A01E51 /* PBXTargetDependency */,
+				E543D33D1074105100A01E51 /* PBXTargetDependency */,
+				E543D33F1074105100A01E51 /* PBXTargetDependency */,
+				E543D3411074105100A01E51 /* PBXTargetDependency */,
+				E543D3431074105100A01E51 /* PBXTargetDependency */,
+				E543D3451074105100A01E51 /* PBXTargetDependency */,
+				E543D3471074105100A01E51 /* PBXTargetDependency */,
+				E543D3491074105100A01E51 /* PBXTargetDependency */,
+				E543D34B1074105100A01E51 /* PBXTargetDependency */,
+				E543D34D1074105100A01E51 /* PBXTargetDependency */,
+				E543D34F1074105100A01E51 /* PBXTargetDependency */,
+				E543D3511074105100A01E51 /* PBXTargetDependency */,
+			);
+			name = AllTutorialsRelease;
+			productName = AllTutorials;
+		};
+		E543D0F21074047800A01E51 /* AllTutorials (debug & release) */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = E543D0FE1074049400A01E51 /* Build configuration list for PBXAggregateTarget "AllTutorials (debug & release)" */;
+			buildPhases = (
+			);
+			dependencies = (
+				E543D0F61074047F00A01E51 /* PBXTargetDependency */,
+				E543D0F81074047F00A01E51 /* PBXTargetDependency */,
+			);
+			name = "AllTutorials (debug & release)";
+			productName = "AllTutorials (debug & release)";
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXContainerItemProxy section */
+		E543D0F51074047F00A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB4D1073F312004F6940 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E51FACC21074018C004F6940;
+			remoteInfo = AllTutorialsDebug;
+		};
+		E543D0F71074047F00A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB4D1073F312004F6940 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E51FACFE1074020D004F6940;
+			remoteInfo = AllTutorialsRelease;
+		};
+		E543D26210740FC400A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E543D1991074076A00A01E51 /* AudioPlayer_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C99996020DA6EE97001A7116 /* AudioPlayer_iPhone.app */;
+			remoteInfo = AudioPlayer_iPhone;
+		};
+		E543D26410740FC400A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E543D1991074076A00A01E51 /* AudioPlayer_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* AudioPlayer_iPhoneD.app */;
+			remoteInfo = AudioPlayer_iPhoneD;
+		};
+		E543D26A10740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB5B10740168004F6940 /* Buttons_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteInfo = Buttons_iPhone;
+		};
+		E543D26C10740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB5B10740168004F6940 /* Buttons_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteInfo = Buttons_iPhoneD;
+		};
+		E543D27010740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB5E10740168004F6940 /* Checkerboard_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteInfo = Checkerboard_iPhone;
+		};
+		E543D27210740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB5E10740168004F6940 /* Checkerboard_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteInfo = Checkerboard_iPhoneD;
+		};
+		E543D27610740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB6110740168004F6940 /* ColorSelector_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteInfo = ColorSelector_iPhone;
+		};
+		E543D27810740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB6110740168004F6940 /* ColorSelector_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteInfo = ColorSelector_iPhoneD;
+		};
+		E543D27C10740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB6410740168004F6940 /* ComboBox_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteInfo = ComboBox_iPhone;
+		};
+		E543D27E10740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB6410740168004F6940 /* ComboBox_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteInfo = ComboBox_iPhoneD;
+		};
+		E543D28210740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB6A10740168004F6940 /* CoverFlow_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteInfo = CoverFlow_iPhone;
+		};
+		E543D28410740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB6A10740168004F6940 /* CoverFlow_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteInfo = CoverFlow_iPhoneD;
+		};
+		E543D28810740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB6D10740168004F6940 /* CSSFontSelection_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteInfo = CSSFontSelection_iPhone;
+		};
+		E543D28A10740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB6D10740168004F6940 /* CSSFontSelection_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteInfo = CSSFontSelection_iPhoneD;
+		};
+		E543D28E10740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB7010740168004F6940 /* DirectHTML_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteInfo = DirectHTML_iPhone;
+		};
+		E543D29010740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB7010740168004F6940 /* DirectHTML_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteInfo = DirectHTML_iPhoneD;
+		};
+		E543D29410740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB7910740168004F6940 /* FlowLayout_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteInfo = FlowLayout_iPhone;
+		};
+		E543D29610740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB7910740168004F6940 /* FlowLayout_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteInfo = FlowLayout_iPhoneD;
+		};
+		E543D29A10740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB7C10740168004F6940 /* FontBrowser_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteInfo = FontBrowser_iPhone;
+		};
+		E543D29C10740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB7C10740168004F6940 /* FontBrowser_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteInfo = FontBrowser_iPhoneD;
+		};
+		E543D2A010740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB7F10740168004F6940 /* Grids_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteInfo = Grids_iPhone;
+		};
+		E543D2A210740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB7F10740168004F6940 /* Grids_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteInfo = Grids_iPhoneD;
+		};
+		E543D2A610740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8210740168004F6940 /* HTMLTree_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteInfo = HTMLTree_iPhone;
+		};
+		E543D2A810740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8210740168004F6940 /* HTMLTree_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteInfo = HTMLTree_iPhoneD;
+		};
+		E543D2AC10740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8510740168004F6940 /* HTMLView_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteInfo = HTMLView_iPhone;
+		};
+		E543D2AE10740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8510740168004F6940 /* HTMLView_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteInfo = HTMLView_iPhoneD;
+		};
+		E543D2B210740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8810740168004F6940 /* Knobs_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteInfo = Knobs_iPhone;
+		};
+		E543D2B410740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8810740168004F6940 /* Knobs_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteInfo = Knobs_iPhoneD;
+		};
+		E543D2B810740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8B10740168004F6940 /* LayoutAnimation_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteInfo = LayoutAnimation_iPhone;
+		};
+		E543D2BA10740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8B10740168004F6940 /* LayoutAnimation_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteInfo = LayoutAnimation_iPhoneD;
+		};
+		E543D2BE10740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8E10740168004F6940 /* List_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteInfo = List_iPhone;
+		};
+		E543D2C010740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8E10740168004F6940 /* List_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteInfo = List_iPhoneD;
+		};
+		E543D2C410740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB9410740168004F6940 /* MessageQueue_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteInfo = MessageQueue_iPhone;
+		};
+		E543D2C610740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB9410740168004F6940 /* MessageQueue_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteInfo = MessageQueue_iPhoneD;
+		};
+		E543D2CA10740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB9710740168004F6940 /* Particles_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteInfo = Particles_iPhone;
+		};
+		E543D2CC10740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB9710740168004F6940 /* Particles_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteInfo = Particles_iPhoneD;
+		};
+		E543D2D010740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB9A10740168004F6940 /* RSS_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteInfo = RSS_iPhone;
+		};
+		E543D2D210740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB9A10740168004F6940 /* RSS_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteInfo = RSS_iPhoneD;
+		};
+		E543D2D610740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB9D10740168004F6940 /* SimpleLayout_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteInfo = SimpleLayout_iPhone;
+		};
+		E543D2D810740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB9D10740168004F6940 /* SimpleLayout_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteInfo = SimpleLayout_iPhoneD;
+		};
+		E543D2DC10740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FABA010740168004F6940 /* SimpleTouch_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteInfo = SimpleTouch_iPhone;
+		};
+		E543D2DE10740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FABA010740168004F6940 /* SimpleTouch_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteInfo = SimpleTouch_iPhoneD;
+		};
+		E543D2E210740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FABA310740168004F6940 /* TabView_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteInfo = TabView_iPhone;
+		};
+		E543D2E410740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FABA310740168004F6940 /* TabView_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteInfo = TabView_iPhoneD;
+		};
+		E543D2E810740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FABA610740168004F6940 /* TextEdit_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteInfo = TextEdit_iPhone;
+		};
+		E543D2EA10740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FABA610740168004F6940 /* TextEdit_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteInfo = TextEdit_iPhoneD;
+		};
+		E543D2EE10740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FABA910740168004F6940 /* WidgetCreatorCSS_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteInfo = WidgetCreatorCSS_iPhone;
+		};
+		E543D2F010740FC500A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FABA910740168004F6940 /* WidgetCreatorCSS_iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteInfo = WidgetCreatorCSS_iPhoneD;
+		};
+		E543D2F21074100B00A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB7C10740168004F6940 /* FontBrowser_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* FontBrowser_iPhoneD */;
+			remoteInfo = FontBrowser_iPhoneD;
+		};
+		E543D2F41074100B00A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FABA010740168004F6940 /* SimpleTouch_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* SimpleTouch_iPhoneD */;
+			remoteInfo = SimpleTouch_iPhoneD;
+		};
+		E543D2F61074100B00A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB9D10740168004F6940 /* SimpleLayout_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* SimpleLayout_iPhoneD */;
+			remoteInfo = SimpleLayout_iPhoneD;
+		};
+		E543D2F81074100B00A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB9710740168004F6940 /* Particles_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* Particles_iPhoneD */;
+			remoteInfo = Particles_iPhoneD;
+		};
+		E543D2FA1074100B00A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB9A10740168004F6940 /* RSS_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* RSS_iPhoneD */;
+			remoteInfo = RSS_iPhoneD;
+		};
+		E543D2FC1074100B00A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB7010740168004F6940 /* DirectHTML_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* DirectHTML_iPhoneD */;
+			remoteInfo = DirectHTML_iPhoneD;
+		};
+		E543D2FE1074100B00A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB9410740168004F6940 /* MessageQueue_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* MessageQueue_iPhoneD */;
+			remoteInfo = MessageQueue_iPhoneD;
+		};
+		E543D3001074100B00A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB6A10740168004F6940 /* CoverFlow_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* CoverFlow_iPhoneD */;
+			remoteInfo = CoverFlow_iPhoneD;
+		};
+		E543D3021074100B00A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB6D10740168004F6940 /* CSSFontSelection_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* CSSFontSelection_iPhoneD */;
+			remoteInfo = CSSFontSelection_iPhoneD;
+		};
+		E543D3041074100B00A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8E10740168004F6940 /* List_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* List_iPhoneD */;
+			remoteInfo = List_iPhoneD;
+		};
+		E543D3061074100B00A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB6410740168004F6940 /* ComboBox_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* ComboBox_iPhoneD */;
+			remoteInfo = ComboBox_iPhoneD;
+		};
+		E543D3081074100B00A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8810740168004F6940 /* Knobs_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* Knobs_iPhoneD */;
+			remoteInfo = Knobs_iPhoneD;
+		};
+		E543D30A1074100B00A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8B10740168004F6940 /* LayoutAnimation_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* LayoutAnimation_iPhoneD */;
+			remoteInfo = LayoutAnimation_iPhoneD;
+		};
+		E543D30C1074100B00A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB6110740168004F6940 /* ColorSelector_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* ColorSelector_iPhoneD */;
+			remoteInfo = ColorSelector_iPhoneD;
+		};
+		E543D30E1074100B00A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8510740168004F6940 /* HTMLView_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* HTMLView_iPhoneD */;
+			remoteInfo = HTMLView_iPhoneD;
+		};
+		E543D3101074100B00A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E543D1991074076A00A01E51 /* AudioPlayer_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* AudioPlayer_iPhoneD */;
+			remoteInfo = AudioPlayer_iPhoneD;
+		};
+		E543D3121074100B00A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB5B10740168004F6940 /* Buttons_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* Buttons_iPhoneD */;
+			remoteInfo = Buttons_iPhoneD;
+		};
+		E543D3141074100B00A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8210740168004F6940 /* HTMLTree_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* HTMLTree_iPhoneD */;
+			remoteInfo = HTMLTree_iPhoneD;
+		};
+		E543D3161074100B00A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB5E10740168004F6940 /* Checkerboard_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* Checkerboard_iPhoneD */;
+			remoteInfo = Checkerboard_iPhoneD;
+		};
+		E543D3181074100B00A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FABA610740168004F6940 /* TextEdit_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* TextEdit_iPhoneD */;
+			remoteInfo = TextEdit_iPhoneD;
+		};
+		E543D31A1074100B00A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FABA910740168004F6940 /* WidgetCreatorCSS_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* WidgetCreatorCSS_iPhoneD */;
+			remoteInfo = WidgetCreatorCSS_iPhoneD;
+		};
+		E543D31C1074100B00A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB7F10740168004F6940 /* Grids_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* Grids_iPhoneD */;
+			remoteInfo = Grids_iPhoneD;
+		};
+		E543D31E1074100B00A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FABA310740168004F6940 /* TabView_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* TabView_iPhoneD */;
+			remoteInfo = TabView_iPhoneD;
+		};
+		E543D3201074100B00A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB7910740168004F6940 /* FlowLayout_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* FlowLayout_iPhoneD */;
+			remoteInfo = FlowLayout_iPhoneD;
+		};
+		E543D3221074105100A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB7C10740168004F6940 /* FontBrowser_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* FontBrowser_iPhone */;
+			remoteInfo = FontBrowser_iPhone;
+		};
+		E543D3241074105100A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FABA010740168004F6940 /* SimpleTouch_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* SimpleTouch_iPhone */;
+			remoteInfo = SimpleTouch_iPhone;
+		};
+		E543D3261074105100A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB9D10740168004F6940 /* SimpleLayout_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* SimpleLayout_iPhone */;
+			remoteInfo = SimpleLayout_iPhone;
+		};
+		E543D3281074105100A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB9710740168004F6940 /* Particles_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* Particles_iPhone */;
+			remoteInfo = Particles_iPhone;
+		};
+		E543D32A1074105100A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB9A10740168004F6940 /* RSS_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* RSS_iPhone */;
+			remoteInfo = RSS_iPhone;
+		};
+		E543D32C1074105100A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB7010740168004F6940 /* DirectHTML_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* DirectHTML_iPhone */;
+			remoteInfo = DirectHTML_iPhone;
+		};
+		E543D32E1074105100A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB9410740168004F6940 /* MessageQueue_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* MessageQueue_iPhone */;
+			remoteInfo = MessageQueue_iPhone;
+		};
+		E543D3301074105100A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB6A10740168004F6940 /* CoverFlow_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* CoverFlow_iPhone */;
+			remoteInfo = CoverFlow_iPhone;
+		};
+		E543D3321074105100A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB6D10740168004F6940 /* CSSFontSelection_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* CSSFontSelection_iPhone */;
+			remoteInfo = CSSFontSelection_iPhone;
+		};
+		E543D3341074105100A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8E10740168004F6940 /* List_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* List_iPhone */;
+			remoteInfo = List_iPhone;
+		};
+		E543D3361074105100A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB6410740168004F6940 /* ComboBox_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* ComboBox_iPhone */;
+			remoteInfo = ComboBox_iPhone;
+		};
+		E543D3381074105100A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8810740168004F6940 /* Knobs_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* Knobs_iPhone */;
+			remoteInfo = Knobs_iPhone;
+		};
+		E543D33A1074105100A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8B10740168004F6940 /* LayoutAnimation_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* LayoutAnimation_iPhone */;
+			remoteInfo = LayoutAnimation_iPhone;
+		};
+		E543D33C1074105100A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB6110740168004F6940 /* ColorSelector_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* ColorSelector_iPhone */;
+			remoteInfo = ColorSelector_iPhone;
+		};
+		E543D33E1074105100A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8510740168004F6940 /* HTMLView_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* HTMLView_iPhone */;
+			remoteInfo = HTMLView_iPhone;
+		};
+		E543D3401074105100A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E543D1991074076A00A01E51 /* AudioPlayer_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* AudioPlayer_iPhone */;
+			remoteInfo = AudioPlayer_iPhone;
+		};
+		E543D3421074105100A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB5B10740168004F6940 /* Buttons_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* Buttons_iPhone */;
+			remoteInfo = Buttons_iPhone;
+		};
+		E543D3441074105100A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8210740168004F6940 /* HTMLTree_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* HTMLTree_iPhone */;
+			remoteInfo = HTMLTree_iPhone;
+		};
+		E543D3461074105100A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB5E10740168004F6940 /* Checkerboard_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* Checkerboard_iPhone */;
+			remoteInfo = Checkerboard_iPhone;
+		};
+		E543D3481074105100A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FABA610740168004F6940 /* TextEdit_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* TextEdit_iPhone */;
+			remoteInfo = TextEdit_iPhone;
+		};
+		E543D34A1074105100A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FABA910740168004F6940 /* WidgetCreatorCSS_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* WidgetCreatorCSS_iPhone */;
+			remoteInfo = WidgetCreatorCSS_iPhone;
+		};
+		E543D34C1074105100A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB7F10740168004F6940 /* Grids_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* Grids_iPhone */;
+			remoteInfo = Grids_iPhone;
+		};
+		E543D34E1074105100A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FABA310740168004F6940 /* TabView_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* TabView_iPhone */;
+			remoteInfo = TabView_iPhone;
+		};
+		E543D3501074105100A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB7910740168004F6940 /* FlowLayout_iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* FlowLayout_iPhone */;
+			remoteInfo = FlowLayout_iPhone;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		E51FAB5B10740168004F6940 /* Buttons_iPhone.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Buttons_iPhone.xcodeproj; path = ./Buttons/Buttons_iPhone.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FAB5E10740168004F6940 /* Checkerboard_iPhone.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Checkerboard_iPhone.xcodeproj; path = ./Checkerboard/Checkerboard_iPhone.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FAB6110740168004F6940 /* ColorSelector_iPhone.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ColorSelector_iPhone.xcodeproj; path = ./ColorSelector/ColorSelector_iPhone.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FAB6410740168004F6940 /* ComboBox_iPhone.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ComboBox_iPhone.xcodeproj; path = ./ComboBox/ComboBox_iPhone.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FAB6A10740168004F6940 /* CoverFlow_iPhone.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CoverFlow_iPhone.xcodeproj; path = ./CoverFlow/CoverFlow_iPhone.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FAB6D10740168004F6940 /* CSSFontSelection_iPhone.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CSSFontSelection_iPhone.xcodeproj; path = ./CSSFontSelection/CSSFontSelection_iPhone.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FAB7010740168004F6940 /* DirectHTML_iPhone.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DirectHTML_iPhone.xcodeproj; path = ./DirectHTML/DirectHTML_iPhone.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FAB7910740168004F6940 /* FlowLayout_iPhone.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FlowLayout_iPhone.xcodeproj; path = ./FlowLayout/FlowLayout_iPhone.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FAB7C10740168004F6940 /* FontBrowser_iPhone.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FontBrowser_iPhone.xcodeproj; path = ./FontBrowser/FontBrowser_iPhone.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FAB7F10740168004F6940 /* Grids_iPhone.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Grids_iPhone.xcodeproj; path = ./Grids/Grids_iPhone.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FAB8210740168004F6940 /* HTMLTree_iPhone.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = HTMLTree_iPhone.xcodeproj; path = ./HTMLTree/HTMLTree_iPhone.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FAB8510740168004F6940 /* HTMLView_iPhone.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = HTMLView_iPhone.xcodeproj; path = ./HTMLView/HTMLView_iPhone.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FAB8810740168004F6940 /* Knobs_iPhone.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Knobs_iPhone.xcodeproj; path = ./Knobs/Knobs_iPhone.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FAB8B10740168004F6940 /* LayoutAnimation_iPhone.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LayoutAnimation_iPhone.xcodeproj; path = ./LayoutAnimation/LayoutAnimation_iPhone.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FAB8E10740168004F6940 /* List_iPhone.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = List_iPhone.xcodeproj; path = ./List/List_iPhone.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FAB9410740168004F6940 /* MessageQueue_iPhone.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MessageQueue_iPhone.xcodeproj; path = ./MessageQueue/MessageQueue_iPhone.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FAB9710740168004F6940 /* Particles_iPhone.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Particles_iPhone.xcodeproj; path = ./Particles/Particles_iPhone.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FAB9A10740168004F6940 /* RSS_iPhone.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RSS_iPhone.xcodeproj; path = ./RSS/RSS_iPhone.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FAB9D10740168004F6940 /* SimpleLayout_iPhone.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SimpleLayout_iPhone.xcodeproj; path = ./SimpleLayout/SimpleLayout_iPhone.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FABA010740168004F6940 /* SimpleTouch_iPhone.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SimpleTouch_iPhone.xcodeproj; path = ./SimpleTouch/SimpleTouch_iPhone.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FABA310740168004F6940 /* TabView_iPhone.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TabView_iPhone.xcodeproj; path = ./TabView/TabView_iPhone.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FABA610740168004F6940 /* TextEdit_iPhone.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TextEdit_iPhone.xcodeproj; path = ./TextEdit/TextEdit_iPhone.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FABA910740168004F6940 /* WidgetCreatorCSS_iPhone.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WidgetCreatorCSS_iPhone.xcodeproj; path = ./WidgetCreatorCSS/WidgetCreatorCSS_iPhone.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E543D1991074076A00A01E51 /* AudioPlayer_iPhone.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AudioPlayer_iPhone.xcodeproj; path = AudioPlayer/AudioPlayer_iPhone.xcodeproj; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		E51FAB4B1073F312004F6940 = {
+			isa = PBXGroup;
+			children = (
+				E543D1991074076A00A01E51 /* AudioPlayer_iPhone.xcodeproj */,
+				E51FAB5B10740168004F6940 /* Buttons_iPhone.xcodeproj */,
+				E51FAB5E10740168004F6940 /* Checkerboard_iPhone.xcodeproj */,
+				E51FAB6110740168004F6940 /* ColorSelector_iPhone.xcodeproj */,
+				E51FAB6410740168004F6940 /* ComboBox_iPhone.xcodeproj */,
+				E51FAB6A10740168004F6940 /* CoverFlow_iPhone.xcodeproj */,
+				E51FAB6D10740168004F6940 /* CSSFontSelection_iPhone.xcodeproj */,
+				E51FAB7010740168004F6940 /* DirectHTML_iPhone.xcodeproj */,
+				E51FAB7910740168004F6940 /* FlowLayout_iPhone.xcodeproj */,
+				E51FAB7C10740168004F6940 /* FontBrowser_iPhone.xcodeproj */,
+				E51FAB7F10740168004F6940 /* Grids_iPhone.xcodeproj */,
+				E51FAB8210740168004F6940 /* HTMLTree_iPhone.xcodeproj */,
+				E51FAB8510740168004F6940 /* HTMLView_iPhone.xcodeproj */,
+				E51FAB8810740168004F6940 /* Knobs_iPhone.xcodeproj */,
+				E51FAB8B10740168004F6940 /* LayoutAnimation_iPhone.xcodeproj */,
+				E51FAB8E10740168004F6940 /* List_iPhone.xcodeproj */,
+				E51FAB9410740168004F6940 /* MessageQueue_iPhone.xcodeproj */,
+				E51FAB9710740168004F6940 /* Particles_iPhone.xcodeproj */,
+				E51FAB9A10740168004F6940 /* RSS_iPhone.xcodeproj */,
+				E51FAB9D10740168004F6940 /* SimpleLayout_iPhone.xcodeproj */,
+				E51FABA010740168004F6940 /* SimpleTouch_iPhone.xcodeproj */,
+				E51FABA310740168004F6940 /* TabView_iPhone.xcodeproj */,
+				E51FABA610740168004F6940 /* TextEdit_iPhone.xcodeproj */,
+				E51FABA910740168004F6940 /* WidgetCreatorCSS_iPhone.xcodeproj */,
+			);
+			sourceTree = "<group>";
+		};
+		E51FAB5C10740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E543D26B10740FC500A01E51 /* Buttons_iPhone.app */,
+				E543D26D10740FC500A01E51 /* Buttons_iPhoneD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FAB5F10740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E543D27110740FC500A01E51 /* Checkerboard_iPhone.app */,
+				E543D27310740FC500A01E51 /* Checkerboard_iPhoneD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FAB6210740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E543D27710740FC500A01E51 /* ColorSelector_iPhone.app */,
+				E543D27910740FC500A01E51 /* ColorSelector_iPhoneD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FAB6510740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E543D27D10740FC500A01E51 /* ComboBox_iPhone.app */,
+				E543D27F10740FC500A01E51 /* ComboBox_iPhoneD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FAB6B10740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E543D28310740FC500A01E51 /* CoverFlow_iPhone.app */,
+				E543D28510740FC500A01E51 /* CoverFlow_iPhoneD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FAB6E10740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E543D28910740FC500A01E51 /* CSSFontSelection_iPhone.app */,
+				E543D28B10740FC500A01E51 /* CSSFontSelection_iPhoneD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FAB7110740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E543D28F10740FC500A01E51 /* DirectHTML_iPhone.app */,
+				E543D29110740FC500A01E51 /* DirectHTML_iPhoneD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FAB7A10740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E543D29510740FC500A01E51 /* FlowLayout_iPhone.app */,
+				E543D29710740FC500A01E51 /* FlowLayout_iPhoneD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FAB7D10740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E543D29B10740FC500A01E51 /* FontBrowser_iPhone.app */,
+				E543D29D10740FC500A01E51 /* FontBrowser_iPhoneD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FAB8010740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E543D2A110740FC500A01E51 /* Grids_iPhone.app */,
+				E543D2A310740FC500A01E51 /* Grids_iPhoneD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FAB8310740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E543D2A710740FC500A01E51 /* HTMLTree_iPhone.app */,
+				E543D2A910740FC500A01E51 /* HTMLTree_iPhoneD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FAB8610740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E543D2AD10740FC500A01E51 /* HTMLView_iPhone.app */,
+				E543D2AF10740FC500A01E51 /* HTMLView_iPhoneD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FAB8910740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E543D2B310740FC500A01E51 /* Knobs_iPhone.app */,
+				E543D2B510740FC500A01E51 /* Knobs_iPhoneD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FAB8C10740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E543D2B910740FC500A01E51 /* LayoutAnimation_iPhone.app */,
+				E543D2BB10740FC500A01E51 /* LayoutAnimation_iPhoneD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FAB8F10740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E543D2BF10740FC500A01E51 /* List_iPhone.app */,
+				E543D2C110740FC500A01E51 /* List_iPhoneD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FAB9510740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E543D2C510740FC500A01E51 /* MessageQueue_iPhone.app */,
+				E543D2C710740FC500A01E51 /* MessageQueue_iPhoneD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FAB9810740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E543D2CB10740FC500A01E51 /* Particles_iPhone.app */,
+				E543D2CD10740FC500A01E51 /* Particles_iPhoneD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FAB9B10740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E543D2D110740FC500A01E51 /* RSS_iPhone.app */,
+				E543D2D310740FC500A01E51 /* RSS_iPhoneD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FAB9E10740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E543D2D710740FC500A01E51 /* SimpleLayout_iPhone.app */,
+				E543D2D910740FC500A01E51 /* SimpleLayout_iPhoneD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FABA110740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E543D2DD10740FC500A01E51 /* SimpleTouch_iPhone.app */,
+				E543D2DF10740FC500A01E51 /* SimpleTouch_iPhoneD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FABA410740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E543D2E310740FC500A01E51 /* TabView_iPhone.app */,
+				E543D2E510740FC500A01E51 /* TabView_iPhoneD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FABA710740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E543D2E910740FC500A01E51 /* TextEdit_iPhone.app */,
+				E543D2EB10740FC500A01E51 /* TextEdit_iPhoneD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FABAA10740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E543D2EF10740FC500A01E51 /* WidgetCreatorCSS_iPhone.app */,
+				E543D2F110740FC500A01E51 /* WidgetCreatorCSS_iPhoneD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E543D1A21074076A00A01E51 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E543D26310740FC400A01E51 /* AudioPlayer_iPhone.app */,
+				E543D26510740FC400A01E51 /* AudioPlayer_iPhoneD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXProject section */
+		E51FAB4D1073F312004F6940 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				ORGANIZATIONNAME = libnui;
+			};
+			buildConfigurationList = E51FAB501073F312004F6940 /* Build configuration list for PBXProject "AllTutorials_iPhone" */;
+			compatibilityVersion = "Xcode 3.0";
+			hasScannedForEncodings = 0;
+			mainGroup = E51FAB4B1073F312004F6940;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = E543D1A21074076A00A01E51 /* Products */;
+					ProjectRef = E543D1991074076A00A01E51 /* AudioPlayer_iPhone.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB5C10740168004F6940 /* Products */;
+					ProjectRef = E51FAB5B10740168004F6940 /* Buttons_iPhone.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB5F10740168004F6940 /* Products */;
+					ProjectRef = E51FAB5E10740168004F6940 /* Checkerboard_iPhone.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB6210740168004F6940 /* Products */;
+					ProjectRef = E51FAB6110740168004F6940 /* ColorSelector_iPhone.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB6510740168004F6940 /* Products */;
+					ProjectRef = E51FAB6410740168004F6940 /* ComboBox_iPhone.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB6B10740168004F6940 /* Products */;
+					ProjectRef = E51FAB6A10740168004F6940 /* CoverFlow_iPhone.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB6E10740168004F6940 /* Products */;
+					ProjectRef = E51FAB6D10740168004F6940 /* CSSFontSelection_iPhone.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB7110740168004F6940 /* Products */;
+					ProjectRef = E51FAB7010740168004F6940 /* DirectHTML_iPhone.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB7A10740168004F6940 /* Products */;
+					ProjectRef = E51FAB7910740168004F6940 /* FlowLayout_iPhone.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB7D10740168004F6940 /* Products */;
+					ProjectRef = E51FAB7C10740168004F6940 /* FontBrowser_iPhone.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB8010740168004F6940 /* Products */;
+					ProjectRef = E51FAB7F10740168004F6940 /* Grids_iPhone.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB8310740168004F6940 /* Products */;
+					ProjectRef = E51FAB8210740168004F6940 /* HTMLTree_iPhone.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB8610740168004F6940 /* Products */;
+					ProjectRef = E51FAB8510740168004F6940 /* HTMLView_iPhone.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB8910740168004F6940 /* Products */;
+					ProjectRef = E51FAB8810740168004F6940 /* Knobs_iPhone.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB8C10740168004F6940 /* Products */;
+					ProjectRef = E51FAB8B10740168004F6940 /* LayoutAnimation_iPhone.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB8F10740168004F6940 /* Products */;
+					ProjectRef = E51FAB8E10740168004F6940 /* List_iPhone.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB9510740168004F6940 /* Products */;
+					ProjectRef = E51FAB9410740168004F6940 /* MessageQueue_iPhone.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB9810740168004F6940 /* Products */;
+					ProjectRef = E51FAB9710740168004F6940 /* Particles_iPhone.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB9B10740168004F6940 /* Products */;
+					ProjectRef = E51FAB9A10740168004F6940 /* RSS_iPhone.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB9E10740168004F6940 /* Products */;
+					ProjectRef = E51FAB9D10740168004F6940 /* SimpleLayout_iPhone.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FABA110740168004F6940 /* Products */;
+					ProjectRef = E51FABA010740168004F6940 /* SimpleTouch_iPhone.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FABA410740168004F6940 /* Products */;
+					ProjectRef = E51FABA310740168004F6940 /* TabView_iPhone.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FABA710740168004F6940 /* Products */;
+					ProjectRef = E51FABA610740168004F6940 /* TextEdit_iPhone.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FABAA10740168004F6940 /* Products */;
+					ProjectRef = E51FABA910740168004F6940 /* WidgetCreatorCSS_iPhone.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				E51FACC21074018C004F6940 /* AllTutorialsDebug */,
+				E51FACFE1074020D004F6940 /* AllTutorialsRelease */,
+				E543D0F21074047800A01E51 /* AllTutorials (debug & release) */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		E543D26310740FC400A01E51 /* AudioPlayer_iPhone.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = AudioPlayer_iPhone.app;
+			remoteRef = E543D26210740FC400A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D26510740FC400A01E51 /* AudioPlayer_iPhoneD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = AudioPlayer_iPhoneD.app;
+			remoteRef = E543D26410740FC400A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D26B10740FC500A01E51 /* Buttons_iPhone.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = Buttons_iPhone.app;
+			remoteRef = E543D26A10740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D26D10740FC500A01E51 /* Buttons_iPhoneD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = Buttons_iPhoneD.app;
+			remoteRef = E543D26C10740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D27110740FC500A01E51 /* Checkerboard_iPhone.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = Checkerboard_iPhone.app;
+			remoteRef = E543D27010740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D27310740FC500A01E51 /* Checkerboard_iPhoneD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = Checkerboard_iPhoneD.app;
+			remoteRef = E543D27210740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D27710740FC500A01E51 /* ColorSelector_iPhone.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = ColorSelector_iPhone.app;
+			remoteRef = E543D27610740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D27910740FC500A01E51 /* ColorSelector_iPhoneD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = ColorSelector_iPhoneD.app;
+			remoteRef = E543D27810740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D27D10740FC500A01E51 /* ComboBox_iPhone.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = ComboBox_iPhone.app;
+			remoteRef = E543D27C10740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D27F10740FC500A01E51 /* ComboBox_iPhoneD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = ComboBox_iPhoneD.app;
+			remoteRef = E543D27E10740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D28310740FC500A01E51 /* CoverFlow_iPhone.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = CoverFlow_iPhone.app;
+			remoteRef = E543D28210740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D28510740FC500A01E51 /* CoverFlow_iPhoneD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = CoverFlow_iPhoneD.app;
+			remoteRef = E543D28410740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D28910740FC500A01E51 /* CSSFontSelection_iPhone.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = CSSFontSelection_iPhone.app;
+			remoteRef = E543D28810740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D28B10740FC500A01E51 /* CSSFontSelection_iPhoneD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = CSSFontSelection_iPhoneD.app;
+			remoteRef = E543D28A10740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D28F10740FC500A01E51 /* DirectHTML_iPhone.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = DirectHTML_iPhone.app;
+			remoteRef = E543D28E10740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D29110740FC500A01E51 /* DirectHTML_iPhoneD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = DirectHTML_iPhoneD.app;
+			remoteRef = E543D29010740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D29510740FC500A01E51 /* FlowLayout_iPhone.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = FlowLayout_iPhone.app;
+			remoteRef = E543D29410740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D29710740FC500A01E51 /* FlowLayout_iPhoneD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = FlowLayout_iPhoneD.app;
+			remoteRef = E543D29610740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D29B10740FC500A01E51 /* FontBrowser_iPhone.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = FontBrowser_iPhone.app;
+			remoteRef = E543D29A10740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D29D10740FC500A01E51 /* FontBrowser_iPhoneD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = FontBrowser_iPhoneD.app;
+			remoteRef = E543D29C10740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D2A110740FC500A01E51 /* Grids_iPhone.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = Grids_iPhone.app;
+			remoteRef = E543D2A010740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D2A310740FC500A01E51 /* Grids_iPhoneD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = Grids_iPhoneD.app;
+			remoteRef = E543D2A210740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D2A710740FC500A01E51 /* HTMLTree_iPhone.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = HTMLTree_iPhone.app;
+			remoteRef = E543D2A610740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D2A910740FC500A01E51 /* HTMLTree_iPhoneD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = HTMLTree_iPhoneD.app;
+			remoteRef = E543D2A810740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D2AD10740FC500A01E51 /* HTMLView_iPhone.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = HTMLView_iPhone.app;
+			remoteRef = E543D2AC10740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D2AF10740FC500A01E51 /* HTMLView_iPhoneD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = HTMLView_iPhoneD.app;
+			remoteRef = E543D2AE10740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D2B310740FC500A01E51 /* Knobs_iPhone.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = Knobs_iPhone.app;
+			remoteRef = E543D2B210740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D2B510740FC500A01E51 /* Knobs_iPhoneD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = Knobs_iPhoneD.app;
+			remoteRef = E543D2B410740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D2B910740FC500A01E51 /* LayoutAnimation_iPhone.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = LayoutAnimation_iPhone.app;
+			remoteRef = E543D2B810740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D2BB10740FC500A01E51 /* LayoutAnimation_iPhoneD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = LayoutAnimation_iPhoneD.app;
+			remoteRef = E543D2BA10740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D2BF10740FC500A01E51 /* List_iPhone.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = List_iPhone.app;
+			remoteRef = E543D2BE10740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D2C110740FC500A01E51 /* List_iPhoneD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = List_iPhoneD.app;
+			remoteRef = E543D2C010740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D2C510740FC500A01E51 /* MessageQueue_iPhone.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = MessageQueue_iPhone.app;
+			remoteRef = E543D2C410740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D2C710740FC500A01E51 /* MessageQueue_iPhoneD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = MessageQueue_iPhoneD.app;
+			remoteRef = E543D2C610740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D2CB10740FC500A01E51 /* Particles_iPhone.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = Particles_iPhone.app;
+			remoteRef = E543D2CA10740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D2CD10740FC500A01E51 /* Particles_iPhoneD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = Particles_iPhoneD.app;
+			remoteRef = E543D2CC10740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D2D110740FC500A01E51 /* RSS_iPhone.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = RSS_iPhone.app;
+			remoteRef = E543D2D010740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D2D310740FC500A01E51 /* RSS_iPhoneD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = RSS_iPhoneD.app;
+			remoteRef = E543D2D210740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D2D710740FC500A01E51 /* SimpleLayout_iPhone.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = SimpleLayout_iPhone.app;
+			remoteRef = E543D2D610740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D2D910740FC500A01E51 /* SimpleLayout_iPhoneD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = SimpleLayout_iPhoneD.app;
+			remoteRef = E543D2D810740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D2DD10740FC500A01E51 /* SimpleTouch_iPhone.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = SimpleTouch_iPhone.app;
+			remoteRef = E543D2DC10740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D2DF10740FC500A01E51 /* SimpleTouch_iPhoneD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = SimpleTouch_iPhoneD.app;
+			remoteRef = E543D2DE10740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D2E310740FC500A01E51 /* TabView_iPhone.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = TabView_iPhone.app;
+			remoteRef = E543D2E210740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D2E510740FC500A01E51 /* TabView_iPhoneD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = TabView_iPhoneD.app;
+			remoteRef = E543D2E410740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D2E910740FC500A01E51 /* TextEdit_iPhone.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = TextEdit_iPhone.app;
+			remoteRef = E543D2E810740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D2EB10740FC500A01E51 /* TextEdit_iPhoneD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = TextEdit_iPhoneD.app;
+			remoteRef = E543D2EA10740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D2EF10740FC500A01E51 /* WidgetCreatorCSS_iPhone.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = WidgetCreatorCSS_iPhone.app;
+			remoteRef = E543D2EE10740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D2F110740FC500A01E51 /* WidgetCreatorCSS_iPhoneD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = WidgetCreatorCSS_iPhoneD.app;
+			remoteRef = E543D2F010740FC500A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXTargetDependency section */
+		E543D0F61074047F00A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E51FACC21074018C004F6940 /* AllTutorialsDebug */;
+			targetProxy = E543D0F51074047F00A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D0F81074047F00A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E51FACFE1074020D004F6940 /* AllTutorialsRelease */;
+			targetProxy = E543D0F71074047F00A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D2F31074100B00A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FontBrowser_iPhoneD;
+			targetProxy = E543D2F21074100B00A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D2F51074100B00A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SimpleTouch_iPhoneD;
+			targetProxy = E543D2F41074100B00A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D2F71074100B00A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SimpleLayout_iPhoneD;
+			targetProxy = E543D2F61074100B00A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D2F91074100B00A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Particles_iPhoneD;
+			targetProxy = E543D2F81074100B00A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D2FB1074100B00A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = RSS_iPhoneD;
+			targetProxy = E543D2FA1074100B00A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D2FD1074100B00A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = DirectHTML_iPhoneD;
+			targetProxy = E543D2FC1074100B00A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D2FF1074100B00A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MessageQueue_iPhoneD;
+			targetProxy = E543D2FE1074100B00A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D3011074100B00A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CoverFlow_iPhoneD;
+			targetProxy = E543D3001074100B00A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D3031074100B00A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CSSFontSelection_iPhoneD;
+			targetProxy = E543D3021074100B00A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D3051074100B00A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = List_iPhoneD;
+			targetProxy = E543D3041074100B00A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D3071074100B00A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ComboBox_iPhoneD;
+			targetProxy = E543D3061074100B00A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D3091074100B00A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Knobs_iPhoneD;
+			targetProxy = E543D3081074100B00A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D30B1074100B00A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = LayoutAnimation_iPhoneD;
+			targetProxy = E543D30A1074100B00A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D30D1074100B00A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ColorSelector_iPhoneD;
+			targetProxy = E543D30C1074100B00A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D30F1074100B00A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = HTMLView_iPhoneD;
+			targetProxy = E543D30E1074100B00A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D3111074100B00A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AudioPlayer_iPhoneD;
+			targetProxy = E543D3101074100B00A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D3131074100B00A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Buttons_iPhoneD;
+			targetProxy = E543D3121074100B00A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D3151074100B00A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = HTMLTree_iPhoneD;
+			targetProxy = E543D3141074100B00A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D3171074100B00A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Checkerboard_iPhoneD;
+			targetProxy = E543D3161074100B00A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D3191074100B00A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = TextEdit_iPhoneD;
+			targetProxy = E543D3181074100B00A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D31B1074100B00A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = WidgetCreatorCSS_iPhoneD;
+			targetProxy = E543D31A1074100B00A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D31D1074100B00A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Grids_iPhoneD;
+			targetProxy = E543D31C1074100B00A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D31F1074100B00A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = TabView_iPhoneD;
+			targetProxy = E543D31E1074100B00A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D3211074100B00A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FlowLayout_iPhoneD;
+			targetProxy = E543D3201074100B00A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D3231074105100A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FontBrowser_iPhone;
+			targetProxy = E543D3221074105100A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D3251074105100A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SimpleTouch_iPhone;
+			targetProxy = E543D3241074105100A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D3271074105100A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SimpleLayout_iPhone;
+			targetProxy = E543D3261074105100A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D3291074105100A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Particles_iPhone;
+			targetProxy = E543D3281074105100A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D32B1074105100A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = RSS_iPhone;
+			targetProxy = E543D32A1074105100A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D32D1074105100A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = DirectHTML_iPhone;
+			targetProxy = E543D32C1074105100A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D32F1074105100A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MessageQueue_iPhone;
+			targetProxy = E543D32E1074105100A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D3311074105100A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CoverFlow_iPhone;
+			targetProxy = E543D3301074105100A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D3331074105100A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CSSFontSelection_iPhone;
+			targetProxy = E543D3321074105100A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D3351074105100A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = List_iPhone;
+			targetProxy = E543D3341074105100A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D3371074105100A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ComboBox_iPhone;
+			targetProxy = E543D3361074105100A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D3391074105100A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Knobs_iPhone;
+			targetProxy = E543D3381074105100A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D33B1074105100A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = LayoutAnimation_iPhone;
+			targetProxy = E543D33A1074105100A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D33D1074105100A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ColorSelector_iPhone;
+			targetProxy = E543D33C1074105100A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D33F1074105100A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = HTMLView_iPhone;
+			targetProxy = E543D33E1074105100A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D3411074105100A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AudioPlayer_iPhone;
+			targetProxy = E543D3401074105100A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D3431074105100A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Buttons_iPhone;
+			targetProxy = E543D3421074105100A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D3451074105100A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = HTMLTree_iPhone;
+			targetProxy = E543D3441074105100A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D3471074105100A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Checkerboard_iPhone;
+			targetProxy = E543D3461074105100A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D3491074105100A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = TextEdit_iPhone;
+			targetProxy = E543D3481074105100A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D34B1074105100A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = WidgetCreatorCSS_iPhone;
+			targetProxy = E543D34A1074105100A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D34D1074105100A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Grids_iPhone;
+			targetProxy = E543D34C1074105100A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D34F1074105100A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = TabView_iPhone;
+			targetProxy = E543D34E1074105100A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D3511074105100A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FlowLayout_iPhone;
+			targetProxy = E543D3501074105100A01E51 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		E51FAB4E1073F312004F6940 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				SDKROOT = iphonesimulator3.1;
+			};
+			name = Default;
+		};
+		E51FACC31074018D004F6940 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = AllTutorialsDebug;
+			};
+			name = Default;
+		};
+		E51FACFF1074020E004F6940 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = AllTutorials;
+			};
+			name = Default;
+		};
+		E543D0F31074047900A01E51 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = "AllTutorials (debug & release)";
+			};
+			name = Default;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E51FAB501073F312004F6940 /* Build configuration list for PBXProject "AllTutorials_iPhone" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E51FAB4E1073F312004F6940 /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		E51FACC5107401AB004F6940 /* Build configuration list for PBXAggregateTarget "AllTutorialsDebug" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E51FACC31074018D004F6940 /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		E51FAD011074022C004F6940 /* Build configuration list for PBXAggregateTarget "AllTutorialsRelease" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E51FACFF1074020E004F6940 /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		E543D0FE1074049400A01E51 /* Build configuration list for PBXAggregateTarget "AllTutorials (debug & release)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E543D0F31074047900A01E51 /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E51FAB4D1073F312004F6940 /* Project object */;
+}

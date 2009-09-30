@@ -12,8 +12,8 @@
 #include "nuiVBox.h"
 
 #include "AudioEngine.h"
-#include "TimeBar.h"
-#include "VolumeController.h"
+#include "Widgets/TimeBar.h"
+#include "Widgets/VolumeController.h"
 
 #define NOTIF_FILEBROWSE_DONE _T("FILEBROWSE_DONE")
 
