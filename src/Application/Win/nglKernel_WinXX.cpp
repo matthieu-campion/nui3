@@ -255,7 +255,7 @@ bool nglKernel::SysInit (HINSTANCE Inst)
     NULL
     );
 
-  NGL_OUT(_T("Create ngl kernel window hwnd = 0x%x"), hwnd);
+//  NGL_OUT(_T("Create ngl kernel window hwnd = 0x%x"), hwnd);
 
   if (hwnd == NULL)
   {

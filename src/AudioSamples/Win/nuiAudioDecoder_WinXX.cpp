@@ -75,32 +75,7 @@ class nuiAudioDecoderPrivate
     SamplesQueue mQueue;
   };
 
-/*bool nuiAudioDecoder::Init()
- {
- if (mInitialized) //already initialized
- return false;
- 
- CoInitialize(NULL);
- 
- mpPrivate = new nuiAudioDecoderPrivate();
- 
- 
- bool result = false;
- HRESULT hr = S_OK;
- mpPrivate->mpWMStream = new nglWindowsMediaIStream(mrStream);
- 
- hr = WMCreateSyncReader(NULL, WMT_RIGHT_PLAYBACK, &mpPrivate->mpWMReader);
- if (SUCCEEDED(hr))
- {
- hr = mpPrivate->mpWMReader->OpenStream(mpPrivate->mpWMStream);
- if (SUCCEEDED(hr))
- {
- result = ReadInfo();
- }
- }
- 
- return result;
- }*/
+
 
 void nuiAudioDecoder::Clear()
 {
@@ -304,6 +279,8 @@ bool nuiAudioDecoder::ReadInfo()
           mInfo.SetSampleRate(SampleRate);
           mInfo.SetBitsPerSample(REQUESTED_BITS_PER_SAMPLE); // we want to convert to 32 bits float samples
           mInfo.SetSampleFrames(SampleFrames);
+		  mInfo.SetStartFrame(0);
+		  mInfo.SetStopFrame(mInfo.GetSampleFrames());
           
           mpPrivate->mQueue.SetInputBytesPerSample(bitsPerSample / 8);
           
