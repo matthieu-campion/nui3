@@ -3,8 +3,8 @@
 	61A9DE3F0B833C9200BC506C /* Project object */ = {
 		activeArchitecturePreference = i386;
 		activeBuildConfigurationName = Default;
-		activeExecutable = E5954AD50FF91895005F7E87 /* RSS */;
-		activeTarget = 61A9DFBE0B833E9600BC506C /* RSS */;
+		activeExecutable = E5954AD60FF91895005F7E87 /* RSSD */;
+		activeTarget = 61A9DFC80B833EF200BC506C /* RSSD */;
 		codeSenseManager = E5954AEE0FF918B3005F7E87 /* Code sense */;
 		executables = (
 			E5954AD50FF91895005F7E87 /* RSS */,
@@ -41,7 +41,7 @@
 					730,
 					60,
 					20,
-					48.16259765625,
+					48,
 					43,
 					43,
 				);
@@ -55,14 +55,12 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 269143732;
-			PBXWorkspaceStateSaveDate = 269143732;
+			PBXPerProjectTemplateStateSaveDate = 276038655;
+			PBXWorkspaceStateSaveDate = 276038655;
 		};
 		perUserProjectItems = {
-			E52C83960FFCE91C00B7779C /* PBXTextBookmark */ = E52C83960FFCE91C00B7779C /* PBXTextBookmark */;
-			E52C83990FFCE91C00B7779C /* PBXTextBookmark */ = E52C83990FFCE91C00B7779C /* PBXTextBookmark */;
-			E52C839A0FFCE91C00B7779C /* PBXTextBookmark */ = E52C839A0FFCE91C00B7779C /* PBXTextBookmark */;
-			E579577F100ACED400821E44 /* PBXTextBookmark */ = E579577F100ACED400821E44 /* PBXTextBookmark */;
+			E51FAD67107403F0004F6940 /* PBXTextBookmark */ = E51FAD67107403F0004F6940 /* PBXTextBookmark */;
+			E543D0E71074044A00A01E51 /* PBXTextBookmark */ = E543D0E71074044A00A01E51 /* PBXTextBookmark */;
 		};
 		sourceControlManager = E5954AED0FF918B3005F7E87 /* Source Control */;
 		userBuildSettings = {
@@ -82,63 +80,30 @@
 	};
 	61A9DFF10B83433800BC506C /* MainWindow.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {948, 1834}}";
+			sepNavIntBoundsRect = "{{0, 0}, {948, 1833}}";
 			sepNavSelRange = "{2778, 10}";
-			sepNavVisRange = "{699, 2305}";
+			sepNavVisRange = "{0, 0}";
 		};
 	};
-	E52C83960FFCE91C00B7779C /* PBXTextBookmark */ = {
+	E51FAD67107403F0004F6940 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 83";
 		rLen = 10;
 		rLoc = 2778;
 		rType = 0;
-		vrLen = 2305;
-		vrLoc = 699;
+		vrLen = 0;
+		vrLoc = 0;
 	};
-	E52C83990FFCE91C00B7779C /* PBXTextBookmark */ = {
+	E543D0E71074044A00A01E51 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 83";
 		rLen = 10;
 		rLoc = 2778;
 		rType = 0;
-		vrLen = 2305;
-		vrLoc = 699;
-	};
-	E52C839A0FFCE91C00B7779C /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E52C839B0FFCE91C00B7779C /* nuiRSSView.h */;
-		name = "nuiRSSView.h: 20";
-		rLen = 112;
-		rLoc = 335;
-		rType = 0;
 		vrLen = 0;
 		vrLoc = 0;
-	};
-	E52C839B0FFCE91C00B7779C /* nuiRSSView.h */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.c.h;
-		name = nuiRSSView.h;
-		path = /Users/meeloo/work/nui3/include/nuiRSSView.h;
-		sourceTree = "<absolute>";
-	};
-	E579577F100ACED400821E44 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E5795780100ACED400821E44 /* nuiRSSView.h */;
-		name = "nuiRSSView.h: 20";
-		rLen = 112;
-		rLoc = 335;
-		rType = 0;
-		vrLen = 0;
-		vrLoc = 0;
-	};
-	E5795780100ACED400821E44 /* nuiRSSView.h */ = {
-		isa = PBXFileReference;
-		name = nuiRSSView.h;
-		path = /Users/meeloo/work/nui3/include/nuiRSSView.h;
-		sourceTree = "<absolute>";
 	};
 	E5954AD50FF91895005F7E87 /* RSS */ = {
 		isa = PBXExecutable;
@@ -151,6 +116,9 @@
 		configStateDict = {
 		};
 		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
 		debuggerPlugin = GDBDebugging;
 		disassemblyDisplayState = 0;
 		dylibVariantSuffix = "";
@@ -163,6 +131,7 @@
 		name = RSS;
 		savedGlobals = {
 		};
+		showTypeColumn = 0;
 		sourceDirectories = (
 		);
 	};
@@ -177,6 +146,9 @@
 		configStateDict = {
 		};
 		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
 		debuggerPlugin = GDBDebugging;
 		disassemblyDisplayState = 0;
 		enableDebugStr = 1;
@@ -186,6 +158,7 @@
 		executableUserSymbolLevel = 0;
 		libgmallocEnabled = 0;
 		name = RSSD;
+		showTypeColumn = 0;
 		sourceDirectories = (
 		);
 	};

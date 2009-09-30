@@ -1,0 +1,2160 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		E51FACC21074018C004F6940 /* AllTutorialsDebug */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = E51FACC5107401AB004F6940 /* Build configuration list for PBXAggregateTarget "AllTutorialsDebug" */;
+			buildPhases = (
+			);
+			dependencies = (
+				E51FACC7107401D2004F6940 /* PBXTargetDependency */,
+				E51FACC9107401D2004F6940 /* PBXTargetDependency */,
+				E51FACCB107401D2004F6940 /* PBXTargetDependency */,
+				E51FACCD107401D2004F6940 /* PBXTargetDependency */,
+				E51FACCF107401D2004F6940 /* PBXTargetDependency */,
+				E51FACD1107401D2004F6940 /* PBXTargetDependency */,
+				E51FACD3107401D2004F6940 /* PBXTargetDependency */,
+				E51FACD5107401D2004F6940 /* PBXTargetDependency */,
+				E51FACD7107401D2004F6940 /* PBXTargetDependency */,
+				E51FACD9107401D2004F6940 /* PBXTargetDependency */,
+				E51FACDB107401D2004F6940 /* PBXTargetDependency */,
+				E51FACDD107401D2004F6940 /* PBXTargetDependency */,
+				E51FACDF107401D2004F6940 /* PBXTargetDependency */,
+				E51FACE1107401D2004F6940 /* PBXTargetDependency */,
+				E51FACE3107401D2004F6940 /* PBXTargetDependency */,
+				E51FACE5107401D2004F6940 /* PBXTargetDependency */,
+				E51FACE7107401D2004F6940 /* PBXTargetDependency */,
+				E51FACE9107401D2004F6940 /* PBXTargetDependency */,
+				E51FACEB107401D2004F6940 /* PBXTargetDependency */,
+				E51FACED107401D2004F6940 /* PBXTargetDependency */,
+				E51FACEF107401D2004F6940 /* PBXTargetDependency */,
+				E51FACF1107401D2004F6940 /* PBXTargetDependency */,
+				E51FACF3107401D2004F6940 /* PBXTargetDependency */,
+				E51FACF5107401D2004F6940 /* PBXTargetDependency */,
+				E51FACF7107401D2004F6940 /* PBXTargetDependency */,
+				E51FACF9107401D2004F6940 /* PBXTargetDependency */,
+				E51FACFB107401D2004F6940 /* PBXTargetDependency */,
+				E543D1AB1074079F00A01E51 /* PBXTargetDependency */,
+			);
+			name = AllTutorialsDebug;
+			productName = AllTutorialsDebug;
+		};
+		E51FACFE1074020D004F6940 /* AllTutorialsRelease */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = E51FAD011074022C004F6940 /* Build configuration list for PBXAggregateTarget "AllTutorialsRelease" */;
+			buildPhases = (
+			);
+			dependencies = (
+				E51FAD0310740293004F6940 /* PBXTargetDependency */,
+				E51FAD0510740293004F6940 /* PBXTargetDependency */,
+				E51FAD0710740293004F6940 /* PBXTargetDependency */,
+				E51FAD0910740293004F6940 /* PBXTargetDependency */,
+				E51FAD0B10740293004F6940 /* PBXTargetDependency */,
+				E51FAD0D10740293004F6940 /* PBXTargetDependency */,
+				E51FAD0F10740293004F6940 /* PBXTargetDependency */,
+				E51FAD1110740293004F6940 /* PBXTargetDependency */,
+				E51FAD1310740293004F6940 /* PBXTargetDependency */,
+				E51FAD1510740293004F6940 /* PBXTargetDependency */,
+				E51FAD1710740293004F6940 /* PBXTargetDependency */,
+				E51FAD1910740293004F6940 /* PBXTargetDependency */,
+				E51FAD1B10740293004F6940 /* PBXTargetDependency */,
+				E51FAD1D10740293004F6940 /* PBXTargetDependency */,
+				E51FAD1F10740293004F6940 /* PBXTargetDependency */,
+				E51FAD2110740293004F6940 /* PBXTargetDependency */,
+				E51FAD2310740293004F6940 /* PBXTargetDependency */,
+				E51FAD2510740293004F6940 /* PBXTargetDependency */,
+				E51FAD2710740293004F6940 /* PBXTargetDependency */,
+				E51FAD2910740293004F6940 /* PBXTargetDependency */,
+				E51FAD2B10740293004F6940 /* PBXTargetDependency */,
+				E51FAD2D10740293004F6940 /* PBXTargetDependency */,
+				E51FAD2F10740293004F6940 /* PBXTargetDependency */,
+				E51FAD3110740293004F6940 /* PBXTargetDependency */,
+				E51FAD3310740293004F6940 /* PBXTargetDependency */,
+				E51FAD3510740293004F6940 /* PBXTargetDependency */,
+				E51FAD3710740293004F6940 /* PBXTargetDependency */,
+				E543D1AD107407C700A01E51 /* PBXTargetDependency */,
+			);
+			name = AllTutorialsRelease;
+			productName = AllTutorials;
+		};
+		E543D0F21074047800A01E51 /* AllTutorials (debug & release) */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = E543D0FE1074049400A01E51 /* Build configuration list for PBXAggregateTarget "AllTutorials (debug & release)" */;
+			buildPhases = (
+			);
+			dependencies = (
+				E543D0F61074047F00A01E51 /* PBXTargetDependency */,
+				E543D0F81074047F00A01E51 /* PBXTargetDependency */,
+			);
+			name = "AllTutorials (debug & release)";
+			productName = "AllTutorials (debug & release)";
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXContainerItemProxy section */
+		E51FABB210740168004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB5B10740168004F6940 /* Buttons.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFBF0B833E9600BC506C;
+			remoteInfo = Buttons;
+		};
+		E51FABB410740168004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB5B10740168004F6940 /* Buttons.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFC90B833EF200BC506C;
+			remoteInfo = ButtonsD;
+		};
+		E51FABBC10740168004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB5E10740168004F6940 /* Checkerboard.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFBF0B833E9600BC506C;
+			remoteInfo = Checkerboard;
+		};
+		E51FABBE10740168004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB5E10740168004F6940 /* Checkerboard.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFC90B833EF200BC506C;
+			remoteInfo = CheckerboardD;
+		};
+		E51FABC610740168004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB6110740168004F6940 /* ColorSelector.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFBF0B833E9600BC506C;
+			remoteInfo = ColorSelector;
+		};
+		E51FABC810740168004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB6110740168004F6940 /* ColorSelector.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFC90B833EF200BC506C;
+			remoteInfo = ColorSelectorD;
+		};
+		E51FABD010740168004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB6410740168004F6940 /* ComboBox.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFBF0B833E9600BC506C;
+			remoteInfo = ComboBox;
+		};
+		E51FABD210740168004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB6410740168004F6940 /* ComboBox.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFC90B833EF200BC506C;
+			remoteInfo = ComboBoxD;
+		};
+		E51FABDA10740168004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB6710740168004F6940 /* Commands.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFBF0B833E9600BC506C;
+			remoteInfo = Commands;
+		};
+		E51FABDC10740168004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB6710740168004F6940 /* Commands.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFC90B833EF200BC506C;
+			remoteInfo = CommandsD;
+		};
+		E51FABE410740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB6A10740168004F6940 /* CoverFlow.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFBF0B833E9600BC506C;
+			remoteInfo = CoverFlow;
+		};
+		E51FABE610740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB6A10740168004F6940 /* CoverFlow.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFC90B833EF200BC506C;
+			remoteInfo = CoverFlowD;
+		};
+		E51FABEE10740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB6D10740168004F6940 /* CSSFontSelection.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFBF0B833E9600BC506C;
+			remoteInfo = CSSFontSelection;
+		};
+		E51FABF010740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB6D10740168004F6940 /* CSSFontSelection.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFC90B833EF200BC506C;
+			remoteInfo = CSSFontSelectionD;
+		};
+		E51FABF810740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB7010740168004F6940 /* DirectHTML.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFBF0B833E9600BC506C;
+			remoteInfo = DirectHTML;
+		};
+		E51FABFA10740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB7010740168004F6940 /* DirectHTML.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFC90B833EF200BC506C;
+			remoteInfo = DirectHTMLD;
+		};
+		E51FAC0210740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB7310740168004F6940 /* DragnDrop.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFBF0B833E9600BC506C;
+			remoteInfo = DragnDrop;
+		};
+		E51FAC0410740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB7310740168004F6940 /* DragnDrop.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFC90B833EF200BC506C;
+			remoteInfo = DragnDropD;
+		};
+		E51FAC0C10740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB7610740168004F6940 /* FileSelector.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFBF0B833E9600BC506C;
+			remoteInfo = FileSelector;
+		};
+		E51FAC0E10740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB7610740168004F6940 /* FileSelector.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFC90B833EF200BC506C;
+			remoteInfo = FileSelectorD;
+		};
+		E51FAC1610740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB7910740168004F6940 /* FlowLayout.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFBF0B833E9600BC506C;
+			remoteInfo = FlowLayout;
+		};
+		E51FAC1810740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB7910740168004F6940 /* FlowLayout.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFC90B833EF200BC506C;
+			remoteInfo = FlowLayoutD;
+		};
+		E51FAC2010740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB7C10740168004F6940 /* FontBrowser.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFBF0B833E9600BC506C;
+			remoteInfo = FontBrowser;
+		};
+		E51FAC2210740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB7C10740168004F6940 /* FontBrowser.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFC90B833EF200BC506C;
+			remoteInfo = FontBrowserD;
+		};
+		E51FAC2A10740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB7F10740168004F6940 /* Grids.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFBF0B833E9600BC506C;
+			remoteInfo = Grids;
+		};
+		E51FAC2C10740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB7F10740168004F6940 /* Grids.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFC90B833EF200BC506C;
+			remoteInfo = GridsD;
+		};
+		E51FAC3510740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8210740168004F6940 /* HTMLTree.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFBF0B833E9600BC506C;
+			remoteInfo = HTMLTree;
+		};
+		E51FAC3710740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8210740168004F6940 /* HTMLTree.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFC90B833EF200BC506C;
+			remoteInfo = HTMLTreeD;
+		};
+		E51FAC3F10740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8510740168004F6940 /* HTMLView.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFBF0B833E9600BC506C;
+			remoteInfo = HTMLView;
+		};
+		E51FAC4110740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8510740168004F6940 /* HTMLView.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFC90B833EF200BC506C;
+			remoteInfo = HTMLViewD;
+		};
+		E51FAC4910740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8810740168004F6940 /* Knobs.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFBF0B833E9600BC506C;
+			remoteInfo = Knobs;
+		};
+		E51FAC4B10740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8810740168004F6940 /* Knobs.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFC90B833EF200BC506C;
+			remoteInfo = KnobsD;
+		};
+		E51FAC5310740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8B10740168004F6940 /* LayoutAnimation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFBF0B833E9600BC506C;
+			remoteInfo = LayoutAnimation;
+		};
+		E51FAC5510740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8B10740168004F6940 /* LayoutAnimation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFC90B833EF200BC506C;
+			remoteInfo = LayoutAnimationD;
+		};
+		E51FAC5D10740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8E10740168004F6940 /* List.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFBF0B833E9600BC506C;
+			remoteInfo = List;
+		};
+		E51FAC5F10740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8E10740168004F6940 /* List.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFC90B833EF200BC506C;
+			remoteInfo = ListD;
+		};
+		E51FAC6710740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB9110740168004F6940 /* MainMenu.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFBF0B833E9600BC506C;
+			remoteInfo = MainMenu;
+		};
+		E51FAC6910740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB9110740168004F6940 /* MainMenu.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFC90B833EF200BC506C;
+			remoteInfo = MainMenuD;
+		};
+		E51FAC7110740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB9410740168004F6940 /* MessageQueue.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFBF0B833E9600BC506C;
+			remoteInfo = MessageQueue;
+		};
+		E51FAC7310740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB9410740168004F6940 /* MessageQueue.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFC90B833EF200BC506C;
+			remoteInfo = MessageQueueD;
+		};
+		E51FAC8010740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB9710740168004F6940 /* Particles.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFBF0B833E9600BC506C;
+			remoteInfo = Particles;
+		};
+		E51FAC8210740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB9710740168004F6940 /* Particles.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFC90B833EF200BC506C;
+			remoteInfo = ParticlesD;
+		};
+		E51FAC8A10740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB9A10740168004F6940 /* RSS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFBF0B833E9600BC506C;
+			remoteInfo = RSS;
+		};
+		E51FAC8C10740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB9A10740168004F6940 /* RSS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFC90B833EF200BC506C;
+			remoteInfo = RSSD;
+		};
+		E51FAC9410740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB9D10740168004F6940 /* SimpleLayout.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFBF0B833E9600BC506C;
+			remoteInfo = SimpleLayout;
+		};
+		E51FAC9610740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB9D10740168004F6940 /* SimpleLayout.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFC90B833EF200BC506C;
+			remoteInfo = SimpleLayoutD;
+		};
+		E51FAC9E10740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FABA010740168004F6940 /* SimpleTouch.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFBF0B833E9600BC506C;
+			remoteInfo = SimpleTouch;
+		};
+		E51FACA010740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FABA010740168004F6940 /* SimpleTouch.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFC90B833EF200BC506C;
+			remoteInfo = SimpleTouchD;
+		};
+		E51FACA810740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FABA310740168004F6940 /* TabView.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFBF0B833E9600BC506C;
+			remoteInfo = TabView;
+		};
+		E51FACAA10740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FABA310740168004F6940 /* TabView.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFC90B833EF200BC506C;
+			remoteInfo = TabViewD;
+		};
+		E51FACB210740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FABA610740168004F6940 /* TextEdit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFBF0B833E9600BC506C;
+			remoteInfo = TextEdit;
+		};
+		E51FACB410740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FABA610740168004F6940 /* TextEdit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFC90B833EF200BC506C;
+			remoteInfo = TextEditD;
+		};
+		E51FACBD10740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FABA910740168004F6940 /* WidgetCreatorCSS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFBF0B833E9600BC506C;
+			remoteInfo = WidgetCreatorCSS;
+		};
+		E51FACBF10740169004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FABA910740168004F6940 /* WidgetCreatorCSS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFC90B833EF200BC506C;
+			remoteInfo = WidgetCreatorCSSD;
+		};
+		E51FACC6107401D2004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB7C10740168004F6940 /* FontBrowser.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFC80B833EF200BC506C;
+			remoteInfo = FontBrowserD;
+		};
+		E51FACC8107401D2004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FABA010740168004F6940 /* SimpleTouch.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFC80B833EF200BC506C;
+			remoteInfo = SimpleTouchD;
+		};
+		E51FACCA107401D2004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB7610740168004F6940 /* FileSelector.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFC80B833EF200BC506C;
+			remoteInfo = FileSelectorD;
+		};
+		E51FACCC107401D2004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB9D10740168004F6940 /* SimpleLayout.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFC80B833EF200BC506C;
+			remoteInfo = SimpleLayoutD;
+		};
+		E51FACCE107401D2004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB7310740168004F6940 /* DragnDrop.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFC80B833EF200BC506C;
+			remoteInfo = DragnDropD;
+		};
+		E51FACD0107401D2004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB9710740168004F6940 /* Particles.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFC80B833EF200BC506C;
+			remoteInfo = ParticlesD;
+		};
+		E51FACD2107401D2004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB9A10740168004F6940 /* RSS.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFC80B833EF200BC506C;
+			remoteInfo = RSSD;
+		};
+		E51FACD4107401D2004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB7010740168004F6940 /* DirectHTML.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFC80B833EF200BC506C;
+			remoteInfo = DirectHTMLD;
+		};
+		E51FACD6107401D2004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB9410740168004F6940 /* MessageQueue.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFC80B833EF200BC506C;
+			remoteInfo = MessageQueueD;
+		};
+		E51FACD8107401D2004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB6A10740168004F6940 /* CoverFlow.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFC80B833EF200BC506C;
+			remoteInfo = CoverFlowD;
+		};
+		E51FACDA107401D2004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB9110740168004F6940 /* MainMenu.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFC80B833EF200BC506C;
+			remoteInfo = MainMenuD;
+		};
+		E51FACDC107401D2004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB6D10740168004F6940 /* CSSFontSelection.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFC80B833EF200BC506C;
+			remoteInfo = CSSFontSelectionD;
+		};
+		E51FACDE107401D2004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB6710740168004F6940 /* Commands.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFC80B833EF200BC506C;
+			remoteInfo = CommandsD;
+		};
+		E51FACE0107401D2004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8E10740168004F6940 /* List.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFC80B833EF200BC506C;
+			remoteInfo = ListD;
+		};
+		E51FACE2107401D2004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB6410740168004F6940 /* ComboBox.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFC80B833EF200BC506C;
+			remoteInfo = ComboBoxD;
+		};
+		E51FACE4107401D2004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8810740168004F6940 /* Knobs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFC80B833EF200BC506C;
+			remoteInfo = KnobsD;
+		};
+		E51FACE6107401D2004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8B10740168004F6940 /* LayoutAnimation.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFC80B833EF200BC506C;
+			remoteInfo = LayoutAnimationD;
+		};
+		E51FACE8107401D2004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB6110740168004F6940 /* ColorSelector.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFC80B833EF200BC506C;
+			remoteInfo = ColorSelectorD;
+		};
+		E51FACEA107401D2004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8510740168004F6940 /* HTMLView.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFC80B833EF200BC506C;
+			remoteInfo = HTMLViewD;
+		};
+		E51FACEC107401D2004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB5B10740168004F6940 /* Buttons.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFC80B833EF200BC506C;
+			remoteInfo = ButtonsD;
+		};
+		E51FACEE107401D2004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8210740168004F6940 /* HTMLTree.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFC80B833EF200BC506C;
+			remoteInfo = HTMLTreeD;
+		};
+		E51FACF0107401D2004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB5E10740168004F6940 /* Checkerboard.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFC80B833EF200BC506C;
+			remoteInfo = CheckerboardD;
+		};
+		E51FACF2107401D2004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FABA610740168004F6940 /* TextEdit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFC80B833EF200BC506C;
+			remoteInfo = TextEditD;
+		};
+		E51FACF4107401D2004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FABA910740168004F6940 /* WidgetCreatorCSS.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFC80B833EF200BC506C;
+			remoteInfo = WidgetCreatorCSSD;
+		};
+		E51FACF6107401D2004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB7F10740168004F6940 /* Grids.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFC80B833EF200BC506C;
+			remoteInfo = GridsD;
+		};
+		E51FACF8107401D2004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FABA310740168004F6940 /* TabView.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFC80B833EF200BC506C;
+			remoteInfo = TabViewD;
+		};
+		E51FACFA107401D2004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB7910740168004F6940 /* FlowLayout.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFC80B833EF200BC506C;
+			remoteInfo = FlowLayoutD;
+		};
+		E51FAD0210740293004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB7C10740168004F6940 /* FontBrowser.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFBE0B833E9600BC506C;
+			remoteInfo = FontBrowser;
+		};
+		E51FAD0410740293004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FABA010740168004F6940 /* SimpleTouch.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFBE0B833E9600BC506C;
+			remoteInfo = SimpleTouch;
+		};
+		E51FAD0610740293004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB7610740168004F6940 /* FileSelector.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFBE0B833E9600BC506C;
+			remoteInfo = FileSelector;
+		};
+		E51FAD0810740293004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB9D10740168004F6940 /* SimpleLayout.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFBE0B833E9600BC506C;
+			remoteInfo = SimpleLayout;
+		};
+		E51FAD0A10740293004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB7310740168004F6940 /* DragnDrop.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFBE0B833E9600BC506C;
+			remoteInfo = DragnDrop;
+		};
+		E51FAD0C10740293004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB9710740168004F6940 /* Particles.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFBE0B833E9600BC506C;
+			remoteInfo = Particles;
+		};
+		E51FAD0E10740293004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB9A10740168004F6940 /* RSS.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFBE0B833E9600BC506C;
+			remoteInfo = RSS;
+		};
+		E51FAD1010740293004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB7010740168004F6940 /* DirectHTML.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFBE0B833E9600BC506C;
+			remoteInfo = DirectHTML;
+		};
+		E51FAD1210740293004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB9410740168004F6940 /* MessageQueue.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFBE0B833E9600BC506C;
+			remoteInfo = MessageQueue;
+		};
+		E51FAD1410740293004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB6A10740168004F6940 /* CoverFlow.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFBE0B833E9600BC506C;
+			remoteInfo = CoverFlow;
+		};
+		E51FAD1610740293004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB9110740168004F6940 /* MainMenu.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFBE0B833E9600BC506C;
+			remoteInfo = MainMenu;
+		};
+		E51FAD1810740293004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB6D10740168004F6940 /* CSSFontSelection.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFBE0B833E9600BC506C;
+			remoteInfo = CSSFontSelection;
+		};
+		E51FAD1A10740293004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB6710740168004F6940 /* Commands.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFBE0B833E9600BC506C;
+			remoteInfo = Commands;
+		};
+		E51FAD1C10740293004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8E10740168004F6940 /* List.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFBE0B833E9600BC506C;
+			remoteInfo = List;
+		};
+		E51FAD1E10740293004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB6410740168004F6940 /* ComboBox.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFBE0B833E9600BC506C;
+			remoteInfo = ComboBox;
+		};
+		E51FAD2010740293004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8810740168004F6940 /* Knobs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFBE0B833E9600BC506C;
+			remoteInfo = Knobs;
+		};
+		E51FAD2210740293004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8B10740168004F6940 /* LayoutAnimation.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFBE0B833E9600BC506C;
+			remoteInfo = LayoutAnimation;
+		};
+		E51FAD2410740293004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB6110740168004F6940 /* ColorSelector.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFBE0B833E9600BC506C;
+			remoteInfo = ColorSelector;
+		};
+		E51FAD2610740293004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8510740168004F6940 /* HTMLView.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFBE0B833E9600BC506C;
+			remoteInfo = HTMLView;
+		};
+		E51FAD2810740293004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB5B10740168004F6940 /* Buttons.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFBE0B833E9600BC506C;
+			remoteInfo = Buttons;
+		};
+		E51FAD2A10740293004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8210740168004F6940 /* HTMLTree.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFBE0B833E9600BC506C;
+			remoteInfo = HTMLTree;
+		};
+		E51FAD2C10740293004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB5E10740168004F6940 /* Checkerboard.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFBE0B833E9600BC506C;
+			remoteInfo = Checkerboard;
+		};
+		E51FAD2E10740293004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FABA610740168004F6940 /* TextEdit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFBE0B833E9600BC506C;
+			remoteInfo = TextEdit;
+		};
+		E51FAD3010740293004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FABA910740168004F6940 /* WidgetCreatorCSS.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFBE0B833E9600BC506C;
+			remoteInfo = WidgetCreatorCSS;
+		};
+		E51FAD3210740293004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB7F10740168004F6940 /* Grids.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFBE0B833E9600BC506C;
+			remoteInfo = Grids;
+		};
+		E51FAD3410740293004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FABA310740168004F6940 /* TabView.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFBE0B833E9600BC506C;
+			remoteInfo = TabView;
+		};
+		E51FAD3610740293004F6940 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB7910740168004F6940 /* FlowLayout.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFBE0B833E9600BC506C;
+			remoteInfo = FlowLayout;
+		};
+		E543D0F51074047F00A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB4D1073F312004F6940 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E51FACC21074018C004F6940;
+			remoteInfo = AllTutorialsDebug;
+		};
+		E543D0F71074047F00A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB4D1073F312004F6940 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E51FACFE1074020D004F6940;
+			remoteInfo = AllTutorialsRelease;
+		};
+		E543D1A61074076A00A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E543D1991074076A00A01E51 /* AudioPlayer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFBF0B833E9600BC506C /* AudioPlayer.app */;
+			remoteInfo = AudioPlayer;
+		};
+		E543D1A81074076A00A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E543D1991074076A00A01E51 /* AudioPlayer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61A9DFC90B833EF200BC506C /* AudioPlayerD.app */;
+			remoteInfo = AudioPlayerD;
+		};
+		E543D1AA1074079F00A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E543D1991074076A00A01E51 /* AudioPlayer.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFC80B833EF200BC506C /* AudioPlayerD */;
+			remoteInfo = AudioPlayerD;
+		};
+		E543D1AC107407C700A01E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E543D1991074076A00A01E51 /* AudioPlayer.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 61A9DFBE0B833E9600BC506C /* AudioPlayer */;
+			remoteInfo = AudioPlayer;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		E51FAB5B10740168004F6940 /* Buttons.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Buttons.xcodeproj; path = ./Buttons/Buttons.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FAB5E10740168004F6940 /* Checkerboard.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Checkerboard.xcodeproj; path = ./Checkerboard/Checkerboard.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FAB6110740168004F6940 /* ColorSelector.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ColorSelector.xcodeproj; path = ./ColorSelector/ColorSelector.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FAB6410740168004F6940 /* ComboBox.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ComboBox.xcodeproj; path = ./ComboBox/ComboBox.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FAB6710740168004F6940 /* Commands.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Commands.xcodeproj; path = ./Commands/Commands.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FAB6A10740168004F6940 /* CoverFlow.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CoverFlow.xcodeproj; path = ./CoverFlow/CoverFlow.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FAB6D10740168004F6940 /* CSSFontSelection.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CSSFontSelection.xcodeproj; path = ./CSSFontSelection/CSSFontSelection.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FAB7010740168004F6940 /* DirectHTML.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DirectHTML.xcodeproj; path = ./DirectHTML/DirectHTML.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FAB7310740168004F6940 /* DragnDrop.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DragnDrop.xcodeproj; path = ./DragnDrop/DragnDrop.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FAB7610740168004F6940 /* FileSelector.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FileSelector.xcodeproj; path = ./FileSelector/FileSelector.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FAB7910740168004F6940 /* FlowLayout.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FlowLayout.xcodeproj; path = ./FlowLayout/FlowLayout.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FAB7C10740168004F6940 /* FontBrowser.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FontBrowser.xcodeproj; path = ./FontBrowser/FontBrowser.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FAB7F10740168004F6940 /* Grids.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Grids.xcodeproj; path = ./Grids/Grids.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FAB8210740168004F6940 /* HTMLTree.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = HTMLTree.xcodeproj; path = ./HTMLTree/HTMLTree.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FAB8510740168004F6940 /* HTMLView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = HTMLView.xcodeproj; path = ./HTMLView/HTMLView.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FAB8810740168004F6940 /* Knobs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Knobs.xcodeproj; path = ./Knobs/Knobs.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FAB8B10740168004F6940 /* LayoutAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LayoutAnimation.xcodeproj; path = ./LayoutAnimation/LayoutAnimation.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FAB8E10740168004F6940 /* List.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = List.xcodeproj; path = ./List/List.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FAB9110740168004F6940 /* MainMenu.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MainMenu.xcodeproj; path = ./MainMenu/MainMenu.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FAB9410740168004F6940 /* MessageQueue.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MessageQueue.xcodeproj; path = ./MessageQueue/MessageQueue.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FAB9710740168004F6940 /* Particles.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Particles.xcodeproj; path = ./Particles/Particles.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FAB9A10740168004F6940 /* RSS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RSS.xcodeproj; path = ./RSS/RSS.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FAB9D10740168004F6940 /* SimpleLayout.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SimpleLayout.xcodeproj; path = ./SimpleLayout/SimpleLayout.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FABA010740168004F6940 /* SimpleTouch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SimpleTouch.xcodeproj; path = ./SimpleTouch/SimpleTouch.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FABA310740168004F6940 /* TabView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TabView.xcodeproj; path = ./TabView/TabView.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FABA610740168004F6940 /* TextEdit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TextEdit.xcodeproj; path = ./TextEdit/TextEdit.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E51FABA910740168004F6940 /* WidgetCreatorCSS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WidgetCreatorCSS.xcodeproj; path = ./WidgetCreatorCSS/WidgetCreatorCSS.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E543D1991074076A00A01E51 /* AudioPlayer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AudioPlayer.xcodeproj; path = AudioPlayer/AudioPlayer.xcodeproj; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		E51FAB4B1073F312004F6940 = {
+			isa = PBXGroup;
+			children = (
+				E543D1991074076A00A01E51 /* AudioPlayer.xcodeproj */,
+				E51FAB5B10740168004F6940 /* Buttons.xcodeproj */,
+				E51FAB5E10740168004F6940 /* Checkerboard.xcodeproj */,
+				E51FAB6110740168004F6940 /* ColorSelector.xcodeproj */,
+				E51FAB6410740168004F6940 /* ComboBox.xcodeproj */,
+				E51FAB6710740168004F6940 /* Commands.xcodeproj */,
+				E51FAB6A10740168004F6940 /* CoverFlow.xcodeproj */,
+				E51FAB6D10740168004F6940 /* CSSFontSelection.xcodeproj */,
+				E51FAB7010740168004F6940 /* DirectHTML.xcodeproj */,
+				E51FAB7310740168004F6940 /* DragnDrop.xcodeproj */,
+				E51FAB7610740168004F6940 /* FileSelector.xcodeproj */,
+				E51FAB7910740168004F6940 /* FlowLayout.xcodeproj */,
+				E51FAB7C10740168004F6940 /* FontBrowser.xcodeproj */,
+				E51FAB7F10740168004F6940 /* Grids.xcodeproj */,
+				E51FAB8210740168004F6940 /* HTMLTree.xcodeproj */,
+				E51FAB8510740168004F6940 /* HTMLView.xcodeproj */,
+				E51FAB8810740168004F6940 /* Knobs.xcodeproj */,
+				E51FAB8B10740168004F6940 /* LayoutAnimation.xcodeproj */,
+				E51FAB8E10740168004F6940 /* List.xcodeproj */,
+				E51FAB9110740168004F6940 /* MainMenu.xcodeproj */,
+				E51FAB9410740168004F6940 /* MessageQueue.xcodeproj */,
+				E51FAB9710740168004F6940 /* Particles.xcodeproj */,
+				E51FAB9A10740168004F6940 /* RSS.xcodeproj */,
+				E51FAB9D10740168004F6940 /* SimpleLayout.xcodeproj */,
+				E51FABA010740168004F6940 /* SimpleTouch.xcodeproj */,
+				E51FABA310740168004F6940 /* TabView.xcodeproj */,
+				E51FABA610740168004F6940 /* TextEdit.xcodeproj */,
+				E51FABA910740168004F6940 /* WidgetCreatorCSS.xcodeproj */,
+			);
+			sourceTree = "<group>";
+		};
+		E51FAB5C10740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E51FABB310740168004F6940 /* Buttons.app */,
+				E51FABB510740168004F6940 /* ButtonsD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FAB5F10740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E51FABBD10740168004F6940 /* Checkerboard.app */,
+				E51FABBF10740168004F6940 /* CheckerboardD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FAB6210740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E51FABC710740168004F6940 /* ColorSelector.app */,
+				E51FABC910740168004F6940 /* ColorSelectorD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FAB6510740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E51FABD110740168004F6940 /* ComboBox.app */,
+				E51FABD310740168004F6940 /* ComboBoxD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FAB6810740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E51FABDB10740168004F6940 /* Commands.app */,
+				E51FABDD10740168004F6940 /* CommandsD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FAB6B10740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E51FABE510740169004F6940 /* CoverFlow.app */,
+				E51FABE710740169004F6940 /* CoverFlowD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FAB6E10740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E51FABEF10740169004F6940 /* CSSFontSelection.app */,
+				E51FABF110740169004F6940 /* CSSFontSelectionD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FAB7110740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E51FABF910740169004F6940 /* DirectHTML.app */,
+				E51FABFB10740169004F6940 /* DirectHTMLD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FAB7410740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E51FAC0310740169004F6940 /* DragnDrop.app */,
+				E51FAC0510740169004F6940 /* DragnDropD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FAB7710740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E51FAC0D10740169004F6940 /* FileSelector.app */,
+				E51FAC0F10740169004F6940 /* FileSelectorD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FAB7A10740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E51FAC1710740169004F6940 /* FlowLayout.app */,
+				E51FAC1910740169004F6940 /* FlowLayoutD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FAB7D10740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E51FAC2110740169004F6940 /* FontBrowser.app */,
+				E51FAC2310740169004F6940 /* FontBrowserD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FAB8010740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E51FAC2B10740169004F6940 /* Grids.app */,
+				E51FAC2D10740169004F6940 /* GridsD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FAB8310740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E51FAC3610740169004F6940 /* HTMLTree.app */,
+				E51FAC3810740169004F6940 /* HTMLTreeD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FAB8610740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E51FAC4010740169004F6940 /* HTMLView.app */,
+				E51FAC4210740169004F6940 /* HTMLViewD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FAB8910740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E51FAC4A10740169004F6940 /* Knobs.app */,
+				E51FAC4C10740169004F6940 /* KnobsD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FAB8C10740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E51FAC5410740169004F6940 /* LayoutAnimation.app */,
+				E51FAC5610740169004F6940 /* LayoutAnimationD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FAB8F10740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E51FAC5E10740169004F6940 /* List.app */,
+				E51FAC6010740169004F6940 /* ListD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FAB9210740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E51FAC6810740169004F6940 /* MainMenu.app */,
+				E51FAC6A10740169004F6940 /* MainMenuD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FAB9510740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E51FAC7210740169004F6940 /* MessageQueue.app */,
+				E51FAC7410740169004F6940 /* MessageQueueD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FAB9810740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E51FAC8110740169004F6940 /* Particles.app */,
+				E51FAC8310740169004F6940 /* ParticlesD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FAB9B10740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E51FAC8B10740169004F6940 /* RSS.app */,
+				E51FAC8D10740169004F6940 /* RSSD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FAB9E10740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E51FAC9510740169004F6940 /* SimpleLayout.app */,
+				E51FAC9710740169004F6940 /* SimpleLayoutD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FABA110740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E51FAC9F10740169004F6940 /* SimpleTouch.app */,
+				E51FACA110740169004F6940 /* SimpleTouchD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FABA410740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E51FACA910740169004F6940 /* TabView.app */,
+				E51FACAB10740169004F6940 /* TabViewD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FABA710740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E51FACB310740169004F6940 /* TextEdit.app */,
+				E51FACB510740169004F6940 /* TextEditD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E51FABAA10740168004F6940 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E51FACBE10740169004F6940 /* WidgetCreatorCSS.app */,
+				E51FACC010740169004F6940 /* WidgetCreatorCSSD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E543D1A21074076A00A01E51 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E543D1A71074076A00A01E51 /* AudioPlayer.app */,
+				E543D1A91074076A00A01E51 /* AudioPlayerD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXProject section */
+		E51FAB4D1073F312004F6940 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = E51FAB501073F312004F6940 /* Build configuration list for PBXProject "AllTutorials" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 0;
+			mainGroup = E51FAB4B1073F312004F6940;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = E543D1A21074076A00A01E51 /* Products */;
+					ProjectRef = E543D1991074076A00A01E51 /* AudioPlayer.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB5C10740168004F6940 /* Products */;
+					ProjectRef = E51FAB5B10740168004F6940 /* Buttons.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB5F10740168004F6940 /* Products */;
+					ProjectRef = E51FAB5E10740168004F6940 /* Checkerboard.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB6210740168004F6940 /* Products */;
+					ProjectRef = E51FAB6110740168004F6940 /* ColorSelector.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB6510740168004F6940 /* Products */;
+					ProjectRef = E51FAB6410740168004F6940 /* ComboBox.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB6810740168004F6940 /* Products */;
+					ProjectRef = E51FAB6710740168004F6940 /* Commands.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB6B10740168004F6940 /* Products */;
+					ProjectRef = E51FAB6A10740168004F6940 /* CoverFlow.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB6E10740168004F6940 /* Products */;
+					ProjectRef = E51FAB6D10740168004F6940 /* CSSFontSelection.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB7110740168004F6940 /* Products */;
+					ProjectRef = E51FAB7010740168004F6940 /* DirectHTML.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB7410740168004F6940 /* Products */;
+					ProjectRef = E51FAB7310740168004F6940 /* DragnDrop.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB7710740168004F6940 /* Products */;
+					ProjectRef = E51FAB7610740168004F6940 /* FileSelector.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB7A10740168004F6940 /* Products */;
+					ProjectRef = E51FAB7910740168004F6940 /* FlowLayout.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB7D10740168004F6940 /* Products */;
+					ProjectRef = E51FAB7C10740168004F6940 /* FontBrowser.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB8010740168004F6940 /* Products */;
+					ProjectRef = E51FAB7F10740168004F6940 /* Grids.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB8310740168004F6940 /* Products */;
+					ProjectRef = E51FAB8210740168004F6940 /* HTMLTree.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB8610740168004F6940 /* Products */;
+					ProjectRef = E51FAB8510740168004F6940 /* HTMLView.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB8910740168004F6940 /* Products */;
+					ProjectRef = E51FAB8810740168004F6940 /* Knobs.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB8C10740168004F6940 /* Products */;
+					ProjectRef = E51FAB8B10740168004F6940 /* LayoutAnimation.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB8F10740168004F6940 /* Products */;
+					ProjectRef = E51FAB8E10740168004F6940 /* List.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB9210740168004F6940 /* Products */;
+					ProjectRef = E51FAB9110740168004F6940 /* MainMenu.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB9510740168004F6940 /* Products */;
+					ProjectRef = E51FAB9410740168004F6940 /* MessageQueue.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB9810740168004F6940 /* Products */;
+					ProjectRef = E51FAB9710740168004F6940 /* Particles.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB9B10740168004F6940 /* Products */;
+					ProjectRef = E51FAB9A10740168004F6940 /* RSS.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FAB9E10740168004F6940 /* Products */;
+					ProjectRef = E51FAB9D10740168004F6940 /* SimpleLayout.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FABA110740168004F6940 /* Products */;
+					ProjectRef = E51FABA010740168004F6940 /* SimpleTouch.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FABA410740168004F6940 /* Products */;
+					ProjectRef = E51FABA310740168004F6940 /* TabView.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FABA710740168004F6940 /* Products */;
+					ProjectRef = E51FABA610740168004F6940 /* TextEdit.xcodeproj */;
+				},
+				{
+					ProductGroup = E51FABAA10740168004F6940 /* Products */;
+					ProjectRef = E51FABA910740168004F6940 /* WidgetCreatorCSS.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				E51FACC21074018C004F6940 /* AllTutorialsDebug */,
+				E51FACFE1074020D004F6940 /* AllTutorialsRelease */,
+				E543D0F21074047800A01E51 /* AllTutorials (debug & release) */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		E51FABB310740168004F6940 /* Buttons.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = Buttons.app;
+			remoteRef = E51FABB210740168004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FABB510740168004F6940 /* ButtonsD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = ButtonsD.app;
+			remoteRef = E51FABB410740168004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FABBD10740168004F6940 /* Checkerboard.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = Checkerboard.app;
+			remoteRef = E51FABBC10740168004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FABBF10740168004F6940 /* CheckerboardD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = CheckerboardD.app;
+			remoteRef = E51FABBE10740168004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FABC710740168004F6940 /* ColorSelector.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = ColorSelector.app;
+			remoteRef = E51FABC610740168004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FABC910740168004F6940 /* ColorSelectorD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = ColorSelectorD.app;
+			remoteRef = E51FABC810740168004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FABD110740168004F6940 /* ComboBox.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = ComboBox.app;
+			remoteRef = E51FABD010740168004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FABD310740168004F6940 /* ComboBoxD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = ComboBoxD.app;
+			remoteRef = E51FABD210740168004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FABDB10740168004F6940 /* Commands.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = Commands.app;
+			remoteRef = E51FABDA10740168004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FABDD10740168004F6940 /* CommandsD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = CommandsD.app;
+			remoteRef = E51FABDC10740168004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FABE510740169004F6940 /* CoverFlow.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = CoverFlow.app;
+			remoteRef = E51FABE410740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FABE710740169004F6940 /* CoverFlowD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = CoverFlowD.app;
+			remoteRef = E51FABE610740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FABEF10740169004F6940 /* CSSFontSelection.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = CSSFontSelection.app;
+			remoteRef = E51FABEE10740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FABF110740169004F6940 /* CSSFontSelectionD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = CSSFontSelectionD.app;
+			remoteRef = E51FABF010740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FABF910740169004F6940 /* DirectHTML.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = DirectHTML.app;
+			remoteRef = E51FABF810740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FABFB10740169004F6940 /* DirectHTMLD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = DirectHTMLD.app;
+			remoteRef = E51FABFA10740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FAC0310740169004F6940 /* DragnDrop.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = DragnDrop.app;
+			remoteRef = E51FAC0210740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FAC0510740169004F6940 /* DragnDropD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = DragnDropD.app;
+			remoteRef = E51FAC0410740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FAC0D10740169004F6940 /* FileSelector.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = FileSelector.app;
+			remoteRef = E51FAC0C10740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FAC0F10740169004F6940 /* FileSelectorD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = FileSelectorD.app;
+			remoteRef = E51FAC0E10740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FAC1710740169004F6940 /* FlowLayout.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = FlowLayout.app;
+			remoteRef = E51FAC1610740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FAC1910740169004F6940 /* FlowLayoutD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = FlowLayoutD.app;
+			remoteRef = E51FAC1810740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FAC2110740169004F6940 /* FontBrowser.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = FontBrowser.app;
+			remoteRef = E51FAC2010740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FAC2310740169004F6940 /* FontBrowserD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = FontBrowserD.app;
+			remoteRef = E51FAC2210740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FAC2B10740169004F6940 /* Grids.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = Grids.app;
+			remoteRef = E51FAC2A10740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FAC2D10740169004F6940 /* GridsD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = GridsD.app;
+			remoteRef = E51FAC2C10740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FAC3610740169004F6940 /* HTMLTree.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = HTMLTree.app;
+			remoteRef = E51FAC3510740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FAC3810740169004F6940 /* HTMLTreeD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = HTMLTreeD.app;
+			remoteRef = E51FAC3710740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FAC4010740169004F6940 /* HTMLView.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = HTMLView.app;
+			remoteRef = E51FAC3F10740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FAC4210740169004F6940 /* HTMLViewD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = HTMLViewD.app;
+			remoteRef = E51FAC4110740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FAC4A10740169004F6940 /* Knobs.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = Knobs.app;
+			remoteRef = E51FAC4910740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FAC4C10740169004F6940 /* KnobsD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = KnobsD.app;
+			remoteRef = E51FAC4B10740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FAC5410740169004F6940 /* LayoutAnimation.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = LayoutAnimation.app;
+			remoteRef = E51FAC5310740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FAC5610740169004F6940 /* LayoutAnimationD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = LayoutAnimationD.app;
+			remoteRef = E51FAC5510740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FAC5E10740169004F6940 /* List.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = List.app;
+			remoteRef = E51FAC5D10740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FAC6010740169004F6940 /* ListD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = ListD.app;
+			remoteRef = E51FAC5F10740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FAC6810740169004F6940 /* MainMenu.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = MainMenu.app;
+			remoteRef = E51FAC6710740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FAC6A10740169004F6940 /* MainMenuD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = MainMenuD.app;
+			remoteRef = E51FAC6910740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FAC7210740169004F6940 /* MessageQueue.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = MessageQueue.app;
+			remoteRef = E51FAC7110740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FAC7410740169004F6940 /* MessageQueueD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = MessageQueueD.app;
+			remoteRef = E51FAC7310740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FAC8110740169004F6940 /* Particles.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = Particles.app;
+			remoteRef = E51FAC8010740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FAC8310740169004F6940 /* ParticlesD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = ParticlesD.app;
+			remoteRef = E51FAC8210740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FAC8B10740169004F6940 /* RSS.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = RSS.app;
+			remoteRef = E51FAC8A10740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FAC8D10740169004F6940 /* RSSD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = RSSD.app;
+			remoteRef = E51FAC8C10740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FAC9510740169004F6940 /* SimpleLayout.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = SimpleLayout.app;
+			remoteRef = E51FAC9410740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FAC9710740169004F6940 /* SimpleLayoutD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = SimpleLayoutD.app;
+			remoteRef = E51FAC9610740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FAC9F10740169004F6940 /* SimpleTouch.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = SimpleTouch.app;
+			remoteRef = E51FAC9E10740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FACA110740169004F6940 /* SimpleTouchD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = SimpleTouchD.app;
+			remoteRef = E51FACA010740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FACA910740169004F6940 /* TabView.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = TabView.app;
+			remoteRef = E51FACA810740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FACAB10740169004F6940 /* TabViewD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = TabViewD.app;
+			remoteRef = E51FACAA10740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FACB310740169004F6940 /* TextEdit.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = TextEdit.app;
+			remoteRef = E51FACB210740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FACB510740169004F6940 /* TextEditD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = TextEditD.app;
+			remoteRef = E51FACB410740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FACBE10740169004F6940 /* WidgetCreatorCSS.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = WidgetCreatorCSS.app;
+			remoteRef = E51FACBD10740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E51FACC010740169004F6940 /* WidgetCreatorCSSD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = WidgetCreatorCSSD.app;
+			remoteRef = E51FACBF10740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D1A71074076A00A01E51 /* AudioPlayer.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = AudioPlayer.app;
+			remoteRef = E543D1A61074076A00A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E543D1A91074076A00A01E51 /* AudioPlayerD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = AudioPlayerD.app;
+			remoteRef = E543D1A81074076A00A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXTargetDependency section */
+		E51FACC7107401D2004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FontBrowserD;
+			targetProxy = E51FACC6107401D2004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FACC9107401D2004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SimpleTouchD;
+			targetProxy = E51FACC8107401D2004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FACCB107401D2004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FileSelectorD;
+			targetProxy = E51FACCA107401D2004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FACCD107401D2004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SimpleLayoutD;
+			targetProxy = E51FACCC107401D2004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FACCF107401D2004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = DragnDropD;
+			targetProxy = E51FACCE107401D2004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FACD1107401D2004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ParticlesD;
+			targetProxy = E51FACD0107401D2004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FACD3107401D2004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = RSSD;
+			targetProxy = E51FACD2107401D2004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FACD5107401D2004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = DirectHTMLD;
+			targetProxy = E51FACD4107401D2004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FACD7107401D2004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MessageQueueD;
+			targetProxy = E51FACD6107401D2004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FACD9107401D2004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CoverFlowD;
+			targetProxy = E51FACD8107401D2004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FACDB107401D2004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MainMenuD;
+			targetProxy = E51FACDA107401D2004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FACDD107401D2004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CSSFontSelectionD;
+			targetProxy = E51FACDC107401D2004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FACDF107401D2004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CommandsD;
+			targetProxy = E51FACDE107401D2004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FACE1107401D2004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ListD;
+			targetProxy = E51FACE0107401D2004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FACE3107401D2004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ComboBoxD;
+			targetProxy = E51FACE2107401D2004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FACE5107401D2004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = KnobsD;
+			targetProxy = E51FACE4107401D2004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FACE7107401D2004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = LayoutAnimationD;
+			targetProxy = E51FACE6107401D2004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FACE9107401D2004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ColorSelectorD;
+			targetProxy = E51FACE8107401D2004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FACEB107401D2004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = HTMLViewD;
+			targetProxy = E51FACEA107401D2004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FACED107401D2004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ButtonsD;
+			targetProxy = E51FACEC107401D2004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FACEF107401D2004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = HTMLTreeD;
+			targetProxy = E51FACEE107401D2004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FACF1107401D2004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CheckerboardD;
+			targetProxy = E51FACF0107401D2004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FACF3107401D2004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = TextEditD;
+			targetProxy = E51FACF2107401D2004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FACF5107401D2004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = WidgetCreatorCSSD;
+			targetProxy = E51FACF4107401D2004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FACF7107401D2004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GridsD;
+			targetProxy = E51FACF6107401D2004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FACF9107401D2004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = TabViewD;
+			targetProxy = E51FACF8107401D2004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FACFB107401D2004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FlowLayoutD;
+			targetProxy = E51FACFA107401D2004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FAD0310740293004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FontBrowser;
+			targetProxy = E51FAD0210740293004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FAD0510740293004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SimpleTouch;
+			targetProxy = E51FAD0410740293004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FAD0710740293004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FileSelector;
+			targetProxy = E51FAD0610740293004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FAD0910740293004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SimpleLayout;
+			targetProxy = E51FAD0810740293004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FAD0B10740293004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = DragnDrop;
+			targetProxy = E51FAD0A10740293004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FAD0D10740293004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Particles;
+			targetProxy = E51FAD0C10740293004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FAD0F10740293004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = RSS;
+			targetProxy = E51FAD0E10740293004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FAD1110740293004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = DirectHTML;
+			targetProxy = E51FAD1010740293004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FAD1310740293004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MessageQueue;
+			targetProxy = E51FAD1210740293004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FAD1510740293004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CoverFlow;
+			targetProxy = E51FAD1410740293004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FAD1710740293004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MainMenu;
+			targetProxy = E51FAD1610740293004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FAD1910740293004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CSSFontSelection;
+			targetProxy = E51FAD1810740293004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FAD1B10740293004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Commands;
+			targetProxy = E51FAD1A10740293004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FAD1D10740293004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = List;
+			targetProxy = E51FAD1C10740293004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FAD1F10740293004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ComboBox;
+			targetProxy = E51FAD1E10740293004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FAD2110740293004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Knobs;
+			targetProxy = E51FAD2010740293004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FAD2310740293004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = LayoutAnimation;
+			targetProxy = E51FAD2210740293004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FAD2510740293004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ColorSelector;
+			targetProxy = E51FAD2410740293004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FAD2710740293004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = HTMLView;
+			targetProxy = E51FAD2610740293004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FAD2910740293004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Buttons;
+			targetProxy = E51FAD2810740293004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FAD2B10740293004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = HTMLTree;
+			targetProxy = E51FAD2A10740293004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FAD2D10740293004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Checkerboard;
+			targetProxy = E51FAD2C10740293004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FAD2F10740293004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = TextEdit;
+			targetProxy = E51FAD2E10740293004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FAD3110740293004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = WidgetCreatorCSS;
+			targetProxy = E51FAD3010740293004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FAD3310740293004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Grids;
+			targetProxy = E51FAD3210740293004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FAD3510740293004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = TabView;
+			targetProxy = E51FAD3410740293004F6940 /* PBXContainerItemProxy */;
+		};
+		E51FAD3710740293004F6940 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FlowLayout;
+			targetProxy = E51FAD3610740293004F6940 /* PBXContainerItemProxy */;
+		};
+		E543D0F61074047F00A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E51FACC21074018C004F6940 /* AllTutorialsDebug */;
+			targetProxy = E543D0F51074047F00A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D0F81074047F00A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E51FACFE1074020D004F6940 /* AllTutorialsRelease */;
+			targetProxy = E543D0F71074047F00A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D1AB1074079F00A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AudioPlayerD;
+			targetProxy = E543D1AA1074079F00A01E51 /* PBXContainerItemProxy */;
+		};
+		E543D1AD107407C700A01E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AudioPlayer;
+			targetProxy = E543D1AC107407C700A01E51 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		E51FAB4E1073F312004F6940 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = Debug;
+		};
+		E51FAB4F1073F312004F6940 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+			};
+			name = Release;
+		};
+		E51FACC31074018D004F6940 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = AllTutorialsDebug;
+			};
+			name = Debug;
+		};
+		E51FACC41074018D004F6940 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PRODUCT_NAME = AllTutorialsDebug;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		E51FACFF1074020E004F6940 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = AllTutorials;
+			};
+			name = Debug;
+		};
+		E51FAD001074020E004F6940 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PRODUCT_NAME = AllTutorials;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		E543D0F31074047900A01E51 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = "AllTutorials (debug & release)";
+			};
+			name = Debug;
+		};
+		E543D0F41074047900A01E51 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PRODUCT_NAME = "AllTutorials (debug & release)";
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E51FAB501073F312004F6940 /* Build configuration list for PBXProject "AllTutorials" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E51FAB4E1073F312004F6940 /* Debug */,
+				E51FAB4F1073F312004F6940 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E51FACC5107401AB004F6940 /* Build configuration list for PBXAggregateTarget "AllTutorialsDebug" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E51FACC31074018D004F6940 /* Debug */,
+				E51FACC41074018D004F6940 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E51FAD011074022C004F6940 /* Build configuration list for PBXAggregateTarget "AllTutorialsRelease" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E51FACFF1074020E004F6940 /* Debug */,
+				E51FAD001074020E004F6940 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E543D0FE1074049400A01E51 /* Build configuration list for PBXAggregateTarget "AllTutorials (debug & release)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E543D0F31074047900A01E51 /* Debug */,
+				E543D0F41074047900A01E51 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E51FAB4D1073F312004F6940 /* Project object */;
+}
