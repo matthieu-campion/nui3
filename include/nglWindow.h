@@ -876,6 +876,7 @@ protected:
   friend LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam );
   friend LRESULT CALLBACK KbdMsgProc(int code, WPARAM wParam, LPARAM lParam);
 
+  static DWORD WM_CREATED;
 #endif // _WIN32_
 
 #ifdef _WIN32_ // Win32 Drag And drop Support

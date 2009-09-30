@@ -48,7 +48,7 @@ const nglChar* gpWindowErrorTable[] =
   NULL
 };
 
-#define WM_CREATED (WM_USER+1)
+//#define WM_CREATED (WM_USER+1)
 #define MENU_SHOWCONSOLE_ID 42
 
 static uint32 MakePOT(uint32 i)
@@ -341,7 +341,7 @@ public:
         return false;
 
       // Draw the quad:
-      DrawTextureQuad(0, 0, mWidth, mHeight);
+      DrawTextureQuad(0, 0, (float)mWidth, (float)mHeight);
 
       if (!wglReleaseTexImageARB(mPBuffer, WGL_FRONT_LEFT_ARB))
         return false;
@@ -372,7 +372,7 @@ public:
       wglMakeCurrent(dc, rc);
 
       // Draw the quad:
-      DrawTextureQuad(0, 0, mWidth, mHeight);
+      DrawTextureQuad(0, 0, (float)mWidth, (float)mHeight);
     }
 
     return true;
@@ -1048,6 +1048,8 @@ void nglWindow::Exit()
     UnregisterClass(NGL_WINDOW_CLASS,App->GetHInstance());
 }
 
+DWORD nglWindow::WM_CREATED = WM_USER;
+
 bool nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInfo& rInfo, const nglContext* pShared)
 {
   NGL_OUT(_T("nglWindow::InternalInit this = 0x%x\n"), this);
@@ -1057,6 +1059,8 @@ bool nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
  
   if (!mAtom)
   {
+    //WM_CREATED = RegisterWindowMessage(_T("NUI_WM_CREATED"));
+
     WNDCLASS wc;
 
     wc.cbClsExtra    = 0;
@@ -1065,7 +1069,7 @@ bool nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
     wc.hIcon         = LoadIcon( App->GetHInstance(), _T("0") );
     wc.hCursor       = LoadCursor( NULL, IDC_ARROW );
     wc.lpszMenuName  = NULL;
-    wc.style         = CS_DBLCLKS | CS_OWNDC;
+    wc.style         = CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS | CS_OWNDC;
     wc.hbrBackground = NULL;
     wc.lpfnWndProc   = &::WndProc;
     wc.lpszClassName = NGL_WINDOW_CLASS;
@@ -2234,15 +2238,32 @@ LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam 
     {
       CREATESTRUCT *cs = (CREATESTRUCT*) lParam;
       win = (nglWindow*)cs->lpCreateParams;
-      SetWindowLongPtr(hWnd, GWLP_USERDATA, (long)win);
-      PostMessage(hWnd, WM_CREATED, 0, 0);
-      return 0;
+      SetWindowLongPtr(hWnd, GWLP_USERDATA, (LONG_PTR)win);
+      NGL_OUT(_T("WM_NCCREATE: 0x%x 0x%x '%ls'\n"), hWnd, win, cs->lpszName);
+      BOOL res = PostMessage(hWnd, nglWindow::WM_CREATED, 0, 0);
+      if (!res)
+      {
+        DWORD qs = GetQueueStatus(QS_ALLEVENTS);
+        DWORD dwError = GetLastError();
+        TCHAR *errBuf = 0;
+        FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwError, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR)&errBuf,0,NULL);
+        OutputDebugString(errBuf);
+        //Free(errBuf);
+        return FALSE;
+      }
+  
+      return TRUE;
     }
     break;
 
   default:
     {
       win = (nglWindow*)GetWindowLongPtr(hWnd, GWLP_USERDATA);
+      if (!win)
+      {
+        NGL_ASSERT(message != nglWindow::WM_CREATED);
+        NGL_OUT(_T("SKIPPED MSG: 0x%x 0x%x\n"), hWnd, message);
+      }
       return win ?
         win->WndProc(hWnd, message, wParam, lParam) :
         DefWindowProc(hWnd, message, wParam, lParam);
@@ -2262,7 +2283,7 @@ LRESULT CALLBACK KbdMsgProc(int code, WPARAM wParam, LPARAM lParam)
   {
     //NGL_OUT(_T("KbdMsgProc sending keyboard event for our window 0x%x\n"), hwnd2);
 
-    UINT msg = wParam;
+    WPARAM msg = wParam;
     DWORD wParam = pMsg->vkCode;
     DWORD lParam = pMsg->scanCode << 16;
     /*
@@ -2321,25 +2342,6 @@ LRESULT nglWindow::WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
   case WM_GETDLGCODE:
     {
       return DLGC_WANTALLKEYS;
-    }
-    break;
-  case WM_CREATED:
-    {
-      CallOnCreation();
-
-      NGL_Windows.insert(hWnd);
-
-      if (!NGL_MsgHook)
-      {
-        HMODULE dll = NULL;
-        GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT, (LPCWSTR)KbdMsgProc, &dll);
-        if (dll && dll != GetModuleHandle(NULL)) // The dll module is valid if it is != NULL and if it is not the .exe that created this process
-        {
-          NGL_MsgHook = SetWindowsHookEx(WH_KEYBOARD_LL, KbdMsgProc, dll, 0);
-        }
-      }
-      CallOnPaint();
-      return 0;
     }
     break;
 
@@ -2732,28 +2734,50 @@ LRESULT nglWindow::WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 
   default:
     {
-      if (mDragMessageId == message)
+      if (message == WM_CREATED)
       {
-        if (wParam == NGL_GET_DATA_MESSAGE)
-        {
-          nglString mime;
-          FORMATETC * pFormat = (FORMATETC*)lParam;
-          NGL_ASSERT(pFormat);
+        NGL_OUT(_T("Received WM_CREATED: 0x%x 0x%x '%ls'\n"), hWnd, this, GetTitle().GetChars());
+        CallOnCreation();
 
-          if (App->GetDataTypesRegistry().GetRegisteredMimeType(pFormat->cfFormat, mime))
+        NGL_Windows.insert(hWnd);
+
+        if (!NGL_MsgHook)
+        {
+          HMODULE dll = NULL;
+          GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT, (LPCWSTR)KbdMsgProc, &dll);
+          if (dll && dll != GetModuleHandle(NULL)) // The dll module is valid if it is != NULL and if it is not the .exe that created this process
           {
-            OnDragRequestData(mpDropSource->GetDraggedObject(), mime);
+            NGL_MsgHook = SetWindowsHookEx(WH_KEYBOARD_LL, KbdMsgProc, dll, 0);
           }
         }
-        else if (wParam == NGL_STOP_DRAGGING)
-        {
-          bool canceled = (bool)lParam;
-          OnDragStop(canceled);
-        }
+        CallOnPaint();
         return 0;
       }
       else
-        return DefWindowProc( hWnd, message, wParam, lParam );
+      {
+        if (mDragMessageId == message)
+        {
+          if (wParam == NGL_GET_DATA_MESSAGE)
+          {
+            nglString mime;
+            FORMATETC * pFormat = (FORMATETC*)lParam;
+            NGL_ASSERT(pFormat);
+
+            if (App->GetDataTypesRegistry().GetRegisteredMimeType(pFormat->cfFormat, mime))
+            {
+              OnDragRequestData(mpDropSource->GetDraggedObject(), mime);
+            }
+          }
+          else if (wParam == NGL_STOP_DRAGGING)
+          {
+            bool canceled = (lParam != 0) ? true : false;
+            OnDragStop(canceled);
+          }
+          return 0;
+        }
+        else
+          return DefWindowProc( hWnd, message, wParam, lParam );
+      }
     }
   }
   return 0;

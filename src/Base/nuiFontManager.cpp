@@ -1067,6 +1067,7 @@ void nuiFontManager::ScanFolders(bool rescanAllFolders /* = false */)
   Info.XPos = 0;
   Info.YPos = 0;
 
+#if 0
 #ifndef _UIKIT_
   gpWin = new nuiMainWindow(ContextInfo, Info);
   nuiVBox* pBox = new nuiVBox();
@@ -1078,6 +1079,7 @@ void nuiFontManager::ScanFolders(bool rescanAllFolders /* = false */)
   pBox->AddCell(gpFontPathLabel, nuiCenter);
   gpWin->AddChild(pBox);
   gpWin->SetState(nglWindow::eShow);
+#endif  
 #endif  
   
   NGL_DEBUG( NGL_OUT(_T("Scan system fonts....\n")); )
