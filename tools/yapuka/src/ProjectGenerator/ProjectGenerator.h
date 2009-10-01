@@ -35,8 +35,7 @@ private:
   
   bool OnSourceSelected(const nuiEvent& rEvent);
   bool OnTargetSelected(const nuiEvent& rEvent);
-  bool IsTargetValid(const nglString& rTarget);
-  
+
   bool OnGenerateButton(const nuiEvent& rEvent);
   bool OnQuitButton(const nuiEvent& rEvent);
   

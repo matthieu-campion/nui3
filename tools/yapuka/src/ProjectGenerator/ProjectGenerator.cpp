@@ -429,20 +429,7 @@ bool ProjectGenerator::OnTargetTextChanged(const nuiEvent& rEvent)
   nglString text = mpProjectTarget->GetText();
   text.Trim();
 
-  if (!IsTargetValid(text))
-  {
-    mpIconProjectDirectory->SetObjectName(_T("Icon::ProjectDirectory::Disabled"));
-    mProjectTargetPath = nglString::Null;
-    mpProjectFilename->SetText(nglString::Null);
-    mpProjectTarget->SetText(nglString::Null);
-    mNuiCheckProjectFile = false;
-    
-    nglString msg;
-    msg.Format(_T("the target directory name is not valid!\nDon't use any blank or unicode character."));
-    MsgError(msg);
-    return false;
-  }
-  else
+  
     mpIconProjectDirectory->SetObjectName(_T("Icon::ProjectDirectory"));
 
   
@@ -459,21 +446,6 @@ bool ProjectGenerator::OnTargetTextChanged(const nuiEvent& rEvent)
 }
 
 
-bool ProjectGenerator::IsTargetValid(const nglString& rTarget)
-{
-  for (int32 i = 0; i < rTarget.GetLength(); i++)
-  {
-    nglChar car = rTarget.GetChar(i);
-    if ((car == _T('-')) || (car == _T('_')) || (car == _T('/')) || (car == _T('\\')) || nglIsDigit(car))
-      continue;
-    
-    if ((car >= _T('A')) && (car <= _T('z')))
-      continue;
-    
-    return false;
-  }
-  return true;
-}
 
 
 ProjectGenerator::~ProjectGenerator()
