@@ -351,11 +351,18 @@ void nuiAnimation::Stop()
     mCount = 1;
     CallOnFrame();
   }
+  
+  InternalStop();
+}
+
+void nuiAnimation::InternalStop()
+{
   mCount = 0;
   //NGL_OUT(_T("nuiAnimation::Stop at %f\n"), GetDuration());
   mAnimSink.Disconnect(GetTimer()->Tick, &nuiAnimation::OnTick);
   AnimStop();
 }
+
 
 bool nuiAnimation::IsPlaying() const
 {

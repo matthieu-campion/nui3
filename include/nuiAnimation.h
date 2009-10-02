@@ -101,6 +101,7 @@ protected:
   void CallOnFrame();
   bool UpdateTime(); ///< This method returns the number time elapsed since the last call to UpdateTime.
   bool OnTick(const nuiEvent& rEvent);
+  void InternalStop();
 
   double mCurrentTime;
   double mCurrentPosition;

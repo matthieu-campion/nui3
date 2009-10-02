@@ -162,8 +162,6 @@ int nglApplication::Main(int argc, char** argv)
 
   Init(argc, argv);
 
-  CallOnInit();
-
   UIApplicationMain(argc, argv, @"nglUIApplication", @"nglUIApplicationDelegate");
 
   [pPool release];
