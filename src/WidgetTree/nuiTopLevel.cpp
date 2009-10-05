@@ -884,7 +884,7 @@ bool nuiTopLevel::CallKeyDown (const nglKeyEvent& rEvent)
   {
     if (mpFocus->IsEnabled())
     {
-      if (mpFocus->DispatchKeyDown(rEvent))
+      if (mpFocus->DispatchKeyDown(rEvent, mHotKeyMask))
       {
         return true;
       }
@@ -892,7 +892,7 @@ bool nuiTopLevel::CallKeyDown (const nglKeyEvent& rEvent)
   }
   else
   {
-    if (DispatchKeyDown(rEvent))
+    if (DispatchKeyDown(rEvent, mHotKeyMask))
       return true;
   }
 
@@ -903,14 +903,14 @@ bool nuiTopLevel::CallKeyUp (const nglKeyEvent& rEvent)
 {
   if (mpFocus && mpFocus->IsEnabled())
   {
-    if (mpFocus->DispatchKeyUp(rEvent))
+    if (mpFocus->DispatchKeyUp(rEvent, mHotKeyMask))
     {
       return true;
     }
   }
   else
   {
-    if (DispatchKeyUp(rEvent))
+    if (DispatchKeyUp(rEvent, mHotKeyMask))
       return true;
   }
 

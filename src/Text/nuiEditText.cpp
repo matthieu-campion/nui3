@@ -242,6 +242,8 @@ const nuiColor& nuiEditText::GetTextColor() const
 
 void nuiEditText::InitKeyBindings()
 {
+  SetHotKeyMask(nuiCommandKey | nuiWinKey);
+  
   mCommandKeyBindings[NK_HOME] = eGoDocBegin;
   mCommandKeyBindings[NK_END] = eGoDocEnd;
   mKeyBindings[NK_HOME] = eGoLineBegin;

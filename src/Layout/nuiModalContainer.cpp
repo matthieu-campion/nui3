@@ -213,9 +213,9 @@ bool nuiModalContainer::DispatchTextInput(const nglString& rUnicodeText)
 
 
 
-bool nuiModalContainer::DispatchKeyDown(const nglKeyEvent& rEvent)
+bool nuiModalContainer::DispatchKeyDown(const nglKeyEvent& rEvent, nuiKeyModifier Mask)
 {
-  if (TriggerHotKeys(rEvent, true, true))
+  if (TriggerHotKeys(rEvent, true, true, Mask))
   {
     return true;
   }
@@ -225,22 +225,22 @@ bool nuiModalContainer::DispatchKeyDown(const nglKeyEvent& rEvent)
     return true;
   }
   
-  if (TriggerHotKeys(rEvent, true, false))
+  if (TriggerHotKeys(rEvent, true, false, Mask))
   {
     return true;
   }
   
   if (mpParent && !mIsModal)
   {
-    return mpParent->DispatchKeyDown(rEvent);
+    return mpParent->DispatchKeyDown(rEvent, Mask & mHotKeyMask);
   }
   
   return false;
 }
 
-bool nuiModalContainer::DispatchKeyUp(const nglKeyEvent& rEvent)
+bool nuiModalContainer::DispatchKeyUp(const nglKeyEvent& rEvent, nuiKeyModifier Mask)
 {
-  if (TriggerHotKeys(rEvent, false, true))
+  if (TriggerHotKeys(rEvent, false, true, Mask))
   {
     return true;
   }
@@ -250,14 +250,14 @@ bool nuiModalContainer::DispatchKeyUp(const nglKeyEvent& rEvent)
     return true;
   }
   
-  if (TriggerHotKeys(rEvent, false, false))
+  if (TriggerHotKeys(rEvent, false, false, Mask))
   {
     return true;
   }
   
   if (mpParent && !mIsModal)
   {
-    return mpParent->DispatchKeyUp(rEvent);
+    return mpParent->DispatchKeyUp(rEvent, Mask);
   }
   
   return false;

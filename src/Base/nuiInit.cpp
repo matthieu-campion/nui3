@@ -96,6 +96,7 @@ bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
   nuiFontManager::LoadManager(Memory);
 #else
 
+  //#if (!defined TARGET_IPHONE_SIMULATOR) || (!TARGET_IPHONE_SIMULATOR)
   nglPath fontdb(ePathUserAppSettings);
   fontdb += nglString(NUI_FONTDB_PATH);
   
@@ -108,7 +109,8 @@ bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
   {
     nuiFontManager::GetManager();
   }
-
+  //#endif
+  
 #endif
   
   

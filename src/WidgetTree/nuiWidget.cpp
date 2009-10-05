@@ -147,6 +147,7 @@ void nuiWidget::InitDefaultValues()
   mSurfaceColor = nuiColor(255, 255, 255, 255);
   mSurfaceBlendFunc = nuiBlendTransp;  
   mDecorationMode = eDecorationOverdraw;
+  mHotKeyMask = -1;
 }
 
 
@@ -1516,9 +1517,10 @@ nuiWidgetPtr GetPreviousFocussableWidget(nuiWidgetPtr pWidget)
 }
 
 
-bool nuiWidget::DispatchKeyDown(const nglKeyEvent& rEvent)
+bool nuiWidget::DispatchKeyDown(const nglKeyEvent& rEvent, nuiKeyModifier Mask)
 {
-  if (TriggerHotKeys(rEvent, true, true))
+  Mask &= mHotKeyMask;
+  if (TriggerHotKeys(rEvent, true, true, Mask))
   {
     return true;
   }
@@ -1528,7 +1530,7 @@ bool nuiWidget::DispatchKeyDown(const nglKeyEvent& rEvent)
     return true;
   }
   
-  if (TriggerHotKeys(rEvent, true, false))
+  if (TriggerHotKeys(rEvent, true, false, Mask))
   {
     return true;
   }
@@ -1563,15 +1565,16 @@ bool nuiWidget::DispatchKeyDown(const nglKeyEvent& rEvent)
   
   if (mpParent)
   {
-    return mpParent->DispatchKeyDown(rEvent);
+    return mpParent->DispatchKeyDown(rEvent, Mask);
   }
   
   return false;
 }
 
-bool nuiWidget::DispatchKeyUp(const nglKeyEvent& rEvent)
+bool nuiWidget::DispatchKeyUp(const nglKeyEvent& rEvent, nuiKeyModifier Mask)
 {
-  if (TriggerHotKeys(rEvent, false, true))
+  Mask &= mHotKeyMask;
+  if (TriggerHotKeys(rEvent, false, true, Mask))
   {
     return true;
   }
@@ -1581,7 +1584,7 @@ bool nuiWidget::DispatchKeyUp(const nglKeyEvent& rEvent)
     return true;
   }
   
-  if (TriggerHotKeys(rEvent, false, false))
+  if (TriggerHotKeys(rEvent, false, false, Mask))
   {
     return true;
   }
@@ -1595,7 +1598,7 @@ bool nuiWidget::DispatchKeyUp(const nglKeyEvent& rEvent)
   
   if (mpParent)
   {
-    return mpParent->DispatchKeyUp(rEvent);
+    return mpParent->DispatchKeyUp(rEvent, Mask);
   }
   
   return false;
@@ -1622,33 +1625,39 @@ bool nuiWidget::KeyUp(const nglKeyEvent& rEvent)
   return false;
 }
 
-bool nuiWidget::TriggerHotKeys(const nglKeyEvent& rEvent, bool KeyDown,  bool Priority)
+bool nuiWidget::TriggerHotKeys(const nglKeyEvent& rEvent, bool KeyDown,  bool Priority, nuiKeyModifier Mask)
 {
   nuiKeyModifier Modifiers = 0;
   
   if (IsKeyDown(NK_LSHIFT) || IsKeyDown(NK_RSHIFT))
     Modifiers |= nuiShiftKey;
-  
+
   if (IsKeyDown(NK_LALT) || IsKeyDown(NK_RALT))
     Modifiers |= nuiAltKey;
-  
+
   if (IsKeyDown(NK_LCTRL) || IsKeyDown(NK_RCTRL))
     Modifiers |= nuiControlKey;
-  
+
   if (IsKeyDown(NK_LMETA) || IsKeyDown(NK_RMETA))
     Modifiers |= nuiMetaKey;
-  
+
   if (IsKeyDown(NK_MENU))
     Modifiers |= nuiMenuKey;
-    
+
+  if (!Modifiers)
+    Modifiers = nuiNoKey;
+  
+  if (Modifiers != (Modifiers & Mask))
+    return false;
+  
   std::map<nglString, nuiSimpleEventSource<nuiWidgetActivated>*>::const_iterator it = mHotKeyEvents.begin();
   std::map<nglString, nuiSimpleEventSource<nuiWidgetActivated>*>::const_iterator end = mHotKeyEvents.end();
-  
+
   for ( ; it != end; ++it)
   {
     nglString name = it->first;
     nuiHotKey* pHotKey = GetTopLevel()->GetHotKey(name);
-      
+
     if (pHotKey->IsEnabled() && (pHotKey->HasPriority() == Priority))
     {
       bool res = false;
@@ -1656,13 +1665,24 @@ bool nuiWidget::TriggerHotKeys(const nglKeyEvent& rEvent, bool KeyDown,  bool Pr
         res = pHotKey->OnKeyDown(rEvent, Modifiers, *(it->second));
       else
         res = pHotKey->OnKeyUp(rEvent, Modifiers, *(it->second));
-    
+
       if (res)
         return res;
     }
   }
   return false;
 }
+
+void nuiWidget::SetHotKeyMask(nuiKeyModifier Mask)
+{
+  mHotKeyMask = Mask; 
+}
+
+nuiKeyModifier nuiWidget::GetHotKeyMask() const
+{
+  return mHotKeyMask;
+}
+
 
 void nuiWidget::EnableMouseEvent(bool enable)
 {
@@ -3982,6 +4002,8 @@ void nuiWidget::OnPropertyChanged(const nglString& rName, const nglString&rValue
 {
   ApplyCSSForStateChange(NUI_WIDGET_MATCHER_PROPERTY);
 }
+
+
 
 // ***************************************************************************
 

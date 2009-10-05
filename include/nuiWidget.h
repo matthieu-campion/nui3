@@ -182,8 +182,8 @@ public:
   virtual bool IsKeyDown (nglKeyCode Key) const;
   virtual bool DispatchTextInput(const nglString& rUnicodeText);
   virtual void DispatchTextInputCancelled();
-  virtual bool DispatchKeyDown(const nglKeyEvent& rEvent);
-  virtual bool DispatchKeyUp(const nglKeyEvent& rEvent);
+  virtual bool DispatchKeyDown(const nglKeyEvent& rEvent, nuiKeyModifier Mask);
+  virtual bool DispatchKeyUp(const nglKeyEvent& rEvent, nuiKeyModifier Mask);
 
   virtual bool TextInput(const nglString& rUnicodeText);
   virtual void TextInputCancelled();
@@ -458,6 +458,8 @@ public:
   nuiHotKey* GetHotKey(const nglString& rName); ///< Returns the hotkey associated to this name first locally then at top level, NULL if none exists
   nuiSimpleEventSource<nuiWidgetActivated>& GetHotKeyEvent(const nglString& rName); ///< Returns the Event associated to this name (local to widget). NB: No safeguards, only an assertion. Use GetHotKey to check if hotkey is registered locally
   void DelHotKey(const nglString& rName); ///< Removes the event in local map, asks for deletion at top level
+  void SetHotKeyMask(nuiKeyModifier Mask);
+  nuiKeyModifier GetHotKeyMask() const;
   //@}
 
   /** @name Generic Public Events */
@@ -570,7 +572,8 @@ protected:
 
   bool Animate(const nuiEvent& rEvent);
   
-  bool TriggerHotKeys(const nglKeyEvent& rEvent, bool KeyDown,  bool Priority); ///< Helper function. Triggers appropriate hotkeys
+  bool TriggerHotKeys(const nglKeyEvent& rEvent, bool KeyDown,  bool Priority, nuiKeyModifier Mask); ///< Helper function. Triggers appropriate hotkeys
+  nuiKeyModifier mHotKeyMask;
 
   std::map<nuiWidgetElement, nuiColor> mWidgetElementColors;
 

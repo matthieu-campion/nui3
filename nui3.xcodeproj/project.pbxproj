@@ -1951,6 +1951,9 @@
 		E58177D20C3D112C00902DFE /* nglFontInstance.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816D7F0C3CECAB00902DFE /* nglFontInstance.h */; };
 		E58177D30C3D112C00902DFE /* nglInputDeviceInstance.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816E2C0C3CECAB00902DFE /* nglInputDeviceInstance.h */; };
 		E58178170C3D16BA00902DFE /* psmodule.c in Sources */ = {isa = PBXBuildFile; fileRef = E58178100C3D16BA00902DFE /* psmodule.c */; };
+		E58411C81077451500E0CB45 /* nuiBindings.h in Headers */ = {isa = PBXBuildFile; fileRef = E58411C71077451500E0CB45 /* nuiBindings.h */; };
+		E58411C91077451500E0CB45 /* nuiBindings.h in Headers */ = {isa = PBXBuildFile; fileRef = E58411C71077451500E0CB45 /* nuiBindings.h */; };
+		E58411CA1077451500E0CB45 /* nuiBindings.h in Headers */ = {isa = PBXBuildFile; fileRef = E58411C71077451500E0CB45 /* nuiBindings.h */; };
 		E58602270CD6373100C0E789 /* nuiRectView.h in Headers */ = {isa = PBXBuildFile; fileRef = E58602250CD6373100C0E789 /* nuiRectView.h */; };
 		E58602280CD6373100C0E789 /* nuiRectView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E58602260CD6373100C0E789 /* nuiRectView.cpp */; };
 		E58602290CD6373100C0E789 /* nuiRectView.h in Headers */ = {isa = PBXBuildFile; fileRef = E58602250CD6373100C0E789 /* nuiRectView.h */; };
@@ -4024,6 +4027,7 @@
 		E58172BB0C3CED8800902DFE /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		E58172D80C3D103300902DFE /* libnui3D.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libnui3D.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E58178100C3D16BA00902DFE /* psmodule.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = psmodule.c; path = deps/freetype2/src/psnames/psmodule.c; sourceTree = SOURCE_ROOT; };
+		E58411C71077451500E0CB45 /* nuiBindings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiBindings.h; path = include/nuiBindings.h; sourceTree = SOURCE_ROOT; };
 		E58602250CD6373100C0E789 /* nuiRectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiRectView.h; path = ../../include/nuiRectView.h; sourceTree = "<group>"; };
 		E58602260CD6373100C0E789 /* nuiRectView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiRectView.cpp; sourceTree = "<group>"; };
 		E587B7260C56BF440076200A /* nuiFontManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiFontManager.h; path = include/nuiFontManager.h; sourceTree = SOURCE_ROOT; };
@@ -4515,6 +4519,7 @@
 		E57502A20E77EDC500D240DE /* Bindings */ = {
 			isa = PBXGroup;
 			children = (
+				E58411C71077451500E0CB45 /* nuiBindings.h */,
 				E57502A30E77EF6800D240DE /* nuiBindings.cpp */,
 			);
 			name = Bindings;
@@ -6543,6 +6548,7 @@
 				E55A47C1105321F3002AB5CA /* nuiPopupValueAttributeEditor.h in Headers */,
 				E55A47CA1053234C002AB5CA /* nuiComboAttributeEditor.h in Headers */,
 				4024359010568E550089BA0B /* nuiStopWatch.h in Headers */,
+				E58411CA1077451500E0CB45 /* nuiBindings.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7128,6 +7134,7 @@
 				E55A47C2105321F3002AB5CA /* nuiPopupValueAttributeEditor.h in Headers */,
 				E55A47C91053234C002AB5CA /* nuiComboAttributeEditor.h in Headers */,
 				4024358F10568E550089BA0B /* nuiStopWatch.h in Headers */,
+				E58411C91077451500E0CB45 /* nuiBindings.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7710,6 +7717,7 @@
 				4024359110568E550089BA0B /* nuiStopWatch.h in Headers */,
 				E52EA7DE106D688C008598F5 /* nglApplication_Cocoa.h in Headers */,
 				E52EA7F2106D6DF5008598F5 /* nglWindow_Cocoa.h in Headers */,
+				E58411C81077451500E0CB45 /* nuiBindings.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

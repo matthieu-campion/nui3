@@ -108,672 +108,672 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = E543D1991074076A00A01E51 /* AudioPlayer_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C99996020DA6EE97001A7116 /* AudioPlayer_iPhone.app */;
+			remoteGlobalIDString = C99996020DA6EE97001A7116;
 			remoteInfo = AudioPlayer_iPhone;
 		};
 		E543D26410740FC400A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E543D1991074076A00A01E51 /* AudioPlayer_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* AudioPlayer_iPhoneD.app */;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED;
 			remoteInfo = AudioPlayer_iPhoneD;
 		};
 		E543D26A10740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB5B10740168004F6940 /* Buttons_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteGlobalIDString = C99996020DA6EE97001A7116;
 			remoteInfo = Buttons_iPhone;
 		};
 		E543D26C10740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB5B10740168004F6940 /* Buttons_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED;
 			remoteInfo = Buttons_iPhoneD;
 		};
 		E543D27010740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB5E10740168004F6940 /* Checkerboard_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteGlobalIDString = C99996020DA6EE97001A7116;
 			remoteInfo = Checkerboard_iPhone;
 		};
 		E543D27210740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB5E10740168004F6940 /* Checkerboard_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED;
 			remoteInfo = Checkerboard_iPhoneD;
 		};
 		E543D27610740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB6110740168004F6940 /* ColorSelector_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteGlobalIDString = C99996020DA6EE97001A7116;
 			remoteInfo = ColorSelector_iPhone;
 		};
 		E543D27810740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB6110740168004F6940 /* ColorSelector_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED;
 			remoteInfo = ColorSelector_iPhoneD;
 		};
 		E543D27C10740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB6410740168004F6940 /* ComboBox_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteGlobalIDString = C99996020DA6EE97001A7116;
 			remoteInfo = ComboBox_iPhone;
 		};
 		E543D27E10740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB6410740168004F6940 /* ComboBox_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED;
 			remoteInfo = ComboBox_iPhoneD;
 		};
 		E543D28210740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB6A10740168004F6940 /* CoverFlow_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteGlobalIDString = C99996020DA6EE97001A7116;
 			remoteInfo = CoverFlow_iPhone;
 		};
 		E543D28410740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB6A10740168004F6940 /* CoverFlow_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED;
 			remoteInfo = CoverFlow_iPhoneD;
 		};
 		E543D28810740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB6D10740168004F6940 /* CSSFontSelection_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteGlobalIDString = C99996020DA6EE97001A7116;
 			remoteInfo = CSSFontSelection_iPhone;
 		};
 		E543D28A10740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB6D10740168004F6940 /* CSSFontSelection_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED;
 			remoteInfo = CSSFontSelection_iPhoneD;
 		};
 		E543D28E10740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB7010740168004F6940 /* DirectHTML_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteGlobalIDString = C99996020DA6EE97001A7116;
 			remoteInfo = DirectHTML_iPhone;
 		};
 		E543D29010740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB7010740168004F6940 /* DirectHTML_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED;
 			remoteInfo = DirectHTML_iPhoneD;
 		};
 		E543D29410740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB7910740168004F6940 /* FlowLayout_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteGlobalIDString = C99996020DA6EE97001A7116;
 			remoteInfo = FlowLayout_iPhone;
 		};
 		E543D29610740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB7910740168004F6940 /* FlowLayout_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED;
 			remoteInfo = FlowLayout_iPhoneD;
 		};
 		E543D29A10740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB7C10740168004F6940 /* FontBrowser_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteGlobalIDString = C99996020DA6EE97001A7116;
 			remoteInfo = FontBrowser_iPhone;
 		};
 		E543D29C10740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB7C10740168004F6940 /* FontBrowser_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED;
 			remoteInfo = FontBrowser_iPhoneD;
 		};
 		E543D2A010740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB7F10740168004F6940 /* Grids_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteGlobalIDString = C99996020DA6EE97001A7116;
 			remoteInfo = Grids_iPhone;
 		};
 		E543D2A210740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB7F10740168004F6940 /* Grids_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED;
 			remoteInfo = Grids_iPhoneD;
 		};
 		E543D2A610740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB8210740168004F6940 /* HTMLTree_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteGlobalIDString = C99996020DA6EE97001A7116;
 			remoteInfo = HTMLTree_iPhone;
 		};
 		E543D2A810740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB8210740168004F6940 /* HTMLTree_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED;
 			remoteInfo = HTMLTree_iPhoneD;
 		};
 		E543D2AC10740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB8510740168004F6940 /* HTMLView_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteGlobalIDString = C99996020DA6EE97001A7116;
 			remoteInfo = HTMLView_iPhone;
 		};
 		E543D2AE10740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB8510740168004F6940 /* HTMLView_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED;
 			remoteInfo = HTMLView_iPhoneD;
 		};
 		E543D2B210740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB8810740168004F6940 /* Knobs_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteGlobalIDString = C99996020DA6EE97001A7116;
 			remoteInfo = Knobs_iPhone;
 		};
 		E543D2B410740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB8810740168004F6940 /* Knobs_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED;
 			remoteInfo = Knobs_iPhoneD;
 		};
 		E543D2B810740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB8B10740168004F6940 /* LayoutAnimation_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteGlobalIDString = C99996020DA6EE97001A7116;
 			remoteInfo = LayoutAnimation_iPhone;
 		};
 		E543D2BA10740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB8B10740168004F6940 /* LayoutAnimation_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED;
 			remoteInfo = LayoutAnimation_iPhoneD;
 		};
 		E543D2BE10740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB8E10740168004F6940 /* List_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteGlobalIDString = C99996020DA6EE97001A7116;
 			remoteInfo = List_iPhone;
 		};
 		E543D2C010740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB8E10740168004F6940 /* List_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED;
 			remoteInfo = List_iPhoneD;
 		};
 		E543D2C410740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB9410740168004F6940 /* MessageQueue_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteGlobalIDString = C99996020DA6EE97001A7116;
 			remoteInfo = MessageQueue_iPhone;
 		};
 		E543D2C610740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB9410740168004F6940 /* MessageQueue_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED;
 			remoteInfo = MessageQueue_iPhoneD;
 		};
 		E543D2CA10740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB9710740168004F6940 /* Particles_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteGlobalIDString = C99996020DA6EE97001A7116;
 			remoteInfo = Particles_iPhone;
 		};
 		E543D2CC10740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB9710740168004F6940 /* Particles_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED;
 			remoteInfo = Particles_iPhoneD;
 		};
 		E543D2D010740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB9A10740168004F6940 /* RSS_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteGlobalIDString = C99996020DA6EE97001A7116;
 			remoteInfo = RSS_iPhone;
 		};
 		E543D2D210740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB9A10740168004F6940 /* RSS_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED;
 			remoteInfo = RSS_iPhoneD;
 		};
 		E543D2D610740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB9D10740168004F6940 /* SimpleLayout_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteGlobalIDString = C99996020DA6EE97001A7116;
 			remoteInfo = SimpleLayout_iPhone;
 		};
 		E543D2D810740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB9D10740168004F6940 /* SimpleLayout_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED;
 			remoteInfo = SimpleLayout_iPhoneD;
 		};
 		E543D2DC10740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FABA010740168004F6940 /* SimpleTouch_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteGlobalIDString = C99996020DA6EE97001A7116;
 			remoteInfo = SimpleTouch_iPhone;
 		};
 		E543D2DE10740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FABA010740168004F6940 /* SimpleTouch_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED;
 			remoteInfo = SimpleTouch_iPhoneD;
 		};
 		E543D2E210740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FABA310740168004F6940 /* TabView_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteGlobalIDString = C99996020DA6EE97001A7116;
 			remoteInfo = TabView_iPhone;
 		};
 		E543D2E410740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FABA310740168004F6940 /* TabView_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED;
 			remoteInfo = TabView_iPhoneD;
 		};
 		E543D2E810740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FABA610740168004F6940 /* TextEdit_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteGlobalIDString = C99996020DA6EE97001A7116;
 			remoteInfo = TextEdit_iPhone;
 		};
 		E543D2EA10740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FABA610740168004F6940 /* TextEdit_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED;
 			remoteInfo = TextEdit_iPhoneD;
 		};
 		E543D2EE10740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FABA910740168004F6940 /* WidgetCreatorCSS_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C99996020DA6EE97001A7116 /* Buttons_iPhone.app */;
+			remoteGlobalIDString = C99996020DA6EE97001A7116;
 			remoteInfo = WidgetCreatorCSS_iPhone;
 		};
 		E543D2F010740FC500A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FABA910740168004F6940 /* WidgetCreatorCSS_iPhone.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED /* Buttons_iPhoneD.app */;
+			remoteGlobalIDString = C9F5F9330DA84CAB00E078ED;
 			remoteInfo = WidgetCreatorCSS_iPhoneD;
 		};
 		E543D2F21074100B00A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB7C10740168004F6940 /* FontBrowser_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* FontBrowser_iPhoneD */;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED;
 			remoteInfo = FontBrowser_iPhoneD;
 		};
 		E543D2F41074100B00A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FABA010740168004F6940 /* SimpleTouch_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* SimpleTouch_iPhoneD */;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED;
 			remoteInfo = SimpleTouch_iPhoneD;
 		};
 		E543D2F61074100B00A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB9D10740168004F6940 /* SimpleLayout_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* SimpleLayout_iPhoneD */;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED;
 			remoteInfo = SimpleLayout_iPhoneD;
 		};
 		E543D2F81074100B00A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB9710740168004F6940 /* Particles_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* Particles_iPhoneD */;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED;
 			remoteInfo = Particles_iPhoneD;
 		};
 		E543D2FA1074100B00A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB9A10740168004F6940 /* RSS_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* RSS_iPhoneD */;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED;
 			remoteInfo = RSS_iPhoneD;
 		};
 		E543D2FC1074100B00A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB7010740168004F6940 /* DirectHTML_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* DirectHTML_iPhoneD */;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED;
 			remoteInfo = DirectHTML_iPhoneD;
 		};
 		E543D2FE1074100B00A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB9410740168004F6940 /* MessageQueue_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* MessageQueue_iPhoneD */;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED;
 			remoteInfo = MessageQueue_iPhoneD;
 		};
 		E543D3001074100B00A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB6A10740168004F6940 /* CoverFlow_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* CoverFlow_iPhoneD */;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED;
 			remoteInfo = CoverFlow_iPhoneD;
 		};
 		E543D3021074100B00A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB6D10740168004F6940 /* CSSFontSelection_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* CSSFontSelection_iPhoneD */;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED;
 			remoteInfo = CSSFontSelection_iPhoneD;
 		};
 		E543D3041074100B00A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB8E10740168004F6940 /* List_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* List_iPhoneD */;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED;
 			remoteInfo = List_iPhoneD;
 		};
 		E543D3061074100B00A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB6410740168004F6940 /* ComboBox_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* ComboBox_iPhoneD */;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED;
 			remoteInfo = ComboBox_iPhoneD;
 		};
 		E543D3081074100B00A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB8810740168004F6940 /* Knobs_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* Knobs_iPhoneD */;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED;
 			remoteInfo = Knobs_iPhoneD;
 		};
 		E543D30A1074100B00A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB8B10740168004F6940 /* LayoutAnimation_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* LayoutAnimation_iPhoneD */;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED;
 			remoteInfo = LayoutAnimation_iPhoneD;
 		};
 		E543D30C1074100B00A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB6110740168004F6940 /* ColorSelector_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* ColorSelector_iPhoneD */;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED;
 			remoteInfo = ColorSelector_iPhoneD;
 		};
 		E543D30E1074100B00A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB8510740168004F6940 /* HTMLView_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* HTMLView_iPhoneD */;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED;
 			remoteInfo = HTMLView_iPhoneD;
 		};
 		E543D3101074100B00A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E543D1991074076A00A01E51 /* AudioPlayer_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* AudioPlayer_iPhoneD */;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED;
 			remoteInfo = AudioPlayer_iPhoneD;
 		};
 		E543D3121074100B00A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB5B10740168004F6940 /* Buttons_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* Buttons_iPhoneD */;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED;
 			remoteInfo = Buttons_iPhoneD;
 		};
 		E543D3141074100B00A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB8210740168004F6940 /* HTMLTree_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* HTMLTree_iPhoneD */;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED;
 			remoteInfo = HTMLTree_iPhoneD;
 		};
 		E543D3161074100B00A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB5E10740168004F6940 /* Checkerboard_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* Checkerboard_iPhoneD */;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED;
 			remoteInfo = Checkerboard_iPhoneD;
 		};
 		E543D3181074100B00A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FABA610740168004F6940 /* TextEdit_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* TextEdit_iPhoneD */;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED;
 			remoteInfo = TextEdit_iPhoneD;
 		};
 		E543D31A1074100B00A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FABA910740168004F6940 /* WidgetCreatorCSS_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* WidgetCreatorCSS_iPhoneD */;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED;
 			remoteInfo = WidgetCreatorCSS_iPhoneD;
 		};
 		E543D31C1074100B00A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB7F10740168004F6940 /* Grids_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* Grids_iPhoneD */;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED;
 			remoteInfo = Grids_iPhoneD;
 		};
 		E543D31E1074100B00A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FABA310740168004F6940 /* TabView_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* TabView_iPhoneD */;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED;
 			remoteInfo = TabView_iPhoneD;
 		};
 		E543D3201074100B00A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB7910740168004F6940 /* FlowLayout_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED /* FlowLayout_iPhoneD */;
+			remoteGlobalIDString = C9F5F9070DA84CAB00E078ED;
 			remoteInfo = FlowLayout_iPhoneD;
 		};
 		E543D3221074105100A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB7C10740168004F6940 /* FontBrowser_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* FontBrowser_iPhone */;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116;
 			remoteInfo = FontBrowser_iPhone;
 		};
 		E543D3241074105100A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FABA010740168004F6940 /* SimpleTouch_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* SimpleTouch_iPhone */;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116;
 			remoteInfo = SimpleTouch_iPhone;
 		};
 		E543D3261074105100A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB9D10740168004F6940 /* SimpleLayout_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* SimpleLayout_iPhone */;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116;
 			remoteInfo = SimpleLayout_iPhone;
 		};
 		E543D3281074105100A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB9710740168004F6940 /* Particles_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* Particles_iPhone */;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116;
 			remoteInfo = Particles_iPhone;
 		};
 		E543D32A1074105100A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB9A10740168004F6940 /* RSS_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* RSS_iPhone */;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116;
 			remoteInfo = RSS_iPhone;
 		};
 		E543D32C1074105100A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB7010740168004F6940 /* DirectHTML_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* DirectHTML_iPhone */;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116;
 			remoteInfo = DirectHTML_iPhone;
 		};
 		E543D32E1074105100A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB9410740168004F6940 /* MessageQueue_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* MessageQueue_iPhone */;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116;
 			remoteInfo = MessageQueue_iPhone;
 		};
 		E543D3301074105100A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB6A10740168004F6940 /* CoverFlow_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* CoverFlow_iPhone */;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116;
 			remoteInfo = CoverFlow_iPhone;
 		};
 		E543D3321074105100A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB6D10740168004F6940 /* CSSFontSelection_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* CSSFontSelection_iPhone */;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116;
 			remoteInfo = CSSFontSelection_iPhone;
 		};
 		E543D3341074105100A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB8E10740168004F6940 /* List_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* List_iPhone */;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116;
 			remoteInfo = List_iPhone;
 		};
 		E543D3361074105100A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB6410740168004F6940 /* ComboBox_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* ComboBox_iPhone */;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116;
 			remoteInfo = ComboBox_iPhone;
 		};
 		E543D3381074105100A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB8810740168004F6940 /* Knobs_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* Knobs_iPhone */;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116;
 			remoteInfo = Knobs_iPhone;
 		};
 		E543D33A1074105100A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB8B10740168004F6940 /* LayoutAnimation_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* LayoutAnimation_iPhone */;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116;
 			remoteInfo = LayoutAnimation_iPhone;
 		};
 		E543D33C1074105100A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB6110740168004F6940 /* ColorSelector_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* ColorSelector_iPhone */;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116;
 			remoteInfo = ColorSelector_iPhone;
 		};
 		E543D33E1074105100A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB8510740168004F6940 /* HTMLView_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* HTMLView_iPhone */;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116;
 			remoteInfo = HTMLView_iPhone;
 		};
 		E543D3401074105100A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E543D1991074076A00A01E51 /* AudioPlayer_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* AudioPlayer_iPhone */;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116;
 			remoteInfo = AudioPlayer_iPhone;
 		};
 		E543D3421074105100A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB5B10740168004F6940 /* Buttons_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* Buttons_iPhone */;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116;
 			remoteInfo = Buttons_iPhone;
 		};
 		E543D3441074105100A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB8210740168004F6940 /* HTMLTree_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* HTMLTree_iPhone */;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116;
 			remoteInfo = HTMLTree_iPhone;
 		};
 		E543D3461074105100A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB5E10740168004F6940 /* Checkerboard_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* Checkerboard_iPhone */;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116;
 			remoteInfo = Checkerboard_iPhone;
 		};
 		E543D3481074105100A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FABA610740168004F6940 /* TextEdit_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* TextEdit_iPhone */;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116;
 			remoteInfo = TextEdit_iPhone;
 		};
 		E543D34A1074105100A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FABA910740168004F6940 /* WidgetCreatorCSS_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* WidgetCreatorCSS_iPhone */;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116;
 			remoteInfo = WidgetCreatorCSS_iPhone;
 		};
 		E543D34C1074105100A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB7F10740168004F6940 /* Grids_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* Grids_iPhone */;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116;
 			remoteInfo = Grids_iPhone;
 		};
 		E543D34E1074105100A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FABA310740168004F6940 /* TabView_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* TabView_iPhone */;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116;
 			remoteInfo = TabView_iPhone;
 		};
 		E543D3501074105100A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB7910740168004F6940 /* FlowLayout_iPhone.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C99995F80DA6EE97001A7116 /* FlowLayout_iPhone */;
+			remoteGlobalIDString = C99995F80DA6EE97001A7116;
 			remoteInfo = FlowLayout_iPhone;
 		};
 /* End PBXContainerItemProxy section */

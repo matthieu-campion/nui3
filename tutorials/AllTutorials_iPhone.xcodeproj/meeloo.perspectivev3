@@ -296,7 +296,7 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>1</integer>
+									<integer>2</integer>
 									<integer>0</integer>
 								</array>
 							</array>
@@ -318,7 +318,7 @@
 							<real>185</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>0 58 1920 1119 0 0 1920 1178 </string>
+						<string>0 59 1920 1119 0 0 1920 1178 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -334,13 +334,15 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>E51FAB551073F320004F6940</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>&lt;No Editor&gt;</string>
+								<string></string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
 									<dict>
 										<key>PBXProjectModuleGUID</key>
 										<string>E51FAB561073F320004F6940</string>
+										<key>PBXProjectModuleLabel</key>
+										<string></string>
 									</dict>
 									<key>SplitCount</key>
 									<string>1</string>
@@ -355,7 +357,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {1713, 0}}</string>
 								<key>RubberWindowFrame</key>
-								<string>0 58 1920 1119 0 0 1920 1178 </string>
+								<string>0 59 1920 1119 0 0 1920 1178 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -379,6 +381,8 @@
 									<dict>
 										<key>Frame</key>
 										<string>{{10, 27}, {1713, 1046}}</string>
+										<key>RubberWindowFrame</key>
+										<string>0 59 1920 1119 0 0 1920 1178 </string>
 									</dict>
 									<key>Module</key>
 									<string>XCDetailModule</string>
@@ -433,8 +437,6 @@
 									<dict>
 										<key>Frame</key>
 										<string>{{10, 27}, {1713, 1046}}</string>
-										<key>RubberWindowFrame</key>
-										<string>0 58 1920 1119 0 0 1920 1178 </string>
 									</dict>
 									<key>Module</key>
 									<string>PBXBuildResultsModule</string>
@@ -462,11 +464,11 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E543D3B210741A8C00A01E51</string>
+				<string>E5840EFD1074D86C00E0CB45</string>
 				<string>1CA23ED40692098700951B8B</string>
-				<string>E543D3B310741A8C00A01E51</string>
+				<string>E5840EFE1074D86C00E0CB45</string>
 				<string>E51FAB551073F320004F6940</string>
-				<string>E543D3B410741A8C00A01E51</string>
+				<string>E5840EFF1074D86C00E0CB45</string>
 				<string>1CA23EDF0692099D00951B8B</string>
 				<string>1CA23EE00692099D00951B8B</string>
 				<string>1CA23EE10692099D00951B8B</string>
@@ -619,7 +621,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>276044428.51646501</real>
+	<real>276093036.12238401</real>
 	<key>ToolbarConfigUserDefaultsMinorVersion</key>
 	<string>2</string>
 	<key>ToolbarDisplayMode</key>
@@ -639,7 +641,7 @@
 		<string>/Users/meeloo/work/nui3/tutorials/AllTutorials_iPhone.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>0 58 1920 1119 0 0 1920 1178 </string>
+	<string>0 59 1920 1119 0 0 1920 1178 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>

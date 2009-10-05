@@ -19,12 +19,12 @@
 typedef uint32 nuiKeyModifier;
 
 // physical keys
-const nuiKeyModifier nuiNoKey = 0;
-const nuiKeyModifier nuiControlKey = 1 << 0;
-const nuiKeyModifier nuiAltKey = 1 << 1;
-const nuiKeyModifier nuiShiftKey = 1 << 2;
-const nuiKeyModifier nuiMetaKey = 1 << 3; // better known as the "WIN" key on WIN32, and "COMMAND" key on OSX, see below
-const nuiKeyModifier nuiMenuKey = 1 << 4;
+const nuiKeyModifier nuiNoKey = 1 << 0;
+const nuiKeyModifier nuiControlKey = 1 << 1;
+const nuiKeyModifier nuiAltKey = 1 << 2;
+const nuiKeyModifier nuiShiftKey = 1 << 3;
+const nuiKeyModifier nuiMetaKey = 1 << 4; // better known as the "WIN" key on WIN32, and "COMMAND" key on OSX, see below
+const nuiKeyModifier nuiMenuKey = 1 << 5;
 
 // Win / Command / Meta key platform-dependent usage
 const nuiKeyModifier nuiCommandKey = nuiMetaKey; // you can use this one if you're more comfortable with the "COMMAND" key

@@ -28,8 +28,8 @@ public:
   virtual nuiWidgetPtr DispatchMouseMove(const nglMouseInfo& rInfo);
   
   virtual bool DispatchTextInput(const nglString& rUnicodeText);
-  virtual bool DispatchKeyDown(const nglKeyEvent& rEvent);
-  virtual bool DispatchKeyUp(const nglKeyEvent& rEvent);
+  virtual bool DispatchKeyDown(const nglKeyEvent& rEvent, nuiKeyModifier Mask);
+  virtual bool DispatchKeyUp(const nglKeyEvent& rEvent, nuiKeyModifier Mask);
 
   void DoModal();
   void ExitModal();

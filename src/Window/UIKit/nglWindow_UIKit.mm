@@ -97,6 +97,8 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 
 - (id) initWithFrame: (CGRect) rect andNGLWindow: (nglWindow*) pNGLWindow
 {
+  [[UITextField alloc] initWithFrame: CGRectZero];
+  
 //NGL_OUT(_T("[nglUIWindow initWithFrame]\n"));
   if ( (self = [super initWithFrame: rect]) )
   {
@@ -463,25 +465,28 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 /////// Keyboard support:
 - (void)initializeKeyboard
 {
-	mpTextField = [[[UITextField alloc] initWithFrame: CGRectZero] autorelease];
-	mpTextField.delegate = self;
-	/* placeholder so there is something to delete! */
-	mpTextField.text = @" ";	
-	
-	/* set UITextInputTrait properties, mostly to defaults */
-	mpTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
-	mpTextField.autocorrectionType = UITextAutocorrectionTypeNo;
-	mpTextField.enablesReturnKeyAutomatically = NO;
-	mpTextField.keyboardAppearance = UIKeyboardAppearanceAlert;
-	mpTextField.keyboardType = UIKeyboardTypeDefault;
-	mpTextField.returnKeyType = UIReturnKeyDefault;
-	mpTextField.secureTextEntry = NO;	
-	
-	mpTextField.hidden = YES;
-	mKeyboardVisible = NO;
-	/* add the UITextField (hidden) to our view */
-	[self addSubview: mpTextField];
-}
+  mpTextField = NULL;
+  //return;
+  mpTextField = [[UITextField alloc] initWithFrame: CGRectZero];
+  //mpTextField = [[UITextField alloc] init];
+  mpTextField.delegate = self;
+  /* placeholder so there is something to delete! */
+  mpTextField.text = @" ";	
+
+  /* set UITextInputTrait properties, mostly to defaults */
+  mpTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+  mpTextField.autocorrectionType = UITextAutocorrectionTypeNo;
+  mpTextField.enablesReturnKeyAutomatically = NO;
+  mpTextField.keyboardAppearance = UIKeyboardAppearanceAlert;
+  mpTextField.keyboardType = UIKeyboardTypeDefault;
+  mpTextField.returnKeyType = UIReturnKeyDefault;
+  mpTextField.secureTextEntry = NO;	
+
+  mpTextField.hidden = YES;
+  mKeyboardVisible = NO;
+  /* add the UITextField (hidden) to our view */
+  [self addSubview: mpTextField];
+  }
 
 // Show Keyboard
 - (void)showKeyboard
