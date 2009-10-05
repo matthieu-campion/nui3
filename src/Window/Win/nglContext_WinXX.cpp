@@ -217,8 +217,8 @@ nglContextInfo::nglContextInfo (HDC hDC, int PFD)
   }
 
   wglMakeCurrent(NULL, NULL);
-  ReleaseDC(tmpWin, tmpDC);
   wglDeleteContext(rc);
+  ReleaseDC(tmpWin, tmpDC);
   DestroyWindow(tmpWin);
 }
 
@@ -323,9 +323,33 @@ int nglContextInfo::GetPFD(HDC hDC) const
     pfd.dwVisibleMask   = 0;
     pfd.dwDamageMask    = 0;
 
+    WNDCLASS wc;
+
+    wc.cbClsExtra    = 0;
+    wc.cbWndExtra    = 0;
+    wc.hInstance     = App->GetHInstance();
+    wc.hIcon         = LoadIcon( App->GetHInstance(), _T("0") );
+    wc.hCursor       = LoadCursor( NULL, IDC_ARROW );
+    wc.lpszMenuName  = NULL;
+    wc.style         = CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS | CS_OWNDC;
+    wc.hbrBackground = NULL;
+    wc.lpfnWndProc   = &::DefWindowProc;
+    wc.lpszClassName = NGL_CONTEXT_CLASS;
+    if (!RegisterClass( &wc ))
+    {
+      DWORD err = GetLastError();
+      LPVOID lpMsgBuf;
+      FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, err, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR)&lpMsgBuf, 0, NULL);
+      NGL_OUT(_T("context error: %ls"), lpMsgBuf);
+      LocalFree(lpMsgBuf);
+
+      NGL_DEBUG( OutputDebugString(_T("NGL: error: unable to create ") NGL_CONTEXT_CLASS _T(" window class\n")); )
+        return false;
+    }
+
     HWND tmpWin = CreateWindowEx(
       WS_EX_APPWINDOW,
-      _T("STATIC"),
+      NGL_CONTEXT_CLASS,
       _T("Dummy Tmp Window from NGL"),
       WS_POPUP,
       0, 0, 64, 64,
@@ -337,9 +361,17 @@ int nglContextInfo::GetPFD(HDC hDC) const
 
     HDC tmpDC = GetDC(tmpWin);
     int pf = ChoosePixelFormat(tmpDC, &pfd);
-    SetPixelFormat(tmpDC, pf, &pfd);
+    res = SetPixelFormat(tmpDC, pf, &pfd);
     HGLRC rc = wglCreateContext(tmpDC);
-    wglMakeCurrent(tmpDC, rc);
+    res = wglMakeCurrent(tmpDC, rc);
+
+
+    res = wglMakeCurrent(NULL, NULL);
+    res = wglDeleteContext(rc);
+
+    res = ReleaseDC(tmpWin, tmpDC);
+    res = DestroyWindow(tmpWin);
+
 
     PFNWGLCHOOSEPIXELFORMATARBPROC wglChoosePixelFormatARB = NULL;
     wglChoosePixelFormatARB = (PFNWGLCHOOSEPIXELFORMATARBPROC)wglGetProcAddress("wglChoosePixelFormatARB");
@@ -528,6 +560,7 @@ int nglContextInfo::GetPFD(HDC hDC) const
       wglSwapIntervalEXT( VerticalSync ? 1 : 0);
     }
 
+    UnregisterClass(NGL_CONTEXT_CLASS, App->GetHInstance());
     return format;
   }
 }

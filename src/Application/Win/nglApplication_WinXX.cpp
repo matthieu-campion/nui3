@@ -149,6 +149,88 @@ int nglApplication::WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR
   // Get application user args
   ParseCmdLine(lpCmdLine);
 
+
+
+
+
+
+#if 0
+  int res = 0;
+  int format = -1;
+
+  // Create a dummy context to be able to query ARB's wglChoosePixelFormatARB
+  PIXELFORMATDESCRIPTOR pfd;
+  pfd.nSize           = sizeof(PIXELFORMATDESCRIPTOR);
+  pfd.nVersion        = 1;
+  pfd.dwFlags         = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_GENERIC_ACCELERATED;
+  pfd.iPixelType      = PFD_TYPE_RGBA;
+  pfd.cColorBits      = 0; // FIXME
+  pfd.cRedBits        = 0;
+  pfd.cRedShift       = 0;
+  pfd.cGreenBits      = 0;
+  pfd.cGreenShift     = 0;
+  pfd.cBlueBits       = 0;
+  pfd.cBlueShift      = 0;
+  pfd.cAlphaBits      = 0;
+  pfd.cAlphaShift     = 0;
+  pfd.cAccumBits      = 0;
+  pfd.cAccumRedBits   = 0;
+  pfd.cAccumGreenBits = 0;
+  pfd.cAccumBlueBits  = 0;
+  pfd.cAccumAlphaBits = 0;
+  pfd.cDepthBits      = 0;
+  pfd.cStencilBits    = 0;
+  pfd.cAuxBuffers     = 0;
+  pfd.iLayerType      = 0;
+  pfd.bReserved       = 0;
+  pfd.dwLayerMask     = 0;
+  pfd.dwVisibleMask   = 0;
+  pfd.dwDamageMask    = 0;
+
+  WNDCLASS wc;
+
+  wc.cbClsExtra    = 0;
+  wc.cbWndExtra    = 0;
+  wc.hInstance     = hInstance;
+  wc.hIcon         = NULL;
+  wc.hCursor       = NULL;
+  wc.lpszMenuName  = NULL;
+  wc.style         = CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS | CS_OWNDC;
+  wc.hbrBackground = NULL;
+  wc.lpfnWndProc   = &::DefWindowProc;
+  wc.lpszClassName = NGL_CONTEXT_CLASS;
+  if (!RegisterClass( &wc ))
+  {
+    NGL_DEBUG( OutputDebugString(_T("NGL: error: unable to create ") NGL_CONTEXT_CLASS _T(" window class\n")); )
+      return false;
+  }
+
+  HWND tmpWin = CreateWindowEx(
+    WS_EX_APPWINDOW,
+    NGL_CONTEXT_CLASS,
+    _T("Dummy Tmp Window from NGL"),
+    WS_POPUP,
+    0, 0, 64, 64,
+    NULL,
+    NULL,
+    NULL,
+    NULL);
+  NGL_OUT(_T("Create tmp gl ctx window hwnd = 0x%x"), tmpWin);
+
+  HDC tmpDC = ::GetDC(tmpWin);
+  int pf = ChoosePixelFormat(tmpDC, &pfd);
+  res = SetPixelFormat(tmpDC, pf, &pfd);
+  HGLRC rc = wglCreateContext(tmpDC);
+  res = wglMakeCurrent(tmpDC, rc);
+
+  res = wglMakeCurrent(NULL, NULL);
+  res = wglDeleteContext(rc);
+  res = ReleaseDC(tmpWin, tmpDC);
+  res = DestroyWindow(tmpWin);
+
+#endif // 0
+
+
   // We're done, tell it to the user
   CallOnInit();
 

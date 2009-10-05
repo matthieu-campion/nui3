@@ -460,8 +460,6 @@ void nuiGLPainter::SetSize(uint32 w, uint32 h)
 
   mWidth = w;
   mHeight = h;
-
-  nuiCheckForGLErrors();
 }
 
 void nuiGLPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
@@ -1650,24 +1648,30 @@ void nuiCheckForGLErrors()
         break;
       case GL_INVALID_ENUM: 
         NGL_LOG(_T("nuiGLPainter"), NGL_LOG_ALWAYS, _T("An unacceptable value is specified for an enumerated argument. The offending function is ignored, having no side effect other than to set the error flag."));
+        NGL_ASSERT(0);
         break;
       case GL_INVALID_VALUE: 
         NGL_LOG(_T("nuiGLPainter"), NGL_LOG_ALWAYS, _T("A numeric argument is out of range. The offending function is ignored, having no side effect other than to set the error flag."));
+        NGL_ASSERT(0);
         break;
       case GL_INVALID_OPERATION:
         NGL_LOG(_T("nuiGLPainter"), NGL_LOG_ALWAYS, _T("The specified operation is not allowed in the current state. The offending function is ignored, having no side effect other than to set the error flag."));
+        //NGL_ASSERT(0);
         break;
       case GL_STACK_OVERFLOW:
         NGL_LOG(_T("nuiGLPainter"), NGL_LOG_ALWAYS, _T("This function would cause a stack overflow. The offending function is ignored, having no side effect other than to set the error flag."));
+        NGL_ASSERT(0);
         break;
       case GL_STACK_UNDERFLOW:
+    NGL_ASSERT(0);
         NGL_LOG(_T("nuiGLPainter"), NGL_LOG_ALWAYS, _T("This function would cause a stack underflow. The offending function is ignored, having no side effect other than to set the error flag."));
+        NGL_ASSERT(0);
         break;
       case GL_OUT_OF_MEMORY:
         NGL_LOG(_T("nuiGLPainter"), NGL_LOG_ALWAYS, _T("There is not enough memory left to execute the function. The state of OpenGL is undefined, except for the state of the error flags, after this error is recorded."));
+        NGL_ASSERT(0);
         break;
     }
-    NGL_ASSERT(0);
     err = glGetError();
   }
 #endif

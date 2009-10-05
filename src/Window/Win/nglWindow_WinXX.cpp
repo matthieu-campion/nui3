@@ -1227,7 +1227,6 @@ bool nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
     this );
   NGL_OUT(_T("Create nglWindow hwnd = 0x%x"), mOSInfo.WindowHandle);
 
-
   if (!mHWnd)
     return false;
 
@@ -1276,6 +1275,7 @@ bool nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
 
   if(!Build(mHWnd, rContext, pShared) || !MakeCurrent())
     return false;
+
   NGL_DEBUG( nglContext::Dump(NGL_LOG_INFO); );
   if (mTargetAPI == eTargetAPI_OpenGL)
     glViewport(0,0,w,h);

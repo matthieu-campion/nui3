@@ -14,6 +14,7 @@
  */
 #define NGL_CORE_CLASS    _T("nglCoreClass")
 #define NGL_WINDOW_CLASS  _T("nglWindowClass")
+#define NGL_CONTEXT_CLASS  _T("nglContextClass")
 
 
 /* System font settings (used for console)

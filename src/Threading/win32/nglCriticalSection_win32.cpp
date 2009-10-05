@@ -103,5 +103,9 @@ bool nglCriticalSection::_TryLock(nglThread::ID threadID)
   return (res != 0);
 }
 
+CRITICAL_SECTION& nglCriticalSection::GetNativeHandle() const
+{
+  return mpPrivate->mCriticalSection;
+}
 
 

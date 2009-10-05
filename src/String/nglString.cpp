@@ -1408,6 +1408,7 @@ void nglString::DecodeFromXML()
   Replace(nglString("&apos;") , nglString((nglChar)'\''));
   Replace(nglString("&lt;")   , nglString((nglChar)'<'));
   Replace(nglString("&gt;")   , nglString((nglChar)'>'));
+  Replace(nglString("&eacute;"), nglString((nglChar)233));
 }
 
 void nglString::Unescape()

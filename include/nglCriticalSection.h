@@ -39,8 +39,10 @@ protected:
   virtual void _Lock(nglThread::ID threadID);
   virtual void _Unlock();
   virtual bool _TryLock(nglThread::ID threadID);
- 
-    
+
+#ifdef WIN32
+  CRITICAL_SECTION& GetNativeHandle() const;
+#endif
 private:
 
   // Data

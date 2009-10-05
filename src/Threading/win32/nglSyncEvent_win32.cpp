@@ -51,4 +51,8 @@ bool nglSyncEvent::Wait(uint32 time)
   return (res == WAIT_OBJECT_0);
 }
 
+HANDLE nglSyncEvent::GetNativeHandle() const
+{
+  return mpData->mEvent;
+}
 
