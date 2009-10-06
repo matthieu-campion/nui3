@@ -19,6 +19,7 @@
 #include "nuiTheme.h"
 #include "nuiDecoration.h"
 #include "nuiWidgetMatcher.h"
+#include "nuiClampedValueAttributeEditor.h"
 #include <limits>
 
 #ifdef _UIKIT_
@@ -228,6 +229,10 @@ bool nuiWidget::AttrIsVisible()
 }
 
 
+static nuiAttributeEditor* GetAlphaAttributeEditor(void* pTarget, nuiAttribute<float>* pAttribute)
+{
+  return new nuiClampedValueAttributeEditor<float>(nuiAttrib<float>(nuiAttribBase(pTarget, pAttribute)), nuiRange(0, 0, 1, .1, .1, 0));
+}
 
 
 void nuiWidget::InitAttributes()
@@ -459,11 +464,13 @@ void nuiWidget::InitAttributes()
                 nuiMakeDelegate(this, &nuiWidget::SetLayoutAnimationDuration)
                ));
 
-  AddAttribute(new nuiAttribute<float>
-               (nglString(_T("Alpha")), nuiUnitSize,
-                nuiMakeDelegate(this, &nuiWidget::GetAlpha),
-                nuiMakeDelegate(this, &nuiWidget::SetAlpha)
-                ));
+  nuiAttribute<float>* pAlphaAttrib = new nuiAttribute<float>
+  (nglString(_T("Alpha")), nuiUnitSize,
+   nuiMakeDelegate(this, &nuiWidget::GetAlpha),
+   nuiMakeDelegate(this, &nuiWidget::SetAlpha)
+   );
+  pAlphaAttrib->SetEditor(&GetAlphaAttributeEditor);
+  AddAttribute(pAlphaAttrib);
   
 }
 

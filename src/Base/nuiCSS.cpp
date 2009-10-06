@@ -642,6 +642,14 @@ protected:
       //    
       return ReadResourceCreator();
     }
+    else if (mChar == _T('$'))
+    {
+      //******************************************
+      //
+      // Read a Global Variable
+      //    
+      return ReadGlobalVariable();
+    }
     else
     {
       if (!ReadMatchers(mMatchers, _T('{')))
@@ -671,6 +679,86 @@ protected:
       
       return res;
     }
+  }
+  
+  bool ReadGlobalVariable()
+  {
+    // Eat the global variable $
+    if (!GetChar())
+    {
+      SetError(_T("unexpected end of file"));
+      return false;
+    }
+    
+    nglString variable;
+    if (!GetSymbol(variable))
+    {
+      SetError(_T("expected a symbol"));
+      return false;
+    }
+    
+    if (!SkipBlank())
+    {
+      SetError(_T("unexpected end of file"));
+      return false;        
+    }
+    
+    if (mChar != _T('='))
+    {
+      SetError(_T("expected ="));
+      return false;        
+    }
+    
+    if (!GetChar())
+    {
+      SetError(_T("unexpected end of file"));
+      return false;
+    }
+    
+    if (!SkipBlank())
+    {
+      SetError(_T("unexpected end of file"));
+      return false;        
+    }
+    
+    bool res = false;
+    nglString rvalue;
+    if (mChar == _T('"'))
+    {
+      res = GetQuoted(rvalue);
+    }
+    else
+    {
+      res = GetValue(rvalue, true);
+    }
+    
+    if (!res)
+    {
+      SetError(_T("Error while looking for symbol or string action"));
+      return false;
+    }
+    
+    if (!SkipBlank())
+    {
+      SetError(_T("unexpected end of file"));
+      return false;        
+    }
+    
+    if (mChar != _T(';'))
+    {
+      SetError(_T("expected ';'"));
+      return false;        
+    }
+    
+    if (!GetChar())
+    {
+      SetError(_T("unexpected end of file"));
+      return false;
+    }
+    
+    nuiObject::SetGlobalProperty(variable, rvalue);
+    
+    return true;
   }
   
   bool ReadResourceCreator()
