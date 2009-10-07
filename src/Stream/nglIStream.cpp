@@ -61,6 +61,7 @@ int64 nglIStream::ReadDouble (double* pData, int64 Count)
   return Read (pData, Count, sizeof(double));
 }
 
+#if 0
 #define BUFFER_SIZE 128
 
 int64 nglIStream::ReadLine (nglString& rLine, nglTextFormat* pFormat)
@@ -89,24 +90,26 @@ int64 nglIStream::ReadLine (nglString& rLine, nglTextFormat* pFormat)
     while ((parsed < bytes) && (format == eTextNone))
     {
       ending = parsed;
-      if (buffer[parsed] == '\0') format = eTextZero; else
-        if (buffer[parsed] == '\n') format = eTextUnix; else
-          if (buffer[parsed] == '\r')
+      if (buffer[parsed] == '\0')
+        format = eTextZero;
+      else if (buffer[parsed] == '\n')
+        format = eTextUnix;
+      else if (buffer[parsed] == '\r')
+      {
+        // DOS/Mac ambiguity, need one more char to decide
+        if (parsed < (bytes - 1))
+        {
+          // Simply fetch from buffer
+          if (buffer[parsed + 1] == '\n')
           {
-            // DOS/Mac ambiguity, need one more char to decide
-            if (parsed < (bytes - 1))
-            {
-              // Simply fetch from buffer
-              if (buffer[parsed + 1] == '\n')
-              {
-                format = eTextDOS;
-                parsed++;
-              }
-              else
-                format = eTextMac;
-            }
+            format = eTextDOS;
+            parsed++;
           }
-          parsed++;
+          else
+            format = eTextMac;
+        }
+      }
+      parsed++;
     }
 
     if (format != eTextNone)
@@ -132,52 +135,127 @@ int64 nglIStream::ReadLine (nglString& rLine, nglTextFormat* pFormat)
       bytes_total += parsed;
       return bytes_total;
     }
+    else if (buffer[parsed - 1] == '\r')
+    {
+      // DOS/Mac ambiguity
+      // Import chars till \r, see you in next loop
+      int32 to_import = parsed - 1;
+
+      rLine.Import(in_offset, buffer, to_import, *mpConv);
+      if (mpConv->GetState())
+      {
+        //SetError(NGL_ISTREAM_???);
+        return bytes_total;
+      }
+
+      // Forward till \r (next loop will start with it)
+      SetPos(parsed - 1, eStreamForward);
+      bytes_total += parsed - 1;
+    }
     else
-      if (buffer[parsed - 1] == '\r')
+    {
+      // We actually didn't encounter any line ending
+      int32 to_import = parsed;
+
+      rLine.Import(in_offset, buffer, to_import, *mpConv);
+      switch (mpConv->GetState())
       {
-        // DOS/Mac ambiguity
-        // Import chars till \r, see you in next loop
-        int32 to_import = parsed - 1;
+      case eStringConv_OK:
+        break;
 
-        rLine.Import(in_offset, buffer, to_import, *mpConv);
-        if (mpConv->GetState())
-        {
-          //SetError(NGL_ISTREAM_???);
-          return bytes_total;
-        }
+      case eStringConv_NeedInput:
+        // Bad luck, our buffer ends right on a byte sequence, adjust 'parsed'
+        parsed -= to_import;
+        break;
 
-        // Forward till \r (next loop will start with it)
-        SetPos(parsed - 1, eStreamForward);
-        bytes_total += parsed - 1;
+      default:
+        //SetError(NGL_ISTREAM_???);
+        return bytes_total;
       }
-      else
-      {
-        // We actually didn't encounter any line ending
-        int32 to_import = parsed;
-
-        rLine.Import(in_offset, buffer, to_import, *mpConv);
-        switch (mpConv->GetState())
-        {
-        case eStringConv_OK:
-          break;
-
-        case eStringConv_NeedInput:
-          // Bad luck, our buffer ends right on a byte sequence, adjust 'parsed'
-          parsed -= to_import;
-          break;
-
-        default:
-          //SetError(NGL_ISTREAM_???);
-          return bytes_total;
-        }
-        SetPos(parsed, eStreamForward);
-        bytes_total += parsed;
-      }
-      //    conv.RecycleBuffer();
+      SetPos(parsed, eStreamForward);
+      bytes_total += parsed;
+    }
+    //    conv.RecycleBuffer();
   }
 
   return bytes_total;
 }
+#endif
+
+int64 nglIStream::ReadLine (nglString& rLine, nglTextFormat* pFormat)
+{
+  int32 bytes_total = 0;
+  
+  rLine.Wipe();
+  if (pFormat)
+    *pFormat = eTextNone;
+  
+  // Make sure we have a text conversion context
+  if (!GetIConv())
+    return 0;
+  
+  std::vector<char> buffer;
+  
+  nglTextFormat format = eTextNone;
+  int32 parsed = 0, ending = 0, bytes;
+  
+  bool done = false;
+  uint8 c = 0;
+  do
+  {
+    if (ReadUInt8(&c, 1) != 1)
+      done = true;
+    else
+    {
+      bytes_total++;
+      switch (c)
+      {
+        case '\0':
+          format = eTextZero;
+          done = true;
+          break;
+          
+        case '\n':
+          format = eTextUnix;
+          done = true;
+          break;
+          
+        case '\r':
+          {
+            uint32 s = Peek(&c, 1, 1);
+            if (!s || c != '\n')
+            {
+              format = eTextMac;
+              done = true;
+            }
+            else
+            {
+              ReadUInt8(&c, 1);
+              bytes_total++;
+              format = eTextDOS;
+              done = true;
+            }
+            
+          }
+          break;
+        default:
+          buffer.push_back(c);
+          break;
+      }
+    }
+
+  } while (!done && GetState() == eStreamReady);
+
+  if (pFormat)
+    *pFormat = format;
+  
+  int32 o = 0;
+  int32 s = buffer.size();
+  rLine.Import(o, &buffer[0], s, *mpConv);
+    
+  return bytes_total;
+}
+
 
 // FIXME: optimize ! At least add line-ending weighting
 int64 nglIStream::ReadText (nglString& rLine, nglTextFormat* pFormat)
