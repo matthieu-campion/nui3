@@ -168,8 +168,6 @@ nglSize ReadText (nglString& rText, nglTextFormat* pFormat);
   
   //@}
 
-private:
-  bool GetIConv();
 };
 
 #endif // __nglIStream_h__

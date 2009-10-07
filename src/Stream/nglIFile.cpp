@@ -119,3 +119,10 @@ int64 nglIFile::Read (void* pData, int64 WordCount, uint WordSize)
   mpFile->SetEndian(mEndian); // Truely inelegant hack, but somehow still efficient
   return mpFile->Read (pData, WordCount, WordSize);
 }
+
+void nglIFile::SetEndian(nglEndian Endian)
+{
+  mpFile->SetEndian(Endian);
+  nglIStream::SetEndian(Endian);
+}
+

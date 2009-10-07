@@ -115,3 +115,9 @@ void nglOFile::AutoFlush(bool Auto)
   if (mpFile) mpFile->AutoFlush (Auto);
 }
 
+void nglOFile::SetEndian(nglEndian Endian)
+{
+  mpFile->SetEndian(Endian);
+  nglOStream::SetEndian(Endian);
+}
+

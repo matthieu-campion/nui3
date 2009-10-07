@@ -190,14 +190,9 @@ int64 nglIStream::ReadLine (nglString& rLine, nglTextFormat* pFormat)
   if (pFormat)
     *pFormat = eTextNone;
   
-  // Make sure we have a text conversion context
-  if (!GetIConv())
-    return 0;
-  
   std::vector<char> buffer;
   
   nglTextFormat format = eTextNone;
-  int32 parsed = 0, ending = 0, bytes;
   
   bool done = false;
   uint8 c = 0;
@@ -249,9 +244,8 @@ int64 nglIStream::ReadLine (nglString& rLine, nglTextFormat* pFormat)
   if (pFormat)
     *pFormat = format;
   
-  int32 o = 0;
   int32 s = buffer.size();
-  rLine.Import(o, &buffer[0], s, *mpConv);
+  rLine.Import(&buffer[0], s, mTextEncoding);
     
   return bytes_total;
 }
@@ -410,21 +404,3 @@ int64 nglIStream::PipeTo(nglOStream& rTarget, double MaxDuration)
 }
 
 
-/*
-* Internals
-*/
-
-bool nglIStream::GetIConv()
-{
-  if (!mpConv)
-  {
-    mpConv = nglString::GetStringConv(nglEncodingPair(mTextEncoding, eEncodingInternal)); // mTextEncoding -> internal (import)
-    if (!mpConv || mpConv->GetState())
-    {
-      // SetError(?? FIXME)
-      return false;
-    }
-  }
-
-  return true;
-}

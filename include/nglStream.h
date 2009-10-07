@@ -96,7 +96,7 @@ public:
   /*!< Get stream's endianness convention
     \return current endianness convention
   */
-  void SetEndian(nglEndian nglEndian);
+  virtual void SetEndian(nglEndian nglEndian);
   /*!<
     \param nglEndian new endianness convention
 
@@ -114,7 +114,7 @@ public:
     The ReadLine() and WriteText() methods assume text input and output with
     a given text encoding. As a default, it is set to \e eEncodingNative.
   */
-  bool SetTextEncoding (nglTextEncoding Encoding);
+  virtual bool SetTextEncoding (nglTextEncoding Encoding);
   /*!< Set current text encoding
     \param Encoding text encoding
 
@@ -129,7 +129,7 @@ public:
     depending on the platform or a given convention.
     As a default, it is set to \e eTextNative.
   */
-  void SetTextFormat (nglTextFormat Format);
+  virtual void SetTextFormat (nglTextFormat Format);
   /*!< Set current text output format
     \return current text format
 

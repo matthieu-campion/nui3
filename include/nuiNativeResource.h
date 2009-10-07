@@ -40,6 +40,13 @@ public:
   int64 Read (void* pData, int64 WordCount, uint WordSize);
   int64 Peek (void* pData, int64 WordCount, uint WordSize);
 
+  
+  
+  virtual void SetEndian(nglEndian nglEndian);
+  virtual bool SetTextEncoding (nglTextEncoding Encoding);
+  virtual void SetTextFormat (nglTextFormat Format);
+  
+  
 private:
   nglIStream* mpIStream;
   bool mValid; 

@@ -295,3 +295,21 @@ int64 nuiNativeResource::Peek (void* pData, int64 WordCount, uint WordSize)
   return mpIStream->Peek(pData, WordCount, WordSize);
 }
 
+void nuiNativeResource::SetEndian(nglEndian Endian)
+{
+  mpIStream->SetEndian(Endian);
+  nglIStream::SetEndian(Endian);
+}
+
+bool nuiNativeResource::SetTextEncoding(nglTextEncoding Encoding)
+{
+  mpIStream->SetTextEncoding(Encoding);
+  return nglIStream::SetTextEncoding(Encoding);
+}
+
+void nuiNativeResource::SetTextFormat(nglTextFormat Format)
+{
+  mpIStream->SetTextFormat(Format);
+  nglIStream::SetTextFormat(Format);
+}
+

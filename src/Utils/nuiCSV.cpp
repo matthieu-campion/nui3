@@ -52,7 +52,7 @@ bool nuiCSV::Load(nglIStream* pStream, bool CheckNbColumns)
   mDocument.clear();
 
 
-  nglString lineUTF8;
+  nglString line;
   nglString separationString(mSeparationChar);
   std::vector<nglString> tokens;
   uint32 numlines = 0;
@@ -60,12 +60,12 @@ bool nuiCSV::Load(nglIStream* pStream, bool CheckNbColumns)
 
 
   // for each line from input stream
-  while (pStream->ReadLine(lineUTF8, NULL))
+  while (pStream->ReadLine(line, NULL))
   {
     numlines++;
-    nglString line;
-    // #FIXME : I thought that using SetTextEncoding(eUTF8) would spare me to manually import the utf-8 string. apparently it doesn't.
-    line.Import(lineUTF8.GetStdString().c_str(), eUTF8);
+//    nglString line;
+//    // #FIXME : I thought that using SetTextEncoding(eUTF8) would spare me to manually import the utf-8 string. apparently it doesn't.
+//    line.Import(lineUTF8.GetStdString().c_str(), eUTF8);
     
     // first, handle the comment lines, if the comment option has been enabled
     if (mCommentsEnabled && (line.GetChar(0) == mCommentTag))
@@ -77,7 +77,7 @@ bool nuiCSV::Load(nglIStream* pStream, bool CheckNbColumns)
     
     // now, handle the usual text lines : 
     //
-    // first of all, look for the separation chars that would be between ["..."] : they are not separation chars, they're part from the text
+    // first of all, look for the separation chars that would be between ["..."] : they are not separation chars, they're part of the text
     // => replace'em with a special tag, in order to let the tokenization process correctly
     int32 pos1=0;
     int32 pos2,pos3,tmppos;

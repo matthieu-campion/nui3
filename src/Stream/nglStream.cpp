@@ -57,6 +57,7 @@ bool nglStream::SetTextEncoding (nglTextEncoding Encoding)
     // Invalidate current conversion context
     if (mpConv)
     {
+      delete mpConv;
       mpConv = NULL;
     }
   }

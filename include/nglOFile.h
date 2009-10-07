@@ -103,6 +103,9 @@ public:
   virtual void Flush();               ///< Immediatly put pending writes on the storage medium (ignored for a read-only file)
   virtual void AutoFlush(bool Auto);  ///< If auto-flush is set, all write operations will return only once the data is effectively written on the storage medium
   //@}
+
+  virtual void SetEndian(nglEndian Endian);
+  
 private:
   nglFile* mpFile;
   bool     mOwnFile;

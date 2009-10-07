@@ -90,7 +90,7 @@ int64 nglOStream::WriteText (const nglString& rData)
     int64 bytes;
     const char* data;
     int64 todo;
-	int32 buffer_free = BUFFER_SIZE;
+    int32 buffer_free = BUFFER_SIZE;
 
     // FIXME!!!!!!!!!!!
     rData.Export(out_offset, buffer, buffer_free, *mpConv);

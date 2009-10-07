@@ -92,6 +92,8 @@ public:
   virtual int64 Read (void* pData, int64 WordCount, uint WordSize = 1);
   //@}
 
+  virtual void SetEndian(nglEndian Endian);  
+  
 private:
   nglFile* mpFile;
   bool     mOwnFile;
