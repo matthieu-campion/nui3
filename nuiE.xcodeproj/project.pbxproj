@@ -3238,6 +3238,14 @@
 		735F73A00FF2747500E66B1D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6126E4720DA578AD00D2641A /* UIKit.framework */; };
 		BC01753D0F374BB200424AC1 /* nuiURL_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = BC01753C0F374BB200424AC1 /* nuiURL_UIKit.mm */; };
 		BC01753E0F374BB200424AC1 /* nuiURL_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = BC01753C0F374BB200424AC1 /* nuiURL_UIKit.mm */; };
+		BC073E78107CB59700CA5956 /* nuiPopupValueAttributeEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = BC073E77107CB59700CA5956 /* nuiPopupValueAttributeEditor.h */; };
+		BC073E79107CB59700CA5956 /* nuiPopupValueAttributeEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = BC073E77107CB59700CA5956 /* nuiPopupValueAttributeEditor.h */; };
+		BC073E7A107CB59700CA5956 /* nuiPopupValueAttributeEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = BC073E77107CB59700CA5956 /* nuiPopupValueAttributeEditor.h */; };
+		BC073E7B107CB59700CA5956 /* nuiPopupValueAttributeEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = BC073E77107CB59700CA5956 /* nuiPopupValueAttributeEditor.h */; };
+		BC073E7D107CB5AB00CA5956 /* nuiPopupValueAttributeEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC073E7C107CB5AB00CA5956 /* nuiPopupValueAttributeEditor.cpp */; };
+		BC073E7E107CB5AB00CA5956 /* nuiPopupValueAttributeEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC073E7C107CB5AB00CA5956 /* nuiPopupValueAttributeEditor.cpp */; };
+		BC073E7F107CB5AB00CA5956 /* nuiPopupValueAttributeEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC073E7C107CB5AB00CA5956 /* nuiPopupValueAttributeEditor.cpp */; };
+		BC073E80107CB5AB00CA5956 /* nuiPopupValueAttributeEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC073E7C107CB5AB00CA5956 /* nuiPopupValueAttributeEditor.cpp */; };
 		BC1395710EFBF1F60013F537 /* nuiAudioDevice_AudioUnit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC1395700EFBF1F60013F537 /* nuiAudioDevice_AudioUnit.cpp */; };
 		BC1395720EFBF1F60013F537 /* nuiAudioDevice_AudioUnit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC1395700EFBF1F60013F537 /* nuiAudioDevice_AudioUnit.cpp */; };
 		BC1395740EFBF2160013F537 /* nuiAudioDevice_AudioUnit.h in Headers */ = {isa = PBXBuildFile; fileRef = BC1395730EFBF2160013F537 /* nuiAudioDevice_AudioUnit.h */; };
@@ -4556,6 +4564,8 @@
 		735F703F0FF2747500E66B1D /* libnuiE.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libnuiE.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		735F73A30FF2747500E66B1D /* libnuiEd.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libnuiEd.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC01753C0F374BB200424AC1 /* nuiURL_UIKit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = nuiURL_UIKit.mm; path = src/Net/UIKit/nuiURL_UIKit.mm; sourceTree = SOURCE_ROOT; };
+		BC073E77107CB59700CA5956 /* nuiPopupValueAttributeEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiPopupValueAttributeEditor.h; path = include/nuiPopupValueAttributeEditor.h; sourceTree = SOURCE_ROOT; };
+		BC073E7C107CB5AB00CA5956 /* nuiPopupValueAttributeEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiPopupValueAttributeEditor.cpp; path = src/Attributes/nuiPopupValueAttributeEditor.cpp; sourceTree = SOURCE_ROOT; };
 		BC1395700EFBF1F60013F537 /* nuiAudioDevice_AudioUnit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiAudioDevice_AudioUnit.cpp; path = src/Audio/AudioUnit/nuiAudioDevice_AudioUnit.cpp; sourceTree = SOURCE_ROOT; };
 		BC1395730EFBF2160013F537 /* nuiAudioDevice_AudioUnit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiAudioDevice_AudioUnit.h; path = include/nuiAudioDevice_AudioUnit.h; sourceTree = SOURCE_ROOT; };
 		BC3E8CFF0F7D081300C97E27 /* nuiTranslator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiTranslator.h; path = include/nuiTranslator.h; sourceTree = SOURCE_ROOT; };
@@ -4803,6 +4813,8 @@
 				6126D47D0DA5716500D2641A /* nuiPercentAttributeEditor.h */,
 				6126D47E0DA5716500D2641A /* nuiPointAttributeEditor.cpp */,
 				6126D47F0DA5716500D2641A /* nuiPointAttributeEditor.h */,
+				BC073E7C107CB5AB00CA5956 /* nuiPopupValueAttributeEditor.cpp */,
+				BC073E77107CB59700CA5956 /* nuiPopupValueAttributeEditor.h */,
 				6126D4800DA5716500D2641A /* nuiStringAttributeEditor.cpp */,
 				6126D4810DA5716500D2641A /* nuiStringAttributeEditor.h */,
 				6126D4820DA5716500D2641A /* nuiBooleanAttributeEditor.cpp */,
@@ -7142,6 +7154,7 @@
 				E51968060FF8F853007EDF46 /* nuiHTMLHeader.h in Headers */,
 				E51968080FF8F853007EDF46 /* nuiHTMLStyle.h in Headers */,
 				406287A8104BD463009790FF /* nuiFrameView.h in Headers */,
+				BC073E79107CB59700CA5956 /* nuiPopupValueAttributeEditor.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7668,6 +7681,7 @@
 				735F6EE00FF2747500E66B1D /* nglImageGIFCodec.h in Headers */,
 				E519680A0FF8F853007EDF46 /* nuiHTMLHeader.h in Headers */,
 				E519680C0FF8F853007EDF46 /* nuiHTMLStyle.h in Headers */,
+				BC073E7A107CB59700CA5956 /* nuiPopupValueAttributeEditor.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8193,6 +8207,7 @@
 				E519680E0FF8F853007EDF46 /* nuiHTMLHeader.h in Headers */,
 				E51968100FF8F853007EDF46 /* nuiHTMLStyle.h in Headers */,
 				406287BB104BD48B009790FF /* nuiFrameView.h in Headers */,
+				BC073E7B107CB59700CA5956 /* nuiPopupValueAttributeEditor.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8719,6 +8734,7 @@
 				E591C2E50FF1B06C005E5E3D /* nglImageGIFCodec.h in Headers */,
 				E51968020FF8F853007EDF46 /* nuiHTMLHeader.h in Headers */,
 				E51968040FF8F853007EDF46 /* nuiHTMLStyle.h in Headers */,
+				BC073E78107CB59700CA5956 /* nuiPopupValueAttributeEditor.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9162,6 +9178,7 @@
 				E579545D100AC5CD00821E44 /* nglStringConv_iconv.cpp in Sources */,
 				406287A7104BD462009790FF /* nuiFrameView.cpp in Sources */,
 				40E96FC1106D20310099D015 /* nuiAudioDecoder_OSX.cpp in Sources */,
+				BC073E7E107CB5AB00CA5956 /* nuiPopupValueAttributeEditor.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9512,6 +9529,7 @@
 				E519680B0FF8F853007EDF46 /* nuiHTMLStyle.cpp in Sources */,
 				E579545E100AC5CD00821E44 /* nglStringConv_iconv.cpp in Sources */,
 				40E96FC2106D20310099D015 /* nuiAudioDecoder_OSX.cpp in Sources */,
+				BC073E7F107CB5AB00CA5956 /* nuiPopupValueAttributeEditor.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9862,6 +9880,7 @@
 				E579545F100AC5CD00821E44 /* nglStringConv_iconv.cpp in Sources */,
 				406287BA104BD48A009790FF /* nuiFrameView.cpp in Sources */,
 				40E96FC3106D20310099D015 /* nuiAudioDecoder_OSX.cpp in Sources */,
+				BC073E80107CB5AB00CA5956 /* nuiPopupValueAttributeEditor.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10212,6 +10231,7 @@
 				E51968030FF8F853007EDF46 /* nuiHTMLStyle.cpp in Sources */,
 				E579545C100AC5CD00821E44 /* nglStringConv_iconv.cpp in Sources */,
 				40E96FC0106D20310099D015 /* nuiAudioDecoder_OSX.cpp in Sources */,
+				BC073E7D107CB5AB00CA5956 /* nuiPopupValueAttributeEditor.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
