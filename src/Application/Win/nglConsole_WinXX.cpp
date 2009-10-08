@@ -147,7 +147,7 @@ void nglConsole::OnOutput(const nglString& rText)
 
   // I don't care if this is slow, its really mandatory in win32.
   vector<nglString> vec;
-  uint ret=rText.Tokenize(vec,'\n');
+  uint ret=rText.Tokenize(vec, _T('\n'));
   for (uint i=0; i<ret; i++)
   {
     OutputDebugString(vec[i].GetChars()); // fixme! to be removed ?
