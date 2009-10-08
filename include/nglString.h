@@ -626,24 +626,24 @@ public:
 
 	/** @name Simple tokenizer */
 	//@{
-	int32 Tokenize(std::vector<nglString>& rTokens) const;
+	int32 Tokenize(std::vector<nglString>& rTokens, bool CreateEmptyTokens = false) const;
 	/*!< Split a string into tokens, using WhiteSpace as separators
 	\param rTokens tokens are appended to this list
 	\return number of separators found
 	*/
-	int32 Tokenize(std::vector<nglString>& rTokens, nglChar Separator) const;
+	int32 Tokenize(std::vector<nglString>& rTokens, nglChar Separator, bool CreateEmptyTokens = false) const;
 	/*!< Split a string into tokens using \p Separator as separator
 	\param rTokens tokens are appended to this list
 	\param Separator separator char
 	\return number of separators found
 	*/
-	int32 Tokenize(std::vector<nglString>& rTokens, const nglChar* pSeparators) const;
+	int32 Tokenize(std::vector<nglString>& rTokens, const nglChar* pSeparators, bool CreateEmptyTokens = false) const;
 	/*!< Split a string into tokens using chars from the null-terminated \p pSeparators string as separator
 	\param rTokens tokens are appended to this list
 	\param pSeparators separators set
 	\return number of separators found
 	*/
-	int32 Tokenize(std::vector<nglString>& rTokens, const nglString& rSeparators) const;
+	int32 Tokenize(std::vector<nglString>& rTokens, const nglString& rSeparators, bool CreateEmptyTokens = false) const;
 	/*!< Split a string into tokens using chars \p rSeparators as separator
 	\param rTokens tokens are appended to this list
 	\param rSeparators separators set

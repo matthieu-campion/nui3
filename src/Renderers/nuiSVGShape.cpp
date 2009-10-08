@@ -348,7 +348,7 @@ bool nuiSVGElement::Load(nuiXMLNode* pNode)
     for (i=0; i<count; i++)
     {
       std::vector<nglString> coords;
-      tokens[i].Tokenize(coords,',');
+      tokens[i].Tokenize(coords, _T(','));
       if (coords.size() < 2)
         return false; // Invalid coordinates
 

@@ -113,7 +113,7 @@ void nglWindow::ParseArgs (nglContextInfo& rContext, nglWindowInfo& rInfo) /* st
     {
       std::vector<nglString> tokens;
 
-      App->GetArg(i+1).Tokenize(tokens, 'x');
+      App->GetArg(i+1).Tokenize(tokens, _T('x'));
       if (tokens.size() >= 2)
       {
         rInfo.Width  = tokens[0].GetInt();

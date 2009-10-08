@@ -77,7 +77,7 @@ bool nglImagePPMCodec::ReadHeader(nglIStream* pIStream)
       pIStream->ReadLine(line);
     } while(line[0] == '#');
     std::vector<nglString> dim;
-    line.Tokenize(dim, ' ');
+    line.Tokenize(dim, _T(' '));
     mHeader.Width  = dim.size() > 0 ? dim[0].GetInt() : 0;
     mHeader.Height = dim.size() > 1 ? dim[1].GetInt() : 0;
 

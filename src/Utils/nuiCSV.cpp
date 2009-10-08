@@ -62,10 +62,8 @@ bool nuiCSV::Load(nglIStream* pStream, bool CheckNbColumns)
   // for each line from input stream
   while (pStream->ReadLine(line, NULL))
   {
+    //NGL_OUT(_T("%3d ReadLine: %ls\n"), numlines, line.GetChars());
     numlines++;
-//    nglString line;
-//    // #FIXME : I thought that using SetTextEncoding(eUTF8) would spare me to manually import the utf-8 string. apparently it doesn't.
-//    line.Import(lineUTF8.GetStdString().c_str(), eUTF8);
     
     // first, handle the comment lines, if the comment option has been enabled
     if (mCommentsEnabled && (line.GetChar(0) == mCommentTag))
@@ -127,7 +125,7 @@ bool nuiCSV::Load(nglIStream* pStream, bool CheckNbColumns)
     // ok, we can now tokenize the line, without making mistakes
     //
     tokens.clear();
-    line.Tokenize(tokens, mSeparationChar);
+    line.Tokenize(tokens, mSeparationChar, true);
     
     // check number of columns
     uint32 nbcols = tokens.size();
@@ -175,6 +173,9 @@ bool nuiCSV::Load(nglIStream* pStream, bool CheckNbColumns)
     
     // now we can add this line to the document
     InsertLine(tokens);
+    
+    if (pStream->GetState() != eStreamReady)
+      return true;
   }
    
   

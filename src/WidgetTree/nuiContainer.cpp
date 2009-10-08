@@ -261,7 +261,7 @@ nuiWidgetPtr nuiContainer::GetChild(const nglString& rName, bool recurse )
 
   // Get all the nodes and remove the slashes:
   std::vector<nglString> tokens;
-  name.Tokenize(tokens, '/');
+  name.Tokenize(tokens, _T('/'));
 
   size_t i;
   size_t count = tokens.size();

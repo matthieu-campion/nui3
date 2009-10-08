@@ -425,7 +425,7 @@ bool nuiFileTree::SetPath(const nglPath& rPath)
   nglPath path(rPath);
   path.MakeRelativeTo(GetRootPath());
   std::vector<nglString> tokens;
-  path.GetPathName().Tokenize(tokens, '/');
+  path.GetPathName().Tokenize(tokens, _T('/'));
   nuiTreeNodePtr pNode = mpTreeView->GetTree();
   
   if (!tokens.empty())

@@ -2276,22 +2276,22 @@ int32 nglString::Contains(const nglString& rSource, bool CaseSensitive) const
 }
 
 
-int32 nglString::Tokenize(std::vector<nglString>& rTokens) const
+int32 nglString::Tokenize(std::vector<nglString>& rTokens, bool CreateEmptyTokens) const
 {
-  return Tokenize(rTokens, WhiteSpace.GetChars());
+  return Tokenize(rTokens, WhiteSpace.GetChars(), CreateEmptyTokens);
 }
 
 
-int32 nglString::Tokenize(std::vector<nglString>& rTokens, nglChar Separator) const
+int32 nglString::Tokenize(std::vector<nglString>& rTokens, nglChar Separator, bool CreateEmptyTokens) const
 {
   nglChar sep[2];
 
   sep[0] = Separator;
   sep[1] = Zero;
-  return Tokenize(rTokens, sep);
+  return Tokenize(rTokens, sep, CreateEmptyTokens);
 }
 
-int32 nglString::Tokenize(std::vector<nglString>& rTokens, const nglChar* pSeparators) const
+int32 nglString::Tokenize(std::vector<nglString>& rTokens, const nglChar* pSeparators, bool CreateEmptyTokens) const
 {
   if (IsEmpty() || !pSeparators/* || !*pSeparators*/)
     return -1;
@@ -2300,25 +2300,25 @@ int32 nglString::Tokenize(std::vector<nglString>& rTokens, const nglChar* pSepar
   while (index < GetLength())
   {
     int32 len = (int32) wcscspn(&(mString[index]), pSeparators);
-    if (len > 0)
+    if (len > 0 || (!len && CreateEmptyTokens))
     {
       nglString token;
 
-      token.Copy(&(mString[index]), len);
+      if (len)
+        token.Copy(&(mString[index]), len);
+
       rTokens.push_back(token);
       count++;
     }
-    else
-      index += 1;
-    index += len;
+    index += len + 1;
   }
 
   return count;
 }
 
-int32 nglString::Tokenize(std::vector<nglString>& rTokens, const nglString& rSeparators) const
+int32 nglString::Tokenize(std::vector<nglString>& rTokens, const nglString& rSeparators, bool CreateEmptyTokens) const
 {
-  return Tokenize(rTokens, rSeparators.GetChars());
+  return Tokenize(rTokens, rSeparators.GetChars(), CreateEmptyTokens);
 }
 
 

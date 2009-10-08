@@ -218,7 +218,7 @@ bool nuiColor::SetValue(const nglString& rString)
     nglString str = rString.Extract(rString.Find('(')+1);
     str.TrimRight(')');
     std::vector<nglString> tokens;
-    str.Tokenize(tokens, ',');
+    str.Tokenize(tokens, _T(','));
     
     for (uint32 i = 0; i < tokens.size(); i++)
       tokens[i].Trim();
