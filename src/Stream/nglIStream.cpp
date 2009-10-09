@@ -132,7 +132,7 @@ int64 nglIStream::ReadLine (nglString& rLine, nglTextFormat* pFormat)
 
 
 // FIXME: optimize ! At least add line-ending weighting
-int64 nglIStream::ReadText (nglString& rLine, nglTextFormat* pFormat)
+int64 nglIStream::ReadText(nglString& rLine, nglTextFormat* pFormat)
 {
   nglString line;
   int64 done = 0, bytes;
@@ -142,7 +142,7 @@ int64 nglIStream::ReadText (nglString& rLine, nglTextFormat* pFormat)
   rLine.Wipe();
   while ((bytes = ReadLine(line, &lineFormat)))
   {
-    rLine += line;
+    rLine += line + _T("\n");
     
     if (lineFormat == eTextDOS)
       rLine += _T("\r\n");

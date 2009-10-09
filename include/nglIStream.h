@@ -66,8 +66,8 @@ public:
     See also SetTextEncoding() and GetTextEncoding().
 
     \a rLine is always emptied (even if an error occurred), and then filled with the
-    encountered text line. This string does contain the \\n line ending character,
-    unless it was the last line of the stream and it didn't have a line ending (in
+    encountered text line. This string does NOT contain the \\n line ending character,
+    even if it was the last line of the stream or it didn't have a line ending (in
     this case \p *pFormat will also be set to \e eTextNone).
 
     \b Example : parse a stream line by line, display each of them with a number
@@ -79,7 +79,7 @@ void DumpLines(nglIStream& rInput)
   uint count = 0;
 
   while (rInput.ReadLine(line))
-    NGL_OUT (_T("%d: %ls"), ++count, line.GetChars());
+    NGL_OUT (_T("%d: %ls\n"), ++count, line.GetChars());
 
   NGL_OUT(_T("Total: %d line%ls\n"), count, PLURAL(count));
 }
@@ -102,7 +102,7 @@ nglSize ReadText (nglString& rText, nglTextFormat* pFormat);
   nglSize done = 0;
 
   while ((done =+ ReadLine(line)))
-    rText += line;
+    rText += line + _T("\n");
 
   return done;
 }
