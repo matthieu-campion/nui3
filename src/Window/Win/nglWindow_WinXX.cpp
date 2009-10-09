@@ -1138,7 +1138,7 @@ bool nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
     if (nglVideoMode::Find(mode, w, h, bitdepth) && mode.SetMode())
     {
       ws  = WS_POPUP;
-      wsx = WS_EX_APPWINDOW;
+      wsx = WS_EX_APPWINDOW | WS_EX_TOPMOST;
       x = 0;
       y = 0;
     }
