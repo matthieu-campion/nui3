@@ -872,28 +872,28 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = E543D1991074076A00A01E51 /* AudioPlayer.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 61A9DFBF0B833E9600BC506C /* AudioPlayer.app */;
+			remoteGlobalIDString = 61A9DFBF0B833E9600BC506C;
 			remoteInfo = AudioPlayer;
 		};
 		E543D1A81074076A00A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E543D1991074076A00A01E51 /* AudioPlayer.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 61A9DFC90B833EF200BC506C /* AudioPlayerD.app */;
+			remoteGlobalIDString = 61A9DFC90B833EF200BC506C;
 			remoteInfo = AudioPlayerD;
 		};
 		E543D1AA1074079F00A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E543D1991074076A00A01E51 /* AudioPlayer.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 61A9DFC80B833EF200BC506C /* AudioPlayerD */;
+			remoteGlobalIDString = 61A9DFC80B833EF200BC506C;
 			remoteInfo = AudioPlayerD;
 		};
 		E543D1AC107407C700A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E543D1991074076A00A01E51 /* AudioPlayer.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 61A9DFBE0B833E9600BC506C /* AudioPlayer */;
+			remoteGlobalIDString = 61A9DFBE0B833E9600BC506C;
 			remoteInfo = AudioPlayer;
 		};
 /* End PBXContainerItemProxy section */
