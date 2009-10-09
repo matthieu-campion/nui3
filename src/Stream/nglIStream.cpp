@@ -125,7 +125,8 @@ int64 nglIStream::ReadLine (nglString& rLine, nglTextFormat* pFormat)
     *pFormat = format;
   
   int32 s = buffer.size();
-  rLine.Import(&buffer[0], s, mTextEncoding);
+  if (s)
+    rLine.Import(&buffer[0], s, mTextEncoding);
     
   return bytes_total;
 }
@@ -142,7 +143,7 @@ int64 nglIStream::ReadText(nglString& rLine, nglTextFormat* pFormat)
   rLine.Wipe();
   while ((bytes = ReadLine(line, &lineFormat)))
   {
-    rLine += line + _T("\n");
+    rLine += line;
     
     if (lineFormat == eTextDOS)
       rLine += _T("\r\n");
