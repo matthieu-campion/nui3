@@ -376,15 +376,14 @@ void nuiTopLevel::AdviseObjectDeath(nuiWidgetPtr pWidget)
     ++it;
   }
 
-//   nglTouchId touchId;
-//   while ( (touchId = GetGrabId(pWidget)) >= 0 )
-//   {
-//     std::list<nuiWidgetPtr>& rGrabStack = GetGrabStack(touchId);
-//     rGrabStack.remove(pWidget);
-//     NGL_ASSERT(mpGrab.find(touchId) != mpGrab.end());
-//     mpGrab.erase(mpGrab.find(touchId));
-//   }
-
+  nuiGrabMap::iterator it2 = mpGrab.begin();
+  while (it2 != mpGrab.end())
+  {
+    if (pWidget == it2->second)
+      it2->second = PopGrab(it2->first);
+    ++it2;
+  }
+  
   if (mpFocus == pWidget)
   {
     mpFocus = NULL;

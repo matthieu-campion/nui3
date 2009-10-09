@@ -9,6 +9,34 @@
 
 #include "AudioEngine.h"
 
+#include "nuiClampedValueAttributeEditor.h"
+#include "nuiBooleanAttributeEditor.h"
+
+inline float GainToDB(float Gain)
+{
+  static const float logf10 = logf(10.0f);
+  static const float db_mul_constf = 20.0f / logf10;
+  if (Gain == 0.0f)
+    return (-144.0f);
+  else
+  {
+    float  dB;
+    
+    dB = logf(Gain) * db_mul_constf;
+    
+    if (dB < -144.0f)
+      dB = -144.0f;
+    
+    return (dB);    // convert factor to dB
+  }
+}
+
+inline float DBToGain(float dB)
+{
+  float Gain = powf(10.0f, dB / 20.0f);
+  return Gain;
+}
+
 
 AudioEngine::AudioEngine(double SampleRate, uint32 BufferSize)
 : mpAudioDevice(NULL),
@@ -60,15 +88,17 @@ void AudioEngine::InitAttributes()
                (nglString(_T("length")), nuiUnitCustom,
                 nuiMakeDelegate(this, &AudioEngine::GetSampleFrames)));
   
-  AddAttribute(new nuiAttribute<float>
-               (nglString(_T("gain")), nuiUnitRangeKnob,
-                nuiMakeDelegate(this, &AudioEngine::GetGain),
-                nuiMakeDelegate(this, &AudioEngine::SetGain)));
+  nuiAttribute<float>* pGainAttrib = new nuiAttribute<float>
+               (nglString(_T("gain")), nuiUnitCustom,
+                nuiMakeDelegate(this, &AudioEngine::GetGainDb),
+                nuiMakeDelegate(this, &AudioEngine::SetGainDb));  
+  AddAttribute(pGainAttrib);
   
-  AddAttribute(new nuiAttribute<bool>
-               (nglString(_T("mute")), nuiUnitOnOff,
+  nuiAttribute<bool>* pMuteAttrib = new nuiAttribute<bool>
+               (nglString(_T("mute")), nuiUnitCustom,
                 nuiMakeDelegate(this, &AudioEngine::IsMute),
-                nuiMakeDelegate(this, &AudioEngine::SetMute)));
+                nuiMakeDelegate(this, &AudioEngine::SetMute));
+  AddAttribute(pMuteAttrib);
 }
 
 void AudioEngine::Process(const std::vector<const float*>& rInput, const std::vector<float*>& rOutput, uint32 SampleFrames)
@@ -234,6 +264,17 @@ void AudioEngine::SetPosition(uint64 position)
 double AudioEngine::GetSampleRate() const
 {
   return mSampleRate;
+}
+
+float AudioEngine::GetGainDb()
+{
+  float Db = GainToDB(mGain);
+  return Db;
+}
+
+void AudioEngine::SetGainDb(float Db)
+{
+  mGain = DBToGain(Db);
 }
 
 float AudioEngine::GetGain()

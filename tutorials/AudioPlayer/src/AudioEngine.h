@@ -32,6 +32,8 @@ public:
   
   float GetGain();
   void SetGain(float gain);
+  float GetGainDb();
+  void SetGainDb(float Db);
   
   bool IsMute();
   void SetMute(bool mute);
