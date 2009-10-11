@@ -41,7 +41,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = BC1A619D0E63311700BDD037 /* nui3.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E592C5140EFE8CCC00340B35 /* libnui3D cocoa.a */;
+			remoteGlobalIDString = E592C5140EFE8CCC00340B35;
 			remoteInfo = "nui3D cocoa";
 		};
 /* End PBXContainerItemProxy section */
@@ -247,12 +247,11 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREFIX_HEADER = "";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"_GLIBCXX_DEBUG=1",
-					"_GLIBCXX_DEBUG_PEDANTIC=1",
-				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = Default;
 		};
@@ -261,12 +260,15 @@
 			baseConfigurationReference = 5048396D09E3307300765E4B /* testGLUTintegrationProj.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ONLY_ACTIVE_ARCH_PRE_XCODE_3_1)";
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				ARCHS = i386;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = 4.0;
 				HEADER_SEARCH_PATHS = ../../include;
-				ONLY_ACTIVE_ARCH_PRE_XCODE_3_1 = "$(NATIVE_ARCH)";
-				OTHER_LDFLAGS = "-lz";
+				OTHER_LDFLAGS = (
+					"-liconv",
+					"-lz",
+				);
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 				STRIP_INSTALLED_PRODUCT = NO;
 			};

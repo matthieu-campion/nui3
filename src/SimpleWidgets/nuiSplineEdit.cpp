@@ -148,9 +148,9 @@ bool nuiSplineEdit::Draw(nuiDrawContext* pContext)
 //  pContext->DrawShape(&Shape, eStrokeShape, true,true);
 //  pContext->DrawShape(&Shape, eFillShape, true, true);
 
-  vector<nuiSplineNode> Nodes;
-  vector<nuiSplineNode>::iterator it;
-  vector<nuiSplineNode>::iterator end;
+  std::vector<nuiSplineNode> Nodes;
+  std::vector<nuiSplineNode>::iterator it;
+  std::vector<nuiSplineNode>::iterator end;
   mpSpline->GetNodes(Nodes);
   it = Nodes.begin();
   end = Nodes.end();

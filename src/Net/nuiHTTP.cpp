@@ -64,7 +64,7 @@ void nuiHTTPMessage::SetBody(const char* pBuffer, nglSize ByteCnt)
   memcpy(&mBody[0], pBuffer, ByteCnt);
 }
 
-const vector<char>& nuiHTTPMessage::GetBody() const
+const std::vector<char>& nuiHTTPMessage::GetBody() const
 {
   return mBody;
 }

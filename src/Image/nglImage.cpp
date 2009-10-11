@@ -792,7 +792,7 @@ void nglImage::Init()
 
 void nglImage::Exit()
 {
-  vector<nglImageCodecInfo*>::iterator i;
+  std::vector<nglImageCodecInfo*>::iterator i;
 
   for (i = mpCodecInfos->begin(); i != mpCodecInfos->end(); ++i)
   {
@@ -821,7 +821,7 @@ bool nglImage::AddCodec (nglImageCodecInfo* pCodecInfo)
 bool nglImage::DelCodec (nglImageCodecInfo* pCodecInfo)
 {
   Init();
-  vector<nglImageCodecInfo*>::iterator i;
+  std::vector<nglImageCodecInfo*>::iterator i;
 
   for (i = mpCodecInfos->begin(); i != mpCodecInfos->end(); ++i)
   {
@@ -844,7 +844,7 @@ nglImageCodec* nglImage::CreateCodec (int Index)
 nglImageCodec* nglImage::CreateCodec (const nglString& rName)
 {
   Init();
-  vector<nglImageCodecInfo*>::iterator i;
+  std::vector<nglImageCodecInfo*>::iterator i;
 
   for (i = mpCodecInfos->begin(); i != mpCodecInfos->end(); ++i)
   {

@@ -409,8 +409,8 @@ nuiXMLNode* nuiSpline::Serialize(nuiXMLNode* pParentNode) const
 
   pNode->SetAttribute(_T("Mode"),mode);
 
-  vector<nuiSplineNode>::const_iterator it;
-  vector<nuiSplineNode>::const_iterator end = mNodes.end();
+  std::vector<nuiSplineNode>::const_iterator it;
+  std::vector<nuiSplineNode>::const_iterator end = mNodes.end();
   for (it = mNodes.begin(); it != end; ++it)
     (*it).Serialize(pNode,mMode);
 
@@ -419,8 +419,8 @@ nuiXMLNode* nuiSpline::Serialize(nuiXMLNode* pParentNode) const
 
 void nuiSpline::InsertNode(const nuiSplineNode& rNode, uint32 index )
 {
-  vector<nuiSplineNode>::iterator it;
-  vector<nuiSplineNode>::iterator end = mNodes.end();
+  std::vector<nuiSplineNode>::iterator it;
+  std::vector<nuiSplineNode>::iterator end = mNodes.end();
   for (it = mNodes.begin(); it != end && index; ++it)
     index --;
   it = mNodes.insert(it, rNode);
@@ -430,10 +430,10 @@ void nuiSpline::InsertNode(const nuiSplineNode& rNode, uint32 index )
 
 void nuiSpline::InsertNodes(std::vector<nuiSplineNode> rNodes, uint32 index )
 {
-  vector<nuiSplineNode>::iterator newit = rNodes.begin();
-  vector<nuiSplineNode>::iterator newend = rNodes.end();
-  vector<nuiSplineNode>::iterator it;
-  vector<nuiSplineNode>::iterator end = mNodes.end();
+  std::vector<nuiSplineNode>::iterator newit = rNodes.begin();
+  std::vector<nuiSplineNode>::iterator newend = rNodes.end();
+  std::vector<nuiSplineNode>::iterator it;
+  std::vector<nuiSplineNode>::iterator end = mNodes.end();
   for (it = mNodes.begin(); it != end && index; ++it)
     index --;
   
@@ -455,8 +455,8 @@ void nuiSpline::AddNode(const nuiSplineNode& rNode)
 
 void nuiSpline::AddNodes(std::vector<nuiSplineNode> rNodes)
 {
-  vector<nuiSplineNode>::iterator newit = rNodes.begin();
-  vector<nuiSplineNode>::iterator newend = rNodes.end();
+  std::vector<nuiSplineNode>::iterator newit = rNodes.begin();
+  std::vector<nuiSplineNode>::iterator newend = rNodes.end();
   while (newit!=newend)
   {
     mNodes.push_back((*newit));
@@ -469,8 +469,8 @@ void nuiSpline::AddNodes(std::vector<nuiSplineNode> rNodes)
 
 void nuiSpline::DeleteNode(uint32 index)
 {
-  vector<nuiSplineNode>::iterator it;
-  vector<nuiSplineNode>::iterator end = mNodes.end();
+  std::vector<nuiSplineNode>::iterator it;
+  std::vector<nuiSplineNode>::iterator end = mNodes.end();
   for (it = mNodes.begin(); it != end && index; ++it)
     index --;
   
@@ -483,8 +483,8 @@ void nuiSpline::DeleteNodes(uint32 index,uint32 count)
 {
   for (;count; count--)
   {
-    vector<nuiSplineNode>::iterator it;
-    vector<nuiSplineNode>::iterator end = mNodes.end();
+    std::vector<nuiSplineNode>::iterator it;
+    std::vector<nuiSplineNode>::iterator end = mNodes.end();
     for (it = mNodes.begin(); it != end && index; ++it)
       index --;
     mEventSink.DisconnectSource( (*it).Changed );
@@ -773,8 +773,8 @@ nuiSplinePoint nuiSpline::Evaluate(float Value) const
 
 void nuiSpline::Evaluate(vector<nuiSplinePoint>& rPoints, uint steps, bool optimize) const
 {
-  vector<nuiSplinePoint> Points;
-  vector<nuiSplinePoint>* pPoints = &rPoints;
+  std::vector<nuiSplinePoint> Points;
+  std::vector<nuiSplinePoint>* pPoints = &rPoints;
   if (optimize)
     pPoints = &Points;
   
@@ -794,8 +794,8 @@ void nuiSpline::Evaluate(vector<nuiSplinePoint>& rPoints, uint steps, bool optim
   // Remove unneeded points:
   if (optimize)
   {
-    vector<nuiSplinePoint>::iterator it;
-    vector<nuiSplinePoint>::iterator rend = Points.end();
+    std::vector<nuiSplinePoint>::iterator it;
+    std::vector<nuiSplinePoint>::iterator rend = Points.end();
     it = Points.begin();
     nuiSplinePoint p1,p2 = *it,p3;
     rPoints.push_back(p2);
@@ -865,18 +865,18 @@ void nuiSpline::PrecalcTangents() const
 
 void nuiSpline::CalculateCardinalTangents(float tightness) const
 {
-  vector<nuiSplineNode>::const_iterator first = mNodes.begin();
-  vector<nuiSplineNode>::const_iterator last = mNodes.end();
+  std::vector<nuiSplineNode>::const_iterator first = mNodes.begin();
+  std::vector<nuiSplineNode>::const_iterator last = mNodes.end();
   if (last == first)
     return;
   --last;
   if (last == first)
     return;
 
-  vector<nuiSplineNode>::const_iterator it;
-  vector<nuiSplineNode>::const_iterator next;
-  vector<nuiSplineNode>::const_iterator previous;
-  vector<nuiSplineNode>::const_iterator end = mNodes.end();
+  std::vector<nuiSplineNode>::const_iterator it;
+  std::vector<nuiSplineNode>::const_iterator next;
+  std::vector<nuiSplineNode>::const_iterator previous;
+  std::vector<nuiSplineNode>::const_iterator end = mNodes.end();
   for (it = first; it != end; ++it)
   {
     if (it==first)
@@ -930,8 +930,8 @@ uint32 nuiSpline::GetSize() const
 nuiRect nuiSpline::GetRect()
 {
   float xmin = 0,ymin = 0,xmax = 0,ymax = 0;
-  vector<nuiSplineNode>::iterator it = mNodes.begin();
-  vector<nuiSplineNode>::iterator end = mNodes.end();
+  std::vector<nuiSplineNode>::iterator it = mNodes.begin();
+  std::vector<nuiSplineNode>::iterator end = mNodes.end();
 
   if (it!=end)
   {
@@ -973,8 +973,8 @@ void nuiSpline::Scale(float x, float y, float z)
 
 void nuiSpline::Multiply(const nuiMatrix& matrix)
 {
-  vector<nuiSplineNode>::iterator it;
-  vector<nuiSplineNode>::iterator end = mNodes.end();
+  std::vector<nuiSplineNode>::iterator it;
+  std::vector<nuiSplineNode>::iterator end = mNodes.end();
 
   for (it = mNodes.begin(); it != end; ++it)
   {

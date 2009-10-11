@@ -26,7 +26,7 @@
 #include "nuiSoftwarePainter.h"
 #include "nuiGrid.h"
 
-class nuiStandaloneDisplay : public nuiTopLevel, public nglContext
+class nuiStandaloneDisplay : public nglContext, public nuiTopLevel
 {
 public:
   nuiStandaloneDisplay(uint32 width, uint32 height)
@@ -39,7 +39,7 @@ public:
     EnablePartialRedraw(false);    
     SetRect(nuiRect(0.0f, 0.0f, (nuiSize)width, (nuiSize)height));
 
-    //BuildOpenGLFromExisting(NULL, aglGetCurrentContext());
+    BuildOpenGLFromExisting(NULL, aglGetCurrentContext());
   }
   
   virtual ~nuiStandaloneDisplay()
@@ -71,6 +71,7 @@ public:
     BeginSession();
     
     pContext->StartRendering();
+    pContext->GetPainter()->SetState(nuiRenderState(), true);
     
     static int counter = 0;
     //NGL_OUT(_T("%d OnPaint %d - %d\n"), counter++, DrawFullFrame, RestorePartial);
@@ -212,7 +213,7 @@ public:
   
   virtual bool MakeCurrent() const
   {
-    
+    return true;
   }
   
   virtual void EndSession()
@@ -311,6 +312,7 @@ void glutMouse(int button, int state, int x, int y)
 void glutDisplay(void)
 {
   // Display the NUI stuff:
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   pDisplay->Paint();
   
   glViewport(0, 0, gWidth, gHeight);

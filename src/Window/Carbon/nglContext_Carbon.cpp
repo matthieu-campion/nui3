@@ -317,7 +317,8 @@ bool nglContext::MakeCurrent(WindowRef win) const
 {
   bool res = true;
 #ifndef __NOGLCONTEXT__
-  res = aglSetCurrentContext(mCtx) != 0;
+  if (mCtx)
+    res = aglSetCurrentContext(mCtx) != 0;
   if (win)
     aglSetDrawable(mCtx, GetWindowPort(win));
 #endif

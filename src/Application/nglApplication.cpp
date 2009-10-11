@@ -42,10 +42,10 @@ bool nglApplication::ParseDefaultArgs()
       else
       {
         // Aliases are coma-separated
-        vector<nglString> aliases;
+        std::vector<nglString> aliases;
         GetArg(i+1).Tokenize (aliases, _T(','));
 
-        vector<nglString>::iterator alias;
+        std::vector<nglString>::iterator alias;
         for (alias = aliases.begin(); alias != aliases.end(); ++alias)
         {
           int verbose = NGL_LOG_DEFAULT;
@@ -83,10 +83,10 @@ bool nglApplication::ParseDefaultArgs()
       else
       {
         // Aliases are coma-separated
-        vector<nglString> aliases;
+        std::vector<nglString> aliases;
         GetArg(i+1).Tokenize (aliases, _T(','));
 
-        vector<nglString>::iterator alias;
+        std::vector<nglString>::iterator alias;
         for (alias = aliases.begin(); alias != aliases.end(); ++alias)
         {
           int colon = (*alias).Find (_T(':'));
