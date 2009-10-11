@@ -291,7 +291,7 @@ bool nuiImageSequence::CreateTextures()
   return true;
 }
 
-uint32 nuiImageSequence::GetFrameIndex(nuiWidget* pWidget) const
+uint32 nuiImageSequence::GetFrameIndex() const
 {
   return mFrameIndex;
 }
