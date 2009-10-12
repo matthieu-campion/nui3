@@ -3035,6 +3035,12 @@
 		E5D66E4F0CF433A4004783D4 /* nuiNativeResource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5D66E4D0CF433A4004783D4 /* nuiNativeResource.cpp */; };
 		E5D66E510CF433BA004783D4 /* nuiNativeResource.h in Headers */ = {isa = PBXBuildFile; fileRef = E5D66E500CF433BA004783D4 /* nuiNativeResource.h */; };
 		E5D66E520CF433BA004783D4 /* nuiNativeResource.h in Headers */ = {isa = PBXBuildFile; fileRef = E5D66E500CF433BA004783D4 /* nuiNativeResource.h */; };
+		E5D9FEE91082B350008D0F11 /* nuiGLUTBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = E5D9FEE81082B350008D0F11 /* nuiGLUTBridge.h */; };
+		E5D9FEEA1082B350008D0F11 /* nuiGLUTBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = E5D9FEE81082B350008D0F11 /* nuiGLUTBridge.h */; };
+		E5D9FEEB1082B350008D0F11 /* nuiGLUTBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = E5D9FEE81082B350008D0F11 /* nuiGLUTBridge.h */; };
+		E5D9FEED1082B382008D0F11 /* nuiGLUTBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5D9FEEC1082B382008D0F11 /* nuiGLUTBridge.cpp */; };
+		E5D9FEEE1082B382008D0F11 /* nuiGLUTBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5D9FEEC1082B382008D0F11 /* nuiGLUTBridge.cpp */; };
+		E5D9FEEF1082B382008D0F11 /* nuiGLUTBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5D9FEEC1082B382008D0F11 /* nuiGLUTBridge.cpp */; };
 		E5EA30190F55926F0057CCA7 /* nuiCoverFlow.h in Headers */ = {isa = PBXBuildFile; fileRef = E5EA30180F55926F0057CCA7 /* nuiCoverFlow.h */; };
 		E5EA301A0F55926F0057CCA7 /* nuiCoverFlow.h in Headers */ = {isa = PBXBuildFile; fileRef = E5EA30180F55926F0057CCA7 /* nuiCoverFlow.h */; };
 		E5EA301B0F55926F0057CCA7 /* nuiCoverFlow.h in Headers */ = {isa = PBXBuildFile; fileRef = E5EA30180F55926F0057CCA7 /* nuiCoverFlow.h */; };
@@ -4091,6 +4097,8 @@
 		E5D435961004DC5300388BF5 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
 		E5D66E4D0CF433A4004783D4 /* nuiNativeResource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiNativeResource.cpp; path = src/Base/nuiNativeResource.cpp; sourceTree = SOURCE_ROOT; };
 		E5D66E500CF433BA004783D4 /* nuiNativeResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiNativeResource.h; path = include/nuiNativeResource.h; sourceTree = SOURCE_ROOT; };
+		E5D9FEE81082B350008D0F11 /* nuiGLUTBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiGLUTBridge.h; path = include/nuiGLUTBridge.h; sourceTree = SOURCE_ROOT; };
+		E5D9FEEC1082B382008D0F11 /* nuiGLUTBridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiGLUTBridge.cpp; sourceTree = "<group>"; };
 		E5EA30180F55926F0057CCA7 /* nuiCoverFlow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiCoverFlow.h; path = include/nuiCoverFlow.h; sourceTree = SOURCE_ROOT; };
 		E5EA301C0F55963C0057CCA7 /* nuiCoverFlow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiCoverFlow.cpp; sourceTree = "<group>"; };
 		E5EB3A960C8226A800CF21E2 /* nuiBindingManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiBindingManager.cpp; sourceTree = "<group>"; };
@@ -5833,6 +5841,8 @@
 				E5816CAA0C3CECAB00902DFE /* nglWindow.h */,
 				BC77BAE70DF94C2500E0EC0D /* nuiMainMenu.cpp */,
 				BC77BAEE0DF9574500E0EC0D /* nuiMainMenu.h */,
+				E5D9FEE81082B350008D0F11 /* nuiGLUTBridge.h */,
+				E5D9FEEC1082B382008D0F11 /* nuiGLUTBridge.cpp */,
 			);
 			path = Window;
 			sourceTree = "<group>";
@@ -6549,6 +6559,7 @@
 				E55A47CA1053234C002AB5CA /* nuiComboAttributeEditor.h in Headers */,
 				4024359010568E550089BA0B /* nuiStopWatch.h in Headers */,
 				E58411CA1077451500E0CB45 /* nuiBindings.h in Headers */,
+				E5D9FEE91082B350008D0F11 /* nuiGLUTBridge.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7135,6 +7146,7 @@
 				E55A47C91053234C002AB5CA /* nuiComboAttributeEditor.h in Headers */,
 				4024358F10568E550089BA0B /* nuiStopWatch.h in Headers */,
 				E58411C91077451500E0CB45 /* nuiBindings.h in Headers */,
+				E5D9FEEB1082B350008D0F11 /* nuiGLUTBridge.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7718,6 +7730,7 @@
 				E52EA7DE106D688C008598F5 /* nglApplication_Cocoa.h in Headers */,
 				E52EA7F2106D6DF5008598F5 /* nglWindow_Cocoa.h in Headers */,
 				E58411C81077451500E0CB45 /* nuiBindings.h in Headers */,
+				E5D9FEEA1082B350008D0F11 /* nuiGLUTBridge.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8239,6 +8252,7 @@
 				E55A47AF10531ABD002AB5CA /* nuiPopupValueAttributeEditor.cpp in Sources */,
 				4024359510568E6F0089BA0B /* nuiStopWatch.cpp in Sources */,
 				40E96FBD106D20160099D015 /* nuiAudioDecoder_OSX.cpp in Sources */,
+				E5D9FEEF1082B382008D0F11 /* nuiGLUTBridge.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8681,6 +8695,7 @@
 				E55A47B010531ABD002AB5CA /* nuiPopupValueAttributeEditor.cpp in Sources */,
 				4024359410568E6F0089BA0B /* nuiStopWatch.cpp in Sources */,
 				40E96FBC106D20160099D015 /* nuiAudioDecoder_OSX.cpp in Sources */,
+				E5D9FEED1082B382008D0F11 /* nuiGLUTBridge.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9117,6 +9132,7 @@
 				E52EA78C106D60EC008598F5 /* nglApplication_Cocoa.mm in Sources */,
 				E52EA7F5106D6E1F008598F5 /* nglWindow_Cocoa.mm in Sources */,
 				40E96FBB106D20160099D015 /* nuiAudioDecoder_OSX.cpp in Sources */,
+				E5D9FEEE1082B382008D0F11 /* nuiGLUTBridge.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
