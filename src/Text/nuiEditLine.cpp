@@ -69,13 +69,21 @@ bool nuiEditLine::KeyDown (const nglKeyEvent& rEvent)
   }
   else if (rEvent.mKey == NK_ENTER || rEvent.mKey == NK_PAD_ENTER)
   {
-    Activated();
+    if (Activated())
+    {
+      nuiTopLevel* pTop = GetTopLevel();
+      pTop->EndTextInput();
+    }
     Invalidate();
     return true;
   }
   else if (rEvent.mKey == NK_ESC)
   {
     Aborted();
+    {
+      nuiTopLevel* pTop = GetTopLevel();
+      pTop->EndTextInput();
+    }
     Invalidate();
     return true;
   }

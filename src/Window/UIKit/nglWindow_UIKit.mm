@@ -522,9 +522,21 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 /* Terminates the editing session */
 - (BOOL)textFieldShouldReturn:(UITextField*)_textField
 {
-	[self hideKeyboard];
-  mpNGLWindow->CallOnTextInputCancelled();
-	return YES;
+  bool res = false;
+  
+  res |= mpNGLWindow->CallOnKeyDown(nglKeyEvent(NK_ENTER, '\n', '\n'));
+  res |= mpNGLWindow->CallOnKeyUp(nglKeyEvent(NK_ENTER, '\n', '\n'));
+
+  if (!res)
+  {
+    if (!mpNGLWindow->CallOnTextInput(_T("\n")))
+    {
+      [self hideKeyboard];
+      mpNGLWindow->CallOnTextInputCancelled();
+      return YES;
+    }
+  }
+	return NO;
 }
 
 
