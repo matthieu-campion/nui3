@@ -5,6 +5,20 @@
   licence: see nui3/LICENCE.TXT
 */
 
+/*
+
+   What you need to get this example code working:
+
+   MacOSX: nothing special, just build it in Xcode and it works...
+
+   Windows: You need to download the GLUT precompiled libraries from http://www.opengl.org/resources/libraries/glut/glut_downloads.php#windows
+            The glut.h header goes in either your global GL/ include directory or the local one in this directory.
+            The libs should go to the local GL/ folder or to your system libraries folder.
+            The dlls should either be in the windows/System32 folder or next to the executable.
+
+*/
+
+#include "nui.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -19,7 +33,6 @@
 #include <cmath>
 #include <string>
 
-#include "nui.h"
 #include "nuiInit.h"
 #include "nuiGrid.h"
 
@@ -35,7 +48,7 @@ nuiGLUTBridge* gpBridge = NULL;
 
 void glutDisplay(void)
 {
-  // Display the NUI stuff:
+  // Draw some OpenGL contents:
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   
   glViewport(0, 0, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
@@ -93,8 +106,10 @@ void glutDisplay(void)
     glEnd();
   }
 
+  // Draw NUI's Widget Tree:
   gpBridge->Display();
   
+  // Swap the OpenGL buffer:
   glFlush();
   glutSwapBuffers();
 }

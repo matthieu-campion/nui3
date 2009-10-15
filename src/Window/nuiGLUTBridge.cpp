@@ -5,6 +5,4 @@
  licence: see nui3/LICENCE.TXT
  */
 
-
-
-void* gmpNUI_GLUTBridge = NULL;
+void* gmpNUI_GLUTBridge = 0;

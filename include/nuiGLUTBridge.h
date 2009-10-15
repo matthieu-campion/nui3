@@ -17,7 +17,7 @@ public:
   nuiGLUTBridge()
   : nuiTopLevel(_T(""))
   {
-    ((nuiGLUTBridge*)gmpNUI_GLUTBridge) = this;
+    *((nuiGLUTBridge**)&gmpNUI_GLUTBridge) = this;
 
     mWidth = glutGet(GLUT_WINDOW_WIDTH);
     mHeight = glutGet(GLUT_WINDOW_HEIGHT);
@@ -26,12 +26,17 @@ public:
     EnablePartialRedraw(false);    
     SetRect(nuiRect(0.0f, 0.0f, (nuiSize)mWidth, (nuiSize)mHeight));
     
+#ifdef WIN32
+    BuildOpenGLFromExisting(NULL, NULL);
+
+#else
     BuildOpenGLFromExisting(NULL, aglGetCurrentContext());
+#endif
   }
   
   virtual ~nuiGLUTBridge()
   {
-    ((nuiGLUTBridge*)gmpNUI_GLUTBridge) = NULL;
+    *((nuiGLUTBridge**)&gmpNUI_GLUTBridge) = this;
   }
   
   void Display()

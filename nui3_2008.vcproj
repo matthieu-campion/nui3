@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="nui3"
 	ProjectGUID="{A287CB70-6835-4961-BEF5-E2DCDBE2CED4}"
 	RootNamespace="nui3"
@@ -2874,6 +2874,26 @@
 				<File
 					RelativePath=".\src\Window\Win\nglWindow_WinXX.cpp"
 					>
+				</File>
+				<File
+					RelativePath=".\src\Window\nuiGLUTBridge.cpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\src\Window\nuiMainMenu.cpp"

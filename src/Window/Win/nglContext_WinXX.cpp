@@ -769,11 +769,16 @@ bool nglContext::BuildOpenGLFromExisting(HWND hWnd, HGLRC rc)
   if (mRC)
     return false; // We already have a context
 
-  mDC = GetDC(hWnd);
+  if (hWnd)
+  {
+    mDC = GetDC(hWnd);
+  }
+  else
+  {
+    mDC = NULL;
+  }
   mCtxWnd = hWnd; // We keep a reference for ReleaseDC() but we don't own it
-
   mValidBackBufferRequestedNotGranted = false;
-
   mRC = rc;
   return true;
 }
@@ -784,9 +789,7 @@ bool nglContext::MakeCurrent() const
 {
   if (mTargetAPI == eTargetAPI_OpenGL)
   {
-    NGL_ASSERT(mDC);
-    NGL_ASSERT(mRC);
-    if (!mDC || !mRC)
+    if (!mCtxWnd || !mDC || !mRC)
       return false;
 
     DWORD err = GetLastError();
