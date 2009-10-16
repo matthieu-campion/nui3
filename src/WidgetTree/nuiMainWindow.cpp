@@ -884,7 +884,7 @@ bool nuiMainWindow::Drag(nuiWidget* pDragSource, nglDragAndDrop* pDragObject)
 { 
   
   //LBDEBUG
-  NGL_OUT(_T("nuiMainWindow::Drag\n"));
+ //NGL_OUT(_T("nuiMainWindow::Drag\n"));
   nuiTopLevel::Ungrab(nuiTopLevel::GetGrab());
   mpDragSource = pDragSource;
   return mpNGLWindow->Drag(pDragObject); 
