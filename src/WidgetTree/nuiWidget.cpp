@@ -2402,10 +2402,11 @@ bool nuiWidget::ReleaseToolTip(nuiWidgetPtr pWidget)
 /// Drag
 bool nuiWidget::Drag(nglDragAndDrop* pDragObj)
 {
+  //LBDEBUG
+NGL_OUT(_T("nuiWidget::Drag\n"));
+
   nuiMainWindow* pWin = (nuiMainWindow*)GetTopLevel();
   return pWin->Drag(this, pDragObj);
-  
-  return true;
 }
 
 

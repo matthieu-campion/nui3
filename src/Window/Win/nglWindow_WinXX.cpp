@@ -587,6 +587,7 @@ nglIDataObject::nglIDataObject(nglWindow* pWindow) : mpWindow(pWindow)
 
 nglIDataObject::~nglIDataObject() 
 { 
+  NGL_OUT(_T("nglIDataObject delete [0x%x]\n"), this);
   NGL_ASSERT(!mpFormatEtc->Release());  
   NGL_ASSERT(!mRef); 
 }
@@ -595,6 +596,7 @@ void nglIDataObject::Clear()
 {
   mpFormatEtc->Clear();
   mpDraggedObject = NULL;
+  NGL_OUT(_T("nglIDataObject::Clear() [0x%x]\n"), this);
 }
 
 void nglIDataObject::SetDraggedObject(nglDragAndDrop* pDraggedObject)
@@ -754,6 +756,10 @@ bool nglDropSource::Drag()
   mInitialButton = 0;
   DWORD dropEffect = 0;
   //OutputDebugString("DoDragDrop BEGIN\n");
+
+//LBDEBUG
+  NGL_OUT(_T("nglDropSource::Drag   0x%x mpDraggedObject\n"), mpDraggedObject);
+
   res = DoDragDrop((IDataObject*)mpIDataObject, (IDropSource*)this, allowedDropEffects, &dropEffect);
   //OutputDebugString("DoDragDrop END\n");
 
@@ -875,8 +881,11 @@ HRESULT STDMETHODCALLTYPE nglDropTarget::DragEnter(IDataObject *pDataObj, DWORD 
   else if (grfKeyState == MK_RBUTTON)
     mButton |= nglMouseInfo::ButtonRight;
 
+
   mpObject = new nglDragAndDrop(eDropEffectCopy);
   //NGL_OUT(_T("NEW: DataObject from nglDropTarget\n"));
+
+
 
   HRESULT res;
   if ((res = GetObject(pDataObj, true)) != S_OK)
@@ -2812,6 +2821,9 @@ static DWORD WINAPI DoDragDropThreadCallback(void *arg)
   nglDropSource* pDropSource = (nglDropSource*)arg;
   nglDragAndDrop* pDraggedObject = pDropSource->GetDraggedObject();
   
+//LBDEBUG
+  NGL_OUT(_T("DoDragDropThreadCallback   pDropSource 0x%x     pDraggedObject 0x%x  \n"), pDropSource, pDraggedObject);
+
   bool dragged = pDropSource->Drag(); ///< blocks until drop occurs or is canceled
   bool canceled = !dragged;
 
@@ -2823,7 +2835,9 @@ static DWORD WINAPI DoDragDropThreadCallback(void *arg)
   pDropSource->ClearObjects();
   
   OleUninitialize();
-  ExitThread(0);
+ 
+  //ExitThread(0);
+  
   return 0;
 }
 
@@ -2833,13 +2847,18 @@ bool nglWindow::Drag(nglDragAndDrop* pDragObject)
   DWORD id;
   
   mpDropSource->SetDraggedObject(pDragObject);
+
+  //LBDEBUG
+  NGL_OUT(_T(" nglWindow::Drag   pDragObject 0x%x\n"), pDragObject);
   
   SetEventMask( NoEvents );
-  HANDLE handle = CreateThread(NULL, 0, DoDragDropThreadCallback, mpDropSource, 0, &id);
+//  HANDLE handle = CreateThread(NULL, 0, DoDragDropThreadCallback, mpDropSource, 0, &id);
+
+DoDragDropThreadCallback((void*)mpDropSource);
 
   //////////////////////////
   
-    /*  
+    /*
   HRESULT res = OleInitialize(NULL);
 
   bool dragged = mpDropSource->Drag(); ///< blocks until drop occurs or is canceled

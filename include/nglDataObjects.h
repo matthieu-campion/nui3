@@ -169,6 +169,7 @@ public:
   : nglDataObject(rMimeType), mData(data)
   {
     mNativeType = nglInternalDataObject::RegisterInternalMimeType(rMimeType);
+    NGL_OUT(_T("0x%p - CTOR(%ls / %d / 0x%p)\n"), this, rMimeType.GetChars(), mNativeType, data);//#FIXME
   }
   
   virtual ~nglInternalDataObject()
@@ -227,12 +228,14 @@ public:
     pMedium->hGlobal = GlobalAlloc(GMEM_MOVEABLE | GMEM_SHARE, (SIZE_T)size);
     NGL_ASSERT(pMedium->hGlobal);
     pMedium->pUnkForRelease = NULL; 
+    NGL_OUT(_T("0x%p - AllocFormatData(0x%p / 0x%p)\n"), this, pMedium->hGlobal, mData);//#FIXME
   }
 
   virtual void SetFormatData(FORMATETC * pFormat, STGMEDIUM * pMedium)
   {
     void** dataPtr = (void**)GlobalLock(pMedium->hGlobal);
     *dataPtr = &mData;
+    NGL_OUT(_T("0x%p - SetFormatData(0x%p / 0x%p)\n"), this, pMedium->hGlobal, *dataPtr);//#FIXME
     GlobalUnlock(pMedium->hGlobal); 
   }
 
@@ -240,6 +243,7 @@ public:
   {
     void** dataPtr = (void**)GlobalLock(pMedium->hGlobal); 
     mData = (C)*(C*)dataPtr;
+    NGL_OUT(_T("0x%p - GetFormatData(0x%p / 0x%p)\n"), this, pMedium->hGlobal, *dataPtr);//#FIXME
     GlobalUnlock(pMedium->hGlobal);
   }
 #endif

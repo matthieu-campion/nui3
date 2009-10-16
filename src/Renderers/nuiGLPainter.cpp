@@ -1633,7 +1633,7 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
 
 void nuiCheckForGLErrors()
 {
-#if 1 // Globally enable/disable OpenGL error checking
+#if 0 // Globally enable/disable OpenGL error checking
 #ifdef _DEBUG_
   bool error = false;
   GLenum err = glGetError();
