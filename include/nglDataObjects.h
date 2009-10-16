@@ -223,7 +223,7 @@ public:
 
   virtual void AllocFormatData(FORMATETC * pFormat, STGMEDIUM * pMedium)
   {
-    nglSize size = sizeof(C*);
+    nglSize size = sizeof(C);
     pMedium->tymed = TYMED_HGLOBAL;
     pMedium->hGlobal = GlobalAlloc(GMEM_MOVEABLE | GMEM_SHARE, (SIZE_T)size);
     NGL_ASSERT(pMedium->hGlobal);
@@ -233,17 +233,17 @@ public:
 
   virtual void SetFormatData(FORMATETC * pFormat, STGMEDIUM * pMedium)
   {
-    void** dataPtr = (void**)GlobalLock(pMedium->hGlobal);
-    *dataPtr = &mData;
-    NGL_OUT(_T("0x%p - SetFormatData(0x%p / 0x%p)\n"), this, pMedium->hGlobal, *dataPtr);//#FIXME
+    C* dataPtr = (C*)GlobalLock(pMedium->hGlobal);
+    *dataPtr = mData;
+    NGL_OUT(_T("0x%p - SetFormatData(0x%p / 0x%p)\n"), this, pMedium->hGlobal, dataPtr);//#FIXME
     GlobalUnlock(pMedium->hGlobal); 
   }
 
   virtual void GetFormatData(FORMATETC* pFormat, STGMEDIUM* pMedium)
   {
-    void** dataPtr = (void**)GlobalLock(pMedium->hGlobal); 
-    mData = (C)*(C*)dataPtr;
-    NGL_OUT(_T("0x%p - GetFormatData(0x%p / 0x%p)\n"), this, pMedium->hGlobal, *dataPtr);//#FIXME
+    C* dataPtr = (C*)GlobalLock(pMedium->hGlobal); 
+    mData = *dataPtr;
+    NGL_OUT(_T("0x%p - GetFormatData(0x%p / 0x%p)\n"), this, pMedium->hGlobal, dataPtr);//#FIXME
     GlobalUnlock(pMedium->hGlobal);
   }
 #endif
