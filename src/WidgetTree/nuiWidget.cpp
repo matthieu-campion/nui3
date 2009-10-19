@@ -449,12 +449,12 @@ void nuiWidget::InitAttributes()
                 nuiMakeDelegate(this, &nuiWidget::SetSurfaceBlendFunc)));
   
   AddAttribute(new nuiAttribute<bool>
-               (nglString(_T("InterativeDecoration")), nuiUnitYesNo,
+               (nglString(_T("InteractiveDecoration")), nuiUnitYesNo,
                 nuiMakeDelegate(this, &nuiWidget::IsDecorationInteractive),
                 nuiMakeDelegate(this, &nuiWidget::EnableInteractiveDecoration)));
   
   AddAttribute(new nuiAttribute<bool>
-               (nglString(_T("InterativeOverDraw")), nuiUnitYesNo,
+               (nglString(_T("InteractiveOverDraw")), nuiUnitYesNo,
                 nuiMakeDelegate(this, &nuiWidget::IsOverDrawInteractive),
                 nuiMakeDelegate(this, &nuiWidget::EnableInteractiveOverDraw)));
   
