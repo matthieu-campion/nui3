@@ -21,7 +21,6 @@ nuiList::nuiList(nuiOrientation Orientation)
     mEventSink(this)
 {
   SetObjectClass(_T("nuiList"));
-  SetMouseCursor(eCursorHand);
   mBorderSize = mDefaultBorderSize;
   mOrientation = Orientation;
   mMultiSelectable = false;
@@ -53,7 +52,6 @@ bool nuiList::Load(const nuiXMLNode* pNode)
 {
   nuiSimpleContainer::Load(pNode);
   SetObjectClass(_T("nuiList"));
-  SetMouseCursor(eCursorHand);
   mBorderSize = nuiGetVal ( pNode, _T("BorderSize"), mDefaultBorderSize);
   mOrientation = nuiGetOrientation ( pNode, nuiVertical);
   mMultiSelectable = pNode->GetAttribute(nglString(_T("MultiSelectable"))) == _T("true");
