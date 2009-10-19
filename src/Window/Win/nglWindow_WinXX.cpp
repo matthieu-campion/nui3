@@ -611,7 +611,7 @@ void nglIDataObject::SetDraggedObject(nglDragAndDrop* pDraggedObject)
 void nglIDataObject::InitObject(nglDropSource* pSource)
 {
   mHWnd = pSource->mHWnd;
-  mMessageId = pSource->mMessageId;
+  //mMessageId = pSource->mMessageId;
   //NGL_ASSERT(!mpDraggedObject);
   //SetDraggedObject(pSource->GetDraggedObject());
 }
@@ -624,11 +624,11 @@ HRESULT STDMETHODCALLTYPE nglIDataObject::GetData(FORMATETC * pFormat, STGMEDIUM
 
   NGL_ASSERT(mpDraggedObject);
 
-  SendMessage(mHWnd, mMessageId, NGL_GET_DATA_MESSAGE, (LPARAM)pFormat);
-
   nglString mime;
   if (App->GetDataTypesRegistry().GetRegisteredMimeType(pFormat->cfFormat, mime))
   {
+    mpWindow->OnDragRequestData(mpDraggedObject, mime);
+
     if (mpDraggedObject->IsTypeSupported(mime))
     {
       nglDataObject* pObj = mpDraggedObject->GetType(mime);
@@ -787,7 +787,7 @@ HRESULT STDMETHODCALLTYPE nglDropSource::GiveFeedback(DWORD dwEffect)
   mpDraggedObject->SetDesiredDropEffect(effect);
   LPARAM lParam = (LPARAM)effect;
 
-  SendMessage(mHWnd, mMessageId, NGL_GIVE_FEEDBACK_MESSAGE, lParam);
+  //SendMessage(mHWnd, mMessageId, NGL_GIVE_FEEDBACK_MESSAGE, lParam);
   //return S_OK;
   return ResultFromScode(DRAGDROP_S_USEDEFAULTCURSORS);
 }
@@ -1279,8 +1279,8 @@ bool nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
   mpDropSource = new nglDropSource(this);
   mpDropSource->AddRef();
   mOnDragging = false;
-  mDragMessageId = RegisterWindowMessage(_T("nglDragAndDrop"));
-  mpDropSource->SetMessageId(mDragMessageId);
+//   mDragMessageId = RegisterWindowMessage(_T("nglDragAndDrop"));
+//   mpDropSource->SetMessageId(mDragMessageId);
 
   if(!Build(mHWnd, rContext, pShared) || !MakeCurrent())
     return false;
@@ -2186,7 +2186,7 @@ bool nglWindow::DoKey (bool IsUp, WPARAM wParam, LPARAM lParam)
   keybstate[VK_RCONTROL] = IsKeyDown(NK_RCTRL)?0xff:0;
   keybstate[VK_CONTROL] = keybstate[VK_LCONTROL] | keybstate[VK_RCONTROL];
 
-  TranslateKey((uint16)wParam, lParam, &ascii, &rawAscii, &code, keybstate);
+  TranslateKey((uint16)wParam, (DWORD)lParam, &ascii, &rawAscii, &code, keybstate);
   if (IsUp)
     return CallOnKeyUp(nglKeyEvent(code, ascii, rawAscii));
   else
@@ -2764,27 +2764,28 @@ LRESULT nglWindow::WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
       }
       else
       {
-        if (mDragMessageId == message)
-        {
-          if (wParam == NGL_GET_DATA_MESSAGE)
-          {
-            nglString mime;
-            FORMATETC * pFormat = (FORMATETC*)lParam;
-            NGL_ASSERT(pFormat);
-
-            if (App->GetDataTypesRegistry().GetRegisteredMimeType(pFormat->cfFormat, mime))
-            {
-              OnDragRequestData(mpDropSource->GetDraggedObject(), mime);
-            }
-          }
-          else if (wParam == NGL_STOP_DRAGGING)
-          {
-            bool canceled = (lParam != 0) ? true : false;
-            OnDragStop(canceled);
-          }
-          return 0;
-        }
-        else
+//         if (mDragMessageId == message)
+//         {
+//           if (wParam == NGL_GET_DATA_MESSAGE)
+//           {
+//             nglString mime;
+//             FORMATETC * pFormat = (FORMATETC*)lParam;
+//             NGL_ASSERT(pFormat);
+// 
+//             if (App->GetDataTypesRegistry().GetRegisteredMimeType(pFormat->cfFormat, mime))
+//             {
+//               OnDragRequestData(mpDropSource->GetDraggedObject(), mime);
+//             }
+//           }
+//          else
+//           if (wParam == NGL_STOP_DRAGGING)
+//           {
+//             bool canceled = (lParam != 0) ? true : false;
+//             OnDragStop(canceled);
+//           }
+//           return 0;
+//         }
+//         else
           return DefWindowProc( hWnd, message, wParam, lParam );
       }
     }
@@ -2814,32 +2815,32 @@ void nglWindow::OnDragLeave()
   //NGL_OUT(_T("nglWindow::OnDragLeave()\n"));
 }
 
-static DWORD WINAPI DoDragDropThreadCallback(void *arg)
-{   
-  HRESULT res = OleInitialize(NULL);
-
-  nglDropSource* pDropSource = (nglDropSource*)arg;
-  nglDragAndDrop* pDraggedObject = pDropSource->GetDraggedObject();
-  
-//LBDEBUG
- // NGL_OUT(_T("DoDragDropThreadCallback   pDropSource 0x%x     pDraggedObject 0x%x  \n"), pDropSource, pDraggedObject);
-
-  bool dragged = pDropSource->Drag(); ///< blocks until drop occurs or is canceled
-  bool canceled = !dragged;
-
-  SendMessage(pDropSource->GetWindowHandle(), pDropSource->GetMessageId(), NGL_STOP_DRAGGING, (LPARAM)canceled);
-  
-  pDraggedObject = pDropSource->GetDraggedObject();
-  NGL_ASSERT(pDraggedObject);
-  delete pDraggedObject;
-  pDropSource->ClearObjects();
-  
-  OleUninitialize();
- 
-  //ExitThread(0);
-  
-  return 0;
-}
+// static DWORD WINAPI DoDragDropThreadCallback(void *arg)
+// {   
+//   HRESULT res = OleInitialize(NULL);
+// 
+//   nglDropSource* pDropSource = (nglDropSource*)arg;
+//   nglDragAndDrop* pDraggedObject = pDropSource->GetDraggedObject();
+//   
+// //LBDEBUG
+//  // NGL_OUT(_T("DoDragDropThreadCallback   pDropSource 0x%x     pDraggedObject 0x%x  \n"), pDropSource, pDraggedObject);
+// 
+//   bool dragged = pDropSource->Drag(); ///< blocks until drop occurs or is canceled
+//   bool canceled = !dragged;
+// 
+//   SendMessage(pDropSource->GetWindowHandle(), pDropSource->GetMessageId(), NGL_STOP_DRAGGING, (LPARAM)canceled);
+//   
+//   pDraggedObject = pDropSource->GetDraggedObject();
+//   NGL_ASSERT(pDraggedObject);
+//   delete pDraggedObject;
+//   pDropSource->ClearObjects();
+//   
+//   OleUninitialize();
+//  
+//   //ExitThread(0);
+//   
+//   return 0;
+// }
 
 bool nglWindow::Drag(nglDragAndDrop* pDragObject)
 {
@@ -2851,28 +2852,17 @@ bool nglWindow::Drag(nglDragAndDrop* pDragObject)
   //LBDEBUG
  //NGL_OUT(_T(" nglWindow::Drag   pDragObject 0x%x\n"), pDragObject);
   
-  SetEventMask( NoEvents );
+//  SetEventMask( NoEvents );
 //  HANDLE handle = CreateThread(NULL, 0, DoDragDropThreadCallback, mpDropSource, 0, &id);
 
-DoDragDropThreadCallback((void*)mpDropSource);
-
-  //////////////////////////
-  
-    /*
-  HRESULT res = OleInitialize(NULL);
-
   bool dragged = mpDropSource->Drag(); ///< blocks until drop occurs or is canceled
-  
-  //SendMessage(pDropSource->GetWindowHandle(), pDropSource->GetMessageId(), NGL_STOP_DRAGGING, 0);
-  
-  pDragObject = mpDropSource->GetDraggedObject();
-  NGL_ASSERT(pDragObject);
+  bool canceled = !dragged;
+
+  //SendMessage(pDropSource->GetWindowHandle(), pDropSource->GetMessageId(), NGL_STOP_DRAGGING, (LPARAM)canceled);
+  OnDragStop(canceled);
+
   delete pDragObject;
   mpDropSource->ClearObjects();
-  
-  OleUninitialize();
-  */
-  ///////////////////////////
 
   return true;
 }
@@ -2930,15 +2920,15 @@ nglDragAndDrop* nglDropSource::GetDraggedObject() const
   return mpDraggedObject;
 }
 
-void nglDropSource::SetMessageId(UINT MessageId)
-{
-  mMessageId = MessageId;
-}
-
-UINT nglDropSource::GetMessageId() const
-{
-  return mMessageId;
-}
+// void nglDropSource::SetMessageId(UINT MessageId)
+// {
+//   mMessageId = MessageId;
+// }
+// 
+// UINT nglDropSource::GetMessageId() const
+// {
+//   return mMessageId;
+// }
 
 void nglDropSource::SetWindowHandle(HWND HWnd)
 {

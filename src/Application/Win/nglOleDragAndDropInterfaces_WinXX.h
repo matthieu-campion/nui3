@@ -28,9 +28,9 @@ class nglIDataObject;
 class nglDropTarget;
 class nglDropSource;
 
-#define NGL_GIVE_FEEDBACK_MESSAGE   ((UINT)1)
-#define NGL_GET_DATA_MESSAGE        ((UINT)2)
-#define NGL_STOP_DRAGGING           ((UINT)3)
+// #define NGL_GIVE_FEEDBACK_MESSAGE   ((UINT)1)
+// #define NGL_GET_DATA_MESSAGE        ((UINT)2)
+// #define NGL_STOP_DRAGGING           ((UINT)3)
 
 
 // IUnknown Implementations
@@ -136,7 +136,7 @@ protected:
   uint32 mInterfaceCount;
 
   HWND            mHWnd;
-  UINT            mMessageId;
+  //UINT            mMessageId;
   nglWindow*      mpWindow;
   nglDragAndDrop* mpDraggedObject;
   nglEnumFormat*  mpFormatEtc;
@@ -157,8 +157,8 @@ public:
   void SetDraggedObject(nglDragAndDrop* pDraggedObject);
   nglDragAndDrop* GetDraggedObject() const;
 
-  void SetMessageId(UINT MessageId);
-  UINT GetMessageId() const;
+//   void SetMessageId(UINT MessageId);
+//   UINT GetMessageId() const;
 
   void SetWindowHandle(HWND HWnd);
   HWND GetWindowHandle() const;
@@ -183,7 +183,7 @@ protected:
   nglDragAndDrop* mpDraggedObject;
   nglIDataObject* mpIDataObject;
   DWORD           mInitialButton;
-  UINT            mMessageId;
+  //UINT            mMessageId;
 
   int             mX, mY;
   nglWindow::Flags mButton;

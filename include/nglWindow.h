@@ -885,7 +885,7 @@ protected:
   class nglDropTarget*  mpDropTarget;
   class nglDropSource*  mpDropSource;
   bool  mOnDragging;
-  UINT  mDragMessageId;
+//   UINT  mDragMessageId;
   class nglPBuffer* mpPBuffer;
   bool mPBufferDisabled;
 #endif//_WIN32_

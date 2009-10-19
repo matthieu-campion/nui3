@@ -2416,6 +2416,7 @@ void nuiWidget::OnDragRequestData(nglDragAndDrop* pDragObject, const nglString& 
 {
   // Do nothing, drag and drop is not supported by default.
 }
+
 void nuiWidget::OnDragStop(bool canceled)
 {
   // Do nothing, drag and drop is not supported by default.
