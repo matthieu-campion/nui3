@@ -1967,6 +1967,9 @@
 		E58948760F0B05AD006B3B17 /* nglVideoMode_Carbon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816E210C3CECAB00902DFE /* nglVideoMode_Carbon.cpp */; };
 		E58948770F0B05B2006B3B17 /* nglWindow_Carbon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816E220C3CECAB00902DFE /* nglWindow_Carbon.cpp */; };
 		E58948780F0B05C3006B3B17 /* nuiMainMenu_Carbon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC77BAEB0DF9572E00E0EC0D /* nuiMainMenu_Carbon.cpp */; };
+		E58C8D17108931C2009D09DF /* nuiAnchor.h in Headers */ = {isa = PBXBuildFile; fileRef = E58C8D16108931C2009D09DF /* nuiAnchor.h */; };
+		E58C8D18108931C2009D09DF /* nuiAnchor.h in Headers */ = {isa = PBXBuildFile; fileRef = E58C8D16108931C2009D09DF /* nuiAnchor.h */; };
+		E58C8D19108931C2009D09DF /* nuiAnchor.h in Headers */ = {isa = PBXBuildFile; fileRef = E58C8D16108931C2009D09DF /* nuiAnchor.h */; };
 		E5901BEB1043F2C200D3FD5F /* nuiToggleButton.h in Headers */ = {isa = PBXBuildFile; fileRef = E5901BEA1043F2C200D3FD5F /* nuiToggleButton.h */; };
 		E5901BEC1043F2C200D3FD5F /* nuiToggleButton.h in Headers */ = {isa = PBXBuildFile; fileRef = E5901BEA1043F2C200D3FD5F /* nuiToggleButton.h */; };
 		E5901BED1043F2C200D3FD5F /* nuiToggleButton.h in Headers */ = {isa = PBXBuildFile; fileRef = E5901BEA1043F2C200D3FD5F /* nuiToggleButton.h */; };
@@ -4037,6 +4040,7 @@
 		E58602250CD6373100C0E789 /* nuiRectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiRectView.h; path = ../../include/nuiRectView.h; sourceTree = "<group>"; };
 		E58602260CD6373100C0E789 /* nuiRectView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiRectView.cpp; sourceTree = "<group>"; };
 		E587B7260C56BF440076200A /* nuiFontManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiFontManager.h; path = include/nuiFontManager.h; sourceTree = SOURCE_ROOT; };
+		E58C8D16108931C2009D09DF /* nuiAnchor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiAnchor.h; path = include/nuiAnchor.h; sourceTree = SOURCE_ROOT; };
 		E5901BEA1043F2C200D3FD5F /* nuiToggleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiToggleButton.h; path = include/nuiToggleButton.h; sourceTree = SOURCE_ROOT; };
 		E591C0190FF17984005E5E3D /* nuiHTMLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nuiHTMLContext.h; sourceTree = "<group>"; };
 		E591C01A0FF17984005E5E3D /* nuiHTMLContext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiHTMLContext.cpp; sourceTree = "<group>"; };
@@ -5488,6 +5492,7 @@
 				E5816DA20C3CECAB00902DFE /* nuiZoomView.cpp */,
 				E5816D1F0C3CECAB00902DFE /* nuiZoomView.h */,
 				E591D80B0C83272700844D3E /* nuiDialog.h */,
+				E58C8D16108931C2009D09DF /* nuiAnchor.h */,
 			);
 			name = Layout;
 			path = src/Layout;
@@ -6560,6 +6565,7 @@
 				4024359010568E550089BA0B /* nuiStopWatch.h in Headers */,
 				E58411CA1077451500E0CB45 /* nuiBindings.h in Headers */,
 				E5D9FEE91082B350008D0F11 /* nuiGLUTBridge.h in Headers */,
+				E58C8D19108931C2009D09DF /* nuiAnchor.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7147,6 +7153,7 @@
 				4024358F10568E550089BA0B /* nuiStopWatch.h in Headers */,
 				E58411C91077451500E0CB45 /* nuiBindings.h in Headers */,
 				E5D9FEEB1082B350008D0F11 /* nuiGLUTBridge.h in Headers */,
+				E58C8D18108931C2009D09DF /* nuiAnchor.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7731,6 +7738,7 @@
 				E52EA7F2106D6DF5008598F5 /* nglWindow_Cocoa.h in Headers */,
 				E58411C81077451500E0CB45 /* nuiBindings.h in Headers */,
 				E5D9FEEA1082B350008D0F11 /* nuiGLUTBridge.h in Headers */,
+				E58C8D17108931C2009D09DF /* nuiAnchor.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -296,7 +296,7 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>2</integer>
+									<integer>15</integer>
 									<integer>0</integer>
 								</array>
 							</array>
@@ -464,11 +464,11 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E5840EFD1074D86C00E0CB45</string>
+				<string>E58C8D0A10892EBA009D09DF</string>
 				<string>1CA23ED40692098700951B8B</string>
-				<string>E5840EFE1074D86C00E0CB45</string>
+				<string>E58C8D0B10892EBA009D09DF</string>
 				<string>E51FAB551073F320004F6940</string>
-				<string>E5840EFF1074D86C00E0CB45</string>
+				<string>E58C8D0C10892EBA009D09DF</string>
 				<string>1CA23EDF0692099D00951B8B</string>
 				<string>1CA23EE00692099D00951B8B</string>
 				<string>1CA23EE10692099D00951B8B</string>
@@ -621,7 +621,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>276093036.12238401</real>
+	<real>277425850.13087702</real>
 	<key>ToolbarConfigUserDefaultsMinorVersion</key>
 	<string>2</string>
 	<key>ToolbarDisplayMode</key>

@@ -333,7 +333,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>E5F9B50B0FC9F27D00325121</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>nglWindow_UIKit.mm</string>
+								<string>ttkern.c</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -341,19 +341,18 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>E5F9B50C0FC9F27D00325121</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>nglWindow_UIKit.mm</string>
+										<string>ttkern.c</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E5FF669F1083F0F1003B5C31</string>
+										<string>E5FF66A51083F3EC003B5C31</string>
 										<key>history</key>
 										<array>
 											<string>E5F9B50D0FC9F27D00325121</string>
 											<string>E5F9B5520FCB689100325121</string>
 											<string>E5F9B5540FCB689100325121</string>
 											<string>E5F9B5560FCB689100325121</string>
-											<string>E5FF66801083EE1B003B5C31</string>
-											<string>E5FF66841083EF62003B5C31</string>
+											<string>E5795811100ACFCA00821E44</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -678,7 +677,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>277082353.00046301</real>
+	<real>277083116.69155002</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -693,7 +692,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E5FF66A01083F0F1003B5C31</string>
 		<string>E5FF66821083EE1B003B5C31</string>
 		<string>E5FF66781083ECF2003B5C31</string>
 		<string>/Users/meeloo/work/nui3/tutorials/TextEdit/TextEdit_iPhone.xcodeproj</string>

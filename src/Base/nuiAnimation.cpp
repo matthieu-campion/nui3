@@ -226,7 +226,7 @@ double nuiAnimation::GetTimeFromNow() const
 
 double nuiAnimation::GetTimeFromEnd() const
 {
-  return mDuration - GetTime();
+  return GetDuration() - GetTime();
 }
 
 
@@ -355,7 +355,27 @@ void nuiAnimation::Stop()
   InternalStop();
 }
 
+void nuiAnimation::Pause()
+{
+  if (!mUpdatingTime && IsPlaying())
+  {
+    mCount = 1;
+    CallOnFrame();
+  }
+  
+  InternalPause();
+}
+
 void nuiAnimation::InternalStop()
+{
+  mCount = 0;
+  //NGL_OUT(_T("nuiAnimation::Stop at %f\n"), GetDuration());
+  mAnimSink.Disconnect(GetTimer()->Tick, &nuiAnimation::OnTick);
+  mCurrentPosition = 0;
+  AnimStop();
+}
+
+void nuiAnimation::InternalPause()
 {
   mCount = 0;
   //NGL_OUT(_T("nuiAnimation::Stop at %f\n"), GetDuration());
@@ -476,7 +496,7 @@ bool nuiAnimation::UpdateTime()
     break;
   }
   
-  mCurrentPosition = mEasing(mCurrentTime / mDuration);
+  mCurrentPosition = mEasing(mCurrentTime / GetDuration());
   
   mUpdatingTime = false;
   return ShouldStop;
@@ -493,6 +513,13 @@ bool nuiAnimation::Stop(const nuiEvent& rEvent)
 {
   if (mEnableCallbacks)
     Stop();
+  return false;
+}
+
+bool nuiAnimation::Pause(const nuiEvent& rEvent)
+{
+  if (mEnableCallbacks)
+    Pause();
   return false;
 }
 
@@ -573,6 +600,21 @@ void nuiMetaAnimation::Stop()
   nuiAnimation::Stop();
 }
 
+void nuiMetaAnimation::Pause()
+{
+  std::list<nuiAnimation*>::iterator it = mpAnimations.begin();
+  std::list<nuiAnimation*>::iterator end = mpAnimations.end();
+  
+  for (; it != end; ++it)
+  {
+    nuiAnimation* pItem = *it;
+    if (pItem->IsPlaying())
+      pItem->Pause();
+  }
+  
+  nuiAnimation::Pause();
+}
+
 double nuiMetaAnimation::GetDuration()
 {
   std::list<nuiAnimation*>::iterator it = mpAnimations.begin();
@@ -649,6 +691,21 @@ void nuiAnimationSequence::Stop()
   }
 
   nuiAnimation::Stop();
+}
+
+void nuiAnimationSequence::Pause()
+{
+  std::list<nuiAnimation*>::iterator it = mpAnimations.begin();
+  std::list<nuiAnimation*>::iterator end = mpAnimations.end();
+  
+  for (; it != end; ++it)
+  {
+    nuiAnimation* pItem = *it;
+    if (pItem->IsPlaying())
+      pItem->Pause();
+  }
+  
+  nuiAnimation::Pause();
 }
 
 double nuiAnimationSequence::GetDuration()

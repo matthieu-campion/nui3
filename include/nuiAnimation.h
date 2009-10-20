@@ -75,7 +75,8 @@ public:
   double GetDuration() const; ///< Return the total duration of the Animation in seconds.
 
   virtual void Play(int32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward); ///< Start playing the animation. Stop after count iterations. 
-  virtual void Stop(); ///< Stop Playing the animation.
+  virtual void Stop(); ///< Stop Playing the animation and reset the play position so tht the next play will restart from the begining.
+  virtual void Pause(); ///< Stop Playing the animation but don't reset the play position, the next play will restart from the last position.
 
   bool IsPlaying() const; ///< Return true if the animation is currently playing.
 
@@ -83,10 +84,12 @@ public:
 
   nuiSimpleEventSource<nuiAnimationStart> AnimStart;
   nuiSimpleEventSource<nuiAnimationStop> AnimStop;
+  nuiSimpleEventSource<nuiAnimationStop> AnimPause;
   nuiSimpleEventSource<nuiAnimationLoop> AnimLoop;
 
   bool Play(const nuiEvent& rEvent); ///< The animation will start playing as soon as this method is called. Use this method if you want to start playing an animation when an nuiEvent is fired.
   bool Stop(const nuiEvent& rEvent); ///< The animation will stop playing as soon as this method is called. Use this method if you want to stop playing an animation when an nuiEvent is fired.
+  bool Pause(const nuiEvent& rEvent); ///< The animation will pause as soon as this method is called. Use this method if you want to pause an animation when an nuiEvent is fired.
 
   static void SetFrameRate(double FPS);
   static double GetFrameRate();
@@ -102,6 +105,7 @@ protected:
   bool UpdateTime(); ///< This method returns the number time elapsed since the last call to UpdateTime.
   bool OnTick(const nuiEvent& rEvent);
   void InternalStop();
+  void InternalPause();
 
   double mCurrentTime;
   double mCurrentPosition;
@@ -166,6 +170,7 @@ public:
 
   virtual void Play(int32 Count = 1.0f, nuiAnimLoop LoopMode = eAnimLoopForward); ///< Start playing the animation. Stop after count iterations. 
   virtual void Stop(); ///< Stop Playing the animation.
+  virtual void Pause(); ///< Pause Playing the animation.
 
   virtual double GetDuration(); ///< Return the total duration of the Animation in seconds.
 
@@ -186,6 +191,7 @@ public:
 
   virtual void Play(int32 Count = 1.0f, nuiAnimLoop LoopMode = eAnimLoopForward); ///< Start playing the animation. Stop after count iterations. 
   virtual void Stop(); ///< Stop Playing the animation.
+  virtual void Pause(); ///< Pause Playing the animation.
 
   virtual double GetDuration(); ///< Return the total duration of the Animation in seconds.
 
