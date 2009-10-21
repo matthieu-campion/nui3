@@ -50,6 +50,7 @@ public:
   virtual nuiWidget* GetHandle(); ///< Get the widget used to draw the handle. If this method returns NULL the default handle is used.
   virtual nuiWidget* GetBackground(); ///< Get the widget used to draw the background. If this method returns NULL the default background is used.
   virtual void SetAutoAdjustHandle(bool Adjust); ///< when enabled, the handle offset, min and max position are automatically adjusted when an operation on them is made. The default is true.
+  bool GetAutoAdjustHandle();
 
   virtual void DrawBackground(bool DrawBackground);
   

@@ -119,7 +119,7 @@ public:
 
   bool Match(nuiWidget*& pWidget)
   {
-    int32 i = mpCondition.size() - 1;
+    int32 i = (int32)mpCondition.size() - 1;
     while (i >= 0)
     {
       if (!MatchOne(mpCondition[i], pWidget))

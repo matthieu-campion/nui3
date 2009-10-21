@@ -744,14 +744,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\Base\nuiAnimation.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiAnimation.h"
-					>
-				</File>
-				<File
 					RelativePath=".\include\nuiApplication.h"
 					>
 				</File>
@@ -3035,6 +3027,14 @@
 			<Filter
 				Name="Animation"
 				>
+				<File
+					RelativePath=".\src\Base\nuiAnimation.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiAnimation.h"
+					>
+				</File>
 				<File
 					RelativePath=".\src\Animations\nuiAttributeAnimation.cpp"
 					>

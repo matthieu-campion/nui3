@@ -111,6 +111,10 @@ void nuiSlider::InitAttributes()
   AddAttribute(new nuiAttribute<nuiOrientation>(nglString(_T("Orientation")), nuiUnitOrientation,
                                        nuiMakeDelegate(this, &nuiSlider::GetOrientation),
                                        nuiMakeDelegate(this, &nuiSlider::SetOrientation)));
+
+  AddAttribute(new nuiAttribute<bool>(_T("AutoAdjustHandle"), nuiUnitBoolean,
+    nuiMakeDelegate(this, &nuiSlider::GetAutoAdjustHandle),
+    nuiMakeDelegate(this, &nuiSlider::SetAutoAdjustHandle)));
 }
 
 nuiXMLNode* nuiSlider::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
@@ -468,6 +472,11 @@ void nuiSlider::AdjustHandle()
 void nuiSlider::SetAutoAdjustHandle(bool Enable)
 {
   mAutoAdjustHandle = Enable;
+}
+
+bool nuiSlider::GetAutoAdjustHandle()
+{
+  return mAutoAdjustHandle;
 }
 
 bool nuiSlider::SetRect(const nuiRect& rRect)
