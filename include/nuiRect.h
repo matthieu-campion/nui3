@@ -235,6 +235,7 @@ public:
   void Scale(nuiSize x, nuiSize y);
   nuiRect Size() const;
   bool IsInside(nuiSize x, nuiSize y) const;
+  bool IsInsideExact(nuiSize x, nuiSize y) const;
   enum DrawMode
   {
     Lines,

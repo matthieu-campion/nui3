@@ -101,9 +101,14 @@ nuiRect nuiRect::Size() const
   return nuiRect(0.0f, 0.0f, GetWidth(), GetHeight());
 }
 
+bool nuiRect::IsInsideExact(nuiSize x, nuiSize y) const
+{
+  return (x >= mLeft && x <= mRight && y >= mTop && y <= mBottom);
+}
+
 bool nuiRect::IsInside(nuiSize x, nuiSize y) const
 {
-  return (x>=mLeft && x<=mRight && y>=mTop && y<=mBottom);
+  return (x > mLeft && x < mRight && y >= mTop && y < mBottom);
 }
 
 void nuiRect::SetPosition(nuiPosition Position, const nuiRect& Inside)
