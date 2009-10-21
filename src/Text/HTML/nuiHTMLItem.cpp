@@ -223,3 +223,14 @@ nglString nuiHTMLItem::GetAbsoluteURL(const nglString& rString) const
   return url;
 }
 
+bool nuiHTMLItem::IsInside(float X, float Y) const
+{
+  return mRect.IsInside(X, Y);
+}
+
+void nuiHTMLItem::GetItemsAt(std::vector<nuiHTMLItem*>& rHitItems, float X, float Y) const
+{
+  if (IsInside(X, Y))
+    rHitItems.push_back(const_cast<nuiHTMLItem*>(this));
+}
+

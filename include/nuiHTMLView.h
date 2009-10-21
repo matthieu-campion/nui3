@@ -49,6 +49,14 @@ public:
   const nuiColor& GetTextColor() const;
   void SetTextColor(const nuiColor& Color);
   
+  virtual bool MouseClicked(const nglMouseInfo& rInfo);
+  virtual bool MouseUnclicked(const nglMouseInfo& rInfo);
+  virtual bool MouseMoved(const nglMouseInfo& rInfo);
+  
+  nuiSignal1<const nglString&> LinkActivated;
+  
+  void SetAutoActivateLink(bool set);
+  bool IsAutoActivateLink() const;
 protected:
   
   void ParseTree(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
@@ -80,8 +88,14 @@ protected:
 
   void ReLayout();
 private:
+  void _SetURL(const nglString& rURL);
+  void _AutoSetURL(const nglString& rURL);
   void _SetText(const nglString& rHTMLText);
   
   void InitAttributes();
+  bool mClicked;
+  nuiSlotsSink mSlotSink;
+  
+  bool mAutoActivateLink;
 };
 

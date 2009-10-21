@@ -174,3 +174,15 @@ void nuiHTMLBox::PopContext(nuiHTMLContext& rContext)
   mContextStack.pop();
 }
 
+void nuiHTMLBox::GetItemsAt(std::vector<nuiHTMLItem*>& rHitItems, float X, float Y) const
+{
+  nuiHTMLItem::GetItemsAt(rHitItems, X, Y);
+  
+  // Try the children:
+  X += mRect.Left();
+  Y += mRect.Top();
+  for (uint32 i = 0; i < mItems.size(); i++)
+  {
+    mItems[i]->GetItemsAt(rHitItems, X, Y);
+  }
+}

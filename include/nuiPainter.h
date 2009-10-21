@@ -84,9 +84,6 @@ public:
     mTop = rClipper.mTop;
     mBottom = rClipper.mBottom;
     mEnabled = rClipper.mEnabled;
-#ifdef USE_NUIVALUETYPES  
-    Changed();
-#endif
     return *this;
   }
 

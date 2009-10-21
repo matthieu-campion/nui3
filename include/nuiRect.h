@@ -35,9 +35,6 @@ typedef nglVector3<nuiSize> nuiVector3;
 
 /// This class implements a 2D rectangle with many very useful methods to manage them.
 class NUI_API nuiRect
-#ifdef USE_NUIVALUETYPES  
-  : public nuiValue
-#endif
 {
 public:
   nuiRect()
@@ -99,9 +96,6 @@ public:
       mRight = MAX(x1,x2);
       mBottom = MAX(y1,y2);
     }
-#ifdef USE_NUIVALUETYPES  
-    Changed();
-#endif
   }
 
   void Set(long x1 = 0, long y1 = 0, long x2 = 0, long y2 = 0, bool SecondPairIsSize = true)
@@ -208,9 +202,6 @@ public:
     mTop += DeltaY;
     mBottom += DeltaY;
 
-#ifdef USE_NUIVALUETYPES  
-    Changed();
-#endif
   }
 
   void MoveTo(nuiSize X, nuiSize Y)
@@ -223,9 +214,6 @@ public:
     mRight = mLeft + w;
     mBottom = mTop + h;
 
-#ifdef USE_NUIVALUETYPES  
-    Changed();
-#endif
   }
 
   void Transform(const nuiMatrix& rMatrix);

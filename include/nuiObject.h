@@ -46,8 +46,8 @@ public:
   virtual nuiXMLNode* Serialize(nuiXMLNode* pNode, bool Recursive = true) const; ///< This method saves the widget state in the given XML Node. If @param Recursive == true (default) then the children nodes will be serialized too. Returns true on succes. 
 	
 	
-  virtual void SetSerializeMode (nuiSerializeMode eMode); ///< Set the serialization mode for this object (see nuiSerializeMode enum documentation).
-  virtual nuiSerializeMode GetSerializeMode () const; ///< Get the serialization mode for this object (see nuiSerializeMode enum documentation).
+  void SetSerializeMode (nuiSerializeMode eMode); ///< Set the serialization mode for this object (see nuiSerializeMode enum documentation).
+  nuiSerializeMode GetSerializeMode () const; ///< Get the serialization mode for this object (see nuiSerializeMode enum documentation).
   //@}
 
   /** @name Object Mode basis (class and name) */
@@ -74,7 +74,7 @@ public:
   bool HasProperty(const char* pName) const; ///< Return true if the object contains the property.
   bool ClearProperties(bool ClearNameAndClassToo = false); ///< Remove all the properties from the object. By default the "Name" and "Class" properties will not be cleared.
   bool GetProperties(std::list<nglString>& rPropertyNames) const; ///< Populate @param rPropertyNames with the name of the properties of the object. 
-  virtual bool ClearProperty(const nglString& rName); ///< Remove the given property from the object.
+  bool ClearProperty(const nglString& rName); ///< Remove the given property from the object.
   bool ClearProperty(const char* pName); ///< Remove the given property from the object.
   void CopyProperties(const nuiObject& rObject); ///< Copy the properties from rObject into this
   

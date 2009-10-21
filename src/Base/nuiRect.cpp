@@ -19,9 +19,6 @@ void nuiRect::Transform(const nuiMatrix& rMatrix)
   mRight  = v2[0];
   mBottom = v2[1];
 
-#ifdef USE_NUIVALUETYPES  
-  Changed();
-#endif
 }
 
 bool nuiRect::Intersect(const nuiRect& rRect1, const nuiRect& rRect2)
@@ -50,9 +47,6 @@ bool nuiRect::Intersect(const nuiRect& rRect1, const nuiRect& rRect2)
     mLeft = mRight = mTop = mBottom = 0;
   }
 
-#ifdef USE_NUIVALUETYPES  
-  Changed();
-#endif
   return return_val;
 }
 
@@ -63,9 +57,6 @@ void nuiRect::Union (const nuiRect& rRect1, const nuiRect& rRect2)
   mRight  = MAX(rRect1.mRight,  rRect2.mRight);
   mBottom = MAX(rRect1.mBottom, rRect2.mBottom);
 
-#ifdef USE_NUIVALUETYPES  
-  Changed();
-#endif
 }
 
 void nuiRect::Grow(nuiSize x, nuiSize y)
@@ -75,9 +66,6 @@ void nuiRect::Grow(nuiSize x, nuiSize y)
   mRight    += x;
   mBottom   += y;
   
-#ifdef USE_NUIVALUETYPES  
-  Changed();
-#endif
 }
 
 void nuiRect::Scale(nuiSize x, nuiSize y)
@@ -91,9 +79,6 @@ void nuiRect::Scale(nuiSize x, nuiSize y)
   mRight    += w;
   mBottom   += h;
   
-#ifdef USE_NUIVALUETYPES  
-  Changed();
-#endif
 }
 
 nuiRect nuiRect::Size() const
@@ -236,9 +221,6 @@ void nuiRect::SetPosition(nuiPosition Position, const nuiRect& Inside)
   mRight += rx;
   mTop += ry;
   mBottom += ry;
-#ifdef USE_NUIVALUETYPES  
-  Changed();
-#endif
 }
 
 // nuiVRect:
@@ -267,9 +249,6 @@ bool nuiRect::SetValue(const nglString& Value)
     w = vec[2].GetCFloat();
     h = vec[3].GetCFloat();
     Set(x,y,w,h);
-#ifdef USE_NUIVALUETYPES  
-    Changed();
-#endif
     //NGL_OUT(_T("%ls\n"), GetValue().GetChars());
 
     return true;
@@ -283,9 +262,6 @@ nuiRect& nuiRect::operator= (const nuiRect& rRect)
   mRight = rRect.mRight;
   mTop = rRect.mTop;
   mBottom = rRect.mBottom;
-#ifdef USE_NUIVALUETYPES  
-  Changed();
-#endif
   return *this;
 }
 

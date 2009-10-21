@@ -73,10 +73,6 @@ nuiButton::nuiButton(const nglImage& rImage)
   nuiImage* pImage = new nuiImage(rImage);
   AddChild(pImage);
   pImage->SetPosition(nuiCenter);
-
-#ifdef NGL_USE_COMPLEX_PROPERTIES
-  mProperties["Clicked"].Bind(&mClicked,false,true);
-#endif
   
   NUI_ADD_EVENT(ButtonPressed);
   NUI_ADD_EVENT(ButtonDePressed);
@@ -99,10 +95,6 @@ nuiButton::nuiButton(nuiDecoration* pDeco, bool AlreadyAcquired)
   
   SetDecoration(pDeco, eDecorationOverdraw, AlreadyAcquired);
   
-#ifdef NGL_USE_COMPLEX_PROPERTIES
-  mProperties["Clicked"].Bind(&mClicked,false,true);
-#endif
-  
   NUI_ADD_EVENT(ButtonPressed);
   NUI_ADD_EVENT(ButtonDePressed);
   NUI_ADD_EVENT(ButtonDePressedInactive);
@@ -122,10 +114,6 @@ bool nuiButton::Load(const nuiXMLNode* pNode)
   mAutoRepeat = false;
   mpAutoRepeatTimer = NULL;
 
-#ifdef NGL_USE_COMPLEX_PROPERTIES
-  mProperties["Clicked"].Bind(&mClicked,false,true);
-#endif
-  
   NUI_ADD_EVENT(ButtonPressed);
   NUI_ADD_EVENT(ButtonDePressed);
   NUI_ADD_EVENT(ButtonDePressedInactive);

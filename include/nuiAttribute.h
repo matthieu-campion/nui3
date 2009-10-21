@@ -1072,6 +1072,39 @@ private:
     }
   }	
 };
+
+
+template <class Type>
+class nuiValueAttribute : public nuiAttribute<Type>
+{
+public:
+  nuiValueAttribute(const nglString& rName, nuiAttributeUnit units = nuiUnitNone, const nuiRange& rRange = nuiRange())
+  : nuiAttribute<Type>(rName, units, nuiMakeDelegate(this, &nuiValueAttribute<Type>::_Get, &nuiValueAttribute<Type>::_Set), rRange)
+  {
+    nuiAttributeBase::SetAsInstanceAttribute(true);
+  }
+  
+  nuiValueAttribute(const nglString& rName, Type value, nuiAttributeUnit units = nuiUnitNone, const nuiRange& rRange = nuiRange())
+  : nuiAttribute<Type>(rName, units, nuiMakeDelegate(this, &nuiValueAttribute<Type>::_Get, &nuiValueAttribute<Type>::_Set), rRange)
+  {
+    nuiAttributeBase::SetAsInstanceAttribute(true);
+    mValue = value;
+  }
+  
+protected:
+  Type _Get() const
+  {
+    return mValue;
+  }
+
+  void _Set(Type value) const
+  {
+    mValue = value;
+  }
+  
+  Type mValue;
+};
+
 //////////////////////////////////////////////
 
 template <class Type> 

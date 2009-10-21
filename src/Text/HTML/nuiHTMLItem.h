@@ -48,6 +48,9 @@ public:
   nglString GetAbsoluteURL(const nglString& rString) const;
 
   bool mSetRectCalled;
+  
+  bool IsInside(float X, float Y) const;
+  virtual void GetItemsAt(std::vector<nuiHTMLItem*>& rHitItems, float X, float Y) const;
 protected:
   uint32 GetDepth() const;
 

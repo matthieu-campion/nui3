@@ -33,6 +33,10 @@ nuiHTMLView::nuiHTMLView(float IdealWidth)
   mVSpace = 2.0f;
   mHSpace = 0.0f;
   mpContext = new nuiHTMLContext();
+  mClicked = false;
+  mAutoActivateLink = true;
+  
+  mSlotSink.Connect(LinkActivated, nuiMakeDelegate(this, &nuiHTMLView::_AutoSetURL));
 }
 
 nuiHTMLView::~nuiHTMLView()
@@ -73,6 +77,10 @@ void nuiHTMLView::InitAttributes()
     nuiMakeDelegate(this, &nuiHTMLView::GetTextColor), 
     nuiMakeDelegate(this, &nuiHTMLView::SetTextColor)));
   
+  AddAttribute(new nuiAttribute<const nglString&>
+               (nglString(_T("URL")), nuiUnitNone,
+                nuiMakeDelegate(this, &nuiHTMLView::GetURL), 
+                nuiMakeDelegate(this, &nuiHTMLView::_SetURL)));
 }
 
 
@@ -595,4 +603,73 @@ void nuiHTMLView::ParseFont(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 void nuiHTMLView::_SetText(const nglString& rHTMLText)
 {
   SetText(rHTMLText);
+}
+
+bool nuiHTMLView::MouseClicked(const nglMouseInfo& rInfo)
+{
+  if (rInfo.Buttons & nglMouseInfo::ButtonLeft)
+  {
+    Grab();
+    mClicked = true;
+  }
+  return false;
+}
+
+bool nuiHTMLView::MouseUnclicked(const nglMouseInfo& rInfo)
+{
+  if (mClicked)
+  {
+    if (rInfo.Buttons & nglMouseInfo::ButtonLeft)
+    {
+      std::vector<nuiHTMLItem*> items;
+      mpRootBox->GetItemsAt(items, rInfo.X, rInfo.Y);
+      if (!items.empty())
+      {
+        for (uint32 i = 0; i < items.size(); i++)
+        {
+          int32 ii = items.size() - 1 - i;
+          nuiHTMLNode* pNode = items[ii]->GetNode();
+          if (pNode)
+          {
+            nuiHTMLAttrib* attrib = pNode->GetAttribute(nuiHTMLAttrib::eAttrib_HREF);
+            if (attrib)
+            {
+              LinkActivated(attrib->GetValue());
+              return true;
+            }
+          }
+        }
+      }
+      Ungrab();
+    }
+  }
+  return false;
+}
+
+bool nuiHTMLView::MouseMoved(const nglMouseInfo& rInfo)
+{
+  
+  return false;
+}
+
+
+void nuiHTMLView::_SetURL(const nglString& rURL)
+{
+  SetURL(rURL);
+}
+
+void nuiHTMLView::_AutoSetURL(const nglString& rURL)
+{
+  if (mAutoActivateLink)
+    SetURL(rURL);
+}
+
+void nuiHTMLView::SetAutoActivateLink(bool set)
+{
+  mAutoActivateLink = set;
+}
+
+bool nuiHTMLView::IsAutoActivateLink() const
+{
+  return mAutoActivateLink;
 }
