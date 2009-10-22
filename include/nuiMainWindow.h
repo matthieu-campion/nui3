@@ -147,6 +147,7 @@ public:
   nuiRect GetWindowRect() const;
   void SetWindowRect(nuiRect rect);
 
+  double GetLastEventTime() const;
 protected:
   /* @name Redirected from nglWindow via nuiMainWindow::NGLWindow */
   //@{
@@ -246,6 +247,7 @@ private:
   NGLWindow* mpNGLWindow;
   uint mFullFrameRedraw;
   bool OnInspectorDeath(const nuiEvent& rEvent);
+  nglTime mLastEventTime;
 };
 
 #endif // __nuiMainWindow_h__

@@ -872,10 +872,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\include\nuiMainWindow.h"
-					>
-				</File>
-				<File
 					RelativePath=".\src\Base\nuiMemoryPool.cpp"
 					>
 				</File>
@@ -2733,6 +2729,10 @@
 				</File>
 				<File
 					RelativePath=".\src\WidgetTree\nuiMainWindow.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiMainWindow.h"
 					>
 				</File>
 				<File

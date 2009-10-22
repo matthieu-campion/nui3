@@ -126,6 +126,12 @@ void nuiImageDecoration::SetTexturePath(nglPath path)
   SetProperty(_T("Texture"), path.GetPathName());
   nuiTexture* pOld = mpTexture;
   mpTexture = nuiTexture::GetTexture(path);
+  if (!mpTexture || !mpTexture->IsValid())
+  {
+    NGL_OUT(_T("nuiImageDecoration::SetTexturePath warning : could not load graphic resource '%ls'\n"), path.GetChars());
+    return;
+  }
+
   if (GetSourceClientRect() == nuiRect(0,0,0,0))
     SetSourceClientRect(nuiRect(0, 0, mpTexture->GetWidth(), mpTexture->GetHeight()));
   if (pOld)

@@ -21,6 +21,10 @@
 #define WM_MOUSEHWHEEL                  0x020E
 #endif
 
+#ifndef WM_TOUCH
+#define WM_TOUCH 0x0240
+#endif
+
 #if HAVE_NV_PERFKIT
 #include "nv_perfauth.h"
 #endif
@@ -2514,6 +2518,39 @@ LRESULT nglWindow::WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
       return 0;
     }
     break;
+
+#if 0
+  // case WM_GESTURE: // Panning / Zooming , etc.
+  case WM_TOUCH:
+    {
+      UINT cInputs = LOWORD(wParam);
+      PTOUCHINPUT pInputs = new TOUCHINPUT[cInputs];
+      if (NULL != pInputs)
+      {
+        if (GetTouchInputInfo((HTOUCHINPUT)lParam,
+          cInputs,
+          pInputs,
+          sizeof(TOUCHINPUT)))
+        {
+          // process pInputs
+          if (!CloseTouchInputHandle((HTOUCHINPUT)lParam))
+          {
+            // error handling
+          }
+        }
+        else
+        {
+          // GetLastError() and error handling
+        }
+      }
+      else
+      {
+        // error handling, presumably out of memory
+      }
+      return DefWindowProc(hWnd, message, wParam, lParam);
+    }
+    break;
+#endif
 
   case WM_SETFOCUS:
     {

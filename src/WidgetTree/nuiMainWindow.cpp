@@ -100,6 +100,7 @@ nuiMainWindow::nuiMainWindow(uint Width, uint Height, bool Fullscreen, const ngl
   
   mpWidgetCanDrop = NULL;
   
+  mLastEventTime = nglTime();
   nuiDefaultDecoration::MainWindow(this);
 }
 
@@ -137,6 +138,8 @@ nuiMainWindow::nuiMainWindow(const nglContextInfo& rContextInfo, const nglWindow
   mpInspectorWindow = NULL;
   mpWidgetCanDrop = NULL;
   
+  mLastEventTime = nglTime();
+
   nuiDefaultDecoration::MainWindow(this);  
 }
 
@@ -376,6 +379,7 @@ void nuiMainWindow::OnResize(uint Width, uint Height)
   InvalidateLayout();
 
   mFullFrameRedraw++;
+  mLastEventTime = nglTime();
   
   EmptyTrash();
 }
@@ -419,6 +423,7 @@ void nuiMainWindow::OnClose()
 void nuiMainWindow::OnState (nglWindow::StateInfo State)
 {
   //OUT("OnState\n");
+  mLastEventTime = nglTime();
   EmptyTrash();
 }
 
@@ -574,7 +579,7 @@ bool nuiMainWindow::DBG_GetMouseOverInfo()
   return mDisplayMouseOverInfo;
 }
 
-void  nuiMainWindow::SetFrameRateLimit(float fps)
+void nuiMainWindow::SetFrameRateLimit(float fps)
 {
   mMaxFPS = fps;
   if (mMaxFPS < 0.0f)
@@ -615,36 +620,43 @@ bool nuiMainWindow::SetMouseCursor(nuiMouseCursor Cursor)
 
 bool nuiMainWindow::OnMouseMove(nglMouseInfo& rInfo)
 {
+  mLastEventTime = nglTime();
   return CallMouseMove(rInfo);
 }
 
 bool nuiMainWindow::OnMouseClick(nglMouseInfo& rInfo)
 {
+  mLastEventTime = nglTime();
   return CallMouseClick(rInfo);
 }
 
 bool nuiMainWindow::OnMouseUnclick(nglMouseInfo& rInfo)
 {
+  mLastEventTime = nglTime();
   return CallMouseUnclick(rInfo);
 }
 
 bool nuiMainWindow::OnTextInput(const nglString& rUnicodeText)
 {
+  mLastEventTime = nglTime();
   return CallTextInput(rUnicodeText);
 }
 
 void nuiMainWindow::OnTextInputCancelled()
 {
+  mLastEventTime = nglTime();
   CallTextInputCancelled();
 }
 
 bool nuiMainWindow::OnKeyUp(const nglKeyEvent& rEvent)
 {
+  mLastEventTime = nglTime();
   return CallKeyUp(rEvent);
 }
 
 bool nuiMainWindow::OnKeyDown(const nglKeyEvent& rEvent)
 {
+  mLastEventTime = nglTime();
   if (mDebugMode)
   {
     if (rEvent.mKey == NK_D && 
@@ -819,10 +831,12 @@ nglWindow* nuiMainWindow::GetNGLWindow() const
 void nuiMainWindow::OnDragEnter()
 {
   //NGL_OUT(_T("nuiMainWindow::OnDragEnter\n"));
+  mLastEventTime = nglTime();
 }
 
 void nuiMainWindow::OnDragLeave()
 {
+  mLastEventTime = nglTime();
   //NGL_OUT(_T("nuiMainWindow::OnDragLeave\n"));
   if (mpWidgetCanDrop)
   {
@@ -834,6 +848,7 @@ void nuiMainWindow::OnDragLeave()
 
 nglDropEffect nuiMainWindow::OnCanDrop (nglDragAndDrop* pDragObject, int X, int Y, nglMouseInfo::Flags Button)
 {
+  mLastEventTime = nglTime();
   
   nuiSize x = (nuiSize)X;
   nuiSize y = (nuiSize)Y;
@@ -864,6 +879,7 @@ nglDropEffect nuiMainWindow::OnCanDrop (nglDragAndDrop* pDragObject, int X, int 
 
 void nuiMainWindow::OnDropped (nglDragAndDrop* pDragObject, int X,int Y, nglMouseInfo::Flags Button)
 {
+  mLastEventTime = nglTime();
   nuiSize x = (nuiSize)X;
   nuiSize y = (nuiSize)Y;
 
@@ -1119,4 +1135,9 @@ void nuiMainWindow::EndTextInput()
 bool nuiMainWindow::IsEnteringText() const
 {
   return mpNGLWindow->IsEnteringText();
+}
+
+double nuiMainWindow::GetLastEventTime() const
+{
+  return mLastEventTime;
 }
