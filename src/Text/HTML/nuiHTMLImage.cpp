@@ -11,8 +11,8 @@
 
 /////////////
 //class nuiHTMLImage : public nuiHTMLItem
-nuiHTMLImage::nuiHTMLImage(nuiHTMLNode* pNode)
-: nuiHTMLItem(pNode, true), mpTexture(NULL), mWidth(0), mHeight(0)
+nuiHTMLImage::nuiHTMLImage(nuiHTMLNode* pNode, nuiHTMLNode* pAnchor)
+: nuiHTMLItem(pNode, pAnchor, true), mpTexture(NULL), mWidth(0), mHeight(0)
 {
   const nuiHTMLAttrib* pSrc = pNode->GetAttribute(nuiHTMLAttrib::eAttrib_SRC);
   const nuiHTMLAttrib* pAlt = pNode->GetAttribute(nuiHTMLAttrib::eAttrib_ALT);

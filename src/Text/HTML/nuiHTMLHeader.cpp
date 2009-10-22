@@ -9,8 +9,8 @@
 #include "nuiHTMLHeader.h"
 
 // class nuiHTMLHeader : public nuiHTMLBox
-nuiHTMLHeader::nuiHTMLHeader(nuiHTMLNode* pNode)
-: nuiHTMLBox(pNode, false)
+nuiHTMLHeader::nuiHTMLHeader(nuiHTMLNode* pNode, nuiHTMLNode* pAnchor)
+: nuiHTMLBox(pNode, pAnchor, false)
 {
 }
 

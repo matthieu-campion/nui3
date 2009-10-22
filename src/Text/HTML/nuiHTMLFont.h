@@ -13,7 +13,7 @@
 class nuiHTMLFont : public nuiHTMLItem
 {
 public:
-  nuiHTMLFont(nuiHTMLNode* pNode);
+  nuiHTMLFont(nuiHTMLNode* pNode, nuiHTMLNode* pAnchor);
   virtual ~nuiHTMLFont();
   
   virtual void Draw(nuiDrawContext* pContext);

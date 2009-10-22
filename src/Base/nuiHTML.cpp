@@ -454,3 +454,35 @@ void nuiHTML::SetSourceURL(const nglString& rURL)
   printf("New source URL (0x%x): %ls\n", this, mSourceURL.GetChars());
 }
 
+void nuiHTML::GetAbsoluteURL(const nglString& rBaseURL, nglString& url)
+{
+  int32 colon = url.Find(':');
+  if (colon > 0)
+  {
+    // complete url link
+  }
+  else if (url[0] == '/')
+  {
+    // Site absolute
+    int32 col = rBaseURL.Find(_T("://"));
+    if (col > 0)
+    {
+      int32 end = rBaseURL.Find('/', col + 3);
+      if (end)
+        url = rBaseURL.Extract(0, end) + url;
+    }
+  }
+  else
+  {
+    // Site relative
+    int32 end = rBaseURL.FindLast(_T('/'));
+    if (end)
+    {
+      url = rBaseURL.Extract(0, end) + url;
+    }
+    else
+    {
+      url = rBaseURL + _T("/") + url;
+    }
+  }
+}

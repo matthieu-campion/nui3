@@ -10,8 +10,8 @@
 
 
 //class nuiHTMLFont : public nuiHTMLItem
-nuiHTMLFont::nuiHTMLFont(nuiHTMLNode* pNode)
-: nuiHTMLItem(pNode, true)
+nuiHTMLFont::nuiHTMLFont(nuiHTMLNode* pNode, nuiHTMLNode* pAnchor)
+: nuiHTMLItem(pNode, pAnchor, true)
 {
   //nuiFontRequest mFontRequest;
   

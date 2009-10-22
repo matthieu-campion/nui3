@@ -9,8 +9,8 @@
 #include "nuiHTMLBox.h"
 
 ////////////////////class nuiHTMLBox
-nuiHTMLBox::nuiHTMLBox(nuiHTMLNode* pNode, bool Inline)
-: nuiHTMLItem(pNode, Inline)
+nuiHTMLBox::nuiHTMLBox(nuiHTMLNode* pNode, nuiHTMLNode* pAnchor, bool Inline)
+: nuiHTMLItem(pNode, pAnchor, Inline)
 {
   
 }
@@ -179,8 +179,8 @@ void nuiHTMLBox::GetItemsAt(std::vector<nuiHTMLItem*>& rHitItems, float X, float
   nuiHTMLItem::GetItemsAt(rHitItems, X, Y);
   
   // Try the children:
-  X += mRect.Left();
-  Y += mRect.Top();
+  X -= mRect.Left();
+  Y -= mRect.Top();
   for (uint32 i = 0; i < mItems.size(); i++)
   {
     mItems[i]->GetItemsAt(rHitItems, X, Y);

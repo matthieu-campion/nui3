@@ -13,7 +13,7 @@
 class nuiHTMLHeader : public nuiHTMLBox
 {
 public:
-  nuiHTMLHeader(nuiHTMLNode* pNode);
+  nuiHTMLHeader(nuiHTMLNode* pNode, nuiHTMLNode* pAnchor);
   virtual ~nuiHTMLHeader();
   
   virtual void Layout(nuiHTMLContext& rContext);

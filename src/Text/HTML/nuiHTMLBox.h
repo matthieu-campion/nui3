@@ -13,7 +13,7 @@
 class nuiHTMLBox : public nuiHTMLItem
 {
 public:
-  nuiHTMLBox(nuiHTMLNode* pNode, bool Inline);
+  nuiHTMLBox(nuiHTMLNode* pNode, nuiHTMLNode* pAnchor, bool Inline);
   virtual ~nuiHTMLBox();
   
   virtual void Draw(nuiDrawContext* pContext);

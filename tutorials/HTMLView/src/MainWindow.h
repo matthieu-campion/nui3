@@ -24,7 +24,7 @@ public:
 protected:
   
   bool OnButtonClick(const nuiEvent& rEvent);
-  
+  void OnURLChanged(const nglString& rString);
 private:
   
   bool LoadCSS(const nglPath& rPath);
@@ -33,6 +33,7 @@ private:
   nuiEditLine* mpInput;
   
   nuiEventSink<MainWindow> mEventSink;
-  
+
+  nuiSlotsSink mSlotSink;
 };
 

@@ -11,8 +11,8 @@
 #include "nuiHTMLBox.h"
 
 /////////////////class nuiHTMLItem
-nuiHTMLItem::nuiHTMLItem(nuiHTMLNode* pNode, bool Inline)
-: mpNode(pNode), mInline(Inline), mEndTag(false), mLineBreak(false), mpParent(NULL)
+nuiHTMLItem::nuiHTMLItem(nuiHTMLNode* pNode, nuiHTMLNode* pAnchor, bool Inline)
+: mpNode(pNode), mInline(Inline), mEndTag(false), mLineBreak(false), mpParent(NULL), mpAnchor(pAnchor)
 {
   mSetRectCalled = false;
   ForceLineBreak(pNode->GetTagType() == nuiHTMLNode::eTag_BR);
@@ -188,38 +188,7 @@ void nuiHTMLItem::ForceLineBreak(bool s)
 nglString nuiHTMLItem::GetAbsoluteURL(const nglString& rString) const
 {
   nglString url(rString);
-  int32 colon = url.Find(':');
-  if (colon > 0)
-  {
-    // complete url link
-  }
-  else if (url[0] == '/')
-  {
-    // Site absolute
-    nglString str(mpNode->GetSourceURL());
-    int32 col = str.Find(_T("://"));
-    if (col > 0)
-    {
-      int32 end = str.Find('/', col + 3);
-      if (end)
-        url = str.Extract(0, end) + url;
-    }
-  }
-  else
-  {
-    // Site relative
-    nglString str(mpNode->GetSourceURL());
-    int32 end = str.FindLast(_T('/'));
-    if (end)
-    {
-      url = str.Extract(0, end) + url;
-    }
-    else
-    {
-      url = str + _T("/") + url;
-    }
-  }
-
+  nuiHTML::GetAbsoluteURL(mpNode->GetSourceURL(), url);
   return url;
 }
 
@@ -232,5 +201,25 @@ void nuiHTMLItem::GetItemsAt(std::vector<nuiHTMLItem*>& rHitItems, float X, floa
 {
   if (IsInside(X, Y))
     rHitItems.push_back(const_cast<nuiHTMLItem*>(this));
+}
+
+nuiRect nuiHTMLItem::GetGlobalRect() const
+{
+  nuiRect r;
+  if (mpParent)
+    r = mpParent->GetGlobalRect(); 
+  r.Move(mRect.Left(), mRect.Top());
+  r.SetSize(mRect.GetWidth(), mRect.GetHeight());
+  return r;
+}
+
+void nuiHTMLItem::SetAnchor(nuiHTMLNode* pAnchor)
+{
+  mpAnchor = pAnchor;
+}
+
+nuiHTMLNode* nuiHTMLItem::GetAnchor() const
+{
+  return mpAnchor;
 }
 

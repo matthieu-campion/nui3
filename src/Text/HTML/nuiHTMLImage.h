@@ -13,7 +13,7 @@
 class nuiHTMLImage : public nuiHTMLItem
 {
 public:
-  nuiHTMLImage(nuiHTMLNode* pNode);
+  nuiHTMLImage(nuiHTMLNode* pNode, nuiHTMLNode* pAnchor);
   virtual ~nuiHTMLImage();
   
   virtual void Draw(nuiDrawContext* pContext);

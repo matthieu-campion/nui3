@@ -397,6 +397,8 @@ public:
   const nglString& GetSourceURL() const;
   void SetSourceURL(const nglString& rURL);
 
+  static void GetAbsoluteURL(const nglString& rBaseURL, nglString& rURL);
+  
 private:
   nglString mSourceURL;
 };

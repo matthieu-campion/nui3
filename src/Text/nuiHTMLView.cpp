@@ -35,6 +35,12 @@ nuiHTMLView::nuiHTMLView(float IdealWidth)
   mpContext = new nuiHTMLContext();
   mClicked = false;
   mAutoActivateLink = true;
+  mpCurrentAnchor = NULL;
+  
+  mMouseX = 0;
+  mMouseY = 0;
+  
+  mDebugBoxes = false;
   
   mSlotSink.Connect(LinkActivated, nuiMakeDelegate(this, &nuiHTMLView::_AutoSetURL));
 }
@@ -183,6 +189,29 @@ bool nuiHTMLView::Draw(nuiDrawContext* pContext)
   {
     mpRootBox->CallDraw(pContext);
   }
+  
+  if (mDebugBoxes)
+  {
+    std::vector<nuiHTMLItem*> items;
+    mpRootBox->GetItemsAt(items, mMouseX, mMouseY);
+    if (!items.empty())
+    {
+      float alpha = 0.5f;
+      for (uint32 i = 0; i < items.size(); i++)
+      {
+        int32 ii = items.size() - 1 - i;
+        nuiHTMLItem* pItem = items[ii];
+        
+        pContext->SetFillColor(nuiColor(0.0, 0.0, 1.0, alpha * .5f));
+        pContext->SetStrokeColor(nuiColor(0.0, 0.0, 1.0, alpha));
+
+        nuiRect r(pItem->GetGlobalRect());
+        pContext->DrawRect(r, eStrokeAndFillShape);
+        
+        alpha *= 0.5f;
+      }
+    }
+  }
   return true;
 }
 
@@ -233,7 +262,7 @@ bool nuiHTMLView::SetText(const nglString& rHTMLText)
     Clear();
     delete mpHTML;
     mpHTML = pHTML;
-    mpRootBox = new nuiHTMLBox(mpHTML, false);
+    mpRootBox = new nuiHTMLBox(mpHTML, mpCurrentAnchor, false);
     ParseTree(mpHTML, mpRootBox);
 
     nuiHTMLContext context(*mpContext);
@@ -245,6 +274,8 @@ bool nuiHTMLView::SetText(const nglString& rHTMLText)
 
 bool nuiHTMLView::SetURL(const nglString& rURL)
 {
+  URLChanged(rURL);
+  
   nglString url(rURL);
   nuiHTTPRequest request(rURL);
   nuiHTTPResponse* pResponse = request.SendRequest();
@@ -303,7 +334,7 @@ bool nuiHTMLView::SetURL(const nglString& rURL)
     Clear();
     delete mpHTML;
     mpHTML = pHTML;
-    mpRootBox = new nuiHTMLBox(mpHTML, false);
+    mpRootBox = new nuiHTMLBox(mpHTML, mpCurrentAnchor, false);
     ParseTree(mpHTML, mpRootBox);
 
     nuiHTMLContext context(*mpContext);
@@ -471,14 +502,14 @@ void nuiHTMLView::ParseText(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
   
   for (uint32 i = 0; i < words.size(); i++)
   {
-    pBox->AddItem(new nuiHTMLText(pNode, words[i]));
+    pBox->AddItem(new nuiHTMLText(pNode, mpCurrentAnchor, words[i]));
   }
   //ParseBody(pNode, pBox);
 }
 
 void nuiHTMLView::ParseDiv(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 {
-  nuiHTMLBox* pNewBox = new nuiHTMLBox(pNode, false);
+  nuiHTMLBox* pNewBox = new nuiHTMLBox(pNode, mpCurrentAnchor, false);
   pBox->AddItem(pNewBox);
   
   ParseBody(pNode, pNewBox);
@@ -486,7 +517,7 @@ void nuiHTMLView::ParseDiv(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 
 void nuiHTMLView::ParseTable(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 {
-  nuiHTMLBox* pNewBox = new nuiHTMLBox(pNode, false);
+  nuiHTMLBox* pNewBox = new nuiHTMLBox(pNode, mpCurrentAnchor, false);
   pBox->AddItem(pNewBox);
   
   uint32 count = pNode->GetNbChildren();
@@ -504,13 +535,13 @@ void nuiHTMLView::ParseTable(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 
 void nuiHTMLView::ParseImage(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 {
-  nuiHTMLImage* pImg = new nuiHTMLImage(pNode);
+  nuiHTMLImage* pImg = new nuiHTMLImage(pNode, mpCurrentAnchor);
   pBox->AddItem(pImg);
 }
 
 void nuiHTMLView::ParseTableRow(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 {
-  nuiHTMLBox* pNewBox = new nuiHTMLBox(pNode, false);
+  nuiHTMLBox* pNewBox = new nuiHTMLBox(pNode, mpCurrentAnchor, false);
   pBox->AddItem(pNewBox);
   
   uint32 count = pNode->GetNbChildren();
@@ -530,7 +561,7 @@ void nuiHTMLView::ParseTableRow(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 void nuiHTMLView::ParseList(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 {
   //printf("html list\n");
-  nuiHTMLBox* pListBox = new nuiHTMLBox(pNode, false);
+  nuiHTMLBox* pListBox = new nuiHTMLBox(pNode, mpCurrentAnchor, false);
   pBox->AddItem(pListBox);
   
   uint32 count = pNode->GetNbChildren();
@@ -541,7 +572,7 @@ void nuiHTMLView::ParseList(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
     {
       case nuiHTML::eTag_LI:
       {
-        nuiHTMLBox* pListItemBox = new nuiHTMLBox(pListItem, false);
+        nuiHTMLBox* pListItemBox = new nuiHTMLBox(pListItem, mpCurrentAnchor, false);
         pListBox->AddItem(pListItemBox);
         ParseBody(pListItem, pListItemBox);
       }
@@ -553,7 +584,7 @@ void nuiHTMLView::ParseList(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 
 void nuiHTMLView::ParseP(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 {
-  nuiHTMLBox* pNewBox = new nuiHTMLBox(pNode, false);
+  nuiHTMLBox* pNewBox = new nuiHTMLBox(pNode, mpCurrentAnchor, false);
   pNewBox->ForceLineBreak(true);
   pBox->AddItem(pNewBox);
   
@@ -562,7 +593,7 @@ void nuiHTMLView::ParseP(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 
 void nuiHTMLView::ParseHeader(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 {
-  nuiHTMLBox* pNewBox = new nuiHTMLHeader(pNode);
+  nuiHTMLBox* pNewBox = new nuiHTMLHeader(pNode, mpCurrentAnchor);
   pBox->AddItem(pNewBox);
   
   ParseBody(pNode, pNewBox);
@@ -570,21 +601,23 @@ void nuiHTMLView::ParseHeader(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 
 void nuiHTMLView::ParseFormatTag(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 {
-  pBox->AddItem(new nuiHTMLItem(pNode, true));
+  pBox->AddItem(new nuiHTMLItem(pNode, mpCurrentAnchor, true));
   ParseBody(pNode, pBox);
-  pBox->AddItemEnd(new nuiHTMLItem(pNode, true));
+  pBox->AddItemEnd(new nuiHTMLItem(pNode, mpCurrentAnchor, true));
 }
 
 void nuiHTMLView::ParseA(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 {
-  pBox->AddItem(new nuiHTMLItem(pNode, true));
+  mpCurrentAnchor = pNode;
+  pBox->AddItem(new nuiHTMLItem(pNode, mpCurrentAnchor, true));
   ParseBody(pNode, pBox);
-  pBox->AddItemEnd(new nuiHTMLItem(pNode, true));
+  pBox->AddItemEnd(new nuiHTMLItem(pNode, mpCurrentAnchor, true));
+  mpCurrentAnchor = NULL;
 }
 
 void nuiHTMLView::ParseBr(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 {
-  pBox->AddItem(new nuiHTMLItem(pNode, false));
+  pBox->AddItem(new nuiHTMLItem(pNode, mpCurrentAnchor, false));
 }
 
 void nuiHTMLView::ParseSpan(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
@@ -594,10 +627,10 @@ void nuiHTMLView::ParseSpan(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 
 void nuiHTMLView::ParseFont(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 {
-  pBox->AddItem(new nuiHTMLFont(pNode));
+  pBox->AddItem(new nuiHTMLFont(pNode, mpCurrentAnchor));
   
   ParseBody(pNode, pBox);
-  pBox->AddItemEnd(new nuiHTMLFont(pNode));
+  pBox->AddItemEnd(new nuiHTMLFont(pNode, mpCurrentAnchor));
 }
 
 void nuiHTMLView::_SetText(const nglString& rHTMLText)
@@ -628,13 +661,17 @@ bool nuiHTMLView::MouseUnclicked(const nglMouseInfo& rInfo)
         for (uint32 i = 0; i < items.size(); i++)
         {
           int32 ii = items.size() - 1 - i;
-          nuiHTMLNode* pNode = items[ii]->GetNode();
+          nuiHTMLItem* pItem = items[ii];
+          nuiHTMLNode* pNode = pItem->GetAnchor();
           if (pNode)
           {
-            nuiHTMLAttrib* attrib = pNode->GetAttribute(nuiHTMLAttrib::eAttrib_HREF);
-            if (attrib)
+            nuiHTMLAttrib* pAttrib = pNode->GetAttribute(nuiHTMLAttrib::eAttrib_HREF);
+            if (pAttrib)
             {
-              LinkActivated(attrib->GetValue());
+              nglString url(pAttrib->GetValue());
+              nuiHTML::GetAbsoluteURL(mpHTML->GetSourceURL(), url);
+
+              LinkActivated(url);
               return true;
             }
           }
@@ -648,7 +685,37 @@ bool nuiHTMLView::MouseUnclicked(const nglMouseInfo& rInfo)
 
 bool nuiHTMLView::MouseMoved(const nglMouseInfo& rInfo)
 {
+  mMouseX = rInfo.X;
+  mMouseY = rInfo.Y;
+
+  if (mDebugBoxes)
+    Invalidate();
   
+  std::vector<nuiHTMLItem*> items;
+  mpRootBox->GetItemsAt(items, rInfo.X, rInfo.Y);
+  if (!items.empty())
+  {
+    for (uint32 i = 0; i < items.size(); i++)
+    {
+      int32 ii = items.size() - 1 - i;
+      nuiHTMLItem* pItem = items[ii];
+      nuiHTMLNode* pNode = pItem->GetAnchor();
+      if (pNode)
+      {
+        nuiHTMLAttrib* pAttrib = pNode->GetAttribute(nuiHTMLAttrib::eAttrib_HREF);
+        if (pAttrib)
+        {
+          nglString url(pAttrib->GetValue());
+          nuiHTML::GetAbsoluteURL(mpHTML->GetSourceURL(), url);
+
+          SetToolTip(url);
+          return true;
+        }
+      }
+    }
+  }
+
+  SetToolTip(nglString::Empty);
   return false;
 }
 
@@ -661,7 +728,9 @@ void nuiHTMLView::_SetURL(const nglString& rURL)
 void nuiHTMLView::_AutoSetURL(const nglString& rURL)
 {
   if (mAutoActivateLink)
+  {
     SetURL(rURL);
+  }
 }
 
 void nuiHTMLView::SetAutoActivateLink(bool set)
@@ -672,4 +741,15 @@ void nuiHTMLView::SetAutoActivateLink(bool set)
 bool nuiHTMLView::IsAutoActivateLink() const
 {
   return mAutoActivateLink;
+}
+
+void nuiHTMLView::SetDebugBoxes(bool set)
+{
+  mDebugBoxes = set;
+  Invalidate();
+}
+
+bool nuiHTMLView::GetDebugBoxed() const
+{
+  return mDebugBoxes;
 }

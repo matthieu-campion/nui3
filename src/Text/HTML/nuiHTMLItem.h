@@ -16,7 +16,7 @@ class nuiHTMLBox;
 class nuiHTMLItem
 {
 public:
-  nuiHTMLItem(nuiHTMLNode* pNode, bool Inline);
+  nuiHTMLItem(nuiHTMLNode* pNode, nuiHTMLNode* pAnchor, bool Inline);
   ~nuiHTMLItem();
   
   void CallDraw(nuiDrawContext* pContext);
@@ -25,6 +25,7 @@ public:
   
   const nuiRect& GetIdealRect() const;
   const nuiRect& GetRect() const;
+  nuiRect GetGlobalRect() const;
   void SetRect(const nuiRect& rRect);
   void MoveTo(float x, float y);
   void SetWidth(float w);
@@ -51,10 +52,14 @@ public:
   
   bool IsInside(float X, float Y) const;
   virtual void GetItemsAt(std::vector<nuiHTMLItem*>& rHitItems, float X, float Y) const;
+  
+  void SetAnchor(nuiHTMLNode* pAnchor);
+  nuiHTMLNode* GetAnchor() const;
 protected:
   uint32 GetDepth() const;
 
   nuiHTMLNode* mpNode;
+  nuiHTMLNode* mpAnchor;
   nuiRect mIdealRect;
   nuiRect mRect;
   nuiHTMLBox* mpParent;

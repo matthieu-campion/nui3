@@ -54,9 +54,13 @@ public:
   virtual bool MouseMoved(const nglMouseInfo& rInfo);
   
   nuiSignal1<const nglString&> LinkActivated;
+  nuiSignal1<const nglString&> URLChanged;
   
   void SetAutoActivateLink(bool set);
   bool IsAutoActivateLink() const;
+  
+  void SetDebugBoxes(bool set);
+  bool GetDebugBoxed() const;
 protected:
   
   void ParseTree(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
@@ -97,5 +101,11 @@ private:
   nuiSlotsSink mSlotSink;
   
   bool mAutoActivateLink;
+  bool mDebugBoxes;
+  
+  float mMouseX;
+  float mMouseY;
+  
+  nuiHTMLNode* mpCurrentAnchor;
 };
 

@@ -87,11 +87,10 @@ void MainWindow::OnCreation()
   mpHTMLView = new nuiHTMLView(GetWidth());
   pScroll->AddChild(mpHTMLView);
 
+  mSlotSink.Connect(mpHTMLView->URLChanged, nuiMakeDelegate(this, &MainWindow::OnURLChanged));
   if (1)
   {
     mpHTMLView->SetURL(url);
-    if (!mpHTMLView->GetURL().IsNull())
-      mpInput->SetText(mpHTMLView->GetURL());
   }
   else
   {
@@ -100,6 +99,10 @@ void MainWindow::OnCreation()
 
 }
 
+void MainWindow::OnURLChanged(const nglString& rString)
+{
+  mpInput->SetText(rString);
+}
 
 
 bool MainWindow::OnButtonClick(const nuiEvent& rEvent)

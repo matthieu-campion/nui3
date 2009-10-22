@@ -13,7 +13,7 @@
 class nuiHTMLText : public nuiHTMLItem
 {
 public:
-  nuiHTMLText(nuiHTMLNode* pNode, const nglString& rText);
+  nuiHTMLText(nuiHTMLNode* pNode, nuiHTMLNode* pAnchor, const nglString& rText);
   virtual ~nuiHTMLText();
   
   virtual void Draw(nuiDrawContext* pContext);
