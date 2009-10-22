@@ -447,18 +447,17 @@ nuiWidgetPtr nuiList::GetIdealItem(nuiSize X,nuiSize Y)
   if (mOrientation == nuiVertical)
   {
     IteratorPtr pIt;
-    float y = 0;
     for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
     {
       nuiWidgetPtr pItem = pIt->GetWidget();
-      nuiRect r(pItem->GetIdealRect());
-
-      if (Y >= y && Y < (y + r.GetHeight()))
+      nuiRect r(pItem->GetBorderedRect());
+      r.SetWidth(GetRect().GetWidth());
+      
+      if (r.IsInside(X, Y))
       {
         delete pIt;
         return pItem;
       }
-      y += r.GetHeight();
     }
     delete pIt;
   }
@@ -469,13 +468,13 @@ nuiWidgetPtr nuiList::GetIdealItem(nuiSize X,nuiSize Y)
     for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
     {
       nuiWidgetPtr pItem = pIt->GetWidget();
-      nuiRect r(pItem->GetIdealRect());
-      if (X >= x && X < x + r.GetWidth())
+      nuiRect r(pItem->GetBorderedRect());
+      r.SetHeight(GetRect().GetHeight());
+      if (r.IsInside(X, Y))
       {
         delete pIt;
         return pItem;
       }
-      x += r.GetWidth();
     }
     delete pIt;
   }

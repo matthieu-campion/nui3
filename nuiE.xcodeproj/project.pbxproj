@@ -10248,7 +10248,6 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_THUMB_SUPPORT = NO;
 				INSTALL_PATH = /usr/local/lib;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
@@ -10342,7 +10341,6 @@
 					HAVE_BCOPY,
 					UIKIT,
 				);
-				GCC_THUMB_SUPPORT = NO;
 				INSTALL_PATH = /usr/local/lib;
 				OTHER_CFLAGS = "";
 				PRELINK_LIBS = expat;
@@ -10364,7 +10362,6 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = 4.2;
 				INSTALL_PATH = /usr/local/lib;
 				ONLY_ACTIVE_ARCH = NO;
@@ -10405,7 +10402,6 @@
 					HAVE_BCOPY,
 					UIKIT,
 				);
-				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = 4.2;
 				INSTALL_PATH = /usr/local/lib;
 				ONLY_ACTIVE_ARCH = YES;
