@@ -33,6 +33,7 @@ public:
   nuiOrientation GetOrientation(); ///< Get the widget orientation.
   nuiWidgetPtr GetItem(nuiSize X,nuiSize Y); ///< Return a pointer to the child pointed by X,Y or NULL.
   nuiWidgetPtr GetIdealItem(nuiSize X,nuiSize Y); ///< Return the item pointed to by the given coordinates without taking any ongoing animation into account.
+  nuiWidgetPtr GetIdealNextItem(nuiSize X,nuiSize Y); ///<  Return the item where we should insert if the insertion point if (X, Y).
   int32 GetItemNumber(nuiWidgetPtr pWidget); ///< Return the index of the child pointed by pWidget.
   bool GetUnselectable(); ///< Return true if the list items are unselectable by clicking on it.
   bool GetMultiSelectable(); ///< Return true if multiple list items can be selected.
@@ -115,10 +116,12 @@ protected:
   nuiEventSink<nuiList> mEventSink;
   
   bool OnChildAdded(const nuiEvent& rEvent);
+  bool OnChildDeleted(const nuiEvent& rEvent);
   
   float mMoveAnimDuration;
   nuiEasingMethod mMoveAnimEasing;
 
+  std::map<nuiWidgetPtr, nuiRect> mRects;
 };
 
 #endif // __nuiList_h__

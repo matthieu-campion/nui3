@@ -23,6 +23,9 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
   SetDebugMode(true);
 #endif
   
+  this->DBG_SetMouseOverInfo(true);
+  this->DBG_SetMouseOverObject(true);
+  
   LoadCSS(_T("rsrc:/css/main.css"));
 }
 
@@ -64,7 +67,7 @@ void MainWindow::OnCreation()
     nglString str;
     str.CFormat(_T("Item %d"), i);
     nuiLabel* pItem = new nuiLabel(str);
-    
+    pItem->SetBorder(0, 5);
     // bind a user data to the item's widget
     pItem->SetToken(new nuiToken<uint32>(i));
     

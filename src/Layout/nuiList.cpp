@@ -44,6 +44,7 @@ nuiList::nuiList(nuiOrientation Orientation)
 
   InitProperties();
   mEventSink.Connect(ChildAdded, &nuiList::OnChildAdded);
+  mEventSink.Connect(ChildDeleted, &nuiList::OnChildDeleted);
   mMoveAnimDuration = .25;
   mMoveAnimEasing = nuiEasingCubicRev;
 }
@@ -214,6 +215,8 @@ bool nuiList::SetRect(const nuiRect& rRect)
       Height += h + mBorderSize;
       Height = (nuiSize)ToAbove(Height);
       pItem->SetLayout(Rect);
+      mRects[pItem] = Rect;
+
       ++rit;
     }
     delete pIt;
@@ -248,6 +251,7 @@ bool nuiList::SetRect(const nuiRect& rRect)
       Width += w + mBorderSize;
       Width = (nuiSize)ToAbove(Width);
       pItem->SetLayout(Rect);
+      mRects[pItem] = Rect;
       ++rit;
     }
     delete pIt;
@@ -450,9 +454,7 @@ nuiWidgetPtr nuiList::GetIdealItem(nuiSize X,nuiSize Y)
     for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
     {
       nuiWidgetPtr pItem = pIt->GetWidget();
-      nuiRect r(pItem->GetBorderedRect());
-      r.SetWidth(GetRect().GetWidth());
-      
+      nuiRect r(mRects[pItem]);      
       if (r.IsInside(X, Y))
       {
         delete pIt;
@@ -464,12 +466,10 @@ nuiWidgetPtr nuiList::GetIdealItem(nuiSize X,nuiSize Y)
   else if (mOrientation == nuiHorizontal)
   {
     IteratorPtr pIt;
-    float x = 0;
     for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
     {
       nuiWidgetPtr pItem = pIt->GetWidget();
-      nuiRect r(pItem->GetBorderedRect());
-      r.SetHeight(GetRect().GetHeight());
+      nuiRect r(mRects[pItem]);      
       if (r.IsInside(X, Y))
       {
         delete pIt;
@@ -481,6 +481,44 @@ nuiWidgetPtr nuiList::GetIdealItem(nuiSize X,nuiSize Y)
   
   return NULL;
 }
+
+nuiWidgetPtr nuiList::GetIdealNextItem(nuiSize X,nuiSize Y)
+{
+  if (mOrientation == nuiVertical)
+  {
+    IteratorPtr pIt;
+    for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
+    {
+      nuiWidgetPtr pItem = pIt->GetWidget();
+      nuiRect r(mRects[pItem]);      
+      if (Y < (r.Top() + r.GetHeight() * .5))
+      {
+        delete pIt;
+        return pItem;
+      }
+    }
+    delete pIt;
+  }
+  else if (mOrientation == nuiHorizontal)
+  {
+    IteratorPtr pIt;
+    for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
+    {
+      nuiWidgetPtr pItem = pIt->GetWidget();
+      nuiRect r(mRects[pItem]);      
+      if (Y < (r.Left() + r.GetWidth() * .5))
+      {
+        delete pIt;
+        return pItem;
+      }
+    }
+    delete pIt;
+  }
+  
+  return NULL;
+}
+
+
 
 
 bool nuiList::KeyDown(const nglKeyEvent& rEvent)
@@ -726,8 +764,8 @@ bool nuiList::MouseMoved  (nuiSize X, nuiSize Y)
   if (!mCanMoveItems)
     return false;
   
-  nuiWidgetPtr pItem = GetIdealItem(X,Y);
-
+  nuiWidgetPtr pItem = GetIdealNextItem(X,Y);
+  
   if ((pItem == mpLastItem) || (pItem == mpLastDestinationItem))
     return false;
   
@@ -987,9 +1025,9 @@ bool nuiList::GetFixedAspectRatio()
 
 bool nuiList::OnChildAdded(const nuiEvent& rEvent)
 {
+  const nuiTreeEvent<nuiWidget>& rTreeEvent((const nuiTreeEvent<nuiWidget>&)rEvent);
   if (mMoveAnimDuration)
   {
-    const nuiTreeEvent<nuiWidget>& rTreeEvent((const nuiTreeEvent<nuiWidget>&)rEvent);
     rTreeEvent.mpChild->SetLayoutAnimationDuration(mMoveAnimDuration);
     rTreeEvent.mpChild->SetLayoutAnimationEasing(mMoveAnimEasing);
     nuiRectAttributeAnimation* pAnim = rTreeEvent.mpChild->GetLayoutAnimation(true);
@@ -1002,6 +1040,15 @@ bool nuiList::OnChildAdded(const nuiEvent& rEvent)
       pAnim->SetHeightAnim(false);
     }
   }
+  
+  mRects[rTreeEvent.mpChild] = nuiRect();
+  return false;
+}
+
+bool nuiList::OnChildDeleted(const nuiEvent& rEvent)
+{
+  const nuiTreeEvent<nuiWidget>& rTreeEvent((const nuiTreeEvent<nuiWidget>&)rEvent);
+  mRects.erase(rTreeEvent.mpChild);
   return false;
 }
 
