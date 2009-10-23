@@ -10,7 +10,7 @@
 			<key>CFBundleTypeIconFile</key>
 			<string>icon.icns</string>
 			<key>CFBundleTypeName</key>
-			<string>sqlite-Editor project</string>
+			<string>sqlite-Viewer project</string>
 			<key>LSTypeIsPackage</key>
 			<true/>
 			<key>NSPersistentStoreTypeKey</key>
@@ -22,11 +22,11 @@
 	<key>CFBundleIconFile</key>
 	<string>icon</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.myCompany.sqlite-Editor</string>
+	<string>com.myCompany.sqlite-Viewer</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>sqlite-Editor</string>
+	<string>sqlite-Viewer</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleSignature</key>

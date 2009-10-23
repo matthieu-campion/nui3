@@ -2,16 +2,17 @@
 {
 	61A9DE3F0B833C9200BC506C /* Project object */ = {
 		activeBuildConfigurationName = Default;
-		activeExecutable = BC5BEAB3109232BE00A5A569 /* sqlite-Editor */;
-		activeTarget = 61A9DFBE0B833E9600BC506C /* sqlite-Editor */;
+		activeExecutable = BC775BCD109245BB00760F39 /* sqlite-Viewer */;
+		activeTarget = 61A9DFBE0B833E9600BC506C /* sqlite-Viewer */;
 		addToTargets = (
-			61A9DFC80B833EF200BC506C /* sqlite-EditorD */,
-			61A9DFBE0B833E9600BC506C /* sqlite-Editor */,
+			61A9DFC80B833EF200BC506C /* sqlite-ViewerD */,
+			61A9DFBE0B833E9600BC506C /* sqlite-Viewer */,
+			61A9DFC80B833EF200BC506C /* sqlite-ViewerD */,
 		);
-		codeSenseManager = BC5BEAC3109232C700A5A569 /* Code sense */;
+		codeSenseManager = BC775BF6109245C400760F39 /* Code sense */;
 		executables = (
-			BC5BEAB3109232BE00A5A569 /* sqlite-Editor */,
-			BC5BEAB4109232BE00A5A569 /* sqlite-EditorD */,
+			BC775BCD109245BB00760F39 /* sqlite-Viewer */,
+			BC775BCE109245BB00760F39 /* sqlite-ViewerD */,
 		);
 		perUserDictionary = {
 			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
@@ -19,7 +20,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					853,
+					852,
 					20,
 					48.16259765625,
 					43,
@@ -36,57 +37,30 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 278016702;
-			PBXWorkspaceStateSaveDate = 278016702;
+			PBXPerProjectTemplateStateSaveDate = 278021563;
+			PBXWorkspaceStateSaveDate = 278021563;
 		};
 		perUserProjectItems = {
-			BC5BEB051092338100A5A569 /* PBXTextBookmark */ = BC5BEB051092338100A5A569 /* PBXTextBookmark */;
-			BC5BEB061092338100A5A569 /* PBXTextBookmark */ = BC5BEB061092338100A5A569 /* PBXTextBookmark */;
+			BC775C291092466000760F39 /* PlistBookmark */ = BC775C291092466000760F39 /* PlistBookmark */;
+			BC775C2E109246B500760F39 /* PlistBookmark */ = BC775C2E109246B500760F39 /* PlistBookmark */;
 		};
-		sourceControlManager = BC5BEAC2109232C700A5A569 /* Source Control */;
+		sourceControlManager = BC775BF5109245C400760F39 /* Source Control */;
 		userBuildSettings = {
 		};
 	};
-	61A9DFBE0B833E9600BC506C /* sqlite-Editor */ = {
+	61A9DFBE0B833E9600BC506C /* sqlite-Viewer */ = {
 		activeExec = 0;
 		executables = (
-			BC5BEAB3109232BE00A5A569 /* sqlite-Editor */,
+			BC775BCD109245BB00760F39 /* sqlite-Viewer */,
 		);
 	};
-	61A9DFC80B833EF200BC506C /* sqlite-EditorD */ = {
+	61A9DFC80B833EF200BC506C /* sqlite-ViewerD */ = {
 		activeExec = 0;
 		executables = (
-			BC5BEAB4109232BE00A5A569 /* sqlite-EditorD */,
+			BC775BCE109245BB00760F39 /* sqlite-ViewerD */,
 		);
 	};
-	BC5BEAB3109232BE00A5A569 /* sqlite-Editor */ = {
-		isa = PBXExecutable;
-		activeArgIndices = (
-		);
-		argumentStrings = (
-		);
-		autoAttachOnCrash = 1;
-		breakpointsEnabled = 0;
-		configStateDict = {
-		};
-		customDataFormattersEnabled = 1;
-		dataTipCustomDataFormattersEnabled = 1;
-		dataTipShowTypeColumn = 1;
-		dataTipSortType = 0;
-		debuggerPlugin = GDBDebugging;
-		disassemblyDisplayState = 0;
-		enableDebugStr = 1;
-		environmentEntries = (
-		);
-		executableSystemSymbolLevel = 0;
-		executableUserSymbolLevel = 0;
-		libgmallocEnabled = 0;
-		name = "sqlite-Editor";
-		showTypeColumn = 0;
-		sourceDirectories = (
-		);
-	};
-	BC5BEAB4109232BE00A5A569 /* sqlite-EditorD */ = {
+	BC775BCD109245BB00760F39 /* sqlite-Viewer */ = {
 		isa = PBXExecutable;
 		activeArgIndices = (
 		);
@@ -109,14 +83,44 @@
 		executableSystemSymbolLevel = 0;
 		executableUserSymbolLevel = 0;
 		libgmallocEnabled = 0;
-		name = "sqlite-EditorD";
+		name = "sqlite-Viewer";
 		savedGlobals = {
 		};
 		showTypeColumn = 0;
 		sourceDirectories = (
 		);
 	};
-	BC5BEAC2109232C700A5A569 /* Source Control */ = {
+	BC775BCE109245BB00760F39 /* sqlite-ViewerD */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 0;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = "sqlite-ViewerD";
+		savedGlobals = {
+		};
+		showTypeColumn = 0;
+		sourceDirectories = (
+		);
+	};
+	BC775BF5109245C400760F39 /* Source Control */ = {
 		isa = PBXSourceControlManager;
 		fallbackIsa = XCSourceControlManager;
 		isSCMEnabled = 0;
@@ -126,35 +130,30 @@
 			};
 		};
 	};
-	BC5BEAC3109232C700A5A569 /* Code sense */ = {
+	BC775BF6109245C400760F39 /* Code sense */ = {
 		isa = PBXCodeSenseManager;
 		indexTemplatePath = "";
 	};
-	BC5BEAC5109232D100A5A569 /* Gui.cpp */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1031, 2464}}";
-			sepNavSelRange = "{154, 0}";
-			sepNavVisRange = "{0, 324}";
-		};
-	};
-	BC5BEB051092338100A5A569 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = BC5BEAC5109232D100A5A569 /* Gui.cpp */;
-		name = "Gui.cpp: 8";
+	BC775C291092466000760F39 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = BC6A09AB0EF92BAB00881ACF /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = "/Users/neywen/devel/nui3/tools/sqlite-Viewer/Info.plist";
 		rLen = 0;
-		rLoc = 154;
-		rType = 0;
-		vrLen = 324;
-		vrLoc = 0;
+		rLoc = 9223372036854775807;
 	};
-	BC5BEB061092338100A5A569 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = BC5BEAC5109232D100A5A569 /* Gui.cpp */;
-		name = "Gui.cpp: 8";
+	BC775C2E109246B500760F39 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = BC6A09AB0EF92BAB00881ACF /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = "/Users/neywen/devel/nui3/tools/sqlite-Viewer/Info.plist";
 		rLen = 0;
-		rLoc = 154;
-		rType = 0;
-		vrLen = 324;
-		vrLoc = 0;
+		rLoc = 9223372036854775807;
 	};
 }

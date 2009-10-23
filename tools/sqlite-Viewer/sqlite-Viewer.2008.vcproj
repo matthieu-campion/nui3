@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9,00"
-	Name="sqlite-Editor"
+	Name="sqlite-Viewer"
 	ProjectGUID="{D87858E8-0145-4B03-889A-3186371799DC}"
 	RootNamespace="template"
 	Keyword="Win32Proj"
