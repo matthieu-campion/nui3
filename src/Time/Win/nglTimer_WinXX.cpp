@@ -22,7 +22,7 @@ void nglTimer::InitMainTimer()
     TIMECAPS caps;
     timeGetDevCaps(&caps,sizeof(TIMECAPS));
     timeBeginPeriod(caps.wPeriodMin); // set the minimum timer period
-    mTimerID = timeSetEvent(caps.wPeriodMin,0,TimeProc,(unsigned int) 0,TIME_PERIODIC + TIME_CALLBACK_FUNCTION);
+    mTimerID = timeSetEvent(caps.wPeriodMin,0,TimeProc,(unsigned int) 0,TIME_PERIODIC + TIME_CALLBACK_FUNCTION + TIME_KILL_SYNCHRONOUS);
   }
 }
 
@@ -162,6 +162,8 @@ void nglTimer::CallOnTick()
 
 std::list<nglTimer*> nglTimer::mTimers;
 
+nglAtomic32 nglTimer::mQueuedEvents = 0;
+
 LRESULT nglTimer::WndProc (HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
   std::list<nglTimer*>::iterator it;
@@ -172,14 +174,17 @@ LRESULT nglTimer::WndProc (HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
     if (pTimer->IsRunning())
       pTimer->CallOnTick();
   }
+
+  ngl_atomic_dec(mQueuedEvents);
   return 0;
 }
 
 void nglTimer::PostMessage()
 {
-  if (App)
+  if (App && !mQueuedEvents)
   {
     //OutputDebugString("nglTimer::PostMessage()\n");
+    ngl_atomic_inc(mQueuedEvents);
     ::PostMessage(App->GetHWnd(), WM_NGLTIMER, 0, 0);
   }
   else
