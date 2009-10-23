@@ -25,8 +25,8 @@
 #ifdef _UIKIT_
 const bool gGlobalUseRenderCache = true;
 #else
-const bool gGlobalUseRenderCache = false;
-//const bool gGlobalUseRenderCache = true;
+//const bool gGlobalUseRenderCache = false;
+const bool gGlobalUseRenderCache = true;
 #endif
 
 //#define NUI_LOG_GETIDEALRECT
