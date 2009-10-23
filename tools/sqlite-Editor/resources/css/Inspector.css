@@ -1,0 +1,79 @@
+
+
+
+@Font fontInspectorColumn
+{
+  Name: "Verdana";
+  Size: 10;
+  Bold: true;
+  Italic: false;
+}
+
+
+
+@Font fontInspectorMessage
+{
+  Name: "Verdana";
+  Size: 12;
+  Bold: true;
+  Italic: false;
+}
+
+@Font fontInspectorResult
+{
+  Name: "Verdana";
+  Size: 10;
+  Bold: false;
+  Italic: false;
+}
+
+
+
+Inspector!
+{
+  BorderTop: 10;
+  BorderLeft: 10;
+  BorderBottom: 10;
+  
+}
+
+@nuiColorDecoration dInspectorColumnLabel
+{
+  FillColor: clrSelectionBlue;
+  StrokeColor: clrBorder;
+  ShapeMode: StrokeAndFill;
+}
+
+InspectorColumnLabel!
+{
+  Decoration: dInspectorColumnLabel;
+  UserHeight: 30;
+  
+  Font: fontInspectorColumn;
+  TextColor: white;
+}
+
+
+InspectorMessage!
+{
+  Font: fontInspectorMessage;
+  TextColor: black;
+}
+
+@nuiColorDecoration dInspectorResult
+{
+  StrokeColor: clrBorder;
+  ShapeMode: Stroke;
+}
+
+InspectorResult!
+{
+  Decoration: dInspectorResult;
+  UserHeight: 25;
+  Position: HorizontalFill;
+  Font: fontInspectorResult;
+  TextColor: rgb(96,96,96);
+}
+
+
+

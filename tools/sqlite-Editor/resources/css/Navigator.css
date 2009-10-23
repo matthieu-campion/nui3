@@ -1,0 +1,60 @@
+
+@Font fontNavigator
+{
+  Name: "Verdana";
+  Size: 11;
+  Bold: true;
+  Italic: false;
+}
+
+
+@nuiColorDecoration dNavigatiorItem_Up
+{
+  FillColor: rgb(200,200,200);
+  StrokeColor: clrBorder;
+  ShapeMode: StrokeAndFill;
+}
+
+
+@nuiColorDecoration dNavigatiorItem_Down
+{
+  FillColor: clrSelectionBlue;
+  StrokeColor: clrBorder;
+  ShapeMode: StrokeAndFill;
+}
+
+
+@nuiStateDecoration dNavigatiorItem
+{
+  OnUp: dNavigatiorItem_Up;
+  OnDown: dNavigatiorItem_Down;
+}
+
+NavigatorItem!
+{
+  Decoration: dNavigatiorItem;
+  UserHeight: 35;
+  
+  BorderTop: 5;
+  BorderBottom: 5;
+  BorderLeft: 5;
+  BorderRight: 5;
+}
+
+NavigatorItemLabel!
+{
+  Position: Center;
+  Font: fontNavigator;
+  TextColor: rgb(96,96,96);
+}
+
+Navigator!
+{
+  BorderTop: 10;
+  
+}
+
+
+
+
+

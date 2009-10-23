@@ -1,0 +1,17 @@
+//
+// main nui3 stylesheet
+//
+
+// you can include your stylesheets this way:
+// #include "myStylesheet.css"
+
+// remember each stylesheet file must have at least a blank ending line, 
+// or the stylehsheet parsing may not work properly
+
+@Color clrSelectionBlue = rgb(177,190,210);
+@Color clrBorder = rgb(160,160,160);
+
+#include "Inspector.css"
+#include "Navigator.css"
+#include "Toolbar.css"
+

@@ -1,0 +1,8 @@
+icon.icns        NUI_RESOURCE    "resources/icon.icns"
+icon.ico        NUI_RESOURCE    "resources/icon.ico"
+icon.png        NUI_RESOURCE    "resources/icon.png"
+css/Inspector.css        NUI_RESOURCE    "resources/css/Inspector.css"
+css/main.css        NUI_RESOURCE    "resources/css/main.css"
+css/Navigator.css        NUI_RESOURCE    "resources/css/Navigator.css"
+css/Toolbar.css        NUI_RESOURCE    "resources/css/Toolbar.css"
+0 ICON "resources/icon.ico"

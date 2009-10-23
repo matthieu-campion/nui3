@@ -1,0 +1,14 @@
+
+@nuiColorDecoration dToolbar
+{
+  FillColor: rgb(200,200,200);
+  StrokeColor: rgb(160,160,160);
+  ShapeMode: StrokeAndFill;
+}
+
+Toolbar!
+{
+  DecorationMode: Border;
+  Decoration: dToolbar;
+}
+

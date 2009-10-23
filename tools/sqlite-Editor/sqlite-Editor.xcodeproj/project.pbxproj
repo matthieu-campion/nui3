@@ -1,0 +1,548 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		61A9DFD70B833F1500BC506C /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD20B833F1500BC506C /* AGL.framework */; };
+		61A9DFD80B833F1500BC506C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD30B833F1500BC506C /* CoreFoundation.framework */; };
+		61A9DFD90B833F1500BC506C /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD40B833F1500BC506C /* CoreServices.framework */; };
+		61A9DFDA0B833F1500BC506C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD50B833F1500BC506C /* Carbon.framework */; };
+		61A9DFDB0B833F1500BC506C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD60B833F1500BC506C /* OpenGL.framework */; };
+		61A9DFDC0B833F1500BC506C /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD20B833F1500BC506C /* AGL.framework */; };
+		61A9DFDD0B833F1500BC506C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD30B833F1500BC506C /* CoreFoundation.framework */; };
+		61A9DFDE0B833F1500BC506C /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD40B833F1500BC506C /* CoreServices.framework */; };
+		61A9DFDF0B833F1500BC506C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD50B833F1500BC506C /* Carbon.framework */; };
+		61A9DFE00B833F1500BC506C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD60B833F1500BC506C /* OpenGL.framework */; };
+		61A9DFF30B83433800BC506C /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61A9DFEF0B83433800BC506C /* Application.cpp */; };
+		61A9DFF40B83433800BC506C /* MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */; };
+		61A9DFF50B83433800BC506C /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61A9DFEF0B83433800BC506C /* Application.cpp */; };
+		61A9DFF60B83433800BC506C /* MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */; };
+		BC5BEAD7109232D100A5A569 /* Gui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC5BEAC5109232D100A5A569 /* Gui.cpp */; };
+		BC5BEAD8109232D100A5A569 /* Inspector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC5BEAC7109232D100A5A569 /* Inspector.cpp */; };
+		BC5BEAD9109232D100A5A569 /* Navigator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC5BEAC9109232D100A5A569 /* Navigator.cpp */; };
+		BC5BEADA109232D100A5A569 /* Toolbar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC5BEACB109232D100A5A569 /* Toolbar.cpp */; };
+		BC5BEADB109232D100A5A569 /* Sql.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC5BEACE109232D100A5A569 /* Sql.cpp */; };
+		BC5BEADC109232D100A5A569 /* SqlRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC5BEAD0109232D100A5A569 /* SqlRequest.cpp */; };
+		BC5BEADE109232D100A5A569 /* PreferencesBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC5BEAD5109232D100A5A569 /* PreferencesBase.cpp */; };
+		BC5BEADF109232D100A5A569 /* Gui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC5BEAC5109232D100A5A569 /* Gui.cpp */; };
+		BC5BEAE0109232D100A5A569 /* Inspector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC5BEAC7109232D100A5A569 /* Inspector.cpp */; };
+		BC5BEAE1109232D100A5A569 /* Navigator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC5BEAC9109232D100A5A569 /* Navigator.cpp */; };
+		BC5BEAE2109232D100A5A569 /* Toolbar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC5BEACB109232D100A5A569 /* Toolbar.cpp */; };
+		BC5BEAE3109232D100A5A569 /* Sql.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC5BEACE109232D100A5A569 /* Sql.cpp */; };
+		BC5BEAE4109232D100A5A569 /* SqlRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC5BEAD0109232D100A5A569 /* SqlRequest.cpp */; };
+		BC5BEAE6109232D100A5A569 /* PreferencesBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC5BEAD5109232D100A5A569 /* PreferencesBase.cpp */; };
+		BC5BEAF7109232FC00A5A569 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BC5BEAF6109232FC00A5A569 /* libsqlite3.0.dylib */; };
+		BC5BEAF8109232FC00A5A569 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BC5BEAF6109232FC00A5A569 /* libsqlite3.0.dylib */; };
+		BC6A09AD0EF92BAB00881ACF /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BC6A09AB0EF92BAB00881ACF /* Info.plist */; };
+		BCBCB15F0DFD45BD002E8BC3 /* libnui3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */; };
+		BCBCB1600DFD45C1002E8BC3 /* libnui3D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15C0DFD45B6002E8BC3 /* libnui3D.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		BC5BEAB8109232BE00A5A569 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E592C5140EFE8CCC00340B35 /* libnui3D cocoa.a */;
+			remoteInfo = "nui3D cocoa";
+		};
+		BCBCB15B0DFD45B6002E8BC3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E58172D80C3D103300902DFE;
+			remoteInfo = nui3D;
+		};
+		BCBCB15D0DFD45B6002E8BC3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E542A1AE0C3F0A5900225219;
+			remoteInfo = nui3;
+		};
+		BCBCB1630DFD45FA002E8BC3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = E5429F110C3F0A5900225219;
+			remoteInfo = nui3;
+		};
+		BCBCB1650DFD4605002E8BC3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = E58172D70C3D103300902DFE;
+			remoteInfo = nui3D;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		61A9DFBF0B833E9600BC506C /* sqlite-Editor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "sqlite-Editor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		61A9DFC90B833EF200BC506C /* sqlite-EditorD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "sqlite-EditorD.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		61A9DFD20B833F1500BC506C /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
+		61A9DFD30B833F1500BC506C /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
+		61A9DFD40B833F1500BC506C /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
+		61A9DFD50B833F1500BC506C /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		61A9DFD60B833F1500BC506C /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
+		61A9DFEF0B83433800BC506C /* Application.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = Application.cpp; path = src/Application.cpp; sourceTree = "<group>"; };
+		61A9DFF00B83433800BC506C /* Application.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = Application.h; path = src/Application.h; sourceTree = "<group>"; };
+		61A9DFF10B83433800BC506C /* MainWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = MainWindow.cpp; path = src/MainWindow.cpp; sourceTree = "<group>"; };
+		61A9DFF20B83433800BC506C /* MainWindow.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = MainWindow.h; path = src/MainWindow.h; sourceTree = "<group>"; };
+		BC5BEAC5109232D100A5A569 /* Gui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Gui.cpp; path = src/Gui/Gui.cpp; sourceTree = SOURCE_ROOT; };
+		BC5BEAC6109232D100A5A569 /* Gui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gui.h; path = src/Gui/Gui.h; sourceTree = SOURCE_ROOT; };
+		BC5BEAC7109232D100A5A569 /* Inspector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Inspector.cpp; path = src/Gui/Inspector.cpp; sourceTree = SOURCE_ROOT; };
+		BC5BEAC8109232D100A5A569 /* Inspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Inspector.h; path = src/Gui/Inspector.h; sourceTree = SOURCE_ROOT; };
+		BC5BEAC9109232D100A5A569 /* Navigator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Navigator.cpp; path = src/Gui/Navigator.cpp; sourceTree = SOURCE_ROOT; };
+		BC5BEACA109232D100A5A569 /* Navigator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Navigator.h; path = src/Gui/Navigator.h; sourceTree = SOURCE_ROOT; };
+		BC5BEACB109232D100A5A569 /* Toolbar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Toolbar.cpp; path = src/Gui/Toolbar.cpp; sourceTree = SOURCE_ROOT; };
+		BC5BEACC109232D100A5A569 /* Toolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Toolbar.h; path = src/Gui/Toolbar.h; sourceTree = SOURCE_ROOT; };
+		BC5BEACE109232D100A5A569 /* Sql.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Sql.cpp; path = src/Sql/Sql.cpp; sourceTree = SOURCE_ROOT; };
+		BC5BEACF109232D100A5A569 /* Sql.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Sql.h; path = src/Sql/Sql.h; sourceTree = SOURCE_ROOT; };
+		BC5BEAD0109232D100A5A569 /* SqlRequest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SqlRequest.cpp; path = src/Sql/SqlRequest.cpp; sourceTree = SOURCE_ROOT; };
+		BC5BEAD1109232D100A5A569 /* SqlRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SqlRequest.h; path = src/Sql/SqlRequest.h; sourceTree = SOURCE_ROOT; };
+		BC5BEAD5109232D100A5A569 /* PreferencesBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PreferencesBase.cpp; path = src/Tools/PreferencesBase.cpp; sourceTree = SOURCE_ROOT; };
+		BC5BEAD6109232D100A5A569 /* PreferencesBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PreferencesBase.h; path = src/Tools/PreferencesBase.h; sourceTree = SOURCE_ROOT; };
+		BC5BEAE7109232E000A5A569 /* Inspector.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = Inspector.css; path = resources/css/Inspector.css; sourceTree = SOURCE_ROOT; };
+		BC5BEAE8109232E000A5A569 /* Navigator.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = Navigator.css; path = resources/css/Navigator.css; sourceTree = SOURCE_ROOT; };
+		BC5BEAE9109232E000A5A569 /* Toolbar.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = Toolbar.css; path = resources/css/Toolbar.css; sourceTree = SOURCE_ROOT; };
+		BC5BEAF6109232FC00A5A569 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = /usr/lib/libsqlite3.0.dylib; sourceTree = "<absolute>"; };
+		BC6A09AB0EF92BAB00881ACF /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
+		BC6A09CB0EF9301900881ACF /* main.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = main.css; path = resources/css/main.css; sourceTree = SOURCE_ROOT; };
+		BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nui3.xcodeproj; path = ../../nui3.xcodeproj; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		61A9DFBD0B833E9600BC506C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				61A9DFD70B833F1500BC506C /* AGL.framework in Frameworks */,
+				61A9DFD80B833F1500BC506C /* CoreFoundation.framework in Frameworks */,
+				61A9DFD90B833F1500BC506C /* CoreServices.framework in Frameworks */,
+				61A9DFDA0B833F1500BC506C /* Carbon.framework in Frameworks */,
+				61A9DFDB0B833F1500BC506C /* OpenGL.framework in Frameworks */,
+				BCBCB15F0DFD45BD002E8BC3 /* libnui3.a in Frameworks */,
+				BC5BEAF8109232FC00A5A569 /* libsqlite3.0.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		61A9DFC70B833EF200BC506C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				61A9DFDC0B833F1500BC506C /* AGL.framework in Frameworks */,
+				61A9DFDD0B833F1500BC506C /* CoreFoundation.framework in Frameworks */,
+				61A9DFDE0B833F1500BC506C /* CoreServices.framework in Frameworks */,
+				61A9DFDF0B833F1500BC506C /* Carbon.framework in Frameworks */,
+				61A9DFE00B833F1500BC506C /* OpenGL.framework in Frameworks */,
+				BCBCB1600DFD45C1002E8BC3 /* libnui3D.a in Frameworks */,
+				BC5BEAF7109232FC00A5A569 /* libsqlite3.0.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		61A9DE3D0B833C9200BC506C = {
+			isa = PBXGroup;
+			children = (
+				BC6A09CA0EF9300600881ACF /* css */,
+				BC6A09A20EF92B4B00881ACF /* resources */,
+				61A9DE4A0B833CD000BC506C /* sources */,
+				61A9DE490B833CB000BC506C /* dependencies */,
+				61A9DFB50B833DE500BC506C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		61A9DE490B833CB000BC506C /* dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				BC5BEAF6109232FC00A5A569 /* libsqlite3.0.dylib */,
+				BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */,
+				61A9DFD20B833F1500BC506C /* AGL.framework */,
+				61A9DFD30B833F1500BC506C /* CoreFoundation.framework */,
+				61A9DFD40B833F1500BC506C /* CoreServices.framework */,
+				61A9DFD50B833F1500BC506C /* Carbon.framework */,
+				61A9DFD60B833F1500BC506C /* OpenGL.framework */,
+			);
+			name = dependencies;
+			sourceTree = "<group>";
+		};
+		61A9DE4A0B833CD000BC506C /* sources */ = {
+			isa = PBXGroup;
+			children = (
+				BC5BEAC4109232D100A5A569 /* Gui */,
+				BC5BEACD109232D100A5A569 /* Sql */,
+				BC5BEAD4109232D100A5A569 /* Tools */,
+				61A9DFEF0B83433800BC506C /* Application.cpp */,
+				61A9DFF00B83433800BC506C /* Application.h */,
+				61A9DFF10B83433800BC506C /* MainWindow.cpp */,
+				61A9DFF20B83433800BC506C /* MainWindow.h */,
+			);
+			name = sources;
+			sourceTree = "<group>";
+		};
+		61A9DFB50B833DE500BC506C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				61A9DFBF0B833E9600BC506C /* sqlite-Editor.app */,
+				61A9DFC90B833EF200BC506C /* sqlite-EditorD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BC5BEAC4109232D100A5A569 /* Gui */ = {
+			isa = PBXGroup;
+			children = (
+				BC5BEAC5109232D100A5A569 /* Gui.cpp */,
+				BC5BEAC6109232D100A5A569 /* Gui.h */,
+				BC5BEAC7109232D100A5A569 /* Inspector.cpp */,
+				BC5BEAC8109232D100A5A569 /* Inspector.h */,
+				BC5BEAC9109232D100A5A569 /* Navigator.cpp */,
+				BC5BEACA109232D100A5A569 /* Navigator.h */,
+				BC5BEACB109232D100A5A569 /* Toolbar.cpp */,
+				BC5BEACC109232D100A5A569 /* Toolbar.h */,
+			);
+			name = Gui;
+			path = src/Gui;
+			sourceTree = SOURCE_ROOT;
+		};
+		BC5BEACD109232D100A5A569 /* Sql */ = {
+			isa = PBXGroup;
+			children = (
+				BC5BEACE109232D100A5A569 /* Sql.cpp */,
+				BC5BEACF109232D100A5A569 /* Sql.h */,
+				BC5BEAD0109232D100A5A569 /* SqlRequest.cpp */,
+				BC5BEAD1109232D100A5A569 /* SqlRequest.h */,
+			);
+			name = Sql;
+			path = src/Sql;
+			sourceTree = SOURCE_ROOT;
+		};
+		BC5BEAD4109232D100A5A569 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				BC5BEAD5109232D100A5A569 /* PreferencesBase.cpp */,
+				BC5BEAD6109232D100A5A569 /* PreferencesBase.h */,
+			);
+			name = Tools;
+			path = src/Tools;
+			sourceTree = SOURCE_ROOT;
+		};
+		BC6A09A20EF92B4B00881ACF /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				BC6A09AB0EF92BAB00881ACF /* Info.plist */,
+			);
+			name = resources;
+			sourceTree = "<group>";
+		};
+		BC6A09CA0EF9300600881ACF /* css */ = {
+			isa = PBXGroup;
+			children = (
+				BC6A09CB0EF9301900881ACF /* main.css */,
+				BC5BEAE7109232E000A5A569 /* Inspector.css */,
+				BC5BEAE8109232E000A5A569 /* Navigator.css */,
+				BC5BEAE9109232E000A5A569 /* Toolbar.css */,
+			);
+			name = css;
+			sourceTree = "<group>";
+		};
+		BCBCB1530DFD45B5002E8BC3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BCBCB15C0DFD45B6002E8BC3 /* libnui3D.a */,
+				BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */,
+				BC5BEAB9109232BE00A5A569 /* libnui3D cocoa.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		61A9DFBE0B833E9600BC506C /* sqlite-Editor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 61A9DFC20B833E9600BC506C /* Build configuration list for PBXNativeTarget "sqlite-Editor" */;
+			buildPhases = (
+				61A9DFBB0B833E9600BC506C /* Resources */,
+				61A9DFBC0B833E9600BC506C /* Sources */,
+				61A9DFBD0B833E9600BC506C /* Frameworks */,
+				BC6A09BE0EF92F1B00881ACF /* Copy Resources Script */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BCBCB1640DFD45FA002E8BC3 /* PBXTargetDependency */,
+			);
+			name = "sqlite-Editor";
+			productName = Temp;
+			productReference = 61A9DFBF0B833E9600BC506C /* sqlite-Editor.app */;
+			productType = "com.apple.product-type.application";
+		};
+		61A9DFC80B833EF200BC506C /* sqlite-EditorD */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 61A9DFCC0B833EF300BC506C /* Build configuration list for PBXNativeTarget "sqlite-EditorD" */;
+			buildPhases = (
+				61A9DFC60B833EF200BC506C /* Sources */,
+				61A9DFC70B833EF200BC506C /* Frameworks */,
+				BC6A09BC0EF92EBF00881ACF /* Copy Resources Script */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BCBCB1660DFD4605002E8BC3 /* PBXTargetDependency */,
+			);
+			name = "sqlite-EditorD";
+			productName = Tempd;
+			productReference = 61A9DFC90B833EF200BC506C /* sqlite-EditorD.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		61A9DE3F0B833C9200BC506C /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 61A9DE400B833C9200BC506C /* Build configuration list for PBXProject "sqlite-Editor" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 0;
+			mainGroup = 61A9DE3D0B833C9200BC506C;
+			productRefGroup = 61A9DFB50B833DE500BC506C /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = BCBCB1530DFD45B5002E8BC3 /* Products */;
+					ProjectRef = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				61A9DFBE0B833E9600BC506C /* sqlite-Editor */,
+				61A9DFC80B833EF200BC506C /* sqlite-EditorD */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		BC5BEAB9109232BE00A5A569 /* libnui3D cocoa.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libnui3D cocoa.a";
+			remoteRef = BC5BEAB8109232BE00A5A569 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BCBCB15C0DFD45B6002E8BC3 /* libnui3D.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnui3D.a;
+			remoteRef = BCBCB15B0DFD45B6002E8BC3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnui3.a;
+			remoteRef = BCBCB15D0DFD45B6002E8BC3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		61A9DFBB0B833E9600BC506C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BC6A09AD0EF92BAB00881ACF /* Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		BC6A09BC0EF92EBF00881ACF /* Copy Resources Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Resources Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "rsync -rC ./resources/ --exclude \".*\" \"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"\n../../tools/make_rc.py resources resource.rc\necho 0 ICON \\\"resources/icon.ico\\\" >> resource.rc\n";
+		};
+		BC6A09BE0EF92F1B00881ACF /* Copy Resources Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Resources Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "rsync -rC ./resources/ --exclude \".*\" \"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"\n../../tools/make_rc.py resources resource.rc\necho 0 ICON \\\"resources/icon.ico\\\" >> resource.rc\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		61A9DFBC0B833E9600BC506C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				61A9DFF30B83433800BC506C /* Application.cpp in Sources */,
+				61A9DFF40B83433800BC506C /* MainWindow.cpp in Sources */,
+				BC5BEADF109232D100A5A569 /* Gui.cpp in Sources */,
+				BC5BEAE0109232D100A5A569 /* Inspector.cpp in Sources */,
+				BC5BEAE1109232D100A5A569 /* Navigator.cpp in Sources */,
+				BC5BEAE2109232D100A5A569 /* Toolbar.cpp in Sources */,
+				BC5BEAE3109232D100A5A569 /* Sql.cpp in Sources */,
+				BC5BEAE4109232D100A5A569 /* SqlRequest.cpp in Sources */,
+				BC5BEAE6109232D100A5A569 /* PreferencesBase.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		61A9DFC60B833EF200BC506C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				61A9DFF50B83433800BC506C /* Application.cpp in Sources */,
+				61A9DFF60B83433800BC506C /* MainWindow.cpp in Sources */,
+				BC5BEAD7109232D100A5A569 /* Gui.cpp in Sources */,
+				BC5BEAD8109232D100A5A569 /* Inspector.cpp in Sources */,
+				BC5BEAD9109232D100A5A569 /* Navigator.cpp in Sources */,
+				BC5BEADA109232D100A5A569 /* Toolbar.cpp in Sources */,
+				BC5BEADB109232D100A5A569 /* Sql.cpp in Sources */,
+				BC5BEADC109232D100A5A569 /* SqlRequest.cpp in Sources */,
+				BC5BEADE109232D100A5A569 /* PreferencesBase.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		BCBCB1640DFD45FA002E8BC3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = nui3;
+			targetProxy = BCBCB1630DFD45FA002E8BC3 /* PBXContainerItemProxy */;
+		};
+		BCBCB1660DFD4605002E8BC3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = nui3D;
+			targetProxy = BCBCB1650DFD4605002E8BC3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		61A9DE410B833C9200BC506C /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				HEADER_SEARCH_PATHS = (
+					../../include,
+					./src,
+				);
+				INFOPLIST_FILE = Info.plist;
+			};
+			name = Default;
+		};
+		61A9DFC30B833E9600BC506C /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				COPY_PHASE_STRIP = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = s;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-liconv",
+					"-lz",
+				);
+				PREBINDING = YES;
+				PRODUCT_NAME = "sqlite-Editor";
+				STRIP_INSTALLED_PRODUCT = YES;
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = NO;
+			};
+			name = Default;
+		};
+		61A9DFCD0B833EF300BC506C /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DEBUGGING_SYMBOLS = full;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = _DEBUG;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-liconv",
+					"-lz",
+				);
+				PREBINDING = YES;
+				PRODUCT_NAME = "sqlite-EditorD";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = NO;
+			};
+			name = Default;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		61A9DE400B833C9200BC506C /* Build configuration list for PBXProject "sqlite-Editor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				61A9DE410B833C9200BC506C /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		61A9DFC20B833E9600BC506C /* Build configuration list for PBXNativeTarget "sqlite-Editor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				61A9DFC30B833E9600BC506C /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		61A9DFCC0B833EF300BC506C /* Build configuration list for PBXNativeTarget "sqlite-EditorD" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				61A9DFCD0B833EF300BC506C /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 61A9DE3F0B833C9200BC506C /* Project object */;
+}

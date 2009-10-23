@@ -1,0 +1,160 @@
+// !$*UTF8*$!
+{
+	61A9DE3F0B833C9200BC506C /* Project object */ = {
+		activeBuildConfigurationName = Default;
+		activeExecutable = BC5BEAB3109232BE00A5A569 /* sqlite-Editor */;
+		activeTarget = 61A9DFBE0B833E9600BC506C /* sqlite-Editor */;
+		addToTargets = (
+			61A9DFC80B833EF200BC506C /* sqlite-EditorD */,
+			61A9DFBE0B833E9600BC506C /* sqlite-Editor */,
+		);
+		codeSenseManager = BC5BEAC3109232C700A5A569 /* Code sense */;
+		executables = (
+			BC5BEAB3109232BE00A5A569 /* sqlite-Editor */,
+			BC5BEAB4109232BE00A5A569 /* sqlite-EditorD */,
+		);
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					853,
+					20,
+					48.16259765625,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 278016702;
+			PBXWorkspaceStateSaveDate = 278016702;
+		};
+		perUserProjectItems = {
+			BC5BEB051092338100A5A569 /* PBXTextBookmark */ = BC5BEB051092338100A5A569 /* PBXTextBookmark */;
+			BC5BEB061092338100A5A569 /* PBXTextBookmark */ = BC5BEB061092338100A5A569 /* PBXTextBookmark */;
+		};
+		sourceControlManager = BC5BEAC2109232C700A5A569 /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	61A9DFBE0B833E9600BC506C /* sqlite-Editor */ = {
+		activeExec = 0;
+		executables = (
+			BC5BEAB3109232BE00A5A569 /* sqlite-Editor */,
+		);
+	};
+	61A9DFC80B833EF200BC506C /* sqlite-EditorD */ = {
+		activeExec = 0;
+		executables = (
+			BC5BEAB4109232BE00A5A569 /* sqlite-EditorD */,
+		);
+	};
+	BC5BEAB3109232BE00A5A569 /* sqlite-Editor */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 0;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = "sqlite-Editor";
+		showTypeColumn = 0;
+		sourceDirectories = (
+		);
+	};
+	BC5BEAB4109232BE00A5A569 /* sqlite-EditorD */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 0;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = "sqlite-EditorD";
+		savedGlobals = {
+		};
+		showTypeColumn = 0;
+		sourceDirectories = (
+		);
+	};
+	BC5BEAC2109232C700A5A569 /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+			repositoryNamesForRoots = {
+				"" = "";
+			};
+		};
+	};
+	BC5BEAC3109232C700A5A569 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	BC5BEAC5109232D100A5A569 /* Gui.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1031, 2464}}";
+			sepNavSelRange = "{154, 0}";
+			sepNavVisRange = "{0, 324}";
+		};
+	};
+	BC5BEB051092338100A5A569 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = BC5BEAC5109232D100A5A569 /* Gui.cpp */;
+		name = "Gui.cpp: 8";
+		rLen = 0;
+		rLoc = 154;
+		rType = 0;
+		vrLen = 324;
+		vrLoc = 0;
+	};
+	BC5BEB061092338100A5A569 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = BC5BEAC5109232D100A5A569 /* Gui.cpp */;
+		name = "Gui.cpp: 8";
+		rLen = 0;
+		rLoc = 154;
+		rType = 0;
+		vrLen = 324;
+		vrLoc = 0;
+	};
+}
