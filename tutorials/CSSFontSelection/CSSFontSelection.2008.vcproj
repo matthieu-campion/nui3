@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9,00"
 	Name="CSSFontSelection"
-	ProjectGUID="{D87858E8-0145-4B03-889A-3186371799DC}"
+	ProjectGUID="{2380A778-CF09-4E2B-B766-2A12BC08CABA}"
 	RootNamespace="template"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="131072"

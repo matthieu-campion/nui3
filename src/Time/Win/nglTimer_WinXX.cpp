@@ -162,7 +162,7 @@ void nglTimer::CallOnTick()
 
 std::list<nglTimer*> nglTimer::mTimers;
 
-nglAtomic32 nglTimer::mQueuedEvents = 0;
+nglAtomic nglTimer::mQueuedEvents = 0;
 
 LRESULT nglTimer::WndProc (HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {

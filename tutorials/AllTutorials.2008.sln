@@ -127,6 +127,21 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WidgetCreatorCSS", "WidgetC
 		{A287CB70-6835-4961-BEF5-E2DCDBE2CED4} = {A287CB70-6835-4961-BEF5-E2DCDBE2CED4}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AudioPlayer", "AudioPlayer\AudioPlayer.2008.vcproj", "{AD6CECC8-2DA2-4A63-B5E9-BA887165B8D5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A287CB70-6835-4961-BEF5-E2DCDBE2CED4} = {A287CB70-6835-4961-BEF5-E2DCDBE2CED4}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CSSFontSelection", "CSSFontSelection\CSSFontSelection.2008.vcproj", "{2380A778-CF09-4E2B-B766-2A12BC08CABA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A287CB70-6835-4961-BEF5-E2DCDBE2CED4} = {A287CB70-6835-4961-BEF5-E2DCDBE2CED4}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimpleTouch", "SimpleTouch\SimpleTouch.2008.vcproj", "{F1AEB3AB-8D20-4844-93C6-7844E0C28F54}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A287CB70-6835-4961-BEF5-E2DCDBE2CED4} = {A287CB70-6835-4961-BEF5-E2DCDBE2CED4}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -343,6 +358,26 @@ Global
 		{8F609C06-2F9C-4EAD-BA58-AA7719C7ED7E}.Release|Win32.Build.0 = Release|Win32
 		{8F609C06-2F9C-4EAD-BA58-AA7719C7ED7E}.Release|x64.ActiveCfg = Release|x64
 		{8F609C06-2F9C-4EAD-BA58-AA7719C7ED7E}.Release|x64.Build.0 = Release|x64
+		{AD6CECC8-2DA2-4A63-B5E9-BA887165B8D5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{AD6CECC8-2DA2-4A63-B5E9-BA887165B8D5}.Debug|Win32.Build.0 = Debug|Win32
+		{AD6CECC8-2DA2-4A63-B5E9-BA887165B8D5}.Debug|x64.ActiveCfg = Debug|Win32
+		{AD6CECC8-2DA2-4A63-B5E9-BA887165B8D5}.Release|Win32.ActiveCfg = Release|Win32
+		{AD6CECC8-2DA2-4A63-B5E9-BA887165B8D5}.Release|Win32.Build.0 = Release|Win32
+		{AD6CECC8-2DA2-4A63-B5E9-BA887165B8D5}.Release|x64.ActiveCfg = Release|Win32
+		{2380A778-CF09-4E2B-B766-2A12BC08CABA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2380A778-CF09-4E2B-B766-2A12BC08CABA}.Debug|Win32.Build.0 = Debug|Win32
+		{2380A778-CF09-4E2B-B766-2A12BC08CABA}.Debug|x64.ActiveCfg = Debug|Win32
+		{2380A778-CF09-4E2B-B766-2A12BC08CABA}.Release|Win32.ActiveCfg = Release|Win32
+		{2380A778-CF09-4E2B-B766-2A12BC08CABA}.Release|Win32.Build.0 = Release|Win32
+		{2380A778-CF09-4E2B-B766-2A12BC08CABA}.Release|x64.ActiveCfg = Release|Win32
+		{F1AEB3AB-8D20-4844-93C6-7844E0C28F54}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F1AEB3AB-8D20-4844-93C6-7844E0C28F54}.Debug|Win32.Build.0 = Debug|Win32
+		{F1AEB3AB-8D20-4844-93C6-7844E0C28F54}.Debug|x64.ActiveCfg = Debug|x64
+		{F1AEB3AB-8D20-4844-93C6-7844E0C28F54}.Debug|x64.Build.0 = Debug|x64
+		{F1AEB3AB-8D20-4844-93C6-7844E0C28F54}.Release|Win32.ActiveCfg = Release|Win32
+		{F1AEB3AB-8D20-4844-93C6-7844E0C28F54}.Release|Win32.Build.0 = Release|Win32
+		{F1AEB3AB-8D20-4844-93C6-7844E0C28F54}.Release|x64.ActiveCfg = Release|x64
+		{F1AEB3AB-8D20-4844-93C6-7844E0C28F54}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

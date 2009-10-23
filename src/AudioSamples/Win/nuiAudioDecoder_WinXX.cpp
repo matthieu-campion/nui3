@@ -8,6 +8,8 @@
 #include "wmsdk.h" 
 #include "objidl.h"
 
+#pragma comment (lib, "wmvcore.lib")
+
 #define PCM_AUDIO_FORMAT_TAG 0x0001
 
 #define REQUESTED_BITS_PER_SAMPLE 32 //we want to retrieve 32 bits audio samples

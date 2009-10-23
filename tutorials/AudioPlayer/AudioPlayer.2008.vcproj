@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9,00"
 	Name="AudioPlayer"
-	ProjectGUID="{D87858E8-0145-4B03-889A-3186371799DC}"
+	ProjectGUID="{AD6CECC8-2DA2-4A63-B5E9-BA887165B8D5}"
 	RootNamespace="template"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="131072"
@@ -184,11 +184,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\AudioEngine.cpp"
+				RelativePath=".\src\AudioEngine.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\AudioEngine.h"
+				RelativePath=".\src\AudioEngine.h"
 				>
 			</File>
 			<File
