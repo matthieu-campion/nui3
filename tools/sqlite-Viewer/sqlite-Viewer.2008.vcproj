@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../../include"
+				AdditionalIncludeDirectories="../../include;./src"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -116,7 +116,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../include"
+				AdditionalIncludeDirectories="../../include;./src"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="0"
@@ -191,6 +191,74 @@
 				RelativePath="src\MainWindow.h"
 				>
 			</File>
+			<Filter
+				Name="Gui"
+				>
+				<File
+					RelativePath=".\src\Gui\Gui.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Gui\Gui.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Gui\Inspector.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Gui\Inspector.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Gui\Navigator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Gui\Navigator.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Gui\Toolbar.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Gui\Toolbar.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Tools"
+				>
+				<File
+					RelativePath=".\src\Tools\PreferencesBase.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Tools\PreferencesBase.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Sql"
+				>
+				<File
+					RelativePath=".\src\Sql\Sql.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Sql\Sql.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Sql\SqlRequest.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Sql\SqlRequest.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\resource.rc"
