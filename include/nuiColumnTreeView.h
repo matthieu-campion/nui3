@@ -75,6 +75,7 @@ protected:
 
   virtual bool OnTreeChildAdded(const nuiEvent& rEvent);
   virtual bool OnTreeChildDeleted(const nuiEvent& rEvent);
+  virtual bool OnTreeChanged(const nuiEvent& rEvent);
 
   uint32 GetDepth();
   void CalcHotRect();
@@ -90,7 +91,7 @@ protected:
   enum TimedButtonEvents
   {
     eUpPressed,
-    eDownPressed,
+    eDownPressed
   };
   TimedButtonEvents mTimedButtonEvent;
   bool OnButtonTimerTick(const nuiEvent& rEvent);

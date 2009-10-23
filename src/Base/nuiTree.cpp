@@ -295,7 +295,7 @@ uint32 nuiTreeBase::GetDepth() const
   if (!mpParent)
     return 0;
   
-  return mpParent->nuiTreeBase::GetDepth() +1;
+  return mpParent->nuiTreeBase::GetDepth() + 1;
 }
 
 uint32 nuiTreeBase::GetTreeDepth() const
@@ -307,7 +307,7 @@ uint32 nuiTreeBase::GetTreeDepth() const
     if (mpChildren[i])
       Depth = MAX(Depth, mpChildren[i]->GetDepth());
   }
-  return Depth+1;
+  return Depth + 1;
 }
 
 int32 nuiTreeBase::ComputeIndexInParent() const

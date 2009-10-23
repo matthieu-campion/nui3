@@ -593,9 +593,6 @@ bool nuiColumnTreeView::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags B
       }
     }
 
-    mNewX = mOldX = mClickX = X;
-    mNewY = mOldY = mClickY = Y;
-
     nuiTreeNodePtr pNode = FindNode(X,Y);
     if (pNode && (pNode != mpSelectedNode))
     {
@@ -672,14 +669,6 @@ bool nuiColumnTreeView::MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags
 
 bool nuiColumnTreeView::MouseMoved(nuiSize X, nuiSize Y)
 {
-  if (mClicked)
-  {
-    mNewX = X;
-    mNewY = Y;
-    Invalidate();
-    CreateScrollBars();
-    return true;
-  }
   return false;
 }
 
@@ -965,6 +954,13 @@ bool nuiColumnTreeView::OnTreeChildDeleted(const nuiEvent& rEvent)
   bool res = nuiTreeView::OnTreeChildDeleted(rEvent);
   CreateScrollBars();
   return res;
+}
+
+bool nuiColumnTreeView::OnTreeChanged(const nuiEvent& rEvent)
+{
+  nuiTreeView::OnTreeChanged(rEvent);
+  CreateScrollBars();
+  return false;
 }
 
 void nuiColumnTreeView::SetPreview(nuiWidgetPtr pPreview)
