@@ -233,8 +233,6 @@
 			<key>Layout</key>
 			<array>
 				<dict>
-					<key>BecomeActive</key>
-					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -274,11 +272,15 @@
 								<string>BC6A09CA0EF9300600881ACF</string>
 								<string>BC6A09A20EF92B4B00881ACF</string>
 								<string>61A9DE4A0B833CD000BC506C</string>
+								<string>BC775C00109245ED00760F39</string>
 								<string>61A9DE490B833CB000BC506C</string>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
+									<integer>14</integer>
+									<integer>10</integer>
+									<integer>8</integer>
 									<integer>0</integer>
 								</array>
 							</array>
@@ -311,12 +313,14 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>BC775BE6109245C400760F39</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>Info.plist</string>
+								<string>SqlRequest.cpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -324,14 +328,17 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>BC775BE7109245C400760F39</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>Info.plist</string>
+										<string>SqlRequest.cpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>BC775C2E109246B500760F39</string>
+										<string>BC70110510924981002D60E2</string>
 										<key>history</key>
 										<array>
-											<string>BC775C291092466000760F39</string>
+											<string>BC70110110924981002D60E2</string>
+											<string>BC70110210924981002D60E2</string>
+											<string>BC70110310924981002D60E2</string>
+											<string>BC70110410924981002D60E2</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -345,18 +352,18 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {1091, 215}}</string>
+								<string>{{0, 0}, {1091, 716}}</string>
 								<key>RubberWindowFrame</key>
 								<string>209 411 1298 762 0 0 1920 1178 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>215pt</string>
+							<string>716pt</string>
 						</dict>
 						<dict>
 							<key>Proportion</key>
-							<string>501pt</string>
+							<string>0pt</string>
 							<key>Tabs</key>
 							<array>
 								<dict>
@@ -370,7 +377,9 @@
 									<key>GeometryConfiguration</key>
 									<dict>
 										<key>Frame</key>
-										<string>{{10, 27}, {1091, 474}}</string>
+										<string>{{10, 27}, {1091, -27}}</string>
+										<key>RubberWindowFrame</key>
+										<string>209 411 1298 762 0 0 1920 1178 </string>
 									</dict>
 									<key>Module</key>
 									<string>XCDetailModule</string>
@@ -425,8 +434,6 @@
 									<dict>
 										<key>Frame</key>
 										<string>{{10, 27}, {1091, 474}}</string>
-										<key>RubberWindowFrame</key>
-										<string>209 411 1298 762 0 0 1920 1178 </string>
 									</dict>
 									<key>Module</key>
 									<string>PBXBuildResultsModule</string>
@@ -454,11 +461,11 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>BC775BE8109245C400760F39</string>
+				<string>BC70110610924981002D60E2</string>
 				<string>1CA23ED40692098700951B8B</string>
-				<string>BC775BE9109245C400760F39</string>
+				<string>BC70110710924981002D60E2</string>
 				<string>BC775BE6109245C400760F39</string>
-				<string>BC775BEA109245C400760F39</string>
+				<string>BC70110810924981002D60E2</string>
 				<string>1CA23EDF0692099D00951B8B</string>
 				<string>1CA23EE00692099D00951B8B</string>
 				<string>1CA23EE10692099D00951B8B</string>
@@ -608,14 +615,14 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>BC775BEB109245C400760F39</string>
+				<string>BC70110910924981002D60E2</string>
 				<string>1CCC7628064C1048000F2A68</string>
 				<string>1CCC7629064C1048000F2A68</string>
-				<string>BC775BEC109245C400760F39</string>
-				<string>BC775BED109245C400760F39</string>
-				<string>BC775BEE109245C400760F39</string>
-				<string>BC775BEF109245C400760F39</string>
-				<string>BC775BF0109245C400760F39</string>
+				<string>BC70110A10924981002D60E2</string>
+				<string>BC70110B10924981002D60E2</string>
+				<string>BC70110C10924981002D60E2</string>
+				<string>BC70110D10924981002D60E2</string>
+				<string>BC70110E10924981002D60E2</string>
 			</array>
 			<key>ToolbarConfigUserDefaultsMinorVersion</key>
 			<string>2</string>
@@ -649,8 +656,8 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>BC775BF3109245C400760F39</string>
-		<string>BC775BF4109245C400760F39</string>
+		<string>BC70110F10924981002D60E2</string>
+		<string>BC70111010924981002D60E2</string>
 		<string>/Users/neywen/devel/nui3/tools/sqlite-Viewer/sqlite-Viewer.xcodeproj</string>
 	</array>
 	<key>WindowString</key>

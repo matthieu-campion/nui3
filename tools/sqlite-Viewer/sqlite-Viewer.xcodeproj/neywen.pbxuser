@@ -20,9 +20,9 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					852,
+					10,
 					20,
-					48.16259765625,
+					48,
 					43,
 					43,
 					20,
@@ -37,12 +37,15 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 278021563;
-			PBXWorkspaceStateSaveDate = 278021563;
+			PBXPerProjectTemplateStateSaveDate = 278022294;
+			PBXWorkspaceStateSaveDate = 278022294;
 		};
 		perUserProjectItems = {
-			BC775C291092466000760F39 /* PlistBookmark */ = BC775C291092466000760F39 /* PlistBookmark */;
-			BC775C2E109246B500760F39 /* PlistBookmark */ = BC775C2E109246B500760F39 /* PlistBookmark */;
+			BC70110110924981002D60E2 /* PlistBookmark */ = BC70110110924981002D60E2 /* PlistBookmark */;
+			BC70110210924981002D60E2 /* PBXTextBookmark */ = BC70110210924981002D60E2 /* PBXTextBookmark */;
+			BC70110310924981002D60E2 /* PBXTextBookmark */ = BC70110310924981002D60E2 /* PBXTextBookmark */;
+			BC70110410924981002D60E2 /* PBXTextBookmark */ = BC70110410924981002D60E2 /* PBXTextBookmark */;
+			BC70110510924981002D60E2 /* PBXTextBookmark */ = BC70110510924981002D60E2 /* PBXTextBookmark */;
 		};
 		sourceControlManager = BC775BF5109245C400760F39 /* Source Control */;
 		userBuildSettings = {
@@ -59,6 +62,57 @@
 		executables = (
 			BC775BCE109245BB00760F39 /* sqlite-ViewerD */,
 		);
+	};
+	BC70110110924981002D60E2 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = BC6A09AB0EF92BAB00881ACF /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = "/Users/neywen/devel/nui3/tools/sqlite-Viewer/Info.plist";
+		rLen = 0;
+		rLoc = 9223372036854775807;
+	};
+	BC70110210924981002D60E2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = BC775C02109245ED00760F39 /* Sql.h */;
+		name = "Sql.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 1099;
+		vrLoc = 0;
+	};
+	BC70110310924981002D60E2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = BC775C04109245ED00760F39 /* SqlRequest.h */;
+		name = "SqlRequest.h: 28";
+		rLen = 0;
+		rLoc = 571;
+		rType = 0;
+		vrLen = 714;
+		vrLoc = 74;
+	};
+	BC70110410924981002D60E2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = BC775C03109245ED00760F39 /* SqlRequest.cpp */;
+		name = "SqlRequest.cpp: 107";
+		rLen = 0;
+		rLoc = 584;
+		rType = 0;
+		vrLen = 734;
+		vrLoc = 4247;
+	};
+	BC70110510924981002D60E2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = BC775C03109245ED00760F39 /* SqlRequest.cpp */;
+		name = "SqlRequest.cpp: 24";
+		rLen = 0;
+		rLoc = 331;
+		rType = 0;
+		vrLen = 775;
+		vrLoc = 0;
 	};
 	BC775BCD109245BB00760F39 /* sqlite-Viewer */ = {
 		isa = PBXExecutable;
@@ -134,26 +188,25 @@
 		isa = PBXCodeSenseManager;
 		indexTemplatePath = "";
 	};
-	BC775C291092466000760F39 /* PlistBookmark */ = {
-		isa = PlistBookmark;
-		fRef = BC6A09AB0EF92BAB00881ACF /* Info.plist */;
-		fallbackIsa = PBXBookmark;
-		isK = 0;
-		kPath = (
-		);
-		name = "/Users/neywen/devel/nui3/tools/sqlite-Viewer/Info.plist";
-		rLen = 0;
-		rLoc = 9223372036854775807;
+	BC775C02109245ED00760F39 /* Sql.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1030, 840}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 1099}";
+		};
 	};
-	BC775C2E109246B500760F39 /* PlistBookmark */ = {
-		isa = PlistBookmark;
-		fRef = BC6A09AB0EF92BAB00881ACF /* Info.plist */;
-		fallbackIsa = PBXBookmark;
-		isK = 0;
-		kPath = (
-		);
-		name = "/Users/neywen/devel/nui3/tools/sqlite-Viewer/Info.plist";
-		rLen = 0;
-		rLoc = 9223372036854775807;
+	BC775C03109245ED00760F39 /* SqlRequest.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1030, 1036}}";
+			sepNavSelRange = "{331, 0}";
+			sepNavVisRange = "{0, 775}";
+		};
+	};
+	BC775C04109245ED00760F39 /* SqlRequest.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1030, 714}}";
+			sepNavSelRange = "{571, 0}";
+			sepNavVisRange = "{74, 714}";
+		};
 	};
 }
