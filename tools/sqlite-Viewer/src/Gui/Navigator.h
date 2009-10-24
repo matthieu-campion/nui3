@@ -23,10 +23,14 @@ public:
 protected:
   
   /// when a table item has been selected
-  bool OnItemActivated(const nuiEvent& rEvent);
+  bool OnItemSelected(const nuiEvent& rEvent);
   
 private:
+  
+  bool SelectItem(nuiButton* pButtonItem);
+  
   nuiVBox* mpBox;
+  nglString mSelectedItem;
   nuiEventSink<Navigator> mEventSink;
 
 };

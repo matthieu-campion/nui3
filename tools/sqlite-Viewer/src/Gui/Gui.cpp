@@ -68,12 +68,7 @@ bool Gui::OnToolbarActivated(const nuiEvent& rEvent)
   
   if (rButton == BUTTON_REFRESH)
   {
-    mpNavigator->Update();
-    
-    nglString currentTable;
-    GetPreferences().GetString(KEY_USER, _T("CurrentTable"), currentTable);    
-    mpInspector->Update(currentTable);
-    
+    mpNavigator->Update();    
     return true;
   }
   

@@ -2,8 +2,8 @@
 {
 	61A9DE3F0B833C9200BC506C /* Project object */ = {
 		activeBuildConfigurationName = Default;
-		activeExecutable = BC775BCD109245BB00760F39 /* sqlite-Viewer */;
-		activeTarget = 61A9DFBE0B833E9600BC506C /* sqlite-Viewer */;
+		activeExecutable = BC775BCE109245BB00760F39 /* sqlite-ViewerD */;
+		activeTarget = 61A9DFC80B833EF200BC506C /* sqlite-ViewerD */;
 		addToTargets = (
 			61A9DFC80B833EF200BC506C /* sqlite-ViewerD */,
 			61A9DFBE0B833E9600BC506C /* sqlite-Viewer */,
@@ -37,15 +37,17 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 278022294;
-			PBXWorkspaceStateSaveDate = 278022294;
+			PBXPerProjectTemplateStateSaveDate = 278061315;
+			PBXWorkspaceStateSaveDate = 278061315;
 		};
 		perUserProjectItems = {
-			BC70110110924981002D60E2 /* PlistBookmark */ = BC70110110924981002D60E2 /* PlistBookmark */;
-			BC70110210924981002D60E2 /* PBXTextBookmark */ = BC70110210924981002D60E2 /* PBXTextBookmark */;
-			BC70110310924981002D60E2 /* PBXTextBookmark */ = BC70110310924981002D60E2 /* PBXTextBookmark */;
-			BC70110410924981002D60E2 /* PBXTextBookmark */ = BC70110410924981002D60E2 /* PBXTextBookmark */;
-			BC70110510924981002D60E2 /* PBXTextBookmark */ = BC70110510924981002D60E2 /* PBXTextBookmark */;
+			BC70110110924981002D60E2 = BC70110110924981002D60E2 /* PlistBookmark */;
+			BC70110210924981002D60E2 = BC70110210924981002D60E2 /* PBXTextBookmark */;
+			BC70110310924981002D60E2 = BC70110310924981002D60E2 /* PBXTextBookmark */;
+			BC7149221092E10500BD47E3 /* PBXTextBookmark */ = BC7149221092E10500BD47E3 /* PBXTextBookmark */;
+			BC7149231092E10500BD47E3 /* PBXTextBookmark */ = BC7149231092E10500BD47E3 /* PBXTextBookmark */;
+			BCEFBC421092D2D9004AD1F0 = BCEFBC421092D2D9004AD1F0 /* PBXTextBookmark */;
+			BCEFBC5D1092D307004AD1F0 = BCEFBC5D1092D307004AD1F0 /* PBXTextBookmark */;
 		};
 		sourceControlManager = BC775BF5109245C400760F39 /* Source Control */;
 		userBuildSettings = {
@@ -72,7 +74,7 @@
 		);
 		name = "/Users/neywen/devel/nui3/tools/sqlite-Viewer/Info.plist";
 		rLen = 0;
-		rLoc = 9223372036854775807;
+		rLoc = 9223372036854775808;
 	};
 	BC70110210924981002D60E2 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -94,25 +96,25 @@
 		vrLen = 714;
 		vrLoc = 74;
 	};
-	BC70110410924981002D60E2 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = BC775C03109245ED00760F39 /* SqlRequest.cpp */;
-		name = "SqlRequest.cpp: 107";
-		rLen = 0;
-		rLoc = 584;
-		rType = 0;
-		vrLen = 734;
-		vrLoc = 4247;
-	};
-	BC70110510924981002D60E2 /* PBXTextBookmark */ = {
+	BC7149221092E10500BD47E3 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = BC775C03109245ED00760F39 /* SqlRequest.cpp */;
 		name = "SqlRequest.cpp: 24";
 		rLen = 0;
 		rLoc = 331;
 		rType = 0;
-		vrLen = 775;
+		vrLen = 430;
 		vrLoc = 0;
+	};
+	BC7149231092E10500BD47E3 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = BC775C04109245ED00760F39 /* SqlRequest.h */;
+		name = "SqlRequest.h: 28";
+		rLen = 0;
+		rLoc = 571;
+		rType = 0;
+		vrLen = 673;
+		vrLoc = 74;
 	};
 	BC775BCD109245BB00760F39 /* sqlite-Viewer */ = {
 		isa = PBXExecutable;
@@ -188,6 +190,20 @@
 		isa = PBXCodeSenseManager;
 		indexTemplatePath = "";
 	};
+	BC775BFC109245ED00760F39 /* Navigator.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1432, 1176}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 1372}";
+		};
+	};
+	BC775C01109245ED00760F39 /* Sql.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1432, 3822}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 778}";
+		};
+	};
 	BC775C02109245ED00760F39 /* Sql.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1030, 840}}";
@@ -197,16 +213,36 @@
 	};
 	BC775C03109245ED00760F39 /* SqlRequest.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1030, 1036}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1030, 952}}";
 			sepNavSelRange = "{331, 0}";
-			sepNavVisRange = "{0, 775}";
+			sepNavVisRange = "{0, 778}";
 		};
 	};
 	BC775C04109245ED00760F39 /* SqlRequest.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1030, 714}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1432, 861}}";
 			sepNavSelRange = "{571, 0}";
-			sepNavVisRange = "{74, 714}";
+			sepNavVisRange = "{0, 788}";
 		};
+	};
+	BCEFBC421092D2D9004AD1F0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = BC775C03109245ED00760F39 /* SqlRequest.cpp */;
+		name = "SqlRequest.cpp: 24";
+		rLen = 0;
+		rLoc = 331;
+		rType = 0;
+		vrLen = 778;
+		vrLoc = 0;
+	};
+	BCEFBC5D1092D307004AD1F0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = BC775C03109245ED00760F39 /* SqlRequest.cpp */;
+		name = "SqlRequest.cpp: 24";
+		rLen = 0;
+		rLoc = 331;
+		rType = 0;
+		vrLen = 829;
+		vrLoc = 0;
 	};
 }
