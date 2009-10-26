@@ -339,6 +339,7 @@ void nuiAnimation::Play(int32 Count, nuiAnimLoop LoopMode)
   else
     mDirection = 1.0;
   
+  mAnimSink.Disconnect(GetTimer()->Tick, &nuiAnimation::OnTick);
   mAnimSink.Connect(GetTimer()->Tick, &nuiAnimation::OnTick);
   
   AnimStart();

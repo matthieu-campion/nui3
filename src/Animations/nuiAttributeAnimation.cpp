@@ -123,11 +123,6 @@ void nuiAttributeAnimation::Play(int32 Count, nuiAnimLoop LoopMode)
   nuiAnimation::Play(Count, LoopMode);
 }
 
-void nuiAttributeAnimation::Stop()
-{
-  nuiAnimation::Stop();
-}
-
 #define SET_ATTRIB(X) \
 if (nuiAttributeTypeTrait<X>::mTypeId == t) \
 { \
@@ -228,11 +223,6 @@ void nuiColorAttributeAnimation::Play(int32 Count, nuiAnimLoop LoopMode)
   }
   
   nuiAnimation::Play(Count, LoopMode);
-}
-
-void nuiColorAttributeAnimation::Stop()
-{
-  nuiAnimation::Stop();
 }
 
 void nuiColorAttributeAnimation::OnFrame()
@@ -359,11 +349,6 @@ void nuiRectAttributeAnimation::Play(int32 Count, nuiAnimLoop LoopMode)
   }
   
   nuiAnimation::Play(Count, LoopMode);
-}
-
-void nuiRectAttributeAnimation::Stop()
-{
-  nuiAnimation::Stop();
 }
 
 void nuiRectAttributeAnimation::OnFrame()

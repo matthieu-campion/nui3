@@ -45,7 +45,7 @@ public:
   nuiMoveToRectAnim (nuiWidgetPtr pTarget, double DurationInSeconds, const nuiRect& rDestination);
   bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
 
-  void Play(uint32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward);
+  void Play(int32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward);
 };
 
 class NUI_API nuiMoveAnim : public nuiMoveRectAnim
@@ -54,7 +54,7 @@ public:
   nuiMoveAnim (nuiWidgetPtr pTarget, double DurationInSeconds, nuiSize X1, nuiSize Y1, nuiSize X2, nuiSize Y2);
   bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
 
-  void Play(uint32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward);
+  void Play(int32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward);
   void OnFrame();
 protected:
   nuiSize mX1,mY1;
@@ -67,7 +67,7 @@ public:
   nuiMoveToAnim (nuiWidgetPtr pTarget, double DurationInSeconds, nuiSize X, nuiSize Y);
   bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
   
-  void Play(uint32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward);
+  void Play(int32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward);
 };
 
 class NUI_API nuiScaleToWidgetAnim : public nuiMoveRectAnim
@@ -76,7 +76,7 @@ public:
   nuiScaleToWidgetAnim (nuiWidgetPtr pTarget, double DurationInSeconds, float Ratio, nuiPosition ScaleBarycenterPosition = nuiCenter);
   bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
 
-  void Play(uint32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward);
+  void Play(int32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward);
 protected:
   float mRatio;
   nuiPosition mPosition;
@@ -88,7 +88,7 @@ public:
   nuiScaleFromWidgetAnim (nuiWidgetPtr pTarget, double DurationInSeconds, float Ratio, nuiPosition ScaleBarycenterPosition = nuiCenter);
   bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
 
-  virtual void Play(uint32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward);
+  virtual void Play(int32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward);
 protected:
   float mRatio;
   nuiPosition mPosition;
@@ -101,7 +101,7 @@ public:
   nuiScaleMatrixWidgetAnim (nuiWidgetPtr pTarget, double DurationInSeconds, float SourceRatio, float DestinationRatio, nuiPosition ScaleBarycenterPosition = nuiCenter);
   bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
 
-  virtual void Play(uint32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward);
+  virtual void Play(int32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward);
   virtual void OnFrame();
 protected:
   float mSourceRatio;
@@ -117,7 +117,7 @@ public:
   nuiScaleToMatrixWidgetAnim (nuiWidgetPtr pTarget, double DurationInSeconds, float DestinationRatio, nuiPosition ScaleBarycenterPosition = nuiCenter);
   bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
 
-  virtual void Play(uint32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward);
+  virtual void Play(int32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward);
 };
 
 class NUI_API nuiScaleFromMatrixWidgetAnim : public nuiScaleMatrixWidgetAnim
@@ -126,7 +126,7 @@ public:
   nuiScaleFromMatrixWidgetAnim (nuiWidgetPtr pTarget, double DurationInSeconds, float DestinationRatio, nuiPosition ScaleBarycenterPosition = nuiCenter);
   bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
 
-  virtual void Play(uint32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward);
+  virtual void Play(int32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward);
 };
 
 /////// WIDGET ALPHA ANIMATIONS:
@@ -136,7 +136,7 @@ public:
   nuiFadeWidgetAnim (nuiWidgetPtr pTarget, double DurationInSeconds, float SourceAlpha, float DestinationAlpha);
   bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
 
-  virtual void Play(uint32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward);
+  virtual void Play(int32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward);
   virtual void OnFrame();
 protected:
   float mSourceAlpha;
@@ -150,7 +150,7 @@ public:
   nuiFadeInWidgetAnim (nuiWidgetPtr pTarget, double DurationInSeconds, bool StartFromCurrentAlpha);
   bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
 
-  virtual void Play(uint32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward);
+  virtual void Play(int32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward);
 
 private:
   bool mStartFromCurrentAlpha;
@@ -162,7 +162,7 @@ public:
   nuiFadeOutWidgetAnim (nuiWidgetPtr pTarget, double DurationInSeconds, bool StartFromCurrentAlpha);
   bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
 
-  virtual void Play(uint32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward);
+  virtual void Play(int32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward);
 
 private:
   bool mStartFromCurrentAlpha;

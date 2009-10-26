@@ -101,6 +101,7 @@ nuiMainWindow::nuiMainWindow(uint Width, uint Height, bool Fullscreen, const ngl
   mpWidgetCanDrop = NULL;
   
   mLastEventTime = nglTime();
+  mLastInteractiveEventTime = 0;
   nuiDefaultDecoration::MainWindow(this);
 }
 
@@ -139,6 +140,7 @@ nuiMainWindow::nuiMainWindow(const nglContextInfo& rContextInfo, const nglWindow
   mpWidgetCanDrop = NULL;
   
   mLastEventTime = nglTime();
+  mLastInteractiveEventTime = 0;
 
   nuiDefaultDecoration::MainWindow(this);  
 }
@@ -268,6 +270,7 @@ nuiXMLNode* nuiMainWindow::Serialize(nuiXMLNode* pParentNode, bool Recursive) co
 
 void nuiMainWindow::OnPaint()
 {
+  mLastEventTime = nglTime();
   mInvalidatePosted = true;
   Paint();
 }
@@ -380,6 +383,7 @@ void nuiMainWindow::OnResize(uint Width, uint Height)
 
   mFullFrameRedraw++;
   mLastEventTime = nglTime();
+  mLastInteractiveEventTime = nglTime();
   
   EmptyTrash();
 }
@@ -397,6 +401,8 @@ void nuiMainWindow::OnDestruction()
 
 void nuiMainWindow::OnActivation()
 {
+  mLastEventTime = nglTime();
+  mLastInteractiveEventTime = nglTime();
   //OUT("OnActivation\n");
   EmptyTrash();
   CancelGrab();
@@ -405,6 +411,8 @@ void nuiMainWindow::OnActivation()
 
 void nuiMainWindow::OnDesactivation()
 {
+  mLastEventTime = nglTime();
+  mLastInteractiveEventTime = nglTime();
   //OUT("OnDesactivation\n");
   EmptyTrash();
   CancelGrab();
@@ -413,6 +421,8 @@ void nuiMainWindow::OnDesactivation()
 
 void nuiMainWindow::OnClose()
 {
+  mLastEventTime = nglTime();
+  mLastInteractiveEventTime = nglTime();
   //OUT("OnClose\n");
   if (mQuitOnClose)
     App->Quit(0);
@@ -424,6 +434,7 @@ void nuiMainWindow::OnState (nglWindow::StateInfo State)
 {
   //OUT("OnState\n");
   mLastEventTime = nglTime();
+  mLastInteractiveEventTime = nglTime();
   EmptyTrash();
 }
 
@@ -621,42 +632,49 @@ bool nuiMainWindow::SetMouseCursor(nuiMouseCursor Cursor)
 bool nuiMainWindow::OnMouseMove(nglMouseInfo& rInfo)
 {
   mLastEventTime = nglTime();
+  mLastInteractiveEventTime = nglTime();
   return CallMouseMove(rInfo);
 }
 
 bool nuiMainWindow::OnMouseClick(nglMouseInfo& rInfo)
 {
   mLastEventTime = nglTime();
+  mLastInteractiveEventTime = nglTime();
   return CallMouseClick(rInfo);
 }
 
 bool nuiMainWindow::OnMouseUnclick(nglMouseInfo& rInfo)
 {
   mLastEventTime = nglTime();
+  mLastInteractiveEventTime = nglTime();
   return CallMouseUnclick(rInfo);
 }
 
 bool nuiMainWindow::OnTextInput(const nglString& rUnicodeText)
 {
   mLastEventTime = nglTime();
+  mLastInteractiveEventTime = nglTime();
   return CallTextInput(rUnicodeText);
 }
 
 void nuiMainWindow::OnTextInputCancelled()
 {
   mLastEventTime = nglTime();
+  mLastInteractiveEventTime = nglTime();
   CallTextInputCancelled();
 }
 
 bool nuiMainWindow::OnKeyUp(const nglKeyEvent& rEvent)
 {
   mLastEventTime = nglTime();
+  mLastInteractiveEventTime = nglTime();
   return CallKeyUp(rEvent);
 }
 
 bool nuiMainWindow::OnKeyDown(const nglKeyEvent& rEvent)
 {
   mLastEventTime = nglTime();
+  mLastInteractiveEventTime = nglTime();
   if (mDebugMode)
   {
     if (rEvent.mKey == NK_D && 
@@ -698,6 +716,9 @@ bool nuiMainWindow::GetAutoRotation() const
 
 bool nuiMainWindow::ShowWidgetInspector()
 {
+  mLastEventTime = nglTime();
+  mLastInteractiveEventTime = nglTime();
+
   if (mpInspectorWindow)
   {
     delete mpInspectorWindow;
@@ -832,11 +853,13 @@ void nuiMainWindow::OnDragEnter()
 {
   //NGL_OUT(_T("nuiMainWindow::OnDragEnter\n"));
   mLastEventTime = nglTime();
+  mLastInteractiveEventTime = nglTime();
 }
 
 void nuiMainWindow::OnDragLeave()
 {
   mLastEventTime = nglTime();
+  mLastInteractiveEventTime = nglTime();
   //NGL_OUT(_T("nuiMainWindow::OnDragLeave\n"));
   if (mpWidgetCanDrop)
   {
@@ -849,6 +872,7 @@ void nuiMainWindow::OnDragLeave()
 nglDropEffect nuiMainWindow::OnCanDrop (nglDragAndDrop* pDragObject, int X, int Y, nglMouseInfo::Flags Button)
 {
   mLastEventTime = nglTime();
+  mLastInteractiveEventTime = nglTime();
   
   nuiSize x = (nuiSize)X;
   nuiSize y = (nuiSize)Y;
@@ -880,6 +904,7 @@ nglDropEffect nuiMainWindow::OnCanDrop (nglDragAndDrop* pDragObject, int X, int 
 void nuiMainWindow::OnDropped (nglDragAndDrop* pDragObject, int X,int Y, nglMouseInfo::Flags Button)
 {
   mLastEventTime = nglTime();
+  mLastInteractiveEventTime = nglTime();
   nuiSize x = (nuiSize)X;
   nuiSize y = (nuiSize)Y;
 
@@ -909,6 +934,7 @@ bool nuiMainWindow::Drag(nuiWidget* pDragSource, nglDragAndDrop* pDragObject)
 
 void nuiMainWindow::OnDragRequestData(nglDragAndDrop* pDragObject, const nglString& rMimeType)
 {
+  mLastEventTime = nglTime();
   //NGL_OUT(_T("nuiMainWindow::OnDragRequestData\n"));
   NGL_ASSERT(mpDragSource);
   if (mpDragSource != this)
@@ -917,6 +943,7 @@ void nuiMainWindow::OnDragRequestData(nglDragAndDrop* pDragObject, const nglStri
 
 void nuiMainWindow::OnDragStop(bool canceled)
 {
+  mLastEventTime = nglTime();
   if (mpDragSource && mpDragSource != this)
   {
     mpDragSource->OnDragStop(canceled); ///< advise drag source
@@ -1140,4 +1167,9 @@ bool nuiMainWindow::IsEnteringText() const
 double nuiMainWindow::GetLastEventTime() const
 {
   return mLastEventTime;
+}
+
+double nuiMainWindow::GetLastInteractiveEventTime() const
+{
+  return mLastInteractiveEventTime;
 }
