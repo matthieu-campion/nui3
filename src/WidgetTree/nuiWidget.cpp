@@ -3775,6 +3775,9 @@ void nuiWidget::SetDecoration(const nglString& rName)
 
 void nuiWidget::SetDecorationMode(nuiDecorationMode Mode)
 {
+  if (mDecorationMode == Mode)
+    return;
+  
   mDecorationMode = Mode;
   InvalidateLayout();
 }
@@ -3793,6 +3796,9 @@ nuiDecorationMode nuiWidget::GetDecorationMode() const
 
 void nuiWidget::SetDecoration(nuiDecoration* pDecoration, nuiDecorationMode Mode, bool AlreadyAcquired)
 {
+  if (mpDecoration == pDecoration && Mode == GetDecorationMode())
+    return;
+
   if (pDecoration && !AlreadyAcquired)
     pDecoration->Acquire();
   if (mpDecoration)

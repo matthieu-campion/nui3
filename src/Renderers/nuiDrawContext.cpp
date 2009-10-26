@@ -117,6 +117,11 @@ void nuiDrawContext::PopClipping()
 
 bool nuiDrawContext::Clip(const nuiRect& rRect)
 {
+  nuiRect r;
+  mpPainter->GetClipRect(r, true);
+  if (r == rRect)
+    return true;
+  
   mpPainter->Clip(rRect);
   mStateChanges++;
   return true;
@@ -131,6 +136,10 @@ bool nuiDrawContext::ResetClipRect()
 
 bool nuiDrawContext::EnableClipping(bool set)
 {
+  nuiRect r;
+  if (mpPainter->GetClipRect(r, false) == set)
+    return true;
+  
   mpPainter->EnableClipping(set);
   mStateChanges++;
   return true;
@@ -150,16 +159,19 @@ void nuiDrawContext::PushState()
 {
   nuiRenderState *pState = new nuiRenderState(mCurrentState);
   mpRenderStateStack.push(pState);
-  mStateChanges++;
+  //mStateChanges++;
 }
 
 void nuiDrawContext::PopState()
 {
   nuiRenderState* pState = mpRenderStateStack.top();
-  mCurrentState = *pState;
+  if (!(*pState == mCurrentState))
+  {
+    mStateChanges++;
+    mCurrentState = *pState;
+  }
   mpRenderStateStack.pop();
   delete pState;
-  mStateChanges++;
 }
 
 const nuiRenderState& nuiDrawContext::GetState() const
@@ -170,22 +182,31 @@ const nuiRenderState& nuiDrawContext::GetState() const
 bool nuiDrawContext::ResetState()
 {
   nuiRenderState Dummy;
-
-  mCurrentState = Dummy;
-  mStateChanges++;
+  if (!(Dummy == mCurrentState))
+  {
+    mStateChanges++;
+    mCurrentState = Dummy;
+  }
+  
   return true;
 }
 
 void nuiDrawContext::EnableBlending(bool val)       
-{ 
-  mCurrentState.mBlending = val; 
-  mStateChanges++;
+{
+  if (mCurrentState.mBlending != val)
+  {
+    mCurrentState.mBlending = val; 
+    mStateChanges++;
+  }
 }
 
 void nuiDrawContext::EnableTexturing(bool val)      
 { 
-  mCurrentState.mTexturing = val;
-  mStateChanges++;
+  if (mCurrentState.mTexturing != val)
+  {
+    mCurrentState.mTexturing = val;
+    mStateChanges++;
+  }
 }
 
 void nuiGetBlendFuncFactors(nuiBlendFunc Func, GLenum& src, GLenum& dst)
@@ -220,8 +241,11 @@ void nuiGetBlendFuncFactors(nuiBlendFunc Func, GLenum& src, GLenum& dst)
 
 void nuiDrawContext::SetBlendFunc(nuiBlendFunc Func)
 {
-  mCurrentState.mBlendFunc = Func;
-  mStateChanges++;
+  if (mCurrentState.mBlendFunc != Func)
+  {
+    mCurrentState.mBlendFunc = Func;
+    mStateChanges++;
+  }
 }
 
 /****************************************************************************
@@ -262,14 +286,20 @@ nuiTexture* nuiDrawContext::GetTexture() const
 
 void nuiDrawContext::SetFillColor(const nuiColor& rColor)
 {
-  mCurrentState.mFillColor = rColor;
-  mStateChanges++;
+  if (!(mCurrentState.mFillColor == rColor))
+  {
+    mCurrentState.mFillColor = rColor;
+    mStateChanges++;
+  }
 }
 
 void nuiDrawContext::SetStrokeColor(const nuiColor& rColor)
 {
-  mCurrentState.mStrokeColor = rColor;
-  mStateChanges++;
+  if (!(mCurrentState.mStrokeColor == rColor))
+  {
+    mCurrentState.mStrokeColor = rColor;
+    mStateChanges++;
+  }
 }
 
 const nuiColor& nuiDrawContext::GetFillColor() const
@@ -294,8 +324,11 @@ void nuiDrawContext::SetLineWidth(nuiSize Width)
 
 void nuiDrawContext::EnableAntialiasing(bool set)
 {
-  mCurrentState.mAntialiasing = set;
-  mStateChanges++;
+  if (mCurrentState.mAntialiasing != set)
+  {
+    mCurrentState.mAntialiasing = set;
+    mStateChanges++;
+  }
 }
 
 bool nuiDrawContext::GetAntialiasing() const
@@ -321,8 +354,11 @@ nuiShape::Winding nuiDrawContext::GetWinding() const
  ****************************************************************************/
 void nuiDrawContext::SetClearColor(const nuiColor& ClearColor)
 {
-  mCurrentState.mClearColor = ClearColor;
-  mStateChanges++;
+  if (!(mCurrentState.mClearColor == ClearColor))
+  {
+    mCurrentState.mClearColor = ClearColor;
+    mStateChanges++;
+  }
 }
 
 void nuiDrawContext::Clear() 
@@ -1133,8 +1169,11 @@ void nuiDrawContext::SetFrustumProjectionMatrix(const nuiRect& rRect, float Left
 ///////
 void nuiDrawContext::EnableColorBuffer(bool set)
 {
-  mCurrentState.mColorBuffer = set;
-  mStateChanges++;
+  if (mCurrentState.mColorBuffer != set)
+  {
+    mCurrentState.mColorBuffer = set;
+    mStateChanges++;
+  }
 }
 
 uint32 nuiDrawContext::GetClipStackSize() const

@@ -3940,28 +3940,28 @@
 		E5816DA40C3CECAB00902DFE /* nglMath.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nglMath.cpp; path = src/Math/nglMath.cpp; sourceTree = SOURCE_ROOT; };
 		E5816DA60C3CECAB00902DFE /* AAPrimitives.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = AAPrimitives.cpp; path = src/Renderers/AAPrimitives.cpp; sourceTree = SOURCE_ROOT; };
 		E5816DA70C3CECAB00902DFE /* AAPrimitives.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = AAPrimitives.h; path = src/Renderers/AAPrimitives.h; sourceTree = SOURCE_ROOT; };
-		E5816DAB0C3CECAB00902DFE /* nuiArc.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiArc.cpp; path = src/Renderers/nuiArc.cpp; sourceTree = SOURCE_ROOT; };
-		E5816DAC0C3CECAB00902DFE /* nuiContour.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiContour.cpp; path = src/Renderers/nuiContour.cpp; sourceTree = SOURCE_ROOT; };
-		E5816DAD0C3CECAB00902DFE /* nuiD3DPainter.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiD3DPainter.cpp; path = src/Renderers/nuiD3DPainter.cpp; sourceTree = SOURCE_ROOT; };
+		E5816DAB0C3CECAB00902DFE /* nuiArc.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = nuiArc.cpp; sourceTree = "<group>"; };
+		E5816DAC0C3CECAB00902DFE /* nuiContour.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = nuiContour.cpp; sourceTree = "<group>"; };
+		E5816DAD0C3CECAB00902DFE /* nuiD3DPainter.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = nuiD3DPainter.cpp; sourceTree = "<group>"; };
 		E5816DAE0C3CECAB00902DFE /* nuiDrawContext.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiDrawContext.cpp; path = src/Renderers/nuiDrawContext.cpp; sourceTree = SOURCE_ROOT; };
-		E5816DB00C3CECAB00902DFE /* nuiGLPainter.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiGLPainter.cpp; path = src/Renderers/nuiGLPainter.cpp; sourceTree = SOURCE_ROOT; };
-		E5816DB10C3CECAB00902DFE /* nuiGradient.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiGradient.cpp; path = src/Renderers/nuiGradient.cpp; sourceTree = SOURCE_ROOT; };
-		E5816DB40C3CECAB00902DFE /* nuiMetaPainter.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiMetaPainter.cpp; path = src/Renderers/nuiMetaPainter.cpp; sourceTree = SOURCE_ROOT; };
-		E5816DB50C3CECAB00902DFE /* nuiOutliner.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiOutliner.cpp; path = src/Renderers/nuiOutliner.cpp; sourceTree = SOURCE_ROOT; };
-		E5816DB60C3CECAB00902DFE /* nuiPainter.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiPainter.cpp; path = src/Renderers/nuiPainter.cpp; sourceTree = SOURCE_ROOT; };
-		E5816DB70C3CECAB00902DFE /* nuiPath.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiPath.cpp; path = src/Renderers/nuiPath.cpp; sourceTree = SOURCE_ROOT; };
-		E5816DB80C3CECAB00902DFE /* nuiPathGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiPathGenerator.cpp; path = src/Renderers/nuiPathGenerator.cpp; sourceTree = SOURCE_ROOT; };
-		E5816DB90C3CECAB00902DFE /* nuiPathOptimizer.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiPathOptimizer.cpp; path = src/Renderers/nuiPathOptimizer.cpp; sourceTree = SOURCE_ROOT; };
-		E5816DBA0C3CECAB00902DFE /* nuiPoint.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiPoint.cpp; path = src/Renderers/nuiPoint.cpp; sourceTree = SOURCE_ROOT; };
-		E5816DBB0C3CECAB00902DFE /* nuiPolyLine.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiPolyLine.cpp; path = src/Renderers/nuiPolyLine.cpp; sourceTree = SOURCE_ROOT; };
-		E5816DBC0C3CECAB00902DFE /* nuiRectPath.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiRectPath.cpp; path = src/Renderers/nuiRectPath.cpp; sourceTree = SOURCE_ROOT; };
+		E5816DB00C3CECAB00902DFE /* nuiGLPainter.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = nuiGLPainter.cpp; sourceTree = "<group>"; };
+		E5816DB10C3CECAB00902DFE /* nuiGradient.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = nuiGradient.cpp; sourceTree = "<group>"; };
+		E5816DB40C3CECAB00902DFE /* nuiMetaPainter.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = nuiMetaPainter.cpp; sourceTree = "<group>"; };
+		E5816DB50C3CECAB00902DFE /* nuiOutliner.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = nuiOutliner.cpp; sourceTree = "<group>"; };
+		E5816DB60C3CECAB00902DFE /* nuiPainter.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = nuiPainter.cpp; sourceTree = "<group>"; };
+		E5816DB70C3CECAB00902DFE /* nuiPath.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = nuiPath.cpp; sourceTree = "<group>"; };
+		E5816DB80C3CECAB00902DFE /* nuiPathGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = nuiPathGenerator.cpp; sourceTree = "<group>"; };
+		E5816DB90C3CECAB00902DFE /* nuiPathOptimizer.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = nuiPathOptimizer.cpp; sourceTree = "<group>"; };
+		E5816DBA0C3CECAB00902DFE /* nuiPoint.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = nuiPoint.cpp; sourceTree = "<group>"; };
+		E5816DBB0C3CECAB00902DFE /* nuiPolyLine.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = nuiPolyLine.cpp; sourceTree = "<group>"; };
+		E5816DBC0C3CECAB00902DFE /* nuiRectPath.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = nuiRectPath.cpp; sourceTree = "<group>"; };
 		E5816DBD0C3CECAB00902DFE /* nuiRenderArray.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiRenderArray.cpp; path = src/Renderers/nuiRenderArray.cpp; sourceTree = SOURCE_ROOT; };
 		E5816DBE0C3CECAB00902DFE /* nuiRenderState.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiRenderState.cpp; path = src/Renderers/nuiRenderState.cpp; sourceTree = SOURCE_ROOT; };
-		E5816DC00C3CECAB00902DFE /* nuiShape.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiShape.cpp; path = src/Renderers/nuiShape.cpp; sourceTree = SOURCE_ROOT; };
-		E5816DC10C3CECAB00902DFE /* nuiSoftwarePainter.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiSoftwarePainter.cpp; path = src/Renderers/nuiSoftwarePainter.cpp; sourceTree = SOURCE_ROOT; };
-		E5816DC20C3CECAB00902DFE /* nuiSpline.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiSpline.cpp; path = src/Renderers/nuiSpline.cpp; sourceTree = SOURCE_ROOT; };
-		E5816DC30C3CECAB00902DFE /* nuiSVGShape.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiSVGShape.cpp; path = src/Renderers/nuiSVGShape.cpp; sourceTree = SOURCE_ROOT; };
-		E5816DC40C3CECAB00902DFE /* nuiTessellator.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiTessellator.cpp; path = src/Renderers/nuiTessellator.cpp; sourceTree = SOURCE_ROOT; };
+		E5816DC00C3CECAB00902DFE /* nuiShape.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = nuiShape.cpp; sourceTree = "<group>"; };
+		E5816DC10C3CECAB00902DFE /* nuiSoftwarePainter.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = nuiSoftwarePainter.cpp; sourceTree = "<group>"; };
+		E5816DC20C3CECAB00902DFE /* nuiSpline.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = nuiSpline.cpp; sourceTree = "<group>"; };
+		E5816DC30C3CECAB00902DFE /* nuiSVGShape.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = nuiSVGShape.cpp; sourceTree = "<group>"; };
+		E5816DC40C3CECAB00902DFE /* nuiTessellator.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = nuiTessellator.cpp; sourceTree = "<group>"; };
 		E5816DC50C3CECAB00902DFE /* nuiTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiTexture.cpp; path = src/Renderers/nuiTexture.cpp; sourceTree = SOURCE_ROOT; };
 		E5816DC60C3CECAB00902DFE /* nuiTextureHelpers.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiTextureHelpers.cpp; path = src/Renderers/nuiTextureHelpers.cpp; sourceTree = SOURCE_ROOT; };
 		E5816DC80C3CECAB00902DFE /* nuiButton.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiButton.cpp; path = src/SimpleWidgets/nuiButton.cpp; sourceTree = SOURCE_ROOT; };
@@ -5514,59 +5514,23 @@
 		E5816DA50C3CECAB00902DFE /* Renderers */ = {
 			isa = PBXGroup;
 			children = (
+				E5DD1A781096111200BBB0EA /* Painters */,
+				E5DD1A791096113400BBB0EA /* Shapes & Contours */,
+				E55DEDF90D350FE3002DA5BD /* SoftwareRasterizer */,
 				E5816DA60C3CECAB00902DFE /* AAPrimitives.cpp */,
 				E5816DA70C3CECAB00902DFE /* AAPrimitives.h */,
-				E5816DAB0C3CECAB00902DFE /* nuiArc.cpp */,
-				E5816CB10C3CECAB00902DFE /* nuiArc.h */,
-				E5816DAC0C3CECAB00902DFE /* nuiContour.cpp */,
-				E5816CBB0C3CECAB00902DFE /* nuiContour.h */,
-				E5816DAD0C3CECAB00902DFE /* nuiD3DPainter.cpp */,
-				E5816CBC0C3CECAB00902DFE /* nuiD3DPainter.h */,
 				E5816DAE0C3CECAB00902DFE /* nuiDrawContext.cpp */,
 				E5816CBF0C3CECAB00902DFE /* nuiDrawContext.h */,
-				E5816DB00C3CECAB00902DFE /* nuiGLPainter.cpp */,
-				E5816CCC0C3CECAB00902DFE /* nuiGLPainter.h */,
-				E5816DB10C3CECAB00902DFE /* nuiGradient.cpp */,
-				E5816CCD0C3CECAB00902DFE /* nuiGradient.h */,
-				E5816DB40C3CECAB00902DFE /* nuiMetaPainter.cpp */,
-				E5816CDD0C3CECAB00902DFE /* nuiMetaPainter.h */,
-				E5816DB50C3CECAB00902DFE /* nuiOutliner.cpp */,
-				E5816CE40C3CECAB00902DFE /* nuiOutliner.h */,
-				E5816DB60C3CECAB00902DFE /* nuiPainter.cpp */,
-				E5816CE50C3CECAB00902DFE /* nuiPainter.h */,
-				E5816DB70C3CECAB00902DFE /* nuiPath.cpp */,
-				E5816CE80C3CECAB00902DFE /* nuiPath.h */,
-				E5816DB80C3CECAB00902DFE /* nuiPathGenerator.cpp */,
-				E5816CE90C3CECAB00902DFE /* nuiPathGenerator.h */,
-				E5816DB90C3CECAB00902DFE /* nuiPathOptimizer.cpp */,
-				E5816CEA0C3CECAB00902DFE /* nuiPathOptimizer.h */,
-				E5816DBA0C3CECAB00902DFE /* nuiPoint.cpp */,
-				E5816CEB0C3CECAB00902DFE /* nuiPoint.h */,
-				E5816DBB0C3CECAB00902DFE /* nuiPolyLine.cpp */,
-				E5816CEC0C3CECAB00902DFE /* nuiPolyLine.h */,
-				E5816DBC0C3CECAB00902DFE /* nuiRectPath.cpp */,
-				E5816CF50C3CECAB00902DFE /* nuiRectPath.h */,
 				E5816DBD0C3CECAB00902DFE /* nuiRenderArray.cpp */,
 				E5816CF70C3CECAB00902DFE /* nuiRenderArray.h */,
 				E5816DBE0C3CECAB00902DFE /* nuiRenderState.cpp */,
 				E5816CF80C3CECAB00902DFE /* nuiRenderState.h */,
-				E5816DC00C3CECAB00902DFE /* nuiShape.cpp */,
-				E5816CFE0C3CECAB00902DFE /* nuiShape.h */,
-				E5816DC10C3CECAB00902DFE /* nuiSoftwarePainter.cpp */,
-				E5816D010C3CECAB00902DFE /* nuiSoftwarePainter.h */,
-				E5816DC20C3CECAB00902DFE /* nuiSpline.cpp */,
-				E5816D020C3CECAB00902DFE /* nuiSpline.h */,
 				61D085100EAFAA3F00B73835 /* nuiSurface.cpp */,
 				61D085130EAFAA5400B73835 /* nuiSurface.h */,
-				E5816DC30C3CECAB00902DFE /* nuiSVGShape.cpp */,
-				E5816D060C3CECAB00902DFE /* nuiSVGShape.h */,
-				E5816DC40C3CECAB00902DFE /* nuiTessellator.cpp */,
-				E5816D0C0C3CECAB00902DFE /* nuiTessellator.h */,
 				E5816DC50C3CECAB00902DFE /* nuiTexture.cpp */,
 				E5816D0E0C3CECAB00902DFE /* nuiTexture.h */,
 				E5816DC60C3CECAB00902DFE /* nuiTextureHelpers.cpp */,
 				E5816D0F0C3CECAB00902DFE /* nuiTextureHelpers.h */,
-				E55DEDF90D350FE3002DA5BD /* SoftwareRasterizer */,
 			);
 			name = Renderers;
 			path = src/Renderers;
@@ -5932,6 +5896,58 @@
 				E5B678C80F39EFE100DBF325 /* nuiAttributeAnimation.h */,
 			);
 			name = Animations;
+			sourceTree = "<group>";
+		};
+		E5DD1A781096111200BBB0EA /* Painters */ = {
+			isa = PBXGroup;
+			children = (
+				E5816DAD0C3CECAB00902DFE /* nuiD3DPainter.cpp */,
+				E5816CBC0C3CECAB00902DFE /* nuiD3DPainter.h */,
+				E5816DB00C3CECAB00902DFE /* nuiGLPainter.cpp */,
+				E5816CCC0C3CECAB00902DFE /* nuiGLPainter.h */,
+				E5816DB40C3CECAB00902DFE /* nuiMetaPainter.cpp */,
+				E5816CDD0C3CECAB00902DFE /* nuiMetaPainter.h */,
+				E5816DB60C3CECAB00902DFE /* nuiPainter.cpp */,
+				E5816CE50C3CECAB00902DFE /* nuiPainter.h */,
+				E5816DC10C3CECAB00902DFE /* nuiSoftwarePainter.cpp */,
+				E5816D010C3CECAB00902DFE /* nuiSoftwarePainter.h */,
+			);
+			name = Painters;
+			sourceTree = "<group>";
+		};
+		E5DD1A791096113400BBB0EA /* Shapes & Contours */ = {
+			isa = PBXGroup;
+			children = (
+				E5816DAB0C3CECAB00902DFE /* nuiArc.cpp */,
+				E5816CB10C3CECAB00902DFE /* nuiArc.h */,
+				E5816DAC0C3CECAB00902DFE /* nuiContour.cpp */,
+				E5816CBB0C3CECAB00902DFE /* nuiContour.h */,
+				E5816DB10C3CECAB00902DFE /* nuiGradient.cpp */,
+				E5816CCD0C3CECAB00902DFE /* nuiGradient.h */,
+				E5816DB50C3CECAB00902DFE /* nuiOutliner.cpp */,
+				E5816CE40C3CECAB00902DFE /* nuiOutliner.h */,
+				E5816DB70C3CECAB00902DFE /* nuiPath.cpp */,
+				E5816CE80C3CECAB00902DFE /* nuiPath.h */,
+				E5816DB80C3CECAB00902DFE /* nuiPathGenerator.cpp */,
+				E5816CE90C3CECAB00902DFE /* nuiPathGenerator.h */,
+				E5816DB90C3CECAB00902DFE /* nuiPathOptimizer.cpp */,
+				E5816CEA0C3CECAB00902DFE /* nuiPathOptimizer.h */,
+				E5816DBA0C3CECAB00902DFE /* nuiPoint.cpp */,
+				E5816CEB0C3CECAB00902DFE /* nuiPoint.h */,
+				E5816DBB0C3CECAB00902DFE /* nuiPolyLine.cpp */,
+				E5816CEC0C3CECAB00902DFE /* nuiPolyLine.h */,
+				E5816DBC0C3CECAB00902DFE /* nuiRectPath.cpp */,
+				E5816CF50C3CECAB00902DFE /* nuiRectPath.h */,
+				E5816DC00C3CECAB00902DFE /* nuiShape.cpp */,
+				E5816CFE0C3CECAB00902DFE /* nuiShape.h */,
+				E5816DC20C3CECAB00902DFE /* nuiSpline.cpp */,
+				E5816D020C3CECAB00902DFE /* nuiSpline.h */,
+				E5816DC30C3CECAB00902DFE /* nuiSVGShape.cpp */,
+				E5816D060C3CECAB00902DFE /* nuiSVGShape.h */,
+				E5816DC40C3CECAB00902DFE /* nuiTessellator.cpp */,
+				E5816D0C0C3CECAB00902DFE /* nuiTessellator.h */,
+			);
+			name = "Shapes & Contours";
 			sourceTree = "<group>";
 		};
 		E5F796590C750430009CE779 /* harfbuzz */ = {

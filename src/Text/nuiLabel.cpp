@@ -507,9 +507,12 @@ void nuiLabel::SetText(const nglString& Text)
 {
   if (GetToolTip() == mText) // Reset the tooltip shown when text is truncated as it's maybe no more usefull
     SetToolTip(nglString::Empty);
+  nglString t(mText);
   mText = Text;
   mText.TrimRight(_T("\n\r\t"));
   mText.Replace('\r','\n');
+  if (t == mText) // Only redisplay if the text has really changed!
+    return;
   mTextChanged = true;
   InvalidateLayout();
 }
