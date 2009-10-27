@@ -119,8 +119,8 @@ bool nuiDrawContext::Clip(const nuiRect& rRect)
 {
   nuiRect r;
   mpPainter->GetClipRect(r, true);
-  if (r == rRect)
-    return true;
+//  if (r == rRect)
+//    return true;
   
   mpPainter->Clip(rRect);
   mStateChanges++;
@@ -136,9 +136,9 @@ bool nuiDrawContext::ResetClipRect()
 
 bool nuiDrawContext::EnableClipping(bool set)
 {
-  nuiRect r;
-  if (mpPainter->GetClipRect(r, false) == set)
-    return true;
+//  nuiRect r;
+//  if (mpPainter->GetClipRect(r, false) == set)
+//    return true;
   
   mpPainter->EnableClipping(set);
   mStateChanges++;
