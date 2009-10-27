@@ -83,7 +83,7 @@ void MainWindow::OnCreation()
   
   nuiScrollView* pScroll = new nuiScrollView(false, true);
   pLayoutBox->AddCell(pScroll);
-  pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
+  pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells() - 1, nuiExpandShrinkAndGrow);
   mpHTMLView = new nuiHTMLView(GetWidth());
   pScroll->AddChild(mpHTMLView);
 

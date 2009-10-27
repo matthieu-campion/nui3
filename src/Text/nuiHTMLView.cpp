@@ -182,6 +182,12 @@ bool nuiHTMLView::SetRect(const nuiRect& rRect)
 
 bool nuiHTMLView::Draw(nuiDrawContext* pContext)
 {
+  if (!(mLastVisibleRect == mVisibleRect))
+  {
+    mpRootBox->UpdateVisibility(mVisibleRect);
+    mLastVisibleRect = mVisibleRect;
+  }
+  
   nuiSimpleContainer::Draw(pContext);
   pContext->SetBlendFunc(nuiBlendTransp);
   pContext->EnableBlending(true);

@@ -27,6 +27,8 @@ public:
   
   void GetItemsAt(std::vector<nuiHTMLItem*>& rHitItems, float X, float Y) const;
 
+  void UpdateVisibility(const nuiRect& rVisibleRect);
+
 protected:
   float LayoutLine(uint32& start, uint32& count, float& y, float& h, nuiHTMLContext& rContext);
   

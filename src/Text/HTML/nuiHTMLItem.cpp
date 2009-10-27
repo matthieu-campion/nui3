@@ -12,9 +12,8 @@
 
 /////////////////class nuiHTMLItem
 nuiHTMLItem::nuiHTMLItem(nuiHTMLNode* pNode, nuiHTMLNode* pAnchor, bool Inline)
-: mpNode(pNode), mInline(Inline), mEndTag(false), mLineBreak(false), mpParent(NULL), mpAnchor(pAnchor)
+: mpNode(pNode), mInline(Inline), mEndTag(false), mLineBreak(false), mpParent(NULL), mpAnchor(pAnchor), mVisible(true), mSetRectCalled(false)
 {
-  mSetRectCalled = false;
   ForceLineBreak(pNode->GetTagType() == nuiHTMLNode::eTag_BR);
 }
 
@@ -35,6 +34,9 @@ uint32 nuiHTMLItem::GetDepth() const
 
 void nuiHTMLItem::CallDraw(nuiDrawContext* pContext)
 {
+  if (!mVisible)
+    return;
+
 #if 0
   for (uint32 i = 0; i < GetDepth(); i++)
     printf("  ");
@@ -222,4 +224,11 @@ nuiHTMLNode* nuiHTMLItem::GetAnchor() const
 {
   return mpAnchor;
 }
+
+void nuiHTMLItem::UpdateVisibility(const nuiRect& rVisibleRect)
+{
+  nuiRect r;
+  mVisible = r.Intersect(GetGlobalRect(), rVisibleRect);
+}
+
 

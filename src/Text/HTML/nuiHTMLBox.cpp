@@ -186,3 +186,14 @@ void nuiHTMLBox::GetItemsAt(std::vector<nuiHTMLItem*>& rHitItems, float X, float
     mItems[i]->GetItemsAt(rHitItems, X, Y);
   }
 }
+
+void nuiHTMLBox::UpdateVisibility(const nuiRect& rVisibleRect)
+{
+  nuiHTMLItem::UpdateVisibility(rVisibleRect);
+  if (mVisible)
+  {
+    for (uint32 i = 0; i < mItems.size(); i++)
+      mItems[i]->UpdateVisibility(rVisibleRect);
+  }
+}
+

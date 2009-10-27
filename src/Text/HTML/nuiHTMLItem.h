@@ -55,6 +55,8 @@ public:
   
   void SetAnchor(nuiHTMLNode* pAnchor);
   nuiHTMLNode* GetAnchor() const;
+  
+  virtual void UpdateVisibility(const nuiRect& rVisibleRect);
 protected:
   uint32 GetDepth() const;
 
@@ -67,6 +69,7 @@ protected:
   bool mEndTag;
   bool mLineBreak;
 
+  bool mVisible;
   nuiColor mOldTextColor;
   
 };

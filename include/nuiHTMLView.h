@@ -107,5 +107,6 @@ private:
   float mMouseY;
   
   nuiHTMLNode* mpCurrentAnchor;
+  nuiRect mLastVisibleRect;
 };
 
