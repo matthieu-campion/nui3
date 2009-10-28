@@ -715,6 +715,7 @@ bool nuiHTMLView::MouseMoved(const nglMouseInfo& rInfo)
           nuiHTML::GetAbsoluteURL(mpHTML->GetSourceURL(), url);
 
           SetToolTip(url);
+          SetMouseCursor(eCursorArrow);
           return true;
         }
       }
@@ -722,6 +723,7 @@ bool nuiHTMLView::MouseMoved(const nglMouseInfo& rInfo)
   }
 
   SetToolTip(nglString::Empty);
+  SetMouseCursor(eCursorCaret);
   return false;
 }
 

@@ -139,34 +139,36 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
     int ww, hh;
     ww = w;
     hh = h;
-    switch (pUIDev.orientation)
+    if (pApp.statusBarOrientation != pUIDev.orientation)
     {
-      case UIDeviceOrientationUnknown:
-      case UIDeviceOrientationFaceUp:
-      case UIDeviceOrientationFaceDown:
-        break;
-      case UIDeviceOrientationPortrait:
-        angle = 0;
-				pApp.statusBarOrientation = UIInterfaceOrientationPortrait;
-        break;
-      case UIDeviceOrientationPortraitUpsideDown:
-        angle = 180;
-				pApp.statusBarOrientation = UIInterfaceOrientationPortraitUpsideDown;
-        break;
-      case UIDeviceOrientationLandscapeLeft:
-        angle = 270;
-        w = hh;
-        h = ww;
-				pApp.statusBarOrientation = (UIInterfaceOrientation) UIDeviceOrientationLandscapeLeft;
-        break;
-      case UIDeviceOrientationLandscapeRight:
-        angle = 90;
-        w = hh;
-        h = ww;
-				pApp.statusBarOrientation = (UIInterfaceOrientation) UIDeviceOrientationLandscapeRight;
-        break;
+      switch (pUIDev.orientation)
+      {
+        case UIDeviceOrientationUnknown:
+        case UIDeviceOrientationFaceUp:
+        case UIDeviceOrientationFaceDown:
+          break;
+        case UIDeviceOrientationPortrait:
+          angle = 0;
+          pApp.statusBarOrientation = UIInterfaceOrientationPortrait;
+          break;
+        case UIDeviceOrientationPortraitUpsideDown:
+          angle = 180;
+          pApp.statusBarOrientation = UIInterfaceOrientationPortraitUpsideDown;
+          break;
+        case UIDeviceOrientationLandscapeLeft:
+          angle = 270;
+          w = hh;
+          h = ww;
+          pApp.statusBarOrientation = (UIInterfaceOrientation) UIDeviceOrientationLandscapeLeft;
+          break;
+        case UIDeviceOrientationLandscapeRight:
+          angle = 90;
+          w = hh;
+          h = ww;
+          pApp.statusBarOrientation = (UIInterfaceOrientation) UIDeviceOrientationLandscapeRight;
+          break;
+      }
     }
-		
 
     if (angle >= 0 && angle != mpNGLWindow->GetRotation())
     {
