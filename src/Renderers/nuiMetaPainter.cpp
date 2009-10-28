@@ -36,22 +36,46 @@ void nuiMetaPainter::StoreOpCode(OpCode code)
 
 void nuiMetaPainter::StoreInt(int32 Val)
 {
-  StoreBuffer(&Val, sizeof(int32), 1);
+  //  StoreBuffer(&Val, sizeof(int32), 1);
+  if (mDummyMode)
+    return;
+  
+  uint pos = mOperations.size();
+  mOperations.resize(pos + sizeof(Val));
+  *(int32*)&(mOperations[pos]) = Val;
 }
 
 void nuiMetaPainter::StoreFloat(float Val)
 {
-  StoreBuffer(&Val, sizeof(float), 1);
+  //  StoreBuffer(&Val, sizeof(float), 1);
+  if (mDummyMode)
+    return;
+  
+  uint pos = mOperations.size();
+  mOperations.resize(pos + sizeof(Val));
+  *(float*)&(mOperations[pos]) = Val;
 }
 
 void nuiMetaPainter::StoreFloat(double Val)
 {
-  StoreBuffer(&Val, sizeof(double), 1);
+  //  StoreBuffer(&Val, sizeof(double), 1);
+  if (mDummyMode)
+    return;
+  
+  uint pos = mOperations.size();
+  mOperations.resize(pos + sizeof(Val));
+  *(double*)&(mOperations[pos]) = Val;
 }
 
 void nuiMetaPainter::StorePointer(void* pVal)
 {
-  StoreBuffer(&pVal, sizeof(void*), 1);
+  //  StoreBuffer(&pVal, sizeof(void*), 1);
+  if (mDummyMode)
+    return;
+  
+  uint pos = mOperations.size();
+  mOperations.resize(pos + sizeof(void*));
+  *(void**)&(mOperations[pos]) = pVal;
 }
 
 void nuiMetaPainter::StoreBuffer(const void* pBuffer, uint ElementSize, uint ElementCount)
@@ -72,26 +96,43 @@ nuiMetaPainter::OpCode nuiMetaPainter::FetchOpCode() const
 
 int32 nuiMetaPainter::FetchInt() const
 {
+  //  int32 tmp;
+//  FetchBuffer(&tmp, sizeof(int32), 1);
+//  return tmp;
   int32 tmp;
-  FetchBuffer(&tmp, sizeof(int32), 1);
+  NGL_ASSERT(mOperationPos + sizeof(tmp) <= mOperations.size());
+  tmp = *(int32*)&mOperations[mOperationPos];
+  mOperationPos += sizeof(tmp);
   return tmp;
 }
 
 void nuiMetaPainter::FetchFloat(double& rDouble) const
 {
-  FetchBuffer(&rDouble, sizeof(double), 1);
+  //  FetchBuffer(&rDouble, sizeof(double), 1);
+  NGL_ASSERT(mOperationPos + sizeof(rDouble) <= mOperations.size());
+  rDouble = *(double*)&mOperations[mOperationPos];
+  mOperationPos += sizeof(rDouble);
 }
 
 void nuiMetaPainter::FetchFloat(float& rFloat) const
 {
-  FetchBuffer(&rFloat, sizeof(float), 1);
+  //  FetchBuffer(&rFloat, sizeof(float), 1);
+  NGL_ASSERT(mOperationPos + sizeof(rFloat) <= mOperations.size());
+  rFloat = *(float*)&mOperations[mOperationPos];
+  mOperationPos += sizeof(rFloat);
 }
 
 void* nuiMetaPainter::FetchPointer() const
 {
-  void* pTmp;
-  FetchBuffer(&pTmp, sizeof(void*), 1);
-  return pTmp;
+//  void* pTmp;
+//  FetchBuffer(&pTmp, sizeof(void*), 1);
+//  return pTmp;
+
+  void* tmp;
+  NGL_ASSERT(mOperationPos + sizeof(tmp) <= mOperations.size());
+  tmp = *(void**)&mOperations[mOperationPos];
+  mOperationPos += sizeof(tmp);
+  return tmp;
 }
 
 void nuiMetaPainter::FetchBuffer(void* pBuffer, uint ElementSize, uint ElementCount) const

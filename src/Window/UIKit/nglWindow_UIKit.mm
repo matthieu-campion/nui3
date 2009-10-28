@@ -111,7 +111,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   mInited = false;
   mInvalidated = true;
   [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-  mInvalidationTimer = [NSTimer scheduledTimerWithTimeInterval:(1.0f / 260.0f) target:self selector:@selector(Paint) userInfo:nil repeats:YES];
+  mInvalidationTimer = [NSTimer scheduledTimerWithTimeInterval:(1.0f / 60.0f) target:self selector:@selector(Paint) userInfo:nil repeats:YES];
 
 	[self initializeKeyboard];
   return self;

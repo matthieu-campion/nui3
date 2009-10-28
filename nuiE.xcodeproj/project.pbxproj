@@ -3778,8 +3778,6 @@
 		6126D59D0DA5716500D2641A /* nuiRenderArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiRenderArray.h; path = include/nuiRenderArray.h; sourceTree = SOURCE_ROOT; };
 		6126D59E0DA5716500D2641A /* nuiRenderState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiRenderState.cpp; sourceTree = "<group>"; };
 		6126D59F0DA5716500D2641A /* nuiRenderState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiRenderState.h; path = include/nuiRenderState.h; sourceTree = SOURCE_ROOT; };
-		6126D5A00DA5716500D2641A /* nuiShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiShader.cpp; sourceTree = "<group>"; };
-		6126D5A10DA5716500D2641A /* nuiShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiShader.h; path = include/nuiShader.h; sourceTree = SOURCE_ROOT; };
 		6126D5A20DA5716500D2641A /* nuiShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiShape.cpp; sourceTree = "<group>"; };
 		6126D5A30DA5716500D2641A /* nuiShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiShape.h; path = include/nuiShape.h; sourceTree = SOURCE_ROOT; };
 		6126D5A40DA5716500D2641A /* nuiSoftwarePainter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiSoftwarePainter.cpp; sourceTree = "<group>"; };
@@ -5223,8 +5221,6 @@
 				6126D59D0DA5716500D2641A /* nuiRenderArray.h */,
 				6126D59E0DA5716500D2641A /* nuiRenderState.cpp */,
 				6126D59F0DA5716500D2641A /* nuiRenderState.h */,
-				6126D5A00DA5716500D2641A /* nuiShader.cpp */,
-				6126D5A10DA5716500D2641A /* nuiShader.h */,
 				6126D5A20DA5716500D2641A /* nuiShape.cpp */,
 				6126D5A30DA5716500D2641A /* nuiShape.h */,
 				6126D5A40DA5716500D2641A /* nuiSoftwarePainter.cpp */,
