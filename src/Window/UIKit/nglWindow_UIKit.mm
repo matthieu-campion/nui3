@@ -111,7 +111,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   mInited = false;
   mInvalidated = true;
   [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-  mInvalidationTimer = [NSTimer scheduledTimerWithTimeInterval:(1.0f/60.0f) target:self selector:@selector(Paint) userInfo:nil repeats:YES];
+  mInvalidationTimer = [NSTimer scheduledTimerWithTimeInterval:(1.0f / 260.0f) target:self selector:@selector(Paint) userInfo:nil repeats:YES];
 
 	[self initializeKeyboard];
   return self;
@@ -127,18 +127,31 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 }
 
 - (void) InitNGLWindow
-{
+{  
+  if (!mInited)
+  {
+    mInited = true;
+    mpNGLWindow->CallOnCreation();
+    mpNGLWindow->Invalidate();
+    mpNGLWindow->OnPaint();
+  }
+
+  static int32 counter = 0;
+  if (counter)
+  {
+    counter--;
+    return;
+  }
+  
+  counter = 60;
+
+  UIApplication* pApp = [UIApplication sharedApplication];
+  UIDevice* pUIDev = [UIDevice currentDevice];
+  int32 angle = -1;
+  int32 w, h;
+  
   if (mpNGLWindow->GetAutoRotation())
   {
-		UIApplication* pApp = [UIApplication sharedApplication];
-    UIDevice* pUIDev = [UIDevice currentDevice];
-    int angle = -1;
-    int w, h;
-    w = [UIScreen mainScreen].applicationFrame.size.width;
-    h = [UIScreen mainScreen].applicationFrame.size.height;
-    int ww, hh;
-    ww = w;
-    hh = h;
     if (pApp.statusBarOrientation != pUIDev.orientation)
     {
       switch (pUIDev.orientation)
@@ -150,22 +163,30 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
         case UIDeviceOrientationPortrait:
           angle = 0;
           pApp.statusBarOrientation = UIInterfaceOrientationPortrait;
+          w = [UIScreen mainScreen].applicationFrame.size.width;
+          h = [UIScreen mainScreen].applicationFrame.size.height;
           break;
         case UIDeviceOrientationPortraitUpsideDown:
           angle = 180;
           pApp.statusBarOrientation = UIInterfaceOrientationPortraitUpsideDown;
+          w = [UIScreen mainScreen].applicationFrame.size.width;
+          h = [UIScreen mainScreen].applicationFrame.size.height;
           break;
         case UIDeviceOrientationLandscapeLeft:
           angle = 270;
-          w = hh;
-          h = ww;
-          pApp.statusBarOrientation = (UIInterfaceOrientation) UIDeviceOrientationLandscapeLeft;
+          pApp.statusBarOrientation = UIInterfaceOrientationLandscapeLeft;
+          h = [UIScreen mainScreen].applicationFrame.size.width;
+          w = [UIScreen mainScreen].applicationFrame.size.height;
           break;
         case UIDeviceOrientationLandscapeRight:
           angle = 90;
-          w = hh;
-          h = ww;
-          pApp.statusBarOrientation = (UIInterfaceOrientation) UIDeviceOrientationLandscapeRight;
+          pApp.statusBarOrientation = UIInterfaceOrientationLandscapeRight;
+          h = [UIScreen mainScreen].applicationFrame.size.width;
+          w = [UIScreen mainScreen].applicationFrame.size.height;
+          break;
+        default:
+          w = mpNGLWindow->GetWidth();
+          h = mpNGLWindow->GetHeight();
           break;
       }
     }
@@ -182,52 +203,42 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   }
   else
   {
-		UIApplication* pApp = [UIApplication sharedApplication];
-    UIDevice* pUIDev = [UIDevice currentDevice];
-    int angle = -1;
-    int w, h;
-    w = [UIScreen mainScreen].applicationFrame.size.width;
-    h = [UIScreen mainScreen].applicationFrame.size.height;
-    int ww, hh;
-    ww = w;
-    hh = h;
-
     switch (mpNGLWindow->GetRotation())
     {
       case 0:
         //UIDeviceOrientationPortrait
-				pApp.statusBarOrientation = UIInterfaceOrientationPortrait;
+        if (pApp.statusBarOrientation != UIInterfaceOrientationPortrait)
+          pApp.statusBarOrientation = UIInterfaceOrientationPortrait;
+        w = [UIScreen mainScreen].applicationFrame.size.width;
+        h = [UIScreen mainScreen].applicationFrame.size.height;
         break;
       case 180:
         //UIDeviceOrientationPortraitUpsideDown
-				pApp.statusBarOrientation = UIInterfaceOrientationPortraitUpsideDown;
+        if (pApp.statusBarOrientation != UIInterfaceOrientationPortraitUpsideDown)
+          pApp.statusBarOrientation = UIInterfaceOrientationPortraitUpsideDown;
+        w = [UIScreen mainScreen].applicationFrame.size.width;
+        h = [UIScreen mainScreen].applicationFrame.size.height;
         break;
       case 270:
         //UIDeviceOrientationLandscapeLeft
-				pApp.statusBarOrientation = (UIInterfaceOrientation) UIDeviceOrientationLandscapeLeft;
-        ww = h;
-        hh = w;
+        if (pApp.statusBarOrientation != UIInterfaceOrientationLandscapeLeft)
+          pApp.statusBarOrientation = UIInterfaceOrientationLandscapeLeft;
+        h = [UIScreen mainScreen].applicationFrame.size.width;
+        w = [UIScreen mainScreen].applicationFrame.size.height;
         break;
       case 90:
         //UIDeviceOrientationLandscapeRight
-				pApp.statusBarOrientation = (UIInterfaceOrientation) UIDeviceOrientationLandscapeRight;
-        ww = h;
-        hh = w;
+        if (pApp.statusBarOrientation != UIInterfaceOrientationLandscapeRight)
+          pApp.statusBarOrientation = UIInterfaceOrientationLandscapeRight;
+        h = [UIScreen mainScreen].applicationFrame.size.width;
+        w = [UIScreen mainScreen].applicationFrame.size.height;
         break;
     }
-    
-    if (mpNGLWindow->GetWidth() != ww || mpNGLWindow->GetHeight() != hh)
+
+    if (mpNGLWindow->GetWidth() != w || mpNGLWindow->GetHeight() != h)
     {
-      mpNGLWindow->SetSize(ww, hh);
+      mpNGLWindow->SetSize(w, h);
     }
-  }
-  
-  if (!mInited)
-  {
-    mInited = true;
-    mpNGLWindow->CallOnCreation();
-    mpNGLWindow->Invalidate();
-    mpNGLWindow->OnPaint();
   }
 }
 
