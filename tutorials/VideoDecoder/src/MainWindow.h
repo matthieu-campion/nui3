@@ -60,5 +60,9 @@ private:
   nglImage* mpNglImage;
   nuiImage* mpImage;
   nuiTexture* mpTexture;
+  
+  nuiTimer mTimer;
+  bool OnPlayBtnClicked(const nuiEvent& rEvent);
+  bool OnTimerTick(const nuiEvent& rEvent);
 };
 

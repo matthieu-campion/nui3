@@ -27,7 +27,8 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
   mpVideoDecoder(NULL),
   mpNglImage(NULL),
   mpImage(NULL),
-  mpTexture(NULL)
+  mpTexture(NULL),
+  mTimer(1.f / 25.f)
 {
 #ifdef _DEBUG_
   SetDebugMode(true);
@@ -36,6 +37,8 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
   RegisterWithManager(this, NOTIF_FILEBROWSE_DONE);
   
   LoadCSS(_T("rsrc:/css/main.css"));
+  
+  mEventSink.Connect(mTimer.Tick, &MainWindow::OnTimerTick);
 }
 
 MainWindow::~MainWindow()
@@ -110,6 +113,12 @@ void MainWindow::OnCreation()
     pBox->AddCell(pBackBtn);
     pBox->AddCell(pForwardBtn);
     pBox->AddCell(pFastForwardBtn);
+  }
+  
+  {
+    nuiButton* pBtn = new nuiButton(_T("play"));
+    mpMainVBox->AddCell(pBtn);
+    mEventSink.Connect(pBtn->Activated, &MainWindow::OnPlayBtnClicked);
   }
 
 }
@@ -361,5 +370,23 @@ bool MainWindow::OnFastForwardBtnClicked(const nuiEvent& rEvent)
   for (uint32 i = 0; i < 25; i++)
     mpVideoDecoder->GoToNextFrame();
   UpdateVideoImage();
+  return true;
+}
+
+bool MainWindow::OnPlayBtnClicked(const nuiEvent& rEvent)
+{
+  if (mTimer.IsRunning())
+    mTimer.Stop();
+  else
+    mTimer.Start(true, true);
+  
+  return true;
+}
+
+bool MainWindow::OnTimerTick(const nuiEvent& rEvent)
+{
+  mpVideoDecoder->GoToNextFrame();
+  UpdateVideoImage();
+  
   return true;
 }
