@@ -143,18 +143,22 @@ nglImage* nuiVideoDecoder::GetCurrentImage()
   
   if (!mpImage)
   {
-    nglImageInfo imgInfo(true/*managed*/);
+    nglImageInfo imgInfo(false);
     imgInfo.mWidth = width;
     imgInfo.mHeight = height;
     imgInfo.mBitDepth = bitsPerPixel;
-    imgInfo.mPixelFormat = eImagePixelRGBA;
+    if (bitsPerPixel == 32)
+      imgInfo.mPixelFormat = eImagePixelRGBA;
+    else
+      imgInfo.mPixelFormat = eImagePixelRGB;
+    
     imgInfo.mBufferFormat = eImageFormatRaw;
     
     imgInfo.mBytesPerPixel = (imgInfo.mBitDepth + 1) / 8;
     imgInfo.mBytesPerLine = imgInfo.mWidth * imgInfo.mBytesPerPixel;
     imgInfo.mpBuffer = (char*)(pBitmapArray[0]);
     
-    mpImage = new nglImage(imgInfo, eTransfert);
+    mpImage = new nglImage(imgInfo);
     
     if (!mpImage->IsValid())
     {
@@ -170,8 +174,8 @@ nglImage* nuiVideoDecoder::GetCurrentImage()
   NGL_ASSERT(bitsPerPixel == mpImage->GetBitDepth());
   
   char* pBuffer = mpImage->GetBuffer();
-  uint32 nbBytes = width * height * (bitsPerPixel / 8) * sizeof(char);
-  memcpy(pBuffer, pBitmapArray[0], nbBytes);    
+  uint32 nbBytes = width * height * (bitsPerPixel / 8);
+  memcpy(pBuffer, pBitmapArray[0], nbBytes);   
   
   return mpImage;
 }

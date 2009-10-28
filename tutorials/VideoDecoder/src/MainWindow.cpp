@@ -318,6 +318,7 @@ void MainWindow::UpdateVideoImage()
   }
   
   mpTexture->ForceReload(false);
+  mpImage->Invalidate();
 }
 
 bool MainWindow::OnBackBtnClicked(const nuiEvent& rEvent)
@@ -346,9 +347,8 @@ bool MainWindow::OnForwardBtnClicked(const nuiEvent& rEvent)
   if (!mpVideoDecoder)
     return true;
   
-  mpVideoDecoder->GetDuration();
-  mpVideoDecoder->GetPosition();
   mpVideoDecoder->GoToNextFrame();
+
   UpdateVideoImage();
   return true;
 }
