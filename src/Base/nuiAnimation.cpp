@@ -153,7 +153,8 @@ nuiAnimation::nuiAnimation()
   mLoopMode = eAnimLoopForward;
   mUpdatingTime = false;
   mEnableCallbacks = true;
-
+  mDeleteOnStop = false;
+  
   mEasing = (nuiEasingMethod)(&::nuiEasingIdentity);
   
   AcquireTimer();
@@ -187,8 +188,25 @@ nuiAnimation::nuiAnimation()
                  (nglString(_T("Duration")), nuiUnitSeconds,
                   nuiMakeDelegate(this, &nuiAnimation::GetDuration),
                   nuiMakeDelegate(this, &nuiAnimation::SetDuration)));
+
+    AddAttribute(new nuiAttribute<bool>
+                 (nglString(_T("DeleteOnStop")), nuiUnitBoolean,
+                  nuiMakeDelegate(this, &nuiAnimation::GetDeleteOnStop),
+                  nuiMakeDelegate(this, &nuiAnimation::SetDeleteOnStop)));
+    
   }
 }
+
+void nuiAnimation::SetDeleteOnStop(bool set)
+{
+  mDeleteOnStop = set;
+}
+
+bool nuiAnimation::GetDeleteOnStop() const
+{
+  return mDeleteOnStop;
+}
+
 
 void nuiAnimation::SetEasing(const nuiEasingMethod& rMethod)
 {
@@ -374,6 +392,9 @@ void nuiAnimation::InternalStop()
   mAnimSink.Disconnect(GetTimer()->Tick, &nuiAnimation::OnTick);
   mCurrentPosition = 0;
   AnimStop();
+  
+  if (mDeleteOnStop)
+    delete this;
 }
 
 void nuiAnimation::InternalPause()

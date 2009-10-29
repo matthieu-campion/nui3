@@ -3079,6 +3079,7 @@ void nuiWidget::AddAnimation(const nglString& rName, nuiAnimation* pAnim)
     delete pOldAnim;
 
   mAnimations[rName] = pAnim;
+  pAnim->SetDeleteOnStop(false); /// Cancel anim delete on stop or we'll crash as soon as the widget is destroyed or the user starts to play the anim once more.
   if (rName == _T("TRASH"))
     mGenericWidgetSink.Connect(pAnim->AnimStop, &nuiWidget::AutoTrash);
   DebugRefreshInfo();

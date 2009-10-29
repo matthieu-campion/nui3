@@ -100,6 +100,9 @@ public:
   static nuiTimer* GetTimer(); ///< GetTimer doesn't allocate the timer and you must not pair it with ReleaseTimer(). It may return NULL if the timer was never created.
   static void ReleaseTimer();
   
+  void SetDeleteOnStop(bool set); ///< If DeleteOnStop is set, the animation will be deleted as soon as it is stopped by calling Stop or by reaching the end of the loop counter.
+  bool GetDeleteOnStop() const; ///< If DeleteOnStop is set, the animation will be deleted as soon as it is stopped by calling Stop or by reaching the end of the loop counter.
+  
 protected:
   void CallOnFrame();
   bool UpdateTime(); ///< This method returns the number time elapsed since the last call to UpdateTime.
@@ -124,6 +127,8 @@ protected:
   bool mUpdatingTime;
 
   bool mEnableCallbacks;
+  
+  bool mDeleteOnStop;
 
   void EnableCallbacks(bool enable);
 
