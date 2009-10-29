@@ -759,6 +759,7 @@ uint nglWindow::GetHeight () const
 
 bool nglWindow::SetSize (uint Width, uint Height)
 {
+  NGL_OUT(_T("nglWindow::SetSize(%d, %d)\n"), Width, Height);
   mWidth  = Width;
   mHeight = Height;
   CallOnResize(Width, Height);

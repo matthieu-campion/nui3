@@ -244,6 +244,11 @@ void nglWindow::CallOnCreation()
   NGL_DEBUG( NGL_LOG(_T("window"), NGL_LOG_DEBUG, _T("Creation\n")); )
   // Set all keys as not pressed
   memset (mpKeyState, 0, sizeof(bool)*NGL_KEY_MAX);
+  //nglTime mLastPaint;
+  //nglTime mFPSDelay;
+  mFPSCount = 0;
+  mFPS = 0;
+  
   OnCreation();
 }
 
@@ -275,8 +280,22 @@ void nglWindow::CallOnClose()
 
 void nglWindow::CallOnPaint()
 {
-  NGL_DEBUG( NGL_LOG(_T("window"), NGL_LOG_DEBUG, _T("Paint\n")); )
+  NGL_DEBUG( NGL_LOG(_T("window"), NGL_LOG_DEBUG, _T("Paint\n")); )  
   OnPaint();
+
+  nglTime now;
+  mFPSCount++;
+  if (now - mFPSDelay > 1.0)
+  {
+    double v = (now - mFPSDelay);
+    double c = mFPSCount;
+    mFPS = c / v;
+    printf("FPS: %f (%f seconds - %d frames)\n", mFPS, v, ToNearest(c));
+
+    mFPSCount = 0;
+    mFPSDelay = now;
+  }
+  mLastPaint = now;
 }
 
 void nglWindow::CallOnState (StateInfo State)

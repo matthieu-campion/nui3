@@ -64,14 +64,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = BC6A0A350EF93F7800881ACF /* nuiE.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 735F703F0FF2747500E66B1D /* libnuiE.a */;
+			remoteGlobalIDString = 735F703F0FF2747500E66B1D;
 			remoteInfo = "nuiE-iPhone 3.0";
 		};
 		E5795743100ACE5B00821E44 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BC6A0A350EF93F7800881ACF /* nuiE.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 735F73A30FF2747500E66B1D /* libnuiEd.a */;
+			remoteGlobalIDString = 735F73A30FF2747500E66B1D;
 			remoteInfo = "nuiEd-iPhone 3.0";
 		};
 /* End PBXContainerItemProxy section */

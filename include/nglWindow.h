@@ -900,6 +900,11 @@ protected:
   bool mSkipBackBufferCopy;
   
   nuiMainMenu* mpMainMenu;
+  
+  double mLastPaint;
+  double mFPSDelay;
+  uint32 mFPSCount;
+  float mFPS;
 };
 
 

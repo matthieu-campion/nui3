@@ -16,7 +16,9 @@
  * MainWindow
  */
 
-const float MAX_PARTICLES = 300;
+const float MAX_PARTICLES = 150;
+const float PARTICLE_MAX_SIZE = 128;
+const float PARTICLE_MIN_SIZE = 32;
 
 class ParticleSystem : public nuiWidget
 {
@@ -29,8 +31,6 @@ public:
     mLastTime = nglTime();
     for (uint32 i = 0; i < MAX_PARTICLES; i++)
       mParticles[i].Init(mMaxAge);
-    
-    mParticleSize = 32;
     
     mpTexture = nuiTexture::GetTexture(nglPath(_T("rsrc:/particle.png")));
     mpArray = new nuiRenderArray(GL_TRIANGLES, false, false); // Create the array as static and 3d
@@ -90,7 +90,7 @@ public:
       float age = 1.0 - (mParticles[i].mAge / mMaxAge);
       age = nuiClamp(age, 0.0f, 1.0f);
       
-      const float halfsize = (1.0 - age * .8) * mParticleSize; // Grow the particles as they age
+      const float halfsize = (1.0 - age * .8) * mParticles[i].mSize; // Grow the particles as they age
       const nuiColor col(1.0f, 1.0f, 1.0f, age);
       
       const uint32 idx = i * 4;
@@ -149,6 +149,8 @@ private:
     
     void Recycle(float MaxAge)
     {
+      mSize = ((float)rand() / (float)RAND_MAX);
+      mSize = PARTICLE_MIN_SIZE + (PARTICLE_MAX_SIZE - PARTICLE_MAX_SIZE) * mSize;
       mAge = MaxAge * ((float)rand() / (float)RAND_MAX);
       mX = 0;
       mY = 0;
@@ -176,10 +178,10 @@ private:
     float mX, mY; // Current position
     float mVX, mVY; // Current vector
     float mAge;
+    float mSize;
   };
   
   float mMaxAge;
-  float mParticleSize;
   std::vector<Particle> mParticles;
   nuiTexture* mpTexture;
   nuiRenderArray* mpArray;

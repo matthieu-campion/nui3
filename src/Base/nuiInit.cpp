@@ -127,7 +127,8 @@ bool nuiUninit()
   if (rManager.GetFontCount())
   {
     nglOFile db(fontdb, eOFileCreate);
-    rManager.Save(db);
+    if (db.IsOpen())
+      rManager.Save(db);
   }
   
   //printf("nuiUnInit(%d)\n", gNUIReferences);
