@@ -3830,8 +3830,6 @@
 		6126D5DA0DA5716500D2641A /* nuiScrollBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiScrollBar.h; path = include/nuiScrollBar.h; sourceTree = SOURCE_ROOT; };
 		6126D5DB0DA5716500D2641A /* nuiSeparator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiSeparator.cpp; sourceTree = "<group>"; };
 		6126D5DC0DA5716500D2641A /* nuiSeparator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiSeparator.h; path = include/nuiSeparator.h; sourceTree = SOURCE_ROOT; };
-		6126D5DD0DA5716500D2641A /* nuiShaderView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiShaderView.cpp; sourceTree = "<group>"; };
-		6126D5DE0DA5716500D2641A /* nuiShaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiShaderView.h; path = include/nuiShaderView.h; sourceTree = SOURCE_ROOT; };
 		6126D5DF0DA5716500D2641A /* nuiShapeView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiShapeView.cpp; sourceTree = "<group>"; };
 		6126D5E00DA5716500D2641A /* nuiShapeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiShapeView.h; path = include/nuiShapeView.h; sourceTree = SOURCE_ROOT; };
 		6126D5E10DA5716500D2641A /* nuiSlider.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiSlider.cpp; sourceTree = "<group>"; };
@@ -3842,8 +3840,6 @@
 		6126D5E60DA5716500D2641A /* nuiStateDummy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiStateDummy.h; path = include/nuiStateDummy.h; sourceTree = SOURCE_ROOT; };
 		6126D5E70DA5716500D2641A /* nuiSVGView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiSVGView.cpp; sourceTree = "<group>"; };
 		6126D5E80DA5716500D2641A /* nuiSVGView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiSVGView.h; path = include/nuiSVGView.h; sourceTree = SOURCE_ROOT; };
-		6126D5E90DA5716500D2641A /* nuiSWF.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiSWF.cpp; sourceTree = "<group>"; };
-		6126D5EA0DA5716500D2641A /* nuiSWF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiSWF.h; path = include/nuiSWF.h; sourceTree = SOURCE_ROOT; };
 		6126D5EB0DA5716500D2641A /* nuiTabBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiTabBar.cpp; sourceTree = "<group>"; };
 		6126D5EC0DA5716500D2641A /* nuiTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiTabBar.h; path = include/nuiTabBar.h; sourceTree = SOURCE_ROOT; };
 		6126D5ED0DA5716500D2641A /* nuiToggleButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiToggleButton.cpp; sourceTree = "<group>"; };
@@ -5301,8 +5297,6 @@
 				6126D5DA0DA5716500D2641A /* nuiScrollBar.h */,
 				6126D5DB0DA5716500D2641A /* nuiSeparator.cpp */,
 				6126D5DC0DA5716500D2641A /* nuiSeparator.h */,
-				6126D5DD0DA5716500D2641A /* nuiShaderView.cpp */,
-				6126D5DE0DA5716500D2641A /* nuiShaderView.h */,
 				6126D5DF0DA5716500D2641A /* nuiShapeView.cpp */,
 				6126D5E00DA5716500D2641A /* nuiShapeView.h */,
 				6126D5E10DA5716500D2641A /* nuiSlider.cpp */,
@@ -5313,8 +5307,6 @@
 				6126D5E60DA5716500D2641A /* nuiStateDummy.h */,
 				6126D5E70DA5716500D2641A /* nuiSVGView.cpp */,
 				6126D5E80DA5716500D2641A /* nuiSVGView.h */,
-				6126D5E90DA5716500D2641A /* nuiSWF.cpp */,
-				6126D5EA0DA5716500D2641A /* nuiSWF.h */,
 				6126D5EB0DA5716500D2641A /* nuiTabBar.cpp */,
 				6126D5EC0DA5716500D2641A /* nuiTabBar.h */,
 				6126D5ED0DA5716500D2641A /* nuiToggleButton.cpp */,

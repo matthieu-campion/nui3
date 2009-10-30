@@ -53,7 +53,7 @@ void nuiScrollView::Init(nuiScrollBar* pHorizontalScrollBar, nuiScrollBar* pVert
   SetObjectClass(_T("nuiScrollView"));
 
   mFillChildren = true;
-  mVIncrement = 16.f;
+  mVIncrement = 64.f;
   mHIncrement = 64.f;
   mCanRespectConstraint = true;
 
