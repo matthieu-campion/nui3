@@ -290,6 +290,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
             newp.x, newp.y
           );
 }
+
 - (void) dumpTouches: (UIEvent*) pEvent
 {
   NSSet* pSet = [pEvent allTouches];
@@ -455,7 +456,8 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 
       mpNGLWindow->CallOnMouseClick(info);
     }
-    else {
+    else
+    {
       NGL_TOUCHES_OUT(_T("[%p][available: %d] Discarding event: [UITouchPhaseBegan X:%d Y:%d]\n"), pTouch, gAvailableTouches.size(), x, y);
     }
   }
@@ -501,7 +503,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   mKeyboardVisible = NO;
   /* add the UITextField (hidden) to our view */
   [self addSubview: mpTextField];
-  }
+}
 
 // Show Keyboard
 - (void)showKeyboard
@@ -712,7 +714,8 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
 }
 
 nglWindow::~nglWindow()
-{}
+{
+}
 
 
 /*

@@ -63,23 +63,42 @@ void objCCallOnWillExit();
   NGL_DEBUG( NGL_OUT(_T("[nglUIApplicationDelegate applicationDidBecomeActive]\n")); )
   NGL_ASSERT(App);
 
-  id win = [pUIApplication keyWindow];
-  NGL_ASSERT(win);
-  nglWindow* pWindow = [win getNGLWindow];
-  NGL_ASSERT(pWindow);
-  pWindow->CallOnActivation();
+	
+	NSEnumerator *e = [[pUIApplication windows] objectEnumerator];
+	
+	id win;
+	while ((win = [e nextObject]) ) {
+		
+		if( [win respondsToSelector: @selector(getNGLWindow)] )
+		{
+			nglWindow* pWindow = [win getNGLWindow];
+			
+			NGL_ASSERT(pWindow);
+			pWindow->CallOnActivation();			
+		}
+	}	
 }
 
 - (void) applicationWillResignActive:         (UIApplication*) pUIApplication
 {
   NGL_DEBUG( NGL_OUT(_T("[nglUIApplicationDelegate applicationWillResignActive]\n")); )
   NGL_ASSERT(App);
-  
-  nglUIWindow* win = (nglUIWindow*)[pUIApplication keyWindow];
-  NGL_ASSERT(win);
-  nglWindow* pWindow = [win getNGLWindow];
-  NGL_ASSERT(pWindow);
-  pWindow->CallOnDesactivation();
+	
+	
+	NSEnumerator *e = [[pUIApplication windows] objectEnumerator];
+	
+	id win;
+	while ((win = [e nextObject]) ) {
+
+		if( [win respondsToSelector: @selector(getNGLWindow)] )
+		{
+			nglWindow* pWindow = [win getNGLWindow];
+			
+			NGL_ASSERT(pWindow);
+			pWindow->CallOnDesactivation();			
+		}
+	}
+	
 }
 
 - (void) applicationDidReceiveMemoryWarning:  (UIApplication*) pUIApplication
@@ -98,9 +117,14 @@ void objCCallOnWillExit();
 
 	objCCallOnWillExit();
 
-  UIWindow* pWindow = [pUIApplication keyWindow];
-  NGL_ASSERT(pWindow);
-  [pWindow release];
+	NSEnumerator *e = [[pUIApplication windows] objectEnumerator];
+	
+	id win;
+	while ((win = [e nextObject]) ) {
+		
+		[win release];
+	}	
+ 
 
 ///< advise the kernel we're quiting
   objCCallOnExit(0);
