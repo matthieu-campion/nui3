@@ -30,7 +30,7 @@ nglVideoMode::nglVideoMode()
   mWidth = (uint)rect.size.width;
   mHeight = (uint)rect.size.height;
 
-  mBPP = 16;
+  mBPP = 32;
   
   Init();
 }

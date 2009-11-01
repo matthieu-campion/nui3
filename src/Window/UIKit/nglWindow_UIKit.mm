@@ -15,6 +15,8 @@
 #include "nglUIWindow.h"
 
 
+#define NGL_WINDOW_FPS 120.0f
+
 //#include "nglImage.h"
 
 #define NGL_WINDOW_EBASE      (NGL_CONTEXT_ELAST+1)
@@ -111,7 +113,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   mInited = false;
   mInvalidated = true;
   [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-  mInvalidationTimer = [NSTimer scheduledTimerWithTimeInterval:(1.0f / 60.0f) target:self selector:@selector(Paint) userInfo:nil repeats:YES];
+  mInvalidationTimer = [NSTimer scheduledTimerWithTimeInterval:(1.0f / NGL_WINDOW_FPS) target:self selector:@selector(Paint) userInfo:nil repeats:YES];
 
 	[self initializeKeyboard];
   return self;
@@ -649,14 +651,12 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
 ///< Rendering takes place in a Core Animation Layer
   CAEAGLLayer* pLayer = (CAEAGLLayer*)[pUIWindow layer];
   NGL_ASSERT(pLayer);  
-	//pLayer.opaque = YES;
+	pLayer.opaque = YES;
   BOOL retainBacking = rContext.CopyOnSwap ? YES : NO;
 	[pLayer setDrawableProperties:
    [NSDictionary dictionaryWithObjectsAndKeys:
-    [NSNumber numberWithBool:retainBacking],
-    kEAGLDrawablePropertyRetainedBacking,
-    (NSString*)mpEAGLPixelFormat,
-    kEAGLDrawablePropertyColorFormat,
+    [NSNumber numberWithBool:retainBacking], kEAGLDrawablePropertyRetainedBacking,
+    (NSString*)mpEAGLPixelFormat, kEAGLDrawablePropertyColorFormat,
     nil
    ]
   ];

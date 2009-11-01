@@ -12,7 +12,7 @@
 
 nuiTimer* nuiAnimation::mpTimer = NULL;
 int32 nuiAnimation::mAnimCounter = 0;
-double nuiAnimation::mFrameRate = 60; // 30 FPS by default
+double nuiAnimation::mFrameRate = 120; // 30 FPS by default
 
 // Standard easing:
 double nuiEasingIdentity(double val)

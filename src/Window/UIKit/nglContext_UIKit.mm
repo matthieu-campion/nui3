@@ -173,8 +173,7 @@ bool nglContext::Build(const nglContextInfo& rInfo, const nglContext* pShared, b
 
   if (rInfo.FrameBitsR == 8 &&
       rInfo.FrameBitsG == 8 &&
-      rInfo.FrameBitsB == 8 &&
-      rInfo.FrameBitsA == 8)
+      rInfo.FrameBitsB == 8)
   {
     mPixelFormat = GL_RGBA8_OES;
 		pixelFormat = kEAGLColorFormatRGBA8;

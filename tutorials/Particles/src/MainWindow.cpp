@@ -16,9 +16,9 @@
  * MainWindow
  */
 
-const float MAX_PARTICLES = 150;
+const float MAX_PARTICLES = 15;
 const float PARTICLE_MAX_SIZE = 128;
-const float PARTICLE_MIN_SIZE = 32;
+const float PARTICLE_MIN_SIZE = 128;
 
 class ParticleSystem : public nuiWidget
 {
@@ -150,7 +150,7 @@ private:
     void Recycle(float MaxAge)
     {
       mSize = ((float)rand() / (float)RAND_MAX);
-      mSize = PARTICLE_MIN_SIZE + (PARTICLE_MAX_SIZE - PARTICLE_MAX_SIZE) * mSize;
+      mSize = (float)PARTICLE_MIN_SIZE + (float)(PARTICLE_MAX_SIZE - PARTICLE_MAX_SIZE) * mSize;
       mAge = MaxAge * ((float)rand() / (float)RAND_MAX);
       mX = 0;
       mY = 0;
