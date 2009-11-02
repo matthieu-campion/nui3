@@ -1269,7 +1269,7 @@ int32 nglPath::GetChildren(list<nglPath>& rChildren) const
       nglPath	path = *this;
       path += nglPath(findData.cFileName);
 
-      pChildren->push_back(path);
+      rChildren.push_back(path);
 			count++;
 		}
 	} while(FindNextFile(dir,&findData)!=0);
