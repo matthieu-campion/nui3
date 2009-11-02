@@ -222,58 +222,7 @@
 		</dict>
 	</array>
 	<key>OpenEditors</key>
-	<array>
-		<dict>
-			<key>Content</key>
-			<dict>
-				<key>PBXProjectModuleGUID</key>
-				<string>40EAF2771098A8B2006459E1</string>
-				<key>PBXProjectModuleLabel</key>
-				<string>MainWindow.cpp</string>
-				<key>PBXSplitModuleInNavigatorKey</key>
-				<dict>
-					<key>Split0</key>
-					<dict>
-						<key>PBXProjectModuleGUID</key>
-						<string>40EAF2781098A8B2006459E1</string>
-						<key>PBXProjectModuleLabel</key>
-						<string>MainWindow.cpp</string>
-						<key>_historyCapacity</key>
-						<integer>0</integer>
-						<key>bookmark</key>
-						<string>40EAF2F31098B11C006459E1</string>
-						<key>history</key>
-						<array>
-							<string>40EAF2E21098B07C006459E1</string>
-							<string>40EAF2E31098B07C006459E1</string>
-						</array>
-						<key>prevStack</key>
-						<array>
-							<string>40EAF2E41098B07C006459E1</string>
-							<string>40EAF2E51098B07C006459E1</string>
-							<string>40EAF2E61098B07C006459E1</string>
-							<string>40EAF2E71098B07C006459E1</string>
-							<string>40EAF2E81098B07C006459E1</string>
-							<string>40EAF2E91098B07C006459E1</string>
-						</array>
-					</dict>
-					<key>SplitCount</key>
-					<string>1</string>
-				</dict>
-				<key>StatusBarVisibility</key>
-				<true/>
-			</dict>
-			<key>Geometry</key>
-			<dict>
-				<key>Frame</key>
-				<string>{{0, 20}, {846, 872}}</string>
-				<key>PBXModuleWindowStatusBarHidden2</key>
-				<false/>
-				<key>RubberWindowFrame</key>
-				<string>38 169 846 913 0 0 1920 1178 </string>
-			</dict>
-		</dict>
-	</array>
+	<array/>
 	<key>PerspectiveWidths</key>
 	<array>
 		<integer>1259</integer>
@@ -407,20 +356,18 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>40EAF2F21098B11C006459E1</string>
+										<string>40212E1110999F1A00C6EAA6</string>
 										<key>history</key>
 										<array>
 											<string>408A19B0109863EC0019E3A3</string>
 											<string>408A19EF1098874E0019E3A3</string>
 											<string>408A1A09109898B70019E3A3</string>
 											<string>408A1A2910989A9B0019E3A3</string>
-											<string>40EAF2F11098B11C006459E1</string>
-											<string>40EAF2EF1098B109006459E1</string>
+											<string>40EAF2F61098B9D8006459E1</string>
 										</array>
 										<key>prevStack</key>
 										<array>
 											<string>40EAF2C01098AAF5006459E1</string>
-											<string>40EAF2C11098AAF5006459E1</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -459,7 +406,7 @@
 									<key>GeometryConfiguration</key>
 									<dict>
 										<key>Frame</key>
-										<string>{{10, 27}, {1052, 762}}</string>
+										<string>{{10, 27}, {377, 327}}</string>
 									</dict>
 									<key>Module</key>
 									<string>XCDetailModule</string>
@@ -545,11 +492,11 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>40EAF25B1098A80B006459E1</string>
+				<string>40212E1310999F1A00C6EAA6</string>
 				<string>1CA23ED40692098700951B8B</string>
-				<string>40EAF25C1098A80B006459E1</string>
+				<string>40212E1410999F1A00C6EAA6</string>
 				<string>408D9C4A1097603600AEE78A</string>
-				<string>40EAF25D1098A80B006459E1</string>
+				<string>40212E1510999F1A00C6EAA6</string>
 				<string>1CA23EDF0692099D00951B8B</string>
 				<string>1CA23EE00692099D00951B8B</string>
 				<string>1CA23EE10692099D00951B8B</string>
@@ -723,7 +670,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>278442268.18090302</real>
+	<real>278503194.31432903</real>
 	<key>ToolbarConfigUserDefaultsMinorVersion</key>
 	<string>2</string>
 	<key>ToolbarDisplayMode</key>
@@ -740,11 +687,8 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>40EAF2F41098B11C006459E1</string>
-		<string>40EAF2651098A80B006459E1</string>
-		<string>40EAF2661098A80B006459E1</string>
-		<string>/Users/mat/work/dev/mxp4/nui3/tutorials/VideoDecoder/VideoDecoder.xcodeproj</string>
 		<string>40EAF2771098A8B2006459E1</string>
+		<string>/Users/mat/work/dev/mxp4/nui3/tutorials/VideoDecoder/VideoDecoder.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
 	<string>542 343 1259 835 0 0 1920 1178 </string>

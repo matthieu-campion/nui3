@@ -89,6 +89,8 @@ public:
   void SetMoveAnimationDuration(float duration);
   void SetMoveAnimationEasing(const nuiEasingMethod& rMethod);
 
+  void Sort(const nuiFastDelegate2<nuiWidget*, nuiWidget*, bool>& rSortDelegate);
+  
 protected:
   nuiOrientation mOrientation; /// mHorizontal is true if the containers' layout if horizontal, false if vertical.
   std::list<nuiRect>  mPositions;

@@ -1063,3 +1063,28 @@ void nuiList::SetMoveAnimationEasing(const nuiEasingMethod& rMethod)
   mMoveAnimEasing = rMethod;
   SetChildrenLayoutAnimationEasing(rMethod);
 }
+
+class SortFunctor
+{
+public:
+  SortFunctor(const nuiFastDelegate2<nuiWidget*, nuiWidget*, bool>& rSortDelegate)
+  {
+    mFunctor = rSortDelegate;
+  }
+  
+  bool operator() (nuiWidget* p1, nuiWidget* p2)
+  {
+    return mFunctor(p1, p2);
+  }
+  
+private:
+  nuiFastDelegate2<nuiWidget*, nuiWidget*, bool> mFunctor;
+};
+
+void nuiList::Sort(const nuiFastDelegate2<nuiWidget*, nuiWidget*, bool>& rSortDelegate)
+{
+  std::sort(mpChildren.begin(), mpChildren.end(), SortFunctor(rSortDelegate));
+  UpdateLayout();
+}
+
+
