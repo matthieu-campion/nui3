@@ -137,7 +137,13 @@ nglIOStream* nuiNativeResourceVolume::OpenWrite(const nglPath& rPath, bool OverW
   return NULL;
 }
 
+/// deprecated
 bool nuiNativeResourceVolume::GetChildren(const nglPath& rPath, std::list<nglPath>* pChildren)
+{
+  return GetChildren(rPath, *pChildren);
+}
+
+bool nuiNativeResourceVolume::GetChildren(const nglPath& rPath, std::list<nglPath>& rChildren)
 {
   nglString p(rPath.GetVolumeLessPath());
   p.TrimLeft(_T('/'));
@@ -153,15 +159,15 @@ bool nuiNativeResourceVolume::GetChildren(const nglPath& rPath, std::list<nglPat
     return false;
   }
   
-  const std::set<nglString>& rChildren(fit->second);
-  std::set<nglString>::const_iterator it = rChildren.begin();
-  std::set<nglString>::const_iterator end = rChildren.end();
+  const std::set<nglString>& rChildrenSet(fit->second);
+  std::set<nglString>::const_iterator it = rChildrenSet.begin();
+  std::set<nglString>::const_iterator end = rChildrenSet.end();
   
   while (it != end)
   {
     nglPath p(rPath);
     p += *it;
-    pChildren->push_back(p);
+    rChildren.push_back(p);
     
     ++it;
   }

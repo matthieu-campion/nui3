@@ -1219,14 +1219,24 @@ bool nglPath::InternalSetPath(const nglChar* pPath)
 }
 
 #ifdef _WIN32_
+
+/// deprecated
 int32 nglPath::GetChildren(list<nglPath>* pChildren) const
+{
+  if (!pChildren)
+    return -1;
+  
+  return GetChildren(*pChildren);
+}
+
+int32 nglPath::GetChildren(list<nglPath>& rChildren) const
 {
   nglString volume = GetVolumeName();
   if (!volume.IsEmpty())
   {
     nglVolume* pVolume = nglVolume::GetVolume(volume);
     if (pVolume)
-      return pVolume->GetChildren(*this, pChildren);
+      return pVolume->GetChildren(*this, rChildren);
   }
   
   
@@ -1256,13 +1266,10 @@ int32 nglPath::GetChildren(list<nglPath>* pChildren) const
 	{
 		if(wcscmp(findData.cFileName, L".") && wcscmp(findData.cFileName, L".."))
 		{
-			if(pChildren)
-			{
-				nglPath	path = *this;
-				path += nglPath(findData.cFileName);
+      nglPath	path = *this;
+      path += nglPath(findData.cFileName);
 
-				pChildren->push_back(path);
-			}
+      pChildren->push_back(path);
 			count++;
 		}
 	} while(FindNextFile(dir,&findData)!=0);

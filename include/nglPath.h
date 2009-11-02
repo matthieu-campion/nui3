@@ -170,7 +170,9 @@ public:
   nglString GetParentName() const;  ///< Returns the parent path as a string (remove the last node)
 	nglPath   GetParent() const;      ///< Returns the parent path (remove the last node)
   void Split(std::vector<nglString>& rElements); ///< Split the elements of this path into its elements (folders and eventual file))
-	int32 GetChildren(std::list<nglPath>* pChildren) const;
+	int32 GetChildren(std::list<nglPath>* pChildren) const; ///< deprecated
+	int32 GetChildren(std::list<nglPath>& pChildren) const; ///< that's the proper api
+ 
 	/*!< Get node's children
 	\param pChildren if non-null, children will be appended to this list
 	\return Number of children. Zero usually means the node was a leaf, check errors with GetError()

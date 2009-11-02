@@ -31,7 +31,12 @@ public:
   virtual bool Move(const nglPath& rSource, const nglPath& rPathTarget) = 0;
   virtual nglIStream* OpenRead(const nglPath& rPath) = 0;
   virtual nglIOStream* OpenWrite(const nglPath& rPath, bool OverWrite) = 0;
+
+  /// deprecated
   virtual bool GetChildren(const nglPath& rPath, std::list<nglPath>* pChildren) = 0;
+  
+  // proper api
+  virtual bool GetChildren(const nglPath& rPath, std::list<nglPath>& pChildren) = 0;
   
   static void Mount(nglVolume* pVolume);
   static void Unmount(nglVolume* pVolume);

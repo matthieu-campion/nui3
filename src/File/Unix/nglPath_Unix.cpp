@@ -274,15 +274,22 @@ bool nglPath::ResolveLink()
 #endif // _CARBON_
 
 
-
+/// deprecated
 int nglPath::GetChildren (std::list<nglPath>* pChildren) const
+{
+  if (!pChildren)
+    return -1;
+  return GetChildren(*pChildren);
+}
+
+int nglPath::GetChildren (std::list<nglPath>& rChildren) const
 {
   nglString volume = GetVolumeName();
   if (!volume.IsEmpty())
   {
     nglVolume* pVolume = nglVolume::GetVolume(volume);
     if (pVolume)
-      return pVolume->GetChildren(*this, pChildren);
+      return pVolume->GetChildren(*this, rChildren);
   }
 
   int count = 0;
@@ -316,13 +323,11 @@ int nglPath::GetChildren (std::list<nglPath>* pChildren) const
   {
     if (strcmp (entry->d_name, ".") && strcmp (entry->d_name, ".."))
     {
-      if (pChildren)
-      {
-        //printf("nglpath - base = '%ls' - child = '%ls'\n", GetChars(), entry->d_name);
-        nglPath path = *this;
-        path += nglPath(entry->d_name);
-        pChildren->push_back (path);
-      }
+      //printf("nglpath - base = '%ls' - child = '%ls'\n", GetChars(), entry->d_name);
+      nglPath path = *this;
+      path += nglPath(entry->d_name);
+      rChildren.push_back (path);
+
       count++;
     }
   }
