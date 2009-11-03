@@ -386,7 +386,7 @@ void nuiOutliner::TessellateObj(nuiRenderObject& rObject, const nuiPath& rVertic
   const nuiPoint& rstop = rVertices[offset + count - 1];
   bool closed = rstart == rstop;
 
-  if (count == 2 && closed)
+  if (count <= 2 && closed)
   {
     glAABegin(GL_POINTS);
   }
