@@ -116,7 +116,7 @@ void nuiHotKeyEditor::FillHotKeysGrid()
     mpHotKeysGrid->SetCell(0, row, pDescriptionLabel, nuiFill);
     
     nuiLabel* pHotKeyLabel = new nuiLabel(pHotKey->ShortcutToString());
-    pDescriptionLabel->SetObjectName(_T("nuiHotKeyEditor_ShortcutCell"));
+    pHotKeyLabel->SetObjectName(_T("nuiHotKeyEditor_ShortcutCell"));
     pHotKeyLabel->SetToken(new nuiToken<nglString>(name));
     mpHotKeysGrid->SetCell(1, row, pHotKeyLabel, nuiFill);
     
