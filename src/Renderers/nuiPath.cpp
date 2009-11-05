@@ -176,6 +176,9 @@ float nuiPath::GetDistanceFromPoint(float X, float Y) const
     const nuiPoint& rP1(mVertices[index1]);
     const nuiPoint& rP2(mVertices[index2]);
     
+    if (rP2.GetType() == nuiPointTypeStop)
+      break;
+    
     dist = MIN(dist, nuiDistanceFromSegment(X, Y, rP1[0], rP1[1] , rP2[0], rP2[1]));
     
     if (dist == 0.0f)

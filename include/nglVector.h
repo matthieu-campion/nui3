@@ -419,7 +419,7 @@ void nuiDistanceFromLineAndSegment(T px, T py, T x0, T y0 , T x1, T y1, T &rDist
     else
       rDistanceFromSegment = sqrt(dist2);
   }
-  
+
   return;
 }
 
