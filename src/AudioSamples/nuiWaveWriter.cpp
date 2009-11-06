@@ -311,6 +311,17 @@ uint32 nuiWaveWriter::Write(const void* pBuffer, uint32 SampleFrames, nuiSampleB
     {
       switch ( mrSampleInfo.GetBitsPerSample() )
       {
+        case 16 :
+        {
+          float* pTempFloat = (float*)pBuffer;
+          
+          int16* pInt16Buffer = new int16[SamplePointsToWrite];
+          nuiAudioConvert_FloatBufferTo16bits(pTempFloat, pInt16Buffer, SamplePointsToWrite);
+          
+          SampleFramesWritten = (uint32)mrStream.WriteInt16(pInt16Buffer, SamplePointsToWrite) / mrSampleInfo.GetChannels();
+        }
+          break;
+          
         case 24 :
         {
           float* pTempFloat = (float*)pBuffer;
