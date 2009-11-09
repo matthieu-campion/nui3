@@ -22,7 +22,6 @@ Lookup precompiled headers in the VC doc to learn how to use them.
 
 #include <assert.h>
 #include <ctype.h>
-#include <dirent.h>
 #include <errno.h>
 #include <float.h>        // for FLT_MAX
 #include <limits.h>        // for INT_MAX
@@ -101,7 +100,9 @@ Lookup precompiled headers in the VC doc to learn how to use them.
 #endif
 #endif
 
-
+#ifndef WIN32
+#include <dirent.h>
+#endif
 
 //#if (((defined _DEBUG) || (defined DEBUG)) || (defined _DEBUG_)) 
 //#include "mmgr.h"
