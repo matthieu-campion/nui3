@@ -132,6 +132,9 @@ public:
   bool HasUserHeight () const;
   void ForceIdealRect(bool Force); ///< Always. Misuse of this flag can lead to very strange visual bugs so beware!
 
+  
+  /** @name Maximum and minimum IDEAL width and height. Setting these values will only change the IDEAL rectangle and it will NOT force the actual layout rectangle. Use the SetMax[Min]Width[Height] methods to actually force the layout. */
+  //@{
   void SetMaxIdealWidth(float MaxWidth); ///< Set to a negative value to disable
   void SetMaxIdealHeight(float MaxHeight); ///< Set to a negative value to disable
   void SetMinIdealWidth(float MinWidth); ///< Set to a negative value to disable
@@ -140,7 +143,19 @@ public:
   float GetMaxIdealHeight() const;
   float GetMinIdealWidth() const;
   float GetMinIdealHeight() const;
-
+  //@}
+  
+  /** @name Maximum and minimum width and height. Setting these values will change the ACTUAL rectangle. To change the min/max IDEAL rectangle use SetMax[Min]IdealWidth[Height] */
+  //@{
+  void SetMaxWidth(float MaxWidth); ///< Set to a negative value to disable
+  void SetMaxHeight(float MaxHeight); ///< Set to a negative value to disable
+  void SetMinWidth(float MinWidth); ///< Set to a negative value to disable
+  void SetMinHeight(float MinHeight); ///< Set to a negative value to disable
+  float GetMaxWidth() const;
+  float GetMaxHeight() const;
+  float GetMinWidth() const;
+  float GetMinHeight() const;
+  
   void GetHotRect(nuiRect& rRect) const; ///< Get the user focused rectangle in the widget. This rectangle is an indication only. The parent of this widget can choose to display it or to ignore the recommendation.
   const nuiRect& GetHotRect() const; ///< Get the user focused rectangle in the widget. This rectangle is an indication only. The parent of this widget can choose to display it or to ignore the recommendation.
   void SetHotRect(const nuiRect& rRect); ///< Get the user focused rectangle in the widget. This rectangle is an indication only. The parent of this widget can choose to display it or to ignore the recommendation.
@@ -625,10 +640,16 @@ private:
 
   uint32 mDebugLevel;
   
+  float mMaxIdealWidth;
+  float mMaxIdealHeight;
+  float mMinIdealWidth;
+  float mMinIdealHeight;
+
   float mMaxWidth;
   float mMaxHeight;
   float mMinWidth;
   float mMinHeight;
+
   friend class nuiTopLevel;
   friend class nuiWidgetInfo;
 	

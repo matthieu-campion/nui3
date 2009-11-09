@@ -289,7 +289,58 @@ void nuiWidget::InitAttributes()
                 nuiMakeDelegate(this, &nuiWidget::GetUserHeight),
                 nuiMakeDelegate(this, &nuiWidget::SetUserHeight)));
   
+  
+  
+  
+  
+  AddAttribute(new nuiAttribute<nuiSize>
+               (nglString(_T("MinIdealWidth")), nuiUnitNone,
+                nuiMakeDelegate(this, &nuiWidget::GetMinIdealWidth),
+                nuiMakeDelegate(this, &nuiWidget::SetMinIdealWidth)));
+  
+  AddAttribute(new nuiAttribute<nuiSize>
+               (nglString(_T("MinIdealHeight")), nuiUnitNone,
+                nuiMakeDelegate(this, &nuiWidget::GetMinIdealHeight),
+                nuiMakeDelegate(this, &nuiWidget::SetMinIdealHeight)));
+  
+  AddAttribute(new nuiAttribute<nuiSize>
+               (nglString(_T("MaxIdealWidth")), nuiUnitNone,
+                nuiMakeDelegate(this, &nuiWidget::GetMaxIdealWidth),
+                nuiMakeDelegate(this, &nuiWidget::SetMaxIdealWidth)));
+  
+  AddAttribute(new nuiAttribute<nuiSize>
+               (nglString(_T("MaxIdealHeight")), nuiUnitNone,
+                nuiMakeDelegate(this, &nuiWidget::GetMaxIdealHeight),
+                nuiMakeDelegate(this, &nuiWidget::SetMaxIdealHeight)));
+  
 
+  
+  AddAttribute(new nuiAttribute<nuiSize>
+               (nglString(_T("MinWidth")), nuiUnitNone,
+                nuiMakeDelegate(this, &nuiWidget::GetMinWidth),
+                nuiMakeDelegate(this, &nuiWidget::SetMinWidth)));
+  
+  AddAttribute(new nuiAttribute<nuiSize>
+               (nglString(_T("MinHeight")), nuiUnitNone,
+                nuiMakeDelegate(this, &nuiWidget::GetMinHeight),
+                nuiMakeDelegate(this, &nuiWidget::SetMinHeight)));
+  
+  AddAttribute(new nuiAttribute<nuiSize>
+               (nglString(_T("MaxWidth")), nuiUnitNone,
+                nuiMakeDelegate(this, &nuiWidget::GetMaxWidth),
+                nuiMakeDelegate(this, &nuiWidget::SetMaxWidth)));
+  
+  AddAttribute(new nuiAttribute<nuiSize>
+               (nglString(_T("MaxHeight")), nuiUnitNone,
+                nuiMakeDelegate(this, &nuiWidget::GetMaxHeight),
+                nuiMakeDelegate(this, &nuiWidget::SetMaxHeight)));
+  
+  
+  
+  
+  
+  
+  
   AddAttribute(new nuiAttribute<bool>
               (nglString(_T("UseRenderCache")), nuiUnitBoolean,
                nuiMakeDelegate(this, &nuiWidget::IsRenderCacheEnabled),
@@ -514,6 +565,7 @@ void nuiWidget::Init()
   mBorderRight = mBorderLeft = 0.f;
   mBorderTop = mBorderBottom = 0.f;
 
+  mMinIdealWidth = mMaxIdealWidth = mMinIdealHeight = mMaxIdealHeight = -1.0f;
   mMinWidth = mMaxWidth = mMinHeight = mMaxHeight = -1.0f;
 
   mpSavedPainter = NULL;
@@ -2469,14 +2521,14 @@ const nuiRect& nuiWidget::GetIdealRect()
         mIdealRect.SetHeight(mUserRect.GetHeight());
     }
 
-    if (mMaxWidth > 0.0f)
-      mIdealRect.Right() = MIN(mMaxWidth, mIdealRect.GetWidth());
-    if (mMaxHeight > 0.0f)
-      mIdealRect.Bottom() = MIN(mMaxHeight, mIdealRect.GetHeight());
-    if (mMinWidth > 0.0f)
-      mIdealRect.Right() = MAX(mMinWidth, mIdealRect.GetWidth());
-    if (mMinHeight > 0.0f)
-      mIdealRect.Bottom() = MAX(mMinHeight, mIdealRect.GetHeight());
+    if (mMaxIdealWidth > 0.0f)
+      mIdealRect.Right() = MIN(mMaxIdealWidth, mIdealRect.GetWidth());
+    if (mMaxIdealHeight > 0.0f)
+      mIdealRect.Bottom() = MIN(mMaxIdealHeight, mIdealRect.GetHeight());
+    if (mMinIdealWidth > 0.0f)
+      mIdealRect.Right() = MAX(mMinIdealWidth, mIdealRect.GetWidth());
+    if (mMinIdealHeight > 0.0f)
+      mIdealRect.Bottom() = MAX(mMinIdealHeight, mIdealRect.GetHeight());
 
     if (mHasUserPos && !mHasUserSize)
       mIdealRect.MoveTo(mUserRect.mLeft, mUserRect.mTop);
@@ -2694,42 +2746,55 @@ void nuiWidget::UpdateSurfaceRect(const nuiRect& rRect)
 void nuiWidget::SetLayout(const nuiRect& rRect)
 {
   nuiRect rect(GetIdealRect().Size());
+  nuiRect r(rRect);
+
+  if (mMaxWidth >= 0)
+    r.SetWidth(MIN(r.GetWidth(), mMaxWidth));
+  
+  if (mMaxHeight >= 0)
+    r.SetHeight(MIN(r.GetHeight(), mMaxHeight));
+  
+  if (mMinWidth >= 0)
+    r.SetWidth(MAX(r.GetWidth(), mMinWidth));
+  
+  if (mMinHeight >= 0)
+    r.SetHeight(MAX(r.GetHeight(), mMinHeight));
   
   if (mPosition != nuiFill)
   {
-    rect.SetPosition(mPosition, rRect);
+    rect.SetPosition(mPosition, r);
   }
   else
   {
     if (mFillRule == nuiFill)
     {
-      rect.SetPosition(mPosition, rRect);
+      rect.SetPosition(mPosition, r);
     }
     else if (mFillRule == nuiTile)
     {
-      rect = rRect;
+      rect = r;
     }
     else
     {
-      nuiRect r = rRect;
+      nuiRect rct = r;
       float ratio,rratio,rw,rh;
-      ratio  = (float)r.GetWidth()    / (float)r.GetHeight();
+      ratio  = (float)rct.GetWidth()    / (float)rct.GetHeight();
       rratio = (float)rect.GetWidth() / (float)rect.GetHeight();
       
       if (ratio < rratio) 
       {
-        rw = (float)r.GetWidth();
+        rw = (float)rct.GetWidth();
         rh = rw / rratio;
       }
       
       else 
       {
-        rh = (float)r.GetHeight();
+        rh = (float)rct.GetHeight();
         rw = rratio * rh;
       }
       
       rect = nuiRect(0.0f, 0.0f, rw, rh);
-      rect.SetPosition(mFillRule, rRect);
+      rect.SetPosition(mFillRule, r);
     }
   }
     
@@ -3418,8 +3483,8 @@ nuiWidget::LayoutConstraint::LayoutConstraint(const LayoutConstraint& rSource)
 
 nuiWidget::LayoutConstraint& nuiWidget::LayoutConstraint::operator=(const LayoutConstraint& rSource)
 {
-  mMaxWidth = rSource.mMaxWidth;
-  mMinWidth = rSource.mMinWidth;
+  mMaxWidth  = rSource.mMaxWidth;
+  mMinWidth  = rSource.mMinWidth;
   mMaxHeight = rSource.mMaxHeight;
   mMinHeight = rSource.mMinHeight;
 
@@ -3428,8 +3493,8 @@ nuiWidget::LayoutConstraint& nuiWidget::LayoutConstraint::operator=(const Layout
 
 bool nuiWidget::LayoutConstraint::operator==(const LayoutConstraint& rSource) const
 {
-  return ( mMaxWidth == rSource.mMaxWidth
-        && mMinWidth == rSource.mMinWidth
+  return ( mMaxWidth  == rSource.mMaxWidth
+        && mMinWidth  == rSource.mMinWidth
         && mMaxHeight == rSource.mMaxHeight
         && mMinHeight == rSource.mMinHeight );
 }
@@ -3523,13 +3588,66 @@ void nuiWidget::DelHotKey(const nglString& rName)
 
 void nuiWidget::SetMaxIdealWidth(float MaxWidth)
 {
+  if (mMaxIdealWidth == MaxWidth)
+    return;
+  mMaxIdealWidth = MaxWidth;
+  InvalidateLayout();
+}
+
+void nuiWidget::SetMaxIdealHeight(float MaxHeight)
+{
+  if (mMaxIdealHeight == MaxHeight)
+    return;
+  mMaxIdealHeight = MaxHeight;
+  InvalidateLayout();
+}
+
+void nuiWidget::SetMinIdealWidth(float MinWidth)
+{
+  if (mMinIdealWidth == MinWidth)
+    return;
+  mMinIdealWidth = MinWidth;
+  InvalidateLayout();
+}
+
+void nuiWidget::SetMinIdealHeight(float MinHeight)
+{
+  if (mMinIdealHeight == MinHeight)
+    return;
+  mMinIdealHeight = MinHeight;
+  InvalidateLayout();
+}
+
+float nuiWidget::GetMaxIdealWidth() const
+{
+  return mMaxIdealWidth;
+}
+
+float nuiWidget::GetMaxIdealHeight() const
+{
+  return mMaxIdealHeight;
+}
+
+float nuiWidget::GetMinIdealWidth() const
+{
+  return mMinIdealWidth;
+}
+
+float nuiWidget::GetMinIdealHeight() const
+{
+  return mMinIdealHeight;
+}
+
+
+void nuiWidget::SetMaxWidth(float MaxWidth)
+{
   if (mMaxWidth == MaxWidth)
     return;
   mMaxWidth = MaxWidth;
   InvalidateLayout();
 }
 
-void nuiWidget::SetMaxIdealHeight(float MaxHeight)
+void nuiWidget::SetMaxHeight(float MaxHeight)
 {
   if (mMaxHeight == MaxHeight)
     return;
@@ -3537,7 +3655,7 @@ void nuiWidget::SetMaxIdealHeight(float MaxHeight)
   InvalidateLayout();
 }
 
-void nuiWidget::SetMinIdealWidth(float MinWidth)
+void nuiWidget::SetMinWidth(float MinWidth)
 {
   if (mMinWidth == MinWidth)
     return;
@@ -3545,7 +3663,7 @@ void nuiWidget::SetMinIdealWidth(float MinWidth)
   InvalidateLayout();
 }
 
-void nuiWidget::SetMinIdealHeight(float MinHeight)
+void nuiWidget::SetMinHeight(float MinHeight)
 {
   if (mMinHeight == MinHeight)
     return;
@@ -3553,24 +3671,24 @@ void nuiWidget::SetMinIdealHeight(float MinHeight)
   InvalidateLayout();
 }
 
-float nuiWidget::GetMaxIdealWidth() const
+float nuiWidget::GetMaxWidth() const
 {
   return mMaxWidth;
 }
 
-float nuiWidget::GetMaxIdealHeight() const
+float nuiWidget::GetMaxHeight() const
 {
   return mMaxHeight;
 }
 
-float nuiWidget::GetMinIdealWidth() const
+float nuiWidget::GetMinWidth() const
 {
   return mMinWidth;
 }
 
-float nuiWidget::GetMinIdealHeight() const
+float nuiWidget::GetMinHeight() const
 {
-  return mMinHeight;
+  return mMinIdealHeight;
 }
 
 
