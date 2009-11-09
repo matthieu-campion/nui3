@@ -246,7 +246,7 @@ bool nuiButton::MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
     }
     else
     {
-      if (mRect.Size().IsInside(X,Y))
+      if (IsInsideFromSelf(X,Y))
       {
         //      printf("activated\n");
         Activated();
