@@ -156,7 +156,10 @@ void nuiScrollBar::SetThumbRect(const nuiRect& rRect)
       mThumbRect.SetSize(rRect.GetWidth(), SBMINTHUMB);
     if (mThumbRect.Bottom() > rRect.Bottom())
       mThumbRect.Move(0.f, rRect.Bottom() - mThumbRect.Bottom());
+    
+    
   }
+  
   
   if (mpThumb)
     mpThumb->SetLayout(mThumbRect);

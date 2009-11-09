@@ -14,7 +14,7 @@
 #include "nuiRange.h"
 
 #define SBSIZE 12 // Basic standard size... Should go in the theme!
-#define SBMINTHUMB 10.f // Min Thumb size
+#define SBMINTHUMB 20.f // Min Thumb size
 
 /// Basic scroll bar with range support. Used in too many compound widgets to name :).
 class NUI_API nuiScrollBar : public nuiSimpleContainer

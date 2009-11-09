@@ -70,6 +70,8 @@ bool nuiSample::Save(nuiSampleWriter& rWriter, uint32 BitsPerSample)
   //Write Infos
   nuiSampleInfo MyInfo = mInfos;
   MyInfo.SetBitsPerSample(BitsPerSample);
+  MyInfo.SetFileFormat(eAudioWave);
+  MyInfo.SetFormatTag(eWaveFormatPcm);
   if (false == rWriter.WriteInfo(MyInfo))
     return false;
   
