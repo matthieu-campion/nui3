@@ -189,15 +189,10 @@ protected:
 
   typedef std::map<nglTouchId, nuiWidgetPtr> nuiGrabMap;
   nuiGrabMap mpGrab;
-  typedef std::map<nglTouchId, std::list<nuiWidgetPtr> > nuiGrabStackMap;
-  nuiGrabStackMap mpGrabStack;
 
 ///< Helpers:
   bool HasGrab(nuiWidgetPtr pWidget);
   nuiWidgetPtr GetGrab(nglTouchId touchId) const;
-  void PushGrab(nglTouchId touchId, nuiWidgetPtr pWidget);
-  nuiWidgetPtr PopGrab(nglTouchId touchId);
-  std::list<nuiWidgetPtr>& GetGrabStack(nglTouchId touchId);
   nglTouchId GetGrabId(nuiWidgetPtr pWidget) const;
 
   nglPath mResPath;

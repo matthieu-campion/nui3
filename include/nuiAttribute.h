@@ -1090,7 +1090,7 @@ public:
     nuiAttributeBase::SetAsInstanceAttribute(true);
     mValue = value;
   }
-  
+
 protected:
   Type _Get() const
   {

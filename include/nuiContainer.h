@@ -188,6 +188,13 @@ public:
 
   /** @name Private event management system (do not override unless you know what you're doing!!!) */
   //@{
+  virtual bool PreMouseClicked(const nglMouseInfo& rInfo);
+  virtual bool PreMouseUnclicked(const nglMouseInfo& rInfo);
+  virtual bool PreMouseMoved(const nglMouseInfo& rInfo);
+  //@}  
+  
+  /** @name Private event management system (do not override unless you know what you're doing!!!) */
+  //@{
   /// Beware: these three methods receive the mouse coordinates in the repair of the root object!
   virtual bool DispatchMouseClick(const nglMouseInfo& rInfo);
   virtual bool DispatchMouseUnclick(const nglMouseInfo& rInfo);

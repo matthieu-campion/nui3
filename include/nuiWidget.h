@@ -147,8 +147,9 @@ public:
   void ValidateLayout(); ///< This method reset the mNeedSelfLayout flag to false. It must be called by any object in the SetRect() method.
   bool HasLayoutChanged() const; ///< This method returns true if the layout of the object has changed since the last layout/redraw loop.
 
-  virtual bool IsInside(nuiSize X, nuiSize Y); ///< Return true if the point (X,Y) (in the coordinates of the root object) is inside the object. This method call IsInsideLocal internally so you may not need to redefine it.
-  virtual bool IsInsideLocal(nuiSize X, nuiSize Y); ///< Return true if the point (X,Y) (in the coordinates of the parent) is inside the object.
+  bool IsInsideFromRoot(nuiSize X, nuiSize Y); ///< Return true if the point (X,Y) (in the coordinates of the root object) is inside the object. This method call IsInsideLocal internally so you may not need to redefine it.
+  bool IsInsideFromParent(nuiSize X, nuiSize Y); ///< Return true if the point (X,Y) (in the coordinates of the parent) is inside the object.
+  virtual bool IsInsideFromSelf(nuiSize X, nuiSize Y); ///< Return true if the point (X,Y) (in the coordinates of the parent) is inside the object.
   //@}
 
   /** @name Rendering */
@@ -328,6 +329,7 @@ public:
   virtual bool DispatchMouseClick(const nglMouseInfo& rInfo);
   virtual bool DispatchMouseUnclick(const nglMouseInfo& rInfo);
   virtual nuiWidgetPtr DispatchMouseMove(const nglMouseInfo& rInfo);
+  
   virtual bool DispatchGrab(nuiWidgetPtr pWidget);
   virtual bool DispatchUngrab(nuiWidgetPtr pWidget);
   virtual bool DispatchHasGrab(nuiWidgetPtr pWidget);

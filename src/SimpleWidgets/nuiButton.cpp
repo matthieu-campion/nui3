@@ -28,6 +28,7 @@ nuiButton::nuiButton()
   SetRedrawOnHover(true);
   mAutoRepeat = false;
   mpAutoRepeatTimer = NULL;
+  EnableInteractiveDecoration(true);
   
   NUI_ADD_EVENT(ButtonPressed);
   NUI_ADD_EVENT(ButtonDePressed);
@@ -50,6 +51,7 @@ nuiButton::nuiButton(const nglString& rText)
   AddChild(pLabel);
   pLabel->SetPosition(nuiCenter);
   SetRedrawOnHover(true);
+  EnableInteractiveDecoration(true);
 
   NUI_ADD_EVENT(ButtonPressed);
   NUI_ADD_EVENT(ButtonDePressed);
@@ -69,6 +71,7 @@ nuiButton::nuiButton(const nglImage& rImage)
   mAutoRepeat = false;
   mpAutoRepeatTimer = NULL;
   SetRedrawOnHover(true);
+  EnableInteractiveDecoration(true);
 
   nuiImage* pImage = new nuiImage(rImage);
   AddChild(pImage);
@@ -92,6 +95,7 @@ nuiButton::nuiButton(nuiDecoration* pDeco, bool AlreadyAcquired)
   mAutoRepeat = false;
   mpAutoRepeatTimer = NULL;
   SetRedrawOnHover(true);
+  EnableInteractiveDecoration(true);
   
   SetDecoration(pDeco, eDecorationOverdraw, AlreadyAcquired);
   
@@ -278,7 +282,7 @@ bool nuiButton::MouseMoved(nuiSize X, nuiSize Y)
 {
   if (mClicked)
   {
-    if (mRect.Size().IsInside(X,Y))
+    if (IsInsideFromSelf(X, Y))
     {
       SetPressed(true);
     }

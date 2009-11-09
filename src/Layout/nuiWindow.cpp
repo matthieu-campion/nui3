@@ -443,8 +443,8 @@ bool nuiWindow::MouseUnclicked (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button
   return true;
 }
 
-bool nuiWindow::MouseMoved (nuiSize X, nuiSize Y)
-  {
+bool nuiWindow::MouseMoved(nuiSize X, nuiSize Y)
+{
   nuiSize dx, dy;
 
   LocalToLocal(GetParent(), X, Y);
@@ -564,13 +564,13 @@ bool nuiWindow::MouseMoved (nuiSize X, nuiSize Y)
   }
   else
   {
-    if (IsInside(X,Y))
+    if (IsInsideFromParent(X,Y))
     {
       nuiRect _Rect = GetRect();
       _Rect.Transform(GetMatrix());
       nuiTheme* pTheme = GetTheme();
       NGL_ASSERT(pTheme);
-      mClickPos= pTheme->GetWindowPart(_Rect,X,Y,GetFlags(), false);
+      mClickPos= pTheme->GetWindowPart(_Rect, X, Y, GetFlags(), false);
       pTheme->Release();
 
       SetMouseCursor(eCursorDoNotSet);

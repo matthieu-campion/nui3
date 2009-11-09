@@ -1765,7 +1765,7 @@ bool nuiWidget::DispatchMouseClick(const nglMouseInfo& rInfo)
   float X = rInfo.X;
   float Y = rInfo.Y;
 
-  if (IsInside(X,Y) || hasgrab)
+  if (IsInsideFromRoot(X,Y) || hasgrab)
   {
     GlobalToLocal(X,Y);
     nglMouseInfo info(rInfo);
@@ -1796,7 +1796,7 @@ bool nuiWidget::DispatchMouseUnclick(const nglMouseInfo& rInfo)
   float X = rInfo.X;
   float Y = rInfo.Y;
 
-  if (IsInside(X,Y) || hasgrab)
+  if (IsInsideFromRoot(X,Y) || hasgrab)
   {
     GlobalToLocal(X,Y);
     nglMouseInfo info(rInfo);
@@ -1831,7 +1831,7 @@ nuiWidgetPtr nuiWidget::DispatchMouseMove(const nglMouseInfo& rInfo)
   if (IsDisabled() && !hasgrab)
     return NULL;
     
-  if (IsInside(X, Y))
+  if (IsInsideFromRoot(X, Y))
   {
     inside = true;
   }
@@ -2310,41 +2310,42 @@ nuiMouseCursor nuiWidget::GetMouseCursor() const
 
 
 
-bool nuiWidget::IsInside(nuiSize X, nuiSize Y)
+bool nuiWidget::IsInsideFromRoot(nuiSize X, nuiSize Y)
 {
   if (!IsVisible(false))
     return false;
 
   GlobalToLocal(X, Y);
-  if (mpParent)
-  {
-    nuiRect rect = mRect;
-    X += rect.mLeft;
-    Y += rect.mTop;
-  }
-  return IsInsideLocal(X,Y);
+  return IsInsideFromSelf(X,Y);
 }
 
-bool nuiWidget::IsInsideLocal(nuiSize X, nuiSize Y)
+bool nuiWidget::IsInsideFromParent(nuiSize X, nuiSize Y)
 {
   if (!IsVisible(false))
     return false;
+  return IsInsideFromSelf(X - mRect.Left(), Y - mRect.Top());
+}
+
+bool nuiWidget::IsInsideFromSelf(nuiSize X, nuiSize Y)
+{
+  if (!IsVisible(false))
+    return false;
+  
   if (mInteractiveDecoration)
   {
     nuiRect r = mVisibleRect;
-    LocalToLocal(GetParent(), r);
-    r.Intersect(mVisibleRect, GetOverDrawRect(false, true));
+    r.Intersect(mVisibleRect, GetOverDrawRect(true, true));
     return r.IsInside(X, Y);
   }
   if (mInteractiveOD)
   {
     nuiRect r = mVisibleRect;
-    LocalToLocal(GetParent(), r);
-    r.Intersect(r, GetOverDrawRect(false, false));
+    r.Intersect(r, GetOverDrawRect(true, false));
     return r.IsInside(X, Y);
   }
-  return GetRect().IsInside(X,Y);
+  return GetRect().Size().IsInside(X,Y);
 }
+
 
 bool nuiWidget::SetToolTip(const nglString& rToolTip)
 {
@@ -3454,7 +3455,7 @@ const nuiWidget::LayoutConstraint& nuiWidget::GetLayoutConstraint() const
 
 nuiWidgetPtr nuiWidget::GetChild(nuiSize X, nuiSize Y)
 {
-  return IsInsideLocal(X,Y)?this:NULL;
+  return IsInsideFromParent(X,Y) ? this : NULL;
 }
 
 void nuiWidget::SetDebug(int32 DebugLevel)

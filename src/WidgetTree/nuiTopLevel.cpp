@@ -32,7 +32,7 @@
       NGL_OUT(_T("NULL\n"));\
     } else {\
       NGL_OUT(_T("%ls\n"),\
-                      it->second->GetProperty(_T("Class")).GetChars());\
+      it->second->GetProperty(_T("Class")).GetChars());\
     }\
   }\
 }
@@ -369,18 +369,11 @@ void nuiTopLevel::AdviseObjectDeath(nuiWidgetPtr pWidget)
   
   mHoveredWidgets.erase(pWidget);
 
-  nuiGrabStackMap::iterator it = mpGrabStack.begin();
-  while (it != mpGrabStack.end())
-  {
-    it->second.remove(pWidget);
-    ++it;
-  }
-
   nuiGrabMap::iterator it2 = mpGrab.begin();
   while (it2 != mpGrab.end())
   {
     if (pWidget == it2->second)
-      it2->second = PopGrab(it2->first);
+      it2->second = NULL;
     ++it2;
   }
   
@@ -566,10 +559,6 @@ bool nuiTopLevel::Grab(nuiWidgetPtr pWidget)
   
   if (pGrab)
   {
-    if (pWidget)
-    {
-      PushGrab(touchId, pGrab);
-    }
     pGrab->MouseUngrabbed(touchId);
   }
 
@@ -605,19 +594,7 @@ bool nuiTopLevel::Ungrab(nuiWidgetPtr pWidget)
     mDisplayToolTip = false;
   }
 
-  std::list<nuiWidgetPtr>& rGrabStack = GetGrabStack(mMouseInfo.TouchId);
-  if (rGrabStack.size() && pGrab == pWidget)
-  {
-    if (pGrab)
-      pGrab->MouseUngrabbed(mMouseInfo.TouchId);
-    pGrab = PopGrab(mMouseInfo.TouchId);
-    if (pGrab)
-      pGrab->MouseGrabbed(mMouseInfo.TouchId);
-  }
-  else
-  {
-    Grab(NULL);
-  }
+  Grab(NULL);
 
   return true;
 }
@@ -629,7 +606,6 @@ NGL_TOUCHES_DEBUG( NGL_OUT(_T("CancelGrab()\n")) );
   {
     nglTouchId touchId = it->first;
     nuiWidget* pGrab = it->second;
-    std::list<nuiWidgetPtr>& rGrabStack = GetGrabStack(touchId);
 
     while (pGrab)
     {
@@ -640,16 +616,9 @@ NGL_TOUCHES_DEBUG( NGL_OUT(_T("CancelGrab()\n")) );
       }
       pGrab->MouseUngrabbed(touchId);
       pGrab = NULL;
-
-      if (rGrabStack.size())
-      {
-        pGrab = PopGrab(touchId);
-      }
     }
-    NGL_ASSERT(rGrabStack.empty());
   }
   mpGrab.clear();
-  mpGrabStack.clear();
   return true;
 }
 
@@ -661,15 +630,6 @@ bool nuiTopLevel::HasGrab(nuiWidgetPtr pWidget)
   return false;
 }
 
-std::list<nuiWidgetPtr>& nuiTopLevel::GetGrabStack(nglTouchId touchId)
-{
-  nuiGrabStackMap::iterator it = mpGrabStack.find(touchId);
-  if (it != mpGrabStack.end())
-    return it->second;
-  mpGrabStack[touchId] = std::list<nuiWidgetPtr>();
-  return mpGrabStack[touchId];
-}
-
 nglTouchId nuiTopLevel::GetGrabId(nuiWidgetPtr pWidget) const
 {
   nuiGrabMap::const_iterator end = mpGrab.end();
@@ -679,29 +639,6 @@ nglTouchId nuiTopLevel::GetGrabId(nuiWidgetPtr pWidget) const
       return it->first;
   }
   return (nglTouchId)-1;
-}
-
-void nuiTopLevel::PushGrab(nglTouchId touchId, nuiWidgetPtr pWidget)
-{
-  NGL_ASSERT(pWidget);
-  NGL_TOUCHES_DEBUG( NGL_OUT(_T("Push[%d] Grabstack: [%ls] of type [%ls]\n"), pWidget->GetObjectName().GetChars(), pWidget->GetObjectClass().GetChars()) );
-  mpGrabStack[touchId].push_back(pWidget);
-}
-
-nuiWidgetPtr nuiTopLevel::PopGrab(nglTouchId touchId)
-{
-  NGL_TOUCHES_DEBUG( NGL_OUT(_T("Pop[%d] Grabstack\n"), touchId) );
-
-  std::list<nuiWidgetPtr>& rGrabStack = GetGrabStack(touchId);
-  if (rGrabStack.empty())
-    return NULL;
-
-  nuiWidgetPtr pWidget = rGrabStack.back();
-  NGL_TOUCHES_DEBUG( NGL_OUT(_T("->%ls of type %ls\n"),
-                              pWidget->GetObjectName().GetChars(),
-                              pWidget->GetObjectClass().GetChars()) );
-  rGrabStack.pop_back();
-  return pWidget;
 }
 
 nuiWidgetPtr nuiTopLevel::GetGrab(nglTouchId touchId) const
@@ -938,8 +875,24 @@ NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseClick [%d] BEGIN\n"), rInfo.TouchId) );
   nuiWidgetPtr pGrab = GetGrab();
   if (pGrab)
   {
-		bool res = false;
-    if (pGrab->MouseEventsEnabled())
+    std::vector<nuiContainerPtr> containers;
+    nuiContainerPtr pParent = pGrab->GetParent();
+    while (pParent)
+    {
+      containers.push_back(pParent);
+      pParent = pParent->GetParent();
+    }
+    
+    bool hook = false;
+    for (int32 i = containers.size() - 1; i >= 0 && !hook; i--)
+    {
+      nglMouseInfo info(rInfo);
+      containers[i]->GlobalToLocal(info.X, info.Y);
+      hook = containers[i]->PreMouseClicked(info);
+    }    
+		
+    bool res = hook;
+    if (pGrab->MouseEventsEnabled() && !hook)
     {
       res = pGrab->DispatchMouseClick(rInfo);
     }
@@ -1005,8 +958,24 @@ NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseUnclick [%d] BEGIN\n"), rInfo.TouchId) )
   nuiWidgetPtr pGrab = GetGrab();
   if (pGrab)
   {
-		bool res = false;
-    if (pGrab->MouseEventsEnabled())
+    std::vector<nuiContainerPtr> containers;
+    nuiContainerPtr pParent = pGrab->GetParent();
+    while (pParent)
+    {
+      containers.push_back(pParent);
+      pParent = pParent->GetParent();
+    }
+    
+    bool hook = false;
+    for (int32 i = containers.size() - 1; i >= 0 && !hook; i--)
+    {
+      nglMouseInfo info(rInfo);
+      containers[i]->GlobalToLocal(info.X, info.Y);
+      hook = containers[i]->PreMouseUnclicked(info);
+    }
+
+		bool res = hook;
+    if (pGrab->MouseEventsEnabled() && !hook)
     {
       res = pGrab->DispatchMouseUnclick(rInfo);
     }
@@ -1030,7 +999,7 @@ void UpdateHoverList(nuiContainer* pContainer, nuiSize X, nuiSize Y, std::set<nu
   for (pIt = pContainer->GetFirstChild(); pIt && pIt->IsValid(); pContainer->GetNextChild(pIt))
   {
     nuiWidgetPtr pItem = pIt->GetWidget();
-    if (pItem->IsInside(X, Y))
+    if (pItem->IsInsideFromRoot(X, Y))
     {
       rHoverList.push_back(pItem);
       rHoverSet.insert(pItem);
@@ -1135,9 +1104,27 @@ NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseMove [%d] BEGIN\n"), rInfo.TouchId) );
   nuiWidgetPtr pGrab = GetGrab();
   if (pGrab)
   {
+    std::vector<nuiContainerPtr> containers;
+    nuiContainerPtr pParent = pGrab->GetParent();
+    while (pParent)
+    {
+      containers.push_back(pParent);
+      pParent = pParent->GetParent();
+    }
+    
+    bool hook = false;
+    for (int32 i = containers.size() - 1; i >= 0 && !hook; i--)
+    {
+      nglMouseInfo info(rInfo);
+      containers[i]->GlobalToLocal(info.X, info.Y);
+      hook = containers[i]->PreMouseMoved(info);
+      if (hook)
+        pHandled = containers[i];
+    }
+    
     //NGL_OUT(_T("grabbed mouse move on '%ls' / '%ls'\n"), mpGrab->GetObjectClass().GetChars(), mpGrab->GetObjectName().GetChars());
     NGL_ASSERT(mpGrab[mMouseInfo.TouchId]);
-    if (mpGrab[mMouseInfo.TouchId]->MouseEventsEnabled())
+    if (mpGrab[mMouseInfo.TouchId]->MouseEventsEnabled() && !hook)
     {
       pHandled = pGrab->DispatchMouseMove(rInfo);
     }

@@ -55,7 +55,7 @@ public:
   /* @name Inherited from nuiWidget */
   //@{
   bool Draw(class nuiDrawContext *);
-  bool IsInsideLocal(nuiSize X, nuiSize Y);
+  bool IsInsideFromSelf(nuiSize X, nuiSize Y);
   bool AddChild(nuiWidgetPtr pChild);
   bool DelChild(nuiWidgetPtr pChild, bool Delete=false);
   //@}

@@ -3280,6 +3280,10 @@
 		C9F4A3130E05E43D0084143E /* nuiImageDecoration.h in Headers */ = {isa = PBXBuildFile; fileRef = C9F4A3110E05E43D0084143E /* nuiImageDecoration.h */; };
 		E504F2980EFC84F800A80C5C /* nuiBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E504F2970EFC84F800A80C5C /* nuiBox.cpp */; };
 		E504F2990EFC84F800A80C5C /* nuiBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E504F2970EFC84F800A80C5C /* nuiBox.cpp */; };
+		E511637C10A0F1A700C0A589 /* nuiBarGraph.h in Headers */ = {isa = PBXBuildFile; fileRef = E511637B10A0F1A700C0A589 /* nuiBarGraph.h */; };
+		E511637D10A0F1A700C0A589 /* nuiBarGraph.h in Headers */ = {isa = PBXBuildFile; fileRef = E511637B10A0F1A700C0A589 /* nuiBarGraph.h */; };
+		E511637E10A0F1A700C0A589 /* nuiBarGraph.h in Headers */ = {isa = PBXBuildFile; fileRef = E511637B10A0F1A700C0A589 /* nuiBarGraph.h */; };
+		E511637F10A0F1A700C0A589 /* nuiBarGraph.h in Headers */ = {isa = PBXBuildFile; fileRef = E511637B10A0F1A700C0A589 /* nuiBarGraph.h */; };
 		E51968010FF8F853007EDF46 /* nuiHTMLHeader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E51967FD0FF8F853007EDF46 /* nuiHTMLHeader.cpp */; };
 		E51968020FF8F853007EDF46 /* nuiHTMLHeader.h in Headers */ = {isa = PBXBuildFile; fileRef = E51967FE0FF8F853007EDF46 /* nuiHTMLHeader.h */; };
 		E51968030FF8F853007EDF46 /* nuiHTMLStyle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E51967FF0FF8F853007EDF46 /* nuiHTMLStyle.cpp */; };
@@ -4578,6 +4582,7 @@
 		C9F4A3110E05E43D0084143E /* nuiImageDecoration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiImageDecoration.h; path = include/nuiImageDecoration.h; sourceTree = SOURCE_ROOT; };
 		D2AAC046055464E500DB518D /* libnuiE.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libnuiE.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E504F2970EFC84F800A80C5C /* nuiBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiBox.cpp; sourceTree = "<group>"; };
+		E511637B10A0F1A700C0A589 /* nuiBarGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiBarGraph.h; path = include/nuiBarGraph.h; sourceTree = SOURCE_ROOT; };
 		E51967FD0FF8F853007EDF46 /* nuiHTMLHeader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiHTMLHeader.cpp; path = src/Text/HTML/nuiHTMLHeader.cpp; sourceTree = SOURCE_ROOT; };
 		E51967FE0FF8F853007EDF46 /* nuiHTMLHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiHTMLHeader.h; path = src/Text/HTML/nuiHTMLHeader.h; sourceTree = SOURCE_ROOT; };
 		E51967FF0FF8F853007EDF46 /* nuiHTMLStyle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiHTMLStyle.cpp; path = src/Text/HTML/nuiHTMLStyle.cpp; sourceTree = SOURCE_ROOT; };
@@ -5313,6 +5318,7 @@
 				6126D5EE0DA5716500D2641A /* nuiToggleButton.h */,
 				6126D5F00DA5716500D2641A /* nuiZoomBar.cpp */,
 				6126D5F10DA5716500D2641A /* nuiZoomBar.h */,
+				E511637B10A0F1A700C0A589 /* nuiBarGraph.h */,
 			);
 			path = SimpleWidgets;
 			sourceTree = "<group>";
@@ -7143,6 +7149,7 @@
 				E51968080FF8F853007EDF46 /* nuiHTMLStyle.h in Headers */,
 				406287A8104BD463009790FF /* nuiFrameView.h in Headers */,
 				BC073E79107CB59700CA5956 /* nuiPopupValueAttributeEditor.h in Headers */,
+				E511637F10A0F1A700C0A589 /* nuiBarGraph.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7670,6 +7677,7 @@
 				E519680A0FF8F853007EDF46 /* nuiHTMLHeader.h in Headers */,
 				E519680C0FF8F853007EDF46 /* nuiHTMLStyle.h in Headers */,
 				BC073E7A107CB59700CA5956 /* nuiPopupValueAttributeEditor.h in Headers */,
+				E511637E10A0F1A700C0A589 /* nuiBarGraph.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8196,6 +8204,7 @@
 				E51968100FF8F853007EDF46 /* nuiHTMLStyle.h in Headers */,
 				406287BB104BD48B009790FF /* nuiFrameView.h in Headers */,
 				BC073E7B107CB59700CA5956 /* nuiPopupValueAttributeEditor.h in Headers */,
+				E511637C10A0F1A700C0A589 /* nuiBarGraph.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8723,6 +8732,7 @@
 				E51968020FF8F853007EDF46 /* nuiHTMLHeader.h in Headers */,
 				E51968040FF8F853007EDF46 /* nuiHTMLStyle.h in Headers */,
 				BC073E78107CB59700CA5956 /* nuiPopupValueAttributeEditor.h in Headers */,
+				E511637D10A0F1A700C0A589 /* nuiBarGraph.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

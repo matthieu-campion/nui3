@@ -106,7 +106,7 @@ nuiWidgetPtr nuiSplitterHandle::DispatchMouseMove(const nglMouseInfo& rInfo)
   if (IsDisabled())
     return false;
 
-  if (IsInside(rInfo.X, rInfo.Y))
+  if (IsInsideFromParent(rInfo.X, rInfo.Y))
     inside = true;
   
   if (inside)

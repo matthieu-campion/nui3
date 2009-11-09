@@ -151,7 +151,7 @@ nuiWidgetPtr nuiContainer::GetChild(nuiSize X, nuiSize Y)
   for (pIt = GetLastChild(); pIt && pIt->IsValid(); GetPreviousChild(pIt))
   {
     nuiWidgetPtr pItem = pIt->GetWidget();
-    if (pItem && pItem->IsInsideLocal(X,Y))
+    if (pItem && pItem->IsInsideFromSelf(X,Y))
     {
       delete pIt;
       nuiContainerPtr pContainer = dynamic_cast<nuiContainerPtr>(pItem);
@@ -175,7 +175,7 @@ void nuiContainer::GetChildren(nuiSize X, nuiSize Y, nuiWidgetList& rChildren, b
   for (pIt = GetLastChild(); pIt && pIt->IsValid(); GetPreviousChild(pIt))
   {
     nuiWidgetPtr pItem = pIt->GetWidget();
-    if (pItem && pItem->IsInsideLocal(X,Y))
+    if (pItem && pItem->IsInsideFromParent(X,Y))
     {
       if (DeepSearch)
       {
@@ -200,7 +200,7 @@ nuiWidgetPtr nuiContainer::GetChildIf(nuiSize X, nuiSize Y, TestWidgetFunctor* p
   for (pIt = GetLastChild(); pIt && pIt->IsValid(); GetPreviousChild(pIt))
   {
     nuiWidgetPtr pItem = pIt->GetWidget();
-    if (pItem && pItem->IsInsideLocal(X,Y))
+    if (pItem && pItem->IsInsideFromSelf(X,Y))
     {
       nuiContainerPtr pContainer = dynamic_cast<nuiContainerPtr>(pItem);
       if (pContainer)
@@ -446,10 +446,16 @@ bool nuiContainer::DispatchMouseClick(const nglMouseInfo& rInfo)
   if (IsDisabled() && !hasgrab)
     return false;
 
-  if (IsInside(rInfo.X, rInfo.Y) || hasgrab)
+  nglMouseInfo info(rInfo);
+  GlobalToLocal(info.X, info.Y);
+  // Get a chance to preempt the mouse event before the children get it:
+  if (PreMouseClicked(info))
+    return true;
+  
+  if (IsInsideFromRoot(rInfo.X, rInfo.Y) || hasgrab)
   {
     if (!hasgrab)
-    {
+    {      
       IteratorPtr pIt;
       for (pIt = GetLastChild(); pIt && pIt->IsValid(); GetPreviousChild(pIt))
       {
@@ -489,7 +495,13 @@ bool nuiContainer::DispatchMouseUnclick(const nglMouseInfo& rInfo)
   if (IsDisabled() && !hasgrab)
     return false;
 
-  if (IsInside(rInfo.X, rInfo.Y) || hasgrab)
+  nglMouseInfo info(rInfo);
+  GlobalToLocal(info.X, info.Y);
+  // Get a chance to preempt the mouse event before the children get it:
+  if (PreMouseUnclicked(rInfo))
+    return true;
+  
+  if (IsInsideFromRoot(rInfo.X, rInfo.Y) || hasgrab)
   {
     if (!hasgrab)
     {
@@ -512,8 +524,6 @@ bool nuiContainer::DispatchMouseUnclick(const nglMouseInfo& rInfo)
       delete pIt;
     }
 
-    nglMouseInfo info(rInfo);
-    GlobalToLocal(info.X, info.Y);
     bool res = PreUnclicked(info);
     if (!res)
     {
@@ -542,15 +552,22 @@ nuiWidgetPtr nuiContainer::DispatchMouseMove(const nglMouseInfo& rInfo)
   bool hasgrab = HasGrab();
 
   if (IsDisabled() && !hasgrab)
-    return false;
+    return NULL;
 
-  if (IsInside(rInfo.X, rInfo.Y) || hasgrab)
+  nglMouseInfo info(rInfo);
+  GlobalToLocal(info.X, info.Y);
+  // Get a chance to preempt the mouse event before the children get it:
+  if (PreMouseMoved(rInfo))
+    return this;
+  
+  if (IsInsideFromRoot(rInfo.X, rInfo.Y) || hasgrab)
   {
     inside = true;
 
     // If the object has the grab we should not try to notify its children of mouse events!
     if (!hasgrab) 
     {
+
       IteratorPtr pIt;
       for (pIt = GetLastChild(); pIt && pIt->IsValid(); GetPreviousChild(pIt))
       {
@@ -568,8 +585,6 @@ nuiWidgetPtr nuiContainer::DispatchMouseMove(const nglMouseInfo& rInfo)
       delete pIt;
     }
 
-    nglMouseInfo info(rInfo);
-    GlobalToLocal(info.X, info.Y);
     if (PreMouseMoved(info))
       return this;
     res = MouseMoved(info);
@@ -579,8 +594,6 @@ nuiWidgetPtr nuiContainer::DispatchMouseMove(const nglMouseInfo& rInfo)
   {
     if (GetHover())
     {
-      nglMouseInfo info(rInfo);
-      GlobalToLocal(info.X, info.Y);
       if (PreMouseMoved(info))
         return this;
       res = MouseMoved(info);
@@ -1001,5 +1014,20 @@ void nuiContainer::SetChildrenLayoutAnimationEasing(const nuiEasingMethod& rMeth
     pItem->SetLayoutAnimationEasing(rMethod);
   }
   delete pIt;
+}
+
+bool nuiContainer::PreMouseClicked(const nglMouseInfo& rInfo)
+{
+  return false;
+}
+
+bool nuiContainer::PreMouseUnclicked(const nglMouseInfo& rInfo)
+{
+  return false;
+}
+
+bool nuiContainer::PreMouseMoved(const nglMouseInfo& rInfo)
+{
+  return false;
 }
 

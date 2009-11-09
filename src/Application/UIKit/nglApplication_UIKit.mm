@@ -67,9 +67,9 @@ void objCCallOnWillExit();
 	NSEnumerator *e = [[pUIApplication windows] objectEnumerator];
 	
 	id win;
-	while ((win = [e nextObject]) ) {
-		
-		if( [win respondsToSelector: @selector(getNGLWindow)] )
+	while ((win = [e nextObject]) )
+  {
+		if ([win respondsToSelector: @selector(getNGLWindow)] )
 		{
 			nglWindow* pWindow = [win getNGLWindow];
 			
@@ -88,9 +88,9 @@ void objCCallOnWillExit();
 	NSEnumerator *e = [[pUIApplication windows] objectEnumerator];
 	
 	id win;
-	while ((win = [e nextObject]) ) {
-
-		if( [win respondsToSelector: @selector(getNGLWindow)] )
+	while ((win = [e nextObject]))
+  {
+    if ([win respondsToSelector: @selector(getNGLWindow)])
 		{
 			nglWindow* pWindow = [win getNGLWindow];
 			
@@ -107,10 +107,12 @@ void objCCallOnWillExit();
 	NGL_ASSERT(App);
 	((nglApplication *) App)->CallOnMemoryWarning();
 }
+
 - (void) applicationSignificantTimeChange:    (UIApplication*) pUIApplication
 {
 //NGL_OUT(_T("[nglUIApplicationDelegate applicationSignificantTimeChange]\n"));
 }
+
 - (void) applicationWillTerminate:            (UIApplication*) pUIApplication
 {
 //	NGL_DEBUG( NGL_OUT(_T("[nglUIApplicationDelegate applicationWillTerminate]\n")) );
@@ -120,8 +122,8 @@ void objCCallOnWillExit();
 	NSEnumerator *e = [[pUIApplication windows] objectEnumerator];
 	
 	id win;
-	while ((win = [e nextObject]) ) {
-		
+	while ((win = [e nextObject]))
+  {
 		[win release];
 	}	
  

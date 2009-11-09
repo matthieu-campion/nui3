@@ -171,14 +171,11 @@ bool nuiWindowManager::ActivateWindow(nuiWindow* pWin)
 
 nuiWindow* nuiWindowManager::GetWindow(nuiSize X, nuiSize Y, bool ClientAreaOnly)
 {
-  X -= mRect.mLeft;
-  Y -= mRect.mTop;
-
   IteratorPtr pIt;
   for (pIt = GetLastChild(); pIt && pIt->IsValid(); GetPreviousChild(pIt))
   {
     nuiWidgetPtr pItem = pIt->GetWidget();
-    if (pItem && pItem->IsInsideLocal(X,Y))
+    if (pItem && pItem->IsInsideFromParent(X,Y))
     {
       delete pIt;
       return (nuiWindow*)pItem;
@@ -286,7 +283,7 @@ bool nuiWindowManager::SetRect(const nuiRect& rRect)
   return true;
 }
 
-bool nuiWindowManager::IsInsideLocal(nuiSize X, nuiSize Y)
+bool nuiWindowManager::IsInsideFromSelf(nuiSize X, nuiSize Y)
 {
   return GetWindow(X,Y) != NULL;
 }
@@ -330,7 +327,7 @@ bool nuiWindowManager::DispatchMouseClick(const nglMouseInfo& rInfo)
   if (!IsEnabled())
     return false;
 
-  if (IsInside(rInfo.X, rInfo.Y))
+  if (IsInsideFromRoot(rInfo.X, rInfo.Y))
   {
     if (!mWindows.empty())
     {
@@ -341,7 +338,7 @@ bool nuiWindowManager::DispatchMouseClick(const nglMouseInfo& rInfo)
       {
         it--;
         nuiWindow* win = *it;
-        if (win->IsInside(rInfo.X, rInfo.Y))
+        if (win->IsInsideFromRoot(rInfo.X, rInfo.Y))
         {
           if (GetActiveWindow() != win)
             ActivateWindow(win);

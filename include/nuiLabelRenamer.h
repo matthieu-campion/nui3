@@ -81,7 +81,7 @@ public:
   
   virtual bool MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
   {
-    if (!mpEditLine->IsInside(X,Y))
+    if (!mpEditLine->IsInsideFromRoot(X,Y))
       return OnEditLineSelected(NULL);
     else
       return false;

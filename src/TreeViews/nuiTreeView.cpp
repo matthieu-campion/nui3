@@ -1047,7 +1047,7 @@ bool nuiTreeView::DispatchMouseClick(const nglMouseInfo& rInfo)
   if (IsDisabled() && !hasgrab)
     return false;
 
-  if (IsInside(rInfo.X, rInfo.Y) || hasgrab)
+  if (IsInsideFromRoot(rInfo.X, rInfo.Y) || hasgrab)
   {
     nuiSize X = rInfo.X;
     nuiSize Y = rInfo.Y;
