@@ -8,7 +8,6 @@
 #include "nui.h"
 #include "nuiXML.h"
 #include "nuiFlags.h"
-#include <map>
 #define XML_STATIC
 #include "expat.h"
 

@@ -19,9 +19,6 @@
 
 class nglStringConv;
 
-#include <vector>
-#include <set>
-
 
 //! Font units
 /*!

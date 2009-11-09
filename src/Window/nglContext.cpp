@@ -13,10 +13,6 @@
 #include "nglVideoMode.h"
 #include "glext/ngl_glext_table.h"
 
-#if macintosh
-#include <string.h>
-#endif
-
 /*
  * nglContextInfo
  */

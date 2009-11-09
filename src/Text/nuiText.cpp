@@ -15,8 +15,6 @@
 
 #include "nuiMainWindow.h"
 
-#include <math.h>
-
 #define SBWIDTH 12
 #define INTERLINE 4
 

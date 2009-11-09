@@ -17,7 +17,6 @@ using namespace std;
 #ifdef WINCE
 	// none
 #elif defined _WIN32_
-	#include <sys/stat.h>
 	#define		ngl_fstat(fd,buffer)					_fstat64( (fd), (buffer))
 	#define		ngl_ftell(fd)							_ftelli64( (fd) )
 	#define		ngl_fseek(fd,off,flag)				_fseeki64( (fd), (off), (flag))
@@ -776,39 +775,10 @@ int64 nglFile::Write (const void* pData, int64 WordCount, uint WordSize)
 
 
 #if ((defined __APPLE__)||(defined _LINUX_))
-#include <errno.h>
-
-#if (!defined __CFM__ ) && (!defined __CFM_CLASSIC__ )
-#include <sys/types.h>
-#include <sys/stat.h>
-#endif
-
-#include <fcntl.h>
-#include <unistd.h>
 
 /* Implemented in file/File_shr.cpp */
 extern const nglChar* File_mode(nglFileMode mode);
 extern const nglChar* File_endian(nglEndian endian);
-
-/* Legacy code : enable build against Win32's POSIX emulation
-#ifdef _WIN32_
-#include <io.h>
-#include <fcntl.h>
-#include <sys/stat.h>
-#define fsync _commit
-#endif //_WIN32
-*/
-
-/* Legacy code : enable build against Carbon's POSIX layer
-#ifdef macintosh
-#include <types.h>
-#include <stat.h>
-#include <fcntl.h>
-#include <unistd.h>
-#define fsync commit
-#endif // macintosh
-*/
-
 
 /*
  * Properties

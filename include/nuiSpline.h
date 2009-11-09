@@ -16,8 +16,6 @@
 #include "nuiRect.h"
 #include "nuiPoint.h"
 #include "nuiPathGenerator.h"
-#include <list>
-#include <vector>
 
 class nuiSpline;
 class nuiSplineNode;

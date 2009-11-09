@@ -18,7 +18,6 @@ and in NGL user application code.
 #include "nuiVersion.h"
 
 
-
 #define USE_WCHAR
 //#define __NUI_NO_SOFTWARE__
 
@@ -618,4 +617,5 @@ typedef unsigned int GLhandleARB;  /* shader object handle */
 #endif
 
 #include "ngl_all.h"
+
 

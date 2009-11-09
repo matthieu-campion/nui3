@@ -2,8 +2,6 @@
 
 #include "nglApplication.h"
 #include "nglTimer.h"
-#include <math.h>
-#include <set>
 
 #define TIMER_MIN_PERIOD     0.00001 // (somewhat 'reasonable')
 

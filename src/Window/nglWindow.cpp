@@ -10,8 +10,6 @@
 #include "nui.h"
 #include "nglKernel.h"
 #include "nglWindow.h"
-#include <ctype.h>
-#include <string.h>
 #include "nuiMainMenu.h"
 
 

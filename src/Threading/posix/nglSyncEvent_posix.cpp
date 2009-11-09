@@ -8,9 +8,6 @@
 #include "nui.h"
 #include "nglSyncEvent.h"
 
-#include <cstring>
-#include <errno.h>
-
 #include <pthread.h>
 #include <unistd.h>
 #include <sys/time.h>

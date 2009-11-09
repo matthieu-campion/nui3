@@ -27,8 +27,6 @@ pointing to the unique instance of the kernel. Since nglKernel is an abstract cl
 the NGL_APP_CREATE macro for instance.
 */
 
-#include <assert.h>
-
 /* Default verbose level
 */
 #ifdef _DEBUG_
@@ -95,8 +93,6 @@ the NGL_APP_CREATE macro for instance.
 #if (!defined _NODND_ && !defined _NOCLIPBOARD_)
 # include "nglDataTypesRegistry.h"
 #endif
-
-#include <list>
 
 class nglDeviceInfo;
 

@@ -1,5 +1,4 @@
 #include "nui.h"
-#include <errno.h>
 #include <iconv.h>
 
 class nglStringCodec 

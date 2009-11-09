@@ -10,8 +10,6 @@
 
 #include "nui.h"
 #include "nuiEvent.h"
-#include <list>
-#include <map>
 #include "nuiToken.h"
 #include "nuiAttribute.h"
 

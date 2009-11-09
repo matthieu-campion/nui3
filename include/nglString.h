@@ -7,8 +7,6 @@
 
 #pragma once
 
-#include <set>
-
 // nglChar
 typedef wchar_t nglChar;
 

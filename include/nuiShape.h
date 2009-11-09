@@ -12,8 +12,6 @@
 #include "nuiFlags.h"
 #include "nuiPathGenerator.h"
 #include "nuiSpline.h"
-#include <list>
-#include <vector>
 
 class nuiRenderArray;
 class nuiRenderObject;

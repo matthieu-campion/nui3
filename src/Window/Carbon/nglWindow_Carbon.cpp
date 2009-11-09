@@ -24,16 +24,11 @@
 #include "nglWindow.h"
 #include "nglKeyboard.h"
 #include "ngl_carbon.h"
-#include <string.h>
 
 #include "nglImage.h"
 #include "nuiMouseCursor.h"
 
 #include "nuiMainMenu.h"
-
-#if macintosh
-#include <stdio.h>
-#endif
 
 #define NGL_WINDOW_EBASE      (NGL_CONTEXT_ELAST+1)
 

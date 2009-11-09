@@ -217,10 +217,7 @@ void nuiRect::SetPosition(nuiPosition Position, const nuiRect& Inside)
 	break;
   }
 
-  mLeft += rx;
-  mRight += rx;
-  mTop += ry;
-  mBottom += ry;
+  Move(rx, ry);
 }
 
 // nuiVRect:

@@ -9,7 +9,6 @@
 
 #include "nui.h"
 #include "nuiHTML.h"
-#include <typeinfo>
 
 class nuiHTMLStyleValueBase : public nuiObject
 {

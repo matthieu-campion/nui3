@@ -11,8 +11,6 @@
 #include "nuiObject.h"
 #include "nuiTreeEvent.h"
 
-#include <vector>
-
 typedef class nuiTreeBase* nuiTreePtr;
 
 

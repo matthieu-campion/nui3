@@ -7,11 +7,11 @@
  *
  */
 
-#include "nuiVideoDecoder.h"
 
 #import <Cocoa/Cocoa.h>
 #import <QTKit/QTKit.h>
 
+#include "nuiVideoDecoder.h"
 
 class nuiVideoDecoderPrivate
 {

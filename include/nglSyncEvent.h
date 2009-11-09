@@ -7,8 +7,6 @@
 
 #pragma once
 
-#include <limits.h>
-
 class nglSyncEventPrivate;
 
 class nglSyncEvent

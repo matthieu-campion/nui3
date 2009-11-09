@@ -26,8 +26,6 @@
 #undef FAR
 #endif // _WIN32_
 
-#include <stdio.h>
-
 extern "C"
 {
 #include "jpeglib.h"
@@ -35,7 +33,6 @@ extern "C"
 
 
 #include "nglBitmapTools.h"
-#include <setjmp.h>
 
 struct my_error_mgr 
 {

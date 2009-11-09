@@ -14,7 +14,6 @@
 #define __nglMath_h__
 
 //#include "nui.h"
-#include <math.h>
 #include "nglEndian.h"
 
 

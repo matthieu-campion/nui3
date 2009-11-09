@@ -10,8 +10,6 @@
 
 //#include "nui.h"
 #include "nglString.h"
-#include <limits>
-#include <algorithm>
 
 /// This class implements a basic RGB color management class.
 class NUI_API nuiColor

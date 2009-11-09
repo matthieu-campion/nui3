@@ -15,8 +15,6 @@
 
 class nuiDrawContext;
 
-#include <map>
-
 /// This class implements a basic Font widget.
 class NUI_API nuiFont : public nuiObject, public nuiFontBase, public nuiRefCount
 {

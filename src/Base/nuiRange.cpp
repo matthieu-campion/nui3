@@ -8,9 +8,7 @@
 #include "nui.h"
 #include "nuiRange.h"
 
-#include <cmath>
-
-#ifdef _WIN32_
+#if (defined _WIN32_) || 1
   #define ISNAN_DOUBLE isnan
 #else
   #define ISNAN_DOUBLE std::isnan<double>

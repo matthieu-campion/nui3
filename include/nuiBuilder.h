@@ -9,8 +9,6 @@
 
 //#include "nui.h"
 #include "nglString.h"
-#include <map>
-#include <list>
 #include "nuiContainer.h"
 
 class nuiBuilder;

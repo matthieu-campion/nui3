@@ -12,8 +12,6 @@
 
 //#include "nui.h"
 class nglInputDevice;
-#include <vector>
-
 
 class nglInputDeviceInstance
 {

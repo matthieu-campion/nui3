@@ -12,8 +12,6 @@
 #include "ngl3DSLoader.h"
 #include "nglString.h"
 #include "nglFile.h"
-#include <stdio.h>
-#include <string.h>
 
 
 #define DUMP

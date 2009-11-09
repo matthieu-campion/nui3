@@ -9,7 +9,6 @@
 #define __nuiEvent_h__
 
 //#include "nui.h"
-#include <list>
 
 class nuiEventSource;
 

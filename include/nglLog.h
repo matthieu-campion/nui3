@@ -16,10 +16,6 @@
 //#include "nui.h"
 #include "nglString.h"
 class nglOStream;
-#include <stdarg.h>
-#include <vector>
-#include <list>
-
 
 /* Verbosity levels
  */

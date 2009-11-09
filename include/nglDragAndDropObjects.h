@@ -18,9 +18,6 @@
 #include "nglString.h"
 //#include "nglDataObjects.h"
 
-#include <map>
-#include <list>
-
 enum nglDropEffect
 {
   eDropEffectNone=0,

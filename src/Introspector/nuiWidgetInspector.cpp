@@ -22,7 +22,6 @@
 #include "nuiAttributeEditor.h"
 #include "nuiIntrospector.h"
 #include "nuiMetaPainter.h"
-#include <typeinfo>
 
 class nuiMetaPainterInspector : public nuiSimpleContainer
   {

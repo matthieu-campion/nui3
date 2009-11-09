@@ -26,8 +26,6 @@
 //#include "nui.h"
 #include "nuiRect.h"
 
-#include <stack>
-
 #include "nuiRenderArray.h"
 #include "nuiRenderState.h"
 

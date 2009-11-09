@@ -9,8 +9,6 @@
 #include "nglKernel.h"
 #include "nglString.h"
 #include "nglDataObjects.h"
-#include <map>
-#include <list>
 
 /*
  * nglDataObject

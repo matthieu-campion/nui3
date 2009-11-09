@@ -11,7 +11,6 @@
 #include "nglIFile.h"
 #include "nglIZip.h"
 #include "unzip.h"
-#include <string.h>
 
 nglZipPath::nglZipPath(const nglZipFS* pZipFS, const nglString& rPathInZip)
   : nglPath(rPathInZip)

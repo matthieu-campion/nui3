@@ -17,7 +17,6 @@
 
 //#include "nui.h"
 #include "nglString.h"
-#include <time.h>
 
 
 //! Tolerance for time comparisons (5us)

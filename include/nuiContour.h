@@ -11,8 +11,6 @@
 //#include "nui.h"
 #include "nuiPathGenerator.h"
 #include "nuiSpline.h"
-#include <list>
-#include <vector>
 
 class NUI_API nuiContour : public nuiPathGenerator
 {

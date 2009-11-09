@@ -8,13 +8,9 @@
 #include "nui.h"
 #include "nglThread.h"
 
-#include <iostream>
-#include <cstring>
-
 #include <pthread.h>
 #include <unistd.h>
 #include <sys/time.h>
-#include <stdlib.h>
 
 #include "nglThreadChecker.h"
 

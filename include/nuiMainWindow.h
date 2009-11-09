@@ -11,8 +11,6 @@
 //#include "nui.h"
 #include "nuiTopLevel.h"
 
-#include <stack>
-
 class nuiLabel;
 class nuiMainWindow;
 class nuiTimer;

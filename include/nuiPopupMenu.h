@@ -12,8 +12,6 @@
 #include "nuiTree.h"
 #include "nuiTreeView.h"
 #include "nuiScrollBar.h"
-#include <list>
-#include <vector>
 
 class nuiTimer;
 class nuiMenuRect;

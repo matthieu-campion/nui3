@@ -17,7 +17,6 @@
 #include "nuiLabel.h"
 #include "nuiWidgetAnimation.h"
 #include "nuiWindowManager.h"
-#include <stdlib.h>
 
 #define RAWFLAG 8
 #define NOCAPTIONFLAG 16
@@ -129,6 +128,8 @@ void nuiWindow::InitProperties()
 
   mNuiWindowSink.Connect(pAnim->AnimStop, &nuiWindow::AutoTrash);
 
+  SetPosition(nuiNoPosition); // User rect by default
+  
   NUI_ADD_EVENT(CloseButtonPressed);
   NUI_ADD_EVENT(FlagsChanged);
 }

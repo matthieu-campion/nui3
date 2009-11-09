@@ -113,14 +113,6 @@ bool nuiWindowManager::DispatchMouseUnclick(const nglMouseInfo& rInfo)
   return nuiSimpleContainer::DispatchMouseUnclick(rInfo);
 }
 
-#ifdef STUPIDBASE
-// stupid hack!!
-#include <math.h>
-float rot = 0;
-float rot2 = 0;
-#endif
-
-
 bool nuiWindowManager::Draw(class nuiDrawContext *pContext)
 {
   // Draw the windows:
@@ -262,9 +254,6 @@ nuiRect nuiWindowManager::CalcIdealSize()
 bool nuiWindowManager::SetRect(const nuiRect& rRect)
 {
   //NGL_OUT(_T("nuiWindowManager::SetRect\n"));
-  nuiRect temp = GetRect();
-
-  nuiRect IdealRect;
   nuiWidget::SetRect(rRect);
 
   {
@@ -272,11 +261,17 @@ bool nuiWindowManager::SetRect(const nuiRect& rRect)
     std::list<nuiWindow*>::iterator end = mWindows.end();
     for (it = mWindows.begin(); it!=end; ++it)
     {
-      nuiRect rect;
       nuiWindow* win = *it;
 
-      rect = win->GetIdealRect();
-      win->SetLayout(rect);
+      if (win->GetPosition() == nuiNoPosition)
+      {
+        nuiRect rect = win->GetIdealRect();
+        win->SetLayout(rect);
+      }
+      else
+      {
+        win->SetLayout(rRect);
+      }
     }
   }
 

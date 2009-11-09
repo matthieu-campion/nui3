@@ -11,14 +11,6 @@
 #include "nglTime.h"
 #include "nglString.h"
 
-#ifdef _UNIX_
-#include <map>
-#endif // _UNIX_
-
-#ifdef _CARBON_
-#include <map>
-#endif // _CARBON_
-
 class nglIStream;
 class nglIOStream;
 

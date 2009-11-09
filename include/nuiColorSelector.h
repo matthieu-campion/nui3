@@ -15,8 +15,6 @@
 #include "nuiPane.h"
 #include "nuiColorDecoration.h"
 
-#include <vector>
-
 enum ColorSelectorMode
 {
   eModeRGB = 0,

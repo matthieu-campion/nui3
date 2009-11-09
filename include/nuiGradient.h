@@ -11,8 +11,6 @@
 #define __nuiGradient_h__
 
 #include "nuiRect.h"
-#include <list>
-#include <utility>
 
 typedef std::pair<nuiSize, nuiColor> nuiGradientPair;
 typedef std::list<nuiGradientPair> nuiGradientStopList;

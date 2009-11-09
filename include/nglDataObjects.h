@@ -17,15 +17,6 @@
 #include "nglKernel.h"
 #include "nglString.h"
 #include "nglDataTypesRegistry.h"
-#include <map>
-#include <list>
-
-#ifdef _WIN32_
-#include <string.h>
-#include <shlobj.h> // deals with struct DROPFILES definition
-#include <shellapi.h>
-#endif
-
 
 class NGL_API nglDataObject
 {

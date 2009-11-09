@@ -13,7 +13,6 @@
 #ifndef __nglDragCarbonDragAndDrop_h__
 #define __nglDragCarbonDragAndDrop_h__
 
-#include <Carbon/Carbon.h>
 #include "nui.h"
 #include "nglKernel.h"
 #include "nglWindow.h"

@@ -13,9 +13,6 @@
 #include "nuiContainer.h"
 #include "nuiButton.h"
 
-#include <vector>
-#include <list>
-
 class NUI_API nuiTab : public nuiButton
 {
 public:

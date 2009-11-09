@@ -9,8 +9,6 @@
 #include "nglKernel.h"
 #include "nglString.h"
 #include "nglDataTypesRegistry.h"
-#include <map>
-#include <list>
 
 nglDataTypesRegistry::nglDataTypesRegistry()
 {

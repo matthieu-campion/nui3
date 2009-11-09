@@ -10,15 +10,6 @@
 #include "nglPath.h"
 #include "nglIFile.h"
 #include "nglVolume.h"
-#include <errno.h>
-#include <dirent.h>
-#include <string.h>
-
-#ifdef _MACOSX_
- #include <sys/param.h>
- #include <sys/ucred.h>
- #include <sys/mount.h>
-#endif
 
 nglTime          nglPath::mMimeTypeStamp = nglTime();
 nglPath::MimeMap nglPath::mMimeType;

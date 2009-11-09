@@ -17,8 +17,6 @@
 #include "nglEvent.h"
 #include "nglString.h"
 #include "nglCriticalSection.h"
-#include <stdarg.h>
-#include <list>
 
 
 //! Interactive portable console

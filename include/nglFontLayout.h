@@ -13,7 +13,6 @@
 #pragma once
 
 //#include "nui.h"
-#include <vector>
 class nglFontBase;
 class nglGlyphInfo;
 class nglString;

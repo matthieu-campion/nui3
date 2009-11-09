@@ -1,8 +1,6 @@
 #ifndef SIGNALS_SLOTS_H
 #define SIGNALS_SLOTS_H
 
-#include <list>
-#include <map>
 #include "nuiFastDelegate.h"
 
 class nuiNonCopyable

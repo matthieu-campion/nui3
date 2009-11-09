@@ -39,9 +39,6 @@ This file includes all nui needed headers to ease the creation of precompiled he
 //#include <crtdbg.h>
 #endif // _WIN32_
 
-#include <list>
-#include <map>
-#include <vector>
 //#define _TU_USE_STL 1
 
 #include "nui_all.h"

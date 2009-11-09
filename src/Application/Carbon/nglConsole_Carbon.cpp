@@ -7,11 +7,6 @@
 
 #include "nui.h"
 #include "nglKernel.h"
-#include <stdio.h>
-#include <string.h>
-#include <unistd.h>
-#include <errno.h>
-#include <fcntl.h>
 
 #define NGL_CONSOLE_PROMPT _T("> ")
 

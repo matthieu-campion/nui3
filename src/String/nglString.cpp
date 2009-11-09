@@ -9,12 +9,6 @@ licence: see nui3/LICENCE.TXT
 
 #pragma warning(disable : 4996)
 
-#include <limits>
-#include <vector>
-#include <locale.h>
-#include <stdlib.h>
-#include <stdarg.h>
-
 #include "nglUTFStringConv.h"
 
 #ifdef WINCE

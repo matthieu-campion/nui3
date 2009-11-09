@@ -13,8 +13,6 @@
 #pragma once
 
 //#include "nui.h"
-#include <vector>
-#include <list>
 
 #include "ft2build.h"
 #include FT_FREETYPE_H

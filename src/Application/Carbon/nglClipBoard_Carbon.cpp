@@ -9,7 +9,6 @@
 #include "nglKernel.h"
 #include "nglLog.h"
 #include "nglClipBoard.h"
-#include <Carbon/Carbon.h>
 
 void nglClipBoard::Clear()
 {

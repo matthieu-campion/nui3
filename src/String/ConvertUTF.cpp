@@ -41,9 +41,6 @@ See the header file "ConvertUTF.h" for complete documentation.
 #include "nui.h"
 
 #include "ConvertUTF.h"
-#ifdef CVTUTF_DEBUG
-#include <stdio.h>
-#endif
 
 static const int halfShift  = 10; /* used for shifting by 10 bits */
 

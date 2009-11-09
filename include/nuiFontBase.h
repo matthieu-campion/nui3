@@ -12,9 +12,6 @@
 #include "nglFontLayout.h"
 #include "nuiRect.h"
 
-#include <vector>
-#include <map>
-
 class nglPath;
 //class nglFont;
 class nuiTexture;

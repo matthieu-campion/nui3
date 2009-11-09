@@ -5,8 +5,6 @@
 #include "nuiRefCount.h"
 #include "nuiDrawContext.h"
 
-#include <map>
-
 class nuiSurface;
 class nuiSurfaceCache;
 class nuiPainter;

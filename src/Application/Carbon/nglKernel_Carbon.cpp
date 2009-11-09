@@ -10,10 +10,6 @@
 #include "nglKernel.h"
 #include "nglDeviceInfo.h"
 
-#if macintosh
-#include <locale.h>
-#endif
-
 /*
 bool nglKernel::GetGamma(float* pRed, float* pGreen, float* pBlue)
 {

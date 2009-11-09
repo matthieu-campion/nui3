@@ -16,8 +16,6 @@
 #define __nglError_h__
 
 //#include "nui.h"
-#include <vector>
-
 
 /* nglString surclases nglError, so we only use a forward declaration here
  */

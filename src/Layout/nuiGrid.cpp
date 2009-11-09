@@ -485,7 +485,10 @@ bool nuiGrid::SetCell(uint32 column, uint32 row, nuiWidget* pWidget, nuiPosition
 
   if (pWidget)
   {
-    pWidget->SetPosition(position);
+    if (position != nuiNoPosition)
+    {
+      pWidget->SetPosition(position);
+    }
     nuiGrid::AddChild(pWidget);
   }
   
@@ -513,7 +516,12 @@ void nuiGrid::SetCellPosition(uint32 column, uint32 row, nuiPosition position)
 
   nuiWidget* pWidget = mGrid[column][row];
   if (pWidget)
-    pWidget->SetPosition(position);
+  {
+    if (position != nuiNoPosition)
+    {
+      pWidget->SetPosition(position);
+    }
+  }
 }
  
 bool nuiGrid::FindCell(nuiWidgetPtr pWidget, uint& rCol, uint& rRow) const 

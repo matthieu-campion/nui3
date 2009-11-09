@@ -14,7 +14,6 @@
 #include "nuiMouseEvent.h"
 #include "nuiShape.h"
 #include "nuiDrawContext.h"
-#include <vector>
 
 /// This widget implements a pane area. It draws basic shape and can intercept mouse events
 class NUI_API nuiPane : public nuiSimpleContainer

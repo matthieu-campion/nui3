@@ -13,19 +13,6 @@
 
 #ifndef __NUI_NO_AA__
 
-#include <stdlib.h>        // for malloc
-#include <string.h>        // for strstr, because gluCheckExtension isn't available in libglu32 on windows
-
-#if defined(__APPLE__)     // for ntohl byteswapping, should be a no-op on PPC and __bswap on x86.
-  #include <arpa/inet.h>
-#else
-  #if defined(_WIN32)
-    #include <winsock.h>
-  #else
-    #include <netinet/in.h>
-  #endif
-#endif
-
 #include "nglMath.h"
 #include "AAPrimitives.h"
 
@@ -35,11 +22,6 @@
 #endif
 
 #endif
-
-#include <stdio.h>        // for printf debugging
-#include <math.h>        // for log exp sqrt etc, and maybe sqrtf
-#include <limits.h>        // for INT_MAX
-#include <float.h>        // for FLT_MAX
 
 #if defined(_NGL_PPC_)
 #include <ppc_intrinsics.h>

@@ -12,16 +12,6 @@
 #include "nglIFile.h"
 #include "nglIOFile.h"
 
-#ifndef WINCE
-	#include <errno.h>
-#endif
-
-#if (defined _WIN32_) && !(defined WINCE)
-	#include <shlobj.h>
-	#include <io.h>
-	#include <direct.h>
-#endif
-
 #if (defined _UIKIT_) || (defined _COCOA_)
 #include "Cocoa/nglPath_Cocoa.h"
 #endif
@@ -35,44 +25,6 @@ using namespace std;
 #ifndef MAX
 	#define MAX(X,Y) ((X>Y)?X:Y)
 #endif
-
-#if (defined _WIN32_) && !(defined WINCE)
-	#include <io.h>
-	#include <stdio.h>
-	#include <sys/stat.h>
-	#include <direct.h>
-	#include <shlobj.h>
-	#include <winioctl.h>
-	#define PATH_MAX MAX_PATH
-	#define F_OK 0
-	#define R_OK 4
-	#define W_OK 2
-	#pragma warning(disable: 4996)
-#elif __APPLE__
-	#include <unistd.h>
-	#include <stdio.h>
-  #include <sys/types.h>
-  #include <sys/stat.h>
-	#include <string.h>
-#elif WINCE
-//	#include <io.h>
-	#include <stdio.h>
-//	#include <sys/stat.h>
-//	#include <direct.h>
-	#include <shlobj.h>
-	#include <winioctl.h>
-	#define PATH_MAX MAX_PATH
-	#define F_OK 0
-	#define R_OK 4
-	#define W_OK 2
-	#pragma warning(disable: 4996)
-#else
-	#include <unistd.h>
-	#include <stdio.h>
-	#include <sys/types.h>
-	#include <sys/stat.h>
-#endif // _WIN32_
-
 
 
 #ifdef __MWERKS__

@@ -7,7 +7,6 @@
 
 #include "nui.h"
 #include "nuiTree.h"
-#include <algorithm>
 
 nuiTreeBase::nuiTreeBase()
 : mTreeNodeEventSink(this), mRefs(0)

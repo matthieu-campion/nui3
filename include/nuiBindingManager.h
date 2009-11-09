@@ -8,7 +8,6 @@
 
 #pragma once
 #include "nui.h"
-#include <typeinfo>
 
 class nuiArgument
 {

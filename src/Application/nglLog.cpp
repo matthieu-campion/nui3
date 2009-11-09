@@ -10,9 +10,6 @@
 #include "nglKernel.h"
 #include "nglTime.h"
 #include "nglOStream.h"
-#include <stdio.h>
-#include <stdarg.h>
-#include <string.h>
 
 const nglLog::StampFlags nglLog::NoStamp     = 0;
 const nglLog::StampFlags nglLog::TimeStamp   = 1 << 0;

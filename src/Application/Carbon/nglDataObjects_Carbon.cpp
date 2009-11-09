@@ -9,14 +9,6 @@
 #include "nglKernel.h"
 #include "nglString.h"
 #include "nglDataObjects.h"
-#include <map>
-#include <list>
-#include <Carbon/Carbon.h>
-
-
-
-
-
 
 
 void nglDataFilesObject::AddFile(const nglString& rPath)

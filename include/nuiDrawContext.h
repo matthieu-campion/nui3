@@ -34,9 +34,6 @@
 
 #include "nuiPainter.h"
 
-#include <stack>
-#include <vector>
-
 class nuiTexture;
 
 enum nuiRenderer

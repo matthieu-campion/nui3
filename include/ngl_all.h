@@ -20,13 +20,93 @@ Lookup precompiled headers in the VC doc to learn how to use them.
 
 //#include "nui.h"
 
-#include <map>
+#include <assert.h>
+#include <ctype.h>
+#include <dirent.h>
+#include <errno.h>
+#include <float.h>        // for FLT_MAX
+#include <limits.h>        // for INT_MAX
+#include <locale.h>
+#include <math.h>        // for log exp sqrt etc, and maybe sqrtf
+#include <setjmp.h>
+#include <stdarg.h>
+#include <stdio.h>        // for printf debugging
+#include <stdlib.h>        // for malloc
+#include <string.h>        // for strstr, because gluCheckExtension isn't available in libglu32 on windows
+#include <sys/stat.h>
+#include <time.h>
+
+#include <algorithm>
+#include <cstring>
+#include <iostream>
+#include <limits>
 #include <list>
-#include <stack>
-#include <vector>
 #include <map>
-#include <string>
+#include <map>
 #include <memory>
+#include <queue>
+#include <set>
+#include <stack>
+#include <string>
+#include <typeinfo>
+#include <utility>
+#include <vector>
+//#include <hash_map>
+
+#ifdef _MACOSX_
+#include <sys/param.h>
+#include <sys/ucred.h>
+#include <sys/mount.h>
+#endif
+
+#if (defined _WIN32_) && !(defined WINCE)
+#include <shlobj.h>
+#endif
+
+#if (defined _WIN32_) && !(defined WINCE)
+#include <io.h>
+#include <direct.h>
+#include <shlobj.h>
+#include <shellapi.h>
+#include <winioctl.h>
+#define PATH_MAX MAX_PATH
+#define F_OK 0
+#define R_OK 4
+#define W_OK 2
+#pragma warning(disable: 4996)
+#elif __APPLE__
+#include <unistd.h>
+#include <sys/types.h>
+#elif WINCE
+#include <shlobj.h>
+#include <winioctl.h>
+#define PATH_MAX MAX_PATH
+#define F_OK 0
+#define R_OK 4
+#define W_OK 2
+#pragma warning(disable: 4996)
+#else
+#include <unistd.h>
+#include <sys/types.h>
+#endif // _WIN32_
+
+
+#if defined(__APPLE__)     // for ntohl byteswapping, should be a no-op on PPC and __bswap on x86.
+#include <arpa/inet.h>
+#else
+#if defined(_WIN32)
+#include <winsock.h>
+#else
+#include <netinet/in.h>
+#endif
+#endif
+
+
+
+//#if (((defined _DEBUG) || (defined DEBUG)) || (defined _DEBUG_)) 
+//#include "mmgr.h"
+//#endif
+
 
 #include "nglKernel.h"
 #include "nglTime.h"

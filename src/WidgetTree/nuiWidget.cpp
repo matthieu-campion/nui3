@@ -20,7 +20,6 @@
 #include "nuiDecoration.h"
 #include "nuiWidgetMatcher.h"
 #include "nuiClampedValueAttributeEditor.h"
-#include <limits>
 
 #ifdef _UIKIT_
 const bool gGlobalUseRenderCache = true;
@@ -2266,7 +2265,7 @@ void nuiWidget::SetSelected(bool set)
 
 void nuiWidget::SetPosition(nuiPosition mode)
 {
-  if (mPosition == mode || mode == nuiNoPosition)
+  if (mPosition == mode)
     return;
   
   mPosition = mode;
@@ -2760,7 +2759,11 @@ void nuiWidget::SetLayout(const nuiRect& rRect)
   if (mMinHeight >= 0)
     r.SetHeight(MAX(r.GetHeight(), mMinHeight));
   
-  if (mPosition != nuiFill)
+  if (mPosition == nuiNoPosition)
+  {
+    rect.Move(r.Left(), r.Top());
+  }
+  else if (mPosition != nuiFill)
   {
     rect.SetPosition(mPosition, r);
   }

@@ -15,12 +15,6 @@
 #include "nglOStream.h"
 #include "nuiApplication.h"
 #include "nuiContainer.h"
-#include <string.h>
-
-#include <list>
-#include <map>
-//#include <hash_map>
-#include <string>
 
 class xmlLexer;
 

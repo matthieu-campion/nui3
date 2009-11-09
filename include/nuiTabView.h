@@ -9,7 +9,6 @@
 #define __nuiTabView_h__
 
 #include "nuiContainer.h"
-#include <vector>
 
 class nuiGradient;
 class nuiFont;

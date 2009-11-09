@@ -14,20 +14,6 @@ using namespace std;
  */
 
 #include "nglApplication.h"
-#ifdef __MWERKS__
-#if macintosh == 0
-#include <sys/time.h>
-#include <unistd.h>
-#include <locale.h>
-#include <fcntl.h>
-#include <math.h>
-#endif
-#endif
-
-//#include <CarbonEventsCore.h>
-
-using namespace std;
-
 
 /*
  * Carbon resource IDs

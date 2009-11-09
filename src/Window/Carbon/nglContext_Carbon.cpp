@@ -10,14 +10,6 @@
 #include "nglContext.h"
 #include "ngl_carbon.h"
 
-#if macintosh
-#include <string.h>
-#endif
-
-#ifdef __APPLE__
-#      include <OpenGL/OpenGL.h>
-#endif
-
 /*
  * nglContextInfo
  */

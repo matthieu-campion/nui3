@@ -13,9 +13,6 @@
 #include "nuiRect.h"
 #include "nuiEventRegistry.h"
 
-
-#include <limits>
-
 /// This class implements the behaviour of a range such as what is needed by a scroll bar for exemple. 
 class NUI_API nuiRange
 {

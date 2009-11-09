@@ -16,8 +16,6 @@
 //#include "nui.h"
 #include "nglKernel.h"
 #include "nglString.h"
-#include <map>
-#include <list>
 
 #ifdef _WIN32_
 typedef UINT        nglNativeObjectType;

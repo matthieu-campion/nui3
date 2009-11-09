@@ -10,7 +10,6 @@
 
 #include "nui.h"
 #include "nglCriticalSection.h"
-#include <queue>
 #include "nglSyncEvent.h"
 
 class nuiNotification;

@@ -13,8 +13,6 @@
 #include "nuiObject.h"
 #include "nuiRefCount.h"
 
-#include <map>
-
 class nuiTexture;
 class nuiPainter;
 class nuiTextureCache;
