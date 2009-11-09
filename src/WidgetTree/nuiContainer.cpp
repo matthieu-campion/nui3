@@ -200,7 +200,7 @@ nuiWidgetPtr nuiContainer::GetChildIf(nuiSize X, nuiSize Y, TestWidgetFunctor* p
   for (pIt = GetLastChild(); pIt && pIt->IsValid(); GetPreviousChild(pIt))
   {
     nuiWidgetPtr pItem = pIt->GetWidget();
-    if (pItem && pItem->IsInsideFromSelf(X,Y))
+    if (pItem && pItem->IsInsideFromParent(X,Y))
     {
       nuiContainerPtr pContainer = dynamic_cast<nuiContainerPtr>(pItem);
       if (pContainer)
