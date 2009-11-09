@@ -92,7 +92,7 @@ bool nuiPositioner::SetRect(const nuiRect& rRect)
     nuiRect rect = pItem->GetIdealRect().Size();
     if (mExpandWidth)
       rect.SetSize(mainrect.GetWidth(), rect.GetHeight());
-    else if (mExpandHeight)
+    if (mExpandHeight)
       rect.SetSize(rect.GetWidth(), mainrect.GetHeight());
 
     rect.SetPosition(mPPosition, mainrect);
