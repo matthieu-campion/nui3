@@ -284,7 +284,7 @@ bool nuiSlider::MouseMoved  (nuiSize X, nuiSize Y)
     //NGL_OUT(_T("MouseMoved : %.2f %.2f     %.2f %.2f\n"), X, Y,x,y);
     
     
-    nuiSize start= mClickValue;
+    nuiSize start = mClickValue;
     nuiSize movement = (mOrientation == nuiHorizontal) ? x : y;
     
     if (IsKeyDown(mFineSensitivityKey))
@@ -292,7 +292,7 @@ bool nuiSlider::MouseMoved  (nuiSize X, nuiSize Y)
       movement /= mFineSensitivityRatio;
     }
     
-    start += (mRange.GetRange() - mRange.GetPageSize()) * (movement/range);
+    start += (mRange.GetRange() - mRange.GetPageSize()) * (movement / range);
     
     mRange.SetValue(start);
     return true;
