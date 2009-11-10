@@ -835,7 +835,7 @@ bool nglFile::Open()
 #ifdef _WIN32_
   flags += _O_BINARY;
 #endif
-  mFD = open (filename, flags, 00644);
+  mFD = open(filename, flags, 00644);
   
   free(const_cast<char *>(filename));
   if (mFD == -1)

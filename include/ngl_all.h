@@ -34,6 +34,7 @@ Lookup precompiled headers in the VC doc to learn how to use them.
 #include <string.h>        // for strstr, because gluCheckExtension isn't available in libglu32 on windows
 #include <sys/stat.h>
 #include <time.h>
+#include <fcntl.h>
 
 #include <algorithm>
 #include <cstring>

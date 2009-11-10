@@ -381,6 +381,8 @@
 									<dict>
 										<key>Frame</key>
 										<string>{{10, 27}, {1713, 1046}}</string>
+										<key>RubberWindowFrame</key>
+										<string>0 59 1920 1119 0 0 1920 1178 </string>
 									</dict>
 									<key>Module</key>
 									<string>XCDetailModule</string>
@@ -435,8 +437,6 @@
 									<dict>
 										<key>Frame</key>
 										<string>{{10, 27}, {1713, 1046}}</string>
-										<key>RubberWindowFrame</key>
-										<string>0 59 1920 1119 0 0 1920 1178 </string>
 									</dict>
 									<key>Module</key>
 									<string>PBXBuildResultsModule</string>
@@ -464,11 +464,11 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E5AE429F10A8D2C000D09C2F</string>
+				<string>E5FB7F9410A9AE5E0000D2F9</string>
 				<string>1CA23ED40692098700951B8B</string>
-				<string>E5AE42A010A8D2C000D09C2F</string>
+				<string>E5FB7F9510A9AE5E0000D2F9</string>
 				<string>E51FAB551073F320004F6940</string>
-				<string>E5AE42A110A8D2C000D09C2F</string>
+				<string>E5FB7F9610A9AE5E0000D2F9</string>
 				<string>1CA23EDF0692099D00951B8B</string>
 				<string>1CA23EE00692099D00951B8B</string>
 				<string>1CA23EE10692099D00951B8B</string>
@@ -621,7 +621,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>279507592.76732498</real>
+	<real>279555678.42096901</real>
 	<key>ToolbarConfigUserDefaultsMinorVersion</key>
 	<string>2</string>
 	<key>ToolbarDisplayMode</key>
