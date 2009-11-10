@@ -40,9 +40,17 @@ nglStringConv::~nglStringConv()
     delete mpCodec;
 }
 
+
+#if !defined(MAC_OS_X_VERSION_10_5) || MAC_OS_X_VERSION_MAX_ALLOWED < MAC_OS_X_VERSION_10_5
+#define BUILDING_ON_TIGER 1
+#endif
+#if !defined(MAC_OS_X_VERSION_10_6) || MAC_OS_X_VERSION_MAX_ALLOWED < MAC_OS_X_VERSION_10_6
+#define BUILDING_ON_LEOPARD 1
+#endif
+
 int nglStringConv::Process (const char*& pSource, int& rToRead, char*& pTarget, int& rToWrite)
 {
-#if (!defined _CARBON_) && (!defined _COCOA_)
+#if (!defined _CARBON_) && (!defined _COCOA_) || !(defined BUILDING_ON_TIGER)
   char* in = const_cast<char*>(pSource);
 #else
   const char* in = pSource;

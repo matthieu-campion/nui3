@@ -2038,31 +2038,13 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		E51FAB4E1073F312004F6940 /* Debug */ = {
+		E51FAB4F1073F312004F6940 /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
 			};
-			name = Debug;
+			name = Default;
 		};
-		E51FAB4F1073F312004F6940 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-			};
-			name = Release;
-		};
-		E51FACC31074018D004F6940 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				PRODUCT_NAME = AllTutorialsDebug;
-			};
-			name = Debug;
-		};
-		E51FACC41074018D004F6940 /* Release */ = {
+		E51FACC41074018D004F6940 /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
@@ -2071,19 +2053,9 @@
 				PRODUCT_NAME = AllTutorialsDebug;
 				ZERO_LINK = NO;
 			};
-			name = Release;
+			name = Default;
 		};
-		E51FACFF1074020E004F6940 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				PRODUCT_NAME = AllTutorials;
-			};
-			name = Debug;
-		};
-		E51FAD001074020E004F6940 /* Release */ = {
+		E51FAD001074020E004F6940 /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
@@ -2092,19 +2064,9 @@
 				PRODUCT_NAME = AllTutorials;
 				ZERO_LINK = NO;
 			};
-			name = Release;
+			name = Default;
 		};
-		E543D0F31074047900A01E51 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				PRODUCT_NAME = "AllTutorials (debug & release)";
-			};
-			name = Debug;
-		};
-		E543D0F41074047900A01E51 /* Release */ = {
+		E543D0F41074047900A01E51 /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
@@ -2113,7 +2075,7 @@
 				PRODUCT_NAME = "AllTutorials (debug & release)";
 				ZERO_LINK = NO;
 			};
-			name = Release;
+			name = Default;
 		};
 /* End XCBuildConfiguration section */
 
@@ -2121,38 +2083,34 @@
 		E51FAB501073F312004F6940 /* Build configuration list for PBXProject "AllTutorials" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E51FAB4E1073F312004F6940 /* Debug */,
-				E51FAB4F1073F312004F6940 /* Release */,
+				E51FAB4F1073F312004F6940 /* Default */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Default;
 		};
 		E51FACC5107401AB004F6940 /* Build configuration list for PBXAggregateTarget "AllTutorialsDebug" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E51FACC31074018D004F6940 /* Debug */,
-				E51FACC41074018D004F6940 /* Release */,
+				E51FACC41074018D004F6940 /* Default */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Default;
 		};
 		E51FAD011074022C004F6940 /* Build configuration list for PBXAggregateTarget "AllTutorialsRelease" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E51FACFF1074020E004F6940 /* Debug */,
-				E51FAD001074020E004F6940 /* Release */,
+				E51FAD001074020E004F6940 /* Default */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Default;
 		};
 		E543D0FE1074049400A01E51 /* Build configuration list for PBXAggregateTarget "AllTutorials (debug & release)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E543D0F31074047900A01E51 /* Debug */,
-				E543D0F41074047900A01E51 /* Release */,
+				E543D0F41074047900A01E51 /* Default */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Default;
 		};
 /* End XCConfigurationList section */
 	};
