@@ -41,10 +41,7 @@ public:
   const nuiColor& GetColor() const;
   void SetColor(const nuiColor& rColor);
 
-protected : 
-
   virtual void Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rDestRect);
-
 	
 private:
   nuiTexture* mpTexture;
