@@ -64,6 +64,7 @@ nuiLabel::nuiLabel(const nglString& Text, const nglString& rObjectName, nuiTheme
 
 void nuiLabel::InitDefaultValues()
 {
+  //EnableSurface(true);
   mUnderline = false;
   mStrikeThrough = false;
   
