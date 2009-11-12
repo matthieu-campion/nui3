@@ -122,7 +122,13 @@ void nuiImageDecoration::SetRepeatX(bool set)
   if (mpTexture && set)
     mpTexture->SetWrapS(GL_REPEAT);
   else if (mpTexture && !set)
-    mpTexture->SetWrapS(GL_CLAMP);
+  {
+  #ifndef _OPENGL_ES_
+      mpTexture->SetWrapS(GL_CLAMP);
+  #else
+      mpTexture->SetWrapS(GL_CLAMP_TO_EDGE);
+  #endif
+  }
 }
 
 
@@ -138,7 +144,13 @@ void nuiImageDecoration::SetRepeatY(bool set)
   if (mpTexture && set)
     mpTexture->SetWrapT(GL_REPEAT);
   else if (mpTexture && !set)
-    mpTexture->SetWrapT(GL_CLAMP);
+  {
+  #ifndef _OPENGL_ES_
+      mpTexture->SetWrapT(GL_CLAMP);
+  #else
+      mpTexture->SetWrapT(GL_CLAMP_TO_EDGE);
+  #endif
+  }
 }
 
 
@@ -184,12 +196,24 @@ void nuiImageDecoration::SetTexturePath(nglPath path)
   if (mRepeatX)
     mpTexture->SetWrapS(GL_REPEAT);
   else
-    mpTexture->SetWrapS(GL_CLAMP);
+  {
+  #ifndef _OPENGL_ES_
+      mpTexture->SetWrapS(GL_CLAMP);
+  #else
+      mpTexture->SetWrapS(GL_CLAMP_TO_EDGE);
+  #endif
+  }
   
   if (mRepeatY)
     mpTexture->SetWrapT(GL_REPEAT);
   else
-    mpTexture->SetWrapT(GL_CLAMP);
+  {
+  #ifndef _OPENGL_ES_
+      mpTexture->SetWrapT(GL_CLAMP);
+  #else
+      mpTexture->SetWrapT(GL_CLAMP_TO_EDGE);
+  #endif
+  }
   
   Changed();
 }

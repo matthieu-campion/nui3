@@ -337,6 +337,7 @@ bool nuiScrollBar::MouseMoved  (nuiSize X, nuiSize Y)
 
     nuiSize length = mRange.GetRange();
     nuiSize start=(mClickValue/length);
+    
     nuiSize movement;
 
     if (mOrientation == nuiHorizontal)
