@@ -50,9 +50,9 @@ public:
 
   /** @name Object Mode basis (class and name) */
   //@{
-  const nglString& GetObjectName() const; ///< adapter to GetProperty("Name") for nuiAttribute
-  virtual void SetObjectName(const nglString& rName); ///< does a SetProperty("Name"...)
-  const nglString& GetObjectClass() const; ///< adapter to GetProperty("Name") for nuiAttribute
+  const nglString& GetObjectName() const; ///< 
+  virtual void SetObjectName(const nglString& rName); ///< 
+  const nglString& GetObjectClass() const; ///< 
   void GetObjectInheritance(std::vector<nglString>& rClasses) const;
   bool IsOfClass(const nglString& rClass) const;
   bool IsOfClass(int32 ClassIndex) const;

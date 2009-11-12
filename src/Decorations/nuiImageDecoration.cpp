@@ -13,7 +13,10 @@ nuiImageDecoration::nuiImageDecoration(const nglString& rName)
 : nuiDecoration(rName),
   mpTexture(NULL),
   mPosition(nuiCenter),
-  mColor(255,255,255,255)
+  mColor(255,255,255,255),
+  mRepeatX(false),
+  mRepeatY(false)
+
 {
   if (SetObjectClass(_T("nuiImageDecoration")))
     InitAttributes();
@@ -24,7 +27,9 @@ nuiImageDecoration::nuiImageDecoration(const nglString& rName, nuiTexture* pText
   mpTexture(pTexture),
   mPosition(position),
   mClientRect(rClientRect),
-  mColor(rColor)
+  mColor(rColor),
+  mRepeatX(false),
+  mRepeatY(false)
 {
   if (SetObjectClass(_T("nuiImageDecoration")))
     InitAttributes();
@@ -35,7 +40,9 @@ nuiImageDecoration::nuiImageDecoration(const nglString& rName, const nglPath& rT
   mpTexture(NULL),
   mPosition(position),
   mClientRect(rClientRect),
-  mColor(rColor)
+  mColor(rColor),
+  mRepeatX(false),
+  mRepeatY(false)
 {
   if (SetObjectClass(_T("nuiImageDecoration")))
     InitAttributes();
@@ -51,29 +58,35 @@ nuiImageDecoration::nuiImageDecoration(const nglString& rName, const nglPath& rT
 void nuiImageDecoration::InitAttributes()
 {
 
-  nuiAttribute<const nuiRect&>* AttributeRect = new nuiAttribute<const nuiRect&>
+  AddAttribute(new nuiAttribute<const nuiRect&>
    (nglString(_T("ClientRect")), nuiUnitNone,
     nuiAttribute<const nuiRect&>::GetterDelegate(this, &nuiImageDecoration::GetSourceClientRect),
-    nuiAttribute<const nuiRect&>::SetterDelegate(this, &nuiImageDecoration::SetSourceClientRect));
+    nuiAttribute<const nuiRect&>::SetterDelegate(this, &nuiImageDecoration::SetSourceClientRect)));
   
-  nuiAttribute<nglPath>* AttributeTexture = new nuiAttribute<nglPath>
+  AddAttribute(new nuiAttribute<nglPath>
    (nglString(_T("Texture")), nuiUnitNone,
     nuiMakeDelegate(this, &nuiImageDecoration::GetTexturePath), 
-    nuiMakeDelegate(this, &nuiImageDecoration::SetTexturePath));
+    nuiMakeDelegate(this, &nuiImageDecoration::SetTexturePath)));
 
-  nuiAttribute<nuiPosition>* AttributePosition = new nuiAttribute<nuiPosition>
+  AddAttribute(new nuiAttribute<nuiPosition>
    (nglString(_T("Position")), nuiUnitPosition,
     nuiMakeDelegate(this, &nuiImageDecoration::GetPosition), 
-    nuiMakeDelegate(this, &nuiImageDecoration::SetPosition));
+    nuiMakeDelegate(this, &nuiImageDecoration::SetPosition)));
   
-  nuiAttribute<const nuiColor&>* AttributeColor = new nuiAttribute<const nuiColor&>
+  AddAttribute(new nuiAttribute<const nuiColor&>
   (nglString(_T("Color")), nuiUnitNone,
    nuiAttribute<const nuiColor&>::GetterDelegate(this, &nuiImageDecoration::GetColor), 
-   nuiAttribute<const nuiColor&>::SetterDelegate(this, &nuiImageDecoration::SetColor));
-  
-	AddAttribute(_T("ClientRect"), AttributeRect);
-	AddAttribute(_T("Texture"), AttributeTexture);
-	AddAttribute(_T("Position"), AttributePosition);
+   nuiAttribute<const nuiColor&>::SetterDelegate(this, &nuiImageDecoration::SetColor)));
+
+  AddAttribute(new nuiAttribute<bool>
+ (nglString(_T("RepeatX")), nuiUnitBoolean,
+  nuiAttribute<bool>::GetterDelegate(this, &nuiImageDecoration::GetRepeatX), 
+  nuiAttribute<bool>::SetterDelegate(this, &nuiImageDecoration::SetRepeatX)));  
+
+  AddAttribute(new nuiAttribute<bool>
+   (nglString(_T("RepeatY")), nuiUnitBoolean,
+    nuiAttribute<bool>::GetterDelegate(this, &nuiImageDecoration::GetRepeatY), 
+    nuiAttribute<bool>::SetterDelegate(this, &nuiImageDecoration::SetRepeatY)));  
 }
 
 
@@ -98,6 +111,39 @@ nuiXMLNode* nuiImageDecoration::Serialize(nuiXMLNode* pNode)
   pNode->SetAttribute(_T("Texture"), GetTexturePath());
   return pNode;
 }
+
+bool nuiImageDecoration::GetRepeatX() const
+{
+  return mRepeatX;
+}
+
+
+void nuiImageDecoration::SetRepeatX(bool set)
+{
+  mRepeatX = set;
+  if (mpTexture && set)
+    mpTexture->SetWrapS(GL_REPEAT);
+  else if (mpTexture && !set)
+    mpTexture->SetWrapS(GL_CLAMP);
+}
+
+
+bool nuiImageDecoration::GetRepeatY() const
+{
+  return mRepeatY;  
+}
+
+
+void nuiImageDecoration::SetRepeatY(bool set)
+{
+  mRepeatY = set;  
+  if (mpTexture && set)
+    mpTexture->SetWrapT(GL_REPEAT);
+  else if (mpTexture && !set)
+    mpTexture->SetWrapT(GL_CLAMP);
+}
+
+
 
 
 nuiPosition nuiImageDecoration::GetPosition()
@@ -136,6 +182,17 @@ void nuiImageDecoration::SetTexturePath(nglPath path)
     SetSourceClientRect(nuiRect(0, 0, mpTexture->GetWidth(), mpTexture->GetHeight()));
   if (pOld)
     pOld->Release();
+  
+  if (mRepeatX)
+    mpTexture->SetWrapS(GL_REPEAT);
+  else
+    mpTexture->SetWrapS(GL_CLAMP);
+  
+  if (mRepeatY)
+    mpTexture->SetWrapT(GL_REPEAT);
+  else
+    mpTexture->SetWrapT(GL_CLAMP);
+  
   Changed();
 }
 
@@ -155,6 +212,13 @@ void nuiImageDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, cons
   if (!mpTexture || !mpTexture->GetImage() || !mpTexture->GetImage()->GetPixelSize())
     return;
 
+  //LBDEBUG
+  NGL_OUT(_T("debug '%ls'\n"), GetObjectName().GetChars());
+  if (GetObjectName() == _T("dHachures3"))
+  {
+    printf("ok");
+  }
+  
   pContext->PushState();
   pContext->ResetState();
   
@@ -171,7 +235,17 @@ void nuiImageDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, cons
     col.Alpha() *= pWidget->GetAlpha();
   
   pContext->SetFillColor(col);
+  
+
+  nuiRect destRect = rect;
+  if (mRepeatX)
+    destRect.SetWidth(rDestRect.GetWidth());
+  if (mRepeatY)
+    destRect.SetHeight(rDestRect.GetHeight());
+  
+  
   pContext->DrawImage(rect, mClientRect);
+//  pContext->DrawImage(rect, destRect);
 
   pContext->PopState();
 }

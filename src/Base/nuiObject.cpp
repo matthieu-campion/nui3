@@ -179,7 +179,7 @@ nuiSerializeMode nuiObject::GetSerializeMode () const
 
 nuiObject::~nuiObject()
 {
-//  OUT("Deleting object '%ls' (class='%ls')\n", GetProperty(_T("Name")).GetChars(), GetProperty(_T("Class")).GetChars());
+//  OUT("Deleting object '%ls' (class='%ls')\n", GetObjectName().GetChars(), GetObjectClass().GetChars());
   delete mpToken;
 
   int32 c = mClassNameIndex;
@@ -204,7 +204,7 @@ nuiObject::~nuiObject()
 
 const nglString& nuiObject::GetObjectClass() const
 {
-	return GetProperty(_T("Class"));
+	return GetClassNameFromIndex(mClassNameIndex);
 }
 
 
@@ -240,8 +240,8 @@ bool nuiObject::SetObjectClass(const nglString& rClass)
   bool first = mInheritanceMap[c] < -1;
   mInheritanceMap[c] = GetObjectClassNameIndex();
 
-	const nglString propname = _T("Class");
-  mProperties[propname] = rClass;
+//	const nglString propname = _T("Class");
+//  mProperties[propname] = rClass;
     
   mClassNameIndex = c;
 

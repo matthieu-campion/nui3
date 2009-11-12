@@ -81,18 +81,12 @@ bool nuiDecoration::IsBorderEnabled() const
 
 
 
-void nuiDecoration::SetName(const nglString& rName)
+void nuiDecoration::SetObjectName(const nglString& rName)
 {
-  nglString name(GetName());
   DelDecoration(this);
-  SetObjectName(rName);
+  nuiObject::SetObjectName(rName);
   AddDecoration(this);
   Changed();
-}
-
-const nglString& nuiDecoration::GetName() const
-{
-  return GetProperty(_T("Name"));
 }
 
 void nuiDecoration::UseWidgetAlpha(bool use)
@@ -127,10 +121,10 @@ void nuiDecoration::AddDecoration(nuiDecoration* pDecoration)
 {
   const nglString& name(pDecoration->GetObjectName());
   DecorationMap::iterator it = mDecorations.find(name);
+  pDecoration->Acquire();
   if (it != mDecorations.end())
     it->second->Release();
   mDecorations[name] = pDecoration;
-  pDecoration->Acquire();
   DecorationsChanged();
 }
 

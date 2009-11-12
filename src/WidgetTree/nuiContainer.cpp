@@ -72,7 +72,7 @@ void nuiContainer::SerializeChildren(nuiXMLNode* pParentNode, bool Recursive) co
 
 nuiContainer::~nuiContainer()
 {
-  //NGL_OUT(_T("Deleting nuiContainer '%ls' (class='%ls')\n"), GetProperty(_T("Name")).GetChars(), GetProperty(_T("Class")).GetChars());
+  //NGL_OUT(_T("Deleting nuiContainer '%ls' (class='%ls')\n"), GetObjectName().GetChars(), GetObjectClass().GetChars());
 }
 
 // We need to do something special about SetObjectXXX in order to avoid pure virtual method called from the constructor.

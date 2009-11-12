@@ -24,8 +24,7 @@ public:
   virtual bool Load(const nuiXMLNode* pNode) = 0;
   virtual nuiXMLNode* Serialize(nuiXMLNode* pNode) = 0;
   
-  void SetName(const nglString& rName);
-  const nglString& GetName() const;
+  void SetObjectName(const nglString& rName);
   
   void UseWidgetAlpha(bool use);
   bool IsWidgetAlphaUsed();

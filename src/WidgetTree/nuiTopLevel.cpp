@@ -32,7 +32,7 @@
       NGL_OUT(_T("NULL\n"));\
     } else {\
       NGL_OUT(_T("%ls\n"),\
-      it->second->GetProperty(_T("Class")).GetChars());\
+      it->second->GetObjectClass().GetChars());\
     }\
   }\
 }
@@ -732,7 +732,7 @@ void nuiTopLevel::SetToolTipOn(bool AutoStop)
   {
     /*
     NGL_OUT(_T("ToolTipOn class %ls / Text: %ls\n"),
-        mpToolTipSource->GetProperty(_T("Class")).GetChars(),
+        mpToolTipSource->GetObjectClass().GetChars(),
         mpToolTipSource->GetToolTip().GetChars()
        );
        */
@@ -756,7 +756,7 @@ bool nuiTopLevel::ToolTipOn(const nuiEvent& rEvent)
   {
     /*
     NGL_OUT(_T("ToolTipOn class %ls / Text: %ls\n"),
-        mpToolTipSource->GetProperty(_T("Class")).GetChars(),
+        mpToolTipSource->GetObjectClass().GetChars(),
         mpToolTipSource->GetToolTip().GetChars()
        );
        */

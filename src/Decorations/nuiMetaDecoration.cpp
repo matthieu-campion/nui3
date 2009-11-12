@@ -174,7 +174,7 @@ const nglString& nuiMetaDecoration::GetDecoration()
     return theWindBlows;
   }
     
-  return mDecorations[mDecorations.size()-1]->GetName();
+  return mDecorations[mDecorations.size()-1]->GetObjectName();
 }
 
 

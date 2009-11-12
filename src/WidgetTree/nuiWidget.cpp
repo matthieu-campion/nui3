@@ -995,7 +995,7 @@ void nuiWidget::Invalidate()
   if ((mNeedRender && mNeedSelfRedraw))
     return;
 
-  //printf("nuiWidget::Invalidate '%ls [%ls]'\n", GetProperty("Class").GetChars() , GetProperty("Name").GetChars());
+  //printf("nuiWidget::Invalidate '%ls [%ls]'\n", GetObjectClass().GetChars() , GetObjectName().GetChars());
   
   if (!IsVisible(true))
   {
@@ -1121,7 +1121,7 @@ void nuiWidget::InvalidateLayout()
 
   if (mpParent && broadcast)
   {
-    //NGL_OUT(_T("InvalidateLayout + Broadcast from %ls\n"), GetProperty("Class").GetChars());
+    //NGL_OUT(_T("InvalidateLayout + Broadcast from %ls\n"), GetObjectClass().GetChars());
     mpParent->BroadcastInvalidateLayout(this, false);
   }
   DebugRefreshInfo();
@@ -1277,7 +1277,7 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
 
   //NGL_ASSERT(!mNeedLayout);
   //if (mNeedLayout)
-  // printf("need layout bug on 0x%X [%ls - %ls]\n", this, GetProperty("Class").GetChars(), GetProperty("Name").GetChars());
+  // printf("need layout bug on 0x%X [%ls - %ls]\n", this, GetObjectClass().GetChars(), GetObjectName().GetChars());
 
   if (mSurfaceEnabled)
   {
@@ -2044,12 +2044,12 @@ void nuiWidget::CallOnTrash()
   nuiTopLevel* pRoot = GetTopLevel();
   if (pRoot)
   {
-    //NGL_OUT(_T("nuiWidget OnTrash [0x%x '%ls']\n"), this, GetProperty(_T("Class")).GetChars());
+    //NGL_OUT(_T("nuiWidget OnTrash [0x%x '%ls']\n"), this, GetObjectClass().GetChars());
     pRoot->AdviseObjectDeath(this);
   }
   else
   {
-    //NGL_OUT(_T("nuiWidget OnTrash NO ROOT! [0x%x '%ls']\n"), this, GetProperty(_T("Class")).GetChars());
+    //NGL_OUT(_T("nuiWidget OnTrash NO ROOT! [0x%x '%ls']\n"), this, GetObjectClass().GetChars());
   }
   
   OnTrash();
@@ -2575,7 +2575,7 @@ const nuiRect& nuiWidget::GetIdealRect()
 
 bool nuiWidget::SetRect(const nuiRect& rRect)
 {
-  //NGL_OUT(_T("nuiWidget::SetRect on '%ls' (%f, %f - %f, %f)\n"), GetProperty("Class").GetChars(), rRect.mLeft, rRect.mTop, rRect.GetWidth(), rRect.GetHeight());
+  //NGL_OUT(_T("nuiWidget::SetRect on '%ls' (%f, %f - %f, %f)\n"), GetObjectClass().GetChars(), rRect.mLeft, rRect.mTop, rRect.GetWidth(), rRect.GetHeight());
   bool inval = mNeedInvalidateOnSetRect;
   if (!(mRect == rRect))
     inval = true;
@@ -3960,7 +3960,7 @@ void nuiWidget::EnableDecoration(bool set)
   {
     nuiDecoration* pDeco = GetDecoration();
     if (pDeco)
-      mDecorationName = pDeco->GetName();
+      mDecorationName = pDeco->GetObjectName();
     SetDecoration(NULL);
   }
   else

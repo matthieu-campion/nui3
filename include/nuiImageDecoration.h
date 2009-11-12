@@ -40,11 +40,18 @@ public:
 
   const nuiColor& GetColor() const;
   void SetColor(const nuiColor& rColor);
+  
+  bool GetRepeatX() const;
+  void SetRepeatX(bool set);
+  bool GetRepeatY() const;
+  void SetRepeatY(bool set);
 
   virtual void Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rDestRect);
 	
 private:
   nuiTexture* mpTexture;
+  bool mRepeatX;
+  bool mRepeatY;
 
 	// attributes ***********************************
   nuiRect mClientRect;
