@@ -1,9 +1,9 @@
 /*
-  NUI3 - C++ cross-platform GUI framework for OpenGL based applications
-  Copyright (C) 2002-2003 Sebastien Metrot
-
-  licence: see nui3/LICENCE.TXT
-*/
+ NUI3 - C++ cross-platform GUI framework for OpenGL based applications
+ Copyright (C) 2002-2003 Sebastien Metrot
+ 
+ licence: see nui3/LICENCE.TXT
+ */
 
 #include "nui.h"
 #include "nuiDrawContext.h"
@@ -16,7 +16,6 @@ nuiImageDecoration::nuiImageDecoration(const nglString& rName)
   mColor(255,255,255,255),
   mRepeatX(false),
   mRepeatY(false)
-
 {
   if (SetObjectClass(_T("nuiImageDecoration")))
     InitAttributes();
@@ -57,12 +56,11 @@ nuiImageDecoration::nuiImageDecoration(const nglString& rName, const nglPath& rT
 
 void nuiImageDecoration::InitAttributes()
 {
-
   AddAttribute(new nuiAttribute<const nuiRect&>
    (nglString(_T("ClientRect")), nuiUnitNone,
     nuiAttribute<const nuiRect&>::GetterDelegate(this, &nuiImageDecoration::GetSourceClientRect),
     nuiAttribute<const nuiRect&>::SetterDelegate(this, &nuiImageDecoration::SetSourceClientRect)));
-  
+
   AddAttribute(new nuiAttribute<nglPath>
    (nglString(_T("Texture")), nuiUnitNone,
     nuiMakeDelegate(this, &nuiImageDecoration::GetTexturePath), 
@@ -74,19 +72,19 @@ void nuiImageDecoration::InitAttributes()
     nuiMakeDelegate(this, &nuiImageDecoration::SetPosition)));
   
   AddAttribute(new nuiAttribute<const nuiColor&>
-  (nglString(_T("Color")), nuiUnitNone,
-   nuiAttribute<const nuiColor&>::GetterDelegate(this, &nuiImageDecoration::GetColor), 
-   nuiAttribute<const nuiColor&>::SetterDelegate(this, &nuiImageDecoration::SetColor)));
-
+               (nglString(_T("Color")), nuiUnitNone,
+                nuiAttribute<const nuiColor&>::GetterDelegate(this, &nuiImageDecoration::GetColor), 
+                nuiAttribute<const nuiColor&>::SetterDelegate(this, &nuiImageDecoration::SetColor)));
+  
   AddAttribute(new nuiAttribute<bool>
- (nglString(_T("RepeatX")), nuiUnitBoolean,
-  nuiAttribute<bool>::GetterDelegate(this, &nuiImageDecoration::GetRepeatX), 
-  nuiAttribute<bool>::SetterDelegate(this, &nuiImageDecoration::SetRepeatX)));  
-
+               (nglString(_T("RepeatX")), nuiUnitBoolean,
+                nuiAttribute<bool>::GetterDelegate(this, &nuiImageDecoration::GetRepeatX), 
+                nuiAttribute<bool>::SetterDelegate(this, &nuiImageDecoration::SetRepeatX)));  
+  
   AddAttribute(new nuiAttribute<bool>
-   (nglString(_T("RepeatY")), nuiUnitBoolean,
-    nuiAttribute<bool>::GetterDelegate(this, &nuiImageDecoration::GetRepeatY), 
-    nuiAttribute<bool>::SetterDelegate(this, &nuiImageDecoration::SetRepeatY)));  
+               (nglString(_T("RepeatY")), nuiUnitBoolean,
+                nuiAttribute<bool>::GetterDelegate(this, &nuiImageDecoration::GetRepeatY), 
+                nuiAttribute<bool>::SetterDelegate(this, &nuiImageDecoration::SetRepeatY)));  
 }
 
 
@@ -107,7 +105,7 @@ nuiXMLNode* nuiImageDecoration::Serialize(nuiXMLNode* pNode)
 {
   pNode->SetName(_T("nuiImageDecoration"));
   pNode->SetAttribute(_T("ClientRect"), mClientRect.GetValue());
-
+  
   pNode->SetAttribute(_T("Texture"), GetTexturePath());
   return pNode;
 }
@@ -163,7 +161,7 @@ nglPath nuiImageDecoration::GetTexturePath() const
 {
   if (HasProperty(_T("Texture")))
     return GetProperty(_T("Texture"));
-
+  
   return mpTexture->GetSource();
 }
 
@@ -177,7 +175,7 @@ void nuiImageDecoration::SetTexturePath(nglPath path)
     NGL_OUT(_T("nuiImageDecoration::SetTexturePath warning : could not load graphic resource '%ls'\n"), path.GetChars());
     return;
   }
-
+  
   if (GetSourceClientRect() == nuiRect(0,0,0,0))
     SetSourceClientRect(nuiRect(0, 0, mpTexture->GetWidth(), mpTexture->GetHeight()));
   if (pOld)
@@ -211,21 +209,15 @@ void nuiImageDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, cons
 {
   if (!mpTexture || !mpTexture->GetImage() || !mpTexture->GetImage()->GetPixelSize())
     return;
-
-  //LBDEBUG
-  NGL_OUT(_T("debug '%ls'\n"), GetObjectName().GetChars());
-  if (GetObjectName() == _T("dHachures3"))
-  {
-    printf("ok");
-  }
   
   pContext->PushState();
   pContext->ResetState();
   
   nuiRect rect = mClientRect;
+  
   rect.SetPosition(mPosition, rDestRect);
   rect.RoundToBelow();
-    
+  
   pContext->EnableTexturing(true);
   pContext->EnableBlending(true);
   pContext->SetBlendFunc(nuiBlendTransp);
@@ -236,17 +228,16 @@ void nuiImageDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, cons
   
   pContext->SetFillColor(col);
   
-
-  nuiRect destRect = rect;
+  nuiRect SrcRect = rect;
   if (mRepeatX)
-    destRect.SetWidth(rDestRect.GetWidth());
+    SrcRect.SetWidth(rDestRect.GetWidth());
   if (mRepeatY)
-    destRect.SetHeight(rDestRect.GetHeight());
+    SrcRect.SetHeight(rDestRect.GetHeight());
+  if (mRepeatX || mRepeatY)
+    SrcRect.MoveTo(0, 0);
   
+  pContext->DrawImage(rDestRect, SrcRect);
   
-  pContext->DrawImage(rect, mClientRect);
-//  pContext->DrawImage(rect, destRect);
-
   pContext->PopState();
 }
 
@@ -275,36 +266,36 @@ nuiSize nuiImageDecoration::GetBorder(nuiPosition position, const nuiWidget* pWi
   mpTexture->TextureToImageCoord(w, h);
   switch (position)
   {
-  case nuiLeft:
-    return mClientRect.Left();
-    break;
-  case nuiRight:
-    return w - mClientRect.Right();
-    break;
-  case nuiTop:
-    return mClientRect.Top();
-    break;
-  case nuiBottom:
-    return h - mClientRect.Bottom();
-    break;
-  case nuiFillHorizontal:
-    return w - mClientRect.GetWidth();
-    break;
-  case nuiFillVertical:
-    return h - mClientRect.GetHeight();
-    break;
-  case nuiNoPosition: break;
-  case nuiTopLeft: break;
-  case nuiTopRight: break;
-  case nuiBottomLeft: break;
-  case nuiBottomRight: break;
-  case nuiCenter: break;
-  case nuiTile: break;
-  case nuiFill: break;
-  case nuiFillLeft: break;
-  case nuiFillRight: break;
-  case nuiFillTop: break;
-  case nuiFillBottom: break;
+    case nuiLeft:
+      return mClientRect.Left();
+      break;
+    case nuiRight:
+      return w - mClientRect.Right();
+      break;
+    case nuiTop:
+      return mClientRect.Top();
+      break;
+    case nuiBottom:
+      return h - mClientRect.Bottom();
+      break;
+    case nuiFillHorizontal:
+      return w - mClientRect.GetWidth();
+      break;
+    case nuiFillVertical:
+      return h - mClientRect.GetHeight();
+      break;
+    case nuiNoPosition: break;
+    case nuiTopLeft: break;
+    case nuiTopRight: break;
+    case nuiBottomLeft: break;
+    case nuiBottomRight: break;
+    case nuiCenter: break;
+    case nuiTile: break;
+    case nuiFill: break;
+    case nuiFillLeft: break;
+    case nuiFillRight: break;
+    case nuiFillTop: break;
+    case nuiFillBottom: break;
   }
   //we should'nt arrive here
   return NULL;
