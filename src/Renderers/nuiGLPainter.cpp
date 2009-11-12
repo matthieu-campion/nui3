@@ -514,6 +514,8 @@ void nuiGLPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
           
           SetState(nuiRenderState());
           ResetClipRect();
+          mClip.Set(0.0f, 0.0f, pSurface->GetWidth(), pSurface->GetHeight());
+
           LoadMatrix(nglMatrixf());
           
           NGL_ASSERT(pSurface);

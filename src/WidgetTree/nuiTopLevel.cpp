@@ -1316,32 +1316,32 @@ bool nuiTopLevel::DrawTree(class nuiDrawContext *pContext)
     pContext->ResetState();
 
     // Update the widget informations:
-    {
-      nuiPainter* pPainter = pContext->GetPainter();
-      nuiMetaPainter painter(nuiRect(0,0, clipWidth, clipHeight), NULL);
-      painter.SetDummyMode(true);
-      pContext->SetPainter(&painter);
-
-      pContext->ResetState();
-      pContext->ResetClipRect();
-      pContext->SetStrokeColor(nuiColor(1.0f,0.0f,0.0f,0.0f));
-      pContext->SetFillColor(nuiColor(1.0f,0.0f,0.0f,.5f));
-      pContext->EnableBlending(true);
-      pContext->SetBlendFunc(nuiBlendTransp);
-      pContext->EnableClipping(true);
-
-      IteratorPtr pIt = NULL;
-      for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
-      {
-        nuiWidgetPtr pItem = pIt->GetWidget();
-        if (pItem && pItem != mpToolTipLabel)
-          DrawChild(pContext, pItem);
-      }
-      delete pIt;
-
-      DisplayToolTips(pContext);
-      pContext->SetPainter(pPainter);
-    }
+//    {
+//      nuiPainter* pPainter = pContext->GetPainter();
+//      nuiMetaPainter painter(nuiRect(0,0, clipWidth, clipHeight), NULL);
+//      painter.SetDummyMode(true);
+//      pContext->SetPainter(&painter);
+//
+//      pContext->ResetState();
+//      pContext->ResetClipRect();
+//      pContext->SetStrokeColor(nuiColor(1.0f,0.0f,0.0f,0.0f));
+//      pContext->SetFillColor(nuiColor(1.0f,0.0f,0.0f,.5f));
+//      pContext->EnableBlending(true);
+//      pContext->SetBlendFunc(nuiBlendTransp);
+//      pContext->EnableClipping(true);
+//
+//      IteratorPtr pIt = NULL;
+//      for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
+//      {
+//        nuiWidgetPtr pItem = pIt->GetWidget();
+//        if (pItem && pItem != mpToolTipLabel)
+//          DrawChild(pContext, pItem);
+//      }
+//      delete pIt;
+//
+//      DisplayToolTips(pContext);
+//      pContext->SetPainter(pPainter);
+//    }
 
     // Ok, all the widgets descriptions should be ok now, let's draw them:
 

@@ -1279,113 +1279,127 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
   //if (mNeedLayout)
   // printf("need layout bug on 0x%X [%ls - %ls]\n", this, GetProperty("Class").GetChars(), GetProperty("Name").GetChars());
 
-  bool drawingincache = mpParent ? mpParent->IsDrawingInCache(true) : false;
-
-  nuiRect clip;
-  pContext->GetClipRect(clip, true);
-  nuiRect _self = GetOverDrawRect(true, false);
-  nuiRect _self_and_decorations = GetOverDrawRect(true, true);
-  nuiRect inter;
-  
-  if (!mSurfaceEnabled)
+  if (mSurfaceEnabled)
   {
+    bool drawingincache = mpParent ? mpParent->IsDrawingInCache(true) : false;
+    
+    nuiRect clip;
+    pContext->GetClipRect(clip, true);
+    nuiRect _self = GetOverDrawRect(true, false);
+    nuiRect _self_and_decorations = GetOverDrawRect(true, true);
+    nuiRect inter;
+    
+    bool rendertest = mNeedRender;
+    if (mNeedRender || !mpSurface)
+    {
+      if (mNeedSelfRedraw)
+      {
+        UpdateSurfaceRect(mRect);
+        mpSurface->Wipe();
+        
+        mpSurface->ResetState();
+        mpSurface->ResetClipRect();
+        mpSurface->LoadMatrix(nglMatrixf());
+        
+        NGL_ASSERT(mpSurface);
+        mpSurface->Set2DProjectionMatrix(nuiRect(0.0f, 0.0f, mpSurface->GetWidth(), mpSurface->GetHeight()));
+        
+        // clear the surface with transparent black:
+        mpSurface->PushState();
+        mpSurface->SetClearColor(nuiColor(0.0f, 0.0f, 0.0f, 0.0f));
+        mpSurface->Clear();  
+        mpSurface->PopState();
+        
+        Validate();
+        
+        InternalDrawWidget(mpSurface, _self, _self_and_decorations, true);
+        mNeedSelfRedraw = false;
+      }
+    }
+    
+    //pContext->Translate(mRect.Left(), mRect.Top());
+    pContext->SetStrokeColor(nuiColor(255, 0, 0));
+    pContext->DrawRect(mRect.Size(), eStrokeShape);
+    
+    nuiMatrix m = pContext->GetMatrix();
+    nglString d;
+    m.GetValue(d);
+    //    NGL_OUT(_T("nglWidget(0x%p):\n%ls\n"), this, d.GetChars());
+    //NGL_ASSERT(m.Array[12] > 0);
+    
+    mNeedSurfaceRedraw = false;
+    DrawSurface(pContext);
+    
+    DebugRefreshInfo();
+  }
+  else
+  {
+    bool drawingincache = mpParent ? mpParent->IsDrawingInCache(true) : false;
+    
+    nuiRect clip;
+    pContext->GetClipRect(clip, true);
+    nuiRect _self = GetOverDrawRect(true, false);
+    nuiRect _self_and_decorations = GetOverDrawRect(true, true);
+    nuiRect inter;
+    
     _self.Intersect(_self, mVisibleRect);
     _self_and_decorations.Intersect(_self_and_decorations, mVisibleRect);
     if (!inter.Intersect(_self_and_decorations, clip)) // Only render at the last needed moment. As we are currently offscreen or clipped entirely we will redraw another day.
       return false;
-  }
-
-  UpdateSurfaceRect(mRect);
-  
-  nuiDrawContext* pSavedCtx = pContext;
-  
-  if (mNeedRender || !mpSurface)
-  {
-    if (mNeedSelfRedraw && mSurfaceEnabled)
+    
+    nuiDrawContext* pSavedCtx = pContext;
+    
+    bool rendertest = mNeedRender;
+    if (gGlobalUseRenderCache && mUseRenderCache)
     {
-
-      mpSurface->Wipe();
-
-      mpSurface->ResetState();
-      mpSurface->ResetClipRect();
-      mpSurface->LoadMatrix(nglMatrixf());
+      NGL_ASSERT(mpRenderCache);
       
-      NGL_ASSERT(mpSurface);
-      mpSurface->Set2DProjectionMatrix(nuiRect(0.0f, 0.0f, mpSurface->GetWidth(), mpSurface->GetHeight()));
+      if (mNeedSelfRedraw)
+      {
+        mpSavedPainter = pContext->GetPainter();
+        mpRenderCache->Reset(mpSavedPainter);
+        pContext->SetPainter(mpRenderCache);
+        
+        mDrawingInCache = true;
+        
+        InternalDrawWidget(pContext, _self, _self_and_decorations, false);
+        
+        pContext->SetPainter(mpSavedPainter);
+        mNeedSelfRedraw = false;
+      }
       
-      // clear the surface with transparent black:
-      mpSurface->PushState();
-      mpSurface->SetClearColor(nuiColor(0.0f, 0.0f, 0.0f, 0.0f));
-      mpSurface->Clear();  
-      mpSurface->PopState();
+      if (!drawingincache && !pContext->GetPainter()->GetDummyMode())
+      {
+        Validate();
+        if (!mMatrixIsIdentity)
+        {
+          pContext->PushMatrix();
+          pContext->MultMatrix(GetMatrix());
+        }
+        
+        mpRenderCache->ReDraw(pContext);
+        
+        if (!mMatrixIsIdentity)
+          pContext->PopMatrix();
+      }
       
-      Validate();
-      
-      InternalDrawWidget(mpSurface, _self, _self_and_decorations, true);
-      mNeedSelfRedraw = false;
-
-        //pContext->PopSurface();
-        //      mpSurface->PopMatrix();
-        //      mpSurface->PopProjectionMatrix();
-        //      mpSurface->PopState();
-        //      mpSurface->PopClipping();
     }
     else
     {
-      if (gGlobalUseRenderCache && !mSurfaceEnabled && mUseRenderCache && mpRenderCache)
+      if (!drawingincache && !pContext->GetPainter()->GetDummyMode())
       {
-        if (mNeedSelfRedraw)
-        {
-          mpSavedPainter = pContext->GetPainter();
-          mpRenderCache->Reset(mpSavedPainter);
-          pContext->SetPainter(mpRenderCache);
-          
-          mDrawingInCache = true;
-          
-          InternalDrawWidget(pContext, _self, _self_and_decorations, false);
-          
-          pContext->SetPainter(mpSavedPainter);
-          mNeedSelfRedraw = false;
-        }
+        Validate();
         
-        if (!drawingincache && !pContext->GetPainter()->GetDummyMode())
-        {
-          Validate();
-          if (!mMatrixIsIdentity)
-          {
-            pContext->PushMatrix();
-            pContext->MultMatrix(GetMatrix());
-          }
-          
-          mpRenderCache->ReDraw(pContext);
-          
-          if (!mMatrixIsIdentity)
-            pContext->PopMatrix();
-        }
-        
-      }
-      else
-      {
-        if (!drawingincache && !pContext->GetPainter()->GetDummyMode())
-        {
-          Validate();
-          
-          InternalDrawWidget(pContext, _self, _self_and_decorations, true);
-          mNeedSelfRedraw = false;
-        }
+        InternalDrawWidget(pContext, _self, _self_and_decorations, true);
+        mNeedSelfRedraw = false;
       }
     }
+    
+    pContext = pSavedCtx;
+    
+    DebugRefreshInfo();
   }
 
-  pContext = pSavedCtx;
-
-  if (mSurfaceEnabled)
-  {
-    mNeedSurfaceRedraw = false;
-    DrawSurface(pContext);
-  }
-  
-  DebugRefreshInfo();
   return true;
 }
 
@@ -1412,6 +1426,8 @@ void nuiWidget::DrawSurface(nuiDrawContext* pContext)
 //    gg = 0.0f;
 
   pContext->SetBlendFunc(mSurfaceBlendFunc);
+  //pContext->SetBlendFunc(nuiBlendTop);
+  
   pContext->MultMatrix(mSurfaceMatrix);
 
   nuiRect src, dst;

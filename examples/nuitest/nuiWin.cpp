@@ -200,7 +200,7 @@ mWinSink(this)
 
   mShowFPS = ShowFPS;
   mFrameCnt = 0;
-  nuiTopLevel::EnablePartialRedraw(false);
+  nuiTopLevel::EnablePartialRedraw(true);
 
   SetDebugMode(true);
 
