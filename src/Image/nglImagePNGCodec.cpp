@@ -8,8 +8,6 @@
 #include "nui.h"
 #include NGL_CONFIG_H
 
-#ifdef HAVE_LIBPNG
-
 #include "nglImage.h"
 #include "nglImagePNGCodec.h"
 #include "png.h"
@@ -397,5 +395,3 @@ float nglImagePNGCodec::GetCompletion()
 {
   return 0;
 }
-
-#endif // HAVE_LIBPNG
