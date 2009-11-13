@@ -82,7 +82,7 @@ void nuiRangeAttributeEditor::Update()
   
   
   // slider
-  mpSlider = new nuiSlider(nuiHorizontal, mRange);
+  mpSlider = new nuiSlider(nuiVertical, mRange);
   mEventSink.Connect(mpSlider->InteractiveValueChanged, &nuiRangeAttributeEditor::OnChanged);
   pBox->SetCell(1, mpSlider);
 }

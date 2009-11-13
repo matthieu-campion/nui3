@@ -16,17 +16,13 @@
 #include "nglImageCodec.h"
 #include "nglMath.h"
 
-#ifndef _UIKIT_
 #include "nglImageTGACodec.h"
 #include "nglImagePPMCodec.h"
-#endif
 
 #ifdef HAVE_COREGRAPHICS
 #include "nglImageCGCodec.h"
 #endif
-#ifdef HAVE_LIBPNG
 #include "nglImagePNGCodec.h"
-#endif
 #ifdef HAVE_LIBJPEG
 #include "nglImageJPEGCodec.h"
 #endif
@@ -772,14 +768,11 @@ void nglImage::Init()
   {
     mpCodecInfos = new std::vector<nglImageCodecInfo*>();
     App->AddExit(Exit);
-  #ifndef _UIKIT_
     mpCodecInfos->push_back(new nglImageTGACodecInfo());
     mpCodecInfos->push_back(new nglImagePPMCodecInfo());
-  #endif
 
-  #ifdef HAVE_LIBPNG
     mpCodecInfos->push_back(new nglImagePNGCodecInfo());
-  #endif
+
   #ifdef HAVE_LIBJPEG
     mpCodecInfos->push_back(new nglImageJPEGCodecInfo());
   #endif
