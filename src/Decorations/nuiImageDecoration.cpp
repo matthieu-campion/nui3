@@ -57,34 +57,34 @@ nuiImageDecoration::nuiImageDecoration(const nglString& rName, const nglPath& rT
 void nuiImageDecoration::InitAttributes()
 {
   AddAttribute(new nuiAttribute<const nuiRect&>
-   (nglString(_T("ClientRect")), nuiUnitNone,
-    nuiAttribute<const nuiRect&>::GetterDelegate(this, &nuiImageDecoration::GetSourceClientRect),
-    nuiAttribute<const nuiRect&>::SetterDelegate(this, &nuiImageDecoration::SetSourceClientRect)));
-
+               (nglString(_T("ClientRect")), nuiUnitNone,
+                nuiAttribute<const nuiRect&>::GetterDelegate(this, &nuiImageDecoration::GetSourceClientRect),
+                nuiAttribute<const nuiRect&>::SetterDelegate(this, &nuiImageDecoration::SetSourceClientRect)));
+  
   AddAttribute(new nuiAttribute<nglPath>
-   (nglString(_T("Texture")), nuiUnitNone,
-    nuiMakeDelegate(this, &nuiImageDecoration::GetTexturePath), 
-    nuiMakeDelegate(this, &nuiImageDecoration::SetTexturePath)));
-
+               (nglString(_T("Texture")), nuiUnitNone,
+                nuiMakeDelegate(this, &nuiImageDecoration::GetTexturePath), 
+                nuiMakeDelegate(this, &nuiImageDecoration::SetTexturePath)));
+  
   AddAttribute(new nuiAttribute<nuiPosition>
-   (nglString(_T("Position")), nuiUnitPosition,
-    nuiMakeDelegate(this, &nuiImageDecoration::GetPosition), 
-    nuiMakeDelegate(this, &nuiImageDecoration::SetPosition)));
+               (nglString(_T("Position")), nuiUnitPosition,
+                nuiMakeDelegate(this, &nuiImageDecoration::GetPosition), 
+                nuiMakeDelegate(this, &nuiImageDecoration::SetPosition)));
   
   AddAttribute(new nuiAttribute<const nuiColor&>
                (nglString(_T("Color")), nuiUnitNone,
-                nuiAttribute<const nuiColor&>::GetterDelegate(this, &nuiImageDecoration::GetColor), 
-                nuiAttribute<const nuiColor&>::SetterDelegate(this, &nuiImageDecoration::SetColor)));
+                nuiMakeDelegate(this, &nuiImageDecoration::GetColor), 
+                nuiMakeDelegate(this, &nuiImageDecoration::SetColor)));
   
   AddAttribute(new nuiAttribute<bool>
                (nglString(_T("RepeatX")), nuiUnitBoolean,
-                nuiAttribute<bool>::GetterDelegate(this, &nuiImageDecoration::GetRepeatX), 
-                nuiAttribute<bool>::SetterDelegate(this, &nuiImageDecoration::SetRepeatX)));  
+                nuiMakeDelegate(this, &nuiImageDecoration::GetRepeatX), 
+                nuiMakeDelegate(this, &nuiImageDecoration::SetRepeatX)));  
   
   AddAttribute(new nuiAttribute<bool>
                (nglString(_T("RepeatY")), nuiUnitBoolean,
-                nuiAttribute<bool>::GetterDelegate(this, &nuiImageDecoration::GetRepeatY), 
-                nuiAttribute<bool>::SetterDelegate(this, &nuiImageDecoration::SetRepeatY)));  
+                nuiMakeDelegate(this, &nuiImageDecoration::GetRepeatY), 
+                nuiMakeDelegate(this, &nuiImageDecoration::SetRepeatY)));  
 }
 
 
@@ -193,27 +193,8 @@ void nuiImageDecoration::SetTexturePath(nglPath path)
   if (pOld)
     pOld->Release();
   
-  if (mRepeatX)
-    mpTexture->SetWrapS(GL_REPEAT);
-  else
-  {
-  #ifndef _OPENGL_ES_
-      mpTexture->SetWrapS(GL_CLAMP);
-  #else
-      mpTexture->SetWrapS(GL_CLAMP_TO_EDGE);
-  #endif
-  }
-  
-  if (mRepeatY)
-    mpTexture->SetWrapT(GL_REPEAT);
-  else
-  {
-  #ifndef _OPENGL_ES_
-      mpTexture->SetWrapT(GL_CLAMP);
-  #else
-      mpTexture->SetWrapT(GL_CLAMP_TO_EDGE);
-  #endif
-  }
+  SetRepeatX(mRepeatX);
+  SetRepeatY(mRepeatY);
   
   Changed();
 }
@@ -238,7 +219,6 @@ void nuiImageDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, cons
   pContext->ResetState();
   
   nuiRect rect = mClientRect;
-  
   rect.SetPosition(mPosition, rDestRect);
   rect.RoundToBelow();
   
@@ -252,16 +232,25 @@ void nuiImageDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, cons
   
   pContext->SetFillColor(col);
   
-  nuiRect SrcRect = rect;
+  nuiRect srcrect(mClientRect);
   if (mRepeatX)
-    SrcRect.SetWidth(rDestRect.GetWidth());
+  {
+    srcrect.SetWidth(rDestRect.GetWidth());
+    srcrect.MoveTo(0, srcrect.Top());
+  }
+
   if (mRepeatY)
-    SrcRect.SetHeight(rDestRect.GetHeight());
+  {
+    srcrect.SetHeight(rDestRect.GetHeight());
+    srcrect.MoveTo(srcrect.Left(), 0);
+  }
+
   if (mRepeatX || mRepeatY)
-    SrcRect.MoveTo(0, 0);
+    rect = rDestRect;
   
-  pContext->DrawImage(rDestRect, SrcRect);
   
+  pContext->DrawImage(rect, srcrect);
+  //pContext->DrawRect(rDestRect, eStrokeShape);
   pContext->PopState();
 }
 
