@@ -239,8 +239,7 @@ void nuiThreadInspector::BuildThreadTree()
     const std::list<nglThreadState>& list = it->second;
 
     nuiTreeNode* pNode = CreateNodeFromThread(ID);
-    mpTree->AddChild(pNode);    
-
+    mpTree->AddChild(pNode);
     
     // no critical sections referenced for this thread
     if (list.size() == 0)
@@ -278,6 +277,7 @@ nuiTreeNode* nuiThreadInspector::CreateNodeFromThread(nglThread::ID ID)
   // give the node a token (the thread ID) for later update
   pNode->SetToken(new nuiToken<nglThread::ID>(ID));
 
+  
   // thread's name
   nglString label;
   label.Format(_T("thread '%ls' [0x%x]"), threadName.GetChars(), ID);
@@ -297,6 +297,7 @@ nuiTreeNode* nuiThreadInspector::CreateNodeFromLock(const nglThreadState& rState
   // give the node a token (the cs pointer) for later update
   pNode->SetToken(new nuiToken<nglLock*>(rState.GetLockPointer()));
 
+  
   // lock's name
   nglString tmp;
   tmp.Format(_T("%ls '%ls' [0x%x]"), 
@@ -488,12 +489,16 @@ void nuiThreadInspector::Clean(nuiTreeNode* pParent, const std::map<nglThread::I
     {
       nglLock* pLock = NULL;
       bool lockdead = true;
-      //ICI
       bool res = nuiGetTokenValue<nglLock*>(pLockNode->GetToken(), pLock);
-      NGL_ASSERT(res);
+      
+      if (!res)
+      {
+        nuiTreeNode* pNext = pLockNode->GetNextInParent();
+        pLockNode = pNext; 
+        continue;
+      }
       
       //
-      NGL_OUT(_T("debug token lock 0x%x\n"), pLock);
         
       for (itl = list.begin(); itl != list.end(); ++itl)
       {
