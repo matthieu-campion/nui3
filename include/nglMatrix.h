@@ -540,6 +540,11 @@ mat1 = mat1 * mat2;
     *this = result;
   }
 
+  bool operator == (const nglMatrix<T>& rMatrix) const
+  {
+    return memcmp(Array, rMatrix.Array, sizeof(Array)) == 0;
+  }
+
   /// Matrix multiplication, result is rA * rB
   friend nglMatrix<T> operator * (const nglMatrix& rA, const nglMatrix& rB)
   {
@@ -591,14 +596,6 @@ mat1 = mat1 * mat2;
     {
       NGL_LOG(_T("math"), Level, _T("[ %8.3f %8.3f %8.3f %8.3f ] "), (T)(*this)(i,0), (T)(*this)(i,1), (T)(*this)(i,2), (T)(*this)(i,3));
     }
-  }
-
-  bool operator==(const nglMatrix& rA) const
-  {
-    for (int i =0; i< 16; i++)
-      if (Array[i] != rA.Array[i])
-        return false;
-    return true;
   }
 
   bool GetValue(nglString& rDump) const
