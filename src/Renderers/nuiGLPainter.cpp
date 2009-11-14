@@ -157,7 +157,6 @@ nuiGLPainter::nuiGLPainter(nglContext* pContext, const nuiRect& rRect)
 {
   mCanRectangleTexture = 0;
   mTextureTarget = GL_TEXTURE_2D;
-
   
   mpContext = pContext;
   if (mpContext)
@@ -245,9 +244,15 @@ void nuiGLPainter::SetViewport()
   
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  glRotatef(Angle, 0.f,0.f,1.f);
-  
-  glMultMatrixf(rMatrix.Array);
+  if (Angle != 0.0f)
+  {
+    glRotatef(Angle, 0.f,0.f,1.f);
+    glMultMatrixf(rMatrix.Array);
+  }
+  else
+  {
+    glLoadMatrixf(rMatrix.Array);
+  }
   
   nuiCheckForGLErrors();
   
@@ -261,10 +266,16 @@ void nuiGLPainter::StartRendering()
   //NUI_RETURN_IF_RENDERING_DISABLED;
   nuiCheckForGLErrors();
 
-
+  mScissorX = -1;
+  mScissorY = -1;
+  mScissorW = -1;
+  mScissorH = -1;
+  mScissorOn = false;
+  
   nuiPainter::StartRendering();
   
   SetViewport();
+  glLoadIdentity();
 
   glDisable(GL_DEPTH_TEST);
   glDisable(GL_SCISSOR_TEST);
@@ -335,51 +346,7 @@ void nuiGLPainter::SetState(const nuiRenderState& rState, bool ForceApply)
     mState.mDepthWrite = rState.mDepthWrite;
     glDepthMask(mState.mDepthWrite);
   }
-  
-  // Stencil test:
-#if 0
-  if (ForceApply || mState.mStencilMode != rState.mStencilMode || mState.mStencilValue != rState.mStencilValue)
-  {
-    mState.mStencilMode = rState.mStencilMode;
-    mState.mStencilValue = rState.mStencilValue;
-    switch (mState.mStencilMode)
-    {
-    case nuiIgnoreStencil:
-      //NGL_OUT(_T("nuiIgnoreStencil Value %d\n"), mState.mStencilValue);
-      glDisable(GL_STENCIL_TEST);
-      glStencilMask(0);
-      glStencilFunc(GL_ALWAYS, mState.mStencilValue, 255);
-      glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
-      break;
-    case nuiReadStencil:
-      //NGL_OUT(_T("nuiReadStencil Value %d\n"), mState.mStencilValue);
-      glEnable(GL_STENCIL_TEST);
-      glStencilMask(0);
-      glStencilFunc(GL_EQUAL, mState.mStencilValue, 255);
-      glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
-      break;
-    case nuiAddToStencil:
-      //NGL_OUT(_T("nuiAddToStencil Value %d\n"), mState.mStencilValue);
-      glEnable(GL_STENCIL_TEST);
-      glStencilMask(~0);
-      glStencilFunc(GL_ALWAYS, mState.mStencilValue, 255);
-      glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
-      break;
-    case nuiBlendToStencil:
-      //NGL_OUT(_T("nuiBlendToStencil Value %d\n"), mState.mStencilValue);
-      glEnable(GL_STENCIL_TEST);
-      glStencilMask(~0);
-      glStencilFunc(GL_ALWAYS, mState.mStencilValue, 255);
-      glStencilOp(GL_INCR, GL_INCR, GL_INCR);
-      break;
-    default:
-      NGL_ASSERT(false);
-      break;
-    }
-    nuiCheckForGLErrors();
-  }
-#endif
-  
+    
   // We don't care about the font in the lower layer of rendering
   //nuiFont* mpFont;
   // 
@@ -395,7 +362,7 @@ void nuiGLPainter::SetState(const nuiRenderState& rState, bool ForceApply)
     nuiCheckForGLErrors();
   }
 
-  if (mClip.mEnabled)    
+  if (mClip.mEnabled || ForceApply)    
   {
     uint32 width = mWidth;
     uint32 height = mHeight;
@@ -406,7 +373,6 @@ void nuiGLPainter::SetState(const nuiRenderState& rState, bool ForceApply)
       height = mpSurface->GetHeight();
     }
     
-    glEnable(GL_SCISSOR_TEST);
     nuiRect clip(mClip);
 
     int x,y,w,h;
@@ -441,11 +407,31 @@ void nuiGLPainter::SetState(const nuiRenderState& rState, bool ForceApply)
       h = ToBelow(clip.GetHeight());
     }
     //NGL_OUT(_T("To Screen Clip {%d, %d, %d, %d}\n"), x,y,w,h);
-    glScissor(x, y, w, h);
+
+    if (!mScissorOn || ForceApply)
+    {
+      glEnable(GL_SCISSOR_TEST);
+      mScissorOn = true;
+    }
+    
+    if (mScissorX != x || mScissorY != y || mScissorW != w || mScissorH != h || ForceApply)
+    {
+      glScissor(x, y, w, h);
+      mScissorX = x;
+      mScissorY = y;
+      mScissorW = w;
+      mScissorH = h;
+    }
     nuiCheckForGLErrors();
   }
   else
-    glDisable(GL_SCISSOR_TEST);
+  {
+    if (mScissorOn || ForceApply)
+    {
+      glDisable(GL_SCISSOR_TEST);
+      mScissorOn = false;
+    }
+  }
 
   mState.mClearColor = rState.mClearColor;
   mState.mStrokeColor = rState.mStrokeColor;

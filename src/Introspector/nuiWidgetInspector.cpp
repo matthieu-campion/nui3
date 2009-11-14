@@ -438,7 +438,8 @@ void nuiWidgetInfo::RebuildInfo(bool Reconstruct)
       mpPropertyGrid->RemoveRows(0, rows);
     
     rows = pnames.size();
-    mpPropertyGrid->AddRows(0, rows);
+    if (rows)
+      mpPropertyGrid->AddRows(0, rows);
     
     while (it != end)
     {

@@ -328,8 +328,6 @@ void nuiMainWindow::Paint()
 //  static int counter = 0;
   //NGL_OUT(_T("%d OnPaint %d - %d\n"), counter++, DrawFullFrame, RestorePartial);
 
-  pContext->LoadIdentity();
-
   pContext->MultMatrix(GetMatrix());
   mLastRendering = nglTime();
   DrawWidget(pContext);

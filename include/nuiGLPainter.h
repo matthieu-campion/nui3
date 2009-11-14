@@ -92,6 +92,13 @@ protected:
 
   bool CheckFramebufferStatus();
   void SetViewport();
+  
+  int32 mScissorX;
+  int32 mScissorY;
+  int32 mScissorW;
+  int32 mScissorH;
+  bool mScissorOn;
+
 };
 
 void nuiCheckForGLErrors();

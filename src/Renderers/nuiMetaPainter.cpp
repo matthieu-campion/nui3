@@ -237,6 +237,8 @@ void nuiMetaPainter::DrawChild(nuiWidget* pChild)
 
 void nuiMetaPainter::LoadMatrix(const nuiMatrix& rMatrix)
 {
+  if (mMatrixStack.top() == rMatrix)
+    return;
   StoreOpCode(eLoadMatrix);
   StoreBuffer(rMatrix.Array, sizeof(nuiSize), 16);
 
@@ -720,7 +722,7 @@ static const nglChar* GetGLMode(GLenum mode)
 
 nglString nuiMetaPainter::GetOperationDescription(int32 OperationIndex) const
 {
-  nglString str;
+  nglString str = _T("???");
   mOperationPos = GetOffsetFromOperationIndex(OperationIndex);
   
   OpCode code = FetchOpCode();
@@ -767,8 +769,9 @@ nglString nuiMetaPainter::GetOperationDescription(int32 OperationIndex) const
     case eDrawChild:
       {
         nuiWidget* pS = (nuiWidget*)FetchPointer();
-        nglString str(pS->GetObjectName());
-        str.CFormat(_T("DrawChild 0x%x / '%ls'"), pS, str.GetChars());
+        nglString clss(pS->GetObjectClass());
+        nglString name(pS->GetObjectName());
+        str.CFormat(_T("DrawChild 0x%x / '%ls - %ls'"), pS, clss.GetChars(), name.GetChars());
       }
       break;
     case eLoadMatrix:
@@ -808,7 +811,7 @@ nglString nuiMetaPainter::GetOperationDescription(int32 OperationIndex) const
         FetchBuffer(m.Array, sizeof(nuiSize), 16);
         nglString v;
         m.GetValue(v);
-        str.CFormat(_T("LoadProjectionMatrix(%f, %f, %f, %f) / %ls"), a, b, d, c, v.GetChars());
+        str.CFormat(_T("LoadProjectionMatrix(%f, %f, %f, %f) / %ls"), a, b, c, d, v.GetChars());
       }
       break;
     case eMultProjectionMatrix:
@@ -843,7 +846,7 @@ nglString nuiMetaPainter::GetOperationDescription(int32 OperationIndex) const
         FetchFloat(b);
         FetchFloat(c);
         FetchFloat(d);
-        str.CFormat(_T("Clip(%f, %f, %f, %f)"), a, b, d, c);
+        str.CFormat(_T("Clip(%f, %f, %f, %f)"), a, b, c, d);
       }
       break;
     case eResetClipRect:
