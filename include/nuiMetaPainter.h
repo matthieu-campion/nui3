@@ -47,7 +47,7 @@ public:
   virtual void EnableClipping(bool set);
 //  virtual bool GetClipRect(nuiRect& rRect, bool LocalRect);
   
-  void DrawChild(nuiWidget* pChild);
+  void DrawChild(nuiDrawContext* pContext, nuiWidget* pChild);
 
   /** @name Render operation storage management */
   //@{
@@ -71,6 +71,9 @@ public:
   nglString GetNextDescription() const;
   void SetName(const nglString& rName);
   const nglString& GetName() const;
+  
+  void SetDrawChildrenImmediat(bool set);
+  bool GetDrawChildrenImmediat() const;
   
 protected:
   // Rendering Operations OpCodes:
@@ -138,6 +141,7 @@ protected:
   mutable std::vector<int32> mOperationIndices;
   mutable int32 mLastSize;
   void UpdateIndices() const;
+  bool mDrawChildrenImmediat;
 };
 
 #endif // __nuiMetaPainter_h__

@@ -20,6 +20,7 @@ nuiMetaPainter::nuiMetaPainter(const nuiRect& rRect, nglContext* pContext)
   mNbDrawArray = 0;
   mNbClearColor = 0;
   mNbOperations = 0;
+  mDrawChildrenImmediat = false;
   mLastSize = -1;
 }
 
@@ -227,11 +228,18 @@ void nuiMetaPainter::SetSize(uint32 w, uint32 h)
   mHeight = h;
 }
 
-void nuiMetaPainter::DrawChild(nuiWidget* pChild)
+void nuiMetaPainter::DrawChild(nuiDrawContext* pContext, nuiWidget* pChild)
 {
+  if (0 && mDrawChildrenImmediat)
+  {
+    pChild->DrawWidget(pContext);
+  }
+  else
+  {
+    StoreOpCode(eDrawChild);
+    StorePointer(pChild);
+  }
   mLastStateValid = false;
-  StoreOpCode(eDrawChild);
-  StorePointer(pChild);
   mNbDrawChild++;
 }
 
@@ -990,4 +998,15 @@ void nuiMetaPainter::UpdateIndices() const
     }
   }
 }
+
+void nuiMetaPainter::SetDrawChildrenImmediat(bool set)
+{
+  mDrawChildrenImmediat = set;
+}
+
+bool nuiMetaPainter::GetDrawChildrenImmediat() const
+{
+  return mDrawChildrenImmediat;
+}
+
 

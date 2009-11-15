@@ -431,7 +431,7 @@ void nuiContainer::DrawChild(nuiDrawContext* pContext, nuiWidget* pChild)
 
   nuiMetaPainter* pMetaPainter = dynamic_cast<nuiMetaPainter*>(pPainter);
   if (pMetaPainter)
-    pMetaPainter->DrawChild(pChild);
+    pMetaPainter->DrawChild(pContext, pChild);
 
   pContext->PopMatrix();
 }

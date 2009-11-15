@@ -49,6 +49,7 @@ nuiSurface::nuiSurface(const nglString& rName, int32 Width, int32 Height, nglIma
   mRenderToTexture = false;
   mpTexture = NULL;
   mpSurfacePainter = new nuiMetaPainter(nuiRect(Width, Height), NULL);
+  mpSurfacePainter->SetDrawChildrenImmediat(true);
   mDirty = true;
   
   SetPainter(mpSurfacePainter);
