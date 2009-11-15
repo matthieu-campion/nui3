@@ -932,7 +932,7 @@ bool nuiWin::CreateText2Window(const nuiEvent& rEvent)
   pGrid->SetCell(0, 1, pScrollView, nuiFill);
 
   pText->SetWrapping(true);
-  pText->SetDebug(1);
+  //pText->SetDebug(1);
 
   nglPath path((nglChar*)rEvent.mpUser);
   nglIStream* pFile = path.OpenRead();
@@ -2033,7 +2033,7 @@ bool nuiWin::CreateFrameWindow3(const nuiEvent& rEvent)
       //pCont->SetPosition(nuiCenter);
       pCont->SetDecoration(pFrames[e], modes[i]);
       pCont->SetBorder(4, 4);
-      pCont->SetDebug(1);
+      //pCont->SetDebug(1);
 
       windows[2 * i + e]->AddChild(pCont);
       pLabel->SetColor(eNormalTextFg, nuiColor(0, 0, 0));

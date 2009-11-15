@@ -489,7 +489,7 @@ void nuiGLPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
       {
         std::map<nuiSurface*, FramebufferInfo>::const_iterator it = mFramebuffers.find(pSurface);
         bool create = (it == mFramebuffers.end()) ? true : false;  
-        if (create)
+        if (create || pSurface->IsDirty())
         {
           PushClipping();
           nuiRenderState s(mState);// PushState();
@@ -500,7 +500,7 @@ void nuiGLPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
           
           SetState(nuiRenderState());
           ResetClipRect();
-          mClip.Set(0.0f, 0.0f, pSurface->GetWidth(), pSurface->GetHeight());
+          mClip.Set(0, 0, pSurface->GetWidth(), pSurface->GetHeight());
 
           LoadMatrix(nglMatrixf());
           

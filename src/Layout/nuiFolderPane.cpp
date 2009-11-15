@@ -155,6 +155,8 @@ void nuiFolderPane::Open()
   mIsOpened = true;
   
   Opened();
+  
+  SetHotRect(GetIdealRect().Size());
 }
 
 // virtual, to be optionally overloaded

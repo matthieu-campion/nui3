@@ -18,13 +18,13 @@ class NUI_API nuiSurface : public nuiObject, public nuiDrawContext
 {
 public:
   static nuiSurface* GetSurface (const nglString& rName, bool Acquired); ///< Get a surface from its ID
-  static nuiSurface* CreateSurface (const nglString& rName, nuiSize Width, nuiSize Height); ///< Create a surface
+  static nuiSurface* CreateSurface (const nglString& rName, int32 Width, int32 Height); ///< Create a surface
 
   static void AddCache(nuiSurfaceCache* pCache);
   static void DelCache(nuiSurfaceCache* pCache);
 
-  nuiSize GetWidth() const;
-  nuiSize GetHeight() const;
+  int32 GetWidth() const;
+  int32 GetHeight() const;
 
   nglImagePixelFormat GetPixelFormat() const;
   
@@ -48,19 +48,21 @@ public:
 
   void Wipe(); ///< Completely reset the surface and all associated operations
   
+  bool IsDirty() const;
+  
   nuiMetaPainter* GetSurfacePainter() const;
   void Realize(nuiDrawContext* pDestinationPainter);
 
 protected:
-  nuiSurface(const nglString& rName, nuiSize Width, nuiSize Height, nglImagePixelFormat PixelFormat = eImagePixelRGBA);
+  nuiSurface(const nglString& rName, int32 Width, int32 Height, nglImagePixelFormat PixelFormat = eImagePixelRGBA);
   virtual ~nuiSurface();
 
 private:
   uint32 mCount;
   bool mPermanent;
 
-  nuiSize mWidth;
-  nuiSize mHeight;
+  int32 mWidth;
+  int32 mHeight;
   
   bool mDepth;
   bool mStencil;
@@ -73,6 +75,8 @@ private:
 
   static nuiSurfaceMap mpSurfaces;
   static nuiSurfaceCacheSet mpSurfaceCaches;
+  
+  bool mDirty;
 };
 
 #endif//__nuiSurface_h__

@@ -64,8 +64,8 @@ nuiLabel::nuiLabel(const nglString& Text, const nglString& rObjectName, nuiTheme
 
 void nuiLabel::InitDefaultValues()
 {
-//  EnableSurface(true);
-//  SetSurfaceBlendFunc(nuiBlendTop); // This is needed to handle text blending corectly for now.
+  //EnableSurface(true);
+  //SetSurfaceBlendFunc(nuiBlendTop); // This is needed to handle text blending corectly for now.
 
   mUnderline = false;
   mStrikeThrough = false;

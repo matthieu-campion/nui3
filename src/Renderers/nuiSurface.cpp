@@ -21,7 +21,7 @@ nuiSurface* nuiSurface::GetSurface (const nglString& rName, bool Acquired)
   return pSurface;
 }
 
-nuiSurface* nuiSurface::CreateSurface (const nglString& rName, nuiSize Width, nuiSize Height)
+nuiSurface* nuiSurface::CreateSurface (const nglString& rName, int32 Width, int32 Height)
 {
   nuiSurface* pSurface = NULL;
   //NGL_OUT(_T("nuiSurface::CreateSurface(%ls, %.1f, %.1f)\n"), rName.GetChars(), Width, Height);
@@ -33,7 +33,7 @@ nuiSurface* nuiSurface::CreateSurface (const nglString& rName, nuiSize Width, nu
   return pSurface;
 }
 
-nuiSurface::nuiSurface(const nglString& rName, nuiSize Width, nuiSize Height, nglImagePixelFormat PixelFormat)
+nuiSurface::nuiSurface(const nglString& rName, int32 Width, int32 Height, nglImagePixelFormat PixelFormat)
   : nuiObject(), nuiDrawContext(nuiRect(Width, Height))
 {
   //NGL_OUT(_T("nuiSurface CTOR 0x%x (%f x %f\n"), this, Width, Height);
@@ -49,6 +49,7 @@ nuiSurface::nuiSurface(const nglString& rName, nuiSize Width, nuiSize Height, ng
   mRenderToTexture = false;
   mpTexture = NULL;
   mpSurfacePainter = new nuiMetaPainter(nuiRect(Width, Height), NULL);
+  mDirty = true;
   
   SetPainter(mpSurfacePainter);
   
@@ -77,11 +78,12 @@ nuiSurface::~nuiSurface()
   //NGL_OUT(_T("nuiSurface DTOR 0x%x\n"), this);
 }
 
-nuiSize nuiSurface::GetWidth() const
+int32 nuiSurface::GetWidth() const
 {
   return mWidth;
 }
-nuiSize nuiSurface::GetHeight() const
+
+int32 nuiSurface::GetHeight() const
 {
   return mHeight;
 }
@@ -96,6 +98,7 @@ void nuiSurface::SetDepth(bool Enable)
 {
   mDepth = Enable;
 }
+
 bool nuiSurface::GetDepth() const
 {
   return mDepth;
@@ -193,11 +196,17 @@ nuiMetaPainter* nuiSurface::GetSurfacePainter() const
 void nuiSurface::Wipe()
 {
   mpSurfacePainter->Reset(NULL);
+  mDirty = true;
 }
 
 void nuiSurface::Realize(nuiDrawContext* pDestinationPainter)
 {
-  NGL_OUT(_T("nuiSurface::Realize() [%x]\n"), this);
+  //NGL_OUT(_T("nuiSurface::Realize() [%x]\n"), this);
   mpSurfacePainter->ReDraw(pDestinationPainter);
+  mDirty = false;
 }
 
+bool nuiSurface::IsDirty() const
+{
+  return mDirty;
+}
