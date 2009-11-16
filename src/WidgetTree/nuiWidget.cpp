@@ -1413,7 +1413,6 @@ void nuiWidget::DrawSurface(nuiDrawContext* pContext)
   pContext->SetTexture(pTexture);
   pContext->EnableBlending(true);
   pContext->SetFillColor(mSurfaceColor);
-  pContext->SetFillColor(nuiColor(1.0f, 1.0f, 1.0f, 1.0f));
 
   pContext->SetBlendFunc(mSurfaceBlendFunc);
   
@@ -3340,6 +3339,8 @@ bool nuiWidget::IsRenderCacheEnabled()
 
 const nuiMetaPainter* nuiWidget::GetRenderCache() const
 {
+  if (mSurfaceEnabled && mpSurface)
+    return mpSurface->GetSurfacePainter();
   return mpRenderCache;
 }
 
@@ -3460,6 +3461,8 @@ bool nuiWidget::AutoTrash(const nuiEvent& rEvent)
 
 bool nuiWidget::IsDrawingInCache(bool Recurse) 
 { 
+  if (mSurfaceEnabled)
+    return false;
   if (mDrawingInCache)
     return true;
   if (Recurse && mpParent)

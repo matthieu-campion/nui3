@@ -230,7 +230,7 @@ void nuiMetaPainter::SetSize(uint32 w, uint32 h)
 
 void nuiMetaPainter::DrawChild(nuiDrawContext* pContext, nuiWidget* pChild)
 {
-  if (0 && mDrawChildrenImmediat)
+  if (1 && mDrawChildrenImmediat)
   {
     pChild->DrawWidget(pContext);
   }
