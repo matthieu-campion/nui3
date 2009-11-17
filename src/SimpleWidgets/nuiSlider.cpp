@@ -280,7 +280,6 @@ bool nuiSlider::MouseMoved  (nuiSize X, nuiSize Y)
     x = X - mClickX;
     y = mClickY - Y;
     
-    //LBDEBUG
     //NGL_OUT(_T("MouseMoved : %.2f %.2f     %.2f %.2f\n"), X, Y,x,y);
     
     
