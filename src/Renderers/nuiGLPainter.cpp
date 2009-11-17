@@ -111,6 +111,25 @@
 //#error "bleh"
 #endif
 
+void ngl_glBlendFuncSeparate(nglContext* pContext, GLenum src, GLenum dst)
+{
+#ifndef _OPENGL_ES_
+  if (pContext->glBlendFuncSeparate)
+  {
+    pContext->glBlendFuncSeparate(src, dst, GL_ONE, GL_ONE);
+  }
+  else 
+  {
+    glBlendFunc(src, dst);
+  }
+#else
+#if GL_OES_blend_equation_separate
+  glBlendFuncSeparateOES(src, dst, GL_ONE, GL_ONE);
+#endif
+#endif
+}
+
+
 bool nuiGLPainter::CheckFramebufferStatus()
 {
 //  return true;
@@ -292,13 +311,7 @@ void nuiGLPainter::StartRendering()
   glDisable(GL_BLEND);
   glDisable(GL_ALPHA_TEST);
   glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-#ifndef _OPENGL_ES_
-  //if (mpContext->glBlendEquationSeparate)
-  //  mpContext->glBlendEquationSeparate(GL_FUNC_ADD, GL_MAX);
-#else
-  //glBlendEquationSeparateOES(GL_FUNC_ADD, GL_MAX);
-#endif
+  ngl_glBlendFuncSeparate(mpContext, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   nuiCheckForGLErrors();
 }
 
@@ -328,7 +341,7 @@ void nuiGLPainter::SetState(const nuiRenderState& rState, bool ForceApply)
     mState.mBlendFunc = rState.mBlendFunc;
     GLenum src, dst;
     nuiGetBlendFuncFactors(rState.mBlendFunc, src, dst);
-    glBlendFunc(src, dst);
+    ngl_glBlendFuncSeparate(mpContext, src, dst);
     nuiCheckForGLErrors();
   }
 
@@ -357,7 +370,7 @@ void nuiGLPainter::SetState(const nuiRenderState& rState, bool ForceApply)
   if (ForceApply || mState.mColorBuffer != rState.mColorBuffer)
   {
     mState.mColorBuffer = rState.mColorBuffer;
-    GLboolean m = mState.mColorBuffer?GL_TRUE:GL_FALSE;
+    GLboolean m = mState.mColorBuffer ? GL_TRUE : GL_FALSE;
     glColorMask(m, m, m, m);
     nuiCheckForGLErrors();
   }
@@ -786,7 +799,7 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
 #else
     glEnable(GL_POLYGON_SMOOTH);
     glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA_SATURATE, GL_ONE);
+    ngl_glBlendFuncSeparate(mpContext, GL_SRC_ALPHA_SATURATE, GL_ONE);
     nuiCheckForGLErrors();
 #endif
   }
@@ -901,7 +914,7 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
 #else
     glDisable(GL_POLYGON_SMOOTH);
     glDisable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    ngl_glBlendFuncSeparate(mpContext, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 #endif
     nuiCheckForGLErrors();
   }

@@ -1294,11 +1294,12 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
     {
       if (mNeedSelfRedraw)
       {
-        UpdateSurfaceRect(mRect);
+        UpdateSurfaceRect(_self_and_decorations.Size());
         mpSurface->Wipe();
         
         mpSurface->ResetState();
         mpSurface->ResetClipRect();
+        mpSurface->Translate(_self_and_decorations.Left(), _self_and_decorations.Top());
         mpSurface->LoadMatrix(nglMatrixf());
         
         NGL_ASSERT(mpSurface);
@@ -1419,7 +1420,7 @@ void nuiWidget::DrawSurface(nuiDrawContext* pContext)
   pContext->MultMatrix(mSurfaceMatrix);
 
   nuiRect src, dst;
-  src = GetRect().Size();
+  src = GetOverDrawRect(true, true);
   dst = src;
   pContext->DrawImage(dst, src);
   pContext->PopState();
@@ -3352,7 +3353,7 @@ void nuiWidget::EnableSurface(bool Set)
   if (mSurfaceEnabled)
   {
     nglString str(GetSurfaceName(this));
-    nuiRect r(GetRect());
+    nuiRect r(GetOverDrawRect(true, true).Size());
     //NGL_OUT(_T("EnableSurface... %f * %f\n"), r.GetWidth(), r.GetHeight());
     mpSurface = nuiSurface::CreateSurface(str, ToAbove(r.GetWidth()), ToAbove(r.GetHeight()));
     mpSurface->Acquire();
