@@ -28,13 +28,6 @@ OSStatus MyAudioFile_ReadProc(void* pInClientData, SInt64 inPosition, UInt32 req
 	return noErr;
 }
 
-OSStatus MyAudioFile_WriteProc (void* pInClientData, SInt64 inPosition,	UInt32 requestCount, const void* pBuffer,	UInt32* pActualCount)
-{
-	NGL_ASSERT(0);
-	*pActualCount = 0;
-	return noErr;
-}
-
 SInt64 MyAudioFile_GetSizeProc(void* pInClientData)
 {
 	nglIStream* pStream = (nglIStream*)pInClientData;
@@ -42,12 +35,6 @@ SInt64 MyAudioFile_GetSizeProc(void* pInClientData)
 	pStream->SetPos(0);
 	nglFileSize size = pStream->Available();
 	return size;
-}
-
-OSStatus MyAudioFile_SetSizeProc(void* pInClientData, SInt64 inSize)
-{
-	NGL_ASSERT(0);
-	return noErr;
 }
 
 
@@ -88,7 +75,9 @@ nuiAudioDecoderPrivate::~nuiAudioDecoderPrivate()
 bool nuiAudioDecoderPrivate::Init()
 {
 	AudioFileTypeID typeID = 0;
-	OSStatus err =  AudioFileOpenWithCallbacks(&mrStream, &MyAudioFile_ReadProc, &MyAudioFile_WriteProc, &MyAudioFile_GetSizeProc, &MyAudioFile_SetSizeProc, typeID, &mAudioFileID);
+
+  // we only want to read (not write) so give NULL for write callbacks (seems to work...)
+  OSStatus err =  AudioFileOpenWithCallbacks(&mrStream, &MyAudioFile_ReadProc, NULL, &MyAudioFile_GetSizeProc, NULL, typeID, &mAudioFileID);
 	
 	if (err != noErr)
 		return false;
@@ -142,6 +131,17 @@ bool nuiAudioDecoder::ReadInfo()
   UInt32 PropDataSize;
   OSStatus res;
   
+  
+  // #FIXME: the value given by this function is sometimes wrong:
+  // with some m4a files and with Mac OS 10.5, SampleFrames will be 16x too big
+  
+  // get length
+  SInt64 SampleFrames = 0;  
+  PropDataSize = sizeof(SampleFrames);
+  res = ExtAudioFileGetProperty(mpPrivate->mExtAudioFileRef, kExtAudioFileProperty_FileLengthFrames, &PropDataSize, &SampleFrames); 
+  if (res != noErr)
+    return false;
+  
   PropDataSize = sizeof(FileDesc);
   res = ExtAudioFileGetProperty(mpPrivate->mExtAudioFileRef, kExtAudioFileProperty_FileDataFormat, &PropDataSize, &FileDesc);
   if (res != noErr)
@@ -164,12 +164,7 @@ bool nuiAudioDecoder::ReadInfo()
   if (res != noErr)
     return false;
   
-  // get length
-  SInt64 SampleFrames = 0;  
-  PropDataSize = sizeof(SampleFrames);
-  res = ExtAudioFileGetProperty(mpPrivate->mExtAudioFileRef, kExtAudioFileProperty_FileLengthFrames, &PropDataSize, &SampleFrames);
-  if (res != noErr)
-    return false;
+  
   
   mInfo.SetSampleFrames(SampleFrames);
   mInfo.SetSampleRate(SampleRate);

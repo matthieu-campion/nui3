@@ -9289,6 +9289,7 @@
 				INSTALL_PATH = /usr/local/lib;
 				PREBINDING = NO;
 				PRODUCT_NAME = nui3D;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 			};
 			name = Default;
 		};
