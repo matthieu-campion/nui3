@@ -516,9 +516,16 @@ void nglEnumFormat::CreateFormatEtcArray(nglDragAndDrop* pDraggedObject)
   while (it != end)
   {
     FORMATETC format;
+    memset(&format, 0, sizeof(format));
     nglDataObject* pObj = it->second;
     NGL_ASSERT(pObj);
     pObj->SetFormatType(&format);
+    NGL_OUT(_T("FormatEtc %p / %p\n"), this, pDraggedObject);
+    NGL_OUT(_T("\t%x\n"), format.cfFormat);
+    NGL_OUT(_T("\t%x\n"), format.dwAspect);
+    NGL_OUT(_T("\t%x\n"), format.lindex);
+    NGL_OUT(_T("\t%x\n"), format.ptd);
+    NGL_OUT(_T("\t%x\n"), format.tymed);
     mFormatEtc.push_back(format);
     it++;
   }
@@ -841,6 +848,7 @@ HRESULT nglDropTarget::GetObject(IDataObject* pDataObj, bool getData)
     nglString mime;
     if (App->GetDataTypesRegistry().GetRegisteredMimeType(Format.cfFormat, mime))
     {
+      NGL_OUT(_T("nglDropTarget::GetObject mime type: %ls\n"), mime.GetChars());
       nglDataObject* pObj = NULL;
       pObj = mpObject->GetType(mime);
       if (!pObj)

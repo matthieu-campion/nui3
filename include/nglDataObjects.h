@@ -188,7 +188,9 @@ public:
     if (!res)
     {
 #ifdef _WIN32_
-      App->GetDataTypesRegistry().RegisterDataType(rMimeType, CF_PRIVATEFIRST, &nglInternalDataObject<C>::Create);
+      static uint32 counter = 0;
+      App->GetDataTypesRegistry().RegisterDataType(rMimeType, CF_PRIVATEFIRST + counter, &nglInternalDataObject<C>::Create);
+      counter++;
 #endif
       
 #ifdef _CARBON_
