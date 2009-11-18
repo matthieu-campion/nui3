@@ -291,12 +291,12 @@ public:
     mIndex2 = index2;
   }
   
-  nuiWidgetCreatorOperation(Type type, const nglString& rName, const nglString& rValue)
+  nuiWidgetCreatorOperation(Type type, const nglString& rName, const nglString& rValue, uint32 index1 = -1, uint32 index2 = -1)
   {
     mType = type;
     mpCreator = NULL;
-    mIndex1 = 0;
-    mIndex2 = 0;
+    mIndex1 = index1;
+    mIndex2 = index2;
     mName = rName;
     mValue = rValue;
   }
@@ -400,7 +400,18 @@ nuiWidget* nuiWidgetCreator::Create(const std::map<nglString, nglString>& rParam
           {
             nuiAttribBase attrib(pWidget->GetAttribute(LookUp(rParamDictionnary, mOperations[i].mName)));
             if (attrib.IsValid())
-              attrib.FromString(LookUp(rParamDictionnary, mOperations[i].mValue));
+            {
+              int32 i0 = mOperations[i].mIndex1;
+              int32 i1 = mOperations[i].mIndex2;
+              
+              if (i0 < 0)
+                attrib.FromString(LookUp(rParamDictionnary, mOperations[i].mValue));
+              else if (i1 < 0)
+                attrib.FromString(i0, LookUp(rParamDictionnary, mOperations[i].mValue));
+              else
+                attrib.FromString(i0, i1, LookUp(rParamDictionnary, mOperations[i].mValue));
+              
+            }
           }
           break;
           
@@ -444,9 +455,9 @@ void nuiWidgetCreator::SetProperty(const nglString& rName, const nglString& rVal
   mOperations.push_back(nuiWidgetCreatorOperation(nuiWidgetCreatorOperation::eSetProperty, rName, rValue));
 }
 
-void nuiWidgetCreator::SetAttribute(const nglString& rName, const nglString& rValue)
+void nuiWidgetCreator::SetAttribute(const nglString& rName, const nglString& rValue, int32 index0, int32 index1)
 {
-  mOperations.push_back(nuiWidgetCreatorOperation(nuiWidgetCreatorOperation::eSetAttribute, rName, rValue));
+  mOperations.push_back(nuiWidgetCreatorOperation(nuiWidgetCreatorOperation::eSetAttribute, rName, rValue, index0, index1));
 }
 
 const nglString& nuiWidgetCreator::GetObjectClass() const

@@ -22,7 +22,7 @@ public:
 class nuiCSSAction_SetAttribute : public nuiCSSAction
 {
 public:
-  nuiCSSAction_SetAttribute(const nglString& rAttribute, const nglString& rValue);
+  nuiCSSAction_SetAttribute(const nglString& rAttribute, const nglString& rValue, int32 i0, int32 i1);
   virtual ~nuiCSSAction_SetAttribute();
   
   void ApplyAction(nuiObject* pObject);
@@ -30,6 +30,8 @@ public:
 private:
   nglString mAttribute;
   nglString mValue;
+  int32 mIndex0;
+  int32 mIndex1;
 };
 
 class nuiCSSAction_SetProperty : public nuiCSSAction

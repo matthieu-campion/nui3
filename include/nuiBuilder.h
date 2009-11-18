@@ -121,7 +121,7 @@ public:
   void SetCell(uint32 column, uint32 row, nuiWidgetCreator* pCreator);
   
   void SetProperty(const nglString& rName, const nglString& rValue);
-  void SetAttribute(const nglString& rName, const nglString& rValue);
+  void SetAttribute(const nglString& rName, const nglString& rValue, int32 index0 = -1, int32 index1 = -1);
   
   const nglString& GetObjectClass() const;
   const nglString& GetObjectName() const;

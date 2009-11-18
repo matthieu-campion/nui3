@@ -23,10 +23,12 @@
 
 
 ///////////////////////////////
-nuiCSSAction_SetAttribute::nuiCSSAction_SetAttribute(const nglString& rAttribute, const nglString& rValue)
+nuiCSSAction_SetAttribute::nuiCSSAction_SetAttribute(const nglString& rAttribute, const nglString& rValue, int32 i0, int32 i1)
 {
   mAttribute = rAttribute;
   mValue = rValue;
+  mIndex0 = i0;
+  mIndex1 = i1;
 }
 
 nuiCSSAction_SetAttribute::~nuiCSSAction_SetAttribute()
@@ -40,7 +42,14 @@ void nuiCSSAction_SetAttribute::ApplyAction(nuiObject* pObject)
   
   nuiAttribBase Attribute = pObject->GetAttribute(mAttribute);  
   if (Attribute.IsValid())
-    Attribute.FromString(mValue);
+  {
+    if (mIndex0 < 0)
+      Attribute.FromString(mValue);
+    else if (mIndex1 < 0)
+      Attribute.FromString(mIndex0, mValue);
+    else
+      Attribute.FromString(mIndex0, mIndex1, mValue);
+  }
 }
 
 /////////////////////////////////
@@ -1038,7 +1047,9 @@ protected:
         nglString LValue;
         nglString RValue;
         nglChar Operator;
-        res = ReadAction(LValue, RValue, Operator);
+        int32 i0;
+        int32 i1;
+        res = ReadAction(LValue, RValue, Operator, i0, i1);
         if (!res)
         {
           SetError(_T("error while reading an assignment"));
@@ -1048,7 +1059,7 @@ protected:
         
         if (Operator == _T(':')) // attribute assignment
         {
-          pCreator->SetAttribute(LValue, RValue);
+          pCreator->SetAttribute(LValue, RValue, i0, i1);
         }
         else if (Operator == _T('=')) // property assignment
         {
@@ -1417,13 +1428,15 @@ protected:
     nglChar op = 0;
     nglString symbol;
     nglString rvalue;
+    int32 i0;
+    int32 i1;
     
-    if (!ReadAction(symbol, rvalue, op))
+    if (!ReadAction(symbol, rvalue, op, i0, i1))
       return false;
     
     if (op == _T(':'))
     {
-      nuiCSSAction_SetAttribute* pAction = new nuiCSSAction_SetAttribute(symbol, rvalue);
+      nuiCSSAction_SetAttribute* pAction = new nuiCSSAction_SetAttribute(symbol, rvalue, i0, i1);
       mActions.push_back(pAction);
     }
     else if (op == _T('='))
@@ -1435,8 +1448,11 @@ protected:
     return true;
   }
 
-  bool ReadAction(nglString& rLValue, nglString& rRValue, nglChar& rOperator)
+  bool ReadAction(nglString& rLValue, nglString& rRValue, nglChar& rOperator, int32& index0, int32& index1)
   {
+    index0 = -1;
+    index1 = -1;
+    
     if (!SkipBlank())
     {
       SetError(_T("Missing action"));
@@ -1457,6 +1473,69 @@ protected:
       return false;
     }
     
+    if (mChar == _T('['))
+    {
+      if (!GetChar() || !SkipBlank())
+      {
+        SetError(_T("End of file while looking for a index ([x])"));
+        return false;
+      }
+ 
+      if (mChar == _T(','))
+      {
+        if (!GetChar() || !SkipBlank())
+        {
+          SetError(_T("End of file while looking for a index ([x])"));
+          return false;
+        }
+      }
+      
+      nglString idx;
+      if (!GetIntValue(idx))
+      {
+        SetError(_T("Error while looking for a index ([x])"));
+        return false;
+      }
+
+      index0 = idx.GetCInt();
+      
+      if (!SkipBlank())
+      {
+        SetError(_T("End of file while looking for an index or ']'"));
+        return false;
+      }
+
+      if (mChar != _T(']'))
+      {
+        nglString idx;
+        if (!GetIntValue(idx))
+        {
+          SetError(_T("Error while looking for an index ([x])"));
+          return false;
+        }
+        
+        index1 = idx.GetCInt();
+        
+        if (!SkipBlank())
+        {
+          SetError(_T("End of file while looking for ']'"));
+          return false;
+        }
+      }
+
+      if (mChar != _T(']'))
+      {
+        SetError(_T("Error while looking for ']'"));
+        return false;
+      }
+ 
+      if (!GetChar() || !SkipBlank())
+      {
+        SetError(_T("Error while looking for an operator"));
+        return false;
+      }
+      
+    }
     
     nglChar op = 0;
     if (mChar == _T('='))
