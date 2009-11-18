@@ -3070,6 +3070,7 @@ void GetDropEffects(nglDragAndDrop* pObj, DWORD* pEffect)
 
 void nglWindow::EnterModalState()
 {
+  NGL_OUT(_T("nglWindow::EnterModalState() [%p - %d]"), this, mInModalState);
   if (GetState() == eHide || GetState() == eMinimize)
     SetState(eShow);
 
@@ -3108,11 +3109,14 @@ void nglWindow::EnterModalState()
   {
     PostQuitMessage(msg.wParam);
   }
+
+  NGL_OUT(_T("nglWindow::EnterModalState(done) [%p - %d]"), this, mInModalState);
 }
 
 
 void nglWindow::ExitModalState()
 {
+  NGL_OUT(_T("nglWindow::ExitModalState() [%p - %d]"), this, mInModalState);
   mInModalState--;
 }
 

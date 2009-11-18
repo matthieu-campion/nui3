@@ -207,7 +207,9 @@ public:
 #ifdef _WIN32_
   virtual void SetFormatType(FORMATETC* pFormat)
   {
-    pFormat->cfFormat = CF_PRIVATEFIRST;
+    nglNativeObjectType type;
+    bool res = App->GetDataTypesRegistry().GetRegisteredFormatType(mMimeType, type);
+    pFormat->cfFormat = type;
     pFormat->tymed = TYMED_HGLOBAL;
     pFormat->ptd = NULL;
     pFormat->dwAspect = DVASPECT_CONTENT;
