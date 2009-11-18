@@ -20,21 +20,44 @@
 //class nuiRSSItem
 nuiRSSItem::nuiRSSItem(const nuiXMLNode* pNode)
 {
-  STARTELEM;
-  GETELEM("title", mTitle)
-  GETELEM("link", mLink)
-  GETELEM("description", mDescription)
-  GETELEM("author", mAuthor)
-  GETELEM("category", mCategory)
-  //GETSUBELEM("category", "domain", mCategoryDomain)
-  //GETELEM("comments", mComments)
-  //GETSUBELEM("enclosure", "url", mEnclosureURL)
-  //GETSUBELEM("enclosure", "length", mEnclosureLength)
-  //GETSUBELEM("enclosure", "type", mEnclosureType)
-  GETELEM("guid", mGUID)
-  GETELEM("pubDate", mPublishingDate)
-  GETELEM("source", mSourceURL)
-  ENDELEM;
+  if (pNode->GetName().Compare(_T("entry"), false) == 0)
+  {
+    // This is an Atom feed
+    STARTELEM;
+    GETELEM("title", mTitle)
+    GETELEMATTR("link", "href", mLink)
+    GETELEM("content", mDescription)
+    //GETELEM("author", mAuthor)
+    //GETELEM("category", mCategory)
+    //GETSUBELEM("category", "domain", mCategoryDomain)
+    //GETELEM("comments", mComments)
+    //GETSUBELEM("enclosure", "url", mEnclosureURL)
+    //GETSUBELEM("enclosure", "length", mEnclosureLength)
+    //GETSUBELEM("enclosure", "type", mEnclosureType)
+    GETELEM("id", mGUID)
+    GETELEM("updated", mPublishingDate)
+    GETELEM("source", mSourceURL)
+    ENDELEM;
+  }
+  else
+  {
+    STARTELEM;
+    GETELEM("title", mTitle)
+    GETELEM("link", mLink)
+    GETELEM("description", mDescription)
+    GETELEM("author", mAuthor)
+    GETELEM("category", mCategory)
+    //GETSUBELEM("category", "domain", mCategoryDomain)
+    //GETELEM("comments", mComments)
+    //GETSUBELEM("enclosure", "url", mEnclosureURL)
+    //GETSUBELEM("enclosure", "length", mEnclosureLength)
+    //GETSUBELEM("enclosure", "type", mEnclosureType)
+    GETELEM("guid", mGUID)
+    GETELEM("pubDate", mPublishingDate)
+    GETELEM("source", mSourceURL)
+    ENDELEM;
+  }
+
 }
 
 nuiRSSItem::~nuiRSSItem()
@@ -273,52 +296,96 @@ bool nuiRSS::UpdateFromXML(nuiXMLNode* pXML)
   if (!pXML)
     return false;
 
-  if (pXML->GetName() != _T("rss"))
+  if (pXML->GetName() != _T("rss") && pXML->GetName() != _T("feed"))
     return false;
   
   mItems.clear();
-  for (int32 j = 0; j < pXML->GetChildrenCount(); j++)
+  
+  if (pXML->GetName() == _T("rss"))
   {
-    nuiXMLNode* pNode = pXML->GetChild(j);
-    if (!pNode)
-      return false;
-
+    for (int32 j = 0; j < pXML->GetChildrenCount(); j++)
+    {
+      nuiXMLNode* pNode = pXML->GetChild(j);
+      if (!pNode)
+        return false;
+      
+      printf("xml item: '%ls'\n", pNode->GetName().GetChars());
+      if (pNode->GetName() == _T("channel"))
+      {
+        
+        STARTELEM;
+        GETELEM("title", mTitle);
+        GETELEM("url", mURL);
+        GETELEM("description", mDescription);
+        GETELEM("language", mLanguage);
+        GETELEM("copyright", mCopyright);
+        GETELEM("managingEditor", mManagingEditor);
+        GETELEM("webMaster", mWebMaster);
+        GETELEM("pubDate", mPublishingDate);
+        GETELEM("lastBuildDate", mLastBuildDate);
+        GETELEM("category", mCategory);
+        GETELEM("generator", mGenerator);
+        GETELEM("docs", mDocs);
+        GETELEM("ttl", mTimeToLive);
+        //GETSUBELEM("image", "title", mImageTitle);
+        //GETSUBELEM("image", "url", mImageURL);
+        //GETSUBELEM("image", "link", mImageLink);
+        GETELEM("rating", mRating);
+        GETELEM("skipHours", mSkipHours);
+        GETELEM("skipDays", mSkipDays);
+        if (name == _T("item"))
+        {
+          mItems.push_back(nuiRSSItem(pN));
+        }
+        ENDELEM;
+        
+        printf("%d item found", mItems.size());
+        
+        return true;
+      }
+      
+    }
+  }
+  else if (pXML->GetName() == _T("feed"))
+  {
+    nuiXMLNode* pNode = pXML;
     printf("xml item: '%ls'\n", pNode->GetName().GetChars());
-    if (pNode->GetName() == _T("channel"))
+    
+    if (pNode->GetName() == _T("feed"))
     {
       
       STARTELEM;
       GETELEM("title", mTitle);
       GETELEM("url", mURL);
-      GETELEM("description", mDescription);
-      GETELEM("language", mLanguage);
-      GETELEM("copyright", mCopyright);
-      GETELEM("managingEditor", mManagingEditor);
-      GETELEM("webMaster", mWebMaster);
-      GETELEM("pubDate", mPublishingDate);
-      GETELEM("lastBuildDate", mLastBuildDate);
-      GETELEM("category", mCategory);
-      GETELEM("generator", mGenerator);
-      GETELEM("docs", mDocs);
-      GETELEM("ttl", mTimeToLive);
+      GETELEM("subtitle", mDescription);
+      //GETELEM("language", mLanguage);
+      //GETELEM("copyright", mCopyright);
+      //GETELEM("managingEditor", mManagingEditor);
+      //GETELEM("webMaster", mWebMaster);
+      //GETELEM("pubDate", mPublishingDate);
+      GETELEM("updated", mLastBuildDate);
+      //GETELEM("category", mCategory);
+      //GETELEM("generator", mGenerator);
+      //GETELEM("docs", mDocs);
+      //GETELEM("ttl", mTimeToLive);
       //GETSUBELEM("image", "title", mImageTitle);
       //GETSUBELEM("image", "url", mImageURL);
       //GETSUBELEM("image", "link", mImageLink);
-      GETELEM("rating", mRating);
-      GETELEM("skipHours", mSkipHours);
-      GETELEM("skipDays", mSkipDays);
-      if (name == _T("item"))
+      //GETELEM("rating", mRating);
+      //GETELEM("skipHours", mSkipHours);
+      //GETELEM("skipDays", mSkipDays);
+      if (name == _T("entry"))
       {
         mItems.push_back(nuiRSSItem(pN));
       }
       ENDELEM;
-
+      
       printf("%d item found", mItems.size());
       
       return true;
     }
-    
   }
+  
   return true;
 }
 
