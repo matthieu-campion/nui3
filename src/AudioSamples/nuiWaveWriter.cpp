@@ -252,9 +252,6 @@ bool nuiWaveWriter::Finalize()
   if ( 1 != mrStream.WriteInt32(&Size,1))
     return false;
   
-  //Go to "RIFF" Chunk Data Size position in stream
-  mrStream.SetPos(4,eStreamFromStart);
-  
   // add chunk size.. 
   if(mrSampleInfo.GetSlices().size() > 0)
   {
@@ -272,6 +269,10 @@ bool nuiWaveWriter::Finalize()
     return false;
   
   //Write
+
+  //Go to "RIFF" Chunk Data Size position in stream
+  mrStream.SetPos(4,eStreamFromStart);
+  
   if ( 1 != mrStream.WriteInt32(&Size,1))
     return false;
   

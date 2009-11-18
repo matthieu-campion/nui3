@@ -281,8 +281,9 @@ bool nuiAudioDecoder::ReadInfo()
           mInfo.SetSampleRate(SampleRate);
           mInfo.SetBitsPerSample(REQUESTED_BITS_PER_SAMPLE); // we want to convert to 32 bits float samples
           mInfo.SetSampleFrames(SampleFrames);
-		  mInfo.SetStartFrame(0);
-		  mInfo.SetStopFrame(mInfo.GetSampleFrames());
+		      mInfo.SetStartFrame(0);
+		      mInfo.SetStopFrame(mInfo.GetSampleFrames());
+          mInfo.SetFileFormat(eAudioCompressed);
           
           mpPrivate->mQueue.SetInputBytesPerSample(bitsPerSample / 8);
           
