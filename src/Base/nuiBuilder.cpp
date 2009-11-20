@@ -235,11 +235,11 @@ bool nuiBuilder::GetClassList(list<nuiWidgetDesc>& rClassNames) const
 
 nuiWidget* nuiBuilder::CreateWidget(const nglString& rClassName) const
 {
-  std::map<nglString, nglString> ParamDictionnary;
-  return CreateWidget(rClassName, ParamDictionnary);
+  std::map<nglString, nglString> ParamDictionary;
+  return CreateWidget(rClassName, ParamDictionary);
 }
 
-nuiWidget* nuiBuilder::CreateWidget(const nglString& rClassName, const std::map<nglString, nglString>& rParamDictionnary) const
+nuiWidget* nuiBuilder::CreateWidget(const nglString& rClassName, const std::map<nglString, nglString>& rParamDictionary) const
 {
   nuiCreateWidgetFn pFn = GetHandler(rClassName);
   if (pFn)
@@ -249,7 +249,7 @@ nuiWidget* nuiBuilder::CreateWidget(const nglString& rClassName, const std::map<
   if (it == mCreatorMap.end())
     return NULL;
   
-  return (it->second)->Create(rParamDictionnary, this);
+  return (it->second)->Create(rParamDictionary, this);
 }
 
 nuiWidget* nuiCreateWidget(const nglString& rClassName)
@@ -323,23 +323,37 @@ nuiWidgetCreator::~nuiWidgetCreator()
   }
 }
 
-static const nglString& LookUp(const std::map<nglString, nglString>& rParamDictionnary, const nglString& rString)
+const nglString& nuiWidgetCreator::LookUp(const std::map<nglString, nglString>& rParamDictionary, const nglString& rString) const
 {
-  const std::map<nglString, nglString>::const_iterator it = rParamDictionnary.find(rString);
-  if (it != rParamDictionnary.end())
+  const std::map<nglString, nglString>::const_iterator it = rParamDictionary.find(rString);
+  if (it != rParamDictionary.end())
     return it->second;
-  
+
   return rString;
 }
 
-nuiWidget* nuiWidgetCreator::Create(const std::map<nglString, nglString>& rParamDictionnary, const nuiBuilder* pBuilder) const
+nuiWidget* nuiWidgetCreator::Create(const std::map<nglString, nglString>& rParamDictionary, const nuiBuilder* pBuilder) const
 {
   if (!pBuilder)
     pBuilder = &nuiBuilder::Get();
+
+  // Merge the dictionaries:
+  std::map<nglString, nglString> ParamDictionary(mDefaultDictionary);
+  ParamDictionary.insert(rParamDictionary.begin(), rParamDictionary.end());
   
-  nglString classname(LookUp(rParamDictionnary, mClassName));
-  nglString objectname(LookUp(rParamDictionnary,mObjectName));
-  nuiWidget* pWidget = pBuilder->CreateWidget(classname);
+  NGL_OUT(_T("\nBuild %ls / %ls\n"), mClassName.GetChars(), mObjectName.GetChars());
+  std::map<nglString, nglString>::iterator it = ParamDictionary.begin();
+  std::map<nglString, nglString>::iterator end = ParamDictionary.end();
+  while (it != end)
+  {
+    NGL_OUT(_T("\t%ls - %ls\n"), it->first.GetChars(), it->second.GetChars());
+    ++it;
+  }
+  
+  
+  nglString classname(LookUp(ParamDictionary, mClassName));
+  nglString objectname(LookUp(ParamDictionary,mObjectName));
+  nuiWidget* pWidget = pBuilder->CreateWidget(classname, ParamDictionary);
   if (!pWidget)
   {
     NGL_OUT(_T("Error while creating a %ls named %ls (translated to %ls - %ls"), 
@@ -359,7 +373,7 @@ nuiWidget* nuiWidgetCreator::Create(const std::map<nglString, nglString>& rParam
   {
     nuiWidget* pChild = NULL;
     if (mOperations[i].mpCreator)
-      pChild = mOperations[i].mpCreator->Create(rParamDictionnary, pBuilder);
+      pChild = mOperations[i].mpCreator->Create(ParamDictionary, pBuilder);
     
     if (pChild)
     {
@@ -392,24 +406,24 @@ nuiWidget* nuiWidgetCreator::Create(const std::map<nglString, nglString>& rParam
       switch (mOperations[i].mType)
       {
         case nuiWidgetCreatorOperation::eSetProperty:
-          pWidget->SetProperty(LookUp(rParamDictionnary, mOperations[i].mName),
-                               LookUp(rParamDictionnary, mOperations[i].mValue));
+          pWidget->SetProperty(LookUp(ParamDictionary, mOperations[i].mName),
+                               LookUp(ParamDictionary, mOperations[i].mValue));
           break;
           
         case nuiWidgetCreatorOperation::eSetAttribute:
           {
-            nuiAttribBase attrib(pWidget->GetAttribute(LookUp(rParamDictionnary, mOperations[i].mName)));
+            nuiAttribBase attrib(pWidget->GetAttribute(LookUp(ParamDictionary, mOperations[i].mName)));
             if (attrib.IsValid())
             {
               int32 i0 = mOperations[i].mIndex1;
               int32 i1 = mOperations[i].mIndex2;
               
               if (i0 < 0)
-                attrib.FromString(LookUp(rParamDictionnary, mOperations[i].mValue));
+                attrib.FromString(LookUp(ParamDictionary, mOperations[i].mValue));
               else if (i1 < 0)
-                attrib.FromString(i0, LookUp(rParamDictionnary, mOperations[i].mValue));
+                attrib.FromString(i0, LookUp(ParamDictionary, mOperations[i].mValue));
               else
-                attrib.FromString(i0, i1, LookUp(rParamDictionnary, mOperations[i].mValue));
+                attrib.FromString(i0, i1, LookUp(ParamDictionary, mOperations[i].mValue));
               
             }
           }
@@ -427,9 +441,8 @@ nuiWidget* nuiWidgetCreator::Create(const std::map<nglString, nglString>& rParam
 
 nuiWidget* nuiWidgetCreator::Create(const nuiBuilder* pBuilder) const
 {
-  std::map<nglString, nglString> EmptyDictionnary;
-  
-  return Create(EmptyDictionnary, pBuilder);
+  std::map<nglString, nglString> ParamDictionary;
+  return Create(ParamDictionary, pBuilder);
 }
 
 // For any simple container widget:
@@ -469,3 +482,19 @@ const nglString& nuiWidgetCreator::GetObjectName() const
 {
   return mObjectName;
 }
+
+void nuiWidgetCreator::SetDefaultDictionary(const std::map<nglString, nglString>& rParamDictionary)
+{
+  mDefaultDictionary = rParamDictionary;
+}
+
+const std::map<nglString, nglString>& nuiWidgetCreator::GetDefaultDictionary() const
+{
+  return mDefaultDictionary;
+}
+
+std::map<nglString, nglString>& nuiWidgetCreator::GetDefaultDictionary()
+{
+  return mDefaultDictionary;
+}
+

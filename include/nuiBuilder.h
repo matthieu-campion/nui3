@@ -70,7 +70,7 @@ public:
   bool GetClassList(std::list<nuiWidgetDesc>& rClassNames) const; ///< This method fills the given nuiWidgetDesc list with the description (name and group) of the classes that this map can handle. 
 
   nuiWidget* CreateWidget(const nglString& rClassName) const;
-  nuiWidget* CreateWidget(const nglString& rClassName, const std::map<nglString, nglString>& rParamDictionnary) const;
+  nuiWidget* CreateWidget(const nglString& rClassName, const std::map<nglString, nglString>& rParamDictionary) const;
   
   static nuiBuilder& Get()
   {
@@ -108,7 +108,7 @@ public:
   nuiWidgetCreator(const nglString& rClassName, const nglString& rObjectName);
   virtual ~nuiWidgetCreator();
   
-  nuiWidget* Create(const std::map<nglString, nglString>& rParamDictionnary, const nuiBuilder* pBuilder = NULL) const;
+  nuiWidget* Create(const std::map<nglString, nglString>& rParamDictionary, const nuiBuilder* pBuilder = NULL) const;
   nuiWidget* Create(const nuiBuilder* pBuilder = NULL) const;
   
   // For any simple container widget:
@@ -125,10 +125,16 @@ public:
   
   const nglString& GetObjectClass() const;
   const nglString& GetObjectName() const;
+  
+  void SetDefaultDictionary(const std::map<nglString, nglString>& rParamDictionary);
+  const std::map<nglString, nglString>& GetDefaultDictionary() const;
+  std::map<nglString, nglString>& GetDefaultDictionary();
 protected:
   std::vector<nuiWidgetCreatorOperation> mOperations;
   nglString mClassName;
   nglString mObjectName;
+  std::map<nglString, nglString> mDefaultDictionary;
+  const nglString& LookUp(const std::map<nglString, nglString>& rParamDictionary, const nglString& rString) const;
 };
 
 

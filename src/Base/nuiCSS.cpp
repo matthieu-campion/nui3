@@ -861,11 +861,101 @@ protected:
     return res;
   }
   
+  bool ReadDictionary(std::map<nglString, nglString>& rDict)
+  {
+    do
+    {
+      if (!GetChar())
+      {
+        SetError(_T("Unexpected end of file"));
+        return false;
+      }
+      
+      if (!SkipBlank())
+      {
+        SetError(_T("Unexpected end of file"));
+        return false;
+      }      
+      
+      // Read Symbol
+      nglString key;
+      if (!GetSymbol(key))
+      {
+        SetError(_T("error while looking for a symbol"));
+        return false;
+      }
+      
+      if (!SkipBlank())
+      {
+        SetError(_T("Unexpected end of file"));
+        return false;
+      }
+      
+      // Read ':'
+      if (mChar != _T(':'))
+      {
+        SetError(_T("Expected ':'"));
+        return false;
+      }
+      
+      if (!GetChar())
+      {
+        SetError(_T("Unexpected end of file"));
+        return false;
+      }
+      
+      if (!SkipBlank())
+      {
+        SetError(_T("Unexpected end of file"));
+        return false;
+      }
+      
+      // Read Value
+      bool res = false;
+      nglString val;
+      if (mChar == _T('"'))
+      {
+        res = GetQuoted(val);
+      }
+      else
+      {
+        res = GetValue(val, true);
+      }
+
+      if (!res)
+      {
+        SetError(_T("error while looking for a value"));
+        return false;
+      }
+      
+      // SkipBlank
+      if (!SkipBlank())
+      {
+        SetError(_T("expected ')' or ';'"));
+        return false;
+      }
+      
+      rDict[key] = val;
+      
+      if (mChar == _T(')'))
+        break;
+    } while (mChar == _T(';'));
+      
+    if (!GetChar() && !SkipBlank())
+    {
+      SetError(_T("Unexpected end of file"));
+      return false;
+    }
+    
+    return true;
+  }
+  
   nuiWidgetCreator* ReadWidgetCreator(uint32 level = 0)
   {
     bool res = true;
     nglString type;
     nglString name;
+    std::map<nglString, nglString> dict;
     
     if (!SkipBlank())
     {
@@ -892,16 +982,40 @@ protected:
         return NULL;
       if (!GetChar())
         return NULL;
-      return new nuiWidgetCreator(type, name);
+      nuiWidgetCreator* pCreator = new nuiWidgetCreator(type, name);
+      pCreator->SetDefaultDictionary(dict);
+      return pCreator;
     }
-    
+
     // Try to read an optional name (the name is not optionnal for the root of the tree)
     if (mChar != _T('{'))
     {
       if (!GetSymbol(name))
       {
-        SetError(_T("expected a widget creator name"));
-        return NULL;
+        if (mChar == _T('(')) // We couldn't read a symbol, try a param list
+        {
+          if (!ReadDictionary(dict))
+            return NULL;
+        }
+        else
+        {
+          SetError(_T("syntax error while looking for a symbol or '('"));
+          return NULL;        
+        }
+      }
+      else
+      {
+        if (!SkipBlank())
+        {
+          SetError(_T("unexpected end of file"));
+          return NULL;        
+        }
+
+        if (mChar == _T('(')) // We couldn't read a symbol, try a param list
+        {
+          if (!ReadDictionary(dict))
+            return NULL;
+        }
       }
 
       if (!SkipBlank())
@@ -909,7 +1023,6 @@ protected:
         SetError(_T("unexpected end of file"));
         return NULL;        
       }
-      
     }
     else if (!level)
     {
@@ -917,7 +1030,7 @@ protected:
       SetError(_T("The root widget creator MUST have a name"));
       return NULL;
     }
-
+    
     // create an object if the declaration is empty (but with a name)
     if (mChar == _T(';'))
     {
@@ -925,7 +1038,9 @@ protected:
         return NULL;
       if (!GetChar())
         return NULL;
-      return new nuiWidgetCreator(type, name);
+      nuiWidgetCreator* pCreator = new nuiWidgetCreator(type, name);
+      pCreator->SetDefaultDictionary(dict);
+      return pCreator;
     }
 
     if (mChar != _T('{'))
@@ -942,7 +1057,8 @@ protected:
     }
 
     nuiWidgetCreator* pCreator = new nuiWidgetCreator(type, name);
-        
+    pCreator->SetDefaultDictionary(dict);
+
     while (mChar != _T('}'))
     {
       if (!SkipBlank())
