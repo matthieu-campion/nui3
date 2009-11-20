@@ -879,12 +879,14 @@ bool nglWindow::GetResolution(float& rHorizontal, float& rVertical) const
 void nglWindow::EnterModalState()
 {
   SetState(eShow);
-  NGL_ASSERT(!"Not Implemented");
+  NGL_OUT(_T("nglWindow::EnterModalState NOT IMPLENTED YET!"));
+//  NGL_ASSERT(!"Not Implemented");
 }
 
 void nglWindow::ExitModalState()
 {
-  NGL_ASSERT(!"Not Implemented");  
+  NGL_OUT(_T("nglWindow::ExitModalState NOT IMPLENTED YET!"));
+//  NGL_ASSERT(!"Not Implemented");  
 }
 
 void nglWindow::StartTextInput(int32 X, int32 Y, int32 W, int32 H)

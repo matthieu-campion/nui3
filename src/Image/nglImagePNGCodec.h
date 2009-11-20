@@ -21,11 +21,11 @@ public:
     mName = _T("PNG");
     mExtensions.push_back(nglString(_T(".png")));
     mInfo = _T("PNG image codec, using libpng");
-  }
+  };
 
   virtual ~nglImagePNGCodecInfo()
   {
-  }
+  };
 
   virtual nglImageCodec* CreateInstance();
 };

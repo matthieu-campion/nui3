@@ -123,9 +123,10 @@ void ngl_glBlendFuncSeparate(nglContext* pContext, GLenum src, GLenum dst)
     glBlendFunc(src, dst);
   }
 #else
-#if GL_OES_blend_equation_separate
-  glBlendFuncSeparateOES(src, dst, GL_ONE, GL_ONE);
-#endif
+//#if GL_OES_blend_equation_separate
+//  glBlendFuncSeparateOES(src, dst, GL_ONE, GL_ONE);
+//#endif
+  glBlendFunc(src, dst);
 #endif
 }
 
