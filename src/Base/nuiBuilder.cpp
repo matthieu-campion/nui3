@@ -341,14 +341,14 @@ nuiWidget* nuiWidgetCreator::Create(const std::map<nglString, nglString>& rParam
   std::map<nglString, nglString> ParamDictionary(mDefaultDictionary);
   ParamDictionary.insert(rParamDictionary.begin(), rParamDictionary.end());
   
-  NGL_OUT(_T("\nBuild %ls / %ls\n"), mClassName.GetChars(), mObjectName.GetChars());
-  std::map<nglString, nglString>::iterator it = ParamDictionary.begin();
-  std::map<nglString, nglString>::iterator end = ParamDictionary.end();
-  while (it != end)
-  {
-    NGL_OUT(_T("\t%ls - %ls\n"), it->first.GetChars(), it->second.GetChars());
-    ++it;
-  }
+//  NGL_OUT(_T("\nBuild %ls / %ls\n"), mClassName.GetChars(), mObjectName.GetChars());
+//  std::map<nglString, nglString>::iterator it = ParamDictionary.begin();
+//  std::map<nglString, nglString>::iterator end = ParamDictionary.end();
+//  while (it != end)
+//  {
+//    NGL_OUT(_T("\t%ls - %ls\n"), it->first.GetChars(), it->second.GetChars());
+//    ++it;
+//  }
   
   
   nglString classname(LookUp(ParamDictionary, mClassName));
