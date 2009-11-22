@@ -148,6 +148,7 @@ void nuiWidget::InitDefaultValues()
   mSurfaceBlendFunc = nuiBlendTransp;  
   mDecorationMode = eDecorationOverdraw;
   mHotKeyMask = -1;
+  mClickThru = true;
 }
 
 
@@ -559,7 +560,6 @@ void nuiWidget::Init()
   mSelectionExclusive = false;
 
   mMouseEventEnabled = true;
-  mLocalMouseEventEnabled = true;
 
   mBorderRight = mBorderLeft = 0.f;
   mBorderTop = mBorderBottom = 0.f;
@@ -1754,28 +1754,19 @@ bool nuiWidget::MouseEventsEnabled() const
   return mMouseEventEnabled;
 }
 
-void nuiWidget::EnableLocalMouseEvent(bool enable)
-{
-  mLocalMouseEventEnabled = enable;
-}
-bool nuiWidget::LocalMouseEventsEnabled() const
-{
-  return mLocalMouseEventEnabled;
-}
-
 bool nuiWidget::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
 {
-  return false;
+  return !mClickThru;
 }
 
 bool nuiWidget::MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
 {
-  return false;
+  return !mClickThru;
 }
 
 bool nuiWidget::MouseMoved(nuiSize X, nuiSize Y)
 {
-  return false;
+  return !mClickThru;
 }
 
 // Multitouch events:
@@ -4144,7 +4135,15 @@ void nuiWidget::OnPropertyChanged(const nglString& rName, const nglString&rValue
   ApplyCSSForStateChange(NUI_WIDGET_MATCHER_PROPERTY);
 }
 
+void nuiWidget::SetClickThru(bool set)
+{
+  mClickThru = set;  
+}
 
+bool nuiWidget::GetClickThru() const
+{
+  return mClickThru;
+}
 
 // ***************************************************************************
 

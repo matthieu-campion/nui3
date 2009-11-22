@@ -213,8 +213,6 @@ public:
   // These three methods receive the mouse coordinates in this object referential
   void EnableMouseEvent(bool enable);
   bool MouseEventsEnabled() const;
-  void EnableLocalMouseEvent(bool enable);
-  bool LocalMouseEventsEnabled() const;
   virtual bool MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
   virtual bool MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
   virtual bool MouseMoved    (nuiSize X, nuiSize Y);
@@ -247,7 +245,8 @@ public:
   virtual bool SetMouseCursor(nuiMouseCursor Cursor); ///< Set the mouse cursor of the object (when the mouse is hovering on the object). The default cursor is eCursorArrow.
   void SetAttrMouseCursor(nuiMouseCursor Cursor); ///< same, but for the Cursor attributes
   nuiMouseCursor GetMouseCursor() const; ///< Get the mouse cursor of the object (when the mouse is hovering on the object). The default cursor is eCursorArrow.
-  
+  void SetClickThru(bool set); ///< If a widget is ClickThru it lets its parent widgets handle the mouse events it doens't want, otherwise it will intercept all mouse events. ClickThru behaviour is not handled is MouseClicked/Unclicked/Moved are redefined in a subclass.
+  bool GetClickThru() const; ///< If a widget is ClickThru it lets its parent widgets handle the mouse events it doens't want, otherwise it will intercept all mouse events. ClickThru behaviour is not handled is MouseClicked/Unclicked/Moved are redefined in a subclass.
   //@}
 
   /** @name State & flags management */
@@ -539,38 +538,11 @@ protected:
   nuiRect mIdealRect; ///< The ideal bounding box of the nuiObject (in coordinates of its parent) position should be at the origin.
   nuiRect mUserRect; ///< The bounding box of the nuiObject if set by the user (in coordinates of its parent).
   nuiRect mHotRect; ///< The currently important interactive part of the widget. Containers try to keep this rect in view when possible. For exemple set it as the cursor rectangle in a text edit widget. Is you text edit is contained in a scroll view, the scroll view will try to follow the cursor.
-  bool mHasFocus; ///< True if the widget has the focus.
-  bool mHasUserPos;
-  bool mHasUserSize;
-  bool mHasUserWidth;
-  bool mHasUserHeight;
-  bool mForceIdealSize;
-  bool mSelectionExclusive;
-  bool mSelected;
-  bool mEnabled;
-  bool mStateLocked;
-  bool mHover;
-  
-  bool mDecorationEnabled;
   nglString mDecorationName;
 
-  bool mNeedSelfLayout; ///< Layout of this widget has been invalidated
-  bool mNeedLayout; ///< Layout has been invalidated in this branch of the widget tree. This doesn't mean that this particularobject needs to recalc its layout, it may come from one of its children.
-  bool mNeedIdealRect;
-  bool mNeedRender;
-  bool mNeedSelfRedraw;
-
-  bool mNeedSurfaceRedraw;
-  bool mSurfaceEnabled;
   nuiSurface* mpSurface;
   void UpdateSurfaceRect(const nuiRect& rRect);
   
-  bool mMouseEventEnabled;
-  bool mLocalMouseEventEnabled;
-  bool mWantKeyboardFocus;
-  
-  bool mTrashed;
-
   nuiSize mBorderLeft, mBorderRight; // empty space left left and right the widget itself
   nuiSize mBorderTop, mBorderBottom; // empty space left below and above the widget itself
 
@@ -581,7 +553,6 @@ protected:
   std::map<nglString, nuiAnimation*, nglString::NaturalLessFunctor> mAnimations;
 
   nuiMatrix mMatrix;
-  bool mMatrixIsIdentity;
 
   nuiMatrix mSurfaceMatrix;
   nuiColor mSurfaceColor;
@@ -609,7 +580,6 @@ protected:
   };
 
   LayoutConstraint mConstraint;
-  bool mCanRespectConstraint;
 
   void ApplyCSSForStateChange(uint32 MatchersTag); ///< This method will match this widget's state with the CSS and apply the changes needed to display it correctly
   void OnPropertyChanged(const nglString& rName, const nglString& rValue);
@@ -617,7 +587,6 @@ protected:
   virtual void DrawFocus(nuiDrawContext* pContext, bool FrontOrBack); ///< Draw a decoration to show that the widget has the keyboard focus. The focus is drawn on top of the regular decoration if it exists.
   void DispatchFocus(nuiWidgetPtr pWidget); ///< Advise the objet of a change of focus object. pWidget can be null.
 
-private:    
   bool mAnimateLayout : 1;
   bool mRedrawOnHover : 1;
   bool mMixAlpha : 1;
@@ -630,7 +599,34 @@ private:
   bool mInteractiveOD : 1;
   bool mInteractiveDecoration : 1;
   bool mShowFocus : 1;
+  bool mHasFocus: 1; ///< True if the widget has the focus.
+  bool mHasUserPos: 1;
+  bool mHasUserSize: 1;
+  bool mHasUserWidth: 1;
+  bool mHasUserHeight: 1;
+  bool mForceIdealSize: 1;
+  bool mSelectionExclusive: 1;
+  bool mSelected: 1;
+  bool mEnabled: 1;
+  bool mStateLocked: 1;
+  bool mHover: 1;
   
+  bool mDecorationEnabled: 1;
+  bool mNeedSelfLayout: 1; ///< Layout of this widget has been invalidated
+  bool mNeedLayout: 1; ///< Layout has been invalidated in this branch of the widget tree. This doesn't mean that this particularobject needs to recalc its layout, it may come from one of its children.
+  bool mNeedIdealRect: 1;
+  bool mNeedRender: 1;
+  bool mNeedSelfRedraw: 1;
+  
+  bool mNeedSurfaceRedraw: 1;
+  bool mSurfaceEnabled: 1;
+  bool mMouseEventEnabled: 1;
+  bool mWantKeyboardFocus: 1;
+  bool mTrashed: 1;
+  bool mMatrixIsIdentity: 1;
+  bool mCanRespectConstraint: 1;
+
+  bool mClickThru;
   
   void InitDefaultValues();
   void InitProperties(); ///< Init the property bindings.

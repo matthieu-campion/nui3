@@ -290,9 +290,6 @@ bool nuiZoomView::OnHotRectChanged(const nuiEvent& rEvent)
 
 bool nuiZoomView::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
 {
-  if (!mLocalMouseEventEnabled)
-    return false;
-
   if (Button & nglMouseInfo::ButtonWheelUp)
   {
     if (mpVerticalScrollbar)
