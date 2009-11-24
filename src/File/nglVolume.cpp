@@ -120,3 +120,9 @@ void nglVolume::GetVolumes(std::list<nglPathVolume>& rVolumes, uint64 Flags)
 nglVolume::VolumeMap nglVolume::mVolumes;
 nglCriticalSection nglVolume::mCS(_T("nglVolumeCS"));
 
+/// deprecated
+bool nglVolume::GetChildren(const nglPath& rPath, std::list<nglPath>* pChildren)
+{
+  return GetChildren(rPath, *pChildren);
+}
+

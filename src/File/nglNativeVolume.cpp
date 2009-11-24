@@ -72,12 +72,6 @@ nglIOStream* nglNativeVolume::OpenWrite(const nglPath& rPath, bool OverWrite)
 }
 
 
-/// deprecated
-bool nglNativeVolume::GetChildren(const nglPath& rPath, std::list<nglPath>* pChildren)
-{
-  return GetChildren(rPath, *pChildren);
-}
-
 bool nglNativeVolume::GetChildren(const nglPath& rPath, std::list<nglPath>& rChildren)
 {
   nglPath p(mInfos.mPath);

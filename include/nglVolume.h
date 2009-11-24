@@ -33,7 +33,7 @@ public:
   virtual nglIOStream* OpenWrite(const nglPath& rPath, bool OverWrite) = 0;
 
   /// deprecated
-  virtual bool GetChildren(const nglPath& rPath, std::list<nglPath>* pChildren) = 0;
+  bool GetChildren(const nglPath& rPath, std::list<nglPath>* pChildren);
   
   // proper api
   virtual bool GetChildren(const nglPath& rPath, std::list<nglPath>& pChildren) = 0;

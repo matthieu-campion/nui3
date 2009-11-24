@@ -137,12 +137,6 @@ nglIOStream* nuiNativeResourceVolume::OpenWrite(const nglPath& rPath, bool OverW
   return NULL;
 }
 
-/// deprecated
-bool nuiNativeResourceVolume::GetChildren(const nglPath& rPath, std::list<nglPath>* pChildren)
-{
-  return GetChildren(rPath, *pChildren);
-}
-
 bool nuiNativeResourceVolume::GetChildren(const nglPath& rPath, std::list<nglPath>& rChildren)
 {
   nglString p(rPath.GetVolumeLessPath());

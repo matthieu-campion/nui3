@@ -183,12 +183,13 @@ private:
 static zlib_filefunc_def zlib_filefunc;
 
 
-nglZipFS::nglZipFS(nglIStream* pStream, bool Own)
-: mRoot(_T(""), 0, 0, 0, false)
+nglZipFS::nglZipFS(const nglString& rVolumeName, nglIStream* pStream, bool Own)
+: nglVolume(rVolumeName, nglString::Empty, nglString::Empty, nglPathVolume::ReadOnly, nglPathVolume::eTypeZip),
+  mRoot(_T(""), 0, 0, 0, false)
 {
   mpStream = pStream;
   mOwnStream = Own;
-	mIsValid = mpStream != NULL;
+	SetValid(mpStream != NULL);
 
 	if (mpStream)
 		mpStream->SetEndian(eEndianIntel);
@@ -198,11 +199,12 @@ nglZipFS::nglZipFS(nglIStream* pStream, bool Own)
 }
 
 nglZipFS::nglZipFS(const nglPath& rPath)
-: mRoot(_T(""), 0, 0, 0, false)
+: nglVolume(nglPath(rPath.GetNodeName()).GetRemovedExtension(), nglString::Empty, nglString::Empty, nglPathVolume::ReadOnly, nglPathVolume::eTypeZip),
+  mRoot(_T(""), 0, 0, 0, false)
 {
   mpStream = rPath.OpenRead();
   mOwnStream = true;
-	mIsValid = mpStream != NULL;
+  SetValid(mpStream != NULL);
 
 	if (mpStream)
 		mpStream->SetEndian(eEndianIntel);
@@ -219,11 +221,6 @@ nglZipFS::~nglZipFS()
     delete mpStream;
 }
 
-bool nglZipFS::IsValid() const
-{
-	return mIsValid;
-}
-
 bool nglZipFS::Open()
 {	
   zlib_filefunc.opaque = mpStream;
@@ -235,7 +232,7 @@ bool nglZipFS::Open()
   zlib_filefunc.zclose_file = &::zClose;
   zlib_filefunc.zerror_file = &::zError;
 
-	if (mpStream == NULL || mpPrivate == NULL || !mIsValid)
+	if (mpStream == NULL || mpPrivate == NULL || !IsValid())
 		return false;
 	
   mpPrivate->mZip = unzOpen2("", &zlib_filefunc);
@@ -531,3 +528,100 @@ bool nglZipFS::Node::AddChild(nglZipFS::Node* pPath)
   mpChildren.push_back(pPath);
   return true;
 }
+
+
+bool nglZipFS::GetPathInfo(const nglPath& rPath, nglPathInfo& rInfo)
+{
+  nglString p(rPath.GetVolumeLessPath());
+  p.TrimLeft(_T('/'));
+  //wprintf(_T("trimed path '%ls'\n"), p.GetChars());
+  nglPath path(p);
+
+  Node* pChild = mRoot.Find(path); 
+
+  rInfo.Exists = pChild != NULL;
+  rInfo.CanRead = rInfo.Exists;
+  rInfo.CanWrite = false;
+  rInfo.IsLeaf = (pChild != NULL) ? (pChild->mIsLeaf) : false;
+  rInfo.Size = (pChild != NULL) ? (pChild->mSize) : 0;
+  rInfo.Visible = true; ///< Always visible...
+
+  return pChild != NULL;
+}
+
+bool nglZipFS::MakeDirectory(const nglPath& rPath)
+{
+  return false;
+}
+
+bool nglZipFS::Delete(const nglPath& rPathToDelete)
+{
+  return false;
+}
+
+bool nglZipFS::Move(const nglPath& rSource, const nglPath& rPathTarget)
+{
+  return false;
+}
+
+nglIStream* nglZipFS::OpenRead(const nglPath& rPath)
+{
+  nglString p(rPath.GetVolumeLessPath());
+  p.TrimLeft(_T('/'));
+  //wprintf(_T("trimed path '%ls'\n"), p.GetChars());
+  nglPath path(p);
+  Node* pNode = mRoot.Find(path);
+  if (!pNode)
+    return NULL;
+  if (!pNode->mIsLeaf)
+    return NULL;
+
+  unz_file_pos file_pos;
+  file_pos.num_of_file = pNode->mNumOfFile;
+  file_pos.pos_in_zip_directory = pNode->mPosInZipDirectory;
+
+  if (unzGoToFilePos(mpPrivate->mZip, &file_pos) != UNZ_OK)
+    return NULL;
+
+  if (unzOpenCurrentFile(mpPrivate->mZip) != UNZ_OK)
+    return NULL;
+
+  void* pUnzip = unzGetCurrentFile(mpPrivate->mZip);
+
+  if (!pUnzip)
+    return NULL;
+
+  return new nglIZip(this, pUnzip, pNode->mSize, pNode->mNumOfFile, pNode->mPosInZipDirectory);
+}
+
+nglIOStream* nglZipFS::OpenWrite(const nglPath& rPath, bool OverWrite)
+{
+  return NULL;
+}
+
+bool nglZipFS::GetChildren(const nglPath& rPath, std::list<nglPath>& rChildren)
+{
+  nglString p(rPath.GetVolumeLessPath());
+  p.TrimLeft(_T('/'));
+  //wprintf(_T("trimed path '%ls'\n"), p.GetChars());
+  nglPath path(p);
+  Node* pNode = mRoot.Find(path);
+  if (!pNode)
+    return 0;
+
+  std::list<nglZipFS::Node*>::iterator it;
+  std::list<nglZipFS::Node*>::iterator end = pNode->mpChildren.end();
+  for (it = pNode->mpChildren.begin(); it != end; ++it)
+  {
+    if (*it)
+    {
+      nglZipPath path(this, rPath.GetPathName().IsEmpty()? (*it)->mName : rPath.GetPathName() );
+      if (!rPath.GetPathName().IsEmpty())
+        path += nglPath((*it)->mName);
+
+      rChildren.push_back(path);
+    }
+  }
+  return rChildren.size();
+}
+

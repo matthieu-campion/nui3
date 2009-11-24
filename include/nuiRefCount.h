@@ -10,7 +10,7 @@
 
 #include "nui.h"
 
-class NUI_API nuiRefCount
+class nuiRefCount
 {
 public:
   nuiRefCount() : mCount(0), mPermanent(false) 

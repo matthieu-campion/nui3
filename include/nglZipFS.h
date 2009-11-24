@@ -15,6 +15,7 @@
 
 #include "nglStream.h"
 #include "nglPath.h"
+#include "nglVolume.h"
 
 class nglIStream;
 
@@ -50,14 +51,22 @@ private:
   const nglZipFS* mpZipFS;
 };
 
-class NGL_API nglZipFS
+class NGL_API nglZipFS : public nglVolume
 {
 public:
-  nglZipFS(nglIStream* pStream, bool Own = true); ///< Create a Zip FS from a stream.
+  nglZipFS(const nglString& rVolumeName, nglIStream* pStream, bool Own = true); ///< Create a Zip FS from a stream.
   nglZipFS(const nglPath& rPath);                 ///< Create a Zip FS from a file. 
   virtual ~nglZipFS();
 
-	bool IsValid() const;
+  // From nglVolume:
+  virtual bool GetPathInfo(const nglPath& rPath, nglPathInfo& rInfo);
+  virtual bool MakeDirectory(const nglPath& rPath);
+  virtual bool Delete(const nglPath& rPathToDelete);
+  virtual bool Move(const nglPath& rSource, const nglPath& rPathTarget);
+  virtual nglIStream* OpenRead(const nglPath& rPath);
+  virtual nglIOStream* OpenWrite(const nglPath& rPath, bool OverWrite);
+  virtual bool GetChildren(const nglPath& rPath, std::list<nglPath>& pChildren);
+
   bool Open();
 
   bool CanWrite() const;
@@ -91,7 +100,6 @@ private:
 
   nglIStream*    mpStream;
   bool           mOwnStream;
-	bool					 mIsValid;
   nglZipPrivate* mpPrivate;
   Node           mRoot; ///< The zip file's root directory
 

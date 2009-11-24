@@ -22,6 +22,5 @@ public:
   virtual bool Move(const nglPath& rSource, const nglPath& rPathTarget);
   virtual nglIStream* OpenRead(const nglPath& rPath);
   virtual nglIOStream* OpenWrite(const nglPath& rPath, bool OverWrite);
-  virtual bool GetChildren(const nglPath& rPath, std::list<nglPath>* pChildren); ///< deprecated
   virtual bool GetChildren(const nglPath& rPath, std::list<nglPath>& pChildren);
 };
