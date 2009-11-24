@@ -158,6 +158,57 @@ typedef  void  (*CRASHREPORTCALLBACK) ( PEXCEPTION_POINTERS pExceptionInfo, HAND
 
 #if defined(_DEBUG)  ||  defined(RELEASE_TRACE)  ||  !defined(TRACE_NO_CRASH_REPORT)
 
+
+////////////////////////
+// SEND AUTOMATIC EMAIL WITH MAPI!
+// Patch by meeloo
+#include <MAPI.h>
+
+class nglMail
+{
+public:
+  // constructor initializes using InitMapi();
+  nglMail();
+  ~nglMail();
+
+  //send email, internally calls logon and logoff
+  bool Send(const char* pStrSubject,
+    const char* pStrMessage,
+    const char* pStrAttachmentFilePath,
+    const char* pStrRecipient,
+    const char* pStrProfileName,
+    const char* pStrEmailAdress);
+
+protected:
+  // checks if MAPI is installed on the system
+  // if you have outlook express installed, MAPI will be there
+  bool IsMapiInstalled();
+
+  // Initialize function pointers
+  bool InitMapi();
+
+  bool Logon();
+  bool Logoff();
+
+  // session used to send emails
+  LHANDLE mlhSession;
+
+  // MAPI function pointers
+  LPMAPIADDRESS mMAPIAddress;
+  LPMAPIDETAILS mMAPIDetails;		
+  LPMAPIFINDNEXT mMAPIFindNext;		
+  LPMAPIFREEBUFFER mMAPIFreeBuffer;
+  LPMAPILOGOFF mMAPILogoff;		
+  LPMAPILOGON mMAPILogon;			
+  LPMAPIREADMAIL mMAPIReadMail;		
+  LPMAPIRESOLVENAME mMAPIResolveName;	
+  LPMAPISENDDOCUMENTS mMAPISendDocuments;	
+  LPMAPISENDMAIL mMAPISendMail;
+  LPMAPISAVEMAIL mMAPISaveMail;
+};
+
+
+
 namespace  __dbg_util  {
 
 //////////////////////////////////////////////////////////////////////////
@@ -627,6 +678,10 @@ void  ComputerCfgInfo ( LPTSTR pszBuf )
 	GetProcessorInfo (pszBuf + nLen);
 }
 
+
+
+
+
 // Custom message about failure
 inline
 void  CrashReportCallback ( PEXCEPTION_POINTERS pei, HANDLE hRptFile, 
@@ -641,6 +696,23 @@ void  CrashReportCallback ( PEXCEPTION_POINTERS pei, HANDLE hRptFile,
 	MessageBox (NULL, pszMsg, pcszAppFullPath, MB_OK | MB_ICONERROR);
 	// Close file handle only if the process will be terminated by the callback.
 	CloseHandle(hRptFile);
+
+  nglMail mailer;
+  char pStrSubject[1024];
+  char pStrMessage[1024];
+  char pStrAttachmentFilePath[1024];
+  char pStrRecipient[1024];
+  char pStrProfileName[1024];
+  char pStrEmailAdress[1024];
+  _snprintf(pStrSubject, 1024, "%ls in %ls", pszcErrorType, pcszAppFileName);
+  _snprintf(pStrMessage, 1024, pszMsg);
+  strcpy(pStrAttachmentFilePath, pcszRptPath);
+  _snprintf(pStrRecipient, 1024, "meeloo@meeloo.net");;
+  _snprintf(pStrProfileName, 1024, "");;
+  _snprintf(pStrEmailAdress, 1024, "meeloo@meeloo.net");;
+
+  mailer.Send(pStrSubject, pStrMessage, pStrAttachmentFilePath, pStrRecipient, pStrProfileName, pStrEmailAdress);
+
 	//     This callback prevents standard Windows' application error message box from 
 	// being subsequently displayed by simply terminating the current process:
 	TerminateProcess (GetCurrentProcess(), 1);

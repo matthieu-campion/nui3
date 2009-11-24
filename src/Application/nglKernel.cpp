@@ -182,9 +182,14 @@ void nglKernel::DecRef()
     delete this;
 }
 
+void SendSomeMail();
 
 void nglKernel::Init()
 {
+  //SendSomeMail();
+
+  _asm { int 3 };
+
   mRefCount = 0;
 #ifdef _DEBUG_
   mDebug = true;
