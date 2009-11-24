@@ -6,7 +6,7 @@
 
 #pragma once
 
-#if (defined WIN32) && (!defined WIN64)
+#if (defined WIN32) && (!defined _WIN64)
 
 #include <windows.h>
 #include <stdio.h>

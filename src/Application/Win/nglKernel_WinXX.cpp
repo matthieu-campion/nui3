@@ -37,7 +37,9 @@ extern void nglInitExceptionHandler();
 
 nglKernel::nglKernel()
 {
-  //nglInitExceptionHandler();
+#if (defined WIN32) && (!defined _WIN64)
+  nglInitExceptionHandler();
+#endif
 
   Init();
 

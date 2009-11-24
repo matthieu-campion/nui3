@@ -1,5 +1,5 @@
 
-#if 0
+#if (defined WIN32) && (!defined _WIN64)
 #undef UNICODE
 #undef _UNICODE
 #define MAX(X,Y) ((X>Y)?X:Y)
