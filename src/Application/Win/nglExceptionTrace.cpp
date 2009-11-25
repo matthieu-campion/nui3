@@ -62,7 +62,7 @@ void SendSomeMail()
   char pStrEmailAdress[1024];
   _snprintf(pStrEmailAdress, 1024, "meeloo@meeloo.net");;
 
-  mailer.Send(pStrSubject, pStrMessage, pStrAttachmentFilePath, pStrRecipient, NULL, pStrEmailAdress);
+  mailer.Send(pStrSubject, pStrMessage, pStrAttachmentFilePath, pStrRecipient, pStrEmailAdress);
 }
 
 #define MAPI_INSTALLED 0
