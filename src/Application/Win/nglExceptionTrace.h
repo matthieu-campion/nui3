@@ -150,6 +150,8 @@ enum  dbgTracer_DumpTypes  {
 	#undef  ASSERT
 #endif
 
+extern char* nglCrashEmail;
+
 typedef  void  (*COMPUTER_CFG_INFO) ( LPTSTR pszBuf );	// The size of pszBuf is 4K.
 
 typedef  void  (*CRASHREPORTCALLBACK) ( PEXCEPTION_POINTERS pExceptionInfo, HANDLE hRptFile,
@@ -679,7 +681,6 @@ void  ComputerCfgInfo ( LPTSTR pszBuf )
 
 
 
-extern char* nglCrashEmail;
 
 
 // Custom message about failure
@@ -697,7 +698,6 @@ void  CrashReportCallback ( PEXCEPTION_POINTERS pei, HANDLE hRptFile,
 	// Close file handle only if the process will be terminated by the callback.
 	CloseHandle(hRptFile);
 
-  char* nglCrashEmail = NULL;
   if (nglCrashEmail)
   {
     nglMail mailer;

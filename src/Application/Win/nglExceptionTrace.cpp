@@ -114,6 +114,8 @@ bool nglMail::InitMapi()
   mMAPIFreeBuffer	= ( LPMAPIFREEBUFFER	)	GetProcAddress ( hlibMAPI, "MAPIFreeBuffer"		);   
   mMAPIDetails		= ( LPMAPIDETAILS		)	GetProcAddress ( hlibMAPI, "MAPIDetails"		);
   mMAPISaveMail		= ( LPMAPISAVEMAIL		)	GetProcAddress ( hlibMAPI, "MAPISaveMail"		);
+
+  return true;
 }
 
 //##//##/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
