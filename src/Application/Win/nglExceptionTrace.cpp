@@ -59,13 +59,10 @@ void SendSomeMail()
   char pStrRecipient[1024];
   _snprintf(pStrRecipient, 1024, "meeloo@meeloo.net");;
 
-  char pStrProfileName[1024];
-  _snprintf(pStrProfileName, 1024, "");;
-
   char pStrEmailAdress[1024];
   _snprintf(pStrEmailAdress, 1024, "meeloo@meeloo.net");;
 
-  mailer.Send(pStrSubject, pStrMessage, pStrAttachmentFilePath, pStrRecipient, pStrProfileName, pStrEmailAdress);
+  mailer.Send(pStrSubject, pStrMessage, pStrAttachmentFilePath, pStrRecipient, NULL, pStrEmailAdress);
 }
 
 #define MAPI_INSTALLED 0
@@ -199,7 +196,6 @@ bool nglMail::Send(const char* pStrSubject,
                    const char* pStrMessage,
                    const char* pStrAttachmentFilePath,
                    const char* pStrRecipient,
-                   const char* pStrProfileName,
                    const char* pStrEmailAdress)
 {
   MessageBox(NULL, pStrSubject, pStrAttachmentFilePath, 0);

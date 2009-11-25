@@ -176,7 +176,6 @@ public:
     const char* pStrMessage,
     const char* pStrAttachmentFilePath,
     const char* pStrRecipient,
-    const char* pStrProfileName,
     const char* pStrEmailAdress);
 
 protected:
@@ -680,6 +679,7 @@ void  ComputerCfgInfo ( LPTSTR pszBuf )
 
 
 
+extern char* nglCrashEmail;
 
 
 // Custom message about failure
@@ -697,22 +697,24 @@ void  CrashReportCallback ( PEXCEPTION_POINTERS pei, HANDLE hRptFile,
 	// Close file handle only if the process will be terminated by the callback.
 	CloseHandle(hRptFile);
 
-  nglMail mailer;
-  char pStrSubject[1024];
-  char pStrMessage[1024];
-  char pStrAttachmentFilePath[1024];
-  char pStrRecipient[1024];
-  char pStrProfileName[1024];
-  char pStrEmailAdress[1024];
-  _snprintf(pStrSubject, 1024, "%ls in %ls", pszcErrorType, pcszAppFileName);
-  _snprintf(pStrMessage, 1024, pszMsg);
-  strcpy(pStrAttachmentFilePath, pcszRptPath);
-  _snprintf(pStrRecipient, 1024, "meeloo@meeloo.net");;
-  _snprintf(pStrProfileName, 1024, "");;
-  _snprintf(pStrEmailAdress, 1024, "meeloo@meeloo.net");;
+  char* nglCrashEmail = NULL;
+  if (nglCrashEmail)
+  {
+    nglMail mailer;
+    char pStrSubject[1024];
+    char pStrMessage[1024];
+    char pStrAttachmentFilePath[1024];
+    char pStrRecipient[1024];
+    char pStrEmailAdress[1024];
+    _snprintf(pStrSubject, 1024, "%ls in %ls", pszcErrorType, pcszAppFileName);
+    _snprintf(pStrMessage, 1024, pszMsg);
+    strcpy(pStrAttachmentFilePath, pcszRptPath);
+    _snprintf(pStrRecipient, 1024, nglCrashEmail);;
+    _snprintf(pStrEmailAdress, 1024, nglCrashEmail);;
 
-  mailer.Send(pStrSubject, pStrMessage, pStrAttachmentFilePath, pStrRecipient, pStrProfileName, pStrEmailAdress);
-
+    mailer.Send(pStrSubject, pStrMessage, pStrAttachmentFilePath, pStrRecipient, pStrEmailAdress);
+  }
+  
 	//     This callback prevents standard Windows' application error message box from 
 	// being subsequently displayed by simply terminating the current process:
 	TerminateProcess (GetCurrentProcess(), 1);

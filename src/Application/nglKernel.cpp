@@ -188,7 +188,7 @@ void nglKernel::Init()
 {
   //SendSomeMail();
 
-  _asm { int 3 };
+  //_asm { int 3 };
 
   mRefCount = 0;
 #ifdef _DEBUG_
@@ -329,6 +329,14 @@ void nglKernel::CallOnWillExit()
 }
 
 void nglKernel::OnWillExit()
-{}
+{
+
+}
 
 #endif
+
+char* nglCrashEmail = NULL;
+void nglKernel::SetCrashReportEmail(const nglString& rEmail)
+{
+  nglCrashEmail = rEmail.Export();
+}

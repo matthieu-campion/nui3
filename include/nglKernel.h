@@ -289,6 +289,7 @@ public:
 
   void NonBlockingHeartBeat(); ///< Keep the application event loop alive without waiting for new events. (i.e. only process the events that are already in the queue).
   
+  static void SetCrashReportEmail(const nglString& rEmail);
 
 protected:
   // Life cycle
