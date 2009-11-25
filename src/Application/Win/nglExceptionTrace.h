@@ -689,31 +689,44 @@ void  CrashReportCallback ( PEXCEPTION_POINTERS pei, HANDLE hRptFile,
 						    LPCTSTR pcszRptPath, LPCTSTR pcszRptFileName, 
 							LPCTSTR pcszAppFullPath, LPCTSTR pcszAppFileName )
 {
+  CloseHandle(hRptFile);
 	LPCTSTR		pszcErrorType = pei ? _T("Unexpected problem") : _T("Deadlock");
-	TCHAR		pszMsg[256];
-	wsprintf (pszMsg, _T("%s detected in the program \"%s\".\r\n\r\n")
-					  _T("See the report file \"%s\" for more info."), 
-			  pszcErrorType, pcszAppFileName, pcszRptPath);		// pcszRptFileName
-	MessageBox (NULL, pszMsg, pcszAppFullPath, MB_OK | MB_ICONERROR);
-	// Close file handle only if the process will be terminated by the callback.
-	CloseHandle(hRptFile);
-
-  if (nglCrashEmail)
+  TCHAR		pszMsg[1024];
+  if (!nglCrashEmail)
   {
-    nglMail mailer;
-    char pStrSubject[1024];
-    char pStrMessage[1024];
-    char pStrAttachmentFilePath[1024];
-    char pStrRecipient[1024];
-    char pStrEmailAdress[1024];
-    _snprintf(pStrSubject, 1024, "%ls in %ls", pszcErrorType, pcszAppFileName);
-    _snprintf(pStrMessage, 1024, pszMsg);
-    strcpy(pStrAttachmentFilePath, pcszRptPath);
-    _snprintf(pStrRecipient, 1024, nglCrashEmail);;
-    _snprintf(pStrEmailAdress, 1024, nglCrashEmail);;
-
-    mailer.Send(pStrSubject, pStrMessage, pStrAttachmentFilePath, pStrRecipient, pStrEmailAdress);
+    wsprintf (pszMsg, _T("%s detected in the program \"%s\".\r\n\r\n")
+      _T("See the report file \"%s\" for more info."), 
+      pszcErrorType, pcszAppFileName, pcszRptPath);		// pcszRptFileName
+    MessageBox (NULL, pszMsg, pcszAppFullPath, MB_OK | MB_ICONERROR);
   }
+  else
+  {
+    wsprintf (pszMsg, _T("%s detected in the program \"%s\".\r\n\r\n")
+      _T("Do you want to automatically send a crash report file to the support email address: %s?\r\nNo personnal information will be sent but we would welcome some information on the actions that preceded the crash or the documents that provoqued it.\r\n\r\nThank you very much in advance."), 
+      pszcErrorType, pcszAppFileName, nglCrashEmail, pcszRptPath);		// pcszRptFileName
+    int res = MessageBox (NULL, pszMsg, pcszAppFullPath, MB_YESNO | MB_ICONERROR);
+    if (res = IDOK)
+    {
+      TCHAR		pszMsg2[1024];
+      wsprintf (pszMsg2, _T("Please describe what you were doing at the time of the crash:\r\n\r\n\r\n\r\nCrash report file from \"%s\"."), 
+        pcszRptPath);		// pcszRptFileName
+      nglMail mailer;
+      char pStrSubject[1024];
+      char pStrMessage[1024];
+      char pStrAttachmentFilePath[1024];
+      char pStrRecipient[1024];
+      char pStrEmailAdress[1024];
+      _snprintf(pStrSubject, 1024, "%s in %s", pszcErrorType, pcszAppFileName);
+      _snprintf(pStrMessage, 1024, pszMsg2);
+      strcpy(pStrAttachmentFilePath, pcszRptPath);
+      _snprintf(pStrRecipient, 1024, nglCrashEmail);;
+      _snprintf(pStrEmailAdress, 1024, nglCrashEmail);;
+
+      mailer.Send(pStrSubject, pStrMessage, pStrAttachmentFilePath, pStrRecipient, pStrEmailAdress);
+    }
+  }
+	// Close file handle only if the process will be terminated by the callback.
+
   
 	//     This callback prevents standard Windows' application error message box from 
 	// being subsequently displayed by simply terminating the current process:

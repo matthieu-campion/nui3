@@ -175,7 +175,7 @@ bool nglMail::Logon()
 
   if ( !mlhSession )	  // Always ask if there is an active session
   {
-    flFlags = MAPI_NEW_SESSION;//|MAPI_LOGON_UI;  // Logon with a new session and force display of UI.
+    flFlags = MAPI_NEW_SESSION;  // Logon with a new session and force display of UI.
 
     unlResult = mMAPILogon (
       0L, 				// Handle to parent window or 0.
@@ -200,7 +200,6 @@ bool nglMail::Send(const char* pStrSubject,
                    const char* pStrRecipient,
                    const char* pStrEmailAdress)
 {
-  MessageBox(NULL, pStrSubject, pStrAttachmentFilePath, 0);
   ULONG unlResult = 1; 
   MapiMessage oMapiMessage;
   MapiFileDesc oAttachment;
@@ -215,7 +214,6 @@ bool nglMail::Send(const char* pStrSubject,
   if (!Logon())
     return false;
 
-  MessageBox(NULL, "Msg2", "Msg2", 0);
   std::string bstrAddress;
   bstrAddress = "SMTP:";
   bstrAddress += pStrEmailAdress;
@@ -271,24 +269,19 @@ bool nglMail::Send(const char* pStrSubject,
   unlResult = mMAPISendMail (	mlhSession,	// Global session handle.
     0L,				// Parent window.  Set to 0 since console app.
     &oMapiMessage,		// Address of Message structure
-    0L,		
+    MAPI_DIALOG,		
     0L		// Reserved.  Must be 0L.
     );	
 
 
-
-  MessageBox(NULL, "Msg3", "Msg3", 0);
   if (unlResult != SUCCESS_SUCCESS)
     return false;
 
-
-  MessageBox(NULL, "Msg4", "Msg4", 0);
 
   //mMAPIFreeBuffer(tempRecip);  // release the recipient descriptors
   if (!Logoff())
     return false;
 
-  MessageBox(NULL, "Msg5", "Msg5 OK!!!!", 0);
   return true;
 }
 
