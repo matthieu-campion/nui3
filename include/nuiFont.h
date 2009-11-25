@@ -11,12 +11,11 @@
 #include "nuiFontBase.h"
 #include "nuiRect.h"
 #include "nuiObject.h"
-#include "nuiRefCount.h"
 
 class nuiDrawContext;
 
 /// This class implements a basic Font widget.
-class NUI_API nuiFont : public nuiObject, public nuiFontBase, public nuiRefCount
+class NUI_API nuiFont : public nuiObject, public nuiFontBase
 {
 public:
   // Constructors and destructors are protected!

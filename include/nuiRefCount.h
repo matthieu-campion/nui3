@@ -5,10 +5,7 @@
   licence: see nui3/LICENCE.TXT
 */
 
-#ifndef __nuiRefCount_h__
-#define __nuiRefCount_h__
-
-#include "nui.h"
+#pragma once
 
 class nuiRefCount
 {
@@ -22,12 +19,12 @@ public:
     //NGL_ASSERT(mCount == 0); 
   }
 
-  uint Acquire()    
+  uint32 Acquire()    
   { 
     return ++mCount; 
   }
 
-  uint Release()
+  uint32 Release()
   { 
     NGL_ASSERTR(mCount > 0, mCount); 
     mCount--;
@@ -39,7 +36,7 @@ public:
     return mCount; 
   }
 
-  uint GetRefCount()
+  uint32 GetRefCount()
   {
     return mCount;
   }
@@ -68,8 +65,7 @@ public:
   }
 
 private:
-  uint mCount;
+  uint32 mCount;
   bool mPermanent;
 };
 
-#endif // __nuiRefCount_h__

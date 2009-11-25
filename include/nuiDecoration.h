@@ -9,11 +9,10 @@
 
 #include "nui.h"
 #include "nuiDrawContext.h"
-#include "nuiRefCount.h"
 #include "nuiDecorationDefines.h"
 
 
-class nuiDecoration : public nuiObject, public nuiRefCount
+class nuiDecoration : public nuiObject
 {
 public:
   nuiDecoration(const nglString& rName);

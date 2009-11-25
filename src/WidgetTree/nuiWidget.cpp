@@ -3245,7 +3245,7 @@ nuiRectAttributeAnimation* nuiWidget::GetLayoutAnimation(bool CreateIfNotAvailab
 
 void nuiWidget::SetLayoutAnimationDuration(float duration)
 {
-  nuiRectAttributeAnimation* pAnim = pAnim = GetLayoutAnimation(duration > 0);
+  nuiRectAttributeAnimation* pAnim = GetLayoutAnimation(duration > 0);
   if (pAnim)
     pAnim->SetDuration(duration);
 }
@@ -3260,7 +3260,7 @@ float nuiWidget::GetLayoutAnimationDuration()
 
 void nuiWidget::SetLayoutAnimationEasing(const nuiEasingMethod& rMethod)
 {
-  nuiRectAttributeAnimation* pAnim = pAnim = GetLayoutAnimation(true);
+  nuiRectAttributeAnimation* pAnim = GetLayoutAnimation(true);
   if (pAnim)
     pAnim->SetEasing(rMethod);
 }

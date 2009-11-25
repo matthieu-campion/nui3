@@ -44,7 +44,7 @@ bool nuiAnimView::Draw(nuiDrawContext* pContext)
   if (!count)
     return true;
 
-  if (mCount)
+  if (count)
   {
     count--;
     UpdateTime();

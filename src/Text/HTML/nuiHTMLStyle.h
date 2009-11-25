@@ -69,7 +69,7 @@ protected:
   ValueType mValue;
 };
 
-class nuiHTMLStyle : public nuiObject, public nuiRefCount
+class nuiHTMLStyle : public nuiObject
 {
 public:
   nuiHTMLStyle();

@@ -489,7 +489,9 @@ protected:
     }
     
     if (!pObj)
+    {
       return false;
+    }
     
     // Apply the actions to the object:
     uint32 i = 0;

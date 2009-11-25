@@ -19,21 +19,21 @@ This file includes all nui needed headers to ease the creation of precompiled he
 #define NGL_STATIC_BUILD // Fake the static build! Always!
 #endif
 
-#include "ngl.h"
-
 #ifdef _WIN32_
-  #ifdef NGL_STATIC_BUILD
-    #define NUI_API
-  #else
-    #ifdef NUI_EXPORTS
-      #define NUI_API __declspec(dllexport)
-    #else
-      #define NUI_API __declspec(dllimport)
-    #endif
-  #endif
+#ifdef NGL_STATIC_BUILD
+#define NUI_API
 #else
-  #define NUI_API
+#ifdef NUI_EXPORTS
+#define NUI_API __declspec(dllexport)
+#else
+#define NUI_API __declspec(dllimport)
 #endif
+#endif
+#else
+#define NUI_API
+#endif
+
+#include "ngl.h"
 
 #ifdef _WIN32_
 //#include <crtdbg.h>

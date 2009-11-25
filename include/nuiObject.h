@@ -12,6 +12,7 @@
 #include "nuiEvent.h"
 #include "nuiToken.h"
 #include "nuiAttribute.h"
+#include "nuiRefCount.h"
 
 class nuiEventSource;
 
@@ -28,7 +29,7 @@ enum nuiSerializeMode
 };
 
 /// This is the root nui class. It implements all the basic widget management system.
-class NUI_API nuiObject
+class NUI_API nuiObject : public nuiRefCount
 {
 public:
   /** @name Life */

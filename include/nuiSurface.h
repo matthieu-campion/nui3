@@ -2,7 +2,6 @@
 #define __nuiSurface_h__
 
 #include "nuiObject.h"
-#include "nuiRefCount.h"
 #include "nuiDrawContext.h"
 
 class nuiSurface;

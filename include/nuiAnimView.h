@@ -14,7 +14,7 @@
 #include "nuiAnimation.h"
 
 /// nuiAnimView is a widget container that keep all its children at their original position and size.
-class NUI_API nuiAnimView : public nuiSimpleContainer, virtual public nuiAnimation
+class NUI_API nuiAnimView : public nuiSimpleContainer, virtual public nuiAnimation, virtual public nuiRefCount
 {
 public:
   nuiAnimView ();
