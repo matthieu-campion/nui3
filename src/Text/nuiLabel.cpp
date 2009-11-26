@@ -176,10 +176,15 @@ void nuiLabel::InitAttributes()
   
 
   AddAttribute(new nuiAttribute<bool>
-  (nglString(_T("Background")), nuiUnitYesNo,
-   nuiMakeDelegate(this, &nuiLabel::GetBackground), 
-   nuiMakeDelegate(this, &nuiLabel::SetBackground)));
-  
+    (nglString(_T("Background")), nuiUnitYesNo,
+    nuiMakeDelegate(this, &nuiLabel::GetBackground), 
+    nuiMakeDelegate(this, &nuiLabel::SetBackground)));
+
+  AddAttribute(new nuiAttribute<bool>
+    (nglString(_T("Wraping")), nuiUnitYesNo,
+    nuiMakeDelegate(this, &nuiLabel::IsWrapping), 
+    nuiMakeDelegate(this, &nuiLabel::SetWrapping)));
+
   AddAttribute(new nuiAttribute<bool>
   (nglString(_T("Underline")), nuiUnitYesNo,
    nuiMakeDelegate(this, &nuiLabel::GetUnderline), 
