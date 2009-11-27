@@ -167,7 +167,7 @@ void nglLog::Logv (const nglChar* pDomain, uint Level, const nglChar* pText, va_
   // Get time stamp (if necessary)
   nglTimeInfo stamp;
 
-  if ((mStampFlags & TimeStamp) || (mStampFlags & DateStamp))
+  if (mStampFlags & (TimeStamp | DateStamp))
   {
     nglTime now;
     now.GetLocalTime (stamp);

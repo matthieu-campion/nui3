@@ -248,7 +248,7 @@ nuiAudioDevice_DirectSound::nuiAudioDevice_DirectSound(GUID IGuid, GUID OGuid, c
   if (hr != S_OK || !mpDirectSound)
   {
     mpDirectSoundCapture->Release();
-    NGL_OUT(_T("nuiAudioDevice_DirectSound constructor ERROR : could not create DirectSound object!\n"));
+    NGL_LOG(_T("nuiAudioDevice_DirectSound"), 1, _T("constructor ERROR : could not create DirectSound object!\n"));
     return;
   }
 
@@ -281,7 +281,7 @@ nuiAudioDevice_DirectSound::nuiAudioDevice_DirectSound()
   if (hr != S_OK || !mpDirectSound)
   {
     mpDirectSoundCapture->Release();
-    NGL_OUT(_T("nuiAudioDevice_DirectSound constructor ERROR : could not create DirectSound object!\n"));
+    NGL_LOG(_T("nuiAudioDevice_DirectSound"), 1, _T("constructor ERROR : could not create DirectSound object!\n"));
     return;
   }
 
@@ -506,7 +506,7 @@ bool nuiAudioDevice_DirectSound::Open(std::vector<uint32>& rInputChannels, std::
     LPDIRECTSOUNDNOTIFY pInputNotify = NULL;
     if( FAILED( hr = mpInputBuffer->QueryInterface( IID_IDirectSoundNotify, (VOID**)&pInputNotify ) ) )
     {
-      NGL_OUT(_T("nuiAudioDevice_DirectSound::Open ERROR : failed in querying interface for input notifications.\n"));
+      NGL_LOG(_T("nuiAudioDevice_DirectSound"), 1, _T("Open ERROR : failed in querying interface for input notifications.\n"));
       return false;
     }
 
@@ -515,7 +515,7 @@ bool nuiAudioDevice_DirectSound::Open(std::vector<uint32>& rInputChannels, std::
     // of signaled events that are handled in WinMain()
     if( FAILED( hr = pInputNotify->SetNotificationPositions( 2, mInputPosNotify ) ) )
     {
-      NGL_OUT(_T("nuiAudioDevice_DirectSound::Open ERROR : failed in setting notifications for input\n"));
+      NGL_LOG(_T("nuiAudioDevice_DirectSound"), 1, _T("Open ERROR : failed in setting notifications for input\n"));
       return false;
     }
 
@@ -537,7 +537,7 @@ bool nuiAudioDevice_DirectSound::Open(std::vector<uint32>& rInputChannels, std::
     LPDIRECTSOUNDNOTIFY pOutputNotify = NULL;
     if( FAILED( hr = mpOutputBuffer->QueryInterface( IID_IDirectSoundNotify, (VOID**)&pOutputNotify ) ) )
     {
-      NGL_OUT(_T("nuiAudioDevice_DirectSound::Open ERROR : failed in querying interface for output notifications.\n"));
+      NGL_LOG(_T("nuiAudioDevice_DirectSound"), 1, _T("Open ERROR : failed in querying interface for output notifications.\n"));
       return false;
     }
 
@@ -545,7 +545,7 @@ bool nuiAudioDevice_DirectSound::Open(std::vector<uint32>& rInputChannels, std::
     // of signaled events that are handled in WinMain()
     if( FAILED( hr = pOutputNotify->SetNotificationPositions( 2, mOutputPosNotify ) ) )
     {
-      NGL_OUT(_T("nuiAudioDevice_DirectSound::Open ERROR : failed in setting notifications for output\n"));
+      NGL_LOG(_T("nuiAudioDevice_DirectSound"), 1, _T("Open ERROR : failed in setting notifications for output\n"));
       return false;
     }
 
@@ -566,7 +566,7 @@ bool nuiAudioDevice_DirectSound::Open(std::vector<uint32>& rInputChannels, std::
     mpOutputTh->Start();
     hr = mpOutputBuffer->Play(0,0,DSCBSTART_LOOPING);
     if (FAILED(hr))
-      NGL_OUT(_T("OutputBuffer->Play ERROR!\n"));
+      NGL_LOG(_T("nuiAudioDevice_DirectSound"), 1, _T("OutputBuffer->Play ERROR!\n"));
   }
 
   // start input capture
@@ -574,7 +574,7 @@ bool nuiAudioDevice_DirectSound::Open(std::vector<uint32>& rInputChannels, std::
   {
     hr = mpInputBuffer->Start(DSCBSTART_LOOPING);
     if (FAILED(hr))
-      NGL_OUT(_T("InputBuffer->Start ERROR!\n"));    
+      NGL_LOG(_T("nuiAudioDevice_DirectSound"), 1, _T("InputBuffer->Start ERROR!\n"));    
   }
 
 
@@ -796,7 +796,7 @@ nuiAudioDevice_DS_ProcessingTh::~nuiAudioDevice_DS_ProcessingTh()
 
 void nuiAudioDevice_DS_ProcessingTh::Process(uint pos)
 {
-  NGL_OUT(_T("Process Thread received Event %d\n"), pos);
+  NGL_LOG(_T("nuiAudioDevice_DS_ProcessingTh"), 1, _T("Process Thread received Event %d\n"), pos);
 
   int16* pBuf1=NULL;
   int16* pBuf2=NULL;
@@ -817,7 +817,7 @@ void nuiAudioDevice_DS_ProcessingTh::Process(uint pos)
   {
     if (!pBuf1 || !size1)
     {
-      //NGL_OUT(_T("nuiAudioDevice_DS_ProcessingTh::Process error : could not lock any part of the input buffer\n"));
+      //NGL_LOG(_T("nuiAudioDevice_DS_ProcessingTh"), 1, _T("Process error : could not lock any part of the input buffer\n"));
       NGL_ASSERT(0);
       return;
     }
@@ -935,7 +935,7 @@ void nuiAudioDevice_DS_ProcessingTh::OnStart()
       break;
 
     default: 
-      // NGL_OUT(_T("Process Thread : Wait error: %d\n"), GetLastError()); 
+      // NGL_LOG(_T("nuiAudioDevice_DS_ProcessingTh"), 1, _T("Process Thread : Wait error: %d\n"), GetLastError()); 
       mContinue=false;
       break;
     }
@@ -1030,10 +1030,7 @@ void nuiAudioDevice_DS_OutputTh::Process(uint pos)
 
     FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, dw, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR) &lpMsgBuf, 0, NULL );
 
-    wsprintf(szBuf, 
-      _T("GetOutputBuffer()->Lock failed with error %d: %ls"), dw, lpMsgBuf); 
-
-    //NGL_OUT(_T("ERROR : %ls\n"), szBuf); 
+    //NGL_LOG(_T("nuiAudioDevice_DS_ProcessingTh"), 1, _T("ERROR : GetOutputBuffer()->Lock failed with error %d: %ls"), dw, lpMsgBuf); 
 
     LocalFree(lpMsgBuf);
 
@@ -1043,7 +1040,7 @@ void nuiAudioDevice_DS_OutputTh::Process(uint pos)
     {
       if (!pBuf1 || !size1)
       {
-        NGL_OUT(_T("nuiAudioDevice_DS_OutputTh::Process error : could not lock any part of the input buffer\n"));
+        NGL_LOG(_T("nuiAudioDevice_DS_OutputTh"), 1, _T("Process error : could not lock any part of the input buffer\n"));
         NGL_ASSERT(0);
         return;
       }
@@ -1191,7 +1188,7 @@ void nuiAudioDevice_DS_OutputTh::OnStart()
       break;
 
     default: 
-      NGL_OUT(_T("Output process : Wait error: %d\n"), GetLastError()); 
+      NGL_LOG(_T("nuiAudioDevice_DS_OutputTh"), 1, _T("Output process : Wait error: %d\n"), GetLastError()); 
       mContinue=false;
       break;
     }

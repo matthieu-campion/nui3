@@ -637,14 +637,14 @@ DWORD WINAPI nglConsole::ThreadProc(LPVOID pParameter)
         switch(in.Event.KeyEvent.wVirtualKeyCode)
         {
           case VK_RETURN:
-//            NGL_OUT(_T("%s"),pThis->mLine.NewLine));
+            NGL_LOG(_T("nglConsole"), 1, _T("%s"),pThis->mLine.NewLine);
             pThis->OnInput(pThis->mLine);
             pThis->mLine.Wipe();
             break;
           default:
             if (in.Event.KeyEvent.uChar.AsciiChar >= 32 && in.Event.KeyEvent.uChar.AsciiChar < 128)
             {// is printable
-//              NGL_OUT(_T("%c"),in.Event.KeyEvent.uChar.AsciiChar);
+              NGL_LOG(_T("nglConsole"), 1, _T("%c"),in.Event.KeyEvent.uChar.AsciiChar);
               pThis->mLine.Append(in.Event.KeyEvent.uChar.AsciiChar);
             }
             break;

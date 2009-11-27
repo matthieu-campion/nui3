@@ -21,10 +21,6 @@
 #  include <time.h>
 #endif // _POSIX_WORLD_
 
-#ifdef _WIN32_
-//  #define NUI_WIN32_TIMESHIFT
-#endif
-
 const nglTime nglTime::Zero   = 0;
 const nglTime nglTime::Second = 1;
 const nglTime nglTime::Minute = 60;
@@ -35,7 +31,7 @@ const nglTime nglTime::Year   = 31557600;
 
 #ifdef _WIN32_
 __int64 nglTime::mLaunchValue = 0;
-int32 nglTime::mLaunchDate = 0;
+int64 nglTime::mLaunchDate = 0;
 #endif // _WIN32_
 
 
@@ -102,11 +98,6 @@ nglTime::nglTime(const nglTimeInfo& rInfo)
 
   rInfo.CopyToSys(&tinfo);
   mValue = mktime (&tinfo);
-  
-#ifdef NUI_WIN32_TIMESHIFT
-  mValue -= mLaunchDate;
-#endif
-  ;
 }
 
 nglTime::nglTime(const nglTime& rTime)
@@ -129,10 +120,6 @@ bool nglTime::GetGMTime (nglTimeInfo& rInfo)
   struct tm* tinfo;
   time_t tstamp = (time_t)mValue;
 
-#ifdef NUI_WIN32_TIMESHIFT
-  tstamp += mLaunchDate;
-#endif
-
   tinfo = gmtime (&tstamp);
   if (!tinfo)
      return false;
@@ -145,9 +132,6 @@ bool nglTime::GetLocalTime (nglTimeInfo& rInfo)
 {
   struct tm* tinfo;
   time_t tstamp = (time_t)mValue;
-#ifdef NUI_WIN32_TIMESHIFT
-  tstamp += mLaunchDate;
-#endif
 
   tinfo = localtime (&tstamp);
   if (!tinfo)
@@ -164,9 +148,6 @@ nglString nglTime::GetGMTimeStr (const char* pFormat)
   char buffer[1024+1];
   struct tm* tinfo;
   time_t tstamp = (time_t)mValue;
-#ifdef NUI_WIN32_TIMESHIFT
-  tstamp += mLaunchDate;
-#endif
 
   if (!(tinfo = gmtime (&tstamp)) ||
       !strftime (buffer, 1024, pFormat, tinfo))
@@ -181,9 +162,6 @@ nglString nglTime::GetLocalTimeStr (const char* pFormat)
   char buffer[1024+1];
   struct tm* tinfo;
   time_t tstamp = (time_t)mValue;
-#ifdef NUI_WIN32_TIMESHIFT
-  tstamp += mLaunchDate;
-#endif
 
   if (!(tinfo = localtime (&tstamp)) ||
       !strftime (buffer, 1024, pFormat, tinfo))
@@ -261,26 +239,26 @@ __int64 nglTime::mTimerFrequency = 0;
 double nglTime::GetTime()
 {
   double t;
-  __int64 tt;
 
-  if (!mTimerFrequency)
+  if (!mLaunchDate)
   {
     if (!QueryPerformanceFrequency((LARGE_INTEGER *)&mTimerFrequency))
       mTimerFrequency = 0;
-    QueryPerformanceCounter((LARGE_INTEGER *)&mLaunchValue);
-    if (!mLaunchDate)
-    {
-      mLaunchDate = time(NULL);
-    }
+
+    if (mTimerFrequency)
+      QueryPerformanceCounter((LARGE_INTEGER *)&mLaunchValue);
+    else
+      mLaunchValue = ((double)timeGetTime()) / 1000.0;
+
+    mLaunchDate = time(NULL);
   }
 
-  if (mTimerFrequency!=0)
+  if (mTimerFrequency != 0)
   {
+    __int64 tt;
     QueryPerformanceCounter((LARGE_INTEGER *)&tt);
 
-#ifdef NUI_WIN32_TIMESHIFT
     tt -= mLaunchValue;
-#endif
     
     t = (double)tt;
     t /= mTimerFrequency;
@@ -289,6 +267,8 @@ double nglTime::GetTime()
   {
     t = ((double)timeGetTime()) / 1000.0;
   }
+  t += mLaunchDate;
   return t;
 }
+
 #endif // _WIN32_

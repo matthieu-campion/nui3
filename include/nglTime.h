@@ -162,7 +162,7 @@ private:
   double mValue;
 #ifdef _WIN32_
   static __int64 mLaunchValue;
-  static int32 mLaunchDate;
+  static int64 mLaunchDate;
   static __int64   mTimerFrequency;
   static double GetTime();
   friend class nglTimer;

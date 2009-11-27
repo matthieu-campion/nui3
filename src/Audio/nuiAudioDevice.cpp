@@ -204,13 +204,13 @@ nuiAudioDeviceManager::nuiAudioDeviceManager()
 
 void nuiAudioDeviceManager::RegisterAPI(const nglString& rAPIName, nuiAudioDeviceAPI* pAPI)
 {
-  NGL_OUT(_T("nuiAudioDeviceManager::RegisterAPI('%ls') [0x%x]\n"), rAPIName.GetChars(), pAPI);
+  NGL_LOG(_T("nuiAudioDeviceManager"), 1, _T("RegisterAPI('%ls') [0x%x]\n"), rAPIName.GetChars(), pAPI);
   APIMap::const_iterator end = mAPIs.end();
   APIMap::const_iterator it = mAPIs.find(rAPIName);
   if (it != end)
   {
     nuiAudioDeviceAPI* pOldAPI = it->second;
-    NGL_OUT(_T("\tkilling previous entry for this API [0x%p]\n"), pOldAPI);
+    NGL_LOG(_T("nuiAudioDeviceManager"), 1, _T("\tkilling previous entry for this API [0x%p]\n"), pOldAPI);
     delete pOldAPI;
   }
   mAPIs[rAPIName] = pAPI;
