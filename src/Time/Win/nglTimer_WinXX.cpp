@@ -11,8 +11,7 @@
 #include "nglMath.h"
 #include <math.h>
 
-#define TIMER_MIN_PERIOD     0.050
-#define TIMER_ZERO_TOLERANCE 0.005 // _must_ be <= TIMER_MIN_PERIOD
+#define NGL_MAX_QUEUED_TIMER_EVENTS 1
 
 MMRESULT nglTimer::mTimerID = -1;
 void nglTimer::InitMainTimer()
@@ -22,7 +21,7 @@ void nglTimer::InitMainTimer()
     TIMECAPS caps;
     timeGetDevCaps(&caps,sizeof(TIMECAPS));
     timeBeginPeriod(caps.wPeriodMin); // set the minimum timer period
-    mTimerID = timeSetEvent(caps.wPeriodMin,0,TimeProc,(unsigned int) 0,TIME_PERIODIC + TIME_CALLBACK_FUNCTION + TIME_KILL_SYNCHRONOUS);
+    mTimerID = timeSetEvent(caps.wPeriodMin, 0, TimeProc, (unsigned int)0, TIME_PERIODIC + TIME_CALLBACK_FUNCTION + TIME_KILL_SYNCHRONOUS);
   }
 }
 
@@ -92,6 +91,19 @@ bool nglTimer::SetPeriod(nglTime Period)
 
 void CALLBACK TimeProc(UINT uID,UINT uMsg,DWORD_PTR dwUser,DWORD_PTR dw1,DWORD_PTR dw2)
 {
+//   static int c = 0;
+//   static int d = 0;
+// 
+//   if (d & 15)
+//   {
+//     OutputDebugString(_T("."));
+//     c++;
+//   }
+//   if (c > 50)
+//   {
+//     c = 0;
+//     OutputDebugString(_T("\n"));
+//   }
   nglTimer::PostMessage();
 }
 
@@ -164,7 +176,7 @@ std::list<nglTimer*> nglTimer::mTimers;
 
 nglAtomic nglTimer::mQueuedEvents = 0;
 
-LRESULT nglTimer::WndProc (HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT nglTimer::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
   std::list<nglTimer*>::iterator it;
   std::list<nglTimer*>::iterator end = mTimers.end();
@@ -181,15 +193,24 @@ LRESULT nglTimer::WndProc (HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 
 void nglTimer::PostMessage()
 {
-  if (App && !mQueuedEvents)
+  if (App && mQueuedEvents < NGL_MAX_QUEUED_TIMER_EVENTS)
   {
-    //OutputDebugString("nglTimer::PostMessage()\n");
     ngl_atomic_inc(mQueuedEvents);
-    ::PostMessage(App->GetHWnd(), WM_NGLTIMER, 0, 0);
+    ::SendMessage(App->GetHWnd(), WM_NGLTIMER, 0, 0);
   }
   else
   {
-    //OutputDebugString("nglTimer::PostMessage() failed\n");
+//     wchar_t str[1024];
+//     wsprintf(str, _T("f(%d)"), mQueuedEvents);
+//     OutputDebugString(str);
+// 
+//     static int c = 0;
+//     c++;
+//     if (c > 20)
+//     {
+//       c = 0;
+//       OutputDebugString(_T("\n"));
+//     }
   }
 }
 
