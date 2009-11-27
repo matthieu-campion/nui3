@@ -43,7 +43,7 @@ nglNativeObjectType nglDataTypesRegistry::RegisterDataType(const nglString& rMim
     Type = RegisterClipboardFormat((LPCTSTR)(rMimeType.GetChars()));
   if (!Type)
   {
-    NGL_LOG(_T("nglNativeObjectTypesRegistry"), 1, _T("RegisterDragAndDropNativeType: Can't RegisterClipboardFormat(\")%ls\")"), rMimeType.GetChars());
+    NGL_LOG(_T("nglNativeObjectTypesRegistry"), NGL_LOG_ERROR, _T("RegisterDragAndDropNativeType: Can't RegisterClipboardFormat(\")%ls\")"), rMimeType.GetChars());
   }
 #endif
   

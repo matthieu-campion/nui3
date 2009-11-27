@@ -119,7 +119,7 @@ void nuiAudioTrack::Read(uint32 sampleFrames)
   
   
   
-  //NGL_LOG(_T("nuiAudioFifo"), 1, _T("\nWrite : read %d from source\n"), nbRead);
+  //NGL_LOG(_T("nuiAudioFifo"), NGL_LOG_DEBUG, _T("\nWrite : read %d from source\n"), nbRead);
   
   
   
@@ -136,7 +136,7 @@ void nuiAudioTrack::Read(uint32 sampleFrames)
     rbuf[c] = (float*)mpRingBuf->GetWritePointer(c);
   
   
-  //NGL_LOG(_T("nuiAudioFifo"), 1, _T("\nBEFORE BUFFERING %d\n"), nbWrite);  
+  //NGL_LOG(_T("nuiAudioFifo"), NGL_LOG_DEBUG, _T("\nBEFORE BUFFERING %d\n"), nbWrite);  
   
   // read audio samples from the source
   uint32 nbReadSamples = ReadSamples(nbWrite, rbuf/*ref for output*/);
@@ -146,12 +146,12 @@ void nuiAudioTrack::Read(uint32 sampleFrames)
   
   
   
-  //NGL_LOG(_T("nuiAudioFifo"), 1, _T("\nAFTER BUFFERING %d\n"), nbWrite);
+  //NGL_LOG(_T("nuiAudioFifo"), NGL_LOG_DEBUG, _T("\nAFTER BUFFERING %d\n"), nbWrite);
   
   
   mpRingBuf->AdvanceWriteIndex(nbWrite);
   
-  //NGL_LOG(_T("nuiAudioFifo"), 1, _T("\nWrite %d\n"), nbWrite);
+  //NGL_LOG(_T("nuiAudioFifo"), NGL_LOG_DEBUG, _T("\nWrite %d\n"), nbWrite);
   
   
   
@@ -168,7 +168,7 @@ void nuiAudioTrack::Read(uint32 sampleFrames)
   nbWrite2  = mpRingBuf->GetWritableToEnd();
   if (nbWrite2 < (nbRead - nbWrite))
   {
-    NGL_LOG(_T("nuiAudioTrack"), 1, _T("ERROR : ringbuffer could not locked enough space to write data (%d requested, %d provided!)"), (nbRead-nbWrite), nbWrite2);
+    NGL_LOG(_T("nuiAudioTrack"), NGL_LOG_ERROR, _T("ERROR : ringbuffer could not locked enough space to write data (%d requested, %d provided!)"), (nbRead-nbWrite), nbWrite2);
     NGL_ASSERT(0);
     return;
   }
@@ -186,7 +186,7 @@ void nuiAudioTrack::Read(uint32 sampleFrames)
   
   mpRingBuf->AdvanceWriteIndex (nbWrite2);
   
-  //NGL_LOG(_T("nuiAudioTrack"), 1, _T("\nWrite %d\n"), nbWrite);
+  //NGL_LOG(_T("nuiAudioTrack"), NGL_LOG_DEBUG, _T("\nWrite %d\n"), nbWrite);
 }
 
 
@@ -230,7 +230,7 @@ bool nuiAudioTrack::CanProcess (uint32 SampleFrames)
 	if (curValue < SampleFrames)
 	{
     //#FIXME : comment this message once you have ensure everything goes right. Otherwise, you'll always get this message when the audio fifo starts (waiting for the data to come...)
-		NGL_LOG(_T("nuiAudioTrack"), 1, _T("\nAUDIO SYSTEM WARNING : NOT ENOUGH AUDIO DATA BUFFERED FOR THE CURRENT TRACK : currently %d buffered samples, it's not enough to read %d samples!\n"), curValue, SampleFrames);
+		NGL_LOG(_T("nuiAudioTrack"), NGL_LOG_WARNING, _T("\nAUDIO SYSTEM WARNING : NOT ENOUGH AUDIO DATA BUFFERED FOR THE CURRENT TRACK : currently %d buffered samples, it's not enough to read %d samples!\n"), curValue, SampleFrames);
 		return false;
 	}
   
@@ -298,7 +298,7 @@ void nuiAudioTrack::Process(uint32 SampleFrames, std::vector<float*>& rOutputBuf
   
   mpRingBuf->AdvanceReadIndex (nbRead);
   
-  // NGL_LOG(_T("nuiAudioTrack"), 1, _T("\n\t\t\t\tRead %d\n"), nbRead);
+  // NGL_LOG(_T("nuiAudioTrack"), NGL_LOG_DEBUG, _T("\n\t\t\t\tRead %d\n"), nbRead);
   
   
   //*******************************************************
@@ -311,7 +311,7 @@ void nuiAudioTrack::Process(uint32 SampleFrames, std::vector<float*>& rOutputBuf
   {
     totalRead += nbRead;
     
-    // NGL_LOG(_T("nuiAudioTrack"), 1, _T("\n\t\t\t\tReadTh : %d samples read"), totalRead);
+    // NGL_LOG(_T("nuiAudioTrack"), NGL_LOG_DEBUG, _T("\n\t\t\t\tReadTh : %d samples read"), totalRead);
     
     // event callback
     ProcessedSamples(nbRead, mBufSize, mpRingBuf->GetReadable());
@@ -336,11 +336,11 @@ void nuiAudioTrack::Process(uint32 SampleFrames, std::vector<float*>& rOutputBuf
   
   mpRingBuf->AdvanceReadIndex(nbRead2);    
   
-  // NGL_LOG(_T("nuiAudioTrack"), 1, _T("\n\t\t\t\tRead %d\n"), nbRead2);    
+  // NGL_LOG(_T("nuiAudioTrack"), NGL_LOG_DEBUG, _T("\n\t\t\t\tRead %d\n"), nbRead2);    
   
   totalRead += (nbRead + nbRead2);
   
-  // NGL_LOG(_T("nuiAudioTrack"), 1, _T("\n\t\t\t\tReadTh : %d samples read"), totalRead);  
+  // NGL_LOG(_T("nuiAudioTrack"), NGL_LOG_DEBUG, _T("\n\t\t\t\tReadTh : %d samples read"), totalRead);  
   
   // event callback
   ProcessedSamples(totalRead, mBufSize, mpRingBuf->GetReadable ());
@@ -472,11 +472,11 @@ bool nuiAudioFifo::Start()
   
   if (!mpAudioDevice)
   {
-    NGL_LOG(_T("nuiAudioFifo"), 1, _T("Start ERROR : could not retrieve audio device!\n"));
+    NGL_LOG(_T("nuiAudioFifo"), NGL_LOG_ERROR, _T("Start ERROR : could not retrieve audio device!\n"));
     return false;
   }
   
-  NGL_LOG(_T("nuiAudioFifo"), 1, _T("start\n"));
+  NGL_LOG(_T("nuiAudioFifo"), NGL_LOG_DEBUG, _T("start\n"));
   
   
   
@@ -494,7 +494,7 @@ bool nuiAudioFifo::Start()
   
   if (!res)
   {
-    NGL_LOG(_T("nuiAudioFifo"), 1, _T("Start ERROR : could not open audio device!\n"));
+    NGL_LOG(_T("nuiAudioFifo"), NGL_LOG_ERROR, _T("Start ERROR : could not open audio device!\n"));
     return false;
   }
   
@@ -535,7 +535,7 @@ void nuiAudioFifo::Close()
   
 	nglThread::Join();
   
-  //NGL_LOG(_T("nuiAudioFifo"), 1, _T("Close ok\n"));
+  NGL_LOG(_T("nuiAudioFifo"), NGL_LOG_DEBUG, _T("Close ok\n"));
 }
 
 
@@ -677,7 +677,7 @@ void nuiAudioFifo::OnStart ()
 	SetStopRequest (false);
   
   
-  // NGL_LOG(_T("nuiAudioFifo"), 1, _T("Reading Thread start\n"));
+  // NGL_LOG(_T("nuiAudioFifo"), NGL_LOG_DEBUG, _T("Reading Thread start\n"));
   
 	while (!GetStopRequest ())
 	{
@@ -719,7 +719,7 @@ void nuiAudioFifo::OnStart ()
 		// mInputCS is automatically unlocked by the guard
 	}
   
-  // NGL_LOG(_T("nuiAudioFifo"), 1, _T("Reading Thread stoped\n"));
+  // NGL_LOG(_T("nuiAudioFifo"), NGL_LOG_DEBUG, _T("Reading Thread stopped\n"));
   
 	mStarted = false;
 }
@@ -743,7 +743,7 @@ void nuiAudioFifo::Process(const std::vector<const float*>& rInputBuffers, const
 	if (GetStopRequest()) 
     return;
   
-  // NGL_LOG(_T("nuiAudioFifo"), 1, _T("\n\t\t\t\tReadTh\n"));
+  // NGL_LOG(_T("nuiAudioFifo"), NGL_LOG_DEBUG, _T("\n\t\t\t\tReadTh\n"));
   
   
 	{

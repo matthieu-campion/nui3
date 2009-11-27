@@ -388,7 +388,7 @@ void nuiAnimation::Pause()
 void nuiAnimation::InternalStop()
 {
   mCount = 0;
-  //NGL_LOG(_T("nuiAnimation), 1, _T("Stop at %f\n"), GetDuration());
+  //NGL_LOG(_T("nuiAnimation), NGL_LOG_DEBUG, _T("Stop at %f\n"), GetDuration());
   mAnimSink.Disconnect(GetTimer()->Tick, &nuiAnimation::OnTick);
   mCurrentPosition = 0;
   AnimStop();
@@ -400,7 +400,7 @@ void nuiAnimation::InternalStop()
 void nuiAnimation::InternalPause()
 {
   mCount = 0;
-  //NGL_LOG(_T("nuiAnimation), 1, _T("Stop at %f\n"), GetDuration());
+  //NGL_LOG(_T("nuiAnimation), NGL_LOG_DEBUG, _T("Stop at %f\n"), GetDuration());
   mAnimSink.Disconnect(GetTimer()->Tick, &nuiAnimation::OnTick);
   AnimStop();
 }
@@ -739,7 +739,7 @@ double nuiAnimationSequence::GetDuration()
   for (; it != end; ++it)
     dur += (*it)->GetDuration();
 
-//  NGL_LOG(_T("nuiAnimationSequence), 1, _T("::GetDuration() = %f\n"), dur);
+//  NGL_LOG(_T("nuiAnimationSequence), NGL_LOG_DEBUG, _T("::GetDuration() = %f\n"), dur);
   return dur;
 }
 
@@ -769,7 +769,7 @@ bool nuiAnimationSequence::OnAnimStopped(const nuiEvent& rEvent)
 {
   if (IsPlaying())
   {
-    //NGL_LOG(_T("nuiAnimationSequence), 1, _T("::OnAnimStopped\n"));
+    //NGL_LOG(_T("nuiAnimationSequence), NGL_LOG_DEBUG, _T("::OnAnimStopped\n"));
     nuiAnimation* pAnim = (nuiAnimation*)rEvent.mpUser;
     // Find the next anim in the sequence:
     std::list<nuiAnimation*>::iterator it = mpAnimations.begin();
@@ -791,12 +791,12 @@ bool nuiAnimationSequence::OnAnimStopped(const nuiEvent& rEvent)
       // Launch the next anim in the sequence:
       pAnim = *it;
       pAnim->Play();
-      //NGL_LOG(_T("nuiAnimationSequence), 1, _T("::OnAnimStopped Launch next anim\n"));
+      //NGL_LOG(_T("nuiAnimationSequence), NGL_LOG_DEBUG, _T("OnAnimStopped Launch next anim\n"));
     }
     else
     {
       // stop the sequence if this was the last in the chain:
-      //NGL_LOG(_T("nuiAnimationSequence), 1, _T("::OnAnimStopped STOP\n"));
+      //NGL_LOG(_T("nuiAnimationSequence), NGL_LOG_DEBUG, _T("OnAnimStopped STOP\n"));
       mpAnimations.front()->Play();
     }
   }

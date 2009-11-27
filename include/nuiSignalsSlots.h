@@ -59,7 +59,7 @@ protected:
     {
       ref = v;
       
-      NGL_LOG(_T("nuiSignal"), 1, _T("nuiSignal new max connection count: %d\n"), ref);
+      NGL_LOG(_T("nuiSignal"), NGL_LOG_DEBUG, _T("nuiSignal new max connection count: %d\n"), ref);
     }
 #endif
   }

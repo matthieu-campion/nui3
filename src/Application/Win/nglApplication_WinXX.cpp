@@ -215,7 +215,7 @@ int nglApplication::WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR
     NULL,
     NULL,
     NULL);
-  NGL_LOG(_T("nglWindow"), 1, _T("Create tmp gl ctx window hwnd = 0x%x"), tmpWin);
+  NGL_LOG(_T("nglWindow"), NGL_LOG_DEBUG, _T("Create tmp gl ctx window hwnd = 0x%x"), tmpWin);
 
   HDC tmpDC = ::GetDC(tmpWin);
   int pf = ChoosePixelFormat(tmpDC, &pfd);

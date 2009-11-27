@@ -144,7 +144,7 @@ void nglLog::Log (const char* pDomain, uint Level, const char* pText, ...)
 
   
   nglString str(pDomain);
-  nglString txt(pDomain);
+  nglString txt(pText);
   Logv (str.GetChars(), Level, txt.GetChars(), args);
 
   va_end (args);
@@ -239,7 +239,7 @@ void nglLog::Logv (const char* pDomain, uint Level, const char* pText, va_list A
   if (pText == NULL) return;
 
   nglString domain(pDomain);
-  nglString text(pDomain);
+  nglString text(pText);
   Logv(domain.GetChars(), Level, text.GetChars(), Args);
 }
 

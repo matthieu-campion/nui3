@@ -101,85 +101,85 @@ public:
     case D3D_OK:
       break;
     case D3DERR_WRONGTEXTUREFORMAT:
-      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ALWAYS, _T("D3D Error : Wrong Texture format."));
+      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ERROR, _T("D3D Error : Wrong Texture format."));
       break;
     case D3DERR_UNSUPPORTEDCOLOROPERATION:
-      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ALWAYS, _T("D3D Error : Unsupported color operation."));
+      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ERROR, _T("D3D Error : Unsupported color operation."));
       break;
     case D3DERR_UNSUPPORTEDCOLORARG:
-      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ALWAYS, _T("D3D Error : Unsupported color arguments."));
+      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ERROR, _T("D3D Error : Unsupported color arguments."));
       break;
     case D3DERR_UNSUPPORTEDALPHAOPERATION:
-      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ALWAYS, _T("D3D Error : Unsupported alpha operation."));
+      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ERROR, _T("D3D Error : Unsupported alpha operation."));
       break;
     case D3DERR_UNSUPPORTEDALPHAARG:
-      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ALWAYS, _T("D3D Error : Unsupported alpha arguments."));
+      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ERROR, _T("D3D Error : Unsupported alpha arguments."));
       break;
     case D3DERR_TOOMANYOPERATIONS:
-      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ALWAYS, _T("D3D Error : Too many operations."));
+      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ERROR, _T("D3D Error : Too many operations."));
       break;
     case D3DERR_CONFLICTINGTEXTUREFILTER:
-      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ALWAYS, _T("D3D Error : Conflicting texture filters."));
+      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ERROR, _T("D3D Error : Conflicting texture filters."));
       break;
     case D3DERR_UNSUPPORTEDFACTORVALUE:
-      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ALWAYS, _T("D3D Error : Unsupported factor value."));
+      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ERROR, _T("D3D Error : Unsupported factor value."));
       break;
     case D3DERR_CONFLICTINGRENDERSTATE:
-      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ALWAYS, _T("D3D Error : Conflicting render state."));
+      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ERROR, _T("D3D Error : Conflicting render state."));
       break;
     case D3DERR_UNSUPPORTEDTEXTUREFILTER:
-      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ALWAYS, _T("D3D Error : Unsupported texture filter."));
+      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ERROR, _T("D3D Error : Unsupported texture filter."));
       break;
     case D3DERR_CONFLICTINGTEXTUREPALETTE:
-      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ALWAYS, _T("D3D Error : Conflicting texture palette."));
+      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ERROR, _T("D3D Error : Conflicting texture palette."));
       break;
     case D3DERR_DRIVERINTERNALERROR:
-      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ALWAYS, _T("D3D Error : Driver internal error."));
+      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ERROR, _T("D3D Error : Driver internal error."));
       break;
     case D3DERR_NOTFOUND:
-      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ALWAYS, _T("D3D Error : Not found."));
+      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ERROR, _T("D3D Error : Not found."));
       break;
     case D3DERR_MOREDATA:
-      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ALWAYS, _T("D3D Error : More data."));
+      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ERROR, _T("D3D Error : More data."));
       break;
     case D3DERR_DEVICELOST:
-      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ALWAYS, _T("D3D Error : Device lost."));
+      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ERROR, _T("D3D Error : Device lost."));
       break;
     case D3DERR_DEVICENOTRESET:
-      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ALWAYS, _T("D3D Error : Device not reset."));
+      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ERROR, _T("D3D Error : Device not reset."));
       break;
     case D3DERR_NOTAVAILABLE:
-      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ALWAYS, _T("D3D Error : Not avaiable."));
+      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ERROR, _T("D3D Error : Not avaiable."));
       break;
     case D3DERR_OUTOFVIDEOMEMORY:
-      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ALWAYS, _T("D3D Error : Out of video memory."));
+      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ERROR, _T("D3D Error : Out of video memory."));
       break;
     case D3DERR_INVALIDDEVICE:
-      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ALWAYS, _T("D3D Error : Invalid device."));
+      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ERROR, _T("D3D Error : Invalid device."));
       break;
     case D3DERR_INVALIDCALL:
-      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ALWAYS, _T("D3D Error : Invalid call."));
+      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ERROR, _T("D3D Error : Invalid call."));
       break;
     case D3DERR_DRIVERINVALIDCALL:
-      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ALWAYS, _T("D3D Error : Driver invalid call."));
+      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ERROR, _T("D3D Error : Driver invalid call."));
       break;
     case D3DERR_WASSTILLDRAWING:
-      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ALWAYS, _T("D3D Error : Was still drawing."));
+      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ERROR, _T("D3D Error : Was still drawing."));
       break;
       //#FIXME
 #ifdef D3DERR_DEVICEREMOVED
     case D3DERR_DEVICEREMOVED:
-      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ALWAYS, _T("D3D Error : Device removed."));
+      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ERROR, _T("D3D Error : Device removed."));
       break;
 #endif
       //#FIXME
 #ifdef D3DERR_DEVICEHUNG
     case D3DERR_DEVICEHUNG:
-      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ALWAYS, _T("D3D Error : Device hung."));
+      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ERROR, _T("D3D Error : Device hung."));
       break;
 #endif
     default:
-      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ALWAYS, _T("Unknown Direct3D Error."));
+      NGL_LOG(_T("nuiD3DPainter"), NGL_LOG_ERROR, _T("Unknown Direct3D Error."));
       break;
 
       /* non géré
