@@ -414,7 +414,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Sebastien Metrot";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Sebastien Metrot (L6L77G9KU6)";
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PFE_C_DIALECTS = "c++";
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
@@ -434,7 +434,6 @@
 					"-lz",
 					"-liconv",
 				);
-				PROVISIONING_PROFILE = "BDEA1422-D478-4C5D-8DDC-CBD0FD14164F";
 				SDKROOT = iphoneos2.1;
 				USE_HEADERMAP = NO;
 			};
@@ -466,7 +465,6 @@
 		C9F5F9320DA84CAB00E078ED /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos2.1]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "";
@@ -484,7 +482,6 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_NAME = TextEdit_iPhoneD;
-				"PROVISIONING_PROFILE[sdk=iphoneos2.1]" = "";
 			};
 			name = Default;
 		};

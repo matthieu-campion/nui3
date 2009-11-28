@@ -602,7 +602,13 @@ void nuiWidget::Init()
 
   NUI_ADD_EVENT(Clicked);
   NUI_ADD_EVENT(Unclicked);
+  NUI_ADD_EVENT(MovedMouse);
 
+  NUI_ADD_EVENT(FocusChanged);
+  
+  NUI_ADD_EVENT(PreClicked);
+  NUI_ADD_EVENT(PreUnclicked);
+  NUI_ADD_EVENT(PreMouseMoved);
 }
 
 void nuiWidget::InitProperties()

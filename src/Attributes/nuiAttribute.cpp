@@ -1769,7 +1769,7 @@ bool nuiAttribute<nuiMouseCursor>::ToString(nuiMouseCursor Value, nglString& rSt
 template <>
 bool nuiAttribute<nuiMouseCursor>::FromString(nuiMouseCursor& rValue, const nglString& rString) const
 {
-  nuiMouseCursor cursor = eCursorNone;
+  rValue = eCursorArrow;
   
   if (!rString.Compare(_T("DoNotSet"), false))
     rValue = eCursorDoNotSet;

@@ -49,7 +49,6 @@ typedef std::map<UITouch*,nglTouchInfo> TouchesInfo;
 - (void)showKeyboard;
 - (void)hideKeyboard;
 - (void)initializeKeyboard;
-@property (readonly) BOOL mKeyboardVisible;
 @end///< nglUIWindow
 
 #endif//__nglWindow_UIKit_h__
