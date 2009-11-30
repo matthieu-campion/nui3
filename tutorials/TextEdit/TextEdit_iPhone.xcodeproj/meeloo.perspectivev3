@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>ActivePerspectiveName</key>
-	<string>Debug</string>
+	<string>Project</string>
 	<key>AllowedModules</key>
 	<array>
 		<dict>
@@ -317,6 +317,8 @@
 							<string>MainColumn</string>
 							<real>163</real>
 						</array>
+						<key>RubberWindowFrame</key>
+						<string>0 59 1920 1119 0 0 1920 1178 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -332,7 +334,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>E5F9B50B0FC9F27D00325121</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>nglSyncEvent_posix.cpp</string>
+								<string>MainWindow.cpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -340,19 +342,15 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>E5F9B50C0FC9F27D00325121</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>nglSyncEvent_posix.cpp</string>
+										<string>MainWindow.cpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E522117710C0A5C200EB6DB6</string>
+										<string>E52213D610C34F5F00EB6DB6</string>
 										<key>history</key>
 										<array>
 											<string>E5F9B50D0FC9F27D00325121</string>
-											<string>E5F9B5520FCB689100325121</string>
-											<string>E5F9B5540FCB689100325121</string>
-											<string>E5F9B5560FCB689100325121</string>
-											<string>E522113210C08D5F00EB6DB6</string>
-											<string>E522117510C0A5A000EB6DB6</string>
+											<string>E522139710C31A0A00EB6DB6</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -367,6 +365,8 @@
 							<dict>
 								<key>Frame</key>
 								<string>{{0, 0}, {1713, 668}}</string>
+								<key>RubberWindowFrame</key>
+								<string>0 59 1920 1119 0 0 1920 1178 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -465,6 +465,8 @@
 									<dict>
 										<key>Frame</key>
 										<string>{{10, 27}, {1713, 378}}</string>
+										<key>RubberWindowFrame</key>
+										<string>0 59 1920 1119 0 0 1920 1178 </string>
 									</dict>
 									<key>Module</key>
 									<string>PBXBuildResultsModule</string>
@@ -537,8 +539,6 @@
 			<key>Layout</key>
 			<array>
 				<dict>
-					<key>BecomeActive</key>
-					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXProjectModuleGUID</key>
@@ -550,8 +550,6 @@
 					<dict>
 						<key>Frame</key>
 						<string>{{0, 0}, {1920, 411}}</string>
-						<key>RubberWindowFrame</key>
-						<string>0 59 1920 1119 0 0 1920 1178 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXDebugCLIModule</string>
@@ -626,11 +624,7 @@
 							</array>
 							<key>Frame</key>
 							<string>{{0, 329}, {960, 333}}</string>
-							<key>RubberWindowFrame</key>
-							<string>0 59 1920 1119 0 0 1920 1178 </string>
 						</dict>
-						<key>RubberWindowFrame</key>
-						<string>0 59 1920 1119 0 0 1920 1178 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXDebugSessionModule</string>
@@ -677,7 +671,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>281060802.48308903</real>
+	<real>281235295.770594</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -692,7 +686,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E522117810C0A5C200EB6DB6</string>
 		<string>E522115C10C08E9100EB6DB6</string>
 		<string>E522114E10C08D6100EB6DB6</string>
 		<string>/Users/meeloo/work/nui3/tutorials/TextEdit/TextEdit_iPhone.xcodeproj</string>

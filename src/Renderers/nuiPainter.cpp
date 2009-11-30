@@ -30,11 +30,7 @@ nuiPainter::nuiPainter(const nuiRect& rRect, nglContext* pContext)
 nuiPainter::~nuiPainter() 
 {
   // Empty the clip stack:
-  while (!mpClippingStack.empty())
-  {
-    delete mpClippingStack.top();
-    mpClippingStack.pop();
-  }
+  mpClippingStack = std::stack<nuiClipper>();
 
   while (!mpSurfaceStack.empty())
   {
@@ -44,11 +40,8 @@ nuiPainter::~nuiPainter()
 
 void nuiPainter::StartRendering()
 {
-  while (!mpClippingStack.empty())
-  {
-    delete mpClippingStack.top();
-    mpClippingStack.pop();
-  }
+  mpClippingStack = std::stack<nuiClipper>();
+
   uint32 w = mWidth, h = mHeight;
   mClip.Set(0, 0, w, h);
   
@@ -145,18 +138,15 @@ const nuiRect& nuiPainter::GetProjectionViewport() const
 // Clipping using Scissor :
 void nuiPainter::PushClipping()
 {
-  nuiClipper* pClipper = new nuiClipper(mClip);
-  mpClippingStack.push(pClipper);
+  mpClippingStack.push(mClip);
 }
 
 void nuiPainter::PopClipping()
 {
   NGL_ASSERT(mpClippingStack.size());
 
-  nuiClipper* pClipper = mpClippingStack.top();
-  mClip = *pClipper;
+  mClip = mpClippingStack.top();
   mpClippingStack.pop();
-  delete pClipper;
 }
 
 void nuiPainter::Clip(const nuiRect& rRect)

@@ -501,11 +501,7 @@ void nuiMetaPainter::Reset(nuiPainter const * pFrom)
   }
   mOperations.clear();
 
-  while (!mpClippingStack.empty())
-  {
-    delete mpClippingStack.top();
-    mpClippingStack.pop();
-  }
+  mpClippingStack = std::stack<nuiClipper>();
 
   while (!mMatrixStack.empty())
     mMatrixStack.pop();

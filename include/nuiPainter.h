@@ -158,7 +158,7 @@ protected:
   std::stack<nuiSurface*> mpSurfaceStack;
   
   nuiRenderState mState;
-  std::stack<nuiClipper*> mpClippingStack;
+  std::stack<nuiClipper> mpClippingStack;
   uint32 mWidth;
   uint32 mHeight;
   uint32 mAngle;
