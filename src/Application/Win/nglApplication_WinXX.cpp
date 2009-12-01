@@ -264,6 +264,13 @@ int nglApplication::SysLoop()
       // We're done : enter idle state
       CallOnIdle();
     }
+    else
+    {
+      if (!OnQuitRequested())
+      {
+        msg.message = 0;
+      }
+    }
   } while (msg.message != WM_QUIT);
 
   CallOnExit(msg.wParam);
