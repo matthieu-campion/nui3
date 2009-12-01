@@ -61,6 +61,11 @@ void nuiRSSView::InitAttributes()
                 nuiMakeDelegate(this, &nuiRSSView::GetTextColor), 
                 nuiMakeDelegate(this, &nuiRSSView::SetTextColor)));
   
+  AddAttribute(new nuiAttribute<const nglString&>
+               (nglString(_T("URL")), nuiUnitName,
+                nuiMakeDelegate(this, &nuiRSSView::GetURL), 
+                nuiMakeDelegate(this, &nuiRSSView::SetURL)));
+  
 }
 
 
@@ -131,6 +136,12 @@ void nuiRSSView::SetURL(const nglString& rURL)
 {
   mpRSS->SetURL(rURL);
 }
+
+const nglString& nuiRSSView::GetURL() const
+{
+  return mpRSS->GetURL();
+}
+
 
 void nuiRSSView::_SetFont(const nglString& rFontSymbol)
 {

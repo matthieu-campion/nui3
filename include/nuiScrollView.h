@@ -58,7 +58,13 @@ public:
   void SetForceNoSmartScroll(bool set);
   bool GetForceNoSmartScroll(bool set) const;
 
+  bool GetEnableHorizontalScroll() const;
+  void SetEnableHorizontalScroll(bool set);
+  bool GetEnableVerticalScroll() const;
+  void SetEnableVerticalScroll(bool set);
+  
 private:
+  void InitAttributes();
   void Init(nuiScrollBar* pHorizontalScrollBar, nuiScrollBar* pVerticalScrollBar, bool Horizontal, bool Vertical);
 
   bool OnChildAdded(const nuiEvent& rEvent);

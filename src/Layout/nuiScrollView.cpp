@@ -48,9 +48,16 @@ bool nuiScrollView::Load(const nuiXMLNode* pNode)
   return true;
 }
 
+void nuiScrollView::InitAttributes()
+{
+  AddAttribute(new nuiAttribute<bool>(_T("EnableHorizontalScroll"), nuiUnitYesNo, nuiMakeDelegate(this, &nuiScrollView::GetEnableHorizontalScroll), nuiMakeDelegate(this, &nuiScrollView::SetEnableHorizontalScroll)));
+  AddAttribute(new nuiAttribute<bool>(_T("EnableVerticalScroll"), nuiUnitYesNo, nuiMakeDelegate(this, &nuiScrollView::GetEnableHorizontalScroll), nuiMakeDelegate(this, &nuiScrollView::SetEnableHorizontalScroll)));
+}
+
 void nuiScrollView::Init(nuiScrollBar* pHorizontalScrollBar, nuiScrollBar* pVerticalScrollBar, bool Horizontal, bool Vertical)
 {
-  SetObjectClass(_T("nuiScrollView"));
+  if (SetObjectClass(_T("nuiScrollView")))
+    InitAttributes();
 
   mFillChildren = true;
   mVIncrement = 64.f;
@@ -128,6 +135,30 @@ void nuiScrollView::Init(nuiScrollBar* pHorizontalScrollBar, nuiScrollBar* pVert
   
   mSVSink.Connect(ChildAdded, &nuiScrollView::OnChildAdded);
   mSVSink.Connect(ChildDeleted, &nuiScrollView::OnChildRemoved);
+}
+
+bool nuiScrollView::GetEnableHorizontalScroll() const
+{
+  return (mpHorizontal || !mForceNoHorizontal);
+}
+
+void nuiScrollView::SetEnableHorizontalScroll(bool set)
+{
+  mForceNoHorizontal = !set;
+  //mpVertical->SetVisible(set);
+  InvalidateLayout();
+}
+
+bool nuiScrollView::GetEnableVerticalScroll() const
+{
+  return (mpVertical || !mForceNoVertical);
+}
+
+void nuiScrollView::SetEnableVerticalScroll(bool set)
+{
+  mForceNoVertical = !set;
+  //mpVertical->SetVisible(set);
+  InvalidateLayout();
 }
 
 nuiScrollView::~nuiScrollView()

@@ -181,7 +181,7 @@ void nuiBuilder::Init()
   NUI_ADD_WIDGET_CREATOR(nuiRectView, "Widget");
   //NUI_ADD_WIDGET_CREATOR(nuiShapeView, "Widget");
   //NUI_ADD_WIDGET_CREATOR(nuiZoomBar, "Widget");
-  //NUI_ADD_WIDGET_CREATOR(nuiRSSView, "Widget");
+  NUI_ADD_WIDGET_CREATOR(nuiRSSView, "Widget");
   //NUI_ADD_WIDGET_CREATOR(nuiHugeImage, "Widget");
   NUI_ADD_WIDGET_CREATOR(nuiHyperLink, "Widget");
   //NUI_ADD_WIDGET_CREATOR(nuiLabelAttribute, "Widget");
