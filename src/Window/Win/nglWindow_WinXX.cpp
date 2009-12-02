@@ -1245,7 +1245,21 @@ bool nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
     this );
   NGL_OUT(_T("Create nglWindow hwnd = 0x%x"), mOSInfo.WindowHandle);
 
-  if (!mHWnd)
+  RECT R;
+  GetClientRect(mHWnd, &R);
+  mOSInfo.GLWindowHandle = mGLHWnd = CreateWindowEx(
+    0,
+    _T("Static"),
+    _T("NGL GL Child Window"),
+    WS_CHILD | WS_VISIBLE,
+    0, 0, R.right - R.left, R.bottom - R.top,
+    mHWnd,
+    NULL,
+    App->GetHInstance(),
+    this );
+  NGL_OUT(_T("Create nglWindow GLhwnd = 0x%x"), mOSInfo.GLWindowHandle);
+
+  if (!mHWnd || !mGLHWnd)
     return false;
 
   SetMouseMode(mMouseMode);
@@ -1265,15 +1279,15 @@ bool nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
   info.Dump(NGL_LOG_INFO);
 #endif // _DEBUG_
   UpdateWindow(mHWnd);
-  ShowWindow(mHWnd,SW_HIDE);
+  ShowWindow(mHWnd, SW_HIDE);
   mState = eHidden;
 
   // Add 'Show console' accelerator to the window's system menu
-  HMENU hmenu=GetSystemMenu(mHWnd,FALSE);
+  HMENU hmenu = GetSystemMenu(mHWnd,FALSE);
   if (hmenu)
   {
-    AppendMenu(hmenu,MF_SEPARATOR,0,NULL);
-    AppendMenu(hmenu,MF_STRING,MENU_SHOWCONSOLE_ID, _T("&Show console\tCtrl+²"));
+    AppendMenu(hmenu, MF_SEPARATOR, 0, NULL);
+    AppendMenu(hmenu, MF_STRING, MENU_SHOWCONSOLE_ID, _T("&Show console\tCtrl+²"));
   }
 
   /* Drag and Drop stuff */
@@ -1291,7 +1305,7 @@ bool nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
 //   mDragMessageId = RegisterWindowMessage(_T("nglDragAndDrop"));
 //   mpDropSource->SetMessageId(mDragMessageId);
 
-  if(!Build(mHWnd, rContext, pShared) || !MakeCurrent())
+  if(!Build(mGLHWnd, rContext, pShared) || !MakeCurrent())
     return false;
 
   NGL_DEBUG( nglContext::Dump(NGL_LOG_INFO); );
@@ -2364,6 +2378,12 @@ LRESULT nglWindow::WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
     break;
 
   case WM_SIZE:
+    {
+      // resize the child window:
+      RECT R;
+      GetClientRect(mHWnd, &R);
+      MoveWindow(mGLHWnd, 0, 0, R.right - R.left, R.bottom - R.top, true);
+    }
     if (!IsIconic(hWnd))
     {
       if (mMouseMode == nglMouseInfo::eRelative)
@@ -3082,7 +3102,7 @@ void nglWindow::EnterModalState()
   do
   {
     // Process (rest of) msg queue
-    while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE) && (mInModalState >= storeModalState))
+    while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE) && msg.message != WM_QUIT && (mInModalState >= storeModalState))
     {
       bool ok = true;
       if (msg.hwnd != mHWnd)
@@ -3096,10 +3116,6 @@ void nglWindow::EnterModalState()
           ok = false;
         }
       }
-      if (msg.message == WM_QUIT)
-      {
-        ok = false;
-      }
 
       if (ok)
       {
@@ -3107,8 +3123,13 @@ void nglWindow::EnterModalState()
         DispatchMessage(&msg);
       }
     }
-  } while (mInModalState >= storeModalState);
+  } while (msg.message != WM_QUIT && (mInModalState >= storeModalState));
   
+  if (msg.message == WM_QUIT)
+  {
+    PostQuitMessage(msg.wParam);
+  }
+
   NGL_OUT(_T("nglWindow::EnterModalState(DONE) [%p - %d]"), this, mInModalState);
 }
 

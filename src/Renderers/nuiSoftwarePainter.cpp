@@ -982,7 +982,7 @@ void nuiSoftwarePainter::Display(nglWindow* pWindow, const nuiRect& rRect)
   int32 offset = (x + mWidth * y);
   
 #ifdef _WIN32_
-  HDC hdc = GetDC(pInfo->WindowHandle);
+  HDC hdc = GetDC(pInfo->GLWindowHandle);
 
   BITMAPV5HEADER bminfo;
 
@@ -1024,7 +1024,7 @@ void nuiSoftwarePainter::Display(nglWindow* pWindow, const nuiRect& rRect)
   bminfo.bV5Reserved = 0;
 
   RECT r;
-  GetClientRect(pInfo->WindowHandle, &r);
+  GetClientRect(pInfo->GLWindowHandle, &r);
 
   r.right = (LONG)mWidth;
   r.bottom = (LONG)mHeight;
@@ -1052,7 +1052,7 @@ void nuiSoftwarePainter::Display(nglWindow* pWindow, const nuiRect& rRect)
     DIB_RGB_COLORS    // usage options
     );
 
-  ReleaseDC(pInfo->WindowHandle, hdc);
+  ReleaseDC(pInfo->GLWindowHandle, hdc);
 
 #elif (defined _CARBON_)
 

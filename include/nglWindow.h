@@ -180,6 +180,7 @@ public:
 #ifdef _WIN32_
     HWND Parent;        // Parent window handle. If NULL, creates a regular toplevel window.
     HWND WindowHandle;  // Window handle
+    HWND GLWindowHandle;  // Window handle
 
     OSInfo();
 #endif // _WIN32_
@@ -854,6 +855,7 @@ protected:
   static ATOM mAtom;
 
   HWND          mHWnd;
+  HWND          mGLHWnd;
   static bool   mClassDefined;
   nglVideoMode  mSavedVideoMode;
   StateInfo     mState;
