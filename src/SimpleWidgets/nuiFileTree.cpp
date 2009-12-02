@@ -111,8 +111,6 @@ bool nuiFileTree::OnNodeActivated(const nuiEvent& rEvent)
   
   if (!res && !path.IsLeaf() && !path.IsBundle())
   {
-    mWalkthrough.push(mRootPath);
-    
     SetRootPath(path);
     SetPath(path);    
   }
@@ -125,13 +123,15 @@ bool nuiFileTree::OnNodeActivated(const nuiEvent& rEvent)
 bool nuiFileTree::OnGotoParentFolder(const nuiEvent& rEvent)
 {
   nglPath path = mRootPath;
-  
-  nglPath parent = mWalkthrough.top();
-  mWalkthrough.pop();
-  
+ 
+  nglPath parent = mRootPath.GetParent();
+
   // hack to see "/Volumes" as the ROOTPATH_ALLVOLUMES
-  if (!parent.GetPathName().Compare(ROOTPATH_ALLVOLUMES))
+  if ((parent.GetPathName() == ROOTPATH_ALLVOLUMES) || (mRootPath.GetPathName().Extract(mRootPath.GetPathName().GetLength()-2, 2) == _T(":/")))
+  {
+    parent = ROOTPATH_ALLVOLUMES;
     path = nglPath(_T("/"));
+  }
   
   SetRootPath(parent);
   

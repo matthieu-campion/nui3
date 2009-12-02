@@ -90,7 +90,6 @@ private:
   nuiTreeNode* mpCurrentTree;
   nglPath mRootPath;
   nglPath mActivatedPath;
-  std::stack<nglPath> mWalkthrough;
   nuiScrollView* mpScrollView;
   
   nglString mPath;
