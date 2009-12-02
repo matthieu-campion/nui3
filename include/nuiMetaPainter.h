@@ -75,6 +75,9 @@ public:
   void SetDrawChildrenImmediat(bool set);
   bool GetDrawChildrenImmediat() const;
   
+#ifdef _DEBUG_
+  void DBGSetReferenceObject(const nuiObject* pRef);
+#endif
 protected:
   // Rendering Operations OpCodes:
   enum OpCode
@@ -142,6 +145,12 @@ protected:
   mutable int32 mLastSize;
   void UpdateIndices() const;
   bool mDrawChildrenImmediat;
+  
+#ifdef _DEBUG_
+  const nuiObject* mpDebugObjectRef;
+  nglString mDebugObjectName;
+  nglString mDebugObjectClass;
+#endif
 };
 
 #endif // __nuiMetaPainter_h__

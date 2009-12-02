@@ -160,6 +160,7 @@ nglPath::nglPath (nglPathBase Base)
         InternalSetPath(_T("/tmp"));
         #endif
       }
+      break;
       
 		case ePathApp:
 			{

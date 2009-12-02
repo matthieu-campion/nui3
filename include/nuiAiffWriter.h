@@ -1,10 +1,8 @@
 /*
- *  nuiAiffWriter.h
- *  nui3
- *
- *  Created by mat on 1/21/09.
- *  Copyright 2009 Mxp4. All rights reserved.
- *
+ NUI3 - C++ cross-platform GUI framework for OpenGL based applications
+ Copyright (C) 2002-2003 Sebastien Metrot & Vincent Caron
+ 
+ licence: see nui3/LICENCE.TXT
  */
 
 #pragma once

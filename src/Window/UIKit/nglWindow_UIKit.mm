@@ -532,6 +532,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   }
   NGL_OUT(_T("\n"));
 */
+  [self Paint];
 }
 
 - (void) invalidate
@@ -739,19 +740,14 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
 	glGetIntegerv(GL_RENDERBUFFER_BINDING_OES, (GLint *) &oldRenderbuffer);
 	glGetIntegerv(GL_FRAMEBUFFER_BINDING_OES, (GLint *) &oldFramebuffer);
 	
-	glGenRenderbuffersOES(1, &mRenderBuffer);
 	glGenFramebuffersOES(1, &mFrameBuffer);
-	
-	glBindRenderbufferOES(GL_RENDERBUFFER_OES, mRenderBuffer);
 	glBindFramebufferOES(GL_FRAMEBUFFER_OES, mFrameBuffer);
 
-	[(EAGLContext*)mpContext renderbufferStorage: GL_RENDERBUFFER_OES
-                                  fromDrawable: pLayer];
+	glGenRenderbuffersOES(1, &mRenderBuffer);
+	glBindRenderbufferOES(GL_RENDERBUFFER_OES, mRenderBuffer);
+	[(EAGLContext*)mpContext renderbufferStorage: GL_RENDERBUFFER_OES fromDrawable: pLayer];
 
-	glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES,
-                               GL_COLOR_ATTACHMENT0_OES,
-                               GL_RENDERBUFFER_OES,
-                               mRenderBuffer);
+	glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, mRenderBuffer);
 
 	if (mDepthFormat)
   {

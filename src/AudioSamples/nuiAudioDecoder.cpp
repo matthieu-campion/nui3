@@ -1,11 +1,10 @@
 /*
- *  nuiAudioDecoder.cpp
- *  nui3
- *
- *  Created by mat on 12/18/08.
- *  Copyright 2008 Mxp4. All rights reserved.
- *
+ NUI3 - C++ cross-platform GUI framework for OpenGL based applications
+ Copyright (C) 2002-2003 Sebastien Metrot & Vincent Caron
+ 
+ licence: see nui3/LICENCE.TXT
  */
+
 #include "nui.h"
 #include "nuiAudioDecoder.h"
 #include "nuiAudioConvert.h"

@@ -12,6 +12,7 @@
 #include "nuiMetaPainter.h"
 #include "nuiNotification.h"
 #include "nuiCSS.h"
+#include "nuiStopWatch.h"
 
 #define PARTIAL_REDRAW_DEFAULT true
 
@@ -1304,6 +1305,8 @@ bool nuiTopLevel::Draw(class nuiDrawContext *pContext)
 
 bool nuiTopLevel::DrawTree(class nuiDrawContext *pContext)
 {
+  //nuiStopWatch watch(_T("nuiTopLevel::DrawTree"));
+
   uint32 clipWidth, clipHeight;
   {
     clipWidth=pContext->GetWidth();
@@ -1312,47 +1315,18 @@ bool nuiTopLevel::DrawTree(class nuiDrawContext *pContext)
 
   if (mPartialRedraw && !DISPLAY_PARTIAL_RECTS)
   {
+    //nuiStopWatch watch(_T("nuiTopLevel::DrawTree / PartialReDraw"));
     // Prepare the layout changes:
     pContext->ResetState();
 
-    // Update the widget informations:
-//    {
-//      nuiPainter* pPainter = pContext->GetPainter();
-//      nuiMetaPainter painter(nuiRect(0,0, clipWidth, clipHeight), NULL);
-//      painter.SetDummyMode(true);
-//      pContext->SetPainter(&painter);
-//
-//      pContext->ResetState();
-//      pContext->ResetClipRect();
-//      pContext->SetStrokeColor(nuiColor(1.0f,0.0f,0.0f,0.0f));
-//      pContext->SetFillColor(nuiColor(1.0f,0.0f,0.0f,.5f));
-//      pContext->EnableBlending(true);
-//      pContext->SetBlendFunc(nuiBlendTransp);
-//      pContext->EnableClipping(true);
-//
-//      IteratorPtr pIt = NULL;
-//      for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
-//      {
-//        nuiWidgetPtr pItem = pIt->GetWidget();
-//        if (pItem && pItem != mpToolTipLabel)
-//          DrawChild(pContext, pItem);
-//      }
-//      delete pIt;
-//
-//      DisplayToolTips(pContext);
-//      pContext->SetPainter(pPainter);
-//    }
-
-    // Ok, all the widgets descriptions should be ok now, let's draw them:
-
     int count = mRedrawList.size();
 
-    for (int i=0; i < count; i++)
+    for (int i = 0; i < count; i++)
     {
       pContext->ResetState();
       pContext->ResetClipRect();
-      pContext->SetStrokeColor(nuiColor(1.0f,0.0f,0.0f,0.0f));
-      pContext->SetFillColor(nuiColor(1.0f,0.0f,0.0f,.5f));
+      pContext->SetStrokeColor(nuiColor(1.0f, 0.0f, 0.0f, 0.0f));
+      pContext->SetFillColor(nuiColor(1.0f, 0.0f, 0.0f, 0.5f));
       pContext->Clip(mRedrawList[i]);
       pContext->EnableClipping(true);
 
@@ -1377,6 +1351,7 @@ bool nuiTopLevel::DrawTree(class nuiDrawContext *pContext)
   }
   else
   {
+    //nuiStopWatch watch(_T("nuiTopLevel::DrawTree / FullDraw"));
     pContext->ResetState();
     pContext->ResetClipRect();
 

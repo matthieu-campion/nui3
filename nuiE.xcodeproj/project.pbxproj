@@ -3302,6 +3302,14 @@
 		E51968100FF8F853007EDF46 /* nuiHTMLStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = E51968000FF8F853007EDF46 /* nuiHTMLStyle.h */; };
 		E51D5B450EC3A3C900182E40 /* ngl_glext_table.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D6670DA5716500D2641A /* ngl_glext_table.cpp */; };
 		E51D5BCE0EC3C5DD00182E40 /* ngl_glext_table.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D6670DA5716500D2641A /* ngl_glext_table.cpp */; };
+		E52216A610C585DA00EB6DB6 /* nuiStopWatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52216A510C585DA00EB6DB6 /* nuiStopWatch.cpp */; };
+		E52216A710C585DA00EB6DB6 /* nuiStopWatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52216A510C585DA00EB6DB6 /* nuiStopWatch.cpp */; };
+		E52216A810C585DA00EB6DB6 /* nuiStopWatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52216A510C585DA00EB6DB6 /* nuiStopWatch.cpp */; };
+		E52216A910C585DA00EB6DB6 /* nuiStopWatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52216A510C585DA00EB6DB6 /* nuiStopWatch.cpp */; };
+		E52216AB10C5861C00EB6DB6 /* nuiStopWatch.h in Headers */ = {isa = PBXBuildFile; fileRef = E52216AA10C5861C00EB6DB6 /* nuiStopWatch.h */; };
+		E52216AC10C5861C00EB6DB6 /* nuiStopWatch.h in Headers */ = {isa = PBXBuildFile; fileRef = E52216AA10C5861C00EB6DB6 /* nuiStopWatch.h */; };
+		E52216AD10C5861C00EB6DB6 /* nuiStopWatch.h in Headers */ = {isa = PBXBuildFile; fileRef = E52216AA10C5861C00EB6DB6 /* nuiStopWatch.h */; };
+		E52216AE10C5861C00EB6DB6 /* nuiStopWatch.h in Headers */ = {isa = PBXBuildFile; fileRef = E52216AA10C5861C00EB6DB6 /* nuiStopWatch.h */; };
 		E53120A20F0781500081CB7E /* nuiHTTP_CoreFoundation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E53120A00F0781500081CB7E /* nuiHTTP_CoreFoundation.cpp */; };
 		E53120A30F0781500081CB7E /* nuiURL_CoreFoundation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E53120A10F0781500081CB7E /* nuiURL_CoreFoundation.cpp */; };
 		E53120A40F0781500081CB7E /* nuiHTTP_CoreFoundation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E53120A00F0781500081CB7E /* nuiHTTP_CoreFoundation.cpp */; };
@@ -4695,6 +4703,8 @@
 		E51967FE0FF8F853007EDF46 /* nuiHTMLHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiHTMLHeader.h; path = src/Text/HTML/nuiHTMLHeader.h; sourceTree = SOURCE_ROOT; };
 		E51967FF0FF8F853007EDF46 /* nuiHTMLStyle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiHTMLStyle.cpp; path = src/Text/HTML/nuiHTMLStyle.cpp; sourceTree = SOURCE_ROOT; };
 		E51968000FF8F853007EDF46 /* nuiHTMLStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiHTMLStyle.h; path = src/Text/HTML/nuiHTMLStyle.h; sourceTree = SOURCE_ROOT; };
+		E52216A510C585DA00EB6DB6 /* nuiStopWatch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiStopWatch.cpp; path = src/Utils/nuiStopWatch.cpp; sourceTree = SOURCE_ROOT; };
+		E52216AA10C5861C00EB6DB6 /* nuiStopWatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiStopWatch.h; path = include/nuiStopWatch.h; sourceTree = SOURCE_ROOT; };
 		E53120A00F0781500081CB7E /* nuiHTTP_CoreFoundation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiHTTP_CoreFoundation.cpp; path = src/Net/CoreFoundation/nuiHTTP_CoreFoundation.cpp; sourceTree = SOURCE_ROOT; };
 		E53120A10F0781500081CB7E /* nuiURL_CoreFoundation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiURL_CoreFoundation.cpp; path = src/Net/CoreFoundation/nuiURL_CoreFoundation.cpp; sourceTree = SOURCE_ROOT; };
 		E53120A60F07817A0081CB7E /* nuiURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiURL.h; path = include/nuiURL.h; sourceTree = SOURCE_ROOT; };
@@ -5606,6 +5616,8 @@
 		6126D6490DA5716500D2641A /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				E52216AA10C5861C00EB6DB6 /* nuiStopWatch.h */,
+				E52216A510C585DA00EB6DB6 /* nuiStopWatch.cpp */,
 				E56D2A2F0FE7091500C16F53 /* nuiRSS.cpp */,
 				E56D2A210FE708E300C16F53 /* nuiRSS.h */,
 				E556976E0FB30E2200324321 /* nuiParser.h */,
@@ -7315,6 +7327,7 @@
 				E5CDB00410AD97DB003709D6 /* nglImagePPMCodec.h in Headers */,
 				E5CDB00610AD97DC003709D6 /* nglImageTGACodec.h in Headers */,
 				E5CDB03210AD9C0E003709D6 /* nuiRangeKnobAttributeEditor.h in Headers */,
+				E52216AE10C5861C00EB6DB6 /* nuiStopWatch.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7850,6 +7863,7 @@
 				E5CDB00A10AD97E4003709D6 /* nglImagePPMCodec.h in Headers */,
 				E5CDB00C10AD97E6003709D6 /* nglImageTGACodec.h in Headers */,
 				E5CDB03110AD9C0E003709D6 /* nuiRangeKnobAttributeEditor.h in Headers */,
+				E52216AD10C5861C00EB6DB6 /* nuiStopWatch.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8384,6 +8398,7 @@
 				E5CDAFEB10AD970B003709D6 /* nglImageTGACodec.h in Headers */,
 				E5CDAFED10AD9710003709D6 /* nglImagePPMCodec.h in Headers */,
 				E5CDB02F10AD9C0D003709D6 /* nuiRangeKnobAttributeEditor.h in Headers */,
+				E52216AB10C5861C00EB6DB6 /* nuiStopWatch.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8919,6 +8934,7 @@
 				E5CDAFFE10AD97D2003709D6 /* nglImagePPMCodec.h in Headers */,
 				E5CDB00010AD97D4003709D6 /* nglImageTGACodec.h in Headers */,
 				E5CDB03010AD9C0E003709D6 /* nuiRangeKnobAttributeEditor.h in Headers */,
+				E52216AC10C5861C00EB6DB6 /* nuiStopWatch.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9383,6 +9399,7 @@
 				E5CDB00110AD97D9003709D6 /* nglImagePNGCodec.cpp in Sources */,
 				E5CDB00210AD97DA003709D6 /* nglImagePPMCodec.cpp in Sources */,
 				E5CDB00510AD97DC003709D6 /* nglImageTGACodec.cpp in Sources */,
+				E52216A910C585DA00EB6DB6 /* nuiStopWatch.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9754,6 +9771,7 @@
 				E5CDB00710AD97E1003709D6 /* nglImagePNGCodec.cpp in Sources */,
 				E5CDB00910AD97E3003709D6 /* nglImagePPMCodec.cpp in Sources */,
 				E5CDB00B10AD97E5003709D6 /* nglImageTGACodec.cpp in Sources */,
+				E52216A810C585DA00EB6DB6 /* nuiStopWatch.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10125,6 +10143,7 @@
 				E5CDAFE810AD9705003709D6 /* nglImagePNGCodec.cpp in Sources */,
 				E5CDAFEA10AD970A003709D6 /* nglImageTGACodec.cpp in Sources */,
 				E5CDAFEC10AD970F003709D6 /* nglImagePPMCodec.cpp in Sources */,
+				E52216A610C585DA00EB6DB6 /* nuiStopWatch.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10496,6 +10515,7 @@
 				E5CDAFFB10AD97D0003709D6 /* nglImagePNGCodec.cpp in Sources */,
 				E5CDAFFD10AD97D1003709D6 /* nglImagePPMCodec.cpp in Sources */,
 				E5CDAFFF10AD97D3003709D6 /* nglImageTGACodec.cpp in Sources */,
+				E52216A710C585DA00EB6DB6 /* nuiStopWatch.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

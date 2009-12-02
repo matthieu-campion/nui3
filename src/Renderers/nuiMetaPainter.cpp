@@ -22,6 +22,10 @@ nuiMetaPainter::nuiMetaPainter(const nuiRect& rRect, nglContext* pContext)
   mNbOperations = 0;
   mDrawChildrenImmediat = false;
   mLastSize = -1;
+  
+#ifdef _DEBUG_
+  mpDebugObjectRef = NULL;
+#endif
 }
 
 nuiMetaPainter::~nuiMetaPainter()
@@ -1005,4 +1009,19 @@ bool nuiMetaPainter::GetDrawChildrenImmediat() const
   return mDrawChildrenImmediat;
 }
 
-
+#ifdef _DEBUG_
+void nuiMetaPainter::DBGSetReferenceObject(const nuiObject* pRef)
+{
+  mpDebugObjectRef = pRef;
+  if (pRef)
+  {
+    mDebugObjectName = pRef->GetObjectName();
+    mDebugObjectClass = pRef->GetObjectClass();
+  }
+  else
+  {
+    mDebugObjectName.Nullify();
+    mDebugObjectClass.Nullify();
+  }
+}
+#endif

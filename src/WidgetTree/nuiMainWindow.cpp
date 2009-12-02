@@ -18,6 +18,7 @@
 #include "nuiLabel.h"
 #include "nuiIntrospector.h"
 #include "nuiSoftwarePainter.h"
+#include "nuiStopWatch.h"
 
 //#define STUPID
 //#define STUPIDBASE
@@ -285,8 +286,10 @@ void nuiMainWindow::LazyPaint()
 
 void nuiMainWindow::Paint()
 {
+  //nuiStopWatch watch(_T("nuiMainWindow::Paint"));
   do 
   {
+
     FillTrash();
     
     GetIdealRect();
@@ -302,6 +305,8 @@ void nuiMainWindow::Paint()
   
   FillTrash();
 
+  //watch.AddIntermediate(_T("After FillTrash()"));
+  
   nuiDrawContext* pContext = GetDrawContext();
   
   pContext->GetPainter()->ResetStats();
@@ -359,7 +364,9 @@ void nuiMainWindow::Paint()
   }
 #endif//__NUI_NO_SOFTWARE__
 
+  //watch.AddIntermediate(_T("Before EndSession()"));
   pContext->EndSession();
+  //watch.AddIntermediate(_T("Before End()"));
   mpNGLWindow->EndSession();
 
   if (mFullFrameRedraw)

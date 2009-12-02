@@ -3316,7 +3316,12 @@ void nuiWidget::EnableRenderCache(bool set)
     if (mUseRenderCache)
     {
       if (!mpRenderCache)
+      {
         mpRenderCache = new nuiMetaPainter(nuiRect());
+#ifdef _DEBUG_
+        mpRenderCache->DBGSetReferenceObject(this);
+#endif
+      }
       mpRenderCache->Reset(NULL);
     }
     else

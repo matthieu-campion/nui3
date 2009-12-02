@@ -1,11 +1,10 @@
 /*
- *  nuiStopWatch.cpp
- *  nui3
- *
- *  Created by mat on 9/8/09.
- *  Copyright 2009 Mxp4. All rights reserved.
- *
+ NUI3 - C++ cross-platform GUI framework for OpenGL based applications
+ Copyright (C) 2002-2003 Sebastien Metrot & Vincent Caron
+ 
+ licence: see nui3/LICENCE.TXT
  */
+
 
 #include "nuiStopWatch.h"
 
@@ -17,16 +16,13 @@ nuiStopWatch::nuiStopWatch(const nglString& LogTitle)
 
 nuiStopWatch::~nuiStopWatch()
 {
+  double seconds = 0.0f;
   {
     nglTime DestructionTime;
     nglTime Diff = DestructionTime - mCreationTime;
-    double seconds = Diff.GetValue();
+    seconds = Diff.GetValue();
     
-    nglString TimeStr;
-    TimeStr.Format(" %lf sec\n", seconds);
-    
-    nglString log = mLogTitle + TimeStr;
-    NGL_OUT(log);
+    NGL_LOG(_T("StopWatch"), NGL_LOG_DEBUG, _T("%ls\t\t%lf sec (%f Hz)\n"), mLogTitle.GetChars(), seconds, 1.0f / seconds);
   }
   
   nglTime ref = mCreationTime;
@@ -40,8 +36,8 @@ nuiStopWatch::~nuiStopWatch()
     double sec = diff.GetValue();
     
     nglString log(_T("\t"));
-    log.Add(str).Add(_T(" ")).Add(sec).Add(_T("\n"));
-    NGL_OUT(log);
+    log.Add(str).Add(_T("\t")).Add(sec).Add(_T("\t")).Add(100.0 * sec / seconds).Add(_T("%"));
+    NGL_LOG(_T("StopWatch"), NGL_LOG_DEBUG, log.GetChars());
     
     ref = time;
     mIntermediatePoints.pop_front();

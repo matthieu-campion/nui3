@@ -11,7 +11,7 @@
 #include "nglKernel.h"
 #include "nglWindow.h"
 #include "nuiMainMenu.h"
-
+#include "nuiStopWatch.h"
 
 
 
@@ -278,6 +278,7 @@ void nglWindow::CallOnClose()
 
 void nglWindow::CallOnPaint()
 {
+  //nuiStopWatch watch(_T("nglWindow::CallOnPaint"));
   NGL_DEBUG( NGL_LOG(_T("window"), NGL_LOG_DEBUG, _T("Paint\n")); )  
   OnPaint();
 
@@ -288,7 +289,7 @@ void nglWindow::CallOnPaint()
     double v = (now - mFPSDelay);
     double c = mFPSCount;
     mFPS = c / v;
-    //printf("FPS: %f (%f seconds - %d frames)\n", mFPS, v, ToNearest(c));
+    printf("FPS: %f (%f seconds - %d frames)\n", mFPS, v, ToNearest(c));
 
     mFPSCount = 0;
     mFPSDelay = now;
@@ -344,18 +345,21 @@ void nglWindow::CallOnTextInputCancelled ()
 
 bool nglWindow::CallOnMouseClick (nglMouseInfo& rInfo)
 {
+  //nuiStopWatch watch(_T("nglWindow::CallOnMouseClick"));
   NGL_DEBUG( NGL_LOG(_T("window"), NGL_LOG_DEBUG, _T("Clic: %d,%d  button=%x"), rInfo.X, rInfo.Y, rInfo.Buttons); )
   return OnMouseClick (rInfo);
 }
 
 bool nglWindow::CallOnMouseUnclick (nglMouseInfo& rInfo)
 {
+  //nuiStopWatch watch(_T("nglWindow::CallOnMouseUnclick"));
   NGL_DEBUG( NGL_LOG(_T("window"), NGL_LOG_DEBUG, _T("Unclic: %d,%d  button=%x"), rInfo.X, rInfo.Y, rInfo.Buttons); )
   return OnMouseUnclick (rInfo);
 }
 
 bool nglWindow::CallOnMouseMove (nglMouseInfo& rInfo)
 {
+  //nuiStopWatch watch(_T("nglWindow::CallOnMouseMove"));
   NGL_DEBUG( NGL_LOG(_T("window"), NGL_LOG_DEBUG, _T("Motion: %d,%d"), rInfo.X, rInfo.Y); )
   return OnMouseMove (rInfo);
 }
