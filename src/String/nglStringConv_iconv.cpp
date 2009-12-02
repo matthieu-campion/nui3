@@ -67,6 +67,7 @@ int nglStringConv::Process (const char*& pSource, int& rToRead, char*& pTarget, 
 
   do
   {
+    //LBDEBUG ICI
     if (iconv(mpCodec->iconv_desc, &in, &inbytes, &out, &outbytes) == (size_t)(-1))
     {
       switch (errno)

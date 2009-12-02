@@ -125,9 +125,9 @@ bool nuiFileTree::OnGotoParentFolder(const nuiEvent& rEvent)
   nglPath path = mRootPath;
  
   nglPath parent = mRootPath.GetParent();
-
+  
   // hack to see "/Volumes" as the ROOTPATH_ALLVOLUMES
-  if ((parent.GetPathName() == ROOTPATH_ALLVOLUMES) || (mRootPath.GetPathName().Extract(mRootPath.GetPathName().GetLength()-2, 2) == _T(":/")))
+  if ((mRootPath.GetPathName() == _T("/")) || ((mRootPath.GetPathName().GetLength() > 1) && (mRootPath.GetPathName().Extract(mRootPath.GetPathName().GetLength()-2, 2) == _T(":/"))))
   {
     parent = ROOTPATH_ALLVOLUMES;
     path = nglPath(_T("/"));
