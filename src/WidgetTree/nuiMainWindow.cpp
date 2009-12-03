@@ -86,7 +86,6 @@ nuiMainWindow::nuiMainWindow(uint Width, uint Height, bool Fullscreen, const ngl
 
   SetRect(nuiRect(0.0f, 0.0f, (nuiSize)w, (nuiSize)h));
   
-  mpInvalidateTimer = 0;
   mLastRendering = 0;
 
   mDisplayMouseOverInfo = false;
@@ -104,6 +103,8 @@ nuiMainWindow::nuiMainWindow(uint Width, uint Height, bool Fullscreen, const ngl
   mLastEventTime = nglTime();
   mLastInteractiveEventTime = 0;
   nuiDefaultDecoration::MainWindow(this);
+  
+  mMainWinSink.Connect(nuiAnimation::AcquireTimer()->Tick, &nuiMainWindow::InvalidateTimer);
 }
 
 nuiMainWindow::nuiMainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& rInfo, const nglContext* pShared, const nglPath& rResPath)
@@ -126,7 +127,6 @@ nuiMainWindow::nuiMainWindow(const nglContextInfo& rContextInfo, const nglWindow
 
   SetRect(nuiRect(0.0f, 0.0f, (nuiSize)w, (nuiSize)h));
   
-  mpInvalidateTimer = 0;
   mLastRendering = 0;
 
   mDisplayMouseOverInfo = false;
@@ -144,6 +144,8 @@ nuiMainWindow::nuiMainWindow(const nglContextInfo& rContextInfo, const nglWindow
   mLastInteractiveEventTime = 0;
 
   nuiDefaultDecoration::MainWindow(this);  
+
+  mMainWinSink.Connect(nuiAnimation::AcquireTimer()->Tick, &nuiMainWindow::InvalidateTimer);
 }
 
 bool nuiMainWindow::Load(const nuiXMLNode* pNode)
@@ -181,7 +183,6 @@ bool nuiMainWindow::Load(const nuiXMLNode* pNode)
   SetRect(nuiRect(0.0f, 0.0f, (nuiSize)w, (nuiSize)h));
 
   mMaxFPS = 0.0f;
-  mpInvalidateTimer = 0;
   mLastRendering = 0;
 
   // Once every thing is properly created on the root window, create the children:
@@ -240,11 +241,12 @@ nuiMainWindow::~nuiMainWindow()
   delete mpInspectorWindow;
   nuiTopLevel::Exit();
   
-  if (mpInvalidateTimer)
-    delete mpInvalidateTimer;
   delete mpNGLWindow;
   mpNGLWindow = NULL;
   //OnDestruction();
+  
+  mMainWinSink.DisconnectAll();
+  nuiAnimation::ReleaseTimer();
 }
 
 
@@ -283,6 +285,8 @@ void nuiMainWindow::LazyPaint()
     Paint();
   }
 }
+
+static float Gx = 0;
 
 void nuiMainWindow::Paint()
 {
@@ -345,6 +349,22 @@ void nuiMainWindow::Paint()
 
   if (DrawFullFrame && RestorePartial)
     EnablePartialRedraw(true);
+
+  if (0)
+  {
+    nuiRect r(32, 32);
+    r.MoveTo(Gx, 10.0f);
+    Gx += 1;
+    
+    if (Gx > GetWidth() - r.GetWidth())
+      Gx = 0;
+    
+    pContext->SetStrokeColor(nuiColor(128, 0, 0, 255));
+    pContext->SetFillColor(nuiColor(0, 0, 128, 255));
+    pContext->EnableBlending(false);
+    //pContext->SetBlendFunc(nuiBlendTranspAdd);
+    pContext->DrawRect(r, eStrokeAndFillShape);
+  }
 
   pContext->StopRendering();
   EmptyTrash();
@@ -450,12 +470,6 @@ void nuiMainWindow::BroadcastInvalidate(nuiWidgetPtr pSender)
 
   //NGL_OUT(_T("(Invalidate)InvalidatePosted(%ls)\n"), pSender->GetProperty("Class").GetChars());
   mInvalidatePosted = true;
-
-  if (mMaxFPS == 0.0f)
-  {
-    mpNGLWindow->Invalidate();
-  }
-
 }
 
 void nuiMainWindow::BroadcastInvalidateRect(nuiWidgetPtr pSender, const nuiRect& rRect)
@@ -464,11 +478,6 @@ void nuiMainWindow::BroadcastInvalidateRect(nuiWidgetPtr pSender, const nuiRect&
 
   //NGL_OUT(_T("(InvalidateRect)InvalidatePosted(%ls)\n"), pSender->GetProperty("Class").GetChars());
   mInvalidatePosted = true;
-
-  if (mMaxFPS == 0.0f) // Do we limit the FPS?
-  {
-    mpNGLWindow->Invalidate();
-  }
 }
 
 void nuiMainWindow::BroadcastInvalidateLayout(nuiWidgetPtr pSender, bool BroadCastOnly)
@@ -477,12 +486,6 @@ void nuiMainWindow::BroadcastInvalidateLayout(nuiWidgetPtr pSender, bool BroadCa
 
   //NGL_OUT(_T("(Invalidate)BroadcastInvalidateLayout(%ls)\n"), pSender->GetProperty("Class").GetChars());
   mInvalidatePosted = true;
-
-  if (mMaxFPS == 0.0f) // Do we limit the FPS?
-  {
-    mpNGLWindow->Invalidate();
-  }
-
 }
 
 void nuiMainWindow::DBG_DisplayMouseOverObject()
@@ -593,28 +596,6 @@ void nuiMainWindow::DBG_SetMouseOverInfo(bool set)
 bool nuiMainWindow::DBG_GetMouseOverInfo()
 {
   return mDisplayMouseOverInfo;
-}
-
-void nuiMainWindow::SetFrameRateLimit(float fps)
-{
-  mMaxFPS = fps;
-  if (mMaxFPS < 0.0f)
-    mMaxFPS = 0.0f;
-
-  if (mpInvalidateTimer)
-    delete mpInvalidateTimer;
-
-  if (mMaxFPS > 0.0f)
-  {
-    mpInvalidateTimer = new nuiTimer(1.0f/fps);
-    mpInvalidateTimer->Start();
-    mMainWinSink.Connect(mpInvalidateTimer->Tick, &nuiMainWindow::InvalidateTimer);
-  }
-}
-
-float nuiMainWindow::GetFrameRateLimit()
-{
-  return mMaxFPS;
 }
 
 bool nuiMainWindow::InvalidateTimer(const nuiEvent& rEvent)

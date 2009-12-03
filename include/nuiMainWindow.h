@@ -68,12 +68,6 @@ public:
   bool GetQuitOnClose() const;
   bool Trash();
 
-  /** @name Frame rate limitation */
-  //@{
-  void  SetFrameRateLimit(float fps); ///< Change the maximum framerate to use for this main window (in number of frames per second). fps should be less than or equal to 0 if you want no limit. 
-  float GetFrameRateLimit(); ///< Return the maximum framerate to use for this main window (in number of frames per second). If it returns 0 there is no limit. 
-  //@}
-
   void SetDebugMode(bool Set);
 
   /** @name Redirected to nglWindow via nuiMainWindow::NGLWindow */
@@ -175,7 +169,6 @@ protected:
   bool mQuitOnClose;
   float mMaxFPS;
   nglTime mLastRendering;
-  nuiTimer* mpInvalidateTimer;
   bool InvalidateTimer(const nuiEvent& rEvent);
 
   nuiWidget*      mpDragSource; ///< widget that has initialized a drag operation

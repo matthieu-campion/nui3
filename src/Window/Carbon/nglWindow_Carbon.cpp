@@ -1124,91 +1124,91 @@ OSStatus nglWindow::WindowEventHandler (EventHandlerCallRef eventHandlerCallRef,
     case kEventClassWindow:
       result = noErr;
       switch (eventKind)
-    {
-      case kEventWindowDrawContent:
-      case kEventWindowUpdate:
-        //          printf("Event: Paint\n");
-        mInvalidatePosted = false;
-        
-        //BeginUpdate(mWindow);                /* this sets up the visRgn */
-        CallOnPaint();
-        //EndUpdate(mWindow);
-        
-        mRedrawing = false;
-        result = eventNotHandledErr;
-        
-        break;
-      case kEventWindowInit:
-        CallOnCreation();
-        break;
-      case kEventWindowActivated:
-        ActivateTSMDocument(nuiTSMDocument);
-        SetUserFocusWindow(mWindow);
-        CallOnActivation();
-        if (mIsFakeChildWindow)
-          result = eventNotHandledErr;
-        break;
-      case kEventWindowDeactivated:
-        DeactivateTSMDocument(nuiTSMDocument);
-        CallOnDesactivation();
-        if (mIsFakeChildWindow)
-          result = eventNotHandledErr;
-        break;
-      case kEventWindowClose:
-        //          printf("Event: Close\n");
-        if (mIsFakeChildWindow)
-          result = eventNotHandledErr;
-        CallOnClose();
-        break;
-      case kEventWindowClosed:
-        //          printf("Event: Closed\n");
-        if (mIsFakeChildWindow)
-          result = eventNotHandledErr;
-        CallOnDestruction();
-        break;
-      case kEventWindowBoundsChanged:
       {
-        // Window is being resized
-        Rect bounds;
-        
-        if (mIsFakeChildWindow)
-        {
-          GLint bufferRect[4];
-          Rect portBounds;
-          GetWindowPortBounds(mWindow, &bounds);
+        case kEventWindowDrawContent:
+        case kEventWindowUpdate:
+          //          printf("Event: Paint\n");
+          mInvalidatePosted = false;
           
-          int iPortHeight = bounds.bottom - bounds.top;
-          int iPortWidth = bounds.right - bounds.left;
+          //BeginUpdate(mWindow);                /* this sets up the visRgn */
+          CallOnPaint();
+          //EndUpdate(mWindow);
           
-          int iHeight = iPortHeight;
-          int iY = iHeight - mYOffset;
-          
-          bufferRect[0] = mXOffset; // 0 = left edge
-          bufferRect[1] = iY - mWindowHeight; // 0 = bottom edge
-          bufferRect[2] = mWindowWidth; // width of buffer rect
-          bufferRect[3] = mWindowHeight; // height of buffer rect
-          aglSetInteger (mCtx, AGL_BUFFER_RECT, bufferRect);
-          aglEnable (mCtx, AGL_BUFFER_RECT);
-          
-          MakeCurrent();
-          InvalWindowRect(mWindow, &bounds);
-          
-          CallOnResize(mWindowWidth, mWindowHeight);
-          
+          mRedrawing = false;
           result = eventNotHandledErr;
-        }
-        else
-        {
-          GetWindowPortBounds(mWindow, &bounds);
-          MakeCurrent();
-          InvalWindowRect(mWindow, &bounds);
           
-          CallOnResize(bounds.right, bounds.bottom);
+          break;
+        case kEventWindowInit:
+          CallOnCreation();
+          break;
+        case kEventWindowActivated:
+          ActivateTSMDocument(nuiTSMDocument);
+          SetUserFocusWindow(mWindow);
+          CallOnActivation();
+          if (mIsFakeChildWindow)
+            result = eventNotHandledErr;
+          break;
+        case kEventWindowDeactivated:
+          DeactivateTSMDocument(nuiTSMDocument);
+          CallOnDesactivation();
+          if (mIsFakeChildWindow)
+            result = eventNotHandledErr;
+          break;
+        case kEventWindowClose:
+          //          printf("Event: Close\n");
+          if (mIsFakeChildWindow)
+            result = eventNotHandledErr;
+          CallOnClose();
+          break;
+        case kEventWindowClosed:
+          //          printf("Event: Closed\n");
+          if (mIsFakeChildWindow)
+            result = eventNotHandledErr;
+          CallOnDestruction();
+          break;
+        case kEventWindowBoundsChanged:
+        {
+          // Window is being resized
+          Rect bounds;
+          
+          if (mIsFakeChildWindow)
+          {
+            GLint bufferRect[4];
+            Rect portBounds;
+            GetWindowPortBounds(mWindow, &bounds);
+            
+            int iPortHeight = bounds.bottom - bounds.top;
+            int iPortWidth = bounds.right - bounds.left;
+            
+            int iHeight = iPortHeight;
+            int iY = iHeight - mYOffset;
+            
+            bufferRect[0] = mXOffset; // 0 = left edge
+            bufferRect[1] = iY - mWindowHeight; // 0 = bottom edge
+            bufferRect[2] = mWindowWidth; // width of buffer rect
+            bufferRect[3] = mWindowHeight; // height of buffer rect
+            aglSetInteger (mCtx, AGL_BUFFER_RECT, bufferRect);
+            aglEnable (mCtx, AGL_BUFFER_RECT);
+            
+            MakeCurrent();
+            InvalWindowRect(mWindow, &bounds);
+            
+            CallOnResize(mWindowWidth, mWindowHeight);
+            
+            result = eventNotHandledErr;
+          }
+          else
+          {
+            GetWindowPortBounds(mWindow, &bounds);
+            MakeCurrent();
+            InvalWindowRect(mWindow, &bounds);
+            
+            CallOnResize(bounds.right, bounds.bottom);
+          }
+          
+          Invalidate();
         }
-        
-        Invalidate();
       }
-    }
       break;
   }
   
@@ -1736,17 +1736,10 @@ void nglWindow::Invalidate()
 {
   if (!mInvalidatePosted)
   {
-    //    printf("No delay!\n");
-#if 0
-    Rect bounds;
-    OSStatus err;
-    GetWindowPortBounds(mWindow, &bounds);
-    err = InvalWindowRect(mWindow, &bounds);
-#else
     OSStatus err;
     EventRef outEvent;
     //    err = CreateEvent( NULL, kEventClassWindow, kEventWindowDrawContent , GetCurrentEventTime(), kEventAttributeNone /*kEventAttributeUserEvent*/, &outEvent);
-    err = CreateEvent( NULL, kEventClassWindow, kEventWindowUpdate , GetCurrentEventTime(), kEventAttributeNone /*kEventAttributeUserEvent*/, &outEvent);
+    err = CreateEvent( NULL, kEventClassWindow, kEventWindowUpdate ,GetCurrentEventTime(), kEventAttributeNone /*kEventAttributeUserEvent*/, &outEvent);
     EventTargetRef Target = GetWindowEventTarget(mWindow);
     err = SetEventParameter(outEvent, kEventParamPostTarget, typeEventTargetRef, sizeof(void*), &Target);
     if (outEvent)
@@ -1755,15 +1748,9 @@ void nglWindow::Invalidate()
 			err = PostEventToQueue(GetMainEventQueue(), outEvent, kEventPriorityLow);
 			ReleaseEvent(outEvent);
 		}
-#endif
     
     mInvalidatePosted = true;
   }
-  else
-  {
-    //    printf("with delay...\n");
-  }
-  
 }
 
 bool nglWindow::SetCursor(nuiMouseCursor Cursor)
