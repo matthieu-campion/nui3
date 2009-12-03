@@ -6,6 +6,7 @@
 #include "nglWindow.h"
 #include "nglKeyboard.h"
 #include "nuiMouseCursor.h"
+#include "nuiStopWatch.h"
 
 #include <QuartzCore/QuartzCore.h>
 
@@ -167,6 +168,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 
 - (void) UpdateOrientation
 {
+  //nuiStopWatch watch(_T("nglWindowUIKIT::UpdateOrientation"));
   UIApplication* pApp = [UIApplication sharedApplication];
   UIDevice* pUIDev = [UIDevice currentDevice];
   int32 angle = -1;
@@ -306,21 +308,19 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 
 - (void) sendEvent: (UIEvent*) pEvent
 {
+  double t = nglTime();
   [self InitNGLWindow];
   
 //  NGL_OUT(_T("[nglUIWindow sendEvent]\n"));
-  nglTime t0;
 //  [self dumpTouches: pEvent];
+//nuiStopWatch watch(_T("nglWindowUIKIT::sendEvent"));
   nglWindow::EventMask mask = mpNGLWindow->GetEventMask();
   if (mask & nglWindow::MouseEvents)
   {
     [self handleEvent: pEvent];
   }
-  nglTime t1;
-  //NGL_OUT(_T("sendEvent: elapsed time: %f sec, handleEvent time: %f\n"),
-  //        (double)(t1 - mLastEventTime), (double)(t1 - t0));
 
-  mLastEventTime=t1;
+  mLastEventTime = t;
   [super sendEvent: pEvent];
 }
 /*
@@ -385,6 +385,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 
 - (void) handleEvent: (UIEvent*) pEvent
 {
+  //nuiStopWatch watch(_T("nglWindowUIKIT::handleEvent"));
 	static double sOldTimestamp = 0.0;
   NSSet* pSet = [pEvent allTouches];
   NGL_ASSERT(pSet);

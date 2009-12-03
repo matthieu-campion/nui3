@@ -437,7 +437,10 @@ bool nuiEditText::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
     handled = true;
     if (Button & nglMouseInfo::ButtonDoubleClick)
     {
-      Do(eSelectWord, new nuiObject());
+      if (!mCommandStack.empty() && mCommandStack.back().first == eSelectWord)
+        Do(eSelectAll, new nuiObject());
+      else
+        Do(eSelectWord, new nuiObject());
     }
     else
     {

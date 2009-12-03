@@ -289,7 +289,7 @@ void nglWindow::CallOnPaint()
     double v = (now - mFPSDelay);
     double c = mFPSCount;
     mFPS = c / v;
-    printf("FPS: %f (%f seconds - %d frames)\n", mFPS, v, ToNearest(c));
+    NGL_LOG(_T("fps"), NGL_LOG_DEBUG, _T("FPS: %f (%f seconds - %d frames)\n"), mFPS, v, ToNearest(c));
 
     mFPSCount = 0;
     mFPSDelay = now;

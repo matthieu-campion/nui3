@@ -147,7 +147,6 @@ nuiTopLevel::nuiTopLevel(const nglPath& rResPath)
   : nuiSimpleContainer(),
     mToolTipTimerOn(0.5f),    
     mToolTipTimerOff(5.0f),
-    mMessageQueueTimer(1.0/100.f),
     mpWatchedWidget(NULL),
     mFillTrash(false),
     mpDrawContext(NULL),
@@ -173,8 +172,7 @@ nuiTopLevel::nuiTopLevel(const nglPath& rResPath)
 
   mTopLevelSink.Connect(mToolTipTimerOn.Tick, &nuiTopLevel::ToolTipOn);
   mTopLevelSink.Connect(mToolTipTimerOff.Tick, &nuiTopLevel::ToolTipOff);
-  mTopLevelSink.Connect(mMessageQueueTimer.Tick, &nuiTopLevel::OnMessageQueueTick);
-  mMessageQueueTimer.Start(false);
+  mTopLevelSink.Connect(nuiAnimation::AcquireTimer()->Tick, &nuiTopLevel::OnMessageQueueTick);
 
   mpGrab.clear();
   mMouseInfo.TouchId = -1;
@@ -291,6 +289,8 @@ void nuiTopLevel::Exit()
     delete pHotKey;
     ++it;
   }
+
+  nuiAnimation::ReleaseTimer();
 }
 
 void nuiTopLevel::DisconnectWidget(nuiWidget* pWidget)

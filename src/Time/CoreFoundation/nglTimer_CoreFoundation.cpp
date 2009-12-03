@@ -3,6 +3,8 @@
 #include "nglApplication.h"
 #include "nglTimer.h"
 
+#include "nuiStopWatch.h"
+
 #define TIMER_MIN_PERIOD     0.00001 // (somewhat 'reasonable')
 
 static std::set<nglTimer*> gNGLTimers;
@@ -55,6 +57,7 @@ bool nglTimer::SetPeriod(nglTime Period)
 void nglTimerAction(CFRunLoopTimerRef       pCFTimer,
                     void*                   pUserData)
 {
+  //nuiStopWatch watch(_T("nglTimerAction"));
   nglTimer* pTimer = (nglTimer*)(pUserData);
   if (!pTimer)
     return;
@@ -127,7 +130,8 @@ bool nglTimer::Start(bool Immediate, bool Reset)
 
 void nglTimer::Stop()
 {
-  if (mRunning) {
+  if (mRunning)
+  {
     NGL_ASSERT(mpCFRunLoopTimer);
     CFRunLoopRef currentRunLoop = CFRunLoopGetCurrent();
     NGL_ASSERT(mpCFRunLoop == currentRunLoop);

@@ -185,8 +185,6 @@ protected:
   nuiToolTip* mpToolTipLabel;
   nuiLabel* mpInfoLabel;
 
-  nuiTimer mMessageQueueTimer;
-
   typedef std::map<nglTouchId, nuiWidgetPtr> nuiGrabMap;
   nuiGrabMap mpGrab;
 
