@@ -550,16 +550,6 @@ int nglContextInfo::GetPFD(HDC hDC) const
     ReleaseDC(tmpWin, tmpDC);
     DestroyWindow(tmpWin);
 
-    PFNWGLSWAPINTERVALEXTPROC wglSwapIntervalEXT = NULL;
-    PFNWGLGETSWAPINTERVALEXTPROC wglGetSwapIntervalEXT = NULL;
-    wglSwapIntervalEXT = (PFNWGLSWAPINTERVALEXTPROC)wglGetProcAddress("wglSwapIntervalEXT");
-    wglGetSwapIntervalEXT = (PFNWGLGETSWAPINTERVALEXTPROC)wglGetProcAddress("wglGetSwapIntervalEXT");
-
-    if (wglSwapIntervalEXT)
-    {
-      wglSwapIntervalEXT( VerticalSync ? 1 : 0);
-    }
-
     UnregisterClass(NGL_CONTEXT_CLASS, App->GetHInstance());
     return format;
   }
@@ -760,6 +750,7 @@ bool nglContext::BuildOpenGL(HWND hWnd, const nglContextInfo& rInfo, const nglCo
       return false;
     }
   }
+
 
   return true;
 }

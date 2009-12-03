@@ -1308,6 +1308,20 @@ bool nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
   if(!Build(mGLHWnd, rContext, pShared) || !MakeCurrent())
     return false;
 
+  PFNWGLSWAPINTERVALEXTPROC wglSwapIntervalEXT = NULL;
+  PFNWGLGETSWAPINTERVALEXTPROC wglGetSwapIntervalEXT = NULL;
+  const GLubyte* pStr = glGetString(GL_EXTENSIONS);
+  wglSwapIntervalEXT = (PFNWGLSWAPINTERVALEXTPROC)wglGetProcAddress("wglSwapIntervalEXT");
+  wglGetSwapIntervalEXT = (PFNWGLGETSWAPINTERVALEXTPROC)wglGetProcAddress("wglGetSwapIntervalEXT");
+
+  if (wglSwapIntervalEXT)
+  {
+    if (rContext.VerticalSync)
+      wglSwapIntervalEXT(1);
+    else
+      wglSwapIntervalEXT(0);
+  }
+
   NGL_DEBUG( nglContext::Dump(NGL_LOG_INFO); );
   if (mTargetAPI == eTargetAPI_OpenGL)
     glViewport(0,0,w,h);
