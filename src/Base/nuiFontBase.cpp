@@ -840,9 +840,6 @@ int nuiFontBase::Print(nuiDrawContext *pContext, float X, float Y, const nglStri
 
   layout.Layout(rText);
 
-  nglFontInfo info;
-  GetInfo(info);
-
   int c = 0;
   int lines = 0;
   while (c >= 0)
@@ -853,7 +850,7 @@ int nuiFontBase::Print(nuiDrawContext *pContext, float X, float Y, const nglStri
     lines++;
   }
 
-  Y -= info.Height * (lines-1);
+  Y -= GetHeight() * (lines-1);
   return Print(pContext, X, Y, layout);
 }
 
@@ -1114,62 +1111,54 @@ bool nuiFontBase::PrintGlyphs(nuiDrawContext *pContext, const std::map<nuiTextur
     uint size = (uint)it->second.size();
     uint i;
 
-    if (1)
+    nuiRenderArray* pArray = new nuiRenderArray(GL_TRIANGLES);
+    pArray->EnableArray(nuiRenderArray::eVertex);
+    pArray->EnableArray(nuiRenderArray::eTexCoord);
+    pArray->Reserve(6 * size);
+    
+    for (i = 0; i < size; i++)
     {
-      nuiRenderArray* pArray = new nuiRenderArray(GL_TRIANGLES);
-      pArray->EnableArray(nuiRenderArray::eVertex);
-      pArray->EnableArray(nuiRenderArray::eTexCoord);
-      for (i = 0; i < size; i++)
-      {
-        const nuiRect& rDest = it->second[i].mDestRect;
-        const nuiRect& rSource = it->second[i].mSourceRect;
+      const nuiRect& rDest = it->second[i].mDestRect;
+      const nuiRect& rSource = it->second[i].mSourceRect;
 
-        nuiSize tx,ty,tw,th;
+      nuiSize tx,ty,tw,th;
 
-        tx = rSource.mLeft;
-        ty = rSource.mTop;
-        tw = rSource.mRight;
-        th = rSource.mBottom;
+      tx = rSource.mLeft;
+      ty = rSource.mTop;
+      tw = rSource.mRight;
+      th = rSource.mBottom;
 
-        pTexture->ImageToTextureCoord(tx, ty);
-        pTexture->ImageToTextureCoord(tw,th);
+      pTexture->ImageToTextureCoord(tx, ty);
+      pTexture->ImageToTextureCoord(tw,th);
 
-        ///////////////////////////////////////////
-        pArray->SetVertex(rDest.mLeft, rDest.mTop);
-        pArray->SetTexCoords(tx, ty);
-        pArray->PushVertex();
-        
-        pArray->SetVertex(rDest.mRight, rDest.mTop);
-        pArray->SetTexCoords(tw, ty);
-        pArray->PushVertex();
-        
-        pArray->SetVertex(rDest.mRight, rDest.mBottom);
-        pArray->SetTexCoords(tw, th);
-        pArray->PushVertex();
+      ///////////////////////////////////////////
+      pArray->SetVertex(rDest.mLeft, rDest.mTop);
+      pArray->SetTexCoords(tx, ty);
+      pArray->PushVertex();
+      
+      pArray->SetVertex(rDest.mRight, rDest.mTop);
+      pArray->SetTexCoords(tw, ty);
+      pArray->PushVertex();
+      
+      pArray->SetVertex(rDest.mRight, rDest.mBottom);
+      pArray->SetTexCoords(tw, th);
+      pArray->PushVertex();
 
-        ///////////////////////////////////////////
-        pArray->SetVertex(rDest.mLeft, rDest.mTop);
-        pArray->SetTexCoords(tx, ty);
-        pArray->PushVertex();
+      ///////////////////////////////////////////
+      pArray->SetVertex(rDest.mLeft, rDest.mTop);
+      pArray->SetTexCoords(tx, ty);
+      pArray->PushVertex();
 
-        pArray->SetVertex(rDest.mRight, rDest.mBottom);
-        pArray->SetTexCoords(tw, th);
-        pArray->PushVertex();
+      pArray->SetVertex(rDest.mRight, rDest.mBottom);
+      pArray->SetTexCoords(tw, th);
+      pArray->PushVertex();
 
-        pArray->SetVertex(rDest.mLeft, rDest.mBottom);
-        pArray->SetTexCoords(tx, th);
-        pArray->PushVertex();
-      }
-
-      pContext->DrawArray(pArray);
+      pArray->SetVertex(rDest.mLeft, rDest.mBottom);
+      pArray->SetTexCoords(tx, th);
+      pArray->PushVertex();
     }
-    else
-    {
-      for (i = 0; i != size; i++)
-      {
-        pContext->DrawImage(it->second[i].mDestRect, it->second[i].mSourceRect);
-      }
-    }
+
+    pContext->DrawArray(pArray);
 
     ++it;
   }

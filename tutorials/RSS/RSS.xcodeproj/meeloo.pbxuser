@@ -81,16 +81,15 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 281616442;
-			PBXWorkspaceStateSaveDate = 281616442;
+			PBXPerProjectTemplateStateSaveDate = 281625891;
+			PBXWorkspaceStateSaveDate = 281625891;
 		};
 		perUserProjectItems = {
 			E5221A0210C9103500EB6DB6 = E5221A0210C9103500EB6DB6 /* PBXTextBookmark */;
 			E5221A0310C9103500EB6DB6 = E5221A0310C9103500EB6DB6 /* PBXTextBookmark */;
-			E5221A0410C9103500EB6DB6 = E5221A0410C9103500EB6DB6 /* PBXTextBookmark */;
-			E5221A0510C9103500EB6DB6 = E5221A0510C9103500EB6DB6 /* PBXTextBookmark */;
 			E5C0DCFD10B38F9E001BFEE0 = E5C0DCFD10B38F9E001BFEE0 /* PBXTextBookmark */;
-			E5DAECE110C9203D00E9094D /* PBXTextBookmark */ = E5DAECE110C9203D00E9094D /* PBXTextBookmark */;
+			E5D222ED10C94504005F3281 = E5D222ED10C94504005F3281 /* PBXTextBookmark */;
+			E5DAECE110C9203D00E9094D = E5DAECE110C9203D00E9094D /* PBXTextBookmark */;
 		};
 		sourceControlManager = E5954AED0FF918B3005F7E87 /* Source Control */;
 		userBuildSettings = {
@@ -148,26 +147,6 @@
 		rType = 0;
 		vrLen = 656;
 		vrLoc = 0;
-	};
-	E5221A0410C9103500EB6DB6 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
-		name = "MainWindow.cpp: 85";
-		rLen = 13;
-		rLoc = 2829;
-		rType = 0;
-		vrLen = 2805;
-		vrLoc = 701;
-	};
-	E5221A0510C9103500EB6DB6 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
-		name = "MainWindow.cpp: 85";
-		rLen = 13;
-		rLoc = 2829;
-		rType = 0;
-		vrLen = 2805;
-		vrLoc = 701;
 	};
 	E5954AD50FF91895005F7E87 /* RSS */ = {
 		isa = PBXExecutable;
@@ -262,6 +241,16 @@
 		name = nuiRSS.h;
 		path = /Users/meeloo/work/nui3/include/nuiRSS.h;
 		sourceTree = "<absolute>";
+	};
+	E5D222ED10C94504005F3281 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 85";
+		rLen = 13;
+		rLoc = 2829;
+		rType = 0;
+		vrLen = 2805;
+		vrLoc = 701;
 	};
 	E5DAECE110C9203D00E9094D /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;

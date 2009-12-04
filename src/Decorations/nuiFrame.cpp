@@ -195,6 +195,10 @@ void nuiFrame::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect&
   mpTexture->ImageToTextureCoord(X2, Y2);
   mpTexture->ImageToTextureCoord(X3, Y3);
   
+  
+  // Reserve 54 vertices
+  pArray->Reserve(54);
+  
   //////// TOP PART
   // TopLeft rect:
   pArray->SetVertex(x0, y0);

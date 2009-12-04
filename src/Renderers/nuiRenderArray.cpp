@@ -64,9 +64,9 @@ nuiRenderArray::nuiRenderArray(const nuiRenderArray& rArray)
 
 nuiRenderArray::~nuiRenderArray()
 {
-  mpCacheHandle = NULL;
   if (mpCacheManager)
     mpCacheManager->ReleaseCacheObject(mpCacheHandle);
+  mpCacheHandle = NULL;
   
   for (uint32 i = 0; i < mIndexedArrays.size(); i++)
     delete mIndexedArrays[i];

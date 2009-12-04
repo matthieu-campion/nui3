@@ -896,9 +896,14 @@ void nglWindow::EndSession()
 
     if ( ![(EAGLContext*)mpContext presentRenderbuffer: GL_RENDERBUFFER_OES] )
     {
+      NGL_ASSERT(0);
       printf("Failed to swap renderbuffer in %s\n", __FUNCTION__);
     }
     mInSession = 0;
+  }
+  else
+  {
+    NGL_ASSERT(0);
   }
 
 #endif

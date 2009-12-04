@@ -151,6 +151,9 @@ protected:
   nglString mDebugObjectName;
   nglString mDebugObjectClass;
 #endif
+  
+  std::vector<nuiRenderState> mRenderStates;
+  std::vector<nuiRenderArray*> mRenderArrays;
 };
 
 #endif // __nuiMetaPainter_h__

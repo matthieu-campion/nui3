@@ -242,8 +242,6 @@ void nglWindow::CallOnCreation()
   NGL_DEBUG( NGL_LOG(_T("window"), NGL_LOG_DEBUG, _T("Creation\n")); )
   // Set all keys as not pressed
   memset (mpKeyState, 0, sizeof(bool)*NGL_KEY_MAX);
-  //nglTime mLastPaint;
-  //nglTime mFPSDelay;
   mFPSCount = 0;
   mFPS = 0;
   

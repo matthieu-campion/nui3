@@ -415,6 +415,30 @@ float nglFontBase::GetHeight (nglFontUnit Unit, float DefaultSpacing) const
   return 0.0f;
 }
 
+float nglFontBase::GetAscender(nglFontUnit Unit) const
+{
+  float ratio = 0.f;
+  switch (Unit)
+  {
+    case eFontUnitEM    : ratio = 1.0f; break;
+    case eFontUnitPoint : ratio = EMToPoint(1.0f); break;
+    case eFontUnitPixel : ratio = EMToPixel(1.0f); break;
+  }
+  return mpFace->Face->ascender * ratio;
+}
+
+float nglFontBase::GetDescender(nglFontUnit Unit) const
+{
+  float ratio = 0.f;
+  switch (Unit)
+  {
+    case eFontUnitEM    : ratio = 1.0f; break;
+    case eFontUnitPoint : ratio = EMToPoint(1.0f); break;
+    case eFontUnitPixel : ratio = EMToPixel(1.0f); break;
+  }
+  return mpFace->Face->ascender * ratio;
+}
+
 uint nglFontBase::GetGlyphCount() const
 {
   return mpFace->Face ? (uint)mpFace->Face->num_glyphs : 0;

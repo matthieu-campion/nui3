@@ -350,13 +350,13 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E5DAECE110C9203D00E9094D</string>
+										<string>E5D222ED10C94504005F3281</string>
 										<key>history</key>
 										<array>
 											<string>E5C0DCFD10B38F9E001BFEE0</string>
 											<string>E5221A0210C9103500EB6DB6</string>
 											<string>E5221A0310C9103500EB6DB6</string>
-											<string>E5221A0510C9103500EB6DB6</string>
+											<string>E5DAECE110C9203D00E9094D</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -479,11 +479,11 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E5DAECE210C9203D00E9094D</string>
+				<string>E5D222EE10C94504005F3281</string>
 				<string>1CA23ED40692098700951B8B</string>
-				<string>E5DAECE310C9203D00E9094D</string>
+				<string>E5D222EF10C94504005F3281</string>
 				<string>E5954AFB0FF918F6005F7E87</string>
-				<string>E5DAECE410C9203D00E9094D</string>
+				<string>E5D222F010C94504005F3281</string>
 				<string>1CA23EDF0692099D00951B8B</string>
 				<string>1CA23EE00692099D00951B8B</string>
 				<string>1CA23EE10692099D00951B8B</string>
@@ -656,7 +656,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>281616445.67458898</real>
+	<real>281625860.98126203</real>
 	<key>ToolbarConfigUserDefaultsMinorVersion</key>
 	<string>2</string>
 	<key>ToolbarDisplayMode</key>
@@ -672,9 +672,7 @@
 	<key>WindowJustification</key>
 	<integer>5</integer>
 	<key>WindowOrderList</key>
-	<array>
-		<string>/Users/meeloo/work/nui3/tutorials/RSS/RSS.xcodeproj</string>
-	</array>
+	<array/>
 	<key>WindowString</key>
 	<string>0 59 1920 1119 0 0 1920 1178 </string>
 	<key>WindowToolsV3</key>

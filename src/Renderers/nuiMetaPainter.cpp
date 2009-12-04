@@ -192,7 +192,9 @@ void nuiMetaPainter::SetState(const nuiRenderState& rState, bool ForceApply)
   mLastStateValid = true;
   mLastState = rState;
   StoreOpCode(eSetState);
-  StorePointer(new nuiRenderState(rState));
+  //StorePointer(new nuiRenderState(rState));
+  StoreInt(mRenderStates.size());
+  mRenderStates.push_back(rState);
   StoreInt(ForceApply?1:0);
 }
 
@@ -207,7 +209,9 @@ void nuiMetaPainter::DrawArray(nuiRenderArray* pRenderArray)
   if (mDummyMode)
     return;
   StoreOpCode(eDrawArray);
-  StorePointer(pRenderArray);
+  //StorePointer(pRenderArray);
+  StoreInt(mRenderArrays.size());
+  mRenderArrays.push_back(pRenderArray);
 
   mNbDrawArray++;
   
@@ -383,9 +387,6 @@ void nuiMetaPainter::AddBreakPoint()
   StoreOpCode(eBreak);
 }
 
-//bool nuiMetaPainter::GetClipRect(nuiRect& rRect, bool LocalRect);
-
-
 void nuiMetaPainter::ReDraw(nuiDrawContext* pContext)
 {
   PartialReDraw(pContext, 0, mNbOperations);
@@ -402,113 +403,14 @@ void nuiMetaPainter::Reset(nuiPainter const * pFrom)
   mNbDrawArray = 0;
   mNbClearColor = 0;
 
-  uint size = mOperations.size();
-  while (mOperationPos < size)
-  {
-    OpCode code = FetchOpCode();
-    switch (code)
-    {
-    case eSetSize:
-      FetchInt();
-      FetchInt();
-      break;
-    case eStartRendering:
-      {
-        nuiSize tmp;
-        FetchFloat(tmp);
-        FetchFloat(tmp);
-      }
-      break;
-    case eSetState:
-      delete ((nuiRenderState*)FetchPointer());
-      FetchInt();
-      break;
-    case eDrawArray:
-      ((nuiRenderArray*)FetchPointer())->Release();
-      break;
-    case eClearColor:
-      break;
-    case eBeginSession:
-      break;
-    case eEndSession:
-      break;
-    case eDrawChild:
-      FetchPointer();
-      break;
-    case eLoadMatrix:
-      {
-        nuiMatrix m;
-        FetchBuffer(m.Array, sizeof(nuiSize), 16);
-      }
-      break;
-    case eMultMatrix:
-      {
-        nuiMatrix m;
-        FetchBuffer(m.Array, sizeof(nuiSize), 16);
-      }
-      break;
-    case ePopMatrix:
-      break;
-    case ePushMatrix:
-      break;
-
-    
-    case eLoadProjectionMatrix:
-      {
-        nuiMatrix m;
-        nuiSize tmp;
-        FetchFloat(tmp);
-        FetchFloat(tmp);
-        FetchFloat(tmp);
-        FetchFloat(tmp);
-        FetchBuffer(m.Array, sizeof(nuiSize), 16);
-      }
-      break;
-    case eMultProjectionMatrix:
-      {
-        nuiMatrix m;
-        FetchBuffer(m.Array, sizeof(nuiSize), 16);
-      }
-      break;
-    case ePopProjectionMatrix:
-      break;
-    case ePushProjectionMatrix:
-      break;
-        
-        
-        
-        
-    case ePushClipping:
-      break;
-    case ePopClipping:
-      break;
-    case eClip:
-      {
-        nuiSize tmp;
-        FetchFloat(tmp);
-        FetchFloat(tmp);
-        FetchFloat(tmp);
-        FetchFloat(tmp);
-      }
-      break;
-    case eResetClipRect:
-      break;
-    case eEnableClipping:
-      FetchInt();
-      break;
-    case eBreak:
-      break;
-    default:
-      NGL_ASSERT(false);
-      break;
-    }
-  }
   mOperations.clear();
-
+  mRenderStates.clear();
+  for (uint32 i = 0; i < mRenderArrays.size(); i++)
+    mRenderArrays[i]->Release();
+  mRenderArrays.clear();
+  
   mpClippingStack = std::stack<nuiClipper>();
-
-  while (!mMatrixStack.empty())
-    mMatrixStack.pop();
+  mMatrixStack = std::stack<nglMatrixf>();
 
   mMatrixStack.push(nuiMatrix());
 
@@ -521,7 +423,6 @@ void nuiMetaPainter::Reset(nuiPainter const * pFrom)
     nuiMatrix m(pFrom->GetMatrix());
     mClip.Move(-m.Elt.M14, -m.Elt.M24);
     mClip.mEnabled = clip;
-//    mMatrixStack.top() = pFrom->GetMatrix();
   }
 }
 
@@ -564,16 +465,21 @@ void nuiMetaPainter::PartialReDraw(nuiDrawContext* pContext, int32 first, int32 
       case eSetState:
         if (draw)
         {
-          nuiRenderState* pState = ((nuiRenderState*)FetchPointer());
+          int32 index = FetchInt();
+          //nuiRenderState* pState = ((nuiRenderState*)FetchPointer());
+          const nuiRenderState& rState(mRenderStates[index]);
           bool ForceApply = FetchInt() ? true : false;
           if (DoDrawSelf)
-            pPainter->SetState(*pState, ForceApply);
+            pPainter->SetState(rState, ForceApply);
         }
         break;
       case eDrawArray:
         if (draw)
         {
-          nuiRenderArray* pRenderArray = (nuiRenderArray*) FetchPointer();
+          int32 index = FetchInt();
+          //nuiRenderState* pState = ((nuiRenderState*)FetchPointer());
+          nuiRenderArray* pRenderArray = mRenderArrays[index];
+          //nuiRenderArray* pRenderArray = (nuiRenderArray*) FetchPointer();
           pRenderArray->Acquire(); // Pre acquire the render array as the painter will release it
           pPainter->DrawArray(pRenderArray);
         }
@@ -753,14 +659,17 @@ nglString nuiMetaPainter::GetOperationDescription(int32 OperationIndex) const
       break;
     case eSetState:
       {
-        FetchPointer();
+        //FetchPointer();
+        FetchInt();
         bool force = FetchInt();
         str.CFormat(_T("SetState(%ls)"), TRUEFALSE(force));
       }
       break;
     case eDrawArray:
       {
-        nuiRenderArray* pArray = (nuiRenderArray*)FetchPointer();
+        //nuiRenderArray* pArray = (nuiRenderArray*)FetchPointer();
+        int32 index = FetchInt();
+        nuiRenderArray* pArray = mRenderArrays[index];
         const nglChar* pMode = GetGLMode(pArray->GetMode());
         str.CFormat(_T("DrawArray 0x%x (size %d mode:%ls)"), pArray, pArray->GetVertices().size(), pMode);
       }
@@ -914,11 +823,13 @@ void nuiMetaPainter::UpdateIndices() const
       case eStartRendering:
         break;
       case eSetState:
-        FetchPointer();
+        //FetchPointer();
+        FetchInt();
         FetchInt();
         break;
       case eDrawArray:
-        FetchPointer();
+        //FetchPointer();
+        FetchInt();
         break;
       case eClearColor:
         break;

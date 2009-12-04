@@ -354,20 +354,18 @@ void nglFontLayout::InitMetrics()
 {
   mXMin = mYMin = 1E32f;
   mXMax = mYMax = -1E32f;
-  nglFontInfo infos;
-  mFont.GetInfo(infos);
-  mAscender = infos.Ascender;
-  mDescender = infos.Descender;
+  mAscender = mFont.GetAscender();
+  mDescender = mFont.GetDescender();
 }
 
 void nglFontLayout::CallOnGlyph (nglFontBase* pFont, const nglString& rString, int Pos, nglGlyphInfo* pGlyph)
 {
   if (pFont != &mFont)
   {
-    nglFontInfo infos;
-    mFont.GetInfo(infos);
-    mAscender = MAX(mAscender, infos.Ascender);
-    mDescender = MAX(mDescender, infos.Descender);
+    float tmpAsc = pFont->GetAscender();
+    float tmpDesc = pFont->GetDescender();
+    mAscender = MAX(mAscender, tmpAsc);
+    mDescender = MAX(mDescender, tmpDesc);
   }
   
   OnGlyph(pFont, rString, Pos, pGlyph);

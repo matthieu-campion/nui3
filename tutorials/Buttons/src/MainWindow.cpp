@@ -38,7 +38,6 @@ void MainWindow::OnClose()
   if (GetNGLWindow()->IsInModalState())
     return;
   
-  
   App->Quit();
 }
 

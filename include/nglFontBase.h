@@ -254,6 +254,8 @@ public:
   bool      IsMonospace() const;    ///< Returns true if the face contains only fixed-pitch glyphs
   bool      IsItalic() const;       ///< Returns font slant, ie. \e italic or \e regular
   float     GetHeight (nglFontUnit Unit = eFontUnitPixel, float DefaultSpacing = 1.f) const;
+  float     GetAscender(nglFontUnit Unit = eFontUnitPixel) const;
+  float     GetDescender(nglFontUnit Unit = eFontUnitPixel) const;
   uint      GetFaceCount() const;
   /*!< Return font height
     \param Unit output unit

@@ -96,9 +96,9 @@ void nuiEventSource::Disconnect(nuiEventTargetBase* t)
 
 bool nuiEventSource::SendEvent(const nuiEvent& rEvent)
 {
-  rEvent.SetSource(this);
-  if (IsEnabled())
+  if (IsEnabled() && !mpTargets.empty())
   {
+    rEvent.SetSource(this);
     std::vector<nuiEventTargetBase*> targets(mpTargets);
     std::vector<nuiEventTargetBase*>::const_iterator it = targets.begin();
     std::vector<nuiEventTargetBase*>::const_iterator end = targets.end();

@@ -22,6 +22,7 @@
 #include "nuiClampedValueAttributeEditor.h"
 
 #ifdef _UIKIT_
+//const bool gGlobalUseRenderCache = false;
 const bool gGlobalUseRenderCache = true;
 #else
 //const bool gGlobalUseRenderCache = false;
