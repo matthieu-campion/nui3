@@ -392,7 +392,7 @@ void nuiMainWindow::Paint()
   if (mFullFrameRedraw)
     mFullFrameRedraw--;
   
-  Invalidate();
+  //Invalidate();
 }
 
 void nuiMainWindow::OnResize(uint Width, uint Height)
