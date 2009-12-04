@@ -354,7 +354,7 @@ void nuiMainWindow::Paint()
   {
     nuiRect r(32, 32);
     r.MoveTo(Gx, 10.0f);
-    Gx += 1;
+    Gx += 4;
     
     if (Gx > GetWidth() - r.GetWidth())
       Gx = 0;
@@ -391,6 +391,8 @@ void nuiMainWindow::Paint()
 
   if (mFullFrameRedraw)
     mFullFrameRedraw--;
+  
+  Invalidate();
 }
 
 void nuiMainWindow::OnResize(uint Width, uint Height)

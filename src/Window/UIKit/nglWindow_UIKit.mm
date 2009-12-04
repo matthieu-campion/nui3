@@ -130,6 +130,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   {
     mInvalidationTimer = [NSTimer scheduledTimerWithTimeInterval:(1.0f / NGL_WINDOW_FPS) target:self selector:@selector(Paint) userInfo:nil repeats:YES];
   }
+  //  mInvalidationTimer = [NSTimer scheduledTimerWithTimeInterval:0.001f target:self selector:@selector(Paint) userInfo:nil repeats:NO];
 
 	[self initializeKeyboard];
   return self;
@@ -291,7 +292,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
     mInited = true;
     mpNGLWindow->CallOnCreation();
     mpNGLWindow->Invalidate();
-    mpNGLWindow->OnPaint();
+    mpNGLWindow->CallOnPaint();
   }
 
   static int32 counter = 0;
@@ -323,6 +324,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   mLastEventTime = t;
   [super sendEvent: pEvent];
 }
+
 /*
 - (void) touchesChangedWithEvent: (UIEvent*) pEvent
 {
@@ -330,6 +332,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   [super touchesChangedWithEvent: pEvent];
 }
 */
+
 - (void) dumpTouch: (UITouch*) pTouch
 {
   UITouchPhase touchPhase = [pTouch phase];
@@ -375,11 +378,11 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 - (void)Paint
 {
   [self InitNGLWindow];
-  if (mInvalidated)
-  {
-    mInvalidated = false;
-    mpNGLWindow->CallOnPaint();
-  }
+//  if (mInvalidated)
+//  {
+//    mInvalidated = false;
+//    mpNGLWindow->CallOnPaint();
+//  }
 }
 
 
@@ -533,7 +536,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   }
   NGL_OUT(_T("\n"));
 */
-  [self Paint];
+  //[self Paint];
 }
 
 - (void) invalidate
@@ -895,7 +898,7 @@ void nglWindow::EndSession()
     {
       printf("Failed to swap renderbuffer in %s\n", __FUNCTION__);
     }
-    mInSession=0;
+    mInSession = 0;
   }
 
 #endif
