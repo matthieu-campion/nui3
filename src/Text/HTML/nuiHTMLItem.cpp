@@ -246,6 +246,20 @@ void nuiHTMLItem::Invalidate()
     mDisplayChangedDelegate();
 }
 
+void nuiHTMLItem::SetLayout(const nuiRect& rRect)
+{
+  if (mSetRectCalled)
+  {
+    MoveTo(rRect.Left(), rRect.Top());
+  }
+  else
+  {
+    SetRect(rRect);
+  }
+
+}
+
+
 void nuiHTMLItem::InvalidateLayout()
 {
   mSetRectCalled = false;

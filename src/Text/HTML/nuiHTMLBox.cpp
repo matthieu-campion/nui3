@@ -58,7 +58,7 @@ float nuiHTMLBox::LayoutLine(uint32& start, uint32& count, float& y, float& h, n
     r.SetHeight(h);
     r.MoveTo(x, y);
     r.RoundToAbove();
-    pIt->SetRect(r);
+    pIt->SetLayout(r);
     //NGL_OUT(_T("<%ls> %ls\n"), pIt->GetNode()->GetName().GetChars(), r.GetValue().GetChars());
     x += ToAbove(r.GetWidth() + rContext.mHSpace);
   }

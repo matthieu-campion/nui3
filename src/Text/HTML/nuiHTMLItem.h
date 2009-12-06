@@ -26,6 +26,7 @@ public:
   const nuiRect& GetIdealRect() const;
   const nuiRect& GetRect() const;
   nuiRect GetGlobalRect() const;
+  void SetLayout(const nuiRect& rRect);
   void SetRect(const nuiRect& rRect);
   void MoveTo(float x, float y);
   void SetWidth(float w);

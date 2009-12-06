@@ -92,7 +92,7 @@ class nuiHTTPRequest_Thread : public nglThread, public nuiCommand
 public:
   nuiHTTPRequest_Thread(nuiHTTPRequest* pRequest, const nuiHTTPRequest::Delegate& rDelegate)
   : nuiCommand(_T("nuiHTTPRequest_Thread"), _T("HTTP Threaded Request Reply Command"), false, false, false),
-    mpRequest(pRequest), mDelegate(rDelegate), mpResponse(NULL)
+    mpRequest(pRequest), mDelegate(rDelegate), mpResponse(NULL), mCancel(false)
   {
     Start();
   }
@@ -100,11 +100,18 @@ public:
   ~nuiHTTPRequest_Thread()
   {
     delete mpRequest;
+    delete mpResponse;
   }
   
   void OnStart()
   {
     mpResponse = mpRequest->SendRequest();
+    
+    if (mCancel)
+    {
+      SetAutoDelete(true);
+      return;
+    }
     
     nuiNotification* pNotif = new nuiNotification(_T("nuiHTTPRequest_Thread"));
     pNotif->SetToken(new nuiToken<nuiCommand*>(this));
@@ -118,18 +125,36 @@ public:
     
   bool ExecuteDo()
   {
-    mDelegate(mpRequest, mpResponse);
+    if (!mCancel)
+      mDelegate(mpRequest, mpResponse);
     return true;
   }
+  
+  void Cancel()
+  {
+    mCancel = true;
+  }
+  
 private:
   nuiHTTPRequest* mpRequest;
   nuiHTTPRequest::Delegate mDelegate;
   nuiHTTPResponse* mpResponse;
+  bool mCancel;
 };
 
 void nuiHTTPRequest::SendRequest(const nuiHTTPRequest::Delegate& rDelegate)
 {
   nuiHTTPRequest_Thread* pThread = new nuiHTTPRequest_Thread(this, rDelegate);
+}
+
+const nglString& nuiHTTPRequest::GetURL() const
+{
+  return mUrl;
+}
+
+const nglString& nuiHTTPRequest::GetMethod() const
+{
+  return mMethod;
 }
 
 

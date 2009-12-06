@@ -10,6 +10,9 @@
 #include "nui.h"
 #include "nuiHTMLItem.h"
 
+class nuiHTTPRequest;
+class nuiHTTPResponse;
+
 class nuiHTMLImage : public nuiHTMLItem
 {
 public:
@@ -20,6 +23,8 @@ public:
   virtual void Layout(nuiHTMLContext& rContext);
   
 private:
+  void HTTPDone(nuiHTTPRequest* pRequest, nuiHTTPResponse* pResponse);
+  
   nuiTexture* mpTexture;
   
   float mWidth;

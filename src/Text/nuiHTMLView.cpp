@@ -165,7 +165,7 @@ void nuiHTMLView::ReLayout()
   
   nuiHTMLContext context(*mpContext);
   mpRootBox->Layout(context);
-  mpRootBox->SetRect(mpRootBox->GetIdealRect());
+  mpRootBox->SetLayout(mpRootBox->GetIdealRect());
 }
 
 
@@ -294,6 +294,9 @@ bool nuiHTMLView::SetURL(const nglString& rURL)
 
 void nuiHTMLView::SetURLDone(nuiHTTPRequest* pRequest, nuiHTTPResponse* pResponse)
 {
+  if (!pResponse)
+    return; // Error!
+  
   //NGL_OUT(_T("\n\nHTTP Headers:\n%ls\n\n"), pResponse->GetHeadersRep().GetChars());
   nglString url(mTempURL);
   const nuiHTTPHeaderMap& rHeaders(pResponse->GetHeaders());
@@ -312,7 +315,6 @@ void nuiHTMLView::SetURLDone(nuiHTTPRequest* pRequest, nuiHTTPResponse* pRespons
     }
     //NGL_OUT(_T("\n\nNew location: %ls\n\n"), url.GetChars());
     
-    delete pResponse;
     SetURL(url);
     return;
   }
@@ -348,6 +350,8 @@ void nuiHTMLView::SetURLDone(nuiHTTPRequest* pRequest, nuiHTTPResponse* pRespons
     delete mpHTML;
     mpHTML = pHTML;
     mpRootBox = new nuiHTMLBox(mpHTML, mpCurrentAnchor, false);
+    mpRootBox->SetLayoutChangedDelegate(nuiMakeDelegate(this, &nuiHTMLView::InvalidateLayout));
+    mpRootBox->SetDisplayChangedDelegate(nuiMakeDelegate(this, &nuiHTMLView::Invalidate));
     ParseTree(mpHTML, mpRootBox);
 
     nuiHTMLContext context(*mpContext);

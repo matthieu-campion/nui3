@@ -41,6 +41,8 @@ public:
   nuiHTTPResponse* SendRequest();
   void SendRequest(const Delegate& rDelegate);
 
+  const nglString& GetURL() const;
+  const nglString& GetMethod() const;
 protected:
   nglString mUrl;
   nglString mMethod;
