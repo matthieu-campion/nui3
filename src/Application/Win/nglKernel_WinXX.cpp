@@ -36,6 +36,7 @@ const nglChar* gpKernelErrorTable[] =
 extern void nglInitExceptionHandler();
 
 nglKernel::nglKernel()
+: mKernelEventSink(this)
 {
 #if (defined WIN32) && (!defined _WIN64)
   nglInitExceptionHandler();

@@ -40,6 +40,7 @@ const nglChar* gpKernelErrorTable[] =
  */
 
 nglKernel::nglKernel()
+: mKernelEventSink(this)
 {
   mpUIApplication = NULL;
 
