@@ -34,10 +34,12 @@ protected:
 class nuiHTTPRequest : public nuiHTTPMessage
 {
 public:
+  typedef nuiFastDelegate2<nuiHTTPRequest*, nuiHTTPResponse*> Delegate;
   nuiHTTPRequest(const nglString& rUrl, const nglString& rMethod = _T("GET"));
   virtual ~nuiHTTPRequest();
 
   nuiHTTPResponse* SendRequest();
+  void SendRequest(const Delegate& rDelegate);
 
 protected:
   nglString mUrl;

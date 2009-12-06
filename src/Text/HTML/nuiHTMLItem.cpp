@@ -12,7 +12,14 @@
 
 /////////////////class nuiHTMLItem
 nuiHTMLItem::nuiHTMLItem(nuiHTMLNode* pNode, nuiHTMLNode* pAnchor, bool Inline)
-: mpNode(pNode), mInline(Inline), mEndTag(false), mLineBreak(false), mpParent(NULL), mpAnchor(pAnchor), mVisible(true), mSetRectCalled(false)
+: mpNode(pNode),
+  mInline(Inline),
+  mEndTag(false),
+  mLineBreak(false),
+  mpParent(NULL),
+  mpAnchor(pAnchor),
+  mVisible(true),
+  mSetRectCalled(false)
 {
   ForceLineBreak(pNode->GetTagType() == nuiHTMLNode::eTag_BR);
 }
@@ -231,4 +238,29 @@ void nuiHTMLItem::UpdateVisibility(const nuiRect& rVisibleRect)
   mVisible = r.Intersect(GetGlobalRect(), rVisibleRect);
 }
 
+void nuiHTMLItem::Invalidate()
+{
+  if (mpParent)
+    mpParent->Invalidate();
+  if (mDisplayChangedDelegate)
+    mDisplayChangedDelegate();
+}
 
+void nuiHTMLItem::InvalidateLayout()
+{
+  mSetRectCalled = false;
+  if (mpParent)
+    mpParent->InvalidateLayout();
+  if (mLayoutChangedDelegate)
+    mLayoutChangedDelegate();
+}
+
+void nuiHTMLItem::SetLayoutChangedDelegate(const nuiFastDelegate0<>& rDelegate)
+{
+  mLayoutChangedDelegate = rDelegate;
+}
+
+void nuiHTMLItem::SetDisplayChangedDelegate(const nuiFastDelegate0<>& rDelegate)
+{
+  mDisplayChangedDelegate = rDelegate;
+}

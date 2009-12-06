@@ -15,6 +15,8 @@
 
 #include "nglPath.h"
 #include "nglString.h"
+#include "nuiMessageQueue.h"
+#include "nuiEvent.h"
 
 class nglKernel;
 class nglPath;
@@ -125,7 +127,7 @@ create an instance. See the ubiquitous nglApplication for instance.
 
 The unique nglKernel object is always available via the \a App pointer.
 */
-class NGL_API nglKernel : public nglError, public nglEvent
+class NGL_API nglKernel : public nglError, public nglEvent, public nuiMessageQueue
 {
 public:
   typedef void (*ExitFunc) (void); ///< Cleanup callback type. See AddExit()
@@ -300,6 +302,9 @@ protected:
   void Init();
   void Exit();
 
+  bool ProcessMessages(const nuiEvent& rEvent);
+  nuiEventSink<nglKernel> mKernelEventSink;
+  
   void SetName (const nglString& rName);
   void SetPath (const nglPath& rPath);
   void ParseCmdLine (char* pCmdLine);
@@ -346,7 +351,10 @@ private:
   nglDataTypesRegistry mDataTypesRegistry;
 #endif
 
-  nglKernel(const nglKernel&) {} // Undefined copy constructor
+  nglKernel(const nglKernel&)
+  : mKernelEventSink(this)
+  {
+  } // Undefined copy constructor
 
 #ifdef _WIN32_
 protected:

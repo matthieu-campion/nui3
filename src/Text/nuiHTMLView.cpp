@@ -148,9 +148,6 @@ nuiRect nuiHTMLView::CalcIdealSize()
   if (mRect.GetWidth() > 0)
     IdealWidth = mRect.GetWidth();
   Clear();
-//  context.mSetLayout = true;
-//  WalkTree(mpHTML, context);
-  //  return nuiRect(context.mMaxWidth, context.mH);
 
   mpContext->mMaxWidth = IdealWidth;
   if (!mpRootBox)
@@ -182,6 +179,9 @@ bool nuiHTMLView::SetRect(const nuiRect& rRect)
 
 bool nuiHTMLView::Draw(nuiDrawContext* pContext)
 {
+  if (!mpRootBox)
+    return true;
+  
   if (!(mLastVisibleRect == mVisibleRect))
   {
     mpRootBox->UpdateVisibility(mVisibleRect);
@@ -269,6 +269,8 @@ bool nuiHTMLView::SetText(const nglString& rHTMLText)
     delete mpHTML;
     mpHTML = pHTML;
     mpRootBox = new nuiHTMLBox(mpHTML, mpCurrentAnchor, false);
+    mpRootBox->SetLayoutChangedDelegate(nuiMakeDelegate(this, &nuiHTMLView::InvalidateLayout));
+    mpRootBox->SetDisplayChangedDelegate(nuiMakeDelegate(this, &nuiHTMLView::Invalidate));
     ParseTree(mpHTML, mpRootBox);
 
     nuiHTMLContext context(*mpContext);
@@ -283,13 +285,17 @@ bool nuiHTMLView::SetURL(const nglString& rURL)
   URLChanged(rURL);
   
   nglString url(rURL);
-  nuiHTTPRequest request(rURL);
-  nuiHTTPResponse* pResponse = request.SendRequest();
-  if (!pResponse)
-    return false;
-
-  //NGL_OUT(_T("\n\nHTTP Headers:\n%ls\n\n"), pResponse->GetHeadersRep().GetChars());
+  mTempURL = rURL;
+  nuiHTTPRequest* pRequest = new nuiHTTPRequest(rURL);
+  pRequest->SendRequest(nuiMakeDelegate(this, &nuiHTMLView::SetURLDone));
   
+  return true;
+}
+
+void nuiHTMLView::SetURLDone(nuiHTTPRequest* pRequest, nuiHTTPResponse* pResponse)
+{
+  //NGL_OUT(_T("\n\nHTTP Headers:\n%ls\n\n"), pResponse->GetHeadersRep().GetChars());
+  nglString url(mTempURL);
   const nuiHTTPHeaderMap& rHeaders(pResponse->GetHeaders());
   nuiHTTPHeaderMap::const_iterator it = rHeaders.find(_T("location"));
   if (it != rHeaders.end())
@@ -307,7 +313,8 @@ bool nuiHTMLView::SetURL(const nglString& rURL)
     //NGL_OUT(_T("\n\nNew location: %ls\n\n"), url.GetChars());
     
     delete pResponse;
-    return SetURL(url);
+    SetURL(url);
+    return;
   }
 
   it = rHeaders.find(_T("content-type"));
@@ -347,7 +354,7 @@ bool nuiHTMLView::SetURL(const nglString& rURL)
     mpRootBox->Layout(context);
     InvalidateLayout();
   }
-  return res;
+  return;
 }
 
 const nglString& nuiHTMLView::GetURL() const
@@ -646,6 +653,9 @@ void nuiHTMLView::_SetText(const nglString& rHTMLText)
 
 bool nuiHTMLView::MouseClicked(const nglMouseInfo& rInfo)
 {
+  if (!mpRootBox)
+    return false;
+  
   if (rInfo.Buttons & nglMouseInfo::ButtonLeft)
   {
     Grab();
@@ -691,6 +701,9 @@ bool nuiHTMLView::MouseUnclicked(const nglMouseInfo& rInfo)
 
 bool nuiHTMLView::MouseMoved(const nglMouseInfo& rInfo)
 {
+  if (!mpRootBox)
+    return false;
+  
   mMouseX = rInfo.X;
   mMouseY = rInfo.Y;
 

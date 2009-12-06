@@ -16,6 +16,8 @@ class nuiHTMLItem;
 class nuiHTMLBox;
 class nuiHTMLFont;
 class nuiHTMLContext;
+class nuiHTTPRequest;
+class nuiHTTPResponse;
 
 class nuiHTMLView : public nuiSimpleContainer
 {
@@ -95,6 +97,7 @@ private:
   void _SetURL(const nglString& rURL);
   void _AutoSetURL(const nglString& rURL);
   void _SetText(const nglString& rHTMLText);
+  void SetURLDone(nuiHTTPRequest* pRequest, nuiHTTPResponse* pResponse);
   
   void InitAttributes();
   bool mClicked;
@@ -108,5 +111,6 @@ private:
   
   nuiHTMLNode* mpCurrentAnchor;
   nuiRect mLastVisibleRect;
+  nglString mTempURL;
 };
 

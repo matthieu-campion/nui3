@@ -189,6 +189,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
         case UIDeviceOrientationPortrait:
           angle = 0;
           pApp.statusBarOrientation = UIInterfaceOrientationPortrait;
+          [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationPortrait];
           [self UpdateKeyboard];
           w = [UIScreen mainScreen].applicationFrame.size.width;
           h = [UIScreen mainScreen].applicationFrame.size.height;
@@ -196,6 +197,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
         case UIDeviceOrientationPortraitUpsideDown:
           angle = 180;
           pApp.statusBarOrientation = UIInterfaceOrientationPortraitUpsideDown;
+          [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationPortraitUpsideDown];
           [self UpdateKeyboard];
           w = [UIScreen mainScreen].applicationFrame.size.width;
           h = [UIScreen mainScreen].applicationFrame.size.height;
@@ -203,6 +205,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
         case UIDeviceOrientationLandscapeLeft:
           angle = 270;
           pApp.statusBarOrientation = UIInterfaceOrientationLandscapeRight;
+          [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationLandscapeRight];
           [self UpdateKeyboard];
           h = [UIScreen mainScreen].applicationFrame.size.width;
           w = [UIScreen mainScreen].applicationFrame.size.height;
@@ -210,6 +213,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
         case UIDeviceOrientationLandscapeRight:
           angle = 90;
           pApp.statusBarOrientation = UIInterfaceOrientationLandscapeLeft;
+          [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationLandscapeLeft];
           [self UpdateKeyboard];
           h = [UIScreen mainScreen].applicationFrame.size.width;
           w = [UIScreen mainScreen].applicationFrame.size.height;
@@ -240,6 +244,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
         if (pApp.statusBarOrientation != UIInterfaceOrientationPortrait)
         {
           pApp.statusBarOrientation = UIInterfaceOrientationPortrait;
+          [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationPortrait];
           [self UpdateKeyboard];
         }
         w = [UIScreen mainScreen].applicationFrame.size.width;
@@ -250,6 +255,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
         if (pApp.statusBarOrientation != UIInterfaceOrientationPortraitUpsideDown)
         {
           pApp.statusBarOrientation = UIInterfaceOrientationPortraitUpsideDown;
+          [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationPortraitUpsideDown];
           [self UpdateKeyboard];
         }
         w = [UIScreen mainScreen].applicationFrame.size.width;
@@ -260,6 +266,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
         if (pApp.statusBarOrientation != UIInterfaceOrientationLandscapeRight)
         {
           pApp.statusBarOrientation = UIInterfaceOrientationLandscapeRight;
+          [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationLandscapeRight];
           [self UpdateKeyboard];
         }
         h = [UIScreen mainScreen].applicationFrame.size.width;
@@ -270,6 +277,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
         if (pApp.statusBarOrientation != UIInterfaceOrientationLandscapeLeft)
         {
           pApp.statusBarOrientation = UIInterfaceOrientationLandscapeLeft;
+          [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationLandscapeLeft];
           [self UpdateKeyboard];
         }
         h = [UIScreen mainScreen].applicationFrame.size.width;

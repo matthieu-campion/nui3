@@ -7,6 +7,7 @@
 
 #include "nui.h"
 #include "nuiHTTP.h"
+#include "nuiCommand.h"
 
 using namespace std;
 
@@ -83,6 +84,54 @@ nuiHTTPRequest::nuiHTTPRequest(const nglString& rUrl, const nglString& rMethod)
 nuiHTTPRequest::~nuiHTTPRequest()
 {
 }
+
+class nuiHTTPRequest_Thread;
+
+class nuiHTTPRequest_Thread : public nglThread, public nuiCommand
+{
+public:
+  nuiHTTPRequest_Thread(nuiHTTPRequest* pRequest, const nuiHTTPRequest::Delegate& rDelegate)
+  : nuiCommand(_T("nuiHTTPRequest_Thread"), _T("HTTP Threaded Request Reply Command"), false, false, false),
+    mpRequest(pRequest), mDelegate(rDelegate), mpResponse(NULL)
+  {
+    Start();
+  }
+  
+  ~nuiHTTPRequest_Thread()
+  {
+    delete mpRequest;
+  }
+  
+  void OnStart()
+  {
+    mpResponse = mpRequest->SendRequest();
+    
+    nuiNotification* pNotif = new nuiNotification(_T("nuiHTTPRequest_Thread"));
+    pNotif->SetToken(new nuiToken<nuiCommand*>(this));
+    App->Post(pNotif);
+  }
+
+  bool SetArgs(const std::vector<nglString, std::allocator<nglString> >&)
+  {
+    return true;
+  }
+    
+  bool ExecuteDo()
+  {
+    mDelegate(mpRequest, mpResponse);
+    return true;
+  }
+private:
+  nuiHTTPRequest* mpRequest;
+  nuiHTTPRequest::Delegate mDelegate;
+  nuiHTTPResponse* mpResponse;
+};
+
+void nuiHTTPRequest::SendRequest(const nuiHTTPRequest::Delegate& rDelegate)
+{
+  nuiHTTPRequest_Thread* pThread = new nuiHTTPRequest_Thread(this, rDelegate);
+}
+
 
 nuiHTTPResponse::nuiHTTPResponse(uint16 StatusCode, const nglString& StatusLine)
 : mStatusCode(StatusCode), mStatusLine(StatusLine)

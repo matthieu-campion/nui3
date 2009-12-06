@@ -48,6 +48,7 @@ const nglChar* gpKernelErrorTable[] =
  */
 
 nglKernel::nglKernel()
+: mKernelEventSink(this)
 {
   mEventHandlerRef = NULL;
   mEventHandlerUPP = NULL;

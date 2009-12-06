@@ -57,7 +57,13 @@ public:
   nuiHTMLNode* GetAnchor() const;
   
   virtual void UpdateVisibility(const nuiRect& rVisibleRect);
+  
+  void SetDisplayChangedDelegate(const nuiFastDelegate0<>& rDelegate);
+  void SetLayoutChangedDelegate(const nuiFastDelegate0<>& rDelegate);
 protected:
+  void Invalidate();
+  void InvalidateLayout();
+  
   uint32 GetDepth() const;
 
   nuiHTMLNode* mpNode;
@@ -71,6 +77,8 @@ protected:
 
   bool mVisible;
   nuiColor mOldTextColor;
+  nuiFastDelegate0<> mLayoutChangedDelegate;
+  nuiFastDelegate0<> mDisplayChangedDelegate;
   
 };
 

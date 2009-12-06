@@ -9,6 +9,7 @@
 #include "nglKernel.h"
 #include "nglConsole.h"
 #include "nglLog.h"
+#include "nuiCommand.h"
 
 #if (!defined _NODND_ && !defined _NOCLIPBOARD_)
 #include "nglDataObjects.h"
@@ -196,6 +197,7 @@ void nglKernel::Init()
   mpLog = NULL;
   mpCon = NULL;
   mOwnCon = false;
+  
 }
 
 void nglKernel::Exit()
@@ -309,12 +311,16 @@ void nglKernel::CallOnInit()
   NGL_DEBUG( NGL_LOG(_T("kernel"), NGL_LOG_INFO, _T("Init (%d parameter%ls)"), GetArgCount(), (GetArgCount() > 1) ? _T("s") : _T("")); )
   nglVolume* pResources = new nuiNativeResourceVolume();
   nglVolume::Mount(pResources);
+  nuiTimer* pTimer = nuiAnimation::AcquireTimer();
+  mKernelEventSink.Connect(pTimer->Tick, &nglKernel::ProcessMessages);
+  
   OnInit();
 }
 
 void nglKernel::CallOnExit(int Code)
 {
   NGL_DEBUG( NGL_LOG(_T("kernel"), NGL_LOG_INFO, _T("Exit (code: %d)"), Code); )
+  mKernelEventSink.DisconnectAll();
   nglVolume::UnmountAll();
   OnExit (Code);
 }
@@ -336,4 +342,23 @@ char* nglCrashEmail = NULL;
 void nglKernel::SetCrashReportEmail(const nglString& rEmail)
 {
   nglCrashEmail = rEmail.Export();
+}
+
+
+bool nglKernel::ProcessMessages(const nuiEvent& rEvent)
+{
+  nuiNotification* pNotif;
+  while (pNotif = Get(0))
+  {
+    nuiCommand* pCommand = NULL;
+    nuiGetTokenValue<nuiCommand*>(pNotif->GetToken(), pCommand);
+    if (pCommand);
+    {
+      pCommand->Do();
+      delete pCommand;
+    }
+    delete pNotif;
+  }
+  
+  return true;
 }
