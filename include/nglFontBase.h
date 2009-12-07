@@ -383,6 +383,14 @@ public:
 
     This method retrieves glyph indexes from nglChars using the current active charmap.
   */
+
+  int32 nglFontBase::GetGlyphIndex(nglChar Source) const;
+  /*!< Retrieve a glyph indexes from a nglChar
+   \param Source nglChar source
+   \return glyph indexes converted, -1 if a fatal error occured
+   
+   This method retrieves a glyph index from an nglChar using the current active charmap.
+   */
   //@}
 
   void GetEncodings(std::set<nglTextEncoding>& rEncodings);

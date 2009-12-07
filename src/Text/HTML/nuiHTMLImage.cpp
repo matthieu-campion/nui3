@@ -86,7 +86,7 @@ void nuiHTMLImage::Draw(nuiDrawContext* pContext)
   if (!mpTexture || !mpTexture->IsValid())
     return;
   
-  NGL_OUT(_T("nuiHTMLImage::Draw %ls\n"), mpTexture->GetObjectName().GetChars());
+  //NGL_OUT(_T("nuiHTMLImage::Draw %ls\n"), mpTexture->GetObjectName().GetChars());
   pContext->PushState();
   pContext->SetTexture(mpTexture);  
   pContext->SetFillColor(nuiColor(255, 255, 255));

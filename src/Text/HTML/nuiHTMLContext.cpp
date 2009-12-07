@@ -16,7 +16,6 @@ nuiHTMLContext::nuiHTMLContext()
   mMaxWidth = 640;
   
   mVSpace = 0;
-  mHSpace = 8;
   
   mFont.SetName(_T("arial"), 0.8f);
   mFont.SetGenericName(_T("sans-serif"), 0.8f);
@@ -31,6 +30,13 @@ nuiHTMLContext::nuiHTMLContext()
   mStrikeThrough = false;
   mTextFgColor = nuiColor(0,0,0,255);
   mTextBgColor = nuiColor(0,0,0,0);
+
+  nuiFont* pFont = nuiFontManager::GetManager().GetFont(mFont);
+  NGL_ASSERT(pFont);
+  nglGlyphInfo ginfo;
+  pFont->GetGlyphInfo(ginfo, pFont->GetGlyphIndex(_T(' ')), nuiFontBase::eGlyphBitmap);
+  mHSpace = ginfo.AdvanceX;
+  pFont->Release();
 }
 
 nuiHTMLContext::nuiHTMLContext(const nuiHTMLContext& rContext)

@@ -792,6 +792,30 @@ int nglFontBase::GetGlyphIndexes (const nglChar* pSource, int SourceLength, uint
 }
 
 
+int32 nglFontBase::GetGlyphIndex(nglChar Source) const
+{
+  if (!mpFace->Face)
+    return -1;
+  
+  /* No selected or available charmap, or charmap conversion turned off : do a dumb copy
+   */
+  if (!mpFace->Face->charmap ||
+      (mpFace->Face->charmap->encoding == ft_encoding_none))
+  {
+#ifdef DBG_INDEX
+    NGL_OUT(_T("GetGlyphIndexes => Font encoding = none, using chars as glyph indices\n"));
+#endif
+    return Source;
+  }
+  
+  /* We have a charmap, prepare lookup cache info
+   */
+  FTC_FaceID face_id = mpFace->Desc.face_id;
+  int done = 0;
+  
+  return FTC_CMapCache_Lookup (gFTCMapCache, face_id, mCharMap, Source);
+}
+
 /*
  * Render mode
  */
