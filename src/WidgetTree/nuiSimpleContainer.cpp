@@ -140,7 +140,7 @@ bool nuiSimpleContainer::DelChild(nuiWidgetPtr pChild,bool Delete)
         Invalidate();
         
         if (pRoot)
-          pRoot->AdviseObjectDeath(this);
+          pRoot->AdviseObjectDeath(pChild);
         pChild->SetParent(NULL);
       }
       ChildDeleted(this, pChild);
