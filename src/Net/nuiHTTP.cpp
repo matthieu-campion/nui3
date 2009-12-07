@@ -120,3 +120,50 @@ const nglString& nuiHTTPResponse::GetStatusLine() const
   return mStatusLine;
 }
 
+////////////////
+// nuiHTTPRequest_Thread
+void nuiHTTPRequest_Thread::Cancel()
+{
+  mCancel = true;
+}
+
+nuiHTTPRequest_Thread::nuiHTTPRequest_Thread(nuiHTTPRequest* pRequest, const nuiHTTPRequest::Delegate& rDelegate)
+: nuiCommand(_T("nuiHTTPRequest_Thread"), _T("HTTP Threaded Request Reply Command"), false, false, false),
+  mpRequest(pRequest), mDelegate(rDelegate), mpResponse(NULL), mCancel(false)
+{
+  Start();
+}
+
+nuiHTTPRequest_Thread::~nuiHTTPRequest_Thread()
+{
+  delete mpRequest;
+  delete mpResponse;
+}
+
+void nuiHTTPRequest_Thread::OnStart()
+{
+  mpResponse = mpRequest->SendRequest();
+  
+  if (mCancel)
+  {
+    SetAutoDelete(true);
+    return;
+  }
+  
+  nuiNotification* pNotif = new nuiNotification(_T("nuiHTTPRequest_Thread"));
+  pNotif->SetToken(new nuiToken<nuiCommand*>(this, true));
+  App->Post(pNotif);
+}
+
+bool nuiHTTPRequest_Thread::SetArgs(const std::vector<nglString, std::allocator<nglString> >&)
+{
+  return true;
+}
+
+bool nuiHTTPRequest_Thread::ExecuteDo()
+{
+  if (!mCancel)
+    mDelegate(mpRequest, mpResponse);
+  return true;
+}
+

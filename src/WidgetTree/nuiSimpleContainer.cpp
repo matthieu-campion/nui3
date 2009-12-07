@@ -134,10 +134,18 @@ bool nuiSimpleContainer::DelChild(nuiWidgetPtr pChild,bool Delete)
     {
       mpChildren.erase(it);
       if (!pChild->IsTrashed())
+      {
+        nuiTopLevel* pRoot = GetTopLevel();
+        Trashed();
+        Invalidate();
+        
+        if (pRoot)
+          pRoot->AdviseObjectDeath(this);
         pChild->SetParent(NULL);
+      }
       ChildDeleted(this, pChild);
       if (Delete && pChild)
-        delete pChild;          
+        delete pChild;
       Invalidate();
       InvalidateLayout();
       DebugRefreshInfo();

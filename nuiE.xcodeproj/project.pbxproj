@@ -4919,7 +4919,6 @@
 				6126D61B0DA5716500D2641A /* Text */,
 				6126D62D0DA5716500D2641A /* Time */,
 				6126D6360DA5716500D2641A /* Threading */,
-				6126D6420DA5716500D2641A /* TreeViews */,
 				6126D6490DA5716500D2641A /* Utils */,
 				6126D6500DA5716500D2641A /* WidgetTree */,
 				6126D6600DA5716500D2641A /* Window */,
@@ -5610,12 +5609,14 @@
 				6126D6470DA5716500D2641A /* nuiTreeView.cpp */,
 				6126D6480DA5716500D2641A /* nuiTreeView.h */,
 			);
-			path = TreeViews;
+			name = TreeViews;
+			path = ../TreeViews;
 			sourceTree = "<group>";
 		};
 		6126D6490DA5716500D2641A /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				6126D6420DA5716500D2641A /* TreeViews */,
 				E52216AA10C5861C00EB6DB6 /* nuiStopWatch.h */,
 				E52216A510C585DA00EB6DB6 /* nuiStopWatch.cpp */,
 				E56D2A2F0FE7091500C16F53 /* nuiRSS.cpp */,

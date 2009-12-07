@@ -9,7 +9,6 @@
 #include "nuiHTMLView.h"
 #include "nuiHTTP.h"
 #include "nuiFontManager.h"
-#include "nuiHTTP.h"
 #include "nuiUnicode.h"
 
 #include "nuiHTMLContext.h"
