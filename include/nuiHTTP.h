@@ -99,7 +99,7 @@ protected:
     }
     
     nuiNotification* pNotif = new nuiNotification(_T("nuiHTTPRequest_Thread"));
-    pNotif->SetToken(new nuiToken<nuiCommand*>(this));
+    pNotif->SetToken(new nuiToken<nuiCommand*>(this, true));
     App->Post(pNotif);
   }
   

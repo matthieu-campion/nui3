@@ -65,13 +65,20 @@ public:
 template <typename T> class nuiToken<T*> : public nuiTokenBase
 {
 public:
-  nuiToken(T* pToken)
-  : Token(pToken)
+  nuiToken(T* pToken, bool OwnToken)
+  : Token(pToken), mOwnToken(OwnToken)
   {
     mType = eTokenPointer;
   }
   
-  T* const Token; 
+  ~nuiToken()
+  {
+    if (mOwnToken)
+      delete Token;
+  }
+  
+  T* const Token;
+  bool mOwnToken;
 };
 
 

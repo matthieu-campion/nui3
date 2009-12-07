@@ -275,7 +275,7 @@ nuiTreeNode* nuiThreadInspector::CreateNodeFromThread(nglThread::ID ID)
   nuiHBox* pBox = new nuiHBox(0);
   nuiTreeNode* pNode = new nuiTreeNode(pBox, true);
   // give the node a token (the thread ID) for later update
-  pNode->SetToken(new nuiToken<nglThread::ID>(ID));
+  pNode->SetToken(new nuiToken<nglThread::ID>(ID, false));
 
   
   // thread's name
@@ -295,7 +295,7 @@ nuiTreeNode* nuiThreadInspector::CreateNodeFromLock(const nglThreadState& rState
   nuiHBox* pBox = new nuiHBox(0);
   nuiTreeNode* pNode = new nuiTreeNode(pBox, true);
   // give the node a token (the cs pointer) for later update
-  pNode->SetToken(new nuiToken<nglLock*>(rState.GetLockPointer()));
+  pNode->SetToken(new nuiToken<nglLock*>(rState.GetLockPointer(), false));
 
   
   // lock's name
