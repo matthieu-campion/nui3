@@ -53,9 +53,9 @@ void MainWindow::OnCreation()
     mEventSink.Connect(pButton->Activated, &MainWindow::ChangeLayout, pButton);
     pButton->SetLayoutAnimationDuration(1);
     //pButton->SetLayoutAnimationEasing(nuiEasingSinus);
-    //pButton->SetLayoutAnimationEasing(nuiEasingElasticOut<500>);
+    pButton->SetLayoutAnimationEasing(nuiEasingElasticOut<500>);
     //pButton->SetLayoutAnimationEasing(nuiEasingBounceOut);
-    pButton->SetLayoutAnimationEasing(nuiEasingBounceIn);
+    //pButton->SetLayoutAnimationEasing(nuiEasingBounceIn);
     //pButton->SetLayoutAnimationEasing(nuiEasingBackIn);
 
 
