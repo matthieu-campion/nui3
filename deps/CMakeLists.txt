@@ -8,5 +8,5 @@ INCLUDE(FindFreetype)
 INCLUDE(FindGIF)
 INCLUDE(FindEXPAT)
 
-add_subdirectory (harfbuzz)
+#add_subdirectory (harfbuzz)
 add_subdirectory (tidy)

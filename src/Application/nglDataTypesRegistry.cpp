@@ -55,7 +55,7 @@ nglNativeObjectType nglDataTypesRegistry::RegisterDataType(const nglString& rMim
     else
     // dynamically generate a new Type
     {
-      if (Type == 'nui3')
+      if (Type == _T('nui3'))
       {
         uint32 size = mRegisteredNativeTypes.size(); // use the size (on 24bits, we should not have any overflow:) ) of the map as a unique index
         Type = ('n' << 24) | (size & 0xffffff);

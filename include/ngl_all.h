@@ -27,7 +27,9 @@ Lookup precompiled headers in the VC doc to learn how to use them.
 #include <limits.h>        // for INT_MAX
 #include <locale.h>
 #include <math.h>        // for log exp sqrt etc, and maybe sqrtf
+#ifndef __LINUX__
 #include <setjmp.h>
+#endif
 #include <stdarg.h>
 #include <stdio.h>        // for printf debugging
 #include <stdlib.h>        // for malloc

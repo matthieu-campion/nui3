@@ -513,11 +513,7 @@ nglString nglWindow::GetTitle() const
 void nglWindow::SetTitle (const nglString& rTitle)
 {
   if (!mWindow) return;
-#ifdef USE_WCHAR
   char* title = rTitle.Export();
-#else
-  const char* title = rTitle.GetChars();
-#endif
 
   XStoreName (mpDisplay, mWindow, title ? title : "");
   XFlush (mpDisplay);
@@ -676,7 +672,7 @@ bool nglWindow::IsKeyDown(nglKeyCode Key) const
  */
 void nglWindow::OnDragEnter() {}
 void nglWindow::OnDragLeave() {}
-bool nglWindow::OnCanDrop(nglDragAndDrop* pDragObject, int X, int Y, nglMouseInfo::Flags Button) { return false; }
+nglDropEffect nglWindow::OnCanDrop(nglDragAndDrop* pDragObject, int X, int Y, nglMouseInfo::Flags Button) { return eDropEffectNone; }
 void nglWindow::OnDropped (nglDragAndDrop* pDragObject, int X,int Y, nglMouseInfo::Flags Button) {}
 bool nglWindow::Drag(nglDragAndDrop* pDragObject) { return false; }
 
@@ -1043,13 +1039,6 @@ void nglWindow::Grab(bool DoGrab)
     XUngrabPointer (mpDisplay, CurrentTime);
   }
   XFlush (mpDisplay);
-}
-
-
-bool nuiMainMenu::RegisterFromWindow(nglWindow*)
-{
-  //#TODO implement native menus on unix
-  return false;
 }
 
 nglMouseInfo::Flags nglWindow::GetXButtons(uint Mask) const

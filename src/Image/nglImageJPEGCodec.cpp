@@ -33,6 +33,7 @@ extern "C"
 
 
 #include "nglBitmapTools.h"
+#include <setjmp.h>
 
 struct my_error_mgr 
 {

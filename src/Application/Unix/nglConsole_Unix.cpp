@@ -90,7 +90,7 @@ void nglConsole::OnOutput (const nglString& rText)
   while (mOutputConv.GetState() != eStringConv_OK);
 #else
   // 'char' mode : string buffer is considered to use the locale's encoding
-  printf (rText.GetChars());
+  wprintf (rText.GetChars());
 #endif
   fflush (stdout);
 }
