@@ -56,6 +56,31 @@ double nuiEasingSinusStartSlowRev(double val);
 double nuiEasingSinusStartFastRev(double val);
 double nuiEasingSinusRev(double val);
 
+template <int32 percent> double nuiEasingElasticIn(double val) ///< percent = 100 is slow, 500 is a good value
+{
+  static const double period = 100.0 / (double)percent;
+  static const double p = 1.0 / (double)period;
+  double res = 0.0;
+	if (val == 0.0 || val == 1.0)
+		return val;
+
+  double s = period / 4.0;
+  val = val - 1;
+  return -pow(2.0, 10.0 * val) * sin( (val - s) * M_PI * 2.0 * p);
+}
+
+template <int32 percent> double nuiEasingElasticOut(double val) ///< percent = 100 is slow, 500 is a good value
+{
+  return 1.0 - nuiEasingElasticIn<percent>(1.0 - val);
+}
+
+
+double nuiEasingBounceOut(double val);
+double nuiEasingBounceIn(double val);
+double nuiEasingBackIn(double val);
+double nuiEasingBackOut(double val);
+
+
 
 /// nuiAnimation is a base class that implements a basic animation framework.
 class NUI_API nuiAnimation : public nuiObject

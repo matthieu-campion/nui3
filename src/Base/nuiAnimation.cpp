@@ -101,6 +101,44 @@ double nuiEasingSinusRev(double val)
   return nuiEasingReverse(val, nuiEasingSinus);
 }
 
+double nuiEasingBounceOut(double val)
+{
+	if (val < 1 / 2.75)
+  {
+		return 7.5625f * val * val;
+	}
+	else if (val < 2 / 2.75)
+  {
+		val -= 1.5f / 2.75f;
+		return 7.5625f * val * val + 0.75f;
+	}
+	else if (val < 2.5 / 2.75)
+  {
+		val -= 2.25f / 2.75f;
+		return 7.5625f * val * val + 0.9375f;
+	}
+  
+	val -= 2.625f / 2.75f;
+	return 7.5625f * val * val + 0.984375f;
+}
+
+double nuiEasingBounceIn(double val)
+{
+  return nuiEasingReverse(val, nuiEasingBounceOut);
+}
+
+double nuiEasingBackIn(double val)
+{
+	double overshoot = 1.70158f;
+	return val * val * ((overshoot + 1) * val - overshoot);
+}
+
+double nuiEasingBackOut(double val)
+{
+  return nuiEasingReverse(val, nuiEasingBackIn);
+}
+
+
 void nuiAnimation::SetFrameRate(double FPS)
 {
   mFrameRate = FPS;

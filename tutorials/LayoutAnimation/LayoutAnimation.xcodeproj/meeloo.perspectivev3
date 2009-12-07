@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>ActivePerspectiveName</key>
-	<string>Debug</string>
+	<string>Project</string>
 	<key>AllowedModules</key>
 	<array>
 		<dict>
@@ -290,13 +290,14 @@
 						<dict>
 							<key>PBXSmartGroupTreeModuleOutlineStateExpansionKey</key>
 							<array>
+								<string>61A9DE3D0B833C9200BC506C</string>
+								<string>61A9DE4A0B833CD000BC506C</string>
 								<string>1C37FBAC04509CD000000102</string>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>3</integer>
-									<integer>1</integer>
+									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
@@ -318,6 +319,8 @@
 							<string>MainColumn</string>
 							<real>163</real>
 						</array>
+						<key>RubberWindowFrame</key>
+						<string>0 59 1920 1119 0 0 1920 1178 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -333,7 +336,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>E5EF6AC10F9625A9003E265A</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>MainWindow.cpp</string>
+								<string>nuiAnimation.cpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -341,19 +344,19 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>E5EF6AC20F9625A9003E265A</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>MainWindow.cpp</string>
+										<string>nuiAnimation.cpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E5C2D0ED10CD53C7000371C5</string>
+										<string>E5C2D1FB10CDC7F8000371C5</string>
 										<key>history</key>
 										<array>
 											<string>E5EF6B310F9628AE003E265A</string>
 											<string>E5B886A50FA0C0C000D38A0D</string>
 											<string>E591D0830FD563C6003B4272</string>
-											<string>E591D0850FD563C6003B4272</string>
-											<string>E591D0870FD563C6003B4272</string>
-											<string>E5C2D0EB10CD53B1000371C5</string>
+											<string>E5C2D1D010CDB183000371C5</string>
+											<string>E5C2D1F710CDB71E000371C5</string>
+											<string>E5C2D1FA10CDC7DF000371C5</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -368,6 +371,8 @@
 							<dict>
 								<key>Frame</key>
 								<string>{{0, 0}, {1713, 810}}</string>
+								<key>RubberWindowFrame</key>
+								<string>0 59 1920 1119 0 0 1920 1178 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -466,6 +471,8 @@
 									<dict>
 										<key>Frame</key>
 										<string>{{10, 27}, {1713, 236}}</string>
+										<key>RubberWindowFrame</key>
+										<string>0 59 1920 1119 0 0 1920 1178 </string>
 									</dict>
 									<key>Module</key>
 									<string>PBXBuildResultsModule</string>
@@ -549,8 +556,6 @@
 					<dict>
 						<key>Frame</key>
 						<string>{{0, 0}, {1920, 340}}</string>
-						<key>RubberWindowFrame</key>
-						<string>0 59 1920 1119 0 0 1920 1178 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXDebugCLIModule</string>
@@ -625,11 +630,7 @@
 							</array>
 							<key>Frame</key>
 							<string>{{0, 359}, {764, 374}}</string>
-							<key>RubberWindowFrame</key>
-							<string>0 59 1920 1119 0 0 1920 1178 </string>
 						</dict>
-						<key>RubberWindowFrame</key>
-						<string>0 59 1920 1119 0 0 1920 1178 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXDebugSessionModule</string>
@@ -676,7 +677,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>281891783.64647198</real>
+	<real>281921528.13246298</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -691,7 +692,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E5C2D0F610CD53C7000371C5</string>
 		<string>E5C2D0F710CD53C7000371C5</string>
 		<string>E5C2D0F810CD53C7000371C5</string>
 		<string>/Users/meeloo/work/nui3/tutorials/LayoutAnimation/LayoutAnimation.xcodeproj</string>

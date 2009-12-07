@@ -26,14 +26,16 @@ MainWindow::~MainWindow()
 {
 }
 
+
 void MainWindow::OnCreation()
 {
   nuiWidget* pBg = new nuiImage(_T("rsrc:/decorations/image.png"));
   pBg->SetRect(nuiRect(-(float)GetWidth(), -(float)GetHeight(), (float)GetWidth() * 3, (float)GetHeight() * 3));
   pBg->SetPosition(nuiCenter);
   pBg->SetAlpha(.1);
-  pBg->SetLayoutAnimationEasing(nuiEasingCubicRev);
-  pBg->SetLayoutAnimationDuration(1);
+  //  pBg->SetLayoutAnimationEasing(nuiEasingCubicRev);
+  pBg->SetLayoutAnimationEasing(nuiEasingElasticOut<700>);
+  pBg->SetLayoutAnimationDuration(3);
                
   AddChild(pBg);
   
@@ -50,7 +52,12 @@ void MainWindow::OnCreation()
     pBox->SetCellExpand(0, nuiExpandShrinkAndGrow);
     mEventSink.Connect(pButton->Activated, &MainWindow::ChangeLayout, pButton);
     pButton->SetLayoutAnimationDuration(1);
-    pButton->SetLayoutAnimationEasing(nuiEasingSinus);
+    //pButton->SetLayoutAnimationEasing(nuiEasingSinus);
+    //pButton->SetLayoutAnimationEasing(nuiEasingElasticOut<500>);
+    //pButton->SetLayoutAnimationEasing(nuiEasingBounceOut);
+    pButton->SetLayoutAnimationEasing(nuiEasingBounceIn);
+    //pButton->SetLayoutAnimationEasing(nuiEasingBackIn);
+
 
     AddChild(pBox);
   }
