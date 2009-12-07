@@ -18,6 +18,7 @@ class nuiHTMLFont;
 class nuiHTMLContext;
 class nuiHTTPRequest;
 class nuiHTTPResponse;
+class nuiHTTPRequest_Thread;
 
 class nuiHTMLView : public nuiSimpleContainer
 {
@@ -98,6 +99,7 @@ private:
   void _AutoSetURL(const nglString& rURL);
   void _SetText(const nglString& rHTMLText);
   void SetURLDone(nuiHTTPRequest* pRequest, nuiHTTPResponse* pResponse);
+  nuiHTTPRequest_Thread* mpRequest;
   
   void InitAttributes();
   bool mClicked;

@@ -36,6 +36,7 @@ nuiHTMLView::nuiHTMLView(float IdealWidth)
   mClicked = false;
   mAutoActivateLink = true;
   mpCurrentAnchor = NULL;
+  mpRequest = NULL;
   
   mMouseX = 0;
   mMouseY = 0;
@@ -49,6 +50,9 @@ nuiHTMLView::~nuiHTMLView()
 {
   delete mpHTML;
   delete mpContext;
+  
+  if (mpRequest)
+    mpRequest->Cancel();
 }
 
 void nuiHTMLView::InitAttributes()
@@ -166,6 +170,7 @@ void nuiHTMLView::ReLayout()
   nuiHTMLContext context(*mpContext);
   mpRootBox->Layout(context);
   mpRootBox->SetLayout(mpRootBox->GetIdealRect());
+  mLastVisibleRect = nuiRect();
 }
 
 
@@ -256,6 +261,12 @@ void nuiHTMLView::SetHSpace(float HSpace)
 
 bool nuiHTMLView::SetText(const nglString& rHTMLText)
 {
+  if (mpRequest)
+  {
+    mpRequest->Cancel();
+    mpRequest = NULL;
+  }
+  
   Clear();
   nuiHTML* pHTML = new nuiHTML();
   
@@ -276,24 +287,33 @@ bool nuiHTMLView::SetText(const nglString& rHTMLText)
     nuiHTMLContext context(*mpContext);
     mpRootBox->Layout(context);
     InvalidateLayout();
+    SetHotRect(nuiRect());
   }
   return res;
 }
 
 bool nuiHTMLView::SetURL(const nglString& rURL)
 {
+  if (mpRequest)
+  {
+    mpRequest->Cancel();
+    mpRequest = NULL;
+  }
+  
   URLChanged(rURL);
   
   nglString url(rURL);
   mTempURL = rURL;
   nuiHTTPRequest* pRequest = new nuiHTTPRequest(rURL);
-  pRequest->SendRequest(nuiMakeDelegate(this, &nuiHTMLView::SetURLDone));
+  mpRequest = pRequest->SendRequest(nuiMakeDelegate(this, &nuiHTMLView::SetURLDone));
   
   return true;
 }
 
 void nuiHTMLView::SetURLDone(nuiHTTPRequest* pRequest, nuiHTTPResponse* pResponse)
 {
+  mpRequest = NULL;
+  
   if (!pResponse)
     return; // Error!
   
@@ -357,6 +377,7 @@ void nuiHTMLView::SetURLDone(nuiHTTPRequest* pRequest, nuiHTTPResponse* pRespons
     nuiHTMLContext context(*mpContext);
     mpRootBox->Layout(context);
     InvalidateLayout();
+    SetHotRect(nuiRect());
   }
   return;
 }

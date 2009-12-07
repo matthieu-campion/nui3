@@ -12,6 +12,7 @@
 
 class nuiHTTPRequest;
 class nuiHTTPResponse;
+class nuiHTTPRequest_Thread;
 
 class nuiHTMLImage : public nuiHTMLItem
 {
@@ -26,7 +27,7 @@ private:
   void HTTPDone(nuiHTTPRequest* pRequest, nuiHTTPResponse* pResponse);
   
   nuiTexture* mpTexture;
-  
+  nuiHTTPRequest_Thread* mpRequest;
   float mWidth;
   float mHeight;
 };

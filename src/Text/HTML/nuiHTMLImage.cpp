@@ -12,7 +12,7 @@
 /////////////
 //class nuiHTMLImage : public nuiHTMLItem
 nuiHTMLImage::nuiHTMLImage(nuiHTMLNode* pNode, nuiHTMLNode* pAnchor)
-: nuiHTMLItem(pNode, pAnchor, true), mpTexture(NULL), mWidth(8), mHeight(8)
+: nuiHTMLItem(pNode, pAnchor, true), mpTexture(NULL), mWidth(8), mHeight(8), mpRequest(NULL)
 {
   const nuiHTMLAttrib* pSrc = pNode->GetAttribute(nuiHTMLAttrib::eAttrib_SRC);
   const nuiHTMLAttrib* pAlt = pNode->GetAttribute(nuiHTMLAttrib::eAttrib_ALT);
@@ -37,7 +37,7 @@ nuiHTMLImage::nuiHTMLImage(nuiHTMLNode* pNode, nuiHTMLNode* pAnchor)
       mpTexture = NULL;
     
       nuiHTTPRequest* pRequest = new nuiHTTPRequest(url);
-      pRequest->SendRequest(nuiMakeDelegate(this, &nuiHTMLImage::HTTPDone));
+      mpRequest = pRequest->SendRequest(nuiMakeDelegate(this, &nuiHTMLImage::HTTPDone));
       return;
     }
   }
@@ -50,11 +50,13 @@ nuiHTMLImage::nuiHTMLImage(nuiHTMLNode* pNode, nuiHTMLNode* pAnchor)
 
 nuiHTMLImage::~nuiHTMLImage()
 {
-  
+  if (mpRequest)
+    mpRequest->Cancel();
 }
 
 void nuiHTMLImage::HTTPDone(nuiHTTPRequest* pRequest, nuiHTTPResponse* pResponse)
 {
+  mpRequest = NULL;
   if (!pResponse)
     return;
   
@@ -84,6 +86,7 @@ void nuiHTMLImage::Draw(nuiDrawContext* pContext)
   if (!mpTexture || !mpTexture->IsValid())
     return;
   
+  NGL_OUT(_T("nuiHTMLImage::Draw %ls\n"), mpTexture->GetObjectName().GetChars());
   pContext->PushState();
   pContext->SetTexture(mpTexture);  
   pContext->SetFillColor(nuiColor(255, 255, 255));

@@ -85,66 +85,9 @@ nuiHTTPRequest::~nuiHTTPRequest()
 {
 }
 
-class nuiHTTPRequest_Thread;
-
-class nuiHTTPRequest_Thread : public nglThread, public nuiCommand
+nuiHTTPRequest_Thread* nuiHTTPRequest::SendRequest(const nuiHTTPRequest::Delegate& rDelegate)
 {
-public:
-  nuiHTTPRequest_Thread(nuiHTTPRequest* pRequest, const nuiHTTPRequest::Delegate& rDelegate)
-  : nuiCommand(_T("nuiHTTPRequest_Thread"), _T("HTTP Threaded Request Reply Command"), false, false, false),
-    mpRequest(pRequest), mDelegate(rDelegate), mpResponse(NULL), mCancel(false)
-  {
-    Start();
-  }
-  
-  ~nuiHTTPRequest_Thread()
-  {
-    delete mpRequest;
-    delete mpResponse;
-  }
-  
-  void OnStart()
-  {
-    mpResponse = mpRequest->SendRequest();
-    
-    if (mCancel)
-    {
-      SetAutoDelete(true);
-      return;
-    }
-    
-    nuiNotification* pNotif = new nuiNotification(_T("nuiHTTPRequest_Thread"));
-    pNotif->SetToken(new nuiToken<nuiCommand*>(this));
-    App->Post(pNotif);
-  }
-
-  bool SetArgs(const std::vector<nglString, std::allocator<nglString> >&)
-  {
-    return true;
-  }
-    
-  bool ExecuteDo()
-  {
-    if (!mCancel)
-      mDelegate(mpRequest, mpResponse);
-    return true;
-  }
-  
-  void Cancel()
-  {
-    mCancel = true;
-  }
-  
-private:
-  nuiHTTPRequest* mpRequest;
-  nuiHTTPRequest::Delegate mDelegate;
-  nuiHTTPResponse* mpResponse;
-  bool mCancel;
-};
-
-void nuiHTTPRequest::SendRequest(const nuiHTTPRequest::Delegate& rDelegate)
-{
-  nuiHTTPRequest_Thread* pThread = new nuiHTTPRequest_Thread(this, rDelegate);
+  return new nuiHTTPRequest_Thread(this, rDelegate);
 }
 
 const nglString& nuiHTTPRequest::GetURL() const
