@@ -148,6 +148,7 @@ protected:
       mChar = 0;
       return false;
     }
+    
     if (!(c & 0x80))
     {
       mChar = c;
@@ -160,29 +161,29 @@ protected:
       //  0xF8 // 5
       //  0xFC // 6
       uint32 count = 0;
-      if (c & 0xFC == 0xFC)
+      if ((c & 0xFC) == 0xFC)
       {
-        mChar = c & ~0xFC;
+        mChar = c & (~0xFC);
         count = 5;
       }
-      else if (c & 0xF8 == 0xF8)
+      else if ((c & 0xF8) == 0xF8)
       {
-        mChar = c & ~0xF8;
+        mChar = c & (~0xF8);
         count = 4;
       }
-      else if (c & 0xF0 == 0xF0)
+      else if ((c & 0xF0) == 0xF0)
       {
-        mChar = c & ~0xF0;
+        mChar = c & (~0xF0);
         count = 3;
       }
-      else if (c & 0xE0 == 0xE0)
+      else if ((c & 0xE0) == 0xE0)
       {
-        mChar = c & ~0xE0;
+        mChar = c & (~0xE0);
         count = 2;
       }
-      else if (c & 0xC0 == 0xC0)
+      else if ((c & 0xC0) == 0xC0)
       {
-        mChar = c & ~0xC0;
+        mChar = c & (~0xC0);
         count = 1;
       }
       
@@ -437,8 +438,8 @@ protected:
   void ApplyActionsToObject(nuiObject* pObj)
   {
     // Apply the actions to the object:
-    uint32 i = 0;
-    for (i = 0; i < mActions.size(); i++)
+    int32 i = 0;
+    for (i = 0; i < (int32)mActions.size(); i++)
     {
       nuiCSSAction* pAction = mActions[i];
       pAction->ApplyAction(pObj);
@@ -494,8 +495,8 @@ protected:
     }
     
     // Apply the actions to the object:
-    uint32 i = 0;
-    for (i = 0; i < mActions.size(); i++)
+    int32 i = 0;
+    for (i = 0; i < (int32)mActions.size(); i++)
     {
       nuiCSSAction* pAction = mActions[i];
       pAction->ApplyAction(pObj);
@@ -677,10 +678,10 @@ protected:
       
       // Create the rule from the matchers and the actions:
       nuiCSSRule* pRule = new nuiCSSRule();
-      uint32 i = mMatchers.size();
+      int32 i = (int32)mMatchers.size();
       for (; i > 0; i--)
         pRule->AddMatcher(mMatchers[i-1]);
-      for (i = 0; i < mActions.size(); i++)
+      for (i = 0; i < (int32)mActions.size(); i++)
         pRule->AddAction(mActions[i]);
       
       mrCSS.AddRule(pRule);
@@ -1221,7 +1222,7 @@ protected:
       }
       else
       {
-        int32 i = rMatchers.size();
+        int32 i = (int32)rMatchers.size();
         uint32 priority = pMatcher->GetPriority();
         if (i && priority)
         {
@@ -1867,8 +1868,8 @@ bool nuiCSS::Serialize(nglOStream& rStream)
 
 void nuiCSS::ApplyRules(nuiWidget* pWidget, uint32 MatchersTag)
 {
-  uint32 count = mRules.size();
-  for (uint32 i = 0; i < count; i++)
+  int32 count = (int32)mRules.size();
+  for (int32 i = 0; i < count; i++)
   {
     nuiCSSRule* pRule = mRules[i];
     pRule->ApplyRule(pWidget, MatchersTag);
@@ -1879,7 +1880,7 @@ void nuiCSS::ApplyRules(nuiWidget* pWidget, uint32 MatchersTag)
 bool nuiCSS::GetMatchingRules(nuiWidget* pWidget, std::vector<nuiCSSRule*>& rMatchingRules, uint32 MatchersTag)
 {
   rMatchingRules.clear();
-  for (uint32 i = 0; i < mRules.size(); i++)
+  for (int32 i = 0; i < (int32)mRules.size(); i++)
   {
     if (mRules[i]->Match(pWidget, MatchersTag))
     {

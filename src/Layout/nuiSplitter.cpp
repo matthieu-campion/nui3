@@ -205,7 +205,6 @@ nuiSplitter::nuiSplitter ( nuiOrientation orientation, nuiSplitterMode mode)
   mpHandle = NULL;  
     
   mFixed = false;
-  mpTimer = NULL;
   mHandleHover = false;
   mMasterChild = true;
   mStartHandlePos = 50;
@@ -231,7 +230,6 @@ bool nuiSplitter::Load(const nuiXMLNode* pNode)
   mMasterChild  = nuiGetBool(pNode,_T("MasterChild"),true);
   mOrientation  = nuiGetOrientation ( pNode, nuiHorizontal);
 
-  mpTimer = NULL;
   mHandleHover = false;
 
   InitProperties();
@@ -851,14 +849,7 @@ void nuiSplitter::GotoHandlePos(nuiSize HandlePos, nuiSize handleStep, double ti
   }
 
 
-  if(mpTimer)
-  {
-    mpTimer->Stop();
-    delete mpTimer;
-  }
-  mpTimer = new nuiTimer(timerStep);
-  mSplitterSink.Connect(mpTimer->Tick, &nuiSplitter::StepHandlePos);
-  mpTimer->Start(false);
+  mSplitterSink.Connect(nuiAnimation::AcquireTimer()->Tick, &nuiSplitter::StepHandlePos);
 }
 
 nuiSize nuiSplitter::GetHandleSize()
@@ -923,7 +914,7 @@ bool nuiSplitter::StepHandlePos(const nuiEvent& rEvent)
     }
     else
     {
-      mpTimer->Stop();
+      mSplitterSink.Disconnect(&nuiSplitter::StepHandlePos);
       GoToHandlePosAnimDone();
     }
   }
@@ -936,7 +927,7 @@ bool nuiSplitter::StepHandlePos(const nuiEvent& rEvent)
     }
     else
     {
-      mpTimer->Stop();
+      mSplitterSink.Disconnect(&nuiSplitter::StepHandlePos);
       GoToHandlePosAnimDone();
     }
   } 

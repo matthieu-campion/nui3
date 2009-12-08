@@ -11,7 +11,6 @@
 //#include "nui.h"
 #include "nuiContainer.h"
 #include "nuiEvent.h"
-#include "nuiTimer.h"
 
 /// defines the way the splitter bar position is computed
 enum nuiSplitterMode
@@ -114,7 +113,6 @@ protected:
   nuiSize mFirstWidgetMinPixels;
   nuiSize mSeconWidgetMinPixels;
 
-  nuiTimer *mpTimer; ///< timer for GotoHandlePos()
   float mStartHandlePos; ///< original position
   float mEndHandlePos; ///< end position
   float mGotoStep; ///< step
