@@ -275,7 +275,7 @@ nuiTreeNode* nuiThreadInspector::CreateNodeFromThread(nglThread::ID ID)
   nuiHBox* pBox = new nuiHBox(0);
   nuiTreeNode* pNode = new nuiTreeNode(pBox, true);
   // give the node a token (the thread ID) for later update
-  pNode->SetToken(new nuiToken<nglThread::ID>(ID, false));
+  pNode->SetToken(new nuiToken<nglThread::ID>(ID));
 
   
   // thread's name
