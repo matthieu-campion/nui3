@@ -21,7 +21,7 @@ public:
   virtual ~nuiLabelAttribute();
 	
 protected:
-	void OnAttributeChanged(const nglString& rText);
+	virtual void OnAttributeChanged(const nglString& rText);
 
 private:
 	nuiSlotsSink mSink;

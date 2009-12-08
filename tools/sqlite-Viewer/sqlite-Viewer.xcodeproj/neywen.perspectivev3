@@ -280,9 +280,7 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>14</integer>
-									<integer>10</integer>
-									<integer>8</integer>
+									<integer>6</integer>
 									<integer>0</integer>
 								</array>
 							</array>
@@ -304,7 +302,7 @@
 							<real>185</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>48 115 1298 762 0 0 1440 878 </string>
+						<string>210 410 1298 762 0 0 1920 1178 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -332,13 +330,13 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>BCC8209B1093AF5B00D76273</string>
+										<string>BCA1EBA110CE614800D08EF1</string>
 										<key>history</key>
 										<array>
 											<string>BC70110110924981002D60E2</string>
 											<string>BC70110210924981002D60E2</string>
 											<string>BCC8209A1093AF5B00D76273</string>
-											<string>BCC820961093AEB500D76273</string>
+											<string>BCA1EB8910CE607200D08EF1</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -354,7 +352,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {1091, 716}}</string>
 								<key>RubberWindowFrame</key>
-								<string>48 115 1298 762 0 0 1440 878 </string>
+								<string>210 410 1298 762 0 0 1920 1178 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -379,7 +377,7 @@
 										<key>Frame</key>
 										<string>{{10, 27}, {1091, -27}}</string>
 										<key>RubberWindowFrame</key>
-										<string>48 115 1298 762 0 0 1440 878 </string>
+										<string>210 410 1298 762 0 0 1920 1178 </string>
 									</dict>
 									<key>Module</key>
 									<string>XCDetailModule</string>
@@ -461,11 +459,11 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>BCC8209C1093AF5B00D76273</string>
+				<string>BCA1EBA210CE614800D08EF1</string>
 				<string>1CA23ED40692098700951B8B</string>
-				<string>BCC8209D1093AF5B00D76273</string>
+				<string>BCA1EBA310CE614800D08EF1</string>
 				<string>BC775BE6109245C400760F39</string>
-				<string>BCC8209E1093AF5B00D76273</string>
+				<string>BCA1EBA410CE614800D08EF1</string>
 				<string>1CA23EDF0692099D00951B8B</string>
 				<string>1CA23EE00692099D00951B8B</string>
 				<string>1CA23EE10692099D00951B8B</string>
@@ -615,14 +613,14 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>BCC8209F1093AF5B00D76273</string>
+				<string>BCA1EB8D10CE607200D08EF1</string>
 				<string>1CCC7628064C1048000F2A68</string>
 				<string>1CCC7629064C1048000F2A68</string>
-				<string>BCC820A01093AF5B00D76273</string>
-				<string>BCC820A11093AF5B00D76273</string>
-				<string>BCC820A21093AF5B00D76273</string>
-				<string>BCC820A31093AF5B00D76273</string>
-				<string>BC775BE6109245C400760F39</string>
+				<string>BCA1EB8E10CE607200D08EF1</string>
+				<string>BCA1EB8F10CE607200D08EF1</string>
+				<string>BCA1EB9010CE607200D08EF1</string>
+				<string>BCA1EB9110CE607200D08EF1</string>
+				<string>BCA1EB9210CE607200D08EF1</string>
 			</array>
 			<key>ToolbarConfigUserDefaultsMinorVersion</key>
 			<string>2</string>
@@ -656,12 +654,10 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>BCC820A41093AF5B00D76273</string>
-		<string>BCC820A51093AF5B00D76273</string>
 		<string>/Users/neywen/devel/nui3/tools/sqlite-Viewer/sqlite-Viewer.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>48 115 1298 762 0 0 1440 878 </string>
+	<string>210 410 1298 762 0 0 1920 1178 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>

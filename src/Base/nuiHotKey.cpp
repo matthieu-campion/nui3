@@ -4,7 +4,9 @@
 
 nglString ModifiersToString(nuiKeyModifier mod)
 {
-  nglString res = nglString::Empty;
+//  nglString res = nglString::Empty;
+  nglString res;
+
   if (mod &  nuiShiftKey)
   {
 #ifdef _CARBON_
@@ -122,7 +124,6 @@ nglString nuiHotKeyImpl<nglChar>::ShortcutToString() const
 {
   nglString shortcut = ModifiersToString(mModifiers);
   shortcut += mTrigger;
-  
   shortcut.ToUpper();
   return shortcut;
 } 

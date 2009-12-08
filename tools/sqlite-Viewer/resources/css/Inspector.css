@@ -70,7 +70,7 @@ InspectorResult!
 {
   Decoration: dInspectorResult;
   UserHeight: 25;
-  Position: HorizontalFill;
+  Position: FillHorizontal;
   Font: fontInspectorResult;
   TextColor: rgb(96,96,96);
 }
