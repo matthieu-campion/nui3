@@ -74,6 +74,7 @@ bool nuiAudioDecoderPrivate::Init()
 {
 	AudioFileTypeID typeID = 0;
 
+
   // we only want to read (not write) so give NULL for write callbacks (seems to work...)
   OSStatus err =  AudioFileOpenWithCallbacks(&mrStream, &MyAudioFile_ReadProc, NULL, &MyAudioFile_GetSizeProc, NULL, typeID, &mAudioFileID);
 	

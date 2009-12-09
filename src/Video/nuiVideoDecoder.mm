@@ -69,7 +69,7 @@ double nuiVideoDecoder::GetDuration() const
   
   QTTime qtDuration = [mpPrivate->mpMovie duration];
   
-  double seconds = qtDuration.timeValue / qtDuration.timeScale;
+  double seconds = (double)(qtDuration.timeValue) / (double)(qtDuration.timeScale);
   return seconds;
 }
 
@@ -80,7 +80,7 @@ double nuiVideoDecoder::GetPosition() const
   
   QTTime CurrTime = [mpPrivate->mpMovie currentTime];
   
-  double seconds = CurrTime.timeValue / CurrTime.timeScale;
+  double seconds = (double)(CurrTime.timeValue) / (double)(CurrTime.timeScale);
   return seconds;
 }
 
@@ -88,6 +88,12 @@ void nuiVideoDecoder::SetPosition(double TimePosition)
 {
   if (!IsValid())
     return;
+  
+  QTTime time;
+  time.timeScale = 1000;
+  time.flags = 0;
+  time.timeValue = TimePosition * time.timeScale;
+  [mpPrivate->mpMovie setCurrentTime:time];
 }
 
 double nuiVideoDecoder::GetTimeTillNextFrame() const
