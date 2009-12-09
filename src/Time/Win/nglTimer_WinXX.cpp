@@ -196,7 +196,7 @@ void nglTimer::PostMessage()
   if (App && mQueuedEvents < NGL_MAX_QUEUED_TIMER_EVENTS)
   {
     ngl_atomic_inc(mQueuedEvents);
-    ::SendMessage(App->GetHWnd(), WM_NGLTIMER, 0, 0);
+    ::PostMessage(App->GetHWnd(), WM_NGLTIMER, 0, 0);
   }
   else
   {

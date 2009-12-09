@@ -258,7 +258,7 @@ bool nglKernel::SysInit (HINSTANCE Inst)
     NULL
     );
 
-  NGL_LOG(_T("nglKernel"), NGL_LOG_INFO, _T("Create ngl kernel window hwnd = 0x%x"), hwnd);
+  //GetLog().Log(_T("nglKernel"), NGL_LOG_INFO, _T("Create ngl kernel window hwnd = 0x%x"), hwnd);
 
   if (hwnd == NULL)
   {

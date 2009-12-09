@@ -368,6 +368,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\nuiClampedValueAttributeEditor.h"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Attributes\nuiColorAttributeEditor.cpp"
 					>
 				</File>
@@ -429,6 +433,10 @@
 				</File>
 				<File
 					RelativePath=".\src\Attributes\nuiRangeKnobAttributeEditor.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiRangeKnobAttributeEditor.h"
 					>
 				</File>
 				<File
