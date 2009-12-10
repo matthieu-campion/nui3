@@ -620,6 +620,7 @@ protected:
         return false;
       }
 
+      NGL_OUT(_T("CSS Include: '%ls'\n"), includePath.GetChars());
       // launch included file parsing
       cssLexer lexer(pF, mrCSS, includePath);
       if (!lexer.Load())

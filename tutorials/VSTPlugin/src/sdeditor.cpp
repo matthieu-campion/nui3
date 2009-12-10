@@ -7,7 +7,7 @@
 // Created by   : Steinberg Media Technologies
 // Description  : Simple Surround Delay plugin with Editor using VSTGUI
 //
-// © 2006, Steinberg Media Technologies, All Rights Reserved
+// ï¿½ 2006, Steinberg Media Technologies, All Rights Reserved
 //-------------------------------------------------------------------------------------------------------
 
 #include "nui.h"
@@ -43,8 +43,12 @@ nuiAttributeEditor* CreateEditor(void* pObj, nuiAttribute<float>* pAttrib)
 SDEditor::SDEditor (AudioEffect *effect)
  : AEffEditor (effect), mpWin(NULL), mLock(false)
 {
+#ifdef WIN32
   nuiInit((HINSTANCE)hInstance);
-
+#else
+  nuiInit(NULL);
+#endif
+  
   SetObjectClass(_T("SDEditor"));
 
   nuiAttribute<float>* pDelayAttrib = new nuiValueAttribute<float>(_T("Delay"), effect->getParameter(kDelay));
@@ -87,7 +91,11 @@ bool SDEditor::open (void *ptr)
 
   nuiContextInfo ctxinfo;
   nglWindowInfo wininfo;
+#ifdef WIN32
   wininfo.OSInfo.Parent = (HWND)ptr;
+#else
+  wininfo.OSInfo.Parent = (WindowRef)ptr;
+#endif
   wininfo.Width = mMainRect.right;
   wininfo.Height = mMainRect.bottom;
 

@@ -17,13 +17,21 @@
 		61A9DFDE0B833F1500BC506C /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD40B833F1500BC506C /* CoreServices.framework */; };
 		61A9DFDF0B833F1500BC506C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD50B833F1500BC506C /* Carbon.framework */; };
 		61A9DFE00B833F1500BC506C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD60B833F1500BC506C /* OpenGL.framework */; };
-		61A9DFF30B83433800BC506C /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61A9DFEF0B83433800BC506C /* Application.cpp */; };
-		61A9DFF40B83433800BC506C /* MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */; };
-		61A9DFF50B83433800BC506C /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61A9DFEF0B83433800BC506C /* Application.cpp */; };
-		61A9DFF60B83433800BC506C /* MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */; };
 		BC6A09AD0EF92BAB00881ACF /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BC6A09AB0EF92BAB00881ACF /* Info.plist */; };
 		BCBCB15F0DFD45BD002E8BC3 /* libnui3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */; };
 		BCBCB1600DFD45C1002E8BC3 /* libnui3D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15C0DFD45B6002E8BC3 /* libnui3D.a */; };
+		E594B4A910D05655007A66FA /* adelay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E594B4A510D05655007A66FA /* adelay.cpp */; };
+		E594B4AB10D05655007A66FA /* sdeditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E594B4A710D05655007A66FA /* sdeditor.cpp */; };
+		E594B4AC10D05655007A66FA /* surrounddelay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E594B4A810D05655007A66FA /* surrounddelay.cpp */; };
+		E594B4AD10D05655007A66FA /* adelay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E594B4A510D05655007A66FA /* adelay.cpp */; };
+		E594B4AF10D05655007A66FA /* sdeditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E594B4A710D05655007A66FA /* sdeditor.cpp */; };
+		E594B4B010D05655007A66FA /* surrounddelay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E594B4A810D05655007A66FA /* surrounddelay.cpp */; };
+		E594B4C010D05760007A66FA /* audioeffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E594B4BB10D05760007A66FA /* audioeffect.cpp */; };
+		E594B4C110D05760007A66FA /* audioeffectx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E594B4BD10D05760007A66FA /* audioeffectx.cpp */; };
+		E594B4C210D05760007A66FA /* vstplugmain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E594B4BF10D05760007A66FA /* vstplugmain.cpp */; };
+		E594B4C310D05760007A66FA /* audioeffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E594B4BB10D05760007A66FA /* audioeffect.cpp */; };
+		E594B4C410D05760007A66FA /* audioeffectx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E594B4BD10D05760007A66FA /* audioeffectx.cpp */; };
+		E594B4C510D05760007A66FA /* vstplugmain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E594B4BF10D05760007A66FA /* vstplugmain.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,23 +63,38 @@
 			remoteGlobalIDString = E58172D70C3D103300902DFE;
 			remoteInfo = nui3D;
 		};
+		E594B48910D0562F007A66FA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E592C5140EFE8CCC00340B35;
+			remoteInfo = "nui3D cocoa";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		61A9DFBF0B833E9600BC506C /* VSTPlugin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VSTPlugin.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		61A9DFC90B833EF200BC506C /* VSTPluginD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VSTPluginD.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		61A9DFC90B833EF200BC506C /* VSTPluginD.vst */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VSTPluginD.vst; sourceTree = BUILT_PRODUCTS_DIR; };
 		61A9DFD20B833F1500BC506C /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
 		61A9DFD30B833F1500BC506C /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
 		61A9DFD40B833F1500BC506C /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		61A9DFD50B833F1500BC506C /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		61A9DFD60B833F1500BC506C /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
-		61A9DFEF0B83433800BC506C /* Application.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = Application.cpp; path = src/Application.cpp; sourceTree = "<group>"; };
-		61A9DFF00B83433800BC506C /* Application.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = Application.h; path = src/Application.h; sourceTree = "<group>"; };
-		61A9DFF10B83433800BC506C /* MainWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = MainWindow.cpp; path = src/MainWindow.cpp; sourceTree = "<group>"; };
-		61A9DFF20B83433800BC506C /* MainWindow.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = MainWindow.h; path = src/MainWindow.h; sourceTree = "<group>"; };
 		BC6A09AB0EF92BAB00881ACF /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		BC6A09CB0EF9301900881ACF /* main.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = main.css; path = resources/css/main.css; sourceTree = SOURCE_ROOT; };
 		BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nui3.xcodeproj; path = ../../nui3.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E594B4A210D05655007A66FA /* adelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = adelay.h; path = src/adelay.h; sourceTree = SOURCE_ROOT; };
+		E594B4A310D05655007A66FA /* sdeditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sdeditor.h; path = src/sdeditor.h; sourceTree = SOURCE_ROOT; };
+		E594B4A410D05655007A66FA /* surrounddelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = surrounddelay.h; path = src/surrounddelay.h; sourceTree = SOURCE_ROOT; };
+		E594B4A510D05655007A66FA /* adelay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = adelay.cpp; path = src/adelay.cpp; sourceTree = SOURCE_ROOT; };
+		E594B4A710D05655007A66FA /* sdeditor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdeditor.cpp; path = src/sdeditor.cpp; sourceTree = SOURCE_ROOT; };
+		E594B4A810D05655007A66FA /* surrounddelay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = surrounddelay.cpp; path = src/surrounddelay.cpp; sourceTree = SOURCE_ROOT; };
+		E594B4BA10D05760007A66FA /* aeffeditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aeffeditor.h; path = vstsdk2.4/public.sdk/source/vst2.x/aeffeditor.h; sourceTree = SOURCE_ROOT; };
+		E594B4BB10D05760007A66FA /* audioeffect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = audioeffect.cpp; path = vstsdk2.4/public.sdk/source/vst2.x/audioeffect.cpp; sourceTree = SOURCE_ROOT; };
+		E594B4BC10D05760007A66FA /* audioeffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = audioeffect.h; path = vstsdk2.4/public.sdk/source/vst2.x/audioeffect.h; sourceTree = SOURCE_ROOT; };
+		E594B4BD10D05760007A66FA /* audioeffectx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = audioeffectx.cpp; path = vstsdk2.4/public.sdk/source/vst2.x/audioeffectx.cpp; sourceTree = SOURCE_ROOT; };
+		E594B4BE10D05760007A66FA /* audioeffectx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = audioeffectx.h; path = vstsdk2.4/public.sdk/source/vst2.x/audioeffectx.h; sourceTree = SOURCE_ROOT; };
+		E594B4BF10D05760007A66FA /* vstplugmain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = vstplugmain.cpp; path = vstsdk2.4/public.sdk/source/vst2.x/vstplugmain.cpp; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +130,7 @@
 		61A9DE3D0B833C9200BC506C = {
 			isa = PBXGroup;
 			children = (
+				E594B4B310D05691007A66FA /* vstsdk */,
 				BC6A09CA0EF9300600881ACF /* css */,
 				BC6A09A20EF92B4B00881ACF /* resources */,
 				61A9DE4A0B833CD000BC506C /* sources */,
@@ -131,10 +155,12 @@
 		61A9DE4A0B833CD000BC506C /* sources */ = {
 			isa = PBXGroup;
 			children = (
-				61A9DFEF0B83433800BC506C /* Application.cpp */,
-				61A9DFF00B83433800BC506C /* Application.h */,
-				61A9DFF10B83433800BC506C /* MainWindow.cpp */,
-				61A9DFF20B83433800BC506C /* MainWindow.h */,
+				E594B4A210D05655007A66FA /* adelay.h */,
+				E594B4A310D05655007A66FA /* sdeditor.h */,
+				E594B4A410D05655007A66FA /* surrounddelay.h */,
+				E594B4A510D05655007A66FA /* adelay.cpp */,
+				E594B4A710D05655007A66FA /* sdeditor.cpp */,
+				E594B4A810D05655007A66FA /* surrounddelay.cpp */,
 			);
 			name = sources;
 			sourceTree = "<group>";
@@ -143,7 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				61A9DFBF0B833E9600BC506C /* VSTPlugin.app */,
-				61A9DFC90B833EF200BC506C /* VSTPluginD.app */,
+				61A9DFC90B833EF200BC506C /* VSTPluginD.vst */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -169,8 +195,22 @@
 			children = (
 				BCBCB15C0DFD45B6002E8BC3 /* libnui3D.a */,
 				BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */,
+				E594B48A10D0562F007A66FA /* libnui3D cocoa.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		E594B4B310D05691007A66FA /* vstsdk */ = {
+			isa = PBXGroup;
+			children = (
+				E594B4BA10D05760007A66FA /* aeffeditor.h */,
+				E594B4BB10D05760007A66FA /* audioeffect.cpp */,
+				E594B4BC10D05760007A66FA /* audioeffect.h */,
+				E594B4BD10D05760007A66FA /* audioeffectx.cpp */,
+				E594B4BE10D05760007A66FA /* audioeffectx.h */,
+				E594B4BF10D05760007A66FA /* vstplugmain.cpp */,
+			);
+			name = vstsdk;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -210,7 +250,7 @@
 			);
 			name = VSTPluginD;
 			productName = Tempd;
-			productReference = 61A9DFC90B833EF200BC506C /* VSTPluginD.app */;
+			productReference = 61A9DFC90B833EF200BC506C /* VSTPluginD.vst */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -251,6 +291,13 @@
 			fileType = archive.ar;
 			path = libnui3.a;
 			remoteRef = BCBCB15D0DFD45B6002E8BC3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E594B48A10D0562F007A66FA /* libnui3D cocoa.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libnui3D cocoa.a";
+			remoteRef = E594B48910D0562F007A66FA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -302,8 +349,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				61A9DFF30B83433800BC506C /* Application.cpp in Sources */,
-				61A9DFF40B83433800BC506C /* MainWindow.cpp in Sources */,
+				E594B4A910D05655007A66FA /* adelay.cpp in Sources */,
+				E594B4AB10D05655007A66FA /* sdeditor.cpp in Sources */,
+				E594B4AC10D05655007A66FA /* surrounddelay.cpp in Sources */,
+				E594B4C010D05760007A66FA /* audioeffect.cpp in Sources */,
+				E594B4C110D05760007A66FA /* audioeffectx.cpp in Sources */,
+				E594B4C210D05760007A66FA /* vstplugmain.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -311,8 +362,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				61A9DFF50B83433800BC506C /* Application.cpp in Sources */,
-				61A9DFF60B83433800BC506C /* MainWindow.cpp in Sources */,
+				E594B4AD10D05655007A66FA /* adelay.cpp in Sources */,
+				E594B4AF10D05655007A66FA /* sdeditor.cpp in Sources */,
+				E594B4B010D05655007A66FA /* surrounddelay.cpp in Sources */,
+				E594B4C310D05760007A66FA /* audioeffect.cpp in Sources */,
+				E594B4C410D05760007A66FA /* audioeffectx.cpp in Sources */,
+				E594B4C510D05760007A66FA /* vstplugmain.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,8 +391,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
-				HEADER_SEARCH_PATHS = ../../include;
+				GCC_VERSION = 4.0;
+				HEADER_SEARCH_PATHS = (
+					../../include,
+					./src,
+					./vstsdk2.4/,
+					./vstsdk2.4/public.sdk/source/vst2.x,
+				);
 				INFOPLIST_FILE = Info.plist;
+				SDKROOT = macosx10.4;
 			};
 			name = Default;
 		};
@@ -356,7 +418,10 @@
 				GCC_OPTIMIZATION_LEVEL = s;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = "-liconv -lz";
+				OTHER_LDFLAGS = (
+					"-liconv",
+					"-lz",
+				);
 				PREBINDING = YES;
 				PRODUCT_NAME = VSTPlugin;
 				STRIP_INSTALLED_PRODUCT = YES;
@@ -381,18 +446,24 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = _DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_PREPROCESS = YES;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = "-liconv -lz";
-				PREBINDING = YES;
+				MACH_O_TYPE = mh_bundle;
+				OTHER_LDFLAGS = (
+					"-liconv",
+					"-lz",
+				);
+				PREBINDING = NO;
 				PRODUCT_NAME = VSTPluginD;
+				STRIP_STYLE = "non-global";
 				WARNING_CFLAGS = (
 					"-Wmost",
 					"-Wno-four-char-constants",
 					"-Wno-unknown-pragmas",
 				);
-				WRAPPER_EXTENSION = app;
-				ZERO_LINK = NO;
+				WRAPPER_EXTENSION = vst;
 			};
 			name = Default;
 		};
