@@ -50,10 +50,10 @@ protected:
 
   bool mDisabled;
 
-  static void UpdateStats(uint32 v)
+  static void UpdateStats(size_t v)
   {
 #ifdef _DEBUG_
-    static uint32 ref = 0;
+    static size_t ref = 0;
     
     if (v > ref)
     {

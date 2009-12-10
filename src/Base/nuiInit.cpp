@@ -80,11 +80,14 @@ bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
   if (gNUIReferences == 0)
   {
     if (!App)
+    {
 #ifdef _WIN32_
       App = new __NglKernel__(OSHandle, pKernel);
 #else
       App = new __NglKernel__(pKernel);
 #endif
+      App->CallOnInit();
+    }
   }
 
   gNUIReferences++;
@@ -140,6 +143,7 @@ bool nuiUninit()
     __NglKernel__* pApp = dynamic_cast<__NglKernel__*>(App);
     if (pApp)
     {
+      App->CallOnExit(0);
       delete (pApp);
       App = NULL;
       return true;

@@ -37,6 +37,21 @@ nuiAttributeEditor* CreateEditor(void* pObj, nuiAttribute<float>* pAttrib)
   return new nuiClampedValueAttributeEditor<float>(nuiAttrib<float>(pObj, pAttrib), nuiRange(pAttrib->Get(pObj), 0.0, 1.0, 0.05, 0.1));
 }
 
+void DelayFormater(nglString& rString, float value)
+{
+  rString.CFormat(_T("%2.2fs"), value);
+}
+
+void FeedbackFormater(nglString& rString, float value)
+{
+  rString.CFormat(_T("%3.1f%%"), 100.0f * value);
+}
+
+void OutFormater(nglString& rString, float value)
+{
+  rString.CFormat(_T("%3.1f%%"), 100.0f * value);
+}
+
 //-----------------------------------------------------------------------------
 // SDEditor class implementation
 //-----------------------------------------------------------------------------
@@ -53,18 +68,21 @@ SDEditor::SDEditor (AudioEffect *effect)
 
   nuiAttribute<float>* pDelayAttrib = new nuiValueAttribute<float>(_T("Delay"), effect->getParameter(kDelay));
   pDelayAttrib->SetEditor(CreateEditor);
+  pDelayAttrib->SetFormater(DelayFormater);
   nuiAttrib<float> delay(this, pDelayAttrib);
   mSlotSink.Connect(delay.GetChangedSignal(), nuiMakeDelegate(this, &SDEditor::SetDelay));
   AddAttribute(pDelayAttrib);
 
   nuiAttribute<float>* pFeedbackAttrib = new nuiValueAttribute<float>(_T("Feedback"), effect->getParameter(kFeedBack));
   pFeedbackAttrib->SetEditor(CreateEditor);
+  pFeedbackAttrib->SetFormater(FeedbackFormater);
   nuiAttrib<float> feedback(this, pFeedbackAttrib);
   mSlotSink.Connect(feedback.GetChangedSignal(), nuiMakeDelegate(this, &SDEditor::SetFeedback));
   AddAttribute(pFeedbackAttrib);
 
   nuiAttribute<float>* pOutAttrib = new nuiValueAttribute<float>(_T("Out"), effect->getParameter(kOut));
   pOutAttrib->SetEditor(CreateEditor);
+  pOutAttrib->SetFormater(OutFormater);
   nuiAttrib<float> out(this, pOutAttrib);
   mSlotSink.Connect(out.GetChangedSignal(), nuiMakeDelegate(this, &SDEditor::SetOut));
   AddAttribute(pOutAttrib);
@@ -74,7 +92,6 @@ SDEditor::SDEditor (AudioEffect *effect)
   mMainRect.bottom = 240;
   mMainRect.right = 320;
   effect->setEditor(this);
-
 }
 
 //-----------------------------------------------------------------------------
@@ -103,14 +120,31 @@ bool SDEditor::open (void *ptr)
   mpWin->SetState(nglWindow::eShow);
 
   nuiVBox* pBox = new nuiVBox();
+  pBox->SetExpand(nuiExpandShrinkAndGrow);
+  nuiImage* pBg = new nuiImage(_T("rsrc:/decorations/image.png"));
+  pBg->SetAlpha(.3f);
+  pBg->SetPosition(nuiCenter);
+  nuiRect r(0, 0, mMainRect.right, mMainRect.bottom);
+  r.Scale(0.1f, 0.1f);
+  pBg->SetLayout(r);
+  pBg->SetLayoutAnimationDuration(3.0f);
+  pBg->SetLayoutAnimationEasing(nuiEasingElasticOut<500>);
+
+  mpWin->AddChild(pBg);
   mpWin->AddChild(pBox);
-  pBox->AddCell(new nuiLabel(_T("Simple NUI VST Plugin")), nuiCenter);
+  nuiLabel* pLabel = new nuiLabel(_T("Simple NUI VST Plugin"));
+  pLabel->SetFont(nuiFont::GetFont(24));
+  pLabel->SetBorder(0, 4);
+  pBox->AddCell(pLabel, nuiCenter);
   nuiAttrib<float> delay(GetAttribute(_T("Delay")));
   nuiAttrib<float> feedback(GetAttribute(_T("Feedback")));
   nuiAttrib<float> out(GetAttribute(_T("Out")));
   pBox->AddCell(delay.GetEditor());
+  pBox->SetCellExpand(1, nuiExpandShrinkAndGrow);
   pBox->AddCell(feedback.GetEditor());
+  pBox->SetCellExpand(2, nuiExpandShrinkAndGrow);
   pBox->AddCell(out.GetEditor());
+  pBox->SetCellExpand(3, nuiExpandShrinkAndGrow);
 
 	return true;
 }

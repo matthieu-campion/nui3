@@ -147,13 +147,13 @@ protected:
     
     if (mIndexed)
     {
-      mAttribute.Set(mIndex, mpKnob->GetRange().GetValue());
+      mAttribute.Set(mIndex, (float)mpKnob->GetRange().GetValue());
       mAttribute.Format(mIndex, str);
       setValue = mAttribute.Get(mIndex);
     }
     else
     {
-      mAttribute.Set(mpKnob->GetRange().GetValue());
+      mAttribute.Set((float)mpKnob->GetRange().GetValue());
       mAttribute.Format(str);
       setValue = mAttribute.Get();
     }

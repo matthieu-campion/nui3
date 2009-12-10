@@ -365,6 +365,8 @@ protected:
   friend class nglContext;
   friend class nglOffscreenContext;
   friend class nglClipBoard;
+  friend bool nuiInit(void* OSHandle, class nuiKernel* pKernel);
+  friend bool nuiUninit();
 
 public:
   virtual HINSTANCE GetHInstance() const;
