@@ -170,28 +170,3 @@ void SurroundDelay::setParameter (VstInt32 index, float value)
 	if (editor)
 		((SDEditor*)editor)->setParameter (index, value);
 }
-
-/// OSX Linker hack:
-#if (defined _CARBON_) || (defined _UIKIT_) || (defined _COCOA_)
-extern "C"
-{
-#include <mach-o/dyld.h>
-#include <mach-o/ldsyms.h>
-}
-const struct
-#ifdef __LP64__
-mach_header_64
-#else
-mach_header
-#endif
-_mh_execute_header =
-{
-0, //	uint32_t	magic;		/* mach magic number identifier */
-0, //	cpu_type_t	cputype;	/* cpu specifier */
-0, //	cpu_subtype_t	cpusubtype;	/* machine specifier */
-0, //	uint32_t	filetype;	/* type of file */
-0, //	uint32_t	ncmds;		/* number of load commands */
-0, //	uint32_t	sizeofcmds;	/* the size of all the load commands */
-0  //	uint32_t	flags;		/* flags */
-};
-#endif

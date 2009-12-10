@@ -50,25 +50,13 @@ static CFBundleRef _CFXBundleCreateFromImageName(CFAllocatorRef allocator, const
   return result;
 }
 
+#include <dlfcn.h>
 static nglPath GetResourcePath()
 {
-#if __LP64__
-  const mach_header* header = (mach_header*)&_mh_execute_header;
-#else
-  const mach_header* header = &_mh_execute_header;
-#endif
+  Dl_info inf;
+  dladdr((void*)GetResourcePath, &inf);
   
-  const char* imagename = 0;
-  /* determine the image name */
-  int cnt = _dyld_image_count();
-  for (int idx1 = 1; idx1 < cnt; idx1++) 
-  {
-    if (_dyld_get_image_header(idx1) == header)
-    {
-      imagename = _dyld_get_image_name(idx1);
-      break;
-    }
-  }
+  const char* imagename = inf.dli_fname;
   /* get the bundle of a header */
   CFBundleRef bundle = NULL;
   if (imagename)
