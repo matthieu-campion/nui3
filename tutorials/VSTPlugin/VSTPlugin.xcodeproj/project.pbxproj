@@ -73,7 +73,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		61A9DFBF0B833E9600BC506C /* VSTPlugin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VSTPlugin.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		61A9DFBF0B833E9600BC506C /* VSTPlugin.vst */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VSTPlugin.vst; sourceTree = BUILT_PRODUCTS_DIR; };
 		61A9DFC90B833EF200BC506C /* VSTPluginD.vst */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VSTPluginD.vst; sourceTree = BUILT_PRODUCTS_DIR; };
 		61A9DFD20B833F1500BC506C /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
 		61A9DFD30B833F1500BC506C /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
@@ -168,7 +168,7 @@
 		61A9DFB50B833DE500BC506C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				61A9DFBF0B833E9600BC506C /* VSTPlugin.app */,
+				61A9DFBF0B833E9600BC506C /* VSTPlugin.vst */,
 				61A9DFC90B833EF200BC506C /* VSTPluginD.vst */,
 			);
 			name = Products;
@@ -232,7 +232,7 @@
 			);
 			name = VSTPlugin;
 			productName = Temp;
-			productReference = 61A9DFBF0B833E9600BC506C /* VSTPlugin.app */;
+			productReference = 61A9DFBF0B833E9600BC506C /* VSTPlugin.vst */;
 			productType = "com.apple.product-type.application";
 		};
 		61A9DFC80B833EF200BC506C /* VSTPluginD */ = {
@@ -418,6 +418,7 @@
 				GCC_OPTIMIZATION_LEVEL = s;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				MACH_O_TYPE = mh_bundle;
 				OTHER_LDFLAGS = (
 					"-liconv",
 					"-lz",
@@ -430,7 +431,7 @@
 					"-Wno-four-char-constants",
 					"-Wno-unknown-pragmas",
 				);
-				WRAPPER_EXTENSION = app;
+				WRAPPER_EXTENSION = vst;
 				ZERO_LINK = NO;
 			};
 			name = Default;
