@@ -53,15 +53,18 @@ static CFBundleRef _CFXBundleCreateFromImageName(CFAllocatorRef allocator, const
 #include <dlfcn.h>
 static nglPath GetResourcePath()
 {
+  CFBundleRef bundle = NULL;
+  
+#ifndef _UIKIT_
   Dl_info inf;
   dladdr((void*)GetResourcePath, &inf);
-  
+
   const char* imagename = inf.dli_fname;
   /* get the bundle of a header */
-  CFBundleRef bundle = NULL;
   if (imagename)
     bundle = _CFXBundleCreateFromImageName (NULL, imagename);
-  
+#endif
+
   if (!bundle)
     bundle = CFBundleGetMainBundle();
   
@@ -130,7 +133,7 @@ nuiNativeResource::nuiNativeResource(const nglPath& rPath)
 #if defined _CARBON_ || defined _UIKIT_ || defined _COCOA_ || defined _LINUX_
   nglPath resourcePath(GetResourcePath());
   resourcePath += rPath;
-  
+
   if (resourcePath.Exists())
   {
     mpIStream = resourcePath.OpenRead();
