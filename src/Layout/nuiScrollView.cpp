@@ -721,11 +721,20 @@ void nuiScrollView::SetHIncrement(nuiSize hIncrement)
   mHIncrement = hIncrement;
   mpHorizontal->GetRange().SetIncrement(mHIncrement);
 }
+nuiSize nuiScrollView::GetHIncrement() const
+{
+  return mHIncrement;
+}
+
 
 void nuiScrollView::SetVIncrement(nuiSize vIncrement)
 {
   mVIncrement = vIncrement;
   mpVertical->GetRange().SetIncrement(mVIncrement);
+}
+nuiSize nuiScrollView::GetVIncrement() const
+{
+  return mVIncrement;
 }
 
 bool nuiScrollView::OnSmoothScrolling(const nuiEvent& rEvent)

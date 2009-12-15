@@ -41,7 +41,9 @@ public:
   nuiScrollBar* GetScrollBar(nuiOrientation Orientation);
 
   void SetHIncrement(nuiSize hIncrement);
+  nuiSize GetHIncrement() const;
   void SetVIncrement(nuiSize vIncrement);
+  nuiSize GetVIncrement() const;
 
   void SetBarSize(float Set)    { mBarSize = Set; InvalidateLayout(); }
 
