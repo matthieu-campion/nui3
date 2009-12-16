@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>ActivePerspectiveName</key>
-	<string>Debug</string>
+	<string>Project</string>
 	<key>AllowedModules</key>
 	<array>
 		<dict>
@@ -319,6 +319,8 @@
 							<string>MainColumn</string>
 							<real>163</real>
 						</array>
+						<key>RubberWindowFrame</key>
+						<string>0 59 1920 1119 0 0 1920 1178 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -346,14 +348,14 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E5518B1410D1B72A009135DC</string>
+										<string>E5518B4B10D256F7009135DC</string>
 										<key>history</key>
 										<array>
 											<string>E5EF6B310F9628AE003E265A</string>
 											<string>E5B886A50FA0C0C000D38A0D</string>
 											<string>E591D0830FD563C6003B4272</string>
 											<string>E5518AA910D1AC4F009135DC</string>
-											<string>E5518B1210D1B6F0009135DC</string>
+											<string>E5518B2110D1BC47009135DC</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -368,6 +370,8 @@
 							<dict>
 								<key>Frame</key>
 								<string>{{0, 0}, {1713, 800}}</string>
+								<key>RubberWindowFrame</key>
+								<string>0 59 1920 1119 0 0 1920 1178 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -406,7 +410,9 @@
 									<key>GeometryConfiguration</key>
 									<dict>
 										<key>Frame</key>
-										<string>{{10, 27}, {1713, 231}}</string>
+										<string>{{10, 27}, {1713, 246}}</string>
+										<key>RubberWindowFrame</key>
+										<string>0 59 1920 1119 0 0 1920 1178 </string>
 									</dict>
 									<key>Module</key>
 									<string>PBXProjectFindModule</string>
@@ -549,8 +555,6 @@
 					<dict>
 						<key>Frame</key>
 						<string>{{0, 0}, {1920, 311}}</string>
-						<key>RubberWindowFrame</key>
-						<string>0 59 1920 1119 0 0 1920 1178 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXDebugCLIModule</string>
@@ -625,11 +629,7 @@
 							</array>
 							<key>Frame</key>
 							<string>{{0, 398}, {1134, 364}}</string>
-							<key>RubberWindowFrame</key>
-							<string>0 59 1920 1119 0 0 1920 1178 </string>
 						</dict>
-						<key>RubberWindowFrame</key>
-						<string>0 59 1920 1119 0 0 1920 1178 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXDebugSessionModule</string>
@@ -676,7 +676,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>282179370.32326502</real>
+	<real>282220279.17567903</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -691,7 +691,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E5518B1510D1B72A009135DC</string>
 		<string>E5518A9610D1AAF6009135DC</string>
 		<string>E5518A9710D1AAF6009135DC</string>
 		<string>/Users/meeloo/work/nui3/tutorials/LayoutAnimation/LayoutAnimation.xcodeproj</string>

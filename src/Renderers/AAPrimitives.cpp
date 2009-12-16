@@ -297,7 +297,7 @@ void glAAGenerateAATex(float Falloff, float alias)
     uint32 l2psz = ToBelow(log2(psz));
 
     if (!glAA_AAtex) 
-      glAA_AAtex = (uint8*)calloc(1, pdb * pdb);
+      glAA_AAtex = (uint8*)malloc(pdb * pdb);
     uint8 *texture = glAA_AAtex;
     if (texture) 
     {

@@ -101,15 +101,6 @@ bool nuiLabel::Load(const nuiXMLNode* pNode)
   mpFont = NULL;
   mFontChanged = true;
 
-  /*
-  mColorNormal.SetValue(pNode->GetAttribute(_T("ColorNormal")));
-  mColorNormalBg.SetValue(pNode->GetAttribute(_T("ColorNormalBg")));
-  mColorSelected.SetValue(pNode->GetAttribute(_T("ColorSelected")));
-  mColorDisabled.SetValue(pNode->GetAttribute(_T("ColorDisabled")));
-  mColorSelectedBg.SetValue(pNode->GetAttribute(_T("ColorSelectedBg")));
-  mColorDisabledBg.SetValue(pNode->GetAttribute(_T("ColorDisabledBg")));
-  */
-
   mUseEllipsis = false;
   mClearBg = false;
   mWrapping = false;
@@ -135,14 +126,7 @@ nuiXMLNode* nuiLabel::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
   pTextNode->SetValue(mText);
   pNode->SetAttribute(_T("TextPosition"),mTextPosition);
   pNode->DelAttribute(_T("Text"));
-/*
-  pNode->SetAttribute(_T("ColorNormal"),mColorNormal.GetValue());
-  pNode->SetAttribute(_T("ColorNormalBg"),mColorNormalBg.GetValue());
-  pNode->SetAttribute(_T("ColorSelected"),mColorSelected.GetValue());
-  pNode->SetAttribute(_T("ColorDisabled"),mColorDisabled.GetValue());
-  pNode->SetAttribute(_T("ColorSelectedBg"),mColorSelectedBg.GetValue());
-  pNode->SetAttribute(_T("ColorDisabledBg"),mColorDisabledBg.GetValue());
-*/
+
   return pNode;
 }
 

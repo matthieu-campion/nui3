@@ -755,7 +755,8 @@ public:
   const Contents& Get(void* pTarget) const
   {
     NGL_ASSERT(!mGetter.empty());
-    NGL_ASSERT(GetDimension() == 0);
+    if (GetDimension() > 0)
+      return Get(pTarget, 0);
     GetterDelegate Getter;
     Getter.SetMemento(mGetter);
     if (!IsInstanceAttribute())
@@ -766,7 +767,8 @@ public:
   const Contents& Get(void* pTarget, uint32 index) const
   {
     NGL_ASSERT(!mGetter.empty());
-    NGL_ASSERT(GetDimension() == 1);
+    if (GetDimension() > 1)
+      return Get(pTarget, index, 0);
     GetterDelegate1 Getter;
     Getter.SetMemento(mGetter);
     if (!IsInstanceAttribute())
@@ -789,7 +791,8 @@ public:
   void Set(void* pTarget, const Contents& rValue) const
   {
     NGL_ASSERT(!mSetter.empty());
-    NGL_ASSERT(GetDimension() == 0);
+    if (GetDimension() > 0)
+      return Set(pTarget, 0, rValue);
     SetterDelegate Setter;
     Setter.SetMemento(mSetter);
     if (!IsInstanceAttribute())
@@ -805,7 +808,8 @@ public:
   void Set(void* pTarget, uint32 index, const Contents& rValue) const
   {
     NGL_ASSERT(!mSetter.empty());
-    NGL_ASSERT(GetDimension() == 1);
+    if (GetDimension() > 1)
+      return Set(pTarget, index, 0, rValue);
     SetterDelegate1 Setter;
     Setter.SetMemento(mSetter);
     if (!IsInstanceAttribute())

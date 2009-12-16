@@ -21,7 +21,8 @@ nuiColorAttributeEditor::nuiColorAttributeEditor(const nuiAttrib<nuiColor>& rAtt
   SetObjectClass(_T("nuiColorAttributeEditor"));
   Init(mAttribute.Get());
 	// the visual object of the property need to be warned when the property value has been set without a user control
-  mSink.Connect(mAttribute.GetChangedSignal(), nuiMakeDelegate(this, &nuiColorAttributeEditor::OnAttributeChanged));
+  if (mConstAttribute.GetDimension() == 0)
+    mSink.Connect(mAttribute.GetChangedSignal(), nuiMakeDelegate(this, &nuiColorAttributeEditor::OnAttributeChanged));
 }
 
 
@@ -34,7 +35,8 @@ nuiColorAttributeEditor::nuiColorAttributeEditor(const nuiAttrib<const nuiColor&
   SetObjectClass(_T("nuiColorAttributeEditor"));
   Init(mConstAttribute.Get());
 	// the visual object of the property need to be warned when the property value has been set without a user control
-  mSink.Connect(mConstAttribute.GetChangedSignal(), nuiMakeDelegate(this, &nuiColorAttributeEditor::OnConstAttributeChanged));
+  if (mConstAttribute.GetDimension() == 0)
+    mSink.Connect(mConstAttribute.GetChangedSignal(), nuiMakeDelegate(this, &nuiColorAttributeEditor::OnConstAttributeChanged));
 }
 
 void nuiColorAttributeEditor::Init(const nuiColor& rColor)

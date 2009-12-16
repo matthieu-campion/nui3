@@ -110,52 +110,42 @@ bool nuiModalContainer::DispatchMouseClick(const nglMouseInfo& rInfo)
 
 bool nuiModalContainer::DispatchMouseUnclick(const nglMouseInfo& rInfo)
 {  
-  if (!mMouseEventEnabled || mTrashed)
+  if (IsTrashed())
     return false;
   
-  if (HasGrab())
-    Ungrab();
-  if (IsDisabled())
-    return false;
-
+  IteratorPtr pIt;
+  for (pIt = GetLastChild(); pIt && pIt->IsValid(); GetPreviousChild(pIt))
   {
+    nuiWidgetPtr pItem = pIt->GetWidget();
+    if (pItem)
     {
-      IteratorPtr pIt;
-      for (pIt = GetLastChild(); pIt && pIt->IsValid(); GetPreviousChild(pIt))
-      {
-        nuiWidgetPtr pItem = pIt->GetWidget();
-        if (pItem)
+      if (IsEnabled())
+        if ((pItem)->DispatchMouseUnclick(rInfo))
         {
-          if (IsEnabled())
-            if ((pItem)->DispatchMouseUnclick(rInfo))
-            {
-              delete pIt;
-              return true;
-            }
+          delete pIt;
+          return true;
         }
-      }
-      delete pIt;
     }
-
-    nuiSize X = rInfo.X;
-    nuiSize Y = rInfo.Y;
-    GlobalToLocal(X, Y);
-    nglMouseInfo info(rInfo);
-    info.X = X;
-    info.Y = Y;
-    bool res = PreUnclicked(info);
-    if (!res)
-    {
-      res = MouseUnclicked(info);
-      res |= Unclicked(info);
-    }
-    
-    if (mWantKeyboardFocus && (rInfo.Buttons == nglMouseInfo::ButtonLeft || rInfo.Buttons == nglMouseInfo::ButtonRight))
-      Focus();
-    
-    return mIsModal || res;
   }
-  return false;
+  delete pIt;
+
+  nuiSize X = rInfo.X;
+  nuiSize Y = rInfo.Y;
+  GlobalToLocal(X, Y);
+  nglMouseInfo info(rInfo);
+  info.X = X;
+  info.Y = Y;
+  bool res = PreUnclicked(info);
+  if (!res)
+  {
+    res = MouseUnclicked(info);
+    res |= Unclicked(info);
+  }
+  
+  if (mWantKeyboardFocus && (rInfo.Buttons == nglMouseInfo::ButtonLeft || rInfo.Buttons == nglMouseInfo::ButtonRight))
+    Focus();
+  
+  return mIsModal || res;
 }
 
 nuiWidgetPtr nuiModalContainer::DispatchMouseMove(const nglMouseInfo& rInfo)
@@ -340,3 +330,29 @@ bool nuiModalContainer::OnPreviousFocusTrashed(const nuiEvent& rEvent)
   mpPreviousFocus = NULL;
   return false;
 }
+
+void nuiModalContainer::GetHoverList(nuiSize X, nuiSize Y, std::set<nuiWidget*>& rHoverSet, std::list<nuiWidget*>& rHoverList) const
+{
+  if (mIsModal)
+  {
+    // Only our children can get the hover...
+    rHoverSet.clear();
+    rHoverList.clear();
+  }
+  
+  nuiContainer::ConstIteratorPtr pIt = NULL;
+  for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
+  {
+    nuiWidgetPtr pItem = pIt->GetWidget();
+    if (pItem->IsInsideFromRoot(X, Y))
+    {
+      rHoverList.push_back(pItem);
+      rHoverSet.insert(pItem);
+      nuiContainer* pChild = dynamic_cast<nuiContainer*>(pItem);
+      if (pChild)
+        pChild->GetHoverList(X, Y, rHoverSet, rHoverList);
+    }
+  }
+  delete pIt;
+}
+

@@ -82,10 +82,15 @@ bool nuiRSSView::Update(const nuiEvent& rEvent)
     nuiFolderPane* pPane = new nuiFolderPane(pLink, true);
     
     nglString desc(rItem.GetDescription());
-    std::string str(desc.GetStdString());
-    nglIMemory mem(&str[0], str.size());
+
     nuiHTML html;
-    bool res = html.Load(mem);
+    bool res = !desc.IsNull();
+    if (res)
+    {
+      std::string str(desc.GetStdString());
+      nglIMemory mem(&str[0], str.size());
+      bool res = html.Load(mem);
+    }
     
     nglString text;
     if (res)
@@ -103,7 +108,7 @@ bool nuiRSSView::Update(const nuiEvent& rEvent)
 //    nuiLabel* pLabel = new nuiLabel(text);
 //    pLabel->SetObjectName(_T("nuiRSSView::Description"));
 //    pLabel->SetWrapping(true);
-    if (!mForceNoHTML)
+    if (!mForceNoHTML && res)
     {
       nuiHTMLView* pLabel = new nuiHTMLView(480);
       pLabel->SetText(desc);

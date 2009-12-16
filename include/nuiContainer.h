@@ -209,8 +209,10 @@ public:
   void SetChildrenLayoutAnimationEasing(const nuiEasingMethod& rMethod);
    //@}
   
+  virtual void GetHoverList(nuiSize X, nuiSize Y, std::set<nuiWidget*>& rHoverSet, std::list<nuiWidget*>& rHoverList) const;
 
 protected:
+  
   
   void DrawChild(nuiDrawContext* pContext, nuiWidget* pChild); /// Draw the given widget as a child of this widget.
   bool DrawChildren(nuiDrawContext* pContext); ///< This helper method calls the DrawMethod on all the children of the nuiObject using the DrawChild method. 

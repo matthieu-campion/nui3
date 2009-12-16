@@ -1,10 +1,8 @@
 /*
- *  nuiVideoDecoder.cpp
- *  nui3
- *
- *  Created by mat on 10/27/09.
- *  Copyright 2009 libNUI. All rights reserved.
- *
+ NUI3 - C++ cross-platform GUI framework for OpenGL based applications
+ Copyright (C) 2002-2003 Sebastien Metrot
+ 
+ licence: see nui3/LICENCE.TXT
  */
 
 

@@ -64,6 +64,7 @@ public:
   virtual nuiSize GetCellMinPixels(uint32 cell) const = 0;        ///< Gets the minimum size in pixels for the given cell
 
   virtual nuiSize GetCellPixels(uint32 cell) const = 0;        ///< Gets the size in pixels for the given cell
+  virtual nuiExpandMode GetCellExpand(uint32 cell) const = 0;        ///< Gets the size in pixels for the given cell
   
   // Add cells:
   virtual void AddCells(uint32 pos, uint32 cells) = 0;
@@ -90,6 +91,7 @@ protected:
   
   void InitBoxAttributes();
   uint32 GetBoxDimensionRange(uint32 dimension) const;
+  void _SetCellExpand(uint32 cell, nuiExpandMode mode);
 };
 
 

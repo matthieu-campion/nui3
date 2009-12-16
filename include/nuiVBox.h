@@ -70,6 +70,9 @@ public:
   nuiSize GetCellMaxShrink(uint32 cell) const;      ///< Gets the maximum shrinking percentage ratio for the given cell 
   nuiSize GetCellMinPixels(uint32 cell) const;       ///< Gets the minimum size in pixels for the given cell
 
+  nuiExpandMode GetCellExpand(uint32 cell) const;
+  
+  
   // Add cells:
   void AddCells(uint32 pos, uint32 cells);
   void AddCell(uint32 pos, nuiWidget* pWidget, nuiPosition position = nuiNoPosition);

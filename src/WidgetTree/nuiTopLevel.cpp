@@ -994,33 +994,16 @@ NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseUnclick [%d] END\n"), rInfo.TouchId) );
 	return res;
 }
 
-void UpdateHoverList(nuiContainer* pContainer, nuiSize X, nuiSize Y, std::set<nuiWidget*>& rHoverSet, std::list<nuiWidget*>& rHoverList)
-{
-  nuiContainer::IteratorPtr pIt = NULL;
-  for (pIt = pContainer->GetFirstChild(); pIt && pIt->IsValid(); pContainer->GetNextChild(pIt))
-  {
-    nuiWidgetPtr pItem = pIt->GetWidget();
-    if (pItem->IsInsideFromRoot(X, Y))
-    {
-      rHoverList.push_back(pItem);
-      rHoverSet.insert(pItem);
-      nuiContainer* pChild = dynamic_cast<nuiContainer*>(pItem);
-      if (pChild)
-        UpdateHoverList(pChild, X, Y, rHoverSet, rHoverList);
-    }
-  }
-  delete pIt;
-}
-
 void nuiTopLevel::UpdateHoverList(nglMouseInfo& rInfo)
 {
-  if (GetGrab())
+  nuiWidgetPtr pGrab = GetGrab();
+  if (pGrab)
     return;
 
   std::list<nuiWidget*> HoverList;
   std::set<nuiWidget*> HoverSet;
   HoverSet.insert(this);
-  ::UpdateHoverList(this, rInfo.X, rInfo.Y, HoverSet, HoverList);
+  GetHoverList(rInfo.X, rInfo.Y, HoverSet, HoverList);
   
   // Old Hovered widgets:
   std::set<nuiWidget*> OldHover;

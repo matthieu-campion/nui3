@@ -1034,3 +1034,21 @@ bool nuiContainer::PreMouseMoved(const nglMouseInfo& rInfo)
   return false;
 }
 
+void nuiContainer::GetHoverList(nuiSize X, nuiSize Y, std::set<nuiWidget*>& rHoverSet, std::list<nuiWidget*>& rHoverList) const
+{
+  nuiContainer::ConstIteratorPtr pIt = NULL;
+  for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
+  {
+    nuiWidgetPtr pItem = pIt->GetWidget();
+    if (pItem->IsInsideFromRoot(X, Y))
+    {
+      rHoverList.push_back(pItem);
+      rHoverSet.insert(pItem);
+      nuiContainer* pChild = dynamic_cast<nuiContainer*>(pItem);
+      if (pChild)
+        pChild->GetHoverList(X, Y, rHoverSet, rHoverList);
+    }
+  }
+  delete pIt;
+}
+

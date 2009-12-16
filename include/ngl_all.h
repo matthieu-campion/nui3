@@ -108,7 +108,7 @@ Lookup precompiled headers in the VC doc to learn how to use them.
 #endif
 
 //#if (((defined _DEBUG) || (defined DEBUG)) || (defined _DEBUG_)) 
-//#include "mmgr.h"
+#include "mmgr.h"
 //#endif
 
 

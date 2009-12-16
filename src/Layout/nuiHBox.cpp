@@ -246,6 +246,10 @@ nuiSize nuiHBox::GetCellMinPixels(uint32 cell) const
 }
 
 
+nuiExpandMode nuiHBox::GetCellExpand(uint32 cell) const
+{
+  return nuiGrid::GetColumnExpand(cell);
+}
 
 
 void nuiHBox::AddCells(uint32 pos, uint32 cells)

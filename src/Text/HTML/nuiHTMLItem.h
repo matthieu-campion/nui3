@@ -61,6 +61,7 @@ public:
   
   void SetDisplayChangedDelegate(const nuiFastDelegate0<>& rDelegate);
   void SetLayoutChangedDelegate(const nuiFastDelegate0<>& rDelegate);
+
 protected:
   void Invalidate();
   void InvalidateLayout();

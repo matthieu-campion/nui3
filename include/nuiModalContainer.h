@@ -21,7 +21,7 @@ public:
 
   virtual void InitParent(nuiContainerPtr pParent); ///< retrieves nuiTopLevel from pParent, and adds this nuiModalContainer to its Children
 
-  void SetModal(bool enable_modal=true);
+  void SetModal(bool enable_modal = true);
 
   virtual bool DispatchMouseClick(const nglMouseInfo& rInfo);
   virtual bool DispatchMouseUnclick(const nglMouseInfo& rInfo);
@@ -36,13 +36,12 @@ public:
   virtual void OnTrash();
   
 private:
+  virtual void GetHoverList(nuiSize X, nuiSize Y, std::set<nuiWidget*>& rHoverSet, std::list<nuiWidget*>& rHoverList) const;
   bool mIsModal;
   bool mInModalState;
   nuiWidget* mpPreviousFocus;
   nuiEventSink<nuiModalContainer> mModalEventSink;
   bool OnPreviousFocusTrashed(const nuiEvent& rEvent);
 };
-
-void Alert(nuiContainer* pParent, const nglString& rTitle, const nglString& rMessage);
 
 #endif // __nuiModalConatiner_h__

@@ -241,6 +241,11 @@ nuiSize nuiVBox::GetCellMinPixels(uint32 cell) const
 }
 
 
+nuiExpandMode nuiVBox::GetCellExpand(uint32 cell) const
+{
+  return nuiGrid::GetRowExpand(cell);
+}
+
 
 
 void nuiVBox::AddCells(uint32 pos, uint32 cells)

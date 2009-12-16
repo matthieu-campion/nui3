@@ -109,7 +109,7 @@ bool nglImageInfo::AllocateBuffer()
   ReleaseBuffer();
   if (mHeight && mBytesPerLine)
   {
-    mpBuffer = (char*) calloc (mHeight, mBytesPerLine);
+    mpBuffer = (char*) malloc (mHeight * mBytesPerLine);
 /*
     if (!mpBuffer)
       SetError ("image", NGL_IMAGE_EOOM);

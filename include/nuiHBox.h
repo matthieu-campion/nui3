@@ -70,6 +70,7 @@ public:
   nuiSize GetCellMinPixels(uint32 cell) const;       ///< Gets the minimum size in pixels for the given cell
 
   nuiSize GetCellPixels(uint32 cell) const;        ///< Gets the size in pixels for the given cell
+  nuiExpandMode GetCellExpand(uint32 cell) const;        ///< Gets the size in pixels for the given cell
 
   // Add cells:
   void AddCells(uint32 pos, uint32 cells);

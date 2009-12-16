@@ -267,6 +267,10 @@ bool nuiHTMLView::SetText(const nglString& rHTMLText)
   }
   
   Clear();
+  
+  if (rHTMLText.IsNull())
+    return true;
+  
   nuiHTML* pHTML = new nuiHTML();
   
   std::string str(rHTMLText.GetStdString());

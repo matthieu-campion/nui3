@@ -1,11 +1,10 @@
 /*
- *  nuiLabelRenamer.h
- *  libnui
- *
- *  Created by Sebastien Metrot on 1/3/07.
- *  Copyright 2007 __MyCompanyName__. All rights reserved.
- *
+ NUI3 - C++ cross-platform GUI framework for OpenGL based applications
+ Copyright (C) 2002-2003 Sebastien Metrot
+ 
+ licence: see nui3/LICENCE.TXT
  */
+
 
 #ifndef __nuiLabelRenamer_h__
 #define __nuiLabelRenamer_h__
