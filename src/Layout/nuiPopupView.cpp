@@ -156,3 +156,10 @@ void nuiPopupView::ConnectTopLevel()
   nuiSimpleContainer::ConnectTopLevel();
 }
 
+void nuiPopupView::SetVisibleRect(const nuiRect& rRect)
+{
+  nuiRect r;
+  r.Intersect(rRect, mChildrenRect);
+  nuiSimpleContainer::SetVisibleRect(r);
+}
+

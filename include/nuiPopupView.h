@@ -32,6 +32,8 @@ public:
   void SetPopupDecoration(nuiDecoration* pDecoration);
   nuiDecoration* GetPopupDecoration();
   
+  void SetVisibleRect(const nuiRect& rRect);
+
   void ConnectTopLevel();
 protected:
   //#TODO Add some way to give focus back to the previous focussed widget
