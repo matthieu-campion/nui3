@@ -18,6 +18,7 @@ nuiDecoration::nuiDecoration(const nglString& rName)
     
   mUseWidgetAlpha = true;
   mBorderEnabled = true;
+  mRedrawOnHover = false;
 
   
   mLayer = eLayerBack;
@@ -30,22 +31,27 @@ nuiDecoration::nuiDecoration(const nglString& rName)
 void nuiDecoration::InitAttributes()
 {
   AddAttribute(new nuiAttribute<bool>
-  (nglString(_T("EnableBorder")), nuiUnitBoolean,
-   nuiAttribute<bool>::GetterDelegate(this, &nuiDecoration::IsBorderEnabled),
-   nuiAttribute<bool>::SetterDelegate(this, &nuiDecoration::EnableBorder)));
+               (nglString(_T("EnableBorder")), nuiUnitBoolean,
+                nuiMakeDelegate(this, &nuiDecoration::IsBorderEnabled),
+                nuiMakeDelegate(this, &nuiDecoration::EnableBorder)));
   
   
   AddAttribute(new nuiAttribute<bool>
-  (nglString(_T("UseWidgetAlpha")), nuiUnitNone,
-   nuiAttribute<bool>::GetterDelegate(this, &nuiDecoration::IsWidgetAlphaUsed),
-   nuiAttribute<bool>::SetterDelegate(this, &nuiDecoration::UseWidgetAlpha)));
-
+               (nglString(_T("UseWidgetAlpha")), nuiUnitNone,
+                nuiMakeDelegate(this, &nuiDecoration::IsWidgetAlphaUsed),
+                nuiMakeDelegate(this, &nuiDecoration::UseWidgetAlpha)));
+  
+  AddAttribute(new nuiAttribute<bool>
+               (nglString(_T("RedrawOnHover")), nuiUnitNone,
+                nuiMakeDelegate(this, &nuiDecoration::GetRedrawOnHover),
+                nuiMakeDelegate(this, &nuiDecoration::RedrawOnHover)));
+  
   
   AddAttribute(new nuiAttribute<nuiDecorationLayer>
-  (nglString(_T("Layer")), nuiUnitNone,
-   nuiMakeDelegate(this, &nuiDecoration::GetLayer), 
-   nuiMakeDelegate(this, &nuiDecoration::SetLayer)));
- 
+               (nglString(_T("Layer")), nuiUnitNone,
+                nuiMakeDelegate(this, &nuiDecoration::GetLayer), 
+                nuiMakeDelegate(this, &nuiDecoration::SetLayer)));
+  
 }
 
 
@@ -63,7 +69,7 @@ void nuiDecoration::SetLayer(nuiDecorationLayer layer)
 }
 
 
-nuiDecorationLayer nuiDecoration::GetLayer()
+nuiDecorationLayer nuiDecoration::GetLayer() const
 {
   return mLayer;
 }
@@ -95,7 +101,7 @@ void nuiDecoration::UseWidgetAlpha(bool use)
   Changed();
 }
 
-bool nuiDecoration::IsWidgetAlphaUsed()
+bool nuiDecoration::IsWidgetAlphaUsed() const
 {
   return mUseWidgetAlpha;
 }
@@ -323,4 +329,15 @@ nuiAttributeEditor* nuiDecoration::GetAttributeEditor(void* pTarget, nuiAttribut
 
   return new nuiComboAttributeEditor<const nglString&>(nuiAttrib<const nglString&>(pTarget, pAttribute), values);
 }
+
+void nuiDecoration::RedrawOnHover(bool set)
+{
+  mRedrawOnHover = set;
+}
+
+bool nuiDecoration::GetRedrawOnHover() const
+{
+  return mRedrawOnHover;
+}
+
 

@@ -2173,7 +2173,7 @@ void nuiWidget::SetHover(bool Hover)
   }
   HoverChanged();
   ApplyCSSForStateChange(NUI_WIDGET_MATCHTAG_STATE);
-  if (mRedrawOnHover)
+  if (mRedrawOnHover || (mpDecoration && mpDecoration->GetRedrawOnHover()))
     Invalidate();
   DebugRefreshInfo();
 }

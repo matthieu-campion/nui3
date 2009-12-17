@@ -26,13 +26,16 @@ public:
   void SetObjectName(const nglString& rName);
   
   void UseWidgetAlpha(bool use);
-  bool IsWidgetAlphaUsed();
+  bool IsWidgetAlphaUsed() const;
   
   void SetLayer(nuiDecorationLayer layer);
-  nuiDecorationLayer GetLayer();
+  nuiDecorationLayer GetLayer() const;
   
   void EnableBorder(bool set);
   bool IsBorderEnabled() const;
+  
+  void RedrawOnHover(bool set);
+  bool GetRedrawOnHover() const;
   
   
   virtual void DrawBack(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rRect);
@@ -60,8 +63,9 @@ public:
   static nuiAttributeEditor* GetAttributeEditor(void* pTarget, nuiAttribute<const nglString&>* pAttribute);
 protected:
 
-  bool mUseWidgetAlpha;
-  bool mBorderEnabled;
+  bool mUseWidgetAlpha : 1;
+  bool mBorderEnabled : 1;
+  bool mRedrawOnHover : 1;
 
   nuiDecorationLayer mLayer;
     

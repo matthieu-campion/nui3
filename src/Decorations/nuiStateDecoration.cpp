@@ -452,6 +452,8 @@ void nuiStateDecoration::SetDecoUpHover(const nglString& rPath)
   nuiDecoration* pDeco = GetDecoration(rPath);
   if (pDeco)
     SetState(nuiStateEnabled | nuiStateReleased | nuiStateHoverOn, pDeco);
+  
+  RedrawOnHover(true);
 }
 
 
@@ -467,6 +469,7 @@ void nuiStateDecoration::SetDecoDownHover(const nglString& rPath)
   nuiDecoration* pDeco = GetDecoration(rPath);
   if (pDeco)
     SetState(nuiStateEnabled | nuiStatePressed | nuiStateHoverOn, pDeco);
+  RedrawOnHover(true);
 }
 
 

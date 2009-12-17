@@ -21,12 +21,12 @@ nuiSurface* nuiSurface::GetSurface (const nglString& rName, bool Acquired)
   return pSurface;
 }
 
-nuiSurface* nuiSurface::CreateSurface (const nglString& rName, int32 Width, int32 Height)
+nuiSurface* nuiSurface::CreateSurface (const nglString& rName, int32 Width, int32 Height, nglImagePixelFormat PixelFormat)
 {
   nuiSurface* pSurface = NULL;
   //NGL_OUT(_T("nuiSurface::CreateSurface(%ls, %.1f, %.1f)\n"), rName.GetChars(), Width, Height);
   NGL_ASSERT(mpSurfaces.find(rName) == mpSurfaces.end());
-  pSurface = new nuiSurface(rName, Width, Height);
+  pSurface = new nuiSurface(rName, Width, Height, PixelFormat);
   pSurface->Acquire();
 
   mpSurfaces[rName] = pSurface;

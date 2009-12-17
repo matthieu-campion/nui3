@@ -17,7 +17,7 @@ class NUI_API nuiSurface : public nuiObject, public nuiDrawContext
 {
 public:
   static nuiSurface* GetSurface (const nglString& rName, bool Acquired); ///< Get a surface from its ID
-  static nuiSurface* CreateSurface (const nglString& rName, int32 Width, int32 Height); ///< Create a surface
+  static nuiSurface* CreateSurface (const nglString& rName, int32 Width, int32 Height, nglImagePixelFormat PixelFormat = eImagePixelRGBA); ///< Create a surface
 
   static void AddCache(nuiSurfaceCache* pCache);
   static void DelCache(nuiSurfaceCache* pCache);
