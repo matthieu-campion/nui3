@@ -10,6 +10,7 @@
 #include "nui.h"
 #include "nuiSingleton.h"
 #include "nuiCommand.h"
+#include "nuiCommandContainer.h"
 
 class nuiCommandManager : public nuiSingleton<nuiCommandManager>
 {
