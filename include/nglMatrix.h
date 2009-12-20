@@ -48,6 +48,8 @@ column first. Illustration :
 template <class T> class nglMatrix
 {
 public:
+  typedef T ValueType;
+
   union
   {
     T Array[16];

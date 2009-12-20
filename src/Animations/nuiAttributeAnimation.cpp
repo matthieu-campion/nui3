@@ -250,7 +250,9 @@ void nuiColorAttributeAnimation::OnFrame()
   const float a = a0 + pos * ad;
   
   nuiColor col(r, g, b, a);
-  
+
+//  NGL_OUT(_T("ColorAnim: pos[%.4f] %ls\n"), pos, col.GetValue().GetChars());
+
   nuiAttribBase attrib(mpTarget->GetAttribute(mTarget));
   NGL_ASSERT(attrib.IsValid());
   
@@ -476,3 +478,106 @@ bool nuiRectAttributeAnimation::GetAutoRound() const
 {
   return mAutoRound;
 }
+
+
+
+/////////////////////////////////
+
+// Matrix Attrib Animation:
+
+/////////////////////////////////
+
+//// nuiAttributeAnimation:
+nuiMatrixAttributeAnimation::nuiMatrixAttributeAnimation()
+{
+  if (SetObjectClass(_T("nuiMatrixAttributeAnimation")))
+  {
+    // Init atributes
+  }
+}
+
+nuiMatrixAttributeAnimation::~nuiMatrixAttributeAnimation()
+{
+}
+
+void nuiMatrixAttributeAnimation::SetStartValue(const nuiMatrix& rVal)
+{
+  mStartValue = rVal;
+}
+const nuiMatrix& nuiMatrixAttributeAnimation::GetStartValue() const
+{
+  return mStartValue;
+}
+
+void nuiMatrixAttributeAnimation::SetEndValue(const nuiMatrix& rVal)
+{
+  mEndValue = rVal;
+}
+const nuiMatrix& nuiMatrixAttributeAnimation::GetEndValue() const
+{
+  return mEndValue;
+}
+
+void nuiMatrixAttributeAnimation::Play(int32 Count, nuiAnimLoop LoopMode)
+{
+  nuiAttribBase attrib(mpTarget->GetAttribute(mTarget));
+  NGL_ASSERT(attrib.IsValid());
+
+  nuiAttrib<nuiMatrix> matrix_attrib(attrib);
+  nuiAttrib<const nuiMatrix&> const_matrix_attrib(attrib);
+  
+  if (mCaptureStartOnPlay)
+  {
+    if (matrix_attrib)
+      mStartValue = matrix_attrib.Get();
+    else if (const_matrix_attrib)
+      mStartValue = const_matrix_attrib.Get();
+  }
+  
+  if (mCaptureEndOnPlay)
+  {
+    if (matrix_attrib)
+      mEndValue = matrix_attrib.Get();
+    else if (const_matrix_attrib)
+      mEndValue = const_matrix_attrib.Get();
+  }
+  nuiAnimation::Play(Count, LoopMode);
+}
+
+void nuiMatrixAttributeAnimation::OnFrame()
+{
+  const nuiMatrix::ValueType pos = (nuiMatrix::ValueType)GetPosition();
+  nuiMatrix frameValue = mStartValue;
+  frameValue.Elt.M11 += (mEndValue.Elt.M11 - mStartValue.Elt.M11) * pos;
+  frameValue.Elt.M12 += (mEndValue.Elt.M12 - mStartValue.Elt.M12) * pos;
+  frameValue.Elt.M13 += (mEndValue.Elt.M13 - mStartValue.Elt.M13) * pos;
+  frameValue.Elt.M14 += (mEndValue.Elt.M14 - mStartValue.Elt.M14) * pos;
+  frameValue.Elt.M21 += (mEndValue.Elt.M21 - mStartValue.Elt.M21) * pos;
+  frameValue.Elt.M22 += (mEndValue.Elt.M22 - mStartValue.Elt.M22) * pos;
+  frameValue.Elt.M23 += (mEndValue.Elt.M23 - mStartValue.Elt.M23) * pos;
+  frameValue.Elt.M24 += (mEndValue.Elt.M24 - mStartValue.Elt.M24) * pos;
+  frameValue.Elt.M31 += (mEndValue.Elt.M31 - mStartValue.Elt.M31) * pos;
+  frameValue.Elt.M32 += (mEndValue.Elt.M32 - mStartValue.Elt.M32) * pos;
+  frameValue.Elt.M33 += (mEndValue.Elt.M33 - mStartValue.Elt.M33) * pos;
+  frameValue.Elt.M34 += (mEndValue.Elt.M34 - mStartValue.Elt.M34) * pos;
+  frameValue.Elt.M41 += (mEndValue.Elt.M41 - mStartValue.Elt.M41) * pos;
+  frameValue.Elt.M42 += (mEndValue.Elt.M42 - mStartValue.Elt.M42) * pos;
+  frameValue.Elt.M43 += (mEndValue.Elt.M43 - mStartValue.Elt.M43) * pos;
+  frameValue.Elt.M44 += (mEndValue.Elt.M44 - mStartValue.Elt.M44) * pos;
+
+  nglString frameValueStr;
+  frameValue.GetValue(frameValueStr);
+//  NGL_OUT(_T("MatrixAnim: pos[%.4f] %ls\n"), pos, frameValueStr.GetChars());
+  
+  nuiAttribBase attrib(mpTarget->GetAttribute(mTarget));
+  NGL_ASSERT(attrib.IsValid());
+  
+  nuiAttrib<nuiMatrix> matrix_attrib(attrib);
+  nuiAttrib<const nuiMatrix&> const_matrix_attrib(attrib);
+  
+  if (matrix_attrib)
+    matrix_attrib.Set(frameValue);
+  else if (const_matrix_attrib)
+    const_matrix_attrib.Set(frameValue);
+}
+

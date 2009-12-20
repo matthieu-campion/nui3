@@ -213,3 +213,24 @@ private:
 };
 
 
+class nuiMatrixAttributeAnimation : public nuiAttributeAnimationBase
+{
+public:
+  nuiMatrixAttributeAnimation();
+  virtual ~nuiMatrixAttributeAnimation();
+  
+  void SetStartValue(const nuiMatrix& rMatrix);
+  const nuiMatrix& GetStartValue() const;
+  void SetEndValue(const nuiMatrix& rMatrix);
+  const nuiMatrix& GetEndValue() const;
+
+  // Inherited:
+  virtual void Play(int32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward);
+  
+  virtual void OnFrame();
+  
+private:
+  nuiMatrix mStartValue;
+  nuiMatrix mEndValue;
+};
+
