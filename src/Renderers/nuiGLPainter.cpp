@@ -224,6 +224,11 @@ nuiGLPainter::nuiGLPainter(nglContext* pContext, const nuiRect& rRect)
     nuiCheckForGLErrors();
   }
 
+#ifdef _OPENGL_ES_
+  glGetIntegerv(GL_FRAMEBUFFER_BINDING_NUI, &mDefaultFramebuffer);
+  glGetIntegerv(GL_RENDERBUFFER_BINDING_NUI, (GLint *) &mDefaultRenderbuffer);
+#endif
+
   mActiveContexts++;
 }
 
@@ -1192,8 +1197,8 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
     if (reload)
     {
       int type = 8;
-      GLuint pixelformat = 0;
-      GLuint internalPixelformat = 0;
+      GLint pixelformat = 0;
+      GLint internalPixelformat = 0;
       GLbyte* pBuffer = NULL;
       bool allocated = false;
 
@@ -1264,6 +1269,7 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
 #else
         internalPixelformat = pSurface->GetPixelFormat();
         pixelformat = pSurface->GetPixelFormat();
+        NGL_ASSERT(internalPixelformat == GL_RGB);
         type = GL_UNSIGNED_BYTE;
 #endif
       }
@@ -1502,9 +1508,6 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
     }
     
     
-    glGetIntegerv(GL_FRAMEBUFFER_BINDING_NUI, &mOldFramebuffer);
-    glGetIntegerv(GL_RENDERBUFFER_BINDING_NUI, (GLint *) &mOldRenderbuffer);
-    
     FramebufferInfo info;
     
     if (create)
@@ -1625,8 +1628,8 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
   else
   {
     /// !pSurface
-    glBindFramebufferNUI(GL_FRAMEBUFFER_NUI, mOldFramebuffer);
-    glBindRenderbufferNUI(GL_RENDERBUFFER_NUI, mOldRenderbuffer);
+    glBindFramebufferNUI(GL_FRAMEBUFFER_NUI, mDefaultFramebuffer);
+    glBindRenderbufferNUI(GL_RENDERBUFFER_NUI, mDefaultRenderbuffer);
     
     nuiCheckForGLErrors();
     CheckFramebufferStatus();

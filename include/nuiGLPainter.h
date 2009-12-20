@@ -88,7 +88,7 @@ protected:
     GLuint mStencilbuffer;
   };
   std::map<nuiSurface*, FramebufferInfo> mFramebuffers;
-  GLint mOldFramebuffer, mOldRenderbuffer;
+  GLint mDefaultFramebuffer, mDefaultRenderbuffer;
 
   bool CheckFramebufferStatus();
   void SetViewport();
