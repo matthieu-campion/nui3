@@ -354,10 +354,7 @@ bool nglKernel::ProcessMessages(const nuiEvent& rEvent)
     nuiCommand* pCommand = NULL;
     nuiGetTokenValue<nuiCommand*>(pNotif->GetToken(), pCommand);
     if (pCommand);
-    {
       pCommand->Do();
-      delete pCommand;
-    }
     delete pNotif;
   }
   
