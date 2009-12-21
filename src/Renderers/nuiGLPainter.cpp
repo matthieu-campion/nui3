@@ -1265,7 +1265,7 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
         }
         else if (internalPixelformat == GL_RGB)
         {
-          pixelformat = GL_BGR;
+          pixelformat = GL_RGB;
           type = GL_UNSIGNED_BYTE;
         }
         else
@@ -1616,7 +1616,7 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
         if (internalPixelformat == GL_RGBA)
           pixelformat = GL_BGRA;
         else if (internalPixelformat == GL_RGB)
-          pixelformat = GL_BGR;
+          pixelformat = GL_RGBA;
         else
           pixelformat = pSurface->GetPixelFormat();
 #else
