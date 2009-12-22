@@ -106,7 +106,6 @@ private:
   // Direct File Operations:
   bool           Close(void* pUnzip);
   nglStreamState GetState(void* pUnzip) const;
-  uint           GetError(void* pUnzip) const;
 
   nglFileOffset GetPos(void* pUnzip) const;
   nglFileOffset SetPos (void* pUnzip, nglFileOffset Where, nglIZip* pFile);

@@ -14,12 +14,9 @@ public:
   
   ~nuiAsyncIStream();
   bool Start();
-  bool Join();
   bool IsDone() const;
   float GetCompletion() const;
   nglStreamState GetState() const;
-  uint GetError() const;
-  const nglChar* GetErrorStr(uint Error) const;
   nglFileOffset GetPos() const;
   nglFileOffset SetPos(nglFileOffset Where, nglStreamWhence Whence);
   nglFileSize Available(uint WordSize);
@@ -27,11 +24,18 @@ public:
   
 protected:
   class Handler;
+  class FileHandler;
+  class HttpHandler;
   friend class Handler;
-  void HandlerDone();
+  friend class FileHandler;
+  friend class HttpHandler;
+  void HandlerDone(nglIStream* pStream);
   
   Handler* mpHandler;
   nglString mURL;
-  nglIMemory* mpMemory;
+  nglIStream* mpStream;
+
+  bool mCancel;
   
+  float mCompletion;
 };

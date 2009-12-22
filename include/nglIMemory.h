@@ -41,8 +41,6 @@ public:
   /** @name State/error methods */
   //@{
   nglStreamState GetState() const;
-  uint           GetError() const;
-  const nglChar* GetErrorStr(uint Error) const;
   //@}
 
   /** @name Stream navigation */

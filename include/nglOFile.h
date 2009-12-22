@@ -76,7 +76,7 @@ public:
 	/*!< Check if the file is open
    \return true if the file is open
    
-   Some methods can set an an error for a File object (see GetError()), however
+   Some methods can set an an error for a File object, however
    the file is still open (and thus usable). This method let you tell if an error
    was fatal or not.
    

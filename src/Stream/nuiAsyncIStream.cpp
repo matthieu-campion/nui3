@@ -12,141 +12,203 @@
 
 class nuiAsyncIStream::Handler : public nglThread, public nuiCommand
 {
+public:
   Handler(nuiAsyncIStream* pStream, const nglString& rURL)
-  : mpStream(pStream), mURL(rURL), nuiCommand(_T("nuiAsynIStream::Handler"), _T("nuiAsynIStream::Handler command. It should only be used by the kernel"), false, false, false)
+  : mpASStream(pStream), mURL(rURL), nuiCommand(_T("nuiAsynIStream::Handler"), _T("nuiAsynIStream::Handler command. It should only be used by the kernel"), false, false, false),
+    mCompletion(0), mpStream(NULL)
   {
   }
-  
+
+  ~Handler()
+  {
+    delete mpStream;
+  }
+
   void Cancel()
   {
     mCancel = true;
   }
 
-  virtual bool DoStream() = 0;
+  float GetCompletion() const
+  {
+    return mCompletion;
+  }
+  
+  virtual nglIStream* DoStream() = 0;
 protected:
   void OnStart()
   {
-    DoStream();
-    
+    mpStream = DoStream();
+
     if (mCancel)
     {
       SetAutoDelete(true);
       return;
     }
-    
+
     nuiNotification* pNotif = new nuiNotification(_T("nuiAsyncIStream_Handler"));
     pNotif->SetToken(new nuiToken<nuiCommand*>(this, true));
     App->Post(pNotif);
   }
-  
+
   bool SetArgs(const std::vector<nglString, std::allocator<nglString> >&)
   {
     return true;
   }
-  
+
   bool ExecuteDo()
   {
     if (!mCancel)
-      mpStream->HandlerDone();
+      mpASStream->HandlerDone(mpStream);
+    else
+      delete mpStream;
+
+    mpStream = NULL;
     return true;
   }
-  
+
 protected:
   nglString mURL;
-  nuiAsyncIStream* mpStream;
+  nuiAsyncIStream* mpASStream;
   bool mCancel;
+  nglIStream* mpStream;
+  float mCompletion;
+};
+
+class nuiAsyncIStream::FileHandler : public nuiAsyncIStream::Handler
+{
+public:
+  FileHandler(nuiAsyncIStream* pASStream, const nglString& rURL)
+  : nuiAsyncIStream::Handler(pASStream, rURL)
+  {
+    
+  }
+  
+  nglIStream* DoStream()
+  {
+    return NULL;
+  }
+protected:
+};
+
+class nuiAsyncIStream::HttpHandler : public nuiAsyncIStream::Handler
+{
+public:
+  HttpHandler(nuiAsyncIStream* pASStream, const nglString& rURL)
+  : nuiAsyncIStream::Handler(pASStream, rURL)
+  {
+    
+  }
+  
+  nglIStream* DoStream()
+  {
+    return NULL;
+  }
+protected:
 };
 
 nuiAsyncIStream::nuiAsyncIStream(const nglString& rURL, bool AutoStart)
-: mURL(rURL), mpHandler(NULL), mpMemory(NULL)
+: mURL(rURL), mpHandler(NULL), mpStream(NULL), mCancel(false)
 {
   nglPath p(mURL);
   nglString protocol(p.GetVolumeName());
 
   if (protocol.IsEmpty())
   {
-    
+    protocol = _T("file");
   }
-  
+
+  if (protocol == _T("file"))
+  {
+    mpHandler = new FileHandler(this, mURL);
+  }
+  else if (protocol == _T("http") || protocol == _T("https"))
+  {
+    mpHandler = new HttpHandler(this, mURL);
+  }
+  else
+  {
+    // Error
+  }
+
   if (AutoStart)
     Start();
 }
 
 nuiAsyncIStream::~nuiAsyncIStream()
 {
-  delete mpHandler;
+  if (mpHandler)
+  {
+    if (IsDone())
+    {
+      delete mpHandler;
+    }
+    else
+    {
+      mpHandler->Cancel();
+    }
+  }
 }
 
 bool nuiAsyncIStream::Start()
 {
-  return false;
-}
-
-bool nuiAsyncIStream::Join()
-{
-  return false;
+  if (!mpHandler)
+    return false;
+  
+  mpHandler->Start();
+  return true;
 }
 
 bool nuiAsyncIStream::IsDone() const
 {
-  return false;
+  if (mCancel || !mpHandler)
+    return true;
+  return mpHandler->IsDone();
 }
 
 float nuiAsyncIStream::GetCompletion() const
 {
-  return 0;
+  return mCompletion;
 }
 
 nglStreamState nuiAsyncIStream::GetState() const
 {
-  if (mpMemory)
-    return mpMemory->GetState();
+  if (mpStream)
+    return mpStream->GetState();
   return eStreamError;
-}
-
-uint nuiAsyncIStream::GetError() const
-{
-  if (mpMemory)
-    return mpMemory->GetError();
-  return 0;
-}
-
-const nglChar* nuiAsyncIStream::GetErrorStr(uint Error) const
-{
-  return _T("Unknown Error");
 }
 
 nglFileOffset nuiAsyncIStream::GetPos() const
 {
-  if (mpMemory)
-    return mpMemory->GetPos();
+  if (mpStream)
+    return mpStream->GetPos();
   return 0;
 }
 
 nglFileOffset nuiAsyncIStream::SetPos(nglFileOffset Where, nglStreamWhence Whence)
 {
-  if (mpMemory)
-    return mpMemory->SetPos(Where, Whence);
+  if (mpStream)
+    return mpStream->SetPos(Where, Whence);
   return 0;
 }
 
 nglFileSize nuiAsyncIStream::Available(uint WordSize)
 {
-  if (mpMemory)
-    return mpMemory->Available(WordSize);
+  if (mpStream)
+    return mpStream->Available(WordSize);
   return 0;
 }
 
 int64 nuiAsyncIStream::Read(void* pData, int64 WordCount, uint WordSize)
 {
-  if (mpMemory)
-    return mpMemory->Read(pData, WordCount, WordSize);
+  if (mpStream)
+    return mpStream->Read(pData, WordCount, WordSize);
   return 0;
 }
 
-void nuiAsyncIStream::HandlerDone()
+void nuiAsyncIStream::HandlerDone(nglIStream* pStream)
 {
-  
+  mpStream = pStream;
 }
 
 

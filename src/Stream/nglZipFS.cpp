@@ -394,11 +394,6 @@ nglStreamState nglZipFS::GetState(void* pUnzip) const
   return eStreamReady;
 }
 
-uint nglZipFS::GetError(void* pUnzip) const
-{
-  return GetState(pUnzip) == eStreamError ? 1 : 0;
-}
-
 nglFileOffset nglZipFS::GetPos(void* pUnzip) const
 {
   unzSetCurrentFile(mpPrivate->mZip, pUnzip);

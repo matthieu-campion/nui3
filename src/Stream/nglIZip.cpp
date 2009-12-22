@@ -23,21 +23,6 @@ nglStreamState nglIZip::GetState() const
   return mpZip->GetState(mpUnzip);
 }
 
-uint nglIZip::GetError() const
-{
-  return mpZip->GetError(mpUnzip);
-}
-
-const nglChar* nglIZip::GetErrorStr() const
-{
-  return _T("Not implemented");
-}
-
-const nglChar* nglIZip::GetErrorStr(uint Error) const
-{
-  return _T("Not implemented");
-}
-
 nglFileOffset nglIZip::GetPos() const
 {
   return mpZip->GetPos(mpUnzip);
