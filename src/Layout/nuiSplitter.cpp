@@ -11,7 +11,7 @@
 #include "nuiDrawContext.h"
 #include "nuiXML.h"
 
-#include "nuiGradientDecoration.h"
+#include "nuiAttributeAnimation.h"
 
 using namespace std;
 
@@ -32,6 +32,7 @@ using namespace std;
 nuiSplitterHandle::nuiSplitterHandle(nuiSplitter* pParent)
 {
   SetObjectClass(_T("nuiSplitterHandle"));
+  
   mpParent = pParent;
   mClicked = false;  
 }
@@ -39,6 +40,8 @@ nuiSplitterHandle::nuiSplitterHandle(nuiSplitter* pParent)
 nuiSplitterHandle::~nuiSplitterHandle()
 {
 }
+
+
 
 nuiSplitter* nuiSplitterHandle::GetSplitter()
 {
@@ -59,6 +62,7 @@ bool nuiSplitterHandle::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags B
         mpParent->GotoHandlePos(mpParent->mHandlePosMax);
       else
         mpParent->GotoHandlePos(mpParent->mHandlePosMin);
+      
       return true;
     }
 
@@ -181,17 +185,19 @@ bool nuiSplitterHandle::MouseMoved(nuiSize X, nuiSize Y)
 
 
 
-
+//***************************************************************************************************************************
 
 
 
 
 
 nuiSplitter::nuiSplitter ( nuiOrientation orientation, nuiSplitterMode mode)
-: nuiSimpleContainer(),
-  mSplitterSink(this)
+: nuiSimpleContainer()
+//  mSplitterSink(this)
 {
-  SetObjectClass(_T("nuiSplitter"));
+  if (SetObjectClass(_T("nuiSplitter")))
+    InitAttributes();
+
   mHandlePos = 50; // 50%
   mHandlePosMin = 10;
   mHandlePosMax = 90;
@@ -216,6 +222,15 @@ nuiSplitter::nuiSplitter ( nuiOrientation orientation, nuiSplitterMode mode)
   mpHandle = new nuiSplitterHandle(this);
   AddChild(mpHandle); 
 }
+
+void nuiSplitter::InitAttributes()
+{
+  AddAttribute(new nuiAttribute<nuiSize>
+               (nglString(_T("HandlePos")), nuiUnitSize,
+                nuiMakeDelegate(this, &nuiSplitter::GetHandlePos),
+                nuiMakeDelegate(this, &nuiSplitter::SetHandlePos)));
+}
+
 
 
 bool nuiSplitter::Load(const nuiXMLNode* pNode)
@@ -847,9 +862,20 @@ void nuiSplitter::GotoHandlePos(nuiSize HandlePos, nuiSize handleStep, double ti
   {
     mEndHandlePos = HandlePos;
   }
+  
+  nuiAttributeAnimation* pAnim = new nuiAttributeAnimation();
+  pAnim->SetTargetObject(this);
+  pAnim->SetTargetAttribute(_T("HandlePos"));
+  pAnim->SetDeleteOnStop(true); 
+  pAnim->SetEasing(nuiEasingSinusStartFast);
+  pAnim->SetStartValue(mStartHandlePos);
+  pAnim->SetEndValue(mEndHandlePos);
+  
+  pAnim->Play();
+  
 
 
-  mSplitterSink.Connect(nuiAnimation::AcquireTimer()->Tick, &nuiSplitter::StepHandlePos);
+//  mSplitterSink.Connect(nuiAnimation::AcquireTimer()->Tick, &nuiSplitter::StepHandlePos);
 }
 
 nuiSize nuiSplitter::GetHandleSize()
@@ -903,36 +929,36 @@ bool nuiSplitter::GetFixed()
 }
 
 
-bool nuiSplitter::StepHandlePos(const nuiEvent& rEvent)
-{
-  if(mStartHandlePos > mEndHandlePos)
-  {
-    if(GetHandlePos() > mEndHandlePos)
-    {
-      nuiSize newPos = ((GetHandlePos() - mGotoStep) > mEndHandlePos) ? (GetHandlePos() - mGotoStep) : mEndHandlePos;
-      SetHandlePos(newPos);
-    }
-    else
-    {
-      mSplitterSink.Disconnect(&nuiSplitter::StepHandlePos);
-      GoToHandlePosAnimDone();
-    }
-  }
-  else
-  {
-    if(GetHandlePos() < mEndHandlePos)
-    {
-      nuiSize newPos = ((GetHandlePos() + mGotoStep) < mEndHandlePos) ? (GetHandlePos() + mGotoStep) : mEndHandlePos;
-      SetHandlePos(newPos);
-    }
-    else
-    {
-      mSplitterSink.Disconnect(&nuiSplitter::StepHandlePos);
-      GoToHandlePosAnimDone();
-    }
-  } 
-  return false;
-}
+//bool nuiSplitter::StepHandlePos(const nuiEvent& rEvent)
+//{
+//  if(mStartHandlePos > mEndHandlePos)
+//  {
+//    if(GetHandlePos() > mEndHandlePos)
+//    {
+//      nuiSize newPos = ((GetHandlePos() - mGotoStep) > mEndHandlePos) ? (GetHandlePos() - mGotoStep) : mEndHandlePos;
+//      SetHandlePos(newPos);
+//    }
+//    else
+//    {
+////      mSplitterSink.Disconnect(&nuiSplitter::StepHandlePos);
+//      GoToHandlePosAnimDone();
+//    }
+//  }
+//  else
+//  {
+//    if(GetHandlePos() < mEndHandlePos)
+//    {
+//      nuiSize newPos = ((GetHandlePos() + mGotoStep) < mEndHandlePos) ? (GetHandlePos() + mGotoStep) : mEndHandlePos;
+//      SetHandlePos(newPos);
+//    }
+//    else
+//    {
+////      mSplitterSink.Disconnect(&nuiSplitter::StepHandlePos);
+//      GoToHandlePosAnimDone();
+//    }
+//  } 
+//  return false;
+//}
 
 void nuiSplitter::SetMasterChild(bool MasterChild)
 {

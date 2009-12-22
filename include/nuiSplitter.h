@@ -100,7 +100,7 @@ public:
   nuiSimpleEventSource<0> GoToHandlePosAnimDone;
 
 protected:
-  bool StepHandlePos(const nuiEvent& rEvent);  
+//  bool StepHandlePos(const nuiEvent& rEvent);  
   nuiOrientation mOrientation; /// mHorizontal is true if the containers' layout if horizontal, false if vertical.
   nuiSplitterMode mMode;
   std::list<nuiRect> mPositions;
@@ -116,7 +116,7 @@ protected:
   float mStartHandlePos; ///< original position
   float mEndHandlePos; ///< end position
   float mGotoStep; ///< step
-  nuiEventSink<nuiSplitter> mSplitterSink; //sink for timer
+//  nuiEventSink<nuiSplitter> mSplitterSink; //sink for timer
 
   bool mMasterChild;
 
@@ -124,6 +124,9 @@ protected:
   bool SetRectVertical(const nuiRect& rRect);
 
 private:
+  
+  void InitAttributes();
+
 
   nuiSplitterHandle* mpHandle;
 
