@@ -1260,12 +1260,14 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
         internalPixelformat = pSurface->GetPixelFormat();
         if (internalPixelformat == GL_RGBA)
         {
+          internalPixelformat = GL_RGBA;
           pixelformat = GL_BGRA;
           type = GL_UNSIGNED_INT_8_8_8_8_REV;
         }
         else if (internalPixelformat == GL_RGB)
         {
-          pixelformat = GL_RGB;
+          internalPixelformat = GL_RGB;
+          pixelformat = GL_BGR;
           type = GL_UNSIGNED_BYTE;
         }
         else
@@ -1277,7 +1279,6 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
 #else
         internalPixelformat = pSurface->GetPixelFormat();
         pixelformat = pSurface->GetPixelFormat();
-        NGL_ASSERT(internalPixelformat == GL_RGB);
         type = GL_UNSIGNED_BYTE;
 #endif
       }
@@ -1318,18 +1319,7 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
         else
 #endif
         {
-          glTexImage2D
-          (  
-           target,
-           0,
-           internalPixelformat,
-           (int)Width,
-           (int)Height,
-           0,
-           pixelformat,
-           type,
-           pBuffer
-           );
+          glTexImage2D(target, 0, internalPixelformat, (int)Width, (int)Height, 0, pixelformat, type, pBuffer);
         }
         nuiCheckForGLErrors();
       }
@@ -1609,19 +1599,18 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
         glBindRenderbufferNUI(GL_RENDERBUFFER_NUI, info.mRenderbuffer);
         nuiCheckForGLErrors();
         
-        GLint pixelformat = 0;
-        GLint internalPixelformat = 0;
+        GLint pixelformat = pSurface->GetPixelFormat();
+        GLint internalPixelformat = pSurface->GetPixelFormat();
+        internalPixelformat = GL_RGBA;
 #if !defined(_OPENGL_ES_) && defined(_MACOSX_)
-        internalPixelformat = pSurface->GetPixelFormat();
         if (internalPixelformat == GL_RGBA)
+        {
           pixelformat = GL_BGRA;
+        }
         else if (internalPixelformat == GL_RGB)
-          pixelformat = GL_RGBA;
-        else
-          pixelformat = pSurface->GetPixelFormat();
-#else
-        internalPixelformat = pSurface->GetPixelFormat();
-        pixelformat = pSurface->GetPixelFormat();
+        {
+          pixelformat = GL_BGR;
+        }
 #endif
         
         glRenderbufferStorageNUI(GL_RENDERBUFFER_NUI, pixelformat, width, height);

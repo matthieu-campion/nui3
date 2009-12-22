@@ -614,6 +614,12 @@
 		E539DD310C9C8DC50099449B /* nglSyncEvent_posix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E539DD2F0C9C8DC50099449B /* nglSyncEvent_posix.cpp */; };
 		E539DD330C9C8EE80099449B /* nglSyncEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = E539DD320C9C8EE80099449B /* nglSyncEvent.h */; };
 		E539DD340C9C8EE80099449B /* nglSyncEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = E539DD320C9C8EE80099449B /* nglSyncEvent.h */; };
+		E540AB5D10DFAC5000791FBA /* nuiAsyncIStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E540AB5C10DFAC5000791FBA /* nuiAsyncIStream.cpp */; };
+		E540AB5E10DFAC5000791FBA /* nuiAsyncIStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E540AB5C10DFAC5000791FBA /* nuiAsyncIStream.cpp */; };
+		E540AB5F10DFAC5000791FBA /* nuiAsyncIStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E540AB5C10DFAC5000791FBA /* nuiAsyncIStream.cpp */; };
+		E540AB6110DFAC8F00791FBA /* nuiAsyncIStream.h in Headers */ = {isa = PBXBuildFile; fileRef = E540AB6010DFAC8F00791FBA /* nuiAsyncIStream.h */; };
+		E540AB6210DFAC8F00791FBA /* nuiAsyncIStream.h in Headers */ = {isa = PBXBuildFile; fileRef = E540AB6010DFAC8F00791FBA /* nuiAsyncIStream.h */; };
+		E540AB6310DFAC8F00791FBA /* nuiAsyncIStream.h in Headers */ = {isa = PBXBuildFile; fileRef = E540AB6010DFAC8F00791FBA /* nuiAsyncIStream.h */; };
 		E5429EF00C3F082800225219 /* jmemmgr.c in Sources */ = {isa = PBXBuildFile; fileRef = E5429EEF0C3F082800225219 /* jmemmgr.c */; };
 		E5429EF70C3F08DC00225219 /* nglPath_Unix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5429EF60C3F08DC00225219 /* nglPath_Unix.cpp */; };
 		E5429F130C3F0A5900225219 /* ftlist.h in Headers */ = {isa = PBXBuildFile; fileRef = E58168180C3CECA800902DFE /* ftlist.h */; };
@@ -3376,6 +3382,8 @@
 		E53645E80CDF7CE300838C78 /* nuiPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiPopupView.h; path = include/nuiPopupView.h; sourceTree = SOURCE_ROOT; };
 		E539DD2F0C9C8DC50099449B /* nglSyncEvent_posix.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nglSyncEvent_posix.cpp; path = src/Threading/posix/nglSyncEvent_posix.cpp; sourceTree = SOURCE_ROOT; };
 		E539DD320C9C8EE80099449B /* nglSyncEvent.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nglSyncEvent.h; path = include/nglSyncEvent.h; sourceTree = SOURCE_ROOT; };
+		E540AB5C10DFAC5000791FBA /* nuiAsyncIStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiAsyncIStream.cpp; sourceTree = "<group>"; };
+		E540AB6010DFAC8F00791FBA /* nuiAsyncIStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiAsyncIStream.h; path = include/nuiAsyncIStream.h; sourceTree = SOURCE_ROOT; };
 		E5429EEF0C3F082800225219 /* jmemmgr.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = jmemmgr.c; path = deps/libjpeg/jmemmgr.c; sourceTree = SOURCE_ROOT; };
 		E5429EF60C3F08DC00225219 /* nglPath_Unix.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nglPath_Unix.cpp; path = src/File/Unix/nglPath_Unix.cpp; sourceTree = SOURCE_ROOT; };
 		E542A1AE0C3F0A5900225219 /* libnui3.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libnui3.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -5673,6 +5681,8 @@
 				E5816DEC0C3CECAB00902DFE /* nglZipFS.cpp */,
 				E5816CAB0C3CECAB00902DFE /* nglZipFS.h */,
 				E5816DED0C3CECAB00902DFE /* Zip */,
+				E540AB5C10DFAC5000791FBA /* nuiAsyncIStream.cpp */,
+				E540AB6010DFAC8F00791FBA /* nuiAsyncIStream.h */,
 			);
 			name = Stream;
 			path = src/Stream;
@@ -6622,6 +6632,7 @@
 				408D9BA61097436800AEE78A /* nuiVideoDecoder.h in Headers */,
 				E52C78E610A84905008486C0 /* mmgr.h in Headers */,
 				E52C78E710A84905008486C0 /* nommgr.h in Headers */,
+				E540AB6310DFAC8F00791FBA /* nuiAsyncIStream.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7213,6 +7224,7 @@
 				408D9BA41097436800AEE78A /* nuiVideoDecoder.h in Headers */,
 				E52C78E410A84905008486C0 /* mmgr.h in Headers */,
 				E52C78E510A84905008486C0 /* nommgr.h in Headers */,
+				E540AB6210DFAC8F00791FBA /* nuiAsyncIStream.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7801,6 +7813,7 @@
 				408D9BA81097436800AEE78A /* nuiVideoDecoder.h in Headers */,
 				E52C78E210A84905008486C0 /* mmgr.h in Headers */,
 				E52C78E310A84905008486C0 /* nommgr.h in Headers */,
+				E540AB6110DFAC8F00791FBA /* nuiAsyncIStream.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8325,6 +8338,7 @@
 				E5D9FEEF1082B382008D0F11 /* nuiGLUTBridge.cpp in Sources */,
 				408D9BA71097436800AEE78A /* nuiVideoDecoder.mm in Sources */,
 				E52C78DF10A848E4008486C0 /* mmgr.cpp in Sources */,
+				E540AB5F10DFAC5000791FBA /* nuiAsyncIStream.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8770,6 +8784,7 @@
 				E5D9FEED1082B382008D0F11 /* nuiGLUTBridge.cpp in Sources */,
 				408D9BA51097436800AEE78A /* nuiVideoDecoder.mm in Sources */,
 				E52C78DE10A848E4008486C0 /* mmgr.cpp in Sources */,
+				E540AB5E10DFAC5000791FBA /* nuiAsyncIStream.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9209,6 +9224,7 @@
 				E5D9FEEE1082B382008D0F11 /* nuiGLUTBridge.cpp in Sources */,
 				408D9BA91097436800AEE78A /* nuiVideoDecoder.mm in Sources */,
 				E52C78DD10A848E4008486C0 /* mmgr.cpp in Sources */,
+				E540AB5D10DFAC5000791FBA /* nuiAsyncIStream.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
