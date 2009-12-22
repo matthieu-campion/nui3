@@ -116,6 +116,10 @@ nuiAsyncIStream::nuiAsyncIStream(const nglString& rURL, bool AutoStart)
   if (protocol.IsEmpty())
   {
     protocol = _T("file");
+    mURL.TrimLeft(_T('/'));
+    mURL.Insert(_T("://"), 0);
+    mURL.Insert(protocol, 0);
+    p = mURL;
   }
 
   if (protocol == _T("file"))
