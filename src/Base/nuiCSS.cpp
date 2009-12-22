@@ -116,6 +116,54 @@ public:
   
   bool Load()
   {
+    uint8 start[16];
+    if (mpStream->Peek(start, 10, 1))
+    {
+      // Skip the unicode BOM:
+      //    Bytes    Encoding Form
+      //      00 00 FE FF   UTF-32, big-endian
+      //      FF FE 00 00   UTF-32, little-endian
+      //      FF FE   UTF-16, little-endian
+      //      FE FF   UTF-16, big-endian
+      //      EF BB BF   UTF-8
+      if (start[0] == 0x00)
+      {
+        if (mpStream->ReadUInt8() != 0x00) return false;
+        if (mpStream->ReadUInt8() != 0x00) return false;
+        if (mpStream->ReadUInt8() != 0xFE) return false;
+        if (mpStream->ReadUInt8() != 0xFF) return false;
+        // big-endian UTF-32
+      }
+      else if (start[0] == 0xFF)
+      {
+        if (mpStream->ReadUInt8() != 0xFF) return false;
+        if (mpStream->ReadUInt8() != 0xFE) return false;
+        if (start[2] == 0x00)
+        {
+          if (mpStream->ReadUInt8() != 0x00) return false;
+          if (mpStream->ReadUInt8() != 0x00) return false;
+          // little endian UTF-32
+        }
+        else
+        {
+          // little endian UTF-16
+        }
+      }
+      else if (start[0] == 0xFE)
+      {
+        if (mpStream->ReadUInt8() != 0xFE) return false;
+        if (mpStream->ReadUInt8() != 0xFF) return false;
+        // big endian UTF-16
+      }
+      else if (start[0] == 0xEF)
+      {
+        if (mpStream->ReadUInt8() != 0xEF) return false;
+        if (mpStream->ReadUInt8() != 0xBB) return false;
+        if (mpStream->ReadUInt8() != 0xBF) return false;
+        // UTF-8
+      }
+    }
+
     while (true)
     {
       if (!SkipBlank())
