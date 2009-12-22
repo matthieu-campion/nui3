@@ -14,11 +14,7 @@
 OSStatus MyAudioFile_ReadProc(void* pInClientData, SInt64 inPosition, UInt32 requestCount, void* pBuffer, UInt32* pActualCount)
 {	
 	nglIStream* pStream = (nglIStream*)pInClientData;
-  
-  uint32 avail = pStream->Available();
 	pStream->SetPos(inPosition);
-	
-  avail = pStream->Available();
   
 	uint8* pOut = (uint8*)pBuffer;
 	*pActualCount = pStream->ReadUInt8(pOut, requestCount);
@@ -186,6 +182,8 @@ uint32 nuiAudioDecoder::ReadDE(std::vector<void*> buffers, uint32 sampleframes, 
 {
   if (!mInitialized)
     return 0;
+  
+  SetPosition((uint32)mPosition);
   
   uint32 channels = mInfo.GetChannels();
   if (buffers.size() != channels)

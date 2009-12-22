@@ -307,7 +307,8 @@ public:
   Contents Get(void* pTarget) const
   {
     NGL_ASSERT(!mGetter.empty());
-    NGL_ASSERT(GetDimension() == 0);
+    if (GetDimension() > 0)
+      return Get(pTarget, 0);
     GetterDelegate Getter;
     Getter.SetMemento(mGetter);
     if (!IsInstanceAttribute())
@@ -318,7 +319,8 @@ public:
   Contents Get(void* pTarget, uint32 index) const
   {
     NGL_ASSERT(!mGetter.empty());
-    NGL_ASSERT(GetDimension() == 1);
+    if (GetDimension() > 1)
+      return Get(pTarget, index, 0);
     GetterDelegate1 Getter;
     Getter.SetMemento(mGetter);
     if (!IsInstanceAttribute())

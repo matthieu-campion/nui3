@@ -2436,7 +2436,10 @@ nuiAttributeEditor* nuiAttribute<nuiExpandMode>::GetDefaultEditor(void* pTarget)
   values.push_back(std::make_pair(_T("Grow"), nuiExpandGrow));
   values.push_back(std::make_pair(_T("Shrink"), nuiExpandShrink));
   values.push_back(std::make_pair(_T("Shrink and Grow"), nuiExpandShrinkAndGrow));
-  return new nuiComboAttributeEditor<nuiExpandMode>(nuiAttrib<nuiExpandMode>(pTarget, this), values);
+  if (((nuiAttrib<nuiExpandMode>*)pTarget)->GetDimension() == 0)
+    return new nuiComboAttributeEditor<nuiExpandMode>(nuiAttrib<nuiExpandMode>(pTarget, this), values);
+  else
+ 		return nuiCreateGenericAttributeEditor(pTarget, this);
 }
 
 

@@ -365,7 +365,7 @@ void nuiTopLevel::EmptyTrash()
 
 void nuiTopLevel::AdviseObjectDeath(nuiWidgetPtr pWidget)
 {
-  if (mpWatchedWidget == pWidget)
+    if (mpWatchedWidget == pWidget)
     mpWatchedWidget = NULL;
   
   mHoveredWidgets.erase(pWidget);
@@ -1008,7 +1008,7 @@ void nuiTopLevel::UpdateHoverList(nglMouseInfo& rInfo)
   // Old Hovered widgets:
   std::set<nuiWidget*> OldHover;
   std::insert_iterator<std::set<nuiWidget*> > oldit(OldHover, OldHover.begin());
-  set_difference(mHoveredWidgets.begin(), mHoveredWidgets.end(), HoverSet.begin(), HoverSet.end(), oldit);
+  std::set_difference(mHoveredWidgets.begin(), mHoveredWidgets.end(), HoverSet.begin(), HoverSet.end(), oldit);
 
   {
     std::set<nuiWidget*>::iterator it = OldHover.begin();
@@ -1025,7 +1025,7 @@ void nuiTopLevel::UpdateHoverList(nglMouseInfo& rInfo)
   // New Hovered widgets:
   std::set<nuiWidget*> NewHover;
   std::insert_iterator<std::set<nuiWidget*> > newit(NewHover, NewHover.begin());
-  set_difference(HoverSet.begin(), HoverSet.end(), mHoveredWidgets.begin(), mHoveredWidgets.end(), newit);
+  std::set_difference(HoverSet.begin(), HoverSet.end(), mHoveredWidgets.begin(), mHoveredWidgets.end(), newit);
 
   {
     std::set<nuiWidget*>::iterator it = NewHover.begin();

@@ -151,7 +151,7 @@ bool nuiModalContainer::DispatchMouseUnclick(const nglMouseInfo& rInfo)
 nuiWidgetPtr nuiModalContainer::DispatchMouseMove(const nglMouseInfo& rInfo)
 {
   if (!mMouseEventEnabled || mTrashed)
-    return false;
+    return NULL;
   
   if (HasGrab())
     Ungrab();
