@@ -76,7 +76,7 @@ nuiTreeNode* nuiFileSelectorBase::GetNewNode(const nglPath& rPath)
         pBox = new nuiHBox(2);
         pIcon = new nuiImage();
         nglString objectName;
-        objectName.Format(_T("nuiFileSelector::TreeFilterIcon::%ls"), rPath.GetExtension().GetChars());
+        objectName.Format(_T("nuiFileSelector::TreeFilterIcon::%ls"), rPath.GetExtension().ToLower().GetChars());
         pIcon->SetObjectName(objectName);
         pIcon->SetObjectClass(objectName);
         label = new nuiLabel(pathName.GetNodeName().IsEmpty()?_T("/"):pathName.GetNodeName());        
@@ -168,7 +168,7 @@ bool nuiFileSelectorBase::IsFileFiltered(const nglPath& rFile)
   for (it = mFilters.begin(); it != mFilters.end(); ++it)
   {
     const nglString& filter = *it;
-    if (!filter.Compare(ext))
+    if (!filter.Compare(ext, false/* not case sensitive*/))
     {
       filterres = true;
       break;
@@ -540,7 +540,7 @@ nuiWidget* nuiFileSelector::GetFileInfo(const nglPath& rPath)
   pBox->AddCell(pIcon, nuiCenter);
   
   nglString objectName;
-  objectName.Format(_T("nuiFileSelector::InfoViewIcon::%ls"), rPath.GetExtension().GetChars());
+  objectName.Format(_T("nuiFileSelector::InfoViewIcon::%ls"), rPath.GetExtension().ToLower().GetChars());
   pIcon->SetObjectName(objectName);
   pIcon->SetObjectClass(objectName);
   
