@@ -130,12 +130,12 @@ void nuiGLPainter::BlendFuncSeparate(GLenum src, GLenum dst, GLenum srcalpha, GL
   }
 #else
   #if GL_OES_blend_equation_separate
-    if (glBlendFuncSeparateOES)
-    {
-      glBlendFuncSeparateOES(src, dst, srcalpha, dstalpha);
-      mTwoPassBlend = false;
-    }
-    else
+//    if (glBlendFuncSeparateOES)
+//    {
+//      glBlendFuncSeparateOES(src, dst, srcalpha, dstalpha);
+//      mTwoPassBlend = false;
+//    }
+//    else
     {
       glBlendFunc(src, dst);
       mTwoPassBlend = true;
