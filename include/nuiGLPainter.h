@@ -99,6 +99,12 @@ protected:
   int32 mScissorH;
   bool mScissorOn;
 
+  void BlendFuncSeparate(GLenum src, GLenum dst, GLenum srcalpha = GL_ONE, GLenum dstalpha = GL_ONE);
+  bool mTwoPassBlend;
+  GLenum mSrcColor;
+  GLenum mDstColor;
+  GLenum mSrcAlpha;
+  GLenum mDstAlpha;
 };
 
 void nuiCheckForGLErrors();
