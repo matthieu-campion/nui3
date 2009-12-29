@@ -8,11 +8,12 @@
 #include "nui.h"
 #include "nuiHTMLImage.h"
 #include "nuiHTTP.h"
+#include "nuiAsyncIStream.h"
 
 /////////////
 //class nuiHTMLImage : public nuiHTMLItem
 nuiHTMLImage::nuiHTMLImage(nuiHTMLNode* pNode, nuiHTMLNode* pAnchor)
-: nuiHTMLItem(pNode, pAnchor, true), mpTexture(NULL), mWidth(8), mHeight(8), mpRequest(NULL)
+: nuiHTMLItem(pNode, pAnchor, true), mpTexture(NULL), mWidth(8), mHeight(8), mpStream(NULL)
 {
   const nuiHTMLAttrib* pSrc = pNode->GetAttribute(nuiHTMLAttrib::eAttrib_SRC);
   const nuiHTMLAttrib* pAlt = pNode->GetAttribute(nuiHTMLAttrib::eAttrib_ALT);
@@ -36,8 +37,8 @@ nuiHTMLImage::nuiHTMLImage(nuiHTMLNode* pNode, nuiHTMLNode* pAnchor)
       mpTexture->Release();
       mpTexture = NULL;
     
-      nuiHTTPRequest* pRequest = new nuiHTTPRequest(url);
-      mpRequest = pRequest->SendRequest(nuiMakeDelegate(this, &nuiHTMLImage::HTTPDone));
+      mpStream = new nuiAsyncIStream(url, true);
+      mSlotSink.Connect(mpStream->StreamReady, nuiMakeDelegate(this, &nuiHTMLImage::StreamDone));
       return;
     }
   }
@@ -50,18 +51,16 @@ nuiHTMLImage::nuiHTMLImage(nuiHTMLNode* pNode, nuiHTMLNode* pAnchor)
 
 nuiHTMLImage::~nuiHTMLImage()
 {
-  if (mpRequest)
-    mpRequest->Cancel();
+  if (mpStream)
+    mpStream->Cancel();
 }
 
-void nuiHTMLImage::HTTPDone(nuiHTTPRequest* pRequest, nuiHTTPResponse* pResponse)
+void nuiHTMLImage::StreamDone(nuiAsyncIStream* pStream)
 {
-  mpRequest = NULL;
-  if (!pResponse)
-    return;
-  
-  nglIMemory mem(&pResponse->GetBody()[0], pResponse->GetBody().size());
-  mpTexture = nuiTexture::GetTexture(&mem);
+  const nuiHTTPResponse* pResponse = pStream->GetHTTPResponse();
+  mpStream = NULL;
+
+  mpTexture = nuiTexture::GetTexture(pStream);
   
   if (!mpTexture)
     return;
@@ -73,7 +72,7 @@ void nuiHTMLImage::HTTPDone(nuiHTTPRequest* pRequest, nuiHTTPResponse* pResponse
     return;
   }
   
-  mpTexture->SetSource(pRequest->GetURL());
+  mpTexture->SetSource(pStream->GetURL());
   
   mWidth = mpTexture->GetWidth();
   mHeight = mpTexture->GetHeight();

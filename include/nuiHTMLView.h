@@ -16,9 +16,7 @@ class nuiHTMLItem;
 class nuiHTMLBox;
 class nuiHTMLFont;
 class nuiHTMLContext;
-class nuiHTTPRequest;
-class nuiHTTPResponse;
-class nuiHTTPRequest_Thread;
+class nuiAsyncIStream;
 
 class nuiHTMLView : public nuiSimpleContainer
 {
@@ -40,14 +38,13 @@ public:
   bool SetText(const nglString& rHTMLText);
   bool SetURL(const nglString& rURL);
   const nglString& GetURL() const;
-
+  void Cancel();
   
   void SetFont(nuiFont* pFont, bool AlreadyAcquired);
   void SetFont(nuiFontRequest& rFontRequest);
   void SetFont(const nglString& rFontSymbol);
   void _SetFont(const nglString& rFontSymbol);
   const nglString& _GetFont() const;
-  
   
   const nuiColor& GetTextColor() const;
   void SetTextColor(const nuiColor& Color);
@@ -64,6 +61,7 @@ public:
   
   void SetDebugBoxes(bool set);
   bool GetDebugBoxed() const;
+  
 protected:
   
   void ParseTree(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
@@ -98,8 +96,8 @@ private:
   void _SetURL(const nglString& rURL);
   void _AutoSetURL(const nglString& rURL);
   void _SetText(const nglString& rHTMLText);
-  void SetURLDone(nuiHTTPRequest* pRequest, nuiHTTPResponse* pResponse);
-  nuiHTTPRequest_Thread* mpRequest;
+  nuiAsyncIStream* mpStream;
+  void StreamDone(nuiAsyncIStream* pStream);
   
   void InitAttributes();
   bool mClicked;

@@ -37,7 +37,7 @@ void MainWindow::OnCreation()
   //nglString url(_T("http://www.w3.org/Consortium/siteindex"));
   //nglString url(_T("http://viewvc.libnui.net/cgi-bin/viewvc.cgi/nui/trunk/nui3/"));
   //nglString url(_T("http://www.google.fr/search?hl=fr&q=libnui&btnG=Recherche+Google&meta=&aq=f&oq="));
-
+  
   // a vertical box for page layout
   nuiVBox* pLayoutBox = new nuiVBox(0);
   pLayoutBox->SetExpand(nuiExpandShrinkAndGrow);
@@ -55,7 +55,7 @@ void MainWindow::OnCreation()
   pHLayoutBox->AddCell(pImg);
   pHLayoutBox->SetCellExpand(pHLayoutBox->GetNbCells()-1, nuiExpandFixed);
   
-  // button in the second cell : we use the default decoration for this button, but you could use the css to assign your own decoration
+  // text entry in the second cell
   mpInput = new nuiEditLine(url);
   mpInput->SetPosition(nuiFillHorizontal);
   mpInput->SetObjectName(_T("RSSURL"));
@@ -63,7 +63,7 @@ void MainWindow::OnCreation()
   pHLayoutBox->AddCell(mpInput);
   pHLayoutBox->SetCellExpand(pHLayoutBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
   
-  // button in the second cell : we use the default decoration for this button, but you could use the css to assign your own decoration
+  // button in the third cell : we use the default decoration for this button, but you could use the css to assign your own decoration
   nuiButton* pButton = new nuiButton();
   pButton->SetPosition(nuiCenter);
   pHLayoutBox->AddCell(pButton);
@@ -73,7 +73,7 @@ void MainWindow::OnCreation()
   mEventSink.Connect(pButton->Activated, &MainWindow::OnButtonClick);
   mEventSink.Connect(mpInput->Activated, &MainWindow::OnButtonClick);
   
-  // label with border in the button (put the label string in the button's constructor if you don't need borders)
+  // label in the button
   nuiLabel* pButtonLabel = new nuiLabel(_T("Go"));
   pButtonLabel->SetPosition(nuiCenter);
   pButtonLabel->SetBorder(8,8);
@@ -84,7 +84,7 @@ void MainWindow::OnCreation()
   pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells() - 1, nuiExpandShrinkAndGrow);
   mpHTMLView = new nuiHTMLView(GetWidth());
   pScroll->AddChild(mpHTMLView);
-
+  
   mSlotSink.Connect(mpHTMLView->URLChanged, nuiMakeDelegate(this, &MainWindow::OnURLChanged));
   if (1)
   {
@@ -94,7 +94,6 @@ void MainWindow::OnCreation()
   {
     mpHTMLView->SetText(_T("<p>Petit</p><p><i>texte</i> de <b>test</b>.</p><p>&eacute;couter le vent</p><p>Je viens de sauter une ligne</p>"));
   }
-
 }
 
 void MainWindow::OnURLChanged(const nglString& rString)

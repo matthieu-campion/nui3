@@ -422,6 +422,7 @@ public:
 	nglString& ToLower(int32 Index, int32 Length);  ///< Convert \p Length upper case chars from position \p Index to lower case
   
   char* EncodeUrl(); ///< outputs a malloc'ed char* encoded as valid URL data in UTF8 as per RFC 2396
+  void DecodeUrl();
   void EncodeToXML();
   void DecodeFromXML();
   void Unescape();

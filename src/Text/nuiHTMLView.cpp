@@ -19,6 +19,7 @@
 #include "nuiHTMLImage.h"
 #include "nuiHTMLFont.h"
 
+#include "nuiAsyncIStream.h"
 
 /////////////////////////////// nuiHTMLView
 nuiHTMLView::nuiHTMLView(float IdealWidth)
@@ -35,7 +36,7 @@ nuiHTMLView::nuiHTMLView(float IdealWidth)
   mClicked = false;
   mAutoActivateLink = true;
   mpCurrentAnchor = NULL;
-  mpRequest = NULL;
+  mpStream = NULL;
   
   mMouseX = 0;
   mMouseY = 0;
@@ -49,9 +50,17 @@ nuiHTMLView::~nuiHTMLView()
 {
   delete mpHTML;
   delete mpContext;
-  
-  if (mpRequest)
-    mpRequest->Cancel();
+
+  Cancel();
+}
+
+void nuiHTMLView::Cancel()
+{
+  if (mpStream)
+  {
+    mpStream->Cancel();
+    mpStream = NULL;
+  }
 }
 
 void nuiHTMLView::InitAttributes()
@@ -260,12 +269,7 @@ void nuiHTMLView::SetHSpace(float HSpace)
 
 bool nuiHTMLView::SetText(const nglString& rHTMLText)
 {
-  if (mpRequest)
-  {
-    mpRequest->Cancel();
-    mpRequest = NULL;
-  }
-  
+  Cancel();
   Clear();
   
   if (rHTMLText.IsNull())
@@ -297,75 +301,70 @@ bool nuiHTMLView::SetText(const nglString& rHTMLText)
 
 bool nuiHTMLView::SetURL(const nglString& rURL)
 {
-  if (mpRequest)
-  {
-    mpRequest->Cancel();
-    mpRequest = NULL;
-  }
+  Cancel();
   
   URLChanged(rURL);
   
   nglString url(rURL);
   mTempURL = rURL;
-  nuiHTTPRequest* pRequest = new nuiHTTPRequest(rURL);
-  mpRequest = pRequest->SendRequest(nuiMakeDelegate(this, &nuiHTMLView::SetURLDone));
-  
+
+  mpStream = new nuiAsyncIStream(rURL, true);
+  mSlotSink.Connect(mpStream->StreamReady, nuiMakeDelegate(this, &nuiHTMLView::StreamDone));
   return true;
 }
 
-void nuiHTMLView::SetURLDone(nuiHTTPRequest* pRequest, nuiHTTPResponse* pResponse)
+void nuiHTMLView::StreamDone(nuiAsyncIStream* pStream)
 {
-  mpRequest = NULL;
-  
-  if (!pResponse)
-    return; // Error!
-  
-  //NGL_OUT(_T("\n\nHTTP Headers:\n%ls\n\n"), pResponse->GetHeadersRep().GetChars());
+  mpStream = NULL;
   nglString url(mTempURL);
-  const nuiHTTPHeaderMap& rHeaders(pResponse->GetHeaders());
-  nuiHTTPHeaderMap::const_iterator it = rHeaders.find(_T("location"));
-  if (it != rHeaders.end())
-  {
-    nglString newurl = it->second;
-    if (newurl[0] == '/')
-    {
-      url.TrimRight('/');
-      url += newurl;
-    }
-    else
-    {
-      url = newurl;
-    }
-    //NGL_OUT(_T("\n\nNew location: %ls\n\n"), url.GetChars());
-    
-    SetURL(url);
-    return;
-  }
-
-  it = rHeaders.find(_T("content-type"));
-
-  nglTextEncoding encoding = eEncodingUnknown;
-  if (it != rHeaders.end())
-  {  
-    nglString contents(it->second);
-    contents.ToUpper();
-    int32 pos = contents.Find(_T("CHARSET="));
-    if (pos >= 0)
-    {
-      nglString enc(contents.Extract(pos + 8));
-      enc.Trim();
-      encoding = nuiGetTextEncodingFromString(enc);
-      //NGL_OUT(_T("\n\nHTTP Encoding: %ls - %d\n\n"), enc.GetChars(), encoding);
-
-    }
-  }
+  const nuiHTTPResponse* pResponse = pStream->GetHTTPResponse();
   
+  nglTextEncoding encoding = eEncodingUnknown;
+
+  if (pResponse)
+  {
+    //NGL_OUT(_T("\n\nHTTP Headers:\n%ls\n\n"), pResponse->GetHeadersRep().GetChars());
+    const nuiHTTPHeaderMap& rHeaders(pResponse->GetHeaders());
+    nuiHTTPHeaderMap::const_iterator it = rHeaders.find(_T("location"));
+    if (it != rHeaders.end())
+    {
+      nglString newurl = it->second;
+      if (newurl[0] == '/')
+      {
+        url.TrimRight('/');
+        url += newurl;
+      }
+      else
+      {
+        url = newurl;
+      }
+      //NGL_OUT(_T("\n\nNew location: %ls\n\n"), url.GetChars());
+      
+      SetURL(url);
+      return;
+    }
+    
+    it = rHeaders.find(_T("content-type"));
+    
+    if (it != rHeaders.end())
+    {  
+      nglString contents(it->second);
+      contents.ToUpper();
+      int32 pos = contents.Find(_T("CHARSET="));
+      if (pos >= 0)
+      {
+        nglString enc(contents.Extract(pos + 8));
+        enc.Trim();
+        encoding = nuiGetTextEncodingFromString(enc);
+        //NGL_OUT(_T("\n\nHTTP Encoding: %ls - %d\n\n"), enc.GetChars(), encoding);
+        
+      }
+    }
+  }  
   
   nuiHTML* pHTML = new nuiHTML();
   pHTML->SetSourceURL(url);
-  nglIMemory mem(&pResponse->GetBody()[0], pResponse->GetBody().size());
-  
-  bool res = pHTML->Load(mem, encoding);
+  bool res = pHTML->Load(*pStream, encoding);
   
   if (res)
   {
@@ -382,7 +381,6 @@ void nuiHTMLView::SetURLDone(nuiHTTPRequest* pRequest, nuiHTTPResponse* pRespons
     InvalidateLayout();
     SetHotRect(nuiRect());
   }
-  return;
 }
 
 const nglString& nuiHTMLView::GetURL() const

@@ -1385,6 +1385,78 @@ char* nglString::EncodeUrl()
   return pResultChars;
 }
 
+static const char HEX2DEC[256] = 
+{
+  /*       0  1  2  3   4  5  6  7   8  9  A  B   C  D  E  F */
+  /* 0 */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
+  /* 1 */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
+  /* 2 */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
+  /* 3 */  0, 1, 2, 3,  4, 5, 6, 7,  8, 9,-1,-1, -1,-1,-1,-1,
+  
+  /* 4 */ -1,10,11,12, 13,14,15,-1, -1,-1,-1,-1, -1,-1,-1,-1,
+  /* 5 */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
+  /* 6 */ -1,10,11,12, 13,14,15,-1, -1,-1,-1,-1, -1,-1,-1,-1,
+  /* 7 */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
+  
+  /* 8 */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
+  /* 9 */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
+  /* A */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
+  /* B */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
+  
+  /* C */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
+  /* D */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
+  /* E */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
+  /* F */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1
+};
+
+inline static nglChar Hex2Dec(nglChar c)
+{
+  if (c > 255)
+    return -1;
+  return HEX2DEC[c];
+}
+
+void nglString::DecodeUrl()
+{
+  // Note from RFC1630: "Sequences which start with a percent
+  // sign but are not followed by two hexadecimal characters
+  // (0-9, A-F) are reserved for future extension"
+  
+  const nglChar* pSrc = GetChars();
+  const int32 SRC_LEN = GetLength();
+  const nglChar* const SRC_END = pSrc + SRC_LEN;
+  // last decodable '%'
+  const nglChar * const SRC_LAST_DEC = SRC_END - 2;
+  
+  const nglChar* pStart = new nglChar[SRC_LEN + 1];
+  nglChar* pEnd = const_cast<nglChar*>(pStart);
+  
+  while (pSrc < SRC_LAST_DEC)
+  {
+    if (*pSrc == '%')
+    {
+      char dec1, dec2;
+      if (-1 != (dec1 = Hex2Dec(*(pSrc + 1)))
+          && -1 != (dec2 = Hex2Dec(*(pSrc + 2))))
+      {
+        *pEnd++ = (dec1 << 4) + dec2;
+        pSrc += 3;
+        continue;
+      }
+    }
+    
+    *pEnd++ = *pSrc++;
+  }
+  
+  // the last 2- chars
+  while (pSrc < SRC_END)
+    *pEnd++ = *pSrc++;
+  
+  *pEnd = 0;
+  Copy(pStart);
+  delete [] pStart;
+}
+
 
 void nglString::EncodeToXML()
 {

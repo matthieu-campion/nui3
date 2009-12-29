@@ -9,19 +9,23 @@
 #include "nuiAsyncIStream.h"
 #include "nglThread.h"
 #include "nuiCommand.h"
+#include "nuiHTTP.h"
 
 class nuiAsyncIStream::Handler : public nglThread, public nuiCommand
 {
 public:
   Handler(nuiAsyncIStream* pStream, const nglString& rURL)
   : mpASStream(pStream), mURL(rURL), nuiCommand(_T("nuiAsynIStream::Handler"), _T("nuiAsynIStream::Handler command. It should only be used by the kernel"), false, false, false),
-    mCompletion(0), mpStream(NULL)
+    mCompletion(0), mpStream(NULL), mCancel(false)
   {
+    mURL.DecodeUrl();
   }
 
   ~Handler()
   {
+    Cancel();
     delete mpStream;
+    NGL_LOG(_T("nuiAsyncIStream"), NGL_LOG_DEBUG, _T("Handler dtor"));
   }
 
   void Cancel()
@@ -35,6 +39,10 @@ public:
   }
   
   virtual nglIStream* DoStream() = 0;
+  virtual const nuiHTTPResponse* GetHTTPResponse() const
+  {
+    return NULL;
+  }
 protected:
   void OnStart()
   {
@@ -43,12 +51,14 @@ protected:
     if (mCancel)
     {
       SetAutoDelete(true);
+      NGL_LOG(_T("nuiAsyncIStream::Handler"), NGL_LOG_DEBUG, _T("Cancel (auto delete thread)"));
       return;
     }
 
     nuiNotification* pNotif = new nuiNotification(_T("nuiAsyncIStream_Handler"));
     pNotif->SetToken(new nuiToken<nuiCommand*>(this, true));
     App->Post(pNotif);
+    NGL_LOG(_T("nuiAsyncIStream::Handler"), NGL_LOG_DEBUG, _T("Posted notification"));
   }
 
   bool SetArgs(const std::vector<nglString, std::allocator<nglString> >&)
@@ -58,11 +68,11 @@ protected:
 
   bool ExecuteDo()
   {
+    NGL_LOG(_T("nuiAsyncIStream::Handler"), NGL_LOG_DEBUG, _T("ExecuteDo"));
     if (!mCancel)
       mpASStream->HandlerDone(mpStream);
-    else
-      delete mpStream;
 
+    delete mpStream;
     mpStream = NULL;
     return true;
   }
@@ -86,7 +96,54 @@ public:
   
   nglIStream* DoStream()
   {
-    return NULL;
+    nglString url(mURL);
+    if (!url.CompareLeft(_T("file://"), false))
+      url.DeleteLeft(7);
+    url.TrimLeft('/');
+    if (url.IsEmpty())
+      url = _T("/");
+    else
+      url.Insert('/', 0);
+      
+    nglPath p(url);
+    if (!p.Exists())
+      return NULL;
+    
+    if (p.IsLeaf())
+      return p.OpenRead();
+
+    // This is a directory, let's fake some HTML page:
+    
+    nglString dir;
+    dir.CFormat(_T("<p>Directory %ls:</p><br>\n"), p.GetChars());
+    
+    dir.Add("<a href=\"").Add(p.GetParent().GetChars()).Add("\">Parent Folder</a><br>\n");
+
+    std::list<nglPath> children;
+    p.GetChildren(children);
+    
+    std::list<nglPath>::const_iterator it = children.begin();
+    std::list<nglPath>::const_iterator end = children.end();
+
+    int32 count = 0;
+    while (it != end)
+    {
+      nglString l;
+      nglPath c(*it);
+      if (c.IsLeaf())
+        l.CFormat(_T("<a href=\"%ls\">%ls</a> %d bytes<br>\n"), c.GetChars(), c.GetNodeName().GetChars(), c.GetSize());
+      else
+        l.CFormat(_T("<a href=\"%ls\">%ls</a> (folder)<br>\n"), c.GetChars(), c.GetNodeName().GetChars());
+      dir += l;
+      count++;
+      ++it;
+    }
+    
+    dir.Add("<p>").Add(count).Add(" items</p><br>\n");
+    
+    char* pChars = dir.Export();
+    nglIMemory* pMem = new nglIMemory(pChars, strlen(pChars));
+    return pMem;
   }
 protected:
 };
@@ -95,16 +152,34 @@ class nuiAsyncIStream::HttpHandler : public nuiAsyncIStream::Handler
 {
 public:
   HttpHandler(nuiAsyncIStream* pASStream, const nglString& rURL)
-  : nuiAsyncIStream::Handler(pASStream, rURL)
+  : nuiAsyncIStream::Handler(pASStream, rURL), mpResponse(NULL)
   {
     
   }
   
+  ~HttpHandler()
+  {
+    delete mpResponse;
+  }
+  
   nglIStream* DoStream()
   {
-    return NULL;
+    nuiHTTPRequest request(mURL);
+    mpResponse = request.SendRequest();
+    if (!mpResponse)
+      return NULL;
+    
+    nglIMemory* pMem = new nglIMemory(&mpResponse->GetBody()[0], mpResponse->GetBody().size());
+    return pMem;
   }
+  
+  virtual const nuiHTTPResponse* GetHTTPResponse() const
+  {
+    return mpResponse;
+  }
+  
 protected:
+  nuiHTTPResponse* mpResponse;
 };
 
 nuiAsyncIStream::nuiAsyncIStream(const nglString& rURL, bool AutoStart)
@@ -113,7 +188,7 @@ nuiAsyncIStream::nuiAsyncIStream(const nglString& rURL, bool AutoStart)
   nglPath p(mURL);
   nglString protocol(p.GetVolumeName());
 
-  if (protocol.IsEmpty())
+  if (protocol.IsEmpty() && mURL.Compare(_T("file:///"), false) != 0)
   {
     protocol = _T("file");
     mURL.TrimLeft(_T('/'));
@@ -126,7 +201,7 @@ nuiAsyncIStream::nuiAsyncIStream(const nglString& rURL, bool AutoStart)
   {
     mpHandler = new FileHandler(this, mURL);
   }
-  else if (protocol == _T("http") || protocol == _T("https"))
+  else if (protocol == _T("http") || protocol == _T("https") || protocol == _T("shttp"))
   {
     mpHandler = new HttpHandler(this, mURL);
   }
@@ -152,6 +227,11 @@ nuiAsyncIStream::~nuiAsyncIStream()
       mpHandler->Cancel();
     }
   }
+}
+
+const nglString& nuiAsyncIStream::GetURL() const
+{
+  return mURL;
 }
 
 bool nuiAsyncIStream::Start()
@@ -212,7 +292,20 @@ int64 nuiAsyncIStream::Read(void* pData, int64 WordCount, uint WordSize)
 
 void nuiAsyncIStream::HandlerDone(nglIStream* pStream)
 {
+  NGL_LOG(_T("nuiAsyncIStream"), NGL_LOG_DEBUG, _T("HandlerDone"));
   mpStream = pStream;
+  StreamReady(this);
 }
 
 
+const nuiHTTPResponse* nuiAsyncIStream::GetHTTPResponse() const
+{
+  if (!mpHandler)
+    return NULL;
+  return mpHandler->GetHTTPResponse();
+}
+
+void nuiAsyncIStream::Cancel()
+{
+  mCancel = true;
+}

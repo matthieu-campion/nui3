@@ -1166,7 +1166,7 @@ bool nglPath::InternalSetPath(const nglChar* pPath)
 	int32 rootpart = GetRootPart();
 	int32 i = mPathName.GetLength() - 1;
 	if (rootpart ? i > rootpart : i > 1)
-		mPathName.TrimRight(L'/');
+		mPathName.TrimRight(_T('/'));
 
 	return true;
 }

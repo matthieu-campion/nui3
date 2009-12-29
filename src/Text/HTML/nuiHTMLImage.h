@@ -9,10 +9,9 @@
 
 #include "nui.h"
 #include "nuiHTMLItem.h"
+#include "nuiSignalsSlots.h"
 
-class nuiHTTPRequest;
-class nuiHTTPResponse;
-class nuiHTTPRequest_Thread;
+class nuiAsyncIStream;
 
 class nuiHTMLImage : public nuiHTMLItem
 {
@@ -24,12 +23,14 @@ public:
   virtual void Layout(nuiHTMLContext& rContext);
   
 private:
-  void HTTPDone(nuiHTTPRequest* pRequest, nuiHTTPResponse* pResponse);
+  void StreamDone(nuiAsyncIStream* pStream);
   
   nuiTexture* mpTexture;
-  nuiHTTPRequest_Thread* mpRequest;
+  nuiAsyncIStream* mpStream;
   float mWidth;
   float mHeight;
+  
+  nuiSlotsSink mSlotSink;
 };
 
 

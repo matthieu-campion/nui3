@@ -6,6 +6,9 @@
  */
 
 #include "nui.h"
+#include "nuiSignalsSlots.h"
+
+class nuiHTTPResponse;
 
 class nuiAsyncIStream : public nglIStream
 {
@@ -13,6 +16,9 @@ public:
   nuiAsyncIStream(const nglString& rURL, bool AutoStart);
   
   ~nuiAsyncIStream();
+  
+  const nglString& GetURL() const;
+  
   bool Start();
   bool IsDone() const;
   float GetCompletion() const;
@@ -22,6 +28,11 @@ public:
   nglFileSize Available(uint WordSize);
   int64 Read(void* pData, int64 WordCount, uint WordSize);
   
+  nuiSignal1<nuiAsyncIStream*> StreamReady;
+  
+  const nuiHTTPResponse* GetHTTPResponse() const;
+  
+  void Cancel();
 protected:
   class Handler;
   class FileHandler;
