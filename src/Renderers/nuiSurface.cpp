@@ -28,15 +28,16 @@ nuiSurface* nuiSurface::CreateSurface (const nglString& rName, int32 Width, int3
   NGL_ASSERT(mpSurfaces.find(rName) == mpSurfaces.end());
   pSurface = new nuiSurface(rName, Width, Height, PixelFormat);
   pSurface->Acquire();
-
   mpSurfaces[rName] = pSurface;
+
+//  NGL_OUT(_T("nuiSurface CreateSurface [0x%x] NAME: [%ls] COUNT [%d]\n"), pSurface, rName.GetChars(), mpSurfaces.size());
+
   return pSurface;
 }
 
 nuiSurface::nuiSurface(const nglString& rName, int32 Width, int32 Height, nglImagePixelFormat PixelFormat)
   : nuiObject(), nuiDrawContext(nuiRect(Width, Height))
 {
-  //NGL_OUT(_T("nuiSurface CTOR 0x%x (%f x %f\n"), this, Width, Height);
   SetObjectClass(_T("nuiSurface"));
   SetObjectName(rName);
   mCount = 0;
@@ -64,7 +65,9 @@ nuiSurface::nuiSurface(const nglString& rName, int32 Width, int32 Height, nglIma
     nuiSurfaceCache* pCache = *it;
     pCache->CreateSurface(this);
     ++it;
-  }  
+  }
+
+//  NGL_OUT(_T("nuiSurface CTOR [0x%x] SIZE[%dx%d]\n"), this, Width, Height);
 }
 
 nuiSurface::~nuiSurface()
@@ -78,8 +81,12 @@ nuiSurface::~nuiSurface()
     ++it;
   }
   mpSurfaces.erase(GetObjectName());
+
+  if (mpPainter == mpSurfacePainter)
+    SetPainter(NULL);
   delete mpSurfacePainter;
-  //NGL_OUT(_T("nuiSurface DTOR 0x%x\n"), this);
+
+//  NGL_OUT(_T("nuiSurface DTOR [0x%x] NAME: [%ls] COUNT [%d]\n"), this, GetObjectName().GetChars(), mpSurfaces.size());
 }
 
 int32 nuiSurface::GetWidth() const

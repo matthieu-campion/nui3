@@ -541,7 +541,7 @@ protected:
   nglString mDecorationName;
 
   nuiSurface* mpSurface;
-  void UpdateSurfaceRect(const nuiRect& rRect);
+  void UpdateSurface(const nuiRect& rRect);
   
   nuiSize mBorderLeft, mBorderRight; // empty space left left and right the widget itself
   nuiSize mBorderTop, mBorderBottom; // empty space left below and above the widget itself

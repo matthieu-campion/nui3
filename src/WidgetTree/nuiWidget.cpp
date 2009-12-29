@@ -718,8 +718,11 @@ nuiWidget::~nuiWidget()
     mpDecoration->Release();
   }
 
-  if (mpSurface)
+  if (mpSurface) {
+    if (mpSurface->GetTexture())
+      mpSurface->GetTexture()->Release();
     mpSurface->Release();
+  }
   delete mpRenderCache;
 }
 
@@ -1304,9 +1307,9 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
     {
       if (mNeedSelfRedraw)
       {
-        UpdateSurfaceRect(_self_and_decorations.Size());
+        UpdateSurface(_self_and_decorations.Size());
+
         mpSurface->Wipe();
-        
         mpSurface->ResetState();
         mpSurface->ResetClipRect();
         mpSurface->Translate(_self_and_decorations.Left(), _self_and_decorations.Top());
@@ -2725,20 +2728,37 @@ static nglString GetSurfaceName(nuiWidget* pWidget)
   return str;
 }
 
-void nuiWidget::UpdateSurfaceRect(const nuiRect& rRect)
+void nuiWidget::UpdateSurface(const nuiRect& rRect)
 {
-  if (mSurfaceEnabled && (mpSurface->GetWidth() != rRect.GetWidth() || mpSurface->GetHeight() != rRect.GetHeight()))
+  if (mSurfaceEnabled)
   {
-    //NGL_OUT(_T("UpdateSurfaceRect... %f * %f\n"), rRect.GetWidth(), rRect.GetHeight());
-    nglString str(GetSurfaceName(this));
-    mpSurface->Release();
-    mpSurface = nuiSurface::CreateSurface(str, ToAbove(rRect.GetWidth()), ToAbove(rRect.GetHeight()), eImagePixelRGBA);
-    mpSurface->Acquire();
-    mpSurface->SetRenderToTexture(true);
-    nuiTexture* pSurfaceTexture = nuiTexture::GetTexture(mpSurface, false);
-    mpSurface->SetTexture(pSurfaceTexture);
-    //#FIXME what should we do about overdraw here?
-    //NGL_OUT(_T("UpdateSurfaceRectOK\n"));
+    if (!mpSurface || (mpSurface->GetWidth() != rRect.GetWidth() || mpSurface->GetHeight() != rRect.GetHeight()))
+    {
+      if (mpSurface) {
+        if (mpSurface->GetTexture())
+          mpSurface->GetTexture()->Release();
+        mpSurface->Release();
+      }
+      mpSurface = NULL;
+
+//      if (!(rRect.GetWidth() > 0 && rRect.GetHeight() > 0))
+//        return;
+
+      nglString str(GetSurfaceName(this));
+      mpSurface = nuiSurface::CreateSurface(str, ToAbove(rRect.GetWidth()), ToAbove(rRect.GetHeight()), eImagePixelRGBA);
+      mpSurface->SetRenderToTexture(true);
+      nuiTexture* pSurfaceTexture = nuiTexture::GetTexture(mpSurface, false);
+      mpSurface->SetTexture(pSurfaceTexture);      
+    }
+  }
+  else
+  {
+    if (mpSurface) {
+      if (mpSurface->GetTexture())
+        mpSurface->GetTexture()->Release();
+      mpSurface->Release();
+    }
+    mpSurface = NULL;
   }
 }
 
@@ -3356,25 +3376,10 @@ void nuiWidget::EnableSurface(bool Set)
   if (mSurfaceEnabled == Set)
     return;
   mSurfaceEnabled = Set;
-  if (mSurfaceEnabled)
-  {
-    nglString str(GetSurfaceName(this));
-    nuiRect r(GetOverDrawRect(true, true).Size());
-//    NGL_OUT(_T("EnableSurface... %f * %f\n"), r.GetWidth(), r.GetHeight());
-    mpSurface = nuiSurface::CreateSurface(str, ToAbove(r.GetWidth()), ToAbove(r.GetHeight()), eImagePixelRGBA);
-    mpSurface->Acquire();
-    mpSurface->SetRenderToTexture(true);
-    nuiTexture* pSurfaceTexture = nuiTexture::GetTexture(mpSurface, false);
-    mpSurface->SetTexture(pSurfaceTexture);
-    //#FIXME what should we do about overdraw here?
-    //NGL_OUT(_T("EnableSurfaceOK\n"));
-    InvalidateSurface();
-  }
-  else
-  {
-    mpSurface->Release();
-    mpSurface = NULL;
-  }
+
+  nuiRect r(GetOverDrawRect(true, true).Size());
+  UpdateSurface(r);
+
   Invalidate();
   DebugRefreshInfo();
 }
