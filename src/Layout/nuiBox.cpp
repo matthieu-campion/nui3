@@ -41,17 +41,17 @@ void nuiBox::InitBoxAttributes()
                 nuiMakeDelegate(this, &nuiBox::GetBoxDimensionRange)));
 
   AddAttribute(new nuiAttribute<bool>
-               (nglString(_T("EqualizeCells")), nuiUnitSize,
+               (nglString(_T("EqualizeCells")), nuiUnitBoolean,
                 nuiMakeDelegate(this, &nuiBox::GetEqualizeCells),
                 nuiMakeDelegate(this, &nuiBox::SetEqualizeCells)));                
   
   AddAttribute(new nuiAttribute<nuiExpandMode>
-               (nglString(_T("Expand")), nuiUnitNone,
+               (nglString(_T("Expand")), nuiUnitExpand,
                 nuiMakeDelegate(this, &nuiBox::GetExpand),
                 nuiMakeDelegate(this, &nuiBox::SetExpand)));                
   
   AddAttribute(new nuiAttribute<nuiExpandMode>
-               (nglString(_T("CellExpand")), nuiUnitSize,
+               (nglString(_T("CellExpand")), nuiUnitExpand,
                 nuiMakeDelegate(this, &nuiBox::GetCellExpand),
                 nuiMakeDelegate(this, &nuiBox::_SetCellExpand),
                 nuiMakeDelegate(this, &nuiBox::GetBoxDimensionRange)));
