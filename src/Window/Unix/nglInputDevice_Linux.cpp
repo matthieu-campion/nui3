@@ -17,7 +17,7 @@
   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "ngl.h"
+#include "nui.h"
 #include "nglKernel.h"
 #include "nglInputDevice_Linux.h"
 #include <sys/types.h>

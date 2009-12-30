@@ -245,7 +245,8 @@ set(SOURCES
   src/Stream/Zip/ioapi.c
   src/Stream/Zip/unzip.c
   src/Stream/Zip/zip.c
-  
+  src/Stream/nuiAsyncIStream.cpp  
+
   src/Image/nglBitmapTools.cpp
   src/Image/nglImage.cpp
 #  src/Image/nglImageCGCodec.cpp
