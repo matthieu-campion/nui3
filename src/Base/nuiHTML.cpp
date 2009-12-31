@@ -11,6 +11,7 @@
 #include "nglOMemory.h"
 #include "nuiUnicode.h"
 
+#undef Bool
 #include "tidy.h"
 #include "buffio.h"
 
