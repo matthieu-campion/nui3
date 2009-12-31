@@ -2335,6 +2335,15 @@ void nuiWidget::SetVisible(bool Visible)
     StartAnimation(_T("HIDE"));
 }
 
+void nuiWidget::SilentSetVisible(bool Visible)
+{
+  if (mVisible == Visible)
+    return;
+  
+  mVisible = Visible;
+}
+
+
 bool nuiWidget::IsVisible(bool combined) const
 {
   if (!combined || !mpParent)
@@ -2713,6 +2722,12 @@ void nuiWidget::SetVisibleRect(const nuiRect& rRect)
 {
   mVisibleRect = rRect;
   Invalidate();
+}
+
+void nuiWidget::SilentSetVisibleRect(const nuiRect& rRect)
+{
+  mVisibleRect = rRect;
+  SilentInvalidate();
 }
 
 const nuiRect& nuiWidget::GetVisibleRect() const

@@ -283,7 +283,7 @@ bool nuiParser::GetFloat(double& rResult)
   uint8 c = 0;
   if (!GetNumberDigit(c, mChar, 10))
     return false;
-  while (mChar && c >= 0 && c <= 9)
+  while (mChar && c <= 9)
   {
     value = value * 10 + c;
     if (!NextChar())
@@ -300,7 +300,7 @@ bool nuiParser::GetFloat(double& rResult)
     double count = 1, v = 0;
     if (!GetNumberDigit(c, mChar, 10))
       return false;
-    while (mChar && c >= 0 && c <= 9) // Read decimal part:
+    while (mChar && c <= 9) // Read decimal part:
     {
       v = v * 10 + c;
       count *= 10;

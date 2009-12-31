@@ -60,7 +60,6 @@ template <int32 percent> double nuiEasingElasticIn(double val) ///< percent = 10
 {
   static const double period = 100.0 / (double)percent;
   static const double p = 1.0 / (double)period;
-  double res = 0.0;
 	if (val == 0.0 || val == 1.0)
 		return val;
 

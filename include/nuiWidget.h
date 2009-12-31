@@ -105,6 +105,7 @@ public:
   void SetBorder(nuiSize XLeft, nuiSize XRight, nuiSize YTop, nuiSize YBottom); ///< Sets the empty space around the widget itself
 
   virtual void SetVisibleRect(const nuiRect& rRect); ///< This sets the rectangle that will actually be displayed in the parent widget (for example in case this widget is inside a nuiScrollView, only a part of it may be visible at once). The rectangle is local to the widget rect.
+  void SilentSetVisibleRect(const nuiRect& rRect); ///< This method change the visible rect of the widget without invalidating it. It is useful if you need to change the visible rect from a parent's SetRect method: you allready know that you will need to redraw it. See SetVisibleRect for more information.
   const nuiRect& GetVisibleRect() const; ///< This sets the rectangle that will actually be displayed in the parent widget (for example in case this widget is inside a nuiScrollView, only a part of it may be visible at once). The rectangle is local to the widget rect.
   
   virtual const nuiRect& GetIdealRect(); ///< Return the ideal area used by this Object. If the layout of this object has changed CalIdealRect will be called and mIdealRect will contain the ideal rectangle. If the user specified a user size then mIdealRect will be overwritten with mUserRect. 
@@ -267,6 +268,7 @@ public:
   virtual void LockState(); ///< Lock the state of the object. The state can't be changed until it is unlocked, also, the object will not combine its state with its parent's anymore.
   virtual void UnlockState(); ///< Unlock the object's state. See LockState() for for info. 
   virtual void SetVisible(bool Visible); ///< Show or hide the widget
+  void SilentSetVisible(bool Visible); ///< Change the visible flag of the widget but don't invalidate. This is useful if you are changing the visibility of a widget from a parent's SetRect method: you are already aware of the rendering and invalidation change.
   bool IsVisible(bool combined = true) const; ///< Return true if the object is visible. By default the returned state will be the state of the object combined with the states of its hierarchy recursively. If one of its parents is invisible the widget becomes invisible. If combine==false the returned value will be the local visible state of the object.
 	bool AttrIsVisible();
   void SetSelectionExclusive(bool Exclusive); ///< When an object is set to exclusive selection it will deselect all its slibblings before selecting itself (for easy radio buttons and the like).
