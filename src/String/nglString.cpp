@@ -36,8 +36,6 @@ licence: see nui3/LICENCE.TXT
 #define ngl_strnicmp wcsncasecmp
 #define ngl_mbs_stricmp strcasecmp
 
-#define DEBUG_IMPORT
-
 static int wcscasecmp(const nglChar* s1, const nglChar* s2)
 {
   nglChar c1;
