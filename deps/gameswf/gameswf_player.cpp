@@ -370,7 +370,7 @@ namespace gameswf
 		}
 
 		++s_player_count;
-		
+
 		// set startup random position
 		Uint64 t = tu_timer::get_systime();
 		t &= 0xFF;	// truncate
@@ -556,7 +556,7 @@ namespace gameswf
 		// Drop all library references to movie_definitions, so they
 		// can be cleaned up.
 	{
-		for (stringi_hash< smart_ptr<character_def> >::iterator it = 
+		for (stringi_hash< smart_ptr<character_def> >::iterator it =
 			m_chardef_library.begin(); it != m_chardef_library.end(); ++it)
 		{
 			if (it->second->get_ref_count() > 1)
@@ -759,7 +759,7 @@ namespace gameswf
 
 // Local Variables:
 // mode: C++
-// c-basic-offset: 8 
+// c-basic-offset: 8
 // tab-width: 8
 // indent-tabs-mode: t
 // End:

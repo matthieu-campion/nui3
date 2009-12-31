@@ -36,7 +36,9 @@ licence: see nui3/LICENCE.TXT
 #define ngl_strnicmp wcsncasecmp
 #define ngl_mbs_stricmp strcasecmp
 
-static int wcscasecmp(const nglChar* s1, const nglChar* s2) 
+#define DEBUG_IMPORT
+
+static int wcscasecmp(const nglChar* s1, const nglChar* s2)
 {
   nglChar c1;
   nglChar c2;
@@ -49,13 +51,13 @@ static int wcscasecmp(const nglChar* s1, const nglChar* s2)
     if (!c1)
       break;
     diff = c1 - c2;
-    if (diff) 
+    if (diff)
     {
       if ((c1 >= L'A') && (c1 <= L'Z'))
         c1 += 0x20;
       if ((c2 >= L'A') && (c2 <= L'Z'))
         c2 += 0x20;
-      if (c1 != c2) 
+      if (c1 != c2)
         break;
     }
   } while (1);
@@ -70,7 +72,7 @@ static int wcsncasecmp(const wchar_t* s1, const wchar_t* s2, int64 n)
   nglChar c2;
   if (!n)
     return 0;
-  do 
+  do
   {
     int diff;
 
@@ -124,7 +126,7 @@ static int wcsncasecmp(const wchar_t* s1, const wchar_t* s2, int64 n)
 static void ngl_uitoa (uint64 x, uint32 base, nglString& _String)
 {
   // Max Number is 33 digits long in binary
-  if (base < 2) 
+  if (base < 2)
     return;
 
   nglChar Temp[34];
@@ -146,7 +148,7 @@ static void ngl_uitoa (uint64 x, uint32 base, nglString& _String)
 
 static void ngl_itoa (int64 x, int32 base, nglString& _String)
 {
-  if (base < 2) 
+  if (base < 2)
     return;
 
   // Max Number is 33 digits long in binary
@@ -365,16 +367,16 @@ static int32 compare_right(nglChar const *a, nglChar const *b)
       return -1;
     else if (!nat_isdigit(*b))
       return +1;
-    else if (*a < *b) 
+    else if (*a < *b)
     {
       if (!bias)
         bias = -1;
-    } 
-    else if (*a > *b) 
+    }
+    else if (*a > *b)
     {
       if (!bias)
         bias = +1;
-    } 
+    }
     else if (!*a  &&  !*b)
     {
       return bias;
@@ -389,7 +391,7 @@ static int32 compare_left(nglChar const *a, nglChar const *b)
 {
   /* Compare two left-aligned numbers: the first to have a
   different value wins. */
-  for (;; a++, b++) 
+  for (;; a++, b++)
   {
     if (!nat_isdigit(*a)  &&  !nat_isdigit(*b))
       return 0;
@@ -415,7 +417,7 @@ static int32 strnatcmp0(nglChar const *a, nglChar const *b, int fold_case)
 
   assert(a && b);
   ai = bi = 0;
-  while (1) 
+  while (1)
   {
     ca = a[ai]; cb = b[bi];
 
@@ -427,30 +429,30 @@ static int32 strnatcmp0(nglChar const *a, nglChar const *b, int fold_case)
       cb = b[++bi];
 
     /* process run of digits */
-    if (nat_isdigit(ca)  &&  nat_isdigit(cb)) 
+    if (nat_isdigit(ca)  &&  nat_isdigit(cb))
     {
       fractional = (ca == '0' || cb == '0');
 
-      if (fractional) 
+      if (fractional)
       {
         if ((result = compare_left(a+ai, b+bi)) != 0)
           return result;
-      } 
-      else 
+      }
+      else
       {
         if ((result = compare_right(a+ai, b+bi)) != 0)
           return result;
       }
     }
 
-    if (!ca && !cb) 
+    if (!ca && !cb)
     {
       /* The strings compare the same.  Perhaps the caller
       will want to call strcmp to break the tie. */
       return fold_case ? ngl_stricmp(a, b) : ngl_strcmp(a, b);
     }
 
-    if (fold_case) 
+    if (fold_case)
     {
       ca = nat_toupper(ca);
       cb = nat_toupper(cb);
@@ -467,14 +469,14 @@ static int32 strnatcmp0(nglChar const *a, nglChar const *b, int fold_case)
   return 0;
 }
 
-static int32 strnatcmp(nglChar const *a, nglChar const *b) 
+static int32 strnatcmp(nglChar const *a, nglChar const *b)
 {
   return strnatcmp0(a, b, 0);
 }
 
 
 /* Compare, recognizing numeric string and ignoring case. */
-static int32 strnatcasecmp(nglChar const *a, nglChar const *b) 
+static int32 strnatcasecmp(nglChar const *a, nglChar const *b)
 {
   return strnatcmp0(a, b, 1);
 }
@@ -528,7 +530,7 @@ nglString::nglString(double db, int32 precision)
 
 nglString::nglString(const nglString& rSource)
 {
-  mString = rSource.mString; 
+  mString = rSource.mString;
   mIsNull = rSource.mIsNull;
 }
 
@@ -537,7 +539,7 @@ nglString::nglString(const nglChar* pSource)
   mIsNull = true;
   if (pSource)
   {
-    mString = std::wstring(pSource, wcslen(pSource)); 
+    mString = std::wstring(pSource, wcslen(pSource));
     mIsNull = false;
   }
 }
@@ -755,7 +757,7 @@ int32 nglString::Export (int32& rOffset, char* pBuffer, int32& rToWrite, nglStri
 
 
 nglString nglString::Extract(uint32 Index) const
-{                   
+{
   return Extract(Index, GetLength() - Index);
 }
 
@@ -1358,7 +1360,7 @@ char* nglString::EncodeUrl()
   char* pResultChars = (char*)malloc(resultLen);
   int j = 0;
   std::set<char>::const_iterator end = gURLDontEncodeChars.end();
-  for (int i = 0; i < exportLen; i++) 
+  for (int i = 0; i < exportLen; i++)
   {
     char c = pExportChars[i];
     if (nglString::gURLDontEncodeChars.find(c) != end) {
@@ -1385,24 +1387,24 @@ char* nglString::EncodeUrl()
   return pResultChars;
 }
 
-static const char HEX2DEC[256] = 
+static const char HEX2DEC[256] =
 {
   /*       0  1  2  3   4  5  6  7   8  9  A  B   C  D  E  F */
   /* 0 */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
   /* 1 */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
   /* 2 */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
   /* 3 */  0, 1, 2, 3,  4, 5, 6, 7,  8, 9,-1,-1, -1,-1,-1,-1,
-  
+
   /* 4 */ -1,10,11,12, 13,14,15,-1, -1,-1,-1,-1, -1,-1,-1,-1,
   /* 5 */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
   /* 6 */ -1,10,11,12, 13,14,15,-1, -1,-1,-1,-1, -1,-1,-1,-1,
   /* 7 */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
-  
+
   /* 8 */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
   /* 9 */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
   /* A */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
   /* B */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
-  
+
   /* C */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
   /* D */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
   /* E */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
@@ -1421,16 +1423,16 @@ void nglString::DecodeUrl()
   // Note from RFC1630: "Sequences which start with a percent
   // sign but are not followed by two hexadecimal characters
   // (0-9, A-F) are reserved for future extension"
-  
+
   const nglChar* pSrc = GetChars();
   const int32 SRC_LEN = GetLength();
   const nglChar* const SRC_END = pSrc + SRC_LEN;
   // last decodable '%'
   const nglChar * const SRC_LAST_DEC = SRC_END - 2;
-  
+
   const nglChar* pStart = new nglChar[SRC_LEN + 1];
   nglChar* pEnd = const_cast<nglChar*>(pStart);
-  
+
   while (pSrc < SRC_LAST_DEC)
   {
     if (*pSrc == '%')
@@ -1444,14 +1446,14 @@ void nglString::DecodeUrl()
         continue;
       }
     }
-    
+
     *pEnd++ = *pSrc++;
   }
-  
+
   // the last 2- chars
   while (pSrc < SRC_END)
     *pEnd++ = *pSrc++;
-  
+
   *pEnd = 0;
   Copy(pStart);
   delete [] pStart;
@@ -1483,7 +1485,7 @@ void nglString::Unescape()
   char* pExport = Export();
   char* pRead = pExport;
   char* pWrite = pExport;
-  
+
   while (*pRead)
   {
     if (*pRead == '\\')
@@ -1498,7 +1500,7 @@ void nglString::Unescape()
         pRead++;
         c = *pRead;
       }
-      
+
       char unescaped = number.GetCInt();
       *pWrite++ += unescaped;
     }
@@ -1507,11 +1509,11 @@ void nglString::Unescape()
       *pWrite++ = *pRead++;
     }
   }
-  
+
   *pWrite = 0;
 
   Import(pExport);
-  delete pExport;  
+  delete pExport;
 }
 
 
@@ -1530,14 +1532,14 @@ nglString& nglString::Format(const nglString& rFormat, ...)
 {
   if (rFormat.IsNull())
     return *this;
-  
+
   mIsNull = false;
   va_list args;
-  
+
   va_start(args, rFormat);
   Formatv(rFormat, args);
   va_end(args);
-  
+
   return *this;
 }
 
@@ -1684,14 +1686,14 @@ nglString& nglString::CFormat(const nglString& rFormat, ...)
 {
   if (rFormat.IsNull())
     return *this;
-  
+
   mIsNull = false;
   va_list args;
-  
+
   va_start(args, rFormat);
   NO_LOCALE( Formatv(rFormat, args) );
   va_end(args);
-  
+
   return *this;
 }
 
@@ -1727,7 +1729,7 @@ nglString& nglString::CFormatv(const nglString& rFormat, va_list Args)
 {
   if (rFormat.IsNull())
     return *this;
-  
+
   mIsNull = false;
   NO_LOCALE( Formatv(rFormat, Args) );
   return *this;
@@ -2607,7 +2609,7 @@ nglStringConv* nglString::GetStringConv(const nglEncodingPair& rEncodings)
     return pConverter;
   }
 
-  delete pConverter;  
+  delete pConverter;
 
   return NULL;
 }

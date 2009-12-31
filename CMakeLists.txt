@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 2.4)
 
+SET(CMAKE_MODULE_PATH deps/cmake_modules)
+
 if(COMMAND cmake_policy)
   cmake_policy(SET CMP0003 NEW)
 endif(COMMAND cmake_policy)
@@ -18,6 +20,17 @@ IF(GLUT_FOUND)
 ELSE(GLUT_FOUND)
  MESSAGE(FATAL_ERROR "GLUT not found")
 ENDIF(GLUT_FOUND)
+
+FIND_PACKAGE(LibTidy)
+
+IF(LIBTIDY_FOUND)
+  INCLUDE_DIRECTORIES(${LIBTIDY_INCLUDE_DIR})
+
+#  SET(requiredlibs ${requiredlibs} ${LIBTIDY_LIBRARIES})
+
+ELSE(LIBTIDY_FOUND)
+  MESSAGE(FATAL_ERROR "The LibTidy library was not found.")
+ENDIF(LIBTIDY_FOUND)
 
 set(SOURCES 
 
@@ -328,7 +341,6 @@ include_directories(
   deps/freetype2/include
   deps/agg/include
   deps/harfbuzz
-  deps/tidy
   include
   src/Stream/Zip
   src/Text/HTML
@@ -408,7 +420,6 @@ ELSEIF (${WINDOWS})
   deps/libjpeg
   deps/libpng
   deps/zlib/
-  deps/tidy/
   )
 
   set(${SOURCES} ${SOURCES} 

@@ -34,16 +34,16 @@ void MainWindow::OnCreation()
 {
   nuiVBox* pBox = new nuiVBox(0);
   AddChild(pBox);
-  
+
   nuiButton* pBtn = new nuiButton(_T("1 - add a item in Test menu"));
   mEventSink.Connect(pBtn->Activated, &MainWindow::OnAddItem);
   pBox->AddCell(pBtn, nuiLeft);
-  
+
   pBtn = new nuiButton(_T("2 - add a submenu in Test menu"));
   mEventSink.Connect(pBtn->Activated, &MainWindow::OnAddSubMenu);
   pBox->AddCell(pBtn, nuiLeft);
-  
-  
+
+
   mText = _T("play with the menu bar, and check the results below:\n");
   mpText = new nuiLabel(mText, nuiFont::GetFont(14));
   mpText->SetPosition(nuiTop);
@@ -60,7 +60,7 @@ void MainWindow::MyCommand(const nglString& rMsg)
   nglString msg = rMsg;
   msg.Append(_T("\n"));
   mText.Append(msg);
-  mpText->SetText(mText);  
+  mpText->SetText(mText);
 }
 
 
@@ -68,15 +68,15 @@ bool MainWindow::OnAddItem(const nuiEvent& rEvent)
 {
   uint32 ID = mUniqueID;
   mUniqueID++;
-  
+
   nglString name;
   name.Format(_T("New%d"), ID);
   nuiMainMenuItem* pNew = new nuiMainMenuItem(name);
   mpCurrentTestMenu->AddChild(pNew);
   mEventSink.Connect(pNew->Activated, &MainWindow::OnMenuCommand, (void*)ID);
-  
+
   mpLastItem = pNew;
-  
+
   return true;
 }
 
@@ -88,7 +88,7 @@ bool MainWindow::OnAddSubMenu(const nuiEvent& rEvent)
 
 bool MainWindow::OnMenuCommand(const nuiEvent& rEvent)
 {
-  uint32 ID = (uint32)rEvent.mpUser;
+  uint64 ID = (uint64)rEvent.mpUser;
   nglString msg;
   msg.Format(_T("event item New%d"), ID);
   MyCommand(msg);

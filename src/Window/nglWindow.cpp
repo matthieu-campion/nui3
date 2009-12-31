@@ -1,7 +1,7 @@
 /*
  NUI3 - C++ cross-platform GUI framework for OpenGL based applications
  Copyright (C) 2002-2003 Sebastien Metrot & Vincent Caron
- 
+
  licence: see nui3/LICENCE.TXT
  */
 
@@ -51,7 +51,7 @@ nglWindowInfo::nglWindowInfo(uint UserWidth, uint UserHeight, bool IsFullScreen)
   MinHeight = -1;
   MaxWidth  = -1;
   MaxHeight = -1;
-  
+
   Rotate    = 0;
   Flags     = IsFullScreen ? nglWindow::FullScreen : nglWindow::NoFlag;
   Events    = nglWindow::AllEvents;
@@ -244,7 +244,7 @@ void nglWindow::CallOnCreation()
   memset (mpKeyState, 0, sizeof(bool)*NGL_KEY_MAX);
   mFPSCount = 0;
   mFPS = 0;
-  
+
   OnCreation();
 }
 
@@ -277,7 +277,7 @@ void nglWindow::CallOnClose()
 void nglWindow::CallOnPaint()
 {
   //nuiStopWatch watch(_T("nglWindow::CallOnPaint"));
-  NGL_DEBUG( NGL_LOG(_T("window"), NGL_LOG_DEBUG, _T("Paint\n")); )  
+  NGL_DEBUG( NGL_LOG(_T("window"), NGL_LOG_DEBUG, _T("Paint\n")); )
   OnPaint();
 
   nglTime now;
@@ -312,7 +312,8 @@ bool nglWindow::CallOnKeyDown (const nglKeyEvent& rEvent)
 #ifdef _DEBUG_
   //NGL_LOG(_T("window"), NGL_LOG_DEBUG, isprint(Char) ? _T("KeyDn: code=%d char='%c'") : _T("KeyDn: code=%d char=%d"), Key, Char);
 #endif // _DEBUG_
-  mpKeyState[rEvent.mKey-1] = true;
+  if (rEvent.mKey > 0)
+    mpKeyState[rEvent.mKey-1] = true;
   return OnKeyDown (rEvent);
 }
 
@@ -321,7 +322,8 @@ bool nglWindow::CallOnKeyUp (const nglKeyEvent& rEvent)
 #ifdef _DEBUG_
   //NGL_LOG(_T("window"), NGL_LOG_DEBUG, isprint(Char) ? _T("KeyUp: code=%d char='%c'") : _T("KeyDn: code=%d char=%d"), Key, Char);
 #endif // _DEBUG_
-  mpKeyState[rEvent.mKey-1] = false;
+  if (rEvent.mKey > 0)
+    mpKeyState[rEvent.mKey-1] = false;
   return OnKeyUp (rEvent);
 }
 

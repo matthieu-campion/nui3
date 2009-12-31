@@ -9,4 +9,4 @@ INCLUDE(FindGIF)
 INCLUDE(FindEXPAT)
 
 #add_subdirectory (harfbuzz)
-add_subdirectory (tidy)
+#add_subdirectory (tidy)

@@ -37,7 +37,7 @@ void MainWindow::OnClose()
 {
   if (GetNGLWindow()->IsInModalState())
     return;
-  
+
   App->Quit();
 }
 
@@ -50,15 +50,15 @@ void MainWindow::OnCreation()
   pMainBox->SetExpand(nuiExpandShrinkAndGrow);
   pMainBox->SetPosition(nuiFillVertical);
   AddChild(pMainBox);
-  
-  // create a label width background for information display 
+
+  // create a label width background for information display
   nuiBackgroundPane* pPane = new nuiBackgroundPane(eInnerBackground);
   pPane->SetBorder(20,20);
   pMainBox->AddCell(pPane, nuiFillHorizontal);
   mpLabel = new nuiLabel();
   pPane->AddChild(mpLabel);
   pPane->SetUserHeight(40);
-  
+
   nuiLabel* pLabel = new nuiLabel(_T("nuiButton:"), nuiFont::GetFont(16));
   pMainBox->AddCell(pLabel, nuiLeft);
   pMainBox->AddCell(Tutorial_Buttons());
@@ -77,7 +77,7 @@ void MainWindow::OnCreation()
 
   // make the mainbox's layout fill the entire user size (c.f. line #33)
   pMainBox->SetAllCellsExpand(nuiExpandShrinkAndGrow);
-  
+
 }
 
 
@@ -101,7 +101,7 @@ void MainWindow::OnCreation()
 nuiWidget* MainWindow::Tutorial_Buttons()
 {
   nuiHBox* pBox = new nuiHBox(0);
-  
+
   // a simple button
   nuiButton* pBtn = new nuiButton(_T("button"));
   pBox->AddCell(pBtn, nuiCenter);
@@ -111,20 +111,20 @@ nuiWidget* MainWindow::Tutorial_Buttons()
   pBtn = new nuiButton(_T("button"));
   pBox->AddCell(pBtn, nuiFill);
   mEventSink.Connect(pBtn->Activated, &MainWindow::OnButtonPressed, (void*)TAG_BUTTON2);
-  
-  
+
+
   // a button with an image
   nglImage pImg(_T("rsrc:/decorations/button1.png"));
   pBtn = new nuiButton(pImg);
   pBox->AddCell(pBtn);
   mEventSink.Connect(pBtn->Activated, &MainWindow::OnButtonPressed, (void*)TAG_BUTTON3);
 
-  
+
   // a roll-over button using decorations
   nuiGradientDecoration* pDecoUp = new nuiGradientDecoration(_T("DecoUp"), nuiColor(192,192,192), nuiColor(128,128,128), 1, nuiColor(0,0,0), eStrokeAndFillShape);
   nuiColorDecoration* pDecoUpHover = new nuiColorDecoration(_T("DecoUpHover"), nuiColor(255,0,0,128), 1, nuiColor(0,0,0));
   nuiFrame* pFrame = new nuiFrame(_T("DecoDown"), _T("rsrc:/decorations/button1.png"), nuiRect(0,0,57,54));
-  
+
   // create a nuiStateDecoration using the three previous decorations for the rollover's three states : up, hover and done
   nuiStateDecoration* pStateDeco = new nuiStateDecoration(_T("Deco"), _T("DecoUp"), _T("DecoDown"), _T("DecoUpHover"));
 
@@ -132,8 +132,8 @@ nuiWidget* MainWindow::Tutorial_Buttons()
   pBtn->SetUserSize(40,40);
   pBox->AddCell(pBtn, nuiCenter);
   mEventSink.Connect(pBtn->Activated, &MainWindow::OnButtonPressed, (void*)TAG_BUTTON4);
-  
-  
+
+
   return pBox;
 }
 
@@ -154,7 +154,7 @@ nuiWidget* MainWindow::Tutorial_Buttons()
 nuiWidget* MainWindow::Tutorial_ToggleButtons()
 {
   nuiHBox* pBox = new nuiHBox(0);
-  
+
   // a simple togglebutton
   nuiToggleButton* pBtn = new nuiToggleButton(_T("toggleButton"));
   pBox->AddCell(pBtn);
@@ -166,7 +166,7 @@ nuiWidget* MainWindow::Tutorial_ToggleButtons()
   pBox->AddCell(pBtn, nuiCenter);
   mEventSink.Connect(pBtn->ButtonPressed, &MainWindow::OnTogglePressed, (void*)TAG_BUTTON3);
   mEventSink.Connect(pBtn->ButtonDePressed, &MainWindow::OnTogglePressed, (void*)TAG_BUTTON4);
-  
+
   return pBox;
 }
 
@@ -183,7 +183,7 @@ nuiWidget* MainWindow::Tutorial_ToggleButtons()
 nuiWidget* MainWindow::Tutorial_RadioButtons1()
 {
   nuiHBox* pBox = new nuiHBox(0);
-  
+
   for (int index = 0; index < 3; index++)                // will create 3 radiobuttons,
   {
     nglString tmp;
@@ -191,15 +191,15 @@ nuiWidget* MainWindow::Tutorial_RadioButtons1()
     nuiRadioButton* pRadioBut = new nuiRadioButton(tmp);// with text inside
     pBox->AddCell(pRadioBut);
     pRadioBut->SetGroup(_T("radios"));                  // set the radio group for group behavior
-    
+
     // will send an event in the ::OnRadioPressed receiver when the radiobutton is 'activated'
     mEventSink.Connect(pRadioBut->Activated, &MainWindow::OnRadioPressed, (void*)index);  // index is given as a user parameter to recognise the button
   }
-    
-  
+
+
   return pBox;
 }
-  
+
 
 // second set : classic radio button, using a radiobutton group
 nuiWidget* MainWindow::Tutorial_RadioButtons2()
@@ -212,8 +212,8 @@ nuiWidget* MainWindow::Tutorial_RadioButtons2()
     pRadioBut->SetPosition(nuiCenter);
     pBox->AddCell(pRadioBut);
     pRadioBut->SetGroup(_T("radios2"));
-    
-    mEventSink.Connect(pRadioBut->Activated, &MainWindow::OnRadioPressed, (void*)index);    
+
+    mEventSink.Connect(pRadioBut->Activated, &MainWindow::OnRadioPressed, (void*)index);
   }
 
   return pBox;
@@ -238,10 +238,10 @@ nuiWidget* MainWindow::Tutorial_RadioButtons2()
 
 bool MainWindow::OnButtonPressed(const nuiEvent& rEvent)
 {
-  int32 tag = (int32)rEvent.mpUser;
-  
+  int64 tag = (int64)rEvent.mpUser;
+
   nglString msg;
-  
+
   switch (tag)
   {
     case TAG_BUTTON1:
@@ -259,17 +259,17 @@ bool MainWindow::OnButtonPressed(const nuiEvent& rEvent)
   }
 
   mpLabel->SetText(msg);
-  
+
   return true;
 }
 
 
 bool MainWindow::OnTogglePressed(const nuiEvent& rEvent)
 {
-  int32 tag = (int32)rEvent.mpUser;
-  
+  int64 tag = (int64)rEvent.mpUser;
+
   nglString msg;
-  
+
   switch (tag)
   {
     case TAG_TOGGLEBUTTON1:
@@ -285,9 +285,9 @@ bool MainWindow::OnTogglePressed(const nuiEvent& rEvent)
       msg = _T("a checkbox, released");
       break;
   }
-  
+
   mpLabel->SetText(msg);
-  
+
   return true;
 }
 
@@ -295,12 +295,12 @@ bool MainWindow::OnTogglePressed(const nuiEvent& rEvent)
 
 bool MainWindow::OnRadioPressed(const nuiEvent& rEvent)
 {
-  int32 index = (int32)rEvent.mpUser;
-  
+  int64 index = (int64)rEvent.mpUser;
+
   nglString msg;
   msg.Format(_T("radio button #%d"), index);
   mpLabel->SetText(msg);
-  
+
   return true;
 }
 

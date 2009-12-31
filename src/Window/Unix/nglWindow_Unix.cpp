@@ -25,9 +25,7 @@
 #include "ngl_unix.h"
 
 #include <string.h>
-#ifdef USE_WCHAR
 #include <wchar.h>
-#endif
 #include <X11/cursorfont.h>
 
 
@@ -184,7 +182,7 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
     return; // An error is already raised by nglContext's code
 
 
-  
+
   // Check fullscreen video mode
   if (mFullScreen)
   {
@@ -518,10 +516,8 @@ void nglWindow::SetTitle (const nglString& rTitle)
   XStoreName (mpDisplay, mWindow, title ? title : "");
   XFlush (mpDisplay);
 
-#ifdef USE_WCHAR
   if (title)
     free (title);
-#endif
 }
 
 
@@ -682,7 +678,7 @@ void nglWindow::OnDragRequestData(nglDragAndDrop* pDragObject, const nglString& 
 void nglWindow::OnDragStop(bool canceled)
 {
 }
- 
+
 
 
 
@@ -957,15 +953,12 @@ bool nglWindow::DoKeyPress (const XKeyEvent& rEvent)
   cnt = XLookupString ((XKeyEvent*)&rEvent, buffer, 16, &keysym, &mCompose);
   if (cnt > 0)
   {
-#ifdef USE_WCHAR
     mbstate_t state = { 0 };
     wchar_t wc;
 
     if (mbrtowc(&wc, buffer, cnt, &state) > 0)
       car = wc;
-#else
-    car = *buffer; // SBCS only
-#endif // USE_WCHAR
+
     if (car == '\r')
       car = '\n';
   }
@@ -1009,7 +1002,7 @@ void nglWindow::SetDeco (uint Deco)  // 0 or MWM_DECOR_ALL
     mHintsAtom, mHintsAtom, 32, PropModeReplace,
     (unsigned char *)hints, sizeof (MotifWmHints)/sizeof (long));
 
-  if (hints != &new_hints) XFree (hints); 
+  if (hints != &new_hints) XFree (hints);
 }
 
 void nglWindow::Grab(bool DoGrab)
