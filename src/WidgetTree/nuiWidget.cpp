@@ -1470,125 +1470,6 @@ void nuiWidget::DispatchTextInputCancelled()
     mpParent->DispatchTextInputCancelled();
 }
 
-nuiWidgetPtr DeepSearchNextFocussableWidget(nuiWidgetPtr pWidget, bool TryThisNode)
-{
-  if (TryThisNode && pWidget->GetWantKeyboardFocus())
-    return pWidget;
-    
-  nuiContainer* pContainer = dynamic_cast<nuiContainer*>(pWidget); // Is this a container?
-  if (pContainer)
-  {
-    std::auto_ptr<nuiContainer::Iterator> pIt(pContainer->GetFirstChild());
-    while (pIt->IsValid())
-    {
-      nuiWidget* pItem = pIt->GetWidget();
-      
-      nuiWidgetPtr pChild = DeepSearchNextFocussableWidget(pItem, true);
-      if (pChild)
-        return pChild;
-      
-      pContainer->GetNextChild(pIt.get());
-    }
-  }
-  
-  return NULL;
-}
-
-nuiWidgetPtr GetNextFocussableSibling(nuiWidgetPtr pWidget)
-{
-  nuiContainer* pParent = pWidget->GetParent();
-  if (pParent)
-  {
-    std::auto_ptr<nuiContainer::Iterator> pIt(pParent->GetChildIterator(pWidget));
-    pParent->GetNextChild(pIt.get());
-    
-    while (pIt->IsValid())
-    {
-      nuiWidgetPtr pSibling = pIt->GetWidget();
-      nuiWidgetPtr pItem = DeepSearchNextFocussableWidget(pSibling, true);
-      if (pItem)
-        return pItem;
-      
-      pParent->GetNextChild(pIt.get());
-    }
-  }
-  
-  return NULL;
-}
-
-nuiWidgetPtr GetNextFocussableWidget(nuiWidgetPtr pWidget)
-{
-  nuiWidget* pItem = DeepSearchNextFocussableWidget(pWidget, false);
-  if (pItem)
-    return pItem;
-
-  nuiWidgetPtr pNextWidget = pWidget;
-  while (pNextWidget)
-  {
-    pItem = GetNextFocussableSibling(pNextWidget);
-    if (pItem)
-      return pItem;
-    
-    pNextWidget = pNextWidget->GetParent();
-  }
-  
-  nuiTopLevel* pTop = pWidget->GetTopLevel();
-  if (pTop != pWidget)
-    return GetNextFocussableWidget(pTop);
-    
-  return NULL;
-}
-
-nuiWidgetPtr DeepSearchPreviousFocussableWidget(nuiWidgetPtr pWidget, bool TryThisNode)
-{
-  nuiContainer* pContainer = dynamic_cast<nuiContainer*>(pWidget); // Is this a container?
-  if (pContainer)
-  {
-    std::auto_ptr<nuiContainer::Iterator> pIt(pContainer->GetLastChild());
-    while (pIt->IsValid())
-    {
-      nuiWidget* pItem = pIt->GetWidget();
-      
-      nuiWidgetPtr pChild = DeepSearchPreviousFocussableWidget(pItem, true);
-      if (pChild)
-        return pChild;
-      
-      pContainer->GetPreviousChild(pIt.get());
-    }
-  }
-  
-  if (TryThisNode && pWidget->GetWantKeyboardFocus())
-    return pWidget;
-
-  return NULL;
-}
-
-nuiWidgetPtr GetPreviousFocussableWidget(nuiWidgetPtr pWidget)
-{
-  nuiWidget* pItem = NULL;
-  nuiContainer* pParent = pWidget->GetParent();
-  if (pParent)
-  {
-    std::auto_ptr<nuiContainer::Iterator> pIt(pParent->GetChildIterator(pWidget));
-    pParent->GetPreviousChild(pIt.get());
-    while (pIt->IsValid())
-    {
-      pItem = pIt->GetWidget();
-      nuiWidgetPtr pChild = DeepSearchPreviousFocussableWidget(pItem, true);
-      if (pChild)
-        return pChild;
-      
-      pParent->GetPreviousChild(pIt.get());
-    }
-    
-    return GetPreviousFocussableWidget(pParent);
-  }
-  
-  nuiTopLevel* pTop = pWidget->GetTopLevel();
-  NGL_ASSERT(pTop);
-  return DeepSearchPreviousFocussableWidget(pTop, true);
-}
-
 
 bool nuiWidget::DispatchKeyDown(const nglKeyEvent& rEvent, nuiKeyModifier Mask)
 {
@@ -1607,7 +1488,8 @@ bool nuiWidget::DispatchKeyDown(const nglKeyEvent& rEvent, nuiKeyModifier Mask)
   {
     return true;
   }
-  
+
+#if 0 // Moving this to nuiTopLevel
   if (rEvent.mKey == NK_TAB && HasFocus())
   {
     nuiTopLevel* pTop = GetTopLevel();
@@ -1635,6 +1517,7 @@ bool nuiWidget::DispatchKeyDown(const nglKeyEvent& rEvent, nuiKeyModifier Mask)
     
     return true;
   }
+#endif
   
   if (mpParent)
   {
@@ -1662,12 +1545,14 @@ bool nuiWidget::DispatchKeyUp(const nglKeyEvent& rEvent, nuiKeyModifier Mask)
     return true;
   }
 
+#if 0
   if (rEvent.mKey == NK_TAB && HasFocus())
   {
     // The user has just changed the focussed widget
     // Let's eat ths remnant key and return...
     return true;
   }
+#endif
   
   if (mpParent)
   {
@@ -4115,7 +4000,7 @@ void nuiWidget::DrawFocus(nuiDrawContext* pContext, bool FrontOrBack)
 {
 //#FIXME LBDEBUG : there's a bug somewhere in that, that makes ComboBox tutorial crash with Win32 (ati, vista)
   // deactivate the DrawFocus for now, in order to release the application.
-return;
+  //return;
 
 
   if (!mShowFocus)
@@ -4123,7 +4008,7 @@ return;
   
   if (mpFocusDecoration)
   {
-    nuiRect sizerect(GetRect().Size());
+    nuiRect sizerect(GetVisibleRect().Size());
     mpFocusDecoration->ClientToGlobalRect(sizerect, this);
     if (FrontOrBack)
       mpFocusDecoration->DrawFront(pContext, this, sizerect);
