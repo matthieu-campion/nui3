@@ -36,7 +36,7 @@ nuiStopWatch::~nuiStopWatch()
     double sec = diff.GetValue();
     
     nglString log(_T("\t"));
-    log.Add(str).Add(_T("\t")).Add(sec).Add(_T("\t")).Add(100.0 * sec / seconds).Add(_T("%"));
+    log.Add(str).Add(_T("\t")).Add(sec).Add(_T(" s\t(")).Add(100.0 * sec / seconds).Add(_T("%%)"));
     NGL_LOG(_T("StopWatch"), NGL_LOG_DEBUG, log.GetChars());
     
     ref = time;

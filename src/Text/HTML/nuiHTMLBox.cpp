@@ -123,10 +123,8 @@ void nuiHTMLBox::Layout(nuiHTMLContext& rContext)
 
     if (linebreak)
     {
-      nuiFont* pFont = nuiFontManager::GetManager().GetFont(rContext.mFont);
-      NGL_ASSERT(pFont);
       nglFontInfo info;
-      pFont->GetInfo(info);
+      rContext.mpFont->GetInfo(info);
       Y += info.Height;
     }
     

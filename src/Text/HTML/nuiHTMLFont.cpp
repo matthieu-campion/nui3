@@ -66,5 +66,6 @@ void nuiHTMLFont::Layout(nuiHTMLContext& rContext)
       rContext.mTextFgColor = mBackupTextFgColor;
   }
   
+  rContext.UpdateFont();
 }
 

@@ -71,12 +71,14 @@ void nuiHTMLItem::Layout(nuiHTMLContext& rContext)
   case nuiHTML::eTag_EM:
     {
       rContext.mFont.SetItalic(set, 1.0f);
+      rContext.UpdateFont();
     }
     break;
   case nuiHTML::eTag_B:
   case nuiHTML::eTag_STRONG:
     {
       rContext.mFont.SetBold(set, 1.0f);
+      rContext.UpdateFont();
     }
     break;
   case nuiHTML::eTag_U:

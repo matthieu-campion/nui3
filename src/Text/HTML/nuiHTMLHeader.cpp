@@ -47,6 +47,7 @@ void nuiHTMLHeader::Layout(nuiHTMLContext& rContext)
   
   rContext.mFont.ClearMustHaveSize();
   rContext.mFont.MustHaveSize(s, 1.0f);
+  rContext.UpdateFont();
   
   nuiHTMLBox::Layout(rContext);
   

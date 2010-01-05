@@ -31,12 +31,7 @@ nuiHTMLContext::nuiHTMLContext()
   mTextFgColor = nuiColor(0,0,0,255);
   mTextBgColor = nuiColor(0,0,0,0);
 
-  nuiFont* pFont = nuiFontManager::GetManager().GetFont(mFont);
-  NGL_ASSERT(pFont);
-  nglGlyphInfo ginfo;
-  pFont->GetGlyphInfo(ginfo, pFont->GetGlyphIndex(_T(' ')), nuiFontBase::eGlyphBitmap);
-  mHSpace = ginfo.AdvanceX;
-  pFont->Release();
+  UpdateFont();
 }
 
 nuiHTMLContext::nuiHTMLContext(const nuiHTMLContext& rContext)
@@ -45,11 +40,14 @@ nuiHTMLContext::nuiHTMLContext(const nuiHTMLContext& rContext)
   mVSpace(rContext.mVSpace),
   mHSpace(rContext.mHSpace),
   mFont(rContext.mFont),
+  mpFont(rContext.mpFont),
   mUnderline(rContext.mUnderline),
   mStrikeThrough(rContext.mStrikeThrough),
   mTextFgColor(rContext.mTextFgColor),
   mTextBgColor(rContext.mTextBgColor)
 {
+  if (mpFont)
+    mpFont->Acquire();
 }
 
 nuiHTMLContext& nuiHTMLContext::operator=(const nuiHTMLContext& rContext)
@@ -62,12 +60,36 @@ nuiHTMLContext& nuiHTMLContext::operator=(const nuiHTMLContext& rContext)
   mHSpace = rContext.mHSpace;
   
   mFont = rContext.mFont;
+  mpFont = rContext.mpFont;
+  if (mpFont)
+    mpFont->Acquire();
+  
   mUnderline = rContext.mUnderline;
   mStrikeThrough = rContext.mStrikeThrough;
   mTextFgColor = rContext.mTextFgColor;
   mTextBgColor = rContext.mTextBgColor;
 
   return *this;
+}
+
+nuiHTMLContext::~nuiHTMLContext()
+{
+  if (mpFont)
+    mpFont->Release();
+}
+
+void nuiHTMLContext::UpdateFont()
+{
+  nuiFont* pOld = mpFont;
+  
+  mpFont = nuiFontManager::GetManager().GetFont(mFont);
+  NGL_ASSERT(mpFont);
+  nglGlyphInfo ginfo;
+  mpFont->GetGlyphInfo(ginfo, mpFont->GetGlyphIndex(_T(' ')), nuiFontBase::eGlyphBitmap);
+  mHSpace = ginfo.AdvanceX;
+  
+  if (pOld)
+    pOld->Release();
 }
 
 

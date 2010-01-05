@@ -20,6 +20,7 @@
 #include "nuiHTMLFont.h"
 
 #include "nuiAsyncIStream.h"
+#include "nuiStopWatch.h"
 
 /////////////////////////////// nuiHTMLView
 nuiHTMLView::nuiHTMLView(float IdealWidth)
@@ -315,6 +316,8 @@ bool nuiHTMLView::SetURL(const nglString& rURL)
 
 void nuiHTMLView::StreamDone(nuiAsyncIStream* pStream)
 {
+//  App->GetLog().SetLevel(_T("StopWatch"), 50);
+//  nuiStopWatch watch(_T("nuiHTMLView::StreamDone"));
   mpStream = NULL;
   nglString url(mTempURL);
   const nuiHTTPResponse* pResponse = pStream->GetHTTPResponse();
@@ -365,7 +368,9 @@ void nuiHTMLView::StreamDone(nuiAsyncIStream* pStream)
   nuiHTML* pHTML = new nuiHTML();
   pHTML->SetSourceURL(url);
   bool res = pHTML->Load(*pStream, encoding);
-  
+
+  //  watch.AddIntermediate(_T("HTML Loaded"));
+
   if (res)
   {
     Clear();
@@ -376,8 +381,11 @@ void nuiHTMLView::StreamDone(nuiAsyncIStream* pStream)
     mpRootBox->SetDisplayChangedDelegate(nuiMakeDelegate(this, &nuiHTMLView::Invalidate));
     ParseTree(mpHTML, mpRootBox);
 
+    //    watch.AddIntermediate(_T("HTML Tree Parsed"));
+    
     nuiHTMLContext context(*mpContext);
     mpRootBox->Layout(context);
+    //    watch.AddIntermediate(_T("HTML Layouted"));
     InvalidateLayout();
     SetHotRect(nuiRect());
   }

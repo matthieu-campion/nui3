@@ -15,6 +15,9 @@ public:
   nuiHTMLContext();
   nuiHTMLContext(const nuiHTMLContext& rContext);
   nuiHTMLContext& operator=(const nuiHTMLContext& rContext);
+  ~nuiHTMLContext();
+  
+  void UpdateFont();
   
   float mLeftMargin;
   
@@ -23,7 +26,8 @@ public:
   float mVSpace;
   float mHSpace;
   
-  nuiFontRequest mFont;
+  nuiFontRequest mFont; ///< If you change this object, you MUST update mpFont too (just call UpdateFont())!
+  nuiFont* mpFont;
   bool mUnderline;
   bool mStrikeThrough;
   nuiColor mTextFgColor;

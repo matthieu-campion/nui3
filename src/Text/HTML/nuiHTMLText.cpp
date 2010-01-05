@@ -33,11 +33,10 @@ void nuiHTMLText::Draw(nuiDrawContext* pContext)
 void nuiHTMLText::Layout(nuiHTMLContext& rContext)
 {
   delete mpLayout;
-  nuiFont* pFont = nuiFontManager::GetManager().GetFont(rContext.mFont);
-  pFont->Acquire();
   if (mpFont)
     mpFont->Release();
-  mpFont = pFont;
+  mpFont = rContext.mpFont;
+  mpFont->Acquire();
   
   mpLayout = new nuiFontLayout(*mpFont, 0, 0, nuiHorizontal);
   mpLayout->SetUnderline(rContext.mUnderline);
