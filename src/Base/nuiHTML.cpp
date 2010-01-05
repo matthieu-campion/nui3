@@ -477,9 +477,9 @@ void nuiHTML::GetAbsoluteURL(const nglString& rBaseURL, nglString& url)
   {
     // Site relative
     int32 end = rBaseURL.FindLast(_T('/'));
-    if (end == rBaseURL[rBaseURL.GetLength() - 1])
+    if (end >= 0)
     {
-      url = rBaseURL.Extract(0, end) + url;
+      url = rBaseURL.Extract(0, end + 1) + url;
     }
     else
     {
