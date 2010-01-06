@@ -1587,7 +1587,7 @@
                           FT_Face    *aface )
   {
     FT_Memory  memory = library->memory;
-    FT_Byte*   sfnt_data;
+    FT_Byte*   sfnt_data = NULL;
     FT_Error   error;
     FT_Long    flag_offset;
     FT_Long    rlen;
@@ -1636,9 +1636,9 @@
                                    is_cff ? "cff" : "truetype",
                                    aface );
 
-    memset( sfnt_data , 0, rlen );
-    FT_FREE( sfnt_data );
   Exit:
+//    if (sfnt_data)
+//      FT_FREE( sfnt_data );
     return error;
   }
 
