@@ -10,7 +10,7 @@
 
 ///////////////////////////////////////// nuiHTMLText
 nuiHTMLText::nuiHTMLText(nuiHTMLNode* pNode, nuiHTMLNode* pAnchor, const nglString& rText)
-: nuiHTMLItem(pNode, pAnchor, true), mText(rText), mpLayout(NULL), mpFont(NULL)
+: nuiHTMLItem(pNode, pAnchor, true), mText(rText), mpLayout(NULL), mpFont(NULL), mpCompositeLayout(NULL), mpNextInRun(NULL), mFirstInRun(false), mUnderline(false), mStrikeThrough(false)
 {
 
 }
@@ -20,14 +20,38 @@ nuiHTMLText::~nuiHTMLText()
   if (mpFont)
     mpFont->Release();
   delete mpLayout;
+  delete mpCompositeLayout;
+  mpNextInRun = NULL;
 }
 
 void nuiHTMLText::Draw(nuiDrawContext* pContext)
 {
+  if (!mFirstInRun)
+    return;
+  
   pContext->SetTextColor(mTextFgColor);
   //nuiColor mTextBgColor;
   pContext->SetFont(mpFont, false);
-  pContext->DrawText(0, mpLayout->GetAscender() , *mpLayout);
+  
+  if (!mpCompositeLayout)
+  {
+    nuiHTMLText* pIt = this;
+    nglString str(nglString::Empty);
+    do 
+    {
+      if (!pIt->mFirstInRun)
+        str.Add(_T(" "));
+      str.Add(pIt->mText);
+      pIt = pIt->mpNextInRun;
+    } while (pIt);
+      
+    mpCompositeLayout = new nuiFontLayout(*mpFont, 0, 0, nuiHorizontal);
+    mpCompositeLayout->SetUnderline(mUnderline);
+    mpCompositeLayout->SetStrikeThrough(mStrikeThrough);
+    mpCompositeLayout->Layout(str);
+  }
+  
+  pContext->DrawText(0, mpCompositeLayout->GetAscender() , *mpCompositeLayout);
 }
 
 void nuiHTMLText::Layout(nuiHTMLContext& rContext)
@@ -41,11 +65,17 @@ void nuiHTMLText::Layout(nuiHTMLContext& rContext)
   mpLayout = new nuiFontLayout(*mpFont, 0, 0, nuiHorizontal);
   mpLayout->SetUnderline(rContext.mUnderline);
   mpLayout->SetStrikeThrough(rContext.mStrikeThrough);
+  mUnderline = rContext.mUnderline;
+  mStrikeThrough = rContext.mStrikeThrough;
+  
   mpLayout->Layout(mText);
   mIdealRect = mpLayout->GetRect();
   mTextFgColor = rContext.mTextFgColor;
   mTextBgColor = rContext.mTextBgColor;
   //printf("text layout done (%ls)\n", mIdealRect.GetValue().GetChars());
+  
+  delete mpCompositeLayout;
+  mpCompositeLayout = NULL;
 }
 
 float nuiHTMLText::GetAscender() const
@@ -58,4 +88,12 @@ float nuiHTMLText::GetDescender() const
   return mpLayout->GetDescender();
 }
 
+void nuiHTMLText::SetNextInRun(nuiHTMLText* pNext)
+{
+  mpNextInRun = pNext;
+}
 
+void nuiHTMLText::SetFirstInRun(bool set)
+{
+  mFirstInRun = set;
+}

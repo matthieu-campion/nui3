@@ -21,13 +21,20 @@ public:
   
   virtual float GetAscender() const;
   virtual float GetDescender() const;
-  
+
+  void SetNextInRun(nuiHTMLText* pNext);
+  void SetFirstInRun(bool set);
 private:
   nglString mText;
   nuiFontLayout* mpLayout;
+  nuiFontLayout* mpCompositeLayout;
   nuiFont* mpFont;
   
   nuiColor mTextFgColor;
   nuiColor mTextBgColor;
+  nuiHTMLText* mpNextInRun;
+  bool mFirstInRun;
+  bool mUnderline;
+  bool mStrikeThrough;
 };
 

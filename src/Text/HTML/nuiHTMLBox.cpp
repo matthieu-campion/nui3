@@ -7,6 +7,7 @@
 
 #include "nui.h"
 #include "nuiHTMLBox.h"
+#include "nuiHTMLText.h"
 
 ////////////////////class nuiHTMLBox
 nuiHTMLBox::nuiHTMLBox(nuiHTMLNode* pNode, nuiHTMLNode* pAnchor, bool Inline)
@@ -51,9 +52,12 @@ float nuiHTMLBox::LayoutLine(uint32& start, uint32& count, float& y, float& h, n
   // Process the line
   x = rContext.mLeftMargin;
   h = ToAbove(h);
+  nuiHTMLText* pLastText = NULL;
   for (int32 j = start; j < start + count; j++)
   {
     nuiHTMLItem* pIt = mItems[j];
+    nuiHTMLText* pText = dynamic_cast<nuiHTMLText*>(pIt);
+    
     nuiRect r(pIt->GetIdealRect());
     r.SetHeight(h);
     r.MoveTo(x, y);
@@ -61,6 +65,19 @@ float nuiHTMLBox::LayoutLine(uint32& start, uint32& count, float& y, float& h, n
     pIt->SetLayout(r);
     //NGL_OUT(_T("<%ls> %ls\n"), pIt->GetNode()->GetName().GetChars(), r.GetValue().GetChars());
     x += ToAbove(r.GetWidth() + rContext.mHSpace);
+    
+    if (pLastText)
+    {
+      pLastText->SetNextInRun(pText);
+    }
+
+    if (pText)
+    {
+      pText->SetFirstInRun(!pLastText);
+    }
+
+
+    pLastText = pText;
   }
   //y += ToAbove(h + rContext.mVSpace);
   y += ToAbove(MAX(h, rContext.mVSpace));
