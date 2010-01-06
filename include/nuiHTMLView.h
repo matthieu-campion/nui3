@@ -62,6 +62,8 @@ public:
   void SetDebugBoxes(bool set);
   bool GetDebugBoxed() const;
   
+  void SetAutoIdealWidth(bool set);
+  bool GetAutoIdealWidth() const;
 protected:
   
   void ParseTree(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
@@ -112,5 +114,7 @@ private:
   nuiHTMLNode* mpCurrentAnchor;
   nuiRect mLastVisibleRect;
   nglString mTempURL;
+  
+  bool mAutoIdealWidth;
 };
 

@@ -43,6 +43,7 @@ nuiHTMLView::nuiHTMLView(float IdealWidth)
   mMouseY = 0;
   
   mDebugBoxes = false;
+  mAutoIdealWidth = true;
   
   mSlotSink.Connect(LinkActivated, nuiMakeDelegate(this, &nuiHTMLView::_AutoSetURL));
 }
@@ -100,6 +101,12 @@ void nuiHTMLView::InitAttributes()
                (nglString(_T("URL")), nuiUnitNone,
                 nuiMakeDelegate(this, &nuiHTMLView::GetURL), 
                 nuiMakeDelegate(this, &nuiHTMLView::_SetURL)));
+
+  AddAttribute(new nuiAttribute<bool>
+               (nglString(_T("AutoIdealWidth")), nuiUnitName,
+                nuiMakeDelegate(this, &nuiHTMLView::GetAutoIdealWidth), 
+                nuiMakeDelegate(this, &nuiHTMLView::SetAutoIdealWidth)));  
+  
 }
 
 
@@ -187,7 +194,8 @@ bool nuiHTMLView::SetRect(const nuiRect& rRect)
 {
   nuiWidget::SetRect(rRect);
 
-  SetIdealWidth(rRect.GetWidth());
+  if (mAutoIdealWidth)
+    SetIdealWidth(rRect.GetWidth());
   
   ReLayout();
   return true;
@@ -810,3 +818,17 @@ bool nuiHTMLView::GetDebugBoxed() const
 {
   return mDebugBoxes;
 }
+
+void nuiHTMLView::SetAutoIdealWidth(bool set)
+{
+  mAutoIdealWidth = set;
+  if (set)
+    InvalidateLayout();
+}
+
+bool nuiHTMLView::GetAutoIdealWidth() const
+{
+  return mAutoIdealWidth;
+}
+
+
