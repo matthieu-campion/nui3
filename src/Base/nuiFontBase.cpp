@@ -912,7 +912,7 @@ int nuiFontBase::Print(nuiDrawContext *pContext, float X, float Y, const nuiFont
       nuiFontLayout::Line rLine(rLines[i]);
       const float x1 = X + rLine.mX;
       const float x2 = X + rLine.mX + rLine.mWidth;
-      const float y = ToNearest(Y + rLine.mY + pos);
+      const float y = ToNearest(Y + rLine.mY + pos) - .5f;
       if (rLine.mWidth > 0)
         pContext->DrawLine(x1, y, x2, y);
     }
@@ -927,7 +927,7 @@ int nuiFontBase::Print(nuiDrawContext *pContext, float X, float Y, const nuiFont
     nglFontInfo info;
     GetInfo (info);
     float pos = -info.Ascender * .4f;
-    float thickness = info.UnderlineThick;
+    float thickness = ToNearest(info.UnderlineThick);
     pContext->SetLineWidth(thickness);
     nuiColor oldcolor(pContext->GetStrokeColor());
     pContext->SetStrokeColor(pContext->GetTextColor());
