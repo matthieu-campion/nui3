@@ -534,11 +534,13 @@ protected:
       nuiFontRequest fontrequest;
       ApplyActionsToObject(&fontrequest);
       nuiFont* pFont = nuiFontManager::GetManager().GetFont(fontrequest, rName);
+      Clear();
       return true;
     }
     
     if (!pObj)
     {
+      Clear();
       return false;
     }
     
@@ -548,9 +550,9 @@ protected:
     {
       nuiCSSAction* pAction = mActions[i];
       pAction->ApplyAction(pObj);
-      delete mActions[i];
     }
         
+    Clear();
     return true;
   }
   
@@ -676,8 +678,10 @@ protected:
         nglString tmp;
         tmp.CFormat(_T("Error (file '%ls') line %d (%d): %ls"), includePath.GetChars(), lexer.GetLine(), lexer.GetColumn(), lexer.GetErrorStr().GetChars() );
         SetError(tmp);
+        delete pF;
         return false;
       }
+      delete pF;
             
       return true;
     }
@@ -902,7 +906,6 @@ protected:
       nglString str;
       str.CFormat(_T("Unable to create an object of type '%ls' and name '%ls'"), type.GetChars(), name.GetChars());
       SetError(str);
-      Clear();
       return false;
     }
     

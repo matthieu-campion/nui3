@@ -1636,6 +1636,8 @@
                                    is_cff ? "cff" : "truetype",
                                    aface );
 
+    memset( sfnt_data , 0, rlen );
+    FT_FREE( sfnt_data );
   Exit:
     return error;
   }
