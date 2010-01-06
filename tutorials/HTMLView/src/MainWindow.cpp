@@ -33,7 +33,8 @@ MainWindow::~MainWindow()
 void MainWindow::OnCreation()
 {
   //nglString url(_T("http://redmine.libnui.net/projects/show/libnui"));
-  nglString url(_T("http://www.kvraudio.com"));
+  //nglString url(_T("http://www.kvraudio.com"));
+  nglString url(_T("file://rsrc:/Index.html"));
   //nglString url(_T("http://www.google.fr"));
   //nglString url(_T("http://www.w3.org/Consortium/siteindex"));
   //nglString url(_T("http://viewvc.libnui.net/cgi-bin/viewvc.cgi/nui/trunk/nui3/"));
