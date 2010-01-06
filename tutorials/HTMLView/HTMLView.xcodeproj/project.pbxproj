@@ -79,6 +79,7 @@
 		BC6A09AB0EF92BAB00881ACF /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		BC6A09CB0EF9301900881ACF /* main.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = main.css; path = resources/css/main.css; sourceTree = SOURCE_ROOT; };
 		BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nui3.xcodeproj; path = ../../nui3.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E59BC6A010F4184E00F239E8 /* Index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = Index.html; path = resources/Index.html; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +159,7 @@
 		BC6A09A20EF92B4B00881ACF /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				E59BC6A010F4184E00F239E8 /* Index.html */,
 				BC6A09AB0EF92BAB00881ACF /* Info.plist */,
 			);
 			name = resources;

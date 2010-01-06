@@ -187,6 +187,8 @@ bool nuiHTMLView::SetRect(const nuiRect& rRect)
 {
   nuiWidget::SetRect(rRect);
 
+  SetIdealWidth(rRect.GetWidth());
+  
   ReLayout();
   return true;
 }
@@ -304,8 +306,6 @@ bool nuiHTMLView::SetURL(const nglString& rURL)
 {
   Cancel();
   
-  URLChanged(rURL);
-  
   nglString url(rURL);
   mTempURL = rURL;
 
@@ -321,6 +321,8 @@ void nuiHTMLView::StreamDone(nuiAsyncIStream* pStream)
   mpStream = NULL;
   nglString url(mTempURL);
   const nuiHTTPResponse* pResponse = pStream->GetHTTPResponse();
+  URLChanged(url);
+  
   
   nglTextEncoding encoding = eEncodingUnknown;
 

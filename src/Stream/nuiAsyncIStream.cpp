@@ -103,7 +103,11 @@ public:
     if (url.IsEmpty())
       url = _T("/");
     else
-      url.Insert('/', 0);
+    {
+      nglPath p(url);
+      if (p.GetVolumeName().IsEmpty())
+        url.Insert('/', 0);
+    }
       
     nglPath p(url);
     if (!p.Exists())
