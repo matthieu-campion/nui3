@@ -162,7 +162,8 @@ nuiTexture* nuiTexture::GetAATexture()
     info.AllocateBuffer();
     uint8* buffer = (uint8*)info.mpBuffer;
     glAAGenerateAABuffer(0, 0, buffer);
-    pTexture = nuiTexture::GetTexture(info, _T("nuiTextureAA"));
+    pTexture = nuiTexture::GetTexture(info);
+    pTexture->SetSource(_T("nuiTextureAA"));
     pTexture->SetWrapS(GL_REPEAT);
     pTexture->SetWrapT(GL_REPEAT);
     pTexture->EnableAutoMipMap(true);

@@ -26,6 +26,7 @@ nuiHTMLContext::nuiHTMLContext()
   mFont.MustHaveSize(12.0f, 1.0f);
   mFont.SetItalic(false, 1.0f);
   mFont.SetBold(false, 1.0f);
+  mpFont = NULL;
   mUnderline = false;
   mStrikeThrough = false;
   mTextFgColor = nuiColor(0,0,0,255);
