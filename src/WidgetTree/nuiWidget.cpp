@@ -1752,8 +1752,27 @@ bool nuiWidget::DispatchMouseUnclick(const nglMouseInfo& rInfo)
       res |= Unclicked(info);
     }
 
-    if (mWantKeyboardFocus && (rInfo.Buttons == nglMouseInfo::ButtonLeft || rInfo.Buttons == nglMouseInfo::ButtonRight))
-      Focus();
+    if (rInfo.Buttons == nglMouseInfo::ButtonLeft || rInfo.Buttons == nglMouseInfo::ButtonRight)
+    {
+      if (mWantKeyboardFocus)
+      {
+        // Focus this widget
+        Focus();
+      }
+      else
+      {
+        // This widget don't want the keyboard focus, let's try to give it to its parent:
+        if (res)
+        {
+          nuiWidget* pParent = mpParent;
+          while (pParent && !pParent->GetWantKeyboardFocus())
+            pParent = pParent->GetParent();
+          
+          if (pParent)
+            pParent->Focus();
+        }
+      }
+    }
     return res;
   }
   return false;
@@ -3464,6 +3483,7 @@ nuiHotKey* nuiWidget::RegisterHotKeyKey(const nglString& rName, nglKeyCode Trigg
   std::map<nglString, nuiSimpleEventSource<nuiWidgetActivated>*>::const_iterator it = mHotKeyEvents.find(rName);
   if (it == mHotKeyEvents.end())
     mHotKeyEvents[rName] = new nuiSimpleEventSource<nuiWidgetActivated>();
+  SetWantKeyboardFocus(true);
   return GetTopLevel()->RegisterHotKeyKey(rName, Trigger, Modifiers, Priority, FireOnKeyUp, rDescription);
 }
 
@@ -3473,6 +3493,7 @@ nuiHotKey* nuiWidget::RegisterHotKeyChar(const nglString& rName, nglChar Trigger
   std::map<nglString, nuiSimpleEventSource<nuiWidgetActivated>*>::const_iterator it = mHotKeyEvents.find(rName);
   if (it == mHotKeyEvents.end())
     mHotKeyEvents[rName] = new nuiSimpleEventSource<nuiWidgetActivated>();
+  SetWantKeyboardFocus(true);
   return GetTopLevel()->RegisterHotKeyChar(rName, Trigger, Modifiers, Priority, FireOnKeyUp, rDescription);
 }
 
@@ -3501,6 +3522,8 @@ void nuiWidget::DelHotKey(const nglString& rName)
   NGL_ASSERT(GetTopLevel());
   GetTopLevel()->DelHotKey(rName);
   mHotKeyEvents.erase(rName);
+  if (mHotKeyEvents.empty())
+    SetWantKeyboardFocus(false);
 }
 
 void nuiWidget::SetMaxIdealWidth(float MaxWidth)
