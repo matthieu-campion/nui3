@@ -204,7 +204,8 @@ protected:
   nuiWidgetPtr mpWatchedWidget;
 
   void UpdateWidgetsCSS();
-  void UpdateMouseCursor(nuiSize X, nuiSize Y);
+  void UpdateMouseCursor(const nuiWidgetList& rWidgets);
+  void DispatchKeyboardFocus(const nuiWidgetList& rWidgets);
 
 protected:
   /* @name Trash management */

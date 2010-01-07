@@ -575,7 +575,8 @@ void nuiWidget::Init()
   mVisible = true;
   
   mWantKeyboardFocus = false;
-  
+  mMuteKeyboardFocusDispatch = false;
+
   LoadIdentityMatrix();
 
   EnableRenderCache(true);
@@ -1752,27 +1753,6 @@ bool nuiWidget::DispatchMouseUnclick(const nglMouseInfo& rInfo)
       res |= Unclicked(info);
     }
 
-    if (rInfo.Buttons == nglMouseInfo::ButtonLeft || rInfo.Buttons == nglMouseInfo::ButtonRight)
-    {
-      if (mWantKeyboardFocus)
-      {
-        // Focus this widget
-        Focus();
-      }
-      else
-      {
-        // This widget don't want the keyboard focus, let's try to give it to its parent:
-        if (res)
-        {
-          nuiWidget* pParent = mpParent;
-          while (pParent && !pParent->GetWantKeyboardFocus())
-            pParent = pParent->GetParent();
-          
-          if (pParent)
-            pParent->Focus();
-        }
-      }
-    }
     return res;
   }
   return false;
@@ -1865,6 +1845,16 @@ bool nuiWidget::GetWantKeyboardFocus() const
 void nuiWidget::SetWantKeyboardFocus(bool Set)
 {
   mWantKeyboardFocus = Set;
+}
+
+bool nuiWidget::GetMuteKeyboardFocusDispatch() const
+{
+  return mMuteKeyboardFocusDispatch;
+}
+
+void nuiWidget::SetMuteKeyboardFocusDispatch(bool Set)
+{
+  mMuteKeyboardFocusDispatch = Set;
 }
 
 bool nuiWidget::Focus()
@@ -4023,7 +4013,7 @@ void nuiWidget::DrawFocus(nuiDrawContext* pContext, bool FrontOrBack)
 {
 //#FIXME LBDEBUG : there's a bug somewhere in that, that makes ComboBox tutorial crash with Win32 (ati, vista)
   // deactivate the DrawFocus for now, in order to release the application.
-  return;
+  //return;
 
 
   if (!mShowFocus)

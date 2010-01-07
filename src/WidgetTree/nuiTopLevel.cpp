@@ -1051,15 +1051,20 @@ NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseClick [%d] END\n"), rInfo.TouchId) );
   }
 
   bool res = DispatchMouseClick(rInfo);
-  UpdateMouseCursor(rInfo.X, rInfo.Y);
-  
+
+  nuiWidgetList widgets;
+  GetChildren(rInfo.X, rInfo.Y, widgets, true);
+  UpdateMouseCursor(widgets);
+  if (rInfo.Buttons == nglMouseInfo::ButtonLeft || rInfo.Buttons == nglMouseInfo::ButtonRight)
+    DispatchKeyboardFocus(widgets);
+
 PRINT_GRAB_IDS();
 NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseClick [%d] END\n"), rInfo.TouchId) );
 
 	return res;
 }
 
-void nuiTopLevel::UpdateMouseCursor(nuiSize X, nuiSize Y)
+void nuiTopLevel::UpdateMouseCursor(const nuiWidgetList& rWidgets)
 {
   nuiWidgetPtr pGrab = GetGrab(mMouseInfo.TouchId);
   if (pGrab)
@@ -1072,12 +1077,10 @@ void nuiTopLevel::UpdateMouseCursor(nuiSize X, nuiSize Y)
     }
   }
   
-  nuiWidgetList widgets;
-  GetChildren(X, Y, widgets, true);
   int32 i = 0;
-  while (i < widgets.size())
+  while (i < rWidgets.size())
   {
-    nuiWidget* pWidget = widgets[i];
+    nuiWidget* pWidget = rWidgets[i];
     nuiMouseCursor cursor = pWidget->GetMouseCursor();
     if (cursor != eCursorDoNotSet)
     {
@@ -1089,6 +1092,35 @@ void nuiTopLevel::UpdateMouseCursor(nuiSize X, nuiSize Y)
   
   SetMouseCursor(GetMouseCursor());
 }
+
+void nuiTopLevel::DispatchKeyboardFocus(const nuiWidgetList& rWidgets)
+{
+  int32 i = 0;
+  
+  while (i < rWidgets.size())
+  {
+    nuiWidget* pWidget = rWidgets.at(i);
+    
+    if (pWidget->GetWantKeyboardFocus())
+    {
+      // Focus this widget
+      pWidget->Focus();
+      return;
+    }
+    
+    if (pWidget->GetMuteKeyboardFocusDispatch())
+    {
+      // Stop looking for focussed widgets now
+      return;
+    }
+    
+    i++;
+  }
+ 
+  if (!mpFocus)
+    Focus();
+}
+
 
 
 bool nuiTopLevel::CallMouseUnclick(nglMouseInfo& rInfo)
@@ -1132,8 +1164,11 @@ NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseUnclick [%d] END\n"), rInfo.TouchId) );
   }
 
   bool res = DispatchMouseUnclick(rInfo);
-  UpdateMouseCursor(rInfo.X, rInfo.Y);
-
+  
+  nuiWidgetList widgets;
+  GetChildren(rInfo.X, rInfo.Y, widgets, true);
+  UpdateMouseCursor(widgets);
+  
 PRINT_GRAB_IDS();
 NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseUnclick [%d] END\n"), rInfo.TouchId) );
 
@@ -1267,8 +1302,11 @@ NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseMove [%d] BEGIN\n"), rInfo.TouchId) );
       pChild = GetChild((nuiSize)rInfo.X, (nuiSize)rInfo.Y);
 
     NGL_ASSERT(pChild);
+
     // Set the mouse cursor to the right object:
-    UpdateMouseCursor(rInfo.X, rInfo.Y);
+    nuiWidgetList widgets;
+    GetChildren(rInfo.X, rInfo.Y, widgets, true);
+    UpdateMouseCursor(widgets);
 
     SetToolTipRect();
     
@@ -1327,7 +1365,9 @@ NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseMove [%d] BEGIN\n"), rInfo.TouchId) );
     }
   }
 
-  UpdateMouseCursor(rInfo.X, rInfo.Y);
+  nuiWidgetList widgets;
+  GetChildren(rInfo.X, rInfo.Y, widgets, true);
+  UpdateMouseCursor(widgets);
   
   SetToolTipRect();
 //NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseMove [%d] END\n"), rInfo.TouchId) );

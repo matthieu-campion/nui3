@@ -236,7 +236,9 @@ public:
   /** @name Misc. & incoming events management */
   //@{
   bool GetWantKeyboardFocus() const;
-  void SetWantKeyboardFocus(bool Set);
+  void SetWantKeyboardFocus(bool Set); ///< A widget that wants the keyboard focus will receive it automatically whenever the user clicks them (only left and right button) or presses tab to change the focus.
+  bool GetMuteKeyboardFocusDispatch() const;
+  void SetMuteKeyboardFocusDispatch(bool Set); ///< A widget that mutes the keyboard focus will prevent its parent from gaining the focus.
   bool HasGrab();  ///< Ask is this widget has the mouse grab.
   bool Grab();  ///< Request the mouse grab
   bool Ungrab(); ///< Release the mouse grab
@@ -624,6 +626,7 @@ protected:
   bool mSurfaceEnabled: 1;
   bool mMouseEventEnabled: 1;
   bool mWantKeyboardFocus: 1;
+  bool mMuteKeyboardFocusDispatch: 1;
   bool mTrashed: 1;
   bool mMatrixIsIdentity: 1;
   bool mCanRespectConstraint: 1;
