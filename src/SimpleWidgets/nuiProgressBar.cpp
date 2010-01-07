@@ -117,6 +117,10 @@ const nuiColor& nuiProgressBar::GetBGColor() const
 void nuiProgressBar::SetGlow(float value)
 {
   mGlowStrength = value;
+  if (mGlowStrength > 0)
+    StartAutoDraw();
+  else 
+    StopAutoDraw();
 }
 
 float nuiProgressBar::GetGlow() const

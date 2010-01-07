@@ -470,7 +470,7 @@ void nuiMainWindow::BroadcastInvalidate(nuiWidgetPtr pSender)
 {
   nuiTopLevel::BroadcastInvalidate(pSender);
 
-  //NGL_OUT(_T("(Invalidate)InvalidatePosted(%ls)\n"), pSender->GetProperty("Class").GetChars());
+  //NGL_OUT(_T("(Invalidate)InvalidatePosted(%ls)\n"), pSender->GetObjectClass().GetChars());
   mInvalidatePosted = true;
 }
 
@@ -478,7 +478,7 @@ void nuiMainWindow::BroadcastInvalidateRect(nuiWidgetPtr pSender, const nuiRect&
 {
   nuiTopLevel::BroadcastInvalidateRect(pSender, rRect);
 
-  //NGL_OUT(_T("(InvalidateRect)InvalidatePosted(%ls)\n"), pSender->GetProperty("Class").GetChars());
+  //NGL_OUT(_T("(InvalidateRect)InvalidatePosted(%ls)\n"), pSender->GetObjectClass().GetChars());
   mInvalidatePosted = true;
 }
 
@@ -486,7 +486,7 @@ void nuiMainWindow::BroadcastInvalidateLayout(nuiWidgetPtr pSender, bool BroadCa
 {
   nuiTopLevel::BroadcastInvalidateLayout(pSender, BroadCastOnly);
 
-  //NGL_OUT(_T("(Invalidate)BroadcastInvalidateLayout(%ls)\n"), pSender->GetProperty("Class").GetChars());
+  //NGL_OUT(_T("(Invalidate)BroadcastInvalidateLayout(%ls)\n"), pSender->GetObjectClass().GetChars());
   mInvalidatePosted = true;
 }
 

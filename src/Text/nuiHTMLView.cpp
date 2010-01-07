@@ -247,6 +247,8 @@ bool nuiHTMLView::Draw(nuiDrawContext* pContext)
 
 void nuiHTMLView::SetIdealWidth(float IdealWidth)
 {
+  if (mIdealWidth == IdealWidth)
+    return;
   mIdealWidth = IdealWidth;
   InvalidateLayout();
 }
