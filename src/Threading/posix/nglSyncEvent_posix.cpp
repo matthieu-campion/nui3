@@ -44,8 +44,8 @@ void nglSyncEvent::Set()
   NGL_ASSERT(mpData);
   pthread_mutex_lock(&mpData->mMutex);
   mpData->mSet = true;
+  pthread_cond_broadcast(&mpData->mCondition);  
   pthread_mutex_unlock(&mpData->mMutex);
-  pthread_cond_broadcast(&mpData->mCondition);
 }
 
 void nglSyncEvent::Reset()
