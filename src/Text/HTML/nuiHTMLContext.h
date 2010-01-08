@@ -32,5 +32,6 @@ public:
   bool mStrikeThrough;
   nuiColor mTextFgColor;
   nuiColor mTextBgColor;
+  nuiColor mLinkColor;
 };
 

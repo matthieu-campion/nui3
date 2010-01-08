@@ -31,7 +31,8 @@ nuiHTMLContext::nuiHTMLContext()
   mStrikeThrough = false;
   mTextFgColor = nuiColor(0,0,0,255);
   mTextBgColor = nuiColor(0,0,0,0);
-
+  mLinkColor = nuiColor(64, 64, 200);
+  
   UpdateFont();
 }
 
@@ -45,7 +46,8 @@ nuiHTMLContext::nuiHTMLContext(const nuiHTMLContext& rContext)
   mUnderline(rContext.mUnderline),
   mStrikeThrough(rContext.mStrikeThrough),
   mTextFgColor(rContext.mTextFgColor),
-  mTextBgColor(rContext.mTextBgColor)
+  mTextBgColor(rContext.mTextBgColor),
+  mLinkColor(rContext.mLinkColor)
 {
   if (mpFont)
     mpFont->Acquire();
@@ -69,7 +71,8 @@ nuiHTMLContext& nuiHTMLContext::operator=(const nuiHTMLContext& rContext)
   mStrikeThrough = rContext.mStrikeThrough;
   mTextFgColor = rContext.mTextFgColor;
   mTextBgColor = rContext.mTextBgColor;
-
+  mLinkColor = rContext.mLinkColor;
+  
   return *this;
 }
 

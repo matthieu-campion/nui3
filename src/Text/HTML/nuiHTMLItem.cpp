@@ -97,7 +97,7 @@ void nuiHTMLItem::Layout(nuiHTMLContext& rContext)
       if (set)
       {
         mOldTextColor = rContext.mTextFgColor;
-        rContext.mTextFgColor = nuiColor(0, 0, 200);
+        rContext.mTextFgColor = rContext.mLinkColor;
       }
       else
       {

@@ -48,6 +48,8 @@ public:
   
   const nuiColor& GetTextColor() const;
   void SetTextColor(const nuiColor& Color);
+  const nuiColor& GetLinkColor() const;
+  void SetLinkColor(const nuiColor& Color);
   
   virtual bool MouseClicked(const nglMouseInfo& rInfo);
   virtual bool MouseUnclicked(const nglMouseInfo& rInfo);

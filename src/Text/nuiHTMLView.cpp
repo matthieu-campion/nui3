@@ -93,9 +93,14 @@ void nuiHTMLView::InitAttributes()
                 nuiMakeDelegate(this, &nuiHTMLView::_SetFont)));
   
   AddAttribute(new nuiAttribute<const nuiColor&>
-   (nglString(_T("TextColor")), nuiUnitNone,
-    nuiMakeDelegate(this, &nuiHTMLView::GetTextColor), 
-    nuiMakeDelegate(this, &nuiHTMLView::SetTextColor)));
+               (nglString(_T("TextColor")), nuiUnitNone,
+                nuiMakeDelegate(this, &nuiHTMLView::GetTextColor), 
+                nuiMakeDelegate(this, &nuiHTMLView::SetTextColor)));
+  
+  AddAttribute(new nuiAttribute<const nuiColor&>
+               (nglString(_T("LinkColor")), nuiUnitNone,
+                nuiMakeDelegate(this, &nuiHTMLView::GetLinkColor), 
+                nuiMakeDelegate(this, &nuiHTMLView::SetLinkColor)));
   
   AddAttribute(new nuiAttribute<const nglString&>
                (nglString(_T("URL")), nuiUnitNone,
@@ -157,6 +162,18 @@ const nuiColor& nuiHTMLView::GetTextColor() const
 void nuiHTMLView::SetTextColor(const nuiColor& Color)
 {
   mpContext->mTextFgColor = Color;
+  ReLayout();
+  Invalidate();
+}
+
+const nuiColor& nuiHTMLView::GetLinkColor() const
+{
+  return mpContext->mLinkColor;
+}
+
+void nuiHTMLView::SetLinkColor(const nuiColor& Color)
+{
+  mpContext->mLinkColor = Color;
   ReLayout();
   Invalidate();
 }
