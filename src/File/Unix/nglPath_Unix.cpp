@@ -287,7 +287,7 @@ int nglPath::GetChildren (std::list<nglPath>& rChildren) const
 
   if (mPathName.IsNull())
   {
-    return false;
+    return -1;
   }
   
   std::string str(mPathName.GetStdString());
@@ -305,7 +305,7 @@ int nglPath::GetChildren (std::list<nglPath>& rChildren) const
 //      case ENFILE:  SetError ("path", NGL_PATH_ESYSMAX); break;
 //      case ENOTDIR: SetError ("path", NGL_PATH_ELEAF); break;
 //    }
-    return 0;
+    return -1;
   }
 
   struct dirent* entry;
