@@ -49,7 +49,7 @@ void nuiHTMLText::Draw(nuiDrawContext* pContext)
     mpCompositeLayout->SetStrikeThrough(mStrikeThrough);
     mpCompositeLayout->Layout(str);
     
-    NGL_OUT(_T("Draw HTMLText: %ls\n"), str.GetChars());
+    //NGL_OUT(_T("Draw HTMLText: %ls\n"), str.GetChars());
   }
   
   pContext->DrawText(0, mpCompositeLayout->GetAscender() , *mpCompositeLayout);

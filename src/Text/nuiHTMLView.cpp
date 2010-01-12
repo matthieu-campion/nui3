@@ -45,6 +45,8 @@ nuiHTMLView::nuiHTMLView(float IdealWidth)
   mDebugBoxes = false;
   mAutoIdealWidth = true;
   
+  mUseToolTips = true;
+  
   mSlotSink.Connect(LinkActivated, nuiMakeDelegate(this, &nuiHTMLView::_AutoSetURL));
 }
 
@@ -111,6 +113,11 @@ void nuiHTMLView::InitAttributes()
                (nglString(_T("AutoIdealWidth")), nuiUnitName,
                 nuiMakeDelegate(this, &nuiHTMLView::GetAutoIdealWidth), 
                 nuiMakeDelegate(this, &nuiHTMLView::SetAutoIdealWidth)));  
+  
+  AddAttribute(new nuiAttribute<bool>
+               (nglString(_T("UseToolTips")), nuiUnitName,
+                nuiMakeDelegate(this, &nuiHTMLView::GetUseToolTips), 
+                nuiMakeDelegate(this, &nuiHTMLView::SetUseToolTips)));  
   
 }
 
@@ -521,6 +528,8 @@ void nuiHTMLView::ParseBody(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
       case nuiHTML::eTag_IMG:
         ParseImage(pChild, pBox);
         break;
+      case nuiHTML::eTag_DIR:
+      case nuiHTML::eTag_MENU:
       case nuiHTML::eTag_UL:
       case nuiHTML::eTag_OL:
       case nuiHTML::eTag_DL:
@@ -640,8 +649,10 @@ void nuiHTMLView::ParseTableRow(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 
 void nuiHTMLView::ParseList(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 {
+  int32 items = 1;
   //printf("html list\n");
   nuiHTMLBox* pListBox = new nuiHTMLBox(pNode, mpCurrentAnchor, false);
+  pListBox->SetMarginLeft(25);
   pBox->AddItem(pListBox);
   
   uint32 count = pNode->GetNbChildren();
@@ -654,10 +665,29 @@ void nuiHTMLView::ParseList(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
       {
         nuiHTMLBox* pListItemBox = new nuiHTMLBox(pListItem, mpCurrentAnchor, false);
         pListBox->AddItem(pListItemBox);
+
+        nglString txt;
+        switch (pNode->GetTagType())
+        {
+          case nuiHTMLNode::eTag_DIR:
+          case nuiHTMLNode::eTag_MENU:
+          case nuiHTMLNode::eTag_UL:
+            txt = "\xe2\x80\xa2 ";
+            break;
+          case nuiHTMLNode::eTag_OL:
+            txt.Add(items).Add(_T(". "));
+            break;
+          case nuiHTMLNode::eTag_DL:
+            break;
+        }
+        nuiHTMLText* pText = new nuiHTMLText(pListItem, mpCurrentAnchor, txt);
+        pListItemBox->AddItem(pText);
         ParseBody(pListItem, pListItemBox);
       }
       break;
     }
+    
+    items++;
   }
   //printf("html /list\n");
 }
@@ -794,7 +824,8 @@ bool nuiHTMLView::MouseMoved(const nglMouseInfo& rInfo)
           nglString url(pAttrib->GetValue());
           nuiHTML::GetAbsoluteURL(mpHTML->GetSourceURL(), url);
 
-          SetToolTip(url);
+          if (mUseToolTips)
+            SetToolTip(url);
           SetMouseCursor(eCursorArrow);
           return true;
         }
@@ -802,7 +833,8 @@ bool nuiHTMLView::MouseMoved(const nglMouseInfo& rInfo)
     }
   }
 
-  SetToolTip(nglString::Empty);
+  if (mUseToolTips)
+    SetToolTip(nglString::Empty);
   SetMouseCursor(eCursorCaret);
   return false;
 }
@@ -854,4 +886,13 @@ bool nuiHTMLView::GetAutoIdealWidth() const
   return mAutoIdealWidth;
 }
 
+void nuiHTMLView::SetUseToolTips(bool set)
+{
+  mUseToolTips = set;
+}
+
+bool nuiHTMLView::GetUseToolTips() const
+{
+  return mUseToolTips;
+}
 

@@ -66,6 +66,9 @@ public:
   
   void SetAutoIdealWidth(bool set);
   bool GetAutoIdealWidth() const;
+  
+  void SetUseToolTips(bool set);
+  bool GetUseToolTips() const;
 protected:
   
   void ParseTree(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
@@ -118,5 +121,7 @@ private:
   nglString mTempURL;
   
   bool mAutoIdealWidth;
+  
+  bool mUseToolTips;
 };
 
