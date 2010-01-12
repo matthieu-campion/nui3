@@ -31,6 +31,7 @@ nuiAudioDecoder::~nuiAudioDecoder()
 nuiSampleReader* nuiAudioDecoder::Clone(nglIStream& rStream) const
 {
   nuiAudioDecoder* pDecoder = new nuiAudioDecoder(*this, rStream);
+  pDecoder->Init();
   pDecoder->SetPosition(0);
   return pDecoder;
 }
