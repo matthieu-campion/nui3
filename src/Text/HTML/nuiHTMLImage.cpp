@@ -18,7 +18,7 @@ nuiHTMLImage::nuiHTMLImage(nuiHTMLNode* pNode, nuiHTMLNode* pAnchor)
   const nuiHTMLAttrib* pSrc = pNode->GetAttribute(nuiHTMLAttrib::eAttrib_SRC);
   const nuiHTMLAttrib* pAlt = pNode->GetAttribute(nuiHTMLAttrib::eAttrib_ALT);
   
-  if (!pSrc || !pAlt)
+  if (!pSrc)
     return;
   
   nglString url = pSrc->GetValue();

@@ -56,8 +56,10 @@ void nuiMessageBox::Init(const nglString& rTitle, nuiWidget* pContents, nuiMessa
   pVBox->AddCell(pTitle);
   
   nuiHBox* pHBox = new nuiHBox(2);
+  pHBox->SetExpand(nuiExpandShrinkAndGrow);
   pHBox->SetObjectName(_T("nuiMessageBox::Contents"));
   pVBox->AddCell(pHBox);
+  pVBox->SetCellExpand(pVBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
 
   if (showIcon)
   {
