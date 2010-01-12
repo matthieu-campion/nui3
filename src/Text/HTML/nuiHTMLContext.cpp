@@ -11,8 +11,6 @@
 ///////////class nuiHTMLContext
 nuiHTMLContext::nuiHTMLContext()
 {
-  mLeftMargin = 0;
-  
   mMaxWidth = 640;
   
   mVSpace = 0;
@@ -32,13 +30,15 @@ nuiHTMLContext::nuiHTMLContext()
   mTextFgColor = nuiColor(0,0,0,255);
   mTextBgColor = nuiColor(0,0,0,0);
   mLinkColor = nuiColor(64, 64, 200);
+
+  mAlignHorizontal = eBegin;
+  mAlignVertical = eBegin;
   
   UpdateFont();
 }
 
 nuiHTMLContext::nuiHTMLContext(const nuiHTMLContext& rContext)
-: mLeftMargin(rContext.mLeftMargin),
-  mMaxWidth(rContext.mMaxWidth),
+: mMaxWidth(rContext.mMaxWidth),
   mVSpace(rContext.mVSpace),
   mHSpace(rContext.mHSpace),
   mFont(rContext.mFont),
@@ -47,7 +47,9 @@ nuiHTMLContext::nuiHTMLContext(const nuiHTMLContext& rContext)
   mStrikeThrough(rContext.mStrikeThrough),
   mTextFgColor(rContext.mTextFgColor),
   mTextBgColor(rContext.mTextBgColor),
-  mLinkColor(rContext.mLinkColor)
+  mLinkColor(rContext.mLinkColor),
+  mAlignHorizontal(rContext.mAlignHorizontal),
+  mAlignVertical(rContext.mAlignVertical)
 {
   if (mpFont)
     mpFont->Acquire();
@@ -55,8 +57,6 @@ nuiHTMLContext::nuiHTMLContext(const nuiHTMLContext& rContext)
 
 nuiHTMLContext& nuiHTMLContext::operator=(const nuiHTMLContext& rContext)
 {
-  mLeftMargin = rContext.mLeftMargin;
-  
   mMaxWidth = rContext.mMaxWidth;
   
   mVSpace = rContext.mVSpace;
@@ -73,6 +73,9 @@ nuiHTMLContext& nuiHTMLContext::operator=(const nuiHTMLContext& rContext)
   mTextBgColor = rContext.mTextBgColor;
   mLinkColor = rContext.mLinkColor;
   
+  mAlignHorizontal = rContext.mAlignHorizontal;
+  mAlignVertical = rContext.mAlignVertical;
+
   return *this;
 }
 

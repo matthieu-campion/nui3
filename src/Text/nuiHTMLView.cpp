@@ -464,7 +464,11 @@ void nuiHTMLView::ParseHTML(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
         break;
         
       case nuiHTML::eTag_BODY:
-        ParseBody(pChild, pBox);
+        {
+          nuiHTMLBox* pBody = new nuiHTMLBox(pChild, mpCurrentAnchor, false);
+          pBox->AddItem(pBody);
+          ParseBody(pChild, pBody);
+        }
         break;
         
       default:

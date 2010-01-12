@@ -29,10 +29,24 @@ public:
 
   void UpdateVisibility(const nuiRect& rVisibleRect);
 
+  void SetMargins(float val);
+  void SetMarginLeft(float val);
+  void SetMarginTop(float val);
+  void SetMarginRight(float val);
+  void SetMarginBottom(float val);
+  float GetMarginLeft() const;
+  float GetMarginTop() const;
+  float GetMarginRight() const;
+  float GetMarginBottom() const;
 protected:
   float LayoutLine(uint32& start, uint32& count, float& y, float& h, nuiHTMLContext& rContext);
   
   std::vector<nuiHTMLItem*> mItems;
   std::stack<nuiHTMLContext> mContextStack;
+
+  float mMarginLeft;
+  float mMarginTop;
+  float mMarginRight;
+  float mMarginBottom;
 };
 

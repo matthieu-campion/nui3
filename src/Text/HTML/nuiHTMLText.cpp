@@ -70,6 +70,7 @@ void nuiHTMLText::Layout(nuiHTMLContext& rContext)
   
   mpLayout->Layout(mText);
   mIdealRect = mpLayout->GetRect();
+  mIdealRect.SetWidth(mIdealRect.GetWidth() + rContext.mHSpace);
   mTextFgColor = rContext.mTextFgColor;
   mTextBgColor = rContext.mTextBgColor;
   //printf("text layout done (%ls)\n", mIdealRect.GetValue().GetChars());

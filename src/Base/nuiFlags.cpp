@@ -10,7 +10,7 @@
 #include "nuiXML.h"
 
 // Get enum from string desc:
-nuiPosition nuiGetPosition (const nglString Position, nuiPosition Default)
+nuiPosition nuiGetPosition (const nglString& Position, nuiPosition Default)
 {
   if (!Position.Compare(_T("Left"),false))
     return nuiLeft;
@@ -95,7 +95,7 @@ nglString nuiGetPosition (nuiPosition Value)
   }
 }
 
-nuiDirection nuiGetDirection (const nglString Direction, nuiDirection Default)
+nuiDirection nuiGetDirection (const nglString& Direction, nuiDirection Default)
 {
   if (!Direction.Compare(_T("Forward"),false))
     return nuiForward;
@@ -117,7 +117,37 @@ nglString nuiGetDirection (nuiDirection Value)
   }
 }
 
-nuiOrientation nuiGetOrientation (const nglString Orientation, nuiOrientation Default)
+nuiAlignment nuiGetAlignment (const nglString& Alignment, nuiAlignment Default)
+{
+  if (!Alignment.Compare(_T("Begin"),false))
+    return eBegin;
+  else if (!Alignment.Compare(_T("End"),false))
+    return eEnd;
+  else if (!Alignment.Compare(_T("Center"),false))
+    return eCenter;
+  else if (!Alignment.Compare(_T("Justify"),false))
+    return eJustify;
+  return Default;
+}
+
+nglString nuiGetAlignment (nuiAlignment Value)
+{
+  switch (Value)
+  {
+    case eBegin:
+      return _T("Begin");
+    case eEnd:
+      return _T("End");
+    case eCenter:
+      return _T("Center");
+    case eJustify:
+      return _T("Justify");
+    default:
+      return _T("Begin");
+  }
+}
+
+nuiOrientation nuiGetOrientation (const nglString& Orientation, nuiOrientation Default)
 {
   if (!Orientation.Compare(_T("Horizontal"),false))
     return nuiHorizontal;
@@ -149,25 +179,32 @@ bool nuiGetBool (const nglString& rBool, bool Default)
 }
 
 // Get enum from XML desc:
-nuiPosition nuiGetPosition (const nuiXMLNode* pNode, const nglString Attr, nuiPosition Default)
+nuiPosition nuiGetPosition (const nuiXMLNode* pNode, const nglString& Attr, nuiPosition Default)
 {
   if (!pNode->HasAttribute(Attr))
     return Default;
-  return nuiGetPosition(pNode->GetAttribute(Attr),Default);
+  return nuiGetPosition(pNode->GetAttribute(Attr), Default);
 }
 
-nuiDirection nuiGetDirection (const nuiXMLNode* pNode, const nglString Attr, nuiDirection Default)
+nuiDirection nuiGetDirection (const nuiXMLNode* pNode, const nglString& Attr, nuiDirection Default)
 {
   if (!pNode->HasAttribute(Attr))
     return Default;
-  return nuiGetDirection(pNode->GetAttribute(Attr),Default);
+  return nuiGetDirection(pNode->GetAttribute(Attr), Default);
 }
 
-nuiOrientation nuiGetOrientation (const nuiXMLNode* pNode, const nglString Attr, nuiOrientation Default)
+nuiOrientation nuiGetOrientation (const nuiXMLNode* pNode, const nglString& Attr, nuiOrientation Default)
 {
   if (!pNode->HasAttribute(Attr))
     return Default;
-  return nuiGetOrientation(pNode->GetAttribute(Attr),Default);
+  return nuiGetOrientation(pNode->GetAttribute(Attr), Default);
+}
+
+nuiAlignment nuiGetAlignment (const nuiXMLNode* pNode, const nglString& Attr, nuiAlignment Default)
+{
+  if (!pNode->HasAttribute(Attr))
+    return Default;
+  return nuiGetAlignment(pNode->GetAttribute(Attr), Default);
 }
 
 // Get enum from standard xml attrib:
@@ -192,15 +229,22 @@ nuiOrientation nuiGetOrientation (const nuiXMLNode* pNode, nuiOrientation Defaul
   return nuiGetOrientation(pNode->GetAttribute(_T("Orientation")),Default);
 }
 
+nuiAlignment nuiGetAlignment (const nuiXMLNode* pNode, nuiAlignment Default)
+{
+  if (!pNode->HasAttribute(_T("Alignment")))
+    return Default;
+  return nuiGetAlignment(pNode->GetAttribute(_T("Alignment")), Default);
+}
+
 // Values helpers:
-bool nuiGetBool (const nuiXMLNode* pNode, const nglString Attr, bool Default)
+bool nuiGetBool (const nuiXMLNode* pNode, const nglString& Attr, bool Default)
 {
   if (!pNode->HasAttribute(Attr))
     return Default;
   return nuiGetBool(pNode->GetAttribute(Attr),Default);
 }
 
-const nglString& nuiGetString (const nuiXMLNode* pNode, const nglString Attr, const nglString& Default)
+const nglString& nuiGetString (const nuiXMLNode* pNode, const nglString& Attr, const nglString& Default)
 {
   if (!pNode->HasAttribute(Attr))
     return Default;
@@ -208,7 +252,7 @@ const nglString& nuiGetString (const nuiXMLNode* pNode, const nglString Attr, co
 }
 
 
-int nuiGetVal (const nuiXMLNode* pNode, const nglString Attr, int Default)
+int nuiGetVal (const nuiXMLNode* pNode, const nglString& Attr, int Default)
 {
   if (!pNode->HasAttribute(Attr))
     return Default;
@@ -216,7 +260,7 @@ int nuiGetVal (const nuiXMLNode* pNode, const nglString Attr, int Default)
 }
 
 
-int64 nuiGetVal (const nuiXMLNode* pNode, const nglString Attr, int64 Default)
+int64 nuiGetVal (const nuiXMLNode* pNode, const nglString& Attr, int64 Default)
 {
   if (!pNode->HasAttribute(Attr))
     return Default;
@@ -224,35 +268,35 @@ int64 nuiGetVal (const nuiXMLNode* pNode, const nglString Attr, int64 Default)
 }
 
 
-uint nuiGetVal (const nuiXMLNode* pNode, const nglString Attr, uint Default)
+uint nuiGetVal (const nuiXMLNode* pNode, const nglString& Attr, uint Default)
 {
   if (!pNode->HasAttribute(Attr))
     return Default;
   return pNode->GetAttribute(Attr).GetCInt();
 }
 
-uint64 nuiGetVal (const nuiXMLNode* pNode, const nglString Attr, uint64 Default)
+uint64 nuiGetVal (const nuiXMLNode* pNode, const nglString& Attr, uint64 Default)
 {
   if (!pNode->HasAttribute(Attr))
     return Default;
   return pNode->GetAttribute(Attr).GetCInt64();
 }
 
-float nuiGetVal (const nuiXMLNode* pNode, const nglString Attr, float Default)
+float nuiGetVal (const nuiXMLNode* pNode, const nglString& Attr, float Default)
 {
   if (!pNode->HasAttribute(Attr))
     return Default;
   return pNode->GetAttribute(Attr).GetCFloat();
 }
 
-double nuiGetVal (const nuiXMLNode* pNode, const nglString Attr, double Default)
+double nuiGetVal (const nuiXMLNode* pNode, const nglString& Attr, double Default)
 {
   if (!pNode->HasAttribute(Attr))
     return Default;
   return pNode->GetAttribute(Attr).GetCDouble();
 }
 
-nglString nuiGetVal (const nuiXMLNode* pNode, const nglString Attr, const nglString& Default)
+nglString nuiGetVal (const nuiXMLNode* pNode, const nglString& Attr, const nglString& Default)
 {
   if (!pNode->HasAttribute(Attr))
     return Default;

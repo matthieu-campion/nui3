@@ -25,6 +25,14 @@ enum nuiDirection
   nuiBackward
 };
 
+enum nuiAlignment
+{
+  eBegin,
+  eEnd,
+  eCenter,
+  eJustify
+};
+
 enum nuiPosition
 {
   nuiNoPosition = 0,
@@ -86,36 +94,40 @@ typedef uint nuiWindowFlags;
 
 
 /// Useful conversion functions:
-nuiPosition     nuiGetPosition    (const nglString Position, nuiPosition Default = nuiNoPosition);
-nuiDirection    nuiGetDirection   (const nglString Direction, nuiDirection Default = nuiForward);
-nuiOrientation  nuiGetOrientation (const nglString Orientation, nuiOrientation Default = nuiVertical);
+nuiPosition     nuiGetPosition    (const nglString& Position, nuiPosition Default = nuiNoPosition);
+nuiDirection    nuiGetDirection   (const nglString& Direction, nuiDirection Default = nuiForward);
+nuiOrientation  nuiGetOrientation (const nglString& Orientation, nuiOrientation Default = nuiVertical);
+nuiAlignment    nuiGetAlignment   (const nglString& Alignment, nuiAlignment Default = eBegin);
 
 nglString nuiGetPosition (nuiPosition Value);
 nglString nuiGetDirection (nuiDirection Value);
 nglString nuiGetOrientation (nuiOrientation Value);
+nglString nuiGetAlignment (nuiAlignment Value);
 
 bool nuiGetBool (const nglString& rBool, bool Default = false);
 
 // Get enum from XML desc:
-nuiPosition     nuiGetPosition    (const nuiXMLNode* pNode, const nglString Attr, nuiPosition Default = nuiCenter);
-nuiDirection    nuiGetDirection   (const nuiXMLNode* pNode, const nglString Attr, nuiDirection Default = nuiForward);
-nuiOrientation  nuiGetOrientation (const nuiXMLNode* pNode, const nglString Attr, nuiOrientation Default = nuiVertical);
+nuiPosition     nuiGetPosition    (const nuiXMLNode* pNode, const nglString& Attr, nuiPosition Default = nuiCenter);
+nuiDirection    nuiGetDirection   (const nuiXMLNode* pNode, const nglString& Attr, nuiDirection Default = nuiForward);
+nuiOrientation  nuiGetOrientation (const nuiXMLNode* pNode, const nglString& Attr, nuiOrientation Default = nuiVertical);
+nuiAlignment    nuiGetAlignment   (const nuiXMLNode* pNode, const nglString& Attr, nuiAlignment Default = eBegin);
 
 // Get enum from xml desc attrib with standard node:
 nuiPosition     nuiGetPosition    (const nuiXMLNode* pNode, nuiPosition Default = nuiCenter);
 nuiDirection    nuiGetDirection   (const nuiXMLNode* pNode, nuiDirection Default = nuiForward);
 nuiOrientation  nuiGetOrientation (const nuiXMLNode* pNode, nuiOrientation Default = nuiVertical);
+nuiAlignment  nuiGetAlignment     (const nuiXMLNode* pNode, nuiAlignment Default = eBegin);
 
-bool nuiGetBool (const nuiXMLNode* pNode, const nglString Attr, bool Default = false);
-const nglString& nuiGetString (const nuiXMLNode* pNode, const nglString Attr, const nglString& Default = nglString::Empty);
+bool nuiGetBool (const nuiXMLNode* pNode, const nglString& Attr, bool Default = false);
+const nglString& nuiGetString (const nuiXMLNode* pNode, const nglString& Attr, const nglString& Default = nglString::Empty);
 
-int     nuiGetVal (const nuiXMLNode* pNode, const nglString Attr, int     Default = 0);
-int64   nuiGetVal (const nuiXMLNode* pNode, const nglString Attr, int64   Default = 0);
-uint    nuiGetVal (const nuiXMLNode* pNode, const nglString Attr, uint    Default = 0);
-uint64  nuiGetVal (const nuiXMLNode* pNode, const nglString Attr, uint64  Default = 0);
-float   nuiGetVal (const nuiXMLNode* pNode, const nglString Attr, float   Default = 0);
-double  nuiGetVal (const nuiXMLNode* pNode, const nglString Attr, double  Default = 0);
-nglString nuiGetVal (const nuiXMLNode* pNode, const nglString Attr, const nglString& Default = nglString::Empty);
+int     nuiGetVal (const nuiXMLNode* pNode, const nglString& Attr, int     Default = 0);
+int64   nuiGetVal (const nuiXMLNode* pNode, const nglString& Attr, int64   Default = 0);
+uint    nuiGetVal (const nuiXMLNode* pNode, const nglString& Attr, uint    Default = 0);
+uint64  nuiGetVal (const nuiXMLNode* pNode, const nglString& Attr, uint64  Default = 0);
+float   nuiGetVal (const nuiXMLNode* pNode, const nglString& Attr, float   Default = 0);
+double  nuiGetVal (const nuiXMLNode* pNode, const nglString& Attr, double  Default = 0);
+nglString nuiGetVal (const nuiXMLNode* pNode, const nglString& Attr, const nglString& Default = nglString::Empty);
 
 template <class T>
 bool nuiGet(const nuiXMLNode* pNode, const nglString& Attr, T& rVal)

@@ -18,9 +18,7 @@ public:
   ~nuiHTMLContext();
   
   void UpdateFont();
-  
-  float mLeftMargin;
-  
+    
   float mMaxWidth;
   
   float mVSpace;
@@ -33,5 +31,8 @@ public:
   nuiColor mTextFgColor;
   nuiColor mTextBgColor;
   nuiColor mLinkColor;
+  
+  nuiAlignment mAlignHorizontal;
+  nuiAlignment mAlignVertical;
 };
 

@@ -11,10 +11,41 @@
 
 ////////////////////class nuiHTMLBox
 nuiHTMLBox::nuiHTMLBox(nuiHTMLNode* pNode, nuiHTMLNode* pAnchor, bool Inline)
-: nuiHTMLItem(pNode, pAnchor, Inline)
+: nuiHTMLItem(pNode, pAnchor, Inline),
+ mMarginLeft(0),
+ mMarginTop(0),
+ mMarginRight(0),
+ mMarginBottom(0)
 {
+  if (pNode->GetTagType() == nuiHTMLNode::eTag_BODY) // Defaults for the body tag
+    SetMargins(8);
   
+  nuiHTMLAttrib* pAttrib = NULL;
+  pAttrib = pNode->GetAttribute(nuiHTMLAttrib::eAttrib_BOTTOMMARGIN);
+  if (pAttrib)
+    mMarginBottom = pAttrib->GetValue().GetCFloat();
+
+  pAttrib = pNode->GetAttribute(nuiHTMLAttrib::eAttrib_TOPMARGIN);
+  if (pAttrib)
+    mMarginTop = pAttrib->GetValue().GetCFloat();
+
+  pAttrib = pNode->GetAttribute(nuiHTMLAttrib::eAttrib_LEFTMARGIN);
+  if (pAttrib)
+    mMarginLeft = pAttrib->GetValue().GetCFloat();
+  
+  pAttrib = pNode->GetAttribute(nuiHTMLAttrib::eAttrib_RIGHTMARGIN);
+  if (pAttrib)
+    mMarginRight = pAttrib->GetValue().GetCFloat();
+  
+  pAttrib = pNode->GetAttribute(nuiHTMLAttrib::eAttrib_MARGINWIDTH);
+  if (pAttrib)
+    mMarginLeft = mMarginRight = pAttrib->GetValue().GetCFloat();
+  
+  pAttrib = pNode->GetAttribute(nuiHTMLAttrib::eAttrib_MARGINHEIGHT);
+  if (pAttrib)
+    mMarginTop = mMarginBottom = pAttrib->GetValue().GetCFloat();
 }
+
 
 nuiHTMLBox::~nuiHTMLBox()
 {
@@ -50,7 +81,7 @@ float nuiHTMLBox::LayoutLine(uint32& start, uint32& count, float& y, float& h, n
   float x = 0;
   //printf("box layout item process line\n");
   // Process the line
-  x = rContext.mLeftMargin;
+  x = 0;
   h = ToAbove(h);
   nuiHTMLText* pLastText = NULL;
   for (int32 j = start; j < start + count; j++)
@@ -60,11 +91,11 @@ float nuiHTMLBox::LayoutLine(uint32& start, uint32& count, float& y, float& h, n
     
     nuiRect r(pIt->GetIdealRect());
     r.SetHeight(h);
-    r.MoveTo(x, y);
+    r.MoveTo(x + mMarginLeft, y + mMarginTop);
     r.RoundToAbove();
     pIt->SetLayout(r);
     //NGL_OUT(_T("<%ls> %ls\n"), pIt->GetNode()->GetName().GetChars(), r.GetValue().GetChars());
-    x += ToAbove(r.GetWidth() + rContext.mHSpace);
+    x += ToAbove(r.GetWidth());
     
     if (pLastText)
     {
@@ -107,6 +138,7 @@ void nuiHTMLBox::Layout(nuiHTMLContext& rContext)
   float X = 0;
   float Y = 0;
   float W = 0;
+  context.mMaxWidth -= (mMarginLeft + mMarginRight);
   
   //printf("box layout start\n");
   int32 done = 0;
@@ -146,7 +178,7 @@ void nuiHTMLBox::Layout(nuiHTMLContext& rContext)
     }
     
     lineh = MAX(lineh, r.GetHeight());
-    X += r.GetWidth() + context.mHSpace;
+    X += r.GetWidth();
     
     count_in_line++;
     //printf("box layout item %d done\n", i);
@@ -170,8 +202,10 @@ void nuiHTMLBox::Layout(nuiHTMLContext& rContext)
   }
   
   
-  //mIdealRect.Set(0.0f, 0.0f, W, Y);
   mIdealRect = total;
+  
+  mIdealRect.SetWidth(mIdealRect.GetWidth() + mMarginLeft + mMarginRight);
+  mIdealRect.SetHeight(mIdealRect.GetHeight() + mMarginTop + mMarginBottom);
   //printf("text layout done (%ls)\n", mIdealRect.GetValue().GetChars());
 }
 
@@ -211,5 +245,50 @@ void nuiHTMLBox::UpdateVisibility(const nuiRect& rVisibleRect)
     for (uint32 i = 0; i < mItems.size(); i++)
       mItems[i]->UpdateVisibility(rVisibleRect);
   }
+}
+
+void nuiHTMLBox::SetMargins(float val)
+{
+  mMarginLeft = mMarginTop = mMarginRight = mMarginBottom = val;
+}
+
+void nuiHTMLBox::SetMarginLeft(float val)
+{
+  mMarginLeft = val;
+}
+
+void nuiHTMLBox::SetMarginTop(float val)
+{
+  mMarginTop = val;
+}
+
+void nuiHTMLBox::SetMarginRight(float val)
+{
+  mMarginRight = val;
+}
+
+void nuiHTMLBox::SetMarginBottom(float val)
+{
+  mMarginBottom = val;
+}
+
+float nuiHTMLBox::GetMarginLeft() const
+{
+  return mMarginLeft;
+}
+
+float nuiHTMLBox::GetMarginTop() const
+{
+  return mMarginTop;
+}
+
+float nuiHTMLBox::GetMarginRight() const
+{
+  return mMarginRight;
+}
+
+float nuiHTMLBox::GetMarginBottom() const
+{
+  return mMarginBottom;
 }
 
