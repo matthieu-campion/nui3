@@ -39,16 +39,17 @@ void nuiHTMLText::Draw(nuiDrawContext* pContext)
     nglString str(nglString::Empty);
     do 
     {
-      if (!pIt->mFirstInRun)
-        str.Add(_T(" "));
       str.Add(pIt->mText);
+      str.Add(_T(" "));
       pIt = pIt->mpNextInRun;
-    } while (pIt);
+    } while (pIt && !pIt->mFirstInRun);
       
     mpCompositeLayout = new nuiFontLayout(*mpFont, 0, 0, nuiHorizontal);
     mpCompositeLayout->SetUnderline(mUnderline);
     mpCompositeLayout->SetStrikeThrough(mStrikeThrough);
     mpCompositeLayout->Layout(str);
+    
+    NGL_OUT(_T("Draw HTMLText: %ls\n"), str.GetChars());
   }
   
   pContext->DrawText(0, mpCompositeLayout->GetAscender() , *mpCompositeLayout);
