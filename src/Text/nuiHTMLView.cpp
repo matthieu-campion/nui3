@@ -650,6 +650,9 @@ void nuiHTMLView::ParseTableRow(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 void nuiHTMLView::ParseList(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 {
   int32 items = 1;
+  nuiHTMLAttrib* pStart = pNode->GetAttribute(nuiHTMLAttrib::eAttrib_START);
+  if (pStart)
+    items = pStart->GetValue().GetCInt();
   //printf("html list\n");
   nuiHTMLBox* pListBox = new nuiHTMLBox(pNode, mpCurrentAnchor, false);
   pListBox->SetMarginLeft(25);

@@ -1412,6 +1412,32 @@ main()
         putchar('\n');
     }
 
+    {
+      uint32_t* str = L"prouté";
+      int32_t i = 0;
+      uint32_t* res = NULL;
+      uint32_t len = wcslen(str);
+      uint32_t reslen = 0;
+
+      printf("Original: '%ls' (%d)\n", str, len);
+      for (i = 0; i < len; i++)
+        printf("0x%04x ", str[i]);
+      printf("\n");
+
+      uccanondecomp(str, len, &res, &reslen);
+      printf("Result: '%ls' (%d)\n", res, reslen);
+      for (i = 0; i < reslen; i++)
+        printf("0x%04x ", res[i]);
+      printf("\n");
+      
+      reslen = uccanoncomp(res, reslen);
+      res[reslen] = 0;
+      printf("Back to the original: '%ls' (%d)\n", res, reslen);
+      for (i = 0; i < reslen; i++)
+        printf("0x%04x ", res[i]);
+      printf("\n");
+    }
+  
     if ((lo = uccombining_class(0x41)) != 0)
       printf("0x41 CCL %ld\n", lo);
 

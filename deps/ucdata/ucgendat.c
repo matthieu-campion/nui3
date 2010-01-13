@@ -1567,6 +1567,449 @@ char *opath;
     fclose(out);
 }
 
+/////////////////////////////////////////////////////////////
+static int32_t cnt = 0;
+void resetseparator()
+{
+  cnt = 0;
+}
+
+void outseparator(FILE* out)
+{
+  if (cnt)
+  { 
+    fprintf(out, ", ");
+    if (!(cnt % 8))
+      fprintf(out, "\n  ");
+  }
+  
+  cnt++;
+}
+
+static void
+#ifdef __STDC__
+write_C_cdata(char *opath)
+#else
+write_C_cdata(opath)
+char *opath;
+#endif
+{
+  FILE *out;
+  uint32_t i, idx, bytes, nprops;
+  uint16_t casecnt[2];
+  char path[BUFSIZ];
+  
+  /*****************************************************************
+   *
+   * Generate the ctype data.
+   *
+   *****************************************************************/
+  
+  /*
+   * Open the ctype.dat file.
+   */
+  sprintf(path, "%s/ucdata_static.c", opath);
+  if ((out = fopen(path, "wt")) == 0)
+    return;
+  
+  /*
+   * Collect the offsets for the properties.  The offsets array is
+   * on a 4-byte boundary to keep things efficient for architectures
+   * that need such a thing.
+   */
+  for (i = idx = 0; i < NUMPROPS; i++) {
+    propcnt[i] = (proptbl[i].used != 0) ? idx : 0xffff;
+    idx += proptbl[i].used;
+  }
+  
+  /*
+   * Add the sentinel index which is used by the binary search as the upper
+   * bound for a search.
+   */
+  propcnt[i] = idx;
+  
+  /*
+   * Record the actual number of property lists.  This may be different than
+   * the number of offsets actually written because of aligning on a 4-byte
+   * boundary.
+   */
+  hdr[1] = NUMPROPS;
+  
+  /*
+   * Calculate the byte count needed and pad the property counts array to a
+   * 4-byte boundary.
+   */
+  if ((bytes = sizeof(uint16_t) * (NUMPROPS + 1)) & 3)
+    bytes += 4 - (bytes & 3);
+  nprops = bytes / sizeof(uint16_t);
+  bytes += sizeof(uint32_t) * idx;
+  
+  /*
+   * Write the header.
+   */
+  fprintf(out, "//\n// ucdata static data.\n// This file is auto generated.\n//\n\n#include <stdint.h>\n\n//================= Properties\n\nuint32_t ctype_num_property_nodes = %d;\n", NUMPROPS);
+  //fwrite((char *) hdr, sizeof(uint16_t), 2, out);
+  
+  /*
+   * Write the byte count.
+   */
+  //fwrite((char *) &bytes, sizeof(uint32_t), 1, out);
+  
+  /*
+   * Write the property list counts.
+   */
+  resetseparator();
+  fprintf(out, "const uint32_t ctype_num_property_list_count[%d] = {\n  ", nprops);
+  //fwrite((char *) propcnt, sizeof(uint16_t), nprops, out);
+  for (uint32_t i = 0; i < nprops; i++)
+  {
+    outseparator(out);
+    fprintf(out, "0x%08x", propcnt[i]);
+  }
+  fprintf(out, "\n};\n\n");
+  
+  /*
+   * Write the property lists.
+   */
+  resetseparator();
+  fprintf(out, "const uint32_t ctype_num_property_lists[] = {\n  ");
+  uint32_t cnt = 0;
+  for (i = 0; i < NUMPROPS; i++)
+  {
+    if (proptbl[i].used > 0)
+    {
+      for (uint32_t j = 0; j < proptbl[i].used; j++)
+      {
+        outseparator(out);
+        //fwrite((char *) proptbl[i].ranges, sizeof(uint32_t), proptbl[i].used, out);
+        fprintf(out, "0x%08x", proptbl[i].ranges[j]);
+        cnt++;
+      }
+    }
+  }
+  fprintf(out, "\n};\n");
+  
+  /*****************************************************************
+   *
+   * Generate the case mapping data.
+   *
+   *****************************************************************/
+  
+  /*
+   * Open the case.dat file.
+   */
+  //sprintf(path, "%s/case.dat", opath);
+  //if ((out = fopen(path, "wb")) == 0)
+  //  return;
+  
+  /*
+   * Write the case mapping tables.
+   */
+  hdr[1] = upper_used + lower_used + title_used;
+  casecnt[0] = upper_used;
+  casecnt[1] = lower_used;
+  
+  /*
+   * Write the header.
+   */
+  //fwrite((char *) hdr, sizeof(uint16_t), 2, out);
+  fprintf(out, "\n//==================== Case data\nuint32_t case_num_property_nodes = %d;\n\n", hdr[1]);
+  
+  /*
+   * Write the upper and lower case table sizes.
+   */
+  //fwrite((char *) casecnt, sizeof(uint16_t), 2, out);
+  fprintf(out, "uint32_t case_lower_table_size = %d;\n", casecnt[0]);
+  
+  if (upper_used > 0)
+  {
+    /*
+     * Write the upper case table.
+     */
+    //fwrite((char *) upper, sizeof(_case_t), upper_used, out);
+    resetseparator();
+    fprintf(out, "const uint32_t case_upper_table[%d] = {\n  ", upper_used * 3);
+    for (uint32_t i = 0; i < upper_used; i++)
+    {
+      outseparator(out);
+      fprintf(out, "0x%08x", upper[i].key);
+      outseparator(out);
+      fprintf(out, "0x%08x", upper[i].other1);
+      outseparator(out);
+      fprintf(out, "0x%08x", upper[i].other2);
+    }
+    fprintf(out, "\n};\n\n");
+  }
+  
+  if (lower_used > 0)
+  {  
+    fprintf(out, "uint32_t case_upper_table_size = %d;\n", casecnt[1]);
+    /*
+     * Write the lower case table.
+     */
+    //fwrite((char *) lower, sizeof(_case_t), lower_used, out);
+    resetseparator();
+    fprintf(out, "const uint32_t case_lower_table[%d] = {\n  ", lower_used * 3);
+    for (uint32_t i = 0; i < lower_used; i++)
+    {
+      outseparator(out);
+      fprintf(out, "0x%08x", lower[i].key);
+      outseparator(out);
+      fprintf(out, "0x%08x", lower[i].other1);
+      outseparator(out);
+      fprintf(out, "0x%08x", lower[i].other2);
+    }
+    fprintf(out, "\n};\n\n");    
+  }
+
+  if (title_used > 0)
+  {  
+    /*
+     * Write the title case table.
+     */
+    //fwrite((char *) title, sizeof(_case_t), title_used, out);
+    resetseparator();
+    fprintf(out, "const uint32_t case_title_table[%d] = {\n  ", title_used * 3);
+    for (uint32_t i = 0; i < title_used; i++)
+    {
+      outseparator(out);
+      fprintf(out, "0x%08x", title[i].key);
+      outseparator(out);
+      fprintf(out, "0x%08x", title[i].other1);
+      outseparator(out);
+      fprintf(out, "0x%08x", title[i].other2);
+    }
+    fprintf(out, "\n};\n\n");    
+  }
+  
+  /*****************************************************************
+   *
+   * Generate the composition data.
+   *
+   *****************************************************************/
+  
+  /*
+   * Create compositions from decomposition data
+   */
+  create_comps();
+  
+  /*
+   * Open the comp.dat file.
+   */
+//  sprintf(path, "%s/comp.dat", opath);
+//  if ((out = fopen(path, "wb")) == 0)
+//    return;
+  
+  resetseparator();
+  fprintf(out, "//==================== Composition data\n\n");
+  
+  /*
+   * Write the header.
+   */
+  hdr[1] = (uint16_t) comps_used * 4;
+  //fwrite((char *) hdr, sizeof(uint16_t), 2, out);
+  
+  /*
+   * Write out the byte count to maintain header size.
+   */
+  bytes = comps_used * sizeof(_comp_t);
+  //fwrite((char *) &bytes, sizeof(uint32_t), 1, out);
+  
+  /*
+   * Now, if comps exist, write them out.
+   */
+  if (comps_used > 0)
+  {
+    //fwrite((char *) comps, sizeof(_comp_t), comps_used, out);
+    resetseparator();
+    fprintf(out, "const uint32_t comp_list[%d] = {\n  ", comps_used);
+    for (uint32_t i = 0; i < comps_used; i++)
+    {
+      outseparator(out);
+      fprintf(out, "0x%08x", comps[i].comp);
+      outseparator(out);
+      fprintf(out, "0x%08x", comps[i].count);
+      outseparator(out);
+      fprintf(out, "0x%08x", comps[i].code1);
+      outseparator(out);
+      fprintf(out, "0x%08x", comps[i].code2);
+    }
+    fprintf(out, "\n};\n\n");
+  }
+  
+  /*****************************************************************
+   *
+   * Generate the decomposition data.
+   *
+   *****************************************************************/
+  
+  /*
+   * Fully expand all decompositions before generating the output file.
+   */
+  expand_decomp();
+  
+  /*
+   * Open the decomp.dat file.
+   */
+  sprintf(path, "%s/decomp.dat", opath);
+//  if ((out = fopen(path, "wb")) == 0)
+//    return;
+  
+  fprintf(out, "//==================== Decomposition data\n\n");
+
+  hdr[1] = decomps_used;
+  
+  /*
+   * Write the header.
+   */
+  //fwrite((char *) hdr, sizeof(uint16_t), 2, out);
+  
+  /*
+   * Write a temporary byte count which will be calculated as the
+   * decompositions are written out.
+   */
+  bytes = 0;
+  //fwrite((char *) &bytes, sizeof(uint32_t), 1, out);
+  
+  if (decomps_used)
+  {
+    /*
+     * Write the list of decomp nodes.
+     */
+//    for (i = idx = 0; i < decomps_used; i++)
+//    {
+//      fwrite((char *) &decomps[i].code, sizeof(uint32_t), 1, out);
+//      fwrite((char *) &idx, sizeof(uint32_t), 1, out);
+//      idx += decomps[i].used;
+//    }
+    resetseparator();
+    fprintf(out, "const uint32_t decomps_list[] = {\n  ");
+    for (uint32_t i = idx = 0; i < decomps_used; i++)
+    {
+      outseparator(out);
+      fprintf(out, "0x%08x", decomps[i].code);
+      outseparator(out);
+      fprintf(out, "0x%08x", idx);
+      idx += decomps[i].used;
+    }
+    
+    
+    /*
+     * Write the sentinel index as the last decomp node.
+     */
+    //fwrite((char *) &idx, sizeof(uint32_t), 1, out);
+    outseparator(out);
+    fprintf(out, "0x%08x", idx);
+    fprintf(out, "\n};\n\n");
+
+    /*
+     * Write the decompositions themselves.
+     */
+    resetseparator();
+    fprintf(out, "const uint32_t decomps[] = {\n  ");
+    for (i = 0; i < decomps_used; i++)
+    {
+      //fwrite((char *) decomps[i].decomp, sizeof(uint32_t), decomps[i].used, out);
+      for (uint32_t j = 0; j < decomps[i].used; j++)
+      {
+        outseparator(out);
+        fprintf(out, "0x%08x", decomps[i].decomp[j]);
+      }
+    }
+    fprintf(out, "\n};\n\n");
+    
+    /*
+     * Seek back to the beginning and write the byte count.
+     */
+//    bytes = (sizeof(uint32_t) * idx) + (sizeof(uint32_t) * ((hdr[1] << 1) + 1));
+//    fseek(out, sizeof(uint16_t) << 1, 0L);
+//    fwrite((char *) &bytes, sizeof(uint32_t), 1, out);
+    
+  }
+  
+  fclose(out);
+  return;
+  
+  /*****************************************************************
+   *
+   * Generate the combining class data.
+   *
+   *****************************************************************/
+  
+  /*
+   * Open the cmbcl.dat file.
+   */
+  sprintf(path, "%s/cmbcl.dat", opath);
+  if ((out = fopen(path, "wb")) == 0)
+    return;
+  
+  /*
+   * Set the number of ranges used.  Each range has a combining class which
+   * means each entry is a 3-tuple.
+   */
+  hdr[1] = ccl_used / 3;
+  
+  /*
+   * Write the header.
+   */
+  fwrite((char *) hdr, sizeof(uint16_t), 2, out);
+  
+  /*
+   * Write out the byte count to maintain header size.
+   */
+  bytes = ccl_used * sizeof(uint32_t);
+  fwrite((char *) &bytes, sizeof(uint32_t), 1, out);
+  
+  if (ccl_used > 0)
+  /*
+   * Write the combining class ranges out.
+   */
+    fwrite((char *) ccl, sizeof(uint32_t), ccl_used, out);
+  
+  fclose(out);
+  
+  /*****************************************************************
+   *
+   * Generate the number data.
+   *
+   *****************************************************************/
+  
+  /*
+   * Open the num.dat file.
+   */
+  sprintf(path, "%s/num.dat", opath);
+  if ((out = fopen(path, "wb")) == 0)
+    return;
+  
+  /*
+   * The count part of the header will be the total number of codes that
+   * have numbers.
+   */
+  hdr[1] = (uint16_t) (ncodes_used << 1);
+  bytes = (ncodes_used * sizeof(_codeidx_t)) + (nums_used * sizeof(_num_t));
+  
+  /*
+   * Write the header.
+   */
+  fwrite((char *) hdr, sizeof(uint16_t), 2, out);
+  
+  /*
+   * Write out the byte count to maintain header size.
+   */
+  fwrite((char *) &bytes, sizeof(uint32_t), 1, out);
+  
+  /*
+   * Now, if number mappings exist, write them out.
+   */
+  if (ncodes_used > 0) {
+    fwrite((char *) ncodes, sizeof(_codeidx_t), ncodes_used, out);
+    fwrite((char *) nums, sizeof(_num_t), nums_used, out);
+  }
+  
+  fclose(out);
+}
+///////////////////////////////////////
+
 static void
 #ifdef __STDC__
 usage(char *prog)
@@ -1652,7 +2095,8 @@ char *argv[];
 
     if (opath == 0)
       opath = ".";
-    write_cdata(opath);
-
+  //write_cdata(opath);
+  write_C_cdata(opath);
+  
     return 0;
 }
