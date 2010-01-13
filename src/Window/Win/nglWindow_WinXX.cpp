@@ -1505,6 +1505,7 @@ HCURSOR nglWindow::GetCursorIDC(nuiMouseCursor Cursor)
     case eCursorCross       : return LoadCursor(hInst,IDC_CROSS);
     case eCursorHand        : return LoadCursor(hInst,IDC_HAND);
     case eCursorClosedHand  : return LoadCursor(hInst,IDC_HAND);
+    case eCursorPointingHand: return LoadCursor(hInst,IDC_HAND); // TODO: use a "pointing hand" cursor instead. can't find it in the API...
     case eCursorIBeam       : return LoadCursor(hInst, IDC_IBEAM);
     case eCursorHelp        : return LoadCursor(hInst,IDC_HELP);
     case eCursorWait        : return LoadCursor(hInst,IDC_WAIT);
