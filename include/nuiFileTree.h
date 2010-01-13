@@ -51,6 +51,7 @@ public:
   nglPath GetPath() const;          ///< Retrieve current Path
   nglPath GetRootPath() const;          ///< Retrieve current root.
   const nglPath& GetActivatedPath();
+  bool GetSelectedPath(nglPath& rPath); // return false if no path is selected
 
   virtual nuiTreeNode* GetNewNode(const nglPath& rPath);
   

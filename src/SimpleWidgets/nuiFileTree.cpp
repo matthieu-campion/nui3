@@ -98,6 +98,16 @@ const nglPath& nuiFileTree::GetActivatedPath()
   return mActivatedPath;
 }
 
+bool nuiFileTree::GetSelectedPath(nglPath& rPath)
+{
+  nuiTreeNode* pNode = mpTreeView->GetSelectedNode();
+  if (!pNode)
+    return false;
+  
+  rPath = pNode->GetProperty(_T("Path"));
+  return true;
+}
+
 
 bool nuiFileTree::OnNodeActivated(const nuiEvent& rEvent)
 {
