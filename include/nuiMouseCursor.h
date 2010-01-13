@@ -16,6 +16,7 @@ enum nuiMouseCursor    ///< See SetCursor() and GetCursor()
   eCursorIBeam,     ///< Text entry
   eCursorHand,      ///< Hand
   eCursorClosedHand,///< Closed Hand (at least on macos)
+  eCursorPointingHand,///< hand with a pointing finger
   eCursorHelp,      ///< Question mark with an arrow
   eCursorWait,      ///< Hourglass or watch (might be with an arrow)
   eCursorCaret,     ///< Text caret

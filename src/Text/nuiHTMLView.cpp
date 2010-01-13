@@ -808,6 +808,8 @@ bool nuiHTMLView::MouseMoved(const nglMouseInfo& rInfo)
     Invalidate();
   
   std::vector<nuiHTMLItem*> items;
+  
+  
   mpRootBox->GetItemsAt(items, rInfo.X, rInfo.Y);
   if (!items.empty())
   {
@@ -826,13 +828,14 @@ bool nuiHTMLView::MouseMoved(const nglMouseInfo& rInfo)
 
           if (mUseToolTips)
             SetToolTip(url);
-          SetMouseCursor(eCursorArrow);
+
+          SetMouseCursor(eCursorPointingHand);
           return true;
         }
       }
     }
   }
-
+  
   if (mUseToolTips)
     SetToolTip(nglString::Empty);
   SetMouseCursor(eCursorCaret);

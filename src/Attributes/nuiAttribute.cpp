@@ -1710,6 +1710,9 @@ bool nuiAttribute<nuiMouseCursor>::ToString(nuiMouseCursor Value, nglString& rSt
     case eCursorClosedHand:
       rString = _T("ClosedHand");
       break;
+    case eCursorPointingHand:
+      rString = _T("PointingHand");
+      break;
     case eCursorHelp:
       rString = _T("Help");
       break;
@@ -1785,6 +1788,8 @@ bool nuiAttribute<nuiMouseCursor>::FromString(nuiMouseCursor& rValue, const nglS
     rValue = eCursorHand;
   else if (!rString.Compare(_T("ClosedHand"), false))
     rValue = eCursorClosedHand;
+  else if (!rString.Compare(_T("PointingHand"), false))
+    rValue = eCursorPointingHand;
   else if (!rString.Compare(_T("Help"), false))
     rValue = eCursorHelp;
   else if (!rString.Compare(_T("Wait"), false))
@@ -1836,6 +1841,7 @@ nuiAttributeEditor* nuiAttribute<nuiMouseCursor>::GetDefaultEditor(void* pTarget
   values.push_back(std::make_pair(_T("IBeam"), eCursorIBeam));
   values.push_back(std::make_pair(_T("Hand"), eCursorHand));
   values.push_back(std::make_pair(_T("ClosedHand"), eCursorClosedHand));
+  values.push_back(std::make_pair(_T("PointingHand"), eCursorPointingHand));
   values.push_back(std::make_pair(_T("Help"), eCursorHelp));
   values.push_back(std::make_pair(_T("Wait"), eCursorWait));
   values.push_back(std::make_pair(_T("Caret"), eCursorCaret));

@@ -1816,6 +1816,9 @@ bool nglWindow::SetCursor(nuiMouseCursor Cursor)
     case eCursorClosedHand:
       ::SetThemeCursor(kThemeClosedHandCursor);
       break;
+    case eCursorPointingHand:
+      ::SetThemeCursor(kThemePointingHandCursor);
+      break;
     case eCursorWait:
       ::SetThemeCursor(kThemeWatchCursor);
       break;
