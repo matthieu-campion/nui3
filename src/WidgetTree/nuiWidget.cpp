@@ -1862,6 +1862,7 @@ bool nuiWidget::Focus()
   if (HasFocus())
     return true;
 
+  mHasFocus = true;
   Invalidate();
 
   nuiTopLevelPtr pRoot = GetTopLevel();
@@ -1876,6 +1877,8 @@ bool nuiWidget::UnFocus()
 {
   if (!HasFocus())
     return false;
+
+  mHasFocus = false;
   nuiTopLevelPtr pRoot = GetTopLevel();
 
   Invalidate();
