@@ -1234,21 +1234,21 @@ create_comps(void)
 create_comps()     
 #endif
 {
-    uint32_t i, cu;
-
-    comps = (_comp_t *) malloc(comps_used * sizeof(_comp_t));
-
-    for (i = cu = 0; i < decomps_used; i++) {
-	if (decomps[i].used != 2 || COMPEX_TEST(decomps[i].code))
+  uint32_t i, cu;
+  
+  comps = (_comp_t *) malloc(comps_used * sizeof(_comp_t));
+  
+  for (i = cu = 0; i < decomps_used; i++) {
+    if (decomps[i].used != 2 || COMPEX_TEST(decomps[i].code))
 	    continue;
-	comps[cu].comp = decomps[i].code;
-	comps[cu].count = 2;
-	comps[cu].code1 = decomps[i].decomp[0];
-	comps[cu].code2 = decomps[i].decomp[1];
-	cu++;
-    }
-    qsort(comps, comps_used, sizeof(_comp_t),
-	  (int32_t (*)(const void *, const void *)) cmpcomps);
+    comps[cu].comp = decomps[i].code;
+    comps[cu].count = 2;
+    comps[cu].code1 = decomps[i].decomp[0];
+    comps[cu].code2 = decomps[i].decomp[1];
+    cu++;
+  }
+  qsort(comps, comps_used, sizeof(_comp_t),
+        (int32_t (*)(const void *, const void *)) cmpcomps);
 }
 
 static void

@@ -29,7 +29,7 @@ enum nuiSerializeMode
 };
 
 /// This is the root nui class. It implements all the basic widget management system.
-class NUI_API nuiObject : public nuiRefCount
+class NUI_API nuiObject : virtual public nuiRefCount
 {
 public:
   /** @name Life */

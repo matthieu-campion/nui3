@@ -9275,7 +9275,9 @@
 					FT_CONFIG_OPTION_SYSTEM_ZLIB,
 					HAVE_BCOPY,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = 4.0;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = ". include deps/libpng deps/gameswf deps/zlib deps/ungif deps/libjpeg src/Application/Carbon src/Stream/Zip deps/freetype2/include deps/expat/include deps/harfbuzz deps/expat/lib";

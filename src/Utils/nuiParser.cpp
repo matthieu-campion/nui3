@@ -398,7 +398,7 @@ bool nuiParser::GetInteger(int32& rResult, uint8 Base)
   uint64 r;
   bool res = GetInteger(r, Base);
   rResult = r;
-  return res && (r < (1 << 32));
+  return res && (r < (1LL << 32));
 }
 
 bool nuiParser::GetInteger(int64& rResult, uint8 Base)
