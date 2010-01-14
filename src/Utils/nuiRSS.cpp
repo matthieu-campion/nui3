@@ -450,6 +450,8 @@ void nuiRSS::SetURL(const nglString& rURL)
   if (rURL != GetURL())
   {
     mRSSURL = rURL;
+    mURL = rURL;
     ForceUpdate();
   }
 }
+
