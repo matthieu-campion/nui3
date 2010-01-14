@@ -10,7 +10,6 @@
 		E535DCA910FBE20700A3E9CA /* ucdata.c in Sources */ = {isa = PBXBuildFile; fileRef = E535DCA510FBE20700A3E9CA /* ucdata.c */; };
 		E535DCAA10FBE20700A3E9CA /* ucpgba.c in Sources */ = {isa = PBXBuildFile; fileRef = E535DCA710FBE20700A3E9CA /* ucpgba.c */; };
 		E535DCAD10FBE22A00A3E9CA /* ucgendat.c in Sources */ = {isa = PBXBuildFile; fileRef = E535DCAC10FBE22A00A3E9CA /* ucgendat.c */; };
-		E537310210FE2079007B00C6 /* ucdata_static.c in Sources */ = {isa = PBXBuildFile; fileRef = E537310110FE2079007B00C6 /* ucdata_static.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -32,7 +31,7 @@
 		E535DCA710FBE20700A3E9CA /* ucpgba.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ucpgba.c; sourceTree = SOURCE_ROOT; };
 		E535DCA810FBE20700A3E9CA /* ucpgba.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ucpgba.h; sourceTree = SOURCE_ROOT; };
 		E535DCAC10FBE22A00A3E9CA /* ucgendat.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ucgendat.c; sourceTree = SOURCE_ROOT; };
-		E537310110FE2079007B00C6 /* ucdata_static.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ucdata_static.c; sourceTree = SOURCE_ROOT; };
+		E539578310FE7BF600C10802 /* ucdata_static.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ucdata_static.h; sourceTree = SOURCE_ROOT; };
 		E5A6889C10FB972900543060 /* ucgendat */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ucgendat; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -59,7 +58,6 @@
 			children = (
 				E535DCAB10FBE20D00A3E9CA /* ucgendat */,
 				08FB7795FE84155DC02AAC07 /* ucdata */,
-				C6A0FF2B0290797F04C91782 /* Documentation */,
 				1AB674ADFE9D54B511CA2CBB /* Products */,
 			);
 			name = ucdata;
@@ -68,6 +66,7 @@
 		08FB7795FE84155DC02AAC07 /* ucdata */ = {
 			isa = PBXGroup;
 			children = (
+				E539578310FE7BF600C10802 /* ucdata_static.h */,
 				E535DCA510FBE20700A3E9CA /* ucdata.c */,
 				E535DCA610FBE20700A3E9CA /* ucdata.h */,
 				E535DCA710FBE20700A3E9CA /* ucpgba.c */,
@@ -83,14 +82,6 @@
 				E5A6889C10FB972900543060 /* ucgendat */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		C6A0FF2B0290797F04C91782 /* Documentation */ = {
-			isa = PBXGroup;
-			children = (
-				E537310110FE2079007B00C6 /* ucdata_static.c */,
-			);
-			name = Documentation;
 			sourceTree = "<group>";
 		};
 		E535DCAB10FBE20D00A3E9CA /* ucgendat */ = {
@@ -163,7 +154,6 @@
 			files = (
 				E535DCA910FBE20700A3E9CA /* ucdata.c in Sources */,
 				E535DCAA10FBE20700A3E9CA /* ucpgba.c in Sources */,
-				E537310210FE2079007B00C6 /* ucdata_static.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -512,7 +512,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Sebastien Metrot";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Sebastien Metrot (L6L77G9KU6)";
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PFE_C_DIALECTS = "c++";
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
@@ -534,8 +534,8 @@
 					"-lz",
 					"-liconv",
 				);
-				PROVISIONING_PROFILE = "866A6299-57D3-4594-A6E7-54E82181E44E";
-				SDKROOT = iphoneos2.1;
+				PROVISIONING_PROFILE = "0568D0EC-EF75-46DA-A59E-3EB9DF7DAB0B";
+				SDKROOT = iphoneos3.1.2;
 				USE_HEADERMAP = NO;
 			};
 			name = Default;

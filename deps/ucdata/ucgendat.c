@@ -1596,7 +1596,6 @@ char *opath;
 {
   FILE *out;
   uint32_t i, idx, bytes, nprops;
-  uint16_t casecnt[2];
   char path[BUFSIZ];
   
   /*****************************************************************
@@ -1608,7 +1607,7 @@ char *opath;
   /*
    * Open the ctype.dat file.
    */
-  sprintf(path, "%s/ucdata_static.c", opath);
+  sprintf(path, "%s/ucdata_static.h", opath);
   if ((out = fopen(path, "wt")) == 0)
     return;
   
@@ -1659,12 +1658,12 @@ char *opath;
    * Write the property list counts.
    */
   resetseparator();
-  fprintf(out, "const uint32_t ctype_num_property_list_count[%d] = {\n  ", nprops);
+  fprintf(out, "const uint16_t ctype_props_offsets[] = {\n  ");
   //fwrite((char *) propcnt, sizeof(uint16_t), nprops, out);
   for (uint32_t i = 0; i < nprops; i++)
   {
     outseparator(out);
-    fprintf(out, "0x%08x", propcnt[i]);
+    fprintf(out, "0x%04x", propcnt[i]);
   }
   fprintf(out, "\n};\n\n");
   
@@ -1672,7 +1671,7 @@ char *opath;
    * Write the property lists.
    */
   resetseparator();
-  fprintf(out, "const uint32_t ctype_num_property_lists[] = {\n  ");
+  fprintf(out, "const uint32_t ctype_props[] = {\n  ");
   uint32_t cnt = 0;
   for (i = 0; i < NUMPROPS; i++)
   {
@@ -1705,82 +1704,65 @@ char *opath;
   /*
    * Write the case mapping tables.
    */
-  hdr[1] = upper_used + lower_used + title_used;
-  casecnt[0] = upper_used;
-  casecnt[1] = lower_used;
   
   /*
    * Write the header.
    */
   //fwrite((char *) hdr, sizeof(uint16_t), 2, out);
-  fprintf(out, "\n//==================== Case data\nuint32_t case_num_property_nodes = %d;\n\n", hdr[1]);
+  fprintf(out, "\n//==================== Case data\nuint32_t case_num_nodes = %d;\n\n", upper_used + lower_used + title_used);
   
   /*
    * Write the upper and lower case table sizes.
    */
   //fwrite((char *) casecnt, sizeof(uint16_t), 2, out);
-  fprintf(out, "uint32_t case_lower_table_size = %d;\n", casecnt[0]);
+  fprintf(out, "uint32_t case_upper_size = %d;\n", upper_used);
+  fprintf(out, "uint32_t case_lower_size = %d;\n", lower_used);
   
-  if (upper_used > 0)
+  resetseparator();
+  fprintf(out, "const uint32_t case_table[] = {\n  ");
+
+  /*
+   * Write the upper case table.
+   */
+  //fwrite((char *) upper, sizeof(_case_t), upper_used, out);
+  for (uint32_t i = 0; i < upper_used; i++)
   {
-    /*
-     * Write the upper case table.
-     */
-    //fwrite((char *) upper, sizeof(_case_t), upper_used, out);
-    resetseparator();
-    fprintf(out, "const uint32_t case_upper_table[%d] = {\n  ", upper_used * 3);
-    for (uint32_t i = 0; i < upper_used; i++)
-    {
-      outseparator(out);
-      fprintf(out, "0x%08x", upper[i].key);
-      outseparator(out);
-      fprintf(out, "0x%08x", upper[i].other1);
-      outseparator(out);
-      fprintf(out, "0x%08x", upper[i].other2);
-    }
-    fprintf(out, "\n};\n\n");
+    outseparator(out);
+    fprintf(out, "0x%08x", upper[i].key);
+    outseparator(out);
+    fprintf(out, "0x%08x", upper[i].other1);
+    outseparator(out);
+    fprintf(out, "0x%08x", upper[i].other2);
   }
   
-  if (lower_used > 0)
-  {  
-    fprintf(out, "uint32_t case_upper_table_size = %d;\n", casecnt[1]);
-    /*
-     * Write the lower case table.
-     */
-    //fwrite((char *) lower, sizeof(_case_t), lower_used, out);
-    resetseparator();
-    fprintf(out, "const uint32_t case_lower_table[%d] = {\n  ", lower_used * 3);
-    for (uint32_t i = 0; i < lower_used; i++)
-    {
-      outseparator(out);
-      fprintf(out, "0x%08x", lower[i].key);
-      outseparator(out);
-      fprintf(out, "0x%08x", lower[i].other1);
-      outseparator(out);
-      fprintf(out, "0x%08x", lower[i].other2);
-    }
-    fprintf(out, "\n};\n\n");    
+  /*
+   * Write the lower case table.
+   */
+  //fwrite((char *) lower, sizeof(_case_t), lower_used, out);
+  for (uint32_t i = 0; i < lower_used; i++)
+  {
+    outseparator(out);
+    fprintf(out, "0x%08x", lower[i].key);
+    outseparator(out);
+    fprintf(out, "0x%08x", lower[i].other1);
+    outseparator(out);
+    fprintf(out, "0x%08x", lower[i].other2);
   }
 
-  if (title_used > 0)
-  {  
-    /*
-     * Write the title case table.
-     */
-    //fwrite((char *) title, sizeof(_case_t), title_used, out);
-    resetseparator();
-    fprintf(out, "const uint32_t case_title_table[%d] = {\n  ", title_used * 3);
-    for (uint32_t i = 0; i < title_used; i++)
-    {
-      outseparator(out);
-      fprintf(out, "0x%08x", title[i].key);
-      outseparator(out);
-      fprintf(out, "0x%08x", title[i].other1);
-      outseparator(out);
-      fprintf(out, "0x%08x", title[i].other2);
-    }
-    fprintf(out, "\n};\n\n");    
+  /*
+   * Write the title case table.
+   */
+  //fwrite((char *) title, sizeof(_case_t), title_used, out);
+  for (uint32_t i = 0; i < title_used; i++)
+  {
+    outseparator(out);
+    fprintf(out, "0x%08x", title[i].key);
+    outseparator(out);
+    fprintf(out, "0x%08x", title[i].other1);
+    outseparator(out);
+    fprintf(out, "0x%08x", title[i].other2);
   }
+  fprintf(out, "\n};\n\n");    
   
   /*****************************************************************
    *
@@ -1822,7 +1804,7 @@ char *opath;
   {
     //fwrite((char *) comps, sizeof(_comp_t), comps_used, out);
     resetseparator();
-    fprintf(out, "const uint32_t comp_list[%d] = {\n  ", comps_used);
+    fprintf(out, "const uint32_t comp_list[] = {\n  ");
     for (uint32_t i = 0; i < comps_used; i++)
     {
       outseparator(out);
@@ -1882,6 +1864,7 @@ char *opath;
 //      fwrite((char *) &idx, sizeof(uint32_t), 1, out);
 //      idx += decomps[i].used;
 //    }
+    fprintf(out, "uint32_t decomps_size = %d;\n", decomps_used);
     resetseparator();
     fprintf(out, "const uint32_t decomps_list[] = {\n  ");
     for (uint32_t i = idx = 0; i < decomps_used; i++)
@@ -1927,8 +1910,8 @@ char *opath;
     
   }
   
-  fclose(out);
-  return;
+//  fclose(out);
+//  return;
   
   /*****************************************************************
    *
@@ -1939,9 +1922,9 @@ char *opath;
   /*
    * Open the cmbcl.dat file.
    */
-  sprintf(path, "%s/cmbcl.dat", opath);
-  if ((out = fopen(path, "wb")) == 0)
-    return;
+//  sprintf(path, "%s/cmbcl.dat", opath);
+//  if ((out = fopen(path, "wb")) == 0)
+//    return;
   
   /*
    * Set the number of ranges used.  Each range has a combining class which
@@ -1952,21 +1935,33 @@ char *opath;
   /*
    * Write the header.
    */
-  fwrite((char *) hdr, sizeof(uint16_t), 2, out);
+  //fwrite((char *) hdr, sizeof(uint16_t), 2, out);
   
   /*
    * Write out the byte count to maintain header size.
    */
-  bytes = ccl_used * sizeof(uint32_t);
-  fwrite((char *) &bytes, sizeof(uint32_t), 1, out);
+  //bytes = ccl_used * sizeof(uint32_t);
+  //fwrite((char *) &bytes, sizeof(uint32_t), 1, out);
   
+  fprintf(out, "//==============================\n// Combining class\n\n");
   if (ccl_used > 0)
-  /*
-   * Write the combining class ranges out.
-   */
-    fwrite((char *) ccl, sizeof(uint32_t), ccl_used, out);
+  {
+    /*
+     * Write the combining class ranges out.
+     */
+    //fwrite((char *) ccl, sizeof(uint32_t), ccl_used, out);
+    resetseparator();
+    fprintf(out, "const uint32_t combining_class[] = {\n  ");
+    for (i = 0; i < ccl_used; i++)
+    {
+      outseparator(out);
+      fprintf(out, "0x%08x", ccl[i]);
+    }
+    fprintf(out, "\n};\n\n");
+    
+  }
   
-  fclose(out);
+  //fclose(out);
   
   /*****************************************************************
    *
@@ -1977,9 +1972,9 @@ char *opath;
   /*
    * Open the num.dat file.
    */
-  sprintf(path, "%s/num.dat", opath);
-  if ((out = fopen(path, "wb")) == 0)
-    return;
+//  sprintf(path, "%s/num.dat", opath);
+//  if ((out = fopen(path, "wb")) == 0)
+//    return;
   
   /*
    * The count part of the header will be the total number of codes that
@@ -1991,19 +1986,42 @@ char *opath;
   /*
    * Write the header.
    */
-  fwrite((char *) hdr, sizeof(uint16_t), 2, out);
+  //fwrite((char *) hdr, sizeof(uint16_t), 2, out);
   
   /*
    * Write out the byte count to maintain header size.
    */
-  fwrite((char *) &bytes, sizeof(uint32_t), 1, out);
+  //fwrite((char *) &bytes, sizeof(uint32_t), 1, out);
   
   /*
    * Now, if number mappings exist, write them out.
    */
-  if (ncodes_used > 0) {
-    fwrite((char *) ncodes, sizeof(_codeidx_t), ncodes_used, out);
-    fwrite((char *) nums, sizeof(_num_t), nums_used, out);
+  if (ncodes_used > 0)
+  {
+    //fwrite((char *) ncodes, sizeof(_codeidx_t), ncodes_used, out);
+    resetseparator();
+    fprintf(out, "const uint32_t number_mappings_idx[] = {\n  ");
+    for (i = 0; i < ncodes_used; i++)
+    {
+      outseparator(out);
+      fprintf(out, "0x%08x", ncodes[i].code);
+      outseparator(out);
+      fprintf(out, "0x%08x", ncodes[i].idx);
+    }
+    fprintf(out, "\n};\n\n");
+    
+    
+    //fwrite((char *) nums, sizeof(_num_t), nums_used, out);
+    resetseparator();
+    fprintf(out, "const int16_t number_mappings[] = {\n  ");
+    for (i = 0; i < nums_used; i++)
+    {
+      outseparator(out);
+      fprintf(out, "0x%04x", (uint16_t)nums[i].numerator);
+      outseparator(out);
+      fprintf(out, "0x%04x", (uint16_t)nums[i].denominator);
+    }
+    fprintf(out, "\n};\n\n");
   }
   
   fclose(out);

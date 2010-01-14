@@ -30,11 +30,14 @@ static char rcsid[] = "$Id: ucdata.c,v 1.4 2001/01/02 18:46:20 mleisher Exp $";
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <wchar.h>
 #ifndef WIN32
 #include <unistd.h>
 #endif
 
 #include "ucdata.h"
+#include "ucdata_static.h"
+
 
 /**************************************************************************
  *
@@ -213,6 +216,18 @@ int32_t reload;
     return 0;
 }
 
+/*
+ * Return -1 on error, 0 if okay
+ */
+static int32_t
+_ucprop_load_static()
+{
+  _ucprop_offsets = (uint16_t*)ctype_props_offsets;
+  _ucprop_ranges = (uint32_t*)ctype_props;
+  return 1;
+}
+
+
 static void
 #ifdef __STDC__
 _ucprop_unload(void)
@@ -220,7 +235,7 @@ _ucprop_unload(void)
 _ucprop_unload()
 #endif
 {
-    if (_ucprop_size == 0)
+    if (_ucprop_size == 0 || _ucprop_offsets == ctype_props_offsets)
       return;
 
     /*
@@ -378,6 +393,22 @@ int32_t reload;
     return 0;
 }
 
+static int32_t
+_uccase_load_static()
+{
+  /*
+   * Set the node count and lengths of the upper and lower case mapping
+   * tables.
+   */
+  _uccase_size = case_num_nodes * 3;
+  _uccase_len[0] = case_upper_size * 3;
+  _uccase_len[1] = case_lower_size * 3;
+  
+  _uccase_map = (uint32_t*)case_table;
+  return 1;
+}
+
+
 static void
 #ifdef __STDC__
 _uccase_unload(void)
@@ -385,7 +416,7 @@ _uccase_unload(void)
 _uccase_unload()
 #endif
 {
-    if (_uccase_size == 0)
+    if (_uccase_size == 0 || _uccase_map == case_table)
       return;
 
     free((char *) _uccase_map);
@@ -602,6 +633,25 @@ int32_t reload;
     return 0;
 }
 
+static int32_t
+_uccomp_load_static()
+{
+  _uccomp_size = sizeof(comp_list) / sizeof(uint32_t);
+  _uccomp_data = (uint32_t *)comp_list;
+  
+  /*
+   * Assume that the data is ordered on count, so that all compositions
+   * of length 2 come first. Only handling length 2 for now.
+   */
+  uint32_t i = 0;
+  for (i = 1; i < _uccomp_size; i += 4)
+    if (_uccomp_data[i] != 2)
+      break;
+  _uccomp_size = i - 1;
+  
+  return 1;
+}
+
 static void
 #ifdef __STDC__
 _uccomp_unload(void)
@@ -609,7 +659,7 @@ _uccomp_unload(void)
 _uccomp_unload()
 #endif
 {
-    if (_uccomp_size == 0)
+    if (_uccomp_size == 0 || _uccomp_data == comp_list)
         return;
 
     free((char *) _uccomp_data);
@@ -808,6 +858,18 @@ int32_t reload;
     return 0;
 }
 
+static int32_t
+_ucdcmp_load_static()
+{
+  uint32_t size, i;
+  
+  _ucdcmp_size = decomps_size;
+  _ucdcmp_nodes = (uint32_t*)decomps_list;
+  _ucdcmp_decomp = (uint32_t*)decomps;
+  
+  return 1;
+}
+
 static void
 #ifdef __STDC__
 _ucdcmp_unload(void)
@@ -815,7 +877,7 @@ _ucdcmp_unload(void)
 _ucdcmp_unload()
 #endif
 {
-    if (_ucdcmp_size == 0)
+    if (_ucdcmp_size == 0 || _ucdcmp_nodes == decomps_list)
       return;
 
     /*
@@ -1022,6 +1084,18 @@ int32_t reload;
     return 0;
 }
 
+static int32_t
+_uccmcl_load_static()
+{
+  uint32_t i;
+  
+  _uccmcl_size = sizeof(combining_class) / sizeof(uint32_t);
+  _uccmcl_nodes = (uint32_t *)combining_class;
+
+  return 0;
+}
+
+
 static void
 #ifdef __STDC__
 _uccmcl_unload(void)
@@ -1029,7 +1103,7 @@ _uccmcl_unload(void)
 _uccmcl_unload()
 #endif
 {
-    if (_uccmcl_size == 0)
+    if (_uccmcl_size == 0 || _uccmcl_nodes == combining_class)
       return;
 
     free((char *) _uccmcl_nodes);
@@ -1141,6 +1215,15 @@ int32_t reload;
     return 0;
 }
 
+static int32_t
+_ucnumb_load_static()
+{
+  _ucnum_size = sizeof(number_mappings_idx) / sizeof(int32_t);
+  _ucnum_nodes = (uint32_t *)number_mappings_idx;
+  _ucnum_vals = (uint16_t *)number_mappings;
+  return 0;
+}
+
 static void
 #ifdef __STDC__
 _ucnumb_unload(void)
@@ -1148,7 +1231,7 @@ _ucnumb_unload(void)
 _ucnumb_unload()
 #endif
 {
-    if (_ucnum_size == 0)
+    if (_ucnum_size == 0 || _ucnum_nodes == number_mappings_idx)
       return;
 
     free((char *) _ucnum_nodes);
@@ -1368,62 +1451,83 @@ main(void)
 main()
 #endif
 {
-    int32_t dig;
-    uint32_t i, lo, *dec;
-    struct ucnumber num;
+  int32_t dig;
+  uint32_t res;
+  uint32_t i, lo, *dec;
+  struct ucnumber num;
+  
+  ucdata_setup(".");
+  _ucprop_load_static();
+  _uccase_load_static();
+  _uccomp_load_static();
+  _ucdcmp_load_static();
+  _uccmcl_load_static();
+  _ucnumb_load_static();
 
-    ucdata_setup(".");
 
-    if (ucisweak(0x30))
-      printf("WEAK\n");
-    else
-      printf("NOT WEAK\n");
-
-    printf("LOWER 0x%04lX\n", uctolower(0xff3a));
-    printf("UPPER 0x%04lX\n", uctoupper(0xff5a));
-
-    if (ucisalpha(0x1d5))
-      printf("ALPHA\n");
-    else
-      printf("NOT ALPHA\n");
-
-    if (ucisupper(0x1d5)) {
-        printf("UPPER\n");
-        lo = uctolower(0x1d5);
-        printf("0x%04lx\n", lo);
-        lo = uctotitle(0x1d5);
-        printf("0x%04lx\n", lo);
-    } else
-      printf("NOT UPPER\n");
-
-    if (ucistitle(0x1d5))
-      printf("TITLE\n");
-    else
-      printf("NOT TITLE\n");
-
-    if (uciscomposite(0x1d5))
-      printf("COMPOSITE\n");
-    else
-      printf("NOT COMPOSITE\n");
-
-    if (ucdecomp(0x1d5, &lo, &dec)) {
-        for (i = 0; i < lo; i++)
-          printf("0x%04lx ", dec[i]);
-        putchar('\n');
-    }
-
+  
+  
+  if (ucisweak(0x30))
+    printf("WEAK\n");
+  else
+    printf("NOT WEAK\n");
+  
+  printf("LOWER 0x%04lX\n", uctolower(0xff3a));
+  printf("UPPER 0x%04lX\n", uctoupper(0xff5a));
+  
+  if (ucisalpha(0x1d5))
+    printf("ALPHA\n");
+  else
+    printf("NOT ALPHA\n");
+  
+  if (ucisupper(0x1d5)) {
+    printf("UPPER\n");
+    lo = uctolower(0x1d5);
+    printf("0x%04lx\n", lo);
+    lo = uctotitle(0x1d5);
+    printf("0x%04lx\n", lo);
+  } else
+    printf("NOT UPPER\n");
+  
+  if (ucistitle(0x1d5))
+    printf("TITLE\n");
+  else
+    printf("NOT TITLE\n");
+  
+  if (uciscomposite(0x1d5))
+    printf("COMPOSITE\n");
+  else
+    printf("NOT COMPOSITE\n");
+  
+  if (ucdecomp(0x1d5, &lo, &dec)) {
+    for (i = 0; i < lo; i++)
+      printf("0x%04lx ", dec[i]);
+    putchar('\n');
+  }
+  
+  res = dec[0];
+  for (i = 0; i < lo - 1; i++)
+  {
+    if (uccomp(res, dec[i + 1], &res))
     {
-      uint32_t* str = L"prouté";
+      printf("pass %d composed to 0x%04lx\n", i, res);
+    }
+    else {
+      printf("error on pass %d\n", i);
+    }
+    
+    {
+      uint32_t* str = L"é";
       int32_t i = 0;
       uint32_t* res = NULL;
       uint32_t len = wcslen(str);
       uint32_t reslen = 0;
-
+      
       printf("Original: '%ls' (%d)\n", str, len);
       for (i = 0; i < len; i++)
         printf("0x%04x ", str[i]);
       printf("\n");
-
+      
       uccanondecomp(str, len, &res, &reslen);
       printf("Result: '%ls' (%d)\n", res, reslen);
       for (i = 0; i < reslen; i++)
@@ -1437,81 +1541,82 @@ main()
         printf("0x%04x ", res[i]);
       printf("\n");
     }
-  
+    
     if ((lo = uccombining_class(0x41)) != 0)
       printf("0x41 CCL %ld\n", lo);
-
+    
     if (ucisxdigit(0xfeff))
       printf("0xFEFF HEX DIGIT\n");
     else
       printf("0xFEFF NOT HEX DIGIT\n");
-
+    
     if (ucisdefined(0x10000))
       printf("0x10000 DEFINED\n");
     else
       printf("0x10000 NOT DEFINED\n");
-
+    
     if (ucnumber_lookup(0x30, &num)) {
-        if (num.numerator != num.denominator)
-          printf("UCNUMBER: 0x30 = %d/%d\n", num.numerator, num.denominator);
-        else
-          printf("UCNUMBER: 0x30 = %d\n", num.numerator);
+      if (num.numerator != num.denominator)
+        printf("UCNUMBER: 0x30 = %d/%d\n", num.numerator, num.denominator);
+      else
+        printf("UCNUMBER: 0x30 = %d\n", num.numerator);
     } else
       printf("UCNUMBER: 0x30 NOT A NUMBER\n");
-
+    
     if (ucnumber_lookup(0xbc, &num)) {
-        if (num.numerator != num.denominator)
-          printf("UCNUMBER: 0xbc = %d/%d\n", num.numerator, num.denominator);
-        else
-          printf("UCNUMBER: 0xbc = %d\n", num.numerator);
+      if (num.numerator != num.denominator)
+        printf("UCNUMBER: 0xbc = %d/%d\n", num.numerator, num.denominator);
+      else
+        printf("UCNUMBER: 0xbc = %d\n", num.numerator);
     } else
       printf("UCNUMBER: 0xbc NOT A NUMBER\n");
-
-
+    
+    
     if (ucnumber_lookup(0xff19, &num)) {
-        if (num.numerator != num.denominator)
-          printf("UCNUMBER: 0xff19 = %d/%d\n", num.numerator, num.denominator);
-        else
-          printf("UCNUMBER: 0xff19 = %d\n", num.numerator);
+      if (num.numerator != num.denominator)
+        printf("UCNUMBER: 0xff19 = %d/%d\n", num.numerator, num.denominator);
+      else
+        printf("UCNUMBER: 0xff19 = %d\n", num.numerator);
     } else
       printf("UCNUMBER: 0xff19 NOT A NUMBER\n");
-
+    
     if (ucnumber_lookup(0x4e00, &num)) {
-        if (num.numerator != num.denominator)
-          printf("UCNUMBER: 0x4e00 = %d/%d\n", num.numerator, num.denominator);
-        else
-          printf("UCNUMBER: 0x4e00 = %d\n", num.numerator);
+      if (num.numerator != num.denominator)
+        printf("UCNUMBER: 0x4e00 = %d/%d\n", num.numerator, num.denominator);
+      else
+        printf("UCNUMBER: 0x4e00 = %d\n", num.numerator);
     } else
       printf("UCNUMBER: 0x4e00 NOT A NUMBER\n");
-
+    
     if (ucdigit_lookup(0x06f9, &dig))
       printf("UCDIGIT: 0x6f9 = %d\n", dig);
     else
       printf("UCDIGIT: 0x6f9 NOT A NUMBER\n");
-
+    
     dig = ucgetdigit(0x0969);
     printf("UCGETDIGIT: 0x969 = %d\n", dig);
-
+    
     num = ucgetnumber(0x30);
     if (num.numerator != num.denominator)
       printf("UCGETNUMBER: 0x30 = %d/%d\n", num.numerator, num.denominator);
     else
       printf("UCGETNUMBER: 0x30 = %d\n", num.numerator);
-
+    
     num = ucgetnumber(0xbc);
     if (num.numerator != num.denominator)
       printf("UCGETNUMBER: 0xbc = %d/%d\n", num.numerator, num.denominator);
     else
       printf("UCGETNUMBER: 0xbc = %d\n", num.numerator);
-
+    
     num = ucgetnumber(0xff19);
     if (num.numerator != num.denominator)
       printf("UCGETNUMBER: 0xff19 = %d/%d\n", num.numerator, num.denominator);
     else
       printf("UCGETNUMBER: 0xff19 = %d\n", num.numerator);
-
+    
     ucdata_cleanup();
     exit(0);
+  }
 }
 
 /* Expected Result:
