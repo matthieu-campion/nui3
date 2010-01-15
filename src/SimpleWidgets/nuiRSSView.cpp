@@ -24,6 +24,7 @@ nuiRSSView::nuiRSSView(const nglString& rURL, int32 SecondsBetweenUpdates, nglIS
   
   mTextColor = nuiColor(0,0,0);
   mFont = nglString::Null;
+  mMaxItems = -1;
   
   mForceNoHTML = ForceNoHTML;
   mpRSS = new nuiRSS(rURL, SecondsBetweenUpdates, pOriginalStream);
@@ -66,23 +67,36 @@ void nuiRSSView::InitAttributes()
                 nuiMakeDelegate(this, &nuiRSSView::GetURL), 
                 nuiMakeDelegate(this, &nuiRSSView::SetURL)));
   
+  AddAttribute(new nuiAttribute<const nglString&>
+               (nglString(_T("ItemWidget")), nuiUnitName,
+                nuiMakeDelegate(this, &nuiRSSView::GetItemWidget), 
+                nuiMakeDelegate(this, &nuiRSSView::SetItemWidget)));
+  
+  AddAttribute(new nuiAttribute<int32>
+               (nglString(_T("MaxItems")), nuiUnitNone,
+                nuiMakeDelegate(this, &nuiRSSView::GetMaxItems), 
+                nuiMakeDelegate(this, &nuiRSSView::SetMaxItems)));
+  
 }
 
 
 
 bool nuiRSSView::Update(const nuiEvent& rEvent)
 {
-  mpBox->Clear();
-  for (uint32 i = 0; i < mpRSS->GetItemCount(); i++)
+  mpBox->Trash();
+  mpBox = new nuiVBox();
+  AddChild(mpBox);
+
+  int32 count = mpRSS->GetItemCount();
+  count = mMaxItems >= 0 ? MIN(mMaxItems, count) : count;
+  
+  for (uint32 i = 0; i < count; i++)
   {
     const nuiRSSItem& rItem(mpRSS->GetItem(i));
     //printf("%ls / %ls\n", rItem.GetLink().GetChars(), rItem.GetTitle().GetChars());
-    nuiHyperLink* pLink = new nuiHyperLink(rItem.GetLink(), rItem.GetTitle());
-    pLink->UseEllipsis(true);
-    nuiFolderPane* pPane = new nuiFolderPane(pLink, true);
-    
-    nglString desc(rItem.GetDescription());
 
+    nglString desc(rItem.GetDescription());
+    
     nuiHTML html;
     bool res = !desc.IsNull();
     if (res)
@@ -104,29 +118,64 @@ bool nuiRSSView::Update(const nuiEvent& rEvent)
       text = rItem.GetDescription();
       //NGL_OUT(_T("%d - Couldn't parse HTML tags:\n%ls\n"), i, text.GetChars());
     }
+
     
-//    nuiLabel* pLabel = new nuiLabel(text);
-//    pLabel->SetObjectName(_T("nuiRSSView::Description"));
-//    pLabel->SetWrapping(true);
-    if (!mForceNoHTML && res)
+    if (mItemWidget.IsEmpty())
     {
-      nuiHTMLView* pLabel = new nuiHTMLView(480);
-      pLabel->SetText(desc);
-      pLabel->SetObjectClass(_T("nuiRSSContents"));
-      if (mFont != nglString::Null)
-        pLabel->_SetFont(mFont);
-      pLabel->SetTextColor(mTextColor);
-      pPane->AddChild(pLabel);
+      nuiHyperLink* pLink = new nuiHyperLink(rItem.GetLink(), rItem.GetTitle());
+      pLink->UseEllipsis(true);
+      nuiFolderPane* pPane = new nuiFolderPane(pLink, true);
+      
+      
+  //    nuiLabel* pLabel = new nuiLabel(text);
+  //    pLabel->SetObjectName(_T("nuiRSSView::Description"));
+  //    pLabel->SetWrapping(true);
+      if (!mForceNoHTML && res)
+      {
+        nuiHTMLView* pLabel = new nuiHTMLView(480);
+        pLabel->SetText(desc);
+        pLabel->SetObjectClass(_T("nuiRSSContents"));
+        if (mFont != nglString::Null)
+          pLabel->_SetFont(mFont);
+        pLabel->SetTextColor(mTextColor);
+        pPane->AddChild(pLabel);
+      }
+      else
+      {
+        nuiLabel* pLabel = new nuiLabel(text);
+        pLabel->SetObjectClass(_T("nuiRSSContents"));
+        pLabel->SetWrapping(true);
+        pPane->AddChild(pLabel);
+      }
+      mpBox->AddCell(pPane);
     }
     else
     {
-      nuiLabel* pLabel = new nuiLabel(text);
-      pLabel->SetObjectClass(_T("nuiRSSContents"));
-      pLabel->SetWrapping(true);
-      pPane->AddChild(pLabel);
-      
+//      if (!mForceNoHTML && res)
+//      {
+//        text = desc;
+//      }
+
+      NGL_OUT(_T("AGENDA: %ls\n"), rItem.GetTitle().GetChars());
+      std::map<nglString, nglString> dictionnary;
+      dictionnary[_T("ItemText")] = text;
+      dictionnary[_T("ItemHTML")] = desc;
+      dictionnary[_T("Title")] = rItem.GetTitle();
+      dictionnary[_T("Link")] = rItem.GetLink();
+      dictionnary[_T("Description")] = rItem.GetDescription();
+      dictionnary[_T("Author")] = rItem.GetAuthor();
+      dictionnary[_T("Category")] = rItem.GetCategory();
+      dictionnary[_T("CategoryDomain")] = rItem.GetCategoryDomain();
+      dictionnary[_T("Comments")] = rItem.GetComments();
+      dictionnary[_T("EnclosureURL")] = rItem.GetEnclosureURL();
+      dictionnary[_T("EnclosureType")] = rItem.GetEnclosureType();
+      dictionnary[_T("GUID")] = rItem.GetGUID();
+      dictionnary[_T("PublishingDate")] = rItem.GetPublishingDate();
+      dictionnary[_T("SourceURL")] = rItem.GetSourceURL();
+      nuiWidget* pWidget = nuiBuilder::Get().CreateWidget(mItemWidget, dictionnary);
+      if (pWidget)
+        mpBox->AddCell(pWidget);
     }
-    mpBox->AddCell(pPane);
     
   }
   return false;
@@ -145,6 +194,28 @@ void nuiRSSView::SetURL(const nglString& rURL)
 const nglString& nuiRSSView::GetURL() const
 {
   return mpRSS->GetURL();
+}
+
+void nuiRSSView::SetItemWidget(const nglString& rWidget)
+{
+  mItemWidget = rWidget;
+  Update(nuiEvent());
+}
+
+const nglString& nuiRSSView::GetItemWidget() const
+{
+  return mItemWidget;
+}
+
+void nuiRSSView::SetMaxItems(int32 maxshown)
+{
+  mMaxItems = maxshown;
+  Update(nuiEvent());
+}
+
+int32 nuiRSSView::GetMaxItems() const
+{
+  return mMaxItems;
 }
 
 

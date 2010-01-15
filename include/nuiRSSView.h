@@ -26,6 +26,12 @@ public:
   void SetURL(const nglString& rURL);
   const nglString&  GetURL() const;
   
+  void SetItemWidget(const nglString& rWidget);
+  const nglString&  GetItemWidget() const;
+  
+  void SetMaxItems(int32 maxshown);
+  int32  GetMaxItems() const;
+  
   void ForceUpdate();
   
   void _SetFont(const nglString& rFontSymbol);
@@ -44,6 +50,9 @@ protected:
   nglString mFont;
   nuiColor mTextColor;
 
+  nglString mItemWidget;
+  
+  int32 mMaxItems;
 private:
   
   void InitAttributes();
