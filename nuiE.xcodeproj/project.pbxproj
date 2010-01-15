@@ -3610,6 +3610,26 @@
 		E5E7D00A0F376A5E00073CA6 /* nglPath_Cocoa.mm in Sources */ = {isa = PBXBuildFile; fileRef = E5E7D0080F376A5E00073CA6 /* nglPath_Cocoa.mm */; };
 		E5E7D00B0F376A5E00073CA6 /* nglPath_Cocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = E5E7D0070F376A5E00073CA6 /* nglPath_Cocoa.h */; };
 		E5E7D00C0F376A5E00073CA6 /* nglPath_Cocoa.mm in Sources */ = {isa = PBXBuildFile; fileRef = E5E7D0080F376A5E00073CA6 /* nglPath_Cocoa.mm */; };
+		E5E8A53C1100CFCC00567BEA /* ucdata_static.h in Headers */ = {isa = PBXBuildFile; fileRef = E5E8A5371100CFCC00567BEA /* ucdata_static.h */; };
+		E5E8A53D1100CFCC00567BEA /* ucdata.c in Sources */ = {isa = PBXBuildFile; fileRef = E5E8A5381100CFCC00567BEA /* ucdata.c */; };
+		E5E8A53E1100CFCC00567BEA /* ucdata.h in Headers */ = {isa = PBXBuildFile; fileRef = E5E8A5391100CFCC00567BEA /* ucdata.h */; };
+		E5E8A53F1100CFCC00567BEA /* ucpgba.c in Sources */ = {isa = PBXBuildFile; fileRef = E5E8A53A1100CFCC00567BEA /* ucpgba.c */; };
+		E5E8A5401100CFCC00567BEA /* ucpgba.h in Headers */ = {isa = PBXBuildFile; fileRef = E5E8A53B1100CFCC00567BEA /* ucpgba.h */; };
+		E5E8A5411100CFCC00567BEA /* ucdata_static.h in Headers */ = {isa = PBXBuildFile; fileRef = E5E8A5371100CFCC00567BEA /* ucdata_static.h */; };
+		E5E8A5421100CFCC00567BEA /* ucdata.c in Sources */ = {isa = PBXBuildFile; fileRef = E5E8A5381100CFCC00567BEA /* ucdata.c */; };
+		E5E8A5431100CFCC00567BEA /* ucdata.h in Headers */ = {isa = PBXBuildFile; fileRef = E5E8A5391100CFCC00567BEA /* ucdata.h */; };
+		E5E8A5441100CFCC00567BEA /* ucpgba.c in Sources */ = {isa = PBXBuildFile; fileRef = E5E8A53A1100CFCC00567BEA /* ucpgba.c */; };
+		E5E8A5451100CFCC00567BEA /* ucpgba.h in Headers */ = {isa = PBXBuildFile; fileRef = E5E8A53B1100CFCC00567BEA /* ucpgba.h */; };
+		E5E8A5461100CFCC00567BEA /* ucdata_static.h in Headers */ = {isa = PBXBuildFile; fileRef = E5E8A5371100CFCC00567BEA /* ucdata_static.h */; };
+		E5E8A5471100CFCC00567BEA /* ucdata.c in Sources */ = {isa = PBXBuildFile; fileRef = E5E8A5381100CFCC00567BEA /* ucdata.c */; };
+		E5E8A5481100CFCC00567BEA /* ucdata.h in Headers */ = {isa = PBXBuildFile; fileRef = E5E8A5391100CFCC00567BEA /* ucdata.h */; };
+		E5E8A5491100CFCC00567BEA /* ucpgba.c in Sources */ = {isa = PBXBuildFile; fileRef = E5E8A53A1100CFCC00567BEA /* ucpgba.c */; };
+		E5E8A54A1100CFCC00567BEA /* ucpgba.h in Headers */ = {isa = PBXBuildFile; fileRef = E5E8A53B1100CFCC00567BEA /* ucpgba.h */; };
+		E5E8A54B1100CFCC00567BEA /* ucdata_static.h in Headers */ = {isa = PBXBuildFile; fileRef = E5E8A5371100CFCC00567BEA /* ucdata_static.h */; };
+		E5E8A54C1100CFCC00567BEA /* ucdata.c in Sources */ = {isa = PBXBuildFile; fileRef = E5E8A5381100CFCC00567BEA /* ucdata.c */; };
+		E5E8A54D1100CFCC00567BEA /* ucdata.h in Headers */ = {isa = PBXBuildFile; fileRef = E5E8A5391100CFCC00567BEA /* ucdata.h */; };
+		E5E8A54E1100CFCC00567BEA /* ucpgba.c in Sources */ = {isa = PBXBuildFile; fileRef = E5E8A53A1100CFCC00567BEA /* ucpgba.c */; };
+		E5E8A54F1100CFCC00567BEA /* ucpgba.h in Headers */ = {isa = PBXBuildFile; fileRef = E5E8A53B1100CFCC00567BEA /* ucpgba.h */; };
 		E5E8C3A00F3742100092827F /* nuiHyperLink.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5E8C39D0F3742100092827F /* nuiHyperLink.cpp */; };
 		E5E8C3A20F3742100092827F /* nuiScrollingLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5E8C39F0F3742100092827F /* nuiScrollingLabel.cpp */; };
 		E5E8C3A30F3742100092827F /* nuiHyperLink.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5E8C39D0F3742100092827F /* nuiHyperLink.cpp */; };
@@ -4806,6 +4826,14 @@
 		E5E7CFCD0F3768EE00073CA6 /* nuiPhoneFontDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiPhoneFontDB.h; path = src/Font/nuiPhoneFontDB.h; sourceTree = SOURCE_ROOT; };
 		E5E7D0070F376A5E00073CA6 /* nglPath_Cocoa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nglPath_Cocoa.h; path = src/File/Cocoa/nglPath_Cocoa.h; sourceTree = SOURCE_ROOT; };
 		E5E7D0080F376A5E00073CA6 /* nglPath_Cocoa.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = nglPath_Cocoa.mm; path = src/File/Cocoa/nglPath_Cocoa.mm; sourceTree = SOURCE_ROOT; };
+		E5E8A5341100CFCC00567BEA /* api.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = api.txt; path = deps/ucdata/api.txt; sourceTree = SOURCE_ROOT; };
+		E5E8A5351100CFCC00567BEA /* bidiapi.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = bidiapi.txt; path = deps/ucdata/bidiapi.txt; sourceTree = SOURCE_ROOT; };
+		E5E8A5361100CFCC00567BEA /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README; path = deps/ucdata/README; sourceTree = SOURCE_ROOT; };
+		E5E8A5371100CFCC00567BEA /* ucdata_static.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ucdata_static.h; path = deps/ucdata/ucdata_static.h; sourceTree = SOURCE_ROOT; };
+		E5E8A5381100CFCC00567BEA /* ucdata.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ucdata.c; path = deps/ucdata/ucdata.c; sourceTree = SOURCE_ROOT; };
+		E5E8A5391100CFCC00567BEA /* ucdata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ucdata.h; path = deps/ucdata/ucdata.h; sourceTree = SOURCE_ROOT; };
+		E5E8A53A1100CFCC00567BEA /* ucpgba.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ucpgba.c; path = deps/ucdata/ucpgba.c; sourceTree = SOURCE_ROOT; };
+		E5E8A53B1100CFCC00567BEA /* ucpgba.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ucpgba.h; path = deps/ucdata/ucpgba.h; sourceTree = SOURCE_ROOT; };
 		E5E8C39D0F3742100092827F /* nuiHyperLink.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiHyperLink.cpp; path = src/Text/nuiHyperLink.cpp; sourceTree = SOURCE_ROOT; };
 		E5E8C39F0F3742100092827F /* nuiScrollingLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiScrollingLabel.cpp; path = src/Text/nuiScrollingLabel.cpp; sourceTree = SOURCE_ROOT; };
 		E5E8C3A60F3742390092827F /* nuiHyperLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiHyperLink.h; path = include/nuiHyperLink.h; sourceTree = SOURCE_ROOT; };
@@ -5738,6 +5766,7 @@
 		6126DA770DA5746200D2641A /* deps */ = {
 			isa = PBXGroup;
 			children = (
+				E5E8A5331100CF9800567BEA /* ucdata */,
 				6126E46C0DA578AD00D2641A /* AudioToolbox.framework */,
 				6126E46D0DA578AD00D2641A /* CoreAudio.framework */,
 				6126E46E0DA578AD00D2641A /* CoreFoundation.framework */,
@@ -6806,6 +6835,21 @@
 			path = src/File/Cocoa;
 			sourceTree = SOURCE_ROOT;
 		};
+		E5E8A5331100CF9800567BEA /* ucdata */ = {
+			isa = PBXGroup;
+			children = (
+				E5E8A5341100CFCC00567BEA /* api.txt */,
+				E5E8A5351100CFCC00567BEA /* bidiapi.txt */,
+				E5E8A5361100CFCC00567BEA /* README */,
+				E5E8A5371100CFCC00567BEA /* ucdata_static.h */,
+				E5E8A5381100CFCC00567BEA /* ucdata.c */,
+				E5E8A5391100CFCC00567BEA /* ucdata.h */,
+				E5E8A53A1100CFCC00567BEA /* ucpgba.c */,
+				E5E8A53B1100CFCC00567BEA /* ucpgba.h */,
+			);
+			name = ucdata;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -7342,6 +7386,9 @@
 				E5CDB03210AD9C0E003709D6 /* nuiRangeKnobAttributeEditor.h in Headers */,
 				E52216AE10C5861C00EB6DB6 /* nuiStopWatch.h in Headers */,
 				E5A686E010F5575B00543060 /* nuiAsyncIStream.h in Headers */,
+				E5E8A54B1100CFCC00567BEA /* ucdata_static.h in Headers */,
+				E5E8A54D1100CFCC00567BEA /* ucdata.h in Headers */,
+				E5E8A54F1100CFCC00567BEA /* ucpgba.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7879,6 +7926,9 @@
 				E5CDB03110AD9C0E003709D6 /* nuiRangeKnobAttributeEditor.h in Headers */,
 				E52216AD10C5861C00EB6DB6 /* nuiStopWatch.h in Headers */,
 				E5A686DF10F5575B00543060 /* nuiAsyncIStream.h in Headers */,
+				E5E8A5461100CFCC00567BEA /* ucdata_static.h in Headers */,
+				E5E8A5481100CFCC00567BEA /* ucdata.h in Headers */,
+				E5E8A54A1100CFCC00567BEA /* ucpgba.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8415,6 +8465,9 @@
 				E5CDB02F10AD9C0D003709D6 /* nuiRangeKnobAttributeEditor.h in Headers */,
 				E52216AB10C5861C00EB6DB6 /* nuiStopWatch.h in Headers */,
 				E5A686DD10F5575B00543060 /* nuiAsyncIStream.h in Headers */,
+				E5E8A53C1100CFCC00567BEA /* ucdata_static.h in Headers */,
+				E5E8A53E1100CFCC00567BEA /* ucdata.h in Headers */,
+				E5E8A5401100CFCC00567BEA /* ucpgba.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8952,6 +9005,9 @@
 				E5CDB03010AD9C0E003709D6 /* nuiRangeKnobAttributeEditor.h in Headers */,
 				E52216AC10C5861C00EB6DB6 /* nuiStopWatch.h in Headers */,
 				E5A686DE10F5575B00543060 /* nuiAsyncIStream.h in Headers */,
+				E5E8A5411100CFCC00567BEA /* ucdata_static.h in Headers */,
+				E5E8A5431100CFCC00567BEA /* ucdata.h in Headers */,
+				E5E8A5451100CFCC00567BEA /* ucpgba.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9418,6 +9474,8 @@
 				E5CDB00510AD97DC003709D6 /* nglImageTGACodec.cpp in Sources */,
 				E52216A910C585DA00EB6DB6 /* nuiStopWatch.cpp in Sources */,
 				E5A686DB10F5573F00543060 /* nuiAsyncIStream.cpp in Sources */,
+				E5E8A54C1100CFCC00567BEA /* ucdata.c in Sources */,
+				E5E8A54E1100CFCC00567BEA /* ucpgba.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9791,6 +9849,8 @@
 				E5CDB00B10AD97E5003709D6 /* nglImageTGACodec.cpp in Sources */,
 				E52216A810C585DA00EB6DB6 /* nuiStopWatch.cpp in Sources */,
 				E5A686DA10F5573F00543060 /* nuiAsyncIStream.cpp in Sources */,
+				E5E8A5471100CFCC00567BEA /* ucdata.c in Sources */,
+				E5E8A5491100CFCC00567BEA /* ucpgba.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10164,6 +10224,8 @@
 				E5CDAFEC10AD970F003709D6 /* nglImagePPMCodec.cpp in Sources */,
 				E52216A610C585DA00EB6DB6 /* nuiStopWatch.cpp in Sources */,
 				E5A686D810F5573F00543060 /* nuiAsyncIStream.cpp in Sources */,
+				E5E8A53D1100CFCC00567BEA /* ucdata.c in Sources */,
+				E5E8A53F1100CFCC00567BEA /* ucpgba.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10537,6 +10599,8 @@
 				E5CDAFFF10AD97D3003709D6 /* nglImageTGACodec.cpp in Sources */,
 				E52216A710C585DA00EB6DB6 /* nuiStopWatch.cpp in Sources */,
 				E5A686D910F5573F00543060 /* nuiAsyncIStream.cpp in Sources */,
+				E5E8A5421100CFCC00567BEA /* ucdata.c in Sources */,
+				E5E8A5441100CFCC00567BEA /* ucpgba.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10606,6 +10670,7 @@
 					deps/libpng,
 					deps/tidy,
 					deps/gameswf,
+					deps/ucdata,
 					deps/ungif,
 					deps/libjpeg,
 					src/Application/UIKit,
