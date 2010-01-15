@@ -52,3 +52,5 @@ Difference among chinese characters in GB, JIS, KSC, BIG5:
  JIS	--	元気	開発
  KSC	--	元氣	開發
  BIG5	--	元氣	開發
+
+

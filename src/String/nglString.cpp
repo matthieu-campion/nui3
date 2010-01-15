@@ -10,6 +10,7 @@ licence: see nui3/LICENCE.TXT
 #pragma warning(disable : 4996)
 
 #include "nglUTFStringConv.h"
+#include "ucdata.h"
 
 #ifdef WINCE
 #define ngl_vsnwprintf	_vswprintf
@@ -2653,6 +2654,28 @@ uint32 nglString::GetLevenshteinDistance(const nglString& rSource, bool CaseSens
   }
 
   return d[len1][len2];
+}
+
+void nglString::ToCanonicalComposition()
+{
+  uint32* exprt = (uint32*)Export(eUCS4);
+  uint32 len = GetLength();
+  uint32 reslen = uccanoncomp(exprt, len);
+  Import((char*)exprt, reslen * sizeof(uint32), eUCS4);
+  delete exprt;
+}
+
+void nglString::ToCanonicalDecomposition()
+{
+  uint32* exprt = (uint32*)Export(eUCS4);
+  uint32 len = GetLength();
+  int32 reslen = 0;
+  uint32* resstr = NULL;
+  int32 res = uccanondecomp(exprt, len, &resstr, &reslen);
+  if (res >= 0 && resstr)
+    Import((char*)resstr, reslen * sizeof(uint32), eUCS4);
+  delete exprt;
+  free(resstr);
 }
 
 

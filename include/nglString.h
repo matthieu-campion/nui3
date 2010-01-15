@@ -427,6 +427,8 @@ public:
   void DecodeFromXML();
   void Unescape();
   
+  void ToCanonicalComposition();
+  void ToCanonicalDecomposition();
   
 	nglString& Format(const nglString& rFormat, ...);
 	nglString& Format(const nglChar* pFormat, ...);

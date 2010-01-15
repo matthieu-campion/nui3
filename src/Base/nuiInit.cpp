@@ -80,7 +80,7 @@ bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
   if (gNUIReferences == 0)
   {
     if (!App)
-    {
+    {      
 #ifdef _WIN32_
       App = new __NglKernel__(OSHandle, pKernel);
 #else

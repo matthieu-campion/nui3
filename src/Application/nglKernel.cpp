@@ -17,6 +17,9 @@
 
 #include "nuiNativeResourceVolume.h"
 
+#include "ucdata.h"
+
+
 /* Defined in <platform>/nglKernel.cpp
  */
 extern const nglChar* gpKernelErrorTable[];
@@ -308,6 +311,7 @@ const nglChar* nglKernel::OnError (uint& rError) const
 
 void nglKernel::CallOnInit()
 {
+  ucdata_init_static();
   NGL_DEBUG( NGL_LOG(_T("kernel"), NGL_LOG_INFO, _T("Init (%d parameter%ls)"), GetArgCount(), (GetArgCount() > 1) ? _T("s") : _T("")); )
   nglVolume* pResources = new nuiNativeResourceVolume();
   nglVolume::Mount(pResources);

@@ -328,6 +328,8 @@ extern int32_t ucdata_load __((char *paths, int32_t mask));
 extern void ucdata_unload __((int32_t mask));
 extern int32_t ucdata_reload __((char *paths, int32_t mask));
 
+  
+extern void ucdata_init_static __(());
 /*
  * Deprecated functions, now just compatibility macros.
  */

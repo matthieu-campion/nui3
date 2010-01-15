@@ -1442,6 +1442,16 @@ int32_t masks;
     return -error;
 }
 
+void ucdata_init_static()
+{
+  _ucprop_load_static();
+  _uccase_load_static();
+  _uccomp_load_static();
+  _ucdcmp_load_static();
+  _uccmcl_load_static();
+  _ucnumb_load_static();
+}
+
 #ifdef TEST
 
 void
