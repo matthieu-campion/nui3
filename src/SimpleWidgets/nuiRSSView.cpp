@@ -172,6 +172,21 @@ bool nuiRSSView::Update(const nuiEvent& rEvent)
       dictionnary[_T("GUID")] = rItem.GetGUID();
       dictionnary[_T("PublishingDate")] = rItem.GetPublishingDate();
       dictionnary[_T("SourceURL")] = rItem.GetSourceURL();
+      dictionnary[_T("ImageURL")] = rItem.GetImageURL();
+      if (!rItem.GetImageURL().IsEmpty())
+      {
+        nglString imagehtml;
+        imagehtml.CFormat(_T("<img src=\"%ls\" alt=\"%ls\"/>"), rItem.GetImageURL().GetChars(), rItem.GetImageTitle().GetChars());
+        NGL_OUT(_T("ImageHTML: %ls"), imagehtml.GetChars());
+        dictionnary[_T("ImageHTML")] = imagehtml;
+      }
+      if (!rItem.GetEnclosureURL().IsEmpty())
+      {
+        nglString enclosurehtml;
+        enclosurehtml.CFormat(_T("<img src=\"%ls\" alt=\"enclosure\"/>"), rItem.GetEnclosureURL().GetChars());
+        NGL_OUT(_T("EnclosureHTML: %ls"), enclosurehtml.GetChars());
+        dictionnary[_T("EnclosureHTML")] = enclosurehtml;
+      }
       nuiWidget* pWidget = nuiBuilder::Get().CreateWidget(mItemWidget, dictionnary);
       if (pWidget)
         mpBox->AddCell(pWidget);

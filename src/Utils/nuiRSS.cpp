@@ -10,7 +10,7 @@
 #include "nuiHTTP.h"
 #include "nglThread.h"
 
-#define STARTELEM for (int32 i = 0; i < pNode->GetChildrenCount(); i++) { nuiXMLNode* pN = pNode->GetChild(i); const nglString& name(pN->GetName()); 
+#define STARTELEM(X) for (int32 i = 0; i < X->GetChildrenCount(); i++) { const nuiXMLNode* pProxy = X; nuiXMLNode* pN = pProxy->GetChild(i); const nglString& name(pN->GetName()); 
 #define GETELEM(X, STR) if (name == _T(X)) { nuiXMLNode* pp = pN->GetChild(0); STR = pp ? pp->GetValue() : nglString::Null; /*printf(X ": '%ls'\n", STR.GetChars());*/ } else
 #define GETELEMATTR(X, Y, STR) if (name == _T(X)) STR = pN->GetAttribute(_T(Y)); else
 #define ENDELEM {} }
@@ -21,7 +21,7 @@ nuiRSSItem::nuiRSSItem(const nuiXMLNode* pNode)
   if (pNode->GetName().Compare(_T("entry"), false) == 0)
   {
     // This is an Atom feed
-    STARTELEM;
+    STARTELEM(pNode);
     GETELEM("title", mTitle)
     GETELEMATTR("link", "href", mLink)
     GETELEM("content", mDescription)
@@ -35,24 +35,64 @@ nuiRSSItem::nuiRSSItem(const nuiXMLNode* pNode)
     GETELEM("id", mGUID)
     GETELEM("updated", mPublishingDate)
     GETELEM("source", mSourceURL)
+    if (name == _T("image"))
+    {
+      STARTELEM(pN);
+      GETELEM("url", mImageURL)
+      GETELEM("title", mImageTitle)
+      GETELEM("link", mImageLink)
+      ENDELEM;
+    }
+    else if (name == _T("enclosure"))
+    {
+      nglString str(pN->GetAttribute("length"));
+      mEnclosureLength = str.GetCInt();
+      mEnclosureURL = pN->GetAttribute("url");
+      mEnclosureType = pN->GetAttribute("type");
+    }
+    if (name == _T("category"))
+    {
+      STARTELEM(pN);
+      GETELEM("domain", mCategoryDomain)
+      ENDELEM;
+    }    
     ENDELEM;
   }
   else
   {
-    STARTELEM;
+    STARTELEM(pNode);
     GETELEM("title", mTitle)
     GETELEM("link", mLink)
     GETELEM("description", mDescription)
     GETELEM("author", mAuthor)
     GETELEM("category", mCategory)
-    //GETSUBELEM("category", "domain", mCategoryDomain)
     //GETELEM("comments", mComments)
-    //GETSUBELEM("enclosure", "url", mEnclosureURL)
-    //GETSUBELEM("enclosure", "length", mEnclosureLength)
-    //GETSUBELEM("enclosure", "type", mEnclosureType)
     GETELEM("guid", mGUID)
     GETELEM("pubDate", mPublishingDate)
     GETELEM("source", mSourceURL)
+    
+    if (name == _T("image"))
+    {
+      STARTELEM(pN);
+      GETELEM("url", mImageURL)
+      GETELEM("title", mImageTitle)
+      GETELEM("link", mImageLink)
+      ENDELEM;
+    }
+    else if (name == _T("enclosure"))
+    {
+      nglString str(pN->GetAttribute("length"));
+      mEnclosureLength = str.GetCInt();
+      mEnclosureURL = pN->GetAttribute("url");
+      mEnclosureType = pN->GetAttribute("type");
+    }
+    if (name == _T("category"))
+    {
+      STARTELEM(pN);
+      GETELEM("domain", mCategoryDomain)
+      ENDELEM;
+    }    
+    
     ENDELEM;
   }
 
@@ -126,6 +166,21 @@ const nglString& nuiRSSItem::GetPublishingDate() const
 const nglString& nuiRSSItem::GetSourceURL() const
 {
   return mSourceURL;
+}
+
+const nglString& nuiRSSItem::GetImageURL() const
+{
+  return mImageURL;
+}
+
+const nglString& nuiRSSItem::GetImageTitle() const
+{
+  return mImageTitle;
+}
+
+const nglString& nuiRSSItem::GetImageLink() const
+{
+  return mImageLink;
 }
 
 
@@ -311,7 +366,7 @@ bool nuiRSS::UpdateFromXML(nuiXMLNode* pXML)
       if (pNode->GetName() == _T("channel"))
       {
         
-        STARTELEM;
+        STARTELEM(pNode);
         GETELEM("title", mTitle);
         GETELEM("url", mURL);
         GETELEM("description", mDescription);
@@ -352,7 +407,7 @@ bool nuiRSS::UpdateFromXML(nuiXMLNode* pXML)
     if (pNode->GetName() == _T("feed"))
     {
       
-      STARTELEM;
+      STARTELEM(pNode);
       GETELEM("title", mTitle);
       GETELEM("url", mURL);
       GETELEM("subtitle", mDescription);

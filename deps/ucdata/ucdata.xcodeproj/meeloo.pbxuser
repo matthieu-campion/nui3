@@ -35,7 +35,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					1474,
+					2114,
 					20,
 					48,
 					43,
@@ -74,12 +74,8 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 285244542;
-			PBXWorkspaceStateSaveDate = 285244542;
-		};
-		perUserProjectItems = {
-			E5A68A4B10FDE21200543060 /* PBXTextBookmark */ = E5A68A4B10FDE21200543060 /* PBXTextBookmark */;
-			E5A68AD410FE137B00543060 /* PBXTextBookmark */ = E5A68AD410FE137B00543060 /* PBXTextBookmark */;
+			PBXPerProjectTemplateStateSaveDate = 285295039;
+			PBXWorkspaceStateSaveDate = 285295039;
 		};
 		sourceControlManager = E5A6888010FB963D00543060 /* Source Control */;
 		userBuildSettings = {
@@ -240,25 +236,5 @@
 		startupPath = "<<ProjectDirectory>>";
 		variableFormatDictionary = {
 		};
-	};
-	E5A68A4B10FDE21200543060 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E535DCA610FBE20700A3E9CA /* ucdata.h */;
-		name = "ucdata.h: 1";
-		rLen = 0;
-		rLoc = 0;
-		rType = 0;
-		vrLen = 1894;
-		vrLoc = 8402;
-	};
-	E5A68AD410FE137B00543060 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E535DCA510FBE20700A3E9CA /* ucdata.c */;
-		name = "ucdata.c: 965";
-		rLen = 32;
-		rLoc = 24308;
-		rType = 0;
-		vrLen = 1343;
-		vrLoc = 3222;
 	};
 }

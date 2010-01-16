@@ -30,6 +30,9 @@ public:
   const nglString& GetGUID() const;
   const nglString& GetPublishingDate() const;
   const nglString& GetSourceURL() const;
+  const nglString& GetImageTitle() const;
+  const nglString& GetImageURL() const;
+  const nglString& GetImageLink() const;
   
 private:
   
@@ -46,6 +49,9 @@ private:
   nglString mGUID;
   nglString mPublishingDate;
   nglString mSourceURL;
+  nglString mImageURL;
+  nglString mImageTitle;
+  nglString mImageLink;
 };
 
 class nuiRSS
