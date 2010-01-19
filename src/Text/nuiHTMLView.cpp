@@ -18,6 +18,7 @@
 #include "nuiHTMLText.h"
 #include "nuiHTMLImage.h"
 #include "nuiHTMLFont.h"
+#include "nuiURL.h"
 
 #include "nuiAsyncIStream.h"
 #include "nuiStopWatch.h"
@@ -782,12 +783,20 @@ bool nuiHTMLView::MouseUnclicked(const nglMouseInfo& rInfo)
           if (pNode)
           {
             nuiHTMLAttrib* pAttrib = pNode->GetAttribute(nuiHTMLAttrib::eAttrib_HREF);
+            nuiHTMLAttrib* pAttribTarget = pNode->GetAttribute(nuiHTMLAttrib::eAttrib_TARGET);
+
             if (pAttrib)
             {
               nglString url(pAttrib->GetValue());
               nuiHTML::GetAbsoluteURL(mpHTML->GetSourceURL(), url);
 
-              LinkActivated(url);
+              if (pAttribTarget && (pAttribTarget->GetValue() == _T("_blank")))
+              {
+                nuiURL nuiurl(url);
+                nuiurl.OpenBrowser();
+              }
+              else
+                LinkActivated(url);
               return true;
             }
           }
