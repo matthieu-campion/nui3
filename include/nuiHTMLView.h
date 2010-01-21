@@ -36,6 +36,7 @@ public:
   void SetHSpace(float InterWidget);
   
   bool SetText(const nglString& rHTMLText);
+  const nglString& GetText() const;
   bool SetURL(const nglString& rURL);
   const nglString& GetURL() const;
   void Cancel();
@@ -123,5 +124,7 @@ private:
   bool mAutoIdealWidth;
   
   bool mUseToolTips;
+  
+  nglString mText;
 };
 

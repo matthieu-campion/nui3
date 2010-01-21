@@ -784,12 +784,11 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
     {
       skipped_ops++;
       if (!(skipped_ops % 100))
-        printf("optim (%d / %d) - %f%%!\n", skipped_ops, ops, (float)skipped_ops * 100.0f / (float)ops);
+        printf("optim (%d / %d) - %2.2f%%\n", skipped_ops, ops, (float)skipped_ops * 100.0f / (float)ops);
       return;
     }
   }
-      
-//  if (!rM.IsIdentity())
+//  else
 //  {
 //    nglVectorf v1(bounds[0], bounds[1], 0); // topleft(x, y)
 //    nglVectorf v2(bounds[3], bounds[4], 0); // bottomright(x, y)
@@ -806,19 +805,6 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
 //      return;
 //    }
 //  }
-//  else
-//  {
-//    if (
-//        (bounds[0] > mClip.Right()) ||
-//        (bounds[1] > mClip.Bottom()) ||
-//        (bounds[3] < mClip.Left()) ||
-//        (bounds[4] < mClip.Top())
-//        )
-//    {
-//      return;
-//    }
-//  }
-//
   
   uint32 s = pArray->GetSize();
   
@@ -1336,7 +1322,7 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
       firstload = true;
       reload = true;
     }
-    
+
     glBindTexture(target, info.mTexture);
     nuiCheckForGLErrors();
     
@@ -1478,21 +1464,22 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
 //      if (!pTexture->IsBufferRetained()) { 
 //        pTexture->ReleaseBuffer();
 //      }
+
+      glTexParameteri(target, GL_TEXTURE_MIN_FILTER, pTexture->GetMinFilter());
+      nuiCheckForGLErrors();
+      glTexParameteri(target, GL_TEXTURE_MAG_FILTER, pTexture->GetMagFilter());
+      nuiCheckForGLErrors();
+      glTexParameteri(target, GL_TEXTURE_WRAP_S, pTexture->GetWrapS());
+      nuiCheckForGLErrors();
+      glTexParameteri(target, GL_TEXTURE_WRAP_T, pTexture->GetWrapT());
+      nuiCheckForGLErrors();
+      
     }
   }
   
-  glTexParameteri(target, GL_TEXTURE_MIN_FILTER, pTexture->GetMinFilter());
-  nuiCheckForGLErrors();
-  glTexParameteri(target, GL_TEXTURE_MAG_FILTER, pTexture->GetMagFilter());
-  nuiCheckForGLErrors();
-  glTexParameteri(target, GL_TEXTURE_WRAP_S, pTexture->GetWrapS());
-  nuiCheckForGLErrors();
-  glTexParameteri(target, GL_TEXTURE_WRAP_T, pTexture->GetWrapT());
-  nuiCheckForGLErrors();
-  
   glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, pTexture->GetEnvMode());
   nuiCheckForGLErrors();
-  
+
   if (changedctx)
   {
     mpContext->BeginSession();

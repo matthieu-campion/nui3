@@ -72,7 +72,7 @@ void nuiHTMLView::InitAttributes()
 {
   AddAttribute(new nuiAttribute<const nglString&>
                (nglString(_T("Text")), nuiUnitName,
-                //nuiMakeDelegate(this, &nuiHTMLView::_GetFont), 
+                nuiMakeDelegate(this, &nuiHTMLView::GetText), 
                 nuiMakeDelegate(this, &nuiHTMLView::_SetText)));
   
   AddAttribute(new nuiAttribute<float>
@@ -307,15 +307,19 @@ void nuiHTMLView::SetHSpace(float HSpace)
 
 bool nuiHTMLView::SetText(const nglString& rHTMLText)
 {
+  if (rHTMLText == mText)
+    return true;
+
   Cancel();
   Clear();
 
+  mText = rHTMLText;
   if (rHTMLText.IsNull())
     return true;
   
   nuiHTML* pHTML = new nuiHTML();
   
-  std::string str(rHTMLText.GetStdString());
+  std::string str(mText.GetStdString());
   nglIMemory mem(&str[0], str.size());
   bool res = pHTML->Load(mem);
   
@@ -335,6 +339,11 @@ bool nuiHTMLView::SetText(const nglString& rHTMLText)
     SetHotRect(nuiRect());
   }
   return res;
+}
+
+const nglString& nuiHTMLView::GetText() const
+{
+  return mText;
 }
 
 bool nuiHTMLView::SetURL(const nglString& rURL)
