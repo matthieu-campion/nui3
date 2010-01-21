@@ -50,13 +50,22 @@ bool nuiRect::Intersect(const nuiRect& rRect1, const nuiRect& rRect2)
   return return_val;
 }
 
-void nuiRect::Union (const nuiRect& rRect1, const nuiRect& rRect2)
+void nuiRect::Union(const nuiRect& rRect1, const nuiRect& rRect2)
 {
   mLeft   = MIN(rRect1.mLeft,   rRect2.mLeft);
   mTop    = MIN(rRect1.mTop,    rRect2.mTop);
   mRight  = MAX(rRect1.mRight,  rRect2.mRight);
   mBottom = MAX(rRect1.mBottom, rRect2.mBottom);
 
+}
+
+void nuiRect::Union(float X, float Y)
+{
+  mLeft   = MIN(mLeft,   X);
+  mTop    = MIN(mTop,    Y);
+  mRight  = MAX(mRight,  X);
+  mBottom = MAX(mBottom, Y);
+  
 }
 
 void nuiRect::Grow(nuiSize x, nuiSize y)

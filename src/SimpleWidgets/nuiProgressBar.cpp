@@ -10,8 +10,8 @@
 #include "nuiShape.h"
 #include "nuiDrawContext.h"
 
-#define AMP 0.15f
-#define INC 2.5f
+#define AMP 0
+#define INC 0
 
 nuiProgressBar::nuiProgressBar(float Progress)
 {

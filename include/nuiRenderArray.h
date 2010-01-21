@@ -141,6 +141,7 @@ public:
   void SetIndex(uint32 IndexInArray, uint32 VertexIndex);
   void SetIndex(uint32 ArrayIndex, uint32 IndexInArray, uint32 VertexIndex);
 
+  void GetBounds(float* bounds) const; ///< bounds must contain at least 6 floats to store the minums and maximums coordinates of this array
 private:
   uint mVertexElements;
   uint mColorElements;
@@ -155,8 +156,19 @@ private:
 
   Vertex mCurrentVertex;
   std::vector<Vertex> mVertices;
+  
+  nuiRect mBounds;
 
   std::vector<IndexArray*> mIndexedArrays;
+
+  void UpdateBounds(float x, float y, float z);
+  float mMinX;
+  float mMinY;
+  float mMinZ;
+  float mMaxX;
+  float mMaxY;
+  float mMaxZ;
+  
 };
 
 class NUI_API nuiRenderObject

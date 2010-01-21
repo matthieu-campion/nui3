@@ -309,7 +309,7 @@ bool nuiHTMLView::SetText(const nglString& rHTMLText)
 {
   Cancel();
   Clear();
-  
+
   if (rHTMLText.IsNull())
     return true;
   

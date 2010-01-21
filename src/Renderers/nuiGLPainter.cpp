@@ -738,6 +738,87 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
     pArray->Release();
     return;
   }
+ 
+  static uint32 ops = 0;
+  static uint32 skipped_ops = 0;
+  
+  ops++;
+  const nuiMatrix& rM(mMatrixStack.top());
+  float bounds[6];
+  pArray->GetBounds(bounds);
+
+  if (rM.Elt.M11 == 1.0f
+   && rM.Elt.M22 == 1.0f
+   && rM.Elt.M33 == 1.0f
+   && rM.Elt.M44 == 1.0f
+   
+   && rM.Elt.M12 == 0.0f
+   && rM.Elt.M13 == 0.0f
+      //&& rM.Elt.M14 == 0.0f
+   
+   && rM.Elt.M21 == 0.0f
+   && rM.Elt.M23 == 0.0f
+      //&& rM.Elt.M24 == 0.0f
+   
+   && rM.Elt.M31 == 0.0f
+   && rM.Elt.M32 == 0.0f
+   && rM.Elt.M34 == 0.0f
+   
+   && rM.Elt.M41 == 0.0f
+   && rM.Elt.M42 == 0.0f
+   && rM.Elt.M43 == 0.0f)
+  {
+    bounds[0] += rM.Elt.M14;
+    bounds[1] += rM.Elt.M24;
+    //bounds[2] += rM.Elt.M34;
+    bounds[3] += rM.Elt.M14;
+    bounds[4] += rM.Elt.M24;
+    //bounds[5] += rM.Elt.M34;
+    
+    if (
+        (bounds[0] > mClip.Right()) ||
+        (bounds[1] > mClip.Bottom()) ||
+        (bounds[3] < mClip.Left()) ||
+        (bounds[4] < mClip.Top())
+        )
+    {
+      skipped_ops++;
+      if (!(skipped_ops % 100))
+        printf("optim (%d / %d) - %f%%!\n", skipped_ops, ops, (float)skipped_ops * 100.0f / (float)ops);
+      return;
+    }
+  }
+      
+//  if (!rM.IsIdentity())
+//  {
+//    nglVectorf v1(bounds[0], bounds[1], 0); // topleft(x, y)
+//    nglVectorf v2(bounds[3], bounds[4], 0); // bottomright(x, y)
+//    v1 = rM * v1;
+//    v2 = rM * v2;
+//    
+//    if (
+//        (v1[0] > mClip.Right()) ||
+//        (v1[1] > mClip.Bottom()) ||
+//        (v2[0] < mClip.Left()) ||
+//        (v2[1] < mClip.Top())
+//       )
+//    {
+//      return;
+//    }
+//  }
+//  else
+//  {
+//    if (
+//        (bounds[0] > mClip.Right()) ||
+//        (bounds[1] > mClip.Bottom()) ||
+//        (bounds[3] < mClip.Left()) ||
+//        (bounds[4] < mClip.Top())
+//        )
+//    {
+//      return;
+//    }
+//  }
+//
   
   uint32 s = pArray->GetSize();
   

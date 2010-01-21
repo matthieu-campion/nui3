@@ -106,6 +106,9 @@ void nuiRenderArray::PushVertex()
   NGL_ASSERT(mCurrentVertex.mTY != std::numeric_limits<float>::infinity());
   NGL_ASSERT(!isnan(mCurrentVertex.mTY));
 
+  // Grow the bounding rect:
+  UpdateBounds(mCurrentVertex.mX, mCurrentVertex.mY, mCurrentVertex.mZ);
+
   mVertices.push_back(mCurrentVertex);
 }
 
@@ -243,6 +246,8 @@ void nuiRenderArray::Set3DMesh(bool set)
 // Indexed accessors:
 void nuiRenderArray::SetVertex(uint32 index, float x, float y, float z)
 {
+  // Grow the bounding rect:
+  UpdateBounds(x, y, z);
   mVertices[index].mX = x;
   mVertices[index].mY = y;
   mVertices[index].mZ = z;
@@ -250,6 +255,7 @@ void nuiRenderArray::SetVertex(uint32 index, float x, float y, float z)
 
 void nuiRenderArray::SetVertex(uint32 index, const nuiVector& rVf)
 {
+  UpdateBounds(rVf[0], rVf[1], rVf[2]);
   mVertices[index].mX = rVf[0];
   mVertices[index].mY = rVf[1];
   mVertices[index].mZ = rVf[2];
@@ -257,6 +263,7 @@ void nuiRenderArray::SetVertex(uint32 index, const nuiVector& rVf)
 
 void nuiRenderArray::SetVertex(uint32 index, const nuiVector3& rV3f)
 {
+  UpdateBounds(rV3f[0], rV3f[1], rV3f[2]);
   mVertices[index].mX = rV3f[0];
   mVertices[index].mY = rV3f[1];
   mVertices[index].mZ = rV3f[2];
@@ -264,6 +271,7 @@ void nuiRenderArray::SetVertex(uint32 index, const nuiVector3& rV3f)
 
 void nuiRenderArray::SetVertex(uint32 index, const nuiVector2& rV2f)
 {
+  UpdateBounds(rV2f[0], rV2f[1], 0);
   mVertices[index].mX = rV2f[0];
   mVertices[index].mY = rV2f[1];
   mVertices[index].mZ = 0;
@@ -367,3 +375,34 @@ void nuiRenderArray::SetIndex(uint32 ArrayIndex, uint32 IndexInArray, uint32 Ver
   mIndexedArrays[ArrayIndex]->mIndices[IndexInArray] = VertexIndex;
 }
 
+void nuiRenderArray::GetBounds(float *pBounds) const
+{
+  pBounds[0] = mMinX;
+  pBounds[1] = mMinY;
+  pBounds[2] = mMinZ;
+  pBounds[3] = mMaxX;
+  pBounds[4] = mMaxY;
+  pBounds[5] = mMaxZ;
+}
+
+void nuiRenderArray::UpdateBounds(float x, float y, float z)
+{
+  if (mVertices.empty())
+  {
+    mMinX = x;
+    mMinY = y;
+    mMinZ = z;
+    mMaxX = x;
+    mMaxY = y;
+    mMaxZ = z;
+  }
+  else
+  {
+    mMinX = MIN(mMinX, x);
+    mMinY = MIN(mMinY, y);;
+    mMinZ = MIN(mMinY, z);;
+    mMaxX = MAX(mMaxX, x);
+    mMaxY = MAX(mMaxY, y);
+    mMaxZ = MAX(mMaxZ, z);
+  }
+}

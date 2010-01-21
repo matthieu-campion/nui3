@@ -671,7 +671,9 @@ nglString nuiMetaPainter::GetOperationDescription(int32 OperationIndex) const
         int32 index = FetchInt();
         nuiRenderArray* pArray = mRenderArrays[index];
         const nglChar* pMode = GetGLMode(pArray->GetMode());
-        str.CFormat(_T("DrawArray 0x%x (size %d mode:%ls)"), pArray, pArray->GetVertices().size(), pMode);
+        float bounds[6];
+        pArray->GetBounds(bounds);
+        str.CFormat(_T("DrawArray 0x%x (size %d mode:%ls) (%f , %f)->(%f, %f)"), pArray, pArray->GetVertices().size(), pMode, bounds[0], bounds[1], bounds[3], bounds[4]);
       }
       break;
     case eClearColor:

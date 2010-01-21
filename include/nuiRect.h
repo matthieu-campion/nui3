@@ -219,6 +219,7 @@ public:
   void Transform(const nuiMatrix& rMatrix);
   bool Intersect(const nuiRect& rRect1, const nuiRect& rRect2);
   void Union (const nuiRect& rRect1, const nuiRect& rRect2);
+  void Union (float X, float Y);
   void Grow(nuiSize x, nuiSize y);
   void Scale(nuiSize x, nuiSize y);
   nuiRect Size() const;
