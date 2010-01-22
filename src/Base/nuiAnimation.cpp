@@ -556,7 +556,15 @@ bool nuiAnimation::UpdateTime()
     break;
   }
   
-  mCurrentPosition = mEasing(mCurrentTime / GetDuration());
+  if (GetDuration() != 0)
+  {
+    mCurrentPosition = mEasing(mCurrentTime / GetDuration());
+  }
+  else
+  {
+    mCurrentPosition = 1.0f;
+  }
+
   
   mUpdatingTime = false;
   return ShouldStop;
