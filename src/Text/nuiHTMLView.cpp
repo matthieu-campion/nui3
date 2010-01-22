@@ -314,7 +314,7 @@ bool nuiHTMLView::SetText(const nglString& rHTMLText)
   Clear();
 
   mText = rHTMLText;
-  if (rHTMLText.IsNull())
+  if (rHTMLText.IsEmpty())
     return true;
   
   nuiHTML* pHTML = new nuiHTML();

@@ -17,7 +17,6 @@
 #include "nuiScrollBar.h"
 #include "nuiPane.h"
 #include "nuiShapeView.h"
-#include "nuiPositioner.h"
 
 #define NUI_COLUMNTREEVIEW_INTERLINE (3.0f)
 #define NUI_COLUMNTREEVIEW_HANDLE_SIZE (12.0f)
@@ -840,8 +839,6 @@ void nuiColumnTreeView::CreateScrollBars()
       
       nuiPane* pPane = new nuiPane(GetColor(eScrollBarBg), GetColor(eScrollBarFg), eFillShape);
       pPane->SetUserSize(mBarSize, mBarSize + 2.f);
-      nuiPositioner* pPositioner = new nuiPositioner();
-      pPane->AddChild(pPositioner);
       nuiPath path;
       path.AddVertex(nuiPoint(0.f, 0.f));
       path.AddVertex(nuiPoint(3.5f, 6.f));
@@ -851,7 +848,8 @@ void nuiColumnTreeView::CreateScrollBars()
       pShape->AddLines(path);
 
       nuiShapeView* pShapeView = new nuiShapeView(pShape);
-      pPositioner->AddChild(pShapeView);
+      pShapeView->SetPosition(nuiCenter);
+      pPane->AddChild(pShapeView);
       pShapeView->SetUserSize(8.f,8.f);
       pShapeView->SetShapeMode(eStrokeAndFillShape);
       pShapeView->SetColor(eShapeStroke, GetColor(eScrollBarFg));
@@ -862,8 +860,6 @@ void nuiColumnTreeView::CreateScrollBars()
       
       pPane = new nuiPane(GetColor(eScrollBarBg), GetColor(eScrollBarFg), eFillShape);
       pPane->SetUserSize(mBarSize, mBarSize + 2.f);
-      pPositioner = new nuiPositioner();
-      pPane->AddChild(pPositioner);
       path = nuiPath();
       path.AddVertex(nuiPoint(0.f, 6.f));
       path.AddVertex(nuiPoint(7.f, 6.f));
@@ -873,7 +869,8 @@ void nuiColumnTreeView::CreateScrollBars()
       pShape->AddLines(path);
 
       pShapeView = new nuiShapeView(pShape);
-      pPositioner->AddChild(pShapeView);
+      pShapeView->SetPosition(nuiCenter);
+      pPane->AddChild(pShapeView);
       pShapeView->SetUserSize(8.f,8.f);
       pShapeView->SetShapeMode(eStrokeAndFillShape);
       pShapeView->SetColor(eShapeStroke, GetColor(eScrollBarFg));
@@ -895,7 +892,10 @@ void nuiColumnTreeView::CreateScrollBars()
     //NGL_OUT(_T("Need %d less\n"), mpScrollBars.size() - Depth);
     // Delete redundant Scrollbars:
     for (uint i = Depth; i < mpScrollBars.size(); i++)
+    {
       mpScrollBars[i]->Trash();
+      mpScrollBars[i] = NULL;
+    }
 
     mpScrollBars.resize(Depth);
   }
