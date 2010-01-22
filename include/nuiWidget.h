@@ -175,7 +175,8 @@ public:
   virtual void InvalidateRect(const nuiRect& rRect);
   virtual void Invalidate(); ///< Ask for a redraw of the object. Only the nuiMainWindow class should redefine this method.
   virtual void SilentInvalidate(); ///< Mark this widget as invalid (= need to be redrawn) but don't broadcast the event in the hierarchy. Most of the time you really want to use Invalidate() instead of SilentInvalidate().
-  virtual void InvalidateLayout(); ///< Tell the system that this widget's geometry should be recalculated.
+  virtual void InvalidateLayout(); ///< Tell the system that this widget's geometry should be recalculated, unless it has a user rect.
+  virtual void ForcedInvalidateLayout(); ///< Nobody should use this method, please use InvalidateLayout instead. Tell the system that this widget's geometry should be recalculated, no exception!
   virtual void UpdateLayout(); ///< Force the re layout of this widget without telling the parrents that the internal geometry has changed.
   virtual void SilentInvalidateLayout(); ///< Mark this widget as invalid with invalid layout. No event is broadcast. Most of the time you really want to use InvalidateLayout instead of SilentInvalidateLayout().
   virtual void Validate(); ///< Reset the invalidate flag as the object doesn't need Redrawing anymore. ATTENTION: you must call this method once in the draw method or any Invalidate() call will be ignored (and no redraw possible)...

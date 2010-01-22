@@ -1128,6 +1128,12 @@ void nuiWidget::SilentInvalidateLayout()
 
 void nuiWidget::InvalidateLayout()
 {
+  if (!mNeedSelfLayout && HasUserRect())
+  {
+    UpdateLayout();
+    return;
+  }
+  
   bool broadcast = !mNeedLayout;
   SilentInvalidateLayout();
 
@@ -1139,8 +1145,27 @@ void nuiWidget::InvalidateLayout()
   DebugRefreshInfo();
 }
 
+void nuiWidget::ForcedInvalidateLayout()
+{
+  bool broadcast = !mNeedLayout;
+  SilentInvalidateLayout();
+  
+  if (mpParent && broadcast)
+  {
+    //NGL_OUT(_T("InvalidateLayout + Broadcast from %ls\n"), GetObjectClass().GetChars());
+    mpParent->BroadcastInvalidateLayout(this, false);
+  }
+  DebugRefreshInfo();
+}
+
 void nuiWidget::BroadcastInvalidateLayout(nuiWidgetPtr pSender, bool BroadCastOnly)
 {
+  if (!mNeedSelfLayout && HasUserSize()) // A child can't change the ideal position of its parent so we can stop broadcasting if the parent has a fixed ideal size.
+  {
+    UpdateLayout();
+    return;
+  }
+  
   mNeedRender = true;
   if (mpSurface)
     mNeedSelfRedraw = true;
@@ -1150,11 +1175,6 @@ void nuiWidget::BroadcastInvalidateLayout(nuiWidgetPtr pSender, bool BroadCastOn
     mNeedSelfLayout = true;
     mNeedIdealRect = true;
   }
-
-  /*
-  if (HasUserRect())
-  BroadCastOnly = true;
-  */
 
   if (mpParent && !mNeedLayout)
   {
@@ -2840,7 +2860,7 @@ void nuiWidget::SetUserWidth(nuiSize s)
   mUserRect.SetWidth(s);
   mHasUserWidth = true;
   UserRectChanged();
-  InvalidateLayout();
+  ForcedInvalidateLayout();
   DebugRefreshInfo();
 }
 
@@ -2857,7 +2877,7 @@ void nuiWidget::SetUserHeight(nuiSize s)
   mUserRect.SetHeight(s);
   mHasUserHeight = true;
   UserRectChanged();
-  InvalidateLayout();
+  ForcedInvalidateLayout();
   DebugRefreshInfo();
 }
 
@@ -2891,7 +2911,7 @@ void nuiWidget::SetUserRect(const nuiRect& rRect)
     }
     else
     {
-      InvalidateLayout();
+      ForcedInvalidateLayout();
     }
     DebugRefreshInfo();
   }
@@ -2929,7 +2949,7 @@ void nuiWidget::SetUserSize(nuiSize X,nuiSize Y)
   mHasUserSize = true;
   mHasUserWidth = true;
   mHasUserHeight = true;
-  InvalidateLayout();
+  ForcedInvalidateLayout();
   DebugRefreshInfo();
 }
 
@@ -2952,7 +2972,7 @@ void nuiWidget::SetUserPos(nuiSize X, nuiSize Y)
   
   mUserRect.MoveTo(X,Y);
   mHasUserPos = true;
-  InvalidateLayout();
+  ForcedInvalidateLayout();
   DebugRefreshInfo();
 }
 
