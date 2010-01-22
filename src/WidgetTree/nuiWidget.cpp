@@ -1160,6 +1160,12 @@ void nuiWidget::BroadcastInvalidateLayout(nuiWidgetPtr pSender, bool BroadCastOn
   {
     mpParent->BroadcastInvalidateLayout(pSender, BroadCastOnly);
   }
+  else
+  {
+    //#TEST
+    //printf("nuiWidget::BroadcastInvalidateLayout %ls / %ls / 0x%x\n", pSender->GetObjectClass().GetChars(), pSender->GetObjectName().GetChars(), pSender);
+  }
+
 
   mNeedLayout = true;
 
@@ -2502,6 +2508,9 @@ void nuiWidget::SetBorders(nuiSize XY)
 
 void nuiWidget::SetBorder(nuiSize X, nuiSize Y)
 {
+  if (mBorderLeft == X && mBorderRight == X && mBorderTop == Y && mBorderBottom == Y)
+    return;
+  
   mBorderLeft = mBorderRight = X;
   mBorderTop = mBorderBottom = Y;
   InvalidateLayout();
@@ -2510,6 +2519,9 @@ void nuiWidget::SetBorder(nuiSize X, nuiSize Y)
 
 void nuiWidget::SetBorderLeft(nuiSize border)
 {
+  if (mBorderLeft == border)
+    return;
+  
   mBorderLeft = border;
   InvalidateLayout();
   DebugRefreshInfo();
@@ -2517,6 +2529,9 @@ void nuiWidget::SetBorderLeft(nuiSize border)
 
 void nuiWidget::SetBorderTop(nuiSize border)
 {
+  if (mBorderTop == border)
+    return;
+  
   mBorderTop = border;
   InvalidateLayout();
   DebugRefreshInfo();
@@ -2524,6 +2539,9 @@ void nuiWidget::SetBorderTop(nuiSize border)
 
 void nuiWidget::SetBorderRight(nuiSize border)
 {
+  if (mBorderRight == border)
+    return;
+    
   mBorderRight = border;
   InvalidateLayout();
   DebugRefreshInfo();
@@ -2531,6 +2549,9 @@ void nuiWidget::SetBorderRight(nuiSize border)
 
 void nuiWidget::SetBorderBottom(nuiSize border)
 {
+  if (mBorderBottom == border)
+    return;
+  
   mBorderBottom = border;
   InvalidateLayout();
   DebugRefreshInfo();
@@ -2599,6 +2620,9 @@ nuiSize nuiWidget::GetActualBorderBottom() const
 
 void nuiWidget::SetBorder(nuiSize Left, nuiSize Right, nuiSize Top, nuiSize Bottom)
 {
+  if (mBorderLeft == Left && mBorderRight == Right && mBorderTop == Top && mBorderBottom == Bottom)
+    return;
+
   mBorderLeft = Left;
   mBorderRight = Right;
   mBorderTop = Top;
@@ -2617,12 +2641,18 @@ void nuiWidget::GetBorder(nuiSize& rLeft, nuiSize& rRight, nuiSize& rTop, nuiSiz
 
 void nuiWidget::SetVisibleRect(const nuiRect& rRect)
 {
+  if (mVisibleRect == rRect)
+    return;
+  
   mVisibleRect = rRect;
   Invalidate();
 }
 
 void nuiWidget::SilentSetVisibleRect(const nuiRect& rRect)
 {
+  if (mVisibleRect == rRect)
+    return;
+  
   mVisibleRect = rRect;
   SilentInvalidate();
 }
@@ -2665,7 +2695,8 @@ void nuiWidget::UpdateSurface(const nuiRect& rRect)
   }
   else
   {
-    if (mpSurface) {
+    if (mpSurface)
+    {
       if (mpSurface->GetTexture())
         mpSurface->GetTexture()->Release();
       mpSurface->Release();
@@ -2803,6 +2834,9 @@ nuiRect nuiWidget::CalcIdealSize()
 
 void nuiWidget::SetUserWidth(nuiSize s)
 {
+  if (mHasUserWidth && GetUserWidth() == s)
+    return;
+  
   mUserRect.SetWidth(s);
   mHasUserWidth = true;
   UserRectChanged();
@@ -2817,6 +2851,9 @@ nuiSize nuiWidget::GetUserWidth()
 
 void nuiWidget::SetUserHeight(nuiSize s)
 {
+  if (mHasUserHeight && GetUserHeight() == s)
+    return;
+  
   mUserRect.SetHeight(s);
   mHasUserHeight = true;
   UserRectChanged();
@@ -2885,6 +2922,9 @@ void nuiWidget::UnsetUserRect()
 
 void nuiWidget::SetUserSize(nuiSize X,nuiSize Y)
 {
+  if (mHasUserSize && GetUserWidth() == X && GetUserHeight() == Y)
+    return;
+  
   mUserRect.SetSize(X,Y);
   mHasUserSize = true;
   mHasUserWidth = true;
@@ -2907,6 +2947,9 @@ void nuiWidget::UnsetUserSize()
 
 void nuiWidget::SetUserPos(nuiSize X, nuiSize Y)
 {
+  if (mHasUserPos && mUserRect.Left() == X && mUserRect.Top() == Y)
+    return;
+  
   mUserRect.MoveTo(X,Y);
   mHasUserPos = true;
   InvalidateLayout();
@@ -2954,6 +2997,9 @@ bool nuiWidget::HasUserPos() const
 
 void nuiWidget::ForceIdealRect(bool Force)
 {
+  if (mForceIdealSize == Force)
+    return;
+  
   mForceIdealSize = Force;
   InvalidateLayout();
   DebugRefreshInfo();
@@ -3670,6 +3716,9 @@ void nuiWidget::SetOverDraw(nuiSize Left, nuiSize Top, nuiSize Right, nuiSize Bo
 
 void nuiWidget::SetOverDrawLeft(nuiSize border)
 {
+  if (mODLeft == border)
+    return;
+  
   mODLeft = border;
   InvalidateLayout();
   DebugRefreshInfo();
@@ -3677,6 +3726,9 @@ void nuiWidget::SetOverDrawLeft(nuiSize border)
 
 void nuiWidget::SetOverDrawTop(nuiSize border)
 {
+  if (mODTop == border)
+    return;
+  
   mODTop = border;
   InvalidateLayout();
   DebugRefreshInfo();
@@ -3684,6 +3736,9 @@ void nuiWidget::SetOverDrawTop(nuiSize border)
 
 void nuiWidget::SetOverDrawRight(nuiSize border)
 {
+  if (mODRight == border)
+    return;
+  
   mODRight = border;
   InvalidateLayout();
   DebugRefreshInfo();
@@ -3691,6 +3746,9 @@ void nuiWidget::SetOverDrawRight(nuiSize border)
 
 void nuiWidget::SetOverDrawBottom(nuiSize border)
 {
+  if (mODBottom == border)
+    return;
+  
   mODBottom = border;
   InvalidateLayout();
   DebugRefreshInfo();

@@ -1490,8 +1490,11 @@ bool nuiTopLevel::DrawTree(class nuiDrawContext *pContext)
 
     int count = mRedrawList.size();
 
+    //printf("drawing %d partial rects\n", count);
+    
     for (int i = 0; i < count; i++)
     {
+      //printf("\t%d: %ls\n", i, mRedrawList[i].GetValue().GetChars());
       pContext->ResetState();
       pContext->ResetClipRect();
       pContext->SetStrokeColor(nuiColor(1.0f, 0.0f, 0.0f, 0.0f));
@@ -1616,11 +1619,13 @@ void nuiTopLevel::BroadcastInvalidateRect(nuiWidgetPtr pSender, const nuiRect& r
 
   r.Set(vec1[0], vec1[1], vec2[0], vec2[1], false);
 
+  //printf("nuiTopLevel::BroadcastInvalidateRect %ls / %ls / 0x%x\n", pSender->GetObjectClass().GetChars(), pSender->GetObjectName().GetChars(), pSender);
   AddInvalidRect(r);
   mNeedRender = true;
   DebugRefreshInfo();
 }
 
+#if 0
 void nuiTopLevel::AddInvalidRect(const nuiRect& rRect)
 {
   int count = mRedrawList.size();
@@ -1638,7 +1643,7 @@ void nuiTopLevel::AddInvalidRect(const nuiRect& rRect)
       nuiRect u;
       u.Union(rRect, mRedrawList[i]);
       nuiSize temp = u.GetSurface();
-      if (smalesti<0 || surface > temp)
+      if (smalesti < 0 || surface > temp)
       {
         smalesti = i;
         smalest = u;
@@ -1652,6 +1657,37 @@ void nuiTopLevel::AddInvalidRect(const nuiRect& rRect)
   else // Ok, this is the best intersection we could find (less surface to redraw):
     mRedrawList[smalesti] = smalest;
 }
+#else
+void nuiTopLevel::AddInvalidRect(const nuiRect& rRect)
+{
+  //printf("+++ AddInvalidRect %ls\n", rRect.GetValue().GetChars());
+  int count = mRedrawList.size();
+  
+  nuiRect intersect;
+  nuiSize surface = rRect.GetSurface();
+  if (surface == 0.0f)
+    return;
+
+  for (int i = 0; i<count; i++)
+  {
+    if (intersect.Intersect(rRect, mRedrawList[i]))
+    {
+      // The rectangles intersect so we create one big out of them
+      nuiRect u;
+      u.Union(rRect, mRedrawList[i]);
+      // Let's remove the coalesced rect from the list
+      mRedrawList.erase(mRedrawList.begin() + i);
+      // Try to add the new big rect to the list:
+      AddInvalidRect(u);
+      return;
+    }
+  }
+
+  // Found no rect to blend into, let's create a new one:
+  //printf("--- AddInvalidRect OK %ls\n", rRect.GetValue().GetChars());
+  mRedrawList.push_back(rRect);
+}
+#endif
 
 bool nuiTopLevel::SetRect(const nuiRect& rRect)
 {

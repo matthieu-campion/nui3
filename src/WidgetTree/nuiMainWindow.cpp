@@ -392,6 +392,11 @@ void nuiMainWindow::Paint()
   if (mFullFrameRedraw)
     mFullFrameRedraw--;
   
+  uint32 rops = pContext->GetPainter()->GetRenderOperations();
+  uint32 verts = pContext->GetPainter()->GetVertices();
+  uint32 batches = pContext->GetPainter()->GetBatches();
+  //printf("Frame stats | RenderOps: %d | Vertices %d | Batches %d\n", rops, verts, batches);
+  
   //Invalidate();
 }
 
