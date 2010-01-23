@@ -150,6 +150,7 @@ void nuiWidget::InitDefaultValues()
   mDecorationMode = eDecorationOverdraw;
   mHotKeyMask = -1;
   mClickThru = true;
+  mInSetRect = false;
 }
 
 
@@ -2840,7 +2841,11 @@ void nuiWidget::InternalSetLayout(const nuiRect& rect, bool PositionChanged, boo
   
   if (mNeedSelfLayout)
   {
+    if (mInSetRect)
+      return;
+    mInSetRect = true;
     SetRect(rect);
+    mInSetRect = false;
     Invalidate();
   }
   else
@@ -2910,7 +2915,12 @@ void nuiWidget::SetUserRect(const nuiRect& rRect)
 
     if (optim)
     {
-      SetRect(rRect);
+      if (!mInSetRect)
+      {
+        mInSetRect = true;
+        SetRect(rRect);
+        mInSetRect = false;
+      }
       mpParent->Invalidate();
       Invalidate();
     }
@@ -3725,9 +3735,14 @@ void nuiWidget::AddEvent(const nglString& rName, nuiEventSource& rEvent)
 
 void nuiWidget::UpdateLayout()
 {
+  if (mInSetRect)
+    return;
   GetIdealRect();
   nuiRect r(GetRect());
+  mInSetRect = true;
   SetRect(r);
+  mInSetRect = false;
+
   Invalidate();
 }
 

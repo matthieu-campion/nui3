@@ -633,6 +633,7 @@ protected:
   bool mTrashed: 1;
   bool mMatrixIsIdentity: 1;
   bool mCanRespectConstraint: 1;
+  bool mInSetRect: 1;
 
   bool mClickThru;
   

@@ -201,6 +201,8 @@ bool nuiColumnTreeView::SetRect(const nuiRect& rRect)
 {
   nuiWidget::SetRect(rRect);
 
+  CreateScrollBars();
+  
   nuiTreeNode* pTree = mpTree;
 
   uint Depth = 0;
@@ -812,7 +814,7 @@ bool nuiColumnTreeView::InvalidateColumn(const nuiEvent& rEvent)
   }
 */
 
-  InvalidateLayout();
+  UpdateLayout();
   return false;
 }
 
