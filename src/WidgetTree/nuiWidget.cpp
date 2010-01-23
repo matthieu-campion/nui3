@@ -494,7 +494,12 @@ void nuiWidget::InitAttributes()
                (nglString(_T("SurfaceMatrix")), nuiUnitMatrix,
                 nuiMakeDelegate(this, &nuiWidget::GetSurfaceMatrix),
                 nuiMakeDelegate(this, &nuiWidget::SetSurfaceMatrix)));
-
+  
+  AddAttribute(new nuiAttribute<const nuiMatrix&>
+               (nglString(_T("Matrix")), nuiUnitMatrix,
+                nuiMakeDelegate(this, &nuiWidget::_GetMatrix),
+                nuiMakeDelegate(this, &nuiWidget::SetMatrix)));
+  
   AddAttribute(new nuiAttribute<nuiBlendFunc>
                (nglString(_T("SurfaceBlendFunc")), nuiUnitCustom,
                 nuiMakeDelegate(this, &nuiWidget::GetSurfaceBlendFunc),
@@ -3292,6 +3297,11 @@ void nuiWidget::GetMatrix(nuiMatrix& rMatrix) const
 const nuiMatrix& nuiWidget::GetMatrix() const
 {
   return mMatrix;
+}
+
+const nuiMatrix& nuiWidget::_GetMatrix() const
+{
+  return GetMatrix();
 }
 
 void nuiWidget::SetMatrix(const nuiMatrix& rMatrix)

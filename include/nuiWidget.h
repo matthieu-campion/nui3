@@ -558,7 +558,9 @@ protected:
   std::map<nglString, nuiAnimation*, nglString::NaturalLessFunctor> mAnimations;
 
   nuiMatrix mMatrix;
+  const nuiMatrix& _GetMatrix() const;
 
+  
   nuiMatrix mSurfaceMatrix;
   nuiColor mSurfaceColor;
   nuiBlendFunc mSurfaceBlendFunc;
