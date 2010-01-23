@@ -485,7 +485,7 @@ int32_t
 #ifdef __STDC__
 ucstring_set_cursor_motion(ucstring_t *str, int32_t cursor_motion)
 #else
-ucstring_set_cursor_motion(s, cursor_motion)
+ucstring_set_cursor_motion(str, cursor_motion)
 ucstring_t *str;
 int32_t cursor_motion;
 #endif
@@ -794,7 +794,8 @@ void
 ucstring_cursor_info(ucstring_t *str, int32_t *direction, uint32_t *position)
 #else
 ucstring_cursor_info(str, direction, position)
-ucstring_t *str, int32_t *direction;
+ucstring_t *str;
+int32_t *direction;
 uint32_t *position;
 #endif
 {

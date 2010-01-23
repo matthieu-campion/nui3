@@ -26,14 +26,23 @@
  * $Id: ucdata.h,v 1.6 2001/01/02 18:46:20 mleisher Exp $
  */
 
+#ifndef WIN32
 #include <stdint.h>
+#else
+typedef char  int8_t;
+typedef short int16_t;
+typedef int   int32_t;
+typedef unsigned char  uint8_t;
+typedef unsigned short uint16_t;
+typedef unsigned int   uint32_t;
+#endif
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 #undef __
-#ifdef __STDC__
+#if (defined __STDC__) || (defined WIN32)
 #define __(x) x
 #else
 #define __(x) ()

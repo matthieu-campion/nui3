@@ -3,8 +3,6 @@
 // This file is auto generated.
 //
 
-#include <stdint.h>
-
 //================= Properties
 
 uint32_t ctype_num_property_nodes = 50;

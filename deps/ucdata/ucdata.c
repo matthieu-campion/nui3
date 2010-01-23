@@ -636,6 +636,7 @@ int32_t reload;
 static int32_t
 _uccomp_load_static()
 {
+  uint32_t i = 0;
   _uccomp_size = sizeof(comp_list) / sizeof(uint32_t);
   _uccomp_data = (uint32_t *)comp_list;
   
@@ -643,7 +644,6 @@ _uccomp_load_static()
    * Assume that the data is ordered on count, so that all compositions
    * of length 2 come first. Only handling length 2 for now.
    */
-  uint32_t i = 0;
   for (i = 1; i < _uccomp_size; i += 4)
     if (_uccomp_data[i] != 2)
       break;
