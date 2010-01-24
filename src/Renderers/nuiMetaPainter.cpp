@@ -11,8 +11,7 @@
 
 // nuiMetaPainter:
 nuiMetaPainter::nuiMetaPainter(const nuiRect& rRect, nglContext* pContext) 
-: nuiPainter(rRect, pContext),
-  mVertices(GL_POINTS)
+: nuiPainter(rRect, pContext)
 {
   mLastStateValid = false;
   mpCache = &mOperations;
@@ -214,6 +213,9 @@ void nuiMetaPainter::DrawArray(nuiRenderArray* pRenderArray)
   mRenderArrays.push_back(pRenderArray);
 
   mNbDrawArray++;
+  mRenderOperations++;
+  mBatches++;
+  mVertices += pRenderArray->GetSize();
   
 /*
   uint start = mVertices.size();
@@ -402,7 +404,10 @@ void nuiMetaPainter::Reset(nuiPainter const * pFrom)
   mNbDrawChild = 0;
   mNbDrawArray = 0;
   mNbClearColor = 0;
-
+  mRenderOperations = 0;
+  mBatches = 0;
+  mVertices = 0;
+  
   mOperations.clear();
   mRenderStates.clear();
   for (uint32 i = 0; i < mRenderArrays.size(); i++)

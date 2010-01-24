@@ -84,6 +84,17 @@ bool nuiWidgetInspectorNode::UpdateInfos(const nuiEvent& rEvent)
     str.Insert(_T("[Grab] "), 0);
   if (mpTarget->HasFocus())
     str.Insert(_T("[Focus] "), 0);
+
+  const nuiMetaPainter* pCache = mpTarget->GetRenderCache();
+  if (pCache)
+  {
+    uint32 rops = pCache->GetRenderOperations();
+    uint32 verts = pCache->GetVertices();
+    uint32 batches = pCache->GetBatches();
+    nglString s;
+    s.CFormat(_T(" (%d Vertices / %d arrays)\n"), verts, rops);
+    str.Add(s);
+  }
   
   pLabel->SetText(str);
   

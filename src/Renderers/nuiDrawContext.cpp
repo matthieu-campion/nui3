@@ -505,38 +505,10 @@ void nuiDrawContext::DrawImageQuad(float x0, float y0, float x1, float y1, float
   mCurrentState.mpTexture->ImageToTextureCoord(tx, ty);
   mCurrentState.mpTexture->ImageToTextureCoord(tw, th);
 
-  nuiRenderArray* pArray = new nuiRenderArray(GL_TRIANGLES);
+  nuiRenderArray* pArray = new nuiRenderArray(GL_TRIANGLE_STRIP);
   pArray->EnableArray(nuiRenderArray::eVertex, true);
   pArray->EnableArray(nuiRenderArray::eTexCoord, true);
   pArray->EnableArray(nuiRenderArray::eColor, true);
-
-//  // 1
-//  pArray->SetTexCoords(tx,ty); 
-//  pArray->SetVertex(x0, y0);
-//  pArray->SetColor(mCurrentState.mFillColor);
-//  pArray->PushVertex();
-//
-//  pArray->SetTexCoords(tw,ty); 
-//  pArray->SetVertex(x1, y1);
-//  pArray->PushVertex();
-//
-//  pArray->SetTexCoords(tw,th); 
-//  pArray->SetVertex(x2, y2);
-//  pArray->PushVertex();
-//
-//  // 2
-//  pArray->SetTexCoords(tx,ty); 
-//  pArray->SetVertex(x0, y0);
-//  pArray->SetColor(mCurrentState.mFillColor);
-//  pArray->PushVertex();
-//
-//  pArray->SetTexCoords(tw,th); 
-//  pArray->SetVertex(x2, y2);
-//  pArray->PushVertex();
-//
-//  pArray->SetTexCoords(tx,th); 
-//  pArray->SetVertex(x3, y3);
-//  pArray->PushVertex();
 
   // 1
   pArray->SetTexCoords(tx,ty); 
@@ -553,19 +525,10 @@ void nuiDrawContext::DrawImageQuad(float x0, float y0, float x1, float y1, float
   pArray->PushVertex();
 
   // 2
-  pArray->SetTexCoords(tw,ty); 
-  pArray->SetVertex(x1, y1);
-  pArray->SetColor(mCurrentState.mFillColor);
-  pArray->PushVertex();
-
   pArray->SetTexCoords(tw,th); 
   pArray->SetVertex(x2, y2);
   pArray->PushVertex();
 
-  pArray->SetTexCoords(tx,th); 
-  pArray->SetVertex(x3, y3);
-  pArray->PushVertex();
-  
   DrawArray(pArray);
 
   if (!texturing)
@@ -795,7 +758,7 @@ void nuiDrawContext::DrawRect(const nuiRect& rRect, nuiShapeMode Mode)
 
     if (rect.mRight - rect.mLeft <= 1.0f)
     {
-      mode = GL_TRIANGLES;
+      mode = GL_TRIANGLE_STRIP;
     }
     else
     {
@@ -804,7 +767,7 @@ void nuiDrawContext::DrawRect(const nuiRect& rRect, nuiShapeMode Mode)
     
     if (rect.mBottom - rect.mTop <= 1.0f)
     {
-      mode = GL_TRIANGLES;
+      mode = GL_TRIANGLE_STRIP;
     }
     else
     {
@@ -812,7 +775,7 @@ void nuiDrawContext::DrawRect(const nuiRect& rRect, nuiShapeMode Mode)
     }
 
     // Draw the stroke in all cases:
-    if (mode == GL_TRIANGLES)
+    if (mode == GL_TRIANGLE_STRIP)
     {
       //rect.Move(-.5,-.5); // Adjust to have a correct position on ATI and Matrox cards, this should work with nVidia too
       nuiRenderArray* pStrokeArray = new nuiRenderArray(mode);
@@ -825,14 +788,10 @@ void nuiDrawContext::DrawRect(const nuiRect& rRect, nuiShapeMode Mode)
       pStrokeArray->PushVertex();
       pStrokeArray->SetVertex(rect.mRight, rect.mTop);
       pStrokeArray->PushVertex();
-      pStrokeArray->SetVertex(rect.mRight, rect.mBottom);
+      pStrokeArray->SetVertex(rect.mLeft, rect.mBottom);
       pStrokeArray->PushVertex();
 
-      pStrokeArray->SetVertex(rect.mLeft, rect.mTop);
-      pStrokeArray->PushVertex();
       pStrokeArray->SetVertex(rect.mRight, rect.mBottom);
-      pStrokeArray->PushVertex();
-      pStrokeArray->SetVertex(rect.mLeft, rect.mBottom);
       pStrokeArray->PushVertex();
 
       DrawArray(pStrokeArray);
@@ -869,7 +828,7 @@ void nuiDrawContext::DrawRect(const nuiRect& rRect, nuiShapeMode Mode)
     nuiRect rect(rRect);
     //rect.Move(-.5,-.5); // Adjust to have a correct position on ATI and Matrox cards, this should work with nVidia too
     // Draw the filled part:
-    nuiRenderArray* pFillArray = new nuiRenderArray(GL_TRIANGLES);
+    nuiRenderArray* pFillArray = new nuiRenderArray(GL_TRIANGLE_STRIP);
     pFillArray->EnableArray(nuiRenderArray::eVertex, true);
     pFillArray->EnableArray(nuiRenderArray::eColor, true);
     pFillArray->Reserve(6);
@@ -881,19 +840,12 @@ void nuiDrawContext::DrawRect(const nuiRect& rRect, nuiShapeMode Mode)
     pFillArray->SetVertex(rect.mRight-1, rect.mTop+1);
     pFillArray->PushVertex();
 
-    pFillArray->SetVertex(rect.mRight-1, rect.mBottom-1);
-    pFillArray->PushVertex();
-
-    //
-    pFillArray->SetVertex(rect.mLeft+1, rect.mTop+1);
+    pFillArray->SetVertex(rect.mLeft-1, rect.mBottom-1);
     pFillArray->PushVertex();
     
     pFillArray->SetVertex(rect.mRight-1, rect.mBottom-1);
     pFillArray->PushVertex();
     
-    pFillArray->SetVertex(rect.mLeft+1, rect.mBottom-1);
-    pFillArray->PushVertex();
-
     DrawArray(pFillArray);
   }
   else if (Mode == eFillShape)
@@ -901,7 +853,7 @@ void nuiDrawContext::DrawRect(const nuiRect& rRect, nuiShapeMode Mode)
     nuiRect rect(rRect);
     //rect.Move(0,-.5); // Adjust to have a correct position on ATI cards, this should work on nvidia too
     // Draw the filled rectangle:
-    nuiRenderArray* pFillArray = new nuiRenderArray(GL_TRIANGLES);
+    nuiRenderArray* pFillArray = new nuiRenderArray(GL_TRIANGLE_STRIP);
     pFillArray->EnableArray(nuiRenderArray::eVertex, true);
     pFillArray->EnableArray(nuiRenderArray::eColor, true);
     pFillArray->Reserve(6);
@@ -913,17 +865,10 @@ void nuiDrawContext::DrawRect(const nuiRect& rRect, nuiShapeMode Mode)
     pFillArray->SetVertex(rect.mRight, rect.mTop);
     pFillArray->PushVertex();
 
-    pFillArray->SetVertex(rect.mRight, rect.mBottom);
-    pFillArray->PushVertex();
-
-    //
-    pFillArray->SetVertex(rect.mLeft, rect.mTop);
-    pFillArray->PushVertex();
-    
-    pFillArray->SetVertex(rect.mRight, rect.mBottom);
-    pFillArray->PushVertex();
-    
     pFillArray->SetVertex(rect.mLeft, rect.mBottom);
+    pFillArray->PushVertex();
+    
+    pFillArray->SetVertex(rect.mRight, rect.mBottom);
     pFillArray->PushVertex();
 
     DrawArray(pFillArray);

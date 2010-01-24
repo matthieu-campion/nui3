@@ -161,7 +161,8 @@ void nuiFrame::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect&
   pContext->PushState();
   pContext->ResetState();
 
-  nuiRenderArray* pArray = new nuiRenderArray(GL_TRIANGLES);
+  //  nuiRenderArray* pArray = new nuiRenderArray(GL_TRIANGLES);
+  nuiRenderArray* pArray = new nuiRenderArray(GL_TRIANGLE_STRIP);
   pArray->EnableArray(nuiRenderArray::eVertex, true);
   pArray->EnableArray(nuiRenderArray::eTexCoord, true);
   pArray->EnableArray(nuiRenderArray::eColor, false);
@@ -196,8 +197,8 @@ void nuiFrame::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect&
   mpTexture->ImageToTextureCoord(X3, Y3);
   
   
-  // Reserve 54 vertices
-  pArray->Reserve(54);
+  // Reserve 28 vertices
+  pArray->Reserve(28);
   
   //////// TOP PART
   // TopLeft rect:
@@ -205,58 +206,28 @@ void nuiFrame::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect&
   pArray->SetTexCoords(X0, Y0);
   pArray->PushVertex();
   
-  pArray->SetVertex(x1, y0);
-  pArray->SetTexCoords(X1, Y0);
-  pArray->PushVertex();
-
-  pArray->SetVertex(x1, y1);
-  pArray->SetTexCoords(X1, Y1);
-  pArray->PushVertex();
-  
-  ///
-  pArray->SetVertex(x0, y0);
-  pArray->SetTexCoords(X0, Y0);
-  pArray->PushVertex();
-
-  pArray->SetVertex(x1, y1);
-  pArray->SetTexCoords(X1, Y1);
-  pArray->PushVertex();
-
   pArray->SetVertex(x0, y1);
   pArray->SetTexCoords(X0, Y1);
   pArray->PushVertex();
   
-  // TopMiddle rect:
   pArray->SetVertex(x1, y0);
   pArray->SetTexCoords(X1, Y0);
   pArray->PushVertex();
   
-  pArray->SetVertex(x2, y0);
-  pArray->SetTexCoords(X2, Y0);
-  pArray->PushVertex();
-  
-  pArray->SetVertex(x2, y1);
-  pArray->SetTexCoords(X2, Y1);
-  pArray->PushVertex();
-  
-  ///
-  pArray->SetVertex(x1, y0);
-  pArray->SetTexCoords(X1, Y0);
-  pArray->PushVertex();
-
-  pArray->SetVertex(x2, y1);
-  pArray->SetTexCoords(X2, Y1);
-  pArray->PushVertex();
-
   pArray->SetVertex(x1, y1);
   pArray->SetTexCoords(X1, Y1);
   pArray->PushVertex();
   
-  // TopRight rect:
+  // TopMiddle rect:
   pArray->SetVertex(x2, y0);
   pArray->SetTexCoords(X2, Y0);
   pArray->PushVertex();
   
+  pArray->SetVertex(x2, y1);
+  pArray->SetTexCoords(X2, Y1);
+  pArray->PushVertex();
+  
+  // TopRight rect:
   pArray->SetVertex(x3, y0);
   pArray->SetTexCoords(X3, Y0);
   pArray->PushVertex();
@@ -264,78 +235,39 @@ void nuiFrame::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect&
   pArray->SetVertex(x3, y1);
   pArray->SetTexCoords(X3, Y1);
   pArray->PushVertex();
-
-  ///
-  pArray->SetVertex(x2, y0);
-  pArray->SetTexCoords(X2, Y0);
+  // Double the last vertex to create a flat triangle that will not be displayed
   pArray->PushVertex();
-
-  pArray->SetVertex(x3, y1);
-  pArray->SetTexCoords(X3, Y1);
-  pArray->PushVertex();
-
-  pArray->SetVertex(x2, y1);
-  pArray->SetTexCoords(X2, Y1);
-  pArray->PushVertex();
-
+  
   ///// MIDDLE PART
   // LeftSide rect:
   pArray->SetVertex(x0, y1);
   pArray->SetTexCoords(X0, Y1);
   pArray->PushVertex();
-  
-  pArray->SetVertex(x1, y1);
-  pArray->SetTexCoords(X1, Y1);
+  // Double the first vertex to create a flat triangle that will not be displayed
   pArray->PushVertex();
   
-  pArray->SetVertex(x1, y2);
-  pArray->SetTexCoords(X1, Y2);
-  pArray->PushVertex();
-
-  ///
-  pArray->SetVertex(x0, y1);
-  pArray->SetTexCoords(X0, Y1);
-  pArray->PushVertex();
-
-  pArray->SetVertex(x1, y2);
-  pArray->SetTexCoords(X1, Y2);
-  pArray->PushVertex();
-
   pArray->SetVertex(x0, y2);
   pArray->SetTexCoords(X0, Y2);
   pArray->PushVertex();
   
-  // Middle (client) rect:
   pArray->SetVertex(x1, y1);
   pArray->SetTexCoords(X1, Y1);
   pArray->PushVertex();
   
-  pArray->SetVertex(x2, y1);
-  pArray->SetTexCoords(X2, Y1);
-  pArray->PushVertex();
-  
-  pArray->SetVertex(x2, y2);
-  pArray->SetTexCoords(X2, Y2);
-  pArray->PushVertex();
-
-  ///
-  pArray->SetVertex(x1, y1);
-  pArray->SetTexCoords(X1, Y1);
-  pArray->PushVertex();
-
-  pArray->SetVertex(x2, y2);
-  pArray->SetTexCoords(X2, Y2);
-  pArray->PushVertex();
-
   pArray->SetVertex(x1, y2);
   pArray->SetTexCoords(X1, Y2);
   pArray->PushVertex();
   
-  // RightSide rect:
+  // Middle (client) rect:
   pArray->SetVertex(x2, y1);
   pArray->SetTexCoords(X2, Y1);
   pArray->PushVertex();
   
+  pArray->SetVertex(x2, y2);
+  pArray->SetTexCoords(X2, Y2);
+  pArray->PushVertex();
+  
+  // RightSide rect:
   pArray->SetVertex(x3, y1);
   pArray->SetTexCoords(X3, Y1);
   pArray->PushVertex();
@@ -343,80 +275,41 @@ void nuiFrame::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect&
   pArray->SetVertex(x3, y2);
   pArray->SetTexCoords(X3, Y2);
   pArray->PushVertex();
-
-  ///
-  pArray->SetVertex(x2, y1);
-  pArray->SetTexCoords(X2, Y1);
-  pArray->PushVertex();
-
-  pArray->SetVertex(x3, y2);
-  pArray->SetTexCoords(X3, Y2);
-  pArray->PushVertex();
-
-  pArray->SetVertex(x2, y2);
-  pArray->SetTexCoords(X2, Y2);
+  // Double the last vertex to create a flat triangle that will not be displayed
   pArray->PushVertex();
   
   
-
+  
   ///// BOTTOM PART
   // BottomLeft rect:
   pArray->SetVertex(x0, y2);
   pArray->SetTexCoords(X0, Y2);
   pArray->PushVertex();
-  
-  pArray->SetVertex(x1, y2);
-  pArray->SetTexCoords(X1, Y2);
+  // Double the first vertex to create a flat triangle that will not be displayed
   pArray->PushVertex();
   
-  pArray->SetVertex(x1, y3);
-  pArray->SetTexCoords(X1, Y3);
-  pArray->PushVertex();
-
-  ///
-  pArray->SetVertex(x0, y2);
-  pArray->SetTexCoords(X0, Y2);
-  pArray->PushVertex();
-
-  pArray->SetVertex(x1, y3);
-  pArray->SetTexCoords(X1, Y3);
-  pArray->PushVertex();
-
   pArray->SetVertex(x0, y3);
   pArray->SetTexCoords(X0, Y3);
   pArray->PushVertex();
   
-  // BottomMiddle rect:
   pArray->SetVertex(x1, y2);
   pArray->SetTexCoords(X1, Y2);
   pArray->PushVertex();
   
-  pArray->SetVertex(x2, y2);
-  pArray->SetTexCoords(X2, Y2);
-  pArray->PushVertex();
-  
-  pArray->SetVertex(x2, y3);
-  pArray->SetTexCoords(X2, Y3);
-  pArray->PushVertex();
-
-  ///
-  pArray->SetVertex(x1, y2);
-  pArray->SetTexCoords(X1, Y2);
-  pArray->PushVertex();
-
-  pArray->SetVertex(x2, y3);
-  pArray->SetTexCoords(X2, Y3);
-  pArray->PushVertex();
-
   pArray->SetVertex(x1, y3);
   pArray->SetTexCoords(X1, Y3);
   pArray->PushVertex();
   
-  // BottomRight rect:
+  // BottomMiddle rect:
   pArray->SetVertex(x2, y2);
   pArray->SetTexCoords(X2, Y2);
   pArray->PushVertex();
   
+  pArray->SetVertex(x2, y3);
+  pArray->SetTexCoords(X2, Y3);
+  pArray->PushVertex();
+  
+  // BottomRight rect:
   pArray->SetVertex(x3, y2);
   pArray->SetTexCoords(X3, Y2);
   pArray->PushVertex();
@@ -424,20 +317,8 @@ void nuiFrame::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect&
   pArray->SetVertex(x3, y3);
   pArray->SetTexCoords(X3, Y3);
   pArray->PushVertex();
-
-  ///
-  pArray->SetVertex(x2, y2);
-  pArray->SetTexCoords(X2, Y2);
-  pArray->PushVertex();
-
-  pArray->SetVertex(x3, y3);
-  pArray->SetTexCoords(X3, Y3);
-  pArray->PushVertex();
-
-  pArray->SetVertex(x2, y3);
-  pArray->SetTexCoords(X2, Y3);
-  pArray->PushVertex();
-
+  
+  
   nuiColor color = mColor;
   
   if (pWidget)

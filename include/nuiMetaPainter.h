@@ -132,8 +132,6 @@ protected:
   nuiRenderState mLastState;
   bool mLastStateValid;
 
-  nuiRenderArray mVertices;
-  
   int32 mNbDrawChild;
   int32 mNbDrawArray;
   int32 mNbClearColor;
