@@ -1502,11 +1502,17 @@ bool nuiTopLevel::DrawTree(class nuiDrawContext *pContext)
       pContext->Clip(mRedrawList[i]);
       pContext->EnableClipping(true);
 
+      pContext->SetClearColor(GetColor(eActiveWindowBg));
       if (mClearBackground)
       {
-        pContext->SetClearColor(GetColor(eActiveWindowBg));
         pContext->Clear();
       }
+      else
+      {
+        // Force the initial render state anyway!
+        pContext->DrawRect(nuiRect(0,0,0,0), eStrokeAndFillShape);
+      }
+      
 
       IteratorPtr pIt;
       for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
@@ -1527,12 +1533,17 @@ bool nuiTopLevel::DrawTree(class nuiDrawContext *pContext)
     pContext->ResetState();
     pContext->ResetClipRect();
 
+    pContext->SetClearColor(GetColor(eActiveWindowBg));
     if (mClearBackground)
     {
-      pContext->SetClearColor(GetColor(eActiveWindowBg));
       pContext->Clear();
     }
-
+    else
+    {
+      // Force the initial render state anyway!
+      pContext->DrawRect(nuiRect(0,0,0,0), eStrokeAndFillShape);
+    }
+    
     IteratorPtr pIt = NULL;
     for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
     {
