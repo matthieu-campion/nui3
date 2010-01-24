@@ -20,6 +20,7 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
   : nuiMainWindow(rContextInfo, rInfo, pShared, nglPath(ePathCurrent)), mEventSink(this)
 {
   SetDebugMode(true);
+  //mClearBackground = false;
 }
 
 MainWindow::~MainWindow()
@@ -30,6 +31,7 @@ void MainWindow::OnCreation()
 {
   nuiScrollView* pScrollView = new nuiScrollView;
   nuiEditText* pText = new nuiEditText(_T("Type something here"));
+  pText->SetTextColor(nuiColor(128,128,128));
   AddChild(pScrollView);
   pScrollView->AddChild(pText);
   

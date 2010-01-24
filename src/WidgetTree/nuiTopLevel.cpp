@@ -1510,7 +1510,7 @@ bool nuiTopLevel::DrawTree(class nuiDrawContext *pContext)
       else
       {
         // Force the initial render state anyway!
-        pContext->DrawRect(nuiRect(0,0,0,0), eStrokeAndFillShape);
+        pContext->DrawRect(nuiRect(0,0,0,0), eStrokeShape);
       }
       
 
@@ -1541,7 +1541,7 @@ bool nuiTopLevel::DrawTree(class nuiDrawContext *pContext)
     else
     {
       // Force the initial render state anyway!
-      pContext->DrawRect(nuiRect(0,0,0,0), eStrokeAndFillShape);
+      pContext->DrawRect(nuiRect(0,0,0,0), eStrokeShape);
     }
     
     IteratorPtr pIt = NULL;
