@@ -1336,7 +1336,7 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
     nuiRect inter;
     
     bool rendertest = mNeedRender;
-    if (mNeedRender || !mpSurface)
+    if (mNeedRender)
     {
       if (mNeedSelfRedraw)
       {
@@ -1351,15 +1351,39 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
         NGL_ASSERT(mpSurface);
         mpSurface->Set2DProjectionMatrix(nuiRect(0, 0, mpSurface->GetWidth(), mpSurface->GetHeight()));
         
-        // clear the surface with transparent black:
-        mpSurface->PushState();
-        mpSurface->SetClearColor(nuiColor(0.0f, 0.0f, 0.0f, 0.0f));
-        mpSurface->Clear();  
-        mpSurface->PopState();
         
         Validate();
         
-        InternalDrawWidget(mpSurface, _self, _self_and_decorations, true);
+        if (mDirtyRects.empty())
+        {
+          mDirtyRects.push_back(_self_and_decorations.Size());
+        }
+
+        int count = mDirtyRects.size();
+        
+        //printf("drawing %d partial rects\n", count);
+        
+        for (int i = 0; i < count; i++)
+        {
+          //printf("\t%d: %ls\n", i, mDirtyRects[i].GetValue().GetChars());
+          mpSurface->ResetState();
+          mpSurface->ResetClipRect();
+          mpSurface->SetStrokeColor(nuiColor(1.0f, 0.0f, 0.0f, 0.0f));
+          mpSurface->SetFillColor(nuiColor(1.0f, 0.0f, 0.0f, 0.5f));
+          mpSurface->Clip(mDirtyRects[i]);
+          mpSurface->EnableClipping(true);
+          
+          // clear the surface with transparent black:
+          mpSurface->PushState();
+          mpSurface->SetClearColor(nuiColor(0.0f, 0.0f, 0.0f, 0.0f));
+          mpSurface->Clear();  
+          mpSurface->PopState();
+          
+          InternalDrawWidget(mpSurface, _self, _self_and_decorations, true);
+        
+          mDirtyRects.clear();
+        }
+
         mNeedSelfRedraw = false;
       }
     }
@@ -4183,6 +4207,39 @@ bool nuiWidget::GetClickThru() const
 {
   return mClickThru;
 }
+
+
+void nuiWidget::AddInvalidRect(const nuiRect& rRect)
+{
+  //printf("+++ AddInvalidRect %ls\n", rRect.GetValue().GetChars());
+  int count = mDirtyRects.size();
+  
+  nuiRect intersect;
+  nuiSize surface = rRect.GetSurface();
+  if (surface == 0.0f)
+    return;
+  
+  for (int i = 0; i<count; i++)
+  {
+    if (intersect.Intersect(rRect, mDirtyRects[i]))
+    {
+      // The rectangles intersect so we create one big out of them
+      nuiRect u;
+      u.Union(rRect, mDirtyRects[i]);
+      // Let's remove the coalesced rect from the list
+      mDirtyRects.erase(mDirtyRects.begin() + i);
+      // Try to add the new big rect to the list:
+      AddInvalidRect(u);
+      return;
+    }
+  }
+  
+  // Found no rect to blend into, let's create a new one:
+  //printf("--- AddInvalidRect OK %ls\n", rRect.GetValue().GetChars());
+  mDirtyRects.push_back(rRect);
+}
+
+
 
 // ***************************************************************************
 

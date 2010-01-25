@@ -1469,7 +1469,18 @@ static const bool DISPLAY_PARTIAL_RECTS = false;
 
 bool nuiTopLevel::Draw(class nuiDrawContext *pContext)
 {
-  return DrawTree(pContext);
+  IteratorPtr pIt;
+  for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
+  {
+    nuiWidgetPtr pItem = pIt->GetWidget();
+    if (pItem && pItem != mpToolTipLabel)
+      DrawChild(pContext, pItem);
+  }
+  delete pIt;
+  
+  DisplayToolTips(pContext);
+  
+  return true;
 }
 
 bool nuiTopLevel::DrawTree(class nuiDrawContext *pContext)
@@ -1488,18 +1499,18 @@ bool nuiTopLevel::DrawTree(class nuiDrawContext *pContext)
     // Prepare the layout changes:
     pContext->ResetState();
 
-    int count = mRedrawList.size();
+    int count = mDirtyRects.size();
 
     //printf("drawing %d partial rects\n", count);
     
     for (int i = 0; i < count; i++)
     {
-      //printf("\t%d: %ls\n", i, mRedrawList[i].GetValue().GetChars());
+      //printf("\t%d: %ls\n", i, mDirtyRects[i].GetValue().GetChars());
       pContext->ResetState();
       pContext->ResetClipRect();
       pContext->SetStrokeColor(nuiColor(1.0f, 0.0f, 0.0f, 0.0f));
       pContext->SetFillColor(nuiColor(1.0f, 0.0f, 0.0f, 0.5f));
-      pContext->Clip(mRedrawList[i]);
+      pContext->Clip(mDirtyRects[i]);
       pContext->EnableClipping(true);
 
       pContext->SetClearColor(GetColor(eActiveWindowBg));
@@ -1512,18 +1523,9 @@ bool nuiTopLevel::DrawTree(class nuiDrawContext *pContext)
         // Force the initial render state anyway!
         pContext->DrawRect(nuiRect(0,0,0,0), eStrokeShape);
       }
-      
 
-      IteratorPtr pIt;
-      for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
-      {
-        nuiWidgetPtr pItem = pIt->GetWidget();
-        if (pItem && pItem != mpToolTipLabel)
-          DrawChild(pContext, pItem);
-      }
-      delete pIt;
-      
-      DisplayToolTips(pContext);
+      Draw(pContext);
+
     }
 
   }
@@ -1543,21 +1545,12 @@ bool nuiTopLevel::DrawTree(class nuiDrawContext *pContext)
       // Force the initial render state anyway!
       pContext->DrawRect(nuiRect(0,0,0,0), eStrokeShape);
     }
-    
-    IteratorPtr pIt = NULL;
-    for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
-    {
-      nuiWidgetPtr pItem = pIt->GetWidget();
-      if (pItem && pItem != mpToolTipLabel)
-        DrawChild(pContext, pItem);
-    }
-    delete pIt;
-    
-    DisplayToolTips(pContext);
+
+    Draw(pContext);
 
     if (DISPLAY_PARTIAL_RECTS)
     {
-      int count = mRedrawList.size();
+      int count = mDirtyRects.size();
       pContext->ResetState();
       pContext->ResetClipRect();
       pContext->SetStrokeColor(nuiColor(1.0f,0.0f,0.0f,0.0f));
@@ -1566,14 +1559,14 @@ bool nuiTopLevel::DrawTree(class nuiDrawContext *pContext)
       pContext->SetBlendFunc(nuiBlendTransp);
       for (int i=0; i < count; i++)
       {
-        pContext->DrawRect(mRedrawList[i], eStrokeAndFillShape);
+        pContext->DrawRect(mDirtyRects[i], eStrokeAndFillShape);
       }
       pContext->ResetState();    
     }
     
   }
 
-  mRedrawList.clear();
+  mDirtyRects.clear();
 
   if (mpWatchedWidget)
   {
@@ -1635,70 +1628,6 @@ void nuiTopLevel::BroadcastInvalidateRect(nuiWidgetPtr pSender, const nuiRect& r
   mNeedRender = true;
   DebugRefreshInfo();
 }
-
-#if 0
-void nuiTopLevel::AddInvalidRect(const nuiRect& rRect)
-{
-  int count = mRedrawList.size();
-
-  nuiRect intersect;
-  int smalesti = -1;
-  nuiRect smalest;
-  nuiSize surface = rRect.GetSurface();
-  if (surface == 0.0f)
-    return;
-  for (int i = 0; i<count; i++)
-  {
-    if (intersect.Intersect(rRect, mRedrawList[i]))
-    {
-      nuiRect u;
-      u.Union(rRect, mRedrawList[i]);
-      nuiSize temp = u.GetSurface();
-      if (smalesti < 0 || surface > temp)
-      {
-        smalesti = i;
-        smalest = u;
-        surface = temp;
-      }
-    }
-
-  }
-  if (smalesti<0) // Found no rect to blend into, let's create a new one:
-    mRedrawList.push_back(rRect);
-  else // Ok, this is the best intersection we could find (less surface to redraw):
-    mRedrawList[smalesti] = smalest;
-}
-#else
-void nuiTopLevel::AddInvalidRect(const nuiRect& rRect)
-{
-  //printf("+++ AddInvalidRect %ls\n", rRect.GetValue().GetChars());
-  int count = mRedrawList.size();
-  
-  nuiRect intersect;
-  nuiSize surface = rRect.GetSurface();
-  if (surface == 0.0f)
-    return;
-
-  for (int i = 0; i<count; i++)
-  {
-    if (intersect.Intersect(rRect, mRedrawList[i]))
-    {
-      // The rectangles intersect so we create one big out of them
-      nuiRect u;
-      u.Union(rRect, mRedrawList[i]);
-      // Let's remove the coalesced rect from the list
-      mRedrawList.erase(mRedrawList.begin() + i);
-      // Try to add the new big rect to the list:
-      AddInvalidRect(u);
-      return;
-    }
-  }
-
-  // Found no rect to blend into, let's create a new one:
-  //printf("--- AddInvalidRect OK %ls\n", rRect.GetValue().GetChars());
-  mRedrawList.push_back(rRect);
-}
-#endif
 
 bool nuiTopLevel::SetRect(const nuiRect& rRect)
 {

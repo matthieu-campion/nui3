@@ -128,7 +128,6 @@ public:
 
   void EnablePartialRedraw(bool Set = true) { mPartialRedraw = Set; }
   bool IsPartialRedrawEnabled() { return mPartialRedraw; }
-  void AddInvalidRect(const nuiRect& rRect);
   void DisplayToolTips(nuiDrawContext* pContext);
   void EnableClearBackground(bool set = true) { mClearBackground = set; Invalidate(); }
   bool IsClearBackgroundEnabled() const { return mClearBackground; }
@@ -220,7 +219,6 @@ protected:
 
   static nuiRenderer mRenderer;
 
-  std::vector<nuiRect> mRedrawList;
   nuiEventSink<nuiTopLevel> mTopLevelSink;
   bool mPartialRedraw;
   void SetToolTipRect();

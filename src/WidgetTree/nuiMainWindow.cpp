@@ -332,14 +332,14 @@ void nuiMainWindow::Paint()
   if (DrawFullFrame && RestorePartial)
     EnablePartialRedraw(false);
 
-  std::vector<nuiRect> RedrawList(mRedrawList);
+  std::vector<nuiRect> RedrawList(mDirtyRects);
     
 //  static int counter = 0;
   //NGL_OUT(_T("%d OnPaint %d - %d\n"), counter++, DrawFullFrame, RestorePartial);
 
   pContext->MultMatrix(GetMatrix());
   mLastRendering = nglTime();
-  DrawWidget(pContext);
+  DrawTree(pContext);
 
   if (mDisplayMouseOverObject)
     DBG_DisplayMouseOverObject();

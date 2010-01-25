@@ -215,6 +215,7 @@ void nuiSurface::Realize(nuiDrawContext* pDestinationPainter)
   //NGL_OUT(_T("nuiSurface::Realize() [%x]\n"), this);
   mpSurfacePainter->ReDraw(pDestinationPainter);
   mDirty = false;
+  mpSurfacePainter->Reset(NULL);
 }
 
 bool nuiSurface::IsDirty() const
