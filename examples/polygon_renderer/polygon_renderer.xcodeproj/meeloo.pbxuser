@@ -1,6 +1,7 @@
 // !$*UTF8*$!
 {
 	61A9DE3F0B833C9200BC506C /* Project object */ = {
+		activeArchitecturePreference = i386;
 		activeBuildConfigurationName = Default;
 		activeExecutable = E5EC7F470EE963CC00F8404D /* polygon_renderer */;
 		activeTarget = 61A9DFBE0B833E9600BC506C /* polygon_renderer */;
@@ -58,14 +59,14 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 252285644;
-			PBXWorkspaceStateSaveDate = 252285644;
+			PBXPerProjectTemplateStateSaveDate = 286199984;
+			PBXWorkspaceStateSaveDate = 286199984;
 		};
 		perUserProjectItems = {
-			E58947C00F09972A006B3B17 /* PBXTextBookmark */ = E58947C00F09972A006B3B17 /* PBXTextBookmark */;
-			E58947C20F099736006B3B17 /* PBXTextBookmark */ = E58947C20F099736006B3B17 /* PBXTextBookmark */;
-			E589482C0F0B011D006B3B17 /* PBXTextBookmark */ = E589482C0F0B011D006B3B17 /* PBXTextBookmark */;
-			E58948300F0B011D006B3B17 /* PBXTextBookmark */ = E58948300F0B011D006B3B17 /* PBXTextBookmark */;
+			E57EC6D1110F10B600AE0A3A /* PBXTextBookmark */ = E57EC6D1110F10B600AE0A3A /* PBXTextBookmark */;
+			E57EC6D2110F10B600AE0A3A /* PBXTextBookmark */ = E57EC6D2110F10B600AE0A3A /* PBXTextBookmark */;
+			E57EC72811105A8700AE0A3A /* PBXTextBookmark */ = E57EC72811105A8700AE0A3A /* PBXTextBookmark */;
+			E57EC72911105A8700AE0A3A /* PBXTextBookmark */ = E57EC72911105A8700AE0A3A /* PBXTextBookmark */;
 		};
 		sourceControlManager = E5EC7F5F0EE963EC00F8404D /* Source Control */;
 		userBuildSettings = {
@@ -85,9 +86,9 @@
 	};
 	61A9DFF10B83433800BC506C /* MainWindow.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1449, 14001}}";
-			sepNavSelRange = "{27074, 0}";
-			sepNavVisRange = "{24012, 2630}";
+			sepNavIntBoundsRect = "{{0, 0}, {1590, 13819}}";
+			sepNavSelRange = "{11968, 0}";
+			sepNavVisRange = "{11361, 1590}";
 		};
 	};
 	61A9DFF20B83433800BC506C /* MainWindow.h */ = {
@@ -97,45 +98,45 @@
 			sepNavVisRange = "{0, 540}";
 		};
 	};
-	E58947C00F09972A006B3B17 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
-		name = "MainWindow.cpp: 987";
-		rLen = 0;
-		rLoc = 22913;
-		rType = 0;
-		vrLen = 1329;
-		vrLoc = 5265;
-	};
-	E58947C20F099736006B3B17 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
-		name = "MainWindow.cpp: 1076";
-		rLen = 0;
-		rLoc = 27074;
-		rType = 0;
-		vrLen = 1962;
-		vrLoc = 24786;
-	};
-	E589482C0F0B011D006B3B17 /* PBXTextBookmark */ = {
+	E57EC6D1110F10B600AE0A3A /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 564";
 		rLen = 0;
 		rLoc = 11968;
 		rType = 0;
-		vrLen = 1647;
-		vrLoc = 11304;
+		vrLen = 1590;
+		vrLoc = 11361;
 	};
-	E58948300F0B011D006B3B17 /* PBXTextBookmark */ = {
+	E57EC6D2110F10B600AE0A3A /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
-		name = "MainWindow.cpp: 1104";
+		name = "MainWindow.cpp: 564";
 		rLen = 0;
-		rLoc = 27074;
+		rLoc = 11968;
 		rType = 0;
-		vrLen = 2630;
-		vrLoc = 24012;
+		vrLen = 1590;
+		vrLoc = 11361;
+	};
+	E57EC72811105A8700AE0A3A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 564";
+		rLen = 0;
+		rLoc = 11968;
+		rType = 0;
+		vrLen = 1590;
+		vrLoc = 11361;
+	};
+	E57EC72911105A8700AE0A3A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 564";
+		rLen = 0;
+		rLoc = 11968;
+		rType = 0;
+		vrLen = 1479;
+		vrLoc = 11361;
 	};
 	E5EC7F470EE963CC00F8404D /* polygon_renderer */ = {
 		isa = PBXExecutable;
@@ -148,6 +149,9 @@
 		configStateDict = {
 		};
 		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
 		debuggerPlugin = GDBDebugging;
 		disassemblyDisplayState = 0;
 		dylibVariantSuffix = "";
@@ -160,6 +164,7 @@
 		name = polygon_renderer;
 		savedGlobals = {
 		};
+		showTypeColumn = 0;
 		sourceDirectories = (
 		);
 		variableFormatDictionary = {
@@ -176,6 +181,9 @@
 		configStateDict = {
 		};
 		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
 		debuggerPlugin = GDBDebugging;
 		disassemblyDisplayState = 0;
 		dylibVariantSuffix = "";
@@ -188,6 +196,7 @@
 		name = polygon_rendererD;
 		savedGlobals = {
 		};
+		showTypeColumn = 0;
 		sourceDirectories = (
 		);
 		variableFormatDictionary = {
@@ -228,6 +237,9 @@
 		isSCMEnabled = 0;
 		scmConfiguration = {
 			repositoryName = "nui 1";
+			repositoryNamesForRoots = {
+				"" = nui;
+			};
 		};
 	};
 	E5EC7F600EE963EC00F8404D /* Code sense */ = {

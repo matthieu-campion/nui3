@@ -194,6 +194,8 @@ nuiGLPainter::nuiGLPainter(nglContext* pContext, const nuiRect& rRect)
   mCanRectangleTexture = 0;
   mTextureTarget = GL_TEXTURE_2D;
   mTwoPassBlend = false;
+  mDefaultFramebuffer = 0;
+  mDefaultRenderbuffer = 0;
 
   mpContext = pContext;
   if (mpContext)
@@ -242,6 +244,8 @@ nuiGLPainter::nuiGLPainter(nglContext* pContext, const nuiRect& rRect)
   }
 
 #ifdef _OPENGL_ES_
+//  mDefaultFramebuffer = 0;
+//  mDefaultRenderbuffer = 0;
   glGetIntegerv(GL_FRAMEBUFFER_BINDING_NUI, &mDefaultFramebuffer);
   glGetIntegerv(GL_RENDERBUFFER_BINDING_NUI, (GLint *) &mDefaultRenderbuffer);
 #endif
@@ -1644,6 +1648,7 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
     if (create)
     {      
       glGenFramebuffersNUI(1, &info.mFramebuffer);
+      //printf("glGenFramebuffersNUI -> %d\n", info.mFramebuffer);
       nuiCheckForGLErrors();
       glBindFramebufferNUI(GL_FRAMEBUFFER_NUI, info.mFramebuffer);
       nuiCheckForGLErrors();
@@ -1722,6 +1727,7 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
                                   GetTextureTarget(pTexture->IsPowerOfTwo()),
                                   tex_info.mTexture,
                                   0);
+        //printf("surface texture -> %d\n", tex_info.mTexture);
         nuiCheckForGLErrors();
       }
       else
@@ -1753,6 +1759,7 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
                                      GL_COLOR_ATTACHMENT0_NUI,
                                      GL_RENDERBUFFER_NUI,
                                      info.mRenderbuffer);
+        //printf("surface render buffer -> %d\n", info.mRenderbuffer);
         nuiCheckForGLErrors();
       }
       CheckFramebufferStatus();
@@ -1765,6 +1772,8 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
       info = it->second;
       glBindFramebufferNUI(GL_FRAMEBUFFER_NUI, info.mFramebuffer);
       glBindRenderbufferNUI(GL_RENDERBUFFER_NUI, info.mRenderbuffer);
+      //printf("glBindFramebufferNUI -> %d\n", info.mFramebuffer);
+      //printf("glBindRenderbufferNUI -> %d\n", info.mRenderbuffer);
       
       nuiCheckForGLErrors();
       CheckFramebufferStatus();
@@ -1774,7 +1783,9 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
   {
     /// !pSurface
     glBindFramebufferNUI(GL_FRAMEBUFFER_NUI, mDefaultFramebuffer);
+    //printf("UNBIND glBindFramebufferNUI -> %d\n", mDefaultFramebuffer);
     glBindRenderbufferNUI(GL_RENDERBUFFER_NUI, mDefaultRenderbuffer);
+    //printf("UNBIND glBindRenderbufferNUI -> %d\n", mDefaultRenderbuffer);
     
     nuiCheckForGLErrors();
     CheckFramebufferStatus();

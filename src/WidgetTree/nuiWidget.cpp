@@ -995,11 +995,17 @@ void nuiWidget::BroadcastInvalidateRect(nuiWidgetPtr pSender, const nuiRect& rRe
   }
 
   r.Set(vec1[0], vec1[1], vec2[0], vec2[1], false);
-  r.Move(rect.Left(), rect.Top());
 
   mNeedRender = true;
-  if (mpSurface)
+  if (mSurfaceEnabled)
+  {
     mNeedSelfRedraw = true;
+    
+    AddInvalidRect(r);
+  }
+
+  r.Move(rect.Left(), rect.Top());
+
   if (mpParent)
     mpParent->BroadcastInvalidateRect(pSender, r);
   DebugRefreshInfo();
@@ -1342,15 +1348,7 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
       {
         UpdateSurface(_self_and_decorations.Size());
 
-        mpSurface->Wipe();
-        mpSurface->ResetState();
-        mpSurface->ResetClipRect();
-        mpSurface->Translate(_self_and_decorations.Left(), _self_and_decorations.Top());
-        mpSurface->LoadMatrix(nglMatrixf());
-        
         NGL_ASSERT(mpSurface);
-        mpSurface->Set2DProjectionMatrix(nuiRect(0, 0, mpSurface->GetWidth(), mpSurface->GetHeight()));
-        
         
         Validate();
         
@@ -1361,15 +1359,18 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
 
         int count = mDirtyRects.size();
         
-        //printf("drawing %d partial rects\n", count);
+        printf("drawing %d partial rects\n", count);
         
         for (int i = 0; i < count; i++)
         {
-          //printf("\t%d: %ls\n", i, mDirtyRects[i].GetValue().GetChars());
+          printf("\t%d: %ls\n", i, mDirtyRects[i].GetValue().GetChars());
           mpSurface->ResetState();
           mpSurface->ResetClipRect();
           mpSurface->SetStrokeColor(nuiColor(1.0f, 0.0f, 0.0f, 0.0f));
           mpSurface->SetFillColor(nuiColor(1.0f, 0.0f, 0.0f, 0.5f));
+          mpSurface->LoadMatrix(nglMatrixf());
+          mpSurface->Translate(_self_and_decorations.Left(), _self_and_decorations.Top());
+          mpSurface->Set2DProjectionMatrix(nuiRect(0, 0, mpSurface->GetWidth(), mpSurface->GetHeight()));
           mpSurface->Clip(mDirtyRects[i]);
           mpSurface->EnableClipping(true);
           
@@ -1381,9 +1382,10 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
           
           InternalDrawWidget(mpSurface, _self, _self_and_decorations, true);
         
-          mDirtyRects.clear();
         }
 
+        mpSurface->SetDirty(true);
+        mDirtyRects.clear();
         mNeedSelfRedraw = false;
       }
     }
@@ -2726,7 +2728,8 @@ void nuiWidget::UpdateSurface(const nuiRect& rRect)
   {
     if (!mpSurface || (mpSurface->GetWidth() != rRect.GetWidth() || mpSurface->GetHeight() != rRect.GetHeight()))
     {
-      if (mpSurface) {
+      if (mpSurface)
+      {
         if (mpSurface->GetTexture())
           mpSurface->GetTexture()->Release();
         mpSurface->Release();
@@ -2740,7 +2743,9 @@ void nuiWidget::UpdateSurface(const nuiRect& rRect)
       mpSurface = nuiSurface::CreateSurface(str, ToAbove(rRect.GetWidth()), ToAbove(rRect.GetHeight()), eImagePixelRGBA);
       mpSurface->SetRenderToTexture(true);
       nuiTexture* pSurfaceTexture = nuiTexture::GetTexture(mpSurface, false);
-      mpSurface->SetTexture(pSurfaceTexture);      
+      mpSurface->SetTexture(pSurfaceTexture);
+      
+      mDirtyRects.clear();
     }
   }
   else
@@ -2752,6 +2757,7 @@ void nuiWidget::UpdateSurface(const nuiRect& rRect)
       mpSurface->Release();
     }
     mpSurface = NULL;
+    mDirtyRects.clear();
   }
 }
 

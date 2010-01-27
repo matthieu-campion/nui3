@@ -181,7 +181,7 @@ const nuiRenderState& nuiDrawContext::GetState() const
 
 bool nuiDrawContext::ResetState()
 {
-  nuiRenderState Dummy;
+  static nuiRenderState Dummy;
   if (!(Dummy == mCurrentState))
   {
     mStateChanges++;
@@ -840,7 +840,7 @@ void nuiDrawContext::DrawRect(const nuiRect& rRect, nuiShapeMode Mode)
     pFillArray->SetVertex(rect.mRight-1, rect.mTop+1);
     pFillArray->PushVertex();
 
-    pFillArray->SetVertex(rect.mLeft-1, rect.mBottom-1);
+    pFillArray->SetVertex(rect.mLeft+1, rect.mBottom-1);
     pFillArray->PushVertex();
     
     pFillArray->SetVertex(rect.mRight-1, rect.mBottom-1);

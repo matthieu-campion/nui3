@@ -84,6 +84,10 @@ public:
 
   bool IsValid() const;
   
+  static const nuiTextureMap& Enum();
+  static nuiSimpleEventSource<0> TexturesChanged;
+  
+  
   static void AddCache(nuiTextureCache* pCache);
   static void DelCache(nuiTextureCache* pCache);
   

@@ -44,6 +44,7 @@ private:
   bool ShowThreadInspector(const nuiEvent& rEvent);
   bool ShowFontInspector(const nuiEvent& rEvent);
   bool ShowDecorationInspector(const nuiEvent& rEvent);
+  bool ShowTextureInspector(const nuiEvent& rEvent);
 
   nuiEventSink<nuiIntrospector> mEventSink;
   nuiWidget* mpTarget;

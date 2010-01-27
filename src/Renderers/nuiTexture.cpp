@@ -195,6 +195,7 @@ void nuiTexture::ClearAll()
   }
 
   mpTextures.clear();
+  TexturesChanged();
 }
 
 void nuiTexture::ForceReloadAll(bool Rebind)
@@ -207,6 +208,7 @@ void nuiTexture::ForceReloadAll(bool Rebind)
     it->second->ForceReload(Rebind);
     ++it;
   }
+  TexturesChanged();
 }
 
 
@@ -409,6 +411,8 @@ void nuiTexture::Init()
     pCache->CreateTexture(this);
     ++it;
   }
+
+  TexturesChanged();
 }
 
 bool nuiTexture::IsValid() const
@@ -449,6 +453,7 @@ nuiTexture::~nuiTexture()
     mpSurface->Release();
   }
   mpTextures.erase(GetProperty(_T("Source")));
+  TexturesChanged();
 }
 
 void nuiTexture::ForceReload(bool Rebind)
@@ -604,6 +609,7 @@ bool nuiTexture::SetSource(const nglString& rName)
   mpTextures.erase(GetProperty(_T("Source")));
   SetProperty(_T("Source"), rName);
   mpTextures[rName] = this;
+  TexturesChanged();
   return true;
 }
 
@@ -643,6 +649,11 @@ bool nuiTexture::GetAutoMipMap() const
   return mAutoMipMap;
 }
 
+const nuiTextureMap& nuiTexture::Enum()
+{
+  return mpTextures;
+}
+
 /////////
 
 nglContext* nuiTexture::mpSharedContext = NULL;
@@ -671,4 +682,6 @@ void nuiTexture::RetainBuffers(bool Set)
 {
   mRetainBuffers = Set;
 }
+
+nuiSimpleEventSource<0> nuiTexture::TexturesChanged;
 

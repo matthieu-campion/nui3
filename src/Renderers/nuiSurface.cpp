@@ -222,3 +222,9 @@ bool nuiSurface::IsDirty() const
 {
   return mDirty;
 }
+
+void nuiSurface::SetDirty(bool set)
+{
+  mDirty = set;
+}
+

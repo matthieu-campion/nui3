@@ -48,6 +48,7 @@ public:
   void Wipe(); ///< Completely reset the surface and all associated operations
   
   bool IsDirty() const;
+  void SetDirty(bool set = true);
   
   nuiMetaPainter* GetSurfacePainter() const;
   void Realize(nuiDrawContext* pDestinationPainter);
