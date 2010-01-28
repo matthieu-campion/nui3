@@ -142,9 +142,6 @@ bool nuiAudioDecoder::Seek(uint64 SampleFrame)
 
 bool nuiAudioDecoder::ReadInfo()
 {
-  if (mInitialized) //already initialized
-    return false;
-  
   if (!mpPrivate)
 	return false;
 
