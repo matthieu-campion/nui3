@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9,00"
 	Name="VideoDecoder"
-	ProjectGUID="{D87858E8-0145-4B03-889A-3186371799DC}"
+	ProjectGUID="{AD9D174D-C0F3-4793-804B-DEE98B5DA3AA}"
 	RootNamespace="template"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="131072"
