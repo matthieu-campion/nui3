@@ -326,6 +326,7 @@ void nuiMainWindow::Paint()
   mpNGLWindow->BeginSession();
 
   pContext->StartRendering();
+  pContext->Set2DProjectionMatrix(GetRect().Size());
   bool DrawFullFrame = !mInvalidatePosted || (mFullFrameRedraw > 0);
   bool RestorePartial = IsPartialRedrawEnabled();
   mInvalidatePosted = false;

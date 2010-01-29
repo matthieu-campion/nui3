@@ -285,6 +285,7 @@ void nuiGLPainter::SetViewport()
   y = Height - ToBelow(r.Bottom());
   h = ToBelow(r.GetHeight());
   
+  //printf("set projection matrix (%d %d - %d %d)\n", x, y, w, h);
   glViewport(x, y, w, h);
   nuiCheckForGLErrors();
   

@@ -19,6 +19,7 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
   : nuiMainWindow(rContextInfo, rInfo, pShared, nglPath(ePathCurrent)),
     mEventSink(this)
 {
+  //mClearBackground = false;
   SetDebugMode(true);
 }
 
@@ -48,7 +49,7 @@ void MainWindow::OnCreation()
     pLabel->SetPosition(nuiCenter);
     pButton->AddChild(pLabel);
     pButton->SetAlpha(.5);
-    pBox->AddCell(pButton, nuiLeft);
+    pBox->AddCell(pButton, nuiCenter);
     pBox->SetCellExpand(0, nuiExpandShrinkAndGrow);
     mEventSink.Connect(pButton->Activated, &MainWindow::ChangeLayout, pButton);
     pButton->SetLayoutAnimationDuration(1);

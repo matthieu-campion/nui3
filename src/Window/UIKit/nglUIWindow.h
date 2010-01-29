@@ -33,10 +33,13 @@ typedef std::map<UITouch*,nglTouchInfo> TouchesInfo;
   NSTimer*      mInvalidationTimer;
 	UITextField*  mpTextField;
 	BOOL          mKeyboardVisible;
+  void*         mpContext;
+  GLint         mRenderBuffer;
 }
 
 + (Class) layerClass;
 - (id) initWithFrame: (CGRect) rect andNGLWindow: (nglWindow*) pNGLWindow;
+- (void) setContext: (void*) pContext renderBuffer: (GLint) buffer;
 - (void) dealloc;
 - (void) invalidate;
 - (void) sendEvent: (UIEvent*) pEvent;

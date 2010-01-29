@@ -1079,6 +1079,7 @@ const nuiMatrix& nuiDrawContext::GetProjectionMatrix() const
 
 void nuiDrawContext::Set2DProjectionMatrix(const nuiRect& rRect)
 {
+  //printf("Set2DProjectionMatrix: %ls\n", rRect.GetValue().GetChars());
   nuiMatrix m;
   m.Translate(-1.0f, 1.0f, 0.0f);
   m.Scale(2.0f/rRect.GetWidth(), -2.0f/rRect.GetHeight(), 1.0f);

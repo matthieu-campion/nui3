@@ -41,7 +41,7 @@ void Application::OnInit()
 
   uint Width = 0, Height = 0;
   bool HasSize = false;
-  bool IsFullScreen = false;
+  bool IsFullScreen = true;
   bool DebugObject = false;
   bool DebugInfo = false;
   bool ShowFPS = false;
@@ -145,6 +145,7 @@ void Application::OnInit()
   }
   mpMainWindow->DBG_SetMouseOverInfo(DebugInfo);
   mpMainWindow->DBG_SetMouseOverObject(DebugObject);
+  //mpMainWindow->SetState(nglWindow::eMaximize);
   mpMainWindow->SetState(nglWindow::eShow);
 
 }

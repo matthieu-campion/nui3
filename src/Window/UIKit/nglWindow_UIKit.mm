@@ -15,6 +15,7 @@
 
 #include "nglUIWindow.h"
 
+#include <GL/gl.h>
 
 #define NGL_WINDOW_FPS 120.0f
 
@@ -98,6 +99,12 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 	return [CAEAGLLayer class];
 }
 
+- (void) setContext: (void*) pContext renderBuffer: (GLint) buffer
+{
+  mpContext = pContext;
+  mRenderBuffer = buffer;
+}
+
 - (id) initWithFrame: (CGRect) rect andNGLWindow: (nglWindow*) pNGLWindow
 {
   [[UITextField alloc] initWithFrame: CGRectZero];
@@ -165,9 +172,11 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 
   [self hideKeyboard];
   [self showKeyboard];
+//  UIApplication* pApp = [UIApplication sharedApplication];
+//  [mpTextField interfaceOrientation: pApp.statusBarOrientation];
 }
 
-- (void) UpdateOrientation
+- (void) UpdateOrientation: (Boolean)forceresize
 {
   //nuiStopWatch watch(_T("nglWindowUIKIT::UpdateOrientation"));
   UIApplication* pApp = [UIApplication sharedApplication];
@@ -178,7 +187,8 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   if (mpNGLWindow->GetAutoRotation())
   {
     unsigned int orientation = pUIDev.orientation;
-    if (pApp.statusBarOrientation != orientation)
+    unsigned int apporientation = pApp.statusBarOrientation;
+    if (apporientation != orientation)
     {
       switch (orientation)
       {
@@ -230,14 +240,41 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
       if (mpNGLWindow->OnRotation(angle))
       {
         mpNGLWindow->SetRotation(angle);
-        mpNGLWindow->SetSize(w, h);
+        forceresize = true;
+        //        CGRect r = [self frame];
+        //printf("currentFrame: %f, %f - %f, %f\n", r.origin.x, r.origin.y, r.size.width, r.size.height);
+        //        r = [UIScreen mainScreen].applicationFrame;
+        //printf("applicationFrame: %f, %f - %f, %f\n", r.origin.x, r.origin.y, r.size.width, r.size.height);
+        //        glClearColor(0, 1, 0, 1);
+        //        glDisable(GL_SCISSOR_TEST);
+        //        glDisable(GL_TEXTURE_2D);
+        //        glColor4f(1, 0, 0, 1);
+        //        glClear(GL_COLOR_BUFFER_BIT);
+        //        glMatrixMode(GL_PROJECTION_MATRIX);
+        //        glLoadIdentity();
+        //        glMatrixMode(GL_MODELVIEW_MATRIX);
+        //        glLoadIdentity();
+        //        //glBegin(GL_LINE_LOOP);
+        //        float ww = 319;
+        //        float hh = 460;
+        //        float v[] = {
+        //          0, 0, 0,
+        //          ww, 0, 0,
+        //          ww, hh, 0,
+        //          0, hh, 0
+        //        };
+        //        glVertexPointer(3, GL_FLOAT, 0, v);
+        //        glEnableClientState(GL_VERTEX_ARRAY);
+        //        glDisableClientState(GL_COLOR_ARRAY);
+        //        glDrawArrays(GL_LINE_LOOP, 0, 4);
         mInvalidated = true;
       }
     }
   }
   else
   {
-    switch (mpNGLWindow->GetRotation())
+    uint32 angle = mpNGLWindow->GetRotation();
+    switch (angle)
     {
       case 0:
         //UIDeviceOrientationPortrait
@@ -287,8 +324,28 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
     
     if (mpNGLWindow->GetWidth() != w || mpNGLWindow->GetHeight() != h)
     {
-      mpNGLWindow->SetSize(w, h);
+      forceresize = TRUE;
     }
+  }
+  
+  if (forceresize)
+  {
+    angle = mpNGLWindow->GetRotation();
+    if (angle == 270 || angle == 90)
+      mpNGLWindow->SetSize([UIScreen mainScreen].applicationFrame.size.height, [UIScreen mainScreen].applicationFrame.size.width);
+    else
+      mpNGLWindow->SetSize([UIScreen mainScreen].applicationFrame.size.width, [UIScreen mainScreen].applicationFrame.size.height);
+    [self setFrame: [UIScreen mainScreen].applicationFrame ];
+
+    CAEAGLLayer* pLayer = (CAEAGLLayer*)[self layer];
+    glBindRenderbufferOES(GL_RENDERBUFFER_OES, mRenderBuffer);
+    [(EAGLContext*)mpContext renderbufferStorage: GL_RENDERBUFFER_OES fromDrawable: pLayer];
+    GLint w, h;
+    glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &w);
+    glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &h);
+    
+    //printf("NEW Render buffer area: %d x %d\n", w, h);
+    
   }
 }
 
@@ -312,7 +369,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   
   counter = 60;
 
-  [self UpdateOrientation];
+  [self UpdateOrientation: FALSE];
 }
 
 - (void) sendEvent: (UIEvent*) pEvent
@@ -674,24 +731,33 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
   }
 
   mInSession  = 0;
-  mWidth      = rInfo.Width;
-  mHeight     = rInfo.Height;
-  mAngle      = rInfo.Rotate;
-
-  CGRect rect = [[UIScreen mainScreen] bounds];
-
-  if (mWidth == 0 || mHeight == 0)
+  mAngle = rInfo.Rotate;
+  CGRect rect = [[UIScreen mainScreen] applicationFrame];
+  if (mAngle == 270 || mAngle == 90)
   {
-    if (mAngle == 90 || mAngle == 270) { ///< invert screen sizes
-      mWidth = (uint)rect.size.height;
-      mHeight = (uint)rect.size.width;
-    }
-    else
-    {
-      mWidth = (uint)rect.size.width;
-      mHeight = (uint)rect.size.height;
-    }
+    mWidth = rect.size.height;
+    mHeight = rect.size.width;
   }
+  else
+  {
+    mWidth = rect.size.width;
+    mHeight = rect.size.height;
+  }
+  
+
+//  if (mWidth == 0 || mHeight == 0)
+//  {
+//    if (mAngle == 90 || mAngle == 270)
+//    { ///< invert screen sizes
+//      mWidth = (uint)rect.size.height;
+//      mHeight = (uint)rect.size.width;
+//    }
+//    else
+//    {
+//      mWidth = (uint)rect.size.width;
+//      mHeight = (uint)rect.size.height;
+//    }
+//  }
 
 ///< Create the actual window
   nglUIWindow* pUIWindow = [[nglUIWindow alloc] initWithFrame: rect andNGLWindow: this];
@@ -742,9 +808,6 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
 	newSize.width = roundf(newSize.width);
 	newSize.height = roundf(newSize.height);
   
-//	mWidth = newSize.width;
-//  mHeight = newSize.height;
-
 
 ///< This layer is then used as the color attachement for a framebuffer based rendering
 	GLuint oldRenderbuffer;
@@ -758,6 +821,11 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
 	glGenRenderbuffersOES(1, &mRenderBuffer);
 	glBindRenderbufferOES(GL_RENDERBUFFER_OES, mRenderBuffer);
 	[(EAGLContext*)mpContext renderbufferStorage: GL_RENDERBUFFER_OES fromDrawable: pLayer];
+  GLint w, h;
+  glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &w);
+  glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &h);
+  mWidth = w;
+  mHeight = h;
 
 	glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, mRenderBuffer);
 
@@ -779,6 +847,9 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
 	NGL_ASSERT (glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) == GL_FRAMEBUFFER_COMPLETE_OES);
   //  glBindFramebufferOES(GL_FRAMEBUFFER_OES, oldFramebuffer);
   //	glBindRenderbufferOES(GL_RENDERBUFFER_OES, oldRenderbuffer);
+  
+  [pUIWindow setContext: mpContext renderBuffer:mRenderBuffer];
+  [pUIWindow UpdateOrientation: TRUE];
 }
 
 nglWindow::~nglWindow()
@@ -809,12 +880,11 @@ void nglWindow::SetState (StateChange State)
       break;
 		case eMaximize:
     {
-      UIApplication* pApp = [UIApplication sharedApplication];
       [pApp setStatusBarHidden:TRUE animated:TRUE];
     }
     break;
   };
-  [(nglUIWindow*)mpUIWindow UpdateOrientation];
+  [(nglUIWindow*)mpUIWindow UpdateOrientation: TRUE];
 }
 
 nglWindow::StateInfo nglWindow::GetState() const

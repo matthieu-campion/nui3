@@ -1631,6 +1631,7 @@ void nuiTopLevel::BroadcastInvalidateRect(nuiWidgetPtr pSender, const nuiRect& r
 
 bool nuiTopLevel::SetRect(const nuiRect& rRect)
 {
+  //printf("toplevel set rect %f %f %f %f", rRect.Left(), rRect.Top(), rRect.GetWidth(), rRect.GetHeight());
   nuiWidget::SetRect(rRect);
   nuiRect rect(mRect.Size());
 
