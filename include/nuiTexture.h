@@ -104,6 +104,7 @@ protected:
   
   virtual ~nuiTexture();
   void Init();
+  void InitAttributes();
 
   nglImage* mpImage;
   bool mOwnImage;

@@ -47,17 +47,18 @@ public:
       mpArray->SetTexCoords(idx + 3, 1, 1);// mpArray->PushVertex();
     }
     
-    mpArray->AddIndicesArray(GL_TRIANGLES);
+    mpArray->AddIndicesArray(GL_TRIANGLE_STRIP);
     for (uint32 i = 0; i < MAX_PARTICLES; i++)
     {
       const uint32 idx = i * 4;
       mpArray->PushIndex(idx);
-      mpArray->PushIndex(idx + 1);
-      mpArray->PushIndex(idx + 2);
       
+      mpArray->PushIndex(idx);
       mpArray->PushIndex(idx + 1);
-      mpArray->PushIndex(idx + 3);
       mpArray->PushIndex(idx + 2);
+      mpArray->PushIndex(idx + 3);
+
+      mpArray->PushIndex(idx + 3);
     }
     
     StartAutoDraw();

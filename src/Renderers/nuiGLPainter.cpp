@@ -554,11 +554,11 @@ void nuiGLPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
           LoadProjectionMatrix(nuiRect(pSurface->GetWidth(), pSurface->GetHeight()), m);
           
           // clear the surface with transparent black:
-          nuiRenderState s2(mState);// PushState();
-          mState.mClearColor = nuiColor(0.0f, 0.0f, 0.0f, 0.0f);
+//          nuiRenderState s2(mState);// PushState();
+//          mState.mClearColor = nuiColor(0.0f, 0.0f, 0.0f, 0.0f);
           SetState(mState);
-          ClearColor();  
-          SetState(s2);
+//          ClearColor();  
+//          SetState(s2);
           
 //////////////////////////////          
           nuiDrawContext Ctx(nuiRect(pSurface->GetWidth(), pSurface->GetHeight()));

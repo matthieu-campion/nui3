@@ -781,7 +781,7 @@ void nuiDrawContext::DrawRect(const nuiRect& rRect, nuiShapeMode Mode)
       nuiRenderArray* pStrokeArray = new nuiRenderArray(mode);
       pStrokeArray->EnableArray(nuiRenderArray::eVertex, true);
       pStrokeArray->EnableArray(nuiRenderArray::eColor, true);
-      pStrokeArray->Reserve(6);
+      pStrokeArray->Reserve(4);
       
       pStrokeArray->SetColor(mCurrentState.mStrokeColor);
       pStrokeArray->SetVertex(rect.mLeft, rect.mTop);
@@ -831,7 +831,7 @@ void nuiDrawContext::DrawRect(const nuiRect& rRect, nuiShapeMode Mode)
     nuiRenderArray* pFillArray = new nuiRenderArray(GL_TRIANGLE_STRIP);
     pFillArray->EnableArray(nuiRenderArray::eVertex, true);
     pFillArray->EnableArray(nuiRenderArray::eColor, true);
-    pFillArray->Reserve(6);
+    pFillArray->Reserve(4);
     
     pFillArray->SetColor(mCurrentState.mFillColor);
     pFillArray->SetVertex(rect.mLeft+1, rect.mTop+1);
@@ -856,7 +856,7 @@ void nuiDrawContext::DrawRect(const nuiRect& rRect, nuiShapeMode Mode)
     nuiRenderArray* pFillArray = new nuiRenderArray(GL_TRIANGLE_STRIP);
     pFillArray->EnableArray(nuiRenderArray::eVertex, true);
     pFillArray->EnableArray(nuiRenderArray::eColor, true);
-    pFillArray->Reserve(6);
+    pFillArray->Reserve(4);
 
     pFillArray->SetColor(mCurrentState.mFillColor);
     pFillArray->SetVertex(rect.mLeft, rect.mTop);

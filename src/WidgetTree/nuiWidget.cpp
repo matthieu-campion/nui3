@@ -1354,23 +1354,23 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
         
         if (mDirtyRects.empty())
         {
-          mDirtyRects.push_back(_self_and_decorations.Size());
+          mDirtyRects.push_back(nuiRect(mpSurface->GetWidth(), mpSurface->GetHeight()));
         }
 
         int count = mDirtyRects.size();
         
-        printf("drawing %d partial rects\n", count);
+        //printf("drawing %d partial rects\n", count);
         
         for (int i = 0; i < count; i++)
         {
-          printf("\t%d: %ls\n", i, mDirtyRects[i].GetValue().GetChars());
+          //printf("\t%d: %ls\n", i, mDirtyRects[i].GetValue().GetChars());
           mpSurface->ResetState();
           mpSurface->ResetClipRect();
-          mpSurface->SetStrokeColor(nuiColor(1.0f, 0.0f, 0.0f, 0.0f));
-          mpSurface->SetFillColor(nuiColor(1.0f, 0.0f, 0.0f, 0.5f));
+          mpSurface->SetStrokeColor(nuiColor(0.0f, 0.0f, 0.0f, 0.0f));
+          mpSurface->SetFillColor(nuiColor(0.0f, 0.0f, 0.0f, 0.0f));
           mpSurface->LoadMatrix(nglMatrixf());
           mpSurface->Translate(_self_and_decorations.Left(), _self_and_decorations.Top());
-          mpSurface->Set2DProjectionMatrix(nuiRect(0, 0, mpSurface->GetWidth(), mpSurface->GetHeight()));
+          mpSurface->Set2DProjectionMatrix(nuiRect(mpSurface->GetWidth(), mpSurface->GetHeight()));
           mpSurface->Clip(mDirtyRects[i]);
           mpSurface->EnableClipping(true);
           
@@ -2746,6 +2746,7 @@ void nuiWidget::UpdateSurface(const nuiRect& rRect)
       mpSurface->SetTexture(pSurfaceTexture);
       
       mDirtyRects.clear();
+      mDirtyRects.push_back(nuiRect(mpSurface->GetWidth(), mpSurface->GetHeight()));
     }
   }
   else

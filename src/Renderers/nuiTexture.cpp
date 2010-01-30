@@ -161,6 +161,7 @@ nuiTexture* nuiTexture::GetAATexture()
     info.mBytesPerLine = pdb;                 ///< Pixel row allocation size in bytes (>= pixel size * image width, 0 if \a mpBuffer is NULL)
     info.AllocateBuffer();
     uint8* buffer = (uint8*)info.mpBuffer;
+    memset(buffer, 0, pdb * pdb);
     glAAGenerateAABuffer(0, 0, buffer);
     pTexture = nuiTexture::GetTexture(info);
     pTexture->SetSource(_T("nuiTextureAA"));
@@ -217,7 +218,8 @@ void nuiTexture::ForceReloadAll(bool Rebind)
 nuiTexture::nuiTexture(nglIStream* pInput, nglImageCodec* pCodec)
   : nuiObject()
 {
-  SetObjectClass(_T("nuiTexture"));
+  if (SetObjectClass(_T("nuiTexture")))
+    InitAttributes();
   mpImage = new nglImage(pInput, pCodec);
   mpSurface = NULL;
   mOwnImage = true;
@@ -236,7 +238,8 @@ nuiTexture::nuiTexture(nglIStream* pInput, nglImageCodec* pCodec)
 nuiTexture::nuiTexture (const nglPath& rPath, nglImageCodec* pCodec)
   : nuiObject()
 {
-  SetObjectClass(_T("nuiTexture"));
+  if (SetObjectClass(_T("nuiTexture")))
+    InitAttributes();
   mpImage = new nglImage(rPath, pCodec);
   mpSurface = NULL;
   mOwnImage = true;
@@ -252,7 +255,8 @@ nuiTexture::nuiTexture (const nglPath& rPath, nglImageCodec* pCodec)
 nuiTexture::nuiTexture (nglImageInfo& rInfo, bool Clone)
   : nuiObject()
 {
-  SetObjectClass(_T("nuiTexture"));
+  if (SetObjectClass(_T("nuiTexture")))
+    InitAttributes();
   mpImage = new nglImage(rInfo, eClone);
   mpSurface = NULL;
   mOwnImage = true;
@@ -274,7 +278,8 @@ nuiTexture::nuiTexture (nglImageInfo& rInfo, bool Clone)
 nuiTexture::nuiTexture (const nglImage& rImage)
   : nuiObject()
 {
-  SetObjectClass(_T("nuiTexture"));
+  if (SetObjectClass(_T("nuiTexture")))
+    InitAttributes();
   mpImage = new nglImage(rImage);
   mpSurface = NULL;
   mOwnImage = true;
@@ -292,7 +297,8 @@ nuiTexture::nuiTexture (const nglImage& rImage)
 nuiTexture::nuiTexture (nglImage* pImage, bool OwnImage)
   : nuiObject()
 {
-  SetObjectClass(_T("nuiTexture"));
+  if (SetObjectClass(_T("nuiTexture")))
+    InitAttributes();
   mpImage = pImage;
   mpSurface = NULL;
   mOwnImage = OwnImage;
@@ -310,7 +316,8 @@ nuiTexture::nuiTexture (nglImage* pImage, bool OwnImage)
 nuiTexture::nuiTexture(const nuiXMLNode* pNode)
 {
   nuiObject::Load(pNode);
-  SetObjectClass(_T("nuiTexture"));
+  if (SetObjectClass(_T("nuiTexture")))
+    InitAttributes();
   mpSurface = NULL;
   mOwnImage = true;
   mForceReload = false;
@@ -328,6 +335,9 @@ nuiTexture::nuiTexture(const nuiXMLNode* pNode)
 
 nuiTexture::nuiTexture(nuiSurface* pSurface)
 {
+  if (SetObjectClass(_T("nuiTexture")))
+    InitAttributes();
+
   mpImage = NULL;
   mpSurface = pSurface;
   mOwnImage = false;
@@ -417,6 +427,8 @@ void nuiTexture::Init()
 
 bool nuiTexture::IsValid() const
 {
+  if (mpSurface)
+    return GetWidth() && GetHeight();
   return mpImage && mpImage->IsValid() && GetWidth() && GetHeight();
 }
 
@@ -653,6 +665,78 @@ const nuiTextureMap& nuiTexture::Enum()
 {
   return mpTextures;
 }
+
+void nuiTexture::InitAttributes()
+{
+//  AddAttribute(new nuiAttribute<uint32>
+//               (nglString(_T("MinFilter")), nuiUnitCustom,
+//                nuiMakeDelegate(this, &nuiTexture::GetMinFilter),
+//                nuiMakeDelegate(this, &nuiTexture::SetMinFilter)));
+//  
+//  AddAttribute(new nuiAttribute<uint32>
+//               (nglString(_T("MagFilter")), nuiUnitCustom,
+//                nuiMakeDelegate(this, &nuiTexture::GetMagFilter),
+//                nuiMakeDelegate(this, &nuiTexture::SetMagFilter)));
+//  
+//  AddAttribute(new nuiAttribute<uint32>
+//               (nglString(_T("WrapS")), nuiUnitCustom,
+//                nuiMakeDelegate(this, &nuiTexture::GetWrapS),
+//                nuiMakeDelegate(this, &nuiTexture::SetWrapS)));
+//  
+//  AddAttribute(new nuiAttribute<uint32>
+//               (nglString(_T("WrapT")), nuiUnitCustom,
+//                nuiMakeDelegate(this, &nuiTexture::GetWrapT),
+//                nuiMakeDelegate(this, &nuiTexture::SetWrapT)));
+
+  AddAttribute(new nuiAttribute<uint32>
+               (nglString(_T("Width")), nuiUnitCustom,
+                nuiMakeDelegate(this, &nuiTexture::GetWidth)));
+  
+  AddAttribute(new nuiAttribute<uint32>
+               (nglString(_T("Height")), nuiUnitCustom,
+                nuiMakeDelegate(this, &nuiTexture::GetHeight)));
+  
+  AddAttribute(new nuiAttribute<uint32>
+               (nglString(_T("WidthPOT")), nuiUnitCustom,
+                nuiMakeDelegate(this, &nuiTexture::GetWidthPOT)));
+  
+  AddAttribute(new nuiAttribute<uint32>
+               (nglString(_T("WidthPOT")), nuiUnitCustom,
+                nuiMakeDelegate(this, &nuiTexture::GetWidthPOT)));
+  
+//  AddAttribute(new nuiAttribute<uint32>
+//               (nglString(_T("EnvMode")), nuiUnitCustom,
+//                nuiMakeDelegate(this, &nuiTexture::GetEnvMode)));
+  
+  AddAttribute(new nuiAttribute<bool>
+               (nglString(_T("AutoMipMap")), nuiUnitBoolean,
+                nuiMakeDelegate(this, &nuiTexture::GetAutoMipMap),
+                nuiMakeDelegate(this, &nuiTexture::EnableAutoMipMap)));
+  
+  AddAttribute(new nuiAttribute<bool>
+               (nglString(_T("RetainBuffer")), nuiUnitBoolean,
+                nuiMakeDelegate(this, &nuiTexture::IsBufferRetained),
+                nuiMakeDelegate(this, &nuiTexture::SetRetainBuffer)));
+  
+//  AddAttribute(new nuiAttribute<const nglString&>
+//               (nglString(_T("Source")), nuiUnitBoolean,
+//                nuiMakeDelegate(this, &nuiTexture::SetSource),
+//                nuiMakeDelegate(this, &nuiTexture::GetSource)));
+  
+  AddAttribute(new nuiAttribute<bool>
+               (nglString(_T("UpToDate")), nuiUnitBoolean,
+                nuiMakeDelegate(this, &nuiTexture::IsUptoDate)));
+  
+  AddAttribute(new nuiAttribute<bool>
+               (nglString(_T("IsPowerOfTwo")), nuiUnitBoolean,
+                nuiMakeDelegate(this, &nuiTexture::IsPowerOfTwo)));
+  
+  AddAttribute(new nuiAttribute<bool>
+               (nglString(_T("IsValid")), nuiUnitBoolean,
+                nuiMakeDelegate(this, &nuiTexture::IsValid)));
+  
+}
+
 
 /////////
 
