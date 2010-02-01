@@ -2514,7 +2514,7 @@ LRESULT nglWindow::WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
       }
       info.X = point.x;
       info.Y = point.y;
-      info.Buttons = (wParam>>16)<32768 ? nglMouseInfo::ButtonWheelLeft : nglMouseInfo::ButtonWheelRight;
+      info.Buttons = (wParam>>16)<32768 ? nglMouseInfo::ButtonWheelRight : nglMouseInfo::ButtonWheelLeft;
 
       mMouseButtonStatus |= info.Buttons;
       CallOnMouseClick(info);
