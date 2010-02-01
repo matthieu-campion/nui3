@@ -454,8 +454,9 @@ void nuiGrid::ClearCells(bool trash)
     {
       if (mGrid[c][r] != NULL)
       {
-        nuiGrid::DelChild(mGrid[c][r], trash);
+        nuiWidget* pChild = mGrid[c][r];
         mGrid[c][r] = NULL;
+        nuiGrid::DelChild(pChild, trash);
       }
     }
   }
