@@ -230,6 +230,8 @@ nuiAudioDevice_DirectSound::nuiAudioDevice_DirectSound(GUID IGuid, GUID OGuid, c
 
   mManufacturer = rOutModule;
   mIsPresent = false;
+  mHasInput = false;
+  mHasOutput = false;
 
   mIDeviceID = IGuid;
   mODeviceID = OGuid;
@@ -237,59 +239,6 @@ nuiAudioDevice_DirectSound::nuiAudioDevice_DirectSound(GUID IGuid, GUID OGuid, c
   mpDirectSound = NULL;
   mpDirectSoundCapture = NULL;
 
-  HRESULT hr;
-  // Get Input device caps:
-  hr = DirectSoundCaptureCreate(&mIDeviceID, &mpDirectSoundCapture, NULL);
-  if (hr != S_OK || !mpDirectSoundCapture)
-    return;
-
-  // Get Output device caps:
-  hr = DirectSoundCreate(&mODeviceID, &mpDirectSound, NULL);
-  if (hr != S_OK || !mpDirectSound)
-  {
-    mpDirectSoundCapture->Release();
-    NGL_LOG(_T("nuiAudioDevice_DirectSound"), NGL_LOG_ERROR, _T("constructor ERROR : could not create DirectSound object!\n"));
-    return;
-  }
-
-  Init();
-}
-
-nuiAudioDevice_DirectSound::nuiAudioDevice_DirectSound()
-: nuiAudioDevice()
-{
-  mInName = _T("Default Device");
-  mOutName = _T("Default Device");
-
-  //mManufacturer = rOutModule;
-  mIsPresent = false;
-
-  //mIDeviceID = IGuid;
-  //mODeviceID = OGuid;
-
-  mpDirectSound = NULL;
-  mpDirectSoundCapture = NULL;
-
-  HRESULT hr;
-  // Get Input device caps:
-  hr = DirectSoundCaptureCreate(NULL, &mpDirectSoundCapture, NULL);
-  if (hr != S_OK || !mpDirectSoundCapture)
-    return;
-
-  // Get Output device caps:
-  hr = DirectSoundCreate(NULL, &mpDirectSound, NULL);
-  if (hr != S_OK || !mpDirectSound)
-  {
-    mpDirectSoundCapture->Release();
-    NGL_LOG(_T("nuiAudioDevice_DirectSound"), NGL_LOG_ERROR, _T("constructor ERROR : could not create DirectSound object!\n"));
-    return;
-  }
-
-  Init();
-}
-
-void nuiAudioDevice_DirectSound::Init()
-{
   mAPIName = API_NAME;
 
   mpRingBuffer = NULL;
@@ -304,9 +253,84 @@ void nuiAudioDevice_DirectSound::Init()
   mNotifOutputEvent[0] = NULL;
   mNotifOutputEvent[1] = NULL;
 
+  HRESULT hr;
+  // Get Input device caps:
+  hr = DirectSoundCaptureCreate(&mIDeviceID, &mpDirectSoundCapture, NULL);
+  if (hr != S_OK || !mpDirectSoundCapture)
+  {
+    NGL_LOG(_T("nuiAudioDevice_DirectSound"), NGL_LOG_INFO, _T("constructor ERROR : could not create DirectSoundCapture object!\n"));
+  }
+
+  // Get Output device caps:
+  hr = DirectSoundCreate(&mODeviceID, &mpDirectSound, NULL);
+  if (hr != S_OK || !mpDirectSound)
+  {
+    NGL_LOG(_T("nuiAudioDevice_DirectSound"), NGL_LOG_ERROR, _T("constructor ERROR : could not create DirectSound object!\n")); // if there is no output, consider the device as not valid
+    return;
+  }
+
+
+  Init();
+}
+
+nuiAudioDevice_DirectSound::nuiAudioDevice_DirectSound()
+: nuiAudioDevice()
+{
+  mInName = _T("Default Device");
+  mOutName = _T("Default Device");
+
+  mIsPresent = false;
+  mHasInput = false;
+  mHasOutput = false;
+
+  mpDirectSound = NULL;
+  mpDirectSoundCapture = NULL;
+
+  mAPIName = API_NAME;
+
+  mpRingBuffer = NULL;
+  mpInputBuffer = NULL;
+  mpOutputBuffer = NULL;
+
+  mpProcessingTh = NULL;
+  mpOutputTh = NULL;
+
+  mNotifInputEvent[0] = NULL;
+  mNotifInputEvent[1] = NULL;
+  mNotifOutputEvent[0] = NULL;
+  mNotifOutputEvent[1] = NULL;
+
+  HRESULT hr;
+  // Get Input device caps:
+  hr = DirectSoundCaptureCreate(NULL, &mpDirectSoundCapture, NULL);
+  if (hr != S_OK || !mpDirectSoundCapture)
+  {
+    NGL_LOG(_T("nuiAudioDevice_DirectSound"), NGL_LOG_INFO, _T("constructor ERROR : could not create DirectSoundCapture object!\n"));
+  }
+
+  // Get Output device caps:
+  hr = DirectSoundCreate(NULL, &mpDirectSound, NULL);
+  if (hr != S_OK || !mpDirectSound)
+  {
+    NGL_LOG(_T("nuiAudioDevice_DirectSound"), NGL_LOG_ERROR, _T("constructor ERROR : could not create DirectSound object!\n"));// if there is no output, consider the device as not valid
+    return;
+  }
+
+  Init();
+}
+
+void nuiAudioDevice_DirectSound::Init()
+{
   DSCCAPS icaps;
   icaps.dwSize = sizeof(DSCCAPS);
-  mpDirectSoundCapture->GetCaps(&icaps);
+  if (mpDirectSoundCapture)
+    mpDirectSoundCapture->GetCaps(&icaps);
+  else
+  {
+    icaps.dwChannels = 0;
+    icaps.dwFormats = 0;
+    icaps.dwFlags = 0;
+  }
 
   DSCAPS ocaps;
   ocaps.dwSize = sizeof(DSCAPS);
@@ -409,7 +433,6 @@ bool nuiAudioDevice_DirectSound::Open(std::vector<uint32>& rInputChannels, std::
 
   mBufferSize = BufferSize;
 
-  //hr = mpDirectSoundCapture->SetCooperativeLevel(GetDesktopWindow(), DSSCL_EXCLUSIVE);
   hr = mpDirectSound->SetCooperativeLevel(GetDesktopWindow(), DSSCL_EXCLUSIVE);
 
   mHasInput = (rInputChannels.size() > 0) && (mInputChannels.size() > 0);
@@ -452,6 +475,7 @@ bool nuiAudioDevice_DirectSound::Open(std::vector<uint32>& rInputChannels, std::
     IBufferDesc.dwFXCount = 0;
     IBufferDesc.lpDSCFXDesc = NULL;
 
+    NGL_ASSERT(mpDirectSoundCapture);
     hr = mpDirectSoundCapture->CreateCaptureBuffer(&IBufferDesc, &mpInputBuffer, NULL);
   }
 
