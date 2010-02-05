@@ -341,7 +341,6 @@ void nuiMainWindow::Paint()
   pContext->MultMatrix(GetMatrix());
   mLastRendering = nglTime();
   DrawTree(pContext);
-  //DrawWidget(pContext);
 
   if (mDisplayMouseOverObject)
     DBG_DisplayMouseOverObject();
