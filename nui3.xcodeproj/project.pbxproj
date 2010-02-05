@@ -571,15 +571,6 @@
 		E52B203C0FE7930D00187CB1 /* ftcid.h in Headers */ = {isa = PBXBuildFile; fileRef = E52B20380FE7930D00187CB1 /* ftcid.h */; };
 		E52B203D0FE7930D00187CB1 /* ftadvanc.h in Headers */ = {isa = PBXBuildFile; fileRef = E52B20370FE7930D00187CB1 /* ftadvanc.h */; };
 		E52B203E0FE7930D00187CB1 /* ftcid.h in Headers */ = {isa = PBXBuildFile; fileRef = E52B20380FE7930D00187CB1 /* ftcid.h */; };
-		E52C78DD10A848E4008486C0 /* mmgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52C78DC10A848E4008486C0 /* mmgr.cpp */; };
-		E52C78DE10A848E4008486C0 /* mmgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52C78DC10A848E4008486C0 /* mmgr.cpp */; };
-		E52C78DF10A848E4008486C0 /* mmgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52C78DC10A848E4008486C0 /* mmgr.cpp */; };
-		E52C78E210A84905008486C0 /* mmgr.h in Headers */ = {isa = PBXBuildFile; fileRef = E52C78E010A84905008486C0 /* mmgr.h */; };
-		E52C78E310A84905008486C0 /* nommgr.h in Headers */ = {isa = PBXBuildFile; fileRef = E52C78E110A84905008486C0 /* nommgr.h */; };
-		E52C78E410A84905008486C0 /* mmgr.h in Headers */ = {isa = PBXBuildFile; fileRef = E52C78E010A84905008486C0 /* mmgr.h */; };
-		E52C78E510A84905008486C0 /* nommgr.h in Headers */ = {isa = PBXBuildFile; fileRef = E52C78E110A84905008486C0 /* nommgr.h */; };
-		E52C78E610A84905008486C0 /* mmgr.h in Headers */ = {isa = PBXBuildFile; fileRef = E52C78E010A84905008486C0 /* mmgr.h */; };
-		E52C78E710A84905008486C0 /* nommgr.h in Headers */ = {isa = PBXBuildFile; fileRef = E52C78E110A84905008486C0 /* nommgr.h */; };
 		E52C831A0FFB9DA800B7779C /* nuiWebCSS.h in Headers */ = {isa = PBXBuildFile; fileRef = E52C83180FFB9DA800B7779C /* nuiWebCSS.h */; };
 		E52C831B0FFB9DA800B7779C /* nuiWebCSS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52C83190FFB9DA800B7779C /* nuiWebCSS.cpp */; };
 		E52C831C0FFB9DA800B7779C /* nuiWebCSS.h in Headers */ = {isa = PBXBuildFile; fileRef = E52C83180FFB9DA800B7779C /* nuiWebCSS.h */; };
@@ -3383,9 +3374,6 @@
 		E52B20300FE792F400187CB1 /* svttglyf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = svttglyf.h; path = deps/freetype2/include/freetype/internal/services/svttglyf.h; sourceTree = SOURCE_ROOT; };
 		E52B20370FE7930D00187CB1 /* ftadvanc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ftadvanc.h; path = deps/freetype2/include/freetype/ftadvanc.h; sourceTree = SOURCE_ROOT; };
 		E52B20380FE7930D00187CB1 /* ftcid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ftcid.h; path = deps/freetype2/include/freetype/ftcid.h; sourceTree = SOURCE_ROOT; };
-		E52C78DC10A848E4008486C0 /* mmgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mmgr.cpp; path = Application/mmgr.cpp; sourceTree = "<group>"; };
-		E52C78E010A84905008486C0 /* mmgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mmgr.h; path = include/mmgr.h; sourceTree = SOURCE_ROOT; };
-		E52C78E110A84905008486C0 /* nommgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nommgr.h; path = include/nommgr.h; sourceTree = SOURCE_ROOT; };
 		E52C83180FFB9DA800B7779C /* nuiWebCSS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nuiWebCSS.h; sourceTree = "<group>"; };
 		E52C83190FFB9DA800B7779C /* nuiWebCSS.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiWebCSS.cpp; sourceTree = "<group>"; };
 		E52C83350FFBB2FD00B7779C /* nuiRegExp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = nuiRegExp.cpp; path = src/String/nuiRegExp.cpp; sourceTree = SOURCE_ROOT; };
@@ -5255,9 +5243,6 @@
 		E5816D200C3CECAB00902DFE /* src */ = {
 			isa = PBXGroup;
 			children = (
-				E52C78E010A84905008486C0 /* mmgr.h */,
-				E52C78E110A84905008486C0 /* nommgr.h */,
-				E52C78DC10A848E4008486C0 /* mmgr.cpp */,
 				E5816C770C3CECAB00902DFE /* ngl.h */,
 				E5816C790C3CECAB00902DFE /* ngl_all.h */,
 				E5CBF87A0F38993F00D34E6F /* Animations */,
@@ -6679,8 +6664,6 @@
 				E5D9FEE91082B350008D0F11 /* nuiGLUTBridge.h in Headers */,
 				E58C8D19108931C2009D09DF /* nuiAnchor.h in Headers */,
 				408D9BA61097436800AEE78A /* nuiVideoDecoder.h in Headers */,
-				E52C78E610A84905008486C0 /* mmgr.h in Headers */,
-				E52C78E710A84905008486C0 /* nommgr.h in Headers */,
 				E540AB6310DFAC8F00791FBA /* nuiAsyncIStream.h in Headers */,
 				E5D13BEE1100AFB5000F46C4 /* ucpgba.h in Headers */,
 				E5D13BF01100AFB5000F46C4 /* ucdata.h in Headers */,
@@ -7275,8 +7258,6 @@
 				E5D9FEEB1082B350008D0F11 /* nuiGLUTBridge.h in Headers */,
 				E58C8D18108931C2009D09DF /* nuiAnchor.h in Headers */,
 				408D9BA41097436800AEE78A /* nuiVideoDecoder.h in Headers */,
-				E52C78E410A84905008486C0 /* mmgr.h in Headers */,
-				E52C78E510A84905008486C0 /* nommgr.h in Headers */,
 				E540AB6210DFAC8F00791FBA /* nuiAsyncIStream.h in Headers */,
 				E5D13BE91100AFB5000F46C4 /* ucpgba.h in Headers */,
 				E5D13BEB1100AFB5000F46C4 /* ucdata.h in Headers */,
@@ -7868,8 +7849,6 @@
 				E5D9FEEA1082B350008D0F11 /* nuiGLUTBridge.h in Headers */,
 				E58C8D17108931C2009D09DF /* nuiAnchor.h in Headers */,
 				408D9BA81097436800AEE78A /* nuiVideoDecoder.h in Headers */,
-				E52C78E210A84905008486C0 /* mmgr.h in Headers */,
-				E52C78E310A84905008486C0 /* nommgr.h in Headers */,
 				E540AB6110DFAC8F00791FBA /* nuiAsyncIStream.h in Headers */,
 				E5D13BE41100AFB5000F46C4 /* ucpgba.h in Headers */,
 				E5D13BE61100AFB5000F46C4 /* ucdata.h in Headers */,
@@ -8398,7 +8377,6 @@
 				40E96FBD106D20160099D015 /* nuiAudioDecoder_OSX.cpp in Sources */,
 				E5D9FEEF1082B382008D0F11 /* nuiGLUTBridge.cpp in Sources */,
 				408D9BA71097436800AEE78A /* nuiVideoDecoder.mm in Sources */,
-				E52C78DF10A848E4008486C0 /* mmgr.cpp in Sources */,
 				E540AB5F10DFAC5000791FBA /* nuiAsyncIStream.cpp in Sources */,
 				E5D13BEF1100AFB5000F46C4 /* ucpgba.c in Sources */,
 				E5D13BF11100AFB5000F46C4 /* ucdata.c in Sources */,
@@ -8847,7 +8825,6 @@
 				40E96FBC106D20160099D015 /* nuiAudioDecoder_OSX.cpp in Sources */,
 				E5D9FEED1082B382008D0F11 /* nuiGLUTBridge.cpp in Sources */,
 				408D9BA51097436800AEE78A /* nuiVideoDecoder.mm in Sources */,
-				E52C78DE10A848E4008486C0 /* mmgr.cpp in Sources */,
 				E540AB5E10DFAC5000791FBA /* nuiAsyncIStream.cpp in Sources */,
 				E5D13BEA1100AFB5000F46C4 /* ucpgba.c in Sources */,
 				E5D13BEC1100AFB5000F46C4 /* ucdata.c in Sources */,
@@ -9290,7 +9267,6 @@
 				40E96FBB106D20160099D015 /* nuiAudioDecoder_OSX.cpp in Sources */,
 				E5D9FEEE1082B382008D0F11 /* nuiGLUTBridge.cpp in Sources */,
 				408D9BA91097436800AEE78A /* nuiVideoDecoder.mm in Sources */,
-				E52C78DD10A848E4008486C0 /* mmgr.cpp in Sources */,
 				E540AB5D10DFAC5000791FBA /* nuiAsyncIStream.cpp in Sources */,
 				E5D13BE51100AFB5000F46C4 /* ucpgba.c in Sources */,
 				E5D13BE71100AFB5000F46C4 /* ucdata.c in Sources */,

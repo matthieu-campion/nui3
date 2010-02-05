@@ -1524,7 +1524,7 @@ bool nuiTopLevel::DrawTree(class nuiDrawContext *pContext)
         pContext->DrawRect(nuiRect(0,0,0,0), eStrokeShape);
       }
 
-      Draw(pContext);
+      DrawWidget(pContext);
 
     }
 
@@ -1546,7 +1546,7 @@ bool nuiTopLevel::DrawTree(class nuiDrawContext *pContext)
       pContext->DrawRect(nuiRect(0,0,0,0), eStrokeShape);
     }
 
-    Draw(pContext);
+    DrawWidget(pContext);
 
     if (DISPLAY_PARTIAL_RECTS)
     {
