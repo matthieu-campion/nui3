@@ -317,6 +317,22 @@ nuiSize nuiImageDecoration::GetBorder(nuiPosition position, const nuiWidget* pWi
   return NULL;
 }
 
+void nuiImageDecoration::GetBorders(const nuiWidget* pWidget, float& rLeft, float& rRight, float& rTop, float& rBottom, float& rHorizontal, float& rVertical) const
+{
+  if (!mBorderEnabled)
+    return;
+  
+  nuiSize w = 1.0, h = 1.0;
+  mpTexture->TextureToImageCoord(w, h);
+  rLeft = mClientRect.Left();
+  rRight = w - mClientRect.Right();
+  rTop = mClientRect.Top();
+  rBottom = h - mClientRect.Bottom();
+  rHorizontal = w - mClientRect.GetWidth();
+  rVertical = h - mClientRect.GetHeight();
+}
+
+
 
 nuiTexture* nuiImageDecoration::GetTexture() const
 {

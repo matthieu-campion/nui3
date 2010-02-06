@@ -151,6 +151,41 @@ nuiSize nuiMetaDecoration::GetBorder(nuiPosition position, const nuiWidget* pWid
 }
 
   
+void nuiMetaDecoration::GetBorders(const nuiWidget* pWidget, float& rLeft, float& rRight, float& rTop, float& rBottom, float& rHorizontal, float& rVertical) const
+{
+  if (!mBorderEnabled)
+    return;
+  
+  std::vector<nuiDecoration*>::const_iterator it = mDecorations.begin();
+  std::vector<nuiDecoration*>::const_iterator end = mDecorations.end();
+  
+  rLeft = 0;
+  rRight = 0;
+  rTop = 0;
+  rBottom = 0;
+  rHorizontal = 0;
+  rVertical = 0;
+  
+  while (it != end)
+  {
+    nuiDecoration* pDecoration = *it;
+    NGL_ASSERT(pDecoration);
+    
+    if (pDecoration->IsBorderEnabled())
+    {
+      rLeft = MAX(rLeft, pDecoration->GetBorder(nuiLeft, pWidget));
+      rRight = MAX(rRight, pDecoration->GetBorder(nuiRight, pWidget));
+      rTop = MAX(rTop, pDecoration->GetBorder(nuiTop, pWidget));
+      rBottom = MAX(rBottom, pDecoration->GetBorder(nuiBottom, pWidget));
+      rHorizontal = MAX(rHorizontal, pDecoration->GetBorder(nuiFillHorizontal, pWidget));
+      rVertical = MAX(rVertical, pDecoration->GetBorder(nuiFillVertical, pWidget));
+    }
+    
+    ++it;
+  }
+}
+
+
 void nuiMetaDecoration::AddDecoration(nuiDecoration* pDeco)
 {
   mDecorations.push_back(pDeco);

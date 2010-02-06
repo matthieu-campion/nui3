@@ -127,16 +127,16 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 
   int frameInterval = 1;
   NSString* sysVersion = [[UIDevice currentDevice] systemVersion];
-  if ([sysVersion compare:@"3.1" options:NSNumericSearch] != NSOrderedAscending) ///< CADisplayLink requires version 3.1 or greater
-  {
-    mDisplayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(Paint)];
-    [mDisplayLink setFrameInterval:frameInterval];
-    [mDisplayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-  }
-  else ///< NSTimer is used as fallback
-  {
-    mInvalidationTimer = [NSTimer scheduledTimerWithTimeInterval:(1.0f / NGL_WINDOW_FPS) target:self selector:@selector(Paint) userInfo:nil repeats:YES];
-  }
+//  if ([sysVersion compare:@"3.1" options:NSNumericSearch] != NSOrderedAscending) ///< CADisplayLink requires version 3.1 or greater
+//  {
+//    mDisplayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(Paint)];
+//    [mDisplayLink setFrameInterval:frameInterval];
+//    [mDisplayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+//  }
+//  else ///< NSTimer is used as fallback
+//  {
+//    mInvalidationTimer = [NSTimer scheduledTimerWithTimeInterval:(1.0f / NGL_WINDOW_FPS) target:self selector:@selector(Paint) userInfo:nil repeats:YES];
+//  }
   //  mInvalidationTimer = [NSTimer scheduledTimerWithTimeInterval:0.001f target:self selector:@selector(Paint) userInfo:nil repeats:NO];
 
 	[self initializeKeyboard];
@@ -443,11 +443,11 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 - (void)Paint
 {
   [self InitNGLWindow];
-//  if (mInvalidated)
-//  {
-//    mInvalidated = false;
-//    mpNGLWindow->CallOnPaint();
-//  }
+  if (mInvalidated)
+  {
+    mInvalidated = false;
+    mpNGLWindow->CallOnPaint();
+  }
 }
 
 

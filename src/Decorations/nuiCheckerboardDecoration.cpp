@@ -171,6 +171,18 @@ nuiSize nuiCheckerboardDecoration::GetBorder(nuiPosition position, const nuiWidg
   return NULL; 
 }
 
+void nuiCheckerboardDecoration::GetBorders(const nuiWidget* pWidget, float& rLeft, float& rRight, float& rTop, float& rBottom, float& rHorizontal, float& rVertical) const
+{
+  if (!mBorderEnabled)
+    return;
+  
+  rLeft = mClientRect.Left();
+  rRight = rLeft;
+  rTop = mClientRect.Top();
+  rBottom = rTop;
+  rHorizontal = rLeft * 2;
+  rVertical = rTop * 2;
+}
 
 
 //*************************************************************************

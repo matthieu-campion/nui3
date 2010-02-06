@@ -357,6 +357,71 @@ nuiSize nuiStateDecoration::GetBorder(nuiPosition position, const nuiWidget* pWi
   return border;
 }
 
+void nuiStateDecoration::GetBorders(const nuiWidget* pWidget, float& rLeft, float& rRight, float& rTop, float& rBottom, float& rHorizontal, float& rVertical) const
+{
+  if (!mBorderEnabled)
+    return;
+  
+  if (mUseSourceClientRect)
+  {
+    rLeft = GetSourceBorder(nuiLeft);
+    rRight = GetSourceBorder(nuiRight);
+    rTop = GetSourceBorder(nuiTop);
+    rBottom = GetSourceBorder(nuiBottom);
+    rHorizontal = GetSourceBorder(nuiFillHorizontal);
+    rVertical = GetSourceBorder(nuiFillVertical);
+    return;
+  }
+  
+  if (pWidget)
+  {
+    nuiDecoration* pChoice = GetDecorationForWidgetState(pWidget);
+    if (pChoice)
+    {
+      rLeft = pChoice->GetBorder(nuiLeft, pWidget);
+      rRight = pChoice->GetBorder(nuiRight, pWidget);
+      rTop = pChoice->GetBorder(nuiTop, pWidget);
+      rBottom = pChoice->GetBorder(nuiBottom, pWidget);
+      rHorizontal = pChoice->GetBorder(nuiFillHorizontal, pWidget);
+      rVertical = pChoice->GetBorder(nuiFillVertical, pWidget);
+      return;
+    }
+    
+    rLeft = 0;
+    rRight = 0;
+    rTop = 0;
+    rBottom = 0;
+    rHorizontal = 0;
+    rVertical = 0;
+    return;
+  }
+  
+  std::map<uint32, nuiDecoration*>::const_iterator it = mStates.begin();
+  std::map<uint32, nuiDecoration*>::const_iterator end = mStates.end();
+  
+  rLeft = 0;
+  rRight = 0;
+  rTop = 0;
+  rBottom = 0;
+  rHorizontal = 0;
+  rVertical = 0;
+
+  while (it != end)
+  {
+    nuiDecoration* pDecoration = it->second;
+    NGL_ASSERT(pDecoration);
+    
+    rLeft = MAX(rLeft, pDecoration->GetBorder(nuiLeft, pWidget));
+    rRight = MAX(rRight, pDecoration->GetBorder(nuiRight, pWidget));
+    rTop = MAX(rTop, pDecoration->GetBorder(nuiTop, pWidget));
+    rBottom = MAX(rBottom, pDecoration->GetBorder(nuiBottom, pWidget));
+    rHorizontal = MAX(rHorizontal, pDecoration->GetBorder(nuiFillHorizontal, pWidget));
+    rVertical = MAX(rVertical, pDecoration->GetBorder(nuiFillVertical, pWidget));
+    
+    ++it;
+  }
+}
+
 
 void nuiStateDecoration::SetState(nuiStateDescription State, nuiDecoration* pDecoration)
 {

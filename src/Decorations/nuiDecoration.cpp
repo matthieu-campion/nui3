@@ -340,4 +340,16 @@ bool nuiDecoration::GetRedrawOnHover() const
   return mRedrawOnHover;
 }
 
+void nuiDecoration::GetBorders(const nuiWidget* pWidget, float& rLeft, float& rRight, float& rTop, float& rBottom, float& rHorizontal, float& rVertical) const
+{
+  if (!mBorderEnabled)
+    return;
+  
+  rLeft = GetBorder(nuiLeft, pWidget);
+  rRight = GetBorder(nuiRight, pWidget);
+  rTop = GetBorder(nuiTop, pWidget);
+  rBottom = GetBorder(nuiBottom, pWidget);
+  rHorizontal = GetBorder(nuiFillHorizontal, pWidget);
+  rVertical = GetBorder(nuiFillVertical, pWidget);
+}
 

@@ -104,6 +104,7 @@ private:
   nuiSize mXOffset; // Used for Smooth Scrolling
   nuiSize mYOffset;
   nuiTimer* mpSmoothTimer;
+  bool mTimerOn;
 
   bool mMinimalResize;
   nuiRect mOldIdealRect;

@@ -386,21 +386,26 @@ nuiSize nuiFrame::GetBorder(nuiPosition position, const nuiWidget* pWidget) cons
   case nuiFillVertical:
     return h - mClientRect.GetHeight();
     break;
-  case nuiNoPosition: break;
-  case nuiTopLeft: break;
-  case nuiTopRight: break;
-  case nuiBottomLeft: break;
-  case nuiBottomRight: break;
-  case nuiCenter: break;
-  case nuiTile: break;
-  case nuiFill: break;
-  case nuiFillLeft: break;
-  case nuiFillRight: break;
-  case nuiFillTop: break;
-  case nuiFillBottom: break;
+  default:
+    break;
   }
   //we should'nt arrive here
   return NULL;
+}
+
+void nuiFrame::GetBorders(const nuiWidget* pWidget, float& rLeft, float& rRight, float& rTop, float& rBottom, float& rHorizontal, float& rVertical) const
+{
+  if (!mBorderEnabled)
+    return;
+  
+  nuiSize w = 1.0, h = 1.0;
+  mpTexture->TextureToImageCoord(w, h);
+  rLeft = mClientRect.Left();
+  rRight = w - mClientRect.Right();
+  rTop = mClientRect.Top();
+  rBottom = h - mClientRect.Bottom();
+  rHorizontal = w - mClientRect.GetWidth();
+  rVertical = h - mClientRect.GetHeight();
 }
 
 

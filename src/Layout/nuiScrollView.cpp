@@ -13,9 +13,9 @@
 
 #define SCROLL_SIZE 12.0f
 #ifdef _UIKIT_
-# define NUI_SMOOTH_SCROLL_RATIO (1.f/4.f)
+# define NUI_SMOOTH_SCROLL_RATIO (0.4f/1.f)
 #else
-# define NUI_SMOOTH_SCROLL_RATIO (1.f/2.f)
+# define NUI_SMOOTH_SCROLL_RATIO (0.2f/1.f)
 #endif
 
 nuiScrollView::nuiScrollView(bool Horizontal, bool Vertical)
@@ -67,7 +67,9 @@ void nuiScrollView::Init(nuiScrollBar* pHorizontalScrollBar, nuiScrollBar* pVert
   mSmoothScrolling = true;
   mXOffset = 0;
   mYOffset = 0;
-  mpSmoothTimer = NULL;
+  mpSmoothTimer = nuiAnimation::AcquireTimer();
+  mSVSink.Connect(mpSmoothTimer->Tick, &nuiScrollView::OnSmoothScrolling);
+  mTimerOn = false;
   mBarSize = SCROLL_SIZE;
 
   mMinimalResize = false;
@@ -163,7 +165,7 @@ void nuiScrollView::SetEnableVerticalScroll(bool set)
 
 nuiScrollView::~nuiScrollView()
 {
-  delete mpSmoothTimer;
+    nuiAnimation::ReleaseTimer();
 
   if (mHorizontalIsExternal && mpHorizontal)
   {
@@ -392,7 +394,7 @@ bool nuiScrollView::SetChildrenRect(nuiSize x, nuiSize y, nuiSize xx, nuiSize yy
 
   if (mSmoothScrolling)
   {
-    if (mpSmoothTimer && mpSmoothTimer->IsRunning())
+    if (mTimerOn)
     {
       if (!mHThumbPressed)
         XOffset = mXOffset;
@@ -516,7 +518,7 @@ bool nuiScrollView::Draw(nuiDrawContext* pContext)
 bool nuiScrollView::Scrolled(const nuiEvent& rEvent)
 {
   if (mSmoothScrolling && !mHThumbPressed && !mVThumbPressed)
-    OnSmoothScrolling(NULL);
+    mTimerOn = true;
   else
     UpdateLayout();
   Invalidate();
@@ -739,7 +741,7 @@ nuiSize nuiScrollView::GetVIncrement() const
 
 bool nuiScrollView::OnSmoothScrolling(const nuiEvent& rEvent)
 {
-  if (mNeedSelfRedraw && mpSmoothTimer && mpSmoothTimer->IsRunning())
+  if (!mTimerOn)
     return false;
 
   float XOffset = mpHorizontal->GetRange().GetValue();
@@ -758,24 +760,12 @@ bool nuiScrollView::OnSmoothScrolling(const nuiEvent& rEvent)
   else
     mYOffset = YOffset;
 
-  if (mXOffset == XOffset && mYOffset == YOffset && mpSmoothTimer)
+  if (mXOffset == XOffset && mYOffset == YOffset)
   {
-    mpSmoothTimer->Stop();
-  }
-  else
-  {
-    if (!mpSmoothTimer)
-    {
-      mpSmoothTimer = new nuiTimer(0.05f);
-      mSVSink.Connect(mpSmoothTimer->Tick, &nuiScrollView::OnSmoothScrolling);
-    }
-    if (!mpSmoothTimer->IsRunning())
-      mpSmoothTimer->Start(false, true);
+    mTimerOn = false;
   }
 
   UpdateLayout();
-  Invalidate();
-
   OffsetsChanged();
   return false;
 }

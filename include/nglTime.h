@@ -70,7 +70,7 @@ Usage example :
   z = x - y;
 \endcode
 
-\b Precision : the nglTime implementation tries to be the more precise possible.
+\b Accuracy : the nglTime implementation tries to be the most accurate possible.
 Windows and Linux (glibc 2.2) rely on the processor clock itself (via the RDTSC
 instruction), thus you can expect 0.01µs precision on a several-hundred-MHz processor.
 */

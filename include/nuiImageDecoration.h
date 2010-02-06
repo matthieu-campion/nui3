@@ -28,6 +28,7 @@ public:
   const nuiRect& GetSourceClientRect() const;
   
   virtual nuiSize GetBorder(nuiPosition position, const nuiWidget* pWidget) const;
+  virtual void GetBorders(const nuiWidget* pWidget, float& rLeft, float& rRight, float& rTop, float& rBottom, float& rHorizontal, float& rVertical) const;
   virtual nuiRect GetIdealClientRect(const nuiWidget* pWidget) const;
   
   nuiTexture* GetTexture() const;

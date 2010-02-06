@@ -3863,28 +3863,34 @@ void nuiWidget::GetOverDraw(nuiSize& Left, nuiSize& Top, nuiSize& Right, nuiSize
   Top = mODTop;
   Bottom = mODBottom;
   
-  if (mpDecoration && IncludeDecorations)
-  {    
-    if (mDecorationMode == eDecorationOverdraw || mDecorationMode == eDecorationBorder)
-    {
-      Left   = MAX(Left  , mpDecoration->GetBorder(nuiLeft, this));
-      Top    = MAX(Top   , mpDecoration->GetBorder(nuiTop, this));
-      Right  = MAX(Right , mpDecoration->GetBorder(nuiRight, this));
-      Bottom = MAX(Bottom, mpDecoration->GetBorder(nuiBottom, this));
+  if (IncludeDecorations)
+  {
+    if (mpDecoration)
+    {    
+      if (mDecorationMode != eDecorationClientOnly)
+      {
+        float l , r, t, b, h, v;
+        mpDecoration->GetBorders(this, l, r, t, b, h, v);
+        Left   = MAX(Left  , l);
+        Top    = MAX(Top   , t);
+        Right  = MAX(Right , r);
+        Bottom = MAX(Bottom, b);
+      }
     }
-  }
-  
-  if (mpFocusDecoration && IncludeDecorations)
-  {    
-    if (mFocusDecorationMode == eDecorationOverdraw || mFocusDecorationMode == eDecorationBorder)
-    {
-      Left   = MAX(Left  , mpFocusDecoration->GetBorder(nuiLeft, this));
-      Top    = MAX(Top   , mpFocusDecoration->GetBorder(nuiTop, this));
-      Right  = MAX(Right , mpFocusDecoration->GetBorder(nuiRight, this));
-      Bottom = MAX(Bottom, mpFocusDecoration->GetBorder(nuiBottom, this));
+    
+    if (mpFocusDecoration)
+    {    
+      if (mFocusDecorationMode != eDecorationClientOnly)
+      {
+        float l , r, t, b, h, v;
+        mpFocusDecoration->GetBorders(this, l, r, t, b, h, v);
+        Left   = MAX(Left  , l);
+        Top    = MAX(Top   , t);
+        Right  = MAX(Right , r);
+        Bottom = MAX(Bottom, b);
+      }
     }
-  }
-  
+  }  
 }
 
 nuiRect nuiWidget::GetOverDrawRect(bool LocalRect, bool IncludeDecorations) const

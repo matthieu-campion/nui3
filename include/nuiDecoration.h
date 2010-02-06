@@ -47,6 +47,7 @@ public:
   virtual void ClientToGlobalRect(nuiRect& rRect, const nuiWidget* pWidget) const;
   
   virtual nuiSize GetBorder(nuiPosition postion, const nuiWidget* pWidget) const = 0;
+  virtual void GetBorders(const nuiWidget* pWidget, float& rLeft, float& rRight, float& rTop, float& rBottom, float& rHorizontal, float& rVertical) const;
   virtual nuiRect GetIdealClientRect(const nuiWidget* pWidget) const = 0;
   virtual nuiRect GetMinimumClientRect(const nuiWidget* pWidget) const;
   virtual nuiRect GetMaximumClientRect(const nuiWidget* pWidget) const;
