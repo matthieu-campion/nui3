@@ -12,11 +12,8 @@
 #include "nuiGradientDecoration.h"
 
 #define SCROLL_SIZE 12.0f
-#ifdef _UIKIT_
-# define NUI_SMOOTH_SCROLL_RATIO (0.4f/1.f)
-#else
-# define NUI_SMOOTH_SCROLL_RATIO (0.2f/1.f)
-#endif
+#define NUI_SMOOTH_SCROLL_RATIO (0.2f/1.f)
+
 
 nuiScrollView::nuiScrollView(bool Horizontal, bool Vertical)
   : nuiComposite(),
