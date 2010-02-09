@@ -232,9 +232,6 @@ void nuiImageDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, cons
   
   pContext->SetFillColor(col);
   
-  //LBDEBUG
-  NGL_OUT(_T("Deco '%ls'  mUseAlpha %d    color.Alpha %.2f\n"), GetObjectName().GetChars(), mUseWidgetAlpha, col.Alpha());
-  
   nuiRect srcrect(mClientRect);
   if (mRepeatX)
   {
