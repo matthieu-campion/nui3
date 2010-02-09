@@ -530,6 +530,11 @@ void nuiWidget::InitAttributes()
   pAlphaAttrib->SetEditor(&GetAlphaAttributeEditor);
   AddAttribute(pAlphaAttrib);
   
+  AddAttribute(new nuiAttribute<int32>
+               (nglString(_T("Debug")), nuiUnitNone,
+                nuiMakeDelegate(this, &nuiWidget::_GetDebug),
+                nuiMakeDelegate(this, &nuiWidget::SetDebug)
+                ));
 }
 
  
@@ -1188,16 +1193,21 @@ void nuiWidget::BroadcastInvalidateLayout(nuiWidgetPtr pSender, bool BroadCastOn
     mNeedIdealRect = true;
   }
 
-  if (mpParent && !mNeedLayout)
+  if (mpParent)// && !mNeedLayout)
   {
     mpParent->BroadcastInvalidateLayout(pSender, BroadCastOnly);
   }
-  else
-  {
-    //#TEST
-    //printf("nuiWidget::BroadcastInvalidateLayout %ls / %ls / 0x%x\n", pSender->GetObjectClass().GetChars(), pSender->GetObjectName().GetChars(), pSender);
-  }
+//  else
+//  {
+//    //#TEST
+//  }
 
+#ifdef DEBUG
+  if (GetDebug() || pSender->GetDebug())
+  {
+    NGL_OUT(_T("nuiWidget::BroadcastInvalidateLayout %ls / %ls / 0x%x\n"), pSender->GetObjectClass().GetChars(), pSender->GetObjectName().GetChars(), pSender);
+  }
+#endif
 
   mNeedLayout = true;
 
@@ -1350,7 +1360,7 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
 
         NGL_ASSERT(mpSurface);
         
-        Validate();
+        mNeedRender = false;
         
         if (mDirtyRects.empty())
         {
@@ -1440,7 +1450,7 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
       
       if (!drawingincache && !pContext->GetPainter()->GetDummyMode())
       {
-        Validate();
+        mNeedRender = false;
         if (!mMatrixIsIdentity)
         {
           pContext->PushMatrix();
@@ -1458,7 +1468,7 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
     {
       if (!drawingincache && !pContext->GetPainter()->GetDummyMode())
       {
-        Validate();
+        mNeedRender = false;
         
         InternalDrawWidget(pContext, _self, _self_and_decorations, true);
         mNeedSelfRedraw = false;
@@ -2101,18 +2111,6 @@ bool nuiWidget::HasLayoutChanged() const
   return mNeedSelfLayout;
 }
 
-void nuiWidget::ValidateLayout()
-{
-  mNeedSelfLayout = false;
-  DebugRefreshInfo();
-}
-
-void nuiWidget::Validate()
-{
-  mNeedRender = false;
-  DebugRefreshInfo();
-}
-
 bool nuiWidget::GetHover() const
 {
   return mHover;
@@ -2279,6 +2277,8 @@ void nuiWidget::SetVisible(bool Visible)
     mNeedLayout = false; // Force relayout
     mNeedSelfLayout = false; // Force relayout
     InvalidateLayout();
+    NGL_ASSERT(mNeedLayout);
+    NGL_ASSERT(mNeedSelfLayout);
   }
   VisibilityChanged();
   DebugRefreshInfo();
@@ -2530,7 +2530,10 @@ const nuiRect& nuiWidget::GetIdealRect()
 
 bool nuiWidget::SetRect(const nuiRect& rRect)
 {
-  //NGL_OUT(_T("nuiWidget::SetRect on '%ls' (%f, %f - %f, %f)\n"), GetObjectClass().GetChars(), rRect.mLeft, rRect.mTop, rRect.GetWidth(), rRect.GetHeight());
+  if (GetDebug())
+  {
+    NGL_OUT(_T("nuiWidget::SetRect on '%ls' (%f, %f - %f, %f)\n"), GetObjectClass().GetChars(), rRect.mLeft, rRect.mTop, rRect.GetWidth(), rRect.GetHeight());
+  }
   bool inval = mNeedInvalidateOnSetRect;
   if (!(mRect == rRect))
     inval = true;
@@ -2546,9 +2549,6 @@ bool nuiWidget::SetRect(const nuiRect& rRect)
   if (inval)
     Invalidate();
 
-  // This is an anti bug in the case people continue to call SetRect instead of SetLayout.
-  mNeedSelfLayout = false;
-  mNeedLayout = false;
   DebugRefreshInfo();
   return true;
 }
@@ -2884,6 +2884,23 @@ void nuiWidget::InternalSetLayout(const nuiRect& rect, bool PositionChanged, boo
     // Is this case the widget has just been moved inside its parent. No need to re layout it, only change the rect...
     mRect = rect;
   }
+  
+  //#TEST
+#ifdef _DEBUG_
+  {
+    nuiSimpleContainer* pCont = dynamic_cast<nuiSimpleContainer*> (this);
+    if (pCont)
+    {
+      for (uint32 i = 0; i < pCont->GetChildrenCount(); i++)
+      {
+        nuiWidget* pChild = pCont->GetChild(i);
+        NGL_ASSERT(pChild);
+        NGL_ASSERT(!pChild->mNeedLayout);
+        NGL_ASSERT(!pChild->mNeedSelfLayout);
+      }
+    }
+  }
+#endif  
 }
 
 nuiRect nuiWidget::CalcIdealSize()
@@ -3584,6 +3601,11 @@ int32 nuiWidget::GetDebug(bool recursive) const
       return MAX(mDebugLevel, mpParent->GetDebug(recursive));
     }
   }
+  return mDebugLevel;
+}
+
+int32 nuiWidget::_GetDebug() const
+{
   return mDebugLevel;
 }
 

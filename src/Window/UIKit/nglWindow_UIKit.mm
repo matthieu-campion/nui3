@@ -356,8 +356,8 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   {
     mInited = true;
     mpNGLWindow->CallOnCreation();
-    mpNGLWindow->Invalidate();
-    mpNGLWindow->CallOnPaint();
+//    mpNGLWindow->Invalidate();
+//    mpNGLWindow->CallOnPaint();
   }
 
   static int32 counter = 0;

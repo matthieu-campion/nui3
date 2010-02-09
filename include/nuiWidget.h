@@ -160,7 +160,6 @@ public:
   void GetHotRect(nuiRect& rRect) const; ///< Get the user focused rectangle in the widget. This rectangle is an indication only. The parent of this widget can choose to display it or to ignore the recommendation.
   const nuiRect& GetHotRect() const; ///< Get the user focused rectangle in the widget. This rectangle is an indication only. The parent of this widget can choose to display it or to ignore the recommendation.
   void SetHotRect(const nuiRect& rRect); ///< Get the user focused rectangle in the widget. This rectangle is an indication only. The parent of this widget can choose to display it or to ignore the recommendation.
-  void ValidateLayout(); ///< This method reset the mNeedSelfLayout flag to false. It must be called by any object in the SetRect() method.
   bool HasLayoutChanged() const; ///< This method returns true if the layout of the object has changed since the last layout/redraw loop.
 
   bool IsInsideFromRoot(nuiSize X, nuiSize Y); ///< Return true if the point (X,Y) (in the coordinates of the root object) is inside the object. This method call IsInsideLocal internally so you may not need to redefine it.
@@ -179,7 +178,6 @@ public:
   virtual void ForcedInvalidateLayout(); ///< Nobody should use this method, please use InvalidateLayout instead. Tell the system that this widget's geometry should be recalculated, no exception!
   virtual void UpdateLayout(); ///< Force the re layout of this widget without telling the parrents that the internal geometry has changed.
   virtual void SilentInvalidateLayout(); ///< Mark this widget as invalid with invalid layout. No event is broadcast. Most of the time you really want to use InvalidateLayout instead of SilentInvalidateLayout().
-  virtual void Validate(); ///< Reset the invalidate flag as the object doesn't need Redrawing anymore. ATTENTION: you must call this method once in the draw method or any Invalidate() call will be ignored (and no redraw possible)...
   float GetMixedAlpha() const; ///< Returns the current alpha transparency value of this object, mixed with the one of its parents if MixWithParent==true.
   float GetAlpha() const; ///< Returns the current alpha transparency value of this object.
   virtual void SetAlpha(float Alpha); ///< The the alpha transparency value of this object. 
@@ -710,6 +708,7 @@ protected:
   
   std::vector<nuiRect> mDirtyRects;
   
+  int32 _GetDebug() const;
 };
 
 #define NUI_ADD_EVENT(NAME) { AddEvent(_T(#NAME), NAME); }
