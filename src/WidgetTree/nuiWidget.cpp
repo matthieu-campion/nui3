@@ -1193,14 +1193,10 @@ void nuiWidget::BroadcastInvalidateLayout(nuiWidgetPtr pSender, bool BroadCastOn
     mNeedIdealRect = true;
   }
 
-  if (mpParent)// && !mNeedLayout)
+  if (mpParent)
   {
     mpParent->BroadcastInvalidateLayout(pSender, BroadCastOnly);
   }
-//  else
-//  {
-//    //#TEST
-//  }
 
 #ifdef DEBUG
   if (GetDebug() || pSender->GetDebug())

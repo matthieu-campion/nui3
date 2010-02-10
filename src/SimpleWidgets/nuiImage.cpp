@@ -14,7 +14,7 @@
 #include "nglString.h"
 
 nuiImage::nuiImage (nuiTexture* pTexture, bool AlreadyAcquired)
-  : nuiWidget()
+  : nuiWidget(), mColor(255, 255, 255, 255)
 {
   if (SetObjectClass(_T("nuiImage")))
     InitAttributes();
@@ -27,12 +27,11 @@ nuiImage::nuiImage (nuiTexture* pTexture, bool AlreadyAcquired)
   mFixedAspectRatio = false;
 
   mBlendFunc = nuiBlendTransp;
-  mIgnoreState = false;
   ResetTextureRect();
 }
 
 nuiImage::nuiImage (nglIStream* pInput, nglImageCodec* pCodec)
-  : nuiWidget()
+  : nuiWidget(), mColor(255, 255, 255, 255)
 {
   if (SetObjectClass(_T("nuiImage")))
     InitAttributes();
@@ -41,12 +40,11 @@ nuiImage::nuiImage (nglIStream* pInput, nglImageCodec* pCodec)
   mUseAlpha = true;
   mFixedAspectRatio = false;
   mBlendFunc = nuiBlendTransp;
-  mIgnoreState = false;
   ResetTextureRect();
 }
 
 nuiImage::nuiImage (const nglPath& rPath, nglImageCodec* pCodec)
-  : nuiWidget()
+  : nuiWidget(), mColor(255, 255, 255, 255)
 {
   if (SetObjectClass(_T("nuiImage")))
     InitAttributes();
@@ -56,12 +54,11 @@ nuiImage::nuiImage (const nglPath& rPath, nglImageCodec* pCodec)
   mFixedAspectRatio = false;
   mBlendFunc = nuiBlendTransp;
   SetProperty(_T("Source"),rPath.GetPathName());
-  mIgnoreState = false;
   ResetTextureRect();
 }
 
 nuiImage::nuiImage (nglImageInfo& rInfo, bool Clone)
-  : nuiWidget()
+  : nuiWidget(), mColor(255, 255, 255, 255)
 {
   if (SetObjectClass(_T("nuiImage")))
     InitAttributes();
@@ -70,12 +67,11 @@ nuiImage::nuiImage (nglImageInfo& rInfo, bool Clone)
   mUseAlpha = true;
   mFixedAspectRatio = false;
   mBlendFunc = nuiBlendTransp;
-  mIgnoreState = false;
   ResetTextureRect();
 }
 
 nuiImage::nuiImage (const nglImage& rImage)
-  : nuiWidget()
+  : nuiWidget(), mColor(255, 255, 255, 255)
 {
   if (SetObjectClass(_T("nuiImage")))
     InitAttributes();
@@ -84,12 +80,11 @@ nuiImage::nuiImage (const nglImage& rImage)
   mUseAlpha = true;
   mFixedAspectRatio = false;
   mBlendFunc = nuiBlendTransp;
-  mIgnoreState = false;
   ResetTextureRect();
 }
 
 nuiImage::nuiImage (nglImage* pImage, bool OwnImage)
-  : nuiWidget()
+  : nuiWidget(), mColor(255, 255, 255, 255)
 {
   if (SetObjectClass(_T("nuiImage")))
     InitAttributes();
@@ -98,7 +93,6 @@ nuiImage::nuiImage (nglImage* pImage, bool OwnImage)
   mUseAlpha = true;
   mFixedAspectRatio = false;
   mBlendFunc = nuiBlendTransp;
-  mIgnoreState = false;
   ResetTextureRect();
 }
 
@@ -119,6 +113,12 @@ void nuiImage::InitAttributes()
                (nglString(_T("FixedAspectRatio")), nuiUnitOnOff,
                 nuiMakeDelegate(this, &nuiImage::GetFixedAspectRatio), 
                 nuiMakeDelegate(this, &nuiImage::SetFixedAspectRatio)));
+
+  AddAttribute(new nuiAttribute<const nuiColor&>
+               (nglString(_T("Color")), nuiUnitNone,
+                nuiMakeDelegate(this, &nuiImage::GetColor), 
+                nuiMakeDelegate(this, &nuiImage::SetColor)));
+  
 }
 
 
@@ -136,7 +136,6 @@ void nuiImage::SetTexturePath(const nglPath& rTexturePath)
   mFixedAspectRatio = false;
   mBlendFunc = nuiBlendTransp;
   SetProperty(_T("Source"), mTexturePath.GetPathName());
-  mIgnoreState = false;  
   ResetTextureRect();
   Invalidate();
 }
@@ -148,7 +147,6 @@ void nuiImage::SetTexture(nuiTexture* pTex)
   mFixedAspectRatio = false;
   mBlendFunc = nuiBlendTransp;
   SetProperty(_T("Source"), _T("Memory Buffer"));
-  mIgnoreState = false;  
   ResetTextureRect();
   Invalidate();
 }
@@ -166,8 +164,6 @@ bool nuiImage::Load(const nuiXMLNode* pNode)
   mBlendFunc = nuiBlendTransp;
   SetProperty(_T("Source"), pNode->GetAttribute(_T("Source")));
 
-  mIgnoreState = nuiGetBool(pNode, _T("IgnoreState"), false);
-
 //  mPosition = nuiGetPosition(pNode,nuiFill);
 //  mFillRule = nuiGetPosition(pNode,_T("FillRule"),nuiFill);
 
@@ -184,7 +180,6 @@ nuiXMLNode* nuiImage::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
 //  pNode->SetAttribute(_T("Position"),mPosition);
 //  pNode->SetAttribute(_T("FillRule"),mFillRule);
   pNode->SetAttribute(_T("Source"),GetProperty(_T("Source")));
-  pNode->SetAttribute(_T("IgnoreState"), mIgnoreState ? _T("true") : _T("false"));
   return pNode;
 }
 
@@ -245,26 +240,8 @@ bool nuiImage::Draw(nuiDrawContext* pContext)
 
   nuiRect rect = mRect.Size();
 
-  nuiColor color = nuiColor(1.0f, 1.0f, 1.0f, alpha);
-
-  if (!mIgnoreState)
-  {
-    if (IsSelected())
-    {
-      color = GetColor(eSelectedImage);
-      color.Alpha() = alpha;
-    }
-    if (IsDisabled())
-    {
-      color = GetColor(eDisabledImage);
-      color.Alpha() = alpha;
-    }
-
-    pContext->EnableBlending(true);
-  }
-
   //pContext->EnableClipping(false);
-  pContext->SetFillColor(color);
+  pContext->SetFillColor(mColor);
   pContext->DrawImage(rect, mTextureRect);
 
   pContext->EnableBlending(false);
@@ -354,5 +331,18 @@ void nuiImage::SetFixedAspectRatio(bool set)
 bool nuiImage::GetFixedAspectRatio() const
 {
   return mFixedAspectRatio;
+}
+
+void nuiImage::SetColor(const nuiColor& rColor)
+{
+  if (mColor == rColor)
+    return;
+  mColor = rColor;
+  Invalidate();
+}
+
+const nuiColor& nuiImage::GetColor() const
+{
+  return mColor;
 }
 

@@ -43,8 +43,6 @@ public:
 
   virtual ~nuiImage();
 
-  void IgnoreState(bool ignoreState = true) { mIgnoreState = ignoreState; }
-
   virtual void ForceReload(); ///< This method deletes the texture associated with the nuiImage thus forcing its recreation at the next rendertime.
   virtual bool Draw(nuiDrawContext* pContext);
   virtual nuiRect CalcIdealSize();
@@ -57,6 +55,9 @@ public:
   virtual nglImage* GetImage(); ///< Return a pointer to the nglImage contained in this object's nuiTexture.
   virtual nuiTexture* GetTexture(); ///< Return a pointer to the nuiTexture contained in this object.
 
+  void SetColor(const nuiColor& rColor);
+  const nuiColor& GetColor() const;
+  
   void SetFixedAspectRatio(bool set);
   bool GetFixedAspectRatio() const;
   
@@ -65,10 +66,11 @@ protected:
   nuiRect mTextureRect;
   nglPath mTexturePath;
   bool mUseAlpha;
-  bool mIgnoreState;
   bool mFixedAspectRatio;
 
   nuiBlendFunc mBlendFunc;
+  
+  nuiColor mColor;
 };
 
 #endif // __nuiImage_h__
