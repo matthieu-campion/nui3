@@ -1404,7 +1404,8 @@ bool nuiWin::CreateScrolledImageWindow(const nuiEvent& rEvent)
   nuiScrollView* pScrollView = new nuiScrollView();
   pWin->AddChild(pScrollView);
   //nuiImage* pImage = new nuiImage(_T("rsrc:/nui.png"));
-  nuiImage* pImage = new nuiImage(_T("rsrc:/testalacon.png"));
+  //nuiImage* pImage = new nuiImage(_T("rsrc:/testalacon.png"));
+  nuiImage* pImage = new nuiImage(_T("rsrc:/sampler_edit_sample_load_dwn.png"));
   pImage->GetTexture()->SetMinFilter(GL_NEAREST);
   pImage->GetTexture()->SetMagFilter(GL_NEAREST);
   pScrollView->AddChild(pImage);

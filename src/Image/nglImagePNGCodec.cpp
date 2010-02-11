@@ -27,7 +27,6 @@ public:
 private:
   png_structp png_ptr;
   png_infop info_ptr;
-  png_bytep old_row;
   png_byte** mpRowPointers;
 
   int initialize_png_reader();
@@ -53,20 +52,19 @@ nglImageCodec* nglImagePNGCodecInfo::CreateInstance()
 nglImagePNGCodec::nglImagePNGCodec()
 {
   mpRowPointers = NULL;
-  png_ptr=NULL;
-  info_ptr=NULL;
-  old_row=NULL;
+  png_ptr = NULL;
+  info_ptr = NULL;
 }
 
 nglImagePNGCodec::~nglImagePNGCodec()
 {
   if (mpRowPointers)
     free (mpRowPointers);
-  mpRowPointers=NULL;
+  mpRowPointers = NULL;
 
   if (png_ptr && info_ptr)
     png_destroy_read_struct(&png_ptr, &info_ptr, NULL);
-  png_ptr =NULL;
+  png_ptr = NULL;
   info_ptr = NULL;
 
 
@@ -116,51 +114,12 @@ void info_callback(png_structp png_ptr, png_infop info_ptr)
 data is complete */
 void row_callback(png_structp png_ptr, png_bytep new_row, png_uint_32 row_num, int pass) 
 {
-  nglImagePNGCodec* pCodec=(nglImagePNGCodec*)(png_get_progressive_ptr(png_ptr));
+  nglImagePNGCodec* pCodec = (nglImagePNGCodec*)(png_get_progressive_ptr(png_ptr));
 
-  /* If the image is interlaced, and you turned
-    on the interlace handler, this function will
-    be called for every row in every pass.  Some
-    of these rows will not be changed from the
-    previous pass.  When the row is not changed,
-    the new_row variable will be NULL.  The rows
-    and passes are called in order, so you don't
-    really need the row_num and pass, but I'm
-    supplying them because it may make your life
-    easier.
-
-    For the non-NULL rows of interlaced images,
-    you must call png_progressive_combine_row()
-    passing in the row and the old row.  You can
-    call this function for NULL rows (it will just
-    return) and for non-interlaced images (it just
-    does the memcpy for you) if it will make the
-    code easier.  Thus, you can just do this for
-    all cases:
-    */
-  
-  if (pCodec->old_row && new_row)
-    png_progressive_combine_row(png_ptr, pCodec->old_row, new_row);
-  pCodec->old_row = new_row;
-
-  if (new_row)
-  {
-    char*buffer=pCodec->mpImage->GetBuffer();
-    uint size=pCodec->mpImage->GetBytesPerLine();
-    buffer+= row_num * size;
-    memcpy(buffer,new_row,size);
-  }
-
-
-  /* where old_row is what was displayed for
-    previously for the row.  Note that the first
-    pass (pass == 0, really) will completely cover
-    the old row, so the rows do not have to be
-    initialized.  After the first pass (and only
-    for interlaced images), you will have to pass
-    the current row, and the function will combine
-    the old row and the new row.
-  */
+  char* buffer = pCodec->mpImage->GetBuffer();
+  uint size = pCodec->mpImage->GetBytesPerLine();
+  buffer += row_num * size;
+  png_progressive_combine_row(png_ptr, (png_byte*)buffer, new_row);
 }
 
 void end_callback(png_structp png_ptr, png_infop info) 
@@ -275,7 +234,7 @@ void nglImagePNGCodec::InfoCallback(png_structp png_ptr, png_infop info_ptr)
 //  if (color_type == PNG_COLOR_TYPE_GRAY || color_type == PNG_COLOR_TYPE_GRAY_ALPHA)
 //      png_set_gray_to_rgb(png_ptr);
 
-  if (png_get_interlace_type(png_ptr,info_ptr)!=PNG_INTERLACE_NONE)
+  if (png_get_interlace_type(png_ptr,info_ptr) != PNG_INTERLACE_NONE)
     png_set_interlace_handling(png_ptr);
 
   png_read_update_info(png_ptr, info_ptr);
