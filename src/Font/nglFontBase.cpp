@@ -1018,6 +1018,8 @@ void nglFontBase::Defaults()
   mCharMap    = 0;
   mpConv      = NULL;
   mRenderMode = 0;
+  
+  mLastResort = false;
 }
 
 #define NGL_FTCACHE_MAX_FACES 5000
@@ -1116,6 +1118,8 @@ bool nglFontBase::LoadFinish()
   /* Initialize some global info fields
    */
   mFamilyName.Import (mpFace->Face->family_name);
+  if (mFamilyName == _T("LastResort"))
+    mLastResort = true;
   mStyleName.Import (mpFace->Face->style_name);
   mUnitsPerEM   = (float)mpFace->Face->units_per_EM;
   mGlobalHeight = (float)mpFace->Face->height; // Only valid for scalable fonts (see GetHeight())
@@ -1293,6 +1297,11 @@ const nuiFontPanoseBytes& nglFontBase::GetPanoseBytes() const
 bool nglFontBase::HasPanoseInfo() const
 {
   return mHasPanoseInfo;
+}
+
+bool nglFontBase::IsLastResort() const
+{
+  return mLastResort;
 }
 
 #endif // HAVE_FREETYPE

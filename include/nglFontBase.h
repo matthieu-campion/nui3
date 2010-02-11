@@ -257,6 +257,7 @@ public:
   float     GetAscender(nglFontUnit Unit = eFontUnitPixel) const;
   float     GetDescender(nglFontUnit Unit = eFontUnitPixel) const;
   uint      GetFaceCount() const;
+  bool      IsLastResort() const; ///< This returns true if this font is considered as a fallback last resort.
   /*!< Return font height
     \param Unit output unit
     \param DefaultSpacing user specified interline spacing (or <em>line gap</em>) when
@@ -489,6 +490,7 @@ private:
  
   nuiFontPanoseBytes    mPanoseBytes;
   bool                  mHasPanoseInfo;
+  bool                  mLastResort;
   
   /* Init/setup
    */

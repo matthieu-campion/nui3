@@ -527,7 +527,7 @@ nglFontBase* nuiFontLayout::FindFontForMissingGlyph(nglFontBase* pOriginalFont, 
   for (size_t i = 0; i < mpSubstitutionFonts.size(); i++)
   {
     uint index = 0;
-    if (mpSubstitutionFonts[i]->GetGlyphIndexes(&Glyph, 1, &index, 1) > 0 && index)
+    if (!mpSubstitutionFonts[i]->IsLastResort() && mpSubstitutionFonts[i]->GetGlyphIndexes(&Glyph, 1, &index, 1) > 0 && index)
     {
       //NGL_OUT(_T("found in previous fonts '%ls' as glyph 0x%x OK\n"), mpSubstitutionFonts[i]->GetFamilyName().GetChars(), index);
       return mpSubstitutionFonts[i];

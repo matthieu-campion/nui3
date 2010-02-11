@@ -1283,7 +1283,7 @@ void nuiFontManager::RequestFont(nuiFontRequest& rRequest, std::list<nuiFontRequ
             sscore *= rRequest.mGenericName.mScore;
           }
           else
-          {\
+          {
             sscore = 0.f;
           }
         }
