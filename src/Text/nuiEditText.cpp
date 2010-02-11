@@ -116,7 +116,7 @@ bool nuiEditText::Draw(nuiDrawContext* pContext)
   pContext->SetBlendFunc(nuiBlendTransp);
 
   nuiColor c(GetColor(eNormalTextBg));
-  c.Alpha() *= GetMixedAlpha();
+  c.Multiply(GetMixedAlpha());
   pContext->SetFillColor(c);
   pContext->DrawRect(GetRect().Size(), eFillShape);
 

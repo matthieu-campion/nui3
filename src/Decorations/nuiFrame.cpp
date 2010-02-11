@@ -333,7 +333,7 @@ void nuiFrame::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect&
     if (mUseWidgetAlpha)
     {
       float widgetAlpha = pWidget->GetMixedAlpha();
-      color.Alpha() *= widgetAlpha;
+      color.Multiply(widgetAlpha);
     }
   }
   pContext->EnableTexturing(true);

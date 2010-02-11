@@ -243,9 +243,9 @@ bool nuiLabel::Draw(nuiDrawContext* pContext)
 {
 //  NGL_OUT(_T("Draw 0x%x\n"), this);
   nuiColor Color = GetTextColor();
-  Color.Alpha() *= GetMixedAlpha();
+  Color.Multiply(GetMixedAlpha());
   nuiColor ColorBg = GetBackgroundColor();
-  ColorBg.Alpha() *= GetMixedAlpha();
+  ColorBg.Multiply(GetMixedAlpha());
 
   CalcLayout();
 

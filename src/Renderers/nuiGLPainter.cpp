@@ -339,7 +339,7 @@ void nuiGLPainter::StartRendering()
   glDisable(GL_BLEND);
   glDisable(GL_ALPHA_TEST);
   glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
-  BlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  BlendFuncSeparate(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
   nuiCheckForGLErrors();
 }
 
@@ -1057,7 +1057,7 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
 #else
     glDisable(GL_POLYGON_SMOOTH);
     glDisable(GL_BLEND);
-    BlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    BlendFuncSeparate(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 #endif
     nuiCheckForGLErrors();
   }

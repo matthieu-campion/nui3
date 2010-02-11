@@ -3467,7 +3467,7 @@ nuiColor nuiWidget::GetColor(nuiWidgetElement element)
   if (mMixAlpha)
   {
     float alpha = GetAlpha();
-    col.Alpha() *= alpha;
+    col.Multiply(alpha);
   }
   return col;
 }

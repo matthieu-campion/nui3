@@ -145,31 +145,31 @@ void nuiReflection::Recalc()
   // Sky:
   tmp = mColor;
   float alpha = mColor.Alpha();
-  tmp.Alpha() = alpha * .2f;
+  tmp.SetOpacity(alpha * .2f);
   tmp.Crop();
   mpSkyGradient->AddStop(tmp, 0); 
 
   mpSkyGradient->AddStop(nuiColor(1.f,1.f,1.f, alpha), 0.1f); 
 
-  tmp.Alpha() = alpha * .6f;
+  tmp.SetOpacity(alpha * .6f);
   tmp.Crop();
   mpSkyGradient->AddStop(tmp, .4f); 
 
-  tmp.Alpha() = alpha * .4f;
+  tmp.SetOpacity(alpha * .4f);
   tmp.Crop();
   mpSkyGradient->AddStop(tmp, 1); 
 
   // Ground:
   mpGroundGradient = new nuiGradient();
-  tmp.Alpha() = alpha * .1f;
+  tmp.SetOpacity(alpha * .1f);
   tmp.Crop();
   mpGroundGradient->AddStop(tmp, 0); 
 
-  tmp.Alpha() = alpha * .4f;
+  tmp.SetOpacity(alpha * .4f);
   tmp.Crop();
   mpGroundGradient->AddStop(tmp, .8f); 
 
-  tmp.Alpha() = alpha *.6f;
+  tmp.SetOpacity(alpha *.6f);
   tmp.Crop();
   mpGroundGradient->AddStop(tmp, 1); 
 }

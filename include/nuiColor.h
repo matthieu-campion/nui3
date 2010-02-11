@@ -63,16 +63,18 @@ public:
   {
   }
 
-  float& Red()   { return mRed;   }
-  float& Green() { return mGreen; }
-  float& Blue()  { return mBlue;  }
-  float& Alpha() { return mAlpha; }
+  void SetRed(float v)    { mRed = v;   }
+  void SetGreen(float v)  { mGreen = v; }
+  void SetBlue(float v)   { mBlue = v;  }
+  void SetAlpha(float v)  { mAlpha = v; }
   
   float Red() const   { return mRed;   }
   float Green() const { return mGreen; }
   float Blue() const  { return mBlue;  }
   float Alpha() const { return mAlpha; }
 
+  void SetOpacity(float v);
+  
   void Set(float r=0.0f,float g=0.0f, float b=0.0f, float a=1.0f, bool Premultiplied = false)
   {
     if (Premultiplied)
@@ -123,7 +125,7 @@ public:
   
   void Crop();
 
-  void Saturate(const nuiColor& rColor, bool WithAlpha = false)
+  void Saturate(const nuiColor& rColor, bool WithAlpha = true)
   {
     mRed   += mRed   + rColor.Red  ();
     mGreen += mGreen + rColor.Green();
@@ -134,7 +136,7 @@ public:
     Crop();
   }
 
-  void Multiply(float Factor, bool WithAlpha = false)
+  void Multiply(float Factor, bool WithAlpha = true)
   {
     mRed   *= Factor;
     mGreen *= Factor;
@@ -145,7 +147,7 @@ public:
     Crop();
   }
 
-  void Multiply(const nuiColor& rFactor, bool WithAlpha = false)
+  void Multiply(const nuiColor& rFactor, bool WithAlpha = true)
   {
     mRed   *= rFactor.mRed;
     mGreen *= rFactor.mGreen;
@@ -174,7 +176,7 @@ public:
   }
   
   
-  void Add(float Value, bool WithAlpha = false)
+  void Add(float Value, bool WithAlpha = true)
   {
     mRed   += Value;
     mGreen += Value;

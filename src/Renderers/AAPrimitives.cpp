@@ -323,9 +323,9 @@ void glAAGenerateAATex(float Falloff, float alias)
 
       // Generate the entire mip pyramid slowly in software
 #ifndef _UIKIT_
-      gluBuild2DMipmaps(GL_TEXTURE_2D, GL_ALPHA, pdb, pdb, GL_ALPHA, GL_UNSIGNED_BYTE, texture);
+      gluBuild2DMipmaps(GL_TEXTURE_2D, GL_LUMINANCE_ALPHA, pdb, pdb, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, texture);
 #else
-      glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, pdb, pdb, 0, GL_ALPHA, GL_UNSIGNED_BYTE, texture);
+      glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE_ALPHA, pdb, pdb, 0, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, texture);
 #endif
 
 
@@ -342,8 +342,8 @@ void glAAGenerateAATex(float Falloff, float alias)
       static uint8 mipfix[4];
       uint8 fix = (texture[ToBelow(psz + phf * 0.2f) + pct * pdb] + texture[ToBelow(psz + phf * 0.7f) + pct * pdb]) >> 1;
       mipfix[0] = mipfix[1] = mipfix[2] = mipfix[3] = fix;
-      glTexSubImage2D(GL_TEXTURE_2D, l2phf, 2, 2, 2, 2, GL_ALPHA, GL_UNSIGNED_BYTE, mipfix);
-      glTexSubImage2D(GL_TEXTURE_2D, l2psz, 1, 1, 1, 1, GL_ALPHA, GL_UNSIGNED_BYTE, mipfix);
+      glTexSubImage2D(GL_TEXTURE_2D, l2phf, 2, 2, 2, 2, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, mipfix);
+      glTexSubImage2D(GL_TEXTURE_2D, l2psz, 1, 1, 1, 1, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, mipfix);
     }
   }
   glError();

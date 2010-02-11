@@ -267,7 +267,6 @@ void nuiGetBlendFuncFactors(nuiBlendFunc Func, GLenum& src, GLenum& dst)
     case nuiBlendTranspClear:   sfactor = GL_SRC_ALPHA;             dfactor = GL_ZERO;                 break;
     case nuiBlendTranspInRev:   sfactor = GL_SRC_ALPHA;             dfactor = GL_SRC_ALPHA;            break;
     case nuiBlendTranspAdd:     sfactor = GL_SRC_ALPHA;             dfactor = GL_ONE;                  break;
-    case nuiBlendText:          sfactor = GL_SRC_ALPHA;             dfactor = GL_ONE_MINUS_SRC_ALPHA;  break;
   }
   src = sfactor;
   dst = dfactor;
@@ -1220,8 +1219,8 @@ void nuiDrawContext::DrawShade(const nuiRect& rSourceRect, const nuiRect& rShade
 
   nuiColor transp(rTint);
   nuiColor opaque(rTint);
-  transp.Alpha() = 0.0f;
-  opaque.Alpha() *= SHADE_ALPHA;
+  transp.Multiply(0.0f);
+  opaque.Multiply(SHADE_ALPHA);
 
   if (!texturing)
     EnableTexturing(true);

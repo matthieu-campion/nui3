@@ -257,7 +257,7 @@ bool nuiPopupMenu::DrawTree(nuiDrawContext* pContext, nuiTreeNode* pTree, uint d
     nuiGradient grad;
     nuiColor bg(GetColor(eMenuBg));
     grad.AddStop(bg, 1);
-    bg.Alpha() = 0;
+    bg.Multiply(0);
     grad.AddStop(bg, 0);
 
     if (pRect->mpSBar->GetRange().GetValue() + pRect->mpSBar->GetRange().GetPageSize() < pRect->mpSBar->GetRange().GetMaximum())

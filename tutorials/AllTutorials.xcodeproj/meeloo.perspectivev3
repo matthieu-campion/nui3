@@ -253,8 +253,6 @@
 			<key>Layout</key>
 			<array>
 				<dict>
-					<key>BecomeActive</key>
-					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -355,18 +353,18 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {1713, 0}}</string>
+								<string>{{0, 0}, {1713, 621}}</string>
 								<key>RubberWindowFrame</key>
 								<string>0 59 1920 1119 0 0 1920 1178 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>0pt</string>
+							<string>621pt</string>
 						</dict>
 						<dict>
 							<key>Proportion</key>
-							<string>1073pt</string>
+							<string>452pt</string>
 							<key>Tabs</key>
 							<array>
 								<dict>
@@ -381,8 +379,6 @@
 									<dict>
 										<key>Frame</key>
 										<string>{{10, 27}, {1713, 1046}}</string>
-										<key>RubberWindowFrame</key>
-										<string>0 59 1920 1119 0 0 1920 1178 </string>
 									</dict>
 									<key>Module</key>
 									<string>XCDetailModule</string>
@@ -436,7 +432,9 @@
 									<key>GeometryConfiguration</key>
 									<dict>
 										<key>Frame</key>
-										<string>{{10, 27}, {1713, 1046}}</string>
+										<string>{{10, 27}, {1713, 425}}</string>
+										<key>RubberWindowFrame</key>
+										<string>0 59 1920 1119 0 0 1920 1178 </string>
 									</dict>
 									<key>Module</key>
 									<string>PBXBuildResultsModule</string>
@@ -464,11 +462,11 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E5DAD5CE10B22C1C00103794</string>
+				<string>E5A796E311242D5900E0B284</string>
 				<string>1CA23ED40692098700951B8B</string>
-				<string>E5DAD5CF10B22C1C00103794</string>
+				<string>E5A796E411242D5900E0B284</string>
 				<string>E51FAB551073F320004F6940</string>
-				<string>E5DAD5D010B22C1C00103794</string>
+				<string>E5A796E511242D5900E0B284</string>
 				<string>1CA23EDF0692099D00951B8B</string>
 				<string>1CA23EE00692099D00951B8B</string>
 				<string>1CA23EE10692099D00951B8B</string>
@@ -621,7 +619,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>280112156.36839497</real>
+	<real>287583577.61927003</real>
 	<key>ToolbarConfigUserDefaultsMinorVersion</key>
 	<string>2</string>
 	<key>ToolbarDisplayMode</key>

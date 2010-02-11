@@ -228,7 +228,7 @@ void nuiImageDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, cons
   pContext->SetTexture(mpTexture);
   nuiColor col(mColor);
   if (mUseWidgetAlpha && pWidget)
-    col.Alpha() *= pWidget->GetMixedAlpha();
+    col.Multiply(pWidget->GetMixedAlpha());
   
   pContext->SetFillColor(col);
   

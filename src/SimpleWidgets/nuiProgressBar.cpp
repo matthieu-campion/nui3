@@ -162,7 +162,7 @@ bool nuiProgressBar::Draw(nuiDrawContext* pContext)
   
   nuiColor col = mFGColor;
   
-  col.Alpha() += alpha;
+  col.Add(alpha);
   col.Crop();
   
   if (mEndless)
@@ -175,13 +175,13 @@ bool nuiProgressBar::Draw(nuiDrawContext* pContext)
     grad.AddStop(col, ratio);
     
     nuiColor noAlpha = col;
-    noAlpha.Alpha() = 0.f;
+    noAlpha.SetOpacity(0.f);
     if (ratio > .5f)
     {
       grad.AddStop(noAlpha, ratio - .5f);
       
       nuiColor midAlpha = col;
-      midAlpha.Alpha() *= (2.f*ratio - 1.f);
+      midAlpha.Multiply(2.f*ratio - 1.f);
       grad.AddStop(midAlpha, 0.0);
       grad.AddStop(midAlpha, 1.0);
     }
@@ -190,7 +190,7 @@ bool nuiProgressBar::Draw(nuiDrawContext* pContext)
       grad.AddStop(noAlpha, ratio + .5f);
       
       nuiColor midAlpha = col;
-      midAlpha.Alpha() *= (-2.f*ratio + 1.f);
+      midAlpha.Multiply(-2.f*ratio + 1.f);
       grad.AddStop(midAlpha, 0.0);
       grad.AddStop(midAlpha, 1.0);
     }

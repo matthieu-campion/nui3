@@ -658,7 +658,7 @@ nuiTexture *nuiFontBase::AllocateTexture(uint size)
   nuiTexture *pTexture = nuiTexture::GetTexture(ImageInfo, true);
   pTexture->SetRetainBuffer(true);
 
-  pTexture->SetEnvMode(GL_BLEND);
+  pTexture->SetEnvMode(GL_MODULATE);
   pTexture->SetMinFilter(GL_NEAREST);
   pTexture->SetMagFilter(GL_NEAREST);
 //  pTexture->SetMinFilter(GL_LINEAR);
@@ -870,7 +870,7 @@ int nuiFontBase::Print(nuiDrawContext *pContext, float X, float Y, const nuiFont
 
   nuiColor SavedColor = pContext->GetFillColor();
   pContext->SetFillColor(pContext->GetTextColor());
-  pContext->SetBlendFunc(nuiBlendText);
+  pContext->SetBlendFunc(nuiBlendTransp);
 
   std::map<nuiTexture*, std::vector<nuiGlyphLayout> > Glyphs;
   for (i = 0; i < todo; i++)

@@ -255,9 +255,9 @@ void nuiGradientDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, c
   if (mUseWidgetAlpha && pWidget)
   {
     float widgetAlpha = pWidget->GetMixedAlpha();
-    mColor1.Alpha() *= widgetAlpha;
-    mColor2.Alpha() *= widgetAlpha;
-    mStrokeColor.Alpha() *= widgetAlpha;
+    mColor1.Multiply(widgetAlpha);
+    mColor2.Multiply(widgetAlpha);
+    mStrokeColor.Multiply(widgetAlpha);
   }
   
   pContext->SetFillColor(mColor1);
@@ -273,8 +273,8 @@ void nuiGradientDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, c
     if (mUseWidgetAlpha && pWidget)
     {
       float widgetAlpha = pWidget->GetMixedAlpha();
-      mColor3.Alpha() *= widgetAlpha;
-      mColor4.Alpha() *= widgetAlpha;
+      mColor3.Multiply(widgetAlpha);
+      mColor4.Multiply(widgetAlpha);
     }
 
     gradient.AddStop(mColor3, mOffset3);

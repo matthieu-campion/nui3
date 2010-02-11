@@ -645,3 +645,9 @@ void nuiColor::GetHSL(float& h, float& s, float& l) const
     l = 0;
 }
 
+void nuiColor::SetOpacity(float v)
+{
+  UnPremultiply();
+  mAlpha = v;
+  Premultiply();
+}

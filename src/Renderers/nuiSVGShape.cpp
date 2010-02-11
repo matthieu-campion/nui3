@@ -287,7 +287,7 @@ bool nuiSVGElement::Load(nuiXMLNode* pNode)
     nglString opac = pNode->GetAttribute("fill-opacity");
     opac.Trim();
     mFillOpacity = opac.GetCFloat();
-    mFillColor.Alpha() = mFillOpacity;
+    mFillColor.SetOpacity(mFillOpacity);
   }
 
   if (pNode->HasAttribute("stroke-opacity"))
@@ -295,7 +295,7 @@ bool nuiSVGElement::Load(nuiXMLNode* pNode)
     nglString opac = pNode->GetAttribute("stroke-opacity");
     opac.Trim();
     mStrokeOpacity = opac.GetCFloat();
-    mStrokeColor.Alpha() = mStrokeOpacity;
+    mStrokeColor.SetOpacity(mStrokeOpacity);
   }
 
   if (pNode->HasAttribute("stroke-width"))
@@ -912,7 +912,7 @@ bool nuiSVGElement::LoadStyle(const nglString& rStyleDesc)
       }
       else if (col.SetValue(color))
       {
-        col.Alpha() = mFillOpacity;
+        col.SetOpacity(mFillOpacity);
         mFillColor = col;
         mUseFillColor = true;
       }
@@ -928,7 +928,7 @@ bool nuiSVGElement::LoadStyle(const nglString& rStyleDesc)
       }
       else if (col.SetValue(color))
       {
-        col.Alpha() = mStrokeOpacity;
+        col.SetOpacity(mStrokeOpacity);
         mStrokeColor = col;
         mUseStrokeColor = true;
       }
@@ -947,14 +947,14 @@ bool nuiSVGElement::LoadStyle(const nglString& rStyleDesc)
       nglString opac = command.Extract(command.Find(':')+1);
       opac.Trim();
       mFillOpacity = opac.GetCFloat();
-      mFillColor.Alpha() = mFillOpacity;
+      mFillColor.SetOpacity(mFillOpacity);
     }
     else if (command.Find(_T("stroke-opacity")) != -1)
     {
       nglString opac = command.Extract(command.Find(':')+1);
       opac.Trim();
       mStrokeOpacity = opac.GetCFloat();
-      mStrokeColor.Alpha() = mStrokeOpacity;
+      mStrokeColor.SetOpacity(mStrokeOpacity);
     }
     else if (command.Find(_T("stroke-width")) != -1)
     {

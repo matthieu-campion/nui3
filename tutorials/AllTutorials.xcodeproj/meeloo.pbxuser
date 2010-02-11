@@ -2,7 +2,7 @@
 {
 	E51FAB4D1073F312004F6940 /* Project object */ = {
 		activeBuildConfigurationName = Default;
-		activeTarget = E543D0F21074047800A01E51 /* AllTutorials (debug & release) */;
+		activeTarget = E51FACC21074018C004F6940 /* AllTutorialsDebug */;
 		addToTargets = (
 		);
 		codeSenseManager = E51FAB521073F312004F6940 /* Code sense */;
@@ -53,8 +53,8 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 280112105;
-			PBXWorkspaceStateSaveDate = 280112105;
+			PBXPerProjectTemplateStateSaveDate = 287582919;
+			PBXWorkspaceStateSaveDate = 287582919;
 		};
 		sourceControlManager = E51FAB511073F312004F6940 /* Source Control */;
 		userBuildSettings = {
