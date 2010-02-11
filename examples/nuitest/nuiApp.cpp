@@ -136,6 +136,9 @@ void nuiApp::OnInit()
   nuiTranslator::GetTranslator().LoadLanguage(nglString(nglString(loc)));
   
   nuiMainWindow::SetRenderer(Renderer);
+  if (Renderer == eSoftware)
+    nuiTexture::RetainBuffers(true);
+
 
   if (!HasSize)
   {
