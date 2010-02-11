@@ -208,7 +208,7 @@ bool nuiColor::SetValue(const nglString& rString)
     mAlpha = 1;
     if (6 < len)
     {
-      // If there is an alpha component get it, else it's 1
+      // If there is an alpha component get it, otherwise it's 1
       mAlpha = ((col>>24) & 0xFF) / 255.0f;
     }
     return true;
@@ -496,12 +496,16 @@ void nuiColor::SetHSV(float h, float s, float v, float a)
 {
   HSVtoRGB(mRed, mGreen, mBlue, h, s, v);
   mAlpha = a;
+  Premultiply();
   Crop();
 }
 
 void nuiColor::GetHSV(float& h, float& s, float& v) const
 {
-  RGBtoHSV(mRed, mGreen, mBlue, h, s, v);
+  nuiColor c(*this);
+  c.UnPremultiply();
+  float r = c.Red(), g = c.Green(), b = c.Blue();
+  RGBtoHSV(r, g, b, h, s, v);  
 }
 
 void nuiColor::SetHSL(float h, float s, float l, float a)
@@ -576,15 +580,18 @@ void nuiColor::SetHSL(float h, float s, float l, float a)
   mGreen = g;
   mBlue = b;
   mAlpha = a;
-  
+
+  Premultiply();
   Crop();
 }
 
 void nuiColor::GetHSL(float& h, float& s, float& l) const
 {
-  double r = mRed;
-  double g = mGreen;
-  double b = mBlue;
+  nuiColor c(*this);
+  c.UnPremultiply();
+  double r = c.Red();
+  double g = c.Green();
+  double b = c.Blue();
   double v;
   double m;
   double vm;
@@ -593,15 +600,16 @@ void nuiColor::GetHSL(float& h, float& s, float& l) const
   h = 0; // default to black
   s = 0;
   l = 0;
+  
   v = MAX(r,g);
   v = MAX(v,b);
   m = MIN(r,g);
   m = MIN(m,b);
   l = (m + v) / 2.0;
+  
   if (l <= 0.0)
-  {
     return;
-  }
+
   vm = v - m;
   s = vm;
   if (s > 0.0)

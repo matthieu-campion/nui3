@@ -78,14 +78,15 @@ In unmanaged mode, nglImageInfo simply holds a reference to a buffer you manage
 class NGL_API nglImageInfo
 {
 public:
-  nglImageBufferFormat mBufferFormat;  ///< Buffer data format can be raw (user accessible) or proprietary (opaque to user, such as S3TC/DXTC)
-  nglImagePixelFormat  mPixelFormat;   ///< Pixel components and respective components bit resolution
-  uint  mWidth;                        ///< Image width in pixels (0 if \a mpBuffer is NULL)
-  uint  mHeight;                       ///< Image height in pixels (0 if \a mpBuffer is NULL)
-  uint  mBitDepth;                     ///< Pixel bit depth (sum of components bit resolution, 0 if \a mpBuffer is NULL)
-  uint  mBytesPerPixel;                ///< Pixel allocation size in bytes (>= pixel bit depth, 0 if \a mpBuffer is NULL)
-  uint  mBytesPerLine;                 ///< Pixel row allocation size in bytes (>= pixel size * image width, 0 if \a mpBuffer is NULL)
-  char* mpBuffer;                      ///< Buffer data
+  nglImageBufferFormat mBufferFormat;   ///< Buffer data format can be raw (user accessible) or proprietary (opaque to user, such as S3TC/DXTC)
+  nglImagePixelFormat  mPixelFormat;    ///< Pixel components and respective components bit resolution
+  uint32  mWidth;                       ///< Image width in pixels (0 if \a mpBuffer is NULL)
+  uint32  mHeight;                      ///< Image height in pixels (0 if \a mpBuffer is NULL)
+  uint32  mBitDepth;                    ///< Pixel bit depth (sum of components bit resolution, 0 if \a mpBuffer is NULL)
+  uint32  mBytesPerPixel;               ///< Pixel allocation size in bytes (>= pixel bit depth, 0 if \a mpBuffer is NULL)
+  uint32  mBytesPerLine;                ///< Pixel row allocation size in bytes (>= pixel size * image width, 0 if \a mpBuffer is NULL)
+  bool    mPreMultAlpha;                ///< True if the buffer has it alpha value premultiplied in the color elements.
+  char* mpBuffer;                       ///< Buffer data
 
   /** @name Life cycle */
   //@{
@@ -236,7 +237,7 @@ public:
     The image buffer data is cloned (and thus managed).
   */
   
-  nglImage(const nglImage& rImage, uint NewWidth, uint NewHeight);
+  nglImage(const nglImage& rImage, uint32 NewWidth, uint32 NewHeight);
   /*!< Create an image copy from another image, scaling the source image to the given size
    \param rImage source image
    \param scaledWidth requested width
@@ -259,11 +260,11 @@ public:
   */
   nglImageBufferFormat GetBufferFormat() const;  ///< Internal buffer format. Returns eImageFormatNone if the info is not available.
   nglImagePixelFormat  GetPixelFormat() const;   ///< Internal pixel format. Returns eImagePixelNone if the info is not available.
-  uint  GetWidth() const;         ///< Image width in pixels. Returns 0 if the info is not available.
-  uint  GetHeight() const;        ///< Image height in pixels. Returns 0 if the info is not available.
-  uint  GetBitDepth() const;      ///< Pixel bit depth (sum of pixel components bit count). Returns 0 if the info is not available.
-  uint  GetPixelSize() const;     ///< Pixel allocation size in bytes (>= pixel bit depth). Returns 0 if the info is not available.
-  uint  GetBytesPerLine() const;  ///< Pixel row allocation size in bytes (>= pixel size * image width). Returns 0 if the info is not available.
+  uint32  GetWidth() const;         ///< Image width in pixels. Returns 0 if the info is not available.
+  uint32  GetHeight() const;        ///< Image height in pixels. Returns 0 if the info is not available.
+  uint32  GetBitDepth() const;      ///< Pixel bit depth (sum of pixel components bit count). Returns 0 if the info is not available.
+  uint32  GetPixelSize() const;     ///< Pixel allocation size in bytes (>= pixel bit depth). Returns 0 if the info is not available.
+  uint32  GetBytesPerLine() const;  ///< Pixel row allocation size in bytes (>= pixel size * image width). Returns 0 if the info is not available.
   char* GetBuffer() const;        ///< Image buffer data. Returns NULL if the info is not available.
 
   bool IsValid() const;
@@ -301,6 +302,8 @@ public:
    return NULL if the coordinates or the new size goes outside the source image.
    */
   
+  void PreMultiply(); ///< Premultiply the alpha in the image buffer
+  void UnPreMultiply(); ///< Try to inverse the effect of PreMultiply.
 
   /** @name User callbacks */
   //@{
@@ -340,7 +343,7 @@ public:
   static bool AddCodec (nglImageCodecInfo* pCodecInfo);
   static bool DelCodec (nglImageCodecInfo* pCodecInfo);
 
-  static nglImageCodec* CreateCodec (int Index);
+  static nglImageCodec* CreateCodec (int32 Index);
   static nglImageCodec* CreateCodec (const nglString& rName);
   //@}
 

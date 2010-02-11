@@ -35,6 +35,7 @@ typedef std::map<UITouch*,nglTouchInfo> TouchesInfo;
 	BOOL          mKeyboardVisible;
   void*         mpContext;
   GLint         mRenderBuffer;
+  nuiTimer*     mpTimer;
 }
 
 + (Class) layerClass;

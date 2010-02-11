@@ -1508,7 +1508,7 @@ bool nuiWin::CreateShapeWindow(const nuiEvent& rEvent)
   pShapeView->SetShapeMode(eStrokeAndFillShape);
   //  pShapeView->SetShapeMode(eFillShape);
   //  pShapeView->SetShapeMode(eStrokeShape);
-  pShapeView->SetColor(eShapeStroke, nuiColor(_T("black")));
+  pShapeView->SetColor(eShapeStroke, nuiColor(_T("darkblue")));
   pShapeView->SetColor(eShapeFill, nuiColor(0.0f, 0.0f, 0.5f, 0.5f));
 
   return false;

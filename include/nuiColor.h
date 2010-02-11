@@ -15,21 +15,30 @@
 class NUI_API nuiColor
 {
 public:
-  explicit nuiColor(float r=0.0f,float g=0.0f, float b=0.0f, float a=1.0f)
+  explicit nuiColor(float r=0.0f,float g=0.0f, float b=0.0f, float a=1.0f, bool Premultiplied = false)
   {
-    Set(r,g,b,a);
+    if (Premultiplied)
+      SetP(r, g, b, a);
+    else
+      SetU(r,g,b,a);
   }
 
-  explicit nuiColor(uint8 r, uint8 g, uint8 b, uint8 a = 255)
+  explicit nuiColor(uint8 r, uint8 g, uint8 b, uint8 a = 255, bool Premultiplied = false)
   {
     static const float ratio = 1.0f/255.0f;
-    Set(r*ratio, g*ratio, b*ratio, a*ratio);
+    if (Premultiplied)
+      SetP(r*ratio, g*ratio, b*ratio, a*ratio);
+    else
+      SetU(r*ratio, g*ratio, b*ratio, a*ratio);
   }
 
-  explicit nuiColor(int r, int g, int b, int a = 255)
+  explicit nuiColor(int r, int g, int b, int a = 255, bool Premultiplied = false)
   {
     static const float ratio = 1.0f/255.0f;
-    Set(r*ratio, g*ratio, b*ratio, a*ratio);
+    if (Premultiplied)
+      SetP(r*ratio, g*ratio, b*ratio, a*ratio);
+    else
+      SetU(r*ratio, g*ratio, b*ratio, a*ratio);
   }
 
   nuiColor(const nuiColor& rColor)
@@ -64,14 +73,54 @@ public:
   float Blue() const  { return mBlue;  }
   float Alpha() const { return mAlpha; }
 
-  void Set(float r=0.0f,float g=0.0f, float b=0.0f, float a=1.0f)
+  void Set(float r=0.0f,float g=0.0f, float b=0.0f, float a=1.0f, bool Premultiplied = false)
+  {
+    if (Premultiplied)
+      SetP(r, g, b, a);
+    else
+      SetU(r, g, b, a);
+  }
+
+  void SetU(float r=0.0f,float g=0.0f, float b=0.0f, float a=1.0f) ///< Set Un premultiplied alpha (the resulting argument color components will be premultiplied)
+  {
+    mRed   = r * a;
+    mGreen = g * a;
+    mBlue  = b * a;
+    mAlpha = a;
+  }
+
+  void SetP(float r=0.0f,float g=0.0f, float b=0.0f, float a=1.0f) ///< Set Premultiplied alpha. The argument color components will not be changed.
   {
     mRed   = r;
     mGreen = g;
     mBlue  = b;
     mAlpha = a;
   }
-
+  
+  void Premultiply()
+  {
+    mRed    *= mAlpha;
+    mGreen  *= mAlpha;
+    mBlue   *= mAlpha;
+  }
+  
+  void UnPremultiply()
+  {
+    if (mAlpha > 0.0f)
+    {
+      mRed    /= mAlpha;
+      mGreen  /= mAlpha;
+      mBlue   /= mAlpha;
+    }
+    else
+    {
+      mRed    = 0;
+      mGreen  = 0;
+      mBlue   = 0;
+    }
+    
+  }
+  
   void Crop();
 
   void Saturate(const nuiColor& rColor, bool WithAlpha = false)
@@ -116,10 +165,10 @@ public:
     
     ratio = 1.0f - ratio;
     
-    mRed += rColor.mRed * ratio;
-    mGreen += rColor.mGreen * ratio;
-    mBlue += rColor.mBlue * ratio;
-    mAlpha += rColor.mAlpha * ratio;
+    mRed    += rColor.mRed * ratio;
+    mGreen  += rColor.mGreen * ratio;
+    mBlue   += rColor.mBlue * ratio;
+    mAlpha  += rColor.mAlpha * ratio;
     
     Crop();
   }
@@ -151,9 +200,9 @@ public:
   }
 
   uint32 GetRGBA() const;
-  void SetHSV(float h, float s, float v, float a = 1.0f); ///< all parameters are [0, 1]
+  void SetHSV(float h,  float s,  float v, float a = 1.0f); ///< all parameters are [0, 1]
   void GetHSV(float& h, float& s, float& v) const;        ///< all parameters are [0, 1] except when h i undefined (r = g = b = 0), in this case h = -1
-  void SetHSL(float h, float s, float v, float a = 1.0f); ///< all parameters are [0, 1]
+  void SetHSL(float h,  float s,  float v, float a = 1.0f); ///< all parameters are [0, 1]
   void GetHSL(float& h, float& s, float& v) const;        ///< all parameters are [0, 1]
   
   static void EnumStandardColorNames(std::vector<nglString>& rStandardColorNames);

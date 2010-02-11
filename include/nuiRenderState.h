@@ -37,6 +37,8 @@ enum nuiBlendFunc
   nuiBlendTranspAdd,     //GL_SRC_ALPHA             GL_ONE
   nuiBlendTranspOver,    //GL_SRC_ALPHA             GL_ONE_MINUS_SRC_ALPHA
   nuiBlendTranspInRev,   //GL_SRC_ALPHA             GL_SRC_ALPHA
+  
+  nuiBlendText           //GL_ONE_MINUS_SRC_ALPHA   GL_SRC_ALPHA
 };
 
 void nuiGetBlendFuncFactors(nuiBlendFunc Func, GLenum& src, GLenum& dst);

@@ -252,14 +252,14 @@ float ifun(float x, float y, float F)
 // 8-way symmetric macro
 #define putpixel(x, y, I) {             \
   uint8 c = I*255;           \
-  texture[(pct   + x) + (pct   + y) * pdb] =   \
-  texture[(pct-1 - x) + (pct   + y) * pdb] =   \
-  texture[(pct   + x) + (pct-1 - y) * pdb] =   \
-  texture[(pct-1 - x) + (pct-1 - y) * pdb] =   \
-  texture[(pct   + y) + (pct   + x) * pdb] =   \
-  texture[(pct-1 - y) + (pct   + x) * pdb] =   \
-  texture[(pct   + y) + (pct-1 - x) * pdb] =   \
-  texture[(pct-1 - y) + (pct-1 - x) * pdb] = c;\
+  texture[(pct   + x) + (pct   + y) * pdb * 1] =   \
+  texture[(pct-1 - x) + (pct   + y) * pdb * 1] =   \
+  texture[(pct   + x) + (pct-1 - y) * pdb * 1] =   \
+  texture[(pct-1 - x) + (pct-1 - y) * pdb * 1] =   \
+  texture[(pct   + y) + (pct   + x) * pdb * 1] =   \
+  texture[(pct-1 - y) + (pct   + x) * pdb * 1] =   \
+  texture[(pct   + y) + (pct-1 - x) * pdb * 1] =   \
+  texture[(pct-1 - y) + (pct-1 - x) * pdb * 1] = c;\
 }
 
 void glAAGenerateAABuffer(float Falloff, float alias, uint8* texture) 

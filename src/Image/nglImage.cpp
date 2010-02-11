@@ -74,6 +74,7 @@ nglImageInfo::nglImageInfo(uint32 width, uint32 height, uint32 bitdepth)
   mBitDepth = bitdepth;
   mBytesPerPixel = (bitdepth + 1) / 8;
   mBytesPerLine = mWidth * mBytesPerPixel;
+  mPreMultAlpha = false;
   mpBuffer = NULL;
   mOwnBuffer = false;
 
@@ -90,6 +91,7 @@ nglImageInfo::nglImageInfo(bool Managed)
   mBitDepth = 0;
   mBytesPerPixel = 0;
   mBytesPerLine = 0;
+  mPreMultAlpha = false;
   mpBuffer = NULL;
   mOwnBuffer = Managed;
 }
@@ -137,6 +139,7 @@ void nglImageInfo::Copy (const nglImageInfo& rInfo, bool Clone)
   mBitDepth       = rInfo.mBitDepth;
   mBytesPerPixel  = rInfo.mBytesPerPixel;
   mBytesPerLine   = rInfo.mBytesPerLine;
+  mPreMultAlpha   = rInfo.mPreMultAlpha;
   mpBuffer        = rInfo.mpBuffer;
   mOwnBuffer      = false; // We copy a reference, we don't own the buffer right now
 
@@ -179,9 +182,9 @@ nglImage::nglImage (nglIStream* pInput, nglImageCodec* pCodec)
 
   if (!mpCodec)
   {
-    uint count;
+    uint32 count;
     count = mpCodecInfos->size();
-    for (uint i=0; i<count && !mpCodec; i++)
+    for (uint32 i=0; i<count && !mpCodec; i++)
     {
       if ((*mpCodecInfos)[i])
       {
@@ -210,6 +213,8 @@ nglImage::nglImage (nglIStream* pInput, nglImageCodec* pCodec)
     }
   }
 
+  if (IsValid() && !mInfo.mPreMultAlpha)
+    PreMultiply();
 }
 
 nglImage::nglImage (const nglPath& rPath, nglImageCodec* pCodec )
@@ -230,9 +235,9 @@ nglImage::nglImage (const nglPath& rPath, nglImageCodec* pCodec )
 
   if (!mpCodec)
   {
-    uint count;
+    uint32 count;
     count = mpCodecInfos->size();
-    for (uint i=0; i<count && !mpCodec; i++)
+    for (uint32 i=0; i<count && !mpCodec; i++)
     {
       if ((*mpCodecInfos)[i])
       {
@@ -251,9 +256,9 @@ nglImage::nglImage (const nglPath& rPath, nglImageCodec* pCodec )
 
   if (!mpCodec) // If not codec was able to detect the image format we try to match the file with its extension.
   {
-    uint count = mpCodecInfos->size();
+    uint32 count = mpCodecInfos->size();
     nglString filename = rPath.GetPathName();
-    for (uint i=0; i<count && !mpCodec; i++)
+    for (uint32 i=0; i<count && !mpCodec; i++)
     {
       if ((*mpCodecInfos)[i])
       {
@@ -280,6 +285,9 @@ nglImage::nglImage (const nglPath& rPath, nglImageCodec* pCodec )
   }
   
   delete pIFile;
+
+  if (IsValid() && !mInfo.mPreMultAlpha)
+    PreMultiply();
 }
 
 nglImage::nglImage(nglImageInfo& rInfo, nuiCopyPolicy policy)
@@ -295,6 +303,9 @@ nglImage::nglImage(nglImageInfo& rInfo, nuiCopyPolicy policy)
   mpCodec = NULL;
   mOwnCodec = true;
   mCompletion = (mInfo.mpBuffer) ? 1.0f : 0.0f;
+
+  if (IsValid() && !rInfo.mPreMultAlpha)
+    PreMultiply();
 }
 
 nglImage::nglImage (const nglImage& rImage)
@@ -317,7 +328,7 @@ bool nglImage::IsValid() const
 
 
 
-template <int depth>
+template <int32 depth>
 uint32 average_pixels(uint32 a, uint32 b)
 {
   if (depth == 32 || depth == 24)
@@ -338,19 +349,19 @@ uint32 average_pixels(uint32 a, uint32 b)
   return (a + b) / 2;
 }
 
-template <int depth>
-void AdvancePtr(const uint8*& pSource, int set)
+template <int32 depth>
+void AdvancePtr(const uint8*& pSource, int32 set)
 {
   pSource += set * (depth / 8);
 }
 
-template <int depth>
-void AdvancePtr(uint8*& pSource, int set)
+template <int32 depth>
+void AdvancePtr(uint8*& pSource, int32 set)
 {
   pSource += set * (depth / 8);
 }
 
-template <int depth>
+template <int32 depth>
 void CopyPixel(uint8* pTarget, uint32 pixel)
 {
   if (depth == 32)
@@ -367,7 +378,7 @@ void CopyPixel(uint8* pTarget, uint32 pixel)
   }
 }
 
-template <int depth>
+template <int32 depth>
 void CopyPixel(uint8*& pTarget, uint32 pixel, bool adv)
 {
   CopyPixel<depth>(pTarget, pixel);  
@@ -375,7 +386,7 @@ void CopyPixel(uint8*& pTarget, uint32 pixel, bool adv)
     AdvancePtr<depth>(pTarget, 1);
 }
 
-template <int depth>
+template <int32 depth>
 uint32 GetPixel(const uint8* pSrc)
 {
   if (depth == 32)
@@ -395,7 +406,7 @@ uint32 GetPixel(const uint8* pSrc)
 }
 
 
-template <int depth>
+template <int32 depth>
 void ScaleLineAvg(uint8* pTarget, int32 TgtWidth, const uint8* pSource, int32 SrcWidth)
 {
   int32 NumPixels = TgtWidth;
@@ -437,7 +448,7 @@ void ScaleLineAvg(uint8* pTarget, int32 TgtWidth, const uint8* pSource, int32 Sr
 
 
 
-template <int depth>
+template <int32 depth>
 void ScaleRectAvg(uint8* pTarget, int32 TgtWidth, int32 TgtHeight,
                   const uint8* pSource, int32 SrcWidth, int32 SrcHeight)
 {
@@ -521,7 +532,7 @@ void ScaleRectAvg(uint8* pTarget, int32 TgtWidth, int32 TgtHeight,
 
 
 
-nglImage::nglImage(const nglImage& rImage, uint NewWidth, uint NewHeight)
+nglImage::nglImage(const nglImage& rImage, uint32 NewWidth, uint32 NewHeight)
 {
   Init();
   mInfo.Copy(rImage.mInfo, false); // don't Clone image buffer
@@ -598,27 +609,27 @@ nglImagePixelFormat nglImage::GetPixelFormat() const
   return mInfo.mPixelFormat;
 }
 
-uint nglImage::GetWidth() const
+uint32 nglImage::GetWidth() const
 {
   return mInfo.mWidth;
 }
 
-uint nglImage::GetHeight() const
+uint32 nglImage::GetHeight() const
 {
   return mInfo.mHeight;
 }
 
-uint nglImage::GetBitDepth() const
+uint32 nglImage::GetBitDepth() const
 {
   return mInfo.mBitDepth;
 }
 
-uint nglImage::GetPixelSize() const
+uint32 nglImage::GetPixelSize() const
 {
   return mInfo.mBytesPerPixel;
 }
 
-uint nglImage::GetBytesPerLine() const
+uint32 nglImage::GetBytesPerLine() const
 {
   return mInfo.mBytesPerLine;
 }
@@ -728,7 +739,7 @@ nglImage* nglImage::Crop(uint32 x, uint32 y, uint32 width, uint32 height)
   char* pSrc = GetBuffer() + (y * mInfo.mBytesPerLine) + (x * mInfo.mBytesPerPixel);
   char* pDst = pNew->GetBuffer();
   
-  for (uint i = 0; i < height; i++, pSrc += mInfo.mBytesPerLine, pDst += newInfo.mBytesPerLine)
+  for (uint32 i = 0; i < height; i++, pSrc += mInfo.mBytesPerLine, pDst += newInfo.mBytesPerLine)
   {
     memcpy(pDst, pSrc, width * newInfo.mBytesPerPixel);
   }
@@ -736,6 +747,39 @@ nglImage* nglImage::Crop(uint32 x, uint32 y, uint32 width, uint32 height)
   return pNew;
 }
 
+void nglImage::PreMultiply()
+{
+  if (mInfo.mPreMultAlpha)
+    return;
+  
+  if (mInfo.mBitDepth == 16 && mInfo.mPixelFormat == eImagePixelLumA)
+  {
+    nglPreMultLine16LumA(GetBuffer(), GetBuffer(), mInfo.mWidth * mInfo.mHeight);
+  }
+  else if (mInfo.mBitDepth == 32 && mInfo.mPixelFormat == eImagePixelRGBA)
+  {
+    nglPreMultLine32RGBA(GetBuffer(), GetBuffer(), mInfo.mWidth * mInfo.mHeight);
+  }
+
+  mInfo.mPreMultAlpha = true;
+}
+
+void nglImage::UnPreMultiply()
+{
+  if (!mInfo.mPreMultAlpha)
+    return;
+  
+  if (mInfo.mBitDepth == 16 && mInfo.mPixelFormat == eImagePixelLumA)
+  {
+    nglUnPreMultLine16LumA(GetBuffer(), GetBuffer(), mInfo.mWidth * mInfo.mHeight);
+  }
+  else if (mInfo.mBitDepth == 32 && mInfo.mPixelFormat == eImagePixelRGBA)
+  {
+    nglUnPreMultLine32RGBA(GetBuffer(), GetBuffer(), mInfo.mWidth * mInfo.mHeight);
+  }
+  
+  mInfo.mPreMultAlpha = false;
+}
 
 
 /*
@@ -827,7 +871,7 @@ bool nglImage::DelCodec (nglImageCodecInfo* pCodecInfo)
   return false;
 }
 
-nglImageCodec* nglImage::CreateCodec (int Index)
+nglImageCodec* nglImage::CreateCodec (int32 Index)
 {
   Init();
   nglImageCodecInfo* info = (*mpCodecInfos)[Index];

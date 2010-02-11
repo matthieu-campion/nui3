@@ -156,12 +156,12 @@ nuiTexture* nuiTexture::GetAATexture()
     info.mPixelFormat = eImagePixelAlpha;   ///< Pixel components and respective components bit resolution
     info.mWidth = pdb;                        ///< Image width in pixels (0 if \a mpBuffer is NULL)
     info.mHeight = pdb;                       ///< Image height in pixels (0 if \a mpBuffer is NULL)
-    info.mBitDepth = 8;                     ///< Pixel bit depth (sum of components bit resolution, 0 if \a mpBuffer is NULL)
     info.mBytesPerPixel = 1;                ///< Pixel allocation size in bytes (>= pixel bit depth, 0 if \a mpBuffer is NULL)
-    info.mBytesPerLine = pdb;                 ///< Pixel row allocation size in bytes (>= pixel size * image width, 0 if \a mpBuffer is NULL)
+    info.mBitDepth = 8 * info.mBytesPerPixel;                     ///< Pixel bit depth (sum of components bit resolution, 0 if \a mpBuffer is NULL)
+    info.mBytesPerLine = pdb * info.mBytesPerPixel;                 ///< Pixel row allocation size in bytes (>= pixel size * image width, 0 if \a mpBuffer is NULL)
     info.AllocateBuffer();
     uint8* buffer = (uint8*)info.mpBuffer;
-    memset(buffer, 0, pdb * pdb);
+    memset(buffer, 0, pdb * pdb * info.mBytesPerPixel);
     glAAGenerateAABuffer(0, 0, buffer);
     pTexture = nuiTexture::GetTexture(info);
     pTexture->SetSource(_T("nuiTextureAA"));
@@ -361,11 +361,15 @@ void nuiTexture::Init()
   {
     mRealWidth = (nuiSize)mpImage->GetWidth();
     mRealHeight = (nuiSize)mpImage->GetHeight();
+    
+    mPixelFormat = mpImage->GetPixelFormat();
   }
   else if (mpSurface)
   {
     mRealWidth = (nuiSize)mpSurface->GetWidth();
     mRealHeight = (nuiSize)mpSurface->GetHeight();
+    
+    mPixelFormat = eImagePixelRGBA;
   }
   mRealWidthPOT = mRealWidth;
   mRealHeightPOT = mRealHeight;
@@ -664,6 +668,11 @@ bool nuiTexture::GetAutoMipMap() const
 const nuiTextureMap& nuiTexture::Enum()
 {
   return mpTextures;
+}
+
+nglImagePixelFormat nuiTexture::GetPixelFormat() const
+{
+  return mPixelFormat;
 }
 
 void nuiTexture::InitAttributes()

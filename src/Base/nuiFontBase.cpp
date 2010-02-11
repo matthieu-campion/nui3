@@ -870,7 +870,7 @@ int nuiFontBase::Print(nuiDrawContext *pContext, float X, float Y, const nuiFont
 
   nuiColor SavedColor = pContext->GetFillColor();
   pContext->SetFillColor(pContext->GetTextColor());
-  pContext->SetBlendFunc(nuiBlendTransp);
+  pContext->SetBlendFunc(nuiBlendText);
 
   std::map<nuiTexture*, std::vector<nuiGlyphLayout> > Glyphs;
   for (i = 0; i < todo; i++)

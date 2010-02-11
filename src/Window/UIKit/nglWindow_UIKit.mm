@@ -17,7 +17,7 @@
 
 #include <GL/gl.h>
 
-#define NGL_WINDOW_FPS 120.0f
+#define NGL_WINDOW_FPS 60.0f
 
 //#include "nglImage.h"
 
@@ -127,16 +127,19 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 
   int frameInterval = 1;
   NSString* sysVersion = [[UIDevice currentDevice] systemVersion];
-//  if ([sysVersion compare:@"3.1" options:NSNumericSearch] != NSOrderedAscending) ///< CADisplayLink requires version 3.1 or greater
-//  {
-//    mDisplayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(Paint)];
-//    [mDisplayLink setFrameInterval:frameInterval];
-//    [mDisplayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-//  }
-//  else ///< NSTimer is used as fallback
-//  {
-//    mInvalidationTimer = [NSTimer scheduledTimerWithTimeInterval:(1.0f / NGL_WINDOW_FPS) target:self selector:@selector(Paint) userInfo:nil repeats:YES];
-//  }
+  if ([sysVersion compare:@"3.1" options:NSNumericSearch] != NSOrderedAscending) ///< CADisplayLink requires version 3.1 or greater
+  {
+    mDisplayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(Paint)];
+    [mDisplayLink setFrameInterval:frameInterval];
+    [mDisplayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+  }
+  else ///< NSTimer is used as fallback
+  {
+    mInvalidationTimer = [NSTimer scheduledTimerWithTimeInterval:(1.0f / NGL_WINDOW_FPS) target:self selector:@selector(Paint) userInfo:nil repeats:YES];
+  }
+  
+  mpTimer = nuiAnimation::AcquireTimer();
+  mpTimer->Stop();
   //  mInvalidationTimer = [NSTimer scheduledTimerWithTimeInterval:0.001f target:self selector:@selector(Paint) userInfo:nil repeats:NO];
 
 	[self initializeKeyboard];
@@ -149,6 +152,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 //NGL_OUT(_T("[nglUIWindow dealloc]\n"));
   mpNGLWindow->CallOnDestruction();
 
+  nuiAnimation::ReleaseTimer();
   if (mInvalidationTimer != nil)
   {
     [mInvalidationTimer invalidate];
@@ -443,10 +447,11 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 - (void)Paint
 {
   [self InitNGLWindow];
-  if (mInvalidated)
+  //if (mInvalidated)
   {
     mInvalidated = false;
-    mpNGLWindow->CallOnPaint();
+    //mpNGLWindow->CallOnPaint();
+    mpTimer->Tick();
   }
 }
 

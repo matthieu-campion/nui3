@@ -209,6 +209,7 @@ void nuiDrawContext::EnableTexturing(bool val)
   }
 }
 
+#if 0
 void nuiGetBlendFuncFactors(nuiBlendFunc Func, GLenum& src, GLenum& dst)
 {
   GLenum sfactor, dfactor;
@@ -238,6 +239,40 @@ void nuiGetBlendFuncFactors(nuiBlendFunc Func, GLenum& src, GLenum& dst)
   src = sfactor;
   dst = dfactor;
 }
+#endif
+
+// Premultiplied Alpha Blending rules:
+void nuiGetBlendFuncFactors(nuiBlendFunc Func, GLenum& src, GLenum& dst)
+{
+  GLenum sfactor, dfactor;
+  switch (Func)
+  {
+    default:
+    case nuiBlendSource:        sfactor = GL_ONE;                   dfactor = GL_ZERO;                 break;
+    case nuiBlendTransp:        sfactor = GL_ONE;                   dfactor = GL_ONE_MINUS_SRC_ALPHA;  break;
+    case nuiBlendClear:         sfactor = GL_ZERO;                  dfactor = GL_ZERO;                 break;
+    case nuiBlendDest:          sfactor = GL_ZERO;                  dfactor = GL_ONE;                  break;
+    case nuiBlendOver:          sfactor = GL_ONE;                   dfactor = GL_ONE_MINUS_SRC_ALPHA;  break;
+    case nuiBlendOverRev:       sfactor = GL_ONE_MINUS_DST_ALPHA;   dfactor = GL_ONE;                  break;
+    case nuiBlendIn:            sfactor = GL_DST_ALPHA;             dfactor = GL_ZERO;                 break;
+    case nuiBlendInRev:         sfactor = GL_ZERO;                  dfactor = GL_SRC_ALPHA;            break;
+    case nuiBlendOut:           sfactor = GL_ONE_MINUS_DST_ALPHA;   dfactor = GL_ZERO;                 break;
+    case nuiBlendOutRev:        sfactor = GL_ZERO;                  dfactor = GL_ONE_MINUS_SRC_ALPHA;  break;
+    case nuiBlendTop:           sfactor = GL_DST_ALPHA;             dfactor = GL_ONE_MINUS_SRC_ALPHA;  break;
+    case nuiBlendTopRev:        sfactor = GL_ONE_MINUS_DST_ALPHA;   dfactor = GL_SRC_ALPHA;            break;
+    case nuiBlendXOR:           sfactor = GL_ONE_MINUS_DST_ALPHA;   dfactor = GL_ONE_MINUS_SRC_ALPHA;  break;
+    case nuiBlendAdd:           sfactor = GL_ONE;                   dfactor = GL_ONE;                  break;
+    case nuiBlendSaturate:      sfactor = GL_SRC_ALPHA_SATURATE;    dfactor = GL_ONE;                  break;
+      
+    case nuiBlendTranspClear:   sfactor = GL_SRC_ALPHA;             dfactor = GL_ZERO;                 break;
+    case nuiBlendTranspInRev:   sfactor = GL_SRC_ALPHA;             dfactor = GL_SRC_ALPHA;            break;
+    case nuiBlendTranspAdd:     sfactor = GL_SRC_ALPHA;             dfactor = GL_ONE;                  break;
+    case nuiBlendText:          sfactor = GL_SRC_ALPHA;             dfactor = GL_ONE_MINUS_SRC_ALPHA;  break;
+  }
+  src = sfactor;
+  dst = dfactor;
+}
+
 
 void nuiDrawContext::SetBlendFunc(nuiBlendFunc Func)
 {

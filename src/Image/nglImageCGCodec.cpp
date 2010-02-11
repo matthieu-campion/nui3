@@ -99,10 +99,12 @@ nglImageCGCodec::~nglImageCGCodec()
 
 bool nglImageCGCodec::Probe(nglIStream* pIStream)
 {
-  if (ProbePNG(pIStream)) {
+  if (ProbePNG(pIStream))
+  {
     return true;
   }
-  else if (ProbeJPEG(pIStream)) {
+  else if (ProbeJPEG(pIStream))
+  {
     return true;
   }
   return false;
@@ -169,6 +171,7 @@ CGImageRef nglImageCGCodec::ReadInfo(nglIStream* pIStream)
       info.mBytesPerPixel = 4;
       info.mBitDepth = 8 * info.mBytesPerPixel;
       info.mBytesPerLine = info.mWidth * info.mBytesPerPixel;
+      info.mPreMultAlpha = true;
       info.mpBuffer = NULL;
 
       SendInfo(info);
