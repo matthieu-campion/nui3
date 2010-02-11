@@ -2273,8 +2273,6 @@ void nuiWidget::SetVisible(bool Visible)
     mNeedLayout = false; // Force relayout
     mNeedSelfLayout = false; // Force relayout
     InvalidateLayout();
-    NGL_ASSERT(mNeedLayout);
-    NGL_ASSERT(mNeedSelfLayout);
   }
   VisibilityChanged();
   DebugRefreshInfo();
