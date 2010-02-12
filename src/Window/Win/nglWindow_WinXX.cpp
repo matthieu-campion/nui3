@@ -1878,9 +1878,9 @@ void nglWindow::EndSession()
     {
       if (NGL_ENABLE_FBO_COPYONSWAP && mFBO_BackBuffer && mFBO_BackBufferTexture)
       {
-        glPushAttrib(GL_ALL_ATTRIB_BITS);
-        nglCheckForGLErrors();
         glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+        nglCheckForGLErrors();
+        //glPushAttrib(GL_ALL_ATTRIB_BITS);
         nglCheckForGLErrors();
         glBindTexture(nglFBOSwapTarget, mFBO_BackBufferTexture);
         nglCheckForGLErrors();
@@ -1959,7 +1959,7 @@ void nglWindow::EndSession()
         glMatrixMode (GL_TEXTURE);
         glPopMatrix();
 
-        glPopAttrib();
+        //glPopAttrib();
 
         nglCheckForGLErrors();
 
