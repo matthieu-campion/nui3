@@ -654,6 +654,7 @@ nuiTexture *nuiFontBase::AllocateTexture(uint size)
   ImageInfo.mpBuffer = NULL;
 
   ImageInfo.AllocateBuffer();
+  memset(ImageInfo.mpBuffer, 0, ImageInfo.mBytesPerLine * ImageInfo.mHeight);
 
   nuiTexture *pTexture = nuiTexture::GetTexture(ImageInfo, true);
   pTexture->SetRetainBuffer(true);
