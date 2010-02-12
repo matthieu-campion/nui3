@@ -1954,11 +1954,12 @@ void nglWindow::EndSession()
 
         glDisable(nglFBOSwapTarget);
 
-        glPopAttrib();
         glMatrixMode (GL_MODELVIEW);
         glPopMatrix();
         glMatrixMode (GL_TEXTURE);
         glPopMatrix();
+
+        glPopAttrib();
 
         nglCheckForGLErrors();
 

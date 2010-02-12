@@ -155,7 +155,7 @@ nuiTopLevel::nuiTopLevel(const nglPath& rResPath)
 {
   //EnableRenderCache(false);
   mReleased = false;
-  mNeedInvalidateOnSetRect = false;
+  mNeedInvalidateOnSetRect = true;
   mClearBackground = true;
   nuiTheme::InitTheme(rResPath);
   SetObjectClass(_T("nuiTopLevel"));
@@ -197,7 +197,7 @@ bool nuiTopLevel::Load(const nuiXMLNode* pNode)
   
   //EnableRenderCache(false);
   mClearBackground = true;
-  mNeedInvalidateOnSetRect = false;
+  mNeedInvalidateOnSetRect = true;
   mReleased = false;
   SetObjectClass(_T("nuiTopLevel"));
 

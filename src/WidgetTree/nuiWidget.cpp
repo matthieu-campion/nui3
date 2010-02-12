@@ -1196,13 +1196,16 @@ void nuiWidget::BroadcastInvalidateLayout(nuiWidgetPtr pSender, bool BroadCastOn
   if (mpParent)
   {
     mpParent->BroadcastInvalidateLayout(pSender, BroadCastOnly);
+    //NGL_OUT(_T("nuiWidget::BroadcastInvalidateLayout %ls / %ls / 0x%x\n"), pSender->GetObjectClass().GetChars(), pSender->GetObjectName().GetChars(), pSender);
   }
 
 #ifdef DEBUG
   if (GetDebug() || pSender->GetDebug())
   {
-    NGL_OUT(_T("nuiWidget::BroadcastInvalidateLayout %ls / %ls / 0x%x\n"), pSender->GetObjectClass().GetChars(), pSender->GetObjectName().GetChars(), pSender);
-  }
+<<<<<<< .mine    //#TEST
+    //NGL_OUT(_T("nuiWidget::BroadcastInvalidateLayout SKIP %ls / %ls / 0x%x\n"), pSender->GetObjectClass().GetChars(), pSender->GetObjectName().GetChars(), pSender);
+=======    NGL_OUT(_T("nuiWidget::BroadcastInvalidateLayout %ls / %ls / 0x%x\n"), pSender->GetObjectClass().GetChars(), pSender->GetObjectName().GetChars(), pSender);
+>>>>>>> .theirs  }
 #endif
 
   mNeedLayout = true;
@@ -2860,7 +2863,7 @@ void nuiWidget::InternalSetLayout(const nuiRect& rect, bool PositionChanged, boo
 #ifdef _DEBUG_
   if (GetDebug())
   {
-    NGL_OUT(_T("InternalSetLayout\n"));
+    //NGL_OUT(_T("InternalSetLayout\n"));
   }
 #endif
   

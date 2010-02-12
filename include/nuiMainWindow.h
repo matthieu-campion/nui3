@@ -48,6 +48,7 @@ public:
 
   /* @name Inherited from nuiWidget */
   //@{
+  virtual void InvalidateLayout();
   virtual void BroadcastInvalidate(nuiWidgetPtr pSender);
   virtual void BroadcastInvalidateLayout(nuiWidgetPtr pSender, bool BroadCastOnly);
   virtual void BroadcastInvalidateRect(nuiWidgetPtr pSender, const nuiRect& rRect);

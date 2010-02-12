@@ -366,11 +366,11 @@ int nglContextInfo::GetPFD(HDC hDC) const
     res = wglMakeCurrent(tmpDC, rc);
 
 
-    res = wglMakeCurrent(NULL, NULL);
-    res = wglDeleteContext(rc);
-
-    res = ReleaseDC(tmpWin, tmpDC);
-    res = DestroyWindow(tmpWin);
+//     res = wglMakeCurrent(NULL, NULL);
+//     res = wglDeleteContext(rc);
+// 
+//     res = ReleaseDC(tmpWin, tmpDC);
+//     res = DestroyWindow(tmpWin);
 
 
     PFNWGLCHOOSEPIXELFORMATARBPROC wglChoosePixelFormatARB = NULL;

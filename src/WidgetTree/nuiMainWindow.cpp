@@ -472,6 +472,13 @@ void nuiMainWindow::OnState (nglWindow::StateInfo State)
 }
 
 
+void nuiMainWindow::InvalidateLayout()
+{
+  //NGL_OUT(_T("nuiMainWindow::InvalidateLayout\n"));
+  nuiTopLevel::InvalidateLayout();
+  BroadcastInvalidateLayout(this, false);
+}
+
 void nuiMainWindow::BroadcastInvalidate(nuiWidgetPtr pSender)
 {
   nuiTopLevel::BroadcastInvalidate(pSender);

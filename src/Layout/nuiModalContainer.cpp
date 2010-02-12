@@ -49,7 +49,7 @@ void nuiModalContainer::InitParent(nuiContainerPtr pParent)
   
   SetWantKeyboardFocus(true);
   pTop->AddChild(this);
-  
+  pTop->Invalidate();
   GetTopLevel()->CancelGrab();
   Grab();
   SetFocusVisible(false);
