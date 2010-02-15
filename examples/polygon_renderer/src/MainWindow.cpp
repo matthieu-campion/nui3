@@ -874,11 +874,11 @@ private:
     
     if (u < 0)
       u = 0;
-    else if (u > mTextureWidth)
+    else if (u >= mTextureWidth)
       u = mTextureWidth - 1;
     if (v < 0)
       v = 0;
-    else if (v > mTextureHeight)
+    else if (v >= mTextureHeight)
       v = mTextureHeight - 1;
     
     const uint8* pBuffer = (uint8*)mpTextureBuffer;
@@ -894,11 +894,11 @@ private:
     
     if (u < 0)
       u = 0;
-    else if (u > mTextureWidth)
+    else if (u >= mTextureWidth)
       u = mTextureWidth - 1;
     if (v < 0)
       v = 0;
-    else if (v > mTextureHeight)
+    else if (v >= mTextureHeight)
       v = mTextureHeight - 1;
     
     const uint8* pBuffer = (uint8*)mpTextureBuffer;
@@ -929,11 +929,11 @@ private:
     
     if (u < 0)
       u = 0;
-    else if (u > mTextureWidth)
+    else if (u >= mTextureWidth)
       u = mTextureWidth - 1;
     if (v < 0)
       v = 0;
-    else if (v > mTextureHeight)
+    else if (v >= mTextureHeight)
       v = mTextureHeight - 1;
     
     const uint8* pBuffer = (uint8*)mpTextureBuffer;
@@ -950,11 +950,11 @@ private:
     
     if (u < 0)
       u = 0;
-    else if (u > mTextureWidth)
+    else if (u >= mTextureWidth)
       u = mTextureWidth - 1;
     if (v < 0)
       v = 0;
-    else if (v > mTextureHeight)
+    else if (v >= mTextureHeight)
       v = mTextureHeight - 1;
     
     const uint8* pBuffer = (uint8*)mpTextureBuffer;
@@ -971,11 +971,11 @@ private:
     const uint32* pBuffer = (uint32*)mpTextureBuffer;
     if (u < 0)
       u = 0;
-    else if (u > mTextureWidth)
+    else if (u >= mTextureWidth)
       u = mTextureWidth - 1;
     if (v < 0)
       v = 0;
-    else if (v > mTextureHeight)
+    else if (v >= mTextureHeight)
       v = mTextureHeight - 1;
     
     return pBuffer[u + v * mTextureWidth];
@@ -994,8 +994,8 @@ private:
     if (y)
       y += 1;
     
-    const int32 xx = 0x100 - x;
-    const int32 yy = 0x100 - y;
+    int32 xx = 0x100 - x;
+    int32 yy = 0x100 - y;
     
     int32 uu = u + 0x10000;
     int32 vv = v + 0x10000;
@@ -1039,7 +1039,7 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
   Rasterizer rasterizer(&screen, false);
   rasterizer.SetClipRect(0, 0, 640, 480);
   rasterizer.SetTexture(pTexture);
-  rasterizer.SetTextureFilter(false);
+  rasterizer.SetTextureFilter(true);
   
   {
 //    vertex v0(10, 10,   1, 0, 0,   0, 0, 0);
@@ -1047,8 +1047,8 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
 //    vertex v2(303, 100, 0, 0, 1,  .5, 1, 1);
 //    vertex v3(303, 10,  0, 1, 0, 1.0, 1, 0);
     
-#define XMULTIPLIER 1
-#define YMULTIPLIER 1
+#define XMULTIPLIER 1.0
+#define YMULTIPLIER 0.9
     vertex v0(0, 0,   1, 0, 0,   0, 0, 0);
     vertex v1(0, pTexture->GetHeight() * YMULTIPLIER,  0, 1, 0,  .5, 0, 1);
     vertex v2(pTexture->GetWidth() * XMULTIPLIER, pTexture->GetHeight() * YMULTIPLIER, 0, 0, 1,  .5, 1, 1);
@@ -1077,10 +1077,10 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
   {
     //srandom(time(NULL));
     double now = nglTime();
-    for (uint32 i = 0; i < 1000000; i++)
+    for (uint32 i = 0; i < 100; i++)
     {
 #define R ((random() % 200 + 55) / 255.0f)
-#if 0 // Large triangles
+#if 1 // Large triangles
       vertex v0(random() % 1200 - 200, random() % 800 - 200, R, R, R, R, 0, 0);
       vertex v1(random() % 1200 - 200, random() % 800 - 200, R, R, R, R, 1, 0);
       vertex v2(random() % 1200 - 200, random() % 800 - 200, R, R, R, R, 0, 1);

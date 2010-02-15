@@ -305,6 +305,10 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				HEADER_SEARCH_PATHS = ../../include;
+				OTHER_LDFLAGS = (
+					"-lz",
+					"-liconv",
+				);
 			};
 			name = Default;
 		};
@@ -323,7 +327,6 @@
 				GCC_OPTIMIZATION_LEVEL = s;
 				INFOPLIST_FILE = "";
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = "-lz";
 				PREBINDING = YES;
 				PRODUCT_NAME = polygon_renderer;
 				STRIP_INSTALLED_PRODUCT = YES;
@@ -350,7 +353,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = _DEBUG;
 				INFOPLIST_FILE = "";
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = "-lz";
 				PREBINDING = YES;
 				PRODUCT_NAME = polygon_rendererD;
 				WARNING_CFLAGS = (

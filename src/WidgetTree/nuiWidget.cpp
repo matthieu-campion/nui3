@@ -2501,7 +2501,8 @@ const nuiRect& nuiWidget::GetIdealRect()
     mIdealRect.Top() -= GetActualBorderTop();
     mIdealRect.Left() -= GetActualBorderLeft();
     mIdealRect.Right() += GetActualBorderRight();
-    mIdealRect.Move(-GetActualBorderLeft(), -GetActualBorderTop());
+    if (!HasUserPos())
+      mIdealRect.MoveTo(0, 0);
     mIdealRect.RoundToBiggest();
 
   }

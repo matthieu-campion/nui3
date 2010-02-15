@@ -42,7 +42,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					1412,
+					10,
 					20,
 					48,
 					43,
@@ -59,14 +59,36 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 286199984;
-			PBXWorkspaceStateSaveDate = 286199984;
+			PBXConfiguration.PBXTargetDataSource.PBXTargetDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					1372,
+					60,
+					20,
+					48.16259765625,
+					43,
+					43,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXTargetDataSource_PrimaryAttribute,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 287942956;
+			PBXWorkspaceStateSaveDate = 287942956;
 		};
 		perUserProjectItems = {
-			E57EC6D1110F10B600AE0A3A /* PBXTextBookmark */ = E57EC6D1110F10B600AE0A3A /* PBXTextBookmark */;
-			E57EC6D2110F10B600AE0A3A /* PBXTextBookmark */ = E57EC6D2110F10B600AE0A3A /* PBXTextBookmark */;
-			E57EC72811105A8700AE0A3A /* PBXTextBookmark */ = E57EC72811105A8700AE0A3A /* PBXTextBookmark */;
-			E57EC72911105A8700AE0A3A /* PBXTextBookmark */ = E57EC72911105A8700AE0A3A /* PBXTextBookmark */;
+			E5752C6D11294D14005D676B = E5752C6D11294D14005D676B /* PBXTextBookmark */;
+			E5752C7011294DD5005D676B = E5752C7011294DD5005D676B /* PBXTextBookmark */;
+			E5752C711129A90C005D676B = E5752C711129A90C005D676B /* PBXTextBookmark */;
+			E5752C721129A90C005D676B = E5752C721129A90C005D676B /* PBXTextBookmark */;
 		};
 		sourceControlManager = E5EC7F5F0EE963EC00F8404D /* Source Control */;
 		userBuildSettings = {
@@ -86,9 +108,9 @@
 	};
 	61A9DFF10B83433800BC506C /* MainWindow.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1590, 13819}}";
-			sepNavSelRange = "{11968, 0}";
-			sepNavVisRange = "{11361, 1590}";
+			sepNavIntBoundsRect = "{{0, 0}, {1183, 14287}}";
+			sepNavSelRange = "{24155, 0}";
+			sepNavVisRange = "{22935, 2749}";
 		};
 	};
 	61A9DFF20B83433800BC506C /* MainWindow.h */ = {
@@ -98,45 +120,45 @@
 			sepNavVisRange = "{0, 540}";
 		};
 	};
-	E57EC6D1110F10B600AE0A3A /* PBXTextBookmark */ = {
+	E5752C6D11294D14005D676B /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
-		name = "MainWindow.cpp: 564";
+		name = "MainWindow.cpp: 1051";
 		rLen = 0;
-		rLoc = 11968;
+		rLoc = 24155;
 		rType = 0;
-		vrLen = 1590;
-		vrLoc = 11361;
+		vrLen = 2749;
+		vrLoc = 22935;
 	};
-	E57EC6D2110F10B600AE0A3A /* PBXTextBookmark */ = {
+	E5752C7011294DD5005D676B /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
-		name = "MainWindow.cpp: 564";
+		name = "MainWindow.cpp: 1051";
 		rLen = 0;
-		rLoc = 11968;
+		rLoc = 24155;
 		rType = 0;
-		vrLen = 1590;
-		vrLoc = 11361;
+		vrLen = 2352;
+		vrLoc = 23332;
 	};
-	E57EC72811105A8700AE0A3A /* PBXTextBookmark */ = {
+	E5752C711129A90C005D676B /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
-		name = "MainWindow.cpp: 564";
+		name = "MainWindow.cpp: 1051";
 		rLen = 0;
-		rLoc = 11968;
+		rLoc = 24155;
 		rType = 0;
-		vrLen = 1590;
-		vrLoc = 11361;
+		vrLen = 2563;
+		vrLoc = 23127;
 	};
-	E57EC72911105A8700AE0A3A /* PBXTextBookmark */ = {
+	E5752C721129A90C005D676B /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
-		name = "MainWindow.cpp: 564";
+		name = "MainWindow.cpp: 1051";
 		rLen = 0;
-		rLoc = 11968;
+		rLoc = 24155;
 		rType = 0;
-		vrLen = 1479;
-		vrLoc = 11361;
+		vrLen = 2352;
+		vrLoc = 23332;
 	};
 	E5EC7F470EE963CC00F8404D /* polygon_renderer */ = {
 		isa = PBXExecutable;

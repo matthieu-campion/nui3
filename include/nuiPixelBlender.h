@@ -37,46 +37,47 @@ public:
   }
 };
 
+#if 0
+static uint32 lerpRGBA(const uint32 d, const uint32 s, uint32 ti)
+{
+  uint32 dstga = d      & 0xFF00FF;
+  uint32 dstrb = d >> 8 & 0xFF00FF;
+  
+  uint32 srcga = s      & 0xFF00FF;
+  uint32 srcrb = s >> 8 & 0xFF00FF;
+  
+  uint32 dga = srcga - dstga;
+  uint32 drb = srcrb - dstrb;
+  
+  dga = (dga * ti) >> 8;  
+  drb = (drb * ti) >> 8;  
+  
+  const uint32 ga  = (dga + dstga)      & 0x00FF00FF;
+  const uint32 rb  = (drb + dstrb) << 8 & 0xFF00FF00;
+  return ga | rb;
+}
+#else
+static uint32 lerpRGBA(const uint32 d, const uint32 s, uint32 ti)
+{
+  ti--;
+  uint32 dstga = d      & 0xFF00FF;
+  uint32 dstrb = d >> 8 & 0xFF00FF;
+  
+  uint32 srcga = s      & 0xFF00FF;
+  uint32 srcrb = s >> 8 & 0xFF00FF;
+  
+  uint32 dga = (dstga * ti) >> 8;  
+  uint32 drb = (dstrb * ti) >> 8;  
+  
+  const uint32 ga  = (dga + srcga)      & 0x00FF00FF;
+  const uint32 rb  = (drb + srcrb) << 8 & 0xFF00FF00;
+  return ga | rb;
+}
+#endif
+
 class nuiPixelBlender_Transp
 {
 public:
-#if 1
-  static uint32 lerpRGBA(const uint32 d, const uint32 s, uint32 ti)
-  {
-    uint32 dstga = d      & 0xFF00FF;
-    uint32 dstrb = d >> 8 & 0xFF00FF;
-
-    uint32 srcga = s      & 0xFF00FF;
-    uint32 srcrb = s >> 8 & 0xFF00FF;
-
-    uint32 dga = srcga - dstga;
-    uint32 drb = srcrb - dstrb;
-
-    dga = (dga * ti) >> 8;  
-    drb = (drb * ti) >> 8;  
-
-    const uint32 ga  = (dga + dstga)      & 0x00FF00FF;
-    const uint32 rb  = (drb + dstrb) << 8 & 0xFF00FF00;
-    return ga | rb;
-  }
-#else
-  static uint32 lerpRGBA(const uint32 d, const uint32 s, uint32 ti)
-  {
-    const uint32 dstga = d      & 0xFF00FF;
-    const uint32 dstrb = d >> 8 & 0xFF00FF;
-
-     const uint32 srcga = s      & 0xFF00FF;
-     const uint32 srcrb = s >> 8 & 0xFF00FF;
-
-    const uint32 dga = (dstga * ti) >> 8;  
-    const uint32 drb = (dstrb * ti) >> 8;  
-
-    const uint32 ga  = (dga + srcga)      & 0x00FF00FF;
-    const uint32 rb  = (drb + srcrb) << 8 & 0xFF00FF00;
-    
-    return (ga | rb);
-  }
-#endif
 
   static void Blend(uint32& dest_color, const uint32 src_color)
   {
