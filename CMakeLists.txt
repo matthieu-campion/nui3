@@ -289,7 +289,6 @@ set(SOURCES
   src/Time/nglTime.cpp
   src/Time/nglTimer.cpp
   
-  src/Application/mmgr.cpp
   src/Application/nglApplication.cpp
   src/Application/nglClipBoard.cpp
   src/Application/nglConsole.cpp
