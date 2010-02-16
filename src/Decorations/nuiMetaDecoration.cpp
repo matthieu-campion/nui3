@@ -153,18 +153,21 @@ nuiSize nuiMetaDecoration::GetBorder(nuiPosition position, const nuiWidget* pWid
   
 void nuiMetaDecoration::GetBorders(const nuiWidget* pWidget, float& rLeft, float& rRight, float& rTop, float& rBottom, float& rHorizontal, float& rVertical) const
 {
-  if (!mBorderEnabled)
-    return;
-  
-  std::vector<nuiDecoration*>::const_iterator it = mDecorations.begin();
-  std::vector<nuiDecoration*>::const_iterator end = mDecorations.end();
-  
   rLeft = 0;
   rRight = 0;
   rTop = 0;
   rBottom = 0;
   rHorizontal = 0;
   rVertical = 0;
+
+  if (!mBorderEnabled)
+  {
+    return;
+  }
+  
+  std::vector<nuiDecoration*>::const_iterator it = mDecorations.begin();
+  std::vector<nuiDecoration*>::const_iterator end = mDecorations.end();
+  
   
   while (it != end)
   {

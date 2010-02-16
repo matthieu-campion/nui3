@@ -188,8 +188,10 @@ nuiContainer::Iterator* nuiSimpleContainer::GetFirstChild()
 {
   IteratorPtr pIt;
   pIt = new Iterator();
-  pIt->SetElement(mpChildren.begin());
-  pIt->SetValid(!mpChildren.empty());  
+  bool valid = !mpChildren.empty();
+  pIt->SetValid(valid);
+  if (valid)
+    pIt->SetElement(mpChildren.begin());
   return pIt;
 }
 
@@ -197,8 +199,10 @@ nuiContainer::ConstIterator* nuiSimpleContainer::GetFirstChild() const
 {
   ConstIteratorPtr pIt;
   pIt = new ConstIterator();
-  pIt->SetElement(mpChildren.begin());
-  pIt->SetValid(!mpChildren.empty());  
+  bool valid = !mpChildren.empty();
+  pIt->SetValid(valid);
+  if (valid)
+    pIt->SetElement(mpChildren.begin());
   return pIt;
 }
 

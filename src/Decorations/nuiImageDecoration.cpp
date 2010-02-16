@@ -317,7 +317,10 @@ nuiSize nuiImageDecoration::GetBorder(nuiPosition position, const nuiWidget* pWi
 void nuiImageDecoration::GetBorders(const nuiWidget* pWidget, float& rLeft, float& rRight, float& rTop, float& rBottom, float& rHorizontal, float& rVertical) const
 {
   if (!mBorderEnabled)
+  {
+    rLeft = rRight = rTop = rBottom = rHorizontal = rVertical = 0;
     return;
+  }
   
   nuiSize w = 1.0, h = 1.0;
   mpTexture->TextureToImageCoord(w, h);

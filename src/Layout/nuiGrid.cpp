@@ -1130,6 +1130,11 @@ bool nuiGrid::Clear(bool Delete)
 
 bool nuiGrid::Draw(nuiDrawContext *pContext)
 {
+  if (GetDebug())
+  {
+    NGL_OUT(_T("nuiGrid::Draw 0x%p\n"), this);
+  }
+
   if (mDisplayWidgetBoundingRect)
   {
     pContext->SetStrokeColor(GetColor(eBorder));
@@ -1138,7 +1143,7 @@ bool nuiGrid::Draw(nuiDrawContext *pContext)
   IteratorPtr pIt;
   for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
   {
-     nuiWidgetPtr pItem = pIt->GetWidget();
+    nuiWidgetPtr pItem = pIt->GetWidget();
     if (pItem)
     {
       //#FIXME #TEST

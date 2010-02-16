@@ -224,7 +224,10 @@ nuiSize nuiBorderDecoration::GetBorder(nuiPosition position, const nuiWidget* pW
 void nuiBorderDecoration::GetBorders(const nuiWidget* pWidget, float& rLeft, float& rRight, float& rTop, float& rBottom, float& rHorizontal, float& rVertical) const
 {
   if (!mBorderEnabled)
+  {
+    rLeft = rRight = rTop = rBottom = rHorizontal = rVertical = 0;
     return;
+  }
   
   rLeft = mClientRect.Left();
   rRight = rLeft;

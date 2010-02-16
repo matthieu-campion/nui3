@@ -182,7 +182,10 @@ nuiSize nuiTreeHandleDecoration::GetBorder(nuiPosition position, const nuiWidget
 void nuiTreeHandleDecoration::GetBorders(const nuiWidget* pWidget, float& rLeft, float& rRight, float& rTop, float& rBottom, float& rHorizontal, float& rVertical) const
 {
   if (!mBorderEnabled)
+  {
+    rLeft = rRight = rTop = rBottom = rHorizontal = rVertical = 0;
     return;
+  }
   
   rLeft = mBorder.GetWidth() + mHandleSize/2.0f;
   rRight = 0;
