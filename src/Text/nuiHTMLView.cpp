@@ -192,7 +192,7 @@ nuiRect nuiHTMLView::CalcIdealSize()
   float IdealWidth = mIdealWidth;
   if (mRect.GetWidth() > 0)
     IdealWidth = mRect.GetWidth();
-  Clear();
+  //Clear();
 
   mpContext->mMaxWidth = IdealWidth;
   if (!mpRootBox)
