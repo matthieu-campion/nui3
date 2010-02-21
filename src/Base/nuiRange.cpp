@@ -384,7 +384,7 @@ bool nuiRange::MakeInRange(double Position, double size)
 
 double nuiRange::ConvertToUnit(double RangeValue) const
 {
-  double t = mValue - mMinimum;
+  double t = RangeValue - mMinimum;
   double r = mMaximum - mMinimum;
   return t / r;
 }
