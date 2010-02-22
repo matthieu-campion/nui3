@@ -962,12 +962,10 @@ nuiRect nuiWidget::GetBorderedRect() const
 
 void nuiWidget::InvalidateRect(const nuiRect& rRect)
 {
-#ifdef _DEBUG_
+  #ifdef _DEBUG_LAYOUT
   if (GetDebug())
-  {
     NGL_OUT(_T("  nuiWidget::InvalidateRect '%ls' [%ls] %ls\n"), GetObjectClass().GetChars(), GetObjectName().GetChars(), rRect.GetValue().GetChars());
-  }
-#endif
+  #endif
   
   if (IsVisible(true))
   {
@@ -1098,12 +1096,12 @@ void nuiWidget::SetSurfaceBlendFunc(nuiBlendFunc BlendFunc)
 void nuiWidget::SilentInvalidate()
 {
   mNeedRender = true;
-#ifdef _DEBUG_
+  #ifdef _DEBUG_LAYOUT
   if (GetDebug())
   {
     NGL_OUT(_T("  nuiWidget::SilentInvalidate '%ls' [%ls]\n"), GetObjectClass().GetChars(), GetObjectName().GetChars());
   }
-#endif
+  #endif
   
   mNeedSelfRedraw = true;
   InvalidateSurface();
@@ -1129,12 +1127,12 @@ void nuiWidget::BroadcastInvalidate(nuiWidgetPtr pSender)
 
 void nuiWidget::SilentInvalidateLayout()
 {
-#ifdef _DEBUG_
+  #ifdef _DEBUG_LAYOUT
   if (GetDebug())
   {
     NGL_OUT(_T("  nuiWidget::SilentInvalidateLayout '%ls' [%ls]\n"), GetObjectClass().GetChars(), GetObjectName().GetChars());
   }
-#endif
+  #endif
   mNeedSelfLayout = true;
   mNeedLayout = true;
   mNeedIdealRect = true;
@@ -2528,10 +2526,11 @@ const nuiRect& nuiWidget::GetIdealRect()
 
 bool nuiWidget::SetRect(const nuiRect& rRect)
 {
+  #ifdef _DEBUG_LAYOUT
   if (GetDebug())
-  {
     NGL_OUT(_T("nuiWidget::SetRect on '%ls' (%f, %f - %f, %f)\n"), GetObjectClass().GetChars(), rRect.mLeft, rRect.mTop, rRect.GetWidth(), rRect.GetHeight());
-  }
+  #endif
+  
   bool inval = mNeedInvalidateOnSetRect;
   if (!(mRect == rRect))
     inval = true;
