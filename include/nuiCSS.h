@@ -137,7 +137,7 @@ class nuiCSS
 {
 public:
   nuiCSS(); 
-  ~nuiCSS();
+  virtual ~nuiCSS();
   
   bool Load(nglIStream& rStream, const nglPath& rSourcePath = nglPath(nglString::Null));
   bool Serialize(nglOStream& rStream);
@@ -146,6 +146,8 @@ public:
   void ApplyRules(nuiWidget* pWidget, uint32 MatchersMask);
   bool GetMatchingRules(nuiWidget* pWidget, std::vector<nuiCSSRule*>& rMatchingRules, uint32 MatchersMask); /// Returns true if the widget is matched by this rule
 
+  virtual nuiObject* CreateObject(const nglString& rType, const nglString& rName);
+  
   const nglString& GetErrorString() const;
 
 private:
