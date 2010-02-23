@@ -15,6 +15,7 @@
 
 //#include "nui.h"
 #include "nglString.h"
+#include "nglReaderWriterLock.h"
 class nglOStream;
 
 /* Verbosity levels
@@ -152,8 +153,8 @@ private:
   {
   public:
     nglString Name;
-    uint      Level;
-    uint      Count;
+    nglAtomic Level;
+    nglAtomic Count;
 
     Domain(const nglChar* pName, uint LogLevel) : Name(pName), Level(LogLevel), Count(0) {}
   };
@@ -175,6 +176,8 @@ private:
 
   Domain* LookupDomain (const nglChar* pName);
   void    Output (const nglString& rText) const;
+
+  mutable nglReaderWriterLock mLock;
 };
 
 #endif // __nglLog_h__

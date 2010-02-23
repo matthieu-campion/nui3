@@ -14,6 +14,7 @@ nglReaderWriterLock::nglReaderWriterLock()
   mWaitingReaders = 0;
   mWaitingWriters = 0;
   mWriterThreadId = 0;
+//  mSyncEvent.Set();
 }
 
 void nglReaderWriterLock::ReadLock()
