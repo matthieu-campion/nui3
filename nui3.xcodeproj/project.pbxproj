@@ -3003,6 +3003,12 @@
 		E5B74ADF0FE021C900476F43 /* nuiRSSView.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B74ADE0FE021C900476F43 /* nuiRSSView.h */; };
 		E5B74AE00FE021C900476F43 /* nuiRSSView.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B74ADE0FE021C900476F43 /* nuiRSSView.h */; };
 		E5B74AE10FE021C900476F43 /* nuiRSSView.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B74ADE0FE021C900476F43 /* nuiRSSView.h */; };
+		E5B7A1D611347AE3005403BF /* nglReaderWriterLock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5B7A1D511347AE3005403BF /* nglReaderWriterLock.cpp */; };
+		E5B7A1D711347AE3005403BF /* nglReaderWriterLock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5B7A1D511347AE3005403BF /* nglReaderWriterLock.cpp */; };
+		E5B7A1D811347AE3005403BF /* nglReaderWriterLock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5B7A1D511347AE3005403BF /* nglReaderWriterLock.cpp */; };
+		E5B7A1DA11347AF4005403BF /* nglReaderWriterLock.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B7A1D911347AF4005403BF /* nglReaderWriterLock.h */; };
+		E5B7A1DB11347AF4005403BF /* nglReaderWriterLock.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B7A1D911347AF4005403BF /* nglReaderWriterLock.h */; };
+		E5B7A1DC11347AF4005403BF /* nglReaderWriterLock.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B7A1D911347AF4005403BF /* nglReaderWriterLock.h */; };
 		E5B916C10E8A6CDC00610715 /* nuiHyperLink.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5B916C00E8A6CDC00610715 /* nuiHyperLink.cpp */; };
 		E5B916C20E8A6CDC00610715 /* nuiHyperLink.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5B916C00E8A6CDC00610715 /* nuiHyperLink.cpp */; };
 		E5B916C40E8A6CFB00610715 /* nuiHyperLink.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B916C30E8A6CFB00610715 /* nuiHyperLink.h */; };
@@ -4115,6 +4121,8 @@
 		E5B678C40F39EFCF00DBF325 /* nuiAttributeAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiAttributeAnimation.cpp; path = Animations/nuiAttributeAnimation.cpp; sourceTree = "<group>"; };
 		E5B678C80F39EFE100DBF325 /* nuiAttributeAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiAttributeAnimation.h; path = include/nuiAttributeAnimation.h; sourceTree = SOURCE_ROOT; };
 		E5B74ADE0FE021C900476F43 /* nuiRSSView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiRSSView.h; path = include/nuiRSSView.h; sourceTree = SOURCE_ROOT; };
+		E5B7A1D511347AE3005403BF /* nglReaderWriterLock.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nglReaderWriterLock.cpp; path = src/Threading/nglReaderWriterLock.cpp; sourceTree = SOURCE_ROOT; };
+		E5B7A1D911347AF4005403BF /* nglReaderWriterLock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nglReaderWriterLock.h; path = include/nglReaderWriterLock.h; sourceTree = SOURCE_ROOT; };
 		E5B916C00E8A6CDC00610715 /* nuiHyperLink.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiHyperLink.cpp; sourceTree = "<group>"; };
 		E5B916C30E8A6CFB00610715 /* nuiHyperLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiHyperLink.h; path = include/nuiHyperLink.h; sourceTree = SOURCE_ROOT; };
 		E5BC28480EFF1132009EEA3B /* nuiHTTP_CoreFoundation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiHTTP_CoreFoundation.cpp; path = CoreFoundation/nuiHTTP_CoreFoundation.cpp; sourceTree = "<group>"; };
@@ -4447,6 +4455,8 @@
 		E505C8720C958BE6001D802C /* Threading */ = {
 			isa = PBXGroup;
 			children = (
+				E5B7A1D911347AF4005403BF /* nglReaderWriterLock.h */,
+				E5B7A1D511347AE3005403BF /* nglReaderWriterLock.cpp */,
 				E505C8870C958C54001D802C /* nglAtomic.h */,
 				E505C8940C958C98001D802C /* nglCriticalSection.h */,
 				E505C8800C958C16001D802C /* nglCriticalSection_posix.cpp */,
@@ -6663,6 +6673,7 @@
 				E5D13BF01100AFB5000F46C4 /* ucdata.h in Headers */,
 				E5D13BF21100AFB5000F46C4 /* ucdata_static.h in Headers */,
 				E57ECB661110A6E300AE0A3A /* nuiTextureInspector.h in Headers */,
+				E5B7A1DA11347AF4005403BF /* nglReaderWriterLock.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7256,6 +7267,7 @@
 				E5D13BEB1100AFB5000F46C4 /* ucdata.h in Headers */,
 				E5D13BED1100AFB5000F46C4 /* ucdata_static.h in Headers */,
 				E57ECB681110A6E300AE0A3A /* nuiTextureInspector.h in Headers */,
+				E5B7A1DC11347AF4005403BF /* nglReaderWriterLock.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7846,6 +7858,7 @@
 				E5D13BE61100AFB5000F46C4 /* ucdata.h in Headers */,
 				E5D13BE81100AFB5000F46C4 /* ucdata_static.h in Headers */,
 				E57ECB671110A6E300AE0A3A /* nuiTextureInspector.h in Headers */,
+				E5B7A1DB11347AF4005403BF /* nglReaderWriterLock.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8373,6 +8386,7 @@
 				E5D13BEF1100AFB5000F46C4 /* ucpgba.c in Sources */,
 				E5D13BF11100AFB5000F46C4 /* ucdata.c in Sources */,
 				E57ECB621110A6BA00AE0A3A /* nuiTextureInspector.cpp in Sources */,
+				E5B7A1D611347AE3005403BF /* nglReaderWriterLock.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8821,6 +8835,7 @@
 				E5D13BEA1100AFB5000F46C4 /* ucpgba.c in Sources */,
 				E5D13BEC1100AFB5000F46C4 /* ucdata.c in Sources */,
 				E57ECB641110A6BA00AE0A3A /* nuiTextureInspector.cpp in Sources */,
+				E5B7A1D811347AE3005403BF /* nglReaderWriterLock.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9263,6 +9278,7 @@
 				E5D13BE51100AFB5000F46C4 /* ucpgba.c in Sources */,
 				E5D13BE71100AFB5000F46C4 /* ucdata.c in Sources */,
 				E57ECB631110A6BA00AE0A3A /* nuiTextureInspector.cpp in Sources */,
+				E5B7A1D711347AE3005403BF /* nglReaderWriterLock.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

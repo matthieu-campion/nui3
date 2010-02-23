@@ -252,8 +252,6 @@
 			<key>Layout</key>
 			<array>
 				<dict>
-					<key>BecomeActive</key>
-					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -302,7 +300,7 @@
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 0}, {247, 1060}}</string>
+							<string>{{0, 0}, {247, 888}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -312,7 +310,7 @@
 					<key>GeometryConfiguration</key>
 					<dict>
 						<key>Frame</key>
-						<string>{{0, 0}, {264, 1078}}</string>
+						<string>{{0, 0}, {264, 906}}</string>
 						<key>GroupTreeTableConfiguration</key>
 						<array>
 							<string>SCMStatusColumn</string>
@@ -321,7 +319,7 @@
 							<real>225</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>0 59 1920 1119 0 0 1920 1178 </string>
+						<string>0 231 1920 947 0 0 1920 1178 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -332,6 +330,8 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -349,10 +349,10 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E5752C711129A90C005D676B</string>
+										<string>E5B7A16D11347A81005403BF</string>
 										<key>history</key>
 										<array>
-											<string>E5752C7011294DD5005D676B</string>
+											<string>E520FA481133F49600D65361</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -366,18 +366,18 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {1651, 739}}</string>
+								<string>{{0, 0}, {1651, 546}}</string>
 								<key>RubberWindowFrame</key>
-								<string>0 59 1920 1119 0 0 1920 1178 </string>
+								<string>0 231 1920 947 0 0 1920 1178 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>739pt</string>
+							<string>546pt</string>
 						</dict>
 						<dict>
 							<key>Proportion</key>
-							<string>334pt</string>
+							<string>355pt</string>
 							<key>Tabs</key>
 							<array>
 								<dict>
@@ -391,9 +391,9 @@
 									<key>GeometryConfiguration</key>
 									<dict>
 										<key>Frame</key>
-										<string>{{10, 27}, {1651, 307}}</string>
+										<string>{{10, 27}, {1651, 328}}</string>
 										<key>RubberWindowFrame</key>
-										<string>0 59 1920 1119 0 0 1920 1178 </string>
+										<string>0 231 1920 947 0 0 1920 1178 </string>
 									</dict>
 									<key>Module</key>
 									<string>XCDetailModule</string>
@@ -475,11 +475,11 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E5752BA211276CF7005D676B</string>
+				<string>E5B7A16E11347A81005403BF</string>
 				<string>1CA23ED40692098700951B8B</string>
-				<string>E5752BA311276CF7005D676B</string>
+				<string>E5B7A16F11347A81005403BF</string>
 				<string>E5CCBB220C7A385900EB6BD1</string>
-				<string>E5752BA411276CF7005D676B</string>
+				<string>E5B7A17011347A81005403BF</string>
 				<string>1CA23EDF0692099D00951B8B</string>
 				<string>1CA23EE00692099D00951B8B</string>
 				<string>1CA23EE10692099D00951B8B</string>
@@ -549,7 +549,7 @@
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 0}, {388, 1060}}</string>
+							<string>{{0, 0}, {0, 0}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -594,10 +594,10 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E5752C721129A90C005D676B</string>
+										<string>E5B7A17111347A81005403BF</string>
 										<key>history</key>
 										<array>
-											<string>E5752C6D11294D14005D676B</string>
+											<string>E520FA491133F49600D65361</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -620,7 +620,7 @@
 						</dict>
 						<dict>
 							<key>Proportion</key>
-							<string>385pt</string>
+							<string>0pt</string>
 							<key>Tabs</key>
 							<array>
 								<dict>
@@ -638,7 +638,7 @@
 									<key>GeometryConfiguration</key>
 									<dict>
 										<key>Frame</key>
-										<string>{{10, 27}, {1510, 358}}</string>
+										<string>{{10, 27}, {0, -27}}</string>
 									</dict>
 									<key>Module</key>
 									<string>PBXBuildResultsModule</string>
@@ -647,7 +647,7 @@
 						</dict>
 					</array>
 					<key>Proportion</key>
-					<string>1510pt</string>
+					<string>0pt</string>
 				</dict>
 			</array>
 			<key>Name</key>
@@ -663,11 +663,11 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E5752BA611276CF7005D676B</string>
+				<string>E5B7A17211347A81005403BF</string>
 				<string>1CA23EE50692099D00951B8B</string>
-				<string>E5752BA711276CF7005D676B</string>
+				<string>E5B7A17311347A81005403BF</string>
 				<string>E59365260C7AD788001596BD</string>
-				<string>E5752BA811276CF7005D676B</string>
+				<string>E5B7A17411347A81005403BF</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
 			<key>ToolbarConfigUserDefaultsMinorVersion</key>
@@ -835,7 +835,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>287942924.218409</real>
+	<real>288651905.22328001</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -848,11 +848,10 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E5752BAF11276CF7005D676B</string>
-		<string>E5752BB011276CF7005D676B</string>
+		<string>/Users/meeloo/work/nui3/examples/polygon_renderer/polygon_renderer.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>0 59 1920 1119 0 0 1920 1178 </string>
+	<string>0 231 1920 947 0 0 1920 1178 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>

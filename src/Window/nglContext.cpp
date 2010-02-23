@@ -216,8 +216,20 @@ void nglContext::Dump(uint Level) const
   nglString version((const char*)glGetString(GL_VERSION));
   nglString renderer((const char*)glGetString(GL_RENDERER));
   nglString vendor((const char*)glGetString(GL_VENDOR));
+  nglString exts((const char*)glGetString(GL_EXTENSIONS));
+  nglString sl((const char*)glGetString(GL_SHADING_LANGUAGE_VERSION));
 
   NGL_LOG(_T("context"), Level, _T("  Version     : OpenGL %ls"), version.GetChars());
   NGL_LOG(_T("context"), Level, _T("  Renderer    : %ls"),        renderer.GetChars());
   NGL_LOG(_T("context"), Level, _T("  Vendor      : %ls"),        vendor.GetChars());
+  NGL_LOG(_T("context"), Level, _T("  GLSL version: %ls"),        sl.GetChars());
+  NGL_LOG(_T("context"), Level, _T("  Extensions  :"));
+  
+  std::vector<nglString> tokens;
+  exts.Tokenize(tokens);
+  for (int32 i = 0; i < tokens.size(); i++)
+  {
+    NGL_LOG(_T("context"), Level, _T("    %3d %ls"), i, tokens[i].GetChars());
+  }
+  
 }

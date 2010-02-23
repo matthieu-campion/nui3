@@ -3429,6 +3429,14 @@
 		E5B6C3860F5F4E8F00E0DFFD /* nuiGenericAttributeEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5B6C3840F5F4E8F00E0DFFD /* nuiGenericAttributeEditor.cpp */; };
 		E5B6C3880F5F4EA900E0DFFD /* nuiGenericAttributeEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B6C3870F5F4EA900E0DFFD /* nuiGenericAttributeEditor.h */; };
 		E5B6C3890F5F4EA900E0DFFD /* nuiGenericAttributeEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B6C3870F5F4EA900E0DFFD /* nuiGenericAttributeEditor.h */; };
+		E5B7A1F911347B1A005403BF /* nglReaderWriterLock.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B7A1F811347B1A005403BF /* nglReaderWriterLock.h */; };
+		E5B7A1FA11347B1A005403BF /* nglReaderWriterLock.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B7A1F811347B1A005403BF /* nglReaderWriterLock.h */; };
+		E5B7A1FB11347B1A005403BF /* nglReaderWriterLock.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B7A1F811347B1A005403BF /* nglReaderWriterLock.h */; };
+		E5B7A1FC11347B1A005403BF /* nglReaderWriterLock.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B7A1F811347B1A005403BF /* nglReaderWriterLock.h */; };
+		E5B7A1FE11347B28005403BF /* nglReaderWriterLock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5B7A1FD11347B28005403BF /* nglReaderWriterLock.cpp */; };
+		E5B7A1FF11347B28005403BF /* nglReaderWriterLock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5B7A1FD11347B28005403BF /* nglReaderWriterLock.cpp */; };
+		E5B7A20011347B28005403BF /* nglReaderWriterLock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5B7A1FD11347B28005403BF /* nglReaderWriterLock.cpp */; };
+		E5B7A20111347B28005403BF /* nglReaderWriterLock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5B7A1FD11347B28005403BF /* nglReaderWriterLock.cpp */; };
 		E5C4DD590F600A6300ACBA6A /* nuiCoverFlow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5C4DD560F600A6300ACBA6A /* nuiCoverFlow.cpp */; };
 		E5C4DD5B0F600A6300ACBA6A /* nuiHotKeyEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5C4DD580F600A6300ACBA6A /* nuiHotKeyEditor.cpp */; };
 		E5C4DD5C0F600A6300ACBA6A /* nuiCoverFlow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5C4DD560F600A6300ACBA6A /* nuiCoverFlow.cpp */; };
@@ -4786,6 +4794,8 @@
 		E5AADD960F4312AE007C6CA9 /* nuiRangeKnobAttributeEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiRangeKnobAttributeEditor.cpp; path = src/Attributes/nuiRangeKnobAttributeEditor.cpp; sourceTree = SOURCE_ROOT; };
 		E5B6C3840F5F4E8F00E0DFFD /* nuiGenericAttributeEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiGenericAttributeEditor.cpp; path = src/Attributes/nuiGenericAttributeEditor.cpp; sourceTree = SOURCE_ROOT; };
 		E5B6C3870F5F4EA900E0DFFD /* nuiGenericAttributeEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiGenericAttributeEditor.h; path = include/nuiGenericAttributeEditor.h; sourceTree = SOURCE_ROOT; };
+		E5B7A1F811347B1A005403BF /* nglReaderWriterLock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nglReaderWriterLock.h; path = include/nglReaderWriterLock.h; sourceTree = SOURCE_ROOT; };
+		E5B7A1FD11347B28005403BF /* nglReaderWriterLock.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nglReaderWriterLock.cpp; path = src/Threading/nglReaderWriterLock.cpp; sourceTree = SOURCE_ROOT; };
 		E5C4DD560F600A6300ACBA6A /* nuiCoverFlow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiCoverFlow.cpp; path = src/SimpleWidgets/nuiCoverFlow.cpp; sourceTree = SOURCE_ROOT; };
 		E5C4DD580F600A6300ACBA6A /* nuiHotKeyEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiHotKeyEditor.cpp; path = src/SimpleWidgets/nuiHotKeyEditor.cpp; sourceTree = SOURCE_ROOT; };
 		E5C4DD5F0F600A8E00ACBA6A /* nuiCoverFlow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiCoverFlow.h; path = include/nuiCoverFlow.h; sourceTree = SOURCE_ROOT; };
@@ -5623,6 +5633,8 @@
 		6126D6360DA5716500D2641A /* Threading */ = {
 			isa = PBXGroup;
 			children = (
+				E5B7A1FD11347B28005403BF /* nglReaderWriterLock.cpp */,
+				E5B7A1F811347B1A005403BF /* nglReaderWriterLock.h */,
 				61B026340DCA1882009B90B3 /* nglLock.cpp */,
 				61B0263A0DCA1893009B90B3 /* nglLock.h */,
 				61B026330DCA1882009B90B3 /* nglLightLock.cpp */,
@@ -7395,6 +7407,7 @@
 				E5E8A54B1100CFCC00567BEA /* ucdata_static.h in Headers */,
 				E5E8A54D1100CFCC00567BEA /* ucdata.h in Headers */,
 				E5E8A54F1100CFCC00567BEA /* ucpgba.h in Headers */,
+				E5B7A1FC11347B1A005403BF /* nglReaderWriterLock.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7935,6 +7948,7 @@
 				E5E8A5461100CFCC00567BEA /* ucdata_static.h in Headers */,
 				E5E8A5481100CFCC00567BEA /* ucdata.h in Headers */,
 				E5E8A54A1100CFCC00567BEA /* ucpgba.h in Headers */,
+				E5B7A1FB11347B1A005403BF /* nglReaderWriterLock.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8474,6 +8488,7 @@
 				E5E8A53C1100CFCC00567BEA /* ucdata_static.h in Headers */,
 				E5E8A53E1100CFCC00567BEA /* ucdata.h in Headers */,
 				E5E8A5401100CFCC00567BEA /* ucpgba.h in Headers */,
+				E5B7A1F911347B1A005403BF /* nglReaderWriterLock.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9014,6 +9029,7 @@
 				E5E8A5411100CFCC00567BEA /* ucdata_static.h in Headers */,
 				E5E8A5431100CFCC00567BEA /* ucdata.h in Headers */,
 				E5E8A5451100CFCC00567BEA /* ucpgba.h in Headers */,
+				E5B7A1FA11347B1A005403BF /* nglReaderWriterLock.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9483,6 +9499,7 @@
 				E5E8A54C1100CFCC00567BEA /* ucdata.c in Sources */,
 				E5E8A54E1100CFCC00567BEA /* ucpgba.c in Sources */,
 				E5CC5F5D11119C5B002E3217 /* nuiTextureInspector.cpp in Sources */,
+				E5B7A20111347B28005403BF /* nglReaderWriterLock.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9859,6 +9876,7 @@
 				E5E8A5471100CFCC00567BEA /* ucdata.c in Sources */,
 				E5E8A5491100CFCC00567BEA /* ucpgba.c in Sources */,
 				E5CC5F5C11119C5B002E3217 /* nuiTextureInspector.cpp in Sources */,
+				E5B7A20011347B28005403BF /* nglReaderWriterLock.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10235,6 +10253,7 @@
 				E5E8A53D1100CFCC00567BEA /* ucdata.c in Sources */,
 				E5E8A53F1100CFCC00567BEA /* ucpgba.c in Sources */,
 				E5CC5F5A11119C5B002E3217 /* nuiTextureInspector.cpp in Sources */,
+				E5B7A1FE11347B28005403BF /* nglReaderWriterLock.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10611,6 +10630,7 @@
 				E5E8A5421100CFCC00567BEA /* ucdata.c in Sources */,
 				E5E8A5441100CFCC00567BEA /* ucpgba.c in Sources */,
 				E5CC5F5B11119C5B002E3217 /* nuiTextureInspector.cpp in Sources */,
+				E5B7A1FF11347B28005403BF /* nglReaderWriterLock.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

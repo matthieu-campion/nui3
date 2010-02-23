@@ -240,6 +240,8 @@ bool nglWindow::GetAutoRotation() const
 void nglWindow::CallOnCreation()
 {
   NGL_DEBUG( NGL_LOG(_T("window"), NGL_LOG_DEBUG, _T("Creation\n")); )
+  // Dump the context:
+  Dump(0);
   // Set all keys as not pressed
   memset (mpKeyState, 0, sizeof(bool)*NGL_KEY_MAX);
   mFPSCount = 0;
