@@ -192,7 +192,7 @@ void nglLog::Logv (const nglChar* pDomain, uint Level, const nglChar* pText, va_
     if (dom->Count == 1)
     {
       // On first display from this domain, adjust domain display width
-      uint dom_len = wcslen(dom_name);
+      uint32 dom_len = wcslen(dom_name);
 
       if (dom_len > mDomainFormatLen)
       {

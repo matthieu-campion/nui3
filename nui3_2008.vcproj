@@ -2604,6 +2604,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\Threading\nglReaderWriterLock.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nglReaderWriterLock.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\nglRingBuffer.h"
 					>
 				</File>

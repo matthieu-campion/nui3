@@ -3106,19 +3106,19 @@ void GetDropEffects(nglDragAndDrop* pObj, DWORD* pEffect)
 
 void nglWindow::EnterModalState()
 {
+  uint32 storeModalState = mInModalState;
+  mInModalState++;
+  NGL_OUT(_T("nglWindow::EnterModalState() [%p - %d]"), this, mInModalState);
   if (GetState() == eHide || GetState() == eMinimize)
     SetState(eShow);
 
   MSG msg;
 
-  mInModalState++;
-  NGL_OUT(_T("nglWindow::EnterModalState() [%p - %d]"), this, mInModalState);
-  uint32 storeModalState = mInModalState;
 
   do
   {
     // Process (rest of) msg queue
-    while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE) && msg.message != WM_QUIT && (mInModalState >= storeModalState))
+    while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE) && msg.message != WM_QUIT && (mInModalState > storeModalState))
     {
       bool ok = true;
       if (msg.hwnd != mHWnd)
@@ -3139,7 +3139,7 @@ void nglWindow::EnterModalState()
         DispatchMessage(&msg);
       }
     }
-  } while (msg.message != WM_QUIT && (mInModalState >= storeModalState));
+  } while (msg.message != WM_QUIT && (mInModalState > storeModalState));
   
   if (msg.message == WM_QUIT)
   {
@@ -3153,6 +3153,7 @@ void nglWindow::EnterModalState()
 void nglWindow::ExitModalState()
 {
   NGL_OUT(_T("nglWindow::ExitModalState() [%p - %d]"), this, mInModalState);
+  NGL_ASSERT(mInModalState > 0);
   mInModalState--;
 }
 
