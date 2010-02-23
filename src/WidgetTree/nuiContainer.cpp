@@ -451,6 +451,7 @@ bool nuiContainer::DispatchMouseClick(const nglMouseInfo& rInfo)
 
   nglMouseInfo info(rInfo);
   GlobalToLocal(info.X, info.Y);
+
   // Get a chance to preempt the mouse event before the children get it:
   if (PreMouseClicked(info))
     return true;
@@ -501,7 +502,7 @@ bool nuiContainer::DispatchMouseUnclick(const nglMouseInfo& rInfo)
   nglMouseInfo info(rInfo);
   GlobalToLocal(info.X, info.Y);
   // Get a chance to preempt the mouse event before the children get it:
-  if (PreMouseUnclicked(rInfo))
+  if (PreMouseUnclicked(info))
     return true;
   
   if (IsInsideFromRoot(rInfo.X, rInfo.Y) || hasgrab)
@@ -553,8 +554,9 @@ nuiWidgetPtr nuiContainer::DispatchMouseMove(const nglMouseInfo& rInfo)
 
   nglMouseInfo info(rInfo);
   GlobalToLocal(info.X, info.Y);
+
   // Get a chance to preempt the mouse event before the children get it:
-  if (PreMouseMoved(rInfo))
+  if (PreMouseMoved(info))
     return this;
   
   if (IsInsideFromRoot(rInfo.X, rInfo.Y) || hasgrab)
