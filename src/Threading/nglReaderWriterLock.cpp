@@ -68,7 +68,6 @@ void nglReaderWriterLock::WriteLock()
       do
       {
         mSyncEvent.Wait();
-        mSyncEvent.Reset();
       } while (!WriteLockPreCondition(currentId));
       mWaitingWriters--;
     }
@@ -113,7 +112,7 @@ void nglReaderWriterLock::PulseWaitingThreads()
 {
   if (mWaitingReaders > 0 || mWaitingWriters > 0)
   {
-    mSyncEvent.Set();
+    mSyncEvent.Pulse();
   }
 }
 
