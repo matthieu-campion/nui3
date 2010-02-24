@@ -85,7 +85,7 @@ bool nglCondition::Wait(uint32 time)
 	}
 	if (ret && ret != ETIMEDOUT) 
 	{
-		NUI_ASSERT(0);
+		NGL_ASSERT(0);
 	}
 	pthread_mutex_unlock(&mutex);
 	pthread_mutex_destroy(&mutex);
