@@ -346,7 +346,7 @@ void nuiFadeWidgetAnim::OnFrame()
 
   float ratio = tt * mSourceAlpha + t * mDestinationAlpha;
 
-  //NGL_OUT(_T("nuiFadeWidgetAnim::OnFrame() [%f %f/%f a=%f]\n"), t, tim, Duration, ratio);
+//  NGL_OUT(_T("nuiFadeWidgetAnim::OnFrame() [%f %f/%f a=%f]\n"), t, tt, Duration, ratio);
 
   mpTarget->SetAlpha(ratio);
 }

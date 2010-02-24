@@ -241,7 +241,9 @@ bool nuiImage::Draw(nuiDrawContext* pContext)
   nuiRect rect = mRect.Size();
 
   //pContext->EnableClipping(false);
-  pContext->SetFillColor(mColor);
+  nuiColor c(mColor);
+  c.Multiply(alpha);
+  pContext->SetFillColor(c);
   pContext->DrawImage(rect, mTextureRect);
 
   pContext->EnableBlending(false);

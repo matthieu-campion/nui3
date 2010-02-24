@@ -9356,7 +9356,6 @@
 					_DEBUG_,
 					_DEBUG,
 					HAVE_BCOPY,
-					_DEBUG_LAYOUT,
 				);
 				GCC_THREADSAFE_STATICS = NO;
 				INSTALL_PATH = /usr/local/lib;

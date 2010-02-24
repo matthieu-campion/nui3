@@ -154,6 +154,7 @@ void nuiAttributeAnimation::OnFrame()
   nglString str;
   str.SetCDouble(pos);
   attrib.FromString(str);
+
 }
 
 #undef SET_ATTRIB
