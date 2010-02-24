@@ -3334,6 +3334,14 @@
 		E556976D0FB30E0600324321 /* nuiParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E556976B0FB30E0600324321 /* nuiParser.cpp */; };
 		E556976F0FB30E2200324321 /* nuiParser.h in Headers */ = {isa = PBXBuildFile; fileRef = E556976E0FB30E2200324321 /* nuiParser.h */; };
 		E55697700FB30E2200324321 /* nuiParser.h in Headers */ = {isa = PBXBuildFile; fileRef = E556976E0FB30E2200324321 /* nuiParser.h */; };
+		E560A3B411358DDF00AFBEAC /* nglCondition_posix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E560A3B311358DDF00AFBEAC /* nglCondition_posix.cpp */; };
+		E560A3B511358DDF00AFBEAC /* nglCondition_posix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E560A3B311358DDF00AFBEAC /* nglCondition_posix.cpp */; };
+		E560A3B611358DDF00AFBEAC /* nglCondition_posix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E560A3B311358DDF00AFBEAC /* nglCondition_posix.cpp */; };
+		E560A3B711358DDF00AFBEAC /* nglCondition_posix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E560A3B311358DDF00AFBEAC /* nglCondition_posix.cpp */; };
+		E560A3B911358DEC00AFBEAC /* nglCondition.h in Headers */ = {isa = PBXBuildFile; fileRef = E560A3B811358DEC00AFBEAC /* nglCondition.h */; };
+		E560A3BA11358DEC00AFBEAC /* nglCondition.h in Headers */ = {isa = PBXBuildFile; fileRef = E560A3B811358DEC00AFBEAC /* nglCondition.h */; };
+		E560A3BB11358DEC00AFBEAC /* nglCondition.h in Headers */ = {isa = PBXBuildFile; fileRef = E560A3B811358DEC00AFBEAC /* nglCondition.h */; };
+		E560A3BC11358DEC00AFBEAC /* nglCondition.h in Headers */ = {isa = PBXBuildFile; fileRef = E560A3B811358DEC00AFBEAC /* nglCondition.h */; };
 		E56D29890FE6ED6F00C16F53 /* xmlparse.c in Sources */ = {isa = PBXBuildFile; fileRef = 6126DB250DA5751300D2641A /* xmlparse.c */; };
 		E56D298A0FE6ED7300C16F53 /* xmlrole.c in Sources */ = {isa = PBXBuildFile; fileRef = 6126DB260DA5751300D2641A /* xmlrole.c */; };
 		E56D298B0FE6ED7900C16F53 /* xmltok_ns.c in Sources */ = {isa = PBXBuildFile; fileRef = 6126DB2C0DA5751300D2641A /* xmltok_ns.c */; };
@@ -4757,6 +4765,8 @@
 		E54B3DEC0F3200250087D518 /* nuiChunksDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiChunksDefinitions.h; path = AudioSamples/nuiChunksDefinitions.h; sourceTree = "<group>"; };
 		E556976B0FB30E0600324321 /* nuiParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiParser.cpp; path = src/Utils/nuiParser.cpp; sourceTree = SOURCE_ROOT; };
 		E556976E0FB30E2200324321 /* nuiParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiParser.h; path = include/nuiParser.h; sourceTree = SOURCE_ROOT; };
+		E560A3B311358DDF00AFBEAC /* nglCondition_posix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nglCondition_posix.cpp; path = src/Threading/posix/nglCondition_posix.cpp; sourceTree = SOURCE_ROOT; };
+		E560A3B811358DEC00AFBEAC /* nglCondition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nglCondition.h; path = include/nglCondition.h; sourceTree = SOURCE_ROOT; };
 		E56D2A1A0FE708B400C16F53 /* nuiFlowView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiFlowView.cpp; path = src/Layout/nuiFlowView.cpp; sourceTree = SOURCE_ROOT; };
 		E56D2A1D0FE708E300C16F53 /* nuiFlowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiFlowView.h; path = include/nuiFlowView.h; sourceTree = SOURCE_ROOT; };
 		E56D2A1E0FE708E300C16F53 /* nuiMainMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiMainMenu.h; path = include/nuiMainMenu.h; sourceTree = SOURCE_ROOT; };
@@ -5633,6 +5643,8 @@
 		6126D6360DA5716500D2641A /* Threading */ = {
 			isa = PBXGroup;
 			children = (
+				E560A3B811358DEC00AFBEAC /* nglCondition.h */,
+				E560A3B311358DDF00AFBEAC /* nglCondition_posix.cpp */,
 				E5B7A1FD11347B28005403BF /* nglReaderWriterLock.cpp */,
 				E5B7A1F811347B1A005403BF /* nglReaderWriterLock.h */,
 				61B026340DCA1882009B90B3 /* nglLock.cpp */,
@@ -7408,6 +7420,7 @@
 				E5E8A54D1100CFCC00567BEA /* ucdata.h in Headers */,
 				E5E8A54F1100CFCC00567BEA /* ucpgba.h in Headers */,
 				E5B7A1FC11347B1A005403BF /* nglReaderWriterLock.h in Headers */,
+				E560A3BC11358DEC00AFBEAC /* nglCondition.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7949,6 +7962,7 @@
 				E5E8A5481100CFCC00567BEA /* ucdata.h in Headers */,
 				E5E8A54A1100CFCC00567BEA /* ucpgba.h in Headers */,
 				E5B7A1FB11347B1A005403BF /* nglReaderWriterLock.h in Headers */,
+				E560A3BB11358DEC00AFBEAC /* nglCondition.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8489,6 +8503,7 @@
 				E5E8A53E1100CFCC00567BEA /* ucdata.h in Headers */,
 				E5E8A5401100CFCC00567BEA /* ucpgba.h in Headers */,
 				E5B7A1F911347B1A005403BF /* nglReaderWriterLock.h in Headers */,
+				E560A3B911358DEC00AFBEAC /* nglCondition.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9030,6 +9045,7 @@
 				E5E8A5431100CFCC00567BEA /* ucdata.h in Headers */,
 				E5E8A5451100CFCC00567BEA /* ucpgba.h in Headers */,
 				E5B7A1FA11347B1A005403BF /* nglReaderWriterLock.h in Headers */,
+				E560A3BA11358DEC00AFBEAC /* nglCondition.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9500,6 +9516,7 @@
 				E5E8A54E1100CFCC00567BEA /* ucpgba.c in Sources */,
 				E5CC5F5D11119C5B002E3217 /* nuiTextureInspector.cpp in Sources */,
 				E5B7A20111347B28005403BF /* nglReaderWriterLock.cpp in Sources */,
+				E560A3B711358DDF00AFBEAC /* nglCondition_posix.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9877,6 +9894,7 @@
 				E5E8A5491100CFCC00567BEA /* ucpgba.c in Sources */,
 				E5CC5F5C11119C5B002E3217 /* nuiTextureInspector.cpp in Sources */,
 				E5B7A20011347B28005403BF /* nglReaderWriterLock.cpp in Sources */,
+				E560A3B611358DDF00AFBEAC /* nglCondition_posix.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10254,6 +10272,7 @@
 				E5E8A53F1100CFCC00567BEA /* ucpgba.c in Sources */,
 				E5CC5F5A11119C5B002E3217 /* nuiTextureInspector.cpp in Sources */,
 				E5B7A1FE11347B28005403BF /* nglReaderWriterLock.cpp in Sources */,
+				E560A3B411358DDF00AFBEAC /* nglCondition_posix.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10631,6 +10650,7 @@
 				E5E8A5441100CFCC00567BEA /* ucpgba.c in Sources */,
 				E5CC5F5B11119C5B002E3217 /* nuiTextureInspector.cpp in Sources */,
 				E5B7A1FF11347B28005403BF /* nglReaderWriterLock.cpp in Sources */,
+				E560A3B511358DDF00AFBEAC /* nglCondition_posix.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
