@@ -9,28 +9,42 @@
 
 #include "nglLock.h"
 #include "nglGuard.h"
-#include "nglSyncEvent.h"
+#include "nglCondition.h"
 
 class nglReaderWriterLock
 {
 public:
   nglReaderWriterLock();
-
-  void ReadLock();
-  void ReadUnlock();
-
-  void WriteLock();
-  void WriteUnlock();
+  ~nglReaderWriterLock();
+  void LockRead();
+  bool TryLockRead();
+  void UnlockRead();
+  void LockWrite();
+  bool TryLockWrite();
+  void UnlockWrite();
+  void LockUpgrade();
+  void UnlockUpgrade();
+  void UnlockUpgradeAndLock();
+  void UnlockAndLockUpgrade();
+  void UnlockAndLockRead();
+  void UnlockUpgradeAndLockShared();
 
 private:
-  void PulseWaitingThreads();
-  bool WriteLockPreCondition(nglThread::ID CurrentThreadId);
-  bool ReadLockPreCondition(nglThread::ID CurrentThreadId);
+  struct StateData
+  {
+    uint32 mSharedCount;
+    bool mExclusive;
+    bool mUpgrade;
+    bool mExclusiveWaitingBlocked;
+  };
 
-  nglSyncEvent mSyncEvent;
-  nglCriticalSection mCS;
-  int32 mLockCount;
-  int32 mWaitingReaders;
-  int32 mWaitingWriters;
-  nglThread::ID mWriterThreadId;
+  StateData mState;
+  nglCriticalSection mStateChange;
+  nglCondition mSharedCond;
+  nglCondition mExclusiveCond;
+  nglCondition mUpgradeCond;
+
+  void ReleaseWaiters();
+
 };
+

@@ -2572,6 +2572,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\nglCondition.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Threading\win32\nglCondition_win32.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\include\nglCriticalSection.h"
 					>
 				</File>

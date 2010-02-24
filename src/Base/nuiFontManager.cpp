@@ -793,7 +793,7 @@ bool nuiFontDesc::HasGlyph(nglChar Glyph) const
     }
     
     len = end - start;
-    middle = (start + end >> 1);
+    middle = (start + end) >> 1;
   }
   return false;
 }

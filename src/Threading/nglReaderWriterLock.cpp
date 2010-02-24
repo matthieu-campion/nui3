@@ -10,120 +10,163 @@
 
 nglReaderWriterLock::nglReaderWriterLock()
 {
-  mLockCount = 0;
-  mWaitingReaders = 0;
-  mWaitingWriters = 0;
-  mWriterThreadId = 0;
-//  mSyncEvent.Set();
+  StateData mState_ = {0,0,0,0};
+  mState = mState_;
 }
 
-void nglReaderWriterLock::ReadLock()
+nglReaderWriterLock::~nglReaderWriterLock()
 {
-  nglThread::ID currentId = nglThread::GetCurThreadID();
+}
 
+void nglReaderWriterLock::LockRead()
+{
+  nglCriticalSectionGuard lk(mStateChange);
+
+  while(mState.mExclusive || mState.mExclusiveWaitingBlocked)
   {
-    nglCriticalSectionGuard g(mCS);
-    // wait until there are no more pending writers, and no writer other than me has the lock
-    if (!ReadLockPreCondition(currentId))
-    {
-      mWaitingReaders++;
-      do
-      {
-        mSyncEvent.Wait();
-      } while (!ReadLockPreCondition(currentId));
-      mWaitingReaders--;
-    }
-    mLockCount++;
+    mSharedCond.Wait();
+  }
+  ++mState.mSharedCount;
+}
+
+bool nglReaderWriterLock::TryLockRead()
+{
+  nglCriticalSectionGuard lk(mStateChange);
+
+  if(mState.mExclusive || mState.mExclusiveWaitingBlocked)
+  {
+    return false;
+  }
+  else
+  {
+    ++mState.mSharedCount;
+    return true;
   }
 }
 
-void nglReaderWriterLock::ReadUnlock()
+void nglReaderWriterLock::UnlockRead()
 {
+  nglCriticalSectionGuard lk(mStateChange);
+  bool const last_reader=!--mState.mSharedCount;
+
+  if(last_reader)
   {
-    nglCriticalSectionGuard g(mCS);
-    if (mLockCount > 0)
+    if(mState.mUpgrade)
     {
-      mLockCount--;
-      if (mLockCount == 0)
-      {
-        PulseWaitingThreads();
-      }
+      mState.mUpgrade = false;
+      mState.mExclusive = true;
+      mUpgradeCond.WakeOne();
     }
     else
     {
-      NGL_ASSERT(!"Unbalanced acquire/release read lock detected");
+      mState.mExclusiveWaitingBlocked=false;
     }
+    ReleaseWaiters();
   }
 }
 
-void nglReaderWriterLock::WriteLock()
+void nglReaderWriterLock::LockWrite()
 {
-  nglThread::ID currentId = nglThread::GetCurThreadID();
+  nglCriticalSectionGuard lk(mStateChange);
 
+  while(mState.mSharedCount || mState.mExclusive)
   {
-    nglCriticalSectionGuard g(mCS);
-    // Wait for other readers or writers to become ready
-    if (!WriteLockPreCondition(currentId))
-    {
-      mWaitingWriters++;
-      do
-      {
-        mSyncEvent.Wait();
-      } while (!WriteLockPreCondition(currentId));
-      mWaitingWriters--;
-    }
-    // the following only gets executed if no exception was thrown:
-    mLockCount++;
-    mWriterThreadId = currentId;
+    mState.mExclusiveWaitingBlocked = true;
+    mExclusiveCond.Wait();
   }
+  mState.mExclusive = true;
 }
 
-void nglReaderWriterLock::WriteUnlock()
+bool nglReaderWriterLock::TryLockWrite()
 {
-  nglThread::ID currentId = nglThread::GetCurThreadID();
+  nglCriticalSectionGuard lk(mStateChange);
 
+  if(mState.mSharedCount || mState.mExclusive)
   {
-    nglCriticalSectionGuard g(mCS);
-    if (mLockCount > 0)
-    {
-      if (mWriterThreadId == currentId)
-      {
-        // writelock was owned by me
-        mLockCount--;
-
-        if (mLockCount == 0)
-        {
-          mWriterThreadId = 0;
-          PulseWaitingThreads();
-        }
-      }
-      else
-      {
-        NGL_ASSERT(!"The calling thread attempted to release a write lock but does not own the lock for the specified object");
-      }
-    }
-    else
-    {
-      NGL_ASSERT(!"Unbalanced acquire/release write lock detected");
-    }
+    return false;
   }
-}
-
-void nglReaderWriterLock::PulseWaitingThreads()
-{
-  if (mWaitingReaders > 0 || mWaitingWriters > 0)
+  else
   {
-    mSyncEvent.Pulse();
+    mState.mExclusive=true;
+    return true;
+  }
+
+}
+
+void nglReaderWriterLock::UnlockWrite()
+{
+  nglCriticalSectionGuard lk(mStateChange);
+  mState.mExclusive = false;
+  mState.mExclusiveWaitingBlocked = false;
+  ReleaseWaiters();
+}
+
+void nglReaderWriterLock::LockUpgrade()
+{
+
+  nglCriticalSectionGuard lk(mStateChange);
+  while(mState.mExclusive || mState.mExclusiveWaitingBlocked || mState.mUpgrade)
+  {
+    mSharedCond.Wait();
+  }
+  ++mState.mSharedCount;
+  mState.mUpgrade = true;
+}
+
+void nglReaderWriterLock::UnlockUpgrade()
+{
+  nglCriticalSectionGuard lk(mStateChange);
+  mState.mUpgrade = false;
+  bool const last_reader = !--mState.mSharedCount;
+
+  if(last_reader)
+  {
+    mState.mExclusiveWaitingBlocked = false;
+    ReleaseWaiters();
   }
 }
 
-bool nglReaderWriterLock::WriteLockPreCondition(nglThread::ID currentThreadId)
+void nglReaderWriterLock::UnlockUpgradeAndLock()
 {
-  return (mLockCount == 0 || mWriterThreadId == currentThreadId);
+  nglCriticalSectionGuard lk(mStateChange);
+  --mState.mSharedCount;
+  while(mState.mSharedCount)
+  {
+    mUpgradeCond.Wait();
+  }
+  mState.mUpgrade = false;
+  mState.mExclusive = true;
 }
 
-bool nglReaderWriterLock::ReadLockPreCondition(nglThread::ID currentThreadId)
+void nglReaderWriterLock::UnlockAndLockUpgrade()
 {
-  return (mWaitingWriters == 0 && (mWriterThreadId == 0 || mWriterThreadId == currentThreadId));
+  nglCriticalSectionGuard lk(mStateChange);
+  mState.mExclusive = false;
+  mState.mUpgrade = true;
+  ++mState.mSharedCount;
+  mState.mExclusiveWaitingBlocked = false;
+  ReleaseWaiters();
 }
 
+void nglReaderWriterLock::UnlockAndLockRead()
+{
+  nglCriticalSectionGuard lk(mStateChange);
+  mState.mExclusive = false;
+  ++mState.mSharedCount;
+  mState.mExclusiveWaitingBlocked = false;
+  ReleaseWaiters();
+}
+
+void nglReaderWriterLock::UnlockUpgradeAndLockShared()
+{
+  nglCriticalSectionGuard lk(mStateChange);
+  mState.mUpgrade = false;
+  mState.mExclusiveWaitingBlocked = false;
+  ReleaseWaiters();
+}
+
+void nglReaderWriterLock::ReleaseWaiters()
+{
+  mExclusiveCond.WakeOne();
+  mSharedCond.WakeAll();
+}

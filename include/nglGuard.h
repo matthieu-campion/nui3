@@ -48,3 +48,40 @@ private:
   // Data
   T &			mrLock;
 };
+
+
+template <class T> class nglUnGuard
+{
+public:
+
+  // Constructor(s) / Destructor
+  nglUnGuard(T& rLock)
+    : mrLock(rLock)
+  {
+    mrLock.Unlock();
+  }
+
+  ~nglUnGuard()
+  {
+    mrLock.Lock();
+  }
+
+private:
+
+  // Private constructor
+  nglUnGuard()
+  {
+  }
+
+  nglUnGuard(const nglUnGuard & rGuard)
+  {
+  }
+
+  // Operator
+  nglUnGuard& operator= (const nglUnGuard& rGuard)
+  {
+  }
+
+  // Data
+  T &			mrLock;
+};

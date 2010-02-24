@@ -46,6 +46,7 @@ private:
 
 // Typedef
 typedef NGL_API nglGuard<nglLightLock> nglLightLockGuard;
+typedef NGL_API nglUnGuard<nglLightLock> nglLightLockUnGuard;
 
 
 

@@ -52,6 +52,7 @@ private:
 
 // Typedef
 typedef NGL_API nglGuard<nglCriticalSection> nglCriticalSectionGuard;
+typedef NGL_API nglUnGuard<nglCriticalSection> nglCriticalSectionUnGuard;
 
 
 
