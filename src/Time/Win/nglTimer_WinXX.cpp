@@ -13,15 +13,17 @@
 
 #define NGL_MAX_QUEUED_TIMER_EVENTS 1
 
-MMRESULT nglTimer::mTimerID = -1;
+HANDLE nglTimer::mTimerQueueHandle = NULL;
+HANDLE nglTimer::mTimerHandle = NULL;
+
 void nglTimer::InitMainTimer()
 {
-  if (mTimerID == -1)
+  if (mTimerQueueHandle == NULL)
   {
-    TIMECAPS caps;
-    timeGetDevCaps(&caps,sizeof(TIMECAPS));
-    timeBeginPeriod(caps.wPeriodMin); // set the minimum timer period
-    mTimerID = timeSetEvent(caps.wPeriodMin, 0, TimeProc, (unsigned int)0, TIME_PERIODIC + TIME_CALLBACK_FUNCTION + TIME_KILL_SYNCHRONOUS);
+    mTimerQueueHandle = CreateTimerQueue();
+    NGL_ASSERT(mTimerQueueHandle);
+    BOOL res = CreateTimerQueueTimer(&mTimerHandle, mTimerQueueHandle, TimeProc, NULL, 1, 1, WT_EXECUTEDEFAULT);
+    NGL_ASSERT(res);
   }
 }
 
@@ -29,11 +31,10 @@ void nglTimer::FreeMainTimer()
 {
   if (mTimers.empty())
   {
-    TIMECAPS caps;
-    timeGetDevCaps(&caps,sizeof(TIMECAPS));
-    timeEndPeriod(caps.wPeriodMin); // set the minimum timer period
-    timeKillEvent(mTimerID);
-    mTimerID = -1;
+    DeleteTimerQueueTimer(mTimerQueueHandle, mTimerHandle, NULL);
+    DeleteTimerQueue(mTimerQueueHandle);
+    mTimerHandle = NULL;
+    mTimerQueueHandle = NULL;
   }
 }
 
@@ -89,7 +90,7 @@ bool nglTimer::SetPeriod(nglTime Period)
   return true;
 }
 
-void CALLBACK TimeProc(UINT uID,UINT uMsg,DWORD_PTR dwUser,DWORD_PTR dw1,DWORD_PTR dw2)
+VOID CALLBACK TimeProc(PVOID lpParameter, BOOLEAN TimerOrWaitFired)
 {
 //   static int c = 0;
 //   static int d = 0;

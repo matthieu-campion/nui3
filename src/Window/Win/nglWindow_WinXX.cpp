@@ -52,7 +52,6 @@ const nglChar* gpWindowErrorTable[] =
   NULL
 };
 
-//#define WM_CREATED (WM_USER+1)
 #define MENU_SHOWCONSOLE_ID 42
 
 static uint32 MakePOT(uint32 i)
@@ -3138,7 +3137,9 @@ void nglWindow::EnterModalState()
         TranslateMessage(&msg);
         DispatchMessage(&msg);
       }
+      //OutputDebugStr(_T("!"));
     }
+    //OutputDebugStr(_T("#"));
   } while (msg.message != WM_QUIT && (mInModalState > storeModalState));
   
   if (msg.message == WM_QUIT)

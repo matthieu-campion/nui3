@@ -157,18 +157,14 @@ private:
   static LRESULT WndProc (HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
   static std::list<nglTimer*> mTimers;
 
-#ifdef NGL_USE_WIN32_MMTIMER
   uint32 mCounter;
   uint32 mRoundsPerTick;
-  static MMRESULT mTimerID;
   static void InitMainTimer();
   static void FreeMainTimer();
-  friend void CALLBACK TimeProc(UINT uID,UINT uMsg,DWORD_PTR dwUser,DWORD_PTR dw1,DWORD_PTR dw2);
-  static nglAtomic mQueuedEvents;
-#else
-  HANDLE mTimerHandle;
   friend VOID CALLBACK TimeProc(PVOID lpParameter, BOOLEAN TimerOrWaitFired);
-#endif
+  static nglAtomic mQueuedEvents;
+  static HANDLE mTimerQueueHandle;
+  static HANDLE mTimerHandle;
 
   static void PostMessage();
 

@@ -226,7 +226,7 @@ and in NGL user application code.
     #define _BOOL
   #endif
 
-  #define WM_NGLTIMER (WM_USER+10)
+  #define WM_NGLTIMER (WM_USER+1)
 
   // Fixed size types
   typedef signed __int8    int8;
