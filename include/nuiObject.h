@@ -108,6 +108,7 @@ public:
   static bool ClearGlobalProperty(const nglString& rName); ///< Remove the given global property.
   static bool ClearGlobalProperty(const char* pName); ///< Remove the given global property.
 
+  void CheckValid() const;
   
 protected:
   static std::vector<int32> mInheritanceMap;
@@ -139,8 +140,6 @@ protected:
   static std::map<nuiObject*, Trace> mObjects;
   Trace* mpTrace;
 #endif
-  
-  void CheckValid() const;
   
 private : 
   void Init(const nglString& rObjectName);

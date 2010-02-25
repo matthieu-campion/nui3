@@ -747,9 +747,13 @@ void nuiObject::CheckValid() const
 {
 #ifdef _NUI_DEBUG_OBJECTS_
   std::map<nuiObject*, Trace>::const_iterator it = mObjects.find(const_cast<nuiObject*>(this));
-  if (it == mObjects.end() || !it->second.mAlive)
+  if (it == mObjects.end())
   {
-    NGL_OUT(_T("Operating on an invalid Object! 0x%x (%ls - %ls)\n"), this, it->second.mClass.GetChars(), it->second.mName.GetChars());
+    NGL_LOG(_T("nuiObject"), 0, _T("Operating on an invalid Object! 0x%x was never created.\n"), this);
+  }
+  else if (!it->second.mAlive)
+  {
+    NGL_LOG(_T("nuiObject"), 0, _T("Operating on an invalid Object! 0x%x (%ls - %ls).\n"), this, it->second.mClass.GetChars(), it->second.mName.GetChars());
   }
   NGL_ASSERT(it != mObjects.end());
   NGL_ASSERT(it->second.mAlive);
