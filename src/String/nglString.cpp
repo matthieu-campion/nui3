@@ -491,14 +491,14 @@ nglString nglString::Empty(L"");
 nglString nglString::WhiteSpace(L" \n\t\r");
 
 nglString::nglString()
+: mIsNull(true)
 {
-  mIsNull = true;
 }
 
 nglString::nglString(nglChar Ch)
+: mIsNull(false)
 {
   mString = Ch;
-  mIsNull = false;
 }
 
 nglString::nglString(int32 integer)
@@ -528,19 +528,15 @@ nglString::nglString(double db, int32 precision)
 
 
 nglString::nglString(const nglString& rSource)
+: mIsNull(rSource.mIsNull),
+  mString(rSource.mString)
 {
-  mString = rSource.mString;
-  mIsNull = rSource.mIsNull;
 }
 
 nglString::nglString(const nglChar* pSource)
+: mIsNull(pSource == NULL),
+  mString(pSource ? std::wstring(pSource, wcslen(pSource)) : std::wstring())
 {
-  mIsNull = true;
-  if (pSource)
-  {
-    mString = std::wstring(pSource, wcslen(pSource));
-    mIsNull = false;
-  }
 }
 
 nglString::nglString(const std::string& rSource, nglTextEncoding Encoding)
@@ -550,6 +546,8 @@ nglString::nglString(const std::string& rSource, nglTextEncoding Encoding)
 }
 
 nglString::nglString(const std::wstring& rSource)
+: mIsNull(false),
+  mString(rSource)
 {
   mString = rSource;
   mIsNull = false;

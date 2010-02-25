@@ -25,6 +25,7 @@ bool nuiSimpleContainer::Load(const nuiXMLNode* pNode)
 
 bool nuiSimpleContainer::LoadChildren(const nuiXMLNode* pNode)
 {
+  CheckValid();
 	bool res=true;
   uint i, count = pNode->GetChildrenCount();
   for (i = 0; i < count; i++)
@@ -51,12 +52,14 @@ bool nuiSimpleContainer::LoadChildren(const nuiXMLNode* pNode)
 
 bool nuiSimpleContainer::LoadAttributes(const nuiXMLNode* pNode)
 {
+  CheckValid();
   return nuiContainer::Load(pNode);
 }
 
 
 nuiSimpleContainer::~nuiSimpleContainer()
 {
+  CheckValid();
   // Delete all children:
   IteratorPtr pIt;
   for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
@@ -83,6 +86,7 @@ void nuiSimpleContainer::SetObjectName(const nglString& rName)
 
 bool nuiSimpleContainer::AddChild(nuiWidgetPtr pChild)
 {
+  CheckValid();
   if (GetDebug())
   {
     NGL_OUT(_T("[%ls] Add Child 0x%x <--- 0x%x\n"), GetObjectClass().GetChars(), this, pChild);
@@ -119,6 +123,7 @@ bool nuiSimpleContainer::AddChild(nuiWidgetPtr pChild)
 
 bool nuiSimpleContainer::DelChild(nuiWidgetPtr pChild,bool Delete)
 {
+  CheckValid();
   NGL_ASSERT(pChild->GetParent() == this)
 
   if (GetDebug())
@@ -158,12 +163,14 @@ bool nuiSimpleContainer::DelChild(nuiWidgetPtr pChild,bool Delete)
 
 uint nuiSimpleContainer::GetChildrenCount() const
 {
+  CheckValid();
   return mpChildren.size();
 }
 
 
 bool nuiSimpleContainer::Clear(bool Delete)
 {
+  CheckValid();
   // start by trashing everybody
   nuiContainer::ChildrenCallOnTrash();
 
@@ -186,6 +193,7 @@ bool nuiSimpleContainer::Clear(bool Delete)
 
 nuiContainer::Iterator* nuiSimpleContainer::GetFirstChild()
 {
+  CheckValid();
   IteratorPtr pIt;
   pIt = new Iterator();
   bool valid = !mpChildren.empty();
@@ -197,6 +205,7 @@ nuiContainer::Iterator* nuiSimpleContainer::GetFirstChild()
 
 nuiContainer::ConstIterator* nuiSimpleContainer::GetFirstChild() const
 {
+  CheckValid();
   ConstIteratorPtr pIt;
   pIt = new ConstIterator();
   bool valid = !mpChildren.empty();
@@ -208,6 +217,7 @@ nuiContainer::ConstIterator* nuiSimpleContainer::GetFirstChild() const
 
 nuiContainer::Iterator* nuiSimpleContainer::GetLastChild()
 {
+  CheckValid();
   nuiWidgetList::iterator it = mpChildren.end();
   IteratorPtr pIt;
   pIt = new Iterator();
@@ -226,6 +236,7 @@ nuiContainer::Iterator* nuiSimpleContainer::GetLastChild()
 
 nuiContainer::ConstIterator* nuiSimpleContainer::GetLastChild() const
 {
+  CheckValid();
   nuiWidgetList::const_iterator it = mpChildren.end();
   ConstIteratorPtr pIt;
   pIt = new ConstIterator();
@@ -244,6 +255,7 @@ nuiContainer::ConstIterator* nuiSimpleContainer::GetLastChild() const
 
 bool nuiSimpleContainer::GetNextChild(nuiContainer::IteratorPtr pIterator)
 {
+  CheckValid();
   if (!pIterator)
     return false;
   if (!pIterator->IsValid())
@@ -260,6 +272,7 @@ bool nuiSimpleContainer::GetNextChild(nuiContainer::IteratorPtr pIterator)
 
 bool nuiSimpleContainer::GetNextChild(nuiContainer::ConstIteratorPtr pIterator) const
 {
+  CheckValid();
   if (!pIterator)
     return false;
   if (!pIterator->IsValid())
@@ -276,6 +289,7 @@ bool nuiSimpleContainer::GetNextChild(nuiContainer::ConstIteratorPtr pIterator) 
 
 bool nuiSimpleContainer::GetPreviousChild(nuiContainer::IteratorPtr pIterator)
 {
+  CheckValid();
   if (!pIterator)
     return false;  
   if (!pIterator->IsValid())
@@ -294,6 +308,7 @@ bool nuiSimpleContainer::GetPreviousChild(nuiContainer::IteratorPtr pIterator)
 
 bool nuiSimpleContainer::GetPreviousChild(nuiContainer::ConstIteratorPtr pIterator) const
 {
+  CheckValid();
   if (!pIterator)
     return false;  
   if (!pIterator->IsValid())
@@ -312,6 +327,7 @@ bool nuiSimpleContainer::GetPreviousChild(nuiContainer::ConstIteratorPtr pIterat
 
 void nuiSimpleContainer::RaiseChild(nuiWidgetPtr pChild)
 {
+  CheckValid();
   
   nuiWidgetList::iterator it = mpChildren.begin();
   nuiWidgetList::iterator end = mpChildren.end();
@@ -334,6 +350,7 @@ void nuiSimpleContainer::RaiseChild(nuiWidgetPtr pChild)
 
 void nuiSimpleContainer::LowerChild(nuiWidgetPtr pChild)
 {
+  CheckValid();
   nuiWidgetList::iterator it = mpChildren.begin();
   nuiWidgetList::iterator end = mpChildren.end();
   nuiWidgetList::iterator previous = it;
@@ -359,6 +376,7 @@ void nuiSimpleContainer::LowerChild(nuiWidgetPtr pChild)
 
 void nuiSimpleContainer::RaiseChildToFront(nuiWidgetPtr pChild)
 {
+  CheckValid();
   nuiWidgetList::iterator it = mpChildren.begin();
   nuiWidgetList::iterator end = mpChildren.end();
   for ( ; it != end; ++it)
@@ -378,6 +396,7 @@ void nuiSimpleContainer::RaiseChildToFront(nuiWidgetPtr pChild)
 
 void nuiSimpleContainer::LowerChildToBack(nuiWidgetPtr pChild)
 {
+  CheckValid();
   nuiWidgetList::iterator it = mpChildren.begin();
   nuiWidgetList::iterator end = mpChildren.end();
   for ( ; it != end; ++it)

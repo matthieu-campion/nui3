@@ -191,6 +191,7 @@ nuiTopLevel::nuiTopLevel(const nglPath& rResPath)
 
 bool nuiTopLevel::Load(const nuiXMLNode* pNode)
 {
+  CheckValid();
   mToolTipTimerOn.SetPeriod(0.5f);
   mToolTipTimerOff.SetPeriod(5.0f);
   mFillTrash = false;
@@ -232,11 +233,13 @@ bool nuiTopLevel::Load(const nuiXMLNode* pNode)
 
 nuiTopLevel::~nuiTopLevel()
 {
+  CheckValid();
   Exit();
 }
 
 void nuiTopLevel::Exit()
 {
+  CheckValid();
   if (mReleased)
     return;
   
@@ -295,6 +298,7 @@ void nuiTopLevel::Exit()
 
 void nuiTopLevel::DisconnectWidget(nuiWidget* pWidget)
 {
+  CheckValid();
   nuiTrashElement Elem(nuiTrashElement::DeleteWidget,pWidget);
   mpTrash.remove(Elem);
   AdviseObjectDeath(pWidget);
@@ -302,6 +306,7 @@ void nuiTopLevel::DisconnectWidget(nuiWidget* pWidget)
 
 void nuiTopLevel::Trash(nuiWidgetPtr pWidget)
 {
+  CheckValid();
   nuiTrashElement Elem(nuiTrashElement::DeleteWidget,pWidget);
   mpTrash.remove(Elem);
   mpTrash.push_back(Elem);
@@ -309,17 +314,20 @@ void nuiTopLevel::Trash(nuiWidgetPtr pWidget)
 
 bool nuiTopLevel::IsTrashFilling() const
 {
+  CheckValid();
   return mFillTrash;
 }
 
 void nuiTopLevel::FillTrash()
 {
+  CheckValid();
   EmptyTrash();
   mFillTrash = true;
 }
 
 void nuiTopLevel::EmptyTrash()
 {
+  CheckValid();
   //BroadcastQueuedNotifications();
   UpdateWidgetsCSS();
 
@@ -365,7 +373,8 @@ void nuiTopLevel::EmptyTrash()
 
 void nuiTopLevel::AdviseObjectDeath(nuiWidgetPtr pWidget)
 {
-    if (mpWatchedWidget == pWidget)
+  CheckValid();
+  if (mpWatchedWidget == pWidget)
     mpWatchedWidget = NULL;
   
   mHoveredWidgets.erase(pWidget);
@@ -430,6 +439,7 @@ void nuiTopLevel::AdviseObjectDeath(nuiWidgetPtr pWidget)
 
 void nuiTopLevel::AdviseSubTreeDeath(nuiWidgetPtr pWidget)
 {
+  CheckValid();
   IteratorPtr pIt;
   nuiContainer* pContainer = dynamic_cast<nuiContainer*> (pWidget);
   if (pContainer)
@@ -448,6 +458,7 @@ void nuiTopLevel::AdviseSubTreeDeath(nuiWidgetPtr pWidget)
 
 nuiDrawContext* nuiTopLevel::GetDrawContext()
 {
+  CheckValid();
   if (mpDrawContext)
     return mpDrawContext;
 
@@ -459,6 +470,7 @@ nuiDrawContext* nuiTopLevel::GetDrawContext()
 
 void nuiTopLevel::SetDrawContext(nuiDrawContext* pDrawContext)
 {
+  CheckValid();
   if (mpDrawContext)
     delete mpDrawContext;
 
@@ -467,6 +479,7 @@ void nuiTopLevel::SetDrawContext(nuiDrawContext* pDrawContext)
 
 nuiTopLevel* nuiTopLevel::GetTopLevel() const
 {
+  CheckValid();
   void* Self = (void*)this;
   return (nuiTopLevel*)Self;
 }
@@ -512,22 +525,26 @@ nuiTrashElement::~nuiTrashElement()
 
 bool nuiTopLevel::DispatchGrab(nuiWidgetPtr pWidget)
 {
+  CheckValid();
   return Grab(pWidget);
 }
 
 bool nuiTopLevel::DispatchUngrab(nuiWidgetPtr pWidget)
 {
+  CheckValid();
   return Ungrab(pWidget);
 }
 
 bool nuiTopLevel::DispatchHasGrab(nuiWidgetPtr pWidget)
 {
+  CheckValid();
   return GetGrab() == pWidget;
 }
 
 
 bool nuiTopLevel::Grab(nuiWidgetPtr pWidget)
 {
+  CheckValid();
   NGL_TOUCHES_DEBUG( NGL_OUT(_T("nuiTopLevel::Grab 0x%x\n"), pWidget) );
 
 ///< some widgets acquire the grab on creation, which is pretty unpleasant (this hack is quite bad)
@@ -581,6 +598,7 @@ bool nuiTopLevel::Grab(nuiWidgetPtr pWidget)
 
 bool nuiTopLevel::Ungrab(nuiWidgetPtr pWidget)
 {
+  CheckValid();
   NGL_TOUCHES_DEBUG( NGL_OUT(_T("nuiTopLevel::Ungrab 0x%x\n"), pWidget) );
   if (pWidget)
   {
@@ -602,6 +620,7 @@ bool nuiTopLevel::Ungrab(nuiWidgetPtr pWidget)
 
 bool nuiTopLevel::CancelGrab()
 {
+  CheckValid();
 NGL_TOUCHES_DEBUG( NGL_OUT(_T("CancelGrab()\n")) );
   for (nuiGrabMap::const_iterator it = mpGrab.begin(); it != mpGrab.end(); ++it)
   {
@@ -626,6 +645,7 @@ NGL_TOUCHES_DEBUG( NGL_OUT(_T("CancelGrab()\n")) );
 
 bool nuiTopLevel::HasGrab(nuiWidgetPtr pWidget)
 {
+  CheckValid();
   if (GetGrabId(pWidget) >= 0)
     return true;
   return false;
@@ -633,6 +653,7 @@ bool nuiTopLevel::HasGrab(nuiWidgetPtr pWidget)
 
 nglTouchId nuiTopLevel::GetGrabId(nuiWidgetPtr pWidget) const
 {
+  CheckValid();
   nuiGrabMap::const_iterator end = mpGrab.end();
   for (nuiGrabMap::const_iterator it = mpGrab.begin(); it != end; ++it)
   {
@@ -644,6 +665,7 @@ nglTouchId nuiTopLevel::GetGrabId(nuiWidgetPtr pWidget) const
 
 nuiWidgetPtr nuiTopLevel::GetGrab(nglTouchId touchId) const
 {
+  CheckValid();
   nuiGrabMap::const_iterator it = mpGrab.find(touchId);
   if (it != mpGrab.end())
     return it->second;
@@ -652,11 +674,13 @@ nuiWidgetPtr nuiTopLevel::GetGrab(nglTouchId touchId) const
 
 nuiWidgetPtr nuiTopLevel::GetGrab() const
 {
+  CheckValid();
   return GetGrab(mMouseInfo.TouchId);
 }
 
 bool nuiTopLevel::SetFocus(nuiWidgetPtr pWidget)
 {
+  CheckValid();
   if (mpFocus == pWidget)
     return true;
 
@@ -682,11 +706,13 @@ bool nuiTopLevel::SetFocus(nuiWidgetPtr pWidget)
 
 nuiWidgetPtr nuiTopLevel::GetFocus() const
 {
+  CheckValid();
   return mpFocus;
 }
 
 bool nuiTopLevel::ActivateToolTip(nuiWidgetPtr pWidget, bool Now)
 {
+  CheckValid();
   if (pWidget == this)
   {
     nglString tt = GetToolTip();
@@ -710,6 +736,7 @@ bool nuiTopLevel::ActivateToolTip(nuiWidgetPtr pWidget, bool Now)
 
 bool nuiTopLevel::ReleaseToolTip(nuiWidgetPtr pWidget)
 {
+  CheckValid();
   if (mpToolTipSource == pWidget)
   {
     mToolTipTimerOn.Stop();
@@ -729,6 +756,7 @@ bool nuiTopLevel::ReleaseToolTip(nuiWidgetPtr pWidget)
 
 void nuiTopLevel::SetToolTipOn(bool AutoStop)
 {
+  CheckValid();
   if (mpToolTipSource)
   {
     /*
@@ -753,6 +781,7 @@ void nuiTopLevel::SetToolTipOn(bool AutoStop)
 
 bool nuiTopLevel::ToolTipOn(const nuiEvent& rEvent)
 {
+  CheckValid();
   if (mpToolTipSource)
   {
     /*
@@ -776,6 +805,7 @@ bool nuiTopLevel::ToolTipOn(const nuiEvent& rEvent)
 
 bool nuiTopLevel::ToolTipOff(const nuiEvent& rEvent)
 {
+  CheckValid();
   //NGL_OUT(_T("ToolTipOff\n"));
   mDisplayToolTip = false;
   mToolTipTimerOn.Stop();
@@ -788,11 +818,13 @@ bool nuiTopLevel::ToolTipOff(const nuiEvent& rEvent)
 
 bool nuiTopLevel::IsKeyDown (nglKeyCode Key) const
 {
+  CheckValid();
   return false;
 }
 
 bool nuiTopLevel::CallTextInput (const nglString& rUnicodeText)
 {
+  CheckValid();
   if (mpFocus && mpFocus->IsEnabled())
   {
     if (mpFocus->DispatchTextInput(rUnicodeText))
@@ -811,6 +843,7 @@ bool nuiTopLevel::CallTextInput (const nglString& rUnicodeText)
 
 void nuiTopLevel::CallTextInputCancelled ()
 {
+  CheckValid();
   if (mpFocus && mpFocus->IsEnabled())
   {
     mpFocus->DispatchTextInputCancelled();
@@ -944,6 +977,7 @@ nuiWidgetPtr GetPreviousFocussableWidget(nuiWidgetPtr pWidget)
 
 bool nuiTopLevel::CallKeyDown (const nglKeyEvent& rEvent)
 {
+  CheckValid();
   if (mpFocus)
   {
     if (mpFocus->IsEnabled())
@@ -991,6 +1025,7 @@ bool nuiTopLevel::CallKeyDown (const nglKeyEvent& rEvent)
 
 bool nuiTopLevel::CallKeyUp (const nglKeyEvent& rEvent)
 {
+  CheckValid();
   if (mpFocus && mpFocus->IsEnabled())
   {
     if (mpFocus->DispatchKeyUp(rEvent, mHotKeyMask))
@@ -1009,6 +1044,7 @@ bool nuiTopLevel::CallKeyUp (const nglKeyEvent& rEvent)
 
 bool nuiTopLevel::CallMouseClick (nglMouseInfo& rInfo)
 {
+  CheckValid();
   mMouseInfo.X = rInfo.X;
   mMouseInfo.Y = rInfo.Y;
   mMouseInfo.Buttons |= rInfo.Buttons;
@@ -1066,6 +1102,7 @@ NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseClick [%d] END\n"), rInfo.TouchId) );
 
 void nuiTopLevel::UpdateMouseCursor(const nuiWidgetList& rWidgets)
 {
+  CheckValid();
   nuiWidgetPtr pGrab = GetGrab(mMouseInfo.TouchId);
   if (pGrab)
   {
@@ -1095,6 +1132,7 @@ void nuiTopLevel::UpdateMouseCursor(const nuiWidgetList& rWidgets)
 
 void nuiTopLevel::DispatchKeyboardFocus(const nuiWidgetList& rWidgets)
 {
+  CheckValid();
   int32 i = 0;
   
   while (i < rWidgets.size())
@@ -1125,6 +1163,7 @@ void nuiTopLevel::DispatchKeyboardFocus(const nuiWidgetList& rWidgets)
 
 bool nuiTopLevel::CallMouseUnclick(nglMouseInfo& rInfo)
 {
+  CheckValid();
 //  NGL_TOUCHES_DEBUG( NGL_OUT(_T("nuiTopLevel::CallMouseUnclick X:%d Y:%d\n"), rInfo.X, rInfo.Y) );
 
   mMouseInfo.X = rInfo.X;
@@ -1177,6 +1216,7 @@ NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseUnclick [%d] END\n"), rInfo.TouchId) );
 
 void nuiTopLevel::UpdateHoverList(nglMouseInfo& rInfo)
 {
+  CheckValid();
   nuiWidgetPtr pGrab = GetGrab();
   if (pGrab)
     return;
@@ -1246,6 +1286,7 @@ void nuiTopLevel::UpdateHoverList(nglMouseInfo& rInfo)
 
 bool nuiTopLevel::CallMouseMove (nglMouseInfo& rInfo)
 {
+  CheckValid();
 NGL_TOUCHES_DEBUG( NGL_OUT(_T("nuiTopLevel::CallMouseMove X:%d Y:%d\n"), rInfo.X, rInfo.Y) );
 
   mMouseInfo.X = rInfo.X;
@@ -1376,6 +1417,7 @@ NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseMove [%d] BEGIN\n"), rInfo.TouchId) );
 
 void nuiTopLevel::SetToolTipRect()
 {
+  CheckValid();
   if (mDisplayToolTip && mpToolTipSource)
   {
     nglString text(mpToolTipSource->GetToolTip());
@@ -1458,6 +1500,7 @@ void nuiTopLevel::SetToolTipRect()
 
 void nuiTopLevel::DisplayToolTips(nuiDrawContext* pContext)
 {
+  CheckValid();
   if (mDisplayToolTip && mpToolTipSource && mpToolTipLabel)
   {
     DrawChild(pContext, mpToolTipLabel);
@@ -1469,6 +1512,7 @@ static const bool DISPLAY_PARTIAL_RECTS = false;
 
 bool nuiTopLevel::Draw(class nuiDrawContext *pContext)
 {
+  CheckValid();
   IteratorPtr pIt;
   for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
   {
@@ -1485,6 +1529,7 @@ bool nuiTopLevel::Draw(class nuiDrawContext *pContext)
 
 bool nuiTopLevel::DrawTree(class nuiDrawContext *pContext)
 {
+  CheckValid();
   //nuiStopWatch watch(_T("nuiTopLevel::DrawTree"));
 
   uint32 clipWidth, clipHeight;
@@ -1596,17 +1641,20 @@ bool nuiTopLevel::DrawTree(class nuiDrawContext *pContext)
                      
 void nuiTopLevel::GetMouseInfo(nglMouseInfo& rMouseInfo) const
 {
+  CheckValid();
   rMouseInfo = mMouseInfo;
 }
 
 nglPath nuiTopLevel::GetResourcePath() const
 {
+  CheckValid();
   return mResPath;
 }
 
 
 void nuiTopLevel::BroadcastInvalidateRect(nuiWidgetPtr pSender, const nuiRect& rRect)
 {
+  CheckValid();
   nuiRect r = rRect;
   nuiRect rect = GetRect();
 
@@ -1631,6 +1679,7 @@ void nuiTopLevel::BroadcastInvalidateRect(nuiWidgetPtr pSender, const nuiRect& r
 
 bool nuiTopLevel::SetRect(const nuiRect& rRect)
 {
+  CheckValid();
   #ifdef _DEBUG_LAYOUT
   if (GetDebug())
     printf("toplevel set rect %f %f %f %f\n", rRect.Left(), rRect.Top(), rRect.GetWidth(), rRect.GetHeight());
@@ -1658,6 +1707,7 @@ bool nuiTopLevel::SetRect(const nuiRect& rRect)
 
 bool nuiTopLevel::InitHotKeys(nglIStream* pHotKeys)
 {
+  CheckValid();
   nuiXML* pXML = new nuiXML(nglString::Null);
   if (pXML->Load(*pHotKeys))
   {
@@ -1678,6 +1728,7 @@ bool nuiTopLevel::InitHotKeys(nglIStream* pHotKeys)
 
 bool nuiTopLevel::InitHotKeys(nuiXMLNode* pHotKeys)
 {
+  CheckValid();
   nglString nodeName = pHotKeys->GetName();
   if (nodeName.Compare(NUIHOTKEYS_XML_NODEID))
   {
@@ -1725,6 +1776,7 @@ bool nuiTopLevel::InitHotKeys(nuiXMLNode* pHotKeys)
 
 nuiHotKey* nuiTopLevel::RegisterHotKeyKey(const nglString& rName, nglKeyCode Trigger, nuiKeyModifier Modifiers, bool Priority /*= false*/, bool FireOnKeyUp /*= false*/, const nglString& rDescription /*= nglString::Empty*/)
 {
+  CheckValid();
   std::map<nglString, nuiHotKey*>::const_iterator it = mHotKeys.find(rName);
   if (it == mHotKeys.end())
   {
@@ -1763,6 +1815,7 @@ nuiHotKey* nuiTopLevel::RegisterHotKeyKey(const nglString& rName, nglKeyCode Tri
 
 nuiHotKey* nuiTopLevel::RegisterHotKeyChar(const nglString& rName, nglChar Trigger, nuiKeyModifier Modifiers, bool Priority /*= false*/, bool FireOnKeyUp /*= false*/, const nglString& rDescription /*= nglString::Empty*/)
 {
+  CheckValid();
   std::map<nglString, nuiHotKey*>::const_iterator it = mHotKeys.find(rName);
   if (it == mHotKeys.end())
   {
@@ -1800,6 +1853,7 @@ nuiHotKey* nuiTopLevel::RegisterHotKeyChar(const nglString& rName, nglChar Trigg
 
 void nuiTopLevel::SetHotKey(const nglString& rName, nuiHotKey* pHotKey)
 {  
+  CheckValid();
   // search toplevel for a registered hotkey for rName
   nuiHotKey* pRegisteredHotKey = GetHotKey(rName);
   
@@ -1825,6 +1879,7 @@ void nuiTopLevel::SetHotKey(const nglString& rName, nuiHotKey* pHotKey)
 
 nuiHotKey* nuiTopLevel::GetHotKey(const nglString& rName)
 {
+  CheckValid();
   std::map<nglString, nuiHotKey*>::const_iterator it = mHotKeys.find(rName);
   if (it != mHotKeys.end())
   {
@@ -1835,11 +1890,13 @@ nuiHotKey* nuiTopLevel::GetHotKey(const nglString& rName)
 
 const std::map<nglString, nuiHotKey*>& nuiTopLevel::GetHotKeys() const
 {
+  CheckValid();
   return mHotKeys;
 }
 
 const nglString& nuiTopLevel::FindHotKeyKey(nglKeyCode Trigger, nuiKeyModifier Modifiers)
 {
+  CheckValid();
   std::map<nglString, nuiHotKey*>::const_iterator it;
   std::map<nglString, nuiHotKey*>::const_iterator end = mHotKeys.end();
   
@@ -1857,6 +1914,7 @@ const nglString& nuiTopLevel::FindHotKeyKey(nglKeyCode Trigger, nuiKeyModifier M
 
 const nglString& nuiTopLevel::FindHotKeyChar(nglChar Trigger, nuiKeyModifier Modifiers)
 {
+  CheckValid();
   std::map<nglString, nuiHotKey*>::const_iterator it;
   std::map<nglString, nuiHotKey*>::const_iterator end = mHotKeys.end();
   
@@ -1874,6 +1932,7 @@ const nglString& nuiTopLevel::FindHotKeyChar(nglChar Trigger, nuiKeyModifier Mod
 
 void nuiTopLevel::DelHotKey( const nglString& rName)
 {
+  CheckValid();
   std::map<nglString, nuiHotKey*>::const_iterator it = mHotKeys.find(rName);
   if (it != mHotKeys.end())
   {
@@ -1888,6 +1947,7 @@ void nuiTopLevel::DelHotKey( const nglString& rName)
 
 void nuiTopLevel::PrintHotKeyMap(const nglString& rText)
 {  
+  CheckValid();
   std::map<nglString, nuiHotKey*>::const_iterator it = mHotKeys.begin();
   NGL_OUT(_T("\nShortcuts Map (%s):\n"), rText.GetStdString().c_str());
   while (it != mHotKeys.end())
@@ -1904,17 +1964,20 @@ void nuiTopLevel::PrintHotKeyMap(const nglString& rText)
 
 bool nuiTopLevel::IsTrashFull() const
 {
+  CheckValid();
   return !mpTrash.empty();
 }
 
 void nuiTopLevel::SetWatchedWidget(nuiWidget* pWatchedWidget)
 {
+  CheckValid();
   mpWatchedWidget = pWatchedWidget;
   Invalidate();
 }
 
 bool nuiTopLevel::OnMessageQueueTick(const nuiEvent& rEvent)
 {
+  CheckValid();
   BroadcastQueuedNotifications();
   return false;
 }
@@ -1922,7 +1985,12 @@ bool nuiTopLevel::OnMessageQueueTick(const nuiEvent& rEvent)
 //// CSS Stuff:
 void nuiTopLevel::PrepareWidgetCSS(nuiWidget* pWidget, bool Recursive, uint32 MatchersTag)
 {
-  mCSSWidgets[pWidget] |= MatchersTag;
+  CheckValid();
+  std::map<nuiWidgetPtr, uint32>::iterator it = mCSSWidgets.find(pWidget);
+  if (it != mCSSWidgets.end())
+    mCSSWidgets[pWidget] |= MatchersTag;
+  else
+    mCSSWidgets[pWidget] = MatchersTag;
 
   if (!Recursive)
     return;
@@ -1942,6 +2010,7 @@ void nuiTopLevel::PrepareWidgetCSS(nuiWidget* pWidget, bool Recursive, uint32 Ma
 
 void nuiTopLevel::ApplyWidgetCSS(nuiWidget* pWidget, bool Recursive, uint32 MatchersTag)
 {
+  CheckValid();
   if (!mpCSS)
     return;
   
@@ -1965,6 +2034,7 @@ void nuiTopLevel::ApplyWidgetCSS(nuiWidget* pWidget, bool Recursive, uint32 Matc
 
 void nuiTopLevel::UpdateWidgetsCSS()
 {
+  CheckValid();
   std::map<nuiWidgetPtr, uint32>::iterator it = mCSSWidgets.begin();
   std::map<nuiWidgetPtr, uint32>::iterator end = mCSSWidgets.end();
   
@@ -1983,6 +2053,7 @@ void nuiTopLevel::UpdateWidgetsCSS()
 
 void nuiTopLevel::SetCSS(nuiCSS* pCSS)
 {
+  CheckValid();
   if (mpCSS != pCSS)
     delete mpCSS;
   mpCSS = pCSS;
@@ -1996,19 +2067,23 @@ void nuiTopLevel::SetCSS(nuiCSS* pCSS)
 
 nuiCSS* nuiTopLevel::GetCSS() const
 {
+  CheckValid();
   return mpCSS;
 }
 
 void nuiTopLevel::EnterModalState()
 {
+  CheckValid();
 }
 
 void nuiTopLevel::ExitModalState()
 {
+  CheckValid();
 }
 
 void nuiTopLevel::SetTabForward(nuiWidget* pSource, nuiWidget* pDestination, bool AutoReverse)
 {
+  CheckValid();
   // First check f there is already an entry in the table for this source
   std::map<nuiWidgetPtr, nuiWidgetPtr>::iterator it = mTabForward.find(pSource);
   
@@ -2046,6 +2121,7 @@ void nuiTopLevel::SetTabForward(nuiWidget* pSource, nuiWidget* pDestination, boo
 
 void nuiTopLevel::SetTabBackward(nuiWidget* pSource, nuiWidget* pDestination, bool AutoReverse)
 {
+  CheckValid();
   // First check f there is already an entry in the table for this source
   std::map<nuiWidgetPtr, nuiWidgetPtr>::iterator it = mTabBackward.find(pSource);
   
@@ -2083,6 +2159,7 @@ void nuiTopLevel::SetTabBackward(nuiWidget* pSource, nuiWidget* pDestination, bo
 
 nuiWidget* nuiTopLevel::GetTabForward(nuiWidget* pSource) const
 {
+  CheckValid();
   std::map<nuiWidgetPtr, nuiWidgetPtr>::const_iterator it = mTabForward.find(pSource);
   if (it != mTabForward.end())
     return it->second;
@@ -2091,6 +2168,7 @@ nuiWidget* nuiTopLevel::GetTabForward(nuiWidget* pSource) const
 
 nuiWidget* nuiTopLevel::GetTabBackward(nuiWidget* pSource) const
 {
+  CheckValid();
   std::map<nuiWidgetPtr, nuiWidgetPtr>::const_iterator it = mTabBackward.find(pSource);
   if (it != mTabBackward.end())
     return it->second;
@@ -2099,6 +2177,7 @@ nuiWidget* nuiTopLevel::GetTabBackward(nuiWidget* pSource) const
 
 void nuiTopLevel::GetTabForwardSources(nuiWidget* pDestination, std::set<nuiWidgetPtr>& rSources) const
 {
+  CheckValid();
   std::map<nuiWidgetPtr, std::set<nuiWidgetPtr> >::const_iterator it = mTabForwardRev.find(pDestination);
   if (it != mTabForwardRev.end())
   {
@@ -2110,6 +2189,7 @@ void nuiTopLevel::GetTabForwardSources(nuiWidget* pDestination, std::set<nuiWidg
 
 void nuiTopLevel::GetTabBackwardSources(nuiWidget* pDestination, std::set<nuiWidgetPtr>& rSources) const
 {
+  CheckValid();
   std::map<nuiWidgetPtr, std::set<nuiWidgetPtr> >::const_iterator it = mTabBackwardRev.find(pDestination);
   if (it != mTabBackwardRev.end())
   {
@@ -2121,15 +2201,18 @@ void nuiTopLevel::GetTabBackwardSources(nuiWidget* pDestination, std::set<nuiWid
 
 void nuiTopLevel::StartTextInput(int32 X, int32 Y, int32 W, int32 H)
 {
+  CheckValid();
   
 }
 
 void nuiTopLevel::EndTextInput()
 {
+  CheckValid();
   
 }
 
 bool nuiTopLevel::IsEnteringText() const
 {
+  CheckValid();
   return false;
 }

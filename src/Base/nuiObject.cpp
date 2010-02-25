@@ -739,12 +739,18 @@ void nuiObject::OnPropertyChanged(const nglString& rProperty, const nglString& r
   //...
 }
 
+#ifdef _NUI_DEBUG_OBJECTS_
 std::map<nuiObject*, nuiObject::Trace> nuiObject::mObjects;
+#endif
 
 void nuiObject::CheckValid() const
 {
 #ifdef _NUI_DEBUG_OBJECTS_
   std::map<nuiObject*, Trace>::const_iterator it = mObjects.find(const_cast<nuiObject*>(this));
+  if (it == mObjects.end() || !it->second.mAlive)
+  {
+    NGL_OUT(_T("Operating on an invalid Object! 0x%x (%ls - %ls)\n"), this, it->second.mClass.GetChars(), it->second.mName.GetChars());
+  }
   NGL_ASSERT(it != mObjects.end());
   NGL_ASSERT(it->second.mAlive);
 #endif
