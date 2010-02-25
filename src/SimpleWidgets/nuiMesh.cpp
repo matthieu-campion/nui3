@@ -23,13 +23,13 @@ nuiMesh::nuiMesh() :
   nuiUserArea(),
   mUserDrawSink(this)
 {
-  Init();
+  nuiMesh::Init();
 }
 
 bool nuiMesh::Load(const nuiXMLNode* pNode)
 {
   nuiUserArea::Load(pNode);
-  Init();
+  nuiMesh::Init();
 
   if (pNode->HasAttribute(_T("Source")))
   {

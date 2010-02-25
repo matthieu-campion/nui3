@@ -14,6 +14,10 @@
 #include "nuiAttribute.h"
 #include "nuiRefCount.h"
 
+#ifdef _DEBUG_
+#define _NUI_DEBUG_OBJECTS_
+#endif
+
 class nuiEventSource;
 
 class nuiXMLNode;
@@ -122,6 +126,22 @@ protected:
   nuiSerializeMode mSerializeMode;
   
   virtual void OnPropertyChanged(const nglString& rProperty, const nglString& rValue);
+
+
+#ifdef _NUI_DEBUG_OBJECTS_
+  class Trace
+  {
+  public:
+    nglString mClass;
+    nglString mName;
+    bool mAlive;
+  };
+  static std::map<nuiObject*, Trace> mObjects;
+  Trace* mpTrace;
+#endif
+  
+  void CheckValid() const;
+  
 private : 
   void Init(const nglString& rObjectName);
   void InitAttributes();

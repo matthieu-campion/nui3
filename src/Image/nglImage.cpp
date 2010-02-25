@@ -176,7 +176,7 @@ vector<nglImageCodecInfo*> *nglImage::mpCodecInfos = NULL;
  */
 nglImage::nglImage (nglIStream* pInput, nglImageCodec* pCodec)
 {
-  Init();
+  StaticInit();
   mpCodec = pCodec;
   mOwnCodec = (pCodec == NULL);
 
@@ -219,7 +219,7 @@ nglImage::nglImage (nglIStream* pInput, nglImageCodec* pCodec)
 
 nglImage::nglImage (const nglPath& rPath, nglImageCodec* pCodec )
 {
-  Init();
+  StaticInit();
   mpCodec = pCodec;
   mOwnCodec = (pCodec == NULL);
 
@@ -292,7 +292,7 @@ nglImage::nglImage (const nglPath& rPath, nglImageCodec* pCodec )
 
 nglImage::nglImage(nglImageInfo& rInfo, nuiCopyPolicy policy)
 {
-  Init();
+  StaticInit();
   if (policy == eTransfert)
     mInfo.Transfert(rInfo);
   else
@@ -310,7 +310,7 @@ nglImage::nglImage(nglImageInfo& rInfo, nuiCopyPolicy policy)
 
 nglImage::nglImage (const nglImage& rImage)
 {
-  Init();
+  StaticInit();
   mInfo.Copy(rImage.mInfo,true); // Clone image buffer
   mpCodec = NULL;                // Don't share the codec, and don't bother making a copy
   mOwnCodec = true;
@@ -534,7 +534,7 @@ void ScaleRectAvg(uint8* pTarget, int32 TgtWidth, int32 TgtHeight,
 
 nglImage::nglImage(const nglImage& rImage, uint32 NewWidth, uint32 NewHeight)
 {
-  Init();
+  StaticInit();
   mInfo.Copy(rImage.mInfo, false); // don't Clone image buffer
   mInfo.mWidth = NewWidth;
   mInfo.mHeight = NewHeight;
@@ -806,12 +806,12 @@ bool nglImage::OnError()
  * Global codec registry
  */
 
-void nglImage::Init()
+void nglImage::StaticInit()
 {
   if (mpCodecInfos == NULL)
   {
     mpCodecInfos = new std::vector<nglImageCodecInfo*>();
-    App->AddExit(Exit);
+    App->AddExit(StaticExit);
     mpCodecInfos->push_back(new nglImageTGACodecInfo());
     mpCodecInfos->push_back(new nglImagePPMCodecInfo());
 
@@ -827,7 +827,7 @@ void nglImage::Init()
   }
 }
 
-void nglImage::Exit()
+void nglImage::StaticExit()
 {
   std::vector<nglImageCodecInfo*>::iterator i;
 
@@ -846,7 +846,7 @@ void nglImage::Exit()
 
 bool nglImage::AddCodec (nglImageCodecInfo* pCodecInfo)
 {
-  Init();
+  StaticInit();
   if (pCodecInfo)
   {
     mpCodecInfos->push_back (pCodecInfo);
@@ -857,7 +857,7 @@ bool nglImage::AddCodec (nglImageCodecInfo* pCodecInfo)
 
 bool nglImage::DelCodec (nglImageCodecInfo* pCodecInfo)
 {
-  Init();
+  StaticInit();
   std::vector<nglImageCodecInfo*>::iterator i;
 
   for (i = mpCodecInfos->begin(); i != mpCodecInfos->end(); ++i)
@@ -873,14 +873,14 @@ bool nglImage::DelCodec (nglImageCodecInfo* pCodecInfo)
 
 nglImageCodec* nglImage::CreateCodec (int32 Index)
 {
-  Init();
+  StaticInit();
   nglImageCodecInfo* info = (*mpCodecInfos)[Index];
   return (info) ? info->CreateInstance() : NULL;
 }
 
 nglImageCodec* nglImage::CreateCodec (const nglString& rName)
 {
-  Init();
+  StaticInit();
   std::vector<nglImageCodecInfo*>::iterator i;
 
   for (i = mpCodecInfos->begin(); i != mpCodecInfos->end(); ++i)

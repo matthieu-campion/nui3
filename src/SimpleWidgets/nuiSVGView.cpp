@@ -16,7 +16,7 @@ nuiSVGView::nuiSVGView(nuiSVGShape* pShape)
   : nuiWidget(),
     mCache(nuiRect())
 {
-  Init();
+  nuiSVGView::Init();
   mpShape = pShape;
   mAntialias = true;
 }
@@ -25,7 +25,7 @@ nuiSVGView::nuiSVGView(const nglPath& rSource)
   : nuiWidget(),
     mCache(nuiRect())
 {
-  Init();
+  nuiSVGView::Init();
   nglIStream* pFile = rSource.OpenRead();
   if (pFile)
   {
@@ -38,7 +38,7 @@ bool nuiSVGView::Load(const nuiXMLNode* pNode)
 {
   nuiWidget::Load(pNode);
   mCache = nuiRect();
-  Init();
+  nuiSVGView::Init();
 
   if (pNode->HasAttribute("Source"))
   {

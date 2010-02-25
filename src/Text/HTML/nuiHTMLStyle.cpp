@@ -36,12 +36,12 @@ void nuiHTMLStyleValueBase::Use(bool set)
 /// class nuiHTMLStyle
 nuiHTMLStyle::nuiHTMLStyle()
 {
-  Init();
+  nuiHTMLStyle::Init();
 }
 
 nuiHTMLStyle::nuiHTMLStyle(const nuiHTMLStyle& rStyle)
 {
-  Init();
+  nuiHTMLStyle::Init();
   
   CopyFrom(rStyle);
 }

@@ -34,6 +34,15 @@ nuiObject::nuiObject(const nglString& rObjectName)
 
 void nuiObject::Init(const nglString& rObjectName)
 {	
+#ifdef _NUI_DEBUG_OBJECTS_
+  mObjects.insert(std::pair<nuiObject*, Trace>(this, Trace()));
+  std::map<nuiObject*, Trace>::iterator it = mObjects.find(this);
+  mpTrace = &(it->second);
+  mpTrace->mAlive = true;
+
+  uint32 s = mObjects.size(); if (!(s % 500)) { NGL_OUT(_T("Objects total count %d\n"), s); }
+#endif
+
   mClassNameIndex = -1;
   if (SetObjectClass(_T("nuiObject")))
     InitAttributes();
@@ -69,6 +78,7 @@ void nuiObject::InitAttributes()
 
 bool nuiObject::Load(const nuiXMLNode* pNode)
 {
+  CheckValid();
 	bool res=true;
 
   nglString name;
@@ -111,6 +121,7 @@ bool nuiObject::Load(const nuiXMLNode* pNode)
 
 nuiXMLNode* nuiObject::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
 {   
+  CheckValid();
   nuiXMLNode* pNode = NULL;
 
   if (mSerializeMode == eDontSaveNode)
@@ -168,17 +179,20 @@ nuiXMLNode* nuiObject::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
 
 void nuiObject::SetSerializeMode (nuiSerializeMode eMode)
 {
+  CheckValid();
   mSerializeMode = eMode;
   DebugRefreshInfo();
 }
 
 nuiSerializeMode nuiObject::GetSerializeMode () const
 {
+  CheckValid();
   return mSerializeMode;
 }
 
 nuiObject::~nuiObject()
 {
+  CheckValid();
 //  OUT("Deleting object '%ls' (class='%ls')\n", GetObjectName().GetChars(), GetObjectClass().GetChars());
   delete mpToken;
 
@@ -199,11 +213,15 @@ nuiObject::~nuiObject()
     c = mInheritanceMap[c];
   }
   
+#ifdef _NUI_DEBUG_OBJECTS_
+  mpTrace->mAlive = false;
+#endif
 }
 
 
 const nglString& nuiObject::GetObjectClass() const
 {
+  CheckValid();
 	return GetClassNameFromIndex(mClassNameIndex);
 }
 
@@ -211,12 +229,18 @@ const nglString& nuiObject::GetObjectClass() const
 
 const nglString& nuiObject::GetObjectName() const
 {
+  CheckValid();
 	return mObjectName;
 }
 
 
 void nuiObject::SetObjectName(const nglString& rName)
 {
+  CheckValid();
+#ifdef _NUI_DEBUG_OBJECTS_
+  mpTrace->mName = rName;
+#endif
+
   mObjectName = rName;
   
   DebugRefreshInfo();
@@ -236,6 +260,11 @@ std::vector<int32> nuiObject::mInheritanceMap;
 
 bool nuiObject::SetObjectClass(const nglString& rClass)
 {
+  CheckValid();
+#ifdef _DEBUG_
+  mpTrace->mClass = rClass;
+#endif
+
   int32 c = GetClassNameIndex(rClass);
   bool first = mInheritanceMap[c] < -1;
   mInheritanceMap[c] = GetObjectClassNameIndex();
@@ -260,6 +289,7 @@ bool nuiObject::SetObjectClass(const nglString& rClass)
 
 void nuiObject::GetObjectInheritance(std::vector<nglString>& rClasses) const
 {
+  CheckValid();
   int32 c = mClassNameIndex;
   
   do
@@ -273,12 +303,14 @@ void nuiObject::GetObjectInheritance(std::vector<nglString>& rClasses) const
 
 bool nuiObject::IsOfClass(const nglString& rClass) const
 {
+  CheckValid();
   int32 c = GetClassNameIndex(rClass);
   return IsOfClass(c);
 }
 
 bool nuiObject::IsOfClass(int32 ClassIndex) const
 {
+  CheckValid();
   NGL_ASSERT(ClassIndex < mInheritanceMap.size());
   
   int32 c = mClassNameIndex;
@@ -293,6 +325,7 @@ bool nuiObject::IsOfClass(int32 ClassIndex) const
 
 void nuiObject::SetProperty (const nglString& rName, const nglString& rValue)
 {
+  CheckValid();
 //  if (rName == _T("ToolTip") && GetObjectClass() == _T("HelpLabel"))
 //  {
 //    NGL_OUT(_T("nuiObject::SetProperty for 0x%x %ls / %ls = %ls\n"), this, GetObjectClass().GetChars(), GetObjectName().GetChars(), rValue.GetChars());
@@ -305,6 +338,7 @@ void nuiObject::SetProperty (const nglString& rName, const nglString& rValue)
 
 const nglString& nuiObject::GetProperty (const nglString& rName) const
 {
+  CheckValid();
   nuiPropertyMap::const_iterator it = mProperties.find(rName);
   if (it == mProperties.end())
     return nglString::Null;
@@ -314,36 +348,42 @@ const nglString& nuiObject::GetProperty (const nglString& rName) const
 
 const nglString& nuiObject::GetProperty(const char* pName) const
 {
+  CheckValid();
   nglString tmp(pName);
   return GetProperty(tmp);
 }
 
 void nuiObject::SetProperty(const char* pName, const nglString& rValue)
 {
+  CheckValid();
   nglString tmp(pName);
   SetProperty(tmp, rValue);
 }
 
 void nuiObject::SetProperty(const char* pName, const char* pValue)
 {
+  CheckValid();
   nglString tmp(pValue);
   SetProperty(pName, tmp);
 }
 
 bool nuiObject::HasProperty(const char* pName) const
 {
+  CheckValid();
   nglString tmp(pName);
   return HasProperty(tmp);
 }
 
 bool nuiObject::ClearProperty(const char* pName)
 {
+  CheckValid();
   nglString tmp(pName);
   return ClearProperty(tmp);
 }
 
 bool nuiObject::GetProperties (list<nglString>& rPropertyNames) const
 {
+  CheckValid();
   nuiPropertyMap::const_iterator it;
   nuiPropertyMap::const_iterator end = mProperties.end();
   for (it = mProperties.begin(); it!=end; ++it)
@@ -355,11 +395,13 @@ bool nuiObject::GetProperties (list<nglString>& rPropertyNames) const
 
 bool nuiObject::HasProperty (const nglString& rName) const
 {
+  CheckValid();
   return mProperties.find(rName) != mProperties.end();
 }
 
 bool nuiObject::ClearProperty(const nglString& rName)
 {
+  CheckValid();
   nuiPropertyMap::iterator it = mProperties.find(rName);
   if (it != mProperties.end())
   {
@@ -373,6 +415,7 @@ bool nuiObject::ClearProperty(const nglString& rName)
 
 bool nuiObject::ClearProperties(bool ClearNameAndClassToo)
 {
+  CheckValid();
   if (ClearNameAndClassToo)
   {
     mProperties.clear();
@@ -403,6 +446,7 @@ bool nuiObject::ClearProperties(bool ClearNameAndClassToo)
 
 void nuiObject::SetToken(nuiTokenBase* pToken)
 {
+  CheckValid();
   if (mpToken != pToken)
     delete mpToken;
   mpToken = pToken;
@@ -410,6 +454,7 @@ void nuiObject::SetToken(nuiTokenBase* pToken)
 
 nuiTokenBase* nuiObject::GetToken() const
 {
+  CheckValid();
   return mpToken;  
 }
 
@@ -423,6 +468,7 @@ uint32 nuiObject::mUniqueAttributeOrder = 0;
 
 void nuiObject::GetAttributes(std::map<nglString, nuiAttribBase>& rAttributeMap) const
 {
+  CheckValid();
   rAttributeMap.clear();
 
   // Add instance attributes:
@@ -462,6 +508,7 @@ static bool NUIATTRIBUTES_COMPARE(const nuiAttribBase& rLeft, const nuiAttribBas
 
 void nuiObject::GetSortedAttributes(std::list<nuiAttribBase>& rListToFill) const
 {
+  CheckValid();
   rListToFill.clear();
 
   // Add classes attributes
@@ -502,6 +549,7 @@ void nuiObject::GetSortedAttributes(std::list<nuiAttribBase>& rListToFill) const
 
 nuiAttribBase nuiObject::GetAttribute(const nglString& rName) const
 {
+  CheckValid();
   // Search Instance Attributes:
   {
     std::map<nglString,nuiAttributeBase*>::const_iterator it = mInstanceAttributes.find(rName);
@@ -531,6 +579,7 @@ nuiAttribBase nuiObject::GetAttribute(const nglString& rName) const
 
 void nuiObject::AddAttribute(const nglString& rName, nuiAttributeBase* pAttribute)
 {
+  CheckValid();
   mUniqueAttributeOrder++;
   pAttribute->SetOrder(mUniqueAttributeOrder);
 
@@ -540,6 +589,7 @@ void nuiObject::AddAttribute(const nglString& rName, nuiAttributeBase* pAttribut
 
 void nuiObject::AddAttribute(nuiAttributeBase* pAttribute)
 {
+  CheckValid();
   mUniqueAttributeOrder++;
   pAttribute->SetOrder(mUniqueAttributeOrder);
 
@@ -548,6 +598,7 @@ void nuiObject::AddAttribute(nuiAttributeBase* pAttribute)
 
 void nuiObject::AddInstanceAttribute(const nglString& rName, nuiAttributeBase* pAttribute)
 {
+  CheckValid();
   mUniqueAttributeOrder++;
   pAttribute->SetOrder(mUniqueAttributeOrder);
   pAttribute->SetAsInstanceAttribute(true);
@@ -557,6 +608,7 @@ void nuiObject::AddInstanceAttribute(const nglString& rName, nuiAttributeBase* p
 
 void nuiObject::AddInstanceAttribute(nuiAttributeBase* pAttribute)
 {
+  CheckValid();
   mUniqueAttributeOrder++;
   pAttribute->SetOrder(mUniqueAttributeOrder);
   pAttribute->SetAsInstanceAttribute(true);
@@ -567,6 +619,7 @@ void nuiObject::AddInstanceAttribute(nuiAttributeBase* pAttribute)
 
 void nuiObject::CopyProperties(const nuiObject& rObject)
 {
+  CheckValid();
   mProperties = rObject.mProperties;
 }
 
@@ -576,6 +629,7 @@ std::vector<std::map<nglString,nuiAttributeBase*> > nuiObject::mClassAttributes;
 
 int32 nuiObject::GetObjectClassNameIndex() const
 {
+  CheckValid();
   return mClassNameIndex;
 }
 
@@ -681,6 +735,19 @@ bool nuiObject::ClearGlobalProperty(const char* pName)
 
 void nuiObject::OnPropertyChanged(const nglString& rProperty, const nglString& rValue)
 {
+  CheckValid();
   //...
 }
+
+std::map<nuiObject*, nuiObject::Trace> nuiObject::mObjects;
+
+void nuiObject::CheckValid() const
+{
+#ifdef _NUI_DEBUG_OBJECTS_
+  std::map<nuiObject*, Trace>::const_iterator it = mObjects.find(const_cast<nuiObject*>(this));
+  NGL_ASSERT(it != mObjects.end());
+  NGL_ASSERT(it->second.mAlive);
+#endif
+}
+
 

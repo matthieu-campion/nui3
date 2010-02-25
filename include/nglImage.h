@@ -362,8 +362,8 @@ protected:
   void OnCodecData (float Completion);     ///< The codec invoke this method whenever more data has been decoded to image buffer
   bool OnCodecError();                     ///< The codec invoke this method when an error occurs while encoding/decoding
 
-  static void Init();
-  static void Exit();
+  static void StaticInit();
+  static void StaticExit();
 
   nglImageInfo mInfo;     ///< The image info.
   nglImageCodec* mpCodec; ///< The codec currently in use to load or save the image.
