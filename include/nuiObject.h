@@ -64,6 +64,7 @@ public:
   int32 GetObjectClassNameIndex() const;
   static int32 GetClassNameIndex(const nglString& rName);
   static const nglString& GetClassNameFromIndex(int32 index);
+  static int32 GetClassCount();
   //@}
   
   /** @name Properties system */
@@ -89,6 +90,7 @@ public:
 	/** @name Attributes system */
 	//@{
 	void GetAttributes(std::map<nglString, nuiAttribBase>& rAttributeMap) const;
+	static void GetAttributesOfClass(uint32 ClassIndex, std::map<nglString, nuiAttributeBase*>& rAttributeMap);
 	void GetSortedAttributes(std::list<nuiAttribBase>& rListToFill) const;
   nuiAttribBase GetAttribute(const nglString& rName) const;
   void AddInstanceAttribute(const nglString& rName, nuiAttributeBase* pProperty); ///< Add an attribute to this object (beware, only this instance of this class will have this attribute. If you wnat the attribute to be global to all instances of the class use AddAttribute instead).

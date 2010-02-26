@@ -48,7 +48,7 @@ void MainWindow::OnCreation()
   uint32 datalen = strlen((const char*)data);
   //////////////////////////////////////
   
-  nuiHTTPRequest request(_T("http://192.168.1.64:8888/"), _T("POST"));
+  nuiHTTPRequest request(_T("http://127.0.0.1:8888/"), _T("POST"));
   nglString boundary;
   boundary.Add(_T("NuiBoundary"));
   boundary.Add((uint32)nglTime(), 16);

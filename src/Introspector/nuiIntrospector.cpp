@@ -18,6 +18,7 @@
 #include "nuiMetaDecoration.h"
 #include "nuiTreeHandleDecoration.h"
 #include "nuiFontManager.h"
+#include "nuiObjectInspector.h"
 
 
 #define CELL_TOOLBAR 0
@@ -107,6 +108,13 @@ nuiWidget* nuiIntrospector::GetToolbar()
   mEventSink.Connect(pTextureBtn->ButtonPressed, &nuiIntrospector::ShowTextureInspector);
   pBox->AddCell(pTextureBtn);
   
+  nuiRadioButton* pObjectsBtn = new nuiRadioButton(_T("Objects"));
+  pObjectsBtn->SetColor(eNormalTextFg, textColor);
+  pObjectsBtn->SetColor(eSelectedTextFg, textColor);
+  pObjectsBtn->SetDecoration(nuiDecoration::Get(INTROSPECTOR_DECO_BUTTON), eDecorationBorder);
+  mEventSink.Connect(pObjectsBtn->ButtonPressed, &nuiIntrospector::ShowObjectInspector);
+  pBox->AddCell(pObjectsBtn);
+  
   
   // for visual comfort :).... doesn't work..!!?!
 //  nuiSeparator* pSeparator2 = new nuiSeparator(nuiHorizontal);
@@ -157,6 +165,12 @@ bool nuiIntrospector::ShowDecorationInspector(const nuiEvent& rEvent)
 bool nuiIntrospector::ShowTextureInspector(const nuiEvent& rEvent)
 {
   SetCell(CELL_CLIENT, new nuiTextureInspector()); 
+  return true;
+}
+
+bool nuiIntrospector::ShowObjectInspector(const nuiEvent& rEvent)
+{
+  SetCell(CELL_CLIENT, new nuiObjectInspector()); 
   return true;
 }
 

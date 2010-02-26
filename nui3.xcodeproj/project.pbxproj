@@ -597,6 +597,12 @@
 		E53120830F0780C60081CB7E /* nuiURL_CoreFoundation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E53120820F0780C60081CB7E /* nuiURL_CoreFoundation.cpp */; };
 		E53120840F0780C60081CB7E /* nuiURL_CoreFoundation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E53120820F0780C60081CB7E /* nuiURL_CoreFoundation.cpp */; };
 		E53120850F0780C60081CB7E /* nuiURL_CoreFoundation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E53120820F0780C60081CB7E /* nuiURL_CoreFoundation.cpp */; };
+		E5354C0711383244008F5402 /* nuiObjectInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = E5354C0611383244008F5402 /* nuiObjectInspector.h */; };
+		E5354C0811383244008F5402 /* nuiObjectInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = E5354C0611383244008F5402 /* nuiObjectInspector.h */; };
+		E5354C0911383244008F5402 /* nuiObjectInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = E5354C0611383244008F5402 /* nuiObjectInspector.h */; };
+		E5354C0B113832B8008F5402 /* nuiObjectInspector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5354C0A113832B8008F5402 /* nuiObjectInspector.cpp */; };
+		E5354C0C113832B8008F5402 /* nuiObjectInspector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5354C0A113832B8008F5402 /* nuiObjectInspector.cpp */; };
+		E5354C0D113832B8008F5402 /* nuiObjectInspector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5354C0A113832B8008F5402 /* nuiObjectInspector.cpp */; };
 		E53645E30CDF7C8000838C78 /* nuiPopupView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E53645E20CDF7C8000838C78 /* nuiPopupView.cpp */; };
 		E53645E40CDF7C8000838C78 /* nuiPopupView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E53645E20CDF7C8000838C78 /* nuiPopupView.cpp */; };
 		E53645E90CDF7CE300838C78 /* nuiPopupView.h in Headers */ = {isa = PBXBuildFile; fileRef = E53645E80CDF7CE300838C78 /* nuiPopupView.h */; };
@@ -3396,6 +3402,8 @@
 		E52EA7F1106D6DF5008598F5 /* nglWindow_Cocoa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nglWindow_Cocoa.h; path = src/Window/Cocoa/nglWindow_Cocoa.h; sourceTree = SOURCE_ROOT; };
 		E52EA7F4106D6E1F008598F5 /* nglWindow_Cocoa.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = nglWindow_Cocoa.mm; path = src/Window/Cocoa/nglWindow_Cocoa.mm; sourceTree = SOURCE_ROOT; };
 		E53120820F0780C60081CB7E /* nuiURL_CoreFoundation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiURL_CoreFoundation.cpp; path = src/Net/CoreFoundation/nuiURL_CoreFoundation.cpp; sourceTree = SOURCE_ROOT; };
+		E5354C0611383244008F5402 /* nuiObjectInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiObjectInspector.h; path = include/nuiObjectInspector.h; sourceTree = SOURCE_ROOT; };
+		E5354C0A113832B8008F5402 /* nuiObjectInspector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiObjectInspector.cpp; path = Introspector/nuiObjectInspector.cpp; sourceTree = "<group>"; };
 		E53645E20CDF7C8000838C78 /* nuiPopupView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiPopupView.cpp; sourceTree = "<group>"; };
 		E53645E80CDF7CE300838C78 /* nuiPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiPopupView.h; path = include/nuiPopupView.h; sourceTree = SOURCE_ROOT; };
 		E539DD2F0C9C8DC50099449B /* nglSyncEvent_posix.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nglSyncEvent_posix.cpp; path = src/Threading/posix/nglSyncEvent_posix.cpp; sourceTree = SOURCE_ROOT; };
@@ -4413,6 +4421,8 @@
 				E5A0FE480FA133BA00D934F6 /* nuiDecorationInspector.cpp */,
 				E57ECB611110A6BA00AE0A3A /* nuiTextureInspector.cpp */,
 				E57ECB651110A6E300AE0A3A /* nuiTextureInspector.h */,
+				E5354C0611383244008F5402 /* nuiObjectInspector.h */,
+				E5354C0A113832B8008F5402 /* nuiObjectInspector.cpp */,
 			);
 			name = Introspector;
 			sourceTree = "<group>";
@@ -6685,6 +6695,7 @@
 				E57ECB661110A6E300AE0A3A /* nuiTextureInspector.h in Headers */,
 				E5B7A1DA11347AF4005403BF /* nglReaderWriterLock.h in Headers */,
 				E560A376113587D300AFBEAC /* nglCondition.h in Headers */,
+				E5354C0911383244008F5402 /* nuiObjectInspector.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7280,6 +7291,7 @@
 				E57ECB681110A6E300AE0A3A /* nuiTextureInspector.h in Headers */,
 				E5B7A1DC11347AF4005403BF /* nglReaderWriterLock.h in Headers */,
 				E560A378113587D300AFBEAC /* nglCondition.h in Headers */,
+				E5354C0811383244008F5402 /* nuiObjectInspector.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7872,6 +7884,7 @@
 				E57ECB671110A6E300AE0A3A /* nuiTextureInspector.h in Headers */,
 				E5B7A1DB11347AF4005403BF /* nglReaderWriterLock.h in Headers */,
 				E560A377113587D300AFBEAC /* nglCondition.h in Headers */,
+				E5354C0711383244008F5402 /* nuiObjectInspector.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8401,6 +8414,7 @@
 				E57ECB621110A6BA00AE0A3A /* nuiTextureInspector.cpp in Sources */,
 				E5B7A1D611347AE3005403BF /* nglReaderWriterLock.cpp in Sources */,
 				E560A372113587BB00AFBEAC /* nglCondition_posix.cpp in Sources */,
+				E5354C0D113832B8008F5402 /* nuiObjectInspector.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8851,6 +8865,7 @@
 				E57ECB641110A6BA00AE0A3A /* nuiTextureInspector.cpp in Sources */,
 				E5B7A1D811347AE3005403BF /* nglReaderWriterLock.cpp in Sources */,
 				E560A374113587BB00AFBEAC /* nglCondition_posix.cpp in Sources */,
+				E5354C0C113832B8008F5402 /* nuiObjectInspector.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9295,6 +9310,7 @@
 				E57ECB631110A6BA00AE0A3A /* nuiTextureInspector.cpp in Sources */,
 				E5B7A1D711347AE3005403BF /* nglReaderWriterLock.cpp in Sources */,
 				E560A373113587BB00AFBEAC /* nglCondition_posix.cpp in Sources */,
+				E5354C0B113832B8008F5402 /* nuiObjectInspector.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

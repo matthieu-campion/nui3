@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>ActivePerspectiveName</key>
-	<string>Project</string>
+	<string>Debug</string>
 	<key>AllowedModules</key>
 	<array>
 		<dict>
@@ -290,15 +290,11 @@
 							<array>
 								<string>61A9DE3D0B833C9200BC506C</string>
 								<string>61A9DE4A0B833CD000BC506C</string>
-								<string>E5C5353511374ACD00A72A39</string>
-								<string>E5C5353611374AF600A72A39</string>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>9</integer>
-									<integer>5</integer>
-									<integer>4</integer>
+									<integer>7</integer>
 									<integer>3</integer>
 									<integer>0</integer>
 								</array>
@@ -320,8 +316,6 @@
 							<string>MainColumn</string>
 							<real>185</real>
 						</array>
-						<key>RubberWindowFrame</key>
-						<string>0 59 1920 1119 0 0 1920 1178 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -332,14 +326,12 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>E560A4551136C1BE00AFBEAC</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>upload.php</string>
+								<string>MainWindow.cpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -347,11 +339,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>E560A4561136C1BE00AFBEAC</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>upload.php</string>
+										<string>MainWindow.cpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E560A6051137CFC300AFBEAC</string>
+										<string>E560A61511381FD400AFBEAC</string>
 										<key>history</key>
 										<array>
 											<string>E560A46E1136D56A00AFBEAC</string>
@@ -359,11 +351,12 @@
 											<string>E560A4721136D56A00AFBEAC</string>
 											<string>E560A50F1136FE2700AFBEAC</string>
 											<string>E560A55511373AE100AFBEAC</string>
-											<string>E560A5BB113745C500AFBEAC</string>
 											<string>E560A5EB1137530400AFBEAC</string>
 											<string>E560A5F81137CD4300AFBEAC</string>
-											<string>E560A5F91137CD4300AFBEAC</string>
-											<string>E560A5FA1137CD4300AFBEAC</string>
+											<string>E560A60A113808EA00AFBEAC</string>
+											<string>E560A60B113808EA00AFBEAC</string>
+											<string>E560A60C113808EA00AFBEAC</string>
+											<string>E560A60D113808EA00AFBEAC</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -378,8 +371,6 @@
 							<dict>
 								<key>Frame</key>
 								<string>{{0, 0}, {1713, 723}}</string>
-								<key>RubberWindowFrame</key>
-								<string>0 59 1920 1119 0 0 1920 1178 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -457,8 +448,6 @@
 									<dict>
 										<key>Frame</key>
 										<string>{{10, 27}, {1713, 323}}</string>
-										<key>RubberWindowFrame</key>
-										<string>0 59 1920 1119 0 0 1920 1178 </string>
 									</dict>
 									<key>Module</key>
 									<string>PBXBuildResultsModule</string>
@@ -542,6 +531,8 @@
 					<dict>
 						<key>Frame</key>
 						<string>{{0, 0}, {1920, 359}}</string>
+						<key>RubberWindowFrame</key>
+						<string>0 59 1920 1119 0 0 1920 1178 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXDebugCLIModule</string>
@@ -565,8 +556,8 @@
 								<string>yes</string>
 								<key>sizes</key>
 								<array>
-									<string>{{0, 0}, {960, 357}}</string>
-									<string>{{0, 357}, {960, 357}}</string>
+									<string>{{0, 0}, {698, 399}}</string>
+									<string>{{0, 399}, {698, 315}}</string>
 								</array>
 							</dict>
 							<key>VerticalSplitView</key>
@@ -581,8 +572,8 @@
 								<string>yes</string>
 								<key>sizes</key>
 								<array>
-									<string>{{0, 0}, {960, 714}}</string>
-									<string>{{960, 0}, {960, 714}}</string>
+									<string>{{0, 0}, {698, 714}}</string>
+									<string>{{698, 0}, {1222, 714}}</string>
 								</array>
 							</dict>
 						</dict>
@@ -612,11 +603,15 @@
 								<string>Value</string>
 								<real>85</real>
 								<string>Summary</string>
-								<real>730</real>
+								<real>468</real>
 							</array>
 							<key>Frame</key>
-							<string>{{0, 357}, {960, 357}}</string>
+							<string>{{0, 399}, {698, 315}}</string>
+							<key>RubberWindowFrame</key>
+							<string>0 59 1920 1119 0 0 1920 1178 </string>
 						</dict>
+						<key>RubberWindowFrame</key>
+						<string>0 59 1920 1119 0 0 1920 1178 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXDebugSessionModule</string>
@@ -663,7 +658,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>288870339.67161101</real>
+	<real>288890836.25401598</real>
 	<key>ToolbarConfigUserDefaultsMinorVersion</key>
 	<string>2</string>
 	<key>ToolbarDisplayMode</key>
@@ -680,6 +675,8 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
+		<string>E560A61211380B9E00AFBEAC</string>
+		<string>E560A61311380B9E00AFBEAC</string>
 		<string>/Users/meeloo/work/nui3/tutorials/HTTPUpload/HTTPUpload.xcodeproj</string>
 	</array>
 	<key>WindowString</key>

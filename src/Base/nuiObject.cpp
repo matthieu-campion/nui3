@@ -501,6 +501,28 @@ void nuiObject::GetAttributes(std::map<nglString, nuiAttribBase>& rAttributeMap)
   }
 }
 
+void nuiObject::GetAttributesOfClass(uint32 ClassIndex, std::map<nglString, nuiAttributeBase*>& rAttributeMap)
+{
+  rAttributeMap.clear();
+  
+  // Add classes attributes:
+  int32 c = ClassIndex;
+  while (c >= 0)
+  {
+    //printf("\t\tattr for class %ls\n", GetClassNameFromIndex(c).GetChars());
+    std::map<nglString,nuiAttributeBase*>::const_iterator it = mClassAttributes[c].begin();
+    std::map<nglString,nuiAttributeBase*>::const_iterator end = mClassAttributes[c].end();
+    
+    while (it != end)
+    {
+      rAttributeMap.insert(*it);
+      ++it;
+    }
+    
+    c = mInheritanceMap[c];
+  }
+}
+
 static bool NUIATTRIBUTES_COMPARE(const nuiAttribBase& rLeft, const nuiAttribBase& rRight)
 {
   return (rLeft.GetOrder() < rRight.GetOrder());
@@ -760,4 +782,8 @@ void nuiObject::CheckValid() const
 #endif
 }
 
+int32 nuiObject::GetClassCount()
+{
+  return mObjectClassNames.size();
+}
 
