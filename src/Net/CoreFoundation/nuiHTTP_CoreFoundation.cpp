@@ -52,11 +52,11 @@ nuiHTTPResponse* nuiHTTPRequest::SendRequest()
     delete pVal;
   }
   
+  CFDataRef body = NULL;
   if (mBody.size())
   {
-    CFDataRef body = CFDataCreateWithBytesNoCopy(kCFAllocatorDefault, (UInt8*)&mBody[0], mBody.size(), kCFAllocatorNull);
+    body = CFDataCreateWithBytesNoCopy(kCFAllocatorDefault, (UInt8*)&mBody[0], mBody.size(), kCFAllocatorNull);
     CFHTTPMessageSetBody(req, body);
-    CFRelease(body);
   }
   
   CFReadStreamRef readStream = CFReadStreamCreateForHTTPRequest(kCFAllocatorDefault, req);
@@ -133,6 +133,8 @@ nuiHTTPResponse* nuiHTTPRequest::SendRequest()
   CFRelease(readStream);
   CFRelease(dict);
   CFRelease(statusLine);
+  if (body)
+    CFRelease(body);
   
   return pResponse;
 }
