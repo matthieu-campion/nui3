@@ -220,6 +220,12 @@
 			E560A5FB1137CD4300AFBEAC /* PBXTextBookmark */ = E560A5FB1137CD4300AFBEAC /* PBXTextBookmark */;
 			E560A5FC1137CD8900AFBEAC /* PBXTextBookmark */ = E560A5FC1137CD8900AFBEAC /* PBXTextBookmark */;
 			E560A5FD1137CDE300AFBEAC /* PBXTextBookmark */ = E560A5FD1137CDE300AFBEAC /* PBXTextBookmark */;
+			E560A6001137CEC300AFBEAC /* PBXTextBookmark */ = E560A6001137CEC300AFBEAC /* PBXTextBookmark */;
+			E560A6011137CEDC00AFBEAC /* PBXTextBookmark */ = E560A6011137CEDC00AFBEAC /* PBXTextBookmark */;
+			E560A6021137CEF900AFBEAC /* PBXTextBookmark */ = E560A6021137CEF900AFBEAC /* PBXTextBookmark */;
+			E560A6031137CF4F00AFBEAC /* PBXTextBookmark */ = E560A6031137CF4F00AFBEAC /* PBXTextBookmark */;
+			E560A6041137CFB800AFBEAC /* PBXTextBookmark */ = E560A6041137CFB800AFBEAC /* PBXTextBookmark */;
+			E560A6051137CFC300AFBEAC /* PBXTextBookmark */ = E560A6051137CFC300AFBEAC /* PBXTextBookmark */;
 			E5C5353111374AC000A72A39 = E5C5353111374AC000A72A39 /* PBXTextBookmark */;
 			E5C5353211374AC000A72A39 = E5C5353211374AC000A72A39 /* PBXTextBookmark */;
 			E5C5353311374AC000A72A39 = E5C5353311374AC000A72A39 /* PBXTextBookmark */;
@@ -2065,7 +2071,7 @@
 		fRef = E5C5356011374B7D00A72A39 /* upload.php */;
 		name = "upload.php: 59";
 		rLen = 0;
-		rLoc = 1280;
+		rLoc = 1217;
 		rType = 0;
 		vrLen = 1183;
 		vrLoc = 255;
@@ -2075,7 +2081,7 @@
 		fRef = E5C5356011374B7D00A72A39 /* upload.php */;
 		name = "upload.php: 59";
 		rLen = 0;
-		rLoc = 1280;
+		rLoc = 1217;
 		rType = 0;
 		vrLen = 1183;
 		vrLoc = 255;
@@ -2085,7 +2091,7 @@
 		fRef = E5C5356011374B7D00A72A39 /* upload.php */;
 		name = "upload.php: 85";
 		rLen = 0;
-		rLoc = 1751;
+		rLoc = 1653;
 		rType = 0;
 		vrLen = 1206;
 		vrLoc = 413;
@@ -2105,7 +2111,7 @@
 		fRef = E5C5356011374B7D00A72A39 /* upload.php */;
 		name = "upload.php: 85";
 		rLen = 0;
-		rLoc = 1751;
+		rLoc = 1653;
 		rType = 0;
 		vrLen = 1212;
 		vrLoc = 406;
@@ -2115,7 +2121,7 @@
 		fRef = E5C5356011374B7D00A72A39 /* upload.php */;
 		name = "upload.php: 45";
 		rLen = 0;
-		rLoc = 716;
+		rLoc = 836;
 		rType = 0;
 		vrLen = 1260;
 		vrLoc = 413;
@@ -2145,7 +2151,7 @@
 		fRef = E5C5356011374B7D00A72A39 /* upload.php */;
 		name = "upload.php: 45";
 		rLen = 0;
-		rLoc = 716;
+		rLoc = 836;
 		rType = 0;
 		vrLen = 1260;
 		vrLoc = 413;
@@ -2154,8 +2160,8 @@
 		isa = PBXTextBookmark;
 		fRef = E5C5356011374B7D00A72A39 /* upload.php */;
 		name = "upload.php: 42";
-		rLen = 133;
-		rLoc = 716;
+		rLen = 113;
+		rLoc = 836;
 		rType = 0;
 		vrLen = 1172;
 		vrLoc = 558;
@@ -2165,7 +2171,7 @@
 		fRef = E5C5356011374B7D00A72A39 /* upload.php */;
 		name = "upload.php: 47";
 		rLen = 0;
-		rLoc = 853;
+		rLoc = 954;
 		rType = 0;
 		vrLen = 1173;
 		vrLoc = 549;
@@ -2175,10 +2181,70 @@
 		fRef = E5C5356011374B7D00A72A39 /* upload.php */;
 		name = "upload.php: 48";
 		rLen = 0;
-		rLoc = 847;
+		rLoc = 949;
 		rType = 0;
 		vrLen = 1186;
 		vrLoc = 323;
+	};
+	E560A6001137CEC300AFBEAC /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5356011374B7D00A72A39 /* upload.php */;
+		name = "upload.php: 39";
+		rLen = 0;
+		rLoc = 575;
+		rType = 0;
+		vrLen = 1220;
+		vrLoc = 182;
+	};
+	E560A6011137CEDC00AFBEAC /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5356011374B7D00A72A39 /* upload.php */;
+		name = "upload.php: 17";
+		rLen = 0;
+		rLoc = 124;
+		rType = 0;
+		vrLen = 1142;
+		vrLoc = 21;
+	};
+	E560A6021137CEF900AFBEAC /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5356011374B7D00A72A39 /* upload.php */;
+		name = "upload.php: 37";
+		rLen = 0;
+		rLoc = 561;
+		rType = 0;
+		vrLen = 1142;
+		vrLoc = 21;
+	};
+	E560A6031137CF4F00AFBEAC /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5356011374B7D00A72A39 /* upload.php */;
+		name = "upload.php: 51";
+		rLen = 0;
+		rLoc = 954;
+		rType = 0;
+		vrLen = 1161;
+		vrLoc = 143;
+	};
+	E560A6041137CFB800AFBEAC /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5356011374B7D00A72A39 /* upload.php */;
+		name = "upload.php: 18";
+		rLen = 0;
+		rLoc = 179;
+		rType = 0;
+		vrLen = 1165;
+		vrLoc = 0;
+	};
+	E560A6051137CFC300AFBEAC /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5356011374B7D00A72A39 /* upload.php */;
+		name = "upload.php: 42";
+		rLen = 0;
+		rLoc = 759;
+		rType = 0;
+		vrLen = 1165;
+		vrLoc = 0;
 	};
 	E5C5353111374AC000A72A39 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -2348,9 +2414,9 @@
 		path = /Users/meeloo/work/nui3/tutorials/HTTPUpload/php/upload.php;
 		sourceTree = "<absolute>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1652, 1235}}";
-			sepNavSelRange = "{847, 0}";
-			sepNavVisRange = "{323, 1186}";
+			sepNavIntBoundsRect = "{{0, 0}, {1652, 1066}}";
+			sepNavSelRange = "{759, 0}";
+			sepNavVisRange = "{0, 1165}";
 		};
 	};
 	E5C5356111374B7D00A72A39 /* PBXTextBookmark */ = {

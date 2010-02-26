@@ -10,7 +10,6 @@
 
 ?>
 
-
 <!-- // print errors from previous request, if any -->
 
 <?
@@ -32,11 +31,14 @@ if (!is_uploaded_file($_FILES["MyFile"]["tmp_name"]))
   <div style="width:320px; border:1px solid red; font-size: 9pt; ">
   <? echo $_FILES["MyFile"]["name"]." :<br/>file upload error!"; ?>
   </div>
-  ?>
+  <?
   exit();
 }
 
 // try and store the file from the temp. path to a proper path
+$name = $_FILES["MyFile"]["name"];
+$type = $_FILES["MyFile"]["type"];
+$size = $_FILES["MyFile"]["size"] / (1024 * 1024);
 $tmppath = $_FILES["MyFile"]["tmp_name"];
 $destinationPath = "store/".$name;
 //$data = @file_get_contents($tmppath);  
@@ -45,9 +47,7 @@ $destinationPath = "store/".$name;
 //    echo "<br/>\n<br/>\n<br/>\n<br/>\n".$data;
 //}
 
-echo "PROUT<br/>";
-
-if (rename($tmppath, $destinationPath))
+if (!rename($tmppath, $destinationPath))
 {
   ?>
     <div style="width:320px; border:1px solid red; font-size: 9pt; ">
@@ -57,19 +57,7 @@ if (rename($tmppath, $destinationPath))
   exit();
 }
 
-?>
-<div>copied file 
-<?
-$tmppath = $_FILES["MyFile"]["tmp_name"];
-$name = $_FILES["MyFile"]["name"];
-$type = $_FILES["MyFile"]["type"];
-$size = $_FILES["MyFile"]["size"] / (1024 * 1024);
-$destinationPath = "store/".$name;
-echo $tmppath;
-
-?> to <?
-echo $destinationPath;
-?></div><br/><?
+?> <div>copied file <? echo $tmppath; ?> to <? echo $destinationPath; ?></div><br/> <?
 
 // everything's ok
 
