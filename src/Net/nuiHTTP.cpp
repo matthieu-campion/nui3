@@ -30,8 +30,8 @@ nglString nuiHTTPMessage::GetHeadersRep() const
   nuiHTTPHeaderMap::const_iterator end = mHeaders.end();
   for (nuiHTTPHeaderMap::const_iterator it = mHeaders.begin(); it != end; ++it)
   {
-    str.Append(it->first + _T(" : ") + it->second);
-    str.AddNewLine();
+    str.Append(it->first + _T(": ") + it->second);
+    str.Add(_T("\r\n"));
   }
   return str;
 }

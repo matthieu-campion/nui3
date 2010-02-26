@@ -581,12 +581,15 @@ void nuiHTMLView::ParseBody(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
         // Skip those tags
         break;
       default:
-        if (pChild->GetName().IsEmpty())
-          ParseText(pChild, pBox);
-        else
+        if (pChild->GetType() != nuiHTML::eNode_Comment)
         {
-          //printf("body??? '%ls'\n", pChild->GetName().GetChars());
-          ParseBody(pChild, pBox);
+          if (pChild->GetType() == nuiHTML::eNode_Text)
+            ParseText(pChild, pBox);
+          else
+          {
+            //printf("body??? '%ls'\n", pChild->GetName().GetChars());
+            ParseBody(pChild, pBox);
+          }
         }
         break;
     }

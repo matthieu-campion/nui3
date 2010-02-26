@@ -12,6 +12,7 @@
 #include "nuiVBox.h"
 #include "nuiHTTP.h"
 #include "nglOMemory.h"
+#include "nuiHTMLView.h"
 
 
 /*
@@ -47,7 +48,7 @@ void MainWindow::OnCreation()
   uint32 datalen = strlen((const char*)data);
   //////////////////////////////////////
   
-  nuiHTTPRequest request(_T("http://testupload:8888/"), _T("POST"));
+  nuiHTTPRequest request(_T("http://192.168.1.64:8888/"), _T("POST"));
   nglString boundary;
   boundary.Add(_T("NuiBoundary"));
   boundary.Add((uint32)nglTime(), 16);
@@ -91,12 +92,26 @@ void MainWindow::OnCreation()
   
   request.SetBody(mem.GetBufferData(), mem.GetSize());
   
-  mem.WriteUInt8((const uint8*)"\0", 1); // Add final 0 for printf
-  printf("Mime encoded:\n%s\n", mem.GetBufferData());
+  //mem.WriteUInt8((const uint8*)"\0", 1); // Add final 0 for printf
+  nglString enc(mem.GetBufferData(),  mem.GetSize());
+  NGL_OUT(_T("Mime encoded:\n%ls\n"), enc.GetChars());
 
   nuiHTTPResponse* pRes = request.SendRequest();
-  printf("Result:\n%ls\n", pRes->GetBodyStr().GetChars());
-  
+
+  nuiHTMLView* pView = new nuiHTMLView();
+  AddChild(pView);
+
+  if (pRes)
+  {
+    NGL_OUT(_T("Result:\n%ls\n"), pRes->GetBodyStr().GetChars());
+    pView->SetText(pRes->GetBodyStr());
+  }
+  else
+  {
+    NGL_OUT(_T("Unable to send HTTP Request"));
+    pView->SetText(_T("Unable to send HTTP Request"));
+  }
+
   delete pRes;
 }
 
