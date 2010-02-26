@@ -8,32 +8,68 @@
 
 //exit();
 
+?>
 
 
+<!-- // print errors from previous request, if any -->
 
-
-
+<?
 // check filename
 if ($_FILES["MyFile"]["name"] == "")
 {
-  header("Location: index.php?error=no file selected!");
+  ?>
+  <div style="width:320px; border:1px solid red; font-size: 9pt; ">
+  <? echo "Location: no file selected!"; ?>
+  </div>
+  <?
   exit();
 }
 
 // check file data upload
 if (!is_uploaded_file($_FILES["MyFile"]["tmp_name"]))
 {
-  header("Location: index.php?error=".$_FILES["MyFile"]["name"]." :<br/>file upload error!");
+  ?>
+  <div style="width:320px; border:1px solid red; font-size: 9pt; ">
+  <? echo $_FILES["MyFile"]["name"]." :<br/>file upload error!"; ?>
+  </div>
+  ?>
   exit();
 }
 
 // try and store the file from the temp. path to a proper path
-$destinationPath = "store/".$_FILES["MyFile"]["name"];
-if (!rename($_FILES["MyFile"]["tmp_name"], $destinationPath))
+$tmppath = $_FILES["MyFile"]["tmp_name"];
+$destinationPath = "store/".$name;
+//$data = @file_get_contents($tmppath);  
+//if ($data)
+//{
+//    echo "<br/>\n<br/>\n<br/>\n<br/>\n".$data;
+//}
+
+echo "PROUT<br/>";
+
+if (rename($tmppath, $destinationPath))
 {
-  header("Location: index.php?error=".$destinationPath." :<br/>could not store this file!");
+  ?>
+    <div style="width:320px; border:1px solid red; font-size: 9pt; ">
+    <? echo "Location: index.php?error=".$destinationPath." :<br/>could not store this file!"; ?>
+    </div>
+  <?
   exit();
 }
+
+?>
+<div>copied file 
+<?
+$tmppath = $_FILES["MyFile"]["tmp_name"];
+$name = $_FILES["MyFile"]["name"];
+$type = $_FILES["MyFile"]["type"];
+$size = $_FILES["MyFile"]["size"] / (1024 * 1024);
+$destinationPath = "store/".$name;
+echo $tmppath;
+
+?> to <?
+echo $destinationPath;
+?></div><br/><?
 
 // everything's ok
 
@@ -41,14 +77,16 @@ if (!rename($_FILES["MyFile"]["tmp_name"], $destinationPath))
 // print_r($_FILES["MyFile"]);
 
 // go back to the form, displaying the info about this current file
-$name = $_FILES["MyFile"]["name"];
-$type = $_FILES["MyFile"]["type"];
-$size = $_FILES["MyFile"]["size"] / (1024 * 1024);
-header("Location: index.php?info=true&name=".$name."&type=".$type."&size=".$size);
-exit();
-
-// note: I ask form.php (via index.php which is called here) to process the results of the request, instead of doing it here
-// This way, if the user reloads the current page of his browser, it doesn't duplicate the request process...
 
 ?>
+
+<!-- // print results from previous request, if any -->
+
+<div style="width:320px; border:1px solid green; font-size: 9pt; ">
+<? 
+echo "file: ".$name."<br/>"; 
+echo "type: ".$type."<br/>"; 
+printf("size: %.2fMb<br/>", $size); 
+?>
+</div>
 

@@ -6,17 +6,21 @@
 // server entry point
 //
 
+?>
+
+<html>
+<body>
+
+<?
+// otherwise generate the upload form
+require("form.php");
 
 // if a file upload has been requested
-//if (isset($_POST["MyParam"]) && ($_POST["MyParam"] == "MyValue")  && isset($_FILES["MyFile"]))
 if (isset($_FILES["MyFile"]))
 {
   require("upload.php");
   exit();
 }
-
-// otherwise generate the upload form
-require("form.php");
 
 $data = @file_get_contents('php://input');  
 if ($data)
@@ -51,4 +55,9 @@ function ParseArray($myarray, $indent)
 exit();
 
 ?>
+
+</body>
+</html>
+
+
 

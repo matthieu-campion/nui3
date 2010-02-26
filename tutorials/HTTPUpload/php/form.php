@@ -8,10 +8,6 @@
 
 ?>
 
-<html>
-<body>
-
-
 <!-- // HTML FORM -->
 
 <h2>Choose the file to upload</h2>
@@ -23,28 +19,4 @@
 </table>
 </form>
 
-
-<!-- // print errors from previous request, if any -->
-
-<? if (isset($_GET["error"])) { ?>
-  <div style="width:320px; border:1px solid red; font-size: 9pt; ">
-  <? echo $_GET["error"]; ?>
-  </div>
-<? } ?>
-
-
-<!-- // print results from previous request, if any -->
-
-<? if (isset($_GET["info"]) && ($_GET["info"]=="true")) { ?>
-  <div style="width:320px; border:1px solid green; font-size: 9pt; ">
-  <? 
-  echo "file: ".$_GET["name"]."<br/>"; 
-  echo "type: ".$_GET["type"]."<br/>"; 
-  printf("size: %.2fMo<br/>", $_GET["size"]); 
-  ?>
-  </div>
-<? } ?>
-
-</body>
-</html>
 
