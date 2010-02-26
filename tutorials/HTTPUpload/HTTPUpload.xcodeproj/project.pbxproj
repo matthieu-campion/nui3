@@ -59,7 +59,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E592C5140EFE8CCC00340B35 /* libnui3D cocoa.a */;
+			remoteGlobalIDString = E592C5140EFE8CCC00340B35;
 			remoteInfo = "nui3D cocoa";
 		};
 /* End PBXContainerItemProxy section */
@@ -79,6 +79,7 @@
 		BC6A09AB0EF92BAB00881ACF /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		BC6A09CB0EF9301900881ACF /* main.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = main.css; path = resources/css/main.css; sourceTree = SOURCE_ROOT; };
 		BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nui3.xcodeproj; path = ../../nui3.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E5C5353611374AF600A72A39 /* php */ = {isa = PBXFileReference; lastKnownFileType = folder; path = php; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +139,7 @@
 		61A9DE4A0B833CD000BC506C /* sources */ = {
 			isa = PBXGroup;
 			children = (
+				E5C5353511374ACD00A72A39 /* php */,
 				61A9DFEF0B83433800BC506C /* Application.cpp */,
 				61A9DFF00B83433800BC506C /* Application.h */,
 				61A9DFF10B83433800BC506C /* MainWindow.cpp */,
@@ -179,6 +181,14 @@
 				E560A44E1136C18E00AFBEAC /* libnui3D cocoa.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		E5C5353511374ACD00A72A39 /* php */ = {
+			isa = PBXGroup;
+			children = (
+				E5C5353611374AF600A72A39 /* php */,
+			);
+			name = php;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
