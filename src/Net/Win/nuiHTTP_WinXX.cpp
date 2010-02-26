@@ -42,7 +42,7 @@ static void ShowErrorRequest(DWORD err)
     BUFFER_LEN,
     NULL);
   errormsg = buffer;
-  NGL_LOG("httpclient", 0, "%ls", errormsg.GetChars());
+  NGL_LOG(_T("httpclient"), 0, errormsg.GetChars());
 }
 
 nuiHTTPResponse* nuiHTTPRequest::SendRequest()
