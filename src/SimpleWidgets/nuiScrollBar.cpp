@@ -19,6 +19,7 @@
 nuiScrollBar::nuiScrollBar(nuiOrientation orientation, const nuiRange& rRange, nuiWidgetPtr pThumb)
   : nuiSimpleContainer(),
     mRange(rRange),
+    mpRange(NULL),
     mpThumb(pThumb),
     mTimer(.2),
     mScrollBarSink(this)
@@ -40,13 +41,11 @@ nuiScrollBar::nuiScrollBar(nuiOrientation orientation, const nuiRange& rRange, n
   
   mIdealWidth = SCROLL_IDEAL_WIDTH;
   
-  mRange = rRange;
+  SetRange(&mRange);
 
-  mScrollBarSink.Connect(mRange.Changed, &nuiScrollBar::DoInvalidateLayout);
-  mScrollBarSink.Connect(mRange.ValueChanged, &nuiScrollBar::DoInvalidate);
   mScrollBarSink.Connect(mTimer.Tick, &nuiScrollBar::HandlePageUp);
   mScrollBarSink.Connect(mTimer.Tick, &nuiScrollBar::HandlePageDown);
-  
+
   if (mpThumb)
     AddChild(mpThumb);
 
@@ -69,8 +68,11 @@ bool nuiScrollBar::Load(const nuiXMLNode* pNode)
 
   // FIXME: interpret other attributes...
   mOrientation = nuiGetOrientation(pNode);
-  mScrollBarSink.Connect(mRange.Changed, &nuiScrollBar::DoInvalidateLayout);
-  mScrollBarSink.Connect(mRange.ValueChanged, &nuiScrollBar::DoInvalidate);
+  
+  SetRange(&mRange);
+
+  mScrollBarSink.Connect(mTimer.Tick, &nuiScrollBar::HandlePageUp);
+  mScrollBarSink.Connect(mTimer.Tick, &nuiScrollBar::HandlePageDown);
 
   NUI_ADD_EVENT(ValueChanged);
   
@@ -194,16 +196,17 @@ bool nuiScrollBar::Draw(nuiDrawContext* pContext)
 
 nuiRect nuiScrollBar::CalcIdealSize()
 {
+  NGL_ASSERT(mpRange);
   nuiRect Rect;
   if (mOrientation == nuiHorizontal)
   {
-    Rect.mRight = MAX(mRange.GetRange(),SCROLL_IDEAL_SIZE);
+    Rect.mRight = MAX(mpRange->GetRange(),SCROLL_IDEAL_SIZE);
     Rect.mBottom= mIdealWidth;
   }
   else
   {
     Rect.mRight = mIdealWidth;
-    Rect.mBottom= MAX(mRange.GetRange(),SCROLL_IDEAL_SIZE);
+    Rect.mBottom= MAX(mpRange->GetRange(),SCROLL_IDEAL_SIZE);
   }
   
   mIdealRect = Rect;
@@ -251,17 +254,17 @@ bool nuiScrollBar::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Butt
       }
       else if (X > mThumbRect.Right() - mThumbSideSize)
       {
-        mClickValue = mRange.GetValue();
+        mClickValue = mpRange->GetValue();
         mRightSideClicked = true;
       }
       else if (X < mThumbRect.Left() + mThumbSideSize)
       {
-        mClickValue = mRange.GetValue();
+        mClickValue = mpRange->GetValue();
         mLeftSideClicked = true;
       }
       else
       {
-        mClickValue = mRange.GetValue();
+        mClickValue = mpRange->GetValue();
         mThumbClicked = true;
       }
     }
@@ -279,7 +282,7 @@ bool nuiScrollBar::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Butt
       }
       else
       {
-        mClickValue = mRange.GetValue();
+        mClickValue = mpRange->GetValue();
         mThumbClicked = true;
         ThumbPressed();
       }
@@ -288,12 +291,12 @@ bool nuiScrollBar::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Butt
   }
   else if (Button & nglMouseInfo::ButtonWheelUp)
   {
-    mRange.Decrement();
+    mpRange->Decrement();
     return true;
   }
   else if (Button & nglMouseInfo::ButtonWheelDown)
   {
-    mRange.Increment();
+    mpRange->Increment();
     return true;
   }
   return false;
@@ -328,6 +331,7 @@ bool nuiScrollBar::MouseUnclicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Bu
 bool nuiScrollBar::MouseMoved  (nuiSize X, nuiSize Y)
 {
   //NGL_OUT(_T("nuiScrollBar::MouseMoved\n"));
+  NGL_ASSERT(mpRange);
 
   if (mThumbClicked)
   {
@@ -335,7 +339,7 @@ bool nuiScrollBar::MouseMoved  (nuiSize X, nuiSize Y)
     x = X-mClickX;
     y = Y-mClickY;
 
-    nuiSize length = mRange.GetRange();
+    nuiSize length = mpRange->GetRange();
     nuiSize start=(mClickValue/length);
     
     nuiSize movement;
@@ -351,7 +355,7 @@ bool nuiScrollBar::MouseMoved  (nuiSize X, nuiSize Y)
       start +=movement/mRect.GetHeight();
     }
 
-    mRange.SetValue(start*length);
+    mpRange->SetValue(start*length);
     return true;
   }
 
@@ -360,34 +364,61 @@ bool nuiScrollBar::MouseMoved  (nuiSize X, nuiSize Y)
 
 bool nuiScrollBar::Increment(const nuiEvent& rEvent)
 {
-  mRange.Increment();
+  NGL_ASSERT(mpRange);
+  mpRange->Increment();
   return false;
 }
 
 bool nuiScrollBar::Decrement(const nuiEvent& rEvent)
 {
-  mRange.Decrement();
+  NGL_ASSERT(mpRange);
+  mpRange->Decrement();
   return false;
 }
 
 // Data management:
 bool nuiScrollBar::HandlePageDown(const nuiEvent& rEvent)
 {
+  NGL_ASSERT(mpRange);
   if (mPageDownClicked)
-    mRange.PageIncrement();
+    mpRange->PageIncrement();
   return false;
 }
 
 bool nuiScrollBar::HandlePageUp(const nuiEvent& rEvent)
 {
+  NGL_ASSERT(mpRange);
   if (mPageUpClicked)
-    mRange.PageDecrement();
+    mpRange->PageDecrement();
   return false;
+}
+
+void nuiScrollBar::SetRange(nuiRange* pRange)
+{
+  if (pRange == mpRange)
+    return;
+  
+  if (mpRange)
+  {
+    mScrollBarSink.Disconnect(mpRange->Changed, &nuiScrollBar::DoInvalidateLayout);
+    mScrollBarSink.Disconnect(mpRange->ValueChanged, &nuiScrollBar::DoInvalidate);
+  }
+  
+  mpRange = pRange;
+  if (mpRange)
+  {
+    mScrollBarSink.Connect(mpRange->Changed, &nuiScrollBar::DoInvalidateLayout);
+    mScrollBarSink.Connect(mpRange->ValueChanged, &nuiScrollBar::DoInvalidate);
+  }
+
+  ValueChanged();
+  UpdateLayout();  
 }
 
 nuiRange& nuiScrollBar::GetRange()
 {
-  return mRange;
+  NGL_ASSERT(mpRange);
+  return *mpRange;
 }
 
 bool nuiScrollBar::DoInvalidate(const nuiEvent& rEvent)

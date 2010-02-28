@@ -33,6 +33,8 @@ public:
   virtual nuiRect CalcIdealSize();
 
   virtual void DisableDrawBackground(bool disabled = true); ///< Disable the scrollbar background drawing
+
+  void SetRange(nuiRange* pRange); ///< Sets the current range used
   virtual nuiRange& GetRange(); ///< Return the Range used by this scroll bar. 
   virtual void SetOrientation(nuiOrientation Orientation); ///< Change the orientation of the scroll bar
   virtual nuiOrientation GetOrientation(); ///< Return the orientation of the scroll bar
@@ -95,6 +97,7 @@ protected:
   nuiSize mIdealWidth;
   
   nuiRange mRange;
+  nuiRange* mpRange;
 
   nuiWidget*  mpThumb;
   
