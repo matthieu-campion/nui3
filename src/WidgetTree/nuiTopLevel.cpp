@@ -538,7 +538,12 @@ bool nuiTopLevel::DispatchUngrab(nuiWidgetPtr pWidget)
 bool nuiTopLevel::DispatchHasGrab(nuiWidgetPtr pWidget)
 {
   CheckValid();
-  return GetGrab() == pWidget;
+  return HasGrab(pWidget);
+}
+
+bool nuiTopLevel::DispatchHasGrab(nuiWidgetPtr pWidget, nglTouchId TouchId)
+{
+  return pWidget == GetGrab(TouchId);
 }
 
 
@@ -560,9 +565,9 @@ bool nuiTopLevel::Grab(nuiWidgetPtr pWidget)
   {
 
   NGL_TOUCHES_DEBUG( NGL_OUT(_T("TouchId[%d] "), mMouseInfo.TouchId) );
-  NGL_TOUCHES_DEBUG( NGL_OUT(_T("%ls of type %ls already grabbed on touch id[%d]\n"), 
+  NGL_TOUCHES_DEBUG( NGL_OUT(_T("%ls of type %ls already grabbed from other touch(es)\n"), 
           pWidget->GetObjectName().GetChars(),
-          pWidget->GetObjectClass().GetChars(), GetGrabId(pWidget)) );
+          pWidget->GetObjectClass().GetChars()) );
 
     return false;
   }
@@ -646,21 +651,12 @@ NGL_TOUCHES_DEBUG( NGL_OUT(_T("CancelGrab()\n")) );
 bool nuiTopLevel::HasGrab(nuiWidgetPtr pWidget)
 {
   CheckValid();
-  if (GetGrabId(pWidget) >= 0)
-    return true;
-  return false;
-}
 
-nglTouchId nuiTopLevel::GetGrabId(nuiWidgetPtr pWidget) const
-{
-  CheckValid();
   nuiGrabMap::const_iterator end = mpGrab.end();
   for (nuiGrabMap::const_iterator it = mpGrab.begin(); it != end; ++it)
-  {
     if (it->second == pWidget)
-      return it->first;
-  }
-  return (nglTouchId)-1;
+      return true;
+  return false;
 }
 
 nuiWidgetPtr nuiTopLevel::GetGrab(nglTouchId touchId) const

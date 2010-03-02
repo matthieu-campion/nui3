@@ -238,7 +238,8 @@ public:
   void SetWantKeyboardFocus(bool Set); ///< A widget that wants the keyboard focus will receive it automatically whenever the user clicks them (only left and right button) or presses tab to change the focus.
   bool GetMuteKeyboardFocusDispatch() const;
   void SetMuteKeyboardFocusDispatch(bool Set); ///< A widget that mutes the keyboard focus will prevent its parent from gaining the focus.
-  bool HasGrab();  ///< Ask is this widget has the mouse grab.
+  bool HasGrab();  ///< Ask if this widget has the mouse grab, or any touch grab
+  bool HasGrab(nglTouchId TouchId);  ///< Ask if this widget has this touch grab \p TouchID.
   bool Grab();  ///< Request the mouse grab
   bool Ungrab(); ///< Release the mouse grab
   bool HasFocus() const; ///< True if the object has the focus.
@@ -350,7 +351,7 @@ public:
   virtual bool DispatchGrab(nuiWidgetPtr pWidget);
   virtual bool DispatchUngrab(nuiWidgetPtr pWidget);
   virtual bool DispatchHasGrab(nuiWidgetPtr pWidget);
-
+  virtual bool DispatchHasGrab(nuiWidgetPtr pWidget, nglTouchId TouchId);
 
   //@}
 

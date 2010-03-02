@@ -465,7 +465,7 @@ bool nuiContainer::DispatchMouseClick(const nglMouseInfo& rInfo)
   if (!mMouseEventEnabled || mTrashed)
     return false;
 
-  bool hasgrab = HasGrab();
+  bool hasgrab = HasGrab(rInfo.TouchId);
   if (IsDisabled() && !hasgrab)
     return false;
 
@@ -486,7 +486,7 @@ bool nuiContainer::DispatchMouseClick(const nglMouseInfo& rInfo)
         nuiWidgetPtr pItem = pIt->GetWidget();
         if (pItem)
         {
-          if (IsEnabled() && !HasGrab())
+          if (IsEnabled() && !HasGrab(rInfo.TouchId))
           {
             if (pItem->DispatchMouseClick(rInfo))
             {
@@ -516,7 +516,7 @@ bool nuiContainer::DispatchMouseUnclick(const nglMouseInfo& rInfo)
   if (!mMouseEventEnabled || mTrashed)
     return false;
 
-  bool hasgrab = HasGrab();
+  bool hasgrab = HasGrab(rInfo.TouchId);
   if (IsDisabled() && !hasgrab)
     return false;
 
@@ -569,7 +569,7 @@ nuiWidgetPtr nuiContainer::DispatchMouseMove(const nglMouseInfo& rInfo)
 
   nuiWidgetPtr pHandled=NULL;
   bool inside=false,res=false;
-  bool hasgrab = HasGrab();
+  bool hasgrab = HasGrab(rInfo.TouchId);
 
   if (IsDisabled() && !hasgrab)
     return NULL;

@@ -1831,7 +1831,7 @@ bool nuiWidget::DispatchMouseClick(const nglMouseInfo& rInfo)
   if (!mMouseEventEnabled || mTrashed)
     return false;
 
-  bool hasgrab = HasGrab();
+  bool hasgrab = HasGrab(rInfo.TouchId);
   if (IsDisabled() && !hasgrab)
     return false;
 
@@ -1863,7 +1863,7 @@ bool nuiWidget::DispatchMouseUnclick(const nglMouseInfo& rInfo)
   if (!mMouseEventEnabled || mTrashed)
     return false;
 
-  bool hasgrab = HasGrab();
+  bool hasgrab = HasGrab(rInfo.TouchId);
   if (IsDisabled() && !hasgrab)
     return false;
 
@@ -1897,7 +1897,7 @@ nuiWidgetPtr nuiWidget::DispatchMouseMove(const nglMouseInfo& rInfo)
 
   bool inside = false;
   bool res = false;
-  bool hasgrab = HasGrab();
+  bool hasgrab = HasGrab(rInfo.TouchId);
   float X = rInfo.X;
   float Y = rInfo.Y;
 
@@ -1946,10 +1946,23 @@ bool nuiWidget::DispatchHasGrab(nuiWidgetPtr pWidget)
   return false;  
 }
 
+bool nuiWidget::DispatchHasGrab(nuiWidgetPtr pWidget, nglTouchId TouchId)
+{
+  CheckValid();
+  if (mpParent)
+    return mpParent->DispatchHasGrab(pWidget, TouchId);
+  return false;  
+}
+
 bool nuiWidget::HasGrab()
 {
   CheckValid();
   return DispatchHasGrab(this);
+}
+bool nuiWidget::HasGrab(nglTouchId TouchId)
+{
+  CheckValid();
+  return DispatchHasGrab(this, TouchId);
 }
 
 bool nuiWidget::Grab()

@@ -85,7 +85,8 @@ public:
   virtual bool DispatchGrab(nuiWidgetPtr pWidget);
   virtual bool DispatchUngrab(nuiWidgetPtr pWidget);
   virtual bool DispatchHasGrab(nuiWidgetPtr pWidget);
-  
+  virtual bool DispatchHasGrab(nuiWidgetPtr pWidget, nglTouchId TouchId);
+
   virtual bool Grab(nuiWidgetPtr pWidget); ///< Redirect all mouse event to this object.
   virtual bool Ungrab(nuiWidgetPtr pWidget); ///< Stop redirecting all mouse event to the given grab object.
   virtual nuiWidgetPtr GetGrab() const; ///< Returns the object that currently has the mouse focus.
@@ -186,11 +187,8 @@ protected:
 
   typedef std::map<nglTouchId, nuiWidgetPtr> nuiGrabMap;
   nuiGrabMap mpGrab;
-
-///< Helpers:
-  bool HasGrab(nuiWidgetPtr pWidget);
-  nuiWidgetPtr GetGrab(nglTouchId touchId) const;
-  nglTouchId GetGrabId(nuiWidgetPtr pWidget) const;
+  bool HasGrab(nuiWidgetPtr pWidget); ///< Returns true if this \p pWidget has been grabbed by any touch
+  nuiWidgetPtr GetGrab(nglTouchId touchId) const;  ///< Returns the Widget that has been grabbed by this \p touchId, NULL otherwise
 
   nglPath mResPath;
 
