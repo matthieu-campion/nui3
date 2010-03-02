@@ -686,34 +686,44 @@ protected:
     }
     else
     {
-      if (!ReadMatchers(mMatchers, _T('{')))
-        return false;
-      
-      if (!SkipBlank())
+      nuiCSSRule* pRule = ReadRule();
+      if (pRule)
       {
-        SetError(_T("unexpected end of file"));
-        Clear();
-        return false;
+        mrCSS.AddRule(pRule);
+        return true;
       }
-      
-      bool res = ReadActionList();
-      
-      // Create the rule from the matchers and the actions:
-      nuiCSSRule* pRule = new nuiCSSRule();
-      int32 i = (int32)mMatchers.size();
-      for (; i > 0; i--)
-        pRule->AddMatcher(mMatchers[i-1]);
-      for (i = 0; i < (int32)mActions.size(); i++)
-        pRule->AddAction(mActions[i]);
-      
-      mrCSS.AddRule(pRule);
-      
-      mMatchers.clear();
-      mActions.clear();
-      
-      return res;
+
+      return false;
     }
   }
+
+  nuiCSSRule* ReadRule()
+  {
+    if (!ReadMatchers(mMatchers, _T('{')))
+      return NULL;
+    
+    if (!SkipBlank())
+    {
+      SetError(_T("unexpected end of file"));
+      Clear();
+      return NULL;
+    }
+    
+    bool res = ReadActionList();
+    
+    // Create the rule from the matchers and the actions:
+    nuiCSSRule* pRule = new nuiCSSRule();
+    int32 i = (int32)mMatchers.size();
+    for (; i > 0; i--)
+      pRule->AddMatcher(mMatchers[i-1]);
+    for (i = 0; i < (int32)mActions.size(); i++)
+      pRule->AddAction(mActions[i]);
+        
+    mMatchers.clear();
+    mActions.clear();
+    return pRule;
+  }
+  
   
   bool ReadGlobalVariable()
   {
@@ -1571,6 +1581,28 @@ protected:
     int32 i0;
     int32 i1;
     
+    if (!SkipBlank())
+    {
+      SetError(_T("Missing action"));
+      return false;
+    }
+    
+    bool res = GetSymbol(symbol);
+    if (res)
+    {
+      if (!SkipBlank())
+      {
+        SetError(_T("Missing '{' or action."));
+        return false;
+      }
+      
+      if (mChar == _T('{'))
+      {
+        //Read an action list
+      }
+
+    }
+    
     if (!ReadAction(symbol, rvalue, op, i0, i1))
       return false;
     
@@ -1590,6 +1622,7 @@ protected:
 
   bool ReadAction(nglString& rLValue, nglString& rRValue, nglChar& rOperator, int32& index0, int32& index1)
   {
+    bool res = false;
     index0 = -1;
     index1 = -1;
     
@@ -1599,14 +1632,17 @@ protected:
       return false;
     }
     
-    nglString symbol;
-    bool res = GetSymbol(symbol);
-    if (!res)
+    nglString symbol(rLValue);
+    if (symbol.IsNull())
     {
-      SetError(_T("Missing symbol name (l-value)"));
-      return false;
+      res = GetSymbol(symbol);
+      if (!res)
+      {
+        SetError(_T("Missing symbol name (l-value)"));
+        return false;
+      }
     }
-    
+
     if (!SkipBlank())
     {
       SetError(_T("Missing action operator ('=')"));
@@ -1840,6 +1876,13 @@ uint32 nuiCSSRule::GetMatchersTag() const
 {
   return mMatchersTag;
 }
+
+void nuiCSSRule::ApplyAction(nuiObject* pObject)
+{
+  nuiWidget* pWidget = dynamic_cast<nuiWidget*> (pObject);
+  ApplyRule(pWidget, -1);
+}
+
 
 
 // class nuiCSS

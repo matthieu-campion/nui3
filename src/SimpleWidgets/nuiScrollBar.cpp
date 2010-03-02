@@ -19,7 +19,7 @@
 nuiScrollBar::nuiScrollBar(nuiOrientation orientation, const nuiRange& rRange, nuiWidgetPtr pThumb)
   : nuiSimpleContainer(),
     mRange(rRange),
-    mpRange(NULL),
+    mpRange(&mRange),
     mpThumb(pThumb),
     mTimer(.2),
     mScrollBarSink(this)
@@ -41,8 +41,6 @@ nuiScrollBar::nuiScrollBar(nuiOrientation orientation, const nuiRange& rRange, n
   
   mIdealWidth = SCROLL_IDEAL_WIDTH;
   
-  SetRange(&mRange);
-
   mScrollBarSink.Connect(mTimer.Tick, &nuiScrollBar::HandlePageUp);
   mScrollBarSink.Connect(mTimer.Tick, &nuiScrollBar::HandlePageDown);
 
@@ -69,7 +67,7 @@ bool nuiScrollBar::Load(const nuiXMLNode* pNode)
   // FIXME: interpret other attributes...
   mOrientation = nuiGetOrientation(pNode);
   
-  SetRange(&mRange);
+  SetRange(NULL);
 
   mScrollBarSink.Connect(mTimer.Tick, &nuiScrollBar::HandlePageUp);
   mScrollBarSink.Connect(mTimer.Tick, &nuiScrollBar::HandlePageDown);
@@ -395,6 +393,9 @@ bool nuiScrollBar::HandlePageUp(const nuiEvent& rEvent)
 
 void nuiScrollBar::SetRange(nuiRange* pRange)
 {
+  if (!pRange)
+    pRange = &mRange;
+  
   if (pRange == mpRange)
     return;
   

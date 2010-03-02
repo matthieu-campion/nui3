@@ -48,7 +48,7 @@ private:
 };
 
 
-class nuiCSSRule
+class nuiCSSRule : public nuiCSSAction
 {
 public:
   nuiCSSRule();
@@ -59,6 +59,8 @@ public:
   bool Match(nuiWidget* pWidget, uint32 MatchersMask); /// Returns true if the widget is matched by this rule
   
   virtual void ApplyRule(nuiWidget* pWidget, uint32 MatchersTag);
+  
+  virtual void ApplyAction(nuiObject* pObject);
   
   uint32 GetMatchersTag() const;
 private:

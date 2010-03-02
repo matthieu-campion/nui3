@@ -3433,6 +3433,14 @@
 		E5A9284C0ED2DD6100517AE8 /* AAPrimitives.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D57A0DA5716500D2641A /* AAPrimitives.h */; };
 		E5AADD970F4312AE007C6CA9 /* nuiRangeKnobAttributeEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5AADD960F4312AE007C6CA9 /* nuiRangeKnobAttributeEditor.cpp */; };
 		E5AADD980F4312AE007C6CA9 /* nuiRangeKnobAttributeEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5AADD960F4312AE007C6CA9 /* nuiRangeKnobAttributeEditor.cpp */; };
+		E5B45DE41139759B000BE2A1 /* nuiObjectInspector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5B45DE31139759B000BE2A1 /* nuiObjectInspector.cpp */; };
+		E5B45DE51139759B000BE2A1 /* nuiObjectInspector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5B45DE31139759B000BE2A1 /* nuiObjectInspector.cpp */; };
+		E5B45DE61139759B000BE2A1 /* nuiObjectInspector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5B45DE31139759B000BE2A1 /* nuiObjectInspector.cpp */; };
+		E5B45DE71139759B000BE2A1 /* nuiObjectInspector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5B45DE31139759B000BE2A1 /* nuiObjectInspector.cpp */; };
+		E5B45DE9113975C5000BE2A1 /* nuiObjectInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B45DE8113975C5000BE2A1 /* nuiObjectInspector.h */; };
+		E5B45DEA113975C5000BE2A1 /* nuiObjectInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B45DE8113975C5000BE2A1 /* nuiObjectInspector.h */; };
+		E5B45DEB113975C5000BE2A1 /* nuiObjectInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B45DE8113975C5000BE2A1 /* nuiObjectInspector.h */; };
+		E5B45DEC113975C5000BE2A1 /* nuiObjectInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B45DE8113975C5000BE2A1 /* nuiObjectInspector.h */; };
 		E5B6C3850F5F4E8F00E0DFFD /* nuiGenericAttributeEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5B6C3840F5F4E8F00E0DFFD /* nuiGenericAttributeEditor.cpp */; };
 		E5B6C3860F5F4E8F00E0DFFD /* nuiGenericAttributeEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5B6C3840F5F4E8F00E0DFFD /* nuiGenericAttributeEditor.cpp */; };
 		E5B6C3880F5F4EA900E0DFFD /* nuiGenericAttributeEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B6C3870F5F4EA900E0DFFD /* nuiGenericAttributeEditor.h */; };
@@ -4802,6 +4810,8 @@
 		E5A686D710F5573F00543060 /* nuiAsyncIStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiAsyncIStream.cpp; path = src/Stream/nuiAsyncIStream.cpp; sourceTree = SOURCE_ROOT; };
 		E5A686DC10F5575B00543060 /* nuiAsyncIStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiAsyncIStream.h; path = include/nuiAsyncIStream.h; sourceTree = SOURCE_ROOT; };
 		E5AADD960F4312AE007C6CA9 /* nuiRangeKnobAttributeEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiRangeKnobAttributeEditor.cpp; path = src/Attributes/nuiRangeKnobAttributeEditor.cpp; sourceTree = SOURCE_ROOT; };
+		E5B45DE31139759B000BE2A1 /* nuiObjectInspector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiObjectInspector.cpp; path = Introspector/nuiObjectInspector.cpp; sourceTree = "<group>"; };
+		E5B45DE8113975C5000BE2A1 /* nuiObjectInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiObjectInspector.h; path = include/nuiObjectInspector.h; sourceTree = SOURCE_ROOT; };
 		E5B6C3840F5F4E8F00E0DFFD /* nuiGenericAttributeEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiGenericAttributeEditor.cpp; path = src/Attributes/nuiGenericAttributeEditor.cpp; sourceTree = SOURCE_ROOT; };
 		E5B6C3870F5F4EA900E0DFFD /* nuiGenericAttributeEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiGenericAttributeEditor.h; path = include/nuiGenericAttributeEditor.h; sourceTree = SOURCE_ROOT; };
 		E5B7A1F811347B1A005403BF /* nglReaderWriterLock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nglReaderWriterLock.h; path = include/nglReaderWriterLock.h; sourceTree = SOURCE_ROOT; };
@@ -6690,6 +6700,8 @@
 		616EA3830DC4999000593FE7 /* Introspector */ = {
 			isa = PBXGroup;
 			children = (
+				E5B45DE8113975C5000BE2A1 /* nuiObjectInspector.h */,
+				E5B45DE31139759B000BE2A1 /* nuiObjectInspector.cpp */,
 				E5CC5F5911119C5B002E3217 /* nuiTextureInspector.cpp */,
 				E5A0FFBE0FA1EB8500D934F6 /* nuiDecorationInspector.h */,
 				E5A0FFBB0FA1EB1200D934F6 /* nuiDecorationInspector.cpp */,
@@ -7421,6 +7433,7 @@
 				E5E8A54F1100CFCC00567BEA /* ucpgba.h in Headers */,
 				E5B7A1FC11347B1A005403BF /* nglReaderWriterLock.h in Headers */,
 				E560A3BC11358DEC00AFBEAC /* nglCondition.h in Headers */,
+				E5B45DEB113975C5000BE2A1 /* nuiObjectInspector.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7963,6 +7976,7 @@
 				E5E8A54A1100CFCC00567BEA /* ucpgba.h in Headers */,
 				E5B7A1FB11347B1A005403BF /* nglReaderWriterLock.h in Headers */,
 				E560A3BB11358DEC00AFBEAC /* nglCondition.h in Headers */,
+				E5B45DEC113975C5000BE2A1 /* nuiObjectInspector.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8504,6 +8518,7 @@
 				E5E8A5401100CFCC00567BEA /* ucpgba.h in Headers */,
 				E5B7A1F911347B1A005403BF /* nglReaderWriterLock.h in Headers */,
 				E560A3B911358DEC00AFBEAC /* nglCondition.h in Headers */,
+				E5B45DE9113975C5000BE2A1 /* nuiObjectInspector.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9046,6 +9061,7 @@
 				E5E8A5451100CFCC00567BEA /* ucpgba.h in Headers */,
 				E5B7A1FA11347B1A005403BF /* nglReaderWriterLock.h in Headers */,
 				E560A3BA11358DEC00AFBEAC /* nglCondition.h in Headers */,
+				E5B45DEA113975C5000BE2A1 /* nuiObjectInspector.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9517,6 +9533,7 @@
 				E5CC5F5D11119C5B002E3217 /* nuiTextureInspector.cpp in Sources */,
 				E5B7A20111347B28005403BF /* nglReaderWriterLock.cpp in Sources */,
 				E560A3B711358DDF00AFBEAC /* nglCondition_posix.cpp in Sources */,
+				E5B45DE61139759B000BE2A1 /* nuiObjectInspector.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9895,6 +9912,7 @@
 				E5CC5F5C11119C5B002E3217 /* nuiTextureInspector.cpp in Sources */,
 				E5B7A20011347B28005403BF /* nglReaderWriterLock.cpp in Sources */,
 				E560A3B611358DDF00AFBEAC /* nglCondition_posix.cpp in Sources */,
+				E5B45DE71139759B000BE2A1 /* nuiObjectInspector.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10273,6 +10291,7 @@
 				E5CC5F5A11119C5B002E3217 /* nuiTextureInspector.cpp in Sources */,
 				E5B7A1FE11347B28005403BF /* nglReaderWriterLock.cpp in Sources */,
 				E560A3B411358DDF00AFBEAC /* nglCondition_posix.cpp in Sources */,
+				E5B45DE41139759B000BE2A1 /* nuiObjectInspector.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10651,6 +10670,7 @@
 				E5CC5F5B11119C5B002E3217 /* nuiTextureInspector.cpp in Sources */,
 				E5B7A1FF11347B28005403BF /* nglReaderWriterLock.cpp in Sources */,
 				E560A3B511358DDF00AFBEAC /* nglCondition_posix.cpp in Sources */,
+				E5B45DE51139759B000BE2A1 /* nuiObjectInspector.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

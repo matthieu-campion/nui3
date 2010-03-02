@@ -24,6 +24,8 @@
 		BC6A09AD0EF92BAB00881ACF /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BC6A09AB0EF92BAB00881ACF /* Info.plist */; };
 		BCBCB15F0DFD45BD002E8BC3 /* libnui3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */; };
 		BCBCB1600DFD45C1002E8BC3 /* libnui3D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15C0DFD45B6002E8BC3 /* libnui3D.a */; };
+		E5ACDE83113B37B000CBE6DA /* nuiMimeMultiPart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5ACDE82113B37B000CBE6DA /* nuiMimeMultiPart.cpp */; };
+		E5ACDE84113B37B000CBE6DA /* nuiMimeMultiPart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5ACDE82113B37B000CBE6DA /* nuiMimeMultiPart.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +81,8 @@
 		BC6A09AB0EF92BAB00881ACF /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		BC6A09CB0EF9301900881ACF /* main.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = main.css; path = resources/css/main.css; sourceTree = SOURCE_ROOT; };
 		BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nui3.xcodeproj; path = ../../nui3.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E5ACDE81113B37B000CBE6DA /* nuiMimeMultiPart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiMimeMultiPart.h; path = src/nuiMimeMultiPart.h; sourceTree = "<group>"; };
+		E5ACDE82113B37B000CBE6DA /* nuiMimeMultiPart.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiMimeMultiPart.cpp; path = src/nuiMimeMultiPart.cpp; sourceTree = "<group>"; };
 		E5C5353611374AF600A72A39 /* php */ = {isa = PBXFileReference; lastKnownFileType = folder; path = php; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -144,6 +148,8 @@
 				61A9DFF00B83433800BC506C /* Application.h */,
 				61A9DFF10B83433800BC506C /* MainWindow.cpp */,
 				61A9DFF20B83433800BC506C /* MainWindow.h */,
+				E5ACDE81113B37B000CBE6DA /* nuiMimeMultiPart.h */,
+				E5ACDE82113B37B000CBE6DA /* nuiMimeMultiPart.cpp */,
 			);
 			name = sources;
 			sourceTree = "<group>";
@@ -329,6 +335,7 @@
 			files = (
 				61A9DFF30B83433800BC506C /* Application.cpp in Sources */,
 				61A9DFF40B83433800BC506C /* MainWindow.cpp in Sources */,
+				E5ACDE83113B37B000CBE6DA /* nuiMimeMultiPart.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -338,6 +345,7 @@
 			files = (
 				61A9DFF50B83433800BC506C /* Application.cpp in Sources */,
 				61A9DFF60B83433800BC506C /* MainWindow.cpp in Sources */,
+				E5ACDE84113B37B000CBE6DA /* nuiMimeMultiPart.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
