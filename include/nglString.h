@@ -565,6 +565,18 @@ public:
       For more information consult http://en.wikipedia.org/wiki/Levenshtein_distance
    */
 
+  
+  void EncodeBase64(const uint8* bytes_to_encode, unsigned int in_len);
+  /*!< Encode the given binary buffer into a base64 string.
+   */
+  void EncodeBase64(const std::vector<uint8>& rBytes);
+  /*!< Encode the given vector of bytes into a base64 string.
+   */
+  void DecodeBase64(std::vector<uint8>& rDecoded) const;
+  /*!< Decode this base64 string into the given vector of bytes.
+   */
+              
+  
 	/** @name Substring search */
 	//@{
 	int32 Find(nglChar nglChar, int32 Index, int32 End,  bool CaseSensitive = true) const;
