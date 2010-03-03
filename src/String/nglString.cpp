@@ -2676,7 +2676,7 @@ void nglString::ToCanonicalDecomposition()
   free(resstr);
 }
 
-/* Base64 code is stolen from http://www.adp-gmbh.ch/cpp/common/base64.html and adapted to nui's strings.
+/* Base64 code is stolen from http://www.adp-gmbh.ch/cpp/common/base64.html and adapted to nui's strings by SŽbastien MŽtrot.
  
  base64.cpp and base64.h
  

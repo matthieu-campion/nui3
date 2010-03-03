@@ -66,17 +66,17 @@ bool nuiZoomBar::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
       }
       else if (X < mThumbRect.Left() + mThumbSideSize ) // Change Left
       {
-        mClickValue = mRange.GetValue();
+        mClickValue = mpRange->GetValue();
         mLeftSideClicked = true;
       }
       else if ( X > mThumbRect.Right() - mThumbSideSize) // Change Right
       {
-        mClickValue = mRange.GetValue();
+        mClickValue = mpRange->GetValue();
         mRightSideClicked = true;
       }
       else
       {
-        mClickValue = mRange.GetValue();
+        mClickValue = mpRange->GetValue();
         mThumbClicked = true;
       }
     }
@@ -94,17 +94,17 @@ bool nuiZoomBar::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
       }
       else if (Y < mThumbRect.Top() + mThumbSideSize ) // Change Top
       {
-        mClickValue = mRange.GetValue();
+        mClickValue = mpRange->GetValue();
         mRightSideClicked = true;
       }
       else if ( Y > mThumbRect.Bottom() - mThumbSideSize) // Change Bottom
       {
-        mClickValue = mRange.GetValue();
+        mClickValue = mpRange->GetValue();
         mLeftSideClicked = true;
       }
       else
       {
-        mClickValue = mRange.GetValue();
+        mClickValue = mpRange->GetValue();
         mThumbClicked = true;
         ThumbPressed();
       }
@@ -113,12 +113,12 @@ bool nuiZoomBar::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
   }
   else if (Button & nglMouseInfo::ButtonWheelUp)
   {
-    mRange.Decrement();
+    mpRange->Decrement();
     return true;
   }
   else if (Button & nglMouseInfo::ButtonWheelDown)
   {
-    mRange.Increment();
+    mpRange->Increment();
     return true;
   }
   return false;
@@ -175,7 +175,7 @@ bool nuiZoomBar::MouseMoved(nuiSize X, nuiSize Y)
   x = X-mClickX;
   y = Y-mClickY;
   
-  nuiSize length = mRange.GetRange();
+  nuiSize length = mpRange->GetRange();
   nuiSize start=(mClickValue/length);
   nuiSize movement;
   
@@ -191,7 +191,7 @@ bool nuiZoomBar::MouseMoved(nuiSize X, nuiSize Y)
       movement = y;
       start +=movement/mRect.GetHeight();
     }
-    mRange.SetValue(start*length);
+    mpRange->SetValue(start*length);
     return true;
   }
   else if (mLeftSideClicked)
@@ -241,8 +241,8 @@ bool nuiZoomBar::MouseMoved(nuiSize X, nuiSize Y)
 
 void nuiZoomBar::UpdateUpBound(nuiSize move)
 {
-  nuiSize length = mRange.GetRange();
-  nuiSize pageSize = mRange.GetPageSize()/length;
+  nuiSize length = mpRange->GetRange();
+  nuiSize pageSize = mpRange->GetPageSize()/length;
   
   pageSize += move/mRect.GetWidth();
   
@@ -252,17 +252,17 @@ void nuiZoomBar::UpdateUpBound(nuiSize move)
     pageSize = 1.0;
   
   double Page = pageSize*length;
-  double Value = mRange.GetValue();
+  double Value = mpRange->GetValue();
   
-  if (Value + Page > mRange.GetMaximum())
+  if (Value + Page > mpRange->GetMaximum())
   {
     if (IsUnZoomAfterBoundEnabled())
     {
-      Value -= (Value + Page - mRange.GetMaximum());
+      Value -= (Value + Page - mpRange->GetMaximum());
     }
     else
     {
-      Page = mRange.GetMaximum() - Value;
+      Page = mpRange->GetMaximum() - Value;
     }
   }
   
@@ -271,14 +271,14 @@ void nuiZoomBar::UpdateUpBound(nuiSize move)
     Page = mPageSizeMin;
   }
   
-  mRange.SetValueAndSize(Value, Page);
+  mpRange->SetValueAndSize(Value, Page);
 }
 
 void nuiZoomBar::UpdateDownBound(nuiSize move)
 {
-  nuiSize prevEnd = mRange.GetValue() + mRange.GetPageSize();
+  nuiSize prevEnd = mpRange->GetValue() + mpRange->GetPageSize();
     
-  nuiSize length = mRange.GetRange();
+  nuiSize length = mpRange->GetRange();
   nuiSize start=(mClickValue/length);
   
   start += move/mRect.GetWidth();
@@ -286,7 +286,7 @@ void nuiZoomBar::UpdateDownBound(nuiSize move)
   double Value = start * length;
   nuiSize Page = prevEnd - Value;
   
-  nuiSize min = mRange.GetMinimum();
+  nuiSize min = mpRange->GetMinimum();
   if (Value < min)
   {
     if (IsUnZoomAfterBoundEnabled())
@@ -306,8 +306,8 @@ void nuiZoomBar::UpdateDownBound(nuiSize move)
   
   if (Page < 0.0)
     Page = 0.0;
-  if (Page > mRange.GetRange())
-    Page = mRange.GetRange();
+  if (Page > mpRange->GetRange())
+    Page = mpRange->GetRange();
 
   if (Page <= mPageSizeMin)
   {
@@ -315,7 +315,7 @@ void nuiZoomBar::UpdateDownBound(nuiSize move)
     Value = prevEnd - Page;
   }
   
-  mRange.SetValueAndSize(Value, Page);
+  mpRange->SetValueAndSize(Value, Page);
 }
 
 
@@ -349,21 +349,21 @@ void nuiZoomBar::ChangeZoomCursor(nuiSize coord, nuiSize DownLimit, nuiSize UpLi
   
   else if (coord >= DownLimit && coord < DownLimit + mThumbSideSize ) //Hover Left Handler
   {
-    if (mRange.GetPageSize() == mPageSizeMin)
+    if (mpRange->GetPageSize() == mPageSizeMin)
     {
       if (mOrientation == nuiHorizontal)
         SetMouseCursor(eCursorResizeW);
       else if (mOrientation == nuiVertical)
         SetMouseCursor(eCursorResizeS);
     }
-    else if (mRange.GetValue() == mRange.GetMinimum() && mRange.GetPageSize() == mRange.GetRange())
+    else if (mpRange->GetValue() == mpRange->GetMinimum() && mpRange->GetPageSize() == mpRange->GetRange())
     {
       if (mOrientation == nuiHorizontal)
         SetMouseCursor(eCursorResizeE);
       else if (mOrientation == nuiVertical)
         SetMouseCursor(eCursorResizeN);
     }
-    else if (mRange.GetValue() == mRange.GetMinimum() && !IsUnZoomAfterBoundEnabled())
+    else if (mpRange->GetValue() == mpRange->GetMinimum() && !IsUnZoomAfterBoundEnabled())
     {
       if (mOrientation == nuiHorizontal)
         SetMouseCursor(eCursorResizeE);
@@ -381,21 +381,21 @@ void nuiZoomBar::ChangeZoomCursor(nuiSize coord, nuiSize DownLimit, nuiSize UpLi
   }
   else if (coord <= UpLimit && coord > UpLimit - mThumbSideSize) //Hover Right Handler
   {
-    if (mRange.GetPageSize() == mPageSizeMin)
+    if (mpRange->GetPageSize() == mPageSizeMin)
     {
       if (mOrientation == nuiHorizontal)
         SetMouseCursor(eCursorResizeE);
       else if (mOrientation == nuiVertical)
         SetMouseCursor(eCursorResizeN);
     }
-    else if (mRange.GetValue() == mRange.GetMinimum() && mRange.GetPageSize() == mRange.GetRange())
+    else if (mpRange->GetValue() == mpRange->GetMinimum() && mpRange->GetPageSize() == mpRange->GetRange())
     {
       if (mOrientation == nuiHorizontal)
         SetMouseCursor(eCursorResizeW);
       else if (mOrientation == nuiVertical)
         SetMouseCursor(eCursorResizeS);
     }
-    else if (mRange.GetValue() + mRange.GetPageSize() == mRange.GetMaximum() && !IsUnZoomAfterBoundEnabled())
+    else if (mpRange->GetValue() + mpRange->GetPageSize() == mpRange->GetMaximum() && !IsUnZoomAfterBoundEnabled())
     {
       if (mOrientation == nuiHorizontal)
         SetMouseCursor(eCursorResizeW);
