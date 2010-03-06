@@ -177,18 +177,12 @@ nglPath::nglPath (nglPathBase Base)
 				#endif
 				#ifdef _CARBON_
 						
-					CFBundleRef appBdl = CFBundleGetMainBundle ();									// get application bundle
-					CFURLRef	appURL = CFBundleCopyBundleURL (appBdl);							// get url from application bundle
-					CFStringRef appURLStr = CFURLCopyFileSystemPath (appURL, kCFURLPOSIXPathStyle); // url to string
+					CFBundleRef appBdl = CFBundleGetMainBundle();									// get application bundle
+					CFURLRef	appURL = CFBundleCopyBundleURL(appBdl);							// get url from application bundle
+					CFStringRef appURLStr = CFURLCopyFileSystemPath(appURL, kCFURLPOSIXPathStyle); // url to string
 					
-					char appBuffer[260];
-					CFRange appRange;
-					appRange.location = 0;
-					appRange.length = CFStringGetLength (appURLStr);
-					CFStringGetBytes (appURLStr, appRange, 8, '?', false, (UInt8*)&appBuffer[0], 260, NULL);
-					appBuffer[appRange.length] = '\0';
-					
-					InternalSetPath (appBuffer);
+          nglString p(appURLStr);
+					InternalSetPath(nglPath(p));
 					
 					CFRelease (appURLStr);
 					CFRelease (appURL);
