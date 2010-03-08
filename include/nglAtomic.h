@@ -100,7 +100,7 @@ inline uint64 ngl_atomic_read(const nglAtomic64 &value)
 // compare and swap atomic variable
 inline bool ngl_atomic_compare_and_swap(nglAtomic64& value, uint64 oldValue, uint64 newValue)
 {
-  uint64 res = nuiInterlockedCompareExchange64((volatile unsigned __int64 *)&value, oldValue, newValue);
+  uint64 res = nuiInterlockedCompareExchange64((volatile unsigned __int64 *)&value, newValue, oldValue);
   return (res == oldValue);
 }
 
@@ -112,7 +112,7 @@ inline void ngl_atomic_set(nglAtomic64& value, uint64 newValue)
   {
     val = value;
   }
-  while (!ngl_atomic_compare_and_swap(value, newValue, val));
+  while (!ngl_atomic_compare_and_swap(value, val, newValue));
   //value = newValue;
 }
 
@@ -124,7 +124,7 @@ inline void ngl_atomic_add(nglAtomic64& value, uint64 addValue)
   {
     val = value;
   }
-  while (!ngl_atomic_compare_and_swap(value, val + addValue, val));
+  while (!ngl_atomic_compare_and_swap(value, val, val + addValue));
   //value += addValue;
 }
 
@@ -136,7 +136,7 @@ inline void ngl_atomic_sub(nglAtomic64& value, uint64 subValue)
   {
     val = value;
   }
-  while (!ngl_atomic_compare_and_swap(value, val - subValue, val));
+  while (!ngl_atomic_compare_and_swap(value, val, val - subValue));
   //value -= subValue;
 }
 
