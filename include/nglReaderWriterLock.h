@@ -14,37 +14,22 @@
 class nglReaderWriterLock
 {
 public:
+
   nglReaderWriterLock();
-  ~nglReaderWriterLock();
+
   void LockRead();
-  bool TryLockRead();
   void UnlockRead();
   void LockWrite();
-  bool TryLockWrite();
   void UnlockWrite();
-  void LockUpgrade();
-  void UnlockUpgrade();
-  void UnlockUpgradeAndLock();
-  void UnlockAndLockUpgrade();
-  void UnlockAndLockRead();
-  void UnlockUpgradeAndLockShared();
 
 private:
-  struct StateData
-  {
-    uint32 mSharedCount;
-    bool mExclusive;
-    bool mUpgrade;
-    bool mExclusiveWaitingBlocked;
-  };
 
-  StateData mState;
-  nglCriticalSection mStateChange;
-  nglCondition mSharedCond;
-  nglCondition mExclusiveCond;
-  nglCondition mUpgradeCond;
+  nglAtomic mReaders;
+  nglThread::ID mWriter;
 
-  void ReleaseWaiters();
+  nglCriticalSection mCS;
 
+  nglCondition mWaitForRead;
+  nglCondition mWaitForWrite;
 };
 

@@ -12,12 +12,18 @@
 #include <math.h>
 
 #define NGL_MAX_QUEUED_TIMER_EVENTS 1
+uint32 WM_NGLTIMER = 0;
 
 HANDLE nglTimer::mTimerQueueHandle = NULL;
 HANDLE nglTimer::mTimerHandle = NULL;
 
 void nglTimer::InitMainTimer()
 {
+  if (!WM_NGLTIMER)
+  {
+    WM_NGLTIMER = RegisterWindowMessage(_T("nglTimerMessage"));
+  }
+
   if (mTimerQueueHandle == NULL)
   {
     mTimerQueueHandle = CreateTimerQueue();
@@ -92,19 +98,6 @@ bool nglTimer::SetPeriod(nglTime Period)
 
 VOID CALLBACK TimeProc(PVOID lpParameter, BOOLEAN TimerOrWaitFired)
 {
-//   static int c = 0;
-//   static int d = 0;
-// 
-//   if (d & 15)
-//   {
-//     OutputDebugString(_T("."));
-//     c++;
-//   }
-//   if (c > 50)
-//   {
-//     c = 0;
-//     OutputDebugString(_T("\n"));
-//   }
   nglTimer::PostMessage();
 }
 
@@ -112,8 +105,7 @@ bool nglTimer::Start(bool Immediate, bool Reset)
 {
   if (mRunning)
     return false;
-  //mTimerID=timeSetEvent((unsigned int)(1000.0f*mPeriod),0,TimeProc,(unsigned int) this,TIME_PERIODIC + TIME_CALLBACK_FUNCTION);
-  //if (mTimerID!=NULL)
+
   {
     mCounter = MIN(mRoundsPerTick, mCounter);
     if (Reset)
@@ -126,20 +118,14 @@ bool nglTimer::Start(bool Immediate, bool Reset)
     if (Immediate)
       OnTick(0);
   }
-/*
-  else
-    mRunning=false;
-*/
 
   return mRunning;
 }
 
 void nglTimer::Stop()
 {
-  if (mRunning /*&& mTimerID*/)
+  if (mRunning)
   {
-    //timeKillEvent(mTimerID);
-    //mTimerID=NULL;
     mRunning = false;
   }
 }
@@ -163,7 +149,7 @@ void nglTimer::CallOnTick()
     {
       nglTime tick;
       mCallCnt++;
-      tick=nglTime::GetTime();
+      tick = nglTime::GetTime();
 
       OnTick(tick-mLastTick);
 
@@ -174,8 +160,6 @@ void nglTimer::CallOnTick()
 }
 
 std::list<nglTimer*> nglTimer::mTimers;
-
-nglAtomic nglTimer::mQueuedEvents = 0;
 
 LRESULT nglTimer::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -188,30 +172,14 @@ LRESULT nglTimer::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
       pTimer->CallOnTick();
   }
 
-  ngl_atomic_dec(mQueuedEvents);
   return 0;
 }
 
 void nglTimer::PostMessage()
 {
-  if (App && mQueuedEvents < NGL_MAX_QUEUED_TIMER_EVENTS)
+  if (App)
   {
-    ngl_atomic_inc(mQueuedEvents);
-    ::PostMessage(App->GetHWnd(), WM_NGLTIMER, 0, 0);
-  }
-  else
-  {
-//     wchar_t str[1024];
-//     wsprintf(str, _T("f(%d)"), mQueuedEvents);
-//     OutputDebugString(str);
-// 
-//     static int c = 0;
-//     c++;
-//     if (c > 20)
-//     {
-//       c = 0;
-//       OutputDebugString(_T("\n"));
-//     }
+    ::SendMessage(App->GetHWnd(), WM_NGLTIMER, 0, 0);
   }
 }
 

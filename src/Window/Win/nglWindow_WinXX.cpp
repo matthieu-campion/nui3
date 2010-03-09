@@ -3113,14 +3113,19 @@ void nglWindow::EnterModalState()
 
   MSG msg;
 
+  HWND mainhwnd = App->GetHWnd();
 
   do
   {
     // Process (rest of) msg queue
     while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE) && msg.message != WM_QUIT && (mInModalState > storeModalState))
     {
+      ATOM atom = GetClassLong(msg.hwnd, GCW_ATOM);
       bool ok = true;
-      if (msg.hwnd != mHWnd)
+
+      // Only skip user events for the nglWindow windows that is not the current one by
+      // checking the class of the window (i.e. the ATOM that was allocated by RegisterClass);
+      if (msg.hwnd != mHWnd && mAtom == atom)
       {
         if (msg.message >= WM_MOUSEFIRST && msg.message <= WM_MOUSELAST)
         {
@@ -3153,9 +3158,9 @@ void nglWindow::EnterModalState()
 
 void nglWindow::ExitModalState()
 {
-  NGL_OUT(_T("nglWindow::ExitModalState() [%p - %d]"), this, mInModalState);
   NGL_ASSERT(mInModalState > 0);
   mInModalState--;
+  NGL_OUT(_T("nglWindow::ExitModalState() [%p - %d]"), this, mInModalState);
 }
 
 void nglWindow::StartTextInput(int32 X, int32 Y, int32 W, int32 H)

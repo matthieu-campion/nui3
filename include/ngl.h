@@ -226,8 +226,6 @@ and in NGL user application code.
     #define _BOOL
   #endif
 
-  #define WM_NGLTIMER (WM_USER+1)
-
   // Fixed size types
   typedef signed __int8    int8;
   typedef unsigned __int8  uint8;
@@ -239,6 +237,8 @@ and in NGL user application code.
   typedef unsigned __int64 uint64;
   typedef float            real32;
   typedef double           real64;
+
+  extern uint32 WM_NGLTIMER;
 
   // Windows already use these macros for Unicode support
   // (we keep their expected behaviour)

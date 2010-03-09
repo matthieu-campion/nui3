@@ -290,13 +290,13 @@ bool nglGetDriveInfo(nglChar* name, nglPathVolume& rVol);
 
 LRESULT nglKernel::MainWndProc (HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+  if (message == WM_NGLTIMER)
+  {
+    return nglTimer::WndProc(hWnd, message, wParam, lParam);
+  }
+
   switch ( message ) 
   {
-    case WM_NGLTIMER:
-      {
-        return nglTimer::WndProc(hWnd, message, wParam, lParam);
-      }
-      break;
 
     case WM_DEVICECHANGE:
       {

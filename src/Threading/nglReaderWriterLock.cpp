@@ -8,165 +8,72 @@
 #include "nui.h"
 #include "nglReaderWriterLock.h"
 
+
 nglReaderWriterLock::nglReaderWriterLock()
 {
-  StateData mState_ = {0,0,0,0};
-  mState = mState_;
-}
-
-nglReaderWriterLock::~nglReaderWriterLock()
-{
+  mReaders = 0;
+  mWriter = 0;
 }
 
 void nglReaderWriterLock::LockRead()
-{
-  nglCriticalSectionGuard lk(mStateChange);
-
-  while(mState.mExclusive || mState.mExclusiveWaitingBlocked)
+{ 
+  bool ok = false;
+  do 
   {
-    mSharedCond.Wait();
-  }
-  ++mState.mSharedCount;
-}
+    {
+      nglCriticalSectionGuard guard(mCS);
 
-bool nglReaderWriterLock::TryLockRead()
-{
-  nglCriticalSectionGuard lk(mStateChange);
+      if (!mWriter)
+      {
+        mReaders++;
+        ok = true;
+      }
+    }
 
-  if(mState.mExclusive || mState.mExclusiveWaitingBlocked)
-  {
-    return false;
-  }
-  else
-  {
-    ++mState.mSharedCount;
-    return true;
-  }
+    if (mWriter)
+      mWaitForRead.Wait();
+
+  } while (!ok);
 }
 
 void nglReaderWriterLock::UnlockRead()
 {
-  nglCriticalSectionGuard lk(mStateChange);
-  bool const last_reader=!--mState.mSharedCount;
+  nglCriticalSectionGuard guard(mCS);
 
-  if(last_reader)
-  {
-    if(mState.mUpgrade)
-    {
-      mState.mUpgrade = false;
-      mState.mExclusive = true;
-      mUpgradeCond.WakeOne();
-    }
-    else
-    {
-      mState.mExclusiveWaitingBlocked=false;
-    }
-    ReleaseWaiters();
-  }
+  ngl_atomic_dec(mReaders);
+  if (!mReaders)
+    mWaitForWrite.WakeOne();
 }
 
 void nglReaderWriterLock::LockWrite()
 {
-  nglCriticalSectionGuard lk(mStateChange);
-
-  while(mState.mSharedCount || mState.mExclusive)
+  do 
   {
-    mState.mExclusiveWaitingBlocked = true;
-    mExclusiveCond.Wait();
-  }
-  mState.mExclusive = true;
-}
+    {
+      nglCriticalSectionGuard guard(mCS);
 
-bool nglReaderWriterLock::TryLockWrite()
-{
-  nglCriticalSectionGuard lk(mStateChange);
+      if (!mWriter && !mReaders)
+      {
+        mWriter = nglThread::GetCurThreadID();
+      }
+    }
 
-  if(mState.mSharedCount || mState.mExclusive)
-  {
-    return false;
-  }
-  else
-  {
-    mState.mExclusive=true;
-    return true;
-  }
+    if (mWriter != nglThread::GetCurThreadID())
+      mWaitForWrite.Wait();
 
+  } while (mWriter != nglThread::GetCurThreadID());
 }
 
 void nglReaderWriterLock::UnlockWrite()
 {
-  nglCriticalSectionGuard lk(mStateChange);
-  mState.mExclusive = false;
-  mState.mExclusiveWaitingBlocked = false;
-  ReleaseWaiters();
+  nglCriticalSectionGuard guard(mCS);
+
+  mWriter = NULL;
+  if (!mReaders)
+    mWaitForWrite.WakeOne();
+  else
+    mWaitForRead.WakeAll();
 }
 
-void nglReaderWriterLock::LockUpgrade()
-{
 
-  nglCriticalSectionGuard lk(mStateChange);
-  while(mState.mExclusive || mState.mExclusiveWaitingBlocked || mState.mUpgrade)
-  {
-    mSharedCond.Wait();
-  }
-  ++mState.mSharedCount;
-  mState.mUpgrade = true;
-}
 
-void nglReaderWriterLock::UnlockUpgrade()
-{
-  nglCriticalSectionGuard lk(mStateChange);
-  mState.mUpgrade = false;
-  bool const last_reader = !--mState.mSharedCount;
-
-  if(last_reader)
-  {
-    mState.mExclusiveWaitingBlocked = false;
-    ReleaseWaiters();
-  }
-}
-
-void nglReaderWriterLock::UnlockUpgradeAndLock()
-{
-  nglCriticalSectionGuard lk(mStateChange);
-  --mState.mSharedCount;
-  while(mState.mSharedCount)
-  {
-    mUpgradeCond.Wait();
-  }
-  mState.mUpgrade = false;
-  mState.mExclusive = true;
-}
-
-void nglReaderWriterLock::UnlockAndLockUpgrade()
-{
-  nglCriticalSectionGuard lk(mStateChange);
-  mState.mExclusive = false;
-  mState.mUpgrade = true;
-  ++mState.mSharedCount;
-  mState.mExclusiveWaitingBlocked = false;
-  ReleaseWaiters();
-}
-
-void nglReaderWriterLock::UnlockAndLockRead()
-{
-  nglCriticalSectionGuard lk(mStateChange);
-  mState.mExclusive = false;
-  ++mState.mSharedCount;
-  mState.mExclusiveWaitingBlocked = false;
-  ReleaseWaiters();
-}
-
-void nglReaderWriterLock::UnlockUpgradeAndLockShared()
-{
-  nglCriticalSectionGuard lk(mStateChange);
-  mState.mUpgrade = false;
-  mState.mExclusiveWaitingBlocked = false;
-  ReleaseWaiters();
-}
-
-void nglReaderWriterLock::ReleaseWaiters()
-{
-  mExclusiveCond.WakeOne();
-  mSharedCond.WakeAll();
-}
