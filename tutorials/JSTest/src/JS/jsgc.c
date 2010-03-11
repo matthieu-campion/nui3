@@ -1470,8 +1470,9 @@ js_AddRootRT(JSRuntime *rt, void *rp, const char *name)
         } while (rt->gcLevel > 0);
     }
 #endif
+    JSDHashTable *table = &rt->gcRootsHash;
     rhe = (JSGCRootHashEntry *)
-          JS_DHashTableOperate(&rt->gcRootsHash, rp, JS_DHASH_ADD);
+          JS_DHashTableOperate(table, rp, JS_DHASH_ADD);
     if (rhe) {
         rhe->root = rp;
         rhe->name = name;

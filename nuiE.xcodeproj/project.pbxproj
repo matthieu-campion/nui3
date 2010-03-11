@@ -3666,6 +3666,7 @@
 		E5E8C3AB0F3742390092827F /* nuiScrollingLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = E5E8C3A80F3742390092827F /* nuiScrollingLabel.h */; };
 		E5E8C3AC0F3742390092827F /* nuiHyperLink.h in Headers */ = {isa = PBXBuildFile; fileRef = E5E8C3A60F3742390092827F /* nuiHyperLink.h */; };
 		E5E8C3AE0F3742390092827F /* nuiScrollingLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = E5E8C3A80F3742390092827F /* nuiScrollingLabel.h */; };
+		E5EB3ABB1147E5040078C71C /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5EB3ABA1147E5040078C71C /* CoreText.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -4873,6 +4874,7 @@
 		E5E8C39F0F3742100092827F /* nuiScrollingLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiScrollingLabel.cpp; path = src/Text/nuiScrollingLabel.cpp; sourceTree = SOURCE_ROOT; };
 		E5E8C3A60F3742390092827F /* nuiHyperLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiHyperLink.h; path = include/nuiHyperLink.h; sourceTree = SOURCE_ROOT; };
 		E5E8C3A80F3742390092827F /* nuiScrollingLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiScrollingLabel.h; path = include/nuiScrollingLabel.h; sourceTree = SOURCE_ROOT; };
+		E5EB3ABA1147E5040078C71C /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -4887,6 +4889,7 @@
 				614B66BE0DA7BA67000F4C22 /* Foundation.framework in Frameworks */,
 				614B66BF0DA7BA67000F4C22 /* OpenGLES.framework in Frameworks */,
 				614B66C00DA7BA67000F4C22 /* UIKit.framework in Frameworks */,
+				E5EB3ABB1147E5040078C71C /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5820,6 +5823,7 @@
 				E5CDAF5F10AD960E003709D6 /* png */,
 				6126DA7A0DA574C500D2641A /* tidyhtml */,
 				E591C25B0FF1AB96005E5E3D /* ungif */,
+				E5EB3ABA1147E5040078C71C /* CoreText.framework */,
 			);
 			name = deps;
 			sourceTree = "<group>";
@@ -10750,11 +10754,12 @@
 					deps/freetype2/include,
 					deps/harfbuzz,
 				);
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-ObjC++";
 				"OTHER_CFLAGS[arch=*]" = "";
 				PREBINDING = YES;
-				SDKROOT = iphoneos2.2.1;
+				SDKROOT = iphoneos3.2;
 				STRIP_INSTALLED_PRODUCT = NO;
 				USE_HEADERMAP = NO;
 				VALID_ARCHS = armv6;

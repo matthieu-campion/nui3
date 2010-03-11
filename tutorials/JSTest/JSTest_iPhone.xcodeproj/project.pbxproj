@@ -283,6 +283,8 @@
 		E59C6F78114669E9008E4749 /* jsxdrapi.c in Sources */ = {isa = PBXBuildFile; fileRef = E59C6E81114669E5008E4749 /* jsxdrapi.c */; };
 		E59C6F79114669E9008E4749 /* jsxml.c in Sources */ = {isa = PBXBuildFile; fileRef = E59C6E83114669E5008E4749 /* jsxml.c */; };
 		E59C6F7A114669E9008E4749 /* prmjtime.c in Sources */ = {isa = PBXBuildFile; fileRef = E59C6E85114669E5008E4749 /* prmjtime.c */; };
+		E5EB3B0B1147F5460078C71C /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5EB3B0A1147F5460078C71C /* CoreText.framework */; };
+		E5EB3B1E1147F54F0078C71C /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5EB3B0A1147F5460078C71C /* CoreText.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -318,14 +320,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = BC6A0A350EF93F7800881ACF /* nuiE.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 735F703F0FF2747500E66B1D /* libnuiE.a */;
+			remoteGlobalIDString = 735F703F0FF2747500E66B1D;
 			remoteInfo = "nuiE-iPhone 3.0";
 		};
 		E59C6DC8114669C8008E4749 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BC6A0A350EF93F7800881ACF /* nuiE.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 735F73A30FF2747500E66B1D /* libnuiEd.a */;
+			remoteGlobalIDString = 735F73A30FF2747500E66B1D;
 			remoteInfo = "nuiEd-iPhone 3.0";
 		};
 /* End PBXContainerItemProxy section */
@@ -526,6 +528,7 @@
 		E59C6E84114669E5008E4749 /* jsxml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsxml.h; path = src/JS/jsxml.h; sourceTree = SOURCE_ROOT; };
 		E59C6E85114669E5008E4749 /* prmjtime.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = prmjtime.c; path = src/JS/prmjtime.c; sourceTree = SOURCE_ROOT; };
 		E59C6E86114669E5008E4749 /* prmjtime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = prmjtime.h; path = src/JS/prmjtime.h; sourceTree = SOURCE_ROOT; };
+		E5EB3B0A1147F5460078C71C /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -542,6 +545,7 @@
 				C9CD09880DDDC04B0082235F /* CFNetwork.framework in Frameworks */,
 				C9EA04FE0E2917FA0067EF48 /* MediaPlayer.framework in Frameworks */,
 				BC540B430EF940C5007E66FC /* libnuiE.a in Frameworks */,
+				E5EB3B1E1147F54F0078C71C /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -558,6 +562,7 @@
 				C9CD09890DDDC04B0082235F /* CFNetwork.framework in Frameworks */,
 				C9EA04FF0E2917FA0067EF48 /* MediaPlayer.framework in Frameworks */,
 				BC540B440EF940C9007E66FC /* libnuiEd.a in Frameworks */,
+				E5EB3B0B1147F5460078C71C /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -575,6 +580,7 @@
 				1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
+				E5EB3B0A1147F5460078C71C /* CoreText.framework */,
 			);
 			name = "Linked Frameworks";
 			sourceTree = "<group>";
@@ -903,6 +909,9 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "JSTest_iPhone" */;
 			compatibilityVersion = "Xcode 3.1";
 			hasScannedForEncodings = 1;
@@ -1264,28 +1273,35 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Sebastien Metrot (L6L77G9KU6)";
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PFE_C_DIALECTS = "c++";
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";
-				GCC_PREPROCESSOR_DEFINITIONS = NUI_IPHONE;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					XP_UNIX,
+					NUI_IPHONE,
+				);
 				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../include";
-				ONLY_ACTIVE_ARCH = YES;
-				OTHER_CFLAGS = (
-					"-x",
-					"objective-c++",
-					"-ObjC++",
+				HEADER_SEARCH_PATHS = (
+					src/JS/fdlibm,
+					src/JS/,
+					"$(SRCROOT)/../../include",
 				);
+				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-liconv",
 					"-lz",
+					"-weak_framework",
+					CoreText,
 				);
 				PREBINDING = NO;
-				SDKROOT = iphoneos2.1;
+				PROVISIONING_PROFILE = "2EAE82E7-CD5B-41D4-9715-2D77E1ADF59A";
+				SDKROOT = iphoneos3.2;
 				USE_HEADERMAP = NO;
 			};
 			name = Default;
@@ -1330,6 +1346,8 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(GCC_PREPROCESSOR_DEFINITIONS)",
+					DEBUG,
 					_DEBUG_,
 					_DEBUG,
 					NUI_IPHONE,

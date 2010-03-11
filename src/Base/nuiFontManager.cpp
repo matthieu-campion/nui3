@@ -11,6 +11,11 @@
 #include "nglIStream.h"
 #include "nuiVBox.h"
 
+#ifdef _UIKIT_
+#include <CoreText/CoreText.h>
+#include <CoreFoundation/CoreFoundation.h>
+#endif
+
 #include <ft2build.h>
 #include FT_FREETYPE_H
 #include FT_CACHE_H
@@ -1056,6 +1061,11 @@ static nuiLabel* gpFontPathLabel = NULL;
 
 void nuiFontManager::ScanFolders(bool rescanAllFolders /* = false */)
 {
+#ifdef _UIKIT_
+  UpdateFonts();
+  return;
+#endif
+  
   nuiContextInfo ContextInfo(nuiContextInfo::StandardContext3D);
   nglWindowInfo Info;
   
@@ -1113,7 +1123,7 @@ void nuiFontManager::ScanFolders(bool rescanAllFolders /* = false */)
   nglTime end_time;
   
   double t = end_time - start_time;
-  printf("mScaning the system fonts took %f seconds\n", t);
+  printf("Scaning the system fonts took %f seconds\n", t);
 
   delete gpWin;
   gpWin = NULL;
@@ -1460,32 +1470,70 @@ bool nuiFontManager::Load(nglIStream& rStream)
   delete[] marker;
   
   Clear();
-  
+
   // compile list of font files
   std::set<nglPath> fontFiles;
   std::set<nglPath>::iterator itf;
   std::map<nglString, nglPath> folders;
   std::map<nglString, nglPath>::iterator it;
-  GetSystemFolders(folders);
   
-  for (it = folders.begin(); it != folders.end(); ++it)
+  bool scanfolders = true;
+#ifdef _UIKIT_
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_3_1
+  if (CTFontCollectionCreateFromAvailableFonts != NULL)
   {
-    const nglString& str = it->first;
-    const nglPath& pth = it->second;
+    scanfolders = false;
     
-    std::list<nglPath> children;
-    std::list<nglPath>::iterator itc;
-    pth.GetChildren(&children);
+    CTFontCollectionRef collection = CTFontCollectionCreateFromAvailableFonts(NULL);
+    CFArrayRef fonts = CTFontCollectionCreateMatchingFontDescriptors(collection);
+    int count = CFArrayGetCount(fonts);
     
-    for (itc = children.begin(); itc != children.end(); ++itc)
+    for (int i = 0; i < count; i++)
     {
-      const nglPath& path = *itc;
+      CTFontDescriptorRef desc = (CTFontDescriptorRef)CFArrayGetValueAtIndex(fonts, i);     
+      CFURLRef url = (CFURLRef)CTFontDescriptorCopyAttribute(desc, kCTFontURLAttribute);
+      CFStringRef str = CFURLGetString(url);
+      const int buffersize = 1024;
+      char buffer[buffersize];
+      memset(buffer, 0, buffersize);
+      CFStringGetFileSystemRepresentation(str, buffer, buffersize - 1);
+      
+      nglString rstr(buffer);
+      // Remove file://localhost from the start of the url:
+      rstr.DeleteLeft(16);
+      const nglPath& path(rstr);
       if (path.IsLeaf())
+      {
         fontFiles.insert(path);
+        printf("font file? %d: %s -> %ls\n", i, buffer, rstr.GetChars());
+      }
     }
   }
+#endif
+#endif
   
-  
+  if (scanfolders)
+  {
+    // All OSes 
+    GetSystemFolders(folders);
+    
+    for (it = folders.begin(); it != folders.end(); ++it)
+    {
+      const nglString& str = it->first;
+      const nglPath& pth = it->second;
+      
+      std::list<nglPath> children;
+      std::list<nglPath>::iterator itc;
+      pth.GetChildren(&children);
+      
+      for (itc = children.begin(); itc != children.end(); ++itc)
+      {
+        const nglPath& path = *itc;
+        if (path.IsLeaf())
+          fontFiles.insert(path);
+      }
+    }
+  }
   
   while (rStream.GetState() == eStreamReady)
   {
@@ -1497,10 +1545,10 @@ bool nuiFontManager::Load(nglIStream& rStream)
       if (!pFontDesc->GetPath().Exists())
       {
         NGL_OUT(_T("FontManager: remove font from database '%ls'\n"), pFontDesc->GetPath().GetChars());
-
+        
         continue;
       }
-
+      
       // register the font 
       mpFonts.push_back(pFontDesc);
       
@@ -1509,14 +1557,11 @@ bool nuiFontManager::Load(nglIStream& rStream)
       if (itf != fontFiles.end())
         fontFiles.erase(itf);
       
-      
-#if 0 // #TEST this is a work in progress!
-      nuiMiniTTFLoader loader(pFontDesc->GetPath());
-      loader.Load();
-#endif
     }
     else
+    {
       delete pFontDesc;
+    }
   }
   
   // now, the files that are still in the compiled list are supposed to be newly installed fonts
@@ -1527,34 +1572,137 @@ bool nuiFontManager::Load(nglIStream& rStream)
   {
     const nglPath& path = *itf;
     
-      bool cont = true;
-      int32 face = 0;
-      while (cont)
+    bool cont = true;
+    int32 face = 0;
+    while (cont)
+    {
+      NGL_ASSERT(gFTLibrary);
+      
+      nuiFontDesc* pFontDesc = new nuiFontDesc(path, face);
+      
+      
+      if (pFontDesc->IsValid())
       {
-        NGL_ASSERT(gFTLibrary);
+        mpFonts.push_back(pFontDesc);
         
-        nuiFontDesc* pFontDesc = new nuiFontDesc(path, face);
-        
-        
-        if (pFontDesc->IsValid())
-        {
-          mpFonts.push_back(pFontDesc);
-          
-          NGL_OUT(_T("FontManager: add new font in database '%ls'\n"), path.GetChars());
-        }
-        else
-        {
-          delete pFontDesc;
-          cont = false;
-        }
-        face++;
+        NGL_OUT(_T("FontManager: add new font in database '%ls'\n"), path.GetChars());
       }
+      else
+      {
+        delete pFontDesc;
+        cont = false;
+      }
+      face++;
+    }
     
   }
   
   FT_Done_FreeType(gFTLibrary);
-  gFTLibrary = NULL;
+  gFTLibrary = NULL;  
   return true;
+}
+
+void nuiFontManager::UpdateFonts()
+{
+  // compile list of font files
+  std::set<nglPath> fontFiles;
+  std::set<nglPath>::iterator itf;
+  std::map<nglString, nglPath> folders;
+  std::map<nglString, nglPath>::iterator it;
+  
+  bool scanfolders = true;
+#ifdef _UIKIT_
+#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_5
+  if (CTFontCollectionCreateFromAvailableFonts != NULL)
+  {
+    scanfolders = false;
+    
+    CTFontCollectionRef collection = CTFontCollectionCreateFromAvailableFonts(NULL);
+    CFArrayRef fonts = CTFontCollectionCreateMatchingFontDescriptors(collection);
+    int count = CFArrayGetCount(fonts);
+    
+    for (int i = 0; i < count; i++)
+    {
+      CTFontDescriptorRef desc = (CTFontDescriptorRef)CFArrayGetValueAtIndex(fonts, i);     
+      CFURLRef url = (CFURLRef)CTFontDescriptorCopyAttribute(desc, kCTFontURLAttribute);
+      CFStringRef str = CFURLGetString(url);
+      const int buffersize = 1024;
+      char buffer[buffersize];
+      memset(buffer, 0, buffersize);
+      CFStringGetFileSystemRepresentation(str, buffer, buffersize - 1);
+      
+      nglString rstr(buffer);
+      // Remove file://localhost from the start of the url:
+      rstr.DeleteLeft(16);
+      const nglPath& path(rstr);
+      if (path.IsLeaf())
+      {
+        fontFiles.insert(path);
+        printf("font file? %d: %s -> %ls\n", i, buffer, rstr.GetChars());
+      }
+    }
+  }
+#endif
+#endif
+  
+  if (scanfolders)
+  {
+    // All OSes 
+    GetSystemFolders(folders);
+    
+    for (it = folders.begin(); it != folders.end(); ++it)
+    {
+      const nglString& str = it->first;
+      const nglPath& pth = it->second;
+      
+      std::list<nglPath> children;
+      std::list<nglPath>::iterator itc;
+      pth.GetChildren(&children);
+      
+      for (itc = children.begin(); itc != children.end(); ++itc)
+      {
+        const nglPath& path = *itc;
+        if (path.IsLeaf())
+          fontFiles.insert(path);
+      }
+    }
+  }
+  
+  // now, the files that are still in the compiled list are supposed to be newly installed fonts
+  // let's add'em to the font database
+  FT_Error error;
+  error = FT_Init_FreeType(&gFTLibrary);
+  for (itf = fontFiles.begin(); itf != fontFiles.end(); ++itf)
+  {
+    const nglPath& path = *itf;
+    
+    bool cont = true;
+    int32 face = 0;
+    while (cont)
+    {
+      NGL_ASSERT(gFTLibrary);
+      
+      nuiFontDesc* pFontDesc = new nuiFontDesc(path, face);
+      
+      
+      if (pFontDesc->IsValid())
+      {
+        mpFonts.push_back(pFontDesc);
+        
+        NGL_OUT(_T("FontManager: add new font in database '%ls'\n"), path.GetChars());
+      }
+      else
+      {
+        delete pFontDesc;
+        cont = false;
+      }
+      face++;
+    }
+    
+  }
+  
+  FT_Done_FreeType(gFTLibrary);
+  gFTLibrary = NULL;  
 }
 
 void nuiFontManager::Clear()

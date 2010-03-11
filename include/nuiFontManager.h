@@ -228,5 +228,6 @@ private:
   static nuiFontManager gManager;
   
   bool ScanSubFolder(const nglPath& rPath);
+  void UpdateFonts();
 };
 

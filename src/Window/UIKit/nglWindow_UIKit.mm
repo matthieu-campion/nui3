@@ -348,6 +348,9 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
     glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &w);
     glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &h);
     
+    [self setContext: mpContext renderBuffer:mRenderBuffer];
+    glClearColor(0, 0, 0, 1);
+    glClear(GL_COLOR_BUFFER_BIT);
     //printf("NEW Render buffer area: %d x %d\n", w, h);
     
   }
@@ -854,6 +857,9 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
   //	glBindRenderbufferOES(GL_RENDERBUFFER_OES, oldRenderbuffer);
   
   [pUIWindow setContext: mpContext renderBuffer:mRenderBuffer];
+  glClearColor(0, 0, 0, 1);
+  glClear(GL_COLOR_BUFFER_BIT);
+  
   [pUIWindow UpdateOrientation: TRUE];
 }
 
