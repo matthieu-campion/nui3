@@ -177,9 +177,12 @@ LRESULT nglTimer::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 void nglTimer::PostMessage()
 {
-  if (App)
+  static volatile bool working = false;
+  if (App && !working)
   {
+    working = true;
     ::SendMessage(App->GetHWnd(), WM_NGLTIMER, 0, 0);
+    working = false;
   }
 }
 
