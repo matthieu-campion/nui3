@@ -35,12 +35,16 @@ nuiObject::nuiObject(const nglString& rObjectName)
 void nuiObject::Init(const nglString& rObjectName)
 {	
 #ifdef _NUI_DEBUG_OBJECTS_
-  mObjects.insert(std::pair<nuiObject*, Trace>(this, Trace()));
-  std::map<nuiObject*, Trace>::iterator it = mObjects.find(this);
-  mpTrace = &(it->second);
-  mpTrace->mAlive = true;
+  {
+    nglCriticalSectionGuard g(gObjectTraceCS);
+    std::pair<std::map<nuiObject*, Trace>::iterator, bool> p = mObjects.insert(std::pair<nuiObject*, Trace>(this, Trace()));
+    NGL_ASSERT(p.first != mObjects.end());
+    std::map<nuiObject*, Trace>::iterator it = p.first; //mObjects.find(this);
+    mpTrace = &(it->second);
+    mpTrace->mAlive = true;
 
-  uint32 s = mObjects.size(); if (!(s % 500)) { NGL_OUT(_T("Objects total count %d\n"), s); }
+    uint32 s = mObjects.size(); if (!(s % 500)) { NGL_OUT(_T("Objects total count %d\n"), s); }
+  }
 #endif
 
   mClassNameIndex = -1;
@@ -214,7 +218,10 @@ nuiObject::~nuiObject()
   }
   
 #ifdef _NUI_DEBUG_OBJECTS_
-  mpTrace->mAlive = false;
+  {
+    nglCriticalSectionGuard g(gObjectTraceCS);
+    mpTrace->mAlive = false;
+  }
 #endif
 }
 
@@ -238,7 +245,10 @@ void nuiObject::SetObjectName(const nglString& rName)
 {
   CheckValid();
 #ifdef _NUI_DEBUG_OBJECTS_
-  mpTrace->mName = rName;
+  {
+    nglCriticalSectionGuard g(gObjectTraceCS);
+    mpTrace->mName = rName;
+  }
 #endif
 
   mObjectName = rName;
@@ -763,22 +773,26 @@ void nuiObject::OnPropertyChanged(const nglString& rProperty, const nglString& r
 
 #ifdef _NUI_DEBUG_OBJECTS_
 std::map<nuiObject*, nuiObject::Trace> nuiObject::mObjects;
+nglCriticalSection nuiObject::gObjectTraceCS;
 #endif
 
 void nuiObject::CheckValid() const
 {
 #ifdef _NUI_DEBUG_OBJECTS_
-  std::map<nuiObject*, Trace>::const_iterator it = mObjects.find(const_cast<nuiObject*>(this));
-  if (it == mObjects.end())
   {
-    NGL_LOG(_T("nuiObject"), 0, _T("Operating on an invalid Object! 0x%x was never created.\n"), this);
+    nglCriticalSectionGuard g(gObjectTraceCS);
+    std::map<nuiObject*, Trace>::const_iterator it = mObjects.find(const_cast<nuiObject*>(this));
+    if (it == mObjects.end())
+    {
+      NGL_LOG(_T("nuiObject"), 0, _T("Operating on an invalid Object! 0x%x was never created.\n"), this);
+    }
+    else if (!it->second.mAlive)
+    {
+      NGL_LOG(_T("nuiObject"), 0, _T("Operating on an invalid Object! 0x%x (%ls - %ls).\n"), this, it->second.mClass.GetChars(), it->second.mName.GetChars());
+    }
+    NGL_ASSERT(it != mObjects.end());
+    NGL_ASSERT(it->second.mAlive);
   }
-  else if (!it->second.mAlive)
-  {
-    NGL_LOG(_T("nuiObject"), 0, _T("Operating on an invalid Object! 0x%x (%ls - %ls).\n"), this, it->second.mClass.GetChars(), it->second.mName.GetChars());
-  }
-  NGL_ASSERT(it != mObjects.end());
-  NGL_ASSERT(it->second.mAlive);
 #endif
 }
 

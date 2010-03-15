@@ -141,6 +141,7 @@ protected:
   };
   static std::map<nuiObject*, Trace> mObjects;
   Trace* mpTrace;
+  static nglCriticalSection gObjectTraceCS;
 #endif
   
 private : 
