@@ -11,18 +11,6 @@
 
 #include "nuiWidget.h"
 
-#define nuiBindClass(CLASSNAME) \
-{ \
-nuiClass* pClass = new nuiClass(_T(#CLASSNAME)); \
-nuiBindingManager::GetManager().AddClass(pClass);
-
-#define nuiEndClass }
-
-#define nuiInheritFrom(PARENT_CLASS) pClass->AddParentClass(nuiBindingManager::GetManager().GetClass(_T(#PARENT_CLASS)));
-#define nuiAddCtor(CTOR_DECL) pClass->AddConstructor(new nuiFunction(CTOR_DECL));
-#define nuiAddMethod(METHOD_NAME, METHOD)  pClass->AddMethod(_T(#METHOD_NAME), new nuiFunction(&METHOD));
-#define nuiAddFunction(FUNCTION_NAME, FUNCTION) nuiBindingManager::GetManager().AddFunction(_T(#FUNCTION_NAME), new nuiFunction(FUNCTION));
-
 static nuiObject* nuiCreate_nuiObject()
 {
   return new nuiObject();

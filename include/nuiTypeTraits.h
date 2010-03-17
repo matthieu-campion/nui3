@@ -163,3 +163,25 @@ struct if_<false, T1, T2>
 };
 
 
+
+template<class T, class U>
+class is_same_type
+{
+public:
+  enum
+  {
+    value = false
+  };
+};
+
+template<class T>
+class is_same_type<T, T>
+{
+public:
+  enum
+  {
+    value = true
+  };
+};
+
+

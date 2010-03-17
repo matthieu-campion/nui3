@@ -374,6 +374,9 @@
 		BCFE08230E050ACB0073662D /* nuiDialogSelectFile.h in Headers */ = {isa = PBXBuildFile; fileRef = BCFE08210E050ACB0073662D /* nuiDialogSelectFile.h */; };
 		BCFE08240E050ACB0073662D /* nuiDialogSelectDirectory.h in Headers */ = {isa = PBXBuildFile; fileRef = BCFE08200E050ACB0073662D /* nuiDialogSelectDirectory.h */; };
 		BCFE08250E050ACB0073662D /* nuiDialogSelectFile.h in Headers */ = {isa = PBXBuildFile; fileRef = BCFE08210E050ACB0073662D /* nuiDialogSelectFile.h */; };
+		E50066D3115070A700CDD83E /* nuiVariant.h in Headers */ = {isa = PBXBuildFile; fileRef = E50066D2115070A700CDD83E /* nuiVariant.h */; };
+		E50066D4115070A700CDD83E /* nuiVariant.h in Headers */ = {isa = PBXBuildFile; fileRef = E50066D2115070A700CDD83E /* nuiVariant.h */; };
+		E50066D5115070A700CDD83E /* nuiVariant.h in Headers */ = {isa = PBXBuildFile; fileRef = E50066D2115070A700CDD83E /* nuiVariant.h */; };
 		E504F0B90EFBAE5200A80C5C /* nuiChunksDefinitions.h in Headers */ = {isa = PBXBuildFile; fileRef = E504F0B80EFBAE5200A80C5C /* nuiChunksDefinitions.h */; };
 		E504F0BA0EFBAE5200A80C5C /* nuiChunksDefinitions.h in Headers */ = {isa = PBXBuildFile; fileRef = E504F0B80EFBAE5200A80C5C /* nuiChunksDefinitions.h */; };
 		E504F2080EFC5C7E00A80C5C /* nuiBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E504F2060EFC5C7E00A80C5C /* nuiBox.cpp */; };
@@ -3301,6 +3304,7 @@
 		BCFE081B0E050AB90073662D /* nuiDialogSelectFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiDialogSelectFile.cpp; path = src/Dialogs/nuiDialogSelectFile.cpp; sourceTree = SOURCE_ROOT; };
 		BCFE08200E050ACB0073662D /* nuiDialogSelectDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiDialogSelectDirectory.h; path = include/nuiDialogSelectDirectory.h; sourceTree = SOURCE_ROOT; };
 		BCFE08210E050ACB0073662D /* nuiDialogSelectFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiDialogSelectFile.h; path = include/nuiDialogSelectFile.h; sourceTree = SOURCE_ROOT; };
+		E50066D2115070A700CDD83E /* nuiVariant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiVariant.h; path = include/nuiVariant.h; sourceTree = SOURCE_ROOT; };
 		E504F0B80EFBAE5200A80C5C /* nuiChunksDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiChunksDefinitions.h; path = AudioSamples/nuiChunksDefinitions.h; sourceTree = "<group>"; };
 		E504F2060EFC5C7E00A80C5C /* nuiBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiBox.cpp; sourceTree = "<group>"; };
 		E505C87E0C958C16001D802C /* nglThread.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nglThread.cpp; path = src/Threading/nglThread.cpp; sourceTree = SOURCE_ROOT; };
@@ -5442,6 +5446,7 @@
 				E5816D6B0C3CECAB00902DFE /* nuiXML.cpp */,
 				E5816D1E0C3CECAB00902DFE /* nuiXML.h */,
 				E58E8A96115057B000C2D204 /* nuiTypeTraits.h */,
+				E50066D2115070A700CDD83E /* nuiVariant.h */,
 			);
 			name = Base;
 			path = src/Base;
@@ -6702,6 +6707,7 @@
 				E560A376113587D300AFBEAC /* nglCondition.h in Headers */,
 				E5354C0911383244008F5402 /* nuiObjectInspector.h in Headers */,
 				E58E8A98115057B000C2D204 /* nuiTypeTraits.h in Headers */,
+				E50066D4115070A700CDD83E /* nuiVariant.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7299,6 +7305,7 @@
 				E560A378113587D300AFBEAC /* nglCondition.h in Headers */,
 				E5354C0811383244008F5402 /* nuiObjectInspector.h in Headers */,
 				E58E8A97115057B000C2D204 /* nuiTypeTraits.h in Headers */,
+				E50066D3115070A700CDD83E /* nuiVariant.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7893,6 +7900,7 @@
 				E560A377113587D300AFBEAC /* nglCondition.h in Headers */,
 				E5354C0711383244008F5402 /* nuiObjectInspector.h in Headers */,
 				E58E8A99115057B000C2D204 /* nuiTypeTraits.h in Headers */,
+				E50066D5115070A700CDD83E /* nuiVariant.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
