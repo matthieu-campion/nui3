@@ -141,6 +141,9 @@ int JSTest()
  * MainWindow
  */
 
+void TestVariant();
+
+
 MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& rInfo, bool ShowFPS, const nglContext* pShared )
   : nuiMainWindow(rContextInfo, rInfo, pShared, nglPath(ePathCurrent)), mEventSink(this)
 {
@@ -148,6 +151,8 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
   SetDebugMode(true);
 #endif
   
+  TestVariant();
+
   JSTest();
 
   LoadCSS(_T("rsrc:/css/main.css"));

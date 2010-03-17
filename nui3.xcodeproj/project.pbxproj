@@ -1998,6 +1998,9 @@
 		E58948760F0B05AD006B3B17 /* nglVideoMode_Carbon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816E210C3CECAB00902DFE /* nglVideoMode_Carbon.cpp */; };
 		E58948770F0B05B2006B3B17 /* nglWindow_Carbon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816E220C3CECAB00902DFE /* nglWindow_Carbon.cpp */; };
 		E58948780F0B05C3006B3B17 /* nuiMainMenu_Carbon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC77BAEB0DF9572E00E0EC0D /* nuiMainMenu_Carbon.cpp */; };
+		E58E8A97115057B000C2D204 /* nuiTypeTraits.h in Headers */ = {isa = PBXBuildFile; fileRef = E58E8A96115057B000C2D204 /* nuiTypeTraits.h */; };
+		E58E8A98115057B000C2D204 /* nuiTypeTraits.h in Headers */ = {isa = PBXBuildFile; fileRef = E58E8A96115057B000C2D204 /* nuiTypeTraits.h */; };
+		E58E8A99115057B000C2D204 /* nuiTypeTraits.h in Headers */ = {isa = PBXBuildFile; fileRef = E58E8A96115057B000C2D204 /* nuiTypeTraits.h */; };
 		E5901BEB1043F2C200D3FD5F /* nuiToggleButton.h in Headers */ = {isa = PBXBuildFile; fileRef = E5901BEA1043F2C200D3FD5F /* nuiToggleButton.h */; };
 		E5901BEC1043F2C200D3FD5F /* nuiToggleButton.h in Headers */ = {isa = PBXBuildFile; fileRef = E5901BEA1043F2C200D3FD5F /* nuiToggleButton.h */; };
 		E5901BED1043F2C200D3FD5F /* nuiToggleButton.h in Headers */ = {isa = PBXBuildFile; fileRef = E5901BEA1043F2C200D3FD5F /* nuiToggleButton.h */; };
@@ -4100,6 +4103,7 @@
 		E58602250CD6373100C0E789 /* nuiRectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiRectView.h; path = ../../include/nuiRectView.h; sourceTree = "<group>"; };
 		E58602260CD6373100C0E789 /* nuiRectView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiRectView.cpp; sourceTree = "<group>"; };
 		E587B7260C56BF440076200A /* nuiFontManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiFontManager.h; path = include/nuiFontManager.h; sourceTree = SOURCE_ROOT; };
+		E58E8A96115057B000C2D204 /* nuiTypeTraits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiTypeTraits.h; path = include/nuiTypeTraits.h; sourceTree = SOURCE_ROOT; };
 		E5901BEA1043F2C200D3FD5F /* nuiToggleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiToggleButton.h; path = include/nuiToggleButton.h; sourceTree = SOURCE_ROOT; };
 		E591C0190FF17984005E5E3D /* nuiHTMLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nuiHTMLContext.h; sourceTree = "<group>"; };
 		E591C01A0FF17984005E5E3D /* nuiHTMLContext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiHTMLContext.cpp; sourceTree = "<group>"; };
@@ -5437,6 +5441,7 @@
 				E5816D1B0C3CECAB00902DFE /* nuiWidgetElements.h */,
 				E5816D6B0C3CECAB00902DFE /* nuiXML.cpp */,
 				E5816D1E0C3CECAB00902DFE /* nuiXML.h */,
+				E58E8A96115057B000C2D204 /* nuiTypeTraits.h */,
 			);
 			name = Base;
 			path = src/Base;
@@ -6696,6 +6701,7 @@
 				E5B7A1DA11347AF4005403BF /* nglReaderWriterLock.h in Headers */,
 				E560A376113587D300AFBEAC /* nglCondition.h in Headers */,
 				E5354C0911383244008F5402 /* nuiObjectInspector.h in Headers */,
+				E58E8A98115057B000C2D204 /* nuiTypeTraits.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7292,6 +7298,7 @@
 				E5B7A1DC11347AF4005403BF /* nglReaderWriterLock.h in Headers */,
 				E560A378113587D300AFBEAC /* nglCondition.h in Headers */,
 				E5354C0811383244008F5402 /* nuiObjectInspector.h in Headers */,
+				E58E8A97115057B000C2D204 /* nuiTypeTraits.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7885,6 +7892,7 @@
 				E5B7A1DB11347AF4005403BF /* nglReaderWriterLock.h in Headers */,
 				E560A377113587D300AFBEAC /* nglCondition.h in Headers */,
 				E5354C0711383244008F5402 /* nuiObjectInspector.h in Headers */,
+				E58E8A99115057B000C2D204 /* nuiTypeTraits.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
