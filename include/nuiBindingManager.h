@@ -19,12 +19,7 @@ public:
     return NULL;
   }
   
-  static Type Convert(const nuiVariant& rArg)
-  {
-    //return rArg;
-    return (Type)0;
-  }
-};
+ };
 
 
 ///////////////////////////////////// Traits implems:
@@ -42,11 +37,6 @@ public:
     }
     return mName.GetChars();
   }
-
-  static Class& Convert(const nuiVariant& rArg)
-  {
-    return *(Class*)NULL;
-  }
 };
 
 template <class Class> class nuiVariantTrait<const Class&>
@@ -61,11 +51,6 @@ public:
     }
     return mName.GetChars();
   }
-
-  static const Class& Convert(const nuiVariant& rArg)
-  {
-    return *(const Class*)NULL;
-  }
 };
 
 template <class Class> class nuiVariantTrait<Class*>
@@ -79,11 +64,6 @@ public:
       mName.Add(typeid(Class).name()).Add(_T("*"));
     }
     return mName.GetChars();
-  }
-
-  static Class* Convert(const nuiVariant& rArg)
-  {
-    return NULL;
   }
 };
 
@@ -101,11 +81,6 @@ public:
   {
     return _T("int");
   }
-  
-  static int Convert(const nuiVariant& rArg)
-  {
-    return 0;
-  }
 };
 
 template <> class nuiVariantTrait<void>
@@ -114,11 +89,6 @@ public:
   static const nglChar* GetName()
   {
     return _T("void");
-  }
-  
-  static void Convert(const nuiVariant& rArg)
-  {
-    return;
   }
 };
 
@@ -129,11 +99,6 @@ public:
   {
     return _T("float");
   }
-  
-  static float Convert(const nuiVariant& rArg)
-  {
-    return 0.0f;
-  }
 };
 
 
@@ -143,11 +108,6 @@ public:
   static const nglChar* GetName()
   {
     return _T("nglString");
-  }
-  
-  static nglString Convert(const nuiVariant& rArg)
-  {
-    return nglString::Null;
   }
 };
 

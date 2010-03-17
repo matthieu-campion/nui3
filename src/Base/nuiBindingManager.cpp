@@ -77,7 +77,7 @@ void TestBinding()
     nuiFunction* pMethod = Methods[0];
     nuiCallContext context;
     context.AddArgument(object);
-    context.AddArgument(nglString(_T("Pouet!")));
+    context.AddArgument(nuiRect(50, 100, 320, 240));
     pMethod->Run(context);  
   }
   
