@@ -41,6 +41,71 @@ void TestVariant()
   NGL_OUT(_T("sizeof nuiVariant: %d\n"), sizeof(nuiVariant));
 }
 
+void TestBinding()
+{
+  nuiClass* pClass = nuiBindingManager::GetManager().GetClass(_T("nuiWidget"));
+
+  if (!pClass)
+    return;
+  
+  nuiVariant object;
+  {
+    const std::set<nuiFunction*>& rCtors(pClass->GetConstructors());
+    nuiFunction* pCtor = *rCtors.begin();
+    nuiCallContext context;
+    pCtor->Run(context);
+    object = (context.GetResult());
+  }
+
+  {
+    std::vector<nuiFunction*> Methods;
+    pClass->GetMethods(_T("GetObjectClass"), Methods);
+    NGL_ASSERT(!Methods.empty());
+    nuiFunction* pMethod = Methods[0];
+    nuiCallContext context;
+    context.AddArgument(object);
+    pMethod->Run(context);
+    nuiVariant result = context.GetResult();
+    nglString res = result;
+    NGL_OUT(_T("GetObjectClass result: %ls\n"), res.GetChars());
+  }
+  
+  {
+    std::vector<nuiFunction*> Methods;
+    pClass->GetMethods(_T("SetObjectName"), Methods);
+    NGL_ASSERT(!Methods.empty());
+    nuiFunction* pMethod = Methods[0];
+    nuiCallContext context;
+    context.AddArgument(object);
+    context.AddArgument(nglString(_T("Pouet!")));
+    pMethod->Run(context);  
+  }
+  
+  {
+    std::vector<nuiFunction*> Methods;
+    pClass->GetMethods(_T("GetObjectName"), Methods);
+    NGL_ASSERT(!Methods.empty());
+    nuiFunction* pMethod = Methods[0];
+    nuiCallContext context;
+    context.AddArgument(object);
+    pMethod->Run(context);
+    nuiVariant result = context.GetResult();
+    nglString res = result;
+    NGL_OUT(_T("GetObjectName result: %ls\n"), res.GetChars());
+  }
+  
+  {
+    std::vector<nuiFunction*> Methods;
+    pClass->GetMethods(_T("Trash"), Methods);
+    NGL_ASSERT(!Methods.empty());
+    nuiFunction* pMethod = Methods[0];
+    nuiCallContext context;
+    context.AddArgument(object);
+    pMethod->Run(context);  
+  }
+  
+}
+
 //class  nuiClass:
 nuiClass::nuiClass(const nglString& rName)
 {
@@ -119,6 +184,32 @@ static void BuildTypeListString(uint StartIndex, const std::vector<nglString>& r
     rString.Add(rArgs[i]);
   }
 }
+
+void nuiClass::GetMethods(const nglString& rName, std::vector<nuiFunction*>& rFunctions) const
+{
+  std::pair<std::multimap<nglString, nuiFunction*>::const_iterator, std::multimap<nglString, nuiFunction*>::const_iterator> ret = mMethods.equal_range(rName);
+  if (ret.first != mMethods.end())
+  {
+    std::multimap<nglString, nuiFunction*>::const_iterator it(ret.first);
+    std::multimap<nglString, nuiFunction*>::const_iterator end(ret.second);
+    
+    while (it != end)
+    {
+      rFunctions.push_back(it->second);
+      ++it;
+    }
+  }
+  
+  uint32 count = mParentClasses.size();
+  for (uint32 i = 0; i < count; i++)
+  {
+    nuiClass* pParent = mParentClasses[count - 1 - i];
+    NGL_ASSERT(pParent);
+    pParent->GetMethods(rName, rFunctions);
+  }
+}
+
+
 
 void nuiClass::Dump(nglString& rString) const
 {

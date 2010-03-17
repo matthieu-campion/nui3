@@ -223,6 +223,21 @@ public:
     return NULL;
   }
   
+  template<typename Type>
+  operator const Type*() const
+  {
+    if (nuiAttributeTypeTrait<Type*>::mTypeId == mType)
+      return reinterpret_cast<const Type*>(mData.mpPointer);
+    
+    if (!mIsPointer)
+      return NULL;
+    
+    if (mIsObject && is_base_of<nuiObject, Type>::value)
+      return dynamic_cast<const Type*>(reinterpret_cast<nuiObject*>(mData.mpPointer));
+    
+    return NULL;
+  }
+  
 private:
   nuiAttributeType mType;
   union 

@@ -510,3 +510,8 @@ void nuiRSS::SetURL(const nglString& rURL)
   }
 }
 
+
+const nglString& nuiRSS::GetRSSURL() const
+{
+  return mRSSURL;
+}

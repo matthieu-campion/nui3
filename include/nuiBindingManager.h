@@ -154,24 +154,48 @@ public:
 class nuiCallContext
 {
 public:
-  nuiCallContext();
-  ~nuiCallContext();
-
-  
-  
-  nuiVariant& operator[](uint32 index) const
+  nuiCallContext()
   {
-    return *mArgs[index];
+  }
+  ~nuiCallContext()
+  {
+  }
+
+  void SetArguments(const std::vector<nuiVariant>& rArgs)
+  {
+    mArgs = rArgs;
   }
   
-  nuiVariant& GetResult() const
+  void AddArguments(const std::vector<nuiVariant>& rArgs)
   {
-    return *mpResult;
+    mArgs.reserve(mArgs.size() + rArgs.size());
+    for (uint32 i = 0; i < rArgs.size(); i++)
+      AddArgument(rArgs[i]);
+  }
+  
+  void AddArgument(const nuiVariant& rArg)
+  {
+    mArgs.push_back(rArg);
+  }
+  
+  nuiVariant& operator[](uint32 index)
+  {
+    return mArgs[index];
+  }
+  
+  const nuiVariant& GetResult() const
+  {
+    return mResult;
+  }
+  
+  nuiVariant& GetResult()
+  {
+    return mResult;
   }
   
 private:
-  std::vector<nuiVariant*> mArgs;
-  nuiVariant* mpResult;
+  std::vector<nuiVariant> mArgs;
+  nuiVariant mResult;
 };
 
 
@@ -584,7 +608,8 @@ public:
   
   bool Run(nuiCallContext& rContext)
   {
-    rContext.GetResult() = (nuiVariantTrait<Class&>::Convert(rContext[0]).*mStorage)();
+    Class* pClass = rContext[0];
+    rContext.GetResult() = (pClass->*mStorage)();
     return true;
   }
 
@@ -634,7 +659,8 @@ public:
   
   bool Run(nuiCallContext& rContext)
   {
-    rContext.GetResult() = (nuiVariantTrait<Class&>::Convert(rContext[0]).*mStorage)(nuiVariantTrait<Param1>::Convert(rContext[1]));
+    Class* pClass = rContext[0];
+    rContext.GetResult() = (pClass->*mStorage)(rContext[1]);
     return true;
   }
 
@@ -661,7 +687,8 @@ public:
   bool Run(nuiCallContext& rContext)
   {
     rContext.GetResult().Clear();
-    (nuiVariantTrait<Class&>::Convert(rContext[0]).*mStorage)(nuiVariantTrait<Param1>::Convert(rContext[1]));
+    Class* pClass = rContext[0];
+    (pClass->*mStorage)(rContext[1]);
     return true;
   }
   
@@ -690,20 +717,13 @@ public:
     if (is_same_type<RetType, void>::value)
     {
       rContext.GetResult().Clear();
-      (nuiVariantTrait<Class&>::Convert(rContext[0]).*mStorage)
-        (
-          nuiVariantTrait<Param1>::Convert(rContext[1]),
-          nuiVariantTrait<Param2>::Convert(rContext[2])
-        );
+      Class* pClass = rContext[0];
+      (pClass->*mStorage)(rContext[1], rContext[2]);
     }
     else
     {
-      rContext.GetResult() = 
-      (nuiVariantTrait<Class&>::Convert(rContext[0]).*mStorage)
-        (
-          nuiVariantTrait<Param1>::Convert(rContext[1]),
-          nuiVariantTrait<Param2>::Convert(rContext[2])
-        );
+      Class* pClass = rContext[0];
+      rContext.GetResult() = (pClass->*mStorage)(rContext[1], rContext[2]);
     }
     return true;
   }
@@ -732,11 +752,8 @@ public:
   bool Run(nuiCallContext& rContext)
   {
     rContext.GetResult().Clear();
-    (nuiVariantTrait<Class&>::Convert(rContext[0]).*mStorage)
-      (
-       nuiVariantTrait<Param1>::Convert(rContext[1]),
-       nuiVariantTrait<Param2>::Convert(rContext[2])
-       );
+    Class* pClass = rContext[0];
+    (pClass->*mStorage)(rContext[1], rContext[2]);
     return true;
   }
   
@@ -764,13 +781,8 @@ public:
   
   bool Run(nuiCallContext& rContext)
   {
-    rContext.GetResult() = 
-    (nuiVariantTrait<Class&>::Convert(rContext[0]).*mStorage)
-    (
-     nuiVariantTrait<Param1>::Convert(rContext[1]),
-     nuiVariantTrait<Param2>::Convert(rContext[2]),
-     nuiVariantTrait<Param3>::Convert(rContext[3])
-     );
+    Class* pClass = rContext[0];
+    rContext.GetResult() = (pClass->*mStorage)(rContext[1], rContext[2], rContext[3]);
     return true;
   }
 
@@ -798,13 +810,8 @@ public:
   
   bool Run(nuiCallContext& rContext)
   {
-    rContext.GetResult() = 
-    (nuiVariantTrait<Class&>::Convert(rContext[0]).*mStorage)
-    (
-     nuiVariantTrait<Param1>::Convert(rContext[1]),
-     nuiVariantTrait<Param2>::Convert(rContext[2]),
-     nuiVariantTrait<Param3>::Convert(rContext[3])
-     );
+    Class* pClass = rContext[0];
+    rContext.GetResult() = (pClass->*mStorage)(rContext[1], rContext[2], rContext[3]);
     return true;
   }
   
@@ -983,7 +990,8 @@ public:
 
   bool Run(nuiCallContext& rContext)
   {
-    rContext.GetResult() = (nuiVariantTrait<Class&>::Convert(rContext[0]).*mStorage)();
+    const Class* pClass = rContext[0];
+    rContext.GetResult() = (pClass->*mStorage)();
     return true;
   }
 
@@ -1529,6 +1537,8 @@ public:
   void AddMethod(const nglString& rMethodName, nuiFunction* pFunction);
   void AddConstructor(nuiFunction* pFunction);
 
+  void GetMethods(const nglString& rName, std::vector<nuiFunction*>& rFunction) const;
+  
   const std::vector<nuiClass*>& GetParentClasse() const;
   const std::multimap<nglString, nuiFunction*>& GetMethods() const;
   const std::set<nuiFunction*>& GetConstructors() const;

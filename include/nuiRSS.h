@@ -92,6 +92,7 @@ public:
   void SetItemRead(int32 index, bool set);
   
   void SetURL(const nglString& rURL);
+  const nglString& GetRSSURL() const;
   bool ForceUpdate();
   
   nuiSimpleEventSource<0> UpdateStarted;

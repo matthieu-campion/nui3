@@ -10,6 +10,7 @@
 #include "Application.h"
 #include "nuiCSS.h"
 #include "nuiVBox.h"
+#include "nuiBindings.h"
 
 #define PROTYPES_H
 #include "jstypes.h"
@@ -142,6 +143,7 @@ int JSTest()
  */
 
 void TestVariant();
+void TestBinding();
 
 
 MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& rInfo, bool ShowFPS, const nglContext* pShared )
@@ -152,6 +154,8 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
 #endif
   
   TestVariant();
+  nuiInitBindings();
+  TestBinding();
 
   JSTest();
 

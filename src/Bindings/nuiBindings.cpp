@@ -11,15 +11,17 @@
 
 #include "nuiWidget.h"
 
-static nuiObject* nuiCreate_nuiObject()
+template <typename Type>
+static Type* nuiCreateObject()
 {
-  return new nuiObject();
+  return new Type();
 }
+
 
 bool nuiInitBindings()
 {
   nuiBindClass(nuiObject);
-    nuiAddCtor(nuiCreate_nuiObject);
+    nuiAddCtor(nuiCreateObject<nuiObject>);
     nuiAddMethod(GetObjectName,   nuiObject::GetObjectName);
     nuiAddMethod(SetObjectName,   nuiObject::SetObjectName);
     nuiAddMethod(GetObjectClass,  nuiObject::GetObjectClass);
@@ -32,6 +34,12 @@ bool nuiInitBindings()
 //    nuiAddMethod(ClearProperty,   nuiObject::ClearProperty);
     nuiAddMethod(GetObjectClassNameIndex, nuiObject::GetObjectClassNameIndex);
 
+  nuiEndClass
+
+  nuiBindClass(nuiWidget);
+  nuiInheritFrom(nuiObject);
+  nuiAddCtor(nuiCreateObject<nuiWidget>);
+  nuiAddMethod(Trash,   nuiWidget::Trash);  
   nuiEndClass
   
   nglString str;
