@@ -345,17 +345,10 @@ void nuiTopLevel::EmptyTrash()
     {
       pItem = rElement.mpWidget;
 
+      AdviseSubTreeDeath(pItem);
       nuiContainerPtr pParent = pItem->GetParent();
       if (pParent)
         pParent->DelChild(pItem);
-
-      //      OUT("About to delete %d (0x%x) from trash\n",pItem->GetProperty(_T("Class")), pItem);
-			// Remove the complete subtree from the tree:
-      AdviseSubTreeDeath(pItem);
-      
-//      if (pItem != this)
-//        delete pItem;
-
     }
   }
 
