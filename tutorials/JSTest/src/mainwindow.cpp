@@ -10,7 +10,9 @@
 #include "Application.h"
 #include "nuiCSS.h"
 #include "nuiVBox.h"
+#include "nuiBindingManager.h"
 #include "nuiBindings.h"
+
 
 #define PROTYPES_H
 #include "jstypes.h"
@@ -70,7 +72,6 @@ JSBool myjs_srand(JSContext *cx, JSObject *obj, uintN argc, jsval *argv, jsval *
 JSBool myjs_out(JSContext *cx, JSObject *obj, uintN argc, jsval *argv, jsval *rval)
 {
     const char *cmd;
-    int rc;
 
     if (!JS_ConvertArguments(cx, argc, argv, "s", &cmd))
         return JS_FALSE;
@@ -81,6 +82,107 @@ JSBool myjs_out(JSContext *cx, JSObject *obj, uintN argc, jsval *argv, jsval *rv
     *rval = JSVAL_VOID;  /* return undefined */
     return JS_TRUE;
 }
+
+static void* GetVariantObjectFromJS(JSContext* cx, const jsval& arg)
+{
+  JSObject* pJSObject = NULL;
+  JS_ValueToObject(cx, arg, &pJSObject);
+  JSClass* pJSClass = JS_GET_CLASS(cx, pJSObject);
+  
+  if (!pJSClass)
+    return nuiVariant();
+  
+  nglString name(pJSClass->name);
+  nuiClass* pClass = nuiBindingManager::GetManager().GetClass(name);
+  if (!pClass)
+    return nuiVariant((void*)NULL);
+  
+  void* pPrivate = JS_GetInstancePrivate(cx, pJSObject, pJSClass, NULL);
+  return pClass->GetVariantFromVoidPtr(pPrivate);
+}
+
+
+template <bool method>
+JSBool nuiGenericJSFunction(JSContext *cx, JSObject *obj, uintN argc, jsval *argv, jsval *rval)
+{
+  JSFunction* pJSFunc = JS_ValueToFunction(cx, JS_ARGV_CALLEE(argv));
+  if (!pJSFunc)
+    return JS_FALSE;
+
+  nuiCallContext ctx;
+
+  if (method) // Only add this if we are calling a method
+    ctx.AddArgument(GetVariantObjectFromJS(cx, JS_THIS_OBJECT(cx, argv)));
+  
+  for (uint32 i = 0; i < argc; i++)
+  {
+    JSType type = JS_TypeOfValue(cx, argv[i]);
+    switch (type)
+    {
+      
+      case JSTYPE_VOID:
+        {
+          return JS_FALSE;
+        }
+        break;
+      
+      case JSTYPE_OBJECT:
+        {
+          // Find the nui equivalent of the object
+          ctx.AddArgument(GetVariantObjectFromJS(cx, argv[i]));
+        }
+        break;
+      
+      case JSTYPE_STRING:
+        {
+          JSString* pStr = JS_ValueToString(cx, argv[i]);
+          nglString str(JS_GetStringChars(pStr));
+          ctx.AddArgument(str);
+        }
+        break;
+      
+      case JSTYPE_NUMBER:
+        {
+          jsdouble val;
+          JS_ValueToNumber(cx, argv[i], &val);
+          ctx.AddArgument(val);
+        }
+        break;
+      
+      case JSTYPE_BOOLEAN:
+        {
+          JSBool b = false;
+          JS_ValueToBoolean(cx, argv[i], &b);
+          ctx.AddArgument(b);
+        }
+        break;
+
+      case JSTYPE_FUNCTION:
+      case JSTYPE_NULL:
+      case JSTYPE_XML:
+      case JSTYPE_LIMIT:
+        {
+          jsval val;
+          if (!JS_ConvertValue(cx, argv[i], JSTYPE_STRING, &val))
+          {
+            NGL_LOG(_T("JavaScript"), NGL_LOG_ERROR, _T("Unable to convert a complex type to a string"));
+            return JS_FALSE;
+          }
+          
+          JSString* pStr = JS_ValueToString(cx, val);
+          nglString str(JS_GetStringChars(pStr));
+          ctx.AddArgument(str);
+        }
+        break;
+    }
+
+  }
+
+  *rval = JSVAL_VOID;  /* return undefined */
+  return JS_TRUE;
+}
+
+
 
 int JSTest()
 {

@@ -129,6 +129,13 @@ public:
                                is_same<_Base, _Derived>::value));
 };
 
+template <typename _Base>
+struct _is_base_of_helper<_Base, void>
+{
+public:
+  static const bool _value = false;
+};
+
 template <typename _Base, typename _Derived>
 struct is_base_of :
 public integral_constant<bool, _is_base_of_helper<_Base, _Derived>::_value>

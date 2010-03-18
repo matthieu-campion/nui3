@@ -1381,11 +1381,28 @@ public:
   const nglString& GetName() const;
 
   void Dump(nglString& rString) const;
+  
+  virtual nuiVariant GetVariantFromVoidPtr(void* pPtr) const = 0;
 protected:
   nglString mName;
   std::vector<nuiClass*> mParentClasses;
   std::multimap<nglString, nuiFunction*> mMethods; 
   std::set<nuiFunction*> mConstructors;
+};
+
+template <typename Class>
+class nuiClassImpl : public nuiClass
+{
+public:
+  nuiClassImpl(const nglString& rName) : nuiClass(rName)
+  {
+  }
+  
+  virtual nuiVariant GetVariantFromVoidPtr(void* pPtr) const
+  {
+    return nuiVariant((Class*)pPtr);
+  }
+  
 };
 
 class nuiBindingManager
@@ -1418,7 +1435,7 @@ protected:
 
 #define nuiBindClass(CLASSNAME) \
 { \
-  nuiClass* pClass = new nuiClass(_T(#CLASSNAME)); \
+  nuiClass* pClass = new nuiClassImpl<CLASSNAME>(_T(#CLASSNAME)); \
   nuiBindingManager::GetManager().AddClass(pClass);
 
 #define nuiEndClass }
