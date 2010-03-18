@@ -33,9 +33,6 @@ public:
   // commented out: see definition
   // virtual bool DelChild(nuiWidgetPtr pChild,bool Delete = false);
 
-  void SetTreeOwner(bool OwnTree); ///< This method tells the nuiPopupMenu is it owns its the nuiTree or not. This permits to destroy (or not) the nuiTree accordingly when the nuiTreePopup is destroyed.
-  bool IsTreeOwner();
-
   // accessors
   void ShowFirstNode(bool show);
   nuiTreeNode* GetSelectedNode() { return mpSelectedNode; };

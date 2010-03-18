@@ -16,7 +16,6 @@
 nuiComboBox::nuiComboBox()
 : nuiSimpleContainer(), 
   mpChoicesTree(NULL), 
-  mOwnTree(false), 
   mpSelected(NULL), 
   mpOldSelected(NULL), 
   mHandleWidth(DEFAULT_HANDLE_WIDTH), 
@@ -31,7 +30,6 @@ nuiComboBox::nuiComboBox()
 nuiComboBox::nuiComboBox(nuiTreeNode* pChoicesTree, bool ownTree)
 : nuiSimpleContainer(), 
   mpChoicesTree(pChoicesTree), 
-  mOwnTree(ownTree), 
   mpSelected(NULL), 
   mpOldSelected(NULL), 
   mHandleWidth(DEFAULT_HANDLE_WIDTH), 
@@ -41,6 +39,8 @@ nuiComboBox::nuiComboBox(nuiTreeNode* pChoicesTree, bool ownTree)
 {
   SetObjectClass(_T("nuiComboBox"));
 
+  if (mpChoicesTree)
+    mpChoicesTree->Acquire();
   ReparentTree(mpChoicesTree);
 }
 
@@ -49,7 +49,6 @@ bool nuiComboBox::Load(nuiXMLNode* pNode)
   nuiSimpleContainer::Load(pNode);
   delete mpChoicesTree;
   mpChoicesTree = NULL; 
-  mOwnTree = false;
   mpSelected = NULL;
   mpOldSelected = NULL; 
   mHandleWidth = DEFAULT_HANDLE_WIDTH; 
@@ -63,8 +62,8 @@ nuiComboBox::~nuiComboBox()
 {
   UnparentTree(mpChoicesTree);
 
-  if (mOwnTree)
-    delete mpChoicesTree;
+  if (mpChoicesTree)
+    mpChoicesTree->Release();
 }
 
 void CalcIdealTreeSize(nuiTreeNode* pTree, float& w, float& h)
@@ -163,7 +162,13 @@ bool nuiComboBox::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
   {
     if (Button & nglMouseInfo::ButtonLeft)
     {
+//      if (mpOldSelected)
+//        mpOldSelected->Release();
       mpOldSelected = mpSelected;
+//      if (mpOldSelected)
+//        mpOldSelected->Acquire();
+//      if (mpSelected)
+//        mpSelected->Release();
       mpSelected = NULL;
       nuiRect rect(0.f,0.f,0.f,0.f);
       PrepareMenuTree(mpChoicesTree);
@@ -185,7 +190,9 @@ bool nuiComboBox::OnSelect(const nuiEvent& rEvent)
   nuiPopupMenu* pMenu = (nuiPopupMenu*)rEvent.mpUser;
   nuiTreeNode* pNode = pMenu->GetSelectedNode();
 
-  SetSelected(pNode?pNode:mpOldSelected);
+  SetSelected(pNode ? pNode : mpOldSelected);
+//  if (mpOldSelected)
+//    mpOldSelected->Release();
   mpOldSelected = NULL;
   if (pNode)
   {
@@ -254,13 +261,16 @@ void nuiComboBox::SetSelected(nuiTreeNode* pSelection)
 
 void nuiComboBox::SetSelected(const nuiTreeNode* pSelection) 
 { 
+//  if (pSelection)
+//    pSelection->Acquire();
+//  if (mpSelected)
+//    mpSelected->Release();
   mpSelected = const_cast<nuiTreeNode*>(pSelection);
   ReparentTree(mpChoicesTree);
   
   SelectionChanged();
   InvalidateLayout();
 }
-
 
 void nuiComboBox::UnparentTree(nuiTreeNode* pTree)
 {
@@ -270,7 +280,8 @@ void nuiComboBox::UnparentTree(nuiTreeNode* pTree)
   nuiWidgetPtr pWidget = pTree->GetElement();
   NGL_ASSERT(pWidget);
   if (pWidget->GetParent() == this)
-    DelChild(pWidget, false);
+    DelChild(pWidget);
+  
   uint32 count = pTree->GetChildrenCount();
   for (uint32 i = 0; i < count; i++)
   {
@@ -319,20 +330,26 @@ void nuiComboBox::SetTree(nuiTreeNode* pTree)
   if (mpChoicesTree == pTree)
     return;
   
-  if (mpSelected)
-  {
-    nuiWidgetPtr pWidget = mpSelected->GetElement();
-    NGL_ASSERT(pWidget);
-    DelChild(pWidget, false);
-  }
-  
-  if (mOwnTree)
-    delete mpChoicesTree;
+//  if (mpSelected)
+//  {
+//    mpSelected->Release();
+//    nuiWidgetPtr pWidget = mpSelected->GetElement();
+//    NGL_ASSERT(pWidget);
+//    DelChild(pWidget);
+//  }
+
+//  if (mpOldSelected)
+//    mpOldSelected->Release();
+
+  if (mpChoicesTree)
+    mpChoicesTree->Release();
 
   mpSelected = NULL;
   mpOldSelected = NULL;
   
   mpChoicesTree = pTree;
+  if (mpChoicesTree)
+    mpChoicesTree->Acquire();
 
   ReparentTree(mpChoicesTree);
   InvalidateLayout();

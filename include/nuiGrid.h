@@ -31,13 +31,13 @@ public:
   void DisplayWidgetBoundingRect(bool enable); ///< Allow to display widget's bounding rect
   void PlaceInvisibleWidgets(bool enable);
   
-  bool SetCell(uint32 col, uint32 row, nuiWidget* pWidget, nuiPosition position = nuiNoPosition, bool ReplaceExisting = true, bool TrashExisting=true);  ///< returns false if cell is not empty and ReplaceExisting == true. Otherwise, thrash any existing widget and replace it with the new one.
+  bool SetCell(uint32 col, uint32 row, nuiWidget* pWidget, nuiPosition position = nuiNoPosition, bool ReplaceExisting = true);  ///< returns false if cell is not empty and ReplaceExisting == true. Otherwise, thrash any existing widget and replace it with the new one.
   bool SetCellToken(uint32 col, uint32 row, nuiTokenBase* pToken);
 
   void SetCellPosition(uint32 col, uint32 row, nuiPosition position); ///< Sets the position of the widget inside the cell
   bool FindCell(nuiWidgetPtr pWidget, uint& rCol, uint& rRow) const; ///< Returns true if \p pWidget was found in this container. If it was found, its position in the grid are set in rCol and rRow.
 
-  void ClearCells(bool trash=true);
+  void ClearCells();
 
   nuiWidget* GetCell(uint32 col, uint32 row) const;               ///< returns NULL if cell is empty
   nuiTokenBase* GetCellToken(uint32 col, uint32 row) const;
@@ -106,10 +106,10 @@ public:
   uint32 GetNbRows() const    { return mNbRows;     }
   uint32 GetNbColumns() const { return mNbColumns;  }
 
-  void RemoveRows(uint32 pos, uint32 rows, bool Delete = true);
-  void RemoveColumns(uint32 pos, uint32 columns, bool Delete = true);
+  void RemoveRows(uint32 pos, uint32 rows);
+  void RemoveColumns(uint32 pos, uint32 columns);
 
-  virtual bool Clear(bool Delete = true);
+  virtual bool Clear();
 
   nuiSize GetDefaultHSpacing() const;
   nuiSize GetDefaultVSpacing() const;

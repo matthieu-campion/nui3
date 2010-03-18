@@ -57,7 +57,7 @@ public:
   bool Draw(class nuiDrawContext *);
   bool IsInsideFromSelf(nuiSize X, nuiSize Y);
   bool AddChild(nuiWidgetPtr pChild);
-  bool DelChild(nuiWidgetPtr pChild, bool Delete=false);
+  bool DelChild(nuiWidgetPtr pChild);
   //@}
 
 private:

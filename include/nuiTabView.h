@@ -44,8 +44,8 @@ public:
   virtual void AddTab(const nglString& rTitle, nuiWidget* pContents);
   virtual void AddTab(nuiWidget* pTitle, nuiWidget* pContents);
   virtual void InsertTab(nuiWidget* pTitle, nuiWidget* pContents, uint position);
-  virtual void RemoveTab(nuiWidget* pTab, bool trashit = true);
-  virtual void RemoveTab(const uint& tab_index, bool trashit = true);
+  virtual void RemoveTab(nuiWidget* pTab);
+  virtual void RemoveTab(const uint& tab_index);
    
   uint GetTabCount();
 

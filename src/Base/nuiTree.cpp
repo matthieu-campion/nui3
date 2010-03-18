@@ -9,7 +9,7 @@
 #include "nuiTree.h"
 
 nuiTreeBase::nuiTreeBase()
-: mTreeNodeEventSink(this), mRefs(0)
+: mTreeNodeEventSink(this)
 {
   SetObjectClass(_T("nuiTreeBase"));
   mpParent = NULL;
@@ -29,25 +29,6 @@ nuiTreeBase::~nuiTreeBase()
 
   delete mpAutoSort;
 }
-
-uint32 nuiTreeBase::Acquire()
-{
-  mRefs++;
-  return mRefs;
-}
-
-uint32 nuiTreeBase::Release()
-{
-  mRefs--;
-  if (!mRefs)
-  {
-    delete this;
-    return 0;
-  }
-  
-  return mRefs;
-}
-
 
 bool nuiTreeBase::AddChild(nuiTreePtr pChild)
 {
@@ -104,12 +85,12 @@ bool nuiTreeBase::InsertChild(uint32 Index, nuiTreePtr pChild)
   return true;
 }
 
-bool nuiTreeBase::SetChild(uint32 Index, nuiTreePtr pChild, bool DeleteExistingObject)
+bool nuiTreeBase::SetChild(uint32 Index, nuiTreePtr pChild)
 {
   pChild->Acquire();
   if (mpChildren.size() < Index+1)
     mpChildren.resize(Index+1);
-  if (DeleteExistingObject && mpChildren[Index])
+  if (mpChildren[Index])
     mpChildren[Index]->Release();
   else if (mpChildren[Index])
   {
@@ -130,7 +111,7 @@ bool nuiTreeBase::SetChild(uint32 Index, nuiTreePtr pChild, bool DeleteExistingO
   return true;
 }
 
-bool nuiTreeBase::DelChild(uint32 Index, bool DeleteObject)
+bool nuiTreeBase::DelChild(uint32 Index)
 {
   NGL_ASSERT(Index < mpChildren.size());
   if (mpChildren[Index])
@@ -142,9 +123,8 @@ bool nuiTreeBase::DelChild(uint32 Index, bool DeleteObject)
     mTreeNodeEventSink.DisconnectSource(mpChildren[Index]->ChildDeleted);
     mTreeNodeEventSink.DisconnectSource(mpChildren[Index]->Deleted);
 
-    if (DeleteObject)
-      mpChildren[Index]->Release();
-
+    mpChildren[Index]->SetParent(NULL);
+    mpChildren[Index]->Release();
     mpChildren.erase(mpChildren.begin()+Index);
 
     Changed();
@@ -185,7 +165,7 @@ bool nuiTreeBase::Clear(bool erase)
   return true;
 }
 
-bool nuiTreeBase::DelChild(nuiTreePtr pChild, bool DeleteObject)
+bool nuiTreeBase::DelChild(nuiTreePtr pChild)
 {
   for (uint32 i = 0; i < mpChildren.size(); i++)
   {
@@ -198,15 +178,8 @@ bool nuiTreeBase::DelChild(nuiTreePtr pChild, bool DeleteObject)
       mTreeNodeEventSink.DisconnectSource(pChild->ChildDeleted);
       mTreeNodeEventSink.DisconnectSource(pChild->Deleted);
 
-      if (DeleteObject)
-      {
-        mpChildren[i]->Release();
-      }
-      else
-      {
-        pChild->SetParent(NULL);
-      }
-      
+      pChild->SetParent(NULL);
+      mpChildren[i]->Release();
       mpChildren.erase(mpChildren.begin()+i);
       
       Changed();
@@ -285,7 +258,7 @@ bool nuiTreeBase::OnChildRemoved(const nuiEvent& rEvent)
 bool nuiTreeBase::OnChildDeleted(const nuiEvent& rEvent)
 {
   const nuiTreeEvent<nuiTreeBase>* pTreeEvent = dynamic_cast<const nuiTreeEvent<nuiTreeBase>*>(&rEvent);
-  DelChild(pTreeEvent->mpChild, false);
+  DelChild(pTreeEvent->mpChild);
   return false;
 }
 

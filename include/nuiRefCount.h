@@ -19,12 +19,12 @@ public:
     //NGL_ASSERT(mCount == 0); 
   }
 
-  uint32 Acquire()    
+  uint32 Acquire() const   
   { 
     return ++mCount; 
   }
 
-  uint32 Release()
+  uint32 Release() const
   { 
     NGL_ASSERTR(mCount > 0, mCount); 
     mCount--;
@@ -65,7 +65,7 @@ public:
   }
 
 private:
-  uint32 mCount;
+  mutable uint32 mCount;
   bool mPermanent;
 };
 

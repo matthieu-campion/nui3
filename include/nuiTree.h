@@ -29,14 +29,11 @@ public:
   nuiTreeBase();
   virtual ~nuiTreeBase();
 
-  uint32 Acquire();
-  uint32 Release();
-  
   bool AddChild(nuiTreePtr pChild);
   bool InsertChild(uint32 Index, nuiTreePtr pChild);
-  bool SetChild(uint32 Index, nuiTreePtr pChild, bool DeleteExistingObject = true);
-  bool DelChild(uint32 Index, bool DeleteObject = true);
-  bool DelChild(nuiTreePtr pChild, bool DeleteObject = true);
+  bool SetChild(uint32 Index, nuiTreePtr pChild);
+  bool DelChild(uint32 Index);
+  bool DelChild(nuiTreePtr pChild);
   void DelChildOnEvent(nuiEventSource& rEvent, nuiTreePtr pChild);
   bool Clear(bool erase = true);
 
@@ -91,7 +88,6 @@ protected:
 private:
   void SetParent(nuiTreeBase* pParent);
   nuiTreeBase* mpParent;
-  uint32 mRefs;
 };
 
 template <class T> class NUI_API nuiTree : public nuiTreeBase

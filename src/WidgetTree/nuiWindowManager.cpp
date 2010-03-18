@@ -296,7 +296,7 @@ bool nuiWindowManager::AddChild(nuiWidgetPtr pChild)
   return res;
 }
 
-bool nuiWindowManager::DelChild(nuiWidgetPtr pChild, bool Delete)
+bool nuiWindowManager::DelChild(nuiWidgetPtr pChild)
 {
   nuiWindowPtr pWin = dynamic_cast<nuiWindow*>(pChild);
   if (pWin)
@@ -314,7 +314,7 @@ bool nuiWindowManager::DelChild(nuiWidgetPtr pChild, bool Delete)
     }
   }
 
-  return nuiSimpleContainer::DelChild(pChild, Delete);
+  return nuiSimpleContainer::DelChild(pChild);
 }
 
 bool nuiWindowManager::DispatchMouseClick(const nglMouseInfo& rInfo)

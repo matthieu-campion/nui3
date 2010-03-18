@@ -266,8 +266,8 @@ void nuiTopLevel::Exit()
     pItem->CallOnTrash();
     nuiContainer* pCtr = pItem->GetParent();
     if (pCtr)
-      pCtr->DelChild(pItem, false);
-    delete pItem;
+      pCtr->DelChild(pItem);
+//    del//ete pItem;
     
     ++wit;
   }
@@ -353,8 +353,8 @@ void nuiTopLevel::EmptyTrash()
 			// Remove the complete subtree from the tree:
       AdviseSubTreeDeath(pItem);
       
-      if (pItem != this)
-        delete pItem;
+//      if (pItem != this)
+//        delete pItem;
 
     }
   }

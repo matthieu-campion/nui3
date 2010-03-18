@@ -533,7 +533,7 @@ bool nuiScrollView::Scrolled(const nuiEvent& rEvent)
   return false;
 }
 
-bool nuiScrollView::Clear(bool Delete)
+bool nuiScrollView::Clear()
 {
   int childCount = GetChildrenCount();
   for (childCount--; childCount >= 0; childCount--)
@@ -541,7 +541,7 @@ bool nuiScrollView::Clear(bool Delete)
     nuiWidget* pWidget = GetChild(childCount);
     if (pWidget && pWidget != mpHorizontal && pWidget != mpVertical)
     {
-      DelChild(pWidget, Delete);
+      DelChild(pWidget);
     }
   }
   mpChildren.clear();

@@ -31,7 +31,7 @@ public:
   void SetFillChildren(bool Set); ///< If filling is enabled the scroll view will try to move its child in order to honor the available space
   bool GetFillChildren();
 
-  virtual bool Clear(bool Delete);
+  virtual bool Clear();
 
   virtual bool MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
 

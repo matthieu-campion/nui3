@@ -100,7 +100,7 @@ void nuiHotKeyEditor::ConnectTopLevel()
 void nuiHotKeyEditor::FillHotKeysGrid()
 {
   // Reset Grid
-  mpHotKeysGrid->ClearCells(true);
+  mpHotKeysGrid->ClearCells();
     
   std::map<nglString, nuiHotKey*>::iterator pUserHotKeysIt;
   mpHotKeysGrid->SetGridSize(2, mpUserHotKeys.size());

@@ -21,12 +21,12 @@ public:
   virtual void DisplayWidgetBoundingRect(bool enable) = 0;  ///< Allow to display widget's bounding rect
   virtual void PlaceInvisibleWidgets(bool enable) = 0;
   
-  virtual bool SetCell(uint32 cell, nuiWidget* pWidget, nuiPosition position = nuiNoPosition, bool ReplaceExisting = true, bool TrashExisting=true) = 0;   ///< returns false if cell is not empty and ReplaceExisting == false. Otherwise, thrash any existing widget and replace it with the new one.
-  virtual nuiLabel* SetCell(uint32 cell, const nglString& rLabel, const nglString& rObjectName, nuiPosition position = nuiNoPosition, bool ReplaceExisting = true, bool TrashExisting=true) = 0; ///< create a nuiLabel with a specific objectname and store it in the box. Usefull to add a simple label to a box, using a css decoration.   
+  virtual bool SetCell(uint32 cell, nuiWidget* pWidget, nuiPosition position = nuiNoPosition) = 0;   ///< returns false if cell is not empty and ReplaceExisting == false. Otherwise, thrash any existing widget and replace it with the new one.
+  virtual nuiLabel* SetCell(uint32 cell, const nglString& rLabel, const nglString& rObjectName, nuiPosition position = nuiNoPosition) = 0; ///< create a nuiLabel with a specific objectname and store it in the box. Usefull to add a simple label to a box, using a css decoration.   
   virtual void SetCellPosition(uint32 cell, nuiPosition position) = 0;  ///< Sets the position of the widget inside the cell
   virtual bool FindCell(nuiWidgetPtr pWidget, uint& rCell) const = 0;  ///< Returns true if \p pWidget was found in this container. If it was found, its position in the grid are set in rCell.
   
-  virtual void ClearCells(bool trash=true) = 0;
+  virtual void ClearCells() = 0;
   
   virtual nuiWidget* GetCell(uint32 cell) const = 0;                ///< returns NULL if cell is empty
   
@@ -74,9 +74,9 @@ public:
   
   virtual uint32 GetNbCells() const = 0;
   
-  virtual void RemoveCells(uint32 pos, uint32 cells, bool Delete = true) = 0;
+  virtual void RemoveCells(uint32 pos, uint32 cells) = 0;
   
-  virtual bool Clear(bool Delete = true) = 0;
+  virtual bool Clear() = 0;
   
   virtual nuiSize GetDefaultSpacing() const = 0;
   virtual void SetDefaultSpacing(nuiSize set) = 0;

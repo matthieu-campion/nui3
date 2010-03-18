@@ -91,6 +91,7 @@ bool nuiSimpleContainer::AddChild(nuiWidgetPtr pChild)
   {
     NGL_OUT(_T("[%ls] Add Child 0x%x <--- 0x%x\n"), GetObjectClass().GetChars(), this, pChild);
   }
+  pChild->Acquire();
   nuiContainer* pParent = pChild->GetParent();
   NGL_ASSERT(pParent != this);
 
@@ -110,7 +111,7 @@ bool nuiSimpleContainer::AddChild(nuiWidgetPtr pChild)
   
   mpChildren.push_back(pChild);
   if (pParent)
-    pParent->DelChild(pChild, false); // Remove from previous parent...
+    pParent->DelChild(pChild); // Remove from previous parent...
   
   pChild->SetParent(this);
   ChildAdded(this, pChild);
@@ -121,14 +122,14 @@ bool nuiSimpleContainer::AddChild(nuiWidgetPtr pChild)
   return true;
 }
 
-bool nuiSimpleContainer::DelChild(nuiWidgetPtr pChild,bool Delete)
+bool nuiSimpleContainer::DelChild(nuiWidgetPtr pChild)
 {
   CheckValid();
   NGL_ASSERT(pChild->GetParent() == this)
 
   if (GetDebug())
   {
-    NGL_OUT(_T("[%ls] Del Child 0x%x <--- 0x%x (%s)\n"), GetObjectClass().GetChars(), this, pChild, Delete?"delete":"no delete");
+    NGL_OUT(_T("[%ls] Del Child 0x%x <--- 0x%x (%s)\n"), GetObjectClass().GetChars(), this, pChild);
   }
   
   nuiWidgetList::iterator it  = mpChildren.begin();
@@ -149,11 +150,10 @@ bool nuiSimpleContainer::DelChild(nuiWidgetPtr pChild,bool Delete)
         pChild->SetParent(NULL);
       }
       ChildDeleted(this, pChild);
-      if (Delete && pChild)
-        delete pChild;
       Invalidate();
       InvalidateLayout();
       DebugRefreshInfo();
+      pChild->Release();
       return true;
     }
   }
@@ -168,7 +168,7 @@ uint nuiSimpleContainer::GetChildrenCount() const
 }
 
 
-bool nuiSimpleContainer::Clear(bool Delete)
+bool nuiSimpleContainer::Clear()
 {
   CheckValid();
   // start by trashing everybody
@@ -181,7 +181,7 @@ bool nuiSimpleContainer::Clear(bool Delete)
     nuiWidget* pWidget = GetChild(childCount);
     if (pWidget)
     {
-      DelChild(pWidget, Delete);
+      DelChild(pWidget);
     }
   }
   mpChildren.clear();

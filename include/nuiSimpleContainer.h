@@ -25,9 +25,9 @@ public:
   virtual void SetObjectName(const nglString& rName);
   
   virtual bool AddChild(nuiWidgetPtr pChild);
-  virtual bool DelChild(nuiWidgetPtr pChild,bool Delete = false); ///< Remove this child from the object. If Delete is true then the child will be deleted too. Returns true if success.
+  virtual bool DelChild(nuiWidgetPtr pChild); ///< Remove this child from the object. If Delete is true then the child will be deleted too. Returns true if success.
   virtual uint GetChildrenCount() const;
-  virtual bool Clear(bool Delete = true);
+  virtual bool Clear();
   
   virtual nuiContainer::Iterator* GetFirstChild();
   virtual nuiContainer::ConstIterator* GetFirstChild() const;

@@ -369,16 +369,16 @@ void nuiTabView::InsertTab(nuiWidget* pTitle, nuiWidget* pContents, uint pos)
   SelectTab(0);
 }
 
-void nuiTabView::RemoveTab(nuiWidget* pTab, bool trashit)
+void nuiTabView::RemoveTab(nuiWidget* pTab)
 {
   std::vector<Tab*>::iterator i = mIcons.begin();
   for (std::vector<nuiWidget*>::iterator it = mTabs.begin(); it != mTabs.end(); it++, i++)
   {
     if (*it == pTab)
     {
-      DelChild((*it), trashit);
+      DelChild((*it));
       mTabViewEvents.DisconnectSource((*i)->Clicked);
-      DelChild((*i), trashit);
+      DelChild((*i));
 
       mTabs.erase(it);     
       mIcons.erase(i);
@@ -387,7 +387,7 @@ void nuiTabView::RemoveTab(nuiWidget* pTab, bool trashit)
   }
 }
 
-void nuiTabView::RemoveTab(const uint& tab_index, bool trashit)
+void nuiTabView::RemoveTab(const uint& tab_index)
 {
   NGL_ASSERT(tab_index < mIcons.size());
 
@@ -397,9 +397,9 @@ void nuiTabView::RemoveTab(const uint& tab_index, bool trashit)
   {
     if (t == tab_index)
     {
-      DelChild(*it, trashit);
+      DelChild(*it);
       mTabViewEvents.DisconnectSource((*i)->Clicked);
-      DelChild(*i, trashit);
+      DelChild(*i);
 
       mTabs.erase(it);     
       mIcons.erase(i);

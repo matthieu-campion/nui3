@@ -61,17 +61,17 @@ void nuiHBox::PlaceInvisibleWidgets(bool enable)
 
 
   
-bool nuiHBox::SetCell(uint32 cell, nuiWidget* pWidget, nuiPosition position, bool ReplaceExisting, bool TrashExisting)
+bool nuiHBox::SetCell(uint32 cell, nuiWidget* pWidget, nuiPosition position)
 {
-  return nuiGrid::SetCell(cell, 0, pWidget, position, ReplaceExisting, TrashExisting);
+  return nuiGrid::SetCell(cell, 0, pWidget, position);
 }
 
-nuiLabel* nuiHBox::SetCell(uint32 cell, const nglString& rLabel, const nglString& rObjectName, nuiPosition position, bool ReplaceExisting, bool TrashExisting)
+nuiLabel* nuiHBox::SetCell(uint32 cell, const nglString& rLabel, const nglString& rObjectName, nuiPosition position)
 {
   nuiLabel* pLabel = new nuiLabel(rLabel);
   if (rObjectName != nglString::Null)
     pLabel->SetObjectName(rObjectName);
-  bool res = nuiGrid::SetCell(cell, 0, pLabel, position, ReplaceExisting, TrashExisting);
+  bool res = nuiGrid::SetCell(cell, 0, pLabel, position);
   if (!res)
     return NULL;
   
@@ -94,9 +94,9 @@ bool nuiHBox::FindCell(nuiWidgetPtr pWidget, uint& rCell) const
 
 
 
-void nuiHBox::ClearCells(bool trash)
+void nuiHBox::ClearCells()
 {
-  nuiGrid::ClearCells(trash);
+  nuiGrid::ClearCells();
 }
 
 
@@ -286,9 +286,9 @@ nuiLabel* nuiHBox::AddCell(const nglString& rLabel, const nglString& rObjectName
 
 
 
-void nuiHBox::RemoveCells(uint32 pos, uint32 cells, bool Delete)
+void nuiHBox::RemoveCells(uint32 pos, uint32 cells)
 {
-  nuiGrid::RemoveColumns(pos, cells, Delete);
+  nuiGrid::RemoveColumns(pos, cells);
 }
 
 
@@ -297,7 +297,7 @@ uint32 nuiHBox::GetNbCells() const
   return nuiGrid::GetNbColumns();
 }  
 
-bool nuiHBox::Clear(bool Delete)
+bool nuiHBox::Clear()
 {
   nuiSize spacing = nuiGrid::GetRowSpacing(0);
   nuiSize growRatio = nuiGrid::GetRowGrowRatio(0);
@@ -307,7 +307,7 @@ bool nuiHBox::Clear(bool Delete)
   nuiSize maxPixels = nuiGrid::GetRowMaxPixels(0);
   nuiSize minPixels = nuiGrid::GetRowMinPixels(0);
 
-  bool res = nuiGrid::Clear(Delete);
+  bool res = nuiGrid::Clear();
   nuiGrid::AddRows(0,1);
 
   nuiGrid::SetRowSpacing(0, spacing);

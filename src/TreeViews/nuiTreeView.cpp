@@ -28,7 +28,8 @@ nuiTreeNode::nuiTreeNode(nuiWidgetPtr pElement, bool Opened, bool Selected, bool
   mTempSelected = false;
   if (mSelected && mpElement)
     mpElement->SetSelected(true);
-
+  if (mpElement)
+    mpElement->Acquire();
   mPosition = 0;
   mSize = 0;
   mSelectionEnabled = true;
@@ -50,6 +51,8 @@ nuiTreeNode::nuiTreeNode(const nglString& rLabelName, bool Opened, bool Selected
   mTempSelected = false;
   if (mSelected && mpElement)
     mpElement->SetSelected(true);
+  if (mpElement)
+    mpElement->Acquire();
 
   mPosition = 0;
   mSize = 0;
@@ -58,6 +61,9 @@ nuiTreeNode::nuiTreeNode(const nglString& rLabelName, bool Opened, bool Selected
 
 nuiTreeNode::~nuiTreeNode()
 {
+  if (mpElement)
+    mpElement->Release();
+  mOwnElement = false;
   //NGL_OUT(_T("nuiTreeNode::~nuiTreeNode() [0x%x]\n"), this);
 }
 

@@ -27,12 +27,12 @@ public:
   void DisplayWidgetBoundingRect(bool enable); ///< Allow to display widget's bounding rect
   void PlaceInvisibleWidgets(bool enable);
   
-  bool SetCell(uint32 cell, nuiWidget* pWidget, nuiPosition position = nuiNoPosition, bool ReplaceExisting = true, bool TrashExisting=true);  ///< returns false if cell is not empty and ReplaceExisting == false. Otherwise, thrash any existing widget and replace it with the new one.
-  nuiLabel* SetCell(uint32 cell, const nglString& rLabel, const nglString& rObjectName = nglString::Null, nuiPosition position = nuiNoPosition, bool ReplaceExisting = true, bool TrashExisting=true); ///< create a nuiLabel with a specific objectname and store it in the box. Usefull to add a simple label to a box, using a css decoration.   
+  bool SetCell(uint32 cell, nuiWidget* pWidget, nuiPosition position = nuiNoPosition);  ///< returns false if cell is not empty and ReplaceExisting == false. Otherwise, thrash any existing widget and replace it with the new one.
+  nuiLabel* SetCell(uint32 cell, const nglString& rLabel, const nglString& rObjectName = nglString::Null, nuiPosition position = nuiNoPosition); ///< create a nuiLabel with a specific objectname and store it in the box. Usefull to add a simple label to a box, using a css decoration.   
   void SetCellPosition(uint32 cell, nuiPosition position); ///< Sets the position of the widget inside the cell
   bool FindCell(nuiWidgetPtr pWidget, uint& rCell) const; ///< Returns true if \p pWidget was found in this container. If it was found, its position in the grid are set in rCell.
 
-  void ClearCells(bool trash=true);
+  void ClearCells();
 
   nuiWidget* GetCell(uint32 cell) const;               ///< returns NULL if cell is empty
 
@@ -81,9 +81,9 @@ public:
 
   uint32 GetNbCells() const;
 
-  void RemoveCells(uint32 pos, uint32 cells, bool Delete = true);
+  void RemoveCells(uint32 pos, uint32 cells);
 
-  virtual bool Clear(bool Delete = true);
+  virtual bool Clear();
 
   nuiSize GetDefaultSpacing() const;
   void SetDefaultSpacing(nuiSize set);

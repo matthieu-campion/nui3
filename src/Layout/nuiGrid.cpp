@@ -131,7 +131,7 @@ bool nuiGrid::Load(const nuiXMLNode* pNode)
 void nuiGrid::Reset(uint32 nbcolumns, uint32 nbrows, bool clear)
 {
   if (clear)
-    Clear(false);
+    Clear();
 
   mNbColumns = nbcolumns;
   mNbRows = nbrows;
@@ -446,7 +446,7 @@ bool nuiGrid::SetRect(const nuiRect& rRect)
   return true;
 }
 
-void nuiGrid::ClearCells(bool trash)
+void nuiGrid::ClearCells()
 {
   for (uint32 c = 0; c < mNbColumns; c++)
   {
@@ -456,14 +456,14 @@ void nuiGrid::ClearCells(bool trash)
       {
         nuiWidget* pChild = mGrid[c][r];
         mGrid[c][r] = NULL;
-        nuiGrid::DelChild(pChild, trash);
+        nuiGrid::DelChild(pChild);
       }
     }
   }
 }
 
 
-bool nuiGrid::SetCell(uint32 column, uint32 row, nuiWidget* pWidget, nuiPosition position, bool ReplaceExisting, bool TrashExisting)
+bool nuiGrid::SetCell(uint32 column, uint32 row, nuiWidget* pWidget, nuiPosition position, bool ReplaceExisting)
 {
   NGL_ASSERT(column < mNbColumns);
   NGL_ASSERT(row < mNbRows);
@@ -476,10 +476,7 @@ bool nuiGrid::SetCell(uint32 column, uint32 row, nuiWidget* pWidget, nuiPosition
 
     mGrid[column][row] = NULL;
 
-    if (TrashExisting)
-      pOldWidget->Trash();
-    else
-      nuiGrid::DelChild(pOldWidget, false);
+    nuiGrid::DelChild(pOldWidget);
       
   }
   mGrid[column][row] = pWidget;
@@ -1017,7 +1014,7 @@ void nuiGrid::AddRows(uint32 pos, uint32 rows)
   InvalidateLayout();
 }
 
-void nuiGrid::RemoveRows(uint32 pos, uint32 rows, bool Delete)
+void nuiGrid::RemoveRows(uint32 pos, uint32 rows)
 {
   if (!rows)
     return;
@@ -1034,8 +1031,8 @@ void nuiGrid::RemoveRows(uint32 pos, uint32 rows, bool Delete)
     while (erasor != end)
     {
       nuiWidget* pWidget = *erasor;
-      if (pWidget && Delete)
-        pWidget->Trash();
+      if (pWidget)
+        DelChild(pWidget);
       erasor++;
     }
     mGrid[c].erase(begin, end);
@@ -1090,9 +1087,9 @@ void nuiGrid::RemoveRows(uint32 pos, uint32 rows, bool Delete)
 
 
 
-bool nuiGrid::Clear(bool Delete)
+bool nuiGrid::Clear()
 {
-  bool res = nuiSimpleContainer::Clear(Delete);
+  bool res = nuiSimpleContainer::Clear();
 
   mGrid.clear();
 
@@ -1121,7 +1118,6 @@ bool nuiGrid::Clear(bool Delete)
   mMinimumColumnSizes.clear();
   
   mRowVisible.clear();
-
 
   InvalidateLayout();
   
@@ -1238,7 +1234,7 @@ void nuiGrid::AddColumns(uint32 pos, uint32 columns)
   InvalidateLayout();
 }
 
-void nuiGrid::RemoveColumns(uint32 pos, uint32 columns, bool Delete)
+void nuiGrid::RemoveColumns(uint32 pos, uint32 columns)
 {
   if (!columns)
     return;
@@ -1255,8 +1251,7 @@ void nuiGrid::RemoveColumns(uint32 pos, uint32 columns, bool Delete)
     while (row != end)
     {
       nuiWidget* pWidget = *row;
-      if (pWidget && Delete)
-        pWidget->Trash(); //< Trash the current widget
+      DelChild(pWidget); //< Trash the current widget
       row++;
     }
 

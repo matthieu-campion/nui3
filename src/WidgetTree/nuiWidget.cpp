@@ -2134,9 +2134,7 @@ bool nuiWidget::Trash()
     if (!pRoot)
     {
       if (mpParent)
-        mpParent->DelChild(this, false);
-
-			delete this;
+        mpParent->DelChild(this);
       return true;
     }
 		

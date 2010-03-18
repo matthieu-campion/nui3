@@ -361,7 +361,7 @@ void nuiDialog::SetLayoutContainer(nuiSimpleContainer* pContainer, bool saveChil
         NGL_ASSERT(pWidget);
         pChilds.push_back(pWidget);
       }
-      mpLayoutContainer->Clear(false);
+      mpLayoutContainer->Clear();
     }
     NGL_ASSERT(dynamic_cast<nuiFixed*>(mpLayoutContainer->GetParent())); // the decorative layout container is always in a nuiFixed
     mpLayoutContainer->GetParent()->Trash();

@@ -1254,13 +1254,13 @@ public:
   {
     if (!pTree)
     {
-      Clear(true);
+      Clear();
       return false;
     }
 
     if (pSelectedNode && !pSelectedNode->IsOpened())
     {
-      Clear(true);
+      Clear();
       nuiVBox* pWidget = new nuiVBox(0);
       AddChild(pWidget);
       nglString str;

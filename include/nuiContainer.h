@@ -142,7 +142,7 @@ public:
   nuiWidgetPtr GetChildIf(nuiSize X, nuiSize Y, TestWidgetFunctor* pFunctor); ///< Returns the child that satisfies the given functor object and that is under the pixel (X,Y) in this object or this if there is no such child. X and Y are given in the coordinate system of the parent object. rFunctor is a std::unary_functor<nuiWidgetPtr, bool> object defined by the user.
   virtual nuiWidgetPtr GetChild(const nglString& rName, bool deepsearch = true); ///< Find a child by its name property. Try to resolve path names like /window/fixed/toto or ../../tata if deepsearch is true
   nuiWidgetPtr SearchForChild(const nglString& rName, bool recurse = true);  ///< Find a child by its name property, recurse the search in the subchildren if asked politely. 
-  virtual bool Clear(bool Delete = true) = 0; ///< Clear all children. By default the children are deleted unless Delete == false.
+  virtual bool Clear() = 0; ///< Clear all children. By default the children are deleted unless Delete == false.
   nuiContainerPtr GetRoot() const;
   nuiWidgetPtr Find (const nglString& rName); ///< Finds a node given its full path relative to the current node. Eg. Find("background/color/red").
 
@@ -201,7 +201,7 @@ public:
   virtual nuiWidgetPtr DispatchMouseMove(const nglMouseInfo& rInfo);
   //@}
 
-  virtual bool DelChild(nuiWidgetPtr pChild,bool Delete=false) = 0;
+  virtual bool DelChild(nuiWidgetPtr pChild) = 0;
 
   /** @name Children Layout animations: */
    //@{

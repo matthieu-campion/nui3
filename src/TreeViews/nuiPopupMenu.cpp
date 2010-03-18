@@ -48,6 +48,7 @@ mpOldFocused(NULL)
     pTop->AddChild(this);
 
   mpTree = pTree;
+  mpTree->Acquire();
   ReparentTree(mpTree);
   mSelectedNodes.push_back(mpTree);
   mXdir = 1;
@@ -114,13 +115,9 @@ nuiPopupMenu::~nuiPopupMenu()
   mSelectionTimer.Stop();
   mScrollTimer.Stop();
 
-  if (mOwnTree)
+  if (mpTree)
   {
-    delete mpTree;
-  }
-  else
-  {
-    UnparentTree(mpTree);
+    mpTree->Release();
   }
 
   for (std::vector<nuiMenuRect*>::iterator i = mRects.begin(); i != mRects.end(); )
@@ -801,7 +798,7 @@ void nuiPopupMenu::UnparentTree(nuiTreeNode* pTree)
     pTree->Select(false);
     pTree->Open(false);
     NGL_ASSERT(pWidget);
-    DelChild(pWidget, false);
+    DelChild(pWidget);
   }
   uint32 count = pTree->GetChildrenCount();
   for (uint32 i = 0; i < count; i++)
@@ -1665,16 +1662,6 @@ void nuiPopupMenu::ShowFirstNode(bool show)
   mShowFirstNode = show;
   Invalidate();
   InvalidateLayout();
-}
-
-void nuiPopupMenu::SetTreeOwner(bool OwnTree)
-{
-  mOwnTree = OwnTree;
-}
-
-bool nuiPopupMenu::IsTreeOwner()
-{
-  return mOwnTree;
 }
 
 
