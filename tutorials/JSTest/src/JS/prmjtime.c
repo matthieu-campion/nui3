@@ -59,6 +59,9 @@
 #include <sys/timeb.h>
 #endif
 #ifdef XP_WIN
+#ifndef _X86_
+#define _AMD64_
+#endif
 #include <windef.h>
 #include <winbase.h>
 #include <math.h>     /* for fabs */

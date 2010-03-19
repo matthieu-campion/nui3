@@ -41,15 +41,16 @@
 /*
  * PR assertion checker.
  */
+#ifdef WIN32
+#    include <windows.h>
+#endif
+
 #include "jsstddef.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include "jstypes.h"
 #include "jsutil.h"
 
-#ifdef WIN32
-#    include <windows.h>
-#endif
 
 JS_PUBLIC_API(void) JS_Assert(const char *s, const char *file, JSIntn ln)
 {
