@@ -1383,6 +1383,8 @@ public:
   void Dump(nglString& rString) const;
   
   virtual nuiVariant GetVariantFromVoidPtr(void* pPtr) const = 0;
+  virtual nuiAttributeType GetClassType() const = 0;
+
 protected:
   nglString mName;
   std::vector<nuiClass*> mParentClasses;
@@ -1401,6 +1403,11 @@ public:
   virtual nuiVariant GetVariantFromVoidPtr(void* pPtr) const
   {
     return nuiVariant((Class*)pPtr);
+  }
+  
+  virtual nuiAttributeType GetClassType() const
+  {
+    return nuiAttributeTypeTrait<Class>::mTypeId;
   }
   
 };
