@@ -186,13 +186,33 @@ JSBool nuiGenericJSFunction(JSContext *cx, JSObject *obj, uintN argc, jsval *arg
   // Call the method or function:
   pFunc->Run(ctx);
   
-  *rval = JSVAL_VOID;  /* return undefined */
+  const nuiVariant& r(ctx.GetResult());
+  nuiAttributeType t = r.GetType();
+  if (t == nuiAttributeTypeTrait<uint8>::mTypeId || t == nuiAttributeTypeTrait<uint16>::mTypeId || t == nuiAttributeTypeTrait<uint32>::mTypeId || t == nuiAttributeTypeTrait<uint64>::mTypeId ||
+      t == nuiAttributeTypeTrait<int8>::mTypeId  || t == nuiAttributeTypeTrait<int16>::mTypeId  || t == nuiAttributeTypeTrait<int32>::mTypeId  || t == nuiAttributeTypeTrait<int64>::mTypeId  ||
+      t == nuiAttributeTypeTrait<float>::mTypeId || t == nuiAttributeTypeTrait<double>::mTypeId)
+  {
+    // Number
+    JS_NewNumberValue(cx, r, rval);
+  }
+  else if (t == nuiAttributeTypeTrait<nglString>::mTypeId)
+  {
+    nglString str = r;
+    std::string s(str.GetStdString()); 
+    *rval = STRING_TO_JSVAL(JS_NewStringCopyN(cx, s.c_str(), s.size()));
+  }
+  else //if (t == nuiAttributeTypeTrait<void>::mTypeId) or unknown type
+  {
+    *rval = JSVAL_VOID;  /* return undefined */
+  }
   return JS_TRUE;
 }
 
-void TestFunction(const nglString& rStr, uint32 i, double d)
+nglString TestFunction(const nglString& rStr, uint32 i, double d)
 {
   NGL_OUT(_T("rStr: '%ls'\ni: %d\nd: %f\n\n"), rStr.GetChars(), i, d);
+  
+  return _T("MOOOOOOOOOOOORTEL!");
 }
 
 int JSTest()
@@ -244,7 +264,7 @@ int JSTest()
   /* Your application code here. This may include JSAPI calls
      to create your own custom JS objects and run scripts. */
 
-  const char* script = "TestFunction(\"bleh!\", 42, 42.42);";
+  const char* script = "out(TestFunction(\"bleh!\", 42, 42.42));";
   jsval rval;
   JSBool res = JS_EvaluateScript(cx, global, script, strlen(script), "<inline>", 0, &rval);
 
