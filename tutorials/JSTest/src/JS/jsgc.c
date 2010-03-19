@@ -1447,7 +1447,7 @@ js_AddRootRT(JSRuntime *rt, void *rp, const char *name)
 {
     JSBool ok;
     JSGCRootHashEntry *rhe;
-
+    JSDHashTable *table;
     /*
      * Due to the long-standing, but now removed, use of rt->gcLock across the
      * bulk of js_GC, API users have come to depend on JS_AddRoot etc. locking
@@ -1462,6 +1462,7 @@ js_AddRootRT(JSRuntime *rt, void *rp, const char *name)
      * waited for all active requests to end.
      */
     JS_LOCK_GC(rt);
+
 #ifdef JS_THREADSAFE
     JS_ASSERT(!rt->gcRunning || rt->gcLevel > 0);
     if (rt->gcRunning && rt->gcThread->id != js_CurrentThreadId()) {
@@ -1470,7 +1471,9 @@ js_AddRootRT(JSRuntime *rt, void *rp, const char *name)
         } while (rt->gcLevel > 0);
     }
 #endif
-    JSDHashTable *table = &rt->gcRootsHash;
+
+    table = &rt->gcRootsHash;
+
     rhe = (JSGCRootHashEntry *)
           JS_DHashTableOperate(table, rp, JS_DHASH_ADD);
     if (rhe) {
