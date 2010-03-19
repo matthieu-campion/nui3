@@ -1407,7 +1407,7 @@ public:
   
   virtual nuiAttributeType GetClassType() const
   {
-    return nuiAttributeTypeTrait<Class>::mTypeId;
+    return nuiAttributeTypeTrait<Class*>::mTypeId;
   }
   
 };
