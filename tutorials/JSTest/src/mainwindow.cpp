@@ -83,10 +83,8 @@ JSBool myjs_out(JSContext *cx, JSObject *obj, uintN argc, jsval *argv, jsval *rv
     return JS_TRUE;
 }
 
-static void* GetVariantObjectFromJS(JSContext* cx, const jsval& arg)
+static void* GetVariantObjectFromJS(JSContext* cx, JSObject* pJSObject)
 {
-  JSObject* pJSObject = NULL;
-  JS_ValueToObject(cx, arg, &pJSObject);
   JSClass* pJSClass = JS_GET_CLASS(cx, pJSObject);
   
   if (!pJSClass)
@@ -101,12 +99,19 @@ static void* GetVariantObjectFromJS(JSContext* cx, const jsval& arg)
   return pClass->GetVariantFromVoidPtr(pPrivate);
 }
 
+std::map<JSFunction*, nuiFunction*> gFunctions;
 
 template <bool method>
 JSBool nuiGenericJSFunction(JSContext *cx, JSObject *obj, uintN argc, jsval *argv, jsval *rval)
 {
   JSFunction* pJSFunc = JS_ValueToFunction(cx, JS_ARGV_CALLEE(argv));
   if (!pJSFunc)
+    return JS_FALSE;
+
+  std::map<JSFunction*, nuiFunction*>::const_iterator it = gFunctions.find(pJSFunc);
+  nuiFunction* pFunc = it->second;
+
+  if (!pFunc)
     return JS_FALSE;
 
   nuiCallContext ctx;
@@ -129,14 +134,14 @@ JSBool nuiGenericJSFunction(JSContext *cx, JSObject *obj, uintN argc, jsval *arg
       case JSTYPE_OBJECT:
         {
           // Find the nui equivalent of the object
-          ctx.AddArgument(GetVariantObjectFromJS(cx, argv[i]));
+          ctx.AddArgument(GetVariantObjectFromJS(cx, JS_THIS_OBJECT(cx, argv)));
         }
         break;
       
       case JSTYPE_STRING:
         {
           JSString* pStr = JS_ValueToString(cx, argv[i]);
-          nglString str(JS_GetStringChars(pStr));
+          nglString str(JS_GetStringBytes(pStr));
           ctx.AddArgument(str);
         }
         break;
@@ -170,7 +175,7 @@ JSBool nuiGenericJSFunction(JSContext *cx, JSObject *obj, uintN argc, jsval *arg
           }
           
           JSString* pStr = JS_ValueToString(cx, val);
-          nglString str(JS_GetStringChars(pStr));
+          nglString str(JS_GetStringBytes(pStr));
           ctx.AddArgument(str);
         }
         break;
@@ -178,66 +183,76 @@ JSBool nuiGenericJSFunction(JSContext *cx, JSObject *obj, uintN argc, jsval *arg
 
   }
 
+  // Call the method or function:
+  pFunc->Run(ctx);
+  
   *rval = JSVAL_VOID;  /* return undefined */
   return JS_TRUE;
 }
 
-
+void TestFunction(const nglString& rStr, uint32 i, double d)
+{
+  NGL_OUT(_T("rStr: '%ls'\ni: %d\nd: %f\n\n"), rStr.GetChars(), i, d);
+}
 
 int JSTest()
 {
-    /* JS variables. */
-    JSRuntime *rt;
-    JSContext *cx;
-    JSObject  *global;
+  /* JS variables. */
+  JSRuntime *rt;
+  JSContext *cx;
+  JSObject  *global;
 
-    /* Create a JS runtime. */
-    rt = JS_NewRuntime(8L * 1024L * 1024L);
-    if (rt == NULL)
-        return 1;
+  /* Create a JS runtime. */
+  rt = JS_NewRuntime(8L * 1024L * 1024L);
+  if (rt == NULL)
+      return 1;
 
-    /* Create a context. */
-    cx = JS_NewContext(rt, 8192);
-    if (cx == NULL)
-        return 1;
-    JS_SetOptions(cx, JSOPTION_VAROBJFIX);
-    JS_SetVersion(cx, JSVERSION_LATEST);
-    JS_SetErrorReporter(cx, reportError);
+  /* Create a context. */
+  cx = JS_NewContext(rt, 8192);
+  if (cx == NULL)
+      return 1;
+  JS_SetOptions(cx, JSOPTION_VAROBJFIX);
+  JS_SetVersion(cx, JSVERSION_LATEST);
+  JS_SetErrorReporter(cx, reportError);
 
-    /* Create the global object. */
-    global = JS_NewObject(cx, &global_class, NULL, NULL);
-    if (global == NULL)
-        return 1;
+  /* Create the global object. */
+  global = JS_NewObject(cx, &global_class, NULL, NULL);
+  if (global == NULL)
+      return 1;
 
-    /* Populate the global object with the standard globals,
-       like Object and Array. */
-    if (!JS_InitStandardClasses(cx, global))
-        return 1;
-
-
-    static JSFunctionSpec myjs_global_functions[] = {
-      JS_FS("rand",   myjs_rand,   0, 0, 0),
-      JS_FS("srand",  myjs_srand,  0, 0, 0),
-      JS_FS("out", myjs_out, 1, 0, 0),
-      JS_FS_END
-    };
-
-    if (!JS_DefineFunctions(cx, global, myjs_global_functions))
-      return JS_FALSE;
+  /* Populate the global object with the standard globals,
+     like Object and Array. */
+  if (!JS_InitStandardClasses(cx, global))
+      return 1;
 
 
-    /* Your application code here. This may include JSAPI calls
-       to create your own custom JS objects and run scripts. */
+  static JSFunctionSpec myjs_global_functions[] = {
+    JS_FS("rand",   myjs_rand,   0, 0, 0),
+    JS_FS("srand",  myjs_srand,  0, 0, 0),
+    JS_FS("out", myjs_out, 1, 0, 0),
+    JS_FS_END
+  };
 
-    const char* script = "out(\"bleh!\");";
-    jsval rval;
-    JSBool res = JS_EvaluateScript(cx, global, script, strlen(script), "<inline>", 0, &rval);
+  if (!JS_DefineFunctions(cx, global, myjs_global_functions))
+    return JS_FALSE;
 
-    /* Cleanup. */
-    JS_DestroyContext(cx);
-    JS_DestroyRuntime(rt);
-    JS_ShutDown();
-    return 0;
+  nuiFunction* pF = nuiAddFunction("TestFunction", TestFunction);
+  JSFunction* pJSF = JS_DefineFunction(cx, global, "TestFunction", nuiGenericJSFunction<false>, 3, 0);
+  gFunctions[pJSF] = pF;
+
+
+  /* Your application code here. This may include JSAPI calls
+     to create your own custom JS objects and run scripts. */
+
+  const char* script = "TestFunction(\"bleh!\", 42, 42.42);";
+  jsval rval;
+  JSBool res = JS_EvaluateScript(cx, global, script, strlen(script), "<inline>", 0, &rval);
+
+  /* Cleanup. */
+  JS_DestroyContext(cx);
+  JS_DestroyRuntime(rt);
+  JS_ShutDown();
+  return 0;
 }
 
 /*

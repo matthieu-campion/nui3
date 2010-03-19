@@ -318,14 +318,16 @@ nuiBindingManager::~nuiBindingManager()
   }
 }
 
-void nuiBindingManager::AddFunction(const nglString& rFunctionName, nuiFunction* pFunction)
+nuiFunction* nuiBindingManager::AddFunction(const nglString& rFunctionName, nuiFunction* pFunction)
 {
   mFunctions.insert(std::pair<nglString, nuiFunction*>(rFunctionName, pFunction));
+  return pFunction;
 }
 
-void nuiBindingManager::AddClass(nuiClass* pClass)
+nuiClass* nuiBindingManager::AddClass(nuiClass* pClass)
 {
   mClasses.insert(std::pair<nglString, nuiClass*>(pClass->GetName(), pClass));
+  return pClass;
 }
 
 void nuiBindingManager::Dump(nglString& rString) const

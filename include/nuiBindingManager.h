@@ -1411,8 +1411,8 @@ public:
   nuiBindingManager();
   virtual ~nuiBindingManager();
 
-  void AddFunction(const nglString& rFunctionName, nuiFunction* pFunction);
-  void AddClass(nuiClass* pClass);
+  nuiFunction* AddFunction(const nglString& rFunctionName, nuiFunction* pFunction);
+  nuiClass* AddClass(nuiClass* pClass);
 
   nuiClass* GetClass(const nglString& rClassName) const;
   
