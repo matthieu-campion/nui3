@@ -17,6 +17,7 @@ public:
   {
     mIsPointer = false;
     mIsObject = false;
+    mIsPOD = false;
     mType = nuiAttributeTypeTrait<void>::mTypeId;
   }
   
@@ -27,6 +28,7 @@ public:
     mIsPointer = is_pointer<Type>::value;
     mIsObject = is_base_of<nuiObject, Type>::value;
     mType = nuiAttributeTypeTrait<Type>::mTypeId;
+    mIsPOD = true;
     if (is_same_type<Type, int8>::value || is_same_type<Type, int16>::value || is_same_type<Type, int32>::value || is_same_type<Type, int64>::value)
     {
       mData.mInt = data;
@@ -49,6 +51,10 @@ public:
     mIsObject = is_base_of<nuiObject, Type>::value;
     mType = nuiAttributeTypeTrait<Type*>::mTypeId;
     mData.mpPointer = (void*)pData;
+    mIsPOD = false;
+
+    if (mIsObject)
+      mData.mpObject->Acquire();
   }
   
   // Classes CTORs
@@ -56,6 +62,7 @@ public:
   {
     mIsPointer = false;
     mIsObject = false;
+    mIsPOD = false;
     mType = nuiAttributeTypeTrait<nglString>::mTypeId;
     mString = rData;
   }
@@ -64,6 +71,7 @@ public:
   {
     mIsPointer = false;
     mIsObject = false;
+    mIsPOD = false;
     mType = nuiAttributeTypeTrait<nglPath>::mTypeId;
     mPath = rData;
   }
@@ -72,6 +80,7 @@ public:
   {
     mIsPointer = false;
     mIsObject = false;
+    mIsPOD = false;
     mType = nuiAttributeTypeTrait<nuiColor>::mTypeId;
     mColor = rData;
   }
@@ -80,6 +89,7 @@ public:
   {
     mIsPointer = false;
     mIsObject = false;
+    mIsPOD = false;
     mType = nuiAttributeTypeTrait<nuiRect>::mTypeId;
     mRect = rData;
   }
@@ -98,10 +108,24 @@ public:
     
     mIsPointer = rObject.mIsPointer;
     mIsObject = rObject.mIsObject;
+    mIsPOD = rObject.mIsPOD;
+
+    if (mIsObject)
+      mData.mpObject->Acquire();
+  }
+  
+  // DTOR:
+  ~nuiVariant()
+  {
+    if (mIsObject)
+      mData.mpObject->Release();
   }
   
   nuiVariant& operator=(const nuiVariant& rObject)
   {
+    if (mIsObject)
+      mData.mpObject->Release();
+    
     mData = rObject.mData;
     
     mString = rObject.mString;
@@ -113,6 +137,10 @@ public:
     
     mIsPointer = rObject.mIsPointer;
     mIsObject = rObject.mIsObject;
+    mIsPOD = rObject.mIsPOD;
+    
+    if (mIsObject)
+      mData.mpObject->Acquire();
     return *this;
   }
   
@@ -123,8 +151,12 @@ public:
   
   void Clear()
   {
+    if (mIsObject)
+      mData.mpObject->Release();
+
     mIsPointer = false;
     mIsObject = false;
+    mIsPOD = false;
     mType = nuiAttributeTypeTrait<void>::mTypeId;
   }
   
@@ -143,6 +175,10 @@ public:
     return mIsObject;
   }
   
+  bool IsPOD() const
+  {
+    return mIsPOD;
+  }
   
   // nglString Cast:
   operator nglString() const
@@ -271,5 +307,6 @@ private:
   
   bool mIsPointer : 1;
   bool mIsObject : 1;
+  bool mIsPOD : 1;
 };
 

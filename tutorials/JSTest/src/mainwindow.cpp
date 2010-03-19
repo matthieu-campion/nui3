@@ -40,33 +40,6 @@ void reportError(JSContext *cx, const char *message, JSErrorReport *report)
             message);
 }
 
-/* A simple JS wrapper for the rand() function, from the C standard library.
-   This example shows how to return a number from a JSNative.
-   This is nearly the simplest possible JSNative function. */
-JSBool myjs_rand(JSContext *cx, JSObject *obj, uintN argc, jsval *argv, jsval *rval)
-{
-    return JS_NewNumberValue(cx, rand(), rval);
-}
-
-/* A wrapper for the srand() function, from the C standard library.
-   This example shows how to handle optional arguments. */
-JSBool myjs_srand(JSContext *cx, JSObject *obj, uintN argc, jsval *argv, jsval *rval)
-{
-    uint32 seed;
-
-    if (!JS_ConvertArguments(cx, argc, argv, "/u", &seed))
-        return JS_FALSE;
-
-    /* If called with no arguments, use the current time as the seed. */
-    if (argc == 0)
-        seed = time(NULL);
-
-    srand(seed);
-
-    *rval = JSVAL_VOID;  /* return undefined */
-    return JS_TRUE;
-}
-
 /* A wrapper for the printf() function, from the C standard library.
    This example shows how to report errors. */
 JSBool myjs_out(JSContext *cx, JSObject *obj, uintN argc, jsval *argv, jsval *rval)
@@ -83,7 +56,7 @@ JSBool myjs_out(JSContext *cx, JSObject *obj, uintN argc, jsval *argv, jsval *rv
     return JS_TRUE;
 }
 
-static void* GetVariantObjectFromJS(JSContext* cx, JSObject* pJSObject)
+static nuiVariant GetVariantObjectFromJS(JSContext* cx, JSObject* pJSObject)
 {
   JSClass* pJSClass = JS_GET_CLASS(cx, pJSObject);
   
@@ -95,11 +68,26 @@ static void* GetVariantObjectFromJS(JSContext* cx, JSObject* pJSObject)
   if (!pClass)
     return nuiVariant((void*)NULL);
   
-  void* pPrivate = JS_GetInstancePrivate(cx, pJSObject, pJSClass, NULL);
-  return pClass->GetVariantFromVoidPtr(pPrivate);
+  nuiVariant* pPrivate = (nuiVariant*)JS_GetInstancePrivate(cx, pJSObject, pJSClass, NULL);
+  return *pPrivate;
 }
 
 std::map<JSFunction*, nuiFunction*> gFunctions;
+std::map<nuiAttributeType, JSClass*> gClasses;
+
+static JSObject* GetJSObjectFromVariant(JSContext* cx, const nuiVariant& rObject)
+{
+  if (!rObject.IsPointer())
+    return NULL;
+  
+  std::map<nuiAttributeType, JSClass*>::const_iterator it = gClasses.find(rObject.GetType());
+  if (it != gClasses.end())
+    return NULL;
+  JSClass* pJSClass = it->second;
+  JSObject* pJSObject = JS_NewObject(cx, pJSClass, pJSProto, pJSParent);
+  
+  return NULL;
+}
 
 template <bool method>
 JSBool nuiGenericJSFunction(JSContext *cx, JSObject *obj, uintN argc, jsval *argv, jsval *rval)
@@ -212,11 +200,153 @@ JSBool nuiGenericJSFunction(JSContext *cx, JSObject *obj, uintN argc, jsval *arg
   return JS_TRUE;
 }
 
+static void nuiFinalizeJSObject(JSContext *cx, JSObject *obj)
+{
+  JSClass* pJSClass = JS_GET_CLASS(cx, pJSObject);
+  
+  if (!pJSClass)
+    return nuiVariant();
+  
+  nuiVariant* pPrivate = (nuiVariant*)JS_GetInstancePrivate(cx, pJSObject, pJSClass, NULL);
+  delete pPrivate;
+}
+
 nglString TestFunction(const nglString& rStr, uint32 i, double d)
 {
   NGL_OUT(_T("rStr: '%ls'\ni: %d\nd: %f\n\n"), rStr.GetChars(), i, d);
   
   return _T("MOOOOOOOOOOOORTEL!\n");
+}
+
+static JSBool nuiConstructJSClass(JSContext *cx, JSObject *obj, uintN argc, jsval *argv, jsval *rval)
+{
+  JSFunction* pJSFunc = JS_ValueToFunction(cx, JS_ARGV_CALLEE(argv));
+  if (!pJSFunc)
+    return JS_FALSE;
+  
+  std::map<JSFunction*, nuiFunction*>::const_iterator it = gFunctions.find(pJSFunc);
+  nuiFunction* pFunc = it->second;
+  
+  if (!pFunc)
+    return JS_FALSE;
+  
+  nuiCallContext ctx;
+  
+  for (uint32 i = 0; i < argc; i++)
+  {
+    JSType type = JS_TypeOfValue(cx, argv[i]);
+    switch (type)
+    {
+        
+      case JSTYPE_VOID:
+      {
+        return JS_FALSE;
+      }
+        break;
+        
+      case JSTYPE_OBJECT:
+        {
+          // Find the nui equivalent of the object
+          ctx.AddArgument(GetVariantObjectFromJS(cx, JS_THIS_OBJECT(cx, argv)));
+        }
+        break;
+        
+      case JSTYPE_STRING:
+        {
+          JSString* pStr = JS_ValueToString(cx, argv[i]);
+          nglString str(JS_GetStringBytes(pStr));
+          ctx.AddArgument(str);
+        }
+        break;
+        
+      case JSTYPE_NUMBER:
+        {
+          jsdouble val;
+          JS_ValueToNumber(cx, argv[i], &val);
+          ctx.AddArgument(val);
+        }
+        break;
+        
+      case JSTYPE_BOOLEAN:
+        {
+          JSBool b = false;
+          JS_ValueToBoolean(cx, argv[i], &b);
+          ctx.AddArgument(b);
+        }
+        break;
+        
+      case JSTYPE_FUNCTION:
+      case JSTYPE_NULL:
+      case JSTYPE_XML:
+      case JSTYPE_LIMIT:
+        {
+          jsval val;
+          if (!JS_ConvertValue(cx, argv[i], JSTYPE_STRING, &val))
+          {
+            NGL_LOG(_T("JavaScript"), NGL_LOG_ERROR, _T("Unable to convert a complex type to a string"));
+            return JS_FALSE;
+          }
+          
+          JSString* pStr = JS_ValueToString(cx, val);
+          nglString str(JS_GetStringBytes(pStr));
+          ctx.AddArgument(str);
+        }
+        break;
+    }
+    
+  }
+  
+  // Call the method or function:
+  pFunc->Run(ctx);
+  
+  nuiVariant* pVariant = new nuiVariant(ctx.GetResult());
+  JS_SetPrivate(cx, JS_THIS_OBJECT(cx, argv), pVariant);
+  return JS_TRUE;
+}
+
+
+static void nuiDefineJSClass(JSContext* cx, JSObject* pGlobalObject, nuiClass* pClass)
+{
+  std::string name(pClass->GetName().GetStdString());
+  JSClass cls =
+  {
+    name.c_str(),
+    JSCLASS_HAS_PRIVATE, // flags
+    
+    /* Mandatory non-null function pointer members. */
+    JS_PropertyStub, //JSPropertyOp        addProperty;
+    JS_PropertyStub, //JSPropertyOp        delProperty;
+    JS_PropertyStub, //JSPropertyOp        getProperty;
+    JS_PropertyStub, //JSPropertyOp        setProperty;
+    JS_EnumerateStub, //JSEnumerateOp       enumerate;
+    JS_ResolveStub, //JSResolveOp         resolve;
+    JS_ConvertStub, //JSConvertOp         convert;
+    nuiFinalizeJSObject, //JSFinalizeOp        finalize;
+    
+    /* Optionally non-null members start here. */
+    NULL, //JSGetObjectOps      getObjectOps;
+    NULL, //JSCheckAccessOp     checkAccess;
+    NULL, // JSNative            call;
+    NULL, //JSNative            construct;
+    NULL, //JSXDRObjectOp       xdrObject;
+    NULL, //JSHasInstanceOp     hasInstance;
+    NULL, //JSMarkOp            mark;
+    NULL, //JSReserveSlotsOp    reserveSlots;
+  };
+  
+  JSObject* pJSObj = JS_InitClass(cx, pGlobalObject, NULL, &cls,
+                          
+                          /* native constructor function and min arg count */
+                          nuiConstructJSClass, 0,
+                          
+                          /* prototype object properties and methods -- these
+                           will be "inherited" by all instances through
+                           delegation up the instance's prototype link. */
+                          NULL, NULL,
+                          
+                          /* class constructor properties and methods */
+                          NULL, NULL);
+
 }
 
 int JSTest()
@@ -251,8 +381,6 @@ int JSTest()
 
 
   static JSFunctionSpec myjs_global_functions[] = {
-    JS_FS("rand",   myjs_rand,   0, 0, 0),
-    JS_FS("srand",  myjs_srand,  0, 0, 0),
     JS_FS("out", myjs_out, 1, 0, 0),
     JS_FS_END
   };
