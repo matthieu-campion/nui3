@@ -133,6 +133,16 @@ public:
     return mType == nuiAttributeTypeTrait<void>::mTypeId;
   }
   
+  bool IsPointer() const
+  {
+    return mIsPointer;
+  }
+  
+  bool IsObject() const
+  {
+    return mIsObject;
+  }
+  
   
   // nglString Cast:
   operator nglString() const

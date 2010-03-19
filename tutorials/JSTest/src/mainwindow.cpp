@@ -201,6 +201,10 @@ JSBool nuiGenericJSFunction(JSContext *cx, JSObject *obj, uintN argc, jsval *arg
     std::string s(str.GetStdString()); 
     *rval = STRING_TO_JSVAL(JS_NewStringCopyN(cx, s.c_str(), s.size()));
   }
+  else if (r.IsPointer())
+  {
+    
+  }
   else //if (t == nuiAttributeTypeTrait<void>::mTypeId) or unknown type
   {
     *rval = JSVAL_VOID;  /* return undefined */
@@ -212,7 +216,7 @@ nglString TestFunction(const nglString& rStr, uint32 i, double d)
 {
   NGL_OUT(_T("rStr: '%ls'\ni: %d\nd: %f\n\n"), rStr.GetChars(), i, d);
   
-  return _T("MOOOOOOOOOOOORTEL!");
+  return _T("MOOOOOOOOOOOORTEL!\n");
 }
 
 int JSTest()
