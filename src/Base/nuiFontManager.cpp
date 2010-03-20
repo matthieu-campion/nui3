@@ -12,7 +12,9 @@
 #include "nuiVBox.h"
 
 #ifdef _UIKIT_
+#ifdef __IPHONE_3_2
 #include <CoreText/CoreText.h>
+#endif
 #include <CoreFoundation/CoreFoundation.h>
 #endif
 
@@ -1479,7 +1481,7 @@ bool nuiFontManager::Load(nglIStream& rStream)
   
   bool scanfolders = true;
 #ifdef _UIKIT_
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_3_1
+#ifdef __IPHONE_3_2
   if (CTFontCollectionCreateFromAvailableFonts != NULL)
   {
     scanfolders = false;
@@ -1612,7 +1614,8 @@ void nuiFontManager::UpdateFonts()
   
   bool scanfolders = true;
 #ifdef _UIKIT_
-#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_5
+//#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_5
+#if __IPHONE_3_2
   if (CTFontCollectionCreateFromAvailableFonts != NULL)
   {
     scanfolders = false;
