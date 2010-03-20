@@ -322,16 +322,18 @@ set(SOURCES
   src/Utils/nuiRSS.cpp
   src/Utils/nuiStopWatch.cpp
   
-  src/Threading/nglLock.cpp
   src/Threading/nglLightLock.cpp
-  src/Threading/nglThread.cpp
+  src/Threading/nglLock.cpp
+  src/Threading/nglReaderWriterLock.cpp
   src/Threading/nglThreadChecker.cpp
+  src/Threading/nglThread.cpp
   
   src/Net/nuiHTTP.cpp
   
   src/Introspector/nuiDecorationInspector.cpp
   src/Introspector/nuiFontInspector.cpp
   src/Introspector/nuiIntrospector.cpp
+  src/Introspector/nuiObjectInspector.cpp
   src/Introspector/nuiThreadInspector.cpp
   src/Introspector/nuiTextureInspector.cpp
   src/Introspector/nuiWidgetInspector.cpp
@@ -387,6 +389,7 @@ IF (${LINUX})
     src/Window/Unix/nglWindow_Unix.cpp
     src/Window/Unix/nuiMainMenu_Unix.cpp
     
+    src/Threading/posix/nglCondition_posix.cpp
     src/Threading/posix/nglCriticalSection_posix.cpp
     src/Threading/posix/nglSyncEvent_posix.cpp
     
