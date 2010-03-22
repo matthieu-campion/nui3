@@ -1219,93 +1219,111 @@ class nuiFunction : public nuiRunable
 public:
   template <typename RetType> nuiFunction(RetType (*pFunction)())
   {
+    mArgC = 0;
     mpStorage = new nuiFunctionStorage0<RetType>(pFunction);
   }
   
   template <typename RetType, class Param1> nuiFunction(RetType (*pFunction)(Param1))
   {
+    mArgC = 1;
     mpStorage = new nuiFunctionStorage1<RetType, Param1>(pFunction);
   }
   
   template <typename RetType, class Param1, class Param2> nuiFunction(RetType (*pFunction)(Param1, Param2))
   {
+    mArgC = 2;
     mpStorage = new nuiFunctionStorage2<RetType, Param1, Param2>(pFunction);
   }
   
   template <typename RetType, class Param1, class Param2, class Param3> nuiFunction(RetType (*pFunction)(Param1, Param2, Param3))
   {
+    mArgC = 3;
     mpStorage = new nuiFunctionStorage3<RetType, Param1, Param2, Param3>(pFunction);
   }
   
   template <typename RetType, class Param1, class Param2, class Param3, class Param4> nuiFunction(RetType (*pFunction)(Param1, Param2, Param3, Param4))
   {
+    mArgC = 4;
     mpStorage = new nuiFunctionStorage4<RetType, Param1, Param2, Param3, Param4>(pFunction);
   }
   
   template <typename RetType, class Param1, class Param2, class Param3, class Param4, class Param5> nuiFunction(RetType (*pFunction)(Param1, Param2, Param3, Param4, Param5))
   {
+    mArgC = 5;
     mpStorage = new nuiFunctionStorage5<RetType, Param1, Param2, Param3, Param4, Param5>(pFunction);
   }
   
   /////////
   template <typename RetType, class Class> nuiFunction(RetType (Class::*pFunction)())
   {
+    mArgC = 0;
     mpStorage = new nuiMethodStorage0<Class, RetType>(pFunction);
   }
   
   template <typename RetType, class Class, class Param1> nuiFunction(RetType (Class::*pFunction)(Param1))
   {
+    mArgC = 1;
     mpStorage = new nuiMethodStorage1<Class, RetType, Param1>(pFunction);
   }
   
   template <typename RetType, class Class, class Param1, class Param2> nuiFunction(RetType (Class::*pFunction)(Param1, Param2))
   {
+    mArgC = 2;
     mpStorage = new nuiMethodStorage2<Class, RetType, Param1, Param2>(pFunction);
   }
   
   template <typename RetType, class Class, class Param1, class Param2, class Param3> nuiFunction(RetType (Class::*pFunction)(Param1, Param2, Param3))
   {
+    mArgC = 3;
     mpStorage = new nuiMethodStorage3<Class, RetType, Param1, Param2, Param3>(pFunction);
   }
   
   template <typename RetType, class Class, class Param1, class Param2, class Param3, class Param4> nuiFunction(RetType (Class::*pFunction)(Param1, Param2, Param3, Param4))
   {
+    mArgC = 4;
     mpStorage = new nuiMethodStorage4<Class, RetType, Param1, Param2, Param3, Param4>(pFunction);
   }
   
   template <typename RetType, class Class, class Param1, class Param2, class Param3, class Param4, class Param5> nuiFunction(RetType (Class::*pFunction)(Param1, Param2, Param3, Param4, Param5))
   {
+    mArgC = 5;
     mpStorage = new nuiMethodStorage5<Class, RetType, Param1, Param2, Param3, Param4, Param5>(pFunction);
   }
   
   /////////
   template <typename RetType, class Class> nuiFunction(RetType (Class::*pFunction)() const)
   {
+    mArgC = 0;
     mpStorage = new nuiConstMethodStorage0<const Class, RetType>(pFunction);
   }
   
   template <typename RetType, class Class, class Param1> nuiFunction(RetType (Class::*pFunction)(Param1) const)
   {
+    mArgC = 1;
     mpStorage = new nuiConstMethodStorage1<const Class, RetType, Param1>(pFunction);
   }
   
   template <typename RetType, class Class, class Param1, class Param2> nuiFunction(RetType (Class::*pFunction)(Param1, Param2) const)
   {
+    mArgC = 2;
     mpStorage = new nuiConstMethodStorage2<const Class, RetType, Param1, Param2>(pFunction);
   }
   
   template <typename RetType, class Class, class Param1, class Param2, class Param3> nuiFunction(RetType (Class::*pFunction)(Param1, Param2, Param3) const)
   {
+    mArgC = 3;
     mpStorage = new nuiConstMethodStorage3<const Class, RetType, Param1, Param2, Param3>(pFunction);
   }
   
   template <typename RetType, class Class, class Param1, class Param2, class Param3, class Param4> nuiFunction(RetType (Class::*pFunction)(Param1, Param2, Param3, Param4) const)
   {
+    mArgC = 4;
     mpStorage = new nuiConstMethodStorage4<const Class, RetType, Param1, Param2, Param3, Param4>(pFunction);
   }
   
   template <typename RetType, class Class, class Param1, class Param2, class Param3, class Param4, class Param5> nuiFunction(RetType (Class::*pFunction)(Param1, Param2, Param3, Param4, Param5) const)
   {
+    mArgC = 5;
     mpStorage = new nuiConstMethodStorage5<const Class, RetType, Param1, Param2, Param3, Param4, Param5>(pFunction);
   }
 
@@ -1318,6 +1336,11 @@ public:
     return mpStorage->Run(rContext);
   }
   
+  uint32 GetArgCount() const
+  {
+    return mArgC;
+  }
+  
   void DumpArgs(std::vector<nglString>& rTypes) const
   {
       return mpStorage->DumpArgs(rTypes);
@@ -1325,6 +1348,7 @@ public:
 
 private:
   nuiRunable* mpStorage;
+  uint32 mArgC;
 };
 
 template <class Class> Class* nuiConstructorStub0()

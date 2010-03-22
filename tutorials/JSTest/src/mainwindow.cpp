@@ -84,9 +84,11 @@ static JSObject* GetJSObjectFromVariant(JSContext* cx, const nuiVariant& rObject
   if (it != gClasses.end())
     return NULL;
   JSClass* pJSClass = it->second;
+  JSObject* pJSProto = NULL;
+  JSObject* pJSParent = NULL;
   JSObject* pJSObject = JS_NewObject(cx, pJSClass, pJSProto, pJSParent);
   
-  return NULL;
+  return pJSObject;
 }
 
 template <bool method>
@@ -200,12 +202,11 @@ JSBool nuiGenericJSFunction(JSContext *cx, JSObject *obj, uintN argc, jsval *arg
   return JS_TRUE;
 }
 
-static void nuiFinalizeJSObject(JSContext *cx, JSObject *obj)
+static void nuiFinalizeJSObject(JSContext *cx, JSObject *pJSObject)
 {
   JSClass* pJSClass = JS_GET_CLASS(cx, pJSObject);
   
-  if (!pJSClass)
-    return nuiVariant();
+  NGL_ASSERT(!pJSClass);
   
   nuiVariant* pPrivate = (nuiVariant*)JS_GetInstancePrivate(cx, pJSObject, pJSClass, NULL);
   delete pPrivate;
@@ -334,19 +335,57 @@ static void nuiDefineJSClass(JSContext* cx, JSObject* pGlobalObject, nuiClass* p
     NULL, //JSReserveSlotsOp    reserveSlots;
   };
   
-  JSObject* pJSObj = JS_InitClass(cx, pGlobalObject, NULL, &cls,
-                          
-                          /* native constructor function and min arg count */
-                          nuiConstructJSClass, 0,
-                          
-                          /* prototype object properties and methods -- these
-                           will be "inherited" by all instances through
-                           delegation up the instance's prototype link. */
-                          NULL, NULL,
-                          
-                          /* class constructor properties and methods */
-                          NULL, NULL);
+  gClasses[pClass->GetClassType()] = pJSClass;
+  
+  const std::multimap<nglString, nuiFunction*>& rFuncs(pClass->GetMethods());
+  std::multimap<nglString, nuiFunction*>::const_iterator it = rFuncs.begin();
+  std::multimap<nglString, nuiFunction*>::const_iterator end = rFuncs.end();
 
+  uint32 s = rFuncs.size();
+  std::vector<JSFunctionSpec> funcs;
+  funcs.reserve(s);
+  
+  nglString last;
+  while (it != end)
+  {
+    if (last != it->first)
+    {
+      nuiFunction* pF = it->second;
+      nglString name(it->first);
+      
+      JSFunctionSpec spec = 
+      {
+        name.Export();
+        nuiGenericJSFunction,
+        pF->GetArgCount(),
+        0,
+        0
+      };
+
+      funcs.push_back(spec);
+    }
+    
+    last = it->first;
+    ++it;
+  }
+
+  JSFunctionSpec spec = 
+  {
+    NULL, NULL,
+    0,
+    0,
+    0
+  };
+  funcs.push_back(spec);
+  
+  JSClass* pJSclass = new JSClass(cls);
+  JSObject* pJSObj = JS_InitClass(cx, pGlobalObject, NULL, pJSclass, nuiConstructJSClass, 0, NULL, &funcs[0], NULL, NULL);
+
+  
+  JSFunction* pJSF = JS_DefineFunction(cx, global, "TestFunction", nuiGenericJSFunction<false>, 3, 0);
+  gFunctions[pJSF] = pF;
+
+  
 }
 
 int JSTest()
