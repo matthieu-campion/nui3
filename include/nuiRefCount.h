@@ -24,12 +24,13 @@ public:
     return ++mCount; 
   }
 
-  uint32 Release() const
+  uint32 Release()
   { 
     NGL_ASSERTR(mCount > 0, mCount); 
     mCount--;
     if (mCount == 0)
     {
+      OnFinalize();
       delete this;
       return 0;
     }
@@ -64,6 +65,10 @@ public:
     return mPermanent;
   }
 
+  virtual void OnFinalize() ///< This callback is called when we are about to delete this
+  {
+  }
+  
 private:
   mutable uint32 mCount;
   bool mPermanent;

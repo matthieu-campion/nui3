@@ -710,6 +710,7 @@ protected:
   std::vector<nuiRect> mDirtyRects;
   
   int32 _GetDebug() const;
+  void OnFinalize();
 };
 
 #define NUI_ADD_EVENT(NAME) { AddEvent(_T(#NAME), NAME); }

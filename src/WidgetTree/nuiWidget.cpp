@@ -4581,5 +4581,11 @@ void nuiWidget::AddInvalidRect(const nuiRect& rRect)
 
 // ***************************************************************************
 
+void nuiWidget::OnFinalize()
+{
+  if (!IsTrashed())
+    CallOnTrash();
+}
+
 // static 
 std::vector<nuiDecorationDelegate> nuiWidget::mDefaultDecorations;

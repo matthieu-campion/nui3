@@ -335,6 +335,9 @@ static void nuiDefineJSClass(JSContext* cx, JSObject* pGlobalObject, nuiClass* p
     NULL, //JSReserveSlotsOp    reserveSlots;
   };
   
+  JSClass* pJSClass = new JSClass(cls);
+  JSObject* pJSObj = JS_InitClass(cx, pGlobalObject, NULL, pJSClass, nuiConstructJSClass, 0, NULL, NULL, NULL, NULL);
+  
   gClasses[pClass->GetClassType()] = pJSClass;
   
   const std::multimap<nglString, nuiFunction*>& rFuncs(pClass->GetMethods());
@@ -353,38 +356,13 @@ static void nuiDefineJSClass(JSContext* cx, JSObject* pGlobalObject, nuiClass* p
       nuiFunction* pF = it->second;
       nglString name(it->first);
       
-      JSFunctionSpec spec = 
-      {
-        name.Export();
-        nuiGenericJSFunction,
-        pF->GetArgCount(),
-        0,
-        0
-      };
-
-      funcs.push_back(spec);
+      JSFunction* pJSF = JS_DefineFunction(cx, pJSObj, name.Export(), nuiGenericJSFunction<false>, pF->GetArgCount(), 0);
+      gFunctions[pJSF] = pF;
     }
     
     last = it->first;
     ++it;
   }
-
-  JSFunctionSpec spec = 
-  {
-    NULL, NULL,
-    0,
-    0,
-    0
-  };
-  funcs.push_back(spec);
-  
-  JSClass* pJSclass = new JSClass(cls);
-  JSObject* pJSObj = JS_InitClass(cx, pGlobalObject, NULL, pJSclass, nuiConstructJSClass, 0, NULL, &funcs[0], NULL, NULL);
-
-  
-  JSFunction* pJSF = JS_DefineFunction(cx, global, "TestFunction", nuiGenericJSFunction<false>, 3, 0);
-  gFunctions[pJSF] = pF;
-
   
 }
 
