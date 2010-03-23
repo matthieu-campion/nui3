@@ -10,11 +10,6 @@
 #include "nuiBindingManager.h"
 #include "nuiTypeTraits.h"
 
-NUI_DECLARE_ATTRIBUTE_TYPE(void);
-NUI_DECLARE_ATTRIBUTE_TYPE(void*);
-NUI_DECLARE_ATTRIBUTE_TYPE(nuiWidget*);
-NUI_DECLARE_ATTRIBUTE_TYPE(nuiObject*);
-
 void TestVariant()
 {
   bool b1 = is_base_of<nuiObject, nuiWidget>::value;

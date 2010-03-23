@@ -257,6 +257,28 @@ public:
     
     NGL_ASSERT(0);
   }
+
+  operator nuiRect() const
+  {
+    if (mType == nuiAttributeTypeTrait<nuiRect>::mTypeId)
+      return mRect;
+    if (mType == nuiAttributeTypeTrait<nglString>::mTypeId)
+    {
+      nuiRect r;
+      r.SetValue(mString);
+      return r;
+    }
+    return nuiRect();
+  }
+  
+  operator nuiColor() const
+  {
+    if (mType == nuiAttributeTypeTrait<nuiColor>::mTypeId)
+      return mColor;
+    if (mType == nuiAttributeTypeTrait<nglString>::mTypeId)
+      return nuiColor(mString);
+    return nuiColor();
+  }
   
   template<typename Type>
   operator Type*() const

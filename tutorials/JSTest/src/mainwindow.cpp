@@ -399,7 +399,7 @@ static void nuiDefineJSClass(JSContext* cx, JSObject* pGlobalObject, nuiClass* p
   
 }
 
-int JSTest()
+int JSTest(nuiMainWindow* pMainWindow)
 {
   /* JS variables. */
   JSRuntime *rt;
@@ -468,7 +468,14 @@ int JSTest()
       ++it;
     }
   }
-  
+
+  {
+    nuiClass* pClass = nuiBindingManager::GetManager().GetClass(_T("nuiMainWindow"));
+    JSClass* pJSClass = gJSClasses[pClass];
+    JSObject* pJSClassObject = gJSClassObjects[pClass];
+    JSObject* pObj = JS_DefineObject(cx, global, "window", pJSClass, pJSClassObject, 0);
+    JS_SetPrivate(cx, pObj, new nuiVariant(pMainWindow));
+  }
   
   /* Your application code here. This may include JSAPI calls
      to create your own custom JS objects and run scripts. */
@@ -476,7 +483,10 @@ int JSTest()
   const char* script =  "out(TestFunction(\"bleh!\", 42, 42.42));\n"
                         "var w = new nuiWidget();\n"
                         "var n = w.GetObjectClass();\n"
-                        "out(n);\n";
+                        "out(n);\n"
+                        "window.AddChild(new nuiLabel('FromJS'));\n"
+                        ;
+  
   jsval rval;
   JSBool res = JS_EvaluateScript(cx, global, script, strlen(script), "<inline>", 0, &rval);
 
@@ -506,7 +516,7 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
   nuiInitBindings();
   TestBinding();
 
-  JSTest();
+  JSTest(this);
 
   LoadCSS(_T("rsrc:/css/main.css"));
 }

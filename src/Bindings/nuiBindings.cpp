@@ -11,10 +11,50 @@
 
 #include "nuiWidget.h"
 
+NUI_DECLARE_ATTRIBUTE_TYPE(void);
+NUI_DECLARE_ATTRIBUTE_TYPE(void*);
+NUI_DECLARE_ATTRIBUTE_TYPE(nuiObject*);
+NUI_DECLARE_ATTRIBUTE_TYPE(nuiWidget*);
+NUI_DECLARE_ATTRIBUTE_TYPE(nuiContainer*);
+NUI_DECLARE_ATTRIBUTE_TYPE(nuiSimpleContainer*);
+NUI_DECLARE_ATTRIBUTE_TYPE(nuiTopLevel*);
+NUI_DECLARE_ATTRIBUTE_TYPE(nuiMainWindow*);
+NUI_DECLARE_ATTRIBUTE_TYPE(nuiLabel*);
+
 template <typename Type>
 static Type* nuiCreateObject()
 {
   return new Type();
+}
+
+template <typename Type, typename P0>
+static Type* nuiCreateObject1(P0 p0)
+{
+  return new Type(p0);
+}
+
+template <typename Type, typename P0, typename P1>
+static Type* nuiCreateObject2(P0 p0, P1 p1)
+{
+  return new Type(p0, p1);
+}
+
+template <typename Type, typename P0, typename P1, typename P2>
+static Type* nuiCreateObject3(P0 p0, P1 p1, P2 p2)
+{
+  return new Type(p0, p1, p2);
+}
+
+template <typename Type, typename P0, typename P1, typename P2, typename P3>
+static Type* nuiCreateObject4(P0 p0, P1 p1, P2 p2, P3 p3)
+{
+  return new Type(p0, p1, p2, p3);
+}
+
+template <typename Type, typename P0, typename P1, typename P2, typename P3, typename P4>
+static Type* nuiCreateObject5(P0 p0, P1 p1, P2 p2, P3 p3, P4 p4)
+{
+  return new Type(p0, p1, p2, p3, p4);
 }
 
 
@@ -33,14 +73,56 @@ bool nuiInitBindings()
     nuiAddMethod(ClearProperties, nuiObject::ClearProperties);
 //    nuiAddMethod(ClearProperty,   nuiObject::ClearProperty);
     nuiAddMethod(GetObjectClassNameIndex, nuiObject::GetObjectClassNameIndex);
-
-  nuiEndClass
+  nuiEndClass;
 
   nuiBindClass(nuiWidget);
   nuiInheritFrom(nuiObject);
   nuiAddCtor(nuiCreateObject<nuiWidget>);
-  nuiAddMethod(Trash,   nuiWidget::Trash);  
-  nuiEndClass
+  nuiAddMethod(Trash, nuiWidget::Trash);
+  nuiAddMethod(CalcIdealSize, nuiWidget::CalcIdealSize);
+  nuiAddMethod(SetRect, nuiWidget::SetRect);
+  nuiAddMethod(SetAlpha, nuiWidget::SetAlpha);
+  nuiAddMethod(SetEnabled, nuiWidget::SetEnabled);
+  nuiAddMethod(SetSelected, nuiWidget::SetSelected);
+  nuiAddMethod(GetRect, nuiWidget::GetRect);
+  nuiAddMethod(GetAlpha, nuiWidget::GetAlpha);
+  nuiAddMethod(IsEnabled, nuiWidget::IsEnabled);
+  nuiAddMethod(IsSelected, nuiWidget::IsSelected);
+  nuiEndClass;
+  
+  nuiBindClass(nuiContainer);
+  nuiInheritFrom(nuiWidget);
+  //nuiAddMethod(GetChild, nuiContainer::GetChild);
+  pClass->AddMethod(_T("GetChild"), new nuiFunction(&nuiContainer::GetChild));
+  nuiAddMethod(GetChildrenCount, nuiContainer::GetChildrenCount);
+  nuiAddMethod(GetNextFocussableChild, nuiContainer::GetNextFocussableChild);
+  nuiAddMethod(GetPreviousFocussableChild, nuiContainer::GetPreviousFocussableChild);
+  nuiAddMethod(GetNextSibling, nuiContainer::GetNextSibling);
+  nuiAddMethod(GetPreviousSibling, nuiContainer::GetPreviousSibling);
+  nuiEndClass;
+
+  nuiBindClass(nuiSimpleContainer);
+  nuiInheritFrom(nuiContainer);
+  nuiAddCtor(nuiCreateObject<nuiSimpleContainer>);
+  nuiAddMethod(AddChild, nuiSimpleContainer::AddChild);
+  nuiEndClass;
+  
+  nuiBindClass(nuiTopLevel);
+  nuiInheritFrom(nuiSimpleContainer);
+  nuiEndClass;
+  
+  nuiBindClass(nuiMainWindow);
+  nuiInheritFrom(nuiTopLevel);
+  pClass->AddConstructor(new nuiFunction(nuiCreateObject3<nuiMainWindow,int32,int32,bool>));
+  nuiEndClass;
+  
+  nuiBindClass(nuiLabel);
+  nuiInheritFrom(nuiWidget);
+  nuiAddCtor(nuiCreateObject<nuiLabel>);
+  pClass->AddConstructor(new nuiFunction(nuiCreateObject1<nuiLabel, const nglString&>));
+  nuiAddMethod(SetText, nuiLabel::SetText);
+  nuiEndClass;
+  
   
   nglString str;
   nuiBindingManager::GetManager().Dump(str);
