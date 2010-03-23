@@ -788,8 +788,12 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
         )
     {
       skipped_ops++;
+      
+      #ifdef _DEBUG
       if (!(skipped_ops % 100))
         printf("optim (%d / %d) - %2.2f%%\n", skipped_ops, ops, (float)skipped_ops * 100.0f / (float)ops);
+      #endif
+      
       return;
     }
   }

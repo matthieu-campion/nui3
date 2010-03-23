@@ -305,7 +305,7 @@ bool WidgetEditor::OnDeleteActivated(const nuiEvent& rEvent)
 	pSelectedWidget->Trash();
 	
 	// delete tree node
-	pParentNode->DelChild(pSelectedNode, true);
+	pParentNode->DelChild(pSelectedNode);
 
 	
 	// the parent becomes the new selected object

@@ -131,8 +131,8 @@ void FrameEditor::OnDropped(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y, n
 
   printf("dropped file: %ls\n", imgpath.GetChars());
 
-  mpFrameViewHolder->Clear(true);
-  mpPictureHolder->Clear(true);
+  mpFrameViewHolder->Clear();
+  mpPictureHolder->Clear();
   mpFrame = new nuiFrame(mpDesc->GetName(), imgpath, nuiRect());
 
   UpdateFrameViews(true);
