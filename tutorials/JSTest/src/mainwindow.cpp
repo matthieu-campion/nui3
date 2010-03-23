@@ -326,8 +326,20 @@ nglString TestFunction(const nglString& rStr, uint32 i, double d)
   return _T("MOOOOOOOOOOOORTEL!\n");
 }
 
-static void nuiDefineJSClass(JSContext* cx, JSObject* pGlobalObject, nuiClass* pClass)
+JSObject* nuiDefineJSClass(JSContext* cx, JSObject* pGlobalObject, nuiClass* pClass)
 {
+  {
+    // Check if this class has already been recursively defined because of inheritance
+    std::map<nuiClass*, JSObject*>::const_iterator it = gJSClassObjects.find(pClass);
+    if (it != gJSClassObjects.end())
+    {
+      NGL_OUT(_T("Skipping class '%s' (already defined)\n\n"), pClass->GetCName());
+      return it->second;
+    }
+  }
+
+  NGL_OUT(_T("\nDefining class '%s'\n"), pClass->GetCName());
+  
   JSClass cls =
   {
     pClass->GetCName(),
@@ -360,9 +372,17 @@ static void nuiDefineJSClass(JSContext* cx, JSObject* pGlobalObject, nuiClass* p
   nuiClass* pParent = pClass->GetParentClass();
   if (pParent)
   {
+    NGL_OUT(_T("\t inherits from '%s'\n"), pParent->GetCName());
     std::map<nuiClass*, JSObject*>::const_iterator it = gJSClassObjects.find(pParent);
     if (it != gJSClassObjects.end())
+    {
       pJSProto = it->second;
+    }
+    else
+    {
+      NGL_OUT(_T("\t (recursive definition) of '%s'\n"), pParent->GetCName());
+      pJSProto = nuiDefineJSClass(cx, pGlobalObject, pParent);
+    }
   }
 
   JSObject* pJSObj = JS_InitClass(cx, pGlobalObject, pJSProto, pJSClass, nuiConstructJSClass, 0, NULL, NULL, NULL, NULL);
@@ -396,7 +416,8 @@ static void nuiDefineJSClass(JSContext* cx, JSObject* pGlobalObject, nuiClass* p
     last = it->first;
     ++it;
   }
-  
+
+  return pJSObj;
 }
 
 int JSTest(nuiMainWindow* pMainWindow)
@@ -474,7 +495,7 @@ int JSTest(nuiMainWindow* pMainWindow)
     JSClass* pJSClass = gJSClasses[pClass];
     JSObject* pJSClassObject = gJSClassObjects[pClass];
     JSObject* pObj = JS_DefineObject(cx, global, "window", pJSClass, pJSClassObject, 0);
-    JS_AddNamedRoot(cx, pObj, "window");
+    //JS_AddNamedRoot(cx, pObj, "window");
     JS_SetPrivate(cx, pObj, new nuiVariant(pMainWindow));
   }
   
@@ -488,8 +509,12 @@ int JSTest(nuiMainWindow* pMainWindow)
 //                        "window.AddChild(new nuiLabel('FromJS'));\n"
 //                        ;
   const char* script =
+  "var obj = new nuiObject();\n"
+  "out('obj class:'+obj.GetObjectClass());\n"
   "var label = new nuiLabel('FromJS');\n"
+  "out('label class:'+label.GetObjectClass());\n"
   "var win = new nuiMainWindow(320,200,true);\n"
+  "out('win class:'+win.GetObjectClass());\n"
   "win.AddChild(label);\n"
   "window.AddChild(label);\n"
   "out(window.GetObjectClass());\n"
