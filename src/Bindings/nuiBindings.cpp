@@ -118,7 +118,7 @@ bool nuiInitBindings()
   
   nuiBindClass(nuiLabel);
   nuiInheritFrom(nuiWidget);
-  nuiAddCtor(nuiCreateObject<nuiLabel>);
+  //nuiAddCtor(nuiCreateObject1<nuiLabel, const nglString&>);
   pClass->AddConstructor(new nuiFunction(nuiCreateObject1<nuiLabel, const nglString&>));
   nuiAddMethod(SetText, nuiLabel::SetText);
   nuiEndClass;

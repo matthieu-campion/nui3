@@ -30,7 +30,7 @@ Application::~Application()
 void Application::OnExit (int Code)
 {
   if (mpMainWindow)
-    delete mpMainWindow;
+    mpMainWindow->Release();
 
   nuiUninit();
 }
@@ -136,6 +136,7 @@ void Application::OnInit()
   Info.YPos = 0;
         
   mpMainWindow = new MainWindow(ContextInfo,Info, ShowFPS);
+  mpMainWindow->Acquire();
   if ((!mpMainWindow) || (mpMainWindow->GetError()))
   {
     if (mpMainWindow) 

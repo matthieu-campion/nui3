@@ -470,22 +470,30 @@ int JSTest(nuiMainWindow* pMainWindow)
   }
 
   {
-    nuiClass* pClass = nuiBindingManager::GetManager().GetClass(_T("nuiMainWindow"));
+    nuiClass* pClass = nuiBindingManager::GetManager().GetClass(_T("nuiSimpleContainer"));
     JSClass* pJSClass = gJSClasses[pClass];
     JSObject* pJSClassObject = gJSClassObjects[pClass];
     JSObject* pObj = JS_DefineObject(cx, global, "window", pJSClass, pJSClassObject, 0);
+    JS_AddNamedRoot(cx, pObj, "window");
     JS_SetPrivate(cx, pObj, new nuiVariant(pMainWindow));
   }
   
   /* Your application code here. This may include JSAPI calls
      to create your own custom JS objects and run scripts. */
 
-  const char* script =  "out(TestFunction(\"bleh!\", 42, 42.42));\n"
-                        "var w = new nuiWidget();\n"
-                        "var n = w.GetObjectClass();\n"
-                        "out(n);\n"
-                        "window.AddChild(new nuiLabel('FromJS'));\n"
-                        ;
+//  const char* script =  "out(TestFunction(\"bleh!\", 42, 42.42));\n"
+//                        "var w = new nuiWidget();\n"
+//                        "var n = w.GetObjectClass();\n"
+//                        "out(n);\n"
+//                        "window.AddChild(new nuiLabel('FromJS'));\n"
+//                        ;
+  const char* script =
+  "var label = new nuiLabel('FromJS');\n"
+  "var win = new nuiMainWindow(320,200,true);\n"
+  "win.AddChild(label);\n"
+  "window.AddChild(label);\n"
+  "out(window.GetObjectClass());\n"
+  ;
   
   jsval rval;
   JSBool res = JS_EvaluateScript(cx, global, script, strlen(script), "<inline>", 0, &rval);
@@ -512,12 +520,6 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
   SetDebugMode(true);
 #endif
   
-  TestVariant();
-  nuiInitBindings();
-  TestBinding();
-
-  JSTest(this);
-
   LoadCSS(_T("rsrc:/css/main.css"));
 }
 
@@ -527,6 +529,16 @@ MainWindow::~MainWindow()
 
 void MainWindow::OnCreation()
 {
+  TestVariant();
+  nuiInitBindings();
+  TestBinding();
+
+  Acquire();
+  JSTest(this);
+  
+  
+
+#if 0
   // a vertical box for page layout
   nuiVBox* pLayoutBox = new nuiVBox(0);
   pLayoutBox->SetExpand(nuiExpandShrinkAndGrow);
@@ -560,6 +572,7 @@ void MainWindow::OnCreation()
   mMyLabel->SetPosition(nuiCenter);
   pLayoutBox->AddCell(mMyLabel);
   pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
+#endif
 }
 
 

@@ -43,6 +43,16 @@ public:
     }
   }
   
+  nuiVariant(bool set)
+  {
+    mIsPointer = false;
+    mIsObject = false;
+    mType = nuiAttributeTypeTrait<bool>::mTypeId;
+    mIsPOD = true;
+
+    mData.mBool = set;
+  }
+  
   // Pointer CTOR
   template <typename Type>
   nuiVariant(Type* pData)
@@ -258,6 +268,34 @@ public:
     NGL_ASSERT(0);
   }
 
+  operator bool() const
+  {
+    if (mType == nuiAttributeTypeTrait<bool>::mTypeId)
+      return mData.mBool;
+
+    if (mType == nuiAttributeTypeTrait<float>::mTypeId
+        || mType == nuiAttributeTypeTrait<double>::mTypeId)
+    {
+      return (bool)mData.mFloat;
+    }
+    else if (mType == nuiAttributeTypeTrait<int8>::mTypeId 
+             || mType == nuiAttributeTypeTrait<int16>::mTypeId
+             || mType == nuiAttributeTypeTrait<int32>::mTypeId
+             || mType == nuiAttributeTypeTrait<int64>::mTypeId)
+    {
+      return (bool)mData.mInt;
+    }
+    else if (mType == nuiAttributeTypeTrait<uint8>::mTypeId
+             || mType == nuiAttributeTypeTrait<uint16>::mTypeId
+             || mType == nuiAttributeTypeTrait<uint32>::mTypeId
+             || mType == nuiAttributeTypeTrait<uint64>::mTypeId)
+    {
+      return (bool)mData.mUInt;
+    }
+    
+    return false;
+  }
+
   operator nuiRect() const
   {
     if (mType == nuiAttributeTypeTrait<nuiRect>::mTypeId)
@@ -317,6 +355,7 @@ private:
     int64 mInt;
     uint64 mUInt;
     double mFloat;
+    bool mBool;
     
     void* mpPointer;
     nuiObject* mpObject;    
