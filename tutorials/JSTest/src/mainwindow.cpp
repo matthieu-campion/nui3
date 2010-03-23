@@ -333,12 +333,12 @@ JSObject* nuiDefineJSClass(JSContext* cx, JSObject* pGlobalObject, nuiClass* pCl
     std::map<nuiClass*, JSObject*>::const_iterator it = gJSClassObjects.find(pClass);
     if (it != gJSClassObjects.end())
     {
-      NGL_OUT(_T("Skipping class '%s' (already defined)\n\n"), pClass->GetCName());
+      NGL_OUT(_T("Skipping class '%ls' (already defined)\n\n"), pClass->GetName().GetChars());
       return it->second;
     }
   }
 
-  NGL_OUT(_T("\nDefining class '%s'\n"), pClass->GetCName());
+  NGL_OUT(_T("\nDefining class '%ls'\n"), pClass->GetName().GetChars());
   
   JSClass cls =
   {
@@ -372,7 +372,7 @@ JSObject* nuiDefineJSClass(JSContext* cx, JSObject* pGlobalObject, nuiClass* pCl
   nuiClass* pParent = pClass->GetParentClass();
   if (pParent)
   {
-    NGL_OUT(_T("\t inherits from '%s'\n"), pParent->GetCName());
+    NGL_OUT(_T("\t inherits from '%ls'\n"), pParent->GetName().GetChars());
     std::map<nuiClass*, JSObject*>::const_iterator it = gJSClassObjects.find(pParent);
     if (it != gJSClassObjects.end())
     {
@@ -380,7 +380,7 @@ JSObject* nuiDefineJSClass(JSContext* cx, JSObject* pGlobalObject, nuiClass* pCl
     }
     else
     {
-      NGL_OUT(_T("\t (recursive definition) of '%s'\n"), pParent->GetCName());
+      NGL_OUT(_T("\t (recursive definition) of '%ls'\n"), pParent->GetName().GetChars());
       pJSProto = nuiDefineJSClass(cx, pGlobalObject, pParent);
     }
   }
