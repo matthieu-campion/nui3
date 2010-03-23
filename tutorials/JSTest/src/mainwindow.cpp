@@ -510,14 +510,11 @@ int JSTest(nuiMainWindow* pMainWindow)
 //                        ;
   const char* script =
   "var obj = new nuiObject();\n"
-  "out('obj class:'+obj.GetObjectClass());\n"
+  "out('obj class:'+obj.GetObjectClass()+'\n');\n"
   "var label = new nuiLabel('FromJS');\n"
-  "out('label class:'+label.GetObjectClass());\n"
-  "var win = new nuiMainWindow(320,200,true);\n"
-  "out('win class:'+win.GetObjectClass());\n"
-  "win.AddChild(label);\n"
+  "out('label class:'+label.GetObjectClass()+'\n');\n"
   "window.AddChild(label);\n"
-  "out(window.GetObjectClass());\n"
+  "out(window.GetObjectClass()+'\n');\n"
   ;
   
   jsval rval;

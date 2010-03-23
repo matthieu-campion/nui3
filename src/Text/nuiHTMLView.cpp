@@ -47,6 +47,8 @@ nuiHTMLView::nuiHTMLView(float IdealWidth)
   mAutoIdealWidth = true;
   
   mUseToolTips = true;
+
+  mMargins = 8;
   
   mSlotSink.Connect(LinkActivated, nuiMakeDelegate(this, &nuiHTMLView::_AutoSetURL));
 }
@@ -77,6 +79,11 @@ void nuiHTMLView::InitAttributes()
   
   AddAttribute(new nuiAttribute<float>
                (nglString(_T("Width")), nuiUnitName,
+                nuiMakeDelegate(this, &nuiHTMLView::GetIdealWidth), 
+                nuiMakeDelegate(this, &nuiHTMLView::SetIdealWidth)));
+  
+  AddAttribute(new nuiAttribute<float>
+               (nglString(_T("IdealWidth")), nuiUnitName,
                 nuiMakeDelegate(this, &nuiHTMLView::GetIdealWidth), 
                 nuiMakeDelegate(this, &nuiHTMLView::SetIdealWidth)));
   
@@ -119,6 +126,17 @@ void nuiHTMLView::InitAttributes()
                (nglString(_T("UseToolTips")), nuiUnitName,
                 nuiMakeDelegate(this, &nuiHTMLView::GetUseToolTips), 
                 nuiMakeDelegate(this, &nuiHTMLView::SetUseToolTips)));  
+  
+  AddAttribute(new nuiAttribute<bool>
+               (nglString(_T("DebugBoxes")), nuiUnitBoolean,
+                nuiMakeDelegate(this, &nuiHTMLView::GetDebugBoxes), 
+                nuiMakeDelegate(this, &nuiHTMLView::SetDebugBoxes)));  
+  
+
+  AddAttribute(new nuiAttribute<float>
+               (nglString(_T("Margins")), nuiUnitPixels,
+                nuiMakeDelegate(this, &nuiHTMLView::GetMargins), 
+                nuiMakeDelegate(this, &nuiHTMLView::SetMargins)));
   
 }
 
@@ -189,12 +207,14 @@ void nuiHTMLView::SetLinkColor(const nuiColor& Color)
 
 nuiRect nuiHTMLView::CalcIdealSize()
 {
+  
   float IdealWidth = mIdealWidth;
-  if (mRect.GetWidth() > 0)
+  if (mAutoIdealWidth && mRect.GetWidth() > 0)
     IdealWidth = mRect.GetWidth();
   //Clear();
 
   mpContext->mMaxWidth = IdealWidth;
+
   if (!mpRootBox)
     return nuiRect(IdealWidth, 400.0f);
   
@@ -221,7 +241,7 @@ bool nuiHTMLView::SetRect(const nuiRect& rRect)
 
   if (mAutoIdealWidth)
     SetIdealWidth(rRect.GetWidth());
-  
+
   ReLayout();
   return true;
 }
@@ -274,7 +294,10 @@ void nuiHTMLView::SetIdealWidth(float IdealWidth)
 {
   if (mIdealWidth == IdealWidth)
     return;
+  
   mIdealWidth = IdealWidth;
+  if (mpContext)
+    mpContext->mMaxWidth = mIdealWidth;
   InvalidateLayout();
 }
 
@@ -329,6 +352,7 @@ bool nuiHTMLView::SetText(const nglString& rHTMLText)
     delete mpHTML;
     mpHTML = pHTML;
     mpRootBox = new nuiHTMLBox(mpHTML, mpCurrentAnchor, false);
+    mpRootBox->SetMargins(mMargins);
     mpRootBox->SetLayoutChangedDelegate(nuiMakeDelegate(this, &nuiHTMLView::InvalidateLayout));
     mpRootBox->SetDisplayChangedDelegate(nuiMakeDelegate(this, &nuiHTMLView::Invalidate));
     ParseTree(mpHTML, mpRootBox);
@@ -423,6 +447,7 @@ void nuiHTMLView::StreamDone(nuiAsyncIStream* pStream)
     delete mpHTML;
     mpHTML = pHTML;
     mpRootBox = new nuiHTMLBox(mpHTML, mpCurrentAnchor, false);
+    mpRootBox->SetMargins(mMargins);
     mpRootBox->SetLayoutChangedDelegate(nuiMakeDelegate(this, &nuiHTMLView::InvalidateLayout));
     mpRootBox->SetDisplayChangedDelegate(nuiMakeDelegate(this, &nuiHTMLView::Invalidate));
     ParseTree(mpHTML, mpRootBox);
@@ -896,7 +921,7 @@ void nuiHTMLView::SetDebugBoxes(bool set)
   Invalidate();
 }
 
-bool nuiHTMLView::GetDebugBoxed() const
+bool nuiHTMLView::GetDebugBoxes() const
 {
   return mDebugBoxes;
 }
@@ -923,3 +948,14 @@ bool nuiHTMLView::GetUseToolTips() const
   return mUseToolTips;
 }
 
+void nuiHTMLView::SetMargins(float margins)
+{
+  mMargins = margins;
+  if (mpRootBox)
+    mpRootBox->SetMargins(margins);
+}
+
+float nuiHTMLView::GetMargins() const
+{
+  return mMargins;
+}

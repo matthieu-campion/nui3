@@ -29,6 +29,7 @@ nuiRSSView::nuiRSSView(const nglString& rURL, int32 SecondsBetweenUpdates, nglIS
   mForceNoHTML = ForceNoHTML;
   mpRSS = new nuiRSS(rURL, SecondsBetweenUpdates, pOriginalStream);
   mpBox = new nuiVBox();
+  mpBox->SetExpand(mExpand);
   AddChild(mpBox);
   mViewSink.Connect(mpRSS->UpdateDone, &nuiRSSView::Update);
   Update(nuiEvent());
@@ -77,6 +78,11 @@ void nuiRSSView::InitAttributes()
                 nuiMakeDelegate(this, &nuiRSSView::GetMaxItems), 
                 nuiMakeDelegate(this, &nuiRSSView::SetMaxItems)));
   
+  AddAttribute(new nuiAttribute<nuiExpandMode>
+               (nglString(_T("Expand")), nuiUnitPixels,
+                nuiMakeDelegate(this, &nuiRSSView::GetExpand), 
+                nuiMakeDelegate(this, &nuiRSSView::SetExpand)));
+  
 }
 
 
@@ -85,6 +91,7 @@ bool nuiRSSView::Update(const nuiEvent& rEvent)
 {
   mpBox->Trash();
   mpBox = new nuiVBox();
+  mpBox->SetExpand(mExpand);
   AddChild(mpBox);
 
   int32 count = mpRSS->GetItemCount();
@@ -177,14 +184,22 @@ bool nuiRSSView::Update(const nuiEvent& rEvent)
       {
         nglString imagehtml;
         imagehtml.CFormat(_T("<img src=\"%ls\" alt=\"%ls\"/>"), rItem.GetImageURL().GetChars(), rItem.GetImageTitle().GetChars());
-        NGL_OUT(_T("ImageHTML: %ls"), imagehtml.GetChars());
+        NGL_OUT(_T("ImageHTML: %ls\n"), imagehtml.GetChars());
+        dictionnary[_T("ImageHTML")] = imagehtml;
+      }
+      else
+      {
+        nglString imagehtml;
+        imagehtml.CFormat(_T("<img src=\"%ls\" alt=\"%ls\"/>"), rItem.GetLink().GetChars(), _T(""));
+        imagehtml.Replace(_T("https"), _T("http"));
+        NGL_OUT(_T("ImageHTML (from link): %ls\n"), imagehtml.GetChars());
         dictionnary[_T("ImageHTML")] = imagehtml;
       }
       if (!rItem.GetEnclosureURL().IsEmpty())
       {
         nglString enclosurehtml;
         enclosurehtml.CFormat(_T("<img src=\"%ls\" alt=\"enclosure\"/>"), rItem.GetEnclosureURL().GetChars());
-        NGL_OUT(_T("EnclosureHTML: %ls"), enclosurehtml.GetChars());
+        NGL_OUT(_T("EnclosureHTML: %ls\n"), enclosurehtml.GetChars());
         dictionnary[_T("EnclosureHTML")] = enclosurehtml;
       }
       nuiWidget* pWidget = nuiBuilder::Get().CreateWidget(mItemWidget, dictionnary);
@@ -259,4 +274,16 @@ void nuiRSSView::SetTextColor(const nuiColor& Color)
   ForceUpdate();  
 }
 
+
+void nuiRSSView::SetExpand(nuiExpandMode expand)
+{
+  mExpand = expand;
+  if (mpBox)
+    mpBox->SetExpand(mExpand);
+}
+
+nuiExpandMode nuiRSSView::GetExpand() const
+{
+  return mExpand;
+}
 

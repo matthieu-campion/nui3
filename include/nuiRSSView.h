@@ -39,6 +39,8 @@ public:
   const nuiColor& GetTextColor() const;
   void SetTextColor(const nuiColor& Color);
   
+  void SetExpand(nuiExpandMode expand);
+  nuiExpandMode GetExpand() const;
 protected:
   
   bool Update(const nuiEvent& rEvent);
@@ -53,6 +55,8 @@ protected:
   nglString mItemWidget;
   
   int32 mMaxItems;
+  
+  nuiExpandMode mExpand;
 private:
   
   void InitAttributes();

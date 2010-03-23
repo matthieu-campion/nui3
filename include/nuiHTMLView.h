@@ -63,13 +63,16 @@ public:
   bool IsAutoActivateLink() const;
   
   void SetDebugBoxes(bool set);
-  bool GetDebugBoxed() const;
+  bool GetDebugBoxes() const;
   
   void SetAutoIdealWidth(bool set);
   bool GetAutoIdealWidth() const;
   
   void SetUseToolTips(bool set);
   bool GetUseToolTips() const;
+  
+  void SetMargins(float margins);
+  float GetMargins() const;
 protected:
   
   void ParseTree(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
@@ -126,5 +129,7 @@ private:
   bool mUseToolTips;
   
   nglString mText;
+  
+  float mMargins;
 };
 
