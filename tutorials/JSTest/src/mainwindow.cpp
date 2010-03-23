@@ -73,15 +73,18 @@ static nuiVariant GetVariantObjectFromJS(JSContext* cx, JSObject* pJSObject)
 }
 
 std::map<JSFunction*, nuiFunction*> gFunctions;
-std::map<nuiAttributeType, JSClass*> gClasses;
+std::map<nuiAttributeType, JSClass*> gClassAttribs;
+std::map<JSClass*, nuiClass*> gNUIClasses;
+std::map<nuiClass*, JSClass*> gJSClasses;
+std::map<nuiClass*, JSObject*> gJSClassObjects;
 
 static JSObject* GetJSObjectFromVariant(JSContext* cx, const nuiVariant& rObject)
 {
   if (!rObject.IsPointer())
     return NULL;
   
-  std::map<nuiAttributeType, JSClass*>::const_iterator it = gClasses.find(rObject.GetType());
-  if (it != gClasses.end())
+  std::map<nuiAttributeType, JSClass*>::const_iterator it = gClassAttribs.find(rObject.GetType());
+  if (it != gClassAttribs.end())
     return NULL;
   JSClass* pJSClass = it->second;
   JSObject* pJSProto = NULL;
@@ -107,7 +110,7 @@ JSBool nuiGenericJSFunction(JSContext *cx, JSObject *obj, uintN argc, jsval *arg
   nuiCallContext ctx;
 
   if (method) // Only add this if we are calling a method
-    ctx.AddArgument(GetVariantObjectFromJS(cx, JS_THIS_OBJECT(cx, argv)));
+    ctx.AddArgument(GetVariantObjectFromJS(cx, obj));
   
   for (uint32 i = 0; i < argc; i++)
   {
@@ -124,7 +127,9 @@ JSBool nuiGenericJSFunction(JSContext *cx, JSObject *obj, uintN argc, jsval *arg
       case JSTYPE_OBJECT:
         {
           // Find the nui equivalent of the object
-          ctx.AddArgument(GetVariantObjectFromJS(cx, JS_THIS_OBJECT(cx, argv)));
+          JSObject* o = NULL;
+          JS_ValueToObject(cx, argv[i], &o);
+          ctx.AddArgument(GetVariantObjectFromJS(cx, o));
         }
         break;
       
@@ -206,17 +211,10 @@ static void nuiFinalizeJSObject(JSContext *cx, JSObject *pJSObject)
 {
   JSClass* pJSClass = JS_GET_CLASS(cx, pJSObject);
   
-  NGL_ASSERT(!pJSClass);
+  NGL_ASSERT(pJSClass);
   
   nuiVariant* pPrivate = (nuiVariant*)JS_GetInstancePrivate(cx, pJSObject, pJSClass, NULL);
   delete pPrivate;
-}
-
-nglString TestFunction(const nglString& rStr, uint32 i, double d)
-{
-  NGL_OUT(_T("rStr: '%ls'\ni: %d\nd: %f\n\n"), rStr.GetChars(), i, d);
-  
-  return _T("MOOOOOOOOOOOORTEL!\n");
 }
 
 static JSBool nuiConstructJSClass(JSContext *cx, JSObject *obj, uintN argc, jsval *argv, jsval *rval)
@@ -229,7 +227,21 @@ static JSBool nuiConstructJSClass(JSContext *cx, JSObject *obj, uintN argc, jsva
   nuiFunction* pFunc = it->second;
   
   if (!pFunc)
-    return JS_FALSE;
+  {
+    // In this case we need to find the class object
+    JSClass* pJSClass = JS_GetClass(obj);
+    if (!pJSClass)
+      return JS_FALSE;
+    
+    std::map<JSClass*, nuiClass*>::const_iterator it = gNUIClasses.find(pJSClass);
+    if (it == gNUIClasses.end())
+      return JS_FALSE;
+    
+    nuiClass* pClass = it->second;
+    if (pClass->GetConstructors().empty())
+      return JS_FALSE;
+    pFunc = *(pClass->GetConstructors().begin());
+  }
   
   nuiCallContext ctx;
   
@@ -248,7 +260,9 @@ static JSBool nuiConstructJSClass(JSContext *cx, JSObject *obj, uintN argc, jsva
       case JSTYPE_OBJECT:
         {
           // Find the nui equivalent of the object
-          ctx.AddArgument(GetVariantObjectFromJS(cx, JS_THIS_OBJECT(cx, argv)));
+          JSObject* o = NULL;
+          JS_ValueToObject(cx, argv[i], &o);
+          ctx.AddArgument(GetVariantObjectFromJS(cx, o));
         }
         break;
         
@@ -301,17 +315,22 @@ static JSBool nuiConstructJSClass(JSContext *cx, JSObject *obj, uintN argc, jsva
   pFunc->Run(ctx);
   
   nuiVariant* pVariant = new nuiVariant(ctx.GetResult());
-  JS_SetPrivate(cx, JS_THIS_OBJECT(cx, argv), pVariant);
+  JS_SetPrivate(cx, obj, pVariant);
   return JS_TRUE;
 }
 
+nglString TestFunction(const nglString& rStr, uint32 i, double d)
+{
+  NGL_OUT(_T("rStr: '%ls'\ni: %d\nd: %f\n\n"), rStr.GetChars(), i, d);
+  
+  return _T("MOOOOOOOOOOOORTEL!\n");
+}
 
 static void nuiDefineJSClass(JSContext* cx, JSObject* pGlobalObject, nuiClass* pClass)
 {
-  std::string name(pClass->GetName().GetStdString());
   JSClass cls =
   {
-    name.c_str(),
+    pClass->GetCName(),
     JSCLASS_HAS_PRIVATE, // flags
     
     /* Mandatory non-null function pointer members. */
@@ -336,10 +355,24 @@ static void nuiDefineJSClass(JSContext* cx, JSObject* pGlobalObject, nuiClass* p
   };
   
   JSClass* pJSClass = new JSClass(cls);
-  JSObject* pJSObj = JS_InitClass(cx, pGlobalObject, NULL, pJSClass, nuiConstructJSClass, 0, NULL, NULL, NULL, NULL);
   
-  gClasses[pClass->GetClassType()] = pJSClass;
+  JSObject* pJSProto = NULL;
+  nuiClass* pParent = pClass->GetParentClass();
+  if (pParent)
+  {
+    std::map<nuiClass*, JSObject*>::const_iterator it = gJSClassObjects.find(pParent);
+    if (it != gJSClassObjects.end())
+      pJSProto = it->second;
+  }
+
+  JSObject* pJSObj = JS_InitClass(cx, pGlobalObject, pJSProto, pJSClass, nuiConstructJSClass, 0, NULL, NULL, NULL, NULL);
   
+  gClassAttribs[pClass->GetClassType()] = pJSClass;
+  gJSClasses[pClass] = pJSClass;
+  gNUIClasses[pJSClass] = pClass;
+  gJSClassObjects[pClass] = pJSObj;
+  
+  // Add functions to the class prototype:
   const std::multimap<nglString, nuiFunction*>& rFuncs(pClass->GetMethods());
   std::multimap<nglString, nuiFunction*>::const_iterator it = rFuncs.begin();
   std::multimap<nglString, nuiFunction*>::const_iterator end = rFuncs.end();
@@ -356,7 +389,7 @@ static void nuiDefineJSClass(JSContext* cx, JSObject* pGlobalObject, nuiClass* p
       nuiFunction* pF = it->second;
       nglString name(it->first);
       
-      JSFunction* pJSF = JS_DefineFunction(cx, pJSObj, name.Export(), nuiGenericJSFunction<false>, pF->GetArgCount(), 0);
+      JSFunction* pJSF = JS_DefineFunction(cx, pJSObj, name.Export(), nuiGenericJSFunction<true>, pF->GetArgCount(), 0);
       gFunctions[pJSF] = pF;
     }
     
@@ -409,11 +442,41 @@ int JSTest()
   JSFunction* pJSF = JS_DefineFunction(cx, global, "TestFunction", nuiGenericJSFunction<false>, 3, 0);
   gFunctions[pJSF] = pF;
 
+  {
+    const nuiBindingManager::ClassMap& rClasses(nuiBindingManager::GetManager().GetClasses());
+    nuiBindingManager::ClassMap::const_iterator it = rClasses.begin();
+    nuiBindingManager::ClassMap::const_iterator end = rClasses.end();
+    while (it != end)
+    {
+      nuiClass* pClass = it->second;
+      nuiDefineJSClass(cx, global, pClass);
+      ++it;
+    }
+  }
 
+  {
+    const nuiBindingManager::FunctionMap& rFunctions(nuiBindingManager::GetManager().GetFunctions());
+    nuiBindingManager::FunctionMap::const_iterator it = rFunctions.begin();
+    nuiBindingManager::FunctionMap::const_iterator end = rFunctions.end();
+    while (it != end)
+    {
+      nuiFunction* pF = it->second;
+      nglString name(it->first);
+      
+      JSFunction* pJSF = JS_DefineFunction(cx, global, name.Export(), nuiGenericJSFunction<false>, pF->GetArgCount(), 0);
+      gFunctions[pJSF] = pF;
+      ++it;
+    }
+  }
+  
+  
   /* Your application code here. This may include JSAPI calls
      to create your own custom JS objects and run scripts. */
 
-  const char* script = "out(TestFunction(\"bleh!\", 42, 42.42));";
+  const char* script =  "out(TestFunction(\"bleh!\", 42, 42.42));\n"
+                        "var w = new nuiWidget();\n"
+                        "var n = w.GetObjectClass();\n"
+                        "out(n);\n";
   jsval rval;
   JSBool res = JS_EvaluateScript(cx, global, script, strlen(script), "<inline>", 0, &rval);
 

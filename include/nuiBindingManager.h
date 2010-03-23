@@ -1398,7 +1398,8 @@ public:
 
   void GetMethods(const nglString& rName, std::vector<nuiFunction*>& rFunction) const;
   
-  const std::vector<nuiClass*>& GetParentClasse() const;
+  nuiClass* GetParentClass() const;
+  const std::vector<nuiClass*>& GetParentClasses() const;
   const std::multimap<nglString, nuiFunction*>& GetMethods() const;
   const std::set<nuiFunction*>& GetConstructors() const;
 
@@ -1409,8 +1410,10 @@ public:
   virtual nuiVariant GetVariantFromVoidPtr(void* pPtr) const = 0;
   virtual nuiAttributeType GetClassType() const = 0;
 
+  const char* GetCName() const;
 protected:
   nglString mName;
+  std::string mCName;
   std::vector<nuiClass*> mParentClasses;
   std::multimap<nglString, nuiFunction*> mMethods; 
   std::set<nuiFunction*> mConstructors;
@@ -1453,9 +1456,13 @@ public:
   }
 
   void Dump(nglString& rString) const;
-protected:
+
   typedef std::multimap<nglString, nuiFunction*> FunctionMap;
   typedef std::map<nglString, nuiClass*> ClassMap;
+  
+  const FunctionMap& GetFunctions() const;
+  const ClassMap& GetClasses() const;
+protected:
   FunctionMap mFunctions;
   ClassMap mClasses;
 

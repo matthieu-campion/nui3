@@ -111,6 +111,7 @@ void TestBinding()
 nuiClass::nuiClass(const nglString& rName)
 {
   mName = rName;
+  mCName = rName.GetStdString();
 }
 
 nuiClass::~nuiClass()
@@ -155,7 +156,14 @@ void nuiClass::AddConstructor(nuiFunction* pFunction)
   mConstructors.insert(pFunction);
 }
 
-const std::vector<nuiClass*>& nuiClass::GetParentClasse() const
+nuiClass* nuiClass::GetParentClass() const
+{
+  if (mParentClasses.empty())
+    return NULL;
+  return mParentClasses[0];
+}
+
+const std::vector<nuiClass*>& nuiClass::GetParentClasses() const
 {
   return mParentClasses;
 }
@@ -174,6 +182,13 @@ const nglString& nuiClass::GetName() const
 {
   return mName;
 }
+
+const char* nuiClass::GetCName() const
+{
+  return mCName.c_str();
+}
+
+
 
 static void BuildTypeListString(uint StartIndex, const std::vector<nglString>& rArgs, nglString& rString)
 {
@@ -379,6 +394,15 @@ nuiClass* nuiBindingManager::GetClass(const nglString& rClassName) const
   return it->second;
 }
 
+const nuiBindingManager::FunctionMap& nuiBindingManager::GetFunctions() const
+{
+  return mFunctions;
+}
+
+const nuiBindingManager::ClassMap& nuiBindingManager::GetClasses() const
+{
+  return mClasses;
+}
 
 nuiBindingManager nuiBindingManager::mManager;
 
