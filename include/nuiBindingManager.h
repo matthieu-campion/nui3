@@ -1449,6 +1449,7 @@ public:
   nuiClass* AddClass(nuiClass* pClass);
 
   nuiClass* GetClass(const nglString& rClassName) const;
+  nuiClass* GetClass(nuiAttributeType type) const;
   
   static nuiBindingManager& GetManager()
   {
@@ -1459,12 +1460,15 @@ public:
 
   typedef std::multimap<nglString, nuiFunction*> FunctionMap;
   typedef std::map<nglString, nuiClass*> ClassMap;
+  typedef std::map<nuiAttributeType, nuiClass*> TypeMap;
   
   const FunctionMap& GetFunctions() const;
   const ClassMap& GetClasses() const;
+  const TypeMap& GetTypes() const;
 protected:
   FunctionMap mFunctions;
   ClassMap mClasses;
+  TypeMap mTypes;
 
   static nuiBindingManager mManager;
 };

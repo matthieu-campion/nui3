@@ -337,6 +337,7 @@ nuiFunction* nuiBindingManager::AddFunction(const nglString& rFunctionName, nuiF
 nuiClass* nuiBindingManager::AddClass(nuiClass* pClass)
 {
   mClasses.insert(std::pair<nglString, nuiClass*>(pClass->GetName(), pClass));
+  mTypes.insert(std::pair<nuiAttributeType, nuiClass*>(pClass->GetClassType(), pClass));
   return pClass;
 }
 
@@ -364,13 +365,13 @@ void nuiBindingManager::Dump(nglString& rString) const
   
   
   // Classes:
-  ClassMap::const_iterator it = mClasses.begin();
-  ClassMap::const_iterator end = mClasses.end();
+  TypeMap::const_iterator it = mTypes.begin();
+  TypeMap::const_iterator end = mTypes.end();
 
   while (it != end)
   {
-    nglString name = it->first;
     nuiClass* pClass = it->second;
+    nglString name = pClass->GetName();
     nglString classdump;
     pClass->Dump(classdump);
 
@@ -389,6 +390,14 @@ nuiClass* nuiBindingManager::GetClass(const nglString& rClassName) const
   return it->second;
 }
 
+nuiClass* nuiBindingManager::GetClass(nuiAttributeType type) const
+{
+  TypeMap::const_iterator it = mTypes.find(type);
+  if (it == mTypes.end())
+    return NULL;
+  return it->second;
+}
+
 const nuiBindingManager::FunctionMap& nuiBindingManager::GetFunctions() const
 {
   return mFunctions;
@@ -397,6 +406,11 @@ const nuiBindingManager::FunctionMap& nuiBindingManager::GetFunctions() const
 const nuiBindingManager::ClassMap& nuiBindingManager::GetClasses() const
 {
   return mClasses;
+}
+
+const nuiBindingManager::TypeMap& nuiBindingManager::GetTypes() const
+{
+  return mTypes;
 }
 
 nuiBindingManager nuiBindingManager::mManager;

@@ -50,7 +50,7 @@ JSBool myjs_out(JSContext *cx, JSObject *obj, uintN argc, jsval *argv, jsval *rv
         return JS_FALSE;
 
     nglString s(cmd);
-    NGL_OUT(_T("%ls"), s.GetChars());
+    NGL_OUT(_T("%ls\n"), s.GetChars());
 
     *rval = JSVAL_VOID;  /* return undefined */
     return JS_TRUE;
@@ -491,12 +491,13 @@ int JSTest(nuiMainWindow* pMainWindow)
   }
 
   {
-    nuiClass* pClass = nuiBindingManager::GetManager().GetClass(_T("nuiSimpleContainer"));
+    nuiVariant v(pMainWindow);
+    nuiClass* pClass = nuiBindingManager::GetManager().GetClass(v.GetType());
     JSClass* pJSClass = gJSClasses[pClass];
     JSObject* pJSClassObject = gJSClassObjects[pClass];
     JSObject* pObj = JS_DefineObject(cx, global, "window", pJSClass, pJSClassObject, 0);
     //JS_AddNamedRoot(cx, pObj, "window");
-    JS_SetPrivate(cx, pObj, new nuiVariant(pMainWindow));
+    JS_SetPrivate(cx, pObj, new nuiVariant(v));
   }
   
   /* Your application code here. This may include JSAPI calls
@@ -509,12 +510,10 @@ int JSTest(nuiMainWindow* pMainWindow)
 //                        "window.AddChild(new nuiLabel('FromJS'));\n"
 //                        ;
   const char* script =
-  "var obj = new nuiObject();\n"
-  "out('obj class:'+obj.GetObjectClass()+'\n');\n"
   "var label = new nuiLabel('FromJS');\n"
-  "out('label class:'+label.GetObjectClass()+'\n');\n"
+  "out('label class:'+label.GetObjectClass());\n"
   "window.AddChild(label);\n"
-  "out(window.GetObjectClass()+'\n');\n"
+  "out(window.GetObjectClass());\n"
   ;
   
   jsval rval;
