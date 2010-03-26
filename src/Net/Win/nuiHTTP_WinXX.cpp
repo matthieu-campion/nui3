@@ -33,6 +33,7 @@ static void ShowErrorRequest(DWORD err)
 #define BUFFER_LEN 1023
   DWORD len;
   nglChar buffer[BUFFER_LEN+1];
+  memset(buffer, 0, sizeof(buffer));
   nglString errormsg;
   FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM,
     NULL, 

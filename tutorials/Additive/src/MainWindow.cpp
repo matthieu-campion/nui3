@@ -140,7 +140,7 @@ float Blur(float x, float mean, float deviation, float variance)
       variance = 0.1;
     }
   }
-  return pow(exp(-(((x - mean) * (x - mean)) / ((2 * variance)))), 1 / (deviation * sqrt(2 * M_PI)));
+  return powf(exp(-(((x - mean) * (x - mean)) / ((2 * variance)))), 1 / (deviation * sqrt(2 * M_PI)));
 }
 
 bool MainWindow::Draw(nuiDrawContext* pContext)
