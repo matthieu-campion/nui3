@@ -25,7 +25,17 @@ nuiSurface* nuiSurface::CreateSurface (const nglString& rName, int32 Width, int3
 {
   nuiSurface* pSurface = NULL;
   //NGL_OUT(_T("nuiSurface::CreateSurface(%ls, %.1f, %.1f)\n"), rName.GetChars(), Width, Height);
-  NGL_ASSERT(mpSurfaces.find(rName) == mpSurfaces.end());
+  nuiSurfaceMap::const_iterator it = mpSurfaces.find(rName);
+  if (it != mpSurfaces.end())
+  {
+    pSurface = it->second;
+    if (pSurface->GetWidth() == Width && pSurface->GetHeight() == Height && pSurface->GetPixelFormat() == PixelFormat)
+    {
+      pSurface->Acquire();
+      return pSurface;
+    }
+  }
+
   pSurface = new nuiSurface(rName, Width, Height, PixelFormat);
   pSurface->Acquire();
   mpSurfaces[rName] = pSurface;
@@ -40,14 +50,13 @@ nuiSurface::nuiSurface(const nglString& rName, int32 Width, int32 Height, nglIma
 {
   SetObjectClass(_T("nuiSurface"));
   SetObjectName(rName);
-  mCount = 0;
   mPermanent = false;
   mWidth = Width;
   mHeight= Height;
   mPixelFormat = PixelFormat;
   mDepth = false;
   mStencil = false;
-  mRenderToTexture = false;
+  mRenderToTexture = true;
   mpTexture = NULL;
   mpSurfacePainter = new nuiMetaPainter(nuiRect(Width, Height), NULL);
 #ifdef DEBUG
@@ -67,6 +76,9 @@ nuiSurface::nuiSurface(const nglString& rName, int32 Width, int32 Height, nglIma
     ++it;
   }
 
+  mpTexture = nuiTexture::GetTexture(this);
+  mpTexture->Acquire();
+  
 //  NGL_OUT(_T("nuiSurface CTOR [0x%x] SIZE[%dx%d]\n"), this, Width, Height);
 }
 
@@ -124,18 +136,9 @@ void nuiSurface::SetStencil(bool Enable)
   mStencil = Enable;
 }
 
-void nuiSurface::SetRenderToTexture(bool Enable)
-{
-  mRenderToTexture = Enable;
-}
 bool nuiSurface::GetRenderToTexture() const
 {
   return mRenderToTexture;
-}
-
-void nuiSurface::SetTexture(nuiTexture* pTexture)
-{
-  mpTexture = pTexture;
 }
 
 nuiTexture* nuiSurface::GetTexture() const
@@ -152,28 +155,6 @@ void nuiSurface::AddCache(nuiSurfaceCache* pCache)
 void nuiSurface::DelCache(nuiSurfaceCache* pCache)
 {
   mpSurfaceCaches.erase(pCache);
-}
-
-uint32 nuiSurface::Acquire()    
-{ 
-  return ++mCount; 
-}
-
-uint32 nuiSurface::Release()
-{ 
-  NGL_ASSERTR(mCount > 0, mCount); 
-  mCount--;
-  if (mCount == 0)
-  {
-    delete this;
-    return 0;
-  }
-  return mCount; 
-}
-
-uint32 nuiSurface::GetRefCount()
-{
-  return mCount;
 }
 
 void nuiSurface::SetPermanent(bool Permanent)

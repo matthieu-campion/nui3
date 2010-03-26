@@ -2897,10 +2897,6 @@ void nuiWidget::UpdateSurface(const nuiRect& rRect)
 
       nglString str(GetSurfaceName(this));
       mpSurface = nuiSurface::CreateSurface(str, ToAbove(rRect.GetWidth()), ToAbove(rRect.GetHeight()), eImagePixelRGBA);
-      mpSurface->SetRenderToTexture(true);
-      nuiTexture* pSurfaceTexture = nuiTexture::GetTexture(mpSurface, false);
-      mpSurface->SetTexture(pSurfaceTexture);
-      
       mDirtyRects.clear();
       mDirtyRects.push_back(nuiRect(mpSurface->GetWidth(), mpSurface->GetHeight()));
     }

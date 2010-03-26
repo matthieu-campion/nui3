@@ -103,24 +103,21 @@ nuiTexture* nuiTexture::GetTexture(const nuiXMLNode* pNode)
   return pTexture;
 }
 
-nuiTexture* nuiTexture::GetTexture(nuiSurface* pSurface, bool Acquired)
+nuiTexture* nuiTexture::GetTexture(nuiSurface* pSurface)
 {
-  nuiTexture* pTexture = NULL;
+  nuiTexture* pTexture = pSurface->GetTexture();
+  if (pTexture)
+    return pTexture;
   nglString name;
   name.Format(_T("Surface 0x%x"), pSurface);
   nuiTextureMap::iterator it = mpTextures.find(name);
   if (it == mpTextures.end())
   {
     pTexture = new nuiTexture(pSurface);    
-    if (!Acquired)
-    {
-      pSurface->Acquire();
-    }
   }
   else
     pTexture = it->second;
-  if (pTexture)
-    pTexture->Acquire();
+  
   return pTexture;  
 }
 
@@ -466,7 +463,7 @@ nuiTexture::~nuiTexture()
 
   if (mpSurface)
   {
-    mpSurface->Release();
+    //mpSurface->Release();
   }
   mpTextures.erase(GetProperty(_T("Source")));
   TexturesChanged();

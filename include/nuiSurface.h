@@ -33,15 +33,10 @@ public:
   void SetStencil(bool Enable);  
   bool GetStencil() const;
 
-  void SetRenderToTexture(bool Enable);
   bool GetRenderToTexture() const;
 
-  void SetTexture(nuiTexture* pTexture);
   nuiTexture* GetTexture() const;
 
-  uint32 Acquire();    
-  uint32 Release();
-  uint GetRefCount();
   void SetPermanent(bool Permanent = true);
   bool IsPermanent();
 
@@ -58,7 +53,6 @@ protected:
   virtual ~nuiSurface();
 
 private:
-  uint32 mCount;
   bool mPermanent;
 
   int32 mWidth;

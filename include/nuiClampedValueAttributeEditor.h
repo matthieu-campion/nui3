@@ -102,6 +102,13 @@ protected:
   
   void Init(uint32 flag)
   {
+    float v = 0;
+    if (mIndexed)
+      v = mAttribute.Get(mIndex);
+    else
+      v = mAttribute.Get();
+    
+    mRange.SetValue(v);
     nuiLabel* pLabel = new nuiLabel(mName);
     pLabel->SetObjectName(_T("Monitor::AttributeLabel"));
     pLabel->SetPosition(nuiCenter);
