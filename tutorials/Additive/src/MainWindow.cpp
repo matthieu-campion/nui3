@@ -108,8 +108,8 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
   }
   
   mClicked = false;
-  mMouseX = 0;
-  mMouseY = 0;
+  mMouseX = GetWidth() / 2;
+  mMouseY = GetHeight() / 2;
   
   mpSurface1 = NULL;
   mpTexture1 = NULL;
@@ -118,10 +118,10 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
   mpSurface3 = NULL;
   mpTexture3 = NULL;
 
-  mMean = .9;
+  mMean = .95;
   mAmount = 0.1;
-  mDeviation = .07;
-  mVariance = .24;
+  mDeviation = .7;
+  mVariance = .28;
   
   mCountX = 16;
   mCountY = 16;
@@ -233,7 +233,7 @@ bool MainWindow::Draw(nuiDrawContext* pContext)
   mpSurface1->SetTextColor(nuiColor(0, 0, 250, 64, true));
   mpSurface1->DrawText(80, 280, _T("Text2"));
   mpSurface1->SetTextColor(nuiColor(255, 255, 255, 255, true));
-  mpSurface1->DrawText(70 + mMouseX, 260 + mMouseY, _T("Text3"));
+  mpSurface1->DrawText(mMouseX - 400, mMouseY + 50, _T("Text3"));
   DrawChildren(mpSurface1);
   mpSurface1->SetDirty(true);
   

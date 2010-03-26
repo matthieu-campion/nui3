@@ -57,6 +57,9 @@ bool nuiPopupValueAttributeEditor::OnValidated(const nuiEvent& rEvent)
   {
     finalStrValue.SetCDouble(max);
   }
+
+  mAttribute.FromString(finalStrValue);
+  mpEditLine->SetText(finalStrValue);
   
   
   // auto trash
