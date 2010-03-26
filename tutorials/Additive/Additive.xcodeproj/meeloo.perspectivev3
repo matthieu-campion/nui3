@@ -289,14 +289,15 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateExpansionKey</key>
 							<array>
 								<string>61A9DE3D0B833C9200BC506C</string>
+								<string>BC6A09CA0EF9300600881ACF</string>
 								<string>61A9DE4A0B833CD000BC506C</string>
 								<string>1C77FABC04509CD000000102</string>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>4</integer>
-									<integer>3</integer>
+									<integer>2</integer>
+									<integer>1</integer>
 									<integer>0</integer>
 								</array>
 							</array>
@@ -344,7 +345,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E5425CD5115C3E3100EE458C</string>
+										<string>E5425D52115CCA0500EE458C</string>
 										<key>history</key>
 										<array>
 											<string>E54257D2115B80E400EE458C</string>
@@ -367,7 +368,8 @@
 											<string>E5425C75115C24E800EE458C</string>
 											<string>E5425C9A115C29BC00EE458C</string>
 											<string>E5425CA1115C29FE00EE458C</string>
-											<string>E5425CD1115C3DC600EE458C</string>
+											<string>E5425D14115CBD1600EE458C</string>
+											<string>E5425D4C115CC9B400EE458C</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -673,7 +675,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>291257905.72048301</real>
+	<real>291293701.79683602</real>
 	<key>ToolbarConfigUserDefaultsMinorVersion</key>
 	<string>2</string>
 	<key>ToolbarDisplayMode</key>
@@ -690,7 +692,7 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E5425CD6115C3E3100EE458C</string>
+		<string>E5425D53115CCA0500EE458C</string>
 		<string>E5425BF6115BDAA000EE458C</string>
 		<string>E5425BF7115BDAA000EE458C</string>
 		<string>/Users/meeloo/work/nui3/tutorials/Additive/Additive.xcodeproj</string>

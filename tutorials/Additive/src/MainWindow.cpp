@@ -21,6 +21,16 @@ static nuiAttributeEditor* GetBlurAttributeEditor(void* pTarget, nuiAttribute<fl
   return new nuiClampedValueAttributeEditor<float>(nuiAttrib<float>(nuiAttribBase(pTarget, pAttribute)), nuiRange(0, 0, 1, .1, .1, 0));
 }
 
+static nuiAttributeEditor* GetBlurAttributeEditor2(void* pTarget, nuiAttribute<float>* pAttribute)
+{
+  return new nuiClampedValueAttributeEditor<float>(nuiAttrib<float>(nuiAttribBase(pTarget, pAttribute)), nuiRange(0, 0, 10, .1, .1, 0));
+}
+
+static nuiAttributeEditor* GetBlurIntAttributeEditor(void* pTarget, nuiAttribute<float>* pAttribute)
+{
+  return new nuiClampedValueAttributeEditor<float>(nuiAttrib<float>(nuiAttribBase(pTarget, pAttribute)), nuiRange(1, 1, 32, 1, 1, 0));
+}
+
 
 MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& rInfo, bool ShowFPS, const nglContext* pShared )
   : nuiMainWindow(rContextInfo, rInfo, pShared, nglPath(ePathCurrent)), mEventSink(this)
@@ -58,6 +68,43 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
      );
     pDeviationAttrib->SetEditor(&GetBlurAttributeEditor);
     AddAttribute(pDeviationAttrib);
+
+    {
+      nuiAttribute<float>* pAttrib = new nuiAttribute<float>
+      (nglString(_T("BlurCountX")), nuiUnitSize,
+       nuiMakeDelegate(this, &MainWindow::GetCountX),
+       nuiMakeDelegate(this, &MainWindow::SetCountX)
+       );
+      pAttrib->SetEditor(&GetBlurIntAttributeEditor);
+      AddAttribute(pAttrib);
+    }
+    {
+      nuiAttribute<float>* pAttrib = new nuiAttribute<float>
+      (nglString(_T("BlurCountY")), nuiUnitSize,
+       nuiMakeDelegate(this, &MainWindow::GetCountY),
+       nuiMakeDelegate(this, &MainWindow::SetCountY)
+       );
+      pAttrib->SetEditor(&GetBlurIntAttributeEditor);
+      AddAttribute(pAttrib);
+    }
+    {
+      nuiAttribute<float>* pAttrib = new nuiAttribute<float>
+      (nglString(_T("BlurScaleX")), nuiUnitSize,
+       nuiMakeDelegate(this, &MainWindow::GetScaleX),
+       nuiMakeDelegate(this, &MainWindow::SetScaleX)
+       );
+      pAttrib->SetEditor(&GetBlurAttributeEditor2);
+      AddAttribute(pAttrib);
+    }
+    {
+      nuiAttribute<float>* pAttrib = new nuiAttribute<float>
+      (nglString(_T("BlurScaleY")), nuiUnitSize,
+       nuiMakeDelegate(this, &MainWindow::GetScaleY),
+       nuiMakeDelegate(this, &MainWindow::SetScaleY)
+       );
+      pAttrib->SetEditor(&GetBlurAttributeEditor2);
+      AddAttribute(pAttrib);
+    }
   }
   
   mClicked = false;
@@ -76,6 +123,11 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
   mDeviation = .07;
   mVariance = .24;
   
+  mCountX = 16;
+  mCountY = 16;
+  mScaleX = 1;
+  mScaleY = 1;
+  
 #ifdef _DEBUG_
   SetDebugMode(true);
 #endif
@@ -88,6 +140,10 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
   pBox->AddCell(GetAttribute(_T("BlurAmount")).GetEditor());
   pBox->AddCell(GetAttribute(_T("BlurVariance")).GetEditor());
   pBox->AddCell(GetAttribute(_T("BlurDeviation")).GetEditor());
+  pBox->AddCell(GetAttribute(_T("BlurCountX")).GetEditor());
+  pBox->AddCell(GetAttribute(_T("BlurScaleX")).GetEditor());
+  pBox->AddCell(GetAttribute(_T("BlurCountY")).GetEditor());
+  pBox->AddCell(GetAttribute(_T("BlurScaleY")).GetEditor());
 }
 
 MainWindow::~MainWindow()
@@ -174,7 +230,7 @@ bool MainWindow::Draw(nuiDrawContext* pContext)
   mpSurface1->SetFont(nuiFont::GetFont(250));
   mpSurface1->SetTextColor(nuiColor(192, 0, 0, 64, true));
   mpSurface1->DrawText(50, 240, _T("Text1"));
-  mpSurface1->SetTextColor(nuiColor(0, 192, 0, 64, true));
+  mpSurface1->SetTextColor(nuiColor(0, 0, 250, 64, true));
   mpSurface1->DrawText(80, 280, _T("Text2"));
   mpSurface1->SetTextColor(nuiColor(255, 255, 255, 255, true));
   mpSurface1->DrawText(70 + mMouseX, 260 + mMouseY, _T("Text3"));
@@ -206,14 +262,12 @@ bool MainWindow::Draw(nuiDrawContext* pContext)
   
   //pContext->DrawImage(nuiRect(512, 512), nuiRect(512, 512));
   
-  const int32 COUNT = 32;
-  const float SCALE = 1.0f;
-  for (int32 i = 0; i < COUNT; i++)
+  for (int32 i = 0; i < mCountY; i++)
   {
-    float a = mAmount * Blur((float)i / (float) COUNT, 0.5, mDeviation, mVariance);
+    float a = mAmount * Blur((float)i / (float) mCountY, 0.5, mDeviation, mVariance);
     nuiColor c(a, a, a, a, true);
     mpSurface2->SetFillColor(c);
-    mpSurface2->DrawImage(nuiRect(0, (int32)(SCALE * (i - (COUNT / 2))), w2, h2), r);
+    mpSurface2->DrawImage(nuiRect(0, (int32)(mScaleY * (i - (mCountY / 2))), w2, h2), r);
   }
   
   // Horizontal Blur the second surface into the third:
@@ -236,12 +290,12 @@ bool MainWindow::Draw(nuiDrawContext* pContext)
   mpSurface3->EnableTexturing(true);
   mpSurface3->SetBlendFunc(nuiBlendAdd);
   
-  for (int32 i = 0; i < COUNT; i++)
+  for (int32 i = 0; i < mCountX; i++)
   {
-    float a = mAmount * Blur((float)i / (float) COUNT, .5, mDeviation, mVariance);
+    float a = mAmount * Blur((float)i / (float) mCountX, .5, mDeviation, mVariance);
     nuiColor c(a, a, a, a, true);
     mpSurface3->SetFillColor(c);
-    mpSurface3->DrawImage(nuiRect((int32)(SCALE * (i - (COUNT / 2))), 0, w2, h2), r2);
+    mpSurface3->DrawImage(nuiRect((int32)(mScaleX * (i - (mCountX / 2))), 0, w2, h2), r2);
   }
   
   // Draw the final surface on screen:
@@ -376,3 +430,48 @@ void MainWindow::SetVariance(float v)
   mVariance = v;
   Invalidate();
 }
+
+float MainWindow::GetCountX() const
+{
+  return mCountX;
+}
+
+void MainWindow::SetCountX(float v)
+{
+  mCountX = v;
+  Invalidate();
+}
+
+float MainWindow::GetCountY() const
+{
+  return mCountY;
+}
+
+void MainWindow::SetCountY(float v)
+{
+  mCountY = v;
+  Invalidate();
+}
+
+float MainWindow::GetScaleX() const
+{
+  return mScaleX;
+}
+
+void MainWindow::SetScaleX(float v)
+{
+  mScaleX = v;
+  Invalidate();
+}
+
+float MainWindow::GetScaleY() const
+{
+  return mScaleY;
+}
+
+void MainWindow::SetScaleY(float v)
+{
+  mScaleY = v;
+  Invalidate();
+}
+

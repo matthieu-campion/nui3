@@ -25,10 +25,11 @@
   ClientRect: "{10 10 0 0}";
 }
 
-"MyLabel"!
+nuiLabel!
 {
-  DecorationMode: Border;
-  Decoration: dMyLabel;
+  TextColor: white;
+  //DecorationMode: Border;
+  //Decoration: dMyLabel;
 }
 
 // blank ending line following

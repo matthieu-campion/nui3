@@ -113,7 +113,7 @@ protected:
     pLabel->SetObjectName(_T("Monitor::AttributeLabel"));
     pLabel->SetPosition(nuiCenter);
     pLabel->SetBorder(0,0,0,4);
-    mpBox->SetCell(0, pLabel);
+    mpBox->SetCell(2, pLabel);
     
     mpKnob = new nuiKnob(mRange);
     nuiImageSequence* pSequence = NULL;
@@ -121,7 +121,7 @@ protected:
     mpKnob->SetImageSequence(pSequence);
     
     mpKnob->SetPosition(nuiCenter);
-    mpBox->SetCell(1, mpKnob);
+    mpBox->SetCell(0, mpKnob);
     
     nglString str;
     if (mIndexed)
@@ -133,7 +133,7 @@ protected:
     mpLabel->SetObjectName(_T("Monitor::AttributeLabel"));
     mpLabel->SetPosition(nuiCenter);
     mpLabel->SetBorder(0,0,2,0);
-    mpBox->SetCell(2, mpLabel);
+    mpBox->SetCell(1, mpLabel);
     
     mValueBackup = mpKnob->GetRange().GetValue();
     

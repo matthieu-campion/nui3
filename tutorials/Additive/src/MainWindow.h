@@ -33,16 +33,35 @@ protected:
   float mDeviation;
   float mVariance;
   float mAmount;
-
-  float GetMean() const;
-  float GetAmount() const;
-  float GetDeviation() const;
-  float GetVariance() const;
+  int32 mCountX;
+  int32 mCountY;
+  float mScaleX;
+  float mScaleY;
   
+  float GetMean() const;
   void SetMean(float v);
+  
+  float GetAmount() const;
   void SetAmount(float v);
+  
+  float GetDeviation() const;
   void SetDeviation(float v);
+  
+  float GetVariance() const;
   void SetVariance(float v);
+  
+  float GetCountX() const;
+  void SetCountX(float v);
+  
+  float GetCountY() const;
+  void SetCountY(float v);
+  
+  float GetScaleX() const;
+  void SetScaleX(float v);
+  
+  float GetScaleY() const;
+  void SetScaleY(float v);
+  
   
   nuiSurface* mpSurface1;
   nuiTexture* mpTexture1;
