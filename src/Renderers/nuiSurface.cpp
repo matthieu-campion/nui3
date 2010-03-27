@@ -50,6 +50,12 @@ nuiSurface::nuiSurface(const nglString& rName, int32 Width, int32 Height, nglIma
 {
   SetObjectClass(_T("nuiSurface"));
   SetObjectName(rName);
+  static bool tr = true;
+  if (tr)
+  {
+    mTrace = true;
+    tr = false;
+  }
   mPermanent = false;
   mWidth = Width;
   mHeight= Height;
@@ -98,6 +104,8 @@ nuiSurface::~nuiSurface()
     SetPainter(NULL);
   delete mpSurfacePainter;
 
+  if (mpTexture)
+    mpTexture->Release();
 //  NGL_OUT(_T("nuiSurface DTOR [0x%x] NAME: [%ls] COUNT [%d]\n"), this, GetObjectName().GetChars(), mpSurfaces.size());
 }
 

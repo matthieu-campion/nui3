@@ -345,14 +345,14 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E5677C76115CFC1C00151564</string>
+										<string>E5677D2C115D313200151564</string>
 										<key>history</key>
 										<array>
 											<string>E54257D2115B80E400EE458C</string>
 											<string>E5425B30115BCE5400EE458C</string>
 											<string>E5425C4A115BE12F00EE458C</string>
 											<string>E5677C32115CEF1100151564</string>
-											<string>E5677C74115CFC0900151564</string>
+											<string>E5677D2A115D308C00151564</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -656,7 +656,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>291306524.227368</real>
+	<real>291320114.57374799</real>
 	<key>ToolbarConfigUserDefaultsMinorVersion</key>
 	<string>2</string>
 	<key>ToolbarDisplayMode</key>
@@ -673,7 +673,7 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E5677C77115CFC1C00151564</string>
+		<string>E5677D2D115D313200151564</string>
 		<string>E5677C41115CEF4100151564</string>
 		<string>E5677C43115CEF4100151564</string>
 		<string>/Users/meeloo/work/nui3/tutorials/Additive/Additive.xcodeproj</string>
