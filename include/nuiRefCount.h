@@ -21,27 +21,27 @@ public:
 
   uint32 Acquire() const   
   { 
-    if (mTrace)
-    {
-      NGL_OUT(_T("Acquire object 0x%x (%d)\n"), this, mCount + 1);
-    }
+//    if (mTrace)
+//    {
+//      NGL_OUT(_T("Acquire object 0x%x (%d)\n"), this, mCount + 1);
+//    }
     return ++mCount; 
   }
 
   uint32 Release()
   { 
-    if (mTrace)
-    {
-      NGL_OUT(_T("Release object 0x%x (%d)\n"), this, mCount - 1);
-    }
+//    if (mTrace)
+//    {
+//      NGL_OUT(_T("Release object 0x%x (%d)\n"), this, mCount - 1);
+//    }
     NGL_ASSERTR(mCount > 0, mCount); 
     mCount--;
     if (mCount == 0)
     {
-      if (mTrace)
-      {
-        NGL_OUT(_T("Delete object 0x%x\n"), this);
-      }
+//      if (mTrace)
+//      {
+//        NGL_OUT(_T("Delete object 0x%x\n"), this);
+//      }
       OnFinalize();
       delete this;
       return 0;

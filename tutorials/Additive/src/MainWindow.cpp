@@ -177,10 +177,6 @@ void MainWindow::UpdateSurfaces()
   mpSurface2 = nuiSurface::CreateSurface(_T("HBlur"), w2, h2, eImagePixelRGBA);
   mpSurface3 = nuiSurface::CreateSurface(_T("VBlur"), w2, h2, eImagePixelRGBA);
   
-  mpSurface1->Acquire();
-  mpSurface2->Acquire();
-  mpSurface3->Acquire();
-  
   mpTexture1 = mpSurface1->GetTexture();
   mpTexture2 = mpSurface2->GetTexture();
   mpTexture3 = mpSurface3->GetTexture();

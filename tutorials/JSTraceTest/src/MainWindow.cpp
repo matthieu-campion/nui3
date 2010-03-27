@@ -436,7 +436,7 @@ int JSTest(nuiMainWindow* pMainWindow)
   cx = JS_NewContext(rt, 8192);
   if (cx == NULL)
       return 1;
-  JS_SetOptions(cx, JSOPTION_VAROBJFIX);
+  JS_SetOptions(cx, JSOPTION_VAROBJFIX | JSOPTION_JIT);
   JS_SetVersion(cx, JSVERSION_LATEST);
   JS_SetErrorReporter(cx, reportError);
 

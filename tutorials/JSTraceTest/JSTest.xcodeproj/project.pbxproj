@@ -24,11 +24,6 @@
 		BC6A09AD0EF92BAB00881ACF /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BC6A09AB0EF92BAB00881ACF /* Info.plist */; };
 		BCBCB15F0DFD45BD002E8BC3 /* libnui3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */; };
 		BCBCB1600DFD45C1002E8BC3 /* libnui3D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15C0DFD45B6002E8BC3 /* libnui3D.a */; };
-		E5CC3315115AC01300747AB2 /* builtins.tbl in Resources */ = {isa = PBXBuildFile; fileRef = E5CC323B115AC01300747AB2 /* builtins.tbl */; };
-		E5CC3317115AC01300747AB2 /* imacro_asm.js in Sources */ = {isa = PBXBuildFile; fileRef = E5CC323D115AC01300747AB2 /* imacro_asm.js */; };
-		E5CC3318115AC01300747AB2 /* imacros.jsasm in Resources */ = {isa = PBXBuildFile; fileRef = E5CC323E115AC01300747AB2 /* imacros.jsasm */; };
-		E5CC3319115AC01300747AB2 /* jitstats.tbl in Resources */ = {isa = PBXBuildFile; fileRef = E5CC323F115AC01300747AB2 /* jitstats.tbl */; };
-		E5CC331A115AC01300747AB2 /* js.msg in Resources */ = {isa = PBXBuildFile; fileRef = E5CC3242115AC01300747AB2 /* js.msg */; };
 		E5CC331B115AC01300747AB2 /* jsapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC3243115AC01300747AB2 /* jsapi.cpp */; };
 		E5CC331C115AC01300747AB2 /* jsarena.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC3245115AC01300747AB2 /* jsarena.cpp */; };
 		E5CC331D115AC01300747AB2 /* jsarray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC3247115AC01300747AB2 /* jsarray.cpp */; };
@@ -36,12 +31,10 @@
 		E5CC331F115AC01300747AB2 /* jsbool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC3250115AC01300747AB2 /* jsbool.cpp */; };
 		E5CC3320115AC01300747AB2 /* jsbuiltins.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC3252115AC01300747AB2 /* jsbuiltins.cpp */; };
 		E5CC3321115AC01300747AB2 /* jscntxt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC3255115AC01300747AB2 /* jscntxt.cpp */; };
-		E5CC3322115AC01300747AB2 /* jscpucfg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC3259115AC01300747AB2 /* jscpucfg.cpp */; };
 		E5CC3323115AC01300747AB2 /* jsdate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC325B115AC01300747AB2 /* jsdate.cpp */; };
 		E5CC3324115AC01300747AB2 /* jsdbgapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC325D115AC01300747AB2 /* jsdbgapi.cpp */; };
 		E5CC3325115AC01300747AB2 /* jsdhash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC325F115AC01300747AB2 /* jsdhash.cpp */; };
 		E5CC3326115AC01300747AB2 /* jsdtoa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC3261115AC01300747AB2 /* jsdtoa.cpp */; };
-		E5CC3327115AC01300747AB2 /* jsdtracef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC3263115AC01300747AB2 /* jsdtracef.cpp */; };
 		E5CC3328115AC01300747AB2 /* jsemit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC3265115AC01300747AB2 /* jsemit.cpp */; };
 		E5CC3329115AC01300747AB2 /* jsexn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC3267115AC01300747AB2 /* jsexn.cpp */; };
 		E5CC332A115AC01300747AB2 /* jsfun.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC3269115AC01300747AB2 /* jsfun.cpp */; };
@@ -50,39 +43,26 @@
 		E5CC332D115AC01300747AB2 /* jsinterp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC3270115AC01300747AB2 /* jsinterp.cpp */; };
 		E5CC332E115AC01300747AB2 /* jsinvoke.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC3274115AC01300747AB2 /* jsinvoke.cpp */; };
 		E5CC332F115AC01300747AB2 /* jsiter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC3275115AC01300747AB2 /* jsiter.cpp */; };
-		E5CC3330115AC01300747AB2 /* jskeyword.tbl in Resources */ = {isa = PBXBuildFile; fileRef = E5CC3277115AC01300747AB2 /* jskeyword.tbl */; };
-		E5CC3331115AC01300747AB2 /* jskwgen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC3278115AC01300747AB2 /* jskwgen.cpp */; };
 		E5CC3332115AC01300747AB2 /* jslock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC327A115AC01300747AB2 /* jslock.cpp */; };
-		E5CC3333115AC01300747AB2 /* jslocko.asm in Sources */ = {isa = PBXBuildFile; fileRef = E5CC327C115AC01300747AB2 /* jslocko.asm */; };
 		E5CC3334115AC01300747AB2 /* jslog2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC327D115AC01300747AB2 /* jslog2.cpp */; };
 		E5CC3335115AC01300747AB2 /* jsmath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC327F115AC01300747AB2 /* jsmath.cpp */; };
 		E5CC3336115AC01300747AB2 /* jsnum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC3281115AC01300747AB2 /* jsnum.cpp */; };
 		E5CC3337115AC01300747AB2 /* jsobj.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC3283115AC01300747AB2 /* jsobj.cpp */; };
 		E5CC3338115AC01300747AB2 /* json.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC3286115AC01300747AB2 /* json.cpp */; };
 		E5CC3339115AC01300747AB2 /* jsopcode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC3288115AC01300747AB2 /* jsopcode.cpp */; };
-		E5CC333A115AC01300747AB2 /* jsopcode.tbl in Resources */ = {isa = PBXBuildFile; fileRef = E5CC328A115AC01300747AB2 /* jsopcode.tbl */; };
-		E5CC333B115AC01300747AB2 /* jsoplengen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC328B115AC01300747AB2 /* jsoplengen.cpp */; };
-		E5CC333C115AC01300747AB2 /* jsops.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC328C115AC01300747AB2 /* jsops.cpp */; };
 		E5CC333D115AC01300747AB2 /* jsparse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC328E115AC01300747AB2 /* jsparse.cpp */; };
 		E5CC333E115AC01300747AB2 /* jsprf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC3290115AC01300747AB2 /* jsprf.cpp */; };
-		E5CC333F115AC01300747AB2 /* jsproto.tbl in Resources */ = {isa = PBXBuildFile; fileRef = E5CC3292115AC01300747AB2 /* jsproto.tbl */; };
-		E5CC3340115AC01300747AB2 /* jsrecursion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC3295115AC01300747AB2 /* jsrecursion.cpp */; };
 		E5CC3341115AC01300747AB2 /* jsregexp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC3296115AC01300747AB2 /* jsregexp.cpp */; };
-		E5CC3342115AC01300747AB2 /* jsreops.tbl in Resources */ = {isa = PBXBuildFile; fileRef = E5CC3298115AC01300747AB2 /* jsreops.tbl */; };
 		E5CC3343115AC01300747AB2 /* jsscan.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC3299115AC01300747AB2 /* jsscan.cpp */; };
 		E5CC3344115AC01300747AB2 /* jsscope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC329B115AC01300747AB2 /* jsscope.cpp */; };
 		E5CC3345115AC01300747AB2 /* jsscript.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC329E115AC01300747AB2 /* jsscript.cpp */; };
-		E5CC3346115AC01300747AB2 /* jsshell.msg in Resources */ = {isa = PBXBuildFile; fileRef = E5CC32A1115AC01300747AB2 /* jsshell.msg */; };
 		E5CC3347115AC01300747AB2 /* jsstr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC32A4115AC01300747AB2 /* jsstr.cpp */; };
 		E5CC3348115AC01300747AB2 /* jstask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC32A7115AC01300747AB2 /* jstask.cpp */; };
 		E5CC3349115AC01300747AB2 /* jstracer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC32AA115AC01300747AB2 /* jstracer.cpp */; };
 		E5CC334A115AC01300747AB2 /* jstypedarray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC32AC115AC01300747AB2 /* jstypedarray.cpp */; };
 		E5CC334B115AC01300747AB2 /* jsutil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC32AF115AC01300747AB2 /* jsutil.cpp */; };
-		E5CC334C115AC01300747AB2 /* jswince.asm in Sources */ = {isa = PBXBuildFile; fileRef = E5CC32B3115AC01300747AB2 /* jswince.asm */; };
 		E5CC334D115AC01300747AB2 /* jsxdrapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC32B4115AC01300747AB2 /* jsxdrapi.cpp */; };
 		E5CC334E115AC01300747AB2 /* jsxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC32B6115AC01300747AB2 /* jsxml.cpp */; };
-		E5CC334F115AC01300747AB2 /* lock_sparcv8plus.il in Resources */ = {isa = PBXBuildFile; fileRef = E5CC32B8115AC01300747AB2 /* lock_sparcv8plus.il */; };
-		E5CC3350115AC01300747AB2 /* lock_sparcv9.il in Resources */ = {isa = PBXBuildFile; fileRef = E5CC32B9115AC01300747AB2 /* lock_sparcv9.il */; };
 		E5CC3351115AC01300747AB2 /* Allocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC32BB115AC01300747AB2 /* Allocator.cpp */; };
 		E5CC3352115AC01300747AB2 /* Assembler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC32BD115AC01300747AB2 /* Assembler.cpp */; };
 		E5CC3353115AC01300747AB2 /* avmplus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC32BF115AC01300747AB2 /* avmplus.cpp */; };
@@ -90,13 +70,7 @@
 		E5CC3355115AC01300747AB2 /* Containers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC32C3115AC01300747AB2 /* Containers.cpp */; };
 		E5CC3356115AC01300747AB2 /* Fragmento.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC32C5115AC01300747AB2 /* Fragmento.cpp */; };
 		E5CC3357115AC01300747AB2 /* LIR.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC32C7115AC01300747AB2 /* LIR.cpp */; };
-		E5CC3358115AC01300747AB2 /* LIRopcode.tbl in Resources */ = {isa = PBXBuildFile; fileRef = E5CC32C9115AC01300747AB2 /* LIRopcode.tbl */; };
-		E5CC3359115AC01300747AB2 /* NativeARM.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC32CC115AC01300747AB2 /* NativeARM.cpp */; };
 		E5CC335A115AC01300747AB2 /* Nativei386.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC32CE115AC01300747AB2 /* Nativei386.cpp */; };
-		E5CC335B115AC01300747AB2 /* NativeMIPS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC32D0115AC01300747AB2 /* NativeMIPS.cpp */; };
-		E5CC335C115AC01300747AB2 /* NativePPC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC32D2115AC01300747AB2 /* NativePPC.cpp */; };
-		E5CC335D115AC01300747AB2 /* NativeSparc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC32D4115AC01300747AB2 /* NativeSparc.cpp */; };
-		E5CC335E115AC01300747AB2 /* NativeX64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC32D6115AC01300747AB2 /* NativeX64.cpp */; };
 		E5CC335F115AC01300747AB2 /* njconfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC32D8115AC01300747AB2 /* njconfig.cpp */; };
 		E5CC3360115AC01300747AB2 /* RegAlloc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC32DB115AC01300747AB2 /* RegAlloc.cpp */; };
 		E5CC3361115AC01300747AB2 /* VMPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC32DD115AC01300747AB2 /* VMPI.cpp */; };
@@ -153,7 +127,6 @@
 		E5CC33D6115AC01300747AB2 /* VMPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC32DD115AC01300747AB2 /* VMPI.cpp */; };
 		E5CC33D7115AC01300747AB2 /* prmjtime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC32DF115AC01300747AB2 /* prmjtime.cpp */; };
 		E5CC33F7115ACB3300747AB2 /* avmplus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC32BF115AC01300747AB2 /* avmplus.cpp */; };
-		E5CC3434115AD86B00747AB2 /* imacros.c.out in Resources */ = {isa = PBXBuildFile; fileRef = E5CC3433115AD86B00747AB2 /* imacros.c.out */; };
 		E5CC343E115AD8BF00747AB2 /* vprof.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC343C115AD8BF00747AB2 /* vprof.cpp */; };
 		E5CC343F115AD8BF00747AB2 /* vprof.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC343C115AD8BF00747AB2 /* vprof.cpp */; };
 		E5CC3448115AD93100747AB2 /* njconfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC32D8115AC01300747AB2 /* njconfig.cpp */; };
@@ -772,19 +745,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				BC6A09AD0EF92BAB00881ACF /* Info.plist in Resources */,
-				E5CC3315115AC01300747AB2 /* builtins.tbl in Resources */,
-				E5CC3318115AC01300747AB2 /* imacros.jsasm in Resources */,
-				E5CC3319115AC01300747AB2 /* jitstats.tbl in Resources */,
-				E5CC331A115AC01300747AB2 /* js.msg in Resources */,
-				E5CC3330115AC01300747AB2 /* jskeyword.tbl in Resources */,
-				E5CC333A115AC01300747AB2 /* jsopcode.tbl in Resources */,
-				E5CC333F115AC01300747AB2 /* jsproto.tbl in Resources */,
-				E5CC3342115AC01300747AB2 /* jsreops.tbl in Resources */,
-				E5CC3346115AC01300747AB2 /* jsshell.msg in Resources */,
-				E5CC334F115AC01300747AB2 /* lock_sparcv8plus.il in Resources */,
-				E5CC3350115AC01300747AB2 /* lock_sparcv9.il in Resources */,
-				E5CC3358115AC01300747AB2 /* LIRopcode.tbl in Resources */,
-				E5CC3434115AD86B00747AB2 /* imacros.c.out in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -828,7 +788,6 @@
 			files = (
 				61A9DFF30B83433800BC506C /* Application.cpp in Sources */,
 				61A9DFF40B83433800BC506C /* MainWindow.cpp in Sources */,
-				E5CC3317115AC01300747AB2 /* imacro_asm.js in Sources */,
 				E5CC331B115AC01300747AB2 /* jsapi.cpp in Sources */,
 				E5CC331C115AC01300747AB2 /* jsarena.cpp in Sources */,
 				E5CC331D115AC01300747AB2 /* jsarray.cpp in Sources */,
@@ -836,12 +795,10 @@
 				E5CC331F115AC01300747AB2 /* jsbool.cpp in Sources */,
 				E5CC3320115AC01300747AB2 /* jsbuiltins.cpp in Sources */,
 				E5CC3321115AC01300747AB2 /* jscntxt.cpp in Sources */,
-				E5CC3322115AC01300747AB2 /* jscpucfg.cpp in Sources */,
 				E5CC3323115AC01300747AB2 /* jsdate.cpp in Sources */,
 				E5CC3324115AC01300747AB2 /* jsdbgapi.cpp in Sources */,
 				E5CC3325115AC01300747AB2 /* jsdhash.cpp in Sources */,
 				E5CC3326115AC01300747AB2 /* jsdtoa.cpp in Sources */,
-				E5CC3327115AC01300747AB2 /* jsdtracef.cpp in Sources */,
 				E5CC3328115AC01300747AB2 /* jsemit.cpp in Sources */,
 				E5CC3329115AC01300747AB2 /* jsexn.cpp in Sources */,
 				E5CC332A115AC01300747AB2 /* jsfun.cpp in Sources */,
@@ -850,20 +807,15 @@
 				E5CC332D115AC01300747AB2 /* jsinterp.cpp in Sources */,
 				E5CC332E115AC01300747AB2 /* jsinvoke.cpp in Sources */,
 				E5CC332F115AC01300747AB2 /* jsiter.cpp in Sources */,
-				E5CC3331115AC01300747AB2 /* jskwgen.cpp in Sources */,
 				E5CC3332115AC01300747AB2 /* jslock.cpp in Sources */,
-				E5CC3333115AC01300747AB2 /* jslocko.asm in Sources */,
 				E5CC3334115AC01300747AB2 /* jslog2.cpp in Sources */,
 				E5CC3335115AC01300747AB2 /* jsmath.cpp in Sources */,
 				E5CC3336115AC01300747AB2 /* jsnum.cpp in Sources */,
 				E5CC3337115AC01300747AB2 /* jsobj.cpp in Sources */,
 				E5CC3338115AC01300747AB2 /* json.cpp in Sources */,
 				E5CC3339115AC01300747AB2 /* jsopcode.cpp in Sources */,
-				E5CC333B115AC01300747AB2 /* jsoplengen.cpp in Sources */,
-				E5CC333C115AC01300747AB2 /* jsops.cpp in Sources */,
 				E5CC333D115AC01300747AB2 /* jsparse.cpp in Sources */,
 				E5CC333E115AC01300747AB2 /* jsprf.cpp in Sources */,
-				E5CC3340115AC01300747AB2 /* jsrecursion.cpp in Sources */,
 				E5CC3341115AC01300747AB2 /* jsregexp.cpp in Sources */,
 				E5CC3343115AC01300747AB2 /* jsscan.cpp in Sources */,
 				E5CC3344115AC01300747AB2 /* jsscope.cpp in Sources */,
@@ -873,7 +825,6 @@
 				E5CC3349115AC01300747AB2 /* jstracer.cpp in Sources */,
 				E5CC334A115AC01300747AB2 /* jstypedarray.cpp in Sources */,
 				E5CC334B115AC01300747AB2 /* jsutil.cpp in Sources */,
-				E5CC334C115AC01300747AB2 /* jswince.asm in Sources */,
 				E5CC334D115AC01300747AB2 /* jsxdrapi.cpp in Sources */,
 				E5CC334E115AC01300747AB2 /* jsxml.cpp in Sources */,
 				E5CC3351115AC01300747AB2 /* Allocator.cpp in Sources */,
@@ -883,12 +834,7 @@
 				E5CC3355115AC01300747AB2 /* Containers.cpp in Sources */,
 				E5CC3356115AC01300747AB2 /* Fragmento.cpp in Sources */,
 				E5CC3357115AC01300747AB2 /* LIR.cpp in Sources */,
-				E5CC3359115AC01300747AB2 /* NativeARM.cpp in Sources */,
 				E5CC335A115AC01300747AB2 /* Nativei386.cpp in Sources */,
-				E5CC335B115AC01300747AB2 /* NativeMIPS.cpp in Sources */,
-				E5CC335C115AC01300747AB2 /* NativePPC.cpp in Sources */,
-				E5CC335D115AC01300747AB2 /* NativeSparc.cpp in Sources */,
-				E5CC335E115AC01300747AB2 /* NativeX64.cpp in Sources */,
 				E5CC335F115AC01300747AB2 /* njconfig.cpp in Sources */,
 				E5CC3360115AC01300747AB2 /* RegAlloc.cpp in Sources */,
 				E5CC3361115AC01300747AB2 /* VMPI.cpp in Sources */,
@@ -980,6 +926,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
+				GCC_CW_ASM_SYNTAX = NO;
 				GCC_PREFIX_HEADER = "src/JS/js-confdefs.h";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					FEATURE_NANOJIT,
@@ -988,7 +935,6 @@
 					AVMPLUS_IA32,
 				);
 				HEADER_SEARCH_PATHS = (
-					./src/JS/fdlibm,
 					./src/JS,
 					../../include,
 				);
@@ -1004,12 +950,12 @@
 					i386,
 				);
 				COPY_PHASE_STRIP = YES;
+				GCC_CW_ASM_SYNTAX = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_PREPROCESSOR_DEFINITIONS = XP_UNIX;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
