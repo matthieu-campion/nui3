@@ -94,6 +94,102 @@ static JSObject* GetJSObjectFromVariant(JSContext* cx, const nuiVariant& rObject
   return pJSObject;
 }
 
+void GetJSValFromVariant(JSContext* cx, jsval* val, const nuiVariant& var)
+{
+  nuiAttributeType t = var.GetType();
+  if (t == nuiAttributeTypeTrait<uint8>::mTypeId || t == nuiAttributeTypeTrait<uint16>::mTypeId || t == nuiAttributeTypeTrait<uint32>::mTypeId || t == nuiAttributeTypeTrait<uint64>::mTypeId ||
+      t == nuiAttributeTypeTrait<int8>::mTypeId  || t == nuiAttributeTypeTrait<int16>::mTypeId  || t == nuiAttributeTypeTrait<int32>::mTypeId  || t == nuiAttributeTypeTrait<int64>::mTypeId  ||
+      t == nuiAttributeTypeTrait<float>::mTypeId || t == nuiAttributeTypeTrait<double>::mTypeId)
+  {
+    // Number
+    JS_NewNumberValue(cx, var, val);
+  }
+  else if (t == nuiAttributeTypeTrait<nglString>::mTypeId)
+  {
+    nglString str = var;
+    std::string s(str.GetStdString()); 
+    *val = STRING_TO_JSVAL(JS_NewStringCopyN(cx, s.c_str(), s.size()));
+  }
+  else if (t == nuiAttributeTypeTrait<void>::mTypeId) // Void value
+  {
+    *val = JSVAL_VOID;  /* return undefined */
+  }
+  else
+  {
+    JSObject* obj = GetJSObjectFromVariant(cx, var);
+    *val = OBJECT_TO_JSVAL(obj);
+  }
+  
+  //#TODO We need to add support for other simple types
+}
+
+void GetVariantFromJSVal(JSContext* cx, nuiVariant& var, jsval val)
+{
+  JSType type = JS_TypeOfValue(cx, val);
+  switch (type)
+  {
+      
+    case JSTYPE_VOID:
+      {
+        var = nuiVariant();
+      }
+      break;
+      
+    case JSTYPE_OBJECT:
+      {
+        // Find the nui equivalent of the object
+        JSObject* o = NULL;
+        JS_ValueToObject(cx, val, &o);
+        var = GetVariantObjectFromJS(cx, o);
+      }
+      break;
+      
+    case JSTYPE_STRING:
+      {
+        JSString* pStr = JS_ValueToString(cx, val);
+        nglString str(JS_GetStringBytes(pStr));
+        var = str;
+      }
+      break;
+      
+    case JSTYPE_NUMBER:
+      {
+        jsdouble val;
+        JS_ValueToNumber(cx, val, &val);
+        var = val;
+      }
+      break;
+      
+    case JSTYPE_BOOLEAN:
+      {
+        JSBool b = false;
+        JS_ValueToBoolean(cx, val, &b);
+        var = b;
+      }
+      break;
+      
+    case JSTYPE_FUNCTION:
+    case JSTYPE_NULL:
+    case JSTYPE_XML:
+    case JSTYPE_LIMIT:
+      {
+        jsval v;
+        if (!JS_ConvertValue(cx, v, JSTYPE_STRING, &val))
+        {
+          NGL_LOG(_T("JavaScript"), NGL_LOG_ERROR, _T("Unable to convert a complex type to a string"));
+          var = nuiVariant();
+          return;
+        }
+        
+        JSString* pStr = JS_ValueToString(cx, v);
+        nglString str(JS_GetStringBytes(pStr));
+        var = str;
+      }
+      break;
+  }  
+}
+
+
 template <bool method>
 JSBool nuiGenericJSFunction(JSContext *cx, JSObject *obj, uintN argc, jsval *argv, jsval *rval)
 {
@@ -114,96 +210,16 @@ JSBool nuiGenericJSFunction(JSContext *cx, JSObject *obj, uintN argc, jsval *arg
   
   for (uint32 i = 0; i < argc; i++)
   {
-    JSType type = JS_TypeOfValue(cx, argv[i]);
-    switch (type)
-    {
-      
-      case JSTYPE_VOID:
-        {
-          return JS_FALSE;
-        }
-        break;
-      
-      case JSTYPE_OBJECT:
-        {
-          // Find the nui equivalent of the object
-          JSObject* o = NULL;
-          JS_ValueToObject(cx, argv[i], &o);
-          ctx.AddArgument(GetVariantObjectFromJS(cx, o));
-        }
-        break;
-      
-      case JSTYPE_STRING:
-        {
-          JSString* pStr = JS_ValueToString(cx, argv[i]);
-          nglString str(JS_GetStringBytes(pStr));
-          ctx.AddArgument(str);
-        }
-        break;
-      
-      case JSTYPE_NUMBER:
-        {
-          jsdouble val;
-          JS_ValueToNumber(cx, argv[i], &val);
-          ctx.AddArgument(val);
-        }
-        break;
-      
-      case JSTYPE_BOOLEAN:
-        {
-          JSBool b = false;
-          JS_ValueToBoolean(cx, argv[i], &b);
-          ctx.AddArgument(b);
-        }
-        break;
-
-      case JSTYPE_FUNCTION:
-      case JSTYPE_NULL:
-      case JSTYPE_XML:
-      case JSTYPE_LIMIT:
-        {
-          jsval val;
-          if (!JS_ConvertValue(cx, argv[i], JSTYPE_STRING, &val))
-          {
-            NGL_LOG(_T("JavaScript"), NGL_LOG_ERROR, _T("Unable to convert a complex type to a string"));
-            return JS_FALSE;
-          }
-          
-          JSString* pStr = JS_ValueToString(cx, val);
-          nglString str(JS_GetStringBytes(pStr));
-          ctx.AddArgument(str);
-        }
-        break;
-    }
-
+    nuiVariant var;
+    GetVariantFromJSVal(cx, var, argv[i]);
+    ctx.AddArgument(var);
   }
 
   // Call the method or function:
   pFunc->Run(ctx);
   
   const nuiVariant& r(ctx.GetResult());
-  nuiAttributeType t = r.GetType();
-  if (t == nuiAttributeTypeTrait<uint8>::mTypeId || t == nuiAttributeTypeTrait<uint16>::mTypeId || t == nuiAttributeTypeTrait<uint32>::mTypeId || t == nuiAttributeTypeTrait<uint64>::mTypeId ||
-      t == nuiAttributeTypeTrait<int8>::mTypeId  || t == nuiAttributeTypeTrait<int16>::mTypeId  || t == nuiAttributeTypeTrait<int32>::mTypeId  || t == nuiAttributeTypeTrait<int64>::mTypeId  ||
-      t == nuiAttributeTypeTrait<float>::mTypeId || t == nuiAttributeTypeTrait<double>::mTypeId)
-  {
-    // Number
-    JS_NewNumberValue(cx, r, rval);
-  }
-  else if (t == nuiAttributeTypeTrait<nglString>::mTypeId)
-  {
-    nglString str = r;
-    std::string s(str.GetStdString()); 
-    *rval = STRING_TO_JSVAL(JS_NewStringCopyN(cx, s.c_str(), s.size()));
-  }
-  else if (r.IsPointer())
-  {
-    
-  }
-  else //if (t == nuiAttributeTypeTrait<void>::mTypeId) or unknown type
-  {
-    *rval = JSVAL_VOID;  /* return undefined */
-  }
+  GetJSValFromVariant(cx, rval, r);
   return JS_TRUE;
 }
 
@@ -216,6 +232,97 @@ static void nuiFinalizeJSObject(JSContext *cx, JSObject *pJSObject)
   nuiVariant* pPrivate = (nuiVariant*)JS_GetInstancePrivate(cx, pJSObject, pJSClass, NULL);
   delete pPrivate;
 }
+
+JSBool nuiPropertyAdd(JSContext *cx, JSObject *obj, jsval id, jsval *vp)
+{
+  if (JSVAL_IS_NUMBER(id))
+    return JS_FALSE;
+  
+  JSString* pStr = JS_ValueToString(cx, id);
+  nglString str(JS_GetStringBytes(pStr));
+  
+  NGL_OUT(_T("Add Property %ls\n"), str.GetChars());
+  JSType type = JS_TypeOfValue(cx, *vp);
+  
+  if (JSVAL_IS_VOID(*vp))
+    NGL_OUT(_T("\tis void\n"));
+  
+  return JS_TRUE;
+}
+
+JSBool nuiPropertyDel(JSContext *cx, JSObject *obj, jsval id, jsval *vp)
+{
+  if (JSVAL_IS_NUMBER(id))
+    return JS_FALSE;
+  
+  JSString* pStr = JS_ValueToString(cx, id);
+  nglString str(JS_GetStringBytes(pStr));
+
+  NGL_OUT(_T("Del Property %ls\n"), str.GetChars());
+  JSType type = JS_TypeOfValue(cx, *vp);
+  
+  if (JSVAL_IS_VOID(*vp))
+    NGL_OUT(_T("\tis void\n"));
+  
+  return JS_TRUE;
+}
+
+JSBool nuiPropertyGet(JSContext *cx, JSObject *obj, jsval id, jsval *vp)
+{
+  if (JSVAL_IS_NUMBER(id))
+    return JS_FALSE;
+
+  nuiVariant variant = GetVariantObjectFromJS(cx, obj);
+  if (!variant.IsObject())
+    return JS_TRUE;
+
+  // We are trying to access an nuiObject attribute
+  JSString* pStr = JS_ValueToString(cx, id);
+  nglString str(JS_GetStringBytes(pStr));
+
+  nuiObject* pObj = variant;
+  NGL_ASSERT(pObj);
+  nuiAttribBase attrib(pObj->GetAttribute(str));
+  if (!attrib.IsValid())
+    return JS_TRUE; // Return the default value
+
+  // Return the actual value
+  nuiVariant v;
+  attrib.ToVariant(v);
+  GetJSValFromVariant(cx, vp, v);
+  NGL_OUT(_T("Get Property %ls\n"), str.GetChars());
+
+  return JS_TRUE;
+}
+
+JSBool nuiPropertySet(JSContext *cx, JSObject *obj, jsval id, jsval *vp)
+{
+  if (JSVAL_IS_NUMBER(id))
+    return JS_FALSE;
+  
+  nuiVariant variant = GetVariantObjectFromJS(cx, obj);
+  if (!variant.IsObject())
+    return JS_TRUE;
+  
+  // We are trying to access an nuiObject attribute
+  JSString* pStr = JS_ValueToString(cx, id);
+  nglString str(JS_GetStringBytes(pStr));
+  
+  nuiObject* pObj = variant;
+  NGL_ASSERT(pObj);
+  nuiAttribBase attrib(pObj->GetAttribute(str));
+  if (!attrib.IsValid())
+    return JS_TRUE; // Return the default value
+  
+  // Set the actual value
+  nuiVariant v;
+  GetVariantFromJSVal(cx, v, *vp);
+  attrib.FromVariant(v);
+  NGL_OUT(_T("Set Property %ls\n"), str.GetChars());
+  
+  return JS_TRUE;
+}
+
 
 static JSBool nuiConstructJSClass(JSContext *cx, JSObject *obj, uintN argc, jsval *argv, jsval *rval)
 {
@@ -247,68 +354,9 @@ static JSBool nuiConstructJSClass(JSContext *cx, JSObject *obj, uintN argc, jsva
   
   for (uint32 i = 0; i < argc; i++)
   {
-    JSType type = JS_TypeOfValue(cx, argv[i]);
-    switch (type)
-    {
-        
-      case JSTYPE_VOID:
-      {
-        return JS_FALSE;
-      }
-        break;
-        
-      case JSTYPE_OBJECT:
-        {
-          // Find the nui equivalent of the object
-          JSObject* o = NULL;
-          JS_ValueToObject(cx, argv[i], &o);
-          ctx.AddArgument(GetVariantObjectFromJS(cx, o));
-        }
-        break;
-        
-      case JSTYPE_STRING:
-        {
-          JSString* pStr = JS_ValueToString(cx, argv[i]);
-          nglString str(JS_GetStringBytes(pStr));
-          ctx.AddArgument(str);
-        }
-        break;
-        
-      case JSTYPE_NUMBER:
-        {
-          jsdouble val;
-          JS_ValueToNumber(cx, argv[i], &val);
-          ctx.AddArgument(val);
-        }
-        break;
-        
-      case JSTYPE_BOOLEAN:
-        {
-          JSBool b = false;
-          JS_ValueToBoolean(cx, argv[i], &b);
-          ctx.AddArgument(b);
-        }
-        break;
-        
-      case JSTYPE_FUNCTION:
-      case JSTYPE_NULL:
-      case JSTYPE_XML:
-      case JSTYPE_LIMIT:
-        {
-          jsval val;
-          if (!JS_ConvertValue(cx, argv[i], JSTYPE_STRING, &val))
-          {
-            NGL_LOG(_T("JavaScript"), NGL_LOG_ERROR, _T("Unable to convert a complex type to a string"));
-            return JS_FALSE;
-          }
-          
-          JSString* pStr = JS_ValueToString(cx, val);
-          nglString str(JS_GetStringBytes(pStr));
-          ctx.AddArgument(str);
-        }
-        break;
-    }
-    
+    nuiVariant var;
+    GetVariantFromJSVal(cx, var, argv[i]);
+    ctx.AddArgument(var);
   }
   
   // Call the method or function:
@@ -346,10 +394,10 @@ JSObject* nuiDefineJSClass(JSContext* cx, JSObject* pGlobalObject, nuiClass* pCl
     JSCLASS_HAS_PRIVATE, // flags
     
     /* Mandatory non-null function pointer members. */
-    JS_PropertyStub, //JSPropertyOp        addProperty;
-    JS_PropertyStub, //JSPropertyOp        delProperty;
-    JS_PropertyStub, //JSPropertyOp        getProperty;
-    JS_PropertyStub, //JSPropertyOp        setProperty;
+    nuiPropertyAdd, //JSPropertyOp        addProperty;
+    nuiPropertyDel, //JSPropertyOp        delProperty;
+    nuiPropertyGet, //JSPropertyOp        getProperty;
+    nuiPropertySet, //JSPropertyOp        setProperty;
     JS_EnumerateStub, //JSEnumerateOp       enumerate;
     JS_ResolveStub, //JSResolveOp         resolve;
     JS_ConvertStub, //JSConvertOp         convert;
@@ -514,6 +562,11 @@ int JSTest(nuiMainWindow* pMainWindow)
   "out('label class:'+label.GetObjectClass());\n"
   "window.AddChild(label);\n"
   "out(window.GetObjectClass());\n"
+  "var test = label.test;\n"
+  "label.test = 'testval';\n"
+  "var res = label.Text;\n"
+  "out(res);\n"
+  "label.TextColor = 'red';\n"
   ;
   
   jsval rval;

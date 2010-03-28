@@ -2101,6 +2101,7 @@ nuiXMLNode* nuiAttribBase::Serialize(nuiXMLNode* pParentNode) const
 }
 
 
+// To/From String
 bool nuiAttribBase::ToString(nglString& rString) const
 {
   return mpAttributeBase->ToString(mpTarget, rString);
@@ -2131,6 +2132,40 @@ bool nuiAttribBase::FromString(uint32 index0, uint32 index1, const nglString& rS
   return mpAttributeBase->FromString(mpTarget, index0, index1, rString);
 }
 
+// To/From Variant
+bool nuiAttribBase::ToVariant(nuiVariant& rVariant) const
+{
+  return mpAttributeBase->ToVariant(mpTarget, rVariant);
+}
+
+bool nuiAttribBase::FromVariant(const nuiVariant& rVariant) const
+{
+  return mpAttributeBase->FromVariant(mpTarget, rVariant);
+}
+
+bool nuiAttribBase::ToVariant(uint32 index, nuiVariant& rVariant) const
+{
+  return mpAttributeBase->ToVariant(mpTarget, index, rVariant);
+}
+
+bool nuiAttribBase::FromVariant(uint32 index, const nuiVariant& rVariant) const
+{
+  return mpAttributeBase->FromVariant(mpTarget, index, rVariant);
+}
+
+bool nuiAttribBase::ToVariant(uint32 index0, uint32 index1, nuiVariant& rVariant) const
+{
+  return mpAttributeBase->ToVariant(mpTarget, index0, index1, rVariant);
+}
+
+bool nuiAttribBase::FromVariant(uint32 index0, uint32 index1, const nuiVariant& rVariant) const
+{
+  return mpAttributeBase->FromVariant(mpTarget, index0, index1, rVariant);
+}
+
+
+
+// Format
 void nuiAttribBase::Format(nglString& rString) const
 {
   mpAttributeBase->Format(mpTarget, rString);

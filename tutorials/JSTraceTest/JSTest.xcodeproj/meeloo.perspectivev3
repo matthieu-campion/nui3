@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>ActivePerspectiveName</key>
-	<string>Project</string>
+	<string>Debug</string>
 	<key>AllowedModules</key>
 	<array>
 		<dict>
@@ -321,8 +321,6 @@
 							<string>MainColumn</string>
 							<real>338</real>
 						</array>
-						<key>RubberWindowFrame</key>
-						<string>2 59 2560 1359 0 0 2560 1418 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -338,7 +336,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>E5A378771146380E00BEE986</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>Nativei386.cpp</string>
+								<string>MainWindow.cpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -346,30 +344,29 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>E5A378781146380E00BEE986</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>Nativei386.cpp</string>
+										<string>MainWindow.cpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E5CC34A2115C98DB00747AB2</string>
+										<string>E5CC36D3115FB90600747AB2</string>
 										<key>history</key>
 										<array>
 											<string>E50066BE1150702D00CDD83E</string>
 											<string>E5F2AF011152F6730064722F</string>
 											<string>E5F2AF3A1152FEC60064722F</string>
-											<string>E5CC307611584CE200747AB2</string>
 											<string>E5CC314E1158A88500747AB2</string>
 											<string>E5CC345A115AE7EC00747AB2</string>
 											<string>E5CC345B115AE7EC00747AB2</string>
 											<string>E5CC345C115AE7EC00747AB2</string>
-											<string>E5CC3499115C98DB00747AB2</string>
 											<string>E5CC349A115C98DB00747AB2</string>
 											<string>E5CC349B115C98DB00747AB2</string>
 											<string>E5CC349C115C98DB00747AB2</string>
 											<string>E5CC349D115C98DB00747AB2</string>
 											<string>E5CC349E115C98DB00747AB2</string>
 											<string>E5CC349F115C98DB00747AB2</string>
-											<string>E5CC34A0115C98DB00747AB2</string>
-											<string>E5CC34A1115C98DB00747AB2</string>
+											<string>E5CC35CE115EC33A00747AB2</string>
+											<string>E5CC35D4115EC3BF00747AB2</string>
+											<string>E5CC36D1115FB8FF00747AB2</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -384,8 +381,6 @@
 							<dict>
 								<key>Frame</key>
 								<string>{{0, 0}, {2178, 523}}</string>
-								<key>RubberWindowFrame</key>
-								<string>2 59 2560 1359 0 0 2560 1418 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -484,8 +479,6 @@
 									<dict>
 										<key>Frame</key>
 										<string>{{10, 27}, {2178, 763}}</string>
-										<key>RubberWindowFrame</key>
-										<string>2 59 2560 1359 0 0 2560 1418 </string>
 									</dict>
 									<key>Module</key>
 									<string>PBXBuildResultsModule</string>
@@ -558,6 +551,8 @@
 			<key>Layout</key>
 			<array>
 				<dict>
+					<key>BecomeActive</key>
+					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXProjectModuleGUID</key>
@@ -569,6 +564,8 @@
 					<dict>
 						<key>Frame</key>
 						<string>{{0, 0}, {2560, 485}}</string>
+						<key>RubberWindowFrame</key>
+						<string>0 59 2560 1359 0 0 2560 1418 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXDebugCLIModule</string>
@@ -643,7 +640,11 @@
 							</array>
 							<key>Frame</key>
 							<string>{{0, 425}, {870, 403}}</string>
+							<key>RubberWindowFrame</key>
+							<string>0 59 2560 1359 0 0 2560 1418 </string>
 						</dict>
+						<key>RubberWindowFrame</key>
+						<string>0 59 2560 1359 0 0 2560 1418 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXDebugSessionModule</string>
@@ -690,7 +691,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>291281115.33387399</real>
+	<real>291485958.02280301</real>
 	<key>ToolbarConfigUserDefaultsMinorVersion</key>
 	<string>2</string>
 	<key>ToolbarDisplayMode</key>
@@ -707,12 +708,13 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
+		<string>E5CC36D4115FB90600747AB2</string>
 		<string>E5CC3455115AD94200747AB2</string>
 		<string>E5CC3456115AD94200747AB2</string>
 		<string>/Users/meeloo/work/nui3/tutorials/JSTraceTest/JSTest.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>2 59 2560 1359 0 0 2560 1418 </string>
+	<string>0 59 2560 1359 0 0 2560 1418 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>

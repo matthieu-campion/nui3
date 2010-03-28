@@ -11,7 +11,6 @@
 #include "nui.h"
 #include "nuiEvent.h"
 #include "nuiToken.h"
-#include "nuiAttribute.h"
 #include "nuiRefCount.h"
 
 #ifdef _DEBUG_
@@ -22,6 +21,8 @@ class nuiEventSource;
 
 class nuiXMLNode;
 class nuiObject;
+class nuiAttributeBase;
+class nuiAttribBase;
 
 typedef std::map<nglString, nglString,nglString::LessFunctor> nuiPropertyMap;
 

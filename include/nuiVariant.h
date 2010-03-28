@@ -8,7 +8,13 @@
 #pragma once
 
 #include "nui.h"
+#include "nuiAttributeType.h"
+#include "nuiTypeTraits.h"
+#include "nuiBorder.h"
+#include "nuiObject.h"
 
+class nuiPoint;
+class nuiRange;
 
 class nuiVariant
 {
@@ -83,7 +89,7 @@ public:
     mIsObject = false;
     mIsPOD = false;
     mType = nuiAttributeTypeTrait<nglPath>::mTypeId;
-    mPath = rData;
+    mString = rData.GetPathName();
   }
   
   nuiVariant(const nuiColor& rData)
@@ -104,6 +110,53 @@ public:
     mRect = rData;
   }
   
+  nuiVariant(const nuiMatrix& rData)
+  {
+    mIsPointer = false;
+    mIsObject = false;
+    mIsPOD = false;
+    mType = nuiAttributeTypeTrait<nuiRect>::mTypeId;
+    NGL_ASSERT(0);
+  }
+  
+  nuiVariant(const nuiBorder& data)
+  {
+    mIsPointer = false;
+    mIsObject = false;
+    mType = nuiAttributeTypeTrait<nuiBorder>::mTypeId;
+    mIsPOD = false;
+    NGL_ASSERT(0);
+  }
+  
+  nuiVariant(const nuiPoint& data)
+  {
+    mIsPointer = false;
+    mIsObject = false;
+    mType = nuiAttributeTypeTrait<nuiBorder>::mTypeId;
+    mIsPOD = false;
+    NGL_ASSERT(0);
+  }
+  
+  nuiVariant(const nuiRange& data)
+  {
+    mIsPointer = false;
+    mIsObject = false;
+    mType = nuiAttributeTypeTrait<nuiRange>::mTypeId;
+    mIsPOD = false;
+    NGL_ASSERT(0);
+  }
+  
+  nuiVariant(const nuiVector& data)
+  {
+    mIsPointer = false;
+    mIsObject = false;
+    mType = nuiAttributeTypeTrait<nuiVector>::mTypeId;
+    mIsPOD = false;
+    NGL_ASSERT(0);
+  }
+  
+
+  
   // Copy CTOR
   nuiVariant(const nuiVariant& rObject)
   {
@@ -112,7 +165,6 @@ public:
     mString = rObject.mString;
     mColor = rObject.mColor;
     mRect = rObject.mRect;
-    mPath = rObject.mPath;
     
     mType = rObject.mType;
     
@@ -141,7 +193,6 @@ public:
     mString = rObject.mString;
     mColor = rObject.mColor;
     mRect = rObject.mRect;
-    mPath = rObject.mPath;
     
     mType = rObject.mType;
     
@@ -206,7 +257,7 @@ public:
       return mColor.GetValue();
     
     if (mType == nuiAttributeTypeTrait<nglPath>::mTypeId)
-      return mPath.GetPathName();
+      return mString;
     
     nglString str;
     if (mType == nuiAttributeTypeTrait<float>::mTypeId
@@ -224,6 +275,15 @@ public:
       str.Add(mData.mUInt);
     
     return str;
+  }
+  
+  // nglPath Cast:
+  operator nglPath() const
+  {
+    if (mType == nuiAttributeTypeTrait<nglPath>::mTypeId || mType == nuiAttributeTypeTrait<nglString>::mTypeId)
+      return mString;
+
+    return nglPath();
   }
   
   // POD Cast:
@@ -318,6 +378,46 @@ public:
     return nuiColor();
   }
   
+  operator nuiMatrix() const
+  {
+    NGL_ASSERT(0);
+    if (mType == nuiAttributeTypeTrait<nuiMatrix>::mTypeId)
+      return nuiMatrix();
+    return nuiMatrix();
+  }
+  
+  operator nuiBorder() const
+  {
+    NGL_ASSERT(0);
+    if (mType == nuiAttributeTypeTrait<nuiBorder>::mTypeId)
+      return nuiBorder();
+    return nuiBorder();
+  }
+  
+  operator nuiPoint() const
+  {
+    NGL_ASSERT(0);
+    if (mType == nuiAttributeTypeTrait<nuiPoint>::mTypeId)
+      return nuiPoint();
+    return nuiPoint();
+  }
+  
+  operator nuiRange() const
+  {
+    NGL_ASSERT(0);
+    if (mType == nuiAttributeTypeTrait<nuiRange>::mTypeId)
+      return nuiRange();
+    return nuiRange();
+  }
+
+  operator nuiVector() const
+  {
+    NGL_ASSERT(0);
+    if (mType == nuiAttributeTypeTrait<nuiVector>::mTypeId)
+      return nuiVector();
+    return nuiVector();
+  }
+  
   template<typename Type>
   operator Type*() const
   {
@@ -363,7 +463,6 @@ private:
   
   nglString mString;
   nuiRect mRect;
-  nglPath mPath;
   nuiColor mColor;
   
   bool mIsPointer : 1;

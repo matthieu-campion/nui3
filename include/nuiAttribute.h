@@ -18,6 +18,7 @@
 #include "nuiMouseCursor.h"
 #include "nuiRenderState.h"
 #include "nuiEvent.h"
+#include "nuiVariant.h"
 
 
 class nuiAttributeEditor;
@@ -27,16 +28,6 @@ class nuiPoint;
 class nuiRect;
 class nuiBorder;
 
-
-typedef uint64 nuiAttributeType;
-
-nuiAttributeEditor* nuiCreateGenericAttributeEditor(void* pTarget, nuiAttributeBase* pAttribute);
-
-
-// don't forget to update your application source code if
-// another unit is added here.
-// for instance, for Yapuka application,
-// it's in ElementInspector.cpp::ElementInspector::AddToolpane
 
 enum nuiAttributeUnit
 {
@@ -62,6 +53,13 @@ enum nuiAttributeUnit
 };
 
 
+nuiAttributeEditor* nuiCreateGenericAttributeEditor(void* pTarget, nuiAttributeBase* pAttribute);
+
+
+// don't forget to update your application source code if
+// another unit is added here.
+// for instance, for Yapuka application,
+// it's in ElementInspector.cpp::ElementInspector::AddToolpane
 class nuiAttributeBase
 {
 public:
@@ -97,6 +95,13 @@ public:
   virtual bool FromString(void* pTarget, int32 index, const nglString& rString) const = 0;
   virtual bool ToString(void* pTarget, int32 index0, int32 index1, nglString& rString) const = 0;
   virtual bool FromString(void* pTarget, int32 index0, int32 index1, const nglString& rString) const = 0;
+
+  virtual bool ToVariant(void* pTarget, nuiVariant& rVar) const = 0;
+  virtual bool FromVariant(void* pTarget, const nuiVariant& rVar) const = 0;
+  virtual bool ToVariant(void* pTarget, int32 index, nuiVariant& rVar) const = 0;
+  virtual bool FromVariant(void* pTarget, int32 index, const nuiVariant& rVar) const = 0;
+  virtual bool ToVariant(void* pTarget, int32 index0, int32 index1, nuiVariant& rVar) const = 0;
+  virtual bool FromVariant(void* pTarget, int32 index0, int32 index1, const nuiVariant& rVar) const = 0;
   
 	// Format methods for each dimensions:
 	virtual void Format(void* pTarget, nglString& string) const = 0;
@@ -134,17 +139,6 @@ private:
 protected:
   mutable AttributeEventMap mAttributeChangedEvents;
 };
-
-uint64 nuiGetNewAttributeUniqueId();
-
-
-template <class Type>
-class nuiAttributeTypeTrait
-{
-public:
-  static uint64 mTypeId;
-};
-
 
 
 template <class Contents>  
@@ -233,14 +227,18 @@ public:
   {
   }
   
+  ////////////////////////////////////////////////////
+  // Strings convertions:
   bool ToString(Contents Value, nglString& rString) const
   {
-    return rString = Value;
+    rString = Value;
+    return true;
   }
   
   bool FromString(Contents& Value, const nglString& rString) const
   {
-    return Value = rString;
+    Value = rString;
+    return true;
   }
   
   bool ToString(void* pTarget, nglString& rString) const
@@ -307,7 +305,87 @@ public:
     Set(pTarget, index0, index1, val);
     return res;
   }
+
+  ////////////////////////////////////////////////////
+  // Variants convertions:
+  bool ToVariant(Contents Value, nuiVariant& rVariant) const
+  {
+    rVariant = nuiVariant(Value);
+    return true;
+  }
+  
+  bool FromVariant(Contents& Value, const nuiVariant& rVariant) const
+  {
+    Value = rVariant.operator Contents();
+    return true;
+  }
+  
+  bool ToVariant(void* pTarget, nuiVariant& rVariant) const
+  {
+    if (mGetter.empty())
+      return false;
     
+    return ToVariant(Get(pTarget), rVariant);
+  }
+  
+  bool FromVariant(void* pTarget, const nuiVariant& rVariant) const
+  {
+    if (mSetter.empty())
+      return false;
+    Contents val;
+    bool res = FromVariant(val, rVariant);
+    if (!res)
+    {
+      return false;
+    }
+    Set(pTarget, val);
+    return res;
+  }
+  
+  bool ToVariant(void* pTarget, int32 index, nuiVariant& rVariant) const
+  {
+    if (mGetter.empty())
+      return false;
+    return ToVariant(Get(pTarget, index), rVariant);
+  }
+  
+  bool FromVariant(void* pTarget, int32 index, const nuiVariant& rVariant) const
+  {
+    if (mSetter.empty())
+      return false;
+    
+    Contents val;
+    bool res = FromVariant(val, rVariant);
+    if (!res)
+    {
+      return false;
+    }
+    Set(pTarget, index, val);
+    return res;
+  }
+  
+  bool ToVariant(void* pTarget, int32 index0, int32 index1, nuiVariant& rVariant) const
+  {
+    if (mGetter.empty())
+      return false;
+    return ToVariant(Get(pTarget, index0, index1), rVariant);
+  }
+  
+  virtual bool FromVariant(void* pTarget, int32 index0, int32 index1, const nuiVariant& rVariant) const
+  {
+    if (mSetter.empty())
+      return false;
+    Contents val;
+    bool res = FromVariant(val, rVariant);
+    if (!res)
+    {
+      return false;
+    }
+    Set(pTarget, index0, index1, val);
+    return res;
+  }
+  
+  
   // Getters for each dimension:
   Contents Get(void* pTarget) const
   {
@@ -758,6 +836,87 @@ public:
     return res;
   }
   
+  
+  ////////////////////////////////////////////////////
+  // Variants convertions:
+  bool ToVariant(Contents Value, nuiVariant& rVariant) const
+  {
+    rVariant = nuiVariant(Value);
+    return true;
+  }
+  
+  bool FromVariant(Contents& Value, const nuiVariant& rVariant) const
+  {
+    Value = rVariant.operator Contents();
+    return true;
+  }
+  
+  bool ToVariant(void* pTarget, nuiVariant& rVariant) const
+  {
+    if (mGetter.empty())
+      return false;
+    
+    return ToVariant(Get(pTarget), rVariant);
+  }
+  
+  bool FromVariant(void* pTarget, const nuiVariant& rVariant) const
+  {
+    if (mSetter.empty())
+      return false;
+    Contents val;
+    bool res = FromVariant(val, rVariant);
+    if (!res)
+    {
+      return false;
+    }
+    Set(pTarget, val);
+    return res;
+  }
+  
+  bool ToVariant(void* pTarget, int32 index, nuiVariant& rVariant) const
+  {
+    if (mGetter.empty())
+      return false;
+    return ToVariant(Get(pTarget, index), rVariant);
+  }
+  
+  bool FromVariant(void* pTarget, int32 index, const nuiVariant& rVariant) const
+  {
+    if (mSetter.empty())
+      return false;
+    
+    Contents val;
+    bool res = FromVariant(val, rVariant);
+    if (!res)
+    {
+      return false;
+    }
+    Set(pTarget, index, val);
+    return res;
+  }
+  
+  bool ToVariant(void* pTarget, int32 index0, int32 index1, nuiVariant& rVariant) const
+  {
+    if (mGetter.empty())
+      return false;
+    return ToVariant(Get(pTarget, index0, index1), rVariant);
+  }
+  
+  virtual bool FromVariant(void* pTarget, int32 index0, int32 index1, const nuiVariant& rVariant) const
+  {
+    if (mSetter.empty())
+      return false;
+    Contents val;
+    bool res = FromVariant(val, rVariant);
+    if (!res)
+    {
+      return false;
+    }
+    Set(pTarget, index0, index1, val);
+    return res;
+  }
+  
+  
   // Getters for each dimension:
   const Contents& Get(void* pTarget) const
   {
@@ -1170,6 +1329,13 @@ public:
   bool FromString(uint32 index, const nglString& rString) const;
   bool ToString(uint32 index0, uint32 index1, nglString& rString) const;
   bool FromString(uint32 index0, uint32 index1, const nglString& rString) const;
+  
+  bool ToVariant(nuiVariant& rVar) const;
+  bool FromVariant(const nuiVariant& rVar) const;
+  bool ToVariant(uint32 index, nuiVariant& rVar) const;
+  bool FromVariant(uint32 index, const nuiVariant& rVar) const;
+  bool ToVariant(uint32 index0, uint32 index1, nuiVariant& rVar) const;
+  bool FromVariant(uint32 index0, uint32 index1, const nuiVariant& rVar) const;
   
 	void Format(nglString& rString) const;
 	void Format(uint32 index, nglString& rString) const;
