@@ -34,20 +34,43 @@ public:
     mIsPointer = is_pointer<Type>::value;
     mIsObject = is_base_of<nuiObject, Type>::value;
     mType = nuiAttributeTypeTrait<Type>::mTypeId;
-    mIsPOD = true;
-    if (is_same_type<Type, int8>::value || is_same_type<Type, int16>::value || is_same_type<Type, int32>::value || is_same_type<Type, int64>::value)
-    {
-      mData.mInt = data;
-    }
-    else if (is_same_type<Type, uint8>::value || is_same_type<Type, uint16>::value || is_same_type<Type, uint32>::value || is_same_type<Type, uint64>::value)
-    {
-      mData.mUInt = data;
-    }
-    else if (is_same_type<Type, float>::value || is_same_type<Type, double>::value)
-    {
-      mData.mFloat = data;
-    }
+    mIsPOD = false;
+    NGL_ASSERT(0);
   }
+ 
+#define CTOR(TYPE)\
+  nuiVariant(TYPE data)\
+  {\
+    mIsPointer = is_pointer<TYPE>::value;\
+    mIsObject = is_base_of<nuiObject, TYPE>::value;\
+    mType = nuiAttributeTypeTrait<TYPE>::mTypeId;\
+    mIsPOD = true;\
+    if (is_same_type<TYPE, int8>::value || is_same_type<TYPE, int16>::value || is_same_type<TYPE, int32>::value || is_same_type<TYPE, int64>::value)\
+    {\
+      mData.mInt = data;\
+    }\
+    else if (is_same_type<TYPE, uint8>::value || is_same_type<TYPE, uint16>::value || is_same_type<TYPE, uint32>::value || is_same_type<TYPE, uint64>::value)\
+    {\
+      mData.mUInt = data;\
+    }\
+    else if (is_same_type<TYPE, float>::value || is_same_type<TYPE, double>::value)\
+    {\
+      mData.mFloat = data;\
+    }\
+  }
+
+  CTOR(int8);
+  CTOR(int32);
+  CTOR(int64);
+  
+  CTOR(uint8);
+  CTOR(uint32);
+  CTOR(uint64);
+  
+  CTOR(float);
+  CTOR(double);
+#undef CTOR
+  
   
   nuiVariant(bool set)
   {
