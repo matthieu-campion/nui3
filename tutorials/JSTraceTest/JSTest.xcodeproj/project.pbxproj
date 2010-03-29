@@ -130,6 +130,8 @@
 		E5CC343E115AD8BF00747AB2 /* vprof.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC343C115AD8BF00747AB2 /* vprof.cpp */; };
 		E5CC343F115AD8BF00747AB2 /* vprof.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC343C115AD8BF00747AB2 /* vprof.cpp */; };
 		E5CC3448115AD93100747AB2 /* njconfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC32D8115AC01300747AB2 /* njconfig.cpp */; };
+		E5CC370F115FF09E00747AB2 /* nuiSpiderMonkey.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC370E115FF09E00747AB2 /* nuiSpiderMonkey.cpp */; };
+		E5CC3710115FF09E00747AB2 /* nuiSpiderMonkey.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC370E115FF09E00747AB2 /* nuiSpiderMonkey.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -353,6 +355,8 @@
 		E5CC3433115AD86B00747AB2 /* imacros.c.out */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = imacros.c.out; path = src/JS/imacros.c.out; sourceTree = SOURCE_ROOT; };
 		E5CC343C115AD8BF00747AB2 /* vprof.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = vprof.cpp; path = src/JS/vprof/vprof.cpp; sourceTree = SOURCE_ROOT; };
 		E5CC343D115AD8BF00747AB2 /* vprof.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = vprof.h; path = src/JS/vprof/vprof.h; sourceTree = SOURCE_ROOT; };
+		E5CC370E115FF09E00747AB2 /* nuiSpiderMonkey.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiSpiderMonkey.cpp; path = ../../src/Bindings/nuiSpiderMonkey.cpp; sourceTree = SOURCE_ROOT; };
+		E5CC3711115FF0BB00747AB2 /* nuiSpiderMonkey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiSpiderMonkey.h; path = ../../include/nuiSpiderMonkey.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -417,6 +421,8 @@
 				61A9DFF00B83433800BC506C /* Application.h */,
 				61A9DFF10B83433800BC506C /* MainWindow.cpp */,
 				61A9DFF20B83433800BC506C /* MainWindow.h */,
+				E5CC370E115FF09E00747AB2 /* nuiSpiderMonkey.cpp */,
+				E5CC3711115FF0BB00747AB2 /* nuiSpiderMonkey.h */,
 			);
 			name = sources;
 			sourceTree = "<group>";
@@ -840,6 +846,7 @@
 				E5CC3361115AC01300747AB2 /* VMPI.cpp in Sources */,
 				E5CC3362115AC01300747AB2 /* prmjtime.cpp in Sources */,
 				E5CC343E115AD8BF00747AB2 /* vprof.cpp in Sources */,
+				E5CC3710115FF09E00747AB2 /* nuiSpiderMonkey.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -903,6 +910,7 @@
 				E5CC33F7115ACB3300747AB2 /* avmplus.cpp in Sources */,
 				E5CC343F115AD8BF00747AB2 /* vprof.cpp in Sources */,
 				E5CC3448115AD93100747AB2 /* njconfig.cpp in Sources */,
+				E5CC370F115FF09E00747AB2 /* nuiSpiderMonkey.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -25,6 +25,7 @@ protected:
   
 private:
   
+  void JSTest();
   bool LoadCSS(const nglPath& rPath);
   
   nuiLabel* mMyLabel;
