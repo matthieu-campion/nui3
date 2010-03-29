@@ -42,7 +42,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					2114,
+					1474,
 					20,
 					48,
 					43,
@@ -59,13 +59,8 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 291341693;
-			PBXWorkspaceStateSaveDate = 291341693;
-		};
-		perUserProjectItems = {
-			E5CC352C115D86E000747AB2 /* PBXTextBookmark */ = E5CC352C115D86E000747AB2 /* PBXTextBookmark */;
-			E5CC3557115E42D600747AB2 /* PBXTextBookmark */ = E5CC3557115E42D600747AB2 /* PBXTextBookmark */;
-			E5CC35C0115EC12F00747AB2 /* PBXTextBookmark */ = E5CC35C0115EC12F00747AB2 /* PBXTextBookmark */;
+			PBXPerProjectTemplateStateSaveDate = 291539298;
+			PBXWorkspaceStateSaveDate = 291539298;
 		};
 		sourceControlManager = E54257CB115B7FB600EE458C /* Source Control */;
 		userBuildSettings = {
@@ -195,59 +190,5 @@
 	E54257CC115B7FB600EE458C /* Code sense */ = {
 		isa = PBXCodeSenseManager;
 		indexTemplatePath = "";
-	};
-	E5CC352B115D86E000747AB2 /* nuiRefCount.h */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.c.h;
-		name = nuiRefCount.h;
-		path = /Users/meeloo/work/nui3/include/nuiRefCount.h;
-		sourceTree = "<absolute>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1219, 1183}}";
-			sepNavSelRange = "{1449, 0}";
-			sepNavVisRange = "{946, 502}";
-		};
-	};
-	E5CC352C115D86E000747AB2 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E5CC352D115D86E000747AB2 /* nuiSurface.cpp */;
-		name = "nuiSurface.cpp: 40";
-		rLen = 0;
-		rLoc = 1111;
-		rType = 0;
-		vrLen = 1091;
-		vrLoc = 386;
-	};
-	E5CC352D115D86E000747AB2 /* nuiSurface.cpp */ = {
-		isa = PBXFileReference;
-		name = nuiSurface.cpp;
-		path = /Users/meeloo/work/nui3/src/Renderers/nuiSurface.cpp;
-		sourceTree = "<absolute>";
-	};
-	E5CC3557115E42D600747AB2 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E5CC352B115D86E000747AB2 /* nuiRefCount.h */;
-		name = "nuiRefCount.h: 91";
-		rLen = 0;
-		rLoc = 1449;
-		rType = 0;
-		vrLen = 502;
-		vrLoc = 946;
-	};
-	E5CC35C0115EC12F00747AB2 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E5CC35C1115EC12F00747AB2 /* nuiRefCount.h */;
-		name = "nuiRefCount.h: 91";
-		rLen = 0;
-		rLoc = 1449;
-		rType = 0;
-		vrLen = 920;
-		vrLoc = 529;
-	};
-	E5CC35C1115EC12F00747AB2 /* nuiRefCount.h */ = {
-		isa = PBXFileReference;
-		name = nuiRefCount.h;
-		path = /Users/meeloo/work/nui3/include/nuiRefCount.h;
-		sourceTree = "<absolute>";
 	};
 }

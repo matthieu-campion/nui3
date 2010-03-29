@@ -10,7 +10,7 @@
 class nuiRefCount
 {
 public:
-  nuiRefCount() : mCount(0), mPermanent(false) , mTrace(false)
+  nuiRefCount() : mTrace(false), mCount(0), mPermanent(false)
   {
   }
 

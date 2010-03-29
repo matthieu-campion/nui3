@@ -12,12 +12,6 @@
 #include "nuiSignalsSlots.h"
 #include "nuiXML.h"
 #include "nuiFastDelegate.h"
-#include "nuiRange.h"
-#include "nuiShape.h"
-#include "nuiDecorationDefines.h"
-#include "nuiMouseCursor.h"
-#include "nuiRenderState.h"
-#include "nuiEvent.h"
 #include "nuiVariant.h"
 
 

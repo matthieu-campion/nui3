@@ -12,6 +12,12 @@
 #include "nuiTypeTraits.h"
 #include "nuiBorder.h"
 #include "nuiObject.h"
+#include "nuiRange.h"
+#include "nuiShape.h"
+#include "nuiDecorationDefines.h"
+#include "nuiMouseCursor.h"
+#include "nuiRenderState.h"
+#include "nuiEvent.h"
 
 class nuiPoint;
 class nuiRange;
@@ -69,6 +75,28 @@ public:
   
   CTOR(float);
   CTOR(double);
+  
+#define EASYCTOR(X) \
+  nuiVariant(X data) \
+  {\
+    mIsPointer = false;\
+    mIsObject = false;\
+    mType = nuiAttributeTypeTrait<X>::mTypeId;\
+    mIsPOD = true;\
+    mData.mInt = (uint64)data;\
+  }
+
+  EASYCTOR(nuiPosition);
+  EASYCTOR(nuiOrientation);
+  EASYCTOR(nuiBlendFunc);
+  EASYCTOR(nuiDecorationMode);
+  EASYCTOR(nuiMouseCursor);
+  EASYCTOR(nuiDirection);
+  EASYCTOR(nuiShapeMode);
+  EASYCTOR(nuiDecorationLayer);
+  EASYCTOR(nuiExpandMode);
+#undef EASYCTOR
+  
 #undef CTOR
   
   
@@ -310,47 +338,72 @@ public:
   }
   
   // POD Cast:
-  template<typename Type>
-  operator Type() const
-  {
-    if (nuiAttributeTypeTrait<Type>::mTypeId == nuiAttributeTypeTrait<float>::mTypeId
-        || nuiAttributeTypeTrait<Type>::mTypeId == nuiAttributeTypeTrait<double>::mTypeId)
-    {
-      if (mType == nuiAttributeTypeTrait<float>::mTypeId || mType == nuiAttributeTypeTrait<double>::mTypeId)
-        return (Type)mData.mFloat;
-      else if (mType == nuiAttributeTypeTrait<nglString>::mTypeId)
-        return (Type)mString.GetCDouble();
-    }
-    else if (nuiAttributeTypeTrait<Type>::mTypeId == nuiAttributeTypeTrait<int8>::mTypeId 
-             || nuiAttributeTypeTrait<Type>::mTypeId == nuiAttributeTypeTrait<int16>::mTypeId
-             || nuiAttributeTypeTrait<Type>::mTypeId == nuiAttributeTypeTrait<int32>::mTypeId
-             || nuiAttributeTypeTrait<Type>::mTypeId == nuiAttributeTypeTrait<int64>::mTypeId)
-    {
-      if (mType == nuiAttributeTypeTrait<uint8>::mTypeId || mType == nuiAttributeTypeTrait<uint16>::mTypeId ||mType == nuiAttributeTypeTrait<uint32>::mTypeId || mType == nuiAttributeTypeTrait<uint64>::mTypeId
-          || mType == nuiAttributeTypeTrait<int8>::mTypeId || mType == nuiAttributeTypeTrait<int16>::mTypeId ||mType == nuiAttributeTypeTrait<int32>::mTypeId || mType == nuiAttributeTypeTrait<int64>::mTypeId)
-        return (Type)mData.mInt;
-      if (mType == nuiAttributeTypeTrait<float>::mTypeId || mType == nuiAttributeTypeTrait<double>::mTypeId)
-        return (Type)ToBelow(mData.mFloat);
-      else if (mType == nuiAttributeTypeTrait<nglString>::mTypeId)
-        return (Type)mString.GetCInt64();
-    }
-    else if (nuiAttributeTypeTrait<Type>::mTypeId == nuiAttributeTypeTrait<uint8>::mTypeId
-             || nuiAttributeTypeTrait<Type>::mTypeId == nuiAttributeTypeTrait<uint16>::mTypeId
-             || nuiAttributeTypeTrait<Type>::mTypeId == nuiAttributeTypeTrait<uint32>::mTypeId
-             || nuiAttributeTypeTrait<Type>::mTypeId == nuiAttributeTypeTrait<uint64>::mTypeId)
-    {
-      if (mType == nuiAttributeTypeTrait<uint8>::mTypeId || mType == nuiAttributeTypeTrait<uint16>::mTypeId ||mType == nuiAttributeTypeTrait<uint32>::mTypeId || mType == nuiAttributeTypeTrait<uint64>::mTypeId
-          || mType == nuiAttributeTypeTrait<int8>::mTypeId || mType == nuiAttributeTypeTrait<int16>::mTypeId ||mType == nuiAttributeTypeTrait<int32>::mTypeId || mType == nuiAttributeTypeTrait<int64>::mTypeId)
-        return (Type)mData.mUInt;
-      if (mType == nuiAttributeTypeTrait<float>::mTypeId || mType == nuiAttributeTypeTrait<double>::mTypeId)
-        return (Type)ToBelow(mData.mFloat);
-      else if (mType == nuiAttributeTypeTrait<nglString>::mTypeId)
-        return (Type)mString.GetCUInt64();
-    }
-    
-    NGL_ASSERT(0);
+#define CAST(TYPE)\
+operator TYPE() const\
+  {\
+    if (nuiAttributeTypeTrait<TYPE>::mTypeId == nuiAttributeTypeTrait<float>::mTypeId\
+        || nuiAttributeTypeTrait<TYPE>::mTypeId == nuiAttributeTypeTrait<double>::mTypeId)\
+    {\
+      if (mType == nuiAttributeTypeTrait<float>::mTypeId || mType == nuiAttributeTypeTrait<double>::mTypeId)\
+        return (TYPE)mData.mFloat;\
+      else if (mType == nuiAttributeTypeTrait<nglString>::mTypeId)\
+        return (TYPE)mString.GetCDouble();\
+        }\
+    else if (nuiAttributeTypeTrait<TYPE>::mTypeId == nuiAttributeTypeTrait<int8>::mTypeId \
+             || nuiAttributeTypeTrait<TYPE>::mTypeId == nuiAttributeTypeTrait<int16>::mTypeId\
+             || nuiAttributeTypeTrait<TYPE>::mTypeId == nuiAttributeTypeTrait<int32>::mTypeId\
+             || nuiAttributeTypeTrait<TYPE>::mTypeId == nuiAttributeTypeTrait<int64>::mTypeId)\
+    {\
+      if (mType == nuiAttributeTypeTrait<uint8>::mTypeId || mType == nuiAttributeTypeTrait<uint16>::mTypeId ||mType == nuiAttributeTypeTrait<uint32>::mTypeId || mType == nuiAttributeTypeTrait<uint64>::mTypeId\
+          || mType == nuiAttributeTypeTrait<int8>::mTypeId || mType == nuiAttributeTypeTrait<int16>::mTypeId ||mType == nuiAttributeTypeTrait<int32>::mTypeId || mType == nuiAttributeTypeTrait<int64>::mTypeId)\
+        return (TYPE)mData.mInt;\
+      if (mType == nuiAttributeTypeTrait<float>::mTypeId || mType == nuiAttributeTypeTrait<double>::mTypeId)\
+        return (TYPE)ToBelow(mData.mFloat);\
+        else if (mType == nuiAttributeTypeTrait<nglString>::mTypeId)\
+          return (TYPE)mString.GetCInt64();\
+          }\
+    else if (nuiAttributeTypeTrait<TYPE>::mTypeId == nuiAttributeTypeTrait<uint8>::mTypeId\
+             || nuiAttributeTypeTrait<TYPE>::mTypeId == nuiAttributeTypeTrait<uint16>::mTypeId\
+             || nuiAttributeTypeTrait<TYPE>::mTypeId == nuiAttributeTypeTrait<uint32>::mTypeId\
+             || nuiAttributeTypeTrait<TYPE>::mTypeId == nuiAttributeTypeTrait<uint64>::mTypeId)\
+    {\
+      if (mType == nuiAttributeTypeTrait<uint8>::mTypeId || mType == nuiAttributeTypeTrait<uint16>::mTypeId ||mType == nuiAttributeTypeTrait<uint32>::mTypeId || mType == nuiAttributeTypeTrait<uint64>::mTypeId\
+          || mType == nuiAttributeTypeTrait<int8>::mTypeId || mType == nuiAttributeTypeTrait<int16>::mTypeId ||mType == nuiAttributeTypeTrait<int32>::mTypeId || mType == nuiAttributeTypeTrait<int64>::mTypeId)\
+        return (TYPE)mData.mUInt;\
+      if (mType == nuiAttributeTypeTrait<float>::mTypeId || mType == nuiAttributeTypeTrait<double>::mTypeId)\
+        return (TYPE)ToBelow(mData.mFloat);\
+        else if (mType == nuiAttributeTypeTrait<nglString>::mTypeId)\
+          return (TYPE)mString.GetCUInt64();\
+          }\
+    NGL_ASSERT(0);\
   }
-
+  
+  CAST(int8);
+  CAST(int16);
+  CAST(int32);
+  CAST(int64);
+  
+  CAST(uint8);
+  CAST(uint16);
+  CAST(uint32);
+  CAST(uint64);
+  
+  CAST(float);
+  CAST(double);
+#undef CAST
+  
+#define EASYCAST(X) operator X() const { return (X)(uint32)*this; }
+  EASYCAST(nuiPosition);
+  EASYCAST(nuiOrientation);
+  EASYCAST(nuiBlendFunc);
+  EASYCAST(nuiDecorationMode);
+  EASYCAST(nuiMouseCursor);
+  EASYCAST(nuiDirection);
+  EASYCAST(nuiShapeMode);
+  EASYCAST(nuiDecorationLayer);
+  EASYCAST(nuiExpandMode);
+#undef EASYCAST
+  
   operator bool() const
   {
     if (mType == nuiAttributeTypeTrait<bool>::mTypeId)
