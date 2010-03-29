@@ -719,9 +719,9 @@
 		path = /Users/meeloo/work/nui3/include/nuiBindingManager.h;
 		sourceTree = "<absolute>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1477, 19409}}";
-			sepNavSelRange = "{21700, 0}";
-			sepNavVisRange = "{21225, 869}";
+			sepNavIntBoundsRect = "{{0, 0}, {1206, 19435}}";
+			sepNavSelRange = "{21810, 0}";
+			sepNavVisRange = "{21033, 1323}";
 		};
 	};
 	E55EB9CA1160D59F00498779 /* PBXTextBookmark */ = {
@@ -975,9 +975,9 @@
 		path = /Users/meeloo/work/nui3/include/nuiVariant.h;
 		sourceTree = "<absolute>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1206, 7423}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1477, 7631}}";
 			sepNavSelRange = "{6329, 0}";
-			sepNavVisRange = "{5775, 1019}";
+			sepNavVisRange = "{5891, 668}";
 		};
 	};
 	E55EB9EF1160D6CD00498779 /* PBXTextBookmark */ = {

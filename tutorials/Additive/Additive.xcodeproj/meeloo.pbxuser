@@ -458,9 +458,9 @@
 		path = ../../include/nuiAttribute.h;
 		sourceTree = "<group>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1608, 27170}}";
-			sepNavSelRange = "{10650, 0}";
-			sepNavVisRange = "{9758, 1731}";
+			sepNavIntBoundsRect = "{{0, 0}, {1652, 27677}}";
+			sepNavSelRange = "{10611, 0}";
+			sepNavVisRange = "{9808, 1280}";
 		};
 	};
 	E55EB99D1160CDB000498779 /* XCBuildMessageTextBookmark */ = {
@@ -535,9 +535,10 @@
 		path = ../../include/nuiVariant.h;
 		sourceTree = "<group>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1002, 7514}}";
-			sepNavSelRange = "{6071, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {1002, 7488}}";
+			sepNavSelRange = "{6645, 5}";
 			sepNavVisRange = "{5526, 1617}";
+			sepNavWindowFrame = "{{15, 70}, {1061, 1103}}";
 		};
 	};
 	E55EB9AE1160D03500498779 /* XCBuildMessageTextBookmark */ = {

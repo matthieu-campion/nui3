@@ -51,3 +51,8 @@ private:
   nglIStream* mpIStream;
   bool mValid; 
 };
+
+#if (defined _LINUX_) || (defined _CARBON_) || (defined _UIKIT_) || (defined _COCOA_)
+nglPath nuiGetNativeResourcePath();
+#endif
+
