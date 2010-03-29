@@ -135,7 +135,7 @@ protected:
 };
 
 
-template <class Contents>  
+template <typename Contents>  
 class nuiAttribute : public nuiAttributeBase
 {
 public:
@@ -308,9 +308,9 @@ public:
     return true;
   }
   
-  bool FromVariant(Contents& Value, const nuiVariant& rVariant) const
+  bool FromVariant(Contents& rValue, const nuiVariant& rVariant) const
   {
-    //Value = rVariant.operator Contents();
+    rValue = rVariant.operator Contents();
     return true;
   }
   
@@ -695,7 +695,7 @@ private:
 
 
 //////////////////////////////////////////////
-template <class Contents>  
+template <typename Contents>  
 class nuiAttribute<const Contents&> : public nuiAttributeBase
 {
 public:
@@ -841,7 +841,7 @@ public:
   
   bool FromVariant(Contents& Value, const nuiVariant& rVariant) const
   {
-    //Value = rVariant.operator Contents();
+    Value = rVariant.operator Contents();
     return true;
   }
   
@@ -1354,7 +1354,7 @@ protected:
   void* mpTarget;
 };
 
-template <class Contents>
+template <typename Contents>
 class nuiAttrib : public nuiAttribBase
 {
 public:

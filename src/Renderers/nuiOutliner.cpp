@@ -104,8 +104,8 @@ void nuiOutliner::AddCap(const nuiPoint& rFirstPoint, const nuiPoint& rLastPoint
       vec[0] = vec[1];
       vec[1] = -tmp;
       vec *= mLineWidth * 0.5f;
-      rPoints.AddVertexOptim(rFirstPoint+vec);
-      rPoints.AddVertexOptim(rLastPoint+vec);
+      rPoints.AddVertexOptim(nuiPoint(rFirstPoint+vec));
+      rPoints.AddVertexOptim(nuiPoint(rLastPoint+vec));
     }
     break;
   }
@@ -147,10 +147,10 @@ void nuiOutliner::Tessellate(nuiPath& rPoints, const nuiPath& rVertices, uint of
       vec[0] = vec[1];
       vec[1] = -tmp;
 
-      Left.AddVertexOptim(rPoint + vec);
-      Left.AddVertexOptim(rNextPoint + vec);
-      Right.AddVertexOptim(rPoint - vec);
-      Right.AddVertexOptim(rNextPoint - vec);
+      Left.AddVertexOptim(nuiPoint(rPoint + vec));
+      Left.AddVertexOptim(nuiPoint(rNextPoint + vec));
+      Right.AddVertexOptim(nuiPoint(rPoint - vec));
+      Right.AddVertexOptim(nuiPoint(rNextPoint - vec));
     }
   }
 

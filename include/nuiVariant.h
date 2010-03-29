@@ -290,6 +290,31 @@ public:
   {
     return mIsPOD;
   }
+
+  
+  //////////////////////////////////////
+  // Casting:
+  template<typename Type>
+  operator Type() const
+  {
+    return Type(0);
+  }
+  
+  template<typename PointerType>
+  operator PointerType*() const
+  {
+    if (nuiAttributeTypeTrait<PointerType*>::mTypeId == mType)
+      return reinterpret_cast<PointerType*>(mData.mpPointer);
+    
+    if (!mIsPointer)
+      return NULL;
+    
+    //if (mIsObject && is_base_of<nuiObject, PointerType>::value)
+      return dynamic_cast<PointerType*>(reinterpret_cast<nuiObject*>(mData.mpPointer));
+    
+    return NULL;
+  }
+  
   
   // nglString Cast:
   operator nglString() const
@@ -493,21 +518,7 @@ operator TYPE() const\
     return nuiVector();
   }
   
-  template<typename Type>
-  operator Type*() const
-  {
-    if (nuiAttributeTypeTrait<Type*>::mTypeId == mType)
-      return reinterpret_cast<Type*>(mData.mpPointer);
-    
-    if (!mIsPointer)
-      return NULL;
-    
-    if (mIsObject && is_base_of<nuiObject, Type>::value)
-      return dynamic_cast<Type*>(reinterpret_cast<nuiObject*>(mData.mpPointer));
-    
-    return NULL;
-  }
-  
+               
 private:
   nuiAttributeType mType;
   union 

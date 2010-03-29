@@ -24,7 +24,7 @@ nuiPath::~nuiPath()
 
 void nuiPath::StopPath()
 {
-  AddVertex(nuiPointTypeStop);
+  AddVertex(nuiPoint(nuiPointTypeStop));
 }
 
 int nuiPath::AddVertex(const nuiPoint& rPoint)

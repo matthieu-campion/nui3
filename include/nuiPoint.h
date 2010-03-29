@@ -25,7 +25,7 @@ public:
   {
   }
 
-  nuiPoint(nuiXMLNode* pNode) : nuiVector(), mType(nuiPointTypeNormal)
+  explicit nuiPoint(nuiXMLNode* pNode) : nuiVector(), mType(nuiPointTypeNormal)
   { 
     if (pNode->GetName() != _T("nuiPoint"))
       return;
@@ -65,31 +65,31 @@ public:
   //@}
 
   /// Initialize with values
-  nuiPoint(float X, float Y, float Z = 0.0f, float W = 1.f) : nuiVector(X,Y,Z,W), mType(nuiPointTypeNormal)
+  explicit nuiPoint(float X, float Y, float Z = 0.0f, float W = 1.f) : nuiVector(X,Y,Z,W), mType(nuiPointTypeNormal)
   {
     NGL_ASSERT(finite(Elt[0]) && finite(Elt[1]) && finite(Elt[2]));
   }
 
   /// Initialize with a two dimensional vector. Third element is zero, fourth is one.
-  nuiPoint(const nuiVector2& rVector) : nuiVector(rVector), mType(nuiPointTypeNormal)
+  explicit nuiPoint(const nuiVector2& rVector) : nuiVector(rVector), mType(nuiPointTypeNormal)
   { 
     NGL_ASSERT(finite(Elt[0]) && finite(Elt[1]) && finite(Elt[2]));
   }
 
   /// Initialize with a two dimensional vector. Fourth element is one.
-  nuiPoint(const nuiVector3& rVector)  : nuiVector(rVector), mType(nuiPointTypeNormal)
+  explicit nuiPoint(const nuiVector3& rVector)  : nuiVector(rVector), mType(nuiPointTypeNormal)
   { 
     NGL_ASSERT(finite(Elt[0]) && finite(Elt[1]) && finite(Elt[2]));
   }
 
   /// Initialize with a four dimensional vector.
-  nuiPoint(const nuiVector& rVector)  : nuiVector(rVector), mType(nuiPointTypeNormal)
+  explicit nuiPoint(const nuiVector& rVector)  : nuiVector(rVector), mType(nuiPointTypeNormal)
   { 
     NGL_ASSERT(finite(Elt[0]) && finite(Elt[1]) && finite(Elt[2]));
   }
 
   /// Initialize with a special point type.
-  nuiPoint(nuiPointType type)  : nuiVector(), mType(type)
+  explicit nuiPoint(nuiPointType type)  : nuiVector(), mType(type)
   { 
     NGL_ASSERT(finite(Elt[0]) && finite(Elt[1]) && finite(Elt[2]));
   }

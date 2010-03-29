@@ -33,8 +33,8 @@ nuiArc::nuiArc(float cX, float cY, float rX, float rY, float Theta1, float Theta
   mXRadius = rX;
   mYRadius = rY;
 
-  mStartVertex = m * start;
-  mStopVertex = m * stop;
+  mStartVertex = nuiPoint(m * start);
+  mStopVertex = nuiPoint(m * stop);
 
   mStartVertex.Elt[0] += cX;
   mStartVertex.Elt[1] += cY;

@@ -1074,14 +1074,14 @@ nuiPoint nuiSpline::GetStartPoint() const
 {
   if (mNodes.empty())
     return nuiPoint::Zero;
-  return mNodes.front().GetPosition();
+  return nuiPoint(mNodes.front().GetPosition());
 }
 
 nuiPoint nuiSpline::GetEndPoint() const
 {
   if (mNodes.empty())
     return nuiPoint::Zero;
-  return mNodes.back().GetPosition();
+  return nuiPoint(mNodes.back().GetPosition());
 }
 
 
