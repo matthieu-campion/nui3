@@ -112,6 +112,12 @@
 			E55EB8F71160B19F00498779 /* PBXTextBookmark */ = E55EB8F71160B19F00498779 /* PBXTextBookmark */;
 			E55EB8F81160B19F00498779 /* XCBuildMessageTextBookmark */ = E55EB8F81160B19F00498779 /* XCBuildMessageTextBookmark */;
 			E55EB8F91160B19F00498779 /* PBXTextBookmark */ = E55EB8F91160B19F00498779 /* PBXTextBookmark */;
+			E55EB9061160B9A000498779 /* XCBuildMessageTextBookmark */ = E55EB9061160B9A000498779 /* XCBuildMessageTextBookmark */;
+			E55EB9091160BACF00498779 /* PBXTextBookmark */ = E55EB9091160BACF00498779 /* PBXTextBookmark */;
+			E55EB90A1160BACF00498779 /* PBXTextBookmark */ = E55EB90A1160BACF00498779 /* PBXTextBookmark */;
+			E55EB90B1160BACF00498779 /* XCBuildMessageTextBookmark */ = E55EB90B1160BACF00498779 /* XCBuildMessageTextBookmark */;
+			E55EB90C1160BACF00498779 /* PBXTextBookmark */ = E55EB90C1160BACF00498779 /* PBXTextBookmark */;
+			E55EB90F1160BACF00498779 /* PBXTextBookmark */ = E55EB90F1160BACF00498779 /* PBXTextBookmark */;
 			E5677E571160A91C00151564 = E5677E571160A91C00151564 /* PBXTextBookmark */;
 			E5677E581160A91C00151564 = E5677E581160A91C00151564 /* PBXTextBookmark */;
 			E5677E5C1160AAD300151564 = E5677E5C1160AAD300151564 /* PBXTextBookmark */;
@@ -151,14 +157,14 @@
 	};
 	61A9DFEF0B83433800BC506C /* Application.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1477, 2392}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1477, 2379}}";
 			sepNavSelRange = "{0, 0}";
 			sepNavVisRange = "{0, 537}";
 		};
 	};
 	61A9DFF10B83433800BC506C /* MainWindow.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1477, 2171}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1477, 2132}}";
 			sepNavSelRange = "{0, 0}";
 			sepNavVisRange = "{0, 750}";
 		};
@@ -226,7 +232,7 @@
 		fRef = E55EB8C01160AB9F00498779 /* nuiAttribute.h */;
 		name = "nuiAttribute.h: 313";
 		rLen = 0;
-		rLoc = 10614;
+		rLoc = 10616;
 		rType = 0;
 		vrLen = 1674;
 		vrLoc = 9600;
@@ -267,7 +273,7 @@
 		fRef = E55EB8C81160AC5B00498779 /* nuiAttribute.h */;
 		name = "nuiAttribute.h: 313";
 		rLen = 0;
-		rLoc = 10607;
+		rLoc = 10609;
 		rType = 0;
 		vrLen = 1683;
 		vrLoc = 9600;
@@ -308,7 +314,7 @@
 		fRef = E55EB8CE1160AD0900498779 /* nuiAttribute.h */;
 		name = "nuiAttribute.h: 845";
 		rLen = 0;
-		rLoc = 26571;
+		rLoc = 26575;
 		rType = 0;
 		vrLen = 1770;
 		vrLoc = 25667;
@@ -369,7 +375,7 @@
 		fRef = E55EB8CE1160AD0900498779 /* nuiAttribute.h */;
 		name = "nuiAttribute.h: 313";
 		rLen = 0;
-		rLoc = 10633;
+		rLoc = 10635;
 		rType = 0;
 		vrLen = 1233;
 		vrLoc = 9801;
@@ -379,7 +385,7 @@
 		fRef = E55EB8CE1160AD0900498779 /* nuiAttribute.h */;
 		name = "nuiAttribute.h: 844";
 		rLen = 0;
-		rLoc = 26571;
+		rLoc = 26575;
 		rType = 0;
 		vrLen = 1760;
 		vrLoc = 25665;
@@ -389,7 +395,7 @@
 		fRef = E55EB8CE1160AD0900498779 /* nuiAttribute.h */;
 		name = "nuiAttribute.h: 313";
 		rLen = 0;
-		rLoc = 10633;
+		rLoc = 10635;
 		rType = 0;
 		vrLen = 1233;
 		vrLoc = 9801;
@@ -451,6 +457,76 @@
 		rType = 0;
 		vrLen = 807;
 		vrLoc = 0;
+	};
+	E55EB9051160B9A000498779 /* nuiAttribute.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = nuiAttribute.h;
+		path = ../../include/nuiAttribute.h;
+		sourceTree = "<group>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1608, 26702}}";
+			sepNavSelRange = "{26538, 0}";
+			sepNavVisRange = "{25455, 1764}";
+		};
+	};
+	E55EB9061160B9A000498779 /* XCBuildMessageTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "No matching function for call to 'nuiVariant::operator Type*() const'";
+		fRef = E55EB9051160B9A000498779 /* nuiAttribute.h */;
+		fallbackIsa = XCBuildMessageTextBookmark;
+		rLen = 1;
+		rLoc = 312;
+		rType = 1;
+	};
+	E55EB9091160BACF00498779 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5CC370E115FF09E00747AB2 /* nuiSpiderMonkey.cpp */;
+		name = "nuiSpiderMonkey.cpp: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 807;
+		vrLoc = 0;
+	};
+	E55EB90A1160BACF00498779 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 750;
+		vrLoc = 0;
+	};
+	E55EB90B1160BACF00498779 /* XCBuildMessageTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "Compile /Users/meeloo/work/nui3/tutorials/JSTraceTest/src/Application.cpp";
+		fRef = 61A9DFEF0B83433800BC506C /* Application.cpp */;
+		fallbackIsa = XCBuildMessageTextBookmark;
+		rLen = 0;
+		rLoc = 0;
+		rType = 1;
+	};
+	E55EB90C1160BACF00498779 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFEF0B83433800BC506C /* Application.cpp */;
+		name = "Application.cpp: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 537;
+		vrLoc = 0;
+	};
+	E55EB90F1160BACF00498779 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E55EB9051160B9A000498779 /* nuiAttribute.h */;
+		name = "nuiAttribute.h: 844";
+		rLen = 0;
+		rLoc = 26538;
+		rType = 0;
+		vrLen = 1764;
+		vrLoc = 25455;
 	};
 	E5677E571160A91C00151564 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;

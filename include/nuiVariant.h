@@ -110,20 +110,6 @@ public:
     mData.mBool = set;
   }
   
-  // Pointer CTOR
-  template <typename Type>
-  nuiVariant(Type* pData)
-  {
-    mIsPointer = true;
-    mIsObject = is_base_of<nuiObject, Type>::value;
-    mType = nuiAttributeTypeTrait<Type*>::mTypeId;
-    mData.mpPointer = (void*)pData;
-    mIsPOD = false;
-
-    if (mIsObject)
-      mData.mpObject->Acquire();
-  }
-  
   // Classes CTORs
   nuiVariant(const nglString& rData)
   {
@@ -206,8 +192,6 @@ public:
     NGL_ASSERT(0);
   }
   
-
-  
   // Copy CTOR
   nuiVariant(const nuiVariant& rObject)
   {
@@ -226,6 +210,21 @@ public:
     if (mIsObject)
       mData.mpObject->Acquire();
   }
+
+  // Pointer CTOR
+  template <typename Type>
+  nuiVariant(Type* pData)
+  {
+    mIsPointer = true;
+    mIsObject = is_base_of<nuiObject, Type>::value;
+    mType = nuiAttributeTypeTrait<Type*>::mTypeId;
+    mData.mpPointer = (void*)pData;
+    mIsPOD = false;
+    
+    if (mIsObject)
+      mData.mpObject->Acquire();
+  }
+  
   
   // DTOR:
   ~nuiVariant()
@@ -505,21 +504,6 @@ operator TYPE() const\
     
     if (mIsObject && is_base_of<nuiObject, Type>::value)
       return dynamic_cast<Type*>(reinterpret_cast<nuiObject*>(mData.mpPointer));
-    
-    return NULL;
-  }
-  
-  template<typename Type>
-  operator const Type*() const
-  {
-    if (nuiAttributeTypeTrait<Type*>::mTypeId == mType)
-      return reinterpret_cast<const Type*>(mData.mpPointer);
-    
-    if (!mIsPointer)
-      return NULL;
-    
-    if (mIsObject && is_base_of<nuiObject, Type>::value)
-      return dynamic_cast<const Type*>(reinterpret_cast<nuiObject*>(mData.mpPointer));
     
     return NULL;
   }

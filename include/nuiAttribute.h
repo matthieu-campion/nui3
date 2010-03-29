@@ -310,7 +310,7 @@ public:
   
   bool FromVariant(Contents& Value, const nuiVariant& rVariant) const
   {
-    Value = rVariant.operator Contents();
+    //Value = rVariant.operator Contents();
     return true;
   }
   
@@ -841,7 +841,7 @@ public:
   
   bool FromVariant(Contents& Value, const nuiVariant& rVariant) const
   {
-    Value = rVariant.operator Contents();
+    //Value = rVariant.operator Contents();
     return true;
   }
   
