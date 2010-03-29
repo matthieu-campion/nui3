@@ -73,7 +73,9 @@
 #define JS_BITS_PER_WORD_LOG2 6
 #define JS_BYTES_PER_DOUBLE 8
 #define JS_BYTES_PER_WORD 8
+#ifndef WIN32
 #define JS_HAVE_STDINT_H 1
+#endif
 //#define JS_THREADSAFE 1
 #define JS_TRACER 1
 #define MOZ_DLL_SUFFIX ".dylib"

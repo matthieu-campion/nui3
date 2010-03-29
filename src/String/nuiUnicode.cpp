@@ -10,8 +10,8 @@
 
 typedef struct nuiUnicodeRangeDesc
 {
-  nglChar RangeStart;
-  nglChar RangeEnd;
+  uint32 RangeStart;
+  uint32 RangeEnd;
   nuiUnicodeRange Range;
 };
 

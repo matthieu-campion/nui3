@@ -73,7 +73,7 @@
 #if defined(JS_HAVE_STDINT_H)
 #include <stdint.h>
 #else
-#include <sys/types.h>
+#include <sys/types.h>2
 #endif
 
 typedef int8_t   JSInt8;
@@ -114,6 +114,17 @@ typedef unsigned JS_INT16_TYPE  JSUint16;
 typedef unsigned JS_INT32_TYPE  JSUint32;
 typedef unsigned JS_INT64_TYPE  JSUint64;
 
+#elif defined AVMPLUS_WIN32
+#if ! defined(_STDINT_H)
+typedef signed char int8_t;
+typedef signed short int16_t;
+typedef signed int int32_t;
+typedef signed __int64 int64_t;
+typedef unsigned char uint8_t;
+typedef unsigned short uint16_t;
+typedef unsigned int uint32_t;
+typedef unsigned __int64 uint64_t;
+#endif
 #else
 #error "couldn't find exact-width integer types"
 #endif

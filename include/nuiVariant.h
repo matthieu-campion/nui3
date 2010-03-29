@@ -53,15 +53,15 @@ public:
     mIsPOD = true;\
     if (is_same_type<TYPE, int8>::value || is_same_type<TYPE, int16>::value || is_same_type<TYPE, int32>::value || is_same_type<TYPE, int64>::value)\
     {\
-      mData.mInt = data;\
+      mData.mInt = (int64)data;\
     }\
     else if (is_same_type<TYPE, uint8>::value || is_same_type<TYPE, uint16>::value || is_same_type<TYPE, uint32>::value || is_same_type<TYPE, uint64>::value)\
     {\
-      mData.mUInt = data;\
+      mData.mUInt = (uint64)data;\
     }\
     else if (is_same_type<TYPE, float>::value || is_same_type<TYPE, double>::value)\
     {\
-      mData.mFloat = data;\
+      mData.mFloat = (double)data;\
     }\
   }
 

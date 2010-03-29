@@ -101,7 +101,7 @@ void MainWindow::OnCreation()
 nuiWidget* MainWindow::Tutorial_Buttons()
 {
   nuiHBox* pBox = new nuiHBox(0);
-  pBox->EnableSurface(true);
+  //pBox->EnableSurface(true);
   
   // a simple button
   nuiButton* pBtn = new nuiButton(_T("button"));

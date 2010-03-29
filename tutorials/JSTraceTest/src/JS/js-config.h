@@ -55,7 +55,33 @@
 
 /* Define to 1 if the standard <stdint.h> header is present and
    useable.  See jstypes.h and jsstdint.h.  */
-#define JS_HAVE_STDINT_H 1
+#ifndef WIN32
+//#define JS_HAVE_STDINT_H 1
+#else
+#define JS_STDDEF_H_HAS_INTPTR_T 1
+// typedef signed __int8    int8;
+// typedef unsigned __int8  uint8;
+// typedef __int16          int16;
+// typedef unsigned __int16 uint16;
+// typedef __int32          int32;
+// typedef unsigned __int32 uint32;
+// typedef __int64          int64;
+// typedef unsigned __int64 uint64;
+// typedef float            real32;
+// typedef double           real64;
+
+typedef signed __int8    JSInt8;
+typedef signed __int16    JSInt16;
+typedef signed __int32    JSInt32;
+typedef signed __int64    JSInt64;
+
+typedef unsigned __int8  JSUint8;
+typedef unsigned __int16  JSUint16;
+typedef unsigned __int32  JSUint32;
+typedef unsigned __int64  JSUint64;
+#define HAVE_GETSYSTEMTIMEASFILETIME 1
+#define HAVE_SYSTEMTIMETOFILETIME 1
+#endif
 
 /* Define to 1 if the <sys/types.h> defines int8_t, etc. */
 /* #undef JS_SYS_TYPES_H_DEFINES_EXACT_SIZE_TYPES */
