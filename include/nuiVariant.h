@@ -76,12 +76,12 @@ public:
   CTOR(float);
   CTOR(double);
   
-#define EASYCTOR(X) \
-  nuiVariant(X data) \
+#define EASYCTOR(TYPE) \
+  nuiVariant(TYPE data) \
   {\
     mIsPointer = false;\
     mIsObject = false;\
-    mType = nuiAttributeTypeTrait<X>::mTypeId;\
+    mType = nuiAttributeTypeTrait<TYPE>::mTypeId;\
     mIsPOD = true;\
     mData.mInt = (uint64)data;\
   }
@@ -412,21 +412,21 @@ operator TYPE() const\
     if (mType == nuiAttributeTypeTrait<float>::mTypeId
         || mType == nuiAttributeTypeTrait<double>::mTypeId)
     {
-      return (bool)mData.mFloat;
+      return (bool)(mData.mFloat != 0);
     }
     else if (mType == nuiAttributeTypeTrait<int8>::mTypeId 
              || mType == nuiAttributeTypeTrait<int16>::mTypeId
              || mType == nuiAttributeTypeTrait<int32>::mTypeId
              || mType == nuiAttributeTypeTrait<int64>::mTypeId)
     {
-      return (bool)mData.mInt;
+      return (bool)(mData.mInt != 0);
     }
     else if (mType == nuiAttributeTypeTrait<uint8>::mTypeId
              || mType == nuiAttributeTypeTrait<uint16>::mTypeId
              || mType == nuiAttributeTypeTrait<uint32>::mTypeId
              || mType == nuiAttributeTypeTrait<uint64>::mTypeId)
     {
-      return (bool)mData.mUInt;
+      return (bool)(mData.mUInt != 0);
     }
     
     return false;

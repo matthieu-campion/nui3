@@ -207,8 +207,6 @@ void nuiAttributeBase::KillAttributeHolder(void* pHolder)
 ////////////////// 
 // Declaration of some property types specializations:
 //template<uint32> nuiAttributeTypeTrait<uint32> nuiAttributeTypeTrait<uint32>::singleton;
-template <typename T>
-uint64 nuiAttributeTypeTrait<T>::mTypeId = nuiGetNewAttributeUniqueId();
 
 NUI_DECLARE_ATTRIBUTE_TYPE(bool);
 
@@ -243,6 +241,8 @@ NUI_DECLARE_ATTRIBUTE_TYPE(nglMatrixf);
 NUI_DECLARE_ATTRIBUTE_TYPE(nuiBlendFunc);
 NUI_DECLARE_ATTRIBUTE_TYPE(nuiExpandMode);
 
+template <typename T>
+uint64 nuiAttributeTypeTrait<T>::mTypeId = nuiGetNewAttributeUniqueId();
 
 
 //********************************************************************************************************

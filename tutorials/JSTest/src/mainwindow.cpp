@@ -224,9 +224,12 @@ static JSBool nuiConstructJSClass(JSContext *cx, JSObject *obj, uintN argc, jsva
     return JS_FALSE;
   
   std::map<JSFunction*, nuiFunction*>::const_iterator it = gFunctions.find(pJSFunc);
-  nuiFunction* pFunc = it->second;
-  
-  if (!pFunc)
+  nuiFunction* pFunc = NULL;
+  if (it != gFunctions.end())
+  {
+    pFunc = it->second;
+  }
+  else
   {
     // In this case we need to find the class object
     JSClass* pJSClass = JS_GetClass(obj);
