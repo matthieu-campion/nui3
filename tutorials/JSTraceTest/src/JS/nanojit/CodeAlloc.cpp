@@ -265,7 +265,11 @@ namespace nanojit
 #endif
 
 #if defined(AVMPLUS_UNIX) && defined(NANOJIT_ARM)
+#ifdef __APPLE__
+#include <unistd.h>
+#else
 #include <asm/unistd.h>
+#endif
 extern "C" void __clear_cache(char *BEG, char *END);
 #endif
 

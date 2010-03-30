@@ -34,6 +34,11 @@
 
 #include "nanojit.h"
 
+#ifdef __APPLE__
+#include "sys/mman.h"
+#include "unistd.h"
+#endif
+
 #ifdef SOLARIS
     typedef caddr_t maddr_ptr;
 #else

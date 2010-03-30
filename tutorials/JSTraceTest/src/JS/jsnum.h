@@ -48,6 +48,11 @@
 #include <ieeefp.h>
 #endif
 
+#ifdef __APPLE__ /// TMP FIX: not sure needed ...
+#define finite(x) __inline_isfinited((double)(x))
+#endif
+
+
 #include "jsstr.h"
 
 /*
