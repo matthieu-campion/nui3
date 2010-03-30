@@ -42,6 +42,7 @@ void MainWindow::JSTest()
   pM->SetGlobal(_T("window"), (nuiSimpleContainer*)this);
   
   const char* script =
+  "NGL_OUT('nuiRight:' + nuiRight);\n"
   "var label = new nuiLabel('FromJS');\n"
   "NGL_OUT('label class:'+label.GetObjectClass());\n"
   "window.AddChild(label);\n"
@@ -51,6 +52,7 @@ void MainWindow::JSTest()
   "var res = label.Text;\n"
   "NGL_OUT(res);\n"
   "label.TextColor = 'red';\n"
+  "label.Position = nuiRight\n"
   ;
   
   nglString program(script);

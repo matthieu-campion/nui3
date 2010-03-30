@@ -124,6 +124,31 @@ bool nuiInitBindings()
   nuiEndClass;
   
   
+  // Add Enums:
+  nuiBindingManager& rBM(nuiBindingManager::GetManager());
+  
+  // nuiPosition:
+  nuiAddEnum(nuiCenter);
+  nuiAddEnum(nuiLeft);
+  nuiAddEnum(nuiRight);
+  nuiAddEnum(nuiTop);
+  nuiAddEnum(nuiBottom);
+  nuiAddEnum(nuiTopLeft);
+  nuiAddEnum(nuiTopRight);
+  nuiAddEnum(nuiBottomLeft);
+  nuiAddEnum(nuiBottomRight);
+  nuiAddEnum(nuiFill);
+  nuiAddEnum(nuiFillHorizontal);
+  nuiAddEnum(nuiFillVertical);
+  nuiAddEnum(nuiFillTop);
+  nuiAddEnum(nuiFillBottom);
+  nuiAddEnum(nuiFillLeft);
+  nuiAddEnum(nuiFillRight);
+
+  // nuiOrientation:
+  nuiAddEnum(nuiHorizontal);
+  nuiAddEnum(nuiVertical);
+  
   nglString str;
   nuiBindingManager::GetManager().Dump(str);
   NGL_OUT(_T("Binding manager dump:\n%ls\n"), str.GetChars());

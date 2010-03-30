@@ -1447,6 +1447,7 @@ public:
 
   nuiFunction* AddFunction(const nglString& rFunctionName, nuiFunction* pFunction);
   nuiClass* AddClass(nuiClass* pClass);
+  void AddEnum(const nglString& rName, uint32 val);
 
   nuiClass* GetClass(const nglString& rClassName) const;
   nuiClass* GetClass(nuiAttributeType type) const;
@@ -1461,14 +1462,17 @@ public:
   typedef std::multimap<nglString, nuiFunction*> FunctionMap;
   typedef std::map<nglString, nuiClass*> ClassMap;
   typedef std::map<nuiAttributeType, nuiClass*> TypeMap;
+  typedef std::map<nglString, uint32> EnumMap;
   
   const FunctionMap& GetFunctions() const;
   const ClassMap& GetClasses() const;
   const TypeMap& GetTypes() const;
+  const EnumMap& GetEnums() const;
 protected:
   FunctionMap mFunctions;
   ClassMap mClasses;
   TypeMap mTypes;
+  EnumMap mEnums;
 
   static nuiBindingManager mManager;
 };
@@ -1478,13 +1482,15 @@ protected:
 #define nuiBindClass(CLASSNAME) \
 { \
   nuiClass* pClass = new nuiClassImpl<CLASSNAME>(_T(#CLASSNAME)); \
-  nuiBindingManager::GetManager().AddClass(pClass);
+  nuiBindingManager& rBM(nuiBindingManager::GetManager());\
+  rBM.AddClass(pClass);
 
 #define nuiEndClass }
 
-#define nuiInheritFrom(PARENT_CLASS) pClass->AddParentClass(nuiBindingManager::GetManager().GetClass(_T(#PARENT_CLASS)));
+#define nuiInheritFrom(PARENT_CLASS) pClass->AddParentClass(rBM.GetClass(_T(#PARENT_CLASS)));
 #define nuiAddCtor(CTOR_DECL) pClass->AddConstructor(new nuiFunction(CTOR_DECL));
 #define nuiAddMethod(METHOD_NAME, METHOD)  pClass->AddMethod(_T(#METHOD_NAME), new nuiFunction(&METHOD));
-#define nuiAddFunction(FUNCTION_NAME, FUNCTION) nuiBindingManager::GetManager().AddFunction(_T(#FUNCTION_NAME), new nuiFunction(FUNCTION));
+#define nuiAddFunction(FUNCTION_NAME, FUNCTION) rBM.AddFunction(_T(#FUNCTION_NAME), new nuiFunction(FUNCTION));
+#define nuiAddEnum(ENUM) rBM.AddEnum(_T(#ENUM), ENUM);
 
 

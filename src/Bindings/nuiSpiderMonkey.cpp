@@ -168,61 +168,61 @@ void nuiSpiderMonkey::GetVariantFromJSVal(nuiVariant& var, jsval val)
   {
       
     case JSTYPE_VOID:
-    {
-      var = nuiVariant();
-    }
+      {
+        var = nuiVariant();
+      }
       break;
       
     case JSTYPE_OBJECT:
-    {
-      // Find the nui equivalent of the object
-      JSObject* o = NULL;
-      JS_ValueToObject(mContext, val, &o);
-      var = GetVariantObjectFromJS(o);
-    }
+      {
+        // Find the nui equivalent of the object
+        JSObject* o = NULL;
+        JS_ValueToObject(mContext, val, &o);
+        var = GetVariantObjectFromJS(o);
+      }
       break;
       
     case JSTYPE_STRING:
-    {
-      JSString* pStr = JS_ValueToString(mContext, val);
-      nglString str(JS_GetStringBytes(pStr));
-      var = str;
-    }
+      {
+        JSString* pStr = JS_ValueToString(mContext, val);
+        nglString str(JS_GetStringBytes(pStr));
+        var = str;
+      }
       break;
       
     case JSTYPE_NUMBER:
-    {
-      jsdouble val;
-      JS_ValueToNumber(mContext, val, &val);
-      var = val;
-    }
+      {
+        jsdouble v;
+        JS_ValueToNumber(mContext, val, &v);
+        var = v;
+      }
       break;
       
     case JSTYPE_BOOLEAN:
-    {
-      JSBool b = false;
-      JS_ValueToBoolean(mContext, val, &b);
-      var = b;
-    }
+      {
+        JSBool b = false;
+        JS_ValueToBoolean(mContext, val, &b);
+        var = b;
+      }
       break;
       
     case JSTYPE_FUNCTION:
     case JSTYPE_NULL:
     case JSTYPE_XML:
     case JSTYPE_LIMIT:
-    {
-      jsval v;
-      if (!JS_ConvertValue(mContext, v, JSTYPE_STRING, &val))
       {
-        NGL_LOG(_T("JavaScript"), NGL_LOG_ERROR, _T("Unable to convert a complex type to a string"));
-        var = nuiVariant();
-        return;
+        jsval v;
+        if (!JS_ConvertValue(mContext, v, JSTYPE_STRING, &val))
+        {
+          NGL_LOG(_T("JavaScript"), NGL_LOG_ERROR, _T("Unable to convert a complex type to a string"));
+          var = nuiVariant();
+          return;
+        }
+        
+        JSString* pStr = JS_ValueToString(mContext, v);
+        nglString str(JS_GetStringBytes(pStr));
+        var = str;
       }
-      
-      JSString* pStr = JS_ValueToString(mContext, v);
-      nglString str(JS_GetStringBytes(pStr));
-      var = str;
-    }
       break;
   }  
 }
@@ -613,6 +613,24 @@ bool nuiSpiderMonkey::Init()
       ++it;
     }
   }
+  
+  // Define global enums:
+  {
+    const nuiBindingManager::EnumMap& rEnums(nuiBindingManager::GetManager().GetEnums());
+    nuiBindingManager::EnumMap::const_iterator it = rEnums.begin();
+    nuiBindingManager::EnumMap::const_iterator end = rEnums.end();
+
+    while (it != end)
+    {
+      uint32 val = it->second;
+      jsval v;
+      GetJSValFromVariant(&v, nuiVariant(val));
+      std::string name(it->first.GetStdString());
+      JSBool res = JS_DefineProperty(mContext, mGlobal, name.c_str(), v, NULL, NULL, JSPROP_ENUMERATE);
+      ++it;
+    }
+  }
+  
     
   
   return true;

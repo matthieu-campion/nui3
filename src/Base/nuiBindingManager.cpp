@@ -341,6 +341,11 @@ nuiClass* nuiBindingManager::AddClass(nuiClass* pClass)
   return pClass;
 }
 
+void nuiBindingManager::AddEnum(const nglString& rName, uint32 val)
+{
+  mEnums[rName] = val;
+}
+
 void nuiBindingManager::Dump(nglString& rString) const
 {
   //std::map<nglString, nuiFunction*> mFunctions;
@@ -411,6 +416,11 @@ const nuiBindingManager::ClassMap& nuiBindingManager::GetClasses() const
 const nuiBindingManager::TypeMap& nuiBindingManager::GetTypes() const
 {
   return mTypes;
+}
+
+const nuiBindingManager::EnumMap& nuiBindingManager::GetEnums() const
+{
+  return mEnums;
 }
 
 nuiBindingManager nuiBindingManager::mManager;

@@ -370,9 +370,13 @@ operator TYPE() const\
     {\
       if (mType == nuiAttributeTypeTrait<float>::mTypeId || mType == nuiAttributeTypeTrait<double>::mTypeId)\
         return (TYPE)mData.mFloat;\
+      else if (mType == nuiAttributeTypeTrait<uint8>::mTypeId || mType == nuiAttributeTypeTrait<uint16>::mTypeId ||mType == nuiAttributeTypeTrait<uint32>::mTypeId || mType == nuiAttributeTypeTrait<uint64>::mTypeId) \
+        return (double)mData.mUInt; \
+      else if (mType == nuiAttributeTypeTrait<int8>::mTypeId || mType == nuiAttributeTypeTrait<int16>::mTypeId ||mType == nuiAttributeTypeTrait<int32>::mTypeId || mType == nuiAttributeTypeTrait<int64>::mTypeId) \
+        return (double)mData.mInt; \
       else if (mType == nuiAttributeTypeTrait<nglString>::mTypeId)\
         return (TYPE)mString.GetCDouble();\
-        }\
+    }\
     else if (nuiAttributeTypeTrait<TYPE>::mTypeId == nuiAttributeTypeTrait<int8>::mTypeId \
              || nuiAttributeTypeTrait<TYPE>::mTypeId == nuiAttributeTypeTrait<int16>::mTypeId\
              || nuiAttributeTypeTrait<TYPE>::mTypeId == nuiAttributeTypeTrait<int32>::mTypeId\
@@ -383,9 +387,9 @@ operator TYPE() const\
         return (TYPE)mData.mInt;\
       if (mType == nuiAttributeTypeTrait<float>::mTypeId || mType == nuiAttributeTypeTrait<double>::mTypeId)\
         return (TYPE)ToBelow(mData.mFloat);\
-        else if (mType == nuiAttributeTypeTrait<nglString>::mTypeId)\
+      else if (mType == nuiAttributeTypeTrait<nglString>::mTypeId)\
           return (TYPE)mString.GetCInt64();\
-          }\
+    }\
     else if (nuiAttributeTypeTrait<TYPE>::mTypeId == nuiAttributeTypeTrait<uint8>::mTypeId\
              || nuiAttributeTypeTrait<TYPE>::mTypeId == nuiAttributeTypeTrait<uint16>::mTypeId\
              || nuiAttributeTypeTrait<TYPE>::mTypeId == nuiAttributeTypeTrait<uint32>::mTypeId\
@@ -396,9 +400,9 @@ operator TYPE() const\
         return (TYPE)mData.mUInt;\
       if (mType == nuiAttributeTypeTrait<float>::mTypeId || mType == nuiAttributeTypeTrait<double>::mTypeId)\
         return (TYPE)ToBelow(mData.mFloat);\
-        else if (mType == nuiAttributeTypeTrait<nglString>::mTypeId)\
-          return (TYPE)mString.GetCUInt64();\
-          }\
+      else if (mType == nuiAttributeTypeTrait<nglString>::mTypeId)\
+        return (TYPE)mString.GetCUInt64();\
+    }\
     NGL_ASSERT(0);\
   }
   
@@ -414,6 +418,7 @@ operator TYPE() const\
   
   CAST(float);
   CAST(double);
+  
 #undef CAST
   
 #define EASYCAST(X) operator X() const { return (X)(uint32)*this; }
