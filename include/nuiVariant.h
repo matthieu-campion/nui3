@@ -297,7 +297,7 @@ public:
   template<typename Type>
   operator Type() const
   {
-    return Type(0);
+    return Type();
   }
   
   template<typename PointerType>
