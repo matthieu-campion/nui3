@@ -324,6 +324,8 @@ extern  "C" void sync_instruction_memory(caddr_t v, u_int len);
     // mac ppc 32 could be 10.0 or later
     // uses MakeDataExecutable() from Carbon api, OSUtils.h
     // see http://developer.apple.com/documentation/Carbon/Reference/Memory_Manag_nt_Utilities/Reference/reference.html#//apple_ref/c/func/MakeDataExecutable
+#include <Carbon/Carbon.h>
+
     void CodeAlloc::flushICache(void *start, size_t len) {
         MakeDataExecutable(start, len);
     }
@@ -341,7 +343,7 @@ extern  "C" void sync_instruction_memory(caddr_t v, u_int len);
         cacheflush((char *)start, len, BCACHE);
     }
 
-#elif defined AVMPLUS_UNIX
+#elif defined AVMPLUS_UNIX && defined(NANOJIT_ARM)
     #ifdef ANDROID
     void CodeAlloc::flushICache(void *start, size_t len) {
         cacheflush((int)start, (int)start + len, 0);

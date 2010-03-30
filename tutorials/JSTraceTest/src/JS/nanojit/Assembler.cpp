@@ -1594,8 +1594,9 @@ namespace nanojit
                     // Out of range indices aren't allowed or checked.
                     // Code after this jtbl instruction is unreachable.
                     releaseRegisters();
+#ifdef DEBUG
                     AvmAssert(_allocator.countActive() == 0);
-
+#endif
                     uint32_t count = ins->getTableSize();
                     bool has_back_edges = false;
 
@@ -1619,8 +1620,9 @@ namespace nanojit
                     // to reconcile registers.  So, frontends *must* insert LIR_regfence at labels of
                     // forward jtbl jumps.  Check here to make sure no registers were picked up from
                     // any forward edges.
-                    AvmAssert(_allocator.countActive() == 0);
-
+#ifdef DEBUG
+                  AvmAssert(_allocator.countActive() == 0);
+#endif
                     if (has_back_edges) {
                         handleLoopCarriedExprs(pending_lives);
                         // save merged (empty) register state at target labels we haven't seen yet

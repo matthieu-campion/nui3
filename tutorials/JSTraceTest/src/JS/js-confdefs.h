@@ -6,9 +6,20 @@
 #ifndef _JS_CONFDEFS_H_
 #define _JS_CONFDEFS_H_
 
-//#define AVMPLUS_64BIT 1
-//#define AVMPLUS_AMD64 1
-#define AVMPLUS_IA32 1
+
+#if (defined i386) || (defined __i386__) || (defined __i386) || (defined _M_IX86) || (defined _X86_) || (defined __THW_INTEL)
+#   define AVMPLUS_IA32 1
+#elif (defined __ia64__) || (defined _IA64) || (defined __IA64__) || (defined _M_IA64)
+#   define AVMPLUS_X64
+#   define AVMPLUS_64BIT 1
+#   define AVMPLUS_AMD64 1
+#elif (defined __powerpc) || (defined __powerpc__) || (defined __POWERPC__) || (defined __ppc__) || (defined _M_PPC) || (defined __PPC) || (defined __PPC__)
+#   define AVMPLUS_MAC
+#   define AVMPLUS_PPC 1
+#elif (defined __arm) || (defined __arm__) || (defined __ARM__) || (defined _M_ARM) || (defined __ARM__)
+#   define AVMPLUS_ARM 1
+#endif
+
 #define AVMPLUS_UNIX 1
 #define CPP_THROW_NEW throw()
 #define D_INO d_ino
