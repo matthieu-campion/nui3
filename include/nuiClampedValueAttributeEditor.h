@@ -110,7 +110,6 @@ protected:
     
     mRange.SetValue(v);
     nuiLabel* pLabel = new nuiLabel(mName);
-    pLabel->SetObjectName(_T("Monitor::AttributeLabel"));
     pLabel->SetPosition(nuiCenter);
     pLabel->SetBorder(0,0,0,4);
     mpBox->SetCell(2, pLabel);
@@ -130,7 +129,6 @@ protected:
       mAttribute.Format(str);
     
     mpLabel = new nuiLabel(str);
-    mpLabel->SetObjectName(_T("Monitor::AttributeLabel"));
     mpLabel->SetPosition(nuiCenter);
     mpLabel->SetBorder(0,0,2,0);
     mpBox->SetCell(1, mpLabel);
