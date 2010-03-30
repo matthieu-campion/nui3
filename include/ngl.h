@@ -603,6 +603,11 @@ typedef unsigned int GLhandleARB;  /* shader object handle */
   #define _NGL_IA64_
 #endif
 
+  // ia64
+#if (defined __amd64__) || (defined __amd64) || (defined __x86_64__) || (defined __x86_64) || (defined _M_X64)
+  #define _NGL_X64_
+#endif
+
 // PowerPC
 #if (defined __powerpc) || (defined __powerpc__) || (defined __POWERPC__) || (defined __ppc__) || (defined _M_PPC) || (defined __PPC) || (defined __PPC__)
   #define _NGL_PPC_

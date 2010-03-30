@@ -9,9 +9,10 @@
 
 #if (defined i386) || (defined __i386__) || (defined __i386) || (defined _M_IX86) || (defined _X86_) || (defined __THW_INTEL)
 #   define AVMPLUS_IA32 1
-#elif (defined __ia64__) || (defined _IA64) || (defined __IA64__) || (defined _M_IA64)
+#elif (defined __amd64__) || (defined __amd64) || (defined __x86_64__) || (defined __x86_64) || (defined _M_X64)
 #   define AVMPLUS_X64
 #   define AVMPLUS_64BIT 1
+#   define NANOJIT_64BIT
 #   define AVMPLUS_AMD64 1
 #elif (defined __powerpc) || (defined __powerpc__) || (defined __POWERPC__) || (defined __ppc__) || (defined _M_PPC) || (defined __PPC) || (defined __PPC__)
 #   define AVMPLUS_MAC
