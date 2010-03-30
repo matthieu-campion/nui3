@@ -2247,6 +2247,8 @@ void nglWindow::DoMouseUnclick( nglMouseInfo::Flags Flags, HWND hWnd, WPARAM wPa
   info.Y = (int16)HIWORD(lParam);
   info.Buttons = Flags;
   CallOnMouseUnclick(info);
+  mOldMouseX = info.X;
+  mOldMouseY = info.Y;
 }
 
 void nglWindow::DoMouseClick( nglMouseInfo::Flags Flags, HWND hWnd, WPARAM wParam, LPARAM lParam )
@@ -2272,6 +2274,8 @@ void nglWindow::DoMouseClick( nglMouseInfo::Flags Flags, HWND hWnd, WPARAM wPara
   info.Y = (int16)HIWORD(lParam);
   info.Buttons = Flags;
   CallOnMouseClick(info);
+  mOldMouseX = info.X;
+  mOldMouseY = info.Y;
 }
 
 
@@ -2494,6 +2498,8 @@ LRESULT nglWindow::WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
       CallOnMouseClick(info);
       mMouseButtonStatus &= ~info.Buttons;
       CallOnMouseUnclick(info);
+      mOldMouseX = info.X;
+      mOldMouseY = info.Y;
       return 0;
     }
     break;
@@ -2520,6 +2526,8 @@ LRESULT nglWindow::WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
       CallOnMouseClick(info);
       mMouseButtonStatus &= ~info.Buttons;
       CallOnMouseUnclick(info);
+      mOldMouseX = info.X;
+      mOldMouseY = info.Y;
       return 0;
     }
     break;
@@ -2552,9 +2560,11 @@ LRESULT nglWindow::WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
         info.X = (int16)LOWORD(lParam);
         info.Y = (int16)HIWORD(lParam);
       }
-      info.Buttons= mMouseButtonStatus;
-      if (mEventMask & MouseEvents)
+      info.Buttons = mMouseButtonStatus;
+      if ((mEventMask & MouseEvents) && (mOldMouseX != info.X) && (mOldMouseY != info.Y))
         CallOnMouseMove(info);
+      mOldMouseX = info.X;
+      mOldMouseY = info.Y;
       return 0;
     }
     break;

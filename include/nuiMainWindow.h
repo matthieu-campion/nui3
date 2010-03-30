@@ -240,8 +240,8 @@ private:
   NGLWindow* mpNGLWindow;
   uint mFullFrameRedraw;
   bool OnInspectorDeath(const nuiEvent& rEvent);
-  nglTime mLastInteractiveEventTime;
-  nglTime mLastEventTime;
+  double mLastInteractiveEventTime;
+  double mLastEventTime;
 };
 
 #endif // __nuiMainWindow_h__
