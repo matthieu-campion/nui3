@@ -140,7 +140,7 @@ void nuiFontInspector::UpdateFonts()
     pGrid->SetCell(j++, i, pText, nuiFillHorizontal);
 
     // Preview
-    nuiLabel* pPreviewLabel = new nuiLabel(_T("ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 01234567890!@#$%^&*(){}[]\\|/?<>,.:"), nuiFont::GetFont(FontIDs[k]));
+    nuiLabel* pPreviewLabel = new nuiLabel(_T("ABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz\n01234567890!@#$%^&*(){}[]\\|/?<>,.:"), nuiFont::GetFont(FontIDs[k]));
     //nuiLabel* pPreviewLabel = new nuiLabel(_T("u - v - w - U - V - W"), nuiFont::GetFont(FontIDs[k]));
     pGrid->SetCell(j++, i, pPreviewLabel, nuiLeft);
     
