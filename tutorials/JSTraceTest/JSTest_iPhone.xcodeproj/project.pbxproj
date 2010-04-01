@@ -983,6 +983,14 @@
 					NUI_IPHONE,
 					"JS_HAVE_STDINT_H=1",
 				);
+				"GCC_PREPROCESSOR_DEFINITIONS[sdk=iphonesimulator*][arch=*]" = (
+					FEATURE_NANOJIT,
+					JS_TRACER,
+					XP_UNIX,
+					AVMPLUS_IA32,
+					NUI_IPHONE,
+					"JS_HAVE_STDINT_H=1",
+				);
 				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -996,6 +1004,12 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
+					"-liconv",
+					"-lz",
+				);
+				"OTHER_LDFLAGS[sdk=iphonesimulator3.2][arch=*]" = (
+					"-weak_framework",
+					CoreText,
 					"-liconv",
 					"-lz",
 				);
@@ -1046,6 +1060,13 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(GCC_PREPROCESSOR_DEFINITIONS)",
+					DEBUG,
+					_DEBUG_,
+					_DEBUG,
+					NUI_IPHONE,
+				);
+				"GCC_PREPROCESSOR_DEFINITIONS[sdk=iphonesimulator*][arch=*]" = (
 					"$(GCC_PREPROCESSOR_DEFINITIONS)",
 					DEBUG,
 					_DEBUG_,

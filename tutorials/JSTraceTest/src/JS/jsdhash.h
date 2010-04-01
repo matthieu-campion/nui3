@@ -46,11 +46,15 @@
 JS_BEGIN_EXTERN_C
 
 #if defined(__GNUC__) && defined(__i386__) && (__GNUC__ >= 3) && !defined(XP_OS2)
-#define JS_DHASH_FASTCALL __attribute__ ((regparm (3),stdcall))
+  #ifndef NUI_IPHONE
+  #define JS_DHASH_FASTCALL __attribute__ ((regparm (3),stdcall))
+  #else
+  #define JS_DHASH_FASTCALL
+  #endif
 #elif defined(XP_WIN)
-#define JS_DHASH_FASTCALL __fastcall
+  #define JS_DHASH_FASTCALL __fastcall
 #else
-#define JS_DHASH_FASTCALL
+  #define JS_DHASH_FASTCALL
 #endif
 
 #ifdef DEBUG_XXXbrendan

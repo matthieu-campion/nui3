@@ -3353,7 +3353,7 @@ js_HashString(JSString *str)
 /*
  * str is not necessarily a GC thing here.
  */
-JSBool JS_FASTCALL
+JSBool //JS_FASTCALL
 js_EqualStrings(JSString *str1, JSString *str2)
 {
     size_t n;

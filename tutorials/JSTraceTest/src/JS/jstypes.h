@@ -174,10 +174,17 @@
 #define JS_FASTCALL __fastcall
 #elif defined(__GNUC__) && defined(__i386__) &&                         \
   ((__GNUC__ >= 4) || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4))
-#define JS_FASTCALL __attribute__((fastcall))
+  #ifndef NUI_IPHONE
+    #define JS_FASTCALL __attribute__((fastcall))
+  #else
+    #define JS_FASTCALL
+//#define JS_NO_FASTCALL
+    #define NO_FASTCALL
+  #endif
 #else
-#define JS_FASTCALL
-#define JS_NO_FASTCALL
+  #define JS_FASTCALL
+  #define JS_NO_FASTCALL
+  #define NO_FASTCALL
 #endif
 
 #ifndef JS_INLINE

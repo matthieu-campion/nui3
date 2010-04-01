@@ -81,10 +81,17 @@
 #define HAVE_X11_XKBLIB_H 1
 #define HAVE__UNWIND_BACKTRACE 1
 #define HAVE___CXA_DEMANGLE 1
+#ifdef AVMPLUS_64BIT
 #define JS_ALIGN_OF_POINTER 8
 #define JS_BITS_PER_WORD_LOG2 6
 #define JS_BYTES_PER_DOUBLE 8
 #define JS_BYTES_PER_WORD 8
+#else
+#define JS_ALIGN_OF_POINTER 4
+#define JS_BITS_PER_WORD_LOG2 2
+#define JS_BYTES_PER_DOUBLE 8
+#define JS_BYTES_PER_WORD 4
+#endif
 #ifndef WIN32
 #define JS_HAVE_STDINT_H 1
 #endif

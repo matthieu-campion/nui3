@@ -555,7 +555,7 @@ js_HashString(JSString *str);
  * Test if strings are equal. The caller can call the function even if str1
  * or str2 are not GC-allocated things.
  */
-extern JSBool JS_FASTCALL
+extern JSBool //JS_FASTCALL
 js_EqualStrings(JSString *str1, JSString *str2);
 
 /*

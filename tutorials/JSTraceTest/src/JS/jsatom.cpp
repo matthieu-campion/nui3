@@ -389,7 +389,10 @@ MatchString(JSDHashTable *table, const JSDHashEntryHdr *hdr, const void *key)
          */
         return JS_FALSE;
     }
-    return js_EqualStrings((JSString *)ATOM_ENTRY_KEY(entry), (JSString *)key);
+  
+  JSString* k1 = (JSString *)ATOM_ENTRY_KEY(entry);
+  JSString* k2 = (JSString *)key;
+    return js_EqualStrings(k1, k2);
 }
 
 /*

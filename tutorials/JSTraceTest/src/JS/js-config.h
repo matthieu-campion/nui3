@@ -105,7 +105,15 @@ typedef unsigned __int64  JSUint64;
 /* #undef JS_INT32_TYPE */
 /* #undef JS_INT64_TYPE */
 /* #undef JS_INTPTR_TYPE */
+#if (defined i386) || (defined __i386__) || (defined __i386) || (defined _M_IX86) || (defined _X86_) || (defined __THW_INTEL)
 #define JS_BYTES_PER_WORD 4
+#elif (defined __amd64__) || (defined __amd64) || (defined __x86_64__) || (defined __x86_64) || (defined _M_X64)
+#define JS_BYTES_PER_WORD 8
+#elif (defined __powerpc) || (defined __powerpc__) || (defined __POWERPC__) || (defined __ppc__) || (defined _M_PPC) || (defined __PPC) || (defined __PPC__)
+#define JS_BYTES_PER_WORD 4
+#elif (defined __arm) || (defined __arm__) || (defined __ARM__) || (defined _M_ARM) || (defined __ARM__)
+#define JS_BYTES_PER_WORD 4
+#endif
 
 /* Some mozilla code uses JS-friend APIs that depend on JS_TRACER being
    correct. */

@@ -340,7 +340,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>E5A378771146380E00BEE986</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>nanojit.h</string>
+								<string>jsbool.cpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -348,26 +348,22 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>E5A378781146380E00BEE986</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>nanojit.h</string>
+										<string>jsbool.cpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E50033F411634CBD0071B60F</string>
+										<string>E5FB26CE1164E9B80070E81B</string>
 										<key>history</key>
 										<array>
 											<string>E5F2AF011152F6730064722F</string>
-											<string>E5CC345B115AE7EC00747AB2</string>
 											<string>E5CC349A115C98DB00747AB2</string>
 											<string>E5CC349B115C98DB00747AB2</string>
 											<string>E5CC349C115C98DB00747AB2</string>
 											<string>E5CC37461160280B00747AB2</string>
-											<string>E5CC37471160280B00747AB2</string>
 											<string>E5CC37481160280B00747AB2</string>
 											<string>E5CC37491160280B00747AB2</string>
 											<string>E5CC375C116028B500747AB2</string>
 											<string>E5CC37E211602FCF00747AB2</string>
-											<string>E55EB8D81160ADC900498779</string>
-											<string>E55EB9091160BACF00498779</string>
 											<string>E55EB90A1160BACF00498779</string>
 											<string>E55EB9D91160D6CA00498779</string>
 											<string>E55EB9DB1160D6CA00498779</string>
@@ -376,18 +372,14 @@
 											<string>E55EB9E11160D6CA00498779</string>
 											<string>E55EB9E31160D6CA00498779</string>
 											<string>E55EB9E61160D6CA00498779</string>
-											<string>E5B19FF511621A810097E62F</string>
 											<string>E5B19FFA11621A810097E62F</string>
 											<string>E5B19FFB11621A810097E62F</string>
 											<string>E5B19FFC11621A810097E62F</string>
-											<string>E5B19FFE11621A810097E62F</string>
 											<string>E5B19FFF11621A810097E62F</string>
 											<string>E5B1A00011621A810097E62F</string>
 											<string>E5B1A01811621D160097E62F</string>
 											<string>E5B1A01911621D160097E62F</string>
 											<string>E5B1A01A11621D160097E62F</string>
-											<string>E5B1A01B11621D160097E62F</string>
-											<string>E5B1A01C11621D160097E62F</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -401,18 +393,18 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {1538, 434}}</string>
+								<string>{{0, 0}, {1538, 421}}</string>
 								<key>RubberWindowFrame</key>
 								<string>0 59 1920 1119 0 0 1920 1178 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>434pt</string>
+							<string>421pt</string>
 						</dict>
 						<dict>
 							<key>Proportion</key>
-							<string>639pt</string>
+							<string>652pt</string>
 							<key>Tabs</key>
 							<array>
 								<dict>
@@ -426,9 +418,7 @@
 									<key>GeometryConfiguration</key>
 									<dict>
 										<key>Frame</key>
-										<string>{{10, 27}, {1538, 612}}</string>
-										<key>RubberWindowFrame</key>
-										<string>0 59 1920 1119 0 0 1920 1178 </string>
+										<string>{{10, 27}, {1538, 625}}</string>
 									</dict>
 									<key>Module</key>
 									<string>XCDetailModule</string>
@@ -503,7 +493,9 @@
 									<key>GeometryConfiguration</key>
 									<dict>
 										<key>Frame</key>
-										<string>{{10, 27}, {1538, 588}}</string>
+										<string>{{10, 27}, {1538, 625}}</string>
+										<key>RubberWindowFrame</key>
+										<string>0 59 1920 1119 0 0 1920 1178 </string>
 									</dict>
 									<key>Module</key>
 									<string>PBXBuildResultsModule</string>
@@ -531,11 +523,11 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E50033F511634CBD0071B60F</string>
+				<string>E5FB2547116382630070E81B</string>
 				<string>1CA23ED40692098700951B8B</string>
-				<string>E50033F611634CBD0071B60F</string>
+				<string>E5FB2548116382630070E81B</string>
 				<string>E5A378771146380E00BEE986</string>
-				<string>E50033F711634CBD0071B60F</string>
+				<string>E5FB2549116382630070E81B</string>
 				<string>1CA23EDF0692099D00951B8B</string>
 				<string>1CA23EE00692099D00951B8B</string>
 				<string>1CA23EE10692099D00951B8B</string>
@@ -653,11 +645,13 @@
 							<key>DebugVariablesTableConfiguration</key>
 							<array>
 								<string>Name</string>
-								<real>338</real>
+								<real>309</real>
 								<string>Value</string>
-								<real>159</real>
+								<real>130</real>
 								<string>Summary</string>
-								<real>131</real>
+								<real>102</real>
+								<string>Type</string>
+								<real>84</real>
 							</array>
 							<key>Frame</key>
 							<string>{{0, 447}, {653, 429}}</string>
@@ -684,13 +678,13 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E5785585116259FA004E6DD3</string>
+				<string>E5FB254A116382630070E81B</string>
 				<string>1CCC7628064C1048000F2A68</string>
 				<string>1CCC7629064C1048000F2A68</string>
-				<string>E5785586116259FA004E6DD3</string>
-				<string>E5785587116259FA004E6DD3</string>
-				<string>E5785588116259FA004E6DD3</string>
-				<string>E5785589116259FA004E6DD3</string>
+				<string>E5FB254B116382630070E81B</string>
+				<string>E5FB254C116382630070E81B</string>
+				<string>E5FB254D116382630070E81B</string>
+				<string>E5FB254E116382630070E81B</string>
 				<string>E5A378771146380E00BEE986</string>
 			</array>
 			<key>ToolbarConfigUserDefaultsMinorVersion</key>
@@ -708,7 +702,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>291720381.60019702</real>
+	<real>291826104.56012899</real>
 	<key>ToolbarConfigUserDefaultsMinorVersion</key>
 	<string>2</string>
 	<key>ToolbarDisplayMode</key>
@@ -725,6 +719,8 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
+		<string>E5FB2550116382630070E81B</string>
+		<string>E5FB2551116382630070E81B</string>
 		<string>/Users/meeloo/work/nui3/tutorials/JSTraceTest/JSTest.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
