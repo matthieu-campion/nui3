@@ -981,7 +981,7 @@
 					XP_UNIX,
 					AVMPLUS_ARM,
 					NUI_IPHONE,
-					"JS_HAVE_STDINT_H=1",
+					STATIC_JS_API,
 				);
 				"GCC_PREPROCESSOR_DEFINITIONS[sdk=iphonesimulator*][arch=*]" = (
 					FEATURE_NANOJIT,
@@ -989,7 +989,7 @@
 					XP_UNIX,
 					AVMPLUS_IA32,
 					NUI_IPHONE,
-					"JS_HAVE_STDINT_H=1",
+					STATIC_JS_API,
 				);
 				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1062,19 +1062,10 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(GCC_PREPROCESSOR_DEFINITIONS)",
 					DEBUG,
-					_DEBUG_,
 					_DEBUG,
-					NUI_IPHONE,
 				);
-				"GCC_PREPROCESSOR_DEFINITIONS[sdk=iphonesimulator*][arch=*]" = (
-					"$(GCC_PREPROCESSOR_DEFINITIONS)",
-					DEBUG,
-					_DEBUG_,
-					_DEBUG,
-					NUI_IPHONE,
-				);
+				"GCC_PREPROCESSOR_DEFINITIONS[sdk=iphonesimulator*][arch=*]" = "$(GCC_PREPROCESSOR_DEFINITIONS)";
 				GCC_THUMB_SUPPORT = NO;
-				GENERATE_PROFILING_CODE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LIBRARY_SEARCH_PATHS = "";
 				PREBINDING = NO;

@@ -177,9 +177,10 @@
   #ifndef NUI_IPHONE
     #define JS_FASTCALL __attribute__((fastcall))
   #else
-    #define JS_FASTCALL
-//#define JS_NO_FASTCALL
-    #define NO_FASTCALL
+//    #define JS_FASTCALL
+////#define JS_NO_FASTCALL
+//    #define NO_FASTCALL
+#define JS_FASTCALL __attribute__((fastcall))
   #endif
 #else
   #define JS_FASTCALL
