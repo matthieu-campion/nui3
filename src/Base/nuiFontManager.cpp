@@ -1480,7 +1480,7 @@ bool nuiFontManager::Load(nglIStream& rStream)
   std::map<nglString, nglPath>::iterator it;
   
   bool scanfolders = true;
-#ifdef _UIKIT_
+#if 0 && defined _UIKIT_
 #ifdef __IPHONE_3_2
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_3_2
   if (CTFontCollectionCreateFromAvailableFonts != NULL)
@@ -1615,7 +1615,7 @@ void nuiFontManager::UpdateFonts()
   std::map<nglString, nglPath>::iterator it;
   
   bool scanfolders = true;
-#ifdef _UIKIT_
+#if 0 && (defined _UIKIT_)
 #ifdef __IPHONE_3_2
 #if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_5
   if (CTFontCollectionCreateFromAvailableFonts != NULL)
