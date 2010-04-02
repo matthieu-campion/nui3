@@ -290,6 +290,7 @@ static float Gx = 0;
 
 void nuiMainWindow::Paint()
 {
+  mLastEventTime = nglTime();
   //nuiStopWatch watch(_T("nuiMainWindow::Paint"));
   do 
   {
@@ -702,6 +703,7 @@ bool nuiMainWindow::OnKeyDown(const nglKeyEvent& rEvent)
 
 bool nuiMainWindow::OnRotation(uint Angle)
 {
+  mLastEventTime = nglTime();
   return true;
 }
 
