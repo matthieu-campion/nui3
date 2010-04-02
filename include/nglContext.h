@@ -261,6 +261,7 @@ protected:
 
   bool Build(int Screen, const nglContextInfo& rInfo, const nglContext* pShared);
   bool MakeCurrent(Window Win) const;
+  bool BuildOpenGLFromExisting(GLXContext ctx);
 #endif // _X11_
 
 #ifdef _CARBON_

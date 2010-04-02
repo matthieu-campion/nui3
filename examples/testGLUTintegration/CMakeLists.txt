@@ -12,7 +12,6 @@ add_definitions(
 
 add_executable(context
 main.cpp
-MainWindow.cpp
 )
 
 target_link_libraries(context expat jpeg png freetype nui3 ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES})

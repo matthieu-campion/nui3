@@ -28,9 +28,10 @@ public:
     
 #ifdef WIN32
     BuildOpenGLFromExisting(NULL, NULL);
-
-#else
+#elif defined __APPLE__
     BuildOpenGLFromExisting(NULL, aglGetCurrentContext());
+#else
+    BuildOpenGLFromExisting(glXGetCurrentContext());
 #endif
   }
   

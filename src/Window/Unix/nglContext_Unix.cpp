@@ -273,6 +273,12 @@ bool nglContext::Build(int Screen, const nglContextInfo& rInfo, const nglContext
   return true;
 }
 
+bool nglContext::BuildOpenGLFromExisting(GLXContext ctx)
+{
+  mGlxCtx = ctx;
+  return true;
+}
+
 bool nglContext::MakeCurrent(Window Win) const
 {
   if (!mpDisplay || !Win || !mGlxCtx)
