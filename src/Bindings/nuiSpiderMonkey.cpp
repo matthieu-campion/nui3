@@ -37,7 +37,7 @@ JSBool js_NGL_LOUT(JSContext *mContext, JSObject *obj, uintN argc, jsval *argv, 
 
 
 nuiSpiderMonkey::nuiSpiderMonkey(uint32 MaxBytes)
-: mMaxBytes(MaxBytes), mContext(NULL), mGlobal(NULL)
+: mMaxBytes(MaxBytes), mContext(NULL), mGlobal(NULL), mEventSink(this)
 {
   if (!mRunTime)
   {
@@ -389,13 +389,25 @@ JSBool nuiSpiderMonkey::PropertySet(JSObject *obj, jsval id, jsval *vp)
   nuiObject* pObj = variant;
   NGL_ASSERT(pObj);
   nuiAttribBase attrib(pObj->GetAttribute(str));
-  if (!attrib.IsValid())
-    return JS_TRUE; // Return the default value
-  
-  // Set the actual value
-  nuiVariant v;
-  GetVariantFromJSVal(v, *vp);
-  attrib.FromVariant(v);
+  if (attrib.IsValid())
+  {
+    // Set the actual value
+    nuiVariant v;
+    GetVariantFromJSVal(v, *vp);
+    attrib.FromVariant(v);
+  }
+  else if (JS_ValueToFunction(mContext, *vp))
+  {
+    nuiWidget* pWidget = variant;
+    if (pWidget)
+    {
+      nuiEventSource* pEventSource = pWidget->GetEvent(str);
+      if (pEventSource)
+      {
+        Connect(obj, *vp, pWidget, str);
+      }
+    }
+  }
   //NGL_OUT(_T("Set Property %ls\n"), str.GetChars());
   
   return JS_TRUE;
@@ -634,5 +646,42 @@ bool nuiSpiderMonkey::Init()
     
   
   return true;
+}
+
+bool nuiSpiderMonkey::OnEvent(const nuiEvent& rEvent)
+{
+  EventLink* pLink = (EventLink*)rEvent.mpUser;
+  // Call javascript handler
+  jsval resval = 0;
+  JSBool res = JS_CallFunctionValue(mContext, pLink->mpObject, pLink->mJSVal, 0, NULL, &resval);
+  return false;
+}
+
+void nuiSpiderMonkey::Connect(JSObject* pObject, jsval obj, nuiWidget* pWidget, const nglString& rEventName)
+{
+  nuiEventSource* pSource = pWidget->GetEvent(rEventName);
+  if (!pSource)
+    return;
+
+  EventLink* pLink = new EventLink();
+  pLink->mpWidget = pWidget;
+  pLink->mName = rEventName;
+  pLink->mpSource = pSource;
+  pLink->mJSVal = obj;
+  pLink->mpObject = pObject;
+  
+  mEventSink.Connect(*pSource, &nuiSpiderMonkey::OnEvent, pLink);
+  mEvents.insert(std::pair<std::pair<nuiWidget*, nglString>, EventLink*>(std::pair<nuiWidget*, nglString>(pWidget, rEventName), pLink));
+  
+}
+
+void nuiSpiderMonkey::Disconnect(nuiWidget* pWidget, const nglString& rEventName)
+{
+  std::multimap<std::pair<nuiWidget*, nglString>, EventLink*>::iterator it = mEvents.find(std::pair<nuiWidget*, nglString>(pWidget, rEventName));
+  if (it != mEvents.end())
+  {
+    delete it->second;
+    mEvents.erase(it);
+  }
 }
 

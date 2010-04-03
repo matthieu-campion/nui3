@@ -90,6 +90,24 @@ protected:
   friend JSBool nuiPropertySet(JSContext *cx, JSObject *obj, jsval id, jsval *vp);
   JSBool PropertySet(JSObject *obj, jsval id, jsval *vp);
   friend JSBool nuiConstructJSClass(JSContext *cx, JSObject *obj, uintN argc, jsval *argv, jsval *rval);
+
+  struct EventLink
+  {
+  public:
+    nuiEventSource* mpSource;
+    nglString mName;
+    nuiWidget* mpWidget;
+    jsval mJSVal;
+    JSObject* mpObject;
+  };
+
+  std::multimap<std::pair<nuiWidget*, nglString>, EventLink*> mEvents; // Event name to event link
+  bool OnEvent(const nuiEvent& rEvent);
+
+  void Connect(JSObject* pObject, jsval obj, nuiWidget* pWidget, const nglString& rEventName);
+  void Disconnect(nuiWidget* pWidget, const nglString& rEventName);
+  
+  nuiEventSink<nuiSpiderMonkey> mEventSink;
 };
 
 
