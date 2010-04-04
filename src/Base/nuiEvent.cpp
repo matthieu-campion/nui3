@@ -25,11 +25,14 @@ nuiEvent::nuiEvent(const nuiEvent& rEvent)
   mpSource = rEvent.mpSource; 
   mType = rEvent.mType; 
   mpUser = rEvent.mpUser;
+  mArguments = rEvent.mArguments;
 }
 
 
 nuiEvent::~nuiEvent() 
 {
+  for (uint32 i = 0; i < mArguments.size(); i++)
+    delete mArguments[i];
 }
 
 int nuiEvent::GetType() const
@@ -46,6 +49,22 @@ const nuiEventSource* nuiEvent::GetSource() const
 {
   return mpSource;
 }
+
+uint32 nuiEvent::GetArgCount() const
+{
+  return mArguments.size();
+}
+
+void nuiEvent::AddArgument(const nuiVariant& rArg)
+{
+  mArguments.push_back(new nuiVariant(rArg));
+}
+
+const nuiVariant& nuiEvent::operator[](uint32 index) const
+{
+  return *(mArguments[index]);
+}
+
 
 // class nuiEventSource
 nuiEventSource::nuiEventSource()
@@ -116,6 +135,64 @@ bool nuiEventSource::operator() (const nuiEvent& rEvent)
 {
   return SendEvent(rEvent);
 }
+
+bool nuiEventSource::operator() (const nuiVariant& rP0)
+{
+  nuiEvent e(0);
+  e.AddArgument(rP0);
+  return SendEvent(e);
+}
+
+bool nuiEventSource::operator() (const nuiVariant& rP0, const nuiVariant& rP1)
+{
+  nuiEvent e(0);
+  e.AddArgument(rP0);
+  e.AddArgument(rP1);
+  return SendEvent(e);
+}
+
+bool nuiEventSource::operator() (const nuiVariant& rP0, const nuiVariant& rP1, const nuiVariant& rP2)
+{
+  nuiEvent e(0);
+  e.AddArgument(rP0);
+  e.AddArgument(rP1);
+  e.AddArgument(rP2);
+  return SendEvent(e);
+}
+
+bool nuiEventSource::operator() (const nuiVariant& rP0, const nuiVariant& rP1, const nuiVariant& rP2, const nuiVariant& rP3)
+{
+  nuiEvent e(0);
+  e.AddArgument(rP0);
+  e.AddArgument(rP1);
+  e.AddArgument(rP2);
+  e.AddArgument(rP3);
+  return SendEvent(e);
+}
+
+bool nuiEventSource::operator() (const nuiVariant& rP0, const nuiVariant& rP1, const nuiVariant& rP2, const nuiVariant& rP3, const nuiVariant& rP4)
+{
+  nuiEvent e(0);
+  e.AddArgument(rP0);
+  e.AddArgument(rP1);
+  e.AddArgument(rP2);
+  e.AddArgument(rP3);
+  e.AddArgument(rP4);
+  return SendEvent(e);
+}
+
+bool nuiEventSource::operator() (const nuiVariant& rP0, const nuiVariant& rP1, const nuiVariant& rP2, const nuiVariant& rP3, const nuiVariant& rP4, const nuiVariant& rP5)
+{
+  nuiEvent e(0);
+  e.AddArgument(rP0);
+  e.AddArgument(rP1);
+  e.AddArgument(rP2);
+  e.AddArgument(rP3);
+  e.AddArgument(rP4);
+  e.AddArgument(rP5);
+  return SendEvent(e);
+}
+
 
 uint nuiEventSource::GetTargetCount() const
 {

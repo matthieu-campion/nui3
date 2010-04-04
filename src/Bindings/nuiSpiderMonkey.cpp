@@ -653,7 +653,15 @@ bool nuiSpiderMonkey::OnEvent(const nuiEvent& rEvent)
   EventLink* pLink = (EventLink*)rEvent.mpUser;
   // Call javascript handler
   jsval resval = 0;
-  JSBool res = JS_CallFunctionValue(mContext, pLink->mpObject, pLink->mJSVal, 0, NULL, &resval);
+  std::vector<jsval> args;
+  args.reserve(rEvent.GetArgCount());
+  for (uint32 i = 0; i < rEvent.GetArgCount(); i++)
+  {
+    jsval v;
+    GetJSValFromVariant(&v, rEvent[i]);
+    args.push_back(v);
+  }
+  JSBool res = JS_CallFunctionValue(mContext, pLink->mpObject, pLink->mJSVal, args.size(), &args[0], &resval);
   return false;
 }
 

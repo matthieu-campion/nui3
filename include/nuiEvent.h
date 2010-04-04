@@ -11,6 +11,7 @@
 //#include "nui.h"
 
 class nuiEventSource;
+class nuiVariant;
 
 /// This is the basic event object used in the user level event management system. 
 class NUI_API nuiEvent
@@ -24,10 +25,15 @@ public:
   const nuiEventSource* GetSource() const;
   void SetSource(nuiEventSource* pObj) const;
 
+  uint32 GetArgCount() const;
+  void AddArgument(const nuiVariant& rArg);
+  const nuiVariant& operator[](uint32 index) const;
+  
   mutable void* mpUser; // This is the user defined data. It is defined on a connection basis.
 private:
   int mType;
   mutable nuiEventSource* mpSource;
+  std::vector<nuiVariant*> mArguments;
 };
 
 /// You are never supposed to use this class directly!!! NEVER EVER :). 
@@ -78,6 +84,12 @@ public:
   virtual void Disconnect(nuiEventTargetBase* t);
   virtual bool SendEvent(const nuiEvent& rEvent = nuiEvent(0));
   virtual bool operator() (const nuiEvent& rEvent = nuiEvent(0));
+  virtual bool operator() (const nuiVariant& rP0);
+  virtual bool operator() (const nuiVariant& rP0, const nuiVariant& rP1);
+  virtual bool operator() (const nuiVariant& rP0, const nuiVariant& rP1, const nuiVariant& rP2);
+  virtual bool operator() (const nuiVariant& rP0, const nuiVariant& rP1, const nuiVariant& rP2, const nuiVariant& rP3);
+  virtual bool operator() (const nuiVariant& rP0, const nuiVariant& rP1, const nuiVariant& rP2, const nuiVariant& rP3, const nuiVariant& rP4);
+  virtual bool operator() (const nuiVariant& rP0, const nuiVariant& rP1, const nuiVariant& rP2, const nuiVariant& rP3, const nuiVariant& rP4, const nuiVariant& rP5);
   uint GetTargetCount() const;
 
   void Enable(bool Set = true)

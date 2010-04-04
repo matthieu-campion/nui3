@@ -42,7 +42,7 @@ void MainWindow::JSTest()
   pM->SetGlobal(_T("window"), (nuiSimpleContainer*)this);
   
   const char* script =
-  "function OnClicked() { NGL_OUT('OnClicked called!'); }"
+  "function OnClicked(x, y, b) { NGL_OUT('OnClicked called!(' + x + ',' + y + ',' + b + ')' ); }"
   "NGL_OUT('nuiRight:' + nuiRight);\n"
   "var label = new nuiLabel('FromJS');\n"
   "NGL_OUT('label class:'+label.GetObjectClass());\n"

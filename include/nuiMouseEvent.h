@@ -46,7 +46,12 @@ public:
 
   virtual bool operator() (const nglMouseInfo& rInfo)
   {
-    return SendEvent(nuiMouseEvent<eventId>(rInfo));
+    nuiMouseEvent<eventId> e(rInfo);
+    e.AddArgument(e.mX);
+    e.AddArgument(e.mY);
+    e.AddArgument((uint32)e.mButton);
+    e.AddArgument(rInfo.TouchId);
+    return SendEvent(e);
   }
 
   virtual bool operator() (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button = 0)
@@ -55,8 +60,8 @@ public:
     info.X = ToZero(X);
     info.Y = ToZero(Y);
     info.Buttons = Button;
-    info.TouchId = Button;
-    return SendEvent(nuiMouseEvent<eventId>(info));
+    
+    return (*this)(info);
   }
 };
 
