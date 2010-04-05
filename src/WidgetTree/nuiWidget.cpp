@@ -739,8 +739,8 @@ nuiWidget::~nuiWidget()
 
   if (mpSurface)
   {
-    if (mpSurface->GetTexture())
-      mpSurface->GetTexture()->Release();
+//    if (mpSurface->GetTexture())
+//      mpSurface->GetTexture()->Release();
     mpSurface->Release();
   }
   delete mpRenderCache;
@@ -2886,8 +2886,8 @@ void nuiWidget::UpdateSurface(const nuiRect& rRect)
     {
       if (mpSurface)
       {
-        if (mpSurface->GetTexture())
-          mpSurface->GetTexture()->Release();
+//        if (mpSurface->GetTexture())
+//          mpSurface->GetTexture()->Release();
         mpSurface->Release();
       }
       mpSurface = NULL;
@@ -2905,8 +2905,8 @@ void nuiWidget::UpdateSurface(const nuiRect& rRect)
   {
     if (mpSurface)
     {
-      if (mpSurface->GetTexture())
-        mpSurface->GetTexture()->Release();
+//      if (mpSurface->GetTexture())
+//        mpSurface->GetTexture()->Release();
       mpSurface->Release();
     }
     mpSurface = NULL;
