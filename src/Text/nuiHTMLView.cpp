@@ -55,10 +55,17 @@ nuiHTMLView::nuiHTMLView(float IdealWidth)
 
 nuiHTMLView::~nuiHTMLView()
 {
+	
+  Cancel();
+	
   delete mpHTML;
   delete mpContext;
+	
+	if(mpRootBox)
+		delete mpRootBox;
 
-  Cancel();
+
+
 }
 
 void nuiHTMLView::Cancel()
@@ -225,6 +232,7 @@ nuiRect nuiHTMLView::CalcIdealSize()
 
 void nuiHTMLView::ReLayout()
 {
+	
   if (!mpRootBox)
     return;
   
@@ -351,6 +359,10 @@ bool nuiHTMLView::SetText(const nglString& rHTMLText)
     Clear();
     delete mpHTML;
     mpHTML = pHTML;
+	  
+	if(mpRootBox)
+		delete mpRootBox;
+	  
     mpRootBox = new nuiHTMLBox(mpHTML, mpCurrentAnchor, false);
     mpRootBox->SetMargins(mMargins);
     mpRootBox->SetLayoutChangedDelegate(nuiMakeDelegate(this, &nuiHTMLView::InvalidateLayout));
@@ -384,6 +396,13 @@ bool nuiHTMLView::SetURL(const nglString& rURL)
 
 void nuiHTMLView::StreamDone(nuiAsyncIStream* pStream)
 {
+	// this has been deleted already..
+ if(IsTrashed(true))
+ {
+
+	 return;
+ }
+	
 //  App->GetLog().SetLevel(_T("StopWatch"), 50);
 //  nuiStopWatch watch(_T("nuiHTMLView::StreamDone"));
   mpStream = NULL;
@@ -446,6 +465,10 @@ void nuiHTMLView::StreamDone(nuiAsyncIStream* pStream)
     Clear();
     delete mpHTML;
     mpHTML = pHTML;
+	  
+	if(mpRootBox)
+		delete mpRootBox;
+	  
     mpRootBox = new nuiHTMLBox(mpHTML, mpCurrentAnchor, false);
     mpRootBox->SetMargins(mMargins);
     mpRootBox->SetLayoutChangedDelegate(nuiMakeDelegate(this, &nuiHTMLView::InvalidateLayout));
@@ -460,6 +483,7 @@ void nuiHTMLView::StreamDone(nuiAsyncIStream* pStream)
     InvalidateLayout();
     SetHotRect(nuiRect());
   }
+	
 }
 
 const nglString& nuiHTMLView::GetURL() const

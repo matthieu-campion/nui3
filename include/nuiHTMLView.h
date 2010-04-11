@@ -22,7 +22,7 @@ class nuiHTMLView : public nuiSimpleContainer
 {
 public:
   nuiHTMLView(float IdealWidth = 800);
-  ~nuiHTMLView();
+  virtual ~nuiHTMLView();
   
   virtual nuiRect CalcIdealSize();
   virtual bool SetRect(const nuiRect& rRect);
