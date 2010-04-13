@@ -25,9 +25,9 @@ public:
   virtual nuiVariant GetGlobal(const nglString& rName) const = 0;
   
   virtual nuiVariant ExecuteExpression(const nglString& rExpression) = 0;
-  virtual bool CompileProgram(const nglString& rSourceName, const nglString& rProgram) = 0;
   bool CompileProgram(const nglPath& rSourceName);
   bool CompileProgram(const nglString& rSourceName, nglIStream* pStream);
+  virtual bool CompileString(const nglString& rSourceName, const nglString& rProgram) = 0;
   
 protected:
   nglString mName;

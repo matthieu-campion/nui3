@@ -48,7 +48,7 @@ public:
   void SetGlobal(const nglString& rName, const nuiVariant& rVariant);
   nuiVariant GetGlobal(const nglString& rName) const;
   nuiVariant ExecuteExpression(const nglString& rExpression);
-  bool CompileProgram(const nglString& rSourceName, const nglString& rProgram);
+  bool CompileString(const nglString& rSourceName, const nglString& rProgram);
   
 protected:
 

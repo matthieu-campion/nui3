@@ -41,28 +41,9 @@ void MainWindow::JSTest()
   nuiSpiderMonkey* pM = new nuiSpiderMonkey();
   pM->SetGlobal(_T("window"), (nuiSimpleContainer*)this);
   
-  const char* script =
-  "function OnClicked(x, y, b) { this.Text = 'OnClicked called!(' + x + ',' + y + ',' + b + ')'; this.TextColor = 'green'; }"
-  "function OnUnclicked(x, y, b) { this.Text = 'OnUnclicked called!(' + x + ',' + y + ',' + b + ')'; this.TextColor = 'blue'; }"
-  "function OnMoved(x, y) { this.Text = 'OnMoved called!(' + x + ',' + y + ')'; this.TextColor = 'red'; }"
-  "NGL_OUT('nuiRight:' + nuiRight);\n"
-  "var label = new nuiLabel('FromJS');\n"
-  "NGL_OUT('label class:'+label.GetObjectClass());\n"
-  "window.AddChild(label);\n"
-  "NGL_OUT(window.GetObjectClass());\n"
-  "var test = label.test;\n"
-  "label.test = 'testval';\n"
-  "var res = label.Text;\n"
-  "NGL_OUT(res);\n"
-  "label.TextColor = 'red';\n"
-  "label.Position = nuiRight;\n"
-  "label.Clicked = OnClicked;"
-  "label.Unclicked = OnUnclicked;"
-  "label.MovedMouse = OnMoved;"
-  ;
-  
-  nglString program(script);
-  pM->ExecuteExpression(program);
+  nglPath fname(_T("rsrc:/main.js"));
+  pM->CompileProgram(fname);
+  pM->ExecuteExpression(_T("main();"));
 }
 
 void MainWindow::OnCreation()

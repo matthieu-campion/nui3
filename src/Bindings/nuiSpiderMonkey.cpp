@@ -65,7 +65,7 @@ nuiVariant nuiSpiderMonkey::ExecuteExpression(const nglString& rExpression)
   return var;
 }
 
-bool nuiSpiderMonkey::CompileProgram(const nglString& rSourceName, const nglString& rProgram)
+bool nuiSpiderMonkey::CompileString(const nglString& rSourceName, const nglString& rProgram)
 {
   std::string program(rProgram.GetStdString());
   std::string filename(rSourceName.GetStdString());

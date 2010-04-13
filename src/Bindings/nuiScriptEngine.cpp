@@ -44,7 +44,7 @@ bool nuiScriptEngine::CompileProgram(const nglString& rSourceName, nglIStream* p
 {
   nglString s;
   pStream->ReadText(s);
-  bool res = CompileProgram(rSourceName, s);
+  bool res = CompileString(rSourceName, s);
   delete pStream;
   return res;
 }
