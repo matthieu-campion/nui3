@@ -37,7 +37,7 @@ JSBool js_NGL_LOUT(JSContext *mContext, JSObject *obj, uintN argc, jsval *argv, 
 
 
 nuiSpiderMonkey::nuiSpiderMonkey(uint32 MaxBytes)
-: mMaxBytes(MaxBytes), mContext(NULL), mGlobal(NULL), mEventSink(this)
+: nuiScriptEngine(_T("spidermonkey"), _T("javascript")), mMaxBytes(MaxBytes), mContext(NULL), mGlobal(NULL), mEventSink(this)
 {
   if (!mRunTime)
   {
@@ -65,7 +65,7 @@ nuiVariant nuiSpiderMonkey::ExecuteExpression(const nglString& rExpression)
   return var;
 }
 
-nuiVariant nuiSpiderMonkey::CompileProgram(const nglString& rSourceName, const nglString& rProgram)
+bool nuiSpiderMonkey::CompileProgram(const nglString& rSourceName, const nglString& rProgram)
 {
   std::string program(rProgram.GetStdString());
   std::string filename(rSourceName.GetStdString());
@@ -83,6 +83,17 @@ void nuiSpiderMonkey::SetGlobal(const nglString& rName, const nuiVariant& rVaria
   GetJSValFromVariant(&v, rVariant);
   std::string name(rName.GetStdString());
   JSBool res = JS_DefineProperty(mContext, mGlobal, name.c_str(), v, NULL, NULL, JSPROP_ENUMERATE);
+}
+
+nuiVariant nuiSpiderMonkey::GetGlobal(const nglString& rName) const
+{
+  jsval v = 0;
+  std::string name(rName.GetStdString());
+  JSBool res = JS_LookupProperty(mContext, mGlobal, name.c_str(), &v);
+  nuiVariant var;
+  if (res)
+    GetVariantFromJSVal(var, v);
+  return var;
 }
 
 
@@ -109,7 +120,7 @@ void nuiSpiderMonkey::ReportError(const char *message, JSErrorReport *report)
   NGL_LOG(_T("spidermonkey"), NGL_LOG_ERROR, _T("%s:%u:%s\n"), report->filename ? report->filename : "<no filename>", (unsigned int)report->lineno, message);
 }
 
-nuiVariant nuiSpiderMonkey::GetVariantObjectFromJS(JSObject* pJSObject)
+nuiVariant nuiSpiderMonkey::GetVariantObjectFromJS(JSObject* pJSObject) const
 {
   JSClass* pJSClass = JS_GET_CLASS(mContext, pJSObject);
   
@@ -125,7 +136,7 @@ nuiVariant nuiSpiderMonkey::GetVariantObjectFromJS(JSObject* pJSObject)
   return *pPrivate;
 }
 
-JSObject* nuiSpiderMonkey::GetJSObjectFromVariant(const nuiVariant& rObject)
+JSObject* nuiSpiderMonkey::GetJSObjectFromVariant(const nuiVariant& rObject) const
 {
   if (!rObject.IsPointer())
     return NULL;
@@ -144,7 +155,7 @@ JSObject* nuiSpiderMonkey::GetJSObjectFromVariant(const nuiVariant& rObject)
   return pJSObject;
 }
 
-void nuiSpiderMonkey::GetJSValFromVariant(jsval* val, const nuiVariant& var)
+void nuiSpiderMonkey::GetJSValFromVariant(jsval* val, const nuiVariant& var) const
 {
   nuiAttributeType t = var.GetType();
   if (t == nuiAttributeTypeTrait<uint8>::mTypeId || t == nuiAttributeTypeTrait<uint16>::mTypeId || t == nuiAttributeTypeTrait<uint32>::mTypeId || t == nuiAttributeTypeTrait<uint64>::mTypeId ||
@@ -173,7 +184,7 @@ void nuiSpiderMonkey::GetJSValFromVariant(jsval* val, const nuiVariant& var)
   //#TODO We need to add support for other simple types
 }
 
-void nuiSpiderMonkey::GetVariantFromJSVal(nuiVariant& var, jsval val)
+void nuiSpiderMonkey::GetVariantFromJSVal(nuiVariant& var, jsval val) const
 {
   JSType type = JS_TypeOfValue(mContext, val);
   switch (type)
@@ -223,17 +234,21 @@ void nuiSpiderMonkey::GetVariantFromJSVal(nuiVariant& var, jsval val)
     case JSTYPE_XML:
     case JSTYPE_LIMIT:
       {
-        jsval v;
-        if (!JS_ConvertValue(mContext, v, JSTYPE_STRING, &val))
-        {
-          NGL_LOG(_T("JavaScript"), NGL_LOG_ERROR, _T("Unable to convert a complex type to a string"));
-          var = nuiVariant();
-          return;
-        }
+        NGL_LOG(_T("JavaScript"), NGL_LOG_ERROR, _T("Unable to convert a complex type to a string"));
+        var = nuiVariant();
+        return;
         
-        JSString* pStr = JS_ValueToString(mContext, v);
-        nglString str(JS_GetStringBytes(pStr));
-        var = str;
+//        jsval v;
+//        if (!JS_ConvertValue(mContext, v, JSTYPE_STRING, &val))
+//        {
+//          NGL_LOG(_T("JavaScript"), NGL_LOG_ERROR, _T("Unable to convert a complex type to a string"));
+//          var = nuiVariant();
+//          return;
+//        }
+//        
+//        JSString* pStr = JS_ValueToString(mContext, v);
+//        nglString str(JS_GetStringBytes(pStr));
+//        var = str;
       }
       break;
   }  

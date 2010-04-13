@@ -3310,6 +3310,605 @@
 		E52216AC10C5861C00EB6DB6 /* nuiStopWatch.h in Headers */ = {isa = PBXBuildFile; fileRef = E52216AA10C5861C00EB6DB6 /* nuiStopWatch.h */; };
 		E52216AD10C5861C00EB6DB6 /* nuiStopWatch.h in Headers */ = {isa = PBXBuildFile; fileRef = E52216AA10C5861C00EB6DB6 /* nuiStopWatch.h */; };
 		E52216AE10C5861C00EB6DB6 /* nuiStopWatch.h in Headers */ = {isa = PBXBuildFile; fileRef = E52216AA10C5861C00EB6DB6 /* nuiStopWatch.h */; };
+		E52CC0F211751D7D0031DFA8 /* nuiScriptEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC0F011751D7D0031DFA8 /* nuiScriptEngine.cpp */; };
+		E52CC0F311751D7D0031DFA8 /* nuiSpiderMonkey.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC0F111751D7D0031DFA8 /* nuiSpiderMonkey.cpp */; };
+		E52CC0F411751D7D0031DFA8 /* nuiScriptEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC0F011751D7D0031DFA8 /* nuiScriptEngine.cpp */; };
+		E52CC0F511751D7D0031DFA8 /* nuiSpiderMonkey.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC0F111751D7D0031DFA8 /* nuiSpiderMonkey.cpp */; };
+		E52CC0F611751D7D0031DFA8 /* nuiScriptEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC0F011751D7D0031DFA8 /* nuiScriptEngine.cpp */; };
+		E52CC0F711751D7D0031DFA8 /* nuiSpiderMonkey.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC0F111751D7D0031DFA8 /* nuiSpiderMonkey.cpp */; };
+		E52CC0F811751D7D0031DFA8 /* nuiScriptEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC0F011751D7D0031DFA8 /* nuiScriptEngine.cpp */; };
+		E52CC0F911751D7D0031DFA8 /* nuiSpiderMonkey.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC0F111751D7D0031DFA8 /* nuiSpiderMonkey.cpp */; };
+		E52CC0FC11751D930031DFA8 /* nuiScriptEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC0FA11751D930031DFA8 /* nuiScriptEngine.h */; };
+		E52CC0FD11751D930031DFA8 /* nuiSpiderMonkey.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC0FB11751D930031DFA8 /* nuiSpiderMonkey.h */; };
+		E52CC0FE11751D930031DFA8 /* nuiScriptEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC0FA11751D930031DFA8 /* nuiScriptEngine.h */; };
+		E52CC0FF11751D930031DFA8 /* nuiSpiderMonkey.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC0FB11751D930031DFA8 /* nuiSpiderMonkey.h */; };
+		E52CC10011751D930031DFA8 /* nuiScriptEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC0FA11751D930031DFA8 /* nuiScriptEngine.h */; };
+		E52CC10111751D930031DFA8 /* nuiSpiderMonkey.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC0FB11751D930031DFA8 /* nuiSpiderMonkey.h */; };
+		E52CC10211751D930031DFA8 /* nuiScriptEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC0FA11751D930031DFA8 /* nuiScriptEngine.h */; };
+		E52CC10311751D930031DFA8 /* nuiSpiderMonkey.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC0FB11751D930031DFA8 /* nuiSpiderMonkey.h */; };
+		E52CC1B311751DA80031DFA8 /* js-confdefs.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC10C11751DA60031DFA8 /* js-confdefs.h */; };
+		E52CC1B411751DA80031DFA8 /* js-config.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC10D11751DA60031DFA8 /* js-config.h */; };
+		E52CC1B511751DA80031DFA8 /* jsapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC10F11751DA60031DFA8 /* jsapi.cpp */; };
+		E52CC1B611751DA80031DFA8 /* jsapi.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11011751DA60031DFA8 /* jsapi.h */; };
+		E52CC1B711751DA80031DFA8 /* jsarena.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC11111751DA60031DFA8 /* jsarena.cpp */; };
+		E52CC1B811751DA80031DFA8 /* jsarena.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11211751DA60031DFA8 /* jsarena.h */; };
+		E52CC1B911751DA80031DFA8 /* jsarray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC11311751DA60031DFA8 /* jsarray.cpp */; };
+		E52CC1BA11751DA80031DFA8 /* jsarray.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11411751DA60031DFA8 /* jsarray.h */; };
+		E52CC1BB11751DA80031DFA8 /* jsatom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC11511751DA60031DFA8 /* jsatom.cpp */; };
+		E52CC1BC11751DA80031DFA8 /* jsatom.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11611751DA60031DFA8 /* jsatom.h */; };
+		E52CC1BD11751DA80031DFA8 /* jsatominlines.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11711751DA60031DFA8 /* jsatominlines.h */; };
+		E52CC1BE11751DA80031DFA8 /* jsautocfg.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11811751DA60031DFA8 /* jsautocfg.h */; };
+		E52CC1BF11751DA80031DFA8 /* jsautokw.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11911751DA60031DFA8 /* jsautokw.h */; };
+		E52CC1C011751DA80031DFA8 /* jsautooplen.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11A11751DA60031DFA8 /* jsautooplen.h */; };
+		E52CC1C111751DA80031DFA8 /* jsbit.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11B11751DA60031DFA8 /* jsbit.h */; };
+		E52CC1C211751DA80031DFA8 /* jsbool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC11C11751DA60031DFA8 /* jsbool.cpp */; };
+		E52CC1C311751DA80031DFA8 /* jsbool.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11D11751DA60031DFA8 /* jsbool.h */; };
+		E52CC1C411751DA80031DFA8 /* jsbuiltins.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC11E11751DA60031DFA8 /* jsbuiltins.cpp */; };
+		E52CC1C511751DA80031DFA8 /* jsbuiltins.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11F11751DA60031DFA8 /* jsbuiltins.h */; };
+		E52CC1C611751DA80031DFA8 /* jsclist.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC12011751DA60031DFA8 /* jsclist.h */; };
+		E52CC1C711751DA80031DFA8 /* jscntxt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC12111751DA60031DFA8 /* jscntxt.cpp */; };
+		E52CC1C811751DA80031DFA8 /* jscntxt.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC12211751DA60031DFA8 /* jscntxt.h */; };
+		E52CC1C911751DA80031DFA8 /* jscntxtinlines.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC12311751DA60031DFA8 /* jscntxtinlines.h */; };
+		E52CC1CA11751DA80031DFA8 /* jscompat.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC12411751DA60031DFA8 /* jscompat.h */; };
+		E52CC1CC11751DA80031DFA8 /* jscpucfg.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC12611751DA60031DFA8 /* jscpucfg.h */; };
+		E52CC1CD11751DA80031DFA8 /* jsdate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC12711751DA60031DFA8 /* jsdate.cpp */; };
+		E52CC1CE11751DA80031DFA8 /* jsdate.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC12811751DA60031DFA8 /* jsdate.h */; };
+		E52CC1CF11751DA80031DFA8 /* jsdbgapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC12911751DA60031DFA8 /* jsdbgapi.cpp */; };
+		E52CC1D011751DA80031DFA8 /* jsdbgapi.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC12A11751DA60031DFA8 /* jsdbgapi.h */; };
+		E52CC1D111751DA80031DFA8 /* jsdhash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC12B11751DA60031DFA8 /* jsdhash.cpp */; };
+		E52CC1D211751DA80031DFA8 /* jsdhash.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC12C11751DA60031DFA8 /* jsdhash.h */; };
+		E52CC1D311751DA80031DFA8 /* jsdtoa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC12D11751DA60031DFA8 /* jsdtoa.cpp */; };
+		E52CC1D411751DA80031DFA8 /* jsdtoa.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC12E11751DA60031DFA8 /* jsdtoa.h */; };
+		E52CC1D611751DA80031DFA8 /* jsdtracef.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC13011751DA60031DFA8 /* jsdtracef.h */; };
+		E52CC1D711751DA80031DFA8 /* jsemit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC13111751DA60031DFA8 /* jsemit.cpp */; };
+		E52CC1D811751DA80031DFA8 /* jsemit.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC13211751DA60031DFA8 /* jsemit.h */; };
+		E52CC1D911751DA80031DFA8 /* jsexn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC13311751DA60031DFA8 /* jsexn.cpp */; };
+		E52CC1DA11751DA80031DFA8 /* jsexn.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC13411751DA60031DFA8 /* jsexn.h */; };
+		E52CC1DB11751DA80031DFA8 /* jsfun.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC13511751DA60031DFA8 /* jsfun.cpp */; };
+		E52CC1DC11751DA80031DFA8 /* jsfun.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC13611751DA60031DFA8 /* jsfun.h */; };
+		E52CC1DD11751DA80031DFA8 /* jsgc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC13711751DA60031DFA8 /* jsgc.cpp */; };
+		E52CC1DE11751DA80031DFA8 /* jsgc.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC13811751DA60031DFA8 /* jsgc.h */; };
+		E52CC1DF11751DA80031DFA8 /* jshash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC13911751DA60031DFA8 /* jshash.cpp */; };
+		E52CC1E011751DA80031DFA8 /* jshash.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC13A11751DA60031DFA8 /* jshash.h */; };
+		E52CC1E111751DA80031DFA8 /* jshashtable.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC13B11751DA60031DFA8 /* jshashtable.h */; };
+		E52CC1E211751DA80031DFA8 /* jsinterp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC13C11751DA60031DFA8 /* jsinterp.cpp */; };
+		E52CC1E311751DA80031DFA8 /* jsinterp.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC13D11751DA60031DFA8 /* jsinterp.h */; };
+		E52CC1E411751DA80031DFA8 /* jsinterpinlines.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC13E11751DA60031DFA8 /* jsinterpinlines.h */; };
+		E52CC1E511751DA80031DFA8 /* jsinttypes.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC13F11751DA60031DFA8 /* jsinttypes.h */; };
+		E52CC1E611751DA80031DFA8 /* jsinvoke.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC14011751DA60031DFA8 /* jsinvoke.cpp */; };
+		E52CC1E711751DA80031DFA8 /* jsiter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC14111751DA60031DFA8 /* jsiter.cpp */; };
+		E52CC1E811751DA80031DFA8 /* jsiter.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC14211751DA60031DFA8 /* jsiter.h */; };
+		E52CC1EA11751DA80031DFA8 /* jslibmath.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC14511751DA60031DFA8 /* jslibmath.h */; };
+		E52CC1EB11751DA80031DFA8 /* jslock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC14611751DA60031DFA8 /* jslock.cpp */; };
+		E52CC1EC11751DA80031DFA8 /* jslock.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC14711751DA60031DFA8 /* jslock.h */; };
+		E52CC1EE11751DA80031DFA8 /* jslog2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC14911751DA60031DFA8 /* jslog2.cpp */; };
+		E52CC1EF11751DA80031DFA8 /* jslong.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC14A11751DA60031DFA8 /* jslong.h */; };
+		E52CC1F011751DA80031DFA8 /* jsmath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC14B11751DA60031DFA8 /* jsmath.cpp */; };
+		E52CC1F111751DA80031DFA8 /* jsmath.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC14C11751DA60031DFA8 /* jsmath.h */; };
+		E52CC1F211751DA80031DFA8 /* jsnum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC14D11751DA60031DFA8 /* jsnum.cpp */; };
+		E52CC1F311751DA80031DFA8 /* jsnum.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC14E11751DA60031DFA8 /* jsnum.h */; };
+		E52CC1F411751DA80031DFA8 /* jsobj.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC14F11751DA60031DFA8 /* jsobj.cpp */; };
+		E52CC1F511751DA80031DFA8 /* jsobj.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC15011751DA60031DFA8 /* jsobj.h */; };
+		E52CC1F611751DA80031DFA8 /* jsobjinlines.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC15111751DA60031DFA8 /* jsobjinlines.h */; };
+		E52CC1F711751DA80031DFA8 /* json.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC15211751DA60031DFA8 /* json.cpp */; };
+		E52CC1F811751DA80031DFA8 /* json.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC15311751DA60031DFA8 /* json.h */; };
+		E52CC1F911751DA80031DFA8 /* jsopcode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC15411751DA60031DFA8 /* jsopcode.cpp */; };
+		E52CC1FA11751DA80031DFA8 /* jsopcode.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC15511751DA60031DFA8 /* jsopcode.h */; };
+		E52CC1FD11751DA80031DFA8 /* jsotypes.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC15911751DA60031DFA8 /* jsotypes.h */; };
+		E52CC1FE11751DA80031DFA8 /* jsparse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC15A11751DA60031DFA8 /* jsparse.cpp */; };
+		E52CC1FF11751DA80031DFA8 /* jsparse.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC15B11751DA60031DFA8 /* jsparse.h */; };
+		E52CC20011751DA80031DFA8 /* jsprf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC15C11751DA60031DFA8 /* jsprf.cpp */; };
+		E52CC20111751DA80031DFA8 /* jsprf.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC15D11751DA60031DFA8 /* jsprf.h */; };
+		E52CC20211751DA80031DFA8 /* jsprvtd.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC15F11751DA60031DFA8 /* jsprvtd.h */; };
+		E52CC20311751DA80031DFA8 /* jspubtd.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC16011751DA60031DFA8 /* jspubtd.h */; };
+		E52CC20511751DA80031DFA8 /* jsregexp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC16211751DA60031DFA8 /* jsregexp.cpp */; };
+		E52CC20611751DA80031DFA8 /* jsregexp.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC16311751DA60031DFA8 /* jsregexp.h */; };
+		E52CC20711751DA80031DFA8 /* jsscan.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC16511751DA60031DFA8 /* jsscan.cpp */; };
+		E52CC20811751DA80031DFA8 /* jsscan.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC16611751DA60031DFA8 /* jsscan.h */; };
+		E52CC20911751DA80031DFA8 /* jsscope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC16711751DA60031DFA8 /* jsscope.cpp */; };
+		E52CC20A11751DA80031DFA8 /* jsscope.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC16811751DA60031DFA8 /* jsscope.h */; };
+		E52CC20B11751DA80031DFA8 /* jsscopeinlines.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC16911751DA60031DFA8 /* jsscopeinlines.h */; };
+		E52CC20C11751DA80031DFA8 /* jsscript.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC16A11751DA60031DFA8 /* jsscript.cpp */; };
+		E52CC20D11751DA80031DFA8 /* jsscript.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC16B11751DA60031DFA8 /* jsscript.h */; };
+		E52CC20E11751DA80031DFA8 /* jsscriptinlines.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC16C11751DA60031DFA8 /* jsscriptinlines.h */; };
+		E52CC20F11751DA80031DFA8 /* jsstaticcheck.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC16E11751DA60031DFA8 /* jsstaticcheck.h */; };
+		E52CC21011751DA80031DFA8 /* jsstdint.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC16F11751DA60031DFA8 /* jsstdint.h */; };
+		E52CC21111751DA80031DFA8 /* jsstr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC17011751DA60031DFA8 /* jsstr.cpp */; };
+		E52CC21211751DA80031DFA8 /* jsstr.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC17111751DA60031DFA8 /* jsstr.h */; };
+		E52CC21311751DA80031DFA8 /* jsstrinlines.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC17211751DA60031DFA8 /* jsstrinlines.h */; };
+		E52CC21411751DA80031DFA8 /* jstask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC17311751DA60031DFA8 /* jstask.cpp */; };
+		E52CC21511751DA80031DFA8 /* jstask.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC17411751DA60031DFA8 /* jstask.h */; };
+		E52CC21611751DA80031DFA8 /* jstl.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC17511751DA60031DFA8 /* jstl.h */; };
+		E52CC21711751DA80031DFA8 /* jstracer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC17611751DA60031DFA8 /* jstracer.cpp */; };
+		E52CC21811751DA80031DFA8 /* jstracer.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC17711751DA60031DFA8 /* jstracer.h */; };
+		E52CC21911751DA80031DFA8 /* jstypedarray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC17811751DA60031DFA8 /* jstypedarray.cpp */; };
+		E52CC21A11751DA80031DFA8 /* jstypedarray.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC17911751DA60031DFA8 /* jstypedarray.h */; };
+		E52CC21B11751DA80031DFA8 /* jstypes.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC17A11751DA60031DFA8 /* jstypes.h */; };
+		E52CC21C11751DA80031DFA8 /* jsutil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC17B11751DA60031DFA8 /* jsutil.cpp */; };
+		E52CC21D11751DA80031DFA8 /* jsutil.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC17C11751DA60031DFA8 /* jsutil.h */; };
+		E52CC21E11751DA80031DFA8 /* jsvector.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC17D11751DA60031DFA8 /* jsvector.h */; };
+		E52CC21F11751DA80031DFA8 /* jsversion.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC17E11751DA60031DFA8 /* jsversion.h */; };
+		E52CC22111751DA80031DFA8 /* jsxdrapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC18011751DA60031DFA8 /* jsxdrapi.cpp */; };
+		E52CC22211751DA80031DFA8 /* jsxdrapi.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC18111751DA60031DFA8 /* jsxdrapi.h */; };
+		E52CC22311751DA80031DFA8 /* jsxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC18211751DA60031DFA8 /* jsxml.cpp */; };
+		E52CC22411751DA80031DFA8 /* jsxml.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC18311751DA60031DFA8 /* jsxml.h */; };
+		E52CC22511751DA80031DFA8 /* Allocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC18711751DA60031DFA8 /* Allocator.cpp */; };
+		E52CC22611751DA80031DFA8 /* Allocator.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC18811751DA60031DFA8 /* Allocator.h */; };
+		E52CC22711751DA80031DFA8 /* Assembler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC18911751DA60031DFA8 /* Assembler.cpp */; };
+		E52CC22811751DA80031DFA8 /* Assembler.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC18A11751DA60031DFA8 /* Assembler.h */; };
+		E52CC22911751DA80031DFA8 /* avmplus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC18B11751DA60031DFA8 /* avmplus.cpp */; };
+		E52CC22A11751DA80031DFA8 /* avmplus.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC18C11751DA60031DFA8 /* avmplus.h */; };
+		E52CC22B11751DA80031DFA8 /* CodeAlloc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC18D11751DA60031DFA8 /* CodeAlloc.cpp */; };
+		E52CC22C11751DA80031DFA8 /* CodeAlloc.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC18E11751DA60031DFA8 /* CodeAlloc.h */; };
+		E52CC22D11751DA80031DFA8 /* Containers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC18F11751DA60031DFA8 /* Containers.cpp */; };
+		E52CC22E11751DA80031DFA8 /* Containers.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC19011751DA60031DFA8 /* Containers.h */; };
+		E52CC22F11751DA80031DFA8 /* Fragmento.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC19111751DA60031DFA8 /* Fragmento.cpp */; };
+		E52CC23011751DA80031DFA8 /* Fragmento.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC19211751DA60031DFA8 /* Fragmento.h */; };
+		E52CC23111751DA80031DFA8 /* LIR.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC19311751DA60031DFA8 /* LIR.cpp */; };
+		E52CC23211751DA80031DFA8 /* LIR.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC19411751DA60031DFA8 /* LIR.h */; };
+		E52CC23311751DA80031DFA8 /* nanojit.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC19611751DA60031DFA8 /* nanojit.h */; };
+		E52CC23411751DA80031DFA8 /* Native.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC19711751DA60031DFA8 /* Native.h */; };
+		E52CC23511751DA80031DFA8 /* NativeARM.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC19811751DA60031DFA8 /* NativeARM.cpp */; };
+		E52CC23611751DA80031DFA8 /* NativeARM.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC19911751DA60031DFA8 /* NativeARM.h */; };
+		E52CC23711751DA80031DFA8 /* Nativei386.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC19A11751DA60031DFA8 /* Nativei386.cpp */; };
+		E52CC23811751DA80031DFA8 /* Nativei386.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC19B11751DA60031DFA8 /* Nativei386.h */; };
+		E52CC23911751DA80031DFA8 /* NativeMIPS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC19C11751DA60031DFA8 /* NativeMIPS.cpp */; };
+		E52CC23A11751DA80031DFA8 /* NativeMIPS.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC19D11751DA60031DFA8 /* NativeMIPS.h */; };
+		E52CC23B11751DA80031DFA8 /* NativePPC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC19E11751DA60031DFA8 /* NativePPC.cpp */; };
+		E52CC23C11751DA80031DFA8 /* NativePPC.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC19F11751DA60031DFA8 /* NativePPC.h */; };
+		E52CC23D11751DA80031DFA8 /* NativeSparc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC1A011751DA60031DFA8 /* NativeSparc.cpp */; };
+		E52CC23E11751DA80031DFA8 /* NativeSparc.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC1A111751DA60031DFA8 /* NativeSparc.h */; };
+		E52CC23F11751DA80031DFA8 /* NativeX64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC1A211751DA60031DFA8 /* NativeX64.cpp */; };
+		E52CC24011751DA80031DFA8 /* NativeX64.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC1A311751DA60031DFA8 /* NativeX64.h */; };
+		E52CC24111751DA80031DFA8 /* njconfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC1A411751DA60031DFA8 /* njconfig.cpp */; };
+		E52CC24211751DA80031DFA8 /* njconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC1A511751DA60031DFA8 /* njconfig.h */; };
+		E52CC24311751DA80031DFA8 /* njcpudetect.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC1A611751DA60031DFA8 /* njcpudetect.h */; };
+		E52CC24411751DA80031DFA8 /* RegAlloc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC1A711751DA60031DFA8 /* RegAlloc.cpp */; };
+		E52CC24511751DA80031DFA8 /* RegAlloc.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC1A811751DA60031DFA8 /* RegAlloc.h */; };
+		E52CC24611751DA80031DFA8 /* VMPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC1A911751DA60031DFA8 /* VMPI.cpp */; };
+		E52CC24711751DA80031DFA8 /* VMPI.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC1AA11751DA60031DFA8 /* VMPI.h */; };
+		E52CC24811751DA80031DFA8 /* prmjtime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC1AB11751DA60031DFA8 /* prmjtime.cpp */; };
+		E52CC24911751DA80031DFA8 /* prmjtime.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC1AC11751DA60031DFA8 /* prmjtime.h */; };
+		E52CC24A11751DA80031DFA8 /* resource.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC1AD11751DA60031DFA8 /* resource.h */; };
+		E52CC24B11751DA80031DFA8 /* vprof.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC1AF11751DA60031DFA8 /* vprof.cpp */; };
+		E52CC24C11751DA80031DFA8 /* vprof.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC1B011751DA60031DFA8 /* vprof.h */; };
+		E52CC24E11751DA80031DFA8 /* imacro_asm.js in Sources */ = {isa = PBXBuildFile; fileRef = E52CC10811751DA60031DFA8 /* imacro_asm.js */; };
+		E52CC24F11751DA80031DFA8 /* js-confdefs.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC10C11751DA60031DFA8 /* js-confdefs.h */; };
+		E52CC25011751DA80031DFA8 /* js-config.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC10D11751DA60031DFA8 /* js-config.h */; };
+		E52CC25111751DA80031DFA8 /* jsapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC10F11751DA60031DFA8 /* jsapi.cpp */; };
+		E52CC25211751DA80031DFA8 /* jsapi.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11011751DA60031DFA8 /* jsapi.h */; };
+		E52CC25311751DA80031DFA8 /* jsarena.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC11111751DA60031DFA8 /* jsarena.cpp */; };
+		E52CC25411751DA80031DFA8 /* jsarena.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11211751DA60031DFA8 /* jsarena.h */; };
+		E52CC25511751DA80031DFA8 /* jsarray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC11311751DA60031DFA8 /* jsarray.cpp */; };
+		E52CC25611751DA80031DFA8 /* jsarray.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11411751DA60031DFA8 /* jsarray.h */; };
+		E52CC25711751DA80031DFA8 /* jsatom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC11511751DA60031DFA8 /* jsatom.cpp */; };
+		E52CC25811751DA80031DFA8 /* jsatom.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11611751DA60031DFA8 /* jsatom.h */; };
+		E52CC25911751DA80031DFA8 /* jsatominlines.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11711751DA60031DFA8 /* jsatominlines.h */; };
+		E52CC25A11751DA80031DFA8 /* jsautocfg.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11811751DA60031DFA8 /* jsautocfg.h */; };
+		E52CC25B11751DA80031DFA8 /* jsautokw.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11911751DA60031DFA8 /* jsautokw.h */; };
+		E52CC25C11751DA80031DFA8 /* jsautooplen.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11A11751DA60031DFA8 /* jsautooplen.h */; };
+		E52CC25D11751DA80031DFA8 /* jsbit.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11B11751DA60031DFA8 /* jsbit.h */; };
+		E52CC25E11751DA80031DFA8 /* jsbool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC11C11751DA60031DFA8 /* jsbool.cpp */; };
+		E52CC25F11751DA80031DFA8 /* jsbool.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11D11751DA60031DFA8 /* jsbool.h */; };
+		E52CC26011751DA80031DFA8 /* jsbuiltins.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC11E11751DA60031DFA8 /* jsbuiltins.cpp */; };
+		E52CC26111751DA80031DFA8 /* jsbuiltins.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11F11751DA60031DFA8 /* jsbuiltins.h */; };
+		E52CC26211751DA80031DFA8 /* jsclist.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC12011751DA60031DFA8 /* jsclist.h */; };
+		E52CC26311751DA80031DFA8 /* jscntxt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC12111751DA60031DFA8 /* jscntxt.cpp */; };
+		E52CC26411751DA80031DFA8 /* jscntxt.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC12211751DA60031DFA8 /* jscntxt.h */; };
+		E52CC26511751DA80031DFA8 /* jscntxtinlines.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC12311751DA60031DFA8 /* jscntxtinlines.h */; };
+		E52CC26611751DA80031DFA8 /* jscompat.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC12411751DA60031DFA8 /* jscompat.h */; };
+		E52CC26811751DA80031DFA8 /* jscpucfg.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC12611751DA60031DFA8 /* jscpucfg.h */; };
+		E52CC26911751DA80031DFA8 /* jsdate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC12711751DA60031DFA8 /* jsdate.cpp */; };
+		E52CC26A11751DA80031DFA8 /* jsdate.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC12811751DA60031DFA8 /* jsdate.h */; };
+		E52CC26B11751DA80031DFA8 /* jsdbgapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC12911751DA60031DFA8 /* jsdbgapi.cpp */; };
+		E52CC26C11751DA80031DFA8 /* jsdbgapi.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC12A11751DA60031DFA8 /* jsdbgapi.h */; };
+		E52CC26D11751DA80031DFA8 /* jsdhash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC12B11751DA60031DFA8 /* jsdhash.cpp */; };
+		E52CC26E11751DA80031DFA8 /* jsdhash.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC12C11751DA60031DFA8 /* jsdhash.h */; };
+		E52CC26F11751DA80031DFA8 /* jsdtoa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC12D11751DA60031DFA8 /* jsdtoa.cpp */; };
+		E52CC27011751DA80031DFA8 /* jsdtoa.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC12E11751DA60031DFA8 /* jsdtoa.h */; };
+		E52CC27211751DA80031DFA8 /* jsdtracef.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC13011751DA60031DFA8 /* jsdtracef.h */; };
+		E52CC27311751DA80031DFA8 /* jsemit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC13111751DA60031DFA8 /* jsemit.cpp */; };
+		E52CC27411751DA80031DFA8 /* jsemit.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC13211751DA60031DFA8 /* jsemit.h */; };
+		E52CC27511751DA80031DFA8 /* jsexn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC13311751DA60031DFA8 /* jsexn.cpp */; };
+		E52CC27611751DA80031DFA8 /* jsexn.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC13411751DA60031DFA8 /* jsexn.h */; };
+		E52CC27711751DA80031DFA8 /* jsfun.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC13511751DA60031DFA8 /* jsfun.cpp */; };
+		E52CC27811751DA80031DFA8 /* jsfun.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC13611751DA60031DFA8 /* jsfun.h */; };
+		E52CC27911751DA80031DFA8 /* jsgc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC13711751DA60031DFA8 /* jsgc.cpp */; };
+		E52CC27A11751DA80031DFA8 /* jsgc.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC13811751DA60031DFA8 /* jsgc.h */; };
+		E52CC27B11751DA80031DFA8 /* jshash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC13911751DA60031DFA8 /* jshash.cpp */; };
+		E52CC27C11751DA80031DFA8 /* jshash.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC13A11751DA60031DFA8 /* jshash.h */; };
+		E52CC27D11751DA80031DFA8 /* jshashtable.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC13B11751DA60031DFA8 /* jshashtable.h */; };
+		E52CC27E11751DA80031DFA8 /* jsinterp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC13C11751DA60031DFA8 /* jsinterp.cpp */; };
+		E52CC27F11751DA80031DFA8 /* jsinterp.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC13D11751DA60031DFA8 /* jsinterp.h */; };
+		E52CC28011751DA80031DFA8 /* jsinterpinlines.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC13E11751DA60031DFA8 /* jsinterpinlines.h */; };
+		E52CC28111751DA80031DFA8 /* jsinttypes.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC13F11751DA60031DFA8 /* jsinttypes.h */; };
+		E52CC28211751DA80031DFA8 /* jsinvoke.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC14011751DA60031DFA8 /* jsinvoke.cpp */; };
+		E52CC28311751DA80031DFA8 /* jsiter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC14111751DA60031DFA8 /* jsiter.cpp */; };
+		E52CC28411751DA80031DFA8 /* jsiter.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC14211751DA60031DFA8 /* jsiter.h */; };
+		E52CC28611751DA80031DFA8 /* jslibmath.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC14511751DA60031DFA8 /* jslibmath.h */; };
+		E52CC28711751DA80031DFA8 /* jslock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC14611751DA60031DFA8 /* jslock.cpp */; };
+		E52CC28811751DA80031DFA8 /* jslock.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC14711751DA60031DFA8 /* jslock.h */; };
+		E52CC28A11751DA80031DFA8 /* jslog2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC14911751DA60031DFA8 /* jslog2.cpp */; };
+		E52CC28B11751DA80031DFA8 /* jslong.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC14A11751DA60031DFA8 /* jslong.h */; };
+		E52CC28C11751DA80031DFA8 /* jsmath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC14B11751DA60031DFA8 /* jsmath.cpp */; };
+		E52CC28D11751DA80031DFA8 /* jsmath.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC14C11751DA60031DFA8 /* jsmath.h */; };
+		E52CC28E11751DA80031DFA8 /* jsnum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC14D11751DA60031DFA8 /* jsnum.cpp */; };
+		E52CC28F11751DA80031DFA8 /* jsnum.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC14E11751DA60031DFA8 /* jsnum.h */; };
+		E52CC29011751DA80031DFA8 /* jsobj.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC14F11751DA60031DFA8 /* jsobj.cpp */; };
+		E52CC29111751DA80031DFA8 /* jsobj.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC15011751DA60031DFA8 /* jsobj.h */; };
+		E52CC29211751DA80031DFA8 /* jsobjinlines.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC15111751DA60031DFA8 /* jsobjinlines.h */; };
+		E52CC29311751DA80031DFA8 /* json.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC15211751DA60031DFA8 /* json.cpp */; };
+		E52CC29411751DA80031DFA8 /* json.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC15311751DA60031DFA8 /* json.h */; };
+		E52CC29511751DA80031DFA8 /* jsopcode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC15411751DA60031DFA8 /* jsopcode.cpp */; };
+		E52CC29611751DA80031DFA8 /* jsopcode.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC15511751DA60031DFA8 /* jsopcode.h */; };
+		E52CC29911751DA80031DFA8 /* jsotypes.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC15911751DA60031DFA8 /* jsotypes.h */; };
+		E52CC29A11751DA80031DFA8 /* jsparse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC15A11751DA60031DFA8 /* jsparse.cpp */; };
+		E52CC29B11751DA80031DFA8 /* jsparse.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC15B11751DA60031DFA8 /* jsparse.h */; };
+		E52CC29C11751DA80031DFA8 /* jsprf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC15C11751DA60031DFA8 /* jsprf.cpp */; };
+		E52CC29D11751DA80031DFA8 /* jsprf.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC15D11751DA60031DFA8 /* jsprf.h */; };
+		E52CC29E11751DA80031DFA8 /* jsprvtd.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC15F11751DA60031DFA8 /* jsprvtd.h */; };
+		E52CC29F11751DA80031DFA8 /* jspubtd.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC16011751DA60031DFA8 /* jspubtd.h */; };
+		E52CC2A111751DA80031DFA8 /* jsregexp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC16211751DA60031DFA8 /* jsregexp.cpp */; };
+		E52CC2A211751DA80031DFA8 /* jsregexp.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC16311751DA60031DFA8 /* jsregexp.h */; };
+		E52CC2A311751DA80031DFA8 /* jsscan.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC16511751DA60031DFA8 /* jsscan.cpp */; };
+		E52CC2A411751DA80031DFA8 /* jsscan.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC16611751DA60031DFA8 /* jsscan.h */; };
+		E52CC2A511751DA80031DFA8 /* jsscope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC16711751DA60031DFA8 /* jsscope.cpp */; };
+		E52CC2A611751DA80031DFA8 /* jsscope.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC16811751DA60031DFA8 /* jsscope.h */; };
+		E52CC2A711751DA80031DFA8 /* jsscopeinlines.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC16911751DA60031DFA8 /* jsscopeinlines.h */; };
+		E52CC2A811751DA80031DFA8 /* jsscript.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC16A11751DA60031DFA8 /* jsscript.cpp */; };
+		E52CC2A911751DA80031DFA8 /* jsscript.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC16B11751DA60031DFA8 /* jsscript.h */; };
+		E52CC2AA11751DA80031DFA8 /* jsscriptinlines.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC16C11751DA60031DFA8 /* jsscriptinlines.h */; };
+		E52CC2AB11751DA80031DFA8 /* jsstaticcheck.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC16E11751DA60031DFA8 /* jsstaticcheck.h */; };
+		E52CC2AC11751DA80031DFA8 /* jsstdint.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC16F11751DA60031DFA8 /* jsstdint.h */; };
+		E52CC2AD11751DA80031DFA8 /* jsstr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC17011751DA60031DFA8 /* jsstr.cpp */; };
+		E52CC2AE11751DA80031DFA8 /* jsstr.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC17111751DA60031DFA8 /* jsstr.h */; };
+		E52CC2AF11751DA80031DFA8 /* jsstrinlines.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC17211751DA60031DFA8 /* jsstrinlines.h */; };
+		E52CC2B011751DA80031DFA8 /* jstask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC17311751DA60031DFA8 /* jstask.cpp */; };
+		E52CC2B111751DA80031DFA8 /* jstask.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC17411751DA60031DFA8 /* jstask.h */; };
+		E52CC2B211751DA80031DFA8 /* jstl.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC17511751DA60031DFA8 /* jstl.h */; };
+		E52CC2B311751DA80031DFA8 /* jstracer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC17611751DA60031DFA8 /* jstracer.cpp */; };
+		E52CC2B411751DA80031DFA8 /* jstracer.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC17711751DA60031DFA8 /* jstracer.h */; };
+		E52CC2B511751DA80031DFA8 /* jstypedarray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC17811751DA60031DFA8 /* jstypedarray.cpp */; };
+		E52CC2B611751DA80031DFA8 /* jstypedarray.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC17911751DA60031DFA8 /* jstypedarray.h */; };
+		E52CC2B711751DA80031DFA8 /* jstypes.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC17A11751DA60031DFA8 /* jstypes.h */; };
+		E52CC2B811751DA80031DFA8 /* jsutil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC17B11751DA60031DFA8 /* jsutil.cpp */; };
+		E52CC2B911751DA80031DFA8 /* jsutil.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC17C11751DA60031DFA8 /* jsutil.h */; };
+		E52CC2BA11751DA80031DFA8 /* jsvector.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC17D11751DA60031DFA8 /* jsvector.h */; };
+		E52CC2BB11751DA80031DFA8 /* jsversion.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC17E11751DA60031DFA8 /* jsversion.h */; };
+		E52CC2BD11751DA80031DFA8 /* jsxdrapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC18011751DA60031DFA8 /* jsxdrapi.cpp */; };
+		E52CC2BE11751DA80031DFA8 /* jsxdrapi.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC18111751DA60031DFA8 /* jsxdrapi.h */; };
+		E52CC2BF11751DA80031DFA8 /* jsxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC18211751DA60031DFA8 /* jsxml.cpp */; };
+		E52CC2C011751DA80031DFA8 /* jsxml.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC18311751DA60031DFA8 /* jsxml.h */; };
+		E52CC2C111751DA80031DFA8 /* Allocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC18711751DA60031DFA8 /* Allocator.cpp */; };
+		E52CC2C211751DA80031DFA8 /* Allocator.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC18811751DA60031DFA8 /* Allocator.h */; };
+		E52CC2C311751DA80031DFA8 /* Assembler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC18911751DA60031DFA8 /* Assembler.cpp */; };
+		E52CC2C411751DA80031DFA8 /* Assembler.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC18A11751DA60031DFA8 /* Assembler.h */; };
+		E52CC2C511751DA80031DFA8 /* avmplus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC18B11751DA60031DFA8 /* avmplus.cpp */; };
+		E52CC2C611751DA80031DFA8 /* avmplus.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC18C11751DA60031DFA8 /* avmplus.h */; };
+		E52CC2C711751DA80031DFA8 /* CodeAlloc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC18D11751DA60031DFA8 /* CodeAlloc.cpp */; };
+		E52CC2C811751DA80031DFA8 /* CodeAlloc.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC18E11751DA60031DFA8 /* CodeAlloc.h */; };
+		E52CC2C911751DA80031DFA8 /* Containers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC18F11751DA60031DFA8 /* Containers.cpp */; };
+		E52CC2CA11751DA80031DFA8 /* Containers.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC19011751DA60031DFA8 /* Containers.h */; };
+		E52CC2CB11751DA80031DFA8 /* Fragmento.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC19111751DA60031DFA8 /* Fragmento.cpp */; };
+		E52CC2CC11751DA80031DFA8 /* Fragmento.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC19211751DA60031DFA8 /* Fragmento.h */; };
+		E52CC2CD11751DA80031DFA8 /* LIR.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC19311751DA60031DFA8 /* LIR.cpp */; };
+		E52CC2CE11751DA80031DFA8 /* LIR.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC19411751DA60031DFA8 /* LIR.h */; };
+		E52CC2CF11751DA80031DFA8 /* nanojit.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC19611751DA60031DFA8 /* nanojit.h */; };
+		E52CC2D011751DA80031DFA8 /* Native.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC19711751DA60031DFA8 /* Native.h */; };
+		E52CC2D111751DA80031DFA8 /* NativeARM.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC19811751DA60031DFA8 /* NativeARM.cpp */; };
+		E52CC2D211751DA80031DFA8 /* NativeARM.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC19911751DA60031DFA8 /* NativeARM.h */; };
+		E52CC2D311751DA80031DFA8 /* Nativei386.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC19A11751DA60031DFA8 /* Nativei386.cpp */; };
+		E52CC2D411751DA80031DFA8 /* Nativei386.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC19B11751DA60031DFA8 /* Nativei386.h */; };
+		E52CC2D511751DA80031DFA8 /* NativeMIPS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC19C11751DA60031DFA8 /* NativeMIPS.cpp */; };
+		E52CC2D611751DA80031DFA8 /* NativeMIPS.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC19D11751DA60031DFA8 /* NativeMIPS.h */; };
+		E52CC2D711751DA80031DFA8 /* NativePPC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC19E11751DA60031DFA8 /* NativePPC.cpp */; };
+		E52CC2D811751DA80031DFA8 /* NativePPC.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC19F11751DA60031DFA8 /* NativePPC.h */; };
+		E52CC2D911751DA80031DFA8 /* NativeSparc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC1A011751DA60031DFA8 /* NativeSparc.cpp */; };
+		E52CC2DA11751DA80031DFA8 /* NativeSparc.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC1A111751DA60031DFA8 /* NativeSparc.h */; };
+		E52CC2DB11751DA80031DFA8 /* NativeX64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC1A211751DA60031DFA8 /* NativeX64.cpp */; };
+		E52CC2DC11751DA80031DFA8 /* NativeX64.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC1A311751DA60031DFA8 /* NativeX64.h */; };
+		E52CC2DD11751DA80031DFA8 /* njconfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC1A411751DA60031DFA8 /* njconfig.cpp */; };
+		E52CC2DE11751DA80031DFA8 /* njconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC1A511751DA60031DFA8 /* njconfig.h */; };
+		E52CC2DF11751DA80031DFA8 /* njcpudetect.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC1A611751DA60031DFA8 /* njcpudetect.h */; };
+		E52CC2E011751DA80031DFA8 /* RegAlloc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC1A711751DA60031DFA8 /* RegAlloc.cpp */; };
+		E52CC2E111751DA80031DFA8 /* RegAlloc.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC1A811751DA60031DFA8 /* RegAlloc.h */; };
+		E52CC2E211751DA80031DFA8 /* VMPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC1A911751DA60031DFA8 /* VMPI.cpp */; };
+		E52CC2E311751DA80031DFA8 /* VMPI.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC1AA11751DA60031DFA8 /* VMPI.h */; };
+		E52CC2E411751DA80031DFA8 /* prmjtime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC1AB11751DA60031DFA8 /* prmjtime.cpp */; };
+		E52CC2E511751DA80031DFA8 /* prmjtime.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC1AC11751DA60031DFA8 /* prmjtime.h */; };
+		E52CC2E611751DA80031DFA8 /* resource.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC1AD11751DA60031DFA8 /* resource.h */; };
+		E52CC2E711751DA80031DFA8 /* vprof.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC1AF11751DA60031DFA8 /* vprof.cpp */; };
+		E52CC2E811751DA80031DFA8 /* vprof.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC1B011751DA60031DFA8 /* vprof.h */; };
+		E52CC2EB11751DA80031DFA8 /* js-confdefs.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC10C11751DA60031DFA8 /* js-confdefs.h */; };
+		E52CC2EC11751DA80031DFA8 /* js-config.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC10D11751DA60031DFA8 /* js-config.h */; };
+		E52CC2ED11751DA80031DFA8 /* jsapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC10F11751DA60031DFA8 /* jsapi.cpp */; };
+		E52CC2EE11751DA80031DFA8 /* jsapi.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11011751DA60031DFA8 /* jsapi.h */; };
+		E52CC2EF11751DA80031DFA8 /* jsarena.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC11111751DA60031DFA8 /* jsarena.cpp */; };
+		E52CC2F011751DA80031DFA8 /* jsarena.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11211751DA60031DFA8 /* jsarena.h */; };
+		E52CC2F111751DA80031DFA8 /* jsarray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC11311751DA60031DFA8 /* jsarray.cpp */; };
+		E52CC2F211751DA80031DFA8 /* jsarray.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11411751DA60031DFA8 /* jsarray.h */; };
+		E52CC2F311751DA80031DFA8 /* jsatom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC11511751DA60031DFA8 /* jsatom.cpp */; };
+		E52CC2F411751DA80031DFA8 /* jsatom.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11611751DA60031DFA8 /* jsatom.h */; };
+		E52CC2F511751DA80031DFA8 /* jsatominlines.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11711751DA60031DFA8 /* jsatominlines.h */; };
+		E52CC2F611751DA80031DFA8 /* jsautocfg.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11811751DA60031DFA8 /* jsautocfg.h */; };
+		E52CC2F811751DA80031DFA8 /* jsautooplen.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11A11751DA60031DFA8 /* jsautooplen.h */; };
+		E52CC2F911751DA80031DFA8 /* jsbit.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11B11751DA60031DFA8 /* jsbit.h */; };
+		E52CC2FA11751DA80031DFA8 /* jsbool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC11C11751DA60031DFA8 /* jsbool.cpp */; };
+		E52CC2FB11751DA80031DFA8 /* jsbool.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11D11751DA60031DFA8 /* jsbool.h */; };
+		E52CC2FC11751DA80031DFA8 /* jsbuiltins.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC11E11751DA60031DFA8 /* jsbuiltins.cpp */; };
+		E52CC2FD11751DA80031DFA8 /* jsbuiltins.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11F11751DA60031DFA8 /* jsbuiltins.h */; };
+		E52CC2FE11751DA80031DFA8 /* jsclist.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC12011751DA60031DFA8 /* jsclist.h */; };
+		E52CC2FF11751DA80031DFA8 /* jscntxt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC12111751DA60031DFA8 /* jscntxt.cpp */; };
+		E52CC30011751DA80031DFA8 /* jscntxt.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC12211751DA60031DFA8 /* jscntxt.h */; };
+		E52CC30111751DA80031DFA8 /* jscntxtinlines.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC12311751DA60031DFA8 /* jscntxtinlines.h */; };
+		E52CC30211751DA80031DFA8 /* jscompat.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC12411751DA60031DFA8 /* jscompat.h */; };
+		E52CC30411751DA80031DFA8 /* jscpucfg.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC12611751DA60031DFA8 /* jscpucfg.h */; };
+		E52CC30511751DA80031DFA8 /* jsdate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC12711751DA60031DFA8 /* jsdate.cpp */; };
+		E52CC30611751DA80031DFA8 /* jsdate.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC12811751DA60031DFA8 /* jsdate.h */; };
+		E52CC30711751DA80031DFA8 /* jsdbgapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC12911751DA60031DFA8 /* jsdbgapi.cpp */; };
+		E52CC30811751DA80031DFA8 /* jsdbgapi.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC12A11751DA60031DFA8 /* jsdbgapi.h */; };
+		E52CC30911751DA80031DFA8 /* jsdhash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC12B11751DA60031DFA8 /* jsdhash.cpp */; };
+		E52CC30A11751DA80031DFA8 /* jsdhash.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC12C11751DA60031DFA8 /* jsdhash.h */; };
+		E52CC30B11751DA80031DFA8 /* jsdtoa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC12D11751DA60031DFA8 /* jsdtoa.cpp */; };
+		E52CC30C11751DA80031DFA8 /* jsdtoa.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC12E11751DA60031DFA8 /* jsdtoa.h */; };
+		E52CC30E11751DA80031DFA8 /* jsdtracef.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC13011751DA60031DFA8 /* jsdtracef.h */; };
+		E52CC30F11751DA80031DFA8 /* jsemit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC13111751DA60031DFA8 /* jsemit.cpp */; };
+		E52CC31011751DA80031DFA8 /* jsemit.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC13211751DA60031DFA8 /* jsemit.h */; };
+		E52CC31111751DA80031DFA8 /* jsexn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC13311751DA60031DFA8 /* jsexn.cpp */; };
+		E52CC31211751DA80031DFA8 /* jsexn.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC13411751DA60031DFA8 /* jsexn.h */; };
+		E52CC31311751DA80031DFA8 /* jsfun.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC13511751DA60031DFA8 /* jsfun.cpp */; };
+		E52CC31411751DA80031DFA8 /* jsfun.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC13611751DA60031DFA8 /* jsfun.h */; };
+		E52CC31511751DA80031DFA8 /* jsgc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC13711751DA60031DFA8 /* jsgc.cpp */; };
+		E52CC31611751DA80031DFA8 /* jsgc.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC13811751DA60031DFA8 /* jsgc.h */; };
+		E52CC31711751DA80031DFA8 /* jshash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC13911751DA60031DFA8 /* jshash.cpp */; };
+		E52CC31811751DA80031DFA8 /* jshash.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC13A11751DA60031DFA8 /* jshash.h */; };
+		E52CC31911751DA80031DFA8 /* jshashtable.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC13B11751DA60031DFA8 /* jshashtable.h */; };
+		E52CC31A11751DA80031DFA8 /* jsinterp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC13C11751DA60031DFA8 /* jsinterp.cpp */; };
+		E52CC31B11751DA80031DFA8 /* jsinterp.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC13D11751DA60031DFA8 /* jsinterp.h */; };
+		E52CC31C11751DA80031DFA8 /* jsinterpinlines.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC13E11751DA60031DFA8 /* jsinterpinlines.h */; };
+		E52CC31D11751DA80031DFA8 /* jsinttypes.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC13F11751DA60031DFA8 /* jsinttypes.h */; };
+		E52CC31E11751DA80031DFA8 /* jsinvoke.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC14011751DA60031DFA8 /* jsinvoke.cpp */; };
+		E52CC31F11751DA80031DFA8 /* jsiter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC14111751DA60031DFA8 /* jsiter.cpp */; };
+		E52CC32011751DA80031DFA8 /* jsiter.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC14211751DA60031DFA8 /* jsiter.h */; };
+		E52CC32211751DA80031DFA8 /* jslibmath.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC14511751DA60031DFA8 /* jslibmath.h */; };
+		E52CC32311751DA80031DFA8 /* jslock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC14611751DA60031DFA8 /* jslock.cpp */; };
+		E52CC32411751DA80031DFA8 /* jslock.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC14711751DA60031DFA8 /* jslock.h */; };
+		E52CC32611751DA80031DFA8 /* jslog2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC14911751DA60031DFA8 /* jslog2.cpp */; };
+		E52CC32711751DA80031DFA8 /* jslong.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC14A11751DA60031DFA8 /* jslong.h */; };
+		E52CC32811751DA80031DFA8 /* jsmath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC14B11751DA60031DFA8 /* jsmath.cpp */; };
+		E52CC32911751DA80031DFA8 /* jsmath.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC14C11751DA60031DFA8 /* jsmath.h */; };
+		E52CC32A11751DA80031DFA8 /* jsnum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC14D11751DA60031DFA8 /* jsnum.cpp */; };
+		E52CC32B11751DA80031DFA8 /* jsnum.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC14E11751DA60031DFA8 /* jsnum.h */; };
+		E52CC32C11751DA80031DFA8 /* jsobj.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC14F11751DA60031DFA8 /* jsobj.cpp */; };
+		E52CC32D11751DA80031DFA8 /* jsobj.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC15011751DA60031DFA8 /* jsobj.h */; };
+		E52CC32E11751DA80031DFA8 /* jsobjinlines.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC15111751DA60031DFA8 /* jsobjinlines.h */; };
+		E52CC32F11751DA80031DFA8 /* json.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC15211751DA60031DFA8 /* json.cpp */; };
+		E52CC33011751DA80031DFA8 /* json.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC15311751DA60031DFA8 /* json.h */; };
+		E52CC33111751DA80031DFA8 /* jsopcode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC15411751DA60031DFA8 /* jsopcode.cpp */; };
+		E52CC33211751DA80031DFA8 /* jsopcode.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC15511751DA60031DFA8 /* jsopcode.h */; };
+		E52CC33511751DA80031DFA8 /* jsotypes.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC15911751DA60031DFA8 /* jsotypes.h */; };
+		E52CC33611751DA80031DFA8 /* jsparse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC15A11751DA60031DFA8 /* jsparse.cpp */; };
+		E52CC33711751DA80031DFA8 /* jsparse.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC15B11751DA60031DFA8 /* jsparse.h */; };
+		E52CC33811751DA80031DFA8 /* jsprf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC15C11751DA60031DFA8 /* jsprf.cpp */; };
+		E52CC33911751DA80031DFA8 /* jsprf.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC15D11751DA60031DFA8 /* jsprf.h */; };
+		E52CC33A11751DA80031DFA8 /* jsprvtd.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC15F11751DA60031DFA8 /* jsprvtd.h */; };
+		E52CC33B11751DA80031DFA8 /* jspubtd.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC16011751DA60031DFA8 /* jspubtd.h */; };
+		E52CC33D11751DA80031DFA8 /* jsregexp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC16211751DA60031DFA8 /* jsregexp.cpp */; };
+		E52CC33E11751DA80031DFA8 /* jsregexp.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC16311751DA60031DFA8 /* jsregexp.h */; };
+		E52CC33F11751DA80031DFA8 /* jsscan.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC16511751DA60031DFA8 /* jsscan.cpp */; };
+		E52CC34011751DA80031DFA8 /* jsscan.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC16611751DA60031DFA8 /* jsscan.h */; };
+		E52CC34111751DA80031DFA8 /* jsscope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC16711751DA60031DFA8 /* jsscope.cpp */; };
+		E52CC34211751DA80031DFA8 /* jsscope.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC16811751DA60031DFA8 /* jsscope.h */; };
+		E52CC34311751DA80031DFA8 /* jsscopeinlines.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC16911751DA60031DFA8 /* jsscopeinlines.h */; };
+		E52CC34411751DA80031DFA8 /* jsscript.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC16A11751DA60031DFA8 /* jsscript.cpp */; };
+		E52CC34511751DA80031DFA8 /* jsscript.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC16B11751DA60031DFA8 /* jsscript.h */; };
+		E52CC34611751DA80031DFA8 /* jsscriptinlines.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC16C11751DA60031DFA8 /* jsscriptinlines.h */; };
+		E52CC34711751DA80031DFA8 /* jsstaticcheck.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC16E11751DA60031DFA8 /* jsstaticcheck.h */; };
+		E52CC34811751DA80031DFA8 /* jsstdint.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC16F11751DA60031DFA8 /* jsstdint.h */; };
+		E52CC34911751DA80031DFA8 /* jsstr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC17011751DA60031DFA8 /* jsstr.cpp */; };
+		E52CC34A11751DA80031DFA8 /* jsstr.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC17111751DA60031DFA8 /* jsstr.h */; };
+		E52CC34B11751DA80031DFA8 /* jsstrinlines.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC17211751DA60031DFA8 /* jsstrinlines.h */; };
+		E52CC34C11751DA80031DFA8 /* jstask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC17311751DA60031DFA8 /* jstask.cpp */; };
+		E52CC34D11751DA80031DFA8 /* jstask.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC17411751DA60031DFA8 /* jstask.h */; };
+		E52CC34E11751DA80031DFA8 /* jstl.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC17511751DA60031DFA8 /* jstl.h */; };
+		E52CC34F11751DA80031DFA8 /* jstracer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC17611751DA60031DFA8 /* jstracer.cpp */; };
+		E52CC35011751DA80031DFA8 /* jstracer.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC17711751DA60031DFA8 /* jstracer.h */; };
+		E52CC35111751DA80031DFA8 /* jstypedarray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC17811751DA60031DFA8 /* jstypedarray.cpp */; };
+		E52CC35211751DA80031DFA8 /* jstypedarray.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC17911751DA60031DFA8 /* jstypedarray.h */; };
+		E52CC35311751DA80031DFA8 /* jstypes.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC17A11751DA60031DFA8 /* jstypes.h */; };
+		E52CC35411751DA80031DFA8 /* jsutil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC17B11751DA60031DFA8 /* jsutil.cpp */; };
+		E52CC35511751DA80031DFA8 /* jsutil.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC17C11751DA60031DFA8 /* jsutil.h */; };
+		E52CC35611751DA80031DFA8 /* jsvector.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC17D11751DA60031DFA8 /* jsvector.h */; };
+		E52CC35711751DA80031DFA8 /* jsversion.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC17E11751DA60031DFA8 /* jsversion.h */; };
+		E52CC35911751DA80031DFA8 /* jsxdrapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC18011751DA60031DFA8 /* jsxdrapi.cpp */; };
+		E52CC35A11751DA80031DFA8 /* jsxdrapi.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC18111751DA60031DFA8 /* jsxdrapi.h */; };
+		E52CC35B11751DA80031DFA8 /* jsxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC18211751DA60031DFA8 /* jsxml.cpp */; };
+		E52CC35C11751DA80031DFA8 /* jsxml.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC18311751DA60031DFA8 /* jsxml.h */; };
+		E52CC35D11751DA80031DFA8 /* Allocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC18711751DA60031DFA8 /* Allocator.cpp */; };
+		E52CC35E11751DA80031DFA8 /* Allocator.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC18811751DA60031DFA8 /* Allocator.h */; };
+		E52CC35F11751DA80031DFA8 /* Assembler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC18911751DA60031DFA8 /* Assembler.cpp */; };
+		E52CC36011751DA80031DFA8 /* Assembler.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC18A11751DA60031DFA8 /* Assembler.h */; };
+		E52CC36111751DA80031DFA8 /* avmplus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC18B11751DA60031DFA8 /* avmplus.cpp */; };
+		E52CC36211751DA80031DFA8 /* avmplus.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC18C11751DA60031DFA8 /* avmplus.h */; };
+		E52CC36311751DA80031DFA8 /* CodeAlloc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC18D11751DA60031DFA8 /* CodeAlloc.cpp */; };
+		E52CC36411751DA80031DFA8 /* CodeAlloc.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC18E11751DA60031DFA8 /* CodeAlloc.h */; };
+		E52CC36511751DA80031DFA8 /* Containers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC18F11751DA60031DFA8 /* Containers.cpp */; };
+		E52CC36611751DA80031DFA8 /* Containers.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC19011751DA60031DFA8 /* Containers.h */; };
+		E52CC36711751DA80031DFA8 /* Fragmento.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC19111751DA60031DFA8 /* Fragmento.cpp */; };
+		E52CC36811751DA80031DFA8 /* Fragmento.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC19211751DA60031DFA8 /* Fragmento.h */; };
+		E52CC36911751DA80031DFA8 /* LIR.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC19311751DA60031DFA8 /* LIR.cpp */; };
+		E52CC36A11751DA80031DFA8 /* LIR.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC19411751DA60031DFA8 /* LIR.h */; };
+		E52CC36B11751DA80031DFA8 /* nanojit.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC19611751DA60031DFA8 /* nanojit.h */; };
+		E52CC36C11751DA80031DFA8 /* Native.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC19711751DA60031DFA8 /* Native.h */; };
+		E52CC36D11751DA80031DFA8 /* NativeARM.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC19811751DA60031DFA8 /* NativeARM.cpp */; };
+		E52CC36E11751DA80031DFA8 /* NativeARM.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC19911751DA60031DFA8 /* NativeARM.h */; };
+		E52CC36F11751DA80031DFA8 /* Nativei386.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC19A11751DA60031DFA8 /* Nativei386.cpp */; };
+		E52CC37011751DA80031DFA8 /* Nativei386.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC19B11751DA60031DFA8 /* Nativei386.h */; };
+		E52CC37111751DA80031DFA8 /* NativeMIPS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC19C11751DA60031DFA8 /* NativeMIPS.cpp */; };
+		E52CC37211751DA80031DFA8 /* NativeMIPS.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC19D11751DA60031DFA8 /* NativeMIPS.h */; };
+		E52CC37311751DA80031DFA8 /* NativePPC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC19E11751DA60031DFA8 /* NativePPC.cpp */; };
+		E52CC37411751DA80031DFA8 /* NativePPC.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC19F11751DA60031DFA8 /* NativePPC.h */; };
+		E52CC37511751DA80031DFA8 /* NativeSparc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC1A011751DA60031DFA8 /* NativeSparc.cpp */; };
+		E52CC37611751DA80031DFA8 /* NativeSparc.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC1A111751DA60031DFA8 /* NativeSparc.h */; };
+		E52CC37711751DA80031DFA8 /* NativeX64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC1A211751DA60031DFA8 /* NativeX64.cpp */; };
+		E52CC37811751DA80031DFA8 /* NativeX64.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC1A311751DA60031DFA8 /* NativeX64.h */; };
+		E52CC37911751DA80031DFA8 /* njconfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC1A411751DA60031DFA8 /* njconfig.cpp */; };
+		E52CC37A11751DA80031DFA8 /* njconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC1A511751DA60031DFA8 /* njconfig.h */; };
+		E52CC37B11751DA80031DFA8 /* njcpudetect.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC1A611751DA60031DFA8 /* njcpudetect.h */; };
+		E52CC37C11751DA80031DFA8 /* RegAlloc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC1A711751DA60031DFA8 /* RegAlloc.cpp */; };
+		E52CC37D11751DA80031DFA8 /* RegAlloc.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC1A811751DA60031DFA8 /* RegAlloc.h */; };
+		E52CC37E11751DA80031DFA8 /* VMPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC1A911751DA60031DFA8 /* VMPI.cpp */; };
+		E52CC37F11751DA80031DFA8 /* VMPI.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC1AA11751DA60031DFA8 /* VMPI.h */; };
+		E52CC38011751DA80031DFA8 /* prmjtime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC1AB11751DA60031DFA8 /* prmjtime.cpp */; };
+		E52CC38111751DA80031DFA8 /* prmjtime.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC1AC11751DA60031DFA8 /* prmjtime.h */; };
+		E52CC38211751DA80031DFA8 /* resource.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC1AD11751DA60031DFA8 /* resource.h */; };
+		E52CC38311751DA80031DFA8 /* vprof.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC1AF11751DA60031DFA8 /* vprof.cpp */; };
+		E52CC38411751DA80031DFA8 /* vprof.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC1B011751DA60031DFA8 /* vprof.h */; };
+		E52CC38711751DA80031DFA8 /* js-confdefs.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC10C11751DA60031DFA8 /* js-confdefs.h */; };
+		E52CC38811751DA80031DFA8 /* js-config.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC10D11751DA60031DFA8 /* js-config.h */; };
+		E52CC38911751DA80031DFA8 /* jsapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC10F11751DA60031DFA8 /* jsapi.cpp */; };
+		E52CC38A11751DA80031DFA8 /* jsapi.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11011751DA60031DFA8 /* jsapi.h */; };
+		E52CC38B11751DA80031DFA8 /* jsarena.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC11111751DA60031DFA8 /* jsarena.cpp */; };
+		E52CC38C11751DA80031DFA8 /* jsarena.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11211751DA60031DFA8 /* jsarena.h */; };
+		E52CC38D11751DA80031DFA8 /* jsarray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC11311751DA60031DFA8 /* jsarray.cpp */; };
+		E52CC38E11751DA80031DFA8 /* jsarray.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11411751DA60031DFA8 /* jsarray.h */; };
+		E52CC38F11751DA80031DFA8 /* jsatom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC11511751DA60031DFA8 /* jsatom.cpp */; };
+		E52CC39011751DA80031DFA8 /* jsatom.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11611751DA60031DFA8 /* jsatom.h */; };
+		E52CC39111751DA80031DFA8 /* jsatominlines.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11711751DA60031DFA8 /* jsatominlines.h */; };
+		E52CC39211751DA80031DFA8 /* jsautocfg.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11811751DA60031DFA8 /* jsautocfg.h */; };
+		E52CC39411751DA80031DFA8 /* jsautooplen.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11A11751DA60031DFA8 /* jsautooplen.h */; };
+		E52CC39511751DA80031DFA8 /* jsbit.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11B11751DA60031DFA8 /* jsbit.h */; };
+		E52CC39611751DA80031DFA8 /* jsbool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC11C11751DA60031DFA8 /* jsbool.cpp */; };
+		E52CC39711751DA80031DFA8 /* jsbool.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11D11751DA60031DFA8 /* jsbool.h */; };
+		E52CC39811751DA80031DFA8 /* jsbuiltins.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC11E11751DA60031DFA8 /* jsbuiltins.cpp */; };
+		E52CC39911751DA80031DFA8 /* jsbuiltins.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC11F11751DA60031DFA8 /* jsbuiltins.h */; };
+		E52CC39A11751DA80031DFA8 /* jsclist.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC12011751DA60031DFA8 /* jsclist.h */; };
+		E52CC39B11751DA80031DFA8 /* jscntxt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC12111751DA60031DFA8 /* jscntxt.cpp */; };
+		E52CC39C11751DA80031DFA8 /* jscntxt.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC12211751DA60031DFA8 /* jscntxt.h */; };
+		E52CC39D11751DA80031DFA8 /* jscntxtinlines.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC12311751DA60031DFA8 /* jscntxtinlines.h */; };
+		E52CC39E11751DA80031DFA8 /* jscompat.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC12411751DA60031DFA8 /* jscompat.h */; };
+		E52CC3A011751DA80031DFA8 /* jscpucfg.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC12611751DA60031DFA8 /* jscpucfg.h */; };
+		E52CC3A111751DA80031DFA8 /* jsdate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC12711751DA60031DFA8 /* jsdate.cpp */; };
+		E52CC3A211751DA80031DFA8 /* jsdate.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC12811751DA60031DFA8 /* jsdate.h */; };
+		E52CC3A311751DA80031DFA8 /* jsdbgapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC12911751DA60031DFA8 /* jsdbgapi.cpp */; };
+		E52CC3A411751DA80031DFA8 /* jsdbgapi.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC12A11751DA60031DFA8 /* jsdbgapi.h */; };
+		E52CC3A511751DA80031DFA8 /* jsdhash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC12B11751DA60031DFA8 /* jsdhash.cpp */; };
+		E52CC3A611751DA80031DFA8 /* jsdhash.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC12C11751DA60031DFA8 /* jsdhash.h */; };
+		E52CC3A711751DA80031DFA8 /* jsdtoa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC12D11751DA60031DFA8 /* jsdtoa.cpp */; };
+		E52CC3A811751DA80031DFA8 /* jsdtoa.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC12E11751DA60031DFA8 /* jsdtoa.h */; };
+		E52CC3AA11751DA80031DFA8 /* jsdtracef.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC13011751DA60031DFA8 /* jsdtracef.h */; };
+		E52CC3AB11751DA80031DFA8 /* jsemit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC13111751DA60031DFA8 /* jsemit.cpp */; };
+		E52CC3AC11751DA80031DFA8 /* jsemit.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC13211751DA60031DFA8 /* jsemit.h */; };
+		E52CC3AD11751DA80031DFA8 /* jsexn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC13311751DA60031DFA8 /* jsexn.cpp */; };
+		E52CC3AE11751DA80031DFA8 /* jsexn.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC13411751DA60031DFA8 /* jsexn.h */; };
+		E52CC3AF11751DA80031DFA8 /* jsfun.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC13511751DA60031DFA8 /* jsfun.cpp */; };
+		E52CC3B011751DA80031DFA8 /* jsfun.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC13611751DA60031DFA8 /* jsfun.h */; };
+		E52CC3B111751DA80031DFA8 /* jsgc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC13711751DA60031DFA8 /* jsgc.cpp */; };
+		E52CC3B211751DA80031DFA8 /* jsgc.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC13811751DA60031DFA8 /* jsgc.h */; };
+		E52CC3B311751DA80031DFA8 /* jshash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC13911751DA60031DFA8 /* jshash.cpp */; };
+		E52CC3B411751DA80031DFA8 /* jshash.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC13A11751DA60031DFA8 /* jshash.h */; };
+		E52CC3B511751DA80031DFA8 /* jshashtable.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC13B11751DA60031DFA8 /* jshashtable.h */; };
+		E52CC3B611751DA80031DFA8 /* jsinterp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC13C11751DA60031DFA8 /* jsinterp.cpp */; };
+		E52CC3B711751DA80031DFA8 /* jsinterp.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC13D11751DA60031DFA8 /* jsinterp.h */; };
+		E52CC3B811751DA80031DFA8 /* jsinterpinlines.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC13E11751DA60031DFA8 /* jsinterpinlines.h */; };
+		E52CC3B911751DA80031DFA8 /* jsinttypes.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC13F11751DA60031DFA8 /* jsinttypes.h */; };
+		E52CC3BA11751DA80031DFA8 /* jsinvoke.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC14011751DA60031DFA8 /* jsinvoke.cpp */; };
+		E52CC3BB11751DA80031DFA8 /* jsiter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC14111751DA60031DFA8 /* jsiter.cpp */; };
+		E52CC3BC11751DA80031DFA8 /* jsiter.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC14211751DA60031DFA8 /* jsiter.h */; };
+		E52CC3BE11751DA80031DFA8 /* jslibmath.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC14511751DA60031DFA8 /* jslibmath.h */; };
+		E52CC3BF11751DA80031DFA8 /* jslock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC14611751DA60031DFA8 /* jslock.cpp */; };
+		E52CC3C011751DA80031DFA8 /* jslock.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC14711751DA60031DFA8 /* jslock.h */; };
+		E52CC3C211751DA80031DFA8 /* jslog2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC14911751DA60031DFA8 /* jslog2.cpp */; };
+		E52CC3C311751DA80031DFA8 /* jslong.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC14A11751DA60031DFA8 /* jslong.h */; };
+		E52CC3C411751DA80031DFA8 /* jsmath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC14B11751DA60031DFA8 /* jsmath.cpp */; };
+		E52CC3C511751DA80031DFA8 /* jsmath.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC14C11751DA60031DFA8 /* jsmath.h */; };
+		E52CC3C611751DA80031DFA8 /* jsnum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC14D11751DA60031DFA8 /* jsnum.cpp */; };
+		E52CC3C711751DA80031DFA8 /* jsnum.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC14E11751DA60031DFA8 /* jsnum.h */; };
+		E52CC3C811751DA80031DFA8 /* jsobj.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC14F11751DA60031DFA8 /* jsobj.cpp */; };
+		E52CC3C911751DA80031DFA8 /* jsobj.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC15011751DA60031DFA8 /* jsobj.h */; };
+		E52CC3CA11751DA80031DFA8 /* jsobjinlines.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC15111751DA60031DFA8 /* jsobjinlines.h */; };
+		E52CC3CB11751DA80031DFA8 /* json.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC15211751DA60031DFA8 /* json.cpp */; };
+		E52CC3CC11751DA80031DFA8 /* json.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC15311751DA60031DFA8 /* json.h */; };
+		E52CC3CD11751DA80031DFA8 /* jsopcode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC15411751DA60031DFA8 /* jsopcode.cpp */; };
+		E52CC3CE11751DA80031DFA8 /* jsopcode.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC15511751DA60031DFA8 /* jsopcode.h */; };
+		E52CC3D111751DA80031DFA8 /* jsotypes.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC15911751DA60031DFA8 /* jsotypes.h */; };
+		E52CC3D211751DA80031DFA8 /* jsparse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC15A11751DA60031DFA8 /* jsparse.cpp */; };
+		E52CC3D311751DA80031DFA8 /* jsparse.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC15B11751DA60031DFA8 /* jsparse.h */; };
+		E52CC3D411751DA80031DFA8 /* jsprf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC15C11751DA60031DFA8 /* jsprf.cpp */; };
+		E52CC3D511751DA80031DFA8 /* jsprf.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC15D11751DA60031DFA8 /* jsprf.h */; };
+		E52CC3D611751DA80031DFA8 /* jsprvtd.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC15F11751DA60031DFA8 /* jsprvtd.h */; };
+		E52CC3D711751DA80031DFA8 /* jspubtd.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC16011751DA60031DFA8 /* jspubtd.h */; };
+		E52CC3D911751DA80031DFA8 /* jsregexp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC16211751DA60031DFA8 /* jsregexp.cpp */; };
+		E52CC3DA11751DA80031DFA8 /* jsregexp.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC16311751DA60031DFA8 /* jsregexp.h */; };
+		E52CC3DB11751DA80031DFA8 /* jsscan.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC16511751DA60031DFA8 /* jsscan.cpp */; };
+		E52CC3DC11751DA80031DFA8 /* jsscan.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC16611751DA60031DFA8 /* jsscan.h */; };
+		E52CC3DD11751DA80031DFA8 /* jsscope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC16711751DA60031DFA8 /* jsscope.cpp */; };
+		E52CC3DE11751DA80031DFA8 /* jsscope.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC16811751DA60031DFA8 /* jsscope.h */; };
+		E52CC3DF11751DA80031DFA8 /* jsscopeinlines.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC16911751DA60031DFA8 /* jsscopeinlines.h */; };
+		E52CC3E011751DA80031DFA8 /* jsscript.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC16A11751DA60031DFA8 /* jsscript.cpp */; };
+		E52CC3E111751DA80031DFA8 /* jsscript.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC16B11751DA60031DFA8 /* jsscript.h */; };
+		E52CC3E211751DA80031DFA8 /* jsscriptinlines.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC16C11751DA60031DFA8 /* jsscriptinlines.h */; };
+		E52CC3E311751DA80031DFA8 /* jsstaticcheck.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC16E11751DA60031DFA8 /* jsstaticcheck.h */; };
+		E52CC3E411751DA80031DFA8 /* jsstdint.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC16F11751DA60031DFA8 /* jsstdint.h */; };
+		E52CC3E511751DA80031DFA8 /* jsstr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC17011751DA60031DFA8 /* jsstr.cpp */; };
+		E52CC3E611751DA80031DFA8 /* jsstr.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC17111751DA60031DFA8 /* jsstr.h */; };
+		E52CC3E711751DA80031DFA8 /* jsstrinlines.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC17211751DA60031DFA8 /* jsstrinlines.h */; };
+		E52CC3E811751DA80031DFA8 /* jstask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC17311751DA60031DFA8 /* jstask.cpp */; };
+		E52CC3E911751DA80031DFA8 /* jstask.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC17411751DA60031DFA8 /* jstask.h */; };
+		E52CC3EA11751DA80031DFA8 /* jstl.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC17511751DA60031DFA8 /* jstl.h */; };
+		E52CC3EB11751DA80031DFA8 /* jstracer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC17611751DA60031DFA8 /* jstracer.cpp */; };
+		E52CC3EC11751DA80031DFA8 /* jstracer.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC17711751DA60031DFA8 /* jstracer.h */; };
+		E52CC3ED11751DA80031DFA8 /* jstypedarray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC17811751DA60031DFA8 /* jstypedarray.cpp */; };
+		E52CC3EE11751DA80031DFA8 /* jstypedarray.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC17911751DA60031DFA8 /* jstypedarray.h */; };
+		E52CC3EF11751DA80031DFA8 /* jstypes.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC17A11751DA60031DFA8 /* jstypes.h */; };
+		E52CC3F011751DA80031DFA8 /* jsutil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC17B11751DA60031DFA8 /* jsutil.cpp */; };
+		E52CC3F111751DA80031DFA8 /* jsutil.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC17C11751DA60031DFA8 /* jsutil.h */; };
+		E52CC3F211751DA80031DFA8 /* jsvector.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC17D11751DA60031DFA8 /* jsvector.h */; };
+		E52CC3F311751DA80031DFA8 /* jsversion.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC17E11751DA60031DFA8 /* jsversion.h */; };
+		E52CC3F511751DA80031DFA8 /* jsxdrapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC18011751DA60031DFA8 /* jsxdrapi.cpp */; };
+		E52CC3F611751DA80031DFA8 /* jsxdrapi.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC18111751DA60031DFA8 /* jsxdrapi.h */; };
+		E52CC3F711751DA80031DFA8 /* jsxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC18211751DA60031DFA8 /* jsxml.cpp */; };
+		E52CC3F811751DA80031DFA8 /* jsxml.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC18311751DA60031DFA8 /* jsxml.h */; };
+		E52CC3F911751DA80031DFA8 /* Allocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC18711751DA60031DFA8 /* Allocator.cpp */; };
+		E52CC3FA11751DA80031DFA8 /* Allocator.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC18811751DA60031DFA8 /* Allocator.h */; };
+		E52CC3FB11751DA80031DFA8 /* Assembler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC18911751DA60031DFA8 /* Assembler.cpp */; };
+		E52CC3FC11751DA80031DFA8 /* Assembler.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC18A11751DA60031DFA8 /* Assembler.h */; };
+		E52CC3FD11751DA80031DFA8 /* avmplus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC18B11751DA60031DFA8 /* avmplus.cpp */; };
+		E52CC3FE11751DA80031DFA8 /* avmplus.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC18C11751DA60031DFA8 /* avmplus.h */; };
+		E52CC3FF11751DA80031DFA8 /* CodeAlloc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC18D11751DA60031DFA8 /* CodeAlloc.cpp */; };
+		E52CC40011751DA80031DFA8 /* CodeAlloc.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC18E11751DA60031DFA8 /* CodeAlloc.h */; };
+		E52CC40111751DA80031DFA8 /* Containers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC18F11751DA60031DFA8 /* Containers.cpp */; };
+		E52CC40211751DA80031DFA8 /* Containers.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC19011751DA60031DFA8 /* Containers.h */; };
+		E52CC40311751DA80031DFA8 /* Fragmento.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC19111751DA60031DFA8 /* Fragmento.cpp */; };
+		E52CC40411751DA80031DFA8 /* Fragmento.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC19211751DA60031DFA8 /* Fragmento.h */; };
+		E52CC40511751DA80031DFA8 /* LIR.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC19311751DA60031DFA8 /* LIR.cpp */; };
+		E52CC40611751DA80031DFA8 /* LIR.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC19411751DA60031DFA8 /* LIR.h */; };
+		E52CC40711751DA80031DFA8 /* nanojit.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC19611751DA60031DFA8 /* nanojit.h */; };
+		E52CC40811751DA80031DFA8 /* Native.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC19711751DA60031DFA8 /* Native.h */; };
+		E52CC40911751DA80031DFA8 /* NativeARM.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC19811751DA60031DFA8 /* NativeARM.cpp */; };
+		E52CC40A11751DA80031DFA8 /* NativeARM.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC19911751DA60031DFA8 /* NativeARM.h */; };
+		E52CC40B11751DA80031DFA8 /* Nativei386.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC19A11751DA60031DFA8 /* Nativei386.cpp */; };
+		E52CC40C11751DA80031DFA8 /* Nativei386.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC19B11751DA60031DFA8 /* Nativei386.h */; };
+		E52CC40D11751DA80031DFA8 /* NativeMIPS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC19C11751DA60031DFA8 /* NativeMIPS.cpp */; };
+		E52CC40E11751DA80031DFA8 /* NativeMIPS.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC19D11751DA60031DFA8 /* NativeMIPS.h */; };
+		E52CC40F11751DA80031DFA8 /* NativePPC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC19E11751DA60031DFA8 /* NativePPC.cpp */; };
+		E52CC41011751DA80031DFA8 /* NativePPC.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC19F11751DA60031DFA8 /* NativePPC.h */; };
+		E52CC41111751DA80031DFA8 /* NativeSparc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC1A011751DA60031DFA8 /* NativeSparc.cpp */; };
+		E52CC41211751DA80031DFA8 /* NativeSparc.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC1A111751DA60031DFA8 /* NativeSparc.h */; };
+		E52CC41311751DA80031DFA8 /* NativeX64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC1A211751DA60031DFA8 /* NativeX64.cpp */; };
+		E52CC41411751DA80031DFA8 /* NativeX64.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC1A311751DA60031DFA8 /* NativeX64.h */; };
+		E52CC41511751DA80031DFA8 /* njconfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC1A411751DA60031DFA8 /* njconfig.cpp */; };
+		E52CC41611751DA80031DFA8 /* njconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC1A511751DA60031DFA8 /* njconfig.h */; };
+		E52CC41711751DA80031DFA8 /* njcpudetect.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC1A611751DA60031DFA8 /* njcpudetect.h */; };
+		E52CC41811751DA80031DFA8 /* RegAlloc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC1A711751DA60031DFA8 /* RegAlloc.cpp */; };
+		E52CC41911751DA80031DFA8 /* RegAlloc.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC1A811751DA60031DFA8 /* RegAlloc.h */; };
+		E52CC41A11751DA80031DFA8 /* VMPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC1A911751DA60031DFA8 /* VMPI.cpp */; };
+		E52CC41B11751DA80031DFA8 /* VMPI.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC1AA11751DA60031DFA8 /* VMPI.h */; };
+		E52CC41C11751DA80031DFA8 /* prmjtime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC1AB11751DA60031DFA8 /* prmjtime.cpp */; };
+		E52CC41D11751DA80031DFA8 /* prmjtime.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC1AC11751DA60031DFA8 /* prmjtime.h */; };
+		E52CC41E11751DA80031DFA8 /* resource.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC1AD11751DA60031DFA8 /* resource.h */; };
+		E52CC41F11751DA80031DFA8 /* vprof.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC1AF11751DA60031DFA8 /* vprof.cpp */; };
+		E52CC42011751DA80031DFA8 /* vprof.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC1B011751DA60031DFA8 /* vprof.h */; };
 		E53120A20F0781500081CB7E /* nuiHTTP_CoreFoundation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E53120A00F0781500081CB7E /* nuiHTTP_CoreFoundation.cpp */; };
 		E53120A30F0781500081CB7E /* nuiURL_CoreFoundation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E53120A10F0781500081CB7E /* nuiURL_CoreFoundation.cpp */; };
 		E53120A40F0781500081CB7E /* nuiHTTP_CoreFoundation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E53120A00F0781500081CB7E /* nuiHTTP_CoreFoundation.cpp */; };
@@ -4682,13 +5281,13 @@
 		6126E3500DA577C000D2641A /* harfbuzz-tibetan.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; name = "harfbuzz-tibetan.c"; path = "deps/harfbuzz/harfbuzz-tibetan.c"; sourceTree = "<group>"; };
 		6126E3510DA577C000D2641A /* harfbuzz.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; name = harfbuzz.c; path = deps/harfbuzz/harfbuzz.c; sourceTree = "<group>"; };
 		6126E3520DA577C000D2641A /* harfbuzz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = harfbuzz.h; path = deps/harfbuzz/harfbuzz.h; sourceTree = "<group>"; };
-		6126E46C0DA578AD00D2641A /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		6126E46D0DA578AD00D2641A /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
-		6126E46E0DA578AD00D2641A /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
-		6126E46F0DA578AD00D2641A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		6126E4700DA578AD00D2641A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		6126E4710DA578AD00D2641A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
-		6126E4720DA578AD00D2641A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		6126E46C0DA578AD00D2641A /* AudioToolbox.framework */ = {isa = PBXFileReference; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		6126E46D0DA578AD00D2641A /* CoreAudio.framework */ = {isa = PBXFileReference; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		6126E46E0DA578AD00D2641A /* CoreFoundation.framework */ = {isa = PBXFileReference; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		6126E46F0DA578AD00D2641A /* CoreGraphics.framework */ = {isa = PBXFileReference; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		6126E4700DA578AD00D2641A /* Foundation.framework */ = {isa = PBXFileReference; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		6126E4710DA578AD00D2641A /* OpenGLES.framework */ = {isa = PBXFileReference; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		6126E4720DA578AD00D2641A /* UIKit.framework */ = {isa = PBXFileReference; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		614B66C30DA7BA67000F4C22 /* libnuiEd.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libnuiEd.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		616EA36B0DC498BB00593FE7 /* nglThreadChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nglThreadChecker.h; path = include/nglThreadChecker.h; sourceTree = SOURCE_ROOT; };
 		616EA36E0DC498CA00593FE7 /* nglThreadChecker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nglThreadChecker.cpp; path = Threading/nglThreadChecker.cpp; sourceTree = "<group>"; };
@@ -4713,7 +5312,7 @@
 		619993A20EA6047D00D2E090 /* nuiImageSequence.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiImageSequence.cpp; sourceTree = "<group>"; };
 		619DD6E20EDF14AE00A49350 /* nglUIWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nglUIWindow.h; path = UIKit/nglUIWindow.h; sourceTree = "<group>"; };
 		619DD6FD0EDF16DB00A49350 /* nglUIApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nglUIApplication.h; path = UIKit/nglUIApplication.h; sourceTree = "<group>"; };
-		61AB25710DEE359200AA48B2 /* EAGLDrawable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EAGLDrawable.h; path = System/Library/Frameworks/OpenGLES.framework/Headers/EAGLDrawable.h; sourceTree = SDKROOT; };
+		61AB25710DEE359200AA48B2 /* EAGLDrawable.h */ = {isa = PBXFileReference; fileEncoding = 4; name = EAGLDrawable.h; path = System/Library/Frameworks/OpenGLES.framework/Headers/EAGLDrawable.h; sourceTree = SDKROOT; };
 		61AB29150E64639D00623908 /* nuiMemoryPool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiMemoryPool.cpp; sourceTree = "<group>"; };
 		61AB29160E64639D00623908 /* nuiMemoryPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiMemoryPool.h; path = include/nuiMemoryPool.h; sourceTree = SOURCE_ROOT; };
 		61AB291B0E6463C400623908 /* nuiPopupMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiPopupMenu.cpp; sourceTree = "<group>"; };
@@ -4722,9 +5321,9 @@
 		61B026340DCA1882009B90B3 /* nglLock.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nglLock.cpp; path = Threading/nglLock.cpp; sourceTree = "<group>"; };
 		61B026390DCA1893009B90B3 /* nglLightLock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nglLightLock.h; path = include/nglLightLock.h; sourceTree = SOURCE_ROOT; };
 		61B0263A0DCA1893009B90B3 /* nglLock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nglLock.h; path = include/nglLock.h; sourceTree = SOURCE_ROOT; };
-		61B2DE880DABE0E00016C664 /* gl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gl.h; path = System/Library/Frameworks/OpenGLES.framework/Headers/ES1/gl.h; sourceTree = SDKROOT; };
-		61B2DE890DABE0E00016C664 /* glext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = glext.h; path = System/Library/Frameworks/OpenGLES.framework/Headers/ES1/glext.h; sourceTree = SDKROOT; };
-		61B2DE8A0DABE1060016C664 /* EAGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EAGL.h; path = System/Library/Frameworks/OpenGLES.framework/Headers/EAGL.h; sourceTree = SDKROOT; };
+		61B2DE880DABE0E00016C664 /* gl.h */ = {isa = PBXFileReference; fileEncoding = 4; name = gl.h; path = System/Library/Frameworks/OpenGLES.framework/Headers/ES1/gl.h; sourceTree = SDKROOT; };
+		61B2DE890DABE0E00016C664 /* glext.h */ = {isa = PBXFileReference; fileEncoding = 4; name = glext.h; path = System/Library/Frameworks/OpenGLES.framework/Headers/ES1/glext.h; sourceTree = SDKROOT; };
+		61B2DE8A0DABE1060016C664 /* EAGL.h */ = {isa = PBXFileReference; fileEncoding = 4; name = EAGL.h; path = System/Library/Frameworks/OpenGLES.framework/Headers/EAGL.h; sourceTree = SDKROOT; };
 		61B2DEB50DABE8B00016C664 /* gl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gl.h; sourceTree = "<group>"; };
 		61B2DEB60DABE8B00016C664 /* glext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glext.h; sourceTree = "<group>"; };
 		61B2DEB70DABE8B00016C664 /* glu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glu.h; sourceTree = "<group>"; };
@@ -4782,6 +5381,179 @@
 		E51968000FF8F853007EDF46 /* nuiHTMLStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiHTMLStyle.h; path = src/Text/HTML/nuiHTMLStyle.h; sourceTree = SOURCE_ROOT; };
 		E52216A510C585DA00EB6DB6 /* nuiStopWatch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiStopWatch.cpp; path = src/Utils/nuiStopWatch.cpp; sourceTree = SOURCE_ROOT; };
 		E52216AA10C5861C00EB6DB6 /* nuiStopWatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiStopWatch.h; path = include/nuiStopWatch.h; sourceTree = SOURCE_ROOT; };
+		E52CC0F011751D7D0031DFA8 /* nuiScriptEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiScriptEngine.cpp; path = src/Bindings/nuiScriptEngine.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC0F111751D7D0031DFA8 /* nuiSpiderMonkey.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiSpiderMonkey.cpp; path = src/Bindings/nuiSpiderMonkey.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC0FA11751D930031DFA8 /* nuiScriptEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiScriptEngine.h; path = include/nuiScriptEngine.h; sourceTree = SOURCE_ROOT; };
+		E52CC0FB11751D930031DFA8 /* nuiSpiderMonkey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiSpiderMonkey.h; path = include/nuiSpiderMonkey.h; sourceTree = SOURCE_ROOT; };
+		E52CC10611751DA60031DFA8 /* builtins.tbl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = builtins.tbl; path = deps/tracemonkey/builtins.tbl; sourceTree = SOURCE_ROOT; };
+		E52CC10711751DA60031DFA8 /* dtoa.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dtoa.c; path = deps/tracemonkey/dtoa.c; sourceTree = SOURCE_ROOT; };
+		E52CC10811751DA60031DFA8 /* imacro_asm.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = imacro_asm.js; path = deps/tracemonkey/imacro_asm.js; sourceTree = SOURCE_ROOT; };
+		E52CC10911751DA60031DFA8 /* imacros.c.out */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = imacros.c.out; path = deps/tracemonkey/imacros.c.out; sourceTree = SOURCE_ROOT; };
+		E52CC10A11751DA60031DFA8 /* imacros.jsasm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = imacros.jsasm; path = deps/tracemonkey/imacros.jsasm; sourceTree = SOURCE_ROOT; };
+		E52CC10B11751DA60031DFA8 /* jitstats.tbl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = jitstats.tbl; path = deps/tracemonkey/jitstats.tbl; sourceTree = SOURCE_ROOT; };
+		E52CC10C11751DA60031DFA8 /* js-confdefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "js-confdefs.h"; path = "deps/tracemonkey/js-confdefs.h"; sourceTree = SOURCE_ROOT; };
+		E52CC10D11751DA60031DFA8 /* js-config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "js-config.h"; path = "deps/tracemonkey/js-config.h"; sourceTree = SOURCE_ROOT; };
+		E52CC10E11751DA60031DFA8 /* js.msg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = js.msg; path = deps/tracemonkey/js.msg; sourceTree = SOURCE_ROOT; };
+		E52CC10F11751DA60031DFA8 /* jsapi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsapi.cpp; path = deps/tracemonkey/jsapi.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC11011751DA60031DFA8 /* jsapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsapi.h; path = deps/tracemonkey/jsapi.h; sourceTree = SOURCE_ROOT; };
+		E52CC11111751DA60031DFA8 /* jsarena.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsarena.cpp; path = deps/tracemonkey/jsarena.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC11211751DA60031DFA8 /* jsarena.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsarena.h; path = deps/tracemonkey/jsarena.h; sourceTree = SOURCE_ROOT; };
+		E52CC11311751DA60031DFA8 /* jsarray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsarray.cpp; path = deps/tracemonkey/jsarray.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC11411751DA60031DFA8 /* jsarray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsarray.h; path = deps/tracemonkey/jsarray.h; sourceTree = SOURCE_ROOT; };
+		E52CC11511751DA60031DFA8 /* jsatom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsatom.cpp; path = deps/tracemonkey/jsatom.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC11611751DA60031DFA8 /* jsatom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsatom.h; path = deps/tracemonkey/jsatom.h; sourceTree = SOURCE_ROOT; };
+		E52CC11711751DA60031DFA8 /* jsatominlines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsatominlines.h; path = deps/tracemonkey/jsatominlines.h; sourceTree = SOURCE_ROOT; };
+		E52CC11811751DA60031DFA8 /* jsautocfg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsautocfg.h; path = deps/tracemonkey/jsautocfg.h; sourceTree = SOURCE_ROOT; };
+		E52CC11911751DA60031DFA8 /* jsautokw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsautokw.h; path = deps/tracemonkey/jsautokw.h; sourceTree = SOURCE_ROOT; };
+		E52CC11A11751DA60031DFA8 /* jsautooplen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsautooplen.h; path = deps/tracemonkey/jsautooplen.h; sourceTree = SOURCE_ROOT; };
+		E52CC11B11751DA60031DFA8 /* jsbit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsbit.h; path = deps/tracemonkey/jsbit.h; sourceTree = SOURCE_ROOT; };
+		E52CC11C11751DA60031DFA8 /* jsbool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsbool.cpp; path = deps/tracemonkey/jsbool.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC11D11751DA60031DFA8 /* jsbool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsbool.h; path = deps/tracemonkey/jsbool.h; sourceTree = SOURCE_ROOT; };
+		E52CC11E11751DA60031DFA8 /* jsbuiltins.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsbuiltins.cpp; path = deps/tracemonkey/jsbuiltins.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC11F11751DA60031DFA8 /* jsbuiltins.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsbuiltins.h; path = deps/tracemonkey/jsbuiltins.h; sourceTree = SOURCE_ROOT; };
+		E52CC12011751DA60031DFA8 /* jsclist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsclist.h; path = deps/tracemonkey/jsclist.h; sourceTree = SOURCE_ROOT; };
+		E52CC12111751DA60031DFA8 /* jscntxt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jscntxt.cpp; path = deps/tracemonkey/jscntxt.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC12211751DA60031DFA8 /* jscntxt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jscntxt.h; path = deps/tracemonkey/jscntxt.h; sourceTree = SOURCE_ROOT; };
+		E52CC12311751DA60031DFA8 /* jscntxtinlines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jscntxtinlines.h; path = deps/tracemonkey/jscntxtinlines.h; sourceTree = SOURCE_ROOT; };
+		E52CC12411751DA60031DFA8 /* jscompat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jscompat.h; path = deps/tracemonkey/jscompat.h; sourceTree = SOURCE_ROOT; };
+		E52CC12511751DA60031DFA8 /* jscpucfg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jscpucfg.cpp; path = deps/tracemonkey/jscpucfg.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC12611751DA60031DFA8 /* jscpucfg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jscpucfg.h; path = deps/tracemonkey/jscpucfg.h; sourceTree = SOURCE_ROOT; };
+		E52CC12711751DA60031DFA8 /* jsdate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsdate.cpp; path = deps/tracemonkey/jsdate.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC12811751DA60031DFA8 /* jsdate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsdate.h; path = deps/tracemonkey/jsdate.h; sourceTree = SOURCE_ROOT; };
+		E52CC12911751DA60031DFA8 /* jsdbgapi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsdbgapi.cpp; path = deps/tracemonkey/jsdbgapi.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC12A11751DA60031DFA8 /* jsdbgapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsdbgapi.h; path = deps/tracemonkey/jsdbgapi.h; sourceTree = SOURCE_ROOT; };
+		E52CC12B11751DA60031DFA8 /* jsdhash.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsdhash.cpp; path = deps/tracemonkey/jsdhash.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC12C11751DA60031DFA8 /* jsdhash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsdhash.h; path = deps/tracemonkey/jsdhash.h; sourceTree = SOURCE_ROOT; };
+		E52CC12D11751DA60031DFA8 /* jsdtoa.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsdtoa.cpp; path = deps/tracemonkey/jsdtoa.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC12E11751DA60031DFA8 /* jsdtoa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsdtoa.h; path = deps/tracemonkey/jsdtoa.h; sourceTree = SOURCE_ROOT; };
+		E52CC12F11751DA60031DFA8 /* jsdtracef.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsdtracef.cpp; path = deps/tracemonkey/jsdtracef.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC13011751DA60031DFA8 /* jsdtracef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsdtracef.h; path = deps/tracemonkey/jsdtracef.h; sourceTree = SOURCE_ROOT; };
+		E52CC13111751DA60031DFA8 /* jsemit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsemit.cpp; path = deps/tracemonkey/jsemit.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC13211751DA60031DFA8 /* jsemit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsemit.h; path = deps/tracemonkey/jsemit.h; sourceTree = SOURCE_ROOT; };
+		E52CC13311751DA60031DFA8 /* jsexn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsexn.cpp; path = deps/tracemonkey/jsexn.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC13411751DA60031DFA8 /* jsexn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsexn.h; path = deps/tracemonkey/jsexn.h; sourceTree = SOURCE_ROOT; };
+		E52CC13511751DA60031DFA8 /* jsfun.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsfun.cpp; path = deps/tracemonkey/jsfun.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC13611751DA60031DFA8 /* jsfun.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsfun.h; path = deps/tracemonkey/jsfun.h; sourceTree = SOURCE_ROOT; };
+		E52CC13711751DA60031DFA8 /* jsgc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsgc.cpp; path = deps/tracemonkey/jsgc.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC13811751DA60031DFA8 /* jsgc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsgc.h; path = deps/tracemonkey/jsgc.h; sourceTree = SOURCE_ROOT; };
+		E52CC13911751DA60031DFA8 /* jshash.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jshash.cpp; path = deps/tracemonkey/jshash.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC13A11751DA60031DFA8 /* jshash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jshash.h; path = deps/tracemonkey/jshash.h; sourceTree = SOURCE_ROOT; };
+		E52CC13B11751DA60031DFA8 /* jshashtable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jshashtable.h; path = deps/tracemonkey/jshashtable.h; sourceTree = SOURCE_ROOT; };
+		E52CC13C11751DA60031DFA8 /* jsinterp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsinterp.cpp; path = deps/tracemonkey/jsinterp.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC13D11751DA60031DFA8 /* jsinterp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsinterp.h; path = deps/tracemonkey/jsinterp.h; sourceTree = SOURCE_ROOT; };
+		E52CC13E11751DA60031DFA8 /* jsinterpinlines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsinterpinlines.h; path = deps/tracemonkey/jsinterpinlines.h; sourceTree = SOURCE_ROOT; };
+		E52CC13F11751DA60031DFA8 /* jsinttypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsinttypes.h; path = deps/tracemonkey/jsinttypes.h; sourceTree = SOURCE_ROOT; };
+		E52CC14011751DA60031DFA8 /* jsinvoke.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsinvoke.cpp; path = deps/tracemonkey/jsinvoke.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC14111751DA60031DFA8 /* jsiter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsiter.cpp; path = deps/tracemonkey/jsiter.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC14211751DA60031DFA8 /* jsiter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsiter.h; path = deps/tracemonkey/jsiter.h; sourceTree = SOURCE_ROOT; };
+		E52CC14311751DA60031DFA8 /* jskeyword.tbl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = jskeyword.tbl; path = deps/tracemonkey/jskeyword.tbl; sourceTree = SOURCE_ROOT; };
+		E52CC14411751DA60031DFA8 /* jskwgen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jskwgen.cpp; path = deps/tracemonkey/jskwgen.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC14511751DA60031DFA8 /* jslibmath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jslibmath.h; path = deps/tracemonkey/jslibmath.h; sourceTree = SOURCE_ROOT; };
+		E52CC14611751DA60031DFA8 /* jslock.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jslock.cpp; path = deps/tracemonkey/jslock.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC14711751DA60031DFA8 /* jslock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jslock.h; path = deps/tracemonkey/jslock.h; sourceTree = SOURCE_ROOT; };
+		E52CC14811751DA60031DFA8 /* jslocko.asm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm.asm; name = jslocko.asm; path = deps/tracemonkey/jslocko.asm; sourceTree = SOURCE_ROOT; };
+		E52CC14911751DA60031DFA8 /* jslog2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jslog2.cpp; path = deps/tracemonkey/jslog2.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC14A11751DA60031DFA8 /* jslong.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jslong.h; path = deps/tracemonkey/jslong.h; sourceTree = SOURCE_ROOT; };
+		E52CC14B11751DA60031DFA8 /* jsmath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsmath.cpp; path = deps/tracemonkey/jsmath.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC14C11751DA60031DFA8 /* jsmath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsmath.h; path = deps/tracemonkey/jsmath.h; sourceTree = SOURCE_ROOT; };
+		E52CC14D11751DA60031DFA8 /* jsnum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsnum.cpp; path = deps/tracemonkey/jsnum.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC14E11751DA60031DFA8 /* jsnum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsnum.h; path = deps/tracemonkey/jsnum.h; sourceTree = SOURCE_ROOT; };
+		E52CC14F11751DA60031DFA8 /* jsobj.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsobj.cpp; path = deps/tracemonkey/jsobj.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC15011751DA60031DFA8 /* jsobj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsobj.h; path = deps/tracemonkey/jsobj.h; sourceTree = SOURCE_ROOT; };
+		E52CC15111751DA60031DFA8 /* jsobjinlines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsobjinlines.h; path = deps/tracemonkey/jsobjinlines.h; sourceTree = SOURCE_ROOT; };
+		E52CC15211751DA60031DFA8 /* json.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = json.cpp; path = deps/tracemonkey/json.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC15311751DA60031DFA8 /* json.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = json.h; path = deps/tracemonkey/json.h; sourceTree = SOURCE_ROOT; };
+		E52CC15411751DA60031DFA8 /* jsopcode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsopcode.cpp; path = deps/tracemonkey/jsopcode.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC15511751DA60031DFA8 /* jsopcode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsopcode.h; path = deps/tracemonkey/jsopcode.h; sourceTree = SOURCE_ROOT; };
+		E52CC15611751DA60031DFA8 /* jsopcode.tbl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = jsopcode.tbl; path = deps/tracemonkey/jsopcode.tbl; sourceTree = SOURCE_ROOT; };
+		E52CC15711751DA60031DFA8 /* jsoplengen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsoplengen.cpp; path = deps/tracemonkey/jsoplengen.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC15811751DA60031DFA8 /* jsops.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsops.cpp; path = deps/tracemonkey/jsops.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC15911751DA60031DFA8 /* jsotypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsotypes.h; path = deps/tracemonkey/jsotypes.h; sourceTree = SOURCE_ROOT; };
+		E52CC15A11751DA60031DFA8 /* jsparse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsparse.cpp; path = deps/tracemonkey/jsparse.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC15B11751DA60031DFA8 /* jsparse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsparse.h; path = deps/tracemonkey/jsparse.h; sourceTree = SOURCE_ROOT; };
+		E52CC15C11751DA60031DFA8 /* jsprf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsprf.cpp; path = deps/tracemonkey/jsprf.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC15D11751DA60031DFA8 /* jsprf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsprf.h; path = deps/tracemonkey/jsprf.h; sourceTree = SOURCE_ROOT; };
+		E52CC15E11751DA60031DFA8 /* jsproto.tbl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = jsproto.tbl; path = deps/tracemonkey/jsproto.tbl; sourceTree = SOURCE_ROOT; };
+		E52CC15F11751DA60031DFA8 /* jsprvtd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsprvtd.h; path = deps/tracemonkey/jsprvtd.h; sourceTree = SOURCE_ROOT; };
+		E52CC16011751DA60031DFA8 /* jspubtd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jspubtd.h; path = deps/tracemonkey/jspubtd.h; sourceTree = SOURCE_ROOT; };
+		E52CC16111751DA60031DFA8 /* jsrecursion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsrecursion.cpp; path = deps/tracemonkey/jsrecursion.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC16211751DA60031DFA8 /* jsregexp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsregexp.cpp; path = deps/tracemonkey/jsregexp.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC16311751DA60031DFA8 /* jsregexp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsregexp.h; path = deps/tracemonkey/jsregexp.h; sourceTree = SOURCE_ROOT; };
+		E52CC16411751DA60031DFA8 /* jsreops.tbl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = jsreops.tbl; path = deps/tracemonkey/jsreops.tbl; sourceTree = SOURCE_ROOT; };
+		E52CC16511751DA60031DFA8 /* jsscan.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsscan.cpp; path = deps/tracemonkey/jsscan.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC16611751DA60031DFA8 /* jsscan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsscan.h; path = deps/tracemonkey/jsscan.h; sourceTree = SOURCE_ROOT; };
+		E52CC16711751DA60031DFA8 /* jsscope.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsscope.cpp; path = deps/tracemonkey/jsscope.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC16811751DA60031DFA8 /* jsscope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsscope.h; path = deps/tracemonkey/jsscope.h; sourceTree = SOURCE_ROOT; };
+		E52CC16911751DA60031DFA8 /* jsscopeinlines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsscopeinlines.h; path = deps/tracemonkey/jsscopeinlines.h; sourceTree = SOURCE_ROOT; };
+		E52CC16A11751DA60031DFA8 /* jsscript.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsscript.cpp; path = deps/tracemonkey/jsscript.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC16B11751DA60031DFA8 /* jsscript.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsscript.h; path = deps/tracemonkey/jsscript.h; sourceTree = SOURCE_ROOT; };
+		E52CC16C11751DA60031DFA8 /* jsscriptinlines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsscriptinlines.h; path = deps/tracemonkey/jsscriptinlines.h; sourceTree = SOURCE_ROOT; };
+		E52CC16D11751DA60031DFA8 /* jsshell.msg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = jsshell.msg; path = deps/tracemonkey/jsshell.msg; sourceTree = SOURCE_ROOT; };
+		E52CC16E11751DA60031DFA8 /* jsstaticcheck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsstaticcheck.h; path = deps/tracemonkey/jsstaticcheck.h; sourceTree = SOURCE_ROOT; };
+		E52CC16F11751DA60031DFA8 /* jsstdint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsstdint.h; path = deps/tracemonkey/jsstdint.h; sourceTree = SOURCE_ROOT; };
+		E52CC17011751DA60031DFA8 /* jsstr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsstr.cpp; path = deps/tracemonkey/jsstr.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC17111751DA60031DFA8 /* jsstr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsstr.h; path = deps/tracemonkey/jsstr.h; sourceTree = SOURCE_ROOT; };
+		E52CC17211751DA60031DFA8 /* jsstrinlines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsstrinlines.h; path = deps/tracemonkey/jsstrinlines.h; sourceTree = SOURCE_ROOT; };
+		E52CC17311751DA60031DFA8 /* jstask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jstask.cpp; path = deps/tracemonkey/jstask.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC17411751DA60031DFA8 /* jstask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jstask.h; path = deps/tracemonkey/jstask.h; sourceTree = SOURCE_ROOT; };
+		E52CC17511751DA60031DFA8 /* jstl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jstl.h; path = deps/tracemonkey/jstl.h; sourceTree = SOURCE_ROOT; };
+		E52CC17611751DA60031DFA8 /* jstracer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jstracer.cpp; path = deps/tracemonkey/jstracer.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC17711751DA60031DFA8 /* jstracer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jstracer.h; path = deps/tracemonkey/jstracer.h; sourceTree = SOURCE_ROOT; };
+		E52CC17811751DA60031DFA8 /* jstypedarray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jstypedarray.cpp; path = deps/tracemonkey/jstypedarray.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC17911751DA60031DFA8 /* jstypedarray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jstypedarray.h; path = deps/tracemonkey/jstypedarray.h; sourceTree = SOURCE_ROOT; };
+		E52CC17A11751DA60031DFA8 /* jstypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jstypes.h; path = deps/tracemonkey/jstypes.h; sourceTree = SOURCE_ROOT; };
+		E52CC17B11751DA60031DFA8 /* jsutil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsutil.cpp; path = deps/tracemonkey/jsutil.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC17C11751DA60031DFA8 /* jsutil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsutil.h; path = deps/tracemonkey/jsutil.h; sourceTree = SOURCE_ROOT; };
+		E52CC17D11751DA60031DFA8 /* jsvector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsvector.h; path = deps/tracemonkey/jsvector.h; sourceTree = SOURCE_ROOT; };
+		E52CC17E11751DA60031DFA8 /* jsversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsversion.h; path = deps/tracemonkey/jsversion.h; sourceTree = SOURCE_ROOT; };
+		E52CC17F11751DA60031DFA8 /* jswince.asm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm.asm; name = jswince.asm; path = deps/tracemonkey/jswince.asm; sourceTree = SOURCE_ROOT; };
+		E52CC18011751DA60031DFA8 /* jsxdrapi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsxdrapi.cpp; path = deps/tracemonkey/jsxdrapi.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC18111751DA60031DFA8 /* jsxdrapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsxdrapi.h; path = deps/tracemonkey/jsxdrapi.h; sourceTree = SOURCE_ROOT; };
+		E52CC18211751DA60031DFA8 /* jsxml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsxml.cpp; path = deps/tracemonkey/jsxml.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC18311751DA60031DFA8 /* jsxml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsxml.h; path = deps/tracemonkey/jsxml.h; sourceTree = SOURCE_ROOT; };
+		E52CC18411751DA60031DFA8 /* lock_sparcv8plus.il */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lock_sparcv8plus.il; path = deps/tracemonkey/lock_sparcv8plus.il; sourceTree = SOURCE_ROOT; };
+		E52CC18511751DA60031DFA8 /* lock_sparcv9.il */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lock_sparcv9.il; path = deps/tracemonkey/lock_sparcv9.il; sourceTree = SOURCE_ROOT; };
+		E52CC18711751DA60031DFA8 /* Allocator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Allocator.cpp; path = deps/tracemonkey/nanojit/Allocator.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC18811751DA60031DFA8 /* Allocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Allocator.h; path = deps/tracemonkey/nanojit/Allocator.h; sourceTree = SOURCE_ROOT; };
+		E52CC18911751DA60031DFA8 /* Assembler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Assembler.cpp; path = deps/tracemonkey/nanojit/Assembler.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC18A11751DA60031DFA8 /* Assembler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Assembler.h; path = deps/tracemonkey/nanojit/Assembler.h; sourceTree = SOURCE_ROOT; };
+		E52CC18B11751DA60031DFA8 /* avmplus.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = avmplus.cpp; path = deps/tracemonkey/nanojit/avmplus.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC18C11751DA60031DFA8 /* avmplus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = avmplus.h; path = deps/tracemonkey/nanojit/avmplus.h; sourceTree = SOURCE_ROOT; };
+		E52CC18D11751DA60031DFA8 /* CodeAlloc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CodeAlloc.cpp; path = deps/tracemonkey/nanojit/CodeAlloc.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC18E11751DA60031DFA8 /* CodeAlloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CodeAlloc.h; path = deps/tracemonkey/nanojit/CodeAlloc.h; sourceTree = SOURCE_ROOT; };
+		E52CC18F11751DA60031DFA8 /* Containers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Containers.cpp; path = deps/tracemonkey/nanojit/Containers.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC19011751DA60031DFA8 /* Containers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Containers.h; path = deps/tracemonkey/nanojit/Containers.h; sourceTree = SOURCE_ROOT; };
+		E52CC19111751DA60031DFA8 /* Fragmento.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Fragmento.cpp; path = deps/tracemonkey/nanojit/Fragmento.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC19211751DA60031DFA8 /* Fragmento.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Fragmento.h; path = deps/tracemonkey/nanojit/Fragmento.h; sourceTree = SOURCE_ROOT; };
+		E52CC19311751DA60031DFA8 /* LIR.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LIR.cpp; path = deps/tracemonkey/nanojit/LIR.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC19411751DA60031DFA8 /* LIR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LIR.h; path = deps/tracemonkey/nanojit/LIR.h; sourceTree = SOURCE_ROOT; };
+		E52CC19511751DA60031DFA8 /* LIRopcode.tbl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LIRopcode.tbl; path = deps/tracemonkey/nanojit/LIRopcode.tbl; sourceTree = SOURCE_ROOT; };
+		E52CC19611751DA60031DFA8 /* nanojit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nanojit.h; path = deps/tracemonkey/nanojit/nanojit.h; sourceTree = SOURCE_ROOT; };
+		E52CC19711751DA60031DFA8 /* Native.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Native.h; path = deps/tracemonkey/nanojit/Native.h; sourceTree = SOURCE_ROOT; };
+		E52CC19811751DA60031DFA8 /* NativeARM.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NativeARM.cpp; path = deps/tracemonkey/nanojit/NativeARM.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC19911751DA60031DFA8 /* NativeARM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NativeARM.h; path = deps/tracemonkey/nanojit/NativeARM.h; sourceTree = SOURCE_ROOT; };
+		E52CC19A11751DA60031DFA8 /* Nativei386.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Nativei386.cpp; path = deps/tracemonkey/nanojit/Nativei386.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC19B11751DA60031DFA8 /* Nativei386.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Nativei386.h; path = deps/tracemonkey/nanojit/Nativei386.h; sourceTree = SOURCE_ROOT; };
+		E52CC19C11751DA60031DFA8 /* NativeMIPS.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NativeMIPS.cpp; path = deps/tracemonkey/nanojit/NativeMIPS.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC19D11751DA60031DFA8 /* NativeMIPS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NativeMIPS.h; path = deps/tracemonkey/nanojit/NativeMIPS.h; sourceTree = SOURCE_ROOT; };
+		E52CC19E11751DA60031DFA8 /* NativePPC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NativePPC.cpp; path = deps/tracemonkey/nanojit/NativePPC.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC19F11751DA60031DFA8 /* NativePPC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NativePPC.h; path = deps/tracemonkey/nanojit/NativePPC.h; sourceTree = SOURCE_ROOT; };
+		E52CC1A011751DA60031DFA8 /* NativeSparc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NativeSparc.cpp; path = deps/tracemonkey/nanojit/NativeSparc.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC1A111751DA60031DFA8 /* NativeSparc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NativeSparc.h; path = deps/tracemonkey/nanojit/NativeSparc.h; sourceTree = SOURCE_ROOT; };
+		E52CC1A211751DA60031DFA8 /* NativeX64.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NativeX64.cpp; path = deps/tracemonkey/nanojit/NativeX64.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC1A311751DA60031DFA8 /* NativeX64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NativeX64.h; path = deps/tracemonkey/nanojit/NativeX64.h; sourceTree = SOURCE_ROOT; };
+		E52CC1A411751DA60031DFA8 /* njconfig.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = njconfig.cpp; path = deps/tracemonkey/nanojit/njconfig.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC1A511751DA60031DFA8 /* njconfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = njconfig.h; path = deps/tracemonkey/nanojit/njconfig.h; sourceTree = SOURCE_ROOT; };
+		E52CC1A611751DA60031DFA8 /* njcpudetect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = njcpudetect.h; path = deps/tracemonkey/nanojit/njcpudetect.h; sourceTree = SOURCE_ROOT; };
+		E52CC1A711751DA60031DFA8 /* RegAlloc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RegAlloc.cpp; path = deps/tracemonkey/nanojit/RegAlloc.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC1A811751DA60031DFA8 /* RegAlloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegAlloc.h; path = deps/tracemonkey/nanojit/RegAlloc.h; sourceTree = SOURCE_ROOT; };
+		E52CC1A911751DA60031DFA8 /* VMPI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VMPI.cpp; path = deps/tracemonkey/nanojit/VMPI.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC1AA11751DA60031DFA8 /* VMPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VMPI.h; path = deps/tracemonkey/nanojit/VMPI.h; sourceTree = SOURCE_ROOT; };
+		E52CC1AB11751DA60031DFA8 /* prmjtime.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = prmjtime.cpp; path = deps/tracemonkey/prmjtime.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC1AC11751DA60031DFA8 /* prmjtime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = prmjtime.h; path = deps/tracemonkey/prmjtime.h; sourceTree = SOURCE_ROOT; };
+		E52CC1AD11751DA60031DFA8 /* resource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = resource.h; path = deps/tracemonkey/resource.h; sourceTree = SOURCE_ROOT; };
+		E52CC1AF11751DA60031DFA8 /* vprof.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = vprof.cpp; path = deps/tracemonkey/vprof/vprof.cpp; sourceTree = SOURCE_ROOT; };
+		E52CC1B011751DA60031DFA8 /* vprof.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = vprof.h; path = deps/tracemonkey/vprof/vprof.h; sourceTree = SOURCE_ROOT; };
 		E53120A00F0781500081CB7E /* nuiHTTP_CoreFoundation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiHTTP_CoreFoundation.cpp; path = src/Net/CoreFoundation/nuiHTTP_CoreFoundation.cpp; sourceTree = SOURCE_ROOT; };
 		E53120A10F0781500081CB7E /* nuiURL_CoreFoundation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiURL_CoreFoundation.cpp; path = src/Net/CoreFoundation/nuiURL_CoreFoundation.cpp; sourceTree = SOURCE_ROOT; };
 		E53120A60F07817A0081CB7E /* nuiURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiURL.h; path = include/nuiURL.h; sourceTree = SOURCE_ROOT; };
@@ -4899,7 +5671,7 @@
 		E5E8C39F0F3742100092827F /* nuiScrollingLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiScrollingLabel.cpp; path = src/Text/nuiScrollingLabel.cpp; sourceTree = SOURCE_ROOT; };
 		E5E8C3A60F3742390092827F /* nuiHyperLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiHyperLink.h; path = include/nuiHyperLink.h; sourceTree = SOURCE_ROOT; };
 		E5E8C3A80F3742390092827F /* nuiScrollingLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiScrollingLabel.h; path = include/nuiScrollingLabel.h; sourceTree = SOURCE_ROOT; };
-		E5EB3ABA1147E5040078C71C /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		E5EB3ABA1147E5040078C71C /* CoreText.framework */ = {isa = PBXFileReference; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -5837,22 +6609,23 @@
 		6126DA770DA5746200D2641A /* deps */ = {
 			isa = PBXGroup;
 			children = (
+				6126DB170DA5751300D2641A /* expat */,
+				6126DD970DA5770300D2641A /* freetype2 */,
+				6126DB550DA5752100D2641A /* glu */,
+				6126E32D0DA577C000D2641A /* harfbuzz */,
+				E5CDAF5F10AD960E003709D6 /* png */,
+				6126DA7A0DA574C500D2641A /* tidyhtml */,
+				E52CC10411751DA60031DFA8 /* tracemonkey */,
 				E5E8A5331100CF9800567BEA /* ucdata */,
+				E591C25B0FF1AB96005E5E3D /* ungif */,
 				6126E46C0DA578AD00D2641A /* AudioToolbox.framework */,
 				6126E46D0DA578AD00D2641A /* CoreAudio.framework */,
 				6126E46E0DA578AD00D2641A /* CoreFoundation.framework */,
 				6126E46F0DA578AD00D2641A /* CoreGraphics.framework */,
+				E5EB3ABA1147E5040078C71C /* CoreText.framework */,
 				6126E4700DA578AD00D2641A /* Foundation.framework */,
 				6126E4710DA578AD00D2641A /* OpenGLES.framework */,
 				6126E4720DA578AD00D2641A /* UIKit.framework */,
-				6126E32D0DA577C000D2641A /* harfbuzz */,
-				6126DD970DA5770300D2641A /* freetype2 */,
-				6126DB550DA5752100D2641A /* glu */,
-				6126DB170DA5751300D2641A /* expat */,
-				E5CDAF5F10AD960E003709D6 /* png */,
-				6126DA7A0DA574C500D2641A /* tidyhtml */,
-				E591C25B0FF1AB96005E5E3D /* ungif */,
-				E5EB3ABA1147E5040078C71C /* CoreText.framework */,
 			);
 			name = deps;
 			sourceTree = "<group>";
@@ -6790,9 +7563,217 @@
 			path = GL;
 			sourceTree = "<group>";
 		};
+		E52CC10411751DA60031DFA8 /* tracemonkey */ = {
+			isa = PBXGroup;
+			children = (
+				E52CC10511751DA60031DFA8 /* .deps */,
+				E52CC10611751DA60031DFA8 /* builtins.tbl */,
+				E52CC10711751DA60031DFA8 /* dtoa.c */,
+				E52CC10811751DA60031DFA8 /* imacro_asm.js */,
+				E52CC10911751DA60031DFA8 /* imacros.c.out */,
+				E52CC10A11751DA60031DFA8 /* imacros.jsasm */,
+				E52CC10B11751DA60031DFA8 /* jitstats.tbl */,
+				E52CC10C11751DA60031DFA8 /* js-confdefs.h */,
+				E52CC10D11751DA60031DFA8 /* js-config.h */,
+				E52CC10E11751DA60031DFA8 /* js.msg */,
+				E52CC10F11751DA60031DFA8 /* jsapi.cpp */,
+				E52CC11011751DA60031DFA8 /* jsapi.h */,
+				E52CC11111751DA60031DFA8 /* jsarena.cpp */,
+				E52CC11211751DA60031DFA8 /* jsarena.h */,
+				E52CC11311751DA60031DFA8 /* jsarray.cpp */,
+				E52CC11411751DA60031DFA8 /* jsarray.h */,
+				E52CC11511751DA60031DFA8 /* jsatom.cpp */,
+				E52CC11611751DA60031DFA8 /* jsatom.h */,
+				E52CC11711751DA60031DFA8 /* jsatominlines.h */,
+				E52CC11811751DA60031DFA8 /* jsautocfg.h */,
+				E52CC11911751DA60031DFA8 /* jsautokw.h */,
+				E52CC11A11751DA60031DFA8 /* jsautooplen.h */,
+				E52CC11B11751DA60031DFA8 /* jsbit.h */,
+				E52CC11C11751DA60031DFA8 /* jsbool.cpp */,
+				E52CC11D11751DA60031DFA8 /* jsbool.h */,
+				E52CC11E11751DA60031DFA8 /* jsbuiltins.cpp */,
+				E52CC11F11751DA60031DFA8 /* jsbuiltins.h */,
+				E52CC12011751DA60031DFA8 /* jsclist.h */,
+				E52CC12111751DA60031DFA8 /* jscntxt.cpp */,
+				E52CC12211751DA60031DFA8 /* jscntxt.h */,
+				E52CC12311751DA60031DFA8 /* jscntxtinlines.h */,
+				E52CC12411751DA60031DFA8 /* jscompat.h */,
+				E52CC12511751DA60031DFA8 /* jscpucfg.cpp */,
+				E52CC12611751DA60031DFA8 /* jscpucfg.h */,
+				E52CC12711751DA60031DFA8 /* jsdate.cpp */,
+				E52CC12811751DA60031DFA8 /* jsdate.h */,
+				E52CC12911751DA60031DFA8 /* jsdbgapi.cpp */,
+				E52CC12A11751DA60031DFA8 /* jsdbgapi.h */,
+				E52CC12B11751DA60031DFA8 /* jsdhash.cpp */,
+				E52CC12C11751DA60031DFA8 /* jsdhash.h */,
+				E52CC12D11751DA60031DFA8 /* jsdtoa.cpp */,
+				E52CC12E11751DA60031DFA8 /* jsdtoa.h */,
+				E52CC12F11751DA60031DFA8 /* jsdtracef.cpp */,
+				E52CC13011751DA60031DFA8 /* jsdtracef.h */,
+				E52CC13111751DA60031DFA8 /* jsemit.cpp */,
+				E52CC13211751DA60031DFA8 /* jsemit.h */,
+				E52CC13311751DA60031DFA8 /* jsexn.cpp */,
+				E52CC13411751DA60031DFA8 /* jsexn.h */,
+				E52CC13511751DA60031DFA8 /* jsfun.cpp */,
+				E52CC13611751DA60031DFA8 /* jsfun.h */,
+				E52CC13711751DA60031DFA8 /* jsgc.cpp */,
+				E52CC13811751DA60031DFA8 /* jsgc.h */,
+				E52CC13911751DA60031DFA8 /* jshash.cpp */,
+				E52CC13A11751DA60031DFA8 /* jshash.h */,
+				E52CC13B11751DA60031DFA8 /* jshashtable.h */,
+				E52CC13C11751DA60031DFA8 /* jsinterp.cpp */,
+				E52CC13D11751DA60031DFA8 /* jsinterp.h */,
+				E52CC13E11751DA60031DFA8 /* jsinterpinlines.h */,
+				E52CC13F11751DA60031DFA8 /* jsinttypes.h */,
+				E52CC14011751DA60031DFA8 /* jsinvoke.cpp */,
+				E52CC14111751DA60031DFA8 /* jsiter.cpp */,
+				E52CC14211751DA60031DFA8 /* jsiter.h */,
+				E52CC14311751DA60031DFA8 /* jskeyword.tbl */,
+				E52CC14411751DA60031DFA8 /* jskwgen.cpp */,
+				E52CC14511751DA60031DFA8 /* jslibmath.h */,
+				E52CC14611751DA60031DFA8 /* jslock.cpp */,
+				E52CC14711751DA60031DFA8 /* jslock.h */,
+				E52CC14811751DA60031DFA8 /* jslocko.asm */,
+				E52CC14911751DA60031DFA8 /* jslog2.cpp */,
+				E52CC14A11751DA60031DFA8 /* jslong.h */,
+				E52CC14B11751DA60031DFA8 /* jsmath.cpp */,
+				E52CC14C11751DA60031DFA8 /* jsmath.h */,
+				E52CC14D11751DA60031DFA8 /* jsnum.cpp */,
+				E52CC14E11751DA60031DFA8 /* jsnum.h */,
+				E52CC14F11751DA60031DFA8 /* jsobj.cpp */,
+				E52CC15011751DA60031DFA8 /* jsobj.h */,
+				E52CC15111751DA60031DFA8 /* jsobjinlines.h */,
+				E52CC15211751DA60031DFA8 /* json.cpp */,
+				E52CC15311751DA60031DFA8 /* json.h */,
+				E52CC15411751DA60031DFA8 /* jsopcode.cpp */,
+				E52CC15511751DA60031DFA8 /* jsopcode.h */,
+				E52CC15611751DA60031DFA8 /* jsopcode.tbl */,
+				E52CC15711751DA60031DFA8 /* jsoplengen.cpp */,
+				E52CC15811751DA60031DFA8 /* jsops.cpp */,
+				E52CC15911751DA60031DFA8 /* jsotypes.h */,
+				E52CC15A11751DA60031DFA8 /* jsparse.cpp */,
+				E52CC15B11751DA60031DFA8 /* jsparse.h */,
+				E52CC15C11751DA60031DFA8 /* jsprf.cpp */,
+				E52CC15D11751DA60031DFA8 /* jsprf.h */,
+				E52CC15E11751DA60031DFA8 /* jsproto.tbl */,
+				E52CC15F11751DA60031DFA8 /* jsprvtd.h */,
+				E52CC16011751DA60031DFA8 /* jspubtd.h */,
+				E52CC16111751DA60031DFA8 /* jsrecursion.cpp */,
+				E52CC16211751DA60031DFA8 /* jsregexp.cpp */,
+				E52CC16311751DA60031DFA8 /* jsregexp.h */,
+				E52CC16411751DA60031DFA8 /* jsreops.tbl */,
+				E52CC16511751DA60031DFA8 /* jsscan.cpp */,
+				E52CC16611751DA60031DFA8 /* jsscan.h */,
+				E52CC16711751DA60031DFA8 /* jsscope.cpp */,
+				E52CC16811751DA60031DFA8 /* jsscope.h */,
+				E52CC16911751DA60031DFA8 /* jsscopeinlines.h */,
+				E52CC16A11751DA60031DFA8 /* jsscript.cpp */,
+				E52CC16B11751DA60031DFA8 /* jsscript.h */,
+				E52CC16C11751DA60031DFA8 /* jsscriptinlines.h */,
+				E52CC16D11751DA60031DFA8 /* jsshell.msg */,
+				E52CC16E11751DA60031DFA8 /* jsstaticcheck.h */,
+				E52CC16F11751DA60031DFA8 /* jsstdint.h */,
+				E52CC17011751DA60031DFA8 /* jsstr.cpp */,
+				E52CC17111751DA60031DFA8 /* jsstr.h */,
+				E52CC17211751DA60031DFA8 /* jsstrinlines.h */,
+				E52CC17311751DA60031DFA8 /* jstask.cpp */,
+				E52CC17411751DA60031DFA8 /* jstask.h */,
+				E52CC17511751DA60031DFA8 /* jstl.h */,
+				E52CC17611751DA60031DFA8 /* jstracer.cpp */,
+				E52CC17711751DA60031DFA8 /* jstracer.h */,
+				E52CC17811751DA60031DFA8 /* jstypedarray.cpp */,
+				E52CC17911751DA60031DFA8 /* jstypedarray.h */,
+				E52CC17A11751DA60031DFA8 /* jstypes.h */,
+				E52CC17B11751DA60031DFA8 /* jsutil.cpp */,
+				E52CC17C11751DA60031DFA8 /* jsutil.h */,
+				E52CC17D11751DA60031DFA8 /* jsvector.h */,
+				E52CC17E11751DA60031DFA8 /* jsversion.h */,
+				E52CC17F11751DA60031DFA8 /* jswince.asm */,
+				E52CC18011751DA60031DFA8 /* jsxdrapi.cpp */,
+				E52CC18111751DA60031DFA8 /* jsxdrapi.h */,
+				E52CC18211751DA60031DFA8 /* jsxml.cpp */,
+				E52CC18311751DA60031DFA8 /* jsxml.h */,
+				E52CC18411751DA60031DFA8 /* lock_sparcv8plus.il */,
+				E52CC18511751DA60031DFA8 /* lock_sparcv9.il */,
+				E52CC18611751DA60031DFA8 /* nanojit */,
+				E52CC1AB11751DA60031DFA8 /* prmjtime.cpp */,
+				E52CC1AC11751DA60031DFA8 /* prmjtime.h */,
+				E52CC1AD11751DA60031DFA8 /* resource.h */,
+				E52CC1AE11751DA60031DFA8 /* vprof */,
+			);
+			name = tracemonkey;
+			path = deps/tracemonkey;
+			sourceTree = SOURCE_ROOT;
+		};
+		E52CC10511751DA60031DFA8 /* .deps */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = .deps;
+			path = deps/tracemonkey/.deps;
+			sourceTree = SOURCE_ROOT;
+		};
+		E52CC18611751DA60031DFA8 /* nanojit */ = {
+			isa = PBXGroup;
+			children = (
+				E52CC18711751DA60031DFA8 /* Allocator.cpp */,
+				E52CC18811751DA60031DFA8 /* Allocator.h */,
+				E52CC18911751DA60031DFA8 /* Assembler.cpp */,
+				E52CC18A11751DA60031DFA8 /* Assembler.h */,
+				E52CC18B11751DA60031DFA8 /* avmplus.cpp */,
+				E52CC18C11751DA60031DFA8 /* avmplus.h */,
+				E52CC18D11751DA60031DFA8 /* CodeAlloc.cpp */,
+				E52CC18E11751DA60031DFA8 /* CodeAlloc.h */,
+				E52CC18F11751DA60031DFA8 /* Containers.cpp */,
+				E52CC19011751DA60031DFA8 /* Containers.h */,
+				E52CC19111751DA60031DFA8 /* Fragmento.cpp */,
+				E52CC19211751DA60031DFA8 /* Fragmento.h */,
+				E52CC19311751DA60031DFA8 /* LIR.cpp */,
+				E52CC19411751DA60031DFA8 /* LIR.h */,
+				E52CC19511751DA60031DFA8 /* LIRopcode.tbl */,
+				E52CC19611751DA60031DFA8 /* nanojit.h */,
+				E52CC19711751DA60031DFA8 /* Native.h */,
+				E52CC19811751DA60031DFA8 /* NativeARM.cpp */,
+				E52CC19911751DA60031DFA8 /* NativeARM.h */,
+				E52CC19A11751DA60031DFA8 /* Nativei386.cpp */,
+				E52CC19B11751DA60031DFA8 /* Nativei386.h */,
+				E52CC19C11751DA60031DFA8 /* NativeMIPS.cpp */,
+				E52CC19D11751DA60031DFA8 /* NativeMIPS.h */,
+				E52CC19E11751DA60031DFA8 /* NativePPC.cpp */,
+				E52CC19F11751DA60031DFA8 /* NativePPC.h */,
+				E52CC1A011751DA60031DFA8 /* NativeSparc.cpp */,
+				E52CC1A111751DA60031DFA8 /* NativeSparc.h */,
+				E52CC1A211751DA60031DFA8 /* NativeX64.cpp */,
+				E52CC1A311751DA60031DFA8 /* NativeX64.h */,
+				E52CC1A411751DA60031DFA8 /* njconfig.cpp */,
+				E52CC1A511751DA60031DFA8 /* njconfig.h */,
+				E52CC1A611751DA60031DFA8 /* njcpudetect.h */,
+				E52CC1A711751DA60031DFA8 /* RegAlloc.cpp */,
+				E52CC1A811751DA60031DFA8 /* RegAlloc.h */,
+				E52CC1A911751DA60031DFA8 /* VMPI.cpp */,
+				E52CC1AA11751DA60031DFA8 /* VMPI.h */,
+			);
+			name = nanojit;
+			path = deps/tracemonkey/nanojit;
+			sourceTree = SOURCE_ROOT;
+		};
+		E52CC1AE11751DA60031DFA8 /* vprof */ = {
+			isa = PBXGroup;
+			children = (
+				E52CC1AF11751DA60031DFA8 /* vprof.cpp */,
+				E52CC1B011751DA60031DFA8 /* vprof.h */,
+			);
+			name = vprof;
+			path = deps/tracemonkey/vprof;
+			sourceTree = SOURCE_ROOT;
+		};
 		E57857AA1162611E004E6DD3 /* Bindings */ = {
 			isa = PBXGroup;
 			children = (
+				E52CC0FA11751D930031DFA8 /* nuiScriptEngine.h */,
+				E52CC0FB11751D930031DFA8 /* nuiSpiderMonkey.h */,
+				E52CC0F011751D7D0031DFA8 /* nuiScriptEngine.cpp */,
+				E52CC0F111751D7D0031DFA8 /* nuiSpiderMonkey.cpp */,
 				E57857B011626146004E6DD3 /* nuiBindings.cpp */,
 				E57857AB11626136004E6DD3 /* nuiBindings.h */,
 			);
@@ -7480,6 +8461,96 @@
 				E57857C311626195004E6DD3 /* nuiAttributeType.h in Headers */,
 				E57857C411626195004E6DD3 /* nuiTypeTraits.h in Headers */,
 				E57857C511626195004E6DD3 /* nuiVariant.h in Headers */,
+				E52CC10011751D930031DFA8 /* nuiScriptEngine.h in Headers */,
+				E52CC10111751D930031DFA8 /* nuiSpiderMonkey.h in Headers */,
+				E52CC2EB11751DA80031DFA8 /* js-confdefs.h in Headers */,
+				E52CC2EC11751DA80031DFA8 /* js-config.h in Headers */,
+				E52CC2EE11751DA80031DFA8 /* jsapi.h in Headers */,
+				E52CC2F011751DA80031DFA8 /* jsarena.h in Headers */,
+				E52CC2F211751DA80031DFA8 /* jsarray.h in Headers */,
+				E52CC2F411751DA80031DFA8 /* jsatom.h in Headers */,
+				E52CC2F511751DA80031DFA8 /* jsatominlines.h in Headers */,
+				E52CC2F611751DA80031DFA8 /* jsautocfg.h in Headers */,
+				E52CC2F811751DA80031DFA8 /* jsautooplen.h in Headers */,
+				E52CC2F911751DA80031DFA8 /* jsbit.h in Headers */,
+				E52CC2FB11751DA80031DFA8 /* jsbool.h in Headers */,
+				E52CC2FD11751DA80031DFA8 /* jsbuiltins.h in Headers */,
+				E52CC2FE11751DA80031DFA8 /* jsclist.h in Headers */,
+				E52CC30011751DA80031DFA8 /* jscntxt.h in Headers */,
+				E52CC30111751DA80031DFA8 /* jscntxtinlines.h in Headers */,
+				E52CC30211751DA80031DFA8 /* jscompat.h in Headers */,
+				E52CC30411751DA80031DFA8 /* jscpucfg.h in Headers */,
+				E52CC30611751DA80031DFA8 /* jsdate.h in Headers */,
+				E52CC30811751DA80031DFA8 /* jsdbgapi.h in Headers */,
+				E52CC30A11751DA80031DFA8 /* jsdhash.h in Headers */,
+				E52CC30C11751DA80031DFA8 /* jsdtoa.h in Headers */,
+				E52CC30E11751DA80031DFA8 /* jsdtracef.h in Headers */,
+				E52CC31011751DA80031DFA8 /* jsemit.h in Headers */,
+				E52CC31211751DA80031DFA8 /* jsexn.h in Headers */,
+				E52CC31411751DA80031DFA8 /* jsfun.h in Headers */,
+				E52CC31611751DA80031DFA8 /* jsgc.h in Headers */,
+				E52CC31811751DA80031DFA8 /* jshash.h in Headers */,
+				E52CC31911751DA80031DFA8 /* jshashtable.h in Headers */,
+				E52CC31B11751DA80031DFA8 /* jsinterp.h in Headers */,
+				E52CC31C11751DA80031DFA8 /* jsinterpinlines.h in Headers */,
+				E52CC31D11751DA80031DFA8 /* jsinttypes.h in Headers */,
+				E52CC32011751DA80031DFA8 /* jsiter.h in Headers */,
+				E52CC32211751DA80031DFA8 /* jslibmath.h in Headers */,
+				E52CC32411751DA80031DFA8 /* jslock.h in Headers */,
+				E52CC32711751DA80031DFA8 /* jslong.h in Headers */,
+				E52CC32911751DA80031DFA8 /* jsmath.h in Headers */,
+				E52CC32B11751DA80031DFA8 /* jsnum.h in Headers */,
+				E52CC32D11751DA80031DFA8 /* jsobj.h in Headers */,
+				E52CC32E11751DA80031DFA8 /* jsobjinlines.h in Headers */,
+				E52CC33011751DA80031DFA8 /* json.h in Headers */,
+				E52CC33211751DA80031DFA8 /* jsopcode.h in Headers */,
+				E52CC33511751DA80031DFA8 /* jsotypes.h in Headers */,
+				E52CC33711751DA80031DFA8 /* jsparse.h in Headers */,
+				E52CC33911751DA80031DFA8 /* jsprf.h in Headers */,
+				E52CC33A11751DA80031DFA8 /* jsprvtd.h in Headers */,
+				E52CC33B11751DA80031DFA8 /* jspubtd.h in Headers */,
+				E52CC33E11751DA80031DFA8 /* jsregexp.h in Headers */,
+				E52CC34011751DA80031DFA8 /* jsscan.h in Headers */,
+				E52CC34211751DA80031DFA8 /* jsscope.h in Headers */,
+				E52CC34311751DA80031DFA8 /* jsscopeinlines.h in Headers */,
+				E52CC34511751DA80031DFA8 /* jsscript.h in Headers */,
+				E52CC34611751DA80031DFA8 /* jsscriptinlines.h in Headers */,
+				E52CC34711751DA80031DFA8 /* jsstaticcheck.h in Headers */,
+				E52CC34811751DA80031DFA8 /* jsstdint.h in Headers */,
+				E52CC34A11751DA80031DFA8 /* jsstr.h in Headers */,
+				E52CC34B11751DA80031DFA8 /* jsstrinlines.h in Headers */,
+				E52CC34D11751DA80031DFA8 /* jstask.h in Headers */,
+				E52CC34E11751DA80031DFA8 /* jstl.h in Headers */,
+				E52CC35011751DA80031DFA8 /* jstracer.h in Headers */,
+				E52CC35211751DA80031DFA8 /* jstypedarray.h in Headers */,
+				E52CC35311751DA80031DFA8 /* jstypes.h in Headers */,
+				E52CC35511751DA80031DFA8 /* jsutil.h in Headers */,
+				E52CC35611751DA80031DFA8 /* jsvector.h in Headers */,
+				E52CC35711751DA80031DFA8 /* jsversion.h in Headers */,
+				E52CC35A11751DA80031DFA8 /* jsxdrapi.h in Headers */,
+				E52CC35C11751DA80031DFA8 /* jsxml.h in Headers */,
+				E52CC35E11751DA80031DFA8 /* Allocator.h in Headers */,
+				E52CC36011751DA80031DFA8 /* Assembler.h in Headers */,
+				E52CC36211751DA80031DFA8 /* avmplus.h in Headers */,
+				E52CC36411751DA80031DFA8 /* CodeAlloc.h in Headers */,
+				E52CC36611751DA80031DFA8 /* Containers.h in Headers */,
+				E52CC36811751DA80031DFA8 /* Fragmento.h in Headers */,
+				E52CC36A11751DA80031DFA8 /* LIR.h in Headers */,
+				E52CC36B11751DA80031DFA8 /* nanojit.h in Headers */,
+				E52CC36C11751DA80031DFA8 /* Native.h in Headers */,
+				E52CC36E11751DA80031DFA8 /* NativeARM.h in Headers */,
+				E52CC37011751DA80031DFA8 /* Nativei386.h in Headers */,
+				E52CC37211751DA80031DFA8 /* NativeMIPS.h in Headers */,
+				E52CC37411751DA80031DFA8 /* NativePPC.h in Headers */,
+				E52CC37611751DA80031DFA8 /* NativeSparc.h in Headers */,
+				E52CC37811751DA80031DFA8 /* NativeX64.h in Headers */,
+				E52CC37A11751DA80031DFA8 /* njconfig.h in Headers */,
+				E52CC37B11751DA80031DFA8 /* njcpudetect.h in Headers */,
+				E52CC37D11751DA80031DFA8 /* RegAlloc.h in Headers */,
+				E52CC37F11751DA80031DFA8 /* VMPI.h in Headers */,
+				E52CC38111751DA80031DFA8 /* prmjtime.h in Headers */,
+				E52CC38211751DA80031DFA8 /* resource.h in Headers */,
+				E52CC38411751DA80031DFA8 /* vprof.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8027,6 +9098,96 @@
 				E57857C011626195004E6DD3 /* nuiAttributeType.h in Headers */,
 				E57857C111626195004E6DD3 /* nuiTypeTraits.h in Headers */,
 				E57857C211626195004E6DD3 /* nuiVariant.h in Headers */,
+				E52CC10211751D930031DFA8 /* nuiScriptEngine.h in Headers */,
+				E52CC10311751D930031DFA8 /* nuiSpiderMonkey.h in Headers */,
+				E52CC38711751DA80031DFA8 /* js-confdefs.h in Headers */,
+				E52CC38811751DA80031DFA8 /* js-config.h in Headers */,
+				E52CC38A11751DA80031DFA8 /* jsapi.h in Headers */,
+				E52CC38C11751DA80031DFA8 /* jsarena.h in Headers */,
+				E52CC38E11751DA80031DFA8 /* jsarray.h in Headers */,
+				E52CC39011751DA80031DFA8 /* jsatom.h in Headers */,
+				E52CC39111751DA80031DFA8 /* jsatominlines.h in Headers */,
+				E52CC39211751DA80031DFA8 /* jsautocfg.h in Headers */,
+				E52CC39411751DA80031DFA8 /* jsautooplen.h in Headers */,
+				E52CC39511751DA80031DFA8 /* jsbit.h in Headers */,
+				E52CC39711751DA80031DFA8 /* jsbool.h in Headers */,
+				E52CC39911751DA80031DFA8 /* jsbuiltins.h in Headers */,
+				E52CC39A11751DA80031DFA8 /* jsclist.h in Headers */,
+				E52CC39C11751DA80031DFA8 /* jscntxt.h in Headers */,
+				E52CC39D11751DA80031DFA8 /* jscntxtinlines.h in Headers */,
+				E52CC39E11751DA80031DFA8 /* jscompat.h in Headers */,
+				E52CC3A011751DA80031DFA8 /* jscpucfg.h in Headers */,
+				E52CC3A211751DA80031DFA8 /* jsdate.h in Headers */,
+				E52CC3A411751DA80031DFA8 /* jsdbgapi.h in Headers */,
+				E52CC3A611751DA80031DFA8 /* jsdhash.h in Headers */,
+				E52CC3A811751DA80031DFA8 /* jsdtoa.h in Headers */,
+				E52CC3AA11751DA80031DFA8 /* jsdtracef.h in Headers */,
+				E52CC3AC11751DA80031DFA8 /* jsemit.h in Headers */,
+				E52CC3AE11751DA80031DFA8 /* jsexn.h in Headers */,
+				E52CC3B011751DA80031DFA8 /* jsfun.h in Headers */,
+				E52CC3B211751DA80031DFA8 /* jsgc.h in Headers */,
+				E52CC3B411751DA80031DFA8 /* jshash.h in Headers */,
+				E52CC3B511751DA80031DFA8 /* jshashtable.h in Headers */,
+				E52CC3B711751DA80031DFA8 /* jsinterp.h in Headers */,
+				E52CC3B811751DA80031DFA8 /* jsinterpinlines.h in Headers */,
+				E52CC3B911751DA80031DFA8 /* jsinttypes.h in Headers */,
+				E52CC3BC11751DA80031DFA8 /* jsiter.h in Headers */,
+				E52CC3BE11751DA80031DFA8 /* jslibmath.h in Headers */,
+				E52CC3C011751DA80031DFA8 /* jslock.h in Headers */,
+				E52CC3C311751DA80031DFA8 /* jslong.h in Headers */,
+				E52CC3C511751DA80031DFA8 /* jsmath.h in Headers */,
+				E52CC3C711751DA80031DFA8 /* jsnum.h in Headers */,
+				E52CC3C911751DA80031DFA8 /* jsobj.h in Headers */,
+				E52CC3CA11751DA80031DFA8 /* jsobjinlines.h in Headers */,
+				E52CC3CC11751DA80031DFA8 /* json.h in Headers */,
+				E52CC3CE11751DA80031DFA8 /* jsopcode.h in Headers */,
+				E52CC3D111751DA80031DFA8 /* jsotypes.h in Headers */,
+				E52CC3D311751DA80031DFA8 /* jsparse.h in Headers */,
+				E52CC3D511751DA80031DFA8 /* jsprf.h in Headers */,
+				E52CC3D611751DA80031DFA8 /* jsprvtd.h in Headers */,
+				E52CC3D711751DA80031DFA8 /* jspubtd.h in Headers */,
+				E52CC3DA11751DA80031DFA8 /* jsregexp.h in Headers */,
+				E52CC3DC11751DA80031DFA8 /* jsscan.h in Headers */,
+				E52CC3DE11751DA80031DFA8 /* jsscope.h in Headers */,
+				E52CC3DF11751DA80031DFA8 /* jsscopeinlines.h in Headers */,
+				E52CC3E111751DA80031DFA8 /* jsscript.h in Headers */,
+				E52CC3E211751DA80031DFA8 /* jsscriptinlines.h in Headers */,
+				E52CC3E311751DA80031DFA8 /* jsstaticcheck.h in Headers */,
+				E52CC3E411751DA80031DFA8 /* jsstdint.h in Headers */,
+				E52CC3E611751DA80031DFA8 /* jsstr.h in Headers */,
+				E52CC3E711751DA80031DFA8 /* jsstrinlines.h in Headers */,
+				E52CC3E911751DA80031DFA8 /* jstask.h in Headers */,
+				E52CC3EA11751DA80031DFA8 /* jstl.h in Headers */,
+				E52CC3EC11751DA80031DFA8 /* jstracer.h in Headers */,
+				E52CC3EE11751DA80031DFA8 /* jstypedarray.h in Headers */,
+				E52CC3EF11751DA80031DFA8 /* jstypes.h in Headers */,
+				E52CC3F111751DA80031DFA8 /* jsutil.h in Headers */,
+				E52CC3F211751DA80031DFA8 /* jsvector.h in Headers */,
+				E52CC3F311751DA80031DFA8 /* jsversion.h in Headers */,
+				E52CC3F611751DA80031DFA8 /* jsxdrapi.h in Headers */,
+				E52CC3F811751DA80031DFA8 /* jsxml.h in Headers */,
+				E52CC3FA11751DA80031DFA8 /* Allocator.h in Headers */,
+				E52CC3FC11751DA80031DFA8 /* Assembler.h in Headers */,
+				E52CC3FE11751DA80031DFA8 /* avmplus.h in Headers */,
+				E52CC40011751DA80031DFA8 /* CodeAlloc.h in Headers */,
+				E52CC40211751DA80031DFA8 /* Containers.h in Headers */,
+				E52CC40411751DA80031DFA8 /* Fragmento.h in Headers */,
+				E52CC40611751DA80031DFA8 /* LIR.h in Headers */,
+				E52CC40711751DA80031DFA8 /* nanojit.h in Headers */,
+				E52CC40811751DA80031DFA8 /* Native.h in Headers */,
+				E52CC40A11751DA80031DFA8 /* NativeARM.h in Headers */,
+				E52CC40C11751DA80031DFA8 /* Nativei386.h in Headers */,
+				E52CC40E11751DA80031DFA8 /* NativeMIPS.h in Headers */,
+				E52CC41011751DA80031DFA8 /* NativePPC.h in Headers */,
+				E52CC41211751DA80031DFA8 /* NativeSparc.h in Headers */,
+				E52CC41411751DA80031DFA8 /* NativeX64.h in Headers */,
+				E52CC41611751DA80031DFA8 /* njconfig.h in Headers */,
+				E52CC41711751DA80031DFA8 /* njcpudetect.h in Headers */,
+				E52CC41911751DA80031DFA8 /* RegAlloc.h in Headers */,
+				E52CC41B11751DA80031DFA8 /* VMPI.h in Headers */,
+				E52CC41D11751DA80031DFA8 /* prmjtime.h in Headers */,
+				E52CC41E11751DA80031DFA8 /* resource.h in Headers */,
+				E52CC42011751DA80031DFA8 /* vprof.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8573,6 +9734,97 @@
 				E57857BA11626195004E6DD3 /* nuiAttributeType.h in Headers */,
 				E57857BB11626195004E6DD3 /* nuiTypeTraits.h in Headers */,
 				E57857BC11626195004E6DD3 /* nuiVariant.h in Headers */,
+				E52CC0FC11751D930031DFA8 /* nuiScriptEngine.h in Headers */,
+				E52CC0FD11751D930031DFA8 /* nuiSpiderMonkey.h in Headers */,
+				E52CC1B311751DA80031DFA8 /* js-confdefs.h in Headers */,
+				E52CC1B411751DA80031DFA8 /* js-config.h in Headers */,
+				E52CC1B611751DA80031DFA8 /* jsapi.h in Headers */,
+				E52CC1B811751DA80031DFA8 /* jsarena.h in Headers */,
+				E52CC1BA11751DA80031DFA8 /* jsarray.h in Headers */,
+				E52CC1BC11751DA80031DFA8 /* jsatom.h in Headers */,
+				E52CC1BD11751DA80031DFA8 /* jsatominlines.h in Headers */,
+				E52CC1BE11751DA80031DFA8 /* jsautocfg.h in Headers */,
+				E52CC1BF11751DA80031DFA8 /* jsautokw.h in Headers */,
+				E52CC1C011751DA80031DFA8 /* jsautooplen.h in Headers */,
+				E52CC1C111751DA80031DFA8 /* jsbit.h in Headers */,
+				E52CC1C311751DA80031DFA8 /* jsbool.h in Headers */,
+				E52CC1C511751DA80031DFA8 /* jsbuiltins.h in Headers */,
+				E52CC1C611751DA80031DFA8 /* jsclist.h in Headers */,
+				E52CC1C811751DA80031DFA8 /* jscntxt.h in Headers */,
+				E52CC1C911751DA80031DFA8 /* jscntxtinlines.h in Headers */,
+				E52CC1CA11751DA80031DFA8 /* jscompat.h in Headers */,
+				E52CC1CC11751DA80031DFA8 /* jscpucfg.h in Headers */,
+				E52CC1CE11751DA80031DFA8 /* jsdate.h in Headers */,
+				E52CC1D011751DA80031DFA8 /* jsdbgapi.h in Headers */,
+				E52CC1D211751DA80031DFA8 /* jsdhash.h in Headers */,
+				E52CC1D411751DA80031DFA8 /* jsdtoa.h in Headers */,
+				E52CC1D611751DA80031DFA8 /* jsdtracef.h in Headers */,
+				E52CC1D811751DA80031DFA8 /* jsemit.h in Headers */,
+				E52CC1DA11751DA80031DFA8 /* jsexn.h in Headers */,
+				E52CC1DC11751DA80031DFA8 /* jsfun.h in Headers */,
+				E52CC1DE11751DA80031DFA8 /* jsgc.h in Headers */,
+				E52CC1E011751DA80031DFA8 /* jshash.h in Headers */,
+				E52CC1E111751DA80031DFA8 /* jshashtable.h in Headers */,
+				E52CC1E311751DA80031DFA8 /* jsinterp.h in Headers */,
+				E52CC1E411751DA80031DFA8 /* jsinterpinlines.h in Headers */,
+				E52CC1E511751DA80031DFA8 /* jsinttypes.h in Headers */,
+				E52CC1E811751DA80031DFA8 /* jsiter.h in Headers */,
+				E52CC1EA11751DA80031DFA8 /* jslibmath.h in Headers */,
+				E52CC1EC11751DA80031DFA8 /* jslock.h in Headers */,
+				E52CC1EF11751DA80031DFA8 /* jslong.h in Headers */,
+				E52CC1F111751DA80031DFA8 /* jsmath.h in Headers */,
+				E52CC1F311751DA80031DFA8 /* jsnum.h in Headers */,
+				E52CC1F511751DA80031DFA8 /* jsobj.h in Headers */,
+				E52CC1F611751DA80031DFA8 /* jsobjinlines.h in Headers */,
+				E52CC1F811751DA80031DFA8 /* json.h in Headers */,
+				E52CC1FA11751DA80031DFA8 /* jsopcode.h in Headers */,
+				E52CC1FD11751DA80031DFA8 /* jsotypes.h in Headers */,
+				E52CC1FF11751DA80031DFA8 /* jsparse.h in Headers */,
+				E52CC20111751DA80031DFA8 /* jsprf.h in Headers */,
+				E52CC20211751DA80031DFA8 /* jsprvtd.h in Headers */,
+				E52CC20311751DA80031DFA8 /* jspubtd.h in Headers */,
+				E52CC20611751DA80031DFA8 /* jsregexp.h in Headers */,
+				E52CC20811751DA80031DFA8 /* jsscan.h in Headers */,
+				E52CC20A11751DA80031DFA8 /* jsscope.h in Headers */,
+				E52CC20B11751DA80031DFA8 /* jsscopeinlines.h in Headers */,
+				E52CC20D11751DA80031DFA8 /* jsscript.h in Headers */,
+				E52CC20E11751DA80031DFA8 /* jsscriptinlines.h in Headers */,
+				E52CC20F11751DA80031DFA8 /* jsstaticcheck.h in Headers */,
+				E52CC21011751DA80031DFA8 /* jsstdint.h in Headers */,
+				E52CC21211751DA80031DFA8 /* jsstr.h in Headers */,
+				E52CC21311751DA80031DFA8 /* jsstrinlines.h in Headers */,
+				E52CC21511751DA80031DFA8 /* jstask.h in Headers */,
+				E52CC21611751DA80031DFA8 /* jstl.h in Headers */,
+				E52CC21811751DA80031DFA8 /* jstracer.h in Headers */,
+				E52CC21A11751DA80031DFA8 /* jstypedarray.h in Headers */,
+				E52CC21B11751DA80031DFA8 /* jstypes.h in Headers */,
+				E52CC21D11751DA80031DFA8 /* jsutil.h in Headers */,
+				E52CC21E11751DA80031DFA8 /* jsvector.h in Headers */,
+				E52CC21F11751DA80031DFA8 /* jsversion.h in Headers */,
+				E52CC22211751DA80031DFA8 /* jsxdrapi.h in Headers */,
+				E52CC22411751DA80031DFA8 /* jsxml.h in Headers */,
+				E52CC22611751DA80031DFA8 /* Allocator.h in Headers */,
+				E52CC22811751DA80031DFA8 /* Assembler.h in Headers */,
+				E52CC22A11751DA80031DFA8 /* avmplus.h in Headers */,
+				E52CC22C11751DA80031DFA8 /* CodeAlloc.h in Headers */,
+				E52CC22E11751DA80031DFA8 /* Containers.h in Headers */,
+				E52CC23011751DA80031DFA8 /* Fragmento.h in Headers */,
+				E52CC23211751DA80031DFA8 /* LIR.h in Headers */,
+				E52CC23311751DA80031DFA8 /* nanojit.h in Headers */,
+				E52CC23411751DA80031DFA8 /* Native.h in Headers */,
+				E52CC23611751DA80031DFA8 /* NativeARM.h in Headers */,
+				E52CC23811751DA80031DFA8 /* Nativei386.h in Headers */,
+				E52CC23A11751DA80031DFA8 /* NativeMIPS.h in Headers */,
+				E52CC23C11751DA80031DFA8 /* NativePPC.h in Headers */,
+				E52CC23E11751DA80031DFA8 /* NativeSparc.h in Headers */,
+				E52CC24011751DA80031DFA8 /* NativeX64.h in Headers */,
+				E52CC24211751DA80031DFA8 /* njconfig.h in Headers */,
+				E52CC24311751DA80031DFA8 /* njcpudetect.h in Headers */,
+				E52CC24511751DA80031DFA8 /* RegAlloc.h in Headers */,
+				E52CC24711751DA80031DFA8 /* VMPI.h in Headers */,
+				E52CC24911751DA80031DFA8 /* prmjtime.h in Headers */,
+				E52CC24A11751DA80031DFA8 /* resource.h in Headers */,
+				E52CC24C11751DA80031DFA8 /* vprof.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9120,6 +10372,97 @@
 				E57857BD11626195004E6DD3 /* nuiAttributeType.h in Headers */,
 				E57857BE11626195004E6DD3 /* nuiTypeTraits.h in Headers */,
 				E57857BF11626195004E6DD3 /* nuiVariant.h in Headers */,
+				E52CC0FE11751D930031DFA8 /* nuiScriptEngine.h in Headers */,
+				E52CC0FF11751D930031DFA8 /* nuiSpiderMonkey.h in Headers */,
+				E52CC24F11751DA80031DFA8 /* js-confdefs.h in Headers */,
+				E52CC25011751DA80031DFA8 /* js-config.h in Headers */,
+				E52CC25211751DA80031DFA8 /* jsapi.h in Headers */,
+				E52CC25411751DA80031DFA8 /* jsarena.h in Headers */,
+				E52CC25611751DA80031DFA8 /* jsarray.h in Headers */,
+				E52CC25811751DA80031DFA8 /* jsatom.h in Headers */,
+				E52CC25911751DA80031DFA8 /* jsatominlines.h in Headers */,
+				E52CC25A11751DA80031DFA8 /* jsautocfg.h in Headers */,
+				E52CC25B11751DA80031DFA8 /* jsautokw.h in Headers */,
+				E52CC25C11751DA80031DFA8 /* jsautooplen.h in Headers */,
+				E52CC25D11751DA80031DFA8 /* jsbit.h in Headers */,
+				E52CC25F11751DA80031DFA8 /* jsbool.h in Headers */,
+				E52CC26111751DA80031DFA8 /* jsbuiltins.h in Headers */,
+				E52CC26211751DA80031DFA8 /* jsclist.h in Headers */,
+				E52CC26411751DA80031DFA8 /* jscntxt.h in Headers */,
+				E52CC26511751DA80031DFA8 /* jscntxtinlines.h in Headers */,
+				E52CC26611751DA80031DFA8 /* jscompat.h in Headers */,
+				E52CC26811751DA80031DFA8 /* jscpucfg.h in Headers */,
+				E52CC26A11751DA80031DFA8 /* jsdate.h in Headers */,
+				E52CC26C11751DA80031DFA8 /* jsdbgapi.h in Headers */,
+				E52CC26E11751DA80031DFA8 /* jsdhash.h in Headers */,
+				E52CC27011751DA80031DFA8 /* jsdtoa.h in Headers */,
+				E52CC27211751DA80031DFA8 /* jsdtracef.h in Headers */,
+				E52CC27411751DA80031DFA8 /* jsemit.h in Headers */,
+				E52CC27611751DA80031DFA8 /* jsexn.h in Headers */,
+				E52CC27811751DA80031DFA8 /* jsfun.h in Headers */,
+				E52CC27A11751DA80031DFA8 /* jsgc.h in Headers */,
+				E52CC27C11751DA80031DFA8 /* jshash.h in Headers */,
+				E52CC27D11751DA80031DFA8 /* jshashtable.h in Headers */,
+				E52CC27F11751DA80031DFA8 /* jsinterp.h in Headers */,
+				E52CC28011751DA80031DFA8 /* jsinterpinlines.h in Headers */,
+				E52CC28111751DA80031DFA8 /* jsinttypes.h in Headers */,
+				E52CC28411751DA80031DFA8 /* jsiter.h in Headers */,
+				E52CC28611751DA80031DFA8 /* jslibmath.h in Headers */,
+				E52CC28811751DA80031DFA8 /* jslock.h in Headers */,
+				E52CC28B11751DA80031DFA8 /* jslong.h in Headers */,
+				E52CC28D11751DA80031DFA8 /* jsmath.h in Headers */,
+				E52CC28F11751DA80031DFA8 /* jsnum.h in Headers */,
+				E52CC29111751DA80031DFA8 /* jsobj.h in Headers */,
+				E52CC29211751DA80031DFA8 /* jsobjinlines.h in Headers */,
+				E52CC29411751DA80031DFA8 /* json.h in Headers */,
+				E52CC29611751DA80031DFA8 /* jsopcode.h in Headers */,
+				E52CC29911751DA80031DFA8 /* jsotypes.h in Headers */,
+				E52CC29B11751DA80031DFA8 /* jsparse.h in Headers */,
+				E52CC29D11751DA80031DFA8 /* jsprf.h in Headers */,
+				E52CC29E11751DA80031DFA8 /* jsprvtd.h in Headers */,
+				E52CC29F11751DA80031DFA8 /* jspubtd.h in Headers */,
+				E52CC2A211751DA80031DFA8 /* jsregexp.h in Headers */,
+				E52CC2A411751DA80031DFA8 /* jsscan.h in Headers */,
+				E52CC2A611751DA80031DFA8 /* jsscope.h in Headers */,
+				E52CC2A711751DA80031DFA8 /* jsscopeinlines.h in Headers */,
+				E52CC2A911751DA80031DFA8 /* jsscript.h in Headers */,
+				E52CC2AA11751DA80031DFA8 /* jsscriptinlines.h in Headers */,
+				E52CC2AB11751DA80031DFA8 /* jsstaticcheck.h in Headers */,
+				E52CC2AC11751DA80031DFA8 /* jsstdint.h in Headers */,
+				E52CC2AE11751DA80031DFA8 /* jsstr.h in Headers */,
+				E52CC2AF11751DA80031DFA8 /* jsstrinlines.h in Headers */,
+				E52CC2B111751DA80031DFA8 /* jstask.h in Headers */,
+				E52CC2B211751DA80031DFA8 /* jstl.h in Headers */,
+				E52CC2B411751DA80031DFA8 /* jstracer.h in Headers */,
+				E52CC2B611751DA80031DFA8 /* jstypedarray.h in Headers */,
+				E52CC2B711751DA80031DFA8 /* jstypes.h in Headers */,
+				E52CC2B911751DA80031DFA8 /* jsutil.h in Headers */,
+				E52CC2BA11751DA80031DFA8 /* jsvector.h in Headers */,
+				E52CC2BB11751DA80031DFA8 /* jsversion.h in Headers */,
+				E52CC2BE11751DA80031DFA8 /* jsxdrapi.h in Headers */,
+				E52CC2C011751DA80031DFA8 /* jsxml.h in Headers */,
+				E52CC2C211751DA80031DFA8 /* Allocator.h in Headers */,
+				E52CC2C411751DA80031DFA8 /* Assembler.h in Headers */,
+				E52CC2C611751DA80031DFA8 /* avmplus.h in Headers */,
+				E52CC2C811751DA80031DFA8 /* CodeAlloc.h in Headers */,
+				E52CC2CA11751DA80031DFA8 /* Containers.h in Headers */,
+				E52CC2CC11751DA80031DFA8 /* Fragmento.h in Headers */,
+				E52CC2CE11751DA80031DFA8 /* LIR.h in Headers */,
+				E52CC2CF11751DA80031DFA8 /* nanojit.h in Headers */,
+				E52CC2D011751DA80031DFA8 /* Native.h in Headers */,
+				E52CC2D211751DA80031DFA8 /* NativeARM.h in Headers */,
+				E52CC2D411751DA80031DFA8 /* Nativei386.h in Headers */,
+				E52CC2D611751DA80031DFA8 /* NativeMIPS.h in Headers */,
+				E52CC2D811751DA80031DFA8 /* NativePPC.h in Headers */,
+				E52CC2DA11751DA80031DFA8 /* NativeSparc.h in Headers */,
+				E52CC2DC11751DA80031DFA8 /* NativeX64.h in Headers */,
+				E52CC2DE11751DA80031DFA8 /* njconfig.h in Headers */,
+				E52CC2DF11751DA80031DFA8 /* njcpudetect.h in Headers */,
+				E52CC2E111751DA80031DFA8 /* RegAlloc.h in Headers */,
+				E52CC2E311751DA80031DFA8 /* VMPI.h in Headers */,
+				E52CC2E511751DA80031DFA8 /* prmjtime.h in Headers */,
+				E52CC2E611751DA80031DFA8 /* resource.h in Headers */,
+				E52CC2E811751DA80031DFA8 /* vprof.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9593,6 +10936,65 @@
 				E560A3B711358DDF00AFBEAC /* nglCondition_posix.cpp in Sources */,
 				E5B45DE61139759B000BE2A1 /* nuiObjectInspector.cpp in Sources */,
 				E57857B411626146004E6DD3 /* nuiBindings.cpp in Sources */,
+				E52CC0F611751D7D0031DFA8 /* nuiScriptEngine.cpp in Sources */,
+				E52CC0F711751D7D0031DFA8 /* nuiSpiderMonkey.cpp in Sources */,
+				E52CC2ED11751DA80031DFA8 /* jsapi.cpp in Sources */,
+				E52CC2EF11751DA80031DFA8 /* jsarena.cpp in Sources */,
+				E52CC2F111751DA80031DFA8 /* jsarray.cpp in Sources */,
+				E52CC2F311751DA80031DFA8 /* jsatom.cpp in Sources */,
+				E52CC2FA11751DA80031DFA8 /* jsbool.cpp in Sources */,
+				E52CC2FC11751DA80031DFA8 /* jsbuiltins.cpp in Sources */,
+				E52CC2FF11751DA80031DFA8 /* jscntxt.cpp in Sources */,
+				E52CC30511751DA80031DFA8 /* jsdate.cpp in Sources */,
+				E52CC30711751DA80031DFA8 /* jsdbgapi.cpp in Sources */,
+				E52CC30911751DA80031DFA8 /* jsdhash.cpp in Sources */,
+				E52CC30B11751DA80031DFA8 /* jsdtoa.cpp in Sources */,
+				E52CC30F11751DA80031DFA8 /* jsemit.cpp in Sources */,
+				E52CC31111751DA80031DFA8 /* jsexn.cpp in Sources */,
+				E52CC31311751DA80031DFA8 /* jsfun.cpp in Sources */,
+				E52CC31511751DA80031DFA8 /* jsgc.cpp in Sources */,
+				E52CC31711751DA80031DFA8 /* jshash.cpp in Sources */,
+				E52CC31A11751DA80031DFA8 /* jsinterp.cpp in Sources */,
+				E52CC31E11751DA80031DFA8 /* jsinvoke.cpp in Sources */,
+				E52CC31F11751DA80031DFA8 /* jsiter.cpp in Sources */,
+				E52CC32311751DA80031DFA8 /* jslock.cpp in Sources */,
+				E52CC32611751DA80031DFA8 /* jslog2.cpp in Sources */,
+				E52CC32811751DA80031DFA8 /* jsmath.cpp in Sources */,
+				E52CC32A11751DA80031DFA8 /* jsnum.cpp in Sources */,
+				E52CC32C11751DA80031DFA8 /* jsobj.cpp in Sources */,
+				E52CC32F11751DA80031DFA8 /* json.cpp in Sources */,
+				E52CC33111751DA80031DFA8 /* jsopcode.cpp in Sources */,
+				E52CC33611751DA80031DFA8 /* jsparse.cpp in Sources */,
+				E52CC33811751DA80031DFA8 /* jsprf.cpp in Sources */,
+				E52CC33D11751DA80031DFA8 /* jsregexp.cpp in Sources */,
+				E52CC33F11751DA80031DFA8 /* jsscan.cpp in Sources */,
+				E52CC34111751DA80031DFA8 /* jsscope.cpp in Sources */,
+				E52CC34411751DA80031DFA8 /* jsscript.cpp in Sources */,
+				E52CC34911751DA80031DFA8 /* jsstr.cpp in Sources */,
+				E52CC34C11751DA80031DFA8 /* jstask.cpp in Sources */,
+				E52CC34F11751DA80031DFA8 /* jstracer.cpp in Sources */,
+				E52CC35111751DA80031DFA8 /* jstypedarray.cpp in Sources */,
+				E52CC35411751DA80031DFA8 /* jsutil.cpp in Sources */,
+				E52CC35911751DA80031DFA8 /* jsxdrapi.cpp in Sources */,
+				E52CC35B11751DA80031DFA8 /* jsxml.cpp in Sources */,
+				E52CC35D11751DA80031DFA8 /* Allocator.cpp in Sources */,
+				E52CC35F11751DA80031DFA8 /* Assembler.cpp in Sources */,
+				E52CC36111751DA80031DFA8 /* avmplus.cpp in Sources */,
+				E52CC36311751DA80031DFA8 /* CodeAlloc.cpp in Sources */,
+				E52CC36511751DA80031DFA8 /* Containers.cpp in Sources */,
+				E52CC36711751DA80031DFA8 /* Fragmento.cpp in Sources */,
+				E52CC36911751DA80031DFA8 /* LIR.cpp in Sources */,
+				E52CC36D11751DA80031DFA8 /* NativeARM.cpp in Sources */,
+				E52CC36F11751DA80031DFA8 /* Nativei386.cpp in Sources */,
+				E52CC37111751DA80031DFA8 /* NativeMIPS.cpp in Sources */,
+				E52CC37311751DA80031DFA8 /* NativePPC.cpp in Sources */,
+				E52CC37511751DA80031DFA8 /* NativeSparc.cpp in Sources */,
+				E52CC37711751DA80031DFA8 /* NativeX64.cpp in Sources */,
+				E52CC37911751DA80031DFA8 /* njconfig.cpp in Sources */,
+				E52CC37C11751DA80031DFA8 /* RegAlloc.cpp in Sources */,
+				E52CC37E11751DA80031DFA8 /* VMPI.cpp in Sources */,
+				E52CC38011751DA80031DFA8 /* prmjtime.cpp in Sources */,
+				E52CC38311751DA80031DFA8 /* vprof.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9973,6 +11375,65 @@
 				E560A3B611358DDF00AFBEAC /* nglCondition_posix.cpp in Sources */,
 				E5B45DE71139759B000BE2A1 /* nuiObjectInspector.cpp in Sources */,
 				E57857B311626146004E6DD3 /* nuiBindings.cpp in Sources */,
+				E52CC0F811751D7D0031DFA8 /* nuiScriptEngine.cpp in Sources */,
+				E52CC0F911751D7D0031DFA8 /* nuiSpiderMonkey.cpp in Sources */,
+				E52CC38911751DA80031DFA8 /* jsapi.cpp in Sources */,
+				E52CC38B11751DA80031DFA8 /* jsarena.cpp in Sources */,
+				E52CC38D11751DA80031DFA8 /* jsarray.cpp in Sources */,
+				E52CC38F11751DA80031DFA8 /* jsatom.cpp in Sources */,
+				E52CC39611751DA80031DFA8 /* jsbool.cpp in Sources */,
+				E52CC39811751DA80031DFA8 /* jsbuiltins.cpp in Sources */,
+				E52CC39B11751DA80031DFA8 /* jscntxt.cpp in Sources */,
+				E52CC3A111751DA80031DFA8 /* jsdate.cpp in Sources */,
+				E52CC3A311751DA80031DFA8 /* jsdbgapi.cpp in Sources */,
+				E52CC3A511751DA80031DFA8 /* jsdhash.cpp in Sources */,
+				E52CC3A711751DA80031DFA8 /* jsdtoa.cpp in Sources */,
+				E52CC3AB11751DA80031DFA8 /* jsemit.cpp in Sources */,
+				E52CC3AD11751DA80031DFA8 /* jsexn.cpp in Sources */,
+				E52CC3AF11751DA80031DFA8 /* jsfun.cpp in Sources */,
+				E52CC3B111751DA80031DFA8 /* jsgc.cpp in Sources */,
+				E52CC3B311751DA80031DFA8 /* jshash.cpp in Sources */,
+				E52CC3B611751DA80031DFA8 /* jsinterp.cpp in Sources */,
+				E52CC3BA11751DA80031DFA8 /* jsinvoke.cpp in Sources */,
+				E52CC3BB11751DA80031DFA8 /* jsiter.cpp in Sources */,
+				E52CC3BF11751DA80031DFA8 /* jslock.cpp in Sources */,
+				E52CC3C211751DA80031DFA8 /* jslog2.cpp in Sources */,
+				E52CC3C411751DA80031DFA8 /* jsmath.cpp in Sources */,
+				E52CC3C611751DA80031DFA8 /* jsnum.cpp in Sources */,
+				E52CC3C811751DA80031DFA8 /* jsobj.cpp in Sources */,
+				E52CC3CB11751DA80031DFA8 /* json.cpp in Sources */,
+				E52CC3CD11751DA80031DFA8 /* jsopcode.cpp in Sources */,
+				E52CC3D211751DA80031DFA8 /* jsparse.cpp in Sources */,
+				E52CC3D411751DA80031DFA8 /* jsprf.cpp in Sources */,
+				E52CC3D911751DA80031DFA8 /* jsregexp.cpp in Sources */,
+				E52CC3DB11751DA80031DFA8 /* jsscan.cpp in Sources */,
+				E52CC3DD11751DA80031DFA8 /* jsscope.cpp in Sources */,
+				E52CC3E011751DA80031DFA8 /* jsscript.cpp in Sources */,
+				E52CC3E511751DA80031DFA8 /* jsstr.cpp in Sources */,
+				E52CC3E811751DA80031DFA8 /* jstask.cpp in Sources */,
+				E52CC3EB11751DA80031DFA8 /* jstracer.cpp in Sources */,
+				E52CC3ED11751DA80031DFA8 /* jstypedarray.cpp in Sources */,
+				E52CC3F011751DA80031DFA8 /* jsutil.cpp in Sources */,
+				E52CC3F511751DA80031DFA8 /* jsxdrapi.cpp in Sources */,
+				E52CC3F711751DA80031DFA8 /* jsxml.cpp in Sources */,
+				E52CC3F911751DA80031DFA8 /* Allocator.cpp in Sources */,
+				E52CC3FB11751DA80031DFA8 /* Assembler.cpp in Sources */,
+				E52CC3FD11751DA80031DFA8 /* avmplus.cpp in Sources */,
+				E52CC3FF11751DA80031DFA8 /* CodeAlloc.cpp in Sources */,
+				E52CC40111751DA80031DFA8 /* Containers.cpp in Sources */,
+				E52CC40311751DA80031DFA8 /* Fragmento.cpp in Sources */,
+				E52CC40511751DA80031DFA8 /* LIR.cpp in Sources */,
+				E52CC40911751DA80031DFA8 /* NativeARM.cpp in Sources */,
+				E52CC40B11751DA80031DFA8 /* Nativei386.cpp in Sources */,
+				E52CC40D11751DA80031DFA8 /* NativeMIPS.cpp in Sources */,
+				E52CC40F11751DA80031DFA8 /* NativePPC.cpp in Sources */,
+				E52CC41111751DA80031DFA8 /* NativeSparc.cpp in Sources */,
+				E52CC41311751DA80031DFA8 /* NativeX64.cpp in Sources */,
+				E52CC41511751DA80031DFA8 /* njconfig.cpp in Sources */,
+				E52CC41811751DA80031DFA8 /* RegAlloc.cpp in Sources */,
+				E52CC41A11751DA80031DFA8 /* VMPI.cpp in Sources */,
+				E52CC41C11751DA80031DFA8 /* prmjtime.cpp in Sources */,
+				E52CC41F11751DA80031DFA8 /* vprof.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10353,6 +11814,65 @@
 				E560A3B411358DDF00AFBEAC /* nglCondition_posix.cpp in Sources */,
 				E5B45DE41139759B000BE2A1 /* nuiObjectInspector.cpp in Sources */,
 				E57857B111626146004E6DD3 /* nuiBindings.cpp in Sources */,
+				E52CC0F211751D7D0031DFA8 /* nuiScriptEngine.cpp in Sources */,
+				E52CC0F311751D7D0031DFA8 /* nuiSpiderMonkey.cpp in Sources */,
+				E52CC1B511751DA80031DFA8 /* jsapi.cpp in Sources */,
+				E52CC1B711751DA80031DFA8 /* jsarena.cpp in Sources */,
+				E52CC1B911751DA80031DFA8 /* jsarray.cpp in Sources */,
+				E52CC1BB11751DA80031DFA8 /* jsatom.cpp in Sources */,
+				E52CC1C211751DA80031DFA8 /* jsbool.cpp in Sources */,
+				E52CC1C411751DA80031DFA8 /* jsbuiltins.cpp in Sources */,
+				E52CC1C711751DA80031DFA8 /* jscntxt.cpp in Sources */,
+				E52CC1CD11751DA80031DFA8 /* jsdate.cpp in Sources */,
+				E52CC1CF11751DA80031DFA8 /* jsdbgapi.cpp in Sources */,
+				E52CC1D111751DA80031DFA8 /* jsdhash.cpp in Sources */,
+				E52CC1D311751DA80031DFA8 /* jsdtoa.cpp in Sources */,
+				E52CC1D711751DA80031DFA8 /* jsemit.cpp in Sources */,
+				E52CC1D911751DA80031DFA8 /* jsexn.cpp in Sources */,
+				E52CC1DB11751DA80031DFA8 /* jsfun.cpp in Sources */,
+				E52CC1DD11751DA80031DFA8 /* jsgc.cpp in Sources */,
+				E52CC1DF11751DA80031DFA8 /* jshash.cpp in Sources */,
+				E52CC1E211751DA80031DFA8 /* jsinterp.cpp in Sources */,
+				E52CC1E611751DA80031DFA8 /* jsinvoke.cpp in Sources */,
+				E52CC1E711751DA80031DFA8 /* jsiter.cpp in Sources */,
+				E52CC1EB11751DA80031DFA8 /* jslock.cpp in Sources */,
+				E52CC1EE11751DA80031DFA8 /* jslog2.cpp in Sources */,
+				E52CC1F011751DA80031DFA8 /* jsmath.cpp in Sources */,
+				E52CC1F211751DA80031DFA8 /* jsnum.cpp in Sources */,
+				E52CC1F411751DA80031DFA8 /* jsobj.cpp in Sources */,
+				E52CC1F711751DA80031DFA8 /* json.cpp in Sources */,
+				E52CC1F911751DA80031DFA8 /* jsopcode.cpp in Sources */,
+				E52CC1FE11751DA80031DFA8 /* jsparse.cpp in Sources */,
+				E52CC20011751DA80031DFA8 /* jsprf.cpp in Sources */,
+				E52CC20511751DA80031DFA8 /* jsregexp.cpp in Sources */,
+				E52CC20711751DA80031DFA8 /* jsscan.cpp in Sources */,
+				E52CC20911751DA80031DFA8 /* jsscope.cpp in Sources */,
+				E52CC20C11751DA80031DFA8 /* jsscript.cpp in Sources */,
+				E52CC21111751DA80031DFA8 /* jsstr.cpp in Sources */,
+				E52CC21411751DA80031DFA8 /* jstask.cpp in Sources */,
+				E52CC21711751DA80031DFA8 /* jstracer.cpp in Sources */,
+				E52CC21911751DA80031DFA8 /* jstypedarray.cpp in Sources */,
+				E52CC21C11751DA80031DFA8 /* jsutil.cpp in Sources */,
+				E52CC22111751DA80031DFA8 /* jsxdrapi.cpp in Sources */,
+				E52CC22311751DA80031DFA8 /* jsxml.cpp in Sources */,
+				E52CC22511751DA80031DFA8 /* Allocator.cpp in Sources */,
+				E52CC22711751DA80031DFA8 /* Assembler.cpp in Sources */,
+				E52CC22911751DA80031DFA8 /* avmplus.cpp in Sources */,
+				E52CC22B11751DA80031DFA8 /* CodeAlloc.cpp in Sources */,
+				E52CC22D11751DA80031DFA8 /* Containers.cpp in Sources */,
+				E52CC22F11751DA80031DFA8 /* Fragmento.cpp in Sources */,
+				E52CC23111751DA80031DFA8 /* LIR.cpp in Sources */,
+				E52CC23511751DA80031DFA8 /* NativeARM.cpp in Sources */,
+				E52CC23711751DA80031DFA8 /* Nativei386.cpp in Sources */,
+				E52CC23911751DA80031DFA8 /* NativeMIPS.cpp in Sources */,
+				E52CC23B11751DA80031DFA8 /* NativePPC.cpp in Sources */,
+				E52CC23D11751DA80031DFA8 /* NativeSparc.cpp in Sources */,
+				E52CC23F11751DA80031DFA8 /* NativeX64.cpp in Sources */,
+				E52CC24111751DA80031DFA8 /* njconfig.cpp in Sources */,
+				E52CC24411751DA80031DFA8 /* RegAlloc.cpp in Sources */,
+				E52CC24611751DA80031DFA8 /* VMPI.cpp in Sources */,
+				E52CC24811751DA80031DFA8 /* prmjtime.cpp in Sources */,
+				E52CC24B11751DA80031DFA8 /* vprof.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10733,6 +12253,66 @@
 				E560A3B511358DDF00AFBEAC /* nglCondition_posix.cpp in Sources */,
 				E5B45DE51139759B000BE2A1 /* nuiObjectInspector.cpp in Sources */,
 				E57857B211626146004E6DD3 /* nuiBindings.cpp in Sources */,
+				E52CC0F411751D7D0031DFA8 /* nuiScriptEngine.cpp in Sources */,
+				E52CC0F511751D7D0031DFA8 /* nuiSpiderMonkey.cpp in Sources */,
+				E52CC24E11751DA80031DFA8 /* imacro_asm.js in Sources */,
+				E52CC25111751DA80031DFA8 /* jsapi.cpp in Sources */,
+				E52CC25311751DA80031DFA8 /* jsarena.cpp in Sources */,
+				E52CC25511751DA80031DFA8 /* jsarray.cpp in Sources */,
+				E52CC25711751DA80031DFA8 /* jsatom.cpp in Sources */,
+				E52CC25E11751DA80031DFA8 /* jsbool.cpp in Sources */,
+				E52CC26011751DA80031DFA8 /* jsbuiltins.cpp in Sources */,
+				E52CC26311751DA80031DFA8 /* jscntxt.cpp in Sources */,
+				E52CC26911751DA80031DFA8 /* jsdate.cpp in Sources */,
+				E52CC26B11751DA80031DFA8 /* jsdbgapi.cpp in Sources */,
+				E52CC26D11751DA80031DFA8 /* jsdhash.cpp in Sources */,
+				E52CC26F11751DA80031DFA8 /* jsdtoa.cpp in Sources */,
+				E52CC27311751DA80031DFA8 /* jsemit.cpp in Sources */,
+				E52CC27511751DA80031DFA8 /* jsexn.cpp in Sources */,
+				E52CC27711751DA80031DFA8 /* jsfun.cpp in Sources */,
+				E52CC27911751DA80031DFA8 /* jsgc.cpp in Sources */,
+				E52CC27B11751DA80031DFA8 /* jshash.cpp in Sources */,
+				E52CC27E11751DA80031DFA8 /* jsinterp.cpp in Sources */,
+				E52CC28211751DA80031DFA8 /* jsinvoke.cpp in Sources */,
+				E52CC28311751DA80031DFA8 /* jsiter.cpp in Sources */,
+				E52CC28711751DA80031DFA8 /* jslock.cpp in Sources */,
+				E52CC28A11751DA80031DFA8 /* jslog2.cpp in Sources */,
+				E52CC28C11751DA80031DFA8 /* jsmath.cpp in Sources */,
+				E52CC28E11751DA80031DFA8 /* jsnum.cpp in Sources */,
+				E52CC29011751DA80031DFA8 /* jsobj.cpp in Sources */,
+				E52CC29311751DA80031DFA8 /* json.cpp in Sources */,
+				E52CC29511751DA80031DFA8 /* jsopcode.cpp in Sources */,
+				E52CC29A11751DA80031DFA8 /* jsparse.cpp in Sources */,
+				E52CC29C11751DA80031DFA8 /* jsprf.cpp in Sources */,
+				E52CC2A111751DA80031DFA8 /* jsregexp.cpp in Sources */,
+				E52CC2A311751DA80031DFA8 /* jsscan.cpp in Sources */,
+				E52CC2A511751DA80031DFA8 /* jsscope.cpp in Sources */,
+				E52CC2A811751DA80031DFA8 /* jsscript.cpp in Sources */,
+				E52CC2AD11751DA80031DFA8 /* jsstr.cpp in Sources */,
+				E52CC2B011751DA80031DFA8 /* jstask.cpp in Sources */,
+				E52CC2B311751DA80031DFA8 /* jstracer.cpp in Sources */,
+				E52CC2B511751DA80031DFA8 /* jstypedarray.cpp in Sources */,
+				E52CC2B811751DA80031DFA8 /* jsutil.cpp in Sources */,
+				E52CC2BD11751DA80031DFA8 /* jsxdrapi.cpp in Sources */,
+				E52CC2BF11751DA80031DFA8 /* jsxml.cpp in Sources */,
+				E52CC2C111751DA80031DFA8 /* Allocator.cpp in Sources */,
+				E52CC2C311751DA80031DFA8 /* Assembler.cpp in Sources */,
+				E52CC2C511751DA80031DFA8 /* avmplus.cpp in Sources */,
+				E52CC2C711751DA80031DFA8 /* CodeAlloc.cpp in Sources */,
+				E52CC2C911751DA80031DFA8 /* Containers.cpp in Sources */,
+				E52CC2CB11751DA80031DFA8 /* Fragmento.cpp in Sources */,
+				E52CC2CD11751DA80031DFA8 /* LIR.cpp in Sources */,
+				E52CC2D111751DA80031DFA8 /* NativeARM.cpp in Sources */,
+				E52CC2D311751DA80031DFA8 /* Nativei386.cpp in Sources */,
+				E52CC2D511751DA80031DFA8 /* NativeMIPS.cpp in Sources */,
+				E52CC2D711751DA80031DFA8 /* NativePPC.cpp in Sources */,
+				E52CC2D911751DA80031DFA8 /* NativeSparc.cpp in Sources */,
+				E52CC2DB11751DA80031DFA8 /* NativeX64.cpp in Sources */,
+				E52CC2DD11751DA80031DFA8 /* njconfig.cpp in Sources */,
+				E52CC2E011751DA80031DFA8 /* RegAlloc.cpp in Sources */,
+				E52CC2E211751DA80031DFA8 /* VMPI.cpp in Sources */,
+				E52CC2E411751DA80031DFA8 /* prmjtime.cpp in Sources */,
+				E52CC2E711751DA80031DFA8 /* vprof.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10787,6 +12367,22 @@
 					FT_CONFIG_OPTION_SYSTEM_ZLIB,
 					HAVE_BCOPY,
 					UIKIT,
+					FEATURE_NANOJIT,
+					JS_TRACER,
+					XP_UNIX,
+					AVMPLUS_ARM,
+				);
+				"GCC_PREPROCESSOR_DEFINITIONS[sdk=iphonesimulator*][arch=*]" = (
+					NGL_STATIC_BUILD,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					FT_CONFIG_OPTION_SYSTEM_ZLIB,
+					HAVE_BCOPY,
+					UIKIT,
+					FEATURE_NANOJIT,
+					JS_TRACER,
+					XP_UNIX,
+					AVMPLUS_IA32,
 				);
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = 4.0;
@@ -10810,6 +12406,9 @@
 					src/Text/HTML,
 					src/Stream/Zip,
 					deps/freetype2/include,
+					deps/tracemonkey,
+					deps/tracemonkey/vprof,
+					deps/tracemonkey/nanojit,
 					deps/harfbuzz,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
@@ -10836,14 +12435,10 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(GCC_PREPROCESSOR_DEFINITIONS)",
 					_DEBUG_,
 					_DEBUG,
-					NGL_STATIC_BUILD,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					FT_CONFIG_OPTION_SYSTEM_ZLIB,
-					HAVE_BCOPY,
-					UIKIT,
+					DEBUG,
 				);
 				INSTALL_PATH = /usr/local/lib;
 				OTHER_CFLAGS = "";
@@ -10897,14 +12492,10 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(GCC_PREPROCESSOR_DEFINITIONS)",
 					_DEBUG_,
 					_DEBUG,
-					NGL_STATIC_BUILD,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					FT_CONFIG_OPTION_SYSTEM_ZLIB,
-					HAVE_BCOPY,
-					UIKIT,
+					DEBUG,
 				);
 				GCC_VERSION = 4.2;
 				INSTALL_PATH = /usr/local/lib;

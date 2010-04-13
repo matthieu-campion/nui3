@@ -66,7 +66,7 @@ static inline uint32 lerpRGBA(const uint32 d, const uint32 s, const float t)
 
 
 #ifndef glError
-#ifdef DEBUG
+#if defined DEBUG && !defined UIKIT
 #define glError() { \
 GLenum err = glGetError(); \
 if (GL_NO_ERROR != err) NGL_OUT(_T("glError: %s caught at %s:%u\n"), (char *)gluErrorString(err), __FILE__, __LINE__); \

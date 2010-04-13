@@ -44,7 +44,7 @@
 
 namespace nanojit
 {
-#ifdef FEATURE_NANOJIT
+#if defined FEATURE_NANOJIT && defined NANOJIT_SPARC
 
 #ifdef NJ_VERBOSE
     const char *regNames[] = {

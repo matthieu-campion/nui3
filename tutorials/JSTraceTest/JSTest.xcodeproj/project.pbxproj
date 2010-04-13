@@ -24,6 +24,10 @@
 		BC6A09AD0EF92BAB00881ACF /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BC6A09AB0EF92BAB00881ACF /* Info.plist */; };
 		BCBCB15F0DFD45BD002E8BC3 /* libnui3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */; };
 		BCBCB1600DFD45C1002E8BC3 /* libnui3D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15C0DFD45B6002E8BC3 /* libnui3D.a */; };
+		E52CBD54117507CB0031DFA8 /* NativeX64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC32D6115AC01300747AB2 /* NativeX64.cpp */; };
+		E52CBD55117507CD0031DFA8 /* NativePPC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC32D2115AC01300747AB2 /* NativePPC.cpp */; };
+		E52CBD56117507D00031DFA8 /* NativeSparc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC32D4115AC01300747AB2 /* NativeSparc.cpp */; };
+		E52CC00011750CB10031DFA8 /* NativeMIPS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC32D0115AC01300747AB2 /* NativeMIPS.cpp */; };
 		E5B19FF111621A5F0097E62F /* Nativei386.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC32CE115AC01300747AB2 /* Nativei386.cpp */; };
 		E5B19FF211621A750097E62F /* NativePPC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC32D2115AC01300747AB2 /* NativePPC.cpp */; };
 		E5CC331B115AC01300747AB2 /* jsapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5CC3243115AC01300747AB2 /* jsapi.cpp */; };
@@ -913,6 +917,10 @@
 				E5CC343F115AD8BF00747AB2 /* vprof.cpp in Sources */,
 				E5CC3448115AD93100747AB2 /* njconfig.cpp in Sources */,
 				E5CC370F115FF09E00747AB2 /* nuiSpiderMonkey.cpp in Sources */,
+				E52CBD54117507CB0031DFA8 /* NativeX64.cpp in Sources */,
+				E52CBD55117507CD0031DFA8 /* NativePPC.cpp in Sources */,
+				E52CBD56117507D00031DFA8 /* NativeSparc.cpp in Sources */,
+				E52CC00011750CB10031DFA8 /* NativeMIPS.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

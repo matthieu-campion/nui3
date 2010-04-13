@@ -10,6 +10,7 @@
 #include "nui.h"
 #include "nuiBindingManager.h"
 #include "nuiBindings.h"
+#include "nuiScriptEngine.h"
 
 typedef struct JSClass           JSClass;
 typedef struct JSExtendedClass   JSExtendedClass;
@@ -38,36 +39,16 @@ typedef intptr_t jsval;
 typedef int JSBool;
 typedef uint uintN;
 
-class nuiScriptEngine
-{
-public:
-  nuiScriptEngine();
-  virtual ~nuiScriptEngine();
-  
-  typedef nuiFastDelegate1<const nglString&, nglIStream*> SourceGetterDelegate;
-  void SetSourceGetterDelegate(const SourceGetterDelegate& rDelegate);
-  
-  virtual void SetGlobal(const nglString& rName, const nuiVariant& rVariant) = 0;
-  virtual nuiVariant GetGlobal(const nglString& rName) = 0;
-
-  virtual nuiVariant ExecuteExpression(const nglString& rExpression) = 0;
-  virtual nuiVariant CompileProgram(const nglString& rSourceName, const nglString& rProgram) = 0;
-
-protected:
-  SourceGetterDelegate mSourceGetterDelegate;
-  
-};
-
-class nuiSpiderMonkey
+class nuiSpiderMonkey : public nuiScriptEngine
 {
 public:
   nuiSpiderMonkey(uint32 MaxBytes = 8L * 1024L * 1024L);
   virtual ~nuiSpiderMonkey();
 
   void SetGlobal(const nglString& rName, const nuiVariant& rVariant);
-  nuiVariant GetGlobal(const nglString& rName);
+  nuiVariant GetGlobal(const nglString& rName) const;
   nuiVariant ExecuteExpression(const nglString& rExpression);
-  nuiVariant CompileProgram(const nglString& rSourceName, const nglString& rProgram);
+  bool CompileProgram(const nglString& rSourceName, const nglString& rProgram);
   
 protected:
 
@@ -86,10 +67,10 @@ protected:
   
   int32 mRunTimeRef;
 
-  nuiVariant GetVariantObjectFromJS(JSObject* pJSObject);
-  JSObject* GetJSObjectFromVariant(const nuiVariant& rObject);
-  void GetJSValFromVariant(jsval* val, const nuiVariant& var);
-  void GetVariantFromJSVal(nuiVariant& var, jsval val);
+  nuiVariant GetVariantObjectFromJS(JSObject* pJSObject) const;
+  JSObject* GetJSObjectFromVariant(const nuiVariant& rObject) const;
+  void GetJSValFromVariant(jsval* val, const nuiVariant& var) const;
+  void GetVariantFromJSVal(nuiVariant& var, jsval val) const;
   JSBool ConstructJSClass(JSObject *obj, uintN argc, jsval *argv, jsval *rval);
   JSObject* DefineJSClass(nuiClass* pClass);
   

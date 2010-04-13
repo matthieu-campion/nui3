@@ -15,16 +15,17 @@ class MainWindow : public nuiMainWindow
 public:
   MainWindow(const nglContextInfo& rContext, const nglWindowInfo& rInfo, bool ShowFPS = false, const nglContext* pShared = NULL);
   ~MainWindow();
-
+  
   void OnCreation();
   void OnClose();
-
+  
 protected:
   
   bool OnButtonClick(const nuiEvent& rEvent);
   
 private:
   
+  void JSTest();
   bool LoadCSS(const nglPath& rPath);
   
   nuiLabel* mMyLabel;
