@@ -5281,13 +5281,13 @@
 		6126E3500DA577C000D2641A /* harfbuzz-tibetan.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; name = "harfbuzz-tibetan.c"; path = "deps/harfbuzz/harfbuzz-tibetan.c"; sourceTree = "<group>"; };
 		6126E3510DA577C000D2641A /* harfbuzz.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; name = harfbuzz.c; path = deps/harfbuzz/harfbuzz.c; sourceTree = "<group>"; };
 		6126E3520DA577C000D2641A /* harfbuzz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = harfbuzz.h; path = deps/harfbuzz/harfbuzz.h; sourceTree = "<group>"; };
-		6126E46C0DA578AD00D2641A /* AudioToolbox.framework */ = {isa = PBXFileReference; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		6126E46D0DA578AD00D2641A /* CoreAudio.framework */ = {isa = PBXFileReference; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
-		6126E46E0DA578AD00D2641A /* CoreFoundation.framework */ = {isa = PBXFileReference; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
-		6126E46F0DA578AD00D2641A /* CoreGraphics.framework */ = {isa = PBXFileReference; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		6126E4700DA578AD00D2641A /* Foundation.framework */ = {isa = PBXFileReference; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		6126E4710DA578AD00D2641A /* OpenGLES.framework */ = {isa = PBXFileReference; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
-		6126E4720DA578AD00D2641A /* UIKit.framework */ = {isa = PBXFileReference; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		6126E46C0DA578AD00D2641A /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		6126E46D0DA578AD00D2641A /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		6126E46E0DA578AD00D2641A /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		6126E46F0DA578AD00D2641A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		6126E4700DA578AD00D2641A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		6126E4710DA578AD00D2641A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		6126E4720DA578AD00D2641A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		614B66C30DA7BA67000F4C22 /* libnuiEd.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libnuiEd.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		616EA36B0DC498BB00593FE7 /* nglThreadChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nglThreadChecker.h; path = include/nglThreadChecker.h; sourceTree = SOURCE_ROOT; };
 		616EA36E0DC498CA00593FE7 /* nglThreadChecker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nglThreadChecker.cpp; path = Threading/nglThreadChecker.cpp; sourceTree = "<group>"; };
@@ -5312,7 +5312,7 @@
 		619993A20EA6047D00D2E090 /* nuiImageSequence.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiImageSequence.cpp; sourceTree = "<group>"; };
 		619DD6E20EDF14AE00A49350 /* nglUIWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nglUIWindow.h; path = UIKit/nglUIWindow.h; sourceTree = "<group>"; };
 		619DD6FD0EDF16DB00A49350 /* nglUIApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nglUIApplication.h; path = UIKit/nglUIApplication.h; sourceTree = "<group>"; };
-		61AB25710DEE359200AA48B2 /* EAGLDrawable.h */ = {isa = PBXFileReference; fileEncoding = 4; name = EAGLDrawable.h; path = System/Library/Frameworks/OpenGLES.framework/Headers/EAGLDrawable.h; sourceTree = SDKROOT; };
+		61AB25710DEE359200AA48B2 /* EAGLDrawable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EAGLDrawable.h; path = System/Library/Frameworks/OpenGLES.framework/Headers/EAGLDrawable.h; sourceTree = SDKROOT; };
 		61AB29150E64639D00623908 /* nuiMemoryPool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiMemoryPool.cpp; sourceTree = "<group>"; };
 		61AB29160E64639D00623908 /* nuiMemoryPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiMemoryPool.h; path = include/nuiMemoryPool.h; sourceTree = SOURCE_ROOT; };
 		61AB291B0E6463C400623908 /* nuiPopupMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiPopupMenu.cpp; sourceTree = "<group>"; };
@@ -5321,9 +5321,9 @@
 		61B026340DCA1882009B90B3 /* nglLock.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nglLock.cpp; path = Threading/nglLock.cpp; sourceTree = "<group>"; };
 		61B026390DCA1893009B90B3 /* nglLightLock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nglLightLock.h; path = include/nglLightLock.h; sourceTree = SOURCE_ROOT; };
 		61B0263A0DCA1893009B90B3 /* nglLock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nglLock.h; path = include/nglLock.h; sourceTree = SOURCE_ROOT; };
-		61B2DE880DABE0E00016C664 /* gl.h */ = {isa = PBXFileReference; fileEncoding = 4; name = gl.h; path = System/Library/Frameworks/OpenGLES.framework/Headers/ES1/gl.h; sourceTree = SDKROOT; };
-		61B2DE890DABE0E00016C664 /* glext.h */ = {isa = PBXFileReference; fileEncoding = 4; name = glext.h; path = System/Library/Frameworks/OpenGLES.framework/Headers/ES1/glext.h; sourceTree = SDKROOT; };
-		61B2DE8A0DABE1060016C664 /* EAGL.h */ = {isa = PBXFileReference; fileEncoding = 4; name = EAGL.h; path = System/Library/Frameworks/OpenGLES.framework/Headers/EAGL.h; sourceTree = SDKROOT; };
+		61B2DE880DABE0E00016C664 /* gl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gl.h; path = System/Library/Frameworks/OpenGLES.framework/Headers/ES1/gl.h; sourceTree = SDKROOT; };
+		61B2DE890DABE0E00016C664 /* glext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = glext.h; path = System/Library/Frameworks/OpenGLES.framework/Headers/ES1/glext.h; sourceTree = SDKROOT; };
+		61B2DE8A0DABE1060016C664 /* EAGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EAGL.h; path = System/Library/Frameworks/OpenGLES.framework/Headers/EAGL.h; sourceTree = SDKROOT; };
 		61B2DEB50DABE8B00016C664 /* gl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gl.h; sourceTree = "<group>"; };
 		61B2DEB60DABE8B00016C664 /* glext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glext.h; sourceTree = "<group>"; };
 		61B2DEB70DABE8B00016C664 /* glu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glu.h; sourceTree = "<group>"; };
@@ -5671,7 +5671,7 @@
 		E5E8C39F0F3742100092827F /* nuiScrollingLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiScrollingLabel.cpp; path = src/Text/nuiScrollingLabel.cpp; sourceTree = SOURCE_ROOT; };
 		E5E8C3A60F3742390092827F /* nuiHyperLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiHyperLink.h; path = include/nuiHyperLink.h; sourceTree = SOURCE_ROOT; };
 		E5E8C3A80F3742390092827F /* nuiScrollingLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiScrollingLabel.h; path = include/nuiScrollingLabel.h; sourceTree = SOURCE_ROOT; };
-		E5EB3ABA1147E5040078C71C /* CoreText.framework */ = {isa = PBXFileReference; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		E5EB3ABA1147E5040078C71C /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */

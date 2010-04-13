@@ -88,6 +88,8 @@ bool nuiInitBindings()
   nuiAddMethod(GetAlpha, nuiWidget::GetAlpha);
   nuiAddMethod(IsEnabled, nuiWidget::IsEnabled);
   nuiAddMethod(IsSelected, nuiWidget::IsSelected);
+  nuiAddMethod(Grab, nuiWidget::Grab);
+  nuiAddMethod(Ungrab, nuiWidget::Ungrab);
   nuiEndClass;
   
   nuiBindClass(nuiContainer);
