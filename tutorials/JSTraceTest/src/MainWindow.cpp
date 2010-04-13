@@ -42,9 +42,9 @@ void MainWindow::JSTest()
   pM->SetGlobal(_T("window"), (nuiSimpleContainer*)this);
   
   const char* script =
-  "function OnClicked(x, y, b) { this.Text = 'OnClicked called!(' + x + ',' + y + ',' + b + ')'; }"
-  "function OnUnclicked(x, y, b) { this.Text = 'OnUnclicked called!(' + x + ',' + y + ',' + b + ')'; }"
-  "function OnMoved(x, y) { this.Text = 'OnMoved called!(' + x + ',' + y + ')'; }"
+  "function OnClicked(x, y, b) { this.Text = 'OnClicked called!(' + x + ',' + y + ',' + b + ')'; this.TextColor = 'green'; }"
+  "function OnUnclicked(x, y, b) { this.Text = 'OnUnclicked called!(' + x + ',' + y + ',' + b + ')'; this.TextColor = 'blue'; }"
+  "function OnMoved(x, y) { this.Text = 'OnMoved called!(' + x + ',' + y + ')'; this.TextColor = 'red'; }"
   "NGL_OUT('nuiRight:' + nuiRight);\n"
   "var label = new nuiLabel('FromJS');\n"
   "NGL_OUT('label class:'+label.GetObjectClass());\n"
@@ -62,7 +62,7 @@ void MainWindow::JSTest()
   ;
   
   nglString program(script);
-  pM->Execute(program);
+  pM->ExecuteExpression(program);
 }
 
 void MainWindow::OnCreation()

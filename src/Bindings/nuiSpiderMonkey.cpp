@@ -55,7 +55,7 @@ nuiSpiderMonkey::~nuiSpiderMonkey()
   JS_ShutDown();
 }
 
-nuiVariant nuiSpiderMonkey::Execute(const nglString& rExpression)
+nuiVariant nuiSpiderMonkey::ExecuteExpression(const nglString& rExpression)
 {
   std::string program(rExpression.GetStdString());
   jsval rval;
@@ -64,6 +64,18 @@ nuiVariant nuiSpiderMonkey::Execute(const nglString& rExpression)
   GetVariantFromJSVal(var, rval);
   return var;
 }
+
+nuiVariant nuiSpiderMonkey::CompileProgram(const nglString& rSourceName, const nglString& rProgram)
+{
+  std::string program(rProgram.GetStdString());
+  std::string filename(rSourceName.GetStdString());
+  jsval rval;
+  JSBool res = JS_EvaluateScript(mContext, mGlobal, program.c_str(), program.size(), filename.c_str(), filename.size(), &rval);
+  nuiVariant var;
+  GetVariantFromJSVal(var, rval);
+  return var;
+}
+
 
 void nuiSpiderMonkey::SetGlobal(const nglString& rName, const nuiVariant& rVariant)
 {

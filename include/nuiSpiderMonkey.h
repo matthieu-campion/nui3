@@ -38,6 +38,26 @@ typedef intptr_t jsval;
 typedef int JSBool;
 typedef uint uintN;
 
+class nuiScriptEngine
+{
+public:
+  nuiScriptEngine();
+  virtual ~nuiScriptEngine();
+  
+  typedef nuiFastDelegate1<const nglString&, nglIStream*> SourceGetterDelegate;
+  void SetSourceGetterDelegate(const SourceGetterDelegate& rDelegate);
+  
+  virtual void SetGlobal(const nglString& rName, const nuiVariant& rVariant) = 0;
+  virtual nuiVariant GetGlobal(const nglString& rName) = 0;
+
+  virtual nuiVariant ExecuteExpression(const nglString& rExpression) = 0;
+  virtual nuiVariant CompileProgram(const nglString& rSourceName, const nglString& rProgram) = 0;
+
+protected:
+  SourceGetterDelegate mSourceGetterDelegate;
+  
+};
+
 class nuiSpiderMonkey
 {
 public:
@@ -45,7 +65,9 @@ public:
   virtual ~nuiSpiderMonkey();
 
   void SetGlobal(const nglString& rName, const nuiVariant& rVariant);
-  nuiVariant Execute(const nglString& rExpression);
+  nuiVariant GetGlobal(const nglString& rName);
+  nuiVariant ExecuteExpression(const nglString& rExpression);
+  nuiVariant CompileProgram(const nglString& rSourceName, const nglString& rProgram);
   
 protected:
 

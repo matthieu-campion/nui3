@@ -860,7 +860,7 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
   glClearColor(0, 0, 0, 1);
   glClear(GL_COLOR_BUFFER_BIT);
   
-  [pUIWindow UpdateOrientation: TRUE];
+  [pUIWindow UpdateOrientation: FALSE];
 }
 
 nglWindow::~nglWindow()

@@ -360,18 +360,18 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {1713, 718}}</string>
+								<string>{{0, 0}, {1713, 711}}</string>
 								<key>RubberWindowFrame</key>
 								<string>0 59 1920 1119 0 0 1920 1178 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>718pt</string>
+							<string>711pt</string>
 						</dict>
 						<dict>
 							<key>Proportion</key>
-							<string>355pt</string>
+							<string>362pt</string>
 							<key>Tabs</key>
 							<array>
 								<dict>
@@ -385,7 +385,7 @@
 									<key>GeometryConfiguration</key>
 									<dict>
 										<key>Frame</key>
-										<string>{{10, 27}, {1713, 328}}</string>
+										<string>{{10, 27}, {1713, 335}}</string>
 										<key>RubberWindowFrame</key>
 										<string>0 59 1920 1119 0 0 1920 1178 </string>
 									</dict>
@@ -469,11 +469,11 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E5B1A02D1162409E0097E62F</string>
+				<string>E5033CB1116BBF3300C1488D</string>
 				<string>1CA23ED40692098700951B8B</string>
-				<string>E5B1A02E1162409E0097E62F</string>
+				<string>E5033CB2116BBF3300C1488D</string>
 				<string>E54257CF115B80E400EE458C</string>
-				<string>E5B1A02F1162409E0097E62F</string>
+				<string>E5033CB3116BBF3300C1488D</string>
 				<string>1CA23EDF0692099D00951B8B</string>
 				<string>1CA23EE00692099D00951B8B</string>
 				<string>1CA23EE10692099D00951B8B</string>
@@ -648,7 +648,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>291651742.51079601</real>
+	<real>292282167.73820502</real>
 	<key>ToolbarConfigUserDefaultsMinorVersion</key>
 	<string>2</string>
 	<key>ToolbarDisplayMode</key>
