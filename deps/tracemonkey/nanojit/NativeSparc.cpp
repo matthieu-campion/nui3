@@ -39,13 +39,13 @@
  * ***** END LICENSE BLOCK ***** */
 #include "js-confdefs.h"
 
+#if defined FEATURE_NANOJIT && defined NANOJIT_SPARC
 #include <sys/mman.h>
 #include <errno.h>
 #include "nanojit.h"
 
 namespace nanojit
 {
-#if defined FEATURE_NANOJIT && defined NANOJIT_SPARC
 
 #ifdef NJ_VERBOSE
     const char *regNames[] = {
@@ -1039,5 +1039,5 @@ namespace nanojit
         verbose_only( SWAP(size_t, codeBytes, exitBytes); )
     }
 
-#endif /* FEATURE_NANOJIT */
 }
+#endif /* FEATURE_NANOJIT */

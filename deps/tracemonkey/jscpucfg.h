@@ -65,10 +65,13 @@
 
 #define IS_LITTLE_ENDIAN 1
 #undef  IS_BIG_ENDIAN
-#define JS_BYTES_PER_DOUBLE 8L
-#define JS_BYTES_PER_WORD   4L
-#define JS_BITS_PER_WORD_LOG2   5
-#define JS_ALIGN_OF_POINTER 4L
+
+#ifndef JS_BYTES_PER_DOUBLE
+  #define JS_BYTES_PER_DOUBLE 8L
+  #define JS_BYTES_PER_WORD   4L
+  #define JS_BITS_PER_WORD_LOG2   5
+  #define JS_ALIGN_OF_POINTER 4L
+#endif
 
 #endif /* _WIN32 || XP_OS2 || WINCE*/
 

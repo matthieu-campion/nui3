@@ -21,7 +21,6 @@
   #   define AVMPLUS_ARM 1
   #endif
 
-  #define AVMPLUS_UNIX 1
   #define CPP_THROW_NEW throw()
   #define D_INO d_ino
   #define EDITLINE 1
@@ -41,7 +40,6 @@
   #define HAVE_DLADDR 1
   #define HAVE_FCHMOD 1
   #define HAVE_FLOCKFILE 1
-  #define HAVE_GETC_UNLOCKED 1
   #define HAVE_GETOPT_H 1
   #define HAVE_GETPAGESIZE 1
   #define HAVE_I18N_LC_MESSAGES 1
@@ -49,7 +47,6 @@
   #define HAVE_INT32_T 1
   #define HAVE_INT64_T 1
   #define HAVE_LCHOWN 1
-  #define HAVE_LOCALTIME_R 1
   #define HAVE_LSTAT64 1
   #define HAVE_MBRTOWC 1
   #define HAVE_MEMMOVE 1
@@ -73,7 +70,6 @@
   #define HAVE_TM_ZONE_TM_GMTOFF 1
   #define HAVE_UINT 1
   #define HAVE_UNISTD_H 1
-  #define HAVE_VA_COPY 1
   #define HAVE_VA_LIST_AS_ARRAY 1
   #define HAVE_VISIBILITY_ATTRIBUTE 1
   #define HAVE_VISIBILITY_HIDDEN_ATTRIBUTE 1
@@ -94,10 +90,6 @@
     #define JS_BYTES_PER_WORD 4
   #endif
 
-  #ifndef WIN32
-    #define JS_HAVE_STDINT_H 1
-  #endif
-
   //#define JS_THREADSAFE 1
   #define JS_TRACER 1
   #define MOZ_DLL_SUFFIX ".dylib"
@@ -106,10 +98,18 @@
   #define STDC_HEADERS 1
   #define UNIX_ASYNC_DNS 1
   #define VA_COPY va_copy
-  #define XP_UNIX 1
+  #ifndef XP_WIN
+    #define XP_UNIX 1
+    #define AVMPLUS_UNIX 1
+    #define HAVE_LOCALTIME_R 1
+    #define JS_HAVE_STDINT_H 1
+    #define HAVE_GETC_UNLOCKED 1
+    #define HAVE_VA_COPY 1
+  #endif
   #define X_DISPLAY_MISSING 1
 
   #define Boolean __JS_Boolean
 
 #endif /* _JS_CONFDEFS_H_ */
 
+ 
