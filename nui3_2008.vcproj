@@ -10001,6 +10001,7 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+								PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
@@ -10055,6 +10056,7 @@
 								<Tool
 									Name="VCCLCompilerTool"
 									AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+									PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 									UsePrecompiledHeader="0"
 								/>
 							</FileConfiguration>
@@ -10098,6 +10100,7 @@
 								<Tool
 									Name="VCCLCompilerTool"
 									AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+									PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 									UsePrecompiledHeader="0"
 								/>
 							</FileConfiguration>
@@ -10141,6 +10144,7 @@
 								<Tool
 									Name="VCCLCompilerTool"
 									AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+									PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 									UsePrecompiledHeader="0"
 								/>
 							</FileConfiguration>
@@ -10184,6 +10188,7 @@
 								<Tool
 									Name="VCCLCompilerTool"
 									AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+									PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 									UsePrecompiledHeader="0"
 								/>
 							</FileConfiguration>
@@ -10227,6 +10232,7 @@
 								<Tool
 									Name="VCCLCompilerTool"
 									AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+									PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 									UsePrecompiledHeader="0"
 								/>
 							</FileConfiguration>
@@ -10270,6 +10276,7 @@
 								<Tool
 									Name="VCCLCompilerTool"
 									AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+									PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 									UsePrecompiledHeader="0"
 								/>
 							</FileConfiguration>
@@ -10313,6 +10320,7 @@
 								<Tool
 									Name="VCCLCompilerTool"
 									AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+									PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 									UsePrecompiledHeader="0"
 								/>
 							</FileConfiguration>
@@ -10356,6 +10364,7 @@
 								<Tool
 									Name="VCCLCompilerTool"
 									AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+									PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 									UsePrecompiledHeader="0"
 								/>
 							</FileConfiguration>
@@ -10399,6 +10408,7 @@
 								<Tool
 									Name="VCCLCompilerTool"
 									AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+									PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 									UsePrecompiledHeader="0"
 								/>
 							</FileConfiguration>
@@ -10442,6 +10452,7 @@
 								<Tool
 									Name="VCCLCompilerTool"
 									AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+									PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 									UsePrecompiledHeader="0"
 								/>
 							</FileConfiguration>
@@ -10485,6 +10496,7 @@
 								<Tool
 									Name="VCCLCompilerTool"
 									AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+									PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 									UsePrecompiledHeader="0"
 								/>
 							</FileConfiguration>
@@ -10528,6 +10540,7 @@
 								<Tool
 									Name="VCCLCompilerTool"
 									AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+									PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 									UsePrecompiledHeader="0"
 								/>
 							</FileConfiguration>
@@ -10571,6 +10584,7 @@
 								<Tool
 									Name="VCCLCompilerTool"
 									AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+									PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 									UsePrecompiledHeader="0"
 								/>
 							</FileConfiguration>
@@ -10614,6 +10628,7 @@
 								<Tool
 									Name="VCCLCompilerTool"
 									AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+									PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 									UsePrecompiledHeader="0"
 								/>
 							</FileConfiguration>
@@ -10657,6 +10672,7 @@
 								<Tool
 									Name="VCCLCompilerTool"
 									AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+									PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 									UsePrecompiledHeader="0"
 								/>
 							</FileConfiguration>
@@ -10700,6 +10716,7 @@
 								<Tool
 									Name="VCCLCompilerTool"
 									AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+									PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 									UsePrecompiledHeader="0"
 								/>
 							</FileConfiguration>
@@ -10828,6 +10845,7 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+								PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
@@ -10871,6 +10889,7 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+								PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
@@ -10914,6 +10933,7 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+								PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
@@ -10957,6 +10977,7 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+								PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
@@ -11000,6 +11021,7 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+								PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
@@ -11043,6 +11065,7 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+								PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
@@ -11086,6 +11109,7 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+								PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
@@ -11129,6 +11153,7 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+								PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
@@ -11172,6 +11197,7 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+								PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
@@ -11215,6 +11241,7 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+								PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
@@ -11258,6 +11285,7 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+								PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
@@ -11301,6 +11329,7 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+								PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
@@ -11344,6 +11373,7 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+								PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
@@ -11387,6 +11417,7 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+								PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
@@ -11430,6 +11461,7 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+								PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
@@ -11473,6 +11505,7 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+								PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
@@ -11516,6 +11549,7 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+								PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
@@ -11559,6 +11593,7 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+								PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
@@ -11602,6 +11637,7 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+								PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
@@ -11645,6 +11681,7 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+								PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
@@ -11688,6 +11725,7 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+								PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
@@ -11731,6 +11769,7 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+								PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
@@ -11774,6 +11813,7 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+								PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
@@ -11817,6 +11857,7 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+								PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
@@ -11860,6 +11901,7 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+								PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
@@ -11903,6 +11945,7 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+								PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
@@ -11946,6 +11989,7 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+								PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
@@ -11989,6 +12033,7 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+								PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
@@ -12032,6 +12077,7 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+								PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
@@ -12075,6 +12121,7 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+								PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
@@ -12118,6 +12165,7 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+								PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
@@ -12161,6 +12209,7 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+								PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
@@ -12204,6 +12253,7 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+								PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
@@ -12247,6 +12297,7 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+								PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
@@ -12290,6 +12341,7 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+								PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
@@ -12333,6 +12385,7 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+								PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
@@ -12376,6 +12429,7 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+								PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
@@ -12419,6 +12473,7 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+								PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
@@ -12462,6 +12517,7 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+								PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
@@ -12505,6 +12561,7 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								AdditionalIncludeDirectories="deps/tracemonkey;deps/tracemonkey/nanojit;deps/tracemonkey/vprof"
+								PreprocessorDefinitions="WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_AMD64_=1;STATIC_JS_API;JSFILE;XP_WIN;AVMPLUS_WIN32;AVMPLUS_LITTLE_ENDIAN;FEATURE_NANOJIT;AVMPLUS_AMD64;JS_TRACER"
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
