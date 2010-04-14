@@ -294,7 +294,6 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>7</integer>
 									<integer>3</integer>
 									<integer>0</integer>
 								</array>
@@ -331,7 +330,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>E560A4551136C1BE00AFBEAC</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>MainWindow.cpp</string>
+								<string></string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -339,11 +338,7 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>E560A4561136C1BE00AFBEAC</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>MainWindow.cpp</string>
-										<key>_historyCapacity</key>
-										<integer>0</integer>
-										<key>bookmark</key>
-										<string>E5AFA4D31175483D0021C1E1</string>
+										<string></string>
 										<key>history</key>
 										<array>
 											<string>E560A46E1136D56A00AFBEAC</string>
@@ -352,9 +347,7 @@
 											<string>E560A55511373AE100AFBEAC</string>
 											<string>E5ACDE86113C905600CBE6DA</string>
 											<string>E5AFA4B8117546580021C1E1</string>
-											<string>E5AFA4C7117548090021C1E1</string>
-											<string>E5AFA4C8117548090021C1E1</string>
-											<string>E5AFA4D1117548390021C1E1</string>
+											<string>E5AFA50611754A370021C1E1</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -658,7 +651,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>292898877.886154</real>
+	<real>292899387.74679297</real>
 	<key>ToolbarConfigUserDefaultsMinorVersion</key>
 	<string>2</string>
 	<key>ToolbarDisplayMode</key>
@@ -675,7 +668,7 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E5AFA4D41175483D0021C1E1</string>
+		<string>E5AFA50711754A3B0021C1E1</string>
 		<string>E5AFA4CD1175480E0021C1E1</string>
 		<string>E5AFA4CE1175480E0021C1E1</string>
 		<string>/Users/meeloo/work/nui3/tutorials/HTTPUpload/HTTPUpload.xcodeproj</string>

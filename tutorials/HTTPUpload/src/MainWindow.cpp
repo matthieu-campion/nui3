@@ -42,72 +42,12 @@ void MainWindow::OnCreation()
   nglString fileref(_T("MyFile"));
   nglString filename(_T("prout.txt"));
   nglPath fname(_T("rsrc:/css/main.css"));
-  const uint8* data = (const uint8*)"YATTA!";
-  uint32 datalen = strlen((const char*)data);
-
-#if 0
-  //////////////////////////////////////
-  //  nglString filename(_T(""));
-
-  nglString mimetype("plain/text");
-  //////////////////////////////////////
-  
-  nglString boundary;
-  boundary.Add(_T("NuiBoundary"));
-  boundary.Add((uint32)nglTime(), 16);
-  nglOMemory mem;
-  mem.SetTextFormat(eTextDOS);
-  mem.SetTextEncoding(eUTF8);
-  nglString str;
-  
-  nglString start;
-  start.CFormat(_T("--%ls"), boundary.GetChars());
-  
-  nglString end;
-  end.Add(_T("\n"));
-  end.Add(start);
-  end.Add(_T("--\n"));
-  start.Add(_T("\n"));
-
-
-  //str.CFormat(_T("Content-type: multipart/form-data, boundary=%ls\n\n"), boundary.GetChars());
-  str.CFormat(_T("multipart/form-data; boundary=%ls"), boundary.GetChars());
-  request.AddHeader(_T("Content-Type"), str);
-  //mem.WriteText(str);
-
-  
-  
-  mem.WriteText(start);
-
-  str.CFormat(_T("Content-Disposition: form-data; name=\"%ls\"\n\n"), varname.GetChars());
-  mem.WriteText(str);
-  mem.WriteText(value);
-  mem.WriteText(_T("\n"));
-
-  mem.WriteText(start);
-  str.CFormat(_T("Content-Disposition: form-data; name=\"%ls\"; filename=\"%ls\"\n"), fileref.GetChars(), filename.GetChars());
-  mem.WriteText(str);
-  
-  str.CFormat(_T("Content-Type: %ls\n\n"), mimetype.GetChars());
-  mem.WriteText(str);
-  mem.WriteUInt8(data, datalen);
-  mem.WriteText(end);
-  
-  request.SetBody(mem.GetBufferData(), mem.GetSize());
-  
-  //mem.WriteUInt8((const uint8*)"\0", 1); // Add final 0 for printf
-  nglString enc(mem.GetBufferData(),  mem.GetSize());
-  NGL_OUT(_T("Mime encoded:\n%ls\n"), enc.GetChars());
-
-#else
 
   nuiMimeMultiPart mime;
   mime.AddVariable(varname, value);
   mime.AddFile(fileref, filename, fname);
   mime.Dump(&request);
   
-#endif
-
   nuiHTTPResponse* pRes = request.SendRequest();
 
   nuiHTMLView* pView = new nuiHTMLView();

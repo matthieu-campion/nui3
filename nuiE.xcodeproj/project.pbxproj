@@ -4052,6 +4052,14 @@
 		E5A9284C0ED2DD6100517AE8 /* AAPrimitives.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D57A0DA5716500D2641A /* AAPrimitives.h */; };
 		E5AADD970F4312AE007C6CA9 /* nuiRangeKnobAttributeEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5AADD960F4312AE007C6CA9 /* nuiRangeKnobAttributeEditor.cpp */; };
 		E5AADD980F4312AE007C6CA9 /* nuiRangeKnobAttributeEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5AADD960F4312AE007C6CA9 /* nuiRangeKnobAttributeEditor.cpp */; };
+		E5AFA4F811754A090021C1E1 /* nuiMimeMultiPart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5AFA4F711754A090021C1E1 /* nuiMimeMultiPart.cpp */; };
+		E5AFA4F911754A090021C1E1 /* nuiMimeMultiPart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5AFA4F711754A090021C1E1 /* nuiMimeMultiPart.cpp */; };
+		E5AFA4FA11754A090021C1E1 /* nuiMimeMultiPart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5AFA4F711754A090021C1E1 /* nuiMimeMultiPart.cpp */; };
+		E5AFA4FB11754A090021C1E1 /* nuiMimeMultiPart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5AFA4F711754A090021C1E1 /* nuiMimeMultiPart.cpp */; };
+		E5AFA4FD11754A220021C1E1 /* nuiMimeMultiPart.h in Headers */ = {isa = PBXBuildFile; fileRef = E5AFA4FC11754A220021C1E1 /* nuiMimeMultiPart.h */; };
+		E5AFA4FE11754A220021C1E1 /* nuiMimeMultiPart.h in Headers */ = {isa = PBXBuildFile; fileRef = E5AFA4FC11754A220021C1E1 /* nuiMimeMultiPart.h */; };
+		E5AFA4FF11754A220021C1E1 /* nuiMimeMultiPart.h in Headers */ = {isa = PBXBuildFile; fileRef = E5AFA4FC11754A220021C1E1 /* nuiMimeMultiPart.h */; };
+		E5AFA50011754A220021C1E1 /* nuiMimeMultiPart.h in Headers */ = {isa = PBXBuildFile; fileRef = E5AFA4FC11754A220021C1E1 /* nuiMimeMultiPart.h */; };
 		E5B45DE41139759B000BE2A1 /* nuiObjectInspector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5B45DE31139759B000BE2A1 /* nuiObjectInspector.cpp */; };
 		E5B45DE51139759B000BE2A1 /* nuiObjectInspector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5B45DE31139759B000BE2A1 /* nuiObjectInspector.cpp */; };
 		E5B45DE61139759B000BE2A1 /* nuiObjectInspector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5B45DE31139759B000BE2A1 /* nuiObjectInspector.cpp */; };
@@ -5608,6 +5616,8 @@
 		E5A686D710F5573F00543060 /* nuiAsyncIStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiAsyncIStream.cpp; path = src/Stream/nuiAsyncIStream.cpp; sourceTree = SOURCE_ROOT; };
 		E5A686DC10F5575B00543060 /* nuiAsyncIStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiAsyncIStream.h; path = include/nuiAsyncIStream.h; sourceTree = SOURCE_ROOT; };
 		E5AADD960F4312AE007C6CA9 /* nuiRangeKnobAttributeEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiRangeKnobAttributeEditor.cpp; path = src/Attributes/nuiRangeKnobAttributeEditor.cpp; sourceTree = SOURCE_ROOT; };
+		E5AFA4F711754A090021C1E1 /* nuiMimeMultiPart.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiMimeMultiPart.cpp; path = src/Net/nuiMimeMultiPart.cpp; sourceTree = SOURCE_ROOT; };
+		E5AFA4FC11754A220021C1E1 /* nuiMimeMultiPart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiMimeMultiPart.h; path = include/nuiMimeMultiPart.h; sourceTree = SOURCE_ROOT; };
 		E5B45DE31139759B000BE2A1 /* nuiObjectInspector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiObjectInspector.cpp; path = Introspector/nuiObjectInspector.cpp; sourceTree = "<group>"; };
 		E5B45DE8113975C5000BE2A1 /* nuiObjectInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiObjectInspector.h; path = include/nuiObjectInspector.h; sourceTree = SOURCE_ROOT; };
 		E5B6C3840F5F4E8F00E0DFFD /* nuiGenericAttributeEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiGenericAttributeEditor.cpp; path = src/Attributes/nuiGenericAttributeEditor.cpp; sourceTree = SOURCE_ROOT; };
@@ -6189,6 +6199,8 @@
 		6126D56F0DA5716500D2641A /* Net */ = {
 			isa = PBXGroup;
 			children = (
+				E5AFA4FC11754A220021C1E1 /* nuiMimeMultiPart.h */,
+				E5AFA4F711754A090021C1E1 /* nuiMimeMultiPart.cpp */,
 				E53120A60F07817A0081CB7E /* nuiURL.h */,
 				E53120A00F0781500081CB7E /* nuiHTTP_CoreFoundation.cpp */,
 				E53120A10F0781500081CB7E /* nuiURL_CoreFoundation.cpp */,
@@ -8551,6 +8563,7 @@
 				E52CC38111751DA80031DFA8 /* prmjtime.h in Headers */,
 				E52CC38211751DA80031DFA8 /* resource.h in Headers */,
 				E52CC38411751DA80031DFA8 /* vprof.h in Headers */,
+				E5AFA4FF11754A220021C1E1 /* nuiMimeMultiPart.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9188,6 +9201,7 @@
 				E52CC41D11751DA80031DFA8 /* prmjtime.h in Headers */,
 				E52CC41E11751DA80031DFA8 /* resource.h in Headers */,
 				E52CC42011751DA80031DFA8 /* vprof.h in Headers */,
+				E5AFA50011754A220021C1E1 /* nuiMimeMultiPart.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9825,6 +9839,7 @@
 				E52CC24911751DA80031DFA8 /* prmjtime.h in Headers */,
 				E52CC24A11751DA80031DFA8 /* resource.h in Headers */,
 				E52CC24C11751DA80031DFA8 /* vprof.h in Headers */,
+				E5AFA4FD11754A220021C1E1 /* nuiMimeMultiPart.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10463,6 +10478,7 @@
 				E52CC2E511751DA80031DFA8 /* prmjtime.h in Headers */,
 				E52CC2E611751DA80031DFA8 /* resource.h in Headers */,
 				E52CC2E811751DA80031DFA8 /* vprof.h in Headers */,
+				E5AFA4FE11754A220021C1E1 /* nuiMimeMultiPart.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10995,6 +11011,7 @@
 				E52CC37E11751DA80031DFA8 /* VMPI.cpp in Sources */,
 				E52CC38011751DA80031DFA8 /* prmjtime.cpp in Sources */,
 				E52CC38311751DA80031DFA8 /* vprof.cpp in Sources */,
+				E5AFA4FA11754A090021C1E1 /* nuiMimeMultiPart.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11434,6 +11451,7 @@
 				E52CC41A11751DA80031DFA8 /* VMPI.cpp in Sources */,
 				E52CC41C11751DA80031DFA8 /* prmjtime.cpp in Sources */,
 				E52CC41F11751DA80031DFA8 /* vprof.cpp in Sources */,
+				E5AFA4FB11754A090021C1E1 /* nuiMimeMultiPart.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11873,6 +11891,7 @@
 				E52CC24611751DA80031DFA8 /* VMPI.cpp in Sources */,
 				E52CC24811751DA80031DFA8 /* prmjtime.cpp in Sources */,
 				E52CC24B11751DA80031DFA8 /* vprof.cpp in Sources */,
+				E5AFA4F811754A090021C1E1 /* nuiMimeMultiPart.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12313,6 +12332,7 @@
 				E52CC2E211751DA80031DFA8 /* VMPI.cpp in Sources */,
 				E52CC2E411751DA80031DFA8 /* prmjtime.cpp in Sources */,
 				E52CC2E711751DA80031DFA8 /* vprof.cpp in Sources */,
+				E5AFA4F911754A090021C1E1 /* nuiMimeMultiPart.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
