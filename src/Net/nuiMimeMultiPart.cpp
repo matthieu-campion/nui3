@@ -7,78 +7,129 @@
 
 #include "nui.h"
 #include "nuiMimeMultiPart.h"
+#include "nuiHTTP.h"
 
-#if 0
 nuiMimeMultiPart::nuiMimeMultiPart(const nglString& rName, const nglString& rContentType, const nglString& rBoundary)
 : mName(rName), 
-  mContentType(rContentType),
+  mType(rContentType),
   mBoundary(rBoundary)
 {
+  if (mBoundary.IsEmpty())
+  {
+    mBoundary.Add(_T("NuiBoundary"));
+    mBoundary.Add((uint32)nglTime(), 16);
+  }
 }
 
-nuiMimeMultiPart::nuiHTTPMessage()
+nuiMimeMultiPart::~nuiMimeMultiPart()
 {
-  for (uint32 i = 0; i > mpParts.size(); i++)
-    delete mpParts[i];
   for (uint32 i = 0; i > mpFiles.size(); i++)
     delete mpFiles[i];
 }
 
-void nuiMimeMultiPart::AddPart(nuiMimeMultiPart* pPart)
-{
-  mpParts.push_back(pPart);
-}
-
 void nuiMimeMultiPart::AddFile(const nglString& rVarName, const nglString& rFileName, nglIStream* pStream)
 {
-  nuiMimeMultiPart* pChild = new nuiMimeMultiPart(rName, _T("multipart/mixed"));
-  AddFile(pChild);
+  File* pFile = new File(pStream, rVarName, rFileName);
+  mpFiles.push_back(pFile);
 }
 
 void nuiMimeMultiPart::AddFile(const nglString& rVarName, const nglString& rFileName, const nglPath& rPath)
 {
-  
+  nglIStream* pFile = rPath.OpenRead();
+  if (!pFile)
+    return;
+  AddFile(rVarName, rFileName, pFile);
 }
 
 void nuiMimeMultiPart::AddVariable(const nglString& rName, const nglString& rValue)
 {
-  nuiMimeMultiPart* pChild = new nuiMimeMultiPart(rName, 
-}
-
-void nuiMimeMultiPart::SetContents(nglIStream* pStream)
-{
-  uint32 size = pStream->GetAvailable();
-  mContents.resize(size);
-  pStream->Read(&mContents[0], size, 1);
-}
-
-void nuiMimeMultiPart::SetContents(const uint8* pBuffer, uint32 size)
-{
-  mContents.resize(size);
-  memcpy(&mContents[0], pBuffer, size)
-}
-
-void nuiMimeMultiPart::SetContents(const std::vector<uint8>& rData)
-{
-  mContents = rData;
+  mVariables[rName] = rValue;
 }
 
 
 void nuiMimeMultiPart::Dump(nglOStream* pStream)
 {
-  nglString boundary(mBoundary);
-  if (mBoundary.IsNull())
+  nglString varname(_T("MyParam"));
+  nglString value(_T("MyValue"));
+  
+  nglString fileref(_T("MyFile"));
+  nglString filename(_T("prout.txt"));
+  //  nglString filename(_T(""));
+  
+  nglString mimetype("plain/text");
+  const uint8* data = (const uint8*)"YATTA!";
+  uint32 datalen = strlen((const char*)data);
+  //////////////////////////////////////
+  
+  nglString str;
+
+  // prepare start and end boundaries:
+  nglString start;
+  start.CFormat(_T("--%ls"), mBoundary.GetChars());
+  
+  nglString end;
+  end.Add(_T("\n"));
+  end.Add(start);
+  end.Add(_T("--\n"));
+  start.Add(_T("\n"));
+  
+  
   {
-    boundary.Add(_T("NuiBoundary"));
-    boundary.Add((uint32)nglTime(), 16);
+    std::map<nglString, nglString>::const_iterator it = mVariables.begin();
+    std::map<nglString, nglString>::const_iterator end = mVariables.end();
+    while (it != end)
+    {
+      pStream->WriteText(start);
+      
+      str.CFormat(_T("Content-Disposition: form-data; name=\"%ls\"\n\n"), it->first.GetChars());
+      pStream->WriteText(str);
+      pStream->WriteText(it->second);
+      pStream->WriteText(_T("\n"));
+      
+      ++it;
+    }
   }
+
+  {  
+    for (uint32 i = 0; i < mpFiles.size(); i++)
+    {
+      pStream->WriteText(start);
+      str.CFormat(_T("Content-Disposition: form-data; name=\"%ls\"; filename=\"%ls\"\n"), mpFiles[i]->mVarName.GetChars(), mpFiles[i]->mFileName.GetChars());
+      pStream->WriteText(str);
+      
+      str.CFormat(_T("Content-Type: %ls\n\n"), mpFiles[i]->mType.GetChars());
+      pStream->WriteText(str);
+      pStream->WriteUInt8(&mpFiles[i]->mContents[0], mpFiles[i]->mContents.size());
+    }
+  }
+
+  if (mVariables.empty() && mpFiles.empty())
+    pStream->WriteText(start);
+    
+  pStream->WriteText(end);
+  
+  
+  //mem.WriteUInt8((const uint8*)"\0", 1); // Add final 0 for printf
+  //nglString enc(mem.GetBufferData(),  mem.GetSize());
+  //NGL_OUT(_T("Mime encoded:\n%ls\n"), enc.GetChars());
 }
 
 void nuiMimeMultiPart::Dump(nuiHTTPMessage* pMessage)
 {
+  // Change the content-type header:
+  nglString header;
+  header.CFormat(_T("multipart/form-data; boundary=%ls"), mBoundary.GetChars());
+  pMessage->AddHeader(_T("Content-Type"), header);
   
+  // Output multi part mime to memory:
+  nglOMemory mem;
+  mem.SetTextFormat(eTextDOS);
+  mem.SetTextEncoding(eUTF8);
+  Dump(&mem);
+  
+  // Set the body of the message from memory
+  pMessage->SetBody(mem.GetBufferData(), mem.GetSize());
 }
-#endif
                                                   
                                                   
 #if 0

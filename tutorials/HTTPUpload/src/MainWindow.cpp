@@ -13,7 +13,7 @@
 #include "nuiHTTP.h"
 #include "nglOMemory.h"
 #include "nuiHTMLView.h"
-
+#include "nuiMimeMultiPart.h"
 
 /*
  * MainWindow
@@ -35,20 +35,23 @@ MainWindow::~MainWindow()
 
 void MainWindow::OnCreation()
 {
-  //////////////////////////////////////
+  nuiHTTPRequest request(_T("http://127.0.0.1:8888/"), _T("POST"));
   nglString varname(_T("MyParam"));
   nglString value(_T("MyValue"));
   
   nglString fileref(_T("MyFile"));
   nglString filename(_T("prout.txt"));
+  nglPath fname(_T("rsrc:/css/main.css"));
+  const uint8* data = (const uint8*)"YATTA!";
+  uint32 datalen = strlen((const char*)data);
+
+#if 0
+  //////////////////////////////////////
   //  nglString filename(_T(""));
 
   nglString mimetype("plain/text");
-  const uint8* data = (const uint8*)"YATTA!";
-  uint32 datalen = strlen((const char*)data);
   //////////////////////////////////////
   
-  nuiHTTPRequest request(_T("http://127.0.0.1:8888/"), _T("POST"));
   nglString boundary;
   boundary.Add(_T("NuiBoundary"));
   boundary.Add((uint32)nglTime(), 16);
@@ -96,6 +99,15 @@ void MainWindow::OnCreation()
   nglString enc(mem.GetBufferData(),  mem.GetSize());
   NGL_OUT(_T("Mime encoded:\n%ls\n"), enc.GetChars());
 
+#else
+
+  nuiMimeMultiPart mime;
+  mime.AddVariable(varname, value);
+  mime.AddFile(fileref, filename, fname);
+  mime.Dump(&request);
+  
+#endif
+
   nuiHTTPResponse* pRes = request.SendRequest();
 
   nuiHTMLView* pView = new nuiHTMLView();
@@ -113,6 +125,8 @@ void MainWindow::OnCreation()
   }
 
   delete pRes;
+  
+
 }
 
 
