@@ -16,8 +16,8 @@ public:
   virtual ~nuiMimeMultiPart();
   
   void AddVariable(const nglString& rName, const nglString& rValue);
-  void AddFile(const nglString& rVarName, const nglString& rFileName, nglIStream* pStream);
-  void AddFile(const nglString& rVarName, const nglString& rFileName, const nglPath& rPath);
+  void AddFile(nglIStream* pStream, const nglString& rVarName, const nglString& rFileName);
+  void AddFile(const nglPath& rPath, const nglString& rVarName, const nglString& rFileName = nglString::Null); // If rFileName is a Null string then we use the rPath node name as the filename.
   
   void Dump(nglOStream* pStream);
   void Dump(nuiHTTPMessage* pMessage);

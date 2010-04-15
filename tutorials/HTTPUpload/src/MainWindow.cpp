@@ -36,16 +36,10 @@ MainWindow::~MainWindow()
 void MainWindow::OnCreation()
 {
   nuiHTTPRequest request(_T("http://127.0.0.1:8888/"), _T("POST"));
-  nglString varname(_T("MyParam"));
-  nglString value(_T("MyValue"));
   
-  nglString fileref(_T("MyFile"));
-  nglString filename(_T("prout.txt"));
-  nglPath fname(_T("rsrc:/css/main.css"));
-
   nuiMimeMultiPart mime;
-  mime.AddVariable(varname, value);
-  mime.AddFile(fileref, filename, fname);
+  mime.AddVariable(_T("MyParam"), _T("MyValue"));
+  mime.AddFile(_T("rsrc:/css/main.css"), _T("MyFile"));
   mime.Dump(&request);
   
   nuiHTTPResponse* pRes = request.SendRequest();
