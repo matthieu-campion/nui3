@@ -2739,7 +2739,7 @@ void nglString::EncodeBase64(const uint8* bytes_to_encode, unsigned int in_len)
       chars_in_line++;
       if (chars_in_line > 60)
       {
-        AddNewLine();
+        Add(_T("\r\n"));
         chars_in_line = 0;
       }
     }
@@ -2762,7 +2762,7 @@ void nglString::EncodeBase64(const uint8* bytes_to_encode, unsigned int in_len)
       chars_in_line++;
       if (chars_in_line > 60)
       {
-        AddNewLine();
+        Add(_T("\r\n"));
         chars_in_line = 0;
       }
     }
@@ -2772,7 +2772,7 @@ void nglString::EncodeBase64(const uint8* bytes_to_encode, unsigned int in_len)
       chars_in_line++;
       if (chars_in_line > 60)
       {
-        AddNewLine();
+        Add(_T("\r\n"));
         chars_in_line = 0;
       }
 

@@ -27,13 +27,41 @@ nuiMimeMultiPart::~nuiMimeMultiPart()
     delete mpFiles[i];
 }
 
-void nuiMimeMultiPart::AddFile(nglIStream* pStream, const nglString& rVarName, const nglString& rFileName)
+void nuiMimeMultiPart::AddFile(nglIStream* pStream, const nglString& rVarName, const nglString& rFileName, ContentTransfertEncoding encoding)
 {
-  File* pFile = new File(pStream, rVarName, rFileName);
+  File* pFile = NULL;
+
+  nglString enc;
+  switch (encoding)
+  {
+  case e7bit: enc = _T("7bit"); break;
+  case e8bit: enc = _T("8bit"); break;
+  case eBinary: enc = _T("binary"); break;
+  case eConvertToBase64: 
+  case eBase64: enc = _T("base64"); break;
+  }
+
+  if (encoding == eConvertToBase64)
+  {
+    std::vector<uint8> vec;
+    vec.resize(pStream->Available());
+    pStream->Read(&vec[0], vec.size(), 1);
+
+    nglString str;
+    str.EncodeBase64(&vec[0], vec.size());
+    char* pB64 = str.Export();
+    nglIMemory* pMem = new nglIMemory(pB64, strlen(pB64));
+    pFile = new File(pMem, rVarName, rFileName, enc);
+    free(pB64);
+  }
+  else
+  {
+    pFile = new File(pStream, rVarName, rFileName, enc);
+  }
   mpFiles.push_back(pFile);
 }
 
-void nuiMimeMultiPart::AddFile(const nglPath& rPath, const nglString& rVarName, const nglString& rFileName)
+void nuiMimeMultiPart::AddFile(const nglPath& rPath, const nglString& rVarName, const nglString& rFileName, ContentTransfertEncoding encoding)
 {
   nglString name(rFileName);
   if (name.IsNull())
@@ -43,7 +71,7 @@ void nuiMimeMultiPart::AddFile(const nglPath& rPath, const nglString& rVarName, 
   if (!pFile)
     return;
 
-  AddFile(pFile, rVarName, name);
+  AddFile(pFile, rVarName, name, encoding);
 }
 
 void nuiMimeMultiPart::AddVariable(const nglString& rName, const nglString& rValue)
@@ -101,7 +129,8 @@ void nuiMimeMultiPart::Dump(nglOStream* pStream)
       pStream->WriteText(start);
       str.CFormat(_T("Content-Disposition: form-data; name=\"%ls\"; filename=\"%ls\"\n"), mpFiles[i]->mVarName.GetChars(), mpFiles[i]->mFileName.GetChars());
       pStream->WriteText(str);
-      
+      str.CFormat(_T("Content-Transfer-Encoding: %ls\n"), mpFiles[i]->mContentTransfertEncoding.GetChars());
+      pStream->WriteText(str);
       str.CFormat(_T("Content-Type: %ls\n\n"), mpFiles[i]->mType.GetChars());
       pStream->WriteText(str);
       pStream->WriteUInt8(&mpFiles[i]->mContents[0], mpFiles[i]->mContents.size());
