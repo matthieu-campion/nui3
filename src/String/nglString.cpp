@@ -2720,6 +2720,8 @@ void nglString::EncodeBase64(const uint8* bytes_to_encode, unsigned int in_len)
   unsigned char char_array_3[3];
   unsigned char char_array_4[4];
   
+  int chars_in_line = 0;
+  
   while (in_len--)
   {
     char_array_3[i++] = *(bytes_to_encode++);
@@ -2731,8 +2733,15 @@ void nglString::EncodeBase64(const uint8* bytes_to_encode, unsigned int in_len)
       char_array_4[3] = char_array_3[2] & 0x3f;
       
       for(i = 0; (i <4) ; i++)
-        Add((nglChar)base64_chars[char_array_4[i]]);
+        Add((nglChar)base64_chars[char_array_4[i]]);    
       i = 0;
+      
+      chars_in_line++;
+      if (chars_in_line > 60)
+      {
+        AddNewLine();
+        chars_in_line = 0;
+      }
     }
   }
   
@@ -2747,10 +2756,28 @@ void nglString::EncodeBase64(const uint8* bytes_to_encode, unsigned int in_len)
     char_array_4[3] = char_array_3[2] & 0x3f;
     
     for (j = 0; (j < i + 1); j++)
+    {
       Add((nglChar)base64_chars[char_array_4[j]]);
+
+      chars_in_line++;
+      if (chars_in_line > 60)
+      {
+        AddNewLine();
+        chars_in_line = 0;
+      }
+    }
     
     while((i++ < 3))
+    {
+      chars_in_line++;
+      if (chars_in_line > 60)
+      {
+        AddNewLine();
+        chars_in_line = 0;
+      }
+
       Add((nglChar)'=');
+    }
     
   }
 
@@ -2760,6 +2787,7 @@ void nglString::DecodeBase64(std::vector<uint8>& rDecoded) const
 {
   rDecoded.clear();
   int32 in_len = GetLength();
+  rDecoded.reserve(in_len);
   int32 i = 0;
   int32 j = 0;
   int32 in_ = 0;
