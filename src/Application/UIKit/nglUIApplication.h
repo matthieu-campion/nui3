@@ -20,6 +20,7 @@
 }
 - (void) dealloc;
 - (void) applicationDidFinishLaunching:       (UIApplication*) pUIApp;
+- (BOOL) application:(UIApplication *)pUIApplication didFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
 - (void) applicationDidBecomeActive:          (UIApplication*) pUIApp;
 - (void) applicationWillResignActive:         (UIApplication*) pUIApp;
 - (void) applicationDidReceiveMemoryWarning:  (UIApplication*) pUIApp;

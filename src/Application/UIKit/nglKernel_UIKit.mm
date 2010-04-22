@@ -92,6 +92,15 @@ void objCCallOnInit(void* pUIApplication)
   App->CallOnInit();
 }
 
+void objCCallOnInitWithURL(void* pUIApplication, const nglString &url)
+{
+	NGL_ASSERT(App);
+	App->mpUIApplication = pUIApplication;
+	App->AddArg(_T("--openurl"));
+	App->AddArg(url);
+	App->CallOnInit();
+}
+
 void objCCallOnWillExit()
 {
   NGL_ASSERT(App);

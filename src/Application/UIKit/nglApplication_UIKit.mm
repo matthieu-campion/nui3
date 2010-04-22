@@ -13,6 +13,7 @@ using namespace std;
 */
 
 void objCCallOnInit(void* pUIApplication);
+void objCCallOnInitWithURL(void* pUIApplication, const nglString &url);
 void objCCallOnExit(int code);
 void objCCallOnWillExit();
 
@@ -56,6 +57,25 @@ void objCCallOnWillExit();
   NGL_ASSERT(App);
 
   objCCallOnInit(pUIApplication);
+}
+
+- (BOOL)application:(UIApplication *)pUIApplication didFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
+{
+	NGL_ASSERT(App);
+	NSURL *launchURL = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];	
+	//objCCallOnInitWithURL(pUIApplication, nglString ((CFStringRef)@"bleepbox://oauth?oauth_verifier=fffff"));
+	
+	if(launchURL)
+	{
+		NSString *urlstr = [launchURL absoluteString];
+		
+		objCCallOnInitWithURL(pUIApplication, nglString ((CFStringRef)urlstr));
+	} else {
+		
+		objCCallOnInit(pUIApplication);
+	}
+	 
+	
 }
 
 - (void) applicationDidBecomeActive:          (UIApplication*) pUIApplication
