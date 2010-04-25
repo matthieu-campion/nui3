@@ -2385,22 +2385,27 @@ void nuiWidget::SetVisible(bool Visible)
   if (mVisible == Visible)
     return;
 
-  Invalidate();
-  mVisible = Visible;
-  if (mVisible)
+  const nuiAnimation* pAnim = GetAnimation(_T("HIDE"));
+  if (pAnim && !Visible && (pAnim->GetPosition()==0 && pAnim->GetDuration()>0))
   {
-    mNeedLayout = false; // Force relayout
-    mNeedSelfLayout = false; // Force relayout
-    InvalidateLayout();
-  }
-  VisibilityChanged();
-  DebugRefreshInfo();
- 
-  ApplyCSSForStateChange(NUI_WIDGET_MATCHTAG_STATE);
-  if (mVisible)
-    StartAnimation(_T("SHOW"));
-  else
     StartAnimation(_T("HIDE"));
+  }
+  else
+  {
+    Invalidate();
+    mVisible = Visible;
+    if (mVisible)
+    {
+      mNeedLayout = false; // Force relayout
+      mNeedSelfLayout = false; // Force relayout
+      InvalidateLayout();
+    }
+    VisibilityChanged();
+    DebugRefreshInfo();
+    ApplyCSSForStateChange(NUI_WIDGET_MATCHTAG_STATE);
+    if (Visible)
+      StartAnimation(_T("SHOW"));
+  }
 }
 
 void nuiWidget::SilentSetVisible(bool Visible)
@@ -3398,6 +3403,8 @@ void nuiWidget::AddAnimation(const nglString& rName, nuiAnimation* pAnim)
   pAnim->SetDeleteOnStop(false); /// Cancel anim delete on stop or we'll crash as soon as the widget is destroyed or the user starts to play the anim once more.
   if (rName == _T("TRASH"))
     mGenericWidgetSink.Connect(pAnim->AnimStop, &nuiWidget::AutoTrash);
+  if (rName == _T("HIDE"))
+    mGenericWidgetSink.Connect(pAnim->AnimStop, &nuiWidget::AutoHide);
   DebugRefreshInfo();
 }
 
@@ -3732,6 +3739,13 @@ bool nuiWidget::AutoTrash(const nuiEvent& rEvent)
   return false;
 }
 
+bool nuiWidget::AutoHide(const nuiEvent& rEvent)
+{
+  CheckValid();
+  SetVisible(false);
+  return false;
+}
+                         
 bool nuiWidget::IsDrawingInCache(bool Recurse) 
 { 
   CheckValid();

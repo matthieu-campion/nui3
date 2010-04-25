@@ -428,9 +428,9 @@ void nuiAnimation::InternalStop()
   mCount = 0;
   //NGL_LOG(_T("nuiAnimation), NGL_LOG_DEBUG, _T("Stop at %f\n"), GetDuration());
   mAnimSink.Disconnect(GetTimer()->Tick, &nuiAnimation::OnTick);
-  mCurrentPosition = 0;
   AnimStop();
-  
+  mCurrentPosition = 0;
+
   if (mDeleteOnStop)
     delete this;
 }
