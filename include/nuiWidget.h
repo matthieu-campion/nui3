@@ -697,7 +697,9 @@ protected:
   nuiSize GetOverDrawTop() const;
   nuiSize GetOverDrawRight() const;
   nuiSize GetOverDrawBottom() const;
-  
+
+  bool AutoHide(const nuiEvent& rEvent); ///< This methods calls SetVisible(false) right after the HIDE animation stopped
+
   void InternalSetLayout(const nuiRect& rect);
   virtual void InternalSetLayout(const nuiRect& rect, bool PositionChanged, bool SizeChanged);
   
