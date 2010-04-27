@@ -8,8 +8,9 @@
 #pragma once
 
 #include "nui.h"
+#include "nuiRefCount.h"
 
-class nuiScriptEngine
+class nuiScriptEngine : public nuiRefCount
 {
 public:
   nuiScriptEngine(const nglString& rName, const nglString& rLanguage);
@@ -28,7 +29,7 @@ public:
   bool CompileProgram(const nglPath& rSourceName);
   bool CompileProgram(const nglString& rSourceName, nglIStream* pStream);
   virtual bool CompileString(const nglString& rSourceName, const nglString& rProgram) = 0;
-  
+
 protected:
   nglString mName;
   nglString mLanguage;

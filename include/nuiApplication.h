@@ -5,7 +5,24 @@
   licence: see nui3/LICENCE.TXT
 */
 
+#pragma once
+
 #include "nglApplication.h"
 
-typedef class nglApplication nuiApplication;
+class nuiScriptEngine;
+
+class nuiApplication : public nglApplication
+{
+public:
+  nuiApplication();
+  virtual ~nuiApplication();
+  
+  void SetScriptEngine(nuiScriptEngine* pEngine);
+  nuiScriptEngine* GetScriptEngine() const;
+
+  void EnableDefaultScriptEngine();
+  
+protected:
+  nuiScriptEngine* mpScriptEngine;
+};
 

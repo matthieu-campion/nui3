@@ -151,6 +151,7 @@ void nuiWidget::InitDefaultValues()
   mHotKeyMask = -1;
   mClickThru = true;
   mInSetRect = false;
+  mInTransition = 0;
 }
 
 
@@ -2428,6 +2429,25 @@ bool nuiWidget::IsVisible(bool combined) const
   return mVisible;
 }
 
+void nuiWidget::StartTransition()
+{
+  CheckValid();
+  mInTransition++;
+}
+
+void nuiWidget::StopTransition()
+{
+  CheckValid();
+  mInTransition--;
+}
+
+bool nuiWidget::IsInTransition() const
+{
+  CheckValid();
+  return mInTransition != 0;
+}
+
+
 // virtual
 bool nuiWidget::SetMouseCursor(nuiMouseCursor Cursor)
 {
@@ -2913,12 +2933,12 @@ void nuiWidget::UpdateSurface(const nuiRect& rRect)
   }
 }
 
-void nuiWidget::SetLayout(const nuiRect& rRect)
+nuiRect nuiWidget::GetLayoutForRect(const nuiRect& rRect)
 {
   CheckValid();
   nuiRect rect(GetIdealRect().Size());
   nuiRect r(rRect);
-
+  
   if (mMaxWidth >= 0)
     r.SetWidth(MIN(r.GetWidth(), mMaxWidth));
   
@@ -2972,14 +2992,26 @@ void nuiWidget::SetLayout(const nuiRect& rRect)
       rect.SetPosition(mFillRule, r);
     }
   }
-    
+  
   rect.Left()   += GetActualBorderLeft();
   rect.Right()  -= GetActualBorderRight();
   rect.Top()    += GetActualBorderTop();
   rect.Bottom() -= GetActualBorderBottom();
-
+  
   rect.RoundToNearest();
-    
+
+  return rect;
+}
+
+
+void nuiWidget::SetLayout(const nuiRect& rRect)
+{
+  if (IsInTransition())
+    return;
+  
+  CheckValid();
+  nuiRect rect(GetLayoutForRect(rRect));
+  
   if (GetLayoutAnimationDuration() > 0)
   {
     nuiRectAttributeAnimation* pAnim = GetLayoutAnimation(true);
@@ -3392,7 +3424,7 @@ uint32 nuiWidget::GetAnimCount()
   return (uint32)mAnimations.size();
 }
 
-void nuiWidget::AddAnimation(const nglString& rName, nuiAnimation* pAnim)
+void nuiWidget::AddAnimation(const nglString& rName, nuiAnimation* pAnim, bool TransitionAnimation)
 {
   CheckValid();
   nuiAnimation* pOldAnim = GetAnimation(rName);
@@ -3405,6 +3437,13 @@ void nuiWidget::AddAnimation(const nglString& rName, nuiAnimation* pAnim)
     mGenericWidgetSink.Connect(pAnim->AnimStop, &nuiWidget::AutoTrash);
   if (rName == _T("HIDE"))
     mGenericWidgetSink.Connect(pAnim->AnimStop, &nuiWidget::AutoHide);
+  
+  if (TransitionAnimation)
+  {
+    mGenericWidgetSink.Connect(pAnim->AnimStart, &nuiWidget::AutoStartTransition);
+    mGenericWidgetSink.Connect(pAnim->AnimStop, &nuiWidget::AutoStopTransition);
+  }
+  
   DebugRefreshInfo();
 }
 
@@ -3745,7 +3784,22 @@ bool nuiWidget::AutoHide(const nuiEvent& rEvent)
   SetVisible(false);
   return false;
 }
-                         
+
+bool nuiWidget::AutoStartTransition(const nuiEvent& rEvent)
+{
+  CheckValid();
+  StartTransition();
+  return false;
+}
+               
+bool nuiWidget::AutoStopTransition(const nuiEvent& rEvent)
+{
+  CheckValid();
+  StopTransition();
+  return false;
+}
+               
+
 bool nuiWidget::IsDrawingInCache(bool Recurse) 
 { 
   CheckValid();

@@ -99,6 +99,7 @@ public:
   virtual nuiRect CalcIdealSize(); ///< This method asks the object to recalculate its layout freely. On return mIdealRect is modified to contain the bounding rectangle needed by the widget and returned to the caller. You will probably have to override this method if you create new widgets, how ever you are never supposed to call it directly and use GetIdealRect instead.
   virtual bool SetRect(const nuiRect& rRect); ///< This method asks the object to recalculate its layout and to force using the given bounding rectangle. You will probably have to overridden this method if inherited widgets, you should then call the original nuiWidget::SetRect as soon as possible when entering the new method. Failure to do so will be prosecuted. 
   virtual void SetLayout(const nuiRect& rRect); ///< This method asks the object to recalculate its layout with the given nuiRect. It will NOT force a SetRect. SetRect will be called if the widget asked for a re-layout (InvalidateLayout()) or if the given rectangle is different than the current rectangle of the widget. Returns the value returned by the SetRect method or false.
+  nuiRect GetLayoutForRect(const nuiRect& rRect); ///< This method returns the actual rectangle that this widget would occupy in its parent if SetLayout was called with the given rRect argument. 
   void SetBorders(nuiSize AllBorders); ///< Sets the empty space around the widget itself
   void SetBorder(nuiSize X, nuiSize Y); ///< Sets the empty space around the widget itself
   void GetBorder(nuiSize& rXLeft, nuiSize& rXRight, nuiSize& rYTop, nuiSize& rYBottom);
@@ -107,6 +108,10 @@ public:
   virtual void SetVisibleRect(const nuiRect& rRect); ///< This sets the rectangle that will actually be displayed in the parent widget (for example in case this widget is inside a nuiScrollView, only a part of it may be visible at once). The rectangle is local to the widget rect.
   void SilentSetVisibleRect(const nuiRect& rRect); ///< This method change the visible rect of the widget without invalidating it. It is useful if you need to change the visible rect from a parent's SetRect method: you allready know that you will need to redraw it. See SetVisibleRect for more information.
   const nuiRect& GetVisibleRect() const; ///< This sets the rectangle that will actually be displayed in the parent widget (for example in case this widget is inside a nuiScrollView, only a part of it may be visible at once). The rectangle is local to the widget rect.
+  
+  void StartTransition(); ///< Signals to this widget that its state is being transitionned and that it should start ignoring layout changes from its parent.
+  void StopTransition(); ///<  Signals to this widget that its state transition is done and that must obei to the layout changes from its parent again.
+  bool IsInTransition() const;
   
   virtual const nuiRect& GetIdealRect(); ///< Return the ideal area used by this Object. If the layout of this object has changed CalIdealRect will be called and mIdealRect will contain the ideal rectangle. If the user specified a user size then mIdealRect will be overwritten with mUserRect. 
   virtual const nuiRect& GetRect() const; ///< Return the current area used by this Object.
@@ -369,7 +374,7 @@ public:
   nuiAnimation* GetAnimation(const nglString& rName); ///< Return a pointer to the animation with the given name
   void GetAnimations(std::map<nglString, nuiAnimation*, nglString::NaturalLessFunctor>& rAnims); ///< Fill \param rAnims with the list of name/anim pairs of this widget.
   uint32 GetAnimCount(); ///< Return the number of animations supported by this widget.
-  void AddAnimation(const nglString& rName, nuiAnimation* pAnim); ///< Add an animation to this widget and associate the given name to it. Any existing animation associated with that name in this widget will be destroyed.
+  void AddAnimation(const nglString& rName, nuiAnimation* pAnim, bool TransitionAnimation = false); ///< Add an animation to this widget and associate the given name to it. Any existing animation associated with that name in this widget will be destroyed.
   void DelAnimation(const nglString& rName); ///< Delete the animation associated with the given name from this widget.
   void ClearAnimations(); ///< Remove all animations from this widget and delete them. 
   void AnimateAll(bool Run = true, bool Reset = true); ///< Run/Stop all animations in parallel. If \param Reset is true then every animation will be reset to the first frame.
@@ -432,6 +437,9 @@ public:
 
   bool AutoTrash(const nuiEvent& rEvent); ///< This method will destroy the widget whenever it is called. 
   bool IsTrashed(bool combined = true) const;
+
+  bool AutoStartTransition(const nuiEvent& rEvent); ///< This method will destroy the widget whenever it is called. 
+  bool AutoStopTransition(const nuiEvent& rEvent); ///< This method will destroy the widget whenever it is called. 
 
   bool IsDrawingInCache(bool Recurse);
 
@@ -635,7 +643,9 @@ protected:
   bool mCanRespectConstraint: 1;
   bool mInSetRect: 1;
 
-  bool mClickThru;
+  bool mClickThru: 1;
+
+  int32 mInTransition;
   
   void InitDefaultValues();
   void InitProperties(); ///< Init the property bindings.

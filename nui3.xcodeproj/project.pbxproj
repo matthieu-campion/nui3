@@ -3594,6 +3594,9 @@
 		E5F796B20C750BB4009CE779 /* harfbuzz.h in Headers */ = {isa = PBXBuildFile; fileRef = E5F7968D0C750BB4009CE779 /* harfbuzz.h */; };
 		E5F796D60C750BB4009CE779 /* harfbuzz.c in Sources */ = {isa = PBXBuildFile; fileRef = E5F7968C0C750BB4009CE779 /* harfbuzz.c */; };
 		E5F796D70C750BB4009CE779 /* harfbuzz.h in Headers */ = {isa = PBXBuildFile; fileRef = E5F7968D0C750BB4009CE779 /* harfbuzz.h */; };
+		E5F9B19B118656B600A703BA /* nuiApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5F9B19A118656B600A703BA /* nuiApplication.cpp */; };
+		E5F9B19C118656B600A703BA /* nuiApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5F9B19A118656B600A703BA /* nuiApplication.cpp */; };
+		E5F9B19D118656B600A703BA /* nuiApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5F9B19A118656B600A703BA /* nuiApplication.cpp */; };
 		E5F9F7710EACB86D00F8D3A3 /* nuiPanose.h in Headers */ = {isa = PBXBuildFile; fileRef = E5F9F7700EACB86D00F8D3A3 /* nuiPanose.h */; };
 		E5F9F7720EACB86D00F8D3A3 /* nuiPanose.h in Headers */ = {isa = PBXBuildFile; fileRef = E5F9F7700EACB86D00F8D3A3 /* nuiPanose.h */; };
 		E5F9F7770EACC8F000F8D3A3 /* nuiPanose.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5F9F7750EACC8F000F8D3A3 /* nuiPanose.cpp */; };
@@ -4872,6 +4875,7 @@
 		E5F7968B0C750BB4009CE779 /* harfbuzz-tibetan.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = "harfbuzz-tibetan.c"; path = "harfbuzz/harfbuzz-tibetan.c"; sourceTree = "<group>"; };
 		E5F7968C0C750BB4009CE779 /* harfbuzz.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = harfbuzz.c; path = harfbuzz/harfbuzz.c; sourceTree = "<group>"; };
 		E5F7968D0C750BB4009CE779 /* harfbuzz.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = harfbuzz.h; path = harfbuzz/harfbuzz.h; sourceTree = "<group>"; };
+		E5F9B19A118656B600A703BA /* nuiApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiApplication.cpp; sourceTree = "<group>"; };
 		E5F9F7700EACB86D00F8D3A3 /* nuiPanose.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiPanose.h; path = include/nuiPanose.h; sourceTree = SOURCE_ROOT; };
 		E5F9F7750EACC8F000F8D3A3 /* nuiPanose.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiPanose.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -6296,6 +6300,7 @@
 				E5816D1E0C3CECAB00902DFE /* nuiXML.h */,
 				E58E8A96115057B000C2D204 /* nuiTypeTraits.h */,
 				E50066D2115070A700CDD83E /* nuiVariant.h */,
+				E5F9B19A118656B600A703BA /* nuiApplication.cpp */,
 			);
 			name = Base;
 			path = src/Base;
@@ -9619,6 +9624,7 @@
 				E52CBFFA11750AE10031DFA8 /* vprof.cpp in Sources */,
 				E52CC07111751B530031DFA8 /* nuiSpiderMonkey.cpp in Sources */,
 				E5AFA4E2117548F20021C1E1 /* nuiMimeMultiPart.cpp in Sources */,
+				E5F9B19D118656B600A703BA /* nuiApplication.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10131,6 +10137,7 @@
 				E52CBF5E11750AE10031DFA8 /* vprof.cpp in Sources */,
 				E52CC07011751B530031DFA8 /* nuiSpiderMonkey.cpp in Sources */,
 				E5AFA4E1117548F20021C1E1 /* nuiMimeMultiPart.cpp in Sources */,
+				E5F9B19C118656B600A703BA /* nuiApplication.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10646,6 +10653,7 @@
 				E52CBEC211750AE10031DFA8 /* vprof.cpp in Sources */,
 				E52CC06F11751B530031DFA8 /* nuiSpiderMonkey.cpp in Sources */,
 				E5AFA4E0117548F20021C1E1 /* nuiMimeMultiPart.cpp in Sources */,
+				E5F9B19B118656B600A703BA /* nuiApplication.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
