@@ -38,6 +38,7 @@ set(SOURCES
 
   src/Base/nui.cpp
   src/Base/nuiAnimation.cpp
+  src/Base/nuiApplication.cpp
   src/Base/nuiBindingManager.cpp
   src/Base/nuiBuilder.cpp
   src/Base/nuiColor.cpp
@@ -72,6 +73,8 @@ set(SOURCES
   src/Base/nuiXML.cpp
   
   src/Bindings/nuiBindings.cpp
+  src/Bindings/nuiScriptEngine.cpp
+  src/Bindings/nuiSpiderMonkey.cpp
   
   src/Animations/nuiAttributeAnimation.cpp
   src/Animations/nuiWidgetAnimation.cpp
@@ -293,7 +296,6 @@ set(SOURCES
   src/Application/nglClipBoard.cpp
   src/Application/nglConsole.cpp
   src/Application/nglCPUInfo_x86.cpp
-  src/Application/nglCPUInfo.cpp
   src/Application/nglCPUInfo.cpp 
   src/Application/nglDataObjects.cpp
   src/Application/nglDataTypesRegistry.cpp
@@ -408,6 +410,10 @@ IF (${LINUX})
   add_definitions(
     -O0
     -g
+    -I/usr/include/mozjs
+    -lmozjs
+    -DXP_UNIX
+
   )
   INSTALL(DIRECTORY examples/data DESTINATION /usr/share/nuitest)
 
