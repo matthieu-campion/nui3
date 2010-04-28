@@ -13,6 +13,7 @@
 #include "nuiNotification.h"
 #include "nuiCSS.h"
 #include "nuiStopWatch.h"
+#include <iterator>
 
 #define PARTIAL_REDRAW_DEFAULT true
 

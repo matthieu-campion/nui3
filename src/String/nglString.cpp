@@ -978,7 +978,7 @@ bool nglString::Copy(const nglChar* pSource, int32 len)
   mString.resize(len);
   for (int32 i = 0; i < len; i++)
     mString[i] = pSource[i];
-  mString[len] = 0;
+  //mString[len] = 0;
   return true;
 }
 
@@ -1645,7 +1645,7 @@ nglString& nglString::Formatv(const nglChar* pFormat, va_list Args)
   mString.resize(len);
 
   len = ngl_vsnwprintf(&mString[0], len, format, Args);
-  mString[len] = 0;
+  //mString[len] = 0;
   return *this;
 #endif
 }

@@ -41,7 +41,7 @@ void Application::OnInit()
 
   uint Width = 0, Height = 0;
   bool HasSize = false;
-  bool IsFullScreen = true;
+  bool IsFullScreen = false;
   bool DebugObject = false;
   bool DebugInfo = false;
   bool ShowFPS = false;
