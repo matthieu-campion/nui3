@@ -450,7 +450,8 @@ protected:
   friend void objCCallOnInit(void* pUIApplication);
   friend void objCCallOnExit(int Code);
   friend void objCCallOnWillExit();
-  
+  friend void  objCCallOnInitWithURL(void* pUIApplication, const nglString &url);
+
   void CallOnWillExit();
 	
   void* mpUIApplication;
