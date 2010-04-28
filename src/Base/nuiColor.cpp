@@ -330,8 +330,8 @@ void nuiColor::Crop()
     mGreen = 0;
   if (isnan(mBlue))
     mBlue = 0;
-  if (isnan(mBlue))
-    mRed = 0;
+  if (isnan(mAlpha))
+    mAlpha = 0;
   mRed   = MIN(1.0f, mRed  );
   mRed  =  MAX(0.0f, mRed  );
   mGreen = MIN(1.0f, mGreen);
