@@ -9,5 +9,6 @@ INCLUDE(FindGIF)
 INCLUDE(FindEXPAT)
 
 add_subdirectory (ucdata)
+add_subdirectory (tracemonkey)
 #add_subdirectory (harfbuzz)
 #add_subdirectory (tidy)

@@ -346,6 +346,9 @@ include_directories(
   deps/ucdata
   deps/agg/include
   deps/harfbuzz
+  deps/tracemonkey
+  deps/tracemonkey/vprof
+  deps/tracemonkey/nanojit
   include
   src/Stream/Zip
   src/Text/HTML
@@ -410,10 +413,7 @@ IF (${LINUX})
   add_definitions(
     -O0
     -g
-    -I/usr/include/mozjs
-    -lmozjs
     -DXP_UNIX
-
   )
   INSTALL(DIRECTORY examples/data DESTINATION /usr/share/nuitest)
 
@@ -466,7 +466,7 @@ ENDIF (${LINUX})
 add_subdirectory(deps)
 
 add_library( nui3 SHARED ${SOURCES} )
-target_link_libraries(nui3 ${CURL_LIBRARY} ${CURL_LIBRARIES} ${EXPAT_LIBRARY} ${FREETYPE_LIBRARY} ${FREETYPE_LIBRARIES} ${EXPAT_LIBRARIES} ${JPEG_LIBRARY} ${JPEG_LIBRARIES} ${PNG_LIBRARY} ${PNG_LIBRARIES} ${GIF_LIBRARY} ${GIF_LIBRARIES} tidy ucdata)
+target_link_libraries(nui3 ${CURL_LIBRARY} ${CURL_LIBRARIES} ${EXPAT_LIBRARY} ${FREETYPE_LIBRARY} ${FREETYPE_LIBRARIES} ${EXPAT_LIBRARIES} ${JPEG_LIBRARY} ${JPEG_LIBRARIES} ${PNG_LIBRARY} ${PNG_LIBRARIES} ${GIF_LIBRARY} ${GIF_LIBRARIES} tidy ucdata tracemonkey)
 
 add_subdirectory(examples)
 add_subdirectory(tutorials)

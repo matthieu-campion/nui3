@@ -8,12 +8,14 @@
 #include "nui.h"
 #include "nuiSpiderMonkey.h"
 
+#ifdef WIN32
 #define PROTYPES_H
 #include "jstypes.h"
 typedef double float64;
 typedef JSWord jsword;
 typedef jsword jsval;
 typedef jsword jsid;
+#endif
 #include "jsapi.h"
 
 

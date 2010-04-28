@@ -35,9 +35,11 @@ typedef struct JSExceptionState  JSExceptionState;
 typedef struct JSLocaleCallbacks JSLocaleCallbacks;
 typedef struct JSSecurityCallbacks JSSecurityCallbacks;
 typedef struct JSONParser        JSONParser;
+
 typedef intptr_t jsval;
 typedef int JSBool;
 typedef uint uintN;
+
 
 class nuiSpiderMonkey : public nuiScriptEngine
 {
