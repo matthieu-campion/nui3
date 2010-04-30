@@ -38,6 +38,22 @@ MainWindow::~MainWindow()
 
 void MainWindow::JSTest()
 {
+  std::vector<int> v;
+  for (int32 i = 0; i < 10; i++)
+    v.push_back(i);
+  nuiVariant a(v);
+  std::vector<int32> v1;
+  std::vector<float> v2;
+  v1 = a;
+  v2 = a;
+  
+  {
+    for (int32 i = 0; i < v.size(); i++)
+    {
+      NGL_OUT(_T("array[%d] = %d - %d - %f\n"), i, v[i], v1[i], v2[i]);
+    }
+  }
+  
   nuiSpiderMonkey* pM = new nuiSpiderMonkey();
   pM->SetGlobal(_T("window"), (nuiSimpleContainer*)this);
   

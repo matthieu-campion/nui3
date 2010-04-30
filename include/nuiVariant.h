@@ -47,7 +47,7 @@ public:
   }
 
   template <typename Type>
-  nuiVariant(std::vector<Type>& data)
+  nuiVariant(const std::vector<Type>& data)
   {
     mIsPointer = false;
     mIsObject = false;
@@ -55,8 +55,9 @@ public:
     mIsPOD = false;
     mIsArray = true;
     mData.mpArray = new std::vector<nuiVariant>();
-    mData.mpArray->insert(data.begin(), data.end());
-    NGL_ASSERT(0);
+    mData.mpArray->reserve(data.size());
+    for (int32 i = 0; i < data.size(); i++)
+      mData.mpArray->push_back(data[i]);
   }
   
 #define CTOR(TYPE)\
@@ -66,6 +67,7 @@ public:
     mIsObject = is_base_of<nuiObject, TYPE>::value;\
     mType = nuiAttributeTypeTrait<TYPE>::mTypeId;\
     mIsPOD = true;\
+    mIsArray = false;\
     if (is_same_type<TYPE, int8>::value || is_same_type<TYPE, int16>::value || is_same_type<TYPE, int32>::value || is_same_type<TYPE, int64>::value)\
     {\
       mData.mInt = (int64)data;\
@@ -270,6 +272,8 @@ public:
   {
     if (mIsObject)
       mData.mpObject->Release();
+    if (mIsArray)
+      delete mData.mpArray;
     
     mData = rObject.mData;
     
@@ -301,6 +305,8 @@ public:
   {
     if (mIsObject)
       mData.mpObject->Release();
+    if (mIsArray)
+      delete mData.mpArray;
 
     mIsPointer = false;
     mIsObject = false;
@@ -366,7 +372,9 @@ public:
     {
       NGL_ASSERT(mData.mpArray);
       std::vector<nuiVariant>& rArray(*mData.mpArray);
-      v.insert(rArray.begin(), rArray.end());
+      v.reserve(rArray.size());
+      for (int32 i = 0; i < rArray.size(); i++)
+        v.push_back(rArray[i]);
     }
     else
     {
