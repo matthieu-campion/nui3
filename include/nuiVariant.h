@@ -30,6 +30,7 @@ public:
     mIsPointer = false;
     mIsObject = false;
     mIsPOD = false;
+    mIsArray = false;
     mType = nuiAttributeTypeTrait<void>::mTypeId;
   }
   
@@ -41,9 +42,23 @@ public:
     mIsObject = is_base_of<nuiObject, Type>::value;
     mType = nuiAttributeTypeTrait<Type>::mTypeId;
     mIsPOD = false;
+    mIsArray = false;
     NGL_ASSERT(0);
   }
- 
+
+  template <typename Type>
+  nuiVariant(std::vector<Type>& data)
+  {
+    mIsPointer = false;
+    mIsObject = false;
+    mType = 0;
+    mIsPOD = false;
+    mIsArray = true;
+    mData.mpArray = new std::vector<nuiVariant>();
+    mData.mpArray->insert(data.begin(), data.end());
+    NGL_ASSERT(0);
+  }
+  
 #define CTOR(TYPE)\
   nuiVariant(TYPE data)\
   {\
@@ -83,6 +98,7 @@ public:
     mIsObject = false;\
     mType = nuiAttributeTypeTrait<TYPE>::mTypeId;\
     mIsPOD = true;\
+    mIsArray = false;\
     mData.mInt = (uint64)data;\
   }
 
@@ -106,7 +122,8 @@ public:
     mIsObject = false;
     mType = nuiAttributeTypeTrait<bool>::mTypeId;
     mIsPOD = true;
-
+    mIsArray = false;
+    
     mData.mBool = set;
   }
   
@@ -116,6 +133,7 @@ public:
     mIsPointer = false;
     mIsObject = false;
     mIsPOD = false;
+    mIsArray = false;
     mType = nuiAttributeTypeTrait<nglString>::mTypeId;
     mString = rData;
   }
@@ -125,6 +143,7 @@ public:
     mIsPointer = false;
     mIsObject = false;
     mIsPOD = false;
+    mIsArray = false;
     mType = nuiAttributeTypeTrait<nglPath>::mTypeId;
     mString = rData.GetPathName();
   }
@@ -134,6 +153,7 @@ public:
     mIsPointer = false;
     mIsObject = false;
     mIsPOD = false;
+    mIsArray = false;
     mType = nuiAttributeTypeTrait<nuiColor>::mTypeId;
     mColor = rData;
   }
@@ -143,6 +163,7 @@ public:
     mIsPointer = false;
     mIsObject = false;
     mIsPOD = false;
+    mIsArray = false;
     mType = nuiAttributeTypeTrait<nuiRect>::mTypeId;
     mRect = rData;
   }
@@ -152,6 +173,7 @@ public:
     mIsPointer = false;
     mIsObject = false;
     mIsPOD = false;
+    mIsArray = false;
     mType = nuiAttributeTypeTrait<nuiRect>::mTypeId;
     NGL_ASSERT(0);
   }
@@ -162,6 +184,7 @@ public:
     mIsObject = false;
     mType = nuiAttributeTypeTrait<nuiBorder>::mTypeId;
     mIsPOD = false;
+    mIsArray = false;
     NGL_ASSERT(0);
   }
   
@@ -171,6 +194,7 @@ public:
     mIsObject = false;
     mType = nuiAttributeTypeTrait<nuiBorder>::mTypeId;
     mIsPOD = false;
+    mIsArray = false;
     NGL_ASSERT(0);
   }
   
@@ -180,6 +204,7 @@ public:
     mIsObject = false;
     mType = nuiAttributeTypeTrait<nuiRange>::mTypeId;
     mIsPOD = false;
+    mIsArray = false;
     NGL_ASSERT(0);
   }
   
@@ -189,6 +214,7 @@ public:
     mIsObject = false;
     mType = nuiAttributeTypeTrait<nuiVector>::mTypeId;
     mIsPOD = false;
+    mIsArray = false;
     NGL_ASSERT(0);
   }
   
@@ -206,9 +232,13 @@ public:
     mIsPointer = rObject.mIsPointer;
     mIsObject = rObject.mIsObject;
     mIsPOD = rObject.mIsPOD;
+    mIsArray = rObject.mIsArray;
 
     if (mIsObject)
       mData.mpObject->Acquire();
+
+    if (mIsArray)
+      mData.mpArray = new std::vector<nuiVariant>(*rObject.mData.mpArray);
   }
 
   // Pointer CTOR
@@ -220,6 +250,7 @@ public:
     mType = nuiAttributeTypeTrait<Type*>::mTypeId;
     mData.mpPointer = (void*)pData;
     mIsPOD = false;
+    mIsArray = false;
     
     if (mIsObject)
       mData.mpObject->Acquire();
@@ -231,6 +262,8 @@ public:
   {
     if (mIsObject)
       mData.mpObject->Release();
+    if (mIsArray)
+      delete mData.mpArray;
   }
   
   nuiVariant& operator=(const nuiVariant& rObject)
@@ -249,9 +282,13 @@ public:
     mIsPointer = rObject.mIsPointer;
     mIsObject = rObject.mIsObject;
     mIsPOD = rObject.mIsPOD;
+    mIsArray = rObject.mIsArray;
     
     if (mIsObject)
       mData.mpObject->Acquire();
+
+    if (mIsArray)
+      mData.mpArray = new std::vector<nuiVariant>(*rObject.mData.mpArray);
     return *this;
   }
   
@@ -268,6 +305,7 @@ public:
     mIsPointer = false;
     mIsObject = false;
     mIsPOD = false;
+    mIsArray = false;
     mType = nuiAttributeTypeTrait<void>::mTypeId;
   }
   
@@ -290,7 +328,12 @@ public:
   {
     return mIsPOD;
   }
-
+  
+  bool IsArray() const
+  {
+    return mIsArray;
+  }
+  
   
   //////////////////////////////////////
   // Casting:
@@ -313,6 +356,24 @@ public:
       return dynamic_cast<PointerType*>(reinterpret_cast<nuiObject*>(mData.mpPointer));
     
     return NULL;
+  }
+  
+  template<typename Type>
+  operator std::vector<Type>() const
+  {
+    std::vector<Type> v;
+    if (mIsArray)
+    {
+      NGL_ASSERT(mData.mpArray);
+      std::vector<nuiVariant>& rArray(*mData.mpArray);
+      v.insert(rArray.begin(), rArray.end());
+    }
+    else
+    {
+      v.push_back((Type)*this);
+    }
+
+    return v;
   }
   
   
@@ -534,6 +595,7 @@ private:
     bool mBool;
     
     void* mpPointer;
+    std::vector<nuiVariant>* mpArray;
     nuiObject* mpObject;    
   } mData;
   
@@ -544,5 +606,6 @@ private:
   bool mIsPointer : 1;
   bool mIsObject : 1;
   bool mIsPOD : 1;
+  bool mIsArray : 1;
 };
 

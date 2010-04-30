@@ -1,3 +1,5 @@
+
+
 function OnClicked(x, y, b)
 {
   this.Text = 'OnClicked called!(' + x + ',' + y + ',' + b + ')';
@@ -35,3 +37,5 @@ function main()
   label.Unclicked = OnUnclicked;
   label.MovedMouse = OnMoved;
 }
+
+
