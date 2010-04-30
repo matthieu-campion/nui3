@@ -4,18 +4,24 @@ IF(${CMAKE_SYSTEM} MATCHES "Linux")
 SET(linux 1)
 ENDIF(${CMAKE_SYSTEM} MATCHES "Linux")
 
-include_directories( . )
+include_directories(
+  .
+)
 
 add_definitions(
   -DXP_UNIX
+  -DNGL_STATIC_BUILD
+  -DHAVE_BCOPY
+  -DFEATURE_NANOJIT
+  -DJS_TRACER
+  -DAVMPLUS_IA32
+  -DDEBUG
 )
 
 
 set(TRACEMONKEY_SOURCES
   jsapi.cpp
-  #jscpucfg.cpp
   jsexn.cpp
-  #jskwgen.cpp
   jsopcode.cpp
   jsscan.cpp
   jsutil.cpp
@@ -23,14 +29,12 @@ set(TRACEMONKEY_SOURCES
   jsdate.cpp
   jsfun.cpp
   jslock.cpp
-  #jsoplengen.cpp
   jsscope.cpp
   jsxdrapi.cpp
   jsarray.cpp
   jsdbgapi.cpp
   jsgc.cpp
   jslog2.cpp
-  jsops.cpp
   jsscript.cpp
   jsxml.cpp
   jsatom.cpp
@@ -47,10 +51,8 @@ set(TRACEMONKEY_SOURCES
   jsprf.cpp
   jstask.cpp
   jsbuiltins.cpp
-  #jsdtracef.cpp
   jsinvoke.cpp
   jsobj.cpp
-  #jsrecursion.cpp
   jstracer.cpp
   jscntxt.cpp
   jsemit.cpp
@@ -58,6 +60,23 @@ set(TRACEMONKEY_SOURCES
   json.cpp
   jsregexp.cpp
   jstypedarray.cpp
+  nanojit/Allocator.cpp
+  nanojit/Containers.cpp
+  nanojit/Nativei386.cpp
+  nanojit/NativeX64.cpp
+  nanojit/Assembler.cpp
+  nanojit/Fragmento.cpp
+  nanojit/NativeMIPS.cpp
+  nanojit/njconfig.cpp
+  nanojit/avmplus.cpp
+  nanojit/LIR.cpp
+  nanojit/NativePPC.cpp
+  nanojit/RegAlloc.cpp
+  nanojit/CodeAlloc.cpp
+  nanojit/NativeARM.cpp
+  nanojit/NativeSparc.cpp
+  nanojit/VMPI.cpp
+  vprof/vprof.cpp
 )
 
 add_library(tracemonkey STATIC ${TRACEMONKEY_SOURCES})

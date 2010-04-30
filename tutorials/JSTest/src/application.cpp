@@ -8,8 +8,8 @@
 
 #include "nui.h"
 #include "nuiInit.h"
-#include "Application.h"
-#include "MainWindow.h"
+#include "application.h"
+#include "mainwindow.h"
 
 #include "nglConsole.h"
 

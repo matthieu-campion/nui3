@@ -6,8 +6,8 @@
  */
 
 #include "nui.h"
-#include "MainWindow.h"
-#include "Application.h"
+#include "mainwindow.h"
+#include "application.h"
 #include "nuiCSS.h"
 #include "nuiVBox.h"
 #include "nuiBindings.h"
