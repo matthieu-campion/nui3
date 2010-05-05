@@ -8,9 +8,10 @@
 #include "nui.h"
 #include "nglKernel.h"
 #include "nglZipFS.h"
-#include "nglIFile.h"
+#include "nglIOStream.h"
 #include "nglIZip.h"
 #include "unzip.h"
+#include "zip.h"
 
 nglZipPath::nglZipPath(const nglZipFS* pZipFS, const nglString& rPathInZip)
   : nglPath(rPathInZip)
@@ -114,8 +115,7 @@ uLong ZCALLBACK zRead(voidpf opaque, voidpf stream, void* buf, uLong size)
 
 uLong ZCALLBACK zWrite(voidpf opaque, voidpf stream, const void* buf, uLong size)
 {
-//  return ((nglIStream*)stream)->Write(buf, size, 1);
-  return 0;
+  return ((nglOStream*)stream)->Write(buf, size, 1);
 }
 
 long ZCALLBACK zTell(voidpf opaque, voidpf stream)
@@ -180,12 +180,9 @@ private:
 };
 
 
-static zlib_filefunc_def zlib_filefunc;
-
-
 nglZipFS::nglZipFS(const nglString& rVolumeName, nglIStream* pStream, bool Own)
 : nglVolume(rVolumeName, nglString::Empty, nglString::Empty, nglPathVolume::ReadOnly, nglPathVolume::eTypeZip),
-  mRoot(_T(""), 0, 0, 0, false)
+  mRoot(_T(""), 0, 0, 0, false), mpFileFuncDef(NULL)
 {
   mpStream = pStream;
   mOwnStream = Own;
@@ -200,7 +197,7 @@ nglZipFS::nglZipFS(const nglString& rVolumeName, nglIStream* pStream, bool Own)
 
 nglZipFS::nglZipFS(const nglPath& rPath)
 : nglVolume(nglPath(rPath.GetNodeName()).GetRemovedExtension(), nglString::Empty, nglString::Empty, nglPathVolume::ReadOnly, nglPathVolume::eTypeZip),
-  mRoot(_T(""), 0, 0, 0, false)
+  mRoot(_T(""), 0, 0, 0, false), mpFileFuncDef(NULL)
 {
   mpStream = rPath.OpenRead();
   mOwnStream = true;
@@ -219,23 +216,26 @@ nglZipFS::~nglZipFS()
     delete mpPrivate;
   if (mOwnStream && mpStream)
     delete mpStream;
+  
+  delete mpFileFuncDef;
 }
 
 bool nglZipFS::Open()
 {	
-  zlib_filefunc.opaque = mpStream;
-  zlib_filefunc.zopen_file  = &::zOpen;
-  zlib_filefunc.zread_file  = &::zRead;
-  zlib_filefunc.zwrite_file = &::zWrite;
-  zlib_filefunc.ztell_file  = &::zTell;
-  zlib_filefunc.zseek_file  = &::zSeek;
-  zlib_filefunc.zclose_file = &::zClose;
-  zlib_filefunc.zerror_file = &::zError;
+  mpFileFuncDef = new zlib_filefunc_def;
+  mpFileFuncDef->opaque = mpStream;
+  mpFileFuncDef->zopen_file  = &::zOpen;
+  mpFileFuncDef->zread_file  = &::zRead;
+  mpFileFuncDef->zwrite_file = &::zWrite;
+  mpFileFuncDef->ztell_file  = &::zTell;
+  mpFileFuncDef->zseek_file  = &::zSeek;
+  mpFileFuncDef->zclose_file = &::zClose;
+  mpFileFuncDef->zerror_file = &::zError;
 
 	if (mpStream == NULL || mpPrivate == NULL || !IsValid())
 		return false;
 	
-  mpPrivate->mZip = unzOpen2("", &zlib_filefunc);
+  mpPrivate->mZip = unzOpen2("", mpFileFuncDef);
 
   if (mpPrivate->mZip == NULL)
     return false;
@@ -618,5 +618,103 @@ bool nglZipFS::GetChildren(const nglPath& rPath, std::list<nglPath>& rChildren)
     }
   }
   return rChildren.size();
+}
+
+////////////
+// nuiZipWriter
+nuiZipWriter::nuiZipWriter(nglOStream* pStream, CreateFlag flag, bool OwnStream)
+: mpStream(pStream), mOwnStream(OwnStream), mpZip(NULL)
+{
+  Open(flag);
+}
+
+nuiZipWriter::nuiZipWriter(const nglPath& rPath, CreateFlag flag)
+: mpStream(rPath.OpenWrite(flag == OverWrite)), mOwnStream(true), mpZip(NULL)
+{
+  Open(flag);
+}
+
+void nuiZipWriter::Open(CreateFlag flag)
+{
+  mpFileFuncDef = new zlib_filefunc_def;
+  mpFileFuncDef->opaque = mpStream;
+  mpFileFuncDef->zopen_file  = &::zOpen;
+  mpFileFuncDef->zread_file  = &::zRead;
+  mpFileFuncDef->zwrite_file = &::zWrite;
+  mpFileFuncDef->ztell_file  = &::zTell;
+  mpFileFuncDef->zseek_file  = &::zSeek;
+  mpFileFuncDef->zclose_file = &::zClose;
+  mpFileFuncDef->zerror_file = &::zError;
+  
+  int append = 0;
+  switch (flag)
+  {
+    case OverWrite: append = APPEND_STATUS_CREATE; break;
+    case AppendToStream: append = APPEND_STATUS_CREATEAFTER; break;
+    case AppendToZip: append = APPEND_STATUS_ADDINZIP; break;
+  }
+  
+  char* comment = NULL;
+ 
+  mpZip = zipOpen2("", append, NULL, mpFileFuncDef);
+  
+  if (comment)
+    free(comment);
+}
+
+nuiZipWriter::~nuiZipWriter()
+{
+  if (mpZip)
+  {
+    zipClose(mpZip, "");
+    mpZip = NULL;
+  }
+
+  if (mOwnStream)
+    delete mpStream;
+  
+  if (mpFileFuncDef)
+    delete mpFileFuncDef;
+}
+
+bool nuiZipWriter::IsValid() const
+{
+  return mpStream && mpZip;
+}
+
+bool nuiZipWriter::AddFile(nglIStream* pStream, const nglString& rPathInZip, const nglString& rComment, bool OwnStream)
+{
+  NGL_ASSERT(IsValid());
+  zip_fileinfo info;
+  nglTime tm;
+  nglTimeInfo t;
+  tm.GetLocalTime(t);
+  info.tmz_date.tm_sec = t.Seconds;            /* seconds after the minute - [0,59] */
+  info.tmz_date.tm_min = t.Minutes;            /* minutes after the hour - [0,59] */
+  info.tmz_date.tm_hour = t.Hours;           /* hours since midnight - [0,23] */
+  info.tmz_date.tm_mday = t.Day;           /* day of the month - [1,31] */
+  info.tmz_date.tm_mon = t.Month;            /* months since January - [0,11] */
+  info.tmz_date.tm_year = t.Year;           /* years - [1980..2044] */
+  
+  info.dosDate = 0;
+
+  info.internal_fa = 0;
+  info.external_fa = 0;
+  
+  bool res = zipOpenNewFileInZip(mpZip, rPathInZip.IsNull() ? NULL : rPathInZip.GetStdString().c_str(), &info, NULL, 0, NULL, 0, rComment.IsNull() ? NULL : rComment.GetStdString().c_str(), 0, 0) == Z_OK;
+  
+  if (OwnStream)
+    delete pStream;
+  return res;
+}
+
+bool nuiZipWriter::AddFile(const nglPath& rPath, const nglString& rPathInZip, const nglString& rComment)
+{
+  return AddFile(rPath.OpenRead(), rPathInZip.IsEmpty() ? rPath.GetPathName() : rPathInZip, rComment, true);
+}
+
+bool nuiZipWriter::Close(const nglString& rComment)
+{
+  return Z_OK == zipClose(mpZip, rComment.IsNull() ? NULL : rComment.GetStdString().c_str());
 }
 

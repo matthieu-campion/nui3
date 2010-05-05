@@ -25,6 +25,8 @@ class nglZipFS;
 class nglZipPath;
 class nglZipPrivate;
 
+struct zlib_filefunc_def_s;
+
 class NGL_API nglZipPath : public nglPath
 {
 public:
@@ -117,6 +119,39 @@ private:
 
   friend class nglZipPath;
   friend class nglIZip;
-};        
+  
+  zlib_filefunc_def_s* mpFileFuncDef;
+}; 
+
+class nuiZipWriter
+{
+public:
+  enum CreateFlag
+  {
+    OverWrite,
+    AppendToStream,
+    AppendToZip
+  };
+  
+  nuiZipWriter(nglOStream* pStream, CreateFlag flag = OverWrite, bool OwnStream = true);
+  nuiZipWriter(const nglPath& rPath, CreateFlag flag);
+  ~nuiZipWriter();
+  
+  bool IsValid() const;
+  
+  bool AddFile(nglIStream* pStream, const nglString& rPathInZip, const nglString& rComment = nglString::Null, bool OwnStream = true);
+  bool AddFile(const nglPath& rPath, const nglString& rPathInZip = nglString::Null, const nglString& rComment = nglString::Null);
+  
+  bool Close(const nglString& rComment = nglString::Null);
+  
+private:
+  void Open(CreateFlag flag);
+  
+  nglOStream* mpStream;
+  bool mOwnStream;
+  void* mpZip;
+
+  zlib_filefunc_def_s* mpFileFuncDef;
+};
 
 #endif // __nglZipFS_h__
