@@ -665,16 +665,12 @@ void nuiZipWriter::Open(CreateFlag flag)
 nuiZipWriter::~nuiZipWriter()
 {
   if (mpZip)
-  {
-    zipClose(mpZip, "");
-    mpZip = NULL;
-  }
+    Close(_T(""));
 
   if (mOwnStream)
     delete mpStream;
   
-  if (mpFileFuncDef)
-    delete mpFileFuncDef;
+  delete mpFileFuncDef;
 }
 
 bool nuiZipWriter::IsValid() const
@@ -702,7 +698,26 @@ bool nuiZipWriter::AddFile(nglIStream* pStream, const nglString& rPathInZip, con
   info.external_fa = 0;
   
   bool res = zipOpenNewFileInZip(mpZip, rPathInZip.IsNull() ? NULL : rPathInZip.GetStdString().c_str(), &info, NULL, 0, NULL, 0, rComment.IsNull() ? NULL : rComment.GetStdString().c_str(), 0, 0) == Z_OK;
-  
+  if (!res)
+    return res;
+
+  const uint32 bufsize = 4096;
+  uint8 buf[bufsize];
+  uint64 todo = pStream->Available();
+  uint32 _read = -1;
+  while (todo && _read)
+  {
+    uint32 toread = MIN(todo, bufsize);
+    _read = pStream->Read(buf, toread, 1);
+    res = zipWriteInFileInZip(mpZip, buf, _read) == Z_OK;
+    todo -= _read;
+
+    if (_read != toread)
+      return false;
+  }
+
+  res = zipCloseFileInZip(mpZip) == Z_OK;
+
   if (OwnStream)
     delete pStream;
   return res;
@@ -715,6 +730,8 @@ bool nuiZipWriter::AddFile(const nglPath& rPath, const nglString& rPathInZip, co
 
 bool nuiZipWriter::Close(const nglString& rComment)
 {
+  NGL_ASSERT(mpZip);
   return Z_OK == zipClose(mpZip, rComment.IsNull() ? NULL : rComment.GetStdString().c_str());
+  mpZip = NULL;
 }
 
