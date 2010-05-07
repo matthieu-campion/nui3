@@ -685,13 +685,13 @@ bool nuiZipWriter::AddFile(nglIStream* pStream, const nglString& rPathInZip, con
   nglTime tm;
   nglTimeInfo t;
   tm.GetLocalTime(t);
-  info.tmz_date.tm_sec = t.Seconds;            /* seconds after the minute - [0,59] */
-  info.tmz_date.tm_min = t.Minutes;            /* minutes after the hour - [0,59] */
-  info.tmz_date.tm_hour = t.Hours;           /* hours since midnight - [0,23] */
-  info.tmz_date.tm_mday = t.Day;           /* day of the month - [1,31] */
-  info.tmz_date.tm_mon = t.Month;            /* months since January - [0,11] */
-  info.tmz_date.tm_year = t.Year;           /* years - [1980..2044] */
-  
+  info.tmz_date.tm_sec  = t.Seconds;
+  info.tmz_date.tm_min  = t.Minutes;
+  info.tmz_date.tm_hour = t.Hours;
+  info.tmz_date.tm_mday = t.Day;
+  info.tmz_date.tm_mon  = t.Month;
+  info.tmz_date.tm_year = t.Year;
+
   info.dosDate = 0;
 
   info.internal_fa = 0;
