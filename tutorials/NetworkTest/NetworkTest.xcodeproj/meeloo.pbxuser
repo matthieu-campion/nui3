@@ -179,6 +179,28 @@
 			E561784E11945B640060DC85 /* XCBuildMessageTextBookmark */ = E561784E11945B640060DC85 /* XCBuildMessageTextBookmark */;
 			E561784F11945B640060DC85 /* PBXTextBookmark */ = E561784F11945B640060DC85 /* PBXTextBookmark */;
 			E561785011945B680060DC85 /* PBXTextBookmark */ = E561785011945B680060DC85 /* PBXTextBookmark */;
+			E5617852119467EF0060DC85 /* PBXTextBookmark */ = E5617852119467EF0060DC85 /* PBXTextBookmark */;
+			E561785911946D390060DC85 /* PBXTextBookmark */ = E561785911946D390060DC85 /* PBXTextBookmark */;
+			E561785A11946D390060DC85 /* PBXTextBookmark */ = E561785A11946D390060DC85 /* PBXTextBookmark */;
+			E5617861119475B00060DC85 /* PBXTextBookmark */ = E5617861119475B00060DC85 /* PBXTextBookmark */;
+			E5617862119475B00060DC85 /* PBXTextBookmark */ = E5617862119475B00060DC85 /* PBXTextBookmark */;
+			E5617863119475B00060DC85 /* PBXTextBookmark */ = E5617863119475B00060DC85 /* PBXTextBookmark */;
+			E5617864119475B00060DC85 /* PBXTextBookmark */ = E5617864119475B00060DC85 /* PBXTextBookmark */;
+			E5617865119475B00060DC85 /* PBXTextBookmark */ = E5617865119475B00060DC85 /* PBXTextBookmark */;
+			E5617866119475B00060DC85 /* PBXTextBookmark */ = E5617866119475B00060DC85 /* PBXTextBookmark */;
+			E5617867119475B00060DC85 /* PBXTextBookmark */ = E5617867119475B00060DC85 /* PBXTextBookmark */;
+			E5617868119475B00060DC85 /* PBXTextBookmark */ = E5617868119475B00060DC85 /* PBXTextBookmark */;
+			E5617869119475B00060DC85 /* PBXTextBookmark */ = E5617869119475B00060DC85 /* PBXTextBookmark */;
+			E561787011947ABC0060DC85 /* PBXTextBookmark */ = E561787011947ABC0060DC85 /* PBXTextBookmark */;
+			E561787111947ABC0060DC85 /* PBXTextBookmark */ = E561787111947ABC0060DC85 /* PBXTextBookmark */;
+			E561787211947ABC0060DC85 /* PBXTextBookmark */ = E561787211947ABC0060DC85 /* PBXTextBookmark */;
+			E561787311947ABC0060DC85 /* PBXTextBookmark */ = E561787311947ABC0060DC85 /* PBXTextBookmark */;
+			E561787C11947BC80060DC85 /* PBXTextBookmark */ = E561787C11947BC80060DC85 /* PBXTextBookmark */;
+			E561787D11947BC80060DC85 /* PBXTextBookmark */ = E561787D11947BC80060DC85 /* PBXTextBookmark */;
+			E561787E11947BC80060DC85 /* PBXTextBookmark */ = E561787E11947BC80060DC85 /* PBXTextBookmark */;
+			E561787F11947BC80060DC85 /* PBXTextBookmark */ = E561787F11947BC80060DC85 /* PBXTextBookmark */;
+			E561788011947BC80060DC85 /* PBXTextBookmark */ = E561788011947BC80060DC85 /* PBXTextBookmark */;
+			E561788511947C340060DC85 /* PBXTextBookmark */ = E561788511947C340060DC85 /* PBXTextBookmark */;
 			E5AE93C211938E7F007C52FF = E5AE93C211938E7F007C52FF /* PBXTextBookmark */;
 			E5AE93C311938E7F007C52FF = E5AE93C311938E7F007C52FF /* PBXTextBookmark */;
 			E5AE93C411938E7F007C52FF = E5AE93C411938E7F007C52FF /* PBXTextBookmark */;
@@ -203,14 +225,14 @@
 	};
 	61A9DFF10B83433800BC506C /* MainWindow.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {2292, 2522}}";
-			sepNavSelRange = "{3271, 0}";
-			sepNavVisRange = "{2634, 1450}";
+			sepNavIntBoundsRect = "{{0, 0}, {2292, 2600}}";
+			sepNavSelRange = "{336, 366}";
+			sepNavVisRange = "{0, 1537}";
 		};
 	};
 	61A9DFF20B83433800BC506C /* MainWindow.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {2292, 1281}}";
+			sepNavIntBoundsRect = "{{0, 0}, {2292, 887}}";
 			sepNavSelRange = "{0, 0}";
 			sepNavVisRange = "{0, 617}";
 		};
@@ -234,7 +256,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 101";
 		rLen = 0;
-		rLoc = 3912;
+		rLoc = 1913;
 		rType = 0;
 		vrLen = 1213;
 		vrLoc = 199;
@@ -263,7 +285,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 72";
 		rLen = 0;
-		rLoc = 1489;
+		rLoc = 1476;
 		rType = 0;
 		vrLen = 1487;
 		vrLoc = 538;
@@ -273,7 +295,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 100";
 		rLen = 0;
-		rLoc = 3765;
+		rLoc = 1767;
 		rType = 0;
 		vrLen = 1565;
 		vrLoc = 675;
@@ -283,7 +305,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 106";
 		rLen = 0;
-		rLoc = 3940;
+		rLoc = 1941;
 		rType = 0;
 		vrLen = 1432;
 		vrLoc = 831;
@@ -294,7 +316,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		fallbackIsa = XCBuildMessageTextBookmark;
 		rLen = 1;
-		rLoc = 164;
+		rLoc = 92;
 		rType = 1;
 	};
 	E561774E1194231D0060DC85 /* PBXTextBookmark */ = {
@@ -302,7 +324,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 101";
 		rLen = 0;
-		rLoc = 3765;
+		rLoc = 1767;
 		rType = 0;
 		vrLen = 1482;
 		vrLoc = 779;
@@ -322,7 +344,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 111";
 		rLen = 0;
-		rLoc = 4007;
+		rLoc = 2008;
 		rType = 0;
 		vrLen = 1539;
 		vrLoc = 779;
@@ -332,23 +354,37 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 118";
 		rLen = 0;
-		rLoc = 4192;
+		rLoc = 4355;
 		rType = 0;
 		vrLen = 1544;
 		vrLoc = 912;
 	};
 	E5617755119424530060DC85 /* nuiSocket.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = nuiSocket.h;
+		path = /Users/meeloo/work/nui3/tutorials/NetworkTest/nuiSocket.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {2292, 887}}";
 			sepNavSelRange = "{235, 245}";
 			sepNavVisRange = "{0, 499}";
+			sepNavWindowFrame = "{{61, 268}, {1061, 1103}}";
 		};
 	};
 	E5617756119424530060DC85 /* nuiSocket.cpp */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.cpp.cpp;
+		name = nuiSocket.cpp;
+		path = /Users/meeloo/work/nui3/tutorials/NetworkTest/nuiSocket.cpp;
+		sourceTree = "<absolute>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {2292, 887}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1002, 975}}";
 			sepNavSelRange = "{1177, 0}";
 			sepNavVisRange = "{0, 1208}";
+			sepNavWindowFrame = "{{84, 247}, {1061, 1103}}";
 		};
 	};
 	E561777B119446B30060DC85 /* PBXTextBookmark */ = {
@@ -375,8 +411,8 @@
 		isa = PBXTextBookmark;
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 99";
-		rLen = 146;
-		rLoc = 3765;
+		rLen = 145;
+		rLoc = 1767;
 		rType = 0;
 		vrLen = 1544;
 		vrLoc = 912;
@@ -481,7 +517,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 124";
 		rLen = 0;
-		rLoc = 3518;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 1140;
 		vrLoc = 1676;
@@ -491,7 +527,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 124";
 		rLen = 0;
-		rLoc = 3518;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 1140;
 		vrLoc = 1676;
@@ -511,8 +547,8 @@
 		comments = "Invalid conversion from 'const wchar_t*' to 'uint'";
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		fallbackIsa = XCBuildMessageTextBookmark;
-		rLen = 1;
-		rLoc = 152;
+		rLen = 0;
+		rLoc = 83;
 		rType = 1;
 	};
 	E56177A1119448680060DC85 /* PBXTextBookmark */ = {
@@ -520,7 +556,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 124";
 		rLen = 0;
-		rLoc = 3456;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 1889;
 		vrLoc = 1543;
@@ -530,7 +566,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 124";
 		rLen = 0;
-		rLoc = 3456;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 1889;
 		vrLoc = 1543;
@@ -549,7 +585,7 @@
 		isa = PBXTextBookmark;
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		rLen = 0;
-		rLoc = 119;
+		rLoc = 83;
 		rType = 1;
 	};
 	E56177A8119448DD0060DC85 /* PBXTextBookmark */ = {
@@ -557,7 +593,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 96";
 		rLen = 0;
-		rLoc = 2447;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 859;
 		vrLoc = 1379;
@@ -567,7 +603,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 96";
 		rLen = 0;
-		rLoc = 2447;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 1821;
 		vrLoc = 995;
@@ -577,7 +613,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 96";
 		rLen = 0;
-		rLoc = 2447;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 1821;
 		vrLoc = 995;
@@ -587,7 +623,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 96";
 		rLen = 0;
-		rLoc = 2447;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 832;
 		vrLoc = 1079;
@@ -614,7 +650,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 96";
 		rLen = 0;
-		rLoc = 2447;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 1832;
 		vrLoc = 995;
@@ -644,7 +680,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 96";
 		rLen = 0;
-		rLoc = 2447;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 834;
 		vrLoc = 2581;
@@ -746,7 +782,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 96";
 		rLen = 0;
-		rLoc = 2447;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 814;
 		vrLoc = 1424;
@@ -756,7 +792,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 99";
 		rLen = 0;
-		rLoc = 2456;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 617;
 		vrLoc = 1424;
@@ -766,7 +802,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 99";
 		rLen = 0;
-		rLoc = 2456;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 1840;
 		vrLoc = 1012;
@@ -815,7 +851,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 99";
 		rLen = 0;
-		rLoc = 2447;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 946;
 		vrLoc = 2362;
@@ -825,7 +861,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 99";
 		rLen = 0;
-		rLoc = 2447;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 946;
 		vrLoc = 2362;
@@ -845,7 +881,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 99";
 		rLen = 0;
-		rLoc = 2447;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 1771;
 		vrLoc = 1676;
@@ -865,7 +901,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 138";
 		rLen = 0;
-		rLoc = 3765;
+		rLoc = 1767;
 		rType = 0;
 		vrLen = 954;
 		vrLoc = 2443;
@@ -875,7 +911,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 140";
 		rLen = 0;
-		rLoc = 3524;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 706;
 		vrLoc = 2764;
@@ -885,7 +921,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 142";
 		rLen = 0;
-		rLoc = 3524;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 1806;
 		vrLoc = 1870;
@@ -895,7 +931,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 142";
 		rLen = 0;
-		rLoc = 3524;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 1758;
 		vrLoc = 1870;
@@ -905,7 +941,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 133";
 		rLen = 0;
-		rLoc = 3524;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 883;
 		vrLoc = 2544;
@@ -915,7 +951,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 133";
 		rLen = 0;
-		rLoc = 3524;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 1807;
 		vrLoc = 1870;
@@ -925,7 +961,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 133";
 		rLen = 0;
-		rLoc = 3524;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 1788;
 		vrLoc = 1870;
@@ -945,7 +981,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 170";
 		rLen = 0;
-		rLoc = 3524;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 845;
 		vrLoc = 3439;
@@ -955,7 +991,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 176";
 		rLen = 0;
-		rLoc = 3524;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 952;
 		vrLoc = 3440;
@@ -1015,7 +1051,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 184";
 		rLen = 0;
-		rLoc = 3765;
+		rLoc = 1767;
 		rType = 0;
 		vrLen = 1001;
 		vrLoc = 2439;
@@ -1085,7 +1121,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 124";
 		rLen = 0;
-		rLoc = 3432;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 849;
 		vrLoc = 2291;
@@ -1125,7 +1161,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 171";
 		rLen = 0;
-		rLoc = 3524;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 2655;
 		vrLoc = 2427;
@@ -1135,7 +1171,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 171";
 		rLen = 0;
-		rLoc = 3524;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 2013;
 		vrLoc = 2426;
@@ -1145,7 +1181,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 171";
 		rLen = 0;
-		rLoc = 3524;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 2009;
 		vrLoc = 2426;
@@ -1175,7 +1211,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 178";
 		rLen = 0;
-		rLoc = 3524;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 2016;
 		vrLoc = 2698;
@@ -1185,7 +1221,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 178";
 		rLen = 0;
-		rLoc = 3524;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 2010;
 		vrLoc = 2698;
@@ -1195,7 +1231,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 173";
 		rLen = 0;
-		rLoc = 3524;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 1751;
 		vrLoc = 2698;
@@ -1205,7 +1241,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 173";
 		rLen = 0;
-		rLoc = 3524;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 1751;
 		vrLoc = 2698;
@@ -1215,7 +1251,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 173";
 		rLen = 0;
-		rLoc = 3524;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 2070;
 		vrLoc = 2466;
@@ -1225,7 +1261,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 173";
 		rLen = 0;
-		rLoc = 3524;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 2009;
 		vrLoc = 2466;
@@ -1235,7 +1271,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 173";
 		rLen = 0;
-		rLoc = 3524;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 1751;
 		vrLoc = 2698;
@@ -1245,7 +1281,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 175";
 		rLen = 0;
-		rLoc = 3524;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 1691;
 		vrLoc = 2758;
@@ -1255,7 +1291,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 175";
 		rLen = 0;
-		rLoc = 3524;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 2070;
 		vrLoc = 2466;
@@ -1265,7 +1301,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 175";
 		rLen = 0;
-		rLoc = 3524;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 2009;
 		vrLoc = 2466;
@@ -1275,7 +1311,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 172";
 		rLen = 0;
-		rLoc = 3524;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 1691;
 		vrLoc = 2758;
@@ -1285,7 +1321,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 172";
 		rLen = 0;
-		rLoc = 3524;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 1691;
 		vrLoc = 2758;
@@ -1295,7 +1331,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 172";
 		rLen = 0;
-		rLoc = 3524;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 2070;
 		vrLoc = 2466;
@@ -1305,7 +1341,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 163";
 		rLen = 0;
-		rLoc = 3524;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 1671;
 		vrLoc = 2758;
@@ -1315,7 +1351,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 163";
 		rLen = 0;
-		rLoc = 3524;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 2050;
 		vrLoc = 2466;
@@ -1325,7 +1361,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 163";
 		rLen = 0;
-		rLoc = 3524;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 1989;
 		vrLoc = 2466;
@@ -1335,7 +1371,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 163";
 		rLen = 0;
-		rLoc = 3524;
+		rLoc = 1526;
 		rType = 0;
 		vrLen = 1966;
 		vrLoc = 2466;
@@ -1345,7 +1381,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 166";
 		rLen = 0;
-		rLoc = 3766;
+		rLoc = 1768;
 		rType = 0;
 		vrLen = 1565;
 		vrLoc = 2584;
@@ -1356,7 +1392,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		fallbackIsa = XCBuildMessageTextBookmark;
 		rLen = 1;
-		rLoc = 160;
+		rLoc = 88;
 		rType = 1;
 	};
 	E561784F11945B640060DC85 /* PBXTextBookmark */ = {
@@ -1364,7 +1400,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 163";
 		rLen = 0;
-		rLoc = 3711;
+		rLoc = 1713;
 		rType = 0;
 		vrLen = 1746;
 		vrLoc = 2446;
@@ -1374,23 +1410,271 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 163";
 		rLen = 0;
-		rLoc = 3711;
+		rLoc = 1713;
 		rType = 0;
 		vrLen = 1746;
 		vrLoc = 2446;
 	};
+	E5617852119467EF0060DC85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
+		name = "nuiNetworkHost.cpp: 163";
+		rLen = 0;
+		rLoc = 1713;
+		rType = 0;
+		vrLen = 1449;
+		vrLoc = 2743;
+	};
+	E5617853119468230060DC85 /* nuiSocket.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {2292, 949}}";
+			sepNavSelRange = "{1386, 0}";
+			sepNavVisRange = "{118, 1291}";
+		};
+	};
+	E5617854119468230060DC85 /* nuiSocket.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {2292, 887}}";
+			sepNavSelRange = "{609, 61}";
+			sepNavVisRange = "{0, 699}";
+		};
+	};
+	E561785911946D390060DC85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
+		name = "nuiNetworkHost.cpp: 163";
+		rLen = 0;
+		rLoc = 1713;
+		rType = 0;
+		vrLen = 1750;
+		vrLoc = 2446;
+	};
+	E561785A11946D390060DC85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
+		name = "nuiNetworkHost.cpp: 188";
+		rLen = 0;
+		rLoc = 4355;
+		rType = 0;
+		vrLen = 1698;
+		vrLoc = 2496;
+	};
+	E561785D11946E260060DC85 /* nuiTCPClient.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {2292, 887}}";
+			sepNavSelRange = "{257, 318}";
+			sepNavVisRange = "{0, 579}";
+		};
+	};
+	E561785E11946E260060DC85 /* nuiTCPClient.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {2292, 988}}";
+			sepNavSelRange = "{221, 0}";
+			sepNavVisRange = "{0, 1176}";
+		};
+	};
+	E5617861119475B00060DC85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF20B83433800BC506C /* MainWindow.h */;
+		name = "MainWindow.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 617;
+		vrLoc = 0;
+	};
+	E5617862119475B00060DC85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 19";
+		rLen = 366;
+		rLoc = 336;
+		rType = 0;
+		vrLen = 1537;
+		vrLoc = 0;
+	};
+	E5617863119475B00060DC85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E561785D11946E260060DC85 /* nuiTCPClient.h */;
+		name = "nuiTCPClient.h: 16";
+		rLen = 318;
+		rLoc = 257;
+		rType = 0;
+		vrLen = 579;
+		vrLoc = 0;
+	};
+	E5617864119475B00060DC85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5617853119468230060DC85 /* nuiSocket.cpp */;
+		name = "nuiSocket.cpp: 17";
+		rLen = 0;
+		rLoc = 313;
+		rType = 0;
+		vrLen = 1306;
+		vrLoc = 0;
+	};
+	E5617865119475B00060DC85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E561785E11946E260060DC85 /* nuiTCPClient.cpp */;
+		name = "nuiTCPClient.cpp: 28";
+		rLen = 0;
+		rLoc = 517;
+		rType = 0;
+		vrLen = 1075;
+		vrLoc = 0;
+	};
+	E5617866119475B00060DC85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5617854119468230060DC85 /* nuiSocket.h */;
+		name = "nuiSocket.h: 36";
+		rLen = 61;
+		rLoc = 609;
+		rType = 0;
+		vrLen = 684;
+		vrLoc = 0;
+	};
+	E5617867119475B00060DC85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E58931DC119367B80022ACBE /* nuiNetworkHost.h */;
+		name = "nuiNetworkHost.h: 48";
+		rLen = 0;
+		rLoc = 1056;
+		rType = 0;
+		vrLen = 1145;
+		vrLoc = 0;
+	};
+	E5617868119475B00060DC85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
+		name = "nuiNetworkHost.cpp: 83";
+		rLen = 0;
+		rLoc = 1523;
+		rType = 0;
+		vrLen = 1398;
+		vrLoc = 1039;
+	};
+	E5617869119475B00060DC85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
+		name = "nuiNetworkHost.cpp: 97";
+		rLen = 0;
+		rLoc = 1912;
+		rType = 0;
+		vrLen = 1631;
+		vrLoc = 1111;
+	};
+	E561787011947ABC0060DC85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
+		name = "nuiNetworkHost.cpp: 115";
+		rLen = 0;
+		rLoc = 2265;
+		rType = 0;
+		vrLen = 1778;
+		vrLoc = 1987;
+	};
+	E561787111947ABC0060DC85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5617854119468230060DC85 /* nuiSocket.h */;
+		name = "nuiSocket.h: 36";
+		rLen = 61;
+		rLoc = 609;
+		rType = 0;
+		vrLen = 699;
+		vrLoc = 0;
+	};
+	E561787211947ABC0060DC85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E561785E11946E260060DC85 /* nuiTCPClient.cpp */;
+		name = "nuiTCPClient.cpp: 28";
+		rLen = 11;
+		rLoc = 541;
+		rType = 0;
+		vrLen = 1066;
+		vrLoc = 0;
+	};
+	E561787311947ABC0060DC85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E561785E11946E260060DC85 /* nuiTCPClient.cpp */;
+		name = "nuiTCPClient.cpp: 31";
+		rLen = 0;
+		rLoc = 664;
+		rType = 0;
+		vrLen = 1073;
+		vrLoc = 0;
+	};
+	E561787C11947BC80060DC85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
+		name = "nuiNetworkHost.cpp: 11";
+		rLen = 67;
+		rLoc = 200;
+		rType = 0;
+		vrLen = 1237;
+		vrLoc = 0;
+	};
+	E561787D11947BC80060DC85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5617854119468230060DC85 /* nuiSocket.h */;
+		name = "nuiSocket.h: 36";
+		rLen = 61;
+		rLoc = 609;
+		rType = 0;
+		vrLen = 699;
+		vrLoc = 0;
+	};
+	E561787E11947BC80060DC85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5617853119468230060DC85 /* nuiSocket.cpp */;
+		name = "nuiSocket.cpp: 71";
+		rLen = 0;
+		rLoc = 1386;
+		rType = 0;
+		vrLen = 1291;
+		vrLoc = 118;
+	};
+	E561787F11947BC80060DC85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E561785E11946E260060DC85 /* nuiTCPClient.cpp */;
+		name = "nuiTCPClient.cpp: 33";
+		rLen = 11;
+		rLoc = 541;
+		rType = 0;
+		vrLen = 1121;
+		vrLoc = 0;
+	};
+	E561788011947BC80060DC85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E561785E11946E260060DC85 /* nuiTCPClient.cpp */;
+		name = "nuiTCPClient.cpp: 34";
+		rLen = 7;
+		rLoc = 573;
+		rType = 0;
+		vrLen = 1005;
+		vrLoc = 149;
+	};
+	E561788511947C340060DC85 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E561785E11946E260060DC85 /* nuiTCPClient.cpp */;
+		name = "nuiTCPClient.cpp: 10";
+		rLen = 0;
+		rLoc = 221;
+		rType = 0;
+		vrLen = 1176;
+		vrLoc = 0;
+	};
 	E58931DC119367B80022ACBE /* nuiNetworkHost.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {2292, 1281}}";
-			sepNavSelRange = "{622, 0}";
-			sepNavVisRange = "{0, 1032}";
+			sepNavIntBoundsRect = "{{0, 0}, {2292, 887}}";
+			sepNavSelRange = "{1056, 0}";
+			sepNavVisRange = "{0, 1145}";
 		};
 	};
 	E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {2292, 2444}}";
-			sepNavSelRange = "{3711, 0}";
-			sepNavVisRange = "{2446, 1746}";
+			sepNavIntBoundsRect = "{{0, 0}, {2292, 2522}}";
+			sepNavSelRange = "{200, 67}";
+			sepNavVisRange = "{0, 1237}";
 		};
 	};
 	E58C19681192F3A800A0223E /* NetworkTest */ = {
@@ -1511,7 +1795,7 @@
 		fRef = E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */;
 		name = "nuiNetworkHost.cpp: 86";
 		rLen = 0;
-		rLoc = 1730;
+		rLoc = 1476;
 		rType = 0;
 		vrLen = 1163;
 		vrLoc = 0;

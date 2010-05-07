@@ -14,16 +14,27 @@ class nuiNetworkHost;
 class nuiSocket
 {
 public:
+#ifdef WIN32
+  typedef SOCKET SocketType;
+#else
+  typedef int SocketType;
+#endif
+
   virtual ~nuiSocket();
   
-  int GetSocket() const;
+  SocketType GetSocket() const;
   
   bool GetLocalHost(nuiNetworkHost& rHost) const;
   bool GetDistantHost(nuiNetworkHost& rHost) const;
+
+  bool IsValid() const;
   
 protected:
-  nuiSocket(int Socket);
-  nuiSocket(int domain, int type, int protocol);
-  int mSocket;
+  nuiSocket(SocketType Socket = -1);
+  bool Init(int domain, int type, int protocol);
+  
+  struct addrinfo* GetAddrInfo(const nuiNetworkHost& rHost);
+  
+  SocketType mSocket;
 };
 

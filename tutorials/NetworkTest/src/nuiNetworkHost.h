@@ -35,6 +35,8 @@ public:
   nuiNetworkHost Resolve(const nglString& rService = nglString::Null);
 
 protected:
+  friend class nuiSocket;
+
   bool mIPSet : 1;
   bool mNameSet : 1;
   bool mResolved : 1;
@@ -42,5 +44,7 @@ protected:
   uint32 mIP;
   nglString mName;
   Protocol mProtocol;
+  
+  struct addrinfo* GetAddrInfo(const nglString& rService = nglString::Null) const;
   
 };

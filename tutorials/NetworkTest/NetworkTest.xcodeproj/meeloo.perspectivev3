@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>ActivePerspectiveName</key>
-	<string>Debug</string>
+	<string>Project</string>
 	<key>AllowedModules</key>
 	<array>
 		<dict>
@@ -295,7 +295,7 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>6</integer>
+									<integer>13</integer>
 									<integer>3</integer>
 									<integer>0</integer>
 								</array>
@@ -317,6 +317,8 @@
 							<string>MainColumn</string>
 							<real>185</real>
 						</array>
+						<key>RubberWindowFrame</key>
+						<string>0 59 2560 1359 0 0 2560 1418 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -332,7 +334,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>E58C197B1192F3C900A0223E</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>nuiNetworkHost.cpp</string>
+								<string>nuiTCPClient.cpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -340,18 +342,21 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>E58C197C1192F3C900A0223E</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>nuiNetworkHost.cpp</string>
+										<string>nuiTCPClient.cpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E561785011945B680060DC85</string>
+										<string>E561788511947C340060DC85</string>
 										<key>history</key>
 										<array>
-											<string>E561777C119446B30060DC85</string>
-											<string>E561777E119446B30060DC85</string>
-											<string>E561780C119456C20060DC85</string>
-											<string>E561780D119456C20060DC85</string>
-											<string>E561784E11945B640060DC85</string>
+											<string>E5617861119475B00060DC85</string>
+											<string>E5617862119475B00060DC85</string>
+											<string>E5617863119475B00060DC85</string>
+											<string>E5617867119475B00060DC85</string>
+											<string>E561787C11947BC80060DC85</string>
+											<string>E561787D11947BC80060DC85</string>
+											<string>E561787E11947BC80060DC85</string>
+											<string>E561787F11947BC80060DC85</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -366,6 +371,8 @@
 							<dict>
 								<key>Frame</key>
 								<string>{{0, 0}, {2353, 919}}</string>
+								<key>RubberWindowFrame</key>
+								<string>0 59 2560 1359 0 0 2560 1418 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -443,6 +450,8 @@
 									<dict>
 										<key>Frame</key>
 										<string>{{10, 27}, {2353, 367}}</string>
+										<key>RubberWindowFrame</key>
+										<string>0 59 2560 1359 0 0 2560 1418 </string>
 									</dict>
 									<key>Module</key>
 									<string>PBXBuildResultsModule</string>
@@ -515,8 +524,6 @@
 			<key>Layout</key>
 			<array>
 				<dict>
-					<key>BecomeActive</key>
-					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXProjectModuleGUID</key>
@@ -528,8 +535,6 @@
 					<dict>
 						<key>Frame</key>
 						<string>{{0, 0}, {2560, 566}}</string>
-						<key>RubberWindowFrame</key>
-						<string>0 59 2560 1359 0 0 2560 1418 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXDebugCLIModule</string>
@@ -604,11 +609,7 @@
 							</array>
 							<key>Frame</key>
 							<string>{{0, 373}, {1280, 374}}</string>
-							<key>RubberWindowFrame</key>
-							<string>0 59 2560 1359 0 0 2560 1418 </string>
 						</dict>
-						<key>RubberWindowFrame</key>
-						<string>0 59 2560 1359 0 0 2560 1418 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXDebugSessionModule</string>
@@ -655,7 +656,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>294935400.51929301</real>
+	<real>294943796.17560601</real>
 	<key>ToolbarConfigUserDefaultsMinorVersion</key>
 	<string>2</string>
 	<key>ToolbarDisplayMode</key>
@@ -672,7 +673,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E561785111945B680060DC85</string>
 		<string>E5617788119446B70060DC85</string>
 		<string>E5617789119446B70060DC85</string>
 		<string>/Users/meeloo/work/nui3/tutorials/NetworkTest/NetworkTest.xcodeproj</string>

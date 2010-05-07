@@ -9,12 +9,12 @@
 #include "nuiSocket.h"
 #include "nuiNetworkHost.h"
 
-nuiSocket::nuiSocket(int Socket)
+nuiSocket::nuiSocket(nuiSocket::SocketType Socket)
 : mSocket(Socket)
 {
 }
 
-nuiSocket::nuiSocket(int domain, int type, int protocol)
+bool nuiSocket::Init(int domain, int type, int protocol)
 {
   mSocket = socket(domain, type, protocol);
 }
@@ -29,7 +29,7 @@ nuiSocket::~nuiSocket()
 #endif
 }
 
-int nuiSocket::GetSocket() const
+nuiSocket::SocketType nuiSocket::GetSocket() const
 {
   return mSocket;
 }
@@ -60,3 +60,13 @@ bool nuiSocket::GetDistantHost(nuiNetworkHost& rHost) const
   return true;
 }
 
+
+bool nuiSocket::IsValid() const
+{
+  return mSocket != -1;
+}
+
+struct addrinfo* nuiSocket::GetAddrInfo(const nuiNetworkHost& rHost)
+{
+  return rHost.GetAddrInfo();
+}

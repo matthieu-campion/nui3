@@ -80,13 +80,47 @@ nuiNetworkHost::Protocol nuiNetworkHost::GetProtocol() const
 
 bool nuiNetworkHost::Resolve(std::vector<nuiNetworkHost>& rHosts, const nglString& rService)
 {
+  struct addrinfo* infos = GetAddrInfo(rService);
+  
+  while (infos)
+  {
+    sockaddr_in* addr = (struct sockaddr_in*)infos->ai_addr;
+    Protocol proto = eAny;
+    if (infos->ai_socktype == SOCK_STREAM)
+      proto = eTCP;
+    else if (infos->ai_socktype == SOCK_DGRAM)
+      proto = eUDP;
+
+    nuiNetworkHost h(nglString(infos->ai_canonname), ntohs(addr->sin_port), proto);
+    h.mIP = addr->sin_addr.s_addr;
+    rHosts.push_back(h);
+
+    infos = infos->ai_next;
+  }
+
+  freeaddrinfo(infos);
+
+  return true;
+}
+
+nuiNetworkHost nuiNetworkHost::Resolve(const nglString& rService)
+{
+  std::vector<nuiNetworkHost> hosts;
+  if (!Resolve(hosts, rService) || hosts.empty())
+    return nuiNetworkHost();
+  return hosts[0];
+}
+
+
+struct addrinfo* nuiNetworkHost::GetAddrInfo(const nglString& rService) const
+{
   struct addrinfo hints;
   memset(&hints, 0, sizeof(hints));
   hints.ai_flags = AI_CANONNAME;     /* AI_PASSIVE, AI_CANONNAME, AI_NUMERICHOST */
   hints.ai_family = PF_INET;    /* PF_xxx */
   hints.ai_socktype = 0;  /* SOCK_xxx */
   hints.ai_protocol = 0;  /* 0 or IPPROTO_xxx for IPv4 and IPv6 */
-
+  
   if (mProtocol == eTCP)
   {
     hints.ai_socktype = SOCK_STREAM;  /* SOCK_xxx */
@@ -99,7 +133,7 @@ bool nuiNetworkHost::Resolve(std::vector<nuiNetworkHost>& rHosts, const nglStrin
   }
   
   struct addrinfo* infos = NULL;
-
+  
   nglString h;
   if (mNameSet)
     h = mName;
@@ -108,16 +142,16 @@ bool nuiNetworkHost::Resolve(std::vector<nuiNetworkHost>& rHosts, const nglStrin
     uint8* ip = (uint8*)&mIP;
     h.CFormat(_T("%d.%d.%d.%d"), ip[0], ip[1], ip[2], ip[3]);
   }
-
+  
   char* hh = NULL;
   char* ss = NULL;
   if (!h.IsEmpty())
     hh = h.Export();
   if (!rService.IsEmpty())
     ss = rService.Export();
-
+  
   int res = getaddrinfo(hh, ss, &hints, &infos);
-
+  
   free(hh);
   free(ss);
   
@@ -152,34 +186,8 @@ bool nuiNetworkHost::Resolve(std::vector<nuiNetworkHost>& rHosts, const nglStrin
     
     NGL_LOG(_T("network"), 0, _T("nuiNetworkHost::Resolve error: %ls\n"), err.GetChars());
   }
-
   
-  while (infos)
-  {
-    sockaddr_in* addr = (struct sockaddr_in*)infos->ai_addr;
-    Protocol proto = eAny;
-    if (infos->ai_socktype == SOCK_STREAM)
-      proto = eTCP;
-    else if (infos->ai_socktype == SOCK_DGRAM)
-      proto = eUDP;
 
-    nuiNetworkHost h(nglString(infos->ai_canonname), ntohs(addr->sin_port), proto);
-    h.mIP = addr->sin_addr.s_addr;
-    rHosts.push_back(h);
-
-
-    infos = infos->ai_next;
-  }
-
-  freeaddrinfo(infos);
-
-  return true;
+  return infos;
 }
 
-nuiNetworkHost nuiNetworkHost::Resolve(const nglString& rService)
-{
-  std::vector<nuiNetworkHost> hosts;
-  if (!Resolve(hosts, rService) || hosts.empty())
-    return nuiNetworkHost();
-  return hosts[0];
-}
