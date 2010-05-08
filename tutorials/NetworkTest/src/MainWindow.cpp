@@ -13,24 +13,9 @@
 
 #include "nuiNetworkHost.h"
 #include "nuiSocket.h"
+#include "nuiTCPClient.h"
 
 // Network classes:
-
-class nuiTCPClient : public nuiSocket
-{
-public:
-  nuiTCPClient();
-  ~nuiTCPClient();
-
-  bool Connect(const nglString& rHost, int16 port);
-  bool Connect(uint32 ipaddress, int16 port);
-  bool Connect(const nuiNetworkHost& rHost);
-
-  bool Send(const std::vector<uint8>& rData);
-  bool Receive(const std::vector<uint8>& rData, int maxdata = -1);
-  
-  bool Close();
-};
 
 class nuiTCPServer : public nuiSocket
 {
@@ -120,7 +105,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::OnCreation()
 {
-  nuiNetworkHost host(_T("www.google.com"));
+  nuiNetworkHost host(_T("www.google.com"), 80, nuiNetworkHost::eTCP);
   std::vector<nuiNetworkHost> hosts;
   host.Resolve(hosts, _T("http"));
   
@@ -143,6 +128,21 @@ void MainWindow::OnCreation()
     }
     
     NGL_OUT(_T("%d: %ls (%d/%ls) [%d.%d.%d.%d]\n"), i, hosts[i].GetName().GetChars(), hosts[i].GetPort(), proto.GetChars(), ip[0], ip[1], ip[2], ip[3]);
+  }
+  
+  nuiTCPClient client;
+  
+  if (client.Connect(hosts[0]))
+  {
+    const char* msg = "GET /\n\n";
+    client.Send((uint8*)msg, strlen(msg));
+    
+    std::vector<uint8> buffer;
+    client.Receive(buffer);
+    
+    nglString s((const char*)&buffer[0], buffer.size());
+    
+    NGL_OUT(_T("Result:\n%ls\n\n"), s.GetChars());
   }
 }
 

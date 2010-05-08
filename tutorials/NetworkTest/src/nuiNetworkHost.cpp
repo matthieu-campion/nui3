@@ -149,6 +149,12 @@ struct addrinfo* nuiNetworkHost::GetAddrInfo(const nglString& rService) const
     hh = h.Export();
   if (!rService.IsEmpty())
     ss = rService.Export();
+  else
+  {
+    nglString s;
+    s.Add(mPort);
+    ss = s.Export();
+  }
   
   int res = getaddrinfo(hh, ss, &hints, &infos);
   

@@ -17,6 +17,7 @@ nuiSocket::nuiSocket(nuiSocket::SocketType Socket)
 bool nuiSocket::Init(int domain, int type, int protocol)
 {
   mSocket = socket(domain, type, protocol);
+  return mSocket >= 0;
 }
 
 nuiSocket::~nuiSocket()

@@ -21,7 +21,8 @@ public:
   bool Connect(uint32 ipaddress, int16 port);
   
   bool Send(const std::vector<uint8>& rData);
-  bool Receive(const std::vector<uint8>& rData, int maxdata = -1);
+  bool Send(const uint8* pData, int len);
+  bool Receive(std::vector<uint8>& rData);
   
   bool Close();
 };
