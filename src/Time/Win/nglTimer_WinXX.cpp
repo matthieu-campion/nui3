@@ -28,7 +28,7 @@ void nglTimer::InitMainTimer()
   {
     mTimerQueueHandle = CreateTimerQueue();
     NGL_ASSERT(mTimerQueueHandle);
-    BOOL res = CreateTimerQueueTimer(&mTimerHandle, mTimerQueueHandle, TimeProc, NULL, 1, 1, WT_EXECUTEDEFAULT);
+    BOOL res = CreateTimerQueueTimer(&mTimerHandle, mTimerQueueHandle, TimeProc, NULL, 1, 1, WT_EXECUTEINUITHREAD);
     NGL_ASSERT(res);
   }
 }

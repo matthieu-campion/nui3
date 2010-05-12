@@ -2561,7 +2561,7 @@ LRESULT nglWindow::WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
         info.Y = (int16)HIWORD(lParam);
       }
       info.Buttons = mMouseButtonStatus;
-      if ((mEventMask & MouseEvents) && (mOldMouseX != info.X) && (mOldMouseY != info.Y))
+      if ((mEventMask & MouseEvents) && ((mOldMouseX != info.X) || (mOldMouseY != info.Y)))
         CallOnMouseMove(info);
       mOldMouseX = info.X;
       mOldMouseY = info.Y;
