@@ -79,10 +79,12 @@ bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
   //printf("nuiInit(%d)\n", gNUIReferences);
   if (gNUIReferences == 0)
   {
+#ifdef WIN32
     WSADATA wsaData;   // if this doesn't work
     //WSAData wsaData; // then try this instead
     // MAKEWORD(1,1) for Winsock 1.1, MAKEWORD(2,0) for Winsock 2.0:
     int res = WSAStartup(MAKEWORD(1,1), &wsaData);
+#endif
 
     if (!App)
     {      
@@ -151,7 +153,9 @@ bool nuiUninit()
       App->CallOnExit(0);
       delete (pApp);
       App = NULL;
+#ifdef WIN32
       WSACleanup();
+#endif
       return true;
     }
     // From now on, all the contexts are dead so we have to release the remaining textures without trying to free their opengl resources
@@ -159,7 +163,9 @@ bool nuiUninit()
     nuiTexture::ForceReloadAll(true);
     nuiTexture::ClearAll();
   }
+#ifdef WIN32
   WSACleanup();
+#endif
   return false;
 }
 

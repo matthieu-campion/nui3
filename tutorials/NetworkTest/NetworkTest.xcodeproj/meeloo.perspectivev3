@@ -334,7 +334,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>E58C197B1192F3C900A0223E</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>nuiSocket.cpp</string>
+								<string>nuiTCPClient.cpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -342,11 +342,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>E58C197C1192F3C900A0223E</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>nuiSocket.cpp</string>
+										<string>nuiTCPClient.cpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E55B8832119F51B7001DC55B</string>
+										<string>E55B8843119F6943001DC55B</string>
 										<key>history</key>
 										<array>
 											<string>E5617861119475B00060DC85</string>
@@ -359,8 +359,9 @@
 											<string>E55B87D6119F4DE7001DC55B</string>
 											<string>E55B87D8119F4DE7001DC55B</string>
 											<string>E55B882F119F51B7001DC55B</string>
-											<string>E55B8830119F51B7001DC55B</string>
-											<string>E55B8831119F51B7001DC55B</string>
+											<string>E55B883F119F6943001DC55B</string>
+											<string>E55B8841119F6943001DC55B</string>
+											<string>E55B8842119F6943001DC55B</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -660,7 +661,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>295653815.76696002</real>
+	<real>295659843.66530299</real>
 	<key>ToolbarConfigUserDefaultsMinorVersion</key>
 	<string>2</string>
 	<key>ToolbarDisplayMode</key>

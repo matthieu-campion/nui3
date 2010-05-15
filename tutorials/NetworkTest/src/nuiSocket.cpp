@@ -81,7 +81,11 @@ struct addrinfo* nuiSocket::GetAddrInfo(const nuiNetworkHost& rHost) const
   return rHost.GetAddrInfo();
 }
 
+#ifdef WIN32
 #define W(X) WSA##X
+#else
+#define W(X) X
+#endif
 
 void nuiSocket::DumpError(int err) const
 {
