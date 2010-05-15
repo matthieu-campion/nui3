@@ -33,7 +33,8 @@ protected:
   nuiSocket(SocketType Socket = -1);
   bool Init(int domain, int type, int protocol);
   
-  struct addrinfo* GetAddrInfo(const nuiNetworkHost& rHost);
+  struct addrinfo* GetAddrInfo(const nuiNetworkHost& rHost) const;
+  void DumpError(int err) const;
   
   SocketType mSocket;
 };

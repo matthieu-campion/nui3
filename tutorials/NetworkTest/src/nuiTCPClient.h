@@ -22,8 +22,18 @@ public:
   
   bool Send(const std::vector<uint8>& rData);
   bool Send(const uint8* pData, int len);
-  bool Receive(std::vector<uint8>& rData);
+  bool ReceiveAvailable(std::vector<uint8>& rData); ///< Fill the rData vector with the data that is already available to read on the socket.
+  bool Receive(std::vector<uint8>& rData); ///< Fill the buffer up to its current size.
+  
+  bool IsConnected() const;
+  int32 GetAvailable() const;
+  bool CanWrite() const;
   
   bool Close();
+  
+protected:
+  friend class nuiTCPServer;
+  nuiTCPClient(int sock);
+  bool mConnected;
 };
 

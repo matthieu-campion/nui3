@@ -14,25 +14,9 @@
 #include "nuiNetworkHost.h"
 #include "nuiSocket.h"
 #include "nuiTCPClient.h"
+#include "nuiTCPServer.h"
 
 // Network classes:
-
-class nuiTCPServer : public nuiSocket
-{
-public:
-  nuiTCPServer();
-  ~nuiTCPServer();
-  
-  bool Bind(const nglString& rHost, int16 port);
-  bool Bind(uint32 ipaddress, int16 port);
-  bool Bind(const nuiNetworkHost& rHost);
-  
-  bool Listen(int backlog = 10);
-  
-  nuiTCPClient* Accept();
-  
-  bool Close();
-};
 
 class nuiUDPClient : public nuiSocket
 {
@@ -105,7 +89,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::OnCreation()
 {
-  nuiNetworkHost host(_T("www.google.com"), 80, nuiNetworkHost::eTCP);
+  ////////// Network Host Test:
+  nuiNetworkHost host(_T("www.libnui.net"), 80, nuiNetworkHost::eTCP);
   std::vector<nuiNetworkHost> hosts;
   host.Resolve(hosts, _T("http"));
   
@@ -130,6 +115,7 @@ void MainWindow::OnCreation()
     NGL_OUT(_T("%d: %ls (%d/%ls) [%d.%d.%d.%d]\n"), i, hosts[i].GetName().GetChars(), hosts[i].GetPort(), proto.GetChars(), ip[0], ip[1], ip[2], ip[3]);
   }
   
+  ////////// Client Test:
   nuiTCPClient client;
   
   if (client.Connect(hosts[0]))
@@ -138,12 +124,40 @@ void MainWindow::OnCreation()
     client.Send((uint8*)msg, strlen(msg));
     
     std::vector<uint8> buffer;
+    buffer.resize(4096);
     client.Receive(buffer);
     
     nglString s((const char*)&buffer[0], buffer.size());
     
     NGL_OUT(_T("Result:\n%ls\n\n"), s.GetChars());
   }
+  
+  ////////// Server Test:
+  nuiTCPServer server;
+  if (server.Bind(0, 31337))
+  {
+    if (server.Listen())
+    {
+      nuiTCPClient* pClient = server.Accept();
+      NGL_ASSERT(pClient);
+      nuiNetworkHost host;
+      pClient->GetDistantHost(host);
+      NGL_OUT(_T("Connected from host %ls:%d\n"), host.GetName().GetChars(), host.GetPort());
+      const char* msg = "\n\nnui send test ok!\n\n\n";
+      pClient->Send((const uint8*)msg, strlen(msg));
+      delete pClient;
+    }
+    else
+    {
+      NGL_OUT(_T("Unable to listen on socket\n"));
+    }
+
+  }
+  else
+  {
+    NGL_OUT(_T("Unable to bind socket\n"));
+  }
+
 }
 
 

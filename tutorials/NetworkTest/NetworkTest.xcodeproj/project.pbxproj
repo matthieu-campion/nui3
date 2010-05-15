@@ -24,6 +24,8 @@
 		BC6A09AD0EF92BAB00881ACF /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BC6A09AB0EF92BAB00881ACF /* Info.plist */; };
 		BCBCB15F0DFD45BD002E8BC3 /* libnui3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */; };
 		BCBCB1600DFD45C1002E8BC3 /* libnui3D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15C0DFD45B6002E8BC3 /* libnui3D.a */; };
+		E55B87B6119F4559001DC55B /* nuiTCPServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E55B87B5119F4559001DC55B /* nuiTCPServer.cpp */; };
+		E55B87B7119F4559001DC55B /* nuiTCPServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E55B87B5119F4559001DC55B /* nuiTCPServer.cpp */; };
 		E5617855119468230060DC85 /* nuiSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5617853119468230060DC85 /* nuiSocket.cpp */; };
 		E5617856119468230060DC85 /* nuiSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5617853119468230060DC85 /* nuiSocket.cpp */; };
 		E561785F11946E260060DC85 /* nuiTCPClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E561785E11946E260060DC85 /* nuiTCPClient.cpp */; };
@@ -85,6 +87,8 @@
 		BC6A09AB0EF92BAB00881ACF /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		BC6A09CB0EF9301900881ACF /* main.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = main.css; path = resources/css/main.css; sourceTree = SOURCE_ROOT; };
 		BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nui3.xcodeproj; path = ../../nui3.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E55B87B4119F4559001DC55B /* nuiTCPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiTCPServer.h; path = src/nuiTCPServer.h; sourceTree = "<group>"; };
+		E55B87B5119F4559001DC55B /* nuiTCPServer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiTCPServer.cpp; path = src/nuiTCPServer.cpp; sourceTree = "<group>"; };
 		E5617853119468230060DC85 /* nuiSocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiSocket.cpp; path = src/nuiSocket.cpp; sourceTree = "<group>"; };
 		E5617854119468230060DC85 /* nuiSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiSocket.h; path = src/nuiSocket.h; sourceTree = "<group>"; };
 		E561785D11946E260060DC85 /* nuiTCPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiTCPClient.h; path = src/nuiTCPClient.h; sourceTree = "<group>"; };
@@ -160,6 +164,8 @@
 				E58931DD119367B80022ACBE /* nuiNetworkHost.cpp */,
 				E561785D11946E260060DC85 /* nuiTCPClient.h */,
 				E561785E11946E260060DC85 /* nuiTCPClient.cpp */,
+				E55B87B4119F4559001DC55B /* nuiTCPServer.h */,
+				E55B87B5119F4559001DC55B /* nuiTCPServer.cpp */,
 			);
 			name = sources;
 			sourceTree = "<group>";
@@ -340,6 +346,7 @@
 				E58931DF119367B80022ACBE /* nuiNetworkHost.cpp in Sources */,
 				E5617855119468230060DC85 /* nuiSocket.cpp in Sources */,
 				E561785F11946E260060DC85 /* nuiTCPClient.cpp in Sources */,
+				E55B87B7119F4559001DC55B /* nuiTCPServer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -352,6 +359,7 @@
 				E58931DE119367B80022ACBE /* nuiNetworkHost.cpp in Sources */,
 				E5617856119468230060DC85 /* nuiSocket.cpp in Sources */,
 				E561786011946E260060DC85 /* nuiTCPClient.cpp in Sources */,
+				E55B87B6119F4559001DC55B /* nuiTCPServer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

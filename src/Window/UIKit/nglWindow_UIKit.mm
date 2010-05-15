@@ -245,32 +245,32 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
       {
         mpNGLWindow->SetRotation(angle);
         forceresize = true;
-        //        CGRect r = [self frame];
-        //printf("currentFrame: %f, %f - %f, %f\n", r.origin.x, r.origin.y, r.size.width, r.size.height);
-        //        r = [UIScreen mainScreen].applicationFrame;
-        //printf("applicationFrame: %f, %f - %f, %f\n", r.origin.x, r.origin.y, r.size.width, r.size.height);
-        //        glClearColor(0, 1, 0, 1);
-        //        glDisable(GL_SCISSOR_TEST);
-        //        glDisable(GL_TEXTURE_2D);
-        //        glColor4f(1, 0, 0, 1);
-        //        glClear(GL_COLOR_BUFFER_BIT);
-        //        glMatrixMode(GL_PROJECTION_MATRIX);
-        //        glLoadIdentity();
-        //        glMatrixMode(GL_MODELVIEW_MATRIX);
-        //        glLoadIdentity();
-        //        //glBegin(GL_LINE_LOOP);
-        //        float ww = 319;
-        //        float hh = 460;
-        //        float v[] = {
-        //          0, 0, 0,
-        //          ww, 0, 0,
-        //          ww, hh, 0,
-        //          0, hh, 0
-        //        };
-        //        glVertexPointer(3, GL_FLOAT, 0, v);
-        //        glEnableClientState(GL_VERTEX_ARRAY);
-        //        glDisableClientState(GL_COLOR_ARRAY);
-        //        glDrawArrays(GL_LINE_LOOP, 0, 4);
+        CGRect r = [self frame];
+        printf("currentFrame: %f, %f - %f, %f\n", r.origin.x, r.origin.y, r.size.width, r.size.height);
+        r = [UIScreen mainScreen].applicationFrame;
+        printf("applicationFrame: %f, %f - %f, %f\n", r.origin.x, r.origin.y, r.size.width, r.size.height);
+        glClearColor(0, 1, 0, 1);
+        glDisable(GL_SCISSOR_TEST);
+        glDisable(GL_TEXTURE_2D);
+        glColor4f(1, 0, 0, 1);
+        glClear(GL_COLOR_BUFFER_BIT);
+        glMatrixMode(GL_PROJECTION_MATRIX);
+        glLoadIdentity();
+        glMatrixMode(GL_MODELVIEW_MATRIX);
+        glLoadIdentity();
+        //glBegin(GL_LINE_LOOP);
+        float ww = 319;
+        float hh = 460;
+        float v[] = {
+          0, 0, 0,
+          ww, 0, 0,
+          ww, hh, 0,
+          0, hh, 0
+        };
+        glVertexPointer(3, GL_FLOAT, 0, v);
+        glEnableClientState(GL_VERTEX_ARRAY);
+        glDisableClientState(GL_COLOR_ARRAY);
+        glDrawArrays(GL_LINE_LOOP, 0, 4);
         mInvalidated = true;
       }
     }
@@ -351,7 +351,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
     [self setContext: mpContext renderBuffer:mRenderBuffer];
     glClearColor(0, 0, 0, 1);
     glClear(GL_COLOR_BUFFER_BIT);
-    //printf("NEW Render buffer area: %d x %d\n", w, h);
+    printf("NEW Render buffer area: %d x %d\n", w, h);
     
   }
 }
@@ -767,13 +767,13 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
 //    }
 //  }
 
-///< Create the actual window
+  // Create the actual window
   nglUIWindow* pUIWindow = [[nglUIWindow alloc] initWithFrame: rect andNGLWindow: this];
 
   mOSInfo.mpUIWindow = pUIWindow;
   mpUIWindow = pUIWindow;
 
-// Enable multitouch
+  // Enable multitouch
   [pUIWindow setMultipleTouchEnabled: YES];
   
   [pUIWindow makeKeyAndVisible];
@@ -783,21 +783,21 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
   
   if (rContext.TargetAPI != eTargetAPI_OpenGL)
   {
-///< UIKit Implementation only supports OpenGLES renderer so far
+    // UIKit Implementation only supports OpenGLES renderer so far
     NGL_LOG(_T("window"), NGL_LOG_INFO, _T("bad renderer"));
     NGL_ASSERT(0);
     return;
   }
   if (!Build(rContext, pShared, rInfo.Flags & nglWindow::FullScreen))
   {
-///< An error has been raised by nglContext's code
+    // An error has been raised by nglContext's code
     NGL_LOG(_T("window"), NGL_LOG_INFO, _T("could not create its context"));
     NGL_ASSERT(0);
     return;
   }
 
 
-///< Rendering takes place in a Core Animation Layer
+  // Rendering takes place in a Core Animation Layer
   CAEAGLLayer* pLayer = (CAEAGLLayer*)[pUIWindow layer];
   NGL_ASSERT(pLayer);  
 	pLayer.opaque = YES;
@@ -817,7 +817,7 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
 	newSize.height = roundf(newSize.height);
   
 
-///< This layer is then used as the color attachement for a framebuffer based rendering
+  // This layer is then used as the color attachement for a framebuffer based rendering
 	GLuint oldRenderbuffer;
 	GLuint oldFramebuffer;
 	glGetIntegerv(GL_RENDERBUFFER_BINDING_OES, (GLint *) &oldRenderbuffer);
