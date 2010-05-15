@@ -8,9 +8,13 @@
 #include "nui.h"
 #include "nuiNetworkHost.h"
 
+#ifdef WIN32
+#include <Ws2tcpip.h>
+#else
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netdb.h>
+#endif
 
 //class nuiNetworkHost
 nuiNetworkHost::nuiNetworkHost(int port, Protocol protocol)
@@ -185,9 +189,11 @@ struct addrinfo* nuiNetworkHost::GetAddrInfo(const nglString& rService) const
       case EAI_SERVICE:
         err = "servname not supported for ai_socktype EAI_SOCKTYPE ai_socktype not supported";
         break;
+#ifndef WIN32
       case EAI_SYSTEM:
         err = "system error returned in errno";
         break;
+#endif
     }
     
     NGL_LOG(_T("network"), 0, _T("nuiNetworkHost::Resolve error: %ls\n"), err.GetChars());

@@ -10,10 +10,14 @@
 #include "nuiTCPServer.h"
 #include "nuiTCPClient.h"
 
+#ifdef WIN32
+#include <Ws2tcpip.h>
+#else
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netdb.h>
 #include <sys/ioctl.h>
+#endif
 
 nuiTCPServer::nuiTCPServer()
 {
@@ -42,7 +46,8 @@ bool nuiTCPServer::Bind(const nuiNetworkHost& rHost)
   
   struct addrinfo* addr = GetAddrInfo(rHost);
   int res = bind(mSocket, addr->ai_addr, addr->ai_addrlen);
-  DumpError(errno);
+  if (res)
+    DumpError(errno);
   
   freeaddrinfo(addr);
   
@@ -63,6 +68,10 @@ nuiTCPClient* nuiTCPServer::Accept()
 
 bool nuiTCPServer::Close()
 {
-  close(mSocket);
+#ifdef WIN32
+  return 0 == closesocket(mSocket);
+#else
+  return 0 == close(mSocket);
+#endif
 }
 

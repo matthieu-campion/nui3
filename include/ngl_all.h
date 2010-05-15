@@ -97,7 +97,7 @@ Lookup precompiled headers in the VC doc to learn how to use them.
 #include <arpa/inet.h>
 #else
 #if defined(_WIN32)
-#include <winsock.h>
+#include <winsock2.h>
 #else
 #include <netinet/in.h>
 #endif

@@ -199,7 +199,7 @@ and in NGL user application code.
   #pragma comment( lib,  "winhttp.lib" )
   #pragma comment( lib, "wsock32.lib" )
 
-//#define _WINSOCKAPI_  // Prevent inclusion of winsock.h in windows.h
+  #define _WINSOCKAPI_  // Prevent inclusion of winsock.h in windows.h
   #define NODRAWTEXT // Prevent inclusion of DrawText defines in windows.h. 
 
   #ifndef _WIN32_WINNT

@@ -9,10 +9,13 @@
 #include "nuiTCPClient.h"
 #include "nuiNetworkHost.h"
 
+#ifdef WIN32
+#include <Ws2tcpip.h>
+#else
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netdb.h>
-#include <sys/ioctl.h>
+#endif
 
 
 nuiTCPClient::nuiTCPClient()
@@ -41,7 +44,8 @@ bool nuiTCPClient::Connect(const nuiNetworkHost& rHost)
 
   struct addrinfo* addr = GetAddrInfo(rHost);
   int res = connect(mSocket, addr->ai_addr, addr->ai_addrlen);
-  DumpError(errno);
+  if (res)
+    DumpError(errno);
   
   freeaddrinfo(addr);
 
@@ -71,7 +75,11 @@ bool nuiTCPClient::Send(const uint8* pData, int len)
   if (!IsConnected())
     return false;
   
+#ifdef WIN32
+  send(mSocket, (const char*)pData, len, 0);
+#else
   send(mSocket, pData, len, 0);
+#endif
   return false;
 }
 
@@ -82,12 +90,22 @@ bool nuiTCPClient::ReceiveAvailable(std::vector<uint8>& rData)
     return false;
 
   int PendingBytes = 0;
+#ifdef WIN32
+  int result = WSAIoctl(mSocket, FIONREAD, NULL, 0, &PendingBytes, sizeof(PendingBytes), NULL, NULL, NULL);
+#else
   int result = ioctl(mSocket, FIONREAD, &PendingBytes);
+#endif
+
   if (!PendingBytes || result != 0)
     return false;
   
   rData.resize(PendingBytes);
+#ifdef WIN32
+  int res = recv(mSocket, (char*)&rData[0], rData.size(), 0);
+#else
   int res = recv(mSocket, &rData[0], rData.size(), 0);
+#endif
+
   if (res < 0)
   {
     mConnected = false;
@@ -111,7 +129,12 @@ bool nuiTCPClient::Receive(std::vector<uint8>& rData)
   if (!IsConnected())
     return false;
   
+#ifdef WIN32
+  int res = recv(mSocket, (char*)&rData[0], rData.size(), 0);
+#else
   int res = recv(mSocket, &rData[0], rData.size(), 0);
+#endif
+
   if (res == 0)
   {
     mConnected = false;
@@ -135,8 +158,8 @@ bool nuiTCPClient::Close()
 
   
 #ifdef WIN32
-  DisconnectEx(mSocket, NULL, 0, 0);
-  closesocket(mSocket)
+  //DisconnectEx(mSocket, NULL, 0, 0);
+  closesocket(mSocket);
 #else
   close(mSocket);
 #endif
@@ -153,7 +176,12 @@ bool nuiTCPClient::IsConnected() const
 int32 nuiTCPClient::GetAvailable() const
 {
   int PendingBytes = 0;
+#ifdef WIN32
+  int result = WSAIoctl(mSocket, FIONREAD, NULL, 0, &PendingBytes, sizeof(PendingBytes), NULL, NULL, NULL);
+#else
   int result = ioctl(mSocket, FIONREAD, &PendingBytes);
+#endif
+
   if (result != 0)
     PendingBytes = 0;
   
