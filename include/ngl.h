@@ -39,7 +39,7 @@ and in NGL user application code.
 #if defined (_WIN32) || defined (WIN32)
 #  ifndef _WIN32_
 #    define _WIN32_
-#define _WIN32_WINNT 0x0501
+#define _WIN32_WINNT 0x0502
 #  endif
 #  ifdef _DEBUG
 //#    define _CRTDBG_MAP_ALLOC // Use the CRT debug mallocs & new
@@ -203,10 +203,10 @@ and in NGL user application code.
   #define NODRAWTEXT // Prevent inclusion of DrawText defines in windows.h. 
 
   #ifndef _WIN32_WINNT
-    #define _WIN32_WINNT _WIN32_WINNT_WINXP
+    #define _WIN32_WINNT _WIN32_WINNT_WS03
   #endif
 
-  #define NTDDI_VERSION NTDDI_WINXP //< Minimum version of the system = WinXP.
+  #define NTDDI_VERSION NTDDI_WS03 //< Minimum version of the system = WinXP.
   #include <windows.h>
   #include <malloc.h>
   #include <cstdio>

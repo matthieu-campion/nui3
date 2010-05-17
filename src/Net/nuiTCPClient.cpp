@@ -10,7 +10,9 @@
 #include "nuiNetworkHost.h"
 
 #ifdef WIN32
+#include <WinSock2.h>
 #include <Ws2tcpip.h>
+#undef GetAddrInfo
 #else
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -43,7 +45,7 @@ bool nuiTCPClient::Connect(const nuiNetworkHost& rHost)
   if (!Init(AF_INET, SOCK_STREAM, 0))
     return false;
 
-  struct addrinfo* addr = GetAddrInfo(rHost);
+  struct addrinfo* addr = nuiSocket::GetAddrInfo(rHost);
   int res = connect(mSocket, addr->ai_addr, addr->ai_addrlen);
   if (res)
     DumpError(errno);

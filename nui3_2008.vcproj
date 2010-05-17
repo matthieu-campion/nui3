@@ -1680,6 +1680,38 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\Net\nuiNetworkHost.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiNetworkHost.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Net\nuiSocket.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiSocket.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Net\nuiTCPClient.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiTCPClient.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Net\nuiTCPServer.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiTCPServer.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\nuiURL.h"
 					>
 				</File>

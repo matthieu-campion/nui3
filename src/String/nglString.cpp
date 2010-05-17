@@ -21,7 +21,7 @@ licence: see nui3/LICENCE.TXT
 #define ngl_strnicmp		wcsnicmp
 #define ngl_mbs_stricmp	_stricmp
 #elif defined _WIN32_
-#define ngl_vsnwprintf	_vswprintf
+#define ngl_vsnwprintf	_vsnwprintf
 #define ngl_snprintf	_snprintf
 #define ngl_strcmp		wcscmp
 #define ngl_stricmp 		wcsicmp
@@ -1585,8 +1585,12 @@ nglString& nglString::Formatv(const nglChar* pFormat, va_list args)
   int len;
 
   va_list args_copy;
+#ifndef WIN32
   va_copy(args_copy, args);
-  
+#else 
+#define args_copy args
+#endif
+
   // Try to render in stack buffer
   len = ngl_vsnwprintf(sbuffer, FORMAT_BUFSIZE, pFormat, args_copy);
   va_end(args_copy);
@@ -1613,7 +1617,9 @@ nglString& nglString::Formatv(const nglChar* pFormat, va_list args)
       bufsize *= 2;
       mString.resize(bufsize);
 
+#ifndef WIN32
       va_copy(args_copy, args);
+#endif
       len = ngl_vsnwprintf(&mString[0], bufsize, pFormat, args_copy);
       va_end(args_copy);
 

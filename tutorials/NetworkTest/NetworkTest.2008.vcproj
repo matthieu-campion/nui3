@@ -191,38 +191,6 @@
 				RelativePath="src\MainWindow.h"
 				>
 			</File>
-			<File
-				RelativePath=".\src\nuiNetworkHost.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\nuiNetworkHost.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\nuiSocket.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\nuiSocket.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\nuiTCPClient.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\nuiTCPClient.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\nuiTCPServer.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\nuiTCPServer.h"
-				>
-			</File>
 		</Filter>
 		<File
 			RelativePath=".\resource.rc"

@@ -11,6 +11,7 @@
 
 #ifdef WIN32
 #include <Ws2tcpip.h>
+#undef GetAddrInfo
 #else
 #include <sys/types.h>
 #include <sys/socket.h>
