@@ -1584,8 +1584,8 @@ nglString& nglString::Formatv(const nglChar* pFormat, va_list args)
   memset(sbuffer, 0, FORMAT_BUFSIZE * sizeof(nglChar));
   int len;
 
-  va_list args_copy;
 #ifndef WIN32
+  va_list args_copy;
   va_copy(args_copy, args);
 #else 
 #define args_copy args
