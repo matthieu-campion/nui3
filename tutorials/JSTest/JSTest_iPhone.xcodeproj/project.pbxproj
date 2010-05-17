@@ -39,8 +39,6 @@
 		C9F5F92E0DA84CAB00E078ED /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C999972E0DA6F405001A7116 /* OpenGLES.framework */; };
 		C9F5F92F0DA84CAB00E078ED /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C99997710DA6F9F2001A7116 /* AudioToolbox.framework */; };
 		C9F5F9300DA84CAB00E078ED /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C99998F50DA7CAF2001A7116 /* QuartzCore.framework */; };
-		E5EB3B0B1147F5460078C71C /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5EB3B0A1147F5460078C71C /* CoreText.framework */; };
-		E5EB3B1E1147F54F0078C71C /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5EB3B0A1147F5460078C71C /* CoreText.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,7 +110,6 @@
 		C9EA04FD0E2917FA0067EF48 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		C9F2587A0E5861EA00687021 /* dlist.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = dlist.plist; sourceTree = "<group>"; };
 		C9F5F9330DA84CAB00E078ED /* JSTest_iPhoneD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JSTest_iPhoneD.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E5EB3B0A1147F5460078C71C /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,7 +126,6 @@
 				C9CD09880DDDC04B0082235F /* CFNetwork.framework in Frameworks */,
 				C9EA04FE0E2917FA0067EF48 /* MediaPlayer.framework in Frameworks */,
 				BC540B430EF940C5007E66FC /* libnuiE.a in Frameworks */,
-				E5EB3B1E1147F54F0078C71C /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,7 +142,6 @@
 				C9CD09890DDDC04B0082235F /* CFNetwork.framework in Frameworks */,
 				C9EA04FF0E2917FA0067EF48 /* MediaPlayer.framework in Frameworks */,
 				BC540B440EF940C9007E66FC /* libnuiEd.a in Frameworks */,
-				E5EB3B0B1147F5460078C71C /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,7 +159,6 @@
 				1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
-				E5EB3B0A1147F5460078C71C /* CoreText.framework */,
 			);
 			name = "Linked Frameworks";
 			sourceTree = "<group>";
@@ -446,8 +440,6 @@
 				OTHER_LDFLAGS = (
 					"-liconv",
 					"-lz",
-					"-weak_framework",
-					CoreText,
 				);
 				PREBINDING = NO;
 				PROVISIONING_PROFILE = "B6311040-6715-402F-A10E-30C63413B1B5";

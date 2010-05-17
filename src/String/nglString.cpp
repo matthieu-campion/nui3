@@ -1572,9 +1572,9 @@ nglString& nglString::Format(const char* pFormat, ...)
   return *this;
 }
 
-#define FORMAT_BUFSIZE 1024
+#define FORMAT_BUFSIZE (1024)
 
-nglString& nglString::Formatv(const nglChar* pFormat, va_list Args)
+nglString& nglString::Formatv(const nglChar* pFormat, va_list args)
 {
   if (!pFormat)
     return *this;
@@ -1584,18 +1584,21 @@ nglString& nglString::Formatv(const nglChar* pFormat, va_list Args)
   memset(sbuffer, 0, FORMAT_BUFSIZE * sizeof(nglChar));
   int len;
 
-#ifdef _WIN32_
+  va_list args_copy;
+  va_copy(args_copy, args);
+  
   // Try to render in stack buffer
-  len = _vsnwprintf(sbuffer, FORMAT_BUFSIZE, pFormat, Args);
+  len = ngl_vsnwprintf(sbuffer, FORMAT_BUFSIZE, pFormat, args_copy);
+  va_end(args_copy);
 
-  if (len >= 0)
+  if (len >= 0 && len <= FORMAT_BUFSIZE)
   {
     /* Output fits in the stack buffer, copy it
     */
     Copy(sbuffer);
     return *this;
   }
-  else if (len == -1)
+  else
   {
     /* Output does not fit in the stack buffer.
     * Windows brain dead xxprintf implementation does not return needed space
@@ -1610,13 +1613,16 @@ nglString& nglString::Formatv(const nglChar* pFormat, va_list Args)
       bufsize *= 2;
       mString.resize(bufsize);
 
-      len = _vsnwprintf(&mString[0], bufsize, pFormat, Args);
-      if (len >= 0)
+      va_copy(args_copy, args);
+      len = ngl_vsnwprintf(&mString[0], bufsize, pFormat, args_copy);
+      va_end(args_copy);
+
+      if (len >= 0 && len <= bufsize)
       {
         /* Fits, hurra !
         * In the event where len==bufsize (no zero terminal written), we have to terminate the string.
         */
-        mString[bufsize] = 0;
+        mString.resize(len);
         return *this;
       }
     }
@@ -1624,30 +1630,6 @@ nglString& nglString::Formatv(const nglChar* pFormat, va_list Args)
   }
 
   return *this;
-#else  // _WIN32_
-
-  const nglChar* format = pFormat;
-
-  // Try to render in stack buffer
-  len = ngl_vsnwprintf(sbuffer, FORMAT_BUFSIZE, format, Args);
-
-  if (len <= FORMAT_BUFSIZE)
-  {
-    /* Output fits in the stack buffer, copy it.
-    * Works okay if vsnprintf could not stuff the terminal zero (ie. len == FORMAT_BUFSIZE)
-    */
-    Copy(sbuffer);
-    return *this;
-  }
-
-  /* Stack buffer did not fit the string, we need 'len' Chars
-  */
-  mString.resize(len);
-
-  len = ngl_vsnwprintf(&mString[0], len, format, Args);
-  //mString[len] = 0;
-  return *this;
-#endif
 }
 
 nglString& nglString::Formatv(const char* pFormat, va_list Args)

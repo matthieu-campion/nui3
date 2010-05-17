@@ -102,9 +102,9 @@ bool nuiTCPClient::ReceiveAvailable(std::vector<uint8>& rData)
   
   rData.resize(PendingBytes);
 #ifdef WIN32
-  int res = recv(mSocket, (char*)&rData[0], rData.size(), 0);
+  int res = recv(mSocket, (char*)&rData[0], rData.size(), MSG_WAITALL);
 #else
-  int res = recv(mSocket, &rData[0], rData.size(), 0);
+  int res = recv(mSocket, &rData[0], rData.size(), MSG_WAITALL);
 #endif
 
   if (res < 0)
@@ -131,9 +131,9 @@ bool nuiTCPClient::Receive(std::vector<uint8>& rData)
     return false;
   
 #ifdef WIN32
-  int res = recv(mSocket, (char*)&rData[0], rData.size(), 0);
+  int res = recv(mSocket, (char*)&rData[0], rData.size(), MSG_WAITALL);
 #else
-  int res = recv(mSocket, &rData[0], rData.size(), 0);
+  int res = recv(mSocket, &rData[0], rData.size(), MSG_WAITALL);
 #endif
 
   if (res == 0)
