@@ -2938,19 +2938,19 @@ nuiRect nuiWidget::GetLayoutForRect(const nuiRect& rRect)
   CheckValid();
   nuiRect rect(GetIdealRect().Size());
   nuiRect r(rRect);
-  
+
   if (mMaxWidth >= 0)
-    r.SetWidth(MIN(r.GetWidth(), mMaxWidth));
-  
+    rect.SetWidth(MIN(r.GetWidth(), mMaxWidth));
+
   if (mMaxHeight >= 0)
-    r.SetHeight(MIN(r.GetHeight(), mMaxHeight));
-  
+    rect.SetHeight(MIN(r.GetHeight(), mMaxHeight));
+
   if (mMinWidth >= 0)
-    r.SetWidth(MAX(r.GetWidth(), mMinWidth));
-  
+    rect.SetWidth(MAX(r.GetWidth(), mMinWidth));
+
   if (mMinHeight >= 0)
-    r.SetHeight(MAX(r.GetHeight(), mMinHeight));
-  
+    rect.SetHeight(MAX(r.GetHeight(), mMinHeight));
+
   if (mPosition == nuiNoPosition)
   {
     rect.Move(r.Left(), r.Top());
@@ -2975,29 +2975,29 @@ nuiRect nuiWidget::GetLayoutForRect(const nuiRect& rRect)
       float ratio,rratio,rw,rh;
       ratio  = (float)rct.GetWidth()    / (float)rct.GetHeight();
       rratio = (float)rect.GetWidth() / (float)rect.GetHeight();
-      
+
       if (ratio < rratio) 
       {
         rw = (float)rct.GetWidth();
         rh = rw / rratio;
       }
-      
+
       else 
       {
         rh = (float)rct.GetHeight();
         rw = rratio * rh;
       }
-      
+
       rect = nuiRect(0.0f, 0.0f, rw, rh);
       rect.SetPosition(mFillRule, r);
     }
   }
-  
+
   rect.Left()   += GetActualBorderLeft();
   rect.Right()  -= GetActualBorderRight();
   rect.Top()    += GetActualBorderTop();
   rect.Bottom() -= GetActualBorderBottom();
-  
+
   rect.RoundToNearest();
 
   return rect;
