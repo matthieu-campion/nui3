@@ -1408,7 +1408,7 @@ nuiFontManager& nuiFontManager::GetManager(bool InitIfNeeded)
   return gManager;
 }
 
-nuiFontManager& nuiFontManager::LoadManager(nglIStream& rStream)
+nuiFontManager& nuiFontManager::LoadManager(nglIStream& rStream, double lastscantime)
 {
   if (gManager.mFontFolders.empty())
   {
@@ -1416,7 +1416,7 @@ nuiFontManager& nuiFontManager::LoadManager(nglIStream& rStream)
   }
   
   gManager.Clear();
-  gManager.Load(rStream);
+  gManager.Load(rStream, lastscantime);
   
   
   return gManager;
@@ -1449,7 +1449,7 @@ bool nuiFontManager::Save(nglOStream& rStream)
   return true;
 }
 
-bool nuiFontManager::Load(nglIStream& rStream)
+bool nuiFontManager::Load(nglIStream& rStream, double lastscantime)
 {
   rStream.SetEndian(eEndianLittle);
   
@@ -1576,27 +1576,34 @@ bool nuiFontManager::Load(nglIStream& rStream)
   {
     const nglPath& path = *itf;
     
-    bool cont = true;
-    int32 face = 0;
-    while (cont)
+    if (path.GetLastMod() > lastscantime)
     {
-      NGL_ASSERT(gFTLibrary);
-      
-      nuiFontDesc* pFontDesc = new nuiFontDesc(path, face);
-      
-      
-      if (pFontDesc->IsValid())
+      bool cont = true;
+      int32 face = 0;
+      while (cont)
       {
-        mpFonts.push_back(pFontDesc);
+        NGL_ASSERT(gFTLibrary);
         
-        NGL_OUT(_T("FontManager: add new font in database '%ls'\n"), path.GetChars());
+        nuiFontDesc* pFontDesc = new nuiFontDesc(path, face);
+        
+        
+        if (pFontDesc->IsValid())
+        {
+          mpFonts.push_back(pFontDesc);
+          
+          NGL_OUT(_T("FontManager: add new font in database '%ls'\n"), path.GetChars());
+        }
+        else
+        {
+          delete pFontDesc;
+          cont = false;
+        }
+        face++;
       }
-      else
-      {
-        delete pFontDesc;
-        cont = false;
-      }
-      face++;
+    }
+    else
+    {
+      NGL_OUT(_T("FontManager: skip already scanned font '%ls'\n"), path.GetChars());
     }
     
   }

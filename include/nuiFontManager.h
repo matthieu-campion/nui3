@@ -214,10 +214,10 @@ public:
   uint32 GetFontCount() const;
   
   static nuiFontManager& GetManager(bool InitIfNeeded = true);
-  static nuiFontManager& LoadManager(nglIStream& rStream);
+  static nuiFontManager& LoadManager(nglIStream& rStream, double lastscantime = 0);
   
   bool Save(nglOStream& rStream);
-  bool Load(nglIStream& rStream);
+  bool Load(nglIStream& rStream, double lastscantime = 0);
   
   void Clear();
 private:

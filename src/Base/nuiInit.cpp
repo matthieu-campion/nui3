@@ -103,7 +103,7 @@ bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
 
 #if (defined _UIKIT_) && (!TARGET_IPHONE_SIMULATOR)
   nglIMemory Memory(gpnuiPhoneFontDB, gnuiPhoneFontDBSize);
-  nuiFontManager::LoadManager(Memory);
+  nuiFontManager::LoadManager(Memory, nglTime());
 #else
 
   //#if (!defined TARGET_IPHONE_SIMULATOR) || (!TARGET_IPHONE_SIMULATOR)
@@ -113,7 +113,7 @@ bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
   if (fontdb.Exists() && fontdb.IsLeaf())
   {
     nglIFile db(fontdb);
-    nuiFontManager::LoadManager(db);
+    nuiFontManager::LoadManager(db, fontdb.GetLastMod());
   }  
   else
   {
