@@ -2951,6 +2951,19 @@ nuiRect nuiWidget::GetLayoutForRect(const nuiRect& rRect)
   if (mMinHeight >= 0)
     rect.SetHeight(MAX(r.GetHeight(), mMinHeight));
 
+  {
+    // Prevent the widget from being bigger than the size provided by its parent:
+    const float w = r.GetWidth();
+    const float ww = rect.GetWidth();
+    const float h = r.GetHeight();
+    const float hh = rect.GetHeight();
+    
+    if (ww > w)
+      rect.SetWidth(w);
+    if (hh > h)
+      rect.SetHeight(h);
+  }
+  
   if (mPosition == nuiNoPosition)
   {
     rect.Move(r.Left(), r.Top());
