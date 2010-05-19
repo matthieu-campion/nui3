@@ -194,6 +194,14 @@ void nuiLabel::InitAttributes()
    nuiMakeDelegate(this, &nuiLabel::GetOrientation),
    nuiMakeDelegate(this, &nuiLabel::SetOrientation)));
   
+  AddAttribute(new nuiAttribute<nuiSize>
+               (nglString(_T("HMargin")), nuiUnitNone,
+                nuiMakeDelegate(this, &nuiLabel::GetHMargin), 
+                nuiMakeDelegate(this, &nuiLabel::SetHMargin)));
+  AddAttribute(new nuiAttribute<nuiSize>
+               (nglString(_T("VMargin")), nuiUnitNone,
+                nuiMakeDelegate(this, &nuiLabel::GetVMargin), 
+                nuiMakeDelegate(this, &nuiLabel::SetVMargin)));
 }
 
 void nuiLabel::InitProperties()
