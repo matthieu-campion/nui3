@@ -608,7 +608,7 @@ nglChar nglString::GetLastChar() const
 
 const nglChar* nglString::GetChars() const
 {
-  return (const nglChar*)mString.c_str();
+  return &mString[0];
 }
 
 std::string nglString::GetStdString(const nglTextEncoding Encoding) const
@@ -1572,7 +1572,7 @@ nglString& nglString::Format(const char* pFormat, ...)
   return *this;
 }
 
-#define FORMAT_BUFSIZE (1024)
+#define FORMAT_BUFSIZE (128)
 
 nglString& nglString::Formatv(const nglChar* pFormat, va_list args)
 {
@@ -1581,7 +1581,7 @@ nglString& nglString::Formatv(const nglChar* pFormat, va_list args)
 
   mIsNull = false;
   nglChar sbuffer[FORMAT_BUFSIZE+1];
-  memset(sbuffer, 0, FORMAT_BUFSIZE * sizeof(nglChar));
+  memset(sbuffer, 0, (FORMAT_BUFSIZE + 1) * sizeof(nglChar));
   int len;
 
 #ifndef WIN32
@@ -1595,6 +1595,17 @@ nglString& nglString::Formatv(const nglChar* pFormat, va_list args)
   len = ngl_vsnwprintf(sbuffer, FORMAT_BUFSIZE, pFormat, args_copy);
   va_end(args_copy);
 
+#ifdef __APPLE__
+  // #HACK #TODO #FIXME vswprintf is broken on OSX! It sometimes returns -1 for no apparent reason!!!
+  // Let's try to workaround the most simple problems while we find a real long term solution:
+  if (len == -1)
+  {
+    int l = wcslen(sbuffer);
+    if (l < FORMAT_BUFSIZE)
+      len = l;
+  }
+#endif
+  
   if (len >= 0 && len <= FORMAT_BUFSIZE)
   {
     /* Output fits in the stack buffer, copy it
