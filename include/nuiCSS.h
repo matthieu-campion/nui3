@@ -154,7 +154,6 @@ public:
 
 private:
 
-
   std::vector<nuiCSSRule*> mRules;
   nglString mErrorString;
 

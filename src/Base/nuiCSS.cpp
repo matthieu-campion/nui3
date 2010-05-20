@@ -291,75 +291,107 @@ protected:
   
   bool GetQuoted(nglString& rResult)
   {
+    mAccumulator.clear();
     if (!SkipBlank())
+    {
+      rResult.Nullify();
       return false;
+    }
     
     if (mChar != _T('\"'))
+    {
+      rResult.Nullify();
       return false;
+    }
     
     while (GetChar() && mChar != _T('\"'))
     {
       if (mChar == _T('\\'))
       {
         if (!GetChar())
+        {
+          rResult.Copy(&mAccumulator[0], mAccumulator.size());
           return false;
+        }
         
         if (mChar != _T('\"'))
+        {
+          rResult.Copy(&mAccumulator[0], mAccumulator.size());
           return false;
+        }
         
       }
-      
-      rResult.Add(mChar);
+
+      mAccumulator.push_back(mChar);
     }
 
     GetChar();
+    rResult.Copy(&mAccumulator[0], mAccumulator.size());
     return true;
   }
   
   bool GetSymbol(nglString& rResult)
   {
-    rResult.Nullify();
+    mAccumulator.clear();
     if (!SkipBlank())
+    {
+      rResult.Nullify();
       return false;
+    }
     
     while (IsValidInSymbol(mChar))
     {
-      rResult.Add(mChar);
+      mAccumulator.push_back(mChar);
       GetChar();
     }
     
+    rResult.Copy(&mAccumulator[0], mAccumulator.size());
     return !rResult.IsEmpty();
   }
   
   bool GetValue(nglString& rResult, bool AllowBlank = false)
   {
-    rResult.Nullify();
+    mAccumulator.clear();
     if (!SkipBlank())
+    {
+      rResult.Nullify();
       return false;
+    }
     
     while ((AllowBlank && IsBlank(mChar)) || IsValidInValue(mChar))
     {
-      rResult.Add(mChar);
+      mAccumulator.push_back(mChar);
       if (!GetChar())
+      {
+        rResult.Copy(&mAccumulator[0], mAccumulator.size());
         return true;
+      }
     }
     
+    rResult.Copy(&mAccumulator[0], mAccumulator.size());
     return true;
   }
 
   bool GetIntValue(nglString& rResult)
   {
-    rResult.Nullify();
+    mAccumulator.clear();
     if (!SkipBlank())
+    {
+      rResult.Nullify();
       return false;
+    }
     
     while (mChar == _T('-') || (mChar >= _T('0') && mChar <= _T('9') ))
     {
-      rResult.Add(mChar);
+      mAccumulator.push_back(mChar);
       if (!GetChar())
+      {
+        rResult.Copy(&mAccumulator[0], mAccumulator.size());
         return true;
+      }
     }
     
+    rResult.Copy(&mAccumulator[0], mAccumulator.size());
     return true;
   }
   
@@ -1780,6 +1812,7 @@ protected:
   
   std::vector<nuiWidgetMatcher*> mMatchers;
   std::vector<nuiCSSAction*> mActions;
+  std::vector<nglChar> mAccumulator;
 };
 
 
@@ -1907,7 +1940,12 @@ nuiCSS::~nuiCSS()
 bool nuiCSS::Load(nglIStream& rStream, const nglPath& rSourcePath)
 {
   mErrorString.Wipe();
-  cssLexer lexer(&rStream, *this, rSourcePath);
+  nglFileOffset s = rStream.Available();
+  std::vector<uint8> cache;
+  cache.resize(s);
+  rStream.Read(&cache[0], s, 1);
+  nglIMemory mem(&cache[0], s);
+  cssLexer lexer(&mem, *this, rSourcePath);
   if (!lexer.Load())
   {
     mErrorString.CFormat(_T("Error line %d (%d): %ls"), lexer.GetLine(), lexer.GetColumn(), lexer.GetErrorStr().GetChars() );
