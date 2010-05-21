@@ -505,7 +505,7 @@ bool nuiContainer::DispatchMouseClick(const nglMouseInfo& rInfo)
       return true;
     bool ret = MouseClicked(info);
     ret |= Clicked(info);
-    return ret;
+    return ret | (!mClickThru);
   }
   return false;
 }
@@ -556,7 +556,7 @@ bool nuiContainer::DispatchMouseUnclick(const nglMouseInfo& rInfo)
       res |= Unclicked(info);
     }
 
-    return res;
+    return res | (!mClickThru);
   }
   return false;
 }
@@ -622,7 +622,7 @@ nuiWidgetPtr nuiContainer::DispatchMouseMove(const nglMouseInfo& rInfo)
     }
   }
 
-  if (!pHandled && res && inside)
+  if (!pHandled && (res | (!mClickThru)) && inside)
   {
     nuiTopLevelPtr pRoot = GetTopLevel();
     if (pRoot)

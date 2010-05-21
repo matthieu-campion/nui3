@@ -94,7 +94,9 @@ float nuiHTMLBox::LayoutLine(uint32& start, uint32& count, float& y, float& h, n
     r.MoveTo(x + mMarginLeft, y + mMarginTop);
     r.RoundToAbove();
     pIt->SetLayout(r);
-    //NGL_OUT(_T("<%ls> %ls\n"), pIt->GetNode()->GetName().GetChars(), r.GetValue().GetChars());
+    
+    NGL_OUT(_T("<%ls> %ls\n"), pIt->GetNode()->GetName().GetChars(), r.GetValue().GetChars());
+    
     x += ToAbove(r.GetWidth());
     
     if (pLastText)

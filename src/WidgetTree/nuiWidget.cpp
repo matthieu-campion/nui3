@@ -1776,19 +1776,19 @@ bool nuiWidget::MouseEventsEnabled() const
 bool nuiWidget::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
 {
   CheckValid();
-  return !mClickThru;
+  return false;
 }
 
 bool nuiWidget::MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
 {
   CheckValid();
-  return !mClickThru;
+  return false;
 }
 
 bool nuiWidget::MouseMoved(nuiSize X, nuiSize Y)
 {
   CheckValid();
-  return !mClickThru;
+  return false;
 }
 
 // Multitouch events:
@@ -1851,7 +1851,7 @@ bool nuiWidget::DispatchMouseClick(const nglMouseInfo& rInfo)
       res |= Clicked(info);
     }
 
-    return res;
+    return res | (!mClickThru);
   }
   return false;
 }
@@ -1883,7 +1883,7 @@ bool nuiWidget::DispatchMouseUnclick(const nglMouseInfo& rInfo)
       res |= Unclicked(info);
     }
 
-    return res;
+    return res | (!mClickThru);
   }
   return false;
 }
@@ -1916,7 +1916,7 @@ nuiWidgetPtr nuiWidget::DispatchMouseMove(const nglMouseInfo& rInfo)
   if (PreMouseMoved(info))
     return this;
   res = MouseMoved(info);
-  res |= MovedMouse(info);
+  res |= MovedMouse(info) | (!mClickThru);
   return (res && inside) ? this : NULL;
 }
 

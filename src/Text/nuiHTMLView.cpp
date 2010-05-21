@@ -214,9 +214,13 @@ void nuiHTMLView::SetLinkColor(const nuiColor& Color)
 
 nuiRect nuiHTMLView::CalcIdealSize()
 {
+//  if (GetDebug())
+//  {
+//    printf("?");    
+//  }
   
   float IdealWidth = mIdealWidth;
-  if (mAutoIdealWidth && mRect.GetWidth() > 0)
+  if (mAutoIdealWidth && (mRect.GetWidth() > 0))
     IdealWidth = mRect.GetWidth();
   //Clear();
 
@@ -232,10 +236,14 @@ nuiRect nuiHTMLView::CalcIdealSize()
 
 void nuiHTMLView::ReLayout()
 {
-	
   if (!mpRootBox)
     return;
   
+//  if (GetDebug())
+//  {
+//    printf("/");    
+//  }
+
   nuiHTMLContext context(*mpContext);
   mpRootBox->Layout(context);
   mpRootBox->SetLayout(mpRootBox->GetIdealRect());
@@ -245,9 +253,14 @@ void nuiHTMLView::ReLayout()
 
 bool nuiHTMLView::SetRect(const nuiRect& rRect)
 {
+//  if (GetDebug())
+//  {
+//    printf(".");    
+//  }
+  
   nuiWidget::SetRect(rRect);
 
-  if (mAutoIdealWidth)
+  if (mAutoIdealWidth && (mRect.GetWidth() > 0))
     SetIdealWidth(rRect.GetWidth());
 
   ReLayout();
@@ -952,9 +965,11 @@ bool nuiHTMLView::GetDebugBoxes() const
 
 void nuiHTMLView::SetAutoIdealWidth(bool set)
 {
+  if (set == mAutoIdealWidth)
+    return;
+
   mAutoIdealWidth = set;
-  if (set)
-    InvalidateLayout();
+  InvalidateLayout();
 }
 
 bool nuiHTMLView::GetAutoIdealWidth() const

@@ -253,6 +253,8 @@
 			<key>Layout</key>
 			<array>
 				<dict>
+					<key>BecomeActive</key>
+					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -346,9 +348,6 @@
 										<key>history</key>
 										<array>
 											<string>E5617861119475B00060DC85</string>
-											<string>E58932291194D7CB0022ACBE</string>
-											<string>E55B87BA119F4B97001DC55B</string>
-											<string>E55B882F119F51B7001DC55B</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -362,18 +361,18 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {2255, 907}}</string>
+								<string>{{0, 0}, {2255, 901}}</string>
 								<key>RubberWindowFrame</key>
 								<string>0 59 2560 1359 0 0 2560 1418 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>907pt</string>
+							<string>901pt</string>
 						</dict>
 						<dict>
 							<key>Proportion</key>
-							<string>406pt</string>
+							<string>412pt</string>
 							<key>Tabs</key>
 							<array>
 								<dict>
@@ -387,7 +386,9 @@
 									<key>GeometryConfiguration</key>
 									<dict>
 										<key>Frame</key>
-										<string>{{10, 27}, {2255, 379}}</string>
+										<string>{{10, 27}, {2255, 385}}</string>
+										<key>RubberWindowFrame</key>
+										<string>0 59 2560 1359 0 0 2560 1418 </string>
 									</dict>
 									<key>Module</key>
 									<string>XCDetailModule</string>
@@ -442,8 +443,6 @@
 									<dict>
 										<key>Frame</key>
 										<string>{{10, 27}, {2255, 379}}</string>
-										<key>RubberWindowFrame</key>
-										<string>0 59 2560 1359 0 0 2560 1418 </string>
 									</dict>
 									<key>Module</key>
 									<string>PBXBuildResultsModule</string>
@@ -471,11 +470,11 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E535626511A0C389008B5D86</string>
+				<string>E535690E11A60A9F008B5D86</string>
 				<string>1CA23ED40692098700951B8B</string>
-				<string>E535626611A0C389008B5D86</string>
+				<string>E535690F11A60A9F008B5D86</string>
 				<string>E58C197B1192F3C900A0223E</string>
-				<string>E535626711A0C389008B5D86</string>
+				<string>E535691011A60A9F008B5D86</string>
 				<string>1CA23EDF0692099D00951B8B</string>
 				<string>1CA23EE00692099D00951B8B</string>
 				<string>1CA23EE10692099D00951B8B</string>
@@ -648,7 +647,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>295998830.42651403</real>
+	<real>296094367.43809003</real>
 	<key>ToolbarConfigUserDefaultsMinorVersion</key>
 	<string>2</string>
 	<key>ToolbarDisplayMode</key>
@@ -664,9 +663,7 @@
 	<key>WindowJustification</key>
 	<integer>5</integer>
 	<key>WindowOrderList</key>
-	<array>
-		<string>/Users/meeloo/work/nui3/tutorials/NetworkTest/NetworkTest.xcodeproj</string>
-	</array>
+	<array/>
 	<key>WindowString</key>
 	<string>0 59 2560 1359 0 0 2560 1418 </string>
 	<key>WindowToolsV3</key>

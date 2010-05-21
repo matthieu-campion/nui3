@@ -250,7 +250,7 @@ void nuiHTMLItem::Invalidate()
 
 void nuiHTMLItem::SetLayout(const nuiRect& rRect)
 {
-  if (mSetRectCalled)
+  if (mSetRectCalled && rRect.GetWidth() == mRect.GetWidth() & rRect.GetHeight() == mRect.GetHeight())
   {
     MoveTo(rRect.Left(), rRect.Top());
   }
