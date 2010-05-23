@@ -620,27 +620,30 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 /////// Keyboard support:
 - (void)initializeKeyboard
 {
-  mpTextField = NULL;
-  //return;
-  mpTextField = [[UITextField alloc] initWithFrame: CGRectZero];
-  //mpTextField = [[UITextField alloc] init];
-  mpTextField.delegate = self;
-  /* placeholder so there is something to delete! */
-  mpTextField.text = @" ";	
+	mpTextField = NULL;
 
-  /* set UITextInputTrait properties, mostly to defaults */
-  mpTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
-  mpTextField.autocorrectionType = UITextAutocorrectionTypeNo;
-  mpTextField.enablesReturnKeyAutomatically = NO;
-  mpTextField.keyboardAppearance = UIKeyboardAppearanceAlert;
-  mpTextField.keyboardType = UIKeyboardTypeDefault;
-  mpTextField.returnKeyType = UIReturnKeyDefault;
-  mpTextField.secureTextEntry = NO;	
-
-  mpTextField.hidden = YES;
-  mKeyboardVisible = NO;
-  /* add the UITextField (hidden) to our view */
-  [self addSubview: mpTextField];
+	// Apparently CGRectZero breaks backspace in OS3.2 .. weird.
+	mpTextField = [[UITextField alloc] initWithFrame: CGRectMake(0,0,160,50)];
+	
+	mpTextField.delegate = self;
+	/* placeholder so there is something to delete! */
+	mpTextField.text = @"x";	
+	
+	/* set UITextInputTrait properties, mostly to defaults */
+	mpTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+	mpTextField.autocorrectionType = UITextAutocorrectionTypeNo;
+	mpTextField.enablesReturnKeyAutomatically = NO;
+	mpTextField.keyboardAppearance = UIKeyboardAppearanceAlert;
+	mpTextField.keyboardType = UIKeyboardTypeDefault;
+	mpTextField.clearsOnBeginEditing = NO;
+	mpTextField.returnKeyType = UIReturnKeyDefault;
+	mpTextField.secureTextEntry = NO;	
+	
+	mpTextField.hidden = YES;
+	mKeyboardVisible = NO;
+	/* add the UITextField (hidden) to our view */
+	[self addSubview: mpTextField];
+	
 }
 
 // Show Keyboard
@@ -671,6 +674,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
     nglString str((CFStringRef)string);
     mpNGLWindow->CallOnTextInput(str);
 	}
+
 	return NO; /* don't allow the edit! (keep placeholder text there) */
 }
 
@@ -691,6 +695,11 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
       return YES;
     }
   }
+	return NO;
+}
+
+- (BOOL)textFieldShouldClear:(UITextField*)_textField
+{
 	return NO;
 }
 
