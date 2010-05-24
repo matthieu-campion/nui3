@@ -244,34 +244,16 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
       if (mpNGLWindow->OnRotation(angle))
       {
         mpNGLWindow->SetRotation(angle);
-        forceresize = true;
+        forceresize = YES;
         CGRect r = [self frame];
         printf("currentFrame: %f, %f - %f, %f\n", r.origin.x, r.origin.y, r.size.width, r.size.height);
         r = [UIScreen mainScreen].applicationFrame;
         printf("applicationFrame: %f, %f - %f, %f\n", r.origin.x, r.origin.y, r.size.width, r.size.height);
-        glClearColor(0, 1, 0, 1);
-        glDisable(GL_SCISSOR_TEST);
-        glDisable(GL_TEXTURE_2D);
-        glColor4f(1, 0, 0, 1);
-        glClear(GL_COLOR_BUFFER_BIT);
-        glMatrixMode(GL_PROJECTION_MATRIX);
-        glLoadIdentity();
-        glMatrixMode(GL_MODELVIEW_MATRIX);
-        glLoadIdentity();
-        //glBegin(GL_LINE_LOOP);
-        float ww = 319;
-        float hh = 460;
-        float v[] = {
-          0, 0, 0,
-          ww, 0, 0,
-          ww, hh, 0,
-          0, hh, 0
-        };
-        glVertexPointer(3, GL_FLOAT, 0, v);
-        glEnableClientState(GL_VERTEX_ARRAY);
-        glDisableClientState(GL_COLOR_ARRAY);
-        glDrawArrays(GL_LINE_LOOP, 0, 4);
+
+		  
         mInvalidated = true;
+		  
+ 
       }
     }
   }
@@ -328,12 +310,14 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
     
     if (mpNGLWindow->GetWidth() != w || mpNGLWindow->GetHeight() != h)
     {
-      forceresize = TRUE;
+      forceresize = YES;
     }
   }
   
   if (forceresize)
   {
+  
+
     angle = mpNGLWindow->GetRotation();
     if (angle == 270 || angle == 90)
       mpNGLWindow->SetSize([UIScreen mainScreen].applicationFrame.size.height, [UIScreen mainScreen].applicationFrame.size.width);
@@ -343,17 +327,29 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 
     CAEAGLLayer* pLayer = (CAEAGLLayer*)[self layer];
     glBindRenderbufferOES(GL_RENDERBUFFER_OES, mRenderBuffer);
+
     [(EAGLContext*)mpContext renderbufferStorage: GL_RENDERBUFFER_OES fromDrawable: pLayer];
     GLint w, h;
     glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &w);
     glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &h);
+	  
+	if (glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) != GL_FRAMEBUFFER_COMPLETE_OES)
+	{
+	  NSLog(@"Failed to make complete framebuffer object %x", glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES));
+	  return;
+	}
     
+	  GLenum err = glGetError();
+	  if (err != GL_NO_ERROR)
+		  NSLog(@"Error. glError: 0x%04X", err);
+	  
     [self setContext: mpContext renderBuffer:mRenderBuffer];
     glClearColor(0, 0, 0, 1);
     glClear(GL_COLOR_BUFFER_BIT);
-    printf("NEW Render buffer area: %d x %d\n", w, h);
+    NSLog(@"NEW Render buffer area: %d x %d\n", w, h);
     
   }
+   
 }
 
 
@@ -376,7 +372,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   
   counter = 60;
 
-  [self UpdateOrientation: FALSE];
+  [self UpdateOrientation: NO];
 }
 
 - (void) sendEvent: (UIEvent*) pEvent
@@ -869,7 +865,7 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
   glClearColor(0, 0, 0, 1);
   glClear(GL_COLOR_BUFFER_BIT);
   
-  [pUIWindow UpdateOrientation: FALSE];
+  //[pUIWindow UpdateOrientation: FALSE];
 }
 
 nglWindow::~nglWindow()
