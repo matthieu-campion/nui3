@@ -27,6 +27,9 @@ nuiCSSAction_SetAttribute::nuiCSSAction_SetAttribute(const nglString& rAttribute
 {
   mAttribute = rAttribute;
   mValue = rValue;
+  mValueIsGlobal = rValue[0] == '$';
+  if (mValueIsGlobal)
+    mValue.DeleteLeft(1);
   mIndex0 = i0;
   mIndex1 = i1;
 }
@@ -43,12 +46,18 @@ void nuiCSSAction_SetAttribute::ApplyAction(nuiObject* pObject)
   nuiAttribBase Attribute = pObject->GetAttribute(mAttribute);  
   if (Attribute.IsValid())
   {
-    if (mIndex0 < 0)
-      Attribute.FromString(mValue);
-    else if (mIndex1 < 0)
-      Attribute.FromString(mIndex0, mValue);
+    nglString v;
+    if (!mValueIsGlobal)
+      v = mValue;
     else
-      Attribute.FromString(mIndex0, mIndex1, mValue);
+      v = nuiObject::GetGlobalProperty(mValue);
+
+    if (mIndex0 < 0)
+      Attribute.FromString(v);
+    else if (mIndex1 < 0)
+      Attribute.FromString(mIndex0, v);
+    else
+      Attribute.FromString(mIndex0, mIndex1, v);
   }
 }
 
@@ -57,6 +66,9 @@ nuiCSSAction_SetProperty::nuiCSSAction_SetProperty(const nglString& rProperty, c
 {
   mProperty = rProperty;
   mValue = rValue;
+  mValueIsGlobal = rValue[0] == '$';
+  if (mValueIsGlobal)
+    mValue.DeleteLeft(1);
 }
 
 nuiCSSAction_SetProperty::~nuiCSSAction_SetProperty()
@@ -67,6 +79,11 @@ nuiCSSAction_SetProperty::~nuiCSSAction_SetProperty()
 void nuiCSSAction_SetProperty::ApplyAction(nuiObject* pObject)
 {
   //NGL_OUT(_T("CSS Action on class %ls proeprty[%ls] <- '%ls'\n"), pWidget->GetObjectClass().GetChars(), mAttribute.GetChars(), mValue.GetChars());
+  nglString v;
+  if (!mValueIsGlobal)
+    v = mValue;
+  else
+    v = nuiObject::GetGlobalProperty(mValue);
   pObject->SetProperty(mProperty, mValue);
 }
 

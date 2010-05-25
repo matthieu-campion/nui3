@@ -30,6 +30,7 @@ public:
 private:
   nglString mAttribute;
   nglString mValue;
+  bool mValueIsGlobal;
   int32 mIndex0;
   int32 mIndex1;
 };
@@ -45,6 +46,7 @@ public:
 private:
   nglString mProperty;
   nglString mValue;
+  bool mValueIsGlobal;
 };
 
 
