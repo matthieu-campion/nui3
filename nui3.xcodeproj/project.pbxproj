@@ -1957,6 +1957,12 @@
 		E57BC75A0C63EA070026DE07 /* nuiFastDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC7580C63EA070026DE07 /* nuiFastDelegate.h */; };
 		E57BC75C0C63EA1A0026DE07 /* nuiSignalsSlots.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC75B0C63EA1A0026DE07 /* nuiSignalsSlots.h */; };
 		E57BC75D0C63EA1A0026DE07 /* nuiSignalsSlots.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC75B0C63EA1A0026DE07 /* nuiSignalsSlots.h */; };
+		E57DDB5D11ADE86A00C0E4DE /* nuiHTMLTable.h in Headers */ = {isa = PBXBuildFile; fileRef = E57DDB5B11ADE86A00C0E4DE /* nuiHTMLTable.h */; };
+		E57DDB5E11ADE86A00C0E4DE /* nuiHTMLTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E57DDB5C11ADE86A00C0E4DE /* nuiHTMLTable.cpp */; };
+		E57DDB5F11ADE86A00C0E4DE /* nuiHTMLTable.h in Headers */ = {isa = PBXBuildFile; fileRef = E57DDB5B11ADE86A00C0E4DE /* nuiHTMLTable.h */; };
+		E57DDB6011ADE86A00C0E4DE /* nuiHTMLTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E57DDB5C11ADE86A00C0E4DE /* nuiHTMLTable.cpp */; };
+		E57DDB6111ADE86A00C0E4DE /* nuiHTMLTable.h in Headers */ = {isa = PBXBuildFile; fileRef = E57DDB5B11ADE86A00C0E4DE /* nuiHTMLTable.h */; };
+		E57DDB6211ADE86A00C0E4DE /* nuiHTMLTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E57DDB5C11ADE86A00C0E4DE /* nuiHTMLTable.cpp */; };
 		E57ECB621110A6BA00AE0A3A /* nuiTextureInspector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E57ECB611110A6BA00AE0A3A /* nuiTextureInspector.cpp */; };
 		E57ECB631110A6BA00AE0A3A /* nuiTextureInspector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E57ECB611110A6BA00AE0A3A /* nuiTextureInspector.cpp */; };
 		E57ECB641110A6BA00AE0A3A /* nuiTextureInspector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E57ECB611110A6BA00AE0A3A /* nuiTextureInspector.cpp */; };
@@ -4254,6 +4260,8 @@
 		E57BC7550C63E9E00026DE07 /* nuiSignalsSlots.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiSignalsSlots.cpp; path = src/Base/nuiSignalsSlots.cpp; sourceTree = SOURCE_ROOT; };
 		E57BC7580C63EA070026DE07 /* nuiFastDelegate.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiFastDelegate.h; path = include/nuiFastDelegate.h; sourceTree = SOURCE_ROOT; };
 		E57BC75B0C63EA1A0026DE07 /* nuiSignalsSlots.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiSignalsSlots.h; path = include/nuiSignalsSlots.h; sourceTree = SOURCE_ROOT; };
+		E57DDB5B11ADE86A00C0E4DE /* nuiHTMLTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nuiHTMLTable.h; sourceTree = "<group>"; };
+		E57DDB5C11ADE86A00C0E4DE /* nuiHTMLTable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiHTMLTable.cpp; sourceTree = "<group>"; };
 		E57ECB611110A6BA00AE0A3A /* nuiTextureInspector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiTextureInspector.cpp; path = Introspector/nuiTextureInspector.cpp; sourceTree = "<group>"; };
 		E57ECB651110A6E300AE0A3A /* nuiTextureInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiTextureInspector.h; path = include/nuiTextureInspector.h; sourceTree = SOURCE_ROOT; };
 		E58167980C3CECA800902DFE /* ft2unix.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ft2unix.h; path = deps/freetype2/builds/unix/ft2unix.h; sourceTree = SOURCE_ROOT; };
@@ -6877,6 +6885,8 @@
 				E5C6CE1A0FF6DC38003E6002 /* nuiHTMLStyle.cpp */,
 				E52C83180FFB9DA800B7779C /* nuiWebCSS.h */,
 				E52C83190FFB9DA800B7779C /* nuiWebCSS.cpp */,
+				E57DDB5B11ADE86A00C0E4DE /* nuiHTMLTable.h */,
+				E57DDB5C11ADE86A00C0E4DE /* nuiHTMLTable.cpp */,
 			);
 			name = HTML;
 			path = src/Text/HTML;
@@ -7711,6 +7721,7 @@
 				E50367CD11A0AD9E001F4389 /* nuiTCPServer.h in Headers */,
 				E50367DF11A0ADF5001F4389 /* nglStringConv.h in Headers */,
 				E50367E011A0ADF5001F4389 /* nuiRegExp.h in Headers */,
+				E57DDB6111ADE86A00C0E4DE /* nuiHTMLTable.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8408,6 +8419,7 @@
 				E50367C911A0AD9E001F4389 /* nuiTCPServer.h in Headers */,
 				E50367DD11A0ADF5001F4389 /* nglStringConv.h in Headers */,
 				E50367DE11A0ADF5001F4389 /* nuiRegExp.h in Headers */,
+				E57DDB5F11ADE86A00C0E4DE /* nuiHTMLTable.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9102,6 +9114,7 @@
 				E50367D111A0AD9E001F4389 /* nuiTCPServer.h in Headers */,
 				E50367E111A0ADF5001F4389 /* nglStringConv.h in Headers */,
 				E50367E211A0ADF5001F4389 /* nuiRegExp.h in Headers */,
+				E57DDB5D11ADE86A00C0E4DE /* nuiHTMLTable.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9697,6 +9710,7 @@
 				E50367B911A0AD7C001F4389 /* nuiSocket.cpp in Sources */,
 				E50367BA11A0AD7C001F4389 /* nuiTCPClient.cpp in Sources */,
 				E50367BB11A0AD7C001F4389 /* nuiTCPServer.cpp in Sources */,
+				E57DDB6211ADE86A00C0E4DE /* nuiHTMLTable.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10214,6 +10228,7 @@
 				E50367B511A0AD7C001F4389 /* nuiSocket.cpp in Sources */,
 				E50367B611A0AD7C001F4389 /* nuiTCPClient.cpp in Sources */,
 				E50367B711A0AD7C001F4389 /* nuiTCPServer.cpp in Sources */,
+				E57DDB6011ADE86A00C0E4DE /* nuiHTMLTable.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10734,6 +10749,7 @@
 				E50367BD11A0AD7C001F4389 /* nuiSocket.cpp in Sources */,
 				E50367BE11A0AD7C001F4389 /* nuiTCPClient.cpp in Sources */,
 				E50367BF11A0AD7C001F4389 /* nuiTCPServer.cpp in Sources */,
+				E57DDB5E11ADE86A00C0E4DE /* nuiHTMLTable.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

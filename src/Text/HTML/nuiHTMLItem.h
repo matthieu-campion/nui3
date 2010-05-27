@@ -19,6 +19,12 @@ public:
   nuiHTMLItem(nuiHTMLNode* pNode, nuiHTMLNode* pAnchor, bool Inline);
   ~nuiHTMLItem();
   
+  enum Unit
+  {
+    ePixels,
+    ePercent
+  };
+  
   void CallDraw(nuiDrawContext* pContext);
   virtual void Draw(nuiDrawContext* pContext);
   virtual void Layout(nuiHTMLContext& rContext);
