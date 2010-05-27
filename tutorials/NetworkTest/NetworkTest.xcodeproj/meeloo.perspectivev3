@@ -361,18 +361,18 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {2255, 901}}</string>
+								<string>{{0, 0}, {2255, 894}}</string>
 								<key>RubberWindowFrame</key>
 								<string>0 59 2560 1359 0 0 2560 1418 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>901pt</string>
+							<string>894pt</string>
 						</dict>
 						<dict>
 							<key>Proportion</key>
-							<string>412pt</string>
+							<string>419pt</string>
 							<key>Tabs</key>
 							<array>
 								<dict>
@@ -386,7 +386,7 @@
 									<key>GeometryConfiguration</key>
 									<dict>
 										<key>Frame</key>
-										<string>{{10, 27}, {2255, 385}}</string>
+										<string>{{10, 27}, {2255, 392}}</string>
 										<key>RubberWindowFrame</key>
 										<string>0 59 2560 1359 0 0 2560 1418 </string>
 									</dict>
@@ -470,11 +470,11 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E535690E11A60A9F008B5D86</string>
+				<string>E5E1C2D111A6897E008FF2A2</string>
 				<string>1CA23ED40692098700951B8B</string>
-				<string>E535690F11A60A9F008B5D86</string>
+				<string>E5E1C2D211A6897E008FF2A2</string>
 				<string>E58C197B1192F3C900A0223E</string>
-				<string>E535691011A60A9F008B5D86</string>
+				<string>E5E1C2D311A6897E008FF2A2</string>
 				<string>1CA23EDF0692099D00951B8B</string>
 				<string>1CA23EE00692099D00951B8B</string>
 				<string>1CA23EE10692099D00951B8B</string>
@@ -647,7 +647,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>296094367.43809003</real>
+	<real>296126846.77140403</real>
 	<key>ToolbarConfigUserDefaultsMinorVersion</key>
 	<string>2</string>
 	<key>ToolbarDisplayMode</key>
@@ -663,7 +663,9 @@
 	<key>WindowJustification</key>
 	<integer>5</integer>
 	<key>WindowOrderList</key>
-	<array/>
+	<array>
+		<string>/Users/meeloo/work/nui3/tutorials/NetworkTest/NetworkTest.xcodeproj</string>
+	</array>
 	<key>WindowString</key>
 	<string>0 59 2560 1359 0 0 2560 1418 </string>
 	<key>WindowToolsV3</key>

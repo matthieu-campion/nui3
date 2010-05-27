@@ -39,8 +39,8 @@ public:
   void SetHeight(float h);
   
   nuiHTMLNode* GetNode() const;
-  void SetParent(nuiHTMLBox* pBox);
-  nuiHTMLBox* GetParent() const;
+  void SetParent(nuiHTMLItem* pBox);
+  nuiHTMLItem* GetParent() const;
   
   virtual float GetAscender() const;
   virtual float GetDescender() const;
@@ -78,7 +78,7 @@ protected:
   nuiHTMLNode* mpAnchor;
   nuiRect mIdealRect;
   nuiRect mRect;
-  nuiHTMLBox* mpParent;
+  nuiHTMLItem* mpParent;
   bool mInline;
   bool mEndTag;
   bool mLineBreak;

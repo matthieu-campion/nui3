@@ -19,25 +19,29 @@ public:
   virtual void Draw(nuiDrawContext* pContext);
   virtual void Layout(nuiHTMLContext& rContext);
   
-  void AddRow();
-  void AddItemEnd(nuiHTMLItem* pItem);
-  
-  void PushContext(const nuiHTMLContext& rContext);
-  void PopContext(nuiHTMLContext& rContext);
+  class Cell;
+
+  void SetCellSpan(int32 col, int32 row, int32 ncols, int32 nrows);
+
+  uint32 GetRowCount() const;
+  uint32 GetColCount() const;
+  nuiHTMLTable::Cell& SetCell(int32 col, int32 row, nuiHTMLNode* pNode, nuiHTMLItem* pItem);
+  nuiHTMLTable::Cell& GetCell(int32 col, int32 row);
+  const nuiHTMLTable::Cell& GetCell(int32 col, int32 row) const;
   
   void GetItemsAt(std::vector<nuiHTMLItem*>& rHitItems, float X, float Y) const;
   
   enum Frame
   {
-    eVoid, //: No sides. This is the default value.
-    eAbove, //: The top side only.
-    eBelow, //: The bottom side only.
-    eHSides, //: The top and bottom sides only.
-    eVSides, //: The right and left sides only.
-    eLHS, //: The left-hand side only.
-    eRHS, //: The right-hand side only.
-    eBox, //: All four sides.
-    eBorder //: All four sides.
+    eVoid,    // No sides. This is the default value.
+    eAbove,   // The top side only.
+    eBelow,   // The bottom side only.
+    eHSides,  // The top and bottom sides only.
+    eVSides,  // The right and left sides only.
+    eLHS,     // The left-hand side only.
+    eRHS,     // The right-hand side only.
+    eBox,     // All four sides.
+    eBorder   // All four sides.
   };
   
   enum Rules
@@ -49,16 +53,17 @@ public:
     eAll
   };
   
-protected:
-  Frame mFrame;
-  float mBorder;
-  
   class Cell
   {
   public:
     Cell();
+    ~Cell();
+    
+    void SetContents(nuiHTMLNode* pNode, nuiHTMLItem* pItem);
+    
     
     Cell* mpMasterCell;
+    nuiHTMLNode* mpNode;
     uint32 mColSpan;
     uint32 mRowSpan;
     nuiHTMLItem* mpItem;
@@ -78,6 +83,23 @@ protected:
     float mPadding;
   };
   
+  void Grow(int32 col, int32 row);
+
+
+protected:
+  Frame mFrame;
+  float mBorder;
+
+  float mRequestedWidth;
+  float mRequestedWidthUnit;
+  
   std::vector<std::vector<Cell> > mCells;
+  std::vector<float> mRowSizes;
+  std::vector<float> mColSizes;
+  std::vector<float> mRowRequestedSizes;
+  std::vector<float> mColRequestedSizes;
+
+  void SetRowCount(uint32 count);
+  void SetColCount(uint32 count);
 };
 

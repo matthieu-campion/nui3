@@ -146,12 +146,12 @@ nuiHTMLNode* nuiHTMLItem::GetNode() const
   return mpNode;
 }
 
-void nuiHTMLItem::SetParent(nuiHTMLBox* pBox)
+void nuiHTMLItem::SetParent(nuiHTMLItem* pBox)
 {
   mpParent = pBox;
 }
 
-nuiHTMLBox* nuiHTMLItem::GetParent() const
+nuiHTMLItem* nuiHTMLItem::GetParent() const
 {
   return mpParent;
 }
