@@ -12,10 +12,10 @@
 nuiHTMLTable::nuiHTMLTable(nuiHTMLNode* pNode, nuiHTMLNode* pAnchor, bool Inline)
 : nuiHTMLItem(pNode, pAnchor, Inline)
 {
-  mCells.resize(1);
-  mCells[0].resize(1);
+  SetRowCount(1);
+  SetColCount(1);
   mRequestedWidth = 100;
-  mRequestedWidthUnit = ePercent;
+  mRequestedWidthUnit = ePercentage;
 }
 
 nuiHTMLTable::~nuiHTMLTable()
@@ -40,9 +40,7 @@ void nuiHTMLTable::Layout(nuiHTMLContext& rContext)
   nuiHTMLContext ctx(rContext);
   
   std::vector<float> Rows;
-  std::vector<float> Cols;
   Rows.resize(GetRowCount());
-  Cols.resize(GetColCount());
   
   for (int32 i = 0; i < GetRowCount(); i++)
   {
@@ -53,7 +51,7 @@ void nuiHTMLTable::Layout(nuiHTMLContext& rContext)
       {
         pItem->Layout(ctx);
         nuiRect r(pItem->GetIdealRect());
-        Cols[j] = MAX(Cols[j], r.GetWidth());
+        mColumns[j].mIdealSize = MAX(mColumns[j].mIdealSize, r.GetWidth());
         Rows[j] = MAX(Rows[j], r.GetHeight());
       }
     }
@@ -61,7 +59,7 @@ void nuiHTMLTable::Layout(nuiHTMLContext& rContext)
 
   float w = 0;
   for (int32 i = 0; i < GetRowCount(); i++)
-    w += Cols[i];
+    w += mColumns[i].mIdealSize;
 
   float h = 0;
   for (int32 i = 0; i < GetColCount(); i++)
@@ -77,7 +75,7 @@ void nuiHTMLTable::Layout(nuiHTMLContext& rContext)
       if (pItem)
       {
         nuiRect r(pItem->GetIdealRect());
-        Cols[j] = MAX(Cols[j], r.GetWidth());
+        mColumns[j].mIdealSize = MAX(mColumns[j].mIdealSize, r.GetWidth());
         Rows[j] = MAX(Rows[j], r.GetHeight());
         pItem->SetLayout(r);
       }
@@ -99,6 +97,7 @@ void nuiHTMLTable::SetColCount(uint32 count)
     return;
   for (uint32 i = 0; i < mCells.size(); i++)
     mCells[i].resize(count);
+  mColumns.resize(count);
   InvalidateLayout();
 }
 
@@ -109,7 +108,7 @@ uint32 nuiHTMLTable::GetRowCount() const
 
 uint32 nuiHTMLTable::GetColCount() const
 {
-  return mCells[0].size();
+  return mColumns.size();
 }
 
 void nuiHTMLTable::Grow(int32 col, int32 row)
@@ -203,4 +202,15 @@ void nuiHTMLTable::Cell::SetContents(nuiHTMLNode* pNode, nuiHTMLItem* pItem)
   delete mpItem;
   mpItem = pItem;
 }
+
+
+// class Col
+nuiHTMLTable::Col::Col()
+{
+  mRequestedSize = 0;
+  mSizeUnit = eProportional;
+  mSize = 1;
+  mIdealSize = 0;
+}
+  
 

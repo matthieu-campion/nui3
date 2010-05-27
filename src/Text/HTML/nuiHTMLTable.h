@@ -82,7 +82,7 @@ public:
     float mSpacing;
     float mPadding;
   };
-  
+
   void Grow(int32 col, int32 row);
 
 
@@ -94,10 +94,18 @@ protected:
   float mRequestedWidthUnit;
   
   std::vector<std::vector<Cell> > mCells;
-  std::vector<float> mRowSizes;
-  std::vector<float> mColSizes;
-  std::vector<float> mRowRequestedSizes;
-  std::vector<float> mColRequestedSizes;
+
+  class Col
+  {
+  public:
+    Col();
+    
+    float mRequestedSize;
+    nuiHTMLItem::Unit mSizeUnit;
+    float mSize;
+    float mIdealSize;
+  };
+  std::vector<Col> mColumns;
 
   void SetRowCount(uint32 count);
   void SetColCount(uint32 count);

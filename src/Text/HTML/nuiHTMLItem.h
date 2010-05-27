@@ -22,7 +22,8 @@ public:
   enum Unit
   {
     ePixels,
-    ePercent
+    ePercentage,
+    eProportional
   };
   
   void CallDraw(nuiDrawContext* pContext);
