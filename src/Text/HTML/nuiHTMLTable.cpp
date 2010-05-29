@@ -446,7 +446,6 @@ void nuiHTMLTable::Cell::SetLayout(const nuiRect& rRect)
 void nuiHTMLTable::Cell::Layout(nuiHTMLContext& rCtx)
 {
   nuiHTMLContext ctx(rCtx);
-  ctx.mMaxWidth -= (mSpacing + mPadding) * 2;
   if (!mpItem)
   {
     mIdealWidth = 0;
@@ -475,6 +474,8 @@ void nuiHTMLTable::Cell::Layout(nuiHTMLContext& rCtx)
     if (rw > ctx.mMaxWidth)
       ctx.mMaxWidth = rw;
   }
+
+  ctx.mMaxWidth -= (mSpacing + mPadding) * 2;
   
   nuiRect r;
   if (mpItem)
@@ -519,19 +520,22 @@ void nuiHTMLTable::Cell::Layout(nuiHTMLContext& rCtx)
 
 void nuiHTMLTable::Cell::Draw(nuiDrawContext* pContext)
 {
+  if (mBorder > 1)
+    printf("\n");
   if (mBorder > 0)
   {
+    int32 b = mBorder / 2;
     pContext->PushState();
     pContext->SetLineWidth(mBorder);
 
     if (mFrame & 1)
-      pContext->DrawLine(mX, mY, mX, mY + mHeight);
+      pContext->DrawLine(mX - b, mY - b, mX - b, mY + mHeight + b);
     if (mFrame & 2)
-      pContext->DrawLine(mX, mY, mX + mWidth, mY);
+      pContext->DrawLine(mX - b, mY - b, mX + mWidth + b, mY - b);
     if (mFrame & 4)
-      pContext->DrawLine(mX + mWidth, mY, mX + mWidth, mY + mHeight);
+      pContext->DrawLine(mX + mWidth + b, mY - b, mX + mWidth + b, mY + mHeight + b);
     if (mFrame & 8)
-      pContext->DrawLine(mX, mY + mHeight, mX + mWidth, mY + mHeight);
+      pContext->DrawLine(mX - b, mY + mHeight + b, mX + mWidth + b, mY + mHeight + b);
     
     pContext->PopState();
   }

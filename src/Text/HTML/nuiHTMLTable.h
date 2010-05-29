@@ -84,7 +84,7 @@ public:
     nglString mAbbr;
     bool mHeader;
     Frame mFrame;
-    float mBorder;
+    int32 mBorder;
     float mSpacing;
     float mPadding;
   };
