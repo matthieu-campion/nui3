@@ -2611,11 +2611,27 @@
 						>
 					</File>
 					<File
+						RelativePath=".\src\Text\HTML\nuiHTMLTable.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\src\Text\HTML\nuiHTMLTable.h"
+						>
+					</File>
+					<File
 						RelativePath=".\src\Text\HTML\nuiHTMLText.cpp"
 						>
 					</File>
 					<File
 						RelativePath=".\src\Text\HTML\nuiHTMLText.h"
+						>
+					</File>
+					<File
+						RelativePath=".\src\Text\HTML\nuiWebCSS.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\src\Text\HTML\nuiWebCSS.h"
 						>
 					</File>
 				</Filter>

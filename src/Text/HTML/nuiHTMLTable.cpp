@@ -94,7 +94,7 @@ void nuiHTMLTable::Layout(nuiHTMLContext& rContext)
       if (rCell.mColSpan > 1)
         w /= rCell.mColSpan;
       mColumns[j].mIdealSize = MAX(mColumns[j].mIdealSize, w);
-      mRows[j].mSize = MAX(mRows[j].mSize, rCell.mIdealHeight);
+      mRows[i].mSize = MAX(mRows[i].mSize, rCell.mIdealHeight);
     }
   }
 
@@ -257,7 +257,9 @@ nuiHTMLTable::Cell& nuiHTMLTable::SetCell(int32 col, int32 row, nuiHTMLNode* pNo
 {
   Grow(col, row);
   
-  mCells[row][col].SetContents(pNode, pItem);
+  Cell& rCell(mCells[row][col]);
+  rCell.SetContents(pNode, pItem);
+  return rCell;
 }
 
 nuiHTMLTable::Cell& nuiHTMLTable::GetCell(int32 col, int32 row)
