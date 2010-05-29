@@ -99,6 +99,7 @@ set(SOURCES
   src/Text/HTML/nuiHTMLItem.cpp
   src/Text/HTML/nuiHTMLStyle.cpp
   src/Text/HTML/nuiHTMLText.cpp
+  src/Text/HTML/nuiHTMLTable.cpp
   src/Text/HTML/nuiWebCSS.cpp
   
   src/Renderers/AAPrimitives.cpp
