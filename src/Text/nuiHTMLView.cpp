@@ -717,9 +717,9 @@ void nuiHTMLView::ParseTableRow(nuiHTMLNode* pNode, nuiHTMLTable* pBox, int32 ro
     {
       case nuiHTML::eTag_TD:
       {
-        nuiHTMLBox* pNewBox = new nuiHTMLBox(pNode, mpCurrentAnchor, false);
+        nuiHTMLBox* pNewBox = new nuiHTMLBox(pChild, mpCurrentAnchor, false);
         ParseBody(pChild, pNewBox);
-        pBox->SetCell(colindex, rowindex, pNode, pNewBox);
+        pBox->SetCell(colindex, rowindex, pChild, pNewBox);
         
         colindex++;
       }
