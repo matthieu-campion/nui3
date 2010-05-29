@@ -84,9 +84,10 @@ void nuiHTMLTable::Layout(nuiHTMLContext& rContext)
     idealw += mColumns[i].mIdealSize;
     if (mColumns[i].mRequestedSizeUnit == eProportional)
     {
-      wratio += mColumns[i].mRequestedSize;
+      float r = mColumns[i].mRequestedSize;
+      float s =  mColumns[i].mIdealSize;
+      wratio += s * r;
     }
-
   }
 
   float wdiff = (idealw - rContext.mMaxWidth) / wratio;
@@ -100,7 +101,7 @@ void nuiHTMLTable::Layout(nuiHTMLContext& rContext)
         mColumns[i].mSize = mColumns[i].mIdealSize;
         break;
       case eProportional:
-        mColumns[i].mSize = mColumns[i].mIdealSize - mColumns[i].mRequestedSize * wdiff;
+        mColumns[i].mSize = mColumns[i].mIdealSize - (mColumns[i].mRequestedSize * mColumns[i].mIdealSize * wdiff);
         if (mColumns[i].mSize < 0)
           mColumns[i].mSize = 0;
         break;
@@ -118,6 +119,8 @@ void nuiHTMLTable::Layout(nuiHTMLContext& rContext)
       ctx.mMaxWidth = mColumns[j].mSize;
       Cell& rCell(GetCell(j, i));
       rCell.Layout(ctx);
+      if (ctx.mMaxWidth < rCell.mIdealWidth)
+        mColumns[j].mSize = rCell.mIdealWidth;
       float h = rCell.mIdealHeight;
       rowheight = MAX(h, rowheight);
     }
