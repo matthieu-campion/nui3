@@ -33,15 +33,15 @@ public:
   
   enum Frame
   {
-    eVoid,    // No sides. This is the default value.
-    eAbove,   // The top side only.
-    eBelow,   // The bottom side only.
-    eHSides,  // The top and bottom sides only.
-    eVSides,  // The right and left sides only.
-    eLHS,     // The left-hand side only.
-    eRHS,     // The right-hand side only.
-    eBox,     // All four sides.
-    eBorder   // All four sides.
+    eVoid = 0,    // No sides. This is the default value.
+    eAbove = 2,   // The top side only.
+    eBelow = 8,   // The bottom side only.
+    eHSides = 2 | 8,  // The top and bottom sides only.
+    eVSides = 1 | 4,  // The right and left sides only.
+    eLHS = 1,     // The left-hand side only.
+    eRHS = 4,     // The right-hand side only.
+    eBox = 1 | 2 | 4 | 8,     // All four sides.
+    eBorder = eBox   // All four sides.
   };
   
   enum Rules
@@ -60,6 +60,9 @@ public:
     ~Cell();
     
     void SetContents(nuiHTMLNode* pNode, nuiHTMLItem* pItem);
+    void SetLayout(const nuiRect& rRect);
+    void Layout(nuiHTMLContext& rCtx);
+    void Draw(nuiDrawContext* pContext);
     
     
     Cell* mpMasterCell;
@@ -71,6 +74,8 @@ public:
     float mIdealHeight;
     float mRequestedWidth;
     float mRequestedHeight;
+    float mX;
+    float mY;
     float mWidth;
     float mHeight;
     nuiHTMLItem::Unit mWidthUnit;
@@ -101,11 +106,21 @@ protected:
     Col();
     
     float mRequestedSize;
-    nuiHTMLItem::Unit mSizeUnit;
+    nuiHTMLItem::Unit mRequestedSizeUnit;
     float mSize;
     float mIdealSize;
   };
+
+  class Row
+  {
+  public:
+    Row();
+    
+    float mSize;
+  };
+  
   std::vector<Col> mColumns;
+  std::vector<Row> mRows;
 
   void SetRowCount(uint32 count);
   void SetColCount(uint32 count);

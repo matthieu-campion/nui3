@@ -15,6 +15,7 @@
 #include "nuiHTMLItem.h"
 #include "nuiHTMLBox.h"
 #include "nuiHTMLHeader.h"
+#include "nuiHTMLTable.h"
 #include "nuiHTMLText.h"
 #include "nuiHTMLImage.h"
 #include "nuiHTMLFont.h"
@@ -681,17 +682,19 @@ void nuiHTMLView::ParseDiv(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 
 void nuiHTMLView::ParseTable(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 {
-  nuiHTMLBox* pNewBox = new nuiHTMLBox(pNode, mpCurrentAnchor, false);
+  nuiHTMLTable* pNewBox = new nuiHTMLTable(pNode, mpCurrentAnchor, false);
   pBox->AddItem(pNewBox);
   
   uint32 count = pNode->GetNbChildren();
+  int32 index = 0;
   for (uint32 i = 0; i < count; i++)
   {
     nuiHTMLNode* pChild = pNode->GetChild(i);
     switch (pChild->GetTagType())
     {
       case nuiHTML::eTag_TR:
-        ParseTableRow(pChild, pNewBox);
+        ParseTableRow(pChild, pNewBox, index);
+        index++;
         break;
     }
   }
@@ -703,20 +706,24 @@ void nuiHTMLView::ParseImage(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
   pBox->AddItem(pImg);
 }
 
-void nuiHTMLView::ParseTableRow(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
-{
-  nuiHTMLBox* pNewBox = new nuiHTMLBox(pNode, mpCurrentAnchor, false);
-  pBox->AddItem(pNewBox);
-  
+void nuiHTMLView::ParseTableRow(nuiHTMLNode* pNode, nuiHTMLTable* pBox, int32 rowindex)
+{ 
   uint32 count = pNode->GetNbChildren();
+  int32 colindex = 0;
   for (uint32 i = 0; i < count; i++)
   {
     nuiHTMLNode* pChild = pNode->GetChild(i);
     switch (pChild->GetTagType())
     {
       case nuiHTML::eTag_TD:
+      {
+        nuiHTMLBox* pNewBox = new nuiHTMLBox(pNode, mpCurrentAnchor, false);
         ParseBody(pChild, pNewBox);
-        break;
+        pBox->SetCell(colindex, rowindex, pNode, pNewBox);
+        
+        colindex++;
+      }
+      break;
     }
   }
 }

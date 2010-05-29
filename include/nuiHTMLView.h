@@ -15,6 +15,7 @@
 class nuiHTMLItem;
 class nuiHTMLBox;
 class nuiHTMLFont;
+class nuiHTMLTable;
 class nuiHTMLContext;
 class nuiAsyncIStream;
 
@@ -83,7 +84,7 @@ protected:
   void ParseBody(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
   void ParseDiv(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
   void ParseTable(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
-  void ParseTableRow(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
+  void ParseTableRow(nuiHTMLNode* pNode, nuiHTMLTable* pBox, int32 rowindex);
   void ParseList(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
   void ParseP(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
   void ParseHeader(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
