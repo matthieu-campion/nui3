@@ -343,7 +343,7 @@ void nui_glBegin(GLenum mode)
   static GLenum oldmode = 0;
   //if (oldmode != mode || !gpCurrentObject->GetSize())
   {
-    nuiRenderArray* pArray = new nuiRenderArray(mode);
+    nuiRenderArray* pArray = new nuiRenderArray(mode, false, false, true);
     gpCurrentObject->AddArray(pArray);
     //pArray->UseGLAATexture(true);
     //pArray->EnableArray(nuiRenderArray::eColor);
@@ -412,7 +412,7 @@ void nuiOutliner::TessellateObj(nuiRenderObject& rObject, const nuiPath& rVertic
 {
   NGL_ASSERT(count);
 
-  nuiRenderArray* pArray = new nuiRenderArray(GL_TRIANGLE_STRIP);
+  nuiRenderArray* pArray = new nuiRenderArray(GL_TRIANGLE_STRIP, false, false, true);
 
   const nuiPoint& rstart = rVertices[offset];
   const nuiPoint& rstop = rVertices[offset + count - 1];

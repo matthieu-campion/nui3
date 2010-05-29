@@ -98,4 +98,5 @@ void nuiHTMLImage::Layout(nuiHTMLContext& rContext)
   if (!mpTexture)
     return;
   mIdealRect.Set(0.0f, 0.0f, mWidth, mHeight);
+  mIdealRect.RoundToBiggest();
 }

@@ -14,8 +14,10 @@ nuiHTMLTable::nuiHTMLTable(nuiHTMLNode* pNode, nuiHTMLNode* pAnchor, bool Inline
 {
   SetRowCount(1);
   SetColCount(1);
-  mRequestedWidth = 100;
-  mRequestedWidthUnit = ePercentage;
+  mDefaultCell.mRequestedWidth = 100;
+  mDefaultCell.mRequestedHeight = -1;
+  mDefaultCell.mRequestedWidthUnit = ePercentage;
+  mDefaultCell.mRequestedHeightUnit = ePercentage;
 }
 
 nuiHTMLTable::~nuiHTMLTable()
@@ -32,6 +34,8 @@ nuiHTMLTable::~nuiHTMLTable()
 
 void nuiHTMLTable::Draw(nuiDrawContext* pContext)
 {
+  mDefaultCell.Draw(pContext);
+  
   for (uint32 i = 0; i < GetRowCount(); i++)
   {
     for (uint32 j = 0; j < GetColCount(); j++)
@@ -44,6 +48,24 @@ void nuiHTMLTable::Draw(nuiDrawContext* pContext)
 void nuiHTMLTable::Layout(nuiHTMLContext& rContext)
 {
   nuiHTMLContext ctx(rContext);
+  float MaxWidth = ctx.mMaxWidth;
+  switch (mDefaultCell.mRequestedWidthUnit)
+  {
+    case ePixels:
+      MaxWidth = mDefaultCell.mRequestedWidth;
+      break;
+    case ePercentage:
+      MaxWidth = (mDefaultCell.mRequestedWidth * MaxWidth) * 0.01f;
+      break;
+    case eProportional:
+      MaxWidth = MaxWidth;
+      break;
+    default:
+      NGL_ASSERT(0);
+      break;
+  } 
+  
+  MaxWidth -= (mDefaultCell.mSpacing + mDefaultCell.mPadding) * 2;
   
   // Calculate default ideal sizes:
   for (int32 i = 0; i < GetRowCount(); i++)
@@ -57,10 +79,10 @@ void nuiHTMLTable::Layout(nuiHTMLContext& rContext)
           ctx.mMaxWidth = mColumns[j].mRequestedSize;
           break;
         case ePercentage:
-          ctx.mMaxWidth = mColumns[j].mRequestedSize * rContext.mMaxWidth;
+          ctx.mMaxWidth = mColumns[j].mRequestedSize * MaxWidth * 0.01f;
           break;
         case eProportional:
-          ctx.mMaxWidth = 100000000;
+          ctx.mMaxWidth = MaxWidth;
           break;
         default:
           NGL_ASSERT(0);
@@ -90,7 +112,7 @@ void nuiHTMLTable::Layout(nuiHTMLContext& rContext)
     }
   }
 
-  float wdiff = (idealw - rContext.mMaxWidth) / wratio;
+  float wdiff = (idealw - MaxWidth) / wratio;
   
   for (int32 i = 0; i < GetColCount(); i++)
   {
@@ -127,11 +149,12 @@ void nuiHTMLTable::Layout(nuiHTMLContext& rContext)
     mRows[i].mSize = rowheight;
   }
   
-  float y = 0;
+  float x = 0;
+  float y = mDefaultCell.mSpacing + mDefaultCell.mPadding;
   for (int32 i = 0; i < GetRowCount(); i++)
   {
     float rowheight = mRows[i].mSize;
-    float x = 0;
+    x = mDefaultCell.mSpacing + mDefaultCell.mPadding;
 
     for (int32 j = 0; j < GetColCount(); j++)
     {
@@ -146,7 +169,20 @@ void nuiHTMLTable::Layout(nuiHTMLContext& rContext)
     y += rowheight;
   }
   
-  mIdealRect = nuiRect(rContext.mMaxWidth, y);
+  x += (mDefaultCell.mSpacing + mDefaultCell.mPadding);
+  y += (mDefaultCell.mSpacing + mDefaultCell.mPadding);
+  mIdealRect = nuiRect(x, y);
+  mIdealRect.RoundToBiggest();
+  mDefaultCell.mIdealWidth = mIdealRect.GetWidth();
+  mDefaultCell.mIdealHeight = mIdealRect.GetHeight();
+}
+
+void nuiHTMLTable::SetLayout(const nuiRect& rRect)
+{
+  nuiHTMLItem::SetLayout(rRect);
+  mDefaultCell.mWidth = mRect.GetWidth();
+  mDefaultCell.mHeight = mRect.GetHeight();
+
 }
 
 void nuiHTMLTable::SetRowCount(uint32 count)
@@ -159,7 +195,7 @@ void nuiHTMLTable::SetRowCount(uint32 count)
 
   int32 cols = GetColCount();
   for (; old < count; old++)
-    mCells[old].resize(cols);
+    mCells[old].resize(cols, mDefaultCell);
   
   InvalidateLayout();
 }
@@ -169,7 +205,7 @@ void nuiHTMLTable::SetColCount(uint32 count)
   if (count == GetColCount())
     return;
   for (uint32 i = 0; i < mCells.size(); i++)
-    mCells[i].resize(count);
+    mCells[i].resize(count, mDefaultCell);
   mColumns.resize(count);
   InvalidateLayout();
 }
@@ -255,11 +291,11 @@ nuiHTMLTable::Cell::Cell()
   mIdealWidth(-1), mIdealHeight(-1),
   mRequestedWidth(-1), mRequestedHeight(-1),
   mWidth(0), mHeight(0),
-  mWidthUnit(ePixels), mHeightUnit(ePixels),
+  mRequestedWidthUnit(ePixels), mRequestedHeightUnit(ePixels),
   mHeader(false),
   mFrame(eBorder),
   mBorder(1),
-  mSpacing(0),
+  mSpacing(2),
   mPadding(0)
 {
 }
@@ -277,16 +313,21 @@ void nuiHTMLTable::Cell::SetContents(nuiHTMLNode* pNode, nuiHTMLItem* pItem)
 
 void nuiHTMLTable::Cell::SetLayout(const nuiRect& rRect)
 {
-  mX = rRect.Left();
-  mY = rRect.Top();
-  mWidth = rRect.GetWidth();
-  mHeight = rRect.GetHeight();
+  mX = rRect.Left() + mPadding + mSpacing;
+  mY = rRect.Top() + mPadding + mSpacing;
+  mWidth = rRect.GetWidth() - (mPadding + mSpacing) * 2;
+  mHeight = rRect.GetHeight() - (mPadding + mSpacing) * 2;
   if (mpItem)
-    mpItem->SetLayout(rRect);
+  {
+    nuiRect r(mX, mY, mWidth, mHeight);
+    mpItem->SetLayout(r);
+  }
 }
 
 void nuiHTMLTable::Cell::Layout(nuiHTMLContext& rCtx)
 {
+  nuiHTMLContext ctx(rCtx);
+  ctx.mMaxWidth -= (mSpacing + mPadding) * 2;
   if (!mpItem)
   {
     mIdealWidth = 0;
@@ -296,8 +337,9 @@ void nuiHTMLTable::Cell::Layout(nuiHTMLContext& rCtx)
   
   mpItem->Layout(rCtx);
   nuiRect r(mpItem->GetIdealRect());
-  mIdealWidth = r.GetWidth();
-  mIdealHeight = r.GetHeight();
+  r.RoundToBiggest();
+  mIdealWidth = r.GetWidth() + (mSpacing + mPadding) * 2;
+  mIdealHeight = r.GetHeight() + (mSpacing + mPadding) * 2;
 }
 
 

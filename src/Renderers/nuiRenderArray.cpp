@@ -11,7 +11,7 @@
 #include "nuiColor.h"
 
 /// class nuiRenderArray
-nuiRenderArray::nuiRenderArray(uint32 mode, bool Static, bool _3dmesh)
+nuiRenderArray::nuiRenderArray(uint32 mode, bool Static, bool _3dmesh, bool _shape)
 {
   Acquire();
   
@@ -21,6 +21,7 @@ nuiRenderArray::nuiRenderArray(uint32 mode, bool Static, bool _3dmesh)
   mStatic = Static;
   mMode = mode;
   m3DMesh = _3dmesh;
+  mShape = _shape;
 
   mVertexElements = 2;
   mColorElements = 4;
@@ -51,6 +52,7 @@ nuiRenderArray::nuiRenderArray(const nuiRenderArray& rArray)
   mStatic = rArray.mStatic;
   mMode = rArray.mMode;
   m3DMesh = rArray.m3DMesh;
+  mShape = rArray.mShape;
 
   mVertexElements = rArray.mVertexElements;
   mColorElements = rArray.mColorElements;
@@ -240,6 +242,16 @@ bool nuiRenderArray::Is3DMesh() const
 void nuiRenderArray::Set3DMesh(bool set)
 {
   m3DMesh = set;
+}
+
+bool nuiRenderArray::IsShape() const
+{
+  return mShape;
+}
+
+void nuiRenderArray::SetShape(bool set)
+{
+  mShape = set;
 }
 
 //////////////

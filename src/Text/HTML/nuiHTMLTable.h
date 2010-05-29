@@ -18,6 +18,7 @@ public:
   
   virtual void Draw(nuiDrawContext* pContext);
   virtual void Layout(nuiHTMLContext& rContext);
+  virtual void SetLayout(const nuiRect& rRect);
   
   class Cell;
 
@@ -78,8 +79,8 @@ public:
     float mY;
     float mWidth;
     float mHeight;
-    nuiHTMLItem::Unit mWidthUnit;
-    nuiHTMLItem::Unit mHeightUnit;
+    nuiHTMLItem::Unit mRequestedWidthUnit;
+    nuiHTMLItem::Unit mRequestedHeightUnit;
     nglString mAbbr;
     bool mHeader;
     Frame mFrame;
@@ -92,12 +93,6 @@ public:
 
 
 protected:
-  Frame mFrame;
-  float mBorder;
-
-  float mRequestedWidth;
-  float mRequestedWidthUnit;
-  
   std::vector<std::vector<Cell> > mCells;
 
   class Col
@@ -124,5 +119,7 @@ protected:
 
   void SetRowCount(uint32 count);
   void SetColCount(uint32 count);
+  
+  Cell mDefaultCell;
 };
 

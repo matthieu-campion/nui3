@@ -208,6 +208,7 @@ void nuiHTMLBox::Layout(nuiHTMLContext& rContext)
   
   mIdealRect.SetWidth(mIdealRect.GetWidth() + mMarginLeft + mMarginRight);
   mIdealRect.SetHeight(mIdealRect.GetHeight() + mMarginTop + mMarginBottom);
+  mIdealRect.RoundToBiggest();
   //printf("text layout done (%ls)\n", mIdealRect.GetValue().GetChars());
 }
 

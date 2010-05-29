@@ -23,7 +23,7 @@ public:
 class NUI_API nuiRenderArray : public nuiRefCount
 {
 public:
-  nuiRenderArray(uint32 mode, bool Static = false, bool _3dmesh = false);
+  nuiRenderArray(uint32 mode, bool Static = false, bool _3dmesh = false, bool _shape = false);
   nuiRenderArray(const nuiRenderArray& rArray);
   virtual ~nuiRenderArray();
 
@@ -101,7 +101,10 @@ public:
   
   bool Is3DMesh() const;
   void Set3DMesh(bool set);
-
+  
+  bool IsShape() const;
+  void SetShape(bool set);
+  
   uint32 GetSize() const;
   void Reserve(uint Count);
   void Resize(uint Count);
@@ -149,8 +152,9 @@ private:
 
   GLenum mMode;
   bool mEnabled[4];
-  bool mStatic;
-  bool m3DMesh;
+  bool mStatic : 1;
+  bool m3DMesh : 1;
+  bool mShape : 1;
   mutable void* mpCacheHandle;
   mutable nuiCacheManager* mpCacheManager;
 
@@ -168,7 +172,6 @@ private:
   float mMaxX;
   float mMaxY;
   float mMaxZ;
-  
 };
 
 class NUI_API nuiRenderObject

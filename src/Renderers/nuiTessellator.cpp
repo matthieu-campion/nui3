@@ -92,6 +92,7 @@ public:
 
   nuiRenderObject* mpObject;
   nuiPath mTempPoints;
+  bool mOutline;
 
 private:
   bool mEdgeFlag;
@@ -119,6 +120,7 @@ nuiRenderObject* nuiTessellator::GenerateFromPath(float Quality)
   gluTessProperty(mpTess,GLU_TESS_WINDING_RULE, GLU_TESS_WINDING_NONZERO);
 
   TessellatorInfo Infos;
+  Infos.mOutline = mOutLine;
   gluTessBeginPolygon(mpTess, &Infos); 
 
   gluTessBeginContour(mpTess);
@@ -155,6 +157,7 @@ nuiRenderObject* nuiTessellator::GenerateFromShape(float Quality)
   gluTessProperty(mpTess,GLU_TESS_WINDING_RULE, Winding);
 
   TessellatorInfo Infos;
+  Infos.mOutline = mOutLine;
 
   uint32 countours = mpShape->GetContourCount();
 
@@ -247,7 +250,7 @@ GLvoid TessellatorInfo::StaticInternalTessError(GLenum ErrNo, void * polygon_dat
 
 void TessellatorInfo::InternalTessBegin(GLenum type)
 {
-  nuiRenderArray* pArray = new nuiRenderArray(type);
+  nuiRenderArray* pArray = new nuiRenderArray(type, false, false, mOutline);
   pArray->EnableArray(nuiRenderArray::eVertex);
   //pArray->EnableArray(nuiRenderArray::eEdgeFlag);
   mpObject->AddArray(pArray);

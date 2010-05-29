@@ -858,7 +858,7 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
 
   NUI_RETURN_IF_RENDERING_DISABLED;
 
-  bool NeedTranslateHack = (mode == GL_POINTS || mode == GL_LINES || mode == GL_LINE_LOOP || mode == GL_LINE_STRIP) && !pArray->Is3DMesh();
+  bool NeedTranslateHack = pArray->IsShape() || ((mode == GL_POINTS || mode == GL_LINES || mode == GL_LINE_LOOP || mode == GL_LINE_STRIP) && !pArray->Is3DMesh());
   float hackX;
   float hackY;
   if (NeedTranslateHack)

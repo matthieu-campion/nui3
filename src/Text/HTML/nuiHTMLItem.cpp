@@ -250,13 +250,15 @@ void nuiHTMLItem::Invalidate()
 
 void nuiHTMLItem::SetLayout(const nuiRect& rRect)
 {
-  if (mSetRectCalled && rRect.GetWidth() == mRect.GetWidth() & rRect.GetHeight() == mRect.GetHeight())
+  nuiRect r(rRect);
+  r.RoundToBiggest();
+  if (mSetRectCalled && r.GetWidth() == mRect.GetWidth() & r.GetHeight() == mRect.GetHeight())
   {
-    MoveTo(rRect.Left(), rRect.Top());
+    MoveTo(r.Left(), r.Top());
   }
   else
   {
-    SetRect(rRect);
+    SetRect(r);
   }
 
 }
