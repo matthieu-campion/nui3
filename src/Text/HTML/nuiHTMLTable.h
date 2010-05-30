@@ -65,7 +65,8 @@ public:
     void Layout(nuiHTMLContext& rCtx);
     void Draw(nuiDrawContext* pContext);
     
-    
+    int32 mCol;
+    int32 mRow;
     Cell* mpMasterCell;
     nuiHTMLNode* mpNode;
     uint32 mColSpan;
@@ -87,6 +88,8 @@ public:
     int32 mBorder;
     float mSpacing;
     float mPadding;
+    nuiColor mBgColor;
+    bool mBgColorSet;
   };
 
   void Grow(int32 col, int32 row);

@@ -102,7 +102,7 @@
 			PBXWorkspaceStateSaveDate = 296522983;
 		};
 		perUserProjectItems = {
-			E5617861119475B00060DC85 = E5617861119475B00060DC85 /* PBXTextBookmark */;
+			E5617861119475B00060DC85 /* PBXTextBookmark */ = E5617861119475B00060DC85 /* PBXTextBookmark */;
 		};
 		sourceControlManager = E58C19811192F3C900A0223E /* Source Control */;
 		userBuildSettings = {

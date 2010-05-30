@@ -171,7 +171,10 @@ void nuiHTMLTable::Layout(nuiHTMLContext& rContext)
       Cell& rCell(GetCell(j, i));
       
       nuiRect r(x, y, w, rowheight);
-      //NGL_OUT(_T("Cell[%d,%d] -> %ls\n"), j, i, r.GetValue().GetChars());
+      if (rCell.mColSpan > 1)
+      {
+        NGL_OUT(_T("Cell[%d,%d] -> %ls\n"), j, i, r.GetValue().GetChars());
+      }
       rCell.SetLayout(r);
       x += w;
     }
@@ -249,11 +252,11 @@ void nuiHTMLTable::SetCellSpan(int32 col, int32 row, int32 ncols, int32 nrows)
   rCell.mRowSpan = nrows;
   for (int32 i = 0; i < nrows; i++)
   {
-    for (int32 j = 0; j < nrows; j++)
+    for (int32 j = 0; j < ncols; j++)
     {
-      if (i && j)
+      if (i || j)
       {
-        Cell& rSlave(GetCell(col + j - 1, row + i - 1));
+        Cell& rSlave(GetCell(col + j, row + i));
         rSlave = Cell();
         rSlave.mpMasterCell = &rCell;
       }
@@ -268,7 +271,16 @@ nuiHTMLTable::Cell& nuiHTMLTable::SetCell(int32 col, int32 row, nuiHTMLNode* pNo
 {
   Grow(col, row);
   
+  Cell* pMaster = mCells[row][col].mpMasterCell;
+  while (pMaster)
+  {
+    col += (pMaster->mColSpan - 1) + ((pMaster->mRowSpan != 1 && row != pMaster->mRow) ? 1 : 0);
+    pMaster = mCells[row][col].mpMasterCell;
+  }
+  
   Cell& rCell(mCells[row][col]);
+  rCell.mCol = col;
+  rCell.mRow = row;
   rCell.SetContents(pNode, pItem);
 
   nuiHTMLAttrib* pAttrib = NULL;
@@ -328,7 +340,8 @@ nuiHTMLTable::Cell::Cell()
   mFrame(eBorder),
   mBorder(1),
   mSpacing(1),
-  mPadding(2)
+  mPadding(2),
+  mBgColorSet(false)
 {
   
 }
@@ -356,6 +369,13 @@ void nuiHTMLTable::Cell::SetContents(nuiHTMLNode* pNode, nuiHTMLItem* pItem)
   if (pAttrib)
     mSpacing = pAttrib->GetValue().GetCFloat();
   
+  pAttrib = pNode->GetAttribute(nuiHTMLAttrib::eAttrib_BGCOLOR);
+  if (pAttrib)
+  {
+    mBgColor.SetValue(pAttrib->GetValue());
+    mBgColorSet = true;
+  }
+
   pAttrib = pNode->GetAttribute(nuiHTMLAttrib::eAttrib_WIDTH);
   if (pAttrib)
   {  
@@ -436,7 +456,15 @@ void nuiHTMLTable::Cell::SetLayout(const nuiRect& rRect)
   mY = rRect.Top() + mSpacing + mBorder;
   mWidth = rRect.GetWidth() - (mSpacing + mBorder) * 2;
   mHeight = rRect.GetHeight() - (mSpacing + mBorder) * 2;
-  if (mpItem)
+  if (mpMasterCell)
+  {
+    float s = mpMasterCell->mSpacing + mpMasterCell->mBorder;
+    float x = mpMasterCell->mX - s;
+    float y = mpMasterCell->mY - s;
+    nuiRect r(x, y, rRect.Right(), rRect.Bottom(), false);
+    mpMasterCell->SetLayout(r);
+  }
+  else if (mpItem)
   {
     nuiRect r(mX + mPadding, mY + mPadding, mWidth - mPadding * 2, mHeight - mPadding * 2);
     mpItem->SetLayout(r);
@@ -520,12 +548,21 @@ void nuiHTMLTable::Cell::Layout(nuiHTMLContext& rCtx)
 
 void nuiHTMLTable::Cell::Draw(nuiDrawContext* pContext)
 {
-  if (mBorder > 1)
-    printf("\n");
+  if (mpMasterCell)
+    return;
+  
+  if (mBgColorSet)
+  {
+    nuiRect r(mX, mY, mWidth, mHeight);
+    
+    pContext->SetFillColor(mBgColor);
+    pContext->DrawRect(r, eFillShape);
+    pContext->SetFillColor(nuiColor());
+  }
+  
   if (mBorder > 0)
   {
     int32 b = mBorder / 2;
-    pContext->PushState();
     pContext->SetLineWidth(mBorder);
 
     if (mFrame & 1)
@@ -537,7 +574,7 @@ void nuiHTMLTable::Cell::Draw(nuiDrawContext* pContext)
     if (mFrame & 8)
       pContext->DrawLine(mX - b, mY + mHeight + b, mX + mWidth + b, mY + mHeight + b);
     
-    pContext->PopState();
+    pContext->SetLineWidth(1);
   }
   if (mpItem)
     mpItem->CallDraw(pContext);
