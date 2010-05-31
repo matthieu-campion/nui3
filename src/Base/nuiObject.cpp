@@ -165,6 +165,7 @@ nuiXMLNode* nuiObject::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
   GetAttributes(attributes);
 	for (it = attributes.begin(); it != attributes.end(); ++it)
 	{
+    const nglString& name(it->first);
 		nuiAttribBase base = it->second;
 
 		base.Serialize(pNode);

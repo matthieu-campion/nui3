@@ -861,7 +861,7 @@ nglString nuiXMLNode::Dump(uint level) const
     {
       //#FIXME
       //DUMPT(("%ls\n",value.GetChars()));
-      res.Add(tab).Add(_T("\"")).Add(value).Add(_T("\n"));
+      res.Add(tab).Add(value).Add(_T("\n"));
     }
     else if (mName == _T("##comment"))
     {
@@ -1323,7 +1323,7 @@ bool nuiXML::Save(nglOStream& rStream) const
   return true;
 }
 
-nglString nuiXML::Dump() const
+nglString nuiXML::Dump(uint level) const
 {
   nglString res;
   res += _T("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
@@ -1342,7 +1342,7 @@ nglString nuiXML::Dump() const
     res+= styleSheet;
   }
   
-  res += nuiXMLNode::Dump(0);
+  res += nuiXMLNode::Dump(level);
   
   return res;
 }

@@ -220,6 +220,29 @@ public:
     mSetter(rSetter.GetMemento())
   {
   }
+
+  bool IsValid(void* pTarget = NULL) const
+  {
+    if (mGetter.empty())
+      return false;
+
+    if (!pTarget) // We just want a general test about the availability of the Getter
+      return true;
+    
+    switch (GetDimension())
+    {
+      case 0:
+        return true;
+        break;
+      case 1:
+        return (GetIndexRange(pTarget, 0) > 0);
+        break;
+      case 2:
+        return (GetIndexRange(pTarget, 0) > 0) && (GetIndexRange(pTarget, 1) > 0);
+        break;
+    }
+    return false; // Any other dimension is an error!
+  }
   
   ////////////////////////////////////////////////////
   // Strings convertions:
@@ -237,7 +260,7 @@ public:
   
   bool ToString(void* pTarget, nglString& rString) const
   {
-    if (mGetter.empty())
+    if (!IsValid(pTarget))
       return false;
 
     return ToString(Get(pTarget), rString);
@@ -259,7 +282,7 @@ public:
   
   bool ToString(void* pTarget, int32 index, nglString& rString) const
   {
-    if (mGetter.empty())
+    if (!IsValid(pTarget))
       return false;
     return ToString(Get(pTarget, index), rString);
   }
@@ -281,7 +304,7 @@ public:
   
   bool ToString(void* pTarget, int32 index0, int32 index1, nglString& rString) const
   {
-    if (mGetter.empty())
+    if (!IsValid(pTarget))
       return false;
     return ToString(Get(pTarget, index0, index1), rString);
   }
@@ -316,7 +339,7 @@ public:
   
   bool ToVariant(void* pTarget, nuiVariant& rVariant) const
   {
-    if (mGetter.empty())
+    if (!IsValid(pTarget))
       return false;
     
     return ToVariant(Get(pTarget), rVariant);
@@ -338,7 +361,7 @@ public:
   
   bool ToVariant(void* pTarget, int32 index, nuiVariant& rVariant) const
   {
-    if (mGetter.empty())
+    if (!IsValid(pTarget))
       return false;
     return ToVariant(Get(pTarget, index), rVariant);
   }
@@ -360,7 +383,7 @@ public:
   
   bool ToVariant(void* pTarget, int32 index0, int32 index1, nuiVariant& rVariant) const
   {
-    if (mGetter.empty())
+    if (!IsValid(pTarget))
       return false;
     return ToVariant(Get(pTarget, index0, index1), rVariant);
   }
@@ -402,6 +425,8 @@ public:
     Getter.SetMemento(mGetter);
     if (!IsInstanceAttribute())
       Getter.SetThis(pTarget);
+    int32 range = GetIndexRange(pTarget, 0);
+    NGL_ASSERT(range > index);
     return Getter(index);
   }
   
@@ -413,6 +438,8 @@ public:
     Getter.SetMemento(mGetter);
     if (!IsInstanceAttribute())
       Getter.SetThis(pTarget);
+    NGL_ASSERT(GetIndexRange(pTarget, 0) > index0);
+    NGL_ASSERT(GetIndexRange(pTarget, 1) > index1);
     return Getter(index0, index1);
   }
   
@@ -781,6 +808,29 @@ public:
   {
   }
   
+  bool IsValid(void* pTarget = NULL) const
+  {
+    if (mGetter.empty())
+      return false;
+    
+    if (!pTarget) // We just want a general test about the availability of the Getter
+      return true;
+    
+    switch (GetDimension())
+    {
+      case 0:
+        return true;
+        break;
+      case 1:
+        return (GetIndexRange(pTarget, 0) > 0);
+        break;
+      case 2:
+        return (GetIndexRange(pTarget, 0) > 0) && (GetIndexRange(pTarget, 1) > 0);
+        break;
+    }
+    return false; // Any other dimension is an error!
+  }
+  
   bool ToString(const Contents& rValue, nglString& rString) const
   {
     return rString = rValue;
@@ -847,7 +897,7 @@ public:
   
   bool ToVariant(void* pTarget, nuiVariant& rVariant) const
   {
-    if (mGetter.empty())
+    if (!IsValid(pTarget))
       return false;
     
     return ToVariant(Get(pTarget), rVariant);
@@ -869,7 +919,7 @@ public:
   
   bool ToVariant(void* pTarget, int32 index, nuiVariant& rVariant) const
   {
-    if (mGetter.empty())
+    if (!IsValid(pTarget))
       return false;
     return ToVariant(Get(pTarget, index), rVariant);
   }
@@ -891,7 +941,7 @@ public:
   
   bool ToVariant(void* pTarget, int32 index0, int32 index1, nuiVariant& rVariant) const
   {
-    if (mGetter.empty())
+    if (!IsValid(pTarget))
       return false;
     return ToVariant(Get(pTarget, index0, index1), rVariant);
   }
@@ -933,6 +983,7 @@ public:
     Getter.SetMemento(mGetter);
     if (!IsInstanceAttribute())
       Getter.SetThis(pTarget);
+    NGL_ASSERT(GetIndexRange(pTarget, 0) > index);
     return Getter(index);
   }
   
@@ -944,6 +995,8 @@ public:
     Getter.SetMemento(mGetter);
     if (!IsInstanceAttribute())
       Getter.SetThis(pTarget);
+    NGL_ASSERT(GetIndexRange(pTarget, 0) > index0);
+    NGL_ASSERT(GetIndexRange(pTarget, 1) > index1);
     return Getter(index0, index1);
   }
   

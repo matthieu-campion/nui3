@@ -123,7 +123,7 @@ public:
   nuiXMLNode* Find(const nglString& rName) const; ///< Finds a node given its full path relative to the current node. Eg. Find("background/color/red").
 
   // Debug:
-  nglString Dump(uint level) const; ///< Output the tree in the console (set the tab indent to \param level)..
+  nglString Dump(uint level = 0) const; ///< Output the tree in the console (set the tab indent to \param level)..
   const nuiXMLNode* GetParent() const;
   nuiXMLNode* GetParent();
   const nuiXMLNode* GetRoot() const;
@@ -158,7 +158,7 @@ public:
   virtual bool Load(nglIStream& rStream); ///< Load an existing xml file from a stream.
   virtual bool Save(nglOStream& rStream) const; ///< Save the current tree to a stream.
  
-  virtual nglString Dump() const; ///< Return the contents of the object as a string.
+  virtual nglString Dump(uint level = 0) const; ///< Return the contents of the object as a string.
   virtual void SetDTD(nglString name, nglString file); ///< Set the DTD of this XML doc.
   virtual void SetStyleSheet(nglString type, nglString file); ///< Set the Style sheet of this xml doc.
   virtual const nglString& GetDTDName(); ///< Get the DTD Name of this XML doc.
