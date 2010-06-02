@@ -131,6 +131,8 @@ nuiXMLNode* nuiObject::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
   if (mSerializeMode == eDontSaveNode)
     return NULL;
 
+  NGL_OUT(_T("Serialize: %ls\n"), GetObjectClass().GetChars());
+  
   if (mSerializeMode != eSkipNode)
   {
     if (pParentNode)

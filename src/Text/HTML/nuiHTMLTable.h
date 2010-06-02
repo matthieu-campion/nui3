@@ -124,5 +124,6 @@ protected:
   void SetColCount(uint32 count);
   
   Cell mDefaultCell;
+  Cell mMainCell;
 };
 

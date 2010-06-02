@@ -697,6 +697,7 @@ bool nuiMainWindow::OnKeyDown(const nglKeyEvent& rEvent)
       
       InvalidateLayout();
     }
+#ifndef _UIKIT_
     else if (rEvent.mKey == NK_S && 
              (IsKeyDown(NK_LCTRL) || IsKeyDown(NK_RCTRL)) && 
              (IsKeyDown(NK_LSHIFT) || IsKeyDown(NK_RSHIFT))
@@ -707,8 +708,9 @@ bool nuiMainWindow::OnKeyDown(const nglKeyEvent& rEvent)
       nglMimeTextSource mimesrc(dump);
       App->GetClipBoard().SetData(mimesrc);
       
-      NGL_OUT(_T("Dumping this widget tree XML description:\n%ls\n"), dump.GetChars());
+      //NGL_OUT(_T("Dumping this widget tree XML description:\n%ls\n"), dump.GetChars());
     }
+#endif
   }
   return CallKeyDown(rEvent);
 }
