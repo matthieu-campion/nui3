@@ -13015,12 +13015,72 @@
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\deps\libcss\src\parse\properties\aural.c"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -13043,12 +13103,72 @@
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\deps\libcss\src\parse\properties\border_outline.c"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -13071,12 +13191,72 @@
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\deps\libcss\src\libparserutils\charset\charset.c"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -13099,12 +13279,72 @@
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\deps\libcss\src\libparserutils\charset\codecs\codec_8859.c"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -13127,12 +13367,72 @@
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\deps\libcss\src\libparserutils\charset\codecs\codec_ext8.c"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -13155,12 +13455,72 @@
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\deps\libcss\src\libparserutils\charset\codecs\codec_utf8.c"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -13183,12 +13543,72 @@
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\deps\libcss\src\charset\detect.c"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -13211,12 +13631,72 @@
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\deps\libcss\src\parse\properties\display_sizing.c"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -13239,12 +13719,72 @@
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\deps\libcss\src\libparserutils\utils\errors.c"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -13267,12 +13807,72 @@
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\deps\libcss\src\libparserutils\input\filter.c"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -13295,12 +13895,72 @@
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\deps\libcss\src\parse\properties\generated_list.c"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -13323,12 +13983,72 @@
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\deps\libcss\src\parse\important.c"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -13351,12 +14071,72 @@
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\deps\libcss\src\parse\language.c"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -13379,12 +14159,72 @@
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\deps\libcss\src\libcss.c"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -13407,12 +14247,72 @@
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\deps\libcss\src\parse\properties\margin.c"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -13435,12 +14335,72 @@
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\deps\libcss\src\parse\properties\page.c"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -13463,12 +14423,72 @@
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\deps\libcss\src\libparserutils\parserutils.c"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -13491,12 +14511,72 @@
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\deps\libcss\src\parse\properties\properties.c"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -13519,12 +14599,72 @@
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\deps\libcss\src\parse\propstrings.c"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -13547,12 +14687,72 @@
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\deps\libcss\src\libparserutils\utils\stack.c"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -13575,12 +14775,72 @@
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\deps\libcss\src\parse\properties\table.c"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -13603,12 +14863,72 @@
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\deps\libcss\src\parse\properties\ui.c"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -13631,12 +14951,72 @@
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\deps\libcss\src\libparserutils\charset\encodings\utf8.c"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -13659,6 +15039,36 @@
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\deps\libcss\src\parse\properties\utils.c"
@@ -13673,12 +15083,72 @@
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\deps\libcss\src\libparserutils\utils\vector.c"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								AdditionalIncludeDirectories="deps//libcss/include;deps/libcss/src;deps/libcss/src/libparserutils;deps/libcss/src/libwapcaplet"
+								PreprocessorDefinitions="inline="
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
