@@ -105,6 +105,8 @@ protected:
     
     float mRequestedSize;
     nuiHTMLItem::Unit mRequestedSizeUnit;
+    float mMinSize;
+    float mMaxSize;
     float mSize;
     float mIdealSize;
   };

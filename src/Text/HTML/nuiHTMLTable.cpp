@@ -113,38 +113,21 @@ void nuiHTMLTable::Layout(nuiHTMLContext& rContext)
   
   MaxWidth -= (mMainCell.mSpacing + mMainCell.mPadding + mMainCell.mBorder) * 2;
   
-  // Calculate default ideal sizes:
+  // Calculate column min and max sizes:
   for (int32 i = 0; i < GetRowCount(); i++)
   {
     for (int32 j = 0; j < GetColCount(); j++)
     {      
       Cell& rCell(GetCell(j, i));
-      ctx.mMaxWidth = MaxWidth;
-      if (mColumns[j].mRequestedSize >= 0)
-      {
-        switch (mColumns[j].mRequestedSizeUnit)
-        {
-          case ePixels:
-            ctx.mMaxWidth = mColumns[j].mRequestedSize;
-            break;
-          case ePercentage:
-            ctx.mMaxWidth = mColumns[j].mRequestedSize * MaxWidth * 0.01f;
-            break;
-          case eProportional:
-            ctx.mMaxWidth = MaxWidth;
-            break;
-          default:
-            NGL_ASSERT(0);
-            break;
-        } 
-      }
-
+      ctx.mMaxWidth = 0;
       rCell.Layout(ctx);
       float w = rCell.mIdealWidth;
-      if (rCell.mColSpan > 1)
-        w /= rCell.mColSpan;
-      mColumns[j].mIdealSize = MAX(mColumns[j].mIdealSize, w);
-      mRows[i].mSize = MAX(mRows[i].mSize, rCell.mIdealHeight);
+      mColumns[j].mMinSize = MAX(mColumns[j].mMinSize, w);
+
+      ctx.mMaxWidth = INT_MAX;
+      rCell.Layout(ctx);
+      w = rCell.mIdealWidth;
+      mColumns[j].mMaxSize = MAX(mColumns[j].mMaxSize, w);
     }
   }
 
@@ -162,50 +145,57 @@ void nuiHTMLTable::Layout(nuiHTMLContext& rContext)
     }
   }
 
-  float wdiff = (idealw - MaxWidth) / wratio;
-  
   for (int32 i = 0; i < GetColCount(); i++)
   {
-    switch (mColumns[i].mRequestedSizeUnit)
-    {
-      case ePixels:
-        mColumns[i].mSize = MAX(mColumns[i].mIdealSize, mColumns[i].mRequestedSize);
-        break;
-      case ePercentage:
-        mColumns[i].mSize = MAX(mColumns[i].mIdealSize, MaxWidth * 0.01f * mColumns[i].mRequestedSize);
-        break;
-      case eProportional:
-        mColumns[i].mSize = MAX(mColumns[i].mIdealSize, mColumns[i].mIdealSize - (mColumns[i].mRequestedSize * mColumns[i].mIdealSize * wdiff));
-        if (mColumns[i].mSize < 0)
-          mColumns[i].mSize = 0;
-        break;
-      default:
-        NGL_ASSERT(0);
-        break;
-    } 
+    mColumns[i].mSize = mColumns[i].mMaxSize;
   }
 
-  for (int32 i = 0; i < GetRowCount(); i++)
-  {
-    float rowheight = 0;
-    for (int32 j = 0; j < GetColCount(); j++)
-    {
-      ctx.mMaxWidth = mColumns[j].mSize;
-      Cell& rCell(GetCell(j, i));
-      rCell.Layout(ctx);
-      if (ctx.mMaxWidth < rCell.mIdealWidth)
-        mColumns[j].mSize = rCell.mIdealWidth;
-      float h = rCell.mIdealHeight;
-      rowheight = MAX(h, rowheight);
-    }
-    mRows[i].mSize = rowheight;
-  }
+//  float wdiff = (idealw - MaxWidth) / wratio;
+//  
+//  for (int32 i = 0; i < GetColCount(); i++)
+//  {
+//    switch (mColumns[i].mRequestedSizeUnit)
+//    {
+//      case ePixels:
+//        mColumns[i].mSize = MAX(mColumns[i].mIdealSize, mColumns[i].mRequestedSize);
+//        break;
+//      case ePercentage:
+//        mColumns[i].mSize = MAX(mColumns[i].mIdealSize, MaxWidth * 0.01f * mColumns[i].mRequestedSize);
+//        break;
+//      case eProportional:
+//        mColumns[i].mSize = MAX(mColumns[i].mIdealSize, mColumns[i].mIdealSize - (mColumns[i].mRequestedSize * mColumns[i].mIdealSize * wdiff));
+//        if (mColumns[i].mSize < 0)
+//          mColumns[i].mSize = 0;
+//        break;
+//      default:
+//        NGL_ASSERT(0);
+//        break;
+//    } 
+//  }
+//
+//  for (int32 i = 0; i < GetRowCount(); i++)
+//  {
+//    float rowheight = 0;
+//    for (int32 j = 0; j < GetColCount(); j++)
+//    {
+//      ctx.mMaxWidth = mColumns[j].mSize;
+//      Cell& rCell(GetCell(j, i));
+//      rCell.Layout(ctx);
+//      if (ctx.mMaxWidth < rCell.mIdealWidth)
+//        mColumns[j].mSize = rCell.mIdealWidth;
+//      float h = rCell.mIdealHeight;
+//      rowheight = MAX(h, rowheight);
+//    }
+//    mRows[i].mSize = rowheight;
+//  }
+//  
+
   
   float x = 0;
   float y = mMainCell.mSpacing + mMainCell.mBorder;
   for (int32 i = 0; i < GetRowCount(); i++)
   {
-    float rowheight = mRows[i].mSize;
+    float rowheight = 0;
     x = mMainCell.mSpacing + mMainCell.mBorder;
 
     for (int32 j = 0; j < GetColCount(); j++)
@@ -213,14 +203,25 @@ void nuiHTMLTable::Layout(nuiHTMLContext& rContext)
       float w = mColumns[j].mSize;
       Cell& rCell(GetCell(j, i));
       
+      ctx.mMaxWidth = w;
+      rCell.Layout(ctx);
+      float h = rCell.mIdealHeight;
+      rowheight = MAX(h, rowheight);
+    }
+
+    for (int32 j = 0; j < GetColCount(); j++)
+    {
+      float w = mColumns[j].mSize;
+      Cell& rCell(GetCell(j, i));
       nuiRect r(x, y, w, rowheight);
-      if (rCell.mColSpan > 1)
-      {
-        NGL_OUT(_T("Cell[%d,%d] -> %ls\n"), j, i, r.GetValue().GetChars());
-      }
+//      if (rCell.mColSpan > 1)
+//      {
+//        NGL_OUT(_T("Cell[%d,%d] -> %ls\n"), j, i, r.GetValue().GetChars());
+//      }
       rCell.SetLayout(r);
       x += w;
     }
+    
     y += rowheight;
   }
   
