@@ -91,6 +91,7 @@ void nuiHTMLTable::Draw(nuiDrawContext* pContext)
 void nuiHTMLTable::Layout(nuiHTMLContext& rContext)
 {
   nuiHTMLContext ctx(rContext);
+  
   float MaxWidth = ctx.mMaxWidth;
   if (mMainCell.mRequestedWidth >= 0)
   {
@@ -113,6 +114,12 @@ void nuiHTMLTable::Layout(nuiHTMLContext& rContext)
   
   MaxWidth -= (mMainCell.mSpacing + mMainCell.mPadding + mMainCell.mBorder) * 2;
   
+  for (int32 i = 0; i < GetColCount(); i++)
+  {
+    mColumns[i].mBorder = 0;
+    mColumns[i].mSpacing = 0;
+  }
+  
   // Calculate column min and max sizes:
   for (int32 i = 0; i < GetRowCount(); i++)
   {
@@ -128,9 +135,19 @@ void nuiHTMLTable::Layout(nuiHTMLContext& rContext)
       rCell.Layout(ctx);
       w = rCell.mIdealWidth;
       mColumns[j].mMaxSize = MAX(mColumns[j].mMaxSize, w);
+
+      mColumns[j].mBorder = rCell.mBorder;
+      mColumns[j].mSpacing = rCell.mSpacing;
     }
   }
 
+//  for (int32 i = 0; i < GetColCount(); i++)
+//  {
+//    mColumns[i].mMinSize += (mColumns[i].mBorder + mColumns[i].mSpacing) * 2;
+//    mColumns[i].mMaxSize += (mColumns[i].mBorder + mColumns[i].mSpacing) * 2;
+//  }
+  
+  
   float idealw = 0;
   float variableidealw = 0;
   float minvariableidealw = 0;
@@ -212,7 +229,7 @@ void nuiHTMLTable::Layout(nuiHTMLContext& rContext)
       float w = mColumns[j].mSize;
       Cell& rCell(GetCell(j, i));
       
-      ctx.mMaxWidth = w;
+      ctx.mMaxWidth = w - (mColumns[i].mBorder + mColumns[i].mSpacing) * 1;
       rCell.Layout(ctx);
       float h = rCell.mIdealHeight;
       rowheight = MAX(h, rowheight);
