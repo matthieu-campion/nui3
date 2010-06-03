@@ -5,11 +5,18 @@
  licence: see nui3/LICENCE.TXT
  */
 
+#include "nui.h"
 #include "nuiAudioDecoder.h"
 #include "nuiAudioConvert.h"
 
-#include <AudioToolBox/AudioToolBox.h>
-#include "AudioToolBox/ExtendedAudioFile.h"
+#include <AvailabilityMacros.h>
+
+#if !defined(__COREAUDIO_USE_FLAT_INCLUDES__)
+#include <AudioToolbox/AudioToolbox.h>
+#else
+#include <AudioToolbox.h>
+#endif
+
 
 OSStatus MyAudioFile_ReadProc(void* pInClientData, SInt64 inPosition, UInt32 requestCount, void* pBuffer, UInt32* pActualCount)
 {	

@@ -37,10 +37,10 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					1434,
+					1194,
 					60,
 					20,
-					48.16259765625,
+					48,
 					43,
 					43,
 				);
@@ -54,11 +54,11 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 269143789;
-			PBXWorkspaceStateSaveDate = 269143789;
+			PBXPerProjectTemplateStateSaveDate = 297294798;
+			PBXWorkspaceStateSaveDate = 297294798;
 		};
 		perUserProjectItems = {
-			E56D28300FE6ACEE00C16F53 /* PBXTextBookmark */ = E56D28300FE6ACEE00C16F53 /* PBXTextBookmark */;
+			E564C7BD11B85C33005FC167 /* PBXTextBookmark */ = E564C7BD11B85C33005FC167 /* PBXTextBookmark */;
 			E57957AA100ACF1300821E44 /* PBXTextBookmark */ = E57957AA100ACF1300821E44 /* PBXTextBookmark */;
 			E5C5CB7D0F864CF0006BB18F /* PlistBookmark */ = E5C5CB7D0F864CF0006BB18F /* PlistBookmark */;
 			E5C5CB800F864CF0006BB18F /* PlistBookmark */ = E5C5CB800F864CF0006BB18F /* PlistBookmark */;
@@ -94,9 +94,9 @@
 	};
 	61A9DFF10B83433800BC506C /* MainWindow.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1652, 731}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1412, 686}}";
 			sepNavSelRange = "{534, 0}";
-			sepNavVisRange = "{0, 1335}";
+			sepNavVisRange = "{154, 1149}";
 		};
 	};
 	61A9DFF20B83433800BC506C /* MainWindow.h */ = {
@@ -106,15 +106,15 @@
 			sepNavVisRange = "{0, 399}";
 		};
 	};
-	E56D28300FE6ACEE00C16F53 /* PBXTextBookmark */ = {
+	E564C7BD11B85C33005FC167 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 25";
 		rLen = 0;
 		rLoc = 534;
 		rType = 0;
-		vrLen = 1335;
-		vrLoc = 0;
+		vrLen = 1149;
+		vrLoc = 154;
 	};
 	E57957AA100ACF1300821E44 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -159,7 +159,7 @@
 		argumentStrings = (
 		);
 		autoAttachOnCrash = 1;
-		breakpointsEnabled = 1;
+		breakpointsEnabled = 0;
 		configStateDict = {
 		};
 		customDataFormattersEnabled = 1;

@@ -2,8 +2,8 @@
 {
 	61A9DE3F0B833C9200BC506C /* Project object */ = {
 		activeBuildConfigurationName = Default;
-		activeExecutable = E5EF6AB60F962302003E265A /* LayoutAnimation */;
-		activeTarget = 61A9DFBE0B833E9600BC506C /* LayoutAnimation */;
+		activeExecutable = E5EF6AB70F962302003E265A /* LayoutAnimationD */;
+		activeTarget = 61A9DFC80B833EF200BC506C /* LayoutAnimationD */;
 		breakpoints = (
 		);
 		codeSenseManager = E5EF6ABF0F96233C003E265A /* Code sense */;
@@ -17,7 +17,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					2114,
+					1234,
 					20,
 					48,
 					43,
@@ -56,8 +56,8 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 282959237;
-			PBXWorkspaceStateSaveDate = 282959237;
+			PBXPerProjectTemplateStateSaveDate = 297294912;
+			PBXWorkspaceStateSaveDate = 297294912;
 		};
 		sourceControlManager = E5EF6ABE0F96233C003E265A /* Source Control */;
 		userBuildSettings = {
@@ -101,9 +101,6 @@
 		configStateDict = {
 		};
 		customDataFormattersEnabled = 1;
-		dataTipCustomDataFormattersEnabled = 1;
-		dataTipShowTypeColumn = 1;
-		dataTipSortType = 0;
 		debuggerPlugin = GDBDebugging;
 		disassemblyDisplayState = 0;
 		dylibVariantSuffix = "";
@@ -116,7 +113,6 @@
 		name = LayoutAnimation;
 		savedGlobals = {
 		};
-		showTypeColumn = 0;
 		sourceDirectories = (
 		);
 		variableFormatDictionary = {
@@ -129,13 +125,10 @@
 		argumentStrings = (
 		);
 		autoAttachOnCrash = 1;
-		breakpointsEnabled = 1;
+		breakpointsEnabled = 0;
 		configStateDict = {
 		};
 		customDataFormattersEnabled = 1;
-		dataTipCustomDataFormattersEnabled = 1;
-		dataTipShowTypeColumn = 1;
-		dataTipSortType = 0;
 		debuggerPlugin = GDBDebugging;
 		disassemblyDisplayState = 0;
 		dylibVariantSuffix = "";
@@ -148,7 +141,6 @@
 		name = LayoutAnimationD;
 		savedGlobals = {
 		};
-		showTypeColumn = 0;
 		sourceDirectories = (
 		);
 		variableFormatDictionary = {

@@ -52,6 +52,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		E564C83511B870D7005FC167 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 61DF35C60EC25BCD00051F43 /* nuiE.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 735F6CDA0FF2747500E66B1D /* nuiE-iPhone 3.0 */;
+			remoteInfo = "nuiE-iPhone 3.0";
+		};
 		E5795855100AD04400821E44 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 61DF35C60EC25BCD00051F43 /* nuiE.xcodeproj */;
@@ -79,13 +86,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 614B66C30DA7BA67000F4C22;
 			remoteInfo = nuiEd;
-		};
-		E5CD2F630ECF82960083037A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 61DF35C60EC25BCD00051F43 /* nuiE.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D2AAC045055464E500DB518D;
-			remoteInfo = nuiE;
 		};
 		E5CD2F650ECF82A00083037A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -332,7 +332,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				E5CD2F640ECF82960083037A /* PBXTargetDependency */,
+				E564C83611B870D7005FC167 /* PBXTargetDependency */,
 			);
 			name = iPhoneDemo;
 			productName = beatmaker;
@@ -494,10 +494,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		E5CD2F640ECF82960083037A /* PBXTargetDependency */ = {
+		E564C83611B870D7005FC167 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = nuiE;
-			targetProxy = E5CD2F630ECF82960083037A /* PBXContainerItemProxy */;
+			name = "nuiE-iPhone 3.0";
+			targetProxy = E564C83511B870D7005FC167 /* PBXContainerItemProxy */;
 		};
 		E5CD2F660ECF82A00083037A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -552,12 +552,14 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_UNROLL_LOOPS = YES;
 				GENERATE_PROFILING_CODE = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_NAME = iPhoneDemo;
+				SDKROOT = iphoneos3.0;
 				STRIPFLAGS = "-SXx";
 				STRIP_INSTALLED_PRODUCT = YES;
 			};

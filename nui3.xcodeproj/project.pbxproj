@@ -620,7 +620,6 @@
 		E52CBD261174C0BE0031DFA8 /* nuiScriptEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBD241174C0BE0031DFA8 /* nuiScriptEngine.cpp */; };
 		E52CBD271174C0BE0031DFA8 /* nuiScriptEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBD241174C0BE0031DFA8 /* nuiScriptEngine.cpp */; };
 		E52CBE2811750AE10031DFA8 /* dtoa.c in Sources */ = {isa = PBXBuildFile; fileRef = E52CBD7E11750ADF0031DFA8 /* dtoa.c */; };
-		E52CBE2911750AE10031DFA8 /* imacro_asm.js in Sources */ = {isa = PBXBuildFile; fileRef = E52CBD7F11750ADF0031DFA8 /* imacro_asm.js */; };
 		E52CBE2A11750AE10031DFA8 /* js-confdefs.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CBD8311750ADF0031DFA8 /* js-confdefs.h */; };
 		E52CBE2B11750AE10031DFA8 /* js-config.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CBD8411750ADF0031DFA8 /* js-config.h */; };
 		E52CBE2C11750AE10031DFA8 /* jsapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBD8611750ADF0031DFA8 /* jsapi.cpp */; };
@@ -679,7 +678,6 @@
 		E52CBE6111750AE10031DFA8 /* jslibmath.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CBDBC11750ADF0031DFA8 /* jslibmath.h */; };
 		E52CBE6211750AE10031DFA8 /* jslock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDBD11750ADF0031DFA8 /* jslock.cpp */; };
 		E52CBE6311750AE10031DFA8 /* jslock.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CBDBE11750ADF0031DFA8 /* jslock.h */; };
-		E52CBE6411750AE10031DFA8 /* jslocko.asm in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDBF11750ADF0031DFA8 /* jslocko.asm */; };
 		E52CBE6511750AE10031DFA8 /* jslog2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDC011750ADF0031DFA8 /* jslog2.cpp */; };
 		E52CBE6611750AE10031DFA8 /* jslong.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CBDC111750ADF0031DFA8 /* jslong.h */; };
 		E52CBE6711750AE10031DFA8 /* jsmath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDC211750ADF0031DFA8 /* jsmath.cpp */; };
@@ -730,7 +728,6 @@
 		E52CBE9411750AE10031DFA8 /* jsutil.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CBDF311750ADF0031DFA8 /* jsutil.h */; };
 		E52CBE9511750AE10031DFA8 /* jsvector.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CBDF411750ADF0031DFA8 /* jsvector.h */; };
 		E52CBE9611750AE10031DFA8 /* jsversion.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CBDF511750ADF0031DFA8 /* jsversion.h */; };
-		E52CBE9711750AE10031DFA8 /* jswince.asm in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDF611750ADF0031DFA8 /* jswince.asm */; };
 		E52CBE9811750AE10031DFA8 /* jsxdrapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDF711750ADF0031DFA8 /* jsxdrapi.cpp */; };
 		E52CBE9911750AE10031DFA8 /* jsxdrapi.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CBDF811750ADF0031DFA8 /* jsxdrapi.h */; };
 		E52CBE9A11750AE10031DFA8 /* jsxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDF911750ADF0031DFA8 /* jsxml.cpp */; };
@@ -775,7 +772,6 @@
 		E52CBEC111750AE10031DFA8 /* resource.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CBE2411750ADF0031DFA8 /* resource.h */; };
 		E52CBEC211750AE10031DFA8 /* vprof.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBE2611750ADF0031DFA8 /* vprof.cpp */; };
 		E52CBEC311750AE10031DFA8 /* vprof.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CBE2711750ADF0031DFA8 /* vprof.h */; };
-		E52CBEC511750AE10031DFA8 /* imacro_asm.js in Sources */ = {isa = PBXBuildFile; fileRef = E52CBD7F11750ADF0031DFA8 /* imacro_asm.js */; };
 		E52CBEC611750AE10031DFA8 /* js-confdefs.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CBD8311750ADF0031DFA8 /* js-confdefs.h */; };
 		E52CBEC711750AE10031DFA8 /* js-config.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CBD8411750ADF0031DFA8 /* js-config.h */; };
 		E52CBEC811750AE10031DFA8 /* jsapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBD8611750ADF0031DFA8 /* jsapi.cpp */; };
@@ -3464,7 +3460,6 @@
 		E592C50B0EFE8CCC00340B35 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E58172B90C3CED8800902DFE /* AGL.framework */; };
 		E592C50C0EFE8CCC00340B35 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E58172BA0C3CED8800902DFE /* Carbon.framework */; };
 		E592C50D0EFE8CCC00340B35 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E58172BB0C3CED8800902DFE /* OpenGL.framework */; };
-		E592C50E0EFE8CCC00340B35 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E59CD7F70CDAAAE100B1C729 /* AudioToolbox.framework */; };
 		E592C50F0EFE8CCC00340B35 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E59CD7F80CDAAAE100B1C729 /* AudioUnit.framework */; };
 		E592C5100EFE8CCC00340B35 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E59CD7F90CDAAAE100B1C729 /* CoreAudio.framework */; };
 		E592C5110EFE8CCC00340B35 /* CoreAudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E59CD7FA0CDAAAE100B1C729 /* CoreAudioKit.framework */; };
@@ -3479,16 +3474,17 @@
 		E592C5BC0EFEC98100340B35 /* nglPlugin_Carbon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D310C3CECAB00902DFE /* nglPlugin_Carbon.cpp */; };
 		E597C3110CBD00190036C9DA /* nuiSeparator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E597C3100CBD00190036C9DA /* nuiSeparator.cpp */; };
 		E597C3120CBD00190036C9DA /* nuiSeparator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E597C3100CBD00190036C9DA /* nuiSeparator.cpp */; };
-		E59CD7FB0CDAAAE100B1C729 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E59CD7F70CDAAAE100B1C729 /* AudioToolbox.framework */; };
 		E59CD7FC0CDAAAE100B1C729 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E59CD7F80CDAAAE100B1C729 /* AudioUnit.framework */; };
 		E59CD7FD0CDAAAE100B1C729 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E59CD7F90CDAAAE100B1C729 /* CoreAudio.framework */; };
 		E59CD7FE0CDAAAE100B1C729 /* CoreAudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E59CD7FA0CDAAAE100B1C729 /* CoreAudioKit.framework */; };
-		E59CD7FF0CDAAAE100B1C729 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E59CD7F70CDAAAE100B1C729 /* AudioToolbox.framework */; };
 		E59CD8000CDAAAE100B1C729 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E59CD7F80CDAAAE100B1C729 /* AudioUnit.framework */; };
 		E59CD8010CDAAAE100B1C729 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E59CD7F90CDAAAE100B1C729 /* CoreAudio.framework */; };
 		E59CD8020CDAAAE100B1C729 /* CoreAudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E59CD7FA0CDAAAE100B1C729 /* CoreAudioKit.framework */; };
 		E59CD8A60CDAB25800B1C729 /* nuiAudioDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52E1A270CD7F397006FBCDD /* nuiAudioDevice.cpp */; };
 		E59CDA380CDABB5900B1C729 /* nuiAudioDevice_CoreAudio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52E1A550CD80280006FBCDD /* nuiAudioDevice_CoreAudio.cpp */; };
+		E59DF6CD1196396000E46CF8 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E59DF6CC1196396000E46CF8 /* AudioToolbox.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		E59DF6CE1196396000E46CF8 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E59DF6CC1196396000E46CF8 /* AudioToolbox.framework */; };
+		E59DF6CF1196396000E46CF8 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E59DF6CC1196396000E46CF8 /* AudioToolbox.framework */; };
 		E5A0FE440FA1336500D934F6 /* nuiDecorationInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = E5A0FE430FA1336500D934F6 /* nuiDecorationInspector.h */; };
 		E5A0FE450FA1336500D934F6 /* nuiDecorationInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = E5A0FE430FA1336500D934F6 /* nuiDecorationInspector.h */; };
 		E5A0FE460FA1336500D934F6 /* nuiDecorationInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = E5A0FE430FA1336500D934F6 /* nuiDecorationInspector.h */; };
@@ -4223,15 +4219,9 @@
 		E52C83350FFBB2FD00B7779C /* nuiRegExp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = nuiRegExp.cpp; path = src/String/nuiRegExp.cpp; sourceTree = SOURCE_ROOT; };
 		E52CBD201174C07E0031DFA8 /* nuiScriptEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiScriptEngine.h; path = include/nuiScriptEngine.h; sourceTree = SOURCE_ROOT; };
 		E52CBD241174C0BE0031DFA8 /* nuiScriptEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiScriptEngine.cpp; path = Bindings/nuiScriptEngine.cpp; sourceTree = "<group>"; };
-		E52CBD7D11750ADF0031DFA8 /* builtins.tbl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = builtins.tbl; path = deps/tracemonkey/builtins.tbl; sourceTree = SOURCE_ROOT; };
 		E52CBD7E11750ADF0031DFA8 /* dtoa.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dtoa.c; path = deps/tracemonkey/dtoa.c; sourceTree = SOURCE_ROOT; };
-		E52CBD7F11750ADF0031DFA8 /* imacro_asm.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = imacro_asm.js; path = deps/tracemonkey/imacro_asm.js; sourceTree = SOURCE_ROOT; };
-		E52CBD8011750ADF0031DFA8 /* imacros.c.out */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = imacros.c.out; path = deps/tracemonkey/imacros.c.out; sourceTree = SOURCE_ROOT; };
-		E52CBD8111750ADF0031DFA8 /* imacros.jsasm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = imacros.jsasm; path = deps/tracemonkey/imacros.jsasm; sourceTree = SOURCE_ROOT; };
-		E52CBD8211750ADF0031DFA8 /* jitstats.tbl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = jitstats.tbl; path = deps/tracemonkey/jitstats.tbl; sourceTree = SOURCE_ROOT; };
 		E52CBD8311750ADF0031DFA8 /* js-confdefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "js-confdefs.h"; path = "deps/tracemonkey/js-confdefs.h"; sourceTree = SOURCE_ROOT; };
 		E52CBD8411750ADF0031DFA8 /* js-config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "js-config.h"; path = "deps/tracemonkey/js-config.h"; sourceTree = SOURCE_ROOT; };
-		E52CBD8511750ADF0031DFA8 /* js.msg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = js.msg; path = deps/tracemonkey/js.msg; sourceTree = SOURCE_ROOT; };
 		E52CBD8611750ADF0031DFA8 /* jsapi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsapi.cpp; path = deps/tracemonkey/jsapi.cpp; sourceTree = SOURCE_ROOT; };
 		E52CBD8711750ADF0031DFA8 /* jsapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsapi.h; path = deps/tracemonkey/jsapi.h; sourceTree = SOURCE_ROOT; };
 		E52CBD8811750ADF0031DFA8 /* jsarena.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsarena.cpp; path = deps/tracemonkey/jsarena.cpp; sourceTree = SOURCE_ROOT; };
@@ -4284,12 +4274,10 @@
 		E52CBDB711750ADF0031DFA8 /* jsinvoke.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsinvoke.cpp; path = deps/tracemonkey/jsinvoke.cpp; sourceTree = SOURCE_ROOT; };
 		E52CBDB811750ADF0031DFA8 /* jsiter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsiter.cpp; path = deps/tracemonkey/jsiter.cpp; sourceTree = SOURCE_ROOT; };
 		E52CBDB911750ADF0031DFA8 /* jsiter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsiter.h; path = deps/tracemonkey/jsiter.h; sourceTree = SOURCE_ROOT; };
-		E52CBDBA11750ADF0031DFA8 /* jskeyword.tbl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = jskeyword.tbl; path = deps/tracemonkey/jskeyword.tbl; sourceTree = SOURCE_ROOT; };
 		E52CBDBB11750ADF0031DFA8 /* jskwgen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jskwgen.cpp; path = deps/tracemonkey/jskwgen.cpp; sourceTree = SOURCE_ROOT; };
 		E52CBDBC11750ADF0031DFA8 /* jslibmath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jslibmath.h; path = deps/tracemonkey/jslibmath.h; sourceTree = SOURCE_ROOT; };
 		E52CBDBD11750ADF0031DFA8 /* jslock.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jslock.cpp; path = deps/tracemonkey/jslock.cpp; sourceTree = SOURCE_ROOT; };
 		E52CBDBE11750ADF0031DFA8 /* jslock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jslock.h; path = deps/tracemonkey/jslock.h; sourceTree = SOURCE_ROOT; };
-		E52CBDBF11750ADF0031DFA8 /* jslocko.asm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm.asm; name = jslocko.asm; path = deps/tracemonkey/jslocko.asm; sourceTree = SOURCE_ROOT; };
 		E52CBDC011750ADF0031DFA8 /* jslog2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jslog2.cpp; path = deps/tracemonkey/jslog2.cpp; sourceTree = SOURCE_ROOT; };
 		E52CBDC111750ADF0031DFA8 /* jslong.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jslong.h; path = deps/tracemonkey/jslong.h; sourceTree = SOURCE_ROOT; };
 		E52CBDC211750ADF0031DFA8 /* jsmath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsmath.cpp; path = deps/tracemonkey/jsmath.cpp; sourceTree = SOURCE_ROOT; };
@@ -4303,7 +4291,6 @@
 		E52CBDCA11750ADF0031DFA8 /* json.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = json.h; path = deps/tracemonkey/json.h; sourceTree = SOURCE_ROOT; };
 		E52CBDCB11750ADF0031DFA8 /* jsopcode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsopcode.cpp; path = deps/tracemonkey/jsopcode.cpp; sourceTree = SOURCE_ROOT; };
 		E52CBDCC11750ADF0031DFA8 /* jsopcode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsopcode.h; path = deps/tracemonkey/jsopcode.h; sourceTree = SOURCE_ROOT; };
-		E52CBDCD11750ADF0031DFA8 /* jsopcode.tbl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = jsopcode.tbl; path = deps/tracemonkey/jsopcode.tbl; sourceTree = SOURCE_ROOT; };
 		E52CBDCE11750ADF0031DFA8 /* jsoplengen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsoplengen.cpp; path = deps/tracemonkey/jsoplengen.cpp; sourceTree = SOURCE_ROOT; };
 		E52CBDCF11750ADF0031DFA8 /* jsops.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsops.cpp; path = deps/tracemonkey/jsops.cpp; sourceTree = SOURCE_ROOT; };
 		E52CBDD011750ADF0031DFA8 /* jsotypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsotypes.h; path = deps/tracemonkey/jsotypes.h; sourceTree = SOURCE_ROOT; };
@@ -4311,13 +4298,11 @@
 		E52CBDD211750ADF0031DFA8 /* jsparse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsparse.h; path = deps/tracemonkey/jsparse.h; sourceTree = SOURCE_ROOT; };
 		E52CBDD311750ADF0031DFA8 /* jsprf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsprf.cpp; path = deps/tracemonkey/jsprf.cpp; sourceTree = SOURCE_ROOT; };
 		E52CBDD411750ADF0031DFA8 /* jsprf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsprf.h; path = deps/tracemonkey/jsprf.h; sourceTree = SOURCE_ROOT; };
-		E52CBDD511750ADF0031DFA8 /* jsproto.tbl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = jsproto.tbl; path = deps/tracemonkey/jsproto.tbl; sourceTree = SOURCE_ROOT; };
 		E52CBDD611750ADF0031DFA8 /* jsprvtd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsprvtd.h; path = deps/tracemonkey/jsprvtd.h; sourceTree = SOURCE_ROOT; };
 		E52CBDD711750ADF0031DFA8 /* jspubtd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jspubtd.h; path = deps/tracemonkey/jspubtd.h; sourceTree = SOURCE_ROOT; };
 		E52CBDD811750ADF0031DFA8 /* jsrecursion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsrecursion.cpp; path = deps/tracemonkey/jsrecursion.cpp; sourceTree = SOURCE_ROOT; };
 		E52CBDD911750ADF0031DFA8 /* jsregexp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsregexp.cpp; path = deps/tracemonkey/jsregexp.cpp; sourceTree = SOURCE_ROOT; };
 		E52CBDDA11750ADF0031DFA8 /* jsregexp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsregexp.h; path = deps/tracemonkey/jsregexp.h; sourceTree = SOURCE_ROOT; };
-		E52CBDDB11750ADF0031DFA8 /* jsreops.tbl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = jsreops.tbl; path = deps/tracemonkey/jsreops.tbl; sourceTree = SOURCE_ROOT; };
 		E52CBDDC11750ADF0031DFA8 /* jsscan.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsscan.cpp; path = deps/tracemonkey/jsscan.cpp; sourceTree = SOURCE_ROOT; };
 		E52CBDDD11750ADF0031DFA8 /* jsscan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsscan.h; path = deps/tracemonkey/jsscan.h; sourceTree = SOURCE_ROOT; };
 		E52CBDDE11750ADF0031DFA8 /* jsscope.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsscope.cpp; path = deps/tracemonkey/jsscope.cpp; sourceTree = SOURCE_ROOT; };
@@ -4326,7 +4311,6 @@
 		E52CBDE111750ADF0031DFA8 /* jsscript.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsscript.cpp; path = deps/tracemonkey/jsscript.cpp; sourceTree = SOURCE_ROOT; };
 		E52CBDE211750ADF0031DFA8 /* jsscript.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsscript.h; path = deps/tracemonkey/jsscript.h; sourceTree = SOURCE_ROOT; };
 		E52CBDE311750ADF0031DFA8 /* jsscriptinlines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsscriptinlines.h; path = deps/tracemonkey/jsscriptinlines.h; sourceTree = SOURCE_ROOT; };
-		E52CBDE411750ADF0031DFA8 /* jsshell.msg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = jsshell.msg; path = deps/tracemonkey/jsshell.msg; sourceTree = SOURCE_ROOT; };
 		E52CBDE511750ADF0031DFA8 /* jsstaticcheck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsstaticcheck.h; path = deps/tracemonkey/jsstaticcheck.h; sourceTree = SOURCE_ROOT; };
 		E52CBDE611750ADF0031DFA8 /* jsstdint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsstdint.h; path = deps/tracemonkey/jsstdint.h; sourceTree = SOURCE_ROOT; };
 		E52CBDE711750ADF0031DFA8 /* jsstr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsstr.cpp; path = deps/tracemonkey/jsstr.cpp; sourceTree = SOURCE_ROOT; };
@@ -4344,13 +4328,10 @@
 		E52CBDF311750ADF0031DFA8 /* jsutil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsutil.h; path = deps/tracemonkey/jsutil.h; sourceTree = SOURCE_ROOT; };
 		E52CBDF411750ADF0031DFA8 /* jsvector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsvector.h; path = deps/tracemonkey/jsvector.h; sourceTree = SOURCE_ROOT; };
 		E52CBDF511750ADF0031DFA8 /* jsversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsversion.h; path = deps/tracemonkey/jsversion.h; sourceTree = SOURCE_ROOT; };
-		E52CBDF611750ADF0031DFA8 /* jswince.asm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm.asm; name = jswince.asm; path = deps/tracemonkey/jswince.asm; sourceTree = SOURCE_ROOT; };
 		E52CBDF711750ADF0031DFA8 /* jsxdrapi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsxdrapi.cpp; path = deps/tracemonkey/jsxdrapi.cpp; sourceTree = SOURCE_ROOT; };
 		E52CBDF811750ADF0031DFA8 /* jsxdrapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsxdrapi.h; path = deps/tracemonkey/jsxdrapi.h; sourceTree = SOURCE_ROOT; };
 		E52CBDF911750ADF0031DFA8 /* jsxml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsxml.cpp; path = deps/tracemonkey/jsxml.cpp; sourceTree = SOURCE_ROOT; };
 		E52CBDFA11750ADF0031DFA8 /* jsxml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsxml.h; path = deps/tracemonkey/jsxml.h; sourceTree = SOURCE_ROOT; };
-		E52CBDFB11750ADF0031DFA8 /* lock_sparcv8plus.il */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lock_sparcv8plus.il; path = deps/tracemonkey/lock_sparcv8plus.il; sourceTree = SOURCE_ROOT; };
-		E52CBDFC11750ADF0031DFA8 /* lock_sparcv9.il */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lock_sparcv9.il; path = deps/tracemonkey/lock_sparcv9.il; sourceTree = SOURCE_ROOT; };
 		E52CBDFE11750ADF0031DFA8 /* Allocator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Allocator.cpp; path = deps/tracemonkey/nanojit/Allocator.cpp; sourceTree = SOURCE_ROOT; };
 		E52CBDFF11750ADF0031DFA8 /* Allocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Allocator.h; path = deps/tracemonkey/nanojit/Allocator.h; sourceTree = SOURCE_ROOT; };
 		E52CBE0011750ADF0031DFA8 /* Assembler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Assembler.cpp; path = deps/tracemonkey/nanojit/Assembler.cpp; sourceTree = SOURCE_ROOT; };
@@ -5126,10 +5107,10 @@
 		E592C5AB0EFEC90600340B35 /* nglStringConv_CoreFoundation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nglStringConv_CoreFoundation.cpp; sourceTree = "<group>"; };
 		E592C5AE0EFEC93600340B35 /* nglStringConv_Carbon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nglStringConv_Carbon.cpp; sourceTree = "<group>"; };
 		E597C3100CBD00190036C9DA /* nuiSeparator.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiSeparator.cpp; path = src/SimpleWidgets/nuiSeparator.cpp; sourceTree = SOURCE_ROOT; };
-		E59CD7F70CDAAAE100B1C729 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = /System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<absolute>"; };
 		E59CD7F80CDAAAE100B1C729 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = /System/Library/Frameworks/AudioUnit.framework; sourceTree = "<absolute>"; };
 		E59CD7F90CDAAAE100B1C729 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = /System/Library/Frameworks/CoreAudio.framework; sourceTree = "<absolute>"; };
 		E59CD7FA0CDAAAE100B1C729 /* CoreAudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudioKit.framework; path = /System/Library/Frameworks/CoreAudioKit.framework; sourceTree = "<absolute>"; };
+		E59DF6CC1196396000E46CF8 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = /System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<absolute>"; };
 		E5A0FE430FA1336500D934F6 /* nuiDecorationInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiDecorationInspector.h; path = include/nuiDecorationInspector.h; sourceTree = SOURCE_ROOT; };
 		E5A0FE480FA133BA00D934F6 /* nuiDecorationInspector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiDecorationInspector.cpp; path = Introspector/nuiDecorationInspector.cpp; sourceTree = "<group>"; };
 		E5A16F0F0C902AB5005DC748 /* nuiTitledPane.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiTitledPane.h; path = include/nuiTitledPane.h; sourceTree = SOURCE_ROOT; };
@@ -5340,11 +5321,11 @@
 				E542A1A90C3F0A5900225219 /* AGL.framework in Frameworks */,
 				E542A1AA0C3F0A5900225219 /* Carbon.framework in Frameworks */,
 				E542A1AB0C3F0A5900225219 /* OpenGL.framework in Frameworks */,
-				E59CD7FB0CDAAAE100B1C729 /* AudioToolbox.framework in Frameworks */,
 				E59CD7FC0CDAAAE100B1C729 /* AudioUnit.framework in Frameworks */,
 				E59CD7FD0CDAAAE100B1C729 /* CoreAudio.framework in Frameworks */,
 				E59CD7FE0CDAAAE100B1C729 /* CoreAudioKit.framework in Frameworks */,
 				E5D435991004DC5400388BF5 /* ApplicationServices.framework in Frameworks */,
+				E59DF6CE1196396000E46CF8 /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5354,12 +5335,12 @@
 			files = (
 				E58173A80C3D106B00902DFE /* AGL.framework in Frameworks */,
 				E58175200C3D10E000902DFE /* OpenGL.framework in Frameworks */,
-				E59CD7FF0CDAAAE100B1C729 /* AudioToolbox.framework in Frameworks */,
 				E59CD8000CDAAAE100B1C729 /* AudioUnit.framework in Frameworks */,
 				E59CD8010CDAAAE100B1C729 /* CoreAudio.framework in Frameworks */,
 				E59CD8020CDAAAE100B1C729 /* CoreAudioKit.framework in Frameworks */,
 				E5D435971004DC5400388BF5 /* ApplicationServices.framework in Frameworks */,
 				408D9C89109764A000AEE78A /* QTKit.framework in Frameworks */,
+				E59DF6CD1196396000E46CF8 /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5370,11 +5351,11 @@
 				E592C50B0EFE8CCC00340B35 /* AGL.framework in Frameworks */,
 				E592C50C0EFE8CCC00340B35 /* Carbon.framework in Frameworks */,
 				E592C50D0EFE8CCC00340B35 /* OpenGL.framework in Frameworks */,
-				E592C50E0EFE8CCC00340B35 /* AudioToolbox.framework in Frameworks */,
 				E592C50F0EFE8CCC00340B35 /* AudioUnit.framework in Frameworks */,
 				E592C5100EFE8CCC00340B35 /* CoreAudio.framework in Frameworks */,
 				E592C5110EFE8CCC00340B35 /* CoreAudioKit.framework in Frameworks */,
 				E5D435981004DC5400388BF5 /* ApplicationServices.framework in Frameworks */,
+				E59DF6CF1196396000E46CF8 /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5694,15 +5675,9 @@
 		E52CBD7B11750ADF0031DFA8 /* tracemonkey */ = {
 			isa = PBXGroup;
 			children = (
-				E52CBD7D11750ADF0031DFA8 /* builtins.tbl */,
 				E52CBD7E11750ADF0031DFA8 /* dtoa.c */,
-				E52CBD7F11750ADF0031DFA8 /* imacro_asm.js */,
-				E52CBD8011750ADF0031DFA8 /* imacros.c.out */,
-				E52CBD8111750ADF0031DFA8 /* imacros.jsasm */,
-				E52CBD8211750ADF0031DFA8 /* jitstats.tbl */,
 				E52CBD8311750ADF0031DFA8 /* js-confdefs.h */,
 				E52CBD8411750ADF0031DFA8 /* js-config.h */,
-				E52CBD8511750ADF0031DFA8 /* js.msg */,
 				E52CBD8611750ADF0031DFA8 /* jsapi.cpp */,
 				E52CBD8711750ADF0031DFA8 /* jsapi.h */,
 				E52CBD8811750ADF0031DFA8 /* jsarena.cpp */,
@@ -5755,12 +5730,10 @@
 				E52CBDB711750ADF0031DFA8 /* jsinvoke.cpp */,
 				E52CBDB811750ADF0031DFA8 /* jsiter.cpp */,
 				E52CBDB911750ADF0031DFA8 /* jsiter.h */,
-				E52CBDBA11750ADF0031DFA8 /* jskeyword.tbl */,
 				E52CBDBB11750ADF0031DFA8 /* jskwgen.cpp */,
 				E52CBDBC11750ADF0031DFA8 /* jslibmath.h */,
 				E52CBDBD11750ADF0031DFA8 /* jslock.cpp */,
 				E52CBDBE11750ADF0031DFA8 /* jslock.h */,
-				E52CBDBF11750ADF0031DFA8 /* jslocko.asm */,
 				E52CBDC011750ADF0031DFA8 /* jslog2.cpp */,
 				E52CBDC111750ADF0031DFA8 /* jslong.h */,
 				E52CBDC211750ADF0031DFA8 /* jsmath.cpp */,
@@ -5774,7 +5747,6 @@
 				E52CBDCA11750ADF0031DFA8 /* json.h */,
 				E52CBDCB11750ADF0031DFA8 /* jsopcode.cpp */,
 				E52CBDCC11750ADF0031DFA8 /* jsopcode.h */,
-				E52CBDCD11750ADF0031DFA8 /* jsopcode.tbl */,
 				E52CBDCE11750ADF0031DFA8 /* jsoplengen.cpp */,
 				E52CBDCF11750ADF0031DFA8 /* jsops.cpp */,
 				E52CBDD011750ADF0031DFA8 /* jsotypes.h */,
@@ -5782,13 +5754,11 @@
 				E52CBDD211750ADF0031DFA8 /* jsparse.h */,
 				E52CBDD311750ADF0031DFA8 /* jsprf.cpp */,
 				E52CBDD411750ADF0031DFA8 /* jsprf.h */,
-				E52CBDD511750ADF0031DFA8 /* jsproto.tbl */,
 				E52CBDD611750ADF0031DFA8 /* jsprvtd.h */,
 				E52CBDD711750ADF0031DFA8 /* jspubtd.h */,
 				E52CBDD811750ADF0031DFA8 /* jsrecursion.cpp */,
 				E52CBDD911750ADF0031DFA8 /* jsregexp.cpp */,
 				E52CBDDA11750ADF0031DFA8 /* jsregexp.h */,
-				E52CBDDB11750ADF0031DFA8 /* jsreops.tbl */,
 				E52CBDDC11750ADF0031DFA8 /* jsscan.cpp */,
 				E52CBDDD11750ADF0031DFA8 /* jsscan.h */,
 				E52CBDDE11750ADF0031DFA8 /* jsscope.cpp */,
@@ -5797,7 +5767,6 @@
 				E52CBDE111750ADF0031DFA8 /* jsscript.cpp */,
 				E52CBDE211750ADF0031DFA8 /* jsscript.h */,
 				E52CBDE311750ADF0031DFA8 /* jsscriptinlines.h */,
-				E52CBDE411750ADF0031DFA8 /* jsshell.msg */,
 				E52CBDE511750ADF0031DFA8 /* jsstaticcheck.h */,
 				E52CBDE611750ADF0031DFA8 /* jsstdint.h */,
 				E52CBDE711750ADF0031DFA8 /* jsstr.cpp */,
@@ -5815,13 +5784,10 @@
 				E52CBDF311750ADF0031DFA8 /* jsutil.h */,
 				E52CBDF411750ADF0031DFA8 /* jsvector.h */,
 				E52CBDF511750ADF0031DFA8 /* jsversion.h */,
-				E52CBDF611750ADF0031DFA8 /* jswince.asm */,
 				E52CBDF711750ADF0031DFA8 /* jsxdrapi.cpp */,
 				E52CBDF811750ADF0031DFA8 /* jsxdrapi.h */,
 				E52CBDF911750ADF0031DFA8 /* jsxml.cpp */,
 				E52CBDFA11750ADF0031DFA8 /* jsxml.h */,
-				E52CBDFB11750ADF0031DFA8 /* lock_sparcv8plus.il */,
-				E52CBDFC11750ADF0031DFA8 /* lock_sparcv9.il */,
 				E52CBDFD11750ADF0031DFA8 /* nanojit */,
 				E52CBE2211750ADF0031DFA8 /* prmjtime.cpp */,
 				E52CBE2311750ADF0031DFA8 /* prmjtime.h */,
@@ -5978,7 +5944,7 @@
 				E51E549B0FF11FE000FDF3BE /* ungif */,
 				E58172B90C3CED8800902DFE /* AGL.framework */,
 				E5D435961004DC5300388BF5 /* ApplicationServices.framework */,
-				E59CD7F70CDAAAE100B1C729 /* AudioToolbox.framework */,
+				E59DF6CC1196396000E46CF8 /* AudioToolbox.framework */,
 				E59CD7F80CDAAAE100B1C729 /* AudioUnit.framework */,
 				E58172BA0C3CED8800902DFE /* Carbon.framework */,
 				E592C0620EFE8AEB00340B35 /* Cocoa.framework */,
@@ -10046,10 +10012,11 @@
 		E581672F0C3CEBF100902DFE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = NO;
 				ORGANIZATIONNAME = libNUI;
 			};
 			buildConfigurationList = E58167300C3CEBF100902DFE /* Build configuration list for PBXProject "nui3" */;
-			compatibilityVersion = "Xcode 2.4";
+			compatibilityVersion = "Xcode 3.1";
 			hasScannedForEncodings = 0;
 			mainGroup = E581672D0C3CEBF100902DFE;
 			productRefGroup = E58167400C3CEC1300902DFE /* Products */;
@@ -11080,7 +11047,6 @@
 				E560A374113587BB00AFBEAC /* nglCondition_posix.cpp in Sources */,
 				E5354C0C113832B8008F5402 /* nuiObjectInspector.cpp in Sources */,
 				E52CBD261174C0BE0031DFA8 /* nuiScriptEngine.cpp in Sources */,
-				E52CBEC511750AE10031DFA8 /* imacro_asm.js in Sources */,
 				E52CBEC811750AE10031DFA8 /* jsapi.cpp in Sources */,
 				E52CBECA11750AE10031DFA8 /* jsarena.cpp in Sources */,
 				E52CBECC11750AE10031DFA8 /* jsarray.cpp in Sources */,
@@ -11642,7 +11608,6 @@
 				E5354C0B113832B8008F5402 /* nuiObjectInspector.cpp in Sources */,
 				E52CBD251174C0BE0031DFA8 /* nuiScriptEngine.cpp in Sources */,
 				E52CBE2811750AE10031DFA8 /* dtoa.c in Sources */,
-				E52CBE2911750AE10031DFA8 /* imacro_asm.js in Sources */,
 				E52CBE2C11750AE10031DFA8 /* jsapi.cpp in Sources */,
 				E52CBE2E11750AE10031DFA8 /* jsarena.cpp in Sources */,
 				E52CBE3011750AE10031DFA8 /* jsarray.cpp in Sources */,
@@ -11666,7 +11631,6 @@
 				E52CBE5E11750AE10031DFA8 /* jsiter.cpp in Sources */,
 				E52CBE6011750AE10031DFA8 /* jskwgen.cpp in Sources */,
 				E52CBE6211750AE10031DFA8 /* jslock.cpp in Sources */,
-				E52CBE6411750AE10031DFA8 /* jslocko.asm in Sources */,
 				E52CBE6511750AE10031DFA8 /* jslog2.cpp in Sources */,
 				E52CBE6711750AE10031DFA8 /* jsmath.cpp in Sources */,
 				E52CBE6911750AE10031DFA8 /* jsnum.cpp in Sources */,
@@ -11687,7 +11651,6 @@
 				E52CBE8E11750AE10031DFA8 /* jstracer.cpp in Sources */,
 				E52CBE9011750AE10031DFA8 /* jstypedarray.cpp in Sources */,
 				E52CBE9311750AE10031DFA8 /* jsutil.cpp in Sources */,
-				E52CBE9711750AE10031DFA8 /* jswince.asm in Sources */,
 				E52CBE9811750AE10031DFA8 /* jsxdrapi.cpp in Sources */,
 				E52CBE9A11750AE10031DFA8 /* jsxml.cpp in Sources */,
 				E52CBE9C11750AE10031DFA8 /* Allocator.cpp in Sources */,
@@ -11878,6 +11841,7 @@
 				);
 				GCC_THREADSAFE_STATICS = NO;
 				INSTALL_PATH = /usr/local/lib;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				PREBINDING = NO;
 				PRODUCT_NAME = nui3D;
 				SDKROOT = macosx10.4;
