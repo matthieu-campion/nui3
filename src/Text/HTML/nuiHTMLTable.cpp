@@ -134,63 +134,62 @@ void nuiHTMLTable::Layout(nuiHTMLContext& rContext)
   float idealw = 0;
   float variableidealw = 0;
   float wratio = 0;
+
   for (int32 i = 0; i < GetColCount(); i++)
   {
-    idealw += mColumns[i].mIdealSize;
+    switch (mColumns[i].mRequestedSizeUnit)
+    {
+      case ePixels:
+        mColumns[i].mSize = MAX(mColumns[i].mSize, mColumns[i].mRequestedSize);
+        break;
+      case ePercentage:
+        mColumns[i].mSize = MAX(mColumns[i].mSize, MaxWidth * 0.01f * mColumns[i].mRequestedSize);
+        break;
+      case eProportional:
+        mColumns[i].mSize = MAX(mColumns[i].mSize, mColumns[i].mMaxSize);
+        break;
+      default:
+        NGL_ASSERT(0);
+        break;
+    } 
+
+    mColumns[i].mSize = MAX(mColumns[i].mSize, mColumns[i].mMinSize);
+
+  
+    idealw += mColumns[i].mSize;
     if (mColumns[i].mRequestedSizeUnit == eProportional)
     {
       float r = mColumns[i].mRequestedSize;
-      float s =  mColumns[i].mIdealSize;
+      float s = mColumns[i].mSize;
+      variableidealw += s;
       wratio += s * r;
     }
   }
-
-  for (int32 i = 0; i < GetColCount(); i++)
+  
+  if (idealw > MaxWidth)
   {
-    mColumns[i].mSize = mColumns[i].mMaxSize;
+    // We need to reduce some column sizes
+    float wmax = MaxWidth;
+    float wdiff = idealw - MaxWidth;
+    wdiff /= wratio;
+    for (int32 i = 0; i < GetColCount(); i++)
+    {
+      switch (mColumns[i].mRequestedSizeUnit)
+      {
+        case ePixels:
+        case ePercentage:
+          // We can't do anything about these
+          break;
+        case eProportional:
+          mColumns[i].mSize = MAX(mColumns[i].mMinSize, mColumns[i].mSize - (mColumns[i].mRequestedSize * wdiff));
+          break;
+        default:
+          NGL_ASSERT(0);
+          break;
+      } 
+    }
   }
 
-//  float wdiff = (idealw - MaxWidth) / wratio;
-//  
-//  for (int32 i = 0; i < GetColCount(); i++)
-//  {
-//    switch (mColumns[i].mRequestedSizeUnit)
-//    {
-//      case ePixels:
-//        mColumns[i].mSize = MAX(mColumns[i].mIdealSize, mColumns[i].mRequestedSize);
-//        break;
-//      case ePercentage:
-//        mColumns[i].mSize = MAX(mColumns[i].mIdealSize, MaxWidth * 0.01f * mColumns[i].mRequestedSize);
-//        break;
-//      case eProportional:
-//        mColumns[i].mSize = MAX(mColumns[i].mIdealSize, mColumns[i].mIdealSize - (mColumns[i].mRequestedSize * mColumns[i].mIdealSize * wdiff));
-//        if (mColumns[i].mSize < 0)
-//          mColumns[i].mSize = 0;
-//        break;
-//      default:
-//        NGL_ASSERT(0);
-//        break;
-//    } 
-//  }
-//
-//  for (int32 i = 0; i < GetRowCount(); i++)
-//  {
-//    float rowheight = 0;
-//    for (int32 j = 0; j < GetColCount(); j++)
-//    {
-//      ctx.mMaxWidth = mColumns[j].mSize;
-//      Cell& rCell(GetCell(j, i));
-//      rCell.Layout(ctx);
-//      if (ctx.mMaxWidth < rCell.mIdealWidth)
-//        mColumns[j].mSize = rCell.mIdealWidth;
-//      float h = rCell.mIdealHeight;
-//      rowheight = MAX(h, rowheight);
-//    }
-//    mRows[i].mSize = rowheight;
-//  }
-//  
-
-  
   float x = 0;
   float y = mMainCell.mSpacing + mMainCell.mBorder;
   for (int32 i = 0; i < GetRowCount(); i++)
@@ -214,10 +213,6 @@ void nuiHTMLTable::Layout(nuiHTMLContext& rContext)
       float w = mColumns[j].mSize;
       Cell& rCell(GetCell(j, i));
       nuiRect r(x, y, w, rowheight);
-//      if (rCell.mColSpan > 1)
-//      {
-//        NGL_OUT(_T("Cell[%d,%d] -> %ls\n"), j, i, r.GetValue().GetChars());
-//      }
       rCell.SetLayout(r);
       x += w;
     }
@@ -631,7 +626,8 @@ nuiHTMLTable::Col::Col()
   mRequestedSize = 1;
   mRequestedSizeUnit = eProportional;
   mSize = 0;
-  mIdealSize = 0;
+  mMinSize = 0;
+  mMaxSize = 0;
 }
 
 

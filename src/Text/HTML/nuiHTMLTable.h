@@ -108,7 +108,6 @@ protected:
     float mMinSize;
     float mMaxSize;
     float mSize;
-    float mIdealSize;
   };
 
   class Row
