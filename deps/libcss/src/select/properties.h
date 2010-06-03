@@ -11,7 +11,7 @@
 #include <libcss/errors.h>
 #include <libcss/computed.h>
 
-#include "stylesheet.h"
+#include "_stylesheet.h"
 #include "select/select.h"
 
 #define PROPERTY_FUNCS(pname)                                           \

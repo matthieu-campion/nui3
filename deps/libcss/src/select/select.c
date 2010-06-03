@@ -12,7 +12,7 @@
 
 #include "bytecode/bytecode.h"
 #include "bytecode/opcodes.h"
-#include "stylesheet.h"
+#include "_stylesheet.h"
 #include "select/computed.h"
 #include "select/dispatch.h"
 #include "select/hash.h"

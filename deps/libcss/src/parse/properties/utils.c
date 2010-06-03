@@ -7,7 +7,7 @@
 
 #include <string.h>
 
-#include "stylesheet.h"
+#include "_stylesheet.h"
 #include "bytecode/bytecode.h"
 #include "bytecode/opcodes.h"
 #include "parse/properties/utils.h"

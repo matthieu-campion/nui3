@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "stylesheet.h"
+#include "_stylesheet.h"
 #include "select/hash.h"
 #include "utils/utils.h"
 

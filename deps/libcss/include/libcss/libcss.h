@@ -8,6 +8,8 @@
 #ifndef libcss_h_
 #define libcss_h_
 
+#define _BSD_SOURCE
+
 #include <libwapcaplet/libwapcaplet.h>
 
 #include <libcss/errors.h>

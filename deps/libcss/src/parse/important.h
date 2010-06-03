@@ -8,7 +8,7 @@
 #ifndef css_parse_important_h_
 #define css_parse_important_h_
 
-#include "stylesheet.h"
+#include "_stylesheet.h"
 #include "parse/language.h"
 
 css_error parse_important(css_language *c,

@@ -8,7 +8,7 @@
 #include <assert.h>
 #include <string.h>
 
-#include "stylesheet.h"
+#include "_stylesheet.h"
 #include "bytecode/bytecode.h"
 #include "parse/language.h"
 #include "utils/parserutilserror.h"

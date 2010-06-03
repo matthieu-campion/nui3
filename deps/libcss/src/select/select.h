@@ -13,7 +13,7 @@
 
 #include <libcss/select.h>
 
-#include "stylesheet.h"
+#include "_stylesheet.h"
 
 typedef struct prop_state {
 	uint32_t specificity;		/* Specificity of property in result */
