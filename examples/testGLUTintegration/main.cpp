@@ -17,7 +17,6 @@
             The dlls should either be in the windows/System32 folder or next to the executable.
 
 */
-
 #include "nui.h"
 
 #include <stdio.h>
@@ -60,6 +59,7 @@ void glutDisplay(void)
   glLoadIdentity();
 
 	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glDepthMask(GL_TRUE);
 	glClear(GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
   
   glLoadIdentity();
