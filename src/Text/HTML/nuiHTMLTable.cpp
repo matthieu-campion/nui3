@@ -15,10 +15,10 @@ nuiHTMLTable::nuiHTMLTable(nuiHTMLNode* pNode, nuiHTMLNode* pAnchor, bool Inline
   mDefaultCell.SetContents(pNode, NULL);
   mMainCell.SetContents(pNode, NULL);
 
-  mMainCell.mRequestedWidth = 120;
+  mMainCell.mRequestedWidth = -1;
   mMainCell.mRequestedHeight = 0;
-  mMainCell.mRequestedWidthUnit = ePixels;
-  mMainCell.mRequestedHeightUnit = ePixels;
+  mMainCell.mRequestedWidthUnit = eProportional;
+  mMainCell.mRequestedHeightUnit = eProportional;
 
 //  mMainCell.mRequestedWidth = -1;
 //  mMainCell.mRequestedHeight = -1;
@@ -44,7 +44,7 @@ nuiHTMLTable::nuiHTMLTable(nuiHTMLNode* pNode, nuiHTMLNode* pAnchor, bool Inline
       Grow(cols, rowcount);
       
       nuiHTMLAttrib* pAttrib = NULL;
-      pAttrib = pNode->GetAttribute(nuiHTMLAttrib::eAttrib_WIDTH);
+      pAttrib = pChild->GetAttribute(nuiHTMLAttrib::eAttrib_WIDTH);
       if (pAttrib)
       {
         const nglString &v(pAttrib->GetValue());
@@ -133,6 +133,7 @@ void nuiHTMLTable::Layout(nuiHTMLContext& rContext)
 
   float idealw = 0;
   float variableidealw = 0;
+  float minvariableidealw = 0;
   float wratio = 0;
 
   for (int32 i = 0; i < GetColCount(); i++)
@@ -157,11 +158,12 @@ void nuiHTMLTable::Layout(nuiHTMLContext& rContext)
 
   
     idealw += mColumns[i].mSize;
-    if (mColumns[i].mRequestedSizeUnit == eProportional)
+    if (mColumns[i].mRequestedSizeUnit == eProportional && mColumns[i].mRequestedSize >= 0)
     {
       float r = mColumns[i].mRequestedSize;
       float s = mColumns[i].mSize;
       variableidealw += s;
+      minvariableidealw += mColumns[i].mMinSize;
       wratio += s * r;
     }
   }
@@ -170,7 +172,9 @@ void nuiHTMLTable::Layout(nuiHTMLContext& rContext)
   {
     // We need to reduce some column sizes
     float wmax = MaxWidth;
-    float wdiff = idealw - MaxWidth;
+    float fixed = idealw - variableidealw;
+    float wdiff = MaxWidth - fixed;
+    //wdiff = MAX(wdiff, minvariableidealw);
     wdiff /= wratio;
     for (int32 i = 0; i < GetColCount(); i++)
     {
@@ -181,7 +185,13 @@ void nuiHTMLTable::Layout(nuiHTMLContext& rContext)
           // We can't do anything about these
           break;
         case eProportional:
-          mColumns[i].mSize = MAX(mColumns[i].mMinSize, mColumns[i].mSize - (mColumns[i].mRequestedSize * wdiff));
+          {
+            float s = mColumns[i].mRequestedSize * wdiff;
+            s *= mColumns[i].mMaxSize;
+            s = MAX(mColumns[i].mMinSize, s);
+            mColumns[i].mSize = s;
+            
+          }
           break;
         default:
           NGL_ASSERT(0);
