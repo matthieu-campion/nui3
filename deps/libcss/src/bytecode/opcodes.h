@@ -8,7 +8,21 @@
 #ifndef css_bytecode_opcodes_h_
 #define css_bytecode_opcodes_h_
 
+#ifndef WIN32
+#include <stdbool.h>
+#include <stdint.h>
 #include <inttypes.h>
+#else
+typedef char  int8_t;
+typedef short int16_t;
+typedef int   int32_t;
+typedef unsigned char  uint8_t;
+typedef unsigned short uint16_t;
+typedef unsigned int   uint32_t;
+typedef int bool;
+#define false   (bool)0
+#define true    (bool)1
+#endif
 
 enum op_azimuth {
 	AZIMUTH_ANGLE			= 0x0080,

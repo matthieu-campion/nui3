@@ -8,7 +8,10 @@
 #ifndef css_stylesheet_h_
 #define css_stylesheet_h_
 
+#ifdef WIN32
+#else
 #include <inttypes.h>
+#endif
 #include <stdio.h>
 
 #include <libwapcaplet/libwapcaplet.h>
