@@ -606,8 +606,6 @@ nuiWidgetPtr nuiContainer::DispatchMouseMove(const nglMouseInfo& rInfo)
       delete pIt;
     }
 
-    if (PreMouseMoved(info))
-      return this;
     res = MouseMoved(info);
     res |= MovedMouse(info);
   }
@@ -615,8 +613,6 @@ nuiWidgetPtr nuiContainer::DispatchMouseMove(const nglMouseInfo& rInfo)
   {
     if (GetHover())
     {
-      if (PreMouseMoved(info))
-        return this;
       res = MouseMoved(info);
       res |= MovedMouse(info);
     }
