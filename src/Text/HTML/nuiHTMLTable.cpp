@@ -240,7 +240,18 @@ void nuiHTMLTable::Layout(nuiHTMLContext& rContext)
       float w = mColumns[j].mSize;
       Cell& rCell(GetCell(j, i));
       nuiRect r(x, y, w, rowheight);
+
       rCell.SetLayout(r);
+      if (rCell.HasMaster())
+      {
+        Cell& rMasterCell(GetCell(rCell.mMasterCol, rCell.mMasterRow));
+        float s = rMasterCell.mSpacing + rMasterCell.mBorder;
+        float x = rMasterCell.mX - s;
+        float y = rMasterCell.mY - s;
+        nuiRect rect(x, y, r.Right(), r.Bottom(), false);
+        rMasterCell.SetLayout(rect);
+        
+      }
       x += w;
     }
     
@@ -324,7 +335,8 @@ void nuiHTMLTable::SetCellSpan(int32 col, int32 row, int32 ncols, int32 nrows)
       {
         Cell& rSlave(GetCell(col + j, row + i));
         rSlave = Cell();
-        rSlave.mpMasterCell = &rCell;
+        rSlave.mMasterCol = col;
+        rSlave.mMasterRow = row;
       }
     }
   }
@@ -335,14 +347,57 @@ void nuiHTMLTable::SetCellSpan(int32 col, int32 row, int32 ncols, int32 nrows)
 
 nuiHTMLTable::Cell& nuiHTMLTable::SetCell(int32 col, int32 row, nuiHTMLNode* pNode, nuiHTMLItem* pItem)
 {
+  //printf("inserting %d,%d\n", col, row);
   Grow(col, row);
+    
+  int32 i = -1;
+  int32 realcol = -1;
+
+  bool IsMaster;
+  bool HasMaster;
+  bool skip = false;
   
-  Cell* pMaster = mCells[row][col].mpMasterCell;
-  while (pMaster)
+  do
   {
-    col += (pMaster->mColSpan - 1) + ((pMaster->mRowSpan != 1 && row != pMaster->mRow) ? 1 : 0);
-    pMaster = mCells[row][col].mpMasterCell;
-  }
+    Grow(realcol + 1, row);
+    const Cell& rCell = GetCell(realcol + 1, row);
+
+    int32 span = rCell.mColSpan;
+    if (rCell.HasMaster())
+    {
+      const Cell& rMaster(GetCell(rCell.mMasterCol, rCell.mMasterRow));
+      span = rMaster.mColSpan;
+      if (span == 1)
+        i--;
+      //printf("\tslave  %d (%d) span = %d\n", realcol, i, span);
+    }
+
+    IsMaster = span > 1;
+
+    if (IsMaster)
+    {
+      //printf("\tmaster %d (%d)\n", realcol, i);
+      realcol += rCell.mColSpan;
+      skip = rCell.mColSpan > 1;    
+      if (!skip)
+        i++;
+    }
+    else
+    {
+      //printf("\tnormal %d (%d)\n", realcol, i);
+      if (skip)
+        i++;
+      skip = false;
+      realcol++;
+    }
+
+    if (!skip)
+      i++;
+  } while (i != col);
+    
+  //printf("\tfound %d (%d)\n\n", realcol, i);
+  col = realcol;
+  
   
   Cell& rCell(mCells[row][col]);
   rCell.mCol = col;
@@ -395,8 +450,9 @@ void nuiHTMLTable::GetItemsAt(std::vector<nuiHTMLItem*>& rHitItems, float X, flo
 
 // class nuiHTMLTable::Cell
 nuiHTMLTable::Cell::Cell()
-: mpMasterCell(NULL),
+: mCol(-1), mRow(-1),
   mColSpan(1), mRowSpan(1),
+  mMasterCol(-1), mMasterRow(-1),
   mpItem(NULL),
   mIdealWidth(-1), mIdealHeight(-1),
   mRequestedWidth(-1), mRequestedHeight(-1),
@@ -516,21 +572,23 @@ void nuiHTMLTable::Cell::SetContents(nuiHTMLNode* pNode, nuiHTMLItem* pItem)
   
 }
 
+bool nuiHTMLTable::Cell::HasMaster() const
+{
+  return mMasterCol >= 0 || mMasterRow >= 0;
+}
+
+bool nuiHTMLTable::Cell::IsMaster() const
+{
+  return mColSpan > 1 || mRowSpan > 1;
+}
+
 void nuiHTMLTable::Cell::SetLayout(const nuiRect& rRect)
 {
   mX = rRect.Left() + mSpacing + mBorder;
   mY = rRect.Top() + mSpacing + mBorder;
   mWidth = rRect.GetWidth() - (mSpacing + mBorder) * 2;
   mHeight = rRect.GetHeight() - (mSpacing + mBorder) * 2;
-  if (mpMasterCell)
-  {
-    float s = mpMasterCell->mSpacing + mpMasterCell->mBorder;
-    float x = mpMasterCell->mX - s;
-    float y = mpMasterCell->mY - s;
-    nuiRect r(x, y, rRect.Right(), rRect.Bottom(), false);
-    mpMasterCell->SetLayout(r);
-  }
-  else if (mpItem)
+  if (!HasMaster() && mpItem)
   {
     nuiRect r(mX + mPadding, mY + mPadding, mWidth - mPadding * 2, mHeight - mPadding * 2);
     mpItem->SetLayout(r);
@@ -614,7 +672,7 @@ void nuiHTMLTable::Cell::Layout(nuiHTMLContext& rCtx)
 
 void nuiHTMLTable::Cell::Draw(nuiDrawContext* pContext)
 {
-  if (mpMasterCell)
+  if (HasMaster())
     return;
   
   if (mBgColorSet)

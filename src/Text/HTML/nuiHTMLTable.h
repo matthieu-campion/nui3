@@ -65,9 +65,13 @@ public:
     void Layout(nuiHTMLContext& rCtx);
     void Draw(nuiDrawContext* pContext);
     
+    bool HasMaster() const;
+    bool IsMaster() const;
+    
     int32 mCol;
     int32 mRow;
-    Cell* mpMasterCell;
+    int32 mMasterCol;
+    int32 mMasterRow;
     nuiHTMLNode* mpNode;
     uint32 mColSpan;
     uint32 mRowSpan;

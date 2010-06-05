@@ -716,13 +716,24 @@ void nuiHTMLView::ParseTableRow(nuiHTMLNode* pNode, nuiHTMLTable* pBox, int32 ro
     switch (pChild->GetTagType())
     {
       case nuiHTML::eTag_TD:
-      {
-        nuiHTMLBox* pNewBox = new nuiHTMLBox(pChild, mpCurrentAnchor, false);
-        ParseBody(pChild, pNewBox);
-        pBox->SetCell(colindex, rowindex, pChild, pNewBox);
-        
-        colindex++;
-      }
+        {
+          nuiHTMLBox* pNewBox = new nuiHTMLBox(pChild, mpCurrentAnchor, false);
+          ParseBody(pChild, pNewBox);
+          pBox->SetCell(colindex, rowindex, pChild, pNewBox);
+          
+          colindex++;
+        }
+        break;
+      case nuiHTML::eTag_TH:
+        {
+          static int cnt = 0;
+          cnt++;
+          nuiHTMLBox* pNewBox = new nuiHTMLBox(pChild, mpCurrentAnchor, false);
+          ParseBody(pChild, pNewBox);
+          pBox->SetCell(colindex, rowindex, pChild, pNewBox);
+          
+          colindex++;
+        }
       break;
     }
   }
