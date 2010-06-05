@@ -51,6 +51,8 @@ nuiHTMLView::nuiHTMLView(float IdealWidth)
 
   mMargins = 8;
   
+  mCanRespectConstraint = true;
+  
   mSlotSink.Connect(LinkActivated, nuiMakeDelegate(this, &nuiHTMLView::_AutoSetURL));
 }
 
@@ -223,6 +225,8 @@ nuiRect nuiHTMLView::CalcIdealSize()
   float IdealWidth = mIdealWidth;
   if (mAutoIdealWidth && (mRect.GetWidth() > 0))
     IdealWidth = mRect.GetWidth();
+  if (mConstraint.mMaxWidth >= 0)
+    IdealWidth = mConstraint.mMaxWidth;
   //Clear();
 
   mpContext->mMaxWidth = IdealWidth;

@@ -152,6 +152,7 @@ void nuiWidget::InitDefaultValues()
   mClickThru = true;
   mInSetRect = false;
   mInTransition = 0;
+  mpLayoutAnimation = NULL;
 }
 
 
@@ -3553,6 +3554,9 @@ void nuiWidget::StopAnimation(const nglString& rName)
 nuiRectAttributeAnimation* nuiWidget::GetLayoutAnimation(bool CreateIfNotAvailable)
 {
   CheckValid();
+  if (mpLayoutAnimation)
+    return mpLayoutAnimation;
+
   nuiRectAttributeAnimation* pAnim = (nuiRectAttributeAnimation*)GetAnimation(LAYOUT_ANIM_NAME);
   if (!pAnim && CreateIfNotAvailable)
   {
@@ -3563,7 +3567,7 @@ nuiRectAttributeAnimation* nuiWidget::GetLayoutAnimation(bool CreateIfNotAvailab
     pAnim->SetCaptureStartOnPlay(true);
     AddAnimation(LAYOUT_ANIM_NAME, pAnim);
   }
-
+  mpLayoutAnimation = pAnim;
   return pAnim;
 }
 

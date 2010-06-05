@@ -715,6 +715,7 @@ protected:
   
   nuiPosition mPosition;
   nuiPosition mFillRule;
+  nuiRectAttributeAnimation* mpLayoutAnimation;
   
   uint32 mCSSPasses;
   virtual void InternalResetCSSPass();
