@@ -56,7 +56,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 61DF35C60EC25BCD00051F43 /* nuiE.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 735F6CDA0FF2747500E66B1D /* nuiE-iPhone 3.0 */;
+			remoteGlobalIDString = 735F6CDA0FF2747500E66B1D;
 			remoteInfo = "nuiE-iPhone 3.0";
 		};
 		E5795855100AD04400821E44 /* PBXContainerItemProxy */ = {

@@ -38,35 +38,21 @@ static void *nuiRealloc(void *ptr, size_t len, void *pw)
 class nuiCSSEngine
 {
 public:
-  static nuiCSSEngine& Instance()
-  {
-    if (gpEngine)
-      return *gpEngine;
-    
-    gpEngine = new nuiCSSEngine;
-    NGL_ASSERT(gpEngine);
-    return *gpEngine;
-  }
-                                
-  
-private:
-  
   nuiCSSEngine()
   {
     int res = css_initialise("", nuiRealloc, this);
     NGL_ASSERT(res == CSS_OK);
   }
-
+  
   ~nuiCSSEngine()
   {
     int res = css_finalise(nuiRealloc, this);
     NGL_ASSERT(res == CSS_OK);
   }
 
-  static nuiCSSEngine* gpEngine;
+  
+private:
 };
-
-static nuiCSSEngine* gpEngine = NULL;
 
 
 /////////////////////////////// nuiHTMLView
