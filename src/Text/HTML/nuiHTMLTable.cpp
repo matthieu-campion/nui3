@@ -133,7 +133,13 @@ void nuiHTMLTable::Layout(nuiHTMLContext& rContext)
 
       ctx.mMaxWidth = INT_MAX;
       rCell.Layout(ctx);
-      w = rCell.mIdealWidth;
+      w = rCell.mIdealWidth / rCell.mColSpan;
+      if (rCell.HasMaster())
+      {
+        Cell& rMasterCell(GetCell(rCell.mMasterCol, rCell.mMasterRow));
+        w = rMasterCell.mIdealWidth / rMasterCell.mColSpan;
+      }
+      
       mColumns[j].mMaxSize = MAX(mColumns[j].mMaxSize, w);
 
       mColumns[j].mBorder = rCell.mBorder;
@@ -231,7 +237,13 @@ void nuiHTMLTable::Layout(nuiHTMLContext& rContext)
       
       ctx.mMaxWidth = w - (mColumns[i].mBorder + mColumns[i].mSpacing) * 1;
       rCell.Layout(ctx);
-      float h = rCell.mIdealHeight;
+      float h = rCell.mIdealHeight / rCell.mRowSpan;
+      if (rCell.HasMaster())
+      {
+        Cell& rMasterCell(GetCell(rCell.mMasterCol, rCell.mMasterRow));
+        h = rMasterCell.mIdealHeight / rMasterCell.mRowSpan;
+      }
+    
       rowheight = MAX(h, rowheight);
     }
 
@@ -249,6 +261,8 @@ void nuiHTMLTable::Layout(nuiHTMLContext& rContext)
         float x = rMasterCell.mX - s;
         float y = rMasterCell.mY - s;
         nuiRect rect(x, y, r.Right(), r.Bottom(), false);
+        ctx.mMaxWidth = rect.GetWidth();
+        rMasterCell.Layout(ctx);
         rMasterCell.SetLayout(rect);
         
       }
