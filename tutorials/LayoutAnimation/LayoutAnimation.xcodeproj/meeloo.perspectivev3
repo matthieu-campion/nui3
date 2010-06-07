@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>ActivePerspectiveName</key>
-	<string>Project</string>
+	<string>Debug</string>
 	<key>AllowedModules</key>
 	<array>
 		<dict>
@@ -319,8 +319,6 @@
 							<string>MainColumn</string>
 							<real>163</real>
 						</array>
-						<key>RubberWindowFrame</key>
-						<string>880 449 1680 969 0 0 2560 1418 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -348,7 +346,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E585A8A911BAFADD005DEEA1</string>
+										<string>E585A8AB11BB14E6005DEEA1</string>
 										<key>history</key>
 										<array>
 											<string>E585A8A311BAFAD2005DEEA1</string>
@@ -367,8 +365,6 @@
 							<dict>
 								<key>Frame</key>
 								<string>{{0, 0}, {1473, 716}}</string>
-								<key>RubberWindowFrame</key>
-								<string>880 449 1680 969 0 0 2560 1418 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -467,8 +463,6 @@
 									<dict>
 										<key>Frame</key>
 										<string>{{10, 27}, {1473, 180}}</string>
-										<key>RubberWindowFrame</key>
-										<string>880 449 1680 969 0 0 2560 1418 </string>
 									</dict>
 									<key>Module</key>
 									<string>PBXBuildResultsModule</string>
@@ -541,6 +535,8 @@
 			<key>Layout</key>
 			<array>
 				<dict>
+					<key>BecomeActive</key>
+					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXProjectModuleGUID</key>
@@ -552,6 +548,8 @@
 					<dict>
 						<key>Frame</key>
 						<string>{{0, 0}, {1680, 268}}</string>
+						<key>RubberWindowFrame</key>
+						<string>880 449 1680 969 0 0 2560 1418 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXDebugCLIModule</string>
@@ -626,7 +624,11 @@
 							</array>
 							<key>Frame</key>
 							<string>{{0, 342}, {992, 313}}</string>
+							<key>RubberWindowFrame</key>
+							<string>880 449 1680 969 0 0 2560 1418 </string>
 						</dict>
+						<key>RubberWindowFrame</key>
+						<string>880 449 1680 969 0 0 2560 1418 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXDebugSessionModule</string>
@@ -673,7 +675,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>297466589.10044003</real>
+	<real>297473254.88097298</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>

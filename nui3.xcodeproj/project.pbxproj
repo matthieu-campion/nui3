@@ -5932,16 +5932,6 @@
 		E58167440C3CECA700902DFE /* deps */ = {
 			isa = PBXGroup;
 			children = (
-				E5C1E21F11B7172A000B9C56 /* libcss */,
-				5621843F0D6302A2008C7CCB /* expat */,
-				E58167460C3CECA700902DFE /* freetype2 */,
-				E5F796590C750430009CE779 /* harfbuzz */,
-				E5816A400C3CECA900902DFE /* libjpeg */,
-				E5816AD50C3CECAA00902DFE /* libpng */,
-				E50DB7750D75D894005B9316 /* tidyhtml */,
-				E52CBD7B11750ADF0031DFA8 /* tracemonkey */,
-				E5D13BD21100AF3F000F46C4 /* ucdata */,
-				E51E549B0FF11FE000FDF3BE /* ungif */,
 				E58172B90C3CED8800902DFE /* AGL.framework */,
 				E5D435961004DC5300388BF5 /* ApplicationServices.framework */,
 				E59DF6CC1196396000E46CF8 /* AudioToolbox.framework */,
@@ -5950,8 +5940,18 @@
 				E592C0620EFE8AEB00340B35 /* Cocoa.framework */,
 				E59CD7F90CDAAAE100B1C729 /* CoreAudio.framework */,
 				E59CD7FA0CDAAAE100B1C729 /* CoreAudioKit.framework */,
+				5621843F0D6302A2008C7CCB /* expat */,
+				E58167460C3CECA700902DFE /* freetype2 */,
+				E5F796590C750430009CE779 /* harfbuzz */,
+				E5C1E21F11B7172A000B9C56 /* libcss */,
+				E5816A400C3CECA900902DFE /* libjpeg */,
+				E5816AD50C3CECAA00902DFE /* libpng */,
 				E58172BB0C3CED8800902DFE /* OpenGL.framework */,
 				408D9C88109764A000AEE78A /* QTKit.framework */,
+				E50DB7750D75D894005B9316 /* tidyhtml */,
+				E52CBD7B11750ADF0031DFA8 /* tracemonkey */,
+				E5D13BD21100AF3F000F46C4 /* ucdata */,
+				E51E549B0FF11FE000FDF3BE /* ungif */,
 			);
 			path = deps;
 			sourceTree = SOURCE_ROOT;

@@ -24,6 +24,51 @@
 #include "nuiAsyncIStream.h"
 #include "nuiStopWatch.h"
 
+extern "C" {
+#include "libcss/libcss.h"
+}
+
+static void *nuiRealloc(void *ptr, size_t len, void *pw)
+{
+  UNUSED(pw);
+  
+  return realloc(ptr, len);
+}
+
+class nuiCSSEngine
+{
+public:
+  static nuiCSSEngine& Instance()
+  {
+    if (gpEngine)
+      return *gpEngine;
+    
+    gpEngine = new nuiCSSEngine;
+    NGL_ASSERT(gpEngine);
+    return *gpEngine;
+  }
+                                
+  
+private:
+  
+  nuiCSSEngine()
+  {
+    int res = css_initialise("", nuiRealloc, this);
+    NGL_ASSERT(res == CSS_OK);
+  }
+
+  ~nuiCSSEngine()
+  {
+    int res = css_finalise(nuiRealloc, this);
+    NGL_ASSERT(res == CSS_OK);
+  }
+
+  static nuiCSSEngine* gpEngine;
+};
+
+static nuiCSSEngine* gpEngine = NULL;
+
+
 /////////////////////////////// nuiHTMLView
 nuiHTMLView::nuiHTMLView(float IdealWidth)
 {
@@ -54,6 +99,8 @@ nuiHTMLView::nuiHTMLView(float IdealWidth)
   mCanRespectConstraint = true;
   
   mSlotSink.Connect(LinkActivated, nuiMakeDelegate(this, &nuiHTMLView::_AutoSetURL));
+  
+  
 }
 
 nuiHTMLView::~nuiHTMLView()
