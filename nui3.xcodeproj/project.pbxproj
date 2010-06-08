@@ -349,6 +349,12 @@
 		BCE44CCB0EC6336000AEBD64 /* nuiSampleDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = BCE44CC90EC6336000AEBD64 /* nuiSampleDefines.h */; };
 		BCECD1FD0C9AA01400E29E33 /* nuiMessageQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = BCECD1FC0C9AA01400E29E33 /* nuiMessageQueue.h */; };
 		BCECD1FE0C9AA01400E29E33 /* nuiMessageQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = BCECD1FC0C9AA01400E29E33 /* nuiMessageQueue.h */; };
+		BCF1A85A11BE67EE00806A7A /* nuiAVIwriter.h in Headers */ = {isa = PBXBuildFile; fileRef = BCF1A85911BE67EE00806A7A /* nuiAVIwriter.h */; };
+		BCF1A85B11BE67EE00806A7A /* nuiAVIwriter.h in Headers */ = {isa = PBXBuildFile; fileRef = BCF1A85911BE67EE00806A7A /* nuiAVIwriter.h */; };
+		BCF1A85C11BE67EE00806A7A /* nuiAVIwriter.h in Headers */ = {isa = PBXBuildFile; fileRef = BCF1A85911BE67EE00806A7A /* nuiAVIwriter.h */; };
+		BCF1A85E11BE67F700806A7A /* nuiAVIwriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCF1A85D11BE67F700806A7A /* nuiAVIwriter.cpp */; };
+		BCF1A85F11BE67F700806A7A /* nuiAVIwriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCF1A85D11BE67F700806A7A /* nuiAVIwriter.cpp */; };
+		BCF1A86011BE67F700806A7A /* nuiAVIwriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCF1A85D11BE67F700806A7A /* nuiAVIwriter.cpp */; };
 		BCF24E470CFEF50200650944 /* nuiStringAttributeEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCF24E460CFEF50200650944 /* nuiStringAttributeEditor.cpp */; };
 		BCF24E480CFEF50200650944 /* nuiStringAttributeEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCF24E460CFEF50200650944 /* nuiStringAttributeEditor.cpp */; };
 		BCF24E4A0CFEF51500650944 /* nuiStringAttributeEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = BCF24E490CFEF51500650944 /* nuiStringAttributeEditor.h */; };
@@ -4100,6 +4106,8 @@
 		BCDA9F900DC20A5A0081CBA7 /* nuiBorderAttributeEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiBorderAttributeEditor.h; path = include/nuiBorderAttributeEditor.h; sourceTree = SOURCE_ROOT; };
 		BCE44CC90EC6336000AEBD64 /* nuiSampleDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiSampleDefines.h; path = include/nuiSampleDefines.h; sourceTree = SOURCE_ROOT; };
 		BCECD1FC0C9AA01400E29E33 /* nuiMessageQueue.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiMessageQueue.h; path = include/nuiMessageQueue.h; sourceTree = SOURCE_ROOT; };
+		BCF1A85911BE67EE00806A7A /* nuiAVIwriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiAVIwriter.h; path = include/nuiAVIwriter.h; sourceTree = SOURCE_ROOT; };
+		BCF1A85D11BE67F700806A7A /* nuiAVIwriter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiAVIwriter.cpp; path = src/Video/nuiAVIwriter.cpp; sourceTree = SOURCE_ROOT; };
 		BCF24E460CFEF50200650944 /* nuiStringAttributeEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiStringAttributeEditor.cpp; path = src/Attributes/nuiStringAttributeEditor.cpp; sourceTree = SOURCE_ROOT; };
 		BCF24E490CFEF51500650944 /* nuiStringAttributeEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiStringAttributeEditor.h; path = include/nuiStringAttributeEditor.h; sourceTree = SOURCE_ROOT; };
 		BCF24E8B0CFF022B00650944 /* nuiAttribute.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiAttribute.cpp; path = src/Attributes/nuiAttribute.cpp; sourceTree = SOURCE_ROOT; };
@@ -5367,6 +5375,8 @@
 			children = (
 				408D9BA21097436800AEE78A /* nuiVideoDecoder.h */,
 				408D9BA31097436800AEE78A /* nuiVideoDecoder.mm */,
+				BCF1A85D11BE67F700806A7A /* nuiAVIwriter.cpp */,
+				BCF1A85911BE67EE00806A7A /* nuiAVIwriter.h */,
 			);
 			name = Video;
 			sourceTree = "<group>";
@@ -8452,6 +8462,7 @@
 				E5C1E3C811B7172C000B9C56 /* parserutilserror.h in Headers */,
 				E5C1E3CA11B7172C000B9C56 /* utils.h in Headers */,
 				E5C1E44011B729CF000B9C56 /* _stylesheet.h in Headers */,
+				BCF1A85B11BE67EE00806A7A /* nuiAVIwriter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9202,6 +9213,7 @@
 				E5C1E36311B7172C000B9C56 /* parserutilserror.h in Headers */,
 				E5C1E36511B7172C000B9C56 /* utils.h in Headers */,
 				E5C1E43F11B729CF000B9C56 /* _stylesheet.h in Headers */,
+				BCF1A85A11BE67EE00806A7A /* nuiAVIwriter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9949,6 +9961,7 @@
 				E5C1E2FE11B7172C000B9C56 /* parserutilserror.h in Headers */,
 				E5C1E30011B7172C000B9C56 /* utils.h in Headers */,
 				E5C1E43E11B729CF000B9C56 /* _stylesheet.h in Headers */,
+				BCF1A85C11BE67EE00806A7A /* nuiAVIwriter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10595,6 +10608,7 @@
 				E5C1E3C511B7172C000B9C56 /* stylesheet.c in Sources */,
 				E5C1E3C711B7172C000B9C56 /* errors.c in Sources */,
 				E5C1E3C911B7172C000B9C56 /* utils.c in Sources */,
+				BCF1A85F11BE67F700806A7A /* nuiAVIwriter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11161,6 +11175,7 @@
 				E5C1E36011B7172C000B9C56 /* stylesheet.c in Sources */,
 				E5C1E36211B7172C000B9C56 /* errors.c in Sources */,
 				E5C1E36411B7172C000B9C56 /* utils.c in Sources */,
+				BCF1A85E11BE67F700806A7A /* nuiAVIwriter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11728,6 +11743,7 @@
 				E5C1E2FB11B7172C000B9C56 /* stylesheet.c in Sources */,
 				E5C1E2FD11B7172C000B9C56 /* errors.c in Sources */,
 				E5C1E2FF11B7172C000B9C56 /* utils.c in Sources */,
+				BCF1A86011BE67F700806A7A /* nuiAVIwriter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
