@@ -11,6 +11,13 @@
 #include "nuiHTML.h"
 #include "nuiUnicode.h"
 
+extern "C"
+{
+#include "libcss/libcss.h"
+}
+
+
+
 static void *nuiRealloc(void *ptr, size_t len, void *pw)
 {
   UNUSED(pw);
@@ -20,7 +27,7 @@ static void *nuiRealloc(void *ptr, size_t len, void *pw)
 
 
 //class nuiCSSStyleSheet
-css_error nuiCSSStyleSheet::ResolveUrl(void *pw, const char *base, lwc_string *rel, lwc_string **abs)
+static css_error ResolveUrl(void *pw, const char *base, lwc_string *rel, lwc_string **abs)
 {
   UNUSED(pw);
   UNUSED(base);
@@ -133,8 +140,6 @@ void nuiCSSStyleSheet::StreamDone(nuiAsyncIStream* pStream)
   
   Init(*pStream, enc);
   mpStream = NULL;    
-  
-  Done(this);
 }
 
 void nuiCSSStyleSheet::Init(nglIStream& rStream, const nglString& charset)
@@ -202,6 +207,10 @@ void nuiCSSStyleSheet::Init(nglIStream& rStream, const nglString& charset)
       error = CSS_IMPORTS_PENDING;
     }
   }
+  else
+  {
+    Done(this);
+  }
 }
 
 void nuiCSSStyleSheet::ImportDone(nuiCSSStyleSheet* pImport)
@@ -226,6 +235,11 @@ void nuiCSSStyleSheet::ImportDone(nuiCSSStyleSheet* pImport)
       
       error = CSS_IMPORTS_PENDING;
     }
+    else
+    {
+      Done(this);
+    }
+
   }
   else
   {

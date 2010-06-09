@@ -10,11 +10,10 @@
 #include "nui.h"
 #include "nuiAsyncIStream.h"
 
-extern "C"
-{
-  #include "libcss/libcss.h"
-}
-
+typedef struct css_stylesheet css_stylesheet;
+typedef struct css_select_ctx css_select_ctx;
+typedef struct css_computed_style css_computed_style;
+typedef struct lwc_string_s lwc_string;
 
 class nuiCSSStyleSheet
 {
@@ -32,7 +31,6 @@ private:
   bool mInline;
   css_stylesheet* mpSheet;
   
-  static css_error ResolveUrl(void *pw, const char *base, lwc_string *rel, lwc_string **abs);
   bool IsValid() const;
   nuiCSSStyleSheet(const nglString& rURL, nglString& rText, bool Inline = true);
   nuiCSSStyleSheet(const nglString& rURL, nglIStream& rStream, bool Inline, const nglString& rCharset);
