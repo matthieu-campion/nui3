@@ -21,175 +21,9 @@
 #include "nuiHTMLFont.h"
 #include "nuiURL.h"
 
-#include "nuiAsyncIStream.h"
 #include "nuiStopWatch.h"
 
-extern "C" {
-#include "libcss/libcss.h"
-}
-
-static void *nuiRealloc(void *ptr, size_t len, void *pw)
-{
-  UNUSED(pw);
-  
-  return realloc(ptr, len);
-}
-
-class nuiCSSEngine
-{
-public:
-  nuiCSSEngine()
-  {
-    int res = css_initialise("", nuiRealloc, this);
-    NGL_ASSERT(res == CSS_OK);
-    
-    const char* css = 
-    "@import \"mystyle1.css\";"\
-    "@import url(\"mystyle2.css\");"\
-    "body"\
-    "{"\
-    "background-color:#d0e4fe;"\
-    "}"\
-    "h1"\
-    "{"\
-    "color:orange;"\
-    "text-align:center;"\
-    "}"\
-    "p"\
-    "{"\
-    "font-family:\"Times New Roman\";"\
-    "font-size:20px;"\
-    "}";
-    
-    nglIMemory mem(css, strlen(css));
-    
-    Sheet* pSheet = CreateStyleSheet(_T("http://prout.com/bleh.css"), mem);
-    
-    delete pSheet;
-  }
-  
-  ~nuiCSSEngine()
-  {
-    int res = css_finalise(nuiRealloc, this);
-    NGL_ASSERT(res == CSS_OK);
-  }
-
-  class Sheet
-  {
-  public:
-    
-  private:
-    friend class nuiCSSEngine;
-    
-    static css_error ResolveUrl(void *pw, const char *base, lwc_string *rel, lwc_string **abs)
-    {
-      UNUSED(pw);
-      UNUSED(base);
-        
-      /* About as useless as possible */
-      *abs = lwc_string_ref(rel);
-      
-      nglString url(lwc_string_data(rel), lwc_string_length(rel));
-      
-      NGL_OUT(_T("CSS Resolve URL: (base '%s' '%ls'\n"), base, url.GetChars());
-      
-      return CSS_OK;
-    }
-    
-    Sheet(const nglString& rURL, nglIStream& rStream)
-    {
-      mpSheet = NULL;
-      
-      size_t len, origlen;
-#define CHUNK_SIZE (4096)
-      uint8_t buf[CHUNK_SIZE];
-      css_error error;
-      int count;
-      
-      /* Initialise library */
-      NGL_ASSERT(lwc_initialise(nuiRealloc, NULL, 0) == lwc_error_ok);
-      
-      NGL_ASSERT(css_stylesheet_create(CSS_LEVEL_21, "UTF-8", rURL.GetStdString().c_str(), NULL, false, false, nuiRealloc, NULL, ResolveUrl, NULL, &mpSheet) == CSS_OK);
-      
-      origlen = len = rStream.Available();
-      
-      while (len >= CHUNK_SIZE)
-      {
-        size_t read = rStream.Read(buf, CHUNK_SIZE, 1);
-        NGL_ASSERT(read == CHUNK_SIZE);
-        
-        error = css_stylesheet_append_data(mpSheet, buf, CHUNK_SIZE);
-        NGL_ASSERT(error == CSS_OK || error == CSS_NEEDDATA);
-        
-        len -= CHUNK_SIZE;
-      }
-      
-      if (len > 0)
-      {
-        size_t read = rStream.Read(buf, len, 1);
-        NGL_ASSERT(read == len);
-        
-        error = css_stylesheet_append_data(mpSheet, buf, len);
-        NGL_ASSERT(error == CSS_OK || error == CSS_NEEDDATA);
-        
-        len = 0;
-      }
-      
-      error = css_stylesheet_data_done(mpSheet);
-      NGL_ASSERT(error == CSS_OK || error == CSS_IMPORTS_PENDING);
-      
-      while (error == CSS_IMPORTS_PENDING)
-      {
-        lwc_string *url;
-        uint64_t media;
-        
-        error = css_stylesheet_next_pending_import(mpSheet, &url, &media);
-        NGL_ASSERT(error == CSS_OK || error == CSS_INVALID);
-        
-        if (error == CSS_OK)
-        {
-          css_stylesheet *import;
-          char *urlbuf = (char*)alloca(lwc_string_length(url) + 1);
-          
-          memcpy(urlbuf, lwc_string_data(url), lwc_string_length(url));
-          urlbuf[lwc_string_length(url)] = '\0';
-          
-          const char *title = NULL;
-          bool allow_quirks = false;
-          bool inline_style = false;
-          
-          NGL_ASSERT(css_stylesheet_create(CSS_LEVEL_21, "UTF-8", urlbuf, title, allow_quirks, inline_style, nuiRealloc, this, &ResolveUrl, this, &import) == CSS_OK);
-          NGL_ASSERT(css_stylesheet_data_done(import) == CSS_OK);
-          NGL_ASSERT(css_stylesheet_register_import(mpSheet, import) == CSS_OK);
-
-          mpImports.push_back(import);
-          
-          error = CSS_IMPORTS_PENDING;
-        }
-      }
-    }
-    
-    ~Sheet()
-    {
-      for (uint32 i = 0; i < mpImports.size(); i++)
-        css_stylesheet_destroy(mpImports[i]);
-      css_stylesheet_destroy(mpSheet);
-    }
-    
-  private:
-    css_stylesheet* mpSheet;
-    std::vector<css_stylesheet*> mpImports;
-  };
-  
-  Sheet* CreateStyleSheet(const nglString& rURL, nglIStream& rStream) const
-  {
-    Sheet* pSheet = new Sheet(rURL, rStream);
-  }
-  
-  
-private:
-};
-
+#include "nuiWebCSS.h"
 
 
 /////////////////////////////// nuiHTMLView
@@ -223,7 +57,8 @@ nuiHTMLView::nuiHTMLView(float IdealWidth)
   
   mSlotSink.Connect(LinkActivated, nuiMakeDelegate(this, &nuiHTMLView::_AutoSetURL));
   
-  //nuiCSSEngine cssengine;
+  nuiCSSEngine* pEngine = new nuiCSSEngine();
+  pEngine->Test();
 }
 
 nuiHTMLView::~nuiHTMLView()

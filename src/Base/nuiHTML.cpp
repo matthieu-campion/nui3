@@ -455,6 +455,79 @@ void nuiHTML::SetSourceURL(const nglString& rURL)
   printf("New source URL (0x%x): %ls\n", this, mSourceURL.GetChars());
 }
 
+// Stolen from nglPath!
+static int32 GetRootPart(const nglString& rStr)
+{
+	if (rStr[0] == _T('/'))
+	{
+		if (rStr[1] != _T('/'))
+			return 1;
+    
+		// //host[/path] (network address)
+		// or /volume[/path] (standard unix like path)
+		int32 end = rStr.Find(_T('/'), 2);
+		return ((end > 0) ? end : rStr.GetLength());
+	}
+  
+  // Find the protocol name:
+  int col = rStr.Find(_T("://"), 0, true);
+  
+  return MIN(col + 3, rStr.GetLength());
+}
+
+
+static bool Canonize(nglString& rStr)
+{
+  nglString canon;
+  int32 len = rStr.GetLength();
+  int32 root_part = GetRootPart(rStr);
+  int32 last_slash = root_part;
+  int32 slash = 0;
+  
+  canon = rStr.GetLeft(root_part);
+  while (slash < len)
+  {
+    slash = rStr.Find(_T('/'), last_slash);
+    if (slash == - 1)
+      slash = len;
+    
+    if (((slash - last_slash) == 1) && (rStr.GetChar(last_slash) == _T('.')))
+    {
+      // Ignore '.'
+    }
+    else
+      if (((slash - last_slash) == 2) && (!rStr.Compare(_T(".."), last_slash, 2)))
+      {
+        // Interpret '..'
+        int32 prev_slash = canon.FindLast(_T('/'));
+        if (prev_slash < root_part)
+          prev_slash = root_part;
+        
+        if (!canon.IsEmpty() && canon.Compare(_T(".."), canon.GetLength() - 2, 2))
+          canon.Delete(prev_slash);
+        else
+        {
+          if (canon.GetLength() > root_part)
+            canon += _T('/');
+          canon += _T("..");
+        }
+      }
+      else
+      {
+        // Simply append path node
+        nglString node = rStr.Extract(last_slash, (slash - last_slash));
+        if (canon.GetLength() > root_part)
+          canon += _T('/');
+        canon += node;
+      }
+    
+    last_slash = slash + 1;
+  }
+  
+  rStr = canon;
+  return true;
+}
+
 void nuiHTML::GetAbsoluteURL(const nglString& rBaseURL, nglString& url)
 {
   int32 colon = url.Find(':');
@@ -486,4 +559,6 @@ void nuiHTML::GetAbsoluteURL(const nglString& rBaseURL, nglString& url)
       url = rBaseURL + _T("/") + url;
     }
   }
+  
+  Canonize(url);
 }

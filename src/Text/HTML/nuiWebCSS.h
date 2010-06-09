@@ -8,78 +8,52 @@
 #pragma once
 
 #include "nui.h"
+#include "nuiAsyncIStream.h"
 
-class nuiParser;
+extern "C" {
+#include "libcss/libcss.h"
+}
 
-class nuiWebCSS
+
+class nuiCSSStyleSheet
 {
-  nuiWebCSS();
-  ~nuiWebCSS();
+public:
   
-  bool Load(nglIStream* pStream, const nglString& rSourceURL);
-  bool Load(const nglString& rString, const nglString& rSourceURL);
+  nuiSignal1<nuiCSSStyleSheet*> Done;
   
-  enum SelectorElementType
-  {
-    eTag,
-    eClass,
-    eProperty
-  };
+private:
+  friend class nuiCSSEngine;
+  std::vector<nuiCSSStyleSheet*> mpImports;
+  nglIStream* mpStream;
+  nuiSlotsSink mSlotSink;
+  bool mIsValid;
+  nglString mURL;
+  bool mInline;
+  css_stylesheet* mpSheet;
   
-  class SelectorElement
-  {
-  public:
-    SelectorElement(SelectorElementType tpe, const nglString& rSymbol, const nglString& rValue = nglString::Null);
-    
-    SelectorElementType mType;
-  };
+  static css_error ResolveUrl(void *pw, const char *base, lwc_string *rel, lwc_string **abs);
+  bool IsValid() const;
+  nuiCSSStyleSheet(const nglString& rURL, nglIStream& rStream, bool Inline, const nglString& rCharset);
+  nuiCSSStyleSheet(const nglString& rURL, const nuiSignal1<nuiCSSStyleSheet*>::Slot& rDelegate = nuiSignal1<nuiCSSStyleSheet*>::Slot());
+  void StreamDone(nuiAsyncIStream* pStream);
   
-  enum ValueType
-  {
-    eEMs,
-    eEXs,
-    ePixels,
-    eCentimeters,
-    eMilimeters,
-    eInches,
-    ePoints,
-    ePicas,
-    eDegrees,
-    eRadiants,
-    eGradiants,
-    eMiliseconds,
-    eSeconds,
-    eHertz,
-    eKHertz,
-    ePercents,
-    eNumber,
-    eURL,
-    eColor,
-    eString
-  };
-  
-  class Action
-  {
-  public:
-    Action(const nglString& rProperty, const nglString& rValue, ValueType tpe);
-    
-    nglString mProperty;
-    nglString mValue;
-    ValueType mType;
-  };
-  
-protected:
-  nuiParser* mpParser;
-  
-  bool ParseBody();
-  bool ParseComment();
-  bool ParseAction();
-  bool ParseActions();
-  bool ParseSelector();
-  bool ParseSelectors();
-  bool ParseRule();
-  bool ParseCharset();
-  bool ParseProperty();
-  bool ParseValue();
-  bool ParseAtCommand();
+  void Init(nglIStream& rStream, const nglString& charset);
+  void ImportDone(nuiCSSStyleSheet* pImport);
+  ~nuiCSSStyleSheet();
 };
+
+class nuiCSSEngine
+{
+public:
+  nuiCSSEngine();
+  ~nuiCSSEngine();
+  
+  nuiCSSStyleSheet* CreateStyleSheet(const nglString& rURL, nglIStream& rStream, bool Inline, const nglString& rCharset) const;
+  nuiCSSStyleSheet* CreateStyleSheet(const nglString& rURL, const nuiSignal1<nuiCSSStyleSheet*>::Slot& rDelegate = nuiSignal1<nuiCSSStyleSheet*>::Slot()) const;
+  
+  void Test();
+  
+private:
+};
+
+
