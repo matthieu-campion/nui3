@@ -33,8 +33,8 @@ css_error nuiCSSStyleSheet::ResolveUrl(void *pw, const char *base, lwc_string *r
   std::string s(url.GetStdString());
   lwc_intern_string(s.c_str(), s.size(), abs);
   
-  NGL_OUT(_T("CSS Resolve URL:\n\tbase '%ls'\n"), b.GetChars());
-  NGL_OUT(_T("\t-> '%ls'\n"), url.GetChars());
+  //NGL_OUT(_T("CSS Resolve URL:\n\tbase '%ls'\n"), b.GetChars());
+  //NGL_OUT(_T("\t-> '%ls'\n"), url.GetChars());
   
   return CSS_OK;
 }
@@ -42,6 +42,18 @@ css_error nuiCSSStyleSheet::ResolveUrl(void *pw, const char *base, lwc_string *r
 bool nuiCSSStyleSheet::IsValid() const
 {
   return mpSheet != NULL;
+}
+
+nuiCSSStyleSheet::nuiCSSStyleSheet(const nglString& rURL, nglString& rText, bool Inline)
+{
+  mURL = rURL;
+  mInline = Inline;
+  mIsValid = false;
+  char* pText = rText.Export();
+  mpStream = new nglIMemory(pText, strlen(pText));
+  Init(*mpStream, _T("UTF-8"));
+  delete mpStream;
+  mpStream = NULL;
 }
 
 nuiCSSStyleSheet::nuiCSSStyleSheet(const nglString& rURL, nglIStream& rStream, bool Inline, const nglString& rCharset)
@@ -280,7 +292,7 @@ void nuiCSSEngine::Test()
   delete pSheet;
 #endif
   
-  //nuiCSSStyleSheet* pSheet = CreateStyleSheet(_T("http://redmine.libnui.net/themes/mariposa/stylesheets/application.css?1251500354"));
+  nuiCSSStyleSheet* pSheet = CreateStyleSheet(_T("http://redmine.libnui.net/themes/mariposa/stylesheets/application.css?1251500354"));
   //nuiCSSStyleSheet* pSheet = CreateStyleSheet(_T("http://redmine.libnui.net/stylesheets/application.css"));
   
 }

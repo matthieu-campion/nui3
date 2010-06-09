@@ -10,8 +10,9 @@
 #include "nui.h"
 #include "nuiAsyncIStream.h"
 
-extern "C" {
-#include "libcss/libcss.h"
+extern "C"
+{
+  #include "libcss/libcss.h"
 }
 
 
@@ -33,6 +34,7 @@ private:
   
   static css_error ResolveUrl(void *pw, const char *base, lwc_string *rel, lwc_string **abs);
   bool IsValid() const;
+  nuiCSSStyleSheet(const nglString& rURL, nglString& rText, bool Inline = true);
   nuiCSSStyleSheet(const nglString& rURL, nglIStream& rStream, bool Inline, const nglString& rCharset);
   nuiCSSStyleSheet(const nglString& rURL, const nuiSignal1<nuiCSSStyleSheet*>::Slot& rDelegate = nuiSignal1<nuiCSSStyleSheet*>::Slot());
   void StreamDone(nuiAsyncIStream* pStream);
