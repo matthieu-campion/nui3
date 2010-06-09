@@ -4493,6 +4493,14 @@
 		E585AD3911BD6195005DEEA1 /* parserutilserror.h in Headers */ = {isa = PBXBuildFile; fileRef = E585ABA511BD6194005DEEA1 /* parserutilserror.h */; };
 		E585AD3A11BD6195005DEEA1 /* utils.c in Sources */ = {isa = PBXBuildFile; fileRef = E585ABA611BD6194005DEEA1 /* utils.c */; };
 		E585AD3B11BD6195005DEEA1 /* utils.h in Headers */ = {isa = PBXBuildFile; fileRef = E585ABA711BD6194005DEEA1 /* utils.h */; };
+		E585ADD811BD9E31005DEEA1 /* nglInputDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D67C0DA5716500D2641A /* nglInputDevice.cpp */; };
+		E585ADD911BD9E3B005DEEA1 /* nglInputDeviceInstance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D67D0DA5716500D2641A /* nglInputDeviceInstance.cpp */; };
+		E585ADDA11BD9E4C005DEEA1 /* nglMimeSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D4B90DA5716500D2641A /* nglMimeSource.cpp */; };
+		E585ADDB11BD9E55005DEEA1 /* nglMimeSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4BA0DA5716500D2641A /* nglMimeSource.h */; };
+		E585ADDE11BD9E8C005DEEA1 /* nuiMeshEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D5CF0DA5716500D2641A /* nuiMeshEngine.h */; };
+		E585ADDF11BD9EA5005DEEA1 /* nuiOffscreenView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5D00DA5716500D2641A /* nuiOffscreenView.cpp */; };
+		E585ADE011BD9EAC005DEEA1 /* nuiSoftwarePainter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D5A40DA5716500D2641A /* nuiSoftwarePainter.cpp */; };
+		E585ADE111BD9EB4005DEEA1 /* nuiUserArea.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D55E0DA5716500D2641A /* nuiUserArea.h */; };
 		E591C2610FF1AB96005E5E3D /* dgif_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = E591C25C0FF1AB96005E5E3D /* dgif_lib.c */; };
 		E591C2620FF1AB96005E5E3D /* gif_err.c in Sources */ = {isa = PBXBuildFile; fileRef = E591C25D0FF1AB96005E5E3D /* gif_err.c */; };
 		E591C2630FF1AB96005E5E3D /* gif_lib.h in Headers */ = {isa = PBXBuildFile; fileRef = E591C25E0FF1AB96005E5E3D /* gif_lib.h */; };
@@ -11711,6 +11719,9 @@
 				E585AC6C11BD6195005DEEA1 /* select.h in Headers */,
 				E585AC6F11BD6195005DEEA1 /* parserutilserror.h in Headers */,
 				E585AC7111BD6195005DEEA1 /* utils.h in Headers */,
+				E585ADDB11BD9E55005DEEA1 /* nglMimeSource.h in Headers */,
+				E585ADDE11BD9E8C005DEEA1 /* nuiMeshEngine.h in Headers */,
+				E585ADE111BD9EB4005DEEA1 /* nuiUserArea.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13789,6 +13800,11 @@
 				E585AC6D11BD6195005DEEA1 /* stylesheet.c in Sources */,
 				E585AC6E11BD6195005DEEA1 /* errors.c in Sources */,
 				E585AC7011BD6195005DEEA1 /* utils.c in Sources */,
+				E585ADD811BD9E31005DEEA1 /* nglInputDevice.cpp in Sources */,
+				E585ADD911BD9E3B005DEEA1 /* nglInputDeviceInstance.cpp in Sources */,
+				E585ADDA11BD9E4C005DEEA1 /* nglMimeSource.cpp in Sources */,
+				E585ADDF11BD9EA5005DEEA1 /* nuiOffscreenView.cpp in Sources */,
+				E585ADE011BD9EAC005DEEA1 /* nuiSoftwarePainter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

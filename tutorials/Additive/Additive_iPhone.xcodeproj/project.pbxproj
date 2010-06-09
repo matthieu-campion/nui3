@@ -49,13 +49,6 @@
 			remoteGlobalIDString = 614B637D0DA7BA67000F4C22;
 			remoteInfo = nuiEd;
 		};
-		BC540B470EF940E3007E66FC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BC6A0A350EF93F7800881ACF /* nuiE.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D2AAC045055464E500DB518D;
-			remoteInfo = nuiE;
-		};
 		BC6A0A3D0EF93F7800881ACF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BC6A0A350EF93F7800881ACF /* nuiE.xcodeproj */;
@@ -69,6 +62,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 614B66C30DA7BA67000F4C22;
 			remoteInfo = nuiEd;
+		};
+		E585ADCA11BD9C83005DEEA1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BC6A0A350EF93F7800881ACF /* nuiE.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 735F6CDA0FF2747500E66B1D /* nuiE-iPhone 3.0 */;
+			remoteInfo = "nuiE-iPhone 3.0";
 		};
 		E5CC34B8115C990B00747AB2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -267,7 +267,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				BC540B480EF940E3007E66FC /* PBXTargetDependency */,
+				E585ADCB11BD9C83005DEEA1 /* PBXTargetDependency */,
 			);
 			name = Additive_iPhone;
 			productName = beatmaker;
@@ -401,10 +401,10 @@
 			name = nuiEd;
 			targetProxy = BC540B450EF940DB007E66FC /* PBXContainerItemProxy */;
 		};
-		BC540B480EF940E3007E66FC /* PBXTargetDependency */ = {
+		E585ADCB11BD9C83005DEEA1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = nuiE;
-			targetProxy = BC540B470EF940E3007E66FC /* PBXContainerItemProxy */;
+			name = "nuiE-iPhone 3.0";
+			targetProxy = E585ADCA11BD9C83005DEEA1 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

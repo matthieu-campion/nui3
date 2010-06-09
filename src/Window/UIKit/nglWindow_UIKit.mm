@@ -108,6 +108,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 - (id) initWithFrame: (CGRect) rect andNGLWindow: (nglWindow*) pNGLWindow
 {
   [[UITextField alloc] initWithFrame: CGRectZero];
+
   
 //NGL_OUT(_T("[nglUIWindow initWithFrame]\n"));
   if ( (self = [super initWithFrame: rect]) )
@@ -866,6 +867,15 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
   glClear(GL_COLOR_BUFFER_BIT);
   
   //[pUIWindow UpdateOrientation: FALSE];
+
+/* Ultra basic UIKit view integration on top of nuiWidgets
+  UIWebView* pWebView = [[UIWebView alloc] initWithFrame: CGRectMake(50, 50, 200, 200)];
+	[pUIWindow addSubview: pWebView];
+	pWebView.hidden = NO;
+  NSURL* pURL = [[NSURL alloc] initWithString: @"http://libnui.net"];
+  NSURLRequest* pReq = [[NSURLRequest alloc] initWithURL: pURL];
+  [pWebView loadRequest: pReq];
+ */
 }
 
 nglWindow::~nglWindow()
