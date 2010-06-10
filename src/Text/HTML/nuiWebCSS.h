@@ -48,6 +48,21 @@ private:
   void ImportDone(nuiCSSStyleSheet* pImport);
 };
 
+
+class nuiCSSContext
+{
+public:
+  nuiCSSContext();
+  ~nuiCSSContext();
+  
+  void AddSheet(nuiCSSStyleSheet* pSheet); ///< Add pSheet to the list of active css style sheets.
+  void RemoveSheets(uint32 count); ///< remove the last count sheets from the context.
+  
+private:
+  std::vector<nuiCSSStyleSheet*> mSheets;
+  
+};
+
 class nuiCSSEngine
 {
 public:

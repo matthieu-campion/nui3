@@ -297,8 +297,15 @@ void nuiHTMLItem::StyleSheetDone(nuiCSSStyleSheet* pCSS)
   NGL_ASSERT(pCSS);
   if (!pCSS->IsValid())
   {
-    //#TODO remove pCSS from mStyleSheets
     delete pCSS;
+    for (uint32 i = 0; i < mStyleSheets.size(); i++)
+    {
+      if (mStyleSheets[i] == pCSS)
+      {
+        mStyleSheets.erase(mStyleSheets.begin() + i);
+        return;
+      }
+    }
   }
   
   InvalidateLayout();
