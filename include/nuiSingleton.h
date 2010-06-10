@@ -48,3 +48,43 @@ private:
 template <class T>	T* nuiSingleton<T>::mpInstance = NULL;
 
 
+template <class T>	class nuiSingletonHolder
+{
+public:
+  
+  nuiSingletonHolder()
+  {
+    mpInstance = NULL;
+  };
+  
+  virtual ~nuiSingletonHolder()
+  {
+    DestroyInstance();
+  };
+  
+  T* Instance()
+  { 
+    if (!mpInstance)	
+      mpInstance = new T;		
+    
+    return mpInstance; 
+  };
+  
+  void DestroyInstance()
+  { 
+    delete mpInstance;
+    mpInstance = NULL;
+  };
+  
+protected:
+  
+private:
+  
+  nuiSingletonHolder(const nuiSingletonHolder& source)
+  {
+  };
+  
+  // Singleton class instance
+  T* mpInstance;
+};
+

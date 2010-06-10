@@ -22,10 +22,10 @@ nuiHTMLImage::nuiHTMLImage(nuiHTMLNode* pNode, nuiHTMLNode* pAnchor)
     return;
   
   nglString url = pSrc->GetValue();
-  printf("incomming url: %ls\n", url.GetChars());
+  //printf("incomming url: %ls\n", url.GetChars());
   url = GetAbsoluteURL(url);
   
-  printf("url: %ls\n", url.GetChars());
+  //printf("url: %ls\n", url.GetChars());
   
   // First look up the cache:
   mpTexture = nuiTexture::GetTexture(nglString(url));

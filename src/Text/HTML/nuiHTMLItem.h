@@ -10,6 +10,7 @@
 #include "nui.h"
 #include "nuiHTML.h"
 #include "nuiHTMLContext.h"
+#include "nuiWebCSS.h"
 
 class nuiHTMLBox;
 
@@ -69,6 +70,9 @@ public:
   void SetDisplayChangedDelegate(const nuiFastDelegate0<>& rDelegate);
   void SetLayoutChangedDelegate(const nuiFastDelegate0<>& rDelegate);
 
+  void AddStyleSheet(nuiCSSStyleSheet* pSheet);
+  const std::vector<nuiCSSStyleSheet*>& GetStyleSheets() const;
+  
 protected:
   void Invalidate();
   void InvalidateLayout();
@@ -89,5 +93,6 @@ protected:
   nuiFastDelegate0<> mLayoutChangedDelegate;
   nuiFastDelegate0<> mDisplayChangedDelegate;
   
+  std::vector<nuiCSSStyleSheet*> mStyleSheets;
 };
 

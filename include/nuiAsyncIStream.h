@@ -5,6 +5,8 @@
  licence: see nui3/LICENCE.TXT
  */
 
+#pragma once
+
 #include "nui.h"
 #include "nuiSignalsSlots.h"
 

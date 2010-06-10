@@ -56,9 +56,6 @@ nuiHTMLView::nuiHTMLView(float IdealWidth)
   mCanRespectConstraint = true;
   
   mSlotSink.Connect(LinkActivated, nuiMakeDelegate(this, &nuiHTMLView::_AutoSetURL));
-  
-  nuiCSSEngine* pEngine = new nuiCSSEngine();
-  pEngine->Test();
 }
 
 nuiHTMLView::~nuiHTMLView()
@@ -580,6 +577,12 @@ void nuiHTMLView::ParseHead(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
       case nuiHTML::eTag_TITLE:
         ParseTitle(pChild, pBox);
         break;
+      case nuiHTML::eTag_STYLE:
+        ParseStyle(pChild, pBox);
+        break;
+      case nuiHTML::eTag_LINK:
+        ParseHeadLink(pChild, pBox);
+        break;
       default:
         {        
           //printf("head??? '%ls'\n", pChild->GetName().GetChars());
@@ -591,6 +594,38 @@ void nuiHTMLView::ParseHead(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 
 void nuiHTMLView::ParseTitle(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 {
+}
+
+void nuiHTMLView::ParseStyle(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
+{
+  nuiCSSStyleSheet* pCSS = nuiCSSEngine::CreateStyleSheet(GetURL(), pNode->GetText(), false);
+  if (pCSS)
+    pBox->AddStyleSheet(pCSS);
+    
+}
+
+void nuiHTMLView::ParseHeadLink(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
+{
+  nuiHTMLAttrib* pRel = pNode->GetAttribute(nuiHTMLAttrib::eAttrib_REL);
+  nuiHTMLAttrib* pHRef = pNode->GetAttribute(nuiHTMLAttrib::eAttrib_HREF);
+  nuiHTMLAttrib* pType = pNode->GetAttribute(nuiHTMLAttrib::eAttrib_TYPE);
+
+  if (!pRel)
+    return;
+  
+  if (pRel->GetValue().Compare(_T("stylesheet"), false) != 0)
+    return;
+  
+  if (pType && pType->GetValue().Compare(_T("text/css"), false) != 0)
+    return;
+
+  if (!pHRef)
+    return;
+  
+  nuiCSSStyleSheet* pCSS = nuiCSSEngine::CreateStyleSheet(pHRef->GetValue());
+  if (pCSS)
+    pBox->AddStyleSheet(pCSS);
+  
 }
 
 void nuiHTMLView::ParseBody(nuiHTMLNode* pNode, nuiHTMLBox* pBox)

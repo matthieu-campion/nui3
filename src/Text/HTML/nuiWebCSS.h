@@ -9,6 +9,7 @@
 
 #include "nui.h"
 #include "nuiAsyncIStream.h"
+#include "nuiSingleton.h"
 
 typedef struct css_stylesheet css_stylesheet;
 typedef struct css_select_ctx css_select_ctx;
@@ -19,6 +20,7 @@ class nuiCSSStyleSheet
 {
 public:
   
+  ~nuiCSSStyleSheet();
   nuiSignal1<nuiCSSStyleSheet*> Done;
   
 private:
@@ -32,28 +34,31 @@ private:
   css_stylesheet* mpSheet;
   
   bool IsValid() const;
-  nuiCSSStyleSheet(const nglString& rURL, nglString& rText, bool Inline = true);
+  nuiCSSStyleSheet(const nglString& rURL, const nglString& rText, bool Inline = true);
   nuiCSSStyleSheet(const nglString& rURL, nglIStream& rStream, bool Inline, const nglString& rCharset);
   nuiCSSStyleSheet(const nglString& rURL, const nuiSignal1<nuiCSSStyleSheet*>::Slot& rDelegate = nuiSignal1<nuiCSSStyleSheet*>::Slot());
   void StreamDone(nuiAsyncIStream* pStream);
   
   void Init(nglIStream& rStream, const nglString& charset);
   void ImportDone(nuiCSSStyleSheet* pImport);
-  ~nuiCSSStyleSheet();
 };
 
 class nuiCSSEngine
 {
 public:
-  nuiCSSEngine();
-  ~nuiCSSEngine();
   
-  nuiCSSStyleSheet* CreateStyleSheet(const nglString& rURL, nglIStream& rStream, bool Inline, const nglString& rCharset) const;
-  nuiCSSStyleSheet* CreateStyleSheet(const nglString& rURL, const nuiSignal1<nuiCSSStyleSheet*>::Slot& rDelegate = nuiSignal1<nuiCSSStyleSheet*>::Slot()) const;
+  static nuiCSSStyleSheet* CreateStyleSheet(const nglString& rURL, const nglString& rString, bool Inline);
+  static nuiCSSStyleSheet* CreateStyleSheet(const nglString& rURL, nglIStream& rStream, bool Inline, const nglString& rCharset);
+  static nuiCSSStyleSheet* CreateStyleSheet(const nglString& rURL, const nuiSignal1<nuiCSSStyleSheet*>::Slot& rDelegate = nuiSignal1<nuiCSSStyleSheet*>::Slot());
   
   void Test();
   
 private:
+  nuiCSSEngine();
+  ~nuiCSSEngine();
+  
+  friend class nuiSingletonHolder<nuiCSSEngine>;
+  static nuiSingletonHolder<nuiCSSEngine> gCSSEngine;
 };
 
 

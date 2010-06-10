@@ -18,6 +18,8 @@ class nuiHTMLFont;
 class nuiHTMLTable;
 class nuiHTMLContext;
 class nuiAsyncIStream;
+class nuiCSSEngine;
+class nuiCSSStyleSheet;
 
 class nuiHTMLView : public nuiSimpleContainer
 {
@@ -80,6 +82,8 @@ protected:
   void ParseHTML(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
   void ParseHead(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
   void ParseTitle(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
+  void ParseHeadLink(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
+  void ParseStyle(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
   void ParseText(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
   void ParseBody(nuiHTMLNode* pNode, nuiHTMLBox* pBox);
   void ParseDiv(nuiHTMLNode* pNode, nuiHTMLBox* pBox);

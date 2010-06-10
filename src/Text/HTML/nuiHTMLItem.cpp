@@ -22,10 +22,19 @@ nuiHTMLItem::nuiHTMLItem(nuiHTMLNode* pNode, nuiHTMLNode* pAnchor, bool Inline)
   mSetRectCalled(false)
 {
   ForceLineBreak(pNode->GetTagType() == nuiHTMLNode::eTag_BR);
+  nuiHTMLAttrib* pStyle = pNode->GetAttribute(nuiHTMLAttrib::eAttrib_STYLE);
+  if (pStyle)
+  {
+    nuiCSSStyleSheet* pStyle = nuiCSSEngine::CreateStyleSheet(mpNode->GetSourceURL(), pNode->GetText(), true);
+  }
 }
 
 nuiHTMLItem::~nuiHTMLItem()
 {
+  for (uint32 i = 0; i < mStyleSheets.size(); i++)
+  {
+    delete mStyleSheets[i];
+  }
 }
 
 void nuiHTMLItem::Draw(nuiDrawContext* pContext)
@@ -282,3 +291,14 @@ void nuiHTMLItem::SetDisplayChangedDelegate(const nuiFastDelegate0<>& rDelegate)
 {
   mDisplayChangedDelegate = rDelegate;
 }
+
+void nuiHTMLItem::AddStyleSheet(nuiCSSStyleSheet* pSheet)
+{
+  mStyleSheets.push_back(pSheet);
+}
+
+const std::vector<nuiCSSStyleSheet*>& nuiHTMLItem::GetStyleSheets() const
+{
+  return mStyleSheets;
+}
+
