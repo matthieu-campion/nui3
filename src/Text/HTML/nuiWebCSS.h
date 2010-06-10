@@ -16,12 +16,18 @@ typedef struct css_select_ctx css_select_ctx;
 typedef struct css_computed_style css_computed_style;
 typedef struct lwc_string_s lwc_string;
 
+class nuiCSSStyleSheet;
+
+typedef nuiSignal1<nuiCSSStyleSheet*>::Slot nuiStyleSheetDoneDelegate;
+
 class nuiCSSStyleSheet
 {
 public:
   
   ~nuiCSSStyleSheet();
   nuiSignal1<nuiCSSStyleSheet*> Done;
+
+  bool IsValid() const;
   
 private:
   friend class nuiCSSEngine;
@@ -33,10 +39,9 @@ private:
   bool mInline;
   css_stylesheet* mpSheet;
   
-  bool IsValid() const;
-  nuiCSSStyleSheet(const nglString& rURL, const nglString& rText, bool Inline = true);
-  nuiCSSStyleSheet(const nglString& rURL, nglIStream& rStream, bool Inline, const nglString& rCharset);
-  nuiCSSStyleSheet(const nglString& rURL, const nuiSignal1<nuiCSSStyleSheet*>::Slot& rDelegate = nuiSignal1<nuiCSSStyleSheet*>::Slot());
+  nuiCSSStyleSheet(const nglString& rURL, const nglString& rText, bool Inline, const nuiStyleSheetDoneDelegate& rDelegate);
+  nuiCSSStyleSheet(const nglString& rURL, nglIStream& rStream, bool Inline, const nglString& rCharset, const nuiStyleSheetDoneDelegate& rDelegate);
+  nuiCSSStyleSheet(const nglString& rURL, const nuiStyleSheetDoneDelegate& rDelegate);
   void StreamDone(nuiAsyncIStream* pStream);
   
   void Init(nglIStream& rStream, const nglString& charset);
@@ -47,9 +52,9 @@ class nuiCSSEngine
 {
 public:
   
-  static nuiCSSStyleSheet* CreateStyleSheet(const nglString& rURL, const nglString& rString, bool Inline);
-  static nuiCSSStyleSheet* CreateStyleSheet(const nglString& rURL, nglIStream& rStream, bool Inline, const nglString& rCharset);
-  static nuiCSSStyleSheet* CreateStyleSheet(const nglString& rURL, const nuiSignal1<nuiCSSStyleSheet*>::Slot& rDelegate = nuiSignal1<nuiCSSStyleSheet*>::Slot());
+  static nuiCSSStyleSheet* CreateStyleSheet(const nglString& rURL, const nglString& rString, bool Inline, const nuiStyleSheetDoneDelegate& rDelegate = nuiStyleSheetDoneDelegate());
+  static nuiCSSStyleSheet* CreateStyleSheet(const nglString& rURL, nglIStream& rStream, bool Inline, const nglString& rCharset, const nuiStyleSheetDoneDelegate& rDelegate = nuiStyleSheetDoneDelegate());
+  static nuiCSSStyleSheet* CreateStyleSheet(const nglString& rURL, const nuiStyleSheetDoneDelegate& rDelegate = nuiStyleSheetDoneDelegate());
   
   void Test();
   

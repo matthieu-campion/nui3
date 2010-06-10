@@ -70,12 +70,15 @@ public:
   void SetDisplayChangedDelegate(const nuiFastDelegate0<>& rDelegate);
   void SetLayoutChangedDelegate(const nuiFastDelegate0<>& rDelegate);
 
-  void AddStyleSheet(nuiCSSStyleSheet* pSheet);
+  void AddStyleSheet(const nglString& rBaseURL, const nglString& rText, bool Inline);
+  void AddStyleSheet(const nglString& rURL);
   const std::vector<nuiCSSStyleSheet*>& GetStyleSheets() const;
   
 protected:
   void Invalidate();
   void InvalidateLayout();
+  
+  void StyleSheetDone(nuiCSSStyleSheet* pCSS);
   
   uint32 GetDepth() const;
 

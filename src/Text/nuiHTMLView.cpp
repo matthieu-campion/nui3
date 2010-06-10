@@ -598,10 +598,7 @@ void nuiHTMLView::ParseTitle(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 
 void nuiHTMLView::ParseStyle(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 {
-  nuiCSSStyleSheet* pCSS = nuiCSSEngine::CreateStyleSheet(GetURL(), pNode->GetText(), false);
-  if (pCSS)
-    pBox->AddStyleSheet(pCSS);
-    
+  pBox->AddStyleSheet(GetURL(), pNode->GetText(), false);
 }
 
 void nuiHTMLView::ParseHeadLink(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
@@ -622,10 +619,7 @@ void nuiHTMLView::ParseHeadLink(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
   if (!pHRef)
     return;
   
-  nuiCSSStyleSheet* pCSS = nuiCSSEngine::CreateStyleSheet(pHRef->GetValue());
-  if (pCSS)
-    pBox->AddStyleSheet(pCSS);
-  
+  pBox->AddStyleSheet(pHRef->GetValue());
 }
 
 void nuiHTMLView::ParseBody(nuiHTMLNode* pNode, nuiHTMLBox* pBox)

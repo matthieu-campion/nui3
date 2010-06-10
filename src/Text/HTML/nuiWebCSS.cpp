@@ -51,7 +51,7 @@ bool nuiCSSStyleSheet::IsValid() const
   return mpSheet != NULL;
 }
 
-nuiCSSStyleSheet::nuiCSSStyleSheet(const nglString& rURL, const nglString& rText, bool Inline)
+nuiCSSStyleSheet::nuiCSSStyleSheet(const nglString& rURL, const nglString& rText, bool Inline, const nuiStyleSheetDoneDelegate& rDelegate)
 {
   NGL_OUT(_T("Create StyleSheet from text%ls\n"), Inline ? _T(" (inline)") : _T(""));
   mURL = rURL;
@@ -59,22 +59,26 @@ nuiCSSStyleSheet::nuiCSSStyleSheet(const nglString& rURL, const nglString& rText
   mIsValid = false;
   char* pText = rText.Export();
   mpStream = new nglIMemory(pText, strlen(pText));
+  if (rDelegate)
+    mSlotSink.Connect(Done, rDelegate);
   Init(*mpStream, _T("UTF-8"));
   delete mpStream;
   mpStream = NULL;
 }
 
-nuiCSSStyleSheet::nuiCSSStyleSheet(const nglString& rURL, nglIStream& rStream, bool Inline, const nglString& rCharset)
+nuiCSSStyleSheet::nuiCSSStyleSheet(const nglString& rURL, nglIStream& rStream, bool Inline, const nglString& rCharset, const nuiStyleSheetDoneDelegate& rDelegate)
 {
   NGL_OUT(_T("Create StyleSheet from stream (base '%ls')%ls\n"), rURL.GetChars(), Inline ? _T(" (inline)") : _T(""));
   mURL = rURL;
   mInline = Inline;
   mIsValid = false;
   mpStream = &rStream;
+  if (rDelegate)
+    mSlotSink.Connect(Done, rDelegate);
   Init(rStream, rCharset);
 }
 
-nuiCSSStyleSheet::nuiCSSStyleSheet(const nglString& rURL, const nuiSignal1<nuiCSSStyleSheet*>::Slot& rDelegate)
+nuiCSSStyleSheet::nuiCSSStyleSheet(const nglString& rURL, const nuiStyleSheetDoneDelegate& rDelegate)
 {
   NGL_OUT(_T("Create StyleSheet from URL '%ls'\n"), rURL.GetChars());
   mURL = rURL;
@@ -273,10 +277,10 @@ nuiCSSEngine::~nuiCSSEngine()
   NGL_ASSERT(res == CSS_OK);
 }
 
-nuiCSSStyleSheet* nuiCSSEngine::CreateStyleSheet(const nglString& rURL, const nglString& rString, bool Inline)
+nuiCSSStyleSheet* nuiCSSEngine::CreateStyleSheet(const nglString& rURL, const nglString& rString, bool Inline, const nuiStyleSheetDoneDelegate& rDelegate)
 {
   gCSSEngine.Instance();
-  nuiCSSStyleSheet* pSheet = new nuiCSSStyleSheet(rURL, rString, Inline);
+  nuiCSSStyleSheet* pSheet = new nuiCSSStyleSheet(rURL, rString, Inline, rDelegate);
   if (!pSheet || !pSheet->IsValid())
   {
     delete pSheet;
@@ -285,10 +289,10 @@ nuiCSSStyleSheet* nuiCSSEngine::CreateStyleSheet(const nglString& rURL, const ng
   return pSheet;
 }
 
-nuiCSSStyleSheet* nuiCSSEngine::CreateStyleSheet(const nglString& rURL, nglIStream& rStream, bool Inline, const nglString& rCharset)
+nuiCSSStyleSheet* nuiCSSEngine::CreateStyleSheet(const nglString& rURL, nglIStream& rStream, bool Inline, const nglString& rCharset, const nuiStyleSheetDoneDelegate& rDelegate)
 {
   gCSSEngine.Instance();
-  nuiCSSStyleSheet* pSheet = new nuiCSSStyleSheet(rURL, rStream, Inline, rCharset);
+  nuiCSSStyleSheet* pSheet = new nuiCSSStyleSheet(rURL, rStream, Inline, rCharset, rDelegate);
   if (!pSheet || !pSheet->IsValid())
   {
     delete pSheet;
@@ -297,7 +301,7 @@ nuiCSSStyleSheet* nuiCSSEngine::CreateStyleSheet(const nglString& rURL, nglIStre
   return pSheet;
 }
 
-nuiCSSStyleSheet* nuiCSSEngine::CreateStyleSheet(const nglString& rURL, const nuiSignal1<nuiCSSStyleSheet*>::Slot& rDelegate)
+nuiCSSStyleSheet* nuiCSSEngine::CreateStyleSheet(const nglString& rURL, const nuiStyleSheetDoneDelegate& rDelegate)
 {
   gCSSEngine.Instance();
   nuiCSSStyleSheet* pSheet = new nuiCSSStyleSheet(rURL, rDelegate);

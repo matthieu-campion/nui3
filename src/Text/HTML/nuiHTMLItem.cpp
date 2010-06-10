@@ -292,9 +292,30 @@ void nuiHTMLItem::SetDisplayChangedDelegate(const nuiFastDelegate0<>& rDelegate)
   mDisplayChangedDelegate = rDelegate;
 }
 
-void nuiHTMLItem::AddStyleSheet(nuiCSSStyleSheet* pSheet)
+void nuiHTMLItem::StyleSheetDone(nuiCSSStyleSheet* pCSS)
 {
-  mStyleSheets.push_back(pSheet);
+  NGL_ASSERT(pCSS);
+  if (!pCSS->IsValid())
+  {
+    //#TODO remove pCSS from mStyleSheets
+    delete pCSS;
+  }
+  
+  InvalidateLayout();
+}
+
+void nuiHTMLItem::AddStyleSheet(const nglString& rBaseURL, const nglString& rText, bool Inline)
+{
+  nuiCSSStyleSheet* pCSS = nuiCSSEngine::CreateStyleSheet(rBaseURL, rText, Inline, nuiMakeDelegate(this, &nuiHTMLItem::StyleSheetDone));
+  if (pCSS)
+    mStyleSheets.push_back(pCSS);
+}
+
+void nuiHTMLItem::AddStyleSheet(const nglString& rURL)
+{
+  nuiCSSStyleSheet* pCSS = nuiCSSEngine::CreateStyleSheet(rURL, nuiMakeDelegate(this, &nuiHTMLItem::StyleSheetDone));
+  if (pCSS)
+    mStyleSheets.push_back(pCSS);
 }
 
 const std::vector<nuiCSSStyleSheet*>& nuiHTMLItem::GetStyleSheets() const
