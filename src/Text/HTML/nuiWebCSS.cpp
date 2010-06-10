@@ -34,6 +34,12 @@ static lwc_string* MakeString(const nglString& rStr)
   return v;
 }
 
+static nglString MakeString(lwc_string* str)
+{
+  nglString v(lwc_string_data(str), lwc_string_length(str));
+  return v;
+}
+
 
 //class nuiCSSStyleSheet
 static css_error ResolveUrl(void *pw, const char *base, lwc_string *rel, lwc_string **abs)
@@ -470,13 +476,12 @@ css_error named_parent_node(void *pw, void *n, lwc_string *name, void **parent)
 	nuiHTMLItem* node = (nuiHTMLItem*)n;
 	UNUSED(pw);
   
+  nglString Name = MakeString(name);
 	*parent = NULL;
-	if (node->parent != NULL)
+	if (node->GetParent() != NULL)
   {
-		bool match;
-		NGL_ASSERT(lwc_string_caseless_isequal(name, node->parent->name, &match) == lwc_error_ok);
-		if (match == true)
-			*parent = (void *) node->parent;
+		if (Name.Compare(node->GetParent()->GetNode()->GetName(), false) == 0);
+			*parent = (void *) node->GetParent;
 	}
   
 	return CSS_OK;
