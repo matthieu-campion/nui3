@@ -12,6 +12,12 @@
 #include "bytecode/opcodes.h"
 #include "parse/properties/utils.h"
 
+#ifdef WIN32
+int strncasecmp( const char* s1, const char* s2, size_t n )
+{
+  return _strnicmp(s1, s2, n);
+}
+#endif
 /**
  * Parse a colour specifier
  *

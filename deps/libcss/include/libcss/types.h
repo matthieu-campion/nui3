@@ -18,9 +18,11 @@ typedef int   int32_t;
 typedef unsigned char  uint8_t;
 typedef unsigned short uint16_t;
 typedef unsigned int   uint32_t;
+#ifndef __cplusplus 
 typedef int bool;
 #define false   (bool)0
 #define true    (bool)1
+#endif
 #endif
 #include <stdlib.h>
 

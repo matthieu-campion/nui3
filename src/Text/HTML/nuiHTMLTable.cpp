@@ -235,7 +235,7 @@ void nuiHTMLTable::Layout(nuiHTMLContext& rContext)
       float w = mColumns[j].mSize;
       Cell& rCell(GetCell(j, i));
       
-      ctx.mMaxWidth = w - (mColumns[i].mBorder + mColumns[i].mSpacing) * 1;
+      ctx.mMaxWidth = w - (mColumns[j].mBorder + mColumns[j].mSpacing) * 1;
       rCell.Layout(ctx);
       float h = rCell.mIdealHeight / rCell.mRowSpan;
       if (rCell.HasMaster())

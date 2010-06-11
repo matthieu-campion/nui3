@@ -68,13 +68,13 @@ parserutils_error parserutils_charset_aliases_create(const char *filename,
 {
 	char buf[300];
 	FILE *fp;
+  int index = 0;
+  char* (*local_fgets)(char* buf, int n, FILE* fp) = fgets;
 
 	if (filename == NULL || alloc == NULL)
 		return PARSERUTILS_BADPARM;
 
 	fp = fopen(filename, "r");
-  int index = 0;
-  char* (*local_fgets)(char* buf, int n, FILE* fp) = fgets;
 	if (fp == NULL)
   {
 		//return PARSERUTILS_FILENOTFOUND;

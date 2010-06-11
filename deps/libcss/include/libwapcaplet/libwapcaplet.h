@@ -23,9 +23,11 @@ typedef unsigned short uint16_t;
 typedef unsigned int   uint32_t;
 typedef __int64          int64_t;
 typedef unsigned __int64 uint64_t;
+#ifndef __cplusplus
 typedef int bool;
 #define false   (bool)0
 #define true    (bool)1
+#endif
 #endif
 
 /**
