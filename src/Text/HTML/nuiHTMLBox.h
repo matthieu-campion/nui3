@@ -38,6 +38,11 @@ public:
   float GetMarginTop() const;
   float GetMarginRight() const;
   float GetMarginBottom() const;
+
+  virtual int32 GetChildrenCount() const;
+  virtual nuiHTMLItem* GetChild(int32 index) const;
+  
+  
 protected:
   float LayoutLine(uint32& start, uint32& count, float& y, float& h, nuiHTMLContext& rContext);
   

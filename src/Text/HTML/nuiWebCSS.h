@@ -17,6 +17,8 @@ typedef struct css_computed_style css_computed_style;
 typedef struct lwc_string_s lwc_string;
 
 class nuiCSSStyleSheet;
+class nuiHTMLItem;
+class nuiHTMLContext;
 
 typedef nuiSignal1<nuiCSSStyleSheet*>::Slot nuiStyleSheetDoneDelegate;
 
@@ -31,6 +33,7 @@ public:
   
 private:
   friend class nuiCSSEngine;
+  friend class nuiCSSContext;
   std::vector<nuiCSSStyleSheet*> mpImports;
   nglIStream* mpStream;
   nuiSlotsSink mSlotSink;
@@ -58,8 +61,10 @@ public:
   void AddSheet(nuiCSSStyleSheet* pSheet); ///< Add pSheet to the list of active css style sheets.
   void RemoveSheets(uint32 count); ///< remove the last count sheets from the context.
   
+  void Select(nuiHTMLContext& rContext, nuiHTMLItem* pNode);
 private:
   std::vector<nuiCSSStyleSheet*> mSheets;
+  css_select_ctx* mpContext;
   
 };
 

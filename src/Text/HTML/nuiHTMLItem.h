@@ -43,6 +43,8 @@ public:
   nuiHTMLNode* GetNode() const;
   void SetParent(nuiHTMLItem* pBox);
   nuiHTMLItem* GetParent() const;
+  virtual int32 GetChildrenCount() const;
+  virtual nuiHTMLItem* GetChild(int32 index) const;
   
   virtual float GetAscender() const;
   virtual float GetDescender() const;
@@ -73,6 +75,7 @@ public:
   void AddStyleSheet(const nglString& rBaseURL, const nglString& rText, bool Inline);
   void AddStyleSheet(const nglString& rURL);
   const std::vector<nuiCSSStyleSheet*>& GetStyleSheets() const;
+  const nuiCSSStyleSheet* nuiHTMLItem::GetInlineStyle() const;
   
 protected:
   void Invalidate();
@@ -97,5 +100,6 @@ protected:
   nuiFastDelegate0<> mDisplayChangedDelegate;
   
   std::vector<nuiCSSStyleSheet*> mStyleSheets;
+  nuiCSSStyleSheet* mpInlineStyle;
 };
 

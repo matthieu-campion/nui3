@@ -19,13 +19,14 @@ nuiHTMLItem::nuiHTMLItem(nuiHTMLNode* pNode, nuiHTMLNode* pAnchor, bool Inline)
   mpParent(NULL),
   mpAnchor(pAnchor),
   mVisible(true),
-  mSetRectCalled(false)
+  mSetRectCalled(false),
+  mpInlineStyle(NULL)
 {
   ForceLineBreak(pNode->GetTagType() == nuiHTMLNode::eTag_BR);
   nuiHTMLAttrib* pStyle = pNode->GetAttribute(nuiHTMLAttrib::eAttrib_STYLE);
   if (pStyle)
   {
-    nuiCSSStyleSheet* pStyle = nuiCSSEngine::CreateStyleSheet(mpNode->GetSourceURL(), pNode->GetText(), true);
+    AddStyleSheet(mpNode->GetSourceURL(), pStyle->GetValue(), true);
   }
 }
 
@@ -35,6 +36,8 @@ nuiHTMLItem::~nuiHTMLItem()
   {
     delete mStyleSheets[i];
   }
+  
+  delete mpInlineStyle;
 }
 
 void nuiHTMLItem::Draw(nuiDrawContext* pContext)
@@ -315,18 +318,44 @@ void nuiHTMLItem::AddStyleSheet(const nglString& rBaseURL, const nglString& rTex
 {
   nuiCSSStyleSheet* pCSS = nuiCSSEngine::CreateStyleSheet(rBaseURL, rText, Inline, nuiMakeDelegate(this, &nuiHTMLItem::StyleSheetDone));
   if (pCSS)
-    mStyleSheets.push_back(pCSS);
+  {
+    if (Inline)
+    {
+      delete mpInlineStyle;
+      mpInlineStyle = pCSS;
+    }
+    else
+      mStyleSheets.push_back(pCSS);
+  }
 }
 
 void nuiHTMLItem::AddStyleSheet(const nglString& rURL)
 {
   nuiCSSStyleSheet* pCSS = nuiCSSEngine::CreateStyleSheet(rURL, nuiMakeDelegate(this, &nuiHTMLItem::StyleSheetDone));
   if (pCSS)
+  {
     mStyleSheets.push_back(pCSS);
+  }
 }
 
 const std::vector<nuiCSSStyleSheet*>& nuiHTMLItem::GetStyleSheets() const
 {
   return mStyleSheets;
 }
+
+const nuiCSSStyleSheet* nuiHTMLItem::GetInlineStyle() const
+{
+  return mpInlineStyle;
+}
+
+int32 nuiHTMLItem::GetChildrenCount() const
+{
+  return 0;
+}
+
+nuiHTMLItem* nuiHTMLItem::GetChild(int32 index) const
+{
+  return NULL;
+}
+
 

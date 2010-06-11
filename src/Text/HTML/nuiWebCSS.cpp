@@ -365,16 +365,21 @@ void nuiCSSEngine::Test()
 //////////
 nuiCSSContext::nuiCSSContext()
 {
+  mpContext = NULL;
+  css_error err = css_select_ctx_create(nuiRealloc, this, &mpContext);
+  NGL_ASSERT(err == CSS_OK);
 }
 
 nuiCSSContext::~nuiCSSContext()
 {
+  css_select_ctx_destroy(mpContext);
 }
 
 
 void nuiCSSContext::AddSheet(nuiCSSStyleSheet* pSheet)
 {
   mSheets.push_back(pSheet);
+  css_select_ctx_append_sheet(mpContext, pSheet->mpSheet, CSS_ORIGIN_AUTHOR, CSS_MEDIA_SCREEN);
 }
 
 void nuiCSSContext::RemoveSheets(uint32 count)
@@ -382,10 +387,105 @@ void nuiCSSContext::RemoveSheets(uint32 count)
   if (!count)
     return;
   NGL_ASSERT(count >= mSheets.size());
+  for (uint32 i = mSheets.size() - count; i < mSheets.size(); i++)
+    css_select_ctx_remove_sheet(mpContext, mSheets[i]->mpSheet);
   mSheets.resize(mSheets.size() - count);
 }
 
-#if 0
+static css_error node_name(void *pw, void *node, lwc_string **name);
+static css_error node_classes(void *pw, void *node, lwc_string ***classes, uint32_t *n_classes);
+static css_error node_id(void *pw, void *node, lwc_string **id);
+static css_error named_ancestor_node(void *pw, void *node, lwc_string *name, void **ancestor);
+static css_error named_parent_node(void *pw, void *node, lwc_string *name, void **parent);
+static css_error named_sibling_node(void *pw, void *node, lwc_string *name, void **sibling);
+static css_error parent_node(void *pw, void *node, void **parent);
+static css_error sibling_node(void *pw, void *node, void **sibling);
+static css_error node_has_name(void *pw, void *node, lwc_string *name, bool *match);
+static css_error node_has_class(void *pw, void *node, lwc_string *name, bool *match);
+static css_error node_has_id(void *pw, void *node, lwc_string *name, bool *match);
+static css_error node_has_attribute(void *pw, void *node, lwc_string *name, bool *match);
+static css_error node_has_attribute_equal(void *pw, void *node, lwc_string *name, lwc_string *value, bool *match);
+static css_error node_has_attribute_dashmatch(void *pw, void *node, lwc_string *name, lwc_string *value, bool *match);
+static css_error node_has_attribute_includes(void *pw, void *node, lwc_string *name, lwc_string *value, bool *match);
+static css_error node_is_first_child(void *pw, void *node, bool *match);
+static css_error node_is_link(void *pw, void *node, bool *match);
+static css_error node_is_visited(void *pw, void *node, bool *match);
+static css_error node_is_hover(void *pw, void *node, bool *match);
+static css_error node_is_active(void *pw, void *node, bool *match);
+static css_error node_is_focus(void *pw, void *node, bool *match);
+static css_error node_is_lang(void *pw, void *node, lwc_string *lang, bool *match);
+static css_error node_presentational_hint(void *pw, void *node, uint32_t property, css_hint *hint);
+static css_error ua_default_for_property(void *pw, uint32_t property, css_hint *hint);
+static css_error compute_font_size(void *pw, const css_hint *parent, css_hint *size);
+
+static css_select_handler selection_handler =
+{
+	node_name,
+	node_classes,
+	node_id,
+	named_ancestor_node,
+	named_parent_node,
+	named_sibling_node,
+	parent_node,
+	sibling_node,
+	node_has_name,
+	node_has_class,
+	node_has_id,
+	node_has_attribute,
+	node_has_attribute_equal,
+	node_has_attribute_dashmatch,
+	node_has_attribute_includes,
+	node_is_first_child,
+	node_is_link,
+	node_is_visited,
+	node_is_hover,
+	node_is_active,
+	node_is_focus,
+	node_is_lang,
+	node_presentational_hint,
+	ua_default_for_property,
+	compute_font_size
+};
+
+void nuiCSSContext::Select(nuiHTMLContext& rContext, nuiHTMLItem* pNode)
+{
+  css_computed_style *style;
+	css_error error;
+    
+	error = css_computed_style_create(nuiRealloc, this, &style);
+	if (error != CSS_OK)
+		return;
+
+  /*
+   * \param ctx             Selection context to use
+   * \param node            Node to select style for
+   * \param pseudo_element  Pseudo element to select for, instead
+   * \param media           Currently active media types
+   * \param inline_style    Corresponding inline style for node, or NULL
+   * \param result          Pointer to style to populate (assumed clean)
+   * \param handler         Dispatch table of handler functions
+   * \param pw              Client-specific private data for handler functions
+   */
+  error = css_select_style(mpContext, pNode, 0, CSS_MEDIA_SCREEN, pNode->GetInlineStyle()->mpSheet, style, &selection_handler, this);
+	if (error != CSS_OK)
+  {
+		css_computed_style_destroy(style);
+		return;
+	}
+  
+	return;
+  
+}
+
+/**
+ * Callback to retrieve a node's name.
+ *
+ * \param pw    HTML document
+ * \param node  DOM node
+ * \param name  Pointer to location to receive node name
+ * \return CSS_OK on success,
+ *         CSS_NOMEM on memory exhaustion.
+ */
 css_error node_name(void *pw, void *n, lwc_string **name)
 {
 	nuiHTMLItem* node = (nuiHTMLItem*)n;
@@ -397,191 +497,327 @@ css_error node_name(void *pw, void *n, lwc_string **name)
 	return CSS_OK;
 }
 
+/**
+ * Callback to retrieve a node's classes.
+ *
+ * \param pw         HTML document
+ * \param node       DOM node
+ * \param classes    Pointer to location to receive class name array
+ * \param n_classes  Pointer to location to receive length of class name array
+ * \return CSS_OK on success,
+ *         CSS_NOMEM on memory exhaustion.
+ *
+ * \note The returned array will be destroyed by libcss. Therefore, it must
+ *       be allocated using the same allocator as used by libcss during style
+ *       selection.
+ */
 css_error node_classes(void *pw, void *n, lwc_string ***classes, uint32_t *n_classes)
 {
 	nuiHTMLItem* node = (nuiHTMLItem*)n;
-	uint32_t i;
-	line_ctx *lc = pw;
   
-	for (i = 0; i < node->n_attrs; i++)
-  {
-		bool amatch;
-		NGL_ASSERT(lwc_string_caseless_isequal(node->attrs[i].name, lc->attr_class, &amatch) == lwc_error_ok);
-		if (amatch == true)
-			break;
-	}
+  *classes = NULL;
+  *n_classes = 0;
+
+  nuiHTMLAttrib* pClass = node->GetNode()->GetAttribute(nuiHTMLAttrib::eAttrib_CLASS);
+  if (!pClass)
+    return CSS_OK;
   
-	if (i != node->n_attrs)
-  {
-		*classes = realloc(NULL, sizeof(lwc_string **));
-		if (*classes == NULL)
-			return CSS_NOMEM;
-    
-		*(classes[0]) = lwc_string_ref(node->attrs[i].value);
-		*n_classes = 1;
-	}
-  else
-  {
-		*classes = NULL;
-		*n_classes = 0;
-	}
+  nglString cls(pClass->GetValue());
+  std::vector<nglString> tokens;
+  cls.Tokenize(tokens);
+  uint32 count = tokens.size();
+  
+  *classes = (lwc_string**)realloc(NULL, sizeof(lwc_string **) * count);
+  if (*classes == NULL)
+    return CSS_NOMEM;
+  
+  for (uint32 i = 0; i < count; i++)
+    *(classes[i]) = MakeString(tokens[i]);
+  *n_classes = count;
   
 	return CSS_OK;
-  
 }
 
+/**
+ * Callback to retrieve a node's ID.
+ *
+ * \param pw    HTML document
+ * \param node  DOM node
+ * \param id    Pointer to location to receive id value
+ * \return CSS_OK on success,
+ *         CSS_NOMEM on memory exhaustion.
+ */
 css_error node_id(void *pw, void *n,
                   lwc_string **id)
 {
 	nuiHTMLItem* node = (nuiHTMLItem*)n;
-	uint32_t i;
-	line_ctx *lc = pw;
-  
-	for (i = 0; i < node->n_attrs; i++)
-  {
-		bool amatch;
-		NGL_ASSERT(lwc_string_caseless_isequal(node->attrs[i].name, lc->attr_id, &amatch) == lwc_error_ok);
-		if (amatch == true)
-			break;
-	}
-  
-	if (i != node->n_attrs)
-		*id = lwc_string_ref(node->attrs[i].value);
-	else
-		*id = NULL;
+	*id = NULL;
+
+  nuiHTMLAttrib* pID = node->GetNode()->GetAttribute(nuiHTMLAttrib::eAttrib_ID);
+  if (!pID)
+    return CSS_OK;
+
+  *id = MakeString(pID->GetValue());
   
 	return CSS_OK;
 }
 
+/**
+ * Callback to find a named ancestor node.
+ *
+ * \param pw        HTML document
+ * \param node      DOM node
+ * \param name      Node name to search for
+ * \param ancestor  Pointer to location to receive ancestor
+ * \return CSS_OK.
+ *
+ * \post \a ancestor will contain the result, or NULL if there is no match
+ */
 css_error named_ancestor_node(void *pw, void *n, lwc_string *name, void **ancestor)
 {
 	nuiHTMLItem* node = (nuiHTMLItem*)n;
 	UNUSED(pw);
+
+  nglString Name(MakeString(name));
+
+  node = node->GetParent();
   
-	for (node = node->parent; node != NULL; node = node->parent)
-  {
-		bool match;
-		NGL_ASSERT(lwc_string_caseless_isequal(name, node->name, &match) == lwc_error_ok);
-		if (match == true)
-			break;
-	}
+  while (node && node->GetNode()->GetName().Compare(Name, false) != 0)
+    node = node->GetParent();
   
-	*ancestor = (void *) node;
+	*ancestor = (void *)node;
   
 	return CSS_OK;
 }
 
+/**
+ * Callback to find a named parent node
+ *
+ * \param pw      HTML document
+ * \param node    DOM node
+ * \param name    Node name to search for
+ * \param parent  Pointer to location to receive parent
+ * \return CSS_OK.
+ *
+ * \post \a parent will contain the result, or NULL if there is no match
+ */
 css_error named_parent_node(void *pw, void *n, lwc_string *name, void **parent)
 {
 	nuiHTMLItem* node = (nuiHTMLItem*)n;
 	UNUSED(pw);
   
-  nglString Name = MakeString(name);
-	*parent = NULL;
-	if (node->GetParent() != NULL)
-  {
-		if (Name.Compare(node->GetParent()->GetNode()->GetName(), false) == 0);
-			*parent = (void *) node->GetParent;
-	}
+  nglString Name(MakeString(name));
+  
+  node = node->GetParent();
+  
+  *parent = NULL;
+  if (node && node->GetNode()->GetName().Compare(Name, false) != 0)
+    *parent = (void *)node;
   
 	return CSS_OK;
 }
 
+/**
+ * Callback to find a named sibling node.
+ *
+ * \param pw       HTML document
+ * \param node     DOM node
+ * \param name     Node name to search for
+ * \param sibling  Pointer to location to receive sibling
+ * \return CSS_OK.
+ *
+ * \post \a sibling will contain the result, or NULL if there is no match
+ */
 css_error named_sibling_node(void *pw, void *n, lwc_string *name, void **sibling)
 {
 	nuiHTMLItem* node = (nuiHTMLItem*)n;
 	UNUSED(pw);
+  *sibling = NULL;
   
-	*sibling = NULL;
-	if (node->prev != NULL)
+  nuiHTMLItem* pParent = node->GetParent();
+  if (!pParent)
+    return CSS_OK;
+  
+  nglString Name = MakeString(name);
+  
+  for (uint32 i = 0; i < pParent->GetChildrenCount(); i++)
   {
-		bool match;
-		NGL_ASSERT(lwc_string_caseless_isequal(name, node->prev->name, &match) == lwc_error_ok);
-		if (match == true)
-			*sibling = (void *) node->prev;
-	}
-  
+    nuiHTMLItem* pChild = pParent->GetChild(i);
+    if (pChild == node)
+    {
+      if (i == 0)
+        return CSS_OK;
+      pChild = pParent->GetChild(i - 1);
+      if (pChild->GetNode()->GetName().Compare(Name, false) == 0)
+        *sibling = pChild;
+      return CSS_OK;
+    }
+  }
+
+  // Huh?!?
 	return CSS_OK;
 }
 
+/**
+ * Callback to retrieve the parent of a node.
+ *
+ * \param pw      HTML document
+ * \param node    DOM node
+ * \param parent  Pointer to location to receive parent
+ * \return CSS_OK.
+ *
+ * \post \a parent will contain the result, or NULL if there is no match
+ */
 css_error parent_node(void *pw, void *n, void **parent)
 {
 	nuiHTMLItem* node = (nuiHTMLItem*)n;
   
 	UNUSED(pw);
   
-	*parent = (void *) node->parent;
+	*parent = node->GetParent();
   
 	return CSS_OK;
 }
 
+/**
+ * Callback to retrieve the preceding sibling of a node.
+ *
+ * \param pw       HTML document
+ * \param node     DOM node
+ * \param sibling  Pointer to location to receive sibling
+ * \return CSS_OK.
+ *
+ * \post \a sibling will contain the result, or NULL if there is no match
+ */
 css_error sibling_node(void *pw, void *n, void **sibling)
 {
 	nuiHTMLItem* node = (nuiHTMLItem*)n;
-  
 	UNUSED(pw);
+  *sibling = NULL;
   
-	*sibling = (void *) node->prev;
+  nuiHTMLItem* pParent = node->GetParent();
+  if (!pParent)
+    return CSS_OK;
   
+  for (uint32 i = 0; i < pParent->GetChildrenCount(); i++)
+  {
+    nuiHTMLItem* pChild = pParent->GetChild(i);
+    if (pChild == node)
+    {
+      if (i == 0)
+        return CSS_OK;
+      pChild = pParent->GetChild(i - 1);
+      *sibling = pChild;
+      return CSS_OK;
+    }
+  }
+  
+  // Huh?!?
 	return CSS_OK;
 }
 
+/**
+ * Callback to determine if a node has the given name.
+ *
+ * \param pw     HTML document
+ * \param node   DOM node
+ * \param name   Name to match
+ * \param match  Pointer to location to receive result
+ * \return CSS_OK.
+ *
+ * \post \a match will contain true if the node matches and false otherwise.
+ */
 css_error node_has_name(void *pw, void *n, lwc_string *name, bool *match)
 {
 	nuiHTMLItem* node = (nuiHTMLItem*)n;
 	UNUSED(pw);
   
-	NGL_ASSERT(lwc_string_caseless_isequal(node->name, name, match) == lwc_error_ok);
+  *match = node->GetNode()->GetName().Compare(MakeString(name), false) == 0;
   
 	return CSS_OK;
 }
 
+/**
+ * Callback to determine if a node has the given class.
+ *
+ * \param pw     HTML document
+ * \param node   DOM node
+ * \param name   Name to match
+ * \param match  Pointer to location to receive result
+ * \return CSS_OK.
+ *
+ * \post \a match will contain true if the node matches and false otherwise.
+ */
 css_error node_has_class(void *pw, void *n, lwc_string *name, bool *match)
 {
 	nuiHTMLItem* node = (nuiHTMLItem*)n;
-	uint32_t i;
-	line_ctx *ctx = pw;
+
+  *match = false;
   
-	for (i = 0; i < node->n_attrs; i++)
-  {
-		bool amatch;
-		NGL_ASSERT(lwc_string_caseless_isequal(node->attrs[i].name, ctx->attr_class, &amatch) == lwc_error_ok);
-		if (amatch == true)
-			break;
-	}
+  nuiHTMLAttrib* pClass = node->GetNode()->GetAttribute(nuiHTMLAttrib::eAttrib_CLASS);
+  if (!pClass)
+    return CSS_OK;
+
+  nglString Class(MakeString(name));
+  nglString cls(pClass->GetValue());
+  std::vector<nglString> tokens;
+  cls.Tokenize(tokens);
+  uint32 count = tokens.size();
   
-	/* Classes are case-sensitive in HTML */
-	if (i != node->n_attrs && name == node->attrs[i].value)
-		*match = true;
-	else
-		*match = false;
+  for (uint32 i = 0; i < count; i++)
+  { 
+    if (tokens[i].Compare(Class, false) == 0)
+    {
+      *match = true;
+      return CSS_OK;
+    }
+  }
   
 	return CSS_OK;
 }
 
+/**
+ * Callback to determine if a node has the given id.
+ *
+ * \param pw     HTML document
+ * \param node   DOM node
+ * \param name   Name to match
+ * \param match  Pointer to location to receive result
+ * \return CSS_OK.
+ *
+ * \post \a match will contain true if the node matches and false otherwise.
+ */
 css_error node_has_id(void *pw, void *n, lwc_string *name, bool *match)
 {
 	nuiHTMLItem* node = (nuiHTMLItem*)n;
-	uint32_t i;
-	line_ctx *ctx = pw;
   
-	for (i = 0; i < node->n_attrs; i++)
-  {
-		bool amatch;
-		NGL_ASSERT(lwc_string_caseless_isequal(node->attrs[i].name, ctx->attr_id, &amatch) == lwc_error_ok);
-		if (amatch == true)
-			break;
-	}
+  *match = false;
   
-	/* IDs are case-sensitive in HTML */
-	if (i != node->n_attrs && name == node->attrs[i].value)
-		*match = true;
-	else
-		*match = false;
+  nuiHTMLAttrib* pID = node->GetNode()->GetAttribute(nuiHTMLAttrib::eAttrib_ID);
+  if (!pID)
+    return CSS_OK;
+  
+  nglString ID(MakeString(name));
+  nglString id(pID->GetValue());
+  
+  if (ID.Compare(id, false) == 0)
+    *match = true;
   
 	return CSS_OK;
 }
 
+/**
+ * Callback to determine if a node has an attribute with the given name.
+ *
+ * \param pw     HTML document
+ * \param node   DOM node
+ * \param name   Name to match
+ * \param match  Pointer to location to receive result
+ * \return CSS_OK on success,
+ *         CSS_NOMEM on memory exhaustion.
+ *
+ * \post \a match will contain true if the node matches and false otherwise.
+ */
 css_error node_has_attribute(void *pw, void *n, lwc_string *name, bool *match)
 {
 	nuiHTMLItem* node = (nuiHTMLItem*)n;
@@ -589,82 +825,86 @@ css_error node_has_attribute(void *pw, void *n, lwc_string *name, bool *match)
 	UNUSED(pw);
 	
 	*match = false;
-	for (i = 0; i < node->n_attrs; i++)
-  {
-		NGL_ASSERT(lwc_string_caseless_isequal(node->attrs[i].name, name, match) == lwc_error_ok);
-		if (*match == true)
-			break;
-	}
-  
+  nuiHTMLAttrib* pAttr = node->GetNode()->GetAttribute(MakeString(name));
+  if (pAttr)
+    *match = true;
+
 	return CSS_OK;
 }
 
+/**
+ * Callback to determine if a node has an attribute with given name and value.
+ *
+ * \param pw     HTML document
+ * \param node   DOM node
+ * \param name   Name to match
+ * \param value  Value to match
+ * \param match  Pointer to location to receive result
+ * \return CSS_OK on success,
+ *         CSS_NOMEM on memory exhaustion.
+ *
+ * \post \a match will contain true if the node matches and false otherwise.
+ */
 css_error node_has_attribute_equal(void *pw, void *n, lwc_string *name, lwc_string *value, bool *match)
 {
 	nuiHTMLItem* node = (nuiHTMLItem*)n;
 	uint32_t i;
 	UNUSED(pw);
-  
+	
 	*match = false;
-	
-	for (i = 0; i < node->n_attrs; i++)
-  {
-		NGL_ASSERT(lwc_string_caseless_isequal(node->attrs[i].name, name, match) == lwc_error_ok);
-		if (*match == true)
-			break;
-	}
-	
-	if (*match == true)
-  {
-		NGL_ASSERT(lwc_string_caseless_isequal(node->attrs[i].name, value, match) == lwc_error_ok);
-	}
-	
+  nuiHTMLAttrib* pAttr = node->GetNode()->GetAttribute(MakeString(name));
+  if (!pAttr)
+    return CSS_OK;
+
+  if (pAttr->GetValue().Compare(MakeString(value), false) == 0)
+    *match = true;
 	return CSS_OK;
 }
 
+/**
+ * Callback to determine if a node has an attribute with the given name whose
+ * value includes that given.
+ *
+ * \param pw     HTML document
+ * \param node   DOM node
+ * \param name   Name to match
+ * \param value  Value to match
+ * \param match  Pointer to location to receive result
+ * \return CSS_OK on success,
+ *         CSS_NOMEM on memory exhaustion.
+ *
+ * \post \a match will contain true if the node matches and false otherwise.
+ */
 css_error node_has_attribute_includes(void *pw, void *n, lwc_string *name, lwc_string *value, bool *match)
 {
 	nuiHTMLItem* node = (nuiHTMLItem*)n;
 	uint32_t i;
-	size_t vlen = lwc_string_length(value);
 	UNUSED(pw);
-  
-	*match = false;
 	
-	for (i = 0; i < node->n_attrs; i++)
-  {
-		NGL_ASSERT(lwc_string_caseless_isequal(node->attrs[i].name, name, match) == lwc_error_ok);
-		if (*match == true)
-			break;
-	}
+	*match = false;
+  nuiHTMLAttrib* pAttr = node->GetNode()->GetAttribute(MakeString(name));
+  if (!pAttr)
+    return CSS_OK;
   
-	if (*match == true)
-  {
-		const char *p;
-		const char *start = lwc_string_data(node->attrs[i].value);
-		const char *end = start + 
-    lwc_string_length(node->attrs[i].value);
-		
-		*match = false;
-		
-		for (p = start; p < end; p++)
-    {
-			if (*p == ' ')
-      {
-				if ((size_t) (p - start) == vlen && strncasecmp(start, lwc_string_data(value), vlen) == 0)
-        {
-          *match = true;
-          break;
-        }
-        
-				start = p + 1;
-			}
-		}
-	}
-  
+  if (pAttr->GetValue().Find(MakeString(value), 0, false) >= 0)
+    *match = true;
 	return CSS_OK;
 }
 
+/**
+ * Callback to determine if a node has an attribute with the given name whose
+ * value dashmatches that given.
+ *
+ * \param pw     HTML document
+ * \param node   DOM node
+ * \param name   Name to match
+ * \param value  Value to match
+ * \param match  Pointer to location to receive result
+ * \return CSS_OK on success,
+ *         CSS_NOMEM on memory exhaustion.
+ *
+ * \post \a match will contain true if the node matches and false otherwise.
+ */
 css_error node_has_attribute_dashmatch(void *pw, void *n, lwc_string *name, lwc_string *value, bool *match)
 {
 	nuiHTMLItem* node = (nuiHTMLItem*)n;
@@ -673,64 +913,86 @@ css_error node_has_attribute_dashmatch(void *pw, void *n, lwc_string *name, lwc_
 	UNUSED(pw);
   
 	*match = false;
-	
-	for (i = 0; i < node->n_attrs; i++)
-  {
-		NGL_ASSERT(lwc_string_caseless_isequal(node->attrs[i].name, name, match) == lwc_error_ok);
-		if (*match == true)
-			break;
-	}
+  nuiHTMLAttrib* pAttr = node->GetNode()->GetAttribute(MakeString(name));
+  if (!pAttr)
+    return CSS_OK;
+
+	nglString val(MakeString(value));
   
-	if (*match == true)
+  const nglChar* p;
+  const nglChar* start = val.GetChars();
+  const nglChar* end = start + val.GetLength();
+  
+  for (p = start; p < end; p++)
   {
-		const char *p;
-		const char *start = lwc_string_data(node->attrs[i].value);
-		const char *end = start + 
-    lwc_string_length(node->attrs[i].value);
-		
-		*match = false;
-		
-		for (p = start; p < end; p++)
+    if (*p == _T('-'))
     {
-			if (*p == '-')
+      if (((size_t) (p - start) == vlen) && (val.Compare(start, 0, vlen, false) == 0))
       {
-				if ((size_t) (p - start) == vlen && strncasecmp(start, lwc_string_data(value), vlen) == 0)
-        {
-          *match = true; 
-          break;
-        }
-        
-				start = p + 1;
-			}
-		}
-	}
+        *match = true; 
+        break;
+      }
+      
+      start = p + 1;
+    }
+  }
   
 	return CSS_OK;
 }
 
+/**
+ * Callback to determine if a node is the first child of its parent.
+ *
+ * \param pw     HTML document
+ * \param node   DOM node
+ * \param match  Pointer to location to receive result
+ * \return CSS_OK.
+ *
+ * \post \a match will contain true if the node matches and false otherwise.
+ */
 css_error node_is_first_child(void *pw, void *n, bool *match)
 {
 	nuiHTMLItem* node = (nuiHTMLItem*)n;
   
 	UNUSED(pw);
   
-	*match = (node->parent != NULL && node->parent->children == node);
+	*match = (node->GetParent() != NULL && node->GetParent()->GetChild(0) == node);
   
 	return CSS_OK;
 }
 
+/**
+ * Callback to determine if a node is a linking element.
+ *
+ * \param pw     HTML document
+ * \param node   DOM node
+ * \param match  Pointer to location to receive result
+ * \return CSS_OK.
+ *
+ * \post \a match will contain true if the node matches and false otherwise.
+ */
 css_error node_is_link(void *pw, void *n, bool *match)
 {
 	nuiHTMLItem* node = (nuiHTMLItem*)n;
   
 	UNUSED(pw);
-	UNUSED(node);
   
-	*match = false;
+	*match = node->GetNode()->GetTagType() == nuiHTMLNode::eTag_A ;
   
 	return CSS_OK;
 }
 
+/**
+ * Callback to determine if a node is a linking element whose target has been
+ * visited.
+ *
+ * \param pw     HTML document
+ * \param node   DOM node
+ * \param match  Pointer to location to receive result
+ * \return CSS_OK.
+ *
+ * \post \a match will contain true if the node matches and false otherwise.
+ */
 css_error node_is_visited(void *pw, void *n, bool *match)
 {
 	nuiHTMLItem* node = (nuiHTMLItem*)n;
@@ -743,6 +1005,16 @@ css_error node_is_visited(void *pw, void *n, bool *match)
 	return CSS_OK;
 }
 
+/**
+ * Callback to determine if a node is currently being hovered over.
+ *
+ * \param pw     HTML document
+ * \param node   DOM node
+ * \param match  Pointer to location to receive result
+ * \return CSS_OK.
+ *
+ * \post \a match will contain true if the node matches and false otherwise.
+ */
 css_error node_is_hover(void *pw, void *n, bool *match)
 {
 	nuiHTMLItem* node = (nuiHTMLItem*)n;
@@ -755,6 +1027,16 @@ css_error node_is_hover(void *pw, void *n, bool *match)
 	return CSS_OK;
 }
 
+/**
+ * Callback to determine if a node is currently activated.
+ *
+ * \param pw     HTML document
+ * \param node   DOM node
+ * \param match  Pointer to location to receive result
+ * \return CSS_OK.
+ *
+ * \post \a match will contain true if the node matches and false otherwise.
+ */
 css_error node_is_active(void *pw, void *n, bool *match)
 {
 	nuiHTMLItem* node = (nuiHTMLItem*)n;
@@ -767,6 +1049,16 @@ css_error node_is_active(void *pw, void *n, bool *match)
 	return CSS_OK;
 }
 
+/**
+ * Callback to determine if a node has the input focus.
+ *
+ * \param pw     HTML document
+ * \param node   DOM node
+ * \param match  Pointer to location to receive result
+ * \return CSS_OK.
+ *
+ * \post \a match will contain true if the node matches and false otherwise.
+ */
 css_error node_is_focus(void *pw, void *n, bool *match)
 {
 	nuiHTMLItem* node = (nuiHTMLItem*)n;
@@ -779,6 +1071,17 @@ css_error node_is_focus(void *pw, void *n, bool *match)
 	return CSS_OK;
 }
 
+/**
+ * Callback to determine if a node has the given language
+ *
+ * \param pw     HTML document
+ * \param node   DOM node
+ * \param lang   Language specifier to match
+ * \param match  Pointer to location to receive result
+ * \return CSS_OK.
+ *
+ * \post \a match will contain true if the node matches and false otherwise.
+ */
 css_error node_is_lang(void *pw, void *n,
                        lwc_string *lang,
                        bool *match)
@@ -794,6 +1097,17 @@ css_error node_is_lang(void *pw, void *n,
 	return CSS_OK;
 }
 
+/**
+ * Callback to retrieve presentational hints for a node
+ *
+ * \param pw        HTML document
+ * \param node      DOM node
+ * \param property  CSS property to retrieve
+ * \param hint      Pointer to hint object to populate
+ * \return CSS_OK               on success,
+ *         CSS_PROPERTY_NOT_SET if there is no hint for the requested property,
+ *         CSS_NOMEM            on memory exhaustion.
+ */
 css_error node_presentational_hint(void *pw, void *node,
                                    uint32_t property, css_hint *hint)
 {
@@ -801,6 +1115,698 @@ css_error node_presentational_hint(void *pw, void *node,
 	UNUSED(node);
 	UNUSED(property);
 	UNUSED(hint);
+  
+#if 0
+	struct content *html = pw;
+	xmlNode *n = node;
+  
+	if (property == CSS_PROP_BACKGROUND_IMAGE) {
+		char *url;
+		url_func_result res;
+		xmlChar *bg = xmlGetProp(n, (const xmlChar *) "background");
+    
+		if (bg == NULL)
+			return CSS_PROPERTY_NOT_SET;
+    
+    
+		res = url_join((const char *) bg,
+                   html->data.html.base_url, &url);
+    
+		xmlFree(bg);
+    
+		if (res == URL_FUNC_NOMEM) {
+			return CSS_NOMEM;
+		} else if (res == URL_FUNC_OK) {
+			lwc_string *iurl;
+			lwc_error lerror;
+      
+			lerror = lwc_intern_string(url, strlen(url), &iurl);
+      
+			free(url);
+      
+			if (lerror == lwc_error_oom) {
+				return CSS_NOMEM;
+			} else if (lerror == lwc_error_ok) {
+				hint->data.string = iurl;
+				hint->status = CSS_BACKGROUND_IMAGE_IMAGE;
+				return CSS_OK;
+			}
+		}
+	} else if (property == CSS_PROP_BACKGROUND_COLOR) {
+		xmlChar *bgcol = xmlGetProp(n, (const xmlChar *) "bgcolor");
+		if (bgcol == NULL)
+			return CSS_PROPERTY_NOT_SET;
+    
+		if (nscss_parse_colour((const char *) bgcol,
+                           &hint->data.color)) {
+			hint->status = CSS_BACKGROUND_COLOR_COLOR;
+		} else {
+			xmlFree(bgcol);
+			return CSS_PROPERTY_NOT_SET;
+		}
+    
+		xmlFree(bgcol);
+    
+		return CSS_OK;
+	} else if (property == CSS_PROP_CAPTION_SIDE) {
+		xmlChar *align = NULL;
+    
+		if (strcmp((const char *) n->name, "caption") == 0)
+			align = xmlGetProp(n, (const xmlChar *) "align");
+    
+		if (align == NULL)
+			return CSS_PROPERTY_NOT_SET;
+    
+		if (strcasecmp((const char *) align, "bottom") == 0) {
+			hint->status = CSS_CAPTION_SIDE_BOTTOM;
+		} else {
+			xmlFree(align);
+			return CSS_PROPERTY_NOT_SET;
+		}
+    
+		xmlFree(align);
+    
+		return CSS_OK;
+	} else if (property == CSS_PROP_COLOR) {
+		xmlChar *col;
+		css_error error;
+		bool is_link, is_visited;
+    
+		error = node_is_link(html, n, &is_link);
+		if (error != CSS_OK)
+			return error;
+    
+		if (is_link) {
+			xmlNode *body;
+			for (body = n; body != NULL && body->parent != NULL &&
+           body->parent->parent != NULL;
+           body = body->parent) {
+				if (body->parent->parent->parent == NULL)
+					break;
+			}
+      
+			error = node_is_visited(html, n, &is_visited);
+			if (error != CSS_OK)
+				return error;
+      
+			if (is_visited)
+				col = xmlGetProp(body,
+                         (const xmlChar *) "vlink");
+			else
+				col = xmlGetProp(body,
+                         (const xmlChar *) "link");
+		} else if (strcmp((const char *) n->name, "body") == 0) {
+			col = xmlGetProp(n, (const xmlChar *) "text");
+		} else {
+			col = xmlGetProp(n, (const xmlChar *) "color");
+		}
+    
+		if (col == NULL)
+			return CSS_PROPERTY_NOT_SET;
+    
+		if (nscss_parse_colour((const char *) col, &hint->data.color)) {
+			hint->status = CSS_COLOR_COLOR;
+		} else {
+			xmlFree(col);
+			return CSS_PROPERTY_NOT_SET;
+		}
+    
+		xmlFree(col);
+    
+		return CSS_OK;
+	} else if (property == CSS_PROP_FLOAT) {
+		xmlChar *align = NULL;
+    
+		/** \todo input[type=image][align=*] - $11.3.3 */
+		if (strcmp((const char *) n->name, "table") == 0 ||
+				strcmp((const char *) n->name, "applet") == 0 ||
+				strcmp((const char *) n->name, "embed") == 0 ||
+				strcmp((const char *) n->name, "iframe") == 0 ||
+				strcmp((const char *) n->name, "img") == 0 ||
+				strcmp((const char *) n->name, "object") == 0)
+			align = xmlGetProp(n, (const xmlChar *) "align");
+    
+		if (align == NULL)
+			return CSS_PROPERTY_NOT_SET;
+    
+		if (strcasecmp((const char *) align, "left") == 0) {
+			hint->status = CSS_FLOAT_LEFT;
+		} else if (strcasecmp((const char *) align, "right") == 0) {
+			hint->status = CSS_FLOAT_RIGHT;
+		} else {
+			xmlFree(align);
+			return CSS_PROPERTY_NOT_SET;
+		}
+    
+		xmlFree(align);
+    
+		return CSS_OK;
+	} else if (property == CSS_PROP_HEIGHT) {
+		xmlChar *height;
+    
+		if (strcmp((const char *) n->name, "iframe") == 0 ||
+				strcmp((const char *) n->name, "td") == 0 ||
+				strcmp((const char *) n->name, "th") == 0 ||
+				strcmp((const char *) n->name, "tr") == 0 ||
+				strcmp((const char *) n->name, "img") == 0 ||
+				strcmp((const char *) n->name, "object") == 0 ||
+				strcmp((const char *) n->name, "applet") == 0)
+			height = xmlGetProp(n, (const xmlChar *) "height");
+		else if (strcmp((const char *) n->name, "textarea") == 0)
+			height = xmlGetProp(n, (const xmlChar *) "rows");
+		else
+			height = NULL;
+    
+		if (height == NULL)
+			return CSS_PROPERTY_NOT_SET;
+    
+		if (parse_dimension((const char *) height, false,
+                        &hint->data.length.value,
+                        &hint->data.length.unit)) {
+			hint->status = CSS_HEIGHT_SET;
+		} else {
+			xmlFree(height);
+			return CSS_PROPERTY_NOT_SET;
+		}
+    
+		xmlFree(height);
+    
+		if (strcmp((const char *) n->name, "textarea") == 0)
+			hint->data.length.unit = CSS_UNIT_EM;
+    
+		return CSS_OK;
+	} else if (property == CSS_PROP_WIDTH) {
+		xmlChar *width;
+    
+		if (strcmp((const char *) n->name, "hr") == 0 ||
+				strcmp((const char *) n->name, "iframe") == 0 ||
+				strcmp((const char *) n->name, "img") == 0 ||
+				strcmp((const char *) n->name, "object") == 0 ||
+				strcmp((const char *) n->name, "table") == 0 ||
+				strcmp((const char *) n->name, "td") == 0 ||
+				strcmp((const char *) n->name, "th") == 0 ||
+				strcmp((const char *) n->name, "applet") == 0)
+			width = xmlGetProp(n, (const xmlChar *) "width");
+		else if (strcmp((const char *) n->name, "textarea") == 0)
+			width = xmlGetProp(n, (const xmlChar *) "cols");
+		else if (strcmp((const char *) n->name, "input") == 0) {
+			width = xmlGetProp(n, (const xmlChar *) "size");
+		} else
+			width = NULL;
+    
+		if (width == NULL)
+			return CSS_PROPERTY_NOT_SET;
+    
+		if (parse_dimension((const char *) width, false,
+                        &hint->data.length.value,
+                        &hint->data.length.unit)) {
+			hint->status = CSS_WIDTH_SET;
+		} else {
+			xmlFree(width);
+			return CSS_PROPERTY_NOT_SET;
+		}
+    
+		xmlFree(width);
+    
+		if (strcmp((const char *) n->name, "textarea") == 0)
+			hint->data.length.unit = CSS_UNIT_EX;
+		else if (strcmp((const char *) n->name, "input") == 0) {
+			xmlChar *type = xmlGetProp(n, (const xmlChar *) "type");
+      
+			if (type == NULL || strcasecmp((const char *) type,
+                                     "text") == 0 ||
+					strcasecmp((const char *) type,
+                     "password") == 0)
+				hint->data.length.unit = CSS_UNIT_EX;
+			else {
+				xmlFree(type);
+				return CSS_PROPERTY_NOT_SET;
+			}
+      
+			if (type != NULL)
+				xmlFree(type);
+		}
+    
+		return CSS_OK;
+	} else if (property == CSS_PROP_BORDER_SPACING) {
+		xmlChar *cellspacing;
+    
+		if (strcmp((const char *) n->name, "table") != 0)
+			return CSS_PROPERTY_NOT_SET;
+    
+		cellspacing = xmlGetProp(n, (const xmlChar *) "cellspacing");
+		if (cellspacing == NULL)
+			return CSS_PROPERTY_NOT_SET;
+    
+		if (parse_dimension((const char *) cellspacing, false,
+                        &hint->data.position.h.value,
+                        &hint->data.position.h.unit)) {
+			hint->data.position.v = hint->data.position.h;
+			hint->status = CSS_BORDER_SPACING_SET;
+		} else {
+			xmlFree(cellspacing);
+			return CSS_PROPERTY_NOT_SET;
+		}
+    
+		xmlFree(cellspacing);
+    
+		return CSS_OK;
+	} else if (property == CSS_PROP_BORDER_TOP_COLOR ||
+             property == CSS_PROP_BORDER_RIGHT_COLOR ||
+             property == CSS_PROP_BORDER_BOTTOM_COLOR ||
+             property == CSS_PROP_BORDER_LEFT_COLOR) {
+		xmlChar *col;
+    
+		if (strcmp((const char *) n->name, "td") == 0 ||
+				strcmp((const char *) n->name, "th") == 0) {
+			/* Find table */
+			for (n = n->parent; n != NULL &&
+           n->type == XML_ELEMENT_NODE;
+           n = n->parent) {
+				if (strcmp((const char *) n->name, "table") ==
+						0)
+					break;
+			}
+      
+			if (n == NULL)
+				return CSS_PROPERTY_NOT_SET;
+		}
+    
+		if (strcmp((const char *) n->name, "table") == 0)
+			col = xmlGetProp(n, (const xmlChar *) "bordercolor");
+		else
+			col = NULL;
+    
+		if (col == NULL)
+			return CSS_PROPERTY_NOT_SET;
+    
+		if (nscss_parse_colour((const char *) col, &hint->data.color)) {
+			hint->status = CSS_BORDER_COLOR_COLOR;
+		} else {
+			xmlFree(col);
+			return CSS_PROPERTY_NOT_SET;
+		}
+    
+		xmlFree(col);
+    
+		return CSS_OK;
+	} else if (property == CSS_PROP_BORDER_TOP_STYLE ||
+             property == CSS_PROP_BORDER_RIGHT_STYLE ||
+             property == CSS_PROP_BORDER_BOTTOM_STYLE ||
+             property == CSS_PROP_BORDER_LEFT_STYLE) {
+		bool is_table_cell = false;
+    
+		if (strcmp((const char *) n->name, "td") == 0 ||
+				strcmp((const char *) n->name, "th") == 0) {
+			is_table_cell = true;
+			/* Find table */
+			for (n = n->parent; n != NULL &&
+           n->type == XML_ELEMENT_NODE;
+           n = n->parent) {
+				if (strcmp((const char *) n->name, "table") ==
+						0)
+					break;
+			}
+      
+			if (n == NULL)
+				return CSS_PROPERTY_NOT_SET;
+		}
+    
+		if (strcmp((const char *) n->name, "table") == 0 &&
+				xmlHasProp(n,
+                   (const xmlChar *) "border") != NULL) {
+          if (is_table_cell)
+            hint->status = CSS_BORDER_STYLE_INSET;
+          else
+            hint->status = CSS_BORDER_STYLE_OUTSET;
+          return CSS_OK;
+        }
+	} else if (property == CSS_PROP_BORDER_TOP_WIDTH ||
+             property == CSS_PROP_BORDER_RIGHT_WIDTH ||
+             property == CSS_PROP_BORDER_BOTTOM_WIDTH ||
+             property == CSS_PROP_BORDER_LEFT_WIDTH) {
+		xmlChar *width;
+		bool is_table_cell = false;
+    
+		if (strcmp((const char *) n->name, "td") == 0 ||
+				strcmp((const char *) n->name, "th") == 0) {
+			is_table_cell = true;
+			/* Find table */
+			for (n = n->parent; n != NULL &&
+           n->type == XML_ELEMENT_NODE;
+           n = n->parent) {
+				if (strcmp((const char *) n->name, "table") ==
+						0)
+					break;
+			}
+      
+			if (n == NULL)
+				return CSS_PROPERTY_NOT_SET;
+		}
+    
+		if (strcmp((const char *) n->name, "table") == 0)
+			width = xmlGetProp(n, (const xmlChar *) "border");
+		else
+			width = NULL;
+    
+		if (width == NULL)
+			return CSS_PROPERTY_NOT_SET;
+    
+		if (parse_dimension((const char *) width, false,
+                        &hint->data.length.value,
+                        &hint->data.length.unit)) {
+			if (is_table_cell &&
+					INTTOFIX(0) !=
+					hint->data.length.value) {
+				hint->data.length.value = INTTOFIX(1);
+				hint->data.length.unit = CSS_UNIT_PX;
+			}
+			hint->status = CSS_BORDER_WIDTH_WIDTH;
+		} else {
+			xmlFree(width);
+			return CSS_PROPERTY_NOT_SET;
+		}
+    
+		xmlFree(width);
+    
+		return CSS_OK;
+	} else if (property == CSS_PROP_MARGIN_TOP ||
+             property == CSS_PROP_MARGIN_BOTTOM) {
+		xmlChar *vspace;
+    
+		if (strcmp((const char *) n->name, "img") == 0 ||
+				strcmp((const char *) n->name, "applet") == 0)
+			vspace = xmlGetProp(n, (const xmlChar *) "vspace");
+		else
+			vspace = NULL;
+    
+		if (vspace == NULL)
+			return CSS_PROPERTY_NOT_SET;
+    
+		if (parse_dimension((const char *) vspace, false,
+                        &hint->data.length.value,
+                        &hint->data.length.unit)) {
+			hint->status = CSS_MARGIN_SET;
+		} else {
+			xmlFree(vspace);
+			return CSS_PROPERTY_NOT_SET;
+		}
+    
+		xmlFree(vspace);
+    
+		return CSS_OK;
+	} else if (property == CSS_PROP_MARGIN_RIGHT ||
+             property == CSS_PROP_MARGIN_LEFT) {
+		xmlChar *hspace = NULL;
+		xmlChar *align = NULL;
+    
+		if (strcmp((const char *) n->name, "img") == 0 ||
+				strcmp((const char *) n->name, "applet") == 0) {
+			hspace = xmlGetProp(n, (const xmlChar *) "hspace");
+      
+			if (hspace == NULL)
+				return CSS_PROPERTY_NOT_SET;
+      
+			if (parse_dimension((const char *) hspace, false,
+                          &hint->data.length.value,
+                          &hint->data.length.unit)) {
+				hint->status = CSS_MARGIN_SET;
+			} else {
+				xmlFree(hspace);
+				return CSS_PROPERTY_NOT_SET;
+			}
+      
+			xmlFree(hspace);
+      
+			return CSS_OK;
+		} else if (strcmp((const char *) n->name, "table") == 0) {
+			align = xmlGetProp(n, (const xmlChar *) "align");
+      
+			if (align == NULL)
+				return CSS_PROPERTY_NOT_SET;
+      
+			if (strcasecmp((const char *) align, "center") == 0 ||
+					strcasecmp((const char *) align,
+                     "abscenter") == 0 ||
+					strcasecmp((const char *) align,
+                     "middle") == 0 ||
+					strcasecmp((const char *) align,
+                     "absmiddle") == 0) {
+            hint->status = CSS_MARGIN_AUTO;
+          } else {
+            xmlFree(align);
+            return CSS_PROPERTY_NOT_SET;
+          }
+      
+			xmlFree(align);
+      
+			return CSS_OK;
+		} else if (strcmp((const char *) n->name, "hr") == 0) {
+			align = xmlGetProp(n, (const xmlChar *) "align");
+      
+			if (align == NULL)
+				return CSS_PROPERTY_NOT_SET;
+      
+			if (strcasecmp((const char *) align, "left") == 0) {
+				if (property == CSS_PROP_MARGIN_LEFT) {
+					hint->data.length.value = 0;
+					hint->data.length.unit = CSS_UNIT_PX;
+					hint->status = CSS_MARGIN_SET;
+				} else {
+					hint->status = CSS_MARGIN_AUTO;
+				}
+			} else if (strcasecmp((const char *) align,
+                            "center") == 0) {
+				hint->status = CSS_MARGIN_AUTO;
+			} else if (strcasecmp((const char *) align,
+                            "right") == 0) {
+				if (property == CSS_PROP_MARGIN_RIGHT) {
+					hint->data.length.value = 0;
+					hint->data.length.unit = CSS_UNIT_PX;
+					hint->status = CSS_MARGIN_SET;
+				} else {
+					hint->status = CSS_MARGIN_AUTO;
+				}
+			} else {
+				xmlFree(align);
+				return CSS_PROPERTY_NOT_SET;
+			}
+      
+			xmlFree(align);
+      
+			return CSS_OK;
+		}
+	} else if (property == CSS_PROP_PADDING_TOP ||
+             property == CSS_PROP_PADDING_RIGHT ||
+             property == CSS_PROP_PADDING_BOTTOM ||
+             property == CSS_PROP_PADDING_LEFT) {
+		xmlChar *cellpadding = NULL;
+    
+		if (strcmp((const char *) n->name, "td") == 0 ||
+				strcmp((const char *) n->name, "th") == 0) {
+			/* Find table */
+			for (n = n->parent; n != NULL &&
+           n->type == XML_ELEMENT_NODE;
+           n = n->parent) {
+				if (strcmp((const char *) n->name, "table") ==
+						0)
+					break;
+			}
+      
+			if (n != NULL)
+				cellpadding = xmlGetProp(n,
+                                 (const xmlChar *) "cellpadding");
+		}
+    
+		if (cellpadding == NULL)
+			return CSS_PROPERTY_NOT_SET;
+    
+		if (parse_dimension((const char *) cellpadding, false,
+                        &hint->data.length.value,
+                        &hint->data.length.unit)) {
+			hint->status = CSS_PADDING_SET;
+		} else {
+			xmlFree(cellpadding);
+			return CSS_PROPERTY_NOT_SET;
+		}
+    
+		xmlFree(cellpadding);
+    
+		return CSS_OK;
+	} else if (property == CSS_PROP_TEXT_ALIGN) {
+		xmlChar *align = NULL;
+    
+		if (strcmp((const char *) n->name, "p") == 0 ||
+				strcmp((const char *) n->name, "h1") == 0 ||
+				strcmp((const char *) n->name, "h2") == 0 ||
+				strcmp((const char *) n->name, "h3") == 0 ||
+				strcmp((const char *) n->name, "h4") == 0 ||
+				strcmp((const char *) n->name, "h5") == 0 ||
+				strcmp((const char *) n->name, "h6") == 0) {
+			align = xmlGetProp(n, (const xmlChar *) "align");
+      
+			if (align == NULL)
+				return CSS_PROPERTY_NOT_SET;
+      
+			if (strcasecmp((const char *) align, "left") == 0) {
+				hint->status = CSS_TEXT_ALIGN_LEFT;
+			} else if (strcasecmp((const char *) align,
+                            "center") == 0) {
+				hint->status = CSS_TEXT_ALIGN_CENTER;
+			} else if (strcasecmp((const char *) align,
+                            "right") == 0) {
+				hint->status = CSS_TEXT_ALIGN_RIGHT;
+			} else if (strcasecmp((const char *) align,
+                            "justify") == 0) {
+				hint->status = CSS_TEXT_ALIGN_JUSTIFY;
+			} else {
+				xmlFree(align);
+				return CSS_PROPERTY_NOT_SET;
+			}
+      
+			xmlFree(align);
+      
+			return CSS_OK;
+		} else if (strcmp((const char *) n->name, "center") == 0) {
+			hint->status = CSS_TEXT_ALIGN_LIBCSS_CENTER;
+      
+			return CSS_OK;
+		} else if (strcmp((const char *) n->name, "caption") == 0) {
+			align = xmlGetProp(n, (const xmlChar *) "align");
+      
+			if (align == NULL || strcasecmp((const char *) align,
+                                      "center") == 0) {
+				hint->status = CSS_TEXT_ALIGN_LIBCSS_CENTER;
+			} else if (strcasecmp((const char *) align,
+                            "left") == 0) {
+				hint->status = CSS_TEXT_ALIGN_LIBCSS_LEFT;
+			} else if (strcasecmp((const char *) align,
+                            "right") == 0) {
+				hint->status = CSS_TEXT_ALIGN_LIBCSS_RIGHT;
+			} else if (strcasecmp((const char *) align,
+                            "justify") == 0) {
+				hint->status = CSS_TEXT_ALIGN_JUSTIFY;
+			} else {
+				xmlFree(align);
+				return CSS_PROPERTY_NOT_SET;
+			}
+      
+			if (align != NULL)
+				xmlFree(align);
+      
+			return CSS_OK;
+		} else if (strcmp((const char *) n->name, "div") == 0 ||
+               strcmp((const char *) n->name, "thead") == 0 ||
+               strcmp((const char *) n->name, "tbody") == 0 ||
+               strcmp((const char *) n->name, "tfoot") == 0 ||
+               strcmp((const char *) n->name, "tr") == 0 ||
+               strcmp((const char *) n->name, "td") == 0 ||
+               strcmp((const char *) n->name, "th") == 0) {
+			align = xmlGetProp(n, (const xmlChar *) "align");
+      
+			if (align == NULL)
+				return CSS_PROPERTY_NOT_SET;
+      
+			if (strcasecmp((const char *) align, "center") == 0) {
+				hint->status = CSS_TEXT_ALIGN_LIBCSS_CENTER;
+			} else if (strcasecmp((const char *) align,
+                            "left") == 0) {
+				hint->status = CSS_TEXT_ALIGN_LIBCSS_LEFT;
+			} else if (strcasecmp((const char *) align,
+                            "right") == 0) {
+				hint->status = CSS_TEXT_ALIGN_LIBCSS_RIGHT;
+			} else if (strcasecmp((const char *) align,
+                            "justify") == 0) {
+				hint->status = CSS_TEXT_ALIGN_JUSTIFY;
+			} else {
+				xmlFree(align);
+				return CSS_PROPERTY_NOT_SET;
+			}
+      
+			xmlFree(align);
+      
+			return CSS_OK;
+		} else if (strcmp((const char *) n->name, "table") == 0) {
+			/* Tables usually reset alignment */
+			hint->status = CSS_TEXT_ALIGN_INHERIT_IF_NON_MAGIC;
+      
+			return CSS_OK;
+		} else {
+			return CSS_PROPERTY_NOT_SET;
+		}
+	} else if (property == CSS_PROP_VERTICAL_ALIGN) {
+		xmlChar *valign = NULL;
+    
+		if (strcmp((const char *) n->name, "col") == 0 ||
+				strcmp((const char *) n->name, "thead") == 0 ||
+				strcmp((const char *) n->name, "tbody") == 0 ||
+				strcmp((const char *) n->name, "tfoot") == 0 ||
+				strcmp((const char *) n->name, "tr") == 0 ||
+				strcmp((const char *) n->name, "td") == 0 ||
+				strcmp((const char *) n->name, "th") == 0) {
+			valign = xmlGetProp(n, (const xmlChar *) "valign");
+      
+			if (valign == NULL)
+				return CSS_PROPERTY_NOT_SET;
+      
+			if (strcasecmp((const char *) valign, "top") == 0) {
+				hint->status = CSS_VERTICAL_ALIGN_TOP;
+			} else if (strcasecmp((const char *) valign,
+                            "middle") == 0) {
+				hint->status = CSS_VERTICAL_ALIGN_MIDDLE;
+			} else if (strcasecmp((const char *) valign,
+                            "bottom") == 0) {
+				hint->status = CSS_VERTICAL_ALIGN_BOTTOM;
+			} else if (strcasecmp((const char *) valign,
+                            "baseline") == 0) {
+				hint->status = CSS_VERTICAL_ALIGN_BASELINE;
+			} else {
+				xmlFree(valign);
+				return CSS_PROPERTY_NOT_SET;
+			}
+      
+			xmlFree(valign);
+      
+			return CSS_OK;
+		} else if (strcmp((const char *) n->name, "applet") == 0 ||
+               strcmp((const char *) n->name, "embed") == 0 ||
+               strcmp((const char *) n->name, "iframe") == 0 ||
+               strcmp((const char *) n->name, "img") == 0 ||
+               strcmp((const char *) n->name, "object") == 0) {
+			/** \todo input[type=image][align=*] - $11.3.3 */
+			valign = xmlGetProp(n, (const xmlChar *) "align");
+      
+			if (valign == NULL)
+				return CSS_PROPERTY_NOT_SET;
+      
+			if (strcasecmp((const char *) valign, "top") == 0) {
+				hint->status = CSS_VERTICAL_ALIGN_TOP;
+			} else if (strcasecmp((const char *) valign,
+                            "bottom") == 0 ||
+                 strcasecmp((const char *) valign,
+                            "baseline") == 0) {
+                   hint->status = CSS_VERTICAL_ALIGN_BASELINE;
+                 } else if (strcasecmp((const char *) valign,
+                                       "texttop") == 0) {
+                   hint->status = CSS_VERTICAL_ALIGN_TEXT_TOP;
+                 } else if (strcasecmp((const char *) valign,
+                                       "absmiddle") == 0 ||
+                            strcasecmp((const char *) valign,
+                                       "abscenter") == 0) {
+                              hint->status = CSS_VERTICAL_ALIGN_MIDDLE;
+                            } else {
+                              xmlFree(valign);
+                              return CSS_PROPERTY_NOT_SET;
+                            }
+      
+			xmlFree(valign);
+      
+			return CSS_OK;
+		}
+	}
+  
+	return CSS_PROPERTY_NOT_SET;
+#endif
   
 	return CSS_PROPERTY_NOT_SET;
 }
@@ -911,5 +1917,4 @@ css_error compute_font_size(void *pw, const css_hint *parent, css_hint *size)
 	return CSS_OK;
 }
 
-#endif
 

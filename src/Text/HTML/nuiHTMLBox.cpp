@@ -295,3 +295,14 @@ float nuiHTMLBox::GetMarginBottom() const
   return mMarginBottom;
 }
 
+int32 nuiHTMLBox::GetChildrenCount() const
+{
+  return mItems.size();
+}
+
+nuiHTMLItem* nuiHTMLBox::GetChild(int32 index) const
+{
+  return mItems[index];
+}
+
+
