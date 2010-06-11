@@ -462,7 +462,11 @@ bool nuiCSSContext::Select(nuiHTMLContext& rContext, nuiHTMLItem* pNode)
    * \param handler         Dispatch table of handler functions
    * \param pw              Client-specific private data for handler functions
    */
-  error = css_select_style(mpContext, pNode, 0, CSS_MEDIA_SCREEN, pNode->GetInlineStyle()->mpSheet, pNode->GetStyle().GetStyle(), &selection_handler, this);
+  const nuiCSSStyleSheet* pInline = pNode->GetInlineStyle();
+  css_stylesheet* pInlineStyle = NULL;
+  if (pInline)
+    pInlineStyle = pInline->mpSheet;
+  error = css_select_style(mpContext, pNode, 0, CSS_MEDIA_SCREEN, pInlineStyle, pNode->GetStyle().GetStyle(), &selection_handler, this);
     
 	return error == CSS_OK;
 }
