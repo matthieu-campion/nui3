@@ -447,14 +447,10 @@ static css_select_handler selection_handler =
 	compute_font_size
 };
 
-void nuiCSSContext::Select(nuiHTMLContext& rContext, nuiHTMLItem* pNode)
+bool nuiCSSContext::Select(nuiHTMLContext& rContext, nuiHTMLItem* pNode)
 {
   css_computed_style *style;
 	css_error error;
-    
-	error = css_computed_style_create(nuiRealloc, this, &style);
-	if (error != CSS_OK)
-		return;
 
   /*
    * \param ctx             Selection context to use
@@ -466,15 +462,30 @@ void nuiCSSContext::Select(nuiHTMLContext& rContext, nuiHTMLItem* pNode)
    * \param handler         Dispatch table of handler functions
    * \param pw              Client-specific private data for handler functions
    */
-  error = css_select_style(mpContext, pNode, 0, CSS_MEDIA_SCREEN, pNode->GetInlineStyle()->mpSheet, style, &selection_handler, this);
+  error = css_select_style(mpContext, pNode, 0, CSS_MEDIA_SCREEN, pNode->GetInlineStyle()->mpSheet, pNode->GetStyle().GetStyle(), &selection_handler, this);
+    
+	return error == CSS_OK;
+}
+
+/// class nuiCSSStyle
+nuiCSSStyle::nuiCSSStyle()
+{
+	css_error error;
+  
+	error = css_computed_style_create(nuiRealloc, this, &mpStyle);
 	if (error != CSS_OK)
-  {
-		css_computed_style_destroy(style);
 		return;
-	}
-  
-	return;
-  
+}
+
+nuiCSSStyle::~nuiCSSStyle()
+{
+  if (mpStyle)
+    css_computed_style_destroy(mpStyle);
+}
+
+css_computed_style* nuiCSSStyle::GetStyle()
+{
+  return mpStyle;
 }
 
 /**

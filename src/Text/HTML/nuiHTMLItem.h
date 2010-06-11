@@ -77,6 +77,7 @@ public:
   const std::vector<nuiCSSStyleSheet*>& GetStyleSheets() const;
   const nuiCSSStyleSheet* nuiHTMLItem::GetInlineStyle() const;
   
+  nuiCSSStyle& GetStyle();
 protected:
   void Invalidate();
   void InvalidateLayout();
@@ -101,5 +102,7 @@ protected:
   
   std::vector<nuiCSSStyleSheet*> mStyleSheets;
   nuiCSSStyleSheet* mpInlineStyle;
+  
+  nuiCSSStyle mStyle;
 };
 

@@ -358,4 +358,9 @@ nuiHTMLItem* nuiHTMLItem::GetChild(int32 index) const
   return NULL;
 }
 
+nuiCSSStyle& nuiHTMLItem::GetStyle()
+{
+  return mStyle;
+}
+
 

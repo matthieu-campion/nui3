@@ -61,11 +61,23 @@ public:
   void AddSheet(nuiCSSStyleSheet* pSheet); ///< Add pSheet to the list of active css style sheets.
   void RemoveSheets(uint32 count); ///< remove the last count sheets from the context.
   
-  void Select(nuiHTMLContext& rContext, nuiHTMLItem* pNode);
+  bool Select(nuiHTMLContext& rContext, nuiHTMLItem* pNode);
 private:
   std::vector<nuiCSSStyleSheet*> mSheets;
   css_select_ctx* mpContext;
   
+};
+
+class nuiCSSStyle
+{
+public:
+  nuiCSSStyle();
+  ~nuiCSSStyle();
+    
+  css_computed_style* GetStyle(); 
+private:
+  friend class nuiCSSContext;
+  css_computed_style* mpStyle;
 };
 
 class nuiCSSEngine
