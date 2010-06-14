@@ -317,14 +317,15 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   
   if (forceresize)
   {
-  
+	  mpNGLWindow->disableFrameBuffer = true;
+	  [(EAGLContext*)mpContext renderbufferStorage: GL_RENDERBUFFER_OES fromDrawable: nil];
 
-    angle = mpNGLWindow->GetRotation();
-    if (angle == 270 || angle == 90)
-      mpNGLWindow->SetSize([UIScreen mainScreen].applicationFrame.size.height, [UIScreen mainScreen].applicationFrame.size.width);
-    else
-      mpNGLWindow->SetSize([UIScreen mainScreen].applicationFrame.size.width, [UIScreen mainScreen].applicationFrame.size.height);
-    [self setFrame: [UIScreen mainScreen].applicationFrame ];
+	  angle = mpNGLWindow->GetRotation();
+	  if (angle == 270 || angle == 90)
+		  mpNGLWindow->SetSize([UIScreen mainScreen].applicationFrame.size.height, [UIScreen mainScreen].applicationFrame.size.width);
+	  else
+		  mpNGLWindow->SetSize([UIScreen mainScreen].applicationFrame.size.width, [UIScreen mainScreen].applicationFrame.size.height);
+	  [self setFrame: [UIScreen mainScreen].applicationFrame ];
 
     CAEAGLLayer* pLayer = (CAEAGLLayer*)[self layer];
     glBindRenderbufferOES(GL_RENDERBUFFER_OES, mRenderBuffer);
@@ -333,13 +334,15 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
     GLint w, h;
     glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &w);
     glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &h);
-	  
+	 
 	if (glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) != GL_FRAMEBUFFER_COMPLETE_OES)
 	{
 	  NSLog(@"Failed to make complete framebuffer object %x", glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES));
 	  return;
 	}
-    
+	 
+
+	  
 	  GLenum err = glGetError();
 	  if (err != GL_NO_ERROR)
 		  NSLog(@"Error. glError: 0x%04X", err);
@@ -348,7 +351,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
     glClearColor(0, 0, 0, 1);
     glClear(GL_COLOR_BUFFER_BIT);
     NSLog(@"NEW Render buffer area: %d x %d\n", w, h);
-    
+    mpNGLWindow->disableFrameBuffer = false;
   }
    
 }
@@ -733,6 +736,7 @@ nglWindow::nglWindow (const nglContextInfo& rContext, const nglWindowInfo& rInfo
 
 void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInfo& rInfo, const nglContext* pShared)
 {
+
   SetError (NGL_WINDOW_ENONE);
   SetEventMask(nglWindow::AllEvents);
 
@@ -745,6 +749,7 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
   }
 
   mInSession  = 0;
+  disableFrameBuffer = false;
   mAngle = rInfo.Rotate;
   CGRect rect = [[UIScreen mainScreen] applicationFrame];
   if (mAngle == 270 || mAngle == 90)
@@ -807,7 +812,7 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
   CAEAGLLayer* pLayer = (CAEAGLLayer*)[pUIWindow layer];
   NGL_ASSERT(pLayer);  
 	pLayer.opaque = YES;
-  BOOL retainBacking = rContext.CopyOnSwap ? YES : NO;
+	BOOL retainBacking = rContext.CopyOnSwap ? YES : NO;
 	[pLayer setDrawableProperties:
    [NSDictionary dictionaryWithObjectsAndKeys:
     [NSNumber numberWithBool:retainBacking], kEAGLDrawablePropertyRetainedBacking,
@@ -835,6 +840,15 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
 	glGenRenderbuffersOES(1, &mRenderBuffer);
 	glBindRenderbufferOES(GL_RENDERBUFFER_OES, mRenderBuffer);
 	[(EAGLContext*)mpContext renderbufferStorage: GL_RENDERBUFFER_OES fromDrawable: pLayer];
+	
+	CGRect r = [(nglUIWindow*)mpUIWindow frame];
+	printf("currentFrame: %f, %f - %f, %f\n", r.origin.x, r.origin.y, r.size.width, r.size.height);
+	r = [UIScreen mainScreen].applicationFrame;
+	printf("applicationFrame: %f, %f - %f, %f\n", r.origin.x, r.origin.y, r.size.width, r.size.height);
+	
+	
+	
+	
   GLint w, h;
   glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &w);
   glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &h);
@@ -904,7 +918,7 @@ void nglWindow::SetState (StateChange State)
     case eMinimize:
       [pApp setStatusBarHidden:FALSE animated:TRUE];
       break;
-		case eMaximize:
+	case eMaximize:
     {
       [pApp setStatusBarHidden:TRUE animated:TRUE];
     }
@@ -993,6 +1007,12 @@ void nglWindow::EndSession()
 #ifdef _DEBUG_WINDOW_
   NGL_LOG(_T("window"), NGL_LOG_INFO, _T("EndSession\n"));
 #endif
+	
+	if(	disableFrameBuffer )
+	{
+	    mInSession = 0;
+		return;
+	}
 
   if (MakeCurrent())
   {

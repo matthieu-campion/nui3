@@ -844,6 +844,8 @@ private:
   GLuint mRenderBuffer;
   GLuint mFrameBuffer;
   GLuint mDepthBuffer;
+public:
+	bool disableFrameBuffer;
 
 #endif
 
