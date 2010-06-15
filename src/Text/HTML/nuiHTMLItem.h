@@ -75,7 +75,7 @@ public:
   void AddStyleSheet(const nglString& rBaseURL, const nglString& rText, bool Inline);
   void AddStyleSheet(const nglString& rURL);
   const std::vector<nuiCSSStyleSheet*>& GetStyleSheets() const;
-  const nuiCSSStyleSheet* nuiHTMLItem::GetInlineStyle() const;
+  const nuiCSSStyleSheet* GetInlineStyle() const;
   
   nuiCSSStyle& GetStyle();
 protected:
