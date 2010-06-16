@@ -15,7 +15,7 @@ class nuiHTTPResponse;
 class nuiAsyncIStream : public nglIStream
 {
 public:
-  nuiAsyncIStream(const nglString& rURL, bool AutoStart);
+  nuiAsyncIStream(const nglString& rURL, bool AutoStart, const nuiSignal1<nuiAsyncIStream*>::Slot& rDelegate);
   
   ~nuiAsyncIStream();
   
@@ -51,4 +51,6 @@ protected:
   bool mCancel;
   
   float mCompletion;
+  
+  nuiSlotsSink mSlotSink;
 };

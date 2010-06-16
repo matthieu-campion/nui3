@@ -37,7 +37,6 @@ private:
   std::vector<nuiCSSStyleSheet*> mpImports;
   nglIStream* mpStream;
   nuiSlotsSink mSlotSink;
-  bool mIsValid;
   nglString mURL;
   bool mInline;
   css_stylesheet* mpSheet;
@@ -58,12 +57,12 @@ public:
   nuiCSSContext();
   ~nuiCSSContext();
   
-  void AddSheet(nuiCSSStyleSheet* pSheet); ///< Add pSheet to the list of active css style sheets.
+  void AddSheet(const nuiCSSStyleSheet* pSheet); ///< Add pSheet to the list of active css style sheets.
   void RemoveSheets(uint32 count); ///< remove the last count sheets from the context.
   
   bool Select(nuiHTMLContext& rContext, nuiHTMLItem* pNode);
 private:
-  std::vector<nuiCSSStyleSheet*> mSheets;
+  std::vector<const nuiCSSStyleSheet*> mSheets;
   css_select_ctx* mpContext;
   
 };
@@ -71,13 +70,61 @@ private:
 class nuiCSSStyle
 {
 public:
-  nuiCSSStyle();
+  nuiCSSStyle(nuiHTMLItem* pItem);
   ~nuiCSSStyle();
     
-  css_computed_style* GetStyle(); 
+  css_computed_style* GetStyle();
+  
+  
+  nuiColor GetColor() const;
+  nuiColor GetBgColor() const;
+  bool HasBgColor() const;
+
+  enum Position
+  {
+    CSS_POSITION_INHERIT			= 0x0,
+    CSS_POSITION_STATIC			= 0x1,
+    CSS_POSITION_RELATIVE			= 0x2,
+    CSS_POSITION_ABSOLUTE			= 0x3,
+    CSS_POSITION_FIXED			= 0x4
+  };
+  Position GetPosition() const;
+
+  
+  enum Unit
+  {
+    CSS_UNIT_PX                 = 0x0,
+    CSS_UNIT_EX                 = 0x1,
+    CSS_UNIT_EM                 = 0x2,
+    CSS_UNIT_IN                 = 0x3,
+    CSS_UNIT_CM                 = 0x4,
+    CSS_UNIT_MM                 = 0x5,
+    CSS_UNIT_PT                 = 0x6,
+    CSS_UNIT_PC                 = 0x7,
+    
+    CSS_UNIT_PCT                = 0x8,	/* Percentage */
+    
+    CSS_UNIT_DEG                = 0x9,
+    CSS_UNIT_GRAD               = 0xa,
+    CSS_UNIT_RAD                = 0xb,
+    
+    CSS_UNIT_MS                 = 0xc,
+    CSS_UNIT_S                  = 0xd,
+    
+    CSS_UNIT_HZ                 = 0xe,
+    CSS_UNIT_KHZ                = 0xf
+  };
+  void GetTop(float& value, Unit& unit) const;
+  void GetLeft(float& value, Unit& unit) const;
+  void GetBottom(float& value, Unit& unit) const;
+  void GetRight(float& value, Unit& unit) const;
+  void GetWidth(float& value, Unit& unit) const;
+  void GetMaxWidth(float& value, Unit& unit) const;
+  
 private:
   friend class nuiCSSContext;
   css_computed_style* mpStyle;
+  nuiHTMLItem* mpItem;
 };
 
 class nuiCSSEngine

@@ -60,17 +60,11 @@ nuiHTMLView::nuiHTMLView(float IdealWidth)
 
 nuiHTMLView::~nuiHTMLView()
 {
-	
   Cancel();
 	
   delete mpHTML;
   delete mpContext;
-	
-	if(mpRootBox)
-		delete mpRootBox;
-
-
-
+  delete mpRootBox;
 }
 
 void nuiHTMLView::Cancel()
@@ -237,6 +231,7 @@ nuiRect nuiHTMLView::CalcIdealSize()
     return nuiRect(IdealWidth, 400.0f);
   
   nuiHTMLContext context(*mpContext);
+  mpRootBox->UpdateStyle(context);
   mpRootBox->Layout(context);
   return nuiRect(mpRootBox->GetIdealRect().GetWidth(), mpRootBox->GetIdealRect().GetHeight());
 }
@@ -252,6 +247,7 @@ void nuiHTMLView::ReLayout()
 //  }
 
   nuiHTMLContext context(*mpContext);
+  mpRootBox->UpdateStyle(context);
   mpRootBox->Layout(context);
   mpRootBox->SetLayout(mpRootBox->GetIdealRect());
   mLastVisibleRect = nuiRect();
@@ -380,8 +376,7 @@ bool nuiHTMLView::SetText(const nglString& rHTMLText)
     delete mpHTML;
     mpHTML = pHTML;
 	  
-	if(mpRootBox)
-		delete mpRootBox;
+    delete mpRootBox;
 	  
     mpRootBox = new nuiHTMLBox(mpHTML, mpCurrentAnchor, false);
     mpRootBox->SetMargins(mMargins);
@@ -390,6 +385,7 @@ bool nuiHTMLView::SetText(const nglString& rHTMLText)
     ParseTree(mpHTML, mpRootBox);
 
     nuiHTMLContext context(*mpContext);
+    mpRootBox->UpdateStyle(context);
     mpRootBox->Layout(context);
     InvalidateLayout();
     SetHotRect(nuiRect());
@@ -409,8 +405,7 @@ bool nuiHTMLView::SetURL(const nglString& rURL)
   nglString url(rURL);
   mTempURL = rURL;
 
-  mpStream = new nuiAsyncIStream(rURL, true);
-  mSlotSink.Connect(mpStream->StreamReady, nuiMakeDelegate(this, &nuiHTMLView::StreamDone));
+  mpStream = new nuiAsyncIStream(rURL, true, nuiMakeDelegate(this, &nuiHTMLView::StreamDone));
   return true;
 }
 
@@ -486,7 +481,6 @@ void nuiHTMLView::StreamDone(nuiAsyncIStream* pStream)
     delete mpHTML;
     mpHTML = pHTML;
 	  
-	if(mpRootBox)
 		delete mpRootBox;
 	  
     mpRootBox = new nuiHTMLBox(mpHTML, mpCurrentAnchor, false);
@@ -498,6 +492,7 @@ void nuiHTMLView::StreamDone(nuiAsyncIStream* pStream)
     //    watch.AddIntermediate(_T("HTML Tree Parsed"));
     
     nuiHTMLContext context(*mpContext);
+    mpRootBox->UpdateStyle(context);
     mpRootBox->Layout(context);
     //    watch.AddIntermediate(_T("HTML Layouted"));
     InvalidateLayout();
@@ -598,7 +593,13 @@ void nuiHTMLView::ParseTitle(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 
 void nuiHTMLView::ParseStyle(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
 {
-  pBox->AddStyleSheet(GetURL(), pNode->GetText(), false);
+  if (pNode->GetNbChildren() == 0)
+    return;
+  
+  nuiHTMLNode* pText = pNode->GetChild(0);
+  if (pText->GetType() != nuiHTML::eNode_Text)
+    return;
+  pBox->AddStyleSheet(GetURL(), pText->GetText(), false);
 }
 
 void nuiHTMLView::ParseHeadLink(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
@@ -619,7 +620,9 @@ void nuiHTMLView::ParseHeadLink(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
   if (!pHRef)
     return;
   
-  pBox->AddStyleSheet(pHRef->GetValue());
+  nglString url = pHRef->GetValue();
+  nuiHTML::GetAbsoluteURL(mpHTML->GetSourceURL(), url);
+  pBox->AddStyleSheet(url);
 }
 
 void nuiHTMLView::ParseBody(nuiHTMLNode* pNode, nuiHTMLBox* pBox)

@@ -2,9 +2,9 @@
 {
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
 		activeBuildConfigurationName = Default;
-		activeExecutable = E5F9B4E00FC9F1D300325121 /* TextEdit_iPhoneD */;
+		activeExecutable = E5F9B4DF0FC9F1D300325121 /* TextEdit_iPhone */;
 		activeSDKPreference = iphoneos3.1.2;
-		activeTarget = C9F5F9070DA84CAB00E078ED /* TextEdit_iPhoneD */;
+		activeTarget = C99995F80DA6EE97001A7116 /* TextEdit_iPhone */;
 		breakpoints = (
 		);
 		codeSenseManager = E5F9B5090FC9F1F200325121 /* Code sense */;
@@ -57,12 +57,12 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 281054352;
-			PBXWorkspaceStateSaveDate = 281054352;
+			PBXPerProjectTemplateStateSaveDate = 298373978;
+			PBXWorkspaceStateSaveDate = 298373978;
 		};
 		perUserProjectItems = {
-			E522139710C31A0A00EB6DB6 /* PBXTextBookmark */ = E522139710C31A0A00EB6DB6 /* PBXTextBookmark */;
-			E52213D610C34F5F00EB6DB6 /* PBXTextBookmark */ = E52213D610C34F5F00EB6DB6 /* PBXTextBookmark */;
+			E553B98C11C8CE4A00CCA8EC /* PBXTextBookmark */ = E553B98C11C8CE4A00CCA8EC /* PBXTextBookmark */;
+			E553BB0E11C8D36700CCA8EC /* PBXTextBookmark */ = E553BB0E11C8D36700CCA8EC /* PBXTextBookmark */;
 			E5F9B50D0FC9F27D00325121 /* PBXTextBookmark */ = E5F9B50D0FC9F27D00325121 /* PBXTextBookmark */;
 		};
 		sourceControlManager = E5F9B5080FC9F1F200325121 /* Source Control */;
@@ -78,9 +78,9 @@
 	};
 	BC6A0A420EF93F9700881ACF /* MainWindow.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {908, 630}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1652, 620}}";
 			sepNavSelRange = "{810, 0}";
-			sepNavVisRange = "{0, 815}";
+			sepNavVisRange = "{0, 891}";
 		};
 	};
 	C99995F80DA6EE97001A7116 /* TextEdit_iPhone */ = {
@@ -95,24 +95,24 @@
 			E5F9B4E00FC9F1D300325121 /* TextEdit_iPhoneD */,
 		);
 	};
-	E522139710C31A0A00EB6DB6 /* PBXTextBookmark */ = {
+	E553B98C11C8CE4A00CCA8EC /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = BC6A0A420EF93F9700881ACF /* MainWindow.cpp */;
-		name = "MainWindow.cpp: 36";
+		name = "MainWindow.cpp: 35";
 		rLen = 0;
 		rLoc = 810;
 		rType = 0;
-		vrLen = 815;
+		vrLen = 891;
 		vrLoc = 0;
 	};
-	E52213D610C34F5F00EB6DB6 /* PBXTextBookmark */ = {
+	E553BB0E11C8D36700CCA8EC /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = BC6A0A420EF93F9700881ACF /* MainWindow.cpp */;
-		name = "MainWindow.cpp: 36";
+		name = "MainWindow.cpp: 35";
 		rLen = 0;
 		rLoc = 810;
 		rType = 0;
-		vrLen = 815;
+		vrLen = 891;
 		vrLoc = 0;
 	};
 	E5F9B4DF0FC9F1D300325121 /* TextEdit_iPhone */ = {

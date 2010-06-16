@@ -29,7 +29,8 @@ void nuiHTMLText::Draw(nuiDrawContext* pContext)
   if (!mFirstInRun)
     return;
   
-  pContext->SetTextColor(mTextFgColor);
+  //pContext->SetTextColor(mTextFgColor);
+  pContext->SetTextColor(mStyle.GetColor());
   //nuiColor mTextBgColor;
   pContext->SetFont(mpFont, false);
   

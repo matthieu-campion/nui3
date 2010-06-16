@@ -49,7 +49,8 @@ nuiHTMLContext::nuiHTMLContext(const nuiHTMLContext& rContext)
   mTextBgColor(rContext.mTextBgColor),
   mLinkColor(rContext.mLinkColor),
   mAlignHorizontal(rContext.mAlignHorizontal),
-  mAlignVertical(rContext.mAlignVertical)
+  mAlignVertical(rContext.mAlignVertical),
+  mpStyleSheets(rContext.mpStyleSheets)
 {
   if (mpFont)
     mpFont->Acquire();
@@ -75,6 +76,8 @@ nuiHTMLContext& nuiHTMLContext::operator=(const nuiHTMLContext& rContext)
   
   mAlignHorizontal = rContext.mAlignHorizontal;
   mAlignVertical = rContext.mAlignVertical;
+
+  mpStyleSheets = rContext.mpStyleSheets;
 
   return *this;
 }

@@ -20,7 +20,8 @@ nuiHTMLItem::nuiHTMLItem(nuiHTMLNode* pNode, nuiHTMLNode* pAnchor, bool Inline)
   mpAnchor(pAnchor),
   mVisible(true),
   mSetRectCalled(false),
-  mpInlineStyle(NULL)
+  mpInlineStyle(NULL),
+  mStyle(this)
 {
   ForceLineBreak(pNode->GetTagType() == nuiHTMLNode::eTag_BR);
   nuiHTMLAttrib* pStyle = pNode->GetAttribute(nuiHTMLAttrib::eAttrib_STYLE);
@@ -53,8 +54,8 @@ uint32 nuiHTMLItem::GetDepth() const
 
 void nuiHTMLItem::CallDraw(nuiDrawContext* pContext)
 {
-  if (!mVisible)
-    return;
+//  if (!mVisible)
+//    return;
 
 #if 0
   for (uint32 i = 0; i < GetDepth(); i++)
@@ -66,10 +67,61 @@ void nuiHTMLItem::CallDraw(nuiDrawContext* pContext)
   printf("nuiHTMLItem::CallDraw <%ls%ls> %ls\n", mpNode->GetName().GetChars(), id.GetChars(), mRect.GetValue().GetChars());
 #endif
   
-  NGL_ASSERT(mSetRectCalled);
+  //NGL_ASSERT(mSetRectCalled);
   pContext->PushMatrix();
-  pContext->Translate(mRect.Left(), mRect.Top());
+
+  nuiCSSStyle::Position pos = GetStyle().GetPosition();
+  switch (pos)
+  {
+    case nuiCSSStyle::CSS_POSITION_FIXED:
+      {
+        // relative to window
+        pContext->LoadIdentity();
+        pContext->Translate(mRect.Left(), mRect.Top());
+      }
+      break;
+    case nuiCSSStyle::CSS_POSITION_ABSOLUTE:
+      {
+        // relative to the first parent that is not in a static position
+        pContext->LoadIdentity();
+        nuiHTMLItem* pParent = GetParent();
+        while (pParent && pParent->GetStyle().GetPosition() == nuiCSSStyle::CSS_POSITION_STATIC)
+          pParent = pParent->GetParent();
+
+        nuiRect g(pParent ? pParent->GetGlobalRect() : nuiRect());
+        pContext->Translate(mRect.Left() + g.Left(), mRect.Top() + g.Top());
+      }
+      break;
+    case nuiCSSStyle::CSS_POSITION_RELATIVE:
+      {
+        // relative to flow position (doesn't move its sibbling and can overlap with them)
+        pContext->Translate(mRect.Left(), mRect.Top());
+      }
+      break;
+    case nuiCSSStyle::CSS_POSITION_STATIC:
+    default:
+      {
+        // Normal flow layout
+        pContext->Translate(mRect.Left(), mRect.Top());
+      }
+      break;
+      
+  }
+  
+  
   //pContext->DrawRect(GetRect().Size(), eStrokeShape);
+  
+  if (mStyle.HasBgColor())
+  {
+    nuiColor obg(pContext->GetFillColor());
+    nuiColor bg(mStyle.GetBgColor());
+    nuiRect r(mRect);
+    r.MoveTo(0, 0);
+    pContext->SetFillColor(bg);
+    pContext->DrawRect(r, eFillShape);
+    pContext->SetFillColor(obg);
+  }
+  
   Draw(pContext);
   pContext->PopMatrix();
 }
@@ -363,4 +415,16 @@ nuiCSSStyle& nuiHTMLItem::GetStyle()
   return mStyle;
 }
 
+void nuiHTMLItem::UpdateStyle(nuiHTMLContext& rContext)
+{
+  nuiHTMLContext ct(rContext);
+  for (uint32 i = 0; i < mStyleSheets.size(); i++)
+    ct.mpStyleSheets.push_back(mStyleSheets[i]);
+
+  if (GetInlineStyle())
+    ct.mpStyleSheets.push_back(GetInlineStyle());
+  
+  nuiCSSContext ctx;
+  ctx.Select(ct, this);
+}
 

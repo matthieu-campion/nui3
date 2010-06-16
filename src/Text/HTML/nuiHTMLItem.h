@@ -78,6 +78,8 @@ public:
   const nuiCSSStyleSheet* GetInlineStyle() const;
   
   nuiCSSStyle& GetStyle();
+  virtual void UpdateStyle(nuiHTMLContext& rContext);
+  
 protected:
   void Invalidate();
   void InvalidateLayout();

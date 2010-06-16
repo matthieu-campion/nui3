@@ -2,8 +2,8 @@
 {
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
 		activeBuildConfigurationName = Default;
-		activeExecutable = E5FCB1E90FD5E88200CE6298 /* SimpleTouch_iPhoneD */;
-		activeTarget = C9F5F9070DA84CAB00E078ED /* SimpleTouch_iPhoneD */;
+		activeExecutable = E5FCB1E80FD5E88200CE6298 /* SimpleTouch_iPhone */;
+		activeTarget = C99995F80DA6EE97001A7116 /* SimpleTouch_iPhone */;
 		addToTargets = (
 			C9F5F9070DA84CAB00E078ED /* SimpleTouch_iPhoneD */,
 			C99995F80DA6EE97001A7116 /* SimpleTouch_iPhone */,
@@ -61,23 +61,17 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 269143832;
-			PBXWorkspaceStateSaveDate = 269143832;
+			PBXPerProjectTemplateStateSaveDate = 298373942;
+			PBXWorkspaceStateSaveDate = 298373942;
 		};
 		perUserProjectItems = {
-			E57957C2100ACF4100821E44 /* PBXTextBookmark */ = E57957C2100ACF4100821E44 /* PBXTextBookmark */;
-			E57957C3100ACF4B00821E44 /* PBXTextBookmark */ = E57957C3100ACF4B00821E44 /* PBXTextBookmark */;
+			E553B94F11C8CE2B00CCA8EC /* PBXTextBookmark */ = E553B94F11C8CE2B00CCA8EC /* PBXTextBookmark */;
+			E553BAF911C8D34E00CCA8EC /* PBXTextBookmark */ = E553BAF911C8D34E00CCA8EC /* PBXTextBookmark */;
 			E5FCB20D0FD5F1AD00CE6298 /* PBXTextBookmark */ = E5FCB20D0FD5F1AD00CE6298 /* PBXTextBookmark */;
-			E5FCB20F0FD5F1AD00CE6298 /* PBXTextBookmark */ = E5FCB20F0FD5F1AD00CE6298 /* PBXTextBookmark */;
-			E5FCB24F0FD5F58600CE6298 /* PBXTextBookmark */ = E5FCB24F0FD5F58600CE6298 /* PBXTextBookmark */;
 			E5FCB2560FD5F5CF00CE6298 /* PBXTextBookmark */ = E5FCB2560FD5F5CF00CE6298 /* PBXTextBookmark */;
 			E5FCB2580FD5F5CF00CE6298 /* PBXTextBookmark */ = E5FCB2580FD5F5CF00CE6298 /* PBXTextBookmark */;
-			E5FCB25C0FD5F5CF00CE6298 /* PBXTextBookmark */ = E5FCB25C0FD5F5CF00CE6298 /* PBXTextBookmark */;
-			E5FCB2620FD5F5CF00CE6298 /* PBXTextBookmark */ = E5FCB2620FD5F5CF00CE6298 /* PBXTextBookmark */;
 			E5FCB2730FD5FA2B00CE6298 /* PBXTextBookmark */ = E5FCB2730FD5FA2B00CE6298 /* PBXTextBookmark */;
 			E5FCB2750FD5FA2B00CE6298 /* PBXTextBookmark */ = E5FCB2750FD5FA2B00CE6298 /* PBXTextBookmark */;
-			E5FCB2790FD5FA2B00CE6298 /* PBXTextBookmark */ = E5FCB2790FD5FA2B00CE6298 /* PBXTextBookmark */;
-			E5FCB27B0FD5FA2B00CE6298 /* PBXTextBookmark */ = E5FCB27B0FD5FA2B00CE6298 /* PBXTextBookmark */;
 		};
 		sourceControlManager = E5FCB2020FD5E8A100CE6298 /* Source Control */;
 		userBuildSettings = {
@@ -86,8 +80,8 @@
 	BC6A0A430EF93F9700881ACF /* Application.cpp */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1652, 3523}}";
-			sepNavSelRange = "{1451, 0}";
-			sepNavVisRange = "{504, 674}";
+			sepNavSelRange = "{585, 0}";
+			sepNavVisRange = "{523, 655}";
 		};
 	};
 	BC6A0A440EF93F9700881ACF /* Application.h */ = {
@@ -109,25 +103,25 @@
 			E5FCB1E90FD5E88200CE6298 /* SimpleTouch_iPhoneD */,
 		);
 	};
-	E57957C2100ACF4100821E44 /* PBXTextBookmark */ = {
+	E553B94F11C8CE2B00CCA8EC /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = BC6A0A430EF93F9700881ACF /* Application.cpp */;
 		name = "Application.cpp: 65";
 		rLen = 0;
 		rLoc = 1451;
 		rType = 0;
-		vrLen = 674;
-		vrLoc = 504;
+		vrLen = 659;
+		vrLoc = 519;
 	};
-	E57957C3100ACF4B00821E44 /* PBXTextBookmark */ = {
+	E553BAF911C8D34E00CCA8EC /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = BC6A0A430EF93F9700881ACF /* Application.cpp */;
-		name = "Application.cpp: 65";
+		name = "Application.cpp: 36";
 		rLen = 0;
-		rLoc = 1451;
+		rLoc = 585;
 		rType = 0;
-		vrLen = 674;
-		vrLoc = 504;
+		vrLen = 655;
+		vrLoc = 523;
 	};
 	E5FCB1E80FD5E88200CE6298 /* SimpleTouch_iPhone */ = {
 		isa = PBXExecutable;
@@ -140,6 +134,9 @@
 		configStateDict = {
 		};
 		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
 		debuggerPlugin = GDBDebugging;
 		disassemblyDisplayState = 0;
 		dylibVariantSuffix = "";
@@ -152,6 +149,7 @@
 		name = SimpleTouch_iPhone;
 		savedGlobals = {
 		};
+		showTypeColumn = 0;
 		sourceDirectories = (
 		);
 		variableFormatDictionary = {
@@ -168,6 +166,9 @@
 		configStateDict = {
 		};
 		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
 		debuggerPlugin = GDBDebugging;
 		disassemblyDisplayState = 0;
 		dylibVariantSuffix = "";
@@ -180,6 +181,7 @@
 		name = SimpleTouch_iPhoneD;
 		savedGlobals = {
 		};
+		showTypeColumn = 0;
 		sourceDirectories = (
 		);
 		variableFormatDictionary = {
@@ -191,6 +193,9 @@
 		isSCMEnabled = 0;
 		scmConfiguration = {
 			repositoryName = nui;
+			repositoryNamesForRoots = {
+				"" = nui;
+			};
 		};
 	};
 	E5FCB2030FD5E8A100CE6298 /* Code sense */ = {
@@ -207,26 +212,6 @@
 		vrLen = 345;
 		vrLoc = 215;
 	};
-	E5FCB20F0FD5F1AD00CE6298 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = BC6A0A440EF93F9700881ACF /* Application.h */;
-		name = "Application.h: 28";
-		rLen = 0;
-		rLoc = 420;
-		rType = 0;
-		vrLen = 345;
-		vrLoc = 215;
-	};
-	E5FCB24F0FD5F58600CE6298 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = BC6A0A430EF93F9700881ACF /* Application.cpp */;
-		name = "Application.cpp: 44";
-		rLen = 0;
-		rLoc = 772;
-		rType = 0;
-		vrLen = 1231;
-		vrLoc = 582;
-	};
 	E5FCB2530FD5F59300CE6298 /* Application.cpp:42 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
@@ -242,6 +227,7 @@
 		lineNumber = 42;
 		location = SimpleTouch_iPhone;
 		modificationTime = 266366230.716407;
+		originalNumberOfMultipleMatches = 0;
 		state = 2;
 	};
 	E5FCB2560FD5F5CF00CE6298 /* PBXTextBookmark */ = {
@@ -278,40 +264,6 @@
 		path = /Users/meeloo/work/nui3/include/nuiRect.h;
 		sourceTree = "<absolute>";
 	};
-	E5FCB25C0FD5F5CF00CE6298 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E5FCB25D0FD5F5CF00CE6298 /* nuiColor.h */;
-		name = "nuiColor.h: 71";
-		rLen = 0;
-		rLoc = 1495;
-		rType = 0;
-		vrLen = 968;
-		vrLoc = 1047;
-	};
-	E5FCB25D0FD5F5CF00CE6298 /* nuiColor.h */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.c.h;
-		name = nuiColor.h;
-		path = /Users/meeloo/work/nui3/include/nuiColor.h;
-		sourceTree = "<absolute>";
-	};
-	E5FCB2620FD5F5CF00CE6298 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E5FCB2630FD5F5CF00CE6298 /* nuiRect.h */;
-		name = "nuiRect.h: 54";
-		rLen = 0;
-		rLoc = 1150;
-		rType = 0;
-		vrLen = 1033;
-		vrLoc = 563;
-	};
-	E5FCB2630FD5F5CF00CE6298 /* nuiRect.h */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.c.h;
-		name = nuiRect.h;
-		path = /Users/meeloo/work/nui3/include/nuiRect.h;
-		sourceTree = "<absolute>";
-	};
 	E5FCB2730FD5FA2B00CE6298 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = E5FCB2740FD5FA2B00CE6298 /* nuiRenderArray.cpp */;
@@ -340,40 +292,6 @@
 		vrLoc = 14078;
 	};
 	E5FCB2760FD5FA2B00CE6298 /* nuiDrawContext.cpp */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.cpp.cpp;
-		name = nuiDrawContext.cpp;
-		path = /Users/meeloo/work/nui3/src/Renderers/nuiDrawContext.cpp;
-		sourceTree = "<absolute>";
-	};
-	E5FCB2790FD5FA2B00CE6298 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E5FCB27A0FD5FA2B00CE6298 /* nuiRenderArray.cpp */;
-		name = "nuiRenderArray.cpp: 105";
-		rLen = 0;
-		rLoc = 2370;
-		rType = 0;
-		vrLen = 1114;
-		vrLoc = 1739;
-	};
-	E5FCB27A0FD5FA2B00CE6298 /* nuiRenderArray.cpp */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.cpp.cpp;
-		name = nuiRenderArray.cpp;
-		path = /Users/meeloo/work/nui3/src/Renderers/nuiRenderArray.cpp;
-		sourceTree = "<absolute>";
-	};
-	E5FCB27B0FD5FA2B00CE6298 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E5FCB27C0FD5FA2B00CE6298 /* nuiDrawContext.cpp */;
-		name = "nuiDrawContext.cpp: 531";
-		rLen = 0;
-		rLoc = 13085;
-		rType = 0;
-		vrLen = 1043;
-		vrLoc = 14078;
-	};
-	E5FCB27C0FD5FA2B00CE6298 /* nuiDrawContext.cpp */ = {
 		isa = PBXFileReference;
 		lastKnownFileType = sourcecode.cpp.cpp;
 		name = nuiDrawContext.cpp;

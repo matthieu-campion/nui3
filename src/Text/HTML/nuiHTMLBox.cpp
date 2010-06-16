@@ -59,6 +59,7 @@ void nuiHTMLBox::AddItem(nuiHTMLItem* pItem)
 {
   mItems.push_back(pItem);
   pItem->SetParent(this);
+  InvalidateLayout();
 }
 
 void nuiHTMLBox::AddItemEnd(nuiHTMLItem* pItem)
@@ -66,6 +67,7 @@ void nuiHTMLBox::AddItemEnd(nuiHTMLItem* pItem)
   pItem->SetEndTag(true);
   mItems.push_back(pItem);
   pItem->SetParent(this);
+  InvalidateLayout();
 }
 
 void nuiHTMLBox::Draw(nuiDrawContext* pContext)
@@ -87,30 +89,44 @@ float nuiHTMLBox::LayoutLine(uint32& start, uint32& count, float& y, float& h, n
   for (int32 j = start; j < start + count; j++)
   {
     nuiHTMLItem* pIt = mItems[j];
-    nuiHTMLText* pText = dynamic_cast<nuiHTMLText*>(pIt);
-    
-    nuiRect r(pIt->GetIdealRect());
-    r.SetHeight(h);
-    r.MoveTo(x + mMarginLeft, y + mMarginTop);
-    r.RoundToAbove();
-    pIt->SetLayout(r);
-    
-    //NGL_OUT(_T("<%ls> %ls\n"), pIt->GetNode()->GetName().GetChars(), r.GetValue().GetChars());
-    
-    x += ToAbove(r.GetWidth());
-    
-    if (pLastText)
+    nuiCSSStyle::Position pos = pIt->GetStyle().GetPosition();
+    if (pos == nuiCSSStyle::CSS_POSITION_STATIC || pos == nuiCSSStyle::CSS_POSITION_RELATIVE)
     {
-      pLastText->SetNextInRun(pText);
+      nuiHTMLText* pText = dynamic_cast<nuiHTMLText*>(pIt);
+      
+      nuiRect r(pIt->GetIdealRect());
+      r.SetHeight(h);
+      r.MoveTo(x + mMarginLeft, y + mMarginTop);
+      r.RoundToAbove();
+      pIt->SetLayout(r);
+      
+      //NGL_OUT(_T("<%ls> %ls\n"), pIt->GetNode()->GetName().GetChars(), r.GetValue().GetChars());
+      for (uint32 bleh = 0; bleh < GetDepth(); bleh++)
+        printf("  ");
+      NGL_OUT(_T("<%ls> %d %p\n"), pIt->GetNode()->GetName().GetChars(), j, pIt);
+      
+      x += ToAbove(r.GetWidth());
+      
+      if (pLastText)
+      {
+        pLastText->SetNextInRun(pText);
+      }
+      
+      if (pText)
+      {
+        pText->SetFirstInRun(!pLastText);
+      }
+      
+      pLastText = pText;
     }
-
-    if (pText)
+    else
     {
-      pText->SetFirstInRun(!pLastText);
+      for (uint32 bleh = 0; bleh < GetDepth(); bleh++)
+        printf("  ");
+      NGL_OUT(_T("skipping <%ls> %d %p\n"), pIt->GetNode()->GetName().GetChars(), j, pIt);
     }
-
-
-    pLastText = pText;
+    
+    NGL_ASSERT(mItems[j]->mSetRectCalled);
   }
   //y += ToAbove(h + rContext.mVSpace);
   y += ToAbove(MAX(h, rContext.mVSpace));
@@ -122,24 +138,32 @@ float nuiHTMLBox::LayoutLine(uint32& start, uint32& count, float& y, float& h, n
 void nuiHTMLBox::Layout(nuiHTMLContext& rContext)
 {
 #if 0 // This is some debug code that helps pointing out layout problems:
-//  for (uint32 i = 0; i < GetDepth(); i++)
-//    printf("  ");
-//  nglString id;
-//  nuiHTMLAttrib* pAttrib = mpNode->GetAttribute(nuiHTMLAttrib::eAttrib_ID);
-//  if (pAttrib)
-//    id.Add(_T(" id='")).Add(pAttrib->GetValue()).Add(_T("'"));
-//  printf("nuiHTMLBox::Layout <%ls%ls> %ls\n", mpNode->GetName().GetChars(), id.GetChars(), mRect.GetValue().GetChars());
-//
-//  if (mpNode->GetTagType() == nuiHTMLNode::eTag_LI)
-//  {
-//    printf("list item\n");
-//  }
+  for (uint32 i = 0; i < GetDepth(); i++)
+    printf("  ");
+  nglString id;
+  nuiHTMLAttrib* pAttrib = mpNode->GetAttribute(nuiHTMLAttrib::eAttrib_ID);
+  if (pAttrib)
+    id.Add(_T(" id='")).Add(pAttrib->GetValue()).Add(_T("'"));
+  printf("nuiHTMLBox::Layout <%ls%ls> %ls (%d items)\n", mpNode->GetName().GetChars(), id.GetChars(), mRect.GetValue().GetChars(), mItems.size());
+
+  if (mpNode->GetTagType() == nuiHTMLNode::eTag_LI)
+  {
+    printf("list item\n");
+  }
 #endif
   
   nuiHTMLContext context(rContext);
   float X = 0;
   float Y = 0;
   float W = 0;
+  float v = 0;
+  nuiCSSStyle::Unit u;
+  GetStyle().GetMaxWidth(v, u);
+  if (v > 0)
+    context.mMaxWidth = MIN(context.mMaxWidth, v);
+  GetStyle().GetWidth(v, u);
+  if (v > 0)
+    context.mMaxWidth = MIN(context.mMaxWidth, v);
   context.mMaxWidth -= (mMarginLeft + mMarginRight);
   
   //printf("box layout start\n");
@@ -157,32 +181,93 @@ void nuiHTMLBox::Layout(nuiHTMLContext& rContext)
     pItem->Layout(context);
     nuiRect r(pItem->GetIdealRect());
     
-    bool linebreak = pItem->IsLineBreak();
-//    if (linebreak)
-//      printf("\nlinebreak\n\n");
-    
-    // Layout the line if needed:
-    if ((X + r.GetWidth() > context.mMaxWidth) || linebreak || !pItem->IsInline())
+    bool flow = true;
+    nuiCSSStyle::Position pos = pItem->GetStyle().GetPosition();
+    switch (pos)
     {
-      done += count_in_line;
-      float w = LayoutLine(line_start, count_in_line, Y, lineh, context);
-      W = MAX(W, w);
-      lastlineh = lineh;
-      lineh = 0;
-      X = 0;
+      case nuiCSSStyle::CSS_POSITION_FIXED:
+        {
+          // relative to window
+          flow = false;
+          float l, t;
+          nuiCSSStyle::Unit u;
+          pItem->GetStyle().GetLeft(l, u);
+          pItem->GetStyle().GetLeft(t, u);
+          r.MoveTo(l,t);
+          r.RoundToAbove();
+          pItem->SetLayout(r);
+          for (uint32 bleh = 0; bleh < GetDepth(); bleh++)
+            printf("  ");
+          printf("fixed layout for item %d (%p)\n", i, pItem);
+          NGL_OUT(_T("  <%ls> %d %p\n"), pItem->GetNode()->GetName().GetChars(), i, pItem);
+        }
+        break;
+      case nuiCSSStyle::CSS_POSITION_ABSOLUTE:
+        {
+          // relative to the first parent that is not in a static position
+          flow = false;
+          float l, t;
+          nuiCSSStyle::Unit u;
+          pItem->GetStyle().GetLeft(l, u);
+          pItem->GetStyle().GetLeft(t, u);
+          r.MoveTo(l,t);
+          r.RoundToAbove();
+          pItem->SetLayout(r);
+          for (uint32 bleh = 0; bleh < GetDepth(); bleh++)
+            printf("  ");
+          printf("absolute layout for item %d (%p)\n", i, pItem);
+          NGL_OUT(_T("  <%ls> %d %p\n"), pItem->GetNode()->GetName().GetChars(), i, pItem);
+        }
+        break;
+      case nuiCSSStyle::CSS_POSITION_RELATIVE:
+        {
+          // relative to flow position (doesn't move its sibbling and can overlap with them)
+        }
+        break;
+      case nuiCSSStyle::CSS_POSITION_STATIC:
+        {
+          // Normal flow layout
+        }
+        break;
+      default:
+        {
+          NGL_ASSERT(0);
+        }
+        break;
+        
+    }
+    
+    if (flow)
+    {
+      bool linebreak = pItem->IsLineBreak();
+      //    if (linebreak)
+      //      printf("\nlinebreak\n\n");
+      
+      // Layout the line if needed:
+      if ((X + r.GetWidth() > context.mMaxWidth) || linebreak || !pItem->IsInline())
+      {
+        done += count_in_line;
+        float w = LayoutLine(line_start, count_in_line, Y, lineh, context);
+        W = MAX(W, w);
+        lastlineh = lineh;
+        lineh = 0;
+        X = 0;
+      }
+      
+      if (linebreak)
+      {
+        nglFontInfo info;
+        rContext.mpFont->GetInfo(info);
+        Y += info.Height;
+      }
+      
+      lineh = MAX(lineh, r.GetHeight());
+      X += r.GetWidth();
+      
+      count_in_line++;
+      
     }
 
-    if (linebreak)
-    {
-      nglFontInfo info;
-      rContext.mpFont->GetInfo(info);
-      Y += info.Height;
-    }
-    
-    lineh = MAX(lineh, r.GetHeight());
-    X += r.GetWidth();
-    
-    count_in_line++;
     //printf("box layout item %d done\n", i);
   }
   
@@ -199,8 +284,10 @@ void nuiHTMLBox::Layout(nuiHTMLContext& rContext)
   nuiRect total;
   for (uint32 i = 0; i < mItems.size(); i++)
   {
-    NGL_ASSERT(mItems[i]->mSetRectCalled);
-    total.Union(total, mItems[i]->GetRect());
+    //NGL_ASSERT(mItems[i]->mSetRectCalled);
+    nuiCSSStyle::Position pos = mItems[i]->GetStyle().GetPosition();
+    if (pos == nuiCSSStyle::CSS_POSITION_STATIC || pos == nuiCSSStyle::CSS_POSITION_RELATIVE)
+      total.Union(total, mItems[i]->GetRect());
   }
   
   
@@ -305,4 +392,21 @@ nuiHTMLItem* nuiHTMLBox::GetChild(int32 index) const
   return mItems[index];
 }
 
+void nuiHTMLBox::UpdateStyle(nuiHTMLContext& rContext)
+{
+  nuiHTMLContext ct(rContext);
+  for (uint32 i = 0; i < mStyleSheets.size(); i++)
+    ct.mpStyleSheets.push_back(mStyleSheets[i]);
+  
+  if (GetInlineStyle())
+    ct.mpStyleSheets.push_back(GetInlineStyle());
+  
+  nuiCSSContext ctx;
+  ctx.Select(ct, this);
+  
+  for (uint32 i = 0; i < mItems.size(); i++)
+    mItems[i]->UpdateStyle(ct);
+  
+  
+}
 

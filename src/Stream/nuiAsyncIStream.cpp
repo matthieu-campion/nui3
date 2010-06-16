@@ -31,6 +31,7 @@ public:
   void Cancel()
   {
     mCancel = true;
+    NGL_OUT(_T("\tCanceling nuiAsyncIStream::Handler 0x%p\n"), this);
   }
 
   float GetCompletion() const
@@ -186,9 +187,10 @@ protected:
   nuiHTTPResponse* mpResponse;
 };
 
-nuiAsyncIStream::nuiAsyncIStream(const nglString& rURL, bool AutoStart)
+nuiAsyncIStream::nuiAsyncIStream(const nglString& rURL, bool AutoStart, const nuiSignal1<nuiAsyncIStream*>::Slot& rDelegate)
 : mURL(rURL), mpHandler(NULL), mpStream(NULL), mCancel(false)
 {
+  mSlotSink.Connect(StreamReady, rDelegate);
   nglPath p(mURL);
   nglString protocol(p.GetVolumeName());
 
@@ -212,6 +214,7 @@ nuiAsyncIStream::nuiAsyncIStream(const nglString& rURL, bool AutoStart)
   else
   {
     // Error
+    NGL_ASSERT(0);
   }
 
   if (AutoStart)
@@ -228,7 +231,7 @@ nuiAsyncIStream::~nuiAsyncIStream()
     }
     else
     {
-      mpHandler->Cancel();
+      Cancel();
     }
   }
 }
@@ -311,5 +314,8 @@ const nuiHTTPResponse* nuiAsyncIStream::GetHTTPResponse() const
 
 void nuiAsyncIStream::Cancel()
 {
+  NGL_OUT(_T("Canceling nuiAsyncIStream 0x%p"), this);
   mCancel = true;
+  if (mpHandler)
+    mpHandler->Cancel();
 }

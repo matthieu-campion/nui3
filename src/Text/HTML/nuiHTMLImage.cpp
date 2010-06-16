@@ -37,8 +37,7 @@ nuiHTMLImage::nuiHTMLImage(nuiHTMLNode* pNode, nuiHTMLNode* pAnchor)
       mpTexture->Release();
       mpTexture = NULL;
     
-      mpStream = new nuiAsyncIStream(url, true);
-      mSlotSink.Connect(mpStream->StreamReady, nuiMakeDelegate(this, &nuiHTMLImage::StreamDone));
+      mpStream = new nuiAsyncIStream(url, true, nuiMakeDelegate(this, &nuiHTMLImage::StreamDone));
       return;
     }
   }
@@ -57,8 +56,9 @@ nuiHTMLImage::~nuiHTMLImage()
 
 void nuiHTMLImage::StreamDone(nuiAsyncIStream* pStream)
 {
-  const nuiHTTPResponse* pResponse = pStream->GetHTTPResponse();
+  NGL_ASSERT(pStream == mpStream);
   mpStream = NULL;
+  const nuiHTTPResponse* pResponse = pStream->GetHTTPResponse();
 
   mpTexture = nuiTexture::GetTexture(pStream);
   

@@ -9,6 +9,8 @@
 
 #include "nuiFontManager.h"
 
+class nuiCSSStyleSheet;
+
 class nuiHTMLContext
 {
 public:
@@ -34,5 +36,7 @@ public:
   
   nuiAlignment mAlignHorizontal;
   nuiAlignment mAlignVertical;
+  
+  std::vector<const nuiCSSStyleSheet*> mpStyleSheets;
 };
 

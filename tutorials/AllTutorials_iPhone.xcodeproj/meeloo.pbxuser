@@ -69,8 +69,12 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 287582904;
-			PBXWorkspaceStateSaveDate = 287582904;
+			PBXPerProjectTemplateStateSaveDate = 298372584;
+			PBXWorkspaceStateSaveDate = 298372584;
+		};
+		perUserProjectItems = {
+			E553BB1F11C8D4D400CCA8EC /* XCBuildMessageTextBookmark */ = E553BB1F11C8D4D400CCA8EC /* XCBuildMessageTextBookmark */;
+			E553BB2111C8D4D400CCA8EC /* PBXTextBookmark */ = E553BB2111C8D4D400CCA8EC /* PBXTextBookmark */;
 		};
 		sourceControlManager = E51FAB511073F312004F6940 /* Source Control */;
 		userBuildSettings = {
@@ -98,5 +102,37 @@
 	};
 	E543D0F21074047800A01E51 /* AllTutorials (debug & release) */ = {
 		activeExec = 0;
+	};
+	E553BB1F11C8D4D400CCA8EC /* XCBuildMessageTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "Extra qualification 'nuiHTMLItem::' on member 'GetInlineStyle'";
+		fRef = E553BB2011C8D4D400CCA8EC /* nuiHTMLItem.h */;
+		fallbackIsa = XCBuildMessageTextBookmark;
+		rLen = 1;
+		rLoc = 77;
+		rType = 1;
+	};
+	E553BB2011C8D4D400CCA8EC /* nuiHTMLItem.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = nuiHTMLItem.h;
+		path = /Users/meeloo/work/nui3/src/Text/HTML/nuiHTMLItem.h;
+		sourceTree = "<absolute>";
+	};
+	E553BB2111C8D4D400CCA8EC /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E553BB2211C8D4D400CCA8EC /* nuiHTMLItem.h */;
+		name = "nuiHTMLItem.h: 78";
+		rLen = 0;
+		rLoc = 2065;
+		rType = 0;
+		vrLen = 701;
+		vrLoc = 1702;
+	};
+	E553BB2211C8D4D400CCA8EC /* nuiHTMLItem.h */ = {
+		isa = PBXFileReference;
+		name = nuiHTMLItem.h;
+		path = /Users/meeloo/work/nui3/src/Text/HTML/nuiHTMLItem.h;
+		sourceTree = "<absolute>";
 	};
 }
