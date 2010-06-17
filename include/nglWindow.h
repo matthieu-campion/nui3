@@ -28,9 +28,7 @@ This class is not available if the _NOGFX_ symbol is defined.
 #include "nglVideoMode.h"
 #include "nuiMouseCursor.h"
 
-#ifndef _NODND_
 #include "nglDragAndDropObjects.h"
-#endif
 
 typedef int32 nglTouchId;
 
@@ -668,8 +666,6 @@ window = new nglWindow (context, info, NULL);
   //@}
 
 
-#ifndef _NODND_
-
   /** @name Drag and drop */
   //@{
 
@@ -698,8 +694,6 @@ window = new nglWindow (context, info, NULL);
   
   
   //@}
-
-#endif//_NODND_
 
   void EnterModalState();
   bool IsInModalState();

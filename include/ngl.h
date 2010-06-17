@@ -78,8 +78,6 @@ and in NGL user application code.
 	#if (TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE)
     #define _UIKIT_
     #define _CORE_FOUNDATION_
-    #define _NOCLIPBOARD_
-    #define _NODND_
 
     #include <CoreFoundation/CoreFoundation.h>
 

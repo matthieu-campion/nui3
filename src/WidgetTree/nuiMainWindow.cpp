@@ -865,7 +865,6 @@ nglWindow* nuiMainWindow::GetNGLWindow() const
   return mpNGLWindow;
 }
 
-#ifndef _NODND_
 void nuiMainWindow::OnDragEnter()
 {
   //NGL_OUT(_T("nuiMainWindow::OnDragEnter\n"));
@@ -963,7 +962,6 @@ void nuiMainWindow::OnDragStop(bool canceled)
     mpDragSource->OnDragStop(canceled); ///< advise drag source
   }
 }
-#endif//_NODND_
 
 ///////////////////////////
 nuiMainWindow::NGLWindow::NGLWindow(nuiMainWindow* pMainWindow, uint Width, uint Height, bool FullScreen)
@@ -1063,8 +1061,6 @@ bool nuiMainWindow::NGLWindow::OnRotation(uint Angle)
   return mpMainWindow->OnRotation(Angle);
 }
 
-#ifndef _NODND_
-
 // Dnd receive
 void nuiMainWindow::NGLWindow::OnDragEnter()
 {
@@ -1106,7 +1102,6 @@ void nuiMainWindow::NGLWindow::OnDragStop(bool canceled)
   nglWindow::OnDragStop(canceled);
   mpMainWindow->OnDragStop(canceled);
 }
-#endif//_NODND_
 
 void nuiMainWindow::SetQuitOnClose(bool Set)
 {

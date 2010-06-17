@@ -1104,5 +1104,34 @@ bool nglWindow::IsEnteringText() const
   return false;
 }
 
+/// Drag and Drop:
+bool nglWindow::Drag(nglDragAndDrop* pDragObject)
+{
+  return false;
+}
 
+nglDropEffect nglWindow::OnCanDrop(nglDragAndDrop* pDragObject, int X,int Y, nglMouseInfo::Flags Button)
+{
+  return eDropEffectNone;
+}
+
+void nglWindow::OnDragEnter()
+{
+}
+
+void nglWindow::OnDragLeave()
+{
+}
+
+void nglWindow::OnDragRequestData(nglDragAndDrop* pDragObject, const nglString& rMimeType)
+{
+}
+
+void nglWindow::OnDragStop(bool canceled)
+{
+}
+
+void nglWindow::OnDropped(nglDragAndDrop* pDragObject, int X,int Y, nglMouseInfo::Flags Button)
+{
+}
 

@@ -298,7 +298,6 @@ public:
   virtual bool ReleaseToolTip(nuiWidgetPtr pWidget); ///< Tell the system to stop displaying this object's tooltip.
   //@}
 
-#ifndef _NODND_
   /** @name Drag and drop */
   //@{
   //  void CancelDrag(nuiDragObject* pDragObject); ///< A widget calls this method to stop an ongoing drag and drop operation with the designated object.
@@ -310,7 +309,6 @@ public:
   virtual void OnDragRequestData(nglDragAndDrop* pDragObject, const nglString& rMimeType); ///< This method is called on the drag and drop source widget by the window manager whenever the drag & drop operation was accepted by the user (by releasing the mouse button on a widget that support the dragged object type). This is the last time the source widget is allowed to place data in the drag and dropped object. 
   virtual void OnDragStop(bool canceled); ///< Called when a drag operation, initiated by the widget, is canceled or finished
   //@}
-#endif
 
   /** @name Basic outgoing events */
   //@{

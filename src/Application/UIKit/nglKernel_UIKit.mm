@@ -125,3 +125,20 @@ if (pWindow) {
 NGL_OUT(_T("objCCallOnExit App->CallOnExit\n"));
 */
  }
+
+/*
+ * Clipboard
+ */
+
+void nglKernel::GetClipboard(nglString& rClipBoard)
+{
+  // #FIXME
+  rClipBoard = _T("*clipboard code not implemented*");
+}
+
+bool nglKernel::SetClipboard(const nglString& rString)
+{
+  // #FIXME
+  return false;
+}
+

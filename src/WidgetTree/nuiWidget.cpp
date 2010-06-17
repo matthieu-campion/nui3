@@ -2569,8 +2569,6 @@ bool nuiWidget::ReleaseToolTip(nuiWidgetPtr pWidget)
 }
 
 
-#ifndef _NODND_
-
 /// Drag
 bool nuiWidget::Drag(nglDragAndDrop* pDragObj)
 {
@@ -2614,8 +2612,6 @@ void nuiWidget::OnDropLeave()
   CheckValid();
   // Do nothing, drag and drop is not supported by default.
 }
-
-#endif//_NODND_
 
 uint32 GetParentCount(nuiWidget* pWidget)
 {

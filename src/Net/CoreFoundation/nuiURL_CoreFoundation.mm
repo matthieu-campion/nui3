@@ -8,6 +8,10 @@
 #include "nui.h"
 #include "nuiURL.h"
 
+#ifndef _CARBON_
+#import <UIKit/UIKit.h>
+#endif
+
 nuiURL::nuiURL(const nglString& rUrl)
 {
   mUrl = rUrl;
@@ -23,7 +27,6 @@ bool nuiURL::IsNull()
   return (mUrl == nglString::Null);
 }
 
-#ifndef _UIKIT_
 bool nuiURL::OpenBrowser()
 {
 
@@ -43,7 +46,8 @@ bool nuiURL::OpenBrowser()
   
   // Launch the URL
 #ifndef _CARBON_
-#pragma message ("Implement with [NSWorkSpace openURL:]")
+  //[NSWorkSpace openURL: url];
+  [[UIApplication sharedApplication] openURL: [NSURL URLWithString: [NSString stringWithCString: s.c_str()]]];
 #else
   OSStatus err = LSOpenCFURLRef(url, NULL);  
   NGL_ASSERT(err == noErr);
@@ -55,4 +59,3 @@ bool nuiURL::OpenBrowser()
   
   return true;
 }
-#endif

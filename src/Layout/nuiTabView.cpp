@@ -560,7 +560,6 @@ nuiTabView::Tab::Tab(nuiWidget* pWidget)
   AddChild(pWidget);
 }
 
-#ifndef _NODND_
 nglDropEffect nuiTabView::Tab::OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y)
 {
   if (!IsSelected())
@@ -569,5 +568,4 @@ nglDropEffect nuiTabView::Tab::OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X,
   }
   return eDropEffectNone;
 }
-#endif
 

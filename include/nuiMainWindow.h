@@ -91,8 +91,6 @@ public:
   const nglChar* GetErrorStr() const;            ///< Retrieve the current error message
   const nglChar* GetErrorStr(uint Error) const;  ///< Retrieve error message by code
 
-#ifndef _NODND_
-
   virtual void OnDragEnter();
   virtual void OnDragLeave();
   virtual nglDropEffect OnCanDrop (nglDragAndDrop* pDragObject, int X, int Y, nglMouseInfo::Flags Button);
@@ -122,7 +120,6 @@ public:
   virtual void OnDragStop(bool canceled);
   
   //@}
-#endif
 
   virtual void EnterModalState();
   virtual void ExitModalState();
@@ -219,7 +216,6 @@ private:
     virtual bool OnMouseMove(nglMouseInfo& rInfo);
     virtual bool OnRotation(uint Angle);
 
-#ifndef _NODND_
     // Dnd receive
     virtual void OnDragEnter();
     virtual void OnDragLeave();
@@ -231,7 +227,6 @@ private:
     virtual void OnDragRequestData(nglDragAndDrop* pDragObject, const nglString& rMimeType);
     virtual void OnDragStop(bool canceled);
     //@}
-#endif
 
   private:
     nuiMainWindow* mpMainWindow;

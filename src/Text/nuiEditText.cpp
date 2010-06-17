@@ -7,9 +7,7 @@
 #include "nuiXML.h"
 #include "nuiDrawContext.h"
 
-#if !defined _NOCLIPBOARD_ && !defined _NODND_
-# include "nglDataObjects.h"
-#endif
+#include "nglDataObjects.h"
 
 //class nuiEditTest2 : nuiSimpleContainer
 nuiEditText::nuiEditText(const nglString& rText)
@@ -265,11 +263,9 @@ void nuiEditText::InitKeyBindings()
   //  mKeyBindings[] = eSelectLine;
   //  mKeyBindings[] = eSelectWord;
 
-#ifndef _NOCLIPBOARD_
   mCommandKeyBindings[NK_C] = eCopy;
   mCommandKeyBindings[NK_X] = eCut;
   mCommandKeyBindings[NK_V] = ePaste;
-#endif
 
   mKeyBindings[NK_DELETE] = eDeleteForward;
   mKeyBindings[NK_BACKSPACE] = eDeleteBackward;
@@ -471,8 +467,6 @@ bool nuiEditText::MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Butto
 
 bool nuiEditText::MouseMoved(nuiSize X, nuiSize Y)
 {
-#ifndef _NODND_
-
   if (mStartDragging && !mDragging)
   {
     Ungrab();
@@ -484,7 +478,6 @@ bool nuiEditText::MouseMoved(nuiSize X, nuiSize Y)
     /*bool res = (unused)*/ Drag(pDnd);
     return true;
   }
-#endif
 
   if (mSelecting)
   {
@@ -525,11 +518,9 @@ void nuiEditText::InitCommands()
   mCommands[eSelectLine] = &nuiEditText::SelectLine;
   mCommands[eSelectWord] = &nuiEditText::SelectWord;
 
-#ifndef _NOCLIPBOARD_
   mCommands[eCopy] = &nuiEditText::Copy;
   mCommands[eCut] = &nuiEditText::Cut;
   mCommands[ePaste] = &nuiEditText::Paste;
-#endif//_NOCLIPBOARD_
 
   mCommands[eDeleteForward] = &nuiEditText::DeleteForward;
   mCommands[eDeleteBackward] = &nuiEditText::DeleteBackward;
@@ -577,9 +568,7 @@ bool nuiEditText::Do(CommandId command, nuiObject* pParams)
   
   // and inform the user the text has changed
   if ( (command == eDeleteSelection) 
-#ifndef _NOCLIPBOARD_
      || (command == eCut) || (command == ePaste) 
-#endif
      || (command == eDeleteForward) || (command == eDeleteBackward) 
      || (command == eInsertText) )
   {
@@ -1379,8 +1368,6 @@ bool nuiEditText::SelectWord(nuiObject* pParams)
 }
 
 
-#ifndef _NOCLIPBOARD_
-
 bool nuiEditText::Copy(nuiObject* pParams)
 {
   if (pParams->GetProperty(_T("Operation"))  == _T("Do"))
@@ -1425,8 +1412,6 @@ bool nuiEditText::Paste(nuiObject* pParams)
   }
   return false;
 }
-
-#endif//_NOCLIPBOARD_
 
 bool nuiEditText::DeleteForward(nuiObject* pParams)
 {
@@ -2183,8 +2168,6 @@ void nuiEditText::TextBlock::InvalidateLayout()
 }
 
 
-#ifndef _NODND_
-
 nglDropEffect nuiEditText::OnCanDrop(nglDragAndDrop* pDragObject,nuiSize X,nuiSize Y)
 {
   if (pDragObject->IsTypeSupported(_T("ngl/Text")))
@@ -2284,8 +2267,6 @@ void nuiEditText::OnDragStop(bool canceled)
   mStartDragging = false;
   mDragging = false;
 }
-
-#endif//!_NODND_
 
 
 

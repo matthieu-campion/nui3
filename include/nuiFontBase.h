@@ -160,7 +160,7 @@ private:
   bool FindNextGlyphLocation(uint Width, uint Height, uint &rOffsetX, uint &rOffsetY);
   void Defaults();
    
-  static const unsigned int TEXTURE_SIZE = 256;
+  static const unsigned int TEXTURE_SIZE = 128;
 
 };
 

@@ -88,13 +88,8 @@ the NGL_APP_CREATE macro for instance.
 #include "nglPath.h"
 #include "nglTimer.h"
 
-#ifndef _NOCLIPBOARD_
-# include "nglClipBoard.h"
-#endif
-
-#if (!defined _NODND_ && !defined _NOCLIPBOARD_)
-# include "nglDataTypesRegistry.h"
-#endif
+#include "nglClipBoard.h"
+#include "nglDataTypesRegistry.h"
 
 class nglDeviceInfo;
 
@@ -225,7 +220,6 @@ public:
   */
   //@}
 
-#ifndef _NOCLIPBOARD_
   /** @name Clipboard */
   //@{
   virtual nglClipBoard &GetClipBoard();
@@ -241,14 +235,11 @@ public:
     \return returns false if the clipboard is not available (maybe temporarily)
   */
   //@}
-#endif//_NOCLIPBOARD_
 
-#if (!defined _NODND_ || !defined _NOCLIPBOARD_)
   /** @name DataTypesRegistry */
   //@{
   virtual nglDataTypesRegistry& GetDataTypesRegistry();
   //@}
-#endif//_NODND_ || _NOCLIPBOARD_
 
   /** @name User callbacks */
   //@{
@@ -337,9 +328,7 @@ private:
   nglLog*       mpLog;
   nglConsole*   mpCon;
 
-#ifndef _NOCLIPBOARD_
   nglClipBoard  mClipboard;
-#endif
 
   bool          mOwnCon;
   ExitFuncList  mExitFuncs;
@@ -347,9 +336,7 @@ private:
   nglString     mName;
   ArgList       mArgs;
 
-#if !defined _NODND_ && !defined _NOCLIPBOARD_
   nglDataTypesRegistry mDataTypesRegistry;
-#endif
 
   nglKernel(const nglKernel&)
   : mKernelEventSink(this)

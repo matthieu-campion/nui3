@@ -84,13 +84,13 @@ nglKernel::~nglKernel()
 
 void nglKernel::GetClipboard(nglString& rClipBoard)
 {
-  // FIXME
+  // #FIXME
   rClipBoard = _T("*clipboard code not implemented*");
 }
 
 bool nglKernel::SetClipboard(const nglString& rString)
 {
-  // FIXME
+  // #FIXME
   return false;
 }
 
