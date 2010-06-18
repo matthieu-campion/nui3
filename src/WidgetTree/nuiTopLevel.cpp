@@ -2206,3 +2206,36 @@ bool nuiTopLevel::IsEnteringText() const
   CheckValid();
   return false;
 }
+
+void nuiTopLevel::PostNotification(nuiNotification* pNotification)
+{
+  mNotificationManager.PostNotification(pNotification);
+}
+
+void nuiTopLevel::BroadcastNotification(const nuiNotification& rNotification)
+{
+  mNotificationManager.BroadcastNotification(rNotification);
+}
+
+void nuiTopLevel::BroadcastQueuedNotifications()
+{
+  mNotificationManager.BroadcastQueuedNotifications();
+}
+
+void nuiTopLevel::RegisterObserver(const nglString& rNotificationName, nuiNotificationObserver* pObserver)
+{
+  mNotificationManager.RegisterObserver(rNotificationName, pObserver);
+}
+
+void nuiTopLevel::UnregisterObserver(nuiNotificationObserver* pObserver, const nglString& rNotificationName)
+{
+  mNotificationManager.UnregisterObserver(pObserver, rNotificationName);
+}
+
+void nuiTopLevel::ClearNotifications()
+{
+  mNotificationManager.Clear();
+}
+
+
+

@@ -131,8 +131,23 @@ protected:
   
   virtual void OnPropertyChanged(const nglString& rProperty, const nglString& rValue);
 
-
-#ifdef _NUI_DEBUG_OBJECTS_
+private : 
+  void Init(const nglString& rObjectName);
+  void InitAttributes();
+  
+  nuiTokenBase* mpToken;
+  //std::map<nglString,nuiAttributeBase*> mAttributes;
+  static uint32 mUniqueAttributeOrder; // to handle properties's order
+  
+  static std::vector<nglString> mObjectClassNames;
+  static std::vector<std::map<nglString, nuiAttributeBase*> > mClassAttributes;
+  std::map<nglString, nuiAttributeBase*> mInstanceAttributes;
+  static std::map<nglString, int32> mObjectClassNamesMap;
+  
+  uint32 mClassNameIndex;
+  nglString mObjectName;
+  
+protected:
   class Trace
   {
   public:
@@ -141,25 +156,8 @@ protected:
     bool mAlive;
   };
   static std::map<nuiObject*, Trace> mObjects;
-  Trace* mpTrace;
   static nglCriticalSection gObjectTraceCS;
-#endif
-  
-private : 
-  void Init(const nglString& rObjectName);
-  void InitAttributes();
-
-  nuiTokenBase* mpToken;
-  //std::map<nglString,nuiAttributeBase*> mAttributes;
-  static uint32 mUniqueAttributeOrder; // to handle properties's order
-
-  static std::vector<nglString> mObjectClassNames;
-  static std::vector<std::map<nglString, nuiAttributeBase*> > mClassAttributes;
-  std::map<nglString, nuiAttributeBase*> mInstanceAttributes;
-  static std::map<nglString, int32> mObjectClassNamesMap;
-
-  uint32 mClassNameIndex;
-  nglString mObjectName;
+  Trace* mpTrace;
 };
 
 //typedef nuiSmartPtr<nuiObject> nuiObjectPtr;

@@ -41,7 +41,7 @@ protected:
 };
 
 
-class NUI_API nuiTopLevel : public nuiSimpleContainer, public nuiNotificationManager
+class NUI_API nuiTopLevel : public nuiSimpleContainer
 {
 public:
   /** @name Life */
@@ -164,6 +164,15 @@ public:
   virtual void StartTextInput(int32 X, int32 Y, int32 W, int32 H);
   virtual void EndTextInput();
   virtual bool IsEnteringText() const;
+
+  // Notification manager proxy:
+  void PostNotification(nuiNotification* pNotification); ///< Put this notification in a queue in order to broadcast when the system feels like it.
+  void BroadcastNotification(const nuiNotification& rNotification); ///< Send this notification now to all registered observers.
+  void BroadcastQueuedNotifications(); ///< Broadcast all the notifications that have been queued up to now.
+  void RegisterObserver(const nglString& rNotificationName, nuiNotificationObserver* pObserver); ///< Register an observer for the given notification type. If the type is nglString::Empty, all the notifications will be sent to the observer.
+  void UnregisterObserver(nuiNotificationObserver* pObserver, const nglString& rNotificationName = nglString::Null); ///< Unregister pObserver so that it doesn't receive the given notification. By default it is removed from all notification types (nglString::Null).
+  void ClearNotifications();
+  
   
 protected:
   void Exit();
@@ -234,6 +243,8 @@ protected:
   std::map<nuiWidgetPtr, nuiWidgetPtr> mTabBackward;
   std::map<nuiWidgetPtr, std::set<nuiWidgetPtr> > mTabForwardRev;
   std::map<nuiWidgetPtr, std::set<nuiWidgetPtr> > mTabBackwardRev;
+  
+  nuiNotificationManager mNotificationManager;
 };
 
 bool operator==(const nuiTrashElement& rElement1,const nuiTrashElement& rElement2);

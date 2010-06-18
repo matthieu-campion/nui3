@@ -16,10 +16,11 @@
  */
 
 MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& rInfo, bool ShowFPS, const nglContext* pShared )
-  : nuiMainWindow(rContextInfo, rInfo, pShared, nglPath(ePathCurrent)),
-    mEventSink(this)
+  : mEventSink(this),
+    nuiMainWindow(rContextInfo, rInfo, pShared, nglPath(ePathCurrent))
+    
 {
-  //mClearBackground = false;
+  //              mClearBackground = false;
   SetDebugMode(true);
 }
 
@@ -40,28 +41,26 @@ void MainWindow::OnCreation()
                
   AddChild(pBg);
   
-  {
-    nuiVBox* pBox = new nuiVBox();
-    pBox->SetExpand(nuiExpandShrinkAndGrow);
-    
-    nuiButton* pButton = new nuiButton();
-    nuiLabel* pLabel = new nuiLabel(nglString(_T("Press Me!")), nuiFont::GetFont(35));
-    pLabel->SetPosition(nuiCenter);
-    pButton->AddChild(pLabel);
-    pButton->SetAlpha(.5);
-    pBox->AddCell(pButton, nuiCenter);
-    pBox->SetCellExpand(0, nuiExpandShrinkAndGrow);
-    mEventSink.Connect(pButton->Activated, &MainWindow::ChangeLayout, pButton);
-    pButton->SetLayoutAnimationDuration(1);
-    //pButton->SetLayoutAnimationEasing(nuiEasingSinus);
-    pButton->SetLayoutAnimationEasing(nuiEasingElasticOut<500>);
-    //pButton->SetLayoutAnimationEasing(nuiEasingBounceOut);
-    //pButton->SetLayoutAnimationEasing(nuiEasingBounceIn);
-    //pButton->SetLayoutAnimationEasing(nuiEasingBackIn);
+  nuiVBox* pBox = new nuiVBox();
+  pBox->SetExpand(nuiExpandShrinkAndGrow);
+  
+  nuiButton* pButton = new nuiButton();
+  nuiLabel* pLabel = new nuiLabel(nglString(_T("Press Me!")), nuiFont::GetFont(35));
+  pLabel->SetPosition(nuiCenter);
+  pButton->AddChild(pLabel);
+  pButton->SetAlpha(.5);
+  pBox->AddCell(pButton, nuiCenter);
+  pBox->SetCellExpand(0, nuiExpandShrinkAndGrow);
+  pButton->SetLayoutAnimationDuration(1);
+  //pButton->SetLayoutAnimationEasing(nuiEasingSinus);
+  pButton->SetLayoutAnimationEasing(nuiEasingElasticOut<500>);
+  //pButton->SetLayoutAnimationEasing(nuiEasingBounceOut);
+  //pButton->SetLayoutAnimationEasing(nuiEasingBounceIn);
+  //pButton->SetLayoutAnimationEasing(nuiEasingBackIn);
 
+  mEventSink.Connect(pButton->Activated, &MainWindow::ChangeLayout, pButton);
 
-    AddChild(pBox);
-  }
+  AddChild(pBox);
 }
 
 void MainWindow::OnClose()

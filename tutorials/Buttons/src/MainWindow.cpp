@@ -105,8 +105,8 @@ nuiWidget* MainWindow::Tutorial_Buttons()
   
   // a simple button
   nuiButton* pBtn = new nuiButton(_T("button"));
-  pBox->AddCell(pBtn, nuiCenter);
   mEventSink.Connect(pBtn->Activated, &MainWindow::OnButtonPressed, (void*)TAG_BUTTON1);
+  pBox->AddCell(pBtn, nuiCenter);
 
   // a simple button filling the box's cell
   pBtn = new nuiButton(_T("button"));

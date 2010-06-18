@@ -20,6 +20,7 @@
 using namespace std;
 
 nuiObject::nuiObject()
+: mpTrace(NULL)
 {	
   nglString name;
   name.CFormat(_T("%p"), this);
@@ -27,6 +28,7 @@ nuiObject::nuiObject()
 }
 
 nuiObject::nuiObject(const nglString& rObjectName)
+: mpTrace(NULL)
 {
   Init(rObjectName);
 }
@@ -43,7 +45,11 @@ void nuiObject::Init(const nglString& rObjectName)
     mpTrace = &(it->second);
     mpTrace->mAlive = true;
 
-    uint32 s = mObjects.size(); if (!(s % 500)) { NGL_OUT(_T("Objects total count %d\n"), s); }
+    uint32 s = mObjects.size();
+    if (!(s % 500))
+    {
+      NGL_OUT(_T("Objects total count %d\n"), s);
+    }
   }
 #endif
 
@@ -200,7 +206,7 @@ nuiSerializeMode nuiObject::GetSerializeMode () const
 nuiObject::~nuiObject()
 {
   CheckValid();
-//  OUT("Deleting object '%ls' (class='%ls')\n", GetObjectName().GetChars(), GetObjectClass().GetChars());
+  //NGL_OUT(_T("Deleting object '%ls' (class='%ls')\n"), GetObjectName().GetChars(), GetObjectClass().GetChars());
   delete mpToken;
 
   int32 c = mClassNameIndex;
@@ -219,13 +225,12 @@ nuiObject::~nuiObject()
     
     c = mInheritanceMap[c];
   }
-  
-#ifdef _NUI_DEBUG_OBJECTS_
+
+  if (mpTrace)
   {
     nglCriticalSectionGuard g(gObjectTraceCS);
     mpTrace->mAlive = false;
   }
-#endif
 }
 
 
@@ -247,12 +252,11 @@ const nglString& nuiObject::GetObjectName() const
 void nuiObject::SetObjectName(const nglString& rName)
 {
   CheckValid();
-#ifdef _NUI_DEBUG_OBJECTS_
+  if (mpTrace)
   {
     nglCriticalSectionGuard g(gObjectTraceCS);
     mpTrace->mName = rName;
   }
-#endif
 
   mObjectName = rName;
   
@@ -774,14 +778,16 @@ void nuiObject::OnPropertyChanged(const nglString& rProperty, const nglString& r
   //...
 }
 
-#ifdef _NUI_DEBUG_OBJECTS_
 std::map<nuiObject*, nuiObject::Trace> nuiObject::mObjects;
 nglCriticalSection nuiObject::gObjectTraceCS;
-#endif
 
 void nuiObject::CheckValid() const
 {
 #ifdef _NUI_DEBUG_OBJECTS_
+  NGL_ASSERT(mpTrace);
+#else
+  if (mpTrace)
+#endif
   {
     nglCriticalSectionGuard g(gObjectTraceCS);
     std::map<nuiObject*, Trace>::const_iterator it = mObjects.find(const_cast<nuiObject*>(this));
@@ -796,7 +802,6 @@ void nuiObject::CheckValid() const
     NGL_ASSERT(it != mObjects.end());
     NGL_ASSERT(it->second.mAlive);
   }
-#endif
 }
 
 int32 nuiObject::GetClassCount()
