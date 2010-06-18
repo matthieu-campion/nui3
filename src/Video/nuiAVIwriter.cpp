@@ -32,24 +32,31 @@
 
 
 
-nuiAVIwriter::nuiAVIwriter(nglOStream& stream, uint32 width, uint32 height, float frame_rate)
+nuiAVIwriter::nuiAVIwriter(nglOStream& stream, uint32 width, uint32 height, uint32 bpp, float frame_rate)
 {
-
+  mOwnStream = false;
+  Init(&stream, width, height, bpp, frame_rate);
 }
 
 
-nuiAVIwriter::nuiAVIwriter(const nglPath& output, uint32 width, uint32 height, float frame_rate)
+nuiAVIwriter::nuiAVIwriter(const nglPath& output, uint32 width, uint32 height, uint32 bpp, float frame_rate)
 {
-
+  nglOFile* file = new nglOFile(output, eOFileCreate);
+  if (!file->IsOpen())
+    return;
+  
+  mOwnStream = true;
+  Init(file, width, height, bpp, frame_rate);
 }
 
-void nuiAVIwriter::Init(nglOStream& stream, uint32 width, uint32 height, float frame_rate)
+void nuiAVIwriter::Init(nglOStream* stream, uint32 width, uint32 height, uint32 bpp, float frame_rate)
 {
-  mpStream = &stream;
+  mpStream = stream;
   mpStream->SetEndian(eEndianLittle);
   
   mWidth = width;
   mHeight = height;
+  mBpp = bpp;
   mFramerate = frame_rate;
   mFrameCount = 0;
   mClosed = false;
@@ -73,17 +80,17 @@ nuiAVIwriter::~nuiAVIwriter()
 
 
 
-void nuiAVIwriter::AddFrame(nglImageInfo& frame)
+void nuiAVIwriter::AddFrame(char* pFrame)
 {
   int x, y;
   uint8 bgr[3];
-  uint8 *pixels = (uint8*)frame.mpBuffer;
+  uint8 *pixels = (uint8*)pFrame;
   uint8 *row, *pixel;
-  int width = frame.mWidth;
-  int height = frame.mHeight;
-  int rowstride = (frame.mBytesPerPixel * 8 * frame.mWidth) / 32;
+  int width = mWidth;
+  int height = mHeight;
+  int rowstride = (mBpp * mWidth) / 24;
 
-  int n_channels = frame.mBitDepth;
+  int n_channels = mBpp / 8;
   int padding = 0;
   
   NGL_ASSERT(width == mWidth);
@@ -147,6 +154,12 @@ void nuiAVIwriter::Close()
     mIndexQueue.pop();
   while (!mChunckStack.empty())
     mChunckStack.pop_back();
+  
+  if (mOwnStream)
+  {
+    nglOFile* pFile = (nglOFile*)mpStream;
+    pFile->Close();
+  }
 }
 
 

@@ -14,11 +14,11 @@ class nuiAVIwriter
 {
 public:
   
-  nuiAVIwriter(nglOStream& stream, uint32 width, uint32 height, float frame_rate); 
-  nuiAVIwriter(const nglPath& output, uint32 width, uint32 height, float frame_rate); 
+  nuiAVIwriter(nglOStream& stream, uint32 width, uint32 height, uint32 bpp,  float frame_rate); 
+  nuiAVIwriter(const nglPath& output, uint32 width, uint32 height, uint32 bpp, float frame_rate); 
   ~nuiAVIwriter();
 
-  void AddFrame(nglImageInfo& frame);
+  void AddFrame(char* pFrame);
   void Close();
   
   
@@ -47,7 +47,7 @@ protected:
   
 private:
 
-  void Init(nglOStream& stream, uint32 width, uint32 height, float frame_rate); 
+  void Init(nglOStream* stream, uint32 width, uint32 height,uint32 bpp,  float frame_rate); 
 
   void WriteHeaderList();
   void WriteMainHeader();
@@ -65,6 +65,8 @@ private:
   
   
   nglOStream* mpStream;
+  bool mOwnStream;
+  int32 mBpp;
   int32 mWidth;
   int32 mHeight;
   float mFramerate;
