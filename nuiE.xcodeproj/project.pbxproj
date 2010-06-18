@@ -894,13 +894,6 @@
 		735F70530FF2747500E66B1D /* nuiStringAttributeEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4810DA5716500D2641A /* nuiStringAttributeEditor.h */; };
 		735F70540FF2747500E66B1D /* nuiBooleanAttributeEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4830DA5716500D2641A /* nuiBooleanAttributeEditor.h */; };
 		735F70550FF2747500E66B1D /* nuiSizeAttributeEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4850DA5716500D2641A /* nuiSizeAttributeEditor.h */; };
-		735F70560FF2747500E66B1D /* nglApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4A50DA5716500D2641A /* nglApplication.h */; };
-		735F70570FF2747500E66B1D /* nglConsole.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4A90DA5716500D2641A /* nglConsole.h */; };
-		735F70580FF2747500E66B1D /* nglCPUInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4AB0DA5716500D2641A /* nglCPUInfo.h */; };
-		735F70590FF2747500E66B1D /* nglEndian.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4B30DA5716500D2641A /* nglEndian.h */; };
-		735F705A0FF2747500E66B1D /* nglEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4B40DA5716500D2641A /* nglEvent.h */; };
-		735F705B0FF2747500E66B1D /* nglKernel.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4B60DA5716500D2641A /* nglKernel.h */; };
-		735F705C0FF2747500E66B1D /* nglLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4B80DA5716500D2641A /* nglLog.h */; };
 		735F705D0FF2747500E66B1D /* nuiHTML.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4BE0DA5716500D2641A /* nuiHTML.h */; };
 		735F705E0FF2747500E66B1D /* nuiApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4C30DA5716500D2641A /* nuiApplication.h */; };
 		735F705F0FF2747500E66B1D /* nuiBindingManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4C50DA5716500D2641A /* nuiBindingManager.h */; };
@@ -1369,7 +1362,6 @@
 		735F722E0FF2747500E66B1D /* nuiAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 61EE88880F7A622F00417FC3 /* nuiAnimation.h */; };
 		735F722F0FF2747500E66B1D /* nuiCommandContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = BCAD1AAB0F7CFE68001FCB9B /* nuiCommandContainer.h */; };
 		735F72300FF2747500E66B1D /* nuiCommandManager.h in Headers */ = {isa = PBXBuildFile; fileRef = BCAD1AAD0F7CFE68001FCB9B /* nuiCommandManager.h */; };
-		735F72310FF2747500E66B1D /* nuiLocale.h in Headers */ = {isa = PBXBuildFile; fileRef = BCB99F140F7D004300686319 /* nuiLocale.h */; };
 		735F72320FF2747500E66B1D /* nuiTranslator.h in Headers */ = {isa = PBXBuildFile; fileRef = BC3E8CFF0F7D081300C97E27 /* nuiTranslator.h */; };
 		735F72330FF2747500E66B1D /* nuiUnicode.h in Headers */ = {isa = PBXBuildFile; fileRef = BC3E8D010F7D081300C97E27 /* nuiUnicode.h */; };
 		735F72340FF2747500E66B1D /* nuiDecorationInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = E5A0FFBE0FA1EB8500D934F6 /* nuiDecorationInspector.h */; };
@@ -1471,12 +1463,6 @@
 		735F72950FF2747500E66B1D /* nglApplication_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6126D4910DA5716500D2641A /* nglApplication_UIKit.mm */; };
 		735F72960FF2747500E66B1D /* nglKernel_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6126D4920DA5716500D2641A /* nglKernel_UIKit.mm */; };
 		735F72970FF2747500E66B1D /* nglConsole_Carbon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D49E0DA5716500D2641A /* nglConsole_Carbon.cpp */; };
-		735F72980FF2747500E66B1D /* nglApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D4A40DA5716500D2641A /* nglApplication.cpp */; };
-		735F72990FF2747500E66B1D /* nglConsole.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D4A80DA5716500D2641A /* nglConsole.cpp */; };
-		735F729A0FF2747500E66B1D /* nglCPUInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D4AA0DA5716500D2641A /* nglCPUInfo.cpp */; };
-		735F729B0FF2747500E66B1D /* nglCPUInfo_x86.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D4AC0DA5716500D2641A /* nglCPUInfo_x86.cpp */; };
-		735F729C0FF2747500E66B1D /* nglKernel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D4B50DA5716500D2641A /* nglKernel.cpp */; };
-		735F729D0FF2747500E66B1D /* nglLog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D4B70DA5716500D2641A /* nglLog.cpp */; };
 		735F729E0FF2747500E66B1D /* nuiHTML.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D4BF0DA5716500D2641A /* nuiHTML.cpp */; };
 		735F729F0FF2747500E66B1D /* nui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D4C00DA5716500D2641A /* nui.cpp */; };
 		735F72A00FF2747500E66B1D /* nuiBindingManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D4C40DA5716500D2641A /* nuiBindingManager.cpp */; };
@@ -1703,7 +1689,6 @@
 		735F737E0FF2747500E66B1D /* nuiAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61EE88870F7A622F00417FC3 /* nuiAnimation.cpp */; };
 		735F737F0FF2747500E66B1D /* nuiCommandContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCAD1AAA0F7CFE68001FCB9B /* nuiCommandContainer.cpp */; };
 		735F73800FF2747500E66B1D /* nuiCommandManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCAD1AAC0F7CFE68001FCB9B /* nuiCommandManager.cpp */; };
-		735F73810FF2747500E66B1D /* nuiLocale.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCB99F150F7D004300686319 /* nuiLocale.cpp */; };
 		735F73820FF2747500E66B1D /* nuiTranslator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC3E8D000F7D081300C97E27 /* nuiTranslator.cpp */; };
 		735F73830FF2747500E66B1D /* nuiUnicode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC3E8D020F7D081300C97E27 /* nuiUnicode.cpp */; };
 		735F73840FF2747500E66B1D /* nuiDecorationInspector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5A0FFBB0FA1EB1200D934F6 /* nuiDecorationInspector.cpp */; };
@@ -1790,6 +1775,59 @@
 		E52216A810C585DA00EB6DB6 /* nuiStopWatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52216A510C585DA00EB6DB6 /* nuiStopWatch.cpp */; };
 		E52216AB10C5861C00EB6DB6 /* nuiStopWatch.h in Headers */ = {isa = PBXBuildFile; fileRef = E52216AA10C5861C00EB6DB6 /* nuiStopWatch.h */; };
 		E52216AD10C5861C00EB6DB6 /* nuiStopWatch.h in Headers */ = {isa = PBXBuildFile; fileRef = E52216AA10C5861C00EB6DB6 /* nuiStopWatch.h */; };
+		E524126711CA90400025CA71 /* ngl_uikit.h in Headers */ = {isa = PBXBuildFile; fileRef = E524126011CA90400025CA71 /* ngl_uikit.h */; };
+		E524126811CA90400025CA71 /* nglClipBoard_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E524126111CA90400025CA71 /* nglClipBoard_UIKit.mm */; };
+		E524126911CA90400025CA71 /* nglConsole_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E524126211CA90400025CA71 /* nglConsole_UIKit.mm */; };
+		E524126A11CA90400025CA71 /* nglDataObjects_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E524126311CA90400025CA71 /* nglDataObjects_UIKit.mm */; };
+		E524126B11CA90400025CA71 /* nglModule_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E524126411CA90400025CA71 /* nglModule_UIKit.mm */; };
+		E524126C11CA90400025CA71 /* nglPlugin_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E524126511CA90400025CA71 /* nglPlugin_UIKit.mm */; };
+		E524126D11CA90400025CA71 /* nglUIKitDragAndDrop.h in Headers */ = {isa = PBXBuildFile; fileRef = E524126611CA90400025CA71 /* nglUIKitDragAndDrop.h */; };
+		E524126E11CA90400025CA71 /* ngl_uikit.h in Headers */ = {isa = PBXBuildFile; fileRef = E524126011CA90400025CA71 /* ngl_uikit.h */; };
+		E524126F11CA90400025CA71 /* nglClipBoard_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E524126111CA90400025CA71 /* nglClipBoard_UIKit.mm */; };
+		E524127011CA90400025CA71 /* nglConsole_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E524126211CA90400025CA71 /* nglConsole_UIKit.mm */; };
+		E524127111CA90400025CA71 /* nglDataObjects_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E524126311CA90400025CA71 /* nglDataObjects_UIKit.mm */; };
+		E524127211CA90400025CA71 /* nglModule_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E524126411CA90400025CA71 /* nglModule_UIKit.mm */; };
+		E524127311CA90400025CA71 /* nglPlugin_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E524126511CA90400025CA71 /* nglPlugin_UIKit.mm */; };
+		E524127411CA90400025CA71 /* nglUIKitDragAndDrop.h in Headers */ = {isa = PBXBuildFile; fileRef = E524126611CA90400025CA71 /* nglUIKitDragAndDrop.h */; };
+		E524128A11CB77C60025CA71 /* nglMimeSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D4B90DA5716500D2641A /* nglMimeSource.cpp */; };
+		E524128B11CB77C60025CA71 /* nglApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4A50DA5716500D2641A /* nglApplication.h */; };
+		E524128C11CB77C60025CA71 /* nglLog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D4B70DA5716500D2641A /* nglLog.cpp */; };
+		E524128D11CB77C60025CA71 /* nglModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D4BB0DA5716500D2641A /* nglModule.cpp */; };
+		E524128E11CB77C60025CA71 /* nglModule.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4BC0DA5716500D2641A /* nglModule.h */; };
+		E524128F11CB77C60025CA71 /* nglClipBoard.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4A70DA5716500D2641A /* nglClipBoard.h */; };
+		E524129011CB77C60025CA71 /* nglMimeSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4BA0DA5716500D2641A /* nglMimeSource.h */; };
+		E524129111CB77C60025CA71 /* nglConsole.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4A90DA5716500D2641A /* nglConsole.h */; };
+		E524129211CB77C60025CA71 /* nglClipBoard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D4A60DA5716500D2641A /* nglClipBoard.cpp */; };
+		E524129311CB77C60025CA71 /* nglApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D4A40DA5716500D2641A /* nglApplication.cpp */; };
+		E524129411CB77C60025CA71 /* nglEndian.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4B30DA5716500D2641A /* nglEndian.h */; };
+		E524129511CB77C60025CA71 /* nglEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4B40DA5716500D2641A /* nglEvent.h */; };
+		E524129611CB77C60025CA71 /* nuiLocale.h in Headers */ = {isa = PBXBuildFile; fileRef = BCB99F140F7D004300686319 /* nuiLocale.h */; };
+		E524129711CB77C60025CA71 /* nglDragAndDropObjects.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D4B10DA5716500D2641A /* nglDragAndDropObjects.cpp */; };
+		E524129811CB77C60025CA71 /* nuiLocale.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCB99F150F7D004300686319 /* nuiLocale.cpp */; };
+		E524129911CB77C60025CA71 /* nglCPUInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4AB0DA5716500D2641A /* nglCPUInfo.h */; };
+		E524129A11CB77C60025CA71 /* nglConsole.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D4A80DA5716500D2641A /* nglConsole.cpp */; };
+		E524129B11CB77C60025CA71 /* nglCPUInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D4AA0DA5716500D2641A /* nglCPUInfo.cpp */; };
+		E524129C11CB77C60025CA71 /* nglDataObjects.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4AE0DA5716500D2641A /* nglDataObjects.h */; };
+		E524129D11CB77C60025CA71 /* nglCPUInfo_x86.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D4AC0DA5716500D2641A /* nglCPUInfo_x86.cpp */; };
+		E524129E11CB77C60025CA71 /* nglKernel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D4B50DA5716500D2641A /* nglKernel.cpp */; };
+		E524129F11CB77C60025CA71 /* nglDragAndDropObjects.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4B20DA5716500D2641A /* nglDragAndDropObjects.h */; };
+		E52412A011CB77C60025CA71 /* nglLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4B80DA5716500D2641A /* nglLog.h */; };
+		E52412A111CB77C60025CA71 /* nglDataTypesRegistry.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4B00DA5716500D2641A /* nglDataTypesRegistry.h */; };
+		E52412A211CB77C60025CA71 /* nglDataTypesRegistry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D4AF0DA5716500D2641A /* nglDataTypesRegistry.cpp */; };
+		E52412A311CB77C60025CA71 /* nglDataObjects.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D4AD0DA5716500D2641A /* nglDataObjects.cpp */; };
+		E52412A411CB77C60025CA71 /* nglKernel.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4B60DA5716500D2641A /* nglKernel.h */; };
+		E52412A511CB77C70025CA71 /* nglMimeSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D4B90DA5716500D2641A /* nglMimeSource.cpp */; };
+		E52412A611CB77C70025CA71 /* nglModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D4BB0DA5716500D2641A /* nglModule.cpp */; };
+		E52412A711CB77C70025CA71 /* nglModule.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4BC0DA5716500D2641A /* nglModule.h */; };
+		E52412A811CB77C70025CA71 /* nglClipBoard.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4A70DA5716500D2641A /* nglClipBoard.h */; };
+		E52412A911CB77C70025CA71 /* nglMimeSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4BA0DA5716500D2641A /* nglMimeSource.h */; };
+		E52412AA11CB77C70025CA71 /* nglClipBoard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D4A60DA5716500D2641A /* nglClipBoard.cpp */; };
+		E52412AB11CB77C70025CA71 /* nglDragAndDropObjects.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D4B10DA5716500D2641A /* nglDragAndDropObjects.cpp */; };
+		E52412AC11CB77C70025CA71 /* nglDataObjects.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4AE0DA5716500D2641A /* nglDataObjects.h */; };
+		E52412AD11CB77C70025CA71 /* nglDragAndDropObjects.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4B20DA5716500D2641A /* nglDragAndDropObjects.h */; };
+		E52412AE11CB77C70025CA71 /* nglDataTypesRegistry.h in Headers */ = {isa = PBXBuildFile; fileRef = 6126D4B00DA5716500D2641A /* nglDataTypesRegistry.h */; };
+		E52412AF11CB77C70025CA71 /* nglDataTypesRegistry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D4AF0DA5716500D2641A /* nglDataTypesRegistry.cpp */; };
+		E52412B011CB77C70025CA71 /* nglDataObjects.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6126D4AD0DA5716500D2641A /* nglDataObjects.cpp */; };
 		E52CC0F211751D7D0031DFA8 /* nuiScriptEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC0F011751D7D0031DFA8 /* nuiScriptEngine.cpp */; };
 		E52CC0F311751D7D0031DFA8 /* nuiSpiderMonkey.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC0F111751D7D0031DFA8 /* nuiSpiderMonkey.cpp */; };
 		E52CC0F811751D7D0031DFA8 /* nuiScriptEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC0F011751D7D0031DFA8 /* nuiScriptEngine.cpp */; };
@@ -3511,6 +3549,13 @@
 		E51968000FF8F853007EDF46 /* nuiHTMLStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiHTMLStyle.h; path = src/Text/HTML/nuiHTMLStyle.h; sourceTree = SOURCE_ROOT; };
 		E52216A510C585DA00EB6DB6 /* nuiStopWatch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiStopWatch.cpp; path = src/Utils/nuiStopWatch.cpp; sourceTree = SOURCE_ROOT; };
 		E52216AA10C5861C00EB6DB6 /* nuiStopWatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiStopWatch.h; path = include/nuiStopWatch.h; sourceTree = SOURCE_ROOT; };
+		E524126011CA90400025CA71 /* ngl_uikit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ngl_uikit.h; path = src/Application/UIKit/ngl_uikit.h; sourceTree = SOURCE_ROOT; };
+		E524126111CA90400025CA71 /* nglClipBoard_UIKit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = nglClipBoard_UIKit.mm; path = src/Application/UIKit/nglClipBoard_UIKit.mm; sourceTree = SOURCE_ROOT; };
+		E524126211CA90400025CA71 /* nglConsole_UIKit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = nglConsole_UIKit.mm; path = src/Application/UIKit/nglConsole_UIKit.mm; sourceTree = SOURCE_ROOT; };
+		E524126311CA90400025CA71 /* nglDataObjects_UIKit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = nglDataObjects_UIKit.mm; path = src/Application/UIKit/nglDataObjects_UIKit.mm; sourceTree = SOURCE_ROOT; };
+		E524126411CA90400025CA71 /* nglModule_UIKit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = nglModule_UIKit.mm; path = src/Application/UIKit/nglModule_UIKit.mm; sourceTree = SOURCE_ROOT; };
+		E524126511CA90400025CA71 /* nglPlugin_UIKit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = nglPlugin_UIKit.mm; path = src/Application/UIKit/nglPlugin_UIKit.mm; sourceTree = SOURCE_ROOT; };
+		E524126611CA90400025CA71 /* nglUIKitDragAndDrop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nglUIKitDragAndDrop.h; path = src/Application/UIKit/nglUIKitDragAndDrop.h; sourceTree = SOURCE_ROOT; };
 		E52CC0F011751D7D0031DFA8 /* nuiScriptEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiScriptEngine.cpp; path = src/Bindings/nuiScriptEngine.cpp; sourceTree = SOURCE_ROOT; };
 		E52CC0F111751D7D0031DFA8 /* nuiSpiderMonkey.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiSpiderMonkey.cpp; path = src/Bindings/nuiSpiderMonkey.cpp; sourceTree = SOURCE_ROOT; };
 		E52CC0FA11751D930031DFA8 /* nuiScriptEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiScriptEngine.h; path = include/nuiScriptEngine.h; sourceTree = SOURCE_ROOT; };
@@ -4099,6 +4144,13 @@
 		6126D4900DA5716500D2641A /* UIKit */ = {
 			isa = PBXGroup;
 			children = (
+				E524126011CA90400025CA71 /* ngl_uikit.h */,
+				E524126111CA90400025CA71 /* nglClipBoard_UIKit.mm */,
+				E524126211CA90400025CA71 /* nglConsole_UIKit.mm */,
+				E524126311CA90400025CA71 /* nglDataObjects_UIKit.mm */,
+				E524126411CA90400025CA71 /* nglModule_UIKit.mm */,
+				E524126511CA90400025CA71 /* nglPlugin_UIKit.mm */,
+				E524126611CA90400025CA71 /* nglUIKitDragAndDrop.h */,
 				6126D4910DA5716500D2641A /* nglApplication_UIKit.mm */,
 				619DD6FD0EDF16DB00A49350 /* nglUIApplication.h */,
 				6126D4920DA5716500D2641A /* nglKernel_UIKit.mm */,
@@ -7162,6 +7214,14 @@
 				E5A8C1A611C2784B00ECE5FF /* select.h in Headers */,
 				E5A8C1AA11C2784B00ECE5FF /* parserutilserror.h in Headers */,
 				E5A8C1AC11C2784B00ECE5FF /* utils.h in Headers */,
+				E524126E11CA90400025CA71 /* ngl_uikit.h in Headers */,
+				E524127411CA90400025CA71 /* nglUIKitDragAndDrop.h in Headers */,
+				E52412A711CB77C70025CA71 /* nglModule.h in Headers */,
+				E52412A811CB77C70025CA71 /* nglClipBoard.h in Headers */,
+				E52412A911CB77C70025CA71 /* nglMimeSource.h in Headers */,
+				E52412AC11CB77C70025CA71 /* nglDataObjects.h in Headers */,
+				E52412AD11CB77C70025CA71 /* nglDragAndDropObjects.h in Headers */,
+				E52412AE11CB77C70025CA71 /* nglDataTypesRegistry.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7189,13 +7249,6 @@
 				735F70530FF2747500E66B1D /* nuiStringAttributeEditor.h in Headers */,
 				735F70540FF2747500E66B1D /* nuiBooleanAttributeEditor.h in Headers */,
 				735F70550FF2747500E66B1D /* nuiSizeAttributeEditor.h in Headers */,
-				735F70560FF2747500E66B1D /* nglApplication.h in Headers */,
-				735F70570FF2747500E66B1D /* nglConsole.h in Headers */,
-				735F70580FF2747500E66B1D /* nglCPUInfo.h in Headers */,
-				735F70590FF2747500E66B1D /* nglEndian.h in Headers */,
-				735F705A0FF2747500E66B1D /* nglEvent.h in Headers */,
-				735F705B0FF2747500E66B1D /* nglKernel.h in Headers */,
-				735F705C0FF2747500E66B1D /* nglLog.h in Headers */,
 				735F705D0FF2747500E66B1D /* nuiHTML.h in Headers */,
 				735F705E0FF2747500E66B1D /* nuiApplication.h in Headers */,
 				735F705F0FF2747500E66B1D /* nuiBindingManager.h in Headers */,
@@ -7664,7 +7717,6 @@
 				735F722E0FF2747500E66B1D /* nuiAnimation.h in Headers */,
 				735F722F0FF2747500E66B1D /* nuiCommandContainer.h in Headers */,
 				735F72300FF2747500E66B1D /* nuiCommandManager.h in Headers */,
-				735F72310FF2747500E66B1D /* nuiLocale.h in Headers */,
 				735F72320FF2747500E66B1D /* nuiTranslator.h in Headers */,
 				735F72330FF2747500E66B1D /* nuiUnicode.h in Headers */,
 				735F72340FF2747500E66B1D /* nuiDecorationInspector.h in Headers */,
@@ -7869,6 +7921,22 @@
 				E5A8C10A11C2784A00ECE5FF /* select.h in Headers */,
 				E5A8C10E11C2784A00ECE5FF /* parserutilserror.h in Headers */,
 				E5A8C11011C2784A00ECE5FF /* utils.h in Headers */,
+				E524126711CA90400025CA71 /* ngl_uikit.h in Headers */,
+				E524126D11CA90400025CA71 /* nglUIKitDragAndDrop.h in Headers */,
+				E524128B11CB77C60025CA71 /* nglApplication.h in Headers */,
+				E524128E11CB77C60025CA71 /* nglModule.h in Headers */,
+				E524128F11CB77C60025CA71 /* nglClipBoard.h in Headers */,
+				E524129011CB77C60025CA71 /* nglMimeSource.h in Headers */,
+				E524129111CB77C60025CA71 /* nglConsole.h in Headers */,
+				E524129411CB77C60025CA71 /* nglEndian.h in Headers */,
+				E524129511CB77C60025CA71 /* nglEvent.h in Headers */,
+				E524129611CB77C60025CA71 /* nuiLocale.h in Headers */,
+				E524129911CB77C60025CA71 /* nglCPUInfo.h in Headers */,
+				E524129C11CB77C60025CA71 /* nglDataObjects.h in Headers */,
+				E524129F11CB77C60025CA71 /* nglDragAndDropObjects.h in Headers */,
+				E52412A011CB77C60025CA71 /* nglLog.h in Headers */,
+				E52412A111CB77C60025CA71 /* nglDataTypesRegistry.h in Headers */,
+				E52412A411CB77C60025CA71 /* nglKernel.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8421,6 +8489,17 @@
 				E5A8C1A811C2784B00ECE5FF /* stylesheet.c in Sources */,
 				E5A8C1A911C2784B00ECE5FF /* errors.c in Sources */,
 				E5A8C1AB11C2784B00ECE5FF /* utils.c in Sources */,
+				E524126F11CA90400025CA71 /* nglClipBoard_UIKit.mm in Sources */,
+				E524127011CA90400025CA71 /* nglConsole_UIKit.mm in Sources */,
+				E524127111CA90400025CA71 /* nglDataObjects_UIKit.mm in Sources */,
+				E524127211CA90400025CA71 /* nglModule_UIKit.mm in Sources */,
+				E524127311CA90400025CA71 /* nglPlugin_UIKit.mm in Sources */,
+				E52412A511CB77C70025CA71 /* nglMimeSource.cpp in Sources */,
+				E52412A611CB77C70025CA71 /* nglModule.cpp in Sources */,
+				E52412AA11CB77C70025CA71 /* nglClipBoard.cpp in Sources */,
+				E52412AB11CB77C70025CA71 /* nglDragAndDropObjects.cpp in Sources */,
+				E52412AF11CB77C70025CA71 /* nglDataTypesRegistry.cpp in Sources */,
+				E52412B011CB77C70025CA71 /* nglDataObjects.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8510,12 +8589,6 @@
 				735F72950FF2747500E66B1D /* nglApplication_UIKit.mm in Sources */,
 				735F72960FF2747500E66B1D /* nglKernel_UIKit.mm in Sources */,
 				735F72970FF2747500E66B1D /* nglConsole_Carbon.cpp in Sources */,
-				735F72980FF2747500E66B1D /* nglApplication.cpp in Sources */,
-				735F72990FF2747500E66B1D /* nglConsole.cpp in Sources */,
-				735F729A0FF2747500E66B1D /* nglCPUInfo.cpp in Sources */,
-				735F729B0FF2747500E66B1D /* nglCPUInfo_x86.cpp in Sources */,
-				735F729C0FF2747500E66B1D /* nglKernel.cpp in Sources */,
-				735F729D0FF2747500E66B1D /* nglLog.cpp in Sources */,
 				735F729E0FF2747500E66B1D /* nuiHTML.cpp in Sources */,
 				735F729F0FF2747500E66B1D /* nui.cpp in Sources */,
 				735F72A00FF2747500E66B1D /* nuiBindingManager.cpp in Sources */,
@@ -8742,7 +8815,6 @@
 				735F737E0FF2747500E66B1D /* nuiAnimation.cpp in Sources */,
 				735F737F0FF2747500E66B1D /* nuiCommandContainer.cpp in Sources */,
 				735F73800FF2747500E66B1D /* nuiCommandManager.cpp in Sources */,
-				735F73810FF2747500E66B1D /* nuiLocale.cpp in Sources */,
 				735F73820FF2747500E66B1D /* nuiTranslator.cpp in Sources */,
 				735F73830FF2747500E66B1D /* nuiUnicode.cpp in Sources */,
 				735F73840FF2747500E66B1D /* nuiDecorationInspector.cpp in Sources */,
@@ -8917,6 +8989,24 @@
 				E5A8C10C11C2784A00ECE5FF /* stylesheet.c in Sources */,
 				E5A8C10D11C2784A00ECE5FF /* errors.c in Sources */,
 				E5A8C10F11C2784A00ECE5FF /* utils.c in Sources */,
+				E524126811CA90400025CA71 /* nglClipBoard_UIKit.mm in Sources */,
+				E524126911CA90400025CA71 /* nglConsole_UIKit.mm in Sources */,
+				E524126A11CA90400025CA71 /* nglDataObjects_UIKit.mm in Sources */,
+				E524126B11CA90400025CA71 /* nglModule_UIKit.mm in Sources */,
+				E524126C11CA90400025CA71 /* nglPlugin_UIKit.mm in Sources */,
+				E524128A11CB77C60025CA71 /* nglMimeSource.cpp in Sources */,
+				E524128C11CB77C60025CA71 /* nglLog.cpp in Sources */,
+				E524128D11CB77C60025CA71 /* nglModule.cpp in Sources */,
+				E524129211CB77C60025CA71 /* nglClipBoard.cpp in Sources */,
+				E524129311CB77C60025CA71 /* nglApplication.cpp in Sources */,
+				E524129711CB77C60025CA71 /* nglDragAndDropObjects.cpp in Sources */,
+				E524129811CB77C60025CA71 /* nuiLocale.cpp in Sources */,
+				E524129A11CB77C60025CA71 /* nglConsole.cpp in Sources */,
+				E524129B11CB77C60025CA71 /* nglCPUInfo.cpp in Sources */,
+				E524129D11CB77C60025CA71 /* nglCPUInfo_x86.cpp in Sources */,
+				E524129E11CB77C60025CA71 /* nglKernel.cpp in Sources */,
+				E52412A211CB77C60025CA71 /* nglDataTypesRegistry.cpp in Sources */,
+				E52412A311CB77C60025CA71 /* nglDataObjects.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
