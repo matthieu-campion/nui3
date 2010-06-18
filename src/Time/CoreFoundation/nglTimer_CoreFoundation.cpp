@@ -136,6 +136,8 @@ void nglTimer::Stop()
     CFRunLoopRef currentRunLoop = CFRunLoopGetCurrent();
     NGL_ASSERT(mpCFRunLoop == currentRunLoop);
     CFRunLoopRemoveTimer(currentRunLoop, mpCFRunLoopTimer, kCFRunLoopCommonModes);
+    if (mpCFRunLoopTimer)
+      CFRelease(mpCFRunLoopTimer);
     mpCFRunLoopTimer = NULL;
   }
   mRunning = false;
