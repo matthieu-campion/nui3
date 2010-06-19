@@ -15,6 +15,8 @@
 #include "tidy.h"
 #include "buffio.h"
 
+#include "nuiWebCSS.h"
+
 //class nuiHTMLAttrib
 nuiHTMLAttrib::nuiHTMLAttrib(AttributeType type, const nglString& rName, const nglString& rValue)
 : mType(type),
@@ -52,19 +54,31 @@ const nglString& nuiHTMLAttrib::GetValue() const
 
 /////////////////////////////////
 // class nuiHTMLNode
-nuiHTMLNode::nuiHTMLNode(const nglString& rName, nuiHTMLNode::NodeType Type, nuiHTMLNode::TagType _tagType, const nglString& rText)
+nuiHTMLNode::nuiHTMLNode(const nglString& rName, nuiHTMLNode::NodeType Type, nuiHTMLNode::TagType _tagType, const nglString& rText, nuiHTMLNode* pParent, bool ComputeStyle)
+: mpParent(pParent), mpStyle(NULL), mpInlineStyle(NULL)
 {
   mName = rName;
   mType = Type;
   mTagType = _tagType;
   mText = rText;
   mpParent = NULL;
+  mpInlineStyle = NULL;
+
+  if (ComputeStyle)
+  {
+    mpStyle = new nuiCSSStyle(this);
+    nuiHTMLAttrib* pStyle = GetAttribute(nuiHTMLAttrib::eAttrib_STYLE);
+    if (pStyle)
+    {
+      AddStyleSheet(GetSourceURL(), pStyle->GetValue(), true);
+    }
+  }
 }
 
-nuiHTMLNode::nuiHTMLNode(const void* _tdoc, const void* _tnod, nglTextEncoding encoding)
+nuiHTMLNode::nuiHTMLNode(const void* _tdoc, const void* _tnod, nglTextEncoding encoding, nuiHTMLNode* pParent, bool ComputeStyle)
+: mpParent(pParent), mpStyle(NULL), mpInlineStyle(NULL)
 {
-  SetFromNode(_tdoc, _tnod, encoding);
-  mpParent = NULL;
+  SetFromNode(_tdoc, _tnod, encoding, ComputeStyle);
 }
 
 
@@ -86,9 +100,20 @@ void nuiHTMLNode::Clear()
     delete mAttributes[j];
   }
   mAttributes.clear();
+
+  // stylesheets:
+  for (uint32 i = 0; i < mStyleSheets.size(); i++)
+  {
+    delete mStyleSheets[i];
+  }
+  
+  delete mpInlineStyle;
+  mpInlineStyle = NULL;
+  delete mpStyle;
+  mpStyle = NULL;
 }
 
-void nuiHTMLNode::SetFromNode(const void* _tdoc, const void* _tnod, nglTextEncoding encoding)
+void nuiHTMLNode::SetFromNode(const void* _tdoc, const void* _tnod, nglTextEncoding encoding, bool ComputeStyle)
 {
   Clear();
   
@@ -115,6 +140,16 @@ void nuiHTMLNode::SetFromNode(const void* _tdoc, const void* _tnod, nglTextEncod
   {
     nuiHTMLAttrib* pAttrib = new nuiHTMLAttrib(tattr, encoding);
     mAttributes.push_back(pAttrib);
+  }
+  
+  if (ComputeStyle)
+  {
+    mpStyle = new nuiCSSStyle(this);
+    nuiHTMLAttrib* pStyle = GetAttribute(nuiHTMLAttrib::eAttrib_STYLE);
+    if (pStyle)
+    {
+      AddStyleSheet(GetSourceURL(), pStyle->GetValue(), true);
+    }
   }
 }
 
@@ -208,20 +243,19 @@ nuiHTMLAttrib* nuiHTMLNode::GetAttribute(nuiHTMLAttrib::AttributeType attrib_typ
   return NULL;
 }
 
-void nuiHTMLNode::BuildTree(const void* _tdoc, const void* _tnod, nglTextEncoding encoding)
+void nuiHTMLNode::BuildTree(const void* _tdoc, const void* _tnod, nglTextEncoding encoding, bool ComputeStyle)
 {
   TidyDoc tdoc = (TidyDoc)_tdoc;
   TidyNode tnod = (TidyNode)_tnod;
-  SetFromNode(_tdoc, _tnod, encoding);
+  SetFromNode(_tdoc, _tnod, encoding, ComputeStyle);
   
   TidyNode child;
   
   for (child = tidyGetChild(tnod); child; child = tidyGetNext(child))
   {
-    nuiHTMLNode* pNode = new nuiHTMLNode(_tdoc, child, encoding);
-    pNode->SetParent(this);
+    nuiHTMLNode* pNode = new nuiHTMLNode(_tdoc, child, encoding, this, ComputeStyle);
     mChildren.push_back(pNode);
-    pNode->BuildTree(tdoc, child, encoding);
+    pNode->BuildTree(tdoc, child, encoding, ComputeStyle);
   }
 }
 
@@ -263,13 +297,14 @@ void nuiHTMLNode::SetParent(nuiHTMLNode* pParent)
 
 
 //class nuiHTML : public nuiHTMLNode
-nuiHTML::nuiHTML()
-: nuiHTMLNode(nglString::Null, eNode_Root, eTag_UNKNOWN, nglString::Null)
+nuiHTML::nuiHTML(bool ComputeStyle)
+: nuiHTMLNode(nglString::Null, eNode_Root, eTag_UNKNOWN, nglString::Null, NULL, ComputeStyle),
+  mComputeStyle(ComputeStyle)
 {
 }
 
 nuiHTML::~nuiHTML()
-{  
+{
 }
 
 class HTMLStream
@@ -433,7 +468,7 @@ bool nuiHTML::Load(nglIStream& rStream, nglTextEncoding OverrideContentsEncoding
       res = tidyRunDiagnostics(tdoc);               // Kvetch
   }    
     
-  BuildTree(tdoc, tidyGetRoot(tdoc), eUTF8);
+  BuildTree(tdoc, tidyGetRoot(tdoc), eUTF8, mComputeStyle);
   
   tidyRelease(tdoc);
   
@@ -562,3 +597,88 @@ void nuiHTML::GetAbsoluteURL(const nglString& rBaseURL, nglString& url)
   
   Canonize(url);
 }
+
+
+//////// Style Sheets:
+void nuiHTMLNode::AddStyleSheet(const nglString& rBaseURL, const nglString& rText, bool Inline)
+{
+  nuiCSSStyleSheet* pCSS = nuiCSSEngine::CreateStyleSheet(rBaseURL, rText, Inline, nuiMakeDelegate(this, &nuiHTMLNode::StyleSheetDone));
+  if (pCSS)
+  {
+    if (Inline)
+    {
+      delete mpInlineStyle;
+      mpInlineStyle = pCSS;
+    }
+    else
+      mStyleSheets.push_back(pCSS);
+  }
+}
+
+void nuiHTMLNode::AddStyleSheet(const nglString& rURL)
+{
+  nuiCSSStyleSheet* pCSS = nuiCSSEngine::CreateStyleSheet(rURL, nuiMakeDelegate(this, &nuiHTMLNode::StyleSheetDone));
+  if (pCSS)
+  {
+    mStyleSheets.push_back(pCSS);
+  }
+}
+
+const std::vector<nuiCSSStyleSheet*>& nuiHTMLNode::GetStyleSheets() const
+{
+  return mStyleSheets;
+}
+
+const nuiCSSStyleSheet* nuiHTMLNode::GetInlineStyle() const
+{
+  return mpInlineStyle;
+}
+
+nuiCSSStyle& nuiHTMLNode::GetStyle()
+{
+  NGL_ASSERT(mpStyle);
+  return *mpStyle;
+}
+
+#include "nuiHTMLContext.h"
+
+void nuiHTMLNode::UpdateStyle(nuiHTMLContext& rContext, bool Force)
+{
+  nuiHTMLContext ct(rContext);
+  if (mpStyle)
+  {
+    for (uint32 i = 0; i < mStyleSheets.size(); i++)
+      ct.mpStyleSheets.push_back(mStyleSheets[i]);
+    
+    if (GetInlineStyle())
+      ct.mpStyleSheets.push_back(GetInlineStyle());
+    
+    nuiCSSContext ctx;
+    ctx.Select(ct, this);
+  }
+
+  for (uint32 i = 0; i < mChildren.size(); i++)
+    mChildren[i]->UpdateStyle(ct);
+  
+}
+
+void nuiHTMLNode::StyleSheetDone(nuiCSSStyleSheet* pCSS)
+{
+  NGL_ASSERT(pCSS);
+  if (!pCSS->IsValid())
+  {
+    delete pCSS;
+    for (uint32 i = 0; i < mStyleSheets.size(); i++)
+    {
+      if (mStyleSheets[i] == pCSS)
+      {
+        mStyleSheets.erase(mStyleSheets.begin() + i);
+        return;
+      }
+    }
+  }
+  
+  LayoutInvalidated();
+}
+
+

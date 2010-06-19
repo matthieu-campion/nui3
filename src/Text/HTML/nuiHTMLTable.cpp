@@ -77,6 +77,9 @@ nuiHTMLTable::~nuiHTMLTable()
 
 void nuiHTMLTable::Draw(nuiDrawContext* pContext)
 {
+  if (!mVisible)
+    return;
+
   mMainCell.Draw(pContext);
   
   for (uint32 i = 0; i < GetRowCount(); i++)

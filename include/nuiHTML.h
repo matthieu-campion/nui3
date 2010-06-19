@@ -10,6 +10,9 @@
 class nuiHTML;
 class nuiHTMLNode;
 class nuiHTMLAttrib;
+class nuiHTMLContext;
+class nuiCSSStyleSheet;
+class nuiCSSStyle;
 
 class nuiHTMLAttrib
 {
@@ -366,12 +369,24 @@ public:
   
   virtual const nglString& GetSourceURL() const;
   nuiHTMLNode* GetParent() const;
+  
+  void AddStyleSheet(const nglString& rBaseURL, const nglString& rText, bool Inline);
+  void AddStyleSheet(const nglString& rURL);
+  const std::vector<nuiCSSStyleSheet*>& GetStyleSheets() const;
+  const nuiCSSStyleSheet* GetInlineStyle() const;
+  
+  nuiCSSStyle& GetStyle();
+  virtual void UpdateStyle(nuiHTMLContext& rContext, bool Force = false);
+  
+  nuiSignal0<> Invalidated;
+  nuiSignal0<> LayoutInvalidated;
+  
 protected:
-  nuiHTMLNode(const nglString& rName, NodeType Type, TagType TagType, const nglString& rText);
-  nuiHTMLNode(const void* _tdoc, const void* _tnod, nglTextEncoding encoding);
+  nuiHTMLNode(const nglString& rName, NodeType Type, TagType TagType, const nglString& rText, nuiHTMLNode* pParent, bool ComputeStyle);
+  nuiHTMLNode(const void* _tdoc, const void* _tnod, nglTextEncoding encoding, nuiHTMLNode* pParent, bool ComputeStyle);
   ~nuiHTMLNode();
-  void BuildTree(const void* _tdoc, const void* _tnod, nglTextEncoding encoding);
-  void SetFromNode(const void* _tdoc, const void* _tnod, nglTextEncoding encoding);
+  void BuildTree(const void* _tdoc, const void* _tnod, nglTextEncoding encoding, bool ComputeStyle);
+  void SetFromNode(const void* _tdoc, const void* _tnod, nglTextEncoding encoding, bool ComputeStyle);
 
   void Clear();
 
@@ -384,12 +399,17 @@ protected:
   nuiHTMLNode* mpParent;
   std::vector<nuiHTMLNode*> mChildren;
   std::vector<nuiHTMLAttrib*> mAttributes;
+
+  std::vector<nuiCSSStyleSheet*> mStyleSheets;
+  nuiCSSStyleSheet* mpInlineStyle;
+  nuiCSSStyle* mpStyle;
+  void StyleSheetDone(nuiCSSStyleSheet* pCSS);
 };
 
 class nuiHTML : public nuiHTMLNode
 {
 public:
-  nuiHTML();
+  nuiHTML(bool ComputeStyle);
   ~nuiHTML();
   
   bool Load(nglIStream& rStream, nglTextEncoding OverrideContentsEncoding = eEncodingUnknown, const nglString& rSourceURL = nglString::Null); ///< By default we don't override the encoding indicated by the contents
@@ -401,4 +421,5 @@ public:
   
 private:
   nglString mSourceURL;
+  bool mComputeStyle;
 };

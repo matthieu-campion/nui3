@@ -9,6 +9,8 @@
 #include "nuiHTMLBox.h"
 #include "nuiHTMLText.h"
 
+static const bool DEBUG_LAYOUT = false;
+
 ////////////////////class nuiHTMLBox
 nuiHTMLBox::nuiHTMLBox(nuiHTMLNode* pNode, nuiHTMLNode* pAnchor, bool Inline)
 : nuiHTMLItem(pNode, pAnchor, Inline),
@@ -101,9 +103,12 @@ float nuiHTMLBox::LayoutLine(uint32& start, uint32& count, float& y, float& h, n
       pIt->SetLayout(r);
       
       //NGL_OUT(_T("<%ls> %ls\n"), pIt->GetNode()->GetName().GetChars(), r.GetValue().GetChars());
-      for (uint32 bleh = 0; bleh < GetDepth(); bleh++)
-        printf("  ");
-      NGL_OUT(_T("<%ls> %d %p\n"), pIt->GetNode()->GetName().GetChars(), j, pIt);
+      if (DEBUG_LAYOUT)
+      {
+        for (uint32 bleh = 0; bleh < GetDepth(); bleh++)
+          printf("  ");
+        NGL_OUT(_T("<%ls> %d %p\n"), pIt->GetNode()->GetName().GetChars(), j, pIt);
+      }
       
       x += ToAbove(r.GetWidth());
       
@@ -121,9 +126,12 @@ float nuiHTMLBox::LayoutLine(uint32& start, uint32& count, float& y, float& h, n
     }
     else
     {
-      for (uint32 bleh = 0; bleh < GetDepth(); bleh++)
-        printf("  ");
-      NGL_OUT(_T("skipping <%ls> %d %p\n"), pIt->GetNode()->GetName().GetChars(), j, pIt);
+      if (DEBUG_LAYOUT)
+      {
+        for (uint32 bleh = 0; bleh < GetDepth(); bleh++)
+          printf("  ");
+        NGL_OUT(_T("skipping <%ls> %d %p\n"), pIt->GetNode()->GetName().GetChars(), j, pIt);
+      }
     }
     
     NGL_ASSERT(mItems[j]->mSetRectCalled);
@@ -196,10 +204,13 @@ void nuiHTMLBox::Layout(nuiHTMLContext& rContext)
           r.MoveTo(l,t);
           r.RoundToAbove();
           pItem->SetLayout(r);
-          for (uint32 bleh = 0; bleh < GetDepth(); bleh++)
-            printf("  ");
-          printf("fixed layout for item %d (%p)\n", i, pItem);
-          NGL_OUT(_T("  <%ls> %d %p\n"), pItem->GetNode()->GetName().GetChars(), i, pItem);
+          if (DEBUG_LAYOUT)
+          {
+            for (uint32 bleh = 0; bleh < GetDepth(); bleh++)
+              printf("  ");
+            printf("fixed layout for item %d (%p)\n", i, pItem);
+            NGL_OUT(_T("  <%ls> %d %p\n"), pItem->GetNode()->GetName().GetChars(), i, pItem);
+          }
         }
         break;
       case nuiCSSStyle::CSS_POSITION_ABSOLUTE:
@@ -213,10 +224,13 @@ void nuiHTMLBox::Layout(nuiHTMLContext& rContext)
           r.MoveTo(l,t);
           r.RoundToAbove();
           pItem->SetLayout(r);
-          for (uint32 bleh = 0; bleh < GetDepth(); bleh++)
-            printf("  ");
-          printf("absolute layout for item %d (%p)\n", i, pItem);
-          NGL_OUT(_T("  <%ls> %d %p\n"), pItem->GetNode()->GetName().GetChars(), i, pItem);
+          if (DEBUG_LAYOUT)
+          {
+            for (uint32 bleh = 0; bleh < GetDepth(); bleh++)
+              printf("  ");
+            printf("absolute layout for item %d (%p)\n", i, pItem);
+            NGL_OUT(_T("  <%ls> %d %p\n"), pItem->GetNode()->GetName().GetChars(), i, pItem);
+          }
         }
         break;
       case nuiCSSStyle::CSS_POSITION_RELATIVE:
@@ -390,23 +404,5 @@ int32 nuiHTMLBox::GetChildrenCount() const
 nuiHTMLItem* nuiHTMLBox::GetChild(int32 index) const
 {
   return mItems[index];
-}
-
-void nuiHTMLBox::UpdateStyle(nuiHTMLContext& rContext)
-{
-  nuiHTMLContext ct(rContext);
-  for (uint32 i = 0; i < mStyleSheets.size(); i++)
-    ct.mpStyleSheets.push_back(mStyleSheets[i]);
-  
-  if (GetInlineStyle())
-    ct.mpStyleSheets.push_back(GetInlineStyle());
-  
-  nuiCSSContext ctx;
-  ctx.Select(ct, this);
-  
-  for (uint32 i = 0; i < mItems.size(); i++)
-    mItems[i]->UpdateStyle(ct);
-  
-  
 }
 

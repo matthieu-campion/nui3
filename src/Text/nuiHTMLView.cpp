@@ -231,7 +231,7 @@ nuiRect nuiHTMLView::CalcIdealSize()
     return nuiRect(IdealWidth, 400.0f);
   
   nuiHTMLContext context(*mpContext);
-  mpRootBox->UpdateStyle(context);
+  mpHTML->UpdateStyle(context);
   mpRootBox->Layout(context);
   return nuiRect(mpRootBox->GetIdealRect().GetWidth(), mpRootBox->GetIdealRect().GetHeight());
 }
@@ -247,7 +247,7 @@ void nuiHTMLView::ReLayout()
 //  }
 
   nuiHTMLContext context(*mpContext);
-  mpRootBox->UpdateStyle(context);
+  mpHTML->UpdateStyle(context);
   mpRootBox->Layout(context);
   mpRootBox->SetLayout(mpRootBox->GetIdealRect());
   mLastVisibleRect = nuiRect();
@@ -364,7 +364,7 @@ bool nuiHTMLView::SetText(const nglString& rHTMLText)
   if (rHTMLText.IsEmpty())
     return true;
   
-  nuiHTML* pHTML = new nuiHTML();
+  nuiHTML* pHTML = new nuiHTML(true);
   
   std::string str(mText.GetStdString());
   nglIMemory mem(&str[0], str.size());
@@ -385,7 +385,7 @@ bool nuiHTMLView::SetText(const nglString& rHTMLText)
     ParseTree(mpHTML, mpRootBox);
 
     nuiHTMLContext context(*mpContext);
-    mpRootBox->UpdateStyle(context);
+    mpHTML->UpdateStyle(context);
     mpRootBox->Layout(context);
     InvalidateLayout();
     SetHotRect(nuiRect());
@@ -469,7 +469,7 @@ void nuiHTMLView::StreamDone(nuiAsyncIStream* pStream)
     }
   }  
   
-  nuiHTML* pHTML = new nuiHTML();
+  nuiHTML* pHTML = new nuiHTML(true);
   pHTML->SetSourceURL(url);
   bool res = pHTML->Load(*pStream, encoding);
 
@@ -492,7 +492,7 @@ void nuiHTMLView::StreamDone(nuiAsyncIStream* pStream)
     //    watch.AddIntermediate(_T("HTML Tree Parsed"));
     
     nuiHTMLContext context(*mpContext);
-    mpRootBox->UpdateStyle(context);
+    mpHTML->UpdateStyle(context);
     mpRootBox->Layout(context);
     //    watch.AddIntermediate(_T("HTML Layouted"));
     InvalidateLayout();
@@ -599,7 +599,7 @@ void nuiHTMLView::ParseStyle(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
   nuiHTMLNode* pText = pNode->GetChild(0);
   if (pText->GetType() != nuiHTML::eNode_Text)
     return;
-  pBox->AddStyleSheet(GetURL(), pText->GetText(), false);
+  mpHTML->AddStyleSheet(GetURL(), pText->GetText(), false);
 }
 
 void nuiHTMLView::ParseHeadLink(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
@@ -622,7 +622,7 @@ void nuiHTMLView::ParseHeadLink(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
   
   nglString url = pHRef->GetValue();
   nuiHTML::GetAbsoluteURL(mpHTML->GetSourceURL(), url);
-  pBox->AddStyleSheet(url);
+  mpHTML->AddStyleSheet(url);
 }
 
 void nuiHTMLView::ParseBody(nuiHTMLNode* pNode, nuiHTMLBox* pBox)

@@ -72,19 +72,11 @@ public:
   void SetDisplayChangedDelegate(const nuiFastDelegate0<>& rDelegate);
   void SetLayoutChangedDelegate(const nuiFastDelegate0<>& rDelegate);
 
-  void AddStyleSheet(const nglString& rBaseURL, const nglString& rText, bool Inline);
-  void AddStyleSheet(const nglString& rURL);
-  const std::vector<nuiCSSStyleSheet*>& GetStyleSheets() const;
-  const nuiCSSStyleSheet* GetInlineStyle() const;
-  
   nuiCSSStyle& GetStyle();
-  virtual void UpdateStyle(nuiHTMLContext& rContext);
   
 protected:
   void Invalidate();
   void InvalidateLayout();
-  
-  void StyleSheetDone(nuiCSSStyleSheet* pCSS);
   
   uint32 GetDepth() const;
 
@@ -101,10 +93,6 @@ protected:
   nuiColor mOldTextColor;
   nuiFastDelegate0<> mLayoutChangedDelegate;
   nuiFastDelegate0<> mDisplayChangedDelegate;
-  
-  std::vector<nuiCSSStyleSheet*> mStyleSheets;
-  nuiCSSStyleSheet* mpInlineStyle;
-  
-  nuiCSSStyle mStyle;
+  nuiSlotsSink mSlotSink;
 };
 

@@ -18,6 +18,7 @@ typedef struct lwc_string_s lwc_string;
 
 class nuiCSSStyleSheet;
 class nuiHTMLItem;
+class nuiHTMLNode;
 class nuiHTMLContext;
 
 typedef nuiSignal1<nuiCSSStyleSheet*>::Slot nuiStyleSheetDoneDelegate;
@@ -60,7 +61,7 @@ public:
   void AddSheet(const nuiCSSStyleSheet* pSheet); ///< Add pSheet to the list of active css style sheets.
   void RemoveSheets(uint32 count); ///< remove the last count sheets from the context.
   
-  bool Select(nuiHTMLContext& rContext, nuiHTMLItem* pNode);
+  bool Select(nuiHTMLContext& rContext, nuiHTMLNode* pNode);
 private:
   std::vector<const nuiCSSStyleSheet*> mSheets;
   css_select_ctx* mpContext;
@@ -70,7 +71,7 @@ private:
 class nuiCSSStyle
 {
 public:
-  nuiCSSStyle(nuiHTMLItem* pItem);
+  nuiCSSStyle(nuiHTMLNode* pNode);
   ~nuiCSSStyle();
     
   css_computed_style* GetStyle();
@@ -124,7 +125,7 @@ public:
 private:
   friend class nuiCSSContext;
   css_computed_style* mpStyle;
-  nuiHTMLItem* mpItem;
+  nuiHTMLNode* mpNode;
 };
 
 class nuiCSSEngine

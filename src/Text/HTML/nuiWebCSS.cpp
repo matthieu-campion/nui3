@@ -572,9 +572,8 @@ void nuiCSSContext::RemoveSheets(uint32 count)
   mSheets.resize(mSheets.size() - count);
 }
 
-bool nuiCSSContext::Select(nuiHTMLContext& rContext, nuiHTMLItem* pNode)
+bool nuiCSSContext::Select(nuiHTMLContext& rContext, nuiHTMLNode* pNode)
 {
-  css_computed_style *style;
   css_error error;
 
   for (uint32 i = 0; i < rContext.mpStyleSheets.size(); i++)
@@ -594,7 +593,7 @@ bool nuiCSSContext::Select(nuiHTMLContext& rContext, nuiHTMLItem* pNode)
    * \param handler         Dispatch table of handler functions
    * \param pw              Client-specific private data for handler functions
    */
-  error = css_select_style(mpContext, pNode->GetNode(), 0, CSS_MEDIA_SCREEN, pInlineStyle, pNode->GetStyle().GetStyle(), &selection_handler, this);
+  error = css_select_style(mpContext, pNode, 0, CSS_MEDIA_SCREEN, pInlineStyle, pNode->GetStyle().GetStyle(), &selection_handler, this);
   NGL_ASSERT(error == CSS_OK);
 //  for (uint32 i = 0; i < rContext.mpStyleSheets.size(); i++)
 //    RemoveSheets(rContext.mpStyleSheets.size());
@@ -603,8 +602,8 @@ bool nuiCSSContext::Select(nuiHTMLContext& rContext, nuiHTMLItem* pNode)
 }
 
 /// class nuiCSSStyle
-nuiCSSStyle::nuiCSSStyle(nuiHTMLItem* pItem)
-: mpItem(pItem)
+nuiCSSStyle::nuiCSSStyle(nuiHTMLNode* pNode)
+: mpNode(pNode)
 {
   css_error error;
   
@@ -628,9 +627,9 @@ css_computed_style* nuiCSSStyle::GetStyle()
 nuiColor nuiCSSStyle::GetColor() const
 {
   css_color col = 0;
-  nuiHTMLItem* pItem = mpItem;
-  while  (pItem && CSS_COLOR_COLOR != css_computed_color(pItem->GetStyle().GetStyle(), &col))
-    pItem = pItem->GetParent();
+  nuiHTMLNode* pNode = mpNode;
+  while  (pNode && CSS_COLOR_COLOR != css_computed_color(pNode->GetStyle().GetStyle(), &col))
+    pNode = pNode->GetParent();
   
   uint8 r = (uint8)(col >> 24);
   uint8 g = (uint8)(col >> 16);
@@ -644,9 +643,9 @@ nuiColor nuiCSSStyle::GetColor() const
 nuiColor nuiCSSStyle::GetBgColor() const
 {
   css_color col = 0xffffffff;
-  nuiHTMLItem* pItem = mpItem;
-  while  (pItem && CSS_BACKGROUND_COLOR_COLOR != css_computed_background_color(pItem->GetStyle().GetStyle(), &col))
-    pItem = pItem->GetParent();
+  nuiHTMLNode* pNode = mpNode;
+  while  (pNode && CSS_BACKGROUND_COLOR_COLOR != css_computed_background_color(pNode->GetStyle().GetStyle(), &col))
+    pNode = pNode->GetParent();
   
   uint8 r = (uint8)(col >> 24);
   uint8 g = (uint8)(col >> 16);
@@ -660,26 +659,26 @@ nuiColor nuiCSSStyle::GetBgColor() const
 bool nuiCSSStyle::HasBgColor() const
 {
   css_color col = 0;
-  return CSS_BACKGROUND_COLOR_COLOR == css_computed_background_color(mpItem->GetStyle().GetStyle(), &col);
+  return CSS_BACKGROUND_COLOR_COLOR == css_computed_background_color(mpNode->GetStyle().GetStyle(), &col);
 }
 
 nuiCSSStyle::Position nuiCSSStyle::GetPosition() const
 {
   //  return ;
-  nuiHTMLItem* pItem = mpItem;
-  while  (pItem && CSS_POSITION_INHERIT == css_computed_position(pItem->GetStyle().GetStyle()))
-    pItem = pItem->GetParent();
-  if (pItem)
-    return (nuiCSSStyle::Position)css_computed_position(pItem->GetStyle().GetStyle());
+  nuiHTMLNode* pNode = mpNode;
+  while  (pNode && CSS_POSITION_INHERIT == css_computed_position(pNode->GetStyle().GetStyle()))
+    pNode = pNode->GetParent();
+  if (pNode)
+    return (nuiCSSStyle::Position)css_computed_position(pNode->GetStyle().GetStyle());
   return CSS_POSITION_STATIC;
 }
 
 void nuiCSSStyle::GetTop(float& value, Unit& unit) const
 {
   css_fixed v = 0;
-  nuiHTMLItem* pItem = mpItem;
-  while  (pItem && CSS_TOP_AUTO == css_computed_top(mpStyle, &v, (css_unit*)&unit))
-    pItem = pItem->GetParent();
+  nuiHTMLNode* pNode = mpNode;
+  while  (pNode && CSS_TOP_AUTO == css_computed_top(mpStyle, &v, (css_unit*)&unit))
+    pNode = pNode->GetParent();
   css_len2px(value, (css_unit)unit, mpStyle);
   value = FIXTOFLT(v);
 }
@@ -687,9 +686,9 @@ void nuiCSSStyle::GetTop(float& value, Unit& unit) const
 void nuiCSSStyle::GetLeft(float& value, Unit& unit) const
 {
   css_fixed v = 0;
-  nuiHTMLItem* pItem = mpItem;
-  while  (pItem && CSS_LEFT_AUTO == css_computed_left(mpStyle, &v, (css_unit*)&unit))
-    pItem = pItem->GetParent();
+  nuiHTMLNode* pNode = mpNode;
+  while  (pNode && CSS_LEFT_AUTO == css_computed_left(mpStyle, &v, (css_unit*)&unit))
+    pNode = pNode->GetParent();
   css_len2px(value, (css_unit)unit, mpStyle);
   value = FIXTOFLT(v);
 }
@@ -697,9 +696,9 @@ void nuiCSSStyle::GetLeft(float& value, Unit& unit) const
 void nuiCSSStyle::GetBottom(float& value, Unit& unit) const
 {
   css_fixed v = 0;
-  nuiHTMLItem* pItem = mpItem;
-  while  (pItem && CSS_BOTTOM_AUTO == css_computed_bottom(mpStyle, &v, (css_unit*)&unit))
-    pItem = pItem->GetParent();
+  nuiHTMLNode* pNode = mpNode;
+  while  (pNode && CSS_BOTTOM_AUTO == css_computed_bottom(mpStyle, &v, (css_unit*)&unit))
+    pNode = pNode->GetParent();
   css_len2px(value, (css_unit)unit, mpStyle);
   value = FIXTOFLT(v);
 }
@@ -707,9 +706,9 @@ void nuiCSSStyle::GetBottom(float& value, Unit& unit) const
 void nuiCSSStyle::GetRight(float& value, Unit& unit) const
 {
   css_fixed v = 0;
-  nuiHTMLItem* pItem = mpItem;
-  while  (pItem && CSS_RIGHT_AUTO == css_computed_right(mpStyle, &v, (css_unit*)&unit))
-    pItem = pItem->GetParent();
+  nuiHTMLNode* pNode = mpNode;
+  while  (pNode && CSS_RIGHT_AUTO == css_computed_right(mpStyle, &v, (css_unit*)&unit))
+    pNode = pNode->GetParent();
   css_len2px(value, (css_unit)unit, mpStyle);
   value = FIXTOFLT(v);
 }
@@ -717,9 +716,9 @@ void nuiCSSStyle::GetRight(float& value, Unit& unit) const
 void nuiCSSStyle::GetWidth(float& value, Unit& unit) const
 {
   css_fixed v = 0;
-  nuiHTMLItem* pItem = mpItem;
-  while  (pItem && CSS_WIDTH_AUTO == css_computed_width(mpStyle, &v, (css_unit*)&unit))
-    pItem = pItem->GetParent();
+  nuiHTMLNode* pNode = mpNode;
+  while  (pNode && CSS_WIDTH_AUTO == css_computed_width(mpStyle, &v, (css_unit*)&unit))
+    pNode = pNode->GetParent();
   css_len2px(value, (css_unit)unit, mpStyle);
   value = FIXTOFLT(v);
 }
@@ -727,9 +726,9 @@ void nuiCSSStyle::GetWidth(float& value, Unit& unit) const
 void nuiCSSStyle::GetMaxWidth(float& value, Unit& unit) const
 {
   css_fixed v = 0;
-  nuiHTMLItem* pItem = mpItem;
-  while  (pItem && CSS_MAX_WIDTH_NONE == css_computed_max_width(mpStyle, &v, (css_unit*)&unit))
-    pItem = pItem->GetParent();
+  nuiHTMLNode* pNode = mpNode;
+  while  (pNode && CSS_MAX_WIDTH_NONE == css_computed_max_width(mpStyle, &v, (css_unit*)&unit))
+    pNode = pNode->GetParent();
   css_len2px(value, (css_unit)unit, mpStyle);
   value = FIXTOFLT(v);
 }
@@ -1392,7 +1391,11 @@ css_error node_presentational_hint(void *pw, void *node, uint32_t property, css_
 //    return CSS_OK;
     
     
-    
+//		css_error res = url_join((const char *) bg, html->data.html.base_url, &url);
+//    nglString url(lwc_string_data(rel), lwc_string_length(rel));
+//    nglString  b(base);
+//    nuiHTML::GetAbsoluteURL(b, url);
+//    
     
     nuiColor col;
     nuiHTMLAttrib* pCol = NULL;

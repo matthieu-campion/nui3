@@ -90,6 +90,7 @@ void MainWindow::OnCreation()
   pScroll->AddChild(mpHTMLView);
   
   mSlotSink.Connect(mpHTMLView->URLChanged, nuiMakeDelegate(this, &MainWindow::OnURLChanged));
+  mEventSink.Connect(pImg->Clicked, &MainWindow::OnGoHome);
   if (1)
   {
     mpHTMLView->SetURL(url);
@@ -113,6 +114,12 @@ bool MainWindow::OnButtonClick(const nuiEvent& rEvent)
     mpInput->SetText(mpHTMLView->GetURL());
   
   return true; // means the event is caught and not broadcasted
+}
+
+bool MainWindow::OnGoHome(const nuiEvent& rEvent)
+{  
+  mpInput->SetText(_T("file://rsrc:/Index.html"));
+  return OnButtonClick(rEvent);
 }
 
 

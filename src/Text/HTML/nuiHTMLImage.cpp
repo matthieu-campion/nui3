@@ -82,6 +82,8 @@ void nuiHTMLImage::StreamDone(nuiAsyncIStream* pStream)
 
 void nuiHTMLImage::Draw(nuiDrawContext* pContext)
 {
+  if (!mVisible)
+    return;
   if (!mpTexture || !mpTexture->IsValid())
     return;
   

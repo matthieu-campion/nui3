@@ -104,7 +104,7 @@ bool nuiRSSView::Update(const nuiEvent& rEvent)
 
     nglString desc(rItem.GetDescription());
     
-    nuiHTML html;
+    nuiHTML html(true);
     bool res = !desc.IsNull();
     if (res)
     {

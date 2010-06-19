@@ -19,26 +19,15 @@ nuiHTMLItem::nuiHTMLItem(nuiHTMLNode* pNode, nuiHTMLNode* pAnchor, bool Inline)
   mpParent(NULL),
   mpAnchor(pAnchor),
   mVisible(true),
-  mSetRectCalled(false),
-  mpInlineStyle(NULL),
-  mStyle(this)
+  mSetRectCalled(false)
 {
   ForceLineBreak(pNode->GetTagType() == nuiHTMLNode::eTag_BR);
-  nuiHTMLAttrib* pStyle = pNode->GetAttribute(nuiHTMLAttrib::eAttrib_STYLE);
-  if (pStyle)
-  {
-    AddStyleSheet(mpNode->GetSourceURL(), pStyle->GetValue(), true);
-  }
+  mSlotSink.Connect(pNode->Invalidated, nuiMakeDelegate(this, &nuiHTMLItem::Invalidate));
+  mSlotSink.Connect(pNode->LayoutInvalidated, nuiMakeDelegate(this, &nuiHTMLItem::InvalidateLayout));
 }
 
 nuiHTMLItem::~nuiHTMLItem()
 {
-  for (uint32 i = 0; i < mStyleSheets.size(); i++)
-  {
-    delete mStyleSheets[i];
-  }
-  
-  delete mpInlineStyle;
 }
 
 void nuiHTMLItem::Draw(nuiDrawContext* pContext)
@@ -54,9 +43,6 @@ uint32 nuiHTMLItem::GetDepth() const
 
 void nuiHTMLItem::CallDraw(nuiDrawContext* pContext)
 {
-//  if (!mVisible)
-//    return;
-
 #if 0
   for (uint32 i = 0; i < GetDepth(); i++)
     printf("  ");
@@ -66,63 +52,69 @@ void nuiHTMLItem::CallDraw(nuiDrawContext* pContext)
     id.Add(_T(" id='")).Add(pAttrib->GetValue()).Add(_T("'"));
   printf("nuiHTMLItem::CallDraw <%ls%ls> %ls\n", mpNode->GetName().GetChars(), id.GetChars(), mRect.GetValue().GetChars());
 #endif
-  
-  //NGL_ASSERT(mSetRectCalled);
-  pContext->PushMatrix();
 
+  pContext->PushMatrix();
+  
   nuiCSSStyle::Position pos = GetStyle().GetPosition();
   switch (pos)
   {
     case nuiCSSStyle::CSS_POSITION_FIXED:
-      {
-        // relative to window
-        pContext->LoadIdentity();
-        pContext->Translate(mRect.Left(), mRect.Top());
-      }
+    {
+      // relative to window
+      pContext->LoadIdentity();
+      pContext->Translate(mRect.Left(), mRect.Top());
+    }
       break;
     case nuiCSSStyle::CSS_POSITION_ABSOLUTE:
-      {
-        // relative to the first parent that is not in a static position
-        pContext->LoadIdentity();
-        nuiHTMLItem* pParent = GetParent();
-        while (pParent && pParent->GetStyle().GetPosition() == nuiCSSStyle::CSS_POSITION_STATIC)
-          pParent = pParent->GetParent();
-
-        nuiRect g(pParent ? pParent->GetGlobalRect() : nuiRect());
-        pContext->Translate(mRect.Left() + g.Left(), mRect.Top() + g.Top());
-      }
+    {
+      // relative to the first parent that is not in a static position
+      pContext->LoadIdentity();
+      nuiHTMLItem* pParent = GetParent();
+      while (pParent && pParent->GetStyle().GetPosition() == nuiCSSStyle::CSS_POSITION_STATIC)
+        pParent = pParent->GetParent();
+      
+      nuiRect g(pParent ? pParent->GetGlobalRect() : nuiRect());
+      pContext->Translate(mRect.Left() + g.Left(), mRect.Top() + g.Top());
+    }
       break;
     case nuiCSSStyle::CSS_POSITION_RELATIVE:
-      {
-        // relative to flow position (doesn't move its sibbling and can overlap with them)
-        pContext->Translate(mRect.Left(), mRect.Top());
-      }
+    {
+      // relative to flow position (doesn't move its sibbling and can overlap with them)
+      pContext->Translate(mRect.Left(), mRect.Top());
+    }
       break;
     case nuiCSSStyle::CSS_POSITION_STATIC:
     default:
-      {
-        // Normal flow layout
-        pContext->Translate(mRect.Left(), mRect.Top());
-      }
+    {
+      // Normal flow layout
+      pContext->Translate(mRect.Left(), mRect.Top());
+    }
       break;
       
   }
   
-  
-  //pContext->DrawRect(GetRect().Size(), eStrokeShape);
-  
-  if (mStyle.HasBgColor())
-  {
-    nuiColor obg(pContext->GetFillColor());
-    nuiColor bg(mStyle.GetBgColor());
-    nuiRect r(mRect);
-    r.MoveTo(0, 0);
-    pContext->SetFillColor(bg);
-    pContext->DrawRect(r, eFillShape);
-    pContext->SetFillColor(obg);
+  if (mVisible)
+  { 
+    //NGL_ASSERT(mSetRectCalled);
+    
+    
+    //pContext->DrawRect(GetRect().Size(), eStrokeShape);
+    
+    if (GetStyle().HasBgColor())
+    {
+      nuiColor obg(pContext->GetFillColor());
+      nuiColor bg(GetStyle().GetBgColor());
+      nuiRect r(mRect);
+      r.MoveTo(0, 0);
+      pContext->SetFillColor(bg);
+      pContext->DrawRect(r, eFillShape);
+      pContext->SetFillColor(obg);
+    }
+    
   }
   
   Draw(pContext);
+  
   pContext->PopMatrix();
 }
 
@@ -324,7 +316,6 @@ void nuiHTMLItem::SetLayout(const nuiRect& rRect)
   {
     SetRect(r);
   }
-
 }
 
 
@@ -347,59 +338,6 @@ void nuiHTMLItem::SetDisplayChangedDelegate(const nuiFastDelegate0<>& rDelegate)
   mDisplayChangedDelegate = rDelegate;
 }
 
-void nuiHTMLItem::StyleSheetDone(nuiCSSStyleSheet* pCSS)
-{
-  NGL_ASSERT(pCSS);
-  if (!pCSS->IsValid())
-  {
-    delete pCSS;
-    for (uint32 i = 0; i < mStyleSheets.size(); i++)
-    {
-      if (mStyleSheets[i] == pCSS)
-      {
-        mStyleSheets.erase(mStyleSheets.begin() + i);
-        return;
-      }
-    }
-  }
-  
-  InvalidateLayout();
-}
-
-void nuiHTMLItem::AddStyleSheet(const nglString& rBaseURL, const nglString& rText, bool Inline)
-{
-  nuiCSSStyleSheet* pCSS = nuiCSSEngine::CreateStyleSheet(rBaseURL, rText, Inline, nuiMakeDelegate(this, &nuiHTMLItem::StyleSheetDone));
-  if (pCSS)
-  {
-    if (Inline)
-    {
-      delete mpInlineStyle;
-      mpInlineStyle = pCSS;
-    }
-    else
-      mStyleSheets.push_back(pCSS);
-  }
-}
-
-void nuiHTMLItem::AddStyleSheet(const nglString& rURL)
-{
-  nuiCSSStyleSheet* pCSS = nuiCSSEngine::CreateStyleSheet(rURL, nuiMakeDelegate(this, &nuiHTMLItem::StyleSheetDone));
-  if (pCSS)
-  {
-    mStyleSheets.push_back(pCSS);
-  }
-}
-
-const std::vector<nuiCSSStyleSheet*>& nuiHTMLItem::GetStyleSheets() const
-{
-  return mStyleSheets;
-}
-
-const nuiCSSStyleSheet* nuiHTMLItem::GetInlineStyle() const
-{
-  return mpInlineStyle;
-}
-
 int32 nuiHTMLItem::GetChildrenCount() const
 {
   return 0;
@@ -412,19 +350,7 @@ nuiHTMLItem* nuiHTMLItem::GetChild(int32 index) const
 
 nuiCSSStyle& nuiHTMLItem::GetStyle()
 {
-  return mStyle;
-}
-
-void nuiHTMLItem::UpdateStyle(nuiHTMLContext& rContext)
-{
-  nuiHTMLContext ct(rContext);
-  for (uint32 i = 0; i < mStyleSheets.size(); i++)
-    ct.mpStyleSheets.push_back(mStyleSheets[i]);
-
-  if (GetInlineStyle())
-    ct.mpStyleSheets.push_back(GetInlineStyle());
-  
-  nuiCSSContext ctx;
-  ctx.Select(ct, this);
+  NGL_ASSERT(mpNode);
+  return mpNode->GetStyle();
 }
 

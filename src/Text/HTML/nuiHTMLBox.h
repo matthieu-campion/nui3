@@ -41,9 +41,7 @@ public:
 
   virtual int32 GetChildrenCount() const;
   virtual nuiHTMLItem* GetChild(int32 index) const;
-  
-  void UpdateStyle(nuiHTMLContext& rContext);
-  
+
 protected:
   float LayoutLine(uint32& start, uint32& count, float& y, float& h, nuiHTMLContext& rContext);
   
