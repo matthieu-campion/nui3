@@ -423,7 +423,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   if (forceresize)
   {
     mpNGLWindow->disableFrameBuffer = true;
-//    [(EAGLContext*)mpContext renderbufferStorage: GL_RENDERBUFFER_OES fromDrawable: nil];
+    [(EAGLContext*)mpContext renderbufferStorage: GL_RENDERBUFFER_OES fromDrawable: nil];
 
     angle = mpNGLWindow->GetRotation();
     if (angle == 270 || angle == 90)
