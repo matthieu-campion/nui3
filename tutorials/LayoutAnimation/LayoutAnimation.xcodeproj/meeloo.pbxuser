@@ -60,29 +60,14 @@
 			PBXWorkspaceStateSaveDate = 298568506;
 		};
 		perUserProjectItems = {
-			E5241B6511CBCB3C0025CA71 /* PBXTextBookmark */ = E5241B6511CBCB3C0025CA71 /* PBXTextBookmark */;
-			E5241B6811CBCB910025CA71 /* PBXTextBookmark */ = E5241B6811CBCB910025CA71 /* PBXTextBookmark */;
-			E5241B6911CBCB990025CA71 /* PBXTextBookmark */ = E5241B6911CBCB990025CA71 /* PBXTextBookmark */;
-			E5241B7711CBCBA80025CA71 /* PBXTextBookmark */ = E5241B7711CBCBA80025CA71 /* PBXTextBookmark */;
 			E5241B8811CBCDB60025CA71 /* PBXTextBookmark */ = E5241B8811CBCDB60025CA71 /* PBXTextBookmark */;
-			E5241B8911CBCDB60025CA71 /* PBXTextBookmark */ = E5241B8911CBCDB60025CA71 /* PBXTextBookmark */;
-			E5241B8A11CBCDB60025CA71 /* PBXTextBookmark */ = E5241B8A11CBCDB60025CA71 /* PBXTextBookmark */;
-			E5241B8B11CBCDB60025CA71 /* PBXTextBookmark */ = E5241B8B11CBCDB60025CA71 /* PBXTextBookmark */;
-			E5241B8C11CBCDBF0025CA71 /* PBXTextBookmark */ = E5241B8C11CBCDBF0025CA71 /* PBXTextBookmark */;
-			E5241B9111CBCE080025CA71 /* PBXTextBookmark */ = E5241B9111CBCE080025CA71 /* PBXTextBookmark */;
-			E5241B9211CBCE080025CA71 /* PBXTextBookmark */ = E5241B9211CBCE080025CA71 /* PBXTextBookmark */;
 			E5241B9311CBCE080025CA71 /* PBXTextBookmark */ = E5241B9311CBCE080025CA71 /* PBXTextBookmark */;
 			E5241B9511CBCE080025CA71 /* PBXTextBookmark */ = E5241B9511CBCE080025CA71 /* PBXTextBookmark */;
 			E5241B9711CBCE080025CA71 /* PBXTextBookmark */ = E5241B9711CBCE080025CA71 /* PBXTextBookmark */;
-			E5241B9911CBCE080025CA71 /* PBXTextBookmark */ = E5241B9911CBCE080025CA71 /* PBXTextBookmark */;
 			E5241B9B11CBCE080025CA71 /* PBXTextBookmark */ = E5241B9B11CBCE080025CA71 /* PBXTextBookmark */;
-			E5241B9D11CBCE210025CA71 /* PBXTextBookmark */ = E5241B9D11CBCE210025CA71 /* PBXTextBookmark */;
-			E5241B9E11CBCE210025CA71 /* PBXTextBookmark */ = E5241B9E11CBCE210025CA71 /* PBXTextBookmark */;
-			E5241B9F11CBCE290025CA71 /* PBXTextBookmark */ = E5241B9F11CBCE290025CA71 /* PBXTextBookmark */;
-			E585A8A311BAFAD2005DEEA1 = E585A8A311BAFAD2005DEEA1 /* PBXTextBookmark */;
-			E5A6314811CA831300446489 = E5A6314811CA831300446489 /* PBXTextBookmark */;
-			E5A6314A11CA831C00446489 = E5A6314A11CA831C00446489 /* PBXTextBookmark */;
-			E5A6314B11CA831C00446489 = E5A6314B11CA831C00446489 /* PBXTextBookmark */;
+			E524214411CF83E30025CA71 /* PBXTextBookmark */ = E524214411CF83E30025CA71 /* PBXTextBookmark */;
+			E585A8A311BAFAD2005DEEA1 /* PBXTextBookmark */ = E585A8A311BAFAD2005DEEA1 /* PBXTextBookmark */;
+			E5A6314A11CA831C00446489 /* PBXTextBookmark */ = E5A6314A11CA831C00446489 /* PBXTextBookmark */;
 		};
 		sourceControlManager = E5EF6ABE0F96233C003E265A /* Source Control */;
 		userBuildSettings = {
@@ -122,46 +107,6 @@
 			sepNavVisRange = "{0, 538}";
 		};
 	};
-	E5241B6511CBCB3C0025CA71 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E5A6314C11CA831C00446489 /* nuiEvent.cpp */;
-		name = "nuiEvent.cpp: 265";
-		rLen = 0;
-		rLoc = 5720;
-		rType = 0;
-		vrLen = 1496;
-		vrLoc = 6884;
-	};
-	E5241B6811CBCB910025CA71 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E5A6314C11CA831C00446489 /* nuiEvent.cpp */;
-		name = "nuiEvent.cpp: 265";
-		rLen = 0;
-		rLoc = 5720;
-		rType = 0;
-		vrLen = 1444;
-		vrLoc = 6884;
-	};
-	E5241B6911CBCB990025CA71 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E5A6314C11CA831C00446489 /* nuiEvent.cpp */;
-		name = "nuiEvent.cpp: 265";
-		rLen = 0;
-		rLoc = 5720;
-		rType = 0;
-		vrLen = 1444;
-		vrLoc = 6884;
-	};
-	E5241B7711CBCBA80025CA71 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E5A6314C11CA831C00446489 /* nuiEvent.cpp */;
-		name = "nuiEvent.cpp: 265";
-		rLen = 0;
-		rLoc = 5720;
-		rType = 0;
-		vrLen = 1128;
-		vrLoc = 6884;
-	};
 	E5241B8811CBCDB60025CA71 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = E5A6314C11CA831C00446489 /* nuiEvent.cpp */;
@@ -171,66 +116,6 @@
 		rType = 0;
 		vrLen = 1471;
 		vrLoc = 6884;
-	};
-	E5241B8911CBCDB60025CA71 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 61A9DFEF0B83433800BC506C /* Application.cpp */;
-		name = "Application.cpp: 1";
-		rLen = 0;
-		rLoc = 0;
-		rType = 0;
-		vrLen = 1503;
-		vrLoc = 0;
-	};
-	E5241B8A11CBCDB60025CA71 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
-		name = "MainWindow.cpp: 56";
-		rLen = 0;
-		rLoc = 1606;
-		rType = 0;
-		vrLen = 2187;
-		vrLoc = 0;
-	};
-	E5241B8B11CBCDB60025CA71 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
-		name = "MainWindow.cpp: 56";
-		rLen = 0;
-		rLoc = 1606;
-		rType = 0;
-		vrLen = 2136;
-		vrLoc = 0;
-	};
-	E5241B8C11CBCDBF0025CA71 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
-		name = "MainWindow.cpp: 56";
-		rLen = 0;
-		rLoc = 1606;
-		rType = 0;
-		vrLen = 1987;
-		vrLoc = 0;
-	};
-	E5241B9111CBCE080025CA71 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E5A6314C11CA831C00446489 /* nuiEvent.cpp */;
-		name = "nuiEvent.cpp: 265";
-		rLen = 0;
-		rLoc = 5720;
-		rType = 0;
-		vrLen = 1128;
-		vrLoc = 6884;
-	};
-	E5241B9211CBCE080025CA71 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
-		name = "MainWindow.cpp: 56";
-		rLen = 0;
-		rLoc = 1606;
-		rType = 0;
-		vrLen = 1525;
-		vrLoc = 611;
 	};
 	E5241B9311CBCE080025CA71 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -280,23 +165,6 @@
 		path = /Users/meeloo/work/nui3/include/nuiObject.h;
 		sourceTree = "<absolute>";
 	};
-	E5241B9911CBCE080025CA71 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E5241B9A11CBCE080025CA71 /* nuiObject.cpp */;
-		name = "nuiObject.cpp: 254";
-		rLen = 0;
-		rLoc = 5362;
-		rType = 0;
-		vrLen = 900;
-		vrLoc = 4790;
-	};
-	E5241B9A11CBCE080025CA71 /* nuiObject.cpp */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.cpp.cpp;
-		name = nuiObject.cpp;
-		path = /Users/meeloo/work/nui3/src/Base/nuiObject.cpp;
-		sourceTree = "<absolute>";
-	};
 	E5241B9B11CBCE080025CA71 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = E5241B9C11CBCE080025CA71 /* nuiObject.cpp */;
@@ -314,40 +182,26 @@
 		path = /Users/meeloo/work/nui3/src/Base/nuiObject.cpp;
 		sourceTree = "<absolute>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {2292, 10556}}";
+			sepNavIntBoundsRect = "{{0, 0}, {989, 10673}}";
 			sepNavSelRange = "{412, 0}";
-			sepNavVisRange = "{0, 1654}";
+			sepNavVisRange = "{287, 1006}";
 		};
 	};
-	E5241B9D11CBCE210025CA71 /* PBXTextBookmark */ = {
+	E524214411CF83E30025CA71 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
-		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
-		name = "MainWindow.cpp: 56";
-		rLen = 0;
-		rLoc = 1606;
-		rType = 0;
-		vrLen = 2187;
-		vrLoc = 0;
-	};
-	E5241B9E11CBCE210025CA71 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E5241B9C11CBCE080025CA71 /* nuiObject.cpp */;
+		fRef = E524214511CF83E30025CA71 /* nuiObject.cpp */;
 		name = "nuiObject.cpp: 24";
 		rLen = 0;
 		rLoc = 412;
 		rType = 0;
-		vrLen = 1654;
+		vrLen = 1840;
 		vrLoc = 0;
 	};
-	E5241B9F11CBCE290025CA71 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E5241B9C11CBCE080025CA71 /* nuiObject.cpp */;
-		name = "nuiObject.cpp: 24";
-		rLen = 0;
-		rLoc = 412;
-		rType = 0;
-		vrLen = 1654;
-		vrLoc = 0;
+	E524214511CF83E30025CA71 /* nuiObject.cpp */ = {
+		isa = PBXFileReference;
+		name = nuiObject.cpp;
+		path = /Users/meeloo/work/nui3/src/Base/nuiObject.cpp;
+		sourceTree = "<absolute>";
 	};
 	E585A8A311BAFAD2005DEEA1 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -373,23 +227,6 @@
 		path = /Users/meeloo/work/nui3/src/WidgetTree/nuiWidget.cpp;
 		sourceTree = "<absolute>";
 	};
-	E5A6314811CA831300446489 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E5A6314911CA831300446489 /* nuiEvent.cpp */;
-		name = "nuiEvent.cpp: 265";
-		rLen = 0;
-		rLoc = 5720;
-		rType = 0;
-		vrLen = 994;
-		vrLoc = 7255;
-	};
-	E5A6314911CA831300446489 /* nuiEvent.cpp */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.cpp.cpp;
-		name = nuiEvent.cpp;
-		path = /Users/meeloo/work/nui3/src/Base/nuiEvent.cpp;
-		sourceTree = "<absolute>";
-	};
 	E5A6314A11CA831C00446489 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = E585A8AC11BB14E6005DEEA1 /* nuiWidget.cpp */;
@@ -399,16 +236,6 @@
 		rType = 0;
 		vrLen = 1767;
 		vrLoc = 80118;
-	};
-	E5A6314B11CA831C00446489 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E5A6314C11CA831C00446489 /* nuiEvent.cpp */;
-		name = "nuiEvent.cpp: 265";
-		rLen = 0;
-		rLoc = 5720;
-		rType = 0;
-		vrLen = 1555;
-		vrLoc = 6884;
 	};
 	E5A6314C11CA831C00446489 /* nuiEvent.cpp */ = {
 		isa = PBXFileReference;

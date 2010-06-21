@@ -1888,7 +1888,7 @@
 		E52417EE11CB860B0025CA71 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5D435961004DC5300388BF5 /* ApplicationServices.framework */; };
 		E52417EF11CB860B0025CA71 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 408D9C88109764A000AEE78A /* QTKit.framework */; };
 		E52417F011CB860B0025CA71 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E59DF6CC1196396000E46CF8 /* AudioToolbox.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		E52417F511CB86810025CA71 /* nuiAudioDevice_AudioUnit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52417F411CB86810025CA71 /* nuiAudioDevice_AudioUnit.cpp */; };
+		E52417F511CB86810025CA71 /* nuiAudioDevice_AudioUnit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417F411CB86810025CA71 /* nuiAudioDevice_AudioUnit.mm */; };
 		E524180111CB86C40025CA71 /* ngl_uikit.h in Headers */ = {isa = PBXBuildFile; fileRef = E52417F711CB86C40025CA71 /* ngl_uikit.h */; };
 		E524180211CB86C40025CA71 /* nglApplication_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417F811CB86C40025CA71 /* nglApplication_UIKit.mm */; };
 		E524180311CB86C40025CA71 /* nglClipBoard_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417F911CB86C40025CA71 /* nglClipBoard_UIKit.mm */; };
@@ -3234,7 +3234,7 @@
 		E52420BC11CBCE9E0025CA71 /* errors.c in Sources */ = {isa = PBXBuildFile; fileRef = E5A8BF6211C277A400ECE5FF /* errors.c */; };
 		E52420BD11CBCE9E0025CA71 /* utils.c in Sources */ = {isa = PBXBuildFile; fileRef = E5A8BF6411C277A400ECE5FF /* utils.c */; };
 		E52420BE11CBCE9E0025CA71 /* nuiURL_CoreFoundation.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52411AB11CA8ED20025CA71 /* nuiURL_CoreFoundation.mm */; };
-		E52420BF11CBCE9E0025CA71 /* nuiAudioDevice_AudioUnit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52417F411CB86810025CA71 /* nuiAudioDevice_AudioUnit.cpp */; };
+		E52420BF11CBCE9E0025CA71 /* nuiAudioDevice_AudioUnit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417F411CB86810025CA71 /* nuiAudioDevice_AudioUnit.mm */; };
 		E52420C011CBCE9E0025CA71 /* nglApplication_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417F811CB86C40025CA71 /* nglApplication_UIKit.mm */; };
 		E52420C111CBCE9E0025CA71 /* nglClipBoard_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417F911CB86C40025CA71 /* nglClipBoard_UIKit.mm */; };
 		E52420C211CBCE9E0025CA71 /* nglConsole_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417FA11CB86C40025CA71 /* nglConsole_UIKit.mm */; };
@@ -6888,7 +6888,7 @@
 		E51E565C0FF248AB00FDF3BE /* nuiHTMLHeader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiHTMLHeader.cpp; sourceTree = "<group>"; };
 		E52411AB11CA8ED20025CA71 /* nuiURL_CoreFoundation.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = nuiURL_CoreFoundation.mm; path = src/Net/CoreFoundation/nuiURL_CoreFoundation.mm; sourceTree = SOURCE_ROOT; };
 		E52417F311CB860B0025CA71 /* libnuiPhoneD.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libnuiPhoneD.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		E52417F411CB86810025CA71 /* nuiAudioDevice_AudioUnit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiAudioDevice_AudioUnit.cpp; path = src/Audio/AudioUnit/nuiAudioDevice_AudioUnit.cpp; sourceTree = SOURCE_ROOT; };
+		E52417F411CB86810025CA71 /* nuiAudioDevice_AudioUnit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = nuiAudioDevice_AudioUnit.mm; path = Audio/AudioUnit/nuiAudioDevice_AudioUnit.mm; sourceTree = "<group>"; };
 		E52417F711CB86C40025CA71 /* ngl_uikit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ngl_uikit.h; path = src/Application/UIKit/ngl_uikit.h; sourceTree = SOURCE_ROOT; };
 		E52417F811CB86C40025CA71 /* nglApplication_UIKit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = nglApplication_UIKit.mm; path = src/Application/UIKit/nglApplication_UIKit.mm; sourceTree = SOURCE_ROOT; };
 		E52417F911CB86C40025CA71 /* nglClipBoard_UIKit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = nglClipBoard_UIKit.mm; path = src/Application/UIKit/nglClipBoard_UIKit.mm; sourceTree = SOURCE_ROOT; };
@@ -9080,7 +9080,7 @@
 		E52E1A230CD7EE46006FBCDD /* Audio */ = {
 			isa = PBXGroup;
 			children = (
-				E52417F411CB86810025CA71 /* nuiAudioDevice_AudioUnit.cpp */,
+				E52417F411CB86810025CA71 /* nuiAudioDevice_AudioUnit.mm */,
 				BC9CB4A30D3E48000093CAC3 /* nuiAudioResampler.h */,
 				BC9CB3F60D3E3D9A0093CAC3 /* nuiAudioConvert.cpp */,
 				BC9CB3FC0D3E3DA70093CAC3 /* nuiAudioConvert.h */,
@@ -15381,7 +15381,7 @@
 				E52417E511CB860B0025CA71 /* errors.c in Sources */,
 				E52417E611CB860B0025CA71 /* utils.c in Sources */,
 				E52417E711CB860B0025CA71 /* nuiURL_CoreFoundation.mm in Sources */,
-				E52417F511CB86810025CA71 /* nuiAudioDevice_AudioUnit.cpp in Sources */,
+				E52417F511CB86810025CA71 /* nuiAudioDevice_AudioUnit.mm in Sources */,
 				E524180211CB86C40025CA71 /* nglApplication_UIKit.mm in Sources */,
 				E524180311CB86C40025CA71 /* nglClipBoard_UIKit.mm in Sources */,
 				E524180411CB86C40025CA71 /* nglConsole_UIKit.mm in Sources */,
@@ -15957,7 +15957,7 @@
 				E52420BC11CBCE9E0025CA71 /* errors.c in Sources */,
 				E52420BD11CBCE9E0025CA71 /* utils.c in Sources */,
 				E52420BE11CBCE9E0025CA71 /* nuiURL_CoreFoundation.mm in Sources */,
-				E52420BF11CBCE9E0025CA71 /* nuiAudioDevice_AudioUnit.cpp in Sources */,
+				E52420BF11CBCE9E0025CA71 /* nuiAudioDevice_AudioUnit.mm in Sources */,
 				E52420C011CBCE9E0025CA71 /* nglApplication_UIKit.mm in Sources */,
 				E52420C111CBCE9E0025CA71 /* nglClipBoard_UIKit.mm in Sources */,
 				E52420C211CBCE9E0025CA71 /* nglConsole_UIKit.mm in Sources */,

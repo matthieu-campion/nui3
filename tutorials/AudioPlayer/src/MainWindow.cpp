@@ -30,7 +30,7 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
   
   LoadCSS(_T("rsrc:/css/main.css"));
   
-  RegisterWithManager(this, NOTIF_FILEBROWSE_DONE);
+  RegisterObserver(NOTIF_FILEBROWSE_DONE, this);
 }
 
 MainWindow::~MainWindow()
@@ -84,6 +84,10 @@ void MainWindow::OnCreation()
   pLayoutBox->AddCell(pLoadBtn);
   pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
   mEventSink.Connect(pLoadBtn->Clicked, &MainWindow::OnBrowse);
+  
+  mBrowsedFile = _T("rsrc:/test.mp3");
+  PostNotification(new nuiNotification(NOTIF_FILEBROWSE_DONE));
+  
 }
 
 

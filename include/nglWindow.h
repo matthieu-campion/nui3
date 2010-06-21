@@ -726,6 +726,7 @@ private:
 #if (defined _UIKIT_) || (defined _COCOA_)
   ///< #HACK: To be called from ObjectiveC interfaces
 public:
+  void SetUIWindow(void* pWindow);
 #endif
   void CallOnCreation();
   void CallOnDestruction();
@@ -838,6 +839,8 @@ private:
   GLuint mRenderBuffer;
   GLuint mFrameBuffer;
   GLuint mDepthBuffer;
+  nglContextInfo mContextInfo;
+  StateChange mState;
 public:
 	bool disableFrameBuffer;
 

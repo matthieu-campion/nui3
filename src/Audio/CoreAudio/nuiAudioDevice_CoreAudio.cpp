@@ -11,29 +11,29 @@
 #define API_NAME _T("CoreAudio")
 
 #ifdef _DEBUG
-  #define nui_verify_noerr(errorCode)                                            \
-  do                                                                      \
-  {                                                                       \
-    if ( 0 != (errorCode) )                                             \
-    {                                                                   \
-    }                                                                   \
+  #define nui_verify_noerr(errorCode)        \
+  do                                         \
+  {                                          \
+    if ( 0 != (errorCode) )                  \
+    {                                        \
+    }                                        \
   } while ( 0 )
 #else
-  #define nui_verify_noerr(errorCode)                                            \
-  do                                                                      \
-  {                                                                       \
-    int evalOnceErrorCode = (errorCode);                                \
-    if ( 0 != evalOnceErrorCode )                                       \
-    {                                                                   \
-      DEBUG_ASSERT_MESSAGE(                                           \
-        DEBUG_ASSERT_COMPONENT_NAME_STRING,                         \
-        #errorCode " == 0 ",                                        \
-        0,                                                          \
-        0,                                                          \
-        __FILE__,                                                   \
-        __LINE__,                                                   \
-        evalOnceErrorCode);                                         \
-    }                                                                   \
+  #define nui_verify_noerr(errorCode)        \
+  do                                         \
+  {                                          \
+    int evalOnceErrorCode = (errorCode);     \
+    if ( 0 != evalOnceErrorCode )            \
+    {                                        \
+      DEBUG_ASSERT_MESSAGE(                  \
+        DEBUG_ASSERT_COMPONENT_NAME_STRING,  \
+        #errorCode " == 0 ",                 \
+        0,                                   \
+        0,                                   \
+        __FILE__,                            \
+        __LINE__,                            \
+        evalOnceErrorCode);                  \
+    }                                        \
   } while ( 0 )
 #endif
 

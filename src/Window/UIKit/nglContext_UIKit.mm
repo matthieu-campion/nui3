@@ -155,6 +155,7 @@ bool nglContext::GetContextInfo(nglContextInfo& rInfo) const
 
 bool nglContext::Build(const nglContextInfo& rInfo, const nglContext* pShared, bool FullScreen)
 {
+  mContextInfo = rInfo;
   mTargetAPI = rInfo.TargetAPI;
   if (mTargetAPI != eTargetAPI_OpenGL)
     return false;
@@ -205,8 +206,17 @@ bool nglContext::Build(const nglContextInfo& rInfo, const nglContext* pShared, b
   mpContext = NULL;
   if (pShared)
   {
-    mpContext = [[EAGLContext alloc]  initWithAPI: kEAGLRenderingAPIOpenGLES1
-                                      sharegroup:  [(EAGLContext*)pShared->mpContext sharegroup]];
+    if (this == pShared)
+    {
+      EAGLContext* pOld = (EAGLContext*)mpContext;
+      mpContext = [[EAGLContext alloc]  initWithAPI: kEAGLRenderingAPIOpenGLES1 sharegroup:  [(EAGLContext*)pOld sharegroup]];
+      [pOld release];
+    }
+    else
+    {
+      mpContext = [[EAGLContext alloc]  initWithAPI: kEAGLRenderingAPIOpenGLES1 sharegroup:  [(EAGLContext*)pShared->mpContext sharegroup]];
+    }
+
   }
   else
   {

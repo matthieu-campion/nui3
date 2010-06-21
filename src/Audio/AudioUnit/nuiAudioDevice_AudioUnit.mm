@@ -10,23 +10,7 @@
 #include "nuiAudioDevice_AudioUnit.h"
 #include "nuiAudioConvert.h"
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#include <AVFoundation/AVFoundation.h>
 
 //class nuiAudioDevice_AudioUnit : public nuiAudioDevice
 nuiAudioDevice_AudioUnit::nuiAudioDevice_AudioUnit()
@@ -164,15 +148,16 @@ bool nuiAudioDevice_AudioUnit::Open(std::vector<uint32>& rInputChannels, std::ve
     mOutputBuffers[i] = (float*)malloc(mBufferSize * sizeof(float));
   
   UInt32 size = sizeof (UInt32);
+#if 0
   UInt32 value = kAudioSessionOverrideAudioRoute_None;
-  AudioSessionSetProperty(kAudioSessionProperty_OverrideAudioRoute, size, &value);  
-  
+  err = AudioSessionSetProperty(kAudioSessionProperty_OverrideAudioRoute, size, &value);  
+
 	// Initialize our session
 	err = AudioSessionInitialize(NULL, NULL, interruptionListener, NULL);	
   
   
 	// Set the category
-	UInt32 uCategory = kAudioSessionCategory_LiveAudio;
+	UInt32 uCategory = kAudioSessionCategory_PlayAndRecord;//kAudioSessionCategory_LiveAudio;
 	err = AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, sizeof(UInt32), &uCategory);
 //	if (err != noErr)
 //  {
@@ -197,6 +182,13 @@ bool nuiAudioDevice_AudioUnit::Open(std::vector<uint32>& rInputChannels, std::ve
 //    return false;
 //  }
 	
+#endif
+  AVAudioSession *mySession = [AVAudioSession sharedInstance]; !
+  [mySession setPreferredHardwareSampleRate: mSampleRate error: nil];
+  [mySession setCategory: AVAudioSessionCategoryPlayAndRecord error: nil]; !
+  [mySession setActive: YES error: nil];
+  mSampleRate = [mySession currentHardwareSampleRate];
+  
 	// Initialize the audio unit
 	mAudioUnit = 0;
 	

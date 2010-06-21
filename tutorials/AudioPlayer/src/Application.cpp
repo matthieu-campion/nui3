@@ -128,7 +128,7 @@ void Application::OnInit()
   double SampleRate = 44100;
   uint32 BufferSize = 1024;
   mpAudioEngine = new AudioEngine(SampleRate, BufferSize);
-
+  
   /* Create the nglWindow (and thus a GL context, don't even try to
    *   instantiate the gui (or nglFont) before the nuiWin !)
    */

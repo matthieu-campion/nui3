@@ -348,17 +348,15 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E5241B9F11CBCE290025CA71</string>
+										<string>E524214411CF83E30025CA71</string>
 										<key>history</key>
 										<array>
 											<string>E585A8A311BAFAD2005DEEA1</string>
 											<string>E5A6314A11CA831C00446489</string>
 											<string>E5241B8811CBCDB60025CA71</string>
-											<string>E5241B8911CBCDB60025CA71</string>
 											<string>E5241B9311CBCE080025CA71</string>
 											<string>E5241B9511CBCE080025CA71</string>
 											<string>E5241B9711CBCE080025CA71</string>
-											<string>E5241B9D11CBCE210025CA71</string>
 											<string>E5241B9B11CBCE080025CA71</string>
 										</array>
 									</dict>
@@ -684,7 +682,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>298569257.204189</real>
+	<real>298812387.97601098</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -699,7 +697,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E5241BA011CBCE290025CA71</string>
 		<string>E5241B7311CBCB990025CA71</string>
 		<string>E5241B7411CBCB990025CA71</string>
 		<string>/Users/meeloo/work/nui3/tutorials/LayoutAnimation/LayoutAnimation.xcodeproj</string>

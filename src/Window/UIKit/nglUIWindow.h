@@ -36,10 +36,12 @@ typedef std::map<UITouch*,nglTouchInfo> TouchesInfo;
   void*         mpContext;
   GLint         mRenderBuffer;
   nuiTimer*     mpTimer;
+  BOOL          mPassingRelay;
 }
 
 + (Class) layerClass;
 - (id) initWithFrame: (CGRect) rect andNGLWindow: (nglWindow*) pNGLWindow;
+- (id) initWithWindow: (nglUIWindow*)pUIWindow;
 - (void) setContext: (void*) pContext renderBuffer: (GLint) buffer;
 - (void) dealloc;
 - (void) invalidate;
