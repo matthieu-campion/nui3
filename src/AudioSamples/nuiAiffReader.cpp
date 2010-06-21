@@ -177,6 +177,10 @@ uint32 nuiAiffReader::ReadIN(void* pBuffer, uint32 SampleFrames, nuiSampleBitFor
     return 0;
   SetPosition((uint32)mPosition);
   const uint32 channels = mInfo.GetChannels();
+  uint32 length = mInfo.GetSampleFrames();
+  NGL_ASSERT(mPosition < length);
+  SampleFrames = MIN(SampleFrames, length - mPosition);
+  
   const uint64 SamplePointsToRead = SampleFrames * channels;
   uint32 SampleFramesRead = 0;
   

@@ -45,7 +45,7 @@ uint32 nuiSampleReader::GetPosition() const
 void nuiSampleReader::SetPosition(uint32 position)
 {
   NGL_ASSERT(mInitialized);
-  mPosition = position;
+  mPosition = MIN(position, mInfo.GetSampleFrames() - 1);
 }
 
 bool nuiSampleReader::GetInfo(nuiSampleInfo& rInfo) const
