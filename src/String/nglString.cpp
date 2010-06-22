@@ -959,7 +959,7 @@ bool nglString::Copy(nglChar Ch)
 {
   mIsNull = false;
   mString.resize(1);
-  mString[1] = Ch;
+  mString[0] = Ch;
   return true;
 }
 
