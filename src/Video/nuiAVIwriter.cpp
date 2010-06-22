@@ -222,10 +222,11 @@ void nuiAVIwriter::WriteMainHeader()
   mpStream->WriteInt32(&mHeight);
   
   /* reserved (4) */
-  mpStream->WriteInt32(0);
-  mpStream->WriteInt32(0);
-  mpStream->WriteInt32(0);
-  mpStream->WriteInt32(0);
+  tmp = 0;
+  mpStream->WriteInt32(&tmp);
+  mpStream->WriteInt32(&tmp);
+  mpStream->WriteInt32(&tmp);
+  mpStream->WriteInt32(&tmp);
   
   PopChunk();
 }
@@ -357,6 +358,7 @@ void nuiAVIwriter::WriteStreamFormat()
 void nuiAVIwriter::WriteFourcc(const char *fourcc) 
 {
   mpStream->Write(fourcc, 1, 4);
+//  mpStream->Write(fourcc, 4, 1);
 }
 
 
@@ -376,7 +378,8 @@ void nuiAVIwriter::PushChunk(const char *fourcc)
   
   /* Write a dummy size field, pointing to it for later updating */
   new_chunk.size_field = mpStream->GetPos();
-  mpStream->WriteInt32(0);
+  int32 tmp = 0;
+  mpStream->WriteInt32(&tmp);
   
   /* Point to the beginning of the chunk's data */
   new_chunk.data_start = mpStream->GetPos();
