@@ -49,7 +49,7 @@ protected:
   std::vector<std::pair<uint32, uint32> > mOutMap;
 
   AudioUnit mAudioUnit;
-  
+  AUGraph mProcessingGraph;
 };
 
 

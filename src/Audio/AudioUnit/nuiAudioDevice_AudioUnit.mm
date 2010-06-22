@@ -10,7 +10,10 @@
 #include "nuiAudioDevice_AudioUnit.h"
 #include "nuiAudioConvert.h"
 
-#include <AVFoundation/AVFoundation.h>
+
+#define kOutputBus	(0)
+#define kInputBus		(1)
+
 
 //class nuiAudioDevice_AudioUnit : public nuiAudioDevice
 nuiAudioDevice_AudioUnit::nuiAudioDevice_AudioUnit()
@@ -39,23 +42,46 @@ nuiAudioDevice_AudioUnit::~nuiAudioDevice_AudioUnit()
 
 
 OSStatus AudioUnitCallback(void* inRefCon, 
-                    AudioUnitRenderActionFlags* ioActionFlags,
-                    const AudioTimeStamp* inTimeStamp,
-                    UInt32 inBusNumber,
-                    UInt32 inNumberFrames_,
-                    AudioBufferList* ioData)
+                           AudioUnitRenderActionFlags* ioActionFlags,
+                           const AudioTimeStamp* inTimeStamp,
+                           UInt32 inBusNumber,
+                           UInt32 inNumberFrames_,
+                           AudioBufferList* ioData)
 {
   // Return if not pre-render
-	if(!(*ioActionFlags & kAudioUnitRenderAction_PreRender))
-  {
-    return noErr;
-  }
+//	if(!(*ioActionFlags & kAudioUnitRenderAction_PreRender))
+//  {
+//    return noErr;
+//  }
   
 	// Get a pointer to the audio device
 	nuiAudioDevice_AudioUnit* pAudioDevice = (nuiAudioDevice_AudioUnit*)inRefCon;
   
 	// Process
 	pAudioDevice->Process(inNumberFrames_, ioData);
+	
+	return noErr;
+} 
+
+
+OSStatus AudioUnitInputCallback(void* inRefCon, 
+                           AudioUnitRenderActionFlags* ioActionFlags,
+                           const AudioTimeStamp* inTimeStamp,
+                           UInt32 inBusNumber,
+                           UInt32 inNumberFrames_,
+                           AudioBufferList* ioData)
+{
+  // Return if not pre-render
+//	if(!(*ioActionFlags & kAudioUnitRenderAction_PreRender))
+//  {
+//    return noErr;
+//  }
+//  
+//	// Get a pointer to the audio device
+//	nuiAudioDevice_AudioUnit* pAudioDevice = (nuiAudioDevice_AudioUnit*)inRefCon;
+//  
+//	// Process
+//	pAudioDevice->Process(inNumberFrames_, ioData);
 	
 	return noErr;
 } 
@@ -74,7 +100,7 @@ void nuiAudioDevice_AudioUnit::Process(uint uNumFrames, AudioBufferList* ioData)
   {
     if (mOutputBuffers.size())
     {
-      const int32 mult = ((1 << 24) - 1);
+      const int32 mult = ((1 << 23) - 1);
       int32* dst0 = (int32*)ioData->mBuffers[0].mData;
       int32* dst1 = (int32*)ioData->mBuffers[1].mData;
       const float* ptr0 = mOutputBuffers[0];
@@ -103,7 +129,7 @@ void nuiAudioDevice_AudioUnit::Process(uint uNumFrames, AudioBufferList* ioData)
       const float* ptr0 = mOutputBuffers[0];
       const float* ptr1 = mOutputBuffers[1];
       
-      const int32 mult = ((1 << 16) - 1);
+      const int32 mult = ((1 << 15) - 1);
       for (uint32 s = 0; s < uNumFrames; s++)
       {
         const float sl = *ptr0;
@@ -148,16 +174,15 @@ bool nuiAudioDevice_AudioUnit::Open(std::vector<uint32>& rInputChannels, std::ve
     mOutputBuffers[i] = (float*)malloc(mBufferSize * sizeof(float));
   
   UInt32 size = sizeof (UInt32);
-#if 0
   UInt32 value = kAudioSessionOverrideAudioRoute_None;
-  err = AudioSessionSetProperty(kAudioSessionProperty_OverrideAudioRoute, size, &value);  
-
+  AudioSessionSetProperty(kAudioSessionProperty_OverrideAudioRoute, size, &value);  
+  
 	// Initialize our session
 	err = AudioSessionInitialize(NULL, NULL, interruptionListener, NULL);	
   
   
 	// Set the category
-	UInt32 uCategory = kAudioSessionCategory_PlayAndRecord;//kAudioSessionCategory_LiveAudio;
+	UInt32 uCategory = kAudioSessionCategory_LiveAudio;
 	err = AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, sizeof(UInt32), &uCategory);
 //	if (err != noErr)
 //  {
@@ -182,34 +207,17 @@ bool nuiAudioDevice_AudioUnit::Open(std::vector<uint32>& rInputChannels, std::ve
 //    return false;
 //  }
 	
-#endif
-  AVAudioSession *mySession = [AVAudioSession sharedInstance]; !
-  [mySession setPreferredHardwareSampleRate: mSampleRate error: nil];
-  [mySession setCategory: AVAudioSessionCategoryPlayAndRecord error: nil]; !
-  [mySession setActive: YES error: nil];
-  mSampleRate = [mySession currentHardwareSampleRate];
-  
 	// Initialize the audio unit
 	mAudioUnit = 0;
 	
 	AudioComponentDescription desc;	
 	desc.componentManufacturer = kAudioUnitManufacturer_Apple;
 	desc.componentType = kAudioUnitType_Output;
-	
-	//RemoteIO is equivalent to AUHAL on OS X 
 	desc.componentSubType = kAudioUnitSubType_RemoteIO;
 	desc.componentFlags = 0;
 	desc.componentFlagsMask = 0;
 	
-	//@see 'Audio Component Services Reference'
-	UInt32 count = AudioComponentCount(&desc);
-	// Make sure we got RemoteIO
-	if (1 != count)
-  {
-    NGL_ASSERT(0);
-    return false;
-  }
-	
+	// Fetch AudioComponent
 	AudioComponent comp = 0;
 	comp = AudioComponentFindNext(comp, &desc);
 	
@@ -219,7 +227,6 @@ bool nuiAudioDevice_AudioUnit::Open(std::vector<uint32>& rInputChannels, std::ve
     NGL_ASSERT(0);
     return false;
   }
-	
 	
 	err = AudioComponentInstanceNew(comp, &mAudioUnit);
 	// Make sure we instantiated
@@ -232,35 +239,160 @@ bool nuiAudioDevice_AudioUnit::Open(std::vector<uint32>& rInputChannels, std::ve
 	
 	//find out about the device's format (but I can save you the suspense:
 	//integer | non-interleaved | packed | little endian | 32 bits (8.24 fixed)
-	AudioStreamBasicDescription out_fmt_desc;
+	AudioStreamBasicDescription out_fmt_desc = {0};
 	size = sizeof(out_fmt_desc);
 	
-	err = AudioUnitGetProperty(mAudioUnit, 
-                             kAudioUnitProperty_StreamFormat, 
-                             kAudioUnitScope_Output, 
-                             0, &out_fmt_desc, &size);
-	if( err != noErr )
+//	err = AudioUnitGetProperty(mAudioUnit, 
+//                             kAudioUnitProperty_StreamFormat, 
+//                             kAudioUnitScope_Output, 
+//                             0, &out_fmt_desc, &size);
+//	if( err != noErr )
+//  {
+//    NGL_ASSERT(0);
+//    return false;
+//  }
+	
+  uint32 s = 2; //sizeof(AudioUnitSampleType);
+  out_fmt_desc.mFormatID = kAudioFormatLinearPCM;
+  if (s == 4)
+    out_fmt_desc.mFormatFlags = kLinearPCMFormatFlagIsFloat;
+  else if (s == 2)
+    out_fmt_desc.mFormatFlags = kLinearPCMFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked;
+  else
   {
     NGL_ASSERT(0);
-    return false;
   }
-	
 
+  out_fmt_desc.mSampleRate = mSampleRate;
+  out_fmt_desc.mFramesPerPacket = 1;
+  out_fmt_desc.mChannelsPerFrame = rOutputChannels.size();
+  out_fmt_desc.mBytesPerPacket = s * rOutputChannels.size();
+  out_fmt_desc.mBytesPerFrame = s * rOutputChannels.size();
+  out_fmt_desc.mBitsPerChannel = s * 8;
+  
+  UInt32 flag = 1;
+  err = AudioUnitSetProperty(mAudioUnit, kAudioOutputUnitProperty_EnableIO, kAudioUnitScope_Output, kOutputBus, &flag, sizeof(flag));
+
+  size = sizeof (AudioStreamBasicDescription);
+  err = AudioUnitSetProperty(mAudioUnit, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Input, kOutputBus, &out_fmt_desc, size);
+    
 	// same for input device:
 	AudioStreamBasicDescription in_fmt_desc;
 	size = sizeof(in_fmt_desc);
 	
-	err = AudioUnitGetProperty(mAudioUnit, 
-                             kAudioUnitProperty_StreamFormat, 
-                             kAudioUnitScope_Input, 
-                             0, &in_fmt_desc, &size);
-	if( err != noErr )
+	AURenderCallbackStruct cb;
+  cb.inputProc = AudioUnitCallback;
+  cb.inputProcRefCon = this;
+  size = sizeof (AURenderCallbackStruct);	
+  if ((err = AudioUnitSetProperty(mAudioUnit, kAudioUnitProperty_SetRenderCallback, kAudioUnitScope_Input, kOutputBus, &cb, size)) != noErr)
   {
     NGL_ASSERT(0);
     return false;
   }
+
+//	err = AudioUnitAddRenderNotify(mAudioUnit, AudioUnitCallback, this);
+//	if (err != noErr)
+//  {
+//    NGL_ASSERT(0);
+//    return false;
+//  }	
+  
+  //	err = AudioUnitGetProperty(mAudioUnit, 
+  //                             kAudioUnitProperty_StreamFormat, 
+  //                             kAudioUnitScope_Input, 
+  //                             0, &in_fmt_desc, &size);
+  //	if( err != noErr )
+  //  {
+  //    NGL_ASSERT(0);
+  //    return false;
+  //  }
 	
-	
+  
+  ///////////////////////////// INPUT:
+  if (0)
+  {
+    //find out about the device's format (but I can save you the suspense:
+    //integer | non-interleaved | packed | little endian | 32 bits (8.24 fixed)
+    AudioStreamBasicDescription in_fmt_desc = {0};
+    size = sizeof(in_fmt_desc);
+    
+    //	err = AudioUnitGetProperty(mAudioUnit, 
+    //                             kAudioUnitProperty_StreamFormat, 
+    //                             kAudioUnitScope_Output, 
+    //                             0, &in_fmt_desc, &size);
+    //	if( err != noErr )
+    //  {
+    //    NGL_ASSERT(0);
+    //    return false;
+    //  }
+    
+    uint32 s = 2; //sizeof(AudioUnitSampleType);
+    in_fmt_desc.mFormatID = kAudioFormatLinearPCM;
+    if (s == 4)
+      in_fmt_desc.mFormatFlags = kLinearPCMFormatFlagIsFloat;
+    else if (s == 2)
+      in_fmt_desc.mFormatFlags = kLinearPCMFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked;
+    else
+    {
+      NGL_ASSERT(0);
+    }
+    
+    in_fmt_desc.mSampleRate = mSampleRate;
+    in_fmt_desc.mFramesPerPacket = 1;
+    in_fmt_desc.mChannelsPerFrame = rOutputChannels.size();
+    in_fmt_desc.mBytesPerPacket = s * rOutputChannels.size();
+    in_fmt_desc.mBytesPerFrame = s * rOutputChannels.size();
+    in_fmt_desc.mBitsPerChannel = s * 8;
+		
+		// Enable INPUT
+		flag = 1;
+		if ((err = AudioUnitSetProperty(mAudioUnit, kAudioOutputUnitProperty_EnableIO, kAudioUnitScope_Input,	kInputBus, &flag, sizeof (flag))) != noErr)
+		{
+      NGL_ASSERT(err == noErr);
+			return false;		
+		}
+		
+		// Set the INPUT stream format
+		size = sizeof (AudioStreamBasicDescription);
+		if ((err = AudioUnitSetProperty(mAudioUnit, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Output, kInputBus, &in_fmt_desc, size)) != noErr)
+		{
+			NGL_ASSERT(err == noErr);
+			return false;
+		}
+		
+		
+		// Assign input callback
+		cb.inputProc = AudioUnitInputCallback;
+		cb.inputProcRefCon = this;
+		size = sizeof (AURenderCallbackStruct);	
+		
+		// When output is active, need to use SetInputCallback rather than SetRenderCallback
+    //		if (EnableOutput)
+		{
+			if ((err = AudioUnitSetProperty(mAudioUnit, kAudioOutputUnitProperty_SetInputCallback, kAudioUnitScope_Global, kInputBus, &cb, size)) != noErr)
+			{
+				NGL_ASSERT(err == noErr);
+				return false;
+			}
+		}
+    /*		else
+     {
+     if ((err = AudioUnitSetProperty(mAudioUnit, kAudioUnitProperty_SetRenderCallback, kAudioUnitScope_Input, 0, &cb, size)) != noErr)
+     {
+     NGL_ASSERT(err == noErr);
+     return false;
+     }			
+     }*/
+		
+		// Disable buffer allocation on input bus
+		flag = 0;
+		if ((err = AudioUnitSetProperty(mAudioUnit, kAudioUnitProperty_ShouldAllocateBuffer, kAudioUnitScope_Output, kInputBus, &flag, sizeof (flag))) != noErr)
+		{
+			NGL_ASSERT(err == noErr);
+			return false;		
+		}	
+  }
+  
 	
 	//NSAssert (noErr == err, @"Retrieving ASBD failed");
 	
@@ -277,12 +409,6 @@ bool nuiAudioDevice_AudioUnit::Open(std::vector<uint32>& rInputChannels, std::ve
   }	
 	
 	//NSAssert (noErr == err, @"AU Init Failed");
-	err = AudioUnitAddRenderNotify(mAudioUnit, AudioUnitCallback, this);
-	if (err != noErr)
-  {
-    NGL_ASSERT(0);
-    return false;
-  }	
 	//NSAssert (noErr == err, @"Add Render Callback failed");
 	
 	

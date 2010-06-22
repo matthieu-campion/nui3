@@ -499,6 +499,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../include";
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-x",
@@ -547,6 +548,7 @@
 		C9F5F9320DA84CAB00E078ED /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = armv6;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos2.1]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -566,6 +568,7 @@
 				LIBRARY_SEARCH_PATHS = "";
 				PREBINDING = NO;
 				PRODUCT_NAME = AudioPlayer_iPhoneD;
+				SDKROOT = iphoneos3.2;
 			};
 			name = Default;
 		};
