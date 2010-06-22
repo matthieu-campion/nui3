@@ -288,6 +288,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 
 - (void) UpdateOrientation: (Boolean)forceresize
 {
+	
   //nuiStopWatch watch(_T("nglWindowUIKIT::UpdateOrientation"));
   UIApplication* pApp = [UIApplication sharedApplication];
   UIDevice* pUIDev = [UIDevice currentDevice];
@@ -431,6 +432,8 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
     else
       mpNGLWindow->SetSize([UIScreen mainScreen].applicationFrame.size.width, [UIScreen mainScreen].applicationFrame.size.height);
     [self setFrame: [UIScreen mainScreen].applicationFrame ];
+	  
+	  glFlush();
 
 #if 1
     CAEAGLLayer* pLayer = (CAEAGLLayer*)[self layer];
@@ -438,8 +441,8 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 
     [(EAGLContext*)mpContext renderbufferStorage: GL_RENDERBUFFER_OES fromDrawable: pLayer];
     GLint w, h;
-    glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &w);
-    glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &h);
+   // glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &w);
+   // glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &h);
 
     if (glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) != GL_FRAMEBUFFER_COMPLETE_OES)
     {
@@ -454,7 +457,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
     [self setContext: mpContext renderBuffer:mRenderBuffer];
     glClearColor(0, 0, 0, 1);
     glClear(GL_COLOR_BUFFER_BIT);
-    NSLog(@"NEW Render buffer area: %d x %d\n", w, h);
+   // NSLog(@"NEW Render buffer area: %d x %d\n", w, h);
     mpNGLWindow->disableFrameBuffer = false;
 #else    
     mpNGLWindow->disableFrameBuffer = false;
@@ -1090,7 +1093,7 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
   glClearColor(0, 0, 0, 1);
   glClear(GL_COLOR_BUFFER_BIT);
   
-  //[pUIWindow UpdateOrientation: FALSE];
+  [pUIWindow UpdateOrientation: FALSE];
 
 /* Ultra basic UIKit view integration on top of nuiWidgets
   UIWebView* pWebView = [[UIWebView alloc] initWithFrame: CGRectMake(50, 50, 200, 200)];
