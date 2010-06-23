@@ -49,10 +49,10 @@ private:
 
   nglString mNuiSourcePath;
   nglPath mNuiRelativeSource;
+  nglPath mNuiTemplatePath;
   nuiLabel* mpNuiRelativeSource;
   nglString mProjectTargetPath;
   nglString mProjectName;
-  nglString miPhoneProjectName;
   nuiEditLine* mpNuiSource;
   nuiEditLine* mpProjectTarget;
   nuiLabel* mpProjectFilename;
@@ -63,15 +63,15 @@ private:
   
   
   nuiToggleButton* mpCheckXcode;
-  nuiToggleButton* mpCheckVisualStudio2005;
   nuiToggleButton* mpCheckVisualStudio2008;
-  nuiToggleButton* mpCheckiPhone;
   
   
   bool mNuiCheckProjectFile;
   nuiLabel* mpNuiCheckProjectFile;
   bool mNuiCheckTools;
   nuiLabel* mpNuiCheckTools;
+  bool mNuiCheckTemplate;
+  nuiLabel* mpNuiCheckTemplate;
   nuiTimer* mpTimer;
 
   nuiEventSink<ProjectGenerator> mEventSink;

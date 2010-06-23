@@ -131,6 +131,18 @@ nuiWidget* ProjectGenerator::BuildBlocSourceDirectory()
   mNuiCheckTools = false;
   pHBox->AddCell(mpNuiCheckTools);
   pHBox->SetCellExpand(pHBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
+
+  pHBox->AddCell(NULL);
+  pHBox->SetCellPixels(pHBox->GetNbCells()-1, 10);
+  
+  pHBox->AddCell(new nuiLabel(_T("nui3 template app: ")));
+  mpNuiCheckTemplate = new nuiLabel(_T(""));
+  mNuiCheckTemplate = false;
+  pHBox->AddCell(mpNuiCheckTemplate);
+  pHBox->SetCellExpand(pHBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
+  
+  
+  
   
   
   // read-only information : nui3 directory relative path from new project
@@ -284,7 +296,7 @@ nuiWidget* ProjectGenerator::BuildBlocButtons()
 {
   nuiHBox* pBox = new nuiHBox(2);
   pBox->SetExpand(nuiExpandShrinkAndGrow);
-  pBox->SetBorder(20,40,40,40);
+  pBox->SetBorder(20,40,100,40);
   
   nuiButton* pGeneratorButton = new nuiButton(_T("generate project"));
   pGeneratorButton->SetPosition(nuiRight);
@@ -363,6 +375,24 @@ bool ProjectGenerator::OnTimerTick(const nuiEvent& rEvent)
     allOK &= false;
   }
   
+  nglPath templatePath = path;
+  templatePath += nglPath(_T("tools/TemplateApp/TemplateApp.xcodeproj"));
+  if (templatePath.Exists())
+  {
+    mNuiCheckTemplate = true;
+    mpNuiCheckTemplate->SetText(_T("found"));
+    mpNuiCheckTemplate->SetColor(eNormalTextFg, nuiColor(_T("green")));
+    allOK &= true;
+  }
+  else
+  {
+    mNuiCheckTemplate = false;
+    mpNuiCheckTemplate->SetText(_T("not found!"));
+    mpNuiCheckTemplate->SetColor(eNormalTextFg, nuiColor(_T("red")));
+    allOK &= false;
+  }
+  
+  
   
   if (allOK)
     mpIconSourceDirectory->SetObjectName(_T("Icon::SourceDirectory"));
@@ -374,6 +404,9 @@ bool ProjectGenerator::OnTimerTick(const nuiEvent& rEvent)
   mNuiRelativeSource = nglPath(mpNuiSource->GetText());
   mNuiRelativeSource.MakeRelativeTo(nglPath(mpProjectTarget->GetText()));
   mpNuiRelativeSource->SetText(mNuiRelativeSource.GetPathName());
+  
+  mNuiTemplatePath = nglPath(mpNuiSource->GetText());
+  mNuiTemplatePath += nglPath(_T("tools/TemplateApp"));
   
   return true;
 }
@@ -447,8 +480,6 @@ bool ProjectGenerator::OnGenerateButton(const nuiEvent& rEvent)
   mProjectTargetPath = target;
   nglPath path = nglPath(target);
   mProjectName = path.GetNodeName();
-  miPhoneProjectName = mProjectName;
-  miPhoneProjectName += _T("_iPhone");
 
   nglPath targetPath(target);
   nglString xcodeproj = mProjectName + _T(".xcodeproj");
@@ -463,8 +494,6 @@ bool ProjectGenerator::OnGenerateButton(const nuiEvent& rEvent)
   }
   
   
-    
-
   GetPreferences().Save();
   
   Make();
@@ -551,16 +580,16 @@ bool ProjectGenerator::Make()
 
     
   //copy the src folder 
-  if (!CopyDirectory(targetpath + nglPath(_T("src")), _T("rsrc:/project/src")))
+  if (!CopyDirectory(targetpath + nglPath(_T("src")), mNuiTemplatePath + nglPath(_T("src"))))
     return false;
   
 
   //copy the resources folders
-  if (!CopyDirectory(targetpath + nglPath(_T("resources")), _T("rsrc:/project/resources")))
+  if (!CopyDirectory(targetpath + nglPath(_T("resources")), mNuiTemplatePath + nglPath(_T("resources"))))
     return false;
-  if (!CopyDirectory(targetpath + nglPath(_T("resources/css")), _T("rsrc:/project/resources/css")))
+  if (!CopyDirectory(targetpath + nglPath(_T("resources/css")), mNuiTemplatePath + nglPath(_T("resources/css"))))
     return false;
-  if (!CopyDirectory(targetpath + nglPath(_T("resources/decorations")), _T("rsrc:/project/resources/decorations")))
+  if (!CopyDirectory(targetpath + nglPath(_T("resources/decorations")), mNuiTemplatePath + nglPath(_T("resources/decorations"))))
     return false;
 
   
@@ -588,56 +617,9 @@ bool ProjectGenerator::Make()
     projectfile = targetpath;
     projectfile += nglPath(projfolder);
     projectfile += nglPath(_T("project.pbxproj"));
-    if (!GenerateFile(_T("rsrc:/project/project.pbxproj"), projectfile))
+    if (!GenerateFile(mNuiTemplatePath + nglPath(_T("TemplateApp.xcodeproj/project.pbxproj")), projectfile))
       return false;
     
-  }
-
-  
-  
-  // create iphone xcodeproj folder
-  if (mpCheckiPhone->IsPressed())
-  {
-    projpath = targetpath;
-    nglString iphoneprojfolder = miPhoneProjectName + nglString(_T(".xcodeproj"));
-    projpath += nglPath(iphoneprojfolder);
-    if (!projpath.Create())
-    {
-      nglString msg;
-      msg.Format(_T("creating iphone xcodeproj folder '%ls'"), projpath.GetChars());
-      return MsgError(msg);
-    }
-    
-    NGL_OUT(_T("nui project generator : iphone project folder created '%ls'\n"), projpath.GetChars());
-
-    // generate xcode iphone project file
-    projectfile = targetpath;
-    projectfile += nglPath(iphoneprojfolder);
-    projectfile += nglPath(_T("project.pbxproj"));
-    if (!GenerateFile(_T("rsrc:/project/project_iPhone.pbxproj"), projectfile))
-      return false;    
-  }
-  
-  
-
-  // generate visual studio 2005 project file
-  if (mpCheckVisualStudio2005->IsPressed())
-  {
-    filename = mProjectName + nglString(_T(".2005.vcproj"));
-    projectfile = targetpath;
-    projectfile += nglPath(filename);
-    if (!GenerateFile(_T("rsrc:/project/project.2005.vcproj"), projectfile))
-      return false;
-  }
-
-  // generate visual studio 2005 solution file
-  if (mpCheckVisualStudio2005->IsPressed())
-  {
-    filename = mProjectName + nglString(_T(".2005.sln"));
-    projectfile = targetpath;
-    projectfile += nglPath(filename);
-    if (!GenerateFile(_T("rsrc:/project/project.2005.sln"), projectfile))
-      return false;
   }
 
   
@@ -647,7 +629,7 @@ bool ProjectGenerator::Make()
     filename = mProjectName + nglString(_T(".2008.vcproj"));
     projectfile = targetpath;
     projectfile += nglPath(filename);
-    if (!GenerateFile(_T("rsrc:/project/project.2008.vcproj"), projectfile))
+    if (!GenerateFile(mNuiTemplatePath + nglPath(_T("TemplateApp.2008.vcproj")), projectfile))
       return false;
   }
   
@@ -657,29 +639,19 @@ bool ProjectGenerator::Make()
     filename = mProjectName + nglString(_T(".2008.sln"));
     projectfile = targetpath;
     projectfile += nglPath(filename);
-    if (!GenerateFile(_T("rsrc:/project/project.2008.sln"), projectfile))
+    if (!GenerateFile(mNuiTemplatePath + nglPath(_T("TemplateApp.2008.sln")), projectfile))
       return false;
   }
   
   
   
-  // generate dlist.plist
-  if (mpCheckXcode->IsPressed() || mpCheckiPhone->IsPressed())
-  {
-    filename = _T("dlist.plist");
-    projectfile = targetpath;
-    projectfile += nglPath(filename);
-    if (!GenerateFile(_T("rsrc:/project/dlist.plist"), projectfile))
-      return false;
-  }
-
   // generate Info.plist
-  if (mpCheckXcode->IsPressed() || mpCheckiPhone->IsPressed())
+  if (mpCheckXcode->IsPressed())
   {
-    filename = _T("Info.plist");
+    filename = mProjectName + nglString(_T(".plist"));
     projectfile = targetpath;
     projectfile += nglPath(filename);
-    if (!GenerateFile(_T("rsrc:/project/Info.plist"), projectfile))
+    if (!GenerateFile(mNuiTemplatePath + nglPath(_T("TemplateApp.plist")), projectfile))
       return false;
   }
   
@@ -687,9 +659,9 @@ bool ProjectGenerator::Make()
   filename = _T("resource.rc");
   projectfile = targetpath;
   projectfile += nglPath(filename);
-  if (!GenerateFile(_T("rsrc:/project/resource.rc"), projectfile))
+  if (!GenerateFile(mNuiTemplatePath + nglPath(_T("resource.rc")), projectfile))
     return false;
-  
+   
 
   nglString msg;
   msg.Format(_T("nui project '%ls' successfully generated!"), mProjectName.GetChars());
@@ -773,9 +745,8 @@ bool ProjectGenerator::GenerateFile(const nglPath& src, const nglPath& dst)
   delete pFile;
   
   nglString contents(str);
-  contents.Replace(_T("%NUI_GENERATOR_PROJECT_IPHONE%"), miPhoneProjectName);
-  contents.Replace(_T("%NUI_GENERATOR_PROJECT%"), mProjectName);
-  contents.Replace(_T("%NUI_GENERATOR_NUI%"), mNuiRelativeSource.GetPathName());
+  contents.Replace(_T("TemplateApp"), mProjectName);
+  contents.Replace(_T("../../../nui3"), mNuiRelativeSource.GetPathName());
 
   
   nglOStream* poFile = dst.OpenWrite(false);
