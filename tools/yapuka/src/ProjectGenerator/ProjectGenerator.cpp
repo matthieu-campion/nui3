@@ -225,32 +225,9 @@ nuiWidget* ProjectGenerator::BuildBlocOptions()
   mpCheckXcode->SetBorder(25,0,0, 0);
   pBloc->SetCell(1, mpCheckXcode, nuiCenter);
   // label
-  pBloc->SetCell(2, new nuiLabel(nuiTR("generate Xcode project file for Mac OS X")));
+  pBloc->SetCell(2, new nuiLabel(nuiTR("generate Xcode project file for Mac OS X, iPhone/iPad")));
   
 
-  
-  // Visual Studio 2005
-  pBloc = new nuiHBox(3);
-  pMainBox->AddCell(pBloc);
-  // icon
-  pIcon = new nuiImage();
-  pIcon->SetObjectName(_T("Icon::VisualStudio2005"));
-  pIcon->SetToken(new nuiToken<nglString>(_T("Icon::VisualStudio2005")));
-  pIcon->SetPosition(nuiTopLeft);
-  pBloc->SetCell(0, pIcon);
-  pBloc->SetCellPixels(0, 48);
-  // check box
-  mpCheckVisualStudio2005 = new nuiToggleButton();
-  mpCheckVisualStudio2005->SetToken(new nuiToken<nuiImage*>(pIcon));
-  mEventSink.Connect(mpCheckVisualStudio2005->ButtonPressed, &ProjectGenerator::OnIconUpdate, (void*)mpCheckVisualStudio2005);
-  mEventSink.Connect(mpCheckVisualStudio2005->ButtonDePressed, &ProjectGenerator::OnIconUpdate, (void*)mpCheckVisualStudio2005);
-  mpCheckVisualStudio2005->SetPressed(true);
-  mpCheckVisualStudio2005->SetBorder(25,0,0, 0);
-  pBloc->SetCell(1, mpCheckVisualStudio2005, nuiCenter);
-  // label
-  pBloc->SetCell(2, new nuiLabel(nuiTR("generate MS Visual Studio 2005 project file for Win32")));
-
-  
   
   // Visual Studio 2008
   pBloc = new nuiHBox(3);
@@ -273,28 +250,6 @@ nuiWidget* ProjectGenerator::BuildBlocOptions()
   // label
   pBloc->SetCell(2, new nuiLabel(nuiTR("generate MS Visual Studio 2008 project file for Win32")));
   
-  
-  
-  // iPhone xcode
-  pBloc = new nuiHBox(3);
-  pMainBox->AddCell(pBloc);
-  // icon
-  pIcon = new nuiImage();
-  pIcon->SetObjectName(_T("Icon::iPhone::Disabled"));
-  pIcon->SetToken(new nuiToken<nglString>(_T("Icon::iPhone")));
-  pIcon->SetPosition(nuiTopLeft);
-  pBloc->SetCell(0, pIcon);
-  pBloc->SetCellPixels(0, 48);
-  // check box
-  mpCheckiPhone = new nuiToggleButton();
-  mpCheckiPhone->SetToken(new nuiToken<nuiImage*>(pIcon));
-  mEventSink.Connect(mpCheckiPhone->ButtonPressed, &ProjectGenerator::OnIconUpdate, (void*)mpCheckiPhone);
-  mEventSink.Connect(mpCheckiPhone->ButtonDePressed, &ProjectGenerator::OnIconUpdate, (void*)mpCheckiPhone);
-  mpCheckiPhone->SetPressed(false);
-  mpCheckiPhone->SetBorder(25,0,0, 0);
-  pBloc->SetCell(1, mpCheckiPhone, nuiCenter);
-  // label
-  pBloc->SetCell(2, new nuiLabel(nuiTR("generate Xcode project file for iPhone")));
   
   
   
