@@ -193,6 +193,11 @@ bool nuiToggleButton::MouseMoved(nuiSize X, nuiSize Y)
 bool nuiToggleButton::MouseUngrabbed()
 {
   nuiWidget::MouseUngrabbed();
+  if (mClicked)
+  {
+    mClicked = false;
+    SetPressed(mWasPressed);
+  }
   return false;
 }
 
