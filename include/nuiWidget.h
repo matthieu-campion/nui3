@@ -637,6 +637,7 @@ protected:
   bool mWantKeyboardFocus: 1;
   bool mMuteKeyboardFocusDispatch: 1;
   bool mTrashed: 1;
+  bool mDoneTrashed: 1;
   bool mMatrixIsIdentity: 1;
   bool mCanRespectConstraint: 1;
   bool mInSetRect: 1;

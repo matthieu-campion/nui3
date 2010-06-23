@@ -550,6 +550,7 @@ void nuiWidget::Init()
 	mUseRenderCache = false;
 
   mTrashed = false;
+  mDoneTrashed = false;
   mRedrawOnHover = false;
 
   mMixAlpha = true;
@@ -2115,6 +2116,9 @@ void nuiWidget::OnTrash()
 bool nuiWidget::Trash()
 {
   CheckValid();
+
+  mTrashed = true;
+
   nuiAnimation* pAnim = GetAnimation(_T("TRASH"));
   if (pAnim && (pAnim->GetTime()==0 && pAnim->GetDuration()>0))
   {
@@ -2122,10 +2126,11 @@ bool nuiWidget::Trash()
   }
   else
   {
-    if (mTrashed)
+    NGL_ASSERT(!mDoneTrashed);
+    if (mDoneTrashed)
       return false;
 
-    mTrashed = true;
+    mDoneTrashed = true;
 
     CallOnTrash();
 
