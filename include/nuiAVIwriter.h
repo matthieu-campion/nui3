@@ -5,6 +5,7 @@
  licence: see nui3/LICENCE.TXT
  */
 
+
 #pragma once
 
 #include "nui.h"
@@ -18,7 +19,7 @@ public:
   nuiAVIwriter(const nglPath& output, uint32 width, uint32 height, uint32 bpp, float frame_rate); 
   ~nuiAVIwriter();
 
-  void AddFrame(char* pFrame);
+  void AddFrame(unsigned char* pFrame);
   void Close();
   
   

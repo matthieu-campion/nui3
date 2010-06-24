@@ -4,9 +4,6 @@
  
  licence: see nui3/LICENCE.TXT
  */
-
-
-
 #include "nuiAVIwriter.h"
 
 
@@ -80,7 +77,7 @@ nuiAVIwriter::~nuiAVIwriter()
 
 
 
-void nuiAVIwriter::AddFrame(char* pFrame)
+void nuiAVIwriter::AddFrame(unsigned char* pFrame)
 {
   int x, y;
   uint8 bgr[3];
@@ -88,7 +85,7 @@ void nuiAVIwriter::AddFrame(char* pFrame)
   uint8 *row, *pixel;
   int width = mWidth;
   int height = mHeight;
-  int rowstride = (mBpp * mWidth) / 24;
+  int rowstride = (mBpp / 8 * mWidth); // TODO : fix
 
   int n_channels = mBpp / 8;
   int padding = 0;
@@ -472,4 +469,5 @@ void nuiAVIwriter::PopChunkWithIndex(int index_flags)
   mIndexQueue.push(new_entry);
   PopChunk();
 }
+
 
