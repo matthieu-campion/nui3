@@ -416,7 +416,7 @@ IF (${LINUX})
     -g
     -DXP_UNIX
   )
-  INSTALL(DIRECTORY examples/data DESTINATION /usr/share/nuitest)
+  INSTALL(DIRECTORY scratchpads/data DESTINATION /usr/share/nuitest)
 
 ELSEIF (${WINDOWS})
   add_definitions( -DWIN32 -DNGL_USE_WIN32_MMTIMER)
@@ -469,6 +469,6 @@ add_subdirectory(deps)
 add_library( nui3 SHARED ${SOURCES} )
 target_link_libraries(nui3 ${CURL_LIBRARY} ${CURL_LIBRARIES} ${EXPAT_LIBRARY} ${FREETYPE_LIBRARY} ${FREETYPE_LIBRARIES} ${EXPAT_LIBRARIES} ${JPEG_LIBRARY} ${JPEG_LIBRARIES} ${PNG_LIBRARY} ${PNG_LIBRARIES} ${GIF_LIBRARY} ${GIF_LIBRARIES} tidy ucdata tracemonkey)
 
-add_subdirectory(examples)
+add_subdirectory(scratchpads)
 add_subdirectory(tutorials)
 
