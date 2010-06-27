@@ -297,7 +297,6 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>10</integer>
 									<integer>1</integer>
 									<integer>0</integer>
 								</array>
@@ -334,7 +333,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>E539542511D3BA0A008021FA</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>testGLAppDelegate.m</string>
+								<string>EAGLView.m</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -342,23 +341,20 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>E539542611D3BA0A008021FA</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>testGLAppDelegate.m</string>
+										<string>EAGLView.m</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E5727BD511D6AA4B00A01D2F</string>
+										<string>E5727BFC11D7976400A01D2F</string>
 										<key>history</key>
 										<array>
 											<string>E539544F11D3C8C0008021FA</string>
 											<string>E55BC5B411D3FB5D00C69ECF</string>
 											<string>E55BC67B11D4156900C69ECF</string>
 											<string>E55BC6A511D4199300C69ECF</string>
-											<string>E59B3A4811D4F98000F148E6</string>
-											<string>E59B3AAE11D5007000F148E6</string>
-											<string>E5727BD011D6AA4700A01D2F</string>
-											<string>E5727BD111D6AA4700A01D2F</string>
-											<string>E5727BD211D6AA4700A01D2F</string>
-											<string>E5727BD311D6AA4700A01D2F</string>
+											<string>E5727BED11D7970500A01D2F</string>
+											<string>E5727BEF11D7970500A01D2F</string>
+											<string>E5727BFA11D7974B00A01D2F</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -662,7 +658,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>299280971.58316201</real>
+	<real>299341668.27805698</real>
 	<key>ToolbarConfigUserDefaultsMinorVersion</key>
 	<string>2</string>
 	<key>ToolbarDisplayMode</key>
@@ -679,7 +675,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E5727BDE11D6AA4B00A01D2F</string>
 		<string>E5727BDF11D6AA4B00A01D2F</string>
 		<string>E5727BE011D6AA4B00A01D2F</string>
 		<string>/Users/meeloo/work/nui3/scratchpads/testGLES_iOS/testGL.xcodeproj</string>
