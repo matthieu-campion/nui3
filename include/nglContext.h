@@ -282,20 +282,9 @@ protected:
 
 #ifdef _UIKIT_
 protected:
-  void*         mpContext; ///< Used to carry the Objective C interface EAGLContext
-  GLuint        mPixelFormat;
-  GLuint        mDepthFormat;
-
-  void*         mpEAGLPixelFormat;
-
   nglContextInfo mContextInfo;
 
   bool mFullscreen;
-
-  bool Build(const nglContextInfo& rInfo, const nglContext* pShared, bool Fullscreen);
-  bool Destroy();
-
-  bool InternalMakeCurrent(void* pContext) const;
 
   friend class nglContextInfo;
 #endif

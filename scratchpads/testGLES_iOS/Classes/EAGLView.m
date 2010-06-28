@@ -8,9 +8,6 @@
 
 #import "EAGLView.h"
 
-#import "ES1Renderer.h"
-#import "ES2Renderer.h"
-
 @implementation EAGLView
 
 @synthesize animating;

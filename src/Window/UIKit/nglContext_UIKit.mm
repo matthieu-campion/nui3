@@ -139,12 +139,10 @@ const nglChar* gpEAGLErrorTable[] =
 
 nglContext::nglContext()
 {
-  mpContext = NULL;
 }
 
 nglContext::~nglContext()
 {
-  Destroy();
 }
 
 bool nglContext::GetContextInfo(nglContextInfo& rInfo) const
@@ -153,6 +151,7 @@ bool nglContext::GetContextInfo(nglContextInfo& rInfo) const
   return true;
 }
 
+#if 0
 bool nglContext::Build(const nglContextInfo& rInfo, const nglContext* pShared, bool FullScreen)
 {
   mContextInfo = rInfo;
@@ -204,34 +203,8 @@ bool nglContext::Build(const nglContextInfo& rInfo, const nglContext* pShared, b
 ///< Create our context
 
   mpContext = NULL;
-  if (pShared)
-  {
-    if (this == pShared)
-    {
-      EAGLContext* pOld = (EAGLContext*)mpContext;
-      mpContext = [[EAGLContext alloc]  initWithAPI: kEAGLRenderingAPIOpenGLES1 sharegroup:  [(EAGLContext*)pOld sharegroup]];
-      [pOld release];
-    }
-    else
-    {
-      mpContext = [[EAGLContext alloc]  initWithAPI: kEAGLRenderingAPIOpenGLES1 sharegroup:  [(EAGLContext*)pShared->mpContext sharegroup]];
-    }
 
-  }
-  else
-  {
-    mpContext = [[EAGLContext alloc]  initWithAPI: kEAGLRenderingAPIOpenGLES1];
-  }
-  NGL_ASSERT(mpContext);
-  if (!mpContext)
-  {
-    NGL_LOG(_T("context"), NGL_LOG_INFO, _T("[EAGLContext %ls] Failed to Create context %ls\n"),
-            pShared ? _T("initWithAPI:sharegroup:") : _T("initWithAPI:"), _T("Failed"));
-    Destroy();
-    return false;
-  }
-
-  if (!InternalMakeCurrent(mpContext))
+  if (!MakeCurrent(mpContext))
   {
     Destroy();
     return false;
@@ -243,24 +216,7 @@ bool nglContext::Build(const nglContextInfo& rInfo, const nglContext* pShared, b
 #endif
   return true;
 }
-
-bool nglContext::InternalMakeCurrent(void* pContext) const
-{
-#ifndef __NOGLCONTEXT__
-
-  if ( ![EAGLContext setCurrentContext: (EAGLContext*)pContext] )
-  {
-    NGL_LOG(_T("context"), NGL_LOG_INFO, _T("EAGLContext setCurrentContext: %p: [error]\n"), pContext);
-    return false;
-  }
-
-# ifdef _DEBUG_CONTEXT_
-  NGL_LOG(_T("context"), NGL_LOG_INFO, _T("EAGLContext setCurrentContext: %p: [succeeded]\n"), pContext);
-# endif
-
 #endif
-  return true;
-}
 
 const nglChar* nglContext::OnError (uint& rError) const
 {
@@ -274,18 +230,4 @@ const nglChar* nglContext::OnError (uint& rError) const
 nglContext::GLExtFunc nglContext::LookupExtFunc (const char* pFuncName)
 {
   return NULL;//(GLExtFunc)eaglGetProcAddress(pFuncName);
-}
-
-bool nglContext::Destroy()
-{
-#ifndef __NOGLCONTEXT__
-  InternalMakeCurrent(NULL);
-  if (mpContext)
-  {
-    [(EAGLContext*)mpContext release];
-  }
-  
-  mpContext = NULL;
-#endif
-	return true;
 }

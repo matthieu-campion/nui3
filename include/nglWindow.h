@@ -834,16 +834,12 @@ private:
   void InternalInit(const nglContextInfo& rContext, const nglWindowInfo& rInfo,
                     const nglContext* pShared);
 
-  int32 mInSession;
   void* mpUIWindow;
   GLuint mRenderBuffer;
   GLuint mFrameBuffer;
   GLuint mDepthBuffer;
   nglContextInfo mContextInfo;
   StateChange mState;
-public:
-	bool disableFrameBuffer;
-
 #endif
 
 #ifdef _WIN32_

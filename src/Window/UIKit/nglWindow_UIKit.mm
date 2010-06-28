@@ -99,94 +99,23 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 	return [CAEAGLLayer class];
 }
 
-- (void) setContext: (void*) pContext renderBuffer: (GLint) buffer
-{
-  mpContext = pContext;
-  mRenderBuffer = buffer;
-}
-
--(void) setPassingRelay
-{
-  mPassingRelay = true;
-}
-
-- (id) initWithWindow: (nglUIWindow*)pUIWindow
-{
-  mPassingRelay = false;
-  [pUIWindow setPassingRelay];
-  [[UITextField alloc] initWithFrame: CGRectZero];
-  
-  
-  //NGL_OUT(_T("[nglUIWindow initWithFrame]\n"));
-  CGRect rect = pUIWindow.frame;
-  if ( (self = [super initWithFrame: rect]) )
-  {
-    mpNGLWindow = [pUIWindow getNGLWindow];
-  }
-  else
-  {
-    NGL_ASSERT(!"initWithFrame: Could not initialize UIWindow");
-  }
-  mInited = false;
-  mInvalidated = true;
-  
-  mInvalidationTimer = nil;
-  mDisplayLink = nil;
-  
-  int frameInterval = 1;
-  NSString* sysVersion = [[UIDevice currentDevice] systemVersion];
-//  if ([sysVersion compare:@"3.1" options:NSNumericSearch] != NSOrderedAscending) ///< CADisplayLink requires version 3.1 or greater
-//  {
-//    mDisplayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(Paint)];
-//    [mDisplayLink setFrameInterval:frameInterval];
-//    [mDisplayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-//  }
-//  else ///< NSTimer is used as fallback
-  {
-    mInvalidationTimer = [NSTimer scheduledTimerWithTimeInterval:(1.0f / NGL_WINDOW_FPS) target:self selector:@selector(Paint) userInfo:nil repeats:YES];
-  }
-  
-  mpTimer = nuiAnimation::AcquireTimer();
-  mpTimer->Stop();
-  //  mInvalidationTimer = [NSTimer scheduledTimerWithTimeInterval:0.001f target:self selector:@selector(Paint) userInfo:nil repeats:NO];
-  
-	[self initializeKeyboard];
-  
-  mInited = true;
-  [self InitNGLWindow];
-  //[pUIWindow release];
-  
-    CAEAGLLayer* pLayer = (CAEAGLLayer*)[self layer];
-    glBindRenderbufferOES(GL_RENDERBUFFER_OES, mRenderBuffer);
-
-    [(EAGLContext*)mpContext renderbufferStorage: GL_RENDERBUFFER_OES fromDrawable: pLayer];
-    GLint w, h;
-    glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &w);
-    glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &h);
-
-    if (glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) != GL_FRAMEBUFFER_COMPLETE_OES)
-    {
-      NSLog(@"Failed to make complete framebuffer object %x", glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES));
-    }
-
-    GLenum err = glGetError();
-    if (err != GL_NO_ERROR)
-      NSLog(@"Error. glError: 0x%04X", err);
-
-    [self setContext: mpContext renderBuffer:mRenderBuffer];
-    glClearColor(0, 0, 0, 1);
-    glClear(GL_COLOR_BUFFER_BIT);
-    NSLog(@"NEW Render buffer area: %d x %d\n", w, h);
-  
-  return self;
-}
 
 - (id) initWithFrame: (CGRect) rect andNGLWindow: (nglWindow*) pNGLWindow
 {
-  mPassingRelay = false;
+  UIDevice* pUIDev = [UIDevice currentDevice];
+  oldorientation = pUIDev.orientation;
+  
+  self = [super initWithFrame:rect];
+  glView = [[EAGLView alloc] initWithFrame:rect replacing: nil];
+  [self addSubview:glView];
+  
+  //[glView startAnimation];
+  
+  OrientationTimer = [NSTimer scheduledTimerWithTimeInterval:(NSTimeInterval)((1.0 / 10.0)) target:self selector:@selector(UpdateOrientation) userInfo:nil repeats:TRUE];
+  [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+
   [[UITextField alloc] initWithFrame: CGRectZero];
 
-  
 //NGL_OUT(_T("[nglUIWindow initWithFrame]\n"));
   if ( (self = [super initWithFrame: rect]) )
   {
@@ -198,20 +127,19 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   }
   mInited = false;
   mInvalidated = true;
-  [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
 
   mInvalidationTimer = nil;
   mDisplayLink = nil;
 
   int frameInterval = 1;
   NSString* sysVersion = [[UIDevice currentDevice] systemVersion];
-//  if ([sysVersion compare:@"3.1" options:NSNumericSearch] != NSOrderedAscending) ///< CADisplayLink requires version 3.1 or greater
-//  {
-//    mDisplayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(Paint)];
-//    [mDisplayLink setFrameInterval:frameInterval];
-//    [mDisplayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-//  }
-//  else ///< NSTimer is used as fallback
+  if ([sysVersion compare:@"3.1" options:NSNumericSearch] != NSOrderedAscending) ///< CADisplayLink requires version 3.1 or greater
+  {
+    mDisplayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(Paint)];
+    [mDisplayLink setFrameInterval:frameInterval];
+    [mDisplayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+  }
+  else ///< NSTimer is used as fallback
   {
     mInvalidationTimer = [NSTimer scheduledTimerWithTimeInterval:(1.0f / NGL_WINDOW_FPS) target:self selector:@selector(Paint) userInfo:nil repeats:YES];
   }
@@ -222,41 +150,14 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 
 	[self initializeKeyboard];
   
-  CAEAGLLayer* pLayer = (CAEAGLLayer*)[self layer];
-  glBindRenderbufferOES(GL_RENDERBUFFER_OES, mRenderBuffer);
-
-  [(EAGLContext*)mpContext renderbufferStorage: GL_RENDERBUFFER_OES fromDrawable: pLayer];
-  GLint w, h;
-  glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &w);
-  glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &h);
-
-  if (glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) != GL_FRAMEBUFFER_COMPLETE_OES)
-  {
-    NSLog(@"Failed to make complete framebuffer object %x", glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES));
-  }
-
-  GLenum err = glGetError();
-  if (err != GL_NO_ERROR)
-    NSLog(@"Error. glError: 0x%04X", err);
-
-  [self setContext: mpContext renderBuffer:mRenderBuffer];
-  glClearColor(0, 0, 0, 1);
-  glClear(GL_COLOR_BUFFER_BIT);
-  NSLog(@"NEW Render buffer area: %d x %d\n", w, h);
-
-  mpNGLWindow->SetSize(w, h);
-  
   return self;
 }
 
 - (void) dealloc
 {
-  if (!mPassingRelay)
-  {
-    [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
-    //NGL_OUT(_T("[nglUIWindow dealloc]\n"));
-    mpNGLWindow->CallOnDestruction();
-  }
+  [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
+  //NGL_OUT(_T("[nglUIWindow dealloc]\n"));
+  mpNGLWindow->CallOnDestruction();
 
   nuiAnimation::ReleaseTimer();
   if (mInvalidationTimer != nil)
@@ -272,6 +173,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
     mDisplayLink = nil;
   }
   
+  [OrientationTimer dealloc];
   [super dealloc];
 }
 
@@ -286,19 +188,106 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 //  [mpTextField interfaceOrientation: pApp.statusBarOrientation];
 }
 
-- (void) UpdateOrientation: (Boolean)forceresize
+//- (void) UpdateOrientation
+//{
+//  int angle = 0;
+//  CGRect rect = [[UIScreen mainScreen] applicationFrame];
+//  UIApplication* pApp = [UIApplication sharedApplication];
+//  UIDevice* pUIDev = [UIDevice currentDevice];
+//  unsigned int orientation = pUIDev.orientation;
+//  unsigned int apporientation = pApp.statusBarOrientation;
+//  
+//  if (oldorientation == orientation)
+//    return;
+//  
+//  int w = rect.size.width;
+//  int h = rect.size.height;
+//  switch (orientation)
+//  {
+//    case UIDeviceOrientationUnknown:
+//    case UIDeviceOrientationFaceUp:
+//    case UIDeviceOrientationFaceDown:
+//      return;
+//      break;
+//    case UIDeviceOrientationPortrait:
+//      angle = 0;
+//      pApp.statusBarOrientation = UIInterfaceOrientationPortrait;
+//      [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationPortrait];
+//      //[self UpdateKeyboard];
+//      w = [UIScreen mainScreen].applicationFrame.size.width;
+//      h = [UIScreen mainScreen].applicationFrame.size.height;
+//      break;
+//    case UIDeviceOrientationPortraitUpsideDown:
+//      angle = 180;
+//      pApp.statusBarOrientation = UIInterfaceOrientationPortraitUpsideDown;
+//      [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationPortraitUpsideDown];
+//      //[self UpdateKeyboard];
+//      w = [UIScreen mainScreen].applicationFrame.size.width;
+//      h = [UIScreen mainScreen].applicationFrame.size.height;
+//      break;
+//    case UIDeviceOrientationLandscapeLeft:
+//      angle = 270;
+//      pApp.statusBarOrientation = UIInterfaceOrientationLandscapeRight;
+//      [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationLandscapeRight];
+//      //[self UpdateKeyboard];
+//      h = [UIScreen mainScreen].applicationFrame.size.width;
+//      w = [UIScreen mainScreen].applicationFrame.size.height;
+//      break;
+//    case UIDeviceOrientationLandscapeRight:
+//      angle = 90;
+//      pApp.statusBarOrientation = UIInterfaceOrientationLandscapeLeft;
+//      [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationLandscapeLeft];
+//      //[self UpdateKeyboard];
+//      h = [UIScreen mainScreen].applicationFrame.size.width;
+//      w = [UIScreen mainScreen].applicationFrame.size.height;
+//      break;
+//    default:
+//      break;
+//  }
+//  
+//  
+//  rect = [[UIScreen mainScreen] applicationFrame];
+//  if (angle == 270 || angle == 90)
+//  {
+//    rect.size.width = h;
+//    rect.size.height = w;
+//  }
+//  else
+//  {
+//    rect.size.width = w;
+//    rect.size.height = h;
+//  }
+//  
+//  if (oldorientation != orientation)
+//  {
+//    EAGLView* old = glView;
+//    self.frame = rect;
+//    
+//    glView = [[EAGLView alloc] initWithFrame:rect replacing: old];
+//    [self addSubview:glView];
+//    [glView startAnimation];
+//    
+//    [old removeFromSuperview];
+//    [old dealloc];
+//  }
+//  oldorientation = orientation;
+//}
+
+- (void) UpdateOrientation
 {
 	
   //nuiStopWatch watch(_T("nglWindowUIKIT::UpdateOrientation"));
-  UIApplication* pApp = [UIApplication sharedApplication];
-  UIDevice* pUIDev = [UIDevice currentDevice];
   int32 angle = -1;
   int32 w, h;
   
+  bool forceresize = FALSE;
+  UIApplication* pApp = [UIApplication sharedApplication];
+  UIDevice* pUIDev = [UIDevice currentDevice];
+  unsigned int orientation = pUIDev.orientation;
+  unsigned int apporientation = pApp.statusBarOrientation;
+
   if (mpNGLWindow->GetAutoRotation())
   {
-    unsigned int orientation = pUIDev.orientation;
-    unsigned int apporientation = pApp.statusBarOrientation;
     if (apporientation != orientation)
     {
       switch (orientation)
@@ -356,11 +345,8 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
         printf("currentFrame: %f, %f - %f, %f\n", r.origin.x, r.origin.y, r.size.width, r.size.height);
         r = [UIScreen mainScreen].applicationFrame;
         printf("applicationFrame: %f, %f - %f, %f\n", r.origin.x, r.origin.y, r.size.width, r.size.height);
-
 		  
         mInvalidated = true;
-		  
- 
       }
     }
   }
@@ -423,149 +409,35 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   
   if (forceresize)
   {
-    mpNGLWindow->disableFrameBuffer = true;
-    [(EAGLContext*)mpContext renderbufferStorage: GL_RENDERBUFFER_OES fromDrawable: nil];
-
-    angle = mpNGLWindow->GetRotation();
+    uint32 angle = mpNGLWindow->GetRotation();
+    CGRect rect = [[UIScreen mainScreen] applicationFrame];
     if (angle == 270 || angle == 90)
-      mpNGLWindow->SetSize([UIScreen mainScreen].applicationFrame.size.height, [UIScreen mainScreen].applicationFrame.size.width);
-    else
-      mpNGLWindow->SetSize([UIScreen mainScreen].applicationFrame.size.width, [UIScreen mainScreen].applicationFrame.size.height);
-    [self setFrame: [UIScreen mainScreen].applicationFrame ];
-	  
-	  glFlush();
-
-#if 1
-    CAEAGLLayer* pLayer = (CAEAGLLayer*)[self layer];
-    glBindRenderbufferOES(GL_RENDERBUFFER_OES, mRenderBuffer);
-
-    [(EAGLContext*)mpContext renderbufferStorage: GL_RENDERBUFFER_OES fromDrawable: pLayer];
-    GLint w, h;
-   // glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &w);
-   // glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &h);
-
-    if (glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) != GL_FRAMEBUFFER_COMPLETE_OES)
     {
-      NSLog(@"Failed to make complete framebuffer object %x", glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES));
-      return;
+      rect.size.width = h;
+      rect.size.height = w;
+    }
+    else
+    {
+      rect.size.width = w;
+      rect.size.height = h;
     }
 
-    GLenum err = glGetError();
-    if (err != GL_NO_ERROR)
-      NSLog(@"Error. glError: 0x%04X", err);
-
-    [self setContext: mpContext renderBuffer:mRenderBuffer];
-    glClearColor(0, 0, 0, 1);
-    glClear(GL_COLOR_BUFFER_BIT);
-   // NSLog(@"NEW Render buffer area: %d x %d\n", w, h);
-    mpNGLWindow->disableFrameBuffer = false;
-#else    
-    mpNGLWindow->disableFrameBuffer = false;
-    
-    nglUIWindow* pNewUIWindow = [[nglUIWindow alloc] initWithWindow:self];
-    mpNGLWindow->SetUIWindow(pNewUIWindow);
-#endif
+    if (oldorientation != orientation)
+    {
+      EAGLView* old = glView;
+      self.frame = rect;
+      
+      glView = [[EAGLView alloc] initWithFrame:rect replacing: old];
+      [self addSubview:glView];
+      //[glView startAnimation];
+      
+      [old removeFromSuperview];
+      [old dealloc];
+      mpNGLWindow->SetSize(rect.size.width, rect.size.height);
+    }
+    oldorientation = orientation;
   }   
 }
-
-void nglWindow::SetUIWindow(void* pWindow)
-{
-  mOSInfo.mpUIWindow = pWindow;
-  mpUIWindow = pWindow;
-//
-//  if (!Build(mContextInfo, this, mFlags & nglWindow::FullScreen))
-//  {
-//    // An error has been raised by nglContext's code
-//    NGL_LOG(_T("window"), NGL_LOG_INFO, _T("could not create its context"));
-//    NGL_ASSERT(0);
-//    return;
-//  }
-//  
-//  
-//  // Rendering takes place in a Core Animation Layer
-//  CAEAGLLayer* pLayer = (CAEAGLLayer*)[mpUIWindow layer];
-//  NGL_ASSERT(pLayer);  
-//	pLayer.opaque = YES;
-//	BOOL retainBacking = mContextInfo.CopyOnSwap ? YES : NO;
-//	[pLayer setDrawableProperties:
-//   [NSDictionary dictionaryWithObjectsAndKeys:
-//    [NSNumber numberWithBool:retainBacking], kEAGLDrawablePropertyRetainedBacking,
-//    (NSString*)mpEAGLPixelFormat, kEAGLDrawablePropertyColorFormat,
-//    nil
-//    ]
-//   ];
-//  
-//  CGRect rect = [(nglUIWindow*)mpUIWindow frame];
-//  CGSize newSize;
-//	newSize = [pLayer bounds].size;
-//	newSize.width = roundf(newSize.width);
-//	newSize.height = roundf(newSize.height);
-//  
-//  
-//  // This layer is then used as the color attachement for a framebuffer based rendering
-//	GLuint oldRenderbuffer;
-//	GLuint oldFramebuffer;
-//	glGetIntegerv(GL_RENDERBUFFER_BINDING_OES, (GLint *) &oldRenderbuffer);
-//	glGetIntegerv(GL_FRAMEBUFFER_BINDING_OES, (GLint *) &oldFramebuffer);
-//	
-//	glGenFramebuffersOES(1, &mFrameBuffer);
-//	glBindFramebufferOES(GL_FRAMEBUFFER_OES, mFrameBuffer);
-//  
-//	glGenRenderbuffersOES(1, &mRenderBuffer);
-//	glBindRenderbufferOES(GL_RENDERBUFFER_OES, mRenderBuffer);
-//	[(EAGLContext*)mpContext renderbufferStorage: GL_RENDERBUFFER_OES fromDrawable: pLayer];
-//	
-//	CGRect r = [(nglUIWindow*)mpUIWindow frame];
-//	printf("currentFrame: %f, %f - %f, %f\n", r.origin.x, r.origin.y, r.size.width, r.size.height);
-//	r = [UIScreen mainScreen].applicationFrame;
-//	printf("applicationFrame: %f, %f - %f, %f\n", r.origin.x, r.origin.y, r.size.width, r.size.height);
-//	
-//	
-//	
-//	
-//  GLint w, h;
-//  glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &w);
-//  glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &h);
-//  mWidth = w;
-//  mHeight = h;
-//  
-//	glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, mRenderBuffer);
-//  
-//	if (mDepthFormat)
-//  {
-//		glGenRenderbuffersOES(1, &mDepthBuffer);
-//		glBindRenderbufferOES(GL_RENDERBUFFER_OES, mDepthBuffer);
-//		glRenderbufferStorageOES(GL_RENDERBUFFER_OES,
-//                             mDepthFormat,
-//                             mWidth,
-//                             mHeight);
-//    
-//		glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES,
-//                                 GL_DEPTH_ATTACHMENT_OES,
-//                                 GL_RENDERBUFFER_OES,
-//                                 mDepthBuffer);
-//	}
-//	
-//	NGL_ASSERT (glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) == GL_FRAMEBUFFER_COMPLETE_OES);
-//  //  glBindFramebufferOES(GL_FRAMEBUFFER_OES, oldFramebuffer);
-//  //	glBindRenderbufferOES(GL_RENDERBUFFER_OES, oldRenderbuffer);
-//  
-//  [mpUIWindow setContext: mpContext renderBuffer:mRenderBuffer];
-//  glClearColor(0, 0, 0, 1);
-//  glClear(GL_COLOR_BUFFER_BIT);
-//  
-  //[pUIWindow UpdateOrientation: FALSE];
-  
-  /* Ultra basic UIKit view integration on top of nuiWidgets
-   UIWebView* pWebView = [[UIWebView alloc] initWithFrame: CGRectMake(50, 50, 200, 200)];
-   [pUIWindow addSubview: pWebView];
-   pWebView.hidden = NO;
-   NSURL* pURL = [[NSURL alloc] initWithString: @"http://libnui.net"];
-   NSURLRequest* pReq = [[NSURLRequest alloc] initWithURL: pURL];
-   [pWebView loadRequest: pReq];
-   */
-}
-
 
 - (void) InitNGLWindow
 {  
@@ -586,7 +458,7 @@ void nglWindow::SetUIWindow(void* pWindow)
   
   counter = 60;
 
-  [self UpdateOrientation: NO];
+  [self UpdateOrientation];
 }
 
 - (void) sendEvent: (UIEvent*) pEvent
@@ -913,8 +785,324 @@ void nglWindow::SetUIWindow(void* pWindow)
 	return NO;
 }
 
+- (void) MakeCurrent
+{
+  [glView MakeCurrent];
+}
+
+- (void) BeginSession
+{
+  [glView BeginSession];
+}
+
+- (void) EndSession
+{
+  [glView EndSession];
+}
+
 
 @end///< nglUIWindow
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////// EAGLVIEW:
+@implementation EAGLView
+
+// You must implement this method
++ (Class)layerClass
+{
+  return [CAEAGLLayer class];
+}
+
+//The EAGL view is stored in the nib file. When it's unarchived it's sent -initWithCoder:
+- (id)initWithFrame:(CGRect)rect replacing:(EAGLView*) original
+{    
+  NSLog(@"new EAGLView (%f,%f %fx%f)\n", rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
+  rect.origin.x = 0;
+  rect.origin.y = 0;
+  if ((self = [super initWithFrame:rect]))
+  {
+    // Get the layer
+    CAEAGLLayer *eaglLayer = (CAEAGLLayer *)self.layer;
+    
+    eaglLayer.opaque = TRUE;
+    eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    [NSNumber numberWithBool:TRUE], kEAGLDrawablePropertyRetainedBacking,
+                                    kEAGLColorFormatRGBA8, kEAGLDrawablePropertyColorFormat,
+                                    nil];
+    
+    EAGLSharegroup* group = nil;
+    if (original != nil)
+      group = [original getSharegroup];
+    
+    if (group)
+      context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1 sharegroup: group];
+    else
+      context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
+    
+    if (!context || ![EAGLContext setCurrentContext:context])
+    {
+      [self release];
+      return nil;
+    }
+    
+    // Create default framebuffer object. The backing will be allocated for the current layer in -resizeFromLayer
+    glGenFramebuffersOES(1, &defaultFramebuffer);
+    glGenRenderbuffersOES(1, &colorRenderbuffer);
+    glBindFramebufferOES(GL_FRAMEBUFFER_OES, defaultFramebuffer);
+    glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderbuffer);
+    glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, colorRenderbuffer);
+  }
+  
+  return self;
+}
+
+- (EAGLSharegroup*)getSharegroup
+{
+  return [[self context] sharegroup];
+}
+
+- (void)layoutSubviews
+{
+  [self resizeFromLayer:(CAEAGLLayer*)self.layer];
+}
+
+
+- (void)dealloc
+{
+  // Tear down GL
+  if (defaultFramebuffer)
+  {
+    glDeleteFramebuffersOES(1, &defaultFramebuffer);
+    defaultFramebuffer = 0;
+  }
+  
+  if (colorRenderbuffer)
+  {
+    glDeleteRenderbuffersOES(1, &colorRenderbuffer);
+    colorRenderbuffer = 0;
+  }
+  
+  // Tear down context
+  if ([EAGLContext currentContext] == context)
+    [EAGLContext setCurrentContext:nil];
+  
+  [context release];
+  context = nil;
+  
+  
+  [super dealloc];
+}
+
+- (EAGLContext*)context
+{
+  return context;
+}
+
+#if 0
+- (void)render
+{
+  // Replace the implementation of this method to do your own custom drawing
+  
+#define SIZE 100
+  static const GLfloat squareVertices[] = {
+    0,  0,
+    SIZE,  0,
+    0,   SIZE,
+    SIZE,   SIZE,
+  };
+  
+  static const GLubyte squareColors[] = {
+    255, 255,   0, 255,
+    0,   255, 255, 255,
+    0,     0,   0,   0,
+    255,   0, 255, 255,
+  };
+  
+  static const GLfloat squareTex[] = {
+    0, 0,
+    1, 0,
+    0, 1,
+    1, 1
+  };
+  
+  static float transY = 0.0f;
+  
+  // This application only creates a single context which is already set current at this point.
+  // This call is redundant, but needed if dealing with multiple contexts.
+  [EAGLContext setCurrentContext:context];
+  
+  // This application only creates a single default framebuffer which is already bound at this point.
+  // This call is redundant, but needed if dealing with multiple framebuffers.
+  glBindFramebufferOES(GL_FRAMEBUFFER_OES, defaultFramebuffer);
+  glViewport(0, 0, backingWidth, backingHeight);
+  
+  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity();
+  float w = backingWidth;
+  float h = backingHeight;
+  if (angle == 270 || angle == 90)
+  {
+    w = backingHeight;
+    h = backingWidth;
+  }
+  
+  glRotatef(angle, 0.f,0.f,1.f);
+  glTranslatef(-1.0f, 1.0f, 0.0f);
+  glScalef(2.0f/w, -2.0f/h, 1.0f);
+  
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity();
+  
+  glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+  glClear(GL_COLOR_BUFFER_BIT);
+  
+  glVertexPointer(2, GL_FLOAT, 0, squareVertices);
+  glEnableClientState(GL_VERTEX_ARRAY);
+  glColorPointer(4, GL_UNSIGNED_BYTE, 0, squareColors);
+  glEnableClientState(GL_COLOR_ARRAY);
+  glTexCoordPointer(2, GL_FLOAT, 0, squareTex);
+  glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+  
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_ONE, GL_SRC_COLOR);
+  glDisable(GL_TEXTURE_2D);
+  
+  glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+  
+  glLoadIdentity();
+  glTranslatef(w - SIZE, 0, 0.0f);
+  glDrawArrays(GL_TRIANGLE_STRIP, 0, 3);
+  
+  glLoadIdentity();
+  glTranslatef(w - SIZE, h - SIZE, 0.0f);
+  glDrawArrays(GL_TRIANGLE_STRIP, 0, 3);
+  
+  glLoadIdentity();
+  glTranslatef(0, h - SIZE, 0.0f);
+  glDrawArrays(GL_TRIANGLE_STRIP, 0, 3);
+  
+  int err = glGetError();
+  if (!texture)
+  {
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    const unsigned char data[] =
+    {
+      0,0,0,255,          255,255,255,255,
+      255,255,255,255,    0,0,0,255
+    };
+    
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 2, 2, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+    err = glGetError();
+    
+    //glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+    glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+    err = glGetError();
+    
+    
+    // the texture wraps over at the edges (repeat)
+    glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
+    glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
+    
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST); 
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+    err = glGetError();
+  }
+  else
+  {
+    glBindTexture(GL_TEXTURE_2D, texture);
+    err = glGetError();
+  }
+  err = glGetError();
+  
+  glEnable(GL_TEXTURE_2D);
+  //glDisableClientState(GL_COLOR_ARRAY);
+  
+  glLoadIdentity();
+  glTranslatef((w - SIZE) / 2, (h - SIZE) / 2, 0.0f);
+  //glDrawArrays(GL_LINE_LOOP, 0, 3);
+  glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+  
+  // This application only creates a single color renderbuffer which is already bound at this point.
+  // This call is redundant, but needed if dealing with multiple renderbuffers.
+  glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderbuffer);
+  [context presentRenderbuffer:GL_RENDERBUFFER_OES];
+}
+#endif
+
+- (BOOL)resizeFromLayer:(CAEAGLLayer *)layer
+{	
+  // Allocate color buffer backing based on the current layer size
+  glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderbuffer);
+  [context renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:layer];
+  glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &backingWidth);
+  glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &backingHeight);
+  
+  if (glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) != GL_FRAMEBUFFER_COMPLETE_OES)
+  {
+    NSLog(@"Failed to make complete framebuffer object %x", glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES));
+    return NO;
+  }
+  
+  printf("Resize frame buffer: %d x %d\n", backingWidth, backingHeight);
+  
+  // Angle:
+  UIDevice* pUIDev = [UIDevice currentDevice];
+  unsigned int orientation = pUIDev.orientation;
+  
+  switch (orientation)
+  {
+    case UIDeviceOrientationUnknown:
+    case UIDeviceOrientationFaceUp:
+    case UIDeviceOrientationFaceDown:
+      angle = 0;
+      break;
+    case UIDeviceOrientationPortrait:
+      angle = 0;
+      break;
+    case UIDeviceOrientationPortraitUpsideDown:
+      angle = 180;
+      break;
+    case UIDeviceOrientationLandscapeLeft:
+      angle = 270;
+      break;
+    case UIDeviceOrientationLandscapeRight:
+      angle = 90;
+      break;
+    default:
+      break;
+  }
+  
+  return YES;
+}
+
+- (void) MakeCurrent
+{
+  [EAGLContext setCurrentContext:context];
+}
+
+- (void) BeginSession
+{
+  [EAGLContext setCurrentContext:context];
+  glBindFramebufferOES(GL_FRAMEBUFFER_OES, defaultFramebuffer);
+}
+
+- (void) EndSession
+{
+  glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderbuffer);
+  [context presentRenderbuffer:GL_RENDERBUFFER_OES];
+}
+
+
+
+
+@end
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////// NGL WINDOW:
+
 
 
 /*
@@ -959,8 +1147,6 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
     gAvailableTouches.push_back(t);
   }
 
-  mInSession  = 0;
-  disableFrameBuffer = false;
   mAngle = rInfo.Rotate;
   CGRect rect = [[UIScreen mainScreen] applicationFrame];
   if (mAngle == 270 || mAngle == 90)
@@ -1012,88 +1198,88 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
     NGL_ASSERT(0);
     return;
   }
-  if (!Build(rContext, pShared, rInfo.Flags & nglWindow::FullScreen))
-  {
-    // An error has been raised by nglContext's code
-    NGL_LOG(_T("window"), NGL_LOG_INFO, _T("could not create its context"));
-    NGL_ASSERT(0);
-    return;
-  }
+//  if (!Build(rContext, pShared, rInfo.Flags & nglWindow::FullScreen))
+//  {
+//    // An error has been raised by nglContext's code
+//    NGL_LOG(_T("window"), NGL_LOG_INFO, _T("could not create its context"));
+//    NGL_ASSERT(0);
+//    return;
+//  }
+//
+//
+//  // Rendering takes place in a Core Animation Layer
+//  CAEAGLLayer* pLayer = (CAEAGLLayer*)[pUIWindow layer];
+//  NGL_ASSERT(pLayer);  
+//	pLayer.opaque = YES;
+//	BOOL retainBacking = rContext.CopyOnSwap ? YES : NO;
+//	[pLayer setDrawableProperties:
+//   [NSDictionary dictionaryWithObjectsAndKeys:
+//    [NSNumber numberWithBool:retainBacking], kEAGLDrawablePropertyRetainedBacking,
+//    (NSString*)mpEAGLPixelFormat, kEAGLDrawablePropertyColorFormat,
+//    nil
+//   ]
+//  ];
 
-
-  // Rendering takes place in a Core Animation Layer
-  CAEAGLLayer* pLayer = (CAEAGLLayer*)[pUIWindow layer];
-  NGL_ASSERT(pLayer);  
-	pLayer.opaque = YES;
-	BOOL retainBacking = rContext.CopyOnSwap ? YES : NO;
-	[pLayer setDrawableProperties:
-   [NSDictionary dictionaryWithObjectsAndKeys:
-    [NSNumber numberWithBool:retainBacking], kEAGLDrawablePropertyRetainedBacking,
-    (NSString*)mpEAGLPixelFormat, kEAGLDrawablePropertyColorFormat,
-    nil
-   ]
-  ];
-
-  rect = [(nglUIWindow*)mpUIWindow frame];
-  CGSize newSize;
-	newSize = [pLayer bounds].size;
-	newSize.width = roundf(newSize.width);
-	newSize.height = roundf(newSize.height);
-  
+//  rect = [(nglUIWindow*)mpUIWindow frame];
+//  CGSize newSize;
+//	newSize = [pLayer bounds].size;
+//	newSize.width = roundf(newSize.width);
+//	newSize.height = roundf(newSize.height);
+//  
 
   // This layer is then used as the color attachement for a framebuffer based rendering
-	GLuint oldRenderbuffer;
-	GLuint oldFramebuffer;
-	glGetIntegerv(GL_RENDERBUFFER_BINDING_OES, (GLint *) &oldRenderbuffer);
-	glGetIntegerv(GL_FRAMEBUFFER_BINDING_OES, (GLint *) &oldFramebuffer);
-	
-	glGenFramebuffersOES(1, &mFrameBuffer);
-	glBindFramebufferOES(GL_FRAMEBUFFER_OES, mFrameBuffer);
-
-	glGenRenderbuffersOES(1, &mRenderBuffer);
-	glBindRenderbufferOES(GL_RENDERBUFFER_OES, mRenderBuffer);
-	[(EAGLContext*)mpContext renderbufferStorage: GL_RENDERBUFFER_OES fromDrawable: pLayer];
+//	GLuint oldRenderbuffer;
+//	GLuint oldFramebuffer;
+//	glGetIntegerv(GL_RENDERBUFFER_BINDING_OES, (GLint *) &oldRenderbuffer);
+//	glGetIntegerv(GL_FRAMEBUFFER_BINDING_OES, (GLint *) &oldFramebuffer);
+//	
+//	glGenFramebuffersOES(1, &mFrameBuffer);
+//	glBindFramebufferOES(GL_FRAMEBUFFER_OES, mFrameBuffer);
+//
+//	glGenRenderbuffersOES(1, &mRenderBuffer);
+//	glBindRenderbufferOES(GL_RENDERBUFFER_OES, mRenderBuffer);
+//	[(EAGLContext*)mpContext renderbufferStorage: GL_RENDERBUFFER_OES fromDrawable: pLayer];
 	
 	CGRect r = [(nglUIWindow*)mpUIWindow frame];
 	printf("currentFrame: %f, %f - %f, %f\n", r.origin.x, r.origin.y, r.size.width, r.size.height);
 	r = [UIScreen mainScreen].applicationFrame;
 	printf("applicationFrame: %f, %f - %f, %f\n", r.origin.x, r.origin.y, r.size.width, r.size.height);
 	
+	SetSize(r.size.width, r.size.height);
 	
 	
-	
-  GLint w, h;
-  glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &w);
-  glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &h);
-  mWidth = w;
-  mHeight = h;
-
-	glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, mRenderBuffer);
-
-	if (mDepthFormat)
-  {
-		glGenRenderbuffersOES(1, &mDepthBuffer);
-		glBindRenderbufferOES(GL_RENDERBUFFER_OES, mDepthBuffer);
-		glRenderbufferStorageOES(GL_RENDERBUFFER_OES,
-                             mDepthFormat,
-                             mWidth,
-                             mHeight);
-
-		glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES,
-                                 GL_DEPTH_ATTACHMENT_OES,
-                                 GL_RENDERBUFFER_OES,
-                                 mDepthBuffer);
-	}
-	
-	NGL_ASSERT (glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) == GL_FRAMEBUFFER_COMPLETE_OES);
-  //  glBindFramebufferOES(GL_FRAMEBUFFER_OES, oldFramebuffer);
-  //	glBindRenderbufferOES(GL_RENDERBUFFER_OES, oldRenderbuffer);
-  
-  [pUIWindow setContext: mpContext renderBuffer:mRenderBuffer];
+//  GLint w, h;
+//  glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &w);
+//  glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &h);
+//  mWidth = w;
+//  mHeight = h;
+//
+//	glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, mRenderBuffer);
+//
+//	if (mDepthFormat)
+//  {
+//		glGenRenderbuffersOES(1, &mDepthBuffer);
+//		glBindRenderbufferOES(GL_RENDERBUFFER_OES, mDepthBuffer);
+//		glRenderbufferStorageOES(GL_RENDERBUFFER_OES,
+//                             mDepthFormat,
+//                             mWidth,
+//                             mHeight);
+//
+//		glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES,
+//                                 GL_DEPTH_ATTACHMENT_OES,
+//                                 GL_RENDERBUFFER_OES,
+//                                 mDepthBuffer);
+//	}
+//	
+//	NGL_ASSERT (glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) == GL_FRAMEBUFFER_COMPLETE_OES);
+//  //  glBindFramebufferOES(GL_FRAMEBUFFER_OES, oldFramebuffer);
+//  //	glBindRenderbufferOES(GL_RENDERBUFFER_OES, oldRenderbuffer);
+//  
+//  [pUIWindow setContext: mpContext renderBuffer:mRenderBuffer];
   glClearColor(0, 0, 0, 1);
   glClear(GL_COLOR_BUFFER_BIT);
   
-  [pUIWindow UpdateOrientation: FALSE];
+//  [pUIWindow UpdateOrientation];
 
 /* Ultra basic UIKit view integration on top of nuiWidgets
   UIWebView* pWebView = [[UIWebView alloc] initWithFrame: CGRectMake(50, 50, 200, 200)];
@@ -1140,7 +1326,7 @@ void nglWindow::SetState (StateChange State)
     }
     break;
   };
-  [(nglUIWindow*)mpUIWindow UpdateOrientation: TRUE];
+  [(nglUIWindow*)mpUIWindow UpdateOrientation];
 }
 
 nglWindow::StateInfo nglWindow::GetState() const
@@ -1212,8 +1398,9 @@ void nglWindow::BeginSession()
 #ifdef _DEBUG_WINDOW_
   NGL_LOG(_T("window"), NGL_LOG_INFO, _T("BeginSession\n"));
 #endif
-  MakeCurrent();
-  mInSession++;
+  //  MakeCurrent();
+  NGL_ASSERT(mpUIWindow);
+  [mpUIWindow BeginSession];
 }
 
 void nglWindow::EndSession()
@@ -1224,36 +1411,34 @@ void nglWindow::EndSession()
   NGL_LOG(_T("window"), NGL_LOG_INFO, _T("EndSession\n"));
 #endif
 	
-	if (disableFrameBuffer)
-	{
-    mInSession = 0;
-		return;
-	}
+//  if (MakeCurrent())
+//  {
+//    glBindRenderbufferOES(GL_RENDERBUFFER_OES, mRenderBuffer);
+//
+//    if (![(EAGLContext*)mpContext presentRenderbuffer: GL_RENDERBUFFER_OES])
+//    {
+//      NGL_ASSERT(0);
+//      printf("Failed to swap renderbuffer in %s\n", __FUNCTION__);
+//    }
+//  }
+//  else
+//  {
+//    NGL_ASSERT(0);
+//  }
 
-  if (MakeCurrent())
-  {
-    glBindRenderbufferOES(GL_RENDERBUFFER_OES, mRenderBuffer);
-
-    if (![(EAGLContext*)mpContext presentRenderbuffer: GL_RENDERBUFFER_OES])
-    {
-      NGL_ASSERT(0);
-      printf("Failed to swap renderbuffer in %s\n", __FUNCTION__);
-    }
-    mInSession = 0;
-  }
-  else
-  {
-    NGL_ASSERT(0);
-  }
-
+  NGL_ASSERT(mpUIWindow);
+  [mpUIWindow EndSession];
 #endif
 }
 
 bool nglWindow::MakeCurrent() const
 {
-  EAGLContext* pContext = [EAGLContext currentContext];	
-	if (pContext != mpContext)
-    return InternalMakeCurrent(mpContext);
+//  EAGLContext* pContext = [EAGLContext currentContext];	
+//	if (pContext != mpContext)
+//    return InternalMakeCurrent(mpContext);
+  NGL_ASSERT(mpUIWindow);
+  [mpUIWindow MakeCurrent];
+
   return true;
 }
 
