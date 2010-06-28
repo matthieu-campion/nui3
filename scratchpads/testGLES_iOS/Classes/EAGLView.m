@@ -41,7 +41,7 @@ static GLint texture = 0;
     EAGLSharegroup* group = nil;
     if (original != nil)
       group = [original getSharegroup];
-    //renderer = [[ES1Renderer alloc] initWithShareGroup: group];
+
     if (group)
       context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1 sharegroup: group];
     else
