@@ -102,6 +102,9 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 
 - (id) initWithFrame: (CGRect) rect andNGLWindow: (nglWindow*) pNGLWindow
 {
+  glView = nil;
+  glViewOld = nil;
+  OrientationTimer = nil;
   UIDevice* pUIDev = [UIDevice currentDevice];
   oldorientation = pUIDev.orientation;
   
@@ -314,25 +317,23 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
     }
   }
   
-  if (forceresize || oldorientation != orientation)
+  if (forceresize)
   {
     CGRect rect = [[UIScreen mainScreen] applicationFrame];
 //    rect.size.width = w;
 //    rect.size.height = h;
 
-    EAGLView* old = glView;
+    glViewOld = glView;
     self.frame = rect;
     
-    glView = [[EAGLView alloc] initWithFrame:rect replacing: old];
+    glView = [[EAGLView alloc] initWithFrame:rect replacing: glViewOld];
     [self addSubview:glView];
     //[glView startAnimation];
     
-    [old removeFromSuperview];
-    [old dealloc];
     mpNGLWindow->SetSize(w, h);
 
-    oldorientation = orientation;
   }   
+  oldorientation = orientation;
 }
 
 - (void) InitNGLWindow
@@ -428,6 +429,13 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 - (void)Paint
 {
   [self InitNGLWindow];
+
+  if (glViewOld)
+  {
+    [glViewOld removeFromSuperview];
+    [glViewOld dealloc];
+    glViewOld = nil;
+  }
   //if (mInvalidated)
   {
     mInvalidated = false;
@@ -713,8 +721,15 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 
 //The EAGL view is stored in the nib file. When it's unarchived it's sent -initWithCoder:
 - (id)initWithFrame:(CGRect)rect replacing:(EAGLView*) original
-{    
+{
   NSLog(@"new EAGLView (%f,%f %fx%f)\n", rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
+  context = nil;
+  backingWidth = 0;
+  backingHeight = 0;
+  angle = 0;
+  defaultFramebuffer = 0;
+  colorRenderbuffer = 0;
+  
   rect.origin.x = 0;
   rect.origin.y = 0;
   if ((self = [super initWithFrame:rect]))
