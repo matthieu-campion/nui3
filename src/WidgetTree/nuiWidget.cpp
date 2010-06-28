@@ -20,6 +20,7 @@
 #include "nuiDecoration.h"
 #include "nuiWidgetMatcher.h"
 #include "nuiClampedValueAttributeEditor.h"
+#include "nuiColorDecoration.h"
 
 #ifdef _UIKIT_
 //const bool gGlobalUseRenderCache = false;
@@ -4336,6 +4337,14 @@ void nuiWidget::SetDecoration(const nglString& rName)
 {
   CheckValid();
   nuiDecoration* pDecoration = nuiDecoration::Get(rName);
+  if (!pDecoration)
+  {
+    nuiColor col;
+    if (col.SetValue(rName))
+    {
+      pDecoration = new nuiColorDecoration(rName, rName, 0, nuiColor(), eFillShape, nuiBlendTransp, nuiRect());
+    }
+  }
   SetDecoration(pDecoration, mDecorationMode, true);
 }
 

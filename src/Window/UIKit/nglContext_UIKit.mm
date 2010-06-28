@@ -4,7 +4,7 @@
 
 
 #include <UIKit/UIKit.h>
-#include "nglUIWindow.h"
+#include "nglWindow_UIKit.h"
 
 #include <OpenGLES/EAGL.h>
 //#include <OpenGLES/EAGLDisplay.h>

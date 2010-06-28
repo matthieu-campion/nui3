@@ -534,10 +534,6 @@
 				GENERATE_PROFILING_CODE = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LIBRARY_SEARCH_PATHS = "";
-				OTHER_LDFLAGS = (
-					"-liconv",
-					"-lz",
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = AudioPlayer_iPhone;
 				STRIPFLAGS = "-SXx";

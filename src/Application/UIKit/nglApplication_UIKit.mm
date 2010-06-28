@@ -3,9 +3,9 @@
 using namespace std;
 
 #include "nglApplication.h"
-#include "nglUIApplication.h"
+#include "nglApplication_UIKit.h"
 
-#include "../../Window/UIKit/nglUIWindow.h"
+#include "../../Window/UIKit/nglWindow_UIKit.h"
 #include "nglWindow.h"
 
 /*

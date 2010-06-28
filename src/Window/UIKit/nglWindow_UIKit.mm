@@ -13,7 +13,7 @@
 
 #include <string.h>
 
-#include "nglUIWindow.h"
+#include "nglWindow_UIKit.h"
 
 #include <GL/gl.h>
 

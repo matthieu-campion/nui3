@@ -49,10 +49,10 @@ OSStatus AudioUnitCallback(void* inRefCon,
                            AudioBufferList* ioData)
 {
   // Return if not pre-render
-//	if(!(*ioActionFlags & kAudioUnitRenderAction_PreRender))
-//  {
-//    return noErr;
-//  }
+	if(!(*ioActionFlags & kAudioUnitRenderAction_PreRender))
+  {
+    return noErr;
+  }
   
 	// Get a pointer to the audio device
 	nuiAudioDevice_AudioUnit* pAudioDevice = (nuiAudioDevice_AudioUnit*)inRefCon;
@@ -309,7 +309,7 @@ bool nuiAudioDevice_AudioUnit::Open(std::vector<uint32>& rInputChannels, std::ve
 	
   
   ///////////////////////////// INPUT:
-  if (0)
+  if (!rInputChannels.empty())
   {
     //find out about the device's format (but I can save you the suspense:
     //integer | non-interleaved | packed | little endian | 32 bits (8.24 fixed)
