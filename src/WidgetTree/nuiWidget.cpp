@@ -2390,11 +2390,21 @@ void nuiWidget::UnlockState()
 void nuiWidget::SetVisible(bool Visible)
 {
   CheckValid();
-  if (mVisible == Visible)
-    return;
+  
+  nuiAnimation* pHideAnim = GetAnimation(_T("HIDE"));
+  nuiAnimation* pShowAnim = GetAnimation(_T("SHOW"));
 
-  const nuiAnimation* pAnim = GetAnimation(_T("HIDE"));
-  if (pAnim && !Visible && (pAnim->GetPosition()==0 && pAnim->GetDuration()>0))
+  if (mVisible == Visible)
+  {
+    if (Visible && (!pHideAnim || !pHideAnim->IsPlaying()))
+      return;
+    else if (!Visible && (!pShowAnim || !pShowAnim->IsPlaying()))
+      return;
+    pHideAnim->Stop();
+    pShowAnim->Stop();
+  }
+
+  if (pHideAnim && !Visible && (pHideAnim->GetPosition()==0 && pHideAnim->GetDuration()>0))
   {
     StartAnimation(_T("HIDE"));
   }
