@@ -197,8 +197,8 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   bool forceresize = FALSE;
   UIApplication* pApp = [UIApplication sharedApplication];
   UIDevice* pUIDev = [UIDevice currentDevice];
-  unsigned int orientation = pUIDev.orientation;
-  unsigned int apporientation = pApp.statusBarOrientation;
+  UIDeviceOrientation orientation = pUIDev.orientation;
+  UIInterfaceOrientation apporientation = pApp.statusBarOrientation;
 
   if (mpNGLWindow->GetAutoRotation())
   {
@@ -311,7 +311,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
         break;
     }
     
-    if (mpNGLWindow->GetWidth() != w || mpNGLWindow->GetHeight() != h)
+    if (mpNGLWindow->GetWidth() != w || mpNGLWindow->GetHeight() != h || oldorientation == orientation)
     {
       forceresize = YES;
     }
@@ -1060,15 +1060,18 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
 
   mAngle = rInfo.Rotate;
   CGRect rect = [[UIScreen mainScreen] applicationFrame];
+  float w, h;
+  mWidth = 0;
+  mHeight = 0;
   if (mAngle == 270 || mAngle == 90)
   {
-    mWidth = rect.size.height;
-    mHeight = rect.size.width;
+    w = rect.size.height;
+    h = rect.size.width;
   }
   else
   {
-    mWidth = rect.size.width;
-    mHeight = rect.size.height;
+    w = rect.size.width;
+    h = rect.size.height;
   }
   
 
@@ -1101,7 +1104,7 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
 	r = [UIScreen mainScreen].applicationFrame;
 	printf("applicationFrame: %f, %f - %f, %f\n", r.origin.x, r.origin.y, r.size.width, r.size.height);
 	
-	SetSize(r.size.width, r.size.height);
+	SetSize(w, h);
 	
   glClearColor(0, 0, 0, 1);
   glClear(GL_COLOR_BUFFER_BIT);
