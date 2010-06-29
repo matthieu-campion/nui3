@@ -73,6 +73,7 @@ typedef std::map<UITouch*,nglTouchInfo> TouchesInfo;
   EAGLView* glViewOld;
   NSTimer* OrientationTimer;
   UIDeviceOrientation oldorientation;
+  int mAngle;
 }
 
 + (Class) layerClass;

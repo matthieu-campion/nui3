@@ -1221,6 +1221,7 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
   mInvalidatePosted = false;
   mRedrawing = false;
   mInModalState = 0;
+  mAngle = 0;
   EventTypeSpec WindowEvents[]=
   {
     // Mouse Class:
