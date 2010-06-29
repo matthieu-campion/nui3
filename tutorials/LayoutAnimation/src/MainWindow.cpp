@@ -61,6 +61,10 @@ void MainWindow::OnCreation()
   mEventSink.Connect(pButton->Activated, &MainWindow::ChangeLayout, pButton);
 
   AddChild(pBox);
+ 
+  EnableAutoRotation(false);
+  SetRotation(90);
+  
 }
 
 void MainWindow::OnClose()

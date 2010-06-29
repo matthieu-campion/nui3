@@ -43,7 +43,7 @@ public:
   bool IsToggleable() const;
 
   nuiSimpleEventSource<nuiWidgetActivated> Deactivated;
-private:
+protected:
   nuiRadioButtonGroup* mpGroupManager;
   bool mCanToggle;
 };

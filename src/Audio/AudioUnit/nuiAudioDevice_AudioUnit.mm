@@ -49,10 +49,10 @@ OSStatus AudioUnitCallback(void* inRefCon,
                            AudioBufferList* ioData)
 {
   // Return if not pre-render
-	if(!(*ioActionFlags & kAudioUnitRenderAction_PreRender))
-  {
-    return noErr;
-  }
+//	if(!(*ioActionFlags & kAudioUnitRenderAction_PreRender))
+//  {
+//    return noErr;
+//  }
   
 	// Get a pointer to the audio device
 	nuiAudioDevice_AudioUnit* pAudioDevice = (nuiAudioDevice_AudioUnit*)inRefCon;

@@ -37,7 +37,7 @@
 	};
 	28FD14FD0DC6FC130079059D /* EAGLView.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1370, 4875}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1219, 4719}}";
 			sepNavSelRange = "{148, 0}";
 			sepNavVisRange = "{18, 2155}";
 		};
@@ -114,16 +114,16 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 299452113;
-			PBXWorkspaceStateSaveDate = 299452113;
+			PBXPerProjectTemplateStateSaveDate = 299511561;
+			PBXWorkspaceStateSaveDate = 299511561;
 		};
 		perUserProjectItems = {
-			E539544F11D3C8C0008021FA /* PBXTextBookmark */ = E539544F11D3C8C0008021FA /* PBXTextBookmark */;
-			E55BC5B411D3FB5D00C69ECF /* PBXTextBookmark */ = E55BC5B411D3FB5D00C69ECF /* PBXTextBookmark */;
-			E55BC67B11D4156900C69ECF /* PBXTextBookmark */ = E55BC67B11D4156900C69ECF /* PBXTextBookmark */;
-			E55BC6A511D4199300C69ECF /* PBXTextBookmark */ = E55BC6A511D4199300C69ECF /* PBXTextBookmark */;
-			E5727BED11D7970500A01D2F /* PBXTextBookmark */ = E5727BED11D7970500A01D2F /* PBXTextBookmark */;
-			E5727BEF11D7970500A01D2F /* PBXTextBookmark */ = E5727BEF11D7970500A01D2F /* PBXTextBookmark */;
+			E539544F11D3C8C0008021FA = E539544F11D3C8C0008021FA /* PBXTextBookmark */;
+			E55BC5B411D3FB5D00C69ECF = E55BC5B411D3FB5D00C69ECF /* PBXTextBookmark */;
+			E55BC67B11D4156900C69ECF = E55BC67B11D4156900C69ECF /* PBXTextBookmark */;
+			E55BC6A511D4199300C69ECF = E55BC6A511D4199300C69ECF /* PBXTextBookmark */;
+			E5727BED11D7970500A01D2F = E5727BED11D7970500A01D2F /* PBXTextBookmark */;
+			E5727BEF11D7970500A01D2F = E5727BEF11D7970500A01D2F /* PBXTextBookmark */;
 		};
 		sourceControlManager = E539543311D3BA0A008021FA /* Source Control */;
 		userBuildSettings = {
@@ -213,7 +213,7 @@
 		ignoreCount = 0;
 		lineNumber = 18;
 		location = testGL;
-		modificationTime = 299432174.3887531;
+		modificationTime = 299511336.58751;
 		originalNumberOfMultipleMatches = 1;
 		state = 2;
 	};
@@ -231,7 +231,7 @@
 		ignoreCount = 0;
 		lineNumber = 123;
 		location = testGL;
-		modificationTime = 299432174.389329;
+		modificationTime = 299511336.589704;
 		originalNumberOfMultipleMatches = 1;
 		state = 2;
 	};
