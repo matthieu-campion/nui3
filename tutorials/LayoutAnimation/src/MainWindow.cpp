@@ -31,6 +31,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::OnCreation()
 {
+//  EnableAutoRotation(false);
+//  SetRotation(90);
+//  SetState(nglWindow::eMaximize);
+
   nuiWidget* pBg = new nuiImage(_T("rsrc:/decorations/image.png"));
   pBg->SetRect(nuiRect(-(float)GetWidth(), -(float)GetHeight(), (float)GetWidth() * 3, (float)GetHeight() * 3));
   pBg->SetPosition(nuiCenter);
@@ -61,10 +65,6 @@ void MainWindow::OnCreation()
   mEventSink.Connect(pButton->Activated, &MainWindow::ChangeLayout, pButton);
 
   AddChild(pBox);
- 
-  EnableAutoRotation(false);
-  SetRotation(90);
-  
 }
 
 void MainWindow::OnClose()
