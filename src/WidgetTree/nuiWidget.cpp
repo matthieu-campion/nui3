@@ -2400,8 +2400,10 @@ void nuiWidget::SetVisible(bool Visible)
       return;
     else if (!Visible && (!pShowAnim || !pShowAnim->IsPlaying()))
       return;
-    pHideAnim->Stop();
-    pShowAnim->Stop();
+    if (pHideAnim)
+      pHideAnim->Stop();
+    if (pShowAnim)
+      pShowAnim->Stop();
   }
 
   if (pHideAnim && !Visible && (pHideAnim->GetPosition()==0 && pHideAnim->GetDuration()>0))
