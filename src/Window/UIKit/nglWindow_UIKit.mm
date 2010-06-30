@@ -265,7 +265,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
     angle = mpNGLWindow->GetRotation();
     if (mAngle != angle)
     {
-      printf("new window angle: %f (old %f)\n", angle, mAngle);
+      printf("new window angle: %f (old %f)\n", angle, (float)mAngle);
       switch (angle)
       {
         case 0:
@@ -830,10 +830,17 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 {	
   // Allocate color buffer backing based on the current layer size
   glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderbuffer);
-  [context renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:layer];
+  if ([context renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:layer] == NO)
+  {
+	  NSLog(@"Failed to call context:renderbuferStorage:");
+	  return NO;
+  }
   glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &backingWidth);
   glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &backingHeight);
   
+	// this line seemed to fix some render buffer creation errors, but I'm not sure if it's necessary.
+  //glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, colorRenderbuffer);
+	
   if (glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) != GL_FRAMEBUFFER_COMPLETE_OES)
   {
     NSLog(@"Failed to make complete framebuffer object %x", glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES));
@@ -1027,17 +1034,17 @@ void nglWindow::SetState (StateChange State)
   switch (State)
   {
     case eHide:
-      [pApp setStatusBarHidden:FALSE animated:TRUE];
+      [pApp setStatusBarHidden:FALSE withAnimation:UIStatusBarAnimationFade];
       break;
     case eShow:
-      [pApp setStatusBarHidden:FALSE animated:TRUE];
+      [pApp setStatusBarHidden:FALSE withAnimation:UIStatusBarAnimationFade];
       break;
     case eMinimize:
-      [pApp setStatusBarHidden:FALSE animated:TRUE];
+      [pApp setStatusBarHidden:FALSE withAnimation:UIStatusBarAnimationFade];
       break;
 	case eMaximize:
     {
-      [pApp setStatusBarHidden:TRUE animated:TRUE];
+      [pApp setStatusBarHidden:TRUE withAnimation:UIStatusBarAnimationFade];
     }
     break;
   };
