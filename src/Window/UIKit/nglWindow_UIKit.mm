@@ -203,6 +203,10 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 
   if (mpNGLWindow->GetAutoRotation())
   {
+    angle = mpNGLWindow->GetRotation();
+    UIInterfaceOrientation neworientation = apporientation;
+    int32 ww = [UIScreen mainScreen].applicationFrame.size.width;
+    int32 hh = [UIScreen mainScreen].applicationFrame.size.height;
     if (apporientation != orientation)
     {
       switch (orientation)
@@ -213,31 +217,27 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
           break;
         case UIDeviceOrientationPortrait:
           angle = 0;
-          pApp.statusBarOrientation = UIInterfaceOrientationPortrait;
-          [self UpdateKeyboard];
-          w = [UIScreen mainScreen].applicationFrame.size.width;
-          h = [UIScreen mainScreen].applicationFrame.size.height;
+          neworientation = UIInterfaceOrientationPortrait;
+          w = ww;
+          h = hh;
           break;
         case UIDeviceOrientationPortraitUpsideDown:
           angle = 180;
-          pApp.statusBarOrientation = UIInterfaceOrientationPortraitUpsideDown;
-          [self UpdateKeyboard];
-          w = [UIScreen mainScreen].applicationFrame.size.width;
-          h = [UIScreen mainScreen].applicationFrame.size.height;
+          neworientation = UIInterfaceOrientationPortraitUpsideDown;
+          w = w;
+          h = hh;
           break;
         case UIDeviceOrientationLandscapeLeft:
           angle = 270;
-          pApp.statusBarOrientation = UIInterfaceOrientationLandscapeRight;
-          [self UpdateKeyboard];
-          h = [UIScreen mainScreen].applicationFrame.size.width;
-          w = [UIScreen mainScreen].applicationFrame.size.height;
+          neworientation = UIInterfaceOrientationLandscapeRight;
+          h = ww;
+          w = hh;
           break;
         case UIDeviceOrientationLandscapeRight:
           angle = 90;
-          pApp.statusBarOrientation = UIInterfaceOrientationLandscapeLeft;
-          [self UpdateKeyboard];
-          h = [UIScreen mainScreen].applicationFrame.size.width;
-          w = [UIScreen mainScreen].applicationFrame.size.height;
+          neworientation = UIInterfaceOrientationLandscapeLeft;
+          h = ww;
+          w = hh;
           break;
       }
     }
@@ -246,21 +246,19 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
     {
       if (mpNGLWindow->OnRotation(angle))
       {
+        pApp.statusBarOrientation = neworientation;
+        [self UpdateKeyboard];
         mpNGLWindow->SetRotation(angle);
         forceresize = YES;
         CGRect r = [self frame];
         printf("currentFrame: %f, %f - %f, %f\n", r.origin.x, r.origin.y, r.size.width, r.size.height);
         r = [UIScreen mainScreen].applicationFrame;
         printf("applicationFrame: %f, %f - %f, %f\n", r.origin.x, r.origin.y, r.size.width, r.size.height);
-		  
+        
         mInvalidated = true;
       }
     }
 
-    if (mpNGLWindow->GetWidth() != w || mpNGLWindow->GetHeight() != h || oldorientation == orientation)
-    {
-      forceresize = YES;
-    }
   }
   else
   {
@@ -322,7 +320,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
     CGRect rect = [[UIScreen mainScreen] applicationFrame];
 //    rect.size.width = w;
 //    rect.size.height = h;
-    printf("new window size: %f, %f\n", w, h);
+    printf("new window size: %d, %d\n", w, h);
 
     glViewOld = glView;
     self.frame = rect;
