@@ -102,12 +102,28 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 
 - (id) initWithFrame: (CGRect) rect andNGLWindow: (nglWindow*) pNGLWindow
 {
-  glView = nil;
-  glViewOld = nil;
-  OrientationTimer = nil;
-  UIDevice* pUIDev = [UIDevice currentDevice];
+	mInited = false;
+	mInvalidated = true;
+	
+	mInvalidationTimer = nil;
+	mDisplayLink = nil;
+	
+	glView = nil;
+	glViewOld = nil;
+	OrientationTimer = nil;
+	
+	
+	mAngle = -1;
+	
+	
+	
+
+	
+ 
+	//oldorientation = UIDeviceOrientationUnknown;
+  UIDevice* pUIDev = [UIDevice currentDevice];	
   oldorientation = pUIDev.orientation;
-  mAngle = -1;
+
   
   if ( (self = [super initWithFrame: rect]) )
   {
@@ -121,16 +137,12 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   [self addSubview:glView];
   
   OrientationTimer = [NSTimer scheduledTimerWithTimeInterval:(NSTimeInterval)((1.0 / 10.0)) target:self selector:@selector(UpdateOrientation) userInfo:nil repeats:TRUE];
-  [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
 
-  [[UITextField alloc] initWithFrame: CGRectZero];
+	// wtf?
+  //[[UITextField alloc] initWithFrame: CGRectZero];
 
 //NGL_OUT(_T("[nglUIWindow initWithFrame]\n"));
-  mInited = false;
-  mInvalidated = true;
 
-  mInvalidationTimer = nil;
-  mDisplayLink = nil;
 
   int frameInterval = 1;
   NSString* sysVersion = [[UIDevice currentDevice] systemVersion];
@@ -149,7 +161,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   mpTimer->Stop();
 
 	[self initializeKeyboard];
-  
+
   return self;
 }
 
@@ -224,7 +236,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
         case UIDeviceOrientationPortraitUpsideDown:
           angle = 180;
           neworientation = UIInterfaceOrientationPortraitUpsideDown;
-          w = w;
+          w = ww;
           h = hh;
           break;
         case UIDeviceOrientationLandscapeLeft:
@@ -339,7 +351,8 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 {  
   if (!mInited)
   {
-    mInited = true;
+
+	  mInited = true;
     mpNGLWindow->CallOnCreation();
 //    mpNGLWindow->Invalidate();
 //    mpNGLWindow->CallOnPaint();
@@ -355,14 +368,18 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   counter = 60;
 
   [self UpdateOrientation];
+	
+
+
 }
 
 - (void) sendEvent: (UIEvent*) pEvent
 {
+
   double t = nglTime();
-  [self InitNGLWindow];
+  //[self InitNGLWindow];
   
-//  NGL_OUT(_T("[nglUIWindow sendEvent]\n"));
+ NGL_OUT(_T("[nglUIWindow sendEvent]\n"));
 //  [self dumpTouches: pEvent];
 //nuiStopWatch watch(_T("nglWindowUIKIT::sendEvent"));
   nglWindow::EventMask mask = mpNGLWindow->GetEventMask();
@@ -372,6 +389,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   }
 
   mLastEventTime = t;
+	
   [super sendEvent: pEvent];
 }
 
@@ -1031,23 +1049,24 @@ void nglWindow::SetState (StateChange State)
   //  static int last_x, last_y;
   UIApplication* pApp = [UIApplication sharedApplication];
 
-  switch (State)
-  {
-    case eHide:
-      [pApp setStatusBarHidden:FALSE withAnimation:UIStatusBarAnimationFade];
-      break;
-    case eShow:
-      [pApp setStatusBarHidden:FALSE withAnimation:UIStatusBarAnimationFade];
-      break;
-    case eMinimize:
-      [pApp setStatusBarHidden:FALSE withAnimation:UIStatusBarAnimationFade];
-      break;
-	case eMaximize:
-    {
-      [pApp setStatusBarHidden:TRUE withAnimation:UIStatusBarAnimationFade];
-    }
-    break;
-  };
+	switch (State)
+	{
+		case eHide:
+			[pApp setStatusBarHidden:FALSE animated:TRUE];
+			break;
+		case eShow:
+			[pApp setStatusBarHidden:FALSE animated:TRUE];
+			break;
+		case eMinimize:
+			[pApp setStatusBarHidden:FALSE animated:TRUE];
+			break;
+		case eMaximize:
+		{
+			[pApp setStatusBarHidden:TRUE animated:TRUE];
+		}
+			break;
+	};
+
   [(nglUIWindow*)mpUIWindow UpdateOrientation];
 }
 
