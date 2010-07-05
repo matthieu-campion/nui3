@@ -743,6 +743,7 @@ public:
   bool CallOnMouseClick (nglMouseInfo& rInfo);
   bool CallOnMouseUnclick(nglMouseInfo& rInfo);
   bool CallOnMouseMove  (nglMouseInfo& rInfo);
+  bool CallOnRotation(uint Angle);
 
 #ifdef _X11_
 public:

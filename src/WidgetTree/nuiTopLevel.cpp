@@ -158,7 +158,7 @@ nuiTopLevel::nuiTopLevel(const nglPath& rResPath)
   mReleased = false;
   mNeedInvalidateOnSetRect = true;
   mClearBackground = true;
-  nuiTheme::InitTheme(rResPath);
+  nuiTheme::InitTheme();
   SetObjectClass(_T("nuiTopLevel"));
 
   mResPath = rResPath;
@@ -204,7 +204,7 @@ bool nuiTopLevel::Load(const nuiXMLNode* pNode)
   SetObjectClass(_T("nuiTopLevel"));
 
   mResPath = nglPath(pNode->GetAttribute("Path"));
-  nuiTheme::InitTheme(mResPath);
+  nuiTheme::InitTheme();
 
   mToolTipDelayOn = .5f;
   mToolTipDelayOff = 5.0f;
@@ -1548,7 +1548,8 @@ bool nuiTopLevel::DrawTree(class nuiDrawContext *pContext)
       pContext->Clip(mDirtyRects[i]);
       pContext->EnableClipping(true);
 
-      pContext->SetClearColor(GetColor(eActiveWindowBg));
+      nuiColor clearColor(GetColor(eActiveWindowBg));
+      pContext->SetClearColor(clearColor);
       if (mClearBackground)
       {
         pContext->Clear();

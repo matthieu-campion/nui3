@@ -28,43 +28,18 @@
 #define DEFAULTFONTSIZE 11.0f
 
 
-nuiTheme::nuiTheme(const nglPath& rPath)
-: mPath(rPath)
+nuiTheme::nuiTheme()
 {
   SetObjectClass(_T("nuiTheme"));
   
   mRefCount = 1;
-  if (!mPath.IsLeaf()) // Is the path a directory?
-  {
-    LoadDefaults();
-  }
-  else
-  {
-    // The given path is an XML file.
-    nuiXML XML(_T("ThemeDesc"));
-    nglIFile File(mPath);
-    if (XML.Load(File))
-      Load(&XML);
-  }
+  LoadDefaults();
   
   int i = 0;
   for (i = 0; i < StyleCount; i++)
     mpFonts[i] = 0;
   
   mpWindowTitleFont = nuiFont::GetFont(11);
-}
-
-nuiTheme::nuiTheme(nuiXMLNode* pNode)
-: mPath(ePathCurrent)
-{
-  mRefCount = 1;
-  int i = 0;
-  for (i = 0; i < StyleCount; i++)
-    mpFonts[i] = 0;
-  
-  mpWindowTitleFont = nuiFont::GetFont(11);
-  
-  Load(pNode);
 }
 
 void nuiTheme::Acquire()
@@ -79,128 +54,109 @@ void nuiTheme::Release()
     delete this;
 }
 
-bool nuiTheme::Load(nuiXMLNode* pNode)
-{
-  nglPath Path(_T("./"));
-  
-  LoadDefaults();
-  /*
-   if (pNode->HasAttribute(_T("SelectedTableColumnBG")))
-   mSelectedTableColumnBG.SetValue(pNode->GetAttribute(_T("SelectedTableColumnBG")));
-   
-   if (pNode->HasAttribute(_T("TableColumnBG")))
-   mTableColumnBG.SetValue(pNode->GetAttribute(_T("TableColumnBG")));
-   
-   if (pNode->HasAttribute(_T("SelectedTableLineBG")))
-   mSelectedTableLineBG.SetValue(pNode->GetAttribute(_T("SelectedTableLineBG")));
-   */
-  
-  return true;
-}
-
 void nuiTheme::LoadDefaults()
 {
   SetElementColor(eActiveWindowShade,           nuiColor());
   SetElementColor(eInactiveWindowShade,         nuiColor());
-  
+
   SetElementColor(eActiveWindowBg,              nuiColor(1.f,1.f,1.f));
   SetElementColor(eInactiveWindowBg,            nuiColor(.9f,.9f,.9f));
-  
+
   SetElementColor(eActiveWindowFg,              nuiColor(.8f,.8f,1.f));
   SetElementColor(eInactiveWindowFg,            nuiColor(.7f,.7f,.8f));
-  
+
   SetElementColor(eActiveWindowTitle,           nuiColor(1.f,1.f,1.f));
   SetElementColor(eInactiveWindowTitle,         nuiColor(.8f,.8f,.8f));
-  
+
   SetElementColor(eSplitterBarFg,               nuiColor(.5f,.5f,.6f));
   SetElementColor(eSplitterBarHover,            nuiColor(.7f,.7f,.8f));
   SetElementColor(eSplitterBarBg,               nuiColor(.5f,.5f,.6f));
-  
+
   SetElementColor(eScrollBarFg,                 nuiColor(1.f,1.f,1.f, .8f));
   SetElementColor(eScrollBarFgHover,            nuiColor(1.f,1.f,1.f));
   SetElementColor(eScrollBarBg,                 nuiColor(.8f,.8f,1.0f));
   SetElementColor(eScrollBarBgHover,            nuiColor(.5f,.5f,0.6f));
-  
+
   SetElementColor(eSliderBarFg,                 nuiColor(.5f,.5f,.9f));
   SetElementColor(eSliderBarBg,                 nuiColor(.8f,.8f,1.0f));
   SetElementColor(eSliderBarBgHover,            nuiColor(.5f,.5f,0.6f));
-  
+
   SetElementColor(eNormalButtonBg,              nuiColor(255, 255, 255, 255));
   SetElementColor(eSelectedButtonBg,            nuiColor(255, 255, 255, 255));
   SetElementColor(eDisabledButtonBg,            nuiColor(255, 255, 255, 255));
   SetElementColor(eHoverNormalButtonBg,         nuiColor(255, 255, 255, 255));
   SetElementColor(eHoverSelectedButtonBg,       nuiColor(255, 255, 255, 255));
   SetElementColor(eHoverDisabledButtonBg,       nuiColor(255, 255, 255, 255));
-  
+
   SetElementColor(eKnobBg,                      nuiColor(.5f,.5f,0.6f));
   SetElementColor(eKnobMarker,                  nuiColor(.8f,.8f,1.0f));
-  
+
   SetElementColor(eNormalTabBg,                 nuiColor());
   SetElementColor(eSelectedTabBg,               nuiColor());
   SetElementColor(eDisabledTabBg,               nuiColor());
   SetElementColor(eHoverNormalTabBg,            nuiColor());
   SetElementColor(eHoverSelectedTabBg,          nuiColor());
   SetElementColor(eHoverDisabledTabBg,          nuiColor());
-  
+
   SetElementColor(eSelectedTableColumnBg,       nuiColor(0.86328125f,0.86328125f,0.86328125f,0.5f));
   SetElementColor(eTableColumnBg,               nuiColor(0.9296875f,0.9296875f,0.9296875f,0.7f));
   SetElementColor(eSelectedTableLineBg,         nuiColor(0.2f,0.2f,0.9f,0.3f));
-  
+
   SetElementColor(eTreeViewHandle,              nuiColor(0.4f, 0.4f, 0.4f, 0.5f));
   SetElementColor(eTreeViewSelection,           nuiColor(0.4f, 0.5f, 1.f, 0.5f));
-  
+
   SetElementColor(eSelectionMarkee,             nuiColor(0.8f, 0.8f, 1.f, 0.9f));
-  
+
   SetElementColor(eNormalTextFg,                nuiColor(0.f,0.f,0.f));
   SetElementColor(eSelectedTextFg,              nuiColor(1.f,1.f,1.f));
   SetElementColor(eDisabledTextFg,              nuiColor(.5f,.5f,.5f));
   SetElementColor(eNormalTextBg,                nuiColor(1.0f, 1.0f, 1.0f, 0.0f));
   SetElementColor(eSelectedTextBg,              nuiColor(.8f,.8f,.8f,.5f));
   SetElementColor(eDisabledTextBg,              nuiColor(.3f,.3f,.3f,0.f));
-  
+
   SetElementColor(eMenuBg,                      nuiColor(1.0f, 1.0f, 1.0f, .9f));
   SetElementColor(eMenuFg,                      nuiColor(0.f, 0.f, 0.f, 0.f));
   SetElementColor(eMenuTitleBg,                 nuiColor(.5f, .5f, .5f));
-  
+
   SetElementColor(eShapeFill,                   nuiColor(.5f, .5f, .5f, .5f));
   SetElementColor(eShapeStroke,                 nuiColor(0.0f, 0.0f, 0.0f, 0.5f));
   SetElementColor(eBorder,                      nuiColor(.5f, .5f, .5f, 1.f));
   SetElementColor(eDisabledImage,               nuiColor(.5f, .5f, .5f, 1.f));
   SetElementColor(eSelectedImage,               nuiColor(.9f, .9f, .9f, 1.f));
-  
+
   SetElementColor(eToolTipBg,                   nuiColor(1.f, 1.f, 1.f, .8f));
   SetElementColor(eToolTipFg,                   nuiColor());
   SetElementColor(eToolTipBorder,               nuiColor(0.f, 0.f, 0.f, .3f));
-  
+
   SetElementColor(eMatrixViewHeaderBorder,      nuiColor(120,120,120));
   SetElementColor(eMatrixViewHeaderBackground,  nuiColor(180,180,180));
   SetElementColor(eMatrixViewBorder,            nuiColor(120,120,120));
   SetElementColor(eMatrixViewBackground,        nuiColor(220,220,220));
-  
+
   /// 
   /// Button colors:
   ///
-  
+
   // Clicked & Hovered
   mButtonBorder[1][1].Set(.6f,.6f,.6f);
   mButtonFill[1][1].Set(.5f,.5f,.53f, 0.6f);
-  
+
   // Clicked & Normal
   mButtonBorder[1][0].Set(.6f,.6f,.6f);
   mButtonFill[1][0].Set(.3f,.3f,.3f, 0.5f);
-  
+
   // Normal & Hovered
   mButtonBorder[0][1].Set(.6f,.6f,.6f);
   mButtonFill[0][1].Set(.7f,.7f,.7f, 1.f);
-  
+
   // Normal & Normal
   mButtonBorder[0][0].Set(.6f,.6f,.6f);
   mButtonFill[0][0].Set(0.7f,0.7f,0.7f, 0.9f);
-  
+
   /// 
   /// tab colors:
   ///
-  
+
   // Clicked & Hovered
   for (int i = 0; i<3; i++)
   {
@@ -210,9 +166,9 @@ void nuiTheme::LoadDefaults()
     mTabBorder[j][k] = mButtonBorder[j][k];
     mTabFill[j][k] = mButtonFill[j][k];
   }
-  
-  mFonts[0].CFormat(_T("<?xml version=\"1.0\"?><nuiFont Size=\"%f\" Source=\"%ls/Vera.ttf\"/>"), DEFAULTFONTSIZE, mPath.GetChars());
-  mFonts[1].CFormat(_T("<?xml version=\"1.0\"?><nuiFont Size=\"%f\" Source=\"%ls/VeraMono.ttf\"/>"), DEFAULTFONTSIZE, mPath.GetChars());
+
+  mFonts[0].CFormat(_T("<?xml version=\"1.0\"?><nuiFont Size=\"%f\" Source=\"/Vera.ttf\"/>"), DEFAULTFONTSIZE);
+  mFonts[1].CFormat(_T("<?xml version=\"1.0\"?><nuiFont Size=\"%f\" Source=\"/VeraMono.ttf\"/>"), DEFAULTFONTSIZE);
 }
 
 nuiTheme::~nuiTheme()
@@ -868,7 +824,7 @@ nuiTheme* nuiTheme::GetTheme()
 {
   if (!mpTheme)
   {
-    mpTheme = new nuiTheme(nglPath(ePathCurrent));
+    mpTheme = new nuiTheme();
   }
   mpTheme->Acquire();
   return mpTheme;
@@ -883,14 +839,14 @@ void nuiTheme::SetTheme(nuiTheme* pTheme)
     mpTheme->Acquire();
 }
 
-void nuiTheme::InitTheme(const nglPath& rResPath)
+void nuiTheme::InitTheme()
 {
   if (mpTheme)
   {
     mpTheme->Acquire();
     return;
   }
-  nuiTheme* pTheme = new nuiTheme(rResPath);
+  nuiTheme* pTheme = new nuiTheme();
   NGL_ASSERT(pTheme);
   SetTheme(pTheme);
   pTheme->Release();

@@ -20,7 +20,7 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
     nuiMainWindow(rContextInfo, rInfo, pShared, nglPath(ePathCurrent))
     
 {
-  //              mClearBackground = false;
+  //mClearBackground = false;
   SetDebugMode(true);
 }
 
@@ -31,9 +31,9 @@ MainWindow::~MainWindow()
 
 void MainWindow::OnCreation()
 {
-//  EnableAutoRotation(false);
-//  SetRotation(90);
-//  SetState(nglWindow::eMaximize);
+  //EnableAutoRotation(false);
+  SetRotation(90);
+  //SetState(nglWindow::eMaximize);
 
   nuiWidget* pBg = new nuiImage(_T("rsrc:/decorations/image.png"));
   pBg->SetRect(nuiRect(-(float)GetWidth(), -(float)GetHeight(), (float)GetWidth() * 3, (float)GetHeight() * 3));

@@ -446,7 +446,7 @@
 					"-liconv",
 				);
 				PROVISIONING_PROFILE = "";
-				SDKROOT = iphoneos3.2;
+				SDKROOT = iphoneos4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USE_HEADERMAP = NO;
 			};

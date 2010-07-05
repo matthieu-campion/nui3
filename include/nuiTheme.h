@@ -31,18 +31,15 @@ class nuiLabel;
 class NUI_API nuiTheme: public nuiObject
 {
 public:
-  static void InitTheme(const nglPath& rResPath); ///< Init the default theme if it doesn't already exist.
+  static void InitTheme(); ///< Init the default theme if it doesn't already exist.
   static nuiTheme* GetTheme(); ///< Return the default theme. If no theme exist one is created with the resource path set as the current working directory.
   static void SetTheme(nuiTheme* pTheme); ///< Replace the default theme with the given one. The old theme is released (and will die gracefully if not acquired by another object).
 
   void Acquire();
   void Release();
 
-  nuiTheme(const nglPath& rPath);
-  nuiTheme(nuiXMLNode* pNode);
+  nuiTheme();
   virtual ~nuiTheme();
-
-  bool Load(nuiXMLNode* pNode);
 
   enum FontStyle
   {
@@ -118,8 +115,6 @@ protected:
   nuiColor mTabFill[2][2];
 
   nuiColor mElementColors[eLastWidgetElement];
-
-  nglPath mPath;
 
   static nuiTheme* mpTheme;
 

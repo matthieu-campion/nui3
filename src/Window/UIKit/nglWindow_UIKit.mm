@@ -136,11 +136,6 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   glView = [[EAGLView alloc] initWithFrame:rect replacing: nil];
   [self addSubview:glView];
   
-  OrientationTimer = [NSTimer scheduledTimerWithTimeInterval:(NSTimeInterval)((1.0 / 10.0)) target:self selector:@selector(UpdateOrientation) userInfo:nil repeats:TRUE];
-
-	// wtf?
-  //[[UITextField alloc] initWithFrame: CGRectZero];
-
 //NGL_OUT(_T("[nglUIWindow initWithFrame]\n"));
 
 
@@ -185,7 +180,8 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
     mDisplayLink = nil;
   }
   
-  [OrientationTimer dealloc];
+  if (OrientationTimer)
+    [OrientationTimer dealloc];
   [super dealloc];
 }
 
@@ -200,8 +196,6 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 
 - (void) UpdateOrientation
 {
-	
-  //nuiStopWatch watch(_T("nglWindowUIKIT::UpdateOrientation"));
   int32 angle = -1;
   int32 w, h;
   w = mpNGLWindow->GetWidth();
@@ -213,120 +207,83 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   UIDeviceOrientation orientation = pUIDev.orientation;
   UIInterfaceOrientation apporientation = pApp.statusBarOrientation;
 
-  if (mpNGLWindow->GetAutoRotation())
+  angle = mpNGLWindow->GetRotation();
+  if (apporientation != orientation)
   {
-    angle = mpNGLWindow->GetRotation();
-    UIInterfaceOrientation neworientation = apporientation;
-    int32 ww = [UIScreen mainScreen].applicationFrame.size.width;
-    int32 hh = [UIScreen mainScreen].applicationFrame.size.height;
-    if (apporientation != orientation)
+    switch (orientation)
     {
-      switch (orientation)
-      {
-        case UIDeviceOrientationUnknown:
-        case UIDeviceOrientationFaceUp:
-        case UIDeviceOrientationFaceDown:
-          break;
-        case UIDeviceOrientationPortrait:
-          angle = 0;
-          neworientation = UIInterfaceOrientationPortrait;
-          w = ww;
-          h = hh;
-          break;
-        case UIDeviceOrientationPortraitUpsideDown:
-          angle = 180;
-          neworientation = UIInterfaceOrientationPortraitUpsideDown;
-          w = ww;
-          h = hh;
-          break;
-        case UIDeviceOrientationLandscapeLeft:
-          angle = 270;
-          neworientation = UIInterfaceOrientationLandscapeRight;
-          h = ww;
-          w = hh;
-          break;
-        case UIDeviceOrientationLandscapeRight:
-          angle = 90;
-          neworientation = UIInterfaceOrientationLandscapeLeft;
-          h = ww;
-          w = hh;
-          break;
-      }
+      case UIDeviceOrientationUnknown:
+      case UIDeviceOrientationFaceUp:
+      case UIDeviceOrientationFaceDown:
+        break;
+      case UIDeviceOrientationPortrait:
+        angle = 0;
+        break;
+      case UIDeviceOrientationPortraitUpsideDown:
+        angle = 180;
+        break;
+      case UIDeviceOrientationLandscapeLeft:
+        angle = 270;
+        break;
+      case UIDeviceOrientationLandscapeRight:
+        angle = 90;
+        break;
     }
-    
-    if (angle >= 0 && angle != mpNGLWindow->GetRotation())
-    {
-      if (mpNGLWindow->OnRotation(angle))
-      {
-        pApp.statusBarOrientation = neworientation;
-        [self UpdateKeyboard];
-        mpNGLWindow->SetRotation(angle);
-        forceresize = YES;
-        CGRect r = [self frame];
-        printf("currentFrame: %f, %f - %f, %f\n", r.origin.x, r.origin.y, r.size.width, r.size.height);
-        r = [UIScreen mainScreen].applicationFrame;
-        printf("applicationFrame: %f, %f - %f, %f\n", r.origin.x, r.origin.y, r.size.width, r.size.height);
-        
-        mInvalidated = true;
-      }
-    }
-
-  }
-  else
-  {
-    angle = mpNGLWindow->GetRotation();
-    if (mAngle != angle)
-    {
-      printf("new window angle: %f (old %f)\n", angle, (float)mAngle);
-      switch (angle)
-      {
-        case 0:
-          //UIDeviceOrientationPortrait
-          if (pApp.statusBarOrientation != UIInterfaceOrientationPortrait)
-          {
-            pApp.statusBarOrientation = UIInterfaceOrientationPortrait;
-            [self UpdateKeyboard];
-          }
-          w = [UIScreen mainScreen].applicationFrame.size.width;
-          h = [UIScreen mainScreen].applicationFrame.size.height;
-          break;
-        case 90:
-          //UIDeviceOrientationLandscapeRight
-          if (pApp.statusBarOrientation != UIInterfaceOrientationLandscapeLeft)
-          {
-            pApp.statusBarOrientation = UIInterfaceOrientationLandscapeLeft;
-            [self UpdateKeyboard];
-          }
-          h = [UIScreen mainScreen].applicationFrame.size.width;
-          w = [UIScreen mainScreen].applicationFrame.size.height;
-          break;
-        case 180:
-          //UIDeviceOrientationPortraitUpsideDown
-          if (pApp.statusBarOrientation != UIInterfaceOrientationPortraitUpsideDown)
-          {
-            pApp.statusBarOrientation = UIInterfaceOrientationPortraitUpsideDown;
-            [self UpdateKeyboard];
-          }
-          w = [UIScreen mainScreen].applicationFrame.size.width;
-          h = [UIScreen mainScreen].applicationFrame.size.height;
-          break;
-        case 270:
-          //UIDeviceOrientationLandscapeLeft
-          if (pApp.statusBarOrientation != UIInterfaceOrientationLandscapeRight)
-          {
-            pApp.statusBarOrientation = UIInterfaceOrientationLandscapeRight;
-            [self UpdateKeyboard];
-          }
-          h = [UIScreen mainScreen].applicationFrame.size.width;
-          w = [UIScreen mainScreen].applicationFrame.size.height;
-          break;
-      }
-      
-      forceresize = YES;
-    }
-    
   }
   
+  mpNGLWindow->CallOnRotation(angle);
+
+  angle = mpNGLWindow->GetRotation();
+  if (mAngle != angle)
+  {
+    printf("new window angle: %f (old %f)\n", angle, (float)mAngle);
+    switch (angle)
+    {
+      case 0:
+        //UIDeviceOrientationPortrait
+        if (pApp.statusBarOrientation != UIInterfaceOrientationPortrait)
+        {
+          pApp.statusBarOrientation = UIInterfaceOrientationPortrait;
+          [self UpdateKeyboard];
+        }
+        w = [UIScreen mainScreen].applicationFrame.size.width;
+        h = [UIScreen mainScreen].applicationFrame.size.height;
+        break;
+      case 90:
+        //UIDeviceOrientationLandscapeRight
+        if (pApp.statusBarOrientation != UIInterfaceOrientationLandscapeLeft)
+        {
+          pApp.statusBarOrientation = UIInterfaceOrientationLandscapeLeft;
+          [self UpdateKeyboard];
+        }
+        h = [UIScreen mainScreen].applicationFrame.size.width;
+        w = [UIScreen mainScreen].applicationFrame.size.height;
+        break;
+      case 180:
+        //UIDeviceOrientationPortraitUpsideDown
+        if (pApp.statusBarOrientation != UIInterfaceOrientationPortraitUpsideDown)
+        {
+          pApp.statusBarOrientation = UIInterfaceOrientationPortraitUpsideDown;
+          [self UpdateKeyboard];
+        }
+        w = [UIScreen mainScreen].applicationFrame.size.width;
+        h = [UIScreen mainScreen].applicationFrame.size.height;
+        break;
+      case 270:
+        //UIDeviceOrientationLandscapeLeft
+        if (pApp.statusBarOrientation != UIInterfaceOrientationLandscapeRight)
+        {
+          pApp.statusBarOrientation = UIInterfaceOrientationLandscapeRight;
+          [self UpdateKeyboard];
+        }
+        h = [UIScreen mainScreen].applicationFrame.size.width;
+        w = [UIScreen mainScreen].applicationFrame.size.height;
+        break;
+    }
+    
+    forceresize = YES;
+  }
+    
   if (forceresize)
   {
     CGRect rect = [[UIScreen mainScreen] applicationFrame];
@@ -351,11 +308,12 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 {  
   if (!mInited)
   {
-
-	  mInited = true;
+    mInited = true;
     mpNGLWindow->CallOnCreation();
 //    mpNGLWindow->Invalidate();
 //    mpNGLWindow->CallOnPaint();
+    OrientationTimer = [NSTimer scheduledTimerWithTimeInterval:(NSTimeInterval)((1.0 / 10.0)) target:self selector:@selector(UpdateOrientation) userInfo:nil repeats:TRUE];
+    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
   }
 
   static int32 counter = 0;
@@ -368,9 +326,6 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   counter = 60;
 
   [self UpdateOrientation];
-	
-
-
 }
 
 - (void) sendEvent: (UIEvent*) pEvent
@@ -785,17 +740,17 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   
     // Formerly in resize from layer:
     //glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderbuffer);
-    [context renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:eaglLayer];
-    glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &backingWidth);
-    glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &backingHeight);
-    
-    if (glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) != GL_FRAMEBUFFER_COMPLETE_OES)
-    {
-      NSLog(@"Failed to make complete framebuffer object %x", glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES));
-      return NO;
-    }
-    
-    printf("Resize frame buffer: %d x %d\n", backingWidth, backingHeight);
+//    [context renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:eaglLayer];
+//    glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &backingWidth);
+//    glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &backingHeight);
+//    
+//    if (glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) != GL_FRAMEBUFFER_COMPLETE_OES)
+//    {
+//      NSLog(@"Failed to make complete framebuffer object %x", glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES));
+//      return NO;
+//    }
+//    
+//    printf("Resize frame buffer: %d x %d\n", backingWidth, backingHeight);
   }
   
   return self;
@@ -808,7 +763,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 
 - (void)layoutSubviews
 {
-  //[self resizeFromLayer:(CAEAGLLayer*)self.layer];
+  [self resizeFromLayer:(CAEAGLLayer*)self.layer];
 }
 
 
@@ -843,7 +798,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   return context;
 }
 
-#if 0
+#if 1
 - (BOOL)resizeFromLayer:(CAEAGLLayer *)layer
 {	
   // Allocate color buffer backing based on the current layer size
