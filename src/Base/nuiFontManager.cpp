@@ -323,6 +323,7 @@ nuiFontRequest::~nuiFontRequest()
 
 void nuiFontRequest::SetName(const nglString& rName, float Score, bool Strict)
 {
+  mOriginalName = rName;
   mName.mElement = rName;
   mName.mElement.ToLower();
   mName.mScore = Score;  
@@ -1789,7 +1790,7 @@ nuiFont* nuiFontManager::GetFont(nuiFontRequest& rRequest, const nglString& rID)
     size = *(rRequest.mMustHaveSizes.mElement.begin());
   
   //wprintf(_T("Loading font %ls\n"), rRequest.mName.mElement.GetChars());
-  nuiFont* pFont = nuiFont::GetFont(rRequest.mName.mElement, size, rRequest.mFace.mElement, rID);
+  nuiFont* pFont = nuiFont::GetFont(rRequest.mOriginalName, size, rRequest.mFace.mElement, rID);
   if (pFont)
     return pFont;
   

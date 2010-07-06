@@ -87,6 +87,7 @@ public:
   
   
   ScoredElement<nglString>  mName;
+  nglString                 mOriginalName;
   ScoredElement<nglString>  mGenericName;
   ScoredElement<nglString>  mStyle;
   ScoredElement<int32>      mFace;
