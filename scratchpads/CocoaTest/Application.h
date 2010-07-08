@@ -20,11 +20,8 @@ int ApplicationMain(int argc, const char **argv);
 
 @interface Application : NSApplication
 {
-	bool shouldKeepRunning;
 }
 
-- (void)run;
-- (void)terminate:(id)sender;
 
 @end
 

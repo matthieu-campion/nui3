@@ -170,23 +170,6 @@
 
 @end
 
-static NSString* GetApplicationName(void)
-{
-  NSDictionary *dict;
-  NSString *appName = 0;
-  
-  /* Determine the application name */
-  dict = (NSDictionary *)CFBundleGetInfoDictionary(CFBundleGetMainBundle());
-  if (dict)
-    appName = [dict objectForKey: @"CFBundleName"];
-  
-  if (![appName length])
-    appName = [[NSProcessInfo processInfo] processName];
-  
-  return appName;
-}
-
-
 int ApplicationMain(int argc, const char **argv)
 {
   NSAutoreleasePool *pool = [NSAutoreleasePool new];
@@ -217,75 +200,6 @@ int ApplicationMain(int argc, const char **argv)
   [pWin setContentView: pView];
   [pWin setDelegate: pView];
 
-  ////////////////
-  // Main Menu:
-  {
-    NSString *appName;
-    NSString *title;
-    NSMenu *appleMenu;
-    NSMenu *windowMenu;
-    NSMenuItem *menuItem;
-    
-    /* Create the main menu bar */
-    [applicationObject setMainMenu:[[NSMenu alloc] init]];
-    
-    /* Create the application menu */
-    appName = GetApplicationName();
-    appleMenu = [[NSMenu alloc] initWithTitle:@""];
-    
-    /* Add menu items */
-    title = [@"About " stringByAppendingString:appName];
-    [appleMenu addItemWithTitle:title action:@selector(orderFrontStandardAboutPanel:) keyEquivalent:@""];
-    
-    [appleMenu addItem:[NSMenuItem separatorItem]];
-    [appleMenu addItem:[NSMenuItem separatorItem]];
-    [appleMenu addItem:[NSMenuItem separatorItem]];
-    [appleMenu addItem:[NSMenuItem separatorItem]];
-    
-    title = [@"Hide " stringByAppendingString:appName];
-    [appleMenu addItemWithTitle:title action:@selector(hide:) keyEquivalent:@/*"h"*/""];
-    
-    menuItem = (NSMenuItem *)[appleMenu addItemWithTitle:@"Hide Others" action:@selector(hideOtherApplications:) keyEquivalent:@/*"h"*/""];
-    [menuItem setKeyEquivalentModifierMask:(NSAlternateKeyMask|NSCommandKeyMask)];
-    
-    [appleMenu addItemWithTitle:@"Show All" action:@selector(unhideAllApplications:) keyEquivalent:@""];
-    
-    [appleMenu addItem:[NSMenuItem separatorItem]];
-    
-    title = [@"Quit " stringByAppendingString:appName];
-    [appleMenu addItemWithTitle:title action:@selector(terminate:) keyEquivalent:@/*"q"*/""];
-    
-    /* Put menu into the menubar */
-    menuItem = [[NSMenuItem alloc] initWithTitle:@"" action:nil keyEquivalent:@""];
-    [menuItem setSubmenu:appleMenu];
-    [[applicationObject mainMenu] addItem:menuItem];
-    [menuItem release];
-    
-    /* Tell the application object that this is now the application menu */
-    [applicationObject setAppleMenu:appleMenu];
-    [appleMenu release];
-    
-    
-    /* Create the window menu */
-    windowMenu = [[NSMenu alloc] initWithTitle:@"Window"];
-    
-    /* "Minimize" item */
-    menuItem = [[NSMenuItem alloc] initWithTitle:@"Minimize" action:@selector(performMiniaturize:) keyEquivalent:@/*"m"*/""];
-    [windowMenu addItem:menuItem];
-    [menuItem release];
-    
-    /* Put menu into the menubar */
-    menuItem = [[NSMenuItem alloc] initWithTitle:@"Window" action:nil keyEquivalent:@""];
-    [menuItem setSubmenu:windowMenu];
-    [[applicationObject mainMenu] addItem:menuItem];
-    [menuItem release];
-    
-    /* Tell the application object that this is now the window menu */
-    [applicationObject setWindowsMenu:windowMenu];
-    [windowMenu release];
-  }  
-//  [pItem setTarget:applicationObject];
-//  [pItem setAction: @selector(terminate:)];
 
   [pWin makeKeyAndOrderFront:nil];
   
@@ -298,35 +212,6 @@ int ApplicationMain(int argc, const char **argv)
 
 @implementation Application
 
-- (void)run
-{
-	[[NSNotificationCenter defaultCenter]
-		postNotificationName:NSApplicationWillFinishLaunchingNotification
-		object:NSApp];
-	[[NSNotificationCenter defaultCenter]
-		postNotificationName:NSApplicationDidFinishLaunchingNotification
-		object:NSApp];
-	
-	shouldKeepRunning = YES;
-	do
-	{
-		NSEvent *event =
-			[self
-				nextEventMatchingMask:NSAnyEventMask
-				untilDate:[NSDate distantFuture]
-				inMode:NSDefaultRunLoopMode
-				dequeue:YES];
-		
-		[self sendEvent:event];
-		[self updateWindows];
-	} while (shouldKeepRunning);
-}
-
-- (void)terminate:(id)sender
-{
-  printf("terminate\n");
-	shouldKeepRunning = NO;
-}
 
 @end
 
