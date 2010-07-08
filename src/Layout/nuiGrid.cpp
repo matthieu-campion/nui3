@@ -293,24 +293,44 @@ void nuiGrid::AdjustToExpand(nuiSize width, nuiSize height, std::vector<nuiSize>
 {
   if (mEqualizeColumns && !mColumnWidths.empty())
   {
-    nuiSize w = 0;
+    nuiSize w = width;
+    uint32 numColumns = mNbColumns;
+    for (uint32 i = 0; i < mNbColumns; i++)
+    {
+      if (mMinimumColumnSizes[i] > 0 && mMinimumColumnSizes[i] == mMaximumColumnSizes[i])
+        --numColumns;
+      else
+        w += mColumnWidths[i];
+    }
+    w /= (nuiSize)numColumns;
     for (uint32 i = 0; i < mColumnWidths.size(); i++)
-      w += mColumnWidths[i];
-    w /= (nuiSize)mColumnWidths.size();
-    for (uint32 i = 0; i < mColumnWidths.size(); i++)
-      mColumnWidths[i] = w;
-  }
-
-  if (mEqualizeRows && !mRowHeights.empty())
-  {
-    nuiSize h = 0;
-    for (uint32 i = 0; i < mRowHeights.size(); i++)
-      h += mRowHeights[i];
-    h /= (nuiSize)mRowHeights.size();
-    for (uint32 i = 0; i < mRowHeights.size(); i++)
-      mRowHeights[i] = h;
+    {
+      if (mMinimumColumnSizes[i] == 0 ||
+          mMinimumColumnSizes[i] != mMaximumColumnSizes[i])
+        mColumnWidths[i] = w;
+    }
   }
   
+  if (mEqualizeRows && !mRowHeights.empty())
+  {
+    nuiSize h = height;
+    uint32 numRows = mNbRows;
+    for (uint32 i = 0; i < mNbRows; i++)
+    {
+      if (mMinimumRowSizes[i] > 0 && mMinimumRowSizes[i] == mMaximumRowSizes[i])
+        --numRows;
+      else
+        h += mRowHeights[i];
+    }
+    h /= (nuiSize)numRows;
+    for (uint32 i = 0; i < mRowHeights.size(); i++)
+    {
+      if (mMinimumRowSizes[i] == 0 ||
+          mMinimumRowSizes[i] != mMaximumRowSizes[i])
+        mRowHeights[i] = h;
+    }
+  }
+
   Widths.clear();
   Heights.clear();
 
