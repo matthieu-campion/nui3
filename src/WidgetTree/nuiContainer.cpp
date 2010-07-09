@@ -100,8 +100,8 @@ void nuiContainer::CallOnTrash()
 {
   CheckValid();
   ChildrenCallOnTrash();
-  
-  OnTrash();
+  nuiWidget::CallOnTrash();
+//  OnTrash();
 }
 
 

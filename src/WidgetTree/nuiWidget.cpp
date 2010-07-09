@@ -2118,7 +2118,8 @@ bool nuiWidget::Trash()
 {
   CheckValid();
 
-  mTrashed = true;
+  if (!mTrashed)
+    CallOnTrash();
 
   nuiAnimation* pAnim = GetAnimation(_T("TRASH"));
   if (pAnim && (pAnim->GetTime()==0 && pAnim->GetDuration()>0))
@@ -2127,13 +2128,12 @@ bool nuiWidget::Trash()
   }
   else
   {
+    NGL_ASSERT(mTrashed);
     NGL_ASSERT(!mDoneTrashed);
     if (mDoneTrashed)
       return false;
 
     mDoneTrashed = true;
-
-    CallOnTrash();
 
     nuiTopLevel* pRoot = GetTopLevel();
 
@@ -2153,8 +2153,8 @@ bool nuiWidget::Trash()
     Trashed();
     Invalidate();
 
-    if (pRoot)
-      pRoot->AdviseObjectDeath(this);
+    NGL_ASSERT(!HasGrab()); /// done with CallOnTrash
+//    pRoot->AdviseObjectDeath(this); /// done with CallOnTrash
 
     DebugRefreshInfo();
   }

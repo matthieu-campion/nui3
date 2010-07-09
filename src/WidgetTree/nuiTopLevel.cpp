@@ -17,7 +17,7 @@
 
 #define PARTIAL_REDRAW_DEFAULT true
 
-#if 0 //defined(_MULTI_TOUCHES_) && defined(_DEBUG_)
+#if 0//defined(_MULTI_TOUCHES_) && defined(_DEBUG_)
 # define NGL_TOUCHES_DEBUG(X) (X)
 # define _NGL_DEBUG_TOUCHES_
 #else//!_MULTI_TOUCHES_
@@ -1166,6 +1166,8 @@ NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseUnclick [%d] BEGIN\n"), rInfo.TouchId) )
   nuiWidgetPtr pGrab = GetGrab();
   if (pGrab)
   {
+    NGL_ASSERT(!pGrab->IsTrashed(true));
+
     std::vector<nuiContainerPtr> containers;
     nuiContainerPtr pParent = pGrab->GetParent();
     while (pParent)
