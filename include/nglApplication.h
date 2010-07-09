@@ -280,6 +280,7 @@ public:
 
 #ifdef _COCOA_
   int nglApplication::Main(int ArgCount, const char** pArgs);
+  friend int main(int ArgCount, const char** pArgs);
   bool Init(int argc, const char** argv);
   int  Run();
 #endif
@@ -354,6 +355,11 @@ extern NGL_API class nglKernel* App;
   #define __NGL_APP_MAINDECL int main(int argc, char** argv)
   #define __NGL_APP_MAINCALL Main(argc, argv)
 #endif // _UNIX_
+
+#if defined(_COCOA_)
+#define __NGL_APP_MAINDECL int main(int argc, const char** argv)
+#define __NGL_APP_MAINCALL Main(argc, argv)
+#endif // _COCOA_
 
 #if (defined _DEBUG_) && (defined _WIN32_)
   #define NGL_CHECK_MEMORY _CrtMemDumpAllObjectsSince( NULL );
