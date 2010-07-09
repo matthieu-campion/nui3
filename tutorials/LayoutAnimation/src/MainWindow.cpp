@@ -31,7 +31,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::OnCreation()
 {
-  //EnableAutoRotation(false);
+  EnableAutoRotation(false);
   SetRotation(90);
   //SetState(nglWindow::eMaximize);
 
