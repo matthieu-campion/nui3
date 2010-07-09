@@ -19,22 +19,26 @@
     }                                        \
   } while ( 0 )
 #else
-  #define nui_verify_noerr(errorCode)        \
-  do                                         \
-  {                                          \
-    int evalOnceErrorCode = (errorCode);     \
-    if ( 0 != evalOnceErrorCode )            \
-    {                                        \
-      DEBUG_ASSERT_MESSAGE(                  \
-        DEBUG_ASSERT_COMPONENT_NAME_STRING,  \
-        #errorCode " == 0 ",                 \
-        0,                                   \
-        0,                                   \
-        __FILE__,                            \
-        __LINE__,                            \
-        evalOnceErrorCode);                  \
-    }                                        \
-  } while ( 0 )
+  #ifdef _COCOA_
+    #define nui_verify_noerr(errorCode)
+  #else
+    #define nui_verify_noerr(errorCode)        \
+    do                                         \
+    {                                          \
+      int evalOnceErrorCode = (errorCode);     \
+      if ( 0 != evalOnceErrorCode )            \
+      {                                        \
+        DEBUG_ASSERT_MESSAGE(                  \
+          DEBUG_ASSERT_COMPONENT_NAME_STRING,  \
+          #errorCode " == 0 ",                 \
+          0,                                   \
+          0,                                   \
+          __FILE__,                            \
+          __LINE__,                            \
+          evalOnceErrorCode);                  \
+      }                                        \
+    } while ( 0 )
+  #endif
 #endif
 
 

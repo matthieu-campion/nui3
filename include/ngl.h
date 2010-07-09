@@ -86,16 +86,18 @@ and in NGL user application code.
     #define __MACHO__
     #define __NGL_MACHO__
     #include <CoreFoundation/CoreFoundation.h>
-#if !__LP64__
-    #include <CoreServices/CoreServices.h>
-#endif
+    #if !__LP64__
+      #include <CoreServices/CoreServices.h>
+    #endif
 
 // Make Carbon the default choice when compiling on a Mac, even when using gcc
-  #elif (!defined(_CARBON_) && !defined(_DARWIN_) && !defined(_COCOA_))
+//#elif (!defined(_CARBON_) && !defined(_DARWIN_) && !defined(_COCOA_))
+  #else
     #define _CARBON_
     #define _CORE_FOUNDATION_
     #include <CoreFoundation/CoreFoundation.h>
   #endif
+
   #ifdef __GNUC__
     #define __MACHO__
     #define __NGL_MACHO__
@@ -318,6 +320,8 @@ and in NGL user application code.
   #ifndef __cplusplus
   //  #if defined(_OBJC_)
   #include <Cocoa/Cocoa.h>
+  #include <ApplicationServices/ApplicationServices.h>
+  #include <CoreGraphics/CoreGraphics.h>
   #endif
 
   #include <stdlib.h>
@@ -336,7 +340,7 @@ and in NGL user application code.
 
   #define NGL_API __attribute__((visibility("hidden"))) 
 
-#endif//_COCOA_
+#endif //_COCOA_
 
 
 /*

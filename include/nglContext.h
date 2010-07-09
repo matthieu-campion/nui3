@@ -288,6 +288,10 @@ protected:
 
   friend class nglContextInfo;
 #endif
+
+#ifdef _COCOA_
+  nglContextInfo mContextInfo;
+#endif
 };
 
 // Add some not yet officially defined values:

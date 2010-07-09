@@ -117,14 +117,14 @@ private:
   static void Exit();
 #endif // _X11_
 
-#ifdef _CARBON_
+#if (defined _CARBON_ || defined _COCOA_)
 private:
   static uint                  mXDepth;
 
   static void Init();
   static bool SetMode (nglVideoMode* pMode, bool Lock);
 
-  CGDirectDisplayID mDisplay;
+  /*CGDirectDisplayID*/ uint32 mDisplay;
   long mHeight, mWidth, mRate, mBPP;
 
 #endif // _CARBON_

@@ -9,6 +9,8 @@
 #include "nglVideoMode.h"
 #include "nglKernel.h"
 
+#include <ApplicationServices/ApplicationServices.h>
+
 
 nglVideoMode::nglVideoMode()
 {

@@ -462,6 +462,8 @@ protected:
 	
   void* mpNSApplication;
   
+  friend void objCCallOnInitWithURL(void* pUIApplication, const nglString &url);  
+  
 public:
 	void * GetNSApplication() { return mpNSApplication; }
   

@@ -9,7 +9,11 @@
 #include "nuiURL.h"
 
 #ifndef _CARBON_
+#ifdef _UIKIT_
 #import <UIKit/UIKit.h>
+#else
+#import <Cocoa/Cocoa.h>
+#endif
 #endif
 
 nuiURL::nuiURL(const nglString& rUrl)
@@ -45,12 +49,14 @@ bool nuiURL::OpenBrowser()
   NGL_ASSERT(url);
   
   // Launch the URL
-#ifndef _CARBON_
+#ifdef _UIKIT_
   //[NSWorkSpace openURL: url];
   [[UIApplication sharedApplication] openURL: [NSURL URLWithString: [NSString stringWithCString: s.c_str()]]];
-#else
+#elif defined _CARBON_
   OSStatus err = LSOpenCFURLRef(url, NULL);  
   NGL_ASSERT(err == noErr);
+#else
+  [[NSApplication sharedApplication] openURL: [NSURL URLWithString: [NSString stringWithCString: s.c_str()]]];
 #endif
   
   // Release the URL and string
