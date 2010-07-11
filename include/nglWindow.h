@@ -843,6 +843,19 @@ private:
   StateChange mState;
 #endif
 
+#ifdef _UIKIT_
+private:
+  void InternalInit(const nglContextInfo& rContext, const nglWindowInfo& rInfo,
+                    const nglContext* pShared);
+  
+  void* mpNSWindow;
+  GLuint mRenderBuffer;
+  GLuint mFrameBuffer;
+  GLuint mDepthBuffer;
+  nglContextInfo mContextInfo;
+  StateChange mState;
+#endif
+  
 #ifdef _WIN32_
 private:
 #ifdef _NGL_WINDOWS_HACKS_ // Define _NGL_WINDOWS_HACKS_ if you want to be able to hack the windows. Highly dangerous!!!

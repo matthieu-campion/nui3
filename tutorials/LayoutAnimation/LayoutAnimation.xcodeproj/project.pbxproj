@@ -22,12 +22,11 @@
 		61A9DFF50B83433800BC506C /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61A9DFEF0B83433800BC506C /* Application.cpp */; };
 		61A9DFF60B83433800BC506C /* MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */; };
 		BCBCB15F0DFD45BD002E8BC3 /* libnui3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */; };
+		E59CD16A11EA0C4000955611 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E59CD16911EA0C4000955611 /* Cocoa.framework */; };
 		E5EF6FBC11E77DE8000FB337 /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61A9DFEF0B83433800BC506C /* Application.cpp */; };
 		E5EF6FBD11E77DE8000FB337 /* MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */; };
-		E5EF6FBF11E77DE8000FB337 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD20B833F1500BC506C /* AGL.framework */; };
 		E5EF6FC011E77DE8000FB337 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD30B833F1500BC506C /* CoreFoundation.framework */; };
 		E5EF6FC111E77DE8000FB337 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD40B833F1500BC506C /* CoreServices.framework */; };
-		E5EF6FC211E77DE8000FB337 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD50B833F1500BC506C /* Carbon.framework */; };
 		E5EF6FC311E77DE8000FB337 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD60B833F1500BC506C /* OpenGL.framework */; };
 		E5EF6FD111E77E79000FB337 /* libnui3D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15C0DFD45B6002E8BC3 /* libnui3D.a */; };
 		E5EF6FE511E77EA7000FB337 /* libnui3CocoaD.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E5EF6FB111E77DE0000FB337 /* libnui3CocoaD.a */; };
@@ -80,14 +79,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E5A8D1D311E33A54004E14CE /* libnui3CocoaD.a */;
+			remoteGlobalIDString = E5A8D1D311E33A54004E14CE;
 			remoteInfo = nui3CocoaD;
 		};
 		E5EF6FCB11E77E22000FB337 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = E5A8CCAE11E33A54004E14CE /* nui3CocoaD */;
+			remoteGlobalIDString = E5A8CCAE11E33A54004E14CE;
 			remoteInfo = nui3CocoaD;
 		};
 /* End PBXContainerItemProxy section */
@@ -105,8 +104,8 @@
 		61A9DFF10B83433800BC506C /* MainWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = MainWindow.cpp; path = src/MainWindow.cpp; sourceTree = "<group>"; };
 		61A9DFF20B83433800BC506C /* MainWindow.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = MainWindow.h; path = src/MainWindow.h; sourceTree = "<group>"; };
 		BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nui3.xcodeproj; path = ../../nui3.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E59CD16911EA0C4000955611 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		E5EF6FC811E77DE8000FB337 /* LayoutAnimationD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LayoutAnimationD.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E5EF6FCA11E77DE8000FB337 /* Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info copy.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,12 +139,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E5EF6FBF11E77DE8000FB337 /* AGL.framework in Frameworks */,
 				E5EF6FC011E77DE8000FB337 /* CoreFoundation.framework in Frameworks */,
 				E5EF6FC111E77DE8000FB337 /* CoreServices.framework in Frameworks */,
-				E5EF6FC211E77DE8000FB337 /* Carbon.framework in Frameworks */,
 				E5EF6FC311E77DE8000FB337 /* OpenGL.framework in Frameworks */,
 				E5EF6FE511E77EA7000FB337 /* libnui3CocoaD.a in Frameworks */,
+				E59CD16A11EA0C4000955611 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -158,7 +156,6 @@
 				61A9DE4A0B833CD000BC506C /* sources */,
 				61A9DE490B833CB000BC506C /* dependencies */,
 				61A9DFB50B833DE500BC506C /* Products */,
-				E5EF6FCA11E77DE8000FB337 /* Info copy.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -171,6 +168,7 @@
 				61A9DFD40B833F1500BC506C /* CoreServices.framework */,
 				61A9DFD50B833F1500BC506C /* Carbon.framework */,
 				61A9DFD60B833F1500BC506C /* OpenGL.framework */,
+				E59CD16911EA0C4000955611 /* Cocoa.framework */,
 			);
 			name = dependencies;
 			sourceTree = "<group>";
@@ -514,7 +512,6 @@
 					_COCOA_,
 					_DEBUG,
 				);
-				INFOPLIST_FILE = "Info copy.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = LayoutAnimationD;
 				WARNING_CFLAGS = (
