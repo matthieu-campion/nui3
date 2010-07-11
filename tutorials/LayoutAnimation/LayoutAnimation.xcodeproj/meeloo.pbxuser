@@ -72,6 +72,13 @@
 			E59CD0FD11E7C7A400955611 /* PBXTextBookmark */ = E59CD0FD11E7C7A400955611 /* PBXTextBookmark */;
 			E59CD0FE11E7C7A400955611 /* PBXTextBookmark */ = E59CD0FE11E7C7A400955611 /* PBXTextBookmark */;
 			E59CD0FF11E7C7A900955611 /* PBXTextBookmark */ = E59CD0FF11E7C7A900955611 /* PBXTextBookmark */;
+			E59CD1BB11EA21A800955611 /* PBXTextBookmark */ = E59CD1BB11EA21A800955611 /* PBXTextBookmark */;
+			E59CD1BC11EA21A800955611 /* PBXTextBookmark */ = E59CD1BC11EA21A800955611 /* PBXTextBookmark */;
+			E59CD1BE11EA21A800955611 /* PBXTextBookmark */ = E59CD1BE11EA21A800955611 /* PBXTextBookmark */;
+			E59CD1BF11EA21A800955611 /* PBXTextBookmark */ = E59CD1BF11EA21A800955611 /* PBXTextBookmark */;
+			E59CD1C111EA21A800955611 /* PBXTextBookmark */ = E59CD1C111EA21A800955611 /* PBXTextBookmark */;
+			E59CD1C311EA21A800955611 /* PBXTextBookmark */ = E59CD1C311EA21A800955611 /* PBXTextBookmark */;
+			E59CD1C411EA21A800955611 /* PBXTextBookmark */ = E59CD1C411EA21A800955611 /* PBXTextBookmark */;
 			E5A6314A11CA831C00446489 = E5A6314A11CA831C00446489 /* PBXTextBookmark */;
 			E5EF6FAC11E77DDB000FB337 = E5EF6FAC11E77DDB000FB337 /* PBXTextBookmark */;
 			E5EF6FD011E77E49000FB337 = E5EF6FD011E77E49000FB337 /* PBXTextBookmark */;
@@ -288,6 +295,107 @@
 		rType = 0;
 		vrLen = 1611;
 		vrLoc = 10588;
+	};
+	E59CD19111EA1BAA00955611 /* nglWindow_Cocoa.mm */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.objcpp;
+		name = nglWindow_Cocoa.mm;
+		path = /Users/meeloo/work/nui3/src/Window/Cocoa/nglWindow_Cocoa.mm;
+		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {2292, 8567}}";
+			sepNavSelRange = "{6861, 10}";
+			sepNavVisRange = "{6541, 999}";
+			sepNavWindowFrame = "{{15, 310}, {1061, 1103}}";
+		};
+	};
+	E59CD1BB11EA21A800955611 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5EF6FED11E77EBA000FB337 /* nglApplication.h */;
+		name = "nglApplication.h: 361";
+		rLen = 0;
+		rLoc = 11678;
+		rType = 0;
+		vrLen = 1611;
+		vrLoc = 10588;
+	};
+	E59CD1BC11EA21A800955611 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E59CD1BD11EA21A800955611 /* NSApplication.h */;
+		name = "NSApplication.h: 351";
+		rLen = 0;
+		rLoc = 14527;
+		rType = 0;
+		vrLen = 2774;
+		vrLoc = 13406;
+	};
+	E59CD1BD11EA21A800955611 /* NSApplication.h */ = {
+		isa = PBXFileReference;
+		name = NSApplication.h;
+		path = /DeveloperUnstable/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSApplication.h;
+		sourceTree = "<absolute>";
+	};
+	E59CD1BE11EA21A800955611 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5EF701F11E781FF000FB337 /* nglApplication_Cocoa.mm */;
+		name = "nglApplication_Cocoa.mm: 205";
+		rLen = 0;
+		rLoc = 4058;
+		rType = 0;
+		vrLen = 830;
+		vrLoc = 3773;
+	};
+	E59CD1BF11EA21A800955611 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E59CD1C011EA21A800955611 /* nglWindow.h */;
+		name = "nglWindow.h: 198";
+		rLen = 0;
+		rLoc = 6267;
+		rType = 0;
+		vrLen = 1423;
+		vrLoc = 4958;
+	};
+	E59CD1C011EA21A800955611 /* nglWindow.h */ = {
+		isa = PBXFileReference;
+		name = nglWindow.h;
+		path = /Users/meeloo/work/nui3/src/Base/../../include/nglWindow.h;
+		sourceTree = "<absolute>";
+	};
+	E59CD1C111EA21A800955611 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E59CD1C211EA21A800955611 /* nglWindow_Cocoa.h */;
+		name = "nglWindow_Cocoa.h: 22";
+		rLen = 0;
+		rLoc = 487;
+		rType = 0;
+		vrLen = 795;
+		vrLoc = 0;
+	};
+	E59CD1C211EA21A800955611 /* nglWindow_Cocoa.h */ = {
+		isa = PBXFileReference;
+		name = nglWindow_Cocoa.h;
+		path = /Users/meeloo/work/nui3/src/Window/Cocoa/nglWindow_Cocoa.h;
+		sourceTree = "<absolute>";
+	};
+	E59CD1C311EA21A800955611 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E59CD19111EA1BAA00955611 /* nglWindow_Cocoa.mm */;
+		name = "nglWindow_Cocoa.mm: 329";
+		rLen = 10;
+		rLoc = 6861;
+		rType = 0;
+		vrLen = 1031;
+		vrLoc = 6541;
+	};
+	E59CD1C411EA21A800955611 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E59CD19111EA1BAA00955611 /* nglWindow_Cocoa.mm */;
+		name = "nglWindow_Cocoa.mm: 329";
+		rLen = 10;
+		rLoc = 6861;
+		rType = 0;
+		vrLen = 999;
+		vrLoc = 6541;
 	};
 	E5A6314A11CA831C00446489 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -529,9 +637,9 @@
 		path = /Users/meeloo/work/nui3/include/nglApplication.h;
 		sourceTree = "<absolute>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {2292, 5772}}";
+			sepNavIntBoundsRect = "{{0, 0}, {989, 5759}}";
 			sepNavSelRange = "{11678, 0}";
-			sepNavVisRange = "{10588, 1611}";
+			sepNavVisRange = "{10588, 1629}";
 		};
 	};
 	E5EF6FEE11E77F05000FB337 /* PBXTextBookmark */ = {
@@ -675,9 +783,9 @@
 		path = /Users/meeloo/work/nui3/src/Application/Cocoa/nglApplication_Cocoa.mm;
 		sourceTree = "<absolute>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {2292, 3393}}";
-			sepNavSelRange = "{1508, 212}";
-			sepNavVisRange = "{786, 1305}";
+			sepNavIntBoundsRect = "{{0, 0}, {2292, 3614}}";
+			sepNavSelRange = "{4058, 0}";
+			sepNavVisRange = "{3773, 830}";
 		};
 	};
 	E5EF702011E781FF000FB337 /* PBXTextBookmark */ = {

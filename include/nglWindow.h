@@ -194,6 +194,12 @@ public:
     void* mpUIWindow; // Pointer to the nglUIWindow (Based on UIWindow from UIKit).
     OSInfo();
 #endif
+
+#ifdef _COCOA_
+    void* mpNSWindow; // Pointer to the nglUIWindow (Based on UIWindow from UIKit).
+    OSInfo();
+#endif
+
   };
 
   typedef uint Flags;      ///< Used during nglWindow construction, see nglWindowInfo
@@ -843,15 +849,13 @@ private:
   StateChange mState;
 #endif
 
-#ifdef _UIKIT_
+#ifdef _COCOA_
 private:
+  uint32 mWidth, mHeight;
   void InternalInit(const nglContextInfo& rContext, const nglWindowInfo& rInfo,
                     const nglContext* pShared);
   
   void* mpNSWindow;
-  GLuint mRenderBuffer;
-  GLuint mFrameBuffer;
-  GLuint mDepthBuffer;
   nglContextInfo mContextInfo;
   StateChange mState;
 #endif
