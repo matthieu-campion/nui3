@@ -53,11 +53,18 @@ const nglChar* gpWindowErrorTable[] =
 	NSOpenGLContext *oglContext;
 }
 
+- (NSOpenGLContext*) getContext;
+
 @end
 // ---------
 
 
 @implementation customGLView
+
+- (NSOpenGLContext*) getContext
+{
+  return oglContext;
+}
 
 -(void)windowWillClose:(NSNotification *)note
 {
@@ -133,12 +140,14 @@ const nglChar* gpWindowErrorTable[] =
 //  glEnableClientState( GL_VERTEX_ARRAY );
 //  
 //  // submit the vertex information for drawing
-//  glVertexPointer( 3, GL_FLOAT, 0, verts );
-//  
-//  glDrawElements( GL_TRIANGLES, 3, GL_UNSIGNED_BYTE, tris );
+////  glVertexPointer( 3, GL_FLOAT, 0, verts );
+////  
+////  glDrawElements( GL_TRIANGLES, 3, GL_UNSIGNED_BYTE, tris );
 //  glDisableClientState( GL_VERTEX_ARRAY );
 //  
 //  glFlush();
+  
+  [[self window] doPaint];
 }
 
 // this tells the window manager that nothing behind our view is visible
@@ -200,7 +209,7 @@ const nglChar* gpWindowErrorTable[] =
   [self setDelegate: pView];
   
   
-  [self makeKeyAndOrderFront:nil];
+  //[self makeKeyAndOrderFront:nil];
   
 //NGL_OUT(_T("[nglNSWindow initWithFrame]\n"));
 
@@ -220,8 +229,6 @@ const nglChar* gpWindowErrorTable[] =
   
   mpTimer = nuiAnimation::AcquireTimer();
   mpTimer->Stop();
-
-	[self initializeKeyboard];
 
   return self;
 }
@@ -277,11 +284,18 @@ const nglChar* gpWindowErrorTable[] =
   //if (mInvalidated)
   {
     mInvalidated = false;
-    //mpNGLWindow->CallOnPaint();
     mpTimer->Tick();
+    [self display];
+    //mpNGLWindow->CallOnPaint();
   }
 }
 
+- (void)doPaint
+{
+  printf("doPaint 0x%x\n", mpNGLWindow);
+  
+  mpNGLWindow->CallOnPaint();
+}
 
 - (void) invalidate
 {
@@ -291,15 +305,21 @@ const nglChar* gpWindowErrorTable[] =
 
 - (void) MakeCurrent
 {
+  printf("MakeCurrent\n");
+  //[[[self contents] getContext] makeCurrent];
 }
 
 - (void) BeginSession
 {
+  printf("BeginSession\n");
+  //[[[self contents] getContext] makeCurrent];
 }
 
 - (void) EndSession
 {
+  printf("EndSession\n");
   glFlush();
+  //[[[self contents] getContext] flushBuffer];
 }
 
 
@@ -372,12 +392,8 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
   mOSInfo.mpNSWindow = pNSWindow;
   mpNSWindow = pNSWindow;
 
-  // Build
-  
-  // Enable multitouch
-  [pNSWindow setMultipleTouchEnabled: YES];
-  
-  [pNSWindow makeKeyAndVisible];
+
+  //[pNSWindow makeKeyAndVisible];
   
   NGL_LOG(_T("window"), NGL_LOG_INFO, _T("trying to create GLES context"));
   rContext.Dump(NGL_LOG_INFO);
@@ -432,13 +448,13 @@ void nglWindow::SetState (StateChange State)
       [mpNSWindow hide:nil];
 			break;
 		case eShow:
-      [mpNSWindow makeKeyAndVisible];
+      [mpNSWindow makeKeyAndOrderFront:nil];
 			break;
 		case eMinimize:
-      [mpNSWindow makeKeyAndVisible];
+      [mpNSWindow makeKeyAndOrderFront:nil];
 			break;
 		case eMaximize:
-      [mpNSWindow makeKeyAndVisible];
+      [mpNSWindow makeKeyAndOrderFront:nil];
 			break;
 	};
 }

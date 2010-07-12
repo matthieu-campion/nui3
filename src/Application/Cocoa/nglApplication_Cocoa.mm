@@ -379,9 +379,14 @@ static NSString* GetApplicationName(void)
   [super sendEvent: pEvent];
 }
 
+
+@end///< nglNSApplication
+
+@implementation nglNSApplicationDelegate
+
 - (void)applicationWillFinishLaunching:(NSNotification *)notification
 {
-  printf("ApplicationDelegate applicationWillFinishLaunching\n");
+  printf("nglNSApplicationDelegate applicationWillFinishLaunching\n");
   [MenuPopulator populateMainMenu];
   //  [pItem setTarget:NSApp];
   //  [pItem setAction: @selector(terminate:)];
@@ -482,7 +487,8 @@ static NSString* GetApplicationName(void)
   objCCallOnExit(0);
 }
 
-@end///< nglNSApplication
+@end
+
 
 
 /*
@@ -556,8 +562,8 @@ int nglApplication::Main(int argc, const char** argv)
 
   nglNSApplication *applicationObject = [nglNSApplication sharedApplication];
   
-  //ApplicationDelegate* appDelegate = [[ApplicationDelegate alloc] init];
-  [applicationObject setDelegate:applicationObject];
+  nglNSApplicationDelegate* appDelegate = [[nglNSApplicationDelegate alloc] init];
+  [applicationObject setDelegate:appDelegate];
   
   [applicationObject run];
   

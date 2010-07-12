@@ -13,6 +13,15 @@
 - (BOOL) openURL: (NSURL*) pUrl;
 - (void) sendEvent: (NSEvent*) pEvent;
 
+
+@end//nglNSApplication
+
+@interface nglNSApplicationDelegate : NSObject
+{
+}
+
+- (void) dealloc;
+
 - (void) applicationDidFinishLaunching:       (NSApplication*) pUIApp;
 - (BOOL) application:(NSApplication *)pNSApplication didFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
 - (void) applicationDidBecomeActive:          (NSApplication*) pUIApp;
@@ -20,14 +29,6 @@
 - (void) applicationDidReceiveMemoryWarning:  (NSApplication*) pUIApp;
 - (void) applicationSignificantTimeChange:    (NSApplication*) pUIApp;
 - (void) applicationWillTerminate:            (NSApplication*) pUIApp;
-
-@end//nglNSApplication
-
-//@interface nglNSApplicationDelegate : NSObject
-//{
-//}
-//- (void) dealloc;
-
 
 @end//nglNSApplicationDelegate
 

@@ -32,7 +32,7 @@ MainWindow::~MainWindow()
 void MainWindow::OnCreation()
 {
   EnableAutoRotation(false);
-  SetRotation(90);
+  //SetRotation(90);
   //SetState(nglWindow::eMaximize);
 
   nuiWidget* pBg = new nuiImage(_T("rsrc:/decorations/image.png"));
