@@ -35,5 +35,7 @@
 	<string>1.0</string>
 	<key>CSResourcesFileMapped</key>
 	<true/>
+	<key>NSPrincipalClass</key>
+	<string>nglNSApplication</string>
 </dict>
 </plist>

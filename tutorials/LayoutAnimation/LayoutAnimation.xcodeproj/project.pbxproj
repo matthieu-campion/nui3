@@ -105,6 +105,7 @@
 		61A9DFF20B83433800BC506C /* MainWindow.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = MainWindow.h; path = src/MainWindow.h; sourceTree = "<group>"; };
 		BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nui3.xcodeproj; path = ../../nui3.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E59CD16911EA0C4000955611 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		E59CD30011EA94A000955611 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		E5EF6FC811E77DE8000FB337 /* LayoutAnimationD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LayoutAnimationD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -176,6 +177,7 @@
 		61A9DE4A0B833CD000BC506C /* sources */ = {
 			isa = PBXGroup;
 			children = (
+				E59CD30011EA94A000955611 /* Info.plist */,
 				61A9DFEF0B83433800BC506C /* Application.cpp */,
 				61A9DFF00B83433800BC506C /* Application.h */,
 				61A9DFF10B83433800BC506C /* MainWindow.cpp */,
@@ -500,7 +502,7 @@
 		E5EF6FC711E77DE8000FB337 /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ARCHS = i386;
 				COPY_PHASE_STRIP = NO;
 				GCC_DEBUGGING_SYMBOLS = full;
 				GCC_DYNAMIC_NO_PIC = NO;

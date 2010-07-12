@@ -27,7 +27,11 @@
 #include "nglIStream.h"
 #include "nglOStream.h"
 
+#ifdef _COCOA_
+#import <ApplicationServices/ApplicationServices.h>
+#else
 #include <CoreGraphics/CoreGraphics.h>
+#endif
 
 class nglImageCGCodec : public nglImageCodec
 {

@@ -58,7 +58,7 @@ UTFConverter nglUTFStringConv::GetUTFConverter(nglTextEncoding From, nglTextEnco
   if (To == eEncodingInternal)
     To = eUCS2;
 #endif
-#if (defined _CARBON_) || (defined _UIKIT_) 
+#if (defined _CARBON_) || (defined _UIKIT_) || (defined _COCOA_) 
   if (From == eEncodingNative)
     From = eUTF8;
   if (From == eEncodingInternal)

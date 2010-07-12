@@ -4964,6 +4964,8 @@
 		E59CD10B11E7C9F200955611 /* nglVideoMode_Cocoa.mm in Sources */ = {isa = PBXBuildFile; fileRef = E59CD10A11E7C9F200955611 /* nglVideoMode_Cocoa.mm */; };
 		E59CD17711EA0D2900955611 /* nglWindow_Cocoa.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52EA7F4106D6E1F008598F5 /* nglWindow_Cocoa.mm */; };
 		E59CD17811EA0D2A00955611 /* nglWindow_Cocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = E52EA7F1106D6DF5008598F5 /* nglWindow_Cocoa.h */; };
+		E59CD1CB11EA24E200955611 /* nglImageCGCodec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52419D911CB9D3C0025CA71 /* nglImageCGCodec.cpp */; };
+		E59CD1CC11EA24E200955611 /* nglImageCGCodec.h in Headers */ = {isa = PBXBuildFile; fileRef = E52419DA11CB9D3C0025CA71 /* nglImageCGCodec.h */; };
 		E59CD7FC0CDAAAE100B1C729 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E59CD7F80CDAAAE100B1C729 /* AudioUnit.framework */; };
 		E59CD7FD0CDAAAE100B1C729 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E59CD7F90CDAAAE100B1C729 /* CoreAudio.framework */; };
 		E59CD7FE0CDAAAE100B1C729 /* CoreAudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E59CD7FA0CDAAAE100B1C729 /* CoreAudioKit.framework */; };
@@ -14726,6 +14728,7 @@
 				E5EF6E8511E7305A000FB337 /* nglApplication_Cocoa.h in Headers */,
 				E5EF6E9A11E7315F000FB337 /* nglDragAndDrop_Cocoa.h in Headers */,
 				E59CD17811EA0D2A00955611 /* nglWindow_Cocoa.h in Headers */,
+				E59CD1CC11EA24E200955611 /* nglImageCGCodec.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17695,6 +17698,7 @@
 				E5EF6EF611E75CCA000FB337 /* nglVideoMode_CoreFoundation.cpp in Sources */,
 				E59CD10B11E7C9F200955611 /* nglVideoMode_Cocoa.mm in Sources */,
 				E59CD17711EA0D2900955611 /* nglWindow_Cocoa.mm in Sources */,
+				E59CD1CB11EA24E200955611 /* nglImageCGCodec.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17939,7 +17943,7 @@
 		E5A8D1D211E33A54004E14CE /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ARCHS = i386;
 				COPY_PHASE_STRIP = NO;
 				GCC_FAST_OBJC_DISPATCH = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;

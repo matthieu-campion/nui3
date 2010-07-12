@@ -313,12 +313,7 @@ protected:
 	// Called right before the application will be terminated by iPhone OS
 	virtual void OnWillExit();	
 #endif
-  
-#ifdef _COCOA_
-	// Called right before the application will be terminated by the OS with COCOA
-	virtual void OnWillExit();	
-#endif
-  
+
 private:
   typedef std::list<ExitFunc>    ExitFuncList;
   typedef std::vector<nglString> ArgList;
