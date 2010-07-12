@@ -16,7 +16,8 @@
 nuiGenericAttributeEditor::nuiGenericAttributeEditor(const nuiAttribBase& rAttribute)
 : nuiAttributeEditor(),
   mEventSink(this),
-  mAttribute(rAttribute)
+  mAttribute(rAttribute),
+  mAutoPollForChanges(false)
 {
 	SetObjectClass(_T("nuiGenericAttributeEditor"));
 	
@@ -125,5 +126,18 @@ bool nuiGenericAttributeEditor::OnRenamed(const nuiEvent& rEvent)
       break;
   }
 	return true;
+}
+
+void nuiGenericAttributeEditor::SetAutoPollForChanges(bool set)
+{
+  if (mAutoPollForChanges == set)
+    return;
+
+  if (set)
+    mEventSink.Connect(nuiAnimation::GetTimer()->Tick, &nuiGenericAttributeEditor::OnAttributeChanged);
+  else
+    mEventSink.Disconnect(nuiAnimation::GetTimer()->Tick, &nuiGenericAttributeEditor::OnAttributeChanged);
+
+  mAutoPollForChanges = set;
 }
 
