@@ -297,8 +297,9 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>12</integer>
-									<integer>9</integer>
+									<integer>5</integer>
+									<integer>1</integer>
+									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
@@ -335,7 +336,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>E5EF6AC10F9625A9003E265A</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>nglApplication_Cocoa.h</string>
+								<string>MainWindow.cpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -343,11 +344,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>E5EF6AC20F9625A9003E265A</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>nglApplication_Cocoa.h</string>
+										<string>MainWindow.cpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E59CD35611EA9AD200955611</string>
+										<string>E59CD38E11EA9EA200955611</string>
 										<key>history</key>
 										<array>
 											<string>E585A8A311BAFAD2005DEEA1</string>
@@ -359,17 +360,19 @@
 											<string>E5EF6FE811E77EBA000FB337</string>
 											<string>E59CD1BB11EA21A800955611</string>
 											<string>E59CD1BC11EA21A800955611</string>
-											<string>E59CD1BF11EA21A800955611</string>
 											<string>E59CD29F11EA25E600955611</string>
-											<string>E59CD2B811EA91F000955611</string>
 											<string>E59CD2BD11EA924300955611</string>
 											<string>E59CD2DE11EA93B000955611</string>
 											<string>E59CD2E011EA93B000955611</string>
-											<string>E59CD2F011EA93D800955611</string>
 											<string>E59CD2FC11EA947000955611</string>
 											<string>E59CD31B11EA970000955611</string>
 											<string>E59CD35011EA9ACC00955611</string>
-											<string>E59CD34D11EA9ABE00955611</string>
+											<string>E59CD35B11EA9C4A00955611</string>
+											<string>E59CD35C11EA9C4A00955611</string>
+											<string>E59CD35D11EA9C4A00955611</string>
+											<string>E59CD37211EA9CA700955611</string>
+											<string>E59CD38B11EA9E9D00955611</string>
+											<string>E59CD38C11EA9E9D00955611</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -636,10 +639,12 @@
 							<array>
 								<string>Name</string>
 								<real>311</real>
+								<string>Type</string>
+								<real>214</real>
 								<string>Value</string>
 								<real>239</real>
 								<string>Summary</string>
-								<real>935</real>
+								<real>718</real>
 							</array>
 							<key>Frame</key>
 							<string>{{0, 368}, {1510, 335}}</string>
@@ -694,7 +699,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>300587730.05852699</real>
+	<real>300588706.13297099</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -709,7 +714,7 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E59CD35711EA9AD200955611</string>
+		<string>E59CD38F11EA9EA200955611</string>
 		<string>E59CD2E311EA93B000955611</string>
 		<string>E59CD2E411EA93B000955611</string>
 		<string>/Users/meeloo/work/nui3/tutorials/LayoutAnimation/LayoutAnimation.xcodeproj</string>
