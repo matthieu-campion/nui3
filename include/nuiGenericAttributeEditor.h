@@ -17,17 +17,19 @@ public:
   
 	nuiGenericAttributeEditor(const nuiAttribBase& rAttribute);
 	virtual ~nuiGenericAttributeEditor();
-  
-  
-  protected : 
+
+  void SetAutoPollForChanges(bool set);
+
+protected:
   
 	bool OnActivated(const nuiEvent& rEvent);
 	bool OnRenamed(const nuiEvent& rEvent);
 	bool OnAttributeChanged(const nuiEvent& rEvent);
   
-  private : 
+private:
   
 	nuiEventSink<nuiGenericAttributeEditor> mEventSink;
 	nuiLabel* mpLabel;
 	nuiAttribBase mAttribute;  
+  bool mAutoPollForChanges;
 };
