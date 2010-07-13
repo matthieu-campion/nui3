@@ -284,7 +284,7 @@ const nglChar* gpWindowErrorTable[] =
 - (void)mouseMoved:(NSEvent *)theEvent
 {
   nglMouseInfo info;
-  info.Buttons = (uint)[NSEvent pressedMouseButtons];
+  info.Buttons = (uint64)[NSEvent pressedMouseButtons];
   info.TouchId = 0;
   NSPoint p = [self mouseLocationOutsideOfEventStream];
   info.X = p.x;
@@ -295,7 +295,7 @@ const nglChar* gpWindowErrorTable[] =
 - (void)mouseDragged:(NSEvent *)theEvent
 {
   nglMouseInfo info;
-  info.Buttons = (uint)[NSEvent pressedMouseButtons];
+  info.Buttons = (uint64)[NSEvent pressedMouseButtons];
   info.TouchId = 0;
   NSPoint p = [self mouseLocationOutsideOfEventStream];
   info.X = p.x;
@@ -329,7 +329,7 @@ const nglChar* gpWindowErrorTable[] =
 - (void)rightMouseDragged:(NSEvent *)theEvent
 {
   nglMouseInfo info;
-  info.Buttons = (uint)[NSEvent pressedMouseButtons];
+  info.Buttons = (uint64)[NSEvent pressedMouseButtons];
   info.TouchId = 0;
   NSPoint p = [self mouseLocationOutsideOfEventStream];
   info.X = p.x;
@@ -402,7 +402,7 @@ const nglChar* gpWindowErrorTable[] =
 - (void)otherMouseDragged:(NSEvent *)theEvent
 {
   nglMouseInfo info;
-  info.Buttons = (uint)[NSEvent pressedMouseButtons];
+  info.Buttons = (uint64)[NSEvent pressedMouseButtons];
   info.TouchId = 0;
   NSPoint p = [self mouseLocationOutsideOfEventStream];
   info.X = p.x;
