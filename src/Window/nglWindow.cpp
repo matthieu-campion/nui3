@@ -332,7 +332,7 @@ bool nglWindow::CallOnKeyUp (const nglKeyEvent& rEvent)
 bool nglWindow::CallOnTextInput (const nglString& rUnicodeString)
 {
 #ifdef _DEBUG_
-  //NGL_LOG(_T("window"), NGL_LOG_DEBUG, _T("TextInput: '%ls' [%d chars]"), rUnicodeString.GetChars(), rUnicodeString.GetLength());
+  NGL_LOG(_T("window"), NGL_LOG_DEBUG, _T("TextInput: '%ls' [%d chars]"), rUnicodeString.GetChars(), rUnicodeString.GetLength());
 #endif // _DEBUG_
   return OnTextInput(rUnicodeString);
 }
@@ -340,7 +340,7 @@ bool nglWindow::CallOnTextInput (const nglString& rUnicodeString)
 void nglWindow::CallOnTextInputCancelled ()
 {
 #ifdef _DEBUG_
-  //NGL_LOG(_T("window"), NGL_LOG_DEBUG, _T("TextInputCancelled"));
+  NGL_LOG(_T("window"), NGL_LOG_DEBUG, _T("TextInputCancelled"));
 #endif // _DEBUG_
   OnTextInputCancelled();
 }

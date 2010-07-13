@@ -16,6 +16,7 @@
 #include "nglWindow_Cocoa.h"
 
 #include <OpenGL/OpenGL.h>
+#include <AppKit/AppKit.h>
 
 #define NGL_WINDOW_FPS 60.0f
 
@@ -64,6 +65,13 @@ const nglChar* gpWindowErrorTable[] =
 - (NSOpenGLContext*) getContext
 {
   return oglContext;
+}
+
+- (NSSize) windowWillResize: (NSWindow*) win toSize: (NSSize) size
+{
+  printf("windowWillResize %f x %f\n", size.width, size.height);
+  [win resize: size];
+  return size;
 }
 
 -(void)windowWillClose:(NSNotification *)note
@@ -276,15 +284,59 @@ const nglChar* gpWindowErrorTable[] =
   counter = 60;
 }
 
+- (void)mouseDown:(NSEvent *)theEvent
+{
+  nglMouseInfo info;
+  info.Buttons = 1 << [theEvent buttonNumber];
+  info.TouchId = 0;
+  NSPoint p = [self mouseLocationOutsideOfEventStream];
+  info.X = p.x;
+  info.Y = [self frame].size.height - p.y;
+  mpNGLWindow->CallOnMouseClick(info);
+}
+
+- (void)mouseUp:(NSEvent *)theEvent
+{
+  nglMouseInfo info;
+  info.Buttons = 1 << [theEvent buttonNumber];
+  info.TouchId = 0;
+  NSPoint p = [self mouseLocationOutsideOfEventStream];
+  info.X = p.x;
+  info.Y = [self frame].size.height - p.y;
+  mpNGLWindow->CallOnMouseUnclick(info);
+}
+
+- (void)mouseMoved:(NSEvent *)theEvent
+{
+  nglMouseInfo info;
+  info.Buttons = (uint)[NSEvent pressedMouseButtons];
+  info.TouchId = 0;
+  NSPoint p = [self mouseLocationOutsideOfEventStream];
+  info.X = p.x;
+  info.Y = [self frame].size.height - p.y;
+  mpNGLWindow->CallOnMouseUnclick(info);
+}
+
+- (void)resize: (NSSize) size
+{
+  printf("resize %f x %f\n", size.width, size.height);
+  mpNGLWindow->CallOnResize(size.width, size.height);
+  mInvalidated = true;
+}
+
+- (BOOL)acceptsMouseMovedEvents
+{
+  return YES;
+}
 
 - (void)Paint
 {
   [self InitNGLWindow];
 
-  //if (mInvalidated)
+  mpTimer->Tick();
+  if (mInvalidated)
   {
     mInvalidated = false;
-    mpTimer->Tick();
     [self display];
     //mpNGLWindow->CallOnPaint();
   }
@@ -299,6 +351,7 @@ const nglChar* gpWindowErrorTable[] =
 
 - (void) invalidate
 {
+  printf("invalidate\n");
   mInvalidated = true;
 }
 
@@ -306,20 +359,20 @@ const nglChar* gpWindowErrorTable[] =
 - (void) MakeCurrent
 {
   printf("MakeCurrent\n");
-  //[[[self contents] getContext] makeCurrent];
+  [[[self contentView] getContext] makeCurrentContext];
 }
 
 - (void) BeginSession
 {
   printf("BeginSession\n");
-  //[[[self contents] getContext] makeCurrent];
+  [[[self contentView] getContext] makeCurrentContext];
 }
 
 - (void) EndSession
 {
   printf("EndSession\n");
   glFlush();
-  //[[[self contents] getContext] flushBuffer];
+  [[[self contentView] getContext] flushBuffer];
 }
 
 
@@ -371,18 +424,25 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
   
   mAngle = rInfo.Rotate;
   NSRect rect = [[NSScreen mainScreen] visibleFrame];
-  float w, h;
   mWidth = 0;
   mHeight = 0;
-  if (mAngle == 270 || mAngle == 90)
+  rect.origin.x = rInfo.XPos;
+  rect.origin.y = rect.size.height - rInfo.YPos;
+  rect.size.width = rInfo.Width;
+  rect.size.height = rInfo.Height;
+
+  switch (rInfo.Pos)
   {
-    w = rect.size.height;
-    h = rect.size.width;
-  }
-  else
-  {
-    w = rect.size.width;
-    h = rect.size.height;
+    case nglWindowInfo::ePosUser:
+      break;
+    case nglWindowInfo::ePosCenter:
+      rect.origin.x = (rect.origin.x - rect.size.width) / 2;
+      rect.origin.y = (rect.origin.y - rect.size.height) / 2;
+      break;
+    case nglWindowInfo::ePosMouse:
+      break;
+    case nglWindowInfo::ePosAuto:
+      break;
   }
   
 
@@ -411,7 +471,7 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
 	r = [NSScreen mainScreen].visibleFrame;
 	printf("applicationFrame: %f, %f - %f, %f\n", r.origin.x, r.origin.y, r.size.width, r.size.height);
 	
-	SetSize(w, h);
+	SetSize(rect.size.width, rect.size.height);
 	
   glClearColor(0, 0, 0, 1);
   glClear(GL_COLOR_BUFFER_BIT);
@@ -560,6 +620,7 @@ bool nglWindow::MakeCurrent() const
 
 void nglWindow::Invalidate()
 {
+  printf("nglWindow::Invalidate()\n");
   [(nglNSWindow*)mpNSWindow invalidate];
 }
 

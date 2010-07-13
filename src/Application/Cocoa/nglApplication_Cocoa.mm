@@ -560,6 +560,8 @@ int nglApplication::Main(int argc, const char** argv)
 
   Init(argc, argv);
 
+  GetLog().SetLevel(_T("window"), 100);
+  
   nglNSApplication *applicationObject = [nglNSApplication sharedApplication];
   
   nglNSApplicationDelegate* appDelegate = [[nglNSApplicationDelegate alloc] init];
