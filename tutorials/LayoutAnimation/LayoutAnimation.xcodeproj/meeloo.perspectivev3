@@ -348,7 +348,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E59CD49611EBE48500955611</string>
+										<string>E59CD50311EBEF2600955611</string>
 										<key>history</key>
 										<array>
 											<string>E585A8A311BAFAD2005DEEA1</string>
@@ -372,7 +372,8 @@
 											<string>E59CD44111EBDF0000955611</string>
 											<string>E59CD44311EBDF0000955611</string>
 											<string>E59CD48511EBE3D900955611</string>
-											<string>E59CD49411EBE47500955611</string>
+											<string>E59CD4C811EBEA8A00955611</string>
+											<string>E59CD50111EBEF1600955611</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -699,7 +700,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>300672133.72532099</real>
+	<real>300674854.08161998</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -714,7 +715,7 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E59CD49711EBE48500955611</string>
+		<string>E59CD50411EBEF2600955611</string>
 		<string>E59CD3CD11EBD62800955611</string>
 		<string>E59CD3CE11EBD62800955611</string>
 		<string>/Users/meeloo/work/nui3/tutorials/LayoutAnimation/LayoutAnimation.xcodeproj</string>

@@ -70,6 +70,8 @@ const nglChar* gpWindowErrorTable[] =
 - (NSSize) windowWillResize: (NSWindow*) win toSize: (NSSize) size
 {
   printf("windowWillResize %f x %f\n", size.width, size.height);
+  // inform the context that the view has been resized
+  
   [win resize: size];
   return size;
 }
@@ -85,7 +87,7 @@ const nglChar* gpWindowErrorTable[] =
   self = [super initWithFrame:frame];
   if(self == nil)
     return nil;
-  
+
   // create and activate the context object which maintains the OpenGL state
   NSOpenGLPixelFormatAttribute attribs[] =
   {
@@ -99,8 +101,10 @@ const nglChar* gpWindowErrorTable[] =
   NSOpenGLPixelFormat* format = [[NSOpenGLPixelFormat alloc] initWithAttributes:attribs];
   
   oglContext = [[NSOpenGLContext alloc] initWithFormat: format shareContext: nil];
+  GLint v = 1;
+  [oglContext setValues:&v forParameter:NSOpenGLCPSwapInterval];
+  [oglContext setView:self];
   [oglContext makeCurrentContext];
-
   return self;
 }
 
@@ -125,36 +129,7 @@ const nglChar* gpWindowErrorTable[] =
 // this is called whenever the view changes (is unhidden or resized)
 - (void)drawRect:(NSRect)frameRect
 {
-  
-  float aspectRatio;
-  
-  // inform the context that the view has been resized
   [oglContext update];
-  
-//  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//  
-//  // adjust the viewport and frustum transforms
-//  // (gluLookAt() doesn't work properly)
-//  glViewport(0, 0, frameRect.size.width, frameRect.size.height);
-//  glMatrixMode(GL_PROJECTION);
-//  glLoadIdentity();
-//  aspectRatio = (float) frameRect.size.width / (float) frameRect.size.height;
-//  glFrustum(-aspectRatio, aspectRatio, -1.0, 1.0, 2.0, 100.0);
-//  
-//  // prepare for primitive drawing
-//  glMatrixMode(GL_MODELVIEW);
-//  glLoadIdentity();
-//  glColor3f( 1.0, 0.5, 1.0 );
-//  glEnableClientState( GL_VERTEX_ARRAY );
-//  
-//  // submit the vertex information for drawing
-////  glVertexPointer( 3, GL_FLOAT, 0, verts );
-////  
-////  glDrawElements( GL_TRIANGLES, 3, GL_UNSIGNED_BYTE, tris );
-//  glDisableClientState( GL_VERTEX_ARRAY );
-//  
-//  glFlush();
-  
   [[self window] doPaint];
 }
 
@@ -314,12 +289,131 @@ const nglChar* gpWindowErrorTable[] =
   NSPoint p = [self mouseLocationOutsideOfEventStream];
   info.X = p.x;
   info.Y = [self frame].size.height - p.y;
+  mpNGLWindow->CallOnMouseMove(info);
+}
+
+- (void)mouseDragged:(NSEvent *)theEvent
+{
+  nglMouseInfo info;
+  info.Buttons = (uint)[NSEvent pressedMouseButtons];
+  info.TouchId = 0;
+  NSPoint p = [self mouseLocationOutsideOfEventStream];
+  info.X = p.x;
+  info.Y = [self frame].size.height - p.y;
+  mpNGLWindow->CallOnMouseMove(info);
+}
+
+////
+- (void)rightMouseDown:(NSEvent *)theEvent
+{
+  nglMouseInfo info;
+  info.Buttons = 1 << [theEvent buttonNumber];
+  info.TouchId = 0;
+  NSPoint p = [self mouseLocationOutsideOfEventStream];
+  info.X = p.x;
+  info.Y = [self frame].size.height - p.y;
+  mpNGLWindow->CallOnMouseClick(info);
+}
+
+- (void)rightMouseUp:(NSEvent *)theEvent
+{
+  nglMouseInfo info;
+  info.Buttons = 1 << [theEvent buttonNumber];
+  info.TouchId = 0;
+  NSPoint p = [self mouseLocationOutsideOfEventStream];
+  info.X = p.x;
+  info.Y = [self frame].size.height - p.y;
   mpNGLWindow->CallOnMouseUnclick(info);
 }
 
+- (void)rightMouseDragged:(NSEvent *)theEvent
+{
+  nglMouseInfo info;
+  info.Buttons = (uint)[NSEvent pressedMouseButtons];
+  info.TouchId = 0;
+  NSPoint p = [self mouseLocationOutsideOfEventStream];
+  info.X = p.x;
+  info.Y = [self frame].size.height - p.y;
+  mpNGLWindow->CallOnMouseMove(info);
+}
+
+- (void)scrollWheel:(NSEvent *)theEvent
+{
+  float x = [theEvent deltaX];
+  float y = [theEvent deltaY];
+  
+  nglMouseInfo info;
+  info.Buttons = 0;
+  info.TouchId = 0;
+  NSPoint p = [self mouseLocationOutsideOfEventStream];
+  info.X = p.x;
+  info.Y = [self frame].size.height - p.y;
+
+  if (x > 0)
+  {
+    info.Buttons = nglMouseInfo::ButtonWheelRight;
+    mpNGLWindow->CallOnMouseClick(info);
+    mpNGLWindow->CallOnMouseUnclick(info);
+  }
+  else if (x < 0)
+  {
+    info.Buttons = nglMouseInfo::ButtonWheelLeft;
+    mpNGLWindow->CallOnMouseClick(info);
+    mpNGLWindow->CallOnMouseUnclick(info);
+  }
+
+  if (y > 0)
+  {
+    info.Buttons = nglMouseInfo::ButtonWheelUp;
+    mpNGLWindow->CallOnMouseClick(info);
+    mpNGLWindow->CallOnMouseUnclick(info);
+  }
+  else if (y < 0)
+  {
+    info.Buttons = nglMouseInfo::ButtonWheelDown;
+    mpNGLWindow->CallOnMouseClick(info);
+    mpNGLWindow->CallOnMouseUnclick(info);
+  }
+}
+//////
+
+- (void)otherMouseDown:(NSEvent *)theEvent
+{
+  nglMouseInfo info;
+  info.Buttons = 1 << [theEvent buttonNumber];
+  info.TouchId = 0;
+  NSPoint p = [self mouseLocationOutsideOfEventStream];
+  info.X = p.x;
+  info.Y = [self frame].size.height - p.y;
+  mpNGLWindow->CallOnMouseClick(info);
+}
+
+- (void)otherMouseUp:(NSEvent *)theEvent
+{
+  nglMouseInfo info;
+  info.Buttons = 1 << [theEvent buttonNumber];
+  info.TouchId = 0;
+  NSPoint p = [self mouseLocationOutsideOfEventStream];
+  info.X = p.x;
+  info.Y = [self frame].size.height - p.y;
+  mpNGLWindow->CallOnMouseUnclick(info);
+}
+
+- (void)otherMouseDragged:(NSEvent *)theEvent
+{
+  nglMouseInfo info;
+  info.Buttons = (uint)[NSEvent pressedMouseButtons];
+  info.TouchId = 0;
+  NSPoint p = [self mouseLocationOutsideOfEventStream];
+  info.X = p.x;
+  info.Y = [self frame].size.height - p.y;
+  mpNGLWindow->CallOnMouseMove(info);
+}
+
+//////////
 - (void)resize: (NSSize) size
 {
-  printf("resize %f x %f\n", size.width, size.height);
+  //printf("resize %f x %f\n", size.width, size.height);
   mpNGLWindow->CallOnResize(size.width, size.height);
   mInvalidated = true;
 }
@@ -358,21 +452,21 @@ const nglChar* gpWindowErrorTable[] =
 
 - (void) MakeCurrent
 {
-  printf("MakeCurrent\n");
+  //printf("MakeCurrent\n");
   [[[self contentView] getContext] makeCurrentContext];
 }
 
 - (void) BeginSession
 {
-  printf("BeginSession\n");
+  //printf("BeginSession\n");
   [[[self contentView] getContext] makeCurrentContext];
 }
 
 - (void) EndSession
 {
-  printf("EndSession\n");
+  //printf("EndSession\n");
   glFlush();
-  [[[self contentView] getContext] flushBuffer];
+  //[[[self contentView] getContext] flushBuffer];
 }
 
 
