@@ -67,15 +67,13 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 300668390;
-			PBXWorkspaceStateSaveDate = 300668390;
+			PBXPerProjectTemplateStateSaveDate = 300719189;
+			PBXWorkspaceStateSaveDate = 300719189;
 		};
 		perUserProjectItems = {
-			E51B6B6011EB4101003FA392 = E51B6B6011EB4101003FA392 /* PBXTextBookmark */;
-			E59CD14211E7D62B00955611 = E59CD14211E7D62B00955611 /* PBXTextBookmark */;
-			E59CD14311E7D62B00955611 = E59CD14311E7D62B00955611 /* PBXTextBookmark */;
-			E59CD15011E7D63800955611 = E59CD15011E7D63800955611 /* PBXTextBookmark */;
-			E5FDA09611EB3BB00017D95A = E5FDA09611EB3BB00017D95A /* PBXTextBookmark */;
+			E59CD14211E7D62B00955611 /* PBXTextBookmark */ = E59CD14211E7D62B00955611 /* PBXTextBookmark */;
+			E59CD14311E7D62B00955611 /* PBXTextBookmark */ = E59CD14311E7D62B00955611 /* PBXTextBookmark */;
+			E5FDA09611EB3BB00017D95A /* PBXTextBookmark */ = E5FDA09611EB3BB00017D95A /* PBXTextBookmark */;
 		};
 		sourceControlManager = E5A8D22511E3593D004E14CE /* Source Control */;
 		userBuildSettings = {
@@ -83,7 +81,7 @@
 	};
 	29B97316FDCFA39411CA2CEA /* main.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1219, 925}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1219, 956}}";
 			sepNavSelRange = "{585, 15}";
 			sepNavVisRange = "{0, 635}";
 		};
@@ -115,16 +113,6 @@
 			sepNavVisRange = "{3779, 1590}";
 		};
 	};
-	E51B6B6011EB4101003FA392 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = C9AFF7E70F21772B0040DCC0 /* Application.m */;
-		name = "Application.m: 173";
-		rLen = 49;
-		rLoc = 4206;
-		rType = 0;
-		vrLen = 1590;
-		vrLoc = 3779;
-	};
 	E59CD14211E7D62B00955611 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = C9AFF7E60F21772B0040DCC0 /* Application.h */;
@@ -144,16 +132,6 @@
 		rType = 0;
 		vrLen = 635;
 		vrLoc = 0;
-	};
-	E59CD15011E7D63800955611 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = C9AFF7E70F21772B0040DCC0 /* Application.m */;
-		name = "Application.m: 173";
-		rLen = 49;
-		rLoc = 4206;
-		rType = 0;
-		vrLen = 1582;
-		vrLoc = 3782;
 	};
 	E5A8D20F11E35934004E14CE /* CocoaTest */ = {
 		isa = PBXExecutable;

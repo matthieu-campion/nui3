@@ -19,6 +19,8 @@
 
 #define NGL_WINDOW_FPS 60.0f
 
+#define SCALE_FACTOR 1.0f
+
 //#include "nglImage.h"
 
 #define NGL_WINDOW_EBASE      (NGL_CONTEXT_ELAST+1)
@@ -705,6 +707,18 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   rect.origin.y = 0;
   if ((self = [super initWithFrame:rect]))
   {
+    if ([self respondsToSelector:@selector(contentScaleFactor)])
+    {
+      /* on iOS 4.0, use contentsScaleFactor */
+      printf("Scale: %f\n", self.contentScaleFactor);
+      self.contentScaleFactor = SCALE_FACTOR;
+    }
+    else
+    {
+      printf("no scaling\n");
+    }
+    
+    
     // Get the layer
     CAEAGLLayer *eaglLayer = (CAEAGLLayer *)self.layer;
     
@@ -728,29 +742,13 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
       [self release];
       return nil;
     }
-    
+        
     // Create default framebuffer object. The backing will be allocated for the current layer in -resizeFromLayer
     glGenFramebuffersOES(1, &defaultFramebuffer);
     glGenRenderbuffersOES(1, &colorRenderbuffer);
     glBindFramebufferOES(GL_FRAMEBUFFER_OES, defaultFramebuffer);
     glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderbuffer);
     glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, colorRenderbuffer);
-
-  
-  
-    // Formerly in resize from layer:
-    //glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderbuffer);
-//    [context renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:eaglLayer];
-//    glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &backingWidth);
-//    glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &backingHeight);
-//    
-//    if (glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) != GL_FRAMEBUFFER_COMPLETE_OES)
-//    {
-//      NSLog(@"Failed to make complete framebuffer object %x", glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES));
-//      return NO;
-//    }
-//    
-//    printf("Resize frame buffer: %d x %d\n", backingWidth, backingHeight);
   }
   
   return self;
@@ -798,7 +796,6 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   return context;
 }
 
-#if 1
 - (BOOL)resizeFromLayer:(CAEAGLLayer *)layer
 {	
   // Allocate color buffer backing based on the current layer size
@@ -851,7 +848,6 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   
   return YES;
 }
-#endif
 
 - (void) MakeCurrent
 {
