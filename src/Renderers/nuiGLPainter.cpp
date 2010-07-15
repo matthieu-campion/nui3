@@ -875,6 +875,10 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
   if (NeedTranslateHack)
   {
     const float ratio=0.5f;
+#ifdef _UIKIT_
+    hackX = ratio;
+    hackY = ratio;
+#else
     if (mAngle == 0)
     {
       hackX = ratio;
@@ -895,6 +899,7 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
       hackX = ratio;
       hackY = 0;
     }
+#endif
     glTranslatef(hackX, hackY, 0);
   }
 
