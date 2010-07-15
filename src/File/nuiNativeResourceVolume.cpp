@@ -9,13 +9,19 @@
 #include "nuiNativeResourceVolume.h"
 #include "nuiNativeResource.h"
 
+#include "nuiStopWatch.h"
 
+#ifndef _UIKIT_
 nuiNativeResourceVolume::nuiNativeResourceVolume()
 : nglVolume(_T("rsrc"), nglPath(), _T("Native resources"), nglPathVolume::ReadOnly, nglPathVolume::eTypeUnknown)
 {
+  App->GetLog().SetLevel(_T("StopWatch"), 100);
+  
+  nuiStopWatch watch(_T("nuiNativeResourceVolume creation"));
   std::vector<nglPath> resources;
   nuiNativeResource::GetResourcesList(resources);
-  
+  watch.AddIntermediate(_T("GetResourcesList"));
+                     
   //wprintf(_T("Found %d resources in this executable\n"), resources.size());
   for (size_t i = 0; i < resources.size(); i++)
   {
@@ -167,4 +173,38 @@ bool nuiNativeResourceVolume::GetChildren(const nglPath& rPath, std::list<nglPat
   }
   return true;
 }
+#else
+nuiNativeResourceVolume::nuiNativeResourceVolume()
+: nglNativeVolume(_T("rsrc"), nglPathVolume(nuiGetNativeResourcePath(), _T("Native resources"), nglPathVolume::ReadOnly, nglPathVolume::eTypeUnknown))
+{
+}
 
+nuiNativeResourceVolume::~nuiNativeResourceVolume()
+{
+  
+}
+
+bool nuiNativeResourceVolume::MakeDirectory(const nglPath& rPath)
+{
+  // We can't modify this kind of volume
+  return false;
+}
+
+bool nuiNativeResourceVolume::Delete(const nglPath& rPathToDelete)
+{
+  // We can't modify this kind of volume
+  return false;
+}
+
+bool nuiNativeResourceVolume::Move(const nglPath& rSource, const nglPath& rPathTarget)
+{
+  // We can't modify this kind of volume
+  return false;
+}
+
+nglIOStream* nuiNativeResourceVolume::OpenWrite(const nglPath& rPath, bool OverWrite)
+{
+  // We can't modify this kind of volume
+  return NULL;
+}
+#endif

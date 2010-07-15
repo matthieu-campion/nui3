@@ -323,12 +323,7 @@ Volume description, as returned by nglPath::GetVolumes().
 class NGL_API nglPathVolume
 {
 public:
-	nglPathVolume();
-	nglPathVolume(const nglPathVolume& rPathVolume);
-	~nglPathVolume();
-
-	nglPathVolume& operator=(const nglPathVolume& rPathVolume);
-
+	typedef uint64 VolumeFlags;
 	//! Volume media type
 	enum MediaType
 	{
@@ -341,8 +336,14 @@ public:
 		eTypeTape,
 		eTypeNetwork
 	};
+  
+	nglPathVolume(const nglPath& rPath = nglString::Null, const nglString& rComment = nglString::Null, nglPathVolume::VolumeFlags Flags = 0, nglPathVolume::MediaType Type = eTypeUnknown);
+	nglPathVolume(const nglPathVolume& rPathVolume);
+	~nglPathVolume();
 
-	typedef uint64 VolumeFlags;
+	nglPathVolume& operator=(const nglPathVolume& rPathVolume);
+
+
 
 	static const VolumeFlags All;       ///< All flags set
 	static const VolumeFlags ReadOnly;  ///< Volume is read-only

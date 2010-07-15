@@ -11,6 +11,7 @@
 
 #pragma once
 
+#ifndef _UIKIT_
 class nuiNativeResourceVolume : public nglVolume
 {
 public:
@@ -28,3 +29,19 @@ public:
 private:
   std::map<nglPath, std::set<nglString> > mItems;
 };
+#else
+// Optimized version for UIKIT
+#include "nglNativeVolume.h"
+
+class nuiNativeResourceVolume : public nglNativeVolume
+{
+public:
+  nuiNativeResourceVolume();
+  virtual ~nuiNativeResourceVolume();
+  
+  virtual bool MakeDirectory(const nglPath& rPath);
+  virtual bool Delete(const nglPath& rPathToDelete);
+  virtual bool Move(const nglPath& rSource, const nglPath& rPathTarget);
+  virtual nglIOStream* OpenWrite(const nglPath& rPath, bool OverWrite);
+};
+#endif

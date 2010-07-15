@@ -57,12 +57,12 @@ const nglPathVolume::VolumeFlags nglPathVolume::Offline    = (1 << 2);
 const nglPathVolume::VolumeFlags nglPathVolume::System     = (1 << 3);
 
 
-nglPathVolume::nglPathVolume()
+nglPathVolume::nglPathVolume(const nglPath& rPath, const nglString& rComment, nglPathVolume::VolumeFlags Flags, nglPathVolume::MediaType Type)
 {
-	mPath = nglString::Null;      ///< nglPath to access this volume
-	mComment = nglString::Null;   ///< Comment (volume label, share comment, etc)
-	mFlags = 0;  ///< Various properties
-	mType = eTypeUnknown;   ///< Volume media type
+	mPath = rPath;      ///< nglPath to access this volume
+	mComment = rComment;   ///< Comment (volume label, share comment, etc)
+	mFlags = Flags;  ///< Various properties
+	mType = Type;   ///< Volume media type
 #ifdef _CARBON_
 	mRefNum = 0;
 #endif
