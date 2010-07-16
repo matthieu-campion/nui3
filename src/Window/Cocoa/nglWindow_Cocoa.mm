@@ -71,8 +71,9 @@ const nglChar* gpWindowErrorTable[] =
 {
   printf("windowWillResize %f x %f\n", size.width, size.height);
   // inform the context that the view has been resized
-  
-  [win resize: size];
+  NSRect rect = {0};
+  rect.size = size;
+  [win resize: [win contentRectForFrameRect: rect].size];
   return size;
 }
 

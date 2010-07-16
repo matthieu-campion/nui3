@@ -56,6 +56,7 @@ void Application::OnInit()
 
   GetLog().UseConsole(true);
   GetLog().SetLevel(_T("fps"), 100);
+  GetLog().SetLevel(_T("all"), 100);
 
   // Manual
   if ( (GetArgCount() == 1) &&

@@ -307,6 +307,10 @@ void nglWindow::CallOnResize (uint Width, uint Height)
 {
   NGL_DEBUG( NGL_LOG(_T("window"), NGL_LOG_DEBUG, _T("Resize: %dx%d"), Width, Height); )
   OnResize (Width, Height);
+#ifdef _COCOA_
+  mWidth = Width;
+  mHeight = Height;
+#endif
 }
 
 bool nglWindow::CallOnKeyDown (const nglKeyEvent& rEvent)
