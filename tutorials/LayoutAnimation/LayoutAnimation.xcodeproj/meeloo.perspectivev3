@@ -353,9 +353,6 @@
 											<string>E5241B9511CBCE080025CA71</string>
 											<string>E5241B9711CBCE080025CA71</string>
 											<string>E59CD1BC11EA21A800955611</string>
-											<string>E59CD29F11EA25E600955611</string>
-											<string>E59CD2BD11EA924300955611</string>
-											<string>E59CD2FC11EA947000955611</string>
 											<string>E59CD31B11EA970000955611</string>
 											<string>E59CD35D11EA9C4A00955611</string>
 										</array>
@@ -542,8 +539,6 @@
 			<key>Layout</key>
 			<array>
 				<dict>
-					<key>BecomeActive</key>
-					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXProjectModuleGUID</key>

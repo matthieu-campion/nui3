@@ -341,7 +341,7 @@ bool MainWindow::OnRequestChanged(const nuiEvent& rEvent)
 void MainWindow::UpdateFontList(uint8 bytes[10])
 {
   mPanose.SetBytes(bytes);
-  mpFontScroll->Clear(true);
+  mpFontScroll->Clear();
   
   nuiFontRequest request;
   request.MustBeSimilar(mPanose, 10);
@@ -350,11 +350,11 @@ void MainWindow::UpdateFontList(uint8 bytes[10])
   
   nuiGrid* pGrid = new nuiGrid(5, Fonts.size() + 1);
 
-  pGrid->SetCell(0, 0, new nuiLabel(_T("Score")), nuiLeft, true, true);
-  pGrid->SetCell(1, 0, new nuiLabel(_T("Name")), nuiLeft, true, true);
-  pGrid->SetCell(2, 0, new nuiLabel(_T("Face")), nuiLeft, true, true);
-  pGrid->SetCell(3, 0, new nuiLabel(_T("PANOSE Bytes")), nuiLeft, true, true);
-  pGrid->SetCell(4, 0, new nuiLabel(_T("Path")), nuiLeft, true, true);
+  pGrid->SetCell(0, 0, new nuiLabel(_T("Score")), nuiLeft, true);
+  pGrid->SetCell(1, 0, new nuiLabel(_T("Name")), nuiLeft, true);
+  pGrid->SetCell(2, 0, new nuiLabel(_T("Face")), nuiLeft, true);
+  pGrid->SetCell(3, 0, new nuiLabel(_T("PANOSE Bytes")), nuiLeft, true);
+  pGrid->SetCell(4, 0, new nuiLabel(_T("Path")), nuiLeft, true);
 
   uint32 index = 1;
   std::list<nuiFontRequestResult>::const_iterator it = Fonts.begin();
@@ -365,10 +365,10 @@ void MainWindow::UpdateFontList(uint8 bytes[10])
     const nuiFontDesc* pDesc = rResult.GetFontDesc();
     nglString str;
     str.SetCFloat(rResult.GetScore());
-    pGrid->SetCell(0, index, new nuiLabel(str), nuiLeft, true, true);
-    pGrid->SetCell(1, index, new nuiLabel(rResult.GetPath().GetNodeName().GetChars()), nuiLeft, true, true);
+    pGrid->SetCell(0, index, new nuiLabel(str), nuiLeft, true);
+    pGrid->SetCell(1, index, new nuiLabel(rResult.GetPath().GetNodeName().GetChars()), nuiLeft, true);
     str.SetCInt(rResult.GetFace());
-    pGrid->SetCell(2, index, new nuiLabel(str), nuiLeft, true, true);
+    pGrid->SetCell(2, index, new nuiLabel(str), nuiLeft, true);
     
     str.Wipe();
     nuiFontPanoseBytes bytes = pDesc->GetPanoseBytes();
@@ -377,9 +377,9 @@ void MainWindow::UpdateFontList(uint8 bytes[10])
       str.Add(pBytes[i]).Add(_T(" "));
     str.Trim();
     //NGL_OUT(_T("%ls [%ls]\n"), rResult.GetPath().GetChars(), str.GetChars());
-    pGrid->SetCell(3, index, new nuiLabel(str), nuiCenter, true, true);
+    pGrid->SetCell(3, index, new nuiLabel(str), nuiCenter, true);
     
-    pGrid->SetCell(4, index, new nuiLabel(rResult.GetPath().GetParent().GetChars()), nuiLeft, true, true);
+    pGrid->SetCell(4, index, new nuiLabel(rResult.GetPath().GetParent().GetChars()), nuiLeft, true);
     ++it;
     index++;
   }

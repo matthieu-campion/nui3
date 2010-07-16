@@ -132,7 +132,7 @@
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {2182, 1170}}";
 			sepNavSelRange = "{1775, 0}";
-			sepNavVisRange = "{568, 1489}";
+			sepNavVisRange = "{514, 1470}";
 			sepNavWindowFrame = "{{15, -1}, {960, 1174}}";
 		};
 	};

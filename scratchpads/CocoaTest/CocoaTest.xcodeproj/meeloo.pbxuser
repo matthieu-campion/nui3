@@ -193,14 +193,4 @@
 			sepNavVisRange = "{12167, 1662}";
 		};
 	};
-	E5FDA09611EB3BB00017D95A /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = C9AFF7E70F21772B0040DCC0 /* Application.m */;
-		name = "Application.m: 173";
-		rLen = 49;
-		rLoc = 4206;
-		rType = 0;
-		vrLen = 1591;
-		vrLoc = 3779;
-	};
 }

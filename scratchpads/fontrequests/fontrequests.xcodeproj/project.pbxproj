@@ -26,13 +26,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		BCA19C7D0F713F3700C5B566 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = E592C5140EFE8CCC00340B35;
-			remoteInfo = "nui3D cocoa";
-		};
 		BCBCB15B0DFD45B6002E8BC3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
@@ -60,6 +53,27 @@
 			proxyType = 1;
 			remoteGlobalIDString = E58172D70C3D103300902DFE;
 			remoteInfo = nui3D;
+		};
+		E5B7EE4611EFD553007A8885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E52417F311CB860B0025CA71 /* libnuiPhoneD.a */;
+			remoteInfo = nuiPhoneD;
+		};
+		E5B7EE4811EFD553007A8885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E52420E511CBCE9E0025CA71 /* libnuiPhone.a */;
+			remoteInfo = nuiPhone;
+		};
+		E5B7EE4A11EFD553007A8885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E5A8D1D311E33A54004E14CE /* libnui3CocoaD.a */;
+			remoteInfo = nui3CocoaD;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -155,7 +169,9 @@
 			children = (
 				BCBCB15C0DFD45B6002E8BC3 /* libnui3D.a */,
 				BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */,
-				BCA19C7E0F713F3700C5B566 /* libnui3D cocoa.a */,
+				E5B7EE4711EFD553007A8885 /* libnuiPhoneD.a */,
+				E5B7EE4911EFD553007A8885 /* libnuiPhone.a */,
+				E5B7EE4B11EFD553007A8885 /* libnui3CocoaD.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -225,13 +241,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		BCA19C7E0F713F3700C5B566 /* libnui3D cocoa.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libnui3D cocoa.a";
-			remoteRef = BCA19C7D0F713F3700C5B566 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		BCBCB15C0DFD45B6002E8BC3 /* libnui3D.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -244,6 +253,27 @@
 			fileType = archive.ar;
 			path = libnui3.a;
 			remoteRef = BCBCB15D0DFD45B6002E8BC3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E5B7EE4711EFD553007A8885 /* libnuiPhoneD.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnuiPhoneD.a;
+			remoteRef = E5B7EE4611EFD553007A8885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E5B7EE4911EFD553007A8885 /* libnuiPhone.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnuiPhone.a;
+			remoteRef = E5B7EE4811EFD553007A8885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E5B7EE4B11EFD553007A8885 /* libnui3CocoaD.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnui3CocoaD.a;
+			remoteRef = E5B7EE4A11EFD553007A8885 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
