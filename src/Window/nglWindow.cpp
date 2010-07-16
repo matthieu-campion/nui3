@@ -415,6 +415,7 @@ uint nglWindow::GetRotation() const
 void nglWindow::SetRotation(uint Angle)
 {
   mAngle = Angle;
+  Invalidate();
 }
 
 
