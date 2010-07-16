@@ -547,6 +547,17 @@ void nuiGLPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
           nuiRenderState s(mState);// PushState();
           PushProjectionMatrix();
           PushMatrix();
+
+#ifdef _OPENGL_ES_
+          if (mpSurfaceStack.empty())
+          {
+            //  mDefaultFramebuffer = 0;
+            //  mDefaultRenderbuffer = 0;
+            glGetIntegerv(GL_FRAMEBUFFER_BINDING_NUI, &mDefaultFramebuffer);
+            glGetIntegerv(GL_RENDERBUFFER_BINDING_NUI, (GLint *) &mDefaultRenderbuffer);
+          }
+#endif
+          
           PushSurface();
           
           
@@ -1696,6 +1707,7 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
     {      
       glGenFramebuffersNUI(1, &info.mFramebuffer);
       //printf("glGenFramebuffersNUI -> %d\n", info.mFramebuffer);
+      
       nuiCheckForGLErrors();
       glBindFramebufferNUI(GL_FRAMEBUFFER_NUI, info.mFramebuffer);
       nuiCheckForGLErrors();
