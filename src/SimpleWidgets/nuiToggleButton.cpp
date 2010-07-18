@@ -89,23 +89,18 @@ bool nuiToggleButton::Draw(nuiDrawContext* pContext)
 
   nuiDecoration* pDeco = GetDecoration();
 
-  if (pDeco)
-  {
-    DrawChildren(pContext);
-    return true;
-  }
-  
-  if (mDisplayAsCheckBox)
-  {
-    pContext->ResetState();
-    nuiTheme* pTheme = GetTheme();
-    NGL_ASSERT(pTheme);
-    pTheme->DrawCheckBox(pContext, this);
-    pTheme->Release();
-
-    DrawChildren(pContext);
-  }
-  else if (mDisplayAsFrameBox)
+//  if (mDisplayAsCheckBox)
+//  {
+//    pContext->ResetState();
+//    nuiTheme* pTheme = GetTheme();
+//    NGL_ASSERT(pTheme);
+//    pTheme->DrawCheckBox(pContext, this);
+//    pTheme->Release();
+//
+//    DrawChildren(pContext);
+//  }
+//  else 
+    if (mDisplayAsFrameBox)
   {
     pContext->ResetState();
 
@@ -260,72 +255,51 @@ void nuiToggleButton::SetDisplayAsFrameBox(bool set)
 
 nuiRect nuiToggleButton::CalcIdealSize()
 {
-  if (!mDisplayAsCheckBox)
+  if (mDisplayAsFrameBox)
   {
-    if (mDisplayAsFrameBox)
-    {
-      nuiRect r(nuiSimpleContainer::CalcIdealSize());
-      //r.Grow(2,2);
-      return r.Size();
-    }
-    return nuiButton::CalcIdealSize();
+    nuiRect r(nuiSimpleContainer::CalcIdealSize());
+    //r.Grow(2,2);
+    return r.Size();
   }
-  else
-  {
-    nuiRect rect = nuiButton::CalcIdealSize();
-    //#FIXME : check that. removed extra size from the checkbox
-    // rect.SetSize(rect.Size().GetWidth() + GetCheckSize() + 1.f, MAX(rect.Size().GetHeight(),GetCheckSize()));
-    rect.SetSize(GetCheckSize(), GetCheckSize());
-    return rect;
-  }
+  return nuiButton::CalcIdealSize();
 }
 
 bool nuiToggleButton::SetRect(const nuiRect& rRect)
 {
-  if (mDisplayAsCheckBox)
+  if (mDisplayAsFrameBox)
   {
     nuiWidget::SetRect(rRect);
-    nuiRect Rect = rRect.Size();
-
-    Rect.Left() += mCheckSize;
+    nuiRect rect(rRect.Size());
+    //rect.Grow(-2,-2);
 
     IteratorPtr pIt;
     for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
     {
       nuiWidgetPtr pItem = pIt->GetWidget();
-      if (pItem)
-        pItem->SetLayout(Rect);
+      if (mCanRespectConstraint)
+        pItem->SetLayoutConstraint(mConstraint);
+      pItem->GetIdealRect();
+      pItem->SetLayout(rect);
     }
     delete pIt;
     return true;
   }
-  else
-  {
-    if (mDisplayAsFrameBox)
-    {
-      nuiWidget::SetRect(rRect);
-      nuiRect rect(rRect.Size());
-      //rect.Grow(-2,-2);
-
-      IteratorPtr pIt;
-      for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
-      {
-        nuiWidgetPtr pItem = pIt->GetWidget();
-        if (mCanRespectConstraint)
-          pItem->SetLayoutConstraint(mConstraint);
-        pItem->GetIdealRect();
-        pItem->SetLayout(rect);
-      }
-      delete pIt;
-      
-    }
-    return nuiButton::SetRect(rRect);
-  }
+  return nuiButton::SetRect(rRect);
 }
 
 
 bool nuiToggleButton::HasContents() const
 {
   return mHasContents;
+}
+
+bool nuiToggleButton::GetDisplayAsCheckBox() const
+{
+  return mDisplayAsCheckBox;
+}
+
+bool nuiToggleButton::GetDisplayAsFrameBox() const
+{
+  return mDisplayAsFrameBox;
 }
 

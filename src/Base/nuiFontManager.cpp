@@ -1233,7 +1233,7 @@ static bool greater_score(const nuiFontRequestResult& rLeft, const nuiFontReques
   return rLeft.GetScore() > rRight.GetScore();
 }
 
-static void SetScore(float& score, float& sscore, float request_score, bool strict, bool condition, bool ref)
+static void SetScore(float& score, float& sscore, float request_score, bool strict, bool condition)
 {
   if (strict)
   {
@@ -1251,8 +1251,8 @@ static void SetScore(float& score, float& sscore, float request_score, bool stri
   }
 }
 
-#define SET_SCORE(X) SetScore(score, sscore, rRequest.m##X.mScore, rRequest.m##X.mStrict, pFontDesc->Get##X() == rRequest.m##X.mElement, pFontDesc->Get##X());
-#define SET_SCORE2(X) SetScore(score, sscore, rRequest.m##X.mScore, rRequest.m##X.mStrict, pFontDesc->Get##X().Compare(rRequest.m##X.mElement, false) == 0, false);
+#define SET_SCORE(X) SetScore(score, sscore, rRequest.m##X.mScore, rRequest.m##X.mStrict, pFontDesc->Get##X() == rRequest.m##X.mElement);
+#define SET_SCORE2(X) SetScore(score, sscore, rRequest.m##X.mScore, rRequest.m##X.mStrict, pFontDesc->Get##X().Compare(rRequest.m##X.mElement, false) == 0);
 
 
 void nuiFontManager::RequestFont(nuiFontRequest& rRequest, std::list<nuiFontRequestResult>& rFoundFonts) const
@@ -1353,7 +1353,7 @@ void nuiFontManager::RequestFont(nuiFontRequest& rRequest, std::list<nuiFontRequ
       }
     }
     
-    SetScore(score, sscore, rRequest.mPanose.mScore * rRequest.mPanose.mElement.GetNormalizedDistance(pFontDesc->GetPanoseBytes()), rRequest.mPanose.mStrict, true, false);
+    SetScore(score, sscore, rRequest.mPanose.mScore * rRequest.mPanose.mElement.GetNormalizedDistance(pFontDesc->GetPanoseBytes()), rRequest.mPanose.mStrict, true);
     
     if (!pFontDesc->GetScalable())
     {

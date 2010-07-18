@@ -870,56 +870,61 @@ void nuiDefaultDecoration::CloseButton(nuiWidget* pWidget)
 void nuiDefaultDecoration::ToggleButton(nuiWidget* pWidget)
 {
   nuiToggleButton* pBtn = (nuiToggleButton*)pWidget;
-  if (pBtn->HasContents())
+  if (!pBtn->GetDisplayAsCheckBox() && !pBtn->GetDisplayAsFrameBox())
   {
     nuiDefaultDecoration::Button(pWidget);
     return;
   }
   
-  
-  nuiStateDecoration* pDeco = (nuiStateDecoration*)nuiDecoration::Get(_T("nuiDefaultDecorationToggleButton"));
-  if (pDeco)
+  if (pBtn->GetDisplayAsCheckBox())
   {
-    pWidget->SetDecoration(pDeco, eDecorationBorder);
-    return;
+    nuiStateDecoration* pDeco = (nuiStateDecoration*)nuiDecoration::Get(_T("nuiDefaultDecorationToggleButtonCheckBox"));
+    if (pDeco)
+    {
+      pWidget->SetDecoration(pDeco, eDecorationBorder);
+      return;
+    }
+    
+    nglIMemory* pIMem = new nglIMemory(gpToggleButtonUp, gToggleButtonUpSize);
+    nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
+    NGL_ASSERT(pTex);
+    nuiImageDecoration* pFrame = new nuiImageDecoration(_T("nuiDefaultDecorationToggleButtonCheckBoxUp"), pTex, nuiRect(10,10,13,13));
+    pFrame->SetPosition(nuiLeft);
+    delete pIMem;
+    
+    
+    pIMem = new nglIMemory(gpToggleButtonDown, gToggleButtonDownSize);
+    pTex = nuiTexture::GetTexture(pIMem);
+    NGL_ASSERT(pTex);
+    pFrame = new nuiImageDecoration(_T("nuiDefaultDecorationToggleButtonCheckBoxDown"), pTex, nuiRect(10,10,13,13));
+    pFrame->SetPosition(nuiLeft);
+    delete pIMem;
+    
+    pIMem = new nglIMemory(gpToggleButtonUpDisabled, gToggleButtonUpDisabledSize);
+    pTex = nuiTexture::GetTexture(pIMem);
+    NGL_ASSERT(pTex);
+    pFrame = new nuiImageDecoration(_T("nuiDefaultDecorationToggleButtonCheckBoxUpDisabled"), pTex, nuiRect(10,10,13,13));
+    pFrame->SetPosition(nuiLeft);
+    delete pIMem;
+    
+    pIMem = new nglIMemory(gpToggleButtonDownDisabled, gToggleButtonDownDisabledSize);
+    pTex = nuiTexture::GetTexture(pIMem);
+    NGL_ASSERT(pTex);
+    pFrame = new nuiImageDecoration(_T("nuiDefaultDecorationToggleButtonCheckBoxDownDisabled"), pTex, nuiRect(10,10,13,13));
+    pFrame->SetPosition(nuiLeft);
+    delete pIMem;
+    
+    
+    nuiStateDecoration* pState = new nuiStateDecoration(_T("nuiDefaultDecorationToggleButtonCheckBox"), 
+                                                        _T("nuiDefaultDecorationToggleButtonCheckBoxUp"),
+                                                        _T("nuiDefaultDecorationToggleButtonCheckBoxDown"),
+                                                        _T("nuiDefaultDecorationToggleButtonCheckBoxUp"),/* hover up */
+                                                        _T("nuiDefaultDecorationToggleButtonCheckBoxDown"), /* hover down*/
+                                                        _T("nuiDefaultDecorationToggleButtonCheckBoxUpDisabled"),
+                                                        _T("nuiDefaultDecorationToggleButtonCheckBoxDownDisabled"));
+    pState->SetSourceClientRect(nuiRect(10,10,13,13));
+    pWidget->SetDecoration(pState, eDecorationBorder);
   }
-  
-  nglIMemory* pIMem = new nglIMemory(gpToggleButtonUp, gToggleButtonUpSize);
-  nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
-  NGL_ASSERT(pTex);
-  nuiImageDecoration* pFrame = new nuiImageDecoration(_T("nuiDefaultDecorationToggleButtonUp"), pTex, nuiRect(10,10,13,13));
-  delete pIMem;
-  
-  
-  pIMem = new nglIMemory(gpToggleButtonDown, gToggleButtonDownSize);
-  pTex = nuiTexture::GetTexture(pIMem);
-  NGL_ASSERT(pTex);
-  pFrame = new nuiImageDecoration(_T("nuiDefaultDecorationToggleButtonDown"), pTex, nuiRect(10,10,13,13));
-  delete pIMem;
-  
-  pIMem = new nglIMemory(gpToggleButtonUpDisabled, gToggleButtonUpDisabledSize);
-  pTex = nuiTexture::GetTexture(pIMem);
-  NGL_ASSERT(pTex);
-  pFrame = new nuiImageDecoration(_T("nuiDefaultDecorationToggleButtonUpDisabled"), pTex, nuiRect(10,10,13,13));
-  delete pIMem;
-  
-  pIMem = new nglIMemory(gpToggleButtonDownDisabled, gToggleButtonDownDisabledSize);
-  pTex = nuiTexture::GetTexture(pIMem);
-  NGL_ASSERT(pTex);
-  pFrame = new nuiImageDecoration(_T("nuiDefaultDecorationToggleButtonDownDisabled"), pTex, nuiRect(10,10,13,13));
-  delete pIMem;
-  
-  
-  nuiStateDecoration* pState = new nuiStateDecoration(_T("nuiDefaultDecorationToggleButton"), 
-                                                      _T("nuiDefaultDecorationToggleButtonUp"),
-                                                      _T("nuiDefaultDecorationToggleButtonDown"),
-                                                      _T("nuiDefaultDecorationToggleButtonUp"),/* hover up */
-                                                      _T("nuiDefaultDecorationToggleButtonDown"), /* hover down*/
-                                                      _T("nuiDefaultDecorationToggleButtonUpDisabled"),
-                                                      _T("nuiDefaultDecorationToggleButtonDownDisabled"));
-  pState->SetSourceClientRect(nuiRect(10,10,13,13));
-  
-  pWidget->SetDecoration(pState, eDecorationBorder);
   
 }
 

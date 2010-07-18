@@ -15,6 +15,10 @@
 #include "nuiFontManager.h"
 #include "nuiBackgroundPane.h"
 
+#include "nuiEditLine.h"
+#include "nuiToggleButton.h"
+#include "nuiSeparator.h"
+
 /*
  * MainWindow
  */
@@ -22,7 +26,7 @@
 MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& rInfo, bool ShowFPS, const nglContext* pShared )
   : nuiMainWindow(rContextInfo, rInfo, pShared, nglPath(ePathCurrent)), mEventSink(this)
 {
-
+  mpRequestBox = NULL;
 }
 
 MainWindow::~MainWindow()
@@ -245,14 +249,62 @@ nuiTreeNode* GetXHeightTree()
   return GetTree(pNames);
 }
 
+nuiEditLine* MainWindow::AddEditLine(const nglString& rName)
+{
+  nuiEditLine* pWidget = new nuiEditLine();
+  AddNamedBox(rName, pWidget);
+  mEventSink.Connect(pWidget->Activated, &MainWindow::OnRequestChanged);
+  return pWidget;
+}
+
+nuiToggleButton* MainWindow::AddCheckBox(const nglString& rName, bool pressed, nuiToggleButton*& pWidget, nuiToggleButton*& pWidgetSet)
+{
+  nuiHBox* pBox = new nuiHBox();
+  
+  pWidget = new nuiToggleButton(rName);
+  mEventSink.Connect(pWidget->ButtonPressed, &MainWindow::OnRequestChanged);
+  mEventSink.Connect(pWidget->ButtonDePressed, &MainWindow::OnRequestChanged);
+
+  pWidgetSet = new nuiToggleButton(_T("Enable"));
+  pWidgetSet->SetDisplayAsCheckBox(true);
+  mEventSink.Connect(pWidgetSet->ButtonPressed, &MainWindow::OnRequestChanged);
+  mEventSink.Connect(pWidgetSet->ButtonDePressed, &MainWindow::OnRequestChanged);
+  
+  pBox->AddCell(pWidget, nuiFillHorizontal);
+  pBox->AddCell(pWidgetSet, nuiRight);
+  pBox->SetCellExpand(0, nuiExpandGrow);
+  mpRequestBox->AddCell(pBox, nuiFillHorizontal);
+  return pWidget;
+}
+
+void MainWindow::AddNamedBox(const nglString& rName, nuiWidget* pEditor)
+{
+  nuiHBox* pBox = new nuiHBox();
+  pBox->AddCell(new nuiLabel(rName));
+  pBox->AddCell(pEditor);
+  pBox->SetCellExpand(1, nuiExpandGrow);
+  mpRequestBox->AddCell(pBox, nuiFillHorizontal);
+}
 
 void MainWindow::OnCreation()
 {
   nuiHBox* pMainBox = new nuiHBox();
   AddChild(pMainBox);
   
-  nuiVBox* pRequestBox = new nuiVBox();
+  mpRequestBox = new nuiVBox();
 
+  mpName = AddEditLine(_T("Name"));
+  mpGenericName = AddEditLine(_T("Generic Name"));
+  mpStyle = AddEditLine(_T("Style"));
+  mpRequestBox->AddCell(new nuiSeparator(nuiHorizontal));
+  mpItalic = AddCheckBox(_T("Italic"), false, mpItalic, mpItalicSet);
+  mpBold = AddCheckBox(_T("Bold"), false, mpBold, mpBoldSet);
+  mpMonospace = AddCheckBox(_T("Monospace"), false, mpMonospace, mpMonospaceSet);
+  mpScalable = AddCheckBox(_T("Scalable"), true, mpScalable, mpScalableSet);
+  mpMustHaveGlyphs = AddEditLine(_T("Glyphs"));
+  
+  mpRequestBox->AddCell(new nuiSeparator(nuiHorizontal));
+  
   mpPanoseFamily = new nuiComboBox(GetFamilyTree());
   mpPanoseSerif = new nuiComboBox(GetSerifTree());
   mpPanoseWeight = new nuiComboBox(GetWeightTree());
@@ -304,7 +356,7 @@ void MainWindow::OnCreation()
     pCombos[i]->SetUserHeight(20);
     pCombos[i]->SetUserWidth(200);
     pCombos[i]->SetSelected((uint)0);
-    pRequestBox->AddCell(pHB, nuiFillHorizontal);
+    mpRequestBox->AddCell(pHB, nuiFillHorizontal);
     mpCombos.push_back(pCombos[i]);
     
     mEventSink.Connect(pCombos[i]->SelectionChanged, &MainWindow::OnRequestChanged);
@@ -312,8 +364,8 @@ void MainWindow::OnCreation()
 
 //  nuiDefaultDecoration::Dialog(pRequestBox);
   nuiBackgroundPane* pPane = new nuiBackgroundPane(eOutterBackground);
-  pPane->AddChild(pRequestBox);
-  pRequestBox->SetExpand(nuiExpandShrinkAndGrow);
+  pPane->AddChild(mpRequestBox);
+  mpRequestBox->SetExpand(nuiExpandShrinkAndGrow);
   pMainBox->SetExpand(nuiExpandShrinkAndGrow);
 
   mpFontScroll = new nuiScrollView();
@@ -344,6 +396,50 @@ void MainWindow::UpdateFontList(uint8 bytes[10])
   mpFontScroll->Clear();
   
   nuiFontRequest request;
+  
+  nglString name = mpName->GetText();
+  nglString genericname = mpGenericName->GetText();
+  nglString style = mpStyle->GetText();
+  bool italic = mpItalic->IsPressed();
+  bool italicset = mpItalicSet->IsPressed();
+  bool bold = mpBold->IsPressed();
+  bool boldset = mpBoldSet->IsPressed();
+  bool mono = mpMonospace->IsPressed();
+  bool monoset = mpMonospaceSet->IsPressed();
+  bool scalable = mpScalable->IsPressed();
+  bool scalableset = mpScalableSet->IsPressed();
+  nglString glyphs = mpMustHaveGlyphs->GetText();
+
+  if (!name.IsEmpty())
+    request.SetName(name, 1.0);
+  
+  if (!genericname.IsEmpty())
+    request.SetName(genericname, 1.0);
+  
+  if (!style.IsEmpty())
+    request.SetStyle(style, 1.0);
+  
+  if (!glyphs.IsEmpty())
+    for (int i = 0; i < glyphs.GetLength(); i++)
+      request.MustHaveGlyph(glyphs[i], 1.0);
+
+  if (boldset)
+    request.SetBold(bold, 1.0);
+  
+  if (italicset)
+    request.SetItalic(italic, 1.0);
+  
+  if (monoset)
+  {
+    if (mono)
+      request.SetMonospace(1.0);
+    else
+      request.SetProportionnal(1.0);
+  }
+
+  if (scalableset)
+    request.SetScalable(scalable, 1.0);
+  
   request.MustBeSimilar(mPanose, 10);
   std::list<nuiFontRequestResult> Fonts;
   nuiFontManager::GetManager().RequestFont(request, Fonts);

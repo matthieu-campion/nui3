@@ -42,14 +42,13 @@ public:
 	
   void SetDisplayAsCheckBox(bool set);
   void SetDisplayAsFrameBox(bool set);
+  bool GetDisplayAsCheckBox() const;
+  bool GetDisplayAsFrameBox() const;
 
   // Class attributes:
   static nuiSize GetDefaultCheckSize(); ///< Retreive the default checkbox size of every button that will be created.
   static void SetDefaultCheckSize(nuiSize CheckSize); ///< Set the default checkbox size of every button that will be created.
 
-  nuiSize GetCheckSize() const { return mCheckSize; }
-  void SetCheckSize(nuiSize checkSize) { mCheckSize = checkSize; }
-  
   bool HasContents() const;
   
   nuiSimpleEventSource<nuiWidgetActivated> Deactivated;

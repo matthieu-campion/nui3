@@ -11,6 +11,10 @@
 #include "nuiComboBox.h"
 #include "nuiScrollView.h"
 
+class nuiVBox;
+class nuiEditLine;
+class nuiToggleButton;
+
 class MainWindow : public nuiMainWindow
 {
 public:
@@ -27,6 +31,8 @@ private:
   void UpdateFontList(uint8 bytes[10]);
 
   nuiEventSink<MainWindow> mEventSink;
+
+  nuiVBox* mpRequestBox;
   
   nuiComboBox* mpPanoseFamily;
   nuiComboBox* mpPanoseSerif;
@@ -39,10 +45,28 @@ private:
   nuiComboBox* mpPanoseMidLine;
   nuiComboBox* mpPanoseXHeight;
   
+  nuiEditLine* mpName;
+  nuiEditLine* mpGenericName;
+  nuiEditLine* mpStyle;
+  nuiToggleButton* mpItalic;
+  nuiToggleButton* mpItalicSet;
+  nuiToggleButton* mpBold;
+  nuiToggleButton* mpBoldSet;
+  nuiToggleButton* mpMonospace;
+  nuiToggleButton* mpMonospaceSet;
+  nuiToggleButton* mpScalable;
+  nuiToggleButton* mpScalableSet;
+  nuiEditLine* mpMustHaveGlyphs;
+  
   std::vector<nuiComboBox*> mpCombos;
   
   nuiScrollView* mpFontScroll;
   
   nuiPanose mPanose;
+  
+  nuiEditLine* AddEditLine(const nglString& rName);
+  nuiToggleButton* AddCheckBox(const nglString& rName, bool pressed, nuiToggleButton*& pWidget, nuiToggleButton*& pWidgetSet);
+  void AddNamedBox(const nglString& rName, nuiWidget* pEditor);
+  
 };
 

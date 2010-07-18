@@ -519,7 +519,7 @@ void nuiTheme::DrawCheckBox(nuiDrawContext* pContext, nuiToggleButton* pButton)
   int c = pButton->IsPressed()?1:0;
   int h = pButton->GetHover()?1:0;
   
-  nuiSize size = pButton->GetCheckSize();
+  nuiSize size = 16;
   border = mButtonBorder[c][h];
   border.Multiply(alpha);
   border.Multiply(pButton->GetColor(eNormalButtonBg), true);
