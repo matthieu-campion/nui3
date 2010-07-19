@@ -344,7 +344,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E52108E811F3A58E00A7771C</string>
+										<string>E521156611F4719200A7771C</string>
 										<key>history</key>
 										<array>
 											<string>E5B7EE6311EFD626007A8885</string>
@@ -594,7 +594,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E52108E911F3A58E00A7771C</string>
+										<string>E521156711F4719200A7771C</string>
 										<key>history</key>
 										<array>
 											<string>E5B7EE6311EFD626007A8885</string>
@@ -844,7 +844,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>301180302.51491201</real>
+	<real>301232530.80555397</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -859,7 +859,6 @@
 	<array>
 		<string>E521077C11F37E3A00A7771C</string>
 		<string>E521077D11F37E3A00A7771C</string>
-		<string>/Users/meeloo/work/nui3/scratchpads/fontrequests/fontrequests.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
 	<string>0 59 2560 1359 0 0 2560 1418 </string>

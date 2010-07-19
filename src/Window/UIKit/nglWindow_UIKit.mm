@@ -336,7 +336,6 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   double t = nglTime();
   //[self InitNGLWindow];
   
- NGL_OUT(_T("[nglUIWindow sendEvent]\n"));
 //  [self dumpTouches: pEvent];
 //nuiStopWatch watch(_T("nglWindowUIKIT::sendEvent"));
   nglWindow::EventMask mask = mpNGLWindow->GetEventMask();

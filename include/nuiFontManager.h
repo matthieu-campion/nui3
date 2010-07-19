@@ -130,6 +130,7 @@ public:
   ~nuiFontDesc();
   
   const nglPath& GetPath() const;
+  bool CheckPath();
   const nglString& GetName() const;
   const nglString& GetStyle() const;
   

@@ -727,6 +727,25 @@ const nglPath& nuiFontDesc::GetPath() const
   return mPath;
 }
 
+bool nuiFontDesc::CheckPath()
+{
+  if (mPath.Exists())
+    return true;
+  nglString p(mPath.GetPathName());
+  nglString pp(p);
+  if (p.IsEmpty())
+    return false;
+  
+  // try to find a .ttc instead of a .ttf...
+  p[p.GetLength() - 1] = 'c';
+  mPath = p;
+  if (mPath.Exists())
+  {
+    printf("found '%ls' instead of '%ls'\n", p.GetChars(), pp.GetChars());
+  }
+  return mPath.Exists();
+}
+
 const nglString& nuiFontDesc::GetName() const
 {
   return mName;
@@ -964,8 +983,10 @@ bool nuiFontDesc::Load(nglIStream& rStream)
     mSizes.insert(Sizes.begin(), Sizes.end());
   }
 
-  // Write the panose bytes for this font:
+  // Read the panose bytes for this font:
   rStream.Read(&mPanoseBytes, 10, 1);
+  
+  printf("FontDesc: '%ls' (%ls)\n", mName.GetChars(), mPath.GetChars());
   
   return true;
 }
@@ -1003,7 +1024,7 @@ void nuiFontManager::GetSystemFolders(std::map<nglString, nglPath>& rFolders)
   rFolders[_T("System0")] = _T("/System/Library/Fonts/");
   //rFolders[_T("System1")] = _T("/Library/Fonts/");
 #elif (defined _UIKIT_)
-  rFolders[_T("System0")] = _T("/System/Library/Fonts/Cache/");
+  rFolders[_T("System0")] = _T("/System/Library/Fonts/");
 #elif (defined _WIN32_)
   nglChar p[MAX_PATH];
   HRESULT hr = SHGetFolderPath(NULL, CSIDL_FONTS, NULL, 0, p);
@@ -1547,7 +1568,7 @@ bool nuiFontManager::Load(nglIStream& rStream, double lastscantime)
     if (pFontDesc->IsValid() && pFontDesc->GetScalable())
     {
       // check font file existence
-      if (!pFontDesc->GetPath().Exists())
+      if (!pFontDesc->CheckPath())
       {
         NGL_OUT(_T("FontManager: remove font from database '%ls'\n"), pFontDesc->GetPath().GetChars());
         
@@ -1789,7 +1810,7 @@ nuiFont* nuiFontManager::GetFont(nuiFontRequest& rRequest, const nglString& rID)
   if (!rRequest.mMustHaveSizes.mElement.empty())
     size = *(rRequest.mMustHaveSizes.mElement.begin());
   
-  //wprintf(_T("Loading font %ls\n"), rRequest.mName.mElement.GetChars());
+  wprintf(_T("Loading font %ls\n"), rRequest.mName.mElement.GetChars());
   nuiFont* pFont = nuiFont::GetFont(rRequest.mOriginalName, size, rRequest.mFace.mElement, rID);
   if (pFont)
     return pFont;
@@ -1799,9 +1820,13 @@ nuiFont* nuiFontManager::GetFont(nuiFontRequest& rRequest, const nglString& rID)
   
   if (Fonts.empty())
   {
+    printf("font request failed, loading default font\n");
     return nuiFont::GetFont(size);
   }
   
   const nuiFontRequestResult& rFont(*(Fonts.begin()));
-  return nuiFont::GetFont(rFont.GetPath(), size, rFont.GetFace(), rID);
+  printf("found font '%ls' (%ls)\n", rFont.GetFontDesc()->GetName().GetChars(), rFont.GetFontDesc()->GetPath().GetChars());
+
+  pFont = nuiFont::GetFont(rFont.GetPath(), size, rFont.GetFace(), rID);
+  return pFont;
 }
