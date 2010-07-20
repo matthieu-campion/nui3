@@ -15,7 +15,8 @@
 #include "AAPrimitives.h"
 #include "nuiTexture.h"
 
-#define SCALE_FACTOR 1.0f
+float NUI_SCALE_FACTOR = 1.0f;
+float NUI_INV_SCALE_FACTOR = 1.0f / NUI_SCALE_FACTOR;
 
 #ifndef __NUI_NO_GL__
 
@@ -268,8 +269,6 @@ void nuiGLPainter::SetViewport()
   GLuint Angle = GetAngle();
   GLuint Width = GetCurrentWidth();
   GLuint Height = GetCurrentHeight();
-  Width *= SCALE_FACTOR;
-  Height *= SCALE_FACTOR;
   const nuiRect& rViewport(mProjectionViewportStack.top());
   const nuiMatrix& rMatrix = mProjectionMatrixStack.top();
   
@@ -291,12 +290,12 @@ void nuiGLPainter::SetViewport()
   h = ToBelow(r.GetHeight());
   
   //printf("set projection matrix (%d %d - %d %d)\n", x, y, w, h);
-  glViewport(x, y, w, h);
+  glViewport(x * NUI_SCALE_FACTOR, y * NUI_SCALE_FACTOR, w * NUI_SCALE_FACTOR, h * NUI_SCALE_FACTOR);
   nuiCheckForGLErrors();
   
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  glScalef(SCALE_FACTOR, SCALE_FACTOR, 1.0f);
+  //glScalef(NUI_SCALE_FACTOR, NUI_SCALE_FACTOR, 1.0f);
   if (Angle != 0.0f)
   {
     glRotatef(Angle, 0.f,0.f,1.f);
@@ -468,10 +467,10 @@ void nuiGLPainter::SetState(const nuiRenderState& rState, bool ForceApply)
       mScissorW = w;
       mScissorH = h;
       
-      x *= SCALE_FACTOR;
-      y *= SCALE_FACTOR;
-      w *= SCALE_FACTOR;
-      h *= SCALE_FACTOR;
+      x *= NUI_SCALE_FACTOR;
+      y *= NUI_SCALE_FACTOR;
+      w *= NUI_SCALE_FACTOR;
+      h *= NUI_SCALE_FACTOR;
       glScissor(x, y, w, h);
     }
     nuiCheckForGLErrors();

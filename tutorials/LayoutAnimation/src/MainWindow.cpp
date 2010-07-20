@@ -18,7 +18,6 @@
 MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& rInfo, bool ShowFPS, const nglContext* pShared )
   : mEventSink(this),
     nuiMainWindow(rContextInfo, rInfo, pShared, nglPath(ePathCurrent))
-    
 {
   //mClearBackground = false;
   SetDebugMode(true);
@@ -35,6 +34,15 @@ void MainWindow::OnCreation()
   //SetRotation(90);
   //SetState(nglWindow::eMaximize);
 
+  {
+    nuiLabel* pLabel1 = new nuiLabel(_T("ABCDEFGH12345678"));
+    nuiLabel* pLabel2 = new nuiLabel(_T("12345678ABCDEFGH"));
+    pLabel1->SetPosition(nuiTopLeft);
+    pLabel2->SetPosition(nuiLeft);
+    AddChild(pLabel1);
+    AddChild(pLabel2);
+  }
+  
   nuiWidget* pBg = new nuiImage(_T("rsrc:/decorations/image.png"));
   pBg->SetRect(nuiRect(-(float)GetWidth(), -(float)GetHeight(), (float)GetWidth() * 3, (float)GetHeight() * 3));
   pBg->SetPosition(nuiCenter);

@@ -25,6 +25,9 @@ using namespace std;
 #include FT_CACHE_H
 #include FT_TRUETYPE_TABLES_H
 
+extern float NUI_SCALE_FACTOR;
+extern float NUI_INV_SCALE_FACTOR;
+
 /* Globals
  */
 FT_Library     gFTLibrary      = NULL;  // Global FT library instance
@@ -497,7 +500,7 @@ float nglFontBase::GetSize (nglFontUnit Unit) const
     case eFontUnitPixel : return mSize;
   }
 
-  return mSize;
+  return mSize * NUI_INV_SCALE_FACTOR;
 }
 
 bool nglFontBase::SetSize (float Size, nglFontUnit Unit)
@@ -520,6 +523,8 @@ bool nglFontBase::SetSize (float Size, nglFontUnit Unit)
     case eFontUnitPoint : pixels = (FT_UInt)roundf (PointToPixel(Size)); break;
     case eFontUnitPixel : pixels = (FT_UInt)roundf (Size); break;
   }
+
+  pixels *= NUI_SCALE_FACTOR;
 
   NGL_ASSERT(pixels > 0);
   

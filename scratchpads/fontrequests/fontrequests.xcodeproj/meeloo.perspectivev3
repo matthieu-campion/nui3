@@ -344,12 +344,10 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E521156611F4719200A7771C</string>
+										<string>E52115F911F5062100A7771C</string>
 										<key>history</key>
 										<array>
 											<string>E5B7EE6311EFD626007A8885</string>
-											<string>E52107E311F38D0B00A7771C</string>
-											<string>E52107EE11F38D5200A7771C</string>
 											<string>E521083911F3936700A7771C</string>
 											<string>E521084411F3948400A7771C</string>
 										</array>
@@ -594,14 +592,11 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E521156711F4719200A7771C</string>
+										<string>E52115FA11F5062100A7771C</string>
 										<key>history</key>
 										<array>
 											<string>E5B7EE6311EFD626007A8885</string>
-											<string>E52107E611F38D0B00A7771C</string>
 											<string>E521083C11F3937200A7771C</string>
-											<string>E521087311F3991700A7771C</string>
-											<string>E521089811F39BD500A7771C</string>
 											<string>E52108E711F3A57F00A7771C</string>
 										</array>
 									</dict>
@@ -844,7 +839,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>301232530.80555397</real>
+	<real>301270561.26351899</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>

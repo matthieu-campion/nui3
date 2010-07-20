@@ -14,6 +14,8 @@
 #include "nglFontBase.h"
 #include "nglMath.h"
 
+extern float NUI_SCALE_FACTOR;
+extern float NUI_INV_SCALE_FACTOR;
 
 /*
  * nglFontLayout
@@ -172,7 +174,7 @@ void nglFontLayout::OnGlyph (nglFontBase* pFont, const nglString& rString, int P
     if (mGlyphs.size() > 0)
       mPenX = mGlyphs[0].X; // Go back to layout X origin
 
-    mPenY += mDownAxis * pFont->GetHeight(eFontUnitPixel);
+    mPenY += mDownAxis * pFont->GetHeight(eFontUnitPixel) * NUI_INV_SCALE_FACTOR;
   }
 
   if (c < _T(' ') ||  // skip control chars (includes newline)
@@ -186,16 +188,16 @@ void nglFontLayout::OnGlyph (nglFontBase* pFont, const nglString& rString, int P
   float kx, ky;
   if (GetKerning(pFont, pGlyph->Index, kx, ky))
   {
-    mPenX += kx;
-    mPenY += ky;
+    mPenX += kx * NUI_INV_SCALE_FACTOR;
+    mPenY += ky * NUI_INV_SCALE_FACTOR;
   }
 
   // Add this glyph to the layout with the current position pen position
   AddGlyph(pFont, mPenX, mPenY, Pos, pGlyph);
 
   // Proceed with glyph advance
-  mPenX += pGlyph->AdvanceX;
-  mPenY += pGlyph->AdvanceY;
+  mPenX += pGlyph->AdvanceX * NUI_INV_SCALE_FACTOR;
+  mPenY += pGlyph->AdvanceY * NUI_INV_SCALE_FACTOR;
 }
 
 void nglFontLayout::OnFinalizeLayout ()
@@ -205,6 +207,9 @@ void nglFontLayout::OnFinalizeLayout ()
 
 const nglGlyphLayout* nglFontLayout::GetGlyphAt (float X, float Y) const
 {
+  X *= NUI_SCALE_FACTOR;
+  Y *= NUI_SCALE_FACTOR;
+  
   if (X < mXMin || X > mXMax || Y < mYMin || Y > mYMax)
     return NULL; // Out of layout bounds
 
@@ -287,8 +292,8 @@ bool nglFontLayout::AddDummyGlyph(int32 ReferencePos, void* pUserPointer, float 
   mYMin = MIN(mYMin, y);
   
   // Maxima
-  x += W;
-  y += H;
+  x += W * NUI_INV_SCALE_FACTOR;
+  y += H * NUI_INV_SCALE_FACTOR;
   mXMax = MAX(mXMax, x);
   mYMax = MAX(mYMax, y);
   
@@ -328,14 +333,14 @@ bool nglFontLayout::AddGlyph (nglFontBase* pFont, float X, float Y, int Pos, ngl
   float x, y;
 
   // Minima
-  x = X + pGlyph->BearingX;
-  y = Y + pGlyph->BearingY - pGlyph->Height;
+  x = X + pGlyph->BearingX * NUI_INV_SCALE_FACTOR;
+  y = Y + (pGlyph->BearingY - pGlyph->Height) * NUI_INV_SCALE_FACTOR;
   mXMin = MIN(mXMin, x);
   mYMin = MIN(mYMin, y);
 
   // Maxima
-  x += pGlyph->Width;
-  y += pGlyph->Height;//= Y + pGlyph->BearingY;
+  x += pGlyph->Width * NUI_INV_SCALE_FACTOR;
+  y += pGlyph->Height * NUI_INV_SCALE_FACTOR;//= Y + pGlyph->BearingY;
   mXMax = MAX(mXMax, x);
   mYMax = MAX(mYMax, y);
 

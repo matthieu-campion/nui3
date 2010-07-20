@@ -19,7 +19,7 @@
 
 #define NGL_WINDOW_FPS 60.0f
 
-#define SCALE_FACTOR 1.0f
+extern float NUI_SCALE_FACTOR;
 
 //#include "nglImage.h"
 
@@ -507,7 +507,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
       }
       else
       {
-        NGL_ASSERT(touchPhase == UITouchPhaseStationary);
+        //NGL_ASSERT(touchPhase == UITouchPhaseStationary);
       }
     }
     else if (touchPhase == UITouchPhaseBegan && (gAvailableTouches.size() > 0))
@@ -710,7 +710,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
     {
       /* on iOS 4.0, use contentsScaleFactor */
       printf("Scale: %f\n", self.contentScaleFactor);
-      self.contentScaleFactor = SCALE_FACTOR;
+      self.contentScaleFactor = NUI_SCALE_FACTOR;
     }
     else
     {
