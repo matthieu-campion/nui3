@@ -18,7 +18,7 @@ class nuiHTMLItem
 {
 public:
   nuiHTMLItem(nuiHTMLNode* pNode, nuiHTMLNode* pAnchor, bool Inline);
-  ~nuiHTMLItem();
+  virtual ~nuiHTMLItem();
   
   enum Unit
   {

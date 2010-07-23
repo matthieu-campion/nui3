@@ -17,7 +17,7 @@ public:
   nuiHTMLContext();
   nuiHTMLContext(const nuiHTMLContext& rContext);
   nuiHTMLContext& operator=(const nuiHTMLContext& rContext);
-  ~nuiHTMLContext();
+  virtual ~nuiHTMLContext();
   
   void UpdateFont();
     
