@@ -15,6 +15,10 @@
 #include <libcss/properties.h>
 #include <libcss/types.h>
 
+#ifdef WIN32
+#define inline
+#endif
+
 struct css_hint;
 struct css_select_handler;
 

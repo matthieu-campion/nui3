@@ -67,6 +67,10 @@ typedef enum shape {
 	SHAPE_RECT = 0
 } shape;
 
+#ifdef WIN32
+#define inline
+#endif
+
 static inline uint32_t buildOPV(opcode_t opcode, uint8_t flags, uint16_t value)
 {
 	return (opcode & 0x3ff) | (flags << 10) | ((value & 0x3fff) << 18);
@@ -98,6 +102,5 @@ static inline bool isInherit(uint32_t OPV)
 }
 
 #endif
-
 
 
