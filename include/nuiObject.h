@@ -111,9 +111,18 @@ public:
   static bool ClearGlobalProperty(const nglString& rName); ///< Remove the given global property.
   static bool ClearGlobalProperty(const char* pName); ///< Remove the given global property.
 
-  void CheckValid() const;
+  inline void CheckValid() const
+  {
+#ifdef _NUI_DEBUG_OBJECTS_
+    NGL_ASSERT(mpTrace);
+#else
+    if (mpTrace)
+#endif
+      CheckValidInternal();
+  }
   
 protected:
+  void CheckValidInternal() const;
   static std::vector<int32> mInheritanceMap;
   virtual bool SetObjectClass(const nglString& rClass); ///< does a SetProperty("Class"...). Returns true if this is the first time an object of this class is registered.
   void InitProperties(); ///< Take care of the property bindings.

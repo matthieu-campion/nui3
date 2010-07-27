@@ -781,27 +781,20 @@ void nuiObject::OnPropertyChanged(const nglString& rProperty, const nglString& r
 std::map<nuiObject*, nuiObject::Trace> nuiObject::mObjects;
 nglCriticalSection nuiObject::gObjectTraceCS;
 
-void nuiObject::CheckValid() const
+void nuiObject::CheckValidInternal() const
 {
-#ifdef _NUI_DEBUG_OBJECTS_
-  NGL_ASSERT(mpTrace);
-#else
-  if (mpTrace)
-#endif
+  nglCriticalSectionGuard g(gObjectTraceCS);
+  std::map<nuiObject*, Trace>::const_iterator it = mObjects.find(const_cast<nuiObject*>(this));
+  if (it == mObjects.end())
   {
-    nglCriticalSectionGuard g(gObjectTraceCS);
-    std::map<nuiObject*, Trace>::const_iterator it = mObjects.find(const_cast<nuiObject*>(this));
-    if (it == mObjects.end())
-    {
-      NGL_LOG(_T("nuiObject"), 0, _T("Operating on an invalid Object! 0x%x was never created.\n"), this);
-    }
-    else if (!it->second.mAlive)
-    {
-      NGL_LOG(_T("nuiObject"), 0, _T("Operating on an invalid Object! 0x%x (%ls - %ls).\n"), this, it->second.mClass.GetChars(), it->second.mName.GetChars());
-    }
-    NGL_ASSERT(it != mObjects.end());
-    NGL_ASSERT(it->second.mAlive);
+    NGL_LOG(_T("nuiObject"), 0, _T("Operating on an invalid Object! 0x%x was never created.\n"), this);
   }
+  else if (!it->second.mAlive)
+  {
+    NGL_LOG(_T("nuiObject"), 0, _T("Operating on an invalid Object! 0x%x (%ls - %ls).\n"), this, it->second.mClass.GetChars(), it->second.mName.GetChars());
+  }
+  NGL_ASSERT(it != mObjects.end());
+  NGL_ASSERT(it->second.mAlive);
 }
 
 int32 nuiObject::GetClassCount()
