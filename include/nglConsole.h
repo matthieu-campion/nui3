@@ -190,6 +190,8 @@ public:
   //@{
   void Output  (const nglChar* pFormat, ...);
   void Outputv (const nglChar* pFormat, va_list Args);
+  void Output  (const char* pFormat, ...);
+  void Outputv (const char* pFormat, va_list Args);
   void Output  (const nglString& rText);
   void Show    (bool IsVisible = true);
   /*!<

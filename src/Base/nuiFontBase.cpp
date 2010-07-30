@@ -888,8 +888,8 @@ int nuiFontBase::Print(nuiDrawContext *pContext, float X, float Y, const nuiFont
 
     nuiGlyphLayout glyph;
 
-    glyph.X     = pglyph->X + X;
-    glyph.Y     = pglyph->Y + Y;
+    glyph.X     = X + pglyph->X * NUI_INV_SCALE_FACTOR;
+    glyph.Y     = Y + pglyph->Y * NUI_INV_SCALE_FACTOR;
     glyph.Pos   = pglyph->Pos;
     glyph.Index = pglyph->Index;
 
@@ -907,7 +907,7 @@ int nuiFontBase::Print(nuiDrawContext *pContext, float X, float Y, const nuiFont
     const std::vector<nuiFontLayout::Line>& rLines(rLayout.GetLines());
     nglFontInfo info;
     GetInfo (info);
-    float pos = -info.UnderlinePos;
+    float pos = -info.UnderlinePos * NUI_INV_SCALE_FACTOR;
     float thickness = info.UnderlineThick;
     pContext->SetLineWidth(thickness);
     nuiColor oldcolor(pContext->GetStrokeColor());
@@ -932,7 +932,7 @@ int nuiFontBase::Print(nuiDrawContext *pContext, float X, float Y, const nuiFont
     const std::vector<nuiFontLayout::Line>& rLines(rLayout.GetLines());
     nglFontInfo info;
     GetInfo (info);
-    float pos = -info.Ascender * .4f;
+    float pos = -info.Ascender * .4f * NUI_INV_SCALE_FACTOR;
     float thickness = ToNearest(info.UnderlineThick);
     pContext->SetLineWidth(thickness);
     nuiColor oldcolor(pContext->GetStrokeColor());
@@ -1015,7 +1015,7 @@ bool nuiFontBase::PrepareGlyph (nuiDrawContext *pContext, nuiGlyphLayout& rGlyph
   int h = GlyphLocation.mHeight;
 
   int x = (int)floorf(rGlyph.X + bmp.Left * NUI_INV_SCALE_FACTOR);
-  int y = (int)floorf(rGlyph.Y - bmp.Top);
+  int y = (int)floorf(rGlyph.Y - bmp.Top * NUI_INV_SCALE_FACTOR);
 
   rGlyph.mpTexture = mTextures[GlyphLocation.mOffsetTexture];
 

@@ -78,7 +78,7 @@ public:
   AudioMeter(const std::vector<std::vector<float> >& rData, Mode mode)
   : mrData(rData), mMode(mode), mLast(0.0f), mPeak(0.0f)
   {
-    StartAutoDraw(30);
+    StartAutoDraw();
   }
 
   virtual ~AudioMeter()
@@ -169,7 +169,7 @@ public:
   Oscilloscop(const std::vector<std::vector<float> >& rData)
   : mrData(rData)
   {
-    StartAutoDraw(30);
+    StartAutoDraw();
   }
 
   virtual ~Oscilloscop()
@@ -198,17 +198,17 @@ public:
       };
       uint32 colorcount = 2;
       
-      nuiRenderArray array(GL_LINE_STRIP);
+      nuiRenderArray* pArray = new nuiRenderArray(GL_LINE_STRIP);
       nuiColor Color(colors[j % colorcount]);
-      array.SetColor(Color);
+      pArray->SetColor(Color);
       for (uint32 i = 0; i < count; i++)
       {
         float value = mrData[j][i];
-        array.SetVertex(i, mid + hi * value);
-        array.PushVertex();
+        pArray->SetVertex(i, mid + hi * value);
+        pArray->PushVertex();
       }
       
-      pContext->DrawArray(array);
+      pContext->DrawArray(pArray);
     }
     return true;
   }
@@ -223,7 +223,7 @@ public:
   Spectrum(const std::vector<std::vector<float> >& rData)
   : mrData(rData), mFFT(rData[0].size())
   {
-    StartAutoDraw(30);
+    StartAutoDraw();
     CreateHanningWindow();
 //    CreateFlatWindow();
 
@@ -265,9 +265,9 @@ public:
       };
       uint32 colorcount = 2;
       
-      nuiRenderArray array(GL_LINE_STRIP);
+      nuiRenderArray* pArray = new nuiRenderArray(GL_LINE_STRIP);
       nuiColor Color(colors[j % colorcount]);
-      array.SetColor(Color);
+      pArray->SetColor(Color);
       
       for (uint32 i = 0; i < s1 / 2; i++)
       {
@@ -280,11 +280,11 @@ public:
         //float x = incr * i;
         float x = s2 * (i == 0 ? 0.0f : nuiEasingQuarticRev((float)i / ((float)s1 / 2)));
 
-        array.SetVertex(x, hi - hi * value);
-        array.PushVertex();
+        pArray->SetVertex(x, hi - hi * value);
+        pArray->PushVertex();
       }
 
-      pContext->DrawArray(array);
+      pContext->DrawArray(pArray);
     }
     return true;
   }

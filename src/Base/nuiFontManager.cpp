@@ -986,7 +986,7 @@ bool nuiFontDesc::Load(nglIStream& rStream)
   // Read the panose bytes for this font:
   rStream.Read(&mPanoseBytes, 10, 1);
   
-  printf("FontDesc: '%ls' (%ls)\n", mName.GetChars(), mPath.GetChars());
+  //printf("FontDesc: '%ls' (%ls)\n", mName.GetChars(), mPath.GetChars());
   
   return true;
 }

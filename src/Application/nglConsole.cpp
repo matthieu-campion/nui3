@@ -260,6 +260,37 @@ void nglConsole::Outputv (const nglChar* pFormat, va_list Args)
   }
 }
 
+void nglConsole::Output (const char* pFormat, ...)
+{
+  nglCriticalSectionGuard guard(mCS);
+  va_list args;
+  
+  va_start (args, pFormat);
+  Outputv (pFormat, args);
+  va_end (args);
+}
+
+void nglConsole::Outputv (const char* pFormat, va_list Args)
+{
+  if (this)   //#HACK This is a hack to have NGL_OUT working event when nuiInit hasn't been called yet
+  {
+    nglCriticalSectionGuard guard(mCS);
+    mOutputBuffer.Formatv(pFormat, Args);
+    OnOutput(mOutputBuffer);
+  }
+  else
+  {
+    nglString out;
+    out.Formatv(pFormat, Args);
+#ifdef _WIN32_
+    OutputDebugString(out.GetChars());
+#else
+    wprintf(_T("%ls\n"), out.GetChars());
+#endif
+    
+  }
+}
+
 void nglConsole::Output (const nglString& rText)
 {
   nglCriticalSectionGuard guard(mCS);

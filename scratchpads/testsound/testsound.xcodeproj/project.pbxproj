@@ -66,12 +66,26 @@
 			remoteGlobalIDString = E5429F110C3F0A5900225219;
 			remoteInfo = nui3;
 		};
-		E537DAF60F1B85A300430CB0 /* PBXContainerItemProxy */ = {
+		E53313B0120232AF00FF5312 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BC1A61C40E63318300BDD037 /* nui3.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E592C5140EFE8CCC00340B35;
-			remoteInfo = "nui3D cocoa";
+			remoteGlobalIDString = E52417F311CB860B0025CA71 /* libnuiPhoneD.a */;
+			remoteInfo = nuiPhoneD;
+		};
+		E53313B2120232AF00FF5312 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BC1A61C40E63318300BDD037 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E52420E511CBCE9E0025CA71 /* libnuiPhone.a */;
+			remoteInfo = nuiPhone;
+		};
+		E53313B4120232AF00FF5312 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BC1A61C40E63318300BDD037 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E5A8D1D311E33A54004E14CE /* libnui3CocoaD.a */;
+			remoteInfo = nui3CocoaD;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -191,7 +205,9 @@
 			children = (
 				BC1A61CD0E63318300BDD037 /* libnui3D.a */,
 				BC1A61CF0E63318300BDD037 /* libnui3.a */,
-				E537DAF70F1B85A300430CB0 /* libnui3D cocoa.a */,
+				E53313B1120232AF00FF5312 /* libnuiPhoneD.a */,
+				E53313B3120232AF00FF5312 /* libnuiPhone.a */,
+				E53313B5120232AF00FF5312 /* libnui3CocoaD.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -275,11 +291,25 @@
 			remoteRef = BC1A61CE0E63318300BDD037 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		E537DAF70F1B85A300430CB0 /* libnui3D cocoa.a */ = {
+		E53313B1120232AF00FF5312 /* libnuiPhoneD.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "libnui3D cocoa.a";
-			remoteRef = E537DAF60F1B85A300430CB0 /* PBXContainerItemProxy */;
+			path = libnuiPhoneD.a;
+			remoteRef = E53313B0120232AF00FF5312 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E53313B3120232AF00FF5312 /* libnuiPhone.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnuiPhone.a;
+			remoteRef = E53313B2120232AF00FF5312 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E53313B5120232AF00FF5312 /* libnui3CocoaD.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnui3CocoaD.a;
+			remoteRef = E53313B4120232AF00FF5312 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -344,6 +374,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = NGL_STATIC_BUILD;
+				GCC_VERSION = 4.0;
 				HEADER_SEARCH_PATHS = ../../include;
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 			};
