@@ -23,6 +23,10 @@ public:
   virtual bool Close();
   
   void Process(uint uNumFrames, AudioBufferList* ioData);
+  void ProcessInput(AudioUnitRenderActionFlags* ioActionFlags,
+                    const AudioTimeStamp* inTimeStamp,
+                    UInt32 inBusNumber,
+                    uint uNumFrames, AudioBufferList* ioData);
   
 protected:
   
@@ -50,6 +54,7 @@ protected:
 
   AudioUnit mAudioUnit;
   AUGraph mProcessingGraph;
+  AudioBufferList* mpIData;
 };
 
 

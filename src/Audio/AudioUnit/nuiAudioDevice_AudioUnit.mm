@@ -18,6 +18,7 @@
 //class nuiAudioDevice_AudioUnit : public nuiAudioDevice
 nuiAudioDevice_AudioUnit::nuiAudioDevice_AudioUnit()
 {  
+  mpIData = NULL;
   EnumSampleRates();
   EnumBufferSizes();
 }
@@ -68,20 +69,14 @@ OSStatus AudioUnitInputCallback(void* inRefCon,
                            AudioUnitRenderActionFlags* ioActionFlags,
                            const AudioTimeStamp* inTimeStamp,
                            UInt32 inBusNumber,
-                           UInt32 inNumberFrames_,
+                           UInt32 inNumberFrames,
                            AudioBufferList* ioData)
 {
-  // Return if not pre-render
-//	if(!(*ioActionFlags & kAudioUnitRenderAction_PreRender))
-//  {
-//    return noErr;
-//  }
-//  
-//	// Get a pointer to the audio device
-//	nuiAudioDevice_AudioUnit* pAudioDevice = (nuiAudioDevice_AudioUnit*)inRefCon;
-//  
-//	// Process
-//	pAudioDevice->Process(inNumberFrames_, ioData);
+	// Get a pointer to the audio device
+	nuiAudioDevice_AudioUnit* pAudioDevice = (nuiAudioDevice_AudioUnit*)inRefCon;
+  
+	// Process
+  pAudioDevice->ProcessInput(ioActionFlags, inTimeStamp, inBusNumber, inNumberFrames, ioData);
 	
 	return noErr;
 } 
@@ -145,6 +140,55 @@ void nuiAudioDevice_AudioUnit::Process(uint uNumFrames, AudioBufferList* ioData)
         ptr1++;
       }
     }
+  }
+} 
+
+void nuiAudioDevice_AudioUnit::ProcessInput(AudioUnitRenderActionFlags* ioActionFlags, const AudioTimeStamp* inTimeStamp, UInt32 inBusNumber, uint inNumberFrames, AudioBufferList* ioData)
+{
+  //NGL_OUT(_T("nuiAudioDevice_AudioUnit::ProcessInput uNumFrames %d    %d\n"),uNumFrames, ioData->mBuffers[0].mNumberChannels);
+  
+  //mAudioProcessFn(mInputBuffers, mOutputBuffers, uNumFrames);
+  ioData = mpIData;
+  OSErr err = AudioUnitRender(mAudioUnit, ioActionFlags, inTimeStamp, inBusNumber, inNumberFrames, ioData);
+
+  // copy buffers (int -> float)
+  if (mInputBuffers.size())
+  {
+    const float mult = 1.0 / ((1 << 23) - 1);
+    const int32* src0 = (int32*)ioData->mBuffers[0].mData;
+    float* dst0 = const_cast<float*>(&mInputBuffers[0][0]);
+    for (uint32 s = 0; s < inNumberFrames; s++)
+    {
+      const float sl = *src0;
+      
+      *dst0 = sl * mult;
+      
+      dst0++;
+      src0++;
+    }
+//    }
+//    else
+//    {
+//      int16* src0 = (int16*)ioData->mBuffers[0].mData;
+//      const float* ptr0 = mOutputBuffers[0];
+//      const float* ptr1 = mOutputBuffers[1];
+//      
+//      const int32 mult = ((1 << 15) - 1);
+//      for (uint32 s = 0; s < uNumFrames; s++)
+//      {
+//        const float sl = *ptr0;
+//        const float sr = *ptr1;
+//        
+//        *dst0 = sl * mult;
+//        dst0++;
+//        *dst0 = sr * mult;
+//        dst0++;
+//        
+//        
+//        ptr0++;
+//        ptr1++;
+//      }
+//    }
   }
 } 
 
@@ -339,11 +383,24 @@ bool nuiAudioDevice_AudioUnit::Open(std::vector<uint32>& rInputChannels, std::ve
     
     in_fmt_desc.mSampleRate = mSampleRate;
     in_fmt_desc.mFramesPerPacket = 1;
-    in_fmt_desc.mChannelsPerFrame = rOutputChannels.size();
-    in_fmt_desc.mBytesPerPacket = s * rOutputChannels.size();
-    in_fmt_desc.mBytesPerFrame = s * rOutputChannels.size();
+    in_fmt_desc.mChannelsPerFrame = rInputChannels.size();
+    in_fmt_desc.mBytesPerPacket = s * rInputChannels.size();
+    in_fmt_desc.mBytesPerFrame = s * rInputChannels.size();
     in_fmt_desc.mBitsPerChannel = s * 8;
-		
+
+    AudioStreamBasicDescription out_fmt_desc = {0};
+    size = sizeof(out_fmt_desc);
+    
+    //	err = AudioUnitGetProperty(mAudioUnit, 
+    //                             kAudioUnitProperty_StreamFormat, 
+    //                             kAudioUnitScope_Output, 
+    //                             0, &out_fmt_desc, &size);
+    //	if( err != noErr )
+    //  {
+    //    NGL_ASSERT(0);
+    //    return false;
+    //  }
+    
 		// Enable INPUT
 		flag = 1;
 		if ((err = AudioUnitSetProperty(mAudioUnit, kAudioOutputUnitProperty_EnableIO, kAudioUnitScope_Input,	kInputBus, &flag, sizeof (flag))) != noErr)
@@ -362,7 +419,21 @@ bool nuiAudioDevice_AudioUnit::Open(std::vector<uint32>& rInputChannels, std::ve
 		
 		
 		// Assign input callback
-		cb.inputProc = AudioUnitInputCallback;
+    mpIData = (AudioBufferList*) calloc(1, sizeof(AudioBufferList) + sizeof(AudioBuffer));
+    NGL_ASSERT(mpIData);
+    
+    mpIData->mNumberBuffers = 1;
+    mpIData->mBuffers[0].mNumberChannels = mInputChannels.size();
+    mpIData->mBuffers[0].mDataByteSize = BufferSize * mInputChannels.size() * in_fmt_desc.mBytesPerFrame;
+    mpIData->mBuffers[0].mData = malloc(mpIData->mBuffers[0].mDataByteSize);
+    if (mpIData->mBuffers[0].mData == NULL)
+    {
+      NGL_ASSERT(mpIData->mBuffers[0].mData);
+      return false;
+    }
+    
+		
+    cb.inputProc = AudioUnitInputCallback;
 		cb.inputProcRefCon = this;
 		size = sizeof (AURenderCallbackStruct);	
 		
@@ -394,24 +465,17 @@ bool nuiAudioDevice_AudioUnit::Open(std::vector<uint32>& rInputChannels, std::ve
   }
   
 	
-	//NSAssert (noErr == err, @"Retrieving ASBD failed");
-	
 	//
 	// These new flags in CoreAudioTypes.h tell us how many fractional bits the fixed-point format
 	// uses.  In the current iPhone OS devices, it's always 24
 	
-	//int number_fractional_bits = (fmt_desc.mFormatFlags & kLinearPCMFormatFlagsSampleFractionMask) >> kLinearPCMFormatFlagsSampleFractionShift;	
 	err = AudioUnitInitialize(mAudioUnit);
 	if (err != noErr)
   {
     NGL_ASSERT(0);
     return false;
   }	
-	
-	//NSAssert (noErr == err, @"AU Init Failed");
-	//NSAssert (noErr == err, @"Add Render Callback failed");
-	
-	
+
 	err = AudioOutputUnitStart(mAudioUnit);
 	if (err != noErr)
   {
