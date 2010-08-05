@@ -22,11 +22,11 @@
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
 					20,
-					483,
+					391,
 					20,
-					383,
-					383,
-					312,
+					391,
+					391,
+					388,
 					20,
 				);
 				PBXFileTableDataSourceColumnsKey = (
@@ -129,9 +129,9 @@
 	};
 	61A9DFF10B83433800BC506C /* MainWindow.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1629, 2587}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1076, 2548}}";
 			sepNavSelRange = "{3402, 0}";
-			sepNavVisRange = "{2597, 1479}";
+			sepNavVisRange = "{2798, 1161}";
 			sepNavWindowFrame = "{{15, 310}, {1061, 1103}}";
 		};
 	};

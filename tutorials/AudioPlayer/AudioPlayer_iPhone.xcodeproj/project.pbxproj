@@ -511,7 +511,7 @@
 					"-lz",
 				);
 				PREBINDING = NO;
-				SDKROOT = iphonesimulator3.2;
+				SDKROOT = iphoneos3.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USE_HEADERMAP = NO;
 			};

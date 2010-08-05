@@ -219,8 +219,8 @@
 	<array/>
 	<key>PerspectiveWidths</key>
 	<array>
-		<integer>2560</integer>
-		<integer>2560</integer>
+		<integer>1920</integer>
+		<integer>1920</integer>
 	</array>
 	<key>Perspectives</key>
 	<array>
@@ -293,6 +293,7 @@
 								<string>61A9DE3D0B833C9200BC506C</string>
 								<string>61A9DE4A0B833CD000BC506C</string>
 								<string>1C37FBAC04509CD000000102</string>
+								<string>1C77FABC04509CD000000102</string>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
@@ -320,7 +321,7 @@
 							<real>283</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>0 59 2560 1359 0 0 2560 1418 </string>
+						<string>0 59 1920 1119 0 0 1920 1178 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -363,7 +364,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {2255, 887}}</string>
 								<key>RubberWindowFrame</key>
-								<string>0 59 2560 1359 0 0 2560 1418 </string>
+								<string>0 59 1920 1119 0 0 1920 1178 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -388,7 +389,7 @@
 										<key>Frame</key>
 										<string>{{10, 27}, {2255, 399}}</string>
 										<key>RubberWindowFrame</key>
-										<string>0 59 2560 1359 0 0 2560 1418 </string>
+										<string>0 59 1920 1119 0 0 1920 1178 </string>
 									</dict>
 									<key>Module</key>
 									<string>XCDetailModule</string>
@@ -596,7 +597,7 @@
 								<string>Value</string>
 								<real>110</real>
 								<string>Summary</string>
-								<real>1000</real>
+								<real>680</real>
 							</array>
 							<key>Frame</key>
 							<string>{{0, 325}, {1280, 327}}</string>
@@ -667,7 +668,7 @@
 		<string>/Users/meeloo/work/nui3/tutorials/NetworkTest/NetworkTest.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>0 59 2560 1359 0 0 2560 1418 </string>
+	<string>0 59 1920 1119 0 0 1920 1178 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>

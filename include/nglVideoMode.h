@@ -124,7 +124,7 @@ private:
   static void Init();
   static bool SetMode (nglVideoMode* pMode, bool Lock);
 
-  /*CGDirectDisplayID*/ uint32 mDisplay;
+  CGDirectDisplayID mDisplay;
   long mHeight, mWidth, mRate, mBPP;
 
 #endif // _CARBON_

@@ -180,6 +180,8 @@ void nuiMainMenuItem::MakeSubMenu(uint32 subMenuID)
 //
 //*****************************************************************************************
 
+pascal OSStatus MainMenuEventHandler(EventHandlerCallRef eventHandlerCallRef, EventRef eventRef, void* userData);
+
 
 class nuiMainMenuPrivate
 {
@@ -243,10 +245,9 @@ private:
 
 
 
-
 pascal OSStatus MainMenuEventHandler(EventHandlerCallRef eventHandlerCallRef, EventRef eventRef, void* userData)
 {
-//  wprintf(_T("MainMenuEventHandler 0x%x\n"), userData);
+  //  wprintf(_T("MainMenuEventHandler 0x%x\n"), userData);
   
   nuiMainMenuPrivate* pPrivate = (nuiMainMenuPrivate*)userData;
   if (!pPrivate)
@@ -254,14 +255,14 @@ pascal OSStatus MainMenuEventHandler(EventHandlerCallRef eventHandlerCallRef, Ev
   
   UInt32 eventKind = GetEventKind(eventRef);
   UInt32 eventClass = GetEventClass (eventRef);
-    
+  
   switch (eventClass)
   {
     case kEventClassCommand:
     {
       HICommand command;
       GetEventParameter(eventRef, kEventParamDirectObject, typeHICommand, 
-                         NULL, sizeof(HICommand), NULL, &command);
+                        NULL, sizeof(HICommand), NULL, &command);
       
       switch (eventKind)
       {
@@ -274,10 +275,10 @@ pascal OSStatus MainMenuEventHandler(EventHandlerCallRef eventHandlerCallRef, Ev
           // we chose to use our objects' pointers as command ID. This way, getting our objects from the command ID is easy.
           //
           // All we have to do : check the commandID is one of our commands. If it's not, we just dispatch the event to the default event handler.
-                    
+          
           if (!pPrivate->IsCommandRegistered(command.commandID))
             return CallNextEventHandler(eventHandlerCallRef, eventRef);
-
+          
           // retrieve the associated item from the command ID
           nuiMainMenuItem* pItem = (nuiMainMenuItem*)command.commandID;
           
@@ -290,7 +291,7 @@ pascal OSStatus MainMenuEventHandler(EventHandlerCallRef eventHandlerCallRef, Ev
           // and send the item activation signal
           pItem->Activated();
         }
-        break;
+          break;
           
         default:
         {

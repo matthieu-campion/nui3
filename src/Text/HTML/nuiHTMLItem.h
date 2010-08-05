@@ -14,7 +14,7 @@
 
 class nuiHTMLBox;
 
-class nuiHTMLItem
+class nuiHTMLItem : public nuiObject
 {
 public:
   nuiHTMLItem(nuiHTMLNode* pNode, nuiHTMLNode* pAnchor, bool Inline);

@@ -15,6 +15,7 @@
 
 #include "nglWindow_Cocoa.h"
 
+#include <Cocoa/Cocoa.h>
 #include <OpenGL/OpenGL.h>
 #include <AppKit/AppKit.h>
 
@@ -92,12 +93,12 @@ const nglChar* gpWindowErrorTable[] =
   // create and activate the context object which maintains the OpenGL state
   NSOpenGLPixelFormatAttribute attribs[] =
   {
-    NSOpenGLPFAColorSize, 24,
-    NSOpenGLPFADepthSize, 16,
+    NSOpenGLPFAColorSize, (NSOpenGLPixelFormatAttribute)24,
+    NSOpenGLPFADepthSize, (NSOpenGLPixelFormatAttribute)16,
     NSOpenGLPFAAccelerated,
     NSOpenGLPFABackingStore,
     //NSOpenGLPFAWindow,
-    0
+    (NSOpenGLPixelFormatAttribute)0
   };
   NSOpenGLPixelFormat* format = [[NSOpenGLPixelFormat alloc] initWithAttributes:attribs];
   
@@ -170,7 +171,7 @@ const nglChar* gpWindowErrorTable[] =
 	mDisplayLink = nil;
 	
   BOOL deffering = NO;
-  NSUInteger styleMask = NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask | NSResizableWindowMask;
+  uint32 styleMask = NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask | NSResizableWindowMask;
   NSBackingStoreType buffering = NSBackingStoreBuffered;
     
   if ( (self = [self initWithContentRect:rect styleMask:styleMask backing:buffering defer:deffering]) )

@@ -50,7 +50,7 @@ OSStatus AudioUnitCallback(void* inRefCon,
                            AudioBufferList* ioData)
 {
   // Return if not pre-render
-//	if(!(*ioActionFlags & kAudioUnitRenderAction_PreRender))
+//	if(!(*ioActionFlags & kAudioUnitRenderAction_))
 //  {
 //    return noErr;
 //  }

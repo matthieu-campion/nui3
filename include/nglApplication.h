@@ -279,7 +279,7 @@ public:
 #endif//_UIKIT_
 
 #ifdef _COCOA_
-  int nglApplication::Main(int ArgCount, const char** pArgs);
+  int Main(int ArgCount, const char** pArgs);
   friend int main(int ArgCount, const char** pArgs);
   bool Init(int argc, const char** argv);
   int  Run();

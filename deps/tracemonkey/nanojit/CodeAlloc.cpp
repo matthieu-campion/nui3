@@ -329,6 +329,7 @@ extern  "C" void sync_instruction_memory(caddr_t v, u_int len);
     // mac ppc 32 could be 10.0 or later
     // uses MakeDataExecutable() from Carbon api, OSUtils.h
     // see http://developer.apple.com/documentation/Carbon/Reference/Memory_Manag_nt_Utilities/Reference/reference.html#//apple_ref/c/func/MakeDataExecutable
+#undef Boolean
 #include <Carbon/Carbon.h>
 
     void CodeAlloc::flushICache(void *start, size_t len) {

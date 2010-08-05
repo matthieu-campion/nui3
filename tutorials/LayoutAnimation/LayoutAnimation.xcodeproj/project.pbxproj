@@ -23,6 +23,13 @@
 		61A9DFF60B83433800BC506C /* MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */; };
 		BCBCB15F0DFD45BD002E8BC3 /* libnui3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */; };
 		E59CD16A11EA0C4000955611 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E59CD16911EA0C4000955611 /* Cocoa.framework */; };
+		E5D64525120A0B92009C26A9 /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61A9DFEF0B83433800BC506C /* Application.cpp */; };
+		E5D64526120A0B92009C26A9 /* MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */; };
+		E5D64528120A0B92009C26A9 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD30B833F1500BC506C /* CoreFoundation.framework */; };
+		E5D64529120A0B92009C26A9 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD40B833F1500BC506C /* CoreServices.framework */; };
+		E5D6452A120A0B92009C26A9 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD60B833F1500BC506C /* OpenGL.framework */; };
+		E5D6452C120A0B92009C26A9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E59CD16911EA0C4000955611 /* Cocoa.framework */; };
+		E5D6453D120AA7D8009C26A9 /* libnui3Cocoa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E5D644FB120A01E0009C26A9 /* libnui3Cocoa.a */; };
 		E5EF6FBC11E77DE8000FB337 /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61A9DFEF0B83433800BC506C /* Application.cpp */; };
 		E5EF6FBD11E77DE8000FB337 /* MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */; };
 		E5EF6FC011E77DE8000FB337 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD30B833F1500BC506C /* CoreFoundation.framework */; };
@@ -75,6 +82,20 @@
 			remoteGlobalIDString = E5A626F311CA240100446489;
 			remoteInfo = nuiPhoneD;
 		};
+		E5D644FA120A01E0009C26A9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E5D643E51209AB9C009C26A9 /* libnui3Cocoa.a */;
+			remoteInfo = nui3Cocoa;
+		};
+		E5D64534120A0BA3009C26A9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = E5D63EBB1209AB9C009C26A9 /* nui3Cocoa */;
+			remoteInfo = nui3Cocoa;
+		};
 		E5EF6FB011E77DE0000FB337 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
@@ -106,7 +127,9 @@
 		BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nui3.xcodeproj; path = ../../nui3.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E59CD16911EA0C4000955611 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		E59CD30011EA94A000955611 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
-		E5EF6FC811E77DE8000FB337 /* LayoutAnimationD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LayoutAnimationD.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E5D64530120A0B92009C26A9 /* LayoutAnimationCocoa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LayoutAnimationCocoa.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E5D64532120A0B92009C26A9 /* Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info copy.plist"; sourceTree = "<group>"; };
+		E5EF6FC811E77DE8000FB337 /* LayoutAnimationCocoaD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LayoutAnimationCocoaD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +156,18 @@
 				61A9DFDF0B833F1500BC506C /* Carbon.framework in Frameworks */,
 				61A9DFE00B833F1500BC506C /* OpenGL.framework in Frameworks */,
 				E5EF6FD111E77E79000FB337 /* libnui3D.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5D64527120A0B92009C26A9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E5D64528120A0B92009C26A9 /* CoreFoundation.framework in Frameworks */,
+				E5D64529120A0B92009C26A9 /* CoreServices.framework in Frameworks */,
+				E5D6452A120A0B92009C26A9 /* OpenGL.framework in Frameworks */,
+				E5D6452C120A0B92009C26A9 /* Cocoa.framework in Frameworks */,
+				E5D6453D120AA7D8009C26A9 /* libnui3Cocoa.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -182,6 +217,7 @@
 				61A9DFF00B83433800BC506C /* Application.h */,
 				61A9DFF10B83433800BC506C /* MainWindow.cpp */,
 				61A9DFF20B83433800BC506C /* MainWindow.h */,
+				E5D64532120A0B92009C26A9 /* Info copy.plist */,
 			);
 			name = sources;
 			sourceTree = "<group>";
@@ -191,7 +227,8 @@
 			children = (
 				61A9DFBF0B833E9600BC506C /* LayoutAnimation.app */,
 				61A9DFC90B833EF200BC506C /* LayoutAnimationD.app */,
-				E5EF6FC811E77DE8000FB337 /* LayoutAnimationD.app */,
+				E5EF6FC811E77DE8000FB337 /* LayoutAnimationCocoaD.app */,
+				E5D64530120A0B92009C26A9 /* LayoutAnimationCocoa.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -204,6 +241,7 @@
 				E5A630D511CA7CCD00446489 /* libnuiPhoneD.a */,
 				E52420EE11CBCEBC0025CA71 /* libnuiPhone.a */,
 				E5EF6FB111E77DE0000FB337 /* libnui3CocoaD.a */,
+				E5D644FB120A01E0009C26A9 /* libnui3Cocoa.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -248,6 +286,24 @@
 			productReference = 61A9DFC90B833EF200BC506C /* LayoutAnimationD.app */;
 			productType = "com.apple.product-type.application";
 		};
+		E5D64521120A0B92009C26A9 /* LayoutAnimationCocoa */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E5D6452E120A0B92009C26A9 /* Build configuration list for PBXNativeTarget "LayoutAnimationCocoa" */;
+			buildPhases = (
+				E5D64524120A0B92009C26A9 /* Sources */,
+				E5D64527120A0B92009C26A9 /* Frameworks */,
+				E5D6452D120A0B92009C26A9 /* Copy Resources Script */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E5D64535120A0BA3009C26A9 /* PBXTargetDependency */,
+			);
+			name = LayoutAnimationCocoa;
+			productName = Tempd;
+			productReference = E5D64530120A0B92009C26A9 /* LayoutAnimationCocoa.app */;
+			productType = "com.apple.product-type.application";
+		};
 		E5EF6FB811E77DE8000FB337 /* LayoutAnimationCocoaD */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E5EF6FC611E77DE8000FB337 /* Build configuration list for PBXNativeTarget "LayoutAnimationCocoaD" */;
@@ -263,7 +319,7 @@
 			);
 			name = LayoutAnimationCocoaD;
 			productName = Tempd;
-			productReference = E5EF6FC811E77DE8000FB337 /* LayoutAnimationD.app */;
+			productReference = E5EF6FC811E77DE8000FB337 /* LayoutAnimationCocoaD.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -274,6 +330,9 @@
 			buildConfigurationList = 61A9DE400B833C9200BC506C /* Build configuration list for PBXProject "LayoutAnimation" */;
 			compatibilityVersion = "Xcode 3.1";
 			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
 			mainGroup = 61A9DE3D0B833C9200BC506C;
 			productRefGroup = 61A9DFB50B833DE500BC506C /* Products */;
 			projectDirPath = "";
@@ -288,6 +347,7 @@
 				61A9DFBE0B833E9600BC506C /* LayoutAnimation */,
 				61A9DFC80B833EF200BC506C /* LayoutAnimationD */,
 				E5EF6FB811E77DE8000FB337 /* LayoutAnimationCocoaD */,
+				E5D64521120A0B92009C26A9 /* LayoutAnimationCocoa */,
 			);
 		};
 /* End PBXProject section */
@@ -319,6 +379,13 @@
 			fileType = archive.ar;
 			path = libnuiPhoneD.a;
 			remoteRef = E5A630D411CA7CCD00446489 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E5D644FB120A01E0009C26A9 /* libnui3Cocoa.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnui3Cocoa.a;
+			remoteRef = E5D644FA120A01E0009C26A9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		E5EF6FB111E77DE0000FB337 /* libnui3CocoaD.a */ = {
@@ -369,6 +436,20 @@
 			shellPath = /bin/sh;
 			shellScript = "rsync -rC ./resources/ --exclude \".*\" \"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"\n../../tools/make_rc.py resources resource.rc\necho 0 ICON \\\"resources/icon.ico\\\" >> resource.rc\n";
 		};
+		E5D6452D120A0B92009C26A9 /* Copy Resources Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Resources Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "rsync -rC ./resources/ --exclude \".*\" \"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"\n../../tools/make_rc.py resources resource.rc\necho 0 ICON \\\"resources/icon.ico\\\" >> resource.rc\n";
+		};
 		E5EF6FC511E77DE8000FB337 /* Copy Resources Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -404,6 +485,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E5D64524120A0B92009C26A9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E5D64525120A0B92009C26A9 /* Application.cpp in Sources */,
+				E5D64526120A0B92009C26A9 /* MainWindow.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E5EF6FBB11E77DE8000FB337 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -425,6 +515,11 @@
 			isa = PBXTargetDependency;
 			name = nui3D;
 			targetProxy = BCBCB1650DFD4605002E8BC3 /* PBXContainerItemProxy */;
+		};
+		E5D64535120A0BA3009C26A9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = nui3Cocoa;
+			targetProxy = E5D64534120A0BA3009C26A9 /* PBXContainerItemProxy */;
 		};
 		E5EF6FCC11E77E22000FB337 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -499,10 +594,39 @@
 			};
 			name = Default;
 		};
+		E5D6452F120A0B92009C26A9 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_AUTO_VECTORIZATION = YES;
+				GCC_DEBUGGING_SYMBOLS = default;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = _COCOA_;
+				GCC_VERSION = 4.2;
+				INFOPLIST_FILE = "Info copy.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				PRODUCT_NAME = LayoutAnimationCocoa;
+				SDKROOT = macosx10.6;
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = NO;
+			};
+			name = Default;
+		};
 		E5EF6FC711E77DE8000FB337 /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DEBUGGING_SYMBOLS = full;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -515,7 +639,7 @@
 					_DEBUG,
 				);
 				INSTALL_PATH = "$(HOME)/Applications";
-				PRODUCT_NAME = LayoutAnimationD;
+				PRODUCT_NAME = LayoutAnimationCocoaD;
 				WARNING_CFLAGS = (
 					"-Wmost",
 					"-Wno-four-char-constants",
@@ -549,6 +673,14 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				61A9DFCD0B833EF300BC506C /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		E5D6452E120A0B92009C26A9 /* Build configuration list for PBXNativeTarget "LayoutAnimationCocoa" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E5D6452F120A0B92009C26A9 /* Default */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Default;

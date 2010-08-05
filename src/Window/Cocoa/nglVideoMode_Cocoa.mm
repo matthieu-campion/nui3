@@ -83,8 +83,8 @@ bool nglVideoMode::SetMode (nglVideoMode* pVideoMode, bool Lock)
   bool done = false;
 
   boolean_t exactMatch;
-  CFDictionaryRef mode = CGDisplayBestModeForParametersAndRefreshRate(pVideoMode->mDisplay, pVideoMode->mBPP, pVideoMode->mWidth, pVideoMode->mHeight, pVideoMode->mRate, &exactMatch);
-  CGDisplaySwitchToMode( pVideoMode->mDisplay, mode);
+  CFDictionaryRef mode = CGDisplayBestModeForParametersAndRefreshRate((CGDirectDisplayID)pVideoMode->mDisplay, pVideoMode->mBPP, pVideoMode->mWidth, pVideoMode->mHeight, pVideoMode->mRate, &exactMatch);
+  CGDisplaySwitchToMode( (CGDirectDisplayID)pVideoMode->mDisplay, mode);
   NGL_DEBUG( NGL_LOG(_T("vidmode"), NGL_LOG_INFO, _T("switching to %ls: %ls"), pVideoMode->Dump().GetChars(), done ? _T("ok"):_T("failed")); )
   return done;
 }

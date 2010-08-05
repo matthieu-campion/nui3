@@ -320,9 +320,10 @@ and in NGL user application code.
   #ifndef __cplusplus
   //  #if defined(_OBJC_)
   #include <Cocoa/Cocoa.h>
-  #include <ApplicationServices/ApplicationServices.h>
   #include <CoreGraphics/CoreGraphics.h>
   #endif
+  
+  #include <ApplicationServices/ApplicationServices.h>
 
   #include <stdlib.h>
   #include <stddef.h>
