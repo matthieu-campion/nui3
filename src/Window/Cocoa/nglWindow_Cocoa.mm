@@ -48,6 +48,120 @@ const nglChar* gpWindowErrorTable[] =
 # define NGL_TOUCHES_OUT {}
 #endif//!_MULTI_TOUCHES_
 
+
+////////// Keyboard:
+int ngl_scode_table[0x80] = 
+{
+  /*  0 */ NK_A, NK_S, NK_D, NK_F, NK_H, NK_G, NK_Z, NK_X, NK_C, NK_V,
+  /* 10 */ NK_GRAVE, NK_B, NK_Q, NK_W, NK_E, NK_R, NK_Y, NK_T, NK_1, NK_2,
+  /* 20 */ NK_3, NK_4, NK_6, NK_5, NK_EQUAL, NK_9, NK_7, NK_MINUS, NK_8, NK_0,
+  /* 30 */ NK_RBRACKET, NK_O, NK_U, NK_LBRACKET, NK_I, NK_P, NK_ENTER, NK_L, NK_J, NK_APOSTROPHE,
+  /* 40 */ NK_K, NK_SEMICOLON, NK_NUMBERSIGN, NK_COMMA, NK_SLASH, NK_N, NK_M, NK_PERIOD, NK_TAB, NK_SPACE,
+  /* 50 */ NK_BACKSLASH, NK_BACKSPACE, 0, NK_ESC, 0, 0, 0, 0, 0, 0,
+  /* 60 */ 0, 0, 0, 0, 0, NK_PAD_PERIOD, 0, NK_PAD_ASTERISK, 0, NK_PAD_PLUS,
+  /* 70 */ 0, NK_PAD_LOCK, 0, 0, 0, NK_PAD_SLASH, NK_PAD_ENTER, 0, NK_PAD_MINUS, 0,
+  /* 80 */ 0, 0, NK_PAD_0, NK_PAD_1, NK_PAD_2, NK_PAD_3, NK_PAD_4, NK_PAD_5, NK_PAD_6, NK_PAD_7,
+  /* 90 */ 0, NK_PAD_8, NK_PAD_9, 0, 0, 0, NK_F5, NK_F6, NK_F7, NK_F3,
+  /* 100 */ NK_F8, NK_F9, 0, NK_F11, NK_SYSREQ, 0, NK_SCRLOCK, 0, 0, NK_F10,
+  /* 110 */ NK_MENU, NK_F12, 0, NK_PAUSE, 0, NK_HOME, NK_PAGEUP, NK_DELETE, NK_F4, NK_END,
+  /* 120 */ NK_F2, NK_PAGEDOWN, NK_F1, NK_LEFT, NK_RIGHT, NK_DOWN, NK_UP 
+};
+
+std::map<unichar, nglKeyCode> gKeyCodes;
+
+static void InitCocoaToNGLKeyCodes()
+{
+  if (!gKeyCodes.empty())
+    return;
+  gKeyCodes[NSUpArrowFunctionKey] = NK_UP;
+  gKeyCodes[NSDownArrowFunctionKey] = NK_DOWN;
+  gKeyCodes[NSLeftArrowFunctionKey] = NK_LEFT;
+  gKeyCodes[NSRightArrowFunctionKey] = NK_RIGHT;
+  gKeyCodes[NSF1FunctionKey] = NK_F1;
+  gKeyCodes[NSF2FunctionKey] = NK_F2;
+  gKeyCodes[NSF3FunctionKey] = NK_F3;
+  gKeyCodes[NSF4FunctionKey] = NK_F4;
+  gKeyCodes[NSF5FunctionKey] = NK_F5;
+  gKeyCodes[NSF6FunctionKey] = NK_F6;
+  gKeyCodes[NSF7FunctionKey] = NK_F7;
+  gKeyCodes[NSF8FunctionKey] = NK_F8;
+  gKeyCodes[NSF9FunctionKey] = NK_F9;
+  gKeyCodes[NSF10FunctionKey] = NK_F10;
+  gKeyCodes[NSF11FunctionKey] = NK_F11;
+  gKeyCodes[NSF12FunctionKey] = NK_F12;
+  //  gKeyCodes[NSF13FunctionKey] = ;
+  //  gKeyCodes[NSF14FunctionKey] = ;
+  //  gKeyCodes[NSF15FunctionKey] = ;
+  //  gKeyCodes[NSF16FunctionKey] = ;
+  //  gKeyCodes[NSF17FunctionKey] = ;
+  //  gKeyCodes[NSF18FunctionKey] = ;
+  //  gKeyCodes[NSF19FunctionKey] = ;
+  //  gKeyCodes[NSF20FunctionKey ] = ;
+  //  gKeyCodes[NSF21FunctionKey ] = ;
+  //  gKeyCodes[NSF22FunctionKey ] = ;
+  //  gKeyCodes[NSF23FunctionKey ] = ;
+  //  gKeyCodes[NSF24FunctionKey ] = ;
+  //  gKeyCodes[NSF25FunctionKey ] = ;
+  //  gKeyCodes[NSF26FunctionKey ] = ;
+  //  gKeyCodes[NSF27FunctionKey ] = ;
+  //  gKeyCodes[NSF28FunctionKey ] = ;
+  //  gKeyCodes[NSF29FunctionKey ] = ;
+  //  gKeyCodes[NSF30FunctionKey ] = ;
+  //  gKeyCodes[NSF31FunctionKey ] = ;
+  //  gKeyCodes[NSF32FunctionKey ] = ;
+  //  gKeyCodes[NSF33FunctionKey ] = ;
+  //  gKeyCodes[NSF34FunctionKey ] = ;
+  //  gKeyCodes[NSF35FunctionKey ] = ;
+  gKeyCodes[NSInsertFunctionKey ] = NK_INSERT;
+  gKeyCodes[NSDeleteFunctionKey ] = NK_DELETE;
+  gKeyCodes[NSHomeFunctionKey   ] = NK_HOME;
+  //gKeyCodes[NSBeginFunctionKey  ] =;
+  //gKeyCodes[NSEndFunctionKey    ] = ;
+  gKeyCodes[NSPageUpFunctionKey ] = NK_PAGEUP;
+  gKeyCodes[NSPageDownFunctionKey    ] = NK_PAGEDOWN;
+  //gKeyCodes[NSPrintScreenFunctionKey ] = ;
+  gKeyCodes[NSScrollLockFunctionKey  ] = NK_SCRLOCK;
+  gKeyCodes[NSPauseFunctionKey       ] = NK_PAUSE;
+  gKeyCodes[NSSysReqFunctionKey      ] = NK_SYSREQ;
+  //gKeyCodes[NSBreakFunctionKey       ] = ;
+  //gKeyCodes[NSResetFunctionKey       ] = ;
+  //gKeyCodes[NSStopFunctionKey        ] = ;
+  gKeyCodes[NSMenuFunctionKey        ] = NK_MENU;
+  //gKeyCodes[NSUserFunctionKey        ] = ;
+  //gKeyCodes[NSSystemFunctionKey      ] = ;
+  //gKeyCodes[NSPrintFunctionKey       ] = ;
+  //gKeyCodes[NSClearLineFunctionKey   ] = ;
+  //gKeyCodes[NSClearDisplayFunctionKey] = ;
+  //gKeyCodes[NSInsertLineFunctionKey  ] = ;
+  //gKeyCodes[NSDeleteLineFunctionKey  ] = ;
+  //gKeyCodes[NSInsertCharFunctionKey  ] = ;
+  //gKeyCodes[NSDeleteCharFunctionKey  ] = ;
+  //gKeyCodes[NSPrevFunctionKey        ] = ;
+  //gKeyCodes[NSNextFunctionKey        ] = ;
+  //gKeyCodes[NSSelectFunctionKey      ] = ;
+  //gKeyCodes[NSExecuteFunctionKey     ] = ;
+  //gKeyCodes[NSUndoFunctionKey        ] = ;
+  //gKeyCodes[NSRedoFunctionKey        ] = ;
+  //gKeyCodes[NSFindFunctionKey        ] = ;
+  //gKeyCodes[NSHelpFunctionKey        ] = ;
+  //gKeyCodes[NSModeSwitchFunctionKey  ] = ;
+  
+  // Normal keys:
+  gKeyCodes[' '] = NK_SPACE;
+}
+
+nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
+{
+  InitCocoaToNGLKeyCodes();
+  std::map<unichar, nglKeyCode>::const_iterator it = gKeyCodes.find(c);
+  if (scanCode < 0x80)
+    return ngl_scode_table[scanCode];
+  if (it != gKeyCodes.end())
+    return it->second;
+  return NK_NONE;
+}
+
+
 //#define _DEBUG_WINDOW_
 
 @interface customGLView : NSView
@@ -146,6 +260,21 @@ const nglChar* gpWindowErrorTable[] =
   [super dealloc];
 }
 
+- (void)keyDown:(NSEvent *)theEvent
+{
+  [[self window] keyDown:theEvent];
+}
+
+- (void)keyUp:(NSEvent *)theEvent
+{
+  [[self window] keyUp:theEvent];
+}
+
+- (void)flagsChanged:(NSEvent *)theEvent
+{
+  [[self window] flagsChanged:theEvent];
+}
+
 @end
 
 
@@ -164,6 +293,8 @@ const nglChar* gpWindowErrorTable[] =
 
 - (id) initWithFrame: (NSRect) rect andNGLWindow: (nglWindow*) pNGLWindow
 {
+  mModifiers = 0;
+
 	mInited = false;
 	mInvalidated = true;
 	
@@ -412,6 +543,93 @@ const nglChar* gpWindowErrorTable[] =
   mpNGLWindow->CallOnMouseMove(info);
 }
 
+////////// Keyboard:
+- (void)keyDown:(NSEvent *)theEvent
+{
+  NSString *chars = [theEvent characters];
+  NSString *rawchars = [theEvent charactersIgnoringModifiers];
+  nglString c((CFStringRef)chars);
+  nglString rc((CFStringRef)rawchars);
+  printf("Key Down: '%ls' / '%ls'.\n", c.GetChars(), rc.GetChars());
+  if ( [rawchars length] == 0 )
+    return;            // reject dead keys
+  if ( [rawchars length] == 1 )
+  {
+    unichar keyChar = [chars characterAtIndex:0];
+    unichar keyRawChar = [rawchars characterAtIndex:0];
+    uint16 scanCode = [theEvent keyCode];
+    nglKeyCode keyCode = CocoaToNGLKeyCode(keyRawChar, scanCode);
+    nglKeyEvent event(keyCode, keyChar, keyRawChar);
+    mpNGLWindow->CallOnKeyDown(event);
+  }
+
+  [super keyDown:theEvent];
+}
+
+- (void)keyUp:(NSEvent *)theEvent
+{
+  NSString *chars = [theEvent characters];
+  NSString *rawchars = [theEvent charactersIgnoringModifiers];
+  nglString c((CFStringRef)chars);
+  nglString rc((CFStringRef)rawchars);
+  printf("Key Up: '%ls' / '%ls'.\n", c.GetChars(), rc.GetChars());
+  if ( [rawchars length] == 0 )
+    return;            // reject dead keys
+  if ( [rawchars length] == 1 )
+  {
+    unichar keyChar = [chars characterAtIndex:0];
+    unichar keyRawChar = [rawchars characterAtIndex:0];
+    uint16 scanCode = [theEvent keyCode];
+    nglKeyCode keyCode = CocoaToNGLKeyCode(keyRawChar, scanCode);
+    nglKeyEvent event(keyCode, keyChar, keyRawChar);
+    mpNGLWindow->CallOnKeyUp(event);
+  }
+  [super keyUp:theEvent];
+}
+
+- (void)flagsChanged:(NSEvent *)theEvent
+{
+  uint32 modKeys = [theEvent modifierFlags];
+  UInt32 upKeys;
+  UInt32 dnKeys;
+  upKeys = ~modKeys & mModifiers;
+  dnKeys = modKeys & ~mModifiers;
+  mModifiers = modKeys;
+  
+  bool res = false;
+  if (upKeys & NSShiftKeyMask)
+    res |= mpNGLWindow->CallOnKeyUp(nglKeyEvent(NK_LSHIFT, 0, 0));
+  if (upKeys & NSControlKeyMask)
+    res |= mpNGLWindow->CallOnKeyUp(nglKeyEvent(NK_LCTRL, 0, 0));
+  if (upKeys & NSAlternateKeyMask)
+    res |= mpNGLWindow->CallOnKeyUp(nglKeyEvent(NK_LALT, 0, 0));
+  if (upKeys & NSAlphaShiftKeyMask)
+    res |= mpNGLWindow->CallOnKeyUp(nglKeyEvent(NK_CAPSLOCK, 0, 0));
+  if (upKeys & NSCommandKeyMask)
+    res |= mpNGLWindow->CallOnKeyUp(nglKeyEvent(NK_META, 0, 0));
+  
+  if (dnKeys & NSShiftKeyMask)
+    res |= mpNGLWindow->CallOnKeyDown(nglKeyEvent(NK_LSHIFT, 0, 0));
+  if (dnKeys & NSControlKeyMask)
+    res |= mpNGLWindow->CallOnKeyDown(nglKeyEvent(NK_LCTRL, 0, 0));
+  if (dnKeys & NSAlternateKeyMask)
+    res |= mpNGLWindow->CallOnKeyDown(nglKeyEvent(NK_LALT, 0, 0));
+  if (dnKeys & NSAlphaShiftKeyMask)
+    res |= mpNGLWindow->CallOnKeyDown(nglKeyEvent(NK_CAPSLOCK, 0, 0));
+  if (dnKeys & NSCommandKeyMask)
+    res |= mpNGLWindow->CallOnKeyDown(nglKeyEvent(NK_META, 0, 0));
+  
+  
+  //NSAlphaShiftKeyMask
+  //NSShiftKeyMask
+  //NSControlKeyMask
+  //NSAlternateKeyMask
+  //NSCommandKeyMask
+  //NSNumericPadKeyMask
+  //NSHelpKeyMask
+  //NSFunctionKeyMask
+}
+
 //////////
 - (void)resize: (NSSize) size
 {
@@ -573,7 +791,7 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
   glClear(GL_COLOR_BUFFER_BIT);
   
 //  [pNSWindow UpdateOrientation];
-
+  
 /* Ultra basic UIKit view integration on top of nuiWidgets
   UIWebView* pWebView = [[UIWebView alloc] initWithFrame: CGRectMake(50, 50, 200, 200)];
 	[pNSWindow addSubview: pWebView];
@@ -669,9 +887,50 @@ void nglWindow::SetTitle (const nglString& rTitle)
   [mpNSWindow setTitle: (NSString*)rTitle.ToCFString()];
 }
 
+bool IsThisKeyDown(const short theKey)
+{
+  return CGEventSourceKeyState(kCGEventSourceStateHIDSystemState, theKey);
+}
+
+
+bool IsCommandKeyDown()
+{
+  const short kCommandKey = 55;
+  return IsThisKeyDown(kCommandKey);
+}
+
+bool IsControlKeyDown()
+{
+  const short kCtlKey = 0x3B;
+  return IsThisKeyDown(kCtlKey);
+}
+
+bool IsOptionKeyDown()
+{
+  const short kOptionKey = 58;
+  return IsThisKeyDown(kOptionKey);
+}
+
+bool IsShiftKeyDown()
+{
+  const short kShiftKey = 56;
+  return IsThisKeyDown(kShiftKey);
+}
+
 bool nglWindow::IsKeyDown (nglKeyCode Key) const
 {
-  return false;
+  if (Key == NK_LMETA || Key == NK_RMETA || Key == NK_META)
+    return IsCommandKeyDown();
+  else if (Key == NK_LCTRL || Key == NK_RCTRL || Key == NK_CTRL)
+    return IsControlKeyDown();
+  else if (Key == NK_LSHIFT || Key == NK_RSHIFT || Key == NK_SHIFT)
+    return IsShiftKeyDown();
+  else if (Key == NK_LALT || Key == NK_RALT || Key == NK_ALT)
+    return IsOptionKeyDown();
+  else if ((Key > 0) && (Key <= NGL_KEY_MAX))
+    return mpKeyState[Key-1];
+  else
+    return false;
 }
 
 void nglWindow::GetMouse (nglMouseInfo& rMouseInfo, bool Local) const

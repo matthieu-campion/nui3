@@ -19,6 +19,7 @@
   NSTimer*      mInvalidationTimer;
 
   nuiTimer*     mpTimer;
+  uint32        mModifiers;
 }
 
 + (Class) layerClass;
