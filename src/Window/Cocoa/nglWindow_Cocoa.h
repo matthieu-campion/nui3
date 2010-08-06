@@ -30,5 +30,9 @@
 - (void) invalidate;
 - (nglWindow *) getNGLWindow;
 
+- (BOOL)keyDown:(NSEvent *)theEvent;
+- (BOOL)keyUp:(NSEvent *)theEvent;
+- (BOOL)flagsChanged:(NSEvent *)theEvent;
+
 @end///< nglNSWindow
 

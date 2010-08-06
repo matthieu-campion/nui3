@@ -262,17 +262,20 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
 
 - (void)keyDown:(NSEvent *)theEvent
 {
-  [[self window] keyDown:theEvent];
+  if (![(nglNSWindow*)[self window] keyDown:theEvent])
+    [super keyDown: theEvent];
 }
 
 - (void)keyUp:(NSEvent *)theEvent
 {
-  [[self window] keyUp:theEvent];
+  if (![(nglNSWindow*)[self window] keyUp:theEvent])
+    [super keyUp: theEvent];
 }
 
 - (void)flagsChanged:(NSEvent *)theEvent
 {
-  [[self window] flagsChanged:theEvent];
+  if (![(nglNSWindow*)[self window] flagsChanged:theEvent])
+    [super flagsChanged: theEvent];
 }
 
 @end
@@ -544,15 +547,13 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
 }
 
 ////////// Keyboard:
-- (void)keyDown:(NSEvent *)theEvent
+- (BOOL)keyDown:(NSEvent *)theEvent
 {
   NSString *chars = [theEvent characters];
   NSString *rawchars = [theEvent charactersIgnoringModifiers];
   nglString c((CFStringRef)chars);
   nglString rc((CFStringRef)rawchars);
-  printf("Key Down: '%ls' / '%ls'.\n", c.GetChars(), rc.GetChars());
-  if ( [rawchars length] == 0 )
-    return;            // reject dead keys
+  //printf("Key Down: '%ls' / '%ls'.\n", c.GetChars(), rc.GetChars());
   if ( [rawchars length] == 1 )
   {
     unichar keyChar = [chars characterAtIndex:0];
@@ -560,21 +561,20 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
     uint16 scanCode = [theEvent keyCode];
     nglKeyCode keyCode = CocoaToNGLKeyCode(keyRawChar, scanCode);
     nglKeyEvent event(keyCode, keyChar, keyRawChar);
-    mpNGLWindow->CallOnKeyDown(event);
+    if (mpNGLWindow->CallOnKeyDown(event))
+      return true;
   }
-
-  [super keyDown:theEvent];
+  
+  return false;
 }
 
-- (void)keyUp:(NSEvent *)theEvent
+- (BOOL)keyUp:(NSEvent *)theEvent
 {
   NSString *chars = [theEvent characters];
   NSString *rawchars = [theEvent charactersIgnoringModifiers];
   nglString c((CFStringRef)chars);
   nglString rc((CFStringRef)rawchars);
-  printf("Key Up: '%ls' / '%ls'.\n", c.GetChars(), rc.GetChars());
-  if ( [rawchars length] == 0 )
-    return;            // reject dead keys
+  //printf("Key Up: '%ls' / '%ls'.\n", c.GetChars(), rc.GetChars());
   if ( [rawchars length] == 1 )
   {
     unichar keyChar = [chars characterAtIndex:0];
@@ -582,12 +582,13 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
     uint16 scanCode = [theEvent keyCode];
     nglKeyCode keyCode = CocoaToNGLKeyCode(keyRawChar, scanCode);
     nglKeyEvent event(keyCode, keyChar, keyRawChar);
-    mpNGLWindow->CallOnKeyUp(event);
+    if (mpNGLWindow->CallOnKeyUp(event))
+      return true;
   }
-  [super keyUp:theEvent];
+  return false;
 }
 
-- (void)flagsChanged:(NSEvent *)theEvent
+- (BOOL)flagsChanged:(NSEvent *)theEvent
 {
   uint32 modKeys = [theEvent modifierFlags];
   UInt32 upKeys;
@@ -628,6 +629,8 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
   //NSNumericPadKeyMask
   //NSHelpKeyMask
   //NSFunctionKeyMask
+
+  return res;
 }
 
 //////////
