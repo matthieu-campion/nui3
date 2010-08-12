@@ -146,9 +146,7 @@ bool nuiToggleButton::MouseUnclicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags
     mClicked = false;
     Ungrab();
 
-    nuiRect r(GetRect().Size());
-    r.Grow(GetActivationOffset(),GetActivationOffset());
-    if (r.IsInside(X,Y))
+    if (IsInsideFromSelf(X,Y, GetActivationOffset()))
     {
       SetPressed(!mWasPressed);
       if (IsPressed())
@@ -174,9 +172,7 @@ bool nuiToggleButton::MouseMoved(nuiSize X, nuiSize Y)
   
   if (mClicked)
   {
-    nuiRect r(GetRect().Size());
-    r.Grow(GetActivationOffset(),GetActivationOffset());
-    if (r.IsInside(X,Y))
+    if (IsInsideFromSelf(X,Y, GetActivationOffset()))
     {
       SetPressed(!mWasPressed);
     }

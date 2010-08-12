@@ -92,9 +92,7 @@ bool nuiRadioButton::MouseUnclicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags 
   {
     mClicked = false;
     Ungrab();
-    nuiRect r(mRect.Size());
-    r.Grow(GetActivationOffset(),GetActivationOffset());
-    if (r.IsInside(X,Y))
+    if (IsInsideFromSelf(X,Y, GetActivationOffset()))
     {
       if (mCanToggle)
         SetPressed(!mWasPressed);
@@ -145,9 +143,7 @@ bool nuiRadioButton::MouseMoved(nuiSize X, nuiSize Y)
   
   if (mClicked)
   {
-    nuiRect r(mRect.Size());
-    r.Grow(GetActivationOffset(),GetActivationOffset());
-    if (r.IsInside(X,Y))
+    if (IsInsideFromSelf(X,Y, GetActivationOffset()))
     {
       if (mCanToggle)
         SetPressed(!mWasPressed);

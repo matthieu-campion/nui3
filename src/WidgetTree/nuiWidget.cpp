@@ -2493,25 +2493,25 @@ nuiMouseCursor nuiWidget::GetMouseCursor() const
 
 
 
-bool nuiWidget::IsInsideFromRoot(nuiSize X, nuiSize Y)
+bool nuiWidget::IsInsideFromRoot(nuiSize X, nuiSize Y, nuiSize GrowOffset)
 {
   CheckValid();
   if (!IsVisible(false))
     return false;
 
   GlobalToLocal(X, Y);
-  return IsInsideFromSelf(X,Y);
+  return IsInsideFromSelf(X,Y, GrowOffset);
 }
 
-bool nuiWidget::IsInsideFromParent(nuiSize X, nuiSize Y)
+bool nuiWidget::IsInsideFromParent(nuiSize X, nuiSize Y, nuiSize GrowOffset)
 {
   CheckValid();
   if (!IsVisible(false))
     return false;
-  return IsInsideFromSelf(X - mRect.Left(), Y - mRect.Top());
+  return IsInsideFromSelf(X - mRect.Left(), Y - mRect.Top(), GrowOffset);
 }
 
-bool nuiWidget::IsInsideFromSelf(nuiSize X, nuiSize Y)
+bool nuiWidget::IsInsideFromSelf(nuiSize X, nuiSize Y, nuiSize GrowOffset)
 {
   CheckValid();
   if (!IsVisible(false))
@@ -2521,15 +2521,20 @@ bool nuiWidget::IsInsideFromSelf(nuiSize X, nuiSize Y)
   {
     nuiRect r = mVisibleRect;
     r.Intersect(mVisibleRect, GetOverDrawRect(true, true));
+    r.Grow(GrowOffset, GrowOffset);
     return r.IsInside(X, Y);
   }
   if (mInteractiveOD)
   {
     nuiRect r = mVisibleRect;
     r.Intersect(r, GetOverDrawRect(true, false));
+    r.Grow(GrowOffset, GrowOffset);
     return r.IsInside(X, Y);
   }
-  return GetRect().Size().IsInside(X,Y);
+
+  nuiRect r(GetRect().Size());
+  r.Grow(GrowOffset, GrowOffset);
+  return r.IsInside(X,Y);
 }
 
 

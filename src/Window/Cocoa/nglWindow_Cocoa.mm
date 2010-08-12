@@ -565,7 +565,10 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
       return true;
   }
   
-  return false;
+  if (c.IsEmpty())
+    return false;
+  
+  return mpNGLWindow->CallOnTextInput(c);
 }
 
 - (BOOL)keyUp:(NSEvent *)theEvent

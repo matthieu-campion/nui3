@@ -167,9 +167,9 @@ public:
   void SetHotRect(const nuiRect& rRect); ///< Get the user focused rectangle in the widget. This rectangle is an indication only. The parent of this widget can choose to display it or to ignore the recommendation.
   bool HasLayoutChanged() const; ///< This method returns true if the layout of the object has changed since the last layout/redraw loop.
 
-  bool IsInsideFromRoot(nuiSize X, nuiSize Y); ///< Return true if the point (X,Y) (in the coordinates of the root object) is inside the object. This method call IsInsideLocal internally so you may not need to redefine it.
-  bool IsInsideFromParent(nuiSize X, nuiSize Y); ///< Return true if the point (X,Y) (in the coordinates of the parent) is inside the object.
-  virtual bool IsInsideFromSelf(nuiSize X, nuiSize Y); ///< Return true if the point (X,Y) (in the coordinates of the parent) is inside the object.
+  bool IsInsideFromRoot(nuiSize X, nuiSize Y, nuiSize GrowOffset = 0); ///< Return true if the point (X,Y) (in the coordinates of the root object) is inside the object. This method call IsInsideLocal internally so you may not need to redefine it.
+  bool IsInsideFromParent(nuiSize X, nuiSize Y, nuiSize GrowOffset = 0); ///< Return true if the point (X,Y) (in the coordinates of the parent) is inside the object.
+  virtual bool IsInsideFromSelf(nuiSize X, nuiSize Y, nuiSize GrowOffset = 0); ///< Return true if the point (X,Y) (in the coordinates of the parent) is inside the object.
   //@}
 
   /** @name Rendering */

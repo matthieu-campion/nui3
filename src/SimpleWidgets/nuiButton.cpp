@@ -256,9 +256,7 @@ bool nuiButton::MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
     }
     else
     {
-      nuiRect r(GetRect().Size());
-      r.Grow(GetActivationOffset(),GetActivationOffset());
-      if (r.IsInside(X,Y))
+      if (IsInsideFromSelf(X,Y, GetActivationOffset()))
       {
         //      printf("activated\n");
         Activated();
@@ -294,9 +292,7 @@ bool nuiButton::MouseMoved(nuiSize X, nuiSize Y)
 {
   if (mClicked)
   {
-    nuiRect r(GetRect().Size());
-    r.Grow(GetActivationOffset(),GetActivationOffset());
-    if (r.IsInside(X,Y))
+    if (IsInsideFromSelf(X,Y, GetActivationOffset()))
     {
       SetPressed(true);
     }
