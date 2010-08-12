@@ -28,6 +28,7 @@ nuiButton::nuiButton()
   SetRedrawOnHover(true);
   mAutoRepeat = false;
   mpAutoRepeatTimer = NULL;
+  mActivationOffset = 0;
   EnableInteractiveDecoration(true);
   
   NUI_ADD_EVENT(ButtonPressed);
@@ -47,6 +48,7 @@ nuiButton::nuiButton(const nglString& rText)
   mPressed = false;
   mAutoRepeat = false;
   mpAutoRepeatTimer = NULL;
+  mActivationOffset = 0;
   nuiLabel* pLabel = new nuiLabel(rText);
   AddChild(pLabel);
   pLabel->SetPosition(nuiCenter);
@@ -70,6 +72,7 @@ nuiButton::nuiButton(const nglImage& rImage)
   mPressed = false;
   mAutoRepeat = false;
   mpAutoRepeatTimer = NULL;
+  mActivationOffset = 0;
   SetRedrawOnHover(true);
   EnableInteractiveDecoration(true);
 
@@ -94,6 +97,7 @@ nuiButton::nuiButton(nuiDecoration* pDeco, bool AlreadyAcquired)
   mPressed = false;
   mAutoRepeat = false;
   mpAutoRepeatTimer = NULL;
+  mActivationOffset = 0;
   SetRedrawOnHover(true);
   EnableInteractiveDecoration(true);
   
@@ -117,6 +121,7 @@ bool nuiButton::Load(const nuiXMLNode* pNode)
   mPressed = false;
   mAutoRepeat = false;
   mpAutoRepeatTimer = NULL;
+  mActivationOffset = 0;
 
   NUI_ADD_EVENT(ButtonPressed);
   NUI_ADD_EVENT(ButtonDePressed);
@@ -142,6 +147,11 @@ void nuiButton::InitAttributes()
                (nglString(_T("AutoRepeat")), nuiUnitBoolean,
                 nuiMakeDelegate(this, &nuiButton::GetAutoRepeat),
                 nuiMakeDelegate(this, &nuiButton::EnableAutoRepeat)));
+  
+  AddAttribute(new nuiAttribute<nuiSize>
+               (nglString(_T("ActivationOffset")), nuiUnitPixels,
+                nuiMakeDelegate(this, &nuiButton::GetActivationOffset),
+                nuiMakeDelegate(this, &nuiButton::SetActivationOffset)));
 }
 
 bool nuiButton::Draw(nuiDrawContext* pContext)
@@ -246,7 +256,9 @@ bool nuiButton::MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
     }
     else
     {
-      if (IsInsideFromSelf(X,Y))
+      nuiRect r(GetRect().Size());
+      r.Grow(GetActivationOffset(),GetActivationOffset());
+      if (r.IsInside(X,Y))
       {
         //      printf("activated\n");
         Activated();
@@ -282,7 +294,9 @@ bool nuiButton::MouseMoved(nuiSize X, nuiSize Y)
 {
   if (mClicked)
   {
-    if (IsInsideFromSelf(X, Y))
+    nuiRect r(GetRect().Size());
+    r.Grow(GetActivationOffset(),GetActivationOffset());
+    if (r.IsInside(X,Y))
     {
       SetPressed(true);
     }
@@ -341,4 +355,14 @@ bool nuiButton::OnAutoRepeat(const nuiEvent& rEvent)
     Activated();
   return false;
 }
+
+void nuiButton::SetActivationOffset(nuiSize Offset)
+{
+  mActivationOffset = Offset;
+}
+nuiSize nuiButton::GetActivationOffset() const
+{
+  return mActivationOffset;
+}
+
 

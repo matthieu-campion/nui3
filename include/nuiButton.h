@@ -55,11 +55,16 @@ public:
 
   void EnableAutoRepeat(bool set);
   bool GetAutoRepeat() const;
+  
+  void SetActivationOffset(nuiSize Offset);
+  nuiSize GetActivationOffset() const;
+
 protected:
   bool mClicked;
   bool mPressed;
   bool mAutoRepeat;
   nuiTimer* mpAutoRepeatTimer;
+  nuiSize mActivationOffset;
   nuiEventSink<nuiButton> mEventSink;
   bool OnAutoRepeat(const nuiEvent& rEvent);
 };
