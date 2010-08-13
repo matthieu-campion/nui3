@@ -319,7 +319,7 @@
 			dependencies = (
 				BCD4499B11D23E8700BEF227 /* PBXTargetDependency */,
 			);
-			name = TemplateApp;
+			name = "TemplateApp";
 			productName = Temp;
 			productReference = 61A9DFBF0B833E9600BC506C /* TemplateApp.app */;
 			productType = "com.apple.product-type.application";
@@ -337,7 +337,7 @@
 			dependencies = (
 				BCD4499D11D23E8F00BEF227 /* PBXTargetDependency */,
 			);
-			name = TemplateAppD;
+			name = "TemplateAppD";
 			productName = Tempd;
 			productReference = 61A9DFC90B833EF200BC506C /* TemplateAppD.app */;
 			productType = "com.apple.product-type.application";
@@ -604,7 +604,7 @@
 					"-lz",
 				);
 				PREBINDING = YES;
-				PRODUCT_NAME = TemplateApp;
+				PRODUCT_NAME = "TemplateApp";
 				STRIP_INSTALLED_PRODUCT = YES;
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -634,7 +634,7 @@
 					"-lz",
 				);
 				PREBINDING = YES;
-				PRODUCT_NAME = TemplateAppD;
+				PRODUCT_NAME = "TemplateAppD";
 				WARNING_CFLAGS = (
 					"-Wmost",
 					"-Wno-four-char-constants",
@@ -664,7 +664,7 @@
 					"-lz",
 				);
 				PREBINDING = YES;
-				PRODUCT_NAME = TemplateAppD;
+				PRODUCT_NAME = "TemplateAppD";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos3.0;
 				WARNING_CFLAGS = (
@@ -699,7 +699,7 @@
 					"-lz",
 				);
 				PREBINDING = YES;
-				PRODUCT_NAME = TemplateAppD;
+				PRODUCT_NAME = "TemplateAppD";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos3.0;
 				WARNING_CFLAGS = (
