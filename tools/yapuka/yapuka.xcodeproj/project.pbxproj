@@ -49,6 +49,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		BC0CFD99121455A70092C1F6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E5D643E51209AB9C009C26A9;
+			remoteInfo = nui3Cocoa;
+		};
 		BCBCB15B0DFD45B6002E8BC3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
@@ -291,6 +298,7 @@
 				BCDFC9B411CFB6F500A900AC /* libnuiPhoneD.a */,
 				BCDFC9B611CFB6F500A900AC /* libnuiPhone.a */,
 				E5331331120222B700FF5312 /* libnui3CocoaD.a */,
+				BC0CFD9A121455A70092C1F6 /* libnui3Cocoa.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -361,6 +369,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		BC0CFD9A121455A70092C1F6 /* libnui3Cocoa.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnui3Cocoa.a;
+			remoteRef = BC0CFD99121455A70092C1F6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		BCBCB15C0DFD45B6002E8BC3 /* libnui3D.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
