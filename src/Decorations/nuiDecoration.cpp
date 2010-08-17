@@ -356,3 +356,43 @@ void nuiDecoration::GetBorders(const nuiWidget* pWidget, float& rLeft, float& rR
   rVertical = GetBorder(nuiFillVertical, pWidget);
 }
 
+//////////////////// nuiDecoration Creators:
+
+nuiDecoration* nuiDecoration::CreateDecoration(const nglString& rDecorationTypeName, const nglString& rDecorationName)
+{
+  std::map<nglString, DecorationCreatorFunction>::const_iterator it = mDecorationCreators.find(rDecorationTypeName);
+  if (it != mDecorationCreators.end())
+    return it->second(rDecorationName);
+  return NULL;
+}
+
+void nuiDecoration::AddDecorationType(const nglString& rDecorationTypeName, const DecorationCreatorFunction& rCreatorDelegate)
+{
+  mDecorationCreators[rDecorationTypeName] = rCreatorDelegate;
+}
+
+
+#include "nuiFrame.h"
+#include "nuiBorderDecoration.h"
+#include "nuiColorDecoration.h"
+#include "nuiImageDecoration.h"
+#include "nuiGradientDecoration.h"
+#include "nuiStateDecoration.h"
+#include "nuiTreeHandleDecoration.h"
+#include "nuiMetaDecoration.h"
+
+void nuiDecoration::InitDecorationEngine()
+{
+  nuiDecoration::AddDecorationType(_T("nuiFrame"),                &nuiCreateDecoration<nuiFrame>);
+  nuiDecoration::AddDecorationType(_T("nuiBorderDecoration"),     &nuiCreateDecoration<nuiBorderDecoration>);
+  nuiDecoration::AddDecorationType(_T("nuiColorDecoration"),      &nuiCreateDecoration<nuiColorDecoration>);
+  nuiDecoration::AddDecorationType(_T("nuiImageDecoration"),      &nuiCreateDecoration<nuiImageDecoration>);
+  nuiDecoration::AddDecorationType(_T("nuiGradientDecoration"),   &nuiCreateDecoration<nuiGradientDecoration>);
+  nuiDecoration::AddDecorationType(_T("nuiStateDecoration"),      &nuiCreateDecoration<nuiStateDecoration>);
+  nuiDecoration::AddDecorationType(_T("nuiTreeHandleDecoration"), &nuiCreateDecoration<nuiTreeHandleDecoration>);
+  nuiDecoration::AddDecorationType(_T("nuiMetaDecoration"),       &nuiCreateDecoration<nuiMetaDecoration>);
+}
+
+std::map<nglString, nuiDecoration::DecorationCreatorFunction> nuiDecoration::mDecorationCreators;
+
+

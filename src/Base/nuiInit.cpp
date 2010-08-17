@@ -10,6 +10,7 @@
 #include "nuiTexture.h"
 #include "nuiFontManager.h"
 #include "nglThreadChecker.h"
+#include "nuiDecoration.h"
 
 #if (defined _UIKIT_)
 #include "../Font/nuiPhoneFontDB.h"
@@ -120,6 +121,9 @@ bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
     nuiFontManager::GetManager();
   }
   //#endif
+  
+  nuiDecoration::InitDecorationEngine();
+
   
 #endif
   

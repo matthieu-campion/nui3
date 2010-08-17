@@ -64,6 +64,12 @@ public:
   nglString GetCSSDeclaration() const;
   
   static nuiAttributeEditor* GetAttributeEditor(void* pTarget, nuiAttribute<const nglString&>* pAttribute);
+  
+  static nuiDecoration* CreateDecoration(const nglString& rDecorationTypeName, const nglString& rDecorationName);
+  typedef nuiDecoration* (*DecorationCreatorFunction)(const nglString&);
+  static void AddDecorationType(const nglString& rDecorationTypeName, const DecorationCreatorFunction& rCreatorDelegate);
+  static void InitDecorationEngine();
+  
 protected:
 
   bool mUseWidgetAlpha : 1;
@@ -78,7 +84,12 @@ private:
   static void DelDecoration(nuiDecoration* pDecoration);
 
   static DecorationMap mDecorations;
-  
-
-  
+  static std::map<nglString, DecorationCreatorFunction> mDecorationCreators;
 };
+
+template <class T>
+nuiDecoration* nuiCreateDecoration(const nglString& rName)
+{
+  return new T(rName);
+}
+

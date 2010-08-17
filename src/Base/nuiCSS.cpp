@@ -2017,41 +2017,6 @@ void nuiCSS::AddRule(nuiCSSRule* pRule)
 
 nuiObject* nuiCSS::CreateObject(const nglString& rType, const nglString& rName)
 {
-  nuiObject* pObj = NULL;
-  
-  if (rType == _T("nuiFrame"))
-  {
-    pObj = new nuiFrame(rName);
-  }
-  else if (rType == _T("nuiBorderDecoration"))
-  {
-    pObj = new nuiBorderDecoration(rName);
-  }
-  else if (rType == _T("nuiColorDecoration"))
-  {
-    pObj = new nuiColorDecoration(rName);
-  }
-  else if (rType == _T("nuiImageDecoration"))
-  {
-    pObj = new nuiImageDecoration(rName);
-  }
-  else if (rType == _T("nuiGradientDecoration"))
-  {
-    pObj = new nuiGradientDecoration(rName);
-  }
-  else if (rType == _T("nuiStateDecoration"))
-  {
-    pObj = new nuiStateDecoration(rName);
-  }
-  else if (rType == _T("nuiTreeHandleDecoration"))
-  {
-    pObj = new nuiTreeHandleDecoration(rName);
-  }
-  else if (rType == _T("nuiMetaDecoration"))
-  {
-    pObj = new nuiMetaDecoration(rName);
-  }
-
-  return pObj;
+  return nuiDecoration::CreateDecoration(rType, rName);
 }
 
