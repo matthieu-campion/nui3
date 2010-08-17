@@ -131,7 +131,6 @@ nuiMessageBox::Button nuiMessageBox::Do(nuiContainer * pParent, const nglString&
 {
   nuiMessageBox* pBox = new nuiMessageBox(pParent, rTitle, rMessage, type);
   Button res = pBox->QueryUser();
-  pBox->Trash();
   return res;
 }
 
