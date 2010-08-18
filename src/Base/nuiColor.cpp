@@ -187,6 +187,7 @@ static static_color static_colors[] =
 
 bool nuiColor::SetValue(const nglString& rString)
 {
+  const float ratio = 1.0f / 255.0f;
   // Search custom colors first:
   ColorMap::iterator it = mCustomColors.find(rString);
   if (it != mCustomColors.end())
@@ -202,14 +203,15 @@ bool nuiColor::SetValue(const nglString& rString)
     uint col,len;
     col = str.GetUInt(/*base=*/16);
     len = str.GetLength();
-    mRed   = ((col>>16) & 0xFF) / 255.0f;
-    mGreen = ((col>>8 ) & 0xFF) / 255.0f;
-    mBlue  = ((col    ) & 0xFF) / 255.0f;
+    mRed   = ((col>>16) & 0xFF) * ratio;
+    mGreen = ((col>>8 ) & 0xFF) * ratio;
+    mBlue  = ((col    ) & 0xFF) * ratio;
     mAlpha = 1;
     if (6 < len)
     {
       // If there is an alpha component get it, otherwise it's 1
-      mAlpha = ((col>>24) & 0xFF) / 255.0f;
+      mAlpha = ((col>>24) & 0xFF) * ratio;
+      Multiply(mAlpha, false);
     }
     return true;
   }
@@ -227,16 +229,16 @@ bool nuiColor::SetValue(const nglString& rString)
     {
     case 4:
       // I'm not sure alpha is in the standard or even handled this way (if you know better, tell me):
-      mAlpha = (tokens[3].GetCInt() /255.0f);
-      mRed   = (tokens[0].GetCInt() /255.0f);
-      mGreen = (tokens[1].GetCInt() /255.0f);
-      mBlue  = (tokens[2].GetCInt() /255.0f);
+      mAlpha = (tokens[3].GetCInt() * ratio);
+      mRed   = mAlpha * (tokens[0].GetCInt() * ratio);
+      mGreen = mAlpha * (tokens[1].GetCInt() * ratio);
+      mBlue  = mAlpha * (tokens[2].GetCInt() * ratio);
       return true;
     case 3:
       mAlpha = 1;
-      mRed   = (tokens[0].GetCInt() /255.0f);
-      mGreen = (tokens[1].GetCInt() /255.0f);
-      mBlue  = (tokens[2].GetCInt() /255.0f);
+      mRed   = (tokens[0].GetCInt() * ratio);
+      mGreen = (tokens[1].GetCInt() * ratio);
+      mBlue  = (tokens[2].GetCInt() * ratio);
       return true;
       break;
     default:
@@ -252,9 +254,9 @@ bool nuiColor::SetValue(const nglString& rString)
       if (rString.Compare(static_colors[i].name, false) == 0)
       {
         mAlpha = 1; // Default alpha is one. Always. :).
-        mRed   = (static_colors[i].r /255.0f);
-        mGreen = (static_colors[i].g /255.0f);
-        mBlue  = (static_colors[i].b /255.0f);
+        mRed   = (static_colors[i].r * ratio);
+        mGreen = (static_colors[i].g * ratio);
+        mBlue  = (static_colors[i].b * ratio);
         return true;
       }
     }
@@ -272,13 +274,15 @@ bool nuiColor::SetValue(const nglString& rString)
 void nuiColor::Get(nglString& rString) const
 {
   uint32 val = 0;
-  val += ToZero(mAlpha * 255.0f);
+  nuiColor t(*this);
+  t.UnPremultiply();
+  val += ToZero(t.mAlpha * 255.0f);
   val<<=8;                    
-  val += ToZero(mRed   * 255.0f);
+  val += ToZero(t.mRed   * 255.0f);
   val<<=8;
-  val += ToZero(mGreen * 255.0f);
+  val += ToZero(t.mGreen * 255.0f);
   val<<=8;
-  val += ToZero(mBlue  * 255.0f);
+  val += ToZero(t.mBlue  * 255.0f);
   rString.SetCUInt(val,16); 
   rString.Insert('#',0);
 }

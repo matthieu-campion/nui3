@@ -110,9 +110,10 @@ public:
   {
     if (mAlpha > 0.0f)
     {
-      mRed    /= mAlpha;
-      mGreen  /= mAlpha;
-      mBlue   /= mAlpha;
+      const float ratio = 1.0f / mAlpha;
+      mRed    *= ratio;
+      mGreen  *= ratio;
+      mBlue   *= ratio;
     }
     else
     {
