@@ -54,6 +54,8 @@ public:
   nuiSimpleEventSource<nuiWidgetActivated> Deactivated;
   
 protected:
+  void InitAttributes();
+
   static nuiSize mDefaultCheckSize;
 
   bool mDisplayAsCheckBox;

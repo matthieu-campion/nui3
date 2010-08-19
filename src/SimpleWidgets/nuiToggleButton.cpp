@@ -69,6 +69,20 @@ nuiToggleButton::~nuiToggleButton()
 {
 }
 
+void nuiToggleButton::InitAttributes()
+{
+  AddAttribute(new nuiAttribute<bool>
+               (nglString(_T("CheckBox")), nuiUnitBoolean,
+                nuiMakeDelegate(this, &nuiToggleButton::GetDisplayAsCheckBox),
+                nuiMakeDelegate(this, &nuiToggleButton::SetDisplayAsCheckBox)));
+
+  AddAttribute(new nuiAttribute<bool>
+               (nglString(_T("FrameBox")), nuiUnitBoolean,
+                nuiMakeDelegate(this, &nuiToggleButton::GetDisplayAsFrameBox),
+                nuiMakeDelegate(this, &nuiToggleButton::SetDisplayAsFrameBox)));
+}
+
+
 nuiSize nuiToggleButton::GetDefaultCheckSize()
 {
   return mDefaultCheckSize;
