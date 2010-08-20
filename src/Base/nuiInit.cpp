@@ -121,12 +121,9 @@ bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
     nuiFontManager::GetManager();
   }
   //#endif
-  
-  nuiDecoration::InitDecorationEngine();
-
-  
 #endif
   
+  nuiDecoration::InitDecorationEngine();
   
   
   return App != NULL && !App->GetError();

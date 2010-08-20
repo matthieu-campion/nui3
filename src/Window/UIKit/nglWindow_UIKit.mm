@@ -692,6 +692,9 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   return [CAEAGLLayer class];
 }
 
+extern float NUI_SCALE_FACTOR;
+extern float NUI_INV_SCALE_FACTOR;
+
 //The EAGL view is stored in the nib file. When it's unarchived it's sent -initWithCoder:
 - (id)initWithFrame:(CGRect)rect replacing:(EAGLView*) original
 {
@@ -709,6 +712,8 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
     if ([self respondsToSelector:@selector(contentScaleFactor)])
     {
       /* on iOS 4.0, use contentsScaleFactor */
+      NUI_SCALE_FACTOR = [UIScreen mainScreen].scale;
+      NUI_INV_SCALE_FACTOR = 1.0f / NUI_SCALE_FACTOR;
       printf("Scale: %f\n", self.contentScaleFactor);
       self.contentScaleFactor = NUI_SCALE_FACTOR;
     }
