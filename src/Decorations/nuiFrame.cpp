@@ -168,8 +168,8 @@ void nuiFrame::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect&
   pArray->EnableArray(nuiRenderArray::eColor, false);
   
   
-  nuiSize w = mpTexture->GetImage()->GetWidth();
-  nuiSize h = mpTexture->GetImage()->GetHeight();
+  nuiSize w = mpTexture->GetWidth();
+  nuiSize h = mpTexture->GetHeight();
   
   float X0 = 0;
   float X1 = (float)mClientRect.Left();

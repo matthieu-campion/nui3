@@ -747,22 +747,35 @@ void nuiTexture::InitAttributes()
 //                nuiMakeDelegate(this, &nuiTexture::SetWrapT)));
 
   AddAttribute(new nuiAttribute<uint32>
-               (nglString(_T("Width")), nuiUnitCustom,
+               (nglString(_T("Width")), nuiUnitPixels,
                 nuiMakeDelegate(this, &nuiTexture::GetWidth)));
   
   AddAttribute(new nuiAttribute<uint32>
-               (nglString(_T("Height")), nuiUnitCustom,
+               (nglString(_T("Height")), nuiUnitPixels,
                 nuiMakeDelegate(this, &nuiTexture::GetHeight)));
   
   AddAttribute(new nuiAttribute<uint32>
-               (nglString(_T("WidthPOT")), nuiUnitCustom,
+               (nglString(_T("UnscaledWidth")), nuiUnitPixels,
+                nuiMakeDelegate(this, &nuiTexture::GetUnscaledWidth)));
+  
+  AddAttribute(new nuiAttribute<uint32>
+               (nglString(_T("UnscaledHeight")), nuiUnitPixels,
+                nuiMakeDelegate(this, &nuiTexture::GetUnscaledHeight)));
+  
+  AddAttribute(new nuiAttribute<uint32>
+               (nglString(_T("WidthPOT")), nuiUnitPixels,
                 nuiMakeDelegate(this, &nuiTexture::GetWidthPOT)));
   
   AddAttribute(new nuiAttribute<uint32>
-               (nglString(_T("WidthPOT")), nuiUnitCustom,
-                nuiMakeDelegate(this, &nuiTexture::GetWidthPOT)));
+               (nglString(_T("HeightPOT")), nuiUnitPixels,
+                nuiMakeDelegate(this, &nuiTexture::GetHeightPOT)));
   
-//  AddAttribute(new nuiAttribute<uint32>
+  AddAttribute(new nuiAttribute<float>
+               (nglString(_T("Scale")), nuiUnitCustom,
+                nuiMakeDelegate(this, &nuiTexture::GetScale),
+                nuiMakeDelegate(this, &nuiTexture::SetScale)));
+  
+  //  AddAttribute(new nuiAttribute<uint32>
 //               (nglString(_T("EnvMode")), nuiUnitCustom,
 //                nuiMakeDelegate(this, &nuiTexture::GetEnvMode)));
   

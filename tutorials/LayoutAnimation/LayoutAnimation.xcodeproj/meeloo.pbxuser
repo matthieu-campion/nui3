@@ -265,9 +265,9 @@
 		path = src/Renderers/nuiTexture.cpp;
 		sourceTree = SOURCE_ROOT;
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {2249, 11908}}";
-			sepNavSelRange = "{13017, 5}";
-			sepNavVisRange = "{12506, 1052}";
+			sepNavIntBoundsRect = "{{0, 0}, {2249, 10491}}";
+			sepNavSelRange = "{17643, 0}";
+			sepNavVisRange = "{16262, 2676}";
 		};
 	};
 	E585A8A311BAFAD2005DEEA1 /* PBXTextBookmark */ = {
@@ -403,9 +403,9 @@
 		path = /Users/meeloo/work/nui3/src/Renderers/nuiTexture.cpp;
 		sourceTree = "<absolute>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1620, 10933}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1335, 10413}}";
 			sepNavSelRange = "{6961, 0}";
-			sepNavVisRange = "{6276, 687}";
+			sepNavVisRange = "{5989, 977}";
 		};
 	};
 	E5C2B13B121EDC7E00152799 /* PBXTextBookmark */ = {
