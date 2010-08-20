@@ -203,7 +203,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   w = mpNGLWindow->GetWidth();
   h = mpNGLWindow->GetHeight();
   
-  bool forceresize = FALSE;
+  bool forceresize = false;
   UIApplication* pApp = [UIApplication sharedApplication];
   UIDevice* pUIDev = [UIDevice currentDevice];
   UIDeviceOrientation orientation = pUIDev.orientation;
@@ -304,6 +304,25 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   }   
   oldorientation = orientation;
   mAngle = angle;
+}
+
+- (void) recreateWindow
+{
+  int w = mpNGLWindow->GetWidth();
+  int h = mpNGLWindow->GetHeight();
+  CGRect rect = [[UIScreen mainScreen] applicationFrame];
+  //    rect.size.width = w;
+  //    rect.size.height = h;
+  printf("new window size: %d, %d\n", w, h);
+  
+  glViewOld = glView;
+  self.frame = rect;
+  
+  glView = [[EAGLView alloc] initWithFrame:rect replacing: glViewOld];
+  [self addSubview:glView];
+  //[glView startAnimation];
+  
+  mpNGLWindow->SetSize(w, h);
 }
 
 - (void) InitNGLWindow
@@ -1022,7 +1041,7 @@ void nglWindow::SetState (StateChange State)
 			break;
 	};
 
-  [(nglUIWindow*)mpUIWindow UpdateOrientation];
+  [(nglUIWindow*)mpUIWindow recreateWindow];
 }
 
 nglWindow::StateInfo nglWindow::GetState() const

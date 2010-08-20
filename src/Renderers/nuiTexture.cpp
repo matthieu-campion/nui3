@@ -240,6 +240,8 @@ nuiTexture::nuiTexture (const nglPath& rPath, nglImageCodec* pCodec)
   if (SetObjectClass(_T("nuiTexture")))
     InitAttributes();
 
+  mpImage = NULL;
+  
   float scale = 1.0f;
   if (NUI_SCALE_FACTOR > 1)
   {
@@ -250,8 +252,15 @@ nuiTexture::nuiTexture (const nglPath& rPath, nglImageCodec* pCodec)
     res.Add(_T("@2x.")).Add(ext);
     p = res;
     mpImage = new nglImage(p, pCodec);
-    if (mpImage)
+    if (mpImage && mpImage->IsValid())
+    {
       scale = 2.0f;
+    }
+    else
+    {
+      delete mpImage;
+      mpImage = NULL;
+    }
   }
   
   if (!mpImage)

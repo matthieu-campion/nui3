@@ -52,7 +52,7 @@ void MainWindow::OnCreation()
   nuiWidget* pBg = new nuiImage(_T("rsrc:/decorations/image.png"));
   pBg->SetRect(nuiRect(-(float)GetWidth(), -(float)GetHeight(), (float)GetWidth() * 3, (float)GetHeight() * 3));
   pBg->SetPosition(nuiCenter);
-  pBg->SetAlpha(.25);
+  pBg->SetAlpha(.20);
   //  pBg->SetLayoutAnimationEasing(nuiEasingCubicRev);
   pBg->SetLayoutAnimationEasing(nuiEasingElasticOut<700>);
   pBg->SetLayoutAnimationDuration(3);
@@ -66,7 +66,7 @@ void MainWindow::OnCreation()
   nuiLabel* pLabel = new nuiLabel(nglString(_T("Press Me!")), nuiFont::GetFont(FONT_SIZE));
   pLabel->SetPosition(nuiCenter);
   pButton->AddChild(pLabel);
-  pButton->SetAlpha(.5);
+  pButton->SetAlpha(.7);
   pBox->AddCell(pButton, nuiCenter);
   pBox->SetCellExpand(0, nuiExpandShrinkAndGrow);
   pButton->SetLayoutAnimationDuration(1);
