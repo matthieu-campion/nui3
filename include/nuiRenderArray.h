@@ -145,6 +145,8 @@ public:
   void SetIndex(uint32 ArrayIndex, uint32 IndexInArray, uint32 VertexIndex);
 
   void GetBounds(float* bounds) const; ///< bounds must contain at least 6 floats to store the minums and maximums coordinates of this array
+  
+  nglString Dump() const;
 private:
   uint mVertexElements;
   uint mColorElements;

@@ -28,6 +28,8 @@ using namespace std;
 
 extern float NUI_SCALE_FACTOR;
 extern float NUI_INV_SCALE_FACTOR;
+//static float NUI_SCALE_FACTOR = 1.0;
+//static float NUI_INV_SCALE_FACTOR = 1.0 / NUI_SCALE_FACTOR;
 
 static const nglChar* gpFontErrorTable[] =
 {
@@ -107,11 +109,11 @@ void nuiFontLayout::OnGlyph (nglFontBase* pFont, const nglString& rString, int P
     {
       if (mGlyphs.size() > 0)
         mPenY = mGlyphs[0].Y; // Go back to layout Y origin
-      mPenX += info.AdvanceMaxW * 2 * NUI_INV_SCALE_FACTOR;
+      mPenX += info.AdvanceMaxW * 2.0f;
     }
     else if (c == _T('\t'))
     {
-      mPenY += info.AdvanceMaxH * mSpacesPerTab * NUI_INV_SCALE_FACTOR;
+      mPenY += info.AdvanceMaxH * mSpacesPerTab;
     }
     else
     {
@@ -121,12 +123,12 @@ void nuiFontLayout::OnGlyph (nglFontBase* pFont, const nglString& rString, int P
       float kx = 0, ky = 0;
       if (GetKerning(pFont, pGlyph->Index, kx, ky))
       {
-        x += kx * NUI_INV_SCALE_FACTOR;
-        y += ky * NUI_INV_SCALE_FACTOR;
+        x += kx;
+        y += ky;
       }
       AddGlyph(pFont, x, y, Pos, pGlyph);
 
-      mPenY += mDownAxis * info.AdvanceMaxH * NUI_INV_SCALE_FACTOR;
+      mPenY += mDownAxis * info.AdvanceMaxH;
     }
   }                           
   else// (orient == nuiHorizontal)
@@ -140,7 +142,7 @@ void nuiFontLayout::OnGlyph (nglFontBase* pFont, const nglString& rString, int P
           mPenX = mGlyphs[0].X; // Go back to layout X origin
         nglFontInfo info;
         pFont->GetInfo(info);
-        mPenY += (mDownAxis * info.AdvanceMaxH) * mYDensity * NUI_INV_SCALE_FACTOR;
+        mPenY += (mDownAxis * info.AdvanceMaxH) * mYDensity;
 
         Line l = {mPenX, mPenY, 0.0f };
         mLines.push_back(l);
@@ -151,8 +153,8 @@ void nuiFontLayout::OnGlyph (nglFontBase* pFont, const nglString& rString, int P
       {
         nglFontInfo info;
         pFont->GetInfo(info);
-        mPenX += info.AdvanceMaxW * mSpacesPerTab * NUI_INV_SCALE_FACTOR;
-        mLines[mLines.size() - 1].mWidth += info.AdvanceMaxW * mSpacesPerTab * NUI_INV_SCALE_FACTOR;
+        mPenX += info.AdvanceMaxW * mSpacesPerTab;
+        mLines[mLines.size() - 1].mWidth += info.AdvanceMaxW * mSpacesPerTab;
       }
       else if (c < _T(' ') ||  // skip control chars (includes newline)
         !pGlyph)        // no glyph to render
@@ -166,18 +168,18 @@ void nuiFontLayout::OnGlyph (nglFontBase* pFont, const nglString& rString, int P
         float kx = 0, ky = 0;
         if (GetKerning(pFont, pGlyph->Index, kx, ky))
         {
-          mPenX += kx * NUI_INV_SCALE_FACTOR;
-          mPenY += ky * NUI_INV_SCALE_FACTOR;
+          mPenX += kx;
+          mPenY += ky;
         }
 
         // Add this glyph to the layout with the current position pen position
         AddGlyph(pFont, mPenX, mPenY, Pos, pGlyph);
 
         // Proceed with glyph advance
-        mPenX += pGlyph->AdvanceX * mXDensity * NUI_INV_SCALE_FACTOR;
-        mPenY += pGlyph->AdvanceY * NUI_INV_SCALE_FACTOR;
+        mPenX += pGlyph->AdvanceX * mXDensity;
+        mPenY += pGlyph->AdvanceY;
         
-        mLines[mLines.size() - 1].mWidth += pGlyph->AdvanceX * NUI_INV_SCALE_FACTOR;
+        mLines[mLines.size() - 1].mWidth += pGlyph->AdvanceX;
       }
     }
     else // Using Wrapper
@@ -237,10 +239,10 @@ void nuiFontLayout::GetWordSize(nuiRect& rRect, const nuiFontLayout::GlyphList& 
     const nglGlyphLayout& rGlyph(*it);
     nglGlyphInfo info;
     rGlyph.mpFont->GetGlyphInfo(info, rGlyph.Index, nuiFontBase::eGlyphBitmap);
-    nuiSize w = info.AdvanceX * NUI_INV_SCALE_FACTOR;
-    nuiSize h = finfo.AdvanceMaxH * NUI_INV_SCALE_FACTOR;
-    nuiSize x = rGlyph.X + info.BearingX * NUI_INV_SCALE_FACTOR;
-    nuiSize y = rGlyph.Y - finfo.Ascender * NUI_INV_SCALE_FACTOR;
+    nuiSize w = info.AdvanceX;
+    nuiSize h = finfo.AdvanceMaxH;
+    nuiSize x = rGlyph.X + info.BearingX;
+    nuiSize y = rGlyph.Y - finfo.Ascender;
 
     r.Union(r, nuiRect(x, y, w, h));
 
@@ -289,7 +291,7 @@ void nuiFontLayout::OnFinalizeLayout()
         //NGL_OUT(_T("EOL\n"));
         if (mGlyphs.size() > 0)
           mPenX = mGlyphs[0].X; // Go back to layout X origin
-        mPenY += mDownAxis * info.AdvanceMaxH * NUI_INV_SCALE_FACTOR;
+        mPenY += mDownAxis * info.AdvanceMaxH;
         mGlyphPrev = 0;
         mpFontPrev = NULL;
 
@@ -309,8 +311,8 @@ void nuiFontLayout::OnFinalizeLayout()
         //NGL_OUT(_T("TAB\n"));
         if (mPenX > 0.0f)
         {
-          mPenX += info.AdvanceMaxW * mSpacesPerTab * NUI_INV_SCALE_FACTOR;
-          mLines[mLines.size() - 1].mWidth += info.AdvanceMaxW * mSpacesPerTab * NUI_INV_SCALE_FACTOR;
+          mPenX += info.AdvanceMaxW * mSpacesPerTab;
+          mLines[mLines.size() - 1].mWidth += info.AdvanceMaxW * mSpacesPerTab;
         }
         mGlyphPrev = 0;
         mpFontPrev = NULL;
@@ -348,19 +350,19 @@ void nuiFontLayout::OnFinalizeLayout()
           float kx = 0, ky = 0;
           if (mpFontPrev && mGlyphPrev && GetKerning(pFont, pGlyph->Index, kx, ky))
           {
-            X += kx * NUI_INV_SCALE_FACTOR;
-            Y += ky * NUI_INV_SCALE_FACTOR;
+            X += kx;
+            Y += ky;
           }
 
           // Proceed with glyph advance
-          X += pGlyph->AdvanceX * NUI_INV_SCALE_FACTOR;
-          Y += pGlyph->AdvanceY * NUI_INV_SCALE_FACTOR;
+          X += pGlyph->AdvanceX;
+          Y += pGlyph->AdvanceY;
 
           {
-            nuiSize w = pGlyph->AdvanceX * NUI_INV_SCALE_FACTOR;
-            nuiSize h = info.AdvanceMaxH * NUI_INV_SCALE_FACTOR;
-            nuiSize x = X + pGlyph->BearingX * NUI_INV_SCALE_FACTOR;
-            nuiSize y = Y - info.Ascender * NUI_INV_SCALE_FACTOR;
+            nuiSize w = pGlyph->AdvanceX;
+            nuiSize h = info.AdvanceMaxH;
+            nuiSize x = X + pGlyph->BearingX;
+            nuiSize y = Y - info.Ascender;
 
             r.Union(r, nuiRect(x, y, w, h));
           }
@@ -376,7 +378,7 @@ void nuiFontLayout::OnFinalizeLayout()
           if (mGlyphs.size() > 0)
           {
             mPenX = mGlyphs[0].X; // Go back to layout X origin
-            mPenY += mDownAxis * info.AdvanceMaxH * NUI_INV_SCALE_FACTOR;
+            mPenY += mDownAxis * info.AdvanceMaxH;
 
             if (mNewLineDelegate && !mNewLineDelegate(pos, false))
             {
@@ -430,18 +432,18 @@ void nuiFontLayout::OnFinalizeLayout()
             float kx = 0, ky = 0;
             if (mGlyphPrev && pFont && mpFontPrev == pFont && GetKerning(pFont, pGlyph->Index, kx, ky))
             {
-              mPenX += kx * NUI_INV_SCALE_FACTOR;
-              mPenY += ky * NUI_INV_SCALE_FACTOR;
+              mPenX += kx;
+              mPenY += ky;
             }
 
             // Add this glyph to the layout with the current position pen position
             AddGlyph(pFont, mPenX, mPenY, Pos, pGlyph);
 
             // Proceed with glyph advance
-            mPenX += pGlyph->AdvanceX * mXDensity * NUI_INV_SCALE_FACTOR;
-            mPenY += pGlyph->AdvanceY * NUI_INV_SCALE_FACTOR;
+            mPenX += pGlyph->AdvanceX * mXDensity;
+            mPenY += pGlyph->AdvanceY;
 
-            mLines[mLines.size() - 1].mWidth += (pGlyph->AdvanceX + kx) * NUI_INV_SCALE_FACTOR;
+            mLines[mLines.size() - 1].mWidth += (pGlyph->AdvanceX + kx);
             
             mGlyphPrev = pGlyph->Index;
             mpFontPrev = pFont;
@@ -505,11 +507,11 @@ nuiRect nuiFontLayout::GetRect() const
     const nglGlyphLayout& rGlyph(*it);
     nglGlyphInfo info;
     rGlyph.mpFont->GetGlyphInfo(info, rGlyph.Index, nuiFontBase::eGlyphBitmap);
-    nuiSize w = info.AdvanceX * NUI_INV_SCALE_FACTOR;
+    nuiSize w = info.AdvanceX;
 //    nuiSize h = finfo.AdvanceMaxH;
-    nuiSize x = rGlyph.X + info.BearingX * NUI_INV_SCALE_FACTOR;
-    nuiSize y = rGlyph.Y - finfo.Ascender * NUI_INV_SCALE_FACTOR;
-    nuiSize h = finfo.Height * NUI_INV_SCALE_FACTOR;
+    nuiSize x = rGlyph.X + info.BearingX;
+    nuiSize y = rGlyph.Y - finfo.Ascender;
+    nuiSize h = finfo.Height;
 
     nuiRect rr(r);
     r.Union(rr, nuiRect(x, y, w, h));
@@ -888,8 +890,8 @@ int nuiFontBase::Print(nuiDrawContext *pContext, float X, float Y, const nuiFont
 
     nuiGlyphLayout glyph;
 
-    glyph.X     = X + pglyph->X * NUI_INV_SCALE_FACTOR;
-    glyph.Y     = Y + pglyph->Y * NUI_INV_SCALE_FACTOR;
+    glyph.X     = X + pglyph->X;
+    glyph.Y     = Y + pglyph->Y;
     glyph.Pos   = pglyph->Pos;
     glyph.Index = pglyph->Index;
 
@@ -907,7 +909,7 @@ int nuiFontBase::Print(nuiDrawContext *pContext, float X, float Y, const nuiFont
     const std::vector<nuiFontLayout::Line>& rLines(rLayout.GetLines());
     nglFontInfo info;
     GetInfo (info);
-    float pos = -info.UnderlinePos * NUI_INV_SCALE_FACTOR;
+    float pos = -info.UnderlinePos;
     float thickness = info.UnderlineThick;
     pContext->SetLineWidth(thickness);
     nuiColor oldcolor(pContext->GetStrokeColor());
@@ -932,7 +934,7 @@ int nuiFontBase::Print(nuiDrawContext *pContext, float X, float Y, const nuiFont
     const std::vector<nuiFontLayout::Line>& rLines(rLayout.GetLines());
     nglFontInfo info;
     GetInfo (info);
-    float pos = -info.Ascender * .4f * NUI_INV_SCALE_FACTOR;
+    float pos = -info.Ascender * .4f;
     float thickness = ToNearest(info.UnderlineThick);
     pContext->SetLineWidth(thickness);
     nuiColor oldcolor(pContext->GetStrokeColor());
@@ -979,7 +981,7 @@ bool nuiFontBase::PrintGlyph (nuiDrawContext *pContext, const nglGlyphLayout& rG
   int w = GlyphLocation.mWidth;
   int h = GlyphLocation.mHeight;
 
-  int x = (int)floorf(rGlyph.X + bmp.Left * NUI_INV_SCALE_FACTOR);
+  int x = (int)floorf(rGlyph.X + bmp.Left);
   int y = (int)floorf(rGlyph.Y - bmp.Top);
 
   nuiTexture *texture;
@@ -1127,8 +1129,14 @@ bool nuiFontBase::PrintGlyphs(nuiDrawContext *pContext, const std::map<nuiTextur
       const nuiRect& rDest = it->second[i].mDestRect;
       const nuiRect& rSource = it->second[i].mSourceRect;
 
+      nuiSize x1,y1,x2,y2;
       nuiSize tx,ty,tw,th;
 
+      x1 = rDest.mLeft;
+      y1 = rDest.mTop;
+      x2 = rDest.mRight;
+      y2 = rDest.mBottom;
+      
       tx = rSource.mLeft;
       ty = rSource.mTop;
       tw = rSource.mRight;
@@ -1138,32 +1146,34 @@ bool nuiFontBase::PrintGlyphs(nuiDrawContext *pContext, const std::map<nuiTextur
       pTexture->ImageToTextureCoord(tw,th);
 
       ///////////////////////////////////////////
-      pArray->SetVertex(rDest.mLeft, rDest.mTop);
+      pArray->SetVertex(x1, y1);
       pArray->SetTexCoords(tx, ty);
       pArray->PushVertex();
       
-      pArray->SetVertex(rDest.mRight, rDest.mTop);
+      pArray->SetVertex(x2, y1);
       pArray->SetTexCoords(tw, ty);
       pArray->PushVertex();
       
-      pArray->SetVertex(rDest.mRight, rDest.mBottom);
+      pArray->SetVertex(x2, y2);
       pArray->SetTexCoords(tw, th);
       pArray->PushVertex();
 
       ///////////////////////////////////////////
-      pArray->SetVertex(rDest.mLeft, rDest.mTop);
+      pArray->SetVertex(x1, y1);
       pArray->SetTexCoords(tx, ty);
       pArray->PushVertex();
 
-      pArray->SetVertex(rDest.mRight, rDest.mBottom);
+      pArray->SetVertex(x2, y2);
       pArray->SetTexCoords(tw, th);
       pArray->PushVertex();
 
-      pArray->SetVertex(rDest.mLeft, rDest.mBottom);
+      pArray->SetVertex(x1, y2);
       pArray->SetTexCoords(tx, th);
       pArray->PushVertex();
     }
 
+    //nglString str = pArray->Dump();
+    //NGL_OUT("%ls", str.GetChars());
     pContext->DrawArray(pArray);
 
     ++it;

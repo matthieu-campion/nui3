@@ -309,6 +309,7 @@ bool nuiLabel::Draw(nuiDrawContext* pContext)
 
   nglFontInfo info;
   mpFont->GetInfo(info);
+  //info.Dump(0);
 
   nuiRect rect = mpLayout->GetRect();
 

@@ -174,7 +174,7 @@ void nglFontLayout::OnGlyph (nglFontBase* pFont, const nglString& rString, int P
     if (mGlyphs.size() > 0)
       mPenX = mGlyphs[0].X; // Go back to layout X origin
 
-    mPenY += mDownAxis * pFont->GetHeight(eFontUnitPixel) * NUI_INV_SCALE_FACTOR;
+    mPenY += mDownAxis * pFont->GetHeight(eFontUnitPixel);
   }
 
   if (c < _T(' ') ||  // skip control chars (includes newline)
@@ -188,16 +188,16 @@ void nglFontLayout::OnGlyph (nglFontBase* pFont, const nglString& rString, int P
   float kx, ky;
   if (GetKerning(pFont, pGlyph->Index, kx, ky))
   {
-    mPenX += kx * NUI_INV_SCALE_FACTOR;
-    mPenY += ky * NUI_INV_SCALE_FACTOR;
+    mPenX += kx;
+    mPenY += ky;
   }
 
   // Add this glyph to the layout with the current position pen position
   AddGlyph(pFont, mPenX, mPenY, Pos, pGlyph);
 
   // Proceed with glyph advance
-  mPenX += pGlyph->AdvanceX * NUI_INV_SCALE_FACTOR;
-  mPenY += pGlyph->AdvanceY * NUI_INV_SCALE_FACTOR;
+  mPenX += pGlyph->AdvanceX;
+  mPenY += pGlyph->AdvanceY;
 }
 
 void nglFontLayout::OnFinalizeLayout ()
@@ -207,9 +207,6 @@ void nglFontLayout::OnFinalizeLayout ()
 
 const nglGlyphLayout* nglFontLayout::GetGlyphAt (float X, float Y) const
 {
-  X *= NUI_SCALE_FACTOR;
-  Y *= NUI_SCALE_FACTOR;
-  
   if (X < mXMin || X > mXMax || Y < mYMin || Y > mYMax)
     return NULL; // Out of layout bounds
 
@@ -292,8 +289,8 @@ bool nglFontLayout::AddDummyGlyph(int32 ReferencePos, void* pUserPointer, float 
   mYMin = MIN(mYMin, y);
   
   // Maxima
-  x += W * NUI_INV_SCALE_FACTOR;
-  y += H * NUI_INV_SCALE_FACTOR;
+  x += W;
+  y += H;
   mXMax = MAX(mXMax, x);
   mYMax = MAX(mYMax, y);
   
@@ -333,14 +330,14 @@ bool nglFontLayout::AddGlyph (nglFontBase* pFont, float X, float Y, int Pos, ngl
   float x, y;
 
   // Minima
-  x = X + pGlyph->BearingX * NUI_INV_SCALE_FACTOR;
-  y = Y + (pGlyph->BearingY - pGlyph->Height) * NUI_INV_SCALE_FACTOR;
+  x = X + pGlyph->BearingX;
+  y = Y + (pGlyph->BearingY - pGlyph->Height);
   mXMin = MIN(mXMin, x);
   mYMin = MIN(mYMin, y);
 
   // Maxima
-  x += pGlyph->Width * NUI_INV_SCALE_FACTOR;
-  y += pGlyph->Height * NUI_INV_SCALE_FACTOR;//= Y + pGlyph->BearingY;
+  x += pGlyph->Width;
+  y += pGlyph->Height;//= Y + pGlyph->BearingY;
   mXMax = MAX(mXMax, x);
   mYMax = MAX(mYMax, y);
 
@@ -349,9 +346,8 @@ bool nglFontLayout::AddGlyph (nglFontBase* pFont, float X, float Y, int Pos, ngl
 
 bool nglFontLayout::GetKerning (nglFontBase* pFont, uint Index, float& rX, float& rY)
 {
-  return (mUseKerning &&
-          mGlyphPrev &&
-          pFont->GetKerning(mGlyphPrev, Index, rX, rY));
+  bool res = pFont->GetKerning(mGlyphPrev, Index, rX, rY);
+  return (mUseKerning && mGlyphPrev && res);
 }
 
 

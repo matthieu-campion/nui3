@@ -70,22 +70,29 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = BC1A61C40E63318300BDD037 /* nui3.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E52417F311CB860B0025CA71 /* libnuiPhoneD.a */;
+			remoteGlobalIDString = E52417F311CB860B0025CA71;
 			remoteInfo = nuiPhoneD;
 		};
 		E53313B2120232AF00FF5312 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BC1A61C40E63318300BDD037 /* nui3.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E52420E511CBCE9E0025CA71 /* libnuiPhone.a */;
+			remoteGlobalIDString = E52420E511CBCE9E0025CA71;
 			remoteInfo = nuiPhone;
 		};
 		E53313B4120232AF00FF5312 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BC1A61C40E63318300BDD037 /* nui3.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E5A8D1D311E33A54004E14CE /* libnui3CocoaD.a */;
+			remoteGlobalIDString = E5A8D1D311E33A54004E14CE;
 			remoteInfo = nui3CocoaD;
+		};
+		E5DDCCC0121B4F0A0017AF57 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BC1A61C40E63318300BDD037 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E5D643E51209AB9C009C26A9;
+			remoteInfo = nui3Cocoa;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -208,6 +215,7 @@
 				E53313B1120232AF00FF5312 /* libnuiPhoneD.a */,
 				E53313B3120232AF00FF5312 /* libnuiPhone.a */,
 				E53313B5120232AF00FF5312 /* libnui3CocoaD.a */,
+				E5DDCCC1121B4F0A0017AF57 /* libnui3Cocoa.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -310,6 +318,13 @@
 			fileType = archive.ar;
 			path = libnui3CocoaD.a;
 			remoteRef = E53313B4120232AF00FF5312 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E5DDCCC1121B4F0A0017AF57 /* libnui3Cocoa.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnui3Cocoa.a;
+			remoteRef = E5DDCCC0121B4F0A0017AF57 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

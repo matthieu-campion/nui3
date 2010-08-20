@@ -340,7 +340,7 @@ bool nglFontBase::GetInfo (nglFontInfo& rInfo, nglFontUnit Unit) const
   float ratio = 0.f;
   switch (Unit)
   {
-    case eFontUnitEM    : ratio = 1.0f; break;
+    case eFontUnitEM    : ratio = NUI_INV_SCALE_FACTOR * 1.0f; break;
     case eFontUnitPoint : ratio = EMToPoint(1.0f); break;
     case eFontUnitPixel : ratio = EMToPixel(1.0f); break;
   }
@@ -423,7 +423,7 @@ float nglFontBase::GetAscender(nglFontUnit Unit) const
   float ratio = 0.f;
   switch (Unit)
   {
-    case eFontUnitEM    : ratio = 1.0f; break;
+    case eFontUnitEM    : ratio = NUI_INV_SCALE_FACTOR * 1.0f; break;
     case eFontUnitPoint : ratio = EMToPoint(1.0f); break;
     case eFontUnitPixel : ratio = EMToPixel(1.0f); break;
   }
@@ -435,7 +435,7 @@ float nglFontBase::GetDescender(nglFontUnit Unit) const
   float ratio = 0.f;
   switch (Unit)
   {
-    case eFontUnitEM    : ratio = 1.0f; break;
+    case eFontUnitEM    : ratio = NUI_INV_SCALE_FACTOR * 1.0f; break;
     case eFontUnitPoint : ratio = EMToPoint(1.0f); break;
     case eFontUnitPixel : ratio = EMToPixel(1.0f); break;
   }
@@ -500,7 +500,7 @@ float nglFontBase::GetSize (nglFontUnit Unit) const
     case eFontUnitPixel : return mSize;
   }
 
-  return mSize * NUI_INV_SCALE_FACTOR;
+  return mSize;
 }
 
 bool nglFontBase::SetSize (float Size, nglFontUnit Unit)
@@ -565,7 +565,7 @@ bool nglFontBase::SetSize (float Size, nglFontUnit Unit)
   mpFace->Desc.face_id = ftscaler.face_id;
   mpFace->Desc.width   = pixels;
   mpFace->Desc.height  = pixels;
-  mSize = pixels;
+  mSize = pixels * NUI_INV_SCALE_FACTOR;
 
   return true;
 }
@@ -602,10 +602,10 @@ bool nglFontBase::GetGlyphInfo (nglGlyphInfo& rInfo, uint Index, GlyphType Type)
     case FT_GLYPH_FORMAT_BITMAP:
     {
       FT_BitmapGlyph bitmap = (FT_BitmapGlyph)glyph;
-      rInfo.Width    = (float)bitmap->bitmap.width;
-      rInfo.Height   = (float)bitmap->bitmap.rows;
-      rInfo.BearingX = (float)bitmap->left;
-      rInfo.BearingY = (float)bitmap->top;
+      rInfo.Width    = NUI_INV_SCALE_FACTOR * (float)bitmap->bitmap.width;
+      rInfo.Height   = NUI_INV_SCALE_FACTOR * (float)bitmap->bitmap.rows;
+      rInfo.BearingX = NUI_INV_SCALE_FACTOR * (float)bitmap->left;
+      rInfo.BearingY = NUI_INV_SCALE_FACTOR * (float)bitmap->top;
     }
     break;
 
@@ -614,10 +614,10 @@ bool nglFontBase::GetGlyphInfo (nglGlyphInfo& rInfo, uint Index, GlyphType Type)
       FT_BBox bbox;
 
       FT_Glyph_Get_CBox(glyph, ft_glyph_bbox_pixels, &bbox);
-      rInfo.Width    = (float)(bbox.xMax - bbox.xMin);
-      rInfo.Height   = (float)(bbox.yMax - bbox.yMin);
-      rInfo.BearingX = (float)bbox.xMin;
-      rInfo.BearingY = (float)bbox.yMax;
+      rInfo.Width    = NUI_INV_SCALE_FACTOR * (float)(bbox.xMax - bbox.xMin);
+      rInfo.Height   = NUI_INV_SCALE_FACTOR * (float)(bbox.yMax - bbox.yMin);
+      rInfo.BearingX = NUI_INV_SCALE_FACTOR * (float)bbox.xMin;
+      rInfo.BearingY = NUI_INV_SCALE_FACTOR * (float)bbox.yMax;
     }
     break;
 
@@ -626,8 +626,8 @@ bool nglFontBase::GetGlyphInfo (nglGlyphInfo& rInfo, uint Index, GlyphType Type)
   }
 
   rInfo.Index = Index;
-  rInfo.AdvanceX = glyph->advance.x / 65536.0f;
-  rInfo.AdvanceY = glyph->advance.y / 65536.0f;
+  rInfo.AdvanceX = NUI_INV_SCALE_FACTOR * glyph->advance.x / 65536.0f;
+  rInfo.AdvanceY = NUI_INV_SCALE_FACTOR * glyph->advance.y / 65536.0f;
 
   return true;
 }
@@ -651,6 +651,8 @@ bool nglFontBase::GetKerning (uint Left, uint Right, float& rX, float& rY) const
     }
   }
 
+  rX *= NUI_INV_SCALE_FACTOR;
+  rY *= NUI_INV_SCALE_FACTOR;
   return true;
 }
 
@@ -1126,7 +1128,7 @@ bool nglFontBase::LoadFinish()
   if (mFamilyName == _T("LastResort"))
     mLastResort = true;
   mStyleName.Import (mpFace->Face->style_name);
-  mUnitsPerEM   = (float)mpFace->Face->units_per_EM;
+  mUnitsPerEM = (float)mpFace->Face->units_per_EM;
   mGlobalHeight = (float)mpFace->Face->height; // Only valid for scalable fonts (see GetHeight())
 
   // Get Panose information from the TT OS/2 tables

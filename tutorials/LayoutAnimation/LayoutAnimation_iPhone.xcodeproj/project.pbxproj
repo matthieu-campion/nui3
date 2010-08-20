@@ -78,7 +78,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = E5A62E5911CA542000446489 /* nui3.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E5D643E51209AB9C009C26A9 /* libnui3Cocoa.a */;
+			remoteGlobalIDString = E5D643E51209AB9C009C26A9;
 			remoteInfo = nui3Cocoa;
 		};
 		E5EF65DF11E72FC3000FB337 /* PBXContainerItemProxy */ = {
@@ -99,7 +99,7 @@
 		BC6A0A420EF93F9700881ACF /* MainWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MainWindow.cpp; path = src/MainWindow.cpp; sourceTree = SOURCE_ROOT; };
 		BC6A0A430EF93F9700881ACF /* Application.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Application.cpp; path = src/Application.cpp; sourceTree = SOURCE_ROOT; };
 		BC6A0A440EF93F9700881ACF /* Application.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Application.h; path = src/Application.h; sourceTree = SOURCE_ROOT; };
-		C99996020DA6EE97001A7116 /* LayoutAnimation_iPhone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LayoutAnimation_iPhone.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C99996020DA6EE97001A7116 /* LayoutAnimationiPhone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LayoutAnimationiPhone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C999972E0DA6F405001A7116 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		C99997710DA6F9F2001A7116 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		C99998F50DA7CAF2001A7116 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -107,7 +107,7 @@
 		C9DCE4C20DA7F4FF008AC45D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C9EA04FD0E2917FA0067EF48 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		C9F2587A0E5861EA00687021 /* dlist.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = dlist.plist; sourceTree = "<group>"; };
-		C9F5F9330DA84CAB00E078ED /* LayoutAnimation_iPhoneD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LayoutAnimation_iPhoneD.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9F5F9330DA84CAB00E078ED /* LayoutAnimationiPhoneD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LayoutAnimationiPhoneD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5A62E5911CA542000446489 /* nui3.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nui3.xcodeproj; path = ../../nui3.xcodeproj; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -172,8 +172,8 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C99996020DA6EE97001A7116 /* LayoutAnimation_iPhone.app */,
-				C9F5F9330DA84CAB00E078ED /* LayoutAnimation_iPhoneD.app */,
+				C99996020DA6EE97001A7116 /* LayoutAnimationiPhone.app */,
+				C9F5F9330DA84CAB00E078ED /* LayoutAnimationiPhoneD.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -268,7 +268,7 @@
 			);
 			name = LayoutAnimation_iPhone;
 			productName = beatmaker;
-			productReference = C99996020DA6EE97001A7116 /* LayoutAnimation_iPhone.app */;
+			productReference = C99996020DA6EE97001A7116 /* LayoutAnimationiPhone.app */;
 			productType = "com.apple.product-type.application";
 		};
 		C9F5F9070DA84CAB00E078ED /* LayoutAnimation_iPhoneD */ = {
@@ -286,7 +286,7 @@
 			);
 			name = LayoutAnimation_iPhoneD;
 			productName = beatmaker;
-			productReference = C9F5F9330DA84CAB00E078ED /* LayoutAnimation_iPhoneD.app */;
+			productReference = C9F5F9330DA84CAB00E078ED /* LayoutAnimationiPhoneD.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -439,7 +439,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Sebastien Metrot (L6L77G9KU6)";
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PFE_C_DIALECTS = "c++";
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
@@ -460,7 +460,7 @@
 					"-lz",
 					"-liconv",
 				);
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "51CFB74E-0AC4-4F0A-931D-6C856FA5EB0D";
 				SDKROOT = iphoneos4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USE_HEADERMAP = NO;
@@ -470,33 +470,26 @@
 		C99996000DA6EE97001A7116 /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = YES;
+				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_AUTO_VECTORIZATION = YES;
-				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_UNROLL_LOOPS = YES;
 				GENERATE_PROFILING_CODE = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
-				LIBRARY_SEARCH_PATHS = "";
-				PRODUCT_NAME = LayoutAnimation_iPhone;
+				PRODUCT_NAME = LayoutAnimationiPhone;
 				STRIPFLAGS = "-SXx";
-				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Default;
 		};
 		C9F5F9320DA84CAB00E078ED /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos2.1]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -509,8 +502,7 @@
 				GCC_THUMB_SUPPORT = NO;
 				GENERATE_PROFILING_CODE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
-				LIBRARY_SEARCH_PATHS = "";
-				PRODUCT_NAME = LayoutAnimation_iPhoneD;
+				PRODUCT_NAME = LayoutAnimationiPhoneD;
 			};
 			name = Default;
 		};

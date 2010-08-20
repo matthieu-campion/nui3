@@ -373,7 +373,7 @@ bool nglWindow::CallOnMouseMove (nglMouseInfo& rInfo)
 bool nglWindow::CallOnRotation(uint Angle)
 {
   //nuiStopWatch watch(_T("nglWindow::CallOnRotation"));
-  NGL_DEBUG( NGL_LOG(_T("window"), NGL_LOG_DEBUG, _T("Rotation: %d"), Angle); )
+  //NGL_DEBUG( NGL_LOG(_T("window"), NGL_LOG_DEBUG, _T("Rotation: %d"), Angle); )
   if (GetAutoRotation())
   {
     if (OnRotation(Angle))
