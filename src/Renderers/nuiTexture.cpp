@@ -232,12 +232,33 @@ nuiTexture::nuiTexture(nglIStream* pInput, nglImageCodec* pCodec)
   Init();
 }
 
+extern float NUI_SCALE_FACTOR;
+
 nuiTexture::nuiTexture (const nglPath& rPath, nglImageCodec* pCodec)
   : nuiObject()
 {
   if (SetObjectClass(_T("nuiTexture")))
     InitAttributes();
-  mpImage = new nglImage(rPath, pCodec);
+
+  float scale = 1.0f;
+  if (NUI_SCALE_FACTOR > 1)
+  {
+    nglPath p(rPath);
+    nglString path(p.GetRemovedExtension());
+    nglString ext(p.GetExtension());
+    nglString res(path);
+    res.Add(_T("@2x.")).Add(ext);
+    p = res;
+    mpImage = new nglImage(p, pCodec);
+    if (mpImage)
+      scale = 2.0f;
+  }
+  
+  if (!mpImage)
+  {
+    mpImage = new nglImage(rPath, pCodec);
+  }
+
   mpSurface = NULL;
   mOwnImage = true;
   mForceReload = false;
@@ -247,6 +268,7 @@ nuiTexture::nuiTexture (const nglPath& rPath, nglImageCodec* pCodec)
   mpTextures[rPath.GetPathName()] = this;
 
   Init();
+  SetScale(scale);
 }
 
 nuiTexture::nuiTexture (nglImageInfo& rInfo, bool Clone)
@@ -350,7 +372,8 @@ nuiTexture::nuiTexture(nuiSurface* pSurface)
 }
 
 void nuiTexture::Init()
-{	
+{
+	mScale = 1;
   mRealWidth = 0;
   mRealHeight = 0;
 
@@ -537,13 +560,13 @@ void nuiTexture::TextureToImageCoord(nuiAltSize& x, nuiAltSize& y) const
 void nuiTexture::ImageToTextureCoord(nuiSize& x, nuiSize& y) const
 {
   if (mRealWidth)
-    x /= mRealWidth;
+    x /= GetWidth();
   else  if (mpImage)
     x /= mpImage->GetWidth();
 
 
   if (mRealHeight)
-    y /= mRealHeight;
+    y /= GetHeight();
   else if (mpImage)
     y /= mpImage->GetHeight();
 }
@@ -551,12 +574,12 @@ void nuiTexture::ImageToTextureCoord(nuiSize& x, nuiSize& y) const
 void nuiTexture::TextureToImageCoord(nuiSize& x, nuiSize& y) const
 {
   if (mRealWidth)
-    x *= mRealWidth;
+    x *= GetWidth();
   else if (mpImage)
     x *= mpImage->GetWidth();
 
   if (mRealHeight)
-    y *= mRealHeight;
+    y *= GetHeight();
   else if (mpImage)
     y *= mpImage->GetHeight();
 }
@@ -633,10 +656,20 @@ nglString nuiTexture::GetSource() const
 
 uint32 nuiTexture::GetWidth() const
 {
-  return mRealWidth;  
+  return mRealWidth * mScale;  
 }
 
 uint32 nuiTexture::GetHeight() const
+{
+  return mRealHeight * mScale;
+}
+
+uint32 nuiTexture::GetUnscaledWidth() const
+{
+  return mRealWidth;  
+}
+
+uint32 nuiTexture::GetUnscaledHeight() const
 {
   return mRealHeight;
 }
@@ -649,6 +682,16 @@ uint32 nuiTexture::GetWidthPOT() const
 uint32 nuiTexture::GetHeightPOT() const
 {
   return mRealHeightPOT;
+}
+
+float nuiTexture::GetScale() const
+{
+  return mScale;
+}
+
+void nuiTexture::SetScale(float scale)
+{
+  mScale = scale;
 }
 
 void nuiTexture::EnableAutoMipMap(bool Set)

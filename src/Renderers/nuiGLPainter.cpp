@@ -1304,8 +1304,8 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
 {
   nuiSurface* pSurface = pTexture->GetSurface();
   
-  float Width = pTexture->GetWidth();
-  float Height = pTexture->GetHeight();
+  float Width = pTexture->GetUnscaledWidth();
+  float Height = pTexture->GetUnscaledHeight();
   GLenum target = GetTextureTarget(pTexture->IsPowerOfTwo());
   bool changedctx = false;
 
@@ -1563,13 +1563,13 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
   double ry = 1;
   if (rectangle != 1)
   {
-    rx = pTexture->GetWidth() / Width;
-    ry = pTexture->GetHeight() / Height;
+    rx = pTexture->GetUnscaledWidth() / Width;
+    ry = pTexture->GetUnscaledHeight() / Height;
 #ifndef _OPENGL_ES_
     if (target == GL_TEXTURE_RECTANGLE_ARB)
     {
-      rx *= pTexture->GetWidth();
-      ry *= pTexture->GetHeight();
+      rx *= pTexture->GetUnscaledWidth();
+      ry *= pTexture->GetUnscaledHeight();
     }
 #endif
   }

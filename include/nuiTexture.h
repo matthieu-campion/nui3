@@ -59,8 +59,13 @@ public:
 
   uint32 GetWidth() const;
   uint32 GetHeight() const;
-  uint32 GetWidthPOT() const;
-  uint32 GetHeightPOT() const;
+  uint32 GetUnscaledWidth() const;
+  uint32 GetUnscaledHeight() const;
+  uint32 GetWidthPOT() const; ///< Returns the Unscaled Width of the texture rounded to the nearest bigger power of two.
+  uint32 GetHeightPOT() const; ///< Returns the Unscaled Height of the texture rounded to the nearest bigger power of two.
+
+  float GetScale() const;
+  void SetScale(float scale);
   
   void SetMinFilter(GLuint Filter);  ///< Set the maximization filter
   void SetMagFilter(GLuint Filter);  ///< Set the minimization filter
@@ -126,6 +131,8 @@ protected:
   GLuint mWrapT;
   GLuint mEnvMode;
   bool mAutoMipMap;
+  
+  float mScale;
 
   nglImagePixelFormat mPixelFormat;
   
