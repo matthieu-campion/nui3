@@ -17,10 +17,16 @@ public:
   nuiFontInspector();
   virtual ~nuiFontInspector();
 
+
+  virtual bool SetRect(const nuiRect& rRect);
+  virtual bool Draw(nuiDrawContext* pContext);
+  virtual nuiRect CalcIdealSize();
+
 protected:
   nuiEventSink<nuiFontInspector> mSink;
   
   bool OnFontsChanged(const nuiEvent& rEvent);
   void UpdateFonts();
   
+  static int32 UpdatingFonts;
 };

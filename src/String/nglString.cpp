@@ -973,8 +973,6 @@ bool nglString::Copy(const nglChar* pSource)
 bool nglString::Copy(const nglChar* pSource, int32 len)
 {
   mIsNull = false;
-  int32 slen = (int32)wcslen(pSource);
-  len = MIN(len, slen);
   mString.resize(len);
   for (int32 i = 0; i < len; i++)
     mString[i] = pSource[i];

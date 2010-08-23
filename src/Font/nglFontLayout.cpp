@@ -369,6 +369,9 @@ void nglFontLayout::CallOnGlyph (nglFontBase* pFont, const nglString& rString, i
     mDescender = MAX(mDescender, tmpDesc);
   }
   
+  
+  //NGL_ASSERT(!(pFont->GetFamilyName() == _T("STHeiti") && Pos == 22));
+  
   OnGlyph(pFont, rString, Pos, pGlyph);
 }
 

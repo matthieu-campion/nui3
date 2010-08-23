@@ -549,7 +549,10 @@ nglFontBase* nuiFontLayout::FindFontForMissingGlyph(nglFontBase* pOriginalFont, 
   {
     const nuiFontRequestResult& rResult(fonts.front());
         
-    nuiFont* pFont = nuiFont::GetFont(rResult.GetPath(), pOriginalFont->GetSize(), rResult.GetFace());
+    nglPath path(rResult.GetPath());
+    float size = pOriginalFont->GetSize();
+    int face = rResult.GetFace();
+    nuiFont* pFont = nuiFont::GetFont(path, size, face);
     
     uint index = 0;
     if (pFont->GetGlyphIndexes(&Glyph, 1, &index, 1) > 0)

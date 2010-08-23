@@ -15,6 +15,7 @@
 #include "nuiFont.h"
 #include "nuiIntrospector.h"
 
+int32 nuiFontInspector::UpdatingFonts = 0;
 
 nuiFontInspector::nuiFontInspector()
 : mSink(this)
@@ -45,6 +46,10 @@ bool nuiFontInspector::OnFontsChanged(const nuiEvent& rEvent)
 
 void nuiFontInspector::UpdateFonts()
 {
+  if (UpdatingFonts)
+    return;
+  UpdatingFonts++;
+  
   Clear();
   
   nuiScrollView* pScrollView = new nuiScrollView();
@@ -146,4 +151,39 @@ void nuiFontInspector::UpdateFonts()
     
     // nglFontBase
   }
+  UpdatingFonts--;
 }
+
+bool nuiFontInspector::SetRect(const nuiRect& rRect)
+{
+  UpdatingFonts++;
+
+  bool res = nuiSimpleContainer::SetRect(rRect);
+  
+  UpdatingFonts--;
+  
+  return res;
+}
+
+bool nuiFontInspector::Draw(nuiDrawContext* pContext)
+{
+  UpdatingFonts++;
+  
+  bool res = nuiSimpleContainer::Draw(pContext);
+  
+  UpdatingFonts--;
+  
+  return res;
+}
+
+nuiRect nuiFontInspector::CalcIdealSize()
+{
+  UpdatingFonts++;
+  
+  nuiRect res = nuiSimpleContainer::CalcIdealSize();
+  
+  UpdatingFonts--;
+  
+  return res;
+}
+
