@@ -667,10 +667,10 @@ nuiTexture *nuiFontBase::AllocateTexture(uint size)
   pTexture->SetRetainBuffer(true);
 
   pTexture->SetEnvMode(GL_MODULATE);
-  pTexture->SetMinFilter(GL_NEAREST);
-  pTexture->SetMagFilter(GL_NEAREST);
-//  pTexture->SetMinFilter(GL_LINEAR);
-//  pTexture->SetMagFilter(GL_LINEAR);
+//  pTexture->SetMinFilter(GL_NEAREST);
+//  pTexture->SetMagFilter(GL_NEAREST);
+  pTexture->SetMinFilter(GL_LINEAR);
+  pTexture->SetMagFilter(GL_LINEAR);
 
 #ifdef _OPENGL_ES_
   pTexture->SetWrapS(GL_CLAMP_TO_EDGE);
@@ -758,7 +758,7 @@ bool nuiFontBase::FindNextGlyphLocation(uint Width, uint Height, uint &rOffsetX,
       mRowMaxWidth = max(mRowMaxWidth, Width);
       return true; 
     }
-    rOffsetX += mRowMaxWidth;
+    rOffsetX += mRowMaxWidth + 1;
     rOffsetY = 0;     
     if (Width < (TEXTURE_SIZE - rOffsetX) )
     {
@@ -797,17 +797,19 @@ void nuiFontBase::AddCacheGlyph(uint Index, nuiFontBase::GlyphLocation &rGlyphLo
   uint OffsetX = mCurrentX;
   uint OffsetY = mCurrentY;
 
-  if (FindNextGlyphLocation(bmp.Width, bmp.Height, OffsetX, OffsetY)) 
+  if (FindNextGlyphLocation(bmp.Width + 1, bmp.Height + 1, OffsetX, OffsetY)) 
   {
+    OffsetX;
+    OffsetY;
     nuiTexture *pCurrentTexture = mTextures[mCurrentTexture];
 
-    rGlyphLocation = GlyphLocation (OffsetX, OffsetY, bmp.Width, bmp.Height, mCurrentTexture);
+    rGlyphLocation = GlyphLocation (OffsetX + 1, OffsetY + 1, bmp.Width, bmp.Height, mCurrentTexture);
     mGlyphLocationLookupTable.insert(std::pair<uint, nuiFontBase::GlyphLocation>(Index, rGlyphLocation));
 
-    CopyBitmapToTexture(bmp, pCurrentTexture, OffsetX, OffsetY);
+    CopyBitmapToTexture(bmp, pCurrentTexture, OffsetX + 1, OffsetY + 1);
 
     mCurrentX = OffsetX;
-    mCurrentY = OffsetY + bmp.Height;
+    mCurrentY = OffsetY + bmp.Height + 1;
   }
   else
   {
@@ -815,15 +817,14 @@ void nuiFontBase::AddCacheGlyph(uint Index, nuiFontBase::GlyphLocation &rGlyphLo
     nuiTexture *texture = AllocateTexture(MAX(TEXTURE_SIZE, POT(MAX(bmp.Width, bmp.Height))));
     mTextures.push_back(texture);
 
-    rGlyphLocation = GlyphLocation (0, 0, bmp.Width, bmp.Height, mCurrentTexture);
+    rGlyphLocation = GlyphLocation (1, 1, bmp.Width, bmp.Height, mCurrentTexture);
     mGlyphLocationLookupTable.insert(std::pair<uint, nuiFontBase::GlyphLocation>(Index, rGlyphLocation));
 
-    CopyBitmapToTexture(bmp, texture, 0, 0);
+    CopyBitmapToTexture(bmp, texture, 1, 1);
 
     mCurrentX = 0;
-    mCurrentY = bmp.Height;
+    mCurrentY = bmp.Height + 2;
     mRowMaxWidth = bmp.Width;
-
   }
 }
 
@@ -981,19 +982,19 @@ bool nuiFontBase::PrintGlyph (nuiDrawContext *pContext, const nglGlyphLayout& rG
   nuiFontBase::GlyphLocation GlyphLocation;
   ((nuiFontBase*)rGlyph.mpFont)->GetCacheGlyph(rGlyph.Index, GlyphLocation);
 
-  int w = GlyphLocation.mWidth;
-  int h = GlyphLocation.mHeight;
+  float w = GlyphLocation.mWidth;
+  float h = GlyphLocation.mHeight;
 
-  int x = (int)floorf(rGlyph.X + bmp.Left);
-  int y = (int)floorf(rGlyph.Y - bmp.Top);
+  float x = rGlyph.X + bmp.Left;
+  float y = rGlyph.Y - bmp.Top;
 
   nuiTexture *texture;
   texture = mTextures[GlyphLocation.mOffsetTexture];
 
   pContext->SetTexture(texture);
 
-  nuiRect DestRect((nuiSize)x, (nuiSize)y, (nuiSize)w * NUI_INV_SCALE_FACTOR, (nuiSize)h * NUI_INV_SCALE_FACTOR);
-  nuiRect SourceRect((nuiSize)GlyphLocation.mOffsetX, (nuiSize)GlyphLocation.mOffsetY, (nuiSize)w, (nuiSize)h);
+  nuiRect DestRect(x, y, w * NUI_INV_SCALE_FACTOR, h * NUI_INV_SCALE_FACTOR);
+  nuiRect SourceRect(GlyphLocation.mOffsetX, GlyphLocation.mOffsetY, w, h);
 
   pContext->DrawImage(DestRect, SourceRect);
 
@@ -1016,16 +1017,21 @@ bool nuiFontBase::PrepareGlyph (nuiDrawContext *pContext, nuiGlyphLayout& rGlyph
   nuiFontBase::GlyphLocation GlyphLocation;
   GetCacheGlyph(rGlyph.Index, GlyphLocation);
 
-  int w = GlyphLocation.mWidth;
-  int h = GlyphLocation.mHeight;
+  float w = GlyphLocation.mWidth;
+  float h = GlyphLocation.mHeight;
 
-  int x = (int)floorf(rGlyph.X + bmp.Left * NUI_INV_SCALE_FACTOR);
-  int y = (int)floorf(rGlyph.Y - bmp.Top * NUI_INV_SCALE_FACTOR);
+  float x = rGlyph.X + bmp.Left * NUI_INV_SCALE_FACTOR;
+  float y = rGlyph.Y - bmp.Top * NUI_INV_SCALE_FACTOR;
 
   rGlyph.mpTexture = mTextures[GlyphLocation.mOffsetTexture];
 
-  rGlyph.mDestRect.Set((nuiSize)x, (nuiSize)y, (nuiSize)w * NUI_INV_SCALE_FACTOR, (nuiSize)h * NUI_INV_SCALE_FACTOR);
-  rGlyph.mSourceRect.Set((nuiSize)GlyphLocation.mOffsetX, (nuiSize)GlyphLocation.mOffsetY, (nuiSize)w, (nuiSize)h);
+  float ww = w * NUI_INV_SCALE_FACTOR;
+  float hh = h * NUI_INV_SCALE_FACTOR;
+  x = ToNearest(x * NUI_SCALE_FACTOR) * NUI_INV_SCALE_FACTOR;
+  y = ToNearest(y * NUI_SCALE_FACTOR) * NUI_INV_SCALE_FACTOR;
+
+  rGlyph.mDestRect.Set(x, y, ww, hh);
+  rGlyph.mSourceRect.Set(GlyphLocation.mOffsetX, GlyphLocation.mOffsetY, w, h);
 
   return true;
 }
