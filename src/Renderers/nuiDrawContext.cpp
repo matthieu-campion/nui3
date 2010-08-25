@@ -494,14 +494,14 @@ nuiColor nuiDrawContext::GetTextColor() const
   return mCurrentState.mTextColor;
 }
 
-void nuiDrawContext::DrawText(nuiSize x, nuiSize y, const nglString& rString)
+void nuiDrawContext::DrawText(nuiSize x, nuiSize y, const nglString& rString, bool AlignGlyphPixels)
 {
-  mCurrentState.mpFont->Print(this,x,y,rString);
+  mCurrentState.mpFont->Print(this,x,y,rString, AlignGlyphPixels);
 }
 
-void nuiDrawContext::DrawText(nuiSize x, nuiSize y, const nuiFontLayout& rLayout)
+void nuiDrawContext::DrawText(nuiSize x, nuiSize y, const nuiFontLayout& rLayout, bool AlignGlyphPixels)
 {
-  mCurrentState.mpFont->Print(this,x,y,rLayout);
+  mCurrentState.mpFont->Print(this,x,y,rLayout, AlignGlyphPixels);
 }
 
 void nuiDrawContext::PermitAntialiasing(bool Set)

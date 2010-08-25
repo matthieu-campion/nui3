@@ -639,7 +639,7 @@ bool nglFontBase::GetKerning (uint Left, uint Right, float& rX, float& rY) const
 
   FT_Vector vec;
 
-  if (!FT_Get_Kerning(mpFace->Face, Left, Right, FT_KERNING_DEFAULT, &vec))
+  if (!FT_Get_Kerning(mpFace->Face, Left, Right, FT_KERNING_UNFITTED, &vec))
   {
     rX = (float)vec.x;
     rY = (float)vec.y;
@@ -653,6 +653,7 @@ bool nglFontBase::GetKerning (uint Left, uint Right, float& rX, float& rY) const
 
   rX *= NUI_INV_SCALE_FACTOR;
   rY *= NUI_INV_SCALE_FACTOR;
+
   return true;
 }
 

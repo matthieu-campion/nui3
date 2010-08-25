@@ -109,22 +109,21 @@ public:
   void SetAlphaTest(float Threshold = 0.01f);
 
 
-  int  Print (nuiDrawContext *pContext, float X, float Y, const nglString& rText);
-
-  int  Print (nuiDrawContext *pContext, float X, float Y, const nuiFontLayout& rLayout);
+  int  Print (nuiDrawContext *pContext, float X, float Y, const nglString& rText, bool AlignGlyphPixels = true);
+  int  Print (nuiDrawContext *pContext, float X, float Y, const nuiFontLayout& rLayout, bool AlignGlyphPixels = true);
 
   int  GetTextSize (float& X, float& Y, const nglChar* pText); ///< Calculate the bounding of the string in texels and returns it in X & Y.
   int  GetTextPos (float X, const nglChar* pText); ///< Calculate the bounding of the char pos in the given text where the pixel (X,?) lies and returns it.
 
-
+  
 protected:
   GLclampf mAlphaTest;  ///< Alpha test threshold as set by SetAlphaTest()
   const nglChar* OnError (uint& rError) const;
 
 private:
-  bool PrintGlyph (nuiDrawContext *pContext, const nglGlyphLayout& rGlyph);
+  bool PrintGlyph (nuiDrawContext *pContext, const nglGlyphLayout& rGlyph, bool AlignGlyphPixels);
   bool PrintGlyphs(nuiDrawContext *pContext, const std::map<nuiTexture*, std::vector<nuiGlyphLayout> >& rGlyphs);
-  bool PrepareGlyph(nuiDrawContext *pContext, nuiGlyphLayout& rGlyph);
+  bool PrepareGlyph(nuiDrawContext *pContext, nuiGlyphLayout& rGlyph, bool AlignGlyphPixels);
   class NUI_API GlyphLocation
   {
   public:
