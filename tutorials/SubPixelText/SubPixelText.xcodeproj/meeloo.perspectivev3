@@ -331,7 +331,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>E5C2B31E1224063500152799</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>MainWindow.cpp</string>
+								<string>ttkern.c</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -339,11 +339,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>E5C2B31F1224063500152799</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>MainWindow.cpp</string>
+										<string>ttkern.c</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E55B4B1E12251F5C00746BAB</string>
+										<string>E55B4B2B122524B300746BAB</string>
 										<key>history</key>
 										<array>
 											<string>E5C2B34812240B9300152799</string>
@@ -352,10 +352,10 @@
 											<string>E5C2B49C12242A9A00152799</string>
 											<string>E5C2B4D712242CF400152799</string>
 											<string>E5C2B4E312242D3200152799</string>
-											<string>E55B4B0212251D3300746BAB</string>
 											<string>E55B4B1312251E3600746BAB</string>
 											<string>E55B4B1512251E3600746BAB</string>
-											<string>E55B4B1712251E3600746BAB</string>
+											<string>E55B4B26122524AE00746BAB</string>
+											<string>E55B4B231225249F00746BAB</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -659,7 +659,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>304422748.71567398</real>
+	<real>304424115.40280098</real>
 	<key>ToolbarConfigUserDefaultsMinorVersion</key>
 	<string>2</string>
 	<key>ToolbarDisplayMode</key>
@@ -676,7 +676,7 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E55B4B1B12251E3D00746BAB</string>
+		<string>E55B4B2C122524B300746BAB</string>
 		<string>E55B4B1C12251E3D00746BAB</string>
 		<string>E55B4B1D12251E3D00746BAB</string>
 		<string>/Users/meeloo/work/nui3/tutorials/SubPixelText/SubPixelText.xcodeproj</string>

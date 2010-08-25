@@ -4,7 +4,7 @@
 /*                                                                         */
 /*    A new `perfect' anti-aliasing renderer (body).                       */
 /*                                                                         */
-/*  Copyright 2000-2001, 2002, 2003, 2005, 2006, 2007, 2008 by             */
+/*  Copyright 2000-2001, 2002, 2003, 2005, 2006, 2007, 2008, 2009, 2010 by */
 /*  David Turner, Robert Wilhelm, and Werner Lemberg.                      */
 /*                                                                         */
 /*  This file is part of the FreeType project, and may only be used,       */
@@ -103,16 +103,20 @@
 #include <stdarg.h>
 #endif
 
+#include <stddef.h>
 #include <string.h>
 #include <setjmp.h>
 #include <limits.h>
 #define FT_UINT_MAX  UINT_MAX
+#define FT_INT_MAX   INT_MAX
 
 #define ft_memset   memset
 
 #define ft_setjmp   setjmp
 #define ft_longjmp  longjmp
 #define ft_jmp_buf  jmp_buf
+
+typedef ptrdiff_t  FT_PtrDist;
 
 
 #define ErrRaster_Invalid_Mode      -2
@@ -170,6 +174,34 @@
 #endif /* !FT_DEBUG_LEVEL_TRACE */
 
 
+#define FT_DEFINE_OUTLINE_FUNCS( class_,               \
+                                 move_to_, line_to_,   \
+                                 conic_to_, cubic_to_, \
+                                 shift_, delta_ )      \
+          static const FT_Outline_Funcs class_ =       \
+          {                                            \
+            move_to_,                                  \
+            line_to_,                                  \
+            conic_to_,                                 \
+            cubic_to_,                                 \
+            shift_,                                    \
+            delta_                                     \
+         };
+                                          
+#define FT_DEFINE_RASTER_FUNCS( class_, glyph_format_,            \
+                                raster_new_, raster_reset_,       \
+                                raster_set_mode_, raster_render_, \
+                                raster_done_ )                    \
+          const FT_Raster_Funcs class_ =                          \
+          {                                                       \
+            glyph_format_,                                        \
+            raster_new_,                                          \
+            raster_reset_,                                        \
+            raster_set_mode_,                                     \
+            raster_render_,                                       \
+            raster_done_                                          \
+         };
+
 #else /* !_STANDALONE_ */
 
 
@@ -181,13 +213,14 @@
 
 #include "ftsmerrs.h"
 
+#include "ftspic.h"
+
 #define ErrRaster_Invalid_Mode      Smooth_Err_Cannot_Render_Glyph
 #define ErrRaster_Invalid_Outline   Smooth_Err_Invalid_Outline
 #define ErrRaster_Memory_Overflow   Smooth_Err_Out_Of_Memory
 #define ErrRaster_Invalid_Argument  Smooth_Err_Invalid_Argument
 
 #endif /* !_STANDALONE_ */
-
 
 #ifndef FT_MEM_SET
 #define FT_MEM_SET( d, s, c )  ft_memset( d, s, c )
@@ -201,26 +234,18 @@
 
 #ifndef FT_STATIC_RASTER
 
-
 #define RAS_ARG   PWorker  worker
 #define RAS_ARG_  PWorker  worker,
 
 #define RAS_VAR   worker
 #define RAS_VAR_  worker,
 
-#define ras       (*worker)
-
-
 #else /* FT_STATIC_RASTER */
-
 
 #define RAS_ARG   /* empty */
 #define RAS_ARG_  /* empty */
 #define RAS_VAR   /* empty */
 #define RAS_VAR_  /* empty */
-
-  static TWorker  ras;
-
 
 #endif /* FT_STATIC_RASTER */
 
@@ -254,7 +279,7 @@
   /* need to define them to "float" or "double" when experimenting with   */
   /* new algorithms                                                       */
 
-  typedef int   TCoord;   /* integer scanline/pixel coordinate */
+  typedef long  TCoord;   /* integer scanline/pixel coordinate */
   typedef long  TPos;     /* sub-pixel coordinate              */
 
   /* determine the type used to store cell areas.  This normally takes at */
@@ -285,8 +310,8 @@
 
   typedef struct  TCell_
   {
-    int    x;
-    int    cover;
+    TPos   x;     /* same with TWorker.ex */
+    TCoord cover; /* same with TWorker.cover */
     TArea  area;
     PCell  next;
 
@@ -301,12 +326,12 @@
     TPos    count_ex, count_ey;
 
     TArea   area;
-    int     cover;
+    TCoord  cover;
     int     invalid;
 
     PCell   cells;
-    int     max_cells;
-    int     num_cells;
+    FT_PtrDist  max_cells;
+    FT_PtrDist  num_cells;
 
     TCoord  cx, cy;
     TPos    x,  y;
@@ -338,9 +363,16 @@
     long        buffer_size;
 
     PCell*     ycells;
-    int        ycount;
+    TPos       ycount;
 
   } TWorker, *PWorker;
+
+
+#ifndef FT_STATIC_RASTER
+#define ras  (*worker)
+#else
+  static TWorker  ras;
+#endif
 
 
   typedef struct TRaster_
@@ -428,7 +460,7 @@
   gray_find_cell( RAS_ARG )
   {
     PCell  *pcell, cell;
-    int     x = ras.ex;
+    TPos    x = ras.ex;
 
 
     if ( x > ras.count_ex )
@@ -560,9 +592,9 @@
                                  TPos    x2,
                                  TCoord  y2 )
   {
-    TCoord  ex1, ex2, fx1, fx2, delta;
+    TCoord  ex1, ex2, fx1, fx2, delta, mod, lift, rem;
     long    p, first, dx;
-    int     incr, lift, mod, rem;
+    int     incr;
 
 
     dx = x2 - x1;
@@ -584,7 +616,7 @@
     if ( ex1 == ex2 )
     {
       delta      = y2 - y1;
-      ras.area  += (TArea)( fx1 + fx2 ) * delta;
+      ras.area  += (TArea)(( fx1 + fx2 ) * delta);
       ras.cover += delta;
       return;
     }
@@ -612,7 +644,7 @@
       mod += (TCoord)dx;
     }
 
-    ras.area  += (TArea)( fx1 + first ) * delta;
+    ras.area  += (TArea)(( fx1 + first ) * delta);
     ras.cover += delta;
 
     ex1 += incr;
@@ -642,7 +674,7 @@
           delta++;
         }
 
-        ras.area  += (TArea)ONE_PIXEL * delta;
+        ras.area  += (TArea)(ONE_PIXEL * delta);
         ras.cover += delta;
         y1        += delta;
         ex1       += incr;
@@ -651,7 +683,7 @@
     }
 
     delta      = y2 - y1;
-    ras.area  += (TArea)( fx2 + ONE_PIXEL - first ) * delta;
+    ras.area  += (TArea)(( fx2 + ONE_PIXEL - first ) * delta);
     ras.cover += delta;
   }
 
@@ -664,10 +696,10 @@
   gray_render_line( RAS_ARG_ TPos  to_x,
                              TPos  to_y )
   {
-    TCoord  ey1, ey2, fy1, fy2;
+    TCoord  ey1, ey2, fy1, fy2, mod;
     TPos    dx, dy, x, x2;
     long    p, first;
-    int     delta, rem, mod, lift, incr;
+    int     delta, rem, lift, incr;
 
 
     ey1 = TRUNC( ras.last_ey );
@@ -711,7 +743,7 @@
     {
       TCoord  ex     = TRUNC( ras.x );
       TCoord  two_fx = (TCoord)( ( ras.x - SUBPIXELS( ex ) ) << 1 );
-      TPos    area;
+      TArea   area;
 
 
       first = ONE_PIXEL;
@@ -726,7 +758,7 @@
       ras.cover += delta;
       ey1       += incr;
 
-      gray_set_cell( &ras, ex, ey1 );
+      gray_set_cell( RAS_VAR_ ex, ey1 );
 
       delta = (int)( first + first - ONE_PIXEL );
       area  = (TArea)two_fx * delta;
@@ -736,7 +768,7 @@
         ras.cover += delta;
         ey1       += incr;
 
-        gray_set_cell( &ras, ex, ey1 );
+        gray_set_cell( RAS_VAR_ ex, ey1 );
       }
 
       delta      = (int)( fy2 - ONE_PIXEL + first );
@@ -979,56 +1011,53 @@
                               const FT_Vector*  control2,
                               const FT_Vector*  to )
   {
-    TPos        dx, dy, da, db;
     int         top, level;
     int*        levels;
     FT_Vector*  arc;
+    int         mid_x = ( DOWNSCALE( ras.x ) + to->x +
+                          3 * (control1->x + control2->x ) ) / 8;
+    int         mid_y = ( DOWNSCALE( ras.y ) + to->y +
+                          3 * (control1->y + control2->y ) ) / 8;
+    TPos        dx = DOWNSCALE( ras.x ) + to->x - ( mid_x << 1 );
+    TPos        dy = DOWNSCALE( ras.y ) + to->y - ( mid_y << 1 );
 
 
-    dx = DOWNSCALE( ras.x ) + to->x - ( control1->x << 1 );
     if ( dx < 0 )
       dx = -dx;
-    dy = DOWNSCALE( ras.y ) + to->y - ( control1->y << 1 );
     if ( dy < 0 )
       dy = -dy;
     if ( dx < dy )
       dx = dy;
-    da = dx;
-
-    dx = DOWNSCALE( ras.x ) + to->x - 3 * ( control1->x + control2->x );
-    if ( dx < 0 )
-      dx = -dx;
-    dy = DOWNSCALE( ras.y ) + to->y - 3 * ( control1->x + control2->y );
-    if ( dy < 0 )
-      dy = -dy;
-    if ( dx < dy )
-      dx = dy;
-    db = dx;
 
     level = 1;
-    da    = da / ras.cubic_level;
-    db    = db / ras.conic_level;
-    while ( da > 0 || db > 0 )
+    dx /= ras.cubic_level;
+    while ( dx > 0 )
     {
-      da >>= 2;
-      db >>= 3;
+      dx >>= 2;
       level++;
     }
 
     if ( level <= 1 )
     {
-      TPos   to_x, to_y, mid_x, mid_y;
+      TPos  to_x, to_y;
 
 
       to_x  = UPSCALE( to->x );
       to_y  = UPSCALE( to->y );
+
+      /* Recalculation of midpoint is needed only if */
+      /* UPSCALE and DOWNSCALE have any effect.      */
+
+#if ( PIXEL_BITS != 6 )
       mid_x = ( ras.x + to_x +
                 3 * UPSCALE( control1->x + control2->x ) ) / 8;
       mid_y = ( ras.y + to_y +
                 3 * UPSCALE( control1->y + control2->y ) ) / 8;
+#endif
 
       gray_render_line( RAS_VAR_ mid_x, mid_y );
       gray_render_line( RAS_VAR_ to_x, to_y );
+
       return;
     }
 
@@ -1076,7 +1105,7 @@
 
     Draw:
       {
-        TPos  to_x, to_y, mid_x, mid_y;
+        TPos  to_x, to_y;
 
 
         to_x  = arc[0].x;
@@ -1104,13 +1133,13 @@
 
 
     /* record current cell, if any */
-    gray_record_cell( worker );
+    gray_record_cell( RAS_VAR );
 
     /* start to a new position */
     x = UPSCALE( to->x );
     y = UPSCALE( to->y );
 
-    gray_start_cell( worker, TRUNC( x ), TRUNC( y ) );
+    gray_start_cell( RAS_VAR_ TRUNC( x ), TRUNC( y ) );
 
     worker->x = x;
     worker->y = y;
@@ -1122,7 +1151,7 @@
   gray_line_to( const FT_Vector*  to,
                 PWorker           worker )
   {
-    gray_render_line( worker, UPSCALE( to->x ), UPSCALE( to->y ) );
+    gray_render_line( RAS_VAR_ UPSCALE( to->x ), UPSCALE( to->y ) );
     return 0;
   }
 
@@ -1132,7 +1161,7 @@
                  const FT_Vector*  to,
                  PWorker           worker )
   {
-    gray_render_conic( worker, control, to );
+    gray_render_conic( RAS_VAR_ control, to );
     return 0;
   }
 
@@ -1143,7 +1172,7 @@
                  const FT_Vector*  to,
                  PWorker           worker )
   {
-    gray_render_cubic( worker, control1, control2, to );
+    gray_render_cubic( RAS_VAR_ control1, control2, to );
     return 0;
   }
 
@@ -1161,7 +1190,7 @@
     /* first of all, compute the scanline offset */
     p = (unsigned char*)map->buffer - y * map->pitch;
     if ( map->pitch >= 0 )
-      p += ( map->rows - 1 ) * map->pitch;
+      p += (unsigned)( ( map->rows - 1 ) * map->pitch );
 
     for ( ; count > 0; count--, spans++ )
     {
@@ -1203,7 +1232,7 @@
   gray_hline( RAS_ARG_ TCoord  x,
                        TCoord  y,
                        TPos    area,
-                       int     acount )
+                       TCoord  acount )
   {
     FT_Span*  span;
     int       count;
@@ -1243,6 +1272,10 @@
     if ( x >= 32767 )
       x = 32767;
 
+    /* FT_Span.y is an integer, so limit our coordinates appropriately */
+    if ( y >= FT_INT_MAX )
+      y = FT_INT_MAX;
+
     if ( coverage )
     {
       /* see whether we can add this span to the current list */
@@ -1281,7 +1314,7 @@
 #endif /* FT_DEBUG_LEVEL_TRACE */
 
         ras.num_gray_spans = 0;
-        ras.span_y         = y;
+        ras.span_y         = (int)y;
 
         count = 0;
         span  = ras.gray_spans;
@@ -1317,7 +1350,7 @@
       printf( "%3d:", yindex );
 
       for ( cell = ras.ycells[yindex]; cell != NULL; cell = cell->next )
-        printf( " (%3d, c:%4d, a:%6d)", cell->x, cell->cover, cell->area );
+        printf( " (%3ld, c:%4ld, a:%6d)", cell->x, cell->cover, cell->area );
       printf( "\n" );
     }
   }
@@ -1349,7 +1382,7 @@
 
       for ( ; cell != NULL; cell = cell->next )
       {
-        TArea  area;
+        TPos  area;
 
 
         if ( cell->x > x && cover != 0 )
@@ -1666,23 +1699,25 @@
 
   } TBand;
 
-
-  static int
-  gray_convert_glyph_inner( RAS_ARG )
-  {
-    static
-    const FT_Outline_Funcs  func_interface =
-    {
+    FT_DEFINE_OUTLINE_FUNCS(func_interface,
       (FT_Outline_MoveTo_Func) gray_move_to,
       (FT_Outline_LineTo_Func) gray_line_to,
       (FT_Outline_ConicTo_Func)gray_conic_to,
       (FT_Outline_CubicTo_Func)gray_cubic_to,
       0,
       0
-    };
+    )
+
+  static int
+  gray_convert_glyph_inner( RAS_ARG )
+  {
 
     volatile int  error = 0;
 
+#ifdef FT_CONFIG_OPTION_PIC
+      FT_Outline_Funcs func_interface;
+      Init_Class_func_interface(&func_interface);
+#endif
 
     if ( ft_setjmp( ras.jump_buffer ) == 0 )
     {
@@ -1829,7 +1864,7 @@
         if ( middle == bottom )
         {
 #ifdef FT_DEBUG_LEVEL_TRACE
-          FT_TRACE7(( "gray_convert_glyph: Rotten glyph!\n" ));
+          FT_TRACE7(( "gray_convert_glyph: rotten glyph\n" ));
 #endif
           return 1;
         }
@@ -1917,7 +1952,7 @@
       ras.clip_box.yMax =  32767L;
     }
 
-    gray_init_cells( worker, raster->buffer, raster->buffer_size );
+    gray_init_cells( RAS_VAR_ raster->buffer, raster->buffer_size );
 
     ras.outline        = *outline;
     ras.num_cells      = 0;
@@ -1937,7 +1972,7 @@
       ras.render_span_data = &ras;
     }
 
-    return gray_convert_glyph( worker );
+    return gray_convert_glyph( RAS_VAR );
   }
 
 
@@ -1969,14 +2004,14 @@
     FT_UNUSED( raster );
   }
 
-#else /* _STANDALONE_ */
+#else /* !_STANDALONE_ */
 
   static int
   gray_raster_new( FT_Memory   memory,
                    FT_Raster*  araster )
   {
     FT_Error  error;
-    PRaster   raster;
+    PRaster   raster = NULL;
 
 
     *araster = 0;
@@ -1999,7 +2034,7 @@
     FT_FREE( raster );
   }
 
-#endif /* _STANDALONE_ */
+#endif /* !_STANDALONE_ */
 
 
   static void
@@ -2037,8 +2072,7 @@
   }
 
 
-  const FT_Raster_Funcs  ft_grays_raster =
-  {
+  FT_DEFINE_RASTER_FUNCS(ft_grays_raster,
     FT_GLYPH_FORMAT_OUTLINE,
 
     (FT_Raster_New_Func)     gray_raster_new,
@@ -2046,7 +2080,7 @@
     (FT_Raster_Set_Mode_Func)0,
     (FT_Raster_Render_Func)  gray_raster_render,
     (FT_Raster_Done_Func)    gray_raster_done
-  };
+  )
 
 
 /* END */

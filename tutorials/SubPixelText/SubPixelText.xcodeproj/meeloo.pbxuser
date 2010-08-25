@@ -53,6 +53,12 @@
 			E55B4B1812251E3600746BAB /* PBXTextBookmark */ = E55B4B1812251E3600746BAB /* PBXTextBookmark */;
 			E55B4B1A12251E3D00746BAB /* PBXTextBookmark */ = E55B4B1A12251E3D00746BAB /* PBXTextBookmark */;
 			E55B4B1E12251F5C00746BAB /* PBXTextBookmark */ = E55B4B1E12251F5C00746BAB /* PBXTextBookmark */;
+			E55B4B211225249F00746BAB /* PBXTextBookmark */ = E55B4B211225249F00746BAB /* PBXTextBookmark */;
+			E55B4B221225249F00746BAB /* PBXTextBookmark */ = E55B4B221225249F00746BAB /* PBXTextBookmark */;
+			E55B4B231225249F00746BAB /* PBXTextBookmark */ = E55B4B231225249F00746BAB /* PBXTextBookmark */;
+			E55B4B26122524AE00746BAB /* PBXTextBookmark */ = E55B4B26122524AE00746BAB /* PBXTextBookmark */;
+			E55B4B27122524AE00746BAB /* PBXTextBookmark */ = E55B4B27122524AE00746BAB /* PBXTextBookmark */;
+			E55B4B2B122524B300746BAB /* PBXTextBookmark */ = E55B4B2B122524B300746BAB /* PBXTextBookmark */;
 			E5C2B34812240B9300152799 = E5C2B34812240B9300152799 /* PBXTextBookmark */;
 			E5C2B34912240B9300152799 = E5C2B34912240B9300152799 /* PBXTextBookmark */;
 			E5C2B43212241B8300152799 = E5C2B43212241B8300152799 /* PBXTextBookmark */;
@@ -90,7 +96,7 @@
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {2292, 2093}}";
 			sepNavSelRange = "{1202, 0}";
-			sepNavVisRange = "{324, 1246}";
+			sepNavVisRange = "{324, 1263}";
 		};
 	};
 	61A9DFF20B83433800BC506C /* MainWindow.h */ = {
@@ -232,6 +238,63 @@
 		rType = 0;
 		vrLen = 1246;
 		vrLoc = 324;
+	};
+	E55B4B211225249F00746BAB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 55";
+		rLen = 0;
+		rLoc = 1202;
+		rType = 0;
+		vrLen = 1526;
+		vrLoc = 195;
+	};
+	E55B4B221225249F00746BAB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C2B50112242FA400152799 /* ttkern.c */;
+		rLen = 0;
+		rLoc = 113;
+		rType = 1;
+	};
+	E55B4B231225249F00746BAB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C2B50112242FA400152799 /* ttkern.c */;
+		name = "ttkern.c: 307";
+		rLen = 0;
+		rLoc = 7920;
+		rType = 0;
+		vrLen = 1694;
+		vrLoc = 3148;
+	};
+	E55B4B26122524AE00746BAB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 55";
+		rLen = 0;
+		rLoc = 1202;
+		rType = 0;
+		vrLen = 1263;
+		vrLoc = 324;
+	};
+	E55B4B27122524AE00746BAB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C2B50112242FA400152799 /* ttkern.c */;
+		name = "ttkern.c: 307";
+		rLen = 0;
+		rLoc = 7920;
+		rType = 0;
+		vrLen = 1368;
+		vrLoc = 3437;
+	};
+	E55B4B2B122524B300746BAB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C2B50112242FA400152799 /* ttkern.c */;
+		name = "ttkern.c: 307";
+		rLen = 0;
+		rLoc = 7920;
+		rType = 0;
+		vrLen = 1368;
+		vrLoc = 3437;
 	};
 	E5C2B2F51224062200152799 /* SubPixelText */ = {
 		isa = PBXExecutable;
@@ -485,11 +548,11 @@
 		delayBeforeContinue = 0;
 		fileReference = E5C2B4F512242ED000152799 /* ttkern.c */;
 		functionName = "tt_face_load_kern()";
-		hitCount = 1;
+		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 158;
 		location = SubPixelTextD;
-		modificationTime = 304422745.494908;
+		modificationTime = 304424110.514474;
 		originalNumberOfMultipleMatches = 1;
 		state = 2;
 	};
@@ -510,11 +573,11 @@
 		delayBeforeContinue = 0;
 		fileReference = E5C2B4F512242ED000152799 /* ttkern.c */;
 		functionName = "tt_face_load_kern()";
-		hitCount = 1;
+		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 114;
 		location = SubPixelTextD;
-		modificationTime = 304422740.486678;
+		modificationTime = 304424110.51532;
 		originalNumberOfMultipleMatches = 1;
 		state = 2;
 	};
@@ -535,9 +598,9 @@
 		path = /Users/meeloo/work/nui3/deps/freetype2/src/sfnt/ttkern.c;
 		sourceTree = "<absolute>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {2292, 3497}}";
-			sepNavSelRange = "{5425, 0}";
-			sepNavVisRange = "{632, 2390}";
+			sepNavIntBoundsRect = "{{0, 0}, {2292, 3991}}";
+			sepNavSelRange = "{7920, 0}";
+			sepNavVisRange = "{3437, 1368}";
 		};
 	};
 }
