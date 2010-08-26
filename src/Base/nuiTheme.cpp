@@ -156,6 +156,8 @@ void nuiTheme::LoadDefaults()
 
   mFonts[0].CFormat(_T("<?xml version=\"1.0\"?><nuiFont Size=\"%f\" Source=\"/Vera.ttf\"/>"), DEFAULTFONTSIZE);
   mFonts[1].CFormat(_T("<?xml version=\"1.0\"?><nuiFont Size=\"%f\" Source=\"/VeraMono.ttf\"/>"), DEFAULTFONTSIZE);
+  
+  Acquire();
 }
 
 nuiTheme::~nuiTheme()
