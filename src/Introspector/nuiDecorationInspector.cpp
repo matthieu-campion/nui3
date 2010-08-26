@@ -38,7 +38,6 @@ nuiDecorationInspector::nuiDecorationInspector()
 
 nuiDecorationInspector::~nuiDecorationInspector()
 {  
-  
 }
 
 bool nuiDecorationInspector::OnDecosChanged(const nuiEvent& rEvent)
@@ -215,4 +214,9 @@ void nuiDecorationInspector::DumpDecl()
     mpCSSLabel->SetText(decl);
     NGL_OUT(_T("Decoration Declaration:\n%ls\n"), decl.GetChars());
   }
+}
+
+void nuiDecorationInspector::OnTrash()
+{
+  mSlot.DisconnectAll();
 }

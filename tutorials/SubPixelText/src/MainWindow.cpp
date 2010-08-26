@@ -25,12 +25,14 @@ public:
     mX = mMin;
     mY = mMin;
     mMax = 200;
-    mStep = .01;
+    mStep = .05;
     
     nglString str("Testing sub pixel font rendering by interpolation");
     nuiFontRequest request;
     request.SetName(_T("Arial"), 1);
     request.SetBold(false, 1);
+    request.SetItalic(false, 1);
+    request.MustHaveSize(50, 1);
     mpFont = nuiFontManager::GetManager().GetFont(request);
     mpLayout = new nuiFontLayout(*mpFont);
     mpLayout->Layout(str);
@@ -85,9 +87,7 @@ protected:
 MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& rInfo, bool ShowFPS, const nglContext* pShared )
 : nuiMainWindow(rContextInfo, rInfo, pShared, nglPath(ePathCurrent)), mEventSink(this)
 {
-#ifdef _DEBUG_
   SetDebugMode(true);
-#endif
   
 #ifdef NUI_IPHONE
   LoadCSS(_T("rsrc:/css/style-iPhone.css"));

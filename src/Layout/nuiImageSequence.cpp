@@ -97,6 +97,7 @@ void nuiImageSequence::InitAttributes()
 
 nuiImageSequence::~nuiImageSequence()
 {
+  delete mpTempImage;
   for (uint32 i = 0; i < mTextures.size(); i++)
     mTextures[i]->Release();
 }

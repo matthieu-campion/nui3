@@ -308,6 +308,7 @@ mWISink(this)
 
 nuiWidgetInfo::~nuiWidgetInfo()
 {
+  SetTarget(NULL);
   delete mpTimer;
 }
 
