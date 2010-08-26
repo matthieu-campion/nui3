@@ -404,12 +404,39 @@ bool nuiImageSequence::Draw(nuiDrawContext* pContext, nuiWidget* pWidget)
   nuiColor color = nuiColor(1.0f, 1.0f, 1.0f, alpha);
   
   pContext->SetFillColor(color);
-  pContext->DrawImage(mRect,mTexRect);
+  pContext->DrawImage(GetRect().Size(),mTexRect);
   
   pContext->EnableBlending(false);
   pContext->EnableTexturing(false);
   
   pContext->PopState();
+  return true;
+  
+}
+
+bool nuiImageSequence::Draw(nuiDrawContext* pContext)
+{
+  //  int x=0,y=0;
+  if (!mTextures.size() || (mFrameIndex >= mTextures.size()))
+    return false;
+  
+  pContext->SetTexture(mTextures[mFrameIndex]);
+  pContext->EnableTexturing(true);
+  
+  float alpha = 1.0f;
+  
+  pContext->EnableBlending(true);
+  pContext->SetBlendFunc(nuiBlendTransp);
+  
+  if (mUseAlpha)
+  {
+    alpha = GetMixedAlpha();
+  }
+  
+  nuiColor color = nuiColor(1.0f, 1.0f, 1.0f, alpha);
+  
+  pContext->SetFillColor(color);
+  pContext->DrawImage(GetRect().Size(),mTexRect);
   return true;
   
 }
