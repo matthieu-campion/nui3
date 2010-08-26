@@ -21,8 +21,6 @@ nuiShape::nuiShape()
 : mEventSink(this)
 {
   mWinding = eNone;
-  mReferences = 0;
-
 }
 
 nuiShape::nuiShape(const nuiShape& rShape)
@@ -40,7 +38,6 @@ nuiShape& nuiShape::operator=(const nuiShape& rShape)
 nuiShape::~nuiShape()
 {
   // BEWARE: it the debuger gets you here then you have a nuiShape leak (some object have forgotten to release their shapes)!
-  NGL_ASSERT(!mReferences);
   Clear();
   //NUI_ADD_EVENT(Changed);
 }
@@ -142,19 +139,6 @@ nuiXMLNode* nuiShape::Serialize(nuiXMLNode* pParentNode) const
     (*it)->Serialize(pNode);
 
   return pNode;
-}
-
-uint nuiShape::Acquire()
-{
-  return ++mReferences;
-}
-
-uint nuiShape::Release()
-{
-  if (--mReferences)
-    return mReferences;
-  delete this;
-  return 0;
 }
 
 void nuiShape::AddContour(nuiContour* pContour)

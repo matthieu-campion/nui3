@@ -39,9 +39,6 @@ public:
   virtual nuiXMLNode* Serialize(nuiXMLNode* pParentNode) const; ///< This method saves the state in the given XML Node.
   //@}
 
-  uint Acquire();
-  uint Release();
-
   /** @name Adding special contours */
   //@{
   void AddCircle(float X, float Y, float Radius, bool CCW = false, float Quality = 0.5f);
@@ -103,7 +100,6 @@ private:
   nuiShape(const nuiShape& rShape);
   nuiShape& operator=(const nuiShape& rShape);
 
-  uint mReferences;
   Winding mWinding;
 
   bool ElementChanged(const nuiEvent& rEvent);

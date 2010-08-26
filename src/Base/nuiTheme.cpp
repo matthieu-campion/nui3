@@ -32,7 +32,6 @@ nuiTheme::nuiTheme()
 {
   SetObjectClass(_T("nuiTheme"));
   
-  mRefCount = 1;
   LoadDefaults();
   
   int i = 0;
@@ -40,18 +39,6 @@ nuiTheme::nuiTheme()
     mpFonts[i] = 0;
   
   mpWindowTitleFont = nuiFont::GetFont(11);
-}
-
-void nuiTheme::Acquire()
-{
-  mRefCount++;
-}
-
-void nuiTheme::Release()
-{
-  mRefCount--;
-  if (!mRefCount)
-    delete this;
 }
 
 void nuiTheme::LoadDefaults()
@@ -837,19 +824,6 @@ void nuiTheme::SetTheme(nuiTheme* pTheme)
   mpTheme = pTheme;
   if (mpTheme)
     mpTheme->Acquire();
-}
-
-void nuiTheme::InitTheme()
-{
-  if (mpTheme)
-  {
-    mpTheme->Acquire();
-    return;
-  }
-  nuiTheme* pTheme = new nuiTheme();
-  NGL_ASSERT(pTheme);
-  SetTheme(pTheme);
-  pTheme->Release();
 }
 
 

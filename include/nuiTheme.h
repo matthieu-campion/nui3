@@ -31,12 +31,8 @@ class nuiLabel;
 class NUI_API nuiTheme: public nuiObject
 {
 public:
-  static void InitTheme(); ///< Init the default theme if it doesn't already exist.
   static nuiTheme* GetTheme(); ///< Return the default theme. If no theme exist one is created with the resource path set as the current working directory.
   static void SetTheme(nuiTheme* pTheme); ///< Replace the default theme with the given one. The old theme is released (and will die gracefully if not acquired by another object).
-
-  void Acquire();
-  void Release();
 
   nuiTheme();
   virtual ~nuiTheme();
@@ -118,7 +114,6 @@ protected:
 
   static nuiTheme* mpTheme;
 
-  uint32 mRefCount;
   nuiFont* mpWindowTitleFont;
 };
 

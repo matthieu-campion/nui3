@@ -17,7 +17,7 @@
 
 class nuiXMLNode;
 
-class NUI_API nuiPathGenerator
+class NUI_API nuiPathGenerator : public nuiRefCount
 {
 public:
   nuiPathGenerator();

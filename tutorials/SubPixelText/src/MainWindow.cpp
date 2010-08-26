@@ -60,7 +60,7 @@ public:
   bool OnTick(const nuiEvent& rEvent)
   {
     mX += mStep;
-    mY += mStep;
+    //mY += mStep;
     if (mX > mMax || mX < mMin)
       mStep = -mStep;
     

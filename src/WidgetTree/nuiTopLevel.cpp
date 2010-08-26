@@ -158,7 +158,6 @@ nuiTopLevel::nuiTopLevel(const nglPath& rResPath)
   mReleased = false;
   mNeedInvalidateOnSetRect = true;
   mClearBackground = true;
-  nuiTheme::InitTheme();
   SetObjectClass(_T("nuiTopLevel"));
 
   mResPath = rResPath;
@@ -204,7 +203,6 @@ bool nuiTopLevel::Load(const nuiXMLNode* pNode)
   SetObjectClass(_T("nuiTopLevel"));
 
   mResPath = nglPath(pNode->GetAttribute("Path"));
-  nuiTheme::InitTheme();
 
   mToolTipDelayOn = .5f;
   mToolTipDelayOff = 5.0f;
@@ -280,7 +278,7 @@ void nuiTopLevel::Exit()
 
   nuiTheme* pTheme = nuiTheme::GetTheme();
   pTheme->Release(); // Release once because of the Acquire in nuiTheme::GetTheme()
-  pTheme->Release(); // Release twice to balance the nuiTheme::InitTheme(..).       
+                     //pTheme->Release(); // Release twice to balance the nuiTheme::InitTheme(..).       
   
   mReleased = true;
 
