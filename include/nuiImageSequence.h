@@ -14,8 +14,8 @@ class nuiImageSequence : public nuiWidget
 {
 public:
   nuiImageSequence();
-  nuiImageSequence(uint32 nbFrames, nglImage* pImage, nuiOrientation orientation, const nuiColor& rColor = nuiColor(255, 255, 255, 255));
-  nuiImageSequence(uint32 nbFrames, const nglPath& rTexturePath, nuiOrientation orientation, const nuiColor& rColor = nuiColor(255, 255, 255, 255));
+  nuiImageSequence(uint32 nbFrames, nglImage* pImage, nuiOrientation orientation = nuiVertical);
+  nuiImageSequence(uint32 nbFrames, const nglPath& rTexturePath, bool framesInSingleFile = true, nuiOrientation orientation = nuiVertical); // all frames in a single file, or stored in separated png files
   void InitAttributes();
   virtual ~nuiImageSequence();
   
@@ -45,9 +45,9 @@ public:
   
   
 private:
-
+  
   bool CreateTextures(); // return true if the textures have been properly created
-
+  
   nglPath mTexturePath;
   std::vector<nuiTexture*> mTextures;
   
@@ -60,6 +60,7 @@ private:
   nuiOrientation mOrientation;
   bool mUseAlpha;
   
+  bool mFramesInSingleFile;
   nglImage* mpTempImage;
   bool mRefreshTextures;
 };

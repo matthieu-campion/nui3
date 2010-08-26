@@ -20,11 +20,11 @@ nuiImageSequence::nuiImageSequence()
   mpTempImage = NULL;
   mRefreshTextures = true;
   mUseAlpha = true;
+  mFramesInSingleFile = true;
 }
 
-nuiImageSequence::nuiImageSequence(uint32 nbFrames, nglImage* pImage, nuiOrientation orientation, const nuiColor& rColor)
-: nuiWidget(), mFrameIndex(0),
-mColor(rColor)
+nuiImageSequence::nuiImageSequence(uint32 nbFrames, nglImage* pImage, nuiOrientation orientation)
+: nuiWidget(), mFrameIndex(0), mFramesInSingleFile(true)
 {
   if (SetObjectClass(_T("nuiImageSequence")))
     InitAttributes();
@@ -36,16 +36,18 @@ mColor(rColor)
   mUseAlpha = true;
 }
 
-nuiImageSequence::nuiImageSequence(uint32 nbFrames, const nglPath& rTexturePath, nuiOrientation orientation, const nuiColor& rColor)
-: nuiWidget(), mFrameIndex(0),
-mColor(rColor),
+nuiImageSequence::nuiImageSequence(uint32 nbFrames, const nglPath& rTexturePath, bool framesInSingleFile, nuiOrientation orientation)
+: nuiWidget(), mFrameIndex(0), mFramesInSingleFile(framesInSingleFile),
 mTexturePath(rTexturePath)
 {
   if (SetObjectClass(_T("nuiImageSequence")))
     InitAttributes();
 	
-  mpTempImage = new nglImage(rTexturePath);
-
+  if (mFramesInSingleFile)
+    mpTempImage = new nglImage(rTexturePath);
+  else
+    mpTempImage = NULL;
+  
   mInterpolated = true;
   mNbFrames = nbFrames;
   mOrientation = orientation;  
@@ -72,12 +74,12 @@ void nuiImageSequence::InitAttributes()
   (nglString(_T("Interpolation")), nuiUnitBoolean,
    nuiMakeDelegate(this, &nuiImageSequence::IsInterpolated),
    nuiMakeDelegate(this, &nuiImageSequence::SetInterpolated));
-
+  
   nuiAttribute<uint32>* AttributeNbFrames = new nuiAttribute<uint32>
   (nglString(_T("NbFrames")), nuiUnitNone,
    nuiMakeDelegate(this, &nuiImageSequence::GetNbFrames),
    nuiMakeDelegate(this, &nuiImageSequence::SetNbFrames));
-
+  
   nuiAttribute<nuiOrientation>* AttributeOrientation = new nuiAttribute<nuiOrientation>
   (nglString(_T("Orientation")), nuiUnitNone,
    nuiMakeDelegate(this, &nuiImageSequence::GetOrientation),
@@ -104,7 +106,7 @@ bool nuiImageSequence::Load(const nuiXMLNode* pNode)
   mColor.SetValue(nuiGetString(pNode, _T("Color"), _T("white")));
   mpTempImage = new nglImage(nglPath(nuiGetString(pNode, _T("Texture"), nglString::Empty)));
   mRefreshTextures = true;
-
+  
   return true;
 }
 
@@ -128,7 +130,7 @@ nuiRect nuiImageSequence::CalcIdealSize()
   // a undefined order. We need all the attributed to be properly set before creating the textures.
   if (mRefreshTextures)
   {
-    NGL_ASSERT(mpTempImage);
+    NGL_ASSERT((mFramesInSingleFile && mpTempImage) || !mFramesInSingleFile);
     
     bool res = CreateTextures();
     NGL_ASSERT(res);
@@ -140,7 +142,7 @@ nuiRect nuiImageSequence::CalcIdealSize()
   
   if (!mTextures.size())
     return mIdealRect;
-
+  
   mIdealRect.Set(0.0f,0.0f,(nuiSize) mTexRect.GetWidth(),(nuiSize) mTexRect.GetHeight());
   return mIdealRect;
 }
@@ -150,17 +152,50 @@ bool nuiImageSequence::CreateTextures()
 {
   if (!mNbFrames)
     return false;
-    
-  if (!mpTempImage && !mTextures.size())
+  
+  if (mFramesInSingleFile && !mpTempImage && !mTextures.size())
     return false;
   
-  NGL_ASSERT(mpTempImage);
+  NGL_ASSERT((mFramesInSingleFile && mpTempImage) || !mFramesInSingleFile);
+  
+  //*****************************************************************
+  // all frames are stored in separate image files
+  if (!mFramesInSingleFile)
+  {
+    for (uint32 i = 0; i < mNbFrames; i++)
+    {
+      nglString filename;
+      filename.Format(_T("%ls%d.png"), mTexturePath.GetChars(), i);
+      nglPath path = nglPath(filename);
+      nuiTexture* pTex = nuiTexture::GetTexture(path, NULL);
+      
+      if (i == 0)
+        mTexRect.Set(0, 0, pTex->GetWidth(), pTex->GetHeight());
+      
+      if (mInterpolated)
+      {
+        pTex->SetMinFilter(GL_LINEAR);
+        pTex->SetMagFilter(GL_LINEAR);
+      }
+      else
+      {
+        pTex->SetMinFilter(GL_NEAREST);
+        pTex->SetMagFilter(GL_NEAREST);
+      }
+      
+      mTextures.push_back(pTex);
+    }
+    
+    
+    // don't need to go further
+    return true; 
+  }
   
   if (mOrientation == nuiVertical)
     mTexRect.Set(0, 0, mpTempImage->GetWidth(), ToBelow(mpTempImage->GetHeight() / (float)mNbFrames));
   else
     mTexRect.Set(0, 0, ToBelow(mpTempImage->GetWidth() / (float)mNbFrames), mpTempImage->GetHeight());
-
+  
   // clean existing textures
   for (uint32 i = 0; i < mTextures.size(); i++)
     mTextures[i]->Release();
@@ -171,32 +206,32 @@ bool nuiImageSequence::CreateTextures()
   uint32 dstBufferSize = mTexRect.GetWidth() * mTexRect.GetHeight() * 4;
   char* pDst = (char*)malloc(dstBufferSize);
   NGL_ASSERT(pDst);
-
-    
+  
+  
   //*****************************************************************
   // frames are aligned vertically
   if (mOrientation == nuiVertical)
   {
-
+    
     // copy and paste each frame from the image to an individual texture
     for (uint32 frame = 0; frame < mNbFrames; frame++)
     {
-//      uint32 x = 0;
+      //      uint32 x = 0;
       uint32 y = frame * mTexRect.GetHeight();
       
       nglImageInfo info;
       mpTempImage->GetInfo(info);
       NGL_ASSERT((info.mPixelFormat == eImagePixelRGB) || (info.mPixelFormat == eImagePixelRGBA))
-
+      
       char* pSrc = pBuffer + (y * info.mBytesPerLine);
-                
+      
       nglCopyLineFn pFunc = nglGetCopyLineFn(32, info.mBitDepth);
       NGL_ASSERT(pFunc);
       
       // copy part of the image
       pFunc(pDst, pSrc, mTexRect.GetWidth() * mTexRect.GetHeight(), false/*don't invert*/);
       
-                
+      
       // create a texture from the copyied buffer and store it
       info.mBufferFormat = eImageFormatRaw;
       info.mPixelFormat = eImagePixelRGBA;
@@ -206,7 +241,7 @@ bool nuiImageSequence::CreateTextures()
       info.mBytesPerPixel = 4;
       info.mBytesPerLine = (mTexRect.GetWidth() * 4);
       info.mpBuffer = pDst;
-                
+      
       nuiTexture* pTex = nuiTexture::GetTexture(info, true/* clone the buffer */);
       mTextures.push_back(pTex);
       
@@ -226,7 +261,7 @@ bool nuiImageSequence::CreateTextures()
       
     }
   }
-
+  
   //*****************************************************************
   // frames are aligned horizontally
   else
@@ -240,14 +275,14 @@ bool nuiImageSequence::CreateTextures()
       nglImageInfo info;
       mpTempImage->GetInfo(info);
       NGL_ASSERT((info.mPixelFormat == eImagePixelRGB) || (info.mPixelFormat == eImagePixelRGBA))
-
+      
       char* pSrc = pBuffer + (x * info.mBytesPerPixel);
       
       nglCopyLineFn pFunc = nglGetCopyLineFn(32, info.mBitDepth);
       NGL_ASSERT(pFunc);
       
       char* pDstPtr = pDst;
-
+      
       // copy line per line
       for (uint32 y = 0; y < mTexRect.GetHeight(); y++)
       {        
@@ -286,7 +321,7 @@ bool nuiImageSequence::CreateTextures()
   
   // clean up
   free(pDst);
-    
+  
   
   return true;
 }
@@ -353,25 +388,23 @@ bool nuiImageSequence::Draw(nuiDrawContext* pContext, nuiWidget* pWidget)
   pContext->PushState();
   pContext->ResetState();
   pContext->SetTexture(mTextures[mFrameIndex]);
-
+  
   pContext->EnableTexturing(true);
   
   float alpha = 1.0f;
   
   pContext->EnableBlending(true);
   pContext->SetBlendFunc(nuiBlendTransp);
-
+  
   if (mUseAlpha && pWidget)
   {
     alpha = pWidget->GetMixedAlpha();
   }
   
-  const nuiRect& destRect = mRect.Size();
-  
   nuiColor color = nuiColor(1.0f, 1.0f, 1.0f, alpha);
-    
+  
   pContext->SetFillColor(color);
-  pContext->DrawImage(destRect,mTexRect);
+  pContext->DrawImage(mRect,mTexRect);
   
   pContext->EnableBlending(false);
   pContext->EnableTexturing(false);
