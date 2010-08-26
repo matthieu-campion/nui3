@@ -384,7 +384,7 @@ public:
 protected:
   nuiHTMLNode(const nglString& rName, NodeType Type, TagType TagType, const nglString& rText, nuiHTMLNode* pParent, bool ComputeStyle);
   nuiHTMLNode(const void* _tdoc, const void* _tnod, nglTextEncoding encoding, nuiHTMLNode* pParent, bool ComputeStyle);
-  ~nuiHTMLNode();
+  virtual ~nuiHTMLNode();
   void BuildTree(const void* _tdoc, const void* _tnod, nglTextEncoding encoding, bool ComputeStyle);
   void SetFromNode(const void* _tdoc, const void* _tnod, nglTextEncoding encoding, bool ComputeStyle);
 
@@ -410,7 +410,7 @@ class nuiHTML : public nuiHTMLNode
 {
 public:
   nuiHTML(bool ComputeStyle);
-  ~nuiHTML();
+  virtual ~nuiHTML();
   
   bool Load(nglIStream& rStream, nglTextEncoding OverrideContentsEncoding = eEncodingUnknown, const nglString& rSourceURL = nglString::Null); ///< By default we don't override the encoding indicated by the contents
 

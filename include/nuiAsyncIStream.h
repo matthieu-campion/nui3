@@ -17,7 +17,7 @@ class nuiAsyncIStream : public nglIStream
 public:
   nuiAsyncIStream(const nglString& rURL, bool AutoStart, const nuiSignal1<nuiAsyncIStream*>::Slot& rDelegate);
   
-  ~nuiAsyncIStream();
+  virtual ~nuiAsyncIStream();
   
   const nglString& GetURL() const;
   
