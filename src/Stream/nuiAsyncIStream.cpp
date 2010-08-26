@@ -21,7 +21,7 @@ public:
     mURL.DecodeUrl();
   }
 
-  ~Handler()
+  virtual ~Handler()
   {
     Cancel();
     delete mpStream;
@@ -162,7 +162,7 @@ public:
     
   }
   
-  ~HttpHandler()
+  virtual ~HttpHandler()
   {
     delete mpResponse;
   }
@@ -245,6 +245,9 @@ bool nuiAsyncIStream::Start()
 {
   if (!mpHandler)
     return false;
+
+  if(mCancel)
+	  return false;
   
   mpHandler->Start();
   return true;
