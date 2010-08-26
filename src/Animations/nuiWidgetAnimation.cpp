@@ -10,7 +10,8 @@
 
 //class nuiWidgetAnimation (BASE CLASS)
 nuiWidgetAnimation::nuiWidgetAnimation (nuiWidgetPtr pTarget, double DurationInSeconds)
-  : mpTarget(pTarget)
+  : nuiAnimation(),
+    mpTarget(pTarget)
 {
   SetDuration(DurationInSeconds);
 }

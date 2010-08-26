@@ -185,6 +185,7 @@ nuiAnimation::nuiAnimation()
 : mAnimSink(this)
 {
   mCount = 0;
+  mCurrentPosition = 0;
   mDuration = 0.5;
   mCurrentTime = 0;
   mDirection = 1.0;
@@ -192,7 +193,7 @@ nuiAnimation::nuiAnimation()
   mUpdatingTime = false;
   mEnableCallbacks = true;
   mDeleteOnStop = false;
-  
+
   mEasing = (nuiEasingMethod)(&::nuiEasingIdentity);
   
   AcquireTimer();
