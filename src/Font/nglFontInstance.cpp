@@ -31,7 +31,7 @@ nglFontInstance::nglFontInstance (const nglPath& rPath, uint Face)
   mOwnMemory = false;
   mStatic = false;
 
-  mRefCount = 1;
+  Acquire();
 }
 
 nglFontInstance::nglFontInstance (const FT_Byte* pBase, FT_Long Size, uint Face, bool StaticBuffer)
@@ -47,7 +47,7 @@ nglFontInstance::nglFontInstance (const FT_Byte* pBase, FT_Long Size, uint Face,
   mOwnMemory = false;
   mStatic   = StaticBuffer;
   
-  mRefCount = 1;
+  Acquire();
 }
 
 nglFontInstance::nglFontInstance (const nglFontInstance& rInstance)
@@ -60,7 +60,7 @@ nglFontInstance::nglFontInstance (const nglFontInstance& rInstance)
   mStatic = rInstance.mStatic;
   mOwnMemory = !mStatic;
   
-  mRefCount = 1;
+  Acquire();
   //NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_DEBUG, _T("nglFontInstance::nglFontInstance COPY CTOR 0x%x (%ls - %d)\n"), this, mPath.GetChars(), mFace);)
 }
 
@@ -69,18 +69,6 @@ nglFontInstance::~nglFontInstance()
   //NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_DEBUG, _T("nglFontInstance::~nglFontInstance DTOR 0x%x (%ls - %d)\n"), this, mPath.GetChars(), mFace);)
   if (mOwnMemory)
     delete[] mpMemBase;
-}
-
-uint32 nglFontInstance::AddRef()
-{
-  mRefCount++;
-  return mRefCount;
-}
-
-uint32 nglFontInstance::Release()
-{
-  mRefCount--;
-  return mRefCount;
 }
 
 nglPath nglFontInstance::GetPath() const
@@ -104,7 +92,7 @@ FTC_FaceID nglFontInstance::Install(const nglFontInstance& rInstance)
     font = *it;
     if ((rInstance.mPath == font->mPath) && (rInstance.mFace == font->mFace))
     {
-      font->AddRef();
+      font->Acquire();
       return (FTC_FaceID)font;
     }
   }

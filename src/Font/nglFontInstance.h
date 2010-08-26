@@ -23,7 +23,7 @@
 /*!
 See src/font/README for more details.
 */
-class nglFontInstance
+class nglFontInstance : nuiRefCount
 {
 public:
   nglFontInstance(const nglPath& rPath, uint Face);
@@ -55,9 +55,5 @@ private:
   FT_Error OnFaceRequest (FT_Library pLibrary, FT_Pointer pData, FT_Face* pFace);
   bool mOwnMemory;
   bool mStatic;
-
-  uint32 mRefCount;
-  uint32 AddRef();
-  uint32 Release();
 };
 
