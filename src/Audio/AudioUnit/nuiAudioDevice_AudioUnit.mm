@@ -149,13 +149,16 @@ void nuiAudioDevice_AudioUnit::ProcessInput(AudioUnitRenderActionFlags* ioAction
   
   //mAudioProcessFn(mInputBuffers, mOutputBuffers, uNumFrames);
   ioData = mpIData;
+  int16* src0 = (int16*)ioData->mBuffers[0].mData;
+  *src0 = 0;
   OSErr err = AudioUnitRender(mAudioUnit, ioActionFlags, inTimeStamp, inBusNumber, inNumberFrames, ioData);
 
+  //printf("process input AudioUnitRender %d (%d - %d) [%d]\n", err, inBusNumber, inNumberFrames, *src0);
   // copy buffers (int -> float)
   if (mInputBuffers.size())
   {
-    const float mult = 1.0 / ((1 << 23) - 1);
-    const int32* src0 = (int32*)ioData->mBuffers[0].mData;
+    const float mult = 1.0 / ((1 << 15) - 1);
+    const int16* src0 = (int16*)ioData->mBuffers[0].mData;
     float* dst0 = const_cast<float*>(&mInputBuffers[0][0]);
     for (uint32 s = 0; s < inNumberFrames; s++)
     {
@@ -423,15 +426,20 @@ bool nuiAudioDevice_AudioUnit::Open(std::vector<uint32>& rInputChannels, std::ve
     NGL_ASSERT(mpIData);
     
     mpIData->mNumberBuffers = 1;
-    mpIData->mBuffers[0].mNumberChannels = mInputChannels.size();
-    mpIData->mBuffers[0].mDataByteSize = BufferSize * mInputChannels.size() * in_fmt_desc.mBytesPerFrame;
-    mpIData->mBuffers[0].mData = malloc(mpIData->mBuffers[0].mDataByteSize);
+    AudioBuffer& rBuf(*(mpIData->mBuffers));
+    uint32 ins = rInputChannels.size();
+    uint32 c = BufferSize * ins * in_fmt_desc.mBytesPerFrame;
+    //printf("Audio inputs: %d - bytes: %d\n", ins, c);
+    rBuf.mNumberChannels = ins;
+    rBuf.mDataByteSize = c;
+    rBuf.mData = malloc(rBuf.mDataByteSize);
     if (mpIData->mBuffers[0].mData == NULL)
     {
       NGL_ASSERT(mpIData->mBuffers[0].mData);
       return false;
     }
     
+    mInputBuffers.push_back(new float[BufferSize]);
 		
     cb.inputProc = AudioUnitInputCallback;
 		cb.inputProcRefCon = this;
