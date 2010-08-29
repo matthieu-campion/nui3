@@ -43,7 +43,7 @@ double nuiEasingSlowStart(double val)
 
 double nuiEasingQuintic(double val)
 {
-  return val * val * val * val;
+  return val * val * val * val * val;
 }
 
 double nuiEasingSinusStartFast(double val)
