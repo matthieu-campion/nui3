@@ -26,7 +26,7 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
 {
   // register the notif. message by the notification manager (MainWindow inherits from nuiMainWindow, which inherits from nuiNotificationManager)
   // the message will be processed by the virtual method OnNotification, overloaded from nuiNotificationObserver class
-  RegisterWithManager(this, NOTIF_FILEBROWSE_DONE);
+  RegisterObserver(NOTIF_FILEBROWSE_DONE, this);
 }
 
 MainWindow::~MainWindow()

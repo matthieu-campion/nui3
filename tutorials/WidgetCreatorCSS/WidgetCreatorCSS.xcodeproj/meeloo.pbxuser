@@ -83,14 +83,13 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 273176184;
-			PBXWorkspaceStateSaveDate = 273176184;
+			PBXPerProjectTemplateStateSaveDate = 304812755;
+			PBXWorkspaceStateSaveDate = 304812755;
 		};
 		perUserProjectItems = {
-			E57A95961045939F0031C44B /* PBXTextBookmark */ = E57A95961045939F0031C44B /* PBXTextBookmark */;
 			E57A95DE1045966F0031C44B /* PBXTextBookmark */ = E57A95DE1045966F0031C44B /* PBXTextBookmark */;
-			E57A96E31046EBCE0031C44B /* PBXTextBookmark */ = E57A96E31046EBCE0031C44B /* PBXTextBookmark */;
-			E57A96E71047FA820031C44B /* PBXTextBookmark */ = E57A96E71047FA820031C44B /* PBXTextBookmark */;
+			E5C065F5122B134E00F52C24 /* PBXTextBookmark */ = E5C065F5122B134E00F52C24 /* PBXTextBookmark */;
+			E5C065F6122B134E00F52C24 /* PBXTextBookmark */ = E5C065F6122B134E00F52C24 /* PBXTextBookmark */;
 		};
 		sourceControlManager = E57A958D1045928A0031C44B /* Source Control */;
 		userBuildSettings = {
@@ -118,9 +117,9 @@
 	};
 	BC6A09CB0EF9301900881ACF /* main.css */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1652, 1288}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1652, 1183}}";
 			sepNavSelRange = "{1206, 0}";
-			sepNavVisRange = "{910, 462}";
+			sepNavVisRange = "{488, 884}";
 			sepNavWindowFrame = "{{61, 28}, {1061, 1103}}";
 		};
 	};
@@ -211,7 +210,7 @@
 		ignoreCount = 0;
 		lineNumber = 38;
 		location = WidgetCreatorCSSD;
-		modificationTime = 273083344.8830889;
+		modificationTime = 304812780.735754;
 		originalNumberOfMultipleMatches = 0;
 		state = 2;
 	};
@@ -232,24 +231,24 @@
 		path = /Users/meeloo/work/nui3/src/String/nglString.cpp;
 		sourceTree = "<absolute>";
 	};
-	E57A96E31046EBCE0031C44B /* PBXTextBookmark */ = {
+	E5C065F5122B134E00F52C24 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 74";
 		rLen = 0;
 		rLoc = 1206;
 		rType = 0;
-		vrLen = 669;
-		vrLoc = 703;
+		vrLen = 896;
+		vrLoc = 475;
 	};
-	E57A96E71047FA820031C44B /* PBXTextBookmark */ = {
+	E5C065F6122B134E00F52C24 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 74";
 		rLen = 0;
 		rLoc = 1206;
 		rType = 0;
-		vrLen = 462;
-		vrLoc = 910;
+		vrLen = 884;
+		vrLoc = 488;
 	};
 }

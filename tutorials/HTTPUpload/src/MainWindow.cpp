@@ -55,7 +55,7 @@ void MainWindow::OnCreation()
   else
   {
     NGL_OUT(_T("Unable to send HTTP Request"));
-    pView->SetText(_T("Unable to send HTTP Request"));
+    pView->SetText(_T("Unable to send HTTP Request. Make sure you have launched the local *AMP (* Apache + Mysql + Php) server with the correct doc root."));
   }
 
   delete pRes;

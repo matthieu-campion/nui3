@@ -38,19 +38,19 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 292983219;
-			PBXWorkspaceStateSaveDate = 292983219;
+			PBXPerProjectTemplateStateSaveDate = 304810267;
+			PBXWorkspaceStateSaveDate = 304810267;
 		};
 		perUserProjectItems = {
 			E5504CF11176930F00D780B0 /* PBXTextBookmark */ = E5504CF11176930F00D780B0 /* PBXTextBookmark */;
 			E5504D071176934400D780B0 /* PBXTextBookmark */ = E5504D071176934400D780B0 /* PBXTextBookmark */;
-			E5504D0D11769F6E00D780B0 /* PBXTextBookmark */ = E5504D0D11769F6E00D780B0 /* PBXTextBookmark */;
-			E5504D0E11769F6F00D780B0 /* PBXTextBookmark */ = E5504D0E11769F6F00D780B0 /* PBXTextBookmark */;
 			E560A46E1136D56A00AFBEAC /* PBXTextBookmark */ = E560A46E1136D56A00AFBEAC /* PBXTextBookmark */;
 			E560A4701136D56A00AFBEAC /* PBXTextBookmark */ = E560A4701136D56A00AFBEAC /* PBXTextBookmark */;
 			E560A4721136D56A00AFBEAC /* PBXTextBookmark */ = E560A4721136D56A00AFBEAC /* PBXTextBookmark */;
 			E560A55511373AE100AFBEAC /* PBXTextBookmark */ = E560A55511373AE100AFBEAC /* PBXTextBookmark */;
 			E5ACDE86113C905600CBE6DA /* PBXTextBookmark */ = E5ACDE86113C905600CBE6DA /* PBXTextBookmark */;
+			E5C062F9122B099600F52C24 /* PBXTextBookmark */ = E5C062F9122B099600F52C24 /* PBXTextBookmark */;
+			E5C062FE122B09B500F52C24 /* PBXTextBookmark */ = E5C062FE122B09B500F52C24 /* PBXTextBookmark */;
 		};
 		sourceControlManager = E560A45D1136C1BE00AFBEAC /* Source Control */;
 		userBuildSettings = {
@@ -84,9 +84,9 @@
 	};
 	61A9DFF10B83433800BC506C /* MainWindow.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {2292, 1430}}";
-			sepNavSelRange = "{954, 0}";
-			sepNavVisRange = "{652, 1289}";
+			sepNavIntBoundsRect = "{{0, 0}, {2292, 1534}}";
+			sepNavSelRange = "{1433, 0}";
+			sepNavVisRange = "{532, 1311}";
 		};
 	};
 	E5504CF11176930F00D780B0 /* PBXTextBookmark */ = {
@@ -101,6 +101,7 @@
 	};
 	E5504CF21176930F00D780B0 /* nuiMimeMultiPart.h */ = {
 		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
 		name = nuiMimeMultiPart.h;
 		path = /Users/meeloo/work/nui3/include/nuiMimeMultiPart.h;
 		sourceTree = "<absolute>";
@@ -111,11 +112,6 @@
 		name = nuiMimeMultiPart.cpp;
 		path = /Users/meeloo/work/nui3/src/Net/nuiMimeMultiPart.cpp;
 		sourceTree = "<absolute>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1219, 1820}}";
-			sepNavSelRange = "{3735, 0}";
-			sepNavVisRange = "{1896, 1839}";
-		};
 	};
 	E5504D071176934400D780B0 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -126,26 +122,6 @@
 		rType = 0;
 		vrLen = 2018;
 		vrLoc = 1717;
-	};
-	E5504D0D11769F6E00D780B0 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
-		name = "MainWindow.cpp: 42";
-		rLen = 0;
-		rLoc = 954;
-		rType = 0;
-		vrLen = 1085;
-		vrLoc = 652;
-	};
-	E5504D0E11769F6F00D780B0 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
-		name = "MainWindow.cpp: 42";
-		rLen = 0;
-		rLoc = 954;
-		rType = 0;
-		vrLen = 1289;
-		vrLoc = 652;
 	};
 	E560A4481136C18E00AFBEAC /* HTTPUpload */ = {
 		isa = PBXExecutable;
@@ -304,5 +280,25 @@
 		name = upload.php;
 		path = /Users/meeloo/work/nui3/tutorials/HTTPUpload/php/upload.php;
 		sourceTree = "<absolute>";
+	};
+	E5C062F9122B099600F52C24 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 58";
+		rLen = 0;
+		rLoc = 1433;
+		rType = 0;
+		vrLen = 1188;
+		vrLoc = 652;
+	};
+	E5C062FE122B09B500F52C24 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 58";
+		rLen = 0;
+		rLoc = 1433;
+		rType = 0;
+		vrLen = 1311;
+		vrLoc = 532;
 	};
 }

@@ -70,16 +70,14 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 269142950;
-			PBXWorkspaceStateSaveDate = 269142950;
+			PBXPerProjectTemplateStateSaveDate = 304809909;
+			PBXWorkspaceStateSaveDate = 304809909;
 		};
 		perUserProjectItems = {
-			E56D24CF0FE4727E00C16F53 /* PBXTextBookmark */ = E56D24CF0FE4727E00C16F53 /* PBXTextBookmark */;
-			E56D24D00FE4727E00C16F53 /* PBXTextBookmark */ = E56D24D00FE4727E00C16F53 /* PBXTextBookmark */;
 			E56D250C0FE4743000C16F53 /* PBXTextBookmark */ = E56D250C0FE4743000C16F53 /* PBXTextBookmark */;
 			E56D26780FE69FA900C16F53 /* PBXTextBookmark */ = E56D26780FE69FA900C16F53 /* PBXTextBookmark */;
-			E56D267C0FE6A00400C16F53 /* PBXTextBookmark */ = E56D267C0FE6A00400C16F53 /* PBXTextBookmark */;
-			E57955C1100ACBD700821E44 /* PBXTextBookmark */ = E57955C1100ACBD700821E44 /* PBXTextBookmark */;
+			E5C06202122B07B800F52C24 /* PBXTextBookmark */ = E5C06202122B07B800F52C24 /* PBXTextBookmark */;
+			E5C0621C122B07DE00F52C24 /* PBXTextBookmark */ = E5C0621C122B07DE00F52C24 /* PBXTextBookmark */;
 		};
 		sourceControlManager = E56D24AF0FE46BBB00C16F53 /* Source Control */;
 		userBuildSettings = {
@@ -106,7 +104,7 @@
 	};
 	61A9DFF20B83433800BC506C /* MainWindow.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1652, 556}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1652, 547}}";
 			sepNavSelRange = "{396, 0}";
 			sepNavVisRange = "{0, 532}";
 		};
@@ -129,6 +127,9 @@
 		configStateDict = {
 		};
 		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
 		debuggerPlugin = GDBDebugging;
 		disassemblyDisplayState = 0;
 		enableDebugStr = 1;
@@ -138,6 +139,7 @@
 		executableUserSymbolLevel = 0;
 		libgmallocEnabled = 0;
 		name = FlowLayout;
+		showTypeColumn = 0;
 		sourceDirectories = (
 		);
 	};
@@ -152,6 +154,9 @@
 		configStateDict = {
 		};
 		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
 		debuggerPlugin = GDBDebugging;
 		disassemblyDisplayState = 0;
 		dylibVariantSuffix = "";
@@ -164,6 +169,7 @@
 		name = FlowLayoutD;
 		savedGlobals = {
 		};
+		showTypeColumn = 0;
 		sourceDirectories = (
 		);
 		variableFormatDictionary = {
@@ -175,6 +181,9 @@
 		isSCMEnabled = 0;
 		scmConfiguration = {
 			repositoryName = nui;
+			repositoryNamesForRoots = {
+				"" = nui;
+			};
 		};
 	};
 	E56D24B00FE46BBB00C16F53 /* Code sense */ = {
@@ -187,26 +196,6 @@
 			sepNavSelRange = "{6785, 0}";
 			sepNavVisRange = "{0, 10084}";
 		};
-	};
-	E56D24CF0FE4727E00C16F53 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
-		name = "MainWindow.cpp: 13";
-		rLen = 0;
-		rLoc = 266;
-		rType = 0;
-		vrLen = 1575;
-		vrLoc = 0;
-	};
-	E56D24D00FE4727E00C16F53 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 61A9DFF20B83433800BC506C /* MainWindow.h */;
-		name = "MainWindow.h: 19";
-		rLen = 0;
-		rLoc = 396;
-		rType = 0;
-		vrLen = 532;
-		vrLoc = 0;
 	};
 	E56D24E50FE472A500C16F53 /* nuiFlowView.cpp */ = {
 		isa = PBXFileReference;
@@ -235,7 +224,7 @@
 		vrLen = 1036;
 		vrLoc = 268;
 	};
-	E56D267C0FE6A00400C16F53 /* PBXTextBookmark */ = {
+	E5C06202122B07B800F52C24 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 61A9DFF20B83433800BC506C /* MainWindow.h */;
 		name = "MainWindow.h: 19";
@@ -245,7 +234,7 @@
 		vrLen = 532;
 		vrLoc = 0;
 	};
-	E57955C1100ACBD700821E44 /* PBXTextBookmark */ = {
+	E5C0621C122B07DE00F52C24 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 61A9DFF20B83433800BC506C /* MainWindow.h */;
 		name = "MainWindow.h: 19";

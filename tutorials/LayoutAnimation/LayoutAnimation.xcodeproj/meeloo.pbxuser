@@ -112,17 +112,17 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 304443961;
-			PBXWorkspaceStateSaveDate = 304443961;
+			PBXPerProjectTemplateStateSaveDate = 304810871;
+			PBXWorkspaceStateSaveDate = 304810871;
 		};
 		perUserProjectItems = {
 			E5241B9311CBCE080025CA71 /* PBXTextBookmark */ = E5241B9311CBCE080025CA71 /* PBXTextBookmark */;
 			E5241B9511CBCE080025CA71 /* PBXTextBookmark */ = E5241B9511CBCE080025CA71 /* PBXTextBookmark */;
 			E5241B9711CBCE080025CA71 /* PBXTextBookmark */ = E5241B9711CBCE080025CA71 /* PBXTextBookmark */;
-			E55B4BDF1225721200746BAB /* PlistBookmark */ = E55B4BDF1225721200746BAB /* PlistBookmark */;
-			E5751FBB1226BF2500523FB6 /* PlistBookmark */ = E5751FBB1226BF2500523FB6 /* PlistBookmark */;
 			E585A8A311BAFAD2005DEEA1 /* PBXTextBookmark */ = E585A8A311BAFAD2005DEEA1 /* PBXTextBookmark */;
 			E59CD1BC11EA21A800955611 /* PBXTextBookmark */ = E59CD1BC11EA21A800955611 /* PBXTextBookmark */;
+			E5C06385122B0B7B00F52C24 /* PlistBookmark */ = E5C06385122B0B7B00F52C24 /* PlistBookmark */;
+			E5C06390122B0C4300F52C24 /* PlistBookmark */ = E5C06390122B0C4300F52C24 /* PlistBookmark */;
 		};
 		sourceControlManager = E5EF6ABE0F96233C003E265A /* Source Control */;
 		userBuildSettings = {
@@ -221,28 +221,6 @@
 		path = /Users/meeloo/work/nui3/include/nuiObject.h;
 		sourceTree = "<absolute>";
 	};
-	E55B4BDF1225721200746BAB /* PlistBookmark */ = {
-		isa = PlistBookmark;
-		fRef = E59CD30011EA94A000955611 /* Info.plist */;
-		fallbackIsa = PBXBookmark;
-		isK = 0;
-		kPath = (
-		);
-		name = /Users/meeloo/work/nui3/tutorials/LayoutAnimation/Info.plist;
-		rLen = 0;
-		rLoc = 9223372036854775808;
-	};
-	E5751FBB1226BF2500523FB6 /* PlistBookmark */ = {
-		isa = PlistBookmark;
-		fRef = E59CD30011EA94A000955611 /* Info.plist */;
-		fallbackIsa = PBXBookmark;
-		isK = 0;
-		kPath = (
-		);
-		name = /Users/meeloo/work/nui3/tutorials/LayoutAnimation/Info.plist;
-		rLen = 0;
-		rLoc = 9223372036854775807;
-	};
 	E585A8A311BAFAD2005DEEA1 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = E585A8A411BAFAD2005DEEA1 /* nuiAnimation.cpp */;
@@ -276,6 +254,28 @@
 		name = NSApplication.h;
 		path = /DeveloperUnstable/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSApplication.h;
 		sourceTree = "<absolute>";
+	};
+	E5C06385122B0B7B00F52C24 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = E59CD30011EA94A000955611 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/meeloo/work/nui3/tutorials/LayoutAnimation/Info.plist;
+		rLen = 0;
+		rLoc = 9223372036854775807;
+	};
+	E5C06390122B0C4300F52C24 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = E59CD30011EA94A000955611 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/meeloo/work/nui3/tutorials/LayoutAnimation/Info.plist;
+		rLen = 0;
+		rLoc = 9223372036854775807;
 	};
 	E5D64521120A0B92009C26A9 /* LayoutAnimationCocoa */ = {
 		activeExec = 0;

@@ -13,7 +13,7 @@
 
 
 guiTheme::guiTheme()
-: nuiTheme(nglPath(ePathCurrent))
+: nuiTheme()
 {
   nuiTheme::SetTheme(this);
 }

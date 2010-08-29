@@ -40,9 +40,9 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					10,
+					1474,
 					20,
-					48.16259765625,
+					48,
 					43,
 					43,
 					20,
@@ -57,8 +57,8 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 275339815;
-			PBXWorkspaceStateSaveDate = 275339815;
+			PBXPerProjectTemplateStateSaveDate = 304809161;
+			PBXWorkspaceStateSaveDate = 304809161;
 		};
 		perUserProjectItems = {
 			E5818CBB10695DC8001CA6D2 /* PBXTextBookmark */ = E5818CBB10695DC8001CA6D2 /* PBXTextBookmark */;
@@ -67,8 +67,8 @@
 			E5818CDB10696ADF001CA6D2 /* PBXTextBookmark */ = E5818CDB10696ADF001CA6D2 /* PBXTextBookmark */;
 			E5818CDD10696ADF001CA6D2 /* PBXTextBookmark */ = E5818CDD10696ADF001CA6D2 /* PBXTextBookmark */;
 			E5818CF410696B35001CA6D2 /* PBXTextBookmark */ = E5818CF410696B35001CA6D2 /* PBXTextBookmark */;
-			E5818D0610696B82001CA6D2 /* PBXTextBookmark */ = E5818D0610696B82001CA6D2 /* PBXTextBookmark */;
-			E5818D1B10697370001CA6D2 /* PBXTextBookmark */ = E5818D1B10697370001CA6D2 /* PBXTextBookmark */;
+			E5C06158122B04CA00F52C24 /* PBXTextBookmark */ = E5C06158122B04CA00F52C24 /* PBXTextBookmark */;
+			E5C0616F122B060800F52C24 /* PBXTextBookmark */ = E5C0616F122B060800F52C24 /* PBXTextBookmark */;
 		};
 		sourceControlManager = E5818C8110695A41001CA6D2 /* Source Control */;
 		userBuildSettings = {
@@ -95,7 +95,7 @@
 	};
 	BC6A09CB0EF9301900881ACF /* main.css */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {899, 928}}";
+			sepNavIntBoundsRect = "{{0, 0}, {899, 947}}";
 			sepNavSelRange = "{524, 0}";
 			sepNavVisRange = "{0, 693}";
 		};
@@ -202,11 +202,6 @@
 		name = nglString.cpp;
 		path = /Users/meeloo/work/nui3/src/String/nglString.cpp;
 		sourceTree = "<absolute>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {899, 35828}}";
-			sepNavSelRange = "{10735, 0}";
-			sepNavVisRange = "{9960, 1125}";
-		};
 	};
 	E5818CD910696ADF001CA6D2 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -224,11 +219,6 @@
 		name = nglPath.cpp;
 		path = /Users/meeloo/work/nui3/src/File/nglPath.cpp;
 		sourceTree = "<absolute>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {899, 21996}}";
-			sepNavSelRange = "{3200, 0}";
-			sepNavVisRange = "{2462, 1363}";
-		};
 	};
 	E5818CDB10696ADF001CA6D2 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -246,11 +236,6 @@
 		name = nuiFont.cpp;
 		path = /Users/meeloo/work/nui3/src/Base/nuiFont.cpp;
 		sourceTree = "<absolute>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {908, 4290}}";
-			sepNavSelRange = "{338, 0}";
-			sepNavVisRange = "{0, 1839}";
-		};
 	};
 	E5818CDD10696ADF001CA6D2 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -264,6 +249,7 @@
 	};
 	E5818CDE10696ADF001CA6D2 /* nuiFontManager.h */ = {
 		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
 		name = nuiFontManager.h;
 		path = /Users/meeloo/work/nui3/tutorials/CSSFontSelection/../../include/nuiFontManager.h;
 		sourceTree = "<absolute>";
@@ -274,11 +260,6 @@
 		name = nuiFontManager.cpp;
 		path = /Users/meeloo/work/nui3/src/Base/nuiFontManager.cpp;
 		sourceTree = "<absolute>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1652, 22217}}";
-			sepNavSelRange = "{42691, 21}";
-			sepNavVisRange = "{41602, 1695}";
-		};
 	};
 	E5818CF410696B35001CA6D2 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -290,7 +271,7 @@
 		vrLen = 1695;
 		vrLoc = 41602;
 	};
-	E5818D0610696B82001CA6D2 /* PBXTextBookmark */ = {
+	E5C06158122B04CA00F52C24 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 31";
@@ -300,7 +281,7 @@
 		vrLen = 693;
 		vrLoc = 0;
 	};
-	E5818D1B10697370001CA6D2 /* PBXTextBookmark */ = {
+	E5C0616F122B060800F52C24 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = BC6A09CB0EF9301900881ACF /* main.css */;
 		name = "main.css: 31";

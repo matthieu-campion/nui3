@@ -16,9 +16,9 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					10,
+					1474,
 					20,
-					48.16259765625,
+					48,
 					43,
 					43,
 					20,
@@ -33,15 +33,15 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 273936729;
-			PBXWorkspaceStateSaveDate = 273936729;
+			PBXPerProjectTemplateStateSaveDate = 304809619;
+			PBXWorkspaceStateSaveDate = 304809619;
 		};
 		perUserProjectItems = {
 			E55A496D1053F31A002AB5CA /* PBXTextBookmark */ = E55A496D1053F31A002AB5CA /* PBXTextBookmark */;
 			E55A496E1053F31A002AB5CA /* PBXTextBookmark */ = E55A496E1053F31A002AB5CA /* PBXTextBookmark */;
 			E55A496F1053F31A002AB5CA /* PBXTextBookmark */ = E55A496F1053F31A002AB5CA /* PBXTextBookmark */;
-			E55A4A061053F983002AB5CA /* PBXTextBookmark */ = E55A4A061053F983002AB5CA /* PBXTextBookmark */;
-			E55A4A291053FE3C002AB5CA /* PBXTextBookmark */ = E55A4A291053FE3C002AB5CA /* PBXTextBookmark */;
+			E5C0617E122B069400F52C24 /* PBXTextBookmark */ = E5C0617E122B069400F52C24 /* PBXTextBookmark */;
+			E5C06199122B06D900F52C24 /* PBXTextBookmark */ = E5C06199122B06D900F52C24 /* PBXTextBookmark */;
 		};
 		sourceControlManager = E55A49631053F177002AB5CA /* Source Control */;
 		userBuildSettings = {
@@ -77,7 +77,7 @@
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {5920, 780}}";
 			sepNavSelRange = "{1757, 0}";
-			sepNavVisRange = "{0, 4307}";
+			sepNavVisRange = "{0, 4304}";
 		};
 	};
 	61A9DFF20B83433800BC506C /* MainWindow.h */ = {
@@ -146,6 +146,8 @@
 		showTypeColumn = 0;
 		sourceDirectories = (
 		);
+		variableFormatDictionary = {
+		};
 	};
 	E55A49631053F177002AB5CA /* Source Control */ = {
 		isa = PBXSourceControlManager;
@@ -191,24 +193,24 @@
 		vrLen = 491;
 		vrLoc = 0;
 	};
-	E55A4A061053F983002AB5CA /* PBXTextBookmark */ = {
+	E5C0617E122B069400F52C24 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 33";
 		rLen = 0;
 		rLoc = 1757;
 		rType = 0;
-		vrLen = 3776;
-		vrLoc = 525;
+		vrLen = 4304;
+		vrLoc = 0;
 	};
-	E55A4A291053FE3C002AB5CA /* PBXTextBookmark */ = {
+	E5C06199122B06D900F52C24 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 33";
 		rLen = 0;
 		rLoc = 1757;
 		rType = 0;
-		vrLen = 4307;
+		vrLen = 4304;
 		vrLoc = 0;
 	};
 }

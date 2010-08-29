@@ -34,7 +34,7 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
   SetDebugMode(true);
 #endif
   
-  RegisterWithManager(this, NOTIF_FILEBROWSE_DONE);
+  RegisterObserver(NOTIF_FILEBROWSE_DONE, this);
   
   LoadCSS(_T("rsrc:/css/main.css"));
   

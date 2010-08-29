@@ -130,15 +130,17 @@ void MainWindow::OnCreation()
     nglString s((const char*)&buffer[0], buffer.size());
     
     //NGL_OUT(_T("Result (%d bytes / %d chars):\n%ls\n\n"), buffer.size(), s.GetLength(), s.GetChars());
-    NGL_OUT(_T("Result (%d bytes):\n\n"), buffer.size());
+    NGL_OUT(_T("Got %d bytes\n\n"), buffer.size());
   }
   
   ////////// Server Test:
   nuiTCPServer server;
   if (server.Bind(0, 31337))
   {
+    NGL_OUT(_T("Opening server on port 31337\n"));
     if (server.Listen())
     {
+      NGL_OUT(_T("Waiting for connexions\n"));
       nuiTCPClient* pClient = server.Accept();
       NGL_ASSERT(pClient);
       nuiNetworkHost host;

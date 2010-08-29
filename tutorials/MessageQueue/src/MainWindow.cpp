@@ -58,8 +58,8 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
   mpThread1 = NULL;
   mpThread2 = NULL;  
   
-  RegisterWithManager(this, NOTIF_PING);
-  RegisterWithManager(this, NOTIF_PONG);
+  RegisterObserver(NOTIF_PING, this);
+  RegisterObserver(NOTIF_PONG, this);
 }
 
 MainWindow::~MainWindow()

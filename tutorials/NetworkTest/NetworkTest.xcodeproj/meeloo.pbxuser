@@ -59,7 +59,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					2016,
+					1451,
 					20,
 					48,
 					43,
@@ -98,11 +98,15 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 297038078;
-			PBXWorkspaceStateSaveDate = 297038078;
+			PBXPerProjectTemplateStateSaveDate = 304811301;
+			PBXWorkspaceStateSaveDate = 304811301;
 		};
 		perUserProjectItems = {
 			E5617861119475B00060DC85 /* PBXTextBookmark */ = E5617861119475B00060DC85 /* PBXTextBookmark */;
+			E5C0643D122B0D8C00F52C24 /* PBXTextBookmark */ = E5C0643D122B0D8C00F52C24 /* PBXTextBookmark */;
+			E5C0643E122B0D8C00F52C24 /* PBXTextBookmark */ = E5C0643E122B0D8C00F52C24 /* PBXTextBookmark */;
+			E5C06448122B0E6200F52C24 /* XCBuildMessageTextBookmark */ = E5C06448122B0E6200F52C24 /* XCBuildMessageTextBookmark */;
+			E5C0644B122B0E9000F52C24 /* PBXTextBookmark */ = E5C0644B122B0E9000F52C24 /* PBXTextBookmark */;
 		};
 		sourceControlManager = E58C19811192F3C900A0223E /* Source Control */;
 		userBuildSettings = {
@@ -120,6 +124,13 @@
 			E58C19691192F3A800A0223E /* NetworkTestD */,
 		);
 	};
+	61A9DFEF0B83433800BC506C /* Application.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1629, 2340}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 820}";
+		};
+	};
 	61A9DFF00B83433800BC506C /* Application.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {2194, 1281}}";
@@ -129,9 +140,9 @@
 	};
 	61A9DFF10B83433800BC506C /* MainWindow.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1076, 2548}}";
-			sepNavSelRange = "{3402, 0}";
-			sepNavVisRange = "{2798, 1161}";
+			sepNavIntBoundsRect = "{{0, 0}, {1629, 2626}}";
+			sepNavSelRange = "{3666, 0}";
+			sepNavVisRange = "{2804, 1373}";
 			sepNavWindowFrame = "{{15, 310}, {1061, 1103}}";
 		};
 	};
@@ -224,5 +235,56 @@
 	E58C19821192F3C900A0223E /* Code sense */ = {
 		isa = PBXCodeSenseManager;
 		indexTemplatePath = "";
+	};
+	E5C0643C122B0D8200F52C24 /* nuiTCPServer.cpp */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
+		name = nuiTCPServer.cpp;
+		path = /Users/meeloo/work/nui3/src/Net/nuiTCPServer.cpp;
+		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {899, 1040}}";
+			sepNavSelRange = "{1158, 0}";
+			sepNavVisRange = "{718, 671}";
+		};
+	};
+	E5C0643D122B0D8C00F52C24 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C0643C122B0D8200F52C24 /* nuiTCPServer.cpp */;
+		name = "nuiTCPServer.cpp: 66";
+		rLen = 0;
+		rLoc = 1158;
+		rType = 0;
+		vrLen = 913;
+		vrLoc = 476;
+	};
+	E5C0643E122B0D8C00F52C24 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFEF0B83433800BC506C /* Application.cpp */;
+		name = "Application.cpp: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 820;
+		vrLoc = 0;
+	};
+	E5C06448122B0E6200F52C24 /* XCBuildMessageTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "Expected `)' before ';' token";
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		fallbackIsa = XCBuildMessageTextBookmark;
+		rLen = 1;
+		rLoc = 139;
+		rType = 1;
+	};
+	E5C0644B122B0E9000F52C24 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 143";
+		rLen = 0;
+		rLoc = 3666;
+		rType = 0;
+		vrLen = 1373;
+		vrLoc = 2804;
 	};
 }

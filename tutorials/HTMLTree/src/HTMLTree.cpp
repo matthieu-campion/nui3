@@ -110,7 +110,7 @@ bool HTMLTree::Parse(const nglString& rString)
 {
   mHTML = rString;
   delete mpHTML;
-  mpHTML = new nuiHTML();
+  mpHTML = new nuiHTML(false);
 
   std::string str(rString.GetStdString());
   nglIMemory mem(&str[0], str.size());
@@ -133,7 +133,7 @@ bool HTMLTree::ParseURL(const nglString& rString)
   mHTML.Import(&pResponse->GetBody()[0], pResponse->GetBody().size(), eUTF8);
 
   delete mpHTML;
-  mpHTML = new nuiHTML();
+  mpHTML = new nuiHTML(false);
   bool res = mpHTML->Load(mem);
   
   nuiTreeNode* pTree = new HTMLTreeNode(mpHTML);
