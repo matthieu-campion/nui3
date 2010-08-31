@@ -165,7 +165,7 @@ void nuiAttributeAnimation::OnFrame()
 
 /////////////////////////////////
 
-//// nuiAttributeAnimation:
+//// nuiColorAttributeAnimation:
 nuiColorAttributeAnimation::nuiColorAttributeAnimation()
 {
   if (SetObjectClass(_T("nuiColorAttributeAnimation")))
@@ -285,7 +285,7 @@ void nuiColorAttributeAnimation::OnFrame()
 
 /////////////////////////////////
 
-//// nuiAttributeAnimation:
+//// nuiRectAttributeAnimation:
 nuiRectAttributeAnimation::nuiRectAttributeAnimation()
 {
   if (SetObjectClass(_T("nuiRectAttributeAnimation")))
@@ -488,7 +488,7 @@ bool nuiRectAttributeAnimation::GetAutoRound() const
 
 /////////////////////////////////
 
-//// nuiAttributeAnimation:
+//// nuiMatrixAttributeAnimation:
 nuiMatrixAttributeAnimation::nuiMatrixAttributeAnimation()
 {
   if (SetObjectClass(_T("nuiMatrixAttributeAnimation")))
@@ -582,3 +582,96 @@ void nuiMatrixAttributeAnimation::OnFrame()
     const_matrix_attrib.Set(frameValue);
 }
 
+/////////////////////////////////
+
+// Matrix Attrib Animation:
+
+/////////////////////////////////
+
+//// nuiRotateMatrixAttributeAnimation:
+nuiRotateMatrixAttributeAnimation::nuiRotateMatrixAttributeAnimation()
+{
+  if (SetObjectClass(_T("nuiRotateMatrixAttributeAnimation")))
+  {
+    // Init atributes
+  }
+  
+  mStartX = mStartY = mEndX = mEndY = mStartAngle = 0;
+  mEndAngle = 360;
+}
+
+nuiRotateMatrixAttributeAnimation::~nuiRotateMatrixAttributeAnimation()
+{
+}
+
+void nuiRotateMatrixAttributeAnimation::SetStartValue(float angle, float xcenter, float ycenter)
+{
+  mStartAngle = angle;
+  mStartX = xcenter;
+  mStartY = ycenter;
+}
+
+float nuiRotateMatrixAttributeAnimation::GetStartAngle() const
+{
+  return mStartAngle;
+}
+
+float nuiRotateMatrixAttributeAnimation::GetStartX() const
+{
+  return mStartX;
+}
+
+float nuiRotateMatrixAttributeAnimation::GetStartY() const
+{
+  return mStartY;
+}
+
+void nuiRotateMatrixAttributeAnimation::SetEndValue(float angle, float xcenter, float ycenter)
+{
+  mEndAngle = angle;
+  mEndX = xcenter;
+  mEndY = ycenter;
+}
+
+float nuiRotateMatrixAttributeAnimation::GetEndAngle() const
+{
+  return mEndAngle;
+}
+
+float nuiRotateMatrixAttributeAnimation::GetEndX() const
+{
+  return mEndX;
+}
+
+float nuiRotateMatrixAttributeAnimation::GetEndY() const
+{
+  return mEndY;
+}
+
+void nuiRotateMatrixAttributeAnimation::OnFrame()
+{
+  const float pos = GetPosition();
+  const float angle = mStartAngle + pos * (mEndAngle - mStartAngle);
+  const float x = mStartX + pos * (mEndX - mStartX);
+  const float y = mStartY + pos * (mEndY - mStartY);
+  
+  nuiMatrix r;
+  nuiMatrix t;
+  nuiMatrix tt;
+  nuiMatrix m;
+  r.SetRotation(angle, 0, 0, 1);
+  t.SetTranslation(-x, -y, 0);
+  tt.SetTranslation(x, y, 0);
+  m = tt * r * t;
+  
+  nuiAttribBase attrib(mpTarget->GetAttribute(mTarget));
+  NGL_ASSERT(attrib.IsValid());
+  
+  nuiAttrib<nuiMatrix> matrix_attrib(attrib);
+  nuiAttrib<const nuiMatrix&> const_matrix_attrib(attrib);
+  
+  if (matrix_attrib)
+    matrix_attrib.Set(m);
+  else if (const_matrix_attrib)
+    const_matrix_attrib.Set(m);
+}

@@ -12,6 +12,10 @@
 #include "nuiVBox.h"
 
 
+#include "nuiAttributeAnimation.h"
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 /*
  * MainWindow
  */
@@ -36,22 +40,30 @@ MainWindow::~MainWindow()
 
 void MainWindow::OnCreation()
 {
-
-  
   // label with decoration in the third cell
-  mMyLabel = new nuiLabel(_T("my label"));
-  mMyLabel->SetObjectName(_T("MyLabel"));
+  mMyLabel = new nuiLabel(_T("my label is spinning!"));
+  mMyLabel->SetFont(nuiFont::GetFont(30));
   mMyLabel->SetPosition(nuiCenter);
   AddChild(mMyLabel);
-  
+
   mMyLabel->EnableSurface(true);
   
   
-  
+  nuiRect r = mMyLabel->CalcIdealSize();
+  float s = MAX(r.GetWidth(), r.GetHeight());
+  float x = s / 2;
+  float y = s / 2;
+  mMyLabel->SetUserRect(nuiRect(s, s));
+  nuiRotateMatrixAttributeAnimation* pAnim = new nuiRotateMatrixAttributeAnimation();
+  pAnim->SetTargetObject(mMyLabel);
+  pAnim->SetTargetAttribute(_T("SurfaceMatrix"));
+  pAnim->SetStartValue(0, x, y);
+  pAnim->SetEndValue(180, x, y);
+  pAnim->SetDuration(2);
+  pAnim->SetEasing(nuiEasingElasticIn<10>);
+  AddAnimation(_T("RotateLabel"), pAnim);
+  pAnim->Play(1000, eAnimLoopPingPong);
 }
-
-
-
 
 void MainWindow::OnClose()
 {

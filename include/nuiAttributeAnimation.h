@@ -234,3 +234,31 @@ private:
   nuiMatrix mEndValue;
 };
 
+class nuiRotateMatrixAttributeAnimation : public nuiAttributeAnimationBase
+{
+public:
+  nuiRotateMatrixAttributeAnimation();
+  virtual ~nuiRotateMatrixAttributeAnimation();
+  
+  void SetStartValue(float angle, float xcenter = 0, float ycenter = 0);
+  float GetStartAngle() const;
+  float GetStartX() const;
+  float GetStartY() const;
+  void SetEndValue(float angle, float xcenter = 0, float ycenter = 0);
+  float GetEndAngle() const;
+  float GetEndX() const;
+  float GetEndY() const;
+  
+  // Inherited:
+  
+  virtual void OnFrame();
+  
+private:
+  float mStartAngle;
+  float mStartX;
+  float mStartY;
+  float mEndAngle;
+  float mEndX;
+  float mEndY;
+};
+

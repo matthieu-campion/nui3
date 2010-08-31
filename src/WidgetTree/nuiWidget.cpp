@@ -1078,6 +1078,8 @@ void nuiWidget::InvalidateSurface()
     return;
   
   mNeedSurfaceRedraw = true;
+  mNeedRender = true;
+
   if (mpParent)
     mpParent->InvalidateRect(GetRect());
   DebugRefreshInfo();

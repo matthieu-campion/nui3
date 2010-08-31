@@ -34,6 +34,29 @@ void interruptionListener( void* inClientData, UInt32 inInterruptionState)
   
 }		
 
+void audioRouteChangeListenerCallback (void                   *inUserData,                                 // 1
+                                       AudioSessionPropertyID inPropertyID,                                // 2
+                                       UInt32                 inPropertyValueSize,                         // 3
+                                       const void             *inPropertyValue                             // 4
+                                       )
+{
+  if (inPropertyID != kAudioSessionProperty_AudioRouteChange)
+    return;
+  
+  printf("Audio Route change\n");
+  nuiAudioDevice_AudioUnit *pDevice = (nuiAudioDevice_AudioUnit*) inUserData;
+  
+  CFDictionaryRef routeChangeDictionary = (CFDictionaryRef)inPropertyValue;
+  CFNumberRef routeChangeReasonRef = (CFNumberRef)CFDictionaryGetValue(routeChangeDictionary, CFSTR(kAudioSession_AudioRouteChangeKey_Reason));
+  
+  SInt32 routeChangeReason;
+  CFNumberGetValue(routeChangeReasonRef, kCFNumberSInt32Type, &routeChangeReason);
+  
+  if (routeChangeReason == kAudioSessionRouteChangeReason_OldDeviceUnavailable)
+  {
+    printf("Audio Route change reason: Old Device unavailable\n");
+  }
+}
 
 
 
@@ -46,6 +69,8 @@ nuiAudioDevice_AudioUnit::nuiAudioDevice_AudioUnit()
   UInt32 size = sizeof (UInt32);
   UInt32 value = kAudioSessionOverrideAudioRoute_None;
   AudioSessionSetProperty(kAudioSessionProperty_OverrideAudioRoute, size, &value);  
+
+  AudioSessionAddPropertyListener(kAudioSessionProperty_AudioRouteChange, audioRouteChangeListenerCallback, this);
   
 	// Initialize our session
 	err = AudioSessionInitialize(NULL, NULL, interruptionListener, NULL);	
@@ -76,18 +101,6 @@ nuiAudioDevice_AudioUnit::~nuiAudioDevice_AudioUnit()
 	AudioOutputUnitStop(mAudioUnit);
 	AudioComponentInstanceDispose(mAudioUnit);  
 }
-
-
-/*
- * The main audio i/o callback.  This number of frames is currently fixed at 1024, but Bill Stewart
- * tells me they're working on a way to let us specify smaller buffer sizes.
- *
- * I should point out that there's something wrong with my dsp somewhere.  This code works on
- * my iPhone, but there are discontinuities in the generated sine that I haven't figure out yet
- * Could be my fixed-point sine table, or maybe I'm doing something wrong with my 16.16
- * phase accumulator.
- */
-
 
 
 OSStatus AudioUnitCallback(void* inRefCon, 
@@ -497,8 +510,7 @@ bool nuiAudioDevice_AudioUnit::Open(std::vector<uint32>& rInputChannels, std::ve
 			return false;		
 		}	
   }
-  
-	
+  	
 	//
 	// These new flags in CoreAudioTypes.h tell us how many fractional bits the fixed-point format
 	// uses.  In the current iPhone OS devices, it's always 24
@@ -620,3 +632,4 @@ nuiAudioDevice* nuiAudioDeviceAPI_AudioUnit::GetDefaultInputDevice()
 
 
 nuiAudioDeviceAPI_AudioUnit AudioUnitAPI;
+

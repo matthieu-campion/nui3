@@ -19,11 +19,9 @@ public:
   void OnCreation();
   void OnClose();
   
-protected:
-  
-  
 private:
-  
+
+  bool OnTick(const nuiEvent& rEvent);
   bool LoadCSS(const nglPath& rPath);
   
   nuiLabel* mMyLabel;
