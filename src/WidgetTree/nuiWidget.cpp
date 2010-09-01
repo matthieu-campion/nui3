@@ -630,7 +630,6 @@ void nuiWidget::Init()
 
 void nuiWidget::InitProperties()
 {
-  mClippingOptims = false;
 }
 
 
@@ -3067,7 +3066,7 @@ void nuiWidget::InternalSetLayout(const nuiRect& rect)
   CheckValid();
   bool PositionChanged = (rect.Left() != mRect.Left()) || (rect.Top() != mRect.Top());
   bool SizeChanged = !rect.Size().IsEqual(mRect.Size());
-  mNeedSelfLayout = mNeedSelfLayout || mClippingOptims || SizeChanged;
+  mNeedSelfLayout = mNeedSelfLayout || SizeChanged;
   
   InternalSetLayout(rect, PositionChanged, SizeChanged);
   

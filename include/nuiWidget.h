@@ -446,8 +446,6 @@ public:
   bool GetNeedSelfRedraw() const { return mNeedSelfRedraw; }
   bool GetNeedIdealRect() const { return mNeedIdealRect; }
 
-  void EnableClippingOptims(bool set) { mClippingOptims = set; Invalidate(); } ///< This widget will constraint its rendering to the clipping region given by it rect instead of just drawing everything directly. This implies that any layout change must invalidate this widget instead of testing for partial redraws. Disabled by default.
-  bool IsClippingOptimEnabled() const { return mClippingOptims; } ///< This widget will constraint its rendering to the clipping region given by it rect instead of just drawing everything directly. This implies that any layout change must invalidate this widget instead of testing for partial redraws. Disabled by default.
   //@}
   
   
@@ -607,7 +605,6 @@ protected:
   bool mVisible : 1;
   bool mUseRenderCache : 1;
   bool mDrawingInCache : 1;
-  bool mClippingOptims : 1;
   bool mNeedInvalidateOnSetRect : 1;
   bool mInteractiveOD : 1;
   bool mInteractiveDecoration : 1;

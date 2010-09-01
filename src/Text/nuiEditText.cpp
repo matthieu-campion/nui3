@@ -36,7 +36,6 @@ nuiEditText::nuiEditText(const nglString& rText)
   SetText(rText);
   InitCommands();
   InitKeyBindings();
-  EnableClippingOptims(true);
 }
 
 bool nuiEditText::Load(const nuiXMLNode* pNode)
@@ -61,7 +60,6 @@ bool nuiEditText::Load(const nuiXMLNode* pNode)
   SetText(pNode->GetValue());
   InitCommands();
   InitKeyBindings();
-  EnableClippingOptims(true);
   
   return true;
 }
