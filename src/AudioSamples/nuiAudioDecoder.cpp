@@ -58,7 +58,7 @@ uint32 nuiAudioDecoder::ReadIN(void* pBuffer, uint32 sampleframes, nuiSampleBitF
   uint32 channels = mInfo.GetChannels();
   
   uint32 length = mInfo.GetSampleFrames();
-  if (mPosition >= lemgth)
+  if (mPosition >= length)
     return 0;
   sampleframes = MIN(sampleframes, length - mPosition);
   
