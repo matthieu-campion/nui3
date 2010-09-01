@@ -169,13 +169,6 @@ void nuiScrollBar::SetThumbRect(const nuiRect& rRect)
 
 bool nuiScrollBar::Draw(nuiDrawContext* pContext)
 {
-  pContext->PushState();
-  pContext->ResetState();
-
-  pContext->PushClipping();
-  pContext->Clip(GetRect().Size());
-  pContext->EnableClipping(true);
-  
   pContext->EnableBlending(true);
   pContext->SetBlendFunc(nuiBlendTransp);
   
@@ -187,9 +180,6 @@ bool nuiScrollBar::Draw(nuiDrawContext* pContext)
   pTheme->Release();
   
   DrawChildren(pContext);
-  
-  pContext->PopClipping();
-  pContext->PopState();
   
   return true;
 }

@@ -206,29 +206,6 @@ bool nuiZoomView::SetRect(const nuiRect& rRect)
 }
 
 
-bool nuiZoomView::Draw(nuiDrawContext* pContext)
-{
-  IteratorPtr pIt;
-  for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
-  {
-    nuiWidgetPtr pItem = pIt->GetWidget();
-    pContext->PushMatrix();
-
-    pContext->PushClipping();
-    nuiRect rect(0.f,0.f,mRect.GetWidth(), mRect.GetHeight());
-    pContext->Clip(rect);
-
-    DrawChild(pContext, pItem);
-
-    pContext->PopClipping();
-
-    pContext->PopMatrix();
-  }
-
-  delete pIt;
-  return true;
-}
-
 bool nuiZoomView::Scrolled(const nuiEvent& rEvent)
 {
   UpdateLayout();

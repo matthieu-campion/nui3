@@ -264,7 +264,6 @@ bool nuiTabView::SetRect(const nuiRect& rRect)
 
 bool nuiTabView::Draw(nuiDrawContext* pContext)
 {
-  pContext->Clip(mRect.Size());
   pContext->SetStrokeColor(nuiColor(1.f,1.f,0.f));
   for (std::vector<Tab*>::iterator it = mIcons.begin(); it != mIcons.end(); it++)
   {

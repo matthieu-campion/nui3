@@ -25,7 +25,6 @@ public:
 
   virtual nuiRect CalcIdealSize();
   virtual bool SetRect(const nuiRect& rRect);
-  virtual bool Draw(nuiDrawContext* pContext);
 
   bool Scrolled(const nuiEvent& rEvent);
   bool Zoomed(const nuiEvent& rEvent);
