@@ -149,7 +149,8 @@ uint32 nuiChunkSampleReader::ReadDE(std::vector<void*> buffers, uint32 samplefra
   //don't increment mPosition: it's already done in ReadIN
   const uint32 channels = mInfo.GetChannels();
   uint32 length = mInfo.GetSampleFrames();
-  NGL_ASSERT(mPosition < length);
+  if (mPosition >= length)
+    return 0;
   sampleframes = MIN(sampleframes, length - mPosition);
   
   if (buffers.size() != channels)

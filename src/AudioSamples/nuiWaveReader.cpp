@@ -124,7 +124,8 @@ uint32 nuiWaveReader::ReadIN(void* pBuffer, uint32 sampleframes, nuiSampleBitFor
   SetPosition((uint32)mPosition);
   
   uint32 length = mInfo.GetSampleFrames();
-  NGL_ASSERT(mPosition < length);
+  if (mPosition >= length)
+    return 0;
   sampleframes = MIN(sampleframes, length - mPosition);
   
   const uint64 SamplePointsToRead = sampleframes * mInfo.GetChannels();

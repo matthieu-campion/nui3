@@ -193,7 +193,8 @@ uint32 nuiAudioDecoder::ReadDE(std::vector<void*> buffers, uint32 sampleframes, 
   SetPosition((uint32)mPosition);
   
   uint32 length = mInfo.GetSampleFrames();
-  NGL_ASSERT(mPosition < length);
+  if (mPosition >= lemgth)
+    return 0;
   sampleframes = MIN(sampleframes, length - mPosition);
   
   uint32 channels = mInfo.GetChannels();

@@ -58,7 +58,8 @@ uint32 nuiAudioDecoder::ReadIN(void* pBuffer, uint32 sampleframes, nuiSampleBitF
   uint32 channels = mInfo.GetChannels();
   
   uint32 length = mInfo.GetSampleFrames();
-  NGL_ASSERT(mPosition < length);
+  if (mPosition >= lemgth)
+    return 0;
   sampleframes = MIN(sampleframes, length - mPosition);
   
   std::vector<float*> temp(channels);
