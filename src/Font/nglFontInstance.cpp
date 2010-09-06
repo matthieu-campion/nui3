@@ -121,7 +121,6 @@ FTC_FaceID nglFontInstance::Uninstall(const nglFontInstance& rInstance)
       if (!font->Release())
       {
         NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_DEBUG, _T("Uninstall '%ls' %d"), font->mPath.GetPathName().GetChars(), font->mFace); )
-        delete font;
         gFontList.erase(it);
       }
       
