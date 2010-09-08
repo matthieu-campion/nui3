@@ -196,6 +196,8 @@ public:
   bool IsOverDrawInteractive() const; ///< Returns true if the widget is to receive mouse events on its overdrawn borders.
   void EnableInteractiveDecoration(bool set); ///< If set is true then the widget will receive mouse events on its overdrawn decoration borders.
   bool IsDecorationInteractive() const; ///< Returns true if the widget is to receive mouse events on its overdrawn borders.
+  bool GetAutoClip() const;
+  void SetAutoClip(bool set);
   //@}
 
   /** @name Incoming keyboard events */
@@ -638,6 +640,7 @@ protected:
   bool mMatrixIsIdentity: 1;
   bool mCanRespectConstraint: 1;
   bool mInSetRect: 1;
+  bool mAutoClip;
 
   bool mClickThru: 1;
 

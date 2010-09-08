@@ -154,6 +154,7 @@ void nuiWidget::InitDefaultValues()
   mInSetRect = false;
   mInTransition = 0;
   mpLayoutAnimation = NULL;
+  mAutoClip = true;
 }
 
 
@@ -356,6 +357,11 @@ void nuiWidget::InitAttributes()
                (nglString(_T("RedrawOnHover")), nuiUnitBoolean,
                 nuiMakeDelegate(this, &nuiWidget::GetRedrawOnHover),
                 nuiMakeDelegate(this, &nuiWidget::SetRedrawOnHover)));
+	
+  AddAttribute(new nuiAttribute<bool>
+               (nglString(_T("AutoClip")), nuiUnitBoolean,
+                nuiMakeDelegate(this, &nuiWidget::GetAutoClip),
+                nuiMakeDelegate(this, &nuiWidget::SetAutoClip)));
 	
   AddAttribute(new nuiAttribute<bool>
                (nglString(_T("Hover")), nuiUnitBoolean,
@@ -1266,7 +1272,7 @@ bool nuiWidget::InternalDrawWidget(nuiDrawContext* pContext, const nuiRect& _sel
   if (ApplyMatrix && !mMatrixIsIdentity)
     pContext->MultMatrix(GetMatrix());
   
-//  if (mAutoClipSelf)
+  if (mAutoClip)
   {
     pContext->PushClipping();
     if (mpDecoration)
@@ -1295,7 +1301,7 @@ bool nuiWidget::InternalDrawWidget(nuiDrawContext* pContext, const nuiRect& _sel
   }
   
   ////////////////////// Draw the widget
-//  if (mAutoClipSelf)
+  if (mAutoClip)
   {
     pContext->PushClipping();
     pContext->Clip(_self);
@@ -1305,7 +1311,7 @@ bool nuiWidget::InternalDrawWidget(nuiDrawContext* pContext, const nuiRect& _sel
   Draw(pContext);
   pContext->PopState();
   
-//  if (mAutoClipSelf)
+  if (mAutoClip)
     pContext->PopClipping();
   
   ////////////////////// Draw the Overlay
@@ -1330,7 +1336,7 @@ bool nuiWidget::InternalDrawWidget(nuiDrawContext* pContext, const nuiRect& _sel
   uint32 newclipdepth = pContext->GetClipStackSize();
   NGL_ASSERT(clipdepth == newclipdepth);
   
-//  if (mAutoClipSelf)
+  if (mAutoClip)
     pContext->PopClipping();
   
   pContext->PopState();
@@ -4679,6 +4685,20 @@ void nuiWidget::AddInvalidRect(const nuiRect& rRect)
   //printf("--- AddInvalidRect OK %ls\n", rRect.GetValue().GetChars());
   mDirtyRects.push_back(rRect);
 }
+
+bool nuiWidget::GetAutoClip() const
+{
+  return mAutoClip;
+}
+
+void nuiWidget::SetAutoClip(bool set)
+{
+  if (mAutoClip == set)
+    return;
+  mAutoClip = set;
+  Invalidate();
+}
+
 
 
 

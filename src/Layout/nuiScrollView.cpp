@@ -56,6 +56,7 @@ void nuiScrollView::Init(nuiScrollBar* pHorizontalScrollBar, nuiScrollBar* pVert
   if (SetObjectClass(_T("nuiScrollView")))
     InitAttributes();
 
+  SetAutoClip(true);
   mFillChildren = true;
   mVIncrement = 64.f;
   mHIncrement = 64.f;
