@@ -469,7 +469,7 @@ ENDIF (${LINUX})
 add_subdirectory(deps)
 
 add_library( nui3 SHARED ${SOURCES} )
-target_link_libraries(nui3 ${CURL_LIBRARY} ${CURL_LIBRARIES} ${EXPAT_LIBRARY} ${FREETYPE_LIBRARY} ${FREETYPE_LIBRARIES} ${EXPAT_LIBRARIES} ${JPEG_LIBRARY} ${JPEG_LIBRARIES} ${PNG_LIBRARY} ${PNG_LIBRARIES} ${GIF_LIBRARY} ${GIF_LIBRARIES} tidy ucdata tracemonkey css)
+target_link_libraries(nui3 ${CURL_LIBRARY} ${CURL_LIBRARIES} ${EXPAT_LIBRARY} ${FREETYPE_LIBRARY} ${FREETYPE_LIBRARIES} ${EXPAT_LIBRARIES} ${JPEG_LIBRARY} ${JPEG_LIBRARIES} ${PNG_LIBRARY} ${PNG_LIBRARIES} ${GIF_LIBRARY} ${GIF_LIBRARIES} tidy ucdata tracemonkey libcss)
 
 add_subdirectory(scratchpads)
 add_subdirectory(tutorials)

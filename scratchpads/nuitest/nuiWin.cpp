@@ -2574,7 +2574,7 @@ bool nuiWin::CreateHTMLWindow(const nuiEvent& rEvent)
   nglPath p(_T("rsrc:/test.html"));
   nglIStream* pStream = p.OpenRead();
 
-  nuiHTML html;
+  nuiHTML html(false);
   html.Load(*pStream);
 
   delete pStream;
