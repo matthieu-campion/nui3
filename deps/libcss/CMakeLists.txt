@@ -7,6 +7,7 @@ ENDIF(${CMAKE_SYSTEM} MATCHES "Linux")
 include_directories(
   include
   src
+  src/libparserutils
 )
 
 add_definitions(

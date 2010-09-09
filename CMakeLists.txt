@@ -350,6 +350,7 @@ include_directories(
   deps/tracemonkey
   deps/tracemonkey/vprof
   deps/tracemonkey/nanojit
+  deps/libcss/include
   include
   src/Stream/Zip
   src/Text/HTML
@@ -422,16 +423,16 @@ ELSEIF (${WINDOWS})
   add_definitions( -DWIN32 -DNGL_USE_WIN32_MMTIMER)
 
   include_directories( 
-  deps/GL/
-  src/Application/Win/
-  src/Window/Win/
-  deps/expat/lib/
-  deps/freetype2/include/
-  deps/ungif/
-  deps/libjpeg/
-  deps/libpng/
-  deps/zlib/
-  deps/libcss/include/
+  deps/GL 
+  src/Application/Win
+  src/Window/Win
+  deps/expat/lib
+  deps/freetype2/include
+  deps/ungif
+  deps/libjpeg
+  deps/libpng
+  deps/zlib
+  deps/libcss/include
   )
 
   set(${SOURCES} ${SOURCES} 
@@ -468,7 +469,7 @@ ENDIF (${LINUX})
 add_subdirectory(deps)
 
 add_library( nui3 SHARED ${SOURCES} )
-target_link_libraries(nui3 ${CURL_LIBRARY} ${CURL_LIBRARIES} ${EXPAT_LIBRARY} ${FREETYPE_LIBRARY} ${FREETYPE_LIBRARIES} ${EXPAT_LIBRARIES} ${JPEG_LIBRARY} ${JPEG_LIBRARIES} ${PNG_LIBRARY} ${PNG_LIBRARIES} ${GIF_LIBRARY} ${GIF_LIBRARIES} tidy ucdata tracemonkey libcss)
+target_link_libraries(nui3 ${CURL_LIBRARY} ${CURL_LIBRARIES} ${EXPAT_LIBRARY} ${FREETYPE_LIBRARY} ${FREETYPE_LIBRARIES} ${EXPAT_LIBRARIES} ${JPEG_LIBRARY} ${JPEG_LIBRARIES} ${PNG_LIBRARY} ${PNG_LIBRARIES} ${GIF_LIBRARY} ${GIF_LIBRARIES} tidy ucdata tracemonkey css)
 
 add_subdirectory(scratchpads)
 add_subdirectory(tutorials)
