@@ -14,10 +14,19 @@ add_definitions(
   -DHAVE_BCOPY
   -DFEATURE_NANOJIT
   -DJS_TRACER
-  -DAVMPLUS_IA32
   -DDEBUG
 )
 
+if(CMAKE_SIZEOF_VOID_P MATCHES 4)
+  add_definitions(
+    -DAVMPLUS_IA32
+  )
+else(CMAKE_SIZEOF_VOID_P MATCHES 4)
+  add_definitions(
+    -DAVMPLUS_64BIT 1
+    -DAVMPLUS_AMD64 1
+  )
+endif(CMAKE_SIZEOF_VOID_P MATCHES 4)
 
 set(TRACEMONKEY_SOURCES
   jsapi.cpp
