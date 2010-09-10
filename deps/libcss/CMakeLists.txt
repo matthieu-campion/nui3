@@ -14,6 +14,9 @@ add_definitions(
   -DDEBUG
 )
 
+add_definitions(
+  -fPIC
+)
 
 set(LIBCSS_SOURCES
   src/libparserutils/charset/codec.c
