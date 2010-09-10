@@ -78,15 +78,22 @@ nglPath nuiGetNativeResourcePath()
 #ifdef _LINUX_
 nglPath nuiGetNativeResourcePath()
 {
-	nglString ResourcePathName(getenv("NUI_RESOURCE_PATH"));
-	if (ResourcePathName.IsEmpty())
-		ResourcePathName = nglString("/usr/share/");
-	if( ResourcePathName.GetLastChar() == _T('/'))
-		ResourcePathName += App->GetName();
-	else
-		ResourcePathName += _T('/')+App->GetName();
-	NGL_OUT(_T("NUI_RESOURCE_PATH: %ls\n"), ResourcePathName.GetChars());
-	return nglPath(ResourcePathName);
+  nglString ResourcePathName(getenv("NUI_RESOURCE_PATH"));
+  if (ResourcePathName.IsEmpty())
+    ResourcePathName = nglString("/usr/share/");
+  if( ResourcePathName.GetLastChar() == _T('/'))
+    ResourcePathName += App->GetName();
+  else
+    ResourcePathName += _T('/')+App->GetName();
+  nglPath p(ResourcePathName);
+  if (!p.Exists() || p.IsLeaf())
+  {
+    p = nglPath(ePathApp);
+    p = p.GetParent();
+    p = p + nglPath(_T("resources"));
+  }
+  NGL_OUT(_T("NUI_RESOURCE_PATH: %ls\n"), p.GetChars());
+  return p;
 }
 #endif //_LINUX_
 
