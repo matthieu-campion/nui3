@@ -190,8 +190,7 @@ nglPath::nglPath (nglPathBase Base)
 								
 				#endif
 				#ifdef _LINUX_
-					// TODO
-					InternalSetPath ("/FIXME");
+					InternalSetPath (App->GetPath());
 				#endif
 
 

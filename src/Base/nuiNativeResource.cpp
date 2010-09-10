@@ -89,8 +89,11 @@ nglPath nuiGetNativeResourcePath()
   if (!p.Exists() || p.IsLeaf())
   {
     p = nglPath(ePathApp);
+    NGL_OUT(_T("application path: %ls\n"), p.GetChars());
     p = p.GetParent();
+    NGL_OUT(_T("application folder: %ls\n"), p.GetChars());
     p = p + nglPath(_T("resources"));
+    NGL_OUT(_T("Couldn't find global resource path, looking for it next to the application: %ls\n"), p.GetChars());
   }
   NGL_OUT(_T("NUI_RESOURCE_PATH: %ls\n"), p.GetChars());
   return p;
