@@ -556,16 +556,16 @@ void nuiGLPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
             glGetIntegerv(GL_RENDERBUFFER_BINDING_NUI, (GLint *) &mDefaultRenderbuffer);
           }
 #endif
-          
+
           PushSurface();
-          
-          
+
+
           SetState(nuiRenderState());
           ResetClipRect();
           mClip.Set(0, 0, pSurface->GetWidth(), pSurface->GetHeight());
 
           LoadMatrix(nglMatrixf());
-          
+
           NGL_ASSERT(pSurface);
           SetSurface(pSurface);
           //Set2DProjectionMatrix(nuiRect(0.0f, 0.0f, pSurface->GetWidth(), pSurface->GetHeight()));
@@ -573,21 +573,21 @@ void nuiGLPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
           m.Translate(-1.0f, 1.0f, 0.0f);
           m.Scale(2.0f / pSurface->GetWidth(), -2.0f / pSurface->GetHeight(), 1.0f);
           LoadProjectionMatrix(nuiRect(pSurface->GetWidth(), pSurface->GetHeight()), m);
-          
+
           // clear the surface with transparent black:
 //          nuiRenderState s2(mState);// PushState();
 //          mState.mClearColor = nuiColor(0.0f, 0.0f, 0.0f, 0.0f);
           SetState(mState);
 //          ClearColor();  
 //          SetState(s2);
-          
+
 //////////////////////////////          
           nuiDrawContext Ctx(nuiRect(pSurface->GetWidth(), pSurface->GetHeight()));
           Ctx.SetPainter(this);
           pSurface->Realize(&Ctx);
           Ctx.SetPainter(NULL);
 //////////////////////////////
-          
+
           PopSurface();
           PopMatrix();
           PopProjectionMatrix();
@@ -596,7 +596,7 @@ void nuiGLPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
           PopClipping();
         }
       }
-      
+
       UploadTexture(mState.mpTexture);
       nuiCheckForGLErrors();
     }

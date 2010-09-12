@@ -825,10 +825,14 @@ void nglImage::StaticInit()
   #endif
     mpCodecInfos->push_back(new nglImageGIFCodecInfo());
   }
+  
+  App->AddExit(nglImage::StaticExit);
 }
 
 void nglImage::StaticExit()
 {
+  if (!mpCodecInfos)
+    return;
   std::vector<nglImageCodecInfo*>::iterator i;
 
   for (i = mpCodecInfos->begin(); i != mpCodecInfos->end(); ++i)

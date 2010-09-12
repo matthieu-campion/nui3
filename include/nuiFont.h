@@ -32,6 +32,8 @@ public:
   static void GetFonts(std::vector<nuiFont*>& rFonts);
 
   static nuiSimpleEventSource<0> FontListChanged;
+  
+  static void ClearAll();
 protected:
   //nuiFont (nglIStream* pInput); ///< Create a font from an input stream.
   nuiFont (const nglString& rName, uint8* pBuffer, uint BufferSize, nuiSize Size, int Face = 0, const nglString& rID = nglString::Empty); ///< Create a font from a buffer in memory and give it a name.

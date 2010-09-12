@@ -30,6 +30,7 @@ public:
   ~nuiDefaultDecoration();
   
   static void Init();
+  static void Exit();
 
   // special case
   static void MainWindow(nuiMainWindow* pWindow);

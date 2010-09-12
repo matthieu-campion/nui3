@@ -332,3 +332,19 @@ void nuiFont::GetFonts(std::vector<nuiFont*>& rFonts)
 }
 
 nuiSimpleEventSource<0> nuiFont::FontListChanged;
+
+void nuiFont::ClearAll()
+{
+  std::map<nglString,nuiFont*,nglString::LessFunctor>::iterator it = mpFonts.begin();
+  std::map<nglString,nuiFont*,nglString::LessFunctor>::iterator end = mpFonts.end();
+  
+  while (it != end)
+  {
+    nuiFont* pFont = it->second;
+    int c = pFont->Release();
+    it = mpFonts.begin();
+  }
+  
+  mpFonts.clear();
+}
+

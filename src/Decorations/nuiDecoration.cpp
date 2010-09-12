@@ -395,4 +395,15 @@ void nuiDecoration::InitDecorationEngine()
 
 std::map<nglString, nuiDecoration::DecorationCreatorFunction> nuiDecoration::mDecorationCreators;
 
+void nuiDecoration::ExitDecorationEngine()
+{
+  DecorationsChanged.DisconnectAll();
+  while (!mDecorations.empty())
+  {
+    DecorationMap::iterator it = mDecorations.begin();
+    nuiDecoration* pDeco = it->second;
+    pDeco->Release();
+  }
+  mDecorationCreators.clear();
+}
 

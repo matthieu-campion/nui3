@@ -107,10 +107,17 @@ void nuiDefaultDecoration::Init()
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileTree::ParentFolderIcon")), &nuiDefaultDecoration::FileTree_ParentFolderIcon);
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileTree::FileIcon")), &nuiDefaultDecoration::FileTree_FileIcon);
 
-  
+  App->AddExit(nuiDefaultDecoration::Exit);
 }
 
 
+void nuiDefaultDecoration::Exit()
+{
+  delete mpKnobSequence;
+  mpKnobSequence = NULL;
+  mIcons.clear();
+  mImages.clear();
+}
 
 
 

@@ -115,12 +115,10 @@ bool nuiSVGView::Draw(nuiDrawContext* pContext)
   x = mRect.GetWidth() / mIdealRect.GetWidth();
   y = mRect.GetHeight() / mIdealRect.GetHeight();
   pContext->Scale(x,y);
-  nuiTheme* pTheme = GetTheme();
-  pContext->SetFont(pTheme->GetFont(nuiTheme::Default), true);
+  pContext->SetFont(nuiFont::GetFont(12));
 //  mpShape->Draw(pContext, mAntialias);
   mCache.ReDraw(pContext);
   pContext->PopMatrix();
-  pTheme->Release();
   return true;
 }
 

@@ -193,6 +193,7 @@ void nuiTexture::ClearAll()
   }
 
   mpTextures.clear();
+  mpSharedContext = NULL;
   TexturesChanged();
 }
 

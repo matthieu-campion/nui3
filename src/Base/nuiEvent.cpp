@@ -74,6 +74,11 @@ nuiEventSource::nuiEventSource()
 
 nuiEventSource::~nuiEventSource()
 {
+  DisconnectAll();
+}
+
+void nuiEventSource::DisconnectAll()
+{
   // Only add every target once, they will manage multiple event connection by them selves.
   while (!mpTargets.empty()) 
   {

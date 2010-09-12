@@ -579,10 +579,7 @@ bool nuiLabel::GetBackground() const
 
 void nuiLabel::SetFont(nuiTheme::FontStyle FontStyle)
 {
-  nuiTheme* pTheme = GetTheme();
-  NGL_ASSERT(pTheme);
-  SetFont(pTheme->GetFont(FontStyle), true);
-  pTheme->Release();
+  SetFont(nuiFont::GetFont(12));
 }
 
 void nuiLabel::SetFont(nuiFont* pFont, bool AlreadyAcquired)

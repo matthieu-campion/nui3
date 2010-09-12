@@ -31,13 +31,7 @@
 nuiTheme::nuiTheme()
 {
   SetObjectClass(_T("nuiTheme"));
-  
   LoadDefaults();
-  
-  int i = 0;
-  for (i = 0; i < StyleCount; i++)
-    mpFonts[i] = 0;
-  
   mpWindowTitleFont = nuiFont::GetFont(11);
 }
 
@@ -154,23 +148,11 @@ void nuiTheme::LoadDefaults()
     mTabFill[j][k] = mButtonFill[j][k];
   }
 
-  mFonts[0].CFormat(_T("<?xml version=\"1.0\"?><nuiFont Size=\"%f\" Source=\"/Vera.ttf\"/>"), DEFAULTFONTSIZE);
-  mFonts[1].CFormat(_T("<?xml version=\"1.0\"?><nuiFont Size=\"%f\" Source=\"/VeraMono.ttf\"/>"), DEFAULTFONTSIZE);
-  
   Acquire();
 }
 
 nuiTheme::~nuiTheme()
 {
-  int i = 0;
-  for (i = 0; i < StyleCount; i++)
-  {
-    //NGL_OUT(_T("Releasing font style %d (0x%x)\n"), i, mpFonts[i]);
-    if (mpFonts[i])
-      mpFonts[i]->Release();
-    mpFonts[i] = 0;
-  }
-  
   mpWindowTitleFont->Release();
   
   if (mpTheme == this)
@@ -579,42 +561,6 @@ void nuiTheme::DrawMenuItem(nuiDrawContext* pContext, const nuiRect& rRect, bool
   
   pContext->EnableBlending(blending);
   pContext->SetBlendFunc(blendfunc);
-}
-
-nuiFont* nuiTheme::GetFont(FontStyle Style)
-{
-  nuiFont* pFont = mpFonts[Style];
-  if (!pFont)
-  {
-    if (Style>=StyleCount)
-      return NULL;
-    nuiXML XML(_T("FontDesc"));
-    std::string str(mFonts[Style].GetStdString());
-    nglIMemory memory(str.c_str(), str.size());
-    if (!XML.Load(memory))
-      printf("Error parsing default font description (%ls)\n", mFonts[Style].GetChars());
-    pFont = nuiFont::GetFont(&XML);
-    
-    if (!pFont)
-      pFont = nuiFont::GetFont(12);
-    
-    mpFonts[Style] = pFont;
-  }
-  
-  if (pFont) // Lock the font so that if doesn't get unloaded by the system...
-    pFont->Acquire();
-  
-  return pFont;
-}
-
-void nuiTheme::SetFont(FontStyle Style, nuiFont* pFont)
-{
-  nuiFont* pOldFont = mpFonts[Style];
-  if (pFont)
-    pFont->Acquire();
-  if (pOldFont)
-    pOldFont->Release();
-  mpFonts[Style] = pFont;
 }
 
 nuiDialog*  nuiTheme::CreateDefaultDialog(nuiContainer* pParent)

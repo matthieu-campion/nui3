@@ -131,37 +131,42 @@ bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
 
 bool nuiUninit()
 {
-  nglPath fontdb(ePathUserAppSettings);
-  fontdb += nglString(NUI_FONTDB_PATH);
-
-  nuiFontManager& rManager(nuiFontManager::GetManager(false));
-  if (rManager.GetFontCount())
-  {
-    nglOFile db(fontdb, eOFileCreate);
-    if (db.IsOpen())
-      rManager.Save(db);
-  }
-  
   //printf("nuiUnInit(%d)\n", gNUIReferences);
   NGL_ASSERT(gNUIReferences != 0);
   gNUIReferences--;
 
   if (!gNUIReferences)
   {
+    nglPath fontdb(ePathUserAppSettings);
+    fontdb += nglString(NUI_FONTDB_PATH);
+    
+    nuiFontManager& rManager(nuiFontManager::GetManager(false));
+    if (rManager.GetFontCount())
+    {
+      nglOFile db(fontdb, eOFileCreate);
+      if (db.IsOpen())
+        rManager.Save(db);
+    }
+
+    // From now on, all the contexts are dead so we have to release the remaining textures without trying to free their opengl resources
+    // because those have been destroyed at the same time than the opengl context
+    
     __NglKernel__* pApp = dynamic_cast<__NglKernel__*>(App);
     if (pApp)
     {
       App->CallOnExit(0);
       delete (pApp);
       App = NULL;
+      nuiDecoration::ExitDecorationEngine();
+      nuiFont::ClearAll();
+      nuiTexture::ClearAll();
 #ifdef WIN32
       WSACleanup();
 #endif
       return true;
     }
-    // From now on, all the contexts are dead so we have to release the remaining textures without trying to free their opengl resources
-    // because those have been destroyed at the same time than the opengl context
-    nuiTexture::ForceReloadAll(true);
+    nuiDecoration::ExitDecorationEngine();
+    nuiFont::ClearAll();
     nuiTexture::ClearAll();
   }
 #ifdef WIN32

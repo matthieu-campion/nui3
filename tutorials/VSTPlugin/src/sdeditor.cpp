@@ -11,7 +11,6 @@
 //-------------------------------------------------------------------------------------------------------
 
 #include "nui.h"
-#include "nuiInit.h"
 #include "nuiVBox.h"
 #include "nuiClampedValueAttributeEditor.h"
 
@@ -58,12 +57,6 @@ void OutFormater(nglString& rString, float value)
 SDEditor::SDEditor (AudioEffect *effect)
  : AEffEditor (effect), mpWin(NULL), mLock(false)
 {
-#ifdef WIN32
-  nuiInit((HINSTANCE)hInstance);
-#else
-  nuiInit(NULL);
-#endif
-  
   SetObjectClass(_T("SDEditor"));
 
   nuiAttribute<float>* pDelayAttrib = new nuiValueAttribute<float>(_T("Delay"), effect->getParameter(kDelay));
@@ -97,7 +90,6 @@ SDEditor::SDEditor (AudioEffect *effect)
 //-----------------------------------------------------------------------------
 SDEditor::~SDEditor ()
 {
-  nuiUninit();
 }
 
 //-----------------------------------------------------------------------------

@@ -1654,10 +1654,7 @@ uint nuiEditText::GetAnchorPos() const
 
 bool nuiEditText::SetFont(nuiTheme::FontStyle FontStyle)
 {
-  nuiTheme* pTheme = GetTheme();
-  NGL_ASSERT(pTheme);
-  SetFont(pTheme->GetFont(FontStyle), true);
-  pTheme->Release();
+  SetFont(nuiFont::GetFont(12));
 
   ClearBlocks();
   CreateBlocks(mText, mpBlocks);

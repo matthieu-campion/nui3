@@ -69,7 +69,7 @@ public:
   typedef nuiDecoration* (*DecorationCreatorFunction)(const nglString&);
   static void AddDecorationType(const nglString& rDecorationTypeName, const DecorationCreatorFunction& rCreatorDelegate);
   static void InitDecorationEngine();
-  
+  static void ExitDecorationEngine();
 protected:
 
   bool mUseWidgetAlpha : 1;

@@ -7,7 +7,7 @@
 // Created by   : Steinberg Media Technologies
 // Description  : Simple Delay plugin (Mono->Stereo)
 //
-// © 2006, Steinberg Media Technologies, All Rights Reserved
+// ï¿½ 2006, Steinberg Media Technologies, All Rights Reserved
 //-------------------------------------------------------------------------------------------------------
 
 #include <stdio.h>
@@ -15,6 +15,13 @@
 
 #ifndef __adelay__
 #include "adelay.h"
+#endif
+
+#include "nui.h"
+#include "nuiInit.h"
+
+#ifdef WIN32
+extern void* hInstance;
 #endif
 
 //----------------------------------------------------------------------------- 
@@ -32,6 +39,12 @@ ADelayProgram::ADelayProgram ()
 ADelay::ADelay (audioMasterCallback audioMaster)
 	: AudioEffectX (audioMaster, kNumPrograms, kNumParams)
 {
+#ifdef WIN32
+  nuiInit((HINSTANCE)hInstance);
+#else
+  nuiInit(NULL);
+#endif
+  
 	// init
 	size = 44100;
 	cursor = 0;
@@ -59,6 +72,7 @@ ADelay::~ADelay ()
 		delete[] buffer;
 	if (programs)
 		delete[] programs;
+  nuiUninit();
 }
 
 //------------------------------------------------------------------------
