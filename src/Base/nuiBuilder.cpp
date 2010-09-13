@@ -158,7 +158,7 @@ void nuiBuilder::Init()
   NUI_ADD_WIDGET_CREATOR(nuiBackgroundPane, "Container");
   //NUI_ADD_WIDGET_CREATOR(nuiDialog, "Dialog");
   //NUI_ADD_WIDGET_CREATOR(nuiFlowView, "Container");
-  NUI_ADD_WIDGET_CREATOR(nuiImageSequence, "Container");
+  //NUI_ADD_WIDGET_CREATOR(nuiImageSequence, "Container");
   NUI_ADD_WIDGET_CREATOR(nuiMatrixView, "Container");
   NUI_ADD_WIDGET_CREATOR(nuiModalContainer, "Container");
   //NUI_ADD_WIDGET_CREATOR(nuiOffscreenView, "Container");

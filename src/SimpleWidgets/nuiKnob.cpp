@@ -179,7 +179,7 @@ nuiImageSequence* nuiKnob::GetImageSequence() const
 
 
 // Received Mouse events:
-bool nuiKnob::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
+bool nuiKnob::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
 {
   mClickX = X;
   mClickY = Y;
@@ -228,7 +228,7 @@ bool nuiKnob::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
   return false;
 }            
 
-bool nuiKnob::MouseUnclicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
+bool nuiKnob::MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
 {
   if (mInteractiveValueChanged)
     ValueChanged();
@@ -330,7 +330,7 @@ nuiRect nuiKnob::CalcIdealSize()
     if (!mpImageSequence)
       return nuiRect(0,0,0,0);
     
-    const nuiRect& rect = mpImageSequence->GetIdealRect();
+    const nuiRect& rect = mpImageSequence->CalcIdealSize();
     return rect;
   }
   else
@@ -342,10 +342,6 @@ nuiRect nuiKnob::CalcIdealSize()
 bool nuiKnob::SetRect(const nuiRect& rRect)
 {
   nuiWidget::SetRect(rRect);
-  
-  if (mpImageSequence)
-    mpImageSequence->SetLayout(rRect);
-  
   return true;
 }
 

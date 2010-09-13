@@ -10,7 +10,7 @@
 #include "nui.h"
 
 
-class nuiImageSequence : public nuiWidget
+class nuiImageSequence : public nuiObject
 {
 public:
   nuiImageSequence();
@@ -44,6 +44,8 @@ public:
   const nuiColor& GetColor() const;
   void SetColor(const nuiColor& color);
   
+  void SetAlpha(float alpha);
+  float GetAlpha() const;
   
 private:
   
@@ -64,5 +66,7 @@ private:
   bool mFramesInSingleFile;
   nglImage* mpTempImage;
   bool mRefreshTextures;
+  float mAlpha;
+  nuiRect mRect;
 };
 

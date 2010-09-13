@@ -10,7 +10,7 @@
 #include "nuiImageSequence.h"
 
 nuiImageSequence::nuiImageSequence()
-: nuiWidget(), mFrameIndex(0)
+: mFrameIndex(0)
 {
   if (SetObjectClass(_T("nuiImageSequence")))
     InitAttributes();
@@ -20,11 +20,12 @@ nuiImageSequence::nuiImageSequence()
   mpTempImage = NULL;
   mRefreshTextures = true;
   mUseAlpha = true;
+  mAlpha = 1;
   mFramesInSingleFile = true;
 }
 
 nuiImageSequence::nuiImageSequence(uint32 nbFrames, nglImage* pImage, nuiOrientation orientation)
-: nuiWidget(), mFrameIndex(0), mFramesInSingleFile(true)
+: mFrameIndex(0), mFramesInSingleFile(true)
 {
   if (SetObjectClass(_T("nuiImageSequence")))
     InitAttributes();
@@ -34,10 +35,11 @@ nuiImageSequence::nuiImageSequence(uint32 nbFrames, nglImage* pImage, nuiOrienta
   mpTempImage = new nglImage(*pImage);
   mRefreshTextures = true;  
   mUseAlpha = true;
+  mAlpha = 1;
 }
 
 nuiImageSequence::nuiImageSequence(uint32 nbFrames, const nglPath& rTexturePath, bool framesInSingleFile, nuiOrientation orientation)
-: nuiWidget(), mFrameIndex(0), mFramesInSingleFile(framesInSingleFile),
+: mFrameIndex(0), mFramesInSingleFile(framesInSingleFile),
 mTexturePath(rTexturePath)
 {
   if (SetObjectClass(_T("nuiImageSequence")))
@@ -53,6 +55,7 @@ mTexturePath(rTexturePath)
   mOrientation = orientation;  
   mRefreshTextures = true;
   mUseAlpha = true;
+  mAlpha = 1;
 }
 
 
@@ -142,10 +145,10 @@ nuiRect nuiImageSequence::CalcIdealSize()
   
   
   if (!mTextures.size())
-    return mIdealRect;
+    return nuiRect();
   
-  mIdealRect.Set(0.0f,0.0f,(nuiSize) mTexRect.GetWidth(),(nuiSize) mTexRect.GetHeight());
-  return mIdealRect;
+  mRect.Set(0.0f,0.0f,(nuiSize) mTexRect.GetWidth(),(nuiSize) mTexRect.GetHeight());
+  return mRect;
 }
 
 
@@ -405,7 +408,7 @@ bool nuiImageSequence::Draw(nuiDrawContext* pContext, nuiWidget* pWidget)
   nuiColor color = nuiColor(1.0f, 1.0f, 1.0f, alpha);
   
   pContext->SetFillColor(color);
-  pContext->DrawImage(GetRect().Size(),mTexRect);
+  pContext->DrawImage(mRect,mTexRect);
   
   pContext->EnableBlending(false);
   pContext->EnableTexturing(false);
@@ -431,13 +434,13 @@ bool nuiImageSequence::Draw(nuiDrawContext* pContext)
   
   if (mUseAlpha)
   {
-    alpha = GetMixedAlpha();
+    alpha = mAlpha;
   }
   
   nuiColor color = nuiColor(1.0f, 1.0f, 1.0f, alpha);
   
   pContext->SetFillColor(color);
-  pContext->DrawImage(GetRect().Size(),mTexRect);
+  pContext->DrawImage(mRect,mTexRect);
   return true;
   
 }
@@ -483,4 +486,14 @@ void nuiImageSequence::SetInterpolated(bool set)
   }
 }
 
+
+void nuiImageSequence::SetAlpha(float alpha)
+{
+  mAlpha = alpha;
+}
+
+float nuiImageSequence::GetAlpha() const
+{
+  return mAlpha;
+}
 
