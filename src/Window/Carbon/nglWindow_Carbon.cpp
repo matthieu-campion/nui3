@@ -1172,16 +1172,18 @@ OSStatus nglWindow::WindowEventHandler (EventHandlerCallRef eventHandlerCallRef,
           CallOnCreation();
           break;
         case kEventWindowActivated:
-          ActivateTSMDocument(nuiTSMDocument);
-          UseInputWindow(nuiTSMDocument, TRUE);
-          RgnHandle rgn = NewRgn();
-          SetRectRgn(rgn, 20, 20, 100, 30);
-          TSMSetInlineInputRegion(nuiTSMDocument, mWindow, rgn);
-          DisposeRgn(rgn);
-          SetUserFocusWindow(mWindow);
-          CallOnActivation();
-          if (mIsFakeChildWindow)
-            result = eventNotHandledErr;
+          {
+            ActivateTSMDocument(nuiTSMDocument);
+            UseInputWindow(nuiTSMDocument, TRUE);
+            RgnHandle rgn = NewRgn();
+            SetRectRgn(rgn, 20, 20, 100, 30);
+            TSMSetInlineInputRegion(nuiTSMDocument, mWindow, rgn);
+            DisposeRgn(rgn);
+            SetUserFocusWindow(mWindow);
+            CallOnActivation();
+            if (mIsFakeChildWindow)
+              result = eventNotHandledErr;
+          }
           break;
         case kEventWindowDeactivated:
           DeactivateTSMDocument(nuiTSMDocument);

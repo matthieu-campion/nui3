@@ -250,7 +250,8 @@ bool nuiPopupMenu::DrawTree(nuiDrawContext* pContext, nuiTreeNode* pTree, uint d
   {
     SetFillColor(pContext, eMenuBg);
     SetStrokeColor(pContext, eNormalTextFg);
-
+    pContext->EnableBlending(true);
+  
     nuiGradient grad;
     nuiColor bg(GetColor(eMenuBg));
     grad.AddStop(bg, 1);
@@ -283,7 +284,9 @@ bool nuiPopupMenu::DrawTree(nuiDrawContext* pContext, nuiTreeNode* pTree, uint d
       pContext->DrawLine(x + w/2 - s, 4 + s, x + w/2 + s, 4 + s);
       pContext->DrawLine(x + w/2 + s, 4 + s, x + w/2, 4);
     }
-  }
+
+    pContext->EnableBlending(false);
+}
 
   if (pOpenedNode)
     DrawTree(pContext, pOpenedNode, depth+1);

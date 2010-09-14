@@ -25,39 +25,101 @@ public:
   T Elt[2];
 
   /// Default constructor, set both coordinates to zero
-  nglVector2() { Elt[0] = 0.f; Elt[1] = 0.f; }
+  nglVector2()
+  {
+    Elt[0] = 0.f;
+    Elt[1] = 0.f;
+  }
   /// Initialize with values
-  nglVector2(T X, T Y) { Elt[0] = X; Elt[1] = Y; }
+  nglVector2(T X, T Y)
+  {
+    Elt[0] = X;
+    Elt[1] = Y;
+  }
   /// Destructor
   virtual ~nglVector2() {}
 
   /// Copy operator
-  void operator=(const nglVector2<T>& rVector) { Elt[0] = rVector[0]; Elt[1] = rVector[1]; }
+  void operator=(const nglVector2<T>& rVector)
+  {
+    Elt[0] = rVector[0];
+    Elt[1] = rVector[1];
+  }
 
+  void Set(T X, T Y)
+  {
+    Elt[0] = X;
+    Elt[1] = Y;
+  }
+  
+  
   /// Read-only access to an element
-  T operator[](uint i) const { NGL_ASSERT(i < 2); return Elt[i]; }
+  T operator[](uint i) const
+  {
+    NGL_ASSERT(i < 2);
+    return Elt[i];
+  }
   /// Read-write access to an element
-  T& operator[](uint i) { NGL_ASSERT(i < 2); return Elt[i]; }
+  T& operator[](uint i)
+  {
+    NGL_ASSERT(i < 2);
+    return Elt[i];
+  }
 
   /// Unary minus
-  nglVector2<T> operator-() const { nglVector2<T> result(-Elt[0], -Elt[1]); return result; }
+  nglVector2<T> operator-() const
+  {
+    nglVector2<T> result(-Elt[0], -Elt[1]);
+    return result;
+  }
 
   /// Increment operator
-  void operator+=(const nglVector2<T>& rVector) { Elt[0] += rVector[0]; Elt[1] += rVector[1]; }
+  void operator+=(const nglVector2<T>& rVector)
+  {
+    Elt[0] += rVector[0];
+    Elt[1] += rVector[1];
+  }
   /// Decrement operator
-  void operator-=(const nglVector2<T>& rVector) { Elt[0] -= rVector[0]; Elt[1] -= rVector[1]; }
+  void operator-=(const nglVector2<T>& rVector)
+  {
+    Elt[0] -= rVector[0];
+    Elt[1] -= rVector[1];
+  }
 
   /// Multiplication by a scalar (scaling)
-  void operator*=(const T & F) { Elt[0] *= F; Elt[1] *= F; }
+  void operator*=(const T & F)
+  {
+    Elt[0] *= F;
+    Elt[1] *= F;
+  }
   /// Scalar product
-  T operator*(const nglVector2<T>& rVector) const { return Elt[0]*rVector[0] + Elt[1]*rVector[1]; }
+  T operator*(const nglVector2<T>& rVector) const
+  {
+    return Elt[0]*rVector[0] + Elt[1]*rVector[1];
+  }
 
   /// Squared length
-  T SquaredLength() const { return Elt[0]*Elt[0] + Elt[1]*Elt[1]; }
+  T SquaredLength() const
+  {
+    return Elt[0]*Elt[0] + Elt[1]*Elt[1];
+  }
   /// Length
-  T Length() const { return (T)sqrt(Elt[0]*Elt[0] + Elt[1]*Elt[1]); }
+  T Length() const
+  {
+    return (T)sqrt(Elt[0]*Elt[0] + Elt[1]*Elt[1]);
+  }
   /// Normalize. Returns false if the length is zero
-  bool Normalize() { T l = Length(); if (l != .0f) { Elt[0] /= l; Elt[1] /= l; return true; } return false; }
+  bool Normalize()
+  {
+    T l = Length();
+    if (l != .0f)
+    {
+      Elt[0] /= l;
+      Elt[1] /= l;
+      return true;
+    }
+    return false;
+  }
 };
 
 
@@ -68,32 +130,100 @@ public:
   T Elt[3];
 
   /// Default constructor, set all coordinates to zero
-  nglVector3() { Elt[0] = 0.f; Elt[1] = 0.f; Elt[2] = 0.f; }
+  nglVector3()
+  {
+    Elt[0] = 0.f;
+    Elt[1] = 0.f;
+    Elt[2] = 0.f;
+  }
   /// Initialize with values
-  nglVector3(T X, T Y, T Z) { Elt[0] = X; Elt[1] = Y; Elt[2] = Z; }
+  nglVector3(T X, T Y, T Z)
+  {
+    Elt[0] = X;
+    Elt[1] = Y;
+    Elt[2] = Z;
+  }
   /// Destructor
   virtual ~nglVector3() {}
 
   /// Copy operator
-  void operator=(const nglVector3<T>& rVector) { Elt[0] = rVector[0]; Elt[1] = rVector[1]; Elt[2] = rVector[2]; }
+  void operator=(const nglVector3<T>& rVector)
+  {
+    Elt[0] = rVector[0];
+    Elt[1] = rVector[1];
+    Elt[2] = rVector[2];
+  }
 
+  void Set(T X, T Y, T Z)
+  {
+    Elt[0] = X;
+    Elt[1] = Y;
+    Elt[2] = Z;
+  }
+  
+  
   /// Read-only access to an element
-  T operator[](uint i) const { NGL_ASSERT(i < 3); return Elt[i]; }
+  T operator[](uint i) const
+  {
+    NGL_ASSERT(i < 3);
+    return Elt[i];
+  }
   /// Read-write access to an element
-  T& operator[](uint i) { NGL_ASSERT(i < 3); return Elt[i]; }
+  T& operator[](uint i)
+  {
+    NGL_ASSERT(i < 3);
+    return Elt[i];
+  }
 
   /// Unary minus
-  nglVector3<T> operator-() const { nglVector3<T> result(-Elt[0], -Elt[1], -Elt[2]); return result; }
+  nglVector3<T> operator-() const
+  {
+    nglVector3<T> result(-Elt[0], -Elt[1], -Elt[2]);
+    return result;
+  }
 
   /// Increment operator
-  void operator+=(const nglVector3<T>& rVector) { Elt[0] += rVector[0]; Elt[1] += rVector[1]; Elt[2] += rVector[2]; }
+  void operator+=(const nglVector3<T>& rVector)
+  {
+    Elt[0] += rVector[0];
+    Elt[1] += rVector[1];
+    Elt[2] += rVector[2];
+  }
   /// Decrement operator
-  void operator-=(const nglVector3<T>& rVector) { Elt[0] -= rVector[0]; Elt[1] -= rVector[1]; Elt[2] -= rVector[2]; }
+  void operator-=(const nglVector3<T>& rVector)
+  {
+    Elt[0] -= rVector[0];
+    Elt[1] -= rVector[1];
+    Elt[2] -= rVector[2];
+  }
 
+  /// Vector addition
+  nglVector3<T> operator+ (const nglVector3<T>& rVector) const
+  {
+    nglVector3<T> result = *this;
+    result += rVector;
+    return result;
+  }
+  /// Vector substraction
+  nglVector3<T> operator- (const nglVector3<T>& rVector) const
+  {
+    nglVector3<T> result = *this;
+    result -= rVector;
+    return result;
+  }
+  
   /// Multiplication by a scalar (scaling)
-  void operator*=(const T & F) { Elt[0] *= F; Elt[1] *= F; Elt[2] *= F; }
+  void operator*=(const T & F)
+  {
+    Elt[0] *= F;
+    Elt[1] *= F;
+    Elt[2] *= F;
+  }
   /// Scalar product
-  T operator*(const nglVector3<T>& rVector) const { return Elt[0]*rVector[0] + Elt[1]*rVector[1] + Elt[2]*rVector[2]; }
+  T operator*(const nglVector3<T>& rVector) const
+  {
+    return Elt[0]*rVector[0] + Elt[1]*rVector[1] + Elt[2]*rVector[2];
+  }
   /// Vector product
   void operator^=(const nglVector3<T>& rVector) 
   {
@@ -116,11 +246,28 @@ public:
   }
 
   /// Squared length
-  T SquaredLength() const { return Elt[0]*Elt[0] + Elt[1]*Elt[1] + Elt[2]*Elt[2]; }
+  T SquaredLength() const
+  {
+    return Elt[0]*Elt[0] + Elt[1]*Elt[1] + Elt[2]*Elt[2];
+  }
   /// Length
-  T Length() const { return (T)sqrt(Elt[0]*Elt[0] + Elt[1]*Elt[1] + Elt[2]*Elt[2]); }
+  T Length() const
+  {
+    return (T)sqrt(Elt[0]*Elt[0] + Elt[1]*Elt[1] + Elt[2]*Elt[2]);
+  }
   /// Normalize. Returns false if the length is zero
-  bool Normalize() { T l = Length(); if (l != .0f) { Elt[0] /= l; Elt[1] /= l; Elt[2] /= l; return true; } return false; }
+  bool Normalize()
+  {
+    T l = Length();
+    if (l != .0f)
+    {
+      Elt[0] /= l;
+      Elt[1] /= l;
+      Elt[2] /= l;
+      return true;
+    }
+    return false;
+  }
 };
 
 
