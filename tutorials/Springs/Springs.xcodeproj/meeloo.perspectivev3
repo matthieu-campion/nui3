@@ -343,10 +343,11 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E50C2966123FD3770039C2F4</string>
+										<string>E50C2A56124109620039C2F4</string>
 										<key>history</key>
 										<array>
-											<string>E50C2964123FD36D0039C2F4</string>
+											<string>E50C298A1240FB0B0039C2F4</string>
+											<string>E50C2A54124109590039C2F4</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -650,7 +651,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>306172791.340244</real>
+	<real>306252130.86513698</real>
 	<key>ToolbarConfigUserDefaultsMinorVersion</key>
 	<string>2</string>
 	<key>ToolbarDisplayMode</key>
@@ -667,7 +668,7 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E50C2967123FD3770039C2F4</string>
+		<string>E50C2A57124109620039C2F4</string>
 		<string>E50C28D4123FC8B90039C2F4</string>
 		<string>E50C28D5123FC8B90039C2F4</string>
 		<string>/Users/meeloo/work/nui3/tutorials/Springs/Springs.xcodeproj</string>

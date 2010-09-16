@@ -21,9 +21,13 @@ class Springs : public nuiWidget
 public:
   Springs()
   {
-    mP1.Set(0, 20, 0);
-    mP2.Set(100, 20, 0);
-    mForce.Set(10, 0, 0);
+    mP1.Set(0, 0, 0);
+    mP2.Set(20, 100, 0);
+    mForce.Set(10, 20, 0);
+    mGravity.Set(0, 1, 0);
+    mLength = 100, 0;
+    mK = 1.7;
+    mFriction = .98;
     StartAutoDraw();
   }
   
@@ -39,13 +43,20 @@ public:
   
   bool Draw(nuiDrawContext* pContext)
   {
-    float K = 1.0f;
-    float D = 50.0f;
-    SpringComputeSingleForce(mForce, mP1, mP2, K, D);
+    float cx = mRect.GetWidth() / 2;
+    float cy = mRect.GetHeight() / 2;
+    nuiVector3 f;
+    SpringComputeSingleForce(f, mP1, mP2, mK, mLength);
 
+    mForce += f;
+    mForce += mGravity;
     mP2 += mForce;
+    mForce *= mFriction;
     
-    pContext->DrawLine(mP1[0], mP1[1], mP2[0], mP2[1]);
+    pContext->DrawLine(cx + mP1[0], cy + mP1[1], cx + mP2[0], cy + mP2[1]);
+    
+//    pContext->SetStrokeColor(nuiColor("red"));
+//    pContext->DrawLine(cx, cy, cx + mForce[0], cy + mForce[1]);
     
     return true;
   }
@@ -60,16 +71,13 @@ public:
     float delta;
     
     //get the distance
-    nuiVector3 d = pb - pa;
+    nuiVector3 d = pa - pb;
     
     distance = d.Length();
     
     if (distance < SPRING_TOLERANCE)
     {
-      force[0] =
-      force[1] =
-      force[2] = 0.0f;
-      
+      force[0] = force[1] = force[2] = 0.0f;
       return;
     }
     
@@ -87,10 +95,24 @@ public:
     force *= intensity;
   }
   
+  bool MouseClicked(const nglMouseInfo& rInfo)
+  {
+    float x, y;
+    x = rInfo.X;
+    y = rInfo.Y;
+    x -= mRect.GetWidth() / 2;
+    y -= mRect.GetHeight() / 2;
+    mP2.Set(x, y, 0);
+    return true;
+  }
 protected:
   nuiVector3 mP1;
   nuiVector3 mP2;
   nuiVector3 mForce;
+  nuiVector3 mGravity;
+  float mLength;
+  float mK;
+  float mFriction;
 };
 
 

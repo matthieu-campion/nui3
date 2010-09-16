@@ -352,13 +352,13 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E5AC0095123E4F0000F04CB4</string>
+										<string>E50C2ABB124112FF0039C2F4</string>
 										<key>history</key>
 										<array>
 											<string>E585A8A311BAFAD2005DEEA1</string>
 											<string>E5241B9311CBCE080025CA71</string>
 											<string>E5241B9511CBCE080025CA71</string>
-											<string>E5AC0085123E4E8C00F04CB4</string>
+											<string>E5AC0095123E4F0000F04CB4</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -372,18 +372,18 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {1681, 796}}</string>
+								<string>{{0, 0}, {1681, 791}}</string>
 								<key>RubberWindowFrame</key>
 								<string>640 299 1920 1119 0 0 2560 1418 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>796pt</string>
+							<string>791pt</string>
 						</dict>
 						<dict>
 							<key>Proportion</key>
-							<string>277pt</string>
+							<string>282pt</string>
 							<key>Tabs</key>
 							<array>
 								<dict>
@@ -397,7 +397,7 @@
 									<key>GeometryConfiguration</key>
 									<dict>
 										<key>Frame</key>
-										<string>{{10, 27}, {1681, 250}}</string>
+										<string>{{10, 27}, {1681, 255}}</string>
 										<key>RubberWindowFrame</key>
 										<string>640 299 1920 1119 0 0 2560 1418 </string>
 									</dict>
@@ -502,11 +502,11 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E5AC0097123E4F0000F04CB4</string>
+				<string>E50C2ABD124112FF0039C2F4</string>
 				<string>1CA23ED40692098700951B8B</string>
-				<string>E5AC0098123E4F0000F04CB4</string>
+				<string>E50C2ABE124112FF0039C2F4</string>
 				<string>E5EF6AC10F9625A9003E265A</string>
-				<string>E5AC0099123E4F0000F04CB4</string>
+				<string>E50C2ABF124112FF0039C2F4</string>
 				<string>1CA23EDF0692099D00951B8B</string>
 				<string>1CA23EE00692099D00951B8B</string>
 				<string>1CA23EE10692099D00951B8B</string>
@@ -681,7 +681,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>306073344.28293502</real>
+	<real>306254591.506809</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>

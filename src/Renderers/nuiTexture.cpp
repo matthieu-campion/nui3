@@ -666,12 +666,12 @@ nglString nuiTexture::GetSource() const
 
 uint32 nuiTexture::GetWidth() const
 {
-  return mRealWidth * mScale;  
+  return mRealWidth / mScale;  
 }
 
 uint32 nuiTexture::GetHeight() const
 {
-  return mRealHeight * mScale;
+  return mRealHeight / mScale;
 }
 
 uint32 nuiTexture::GetUnscaledWidth() const
