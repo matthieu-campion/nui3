@@ -11372,14 +11372,16 @@
 		E5816D860C3CECAB00902DFE /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				E5816D870C3CECAB00902DFE /* nglBitmapTools.cpp */,
+				E5816C7C0C3CECAB00902DFE /* nglBitmapTools.h */,
+				E5816D880C3CECAB00902DFE /* nglImage.cpp */,
+				E5816C8E0C3CECAB00902DFE /* nglImage.h */,
 				E52419D911CB9D3C0025CA71 /* nglImageCGCodec.cpp */,
 				E52419DA11CB9D3C0025CA71 /* nglImageCGCodec.h */,
-				E5816C7C0C3CECAB00902DFE /* nglBitmapTools.h */,
-				E5816C8E0C3CECAB00902DFE /* nglImage.h */,
-				E5816C8F0C3CECAB00902DFE /* nglImageCodec.h */,
-				E5816D870C3CECAB00902DFE /* nglBitmapTools.cpp */,
-				E5816D880C3CECAB00902DFE /* nglImage.cpp */,
 				E5816D890C3CECAB00902DFE /* nglImageCodec.cpp */,
+				E5816C8F0C3CECAB00902DFE /* nglImageCodec.h */,
+				E51E54AB0FF1237F00FDF3BE /* nglImageGIFCodec.cpp */,
+				E51E54AA0FF1237F00FDF3BE /* nglImageGIFCodec.h */,
 				E5816D8A0C3CECAB00902DFE /* nglImageJPEGCodec.cpp */,
 				E5816D8B0C3CECAB00902DFE /* nglImageJPEGCodec.h */,
 				E5816D8C0C3CECAB00902DFE /* nglImagePNGCodec.cpp */,
@@ -11388,8 +11390,6 @@
 				E5816D8F0C3CECAB00902DFE /* nglImagePPMCodec.h */,
 				E5816D900C3CECAB00902DFE /* nglImageTGACodec.cpp */,
 				E5816D910C3CECAB00902DFE /* nglImageTGACodec.h */,
-				E51E54AA0FF1237F00FDF3BE /* nglImageGIFCodec.h */,
-				E51E54AB0FF1237F00FDF3BE /* nglImageGIFCodec.cpp */,
 			);
 			name = Image;
 			path = src/Image;

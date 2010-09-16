@@ -84,6 +84,92 @@ const nuiColor nuiGradient::GetColorAt(nuiSize position) const
     }
 }
 
+nuiTexture* nuiGradient::CreateTexture(int32 size, nglImagePixelFormat format) const
+{
+  //  int32 bpp = 32;
+  //  switch (format)
+  //  {
+  //    case eImagePixelRGB:
+  //      {
+  //        bpp = 24;
+  //      }
+  //      break;
+  //    case eImagePixelRGBA:
+  //      {
+  //        bpp = 32;
+  //      }
+  //      break;
+  //    case eImagePixelAlpha:
+  //    case eImagePixelLum:
+  //      {
+  //        bpp = 8;
+  //      }
+  //      break;
+  //    case eImagePixelLumA:
+  //      {
+  //        bpp = 16;
+  //      }
+  //      break;
+  //  }
+  
+  format = eImagePixelRGBA;  
+  nglImageInfo imageinfo(size, 1, 32);
+  imageinfo.mPixelFormat = format;
+  imageinfo.AllocateBuffer();
+  
+  uint32* pBuffer = (uint32*)imageinfo.mpBuffer;
+
+  nuiGradientStopList::const_iterator it = mStops.begin();
+  nuiGradientStopList::const_iterator end = mStops.end();
+  
+  if (it == end)
+    memset(pBuffer, 0, size * 4);
+  float pos0 = 0;
+  nuiColor col0 = it->second;
+  
+  
+  while (it != end)
+  {
+    float pos1 = it->first;
+    nuiColor col1 = it->second;
+    
+    int32 ipos0 = ToBelow(pos0) * size;
+    int32 ipos1 = ToBelow(pos1) * size;
+    
+    float r = 0;
+    const float incr = 1.0f / (pos1 - pos0);
+    for (int32 i = pos0; i < pos1; i++)
+    {
+      nuiColor col(col0);
+      col.Mix(col1, r);
+      *pBuffer = col.GetRGBA();
+      pBuffer++;
+    }
+    
+    pos0 = pos1;
+    col0 = col1;
+    
+    ++it;
+  }
+  
+  // go to the end of the line:
+  float pos1 = size;
+  
+  int32 ipos0 = ToBelow(pos0) * size;
+  int32 ipos1 = ToBelow(pos1) * size;
+  
+  float r = 0;
+  const float incr = 1.0f / (pos1 - pos0);
+  for (int32 i = pos0; i < pos1; i++)
+  {
+    *pBuffer = col0.GetRGBA();
+    pBuffer++;
+  }
+  
+  nglImage* pImage = new nglImage(imageinfo);
+  nuiTexture* pTexture = nuiTexture::GetTexture(pImage, true);
+  return pTexture;
+}
 
 //////////////
 

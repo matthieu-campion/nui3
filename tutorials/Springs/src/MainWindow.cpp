@@ -28,6 +28,7 @@ public:
     mLength = 100, 0;
     mK = 1.7;
     mFriction = .98;
+    mClicked = false;
     StartAutoDraw();
   }
   
@@ -45,13 +46,17 @@ public:
   {
     float cx = mRect.GetWidth() / 2;
     float cy = mRect.GetHeight() / 2;
-    nuiVector3 f;
-    SpringComputeSingleForce(f, mP1, mP2, mK, mLength);
-
-    mForce += f;
-    mForce += mGravity;
-    mP2 += mForce;
-    mForce *= mFriction;
+    
+    if (!mClicked)
+    {
+      nuiVector3 f;
+      SpringComputeSingleForce(f, mP1, mP2, mK, mLength);
+      
+      mForce += f;
+      mForce += mGravity;
+      mP2 += mForce;
+      mForce *= mFriction;
+    }
     
     pContext->DrawLine(cx + mP1[0], cy + mP1[1], cx + mP2[0], cy + mP2[1]);
     
@@ -97,14 +102,41 @@ public:
   
   bool MouseClicked(const nglMouseInfo& rInfo)
   {
-    float x, y;
-    x = rInfo.X;
-    y = rInfo.Y;
+    if (rInfo.Buttons == nglMouseInfo::ButtonLeft)
+    {
+      SetPosFromPixel(rInfo.X, rInfo.Y);
+      mClicked = true;
+      return true;
+    }
+    return false;
+  }
+  
+  bool MouseUnclicked(const nglMouseInfo& rInfo)
+  {
+    if (rInfo.Buttons == nglMouseInfo::ButtonLeft)
+    {
+      SetPosFromPixel(rInfo.X, rInfo.Y);
+      mClicked = false;
+      return true;
+    }
+    return false;
+  }
+  
+  bool MouseMoved(const nglMouseInfo& rInfo)
+  {
+    if (mClicked)
+      SetPosFromPixel(rInfo.X, rInfo.Y);
+
+    return true;
+  }
+  
+  void SetPosFromPixel(float x, float y)
+  {
     x -= mRect.GetWidth() / 2;
     y -= mRect.GetHeight() / 2;
     mP2.Set(x, y, 0);
-    return true;
   }
+  
 protected:
   nuiVector3 mP1;
   nuiVector3 mP2;
@@ -113,6 +145,8 @@ protected:
   float mLength;
   float mK;
   float mFriction;
+  
+  bool mClicked;
 };
 
 

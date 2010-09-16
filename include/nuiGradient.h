@@ -29,6 +29,8 @@ public:
   void AddStop(const nuiColor& rColor, nuiSize position); ///< add a stop element to the gradient at the position (position E [0,1]).
   const nuiGradientStopList& GetStopList() const;
   const nuiColor GetColorAt(nuiSize position) const;
+  
+  nuiTexture* CreateTexture(int32 size, nglImagePixelFormat format = eImagePixelRGBA) const;
 protected:
   nuiGradientStopList mStops;
 
