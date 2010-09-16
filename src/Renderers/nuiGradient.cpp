@@ -137,11 +137,12 @@ nuiTexture* nuiGradient::CreateTexture(int32 size, nglImagePixelFormat format) c
     int32 ipos1 = ToBelow(pos1 * size);
     
     float r = 0;
-    const float incr = 1.0f / (pos1 - pos0);
-    for (int32 i = pos0; i < pos1; i++)
+    const float incr = 1.0f / (ipos1 - ipos0);
+    for (int32 i = ipos0; i < ipos1; i++)
     {
-      nuiColor col(col0);
-      col.Mix(col1, r);
+      nuiColor col(col1);
+      col.Mix(col0, r);
+      r += incr;
       *pBuffer = col.GetRGBA();
       pBuffer++;
     }
@@ -152,18 +153,21 @@ nuiTexture* nuiGradient::CreateTexture(int32 size, nglImagePixelFormat format) c
     ++it;
   }
   
-  // go to the end of the line:
-  float pos1 = size;
-  
-  int32 ipos0 = ToBelow(pos0 * size);
-  int32 ipos1 = ToBelow(pos1 * size);
-  
-  float r = 0;
-  const float incr = 1.0f / (pos1 - pos0);
-  for (int32 i = pos0; i < pos1; i++)
+  if (pos0 < 1)
   {
-    *pBuffer = col0.GetRGBA();
-    pBuffer++;
+    // fill to the end of the line:
+    float pos1 = 1;
+    
+    int32 ipos0 = ToBelow(pos0 * size);
+    int32 ipos1 = ToBelow(pos1 * size);
+    
+    float r = 0;
+    const float incr = 1.0f / (ipos1 - ipos0);
+    for (int32 i = ipos0; i < ipos1; i++)
+    {
+      *pBuffer = col0.GetRGBA();
+      pBuffer++;
+    }
   }
   
   nglImage* pImage = new nglImage(imageinfo);
