@@ -133,8 +133,8 @@ nuiTexture* nuiGradient::CreateTexture(int32 size, nglImagePixelFormat format) c
     float pos1 = it->first;
     nuiColor col1 = it->second;
     
-    int32 ipos0 = ToBelow(pos0) * size;
-    int32 ipos1 = ToBelow(pos1) * size;
+    int32 ipos0 = ToBelow(pos0 * size);
+    int32 ipos1 = ToBelow(pos1 * size);
     
     float r = 0;
     const float incr = 1.0f / (pos1 - pos0);
@@ -155,8 +155,8 @@ nuiTexture* nuiGradient::CreateTexture(int32 size, nglImagePixelFormat format) c
   // go to the end of the line:
   float pos1 = size;
   
-  int32 ipos0 = ToBelow(pos0) * size;
-  int32 ipos1 = ToBelow(pos1) * size;
+  int32 ipos0 = ToBelow(pos0 * size);
+  int32 ipos1 = ToBelow(pos1 * size);
   
   float r = 0;
   const float incr = 1.0f / (pos1 - pos0);
