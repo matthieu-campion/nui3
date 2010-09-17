@@ -654,6 +654,18 @@ bool ProjectGenerator::Make()
     if (!GenerateFile(mNuiTemplatePath + nglPath(_T("TemplateApp.plist")), projectfile))
       return false;
   }
+
+  // generate iPhone Info.plist
+  if (mpCheckXcode->IsPressed())
+  {
+    filename = mProjectName + nglString(_T("-iPhone.plist"));
+    projectfile = targetpath;
+    projectfile += nglPath(filename);
+    if (!GenerateFile(mNuiTemplatePath + nglPath(_T("TemplateApp-iPhone.plist")), projectfile))
+      return false;
+  }
+  
+  
   
   // generate resource.rc
   filename = _T("resource.rc");

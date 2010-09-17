@@ -466,7 +466,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "rsync -rC ./resources/ --exclude \".*\" \"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"\n../../../nui/tools/make_rc.py resources resource.rc\necho 0 ICON \\\"resources/icon.ico\\\" >> resource.rc\n";
+			shellScript = "rsync -rC ./resources/ --exclude \".*\" \"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"\n../../../nui3/tools/make_rc.py resources resource.rc\necho 0 ICON \\\"resources/icon.ico\\\" >> resource.rc\n";
 		};
 		BC6A09BC0EF92EBF00881ACF /* Copy Resources Script */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -580,7 +580,7 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				HEADER_SEARCH_PATHS = ../../../nui3/include;
-				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_FILE = TemplateApp.plist;
 			};
 			name = Default;
 		};
@@ -657,7 +657,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PREPROCESSOR_DEFINITIONS = NUI_IPHONE;
-				INFOPLIST_FILE = "TemplateApp iPhone.plist";
+				INFOPLIST_FILE = "TemplateApp-iPhone.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-liconv",
@@ -666,7 +666,7 @@
 				PREBINDING = YES;
 				PRODUCT_NAME = "TemplateAppD";
 				PROVISIONING_PROFILE = "";
-				SDKROOT = iphoneos3.0;
+				SDKROOT = iphoneos4.1;
 				WARNING_CFLAGS = (
 					"-Wmost",
 					"-Wno-four-char-constants",
@@ -692,7 +692,7 @@
 					NUI_IPHONE,
 					_DEBUG,
 				);
-				INFOPLIST_FILE = "TemplateApp iPhone.plist";
+				INFOPLIST_FILE = "TemplateApp-iPhone.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-liconv",
@@ -701,7 +701,7 @@
 				PREBINDING = YES;
 				PRODUCT_NAME = "TemplateAppD";
 				PROVISIONING_PROFILE = "";
-				SDKROOT = iphoneos3.0;
+				SDKROOT = iphoneos4.1;
 				WARNING_CFLAGS = (
 					"-Wmost",
 					"-Wno-four-char-constants",
