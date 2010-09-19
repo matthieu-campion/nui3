@@ -268,7 +268,11 @@ struct VoidToDefaultVoid<void> { typedef DefaultVoid type; };
 	// Codeplay and VC4 can't cope with the unknown_inheritance case either.
 	class GenericClass {};
 #else
-	class GenericClass;
+    #ifdef __clang__
+        class GenericClass {};
+    #else
+        class GenericClass;
+    #endif
 #endif
 
 // The size of a single inheritance member function pointer.
