@@ -238,7 +238,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   angle = mpNGLWindow->GetRotation();
   if (mAngle != angle)
   {
-    printf("new window angle: %f (old %f)\n", angle, (float)mAngle);
+    NSLog(@"new window angle: %f (old %f)\n", angle, (float)mAngle);
     switch (angle)
     {
       case 0:
@@ -291,7 +291,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
     CGRect rect = [[UIScreen mainScreen] applicationFrame];
 //    rect.size.width = w;
 //    rect.size.height = h;
-    printf("new window size: %d, %d\n", w, h);
+    NSLog(@"new window size: %d, %d\n", w, h);
 
     glViewOld = glView;
     self.frame = rect;
@@ -313,7 +313,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   CGRect rect = [[UIScreen mainScreen] applicationFrame];
   //    rect.size.width = w;
   //    rect.size.height = h;
-  printf("new window size: %d, %d\n", w, h);
+  NSLog(@"new window size: %d, %d\n", w, h);
   
   glViewOld = glView;
   self.frame = rect;
@@ -733,12 +733,12 @@ extern float NUI_INV_SCALE_FACTOR;
       /* on iOS 4.0, use contentsScaleFactor */
       NUI_SCALE_FACTOR = [UIScreen mainScreen].scale;
       NUI_INV_SCALE_FACTOR = 1.0f / NUI_SCALE_FACTOR;
-      printf("Scale: %f\n", self.contentScaleFactor);
+      NSLog(@"Scale: %f\n", self.contentScaleFactor);
       self.contentScaleFactor = NUI_SCALE_FACTOR;
     }
     else
     {
-      printf("no scaling\n");
+      NSLog(@"no scaling\n");
     }
     
     
@@ -772,6 +772,15 @@ extern float NUI_INV_SCALE_FACTOR;
     glBindFramebufferOES(GL_FRAMEBUFFER_OES, defaultFramebuffer);
     glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderbuffer);
     glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, colorRenderbuffer);
+
+    if (![self resizeFromLayer:eaglLayer])
+    {
+      NSLog(@"Unable to resizeFromLayer\n");
+    }
+}
+  else
+  {
+    NSLog(@"EAGLView init failed :-/\n");
   }
   
   return self;
@@ -784,7 +793,7 @@ extern float NUI_INV_SCALE_FACTOR;
 
 - (void)layoutSubviews
 {
-  [self resizeFromLayer:(CAEAGLLayer*)self.layer];
+  //[self resizeFromLayer:(CAEAGLLayer*)self.layer];
 }
 
 
@@ -822,6 +831,7 @@ extern float NUI_INV_SCALE_FACTOR;
 - (BOOL)resizeFromLayer:(CAEAGLLayer *)layer
 {	
   // Allocate color buffer backing based on the current layer size
+  glBindFramebufferOES(GL_FRAMEBUFFER_OES, defaultFramebuffer);
   glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderbuffer);
   if ([context renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:layer] == NO)
   {
@@ -840,7 +850,7 @@ extern float NUI_INV_SCALE_FACTOR;
     return NO;
   }
   
-  printf("Resize frame buffer: %d x %d\n", backingWidth, backingHeight);
+  NSLog(@"Resize frame buffer: %d x %d\n", backingWidth, backingHeight);
   
   // Angle:
   UIDevice* pUIDev = [UIDevice currentDevice];
@@ -984,9 +994,9 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
   }
 	
 	CGRect r = [(nglUIWindow*)mpUIWindow frame];
-	printf("currentFrame: %f, %f - %f, %f\n", r.origin.x, r.origin.y, r.size.width, r.size.height);
+	NSLog(@"currentFrame: %f, %f - %f, %f\n", r.origin.x, r.origin.y, r.size.width, r.size.height);
 	r = [UIScreen mainScreen].applicationFrame;
-	printf("applicationFrame: %f, %f - %f, %f\n", r.origin.x, r.origin.y, r.size.width, r.size.height);
+	NSLog(@"applicationFrame: %f, %f - %f, %f\n", r.origin.x, r.origin.y, r.size.width, r.size.height);
 	
 	SetSize(w, h);
 	

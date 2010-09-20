@@ -26,7 +26,7 @@ public:
     mForce.Set(10, 20, 0);
     mGravity.Set(0, 1, 0);
     mLength = 100, 0;
-    mK = 1.7;
+    mK = .1;
     mFriction = .98;
     mClicked = false;
     StartAutoDraw();
@@ -46,6 +46,7 @@ public:
   {
     float cx = mRect.GetWidth() / 2;
     float cy = mRect.GetHeight() / 2;
+    const float time_ratio = 1;
     
     if (!mClicked)
     {
@@ -54,8 +55,8 @@ public:
       
       mForce += f;
       mForce += mGravity;
-      mP2 += mForce;
-      mForce *= mFriction;
+      mP2 += mForce * time_ratio;
+      mForce *= pow(mFriction, time_ratio);
     }
     
     pContext->DrawLine(cx + mP1[0], cy + mP1[1], cx + mP2[0], cy + mP2[1]);

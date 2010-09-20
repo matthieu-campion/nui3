@@ -42,7 +42,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					1474,
+					10,
 					20,
 					48,
 					43,
@@ -59,11 +59,13 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 292273967;
-			PBXWorkspaceStateSaveDate = 292273967;
+			PBXPerProjectTemplateStateSaveDate = 306346888;
+			PBXWorkspaceStateSaveDate = 306346888;
 		};
 		perUserProjectItems = {
+			E50C2C71124277FE0039C2F4 /* PBXTextBookmark */ = E50C2C71124277FE0039C2F4 /* PBXTextBookmark */;
 			E55EB9591160C8AD00498779 /* PBXTextBookmark */ = E55EB9591160C8AD00498779 /* PBXTextBookmark */;
+			E5B9539A1243925E00D32FF9 /* PBXTextBookmark */ = E5B9539A1243925E00D32FF9 /* PBXTextBookmark */;
 		};
 		sourceControlManager = E54257CB115B7FB600EE458C /* Source Control */;
 		userBuildSettings = {
@@ -97,9 +99,9 @@
 	};
 	61A9DFF10B83433800BC506C /* MainWindow.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1652, 6045}}";
-			sepNavSelRange = "{0, 0}";
-			sepNavVisRange = "{4991, 1397}";
+			sepNavIntBoundsRect = "{{0, 0}, {1652, 5954}}";
+			sepNavSelRange = "{9256, 0}";
+			sepNavVisRange = "{7867, 2464}";
 		};
 	};
 	61A9DFF20B83433800BC506C /* MainWindow.h */ = {
@@ -115,6 +117,16 @@
 			sepNavSelRange = "{235, 0}";
 			sepNavVisRange = "{0, 303}";
 		};
+	};
+	E50C2C71124277FE0039C2F4 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 287";
+		rLen = 0;
+		rLoc = 9256;
+		rType = 0;
+		vrLen = 2464;
+		vrLoc = 7867;
 	};
 	E54257B4115B7F9600EE458C /* Additive */ = {
 		isa = PBXExecutable;
@@ -203,5 +215,15 @@
 		rType = 0;
 		vrLen = 1419;
 		vrLoc = 4991;
+	};
+	E5B9539A1243925E00D32FF9 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 287";
+		rLen = 0;
+		rLoc = 9256;
+		rType = 0;
+		vrLen = 2464;
+		vrLoc = 7867;
 	};
 }

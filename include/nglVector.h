@@ -92,6 +92,12 @@ public:
     Elt[0] *= F;
     Elt[1] *= F;
   }
+
+  nglVector2<T> operator*(const T & F)
+  {
+    return nglVector2<T>(Elt[0] * F, Elt[1] * F);
+  }
+  
   /// Scalar product
   T operator*(const nglVector2<T>& rVector) const
   {
@@ -219,6 +225,12 @@ public:
     Elt[1] *= F;
     Elt[2] *= F;
   }
+  
+  nglVector3<T> operator*(const T & F)
+  {
+    return nglVector3<T>(Elt[0] * F, Elt[1] * F, Elt[2] * F);
+  }  
+  
   /// Scalar product
   T operator*(const nglVector3<T>& rVector) const
   {
