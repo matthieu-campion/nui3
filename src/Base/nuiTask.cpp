@@ -1,11 +1,11 @@
 /*
- *  nuiTask.cpp
- *  nui3
- *
- *  Created by Sébastien Métrot on 9/20/10.
- *  Copyright 2010 libNUI. All rights reserved.
- *
+ NUI3 - C++ cross-platform GUI framework for OpenGL based applications
+ Copyright (C) 2002-2003 Sebastien Metrot
+ 
+ licence: see nui3/LICENCE.TXT
  */
+
+
 
 #include "nuiTask.h"
 
