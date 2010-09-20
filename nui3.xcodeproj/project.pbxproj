@@ -4986,6 +4986,18 @@
 		E5A16FF80C90656A005DC748 /* nuiToken.h in Headers */ = {isa = PBXBuildFile; fileRef = E5A16FF60C90656A005DC748 /* nuiToken.h */; };
 		E5A1704E0C907095005DC748 /* nuiToken.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5A1704D0C907095005DC748 /* nuiToken.cpp */; };
 		E5A1704F0C907095005DC748 /* nuiToken.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5A1704D0C907095005DC748 /* nuiToken.cpp */; };
+		E5A1EAD91247B4B400392FEE /* nuiTask.h in Headers */ = {isa = PBXBuildFile; fileRef = E5A1EAD81247B4B400392FEE /* nuiTask.h */; };
+		E5A1EADA1247B4B400392FEE /* nuiTask.h in Headers */ = {isa = PBXBuildFile; fileRef = E5A1EAD81247B4B400392FEE /* nuiTask.h */; };
+		E5A1EADB1247B4B400392FEE /* nuiTask.h in Headers */ = {isa = PBXBuildFile; fileRef = E5A1EAD81247B4B400392FEE /* nuiTask.h */; };
+		E5A1EADC1247B4B400392FEE /* nuiTask.h in Headers */ = {isa = PBXBuildFile; fileRef = E5A1EAD81247B4B400392FEE /* nuiTask.h */; };
+		E5A1EADD1247B4B400392FEE /* nuiTask.h in Headers */ = {isa = PBXBuildFile; fileRef = E5A1EAD81247B4B400392FEE /* nuiTask.h */; };
+		E5A1EADE1247B4B400392FEE /* nuiTask.h in Headers */ = {isa = PBXBuildFile; fileRef = E5A1EAD81247B4B400392FEE /* nuiTask.h */; };
+		E5A1EAF71247B87900392FEE /* nuiTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5A1EAF51247B87900392FEE /* nuiTask.cpp */; };
+		E5A1EAF91247B87900392FEE /* nuiTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5A1EAF51247B87900392FEE /* nuiTask.cpp */; };
+		E5A1EAFB1247B87900392FEE /* nuiTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5A1EAF51247B87900392FEE /* nuiTask.cpp */; };
+		E5A1EAFD1247B87900392FEE /* nuiTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5A1EAF51247B87900392FEE /* nuiTask.cpp */; };
+		E5A1EAFF1247B87900392FEE /* nuiTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5A1EAF51247B87900392FEE /* nuiTask.cpp */; };
+		E5A1EB011247B87900392FEE /* nuiTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5A1EAF51247B87900392FEE /* nuiTask.cpp */; };
 		E5A2A6E70C7F2877008E2827 /* nuiTreeView.h in Headers */ = {isa = PBXBuildFile; fileRef = E5A2A6E60C7F2877008E2827 /* nuiTreeView.h */; };
 		E5A2A6E80C7F2877008E2827 /* nuiTreeView.h in Headers */ = {isa = PBXBuildFile; fileRef = E5A2A6E60C7F2877008E2827 /* nuiTreeView.h */; };
 		E5A2CBD80D3AF30900FC2180 /* nuiWidgetMatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = E5A2CBD70D3AF30900FC2180 /* nuiWidgetMatcher.h */; };
@@ -9325,6 +9337,8 @@
 		E5A16F120C902AD5005DC748 /* nuiTitledPane.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiTitledPane.cpp; path = src/Layout/nuiTitledPane.cpp; sourceTree = SOURCE_ROOT; };
 		E5A16FF60C90656A005DC748 /* nuiToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiToken.h; path = include/nuiToken.h; sourceTree = SOURCE_ROOT; };
 		E5A1704D0C907095005DC748 /* nuiToken.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiToken.cpp; sourceTree = "<group>"; };
+		E5A1EAD81247B4B400392FEE /* nuiTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiTask.h; path = include/nuiTask.h; sourceTree = SOURCE_ROOT; };
+		E5A1EAF51247B87900392FEE /* nuiTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiTask.cpp; sourceTree = "<group>"; };
 		E5A2A6E60C7F2877008E2827 /* nuiTreeView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiTreeView.h; path = include/nuiTreeView.h; sourceTree = SOURCE_ROOT; };
 		E5A2CBD70D3AF30900FC2180 /* nuiWidgetMatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiWidgetMatcher.h; path = include/nuiWidgetMatcher.h; sourceTree = SOURCE_ROOT; };
 		E5A8BF0E11C277A300ECE5FF /* bytecode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bytecode.h; path = deps/libcss/src/bytecode/bytecode.h; sourceTree = SOURCE_ROOT; };
@@ -11300,6 +11314,8 @@
 				E58E8A96115057B000C2D204 /* nuiTypeTraits.h */,
 				E50066D2115070A700CDD83E /* nuiVariant.h */,
 				E5F9B19A118656B600A703BA /* nuiApplication.cpp */,
+				E5A1EAD81247B4B400392FEE /* nuiTask.h */,
+				E5A1EAF51247B87900392FEE /* nuiTask.cpp */,
 			);
 			name = Base;
 			path = src/Base;
@@ -13044,6 +13060,7 @@
 				E52419CF11CB9CEC0025CA71 /* tessmono.h in Headers */,
 				E52419DC11CB9D3C0025CA71 /* nglImageCGCodec.h in Headers */,
 				E52419DF11CB9D540025CA71 /* nglPath_Cocoa.h in Headers */,
+				E5A1EADB1247B4B400392FEE /* nuiTask.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13808,6 +13825,7 @@
 				E5241E9D11CBCE9E0025CA71 /* tessmono.h in Headers */,
 				E5241E9E11CBCE9E0025CA71 /* nglImageCGCodec.h in Headers */,
 				E5241E9F11CBCE9E0025CA71 /* nglPath_Cocoa.h in Headers */,
+				E5A1EADC1247B4B400392FEE /* nuiTask.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14557,6 +14575,7 @@
 				E5A8BFF611C277A500ECE5FF /* select.h in Headers */,
 				E5A8BFF911C277A500ECE5FF /* parserutilserror.h in Headers */,
 				E5A8BFFB11C277A500ECE5FF /* utils.h in Headers */,
+				E5A1EADA1247B4B400392FEE /* nuiTask.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15306,6 +15325,7 @@
 				E5A8BFAB11C277A500ECE5FF /* select.h in Headers */,
 				E5A8BFAE11C277A500ECE5FF /* parserutilserror.h in Headers */,
 				E5A8BFB011C277A500ECE5FF /* utils.h in Headers */,
+				E5A1EAD91247B4B400392FEE /* nuiTask.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16058,6 +16078,7 @@
 				E5EF6E8511E7305A000FB337 /* nglApplication_Cocoa.h in Headers */,
 				E5EF6E9A11E7315F000FB337 /* nglDragAndDrop_Cocoa.h in Headers */,
 				E59CD17811EA0D2A00955611 /* nglWindow_Cocoa.h in Headers */,
+				E5A1EADD1247B4B400392FEE /* nuiTask.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16810,6 +16831,7 @@
 				E5D641A31209AB9C009C26A9 /* nglApplication_Cocoa.h in Headers */,
 				E5D641A41209AB9C009C26A9 /* nglDragAndDrop_Cocoa.h in Headers */,
 				E5D641A51209AB9C009C26A9 /* nglWindow_Cocoa.h in Headers */,
+				E5A1EADE1247B4B400392FEE /* nuiTask.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17523,6 +17545,7 @@
 				E52419CE11CB9CEC0025CA71 /* tessmono.c in Sources */,
 				E52419DB11CB9D3C0025CA71 /* nglImageCGCodec.cpp in Sources */,
 				E52419E011CB9D540025CA71 /* nglPath_Cocoa.mm in Sources */,
+				E5A1EAF71247B87900392FEE /* nuiTask.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18099,6 +18122,7 @@
 				E52420D711CBCE9E0025CA71 /* tessmono.c in Sources */,
 				E52420D811CBCE9E0025CA71 /* nglImageCGCodec.cpp in Sources */,
 				E52420D911CBCE9E0025CA71 /* nglPath_Cocoa.mm in Sources */,
+				E5A1EB011247B87900392FEE /* nuiTask.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18666,6 +18690,7 @@
 				E5A8BFF811C277A500ECE5FF /* errors.c in Sources */,
 				E5A8BFFA11C277A500ECE5FF /* utils.c in Sources */,
 				E52411AD11CA8ED20025CA71 /* nuiURL_CoreFoundation.mm in Sources */,
+				E5A1EAFD1247B87900392FEE /* nuiTask.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -19232,6 +19257,7 @@
 				E5A8BFAD11C277A500ECE5FF /* errors.c in Sources */,
 				E5A8BFAF11C277A500ECE5FF /* utils.c in Sources */,
 				E52411AC11CA8ED20025CA71 /* nuiURL_CoreFoundation.mm in Sources */,
+				E5A1EAFB1247B87900392FEE /* nuiTask.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -19802,6 +19828,7 @@
 				E59CD10B11E7C9F200955611 /* nglVideoMode_Cocoa.mm in Sources */,
 				E59CD17711EA0D2900955611 /* nglWindow_Cocoa.mm in Sources */,
 				E5D6450C120A0B39009C26A9 /* nglImageCGCodec.cpp in Sources */,
+				E5A1EAFF1247B87900392FEE /* nuiTask.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -20372,6 +20399,7 @@
 				E5D643D81209AB9C009C26A9 /* nglVideoMode_Cocoa.mm in Sources */,
 				E5D643D91209AB9C009C26A9 /* nglWindow_Cocoa.mm in Sources */,
 				E5D6450D120A0B3A009C26A9 /* nglImageCGCodec.cpp in Sources */,
+				E5A1EAF91247B87900392FEE /* nuiTask.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
