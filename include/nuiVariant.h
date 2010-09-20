@@ -21,6 +21,52 @@
 
 class nuiPoint;
 class nuiRange;
+class nuiWidget;
+class nuiContainer;
+class nuiSimpleContainer;
+class nuiTopLevel;
+class nuiMainWindow;
+class nuiLabel;
+
+#ifdef __clang__
+template <> uint64 nuiAttributeTypeTrait<bool>::mTypeId;
+
+template <> uint64 nuiAttributeTypeTrait<int8>::mTypeId;
+template <> uint64 nuiAttributeTypeTrait<int16>::mTypeId;
+template <> uint64 nuiAttributeTypeTrait<int32>::mTypeId;
+template <> uint64 nuiAttributeTypeTrait<int64>::mTypeId;
+
+template <> uint64 nuiAttributeTypeTrait<uint8>::mTypeId;
+template <> uint64 nuiAttributeTypeTrait<uint16>::mTypeId;
+template <> uint64 nuiAttributeTypeTrait<uint32>::mTypeId;
+template <> uint64 nuiAttributeTypeTrait<uint64>::mTypeId;
+
+template <> uint64 nuiAttributeTypeTrait<float>::mTypeId;
+template <> uint64 nuiAttributeTypeTrait<double>::mTypeId;
+
+template <> uint64 nuiAttributeTypeTrait<nglString>::mTypeId;
+template <> uint64 nuiAttributeTypeTrait<nuiPoint>::mTypeId;
+template <> uint64 nuiAttributeTypeTrait<nuiRect>::mTypeId;
+template <> uint64 nuiAttributeTypeTrait<nuiBorder>::mTypeId;
+template <> uint64 nuiAttributeTypeTrait<nuiColor>::mTypeId;
+template <> uint64 nuiAttributeTypeTrait<nuiRange>::mTypeId;
+template <> uint64 nuiAttributeTypeTrait<nuiVector>::mTypeId;
+template <> uint64 nuiAttributeTypeTrait<nglMatrixf>::mTypeId;
+template <> uint64 nuiAttributeTypeTrait<nuiBlendFunc>::mTypeId;
+template <> uint64 nuiAttributeTypeTrait<nuiExpandMode>::mTypeId;
+
+template <> uint64 nuiAttributeTypeTrait<void>::mTypeId;
+template <> uint64 nuiAttributeTypeTrait<void*>::mTypeId;
+template <> uint64 nuiAttributeTypeTrait<nuiObject*>::mTypeId;
+template <> uint64 nuiAttributeTypeTrait<nuiWidget*>::mTypeId;
+template <> uint64 nuiAttributeTypeTrait<nuiContainer*>::mTypeId;
+template <> uint64 nuiAttributeTypeTrait<nuiSimpleContainer*>::mTypeId;
+template <> uint64 nuiAttributeTypeTrait<nuiTopLevel*>::mTypeId;
+template <> uint64 nuiAttributeTypeTrait<nuiMainWindow*>::mTypeId;
+template <> uint64 nuiAttributeTypeTrait<nuiLabel*>::mTypeId;
+#endif
+
+
 
 class nuiVariant
 {
@@ -473,6 +519,7 @@ operator TYPE() const\
         return (TYPE)mString.GetCUInt64();\
     }\
     NGL_ASSERT(0);\
+    return 0;\
   }
   
   CAST(int8);

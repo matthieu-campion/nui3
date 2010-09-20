@@ -9,6 +9,7 @@
 
 typedef uint64 nuiAttributeType;
 
+uint64 nuiGetNewAttributeUniqueId();
 
 template <class Type>
 class nuiAttributeTypeTrait
@@ -17,6 +18,4 @@ public:
   static uint64 mTypeId;
 };
 
-
-uint64 nuiGetNewAttributeUniqueId();
 

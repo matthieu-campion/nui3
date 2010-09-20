@@ -704,7 +704,7 @@ NGL_API void nglCopyLine24To32 (void* pDst, void* pSrc, int32 PixelCount, bool I
       r = *pSource++;
       g = *pSource++;
       b = *pSource++;
-      *pDest--;
+      pDest--;
       *pDest-- = b;
       *pDest-- = g;
       *pDest-- = r;
@@ -736,7 +736,7 @@ NGL_API void nglCopyLine24To32ARGB (void* pDst, void* pSrc, int32 PixelCount, bo
       r = *pSource++;
       g = *pSource++;
       b = *pSource++;
-      *pDest--;
+      pDest--;
       *pDest-- = r;
       *pDest-- = g;
       *pDest-- = b;

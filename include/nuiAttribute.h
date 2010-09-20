@@ -22,7 +22,6 @@ class nuiPoint;
 class nuiRect;
 class nuiBorder;
 
-
 enum nuiAttributeUnit
 {
 	nuiUnitNone = 0,
@@ -333,7 +332,9 @@ public:
   
   bool FromVariant(Contents& rValue, const nuiVariant& rVariant) const
   {
+#ifndef CLANG_HACK
     rValue = rVariant.operator Contents();
+#endif
     return true;
   }
   
@@ -350,7 +351,10 @@ public:
     if (mSetter.empty())
       return false;
     Contents val;
-    bool res = FromVariant(val, rVariant);
+    bool res = true;
+#ifndef CLANG_HACK
+    res = FromVariant(val, rVariant);
+#endif
     if (!res)
     {
       return false;
@@ -372,7 +376,10 @@ public:
       return false;
     
     Contents val;
-    bool res = FromVariant(val, rVariant);
+    bool res = true;
+#ifndef CLANG_HACK
+    res = FromVariant(val, rVariant);
+#endif
     if (!res)
     {
       return false;
@@ -891,7 +898,9 @@ public:
   
   bool FromVariant(Contents& Value, const nuiVariant& rVariant) const
   {
+#ifndef CLANG_HACK
     Value = rVariant.operator Contents();
+#endif
     return true;
   }
   
@@ -908,7 +917,10 @@ public:
     if (mSetter.empty())
       return false;
     Contents val;
-    bool res = FromVariant(val, rVariant);
+    bool res = true;
+#ifndef CLANG_HACK
+    res = FromVariant(val, rVariant);
+#endif
     if (!res)
     {
       return false;

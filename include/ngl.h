@@ -93,7 +93,9 @@ and in NGL user application code.
 // Make Carbon the default choice when compiling on a Mac, even when using gcc
 //#elif (!defined(_CARBON_) && !defined(_DARWIN_) && !defined(_COCOA_))
   #else
-    #define _CARBON_
+    #ifndef _CARBON_
+      #define _CARBON_
+    #endif
     #define _CORE_FOUNDATION_
     #include <CoreFoundation/CoreFoundation.h>
   #endif
