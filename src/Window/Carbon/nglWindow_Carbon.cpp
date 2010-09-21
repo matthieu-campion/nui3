@@ -976,6 +976,7 @@ void nglWindow::InitDragAndDrop()
 {
   if (mInited == false)
   {
+    mInited = true;
     
     /*
      * Drag and Drop stuff
@@ -986,7 +987,6 @@ void nglWindow::InitDragAndDrop()
     mpCarbonDragAndDrop = new nglCarbonDragAndDrop(this, mWindow);
     
     CallOnCreation();
-    mInited = true;
     
 		Rect Bounds;
 		MakeCurrent();

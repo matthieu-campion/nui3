@@ -10,7 +10,7 @@
 #include "nuiTask.h"
 
 
-
+#if 0
 void TestSink(int a)
 {
   printf("TestSink: %d\n", a);
@@ -18,6 +18,7 @@ void TestSink(int a)
 
 void TestTask()
 {
-  nuiTaskBase* pTask = nuiMakeTask(TestSink, 42);
+  nuiTask* pTask = nuiMakeTask(TestSink, 42);
   pTask->Run();
 }
+#endif
