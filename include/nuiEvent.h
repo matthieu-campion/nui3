@@ -8,7 +8,7 @@
 #ifndef __nuiEvent_h__
 #define __nuiEvent_h__
 
-//#include "nui.h"
+#include "nui.h"
 
 class nuiEventSource;
 class nuiVariant;
@@ -140,6 +140,7 @@ public:
   
   void Connect(nuiEventSource& rSource, TargetFunc pTargetFunc, void* pUser=NULL)
   {
+    assert(nuiEventTargetBase::mpTarget != NULL);
     nuiEventTargetBase::Connect(rSource, nuiMakeDelegate((T*)mpTarget, pTargetFunc).GetMemento(), pUser);
   }
   
@@ -150,11 +151,13 @@ public:
   
   void Disconnect(TargetFunc pTargetFunc)
   {
+    assert(nuiEventTargetBase::mpTarget != NULL);
     nuiEventTargetBase::Disconnect(nuiMakeDelegate((T*)mpTarget, pTargetFunc).GetMemento());
   }
   
   void Disconnect(nuiEventSource& rSource, TargetFunc pTargetFunc)
   {
+    assert(nuiEventTargetBase::mpTarget != NULL);
     nuiEventTargetBase::Disconnect(rSource, nuiMakeDelegate((T*)mpTarget, pTargetFunc).GetMemento());
   }
   

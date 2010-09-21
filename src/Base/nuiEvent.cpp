@@ -267,8 +267,6 @@ bool nuiEventTargetBase::CallEvent(void* pTarget, nuiDelegateMemento pFunc, cons
 
 void nuiEventTargetBase::Connect(nuiEventSource& rSource, const nuiDelegateMemento& rTargetFunc, void* pUser)
 {
-  NGL_ASSERT(mpTarget);
-  
   Link* pLink = new Link;
   pLink->mTargetFunc = rTargetFunc;
   pLink->mpUser = pUser;
@@ -281,7 +279,6 @@ void nuiEventTargetBase::Connect(nuiEventSource& rSource, const nuiDelegateMemen
 
 void nuiEventTargetBase::DisconnectSource(nuiEventSource& rSource)
 {
-  NGL_ASSERT(mpTarget);
   LinksMap::iterator it_source = mpLinks.find(&rSource);
   if (it_source != mpLinks.end())
   {
@@ -298,8 +295,6 @@ void nuiEventTargetBase::DisconnectSource(nuiEventSource& rSource)
 
 void nuiEventTargetBase::Disconnect(const nuiDelegateMemento& rTFunc)
 {
-  NGL_ASSERT(mpTarget);
-  
   std::vector<nuiEventSource*> toErase;
   LinksMap::const_iterator end_source = mpLinks.end();
   for (LinksMap::iterator it_source = mpLinks.begin(); it_source != end_source; ++it_source)
@@ -333,8 +328,6 @@ void nuiEventTargetBase::Disconnect(const nuiDelegateMemento& rTFunc)
 
 void nuiEventTargetBase::Disconnect(nuiEventSource& rSource, const nuiDelegateMemento& rTFunc)
 {
-  NGL_ASSERT(mpTarget);
-  
   LinksMap::iterator it_source = mpLinks.find(&rSource);
   if (it_source != mpLinks.end())
   {

@@ -18,7 +18,6 @@ void TestSink(int a)
 
 void TestTask()
 {
-  nuiTask* pTask = nuiMakeTask(TestSink, 42);
-  pTask->Run();
+  nuiAnimation::RunOnNextTick(nuiMakeTask(TestSink, 42));
 }
 #endif

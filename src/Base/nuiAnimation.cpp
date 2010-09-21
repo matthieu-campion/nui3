@@ -164,7 +164,7 @@ nuiTimer* nuiAnimation::AcquireTimer()
   if (!mpTimer)
   {
     mpTimer = new nuiTimer(1.0 / mFrameRate);
-    AnimSink.Connect(mpTimer->Tick, &nuiAnimation::StartTasks);
+    AnimSink.Connect(mpTimer->Tick, (bool (*)(const nuiEvent&))&nuiAnimation::StartTasks);
     mpTimer->Start(false, false);
   }
   return mpTimer;

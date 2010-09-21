@@ -151,7 +151,7 @@ protected:
   static int32 mAnimCounter;
   static double mFrameRate;
   static std::list<nuiTask*> mOnNextTick;
-  bool StartTasks(const nuiEvent& rEvent);
+  static bool StartTasks(const nuiEvent& rEvent);
   
   nglTime mLastTime;
   bool mUpdatingTime;
