@@ -331,14 +331,14 @@ template <class X, class Y, class Param0, class Param1, class RetType>
 nuiTask2<Param0, Param1, RetType>* nuiMakeTask(Y*x, RetType (X::*func)(Param0 p0, Param1 p1),
                                                Param0 P0, Param1 P1)
 { 
-	return new nuiTask2<Param0, Param1, RetType>(x, func, P0, P1);
+	return new nuiTask2<Param0, Param1, RetType>(nuiMakeDelegate(x, func), P0, P1);
 }
 
 template <class X, class Y, class Param0, class Param1, class RetType>
 nuiTask2<Param0, Param1, RetType>* nuiMakeTask(Y*x, RetType (X::*func)(Param0 p0, Param1 p1) const,
                                                Param0 P0, Param1 P1)
 { 
-	return new nuiTask2<Param0, Param1, RetType>(x, func, P0, P1);
+	return new nuiTask2<Param0, Param1, RetType>(nuiMakeDelegate(x, func), P0, P1);
 }
 
 
@@ -354,14 +354,14 @@ template <class X, class Y, class Param0, class Param1, class Param2, class RetT
 nuiTask3<Param0, Param1, Param2, RetType>* nuiMakeTask(Y*x, RetType (X::*func)(Param0 p0, Param1 p1, Param2 p2),
                                                        Param0 P0, Param1 P1, Param2 P2)
 { 
-	return new nuiTask3<Param0, Param1, Param2, RetType>(x, func, P0, P1, P2);
+	return new nuiTask3<Param0, Param1, Param2, RetType>(nuiMakeDelegate(x, func), P0, P1, P2);
 }
 
 template <class X, class Y, class Param0, class Param1, class Param2, class RetType>
 nuiTask3<Param0, Param1, Param2, RetType>* nuiMakeTask(Y*x, RetType (X::*func)(Param0 p0, Param1 p1, Param2 p2) const,
                                                        Param0 P0, Param1 P1, Param2 P2)
 { 
-	return new nuiTask3<Param0, Param1, Param2, RetType>(x, func, P0, P1, P2);
+	return new nuiTask3<Param0, Param1, Param2, RetType>(nuiMakeDelegate(x, func), P0, P1, P2);
 }
 
 // 4 Params
@@ -376,14 +376,14 @@ template <class X, class Y, class Param0, class Param1, class Param2, class Para
 nuiTask4<Param0, Param1, Param2, Param3, RetType>* nuiMakeTask(Y*x, RetType (X::*func)(Param0 p0, Param1 p1, Param2 p2, Param3 p3),
                                        Param0 P0, Param1 P1, Param2 P2, Param3 P3)
 { 
-	return new nuiTask4<Param0, Param1, Param2, Param3, RetType>(x, func, P0, P1, P2, P3);
+	return new nuiTask4<Param0, Param1, Param2, Param3, RetType>(nuiMakeDelegate(x, func), P0, P1, P2, P3);
 }
 
 template <class X, class Y, class Param0, class Param1, class Param2, class Param3, class RetType>
 nuiTask4<Param0, Param1, Param2, Param3, RetType>* nuiMakeTask(Y*x, RetType (X::*func)(Param0 p0, Param1 p1, Param2 p2, Param3 p3) const,
                                        Param0 P0, Param1 P1, Param2 P2, Param3 P3)
 { 
-	return new nuiTask4<Param0, Param1, Param2, Param3, RetType>(x, func, P0, P1, P2, P3);
+	return new nuiTask4<Param0, Param1, Param2, Param3, RetType>(nuiMakeDelegate(x, func), P0, P1, P2, P3);
 }
 
 // 5 Params
@@ -398,14 +398,14 @@ template <class X, class Y, class Param0, class Param1, class Param2, class Para
 nuiTask5<Param0, Param1, Param2, Param3, Param4, RetType>* nuiMakeTask(Y*x, RetType (X::*func)(Param0 p0, Param1 p1, Param2 p2, Param3 p3, Param4 p4),
                                        Param0 P0, Param1 P1, Param2 P2, Param3 P3, Param4 P4)
 { 
-	return new nuiTask5<Param0, Param1, Param2, Param3, Param4, RetType>(x, func, P0, P1, P2, P3, P4);
+	return new nuiTask5<Param0, Param1, Param2, Param3, Param4, RetType>(nuiMakeDelegate(x, func), P0, P1, P2, P3, P4);
 }
 
 template <class X, class Y, class Param0, class Param1, class Param2, class Param3, class Param4, class RetType>
 nuiTask5<Param0, Param1, Param2, Param3, Param4, RetType>* nuiMakeTask(Y*x, RetType (X::*func)(Param0 p0, Param1 p1, Param2 p2, Param3 p3, Param4 p4) const,
                                        Param0 P0, Param1 P1, Param2 P2, Param3 P3, Param4 P4)
 { 
-	return new nuiTask5<Param0, Param1, Param2, Param3, Param4, RetType>(x, func, P0, P1, P2, P3, P4);
+	return new nuiTask5<Param0, Param1, Param2, Param3, Param4, RetType>(nuiMakeDelegate(x, func), P0, P1, P2, P3, P4);
 }
 
 // 6 Params
@@ -420,14 +420,14 @@ template <class X, class Y, class Param0, class Param1, class Param2, class Para
 nuiTask6<Param0, Param1, Param2, Param3, Param4, Param5, RetType>* nuiMakeTask(Y*x, RetType (X::*func)(Param0 p0, Param1 p1, Param2 p2, Param3 p3, Param4 p4, Param5 p5),
                                        Param0 P0, Param1 P1, Param2 P2, Param3 P3, Param4 P4, Param5 P5)
 { 
-	return new nuiTask6<Param0, Param1, Param2, Param3, Param4, Param5, RetType>(x, func, P0, P1, P2, P3, P4, P5);
+	return new nuiTask6<Param0, Param1, Param2, Param3, Param4, Param5, RetType>(nuiMakeDelegate(x, func), P0, P1, P2, P3, P4, P5);
 }
 
 template <class X, class Y, class Param0, class Param1, class Param2, class Param3, class Param4, class Param5, class RetType>
 nuiTask6<Param0, Param1, Param2, Param3, Param4, Param5, RetType>* nuiMakeTask(Y*x, RetType (X::*func)(Param0 p0, Param1 p1, Param2 p2, Param3 p3, Param4 p4, Param5 p5) const,
                                        Param0 P0, Param1 P1, Param2 P2, Param3 P3, Param4 P4, Param5 P5)
 { 
-	return new nuiTask6<Param0, Param1, Param2, Param3, Param4, Param5, RetType>(x, func, P0, P1, P2, P3, P4, P5);
+	return new nuiTask6<Param0, Param1, Param2, Param3, Param4, Param5, RetType>(nuiMakeDelegate(x, func), P0, P1, P2, P3, P4, P5);
 }
 
 // 7 Params
@@ -442,14 +442,14 @@ template <class X, class Y, class Param0, class Param1, class Param2, class Para
 nuiTask7<Param0, Param1, Param2, Param3, Param4, Param5, Param6, RetType>* nuiMakeTask(Y*x, RetType (X::*func)(Param0 p0, Param1 p1, Param2 p2, Param3 p3, Param4 p4, Param5 p5, Param6 p6),
                                        Param0 P0, Param1 P1, Param2 P2, Param3 P3, Param4 P4, Param5 P5, Param6 P6)
 { 
-	return new nuiTask7<Param0, Param1, Param2, Param3, Param4, Param5, Param6, RetType>(x, func, P0, P1, P2, P3, P4, P5, P6);
+	return new nuiTask7<Param0, Param1, Param2, Param3, Param4, Param5, Param6, RetType>(nuiMakeDelegate(x, func), P0, P1, P2, P3, P4, P5, P6);
 }
 
 template <class X, class Y, class Param0, class Param1, class Param2, class Param3, class Param4, class Param5, class Param6, class RetType>
 nuiTask7<Param0, Param1, Param2, Param3, Param4, Param5, Param6, RetType>* nuiMakeTask(Y*x, RetType (X::*func)(Param0 p0, Param1 p1, Param2 p2, Param3 p3, Param4 p4, Param5 p5, Param6 p6) const,
                                        Param0 P0, Param1 P1, Param2 P2, Param3 P3, Param4 P4, Param5 P5, Param6 P6)
 { 
-	return new nuiTask7<Param0, Param1, Param2, Param3, Param4, Param5, Param6, RetType>(x, func, P0, P1, P2, P3, P4, P5, P6);
+	return new nuiTask7<Param0, Param1, Param2, Param3, Param4, Param5, Param6, RetType>(nuiMakeDelegate(x, func), P0, P1, P2, P3, P4, P5, P6);
 }
 
 
@@ -465,14 +465,14 @@ template <class X, class Y, class Param0, class Param1, class Param2, class Para
 nuiTask8<Param0, Param1, Param2, Param3, Param4, Param5, Param6, Param7, RetType>* nuiMakeTask(Y*x, RetType (X::*func)(Param0 p0, Param1 p1, Param2 p2, Param3 p3, Param4 p4, Param5 p5, Param6 p6, Param7 p7),
                                        Param0 P0, Param1 P1, Param2 P2, Param3 P3, Param4 P4, Param5 P5, Param6 P6, Param7 P7)
 { 
-	return new nuiTask8<Param0, Param1, Param2, Param3, Param4, Param5, Param6, Param7, RetType>(x, func, P0, P1, P2, P3, P4, P5, P6, P7);
+	return new nuiTask8<Param0, Param1, Param2, Param3, Param4, Param5, Param6, Param7, RetType>(nuiMakeDelegate(x, func), P0, P1, P2, P3, P4, P5, P6, P7);
 }
 
 template <class X, class Y, class Param0, class Param1, class Param2, class Param3, class Param4, class Param5, class Param6, class Param7, class RetType>
 nuiTask8<Param0, Param1, Param2, Param3, Param4, Param5, Param6, Param7, RetType>* nuiMakeTask(Y*x, RetType (X::*func)(Param0 p0, Param1 p1, Param2 p2, Param3 p3, Param4 p4, Param5 p5, Param6 p6, Param7 p7) const,
                                        Param0 P0, Param1 P1, Param2 P2, Param3 P3, Param4 P4, Param5 P5, Param6 P6, Param7 P7)
 { 
-	return new nuiTask8<Param0, Param1, Param2, Param3, Param4, Param5, Param6, Param7, RetType>(x, func, P0, P1, P2, P3, P4, P5, P6, P7);
+	return new nuiTask8<Param0, Param1, Param2, Param3, Param4, Param5, Param6, Param7, RetType>(nuiMakeDelegate(x, func), P0, P1, P2, P3, P4, P5, P6, P7);
 }
 
 

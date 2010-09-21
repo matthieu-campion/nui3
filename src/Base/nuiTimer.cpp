@@ -9,6 +9,7 @@
 #include "nui.h"
 #include "nuiTimer.h"
 #include "nuiEventRegistry.h"
+#include "nuiTask.h"
 
 ////////////////////////
 // nuiTickEvent
@@ -44,4 +45,12 @@ nuiTimer::~nuiTimer()
 void nuiTimer::OnTick(nglTime Lap)
 {
   Tick(nuiTickEvent(Lap));
+}
+
+bool nuiTimer::StartOnNextTick(bool Reset)
+{
+  nuiTask* pTask = nuiMakeTask(this, &nuiTimer::Start, false, true);
+  //nuiTask* pTask = new nuiTask2<bool, bool, bool>(nuiMakeDelegate(this, &nuiTimer::Start), false, true);
+  nuiAnimation::RunOnNextTick(pTask);
+  return true;
 }

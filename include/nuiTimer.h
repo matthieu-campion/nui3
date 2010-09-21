@@ -37,6 +37,15 @@ public:
 
   nuiEventSource Tick; /// Sends an nuiTickEvent.
 
+  bool StartOnNextTick(bool Reset = true);
+  /*!<
+   \param Reset reset event counter
+   \return true if the timer was successfully started
+   
+   You must invoke StartOnNextTick() to run the timer on the next animation timer tick, it does not run automatically at
+   instantiation time.
+   */
+
 };
 
 #endif // __nuiTimer_h__

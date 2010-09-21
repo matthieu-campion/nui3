@@ -9,6 +9,7 @@
 #include "nuiAnimation.h"
 #include "nuiXML.h"
 #include "nglMath.h"
+#include "nuiTask.h"
 
 nuiTimer* nuiAnimation::mpTimer = NULL;
 int32 nuiAnimation::mAnimCounter = 0;
@@ -155,12 +156,15 @@ double nuiAnimation::GetFrameRate()
   return mFrameRate;
 }
 
+static nuiEventSink<nuiAnimation> AnimSink(NULL);
+
 nuiTimer* nuiAnimation::AcquireTimer()
 {
   mAnimCounter++;
   if (!mpTimer)
   {
     mpTimer = new nuiTimer(1.0 / mFrameRate);
+    AnimSink.Connect(mpTimer->Tick, &nuiAnimation::StartTasks);
     mpTimer->Start(false, false);
   }
   return mpTimer;
@@ -177,6 +181,7 @@ void nuiAnimation::ReleaseTimer()
   if (!mAnimCounter)
   {
     delete mpTimer;
+    AnimSink.DisconnectAll();
     mpTimer = NULL;
   }
 }
@@ -400,6 +405,13 @@ void nuiAnimation::Play(int32 Count, nuiAnimLoop LoopMode)
   mAnimSink.Connect(GetTimer()->Tick, &nuiAnimation::OnTick);
   
   AnimStart();
+}
+
+bool nuiAnimation::PlayOnNextTick(int32 Count, nuiAnimLoop LoopMode)
+{
+  nuiTask* pTask = nuiMakeTask(this, &nuiAnimation::Play, Count, LoopMode);
+  RunOnNextTick(pTask);
+  return true;
 }
 
 void nuiAnimation::Stop()
@@ -851,3 +863,25 @@ bool nuiAnimationSequence::OnAnimStopped(const nuiEvent& rEvent)
   return false;
 }
 
+std::list<nuiTask*> nuiAnimation::mOnNextTick;
+
+bool nuiAnimation::StartTasks(const nuiEvent& rEvent)
+{
+  std::list<nuiTask*>::iterator it = mOnNextTick.begin();
+  std::list<nuiTask*>::iterator end = mOnNextTick.end();
+  while (it != end)
+  {
+    nuiTask* pTask = *it;
+    pTask->Run();
+    delete pTask;
+    ++it;
+  }
+  
+  mOnNextTick.clear();
+  return true;
+}
+
+void nuiAnimation::RunOnNextTick(nuiTask* pTask)
+{
+  mOnNextTick.push_back(pTask);
+}

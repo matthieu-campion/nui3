@@ -133,9 +133,19 @@ public:
   {
   }
 
+  void Connect(nuiEventSource& rSource, bool (*pTargetFunc)(const nuiEvent&), void* pUser=NULL)
+  {
+    nuiEventTargetBase::Connect(rSource, nuiFastDelegate1<const nuiEvent&, bool>(pTargetFunc).GetMemento(), pUser);
+  }
+  
   void Connect(nuiEventSource& rSource, TargetFunc pTargetFunc, void* pUser=NULL)
   {
     nuiEventTargetBase::Connect(rSource, nuiMakeDelegate((T*)mpTarget, pTargetFunc).GetMemento(), pUser);
+  }
+  
+  void Disconnect(bool (*pTargetFunc)(const nuiEvent&))
+  {
+    nuiEventTargetBase::Disconnect(nuiFastDelegate1<const nuiEvent&, bool>(pTargetFunc).GetMemento());
   }
   
   void Disconnect(TargetFunc pTargetFunc)

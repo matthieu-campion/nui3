@@ -13,6 +13,8 @@
 
 #include "nuiEventRegistry.h"
 
+class nuiTask;
+
 enum nuiAnimWhence
 {
   eAnimFromStart,  ///< Move forward, from the beginning of the file (offset 0).
@@ -99,6 +101,7 @@ public:
   double GetDuration() const; ///< Return the total duration of the Animation in seconds.
 
   virtual void Play(int32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward); ///< Start playing the animation. Stop after count iterations. 
+  bool PlayOnNextTick(int32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward); ///< The animation will start playing as soon as the next animation tick is reached. Stop after count iterations. 
   virtual void Stop(); ///< Stop Playing the animation and reset the play position so tht the next play will restart from the begining.
   virtual void Pause(); ///< Stop Playing the animation but don't reset the play position, the next play will restart from the last position.
 
@@ -123,6 +126,7 @@ public:
   static nuiTimer* AcquireTimer(); ///< You must pair each call to AcquireTimer() with a call to ReleaseTimer().
   static nuiTimer* GetTimer(); ///< GetTimer doesn't allocate the timer and you must not pair it with ReleaseTimer(). It may return NULL if the timer was never created.
   static void ReleaseTimer();
+  static void RunOnNextTick(nuiTask* pTask);
   
   void SetDeleteOnStop(bool set); ///< If DeleteOnStop is set, the animation will be deleted as soon as it is stopped by calling Stop or by reaching the end of the loop counter.
   bool GetDeleteOnStop() const; ///< If DeleteOnStop is set, the animation will be deleted as soon as it is stopped by calling Stop or by reaching the end of the loop counter.
@@ -146,6 +150,8 @@ protected:
   static nuiTimer* mpTimer;
   static int32 mAnimCounter;
   static double mFrameRate;
+  static std::list<nuiTask*> mOnNextTick;
+  bool StartTasks(const nuiEvent& rEvent);
   
   nglTime mLastTime;
   bool mUpdatingTime;
@@ -165,6 +171,7 @@ protected:
   double GetTimeFromEnd() const;
   
   nuiEventSink<nuiAnimation> mAnimSink;
+
 };
 
 class NUI_API nuiWaitAnimation : public nuiAnimation
