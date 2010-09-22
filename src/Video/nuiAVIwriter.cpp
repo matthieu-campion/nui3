@@ -354,8 +354,7 @@ void nuiAVIwriter::WriteStreamFormat()
 
 void nuiAVIwriter::WriteFourcc(const char *fourcc) 
 {
-  mpStream->Write(fourcc, 1, 4);
-//  mpStream->Write(fourcc, 4, 1);
+  mpStream->WriteInt8(fourcc, 4);
 }
 
 
