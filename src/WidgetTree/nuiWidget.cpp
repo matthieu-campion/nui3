@@ -3058,6 +3058,7 @@ void nuiWidget::SetLayout(const nuiRect& rRect)
     if (pAnim->IsPlaying())
       pAnim->Stop();
     pAnim->SetEndValue(rect);
+    //pAnim->PlayOnNextTick();
     pAnim->Play();
     pAnim->SetTime(0);
   }

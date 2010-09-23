@@ -632,7 +632,7 @@ bool nuiAnimation::StartTasks(const nuiEvent& rEvent)
     }
   }
   
-  return true;
+  return false;
 }
 
 void nuiAnimation::RunOnAnimationTick(nuiTask* pTask, int32 TickCount)

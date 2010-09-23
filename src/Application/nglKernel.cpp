@@ -356,5 +356,5 @@ bool nglKernel::ProcessMessages(const nuiEvent& rEvent)
     delete pNotif;
   }
   
-  return true;
+  return false;
 }

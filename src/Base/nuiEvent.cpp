@@ -233,8 +233,6 @@ void nuiEventTargetBase::DisconnectAll()
 
 bool nuiEventTargetBase::OnEvent(const nuiEvent& rEvent)
 {
-  NGL_ASSERT(mpTarget);
-  
   bool handled = false;
   
   nuiEventSource* pSource = (nuiEventSource*)rEvent.GetSource();
