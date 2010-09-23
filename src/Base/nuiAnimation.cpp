@@ -410,7 +410,7 @@ void nuiAnimation::Play(int32 Count, nuiAnimLoop LoopMode)
 bool nuiAnimation::PlayOnNextTick(int32 Count, nuiAnimLoop LoopMode)
 {
   nuiTask* pTask = nuiMakeTask(this, &nuiAnimation::Play, Count, LoopMode);
-  RunOnNextTick(pTask);
+  RunOnAnimationTick(pTask);
   return true;
 }
 
@@ -607,6 +607,37 @@ bool nuiAnimation::Pause(const nuiEvent& rEvent)
 void nuiAnimation::EnableCallbacks(bool enable)
 {
   mEnableCallbacks = enable;
+}
+
+
+std::list<std::pair<int32, nuiTask*> > nuiAnimation::mOnNextTick;
+
+bool nuiAnimation::StartTasks(const nuiEvent& rEvent)
+{
+  std::list<std::pair<int32, nuiTask*> >::iterator it = mOnNextTick.begin();
+  std::list<std::pair<int32, nuiTask*> >::iterator end = mOnNextTick.end();
+  while (it != end)
+  {
+    if (it->first)
+    {
+      it->first--;
+      ++it;
+    }
+    else
+    {
+      nuiTask* pTask = it->second;
+      pTask->Run();
+      delete pTask;
+      mOnNextTick.erase(it++);
+    }
+  }
+  
+  return true;
+}
+
+void nuiAnimation::RunOnAnimationTick(nuiTask* pTask, int32 TickCount)
+{
+  mOnNextTick.push_back(std::pair<int32, nuiTask*>(TickCount, pTask));
 }
 
 
@@ -861,27 +892,4 @@ bool nuiAnimationSequence::OnAnimStopped(const nuiEvent& rEvent)
   }
 
   return false;
-}
-
-std::list<nuiTask*> nuiAnimation::mOnNextTick;
-
-bool nuiAnimation::StartTasks(const nuiEvent& rEvent)
-{
-  std::list<nuiTask*>::iterator it = mOnNextTick.begin();
-  std::list<nuiTask*>::iterator end = mOnNextTick.end();
-  while (it != end)
-  {
-    nuiTask* pTask = *it;
-    pTask->Run();
-    delete pTask;
-    ++it;
-  }
-  
-  mOnNextTick.clear();
-  return true;
-}
-
-void nuiAnimation::RunOnNextTick(nuiTask* pTask)
-{
-  mOnNextTick.push_back(pTask);
 }

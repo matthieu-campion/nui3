@@ -126,7 +126,7 @@ public:
   static nuiTimer* AcquireTimer(); ///< You must pair each call to AcquireTimer() with a call to ReleaseTimer().
   static nuiTimer* GetTimer(); ///< GetTimer doesn't allocate the timer and you must not pair it with ReleaseTimer(). It may return NULL if the timer was never created.
   static void ReleaseTimer();
-  static void RunOnNextTick(nuiTask* pTask);
+  static void RunOnAnimationTick(nuiTask* pTask, int32 WaitNTickCount = 0);
   
   void SetDeleteOnStop(bool set); ///< If DeleteOnStop is set, the animation will be deleted as soon as it is stopped by calling Stop or by reaching the end of the loop counter.
   bool GetDeleteOnStop() const; ///< If DeleteOnStop is set, the animation will be deleted as soon as it is stopped by calling Stop or by reaching the end of the loop counter.
@@ -150,7 +150,7 @@ protected:
   static nuiTimer* mpTimer;
   static int32 mAnimCounter;
   static double mFrameRate;
-  static std::list<nuiTask*> mOnNextTick;
+  static std::list<std::pair<int32, nuiTask*> > mOnNextTick;
   static bool StartTasks(const nuiEvent& rEvent);
   
   nglTime mLastTime;

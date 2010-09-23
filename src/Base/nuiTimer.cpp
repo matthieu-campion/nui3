@@ -51,6 +51,6 @@ bool nuiTimer::StartOnNextTick(bool Reset)
 {
   nuiTask* pTask = nuiMakeTask(this, &nuiTimer::Start, false, true);
   //nuiTask* pTask = new nuiTask2<bool, bool, bool>(nuiMakeDelegate(this, &nuiTimer::Start), false, true);
-  nuiAnimation::RunOnNextTick(pTask);
+  nuiAnimation::RunOnAnimationTick(pTask);
   return true;
 }
