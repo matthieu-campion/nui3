@@ -21,6 +21,7 @@
 #include "nuiWidgetMatcher.h"
 #include "nuiClampedValueAttributeEditor.h"
 #include "nuiColorDecoration.h"
+#include "nuiTask.h"
 
 #ifdef _UIKIT_
 //const bool gGlobalUseRenderCache = false;
@@ -3058,9 +3059,11 @@ void nuiWidget::SetLayout(const nuiRect& rRect)
     if (pAnim->IsPlaying())
       pAnim->Stop();
     pAnim->SetEndValue(rect);
-    //pAnim->PlayOnNextTick();
-    pAnim->Play();
-    pAnim->SetTime(0);
+    pAnim->PlayOnNextTick();
+    nuiTask* pTask = nuiMakeTask(pAnim, &nuiAnimation::SetTime, 0.0, eAnimFromStart);
+    nuiAnimation::RunOnAnimationTick(pTask);
+    //pAnim->Play();
+    //pAnim->SetTime(0);
   }
   else
   {
