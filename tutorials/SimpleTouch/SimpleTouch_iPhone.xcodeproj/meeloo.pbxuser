@@ -2,14 +2,14 @@
 {
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
 		activeBuildConfigurationName = Default;
-		activeExecutable = E5FCB1E80FD5E88200CE6298 /* SimpleTouch_iPhone */;
-		activeTarget = C99995F80DA6EE97001A7116 /* SimpleTouch_iPhone */;
+		activeExecutable = E5FCB1E90FD5E88200CE6298 /* SimpleTouch_iPhoneD */;
+		activeSDKPreference = iphoneos4.1;
+		activeTarget = C9F5F9070DA84CAB00E078ED /* SimpleTouch_iPhoneD */;
 		addToTargets = (
 			C9F5F9070DA84CAB00E078ED /* SimpleTouch_iPhoneD */,
 			C99995F80DA6EE97001A7116 /* SimpleTouch_iPhone */,
 		);
 		breakpoints = (
-			E5FCB2530FD5F59300CE6298 /* Application.cpp:42 */,
 		);
 		codeSenseManager = E5FCB2030FD5E8A100CE6298 /* Code sense */;
 		executables = (
@@ -61,12 +61,15 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 298373942;
-			PBXWorkspaceStateSaveDate = 298373942;
+			PBXPerProjectTemplateStateSaveDate = 307030666;
+			PBXWorkspaceStateSaveDate = 307030666;
 		};
 		perUserProjectItems = {
-			E553B94F11C8CE2B00CCA8EC /* PBXTextBookmark */ = E553B94F11C8CE2B00CCA8EC /* PBXTextBookmark */;
-			E553BAF911C8D34E00CCA8EC /* PBXTextBookmark */ = E553BAF911C8D34E00CCA8EC /* PBXTextBookmark */;
+			E5FC8F83124CF3010027EC36 /* PBXTextBookmark */ = E5FC8F83124CF3010027EC36 /* PBXTextBookmark */;
+			E5FC8F9C124CF5B10027EC36 /* PBXTextBookmark */ = E5FC8F9C124CF5B10027EC36 /* PBXTextBookmark */;
+			E5FC8FA3124CF5E90027EC36 /* PBXTextBookmark */ = E5FC8FA3124CF5E90027EC36 /* PBXTextBookmark */;
+			E5FC8FA4124CF5EB0027EC36 /* PBXTextBookmark */ = E5FC8FA4124CF5EB0027EC36 /* PBXTextBookmark */;
+			E5FC8FA9124CF88A0027EC36 /* PBXTextBookmark */ = E5FC8FA9124CF88A0027EC36 /* PBXTextBookmark */;
 			E5FCB20D0FD5F1AD00CE6298 /* PBXTextBookmark */ = E5FCB20D0FD5F1AD00CE6298 /* PBXTextBookmark */;
 			E5FCB2560FD5F5CF00CE6298 /* PBXTextBookmark */ = E5FCB2560FD5F5CF00CE6298 /* PBXTextBookmark */;
 			E5FCB2580FD5F5CF00CE6298 /* PBXTextBookmark */ = E5FCB2580FD5F5CF00CE6298 /* PBXTextBookmark */;
@@ -79,9 +82,9 @@
 	};
 	BC6A0A430EF93F9700881ACF /* Application.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1652, 3523}}";
-			sepNavSelRange = "{585, 0}";
-			sepNavVisRange = "{523, 655}";
+			sepNavIntBoundsRect = "{{0, 0}, {899, 3640}}";
+			sepNavSelRange = "{422, 0}";
+			sepNavVisRange = "{244, 934}";
 		};
 	};
 	BC6A0A440EF93F9700881ACF /* Application.h */ = {
@@ -103,25 +106,90 @@
 			E5FCB1E90FD5E88200CE6298 /* SimpleTouch_iPhoneD */,
 		);
 	};
-	E553B94F11C8CE2B00CCA8EC /* PBXTextBookmark */ = {
+	E5FC8F83124CF3010027EC36 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
-		fRef = BC6A0A430EF93F9700881ACF /* Application.cpp */;
-		name = "Application.cpp: 65";
+		fRef = E5FC8F84124CF3010027EC36 /* pngerror.c */;
+		name = "pngerror.c: 221";
 		rLen = 0;
-		rLoc = 1451;
+		rLoc = 6821;
 		rType = 0;
-		vrLen = 659;
-		vrLoc = 519;
+		vrLen = 1443;
+		vrLoc = 6123;
 	};
-	E553BAF911C8D34E00CCA8EC /* PBXTextBookmark */ = {
+	E5FC8F84124CF3010027EC36 /* pngerror.c */ = {
+		isa = PBXFileReference;
+		name = pngerror.c;
+		path = /Users/meeloo/work/nui3/deps/libpng/pngerror.c;
+		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {899, 4758}}";
+			sepNavSelRange = "{6821, 0}";
+			sepNavVisRange = "{5306, 1223}";
+		};
+	};
+	E5FC8F87124CF3010027EC36 /* pngpread.c */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.c;
+		name = pngpread.c;
+		path = /Users/meeloo/work/nui3/deps/libpng/pngpread.c;
+		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1652, 22737}}";
+			sepNavSelRange = "{45165, 33}";
+			sepNavVisRange = "{44722, 831}";
+		};
+	};
+	E5FC8F9B124CF5330027EC36 /* nglImage.cpp */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
+		name = nglImage.cpp;
+		path = /Users/meeloo/work/nui3/src/Image/nglImage.cpp;
+		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1652, 14417}}";
+			sepNavSelRange = "{17199, 0}";
+			sepNavVisRange = "{16637, 550}";
+		};
+	};
+	E5FC8F9C124CF5B10027EC36 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5FC8F87124CF3010027EC36 /* pngpread.c */;
+		name = "pngpread.c: 1590";
+		rLen = 33;
+		rLoc = 45165;
+		rType = 0;
+		vrLen = 831;
+		vrLoc = 44722;
+	};
+	E5FC8FA3124CF5E90027EC36 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = BC6A0A430EF93F9700881ACF /* Application.cpp */;
-		name = "Application.cpp: 36";
+		name = "Application.cpp: 27";
 		rLen = 0;
-		rLoc = 585;
+		rLoc = 422;
 		rType = 0;
-		vrLen = 655;
-		vrLoc = 523;
+		vrLen = 934;
+		vrLoc = 244;
+	};
+	E5FC8FA4124CF5EB0027EC36 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5FC8F9B124CF5330027EC36 /* nglImage.cpp */;
+		name = "nglImage.cpp: 822";
+		rLen = 0;
+		rLoc = 17199;
+		rType = 0;
+		vrLen = 550;
+		vrLoc = 16637;
+	};
+	E5FC8FA9124CF88A0027EC36 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = BC6A0A430EF93F9700881ACF /* Application.cpp */;
+		name = "Application.cpp: 27";
+		rLen = 0;
+		rLoc = 422;
+		rType = 0;
+		vrLen = 417;
+		vrLoc = 244;
 	};
 	E5FCB1E80FD5E88200CE6298 /* SimpleTouch_iPhone */ = {
 		isa = PBXExecutable;
@@ -212,24 +280,6 @@
 		vrLen = 345;
 		vrLoc = 215;
 	};
-	E5FCB2530FD5F59300CE6298 /* Application.cpp:42 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = BC6A0A430EF93F9700881ACF /* Application.cpp */;
-		functionName = "Draw(nuiDrawContext* pContext)";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 42;
-		location = SimpleTouch_iPhone;
-		modificationTime = 266366230.716407;
-		originalNumberOfMultipleMatches = 0;
-		state = 2;
-	};
 	E5FCB2560FD5F5CF00CE6298 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = E5FCB2570FD5F5CF00CE6298 /* nuiColor.h */;
@@ -297,5 +347,10 @@
 		name = nuiDrawContext.cpp;
 		path = /Users/meeloo/work/nui3/src/Renderers/nuiDrawContext.cpp;
 		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {978, 20046}}";
+			sepNavSelRange = "{14066, 0}";
+			sepNavVisRange = "{13395, 1389}";
+		};
 	};
 }

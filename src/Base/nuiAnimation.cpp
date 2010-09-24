@@ -403,7 +403,8 @@ void nuiAnimation::Play(int32 Count, nuiAnimLoop LoopMode)
   
   mAnimSink.Disconnect(GetTimer()->Tick, &nuiAnimation::OnTick);
   mAnimSink.Connect(GetTimer()->Tick, &nuiAnimation::OnTick);
-  
+  mFirstFrameSincePlay = true;
+
   AnimStart();
 }
 
@@ -492,7 +493,11 @@ bool nuiAnimation::UpdateTime()
   nglTime now;
   double t = now - mLastTime;
   double advance = mDirection * t;
-  mCurrentTime += advance;
+  if (!mFirstFrameSincePlay)
+    mCurrentTime += advance;
+  else
+    mFirstFrameSincePlay = false;
+
   mLastTime = now;
 
   double duration = GetDuration();

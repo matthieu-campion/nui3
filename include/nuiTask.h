@@ -165,7 +165,7 @@ template <class P0, class P1, class P2, class P3, class P4, class Ret>
 class nuiTask5 : public nuiTask
 {
 public:
-  typedef nuiFastDelegate6<P0, P1, P2, P3, P4, Ret> Delegate;
+  typedef nuiFastDelegate5<P0, P1, P2, P3, P4, Ret> Delegate;
   nuiTask5(const Delegate& rDelegate, const P0& rP0, const P1& rP1, const P2& rP2, const P3& rP3, const P4& rP4)
   : mDelegate(rDelegate), mP0(rP0), mP1(rP1), mP2(rP2), mP3(rP3), mP4(rP4)
   {    

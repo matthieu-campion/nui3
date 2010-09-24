@@ -138,6 +138,7 @@ protected:
   void InternalStop();
   void InternalPause();
 
+  bool mFirstFrameSincePlay;
   double mCurrentTime;
   double mCurrentPosition;
   double mDuration;

@@ -18,6 +18,6 @@ void TestSink(int a)
 
 void TestTask()
 {
-  nuiAnimation::RunOnNextTick(nuiMakeTask(TestSink, 42));
+  nuiAnimation::RunOnAnimationTick(nuiMakeTask(TestSink, 42));
 }
 #endif

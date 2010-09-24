@@ -22,6 +22,8 @@
 
 #define PNG_1_2_X
 
+#define PNG_LEGACY_SUPPORTED
+
 /*
  * PNG_USER_CONFIG has to be defined on the compiler command line. This
  * includes the resource compiler for Windows DLL configurations.

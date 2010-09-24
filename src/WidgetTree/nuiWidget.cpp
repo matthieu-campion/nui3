@@ -33,6 +33,14 @@ const bool gGlobalUseRenderCache = true;
 
 //#define NUI_LOG_GETIDEALRECT
 
+// Use like this:  nuiAnimation::RunOnAnimationTick(nuiMakeTask(nuiDelayedPlayAnim, eAnimFromStart, Time, count, loopmode));
+void nuiDelayedPlayAnim(nuiAnimation* pAnim, nuiAnimWhence Whence, double Time, int32 count, nuiAnimLoop loopmode)
+{
+  pAnim->Play(count, loopmode);
+  pAnim->SetTime(Time, Whence);
+}
+
+
 #ifdef NUI_WIDGET_STATS
 static uint wcount = 0;
 static uint maxwcount = 0;
@@ -3044,7 +3052,6 @@ nuiRect nuiWidget::GetLayoutForRect(const nuiRect& rRect)
   return rect;
 }
 
-
 void nuiWidget::SetLayout(const nuiRect& rRect)
 {
   if (IsInTransition())
@@ -3059,11 +3066,7 @@ void nuiWidget::SetLayout(const nuiRect& rRect)
     if (pAnim->IsPlaying())
       pAnim->Stop();
     pAnim->SetEndValue(rect);
-    pAnim->PlayOnNextTick();
-    nuiTask* pTask = nuiMakeTask(pAnim, &nuiAnimation::SetTime, 0.0, eAnimFromStart);
-    nuiAnimation::RunOnAnimationTick(pTask);
-    //pAnim->Play();
-    //pAnim->SetTime(0);
+    nuiDelayedPlayAnim(pAnim, eAnimFromStart, 0.0, 1, eAnimLoopForward);
   }
   else
   {
@@ -3551,8 +3554,7 @@ void nuiWidget::StartAnimation(const nglString& rName, double Time)
   nuiAnimation* pAnim = GetAnimation(rName);
   if (pAnim)
   {
-    pAnim->Play();
-    pAnim->SetTime(Time);
+    nuiDelayedPlayAnim(pAnim, eAnimFromStart, Time, 1, eAnimLoopForward);
   }
   DebugRefreshInfo();
 }
@@ -3563,8 +3565,7 @@ void nuiWidget::StartAnimation(const nglString& rName, int32 count, nuiAnimLoop 
   nuiAnimation* pAnim = GetAnimation(rName);
   if (pAnim)
   {
-    pAnim->Play(count, loopmode);
-    pAnim->SetTime(Time);
+    nuiDelayedPlayAnim(pAnim, eAnimFromStart, Time, count, loopmode);
   }
   DebugRefreshInfo();
 }
