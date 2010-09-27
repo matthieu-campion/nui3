@@ -23,13 +23,13 @@ public:
 
 protected:
   
-  bool OnButtonClick(const nuiEvent& rEvent);
+  void OnButtonClick(const nuiEvent& rEvent);
   
 private:
   
   bool LoadCSS(const nglPath& rPath);
-  bool OnBrowse(const nuiEvent& rEvent);
-  bool OnDialogDone(const nuiEvent& event);
+  void OnBrowse(const nuiEvent& rEvent);
+  void OnDialogDone(const nuiEvent& event);
   
   virtual void OnNotification(const nuiNotification& rNotif);
   

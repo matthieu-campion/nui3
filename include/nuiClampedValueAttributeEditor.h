@@ -140,7 +140,7 @@ protected:
   }
   
   
-  bool OnInteractiveChanged(const nuiEvent& rEvent)
+  void OnInteractiveChanged(const nuiEvent& rEvent)
   {
     if (!mInteractiveChange)
     {
@@ -169,12 +169,12 @@ protected:
       
       mpLabel->SetText(str);
     }
-    return true;
+    rEvent.Cancel();
   }  
   
   
   
-  bool OnChanged(const nuiEvent& rEvent)
+  void OnChanged(const nuiEvent& rEvent)
   {
     
     nglString value;
@@ -220,7 +220,7 @@ protected:
       mpKnob->GetRange().SetValue(setValue);
       mpLabel->SetText(str);
     }
-    return true;
+    rEvent.Cancel();
   }  
   
   

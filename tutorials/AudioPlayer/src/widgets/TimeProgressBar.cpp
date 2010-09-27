@@ -55,10 +55,10 @@ nuiRect TimeProgressBar::CalcIdealSize()
   return nuiRect(0,0, 100, 15);
 }
 
-bool TimeProgressBar::OnTimerTick(const nuiEvent& rEvet)
+void TimeProgressBar::OnTimerTick(const nuiEvent& rEvent)
 {
   Invalidate();
-  return true;
+  rEvent.Cancel();
 }
 
 bool TimeProgressBar::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)

@@ -25,7 +25,7 @@ public:
   void RemoveRadioButton(nuiRadioButton *pRadioButton);
 
 protected:
-  virtual bool OnActivated(const nuiEvent& rEvent);
+  virtual void OnActivated(const nuiEvent& rEvent);
 protected:
   void Init();
   nuiEventSink<nuiRadioButtonGroup> mSink;

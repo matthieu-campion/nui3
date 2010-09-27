@@ -304,17 +304,17 @@ void nuiColorSelector::SetNumColors(uint NumColors)
   Invalidate();
 }
 
-bool nuiColorSelector::SwatchSelected(const nuiEvent& rEvent)
+void nuiColorSelector::SwatchSelected(const nuiEvent& rEvent)
 {
   nuiPane* pPane = (nuiPane*) rEvent.mpUser;
   SetCurrentColor(pPane->GetFillColor());
   
   // send event
   SwatchColorChanged(); 
-  return true;
+  rEvent.Cancel();
 }
 
-bool nuiColorSelector::OnTabSelected(const nuiEvent& rEvent)
+void nuiColorSelector::OnTabSelected(const nuiEvent& rEvent)
 {
   uint tabIndex = mpTabView->GetSelectedTab();
   switch (tabIndex)
@@ -330,7 +330,7 @@ bool nuiColorSelector::OnTabSelected(const nuiEvent& rEvent)
     default:
       break;
   }
-  return true;
+  rEvent.Cancel();
 }
 
 void nuiColorSelector::Tab_RGB_Update()
@@ -391,7 +391,7 @@ void nuiColorSelector::Tab_HSV_Update()
 }
 
 
-bool nuiColorSelector::RGBSliderChanged(const nuiEvent& rEvent)
+void nuiColorSelector::RGBSliderChanged(const nuiEvent& rEvent)
 {
   nuiSize red = (float)mpRedSlider->GetRange().GetValue();
   nuiSize green = (float)mpGreenSlider->GetRange().GetValue();
@@ -403,10 +403,10 @@ bool nuiColorSelector::RGBSliderChanged(const nuiEvent& rEvent)
   // send event
   RGBColorChanged();
   
-  return true;
+  rEvent.Cancel();
 }
 
-bool nuiColorSelector::HSVSliderChanged(const nuiEvent& rEvent)
+void nuiColorSelector::HSVSliderChanged(const nuiEvent& rEvent)
 {
   nuiSize h = (float)mpHueSlider->GetRange().GetValue();
   nuiSize s = (float)mpSaturationSlider->GetRange().GetValue();
@@ -420,6 +420,6 @@ bool nuiColorSelector::HSVSliderChanged(const nuiEvent& rEvent)
   // send event
   HSVColorChanged();
   
-  return true;
+  rEvent.Cancel();
 }
 

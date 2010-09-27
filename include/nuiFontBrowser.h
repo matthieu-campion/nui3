@@ -28,8 +28,8 @@ public:
   nuiSimpleEventSource<0> FontChanged;
 private:
   nuiEventSink<nuiFontBrowser> mSink;
-  bool OnFontChanged(const nuiEvent& rEvent);
-  bool OnStyleChanged(const nuiEvent& rEvent);
+  void OnFontChanged(const nuiEvent& rEvent);
+  void OnStyleChanged(const nuiEvent& rEvent);
 
   nuiList* mpFontList;
   nuiList* mpStyleList;

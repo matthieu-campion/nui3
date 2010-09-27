@@ -26,9 +26,9 @@ protected:
   nuiWidget* Tutorial_RadioButtons1();
   nuiWidget* Tutorial_RadioButtons2();
 
-  bool OnButtonPressed(const nuiEvent& rEvent);
-  bool OnTogglePressed(const nuiEvent& rEvent);
-  bool OnRadioPressed(const nuiEvent& rEvent);
+  void OnButtonPressed(const nuiEvent& rEvent);
+  void OnTogglePressed(const nuiEvent& rEvent);
+  void OnRadioPressed(const nuiEvent& rEvent);
   
 private:
   

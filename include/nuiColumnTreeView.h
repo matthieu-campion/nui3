@@ -61,7 +61,7 @@ protected:
   bool DispatchMouseClick(const nglMouseInfo& rInfo);
   nuiTreeNode* CalcColumnSize(nuiRect& rRect, nuiTreeNode* pTree);
   nuiTreeNode* SetColumnRect(const nuiRect& rRect, nuiTreeNode* pTree);
-  bool InvalidateColumn(const nuiEvent& rEvent);
+  void InvalidateColumn(const nuiEvent& rEvent);
   void CreateScrollBars();
 
   nuiSize mMinColumnSize;
@@ -73,9 +73,9 @@ protected:
   float mHandleSize;
   float mBarSize;
 
-  virtual bool OnTreeChildAdded(const nuiEvent& rEvent);
-  virtual bool OnTreeChildDeleted(const nuiEvent& rEvent);
-  virtual bool OnTreeChanged(const nuiEvent& rEvent);
+  virtual void OnTreeChildAdded(const nuiEvent& rEvent);
+  virtual void OnTreeChildDeleted(const nuiEvent& rEvent);
+  virtual void OnTreeChanged(const nuiEvent& rEvent);
 
   uint32 GetDepth();
   void CalcHotRect();
@@ -94,11 +94,11 @@ protected:
     eDownPressed
   };
   TimedButtonEvents mTimedButtonEvent;
-  bool OnButtonTimerTick(const nuiEvent& rEvent);
-  bool StopButtonTimer(const nuiEvent& rEvent);
+  void OnButtonTimerTick(const nuiEvent& rEvent);
+  void StopButtonTimer(const nuiEvent& rEvent);
   
-  bool ArrowUpClicked(const nuiEvent& rEvent);
-  bool ArrowDownClicked(const nuiEvent& rEvent);
+  void ArrowUpClicked(const nuiEvent& rEvent);
+  void ArrowDownClicked(const nuiEvent& rEvent);
 
   nglString mKey;
 };
@@ -112,7 +112,7 @@ public:
   virtual bool UpdatePreview(nuiColumnTreeView* pTree, nuiTreeNodePtr pSelectedNode); ///< This method is called when the currently selected item has changed in the parent ColumnTreeView. The user is responsible for changing the representation of the preview widget by overridding it. Return false if the preview should not be displayed, true otherwise.
 
 protected:
-  virtual bool OnUpdatePreview(const nuiEvent& rEvent);
+  virtual void OnUpdatePreview(const nuiEvent& rEvent);
   nuiEventSink<nuiColumnTreeViewPreview> mPreviewSink;
 };
 

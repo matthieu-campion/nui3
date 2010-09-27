@@ -343,10 +343,9 @@ bool nuiSplineEdit::IsEditable()
   return mEditable;
 }
 
-bool nuiSplineEdit::SplineChanged(const nuiEvent& rEvent)
+void nuiSplineEdit::SplineChanged(const nuiEvent& rEvent)
 {
   InvalidateLayout();
-  return false;
 }
 
 void nuiSplineEdit::SetSplineColor(const nuiColor& rColor)

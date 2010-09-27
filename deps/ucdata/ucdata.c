@@ -1220,7 +1220,7 @@ _ucnumb_load_static()
 {
   _ucnum_size = sizeof(number_mappings_idx) / sizeof(int32_t);
   _ucnum_nodes = (uint32_t *)number_mappings_idx;
-  _ucnum_vals = (uint16_t *)number_mappings;
+  _ucnum_vals = (int16_t *)number_mappings;
   return 0;
 }
 

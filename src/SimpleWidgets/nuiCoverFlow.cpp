@@ -426,7 +426,7 @@ const nuiColor& nuiCoverFlow::GetBackgroundColor() const
   return mBackground;
 }
 
-bool nuiCoverFlow::OnUpdateTime(const nuiEvent& rEvent)
+void nuiCoverFlow::OnUpdateTime(const nuiEvent& rEvent)
 {
   float diff = ((float)mSelectedImage) - mPos;
   double _t = nglTime();
@@ -445,7 +445,6 @@ bool nuiCoverFlow::OnUpdateTime(const nuiEvent& rEvent)
   }
   
   Invalidate();
-  return false;
 }
 
 bool nuiCoverFlow::KeyDown(const nglKeyEvent& rEvent)

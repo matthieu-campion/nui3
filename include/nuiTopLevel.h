@@ -108,8 +108,8 @@ public:
   virtual bool ActivateToolTip(nuiWidgetPtr pWidget, bool Now = false); ///< nuiMainWindow override the default tool-tip mechanism to actually display them.
   virtual bool ReleaseToolTip(nuiWidgetPtr pWidget); ///< Remove the current tool-tip for the given widget. 
   virtual void SetToolTipOn(bool AutoStop);
-  virtual bool ToolTipOn(const nuiEvent& rEvent);
-  virtual bool ToolTipOff(const nuiEvent& rEvent);
+  virtual void ToolTipOn(const nuiEvent& rEvent);
+  virtual void ToolTipOff(const nuiEvent& rEvent);
   //@}
 
   virtual bool IsKeyDown (nglKeyCode Key) const;
@@ -178,7 +178,7 @@ protected:
   void Exit();
   void SetDrawContext(nuiDrawContext* pDrawContext);
   virtual void BroadcastInvalidateRect(nuiWidgetPtr pSender, const nuiRect& rRect);
-  bool OnMessageQueueTick(const nuiEvent& rEvent);
+  void OnMessageQueueTick(const nuiEvent& rEvent);
   void UpdateHoverList(nglMouseInfo& rInfo);
   
   nuiWidgetPtr mpFocus;

@@ -24,7 +24,7 @@ public:
 	
 private : 
 
-  bool OnChanged(const nuiEvent& rEvent);
+  void OnChanged(const nuiEvent& rEvent);
 
 //	void OnAttributeChanged(const nuiRange& rRange);
   void Update();

@@ -20,7 +20,7 @@ public:
 
   virtual nuiXMLNode* Serialize(nuiXMLNode* pParentNode, bool Recursive) const;
 
-  bool Selected(const nuiEvent& rEvent); ///< Called whenever a file is double clicked.
+  void Selected(const nuiEvent& rEvent); ///< Called whenever a file is double clicked.
 
 protected:
   nuiEventSink<nuiFileList> mFileListSink;

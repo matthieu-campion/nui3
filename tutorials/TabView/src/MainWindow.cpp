@@ -74,7 +74,7 @@ void MainWindow::OnCreation()
 
 
 
-bool MainWindow::Reset(const nuiEvent& rEvent)
+void MainWindow::Reset(const nuiEvent& rEvent)
 {
   uint64 code = (uint64)rEvent.mpUser;
   nuiPosition pos = (nuiPosition)code;
@@ -82,7 +82,7 @@ bool MainWindow::Reset(const nuiEvent& rEvent)
   mpMainBox->SetCell(1, pWidget);
   mpMainBox->SetCellExpand(1, nuiExpandShrinkAndGrow);
 
-  return true;
+  rEvent.Cancel();
 }
 
 
@@ -135,7 +135,7 @@ nuiWidget* MainWindow::BuildTabView(nuiPosition pos)
 }
 
 
-bool MainWindow::OnAddTab(const nuiEvent& rEvent)
+void MainWindow::OnAddTab(const nuiEvent& rEvent)
 {
   nuiTabView* pTabView = (nuiTabView*)rEvent.mpUser;
   nglString s;
@@ -143,20 +143,17 @@ bool MainWindow::OnAddTab(const nuiEvent& rEvent)
   s.Format(_T("Tab%d"), pTabView->GetTabCount()+1);
 
   pTabView->AddTab(s, new nuiLabel(s));
-  return false;
 }
 
-bool MainWindow::OnRemoveTab(const nuiEvent& rEvent)
+void MainWindow::OnRemoveTab(const nuiEvent& rEvent)
 {
   nuiTabView* pTabView = (nuiTabView*)rEvent.mpUser;
 
   if (pTabView->GetTabCount() > 4)
   {
     pTabView->RemoveTab(pTabView->GetTabCount()-1);
-    return true;
+    rEvent.Cancel();
   }
-
-  return false;
 }
 
 

@@ -25,7 +25,7 @@ public:
 protected:
   nuiEventSink<nuiFontInspector> mSink;
   
-  bool OnFontsChanged(const nuiEvent& rEvent);
+  void OnFontsChanged(const nuiEvent& rEvent);
   void UpdateFonts();
   
   static int32 UpdatingFonts;

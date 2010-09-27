@@ -929,7 +929,7 @@ bool nuiSplitter::GetFixed()
 }
 
 
-//bool nuiSplitter::StepHandlePos(const nuiEvent& rEvent)
+//void nuiSplitter::StepHandlePos(const nuiEvent& rEvent)
 //{
 //  if(mStartHandlePos > mEndHandlePos)
 //  {
@@ -957,7 +957,6 @@ bool nuiSplitter::GetFixed()
 //      GoToHandlePosAnimDone();
 //    }
 //  } 
-//  return false;
 //}
 
 void nuiSplitter::SetMasterChild(bool MasterChild)

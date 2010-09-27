@@ -293,7 +293,7 @@ protected:
   void Init();
   void Exit();
 
-  bool ProcessMessages(const nuiEvent& rEvent);
+  void ProcessMessages(const nuiEvent& rEvent);
   nuiEventSink<nglKernel> mKernelEventSink;
   
   void SetName (const nglString& rName);

@@ -237,14 +237,14 @@ void FrameEditor::OnFrameViewRectChanged(const nuiRect& rRect)
 }
 
 
-bool FrameEditor::OnFrameMouseMoved(const nuiEvent& rEvent)
+void FrameEditor::OnFrameMouseMoved(const nuiEvent& rEvent)
 {
 	nuiMouseMovedEvent* pEvent = (nuiMouseMovedEvent*)&rEvent;
 	// set the information nuiAttribute. It will automatically update the gui
 	nuiPoint point(pEvent->mX, pEvent->mY);
 
-	GetMainWindow()->mAttributeMouseCoord.Set(point); 
-	return true;
+	GetMainWindow()->mAttributeMouseCoord.Set(point);
+  rEvent.Cancel();
 }
 
 
@@ -261,10 +261,9 @@ void FrameEditor::CommitChanges()
 
 
 
-bool FrameEditor::OnCommitChanges(const nuiEvent& rEvent)
+void FrameEditor::OnCommitChanges(const nuiEvent& rEvent)
 {
   CommitChanges();
-  return false;
 }
 
 

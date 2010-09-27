@@ -51,30 +51,26 @@ nuiDialogSelectDirectory::~nuiDialogSelectDirectory()
 }
 
 
-bool nuiDialogSelectDirectory::OnSelectorOK(const nuiEvent& rEvent)
+void nuiDialogSelectDirectory::OnSelectorOK(const nuiEvent& rEvent)
 {
   mPath = mpSelector->GetPath();
   
   // send event and close the dialog if the user answered true
   if (!DirectorySelected())
     Trash();
-  
-  return false;
 }
 
 
 
-bool nuiDialogSelectDirectory::OnDialogDone(const nuiEvent& rEvent)
+void nuiDialogSelectDirectory::OnDialogDone(const nuiEvent& rEvent)
 {
   nuiDialog::DialogResult result = GetResult();
   
   if (result == nuiDialog::eDialogAccepted)
   {
-    bool res = !OnSelectorOK(rEvent);
-    return res;
+    OnSelectorOK(rEvent);
+    rEvent.Cancel();
   }
-  
-  return false;
 }
 
 
@@ -89,7 +85,7 @@ const nglPath& nuiDialogSelectDirectory::GetRootPath()
 }
 
 
-bool nuiDialogSelectDirectory::OnCreateNewFolder(const nuiEvent& rEvent)
+void nuiDialogSelectDirectory::OnCreateNewFolder(const nuiEvent& rEvent)
 {
   mpCreateDialog = new nuiDialog(mpParent);
   nuiSimpleContainer* pContainer = new nuiSimpleContainer();
@@ -106,11 +102,11 @@ bool nuiDialogSelectDirectory::OnCreateNewFolder(const nuiEvent& rEvent)
   mEventSink.Connect(mpCreateDialog->DialogDone, &nuiDialogSelectDirectory::OnCreateNewFolderDone);
   
   mpCreateEditLine->Focus();
-  return true;
+  rEvent.Cancel();
 }
 
 
-bool nuiDialogSelectDirectory::OnCreateNewFolderDone(const nuiEvent& rEvent)
+void nuiDialogSelectDirectory::OnCreateNewFolderDone(const nuiEvent& rEvent)
 {
 
   nuiDialog::DialogResult result = mpCreateDialog->GetResult();
@@ -120,7 +116,10 @@ bool nuiDialogSelectDirectory::OnCreateNewFolderDone(const nuiEvent& rEvent)
     nglString text = mpCreateEditLine->GetText();
     text.Trim();
     if (text == nglString::Null)
-      return true;
+    {
+      rEvent.Cancel();
+      return;
+    }
     
     mPath = mpSelector->GetFolderPath();
     mPath += nglPath(mpCreateEditLine->GetText());
@@ -129,6 +128,5 @@ bool nuiDialogSelectDirectory::OnCreateNewFolderDone(const nuiEvent& rEvent)
     mpSelector->SetRootPath(mPath.GetParent());
     mpSelector->SetPath(mPath);
   }  
-  return false;
 }
 

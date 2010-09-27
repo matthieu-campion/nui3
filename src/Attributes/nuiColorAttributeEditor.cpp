@@ -84,7 +84,7 @@ nuiColorAttributeEditor::~nuiColorAttributeEditor()
 }
 
 
-bool nuiColorAttributeEditor::OnClicked(const nuiEvent& rEvent)
+void nuiColorAttributeEditor::OnClicked(const nuiEvent& rEvent)
 {
   if (mAttribute.IsValid())
     mpSelector = new nuiColorSelector(mAttribute.Get(), mColors);
@@ -95,18 +95,16 @@ bool nuiColorAttributeEditor::OnClicked(const nuiEvent& rEvent)
   pPopup->AddChild(mpSelector);
   
   mEventSink.Connect(mpSelector->ColorChanged, &nuiColorAttributeEditor::OnChanged);
-  return true;
+  rEvent.Cancel();
 }
 
 
-bool nuiColorAttributeEditor::OnChanged(const nuiEvent& rEvent)
+void nuiColorAttributeEditor::OnChanged(const nuiEvent& rEvent)
 {
   if (mAttribute.IsValid())
     mAttribute.Set(mpSelector->GetCurrentColor());
 	else 
     mConstAttribute.Set(mpSelector->GetCurrentColor());
-  
-  return false;
 }
 
 

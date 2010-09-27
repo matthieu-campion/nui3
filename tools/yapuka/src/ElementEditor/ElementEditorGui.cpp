@@ -97,7 +97,7 @@ ElementEditorGui::~ElementEditorGui()
 
 
 
-bool ElementEditorGui::OnSave(const nuiEvent& rEvent)
+void ElementEditorGui::OnSave(const nuiEvent& rEvent)
 {
   nglPath path(ePathUserDocuments);
   nuiPane* pEditPane = new nuiPane(nuiColor(255, 255, 255, 192), nuiColor(0, 0, 0, 192));
@@ -128,11 +128,9 @@ bool ElementEditorGui::OnSave(const nuiEvent& rEvent)
   pDialog->SetToken(new nuiToken<nuiFileSelector*>(pFS));
   
   mEventSink.Connect(pDialog->DialogDone, &ElementEditorGui::OnSaved, pDialog);
-  
-  return false;
 }
 
-bool ElementEditorGui::OnSaved(const nuiEvent& rEvent)
+void ElementEditorGui::OnSaved(const nuiEvent& rEvent)
 {
   nuiDialog* pDialog = (nuiDialog*)rEvent.mpUser;
   nuiFileSelector* pFS = ((nuiToken<nuiFileSelector*>*)pDialog->GetToken())->Token;
@@ -172,14 +170,12 @@ bool ElementEditorGui::OnSaved(const nuiEvent& rEvent)
     
     file.Write(Dump, eUTF8);
   }
-  
-  return false;
 }
 
 
 
 
-bool ElementEditorGui::OnLoad(const nuiEvent& rEvent)
+void ElementEditorGui::OnLoad(const nuiEvent& rEvent)
 {
   nglPath path(ePathUserDocuments);
   nuiPane* pEditPane = new nuiPane(nuiColor(255, 255, 255, 192), nuiColor(0, 0, 0, 192));
@@ -210,11 +206,9 @@ bool ElementEditorGui::OnLoad(const nuiEvent& rEvent)
   pDialog->SetToken(new nuiToken<nuiFileSelector*>(pFS));
   
   mEventSink.Connect(pDialog->DialogDone, &ElementEditorGui::OnLoaded, pDialog);
-  
-  return false;
 }
 
-bool ElementEditorGui::OnLoaded(const nuiEvent& rEvent)
+void ElementEditorGui::OnLoaded(const nuiEvent& rEvent)
 {
   nuiDialog* pDialog = (nuiDialog*)rEvent.mpUser;
   nuiFileSelector* pFS = ((nuiToken<nuiFileSelector*>*)pDialog->GetToken())->Token;
@@ -226,7 +220,9 @@ bool ElementEditorGui::OnLoaded(const nuiEvent& rEvent)
     
     nuiXML XML("yapuka");
     if (!XML.Load(file))
-      return false;
+    {
+      return;
+    }
     
     for (uint32 i = 0; i < XML.GetChildrenCount(); i++)
     {
@@ -253,13 +249,11 @@ bool ElementEditorGui::OnLoaded(const nuiEvent& rEvent)
     if (!mElements.empty())
 			mpElementTree->Select(mpLastElement, true);
   }
-  
-  return false;
 }
 
 
 
-bool ElementEditorGui::OnNewFrame(const nuiEvent& rEvent)
+void ElementEditorGui::OnNewFrame(const nuiEvent& rEvent)
 {
   ElementDesc* pDesc = new ElementDesc();
   pDesc->SetType(eElementFrame);
@@ -268,11 +262,9 @@ bool ElementEditorGui::OnNewFrame(const nuiEvent& rEvent)
   UpdateList();
   if (!mElements.empty())
     mpElementTree->Select(mpLastElement, true);
-  
-  return false;
 }
 
-bool ElementEditorGui::OnNewWidget(const nuiEvent& rEvent)
+void ElementEditorGui::OnNewWidget(const nuiEvent& rEvent)
 {
   ElementDesc* pDesc = new ElementDesc();
   pDesc->SetType(eElementWidget);
@@ -281,8 +273,6 @@ bool ElementEditorGui::OnNewWidget(const nuiEvent& rEvent)
   UpdateList();
   if (!mElements.empty())
     mpElementTree->Select(mpLastElement, true);
-  
-  return false;
 }
 
 void ElementEditorGui::UpdateList()
@@ -347,7 +337,7 @@ void ElementEditorGui::ClearEditor()
   mpEditorContainer->AddChild(pLabel);
 }
 
-bool ElementEditorGui::OnElementSelected(const nuiEvent& rEvent)
+void ElementEditorGui::OnElementSelected(const nuiEvent& rEvent)
 {
   nuiTreeNode* pNode = mpElementTree->GetSelectedNode();
   if (pNode)
@@ -356,7 +346,9 @@ bool ElementEditorGui::OnElementSelected(const nuiEvent& rEvent)
     nuiToken<ElementDesc*>* pToken = (nuiToken<ElementDesc*>*) pNode->GetToken();
     
 		if (!pToken)
-			return false;
+		{
+      return;
+    }
 		
 		ElementDesc* pDesc = pToken->Token;
     NGL_ASSERT(pDesc);
@@ -367,11 +359,9 @@ bool ElementEditorGui::OnElementSelected(const nuiEvent& rEvent)
   {
     ClearEditor();
   }
-  
-  return false;
 }
 
-bool ElementEditorGui::OnElementActivated(const nuiEvent& rEvent)
+void ElementEditorGui::OnElementActivated(const nuiEvent& rEvent)
 {
   nuiTreeNode* pNode = mpElementTree->GetSelectedNode();
   if (pNode)
@@ -379,7 +369,9 @@ bool ElementEditorGui::OnElementActivated(const nuiEvent& rEvent)
     nuiToken<ElementDesc*>* pToken = (nuiToken<ElementDesc*>*) pNode->GetToken();
 		
 		if (!pToken)
-			return false;
+		{
+      return;
+    }
     
 		// take care about that... be sure it's a nuiLabel
 		nuiLabel* pLabel = (nuiLabel*)pNode->GetElement();
@@ -388,11 +380,9 @@ bool ElementEditorGui::OnElementActivated(const nuiEvent& rEvent)
     pRenamer->SetToken(new nuiToken<ElementDesc*>(pToken->Token));
     mEventSink.Connect(pRenamer->Renamed, &ElementEditorGui::OnElementRenamed, pRenamer);
   }
-  
-  return false;
 }
 
-bool ElementEditorGui::OnElementRenamed(const nuiEvent& rEvent)
+void ElementEditorGui::OnElementRenamed(const nuiEvent& rEvent)
 {
   nuiLabelRenamer* pItem = (nuiLabelRenamer*)rEvent.mpUser;
   NGL_ASSERT(pItem);
@@ -403,6 +393,6 @@ bool ElementEditorGui::OnElementRenamed(const nuiEvent& rEvent)
   pDesc->SetName(pItem->GetText());
   
   OnElementSelected(rEvent);
-  return true;
+  rEvent.Cancel();
 }
 

@@ -93,7 +93,7 @@ protected:
   virtual bool MouseUnclicked (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
   virtual bool MouseMoved (nuiSize X, nuiSize Y);
 
-  bool OnUserDraw (const nuiEvent& rEvent);
+  void OnUserDraw (const nuiEvent& rEvent);
 
   virtual void StartView (nuiSize X, nuiSize Y);
   virtual bool UpdateView(float DeltaX, float DeltaY);

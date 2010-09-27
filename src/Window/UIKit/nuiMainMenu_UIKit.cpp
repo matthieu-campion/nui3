@@ -213,9 +213,9 @@ bool nuiMainMenu::UnregisterFromWindow(nglWindow* pWindow)
 }
 
 
-bool nuiMainMenu::OnItemAdded(const nuiEvent& rEvent)
+void nuiMainMenu::OnItemAdded(const nuiEvent& rEvent)
 {
-  return true;
+  rEvent.Cancel();
 }
 
 

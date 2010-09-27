@@ -83,7 +83,7 @@ void MainWindow::OnCreation()
 }
 
 
-bool MainWindow::OnItemSelected(const nuiEvent& rEvent)
+void MainWindow::OnItemSelected(const nuiEvent& rEvent)
 {
   nuiWidget* pSelectedWidget = mpList->GetSelected();
   uint32 token;
@@ -94,12 +94,10 @@ bool MainWindow::OnItemSelected(const nuiEvent& rEvent)
   nglString message;
   message.Format(_T("selected item num %d"), token);
   mpOutput->SetText(message);
-  
-  return false;
 }
 
 
-bool MainWindow::OnItemActivated(const nuiEvent& rEvent)
+void MainWindow::OnItemActivated(const nuiEvent& rEvent)
 {
   uint32 token;
   nuiGetTokenValue<uint32>(mpList->GetSelectedToken(), token);
@@ -108,7 +106,7 @@ bool MainWindow::OnItemActivated(const nuiEvent& rEvent)
   message.Format(_T("activated item num %d"), token);
   mpOutput->SetText(message);
 
-  return true;  
+  rEvent.Cancel();
 }
 
 

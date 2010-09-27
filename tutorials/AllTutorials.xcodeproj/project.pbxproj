@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 42;
+	objectVersion = 44;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -896,6 +896,20 @@
 			remoteGlobalIDString = 61A9DFBE0B833E9600BC506C;
 			remoteInfo = AudioPlayer;
 		};
+		E5C5FDA912514C7500EAE988 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8B10740168004F6940 /* LayoutAnimation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E5EF6FC811E77DE8000FB337;
+			remoteInfo = LayoutAnimationCocoaD;
+		};
+		E5C5FDAB12514C7500EAE988 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FAB8B10740168004F6940 /* LayoutAnimation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E5D64530120A0B92009C26A9;
+			remoteInfo = LayoutAnimationCocoa;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -1113,6 +1127,8 @@
 			children = (
 				E51FAC5410740169004F6940 /* LayoutAnimation.app */,
 				E51FAC5610740169004F6940 /* LayoutAnimationD.app */,
+				E5C5FDAA12514C7500EAE988 /* LayoutAnimationCocoaD.app */,
+				E5C5FDAC12514C7500EAE988 /* LayoutAnimationCocoa.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1221,9 +1237,19 @@
 /* Begin PBXProject section */
 		E51FAB4D1073F312004F6940 /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+			};
 			buildConfigurationList = E51FAB501073F312004F6940 /* Build configuration list for PBXProject "AllTutorials" */;
 			compatibilityVersion = "Xcode 2.4";
+			developmentRegion = English;
 			hasScannedForEncodings = 0;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
 			mainGroup = E51FAB4B1073F312004F6940;
 			projectDirPath = "";
 			projectReferences = (
@@ -1740,6 +1766,20 @@
 			fileType = wrapper.application;
 			path = AudioPlayerD.app;
 			remoteRef = E543D1A81074076A00A01E51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E5C5FDAA12514C7500EAE988 /* LayoutAnimationCocoaD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = LayoutAnimationCocoaD.app;
+			remoteRef = E5C5FDA912514C7500EAE988 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E5C5FDAC12514C7500EAE988 /* LayoutAnimationCocoa.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = LayoutAnimationCocoa.app;
+			remoteRef = E5C5FDAB12514C7500EAE988 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

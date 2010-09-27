@@ -46,7 +46,7 @@ nuiGenericAttributeEditor::~nuiGenericAttributeEditor()
 }
 
 
-bool nuiGenericAttributeEditor::OnAttributeChanged(const nuiEvent& rEvent)
+void nuiGenericAttributeEditor::OnAttributeChanged(const nuiEvent& rEvent)
 {
 	nglString contents;
   
@@ -82,19 +82,18 @@ bool nuiGenericAttributeEditor::OnAttributeChanged(const nuiEvent& rEvent)
     }
       break;
   }
-  return false;
 }
 
-bool nuiGenericAttributeEditor::OnActivated(const nuiEvent& rEvent)
+void nuiGenericAttributeEditor::OnActivated(const nuiEvent& rEvent)
 {
 	nuiLabelRenamer* pRenamer = new nuiLabelRenamer(mpLabel);
 	mEventSink.Connect(pRenamer->Renamed, &nuiGenericAttributeEditor::OnRenamed, pRenamer);
 	
-	return true;
+  rEvent.Cancel();
 }
 
 
-bool nuiGenericAttributeEditor::OnRenamed(const nuiEvent& rEvent)
+void nuiGenericAttributeEditor::OnRenamed(const nuiEvent& rEvent)
 {
 	nuiLabelRenamer* pRenamer = (nuiLabelRenamer*)rEvent.mpUser;
   switch (mAttribute.GetDimension())
@@ -125,7 +124,7 @@ bool nuiGenericAttributeEditor::OnRenamed(const nuiEvent& rEvent)
       }
       break;
   }
-	return true;
+  rEvent.Cancel();
 }
 
 void nuiGenericAttributeEditor::SetAutoPollForChanges(bool set)

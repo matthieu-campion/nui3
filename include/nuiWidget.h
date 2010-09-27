@@ -435,11 +435,11 @@ public:
   void SetTheme(nuiTheme* pTheme);
   nuiTheme* GetTheme();
 
-  bool AutoTrash(const nuiEvent& rEvent); ///< This method will destroy the widget whenever it is called. 
+  void AutoTrash(const nuiEvent& rEvent); ///< This method will destroy the widget whenever it is called. 
   bool IsTrashed(bool combined = true) const;
 
-  bool AutoStartTransition(const nuiEvent& rEvent); ///< This method will destroy the widget whenever it is called. 
-  bool AutoStopTransition(const nuiEvent& rEvent); ///< This method will destroy the widget whenever it is called. 
+  void AutoStartTransition(const nuiEvent& rEvent); ///< This method will destroy the widget whenever it is called. 
+  void AutoStopTransition(const nuiEvent& rEvent); ///< This method will destroy the widget whenever it is called. 
 
   bool IsDrawingInCache(bool Recurse);
 
@@ -571,7 +571,7 @@ protected:
   nuiColor mSurfaceColor;
   nuiBlendFunc mSurfaceBlendFunc;
 
-  bool Animate(const nuiEvent& rEvent);
+  void Animate(const nuiEvent& rEvent);
   
   bool TriggerHotKeys(const nglKeyEvent& rEvent, bool KeyDown,  bool Priority, nuiKeyModifier Mask); ///< Helper function. Triggers appropriate hotkeys
   nuiKeyModifier mHotKeyMask;
@@ -707,7 +707,7 @@ protected:
   nuiSize GetOverDrawRight() const;
   nuiSize GetOverDrawBottom() const;
 
-  bool AutoHide(const nuiEvent& rEvent); ///< This methods calls SetVisible(false) right after the HIDE animation stopped
+  void AutoHide(const nuiEvent& rEvent); ///< This methods calls SetVisible(false) right after the HIDE animation stopped
 
   void InternalSetLayout(const nuiRect& rect);
   virtual void InternalSetLayout(const nuiRect& rect, bool PositionChanged, bool SizeChanged);

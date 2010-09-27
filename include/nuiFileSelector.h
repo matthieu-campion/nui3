@@ -154,10 +154,10 @@ private:
 
   
 
-  bool OnActivated (const nuiEvent& event);
-  bool OnFolderListSelectionChanged(const nuiEvent& event);
+  void OnActivated (const nuiEvent& event);
+  void OnFolderListSelectionChanged(const nuiEvent& event);
   
-  bool OnRootStateChanged(const nuiEvent& rEvent);
+  void OnRootStateChanged(const nuiEvent& rEvent);
 
   nuiHBox* mpMainBox;
   nuiVBox* mpInfoBox;
@@ -168,9 +168,9 @@ private:
   bool mShowVolumes;
   std::list<nglPathVolume> mVolumes;
 
-  bool OnClosed   (const nuiEvent& rEvent);
-  bool OnOK       (const nuiEvent& rEvent);
-  bool OnSelected (const nuiEvent& rEvent);
+  void OnClosed   (const nuiEvent& rEvent);
+  void OnOK       (const nuiEvent& rEvent);
+  void OnSelected (const nuiEvent& rEvent);
 
   DisplayMode mDisplayMode;
   nuiEventSink<nuiFileSelector> mEventSink;

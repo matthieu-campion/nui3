@@ -38,10 +38,9 @@ nuiFontInspector::~nuiFontInspector()
   
 }
 
-bool nuiFontInspector::OnFontsChanged(const nuiEvent& rEvent)
+void nuiFontInspector::OnFontsChanged(const nuiEvent& rEvent)
 {
   UpdateFonts();
-  return false;
 }
 
 void nuiFontInspector::UpdateFonts()

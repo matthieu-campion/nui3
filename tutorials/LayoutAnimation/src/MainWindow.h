@@ -20,7 +20,7 @@ public:
   void OnClose();
 
 protected:
-  bool ChangeLayout(const nuiEvent& rEvent);
+  void ChangeLayout(const nuiEvent& rEvent);
   
   nuiEventSink<MainWindow> mEventSink;
 };

@@ -3,8 +3,8 @@
 	E51FAB4D1073F312004F6940 /* Project object */ = {
 		activeArchitecturePreference = i386;
 		activeBuildConfigurationName = Default;
-		activeSDKPreference = iphonesimulator3.1;
-		activeTarget = E543D0F21074047800A01E51 /* AllTutorials (debug & release) */;
+		activeSDKPreference = macosx10.6;
+		activeTarget = E51FACC21074018C004F6940 /* AllTutorialsDebug */;
 		addToTargets = (
 		);
 		codeSenseManager = E51FAB521073F312004F6940 /* Code sense */;
@@ -69,12 +69,12 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 298487726;
-			PBXWorkspaceStateSaveDate = 298487726;
+			PBXPerProjectTemplateStateSaveDate = 307317791;
+			PBXWorkspaceStateSaveDate = 307317791;
 		};
 		perUserProjectItems = {
-			E524125B11CA90270025CA71 /* PBXTextBookmark */ = E524125B11CA90270025CA71 /* PBXTextBookmark */;
-			E553BB2111C8D4D400CCA8EC /* PBXTextBookmark */ = E553BB2111C8D4D400CCA8EC /* PBXTextBookmark */;
+			E5C5FCDB12514C2700EAE988 /* PBXTextBookmark */ = E5C5FCDB12514C2700EAE988 /* PBXTextBookmark */;
+			E5C5FD0A12514C5100EAE988 /* PBXTextBookmark */ = E5C5FD0A12514C5100EAE988 /* PBXTextBookmark */;
 		};
 		sourceControlManager = E51FAB511073F312004F6940 /* Source Control */;
 		userBuildSettings = {
@@ -100,38 +100,43 @@
 	E51FACFE1074020D004F6940 /* AllTutorialsRelease */ = {
 		activeExec = 0;
 	};
-	E524125B11CA90270025CA71 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E524125C11CA90270025CA71 /* nuiHTMLItem.h */;
-		name = "nuiHTMLItem.h: 78";
-		rLen = 0;
-		rLoc = 2065;
-		rType = 0;
-		vrLen = 684;
-		vrLoc = 1702;
-	};
-	E524125C11CA90270025CA71 /* nuiHTMLItem.h */ = {
-		isa = PBXFileReference;
-		name = nuiHTMLItem.h;
-		path = /Users/meeloo/work/nui3/src/Text/HTML/nuiHTMLItem.h;
-		sourceTree = "<absolute>";
-	};
 	E543D0F21074047800A01E51 /* AllTutorials (debug & release) */ = {
 		activeExec = 0;
-	};
-	E553BB2111C8D4D400CCA8EC /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E553BB2211C8D4D400CCA8EC /* nuiHTMLItem.h */;
-		name = "nuiHTMLItem.h: 78";
-		rLen = 0;
-		rLoc = 2065;
-		rType = 0;
-		vrLen = 701;
-		vrLoc = 1702;
 	};
 	E553BB2211C8D4D400CCA8EC /* nuiHTMLItem.h */ = {
 		isa = PBXFileReference;
 		lastKnownFileType = sourcecode.c.h;
+		name = nuiHTMLItem.h;
+		path = /Users/meeloo/work/nui3/src/Text/HTML/nuiHTMLItem.h;
+		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1652, 1274}}";
+			sepNavSelRange = "{2065, 0}";
+			sepNavVisRange = "{1664, 471}";
+		};
+	};
+	E5C5FCDB12514C2700EAE988 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E553BB2211C8D4D400CCA8EC /* nuiHTMLItem.h */;
+		name = "nuiHTMLItem.h: 86";
+		rLen = 0;
+		rLoc = 2065;
+		rType = 0;
+		vrLen = 471;
+		vrLoc = 1664;
+	};
+	E5C5FD0A12514C5100EAE988 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5FD0B12514C5100EAE988 /* nuiHTMLItem.h */;
+		name = "nuiHTMLItem.h: 86";
+		rLen = 0;
+		rLoc = 2065;
+		rType = 0;
+		vrLen = 471;
+		vrLoc = 1664;
+	};
+	E5C5FD0B12514C5100EAE988 /* nuiHTMLItem.h */ = {
+		isa = PBXFileReference;
 		name = nuiHTMLItem.h;
 		path = /Users/meeloo/work/nui3/src/Text/HTML/nuiHTMLItem.h;
 		sourceTree = "<absolute>";

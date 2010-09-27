@@ -93,7 +93,7 @@ private:
   }
   
   
-  bool OnChanged(const nuiEvent& rEvent)
+  void OnChanged(const nuiEvent& rEvent)
   {
     const nuiTreeNode* pNode = mpCombo->GetSelected();
     nglString str;
@@ -114,7 +114,7 @@ private:
       mpCombo->SelectionChanged.Enable();
     }
     
-    return true;
+    rEvent.Cancel();
   }  
   
   
@@ -237,7 +237,7 @@ private:
   }
   
   
-  bool OnChanged(const nuiEvent& rEvent)
+  void OnChanged(const nuiEvent& rEvent)
   {
     const nuiTreeNode* pNode = mpCombo->GetSelected();
     nglString str;
@@ -258,7 +258,7 @@ private:
       mpCombo->SelectionChanged.Enable();
     }
     
-    return true;
+    rEvent.Cancel();
   }  
   
   

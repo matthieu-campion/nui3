@@ -286,16 +286,14 @@ bool nuiKnob::MouseMoved(nuiSize X, nuiSize Y)
 }
 
 // Data management:
-bool nuiKnob::HandlePageDown(const nuiEvent& rEvent)
+void nuiKnob::HandlePageDown(const nuiEvent& rEvent)
 {
   mRange.PageIncrement();
-  return false;
 }
 
-bool nuiKnob::HandlePageUp(const nuiEvent& rEvent)
+void nuiKnob::HandlePageUp(const nuiEvent& rEvent)
 {
   mRange.PageDecrement();
-  return false;
 }
 
 nuiRange& nuiKnob::GetRange()
@@ -305,7 +303,7 @@ nuiRange& nuiKnob::GetRange()
 
 
 
-bool nuiKnob::DoInvalidate(const nuiEvent& rEvent)
+void nuiKnob::DoInvalidate(const nuiEvent& rEvent)
 {
   if (mSequenceNeedRefresh)
   {
@@ -320,7 +318,6 @@ bool nuiKnob::DoInvalidate(const nuiEvent& rEvent)
   }
   
   Invalidate();
-  return false;
 }
 
 nuiRect nuiKnob::CalcIdealSize()

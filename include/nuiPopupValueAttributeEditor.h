@@ -21,9 +21,9 @@ public:
   
 protected:
   
-  bool OnAttributeChanged(const nuiEvent& rEvent);
-  bool OnValidated(const nuiEvent& rEvent);
-  bool OnCanceled(const nuiEvent& rEvent);
+  void OnAttributeChanged(const nuiEvent& rEvent);
+  void OnValidated(const nuiEvent& rEvent);
+  void OnCanceled(const nuiEvent& rEvent);
   
 private:
   

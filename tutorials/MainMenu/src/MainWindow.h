@@ -23,9 +23,9 @@ public:
   
 protected:
 
-  bool OnAddItem(const nuiEvent& rEvent);
-  bool OnAddSubMenu(const nuiEvent& rEvent);
-  bool OnMenuCommand(const nuiEvent& rEvent);
+  void OnAddItem(const nuiEvent& rEvent);
+  void OnAddSubMenu(const nuiEvent& rEvent);
+  void OnMenuCommand(const nuiEvent& rEvent);
 
   nglString mText;
   nuiLabel* mpText;

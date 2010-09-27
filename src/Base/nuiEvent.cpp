@@ -18,6 +18,7 @@ nuiEvent::nuiEvent(int Type)
   mpSource = NULL; 
   mType = Type; 
   mpUser = NULL;
+  mCancel = false;
 }
 
 nuiEvent::nuiEvent(const nuiEvent& rEvent)
@@ -26,8 +27,18 @@ nuiEvent::nuiEvent(const nuiEvent& rEvent)
   mType = rEvent.mType; 
   mpUser = rEvent.mpUser;
   mArguments = rEvent.mArguments;
+  mCancel = rEvent.mCancel;
 }
 
+void nuiEvent::Cancel() const
+{
+  mCancel = false;
+}
+
+bool nuiEvent::IsCanceled() const
+{
+  return mCancel;
+}
 
 nuiEvent::~nuiEvent() 
 {
@@ -126,7 +137,8 @@ bool nuiEventSource::SendEvent(const nuiEvent& rEvent)
     bool handled = false;
     while (it != end && !handled)
     {
-      handled =((*it)->OnEvent(rEvent));
+      ((*it)->OnEvent(rEvent));
+      handled = rEvent.IsCanceled();
       ++it;
     }
 
@@ -260,7 +272,8 @@ bool nuiEventTargetBase::CallEvent(void* pTarget, nuiDelegateMemento pFunc, cons
 {
   Delegate del;
   del.SetMemento(pFunc);
-  return del(rEvent);
+  del(rEvent);
+  return rEvent.IsCanceled();
 }
 
 void nuiEventTargetBase::Connect(nuiEventSource& rSource, const nuiDelegateMemento& rTargetFunc, void* pUser)

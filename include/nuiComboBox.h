@@ -45,7 +45,7 @@ protected:
 
   virtual bool    MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
 
-  bool OnSelect(const nuiEvent& rEvent);
+  void OnSelect(const nuiEvent& rEvent);
 
   void ReparentTree(nuiTreeNode* pTree);
   void UnparentTree(nuiTreeNode* pTree);

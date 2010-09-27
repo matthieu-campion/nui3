@@ -677,7 +677,7 @@ bool nuiSpiderMonkey::Init()
   return true;
 }
 
-bool nuiSpiderMonkey::OnEvent(const nuiEvent& rEvent)
+void nuiSpiderMonkey::OnEvent(const nuiEvent& rEvent)
 {
   EventLink* pLink = (EventLink*)rEvent.mpUser;
   // Call javascript handler
@@ -691,7 +691,6 @@ bool nuiSpiderMonkey::OnEvent(const nuiEvent& rEvent)
     args.push_back(v);
   }
   JSBool res = JS_CallFunctionValue(mContext, pLink->mpObject, pLink->mJSVal, args.size(), &args[0], &resval);
-  return false;
 }
 
 void nuiSpiderMonkey::Connect(JSObject* pObject, jsval obj, nuiWidget* pWidget, const nglString& rEventName)

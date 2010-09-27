@@ -62,11 +62,11 @@ nuiPercentAttributeEditor::~nuiPercentAttributeEditor()
 
 
 
-bool nuiPercentAttributeEditor::OnChanged(const nuiEvent& rEvent)
+void nuiPercentAttributeEditor::OnChanged(const nuiEvent& rEvent)
 {
 	float value = (float)mpSlider->GetRange().GetValue();
 	mAttribute.Set(value);
-	return true;
+  rEvent.Cancel();
 }
 
 

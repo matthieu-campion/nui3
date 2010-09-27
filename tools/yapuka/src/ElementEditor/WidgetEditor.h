@@ -55,20 +55,20 @@ public:
 	void CommitChanges();
 
 	
-protected : 
+protected: 
 
-		bool OnSelectionChanged(const nuiEvent& rEvent);
-		bool OnActivated(const nuiEvent& rEvent);
-		bool OnDeleteActivated(const nuiEvent& rEvent);
+		void OnSelectionChanged(const nuiEvent& rEvent);
+		void OnActivated(const nuiEvent& rEvent);
+		void OnDeleteActivated(const nuiEvent& rEvent);
 		bool DialogCantDo();
 	
-private : 
+private: 
 
 	void FillWidgetDelegates();
 	void RunWidgetDelegate(const nglString& classname, nuiWidget* pWidget);
 
 	void CommitWidgetChanges(nuiTreeNode* pTreeNode, nuiXMLNode* pXmlParent);
-  bool OnCommitChanges(const nuiEvent& rEvent);
+  void OnCommitChanges(const nuiEvent& rEvent);
 
 
 

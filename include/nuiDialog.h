@@ -62,7 +62,7 @@ public:
   
   DialogResult GetResult();
 
-  virtual bool ExitDialog(const nuiEvent& rEvent);
+  virtual void ExitDialog(const nuiEvent& rEvent);
   
   nuiSimpleEventSource<0> DialogApplied;
   nuiSimpleEventSource<0> DialogDone;
@@ -72,10 +72,10 @@ protected:
   
   virtual nuiSimpleContainer* CreateDefaultLayout(); ///< creates a the default the decorative Container mpLayoutContainer, override it to change its look
   
-  virtual bool  OnOk(const nuiEvent& rEvent);
-  virtual bool  OnCancel(const nuiEvent& rEvent);
-  virtual bool  OnApply(const nuiEvent& rEvent);
-  virtual bool  OnAccept(const nuiEvent& rEvent);
+  virtual void  OnOk(const nuiEvent& rEvent);
+  virtual void  OnCancel(const nuiEvent& rEvent);
+  virtual void  OnApply(const nuiEvent& rEvent);
+  virtual void  OnAccept(const nuiEvent& rEvent);
 
 	nuiEventSink<nuiDialog> mSink;
   nuiSimpleContainer*   mpLayoutContainer;

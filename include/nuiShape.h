@@ -102,7 +102,7 @@ private:
 
   Winding mWinding;
 
-  bool ElementChanged(const nuiEvent& rEvent);
+  void ElementChanged(const nuiEvent& rEvent);
   nuiEventSink<nuiShape> mEventSink;
 };
 

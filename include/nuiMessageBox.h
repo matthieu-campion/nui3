@@ -81,10 +81,10 @@ private:
   
   nuiEventSink<nuiMessageBox> mSink;
   
-  bool OnOK(const nuiEvent& rEvent);
-  bool OnCancel(const nuiEvent& rEvent);
-  bool OnRetry(const nuiEvent& rEvent);
-  bool OnCustom(const nuiEvent& rEvent);
+  void OnOK(const nuiEvent& rEvent);
+  void OnCancel(const nuiEvent& rEvent);
+  void OnRetry(const nuiEvent& rEvent);
+  void OnCustom(const nuiEvent& rEvent);
   
   nuiWidget* CreateOK();
   nuiWidget* CreateCancel();

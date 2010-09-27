@@ -569,15 +569,15 @@ nuiWidget* nuiFileSelector::GetFileInfo(const nglPath& rPath)
 }
 
 
-bool nuiFileSelector::OnActivated (const nuiEvent& event)
+void nuiFileSelector::OnActivated(const nuiEvent& rEvent)
 {
-  OK ();
-  return true;
+  OK();
+  rEvent.Cancel();
 }
 
 
 
-void nuiFileSelector::SetFileName (const nglString& FileName)
+void nuiFileSelector::SetFileName(const nglString& FileName)
 {
   if (mpEntry)
     mpEntry->SetText(FileName);
@@ -797,7 +797,7 @@ nuiFileSelector::DisplayMode nuiFileSelector::GetDisplayMode() const
 
 
 
-bool nuiFileSelector::OnSelected (const nuiEvent& rEvent)
+void nuiFileSelector::OnSelected (const nuiEvent& rEvent)
 {
 	nglPath curPath;
   nuiTreeNode* pTree = mpTreeView->GetSelectedNode();
@@ -815,32 +815,29 @@ bool nuiFileSelector::OnSelected (const nuiEvent& rEvent)
       SetInfoView(NULL);
     
     if (mpEntry == NULL)
-      return false;
+      return;
     
     mpEntry->SetText(addin);
   }
   else
     SetInfoView(NULL);
-	
-	return false;
 }
   
-bool nuiFileSelector::OnFolderListSelectionChanged(const nuiEvent& event)
+void nuiFileSelector::OnFolderListSelectionChanged(const nuiEvent& event)
 {
   if(!mShowVolumes)
-    return false;
+    return;
   nuiToken<nglString>* pToken = (nuiToken<nglString>*)(mpFolderList->GetSelectedToken());
   nglString SelectedPathName;
   nuiGetTokenValue<nglString>(pToken, SelectedPathName);
   nglPath SelectedPath(SelectedPathName);
   //NGL_OUT(_T("new Path :__") + SelectedPath.GetPathName() + _T("__\n"));
   SetRootPath(SelectedPath);
-  return false;
 }
 
 
 
-bool nuiFileSelector::OnRootStateChanged(const nuiEvent& rEvent)
+void nuiFileSelector::OnRootStateChanged(const nuiEvent& rEvent)
 {
   uint32 opened = (unsigned long int)rEvent.mpUser;
   
@@ -850,7 +847,7 @@ bool nuiFileSelector::OnRootStateChanged(const nuiEvent& rEvent)
   else
     Closed();
   
-  return true;
+  rEvent.Cancel();
 }
 
 

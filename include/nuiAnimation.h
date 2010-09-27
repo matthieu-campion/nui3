@@ -114,9 +114,9 @@ public:
   nuiSimpleEventSource<nuiAnimationStop> AnimPause;
   nuiSimpleEventSource<nuiAnimationLoop> AnimLoop;
 
-  bool Play(const nuiEvent& rEvent); ///< The animation will start playing as soon as this method is called. Use this method if you want to start playing an animation when an nuiEvent is fired.
-  bool Stop(const nuiEvent& rEvent); ///< The animation will stop playing as soon as this method is called. Use this method if you want to stop playing an animation when an nuiEvent is fired.
-  bool Pause(const nuiEvent& rEvent); ///< The animation will pause as soon as this method is called. Use this method if you want to pause an animation when an nuiEvent is fired.
+  void Play(const nuiEvent& rEvent); ///< The animation will start playing as soon as this method is called. Use this method if you want to start playing an animation when an nuiEvent is fired.
+  void Stop(const nuiEvent& rEvent); ///< The animation will stop playing as soon as this method is called. Use this method if you want to stop playing an animation when an nuiEvent is fired.
+  void Pause(const nuiEvent& rEvent); ///< The animation will pause as soon as this method is called. Use this method if you want to pause an animation when an nuiEvent is fired.
 
   static void SetFrameRate(double FPS);
   static double GetFrameRate();
@@ -134,7 +134,7 @@ public:
 protected:
   void CallOnFrame();
   bool UpdateTime(); ///< This method returns the number time elapsed since the last call to UpdateTime.
-  bool OnTick(const nuiEvent& rEvent);
+  void OnTick(const nuiEvent& rEvent);
   void InternalStop();
   void InternalPause();
 
@@ -152,7 +152,7 @@ protected:
   static int32 mAnimCounter;
   static double mFrameRate;
   static std::list<std::pair<int32, nuiTask*> > mOnNextTick;
-  static bool StartTasks(const nuiEvent& rEvent);
+  static void StartTasks(const nuiEvent& rEvent);
   
   nglTime mLastTime;
   bool mUpdatingTime;
@@ -239,7 +239,7 @@ public:
 protected:
   std::list<nuiAnimation*> mpAnimations;
 
-  bool OnAnimStopped(const nuiEvent& rEvent);
+  void OnAnimStopped(const nuiEvent& rEvent);
   nuiEventSink<nuiAnimationSequence> mAnimSequenceSink;
 };
 

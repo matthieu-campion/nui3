@@ -237,7 +237,7 @@ nuiWidget* MainWindow::Tutorial_RadioButtons2()
 //
 //
 
-bool MainWindow::OnButtonPressed(const nuiEvent& rEvent)
+void MainWindow::OnButtonPressed(const nuiEvent& rEvent)
 {
   int64 tag = (int64)rEvent.mpUser;
 
@@ -261,11 +261,11 @@ bool MainWindow::OnButtonPressed(const nuiEvent& rEvent)
 
   mpLabel->SetText(msg);
 
-  return true;
+  rEvent.Cancel();
 }
 
 
-bool MainWindow::OnTogglePressed(const nuiEvent& rEvent)
+void MainWindow::OnTogglePressed(const nuiEvent& rEvent)
 {
   int64 tag = (int64)rEvent.mpUser;
 
@@ -289,12 +289,12 @@ bool MainWindow::OnTogglePressed(const nuiEvent& rEvent)
 
   mpLabel->SetText(msg);
 
-  return true;
+  rEvent.Cancel();
 }
 
 
 
-bool MainWindow::OnRadioPressed(const nuiEvent& rEvent)
+void MainWindow::OnRadioPressed(const nuiEvent& rEvent)
 {
   int64 index = (int64)rEvent.mpUser;
 
@@ -302,7 +302,7 @@ bool MainWindow::OnRadioPressed(const nuiEvent& rEvent)
   msg.Format(_T("radio button #%d"), index);
   mpLabel->SetText(msg);
 
-  return true;
+  rEvent.Cancel();
 }
 
 

@@ -64,7 +64,7 @@ void MainWindow::MyCommand(const nglString& rMsg)
 }
 
 
-bool MainWindow::OnAddItem(const nuiEvent& rEvent)
+void MainWindow::OnAddItem(const nuiEvent& rEvent)
 {
   uint32 ID = mUniqueID;
   mUniqueID++;
@@ -77,22 +77,22 @@ bool MainWindow::OnAddItem(const nuiEvent& rEvent)
 
   mpLastItem = pNew;
 
-  return true;
+  rEvent.Cancel();
 }
 
-bool MainWindow::OnAddSubMenu(const nuiEvent& rEvent)
+void MainWindow::OnAddSubMenu(const nuiEvent& rEvent)
 {
   mpCurrentTestMenu = mpLastItem;
-  return OnAddItem(rEvent);
+  OnAddItem(rEvent);
 }
 
-bool MainWindow::OnMenuCommand(const nuiEvent& rEvent)
+void MainWindow::OnMenuCommand(const nuiEvent& rEvent)
 {
   uint64 ID = (uint64)rEvent.mpUser;
   nglString msg;
   msg.Format(_T("event item New%d"), ID);
   MyCommand(msg);
-  return true;
+  rEvent.Cancel();
 }
 
 

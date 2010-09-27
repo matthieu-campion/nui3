@@ -274,11 +274,10 @@ void nuiShape::EmptyCaches()
 
 
 
-bool nuiShape::ElementChanged(const nuiEvent& rEvent)
+void nuiShape::ElementChanged(const nuiEvent& rEvent)
 {
   EmptyCaches();
   //Changed();
-  return false;
 }
 
 #define CIRCLE_FACTOR (1.0/3.5)

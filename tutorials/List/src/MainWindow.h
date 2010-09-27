@@ -21,8 +21,8 @@ public:
 
 protected:
 
-  bool OnItemSelected(const nuiEvent& rEvent);
-  bool OnItemActivated(const nuiEvent& rEvent);
+  void OnItemSelected(const nuiEvent& rEvent);
+  void OnItemActivated(const nuiEvent& rEvent);
 
 private:
   

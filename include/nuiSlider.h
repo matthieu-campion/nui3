@@ -65,8 +65,8 @@ public:
   // Sent events:
   nuiSimpleEventSource<nuiValueChanged> InteractiveValueChanged; ///< This event is sent whenever the Slider's thumb position is changed (by the user or by the program).
   nuiSimpleEventSource<nuiValueChanged> ValueChanged; ///< This event is sent whenever the Slider's thumb position is changed and the mouse is unclicked.
-  bool HandlePageDown(const nuiEvent& rEvent);
-  bool HandlePageUp(const nuiEvent& rEvent);
+  void HandlePageDown(const nuiEvent& rEvent);
+  void HandlePageUp(const nuiEvent& rEvent);
 
   // Settings
   // the bigger the ratio is, the slower the slider will move.
@@ -79,9 +79,9 @@ public:
 
 protected:
   void InitAttributes();
-  bool DoInvalidate(const nuiEvent& rEvent);
-  bool HandleClicked(const nuiEvent& rEvent);
-  bool HandleUnclicked(const nuiEvent& rEvent);
+  void DoInvalidate(const nuiEvent& rEvent);
+  void HandleClicked(const nuiEvent& rEvent);
+  void HandleUnclicked(const nuiEvent& rEvent);
 
   nuiOrientation mOrientation;
 

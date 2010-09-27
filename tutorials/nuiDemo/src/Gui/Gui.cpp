@@ -175,7 +175,7 @@ nuiWidget* Gui::BuildControls()
 // Gui Events Receivers
 //
 
-bool Gui::OnSwitchChanged(const nuiEvent& rEvent)
+void Gui::OnSwitchChanged(const nuiEvent& rEvent)
 {
   nuiToggleButton* pBtn = (nuiToggleButton*)rEvent.mpUser;
   NGL_ASSERT(pBtn);
@@ -195,42 +195,41 @@ bool Gui::OnSwitchChanged(const nuiEvent& rEvent)
     ShowText(true);
   else
     ShowControls(true);
-  return true;
+  rEvent.Cancel();
 }
 
 
-bool Gui::OnStartButtonPressed(const nuiEvent& rEvent)
+void Gui::OnStartButtonPressed(const nuiEvent& rEvent)
 {
   GetEngine()->GetAudioTrack()->Start();
-  return true;
-  // Returning true from an event receiver means the event is caught : no one else can receive the event.
+  rEvent.Cancel();
+  // this means the event is caught : no one else can receive the event.
   //
   // When an event source is connected to several receivers (<=> several objects need to know when a particular event is sent),
   // - return false from each receiver, if you want the event to be broadcasted to all the receivers
   // - return true, for instance, if the receiver currently processing the event has reached a condition to make the event broadcast stop.
   //
-  // in our demo example, the event source is connect to this single receiver, so we can return true or false, it doesn't matter.
+  // in our demo example, the event source is connect to this single receiver, so we can cancel the event, it doesn't matter.
 }
 
-bool Gui::OnStartButtonDePressed(const nuiEvent& rEvent)
+void Gui::OnStartButtonDePressed(const nuiEvent& rEvent)
 {
   GetEngine()->GetAudioTrack()->Stop();
-  return true;
+  rEvent.Cancel();
 }
 
 
-bool Gui::OnVolumeSliderChanged(const nuiEvent& rEvent)
+void Gui::OnVolumeSliderChanged(const nuiEvent& rEvent)
 {
   nuiSlider* pSlider = (nuiSlider*)rEvent.mpUser;
   NGL_ASSERT(pSlider);
   
   GetEngine()->SetVolume(pSlider->GetRange().GetValue());
   
-  return true;
+  rEvent.Cancel();
 }
 
-
-bool Gui::OnFreqKnobChanged(const nuiEvent& rEvent)
+void Gui::OnFreqKnobChanged(const nuiEvent& rEvent)
 {
   nuiKnob* pFreqKnob = (nuiKnob*)rEvent.mpUser;
   NGL_ASSERT(pFreqKnob);
@@ -242,11 +241,11 @@ bool Gui::OnFreqKnobChanged(const nuiEvent& rEvent)
   val += 20;
   GetEngine()->GetFilter().SetFreq(val);
   GetEngine()->GetFilter().ComputeCoefficients();
-  return true;
+  rEvent.Cancel();
 }
 
 
-bool Gui::OnQKnobChanged(const nuiEvent& rEvent)
+void Gui::OnQKnobChanged(const nuiEvent& rEvent)
 {
   nuiKnob* pQKnob = (nuiKnob*)rEvent.mpUser;
   NGL_ASSERT(pQKnob);
@@ -254,7 +253,7 @@ bool Gui::OnQKnobChanged(const nuiEvent& rEvent)
   
   GetEngine()->GetFilter().SetQ(pQKnob->GetRange().GetValue());
   GetEngine()->GetFilter().ComputeCoefficients();
-  return true;
+  rEvent.Cancel();
 }
 
 
@@ -295,7 +294,7 @@ void Gui::ShowText(bool show)
 }
 
 
-bool Gui::OnShowText(const nuiEvent& rEvent)
+void Gui::OnShowText(const nuiEvent& rEvent)
 {
   if (mAlphaText >= 1.f)
   {
@@ -314,11 +313,11 @@ bool Gui::OnShowText(const nuiEvent& rEvent)
   mpTextPanel->SetAlpha(mAlphaText);
   mpPaneBkg->Invalidate();
   
-  return true;  
+  rEvent.Cancel();
 }
 
 
-bool Gui::OnShowControls(const nuiEvent& rEvent)
+void Gui::OnShowControls(const nuiEvent& rEvent)
 {
   if (mAlphaControls >= 1.f)
   {
@@ -338,17 +337,17 @@ bool Gui::OnShowControls(const nuiEvent& rEvent)
   mpTextPanel->SetAlpha(mAlphaText);
   mpPaneBkg->Invalidate();
 
-  return true;  
+  rEvent.Cancel();
 }
 
 
 
-bool Gui::OnTitleButtonActivated(const nuiEvent& rEvent)
+void Gui::OnTitleButtonActivated(const nuiEvent& rEvent)
 {
   NGL_OUT(_T("click\n"));
   
   // Open libnui web page
   nuiURL url(_T("http://libnui.net"));
   url.OpenBrowser();
-  return true;
+  rEvent.Cancel();
 }

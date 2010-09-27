@@ -79,7 +79,7 @@ public:
 
 
 protected:
-  bool SplineChanged(const nuiEvent& rEvent); ///< This call back is fired whenever the spline is changed.
+  void SplineChanged(const nuiEvent& rEvent); ///< This call back is fired whenever the spline is changed.
   nuiEventSink<nuiSplineEdit> mEventsink;
 
 

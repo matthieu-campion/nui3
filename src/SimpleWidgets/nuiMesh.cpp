@@ -103,10 +103,10 @@ bool nuiMesh::SetSize (const nuiRect& rRect)
  * Rendering
  */
 
-bool nuiMesh::OnUserDraw(const nuiEvent& rEvent)
+void nuiMesh::OnUserDraw(const nuiEvent& rEvent)
 {
   if (!mpEngine)
-    return false; // No engine loaded (yet)
+    return; // No engine loaded (yet)
 
   nuiDrawContext* pContext = (nuiDrawContext*)rEvent.mpUser;
 
@@ -124,7 +124,7 @@ bool nuiMesh::OnUserDraw(const nuiEvent& rEvent)
     mDemoStamp = now;
   }
 
-  return true;
+  rEvent.Cancel();
 }
 
 

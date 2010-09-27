@@ -301,16 +301,14 @@ bool nuiSlider::MouseMoved  (nuiSize X, nuiSize Y)
 }
 
 // Data management:
-bool nuiSlider::HandlePageDown(const nuiEvent& rEvent)
+void nuiSlider::HandlePageDown(const nuiEvent& rEvent)
 {
   mRange.PageDecrement();
-  return false;
 }
 
-bool nuiSlider::HandlePageUp(const nuiEvent& rEvent)
+void nuiSlider::HandlePageUp(const nuiEvent& rEvent)
 {
   mRange.PageIncrement();
-  return false;
 }
 
 nuiRange& nuiSlider::GetRange()
@@ -318,7 +316,7 @@ nuiRange& nuiSlider::GetRange()
   return mRange;
 }
 
-bool nuiSlider::DoInvalidate(const nuiEvent& rEvent)
+void nuiSlider::DoInvalidate(const nuiEvent& rEvent)
 {
   //ValueChanged();
   InteractiveValueChanged();
@@ -328,7 +326,6 @@ bool nuiSlider::DoInvalidate(const nuiEvent& rEvent)
   // mInteractiveValueChanged = true;
   
   UpdateLayout();
-  return false;
 }
 
 void nuiSlider::SetOrientation(nuiOrientation Orientation)

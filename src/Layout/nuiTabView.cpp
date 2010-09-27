@@ -407,7 +407,7 @@ void nuiTabView::RemoveTab(const uint& tab_index)
   }
 }
 
-bool nuiTabView::OnIconClicked(const nuiEvent& rEvent)
+void nuiTabView::OnIconClicked(const nuiEvent& rEvent)
 {
   Tab* pIcon = (Tab*)(rEvent.mpUser);
   for (uint i = 0; i < mIcons.size(); i++)
@@ -433,16 +433,13 @@ bool nuiTabView::OnIconClicked(const nuiEvent& rEvent)
     else
       ((Tab*)(mIcons[i]))->SetSelected(false);
   }
-  return true;
+  rEvent.Cancel();
 }
 
-bool nuiTabView::OnTabEnterDrag(const nuiEvent& rEvent)
+void nuiTabView::OnTabEnterDrag(const nuiEvent& rEvent)
 {
   if (mChangeOnDrag)
-  {
-    return OnIconClicked(rEvent);
-  }
-  return false;
+    OnIconClicked(rEvent);
 }
 
 void nuiTabView::SelectTab(const uint& rIndex)

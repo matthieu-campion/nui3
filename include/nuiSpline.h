@@ -169,7 +169,7 @@ protected:
 
   mutable bool mChanged;
   mutable nuiSimpleEventSource<nuiChanged> InternalChanged; ///< This event is fired each time the Spline is changed internally.
-  bool ElementChanged(const nuiEvent& rEvent);
+  void ElementChanged(const nuiEvent& rEvent);
   nuiEventSink<nuiSpline> mEventSink;
 
   void CalculateCardinalTangents(float tightness) const; ///< Calculate the Tangents with the Cardinal algorithm.
@@ -177,7 +177,7 @@ protected:
   void CalculateTCBTangents() const; ///< Calculate the Tangents with the TCB algorithm.
 
 private:
-  bool InvalidateCache(const nuiEvent& rEvent);
+  void InvalidateCache(const nuiEvent& rEvent);
 
   mutable bool mCacheValid;
   mutable float mLastQuality;

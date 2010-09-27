@@ -40,10 +40,9 @@ nuiDecorationInspector::~nuiDecorationInspector()
 {  
 }
 
-bool nuiDecorationInspector::OnDecosChanged(const nuiEvent& rEvent)
+void nuiDecorationInspector::OnDecosChanged(const nuiEvent& rEvent)
 {
   UpdateDecos();
-  return false;
 }
 
 void nuiDecorationInspector::UpdateDecos()
@@ -105,7 +104,7 @@ void nuiDecorationInspector::UpdateDecos()
   mSink.Connect(pList->SelectionChanged, &nuiDecorationInspector::OnDecoSelection, (void*)pList);
 }
 
-bool nuiDecorationInspector::OnDecoSelection(const nuiEvent& rEvent)
+void nuiDecorationInspector::OnDecoSelection(const nuiEvent& rEvent)
 {
   nuiList* pList = (nuiList*)rEvent.mpUser;
   nuiWidget* pW = pList->GetSelected();
@@ -201,8 +200,6 @@ bool nuiDecorationInspector::OnDecoSelection(const nuiEvent& rEvent)
   }
   
   DumpDecl();
-  
-  return false;
 }
 
 void nuiDecorationInspector::DumpDecl()

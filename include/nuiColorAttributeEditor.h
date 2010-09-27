@@ -28,9 +28,9 @@ protected :
 
 	void OnAttributeChanged(nuiColor color);
 	void OnConstAttributeChanged(const nuiColor& color);
-	bool OnChanged(const nuiEvent& rEvent);
+	void OnChanged(const nuiEvent& rEvent);
 
-	bool OnClicked(const nuiEvent& rEvent);
+	void OnClicked(const nuiEvent& rEvent);
 	
 	std::vector<nuiColor> mColors;
 

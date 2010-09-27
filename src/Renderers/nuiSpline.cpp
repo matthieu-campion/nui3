@@ -985,11 +985,10 @@ void nuiSpline::Multiply(const nuiMatrix& matrix)
   InternalChanged();
 }
 
-bool nuiSpline::ElementChanged(const nuiEvent& rEvent)
+void nuiSpline::ElementChanged(const nuiEvent& rEvent)
 {
   mChanged = true;
   Changed();
-  return false;
 }
 
 void nuiSpline::SetCardinalMode(float tightness)
@@ -1063,11 +1062,10 @@ bool nuiSpline::Tessellate(nuiPath& rVertices, float Quality) const
   return true;
 }
 
-bool nuiSpline::InvalidateCache(const nuiEvent& rEvent)
+void nuiSpline::InvalidateCache(const nuiEvent& rEvent)
 {
   mCacheValid = false;
   mTessCache.Clear();
-  return false;
 }
 
 nuiPoint nuiSpline::GetStartPoint() const

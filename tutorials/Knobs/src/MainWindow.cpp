@@ -80,12 +80,12 @@ void MainWindow::OnCreation()
 }
 
 
-bool MainWindow::OnValueChanged(const nuiEvent& rEvent)
+void MainWindow::OnValueChanged(const nuiEvent& rEvent)
 {
   nglString value;
   value.Format(_T("%.0f"), mpKnob->GetRange().GetValue());
   mpLabel->SetText(value);
-  return true;
+  rEvent.Cancel();
 }
 
 void MainWindow::OnClose()

@@ -156,7 +156,7 @@ void nuiTabBar::SelectTab(int id)
   TabsSelected(mSelectedTabs);
 }
 
-bool nuiTabBar::OnTabSelected(const nuiEvent& rEvent)
+void nuiTabBar::OnTabSelected(const nuiEvent& rEvent)
 {
   if (!(IsKeyDown(NK_LCTRL) || IsKeyDown(NK_RCTRL)))
   {
@@ -177,6 +177,6 @@ bool nuiTabBar::OnTabSelected(const nuiEvent& rEvent)
 
   TabsSelected(mSelectedTabs);
 
-  return true;
+  rEvent.Cancel();
 }
 

@@ -263,7 +263,7 @@ private:
   virtual bool MouseMoved(nuiSize X, nuiSize Y);
           void RelativeSpinCells(nuiSize delta);
           void SpinCells(nuiSize delta);
-          bool Renamed(const nuiEvent& rEvent);
+          void Renamed(const nuiEvent& rEvent);
           
   virtual void OnTick(nglTime Lap); // timer event
 

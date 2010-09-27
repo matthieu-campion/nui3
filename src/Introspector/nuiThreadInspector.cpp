@@ -333,7 +333,7 @@ nuiTreeNode* nuiThreadInspector::CreateNodeFromLock(const nglThreadState& rState
 //
 // parse the current threadchecker's state and parse the threadchecker's tree. update the tree from the state.
 //
-bool nuiThreadInspector::Update(const nuiEvent& rEvent)
+void nuiThreadInspector::Update(const nuiEvent& rEvent)
 {
   if (!mpTree)
   {
@@ -341,7 +341,8 @@ bool nuiThreadInspector::Update(const nuiEvent& rEvent)
     mCurrentTime = nglTime();
     BuildThreadTree();
     mpTimer->Start();
-    return true;
+    rEvent.Cancel();
+    return;
   }
   
   mpUpdateCount->SetValue(mpUpdateCount->GetValue()+1);
@@ -401,7 +402,7 @@ bool nuiThreadInspector::Update(const nuiEvent& rEvent)
   // clean tree. remove dead threads
   Clean(mpTree, states);
   
-  return true;
+  rEvent.Cancel();
 }
 
 

@@ -138,40 +138,40 @@ nuiWidget* nuiIntrospector::GetStatusbar()
 }
 
 
-bool nuiIntrospector::ShowWidgetInspector(const nuiEvent& rEvent)
+void nuiIntrospector::ShowWidgetInspector(const nuiEvent& rEvent)
 {
   SetCell(CELL_CLIENT, new nuiWidgetInspector(mpTarget)); 
-  return true;
+  rEvent.Cancel();
 }
 
-bool nuiIntrospector::ShowThreadInspector(const nuiEvent& rEvent)
+void nuiIntrospector::ShowThreadInspector(const nuiEvent& rEvent)
 {
   SetCell(CELL_CLIENT, new nuiThreadInspector()); 
-  return true;
+  rEvent.Cancel();
 }
 
-bool nuiIntrospector::ShowFontInspector(const nuiEvent& rEvent)
+void nuiIntrospector::ShowFontInspector(const nuiEvent& rEvent)
 {
   SetCell(CELL_CLIENT, new nuiFontInspector()); 
-  return true;
+  rEvent.Cancel();
 }
 
-bool nuiIntrospector::ShowDecorationInspector(const nuiEvent& rEvent)
+void nuiIntrospector::ShowDecorationInspector(const nuiEvent& rEvent)
 {
   SetCell(CELL_CLIENT, new nuiDecorationInspector()); 
-  return true;
+  rEvent.Cancel();
 }
 
-bool nuiIntrospector::ShowTextureInspector(const nuiEvent& rEvent)
+void nuiIntrospector::ShowTextureInspector(const nuiEvent& rEvent)
 {
   SetCell(CELL_CLIENT, new nuiTextureInspector()); 
-  return true;
+  rEvent.Cancel();
 }
 
-bool nuiIntrospector::ShowObjectInspector(const nuiEvent& rEvent)
+void nuiIntrospector::ShowObjectInspector(const nuiEvent& rEvent)
 {
   SetCell(CELL_CLIENT, new nuiObjectInspector()); 
-  return true;
+  rEvent.Cancel();
 }
 
 void nuiIntrospector::InitDecorations()

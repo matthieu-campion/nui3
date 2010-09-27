@@ -489,21 +489,22 @@ void nuiPopupMenu::CalcTreeSize(nuiRect& rRect, nuiTreeNode* pTree, uint32& cpt)
   rRect.SetSize(rect.GetWidth()+rRect.GetWidth(), rect.GetHeight()+rRect.GetHeight());
 }
 
-bool nuiPopupMenu::OnScrollBarChange(const nuiEvent& rEvent)
+void nuiPopupMenu::OnScrollBarChange(const nuiEvent& rEvent)
 {
   nuiMenuRect* pMenuRect = (nuiMenuRect*)(rEvent.mpUser);
 
   if (mScrolledFromKeyboard)
   {
     mScrolledFromKeyboard = false;
-    return true;
+    rEvent.Cancel();
+    return;
   }
   pMenuRect->mpFromNode->OpenAllChildren(false);
   pMenuRect->mpFromNode->SelectAllChildren(false);
 
   Invalidate();
   InvalidateLayout();
-  return true;
+  rEvent.Cancel();
 }
 
 nuiTreeNodePtr nuiPopupMenu::GetParentNode(nuiTreeNodePtr pParent, nuiTreeNodePtr pNode)
@@ -728,14 +729,13 @@ void nuiPopupMenu::SetTreeRect(uint depth, nuiSize X, nuiSize Y, nuiTreeNode* pT
   }
 }
 
-bool nuiPopupMenu::OnTreeChanged(const nuiEvent& rEvent)
+void nuiPopupMenu::OnTreeChanged(const nuiEvent& rEvent)
 {
   Invalidate();
   InvalidateLayout();
-  return false;
 }
 
-bool nuiPopupMenu::OnTreeChildAdded(const nuiEvent& rEvent)
+void nuiPopupMenu::OnTreeChildAdded(const nuiEvent& rEvent)
 {
   const nuiTreeEvent<nuiTreeBase>* pTreeEvent = dynamic_cast<const nuiTreeEvent<nuiTreeBase>*>(&rEvent);
   nuiTreeNode* pNode = dynamic_cast<nuiTreeNode*>(pTreeEvent->mpChild);
@@ -750,11 +750,9 @@ bool nuiPopupMenu::OnTreeChildAdded(const nuiEvent& rEvent)
         pNode->SetOwnElement(false);
     }
   }
-
-  return false;
 }
 
-bool nuiPopupMenu::OnTreeChildDeleted(const nuiEvent& rEvent)
+void nuiPopupMenu::OnTreeChildDeleted(const nuiEvent& rEvent)
 {
   const nuiTreeEvent<nuiTreeBase>* pTreeEvent = dynamic_cast<const nuiTreeEvent<nuiTreeBase>*>(&rEvent);
   nuiTreeNode* pNode = dynamic_cast<nuiTreeNode*>(pTreeEvent->mpChild);
@@ -767,8 +765,6 @@ bool nuiPopupMenu::OnTreeChildDeleted(const nuiEvent& rEvent)
   }
   if (mpSelectedNode == pNode)
     mpSelectedNode = NULL;
-
-  return false;
 }
 
 void nuiPopupMenu::ReparentTree(nuiTreeNode* pTree)
@@ -842,13 +838,14 @@ void nuiPopupMenu::ResetScrolling(uint32 rect)
   }
 }
 
-bool nuiPopupMenu::OnSelectionTimer(const nuiEvent& rEvent)
+void nuiPopupMenu::OnSelectionTimer(const nuiEvent& rEvent)
 {
   mSelectionTimer.Stop();
   mSelectionTimer.SetPeriod(nglTime(TIMER_PERIOD));
   if (!mpNewSelectedNode || (mpSelectedNode && (mpSelectedNode == mpNewSelectedNode))) 
   {
-    return true;
+    rEvent.Cancel();
+    return;
   }
 
   nuiTreeNodePtr pParent = GetParentNode(mpTree, mpNewSelectedNode);
@@ -902,14 +899,12 @@ bool nuiPopupMenu::OnSelectionTimer(const nuiEvent& rEvent)
   FillSelectedNodes();
 
   //Invalidate();
-  return true;
+  rEvent.Cancel();
 }
 
-bool nuiPopupMenu::OnScrollTimer(const nuiEvent& rEvent)
+void nuiPopupMenu::OnScrollTimer(const nuiEvent& rEvent)
 {
   IncrementScrollBar(!mScrollUp);
-
-  return false;
 }
 
 bool nuiPopupMenu::MouseMoved(nuiSize X, nuiSize Y)

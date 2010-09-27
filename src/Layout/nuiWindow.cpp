@@ -333,14 +333,13 @@ bool nuiWindow::SetParent(nuiContainerPtr pParent)
   return res;
 }
 
-bool nuiWindow::HandleCloseButtonPressed(const nuiEvent& rEvent)
+void nuiWindow::HandleCloseButtonPressed(const nuiEvent& rEvent)
 {
   // Destroy the window if there is no handler for the event...
   if (!CloseButtonPressed.GetTargetCount())
     Trash();
   else
     CloseButtonPressed();
-  return false;
 }
 
 void nuiWindow::SetTitle(const nglString& rTitle)

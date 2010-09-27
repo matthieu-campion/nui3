@@ -956,8 +956,8 @@
 		E51FAB8C10740168004F6940 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E543D2B910740FC500A01E51 /* LayoutAnimation_iPhone.app */,
-				E543D2BB10740FC500A01E51 /* LayoutAnimation_iPhoneD.app */,
+				E543D2B910740FC500A01E51 /* LayoutAnimationiPhone.app */,
+				E543D2BB10740FC500A01E51 /* LayoutAnimationiPhoneD.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1063,7 +1063,14 @@
 			};
 			buildConfigurationList = E51FAB501073F312004F6940 /* Build configuration list for PBXProject "AllTutorials_iPhone" */;
 			compatibilityVersion = "Xcode 3.0";
+			developmentRegion = English;
 			hasScannedForEncodings = 0;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
 			mainGroup = E51FAB4B1073F312004F6940;
 			projectDirPath = "";
 			projectReferences = (
@@ -1370,17 +1377,17 @@
 			remoteRef = E543D2B410740FC500A01E51 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		E543D2B910740FC500A01E51 /* LayoutAnimation_iPhone.app */ = {
+		E543D2B910740FC500A01E51 /* LayoutAnimationiPhone.app */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.application;
-			path = LayoutAnimation_iPhone.app;
+			path = LayoutAnimationiPhone.app;
 			remoteRef = E543D2B810740FC500A01E51 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		E543D2BB10740FC500A01E51 /* LayoutAnimation_iPhoneD.app */ = {
+		E543D2BB10740FC500A01E51 /* LayoutAnimationiPhoneD.app */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.application;
-			path = LayoutAnimation_iPhoneD.app;
+			path = LayoutAnimationiPhoneD.app;
 			remoteRef = E543D2BA10740FC500A01E51 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};

@@ -1810,7 +1810,7 @@ nuiFont* nuiFontManager::GetFont(nuiFontRequest& rRequest, const nglString& rID)
   if (!rRequest.mMustHaveSizes.mElement.empty())
     size = *(rRequest.mMustHaveSizes.mElement.begin());
   
-  wprintf(_T("Loading font %ls\n"), rRequest.mName.mElement.GetChars());
+  //wprintf(_T("Loading font %ls\n"), rRequest.mName.mElement.GetChars());
   nuiFont* pFont = nuiFont::GetFont(rRequest.mOriginalName, size, rRequest.mFace.mElement, rID);
   if (pFont)
     return pFont;
@@ -1820,12 +1820,12 @@ nuiFont* nuiFontManager::GetFont(nuiFontRequest& rRequest, const nglString& rID)
   
   if (Fonts.empty())
   {
-    printf("font request failed, loading default font\n");
+    wprintf(_T("font request for '%ls'failed, loading default font\n"), rRequest.mName.mElement.GetChars());
     return nuiFont::GetFont(size);
   }
   
   const nuiFontRequestResult& rFont(*(Fonts.begin()));
-  printf("found font '%ls' (%ls)\n", rFont.GetFontDesc()->GetName().GetChars(), rFont.GetFontDesc()->GetPath().GetChars());
+  //printf("found font '%ls' (%ls)\n", rFont.GetFontDesc()->GetName().GetChars(), rFont.GetFontDesc()->GetPath().GetChars());
 
   pFont = nuiFont::GetFont(rFont.GetPath(), size, rFont.GetFace(), rID);
   return pFont;

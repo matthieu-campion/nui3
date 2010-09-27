@@ -29,7 +29,7 @@ private:
 
   nuiTreeNode* CreateNodeFromThread(nglThread::ID ID);
   nuiTreeNode* CreateNodeFromLock(const nglThreadState& rState);
-  bool Update(const nuiEvent& rEvent);
+  void Update(const nuiEvent& rEvent);
   void Clean(nuiTreeNode* pParent, const std::map<nglThread::ID, std::list<nglThreadState> >& states);
   
   // attributes

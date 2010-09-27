@@ -767,7 +767,7 @@ void nuiTopLevel::SetToolTipOn(bool AutoStop)
   SetToolTipRect();
 }
 
-bool nuiTopLevel::ToolTipOn(const nuiEvent& rEvent)
+void nuiTopLevel::ToolTipOn(const nuiEvent& rEvent)
 {
   CheckValid();
   if (mpToolTipSource)
@@ -788,10 +788,9 @@ bool nuiTopLevel::ToolTipOn(const nuiEvent& rEvent)
   
   //Invalidate();
   SetToolTipRect();
-  return false;
 }
 
-bool nuiTopLevel::ToolTipOff(const nuiEvent& rEvent)
+void nuiTopLevel::ToolTipOff(const nuiEvent& rEvent)
 {
   CheckValid();
   //NGL_OUT(_T("ToolTipOff\n"));
@@ -800,8 +799,6 @@ bool nuiTopLevel::ToolTipOff(const nuiEvent& rEvent)
   mToolTipTimerOff.Stop();
   //Invalidate();
   mpToolTipLabel->Invalidate();
-
-  return false;
 }
 
 bool nuiTopLevel::IsKeyDown (nglKeyCode Key) const
@@ -1966,11 +1963,10 @@ void nuiTopLevel::SetWatchedWidget(nuiWidget* pWatchedWidget)
   Invalidate();
 }
 
-bool nuiTopLevel::OnMessageQueueTick(const nuiEvent& rEvent)
+void nuiTopLevel::OnMessageQueueTick(const nuiEvent& rEvent)
 {
   CheckValid();
   BroadcastQueuedNotifications();
-  return false;
 }
 
 //// CSS Stuff:

@@ -38,8 +38,8 @@ public:
   virtual bool MouseClicked   (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
   virtual bool MouseUnclicked (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
     
-  bool OnIconClicked(const nuiEvent& rEvent);
-  bool OnTabEnterDrag(const nuiEvent& rEvent);
+  void OnIconClicked(const nuiEvent& rEvent);
+  void OnTabEnterDrag(const nuiEvent& rEvent);
 
   virtual void AddTab(const nglString& rTitle, nuiWidget* pContents);
   virtual void AddTab(nuiWidget* pTitle, nuiWidget* pContents);

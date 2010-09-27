@@ -524,14 +524,13 @@ bool nuiScrollView::Draw(nuiDrawContext* pContext)
   return true;
 }
 
-bool nuiScrollView::Scrolled(const nuiEvent& rEvent)
+void nuiScrollView::Scrolled(const nuiEvent& rEvent)
 {
   if (mSmoothScrolling && !mHThumbPressed && !mVThumbPressed)
     mTimerOn = true;
   else
     UpdateLayout();
   Invalidate();
-  return false;
 }
 
 bool nuiScrollView::Clear()
@@ -555,7 +554,7 @@ bool nuiScrollView::Clear()
   return true;
 }
 
-bool nuiScrollView::OnChildAdded(const nuiEvent& rEvent)
+void nuiScrollView::OnChildAdded(const nuiEvent& rEvent)
 {
   const nuiTreeEvent<nuiWidget>* pTreeEvent = dynamic_cast<const nuiTreeEvent<nuiWidget>*>(&rEvent);
   nuiWidgetPtr pNode = dynamic_cast<nuiWidgetPtr>(pTreeEvent->mpChild);
@@ -574,10 +573,9 @@ bool nuiScrollView::OnChildAdded(const nuiEvent& rEvent)
   {
     RaiseChildToFront(mpVertical);
   }
-  return false;
 }
 
-bool nuiScrollView::OnChildRemoved(const nuiEvent& rEvent)
+void nuiScrollView::OnChildRemoved(const nuiEvent& rEvent)
 {
   const nuiTreeEvent<nuiWidget>* pTreeEvent = dynamic_cast<const nuiTreeEvent<nuiWidget>*>(&rEvent);
   nuiWidgetPtr pNode = dynamic_cast<nuiWidgetPtr>(pTreeEvent->mpChild);
@@ -586,17 +584,15 @@ bool nuiScrollView::OnChildRemoved(const nuiEvent& rEvent)
   {
     mSVSink.DisconnectSource(pNode->HotRectChanged);
   }
-
-  return false;
 }
 
-bool nuiScrollView::OnHotRectChanged(const nuiEvent& rEvent)
+void nuiScrollView::OnHotRectChanged(const nuiEvent& rEvent)
 {
   UpdateLayout();
   nuiWidgetPtr pChild = (nuiWidgetPtr)rEvent.mpUser;
 
   if (!pChild)
-    return false;
+    return;
 
   nuiRect rect;
   pChild->GetHotRect(rect);
@@ -610,7 +606,6 @@ bool nuiScrollView::OnHotRectChanged(const nuiEvent& rEvent)
   {
     mpHorizontal->GetRange().MakeInRange(rect.Left(), rect.GetWidth());
   }
-  return false;
 }
 
 void nuiScrollView::SetFillChildren(bool Set) ///< If filling is enabled the scroll view will try to move its child in order to honor the available space
@@ -748,10 +743,10 @@ nuiSize nuiScrollView::GetVIncrement() const
   return mVIncrement;
 }
 
-bool nuiScrollView::OnSmoothScrolling(const nuiEvent& rEvent)
+void nuiScrollView::OnSmoothScrolling(const nuiEvent& rEvent)
 {
   if (!mTimerOn)
-    return false;
+    return;
 
   float XOffset = mpHorizontal->GetRange().GetValue();
   float YOffset = mpVertical->GetRange().GetValue();
@@ -776,7 +771,6 @@ bool nuiScrollView::OnSmoothScrolling(const nuiEvent& rEvent)
 
   UpdateLayout();
   OffsetsChanged();
-  return false;
 }
 
 void nuiScrollView::EnableSmoothScrolling(bool set)
@@ -802,28 +796,24 @@ bool nuiScrollView::IsMinimalResizeEnabled() const
   return mMinimalResize;
 }
 
-bool nuiScrollView::OnHThumbPressed(const nuiEvent& rEvent)
+void nuiScrollView::OnHThumbPressed(const nuiEvent& rEvent)
 {
   mHThumbPressed = true;
-  return false;
 }
 
-bool nuiScrollView::OnHThumbDepressed(const nuiEvent& rEvent)
+void nuiScrollView::OnHThumbDepressed(const nuiEvent& rEvent)
 {
   mHThumbPressed = false;
-  return false;
 }
 
-bool nuiScrollView::OnVThumbPressed(const nuiEvent& rEvent)
+void nuiScrollView::OnVThumbPressed(const nuiEvent& rEvent)
 {
   mVThumbPressed = true;
-  return false;
 }
 
-bool nuiScrollView::OnVThumbDepressed(const nuiEvent& rEvent)
+void nuiScrollView::OnVThumbDepressed(const nuiEvent& rEvent)
 {
   mVThumbPressed = false;
-  return false;
 }
 
 nuiSize nuiScrollView::GetXOffset() const

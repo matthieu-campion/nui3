@@ -99,7 +99,7 @@ private:
   void Init();
   
   // internal events for system-side implementation
-  bool OnItemAdded(const nuiEvent& rEvent);
+  void OnItemAdded(const nuiEvent& rEvent);
   
   void InsertMenu(nuiMainMenuItem* pItem);
   void InsertItem(nuiMainMenuItem* pParent, nuiMainMenuItem* pItem);

@@ -81,14 +81,14 @@ void VolumeController::OnMuteAttribChanged(bool mute)
   mpBtn->Clicked.Enable(true);
 }
 
-bool VolumeController::OnBtnClicked(const nuiEvent& rEvent)
+void VolumeController::OnBtnClicked(const nuiEvent& rEvent)
 {
   bool pressed = mpBtn->IsPressed();
   mMuteAttrib.Set(pressed);
-  return true;
+  rEvent.Cancel();
 }
 
-bool VolumeController::OnSliderChanged(const nuiEvent& rEvent)
+void VolumeController::OnSliderChanged(const nuiEvent& rEvent)
 {
   nuiRange range(mpSlider->GetRange());
   float gainDb = range.GetValue();
@@ -98,5 +98,5 @@ bool VolumeController::OnSliderChanged(const nuiEvent& rEvent)
   }
   
   mGainAttrib.Set(gainDb);
-  return true;
+  rEvent.Cancel();
 }

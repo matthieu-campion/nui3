@@ -32,12 +32,12 @@ nuiRangeAttributeEditor::~nuiRangeAttributeEditor()
 
 }
 
-bool nuiRangeAttributeEditor::OnChanged(const nuiEvent& rEvent)
+void nuiRangeAttributeEditor::OnChanged(const nuiEvent& rEvent)
 {
   mRange.SetValue(mpSlider->GetRange().GetValue());
   mpValue->SetValue(mRange.GetValue());
   mAttribute.Set(mRange);
-  return true;
+  rEvent.Cancel();
 }
 
 

@@ -344,7 +344,7 @@ void nglKernel::SetCrashReportEmail(const nglString& rEmail)
 }
 
 
-bool nglKernel::ProcessMessages(const nuiEvent& rEvent)
+void nglKernel::ProcessMessages(const nuiEvent& rEvent)
 {
   nuiNotification* pNotif;
   while (pNotif = Get(0))
@@ -355,6 +355,4 @@ bool nglKernel::ProcessMessages(const nuiEvent& rEvent)
       pCommand->Do();
     delete pNotif;
   }
-  
-  return false;
 }

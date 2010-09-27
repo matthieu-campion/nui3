@@ -31,11 +31,11 @@ nuiRangeKnobAttributeEditor::~nuiRangeKnobAttributeEditor()
 
 }
 
-bool nuiRangeKnobAttributeEditor::OnChanged(const nuiEvent& rEvent)
+void nuiRangeKnobAttributeEditor::OnChanged(const nuiEvent& rEvent)
 {
   mRange.SetValue(mpKnob->GetRange().GetValue());
   mAttribute.Set(mRange);
-  return true;
+  rEvent.Cancel();
 }
 
 

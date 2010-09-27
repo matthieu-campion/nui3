@@ -24,7 +24,7 @@ public:
   
   virtual bool KeyDown(const nglKeyEvent& rEvent);
   virtual bool KeyUp(const nglKeyEvent& rEvent);
-  bool OnCellClicked(const nuiEvent& rEvent); // 1st click = select // second click = edit // 3rd click = deselect
+  void OnCellClicked(const nuiEvent& rEvent); // 1st click = select // second click = edit // 3rd click = deselect
   
   void ApplyChanges(); // update toplevel's hotkey map 
   

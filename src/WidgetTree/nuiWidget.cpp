@@ -3435,7 +3435,7 @@ void nuiWidget::StopAutoDraw()
   DebugRefreshInfo();
 }
 
-bool nuiWidget::Animate(const nuiEvent& rEvent)
+void nuiWidget::Animate(const nuiEvent& rEvent)
 {
   CheckValid();
   if (mVisible)
@@ -3445,7 +3445,6 @@ bool nuiWidget::Animate(const nuiEvent& rEvent)
     else
       Invalidate();
   }
-  return false;
 }
 
 nuiAnimation* nuiWidget::GetAnimation(const nglString& rName)
@@ -3819,32 +3818,28 @@ nuiTheme* nuiWidget::GetTheme()
   return nuiTheme::GetTheme();
 }
 
-bool nuiWidget::AutoTrash(const nuiEvent& rEvent)
+void nuiWidget::AutoTrash(const nuiEvent& rEvent)
 {
   CheckValid();
   Trash();
-  return false;
 }
 
-bool nuiWidget::AutoHide(const nuiEvent& rEvent)
+void nuiWidget::AutoHide(const nuiEvent& rEvent)
 {
   CheckValid();
   SetVisible(false);
-  return false;
 }
 
-bool nuiWidget::AutoStartTransition(const nuiEvent& rEvent)
+void nuiWidget::AutoStartTransition(const nuiEvent& rEvent)
 {
   CheckValid();
   StartTransition();
-  return false;
 }
                
-bool nuiWidget::AutoStopTransition(const nuiEvent& rEvent)
+void nuiWidget::AutoStopTransition(const nuiEvent& rEvent)
 {
   CheckValid();
   StopTransition();
-  return false;
 }
                
 

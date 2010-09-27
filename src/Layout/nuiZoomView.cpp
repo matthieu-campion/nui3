@@ -206,19 +206,17 @@ bool nuiZoomView::SetRect(const nuiRect& rRect)
 }
 
 
-bool nuiZoomView::Scrolled(const nuiEvent& rEvent)
+void nuiZoomView::Scrolled(const nuiEvent& rEvent)
 {
   UpdateLayout();
-  return false;
 }
 
-bool nuiZoomView::Zoomed(const nuiEvent& rEvent)
+void nuiZoomView::Zoomed(const nuiEvent& rEvent)
 {
   InvalidateLayout();
-  return false;
 }
 
-bool nuiZoomView::OnChildAdded(const nuiEvent& rEvent)
+void nuiZoomView::OnChildAdded(const nuiEvent& rEvent)
 {
   const nuiTreeEvent<nuiWidget>* pTreeEvent = dynamic_cast<const nuiTreeEvent<nuiWidget>*>(&rEvent);
   nuiWidgetPtr pNode = dynamic_cast<nuiWidgetPtr>(pTreeEvent->mpChild);
@@ -227,11 +225,9 @@ bool nuiZoomView::OnChildAdded(const nuiEvent& rEvent)
   {
     mSVSink.Connect(pNode->HotRectChanged, &nuiZoomView::OnHotRectChanged, pNode);
   }
-
-  return false;
 }
 
-bool nuiZoomView::OnChildRemoved(const nuiEvent& rEvent)
+void nuiZoomView::OnChildRemoved(const nuiEvent& rEvent)
 {
   const nuiTreeEvent<nuiWidget>* pTreeEvent = dynamic_cast<const nuiTreeEvent<nuiWidget>*>(&rEvent);
   nuiWidgetPtr pNode = dynamic_cast<nuiWidgetPtr>(pTreeEvent->mpChild);
@@ -240,16 +236,14 @@ bool nuiZoomView::OnChildRemoved(const nuiEvent& rEvent)
   {
     mSVSink.DisconnectSource(pNode->HotRectChanged);
   }
-
-  return false;
 }
 
-bool nuiZoomView::OnHotRectChanged(const nuiEvent& rEvent)
+void nuiZoomView::OnHotRectChanged(const nuiEvent& rEvent)
 {
   nuiWidgetPtr pChild = dynamic_cast<nuiWidgetPtr>((nuiObject*)rEvent.mpUser);
 
   if (!pChild)
-    return false;
+    return;
 
   nuiRect rect;
   pChild->GetHotRect(rect);
@@ -262,7 +256,6 @@ bool nuiZoomView::OnHotRectChanged(const nuiEvent& rEvent)
   {
     mpHorizontalScrollbar->GetRange().MakeInRange(rect.Left(), rect.GetWidth());
   }
-  return false;
 }
 
 bool nuiZoomView::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)

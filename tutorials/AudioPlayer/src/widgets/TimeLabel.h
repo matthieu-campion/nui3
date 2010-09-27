@@ -16,7 +16,7 @@ public:
   virtual ~TimeLabel();
   
 private:
-  bool OnTimerTick(const nuiEvent& rEvent);
+  void OnTimerTick(const nuiEvent& rEvent);
   nglString GetPosition();
   nglString GetLength();
   

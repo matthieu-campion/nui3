@@ -23,10 +23,10 @@ public:
   
 protected:
   
-  bool OnStart(const nuiEvent& rEvent); 
-  bool OnStop(const nuiEvent& rEvent); 
+  void OnStart(const nuiEvent& rEvent); 
+  void OnStop(const nuiEvent& rEvent); 
 
-  bool OnScrollbarMoved(const nuiEvent& event);
+  void OnScrollbarMoved(const nuiEvent& event);
   void AddText(uint32 ID, const nglString rText);
 
   virtual void OnNotification(const nuiNotification& rNotification);

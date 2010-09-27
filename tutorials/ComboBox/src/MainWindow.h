@@ -22,7 +22,7 @@ public:
   
 private:
 
-  bool OnComboChanged(const nuiEvent& rEvent);
+  void OnComboChanged(const nuiEvent& rEvent);
   bool LoadCSS(const nglPath& rPath);
   
   nuiLabel* mpLabel;

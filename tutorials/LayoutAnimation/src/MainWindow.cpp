@@ -90,7 +90,7 @@ void MainWindow::OnClose()
   App->Quit();
 }
 
-bool MainWindow::ChangeLayout(const nuiEvent& rEvent)
+void MainWindow::ChangeLayout(const nuiEvent& rEvent)
 {
   nuiButton* pButton = (nuiButton*)rEvent.mpUser;
   uint32 pos = pButton->GetPosition() + 1;
@@ -99,5 +99,5 @@ bool MainWindow::ChangeLayout(const nuiEvent& rEvent)
     pos = nuiLeft;
   ((nuiLabel*)pButton->GetChild(0))->SetText(nuiGetPosition((nuiPosition)pos));
   pButton->SetPosition((nuiPosition)pos);
-  return true;
+  rEvent.Cancel();
 }

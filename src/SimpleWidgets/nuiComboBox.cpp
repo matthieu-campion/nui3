@@ -183,7 +183,7 @@ bool nuiComboBox::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
   return false;
 }
 
-bool nuiComboBox::OnSelect(const nuiEvent& rEvent)
+void nuiComboBox::OnSelect(const nuiEvent& rEvent)
 {
   nuiWidget::SetSelected(false);
 
@@ -202,7 +202,7 @@ bool nuiComboBox::OnSelect(const nuiEvent& rEvent)
   pMenu->SetTrashRemoval(true);
   InvalidateLayout();
       
-  return true;
+  rEvent.Cancel();
 }
 
 void nuiComboBox::SetSelected(uint32 childIndex)

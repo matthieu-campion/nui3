@@ -200,10 +200,9 @@ const std::list<nuiPathGenerator*>* nuiContour::GetElements() const
   return &mpElements;
 }
 
-bool nuiContour::ElementChanged(const nuiEvent& rEvent)
+void nuiContour::ElementChanged(const nuiEvent& rEvent)
 {
 //  Changed();
-  return false;
 }
 
 nuiPoint nuiContour::GetStartPoint() const

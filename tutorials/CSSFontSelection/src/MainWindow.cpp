@@ -67,14 +67,15 @@ void MainWindow::OnCreation()
 
 
 
-bool MainWindow::OnButtonClick(const nuiEvent& rEvent)
+void MainWindow::OnButtonClick(const nuiEvent& rEvent)
 {
   nglString message;
   double currentTime = nglTime();
   message.Format(_T("click time: %.2f"), currentTime);
   mMyLabel->SetText(message);
   
-  return true; // means the event is caught and not broadcasted
+  // the event is caught and not broadcast
+  rEvent.Cancel();
 }
 
 

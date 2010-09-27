@@ -62,7 +62,7 @@ public:
 
 private:
   /** This class contains informations about each window contained in the window manager */
-  bool WindowFlagChanged(const nuiEvent& rEvent);
+  void WindowFlagChanged(const nuiEvent& rEvent);
   std::list<nuiWindow*> mWindows;
 
   nuiEventSink<nuiWindowManager> mWMSink;
@@ -79,9 +79,9 @@ nuiWindow* GetWindow();
 
 virtual bool Draw(class nuiDrawContext * pContext);
 virtual nuiRect CalcIdealSize();
-virtual bool ApplyWindowFlags(const nuiEvent& rEvent);
-virtual bool TargetRectChanged(const nuiEvent& rEvent);
-virtual bool HandleCloseButtonPressed(const nuiEvent& rEvent);
+virtual void ApplyWindowFlags(const nuiEvent& rEvent);
+virtual void TargetRectChanged(const nuiEvent& rEvent);
+virtual void HandleCloseButtonPressed(const nuiEvent& rEvent);
 };
 */
 

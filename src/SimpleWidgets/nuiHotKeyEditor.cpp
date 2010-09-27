@@ -131,7 +131,7 @@ void nuiHotKeyEditor::FillHotKeysGrid()
   mpHotKeysGrid->SetColumnExpand(1, nuiExpandFixed);
 }
 
-bool nuiHotKeyEditor::OnCellClicked(const nuiEvent& rEvent)
+void nuiHotKeyEditor::OnCellClicked(const nuiEvent& rEvent)
 {
   NGL_ASSERT(rEvent.mpUser != NULL);
   nuiLabel* pLabel = (nuiLabel*) rEvent.mpUser;
@@ -179,9 +179,9 @@ bool nuiHotKeyEditor::OnCellClicked(const nuiEvent& rEvent)
       mpSelectedHotKey = mpUserHotKeys[HotKeyName];
     }
     
-    return true;
+    rEvent.Cancel();
+    return;
   } 
-  return false;
 }
 
 

@@ -66,7 +66,7 @@ void MainWindow::OnClose()
 }
 
 
-bool MainWindow::OnBrowse(const nuiEvent& rEvent)
+void MainWindow::OnBrowse(const nuiEvent& rEvent)
 {
   nglPath browsedPath             = nglPath(ePathUser);
   nglPath rootPath                = nglPath(_T("/"));
@@ -87,12 +87,12 @@ bool MainWindow::OnBrowse(const nuiEvent& rEvent)
   // we wish this dialog box to be modal
   mpDialog->DoModal();
   
-  return true;
+  rEvent.Cancel();
 }
 
 
 
-bool MainWindow::OnDialogDone(const nuiEvent& event)
+void MainWindow::OnDialogDone(const nuiEvent& event)
 {
   nuiDialog::DialogResult result = mpDialog->GetResult();
   
@@ -100,9 +100,7 @@ bool MainWindow::OnDialogDone(const nuiEvent& event)
   // returning true means "don't close the dialog box": it can be usefull if the user choice doesn't match with the application constraints for instance.
 
   if (result == nuiDialog::eDialogCanceled)
-  {
-    return false;
-  }
+    return;
   
   if (result == nuiDialog::eDialogAccepted)
   {
@@ -122,8 +120,6 @@ bool MainWindow::OnDialogDone(const nuiEvent& event)
     // - delete manually the dialog when your main process exits
     // this solution is a bit ugly, and using an asynchrone message to get out of the dialog process is much better.
   }
-  
-  return false;
 }
 
 

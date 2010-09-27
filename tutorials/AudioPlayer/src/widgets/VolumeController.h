@@ -16,8 +16,8 @@ public:
   virtual ~VolumeController();
   
 private:
-  bool OnBtnClicked(const nuiEvent& rEvent);
-  bool OnSliderChanged(const nuiEvent& rEvent);
+  void OnBtnClicked(const nuiEvent& rEvent);
+  void OnSliderChanged(const nuiEvent& rEvent);
   
   void OnGainAttribChanged(float gainDb);
   void OnMuteAttribChanged(bool mute);

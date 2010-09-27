@@ -69,14 +69,14 @@ protected:
   bool MouseUnclicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
   bool MouseMoved  (nuiSize X, nuiSize Y);
   
-  bool HandlePageDown(const nuiEvent& rEvent);
-  bool HandlePageUp(const nuiEvent& rEvent);
+  void HandlePageDown(const nuiEvent& rEvent);
+  void HandlePageUp(const nuiEvent& rEvent);
   
   virtual nuiRect CalcIdealSize();
   
-  bool DoInvalidate(const nuiEvent& rEvent);
-  bool HandleClicked(const nuiEvent& rEvent);
-  bool HandleUnclicked(const nuiEvent& rEvent);
+  void DoInvalidate(const nuiEvent& rEvent);
+  void HandleClicked(const nuiEvent& rEvent);
+  void HandleUnclicked(const nuiEvent& rEvent);
 
   nuiSize mClickValue;
 

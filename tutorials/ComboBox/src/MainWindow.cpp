@@ -78,7 +78,7 @@ void MainWindow::OnCreation()
 
 }
 
-bool MainWindow::OnComboChanged(const nuiEvent& rEvent)
+void MainWindow::OnComboChanged(const nuiEvent& rEvent)
 {
   nuiComboBox* pCombo = (nuiComboBox*)rEvent.mpUser;
   
@@ -90,7 +90,7 @@ bool MainWindow::OnComboChanged(const nuiEvent& rEvent)
   msg.Format(_T("the user choice is:\n '%ls' (index %d)"), pLabel->GetText().GetChars(), index);
   mpLabel->SetText(msg);
   
-  return true;
+  rEvent.Cancel();
 }
 
 

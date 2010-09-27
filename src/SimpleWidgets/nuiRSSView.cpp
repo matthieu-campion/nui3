@@ -87,7 +87,7 @@ void nuiRSSView::InitAttributes()
 
 
 
-bool nuiRSSView::Update(const nuiEvent& rEvent)
+void nuiRSSView::Update(const nuiEvent& rEvent)
 {
   mpBox->Trash();
   mpBox = new nuiVBox();
@@ -208,7 +208,6 @@ bool nuiRSSView::Update(const nuiEvent& rEvent)
     }
     
   }
-  return false;
 }
 
 void nuiRSSView::ForceUpdate()

@@ -107,19 +107,20 @@ void MainWindow::OnURLChanged(const nglString& rString)
 }
 
 
-bool MainWindow::OnButtonClick(const nuiEvent& rEvent)
+void MainWindow::OnButtonClick(const nuiEvent& rEvent)
 {  
   mpHTMLView->SetURL(mpInput->GetText());
   if (!mpHTMLView->GetURL().IsNull())
     mpInput->SetText(mpHTMLView->GetURL());
   
-  return true; // means the event is caught and not broadcasted
+  // the event is caught and not broadcast
+  rEvent.Cancel();
 }
 
-bool MainWindow::OnGoHome(const nuiEvent& rEvent)
+void MainWindow::OnGoHome(const nuiEvent& rEvent)
 {  
   mpInput->SetText(_T("file://rsrc:/Index.html"));
-  return OnButtonClick(rEvent);
+  OnButtonClick(rEvent);
 }
 
 
@@ -127,7 +128,6 @@ void MainWindow::OnClose()
 {
   if (GetNGLWindow()->IsInModalState())
     return;
-  
   
   App->Quit();
 }

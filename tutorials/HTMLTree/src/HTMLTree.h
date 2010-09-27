@@ -36,6 +36,6 @@ protected:
   nuiScrollView* mpScroll1;
   nuiScrollView* mpScroll2;
   
-  bool OnSelectionChanged(const nuiEvent& rEvent);
+  void OnSelectionChanged(const nuiEvent& rEvent);
 };
 

@@ -270,7 +270,7 @@ nuiWidget* ProjectGenerator::BuildBlocOptions()
 
 
 
-bool ProjectGenerator::OnIconUpdate(const nuiEvent& rEvent)
+void ProjectGenerator::OnIconUpdate(const nuiEvent& rEvent)
 {
   nuiToggleButton* pBtn = (nuiToggleButton*)rEvent.mpUser;
   nuiImage* pIcon;
@@ -284,7 +284,7 @@ bool ProjectGenerator::OnIconUpdate(const nuiEvent& rEvent)
 
   pIcon->SetObjectName(objectName);
   
-  return true;
+  rEvent.Cancel();
 }
 
 
@@ -314,15 +314,15 @@ nuiWidget* ProjectGenerator::BuildBlocButtons()
 }
 
 
-bool ProjectGenerator::OnSourceTextChanged(const nuiEvent& rEvent)
+void ProjectGenerator::OnSourceTextChanged(const nuiEvent& rEvent)
 {
   mpTimer->Stop();
   mpTimer->Start(false);
     
-  return true;
+  rEvent.Cancel();
 }
 
-bool ProjectGenerator::OnTimerTick(const nuiEvent& rEvent)
+void ProjectGenerator::OnTimerTick(const nuiEvent& rEvent)
 {
   mpTimer->Stop();
   
@@ -408,21 +408,18 @@ bool ProjectGenerator::OnTimerTick(const nuiEvent& rEvent)
   mNuiTemplatePath = nglPath(mpNuiSource->GetText());
   mNuiTemplatePath += nglPath(_T("tools/TemplateApp"));
   
-  return true;
+  rEvent.Cancel();
 }
 
 
-bool ProjectGenerator::OnTargetTextChanged(const nuiEvent& rEvent)
+void ProjectGenerator::OnTargetTextChanged(const nuiEvent& rEvent)
 {
   nglString text = mpProjectTarget->GetText();
   text.Trim();
-
   
-    mpIconProjectDirectory->SetObjectName(_T("Icon::ProjectDirectory"));
-
+  mpIconProjectDirectory->SetObjectName(_T("Icon::ProjectDirectory"));
   
   nglPath path(text);
-  
   
   nglString newtext = text + _T("/") + path.GetNodeName() + _T(".xcodeproj");
   mpProjectFilename->SetText(newtext);
@@ -430,7 +427,7 @@ bool ProjectGenerator::OnTargetTextChanged(const nuiEvent& rEvent)
   mpTimer->Stop();
   mpTimer->Start(false);
   
-  return true;
+  rEvent.Cancel();
 }
 
 
@@ -443,7 +440,7 @@ ProjectGenerator::~ProjectGenerator()
 }
 
 
-bool ProjectGenerator::OnGenerateButton(const nuiEvent& rEvent)
+void ProjectGenerator::OnGenerateButton(const nuiEvent& rEvent)
 {
   nglString source = mpNuiSource->GetText();
   nglString target = mpProjectTarget->GetText();
@@ -454,7 +451,8 @@ bool ProjectGenerator::OnGenerateButton(const nuiEvent& rEvent)
   {
     nuiMessageBox* pMessageBox = new nuiMessageBox(GetMainWindow(), _T("Project Creator"), _T("source and target information can't be empty!"), eMB_OK);
     pMessageBox->QueryUser();   
-    return true;  
+    rEvent.Cancel();
+    return;
   }
 
   nglPath sourcePath(source);
@@ -464,7 +462,8 @@ bool ProjectGenerator::OnGenerateButton(const nuiEvent& rEvent)
     msg.Format(_T("the nui source directory '%ls' does not exist!"), sourcePath.GetChars());
     nuiMessageBox* pMessageBox = new nuiMessageBox(GetMainWindow(), nglString(_T("Project Creator")), msg, eMB_OK);
     pMessageBox->QueryUser();     
-    return true;  
+    rEvent.Cancel();
+    return;
   }
   
   if (!mNuiCheckProjectFile || !mNuiCheckTools)
@@ -472,8 +471,9 @@ bool ProjectGenerator::OnGenerateButton(const nuiEvent& rEvent)
     nglString msg;
     msg.Format(_T("Parts of nui could not be found.\nCheck the nui source directory or checkout the complete nui sources from libnui.net!"));
     nuiMessageBox* pMessageBox = new nuiMessageBox(GetMainWindow(), nglString(_T("Project Creator")), msg, eMB_OK);
-    pMessageBox->QueryUser();     
-    return true;        
+    pMessageBox->QueryUser();
+    rEvent.Cancel();
+    return;        
   }
 
   mNuiSourcePath = source;
@@ -490,7 +490,8 @@ bool ProjectGenerator::OnGenerateButton(const nuiEvent& rEvent)
     msg.Format(_T("the following project exists already!\n'%ls'"), targetPath.GetChars());
     nuiMessageBox* pMessageBox = new nuiMessageBox(GetMainWindow(), nglString(_T("Project Creator")), msg, eMB_OK);
     pMessageBox->QueryUser();     
-    return true;  
+    rEvent.Cancel();
+    return;
   }
   
   
@@ -498,12 +499,12 @@ bool ProjectGenerator::OnGenerateButton(const nuiEvent& rEvent)
   
   Make();
   
-  return true;
+  rEvent.Cancel();
 }
 
 
 
-bool ProjectGenerator::OnBrowseSource(const nuiEvent& rEvent)
+void ProjectGenerator::OnBrowseSource(const nuiEvent& rEvent)
 {
   mNuiSourcePath.Trim();
   if (mNuiSourcePath == nglString::Null)
@@ -514,11 +515,13 @@ bool ProjectGenerator::OnBrowseSource(const nuiEvent& rEvent)
 
   nuiDialogSelectDirectory* pDialog = new nuiDialogSelectDirectory(GetMainWindow(), _T("SELECT THE NUI SOURCE DIRECTORY"), mNuiSourcePath, nglPath(_T("/")));
   mEventSink.Connect(pDialog->DirectorySelected, &ProjectGenerator::OnSourceSelected, (void*)pDialog);
-  return true;
+  
+  rEvent.Cancel();
+  return;
 }
 
 
-bool ProjectGenerator::OnSourceSelected(const nuiEvent& rEvent)
+void ProjectGenerator::OnSourceSelected(const nuiEvent& rEvent)
 {
   nuiDialogSelectDirectory* pDialog = (nuiDialogSelectDirectory*)rEvent.mpUser;
   mNuiSourcePath = pDialog->GetSelectedDirectory();
@@ -526,25 +529,23 @@ bool ProjectGenerator::OnSourceSelected(const nuiEvent& rEvent)
   
   OnTimerTick(rEvent);
 
- GetPreferences().SetString(PREFERENCES_PROJECTGENERATOR, _T("nuiSourcePath"), mNuiSourcePath);
-
-  return false;
+  GetPreferences().SetString(PREFERENCES_PROJECTGENERATOR, _T("nuiSourcePath"), mNuiSourcePath);
 }
 
 
 
 
-bool ProjectGenerator::OnBrowseTarget(const nuiEvent& rEvent)
+void ProjectGenerator::OnBrowseTarget(const nuiEvent& rEvent)
 {
   nglPath path = nglPath(mProjectTargetPath).GetParent();
   
   nuiDialogSelectDirectory* pDialog = new nuiDialogSelectDirectory(GetMainWindow(), _T("ENTER THE NEW PROJECT TARGET"), path, nglPath(_T("/")));
   mEventSink.Connect(pDialog->DirectorySelected, &ProjectGenerator::OnTargetSelected, (void*)pDialog);
-  return true;
+  rEvent.Cancel();
 }
 
 
-bool ProjectGenerator::OnTargetSelected(const nuiEvent& rEvent)
+void ProjectGenerator::OnTargetSelected(const nuiEvent& rEvent)
 {
   nuiDialogSelectDirectory* pDialog = (nuiDialogSelectDirectory*)rEvent.mpUser;
   mProjectTargetPath = pDialog->GetSelectedDirectory();
@@ -552,12 +553,14 @@ bool ProjectGenerator::OnTargetSelected(const nuiEvent& rEvent)
   
   nglPath path(mProjectTargetPath);
   
-  if (!OnTargetTextChanged(rEvent))
-    return true;
+  OnTargetTextChanged(rEvent);
+  if (!rEvent.IsCanceled())
+  {
+    rEvent.Cancel();
+    return;
+  }
   
   GetPreferences().SetString(PREFERENCES_PROJECTGENERATOR, _T("nuiTargetPath"), path.GetParent().GetPathName());  
-  
-  return false;
 }
 
 
@@ -792,8 +795,8 @@ bool ProjectGenerator::MsgError(const nglString& error)
 }
 
 
-bool ProjectGenerator::OnQuitButton(const nuiEvent& rEvent)
+void ProjectGenerator::OnQuitButton(const nuiEvent& rEvent)
 {
   GetApp()->Quit();
-  return true;
+  rEvent.Cancel();
 }

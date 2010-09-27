@@ -43,7 +43,7 @@ public:
   nuiExpandMode GetExpand() const;
 protected:
   
-  bool Update(const nuiEvent& rEvent);
+  void Update(const nuiEvent& rEvent);
   
   nuiRSS* mpRSS;
   nuiVBox* mpBox;

@@ -21,8 +21,8 @@ public:
   
 protected:
   
-  bool OnBrowse(const nuiEvent& rEvent);
-  bool OnDialogDone(const nuiEvent& event);
+  void OnBrowse(const nuiEvent& rEvent);
+  void OnDialogDone(const nuiEvent& event);
   
   virtual void OnNotification(const nuiNotification& rNotif);
 

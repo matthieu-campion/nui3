@@ -195,12 +195,11 @@ void nuiTreeBase::DelChildOnEvent(nuiEventSource& rEvent, nuiTreePtr pChild)
   mTreeNodeEventSink.Connect(rEvent, &nuiTreeBase::OnDelChildRequest, pChild);
 }
 
-bool nuiTreeBase::OnDelChildRequest(const nuiEvent& rEvent)
+void nuiTreeBase::OnDelChildRequest(const nuiEvent& rEvent)
 {
   nuiTreePtr pChild = (nuiTreePtr)rEvent.mpUser;
   mTreeNodeEventSink.DisconnectSource(*const_cast<nuiEventSource*>(rEvent.GetSource()));
   DelChild(pChild);
-  return false;
 }
 
 
@@ -235,31 +234,27 @@ bool nuiTreeBase::GetChildren(std::list<nuiTreePtr>& rChildren)
   return false;
 }
 
-bool nuiTreeBase::OnChildChanged(const nuiEvent& rEvent)
+void nuiTreeBase::OnChildChanged(const nuiEvent& rEvent)
 {
   Changed();
-  return false;
 }
 
-bool nuiTreeBase::OnChildAdded(const nuiEvent& rEvent)
+void nuiTreeBase::OnChildAdded(const nuiEvent& rEvent)
 {
   const nuiTreeEvent<nuiTreeBase>* pTreeEvent = dynamic_cast<const nuiTreeEvent<nuiTreeBase>*>(&rEvent);
   ChildAdded(pTreeEvent->mpParent, pTreeEvent->mpChild);
-  return false;
 }
 
-bool nuiTreeBase::OnChildRemoved(const nuiEvent& rEvent)
+void nuiTreeBase::OnChildRemoved(const nuiEvent& rEvent)
 {
   const nuiTreeEvent<nuiTreeBase>* pTreeEvent = dynamic_cast<const nuiTreeEvent<nuiTreeBase>*>(&rEvent);
   ChildDeleted(pTreeEvent->mpParent, pTreeEvent->mpChild);
-  return false;
 }
 
-bool nuiTreeBase::OnChildDeleted(const nuiEvent& rEvent)
+void nuiTreeBase::OnChildDeleted(const nuiEvent& rEvent)
 {
   const nuiTreeEvent<nuiTreeBase>* pTreeEvent = dynamic_cast<const nuiTreeEvent<nuiTreeBase>*>(&rEvent);
   DelChild(pTreeEvent->mpChild);
-  return false;
 }
 
 uint32 nuiTreeBase::GetDepth() const

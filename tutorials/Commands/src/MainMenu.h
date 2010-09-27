@@ -26,8 +26,8 @@ private:
 
   void Init();
   
-  bool OnMenuCommand(const nuiEvent& rEvent);
-  bool OnCommandChanged(const nuiEvent& rEvent);
+  void OnMenuCommand(const nuiEvent& rEvent);
+  void OnCommandChanged(const nuiEvent& rEvent);
   
   std::map<uint32, nglString> mCommands;
   nuiEventSink<MainMenu> mEventSink;

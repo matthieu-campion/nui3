@@ -191,11 +191,11 @@ bool nuiSpinnerLabel::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags B
 // labelRenamer event
 //
 //
-bool nuiSpinnerLabel::Renamed (const nuiEvent& event)
+void nuiSpinnerLabel::Renamed (const nuiEvent& rEvent)
 {
-  NGL_ASSERT (event.mpUser != NULL);
+  NGL_ASSERT (rEvent.mpUser != NULL);
 
-  nuiLabelRenamer* renamer = (nuiLabelRenamer*)event.mpUser;
+  nuiLabelRenamer* renamer = (nuiLabelRenamer*)rEvent.mpUser;
   nglString text = renamer->GetText();
 
   double value = mFormater.GetCDouble (text);
@@ -205,9 +205,9 @@ bool nuiSpinnerLabel::Renamed (const nuiEvent& event)
   mFormater.Format (mRange.GetValue(), text);
   SetText (text);
 
-  DoInvalidate(event);
+  DoInvalidate(rEvent);
 
-  return true;
+  rEvent.Cancel();
 }
 
 
@@ -346,11 +346,10 @@ nuiRange& nuiSpinnerLabel::GetRange()
 // DoInvalidate
 //
 //
-bool nuiSpinnerLabel::DoInvalidate(const nuiEvent& rEvent)
+void nuiSpinnerLabel::DoInvalidate(const nuiEvent& rEvent)
 {
   ValueChanged();
   Invalidate();
-  return false;
 }
 
 
@@ -360,12 +359,11 @@ bool nuiSpinnerLabel::DoInvalidate(const nuiEvent& rEvent)
 // ValueInChange
 //
 //
-bool nuiSpinnerLabel::OnValueChanging(const nuiEvent& rEvent)
+void nuiSpinnerLabel::OnValueChanging(const nuiEvent& rEvent)
 {
   ValueChanging();
   mFormater.Format (mRange.GetValue(), mValueString);
   SetText (mValueString);
-  return false;
 }
 
 

@@ -117,7 +117,7 @@ nuiFontBrowser::~nuiFontBrowser()
 {
 }
 
-bool nuiFontBrowser::OnFontChanged(const nuiEvent& rEvent)
+void nuiFontBrowser::OnFontChanged(const nuiEvent& rEvent)
 {
   nuiWidget* pLabel = mpFontList->GetSelected();
   if (pLabel)
@@ -139,12 +139,10 @@ bool nuiFontBrowser::OnFontChanged(const nuiEvent& rEvent)
     
     mpStyleList->SelectItem((uint)0);
   }
-  
-  return false;
 }
     
     
-bool nuiFontBrowser::OnStyleChanged(const nuiEvent& rEvent)
+void nuiFontBrowser::OnStyleChanged(const nuiEvent& rEvent)
 {
   mFontSize = mpSizeSlider->GetRange().GetValue();
   nglString str;
@@ -160,8 +158,6 @@ bool nuiFontBrowser::OnStyleChanged(const nuiEvent& rEvent)
     SetFont(rFontName, rFontStyle, mFontSize);
     FontChanged();
   }
-  
-  return false;
 }
 
 nuiFontDesc* nuiFontBrowser::GetCurrentFontDesc() const

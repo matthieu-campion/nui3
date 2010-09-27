@@ -49,14 +49,14 @@ void nuiBooleanAttributeEditor::OnAttributeChanged(bool value)
 }
 
 
-bool nuiBooleanAttributeEditor::OnButtonPressed(const nuiEvent& rEvent)
+void nuiBooleanAttributeEditor::OnButtonPressed(const nuiEvent& rEvent)
 {
 	mAttribute.Set(true);
-	return true;
+  rEvent.Cancel();
 }
 
-bool nuiBooleanAttributeEditor::OnButtonDePressed(const nuiEvent& rEvent)
+void nuiBooleanAttributeEditor::OnButtonDePressed(const nuiEvent& rEvent)
 {
 	mAttribute.Set(false);
-	return true;
+  rEvent.Cancel();
 }

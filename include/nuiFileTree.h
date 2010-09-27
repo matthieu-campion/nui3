@@ -79,8 +79,8 @@ private:
   nglString GetFileInfo(const nglPath& rPath);
   void FormatFileSize(nuiSize size, nglString& str);
   
-  bool OnNodeActivated(const nuiEvent& rEvent);
-  bool OnGotoParentFolder(const nuiEvent& rEvent);
+  void OnNodeActivated(const nuiEvent& rEvent);
+  void OnGotoParentFolder(const nuiEvent& rEvent);
   
   bool isRoot(const nglPath& rPath);
   

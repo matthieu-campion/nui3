@@ -22,9 +22,9 @@ public:
 
 protected:
   
-	bool OnActivated(const nuiEvent& rEvent);
-	bool OnRenamed(const nuiEvent& rEvent);
-	bool OnAttributeChanged(const nuiEvent& rEvent);
+	void OnActivated(const nuiEvent& rEvent);
+	void OnRenamed(const nuiEvent& rEvent);
+	void OnAttributeChanged(const nuiEvent& rEvent);
   
 private:
   

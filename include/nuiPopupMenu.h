@@ -70,12 +70,12 @@ protected:
   nuiTreeNode* mpTree;
   nuiEventSink<nuiPopupMenu> mPopupTreeSink;
 
-  virtual bool OnSelectionTimer(const nuiEvent& rEvent);
-  virtual bool OnTreeChanged(const nuiEvent& rEvent);
-  virtual bool OnTreeChildAdded(const nuiEvent& rEvent);
-  virtual bool OnTreeChildDeleted(const nuiEvent& rEvent);
-  virtual bool OnScrollBarChange(const nuiEvent& rEvent);
-  virtual bool OnScrollTimer(const nuiEvent& rEvent);
+  virtual void OnSelectionTimer(const nuiEvent& rEvent);
+  virtual void OnTreeChanged(const nuiEvent& rEvent);
+  virtual void OnTreeChildAdded(const nuiEvent& rEvent);
+  virtual void OnTreeChildDeleted(const nuiEvent& rEvent);
+  virtual void OnScrollBarChange(const nuiEvent& rEvent);
+  virtual void OnScrollTimer(const nuiEvent& rEvent);
   bool mScrollUp;
 
   friend class nuiMenuRect;

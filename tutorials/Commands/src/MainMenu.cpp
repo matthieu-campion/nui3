@@ -105,7 +105,7 @@ void MainMenu::Init()
 
 
 
-bool MainMenu::OnMenuCommand(const nuiEvent& rEvent)
+void MainMenu::OnMenuCommand(const nuiEvent& rEvent)
 {
   uint32 menuCmd = (uint32)rEvent.mpUser;
   
@@ -113,13 +113,25 @@ bool MainMenu::OnMenuCommand(const nuiEvent& rEvent)
   switch (menuCmd)
   {
     case eMenu2Undo:
-      return nuiCommandManager::Undo();
+    {
+      if (nuiCommandManager::Undo())
+        rEvent.Cancel();
+      return;
+    }
   
     case eMenu2Redo:
-      return nuiCommandManager::Redo();
+    {
+      if (nuiCommandManager::Redo())
+        rEvent.Cancel();
+      return;
+    }
   
     case eMenu2Repeat:
-      return nuiCommandManager::Repeat();
+    {
+      if (nuiCommandManager::Repeat())
+        rEvent.Cancel();
+      return;
+    }
       
     // in our sample application, we automatically launch any command from the menu,
     // withouth any arguments.
@@ -138,12 +150,12 @@ bool MainMenu::OnMenuCommand(const nuiEvent& rEvent)
     }
   }
   
-  return true;
+  rEvent.Cancel();
 }
 
 
 
-bool MainMenu::OnCommandChanged(const nuiEvent& rEvent)
+void MainMenu::OnCommandChanged(const nuiEvent& rEvent)
 {
   // update undo / redo menu
   bool canundo = nuiCommandManager::CanUndo();
@@ -186,7 +198,7 @@ bool MainMenu::OnCommandChanged(const nuiEvent& rEvent)
   // update monitor info
   GetMainWindow()->UpdateCommandManagerInfo();
   
-  return true;
+  rEvent.Cancel();
 }
 
 

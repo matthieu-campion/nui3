@@ -22,8 +22,8 @@ public:
 protected:
   nuiEventSink<nuiTextureInspector> mSink;
   
-  bool OnTexturesChanged(const nuiEvent& rEvent);
-  bool OnTextureSelection(const nuiEvent& rEvent);
+  void OnTexturesChanged(const nuiEvent& rEvent);
+  void OnTextureSelection(const nuiEvent& rEvent);
   void UpdateTextures();
   
   nuiImage* mpImage;

@@ -100,10 +100,10 @@ public:
 protected:
   nglString mRSSURL;
   nuiTimer* mpUpdateTimer;
-  bool TimeToUpdate(const nuiEvent& rEvent);
+  void TimeToUpdate(const nuiEvent& rEvent);
   
   nuiTimer* mpNotificationTimer;
-  bool TimeToNotify(const nuiEvent& rEvent);
+  void TimeToNotify(const nuiEvent& rEvent);
 
   nglThreadDelegate* mpHTTPThread;
   void StartHTTPThread();

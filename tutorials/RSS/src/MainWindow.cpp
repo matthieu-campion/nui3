@@ -90,7 +90,7 @@ void MainWindow::OnCreation()
 
 
 
-bool MainWindow::OnButtonClick(const nuiEvent& rEvent)
+void MainWindow::OnButtonClick(const nuiEvent& rEvent)
 {
   nglString message;
   double currentTime = nglTime();
@@ -98,7 +98,8 @@ bool MainWindow::OnButtonClick(const nuiEvent& rEvent)
   mpRSSView->SetURL(mpInput->GetText());
   mpRSSView->ForceUpdate();
   
-  return true; // means the event is caught and not broadcasted
+  // the event is caught and not broadcasted
+  rEvent.Cancel();
 }
 
 

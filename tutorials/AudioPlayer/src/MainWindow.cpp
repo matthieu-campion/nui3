@@ -92,7 +92,7 @@ void MainWindow::OnCreation()
 
 
 
-bool MainWindow::OnButtonClick(const nuiEvent& rEvent)
+void MainWindow::OnButtonClick(const nuiEvent& rEvent)
 {  
   bool playing = GetAudioEngine()->IsPlaying();
   if (playing)
@@ -107,7 +107,8 @@ bool MainWindow::OnButtonClick(const nuiEvent& rEvent)
   }
   
   
-  return true; // means the event is caught and not broadcasted
+  // the event is caught and not broadcasted
+  rEvent.Cancel();
 }
 
 
@@ -146,7 +147,7 @@ bool MainWindow::LoadCSS(const nglPath& rPath)
   return false;
 }
 
-bool MainWindow::OnBrowse(const nuiEvent& rEvent)
+void MainWindow::OnBrowse(const nuiEvent& rEvent)
 {
   nglPath browsedPath             = nglPath(ePathUser);
   nglPath rootPath                = nglPath(_T("/"));
@@ -167,12 +168,12 @@ bool MainWindow::OnBrowse(const nuiEvent& rEvent)
   // we wish this dialog box to be modal
   mpDialog->DoModal();
   
-  return true;
+  rEvent.Cancel();
 }
 
 
 
-bool MainWindow::OnDialogDone(const nuiEvent& event)
+void MainWindow::OnDialogDone(const nuiEvent& event)
 {
   nuiDialog::DialogResult result = mpDialog->GetResult();
   
@@ -181,7 +182,7 @@ bool MainWindow::OnDialogDone(const nuiEvent& event)
   
   if (result == nuiDialog::eDialogCanceled)
   {
-    return false;
+    return;
   }
   
   if (result == nuiDialog::eDialogAccepted)
@@ -202,8 +203,6 @@ bool MainWindow::OnDialogDone(const nuiEvent& event)
     // - delete manually the dialog when your main process exits
     // this solution is a bit ugly, and using an asynchrone message to get out of the dialog process is much better.
   }
-  
-  return false;
 }
 
 

@@ -25,13 +25,13 @@ public:
   
 private:
   
-  bool OnSelectorOK(const nuiEvent& rEvent);
-  bool OnDialogDone(const nuiEvent& rEvent);
+  void OnSelectorOK(const nuiEvent& rEvent);
+  void OnDialogDone(const nuiEvent& rEvent);
   
   
   
-  bool OnCreateNewFolder(const nuiEvent& rEvent);
-  bool OnCreateNewFolderDone(const nuiEvent& rEvent);
+  void OnCreateNewFolder(const nuiEvent& rEvent);
+  void OnCreateNewFolderDone(const nuiEvent& rEvent);
   
   
   

@@ -29,13 +29,13 @@ protected:
   void InitMainMenu();
   
   // menu commands' receivers
-  bool OnMenuFileOpen(const nuiEvent& rEvent);
-  bool OnMenuFileClose(const nuiEvent& rEvent);
-  bool OnMenuFileDI(const nuiEvent& rEvent);
-  bool OnMenuEditCopy(const nuiEvent& rEvent);
-  bool OnMenuEditPaste(const nuiEvent& rEvent);  
-  bool OnMenuEditOptionChecked(const nuiEvent& rEvent);  
-  bool OnMenuEditPrefOption1Checked(const nuiEvent& rEvent);  
+  void OnMenuFileOpen(const nuiEvent& rEvent);
+  void OnMenuFileClose(const nuiEvent& rEvent);
+  void OnMenuFileDI(const nuiEvent& rEvent);
+  void OnMenuEditCopy(const nuiEvent& rEvent);
+  void OnMenuEditPaste(const nuiEvent& rEvent);  
+  void OnMenuEditOptionChecked(const nuiEvent& rEvent);  
+  void OnMenuEditPrefOption1Checked(const nuiEvent& rEvent);  
   
   MainWindow* mpMainWindow;
   nuiMainMenu* mpMainMenu;

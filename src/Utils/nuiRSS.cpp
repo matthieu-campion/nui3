@@ -465,10 +465,9 @@ void nuiRSS::StartHTTPThread()
   delete pResponse;
 }
 
-bool nuiRSS::TimeToUpdate(const nuiEvent& rEvent)
+void nuiRSS::TimeToUpdate(const nuiEvent& rEvent)
 {
   ForceUpdate();
-  return false;
 }
 
 bool nuiRSS::ForceUpdate()
@@ -483,7 +482,7 @@ bool nuiRSS::ForceUpdate()
   return true;
 }
 
-bool nuiRSS::TimeToNotify(const nuiEvent& rEvent)
+void nuiRSS::TimeToNotify(const nuiEvent& rEvent)
 {
   if (mUpdating && mpXML)
   {
@@ -497,7 +496,6 @@ bool nuiRSS::TimeToNotify(const nuiEvent& rEvent)
     mUpdating = false;
     UpdateDone();
   }
-  return false;
 }
 
 void nuiRSS::SetURL(const nglString& rURL)

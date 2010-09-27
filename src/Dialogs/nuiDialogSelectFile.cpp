@@ -111,7 +111,7 @@ nuiDialogSelectFile::~nuiDialogSelectFile()
 
 
 
-bool nuiDialogSelectFile::OnSelectorOK(const nuiEvent& rEvent)
+void nuiDialogSelectFile::OnSelectorOK(const nuiEvent& rEvent)
 {
 //  nglString text = mpEditLine->GetText();
 //  text.Trim();
@@ -124,12 +124,10 @@ bool nuiDialogSelectFile::OnSelectorOK(const nuiEvent& rEvent)
   // send event and close the dialog if the user answered true
   if (!FileSelected())
     Trash();
-  
-  return false;
 }
 
 
-bool nuiDialogSelectFile::OnCreateNewFolder(const nuiEvent& rEvent)
+void nuiDialogSelectFile::OnCreateNewFolder(const nuiEvent& rEvent)
 {
   mpCreateDialog = new nuiDialog(mpParent);
   nuiSimpleContainer* pContainer = new nuiSimpleContainer();
@@ -149,11 +147,11 @@ bool nuiDialogSelectFile::OnCreateNewFolder(const nuiEvent& rEvent)
   
   NGL_OUT(_T("new folder \n"));
   
-  return true;
+  rEvent.Cancel();
 }
 
 
-bool nuiDialogSelectFile::OnCreateNewFolderDone(const nuiEvent& rEvent)
+void nuiDialogSelectFile::OnCreateNewFolderDone(const nuiEvent& rEvent)
 {
   
   nuiDialog::DialogResult result = mpCreateDialog->GetResult();
@@ -163,7 +161,10 @@ bool nuiDialogSelectFile::OnCreateNewFolderDone(const nuiEvent& rEvent)
     nglString text = mpCreateEditLine->GetText();
     text.Trim();
     if (text == nglString::Null)
-      return true;
+    {
+      rEvent.Cancel();
+      return;
+    }
     
     mPath = mpSelector->GetFolderPath();
     mPath += nglPath(mpCreateEditLine->GetText());
@@ -172,20 +173,17 @@ bool nuiDialogSelectFile::OnCreateNewFolderDone(const nuiEvent& rEvent)
     //mRootPath = mpSelector->GetRootPath();
     mpSelector->SetRootPath(mPath.GetParent());
   }  
-  return false;
 }
 
-bool nuiDialogSelectFile::OnDialogDone(const nuiEvent& rEvent)
+void nuiDialogSelectFile::OnDialogDone(const nuiEvent& rEvent)
 {
   nuiDialog::DialogResult result = GetResult();
   
   if (result == nuiDialog::eDialogAccepted)
   {
-    bool res = !OnSelectorOK(rEvent);
-    return res;
+    OnSelectorOK(rEvent);
+    rEvent.Cancel();
   }
-  
-  return false;
 }
 
 

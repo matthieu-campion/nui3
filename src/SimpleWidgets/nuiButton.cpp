@@ -345,17 +345,17 @@ bool nuiButton::GetAutoRepeat() const
   return mAutoRepeat;
 }
 
-bool nuiButton::OnAutoRepeat(const nuiEvent& rEvent)
+void nuiButton::OnAutoRepeat(const nuiEvent& rEvent)
 {
   if (IsPressed())
     Activated();
-  return false;
 }
 
 void nuiButton::SetActivationOffset(nuiSize Offset)
 {
   mActivationOffset = Offset;
 }
+
 nuiSize nuiButton::GetActivationOffset() const
 {
   return mActivationOffset;

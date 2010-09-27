@@ -3,18 +3,14 @@
 	E51FAB4D1073F312004F6940 /* Project object */ = {
 		activeBuildConfigurationName = Default;
 		activeTarget = E51FACC21074018C004F6940 /* AllTutorialsDebug */;
-		addToTargets = (
-		);
-		codeSenseManager = E51FAB521073F312004F6940 /* Code sense */;
-		ignoreBreakpointsInProjectsDict = {
-		};
+		codeSenseManager = E5C5FDB212514C9400EAE988 /* Code sense */;
 		perUserDictionary = {
 			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
 				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					1474,
+					2114,
 					20,
 					48,
 					43,
@@ -36,10 +32,10 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					1434,
+					2074,
 					60,
 					20,
-					48,
+					48.16259765625,
 					43,
 					43,
 				);
@@ -53,31 +49,53 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-<<<<<<< .mine
-			PBXPerProjectTemplateStateSaveDate = 276830356;
-			PBXWorkspaceStateSaveDate = 276830356;
-=======
-			PBXPerProjectTemplateStateSaveDate = 287582919;
-			PBXWorkspaceStateSaveDate = 287582919;
->>>>>>> .r5244
+			PBXPerProjectTemplateStateSaveDate = 307319545;
+			PBXWorkspaceStateSaveDate = 307319545;
 		};
-		sourceControlManager = E51FAB511073F312004F6940 /* Source Control */;
+		perUserProjectItems = {
+			E5C5FE5D125155D600EAE988 /* PBXTextBookmark */ = E5C5FE5D125155D600EAE988 /* PBXTextBookmark */;
+			E5C5FE5E125155D600EAE988 /* PBXTextBookmark */ = E5C5FE5E125155D600EAE988 /* PBXTextBookmark */;
+			E5C5FE63125155D600EAE988 /* PBXTextBookmark */ = E5C5FE63125155D600EAE988 /* PBXTextBookmark */;
+			E5C5FE65125155D600EAE988 /* PBXTextBookmark */ = E5C5FE65125155D600EAE988 /* PBXTextBookmark */;
+			E5C5FE69125155D600EAE988 /* PBXTextBookmark */ = E5C5FE69125155D600EAE988 /* PBXTextBookmark */;
+			E5C5FE6B125155D600EAE988 /* PBXTextBookmark */ = E5C5FE6B125155D600EAE988 /* PBXTextBookmark */;
+			E5C5FE6D125155D600EAE988 /* PBXTextBookmark */ = E5C5FE6D125155D600EAE988 /* PBXTextBookmark */;
+			E5C5FE6F125155D600EAE988 /* PBXTextBookmark */ = E5C5FE6F125155D600EAE988 /* PBXTextBookmark */;
+			E5C5FE73125155D600EAE988 /* PBXTextBookmark */ = E5C5FE73125155D600EAE988 /* PBXTextBookmark */;
+			E5C5FE75125155D600EAE988 /* PBXTextBookmark */ = E5C5FE75125155D600EAE988 /* PBXTextBookmark */;
+			E5C5FE77125155D600EAE988 /* PBXTextBookmark */ = E5C5FE77125155D600EAE988 /* PBXTextBookmark */;
+			E5C5FE79125155D600EAE988 /* PBXTextBookmark */ = E5C5FE79125155D600EAE988 /* PBXTextBookmark */;
+			E5C5FE7B125155D600EAE988 /* PBXTextBookmark */ = E5C5FE7B125155D600EAE988 /* PBXTextBookmark */;
+			E5C5FE7D125155D600EAE988 /* PBXTextBookmark */ = E5C5FE7D125155D600EAE988 /* PBXTextBookmark */;
+			E5C5FE7F125155D600EAE988 /* PBXTextBookmark */ = E5C5FE7F125155D600EAE988 /* PBXTextBookmark */;
+			E5C5FE81125155D600EAE988 /* PBXTextBookmark */ = E5C5FE81125155D600EAE988 /* PBXTextBookmark */;
+			E5C5FE83125155D600EAE988 /* PBXTextBookmark */ = E5C5FE83125155D600EAE988 /* PBXTextBookmark */;
+			E5C5FE85125155D600EAE988 /* PBXTextBookmark */ = E5C5FE85125155D600EAE988 /* PBXTextBookmark */;
+			E5C5FE89125155D600EAE988 /* PBXTextBookmark */ = E5C5FE89125155D600EAE988 /* PBXTextBookmark */;
+			E5C5FE8B125155D600EAE988 /* PBXTextBookmark */ = E5C5FE8B125155D600EAE988 /* PBXTextBookmark */;
+			E5C5FE8D125155D600EAE988 /* PBXTextBookmark */ = E5C5FE8D125155D600EAE988 /* PBXTextBookmark */;
+			E5C5FE8F125155D600EAE988 /* PBXTextBookmark */ = E5C5FE8F125155D600EAE988 /* PBXTextBookmark */;
+			E5C5FE91125155D600EAE988 /* PBXTextBookmark */ = E5C5FE91125155D600EAE988 /* PBXTextBookmark */;
+			E5C5FE93125155D600EAE988 /* PBXTextBookmark */ = E5C5FE93125155D600EAE988 /* PBXTextBookmark */;
+			E5C5FE95125155D600EAE988 /* PBXTextBookmark */ = E5C5FE95125155D600EAE988 /* PBXTextBookmark */;
+			E5C5FE97125155D600EAE988 /* PBXTextBookmark */ = E5C5FE97125155D600EAE988 /* PBXTextBookmark */;
+			E5C5FE99125155D600EAE988 /* PBXTextBookmark */ = E5C5FE99125155D600EAE988 /* PBXTextBookmark */;
+			E5C5FE9B125155D600EAE988 /* PBXTextBookmark */ = E5C5FE9B125155D600EAE988 /* PBXTextBookmark */;
+			E5C5FE9D125155D600EAE988 /* PBXTextBookmark */ = E5C5FE9D125155D600EAE988 /* PBXTextBookmark */;
+			E5C5FEA1125155D600EAE988 /* PBXTextBookmark */ = E5C5FEA1125155D600EAE988 /* PBXTextBookmark */;
+			E5C5FEB01251563700EAE988 /* PBXTextBookmark */ = E5C5FEB01251563700EAE988 /* PBXTextBookmark */;
+			E5C5FEBA125156AC00EAE988 /* PBXTextBookmark */ = E5C5FEBA125156AC00EAE988 /* PBXTextBookmark */;
+			E5C5FEBB125156AC00EAE988 /* PBXTextBookmark */ = E5C5FEBB125156AC00EAE988 /* PBXTextBookmark */;
+			E5C5FEBC125156AC00EAE988 /* PBXTextBookmark */ = E5C5FEBC125156AC00EAE988 /* PBXTextBookmark */;
+			E5C5FEBD125156AC00EAE988 /* PBXTextBookmark */ = E5C5FEBD125156AC00EAE988 /* PBXTextBookmark */;
+			E5C5FEBE125156AC00EAE988 /* PBXTextBookmark */ = E5C5FEBE125156AC00EAE988 /* PBXTextBookmark */;
+			E5C5FEBF125156AC00EAE988 /* PBXTextBookmark */ = E5C5FEBF125156AC00EAE988 /* PBXTextBookmark */;
+			E5C5FEC1125156AC00EAE988 /* PBXTextBookmark */ = E5C5FEC1125156AC00EAE988 /* PBXTextBookmark */;
+			E5C5FECA1251597700EAE988 /* PBXTextBookmark */ = E5C5FECA1251597700EAE988 /* PBXTextBookmark */;
+		};
+		sourceControlManager = E5C5FDB112514C9400EAE988 /* Source Control */;
 		userBuildSettings = {
 		};
-	};
-	E51FAB511073F312004F6940 /* Source Control */ = {
-		isa = PBXSourceControlManager;
-		fallbackIsa = XCSourceControlManager;
-		isSCMEnabled = 0;
-		scmConfiguration = {
-			repositoryNamesForRoots = {
-				"" = "";
-			};
-		};
-	};
-	E51FAB521073F312004F6940 /* Code sense */ = {
-		isa = PBXCodeSenseManager;
-		indexTemplatePath = "";
 	};
 	E51FACC21074018C004F6940 /* AllTutorialsDebug */ = {
 		activeExec = 0;
@@ -87,5 +105,715 @@
 	};
 	E543D0F21074047800A01E51 /* AllTutorials (debug & release) */ = {
 		activeExec = 0;
+	};
+	E5C5FDB112514C9400EAE988 /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+			repositoryNamesForRoots = {
+				"" = nui;
+			};
+		};
+	};
+	E5C5FDB212514C9400EAE988 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	E5C5FDB6125152F200EAE988 /* MainWindow.cpp */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
+		name = MainWindow.cpp;
+		path = /Users/meeloo/work/nui3/tutorials/FileSelector/src/MainWindow.cpp;
+		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {2292, 1937}}";
+			sepNavSelRange = "{2751, 0}";
+			sepNavVisRange = "{969, 2341}";
+		};
+	};
+	E5C5FDBA125152F200EAE988 /* MainWindow.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = MainWindow.h;
+		path = /Users/meeloo/work/nui3/tutorials/FileSelector/src/MainWindow.h;
+		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {2292, 855}}";
+			sepNavSelRange = "{538, 8}";
+			sepNavVisRange = "{0, 798}";
+		};
+	};
+	E5C5FE5D125155D600EAE988 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5FDBA125152F200EAE988 /* MainWindow.h */;
+		name = "MainWindow.h: 24";
+		rLen = 8;
+		rLoc = 538;
+		rType = 0;
+		vrLen = 798;
+		vrLoc = 0;
+	};
+	E5C5FE5E125155D600EAE988 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5FDB6125152F200EAE988 /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 85";
+		rLen = 0;
+		rLoc = 2751;
+		rType = 0;
+		vrLen = 2341;
+		vrLoc = 969;
+	};
+	E5C5FE60125155D600EAE988 /* DragSource_FileTree.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = DragSource_FileTree.h;
+		path = /Users/meeloo/work/nui3/tutorials/DragnDrop/src/DragSource_FileTree.h;
+		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {2292, 830}}";
+			sepNavSelRange = "{460, 8}";
+			sepNavVisRange = "{0, 504}";
+		};
+	};
+	E5C5FE62125155D600EAE988 /* DragSource_FileTree.cpp */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
+		name = DragSource_FileTree.cpp;
+		path = /Users/meeloo/work/nui3/tutorials/DragnDrop/src/DragSource_FileTree.cpp;
+		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {2292, 830}}";
+			sepNavSelRange = "{762, 0}";
+			sepNavVisRange = "{0, 1144}";
+		};
+	};
+	E5C5FE63125155D600EAE988 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5FE64125155D600EAE988 /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 93";
+		rLen = 8;
+		rLoc = 3044;
+		rType = 0;
+		vrLen = 2128;
+		vrLoc = 1292;
+	};
+	E5C5FE64125155D600EAE988 /* MainWindow.cpp */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
+		name = MainWindow.cpp;
+		path = /Users/meeloo/work/nui3/tutorials/RSS/src/MainWindow.cpp;
+		sourceTree = "<absolute>";
+	};
+	E5C5FE65125155D600EAE988 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5FE66125155D600EAE988 /* MainWindow.h */;
+		name = "MainWindow.h: 25";
+		rLen = 0;
+		rLoc = 474;
+		rType = 0;
+		vrLen = 656;
+		vrLoc = 0;
+	};
+	E5C5FE66125155D600EAE988 /* MainWindow.h */ = {
+		isa = PBXFileReference;
+		name = MainWindow.h;
+		path = /Users/meeloo/work/nui3/tutorials/RSS/src/MainWindow.h;
+		sourceTree = "<absolute>";
+	};
+	E5C5FE68125155D600EAE988 /* MainWindow.cpp */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
+		name = MainWindow.cpp;
+		path = /Users/meeloo/work/nui3/tutorials/MessageQueue/src/MainWindow.cpp;
+		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {2292, 4394}}";
+			sepNavSelRange = "{5008, 0}";
+			sepNavVisRange = "{4046, 1871}";
+		};
+	};
+	E5C5FE69125155D600EAE988 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5FE6A125155D600EAE988 /* MainWindow.h */;
+		name = "MainWindow.h: 41";
+		rLen = 8;
+		rLoc = 946;
+		rType = 0;
+		vrLen = 1350;
+		vrLoc = 0;
+	};
+	E5C5FE6A125155D600EAE988 /* MainWindow.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = MainWindow.h;
+		path = /Users/meeloo/work/nui3/tutorials/MessageQueue/src/MainWindow.h;
+		sourceTree = "<absolute>";
+	};
+	E5C5FE6B125155D600EAE988 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5FE6C125155D600EAE988 /* Application.h */;
+		name = "Application.h: 38";
+		rLen = 0;
+		rLoc = 828;
+		rType = 0;
+		vrLen = 1096;
+		vrLoc = 0;
+	};
+	E5C5FE6C125155D600EAE988 /* Application.h */ = {
+		isa = PBXFileReference;
+		name = Application.h;
+		path = /Users/meeloo/work/nui3/tutorials/MainMenu/src/Application.h;
+		sourceTree = "<absolute>";
+	};
+	E5C5FE6D125155D600EAE988 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5FE6E125155D600EAE988 /* Application.cpp */;
+		name = "Application.cpp: 218";
+		rLen = 8;
+		rLoc = 6049;
+		rType = 0;
+		vrLen = 2040;
+		vrLoc = 4777;
+	};
+	E5C5FE6E125155D600EAE988 /* Application.cpp */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
+		name = Application.cpp;
+		path = /Users/meeloo/work/nui3/tutorials/MainMenu/src/Application.cpp;
+		sourceTree = "<absolute>";
+	};
+	E5C5FE6F125155D600EAE988 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5FE70125155D600EAE988 /* MainWindow.h */;
+		name = "MainWindow.h: 28";
+		rLen = 0;
+		rLoc = 613;
+		rType = 0;
+		vrLen = 828;
+		vrLoc = 0;
+	};
+	E5C5FE70125155D600EAE988 /* MainWindow.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = MainWindow.h;
+		path = /Users/meeloo/work/nui3/tutorials/MainMenu/src/MainWindow.h;
+		sourceTree = "<absolute>";
+	};
+	E5C5FE72125155D600EAE988 /* MainWindow.cpp */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
+		name = MainWindow.cpp;
+		path = /Users/meeloo/work/nui3/tutorials/MainMenu/src/MainWindow.cpp;
+		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {2292, 1300}}";
+			sepNavSelRange = "{1956, 0}";
+			sepNavVisRange = "{722, 1430}";
+		};
+	};
+	E5C5FE73125155D600EAE988 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5FE74125155D600EAE988 /* MainWindow.h */;
+		name = "MainWindow.h: 24";
+		rLen = 0;
+		rLoc = 456;
+		rType = 0;
+		vrLen = 617;
+		vrLoc = 0;
+	};
+	E5C5FE74125155D600EAE988 /* MainWindow.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = MainWindow.h;
+		path = /Users/meeloo/work/nui3/tutorials/CSSFontSelection/src/MainWindow.h;
+		sourceTree = "<absolute>";
+	};
+	E5C5FE75125155D600EAE988 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5FE76125155D600EAE988 /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 77";
+		rLen = 0;
+		rLoc = 2270;
+		rType = 0;
+		vrLen = 1848;
+		vrLoc = 786;
+	};
+	E5C5FE76125155D600EAE988 /* MainWindow.cpp */ = {
+		isa = PBXFileReference;
+		name = MainWindow.cpp;
+		path = /Users/meeloo/work/nui3/tutorials/CSSFontSelection/src/MainWindow.cpp;
+		sourceTree = "<absolute>";
+	};
+	E5C5FE77125155D600EAE988 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5FE78125155D600EAE988 /* MainMenu.h */;
+		name = "MainMenu.h: 30";
+		rLen = 0;
+		rLoc = 460;
+		rType = 0;
+		vrLen = 591;
+		vrLoc = 0;
+	};
+	E5C5FE78125155D600EAE988 /* MainMenu.h */ = {
+		isa = PBXFileReference;
+		name = MainMenu.h;
+		path = /Users/meeloo/work/nui3/tutorials/Commands/src/MainMenu.h;
+		sourceTree = "<absolute>";
+	};
+	E5C5FE79125155D600EAE988 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5FE7A125155D600EAE988 /* MainMenu.cpp */;
+		name = "MainMenu.cpp: 85";
+		rLen = 0;
+		rLoc = 2272;
+		rType = 0;
+		vrLen = 1933;
+		vrLoc = 585;
+	};
+	E5C5FE7A125155D600EAE988 /* MainMenu.cpp */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
+		name = MainMenu.cpp;
+		path = /Users/meeloo/work/nui3/tutorials/Commands/src/MainMenu.cpp;
+		sourceTree = "<absolute>";
+	};
+	E5C5FE7B125155D600EAE988 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5FE7C125155D600EAE988 /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 110";
+		rLen = 0;
+		rLoc = 2542;
+		rType = 0;
+		vrLen = 1494;
+		vrLoc = 1080;
+	};
+	E5C5FE7C125155D600EAE988 /* MainWindow.cpp */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
+		name = MainWindow.cpp;
+		path = /Users/meeloo/work/nui3/tutorials/List/src/MainWindow.cpp;
+		sourceTree = "<absolute>";
+	};
+	E5C5FE7D125155D600EAE988 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5FE7E125155D600EAE988 /* MainWindow.h */;
+		name = "MainWindow.h: 25";
+		rLen = 0;
+		rLoc = 521;
+		rType = 0;
+		vrLen = 699;
+		vrLoc = 0;
+	};
+	E5C5FE7E125155D600EAE988 /* MainWindow.h */ = {
+		isa = PBXFileReference;
+		name = MainWindow.h;
+		path = /Users/meeloo/work/nui3/tutorials/List/src/MainWindow.h;
+		sourceTree = "<absolute>";
+	};
+	E5C5FE7F125155D600EAE988 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5FE80125155D600EAE988 /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 81";
+		rLen = 8;
+		rLoc = 2028;
+		rType = 0;
+		vrLen = 1657;
+		vrLoc = 849;
+	};
+	E5C5FE80125155D600EAE988 /* MainWindow.cpp */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
+		name = MainWindow.cpp;
+		path = /Users/meeloo/work/nui3/tutorials/ComboBox/src/MainWindow.cpp;
+		sourceTree = "<absolute>";
+	};
+	E5C5FE81125155D600EAE988 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5FE82125155D600EAE988 /* MainWindow.h */;
+		name = "MainWindow.h: 25";
+		rLen = 0;
+		rLoc = 457;
+		rType = 0;
+		vrLen = 603;
+		vrLoc = 0;
+	};
+	E5C5FE82125155D600EAE988 /* MainWindow.h */ = {
+		isa = PBXFileReference;
+		name = MainWindow.h;
+		path = /Users/meeloo/work/nui3/tutorials/ComboBox/src/MainWindow.h;
+		sourceTree = "<absolute>";
+	};
+	E5C5FE83125155D600EAE988 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5FE84125155D600EAE988 /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 83";
+		rLen = 8;
+		rLoc = 2063;
+		rType = 0;
+		vrLen = 1709;
+		vrLoc = 588;
+	};
+	E5C5FE84125155D600EAE988 /* MainWindow.cpp */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
+		name = MainWindow.cpp;
+		path = /Users/meeloo/work/nui3/tutorials/Knobs/src/MainWindow.cpp;
+		sourceTree = "<absolute>";
+	};
+	E5C5FE85125155D600EAE988 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5FE86125155D600EAE988 /* MainWindow.h */;
+		name = "MainWindow.h: 26";
+		rLen = 0;
+		rLoc = 475;
+		rType = 0;
+		vrLen = 605;
+		vrLoc = 0;
+	};
+	E5C5FE86125155D600EAE988 /* MainWindow.h */ = {
+		isa = PBXFileReference;
+		name = MainWindow.h;
+		path = /Users/meeloo/work/nui3/tutorials/Knobs/src/MainWindow.h;
+		sourceTree = "<absolute>";
+	};
+	E5C5FE88125155D600EAE988 /* MainWindow.cpp */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
+		name = MainWindow.cpp;
+		path = /Users/meeloo/work/nui3/tutorials/HTMLView/src/MainWindow.cpp;
+		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {2292, 2080}}";
+			sepNavSelRange = "{3980, 0}";
+			sepNavVisRange = "{2756, 1559}";
+		};
+	};
+	E5C5FE89125155D600EAE988 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5FE8A125155D600EAE988 /* MainWindow.h */;
+		name = "MainWindow.h: 27";
+		rLen = 0;
+		rLoc = 546;
+		rType = 0;
+		vrLen = 803;
+		vrLoc = 0;
+	};
+	E5C5FE8A125155D600EAE988 /* MainWindow.h */ = {
+		isa = PBXFileReference;
+		name = MainWindow.h;
+		path = /Users/meeloo/work/nui3/tutorials/HTMLView/src/MainWindow.h;
+		sourceTree = "<absolute>";
+	};
+	E5C5FE8B125155D600EAE988 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5FE8C125155D600EAE988 /* MainWindow.h */;
+		name = "MainWindow.h: 31";
+		rLen = 0;
+		rLoc = 703;
+		rType = 0;
+		vrLen = 823;
+		vrLoc = 0;
+	};
+	E5C5FE8C125155D600EAE988 /* MainWindow.h */ = {
+		isa = PBXFileReference;
+		name = MainWindow.h;
+		path = /Users/meeloo/work/nui3/tutorials/Buttons/src/MainWindow.h;
+		sourceTree = "<absolute>";
+	};
+	E5C5FE8D125155D600EAE988 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5FE8E125155D600EAE988 /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 217";
+		rLen = 0;
+		rLoc = 6234;
+		rType = 0;
+		vrLen = 1776;
+		vrLoc = 4577;
+	};
+	E5C5FE8E125155D600EAE988 /* MainWindow.cpp */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
+		name = MainWindow.cpp;
+		path = /Users/meeloo/work/nui3/tutorials/Buttons/src/MainWindow.cpp;
+		sourceTree = "<absolute>";
+	};
+	E5C5FE8F125155D600EAE988 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5FE90125155D600EAE988 /* HTMLTree.cpp */;
+		name = "HTMLTree.cpp: 147";
+		rLen = 8;
+		rLoc = 3130;
+		rType = 0;
+		vrLen = 1577;
+		vrLoc = 2218;
+	};
+	E5C5FE90125155D600EAE988 /* HTMLTree.cpp */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
+		name = HTMLTree.cpp;
+		path = /Users/meeloo/work/nui3/tutorials/HTMLTree/src/HTMLTree.cpp;
+		sourceTree = "<absolute>";
+	};
+	E5C5FE91125155D600EAE988 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5FE92125155D600EAE988 /* HTMLTree.h */;
+		name = "HTMLTree.h: 39";
+		rLen = 0;
+		rLoc = 705;
+		rType = 0;
+		vrLen = 754;
+		vrLoc = 0;
+	};
+	E5C5FE92125155D600EAE988 /* HTMLTree.h */ = {
+		isa = PBXFileReference;
+		name = HTMLTree.h;
+		path = /Users/meeloo/work/nui3/tutorials/HTMLTree/src/HTMLTree.h;
+		sourceTree = "<absolute>";
+	};
+	E5C5FE93125155D600EAE988 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5FE94125155D600EAE988 /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 77";
+		rLen = 8;
+		rLoc = 1970;
+		rType = 0;
+		vrLen = 1935;
+		vrLoc = 904;
+	};
+	E5C5FE94125155D600EAE988 /* MainWindow.cpp */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
+		name = MainWindow.cpp;
+		path = /Users/meeloo/work/nui3/tutorials/TabView/src/MainWindow.cpp;
+		sourceTree = "<absolute>";
+	};
+	E5C5FE95125155D600EAE988 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5FE96125155D600EAE988 /* MainWindow.h */;
+		name = "MainWindow.h: 24";
+		rLen = 8;
+		rLoc = 489;
+		rType = 0;
+		vrLen = 759;
+		vrLoc = 0;
+	};
+	E5C5FE96125155D600EAE988 /* MainWindow.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = MainWindow.h;
+		path = /Users/meeloo/work/nui3/tutorials/TabView/src/MainWindow.h;
+		sourceTree = "<absolute>";
+	};
+	E5C5FE97125155D600EAE988 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5FE98125155D600EAE988 /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 95";
+		rLen = 0;
+		rLoc = 2866;
+		rType = 0;
+		vrLen = 1619;
+		vrLoc = 1810;
+	};
+	E5C5FE98125155D600EAE988 /* MainWindow.cpp */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
+		name = MainWindow.cpp;
+		path = /Users/meeloo/work/nui3/tutorials/AudioPlayer/src/MainWindow.cpp;
+		sourceTree = "<absolute>";
+	};
+	E5C5FE99125155D600EAE988 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5FE9A125155D600EAE988 /* MainWindow.h */;
+		name = "MainWindow.h: 26";
+		rLen = 8;
+		rLoc = 557;
+		rType = 0;
+		vrLen = 962;
+		vrLoc = 0;
+	};
+	E5C5FE9A125155D600EAE988 /* MainWindow.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = MainWindow.h;
+		path = /Users/meeloo/work/nui3/tutorials/AudioPlayer/src/MainWindow.h;
+		sourceTree = "<absolute>";
+	};
+	E5C5FE9B125155D600EAE988 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5FE9C125155D600EAE988 /* TimeLabel.cpp */;
+		name = "TimeLabel.cpp: 42";
+		rLen = 8;
+		rLoc = 791;
+		rType = 0;
+		vrLen = 1280;
+		vrLoc = 0;
+	};
+	E5C5FE9C125155D600EAE988 /* TimeLabel.cpp */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
+		name = TimeLabel.cpp;
+		path = /Users/meeloo/work/nui3/tutorials/AudioPlayer/src/widgets/TimeLabel.cpp;
+		sourceTree = "<absolute>";
+	};
+	E5C5FE9D125155D600EAE988 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5FE9E125155D600EAE988 /* TimeLabel.h */;
+		name = "TimeLabel.h: 19";
+		rLen = 0;
+		rLoc = 329;
+		rType = 0;
+		vrLen = 573;
+		vrLoc = 0;
+	};
+	E5C5FE9E125155D600EAE988 /* TimeLabel.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = TimeLabel.h;
+		path = /Users/meeloo/work/nui3/tutorials/AudioPlayer/src/widgets/TimeLabel.h;
+		sourceTree = "<absolute>";
+	};
+	E5C5FEA0125155D600EAE988 /* TimeProgressBar.cpp */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
+		name = TimeProgressBar.cpp;
+		path = /Users/meeloo/work/nui3/tutorials/AudioPlayer/src/widgets/TimeProgressBar.cpp;
+		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {2292, 1417}}";
+			sepNavSelRange = "{1363, 0}";
+			sepNavVisRange = "{0, 1491}";
+		};
+	};
+	E5C5FEA1125155D600EAE988 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5FEA2125155D600EAE988 /* TimeProgressBar.h */;
+		name = "TimeProgressBar.h: 26";
+		rLen = 8;
+		rLoc = 677;
+		rType = 0;
+		vrLen = 873;
+		vrLoc = 0;
+	};
+	E5C5FEA2125155D600EAE988 /* TimeProgressBar.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = TimeProgressBar.h;
+		path = /Users/meeloo/work/nui3/tutorials/AudioPlayer/src/widgets/TimeProgressBar.h;
+		sourceTree = "<absolute>";
+	};
+	E5C5FEA6125155D600EAE988 /* VolumeController.cpp */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
+		name = VolumeController.cpp;
+		path = /Users/meeloo/work/nui3/tutorials/AudioPlayer/src/widgets/VolumeController.cpp;
+		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {2292, 1326}}";
+			sepNavSelRange = "{2092, 0}";
+			sepNavVisRange = "{952, 1488}";
+		};
+	};
+	E5C5FEB01251563700EAE988 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5FE60125155D600EAE988 /* DragSource_FileTree.h */;
+		name = "DragSource_FileTree.h: 29";
+		rLen = 8;
+		rLoc = 460;
+		rType = 0;
+		vrLen = 504;
+		vrLoc = 0;
+	};
+	E5C5FEBA125156AC00EAE988 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5FE62125155D600EAE988 /* DragSource_FileTree.cpp */;
+		name = "DragSource_FileTree.cpp: 34";
+		rLen = 0;
+		rLoc = 762;
+		rType = 0;
+		vrLen = 1144;
+		vrLoc = 0;
+	};
+	E5C5FEBB125156AC00EAE988 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5FE68125155D600EAE988 /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 150";
+		rLen = 0;
+		rLoc = 5008;
+		rType = 0;
+		vrLen = 1871;
+		vrLoc = 4046;
+	};
+	E5C5FEBC125156AC00EAE988 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5FE72125155D600EAE988 /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 87";
+		rLen = 0;
+		rLoc = 1956;
+		rType = 0;
+		vrLen = 1430;
+		vrLoc = 722;
+	};
+	E5C5FEBD125156AC00EAE988 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5FE88125155D600EAE988 /* MainWindow.cpp */;
+		name = "MainWindow.cpp: 123";
+		rLen = 0;
+		rLoc = 3980;
+		rType = 0;
+		vrLen = 1559;
+		vrLoc = 2756;
+	};
+	E5C5FEBE125156AC00EAE988 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5FEA0125155D600EAE988 /* TimeProgressBar.cpp */;
+		name = "TimeProgressBar.cpp: 58";
+		rLen = 0;
+		rLoc = 1363;
+		rType = 0;
+		vrLen = 1491;
+		vrLoc = 0;
+	};
+	E5C5FEBF125156AC00EAE988 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5FEC0125156AC00EAE988 /* VolumeController.h */;
+		name = "VolumeController.h: 19";
+		rLen = 8;
+		rLoc = 359;
+		rType = 0;
+		vrLen = 705;
+		vrLoc = 0;
+	};
+	E5C5FEC0125156AC00EAE988 /* VolumeController.h */ = {
+		isa = PBXFileReference;
+		name = VolumeController.h;
+		path = /Users/meeloo/work/nui3/tutorials/AudioPlayer/src/widgets/VolumeController.h;
+		sourceTree = "<absolute>";
+	};
+	E5C5FEC1125156AC00EAE988 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5FEA6125155D600EAE988 /* VolumeController.cpp */;
+		name = "VolumeController.cpp: 86";
+		rLen = 0;
+		rLoc = 2092;
+		rType = 0;
+		vrLen = 1371;
+		vrLoc = 1069;
+	};
+	E5C5FECA1251597700EAE988 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E5C5FECB1251597700EAE988 /* VolumeController.cpp */;
+		name = "VolumeController.cpp: 86";
+		rLen = 0;
+		rLoc = 2092;
+		rType = 0;
+		vrLen = 1633;
+		vrLoc = 725;
+	};
+	E5C5FECB1251597700EAE988 /* VolumeController.cpp */ = {
+		isa = PBXFileReference;
+		name = VolumeController.cpp;
+		path = /Users/meeloo/work/nui3/tutorials/AudioPlayer/src/widgets/VolumeController.cpp;
+		sourceTree = "<absolute>";
 	};
 }

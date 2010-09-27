@@ -117,8 +117,8 @@ protected:
   nuiWidgetPtr     mpLastDestinationItem;
   nuiEventSink<nuiList> mEventSink;
   
-  bool OnChildAdded(const nuiEvent& rEvent);
-  bool OnChildDeleted(const nuiEvent& rEvent);
+  void OnChildAdded(const nuiEvent& rEvent);
+  void OnChildDeleted(const nuiEvent& rEvent);
   
   float mMoveAnimDuration;
   nuiEasingMethod mMoveAnimEasing;

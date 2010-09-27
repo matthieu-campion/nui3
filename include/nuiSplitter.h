@@ -100,7 +100,7 @@ public:
   nuiSimpleEventSource<0> GoToHandlePosAnimDone;
 
 protected:
-//  bool StepHandlePos(const nuiEvent& rEvent);  
+//  void StepHandlePos(const nuiEvent& rEvent);  
   nuiOrientation mOrientation; /// mHorizontal is true if the containers' layout if horizontal, false if vertical.
   nuiSplitterMode mMode;
   std::list<nuiRect> mPositions;

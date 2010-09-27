@@ -53,7 +53,7 @@ private:
 	void SetScale(float scale);
 
 
-  bool OnCommitChanges(const nuiEvent& rEvent);
+  void OnCommitChanges(const nuiEvent& rEvent);
   
   ElementDesc* mpDesc;
 	ElementInspector* mpInspector;
@@ -68,7 +68,7 @@ private:
   void OnFrameRectChanged(const nuiRect& rRect);
   void OnFrameViewRectChanged(const nuiRect& rRect);
 	void OnColorChanged(const nuiColor& color);
-  bool OnFrameMouseMoved(const nuiEvent& rEvent);
+  void OnFrameMouseMoved(const nuiEvent& rEvent);
   nuiSlotsSink mSlotSink;
   nuiEventSink<FrameEditor> mEventSink;
   

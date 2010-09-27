@@ -66,7 +66,7 @@ protected:
   nuiTimer* mpAutoRepeatTimer;
   nuiSize mActivationOffset;
   nuiEventSink<nuiButton> mEventSink;
-  bool OnAutoRepeat(const nuiEvent& rEvent);
+  void OnAutoRepeat(const nuiEvent& rEvent);
 };
 
 

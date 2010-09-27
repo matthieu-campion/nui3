@@ -614,10 +614,9 @@ bool nuiMainWindow::DBG_GetMouseOverInfo()
   return mDisplayMouseOverInfo;
 }
 
-bool nuiMainWindow::InvalidateTimer(const nuiEvent& rEvent)
+void nuiMainWindow::InvalidateTimer(const nuiEvent& rEvent)
 {
   LazyPaint();
-  return false;
 }
 
 
@@ -762,11 +761,10 @@ bool nuiMainWindow::ShowWidgetInspector()
   return false;
 }
 
-bool nuiMainWindow::OnInspectorDeath(const nuiEvent& rEvent)
+void nuiMainWindow::OnInspectorDeath(const nuiEvent& rEvent)
 {
   mpInspectorWindow = NULL;
   SetWatchedWidget(NULL);
-  return false;
 }
 
 bool nuiMainWindow::Trash()

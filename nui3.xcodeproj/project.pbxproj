@@ -20607,10 +20607,10 @@
 					AVMPLUS_ARM,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				GCC_VERSION = 4.0;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
-				SDKROOT = macosx10.5;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = macosx10.6;
 				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = ". include deps/libpng deps/gameswf deps/zlib deps/ungif deps/ucdata deps/libjpeg src/Application/Carbon src/Stream/Zip deps/freetype2/include deps/expat/include deps/harfbuzz deps/expat/lib deps/tracemonkey deps/libcss/src deps/libcss/src/libwapcaplet deps/libcss/src/libparserutils deps/libcss/include";
 			};

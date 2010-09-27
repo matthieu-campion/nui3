@@ -51,11 +51,11 @@ public:
 
   // Sent events:
   nuiSimpleEventSource<nuiValueChanged> ValueChanged; ///< This event is sent whenever the scrollbar's thumb position is changed (by the user or by the program).
-  bool HandlePageDown(const nuiEvent& rEvent);
-  bool HandlePageUp(const nuiEvent& rEvent);
+  void HandlePageDown(const nuiEvent& rEvent);
+  void HandlePageUp(const nuiEvent& rEvent);
 
-  bool Increment(const nuiEvent& rEvent);
-  bool Decrement(const nuiEvent& rEvent);
+  void Increment(const nuiEvent& rEvent);
+  void Decrement(const nuiEvent& rEvent);
 
   void SetIdealWidth(nuiSize width);
   nuiSize GetIdealWidth() const;
@@ -69,8 +69,8 @@ public:
   nuiSimpleEventSource<0> ThumbDepressed;
   
 protected:
-  bool DoInvalidate(const nuiEvent& rEvent);
-  bool DoInvalidateLayout(const nuiEvent& rEvent);
+  void DoInvalidate(const nuiEvent& rEvent);
+  void DoInvalidateLayout(const nuiEvent& rEvent);
 
   void SetThumbRect(const nuiRect& rRect);
 

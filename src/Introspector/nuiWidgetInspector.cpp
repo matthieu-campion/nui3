@@ -69,10 +69,10 @@ mpTree(NULL)
     mInspectorNodeSink.Connect(mpTarget->DebugRefreshInfo, &nuiWidgetInspectorNode::UpdateInfos);
 }
 
-bool nuiWidgetInspectorNode::UpdateInfos(const nuiEvent& rEvent)
+void nuiWidgetInspectorNode::UpdateInfos(const nuiEvent& rEvent)
 {
   if (!mpTarget)
-    return false;
+    return;
   
   float r = 0;
   float g = 0;
@@ -106,8 +106,6 @@ bool nuiWidgetInspectorNode::UpdateInfos(const nuiEvent& rEvent)
     b = .5f;
   
   pLabel->SetColor(eNormalTextFg, nuiColor(r, g, b));
-  
-  return false;
 }
 
 nuiWidgetInspectorNode::~nuiWidgetInspectorNode()
@@ -193,7 +191,7 @@ nuiWidgetInspector::~nuiWidgetInspector()
 }
 
 
-bool nuiWidgetInspector::OnSelectionChanged(const nuiEvent& rEvent)
+void nuiWidgetInspector::OnSelectionChanged(const nuiEvent& rEvent)
 {
   //nuiColumnTreeView* pTreeView = (nuiColumnTreeView*)rEvent.mpUser;
   nuiTreeView* pTreeView = (nuiTreeView*)rEvent.mpUser;
@@ -209,8 +207,6 @@ bool nuiWidgetInspector::OnSelectionChanged(const nuiEvent& rEvent)
   }
   
   mpWidgetInfo->SetTarget(pTarget);
-  
-  return false;
 }
 
 /////////
@@ -343,27 +339,23 @@ void nuiWidgetInfo::SetTarget(nuiWidget* pWidget)
   RebuildInfo(true);
 }
 
-bool nuiWidgetInfo::OnTimerTick(const nuiEvent& rEvent)
+void nuiWidgetInfo::OnTimerTick(const nuiEvent& rEvent)
 {
   if (mNeedUpdate)
   {
     RebuildInfo(false);
     mNeedUpdate = false;
   }
-  
-  return false;
 }
 
-bool nuiWidgetInfo::OnDebugUpdate(const nuiEvent& rEvent)
+void nuiWidgetInfo::OnDebugUpdate(const nuiEvent& rEvent)
 {
   mNeedUpdate = true;
-  return false;
 }
 
-bool nuiWidgetInfo::OnTrashed(const nuiEvent& rEvent)
+void nuiWidgetInfo::OnTrashed(const nuiEvent& rEvent)
 {
   SetTarget(NULL);
-  return false;
 }
 
 void nuiWidgetInfo::RebuildInfo(bool Reconstruct)

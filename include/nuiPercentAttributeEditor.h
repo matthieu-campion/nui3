@@ -24,7 +24,7 @@ public:
 protected : 
 
 	void OnAttributeChanged(float value);
-	bool OnChanged(const nuiEvent& rEvent);
+	void OnChanged(const nuiEvent& rEvent);
 
 	
 private : 

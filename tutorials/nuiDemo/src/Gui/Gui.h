@@ -27,18 +27,18 @@ protected:
   void ShowText(bool show);
   
   // gui events receivers
-  bool OnStartButtonPressed(const nuiEvent& rEvent);
-  bool OnStartButtonDePressed(const nuiEvent& rEvent);
+  void OnStartButtonPressed(const nuiEvent& rEvent);
+  void OnStartButtonDePressed(const nuiEvent& rEvent);
 
-  bool OnSwitchChanged(const nuiEvent& rEvent);
-  bool OnVolumeSliderChanged(const nuiEvent& rEvent);
-  bool OnFreqKnobChanged(const nuiEvent& rEvent);
-  bool OnQKnobChanged(const nuiEvent& rEvent);
+  void OnSwitchChanged(const nuiEvent& rEvent);
+  void OnVolumeSliderChanged(const nuiEvent& rEvent);
+  void OnFreqKnobChanged(const nuiEvent& rEvent);
+  void OnQKnobChanged(const nuiEvent& rEvent);
   
-  bool OnShowText(const nuiEvent& rEvent);
-  bool OnShowControls(const nuiEvent& rEvent);
+  void OnShowText(const nuiEvent& rEvent);
+  void OnShowControls(const nuiEvent& rEvent);
   
-  bool OnTitleButtonActivated(const nuiEvent& rEvent);
+  void OnTitleButtonActivated(const nuiEvent& rEvent);
   
 private:
 

@@ -84,7 +84,7 @@ public:
 
 protected:
   void CalcLayout();
-  bool OnTextChanged(const nuiEvent& rEvent);
+  void OnTextChanged(const nuiEvent& rEvent);
 
   nuiSize mVMargin;
   nuiSize mHMargin;

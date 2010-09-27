@@ -381,50 +381,59 @@ void nuiDialog::SetLayoutContainer(nuiSimpleContainer* pContainer, bool saveChil
   }
 }
 
-bool nuiDialog::OnOk(const nuiEvent& rEvent)
+void nuiDialog::OnOk(const nuiEvent& rEvent)
 {
   mResult = eDialogAccepted;
   if (!DialogDone())
-    return ExitDialog(rEvent);
-  else
-    return false;
+  {
+    ExitDialog(rEvent);
+  }
 }
 
-bool nuiDialog::OnAccept(const nuiEvent& rEvent)
+void nuiDialog::OnAccept(const nuiEvent& rEvent)
 {
   if (!mpDefaultButton)
-    return false;
+    return;
   
   if (mpDefaultButton == mpButtonOk)
-    return OnOk(rEvent);
+  {
+    OnOk(rEvent);
+    return;
+  }
   else if (mpDefaultButton == mpButtonCancel)
-    return OnCancel(rEvent);
+  {
+    OnCancel(rEvent);
+    return;    
+  }
   else if (mpDefaultButton == mpButtonApply)
-    return OnApply(rEvent);
+  {
+    OnApply(rEvent);
+    return;
+  }
 
-  return mpDefaultButton->Activated();
+  if (mpDefaultButton->Activated())
+    rEvent.Cancel();
 }
 
-bool nuiDialog::OnCancel(const nuiEvent& rEvent)
+void nuiDialog::OnCancel(const nuiEvent& rEvent)
 { 
   mResult = eDialogCanceled;
   if (!DialogDone())
-    return ExitDialog(rEvent);
-  else
-    return false;
+  {
+    ExitDialog(rEvent);
+  }
 }
 
-bool nuiDialog::OnApply(const nuiEvent& rEvent)
+void nuiDialog::OnApply(const nuiEvent& rEvent)
 { 
   DialogApplied();
-  return true;
+  rEvent.Cancel();
 }
 
 
-bool nuiDialog::ExitDialog(const nuiEvent& rEvent)
+void nuiDialog::ExitDialog(const nuiEvent& rEvent)
 {
   Trash();
-  return false;
 }
 
 nuiDialog::DialogResult nuiDialog::GetResult()

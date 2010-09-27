@@ -41,7 +41,7 @@ nuiPopupValueAttributeEditor::~nuiPopupValueAttributeEditor()
   
 }
 
-bool nuiPopupValueAttributeEditor::OnValidated(const nuiEvent& rEvent)
+void nuiPopupValueAttributeEditor::OnValidated(const nuiEvent& rEvent)
 {
   nglString userStrValue = mpEditLine->GetText();
   double value = userStrValue.GetCDouble();
@@ -65,21 +65,20 @@ bool nuiPopupValueAttributeEditor::OnValidated(const nuiEvent& rEvent)
   // auto trash
   Trash();
   
-  return true;
+  rEvent.Cancel();
 }
 
-bool nuiPopupValueAttributeEditor::OnCanceled(const nuiEvent& rEvent)
+void nuiPopupValueAttributeEditor::OnCanceled(const nuiEvent& rEvent)
 {
   // auto trash
   Trash();
-  return true;
+  rEvent.Cancel();
 }
 
 
-bool nuiPopupValueAttributeEditor::OnAttributeChanged(const nuiEvent& rEvent)
+void nuiPopupValueAttributeEditor::OnAttributeChanged(const nuiEvent& rEvent)
 {
   nglString str;
   mAttribute.ToString(str);
   mpEditLine->SetText(str);
-  return false;
 }

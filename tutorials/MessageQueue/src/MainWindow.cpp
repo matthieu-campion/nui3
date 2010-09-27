@@ -136,24 +136,24 @@ void MainWindow::OnCreation()
 //
 // just a trick to make the two scrollbars move together
 //
-bool MainWindow::OnScrollbarMoved(const nuiEvent& event)
+void MainWindow::OnScrollbarMoved(const nuiEvent& rEvent)
 {
   // get the scrollbar given as the event's user parameter
-  nuiScrollView* pView = (nuiScrollView*)event.mpUser;
+  nuiScrollView* pView = (nuiScrollView*)rEvent.mpUser;
   
   // guess who is the other scrollbar
   nuiScrollView* pOtherView = (pView == mpViews[0])? mpViews[1] : mpViews[0];
   
   // ask the other one to take the position that the first one is giving
   pOtherView->GetScrollBar(nuiVertical)->GetRange().SetValue(pView->GetScrollBar(nuiVertical)->GetRange().GetValue());
-  return true;
+  rEvent.Cancel();
 }
 
 
 //
 // launch the threads
 //
-bool MainWindow::OnStart(const nuiEvent& rEvent)
+void MainWindow::OnStart(const nuiEvent& rEvent)
 {
   mLabels[0] = _T("THREAD1 : hey I wanna play!\n");
   mLabels[1] = _T("THREAD2 : yeah, let's play ping pong!\n");
@@ -168,14 +168,14 @@ bool MainWindow::OnStart(const nuiEvent& rEvent)
   mpThread1->Start();
   mpThread2->Start();  
   
-  return true;
+  rEvent.Cancel();
 }
 
 
 //
 // ask the threads to stop and wait for them to do so
 //
-bool MainWindow::OnStop(const nuiEvent& rEvent)
+void MainWindow::OnStop(const nuiEvent& rEvent)
 {
   if (mpThread1 && mpThread2)
   {
@@ -192,7 +192,7 @@ bool MainWindow::OnStop(const nuiEvent& rEvent)
     mpThread2 = NULL;
   }
   
-  return true;
+  rEvent.Cancel();
 }
 
 

@@ -22,18 +22,18 @@ public:
   
 protected:
 
-  bool OnLoad(const nuiEvent& rEvent);
-  bool OnLoaded(const nuiEvent& rEvent);
+  void OnLoad(const nuiEvent& rEvent);
+  void OnLoaded(const nuiEvent& rEvent);
   
-  bool OnSave(const nuiEvent& rEvent);
-  bool OnSaved(const nuiEvent& rEvent);
+  void OnSave(const nuiEvent& rEvent);
+  void OnSaved(const nuiEvent& rEvent);
   
-  bool OnNewFrame(const nuiEvent& rEvent);
-	bool OnNewWidget(const nuiEvent& rEvent);
+  void OnNewFrame(const nuiEvent& rEvent);
+	void OnNewWidget(const nuiEvent& rEvent);
   
-  bool OnElementSelected(const nuiEvent& rEvent);
-  bool OnElementActivated(const nuiEvent& rEvent);
-  bool OnElementRenamed(const nuiEvent& rEvent);
+  void OnElementSelected(const nuiEvent& rEvent);
+  void OnElementActivated(const nuiEvent& rEvent);
+  void OnElementRenamed(const nuiEvent& rEvent);
 
   
   

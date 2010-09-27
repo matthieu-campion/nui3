@@ -22,8 +22,8 @@ public:
 protected:
   nuiEventSink<nuiDecorationInspector> mSink;
   
-  bool OnDecosChanged(const nuiEvent& rEvent);
-  bool OnDecoSelection(const nuiEvent& rEvent);
+  void OnDecosChanged(const nuiEvent& rEvent);
+  void OnDecoSelection(const nuiEvent& rEvent);
   void UpdateDecos();
   void DumpDecl();
   void OnTrash();

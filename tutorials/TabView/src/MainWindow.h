@@ -21,11 +21,11 @@ public:
 
 protected:
   
-  bool Reset(const nuiEvent& rEvent);
+  void Reset(const nuiEvent& rEvent);
   nuiWidget* BuildTabView(nuiPosition pos);
   
-  bool OnAddTab(const nuiEvent& rEvent);
-  bool OnRemoveTab(const nuiEvent& rEvent);
+  void OnAddTab(const nuiEvent& rEvent);
+  void OnRemoveTab(const nuiEvent& rEvent);
   
 private:
   

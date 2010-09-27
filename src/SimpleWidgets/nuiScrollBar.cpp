@@ -352,35 +352,31 @@ bool nuiScrollBar::MouseMoved  (nuiSize X, nuiSize Y)
   return false;
 }
 
-bool nuiScrollBar::Increment(const nuiEvent& rEvent)
+void nuiScrollBar::Increment(const nuiEvent& rEvent)
 {
   NGL_ASSERT(mpRange);
   mpRange->Increment();
-  return false;
 }
 
-bool nuiScrollBar::Decrement(const nuiEvent& rEvent)
+void nuiScrollBar::Decrement(const nuiEvent& rEvent)
 {
   NGL_ASSERT(mpRange);
   mpRange->Decrement();
-  return false;
 }
 
 // Data management:
-bool nuiScrollBar::HandlePageDown(const nuiEvent& rEvent)
+void nuiScrollBar::HandlePageDown(const nuiEvent& rEvent)
 {
   NGL_ASSERT(mpRange);
   if (mPageDownClicked)
     mpRange->PageIncrement();
-  return false;
 }
 
-bool nuiScrollBar::HandlePageUp(const nuiEvent& rEvent)
+void nuiScrollBar::HandlePageUp(const nuiEvent& rEvent)
 {
   NGL_ASSERT(mpRange);
   if (mPageUpClicked)
     mpRange->PageDecrement();
-  return false;
 }
 
 void nuiScrollBar::SetRange(nuiRange* pRange)
@@ -414,18 +410,16 @@ nuiRange& nuiScrollBar::GetRange()
   return *mpRange;
 }
 
-bool nuiScrollBar::DoInvalidate(const nuiEvent& rEvent)
+void nuiScrollBar::DoInvalidate(const nuiEvent& rEvent)
 {
   ValueChanged();
   UpdateLayout();
-  return false;
 }
 
-bool nuiScrollBar::DoInvalidateLayout(const nuiEvent& rEvent)
+void nuiScrollBar::DoInvalidateLayout(const nuiEvent& rEvent)
 {
   ValueChanged();
   UpdateLayout();
-  return false;
 }
 
 void nuiScrollBar::SetOrientation(nuiOrientation Orientation)

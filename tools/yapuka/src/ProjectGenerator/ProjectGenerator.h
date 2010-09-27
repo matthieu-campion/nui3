@@ -26,20 +26,20 @@ private:
   
   
   
-  bool OnBrowseSource(const nuiEvent& rEvent);
-  bool OnBrowseTarget(const nuiEvent& rEvent);
+  void OnBrowseSource(const nuiEvent& rEvent);
+  void OnBrowseTarget(const nuiEvent& rEvent);
 
-  bool OnSourceTextChanged(const nuiEvent& rEvent);
-  bool OnTimerTick(const nuiEvent& rEvent);
-  bool OnTargetTextChanged(const nuiEvent& rEvent);
+  void OnSourceTextChanged(const nuiEvent& rEvent);
+  void OnTimerTick(const nuiEvent& rEvent);
+  void OnTargetTextChanged(const nuiEvent& rEvent);
   
-  bool OnSourceSelected(const nuiEvent& rEvent);
-  bool OnTargetSelected(const nuiEvent& rEvent);
+  void OnSourceSelected(const nuiEvent& rEvent);
+  void OnTargetSelected(const nuiEvent& rEvent);
 
-  bool OnGenerateButton(const nuiEvent& rEvent);
-  bool OnQuitButton(const nuiEvent& rEvent);
+  void OnGenerateButton(const nuiEvent& rEvent);
+  void OnQuitButton(const nuiEvent& rEvent);
   
-  bool OnIconUpdate(const nuiEvent& rEvent);
+  void OnIconUpdate(const nuiEvent& rEvent);
 
   bool Make();
   bool MsgError(const nglString& error);

@@ -232,33 +232,29 @@ nuiMessageBox::Button nuiMessageBox::QueryUser()
   return btn;
 }
 
-bool nuiMessageBox::OnOK(const nuiEvent& rEvent)
+void nuiMessageBox::OnOK(const nuiEvent& rEvent)
 {
   mClickedButton = ButtonOK;
   ExitModal();
-  return false;
 }
 
-bool nuiMessageBox::OnCancel(const nuiEvent& rEvent)
+void nuiMessageBox::OnCancel(const nuiEvent& rEvent)
 {
   mClickedButton = ButtonCancel;
   ExitModal();
-  return false;
 }
 
-bool nuiMessageBox::OnRetry(const nuiEvent& rEvent)
+void nuiMessageBox::OnRetry(const nuiEvent& rEvent)
 {
   mClickedButton = ButtonRetry;
   ExitModal();
-  return false;
 }
 
-bool nuiMessageBox::OnCustom(const nuiEvent& rEvent)
+void nuiMessageBox::OnCustom(const nuiEvent& rEvent)
 {
   Button btn = (Button)(unsigned long int)rEvent.mpUser; 
   mClickedButton = btn;
   ExitModal();
-  return false;
 }
 
 

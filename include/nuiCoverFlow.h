@@ -76,7 +76,7 @@ public:
   
 protected:
   void DrawCard(nuiDrawContext* pContext, int32 index, float start, float end);
-  bool OnUpdateTime(const nuiEvent& rEvent);
+  void OnUpdateTime(const nuiEvent& rEvent);
   
   std::vector<nuiTexture*> mImages;
   int32 mSelectedImage;

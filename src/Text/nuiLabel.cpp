@@ -639,11 +639,10 @@ void nuiLabel::SetTextPosition(nuiPosition Position)
   Invalidate();
 }
 
-bool nuiLabel::OnTextChanged(const nuiEvent& rEvent)
+void nuiLabel::OnTextChanged(const nuiEvent& rEvent)
 {
   mTextChanged = true;
   InvalidateLayout();
-  return false;
 }
 
 nuiPosition nuiLabel::GetTextPosition()

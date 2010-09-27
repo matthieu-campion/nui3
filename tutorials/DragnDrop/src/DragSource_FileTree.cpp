@@ -34,7 +34,7 @@ DragFileTree::~DragFileTree()
 }
 
 
-bool DragFileTree::OnFileActivated(const nuiEvent& rEvent)
+void DragFileTree::OnFileActivated(const nuiEvent& rEvent)
 {
   nuiFileTree* pFileTree = (nuiFileTree*)rEvent.mpUser;
   
@@ -45,5 +45,5 @@ bool DragFileTree::OnFileActivated(const nuiEvent& rEvent)
   
   // do what u want with the selected file here...
   
-  return true;
+  rEvent.Cancel();
 }

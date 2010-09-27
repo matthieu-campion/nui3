@@ -789,7 +789,7 @@ void nuiColumnTreeView::CalcVerticalHotRect()
 }
 
 
-bool nuiColumnTreeView::InvalidateColumn(const nuiEvent& rEvent)
+void nuiColumnTreeView::InvalidateColumn(const nuiEvent& rEvent)
 {
 //  int column = (int)rEvent.mpUser;
   //SetRect(GetBorderedRect());
@@ -815,7 +815,6 @@ bool nuiColumnTreeView::InvalidateColumn(const nuiEvent& rEvent)
 */
 
   UpdateLayout();
-  return false;
 }
 
 void nuiColumnTreeView::CreateScrollBars()
@@ -903,7 +902,7 @@ void nuiColumnTreeView::CreateScrollBars()
   }
 }
 
-bool nuiColumnTreeView::OnButtonTimerTick(const nuiEvent& rEvent)
+void nuiColumnTreeView::OnButtonTimerTick(const nuiEvent& rEvent)
 {
   nuiScrollBar* pScrollBar = mpScrollBars[mButtonDepth];
   switch (mTimedButtonEvent)
@@ -917,52 +916,55 @@ bool nuiColumnTreeView::OnButtonTimerTick(const nuiEvent& rEvent)
     default:
       break;
   }
-  return true;
+  rEvent.Cancel();
 }
 
-bool nuiColumnTreeView::StopButtonTimer(const nuiEvent& rEvent)
+void nuiColumnTreeView::StopButtonTimer(const nuiEvent& rEvent)
 {
   mpButtonTimer->Stop();
   mButtonDepth = (unsigned long int)rEvent.mpUser;
   mpButtonTimer->SetPeriod(INITIAL_TIMER_PERIOD);
-  return true;
+  rEvent.Cancel();
 }
 
-bool nuiColumnTreeView::ArrowUpClicked(const nuiEvent& rEvent)
+void nuiColumnTreeView::ArrowUpClicked(const nuiEvent& rEvent)
 {
   mTimedButtonEvent = eUpPressed;
   mButtonDepth = (unsigned long int)rEvent.mpUser;
   mpButtonTimer->Start();
-  return true;
+  rEvent.Cancel();
 }
 
-bool nuiColumnTreeView::ArrowDownClicked(const nuiEvent& rEvent)
+void nuiColumnTreeView::ArrowDownClicked(const nuiEvent& rEvent)
 {
   mTimedButtonEvent = eDownPressed;
   mButtonDepth = (unsigned long int)rEvent.mpUser;
   mpButtonTimer->Start();
-  return true;
+  rEvent.Cancel();
 }
 
-bool nuiColumnTreeView::OnTreeChildAdded(const nuiEvent& rEvent)
+void nuiColumnTreeView::OnTreeChildAdded(const nuiEvent& rEvent)
 {
-  bool res = nuiTreeView::OnTreeChildAdded(rEvent);
+  nuiTreeView::OnTreeChildAdded(rEvent);
+  bool res = rEvent.IsCanceled();
   CreateScrollBars();
-  return res;
+  if (res)
+    rEvent.Cancel();
 }
 
-bool nuiColumnTreeView::OnTreeChildDeleted(const nuiEvent& rEvent)
+void nuiColumnTreeView::OnTreeChildDeleted(const nuiEvent& rEvent)
 {
-  bool res = nuiTreeView::OnTreeChildDeleted(rEvent);
+  nuiTreeView::OnTreeChildDeleted(rEvent);
+  bool res = rEvent.IsCanceled();
   CreateScrollBars();
-  return res;
+  if (res)
+    rEvent.Cancel();
 }
 
-bool nuiColumnTreeView::OnTreeChanged(const nuiEvent& rEvent)
+void nuiColumnTreeView::OnTreeChanged(const nuiEvent& rEvent)
 {
   nuiTreeView::OnTreeChanged(rEvent);
   CreateScrollBars();
-  return false;
 }
 
 void nuiColumnTreeView::SetPreview(nuiWidgetPtr pPreview)
@@ -995,13 +997,12 @@ nuiColumnTreeViewPreview::~nuiColumnTreeViewPreview()
 {
 }
 
-bool nuiColumnTreeViewPreview::OnUpdatePreview(const nuiEvent& rEvent)
+void nuiColumnTreeViewPreview::OnUpdatePreview(const nuiEvent& rEvent)
 {
   nuiColumnTreeView* pTree = (nuiColumnTreeView*)GetParent();
   nuiTreeNode* pNode = pTree?pTree->GetSelectedNode():NULL;
 
   SetVisible(UpdatePreview(pTree, pNode));
-  return false;
 }
 
 bool nuiColumnTreeViewPreview::UpdatePreview(nuiColumnTreeView* pTree, nuiTreeNodePtr pSelectedNode)

@@ -193,9 +193,9 @@ protected:
   nuiTreeNodePtr mpTree;
   nuiEventSink<nuiTreeView> mTreeViewSink;
 
-  virtual bool OnTreeChanged(const nuiEvent& rEvent);
-  virtual bool OnTreeChildAdded(const nuiEvent& rEvent);
-  virtual bool OnTreeChildDeleted(const nuiEvent& rEvent);
+  virtual void OnTreeChanged(const nuiEvent& rEvent);
+  virtual void OnTreeChildAdded(const nuiEvent& rEvent);
+  virtual void OnTreeChildDeleted(const nuiEvent& rEvent);
   
   void InitAttributes();
 

@@ -23,7 +23,7 @@ public:
   
 private:
 
-  bool OnValueChanged(const nuiEvent& rEvent);
+  void OnValueChanged(const nuiEvent& rEvent);
   
   nuiKnob* mpKnob;
   nuiLabel* mpLabel;

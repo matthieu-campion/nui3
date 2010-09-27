@@ -109,7 +109,7 @@ bool nuiFileTree::GetSelectedPath(nglPath& rPath)
 }
 
 
-bool nuiFileTree::OnNodeActivated(const nuiEvent& rEvent)
+void nuiFileTree::OnNodeActivated(const nuiEvent& rEvent)
 {
   nuiFileSelectorNode* pNode = (nuiFileSelectorNode*)rEvent.mpUser;
   nglPath path(pNode->GetProperty(_T("Path")));
@@ -125,12 +125,12 @@ bool nuiFileTree::OnNodeActivated(const nuiEvent& rEvent)
     SetPath(path);    
   }
   
-  return true;
+  rEvent.Cancel();
 }
 
 
 
-bool nuiFileTree::OnGotoParentFolder(const nuiEvent& rEvent)
+void nuiFileTree::OnGotoParentFolder(const nuiEvent& rEvent)
 {
   nglPath path = mRootPath;
  
@@ -147,7 +147,7 @@ bool nuiFileTree::OnGotoParentFolder(const nuiEvent& rEvent)
   
   SetPath(path);
   
-  return true;
+  rEvent.Cancel();
 }
 
 

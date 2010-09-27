@@ -26,8 +26,8 @@ protected :
 
 
 	void OnAttributeChanged(bool value);
-	bool OnButtonPressed(const nuiEvent& rEvent);
-	bool OnButtonDePressed(const nuiEvent& rEvent);
+	void OnButtonPressed(const nuiEvent& rEvent);
+	void OnButtonDePressed(const nuiEvent& rEvent);
 
 	
 private : 

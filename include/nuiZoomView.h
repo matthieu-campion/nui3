@@ -26,8 +26,8 @@ public:
   virtual nuiRect CalcIdealSize();
   virtual bool SetRect(const nuiRect& rRect);
 
-  bool Scrolled(const nuiEvent& rEvent);
-  bool Zoomed(const nuiEvent& rEvent);
+  void Scrolled(const nuiEvent& rEvent);
+  void Zoomed(const nuiEvent& rEvent);
 
   virtual bool MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
 
@@ -40,9 +40,9 @@ public:
 
 private:
 
-  bool OnChildAdded(const nuiEvent& rEvent);
-  bool OnChildRemoved(const nuiEvent& rEvent);
-  bool OnHotRectChanged(const nuiEvent& rEvent);
+  void OnChildAdded(const nuiEvent& rEvent);
+  void OnChildRemoved(const nuiEvent& rEvent);
+  void OnHotRectChanged(const nuiEvent& rEvent);
 
   nuiScrollBar* mpHorizontalScrollbar;
   nuiScrollBar* mpVerticalScrollbar;

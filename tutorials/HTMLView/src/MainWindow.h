@@ -23,8 +23,8 @@ public:
 
 protected:
   
-  bool OnButtonClick(const nuiEvent& rEvent);
-  bool OnGoHome(const nuiEvent& rEvent);
+  void OnButtonClick(const nuiEvent& rEvent);
+  void OnGoHome(const nuiEvent& rEvent);
   void OnURLChanged(const nglString& rString);
 private:
   

@@ -60,9 +60,9 @@ public:
   bool GetShowDisabledButtons() const;
   
   // Scrolling Management
-  bool OnScrollBackward(const nuiEvent& rEvent);
-  bool OnScrollForward(const nuiEvent& rEvent);
-  bool OnScrollViewChanged(const nuiEvent& rEvent);
+  void OnScrollBackward(const nuiEvent& rEvent);
+  void OnScrollForward(const nuiEvent& rEvent);
+  void OnScrollViewChanged(const nuiEvent& rEvent);
   
 protected:
   bool mShowDisabledButtons;

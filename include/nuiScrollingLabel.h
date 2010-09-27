@@ -54,7 +54,7 @@ public:
   void UnpauseScrolling();
   void PauseScrolling();  
   bool IsScrolling() const;
-  virtual bool OnTimerChange(const nuiEvent& rEvent);
+  virtual void OnTimerChange(const nuiEvent& rEvent);
   
   // nuiLabel management
   nuiLabel* GetLabel();

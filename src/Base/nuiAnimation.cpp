@@ -164,7 +164,7 @@ nuiTimer* nuiAnimation::AcquireTimer()
   if (!mpTimer)
   {
     mpTimer = new nuiTimer(1.0 / mFrameRate);
-    AnimSink.Connect(mpTimer->Tick, (bool (*)(const nuiEvent&))&nuiAnimation::StartTasks);
+    AnimSink.Connect(mpTimer->Tick, (void (*)(const nuiEvent&))&nuiAnimation::StartTasks);
     mpTimer->Start(false, false);
   }
   return mpTimer;
@@ -479,10 +479,9 @@ void nuiAnimation::CallOnFrame()
   }
 }
 
-bool nuiAnimation::OnTick(const nuiEvent& rEvent)
+void nuiAnimation::OnTick(const nuiEvent& rEvent)
 {
   CallOnFrame();
-  return false;
 }
 
 bool nuiAnimation::UpdateTime()
@@ -588,25 +587,22 @@ bool nuiAnimation::UpdateTime()
   return ShouldStop;
 }
 
-bool nuiAnimation::Play(const nuiEvent& rEvent)
+void nuiAnimation::Play(const nuiEvent& rEvent)
 {
   if (mEnableCallbacks)
     Play();
-  return false;
 }
 
-bool nuiAnimation::Stop(const nuiEvent& rEvent)
+void nuiAnimation::Stop(const nuiEvent& rEvent)
 {
   if (mEnableCallbacks)
     Stop();
-  return false;
 }
 
-bool nuiAnimation::Pause(const nuiEvent& rEvent)
+void nuiAnimation::Pause(const nuiEvent& rEvent)
 {
   if (mEnableCallbacks)
     Pause();
-  return false;
 }
 
 void nuiAnimation::EnableCallbacks(bool enable)
@@ -617,7 +613,7 @@ void nuiAnimation::EnableCallbacks(bool enable)
 
 std::list<std::pair<int32, nuiTask*> > nuiAnimation::mOnNextTick;
 
-bool nuiAnimation::StartTasks(const nuiEvent& rEvent)
+void nuiAnimation::StartTasks(const nuiEvent& rEvent)
 {
   std::list<std::pair<int32, nuiTask*> >::iterator it = mOnNextTick.begin();
   std::list<std::pair<int32, nuiTask*> >::iterator end = mOnNextTick.end();
@@ -636,8 +632,6 @@ bool nuiAnimation::StartTasks(const nuiEvent& rEvent)
       mOnNextTick.erase(it++);
     }
   }
-  
-  return false;
 }
 
 void nuiAnimation::RunOnAnimationTick(nuiTask* pTask, int32 TickCount)
@@ -860,7 +854,7 @@ void nuiAnimationSequence::OnFrame()
   // Do nothing, not even update time.
 }
 
-bool nuiAnimationSequence::OnAnimStopped(const nuiEvent& rEvent)
+void nuiAnimationSequence::OnAnimStopped(const nuiEvent& rEvent)
 {
   if (IsPlaying())
   {
@@ -895,6 +889,4 @@ bool nuiAnimationSequence::OnAnimStopped(const nuiEvent& rEvent)
       mpAnimations.front()->Play();
     }
   }
-
-  return false;
 }

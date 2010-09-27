@@ -756,12 +756,12 @@ bool nuiScrollingLabel::IsScrolling() const
   return mpTimer->IsRunning();
 }
 
-bool nuiScrollingLabel::OnTimerChange(const nuiEvent& rEvent)
+void nuiScrollingLabel::OnTimerChange(const nuiEvent& rEvent)
 {
   mTickCount++;
   UpdateLayout();
 
-  return true;
+  rEvent.Cancel();
 }
 
 

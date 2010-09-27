@@ -82,7 +82,7 @@ public:
   nuiTabsSelected TabsSelected;
 
 protected:
-  virtual bool OnTabSelected(const nuiEvent& rEvent);
+  virtual void OnTabSelected(const nuiEvent& rEvent);
 
 protected:
   std::vector<nuiTab*> mTabs;

@@ -118,21 +118,21 @@ nuiScrollBox::~nuiScrollBox()
 /////////////////////////////////
 
 
-bool nuiScrollBox::OnScrollBackward(const nuiEvent& rEvent)
+void nuiScrollBox::OnScrollBackward(const nuiEvent& rEvent)
 {
   mpScrollView->GetRange(mOrientation)->Decrement();
-  return true;
+  rEvent.Cancel();
 }
 
 
-bool nuiScrollBox::OnScrollForward(const nuiEvent& rEvent)
+void nuiScrollBox::OnScrollForward(const nuiEvent& rEvent)
 {
   mpScrollView->GetRange(mOrientation)->Increment();
-  return true;
+  rEvent.Cancel();
 }
 
 
-bool nuiScrollBox::OnScrollViewChanged(const nuiEvent& rEvent)
+void nuiScrollBox::OnScrollViewChanged(const nuiEvent& rEvent)
 {
   if (mpScrollView->GetRange(mOrientation)->GetValue() == mpScrollView->GetRange(mOrientation)->GetMinimum())
   {
@@ -167,8 +167,6 @@ bool nuiScrollBox::OnScrollViewChanged(const nuiEvent& rEvent)
       mpForwardButton->SetVisible(true);
     }
   }
-  
-  return false;
 }
 
 

@@ -41,10 +41,9 @@ nuiTextureInspector::~nuiTextureInspector()
   
 }
 
-bool nuiTextureInspector::OnTexturesChanged(const nuiEvent& rEvent)
+void nuiTextureInspector::OnTexturesChanged(const nuiEvent& rEvent)
 {
   UpdateTextures();
-  return false;
 }
 
 void nuiTextureInspector::UpdateTextures()
@@ -95,7 +94,7 @@ void nuiTextureInspector::UpdateTextures()
   mSink.Connect(pList->SelectionChanged, &nuiTextureInspector::OnTextureSelection, (void*)pList);
 }
 
-bool nuiTextureInspector::OnTextureSelection(const nuiEvent& rEvent)
+void nuiTextureInspector::OnTextureSelection(const nuiEvent& rEvent)
 {
   nuiList* pList = (nuiList*)rEvent.mpUser;
   nuiWidget* pW = pList->GetSelected();
@@ -186,7 +185,5 @@ bool nuiTextureInspector::OnTextureSelection(const nuiEvent& rEvent)
     ++it_a;
     i++;
   }
-    
-  return false;
 }
 

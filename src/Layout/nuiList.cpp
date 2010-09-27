@@ -1023,7 +1023,7 @@ bool nuiList::GetFixedAspectRatio()
   return mFixedAspectRatio;
 }
 
-bool nuiList::OnChildAdded(const nuiEvent& rEvent)
+void nuiList::OnChildAdded(const nuiEvent& rEvent)
 {
   const nuiTreeEvent<nuiWidget>& rTreeEvent((const nuiTreeEvent<nuiWidget>&)rEvent);
   if (mMoveAnimDuration)
@@ -1042,14 +1042,12 @@ bool nuiList::OnChildAdded(const nuiEvent& rEvent)
   }
   
   mRects[rTreeEvent.mpChild] = nuiRect();
-  return false;
 }
 
-bool nuiList::OnChildDeleted(const nuiEvent& rEvent)
+void nuiList::OnChildDeleted(const nuiEvent& rEvent)
 {
   const nuiTreeEvent<nuiWidget>& rTreeEvent((const nuiTreeEvent<nuiWidget>&)rEvent);
   mRects.erase(rTreeEvent.mpChild);
-  return false;
 }
 
 void nuiList::SetMoveAnimationDuration(float duration)

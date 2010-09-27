@@ -51,7 +51,7 @@ public:
 private:
   std::list<nuiPathGenerator*> mpElements;
   nuiContour(const nuiContour& rContour);
-  bool ElementChanged(const nuiEvent& rEvent);
+  void ElementChanged(const nuiEvent& rEvent);
   nuiEventSink<nuiContour> mEventSink;
 };
 

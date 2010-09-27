@@ -23,7 +23,7 @@ public:
   virtual bool MouseMoved    (nuiSize X, nuiSize Y);
   
 private:
-  bool OnTimerTick(const nuiEvent& rEvet);
+  void OnTimerTick(const nuiEvent& rEvet);
   
   nuiAttrib<uint64> mPosAttrib;
   nuiAttrib<uint64> mLengthAttrib;

@@ -107,7 +107,7 @@ protected:
   };
 
   std::multimap<std::pair<nuiWidget*, nglString>, EventLink*> mEvents; // Event name to event link
-  bool OnEvent(const nuiEvent& rEvent);
+  void OnEvent(const nuiEvent& rEvent);
 
   void Connect(JSObject* pObject, jsval obj, nuiWidget* pWidget, const nglString& rEventName);
   void Disconnect(nuiWidget* pWidget, const nglString& rEventName);

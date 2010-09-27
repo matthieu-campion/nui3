@@ -62,11 +62,11 @@ public:
   nuiTreeBase* GetParent() const;
 
 protected:
-  bool OnChildChanged(const nuiEvent& rEvent);
-  bool OnChildAdded(const nuiEvent& rEvent);
-  bool OnChildRemoved(const nuiEvent& rEvent);
-  bool OnChildDeleted(const nuiEvent& rEvent);
-  bool OnDelChildRequest(const nuiEvent& rEvent);
+  void OnChildChanged(const nuiEvent& rEvent);
+  void OnChildAdded(const nuiEvent& rEvent);
+  void OnChildRemoved(const nuiEvent& rEvent);
+  void OnChildDeleted(const nuiEvent& rEvent);
+  void OnDelChildRequest(const nuiEvent& rEvent);
   nuiEventSink<nuiTreeBase> mTreeNodeEventSink;
   
   std::vector<nuiTreePtr> mpChildren;

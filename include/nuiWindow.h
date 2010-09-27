@@ -95,7 +95,7 @@ protected:
 
   nuiWindowManager* mpManager;
   
-  bool HandleCloseButtonPressed(const nuiEvent& rEvent);
+  void HandleCloseButtonPressed(const nuiEvent& rEvent);
 
   nuiEventSink<nuiWindow> mNuiWindowSink;
 

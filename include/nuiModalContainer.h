@@ -41,7 +41,7 @@ private:
   bool mInModalState;
   nuiWidget* mpPreviousFocus;
   nuiEventSink<nuiModalContainer> mModalEventSink;
-  bool OnPreviousFocusTrashed(const nuiEvent& rEvent);
+  void OnPreviousFocusTrashed(const nuiEvent& rEvent);
 };
 
 #endif // __nuiModalConatiner_h__

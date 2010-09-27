@@ -658,14 +658,17 @@ bool nuiMatrixView::MouseDoubleClicked(uint col, uint row)
 }
 
 
-bool nuiMatrixView::Renamed(const nuiEvent& rEvent)
+void nuiMatrixView::Renamed(const nuiEvent& rEvent)
 {
   NGL_ASSERT(rEvent.mpUser);
   nuiLabelRenamer* renamer = (nuiLabelRenamer*)rEvent.mpUser;
   nglString contents = renamer->GetText();
   contents.Trim();
   if (contents.IsEmpty())
-    return true;
+  { 
+    rEvent.Cancel();
+    return;
+  }
     
   double value = contents.GetCDouble();
   
@@ -686,7 +689,7 @@ bool nuiMatrixView::Renamed(const nuiEvent& rEvent)
     
   ValueChanged();
         
-  return true;
+  rEvent.Cancel();
 }
 
 

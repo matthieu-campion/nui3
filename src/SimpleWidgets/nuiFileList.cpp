@@ -56,7 +56,7 @@ nuiFileList::~nuiFileList()
 {
 }
 
-bool nuiFileList::Selected(const nuiEvent& rEvent)
+void nuiFileList::Selected(const nuiEvent& rEvent)
 {
   nuiWidgetList Items;
 //  NGL_OUT(_T("Selected!\n"));
@@ -85,8 +85,6 @@ bool nuiFileList::Selected(const nuiEvent& rEvent)
   }
 //  else
 //    NGL_OUT(_T("?!? No item selected!?!\n"));
-
-  return false;
 }
 
 

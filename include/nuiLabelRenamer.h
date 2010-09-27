@@ -81,7 +81,11 @@ public:
   virtual bool MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
   {
     if (!mpEditLine->IsInsideFromRoot(X,Y))
-      return OnEditLineSelected(NULL);
+    {
+      nuiEvent e;
+      OnEditLineSelected(e);
+      return e.IsCanceled();
+    }
     else
       return false;
   }
@@ -89,14 +93,14 @@ public:
 private:
   nuiEventSink<nuiLabelRenamer> mSink;
 
-  bool OnEditLineCanceled(const nuiEvent& rEvent)
+  void OnEditLineCanceled(const nuiEvent& rEvent)
   {
     Canceled();
     Trash();
-    return true;
+    rEvent.Cancel();
   }
 
-  bool OnEditLineSelected(const nuiEvent& rEvent)
+  void OnEditLineSelected(const nuiEvent& rEvent)
   {
     mText = mpEditLine->GetText();
     mRejectName = false;
@@ -105,7 +109,8 @@ private:
     {
       Canceled();
       Trash();
-      return true;
+      rEvent.Cancel();
+      return;
     }
 
     Renamed();
@@ -116,10 +121,9 @@ private:
         mpLabel->SetText(mText);
         
       Trash();
-      return true;
+      rEvent.Cancel();
+      return;
     }
-    
-    return false;
   }
 
   nuiEditLine* mpEditLine;

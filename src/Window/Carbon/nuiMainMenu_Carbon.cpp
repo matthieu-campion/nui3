@@ -356,7 +356,7 @@ nuiMainMenu::~nuiMainMenu()
 
 
 // an item has been added in the widget tree. Do the system-side of the operation (add a menu or add a menu item)
-bool nuiMainMenu::OnItemAdded(const nuiEvent& rEvent)
+void nuiMainMenu::OnItemAdded(const nuiEvent& rEvent)
 {
   const nuiTreeEvent<nuiTreeBase>* pTreeEvent = dynamic_cast<const nuiTreeEvent<nuiTreeBase>*>(&rEvent);
   nuiMainMenuItem* pParent = (nuiMainMenuItem*)pTreeEvent->mpParent;
@@ -388,7 +388,7 @@ bool nuiMainMenu::OnItemAdded(const nuiEvent& rEvent)
     }
   }
   
-  return true;
+  rEvent.Cancel();
 }
 
 

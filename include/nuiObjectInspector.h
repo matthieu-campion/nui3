@@ -22,8 +22,8 @@ public:
 protected:
   nuiEventSink<nuiObjectInspector> mSink;
   
-  bool OnObjectsChanged(const nuiEvent& rEvent);
-  bool OnObjectSelection(const nuiEvent& rEvent);
+  void OnObjectsChanged(const nuiEvent& rEvent);
+  void OnObjectSelection(const nuiEvent& rEvent);
   void UpdateObjects();
   
   nuiImage* mpImage;

@@ -41,10 +41,9 @@ nuiObjectInspector::~nuiObjectInspector()
   
 }
 
-bool nuiObjectInspector::OnObjectsChanged(const nuiEvent& rEvent)
+void nuiObjectInspector::OnObjectsChanged(const nuiEvent& rEvent)
 {
   UpdateObjects();
-  return false;
 }
 
 void nuiObjectInspector::UpdateObjects()
@@ -84,7 +83,7 @@ void nuiObjectInspector::UpdateObjects()
   mSink.Connect(pList->SelectionChanged, &nuiObjectInspector::OnObjectSelection, (void*)pList);
 }
 
-bool nuiObjectInspector::OnObjectSelection(const nuiEvent& rEvent)
+void nuiObjectInspector::OnObjectSelection(const nuiEvent& rEvent)
 {
   nuiList* pList = (nuiList*)rEvent.mpUser;
   nuiWidget* pW = pList->GetSelected();
@@ -102,7 +101,7 @@ bool nuiObjectInspector::OnObjectSelection(const nuiEvent& rEvent)
   //  mSlot.Connect(pObject->Changed, nuiMakeDelegate(mpLabel->GetParent(), &nuiWidget::Invalidate));
 
   if (index < 0)
-    return false;
+    return;
   
   // build attributes list
   std::map<nglString, nuiAttributeBase*> attributes;
@@ -132,7 +131,5 @@ bool nuiObjectInspector::OnObjectSelection(const nuiEvent& rEvent)
     ++it_a;
     i++;
   }
-  
-  return false;
 }
 

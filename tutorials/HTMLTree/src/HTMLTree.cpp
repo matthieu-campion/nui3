@@ -144,11 +144,11 @@ bool HTMLTree::ParseURL(const nglString& rString)
   return res;
 }
 
-bool HTMLTree::OnSelectionChanged(const nuiEvent& rEvent)
+void HTMLTree::OnSelectionChanged(const nuiEvent& rEvent)
 {
   HTMLTreeNode* pNode = (HTMLTreeNode*)mpTreeView->GetSelectedNode();
   if (!pNode)
-    return false;
+    return;
   
   mpAttributes->RemoveRows(0, mpAttributes->GetNbRows());
   
@@ -156,7 +156,7 @@ bool HTMLTree::OnSelectionChanged(const nuiEvent& rEvent)
   NGL_ASSERT(pHTML);
   uint32 count = pHTML->GetNbAttributes();
   if (!count)
-    return false;
+    return;
   mpAttributes->AddRows(0, count);
   for (uint32 i = 0; i < count; i++)
   {
@@ -166,5 +166,4 @@ bool HTMLTree::OnSelectionChanged(const nuiEvent& rEvent)
     mpAttributes->SetCell(0, i, new nuiLabel(name));
     mpAttributes->SetCell(1, i, new nuiLabel(value));
   }
-  return false;
 }

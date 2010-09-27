@@ -215,9 +215,9 @@ WidgetEditor::~WidgetEditor()
 //
 // a tree node has been selected from the tree : display the attribute editor
 //
-bool WidgetEditor::OnSelectionChanged(const nuiEvent& rEvent)
+void WidgetEditor::OnSelectionChanged(const nuiEvent& rEvent)
 {
-nuiWidget* pTargetedWidget=NULL;
+  nuiWidget* pTargetedWidget=NULL;
 
 	// get the selected tree node
 	nuiTreeNode* pSelectedNode = mpTreeMain->GetSelectedNode();
@@ -265,8 +265,6 @@ nuiWidget* pTargetedWidget=NULL;
 		mpInspector->AddToolpane(pToolpane, 250);
 		
 	mpCurrentToolpane = pToolpane;
-	
-	return false;
 }
 
 
@@ -276,7 +274,7 @@ nuiWidget* pTargetedWidget=NULL;
 //
 // the user requested a widget deletion
 //
-bool WidgetEditor::OnDeleteActivated(const nuiEvent& rEvent)
+void WidgetEditor::OnDeleteActivated(const nuiEvent& rEvent)
 {
 	// get the selected tree node
 	nuiTreeNode* pSelectedNode = mpTreeMain->GetSelectedNode();
@@ -313,7 +311,7 @@ bool WidgetEditor::OnDeleteActivated(const nuiEvent& rEvent)
 	mpContainerList->DeselectAll();
 	mpWidgetList->DeselectAll();
 	
-	return true;
+	rEvent.Cancel();
 }
 
 
@@ -322,7 +320,7 @@ bool WidgetEditor::OnDeleteActivated(const nuiEvent& rEvent)
 //
 // a widget class has been activated in the list
 //
-bool WidgetEditor::OnActivated(const nuiEvent& rEvent)
+void WidgetEditor::OnActivated(const nuiEvent& rEvent)
 {
   nuiList* pList = (nuiList*)rEvent.mpUser;
   NGL_ASSERT(pList);
@@ -339,7 +337,11 @@ bool WidgetEditor::OnActivated(const nuiEvent& rEvent)
 	// the associated widget is not a container, it's a simple widget : stop the process
 	nuiSimpleContainer* pSelectedContainer = pSelectionInfo->GetContainer();
 	if (pSelectedContainer == NULL)
-		return DialogCantDo();
+	{
+    if (DialogCantDo())
+      rEvent.Cancel();
+    return;
+  }
 
 
 	// yes, it's a container. go on...
@@ -392,9 +394,6 @@ bool WidgetEditor::OnActivated(const nuiEvent& rEvent)
 	mpTreeMain->SelectAll(false);
 	mpTreeMain->SelectionChanged.Enable();
 	mpTreeMain->Select(pNewNode, true);
-	
-	
-	return false;
 }
 
 
@@ -506,10 +505,9 @@ void WidgetEditor::CommitChanges()
 
 
 
-bool WidgetEditor::OnCommitChanges(const nuiEvent& rEvent)
+void WidgetEditor::OnCommitChanges(const nuiEvent& rEvent)
 {
   CommitChanges();
-  return false;
 }
 
 

@@ -15,6 +15,7 @@
 #include <io.h>
 #include <alloc.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <sys\stat.h>
 #else
 #include <sys/types.h>

@@ -325,10 +325,9 @@ void nuiMessageBox(nuiContainer* pParent, const nglString& rTitle, const nglStri
   pModal->DoModal();
 }
 
-bool nuiModalContainer::OnPreviousFocusTrashed(const nuiEvent& rEvent)
+void nuiModalContainer::OnPreviousFocusTrashed(const nuiEvent& rEvent)
 {
   mpPreviousFocus = NULL;
-  return false;
 }
 
 void nuiModalContainer::GetHoverList(nuiSize X, nuiSize Y, std::set<nuiWidget*>& rHoverSet, std::list<nuiWidget*>& rHoverList) const

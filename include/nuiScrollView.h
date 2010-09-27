@@ -26,7 +26,7 @@ public:
   virtual bool SetRect(const nuiRect& rRect);
   virtual bool Draw(nuiDrawContext* pContext);
 
-  bool Scrolled(const nuiEvent& rEvent);
+  void Scrolled(const nuiEvent& rEvent);
 
   void SetFillChildren(bool Set); ///< If filling is enabled the scroll view will try to move its child in order to honor the available space
   bool GetFillChildren();
@@ -69,9 +69,9 @@ private:
   void InitAttributes();
   void Init(nuiScrollBar* pHorizontalScrollBar, nuiScrollBar* pVerticalScrollBar, bool Horizontal, bool Vertical);
 
-  bool OnChildAdded(const nuiEvent& rEvent);
-  bool OnChildRemoved(const nuiEvent& rEvent);
-  bool OnHotRectChanged(const nuiEvent& rEvent);
+  void OnChildAdded(const nuiEvent& rEvent);
+  void OnChildRemoved(const nuiEvent& rEvent);
+  void OnHotRectChanged(const nuiEvent& rEvent);
 
   nuiRect mChildrenUnionRect;
   bool SetChildrenRect(nuiSize x, nuiSize y, nuiSize xx, nuiSize yy, nuiSize scrollv, nuiSize scrollh);
@@ -91,12 +91,12 @@ private:
   bool mFillChildren;
   nuiSize mVIncrement, mHIncrement;
 
-  bool OnSmoothScrolling(const nuiEvent& rEvent);
+  void OnSmoothScrolling(const nuiEvent& rEvent);
   
-  bool OnHThumbPressed(const nuiEvent& rEvent);
-  bool OnHThumbDepressed(const nuiEvent& rEvent);
-  bool OnVThumbPressed(const nuiEvent& rEvent);
-  bool OnVThumbDepressed(const nuiEvent& rEvent);
+  void OnHThumbPressed(const nuiEvent& rEvent);
+  void OnHThumbDepressed(const nuiEvent& rEvent);
+  void OnVThumbPressed(const nuiEvent& rEvent);
+  void OnVThumbDepressed(const nuiEvent& rEvent);
   
   bool mHThumbPressed;
   bool mVThumbPressed;

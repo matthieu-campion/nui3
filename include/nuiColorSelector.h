@@ -52,16 +52,16 @@ private:
   nuiWidget* Tab_HSV();
   nuiWidget* Tab_Swatches();
   
-  bool OnTabSelected(const nuiEvent& rEvent);
+  void OnTabSelected(const nuiEvent& rEvent);
   
   void Tab_RGB_Update();
   void Tab_HSV_Update();
   void FormatColor(nuiSize color, nuiLabel* pLabel, float maxval = 255.0f, bool integer = true);
   
   
-  bool SwatchSelected(const nuiEvent& rEvent);
-  bool RGBSliderChanged(const nuiEvent& rEvent);
-  bool HSVSliderChanged(const nuiEvent& rEvent);
+  void SwatchSelected(const nuiEvent& rEvent);
+  void RGBSliderChanged(const nuiEvent& rEvent);
+  void HSVSliderChanged(const nuiEvent& rEvent);
   
   void MakeSwatchGrid();
   

@@ -90,16 +90,15 @@ void nuiStringAttributeEditor::OnConstAttributeChanged(const nglString& string)
 }
 
 
-bool nuiStringAttributeEditor::OnActivated(const nuiEvent& rEvent)
+void nuiStringAttributeEditor::OnActivated(const nuiEvent& rEvent)
 {
 	nuiLabelRenamer* pRenamer = new nuiLabelRenamer(mpLabel);
 	mEventSink.Connect(pRenamer->Renamed, &nuiStringAttributeEditor::OnRenamed, pRenamer);
-	
-	return true;
+  rEvent.Cancel();
 }
 
 
-bool nuiStringAttributeEditor::OnRenamed(const nuiEvent& rEvent)
+void nuiStringAttributeEditor::OnRenamed(const nuiEvent& rEvent)
 {
 	nuiLabelRenamer* pRenamer = (nuiLabelRenamer*)rEvent.mpUser;
 	if (mAttribute.IsValid())
@@ -110,6 +109,6 @@ bool nuiStringAttributeEditor::OnRenamed(const nuiEvent& rEvent)
 	{
 		mConstAttribute.Set(pRenamer->GetText());
 	}
-	return true;
+  rEvent.Cancel();
 }
 

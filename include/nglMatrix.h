@@ -193,22 +193,25 @@ public:
     nglMatrix<T> result;
 
     det = 1.f / det;
-    result.Elt.M11 = det * (Elt.M22*(Elt.M33) + Elt.M23*(-Elt.M32));
-    result.Elt.M12 = det * (Elt.M32*(Elt.M13) + Elt.M33*(-Elt.M12));
-    result.Elt.M13 = det * (Elt.M12*Elt.M23 - Elt.M13*Elt.M22);
-    result.Elt.M14 = det * (Elt.M12*(Elt.M24*Elt.M33 - Elt.M23*Elt.M34) + Elt.M13*(Elt.M22*Elt.M34 - Elt.M24*Elt.M32) + Elt.M14*(Elt.M23*Elt.M32 - Elt.M22*Elt.M33));
-    result.Elt.M21 = det * (Elt.M23*Elt.M31 + Elt.M21*(-Elt.M33));
-    result.Elt.M22 = det * (Elt.M33*Elt.M11 + Elt.M31*(-Elt.M13));
-    result.Elt.M23 = det * (Elt.M13*Elt.M21 - Elt.M11*Elt.M23);
-    result.Elt.M24 = det * (Elt.M13*(Elt.M24*Elt.M31 - Elt.M21*Elt.M34) + Elt.M14*(Elt.M21*Elt.M33 - Elt.M23*Elt.M31) + Elt.M11*(Elt.M23*Elt.M34 - Elt.M24*Elt.M33));
-    result.Elt.M31 = det * (Elt.M21*Elt.M32 + Elt.M22*(-Elt.M31));
-    result.Elt.M32 = det * (Elt.M31*Elt.M12 + Elt.M32*(-Elt.M11));
-    result.Elt.M33 = det * (Elt.M11*Elt.M22 - Elt.M12*Elt.M21);
-    result.Elt.M34 = det * (Elt.M14*(Elt.M22*Elt.M31 - Elt.M21*Elt.M32) + Elt.M11*(Elt.M24*Elt.M32 - Elt.M22*Elt.M34) + Elt.M12*(Elt.M21*Elt.M34 - Elt.M24*Elt.M31));
+    result.Elt.M11 = det * (Elt.M22 * Elt.M33 - Elt.M23 * Elt.M32);
+    result.Elt.M12 = det * (Elt.M32 * Elt.M13 - Elt.M33 * Elt.M12);
+    result.Elt.M13 = det * (Elt.M12 * Elt.M23 - Elt.M13 * Elt.M22);
+    result.Elt.M14 = det * (Elt.M12 * (Elt.M24 * Elt.M33 - Elt.M23 * Elt.M34) + Elt.M13 * (Elt.M22 * Elt.M34 - Elt.M24 * Elt.M32) + Elt.M14 * (Elt.M23 * Elt.M32 - Elt.M22 * Elt.M33));
+
+    result.Elt.M21 = det * (Elt.M23 * Elt.M31 - Elt.M21 * Elt.M33);
+    result.Elt.M22 = det * (Elt.M33 * Elt.M11 - Elt.M31 * Elt.M13);
+    result.Elt.M23 = det * (Elt.M13 * Elt.M21 - Elt.M11 * Elt.M23);
+    result.Elt.M24 = det * (Elt.M13 * (Elt.M24 * Elt.M31 - Elt.M21 * Elt.M34) + Elt.M14 * (Elt.M21 * Elt.M33 - Elt.M23 * Elt.M31) + Elt.M11 * (Elt.M23 * Elt.M34 - Elt.M24 * Elt.M33));
+    
+    result.Elt.M31 = det * (Elt.M21 * Elt.M32 - Elt.M22 * Elt.M31);
+    result.Elt.M32 = det * (Elt.M31 * Elt.M12 - Elt.M32 * Elt.M11);
+    result.Elt.M33 = det * (Elt.M11 * Elt.M22 - Elt.M12 * Elt.M21);
+    result.Elt.M34 = det * (Elt.M14 * (Elt.M22 * Elt.M31 - Elt.M21 * Elt.M32) + Elt.M11 * (Elt.M24 * Elt.M32 - Elt.M22 * Elt.M34) + Elt.M12 * (Elt.M21 * Elt.M34 - Elt.M24 * Elt.M31));
+    
     result.Elt.M41 = 0;
     result.Elt.M42 = 0;
     result.Elt.M43 = 0;
-    result.Elt.M44 = det * (Elt.M11*(Elt.M22*Elt.M33 - Elt.M23*Elt.M32) + Elt.M12*(Elt.M23*Elt.M31 - Elt.M21*Elt.M33) + Elt.M13*(Elt.M21*Elt.M32 - Elt.M22*Elt.M31));
+    result.Elt.M44 = det * (Elt.M11 * (Elt.M22 * Elt.M33 - Elt.M23 * Elt.M32) + Elt.M12 * (Elt.M23 * Elt.M31 - Elt.M21 * Elt.M33) + Elt.M13 * (Elt.M21 * Elt.M32 - Elt.M22 * Elt.M31));
 
     *this = result;
   }

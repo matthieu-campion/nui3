@@ -39,14 +39,14 @@ TimeLabel::~TimeLabel()
   
 }
 
-bool TimeLabel::OnTimerTick(const nuiEvent& rEvent)
+void TimeLabel::OnTimerTick(const nuiEvent& rEvent)
 {
   nglString text(GetPosition());
   text += (_T(" / "));
   text += GetLength();
   
   SetText(text);
-  return true;
+  rEvent.Cancel();
 }
 
 nglString TimeLabel::GetPosition()

@@ -30,17 +30,21 @@ public:
   const nuiVariant& operator[](uint32 index) const;
   
   mutable void* mpUser; // This is the user defined data. It is defined on a connection basis.
+  
+  void Cancel() const; ///< Stop propagating this event!
+  bool IsCanceled() const;
 private:
   int mType;
   mutable nuiEventSource* mpSource;
   std::vector<nuiVariant*> mArguments;
+  mutable bool mCancel;
 };
 
 /// You are never supposed to use this class directly!!! NEVER EVER :). 
 class NUI_API nuiEventTargetBase
 {
 public:
-  typedef nuiFastDelegate1<const nuiEvent&, bool> Delegate;
+  typedef nuiFastDelegate1<const nuiEvent&> Delegate;
   
   nuiEventTargetBase(void* pTarget);
   virtual ~nuiEventTargetBase();
@@ -122,7 +126,7 @@ private:
 template <class T> class NUI_API nuiEventSink : public nuiEventTargetBase
 {
 private:
-  typedef bool (T::*TargetFunc)(const nuiEvent&);
+  typedef void (T::*TargetFunc)(const nuiEvent&);
 public:
   nuiEventSink(T* pTarget)
   : nuiEventTargetBase((void*)pTarget)
@@ -133,9 +137,9 @@ public:
   {
   }
 
-  void Connect(nuiEventSource& rSource, bool (*pTargetFunc)(const nuiEvent&), void* pUser=NULL)
+  void Connect(nuiEventSource& rSource, void (*pTargetFunc)(const nuiEvent&), void* pUser=NULL)
   {
-    nuiEventTargetBase::Connect(rSource, nuiFastDelegate1<const nuiEvent&, bool>(pTargetFunc).GetMemento(), pUser);
+    nuiEventTargetBase::Connect(rSource, nuiFastDelegate1<const nuiEvent&>(pTargetFunc).GetMemento(), pUser);
   }
   
   void Connect(nuiEventSource& rSource, TargetFunc pTargetFunc, void* pUser=NULL)
@@ -144,9 +148,9 @@ public:
     nuiEventTargetBase::Connect(rSource, nuiMakeDelegate((T*)mpTarget, pTargetFunc).GetMemento(), pUser);
   }
   
-  void Disconnect(bool (*pTargetFunc)(const nuiEvent&))
+  void Disconnect(void (*pTargetFunc)(const nuiEvent&))
   {
-    nuiEventTargetBase::Disconnect(nuiFastDelegate1<const nuiEvent&, bool>(pTargetFunc).GetMemento());
+    nuiEventTargetBase::Disconnect(nuiFastDelegate1<const nuiEvent&>(pTargetFunc).GetMemento());
   }
   
   void Disconnect(TargetFunc pTargetFunc)

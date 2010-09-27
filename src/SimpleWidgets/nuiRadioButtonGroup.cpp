@@ -51,7 +51,7 @@ void nuiRadioButtonGroup::RemoveRadioButton(nuiRadioButton *pRadioButton)
   mSink.DisconnectSource(pRadioButton->Activated);
 }
 
-bool nuiRadioButtonGroup::OnActivated(const nuiEvent& rEvent)
+void nuiRadioButtonGroup::OnActivated(const nuiEvent& rEvent)
 {
   nuiRadioButton *pRadioButton = (nuiRadioButton*)rEvent.mpUser;
   NGL_ASSERT(pRadioButton->IsPressed());
@@ -69,7 +69,5 @@ bool nuiRadioButtonGroup::OnActivated(const nuiEvent& rEvent)
       }
     }
   }
-
-  return false;
 }
 

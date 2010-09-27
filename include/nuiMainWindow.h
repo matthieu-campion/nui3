@@ -167,7 +167,7 @@ protected:
   bool mQuitOnClose;
   float mMaxFPS;
   nglTime mLastRendering;
-  bool InvalidateTimer(const nuiEvent& rEvent);
+  void InvalidateTimer(const nuiEvent& rEvent);
 
   nuiWidget*      mpDragSource; ///< widget that has initialized a drag operation
   nuiWidget*      mpWidgetCanDrop; ///< if not NULL, this is the last widget that return true to an OnCanDrop call (used for DragLeave)
@@ -234,7 +234,7 @@ private:
 
   NGLWindow* mpNGLWindow;
   uint mFullFrameRedraw;
-  bool OnInspectorDeath(const nuiEvent& rEvent);
+  void OnInspectorDeath(const nuiEvent& rEvent);
   double mLastInteractiveEventTime;
   double mLastEventTime;
 };

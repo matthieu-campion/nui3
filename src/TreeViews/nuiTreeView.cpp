@@ -570,13 +570,12 @@ void nuiTreeView::SetTreeRect(nuiSize& Y, uint32 Depth, nuiTreeNode* pTree)
 
 
 
-bool nuiTreeView::OnTreeChanged(const nuiEvent& rEvent)
+void nuiTreeView::OnTreeChanged(const nuiEvent& rEvent)
 {
   InvalidateLayout();
-  return false;
 }
 
-bool nuiTreeView::OnTreeChildAdded(const nuiEvent& rEvent)
+void nuiTreeView::OnTreeChildAdded(const nuiEvent& rEvent)
 {
   const nuiTreeEvent<nuiTreeBase>* pTreeEvent = dynamic_cast<const nuiTreeEvent<nuiTreeBase>*>(&rEvent);
   nuiTreeNode* pNode = dynamic_cast<nuiTreeNode*>(pTreeEvent->mpChild);
@@ -598,13 +597,10 @@ bool nuiTreeView::OnTreeChildAdded(const nuiEvent& rEvent)
       if (pWidget)
         AddChild(pWidget);
     }
-
   }
-
-  return false;
 }
 
-bool nuiTreeView::OnTreeChildDeleted(const nuiEvent& rEvent)
+void nuiTreeView::OnTreeChildDeleted(const nuiEvent& rEvent)
 {
   const nuiTreeEvent<nuiTreeBase>* pTreeEvent = dynamic_cast<const nuiTreeEvent<nuiTreeBase>*>(&rEvent);
   nuiTreeNode* pNode = dynamic_cast<nuiTreeNode*>(pTreeEvent->mpChild);
@@ -623,8 +619,6 @@ bool nuiTreeView::OnTreeChildDeleted(const nuiEvent& rEvent)
   }
   if (mpSelectedNode == pNode)
     mpSelectedNode = NULL;
-
-  return false;
 }
 
 void nuiTreeView::ReparentTree(nuiTreeNode* pTree)

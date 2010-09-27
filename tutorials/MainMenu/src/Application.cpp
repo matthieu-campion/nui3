@@ -215,58 +215,58 @@ void Application::InitMainMenu()
 // menu commands' receivers
 //
 
-bool Application::OnMenuFileOpen(const nuiEvent& rEvent)
+void Application::OnMenuFileOpen(const nuiEvent& rEvent)
 {
   if (mpMainWindow)
     mpMainWindow->MyCommand(_T("File / Open"));
-  return true;
+  rEvent.Cancel();
 }
 
-bool Application::OnMenuFileClose(const nuiEvent& rEvent)
+void Application::OnMenuFileClose(const nuiEvent& rEvent)
 {
   if (mpMainWindow)
     mpMainWindow->MyCommand(_T("File / Close"));
-  return true;
+  rEvent.Cancel();
 }
 
-bool Application::OnMenuFileDI(const nuiEvent& rEvent)
+void Application::OnMenuFileDI(const nuiEvent& rEvent)
 {
   if (mpMainWindow)
     mpMainWindow->MyCommand(_T("this should not happen in our example, since the item has been disabled :)"));
-  return true;
+  rEvent.Cancel();
 }
 
-bool Application::OnMenuEditCopy(const nuiEvent& rEvent)
+void Application::OnMenuEditCopy(const nuiEvent& rEvent)
 {
   if (mpMainWindow)
     mpMainWindow->MyCommand(_T("Edit / Copy"));
-  return true;
+  rEvent.Cancel();
 }
 
-bool Application::OnMenuEditPaste(const nuiEvent& rEvent)
+void Application::OnMenuEditPaste(const nuiEvent& rEvent)
 {
   if (mpMainWindow)
     mpMainWindow->MyCommand(_T("Edit / Paste"));
-  return true;
+  rEvent.Cancel();
 }
 
-bool Application::OnMenuEditOptionChecked(const nuiEvent& rEvent)
+void Application::OnMenuEditOptionChecked(const nuiEvent& rEvent)
 {
   if (!mpMainWindow)
-    return false;
+    return;
   
   bool set = (bool)rEvent.mpUser;
   if (set)
     mpMainWindow->MyCommand(_T("Edit / Option CHECKED"));
   else
     mpMainWindow->MyCommand(_T("Edit / Option UNCHECKED"));
-  return true;
+  rEvent.Cancel();
 }
 
-bool Application::OnMenuEditPrefOption1Checked(const nuiEvent& rEvent)
+void Application::OnMenuEditPrefOption1Checked(const nuiEvent& rEvent)
 {
   if (!mpMainWindow)
-    return false;
+    return;
   
   bool set = (bool)rEvent.mpUser;
   if (set)
@@ -274,7 +274,7 @@ bool Application::OnMenuEditPrefOption1Checked(const nuiEvent& rEvent)
   else
     mpMainWindow->MyCommand(_T("Edit / Preferences / Option1 UNCHECKED"));
       
-      return true;
+  rEvent.Cancel();
 }
 
 

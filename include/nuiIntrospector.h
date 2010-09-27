@@ -40,12 +40,12 @@ public:
 private:
 
   void  InitDecorations();
-  bool ShowWidgetInspector(const nuiEvent& rEvent);
-  bool ShowThreadInspector(const nuiEvent& rEvent);
-  bool ShowFontInspector(const nuiEvent& rEvent);
-  bool ShowDecorationInspector(const nuiEvent& rEvent);
-  bool ShowTextureInspector(const nuiEvent& rEvent);
-  bool ShowObjectInspector(const nuiEvent& rEvent);
+  void ShowWidgetInspector(const nuiEvent& rEvent);
+  void ShowThreadInspector(const nuiEvent& rEvent);
+  void ShowFontInspector(const nuiEvent& rEvent);
+  void ShowDecorationInspector(const nuiEvent& rEvent);
+  void ShowTextureInspector(const nuiEvent& rEvent);
+  void ShowObjectInspector(const nuiEvent& rEvent);
 
   nuiEventSink<nuiIntrospector> mEventSink;
   nuiWidget* mpTarget;

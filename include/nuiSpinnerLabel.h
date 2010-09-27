@@ -61,7 +61,7 @@ public:
   void SetFineSensitivityKey(nglKeyCode FineSensitivityKey);
 
 
-  virtual bool Renamed (const nuiEvent& event);
+  virtual void Renamed (const nuiEvent& event);
 
 protected:
 
@@ -70,10 +70,10 @@ protected:
 
 
 
-  bool DoInvalidate(const nuiEvent& rEvent);
-  bool OnValueChanging(const nuiEvent& rEvent);
-  bool HandleClicked(const nuiEvent& rEvent);
-  bool HandleUnclicked(const nuiEvent& rEvent);
+  void DoInvalidate(const nuiEvent& rEvent);
+  void OnValueChanging(const nuiEvent& rEvent);
+  void HandleClicked(const nuiEvent& rEvent);
+  void HandleUnclicked(const nuiEvent& rEvent);
 
   double mClickValue;
   nglString mValueString;
@@ -107,7 +107,7 @@ private :
     nuiSpinnerLabelRenamer (nuiSpinnerLabel* pSLabel);
     ~nuiSpinnerLabelRenamer ();
     
-    virtual bool OnEditLineSelected(const nuiEvent& rEvent);
+    virtual void OnEditLineSelected(const nuiEvent& rEvent);
 
   };
 */
