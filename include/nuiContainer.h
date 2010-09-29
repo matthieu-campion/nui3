@@ -20,32 +20,15 @@ class NUI_API nuiContainer : public nuiWidget
   friend class nuiWidget;
   friend class nuiTopLevel;
 public:
-  class NUI_API ChildIteratorBase
+  class NUI_API ChildIteratorBase : public nuiRefCount
   {
   public:
     ChildIteratorBase()
     {
-      mRefs = 0;
     }
 
     virtual ~ChildIteratorBase()
     {
-      NGL_ASSERT(!mRefs);
-    }
-
-    void Acquire()
-    {
-      mRefs++;
-    }
-
-    uint32 Release()
-    {
-      NGL_ASSERT(mRefs > 0);
-      mRefs--;
-      int32 r = mRefs;
-      if (!mRefs)
-        delete this;
-      return r;
     }
 
     bool IsValid() const
@@ -60,7 +43,6 @@ public:
     }
     
   private:
-    uint32 mRefs;
     bool mValid;
     
   };

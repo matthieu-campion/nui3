@@ -199,7 +199,8 @@ nuiAnimation::nuiAnimation()
   mEnableCallbacks = true;
   mDeleteOnStop = false;
 
-  mEasing = (nuiEasingMethod)(&::nuiEasingIdentity);
+  mpEasing = NULL;
+  //(nuiEasingMethod)(&::nuiEasingIdentity);
   
   AcquireTimer();
   
@@ -254,7 +255,8 @@ bool nuiAnimation::GetDeleteOnStop() const
 
 void nuiAnimation::SetEasing(const nuiEasingMethod& rMethod)
 {
-  mEasing = rMethod;
+  delete mpEasing;
+  mpEasing = new nuiEasingFunction(rMethod);
 }
 
 
@@ -307,6 +309,7 @@ bool nuiAnimation::Load(const nuiXMLNode* pNode)
 
 nuiAnimation::~nuiAnimation()
 {
+  delete mpEasing;
   ReleaseTimer();
 }
 
@@ -575,7 +578,9 @@ bool nuiAnimation::UpdateTime()
   
   if (GetDuration() != 0)
   {
-    mCurrentPosition = mEasing(mCurrentTime / GetDuration());
+    mCurrentPosition = mCurrentTime / GetDuration();
+    if (mpEasing)
+      mCurrentPosition = mpEasing->Map(mCurrentPosition);
   }
   else
   {

@@ -24,11 +24,11 @@
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
 					20,
-					548,
+					549,
 					20,
-					548,
-					548,
-					548,
+					549,
+					549,
+					545,
 					20,
 				);
 				PBXFileTableDataSourceColumnsKey = (
@@ -112,14 +112,8 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 307314528;
-			PBXWorkspaceStateSaveDate = 307314528;
-		};
-		perUserProjectItems = {
-			E5C5FBE912513F8A00EAE988 /* PBXTextBookmark */ = E5C5FBE912513F8A00EAE988 /* PBXTextBookmark */;
-			E5C5FBEA12513F8A00EAE988 /* PBXTextBookmark */ = E5C5FBEA12513F8A00EAE988 /* PBXTextBookmark */;
-			E5C5FBEB12513F8A00EAE988 /* PBXTextBookmark */ = E5C5FBEB12513F8A00EAE988 /* PBXTextBookmark */;
-			E5C5FBF91251492700EAE988 /* PBXTextBookmark */ = E5C5FBF91251492700EAE988 /* PBXTextBookmark */;
+			PBXPerProjectTemplateStateSaveDate = 307356392;
+			PBXWorkspaceStateSaveDate = 307356392;
 		};
 		sourceControlManager = E5EF6ABE0F96233C003E265A /* Source Control */;
 		userBuildSettings = {
@@ -166,58 +160,6 @@
 			sepNavSelRange = "{453, 0}";
 			sepNavVisRange = "{0, 538}";
 		};
-	};
-	E5241B9411CBCE080025CA71 /* basic_string.h */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.c.h;
-		name = basic_string.h;
-		path = "/Developer/SDKs/MacOSX10.4u.sdk/usr/include/c++/4.0.0/bits/basic_string.h";
-		sourceTree = "<absolute>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {2260, 32188}}";
-			sepNavSelRange = "{15644, 0}";
-			sepNavVisRange = "{14203, 2273}";
-		};
-	};
-	E5C5FBE912513F8A00EAE988 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E5241B9411CBCE080025CA71 /* basic_string.h */;
-		name = "basic_string.h: 480";
-		rLen = 0;
-		rLoc = 15644;
-		rType = 0;
-		vrLen = 2273;
-		vrLoc = 14203;
-	};
-	E5C5FBEA12513F8A00EAE988 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 61A9DFF20B83433800BC506C /* MainWindow.h */;
-		name = "MainWindow.h: 23";
-		rLen = 0;
-		rLoc = 453;
-		rType = 0;
-		vrLen = 538;
-		vrLoc = 0;
-	};
-	E5C5FBEB12513F8A00EAE988 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
-		name = "MainWindow.cpp: 93";
-		rLen = 0;
-		rLoc = 2534;
-		rType = 0;
-		vrLen = 2188;
-		vrLoc = 561;
-	};
-	E5C5FBF91251492700EAE988 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
-		name = "MainWindow.cpp: 102";
-		rLen = 0;
-		rLoc = 2888;
-		rType = 0;
-		vrLen = 2298;
-		vrLoc = 594;
 	};
 	E5D64521120A0B92009C26A9 /* LayoutAnimationCocoa */ = {
 		activeExec = 0;

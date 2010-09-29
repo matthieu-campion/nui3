@@ -81,6 +81,40 @@ double nuiEasingBounceIn(double val);
 double nuiEasingBackIn(double val);
 double nuiEasingBackOut(double val);
 
+class nuiEasing
+{
+public:
+  nuiEasing()
+  {
+  }
+  
+  virtual ~nuiEasing()
+  {
+  }
+  
+  virtual double Map(double val) = 0;
+};
+
+class nuiEasingFunction : public nuiEasing
+{
+public:
+  nuiEasingFunction(const nuiEasingMethod& rFunction)
+  : mFunction(rFunction)
+  {
+  }
+  virtual ~nuiEasingFunction()
+  {
+  }
+  
+  double Map(double val)
+  {
+    return mFunction(val);
+  }
+  
+private:
+  nuiEasingMethod mFunction;
+};
+
 
 
 /// nuiAnimation is a base class that implements a basic animation framework.
@@ -122,6 +156,7 @@ public:
   static double GetFrameRate();
   
   void SetEasing(const nuiEasingMethod& rMethod);
+  void SetEasing(nuiEasing* pEasing);
   
   static nuiTimer* AcquireTimer(); ///< You must pair each call to AcquireTimer() with a call to ReleaseTimer().
   static nuiTimer* GetTimer(); ///< GetTimer doesn't allocate the timer and you must not pair it with ReleaseTimer(). It may return NULL if the timer was never created.
@@ -146,7 +181,7 @@ protected:
 
   double mDirection; ///< Either 1 or -1. This sets the current direction of play back.
   nuiAnimLoop mLoopMode;
-  nuiEasingMethod mEasing;
+  nuiEasing* mpEasing;
 
   static nuiTimer* mpTimer;
   static int32 mAnimCounter;
