@@ -7,11 +7,12 @@
 
 #pragma once
 
+#include "nuiNonCopyable.h"
 #include "nglLock.h"
 #include "nglGuard.h"
 #include "nglCondition.h"
 
-class nglReaderWriterLock
+class nglReaderWriterLock : nuiNonCopyable
 {
 public:
 

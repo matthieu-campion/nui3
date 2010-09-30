@@ -21,6 +21,7 @@ precompiled header central file and everything should be rolling. (lookup precom
 #include "nuiApplication.h"
 #include "nuiProperty.h"
 #include "nuiRefCount.h"
+#include "nuiNonCopyable.h"
 #include "nuiEvent.h"
 #include "nuiObject.h"
 #include "nuiBuilder.h"

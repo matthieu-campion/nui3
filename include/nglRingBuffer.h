@@ -10,6 +10,7 @@
 
 #include "nui.h"
 #include "nglAtomic.h"
+#include "nuiNonCopyable.h"
 
 
 
@@ -23,7 +24,7 @@
 // - is an unselected sample.
 // R is the read index.
 // W is the write index.
-class NGL_API nglRingBuffer
+class NGL_API nglRingBuffer : nuiNonCopyable
 {
 public:
   

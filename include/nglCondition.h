@@ -7,10 +7,11 @@
 
 #pragma once
 #include <limits.h>
+#include "nuiNonCopyable.h"
 
 class nglConditionPrivate;
 
-class nglCondition
+class nglCondition : nuiNonCopyable
 {
 
 public:

@@ -4,20 +4,6 @@
 #include "nui.h"
 #include "nuiFastDelegate.h"
 
-class nuiNonCopyable
-{
-protected:
-  nuiNonCopyable()
-  {
-  }
-  ~nuiNonCopyable()
-  {
-  }
-private:
-	nuiNonCopyable( const nuiNonCopyable& );
-	const nuiNonCopyable& operator=( const nuiNonCopyable& );
-};
-
 class nuiSlotsSink;
 
 class nuiSignal

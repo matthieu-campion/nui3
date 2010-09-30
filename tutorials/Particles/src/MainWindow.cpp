@@ -16,9 +16,9 @@
  * MainWindow
  */
 
-const float MAX_PARTICLES = 15;
-const float PARTICLE_MAX_SIZE = 128;
-const float PARTICLE_MIN_SIZE = 128;
+const float MAX_PARTICLES = 1000;
+const float PARTICLE_MAX_SIZE = 64;
+const float PARTICLE_MIN_SIZE = 64;
 
 class ParticleSystem : public nuiWidget
 {
