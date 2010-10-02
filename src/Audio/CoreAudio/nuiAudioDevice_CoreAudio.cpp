@@ -366,7 +366,12 @@ OSStatus nuiAudioDevice_CoreAudio::Process(AudioDeviceID inDevice, const AudioTi
       pData += channel;
       for (uint32 s = 0; s < mBufferSize; s++)
       {
+#ifdef DEBUG
+        // Clip the output data, as we are debugging we may have audio bugs blowing out the speakers, not to mention your ears...
+        *pData = nuiClamp(*(pOutputSamples++), -1.0f, 1.0f);
+#else
         *pData = *(pOutputSamples++);
+#endif
         pData += stride;
       }
     }

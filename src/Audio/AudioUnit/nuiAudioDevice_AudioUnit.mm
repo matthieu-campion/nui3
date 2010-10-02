@@ -163,8 +163,8 @@ void nuiAudioDevice_AudioUnit::Process(uint uNumFrames, AudioBufferList* ioData)
       const float* ptr1 = mOutputBuffers[1];
       for (uint32 s = 0; s < uNumFrames; s++)
       {
-        const float sl = *ptr0;
-        const float sr = *ptr1;
+        const float sl = nuiClamp(*ptr0, -1.0f, 1.0f);
+        const float sr = nuiClamp(*ptr1, -1.0f, 1.0f);
         
         *dst0 = sl * mult;
         *dst1 = sr * mult;
@@ -188,8 +188,8 @@ void nuiAudioDevice_AudioUnit::Process(uint uNumFrames, AudioBufferList* ioData)
       const int32 mult = ((1 << 15) - 1);
       for (uint32 s = 0; s < uNumFrames; s++)
       {
-        const float sl = *ptr0;
-        const float sr = *ptr1;
+        const float sl = nuiClamp(*ptr0, -1.0f, 1.0f);
+        const float sr = nuiClamp(*ptr1, -1.0f, 1.0f);
         
         *dst0 = sl * mult;
         dst0++;
