@@ -55,6 +55,10 @@ public:
 
   void EnableAutoRepeat(bool set);
   bool GetAutoRepeat() const;
+  void SetAutoRepeatDelay(float Delay);
+  float GetAutoRepeatDelay() const;
+  void SetAutoRepeatMinDelay(float Delay);
+  float GetAutoRepeatMinDelay() const;
   
   void SetActivationOffset(nuiSize Offset);
   nuiSize GetActivationOffset() const;
@@ -64,8 +68,10 @@ protected:
   bool mPressed;
   bool mAutoRepeat;
   nglTime mLastTime;
-  double mRepeatTime;
-  double mUntilRepeat;
+  float mRepeatDelay;
+  float mRepeatMinDelay;
+  float mCurrentRepeatDelay;
+  float mUntilRepeat;
   nuiTimer* mpAutoRepeatTimer;
   nuiSize mActivationOffset;
   nuiEventSink<nuiButton> mEventSink;

@@ -28,6 +28,8 @@ nuiButton::nuiButton()
   mPressed = false;
   SetRedrawOnHover(true);
   mAutoRepeat = false;
+  mRepeatDelay = 0.5;
+  mRepeatMinDelay = 0.01;
   mpAutoRepeatTimer = NULL;
   mActivationOffset = 0;
   EnableInteractiveDecoration(true);
@@ -48,6 +50,8 @@ nuiButton::nuiButton(const nglString& rText)
   mClicked = false;
   mPressed = false;
   mAutoRepeat = false;
+  mRepeatDelay = 0.5;
+  mRepeatMinDelay = 0.01;
   mpAutoRepeatTimer = NULL;
   mActivationOffset = 0;
   nuiLabel* pLabel = new nuiLabel(rText);
@@ -72,6 +76,8 @@ nuiButton::nuiButton(const nglImage& rImage)
   mClicked = false;
   mPressed = false;
   mAutoRepeat = false;
+  mRepeatDelay = 0.5;
+  mRepeatMinDelay = 0.01;
   mpAutoRepeatTimer = NULL;
   mActivationOffset = 0;
   SetRedrawOnHover(true);
@@ -97,6 +103,8 @@ nuiButton::nuiButton(nuiDecoration* pDeco, bool AlreadyAcquired)
   mClicked = false;
   mPressed = false;
   mAutoRepeat = false;
+  mRepeatDelay = 0.5;
+  mRepeatMinDelay = 0.01;
   mpAutoRepeatTimer = NULL;
   mActivationOffset = 0;
   SetRedrawOnHover(true);
@@ -121,6 +129,8 @@ bool nuiButton::Load(const nuiXMLNode* pNode)
   mClicked = false;
   mPressed = false;
   mAutoRepeat = false;
+  mRepeatDelay = 0.5;
+  mRepeatMinDelay = 0.01;
   mpAutoRepeatTimer = NULL;
   mActivationOffset = 0;
 
@@ -149,6 +159,15 @@ void nuiButton::InitAttributes()
                (nglString(_T("AutoRepeat")), nuiUnitBoolean,
                 nuiMakeDelegate(this, &nuiButton::GetAutoRepeat),
                 nuiMakeDelegate(this, &nuiButton::EnableAutoRepeat)));
+
+  AddAttribute(new nuiAttribute<float>
+               (nglString(_T("AutoRepeatDelay")), nuiUnitSeconds,
+                nuiMakeDelegate(this, &nuiButton::GetAutoRepeatDelay),
+                nuiMakeDelegate(this, &nuiButton::SetAutoRepeatDelay)));
+  AddAttribute(new nuiAttribute<float>
+               (nglString(_T("AutoRepeatMinDelay")), nuiUnitSeconds,
+                nuiMakeDelegate(this, &nuiButton::GetAutoRepeatMinDelay),
+                nuiMakeDelegate(this, &nuiButton::SetAutoRepeatMinDelay)));
   
   AddAttribute(new nuiAttribute<nuiSize>
                (nglString(_T("ActivationOffset")), nuiUnitPixels,
@@ -236,8 +255,9 @@ bool nuiButton::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
       Activated();
 
       mLastTime = nglTime();
-      mRepeatTime = 0.5;
-      mUntilRepeat = mRepeatTime;
+      mCurrentRepeatDelay = mRepeatDelay;
+      mUntilRepeat = mCurrentRepeatDelay;
+
       if (!mpAutoRepeatTimer)
       {
         mpAutoRepeatTimer = nuiAnimation::AcquireTimer();
@@ -348,10 +368,25 @@ void nuiButton::EnableAutoRepeat(bool set)
 {
   mAutoRepeat = set;
 }
-
 bool nuiButton::GetAutoRepeat() const
 {
   return mAutoRepeat;
+}
+void nuiButton::SetAutoRepeatDelay(float Delay)
+{
+  mRepeatDelay = Delay;
+}
+float nuiButton::GetAutoRepeatDelay() const
+{
+  return mRepeatDelay;
+}
+void nuiButton::SetAutoRepeatMinDelay(float Delay)
+{
+  mRepeatMinDelay = Delay;
+}
+float nuiButton::GetAutoRepeatMinDelay() const
+{
+  return mRepeatMinDelay;
 }
 
 void nuiButton::OnAutoRepeat(const nuiEvent& rEvent)
@@ -366,8 +401,8 @@ void nuiButton::OnAutoRepeat(const nuiEvent& rEvent)
     mLastTime = now;
     if (mUntilRepeat <= 0)
     {
-      mRepeatTime = MAX(0.01, mRepeatTime-mRepeatTime/4.0);
-      mUntilRepeat = mRepeatTime;
+      mCurrentRepeatDelay = MAX(mRepeatMinDelay, mCurrentRepeatDelay-mCurrentRepeatDelay/4.0);
+      mUntilRepeat = mCurrentRepeatDelay;
       Activated();
     }
   }
