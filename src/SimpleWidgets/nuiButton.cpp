@@ -17,7 +17,8 @@
 #define INACTIVE_SHADE_SIZE 8.f
 
 nuiButton::nuiButton()
-  : nuiSimpleContainer(), mEventSink(this)
+: nuiSimpleContainer(),
+  mEventSink(this)
 {
   if (SetObjectClass(_T("nuiButton")))
   {
@@ -133,7 +134,8 @@ bool nuiButton::Load(const nuiXMLNode* pNode)
 
 nuiButton::~nuiButton()
 {
-  delete mpAutoRepeatTimer;
+  if (mpAutoRepeatTimer)
+    nuiAnimation::ReleaseTimer();
 }
 
 void nuiButton::InitAttributes()
@@ -231,9 +233,16 @@ bool nuiButton::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
     
     if (mAutoRepeat)
     {
-      mpAutoRepeatTimer = new nuiTimer(1.0f / 10.0f);
-      mEventSink.Connect(mpAutoRepeatTimer->Tick, &nuiButton::OnAutoRepeat);
-      mpAutoRepeatTimer->Start();
+      Activated();
+
+      mLastTime = nglTime();
+      mRepeatTime = 0.5;
+      mUntilRepeat = mRepeatTime;
+      if (!mpAutoRepeatTimer)
+      {
+        mpAutoRepeatTimer = nuiAnimation::AcquireTimer();
+        mEventSink.Connect(mpAutoRepeatTimer->Tick, &nuiButton::OnAutoRepeat);
+      }
     }
     return true;
   }
@@ -249,10 +258,10 @@ bool nuiButton::MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
     mClicked = false;
     Ungrab();
     SetPressed(false);
-    if (mpAutoRepeatTimer)
+    if (mAutoRepeat)//mpAutoRepeatTimer)
     {
-      delete mpAutoRepeatTimer;
-      mpAutoRepeatTimer = NULL;
+//      delete mpAutoRepeatTimer;
+//      mpAutoRepeatTimer = NULL;
     }
     else
     {
@@ -347,8 +356,21 @@ bool nuiButton::GetAutoRepeat() const
 
 void nuiButton::OnAutoRepeat(const nuiEvent& rEvent)
 {
+  if (!mAutoRepeat)
+    return;
+
   if (IsPressed())
-    Activated();
+  {
+    nglTime now;
+    mUntilRepeat -= (now.GetValue() - mLastTime.GetValue());
+    mLastTime = now;
+    if (mUntilRepeat <= 0)
+    {
+      mRepeatTime = MAX(0.01, mRepeatTime-mRepeatTime/4.0);
+      mUntilRepeat = mRepeatTime;
+      Activated();
+    }
+  }
 }
 
 void nuiButton::SetActivationOffset(nuiSize Offset)

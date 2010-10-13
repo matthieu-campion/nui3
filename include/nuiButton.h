@@ -63,6 +63,9 @@ protected:
   bool mClicked;
   bool mPressed;
   bool mAutoRepeat;
+  nglTime mLastTime;
+  double mRepeatTime;
+  double mUntilRepeat;
   nuiTimer* mpAutoRepeatTimer;
   nuiSize mActivationOffset;
   nuiEventSink<nuiButton> mEventSink;
