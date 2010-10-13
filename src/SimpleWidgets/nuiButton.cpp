@@ -145,7 +145,10 @@ bool nuiButton::Load(const nuiXMLNode* pNode)
 nuiButton::~nuiButton()
 {
   if (mpAutoRepeatTimer)
+  {
     nuiAnimation::ReleaseTimer();
+    mpAutoRepeatTimer=NULL;
+  }
 }
 
 void nuiButton::InitAttributes()
@@ -278,12 +281,7 @@ bool nuiButton::MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
     mClicked = false;
     Ungrab();
     SetPressed(false);
-    if (mAutoRepeat)//mpAutoRepeatTimer)
-    {
-//      delete mpAutoRepeatTimer;
-//      mpAutoRepeatTimer = NULL;
-    }
-    else
+    if (!mAutoRepeat)
     {
       if (IsInsideFromSelf(X,Y, GetActivationOffset()))
       {
@@ -312,6 +310,12 @@ bool nuiButton::MouseUngrabbed()
     mClicked = false;
     ButtonDePressedInactive();
     SetPressed(false);
+  }
+  if (mpAutoRepeatTimer)
+  {
+    mEventSink.Disconnect(mpAutoRepeatTimer->Tick, &nuiButton::OnAutoRepeat);
+    mpAutoRepeatTimer = NULL;
+    nuiAnimation::ReleaseTimer();
   }
 
   return false;
