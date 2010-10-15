@@ -37,5 +37,7 @@
 	<true/>
 	<key>NSPrincipalClass</key>
 	<string>nglNSApplication</string>
+	<key>UIStatusBarHidden</key>
+	<true/>
 </dict>
 </plist>

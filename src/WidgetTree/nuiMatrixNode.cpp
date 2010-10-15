@@ -11,6 +11,22 @@
 //class nuiMatrixNode : public nuiObject
 nuiMatrixNode::nuiMatrixNode()
 {
+  Init();
+}
+
+nuiMatrixNode::nuiMatrixNode(const nuiMatrix& rMatrix)
+{
+  Init();
+  mMatrix = rMatrix;
+}
+
+nuiMatrixNode::~nuiMatrixNode()
+{
+  // Nothing special here
+}
+
+void nuiMatrixNode::Init()
+{
   if (SetObjectClass(_T("nuiMatrixNode")))
   {
     // Create attributes
@@ -19,11 +35,6 @@ nuiMatrixNode::nuiMatrixNode()
                   nuiMakeDelegate(this, &nuiMatrixNode::GetMatrix),
                   nuiMakeDelegate(this, &nuiMatrixNode::SetMatrix)));
   }
-}
-
-nuiMatrixNode::~nuiMatrixNode()
-{
-  // Nothing special here
 }
 
 //void nuiMatrixNode::Apply(nuiMatrix& rMatrix) const = 0; ///< Override this method to create your own matrix node operations
@@ -180,11 +191,11 @@ void nuiMatrixNode_Translation::SetX(float set)
   Changed();
 }
 
-
 float nuiMatrixNode_Translation::GetX() const
 {
   return mVector[0];
 }
+
 
 void nuiMatrixNode_Translation::SetY(float set)
 {
@@ -197,6 +208,7 @@ float nuiMatrixNode_Translation::GetY() const
   return mVector[1];
 }
 
+
 void nuiMatrixNode_Translation::SetZ(float set)
 {
   mVector[2] = set;
@@ -204,6 +216,92 @@ void nuiMatrixNode_Translation::SetZ(float set)
 }
 
 float nuiMatrixNode_Translation::GetZ() const
+{
+  return mVector[2];
+}
+
+
+
+/////////////////////////////////////////////
+//class nuiMatrixNode_Scale :  nuiMatrixNode
+nuiMatrixNode_Scale::nuiMatrixNode_Scale()
+{
+  if (SetObjectClass(_T("nuiMatrixNode_Scale")))
+  {
+    AddAttribute(new nuiAttribute<const nglVectorf&>
+                 (nglString(_T("Scale")), nuiUnitVector,
+                  nuiMakeDelegate(this, &nuiMatrixNode_Scale::GetScale),
+                  nuiMakeDelegate(this, &nuiMatrixNode_Scale::SetScale)));
+    
+    AddAttribute(new nuiAttribute<float>
+                 (nglString(_T("X")), nuiUnitNone,
+                  nuiMakeDelegate(this, &nuiMatrixNode_Scale::GetX),
+                  nuiMakeDelegate(this, &nuiMatrixNode_Scale::SetX)));
+    AddAttribute(new nuiAttribute<float>
+                 (nglString(_T("Y")), nuiUnitNone,
+                  nuiMakeDelegate(this, &nuiMatrixNode_Scale::GetY),
+                  nuiMakeDelegate(this, &nuiMatrixNode_Scale::SetY)));
+    AddAttribute(new nuiAttribute<float>
+                 (nglString(_T("Z")), nuiUnitVector,
+                  nuiMakeDelegate(this, &nuiMatrixNode_Scale::GetZ),
+                  nuiMakeDelegate(this, &nuiMatrixNode_Scale::SetZ)));
+  }
+}
+
+void nuiMatrixNode_Scale::Update() const
+{
+  mMatrix.SetScaling(mVector);
+}
+
+
+void nuiMatrixNode_Scale::Set(float X, float Y, float Z)
+{
+  mVector.Set(X, Y, Z);
+  Changed();
+}
+
+void nuiMatrixNode_Scale::SetScale(const nglVectorf& rVector)
+{
+  mVector = rVector;
+  Changed();
+}
+
+const nglVectorf& nuiMatrixNode_Scale::GetScale() const
+{
+  return mVector;
+}
+
+void nuiMatrixNode_Scale::SetX(float set)
+{
+  mVector[0] = set;
+  Changed();
+}
+
+float nuiMatrixNode_Scale::GetX() const
+{
+  return mVector[0];
+}
+
+
+void nuiMatrixNode_Scale::SetY(float set)
+{
+  mVector[1] = set;
+  Changed();
+}
+
+float nuiMatrixNode_Scale::GetY() const
+{
+  return mVector[1];
+}
+
+
+void nuiMatrixNode_Scale::SetZ(float set)
+{
+  mVector[2] = set;
+  Changed();
+}
+
+float nuiMatrixNode_Scale::GetZ() const
 {
   return mVector[2];
 }

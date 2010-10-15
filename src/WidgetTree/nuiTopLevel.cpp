@@ -1651,7 +1651,7 @@ void nuiTopLevel::BroadcastInvalidateRect(nuiWidgetPtr pSender, const nuiRect& r
 
   nuiVector vec1((float)r.Left(),(float)r.Top(),0);
   nuiVector vec2((float)r.Right(),(float)r.Bottom(),0);
-  if (!mMatrixIsIdentity)
+  if (!IsMatrixIdentity())
   {
     vec1 = GetMatrix() * vec1;
     vec2 = GetMatrix() * vec2;

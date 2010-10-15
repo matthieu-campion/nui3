@@ -147,8 +147,8 @@ void nuiWidget::InitDefaultValues()
   mShowFocus = true;
   mPosition = nuiFill;
   mFillRule = nuiFill;
-  mMatrixIsIdentity = true;
   mCSSPasses = 0;
+  mpMatrixNodes = NULL;
   mpParent = NULL;
   mpTheme = NULL;
   mDecorationEnabled = true;
@@ -607,8 +607,6 @@ void nuiWidget::Init()
   mWantKeyboardFocus = false;
   mMuteKeyboardFocusDispatch = false;
 
-  LoadIdentityMatrix();
-
   EnableRenderCache(true);
   
   // Events:
@@ -831,7 +829,7 @@ bool nuiWidget::SetParent(nuiContainerPtr pParent)
 void nuiWidget::LocalToGlobal(int& x, int& y) const
 {
   CheckValid();
-  if (!mMatrixIsIdentity)
+  if (!IsMatrixIdentity())
   {
     nuiVector vec((double)x,(double)y, 0);
     vec = GetMatrix() * vec;
@@ -849,7 +847,7 @@ void nuiWidget::LocalToGlobal(int& x, int& y) const
 void nuiWidget::LocalToGlobal(nuiSize& x, nuiSize& y) const
 {
   CheckValid();
-  if (!mMatrixIsIdentity)
+  if (!IsMatrixIdentity())
   {
     nuiVector vec(x, y, 0);
     vec = GetMatrix() * vec;
@@ -867,7 +865,7 @@ void nuiWidget::LocalToGlobal(nuiSize& x, nuiSize& y) const
 void nuiWidget::LocalToGlobal(nuiRect& rRect) const
 {
   CheckValid();
-  if (!mMatrixIsIdentity)
+  if (!IsMatrixIdentity())
   {
     nuiVector vec1(rRect.mLeft,rRect.mTop,0);
     nuiVector vec2(rRect.mRight,rRect.mBottom,0);
@@ -895,7 +893,7 @@ void nuiWidget::GlobalToLocal(int& x, int& y) const
   x -= (int)mRect.mLeft;
   y -= (int)mRect.mTop;
 
-  if (!mMatrixIsIdentity)
+  if (!IsMatrixIdentity())
   {
     nuiVector vec((double)x,(double)y,0);
     nuiMatrix mat;
@@ -915,7 +913,7 @@ void nuiWidget::GlobalToLocal(nuiSize& x, nuiSize& y) const
   x -= mRect.mLeft;
   y -= mRect.mTop;
 
-  if (!mMatrixIsIdentity)
+  if (!IsMatrixIdentity())
   {
     nuiVector vec(x,y,0);
     nuiMatrix mat;
@@ -936,7 +934,7 @@ void nuiWidget::GlobalToLocal(nuiRect& rRect) const
   }
   rRect.Move(-mRect.mLeft, -mRect.mTop);
 
-  if (!mMatrixIsIdentity)
+  if (!IsMatrixIdentity())
   {
     nuiMatrix mat;
     GetMatrix(mat);
@@ -1029,7 +1027,7 @@ void nuiWidget::BroadcastInvalidateRect(nuiWidgetPtr pSender, const nuiRect& rRe
 
   nuiVector vec1(r.Left(),r.Top(),0);
   nuiVector vec2(r.Right(),r.Bottom(),0);
-  if (!mMatrixIsIdentity)
+  if (!IsMatrixIdentity())
   {
     nuiMatrix m(GetMatrix());
     //m.InvertHomogenous();
@@ -1278,7 +1276,7 @@ bool nuiWidget::InternalDrawWidget(nuiDrawContext* pContext, const nuiRect& _sel
   CheckValid();
   pContext->PushState();
   pContext->ResetState();
-  if (ApplyMatrix && !mMatrixIsIdentity)
+  if (ApplyMatrix && !IsMatrixIdentity())
     pContext->MultMatrix(GetMatrix());
   
   if (mAutoClip)
@@ -1507,7 +1505,7 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
       if (!drawingincache && !pContext->GetPainter()->GetDummyMode())
       {
         mNeedRender = false;
-        if (!mMatrixIsIdentity)
+        if (!IsMatrixIdentity())
         {
           pContext->PushMatrix();
           pContext->MultMatrix(GetMatrix());
@@ -1515,7 +1513,7 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
         
         mpRenderCache->ReDraw(pContext);
         
-        if (!mMatrixIsIdentity)
+        if (!IsMatrixIdentity())
           pContext->PopMatrix();
       }
       
@@ -3628,26 +3626,44 @@ void nuiWidget::SetLayoutAnimationEasing(const nuiEasingMethod& rMethod)
 
 
 /// Matrix Operations:
+nuiMatrix nuiWidget::mIdentityMatrix;
+
 void nuiWidget::LoadIdentityMatrix()
 {
   CheckValid();
   Invalidate();
-  mMatrix.SetIdentity();
-  mMatrixIsIdentity = true;
+  for (uint32 i = 0; i < mpMatrixNodes->size(); i++)
+    delete (mpMatrixNodes->at(i));
+  delete mpMatrixNodes;
+  mpMatrixNodes = NULL;
   Invalidate();
   DebugRefreshInfo();
+}
+
+bool nuiWidget::IsMatrixIdentity() const
+{
+  if (!mpMatrixNodes)
+    return true;
+  return false;
 }
 
 void nuiWidget::GetMatrix(nuiMatrix& rMatrix) const
 {
   CheckValid();
-  rMatrix = mMatrix;
+  rMatrix = mIdentityMatrix;
+  if (IsMatrixIdentity())
+    return;
+
+  for (uint32 i = 0; i < mpMatrixNodes->size(); i++)
+    mpMatrixNodes->at(i)->Apply(rMatrix);
 }
 
 const nuiMatrix& nuiWidget::GetMatrix() const
 {
   CheckValid();
-  return mMatrix;
+  nuiMatrix m;
+  GetMatrix(m);
+  return m;
 }
 
 const nuiMatrix& nuiWidget::_GetMatrix() const
@@ -3661,10 +3677,17 @@ void nuiWidget::SetMatrix(const nuiMatrix& rMatrix)
   CheckValid();
   nuiWidget::InvalidateRect(GetOverDrawRect(true, true));
   SilentInvalidate();
-  
-  mMatrix = rMatrix;
-  mMatrixIsIdentity = mMatrix.IsIdentity();
-  
+
+  // Special case: we only need one simple static matrix node at max
+  LoadIdentityMatrix(); // So we load the identity matrix (i.e. clear any existing node)
+  if (!rMatrix.IsIdentity()) // If the user wasn't asking for the identity matrix
+  {
+    // we create a simple static matrix node:
+    mpMatrixNodes = new std::vector<nuiMatrixNode*>();
+    mpMatrixNodes->push_back(new nuiMatrixNode(rMatrix));
+  }
+
+  // Usual clean up needed for the partial redraw to work correctly
   nuiWidget::InvalidateRect(GetOverDrawRect(true, true));
   SilentInvalidate();
   
