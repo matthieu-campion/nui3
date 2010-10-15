@@ -34,7 +34,7 @@ void MainWindow::OnCreation()
 {
   //EnableAutoRotation(false);
   //SetRotation(90);
-  SetState(nglWindow::eMaximize);
+  //SetState(nglWindow::eMaximize);
 
 //  {
 //    nuiLabel* pLabel1 = new nuiLabel(_T("ABCDEFGH12345678"));

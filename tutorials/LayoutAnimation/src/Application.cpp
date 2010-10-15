@@ -146,8 +146,8 @@ void Application::OnInit()
   }
   mpMainWindow->DBG_SetMouseOverInfo(DebugInfo);
   mpMainWindow->DBG_SetMouseOverObject(DebugObject);
-  //mpMainWindow->SetState(nglWindow::eMaximize);
-  mpMainWindow->SetState(nglWindow::eShow);
+  mpMainWindow->SetState(nglWindow::eMaximize);
+  //mpMainWindow->SetState(nglWindow::eShow);
 
 }
 

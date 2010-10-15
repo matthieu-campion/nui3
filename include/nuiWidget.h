@@ -392,6 +392,7 @@ public:
   /** @name Matrix Transformation Support */
   //@{
   void LoadIdentityMatrix();
+  bool IsMatrixIdentity() const;
   void GetMatrix(nuiMatrix& rMatrix) const;
   const nuiMatrix& GetMatrix() const;
   void SetMatrix(const nuiMatrix& rMatrix);
@@ -564,7 +565,8 @@ protected:
 
   std::map<nglString, nuiAnimation*, nglString::NaturalLessFunctor> mAnimations;
 
-  nuiMatrix mMatrix;
+  static nuiMatrix mIdentityMatrix;
+  std::vector<nuiMatrixNode*>* mpMatrixNodes;
   const nuiMatrix& _GetMatrix() const;
 
   
@@ -638,7 +640,6 @@ protected:
   bool mMuteKeyboardFocusDispatch: 1;
   bool mTrashed: 1;
   bool mDoneTrashed: 1;
-  bool mMatrixIsIdentity: 1;
   bool mCanRespectConstraint: 1;
   bool mInSetRect: 1;
   bool mAutoClip;
