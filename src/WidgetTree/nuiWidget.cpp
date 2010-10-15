@@ -558,6 +558,7 @@ void nuiWidget::InitAttributes()
  
 void nuiWidget::Init()
 {
+  mIdentityMatrix.SetIdentity();
   mDebugLevel = 0; // No debug by default.
   mCanRespectConstraint = false; ///< By default the widgets don't care about the constraints imposed by their parents. Only few ones care about this.
   mNeedInvalidateOnSetRect = true;
@@ -607,6 +608,8 @@ void nuiWidget::Init()
   mWantKeyboardFocus = false;
   mMuteKeyboardFocusDispatch = false;
 
+  LoadIdentityMatrix();
+  
   EnableRenderCache(true);
   
   // Events:
@@ -1454,9 +1457,9 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
       }
     }
     
-    nuiMatrix m = pContext->GetMatrix();
-    nglString d;
-    m.GetValue(d);
+    //nuiMatrix m = pContext->GetMatrix();
+    //nglString d;
+    //m.GetValue(d);
     //    NGL_OUT(_T("nglWidget(0x%p):\n%ls\n"), this, d.GetChars());
     //NGL_ASSERT(m.Array[12] > 0);
     
@@ -3690,19 +3693,22 @@ void nuiWidget::LoadIdentityMatrix()
 {
   CheckValid();
   Invalidate();
-  for (uint32 i = 0; i < mpMatrixNodes->size(); i++)
-    mpMatrixNodes->at(i)->Release();
-  delete mpMatrixNodes;
-  mpMatrixNodes = NULL;
+  
+  if (mpMatrixNodes)
+  {
+    for (uint32 i = 0; i < mpMatrixNodes->size(); i++)
+      mpMatrixNodes->at(i)->Release();
+    delete mpMatrixNodes;
+    mpMatrixNodes = NULL;
+  }
+  
   Invalidate();
   DebugRefreshInfo();
 }
 
 bool nuiWidget::IsMatrixIdentity() const
 {
-  if (!mpMatrixNodes)
-    return true;
-  return false;
+  return !mpMatrixNodes;
 }
 
 void nuiWidget::GetMatrix(nuiMatrix& rMatrix) const
