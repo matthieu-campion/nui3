@@ -339,7 +339,8 @@ void nuiMainWindow::Paint()
 //  static int counter = 0;
   //NGL_OUT(_T("%d OnPaint %d - %d\n"), counter++, DrawFullFrame, RestorePartial);
 
-  pContext->MultMatrix(GetMatrix());
+  if (!IsMatrixIdentity())
+    pContext->MultMatrix(GetMatrix());
   mLastRendering = nglTime();
   DrawTree(pContext);
 
