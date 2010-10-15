@@ -3628,12 +3628,70 @@ void nuiWidget::SetLayoutAnimationEasing(const nuiEasingMethod& rMethod)
 /// Matrix Operations:
 nuiMatrix nuiWidget::mIdentityMatrix;
 
+void nuiWidget::AddMatrixNode(nuiMatrixNode* pNode)
+{
+  CheckValid();
+  nuiWidget::InvalidateRect(GetOverDrawRect(true, true));
+  SilentInvalidate();
+
+  if (!mpMatrixNodes)
+    mpMatrixNodes = new std::vector<nuiMatrixNode*>;
+  mpMatrixNodes->push_back(pNode);
+
+  // Usual clean up needed for the partial redraw to work correctly
+  nuiWidget::InvalidateRect(GetOverDrawRect(true, true));
+  SilentInvalidate();
+  
+  if (mpParent)
+    mpParent->BroadcastInvalidate(this);
+  DebugRefreshInfo();
+}
+
+void nuiWidget::DelMatrixNode(uint32 index)
+{
+  if (!mpMatrixNodes)
+    return;
+  
+  CheckValid();
+  nuiWidget::InvalidateRect(GetOverDrawRect(true, true));
+  SilentInvalidate();
+  
+  mpMatrixNodes->at(index)->Release();
+  mpMatrixNodes->erase(mpMatrixNodes->begin() + index);
+  
+  // Usual clean up needed for the partial redraw to work correctly
+  nuiWidget::InvalidateRect(GetOverDrawRect(true, true));
+  SilentInvalidate();
+  
+  if (mpParent)
+    mpParent->BroadcastInvalidate(this);
+  DebugRefreshInfo();
+}
+
+
+int32 nuiWidget::GetMatrixNodeCount() const
+{
+  CheckValid();
+  if (!mpMatrixNodes)
+    return 0;
+  return mpMatrixNodes->size();
+}
+
+
+nuiMatrixNode* nuiWidget::GetMatrixNode(uint32 index) const
+{
+  CheckValid();
+  if (!mpMatrixNodes)
+    return mpMatrixNodes->at(index);
+}
+
+
 void nuiWidget::LoadIdentityMatrix()
 {
   CheckValid();
   Invalidate();
   for (uint32 i = 0; i < mpMatrixNodes->size(); i++)
-    delete (mpMatrixNodes->at(i));
+    mpMatrixNodes->at(i)->Release();
   delete mpMatrixNodes;
   mpMatrixNodes = NULL;
   Invalidate();

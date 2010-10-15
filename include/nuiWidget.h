@@ -391,6 +391,14 @@ public:
 
   /** @name Matrix Transformation Support */
   //@{
+  void AddMatrixNode(nuiMatrixNode* pNode);
+  void DelMatrixNode(uint32 index);
+  int32 GetMatrixNodeCount() const;
+  nuiMatrixNode* GetMatrixNode(uint32 index) const;
+  //@}
+  
+  /** @name Old (deprecated) Matrix Transformation Support */
+  //@{
   void LoadIdentityMatrix();
   bool IsMatrixIdentity() const;
   void GetMatrix(nuiMatrix& rMatrix) const;
