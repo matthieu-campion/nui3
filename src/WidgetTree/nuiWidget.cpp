@@ -558,7 +558,6 @@ void nuiWidget::InitAttributes()
  
 void nuiWidget::Init()
 {
-  mIdentityMatrix.SetIdentity();
   mDebugLevel = 0; // No debug by default.
   mCanRespectConstraint = false; ///< By default the widgets don't care about the constraints imposed by their parents. Only few ones care about this.
   mNeedInvalidateOnSetRect = true;
