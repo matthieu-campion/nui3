@@ -402,7 +402,7 @@ public:
   void LoadIdentityMatrix();
   bool IsMatrixIdentity() const;
   void GetMatrix(nuiMatrix& rMatrix) const;
-  const nuiMatrix& GetMatrix() const;
+  nuiMatrix GetMatrix() const;
   void SetMatrix(const nuiMatrix& rMatrix);
   //@}
 
