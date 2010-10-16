@@ -21,7 +21,6 @@
 #include "nuiSurface.h"
 #include "nuiRenderState.h"
 #include "nuiAnimation.h"
-#include "nuiMatrixNode.h"
 
 class nuiContainer;
 class nuiDrawContext;
@@ -37,6 +36,8 @@ class nuiPainter;
  
 class nuiTheme;
 class nuiRectAttributeAnimation;
+
+class nuiMatrixNode;
 
 typedef nuiWidget* nuiWidgetPtr;
 typedef std::vector<nuiWidgetPtr> nuiWidgetList;
@@ -718,7 +719,9 @@ protected:
   nuiSize GetOverDrawBottom() const;
 
   void AutoHide(const nuiEvent& rEvent); ///< This methods calls SetVisible(false) right after the HIDE animation stopped
-
+  void AutoInvalidate(const nuiEvent& rEvent); ///< This methods calls Invalidate()
+  void AutoInvalidateLayout(const nuiEvent& rEvent); ///< This methods calls InvalidateLayout()
+  
   void InternalSetLayout(const nuiRect& rect);
   virtual void InternalSetLayout(const nuiRect& rect, bool PositionChanged, bool SizeChanged);
   

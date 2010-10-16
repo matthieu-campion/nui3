@@ -10,6 +10,7 @@
 #pragma once
 
 #include "nui.h"
+#include "nuiEvent.h"
 
 class nuiMatrixNode : public nuiObject
 {
@@ -24,22 +25,27 @@ public:
   const nuiMatrix& GetMatrix() const;
   void SetMatrix(const nuiMatrix& rMatrix);
 
+  nuiSimpleEventSource<0> Changed;
 protected:
   mutable nuiMatrix mMatrix;
   mutable bool mChanged;
-  void Changed();
+  void SetChanged();
   
 private:
   void Init();
 };
 
-class nuiMatrixNode_Rotation :  nuiMatrixNode
+class nuiMatrixNode_Rotation : public nuiMatrixNode
 {
+public:
   nuiMatrixNode_Rotation();
-
+  nuiMatrixNode_Rotation(float Angle, const nglVectorf& rAxis);
+  nuiMatrixNode_Rotation(float Angle, float Xaxis, float Yaxis, float Zaxis);
+  
   virtual void Update() const;
   
-  void SetRotation(float Angle, const nglVectorf& rAxis);
+  void Set(float Angle, const nglVectorf& rAxis);
+  void Set(float Angle, float Xaxis, float Yaxis, float Zaxis);
 
   void SetAngle(float Angle);
   float GetAngle() const;
@@ -47,14 +53,17 @@ class nuiMatrixNode_Rotation :  nuiMatrixNode
   const nglVectorf& GetAxis() const;
   
 protected:
+  void Init();
   float mAngle;
   nglVectorf mAxis;
   
 };
 
-class nuiMatrixNode_Translation :  nuiMatrixNode
+class nuiMatrixNode_Translation : public nuiMatrixNode
 {
+public:
   nuiMatrixNode_Translation();
+  nuiMatrixNode_Translation(float X, float Y, float Z);
   
   virtual void Update() const;
 
@@ -72,19 +81,24 @@ class nuiMatrixNode_Translation :  nuiMatrixNode
 
 
 protected:
+  void Init();
   nglVectorf mVector;
 };
 
-class nuiMatrixNode_Scale :  nuiMatrixNode
+class nuiMatrixNode_Scale : public nuiMatrixNode
 {
+public:
   nuiMatrixNode_Scale();
+  nuiMatrixNode_Scale(float Scale);
+  nuiMatrixNode_Scale(float X, float Y, float Z);
   
   virtual void Update() const;
   
   void Set(float X, float Y, float Z);
-  
-  void SetScale(const nglVectorf& rVector);
-  const nglVectorf& GetScale() const;
+  void SetScale(float XYZ);
+  float GetScale() const;
+  void SetScaleVector(const nglVectorf& rVector);
+  const nglVectorf& GetScaleVector() const;
   
   void SetX(float set);
   float GetX() const;
@@ -95,6 +109,7 @@ class nuiMatrixNode_Scale :  nuiMatrixNode
   
   
 protected:
+  void Init();
   nglVectorf mVector;
 };
 

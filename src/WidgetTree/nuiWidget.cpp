@@ -22,6 +22,8 @@
 #include "nuiClampedValueAttributeEditor.h"
 #include "nuiColorDecoration.h"
 #include "nuiTask.h"
+#include "nuiMatrixNode.h"
+
 
 #ifdef _UIKIT_
 //const bool gGlobalUseRenderCache = false;
@@ -3641,7 +3643,8 @@ void nuiWidget::AddMatrixNode(nuiMatrixNode* pNode)
 
   pNode->Acquire();
   mpMatrixNodes->push_back(pNode);
-
+  mGenericWidgetSink.Connect(pNode->Changed, &nuiWidget::AutoInvalidateLayout);
+  
   // Usual clean up needed for the partial redraw to work correctly
   nuiWidget::InvalidateRect(GetOverDrawRect(true, true));
   SilentInvalidate();
@@ -3660,6 +3663,7 @@ void nuiWidget::DelMatrixNode(uint32 index)
   nuiWidget::InvalidateRect(GetOverDrawRect(true, true));
   SilentInvalidate();
   
+  mGenericWidgetSink.Disconnect(mpMatrixNodes->at(index)->Changed, &nuiWidget::AutoInvalidateLayout);
   mpMatrixNodes->at(index)->Release();
   mpMatrixNodes->erase(mpMatrixNodes->begin() + index);
   
@@ -4786,6 +4790,15 @@ void nuiWidget::SetAutoClip(bool set)
 }
 
 
+void nuiWidget::AutoInvalidate(const nuiEvent& rEvent)
+{
+  Invalidate();
+}
+
+void nuiWidget::AutoInvalidateLayout(const nuiEvent& rEvent)
+{
+  InvalidateLayout();
+}
 
 
 // ***************************************************************************
