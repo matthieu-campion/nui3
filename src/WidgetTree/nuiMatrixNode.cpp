@@ -35,6 +35,8 @@ void nuiMatrixNode::Init()
                   nuiMakeDelegate(this, &nuiMatrixNode::GetMatrix),
                   nuiMakeDelegate(this, &nuiMatrixNode::SetMatrix)));
   }
+  
+  mChanged = false;
 }
 
 //void nuiMatrixNode::Apply(nuiMatrix& rMatrix) const = 0; ///< Override this method to create your own matrix node operations

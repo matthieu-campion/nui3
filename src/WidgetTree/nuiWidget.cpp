@@ -3638,6 +3638,8 @@ void nuiWidget::AddMatrixNode(nuiMatrixNode* pNode)
 
   if (!mpMatrixNodes)
     mpMatrixNodes = new std::vector<nuiMatrixNode*>;
+
+  pNode->Acquire();
   mpMatrixNodes->push_back(pNode);
 
   // Usual clean up needed for the partial redraw to work correctly
@@ -3683,7 +3685,7 @@ int32 nuiWidget::GetMatrixNodeCount() const
 nuiMatrixNode* nuiWidget::GetMatrixNode(uint32 index) const
 {
   CheckValid();
-  if (!mpMatrixNodes)
+  if (mpMatrixNodes)
     return mpMatrixNodes->at(index);
 }
 
@@ -3713,7 +3715,7 @@ bool nuiWidget::IsMatrixIdentity() const
 void nuiWidget::GetMatrix(nuiMatrix& rMatrix) const
 {
   CheckValid();
-  rMatrix = mIdentityMatrix;
+  rMatrix.SetIdentity();
   if (IsMatrixIdentity())
     return;
 
@@ -3721,7 +3723,7 @@ void nuiWidget::GetMatrix(nuiMatrix& rMatrix) const
     mpMatrixNodes->at(i)->Apply(rMatrix);
 }
 
-const nuiMatrix& nuiWidget::GetMatrix() const
+nuiMatrix nuiWidget::GetMatrix() const
 {
   CheckValid();
   nuiMatrix m;
@@ -3745,9 +3747,7 @@ void nuiWidget::SetMatrix(const nuiMatrix& rMatrix)
   LoadIdentityMatrix(); // So we load the identity matrix (i.e. clear any existing node)
   if (!rMatrix.IsIdentity()) // If the user wasn't asking for the identity matrix
   {
-    // we create a simple static matrix node:
-    mpMatrixNodes = new std::vector<nuiMatrixNode*>();
-    mpMatrixNodes->push_back(new nuiMatrixNode(rMatrix));
+    AddMatrixNode(new nuiMatrixNode(rMatrix));
   }
 
   // Usual clean up needed for the partial redraw to work correctly
