@@ -122,7 +122,7 @@ nuiTreeNode* nuiColumnTreeView::DrawColumn(nuiDrawContext* pContext, nuiTreeNode
         pContext->PushClipping();
         r.SetSize(r.GetWidth() + mHandleSize, r.GetHeight());
         pContext->Clip(r);
-        pTheme->DrawTreeHandle(pContext, HR, false, mHandleSize-4);
+        pTheme->DrawTreeHandle(pContext, HR, false, mHandleSize-4, GetColor(eTreeViewHandle));
         pContext->PopClipping();
       }
       DrawChild(pContext, pWidget);
