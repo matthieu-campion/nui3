@@ -92,13 +92,13 @@ nuiMatrixNode_Rotation::nuiMatrixNode_Rotation()
 nuiMatrixNode_Rotation::nuiMatrixNode_Rotation(float Angle, const nglVectorf& rAxis)
 {
   nuiMatrixNode_Rotation::Init();
-  Set(Angle, rAxis);
+  SetRotation(Angle, rAxis);
 }
 
 nuiMatrixNode_Rotation::nuiMatrixNode_Rotation(float Angle, float Xaxis, float Yaxis, float Zaxis)
 {
   nuiMatrixNode_Rotation::Init();
-  Set(Angle, Xaxis, Yaxis, Zaxis);
+  SetRotation(Angle, Xaxis, Yaxis, Zaxis);
 }
 
 void nuiMatrixNode_Rotation::Init()
@@ -125,15 +125,15 @@ void nuiMatrixNode_Rotation::Update() const
 }
 
 
-void nuiMatrixNode_Rotation::Set(float Angle, const nglVectorf& rAxis)
+void nuiMatrixNode_Rotation::SetRotation(float Angle, const nglVectorf& rAxis)
 {
   SetAngle(Angle);
   SetAxis(rAxis);
 }
 
-void nuiMatrixNode_Rotation::Set(float Angle, float Xaxis, float Yaxis, float Zaxis)
+void nuiMatrixNode_Rotation::SetRotation(float Angle, float Xaxis, float Yaxis, float Zaxis)
 {
-  Set(Angle, nglVectorf(Xaxis, Yaxis, Zaxis));
+  SetRotation(Angle, nglVectorf(Xaxis, Yaxis, Zaxis));
 }
 
 void nuiMatrixNode_Rotation::SetAngle(float Angle)
@@ -369,4 +369,70 @@ float nuiMatrixNode_Scale::GetZ() const
 {
   return mVector[2];
 }
+
+///////////////////////////////////////
+nuiMatrixNode_Pivot::nuiMatrixNode_Pivot()
+{
+  nuiMatrixNode_Pivot::Init();
+  // the default nglVectorf should be ok
+}
+
+nuiMatrixNode_Pivot::nuiMatrixNode_Pivot(float Angle, const nglVectorf& rPivot, const nglVectorf& rAxis)
+{
+  nuiMatrixNode_Pivot::Init();
+  Set(Angle, rPivot, rAxis);
+}
+
+nuiMatrixNode_Pivot::nuiMatrixNode_Pivot(float Angle, float X, float Y, float Z, float Xaxis, float Yaxis, float Zaxis)
+{
+  nuiMatrixNode_Pivot::Init();
+  Set(Angle, X, Y, Z, Xaxis, Yaxis, Zaxis);
+}
+
+void nuiMatrixNode_Pivot::Init()
+{
+  if (SetObjectClass(_T("nuiMatrixNode_Pivot")))
+  {
+    // Create attributes
+    AddAttribute(new nuiAttribute<const nglVectorf&>
+                 (nglString(_T("Pivot")), nuiUnitVector,
+                  nuiMakeDelegate(this, &nuiMatrixNode_Pivot::GetPivot),
+                  nuiMakeDelegate(this, &nuiMatrixNode_Pivot::SetPivot)));
+  }
+}
+
+
+void nuiMatrixNode_Pivot::Update() const
+{
+  mMatrix.SetRotation(mAngle, mAxis);
+  nuiMatrix tr;
+  tr.SetTranslation(mPivot);
+  mMatrix *= tr;
+}
+
+
+void nuiMatrixNode_Pivot::Set(float Angle, const nglVectorf& rPivot, const nglVectorf& rAxis)
+{
+  nuiMatrixNode_Rotation::SetRotation(Angle, rAxis);
+  SetPivot(rPivot);
+}
+
+void nuiMatrixNode_Pivot::Set(float Angle, float X, float Y, float Z, float Xaxis, float Yaxis, float Zaxis)
+{
+  Set(Angle, nglVectorf(X, Y, Z), nglVectorf(Xaxis, Yaxis, Zaxis));
+}
+
+void nuiMatrixNode_Pivot::SetPivot(const nglVectorf& rPivot)
+{
+  if (mPivot == rPivot)
+    return;
+  mPivot = rPivot;
+  SetChanged();
+}
+
+const nglVectorf& nuiMatrixNode_Pivot::GetPivot() const
+{
+  return mPivot;
+}
+
 

@@ -44,8 +44,8 @@ public:
   
   virtual void Update() const;
   
-  void Set(float Angle, const nglVectorf& rAxis);
-  void Set(float Angle, float Xaxis, float Yaxis, float Zaxis);
+  void SetRotation(float Angle, const nglVectorf& rAxis);
+  void SetRotation(float Angle, float Xaxis, float Yaxis, float Zaxis);
 
   void SetAngle(float Angle);
   float GetAngle() const;
@@ -111,5 +111,25 @@ public:
 protected:
   void Init();
   nglVectorf mVector;
+};
+
+class nuiMatrixNode_Pivot : public nuiMatrixNode_Rotation
+{
+public:
+  nuiMatrixNode_Pivot();
+  nuiMatrixNode_Pivot(float Angle, const nglVectorf& rPivot, const nglVectorf& rAxis);
+  nuiMatrixNode_Pivot(float Angle, float X, float Y, float Z, float Xaxis, float Yaxis, float Zaxis);
+  
+  virtual void Update() const;
+  
+  void Set(float Angle, const nglVectorf& rPivot, const nglVectorf& rAxis);
+  void Set(float Angle, float X, float Y, float Z, float Xaxis, float Yaxis, float Zaxis);
+  
+  void SetPivot(const nglVectorf& rPivot);
+  const nglVectorf& GetPivot() const;
+  
+protected:
+  void Init();
+  nglVectorf mPivot;
 };
 
