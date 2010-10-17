@@ -130,10 +130,10 @@ public:
   
 private:
 
-  bool CreateCSThread(const nuiEvent& rEvent);
-  bool RemoveCSThread(const nuiEvent& rEvent);
-  bool CreateLLThread(const nuiEvent& rEvent);
-  bool RemoveLLThread(const nuiEvent& rEvent);
+  void CreateCSThread(const nuiEvent& rEvent);
+  void RemoveCSThread(const nuiEvent& rEvent);
+  void CreateLLThread(const nuiEvent& rEvent);
+  void RemoveLLThread(const nuiEvent& rEvent);
   
   nuiList* mpCSList;
   nuiList* mpLLList;

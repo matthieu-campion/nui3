@@ -105,7 +105,7 @@ ThreadInspectorTest::~ThreadInspectorTest()
 }
 
 
-bool ThreadInspectorTest::CreateCSThread(const nuiEvent& rEvent)
+void ThreadInspectorTest::CreateCSThread(const nuiEvent& rEvent)
 {
   // create thread
   nglString name;
@@ -130,15 +130,15 @@ bool ThreadInspectorTest::CreateCSThread(const nuiEvent& rEvent)
   
   pBox->AddCell(pThread->InitGUI());
   
-  return true;
+  rEvent.Cancel();
 }
 
 
-bool ThreadInspectorTest::RemoveCSThread(const nuiEvent& rEvent)
+void ThreadInspectorTest::RemoveCSThread(const nuiEvent& rEvent)
 {
   nuiWidget* pWidget = mpCSList->GetSelected();
   if (!pWidget)
-    return true;
+    rEvent.Cancel();
     
   // retrieve thread associated to the selected widget from the list
   std::map<nuiWidget*, TITCSthread*>::iterator it = mCSThreads.find(pWidget);
@@ -153,13 +153,13 @@ bool ThreadInspectorTest::RemoveCSThread(const nuiEvent& rEvent)
   mpCSList->DelChild(pWidget);  
   mCSThreads.erase(it);
   
-  return true;
+  rEvent.Cancel();
 }
 
 
 
 
-bool ThreadInspectorTest::CreateLLThread(const nuiEvent& rEvent)
+void ThreadInspectorTest::CreateLLThread(const nuiEvent& rEvent)
 {
   // create thread
   nglString name;
@@ -184,15 +184,15 @@ bool ThreadInspectorTest::CreateLLThread(const nuiEvent& rEvent)
   
   pBox->AddCell(pThread->InitGUI());
   
-  return true;
+  rEvent.Cancel();
 }
 
 
-bool ThreadInspectorTest::RemoveLLThread(const nuiEvent& rEvent)
+void ThreadInspectorTest::RemoveLLThread(const nuiEvent& rEvent)
 {
   nuiWidget* pWidget = mpLLList->GetSelected();
   if (!pWidget)
-    return true;
+    rEvent.Cancel();
     
   // retrieve thread associated to the selected widget from the list
   std::map<nuiWidget*, TITLLthread*>::iterator it = mLLThreads.find(pWidget);
@@ -207,7 +207,7 @@ bool ThreadInspectorTest::RemoveLLThread(const nuiEvent& rEvent)
   mpLLList->DelChild(pWidget);  
   mLLThreads.erase(it);
   
-  return true;
+  rEvent.Cancel();
 }
 
 

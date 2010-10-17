@@ -1097,11 +1097,13 @@ Cursor nglWindow::GetXCursor(nuiMouseCursor _Cursor)
 
 void nglWindow::EnterModalState()
 {
+    NGL_LOG("deb", 0, "Entering modal state");
 	App->EnterModalState();
 }
 
 void nglWindow::ExitModalState()
 {
+    NGL_LOG("deb", 0, "Exiting modal state");
 	App->ExitModalState();
 }
 
