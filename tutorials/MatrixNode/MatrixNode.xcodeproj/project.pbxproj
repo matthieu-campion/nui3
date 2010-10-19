@@ -108,14 +108,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = BCD448A211D2120F00BEF227 /* nui3.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E5A8D1D311E33A54004E14CE /* libnui3CocoaD.a */;
+			remoteGlobalIDString = E5A8D1D311E33A54004E14CE;
 			remoteInfo = nui3CocoaD;
 		};
 		E528F8CB126A339D0030CB86 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BCD448A211D2120F00BEF227 /* nui3.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E5D643E51209AB9C009C26A9 /* libnui3Cocoa.a */;
+			remoteGlobalIDString = E5D643E51209AB9C009C26A9;
 			remoteInfo = nui3Cocoa;
 		};
 /* End PBXContainerItemProxy section */
