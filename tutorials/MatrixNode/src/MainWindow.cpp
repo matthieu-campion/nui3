@@ -44,13 +44,14 @@ void MainWindow::OnCreation()
   nuiLabel* pLabel = new nuiLabel(_T("Label"));
   pLabel->SetUserPos(320, 200);
   pLabel->SetAutoClip(false);
-  nuiMatrixNode* pTranslation = new nuiMatrixNode_Translation(-20,-10,0);
-  nuiMatrixNode* pRotation = new nuiMatrixNode_Rotation(0,0,0,1);
+  //nuiMatrixNode* pTranslation = new nuiMatrixNode_Translation(-20,-10,0);
+  //nuiMatrixNode* pRotation = new nuiMatrixNode_Rotation(0,0,0,1);
+  nuiMatrixNode* pRotation = new nuiMatrixNode_Pivot(0, -20,-10,0, 0,0,1);
   nuiMatrixNode* pScale = new nuiMatrixNode_Scale(1.0,1.0,1.0);
 
   pLabel->AddMatrixNode(pScale);
   pLabel->AddMatrixNode(pRotation);
-  pLabel->AddMatrixNode(pTranslation);
+//  pLabel->AddMatrixNode(pTranslation);
   
   nuiAttributeAnim<float>* pAnimRot = new nuiAttributeAnim<float>();
   pAnimRot->SetStartValue(0);
@@ -60,7 +61,7 @@ void MainWindow::OnCreation()
   pAnimRot->SetDeleteOnStop(true);
   pAnimRot->SetDuration(3);
   //pAnimRot->SetEasing(nuiEasingElasticOut<1400>);
-  pAnimRot->SetEasing(nuiEasingQuintic);
+  pAnimRot->SetEasing(nuiEasingCubic);
   pAnimRot->Play(1000000, eAnimLoopForward);
 
   nuiAttributeAnim<float>* pAnimScale = new nuiAttributeAnim<float>();
