@@ -24,7 +24,7 @@ public:
   
   virtual nuiRect CalcIdealSize();  
   virtual bool Draw(nuiDrawContext* pContext);
-  virtual bool Draw(nuiDrawContext* pContext, nuiWidget* pWidget = NULL);
+  virtual bool Draw(nuiDrawContext* pContext, nuiWidget* pWidget);
   
   uint32 GetFrameIndex() const;
   void SetFrameIndex(uint32 index);
