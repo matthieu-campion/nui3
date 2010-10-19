@@ -21,6 +21,7 @@
 #include "nuiSurface.h"
 #include "nuiRenderState.h"
 #include "nuiAnimation.h"
+#include "nuiMatrixNode.h"
 
 class nuiContainer;
 class nuiDrawContext;

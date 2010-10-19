@@ -645,6 +645,7 @@ void nuiWin::CreateCSSParserTest(const nuiEvent& rEvent)
   if (!pF)
   {
     pText->Print(_T("Unable to open CSS source file '%ls'\n"), p.GetChars());
+    return;
   }
 
   nuiCSS* pCSS = new nuiCSS();
@@ -1802,7 +1803,7 @@ void nuiWin::CreateFontSubstitutionWindow(const nuiEvent& rEvent)
   pText->Print(_T("%ls"), txt.GetChars());
 
   pText->Print(_T("here we are!\n"));
-  //
+
   rEvent.Cancel();
 }
 
@@ -2325,6 +2326,7 @@ void nuiWin::AudioDeviceSelected(const nuiEvent& rEvent)
   if (!res)
   {
     NGL_OUT(nuiTR("nuiAudioDevice Open failed!\n"));
+    return;
   }
 
 
@@ -3684,7 +3686,6 @@ void nuiWin::SaveXMLDescription(const nuiEvent& rEvent)
   pXML = (nuiXML*) Serialize(NULL,true);
   nglOFile file(nglPath((_T("nuiTestOutput.xml"))),eOFileCreate);
   pXML->Save(file);
-  return;
 }
 
 void nuiWin::LogText(const nuiEvent& rEvent)
@@ -3692,7 +3693,6 @@ void nuiWin::LogText(const nuiEvent& rEvent)
   nuiEditLine* pLine = (nuiEditLine*)rEvent.mpUser;
   NGL_OUT(_T("From Edit Line: %ls\n"),pLine->GetText().GetChars());
   pLine->SetText((_T("")));
-  return;
 }
 
 void nuiWin::FileSelect(const nuiEvent& rEvent)

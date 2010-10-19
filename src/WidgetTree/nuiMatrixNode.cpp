@@ -184,7 +184,6 @@ void nuiMatrixNode_Translation::Init()
                  (nglString(_T("Vector")), nuiUnitVector,
                   nuiMakeDelegate(this, &nuiMatrixNode_Translation::GetVector),
                   nuiMakeDelegate(this, &nuiMatrixNode_Translation::SetVector)));
-    
     AddAttribute(new nuiAttribute<float>
                  (nglString(_T("X")), nuiUnitNone,
                   nuiMakeDelegate(this, &nuiMatrixNode_Translation::GetX),
