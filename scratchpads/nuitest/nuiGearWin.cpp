@@ -69,7 +69,7 @@ BlendMode ModeDesc[]=
   SETFUNC(TranspClear),
   SETFUNC(TranspOver),
   SETFUNC(TranspInRev),
-  
+
   { NULL, (nuiBlendFunc)0 }
 };
 
@@ -164,24 +164,24 @@ nuiGearWin::~nuiGearWin()
   delete mpTimer;
 }
 
-bool nuiGearWin::ShowMenu(const nuiEvent& rEvent)
+void nuiGearWin::ShowMenu(const nuiEvent& rEvent)
 {
   const nuiMouseClickedEvent& rMEvent((const nuiMouseClickedEvent&)rEvent);
 
   NGL_OUT(_T("Mouse Clicked: %f - %f\n"), rMEvent.mX, rMEvent.mY);
- 
+
   if (rMEvent.mButton == nglMouseInfo::ButtonMiddle)
   {
     nuiRect rect(rMEvent.mX+2,rMEvent.mY+2,0.0f,0.0f);
 
     nuiTreeNodePtr pTree = new nuiTreeNode(_T("Demo Menu"));
-    
+
     for (uint i = 0; i < 5; i++)
     {
       nglString txt1;
       txt1.Format("%c", 'A' + i);
       nuiTreeNode* pSubTree = new nuiTreeNode(txt1);
-      
+
       for (uint j = 0; j < 16; j++)
       {
         nglString txt2;
@@ -192,10 +192,10 @@ bool nuiGearWin::ShowMenu(const nuiEvent& rEvent)
           nglString txt3;
           txt3.Format("%d", k);
           nuiTreeNode* pSubNode = new nuiTreeNode(txt3);
-          
+
           pNode->AddChild(pSubNode);
         }
-        
+
         pSubTree->AddChild(pNode);
       }
       pTree->AddChild(pSubTree);
@@ -226,9 +226,9 @@ bool nuiGearWin::ShowMenu(const nuiEvent& rEvent)
     pTree->AddChild(new nuiTreeNode(pImage));
 
     pTree->AddChild(new nuiTreeNode(_T("Testing menu")));
-  
+
     pTree->AddChild(new nuiTreeNode(_T("Testing menu 2 blablabla")));
-    
+
     nuiPopupMenu* pMenu = new nuiPopupMenu(this, pTree, rect);
     UNUSED(pMenu);
   }
@@ -248,20 +248,18 @@ bool nuiGearWin::ShowMenu(const nuiEvent& rEvent)
     mGearWinSink.Connect(pMenu->MenuDone, &nuiGearWin::ItemSelected, (void*)pMenu);
 
   }
-  return false;
 }
 
-bool nuiGearWin::ItemSelected(const nuiEvent& rEvent)
+void nuiGearWin::ItemSelected(const nuiEvent& rEvent)
 {
   nuiPopupMenu* pMenu = (nuiPopupMenu*)(rEvent.mpUser);
   nuiTreeNode* pNode = pMenu->GetSelectedNode();
   if (pNode)
     SetImageMode(mpImage,(pMenu->GetIdInTree(pNode)));
   Invalidate();
-  return false;
 }
 
-bool nuiGearWin::UserDraw(const nuiEvent& rEvent)
+void nuiGearWin::UserDraw(const nuiEvent& rEvent)
 {
   nuiRect rect = mpUserArea->GetRect();
   float Alpha = mpAlphaBar->GetRange().GetValue();
@@ -301,10 +299,9 @@ bool nuiGearWin::UserDraw(const nuiEvent& rEvent)
 
   if (mAnimate)
     Invalidate();
-  return false;
 }
 
-bool nuiGearWin::ToggleAnimation(const nuiEvent& rEvent)
+void nuiGearWin::ToggleAnimation(const nuiEvent& rEvent)
 {
   mAnimate = !mAnimate;
   if (mAnimate)
@@ -319,14 +316,12 @@ bool nuiGearWin::ToggleAnimation(const nuiEvent& rEvent)
   }
 
   Invalidate();
-  return false;
 }
 
 
-bool nuiGearWin::UpdateFPS(const nuiEvent& rEvent)
+void nuiGearWin::UpdateFPS(const nuiEvent& rEvent)
 {
   nglString temp;
   temp.Format("%.1f fps", mFPS);
   mpFPSLabel->SetText(temp);
-  return false;
 }

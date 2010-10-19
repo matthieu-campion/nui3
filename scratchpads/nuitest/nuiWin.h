@@ -29,107 +29,107 @@ public:
   virtual bool OnKeyDown(const nglKeyEvent& rEvent);
 
   bool Draw(nuiDrawContext* pContext);
-  
+
   void OnClose();
   void OnPaint();
 protected:
 
-  bool CreateConsoleWindow(const nuiEvent& rEvent);
-  bool CreateThreadInspectorTestWindow(const nuiEvent& rEvent);
-  bool CreateCSSParserTest(const nuiEvent& rEvent);
-  bool CreateBlurArea(const nuiEvent& rEvent);
-  bool CreateSplineWindow(const nuiEvent& rEvent);
-  bool CreateTreeViewWindow(const nuiEvent& rEvent);
-  bool CreateSVGTigerWindow(const nuiEvent& rEvent);
-  bool CreateAnimWindow(const nuiEvent& rEvent);
-  bool CreateMessedUpWindow(const nuiEvent& rEvent);
-  bool CreateTextWindow(const nuiEvent& rEvent);
-  bool CreateText2Window(const nuiEvent& rEvent);
-  bool CreateFileListWindow(const nuiEvent& rEvent);
-  bool CreateOffscreenArea(const nuiEvent& rEvent);
-  bool CreateColumnTreeViewWindow(const nuiEvent& rEvent);
-  bool CreateScrolledImageWindow(const nuiEvent& rEvent);
-  bool CreateScrolledImageWindow2(const nuiEvent& rEvent);
+  void CreateConsoleWindow(const nuiEvent& rEvent);
+  void CreateThreadInspectorTestWindow(const nuiEvent& rEvent);
+  void CreateCSSParserTest(const nuiEvent& rEvent);
+  void CreateBlurArea(const nuiEvent& rEvent);
+  void CreateSplineWindow(const nuiEvent& rEvent);
+  void CreateTreeViewWindow(const nuiEvent& rEvent);
+  void CreateSVGTigerWindow(const nuiEvent& rEvent);
+  void CreateAnimWindow(const nuiEvent& rEvent);
+  void CreateMessedUpWindow(const nuiEvent& rEvent);
+  void CreateTextWindow(const nuiEvent& rEvent);
+  void CreateText2Window(const nuiEvent& rEvent);
+  void CreateFileListWindow(const nuiEvent& rEvent);
+  void CreateOffscreenArea(const nuiEvent& rEvent);
+  void CreateColumnTreeViewWindow(const nuiEvent& rEvent);
+  void CreateScrolledImageWindow(const nuiEvent& rEvent);
+  void CreateScrolledImageWindow2(const nuiEvent& rEvent);
 #ifdef USE_SWF
-  bool CreateSWFTest1Window(const nuiEvent& rEvent);
+  void CreateSWFTest1Window(const nuiEvent& rEvent);
 #endif
-  bool CreateShapeWindow(const nuiEvent& rEvent);
-  bool TogglePartialRedraw(const nuiEvent& rEvent);
-  bool CreateWrappedLabelWindow(const nuiEvent& rEvent);
-  bool CreateWhizzAnimWindow(const nuiEvent& rEvent);
-  bool CreateTextLayoutWindow(const nuiEvent& rEvent);
-  bool CreateFontSubstitutionWindow(const nuiEvent& rEvent);
-  bool CreateSignalsAndSlotsTestWindow(const nuiEvent& rEvent);
-  bool CreateClippingTest(const nuiEvent& rEvent);
-  bool CreateSurfaceTest(const nuiEvent& rEvent);
-  bool CreateDragZone(const nuiEvent& rEvent);
-  bool CreateEnableTestWindow(const nuiEvent& rEvent);
-  bool CreateButtonDecorationWindow(const nuiEvent& rEvent);
-  bool CreateVolumesTestWindow(const nuiEvent& rEvent);
-  bool CreateHTTPWindow(const nuiEvent& rEvent);
-  bool SendHTTPRequest(const nuiEvent& rEvent);
-  bool CreateHTMLWindow(const nuiEvent& rEvent);
-  bool CreateImageResizeWindow(const nuiEvent& rEvent);
-  bool CreateCoverFlowWindow(const nuiEvent& rEvent);
-  bool CreateUnicodeTextWindow(const nuiEvent& rEvent);
+  void CreateShapeWindow(const nuiEvent& rEvent);
+  void TogglePartialRedraw(const nuiEvent& rEvent);
+  void CreateWrappedLabelWindow(const nuiEvent& rEvent);
+  void CreateWhizzAnimWindow(const nuiEvent& rEvent);
+  void CreateTextLayoutWindow(const nuiEvent& rEvent);
+  void CreateFontSubstitutionWindow(const nuiEvent& rEvent);
+  void CreateSignalsAndSlotsTestWindow(const nuiEvent& rEvent);
+  void CreateClippingTest(const nuiEvent& rEvent);
+  void CreateSurfaceTest(const nuiEvent& rEvent);
+  void CreateDragZone(const nuiEvent& rEvent);
+  void CreateEnableTestWindow(const nuiEvent& rEvent);
+  void CreateButtonDecorationWindow(const nuiEvent& rEvent);
+  void CreateVolumesTestWindow(const nuiEvent& rEvent);
+  void CreateHTTPWindow(const nuiEvent& rEvent);
+  void SendHTTPRequest(const nuiEvent& rEvent);
+  void CreateHTMLWindow(const nuiEvent& rEvent);
+  void CreateImageResizeWindow(const nuiEvent& rEvent);
+  void CreateCoverFlowWindow(const nuiEvent& rEvent);
+  void CreateUnicodeTextWindow(const nuiEvent& rEvent);
 
-  bool ShowMenu(const nuiEvent& rEvent);
-  bool ItemSelected(const nuiEvent& rEvent);
-  bool UserDraw(const nuiEvent& rEvent);
-  bool ToggleAnimation(const nuiEvent& rEvent);
+  void ShowMenu(const nuiEvent& rEvent);
+  void ItemSelected(const nuiEvent& rEvent);
+  void UserDraw(const nuiEvent& rEvent);
+  void ToggleAnimation(const nuiEvent& rEvent);
 
-  bool SaveXMLDescription(const nuiEvent& rEvent);
-  bool OutputSomething(const nuiEvent& rEvent);
-  bool CreateFromGladeXML(const nuiEvent& rEvent);
-  bool CreateFromXML(const nuiEvent& rEvent);
-  bool HideText(const nuiEvent& rEvent);
-  bool LogText(const nuiEvent& rEvent);
-  bool ClearTable(const nuiEvent& rEvent);
-  bool FileSelect(const nuiEvent& rEvent);
-  bool FileSelectDone(const nuiEvent& rEvent);
+  void SaveXMLDescription(const nuiEvent& rEvent);
+  void OutputSomething(const nuiEvent& rEvent);
+  void CreateFromGladeXML(const nuiEvent& rEvent);
+  void CreateFromXML(const nuiEvent& rEvent);
+  void HideText(const nuiEvent& rEvent);
+  void LogText(const nuiEvent& rEvent);
+  void ClearTable(const nuiEvent& rEvent);
+  void FileSelect(const nuiEvent& rEvent);
+  void FileSelectDone(const nuiEvent& rEvent);
 
-  bool UpdateInspector(const nuiEvent& rEvent);
-  bool ParentInspector(const nuiEvent& rEvent);
-  bool SelectInspector(const nuiEvent& rEvent);
+  void UpdateInspector(const nuiEvent& rEvent);
+  void ParentInspector(const nuiEvent& rEvent);
+  void SelectInspector(const nuiEvent& rEvent);
 
-  bool DrawBlur(const nuiEvent& rEvent);
+  void DrawBlur(const nuiEvent& rEvent);
 
-  bool SoftwarePainterWindow(const nuiEvent& rEvent);
-  
-  bool SpinerLabelWindow(const nuiEvent& rEvent);
-  bool VBoxAndHBoxWindow(const nuiEvent& rEvent);
-  bool MatrixViewWindow(const nuiEvent& rEvent);
-  bool MatrixViewTest(const nuiEvent& rEvent);
+  void SoftwarePainterWindow(const nuiEvent& rEvent);
+
+  void SpinerLabelWindow(const nuiEvent& rEvent);
+  void VBoxAndHBoxWindow(const nuiEvent& rEvent);
+  void MatrixViewWindow(const nuiEvent& rEvent);
+  void MatrixViewTest(const nuiEvent& rEvent);
   void GetMatrixViewItemDesc(nuiMatrixViewItemDesc& rDesc);
-  
-  bool DumpStats(const nuiEvent& rEvent);
-  bool OnTextWrapChanged(const nuiEvent& rEvent);
-  bool OnTextSizeSliderChanged(const nuiEvent& rEvent);
-  bool CreateTitledPaneWindow(const nuiEvent& rEvent);
 
-  bool CreateSliderWindow(const nuiEvent& rEvent);
-  bool OnSliderChanged(const nuiEvent& rEvent);
-    
-  bool SaveFontDB(const nuiEvent& rEvent);
-  bool LoadFontDB(const nuiEvent& rEvent);
-  
-  bool CreateFrameWindow(const nuiEvent& rEvent);
-  bool CreateFrameWindow2(const nuiEvent& rEvent);
-  bool CreateFrameWindow3(const nuiEvent& rEvent);
+  void DumpStats(const nuiEvent& rEvent);
+  void OnTextWrapChanged(const nuiEvent& rEvent);
+  void OnTextSizeSliderChanged(const nuiEvent& rEvent);
+  void CreateTitledPaneWindow(const nuiEvent& rEvent);
 
-  bool CreateAudioWindow(const nuiEvent& rEvent);
+  void CreateSliderWindow(const nuiEvent& rEvent);
+  void OnSliderChanged(const nuiEvent& rEvent);
 
-  bool CreateAudioFifoWindow(const nuiEvent& rEvent);
+  void SaveFontDB(const nuiEvent& rEvent);
+  void LoadFontDB(const nuiEvent& rEvent);
 
-  bool CreateResourceWindow(const nuiEvent& rEvent);
+  void CreateFrameWindow(const nuiEvent& rEvent);
+  void CreateFrameWindow2(const nuiEvent& rEvent);
+  void CreateFrameWindow3(const nuiEvent& rEvent);
 
-  bool CreateEllispsisTestWindow(const nuiEvent& rEvent);
-  
-  bool CreateMessageBox(const nuiEvent& rEvent);
-  bool CreateWidgetTexture(const nuiEvent& rEvent);
-  
-  bool AudioDeviceSelected(const nuiEvent& rEvent);
-  bool AudioComboTrashed(const nuiEvent& rEvent);
+  void CreateAudioWindow(const nuiEvent& rEvent);
+
+  void CreateAudioFifoWindow(const nuiEvent& rEvent);
+
+  void CreateResourceWindow(const nuiEvent& rEvent);
+
+  void CreateEllispsisTestWindow(const nuiEvent& rEvent);
+
+  void CreateMessageBox(const nuiEvent& rEvent);
+  void CreateWidgetTexture(const nuiEvent& rEvent);
+
+  void AudioDeviceSelected(const nuiEvent& rEvent);
+  void AudioComboTrashed(const nuiEvent& rEvent);
 
   // The window manager:
   nuiWindowManager* mpManager;
@@ -141,12 +141,12 @@ protected:
   nglTime mLastFPSMeasure;
   nglString mFPSText;
   bool mShowFPS;
-  
+
   nuiEditText* mpURLText;
   nuiLabel* mpHTTPResponseLabel;
 
   static uint mRefs;
-  
+
 };
 
 #endif

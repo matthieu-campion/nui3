@@ -37,7 +37,7 @@ public:
   void SetLockedB(bool set);
   bool IsLockedC();
   void SetLockedC(bool set);
-         
+
   const nglString& GetName() const;
   nglThread::ID	GetID() const;
 protected:
@@ -60,7 +60,7 @@ private:
   bool mRunning;
   nglCriticalSection mRunCS;
   nglCriticalSection mLockCS;
-  
+
 
 };
 
@@ -127,20 +127,20 @@ class ThreadInspectorTest : public nuiVBox
 public:
   ThreadInspectorTest();
   virtual ~ThreadInspectorTest();
-  
+
 private:
 
-  bool CreateCSThread(const nuiEvent& rEvent);
-  bool RemoveCSThread(const nuiEvent& rEvent);
-  bool CreateLLThread(const nuiEvent& rEvent);
-  bool RemoveLLThread(const nuiEvent& rEvent);
-  
+  void CreateCSThread(const nuiEvent& rEvent);
+  void RemoveCSThread(const nuiEvent& rEvent);
+  void CreateLLThread(const nuiEvent& rEvent);
+  void RemoveLLThread(const nuiEvent& rEvent);
+
   nuiList* mpCSList;
   nuiList* mpLLList;
   std::map<nuiWidget*, TITCSthread*> mCSThreads;
   std::map<nuiWidget*, TITLLthread*> mLLThreads;
   uint32 mThreadCount;
-  
+
   nuiEventSink<ThreadInspectorTest> mEventSink;
 
 };
