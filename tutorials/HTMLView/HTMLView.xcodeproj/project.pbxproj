@@ -66,7 +66,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E5D643E51209AB9C009C26A9 /* libnui3Cocoa.a */;
+			remoteGlobalIDString = E5D643E51209AB9C009C26A9;
 			remoteInfo = nui3Cocoa;
 		};
 		E5F2C1C511CD3EC7005F33C3 /* PBXContainerItemProxy */ = {
@@ -201,7 +201,7 @@
 				BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */,
 				E5F2C1C611CD3EC7005F33C3 /* libnuiPhoneD.a */,
 				E5F2C1C811CD3EC7005F33C3 /* libnuiPhone.a */,
-				E5A8D1DC11E33A72004E14CE /* libnui3D.a */,
+				E5A8D1DC11E33A72004E14CE /* libnui3CocoaD.a */,
 				E5C062AE122B08DF00F52C24 /* libnui3Cocoa.a */,
 			);
 			name = Products;
@@ -254,7 +254,14 @@
 			isa = PBXProject;
 			buildConfigurationList = 61A9DE400B833C9200BC506C /* Build configuration list for PBXProject "HTMLView" */;
 			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
 			hasScannedForEncodings = 0;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
 			mainGroup = 61A9DE3D0B833C9200BC506C;
 			productRefGroup = 61A9DFB50B833DE500BC506C /* Products */;
 			projectDirPath = "";
@@ -287,7 +294,7 @@
 			remoteRef = BCBCB15D0DFD45B6002E8BC3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		E5A8D1DC11E33A72004E14CE /* libnui3D.a */ = {
+		E5A8D1DC11E33A72004E14CE /* libnui3CocoaD.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libnui3CocoaD.a;
