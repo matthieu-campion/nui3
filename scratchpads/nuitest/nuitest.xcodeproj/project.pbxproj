@@ -37,7 +37,6 @@
 		E529DFB81064D36B00C0CE08 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E59CDA550CDAC2F100B1C729 /* AudioUnit.framework */; };
 		E529DFB91064D36B00C0CE08 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E59CDA560CDAC2F100B1C729 /* CoreAudio.framework */; };
 		E529DFBA1064D36B00C0CE08 /* CoreAudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E59CDA570CDAC2F100B1C729 /* CoreAudioKit.framework */; };
-		E529DFDE1064D46F00C0CE08 /* libnui3D cocoa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E5BC28DE0EFF249B009EEA3B /* libnui3D cocoa.a */; };
 		E585FDB4086C3E3200CBD5E1 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E585FDB3086C3E3200CBD5E1 /* AGL.framework */; };
 		E585FDB5086C3E3200CBD5E1 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E585FDB3086C3E3200CBD5E1 /* AGL.framework */; };
 		E59CDA580CDAC2F100B1C729 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E59CDA540CDAC2F100B1C729 /* AudioToolbox.framework */; };
@@ -87,19 +86,33 @@
 			remoteGlobalIDString = E58172D70C3D103300902DFE;
 			remoteInfo = nui3D;
 		};
-		E529DFC21064D39400C0CE08 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BC1A61370E632DD700BDD037 /* nui3.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = E592C0740EFE8CCC00340B35;
-			remoteInfo = "nui3D cocoa";
-		};
-		E5BC28DD0EFF249B009EEA3B /* PBXContainerItemProxy */ = {
+		E5EC0C76126DDB49002DA9F4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BC1A61370E632DD700BDD037 /* nui3.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E592C5140EFE8CCC00340B35;
-			remoteInfo = "nui3D cocoa";
+			remoteGlobalIDString = E52417F311CB860B0025CA71 /* libnuiPhoneD.a */;
+			remoteInfo = nuiPhoneD;
+		};
+		E5EC0C78126DDB49002DA9F4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BC1A61370E632DD700BDD037 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E52420E511CBCE9E0025CA71 /* libnuiPhone.a */;
+			remoteInfo = nuiPhone;
+		};
+		E5EC0C7A126DDB49002DA9F4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BC1A61370E632DD700BDD037 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E5A8D1D311E33A54004E14CE /* libnui3CocoaD.a */;
+			remoteInfo = nui3CocoaD;
+		};
+		E5EC0C7C126DDB49002DA9F4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BC1A61370E632DD700BDD037 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E5D643E51209AB9C009C26A9 /* libnui3Cocoa.a */;
+			remoteInfo = nui3Cocoa;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -162,7 +175,6 @@
 				E529DFB81064D36B00C0CE08 /* AudioUnit.framework in Frameworks */,
 				E529DFB91064D36B00C0CE08 /* CoreAudio.framework in Frameworks */,
 				E529DFBA1064D36B00C0CE08 /* CoreAudioKit.framework in Frameworks */,
-				E529DFDE1064D46F00C0CE08 /* libnui3D cocoa.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -245,7 +257,10 @@
 			children = (
 				BC1A61400E632DD800BDD037 /* libnui3D.a */,
 				BC1A61420E632DD800BDD037 /* libnui3.a */,
-				E5BC28DE0EFF249B009EEA3B /* libnui3D cocoa.a */,
+				E5EC0C77126DDB49002DA9F4 /* libnuiPhoneD.a */,
+				E5EC0C79126DDB49002DA9F4 /* libnuiPhone.a */,
+				E5EC0C7B126DDB49002DA9F4 /* libnui3CocoaD.a */,
+				E5EC0C7D126DDB49002DA9F4 /* libnui3Cocoa.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -293,7 +308,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				E529DFC31064D39400C0CE08 /* PBXTargetDependency */,
 			);
 			name = "nuiTestD Cocoa";
 			productName = nuitest;
@@ -326,7 +340,14 @@
 			isa = PBXProject;
 			buildConfigurationList = E5A754C708551A26002B185C /* Build configuration list for PBXProject "nuitest" */;
 			compatibilityVersion = "Xcode 2.4";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
 			mainGroup = 91CC2AFB0744CE480018CBED;
 			productRefGroup = 91CC2B130744CEA30018CBED /* Products */;
 			projectDirPath = "";
@@ -360,11 +381,32 @@
 			remoteRef = BC1A61410E632DD800BDD037 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		E5BC28DE0EFF249B009EEA3B /* libnui3D cocoa.a */ = {
+		E5EC0C77126DDB49002DA9F4 /* libnuiPhoneD.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "libnui3D cocoa.a";
-			remoteRef = E5BC28DD0EFF249B009EEA3B /* PBXContainerItemProxy */;
+			path = libnuiPhoneD.a;
+			remoteRef = E5EC0C76126DDB49002DA9F4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E5EC0C79126DDB49002DA9F4 /* libnuiPhone.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnuiPhone.a;
+			remoteRef = E5EC0C78126DDB49002DA9F4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E5EC0C7B126DDB49002DA9F4 /* libnui3CocoaD.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnui3CocoaD.a;
+			remoteRef = E5EC0C7A126DDB49002DA9F4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E5EC0C7D126DDB49002DA9F4 /* libnui3Cocoa.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnui3Cocoa.a;
+			remoteRef = E5EC0C7C126DDB49002DA9F4 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -491,11 +533,6 @@
 			isa = PBXTargetDependency;
 			name = nui3D;
 			targetProxy = BC1A614B0E632E5000BDD037 /* PBXContainerItemProxy */;
-		};
-		E529DFC31064D39400C0CE08 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "nui3D cocoa";
-			targetProxy = E529DFC21064D39400C0CE08 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
