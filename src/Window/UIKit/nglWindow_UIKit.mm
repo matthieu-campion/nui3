@@ -290,25 +290,17 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   if (forceresize)
   {				
     CGRect rect = [[UIScreen mainScreen] applicationFrame];
-//    rect.size.width = w;
-//    rect.size.height = h;
     NSLog(@"new window size: %d, %d\n", w, h);
 
     glViewOld = glView;
     self.frame = rect;
-	
+		
     glView = [[EAGLView alloc] initWithFrame:rect replacing: glViewOld];
     [self addSubview:glView];
 		[self sendSubviewToBack:glView];
-    //[glView startAnimation];
-   
-		
-		for (UIView *subview in [[self.subviews copy] autorelease])
-		{
-			if (subview != glView && subview != glViewOld)
-				[subview setNeedsDisplay];
-		}
-				
+
+		// Invalidate all subviews
+		[self.subviews makeObjectsPerformSelector:@selector(setNeedsDisplay)];
     mpNGLWindow->SetSize(w, h);
   }   
   oldorientation = orientation;
@@ -762,8 +754,11 @@ extern float NUI_INV_SCALE_FACTOR;
                                     nil];
     
     EAGLSharegroup* group = nil;
-    if (original != nil)
+    if (original != nil) 
+		{
       group = [original getSharegroup];
+			[original removeFromSuperview];
+		}
     
 		//self.clearsContextBeforeDrawing = TRUE;
 		
