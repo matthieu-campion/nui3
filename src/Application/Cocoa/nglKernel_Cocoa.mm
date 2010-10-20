@@ -125,6 +125,8 @@ NGL_OUT(_T("objCCallOnExit App->CallOnExit\n"));
 */
  }
 
+
+
 /*
  * Clipboard
  */

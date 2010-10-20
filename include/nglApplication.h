@@ -213,6 +213,7 @@ myprogram --log-level all:0,net:info
   */
   //@}
 
+
 protected:
   const nglChar* OnError (uint& rError) const; // From nglError
   bool mExitPosted;
@@ -260,7 +261,6 @@ protected:
 #ifdef _UIKIT_
 protected:
 	//@{
-	virtual void OnMemoryWarning();
 	/*!<
 	 Called when the system (iPhone OS) is sending memory warning to all processes.
 	 You should free up memory when this happens, warn the user or quit the application.
@@ -275,7 +275,6 @@ protected:
 
 ///< Yes, it has to be public (called from an obj-c class ...)
 public:
-	void CallOnMemoryWarning();
 #endif//_UIKIT_
 
 #ifdef _COCOA_

@@ -264,22 +264,44 @@ public:
     - the process received a signal (\e Unix \e only). HUP, INT, QUIT, PIPE and TERM are
       currently intercepted.
   */
-  //@}
 
   virtual void OnDeviceAdded(const nglDeviceInfo* pDeviceInfo);
   /*!<
     This method is called when a new device is connected to this computer. This can be used to detect new input devices and nglPathVolumes.
     \param rDeviceInfo a description of the device.
   */
-  //@}
 
   virtual void OnDeviceRemoved(const nglDeviceInfo* pDeviceInfo);
   /*!<
     This method is called when a device is removed from this computer. This can be used to detect input devices and nglPathVolumes removal.
     \param rDeviceInfo a description of the device.
   */
-  //@}
 
+  virtual void OnMemoryWarning();
+  /*!<
+   This method is called when the system is running out of memory. You can try inform the user or try to free memory automatically. You can also ignore it and risk a crash 
+   */
+  
+	virtual void OnWillExit();	
+  /*!<
+   Called right before the application will be terminated by iPhone OS multitasking.
+   */
+  //@}
+  
+  virtual void OnActivation();
+  /*!<
+   Called right before the application will be reactivated by the iPhone OS multitasking.
+   */
+  //@}
+  
+  
+  virtual void OnDeactivation();
+  /*!<
+   Called right before the application will be deactivated by the iPhone OS multitasking.
+   */
+  //@}
+  
+  
   void NonBlockingHeartBeat(); ///< Keep the application event loop alive without waiting for new events. (i.e. only process the events that are already in the queue).
   
   static void SetCrashReportEmail(const nglString& rEmail);
@@ -305,14 +327,15 @@ protected:
   // Internal callbacks
   void CallOnInit();
   void CallOnExit(int Code);
-
+  void CallOnWillExit();
+  void CallOnMemoryWarning();
+  void CallOnActivation();
+  void CallOnDeactivation();
+  
+  
+  
   // From nglError
   virtual const nglChar* OnError (uint& rError) const;
-
-#ifdef _UIKIT_
-	// Called right before the application will be terminated by iPhone OS
-	virtual void OnWillExit();	
-#endif
 
 private:
   typedef std::list<ExitFunc>    ExitFuncList;
@@ -341,6 +364,8 @@ private:
   friend bool nuiInit(void* OSHandle, class nuiKernel* pKernel);
   friend bool nuiUninit();
 
+	
+  
 #ifdef _WIN32_
 protected:
   friend class nglConsole;
@@ -432,10 +457,11 @@ protected:
   friend void objCCallOnInit(void* pUIApplication);
   friend void objCCallOnExit(int Code);
   friend void objCCallOnWillExit();
-  friend void  objCCallOnInitWithURL(void* pUIApplication, const nglString &url);
-
-  void CallOnWillExit();
-	
+  friend void objCCallOnInitWithURL(void* pUIApplication, const nglString &url);
+  friend void objCCallOnActivation();
+  friend void objCCallOnDeactivation();
+  friend void objCCallOnMemoryWarning();
+  
   void* mpUIApplication;
 
 public:

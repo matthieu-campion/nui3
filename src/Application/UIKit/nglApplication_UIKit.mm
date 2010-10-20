@@ -16,6 +16,9 @@ void objCCallOnInit(void* pUIApplication);
 void objCCallOnInitWithURL(void* pUIApplication, const nglString &url);
 void objCCallOnExit(int code);
 void objCCallOnWillExit();
+void objCCallOnActivation();
+void objCCallOnDeactivation();
+void objCCallOnMemoryWarning();
 
 @implementation nglUIApplication
 
@@ -83,7 +86,8 @@ void objCCallOnWillExit();
   NGL_DEBUG( NGL_OUT(_T("[nglUIApplicationDelegate applicationDidBecomeActive]\n")); )
   NGL_ASSERT(App);
 
-	
+  objCCallOnActivation();
+  
 	NSEnumerator *e = [[pUIApplication windows] objectEnumerator];
 	
 	id win;
@@ -104,7 +108,6 @@ void objCCallOnWillExit();
   NGL_DEBUG( NGL_OUT(_T("[nglUIApplicationDelegate applicationWillResignActive]\n")); )
   NGL_ASSERT(App);
 	
-	
 	NSEnumerator *e = [[pUIApplication windows] objectEnumerator];
 	
 	id win;
@@ -119,13 +122,14 @@ void objCCallOnWillExit();
 		}
 	}
 	
+  objCCallOnDeactivation();
 }
 
 - (void) applicationDidReceiveMemoryWarning:  (UIApplication*) pUIApplication
 {
   NGL_DEBUG( NGL_OUT(_T("[nglUIApplicationDelegate applicationDidReceiveMemoryWarning]\n")); )
 	NGL_ASSERT(App);
-	((nglApplication *) App)->CallOnMemoryWarning();
+  objCCallOnMemoryWarning();
 }
 
 - (void) applicationSignificantTimeChange:    (UIApplication*) pUIApplication
