@@ -137,6 +137,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   }
   glView = [[EAGLView alloc] initWithFrame:rect replacing: nil];
   [self addSubview:glView];
+	[self sendSubviewToBack:glView];
   
 //NGL_OUT(_T("[nglUIWindow initWithFrame]\n"));
 
@@ -208,7 +209,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   UIDevice* pUIDev = [UIDevice currentDevice];
   UIDeviceOrientation orientation = pUIDev.orientation;
   UIInterfaceOrientation apporientation = pApp.statusBarOrientation;
-
+	
   angle = mpNGLWindow->GetRotation();
   if (apporientation != orientation)
   {
@@ -287,7 +288,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   }
     
   if (forceresize)
-  {
+  {				
     CGRect rect = [[UIScreen mainScreen] applicationFrame];
 //    rect.size.width = w;
 //    rect.size.height = h;
@@ -295,11 +296,19 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 
     glViewOld = glView;
     self.frame = rect;
-    
+	
     glView = [[EAGLView alloc] initWithFrame:rect replacing: glViewOld];
     [self addSubview:glView];
+		[self sendSubviewToBack:glView];
     //[glView startAnimation];
-    
+   
+		
+		for (UIView *subview in [[self.subviews copy] autorelease])
+		{
+			if (subview != glView && subview != glViewOld)
+				[subview setNeedsDisplay];
+		}
+				
     mpNGLWindow->SetSize(w, h);
   }   
   oldorientation = orientation;
@@ -320,6 +329,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   
   glView = [[EAGLView alloc] initWithFrame:rect replacing: glViewOld];
   [self addSubview:glView];
+	[self sendSubviewToBack:glView];
   //[glView startAnimation];
   
   mpNGLWindow->SetSize(w, h);
@@ -755,6 +765,8 @@ extern float NUI_INV_SCALE_FACTOR;
     if (original != nil)
       group = [original getSharegroup];
     
+		//self.clearsContextBeforeDrawing = TRUE;
+		
     if (group)
       context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1 sharegroup: group];
     else

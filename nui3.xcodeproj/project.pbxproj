@@ -1860,7 +1860,6 @@
 		E524180A11CB86C40025CA71 /* nglDragAndDrop_UIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = E524180011CB86C40025CA71 /* nglDragAndDrop_UIKit.h */; };
 		E524180D11CB875B0025CA71 /* nuiPhoneFontDB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E524180B11CB875B0025CA71 /* nuiPhoneFontDB.cpp */; };
 		E524180E11CB875B0025CA71 /* nuiPhoneFontDB.h in Headers */ = {isa = PBXBuildFile; fileRef = E524180C11CB875B0025CA71 /* nuiPhoneFontDB.h */; };
-		E524181011CB87860025CA71 /* nuiURL_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E524180F11CB87860025CA71 /* nuiURL_UIKit.mm */; };
 		E524181711CB87E80025CA71 /* nglContext_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E524181211CB87E80025CA71 /* nglContext_UIKit.mm */; };
 		E524181811CB87E80025CA71 /* nglWindow_UIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = E524181311CB87E80025CA71 /* nglWindow_UIKit.h */; };
 		E524181911CB87E80025CA71 /* nglVideoMode_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E524181411CB87E80025CA71 /* nglVideoMode_UIKit.mm */; };
@@ -3202,7 +3201,6 @@
 		E52420C511CBCE9E0025CA71 /* nglModule_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417FD11CB86C40025CA71 /* nglModule_UIKit.mm */; };
 		E52420C611CBCE9E0025CA71 /* nglPlugin_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417FE11CB86C40025CA71 /* nglPlugin_UIKit.mm */; };
 		E52420C711CBCE9E0025CA71 /* nuiPhoneFontDB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E524180B11CB875B0025CA71 /* nuiPhoneFontDB.cpp */; };
-		E52420C811CBCE9E0025CA71 /* nuiURL_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E524180F11CB87860025CA71 /* nuiURL_UIKit.mm */; };
 		E52420C911CBCE9E0025CA71 /* nglContext_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E524181211CB87E80025CA71 /* nglContext_UIKit.mm */; };
 		E52420CA11CBCE9E0025CA71 /* nglVideoMode_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E524181411CB87E80025CA71 /* nglVideoMode_UIKit.mm */; };
 		E52420CB11CBCE9E0025CA71 /* nglWindow_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E524181511CB87E80025CA71 /* nglWindow_UIKit.mm */; };
@@ -17541,7 +17539,6 @@
 				E524180711CB86C40025CA71 /* nglModule_UIKit.mm in Sources */,
 				E524180811CB86C40025CA71 /* nglPlugin_UIKit.mm in Sources */,
 				E524180D11CB875B0025CA71 /* nuiPhoneFontDB.cpp in Sources */,
-				E524181011CB87860025CA71 /* nuiURL_UIKit.mm in Sources */,
 				E524181711CB87E80025CA71 /* nglContext_UIKit.mm in Sources */,
 				E524181911CB87E80025CA71 /* nglVideoMode_UIKit.mm in Sources */,
 				E524181A11CB87E80025CA71 /* nglWindow_UIKit.mm in Sources */,
@@ -18118,7 +18115,6 @@
 				E52420C511CBCE9E0025CA71 /* nglModule_UIKit.mm in Sources */,
 				E52420C611CBCE9E0025CA71 /* nglPlugin_UIKit.mm in Sources */,
 				E52420C711CBCE9E0025CA71 /* nuiPhoneFontDB.cpp in Sources */,
-				E52420C811CBCE9E0025CA71 /* nuiURL_UIKit.mm in Sources */,
 				E52420C911CBCE9E0025CA71 /* nglContext_UIKit.mm in Sources */,
 				E52420CA11CBCE9E0025CA71 /* nglVideoMode_UIKit.mm in Sources */,
 				E52420CB11CBCE9E0025CA71 /* nglWindow_UIKit.mm in Sources */,
