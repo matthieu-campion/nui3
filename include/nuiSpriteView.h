@@ -10,7 +10,15 @@
 class nuiSprite : public nuiObject
 {
 public:
+  nuiSprite();
+  virtual ~nuiSprite();
 
+  //! State management
+  int32 GetStateCount() const;
+  const nglString& GetStateName(int32 index) const;
+
+  int32 GetState(int32 index) const;
+  void SetState(int32 index);
   
 };
 
