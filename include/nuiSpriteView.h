@@ -7,12 +7,51 @@
 
 #pragma once
 
+class nuiTexture;
+
+class nuiSpriteFrame
+{
+public:
+  nuiSpriteFrame();
+  virtual ~nuiSpriteFrame();
+  
+  bool SetTexture(nuiTexture* pTexture, const nuiRect& rRect);
+  bool SetTexture(const nglPath& rPath, const nuiRect& rRect);
+  bool SetTexture(const nglPath& rPath);
+
+  void SetRect(const nuiRect& rRect);
+  void SetHandle(float x, float y);
+  
+  const nglPath& GetTexturePath() const;
+  nuiTexture* GetTexture() const;
+  const nuiRect& GetRect();
+  
+  float GetHandleX() const;
+  float GetHandleY() const;
+
+protected:
+  nuiTexture* mpTexture;
+  nuiRect mRect; ///< Rectangle inside mpTexture occupied by the sprite pixels
+  float mX, mY; ///< Handle position
+};
+
+class nuiSpriteDef
+{
+public:
+  nuiSpriteDef();
+  virtual ~nuiSpriteDef();
+  
+  
+};
+
 class nuiSprite : public nuiObject
 {
 public:
   nuiSprite();
   virtual ~nuiSprite();
 
+  const nuiSpriteDef& GetDefinition() const;
+  
   //! State management
   int32 GetStateCount() const;
   const nglString& GetStateName(int32 index) const;
