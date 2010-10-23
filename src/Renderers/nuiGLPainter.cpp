@@ -290,7 +290,11 @@ void nuiGLPainter::SetViewport()
   h = ToBelow(r.GetHeight());
   
   //printf("set projection matrix (%d %d - %d %d)\n", x, y, w, h);
-  glViewport(x * NUI_SCALE_FACTOR, y * NUI_SCALE_FACTOR, w * NUI_SCALE_FACTOR, h * NUI_SCALE_FACTOR);
+  if (!mpSurface)
+    glViewport(x * NUI_SCALE_FACTOR, y * NUI_SCALE_FACTOR, w * NUI_SCALE_FACTOR, h * NUI_SCALE_FACTOR);
+  else
+    glViewport(x, y, w, h);
+
   nuiCheckForGLErrors();
   
   glMatrixMode(GL_PROJECTION);
@@ -467,10 +471,13 @@ void nuiGLPainter::SetState(const nuiRenderState& rState, bool ForceApply)
       mScissorW = w;
       mScissorH = h;
       
-      x *= NUI_SCALE_FACTOR;
-      y *= NUI_SCALE_FACTOR;
-      w *= NUI_SCALE_FACTOR;
-      h *= NUI_SCALE_FACTOR;
+      if (!mpSurface)
+      {
+        x *= NUI_SCALE_FACTOR;
+        y *= NUI_SCALE_FACTOR;
+        w *= NUI_SCALE_FACTOR;
+        h *= NUI_SCALE_FACTOR;
+      }
       glScissor(x, y, w, h);
     }
     nuiCheckForGLErrors();

@@ -124,7 +124,27 @@ if (pWindow) {
 
 NGL_OUT(_T("objCCallOnExit App->CallOnExit\n"));
 */
- }
+}
+
+void objCCallOnActivation()
+{
+  NGL_ASSERT(App);
+	App->CallOnActivation();
+}
+
+void objCCallOnDeactivation()
+{
+  NGL_ASSERT(App);
+	App->CallOnDeactivation();
+}
+
+void objCCallOnMemoryWarning()
+{
+  NGL_ASSERT(App);
+	App->CallOnMemoryWarning();
+}
+
+
 
 /*
  * Clipboard

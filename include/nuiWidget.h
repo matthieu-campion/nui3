@@ -21,6 +21,7 @@
 #include "nuiSurface.h"
 #include "nuiRenderState.h"
 #include "nuiAnimation.h"
+#include "nuiMatrixNode.h"
 
 class nuiContainer;
 class nuiDrawContext;
@@ -36,6 +37,8 @@ class nuiPainter;
  
 class nuiTheme;
 class nuiRectAttributeAnimation;
+
+class nuiMatrixNode;
 
 typedef nuiWidget* nuiWidgetPtr;
 typedef std::vector<nuiWidgetPtr> nuiWidgetList;
@@ -390,9 +393,18 @@ public:
 
   /** @name Matrix Transformation Support */
   //@{
+  void AddMatrixNode(nuiMatrixNode* pNode);
+  void DelMatrixNode(uint32 index);
+  int32 GetMatrixNodeCount() const;
+  nuiMatrixNode* GetMatrixNode(uint32 index) const;
+  //@}
+  
+  /** @name Old (deprecated) Matrix Transformation Support */
+  //@{
   void LoadIdentityMatrix();
+  bool IsMatrixIdentity() const;
   void GetMatrix(nuiMatrix& rMatrix) const;
-  const nuiMatrix& GetMatrix() const;
+  nuiMatrix GetMatrix() const;
   void SetMatrix(const nuiMatrix& rMatrix);
   //@}
 
@@ -563,7 +575,8 @@ protected:
 
   std::map<nglString, nuiAnimation*, nglString::NaturalLessFunctor> mAnimations;
 
-  nuiMatrix mMatrix;
+  static nuiMatrix mIdentityMatrix;
+  std::vector<nuiMatrixNode*>* mpMatrixNodes;
   const nuiMatrix& _GetMatrix() const;
 
   
@@ -637,7 +650,6 @@ protected:
   bool mMuteKeyboardFocusDispatch: 1;
   bool mTrashed: 1;
   bool mDoneTrashed: 1;
-  bool mMatrixIsIdentity: 1;
   bool mCanRespectConstraint: 1;
   bool mInSetRect: 1;
   bool mAutoClip;
@@ -708,7 +720,9 @@ protected:
   nuiSize GetOverDrawBottom() const;
 
   void AutoHide(const nuiEvent& rEvent); ///< This methods calls SetVisible(false) right after the HIDE animation stopped
-
+  void AutoInvalidate(const nuiEvent& rEvent); ///< This methods calls Invalidate()
+  void AutoInvalidateLayout(const nuiEvent& rEvent); ///< This methods calls InvalidateLayout()
+  
   void InternalSetLayout(const nuiRect& rect);
   virtual void InternalSetLayout(const nuiRect& rect, bool PositionChanged, bool SizeChanged);
   

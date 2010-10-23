@@ -20,6 +20,10 @@
 #include "nuiTexture.h"
 #include "nuiSurface.h"
 
+extern float NUI_SCALE_FACTOR;
+extern float NUI_INV_SCALE_FACTOR;
+
+
 /****************************************************************************
  *
  * Constructor / Destructor
@@ -781,6 +785,28 @@ void nuiDrawContext::DrawGradient(const nuiGradient& rGradient, const nuiRect& r
   PopClipping();
 }
 
+static void nuiDrawRect(const nuiRect& out, nuiRenderArray& rArray)
+{
+  rArray.SetMode(GL_TRIANGLE_STRIP);
+  nuiRect in(out);
+  in.Grow(-1, -1);
+  
+  rArray.SetVertex(out.Left(), out.Top()); rArray.PushVertex();
+  rArray.SetVertex(in.Left(), in.Top()); rArray.PushVertex();
+
+  rArray.SetVertex(out.Right(), out.Top()); rArray.PushVertex();
+  rArray.SetVertex(in.Right(), in.Top()); rArray.PushVertex();
+  
+  rArray.SetVertex(out.Right(), out.Bottom()); rArray.PushVertex();
+  rArray.SetVertex(in.Right(), in.Bottom()); rArray.PushVertex();
+  
+  rArray.SetVertex(out.Left(), out.Bottom()); rArray.PushVertex();
+  rArray.SetVertex(in.Left(), in.Bottom()); rArray.PushVertex();
+
+  rArray.SetVertex(out.Left(), out.Top()); rArray.PushVertex();
+  rArray.SetVertex(in.Left(), in.Top()); rArray.PushVertex();
+}
+
 void nuiDrawContext::DrawRect(const nuiRect& rRect, nuiShapeMode Mode)
 {
 
@@ -811,7 +837,6 @@ void nuiDrawContext::DrawRect(const nuiRect& rRect, nuiShapeMode Mode)
     // Draw the stroke in all cases:
     if (mode == GL_TRIANGLE_STRIP)
     {
-      //rect.Move(-.5,-.5); // Adjust to have a correct position on ATI and Matrox cards, this should work with nVidia too
       nuiRenderArray* pStrokeArray = new nuiRenderArray(mode);
       pStrokeArray->EnableArray(nuiRenderArray::eVertex, true);
       pStrokeArray->EnableArray(nuiRenderArray::eColor, true);
@@ -833,22 +858,29 @@ void nuiDrawContext::DrawRect(const nuiRect& rRect, nuiShapeMode Mode)
     else
     {
       nuiRenderArray* pStrokeArray = new nuiRenderArray(mode);
-      pStrokeArray->EnableArray(nuiRenderArray::eVertex, true);
-      pStrokeArray->EnableArray(nuiRenderArray::eColor, true);
-      pStrokeArray->Reserve(4);
-
-      pStrokeArray->SetColor(mCurrentState.mStrokeColor);
-      pStrokeArray->SetVertex(rect.mLeft, rect.mTop);
-      pStrokeArray->PushVertex();
-      
-      pStrokeArray->SetVertex(rect.mRight, rect.mTop);
-      pStrokeArray->PushVertex();
-      
-      pStrokeArray->SetVertex(rect.mRight, rect.mBottom);
-      pStrokeArray->PushVertex();
-
-      pStrokeArray->SetVertex(rect.mLeft, rect.mBottom);
-      pStrokeArray->PushVertex();
+      if (NUI_SCALE_FACTOR != 1.0f)
+      {
+        nuiDrawRect(rRect, *pStrokeArray);
+      }
+      else
+      {
+        pStrokeArray->EnableArray(nuiRenderArray::eVertex, true);
+        pStrokeArray->EnableArray(nuiRenderArray::eColor, true);
+        pStrokeArray->Reserve(4);
+        
+        pStrokeArray->SetColor(mCurrentState.mStrokeColor);
+        pStrokeArray->SetVertex(rect.mLeft, rect.mTop);
+        pStrokeArray->PushVertex();
+        
+        pStrokeArray->SetVertex(rect.mRight, rect.mTop);
+        pStrokeArray->PushVertex();
+        
+        pStrokeArray->SetVertex(rect.mRight, rect.mBottom);
+        pStrokeArray->PushVertex();
+        
+        pStrokeArray->SetVertex(rect.mLeft, rect.mBottom);
+        pStrokeArray->PushVertex();
+      }
 
       DrawArray(pStrokeArray);
     }
@@ -860,7 +892,6 @@ void nuiDrawContext::DrawRect(const nuiRect& rRect, nuiShapeMode Mode)
       return;
 
     nuiRect rect(rRect);
-    //rect.Move(-.5,-.5); // Adjust to have a correct position on ATI and Matrox cards, this should work with nVidia too
     // Draw the filled part:
     nuiRenderArray* pFillArray = new nuiRenderArray(GL_TRIANGLE_STRIP);
     pFillArray->EnableArray(nuiRenderArray::eVertex, true);

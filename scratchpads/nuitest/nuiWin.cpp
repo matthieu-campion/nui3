@@ -141,7 +141,7 @@ public:
   : mDelegate(rDelegate), mParam0(p0), mParam1(p1)
   {
   }
-  
+
   Ret operator()() const
   {
     return mDelegate(mParam0, mParam1);
@@ -161,7 +161,7 @@ public:
   : mDelegate(rDelegate), mParam1(p1)
   {
   }
-  
+
   Ret operator()(Param0 p0) const
   {
     return mDelegate(p0, mParam1);
@@ -330,7 +330,7 @@ void nuiWin::OnCreation()
 
   {
     static const nglChar* tests[] =
-    { 
+    {
       _T("rsrc:/font_tests/test-japanese.txt"),
       _T("rsrc:/font_tests/test-japanese2.txt"),
       _T("rsrc:/font_tests/test-arabic.txt"),
@@ -390,7 +390,7 @@ void nuiWin::OnCreation()
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateSWFTest1Window);
   pMainTree->AddChild(pElement);
 #endif
-  
+
   // CreateShapeWindow:
   pElement = new nuiTreeNode(nuiTR("Shapes Window"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateShapeWindow);
@@ -503,11 +503,11 @@ void nuiWin::OnCreation()
   pElement = new nuiTreeNode(nuiTR("Clipping Test"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateClippingTest);
   pMainTree->AddChild(pElement);
-  
+
   pElement = new nuiTreeNode(nuiTR("Surface Test"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateSurfaceTest);
   pMainTree->AddChild(pElement);
-  
+
   pElement = new nuiTreeNode(nuiTR("Enum audio hardware"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateAudioWindow);
   pMainTree->AddChild(pElement);
@@ -523,7 +523,7 @@ void nuiWin::OnCreation()
   pElement = new nuiTreeNode(nuiTR("nuiHTML test"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateHTMLWindow);
   pMainTree->AddChild(pElement);
-  
+
   pElement = new nuiTreeNode(nuiTR("nglImage Resize test"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateImageResizeWindow);
   pMainTree->AddChild(pElement);
@@ -535,7 +535,7 @@ void nuiWin::OnCreation()
   pElement = new nuiTreeNode(nuiTR("Unicode Text Analysis"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateUnicodeTextWindow);
   pMainTree->AddChild(pElement);
-  
+
   pElement = new nuiTreeNode(nuiTR("Enum native resources"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateResourceWindow);
   pMainTree->AddChild(pElement);
@@ -606,7 +606,7 @@ void nuiWin::OnCreation()
 
 
 
-bool nuiWin::CreateConsoleWindow(const nuiEvent& rEvent)
+void nuiWin::CreateConsoleWindow(const nuiEvent& rEvent)
 {
   nuiWindow* pWindow = new nuiWindow(nuiRect(10,10,400,400));
   mpManager->AddChild(pWindow);
@@ -616,23 +616,20 @@ bool nuiWin::CreateConsoleWindow(const nuiEvent& rEvent)
   Console* pConsole = new Console(nuiTR("Welcome to the nui test application!\nThis window contains a text widget to which the ngl's console output have been redirected\n"));
   pScrollView->AddChild(pConsole);
   App->SetConsole(pConsole);
-  return false;
 }
 
 
 // a test for the nuiThreadInspector from the nuiIntrospector
-bool nuiWin::CreateThreadInspectorTestWindow(const nuiEvent& rEvent)
+void nuiWin::CreateThreadInspectorTestWindow(const nuiEvent& rEvent)
 {
   nuiWindow* pWindow = new nuiWindow(nuiRect(10,10,500,400));
   mpManager->AddChild(pWindow);
 
   pWindow->AddChild(new ThreadInspectorTest());
-
-  return false;
 }
 
 
-bool nuiWin::CreateCSSParserTest(const nuiEvent& rEvent)
+void nuiWin::CreateCSSParserTest(const nuiEvent& rEvent)
 {
   nuiWindow* pWindow = new nuiWindow(nuiRect(10,10,400,400));
   mpManager->AddChild(pWindow);
@@ -648,7 +645,7 @@ bool nuiWin::CreateCSSParserTest(const nuiEvent& rEvent)
   if (!pF)
   {
     pText->Print(_T("Unable to open CSS source file '%ls'\n"), p.GetChars());
-    return false;
+    return;
   }
 
   nuiCSS* pCSS = new nuiCSS();
@@ -661,23 +658,19 @@ bool nuiWin::CreateCSSParserTest(const nuiEvent& rEvent)
     pText->Print(_T("Error parsing CSS File: %s\n"), pCSS->GetErrorString().GetChars());
   }
 
-
-  return false;
 }
 
 
-bool nuiWin::CreateBlurArea(const nuiEvent& rEvent)
+void nuiWin::CreateBlurArea(const nuiEvent& rEvent)
 {
   nuiUserArea* pUserArea = new nuiUserArea();
   AddChild(pUserArea);
   nuiTexture* pTexture = nuiTexture::GetTexture(nglPath(_T("rsrc:/nui.png")));
   pTexture->SetPermanent(true);
   mWinSink.Connect(pUserArea->UserDraw, &nuiWin::DrawBlur, pTexture);
-
-  return false;
 }
 
-bool nuiWin::CreateSplineWindow(const nuiEvent& rEvent)
+void nuiWin::CreateSplineWindow(const nuiEvent& rEvent)
 {
   nuiSpline* pSpline = NULL;
   nglIStream* pFile = nglPath(_T("spline.xml")).OpenRead();
@@ -723,11 +716,9 @@ bool nuiWin::CreateSplineWindow(const nuiEvent& rEvent)
   nuiSplineEdit* pSplineEdit = new nuiSplineEdit(pSpline, true);
   pSplineWin->AddChild(pSplineEdit);
   pSplineEdit->DisplayTangents(false);
-
-  return false;
 }
 
-bool nuiWin::CreateTreeViewWindow(const nuiEvent& rEvent)
+void nuiWin::CreateTreeViewWindow(const nuiEvent& rEvent)
 {
   nuiWindow* pTreeWin = new nuiWindow(nuiRect(10, 10, 320, 300), nuiWindow::NoFlag, nuiTR("TreeView example"));
   mpManager->AddChild(pTreeWin);
@@ -757,14 +748,12 @@ bool nuiWin::CreateTreeViewWindow(const nuiEvent& rEvent)
   nuiTreeView* pTreeView = new nuiTreeView(pTreeNode);
   pScrollView->AddChild(pTreeView);
   pScrollView->EnableSurface(true);
-
-  return false;
 }
 
 
 
 
-bool nuiWin::CreateAnimWindow(const nuiEvent& rEvent)
+void nuiWin::CreateAnimWindow(const nuiEvent& rEvent)
 {
   nuiWindow* pAnimWin = new nuiWindow(nuiRect(10, 10, 100, 200), nuiWindow::NoFlag, nuiTR("Anim example"));
   mpManager->AddChild(pAnimWin);
@@ -789,14 +778,12 @@ bool nuiWin::CreateAnimWindow(const nuiEvent& rEvent)
   pAnim->SetEasing(nuiEasingSinus);
   pAnim->SetTime(0);
   pAnim->Play(10000, eAnimLoopPingPong);
-
-  return false;
 }
 
-bool nuiWin::CreateSVGTigerWindow(const nuiEvent& rEvent)
+void nuiWin::CreateSVGTigerWindow(const nuiEvent& rEvent)
 {
 
-  nuiWindow* pSVGWin = new nuiWindow(nuiRect(10.0f,10.0f,250.0f,400.0f)); 
+  nuiWindow* pSVGWin = new nuiWindow(nuiRect(10.0f,10.0f,250.0f,400.0f));
   mpManager->AddChild(pSVGWin);
   nuiSVGView* pSVGView;
 
@@ -813,16 +800,13 @@ bool nuiWin::CreateSVGTigerWindow(const nuiEvent& rEvent)
   pSVGWin->AddChild(pSVGView);
   NGL_OUT((_T("Loaded SVG file in %f seconds\n")), (double)(nglTime()-before));
 
-
   pSVGView->EnableAntialias(true);
-
-  return false;
 }
 
 
-bool nuiWin::CreateMessedUpWindow(const nuiEvent& rEvent)
+void nuiWin::CreateMessedUpWindow(const nuiEvent& rEvent)
 {
-  nuiWindow* pWin = new nuiWindow(nuiRect(10.0f,10.0f,350.0f,250.0f)); 
+  nuiWindow* pWin = new nuiWindow(nuiRect(10.0f,10.0f,350.0f,250.0f));
   mpManager->AddChild(pWin);
   nuiVBox* pBox = new nuiVBox(0);
   pWin->AddChild(pBox);
@@ -870,11 +854,9 @@ bool nuiWin::CreateMessedUpWindow(const nuiEvent& rEvent)
   nuiEditLine* pEdt = new nuiEditLine(nglString(_T(""))  );
   pBox->AddCell(pEdt);
   mWinSink.Connect(pEdt->Selected, &nuiWin::LogText, pEdt);
-
-  return false;
 }
 
-bool nuiWin::CreateTextWindow(const nuiEvent& rEvent)
+void nuiWin::CreateTextWindow(const nuiEvent& rEvent)
 {
   nuiWindow* pWin2 = new nuiWindow(nuiRect(10.0f,10.0f,500.0f,350.0f),0 ,(nuiTR("Fixed Font Text Window")));
   mpManager->AddChild(pWin2);
@@ -900,10 +882,9 @@ bool nuiWin::CreateTextWindow(const nuiEvent& rEvent)
   pText->SetFont(nuiTheme::Fixed);
 
   delete pFile;
-  return false;
 }
 
-bool nuiWin::CreateText2Window(const nuiEvent& rEvent)
+void nuiWin::CreateText2Window(const nuiEvent& rEvent)
 {
   nuiWindow* pWin2 = new nuiWindow(nuiRect(10.0f,10.0f,500.0f,350.0f),0 ,(nuiTR("Default Font Text Window")));
   mpManager->AddChild(pWin2);
@@ -937,7 +918,7 @@ bool nuiWin::CreateText2Window(const nuiEvent& rEvent)
   nglPath path((nglChar*)rEvent.mpUser);
   nglIStream* pFile = path.OpenRead();
   if (!pFile)
-    return false;
+    return;
 
   pFile->SetTextEncoding(eUTF8);
   nglString text;
@@ -954,17 +935,15 @@ bool nuiWin::CreateText2Window(const nuiEvent& rEvent)
   mWinSink.Connect(pCheck->ButtonDePressed, &nuiWin::OnTextWrapChanged, pText);
 
   delete pFile;
-  return false;
 }
 
-bool nuiWin::OnTextWrapChanged(const nuiEvent& rEvent)
+void nuiWin::OnTextWrapChanged(const nuiEvent& rEvent)
 {
   nuiLabel* pLabel = (nuiLabel*)rEvent.mpUser;
   pLabel->SetWrapping(!pLabel->IsWrapping());
-  return false;
 }
 
-bool nuiWin::OnTextSizeSliderChanged(const nuiEvent& rEvent)
+void nuiWin::OnTextSizeSliderChanged(const nuiEvent& rEvent)
 {
   std::pair<nuiLabel*, nuiRange*>* pPair = (std::pair<nuiLabel*, nuiRange*>*)rEvent.mpUser;
 
@@ -972,11 +951,9 @@ bool nuiWin::OnTextSizeSliderChanged(const nuiEvent& rEvent)
   nuiRange* pRange = pPair->second;
 
   pLabel->SetFont(nuiFont::GetFont(pRange->GetValue()));
-
-  return false;
 }
 
-bool nuiWin::CreateSliderWindow(const nuiEvent& rEvent)
+void nuiWin::CreateSliderWindow(const nuiEvent& rEvent)
 {
   nuiWindow* pWin = new nuiWindow(nuiRect(10.0f,10.0f, 300.f,400.f), nuiWindow::DecoratedBackground ,(nuiTR("Slider Window")));
   mpManager->AddChild(pWin);
@@ -1183,11 +1160,9 @@ bool nuiWin::CreateSliderWindow(const nuiEvent& rEvent)
       mWinSink.Connect(pSlider->ValueChanged, &nuiWin::OnSliderChanged, new std::pair<nuiSlider*, nuiLabel*>(pSlider, pText2));
     }
   }
-
-  return false;
 }
 
-bool nuiWin::OnSliderChanged(const nuiEvent& rEvent)
+void nuiWin::OnSliderChanged(const nuiEvent& rEvent)
 {
   std::pair<nuiSlider*, nuiLabel*>* pPair = (std::pair<nuiSlider*, nuiLabel*>*)rEvent.mpUser;
   nuiSlider* pSlider = pPair->first;
@@ -1196,11 +1171,9 @@ bool nuiWin::OnSliderChanged(const nuiEvent& rEvent)
   nglString s;
   s.Format(_T("%.2f"), pSlider->GetRange().GetValue());
   pText->SetText(s);
-
-  return false;
 }
 
-bool nuiWin::CreateEllispsisTestWindow(const nuiEvent& rEvent)
+void nuiWin::CreateEllispsisTestWindow(const nuiEvent& rEvent)
 {
   nuiWindow* pWin = new nuiWindow(nuiRect(10.0f,10.0f,200.0f,50.0f),0 ,(nuiTR("Label Ellipsis Test Window")));
   mpManager->AddChild(pWin);
@@ -1209,25 +1182,24 @@ bool nuiWin::CreateEllispsisTestWindow(const nuiEvent& rEvent)
 
   nuiLabel* pLabel = new nuiLabel(_T("toto1_toto2_toto3_toto4_toto5_toto6_toto7_toto8_toto9_toto10"));
   pLabel->UseEllipsis(true);
-  //  
+  //
   //  nuiButton* pBtn = new nuiButton(_T("blabla"));
-  //  
+  //
   //  pHBox->SetCell(0, pLabel);
   //  pHBox->SetCell(1, pBtn);
-  //  
+  //
   //  pHBox->SetCellExpand(0, nuiExpandShrinkAndGrow);
   //  pHBox->SetCellExpand(1, nuiExpandFixed);
-  //  
+  //
   nuiVBox* pVBox = new nuiVBox();
   pVBox->AddCell(pLabel);
   pVBox->SetExpand(nuiExpandShrinkAndGrow);
 
   pWin->AddChild(pVBox);
-  return false;
 }
 
 
-bool nuiWin::CreateFileListWindow(const nuiEvent& rEvent)
+void nuiWin::CreateFileListWindow(const nuiEvent& rEvent)
 {
   nuiWindow* pWin3 = new nuiWindow(nuiRect(10.0f,10.0f,250.0f,400.0f));
   mpManager->AddChild(pWin3);
@@ -1238,7 +1210,6 @@ bool nuiWin::CreateFileListWindow(const nuiEvent& rEvent)
   pWin3->AddChild(pSV);
   //  (new nuiImage(pList,nglPath(_T("rsrc:/toucan.png"))))->SetPosition(nuiCenter);
   //  new nuiImage(pList,nglPath(_T("rsrc:/small_ngl.png")));
-  return false;
 }
 
 
@@ -1289,7 +1260,7 @@ public:
   }
 };
 
-bool nuiWin::CreateColumnTreeViewWindow(const nuiEvent& rEvent)
+void nuiWin::CreateColumnTreeViewWindow(const nuiEvent& rEvent)
 {
   nuiWindow* pColumnTreeViewWin = new nuiWindow(nuiRect(10, 10, 300, 200), nuiWindow::NoFlag, nuiTR("Column Tree View"));
   mpManager->AddChild(pColumnTreeViewWin);
@@ -1334,8 +1305,6 @@ bool nuiWin::CreateColumnTreeViewWindow(const nuiEvent& rEvent)
   pSV->AddChild(pView);
 
   new SamplePreview(pView);
-
-  return false;
 }
 
 
@@ -1367,10 +1336,10 @@ bool nuiWin::Draw(nuiDrawContext* pContext)
     if (mFrameCnt > 20)
     {
       nuiPainter* pPainter = pContext->GetPainter();
-      mFPSText.Format(_T("%.1f (%d vertices in %d batches and %d operations)"), 
-        (double)mFrameCnt / (now - mLastFPSMeasure), 
-        pPainter->GetVertices(), 
-        pPainter->GetBatches(), 
+      mFPSText.Format(_T("%.1f (%d vertices in %d batches and %d operations)"),
+        (double)mFrameCnt / (now - mLastFPSMeasure),
+        pPainter->GetVertices(),
+        pPainter->GetBatches(),
         pPainter->GetRenderOperations());
       mLastFPSMeasure = now;
       mFrameCnt = 0;
@@ -1380,7 +1349,7 @@ bool nuiWin::Draw(nuiDrawContext* pContext)
 
     if (!mFPSText.IsEmpty())
     {
-      pContext->SetFont(GetTheme()->GetFont(nuiTheme::Fixed));
+      pContext->SetFont(nuiFont::GetFont(12));
       pContext->SetTextColor(nuiColor(1,0,0));
       pContext->DrawText(4,(nuiSize)GetHeight(), mFPSText);
     }
@@ -1397,7 +1366,7 @@ void nuiWin::OnPaint()
     nuiTopLevel::Invalidate();
 }
 
-bool nuiWin::CreateScrolledImageWindow(const nuiEvent& rEvent)
+void nuiWin::CreateScrolledImageWindow(const nuiEvent& rEvent)
 {
   nuiWindow* pWin = new nuiWindow(nuiRect(10, 10, 300, 300), nglWindow::NoFlag, nuiTR("Scrolled Image..."));
   mpManager->AddChild(pWin);
@@ -1411,11 +1380,9 @@ bool nuiWin::CreateScrolledImageWindow(const nuiEvent& rEvent)
   pScrollView->AddChild(pImage);
   pImage->SetPosition(nuiTopLeft);
   pImage->SetFillRule(nuiTopLeft);
-
-  return false;
 }
 
-bool nuiWin::CreateScrolledImageWindow2(const nuiEvent& rEvent)
+void nuiWin::CreateScrolledImageWindow2(const nuiEvent& rEvent)
 {
   nuiWindow* pWin = new nuiWindow(nuiRect(10, 10, 200, 200), nglWindow::NoFlag, nuiTR("Scrolled Image (2)..."));
   mpManager->AddChild(pWin);
@@ -1424,13 +1391,11 @@ bool nuiWin::CreateScrolledImageWindow2(const nuiEvent& rEvent)
   nuiImage* pImage = new nuiImage(_T("rsrc:/jpeg.jpg"));
   pScrollView->AddChild(pImage);
   pImage->SetFillRule(nuiTopLeft);
-
-  return false;
 }
 
 
 #ifdef USE_SWF
-bool nuiWin::CreateSWFTest1Window(const nuiEvent& rEvent)
+void nuiWin::CreateSWFTest1Window(const nuiEvent& rEvent)
 {
   nuiWindow* pWin = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, nuiTR("SWF Movie..."));
   mpManager->AddChild(pWin);
@@ -1466,12 +1431,11 @@ bool nuiWin::CreateSWFTest1Window(const nuiEvent& rEvent)
     text.Format(_T("Unable to load flash movie '%ls'"), movie.GetChars());
     pContainer->AddChild(new nuiLabel(text));
   }
-  return false;
 }
 #endif
 
 
-bool nuiWin::CreateShapeWindow(const nuiEvent& rEvent)
+void nuiWin::CreateShapeWindow(const nuiEvent& rEvent)
 {
   nuiWindow* pWin = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, nuiTR("nuiShapes..."));
   mpManager->AddChild(pWin);
@@ -1511,11 +1475,9 @@ bool nuiWin::CreateShapeWindow(const nuiEvent& rEvent)
   //  pShapeView->SetShapeMode(eStrokeShape);
   pShapeView->SetColor(eShapeStroke, nuiColor(_T("darkblue")));
   pShapeView->SetColor(eShapeFill, nuiColor(0.0f, 0.0f, 0.5f, 0.5f));
-
-  return false;
 }
 
-bool nuiWin::TogglePartialRedraw(const nuiEvent& rEvent)
+void nuiWin::TogglePartialRedraw(const nuiEvent& rEvent)
 {
   nuiTopLevel::EnablePartialRedraw(!nuiTopLevel::IsPartialRedrawEnabled());
   if (nuiTopLevel::IsPartialRedrawEnabled())
@@ -1526,10 +1488,9 @@ bool nuiWin::TogglePartialRedraw(const nuiEvent& rEvent)
   {
     NGL_OUT(_T("Partial Redraw Disabled\n"));
   }
-  return false;
 }
 
-bool nuiWin::CreateWrappedLabelWindow(const nuiEvent& rEvent)
+void nuiWin::CreateWrappedLabelWindow(const nuiEvent& rEvent)
 {
   nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, nuiTR("Wrapped Label"));
   mpManager->AddChild(pWindow);
@@ -1552,11 +1513,10 @@ bool nuiWin::CreateWrappedLabelWindow(const nuiEvent& rEvent)
   }
   else
   {
-    pBox->AddCell(pLabel);    
+    pBox->AddCell(pLabel);
   }
   pLabel->SetWrapping(true);
   pLabel->SetPosition(nuiTopLeft);
-  return false;
 }
 
 
@@ -1675,14 +1635,13 @@ private:
   float mPhase;
 };
 
-bool nuiWin::CreateWhizzAnimWindow(const nuiEvent& rEvent)
+void nuiWin::CreateWhizzAnimWindow(const nuiEvent& rEvent)
 {
   nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, nuiTR("Whizzy Anim"));
   mpManager->AddChild(pWindow);
 
   nuiWhizzAnim* pAnim = new nuiWhizzAnim();
   pWindow->AddChild(pAnim);
-  return false;
 }
 
 class TestLabel : public nuiWidget
@@ -1807,7 +1766,7 @@ private:
   nuiFont* mpFont;
 };
 
-bool nuiWin::CreateTextLayoutWindow(const nuiEvent& rEvent)
+void nuiWin::CreateTextLayoutWindow(const nuiEvent& rEvent)
 {
   nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, nuiTR("Text Layout"));
   mpManager->AddChild(pWindow);
@@ -1822,12 +1781,10 @@ bool nuiWin::CreateTextLayoutWindow(const nuiEvent& rEvent)
 
   pBox->AddCell(new TestLabel(TEST_TEXT, _T("<nuiFont Size=\"12\" Source=\"../Data/Vera.ttf\"/>")));
   pBox->AddCell(new TestLabel(TEST_TEXT, _T("<nuiFont Size=\"12\" Source=\"../Data/VeraMono.ttf\"/>")));
-
-  return false;
 }
 
 
-bool nuiWin::CreateFontSubstitutionWindow(const nuiEvent& rEvent)
+void nuiWin::CreateFontSubstitutionWindow(const nuiEvent& rEvent)
 {
   nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, nuiTR("Fonts"));
   mpManager->AddChild(pWindow);
@@ -1846,27 +1803,23 @@ bool nuiWin::CreateFontSubstitutionWindow(const nuiEvent& rEvent)
   pText->Print(_T("%ls"), txt.GetChars());
 
   pText->Print(_T("here we are!\n"));
-  //             
-  return true;
+
+  rEvent.Cancel();
 }
 
-bool nuiWin::SaveFontDB(const nuiEvent& rEvent)
+void nuiWin::SaveFontDB(const nuiEvent& rEvent)
 {
   nglPath p(_T("nuiFonts.db3"));
   nglOFile strm(p, eOFileCreate);
   nuiFontManager& rManager(nuiFontManager::GetManager());
   rManager.Save(strm);
-
-  return false;
 }
 
-bool nuiWin::LoadFontDB(const nuiEvent& rEvent)
+void nuiWin::LoadFontDB(const nuiEvent& rEvent)
 {
   nglPath p(_T("nuiFonts.db3"));
   nglIFile strm(p);
   nuiFontManager::LoadManager(strm);
-
-  return false;
 }
 
 
@@ -1918,7 +1871,7 @@ public:
 
 };
 
-bool nuiWin::CreateSignalsAndSlotsTestWindow(const nuiEvent& rEvent)
+void nuiWin::CreateSignalsAndSlotsTestWindow(const nuiEvent& rEvent)
 {
   nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, nuiTR("Signals and slots"));
   mpManager->AddChild(pWindow);
@@ -1966,11 +1919,10 @@ bool nuiWin::CreateSignalsAndSlotsTestWindow(const nuiEvent& rEvent)
 
   delegate1(pText);
   delegate2(pText);
-  return false;
 }
 
 
-bool nuiWin::CreateFrameWindow(const nuiEvent& rEvent)
+void nuiWin::CreateFrameWindow(const nuiEvent& rEvent)
 {
   nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, nuiTR("Frame View test"));
   mpManager->AddChild(pWindow);
@@ -1985,11 +1937,9 @@ bool nuiWin::CreateFrameWindow(const nuiEvent& rEvent)
   pFrameView->AddChild(pText);
   pText->SetPosition(nuiCenter);
   pText->SetColor(eNormalTextFg, nuiColor(128, 128, 182));
-
-  return false;
 }
 
-bool nuiWin::CreateFrameWindow2(const nuiEvent& rEvent)
+void nuiWin::CreateFrameWindow2(const nuiEvent& rEvent)
 {
   nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, nuiTR("Frame View test 2"));
   mpManager->AddChild(pWindow);
@@ -2003,12 +1953,9 @@ bool nuiWin::CreateFrameWindow2(const nuiEvent& rEvent)
 
   pWindow->AddChild(pPositioner);
   pPositioner->AddChild(pText);
-
-
-  return false;
 }
 
-bool nuiWin::CreateFrameWindow3(const nuiEvent& rEvent)
+void nuiWin::CreateFrameWindow3(const nuiEvent& rEvent)
 {
   nuiFrame* pFrame0 = new nuiFrame(_T("TestFrame3"), nuiTexture::GetTexture(nglPath(_T("rsrc:/fondtrack.png"))), nuiRect(7, 7, 35, 53));
   nuiFrame* pFrame1 = new nuiFrame(_T("TestFrame3"), nuiTexture::GetTexture(nglPath(_T("rsrc:/fondtrack.png"))), nuiRect(7, 7, 35, 53));
@@ -2045,8 +1992,6 @@ bool nuiWin::CreateFrameWindow3(const nuiEvent& rEvent)
       //pLabel->SetBorder(2, 2);
     }
   }
-
-  return false;
 }
 
 class DragPane : public nuiWidget
@@ -2095,13 +2040,12 @@ public:
   bool mDnd;
 };
 
-bool nuiWin::CreateDragZone(const nuiEvent& rEvent)
+void nuiWin::CreateDragZone(const nuiEvent& rEvent)
 {
   nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, nuiTR("Drag Zone test"));
   mpManager->AddChild(pWindow);
   DragPane* pDragPane = new DragPane();
   pWindow->AddChild(pDragPane);
-  return false;
 }
 
 
@@ -2125,7 +2069,7 @@ public:
 
     //r.Move(.5, .5);
     pContext->DrawRect(r, eStrokeShape);
-    
+
     //pContext->AddBreakPoint();
 
 //    pContext->PushClipping();
@@ -2142,12 +2086,11 @@ public:
   }
 };
 
-bool nuiWin::CreateClippingTest(const nuiEvent& rEvent)
+void nuiWin::CreateClippingTest(const nuiEvent& rEvent)
 {
   nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, nuiTR("Clipping test"));
   mpManager->AddChild(pWindow);
   pWindow->AddChild(new ClippingTest());
-  return false;
 }
 
 // nuiSurface test
@@ -2158,24 +2101,24 @@ public:
   {
     SetUserSize(320, 200);
     SetPosition(nuiCenter);
-    
+
     //    nglString surfaceName;
     //    surfaceName.CFormat(_T("%p"), this);
     //    mpSurface = nuiSurface::CreateSurface(surfaceName, 256, 256);
-    //    mpSurfaceTexture = nuiTexture::GetTexture(mpSurface, false);  
-    //    
-    
+    //    mpSurfaceTexture = nuiTexture::GetTexture(mpSurface, false);
+    //
+
   }
-  
+
   bool Draw(nuiDrawContext* pContext)
-  {    
+  {
     nuiRect r(GetRect().Size());
     int32 w = r.GetWidth();
     int32 h = r.GetHeight();
-    
+
     pContext->SetFillColor(nuiColor(_T("red")));
     pContext->SetStrokeColor(nuiColor(_T("green")));
-    
+
     //r.Move(.5, .5);
     pContext->DrawRect(r, eStrokeAndFillShape);
 
@@ -2188,26 +2131,25 @@ public:
     pContext->SetBlendFunc(nuiBlendTransp);
     pContext->SetTextColor(nuiColor(0.0f, 1.0f, 0.0f));
     pContext->DrawText(10, 50, _T("test string"));
-    
+
     return true;
   }
-  
+
   nuiRect CalcIdealSize()
   {
     return nuiRect(0, 0, 200, 200);
   }
-  
+
   nuiSurface* mpSurface;
   nuiTexture* mpSurfaceTexture;
 };
 
 
-bool nuiWin::CreateSurfaceTest(const nuiEvent& rEvent)
+void nuiWin::CreateSurfaceTest(const nuiEvent& rEvent)
 {
   nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, nuiTR("Surface test"));
   mpManager->AddChild(pWindow);
   pWindow->AddChild(new SurfaceTest());
-  return false;
 }
 
 
@@ -2268,7 +2210,7 @@ private:
 
 
 
-bool nuiWin::CreateAudioWindow(const nuiEvent& rEvent)
+void nuiWin::CreateAudioWindow(const nuiEvent& rEvent)
 {
   nuiWindow* pWindow = new nuiWindow(nuiRect(10.0f,10.0f, 300.f,400.f), nuiWindow::DecoratedBackground ,(nuiTR("Audio Hardware")));
   mpManager->AddChild(pWindow);
@@ -2300,11 +2242,9 @@ bool nuiWin::CreateAudioWindow(const nuiEvent& rEvent)
   }
 
   pCombo->SetTree(pTree);
-
-  return false;
 }
 
-bool nuiWin::AudioComboTrashed(const nuiEvent& rEvent)
+void nuiWin::AudioComboTrashed(const nuiEvent& rEvent)
 {
   nuiComboBox* pCombo = (nuiComboBox*) rEvent.mpUser;
 
@@ -2317,11 +2257,9 @@ bool nuiWin::AudioComboTrashed(const nuiEvent& rEvent)
     bool res = nuiGetTokenValue<nuiAudioDevice*>(pChild->GetElement()->GetToken(), pDev);
     delete pDev;
   }
-
-  return false;
 }
 
-bool nuiWin::AudioDeviceSelected(const nuiEvent& rEvent)
+void nuiWin::AudioDeviceSelected(const nuiEvent& rEvent)
 {
   nuiComboBox* pCombo = (nuiComboBox*) rEvent.mpUser;
   nuiText* pText;
@@ -2329,10 +2267,10 @@ bool nuiWin::AudioDeviceSelected(const nuiEvent& rEvent)
   nuiAudioDevice* pDev;
   nuiWidget* pWidget = pCombo->GetSelectedWidget();
   if (!pWidget)
-    return false;
+    return;
   res = nuiGetTokenValue<nuiAudioDevice*>(pWidget->GetToken(), pDev);
   if (!res)
-    return false;
+    return;
 
   nglString str;
 
@@ -2373,9 +2311,7 @@ bool nuiWin::AudioDeviceSelected(const nuiEvent& rEvent)
   NGL_OUT(_T("%ls"), str.GetChars());
 
   if (!pDev->IsPresent())
-  {
-    return false;
-  }
+    return;
 
   std::vector<uint32> InChannels;
   std::vector<uint32> OutChannels;
@@ -2390,20 +2326,18 @@ bool nuiWin::AudioDeviceSelected(const nuiEvent& rEvent)
   if (!res)
   {
     NGL_OUT(nuiTR("nuiAudioDevice Open failed!\n"));
-    return false;
+    return;
   }
 
 
   while (handler.CanContinue())
   {
     nglThread::Sleep(1);
-  } 
+  }
 
 
 
   pDev->Close();
-
-  return false;
 }
 
 
@@ -2482,7 +2416,7 @@ private:
 
 
 
-bool nuiWin::CreateAudioFifoWindow(const nuiEvent& rEvent)
+void nuiWin::CreateAudioFifoWindow(const nuiEvent& rEvent)
 {
   nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, nuiTR("AudioFifo test"));
   mpManager->AddChild(pWindow);
@@ -2500,7 +2434,6 @@ bool nuiWin::CreateAudioFifoWindow(const nuiEvent& rEvent)
   {
     //NGL_OUT(_T("error. end of program.\n"));
     delete myfifo;
-    return false;
   }
 
   MyAudioTrack* mytrack = new MyAudioTrack(44100.0F);
@@ -2509,12 +2442,12 @@ bool nuiWin::CreateAudioFifoWindow(const nuiEvent& rEvent)
 
   // Here, we stop the audio system once all samples have been given to the audio system.
   // But if bufferingEnabled parameter == true, you have to overload the nuiAudioTrack::ProcessedSamples virtual method, in order to stop the audio system at the right moment
-  // (<=> when all samples have been processed from buffer to device output), otherwise, you will not hear the whole sound, it'll be cut before the end... 
+  // (<=> when all samples have been processed from buffer to device output), otherwise, you will not hear the whole sound, it'll be cut before the end...
 
   while (mytrack->CanContinue())
   {
     nglThread::Sleep(1);
-  } 
+  }
 
   myfifo->UnregisterTrack(mytrack);
 
@@ -2522,11 +2455,9 @@ bool nuiWin::CreateAudioFifoWindow(const nuiEvent& rEvent)
 
   myfifo->Close();
   delete myfifo;
-
-  return false;
 }
 
-bool nuiWin::CreateHTTPWindow(const nuiEvent& rEvent)
+void nuiWin::CreateHTTPWindow(const nuiEvent& rEvent)
 {
   nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, nuiTR("HTTP Request"));
   mpManager->AddChild(pWindow);
@@ -2546,11 +2477,9 @@ bool nuiWin::CreateHTTPWindow(const nuiEvent& rEvent)
   pVBox->SetCell(2, mpHTTPResponseLabel);
 
   pWindow->AddChild(pVBox);
-
-  return false;
 }
 
-bool nuiWin::SendHTTPRequest(const nuiEvent& rEvent)
+void nuiWin::SendHTTPRequest(const nuiEvent& rEvent)
 {
   nglString url = mpURLText->GetText();
   nuiHTTPRequest req(url);
@@ -2563,10 +2492,10 @@ bool nuiWin::SendHTTPRequest(const nuiEvent& rEvent)
   {
     mpHTTPResponseLabel->SetText(nuiTR("Unable to connect to ") + url);
   }
-  return true;
+  rEvent.Cancel();
 }
 
-bool nuiWin::CreateHTMLWindow(const nuiEvent& rEvent)
+void nuiWin::CreateHTMLWindow(const nuiEvent& rEvent)
 {
   //  nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, _T("HTML Test"));
   //  mpManager->AddChild(pWindow);
@@ -2578,11 +2507,9 @@ bool nuiWin::CreateHTMLWindow(const nuiEvent& rEvent)
   html.Load(*pStream);
 
   delete pStream;
-
-  return false;
 }
 
-bool nuiWin::CreateImageResizeWindow(const nuiEvent& rEvent)
+void nuiWin::CreateImageResizeWindow(const nuiEvent& rEvent)
 {
 //  nglPath p(_T("rsrc:/nui.png"));
   nglPath p(_T("rsrc:/jpeg.jpg"));
@@ -2590,7 +2517,7 @@ bool nuiWin::CreateImageResizeWindow(const nuiEvent& rEvent)
   nglIStream* pStream = p.OpenRead();
   nglImage* pImage = new nglImage(pStream);
   nglImage* pNewImage = new nglImage(*pImage, 320, 320);
-  
+
   nuiWindow* pWin = new nuiWindow(nuiRect(10, 10, 320, 320));
   nuiScrollView* pScroll = new nuiScrollView();
   pWin->AddChild(pScroll);
@@ -2599,10 +2526,9 @@ bool nuiWin::CreateImageResizeWindow(const nuiEvent& rEvent)
   pBox->AddCell(new nuiImage(pNewImage, true), nuiTopLeft);
   pBox->AddCell(new nuiImage(pImage, true), nuiTopLeft);
   mpManager->AddChild(pWin);
-  return false;
 }
 
-bool nuiWin::CreateCoverFlowWindow(const nuiEvent& rEvent)
+void nuiWin::CreateCoverFlowWindow(const nuiEvent& rEvent)
 {
   nuiWindow* pWin = new nuiWindow(nuiRect(10, 10, 320, 320));
   nuiCoverFlow* pFlow = new nuiCoverFlow();
@@ -2617,10 +2543,9 @@ bool nuiWin::CreateCoverFlowWindow(const nuiEvent& rEvent)
   pFlow->SelectImage(2);
   pFlow->SetBackgroundColor(nuiColor(0, 0, 0, 255));
   mpManager->AddChild(pWin);
-  return false;
 }
 
-bool nuiWin::CreateUnicodeTextWindow(const nuiEvent& rEvent)
+void nuiWin::CreateUnicodeTextWindow(const nuiEvent& rEvent)
 {
   nuiWindow* pWin = new nuiWindow(nuiRect(10, 10, 320, 320));
   nuiScrollView* pView = new nuiScrollView();
@@ -2628,33 +2553,33 @@ bool nuiWin::CreateUnicodeTextWindow(const nuiEvent& rEvent)
   nuiText* pText = new nuiText();
   pView->AddChild(pText);
   mpManager->AddChild(pWin);
-  
+
   //nglPath path(_T("rsrc:/font_tests/test-japanese.txt"));
   nglPath path(_T("rsrc:/GLASS.txt"));
   nglIStream* pFile = path.OpenRead();
   if (!pFile)
-    return false;
-  
+    return;
+
   pFile->SetTextEncoding(eUTF8);
   nglString text;
-  
+
   bool r = pFile->ReadText(text);
   delete pFile;
 
   if (!r)
-    return false;
+    return;
 
   nuiTextRangeList Ranges;
   bool res = nuiSplitText(text, Ranges, nuiST_ScriptChange);
   if (!res)
   {
     NGL_OUT(_T("Error while splitting the text\n"));
-    return false;
+    return;
   }
 
   nuiTextRangeList::iterator it = Ranges.begin();
   nuiTextRangeList::iterator end = Ranges.end();
-  
+
   uint32 i = 0;
   uint32 current = 0;
   uint32 len = 0;
@@ -2663,26 +2588,25 @@ bool nuiWin::CreateUnicodeTextWindow(const nuiEvent& rEvent)
     const nuiTextRange& rRange(*it);
 
     len = rRange.mLength;
-    
+
     nglString str;
-    str.CFormat(_T("Text range %4d\t[%4d to %4d - %3d glyphs]\t%ls - %ls - %ls'\n"), 
-            i, current, current + len, len, 
+    str.CFormat(_T("Text range %4d\t[%4d to %4d - %3d glyphs]\t%ls - %ls - %ls'\n"),
+            i, current, current + len, len,
             rRange.mBlank?_T("blank"):_T("     "),
             rRange.mDirection?_T("RtL"):_T("LtR"),
             nuiGetUnicodeScriptName(rRange.mScript).GetChars()
     );
-    
+
     NGL_OUT(str.GetChars());
     pText->AddText(str);
 
     current += len;
-    
+
     i++;
     ++it;
   }
-  
+
   //pText->AddText(text);
-  return false;
 }
 
 
@@ -2695,7 +2619,7 @@ struct Test
 };
 
 
-bool nuiWin::CreateResourceWindow(const nuiEvent& rEvent)
+void nuiWin::CreateResourceWindow(const nuiEvent& rEvent)
 {
   nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, nuiTR("Native Resources"));
   mpManager->AddChild(pWindow);
@@ -2723,8 +2647,6 @@ bool nuiWin::CreateResourceWindow(const nuiEvent& rEvent)
   nglString str;
   str.CFormat(_T("Found %d resources\n"), resources.size());
   pText->AddText(str);
-
-  return false;
 }
 
 
@@ -2907,7 +2829,7 @@ private:
       mpRasterizer->DrawLine<nuiPixelBlender_Transp>(v0, v1);
     }
 
-    { // Clipping limits test   
+    { // Clipping limits test
       int32 x0 = ww;
       int32 x1 = __w - ww;
       int32 y0 = hh;
@@ -3166,12 +3088,10 @@ private:
   nuiTexture* mpTex;
 };
 
-bool nuiWin::SoftwarePainterWindow(const nuiEvent& rEvent)
+void nuiWin::SoftwarePainterWindow(const nuiEvent& rEvent)
 {
   nuiWindow* pWin = new SoftwareWindow(nuiRect(10, 10, 300, 600), nglWindow::NoFlag, nuiTR("Software Rasterizer"));
   mpManager->AddChild(pWin);
-
-  return false;
 }
 
 
@@ -3198,7 +3118,7 @@ public:
   virtual bool Format (double dValue, nglString& rResult) const
   {
     rResult.CFormat ("%.0fmm", dValue);
-    return true;  
+    return true;
   };
 };
 
@@ -3206,7 +3126,7 @@ public:
 static MillimeterFormater mmFormater;
 static nuiRange mmRange(0,-100,100);
 
-bool nuiWin::SpinerLabelWindow (const nuiEvent& rEvent)
+void nuiWin::SpinerLabelWindow (const nuiEvent& rEvent)
 {
   nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, nuiTR("Spiner Label, Formated Label and Formater"));
   mpManager->AddChild(pWindow);
@@ -3218,25 +3138,23 @@ bool nuiWin::SpinerLabelWindow (const nuiEvent& rEvent)
 
   //  nuiScrollView* pScroller = new nuiScrollView(true, true);
   //  pWindow->AddChild(pScroller);
-  // 
+  //
   //  //
   //  // available nuiSpinerLabel constr.
   //  //
   //  //nuiSpinerLabel(nuiContainerPtr pParent, const nuiFormater& rFormater = &nuiFormatedLabel::DefaultFormater, const nuiRange& rRange = nuiRange(), nuiTheme::FontStyle FontStyle=nuiTheme::Default);
   //  //nuiSpinerLabel(nuiContainerPtr pParent, const nuiFormater& rFormater, const nuiRange& rRange, nuiFont* pFont, bool AlreadyAcquired = false);
   //  //
-  //  
+  //
   //  nuiFixed* pFixed = new nuiFixed();
   //  pScroller->AddChild(pFixed);
-  //  
+  //
   //  nuiPane* pPane = new nuiPane(nuiColor(0.7f, 0.7f, 0.7f, 0.8f), nuiColor(0.5f, 0.5f, 0.5f, 1.0f));
   //  pFixed->AddChild(pPane);
   //  pPane->SetUserPos (20,20);
-  //  
-  //  nuiSpinnerLabel* pSLabel = new nuiSpinnerLabel(mmFormater, mmRange); 
+  //
+  //  nuiSpinnerLabel* pSLabel = new nuiSpinnerLabel(mmFormater, mmRange);
   //  pPane->AddChild(pSLabel);
-
-  return false;
 }
 
 
@@ -3245,7 +3163,7 @@ bool nuiWin::SpinerLabelWindow (const nuiEvent& rEvent)
 // VBoxAndHBoxWindow
 //
 
-bool nuiWin::VBoxAndHBoxWindow (const nuiEvent& rEvent)
+void nuiWin::VBoxAndHBoxWindow (const nuiEvent& rEvent)
 {
   nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, nuiTR("nuiVBox and nuiHBox"));
   mpManager->AddChild(pWindow);
@@ -3258,7 +3176,7 @@ bool nuiWin::VBoxAndHBoxWindow (const nuiEvent& rEvent)
 
   pLabel = new nuiLabel(_T("r0 long enough"));
   boxv->SetCell(0, pLabel);
-  
+
   pLabel = new nuiLabel(_T("r1"));
   pLabel->SetTextPosition(nuiCenter);
   boxv->SetCell(1, pLabel);
@@ -3274,7 +3192,7 @@ bool nuiWin::VBoxAndHBoxWindow (const nuiEvent& rEvent)
   pLabel = new nuiLabel(_T("r4"));
   pLabel->SetPosition(nuiBottom);
   boxv->AddCell(pLabel);
-  
+
 
   boxh->SetCell(0, new nuiLabel(_T("c0")));
   boxh->SetCell(1, new nuiLabel(_T("c1")));
@@ -3284,8 +3202,6 @@ bool nuiWin::VBoxAndHBoxWindow (const nuiEvent& rEvent)
 
   pWindow->AddChild(boxv);
   boxv->AddCell(boxh);
-
-  return false;
 }
 
 
@@ -3303,7 +3219,7 @@ bool nuiWin::VBoxAndHBoxWindow (const nuiEvent& rEvent)
 
 bool MatrixViewFlag;
 
-bool nuiWin::MatrixViewTest(const nuiEvent& rEvent)
+void nuiWin::MatrixViewTest(const nuiEvent& rEvent)
 {
   nuiMatrixView* mat = (nuiMatrixView*)rEvent.mpUser;
 
@@ -3319,10 +3235,10 @@ bool nuiWin::MatrixViewTest(const nuiEvent& rEvent)
   }
 
   mat->InvalidateLayout();
-  return true;
+  rEvent.Cancel();
 }
 
-bool nuiWin::MatrixViewWindow (const nuiEvent& rEvent)
+void nuiWin::MatrixViewWindow (const nuiEvent& rEvent)
 {
   nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 500, 300), nglWindow::NoFlag, _T("nuiMatrixView"));
   mpManager->AddChild(pWindow);
@@ -3357,7 +3273,7 @@ bool nuiWin::MatrixViewWindow (const nuiEvent& rEvent)
 
 
   // css decoration example
-  //  nuiMatrixViewItem 
+  //  nuiMatrixViewItem
   //  {
   //    TextColor: white;
   //  }
@@ -3393,8 +3309,6 @@ bool nuiWin::MatrixViewWindow (const nuiEvent& rEvent)
 
 
   */
-
-  return false;
 }
 
 
@@ -3414,7 +3328,7 @@ void nuiWin::GetMatrixViewItemDesc(nuiMatrixViewItemDesc& rDesc)
 //
 // CreateTitledPaneWindow (nuiTitledPane and nuiFolderPane)
 //
-bool nuiWin::CreateTitledPaneWindow(const nuiEvent& rEvent)
+void nuiWin::CreateTitledPaneWindow(const nuiEvent& rEvent)
 {
   nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 500, 300), nglWindow::NoFlag, nuiTR("nuiTitledPane and nuiFolderPane"));
   mpManager->AddChild(pWindow);
@@ -3443,9 +3357,6 @@ bool nuiWin::CreateTitledPaneWindow(const nuiEvent& rEvent)
   vbox->SetCellSpacing (1, 10);
 
   pFPane->AddChild(new nuiLabel(nuiTR("bleh!")));
-
-
-  return false;
 }
 
 
@@ -3467,8 +3378,8 @@ bool nuiWin::CreateTitledPaneWindow(const nuiEvent& rEvent)
 #endif //BigEndian_
 
 
-#define _xs_doublecopysgn(a,b)      ((int32*)&a)[_xs_iexp_]&=~(((int32*)&b)[_xs_iexp_]&0x80000000) 
-#define _xs_doubleisnegative(a)     ((((int32*)&a)[_xs_iexp_])|0x80000000) 
+#define _xs_doublecopysgn(a,b)      ((int32*)&a)[_xs_iexp_]&=~(((int32*)&b)[_xs_iexp_]&0x80000000)
+#define _xs_doubleisnegative(a)     ((((int32*)&a)[_xs_iexp_])|0x80000000)
 
 typedef double real64;
 typedef float real32;
@@ -3504,7 +3415,7 @@ public:
   typedef int32 Fix;
   // ====================================================================================================================
   //  Basic Conversion from Numbers
-  // ==================================================================================================================== 
+  // ====================================================================================================================
   inline static Fix       ToFix       (int32 val)    {return val<<N;}
   inline static Fix       ToFix       (real64 val)   {return xs_ConvertToFixed(val);}
 
@@ -3556,14 +3467,14 @@ inline int32 xs_ToInt(real64 val, real64 dme)
   _xs_doublecopysgn(dme,val);
   return xs_CRoundToInt(val+dme);
 #else
-  return int32(val);  
+  return int32(val);
 #endif
 }
 
 // ====================================================================================================================
 inline int32 xs_FloorToInt(real64 val, real64 dme)
 {
-#if _xs_DEFAULT_CONVERSION==0  
+#if _xs_DEFAULT_CONVERSION==0
   return xs_CRoundToInt (val - dme);
 #else
   return floor(val);
@@ -3577,7 +3488,7 @@ inline int32 xs_CeilToInt(real64 val, real64 dme)
   return xs_CRoundToInt (val + dme);
 #else
   return ceil(val);
-#endif  
+#endif
 }
 
 //=================================================================================================================
@@ -3604,7 +3515,7 @@ template <class Class> inline int32 tozero(Class x)
 //  return x >= 0 ? xs_CRoundToInt(x) : -xs_CRoundToInt(-x);
 //}
 
-bool nuiWin::DumpStats(const nuiEvent& rEvent)
+void nuiWin::DumpStats(const nuiEvent& rEvent)
 {
   NGL_OUT((_T("sizeof(nuiObject): %d\n")), sizeof(nuiObject));
   NGL_OUT((_T("sizeof(nuiWidget): %d\n")), sizeof(nuiWidget));
@@ -3673,11 +3584,10 @@ bool nuiWin::DumpStats(const nuiEvent& rEvent)
       f1 += incr;
     }
   }
-  return false;
 }
 
 bool nuiWin::OnKeyDown(const nglKeyEvent& rEvent)
-{ 
+{
   if (rEvent.mKey == NK_ESC)
   {
     App->Quit (0);
@@ -3700,28 +3610,27 @@ void nuiWin::OnClose()
     delete this;
 }
 
-bool nuiWin::OutputSomething( const nuiEvent& rEvent)
+void nuiWin::OutputSomething( const nuiEvent& rEvent)
 {
   static int value = 0;
   NGL_OUT((_T("Position: %d\n")),value++);
-  return false;
 }
 
-bool nuiWin::CreateFromGladeXML( const nuiEvent& rEvent)
+void nuiWin::CreateFromGladeXML(const nuiEvent& rEvent)
 {
   nuiXML* pXML = ImportGladeXML((nglChar*)_T("rsrc:/sample1.xml"));
 
   if (!pXML)
   {
     NGL_OUT((_T("\nERROR: unable to load glade XML description :-(.\n")));
-    return false;
-  }       
+    return;
+  }
 
   GetTopLevel()->AddChild(nuiCreateWidget(pXML));
-  return false;
+  return;
 }
 
-bool nuiWin::CreateFromXML( const nuiEvent& rEvent)
+void nuiWin::CreateFromXML( const nuiEvent& rEvent)
 {
   /*
   nuiXML XML(nglString((_T("Test"))));
@@ -3730,7 +3639,7 @@ bool nuiWin::CreateFromXML( const nuiEvent& rEvent)
   {
   NGL_OUT((_T("\nERROR: unable to load glade XML description :-(.\n")));
   return false;
-  }       
+  }
 
   nuiCreateWidget(NULL,&XML);
   //  nuiCreateWidget(GetRoot(),&XML);
@@ -3753,44 +3662,40 @@ bool nuiWin::CreateFromXML( const nuiEvent& rEvent)
   nuiWin* win = new nuiWin(ContextInfo,Info, false, GetNGLContext());
   if ((!win) || (win->GetError()))
   {
-    if (win) 
+    if (win)
       NGL_OUT(_T("Error: cannot create window (%ls)\n"), win->GetErrorStr());
     App->Quit (1);
-    return false;
+    return;
   }
   win->DBG_SetMouseOverInfo(false);
   win->DBG_SetMouseOverObject(false);
   win->SetState(nglWindow::eShow);
-
-  return false;
 }
 
-bool nuiWin::HideText( const nuiEvent& rEvent)
+void nuiWin::HideText( const nuiEvent& rEvent)
 {
   if (!rEvent.mpUser)
-    return false;
+    return;
   ((nuiWidgetPtr)rEvent.mpUser)->SetVisible(!((nuiWidgetPtr)rEvent.mpUser)->IsVisible());
-  return false;
+  return;
 }
 
-bool nuiWin::SaveXMLDescription(const nuiEvent& rEvent)
+void nuiWin::SaveXMLDescription(const nuiEvent& rEvent)
 {
   nuiXML* pXML = NULL;
   pXML = (nuiXML*) Serialize(NULL,true);
   nglOFile file(nglPath((_T("nuiTestOutput.xml"))),eOFileCreate);
   pXML->Save(file);
-  return false;
 }
 
-bool nuiWin::LogText(const nuiEvent& rEvent)
+void nuiWin::LogText(const nuiEvent& rEvent)
 {
   nuiEditLine* pLine = (nuiEditLine*)rEvent.mpUser;
   NGL_OUT(_T("From Edit Line: %ls\n"),pLine->GetText().GetChars());
   pLine->SetText((_T("")));
-  return false;
 }
 
-bool nuiWin::FileSelect(const nuiEvent& rEvent)
+void nuiWin::FileSelect(const nuiEvent& rEvent)
 {
   nuiWindow* pWin = new nuiWindow(nuiRect(10, 10, 200, 200), nuiWindow::NoFlag, nuiTR("Select a file..."));
   mpManager->AddChild(pWin);
@@ -3799,10 +3704,10 @@ bool nuiWin::FileSelect(const nuiEvent& rEvent)
   mWinSink.Connect(pFileSelector->OK, &nuiWin::FileSelectDone, pFileSelector);
   mWinSink.Connect(pFileSelector->Cancel, &nuiWin::FileSelectDone, pFileSelector);
   pFileSelector->SetPath(nglPath(ePathCurrent));
-  return true;
+  rEvent.Cancel();
 }
 
-bool nuiWin::FileSelectDone(const nuiEvent& rEvent)
+void nuiWin::FileSelectDone(const nuiEvent& rEvent)
 {
   nuiFileSelector* pFileSelector = (nuiFileSelector*)rEvent.mpUser;
 
@@ -3810,10 +3715,10 @@ bool nuiWin::FileSelectDone(const nuiEvent& rEvent)
   NGL_OUT(_T("File selection: '%ls'\n"), path.GetChars());
 
   pFileSelector->GetParent()->Trash();
-  return true;
+  rEvent.Cancel();
 }
 
-bool nuiWin::DrawBlur(const nuiEvent& rEvent)
+void nuiWin::DrawBlur(const nuiEvent& rEvent)
 {
   nuiDrawEvent* pDrawEvent = (nuiDrawEvent*)&rEvent;
   nuiTexture* pTexture = (nuiTexture*) pDrawEvent->mpUser;
@@ -3835,10 +3740,10 @@ bool nuiWin::DrawBlur(const nuiEvent& rEvent)
   float y = h * cos(v/2) * .2f;
   nuiRadialBlur(pContext, pTexture, nuiRect(w/2,h/2,w, h), zoom, nuiVector2(x,y), 20, .8f, .5f);
   nuiTopLevel::Invalidate();
-  return true;
+  rEvent.Cancel();
 }
 
-bool nuiWin::CreateEnableTestWindow(const nuiEvent& rEvent)
+void nuiWin::CreateEnableTestWindow(const nuiEvent& rEvent)
 {
   nuiWindow* pEnableWin = new nuiWindow(nuiRect(10, 10, 100, 100), nuiWindow::NoFlag, nuiTR("Enable Widget Test"));
 
@@ -3857,11 +3762,9 @@ bool nuiWin::CreateEnableTestWindow(const nuiEvent& rEvent)
 
   pEnableWin->AddChild(pFolder);
   mpManager->AddChild(pEnableWin);
-
-  return false;
 }
 
-bool nuiWin::CreateButtonDecorationWindow(const nuiEvent& rEvent)
+void nuiWin::CreateButtonDecorationWindow(const nuiEvent& rEvent)
 {
   nuiWindow* pEnableWin = new nuiWindow(nuiRect(10, 10, 100, 100), nuiWindow::NoFlag, nuiTR("Button Decoration sample"));
 
@@ -3873,11 +3776,9 @@ bool nuiWin::CreateButtonDecorationWindow(const nuiEvent& rEvent)
   pEnableWin->AddChild(pPos);
   pPos->AddChild(pButton);
   mpManager->AddChild(pEnableWin);
-
-  return false;
 }
 
-bool nuiWin::CreateVolumesTestWindow(const nuiEvent& rEvent)
+void nuiWin::CreateVolumesTestWindow(const nuiEvent& rEvent)
 {
   nuiWindow* pEnableWin = new nuiWindow(nuiRect(10, 10, 300, 300), nuiWindow::NoFlag, nuiTR("Enumerate Volumes Test"));
   nuiText* pText = new nuiText();
@@ -3913,11 +3814,9 @@ bool nuiWin::CreateVolumesTestWindow(const nuiEvent& rEvent)
 
   pEnableWin->AddChild(pText);
   mpManager->AddChild(pEnableWin);
-
-  return false;
 }
 
-bool nuiWin::CreateMessageBox(const nuiEvent& rEvent)
+void nuiWin::CreateMessageBox(const nuiEvent& rEvent)
 {
   nuiMessageBox::Button res;
 
@@ -3928,17 +3827,16 @@ bool nuiWin::CreateMessageBox(const nuiEvent& rEvent)
   res = nuiMessageBox::Do(this, nuiTR("Simple message box (OK - Cancel)"), nuiTR("This is a 'OK/Cancel' message box"), eMB_OKCancel);
   res = nuiMessageBox::Do(this, nuiTR("Simple message box (Retry - OK - Cancel)"), nuiTR("This is a 'Retry/OK/Cancel' message box"), eMB_RetryOKCancel);
   res = nuiMessageBox::Do(this, nuiTR("Simple message box (Yes - No) [Last MsgBox Test]"), nuiTR("This is a 'Yes/No' message box,\nyou will now be able to go back to what you were doing..."), eMB_YesNo);
-  return false;
 }
 
-bool nuiWin::CreateWidgetTexture(const nuiEvent& rEvent)
+void nuiWin::CreateWidgetTexture(const nuiEvent& rEvent)
 {
   nuiTopLevel* pTop = GetTopLevel();
   nuiContainer::Iterator* it = mpManager->GetFirstChild();
   if (!it->IsValid())
   {
     delete it;
-    return false;
+    return;
   }
 
   nuiWidgetPtr pSource = it->GetWidget();
@@ -3984,6 +3882,5 @@ bool nuiWin::CreateWidgetTexture(const nuiEvent& rEvent)
 
   delete pContext;
   EnablePartialRedraw(old);
-  return false;
 }
 

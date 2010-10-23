@@ -137,6 +137,7 @@ set(SOURCES
   src/WidgetTree/nuiTopLevel.cpp
   src/WidgetTree/nuiWidget.cpp
   src/WidgetTree/nuiWindowManager.cpp
+  src/WidgetTree/nuiMatrixNode.cpp
   
   src/SimpleWidgets/nuiButton.cpp
   src/SimpleWidgets/nuiColorSelector.cpp

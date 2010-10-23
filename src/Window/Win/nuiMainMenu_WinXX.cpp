@@ -291,7 +291,7 @@ bool nuiMainMenu::UnregisterFromWindow(nglWindow* pWindow)
 }
 
 
-bool nuiMainMenu::OnItemAdded(const nuiEvent& rEvent)
+void nuiMainMenu::OnItemAdded(const nuiEvent& rEvent)
 {
   // an item has been added to the tree
   const nuiTreeEvent<nuiTreeBase>* pTreeEvent = dynamic_cast<const nuiTreeEvent<nuiTreeBase>*>(&rEvent);
@@ -313,7 +313,7 @@ bool nuiMainMenu::OnItemAdded(const nuiEvent& rEvent)
 
   mpPrivate->Draw();
 
-  return true;
+  rEvent.Cancel();
 }
 
 

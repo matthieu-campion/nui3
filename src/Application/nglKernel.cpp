@@ -324,7 +324,6 @@ void nglKernel::CallOnExit(int Code)
   OnExit (Code);
 }
 
-#ifdef _UIKIT_
 void nglKernel::CallOnWillExit()
 {
   OnWillExit();
@@ -335,7 +334,36 @@ void nglKernel::OnWillExit()
 
 }
 
-#endif
+void nglKernel::CallOnActivation()
+{
+  OnActivation();
+}
+
+void nglKernel::CallOnDeactivation()
+{
+  OnDeactivation();
+}
+
+void nglKernel::OnActivation()
+{
+}
+
+void nglKernel::OnDeactivation()
+{
+}
+
+
+///< Memory-warning methods (only availble on iPhone OS/UIKit)
+void nglKernel::OnMemoryWarning()
+{
+}
+
+void nglKernel::CallOnMemoryWarning()
+{
+	OnMemoryWarning();
+}
+
+
 
 char* nglCrashEmail = NULL;
 void nglKernel::SetCrashReportEmail(const nglString& rEmail)

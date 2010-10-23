@@ -23,17 +23,17 @@
 #include "Gears.h"
 
 
-class nuiGearWin : public nuiWindow 
+class nuiGearWin : public nuiWindow
 {
 public:
   nuiGearWin(const nuiRect& rRect);
   ~nuiGearWin();
 
-  bool ShowMenu(const nuiEvent& rEvent);
-  bool ItemSelected(const nuiEvent& rEvent);
-  bool UserDraw(const nuiEvent& rEvent);
-  bool ToggleAnimation(const nuiEvent& rEvent);
-  bool UpdateFPS(const nuiEvent& rEvent);
+  void ShowMenu(const nuiEvent& rEvent);
+  void ItemSelected(const nuiEvent& rEvent);
+  void UserDraw(const nuiEvent& rEvent);
+  void ToggleAnimation(const nuiEvent& rEvent);
+  void UpdateFPS(const nuiEvent& rEvent);
 
 protected:
   nuiLabel*    mpFPSLabel;
