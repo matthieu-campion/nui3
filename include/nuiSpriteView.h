@@ -22,7 +22,6 @@ public:
   void SetRect(const nuiRect& rRect);
   void SetHandle(float x, float y);
   
-  const nglPath& GetTexturePath() const;
   nuiTexture* GetTexture() const;
   const nuiRect& GetRect();
   
@@ -35,19 +34,49 @@ protected:
   float mX, mY; ///< Handle position
 };
 
+class nuiSpriteAnimation
+{
+public:
+  nuiSpriteAnimation();
+  virtual ~nuiSpriteAnimation();
+  
+  int32 GetFrameCount() const;
+  void AddFrame(nuiSpriteFrame* pFrame);
+  const nuiSpriteFrame* GetFrame(int32 index) const;
+  
+  void SetDuration(float seconds);
+  void SetFPS(float FPS);
+  float GetDuration() const;
+  float GetFPS() const;
+  
+  void SetName(const nglString& rName);
+  const nglString& GetName() const;
+  
+protected:
+  nglString mName;
+  std::vector<nuiSpriteFrame*> mpFrames;
+  float mFPS;
+};
+
 class nuiSpriteDef
 {
 public:
   nuiSpriteDef();
   virtual ~nuiSpriteDef();
   
+  void AddAnimation(nuiSpriteAnimation* pAnim);
+  int32 GetAnimationCount() const;
+  const nuiSpriteAnimation* GetAnimation(int32 index) const;
+  
+protected:
+  std::vector<nuiSpriteAnimation*> mpAnimations;
   
 };
 
 class nuiSprite : public nuiObject
 {
 public:
-  nuiSprite();
+  nuiSprite(nuiSpriteDef* pSpriteDef);
   virtual ~nuiSprite();
 
   const nuiSpriteDef& GetDefinition() const;
@@ -56,7 +85,7 @@ public:
   int32 GetStateCount() const;
   const nglString& GetStateName(int32 index) const;
 
-  int32 GetState(int32 index) const;
+  int32 GetState() const;
   void SetState(int32 index);
   
 };
