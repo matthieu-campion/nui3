@@ -58,36 +58,52 @@ protected:
   float mFPS;
 };
 
-class nuiSpriteDef
+class nuiSpriteDef : public nuiObject
 {
 public:
-  nuiSpriteDef();
+  nuiSpriteDef(const nglString& rObjectName);
   virtual ~nuiSpriteDef();
   
   void AddAnimation(nuiSpriteAnimation* pAnim);
   int32 GetAnimationCount() const;
   const nuiSpriteAnimation* GetAnimation(int32 index) const;
   
-protected:
-  std::vector<nuiSpriteAnimation*> mpAnimations;
+  static nuiSpriteDef* GetSprite(const nglString& rSpriteDefName);
   
+protected:
+  static std::map<nglString, nuiSpriteDef*> mSpriteMap;
+  void Init();
+  std::vector<nuiSpriteAnimation*> mpAnimations;
 };
 
 class nuiSprite : public nuiObject
 {
 public:
+  nuiSprite(const nglString& rSpriteDefName);
   nuiSprite(nuiSpriteDef* pSpriteDef);
   virtual ~nuiSprite();
 
-  const nuiSpriteDef& GetDefinition() const;
-  
-  //! State management
-  int32 GetStateCount() const;
-  const nglString& GetStateName(int32 index) const;
+  const nuiSpriteDef* GetDefinition() const;
 
-  int32 GetState() const;
-  void SetState(int32 index);
+  /** @name Matrix Transformation Support */
+  //@{
+  void AddMatrixNode(nuiMatrixNode* pNode);
+  void DelMatrixNode(uint32 index);
+  int32 GetMatrixNodeCount() const;
+  nuiMatrixNode* GetMatrixNode(uint32 index) const;
+
+  void LoadIdentityMatrix();
+  bool IsMatrixIdentity() const;
+  void GetMatrix(nuiMatrix& rMatrix) const;
+  nuiMatrix GetMatrix() const;
+  void SetMatrix(const nuiMatrix& rMatrix);
+  //@}
+protected:
+  void Init();
+  static nuiMatrix mIdentityMatrix;
+  std::vector<nuiMatrixNode*>* mpMatrixNodes;
   
+  nuiSpriteDef* mpSpriteDef;
 };
 
 

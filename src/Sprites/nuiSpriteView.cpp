@@ -141,3 +141,176 @@ const nglString& nuiSpriteAnimation::GetName() const
   return mName;
 }
                
+///////////////////////////////////////////////////////
+// class nuiSpriteDef
+nuiSpriteDef::nuiSpriteDef(const nglString& rSpriteDefName)
+{
+  Init();
+  SetObjectName(rSpriteDefName);
+  std::map<nglString, nuiSpriteDef*>::const_iterator it = mSpriteMap.find(rSpriteDefName);
+  if (it != mSpriteMap.end())
+    it->second->Release();
+  mSpriteMap[rSpriteDefName] = this;
+}
+
+nuiSpriteDef::~nuiSpriteDef()
+{
+  for (int32 i = 0; i < mpAnimations.size(); i++)
+    delete mpAnimations[i];
+}
+
+void nuiSpriteDef::Init()
+{
+  if (SetObjectClass(_T("nuiSpriteDef")))
+  {
+    
+  }
+
+}
+      
+void nuiSpriteDef::AddAnimation(nuiSpriteAnimation* pAnim)
+{
+  mpAnimations.push_back(pAnim);
+}
+
+int32 nuiSpriteDef::GetAnimationCount() const
+{
+  return mpAnimations.size();
+}
+
+const nuiSpriteAnimation* nuiSpriteDef::GetAnimation(int32 index) const
+{
+  return mpAnimations[index];
+}
+
+nuiSpriteDef* nuiSpriteDef::GetSprite(const nglString& rName)
+{
+  std::map<nglString, nuiSpriteDef*>::const_iterator it = mSpriteMap.find(rName);
+  if (it == mSpriteMap.end())
+    return NULL;
+  
+  it->second->Acquire();
+  return it->second;
+}
+
+
+/////////////////////////////////////////////////////////
+// class nuiSprite
+nuiMatrix nuiSprite::mIdentityMatrix;
+
+nuiSprite::nuiSprite(const nglString& rSpriteDefName)
+: mpSpriteDef(nuiSpriteDef::GetSprite(rSpriteDefName))
+{
+  Init();
+}
+
+nuiSprite::nuiSprite(nuiSpriteDef* pSpriteDef)
+: mpSpriteDef(pSpriteDef)
+{
+  mpSpriteDef->Acquire();
+  Init();
+}
+
+nuiSprite::~nuiSprite()
+{
+  if (mpSpriteDef)
+    mpSpriteDef->Release();
+}
+
+void nuiSprite::Init()
+{
+  if (SetObjectClass(_T("nuiSprite")))
+  {
+    
+  }
+}
+
+const nuiSpriteDef* nuiSprite::GetDefinition() const
+{
+  return mpSpriteDef;
+}
+
+void nuiSprite::AddMatrixNode(nuiMatrixNode* pNode)
+{
+  if (!mpMatrixNodes)
+    mpMatrixNodes = new std::vector<nuiMatrixNode*>;
+  
+  pNode->Acquire();
+  mpMatrixNodes->push_back(pNode);
+}
+
+void nuiSprite::DelMatrixNode(uint32 index)
+{
+  if (!mpMatrixNodes)
+    return;
+  
+  CheckValid();
+  mpMatrixNodes->at(index)->Release();
+  mpMatrixNodes->erase(mpMatrixNodes->begin() + index);
+  
+  DebugRefreshInfo();
+}
+
+
+int32 nuiSprite::GetMatrixNodeCount() const
+{
+  CheckValid();
+  if (!mpMatrixNodes)
+    return 0;
+  return mpMatrixNodes->size();
+}
+
+
+nuiMatrixNode* nuiSprite::GetMatrixNode(uint32 index) const
+{
+  CheckValid();
+  if (mpMatrixNodes)
+    return mpMatrixNodes->at(index);
+}
+
+
+void nuiSprite::LoadIdentityMatrix()
+{
+  CheckValid();
+  
+  if (mpMatrixNodes)
+  {
+    for (uint32 i = 0; i < mpMatrixNodes->size(); i++)
+      mpMatrixNodes->at(i)->Release();
+    delete mpMatrixNodes;
+    mpMatrixNodes = NULL;
+  }
+  
+  DebugRefreshInfo();
+}
+
+bool nuiSprite::IsMatrixIdentity() const
+{
+  return !mpMatrixNodes;
+}
+
+void nuiSprite::GetMatrix(nuiMatrix& rMatrix) const
+{
+  CheckValid();
+  rMatrix.SetIdentity();
+  if (IsMatrixIdentity())
+    return;
+  
+  for (uint32 i = 0; i < mpMatrixNodes->size(); i++)
+    mpMatrixNodes->at(i)->Apply(rMatrix);
+}
+
+nuiMatrix nuiSprite::GetMatrix() const
+{
+  CheckValid();
+  nuiMatrix m;
+  GetMatrix(m);
+  return m;
+}
+
+
+
+
+
+
+
