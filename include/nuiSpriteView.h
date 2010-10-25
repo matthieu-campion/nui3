@@ -23,7 +23,7 @@ public:
   void SetHandle(float x, float y);
   
   nuiTexture* GetTexture() const;
-  const nuiRect& GetRect();
+  const nuiRect& GetRect() const;
   
   float GetHandleX() const;
   float GetHandleY() const;
@@ -85,6 +85,10 @@ public:
 
   const nuiSpriteDef* GetDefinition() const;
 
+  void AddChild(nuiSprite* pChild);
+  void DelChild(nuiSprite* pChild);
+  nuiSprite* GetParent() const;
+  
   /** @name Matrix Transformation Support */
   //@{
   void AddMatrixNode(nuiMatrixNode* pNode);
@@ -98,12 +102,20 @@ public:
   nuiMatrix GetMatrix() const;
   void SetMatrix(const nuiMatrix& rMatrix);
   //@}
+  
+  void Draw(nuiDrawContext* pContext);
 protected:
+              
   void Init();
   static nuiMatrix mIdentityMatrix;
   std::vector<nuiMatrixNode*>* mpMatrixNodes;
-  
+  std::vector<nuiSprite*> mpChildren;
+  void SetParent(nuiSprite* pParent);
+
+  nuiSprite* mpParent;
   nuiSpriteDef* mpSpriteDef;
+  int32 mCurrentAnimation;
+  float mCurrentFrame;
 };
 
 
@@ -117,3 +129,5 @@ public:
   void DelSprite(nuiSprite* pSprite);
   
 };
+
+

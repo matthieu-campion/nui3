@@ -67,7 +67,7 @@ nuiTexture* nuiSpriteFrame::GetTexture() const
   return mpTexture;
 }
 
-const nuiRect& nuiSpriteFrame::GetRect()
+const nuiRect& nuiSpriteFrame::GetRect() const
 {
   return mRect;
 }
@@ -207,6 +207,7 @@ nuiSprite::nuiSprite(const nglString& rSpriteDefName)
 nuiSprite::nuiSprite(nuiSpriteDef* pSpriteDef)
 : mpSpriteDef(pSpriteDef)
 {
+  mpParent = NULL;
   mpSpriteDef->Acquire();
   Init();
 }
@@ -223,6 +224,9 @@ void nuiSprite::Init()
   {
     
   }
+
+  mCurrentAnimation = 0;
+  mCurrentFrame = 0;
 }
 
 const nuiSpriteDef* nuiSprite::GetDefinition() const
@@ -308,9 +312,53 @@ nuiMatrix nuiSprite::GetMatrix() const
   return m;
 }
 
+void nuiSprite::AddChild(nuiSprite* pChild)
+{
+  pChild->Acquire();
+  nuiSprite* pParent = pChild->GetParent();
+  pParent->DelChild(pChild);
+  mpChildren.push_back(pChild);
+}
+
+void nuiSprite::DelChild(nuiSprite* pChild)
+{
+  for (int32 i = 0; i < mpChildren.size(); i++)
+  {
+    if (mpChildren[i] == pChild)
+    {
+      mpChildren.erase(mpChildren.begin() + i);
+      pChild->Release();
+      return;
+    }
+  }
+}
+
+void nuiSprite::SetParent(nuiSprite* pParent)
+{
+  mpParent = pParent;
+}
+
+nuiSprite* nuiSprite::GetParent() const
+{
+  return mpParent;
+}
 
 
-
-
-
+void nuiSprite::Draw(nuiDrawContext* pContext)
+{
+  nuiMatrix m;
+  GetMatrix(m);
+  pContext->PushMatrix();
+  
+  const nuiSpriteAnimation* pAnim = mpSpriteDef->GetAnimation(mCurrentAnimation);
+  const nuiSpriteFrame* pFrame = pAnim->GetFrame(ToBelow(mCurrentFrame));
+  nuiRect src(pFrame->GetRect());
+  nuiRect dst(src);
+  dst.Move(-pFrame->GetHandleX(), -pFrame->GetHandleY());
+  
+  pContext->SetTexture(pFrame->GetTexture());
+  pContext->DrawImage(src, dst);
+  
+  pContext->PopMatrix();
+}
 
