@@ -127,7 +127,13 @@ public:
   
   void AddSprite(nuiSprite* pSprite);
   void DelSprite(nuiSprite* pSprite);
+
+  nuiRect CalcIdealRect();
+
+  bool Draw(nuiDrawContext* pContext);
   
+protected:
+  std::vector<nuiSprite*> mpSprites;
 };
 
 

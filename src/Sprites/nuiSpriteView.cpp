@@ -214,8 +214,11 @@ nuiSprite::nuiSprite(nuiSpriteDef* pSpriteDef)
 
 nuiSprite::~nuiSprite()
 {
+  LoadIdentityMatrix();
   if (mpSpriteDef)
     mpSpriteDef->Release();
+  for (int32 i = 0; i < mpChildren.size(); i++)
+    mpChildren[i]->Release();
 }
 
 void nuiSprite::Init()
@@ -361,4 +364,52 @@ void nuiSprite::Draw(nuiDrawContext* pContext)
   
   pContext->PopMatrix();
 }
+
+
+/////////////////////////////////////////////
+// class nuiSpriteView : public nuiSimpleContainer
+nuiSpriteView::nuiSpriteView()
+{
+  if (SetObjectClass(_T("nuiSpriteView")))
+  {
+    // Init attributes
+  }
+}
+
+nuiSpriteView::~nuiSpriteView()
+{
+  for (int32 i = 0; i < mpChildren.size(); i++)
+    mpSprites[i]->Release();
+}
+
+void nuiSpriteView::AddSprite(nuiSprite* pSprite)
+{
+  mpSprites.push_back(pSprite);
+}
+
+void nuiSpriteView::DelSprite(nuiSprite* pSprite)
+{
+  for (int32 i = 0; i < mpChildren.size(); i++)
+  {
+    if (mpSprites[i] == pSprite)
+    {
+      mpSprites[i]->Release();
+      mpSprites.erase(mpSprites.begin() + i);
+      return;
+    }
+  }
+}
+  
+nuiRect nuiSpriteView::CalcIdealRect()
+{
+  return nuiRect(320, 200);
+}
+
+bool nuiSpriteView::Draw(nuiDrawContext* pContext)
+{
+  for (int32 i = 0; i < mpSprites.size(); i++)
+    mpSprites[i]->Draw(pContext);
+}
+
+
 
