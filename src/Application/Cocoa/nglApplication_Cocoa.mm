@@ -570,7 +570,6 @@ int nglApplication::Main(int argc, const char** argv)
   [applicationObject run];
   
   [pPool release];
-
   //nuiUninit();
   return 0;
 }

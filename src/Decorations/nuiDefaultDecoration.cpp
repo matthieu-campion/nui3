@@ -19,22 +19,15 @@
 #include "nuiBackgroundPane.h"
 #include "nuiKnob.h"
 
-
 nuiDefaultDecoration::nuiDefaultDecoration()
 {
-  mpKnobSequence = NULL;
+  NGL_ASSERT(0);
 }
 
 
 nuiDefaultDecoration::~nuiDefaultDecoration()
 {
-  // release icons textures
-  std::list<nuiTexture*>::iterator it;
-  for (it = mIcons.begin(); it != mIcons.end(); ++it)
-  {
-    nuiTexture* pTex = *it;
-    pTex->Release();
-  }
+  NGL_ASSERT(0);
 } 
 
 
@@ -46,7 +39,6 @@ nuiDefaultDecoration::~nuiDefaultDecoration()
 //
 void nuiDefaultDecoration::Init()
 {
-
   InitColors();
   InitSelection();
   InitMaps();
@@ -113,8 +105,18 @@ void nuiDefaultDecoration::Init()
 
 void nuiDefaultDecoration::Exit()
 {
-  delete mpKnobSequence;
+  if (mpKnobSequence)
+    mpKnobSequence->Release();
   mpKnobSequence = NULL;
+
+  // release icons textures
+  std::list<nuiTexture*>::iterator it;
+  for (it = mIcons.begin(); it != mIcons.end(); ++it)
+  {
+    nuiTexture* pTex = *it;
+    pTex->Release();
+  }
+  
   mIcons.clear();
   mImages.clear();
 }
@@ -997,6 +999,7 @@ void nuiDefaultDecoration::KnobSequence(nuiWidget* pWidget)
     nglImage* pImage = new nglImage(pIMem);
     NGL_ASSERT(pImage);
     mpKnobSequence = new nuiImageSequence(31, pImage, nuiVertical);
+    mpKnobSequence->Acquire();
     delete pIMem;     
     delete pImage;
   }

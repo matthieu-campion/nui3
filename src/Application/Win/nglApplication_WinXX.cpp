@@ -274,6 +274,8 @@ int nglApplication::SysLoop()
   } while (msg.message != WM_QUIT);
 
   CallOnExit(msg.wParam);
+  
+  Exit();
 
   return msg.wParam; // Return the exit code to the system
 }

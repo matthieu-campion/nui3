@@ -26,9 +26,6 @@ class nuiDefaultDecoration
 {
 public:
   
-  nuiDefaultDecoration();
-  ~nuiDefaultDecoration();
-  
   static void Init();
   static void Exit();
 
@@ -109,7 +106,10 @@ private:
   static std::list<nuiTexture*> mIcons;
   static std::map<nglString, std::pair<char*,long> > mImages;
 
-
+  nuiDefaultDecoration();
+  ~nuiDefaultDecoration();
+  
+  
 
 };
 

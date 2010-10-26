@@ -164,11 +164,17 @@ nuiXMLNode* nuiKnob::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
 
 nuiKnob::~nuiKnob()
 {
+  if (mpImageSequence)
+    mpImageSequence->Release();
 }
 
 
 void nuiKnob::SetImageSequence(nuiImageSequence* pImageSequence)
 {
+  if (pImageSequence)
+    pImageSequence->Acquire();
+  if (mpImageSequence)
+    mpImageSequence->Release();
   mpImageSequence = pImageSequence;
 }
 
@@ -307,7 +313,8 @@ void nuiKnob::DoInvalidate(const nuiEvent& rEvent)
 {
   if (mSequenceNeedRefresh)
   {
-    delete mpImageSequence;
+    if (mpImageSequence)
+      mpImageSequence->Release();
     mpImageSequence = NULL;
     
     mpImageSequence = new nuiImageSequence();

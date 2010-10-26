@@ -827,8 +827,6 @@ void nglImage::StaticInit()
   #endif
     
   }
-  
-  App->AddExit(nglImage::StaticExit);
 }
 
 void nglImage::StaticExit()
