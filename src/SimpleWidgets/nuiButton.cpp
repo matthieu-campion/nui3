@@ -281,6 +281,7 @@ bool nuiButton::MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
     mClicked = false;
     Ungrab();
     SetPressed(false);
+    Invalidate();
     if (!mAutoRepeat)
     {
       if (IsInsideFromSelf(X,Y, GetActivationOffset()))
@@ -295,8 +296,6 @@ bool nuiButton::MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
       }
       
     }
-
-    Invalidate();
     return true;
   }
   return false;
