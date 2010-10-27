@@ -457,7 +457,7 @@ void nuiAnimation::InternalPause()
   mCount = 0;
   //NGL_LOG(_T("nuiAnimation), NGL_LOG_DEBUG, _T("Stop at %f\n"), GetDuration());
   mAnimSink.Disconnect(GetTimer()->Tick, &nuiAnimation::OnTick);
-  AnimStop();
+  AnimPause();
 }
 
 
