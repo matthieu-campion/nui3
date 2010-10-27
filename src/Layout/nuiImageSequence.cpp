@@ -22,6 +22,7 @@ nuiImageSequence::nuiImageSequence()
   mUseAlpha = true;
   mAlpha = 1;
   mFramesInSingleFile = true;
+  //printf("nuiImageSequence CTOR1 %p\n", this);
 }
 
 nuiImageSequence::nuiImageSequence(uint32 nbFrames, nglImage* pImage, nuiOrientation orientation)
@@ -36,6 +37,7 @@ nuiImageSequence::nuiImageSequence(uint32 nbFrames, nglImage* pImage, nuiOrienta
   mRefreshTextures = true;  
   mUseAlpha = true;
   mAlpha = 1;
+  //printf("nuiImageSequence CTOR2 %p\n", this);
 }
 
 nuiImageSequence::nuiImageSequence(uint32 nbFrames, const nglPath& rTexturePath, bool framesInSingleFile, nuiOrientation orientation)
@@ -56,6 +58,7 @@ mTexturePath(rTexturePath)
   mRefreshTextures = true;
   mUseAlpha = true;
   mAlpha = 1;
+  //printf("nuiImageSequence CTOR3 %p\n", this);
 }
 
 
@@ -100,6 +103,7 @@ void nuiImageSequence::InitAttributes()
 
 nuiImageSequence::~nuiImageSequence()
 {
+  //printf("nuiImageSequence DTOR %p\n", this);
   delete mpTempImage;
   for (uint32 i = 0; i < mTextures.size(); i++)
     mTextures[i]->Release();

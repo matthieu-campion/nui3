@@ -206,7 +206,8 @@ void nuiTexture::ClearAll()
   {
     nglString TexName(it->first);
     nuiTexture* pTex = it->second;
-    delete pTex; // the destructor of an nuiTexture removes that texture from the nuiTextureMap automatically so the only way not to get lost with the next it is to restart at the begining.
+    //delete pTex; // the destructor of an nuiTexture removes that texture from the nuiTextureMap automatically so the only way not to get lost with the next it is to restart at the begining.
+    pTex->Release();
     it = mpTextures.begin();
   }
 

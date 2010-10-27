@@ -695,6 +695,7 @@ protected:
   nuiDecorationMode mFocusDecorationMode;
   
   static std::vector<nuiDecorationDelegate> mDefaultDecorations;
+  static void ExitDefaultDecorations();
 
 
   void SetBorderLeft(nuiSize border);

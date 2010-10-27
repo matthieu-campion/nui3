@@ -4434,7 +4434,13 @@ void nuiWidget::InitDefaultDecorations()
   if (mDefaultDecorations.size())
     return;
 
+  App->AddExit(&nuiWidget::ExitDefaultDecorations);
   nuiDefaultDecoration::Init();
+}
+
+void nuiWidget::ExitDefaultDecorations()
+{
+  mDefaultDecorations.clear();
 }
 
 // static 

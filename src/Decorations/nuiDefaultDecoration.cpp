@@ -109,14 +109,6 @@ void nuiDefaultDecoration::Exit()
     mpKnobSequence->Release();
   mpKnobSequence = NULL;
 
-  // release icons textures
-  std::list<nuiTexture*>::iterator it;
-  for (it = mIcons.begin(); it != mIcons.end(); ++it)
-  {
-    nuiTexture* pTex = *it;
-    pTex->Release();
-  }
-  
   mIcons.clear();
   mImages.clear();
 }
