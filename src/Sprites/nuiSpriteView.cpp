@@ -91,6 +91,7 @@ nuiSpriteAnimation::nuiSpriteAnimation()
 }
 
 nuiSpriteAnimation::nuiSpriteAnimation(const nglPath& rPath)
+: mFPS(10)
 {
   std::list<nglPath> children;
   rPath.GetChildren(&children);
@@ -420,8 +421,13 @@ void nuiSprite::Draw(nuiDrawContext* pContext)
 void nuiSprite::Animate(float passedtime)
 {
   const nuiSpriteAnimation* pAnim = mpSpriteDef->GetAnimation(mCurrentAnimation);
-  mCurrentFrame += passedtime * mSpeed / pAnim->GetFPS();
-
+  float fps = pAnim->GetFPS();
+  NGL_ASSERT(fps != 0);
+  mCurrentFrame += passedtime * mSpeed * fps;
+  float count = pAnim->GetFrameCount();
+  while (mCurrentFrame >= count)
+    mCurrentFrame -= count;
+  
   for (int32 i = 0; i < mpChildren.size(); i++)
     mpChildren[i]->Animate(passedtime);
 }
