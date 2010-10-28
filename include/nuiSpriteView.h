@@ -38,6 +38,7 @@ class nuiSpriteAnimation
 {
 public:
   nuiSpriteAnimation();
+  nuiSpriteAnimation(const nglPath& rPath);
   virtual ~nuiSpriteAnimation();
   
   int32 GetFrameCount() const;
@@ -62,6 +63,7 @@ class nuiSpriteDef : public nuiObject
 {
 public:
   nuiSpriteDef(const nglString& rObjectName);
+  nuiSpriteDef(const nglPath& rObjectPath);
   virtual ~nuiSpriteDef();
   
   void AddAnimation(nuiSpriteAnimation* pAnim);
@@ -104,6 +106,12 @@ public:
   //@}
   
   void Draw(nuiDrawContext* pContext);
+
+  void Animate(float passedtime);
+
+  float GetSpeed() const;
+  void SetSpeed(float speed); ///< Default is 1
+  
 protected:
               
   void Init();
@@ -116,6 +124,7 @@ protected:
   nuiSpriteDef* mpSpriteDef;
   int32 mCurrentAnimation;
   float mCurrentFrame;
+  float mSpeed;
 };
 
 
@@ -134,6 +143,7 @@ public:
   
 protected:
   std::vector<nuiSprite*> mpSprites;
+  double mLastTime;
 };
 
 
