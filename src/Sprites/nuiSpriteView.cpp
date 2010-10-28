@@ -412,7 +412,7 @@ void nuiSprite::Draw(nuiDrawContext* pContext)
   pContext->SetBlendFunc(nuiBlendTransp);
   pContext->SetFillColor(nuiColor(255, 255, 255));
   pContext->SetTexture(pFrame->GetTexture());
-  pContext->DrawImage(src, dst);
+  pContext->DrawImage(dst, src);
   
   pContext->PopMatrix();
 
