@@ -48,6 +48,8 @@ bool nuiSpriteFrame::SetTexture(const nglPath& rPath)
     return false;
   
   mRect = nuiRect((float)mpTexture->GetWidth(), (float)mpTexture->GetHeight());
+  mX = mpTexture->GetWidth() / 2;
+  mY = mpTexture->GetHeight() / 2;
 
 }
 
