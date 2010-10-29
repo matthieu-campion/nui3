@@ -41,12 +41,17 @@ void MainWindow::OnCreation()
 {
   SetColor(eActiveWindowBg, nuiColor("black"));
   mpSpriteView = new nuiSpriteView();
+  mpSpriteView->EnableRenderCache(false);
   AddChild(mpSpriteView);
   
   // Define the sprite:
   mpSpriteDef = new nuiSpriteDef(nglPath("rsrc:/Gizmo"));
   
-  for (int32 i = 0; i < 1000; i++)
+  // Number of sprites to acheive about 60FPS:
+  // iPod 2G   : 50
+  // iPhone 3GS:
+  // iPhone 4  : 120
+  for (int32 i = 0; i < 120; i++)
   {
     nuiSprite* pSprite = new nuiSprite(_T("Gizmo"));
     int32 x, y;

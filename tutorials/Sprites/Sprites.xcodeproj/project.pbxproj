@@ -700,6 +700,7 @@
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = "Sprites-iPhone.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				OTHER_LDFLAGS = (
 					"-liconv",
 					"-lz",
