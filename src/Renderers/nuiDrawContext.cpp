@@ -791,7 +791,7 @@ static void nuiDrawRect(const nuiRect& out, nuiRenderArray& rArray)
   rArray.SetMode(GL_TRIANGLE_STRIP);
   rArray.Reserve(8);
   nuiRect in(out);
-  in.Grow(-1, -1);
+  in.Grow(-NUI_INV_SCALE_FACTOR, -NUI_INV_SCALE_FACTOR);
   
   rArray.SetVertex(out.Left(), out.Top()); rArray.PushVertex();
   rArray.SetVertex(in.Left(), in.Top()); rArray.PushVertex();
