@@ -1611,4 +1611,14 @@ bool operator<(const nglPath& rLeft, const nglPath& rRight)
   return rLeft.GetPathName() < rRight.GetPathName();
 }
 
+bool nglComparePath(const nglPath& rLeft, const nglPath& rRight)
+{
+  return nglCompareStrings(rLeft.GetPathName(), rRight.GetPathName());
+}
+
+bool nglCompareNaturalPath(const nglPath& rLeft, const nglPath& rRight)
+{
+  return nglCompareNaturalStrings(rLeft.GetPathName(), rRight.GetPathName());
+}
+
 

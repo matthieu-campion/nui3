@@ -97,6 +97,7 @@ nuiSpriteAnimation::nuiSpriteAnimation(const nglPath& rPath)
 {
   std::list<nglPath> children;
   rPath.GetChildren(&children);
+  children.sort(nglCompareNaturalPath);
   nuiSpriteAnimation* pAnim1 = new nuiSpriteAnimation();
   std::list<nglPath>::const_iterator it = children.begin();
   std::list<nglPath>::const_iterator end = children.end();
@@ -279,6 +280,12 @@ void nuiSprite::Init()
   mCurrentAnimation = 0;
   mCurrentFrame = 0;
   mSpeed = 1.0f;
+  
+  // Init Matrixes:
+  mpPosition = new nuiMatrixNode_Translation();
+  mpPivot = new nuiMatrixNode_Pivot();
+  AddMatrixNode(mpPosition);
+  AddMatrixNode(mpPivot);
 }
 
 const nuiSpriteDef* nuiSprite::GetDefinition() const
@@ -342,16 +349,15 @@ void nuiSprite::LoadIdentityMatrix()
 
 bool nuiSprite::IsMatrixIdentity() const
 {
-  return !mpMatrixNodes;
+  nuiMatrix m;
+  GetMatrix(m);
+  return !mpMatrixNodes || m.IsIdentity();
 }
 
 void nuiSprite::GetMatrix(nuiMatrix& rMatrix) const
 {
   CheckValid();
   rMatrix.SetIdentity();
-  if (IsMatrixIdentity())
-    return;
-  
   for (uint32 i = 0; i < mpMatrixNodes->size(); i++)
     mpMatrixNodes->at(i)->Apply(rMatrix);
 }
@@ -401,6 +407,7 @@ void nuiSprite::Draw(nuiDrawContext* pContext)
   nuiMatrix m;
   GetMatrix(m);
   pContext->PushMatrix();
+  pContext->MultMatrix(m);
   
   const nuiSpriteAnimation* pAnim = mpSpriteDef->GetAnimation(mCurrentAnimation);
   const nuiSpriteFrame* pFrame = pAnim->GetFrame(ToBelow(mCurrentFrame));
@@ -443,6 +450,42 @@ void nuiSprite::SetSpeed(float speed)
 {
   mSpeed = speed;
 }
+
+void nuiSprite::SetPosition(float X, float Y)
+{
+  mpPosition->Set(X, Y, 0.0f);
+}
+
+void nuiSprite::SetAngle(float angle)
+{
+  mpPivot->SetAngle(angle);
+}
+
+void nuiSprite::SetX(float X)
+{
+  mpPosition->SetX(X);
+}
+
+void nuiSprite::SetY(float Y)
+{
+  mpPosition->SetY(Y);
+}
+
+float nuiSprite::GetX() const
+{
+  return mpPosition->GetX();
+}
+
+float nuiSprite::GetY() const
+{
+  return mpPosition->GetY();
+}
+
+float nuiSprite::GetAngle() const
+{
+  return mpPivot->GetAngle();
+}
+
 
 
 /////////////////////////////////////////////

@@ -39,7 +39,7 @@ class nuiMatrixNode_Rotation : public nuiMatrixNode
 {
 public:
   nuiMatrixNode_Rotation();
-  nuiMatrixNode_Rotation(float Angle, const nglVectorf& rAxis);
+  nuiMatrixNode_Rotation(float Angle, const nglVectorf& rAxis = nglVectorf(0, 0, 1));
   nuiMatrixNode_Rotation(float Angle, float Xaxis, float Yaxis, float Zaxis);
   
   virtual void Update() const;

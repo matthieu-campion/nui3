@@ -18,6 +18,11 @@ using namespace std;
 
 nuiTextureMap nuiTexture::mpTextures;
 
+#if 1
+static inline void LOG_GETTEXTURE(nuiTexture* pTexture)
+{
+}
+#else
 static inline void LOG_GETTEXTURE(nuiTexture* pTexture)
 {
   printf("nuiTexture::GetTexture: ");
@@ -27,7 +32,7 @@ static inline void LOG_GETTEXTURE(nuiTexture* pTexture)
   }
   printf("0x%p '%ls'\n", pTexture, pTexture->GetSource().GetChars());
 }
-
+#endif
 
 nuiTexture* nuiTexture::GetTexture (nglIStream* pInput, nglImageCodec* pCodec)
 {

@@ -2985,3 +2985,24 @@ nglChar& nglString::operator[](int32 Index)
 {
 	return mString[Index];
 }
+
+bool nglCompareStrings(const nglString& rLeft, const nglString& rRight)
+{
+  return rLeft.Compare(rRight, true) < 0;
+}
+
+bool nglCompareStringsNoCase(const nglString& rLeft, const nglString& rRight)
+{
+  return rLeft.Compare(rRight, false) < 0;
+}
+
+bool nglCompareNaturalStrings(const nglString& rLeft, const nglString& rRight)
+{
+  return rLeft.CompareNatural(rRight, true) < 0;
+}
+
+bool nglCompareNaturalStringsNoCase(const nglString& rLeft, const nglString& rRight)
+{
+  return rLeft.CompareNatural(rRight, false) < 0;
+}
+

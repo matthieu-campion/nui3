@@ -23,14 +23,6 @@
 		BC3FD81411D17E7B00447DD4 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD30B833F1500BC506C /* CoreFoundation.framework */; };
 		BC3FD81511D17E7C00447DD4 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD40B833F1500BC506C /* CoreServices.framework */; };
 		BC3FD81611D17E7D00447DD4 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD60B833F1500BC506C /* OpenGL.framework */; };
-		BC3FD91F11D17F0B00447DD4 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC3FD91711D17F0B00447DD4 /* MediaPlayer.framework */; };
-		BC3FD92011D17F0B00447DD4 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC3FD91811D17F0B00447DD4 /* CFNetwork.framework */; };
-		BC3FD92111D17F0B00447DD4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC3FD91911D17F0B00447DD4 /* QuartzCore.framework */; };
-		BC3FD92211D17F0B00447DD4 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC3FD91A11D17F0B00447DD4 /* AudioToolbox.framework */; };
-		BC3FD92311D17F0B00447DD4 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC3FD91B11D17F0B00447DD4 /* OpenGLES.framework */; };
-		BC3FD92411D17F0B00447DD4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC3FD91C11D17F0B00447DD4 /* CoreGraphics.framework */; };
-		BC3FD92611D17F0B00447DD4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC3FD91E11D17F0B00447DD4 /* Foundation.framework */; };
-		BCAF116611D20BD5001B2A28 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCAF116511D20BD5001B2A28 /* UIKit.framework */; };
 		BCD448B811D2121C00BEF227 /* libnui3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCD448B111D2120F00BEF227 /* libnui3.a */; };
 		BCD448B911D2122100BEF227 /* libnui3D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCD448AF11D2120F00BEF227 /* libnui3D.a */; };
 		BCD448BE11D2123000BEF227 /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61A9DFEF0B83433800BC506C /* Application.cpp */; };
@@ -44,7 +36,14 @@
 		BCD448C711D2123000BEF227 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC3FD91E11D17F0B00447DD4 /* Foundation.framework */; };
 		BCD448C811D2123000BEF227 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCAF116511D20BD5001B2A28 /* UIKit.framework */; };
 		BCD448C911D2123000BEF227 /* libnuiPhoneD.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCD448B511D2120F00BEF227 /* libnuiPhoneD.a */; };
-		BCD449A211D23EAB00BEF227 /* libnuiPhone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCD448B711D2120F00BEF227 /* libnuiPhone.a */; };
+		E5C5BBFB127A4359007A8A8B /* libnuiPhone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCD448B711D2120F00BEF227 /* libnuiPhone.a */; };
+		E5C5BC06127A43A4007A8A8B /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5C5BC05127A43A4007A8A8B /* CoreFoundation.framework */; };
+		E5C5BC0E127A43D8007A8A8B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5C5BC0D127A43D8007A8A8B /* UIKit.framework */; };
+		E5C5BC7A127A4A87007A8A8B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5C5BC79127A4A87007A8A8B /* CoreGraphics.framework */; };
+		E5C5BC7E127A4A9C007A8A8B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5C5BC7D127A4A9C007A8A8B /* Foundation.framework */; };
+		E5C5BC82127A4ACC007A8A8B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5C5BC81127A4ACC007A8A8B /* QuartzCore.framework */; };
+		E5C5BC8A127A4AED007A8A8B /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5C5BC89127A4AED007A8A8B /* CFNetwork.framework */; };
+		E5C5BC90127A4B12007A8A8B /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5C5BC8F127A4B12007A8A8B /* OpenGLES.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,14 +107,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = BCD448A211D2120F00BEF227 /* nui3.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E5A8D1D311E33A54004E14CE /* libnui3CocoaD.a */;
+			remoteGlobalIDString = E5A8D1D311E33A54004E14CE;
 			remoteInfo = nui3CocoaD;
 		};
 		E50F22FB1275DDB600D26497 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BCD448A211D2120F00BEF227 /* nui3.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E5D643E51209AB9C009C26A9 /* libnui3Cocoa.a */;
+			remoteGlobalIDString = E5D643E51209AB9C009C26A9;
 			remoteInfo = nui3Cocoa;
 		};
 /* End PBXContainerItemProxy section */
@@ -142,10 +141,21 @@
 		BCAF116511D20BD5001B2A28 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		BCD448A211D2120F00BEF227 /* nui3.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nui3.xcodeproj; path = ../../nui3.xcodeproj; sourceTree = SOURCE_ROOT; };
 		BCD448D611D2142C00BEF227 /* SpritesD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpritesD.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		BCD448D811D2142C00BEF227 /* SpritesD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpritesD.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BCD448D811D2142C00BEF227 /* Sprites.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sprites.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCD4495611D23BCE00BEF227 /* style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = style.css; path = resources/css/style.css; sourceTree = SOURCE_ROOT; };
 		BCD4495711D23BF900BEF227 /* style-Common.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = "style-Common.css"; path = "resources/css/style-Common.css"; sourceTree = SOURCE_ROOT; };
 		BCD4495811D23BF900BEF227 /* style-iPhone.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = "style-iPhone.css"; path = "resources/css/style-iPhone.css"; sourceTree = SOURCE_ROOT; };
+		E5C5BBFF127A4373007A8A8B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		E5C5BC03127A43A4007A8A8B /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		E5C5BC05127A43A4007A8A8B /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		E5C5BC09127A43CA007A8A8B /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		E5C5BC0B127A43D8007A8A8B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		E5C5BC0D127A43D8007A8A8B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		E5C5BC79127A4A87007A8A8B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		E5C5BC7D127A4A9C007A8A8B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		E5C5BC81127A4ACC007A8A8B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		E5C5BC89127A4AED007A8A8B /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		E5C5BC8F127A4B12007A8A8B /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,15 +189,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC3FD91F11D17F0B00447DD4 /* MediaPlayer.framework in Frameworks */,
-				BC3FD92011D17F0B00447DD4 /* CFNetwork.framework in Frameworks */,
-				BC3FD92111D17F0B00447DD4 /* QuartzCore.framework in Frameworks */,
-				BC3FD92211D17F0B00447DD4 /* AudioToolbox.framework in Frameworks */,
-				BC3FD92311D17F0B00447DD4 /* OpenGLES.framework in Frameworks */,
-				BC3FD92411D17F0B00447DD4 /* CoreGraphics.framework in Frameworks */,
-				BC3FD92611D17F0B00447DD4 /* Foundation.framework in Frameworks */,
-				BCAF116611D20BD5001B2A28 /* UIKit.framework in Frameworks */,
-				BCD449A211D23EAB00BEF227 /* libnuiPhone.a in Frameworks */,
+				E5C5BBFB127A4359007A8A8B /* libnuiPhone.a in Frameworks */,
+				E5C5BC06127A43A4007A8A8B /* CoreFoundation.framework in Frameworks */,
+				E5C5BC0E127A43D8007A8A8B /* UIKit.framework in Frameworks */,
+				E5C5BC7A127A4A87007A8A8B /* CoreGraphics.framework in Frameworks */,
+				E5C5BC7E127A4A9C007A8A8B /* Foundation.framework in Frameworks */,
+				E5C5BC82127A4ACC007A8A8B /* QuartzCore.framework in Frameworks */,
+				E5C5BC8A127A4AED007A8A8B /* CFNetwork.framework in Frameworks */,
+				E5C5BC90127A4B12007A8A8B /* OpenGLES.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,6 +227,16 @@
 				61A9DE4A0B833CD000BC506C /* sources */,
 				61A9DE490B833CB000BC506C /* dependencies */,
 				61A9DFB50B833DE500BC506C /* Products */,
+				E5C5BC03127A43A4007A8A8B /* CFNetwork.framework */,
+				E5C5BC05127A43A4007A8A8B /* CoreFoundation.framework */,
+				E5C5BC09127A43CA007A8A8B /* MediaPlayer.framework */,
+				E5C5BC0B127A43D8007A8A8B /* QuartzCore.framework */,
+				E5C5BC0D127A43D8007A8A8B /* UIKit.framework */,
+				E5C5BC79127A4A87007A8A8B /* CoreGraphics.framework */,
+				E5C5BC7D127A4A9C007A8A8B /* Foundation.framework */,
+				E5C5BC81127A4ACC007A8A8B /* QuartzCore.framework */,
+				E5C5BC89127A4AED007A8A8B /* CFNetwork.framework */,
+				E5C5BC8F127A4B12007A8A8B /* OpenGLES.framework */,
 			);
 			sourceTree = "<group>";
 		};
@@ -248,7 +267,7 @@
 				61A9DFBF0B833E9600BC506C /* Sprites.app */,
 				61A9DFC90B833EF200BC506C /* SpritesD.app */,
 				BCD448D611D2142C00BEF227 /* SpritesD.app */,
-				BCD448D811D2142C00BEF227 /* SpritesD.app */,
+				BCD448D811D2142C00BEF227 /* Sprites.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -276,6 +295,7 @@
 				BC3FD91C11D17F0B00447DD4 /* CoreGraphics.framework */,
 				BC3FD91E11D17F0B00447DD4 /* Foundation.framework */,
 				BCAF116511D20BD5001B2A28 /* UIKit.framework */,
+				E5C5BBFF127A4373007A8A8B /* Foundation.framework */,
 			);
 			name = "frameworks iPhone";
 			sourceTree = "<group>";
@@ -365,7 +385,7 @@
 			);
 			name = "Sprites iPhone";
 			productName = Tempd;
-			productReference = BCD448D811D2142C00BEF227 /* SpritesD.app */;
+			productReference = BCD448D811D2142C00BEF227 /* Sprites.app */;
 			productType = "com.apple.product-type.application";
 		};
 		BCD448BC11D2123000BEF227 /* SpritesD iPhone */ = {
@@ -679,6 +699,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PREPROCESSOR_DEFINITIONS = NUI_IPHONE;
+				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = "Sprites-iPhone.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -686,7 +707,7 @@
 					"-lz",
 				);
 				PREBINDING = YES;
-				PRODUCT_NAME = SpritesD;
+				PRODUCT_NAME = Sprites;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos4.1;
 				WARNING_CFLAGS = (
@@ -714,6 +735,7 @@
 					NUI_IPHONE,
 					_DEBUG,
 				);
+				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = "Sprites-iPhone.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (

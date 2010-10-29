@@ -39,13 +39,26 @@ MainWindow::~MainWindow()
 
 void MainWindow::OnCreation()
 {
+  SetColor(eActiveWindowBg, nuiColor("black"));
   mpSpriteView = new nuiSpriteView();
   AddChild(mpSpriteView);
   
   // Define the sprite:
   mpSpriteDef = new nuiSpriteDef(nglPath("rsrc:/Gizmo"));
   
-  mpSpriteView->AddSprite(new nuiSprite(_T("Gizmo")));
+  for (int32 i = 0; i < 1000; i++)
+  {
+    nuiSprite* pSprite = new nuiSprite(_T("Gizmo"));
+    int32 x, y;
+    x = rand() % GetWidth();
+    y = rand() % GetHeight();
+    float angle = rand() % 360;
+    float speed = (float)(rand() % 20) / 10.f;
+    pSprite->SetPosition(x, y);
+    pSprite->SetAngle(angle);
+    pSprite->SetSpeed(speed);
+    mpSpriteView->AddSprite(pSprite);
+  }
 
 }
 

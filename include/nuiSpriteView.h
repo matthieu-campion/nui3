@@ -98,7 +98,7 @@ public:
   int32 GetMatrixNodeCount() const;
   nuiMatrixNode* GetMatrixNode(uint32 index) const;
 
-  void LoadIdentityMatrix();
+  void LoadIdentityMatrix(); ///< Beware: you can't use Get/SetPosition/Angle/X or Y after that as the matrixes they use will gone.
   bool IsMatrixIdentity() const;
   void GetMatrix(nuiMatrix& rMatrix) const;
   nuiMatrix GetMatrix() const;
@@ -111,7 +111,14 @@ public:
 
   float GetSpeed() const;
   void SetSpeed(float speed); ///< Default is 1
-  
+
+  void SetPosition(float X, float Y);
+  void SetAngle(float angle);
+  void SetX(float X);
+  void SetY(float Y);
+  float GetX() const;
+  float GetY() const;
+  float GetAngle() const;
 protected:
               
   void Init();
@@ -125,6 +132,9 @@ protected:
   int32 mCurrentAnimation;
   float mCurrentFrame;
   float mSpeed;
+  
+  nuiMatrixNode_Translation* mpPosition;
+  nuiMatrixNode_Pivot* mpPivot;
 };
 
 
