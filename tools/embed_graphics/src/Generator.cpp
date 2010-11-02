@@ -105,7 +105,7 @@ Generator::~Generator()
 }
 
 
-bool Generator::OnBrowseToolRequest(const nuiEvent& rEvent)
+void Generator::OnBrowseToolRequest(const nuiEvent& rEvent)
 {
   int X,Y;
   GetApp()->GetMainWindow()->GetNGLWindow()->GetPosition(X, Y);
@@ -115,12 +115,10 @@ bool Generator::OnBrowseToolRequest(const nuiEvent& rEvent)
   
   mTimerSink.Connect(mTimer.Tick, &Generator::OnBrowseTool);
   mTimer.Start();
-  
-  return true;
 }
 
 
-bool Generator::OnBrowseTool(const nuiEvent& rEvent)
+void Generator::OnBrowseTool(const nuiEvent& rEvent)
 {
   mTimer.Stop();
   mTimerSink.Disconnect(mTimer.Tick, &Generator::OnBrowseTool);
@@ -130,13 +128,12 @@ bool Generator::OnBrowseTool(const nuiEvent& rEvent)
                       nglPath(ePathUser), nglPath(_T("/")), nglString::Null, _T("*"), false);
   mEventSink.Connect(pDialog->FileSelected, &Generator::OnToolSelected, (void*)pDialog);
   pDialog->DoModal();
-  return true;
 }
 
 
 
 
-bool Generator::OnBrowseSourceRequest(const nuiEvent& rEvent)
+void Generator::OnBrowseSourceRequest(const nuiEvent& rEvent)
 {
   int X,Y;
   GetApp()->GetMainWindow()->GetNGLWindow()->GetPosition(X, Y);
@@ -146,11 +143,9 @@ bool Generator::OnBrowseSourceRequest(const nuiEvent& rEvent)
   
   mTimerSink.Connect(mTimer.Tick, &Generator::OnBrowseSource);
   mTimer.Start();
-
-  return true;
 }
 
-bool Generator::OnBrowseSource(const nuiEvent& rEvent)
+void Generator::OnBrowseSource(const nuiEvent& rEvent)
 {
   mTimer.Stop();
   mTimerSink.Disconnect(mTimer.Tick, &Generator::OnBrowseSource);
@@ -158,12 +153,11 @@ bool Generator::OnBrowseSource(const nuiEvent& rEvent)
   nuiDialogSelectDirectory* pDialog = new nuiDialogSelectDirectory((nuiMainWindow*)GetMainWindow(), _T("SELECT THE GRAPHIC RESOURCES DIRECTORY"), nglPath(ePathUser), nglPath(_T("/")));
   mEventSink.Connect(pDialog->DirectorySelected, &Generator::OnSourceSelected, (void*)pDialog);
   pDialog->DoModal();
-  return true;
 }
 
 
 
-bool Generator::OnToolSelected(const nuiEvent& rEvent)
+void Generator::OnToolSelected(const nuiEvent& rEvent)
 {
   nuiDialogSelectFile* pDialog = (nuiDialogSelectFile*)rEvent.mpUser;
   nglPath path = pDialog->GetSelectedFile();
@@ -175,11 +169,9 @@ bool Generator::OnToolSelected(const nuiEvent& rEvent)
   GetApp()->GetMainWindow()->SetSize(APP_WIDTH,APP_HEIGHT);
   GetApp()->GetMainWindow()->GetNGLWindow()->SetPosition(X + (APP_FULL_WIDTH - APP_WIDTH)/2, Y + (APP_FULL_HEIGHT - APP_HEIGHT)/2);    
   GetApp()->GetMainWindow()->UpdateLayout();  
-  
-  return false;
 }
 
-bool Generator::OnSourceSelected(const nuiEvent& rEvent)
+void Generator::OnSourceSelected(const nuiEvent& rEvent)
 {
   nuiDialogSelectDirectory* pDialog = (nuiDialogSelectDirectory*)rEvent.mpUser;
   nglPath path = pDialog->GetSelectedDirectory();
@@ -190,13 +182,11 @@ bool Generator::OnSourceSelected(const nuiEvent& rEvent)
   GetApp()->GetMainWindow()->SetSize(APP_WIDTH,APP_HEIGHT);
   GetApp()->GetMainWindow()->GetNGLWindow()->SetPosition(X + (APP_FULL_WIDTH - APP_WIDTH)/2, Y + (APP_FULL_HEIGHT - APP_HEIGHT)/2);    
   GetApp()->GetMainWindow()->UpdateLayout();  
-
-  return false;
 }
 
 
 
-bool Generator::OnStart(const nuiEvent& rEvent)
+void Generator::OnStart(const nuiEvent& rEvent)
 {
   // check tool
   mTool = nglPath(mpToolLabel->GetText());
@@ -204,7 +194,7 @@ bool Generator::OnStart(const nuiEvent& rEvent)
   {
     nuiMessageBox* pBox = new nuiMessageBox((nuiMainWindow*)GetMainWindow(), _T("oups"), _T("the generator tool command line path is not valid."), eMB_OK);
     pBox->QueryUser();
-    return true;
+    return;
   }
   
   
@@ -216,7 +206,7 @@ bool Generator::OnStart(const nuiEvent& rEvent)
   {
     nuiMessageBox* pBox = new nuiMessageBox((nuiMainWindow*)GetMainWindow(), _T("oups"), _T("the graphic resources path is not valid.\nIt must contain a 'png' folder,\nwith all the graphic resources inside."), eMB_OK);
     pBox->QueryUser();
-    return true;
+    return;
   }
   
   GetApp()->GetPreferences().SetPath(MAIN_KEY, _T("Tool"), mTool);
@@ -290,9 +280,6 @@ bool Generator::OnStart(const nuiEvent& rEvent)
   
   nuiMessageBox* pBox = new nuiMessageBox((nuiMainWindow*)GetMainWindow(), _T("embed_graphics"), _T("process successfull!"), eMB_OK);
   pBox->QueryUser();
-
-  
-  return true;
 }
 
 
@@ -330,7 +317,9 @@ void Generator::ParsePngFiles(const nglPath& rootSource, const nglPath& pngSourc
     
     // and call the generator tool to create .cpp and .h files
     nglString cmd;
-    cmd.Format(_T("%ls %ls %ls"), mTool.GetChars(), child.GetChars(), destPath.GetChars());
+    nglString space(_T(" "));
+    cmd.Append(mTool).Append(_T(" ")).Append(child.GetChars()).Append(_T(" ")).Append(destPath.GetChars());
+    NGL_OUT(_T("command : %ls\n"), cmd.GetChars());
     system(cmd.GetStdString().c_str());
   }
   
