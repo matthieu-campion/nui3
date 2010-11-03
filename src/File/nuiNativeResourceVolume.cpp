@@ -22,7 +22,7 @@ nuiNativeResourceVolume::nuiNativeResourceVolume()
   nuiNativeResource::GetResourcesList(resources);
   watch.AddIntermediate(_T("GetResourcesList"));
                      
-  //wprintf(_T("Found %d resources in this executable\n"), resources.size());
+  //NGL_OUT(_T("Found %d resources in this executable\n"), resources.size());
   for (size_t i = 0; i < resources.size(); i++)
   {
     nglPath tmp(resources[i]);
@@ -35,7 +35,7 @@ nuiNativeResourceVolume::nuiNativeResourceVolume()
 			if (!nodename.IsEmpty())
       {
         mItems[tmp].insert(nodename);
-        //wprintf(_T("mItems[%ls] <- '%ls'\n"), tmp.GetChars(), nodename.GetChars());
+        //NGL_OUT(_T("mItems[%ls] <- '%ls'\n"), tmp.GetChars(), nodename.GetChars());
       }
 		}
   }
