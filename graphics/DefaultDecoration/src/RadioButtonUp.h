@@ -8,5 +8,5 @@
 #pragma once
 
 extern const char* gpRadioButtonUp;
-const long         gRadioButtonUpSize = 552;
+const long         gRadioButtonUpSize = 3224;
 

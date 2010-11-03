@@ -30,6 +30,8 @@ protected:
   void OnTogglePressed(const nuiEvent& rEvent);
   void OnRadioPressed(const nuiEvent& rEvent);
   
+  bool LoadCSS(const nglPath& rPath);
+  
 private:
   
   nuiLabel* mpLabel;

@@ -10,27 +10,12 @@
 
 
 
-
-"MyImage"!
+"MyButton"!
 {
-  Texture: "rsrc:/decorations/image.png";
-  UserWidth: 100;
-  UserHeight: 100;
-}
-
-
-@nuiColorDecoration dMyLabel
-{
-  FillColor: rgb(220,220,220);
-  StrokeColor: black;
-  ShapeMode: StrokeAndFill;
-  ClientRect: "{10 10 0 0}";
-}
-
-"MyLabel"!
-{
-  DecorationMode: Border;
-  Decoration: dMyLabel;
+  BorderLeft: 10;
+  BorderRight: 10;
+  BorderTop: 5;
+  BorderBottom: 5;
 }
 
 // blank ending line following
