@@ -544,6 +544,8 @@ bool nuiSpriteView::Draw(nuiDrawContext* pContext)
     mpSprites[i]->Draw(pContext);
     
   }
+
+  return true;
 }
 
 
