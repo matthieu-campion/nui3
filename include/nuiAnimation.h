@@ -81,7 +81,7 @@ double nuiEasingBounceIn(double val);
 double nuiEasingBackIn(double val);
 double nuiEasingBackOut(double val);
 
-class nuiEasing
+class nuiEasing : public nuiRefCount
 {
 public:
   nuiEasing()

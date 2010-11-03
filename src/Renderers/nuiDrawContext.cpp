@@ -544,6 +544,7 @@ void nuiDrawContext::DrawImageQuad(float x0, float y0, float x1, float y1, float
   mCurrentState.mpTexture->ImageToTextureCoord(tw, th);
 
   nuiRenderArray* pArray = new nuiRenderArray(GL_TRIANGLE_STRIP);
+  pArray->Reserve(4);
   pArray->EnableArray(nuiRenderArray::eVertex, true);
   pArray->EnableArray(nuiRenderArray::eTexCoord, true);
   pArray->EnableArray(nuiRenderArray::eColor, true);
@@ -788,6 +789,7 @@ void nuiDrawContext::DrawGradient(const nuiGradient& rGradient, const nuiRect& r
 static void nuiDrawRect(const nuiRect& out, nuiRenderArray& rArray)
 {
   rArray.SetMode(GL_TRIANGLE_STRIP);
+  rArray.Reserve(8);
   nuiRect in(out);
   in.Grow(-NUI_INV_SCALE_FACTOR, -NUI_INV_SCALE_FACTOR);
   
@@ -1262,6 +1264,7 @@ void nuiDrawContext::DrawShade(const nuiRect& rSourceRect, const nuiRect& rShade
   pArray->EnableArray(nuiRenderArray::eVertex);
   pArray->EnableArray(nuiRenderArray::eColor);
   pArray->EnableArray(nuiRenderArray::eTexCoord);
+  pArray->Reserve(42);
 
   // Top Left:
   pArray->SetColor(transp);

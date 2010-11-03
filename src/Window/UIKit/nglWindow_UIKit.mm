@@ -137,6 +137,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   }
   glView = [[EAGLView alloc] initWithFrame:rect replacing: nil];
   [self addSubview:glView];
+	[self sendSubviewToBack:glView];
   
 //NGL_OUT(_T("[nglUIWindow initWithFrame]\n"));
 
@@ -208,7 +209,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   UIDevice* pUIDev = [UIDevice currentDevice];
   UIDeviceOrientation orientation = pUIDev.orientation;
   UIInterfaceOrientation apporientation = pApp.statusBarOrientation;
-
+	
   angle = mpNGLWindow->GetRotation();
   if (apporientation != orientation)
   {
@@ -287,19 +288,19 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   }
     
   if (forceresize)
-  {
+  {				
     CGRect rect = [[UIScreen mainScreen] applicationFrame];
-//    rect.size.width = w;
-//    rect.size.height = h;
     NSLog(@"new window size: %d, %d\n", w, h);
 
     glViewOld = glView;
     self.frame = rect;
-    
+		
     glView = [[EAGLView alloc] initWithFrame:rect replacing: glViewOld];
     [self addSubview:glView];
-    //[glView startAnimation];
-    
+		[self sendSubviewToBack:glView];
+
+		// Invalidate all subviews
+		[self.subviews makeObjectsPerformSelector:@selector(setNeedsDisplay)];
     mpNGLWindow->SetSize(w, h);
   }   
   oldorientation = orientation;
@@ -320,6 +321,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   
   glView = [[EAGLView alloc] initWithFrame:rect replacing: glViewOld];
   [self addSubview:glView];
+	[self sendSubviewToBack:glView];
   //[glView startAnimation];
   
   mpNGLWindow->SetSize(w, h);
@@ -752,9 +754,14 @@ extern float NUI_INV_SCALE_FACTOR;
                                     nil];
     
     EAGLSharegroup* group = nil;
-    if (original != nil)
+    if (original != nil) 
+		{
       group = [original getSharegroup];
+			[original removeFromSuperview];
+		}
     
+		//self.clearsContextBeforeDrawing = TRUE;
+		
     if (group)
       context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1 sharegroup: group];
     else

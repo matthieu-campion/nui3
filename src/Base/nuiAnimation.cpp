@@ -255,8 +255,15 @@ bool nuiAnimation::GetDeleteOnStop() const
 
 void nuiAnimation::SetEasing(const nuiEasingMethod& rMethod)
 {
-  delete mpEasing;
-  mpEasing = new nuiEasingFunction(rMethod);
+  SetEasing(new nuiEasingFunction(rMethod));
+}
+
+void nuiAnimation::SetEasing(nuiEasing* pEasing)
+{
+  pEasing->Acquire();
+  if (mpEasing)
+    mpEasing->Release();
+  mpEasing = pEasing;
 }
 
 
@@ -309,7 +316,8 @@ bool nuiAnimation::Load(const nuiXMLNode* pNode)
 
 nuiAnimation::~nuiAnimation()
 {
-  delete mpEasing;
+  if (mpEasing)
+    mpEasing->Release();
   ReleaseTimer();
 }
 
@@ -457,7 +465,7 @@ void nuiAnimation::InternalPause()
   mCount = 0;
   //NGL_LOG(_T("nuiAnimation), NGL_LOG_DEBUG, _T("Stop at %f\n"), GetDuration());
   mAnimSink.Disconnect(GetTimer()->Tick, &nuiAnimation::OnTick);
-  AnimStop();
+  AnimPause();
 }
 
 

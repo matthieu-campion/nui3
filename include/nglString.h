@@ -824,6 +824,11 @@ bool nglIsDigit(nglChar a);
 
 bool nglIsSpace(nglChar a);
 
+bool nglCompareStrings(const nglString& rLeft, const nglString& rRight);
+bool nglCompareStringsNoCase(const nglString& rLeft, const nglString& rRight);
+bool nglCompareNaturalStrings(const nglString& rLeft, const nglString& rRight);
+bool nglCompareNaturalStringsNoCase(const nglString& rLeft, const nglString& rRight);
+
 
 //! nglString conversion processor
 /*!

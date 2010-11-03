@@ -18,12 +18,29 @@ using namespace std;
 
 nuiTextureMap nuiTexture::mpTextures;
 
+#if 1
+static inline void LOG_GETTEXTURE(nuiTexture* pTexture)
+{
+}
+#else
+static inline void LOG_GETTEXTURE(nuiTexture* pTexture)
+{
+  printf("nuiTexture::GetTexture: ");
+  if (!pTexture) 
+  {
+    printf("NULL Texture\n"); 
+  }
+  printf("0x%p '%ls'\n", pTexture, pTexture->GetSource().GetChars());
+}
+#endif
+
 nuiTexture* nuiTexture::GetTexture (nglIStream* pInput, nglImageCodec* pCodec)
 {
   nuiTexture* pTexture = NULL;
   pTexture = new nuiTexture(pInput, pCodec);
   if (pTexture)
     pTexture->Acquire();
+  LOG_GETTEXTURE(pTexture);
   return pTexture;
 }
 
@@ -37,6 +54,7 @@ nuiTexture* nuiTexture::GetTexture (const nglPath& rPath, nglImageCodec* pCodec)
     pTexture = it->second;
   if (pTexture)
     pTexture->Acquire();
+  LOG_GETTEXTURE(pTexture);
   return pTexture;
 }
 
@@ -57,6 +75,7 @@ nuiTexture* nuiTexture::GetTexture (nglImageInfo& rInfo, bool Clone)
   }
   if (pTexture)
     pTexture->Acquire();
+  LOG_GETTEXTURE(pTexture);
   return pTexture;
 }
 
@@ -72,6 +91,7 @@ nuiTexture* nuiTexture::GetTexture (const nglImage& rImage)
     pTexture = it->second;
   if (pTexture)
     pTexture->Acquire();
+  LOG_GETTEXTURE(pTexture);
   return pTexture;
 }
 
@@ -87,6 +107,7 @@ nuiTexture* nuiTexture::GetTexture (nglImage* pImage, bool OwnImage)
     pTexture = it->second;
   if (pTexture)
     pTexture->Acquire();
+  LOG_GETTEXTURE(pTexture);
   return pTexture;
 }
 
@@ -100,24 +121,25 @@ nuiTexture* nuiTexture::GetTexture(const nuiXMLNode* pNode)
     pTexture = it->second;
   if (pTexture)
     pTexture->Acquire();
+  LOG_GETTEXTURE(pTexture);
   return pTexture;
 }
 
 nuiTexture* nuiTexture::GetTexture(nuiSurface* pSurface)
 {
   nuiTexture* pTexture = pSurface->GetTexture();
-  if (pTexture)
-    return pTexture;
-  nglString name;
-  name.Format(_T("Surface 0x%x"), pSurface);
-  nuiTextureMap::iterator it = mpTextures.find(name);
-  if (it == mpTextures.end())
+  if (!pTexture)
   {
-    pTexture = new nuiTexture(pSurface);    
+    nglString name;
+    name.Format(_T("Surface 0x%x"), pSurface);
+    nuiTextureMap::iterator it = mpTextures.find(name);
+    if (it == mpTextures.end())
+      pTexture = new nuiTexture(pSurface);    
+    else
+      pTexture = it->second;
   }
-  else
-    pTexture = it->second;
   
+  LOG_GETTEXTURE(pTexture);
   return pTexture;  
 }
 
@@ -130,6 +152,7 @@ nuiTexture* nuiTexture::GetTexture(const nglString& rName)
   pTexture = it->second;
   if (pTexture)
     pTexture->Acquire();
+  LOG_GETTEXTURE(pTexture);
   return pTexture;
 }
 
@@ -188,7 +211,8 @@ void nuiTexture::ClearAll()
   {
     nglString TexName(it->first);
     nuiTexture* pTex = it->second;
-    delete pTex; // the destructor of an nuiTexture removes that texture from the nuiTextureMap automatically so the only way not to get lost with the next it is to restart at the begining.
+    //delete pTex; // the destructor of an nuiTexture removes that texture from the nuiTextureMap automatically so the only way not to get lost with the next it is to restart at the begining.
+    pTex->Release();
     it = mpTextures.begin();
   }
 

@@ -30,13 +30,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		BC0F10A60F1CFEC90029C457 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = E592C5140EFE8CCC00340B35;
-			remoteInfo = "nui3D cocoa";
-		};
 		BCBCB15B0DFD45B6002E8BC3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
@@ -64,6 +57,34 @@
 			proxyType = 1;
 			remoteGlobalIDString = E58172D70C3D103300902DFE;
 			remoteInfo = nui3D;
+		};
+		BCFDBFB21280BB830026492B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E52417F311CB860B0025CA71;
+			remoteInfo = nuiPhoneD;
+		};
+		BCFDBFB41280BB830026492B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E52420E511CBCE9E0025CA71;
+			remoteInfo = nuiPhone;
+		};
+		BCFDBFB61280BB830026492B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E5A8D1D311E33A54004E14CE;
+			remoteInfo = nui3CocoaD;
+		};
+		BCFDBFB81280BB830026492B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E5D643E51209AB9C009C26A9;
+			remoteInfo = nui3Cocoa;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -167,7 +188,10 @@
 			children = (
 				BCBCB15C0DFD45B6002E8BC3 /* libnui3D.a */,
 				BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */,
-				BC0F10A70F1CFEC90029C457 /* libnui3D cocoa.a */,
+				BCFDBFB31280BB830026492B /* libnuiPhoneD.a */,
+				BCFDBFB51280BB830026492B /* libnuiPhone.a */,
+				BCFDBFB71280BB830026492B /* libnui3CocoaD.a */,
+				BCFDBFB91280BB830026492B /* libnui3Cocoa.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -218,7 +242,14 @@
 			isa = PBXProject;
 			buildConfigurationList = 61A9DE400B833C9200BC506C /* Build configuration list for PBXProject "embed_graphics" */;
 			compatibilityVersion = "Xcode 2.4";
+			developmentRegion = English;
 			hasScannedForEncodings = 0;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
 			mainGroup = 61A9DE3D0B833C9200BC506C;
 			productRefGroup = 61A9DFB50B833DE500BC506C /* Products */;
 			projectDirPath = "";
@@ -237,13 +268,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		BC0F10A70F1CFEC90029C457 /* libnui3D cocoa.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libnui3D cocoa.a";
-			remoteRef = BC0F10A60F1CFEC90029C457 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		BCBCB15C0DFD45B6002E8BC3 /* libnui3D.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -256,6 +280,34 @@
 			fileType = archive.ar;
 			path = libnui3.a;
 			remoteRef = BCBCB15D0DFD45B6002E8BC3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BCFDBFB31280BB830026492B /* libnuiPhoneD.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnuiPhoneD.a;
+			remoteRef = BCFDBFB21280BB830026492B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BCFDBFB51280BB830026492B /* libnuiPhone.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnuiPhone.a;
+			remoteRef = BCFDBFB41280BB830026492B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BCFDBFB71280BB830026492B /* libnui3CocoaD.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnui3CocoaD.a;
+			remoteRef = BCFDBFB61280BB830026492B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BCFDBFB91280BB830026492B /* libnui3Cocoa.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnui3Cocoa.a;
+			remoteRef = BCFDBFB81280BB830026492B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

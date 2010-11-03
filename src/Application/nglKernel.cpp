@@ -322,6 +322,7 @@ void nglKernel::CallOnExit(int Code)
   nglVolume::UnmountAll();
   nuiAnimation::ReleaseTimer();
   OnExit (Code);
+  Exit();
 }
 
 void nglKernel::CallOnWillExit()

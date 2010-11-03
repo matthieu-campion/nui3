@@ -86,7 +86,7 @@ nuiMatrixNode_Rotation::nuiMatrixNode_Rotation()
 {
   nuiMatrixNode_Rotation::Init();
   mAngle = 0;
-  // the default nglVectorf should be ok
+  SetAxis(nglVectorf(0, 0, 1)); // Rotate around z by defaut...
 }
 
 nuiMatrixNode_Rotation::nuiMatrixNode_Rotation(float Angle, const nglVectorf& rAxis)

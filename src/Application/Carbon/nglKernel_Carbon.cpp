@@ -67,9 +67,6 @@ nglKernel::~nglKernel()
 	  RemoveEventHandler(mEventHandlerRef);
   if (mEventHandlerUPP)
     DisposeEventHandlerUPP(mEventHandlerUPP);
-
-  Exit();
-
 /*
   if (isatty(STDIN_FILENO)) tcsetattr (STDIN_FILENO, TCSANOW, &mTermInfo);
 */

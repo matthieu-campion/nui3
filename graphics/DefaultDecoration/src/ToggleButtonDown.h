@@ -8,5 +8,5 @@
 #pragma once
 
 extern const char* gpToggleButtonDown;
-const long         gToggleButtonDownSize = 512;
+const long         gToggleButtonDownSize = 3136;
 

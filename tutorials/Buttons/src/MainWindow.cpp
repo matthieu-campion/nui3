@@ -17,6 +17,7 @@
 #include "nuiColorDecoration.h"
 #include "nuiGradientDecoration.h"
 #include "nuiFrame.h"
+#include "nuiCSS.h"
 
 /*
  * MainWindow
@@ -26,6 +27,7 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
   : nuiMainWindow(rContextInfo, rInfo, pShared, nglPath(ePathCurrent)), mEventSink(this)
 {
   SetDebugMode(true);
+  LoadCSS(_T("rsrc:/css/main.css"));  
 }
 
 MainWindow::~MainWindow()
@@ -105,11 +107,13 @@ nuiWidget* MainWindow::Tutorial_Buttons()
   
   // a simple button
   nuiButton* pBtn = new nuiButton(_T("button"));
+  pBtn->SetObjectName(_T("MyButton"));
   mEventSink.Connect(pBtn->Activated, &MainWindow::OnButtonPressed, (void*)TAG_BUTTON1);
   pBox->AddCell(pBtn, nuiCenter);
 
   // a simple button filling the box's cell
   pBtn = new nuiButton(_T("button"));
+  pBtn->SetObjectName(_T("MyButton"));
   pBox->AddCell(pBtn, nuiFill);
   mEventSink.Connect(pBtn->Activated, &MainWindow::OnButtonPressed, (void*)TAG_BUTTON2);
 
@@ -117,6 +121,7 @@ nuiWidget* MainWindow::Tutorial_Buttons()
   // a button with an image
   nglImage pImg(_T("rsrc:/decorations/button1.png"));
   pBtn = new nuiButton(pImg);
+  pBtn->SetObjectName(_T("MyButton"));
   pBox->AddCell(pBtn);
   mEventSink.Connect(pBtn->Activated, &MainWindow::OnButtonPressed, (void*)TAG_BUTTON3);
 
@@ -130,6 +135,7 @@ nuiWidget* MainWindow::Tutorial_Buttons()
   nuiStateDecoration* pStateDeco = new nuiStateDecoration(_T("Deco"), _T("DecoUp"), _T("DecoDown"), _T("DecoUpHover"));
 
   pBtn = new nuiButton(pStateDeco);
+  pBtn->SetObjectName(_T("MyButton"));
   pBtn->SetUserSize(40,40);
   pBox->AddCell(pBtn, nuiCenter);
   mEventSink.Connect(pBtn->Activated, &MainWindow::OnButtonPressed, (void*)TAG_BUTTON4);
@@ -158,12 +164,14 @@ nuiWidget* MainWindow::Tutorial_ToggleButtons()
 
   // a simple togglebutton
   nuiToggleButton* pBtn = new nuiToggleButton(_T("toggleButton"));
+  pBtn->SetObjectName(_T("MyButton"));
   pBox->AddCell(pBtn);
   mEventSink.Connect(pBtn->ButtonPressed, &MainWindow::OnTogglePressed, (void*)TAG_BUTTON1);
   mEventSink.Connect(pBtn->ButtonDePressed, &MainWindow::OnTogglePressed, (void*)TAG_BUTTON2);
 
   // a togglebutton, with a "checkbox" look : leave the button without any child
   pBtn = new nuiToggleButton();
+  pBtn->SetObjectName(_T("MyButton"));
   pBox->AddCell(pBtn, nuiCenter);
   mEventSink.Connect(pBtn->ButtonPressed, &MainWindow::OnTogglePressed, (void*)TAG_BUTTON3);
   mEventSink.Connect(pBtn->ButtonDePressed, &MainWindow::OnTogglePressed, (void*)TAG_BUTTON4);
@@ -190,6 +198,7 @@ nuiWidget* MainWindow::Tutorial_RadioButtons1()
     nglString tmp;
     tmp.Format(_T("Radio %d"), index);
     nuiRadioButton* pRadioBut = new nuiRadioButton(tmp);// with text inside
+    pRadioBut->SetObjectName(_T("MyButton"));
     pBox->AddCell(pRadioBut);
     pRadioBut->SetGroup(_T("radios"));                  // set the radio group for group behavior
 
@@ -210,6 +219,7 @@ nuiWidget* MainWindow::Tutorial_RadioButtons2()
   for (int index = 0; index < 3; index++)
   {
     nuiRadioButton* pRadioBut = new nuiRadioButton(); // leave it without any child : it'll get a class "radio" look
+    pRadioBut->SetObjectName(_T("MyButton"));
     pRadioBut->SetPosition(nuiCenter);
     pBox->AddCell(pRadioBut);
     pRadioBut->SetGroup(_T("radios2"));
@@ -306,5 +316,39 @@ void MainWindow::OnRadioPressed(const nuiEvent& rEvent)
 }
 
 
+
+
+
+
+
+
+
+
+
+
+bool MainWindow::LoadCSS(const nglPath& rPath)
+{
+  nglIStream* pF = rPath.OpenRead();
+  if (!pF)
+  {
+    NGL_OUT(_T("Unable to open CSS source file '%ls'\n"), rPath.GetChars());
+    return false;
+  }
+  
+  nuiCSS* pCSS = new nuiCSS();
+  bool res = pCSS->Load(*pF, rPath);
+  delete pF;
+  
+  if (res)
+  {
+    nuiMainWindow::SetCSS(pCSS);
+    return true;
+  }
+  
+  NGL_OUT(_T("%ls\n"), pCSS->GetErrorString().GetChars());
+  
+  delete pCSS;
+  return false;
+}
 
 

@@ -1608,7 +1608,25 @@ nglIOStream* nglPath::OpenWrite(bool OverWrite) const
 
 bool operator<(const nglPath& rLeft, const nglPath& rRight)
 {
-  return rLeft.GetPathName() < rRight.GetPathName();
+  return nglComparePath(rLeft, rRight);
+}
+
+bool nglComparePath(const nglPath& rLeft, const nglPath& rRight)
+{
+#ifdef WIN32
+  return nglCompareStringsNoCase(rLeft.GetPathName(), rRight.GetPathName());
+#else
+  return nglCompareStrings(rLeft.GetPathName(), rRight.GetPathName());
+#endif
+}
+
+bool nglCompareNaturalPath(const nglPath& rLeft, const nglPath& rRight)
+{
+#ifdef WIN32
+  return nglCompareNaturalStringsNoCase(rLeft.GetPathName(), rRight.GetPathName());
+#else
+  return nglCompareNaturalStrings(rLeft.GetPathName(), rRight.GetPathName());
+#endif
 }
 
 

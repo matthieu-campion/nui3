@@ -166,7 +166,8 @@ int nglApplication::Main(int argc, char** argv)
   if (!Init (argc, argv))
     return 1;
   CallOnInit();
-  return Run();
+  int res = Run();
+  return res;
 }
 
 bool nglApplication::Init(int ArgCnt, char** pArg)
@@ -245,7 +246,7 @@ int nglApplication::Run()
     DeleteTSMDocument(nuiTSMDocument);
   }
   
-  ExitToShell();
+  //ExitToShell();
   
 #endif // __CFM_CLASSIC__
   return 0;

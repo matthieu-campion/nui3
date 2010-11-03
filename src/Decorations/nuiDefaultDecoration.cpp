@@ -19,22 +19,15 @@
 #include "nuiBackgroundPane.h"
 #include "nuiKnob.h"
 
-
 nuiDefaultDecoration::nuiDefaultDecoration()
 {
-  mpKnobSequence = NULL;
+  NGL_ASSERT(0);
 }
 
 
 nuiDefaultDecoration::~nuiDefaultDecoration()
 {
-  // release icons textures
-  std::list<nuiTexture*>::iterator it;
-  for (it = mIcons.begin(); it != mIcons.end(); ++it)
-  {
-    nuiTexture* pTex = *it;
-    pTex->Release();
-  }
+  NGL_ASSERT(0);
 } 
 
 
@@ -46,7 +39,6 @@ nuiDefaultDecoration::~nuiDefaultDecoration()
 //
 void nuiDefaultDecoration::Init()
 {
-
   InitColors();
   InitSelection();
   InitMaps();
@@ -113,8 +105,10 @@ void nuiDefaultDecoration::Init()
 
 void nuiDefaultDecoration::Exit()
 {
-  delete mpKnobSequence;
+  if (mpKnobSequence)
+    mpKnobSequence->Release();
   mpKnobSequence = NULL;
+
   mIcons.clear();
   mImages.clear();
 }
@@ -723,21 +717,21 @@ void nuiDefaultDecoration::Button(nuiWidget* pWidget)
   nglIMemory* pIMemUp = new nglIMemory(gpButtonUp, gButtonUpSize);
   nuiTexture* pTexUp = nuiTexture::GetTexture(pIMemUp);
   NGL_ASSERT(pTexUp);
-  nuiFrame* pFrameUp = new nuiFrame(_T("nuiDefaultDecorationButtonUp"), pTexUp, nuiRect(14,15,2,7));
+  nuiFrame* pFrameUp = new nuiFrame(_T("nuiDefaultDecorationButtonUp"), pTexUp, nuiRect(4,4,2,6));
   delete pIMemUp;
 
   
   nglIMemory* pIMemHover = new nglIMemory(gpButtonUp, gButtonUpSize);
   nuiTexture* pTexHover = nuiTexture::GetTexture(pIMemHover);
   NGL_ASSERT(pTexHover);
-  nuiFrame* pFrameHover = new nuiFrame(_T("nuiDefaultDecorationButtonHover"), pTexHover, nuiRect(14,15,2,7));
+  nuiFrame* pFrameHover = new nuiFrame(_T("nuiDefaultDecorationButtonHover"), pTexHover, nuiRect(4,4,2,6));
   delete pIMemHover;
   
   
   nglIMemory* pIMemDown = new nglIMemory(gpButtonDown, gButtonDownSize);
   nuiTexture* pTexDown = nuiTexture::GetTexture(pIMemDown);
   NGL_ASSERT(pTexDown);
-  nuiFrame* pFrameDown = new nuiFrame(_T("nuiDefaultDecorationButtonDown"), pTexDown, nuiRect(14,15,2,7));
+  nuiFrame* pFrameDown = new nuiFrame(_T("nuiDefaultDecorationButtonDown"), pTexDown, nuiRect(4,4,2,6));
   delete pIMemDown;
   
   
@@ -746,7 +740,7 @@ void nuiDefaultDecoration::Button(nuiWidget* pWidget)
                                                       _T("nuiDefaultDecorationButtonUp"),
                                                       _T("nuiDefaultDecorationButtonDown"),
                                                       _T("nuiDefaultDecorationButtonHover"));
-  pState->SetSourceClientRect(nuiRect(14,15,2,7));
+  pState->SetSourceClientRect(nuiRect(4,4,2,6));
 
   pWidget->SetDecoration(pState, eDecorationBorder);
 
@@ -780,26 +774,26 @@ void nuiDefaultDecoration::RadioButton(nuiWidget* pWidget)
   nglIMemory* pIMem = new nglIMemory(gpRadioButtonUp, gRadioButtonUpSize);
   nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
-  nuiFrame* pFrame = new nuiFrame(_T("nuiDefaultDecorationRadioButtonUp"), pTex, nuiRect(10,10,13,13));
+  nuiFrame* pFrame = new nuiFrame(_T("nuiDefaultDecorationRadioButtonUp"), pTex, nuiRect(0,0,13,13));
   delete pIMem;
   
   
   pIMem = new nglIMemory(gpRadioButtonDown, gRadioButtonDownSize);
   pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
-  pFrame = new nuiFrame(_T("nuiDefaultDecorationRadioButtonDown"), pTex, nuiRect(10,10,13,13));
+  pFrame = new nuiFrame(_T("nuiDefaultDecorationRadioButtonDown"), pTex, nuiRect(0,0,13,13));
   delete pIMem;
 
   pIMem = new nglIMemory(gpRadioButtonUpDisabled, gRadioButtonUpDisabledSize);
   pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
-  pFrame = new nuiFrame(_T("nuiDefaultDecorationRadioButtonUpDisabled"), pTex, nuiRect(10,10,13,13));
+  pFrame = new nuiFrame(_T("nuiDefaultDecorationRadioButtonUpDisabled"), pTex, nuiRect(0,0,13,13));
   delete pIMem;
 
   pIMem = new nglIMemory(gpRadioButtonDownDisabled, gRadioButtonDownDisabledSize);
   pTex = nuiTexture::GetTexture(pIMem);
   NGL_ASSERT(pTex);
-  pFrame = new nuiFrame(_T("nuiDefaultDecorationRadioButtonDownDisabled"), pTex, nuiRect(10,10,13,13));
+  pFrame = new nuiFrame(_T("nuiDefaultDecorationRadioButtonDownDisabled"), pTex, nuiRect(0,0,13,13));
   delete pIMem;
   
   
@@ -810,7 +804,7 @@ void nuiDefaultDecoration::RadioButton(nuiWidget* pWidget)
                                                       _T("nuiDefaultDecorationRadioButtonDown"), /* hover down*/
                                                       _T("nuiDefaultDecorationRadioButtonUpDisabled"),
                                                       _T("nuiDefaultDecorationRadioButtonDownDisabled"));
-  pState->SetSourceClientRect(nuiRect(10,10,13,13));
+  pState->SetSourceClientRect(nuiRect(0,0,13,13));
   
   pWidget->SetDecoration(pState, eDecorationBorder);
   
@@ -896,7 +890,7 @@ void nuiDefaultDecoration::ToggleButton(nuiWidget* pWidget)
     nglIMemory* pIMem = new nglIMemory(gpToggleButtonUp, gToggleButtonUpSize);
     nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
     NGL_ASSERT(pTex);
-    nuiImageDecoration* pFrame = new nuiImageDecoration(_T("nuiDefaultDecorationToggleButtonCheckBoxUp"), pTex, nuiRect(10,10,13,13));
+    nuiImageDecoration* pFrame = new nuiImageDecoration(_T("nuiDefaultDecorationToggleButtonCheckBoxUp"), pTex, nuiRect(0,0,13,13));
     pFrame->SetPosition(nuiLeft);
     delete pIMem;
     
@@ -904,21 +898,21 @@ void nuiDefaultDecoration::ToggleButton(nuiWidget* pWidget)
     pIMem = new nglIMemory(gpToggleButtonDown, gToggleButtonDownSize);
     pTex = nuiTexture::GetTexture(pIMem);
     NGL_ASSERT(pTex);
-    pFrame = new nuiImageDecoration(_T("nuiDefaultDecorationToggleButtonCheckBoxDown"), pTex, nuiRect(10,10,13,13));
+    pFrame = new nuiImageDecoration(_T("nuiDefaultDecorationToggleButtonCheckBoxDown"), pTex, nuiRect(0,0,13,13));
     pFrame->SetPosition(nuiLeft);
     delete pIMem;
     
     pIMem = new nglIMemory(gpToggleButtonUpDisabled, gToggleButtonUpDisabledSize);
     pTex = nuiTexture::GetTexture(pIMem);
     NGL_ASSERT(pTex);
-    pFrame = new nuiImageDecoration(_T("nuiDefaultDecorationToggleButtonCheckBoxUpDisabled"), pTex, nuiRect(10,10,13,13));
+    pFrame = new nuiImageDecoration(_T("nuiDefaultDecorationToggleButtonCheckBoxUpDisabled"), pTex, nuiRect(0,0,13,13));
     pFrame->SetPosition(nuiLeft);
     delete pIMem;
     
     pIMem = new nglIMemory(gpToggleButtonDownDisabled, gToggleButtonDownDisabledSize);
     pTex = nuiTexture::GetTexture(pIMem);
     NGL_ASSERT(pTex);
-    pFrame = new nuiImageDecoration(_T("nuiDefaultDecorationToggleButtonCheckBoxDownDisabled"), pTex, nuiRect(10,10,13,13));
+    pFrame = new nuiImageDecoration(_T("nuiDefaultDecorationToggleButtonCheckBoxDownDisabled"), pTex, nuiRect(0,0,13,13));
     pFrame->SetPosition(nuiLeft);
     delete pIMem;
     
@@ -930,7 +924,7 @@ void nuiDefaultDecoration::ToggleButton(nuiWidget* pWidget)
                                                         _T("nuiDefaultDecorationToggleButtonCheckBoxDown"), /* hover down*/
                                                         _T("nuiDefaultDecorationToggleButtonCheckBoxUpDisabled"),
                                                         _T("nuiDefaultDecorationToggleButtonCheckBoxDownDisabled"));
-    pState->SetSourceClientRect(nuiRect(10,10,13,13));
+    pState->SetSourceClientRect(nuiRect(0,0,13,13));
     pWidget->SetDecoration(pState, eDecorationBorder);
   }
   
@@ -997,6 +991,7 @@ void nuiDefaultDecoration::KnobSequence(nuiWidget* pWidget)
     nglImage* pImage = new nglImage(pIMem);
     NGL_ASSERT(pImage);
     mpKnobSequence = new nuiImageSequence(31, pImage, nuiVertical);
+    mpKnobSequence->Acquire();
     delete pIMem;     
     delete pImage;
   }

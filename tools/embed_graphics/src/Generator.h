@@ -18,16 +18,16 @@ public:
   virtual ~Generator();
   
 private:
-  bool OnBrowseSourceRequest(const nuiEvent& rEvent);
-  bool OnBrowseToolRequest(const nuiEvent& rEvent);
+  void OnBrowseSourceRequest(const nuiEvent& rEvent);
+  void OnBrowseToolRequest(const nuiEvent& rEvent);
 
-  bool OnBrowseSource(const nuiEvent& rEvent);
-  bool OnBrowseTool(const nuiEvent& rEvent);
+  void OnBrowseSource(const nuiEvent& rEvent);
+  void OnBrowseTool(const nuiEvent& rEvent);
 
-  bool OnSourceSelected(const nuiEvent& rEvent);
-  bool OnToolSelected(const nuiEvent& rEvent);
+  void OnSourceSelected(const nuiEvent& rEvent);
+  void OnToolSelected(const nuiEvent& rEvent);
 
-  bool OnStart(const nuiEvent& rEvent);
+  void OnStart(const nuiEvent& rEvent);
   void ParsePngFiles(const nglPath& rootSource, const nglPath& pngSource, const nglPath& codeSource);
   void DumpIncluder(const nglPath& rootSource, const nglPath& pngSource,const nglPath& codeSource, const nglPath& HincluderPath, const nglPath& CPPincluderPath, nglString& HincluderStr, nglString& CPPincluderStr);
   

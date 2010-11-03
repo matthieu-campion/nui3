@@ -368,4 +368,8 @@ private:
 #endif // _CARBON_
 };
 
+bool nglComparePath(const nglPath& rLeft, const nglPath& rRight);
+bool nglCompareNaturalPath(const nglPath& rLeft, const nglPath& rRight);
+
+
 #endif // __nglPath_h__

@@ -48,6 +48,8 @@ bool nuiSpriteFrame::SetTexture(const nglPath& rPath)
     return false;
   
   mRect = nuiRect((float)mpTexture->GetWidth(), (float)mpTexture->GetHeight());
+  mX = mpTexture->GetWidth() / 2;
+  mY = mpTexture->GetHeight() / 2;
 
 }
 
@@ -88,6 +90,23 @@ nuiSpriteAnimation::nuiSpriteAnimation()
 : mFPS(10)
 {
 
+}
+
+nuiSpriteAnimation::nuiSpriteAnimation(const nglPath& rPath)
+: mFPS(10)
+{
+  std::list<nglPath> children;
+  rPath.GetChildren(&children);
+  children.sort(nglCompareNaturalPath);
+  nuiSpriteAnimation* pAnim1 = new nuiSpriteAnimation();
+  std::list<nglPath>::const_iterator it = children.begin();
+  std::list<nglPath>::const_iterator end = children.end();
+  for (; it != end; it++)
+  {
+    nuiSpriteFrame* pFrame = new nuiSpriteFrame();
+    pFrame->SetTexture(*it);
+    AddFrame(pFrame);
+  }
 }
 
 nuiSpriteAnimation::~nuiSpriteAnimation()
@@ -143,6 +162,9 @@ const nglString& nuiSpriteAnimation::GetName() const
                
 ///////////////////////////////////////////////////////
 // class nuiSpriteDef
+
+std::map<nglString, nuiSpriteDef*> nuiSpriteDef::mSpriteMap;
+
 nuiSpriteDef::nuiSpriteDef(const nglString& rSpriteDefName)
 {
   Init();
@@ -151,6 +173,32 @@ nuiSpriteDef::nuiSpriteDef(const nglString& rSpriteDefName)
   if (it != mSpriteMap.end())
     it->second->Release();
   mSpriteMap[rSpriteDefName] = this;
+}
+
+nuiSpriteDef::nuiSpriteDef(const nglPath& rSpriteDefPath)
+{
+  Init();
+  nglString name(rSpriteDefPath.GetNodeName());
+  SetObjectName(name);
+  std::map<nglString, nuiSpriteDef*>::const_iterator it = mSpriteMap.find(name);
+  if (it != mSpriteMap.end())
+    it->second->Release();
+  mSpriteMap[name] = this;
+
+  {
+    std::list<nglPath> children;
+    rSpriteDefPath.GetChildren(&children);
+    std::list<nglPath>::const_iterator it = children.begin();
+    std::list<nglPath>::const_iterator end = children.end();
+    for (; it != end; it++)
+    {
+      nuiSpriteAnimation* pAnim = new nuiSpriteAnimation(*it);
+      if (pAnim->GetFrameCount())
+        AddAnimation(pAnim);
+      else
+        delete pAnim;
+    }
+  }
 }
 
 nuiSpriteDef::~nuiSpriteDef()
@@ -207,7 +255,6 @@ nuiSprite::nuiSprite(const nglString& rSpriteDefName)
 nuiSprite::nuiSprite(nuiSpriteDef* pSpriteDef)
 : mpSpriteDef(pSpriteDef)
 {
-  mpParent = NULL;
   mpSpriteDef->Acquire();
   Init();
 }
@@ -228,8 +275,17 @@ void nuiSprite::Init()
     
   }
 
+  mpParent = NULL;
+  mpMatrixNodes = NULL;
   mCurrentAnimation = 0;
   mCurrentFrame = 0;
+  mSpeed = 1.0f;
+  
+  // Init Matrixes:
+  mpPosition = new nuiMatrixNode_Translation();
+  mpPivot = new nuiMatrixNode_Pivot();
+  AddMatrixNode(mpPosition);
+  AddMatrixNode(mpPivot);
 }
 
 const nuiSpriteDef* nuiSprite::GetDefinition() const
@@ -293,16 +349,15 @@ void nuiSprite::LoadIdentityMatrix()
 
 bool nuiSprite::IsMatrixIdentity() const
 {
-  return !mpMatrixNodes;
+  nuiMatrix m;
+  GetMatrix(m);
+  return !mpMatrixNodes || m.IsIdentity();
 }
 
 void nuiSprite::GetMatrix(nuiMatrix& rMatrix) const
 {
   CheckValid();
   rMatrix.SetIdentity();
-  if (IsMatrixIdentity())
-    return;
-  
   for (uint32 i = 0; i < mpMatrixNodes->size(); i++)
     mpMatrixNodes->at(i)->Apply(rMatrix);
 }
@@ -352,28 +407,98 @@ void nuiSprite::Draw(nuiDrawContext* pContext)
   nuiMatrix m;
   GetMatrix(m);
   pContext->PushMatrix();
+  pContext->MultMatrix(m);
   
   const nuiSpriteAnimation* pAnim = mpSpriteDef->GetAnimation(mCurrentAnimation);
   const nuiSpriteFrame* pFrame = pAnim->GetFrame(ToBelow(mCurrentFrame));
   nuiRect src(pFrame->GetRect());
   nuiRect dst(src);
   dst.Move(-pFrame->GetHandleX(), -pFrame->GetHandleY());
-  
+
+  pContext->EnableBlending(true);
+  pContext->SetBlendFunc(nuiBlendTransp);
+  pContext->SetFillColor(nuiColor(255, 255, 255));
   pContext->SetTexture(pFrame->GetTexture());
-  pContext->DrawImage(src, dst);
+  pContext->DrawImage(dst, src);
   
   pContext->PopMatrix();
+
+  for (int32 i = 0; i < mpChildren.size(); i++)
+    mpChildren[i]->Draw(pContext);
 }
+
+void nuiSprite::Animate(float passedtime)
+{
+  const nuiSpriteAnimation* pAnim = mpSpriteDef->GetAnimation(mCurrentAnimation);
+  float fps = pAnim->GetFPS();
+  NGL_ASSERT(fps != 0);
+  mCurrentFrame += passedtime * mSpeed * fps;
+  float count = pAnim->GetFrameCount();
+  while (mCurrentFrame >= count)
+    mCurrentFrame -= count;
+  
+  for (int32 i = 0; i < mpChildren.size(); i++)
+    mpChildren[i]->Animate(passedtime);
+}
+
+float nuiSprite::GetSpeed() const
+{
+  return mSpeed;
+}
+
+void nuiSprite::SetSpeed(float speed)
+{
+  mSpeed = speed;
+}
+
+void nuiSprite::SetPosition(float X, float Y)
+{
+  mpPosition->Set(X, Y, 0.0f);
+}
+
+void nuiSprite::SetAngle(float angle)
+{
+  mpPivot->SetAngle(angle);
+}
+
+void nuiSprite::SetX(float X)
+{
+  mpPosition->SetX(X);
+}
+
+void nuiSprite::SetY(float Y)
+{
+  mpPosition->SetY(Y);
+}
+
+float nuiSprite::GetX() const
+{
+  return mpPosition->GetX();
+}
+
+float nuiSprite::GetY() const
+{
+  return mpPosition->GetY();
+}
+
+float nuiSprite::GetAngle() const
+{
+  return mpPivot->GetAngle();
+}
+
 
 
 /////////////////////////////////////////////
 // class nuiSpriteView : public nuiSimpleContainer
 nuiSpriteView::nuiSpriteView()
 {
+  mLastTime = 0;
   if (SetObjectClass(_T("nuiSpriteView")))
   {
     // Init attributes
   }
+  
+  StartAutoDraw();
 }
 
 nuiSpriteView::~nuiSpriteView()
@@ -407,8 +532,20 @@ nuiRect nuiSpriteView::CalcIdealRect()
 
 bool nuiSpriteView::Draw(nuiDrawContext* pContext)
 {
+  nglTime now;
+  double t = 0;
+  if (mLastTime != 0)
+    t = now - mLastTime;
+  mLastTime = now;
+
   for (int32 i = 0; i < mpSprites.size(); i++)
+  {
+    mpSprites[i]->Animate(t);
     mpSprites[i]->Draw(pContext);
+    
+  }
+
+  return true;
 }
 
 

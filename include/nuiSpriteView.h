@@ -38,6 +38,7 @@ class nuiSpriteAnimation
 {
 public:
   nuiSpriteAnimation();
+  nuiSpriteAnimation(const nglPath& rPath);
   virtual ~nuiSpriteAnimation();
   
   int32 GetFrameCount() const;
@@ -62,6 +63,7 @@ class nuiSpriteDef : public nuiObject
 {
 public:
   nuiSpriteDef(const nglString& rObjectName);
+  nuiSpriteDef(const nglPath& rObjectPath);
   virtual ~nuiSpriteDef();
   
   void AddAnimation(nuiSpriteAnimation* pAnim);
@@ -96,7 +98,7 @@ public:
   int32 GetMatrixNodeCount() const;
   nuiMatrixNode* GetMatrixNode(uint32 index) const;
 
-  void LoadIdentityMatrix();
+  void LoadIdentityMatrix(); ///< Beware: you can't use Get/SetPosition/Angle/X or Y after that as the matrixes they use will gone.
   bool IsMatrixIdentity() const;
   void GetMatrix(nuiMatrix& rMatrix) const;
   nuiMatrix GetMatrix() const;
@@ -104,6 +106,19 @@ public:
   //@}
   
   void Draw(nuiDrawContext* pContext);
+
+  void Animate(float passedtime);
+
+  float GetSpeed() const;
+  void SetSpeed(float speed); ///< Default is 1
+
+  void SetPosition(float X, float Y);
+  void SetAngle(float angle);
+  void SetX(float X);
+  void SetY(float Y);
+  float GetX() const;
+  float GetY() const;
+  float GetAngle() const;
 protected:
               
   void Init();
@@ -116,6 +131,10 @@ protected:
   nuiSpriteDef* mpSpriteDef;
   int32 mCurrentAnimation;
   float mCurrentFrame;
+  float mSpeed;
+  
+  nuiMatrixNode_Translation* mpPosition;
+  nuiMatrixNode_Pivot* mpPivot;
 };
 
 
@@ -134,6 +153,7 @@ public:
   
 protected:
   std::vector<nuiSprite*> mpSprites;
+  double mLastTime;
 };
 
 
