@@ -78,13 +78,13 @@ nuiSize nuiNavigationController::GetAnimPositon() const
 }
 
 
-void nuiNavigationController::PushnuiViewController(nuiViewController* pnuiViewController, bool animated, TransitionType type)
+void nuiNavigationController::PushViewController(nuiViewController* pViewController, bool animated, TransitionType type)
 {
   // don't overlapp animations
   if (mPushed || mPoped)
     return;
   
-  mpIn = pnuiViewController;
+  mpIn = pViewController;
   mpOut  = NULL;
   
   mpIn->mAnimated = animated;
@@ -137,7 +137,7 @@ void nuiNavigationController::PushnuiViewController(nuiViewController* pnuiViewC
 
 
 
-nuiViewController* nuiNavigationController::PopnuiViewControllerAnimated(bool animated, TransitionType type)
+nuiViewController* nuiNavigationController::PopViewControllerAnimated(bool animated, TransitionType type)
 {
   // don't overlapp animations
   if (mPushed || mPoped)
@@ -145,7 +145,7 @@ nuiViewController* nuiNavigationController::PopnuiViewControllerAnimated(bool an
   
   if (mnuiViewControllers.size() < 1)
   {
-    NGL_OUT(_T("nuiNavigationController::popnuiViewControllerAnimated : nothing to pop"));
+    NGL_OUT(_T("nuiNavigationController::popViewControllerAnimated : nothing to pop"));
     return NULL;
   }
   
@@ -217,7 +217,7 @@ bool nuiNavigationController::SetRect(const nuiRect& rRect)
 
 
 
-std::vector<nuiViewController*> nuiNavigationController::PopTonuiViewController(nuiViewController* pnuiViewController, bool animated, TransitionType type)
+std::vector<nuiViewController*> nuiNavigationController::PopToViewController(nuiViewController* pViewController, bool animated, TransitionType type)
 {
   // don't overlapp animations
   if (mPushed || mPoped)
@@ -226,7 +226,7 @@ std::vector<nuiViewController*> nuiNavigationController::PopTonuiViewController(
 }
 
 
-std::vector<nuiViewController*> nuiNavigationController::PopToRootnuiViewControllerAnimated(bool animated, TransitionType type)
+std::vector<nuiViewController*> nuiNavigationController::PopToRootViewControllerAnimated(bool animated, TransitionType type)
 {
   // don't overlapp animations
   if (mPushed || mPoped)

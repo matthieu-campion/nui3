@@ -31,11 +31,11 @@ public:
   nuiNavigationController();
   virtual ~nuiNavigationController();
   
-  void PushnuiViewController(nuiViewController* pnuiViewController, bool animated=true, TransitionType type = eTransitionSlide);
-  nuiViewController* PopnuiViewControllerAnimated(bool animated=true, TransitionType type = eTransitionSlide); 
+  void PushViewController(nuiViewController* pViewController, bool animated=true, TransitionType type = eTransitionSlide);
+  nuiViewController* PopViewControllerAnimated(bool animated=true, TransitionType type = eTransitionSlide); 
   
-  std::vector<nuiViewController*> PopTonuiViewController(nuiViewController* pnuiViewController, bool animated=true, TransitionType type = eTransitionSlide); 
-  std::vector<nuiViewController*> PopToRootnuiViewControllerAnimated(bool animated=true, TransitionType type = eTransitionSlide); 
+  std::vector<nuiViewController*> PopToViewController(nuiViewController* pViewController, bool animated=true, TransitionType type = eTransitionSlide); 
+  std::vector<nuiViewController*> PopToRootViewControllerAnimated(bool animated=true, TransitionType type = eTransitionSlide); 
   
 protected:
   
