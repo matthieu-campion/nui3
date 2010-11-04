@@ -33,6 +33,12 @@ nuiNavigationController::nuiNavigationController()
   mpOut = NULL;
   mPushed = false;
   mPoped = false;
+  
+  mPending = true;
+  mpPendingViewController = NULL;
+  mPendingAnimated = false;
+  mPendingType = eTransitionNone;
+  
 }
 
 
@@ -67,6 +73,9 @@ void nuiNavigationController::InitAttributes()
 
 void nuiNavigationController::SetAnimPosition(nuiSize value)
 {
+  //LBDEBUG
+  NGL_OUT(_T("SetAnimPosition %.2f\n"));
+  
   mAnimPosition = value;
   UpdateLayout();
 }
@@ -83,6 +92,15 @@ void nuiNavigationController::PushViewController(nuiViewController* pViewControl
   // don't overlapp animations
   if (mPushed || mPoped)
     return;
+  
+  // store the push request if we're not connected to the top level yet
+  if (mPending)
+  {
+    mpPendingViewController = pViewController;
+    mPendingAnimated = animated;
+    mPendingType = type;
+    return;
+  }
   
   mpIn = pViewController;
   mpOut  = NULL;
@@ -195,7 +213,27 @@ nuiViewController* nuiNavigationController::PopViewControllerAnimated(bool anima
 bool nuiNavigationController::SetRect(const nuiRect& rRect)
 {
   if (!mPushed && !mPoped)
-    return nuiSimpleContainer::SetRect(rRect);
+    nuiSimpleContainer::SetRect(rRect);
+  else
+    nuiWidget::SetRect(rRect);
+ 
+  // pending operation, if any...
+  if (mPending)
+  {
+    mPending = false;
+    if (mpPendingViewController)
+    {
+      PushViewController(mpPendingViewController, mPendingAnimated, mPendingType);
+      mpPendingViewController = NULL;
+      mPendingAnimated = false;
+      mPendingType = eTransitionNone;
+    }
+  }
+
+  // nothing to layout right now...
+  if (!mPushed && !mPoped)
+    return true;
+
   
   nuiRect rect;
   rect.Set(mAnimPosition, rRect.Top(), rRect.GetWidth(), rRect.GetHeight());

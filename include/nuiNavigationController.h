@@ -60,10 +60,19 @@ private:
   
   bool mPushed;
   bool mPoped;
+
+  bool mPending;
+  nuiViewController* mpPendingViewController;
+  bool mPendingAnimated;
+  TransitionType mPendingType;
   
   nuiSize mAnimPosition;
   nuiEventSink<nuiNavigationController> mEventSink;
   
+  
+  
   static std::vector<nuiEasingMethod> mEasings;
   static std::vector<float> mDurations;
+  
+  
 };
