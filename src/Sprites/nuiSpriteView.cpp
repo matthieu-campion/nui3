@@ -292,12 +292,18 @@ void nuiSprite::Init()
   mCurrentAnimation = 0;
   mCurrentFrame = 0;
   mSpeed = 1.0f;
+  mScale = 1.0f;
+  mScaleX = 1.0f;
+  mScaleY = 1.0f;
+  
   
   // Init Matrixes:
+  mpScale = new nuiMatrixNode_Scale();
   mpPosition = new nuiMatrixNode_Translation();
   mpPivot = new nuiMatrixNode_Pivot();
   AddMatrixNode(mpPosition);
   AddMatrixNode(mpPivot);
+  AddMatrixNode(mpScale);
 }
 
 void nuiSprite::InitAttributes()
@@ -326,6 +332,18 @@ void nuiSprite::InitAttributes()
                 nuiMakeDelegate(this, &nuiSprite::GetAngle),
                 nuiMakeDelegate(this, &nuiSprite::SetAngle)));
   
+  AddAttribute(new nuiAttribute<float>
+               (nglString(_T("Scale")), nuiUnitCustom,
+                nuiMakeDelegate(this, &nuiSprite::GetScale),
+                nuiMakeDelegate(this, &nuiSprite::SetScale)));
+  AddAttribute(new nuiAttribute<float>
+               (nglString(_T("ScaleX")), nuiUnitCustom,
+                nuiMakeDelegate(this, &nuiSprite::GetScaleX),
+                nuiMakeDelegate(this, &nuiSprite::SetScaleX)));
+  AddAttribute(new nuiAttribute<float>
+               (nglString(_T("ScaleY")), nuiUnitCustom,
+                nuiMakeDelegate(this, &nuiSprite::GetScaleY),
+                nuiMakeDelegate(this, &nuiSprite::SetScaleY)));
 }
 
 
@@ -552,6 +570,38 @@ float nuiSprite::GetY() const
 float nuiSprite::GetAngle() const
 {
   return mpPivot->GetAngle();
+}
+
+
+
+float nuiSprite::GetScaleX() const
+{
+  return mpScale->GetX();
+}
+
+float nuiSprite::GetScaleY() const
+{
+  return mpScale->GetY();
+}
+
+float nuiSprite::GetScale() const
+{
+  return mpScale->GetScale();
+}
+
+void nuiSprite::SetScaleX(float value)
+{
+  mpScale->SetX(value);
+}
+
+void nuiSprite::SetScaleY(float value)
+{
+  mpScale->SetY(value);
+}
+
+void nuiSprite::SetScale(float value)
+{
+  mpScale->SetScale(value);
 }
 
 

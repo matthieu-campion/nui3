@@ -125,7 +125,15 @@ public:
 
   float GetAngle() const;
   void SetAngle(float angle);
-
+  
+  float GetScaleX() const;
+  float GetScaleY() const;
+  float GetScale() const;
+  void SetScaleX(float value);
+  void SetScaleY(float value);
+  void SetScale(float value);
+  
+  
 protected:
               
   void Init();
@@ -141,7 +149,11 @@ protected:
   int32 mCurrentAnimation;
   float mCurrentFrame;
   float mSpeed;
+  float mScale;
+  float mScaleX;
+  float mScaleY;
   
+  nuiMatrixNode_Scale* mpScale;
   nuiMatrixNode_Translation* mpPosition;
   nuiMatrixNode_Pivot* mpPivot;
   
