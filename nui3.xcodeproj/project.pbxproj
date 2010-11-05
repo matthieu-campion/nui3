@@ -9861,7 +9861,7 @@
 			name = Embeded;
 			sourceTree = "<group>";
 		};
-		BC92AC991282F8F1006A27B0 /* UIKit */ = {
+		BC92AC991282F8F1006A27B0 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
 				BC92ACA41282F90D006A27B0 /* nuiViewController.cpp */,
@@ -9871,7 +9871,7 @@
 				BC92ACA21282F90D006A27B0 /* nuiNavigationBar.cpp */,
 				BC92ACB71282F91C006A27B0 /* nuiNavigationBar.h */,
 			);
-			name = UIKit;
+			name = Navigation;
 			sourceTree = "<group>";
 		};
 		BCC51B9A0DC0D8FA00563B7E /* Introspector */ = {
@@ -11269,7 +11269,7 @@
 				E5816E040C3CECAB00902DFE /* Time */,
 				E5816E0D0C3CECAB00902DFE /* TreeViews */,
 				E5816E120C3CECAB00902DFE /* Utils */,
-				BC92AC991282F8F1006A27B0 /* UIKit */,
+				BC92AC991282F8F1006A27B0 /* Navigation */,
 				408D9BA11097433F00AEE78A /* Video */,
 				E5816E150C3CECAB00902DFE /* WidgetTree */,
 				E5816E1C0C3CECAB00902DFE /* Window */,
