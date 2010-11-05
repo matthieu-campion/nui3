@@ -20,6 +20,9 @@ nuiRenderArray::nuiRenderArray(uint32 mode, bool Static, bool _3dmesh, bool _sha
   mEnabled[eVertex] = true; // Enable Vertices by default
   mStatic = Static;
   mMode = mode;
+#ifdef GL_RECT
+  NGL_ASSERT(mode != GL_RECT); // GL_RECT Can
+#endif
   m3DMesh = _3dmesh;
   mShape = _shape;
 
