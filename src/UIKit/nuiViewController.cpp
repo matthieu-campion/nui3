@@ -28,8 +28,7 @@ nuiViewController::~nuiViewController()
 // virtual 
 void nuiViewController::ConnectTopLevel()
 {
-  if (!mAnimated)
-    ViewDidAppear();
+  ViewDidAppear();
 }
 
 

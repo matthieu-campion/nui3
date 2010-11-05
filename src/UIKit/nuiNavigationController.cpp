@@ -73,9 +73,6 @@ void nuiNavigationController::InitAttributes()
 
 void nuiNavigationController::SetAnimPosition(nuiSize value)
 {
-  //LBDEBUG
-  NGL_OUT(_T("SetAnimPosition %.2f\n"));
-  
   mAnimPosition = value;
   UpdateLayout();
 }
@@ -227,6 +224,7 @@ bool nuiNavigationController::SetRect(const nuiRect& rRect)
       mpPendingViewController = NULL;
       mPendingAnimated = false;
       mPendingType = eTransitionNone;
+      UpdateLayout();
     }
   }
 
