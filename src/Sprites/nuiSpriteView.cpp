@@ -242,6 +242,7 @@ int32 nuiSpriteDef::GetAnimation(const nglString& rName) const
   return 0;
 }
 
+
 nuiSpriteDef* nuiSpriteDef::GetSprite(const nglString& rName)
 {
   std::map<nglString, nuiSpriteDef*>::const_iterator it = mSpriteMap.find(rName);
@@ -283,7 +284,7 @@ void nuiSprite::Init()
 {
   if (SetObjectClass(_T("nuiSprite")))
   {
-    
+    InitAttributes();
   }
 
   mpParent = NULL;
@@ -298,6 +299,35 @@ void nuiSprite::Init()
   AddMatrixNode(mpPosition);
   AddMatrixNode(mpPivot);
 }
+
+void nuiSprite::InitAttributes()
+{
+  AddAttribute(new nuiAttribute<const nglString&>
+               (nglString(_T("Animation")), nuiUnitCustom,
+                nuiMakeDelegate(this, &nuiSprite::GetCurrentAnimationName),
+                nuiMakeDelegate(this, &nuiSprite::_SetAnimation)));
+  
+  AddAttribute(new nuiAttribute<float>
+               (nglString(_T("Speed")), nuiUnitCustom,
+                nuiMakeDelegate(this, &nuiSprite::GetSpeed),
+                nuiMakeDelegate(this, &nuiSprite::SetSpeed)));
+  
+  AddAttribute(new nuiAttribute<float>
+               (nglString(_T("X")), nuiUnitCustom,
+                nuiMakeDelegate(this, &nuiSprite::GetX),
+                nuiMakeDelegate(this, &nuiSprite::SetX)));
+  AddAttribute(new nuiAttribute<float>
+               (nglString(_T("Y")), nuiUnitCustom,
+                nuiMakeDelegate(this, &nuiSprite::GetY),
+                nuiMakeDelegate(this, &nuiSprite::SetY)));
+
+  AddAttribute(new nuiAttribute<float>
+               (nglString(_T("Angle")), nuiUnitCustom,
+                nuiMakeDelegate(this, &nuiSprite::GetAngle),
+                nuiMakeDelegate(this, &nuiSprite::SetAngle)));
+  
+}
+
 
 const nuiSpriteDef* nuiSprite::GetDefinition() const
 {
@@ -447,6 +477,21 @@ void nuiSprite::SetAnimation(int32 index)
 {
   NGL_ASSERT(index < mpSpriteDef->GetAnimationCount());
   mCurrentAnimation = index;
+}
+
+void nuiSprite::_SetAnimation(const nglString& rAnimationName)
+{
+  SetAnimation(rAnimationName);
+}
+
+
+
+const nglString& nuiSprite::GetCurrentAnimationName() const
+{
+  const nuiSpriteAnimation* pAnim = mpSpriteDef->GetAnimation(mCurrentAnimation);
+  if (!pAnim)
+    return nglString::Null;
+  return pAnim->GetName();
 }
 
 

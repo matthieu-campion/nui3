@@ -112,20 +112,25 @@ public:
 
   void SetAnimation(const nglString& rAnimationName);
   void SetAnimation(int32 index);
+  const nglString& GetCurrentAnimationName() const;
   
   float GetSpeed() const;
   void SetSpeed(float speed); ///< Default is 1
 
   void SetPosition(float X, float Y);
-  void SetAngle(float angle);
   void SetX(float X);
   void SetY(float Y);
   float GetX() const;
   float GetY() const;
+
   float GetAngle() const;
+  void SetAngle(float angle);
+
 protected:
               
   void Init();
+  void InitAttributes();
+
   static nuiMatrix mIdentityMatrix;
   std::vector<nuiMatrixNode*>* mpMatrixNodes;
   std::vector<nuiSprite*> mpChildren;
@@ -139,6 +144,11 @@ protected:
   
   nuiMatrixNode_Translation* mpPosition;
   nuiMatrixNode_Pivot* mpPivot;
+  
+private:
+  
+  void _SetAnimation(const nglString& rAnimationName);
+
 };
 
 
