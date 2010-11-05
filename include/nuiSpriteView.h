@@ -69,6 +69,7 @@ public:
   void AddAnimation(nuiSpriteAnimation* pAnim);
   int32 GetAnimationCount() const;
   const nuiSpriteAnimation* GetAnimation(int32 index) const;
+  const nuiSpriteAnimation* GetAnimation(const nglString& rName) const;
   
   static nuiSpriteDef* GetSprite(const nglString& rSpriteDefName);
   
@@ -109,6 +110,9 @@ public:
 
   void Animate(float passedtime);
 
+  void SetAnimation(const nglString& rAnimationName);
+  void SetAnimation(int32 index);
+  
   float GetSpeed() const;
   void SetSpeed(float speed); ///< Default is 1
 

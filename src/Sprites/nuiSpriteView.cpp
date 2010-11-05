@@ -231,6 +231,17 @@ const nuiSpriteAnimation* nuiSpriteDef::GetAnimation(int32 index) const
   return mpAnimations[index];
 }
 
+const nuiSpriteAnimation* GetAnimation(const nglString& rName) const
+{
+  for (int32 i = 0; i < GetAnimationCount(); i++)
+  {
+    nuiSpriteAnimation* pAnim = GetAnimation(i);
+    if (pAnim->GetName() == rName)
+      return pAnim;
+  }
+  return NULL;
+}
+
 nuiSpriteDef* nuiSpriteDef::GetSprite(const nglString& rName)
 {
   std::map<nglString, nuiSpriteDef*>::const_iterator it = mSpriteMap.find(rName);
@@ -426,6 +437,18 @@ void nuiSprite::Draw(nuiDrawContext* pContext)
   for (int32 i = 0; i < mpChildren.size(); i++)
     mpChildren[i]->Draw(pContext);
 }
+
+void nuiSprite::SetAnimation(const nglString& rAnimationName)
+{
+  SetAnimation(mpSpriteDef->GetAnimation(rAnimationName));
+}
+
+void nuiSprite::SetAnimation(int32 index)
+{
+  NGL_ASSERT(index < mpSpriteDef->GetAnimationCount());
+  mCurrentAnimation = index;
+}
+
 
 void nuiSprite::Animate(float passedtime)
 {
