@@ -231,15 +231,15 @@ const nuiSpriteAnimation* nuiSpriteDef::GetAnimation(int32 index) const
   return mpAnimations[index];
 }
 
-const nuiSpriteAnimation* GetAnimation(const nglString& rName) const
+int32 nuiSpriteDef::GetAnimation(const nglString& rName) const
 {
   for (int32 i = 0; i < GetAnimationCount(); i++)
   {
-    nuiSpriteAnimation* pAnim = GetAnimation(i);
+    const nuiSpriteAnimation* pAnim = GetAnimation(i);
     if (pAnim->GetName() == rName)
-      return pAnim;
+      return i;
   }
-  return NULL;
+  return 0;
 }
 
 nuiSpriteDef* nuiSpriteDef::GetSprite(const nglString& rName)

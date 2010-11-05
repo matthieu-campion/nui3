@@ -69,7 +69,7 @@ public:
   void AddAnimation(nuiSpriteAnimation* pAnim);
   int32 GetAnimationCount() const;
   const nuiSpriteAnimation* GetAnimation(int32 index) const;
-  const nuiSpriteAnimation* GetAnimation(const nglString& rName) const;
+  int32 GetAnimation(const nglString& rName) const;
   
   static nuiSpriteDef* GetSprite(const nglString& rSpriteDefName);
   
