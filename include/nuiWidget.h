@@ -140,7 +140,10 @@ public:
   bool HasUserWidth  () const;
   bool HasUserHeight () const;
   void ForceIdealRect(bool Force); ///< Always. Misuse of this flag can lead to very strange visual bugs so beware!
-
+  void SetFixedAspectRatio(bool set); ///< Change the aspect ratio layout policy. If the aspect ratio is fixed then the layout engine tries to keep the aspect ratio implied by the ideal rect requested by the widget. It is false by default for most widgets.
+  bool GetFixedAspectRatio() const; ///< Returns the aspect ratio layout policy. If the aspect ratio is fixed then the layout engine tries to keep the aspect ratio implied by the ideal rect requested by the widget. It is false by default for most widgets.
+  
+  
   
   /** @name Maximum and minimum IDEAL width and height. Setting these values will only change the IDEAL rectangle and it will NOT force the actual layout rectangle. Use the SetMax[Min]Width[Height] methods to actually force the layout. */
   //@{
@@ -652,7 +655,9 @@ protected:
   bool mDoneTrashed: 1;
   bool mCanRespectConstraint: 1;
   bool mInSetRect: 1;
-  bool mAutoClip;
+  bool mAutoClip: 1;
+  bool mFixedAspectRatio: 1;
+
 
   bool mClickThru: 1;
 

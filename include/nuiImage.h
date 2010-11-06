@@ -58,15 +58,11 @@ public:
   void SetColor(const nuiColor& rColor);
   const nuiColor& GetColor() const;
   
-  void SetFixedAspectRatio(bool set);
-  bool GetFixedAspectRatio() const;
-  
 protected:
   nuiTexture* mpTexture;
   nuiRect mTextureRect;
   nglPath mTexturePath;
   bool mUseAlpha;
-  bool mFixedAspectRatio;
 
   nuiBlendFunc mBlendFunc;
   
