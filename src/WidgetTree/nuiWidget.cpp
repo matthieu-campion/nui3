@@ -3010,19 +3010,42 @@ nuiRect nuiWidget::GetLayoutForRect(const nuiRect& rRect)
 
   // Prevent the widget from being bigger than the size provided by its parent:
   float w = r.GetWidth();
-  const float ww = rect.GetWidth();
+  float ww = rect.GetWidth();
   float h = r.GetHeight();
-  const float hh = rect.GetHeight();
+  float hh = rect.GetHeight();
   
   if (ww > w)
   {
-    rect.SetWidth(w);
+    ww = w;
   }
   if (hh > h)
   {
-    rect.SetHeight(h);
+    hh = h;
   }
-      
+
+  if (GetFixedAspectRatio())
+  {
+    // Give good ratio to keep things in proportions
+    float tw = mIdealRect.GetWidth();
+    float th = mIdealRect.GetHeight();
+    float r = 1.0f;
+    
+    if (hh < th)
+    {
+      r = hh / th;
+      ww = tw * r;
+    }
+    
+    if (ww < tw)
+    {
+      r = ww / tw;
+      hh = th * r;
+    }
+  }
+  
+  rect.SetWidth(ww);
+  rect.SetHeight(hh);
+  
   if (mPosition == nuiNoPosition)
   {
     rect.Move(r.Left(), r.Top());
@@ -3033,29 +3056,6 @@ nuiRect nuiWidget::GetLayoutForRect(const nuiRect& rRect)
   }
   else
   {
-    if (GetFixedAspectRatio())
-    {
-      // Give good ratio to keep things in proportions
-      float tw = mIdealRect.GetWidth();
-      float th = mIdealRect.GetHeight();
-      float r = 1.0f;
-      
-      if (h < th)
-      {
-        r = h / th;
-        w = tw * r;
-      }
-      
-      if (w < tw)
-      {
-        r = w / tw;
-        h = th * r;
-      }
-      
-      rect.SetWidth(w);
-      rect.SetHeight(h);
-    }
-
     if (mFillRule == nuiFill)
     {
       rect.SetPosition(mPosition, r);
