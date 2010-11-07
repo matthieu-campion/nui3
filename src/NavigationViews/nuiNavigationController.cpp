@@ -6,6 +6,7 @@
  */
 
 
+#include "nui.h"
 #include "nuiNavigationController.h"
 #include "nuiViewController.h"
 #include "nuiAttributeAnimation.h"

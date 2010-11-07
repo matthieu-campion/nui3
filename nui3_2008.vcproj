@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="nui3"
 	ProjectGUID="{A287CB70-6835-4961-BEF5-E2DCDBE2CED4}"
 	RootNamespace="nui3"
@@ -3261,6 +3261,34 @@
 				</File>
 				<File
 					RelativePath=".\include\nuiSpriteView.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="NavigationViews"
+				>
+				<File
+					RelativePath=".\src\NavigationViews\nuiNavigationBar.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiNavigationBar.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\NavigationViews\nuiNavigationController.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiNavigationController.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\NavigationViews\nuiViewController.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiViewController.h"
 					>
 				</File>
 			</Filter>
@@ -12951,11 +12979,11 @@
 						>
 					</File>
 					<File
-						RelativePath=".\deps\libcss\include\parserutils\errors.h"
+						RelativePath=".\deps\libcss\include\libcss\errors.h"
 						>
 					</File>
 					<File
-						RelativePath=".\deps\libcss\include\libcss\errors.h"
+						RelativePath=".\deps\libcss\include\parserutils\errors.h"
 						>
 					</File>
 					<File
@@ -12963,11 +12991,11 @@
 						>
 					</File>
 					<File
-						RelativePath=".\deps\libcss\include\libcss\functypes.h"
+						RelativePath=".\deps\libcss\include\parserutils\functypes.h"
 						>
 					</File>
 					<File
-						RelativePath=".\deps\libcss\include\parserutils\functypes.h"
+						RelativePath=".\deps\libcss\include\libcss\functypes.h"
 						>
 					</File>
 					<File
@@ -13011,11 +13039,11 @@
 						>
 					</File>
 					<File
-						RelativePath=".\deps\libcss\include\parserutils\types.h"
+						RelativePath=".\deps\libcss\include\libcss\types.h"
 						>
 					</File>
 					<File
-						RelativePath=".\deps\libcss\include\libcss\types.h"
+						RelativePath=".\deps\libcss\include\parserutils\types.h"
 						>
 					</File>
 					<File
@@ -15358,11 +15386,11 @@
 							>
 						</File>
 						<File
-							RelativePath=".\deps\libcss\src\select\properties.h"
+							RelativePath=".\deps\libcss\src\parse\properties\properties.h"
 							>
 						</File>
 						<File
-							RelativePath=".\deps\libcss\src\parse\properties\properties.h"
+							RelativePath=".\deps\libcss\src\select\properties.h"
 							>
 						</File>
 						<File
@@ -15386,15 +15414,15 @@
 							>
 						</File>
 						<File
-							RelativePath=".\deps\libcss\src\parse\properties\utils.h"
-							>
-						</File>
-						<File
 							RelativePath=".\deps\libcss\src\libparserutils\utils\utils.h"
 							>
 						</File>
 						<File
 							RelativePath=".\deps\libcss\src\utils\utils.h"
+							>
+						</File>
+						<File
+							RelativePath=".\deps\libcss\src\parse\properties\utils.h"
 							>
 						</File>
 					</Filter>
