@@ -107,6 +107,8 @@ nuiSpriteAnimation::nuiSpriteAnimation(const nglPath& rPath)
     pFrame->SetTexture(*it);
     AddFrame(pFrame);
   }
+  
+  SetName(rPath.GetNodeName());
 }
 
 nuiSpriteAnimation::~nuiSpriteAnimation()
