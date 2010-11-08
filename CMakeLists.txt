@@ -32,7 +32,7 @@ ELSE(LIBTIDY_FOUND)
   MESSAGE(FATAL_ERROR "The LibTidy library was not found.")
 ENDIF(LIBTIDY_FOUND)
 
-set(SOURCES 
+set(SOURCES
 
   graphics/DefaultDecoration.cpp
 
@@ -71,14 +71,14 @@ set(SOURCES
   src/Base/nuiToken.cpp
   src/Base/nuiTree.cpp
   src/Base/nuiXML.cpp
-  
+
   src/Bindings/nuiBindings.cpp
   src/Bindings/nuiScriptEngine.cpp
   src/Bindings/nuiSpiderMonkey.cpp
-  
+
   src/Animations/nuiAttributeAnimation.cpp
   src/Animations/nuiWidgetAnimation.cpp
-  
+
   src/Text/nuiEditLine.cpp
   src/Text/nuiEditText.cpp
   src/Text/nuiFormatedLabel.cpp
@@ -90,18 +90,18 @@ set(SOURCES
   src/Text/nuiScrollingLabel.cpp
   src/Text/nuiSpinnerLabel.cpp
   src/Text/nuiText.cpp
-  
+
   src/Text/HTML/nuiHTMLBox.cpp
   src/Text/HTML/nuiHTMLContext.cpp
   src/Text/HTML/nuiHTMLFont.cpp
   src/Text/HTML/nuiHTMLHeader.cpp
-  src/Text/HTML/nuiHTMLImage.cpp	    
+  src/Text/HTML/nuiHTMLImage.cpp
   src/Text/HTML/nuiHTMLItem.cpp
   src/Text/HTML/nuiHTMLStyle.cpp
   src/Text/HTML/nuiHTMLText.cpp
   src/Text/HTML/nuiHTMLTable.cpp
   src/Text/HTML/nuiWebCSS.cpp
-  
+
   src/Renderers/AAPrimitives.cpp
   src/Renderers/nuiArc.cpp
   src/Renderers/nuiContour.cpp
@@ -130,7 +130,9 @@ set(SOURCES
   src/Renderers/nuiTessellator.cpp
   src/Renderers/nuiTexture.cpp
   src/Renderers/nuiTextureHelpers.cpp
-  
+
+  src/Sprites/nuiSpriteView.cpp
+
   src/WidgetTree/nuiContainer.cpp
   src/WidgetTree/nuiMainWindow.cpp
   src/WidgetTree/nuiSimpleContainer.cpp
@@ -138,7 +140,7 @@ set(SOURCES
   src/WidgetTree/nuiWidget.cpp
   src/WidgetTree/nuiWindowManager.cpp
   src/WidgetTree/nuiMatrixNode.cpp
-  
+
   src/SimpleWidgets/nuiButton.cpp
   src/SimpleWidgets/nuiColorSelector.cpp
   src/SimpleWidgets/nuiComboBox.cpp
@@ -172,15 +174,15 @@ set(SOURCES
   src/SimpleWidgets/nuiTabBar.cpp
   src/SimpleWidgets/nuiToggleButton.cpp
   src/SimpleWidgets/nuiZoomBar.cpp
-  
+
   src/TreeViews/nuiColumnTreeView.cpp
   src/TreeViews/nuiPopupMenu.cpp
   src/TreeViews/nuiTreeView.cpp
-  
+
   src/Dialogs/nuiDialogSelectDirectory.cpp
   src/Dialogs/nuiDialogSelectFile.cpp
   src/Dialogs/nuiMessageBox.cpp
-  
+
   src/Layout/nuiAnimView.cpp
   src/Layout/nuiBackgroundPane.cpp
   src/Layout/nuiBox.cpp
@@ -206,11 +208,11 @@ set(SOURCES
   src/Layout/nuiVBox.cpp
   src/Layout/nuiWindow.cpp
   src/Layout/nuiZoomView.cpp
-  
+
   src/Audio/nuiAudioConvert.cpp
   src/Audio/nuiAudioDevice.cpp
   src/Audio/nuiAudioFifo.cpp
-  
+
   src/Attributes/nuiAttribute.cpp
   src/Attributes/nuiAttributeEditor.cpp
   src/Attributes/nuiBooleanAttributeEditor.cpp
@@ -224,9 +226,9 @@ set(SOURCES
   src/Attributes/nuiRangeAttributeEditor.cpp
   src/Attributes/nuiRangeKnobAttributeEditor.cpp
   src/Attributes/nuiRectAttributeEditor.cpp
-  src/Attributes/nuiSizeAttributeEditor  
+  src/Attributes/nuiSizeAttributeEditor
   src/Attributes/nuiStringAttributeEditor.cpp
-  
+
   src/Decorations/nuiBorderDecoration.cpp
   src/Decorations/nuiCheckerboardDecoration.cpp
   src/Decorations/nuiColorDecoration.cpp
@@ -236,10 +238,10 @@ set(SOURCES
   src/Decorations/nuiGradientDecoration.cpp
   src/Decorations/nuiImageDecoration.cpp
   src/Decorations/nuiMetaDecoration.cpp
-  src/Decorations/nuiStateDecoration.cpp  
+  src/Decorations/nuiStateDecoration.cpp
   src/Decorations/nuiTreeHandleDecoration.cpp
 
-  
+
   src/String/ConvertUTF.cpp
   src/String/nglString.cpp
   src/String/nglStringConv_iconv.cpp
@@ -247,9 +249,9 @@ set(SOURCES
 #  src/String/nuiRegExp.cpp
   src/String/nuiTranslator.cpp
   src/String/nuiUnicode.cpp
-  
+
   src/Math/nglMath.cpp
-  
+
   src/Stream/nglIFile.cpp
   src/Stream/nglIMemory.cpp
   src/Stream/nglIOFile.cpp
@@ -263,7 +265,7 @@ set(SOURCES
   src/Stream/Zip/ioapi.c
   src/Stream/Zip/unzip.c
   src/Stream/Zip/zip.c
-  src/Stream/nuiAsyncIStream.cpp  
+  src/Stream/nuiAsyncIStream.cpp
 
   src/Image/nglBitmapTools.cpp
   src/Image/nglImage.cpp
@@ -274,13 +276,13 @@ set(SOURCES
   src/Image/nglImagePNGCodec.cpp
   src/Image/nglImagePPMCodec.cpp
   src/Image/nglImageTGACodec.cpp
-  
+
   src/File/nglFile.cpp
   src/File/nglNativeVolume.cpp
   src/File/nglPath.cpp
   src/File/nglVolume.cpp
   src/File/nuiNativeResourceVolume.cpp
-  
+
   src/Font/ngl_default_font.cpp
   src/Font/nglFont.cpp
   src/Font/nglFontBase.cpp
@@ -290,15 +292,15 @@ set(SOURCES
   src/Font/nglFontTexCache.cpp
   src/Font/nuiPanose.cpp
   src/Font/nuiPhoneFontDB.cpp
-  
+
   src/Time/nglTime.cpp
   src/Time/nglTimer.cpp
-  
+
   src/Application/nglApplication.cpp
   src/Application/nglClipBoard.cpp
   src/Application/nglConsole.cpp
   src/Application/nglCPUInfo_x86.cpp
-  src/Application/nglCPUInfo.cpp 
+  src/Application/nglCPUInfo.cpp
   src/Application/nglDataObjects.cpp
   src/Application/nglDataTypesRegistry.cpp
   src/Application/nglDragAndDropObjects.cpp
@@ -307,7 +309,7 @@ set(SOURCES
   src/Application/nglMimeSource.cpp
   src/Application/nglModule.cpp
   src/Application/nuiLocale.cpp
-  
+
   src/Window/nglContext.cpp
   src/Window/nglDeviceInfo.cpp
   src/Window/nglInputDevice.cpp
@@ -318,22 +320,22 @@ set(SOURCES
   src/Window/nuiGLUTBridge.cpp
   src/Window/nuiMainMenu.cpp
   src/Window/glext/ngl_glext_table.cpp
-  
+
   src/Utils/ngl3DSLoader.cpp
   src/Utils/nglError.cpp
   src/Utils/nuiCSV.cpp
   src/Utils/nuiParser.cpp
   src/Utils/nuiRSS.cpp
   src/Utils/nuiStopWatch.cpp
-  
+
   src/Threading/nglLightLock.cpp
   src/Threading/nglLock.cpp
   src/Threading/nglReaderWriterLock.cpp
   src/Threading/nglThreadChecker.cpp
   src/Threading/nglThread.cpp
-  
+
   src/Net/nuiHTTP.cpp
-  
+
   src/Introspector/nuiDecorationInspector.cpp
   src/Introspector/nuiFontInspector.cpp
   src/Introspector/nuiIntrospector.cpp
@@ -341,6 +343,10 @@ set(SOURCES
   src/Introspector/nuiThreadInspector.cpp
   src/Introspector/nuiTextureInspector.cpp
   src/Introspector/nuiWidgetInspector.cpp
+
+  src/NavigationViews/nuiNavigationBar.cpp
+  src/NavigationViews/nuiNavigationController.cpp
+  src/NavigationViews/nuiViewController.cpp
 )
 
 include_directories(
@@ -358,7 +364,7 @@ include_directories(
   .
 )
 
-add_definitions( 
+add_definitions(
   -DFT_CONFIG_OPTION_SYSTEM_ZLIB
   -DNGL_STATIC_BUILD
   -D_DEBUG
@@ -376,19 +382,19 @@ ENDIF(${CMAKE_SYSTEM} MATCHES "Linux")
 IF (${LINUX})
   MESSAGE("Linux Build")
   add_definitions( -D__LINUX__ )
-  include_directories( 
+  include_directories(
     src/Application/Unix
     src/Window/Unix
   )
-  set(SOURCES 
+  set(SOURCES
     src/Time/Unix/nglTimer_Unix.cpp
-    
+
     src/Application/Unix/nglApplication_Unix.cpp
     src/Application/Unix/nglClipBoard_Unix.cpp
     src/Application/Unix/nglDataObjects_Unix.cpp
     src/Application/Unix/nglKernel_Unix.cpp
     src/Application/Unix/nglModule_Unix.cpp
-    
+
     src/Window/Unix/nglContext_Unix.cpp
     src/Window/Unix/nglEvent_Unix.cpp
     src/Window/Unix/nglInputDevice_Unix.cpp
@@ -396,17 +402,17 @@ IF (${LINUX})
     src/Window/Unix/nglVideoMode_Unix.cpp
     src/Window/Unix/nglWindow_Unix.cpp
     src/Window/Unix/nuiMainMenu_Unix.cpp
-    
+
     src/Threading/posix/nglCondition_posix.cpp
     src/Threading/posix/nglCriticalSection_posix.cpp
     src/Threading/posix/nglSyncEvent_posix.cpp
-    
+
     src/Net/Unix/nuiHTTP_Unix.cpp
     src/Net/Unix/nuiURL_Unix.cpp
-    
+
   # src/File/Unix/nglFile_Unix.cpp
     src/File/Unix/nglPath_Unix.cpp
-    
+
    src/Threading/posix/nglThread_posix.cpp
    src/Application/Unix/nglConsole_Unix.cpp
 
@@ -423,8 +429,8 @@ IF (${LINUX})
 ELSEIF (${WINDOWS})
   add_definitions( -DWIN32 -DNGL_USE_WIN32_MMTIMER)
 
-  include_directories( 
-  deps/GL 
+  include_directories(
+  deps/GL
   src/Application/Win
   src/Window/Win
   deps/expat/lib
@@ -436,9 +442,9 @@ ELSEIF (${WINDOWS})
   deps/libcss/include
   )
 
-  set(${SOURCES} ${SOURCES} 
+  set(${SOURCES} ${SOURCES}
     src/Time/Unix/nglTimer_WinXX.cpp
-    
+
     src/Application/WinX/ngl.cpp
     src/Application/WinX/nglDataObjects_WinXX.cpp
     src/Application/WinX/nglExceptionTrace_WinXX.cpp
@@ -450,18 +456,18 @@ ELSEIF (${WINDOWS})
     src/Application/Win/nglConsole_WinXX.cpp
     src/Application/Win/nglKernel_WinXX.cpp
     src/Application/WinX/nglModule_WinXX.cpp
-    
+
     src/Window/Win/nglContext_WinXX.cpp
     src/Window/Win/nglEvent_WinXX.cpp
     src/Window/Win/nglInputDevice_WinXX.cpp
     src/Window/Win/nglInputDevice_DirectX.cpp
     src/Window/Win/nglVideoMode_WinXX.cpp
     src/Window/Win/nglWindow_WinXX.cpp
-    
+
     src/Threading/win32/nglCriticalSection_win32.cpp
     src/Threading/win32/nglSyncEvent_win32.cpp
     src/Threading/win32/nglThread_win32.cpp
-    
+
     src/Net/Win/nuiHTTP_WinXX.cpp
   )
 ENDIF (${LINUX})
