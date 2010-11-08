@@ -316,9 +316,14 @@ void nuiSprite::InitAttributes()
                 nuiMakeDelegate(this, &nuiSprite::_SetAnimation)));
   
   AddAttribute(new nuiAttribute<float>
-               (nglString(_T("Speed")), nuiUnitCustom,
+               (nglString(_T("FrameTime")), nuiUnitCustom,
                 nuiMakeDelegate(this, &nuiSprite::GetSpeed),
                 nuiMakeDelegate(this, &nuiSprite::SetSpeed)));
+  
+  AddAttribute(new nuiAttribute<float>
+               (nglString(_T("FrameTime")), nuiUnitCustom,
+                nuiMakeDelegate(this, &nuiSprite::GetFrameTime),
+                nuiMakeDelegate(this, &nuiSprite::SetFrameTime)));
   
   AddAttribute(new nuiAttribute<float>
                (nglString(_T("X")), nuiUnitCustom,
