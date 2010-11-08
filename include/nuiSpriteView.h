@@ -113,6 +113,9 @@ public:
   void SetAnimation(const nglString& rAnimationName);
   void SetAnimation(int32 index);
   const nglString& GetCurrentAnimationName() const;
+
+  void SetFrameTime(float framepos);
+  float GetFrameTime() const;
   
   float GetSpeed() const;
   void SetSpeed(float speed); ///< Default is 1
