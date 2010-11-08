@@ -6,6 +6,7 @@
  */
 
 
+#include "nui.h"
 #include "nuiNavigationController.h"
 #include "nuiViewController.h"
 #include "nuiAttributeAnimation.h"
@@ -132,7 +133,8 @@ void nuiNavigationController::PushViewController(nuiViewController* pViewControl
     pAnim->SetEndValue(0);
     pAnim->SetEasing(mEasings[type]);
     pAnim->SetDuration(mDurations[type]);
-    mEventSink.Connect(pAnim->AnimStop, &nuiNavigationController::OnViewPushStop, (void*)pAnim);
+    pAnim->SetDeleteOnStop(true);
+    mEventSink.Connect(pAnim->AnimStop, &nuiNavigationController::OnViewPushStop);
     pAnim->Play();
   }
   else 
@@ -188,7 +190,8 @@ nuiViewController* nuiNavigationController::PopViewControllerAnimated(bool anima
     pAnim->SetEndValue(0);
     pAnim->SetEasing(mEasings[type]);
     pAnim->SetDuration(mDurations[type]);
-    mEventSink.Connect(pAnim->AnimStop, &nuiNavigationController::OnViewPopStop, (void*)pAnim);
+    pAnim->SetDeleteOnStop(true);
+    mEventSink.Connect(pAnim->AnimStop, &nuiNavigationController::OnViewPopStop);
     pAnim->Play();
   }
   else
@@ -275,9 +278,6 @@ std::vector<nuiViewController*> nuiNavigationController::PopToRootViewController
 
 void nuiNavigationController::OnViewPushStop(const nuiEvent& rEvent)
 {
-  nuiAttributeAnimation* pAnim = (nuiAttributeAnimation*)rEvent.mpUser;
-  delete pAnim;
-  
   mPushed = false;
   mPoped = false;
   
@@ -295,9 +295,6 @@ void nuiNavigationController::OnViewPushStop(const nuiEvent& rEvent)
 
 void nuiNavigationController::OnViewPopStop(const nuiEvent& rEvent)
 {
-  nuiAttributeAnimation* pAnim = (nuiAttributeAnimation*)rEvent.mpUser;
-  delete pAnim;
-  
   mPushed = false;
   mPoped = false;
   

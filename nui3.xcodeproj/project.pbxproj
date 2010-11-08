@@ -8108,9 +8108,9 @@
 		BC8383520E8D36E500023E3A /* nuiBackgroundPane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiBackgroundPane.h; path = include/nuiBackgroundPane.h; sourceTree = SOURCE_ROOT; };
 		BC915AF80DE187E80044CD59 /* nuiImageDecoration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiImageDecoration.cpp; path = src/Decorations/nuiImageDecoration.cpp; sourceTree = SOURCE_ROOT; };
 		BC915AFB0DE187F80044CD59 /* nuiImageDecoration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiImageDecoration.h; path = include/nuiImageDecoration.h; sourceTree = SOURCE_ROOT; };
-		BC92ACA21282F90D006A27B0 /* nuiNavigationBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiNavigationBar.cpp; path = src/UIKit/nuiNavigationBar.cpp; sourceTree = SOURCE_ROOT; };
-		BC92ACA31282F90D006A27B0 /* nuiNavigationController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiNavigationController.cpp; path = src/UIKit/nuiNavigationController.cpp; sourceTree = SOURCE_ROOT; };
-		BC92ACA41282F90D006A27B0 /* nuiViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiViewController.cpp; path = src/UIKit/nuiViewController.cpp; sourceTree = SOURCE_ROOT; };
+		BC92ACA21282F90D006A27B0 /* nuiNavigationBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiNavigationBar.cpp; path = NavigationViews/nuiNavigationBar.cpp; sourceTree = "<group>"; };
+		BC92ACA31282F90D006A27B0 /* nuiNavigationController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiNavigationController.cpp; path = NavigationViews/nuiNavigationController.cpp; sourceTree = "<group>"; };
+		BC92ACA41282F90D006A27B0 /* nuiViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiViewController.cpp; path = NavigationViews/nuiViewController.cpp; sourceTree = "<group>"; };
 		BC92ACB71282F91C006A27B0 /* nuiNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiNavigationBar.h; path = include/nuiNavigationBar.h; sourceTree = SOURCE_ROOT; };
 		BC92ACB81282F91C006A27B0 /* nuiNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiNavigationController.h; path = include/nuiNavigationController.h; sourceTree = SOURCE_ROOT; };
 		BC92ACC51282F923006A27B0 /* nuiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiViewController.h; path = include/nuiViewController.h; sourceTree = SOURCE_ROOT; };
@@ -9861,7 +9861,7 @@
 			name = Embeded;
 			sourceTree = "<group>";
 		};
-		BC92AC991282F8F1006A27B0 /* Navigation */ = {
+		BC92AC991282F8F1006A27B0 /* NavigationViews */ = {
 			isa = PBXGroup;
 			children = (
 				BC92ACA41282F90D006A27B0 /* nuiViewController.cpp */,
@@ -9871,7 +9871,7 @@
 				BC92ACA21282F90D006A27B0 /* nuiNavigationBar.cpp */,
 				BC92ACB71282F91C006A27B0 /* nuiNavigationBar.h */,
 			);
-			name = Navigation;
+			name = NavigationViews;
 			sourceTree = "<group>";
 		};
 		BCC51B9A0DC0D8FA00563B7E /* Introspector */ = {
@@ -11269,7 +11269,7 @@
 				E5816E040C3CECAB00902DFE /* Time */,
 				E5816E0D0C3CECAB00902DFE /* TreeViews */,
 				E5816E120C3CECAB00902DFE /* Utils */,
-				BC92AC991282F8F1006A27B0 /* Navigation */,
+				BC92AC991282F8F1006A27B0 /* NavigationViews */,
 				408D9BA11097433F00AEE78A /* Video */,
 				E5816E150C3CECAB00902DFE /* WidgetTree */,
 				E5816E1C0C3CECAB00902DFE /* Window */,
