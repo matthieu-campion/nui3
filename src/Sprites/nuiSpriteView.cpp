@@ -514,6 +514,17 @@ const nglString& nuiSprite::GetCurrentAnimationName() const
   return pAnim->GetName();
 }
 
+void nuiSprite::SetFrameTime(float framepos)
+{
+  NGL_ASSERT(mCurrentFrame < mpSpriteDef->GetAnimation(mCurrentAnimation)->GetFrameCount());
+  mCurrentFrame = framepos;
+}
+
+float nuiSprite::GetFrameTime() const
+{
+  return mCurrentFrame;
+}
+
 
 void nuiSprite::Animate(float passedtime)
 {
