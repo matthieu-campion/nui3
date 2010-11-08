@@ -38,8 +38,10 @@ extern void nglInitExceptionHandler();
 nglKernel::nglKernel()
 : mKernelEventSink(this)
 {
+#ifdef _DEBUG_
 #if (defined WIN32) && (!defined _WIN64)
   nglInitExceptionHandler();
+#endif
 #endif
 
   Init();

@@ -69,6 +69,7 @@ public:
   void AddAnimation(nuiSpriteAnimation* pAnim);
   int32 GetAnimationCount() const;
   const nuiSpriteAnimation* GetAnimation(int32 index) const;
+  int32 GetAnimation(const nglString& rName) const;
   
   static nuiSpriteDef* GetSprite(const nglString& rSpriteDefName);
   
@@ -109,19 +110,38 @@ public:
 
   void Animate(float passedtime);
 
+  void SetAnimation(const nglString& rAnimationName);
+  void SetAnimation(int32 index);
+  const nglString& GetCurrentAnimationName() const;
+
+  void SetFrameTime(float framepos);
+  float GetFrameTime() const;
+  
   float GetSpeed() const;
   void SetSpeed(float speed); ///< Default is 1
 
   void SetPosition(float X, float Y);
-  void SetAngle(float angle);
   void SetX(float X);
   void SetY(float Y);
   float GetX() const;
   float GetY() const;
+
   float GetAngle() const;
+  void SetAngle(float angle);
+  
+  float GetScaleX() const;
+  float GetScaleY() const;
+  float GetScale() const;
+  void SetScaleX(float value);
+  void SetScaleY(float value);
+  void SetScale(float value);
+  
+  
 protected:
               
   void Init();
+  void InitAttributes();
+
   static nuiMatrix mIdentityMatrix;
   std::vector<nuiMatrixNode*>* mpMatrixNodes;
   std::vector<nuiSprite*> mpChildren;
@@ -132,9 +152,18 @@ protected:
   int32 mCurrentAnimation;
   float mCurrentFrame;
   float mSpeed;
+  float mScale;
+  float mScaleX;
+  float mScaleY;
   
+  nuiMatrixNode_Scale* mpScale;
   nuiMatrixNode_Translation* mpPosition;
   nuiMatrixNode_Pivot* mpPivot;
+  
+private:
+  
+  void _SetAnimation(const nglString& rAnimationName);
+
 };
 
 

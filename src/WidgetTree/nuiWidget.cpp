@@ -165,6 +165,7 @@ void nuiWidget::InitDefaultValues()
   mInSetRect = false;
   mInTransition = 0;
   mpLayoutAnimation = NULL;
+  mFixedAspectRatio = false;
   mAutoClip = true;
 }
 
@@ -555,6 +556,13 @@ void nuiWidget::InitAttributes()
                 nuiMakeDelegate(this, &nuiWidget::_GetDebug),
                 nuiMakeDelegate(this, &nuiWidget::SetDebug)
                 ));
+  
+  AddAttribute(new nuiAttribute<bool>
+               (nglString(_T("FixedAspectRatio")), nuiUnitOnOff,
+                nuiMakeDelegate(this, &nuiWidget::GetFixedAspectRatio), 
+                nuiMakeDelegate(this, &nuiWidget::SetFixedAspectRatio)));
+  
+  
 }
 
  
@@ -2971,6 +2979,17 @@ void nuiWidget::UpdateSurface(const nuiRect& rRect)
   }
 }
 
+void nuiWidget::SetFixedAspectRatio(bool set)
+{
+  mFixedAspectRatio = set;
+  InvalidateLayout();
+}
+
+bool nuiWidget::GetFixedAspectRatio() const
+{
+  return mFixedAspectRatio;
+}
+
 nuiRect nuiWidget::GetLayoutForRect(const nuiRect& rRect)
 {
   CheckValid();
@@ -2989,18 +3008,43 @@ nuiRect nuiWidget::GetLayoutForRect(const nuiRect& rRect)
   if (mMinHeight >= 0)
     rect.SetHeight(MAX(r.GetHeight(), mMinHeight));
 
+  // Prevent the widget from being bigger than the size provided by its parent:
+  float w = r.GetWidth();
+  float ww = rect.GetWidth();
+  float h = r.GetHeight();
+  float hh = rect.GetHeight();
+  
+  if (ww > w)
   {
-    // Prevent the widget from being bigger than the size provided by its parent:
-    const float w = r.GetWidth();
-    const float ww = rect.GetWidth();
-    const float h = r.GetHeight();
-    const float hh = rect.GetHeight();
-    
-    if (ww > w)
-      rect.SetWidth(w);
-    if (hh > h)
-      rect.SetHeight(h);
+    ww = w;
   }
+  if (hh > h)
+  {
+    hh = h;
+  }
+
+  if (GetFixedAspectRatio())
+  {
+    // Give good ratio to keep things in proportions
+    float tw = mIdealRect.GetWidth();
+    float th = mIdealRect.GetHeight();
+    float r = 1.0f;
+    
+    if (hh < th)
+    {
+      r = hh / th;
+      ww = tw * r;
+    }
+    
+    if (ww < tw)
+    {
+      r = ww / tw;
+      hh = th * r;
+    }
+  }
+  
+  rect.SetWidth(ww);
+  rect.SetHeight(hh);
   
   if (mPosition == nuiNoPosition)
   {
@@ -3024,7 +3068,7 @@ nuiRect nuiWidget::GetLayoutForRect(const nuiRect& rRect)
     {
       nuiRect rct = r;
       float ratio,rratio,rw,rh;
-      ratio  = (float)rct.GetWidth()    / (float)rct.GetHeight();
+      ratio  = (float)rct.GetWidth()  / (float)rct.GetHeight();
       rratio = (float)rect.GetWidth() / (float)rect.GetHeight();
 
       if (ratio < rratio) 

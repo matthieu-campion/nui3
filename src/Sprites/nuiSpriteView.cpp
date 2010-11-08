@@ -107,6 +107,8 @@ nuiSpriteAnimation::nuiSpriteAnimation(const nglPath& rPath)
     pFrame->SetTexture(*it);
     AddFrame(pFrame);
   }
+  
+  SetName(rPath.GetNodeName());
 }
 
 nuiSpriteAnimation::~nuiSpriteAnimation()
@@ -231,6 +233,18 @@ const nuiSpriteAnimation* nuiSpriteDef::GetAnimation(int32 index) const
   return mpAnimations[index];
 }
 
+int32 nuiSpriteDef::GetAnimation(const nglString& rName) const
+{
+  for (int32 i = 0; i < GetAnimationCount(); i++)
+  {
+    const nuiSpriteAnimation* pAnim = GetAnimation(i);
+    if (pAnim->GetName() == rName)
+      return i;
+  }
+  return 0;
+}
+
+
 nuiSpriteDef* nuiSpriteDef::GetSprite(const nglString& rName)
 {
   std::map<nglString, nuiSpriteDef*>::const_iterator it = mSpriteMap.find(rName);
@@ -272,7 +286,7 @@ void nuiSprite::Init()
 {
   if (SetObjectClass(_T("nuiSprite")))
   {
-    
+    InitAttributes();
   }
 
   mpParent = NULL;
@@ -280,13 +294,60 @@ void nuiSprite::Init()
   mCurrentAnimation = 0;
   mCurrentFrame = 0;
   mSpeed = 1.0f;
+  mScale = 1.0f;
+  mScaleX = 1.0f;
+  mScaleY = 1.0f;
+  
   
   // Init Matrixes:
+  mpScale = new nuiMatrixNode_Scale();
   mpPosition = new nuiMatrixNode_Translation();
   mpPivot = new nuiMatrixNode_Pivot();
   AddMatrixNode(mpPosition);
   AddMatrixNode(mpPivot);
+  AddMatrixNode(mpScale);
 }
+
+void nuiSprite::InitAttributes()
+{
+  AddAttribute(new nuiAttribute<const nglString&>
+               (nglString(_T("Animation")), nuiUnitCustom,
+                nuiMakeDelegate(this, &nuiSprite::GetCurrentAnimationName),
+                nuiMakeDelegate(this, &nuiSprite::_SetAnimation)));
+  
+  AddAttribute(new nuiAttribute<float>
+               (nglString(_T("Speed")), nuiUnitCustom,
+                nuiMakeDelegate(this, &nuiSprite::GetSpeed),
+                nuiMakeDelegate(this, &nuiSprite::SetSpeed)));
+  
+  AddAttribute(new nuiAttribute<float>
+               (nglString(_T("X")), nuiUnitCustom,
+                nuiMakeDelegate(this, &nuiSprite::GetX),
+                nuiMakeDelegate(this, &nuiSprite::SetX)));
+  AddAttribute(new nuiAttribute<float>
+               (nglString(_T("Y")), nuiUnitCustom,
+                nuiMakeDelegate(this, &nuiSprite::GetY),
+                nuiMakeDelegate(this, &nuiSprite::SetY)));
+
+  AddAttribute(new nuiAttribute<float>
+               (nglString(_T("Angle")), nuiUnitCustom,
+                nuiMakeDelegate(this, &nuiSprite::GetAngle),
+                nuiMakeDelegate(this, &nuiSprite::SetAngle)));
+  
+  AddAttribute(new nuiAttribute<float>
+               (nglString(_T("Scale")), nuiUnitCustom,
+                nuiMakeDelegate(this, &nuiSprite::GetScale),
+                nuiMakeDelegate(this, &nuiSprite::SetScale)));
+  AddAttribute(new nuiAttribute<float>
+               (nglString(_T("ScaleX")), nuiUnitCustom,
+                nuiMakeDelegate(this, &nuiSprite::GetScaleX),
+                nuiMakeDelegate(this, &nuiSprite::SetScaleX)));
+  AddAttribute(new nuiAttribute<float>
+               (nglString(_T("ScaleY")), nuiUnitCustom,
+                nuiMakeDelegate(this, &nuiSprite::GetScaleY),
+                nuiMakeDelegate(this, &nuiSprite::SetScaleY)));
+}
+
 
 const nuiSpriteDef* nuiSprite::GetDefinition() const
 {
@@ -427,6 +488,44 @@ void nuiSprite::Draw(nuiDrawContext* pContext)
     mpChildren[i]->Draw(pContext);
 }
 
+void nuiSprite::SetAnimation(const nglString& rAnimationName)
+{
+  SetAnimation(mpSpriteDef->GetAnimation(rAnimationName));
+}
+
+void nuiSprite::SetAnimation(int32 index)
+{
+  NGL_ASSERT(index < mpSpriteDef->GetAnimationCount());
+  mCurrentAnimation = index;
+}
+
+void nuiSprite::_SetAnimation(const nglString& rAnimationName)
+{
+  SetAnimation(rAnimationName);
+}
+
+
+
+const nglString& nuiSprite::GetCurrentAnimationName() const
+{
+  const nuiSpriteAnimation* pAnim = mpSpriteDef->GetAnimation(mCurrentAnimation);
+  if (!pAnim)
+    return nglString::Null;
+  return pAnim->GetName();
+}
+
+void nuiSprite::SetFrameTime(float framepos)
+{
+  NGL_ASSERT(mCurrentFrame < mpSpriteDef->GetAnimation(mCurrentAnimation)->GetFrameCount());
+  mCurrentFrame = framepos;
+}
+
+float nuiSprite::GetFrameTime() const
+{
+  return mCurrentFrame;
+}
+
+
 void nuiSprite::Animate(float passedtime)
 {
   const nuiSpriteAnimation* pAnim = mpSpriteDef->GetAnimation(mCurrentAnimation);
@@ -484,6 +583,38 @@ float nuiSprite::GetY() const
 float nuiSprite::GetAngle() const
 {
   return mpPivot->GetAngle();
+}
+
+
+
+float nuiSprite::GetScaleX() const
+{
+  return mpScale->GetX();
+}
+
+float nuiSprite::GetScaleY() const
+{
+  return mpScale->GetY();
+}
+
+float nuiSprite::GetScale() const
+{
+  return mpScale->GetScale();
+}
+
+void nuiSprite::SetScaleX(float value)
+{
+  mpScale->SetX(value);
+}
+
+void nuiSprite::SetScaleY(float value)
+{
+  mpScale->SetY(value);
+}
+
+void nuiSprite::SetScale(float value)
+{
+  mpScale->SetScale(value);
 }
 
 
