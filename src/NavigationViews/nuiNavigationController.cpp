@@ -85,11 +85,11 @@ nuiSize nuiNavigationController::GetAnimPositon() const
 }
 
 
-void nuiNavigationController::PushViewController(nuiViewController* pViewController, bool animated, TransitionType type)
+bool nuiNavigationController::PushViewController(nuiViewController* pViewController, bool animated, TransitionType type)
 {
   // don't overlapp animations
   if (mPushed || mPoped)
-    return;
+    return false;
   
   // store the push request if we're not connected to the top level yet
   if (mPending)
@@ -97,7 +97,7 @@ void nuiNavigationController::PushViewController(nuiViewController* pViewControl
     mpPendingViewController = pViewController;
     mPendingAnimated = animated;
     mPendingType = type;
-    return;
+    return true;
   }
   
   mpIn = pViewController;
@@ -149,6 +149,7 @@ void nuiNavigationController::PushViewController(nuiViewController* pViewControl
     DelChild(mpOut);
   }
   
+  return true;
 }
 
 
