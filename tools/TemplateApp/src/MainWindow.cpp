@@ -11,18 +11,6 @@
 #include "nuiCSS.h"
 #include "nuiVBox.h"
 
-//#ifdef _WIN32_
-//#include "nuiAudioDevice_DirectSound.h"
-//#endif
-//
-//#ifdef _CARBON_
-//#include "nuiAudioDevice_CoreAudio.h"
-//#endif
-//
-//#ifdef _UIKIT_
-//#include "nuiAudioDevice.h"
-//#endif
-//
 #include "nuiAudioDevice.h"
 
 /*
@@ -41,6 +29,7 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
 #else
   LoadCSS(_T("rsrc:/css/style.css"));
 #endif
+
 }
 
 MainWindow::~MainWindow()
@@ -97,9 +86,16 @@ void MainWindow::OnCreation()
   {
     nglString name = nuiAudioDeviceManager::Get().GetDeviceName(i);
     name.Add(_T(" (")).Add(nuiAudioDeviceManager::Get().GetDeviceAPIName(i)).Add(_T(")"));
+    #ifdef _WIN32_
+    nglString tmp;
+    tmp.Format(_T("AudioDevice : %ls\n"), name.GetChars());
+    OutputDebugString(tmp.GetChars());
+    #else
     NGL_OUT(_T("AudioDevice : %ls\n"), name.GetChars());
+    #endif
   }  
 }
+
 
 
 
