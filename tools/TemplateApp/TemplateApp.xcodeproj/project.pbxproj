@@ -31,6 +31,8 @@
 		BC3FD92411D17F0B00447DD4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC3FD91C11D17F0B00447DD4 /* CoreGraphics.framework */; };
 		BC3FD92611D17F0B00447DD4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC3FD91E11D17F0B00447DD4 /* Foundation.framework */; };
 		BCAF116611D20BD5001B2A28 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCAF116511D20BD5001B2A28 /* UIKit.framework */; };
+		BCB4089B1288496E00E9D79A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC3FD91A11D17F0B00447DD4 /* AudioToolbox.framework */; };
+		BCB408AF1288498A00E9D79A /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCB408AE1288498A00E9D79A /* CoreAudio.framework */; };
 		BCD448B811D2121C00BEF227 /* libnui3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCD448B111D2120F00BEF227 /* libnui3.a */; };
 		BCD448B911D2122100BEF227 /* libnui3D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCD448AF11D2120F00BEF227 /* libnui3D.a */; };
 		BCD448BE11D2123000BEF227 /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61A9DFEF0B83433800BC506C /* Application.cpp */; };
@@ -48,6 +50,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		BC39712712883D4D00061EFE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCD448A211D2120F00BEF227 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E5A8D1D311E33A54004E14CE;
+			remoteInfo = nui3CocoaD;
+		};
+		BC39712912883D4D00061EFE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCD448A211D2120F00BEF227 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E5D643E51209AB9C009C26A9;
+			remoteInfo = nui3Cocoa;
+		};
 		BCD448AE11D2120F00BEF227 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BCD448A211D2120F00BEF227 /* nui3.xcodeproj */;
@@ -61,13 +77,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = E542A1AE0C3F0A5900225219;
 			remoteInfo = nui3;
-		};
-		BCD448B211D2120F00BEF227 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BCD448A211D2120F00BEF227 /* nui3.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = E592C5140EFE8CCC00340B35;
-			remoteInfo = "nui3D cocoa";
 		};
 		BCD448B411D2120F00BEF227 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -114,8 +123,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		61A9DFBF0B833E9600BC506C /* TemplateApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TemplateApp.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		61A9DFC90B833EF200BC506C /* TemplateAppD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TemplateAppD.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		61A9DFBF0B833E9600BC506C /* TemplateApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TemplateApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		61A9DFC90B833EF200BC506C /* TemplateAppD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TemplateAppD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61A9DFD20B833F1500BC506C /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
 		61A9DFD30B833F1500BC506C /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
 		61A9DFD40B833F1500BC506C /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
@@ -133,9 +142,10 @@
 		BC3FD91C11D17F0B00447DD4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = /System/Library/Frameworks/CoreGraphics.framework; sourceTree = "<absolute>"; };
 		BC3FD91E11D17F0B00447DD4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		BCAF116511D20BD5001B2A28 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		BCB408AE1288498A00E9D79A /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = /System/Library/Frameworks/CoreAudio.framework; sourceTree = "<absolute>"; };
 		BCD448A211D2120F00BEF227 /* nui3.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nui3.xcodeproj; path = ../../../nui3/nui3.xcodeproj; sourceTree = SOURCE_ROOT; };
-		BCD448D611D2142C00BEF227 /* TemplateAppD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TemplateAppD.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		BCD448D811D2142C00BEF227 /* TemplateAppD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TemplateAppD.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BCD448D611D2142C00BEF227 /* TemplateAppD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TemplateAppD.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BCD448D811D2142C00BEF227 /* TemplateAppD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TemplateAppD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCD4495611D23BCE00BEF227 /* style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = style.css; path = resources/css/style.css; sourceTree = SOURCE_ROOT; };
 		BCD4495711D23BF900BEF227 /* style-Common.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = "style-Common.css"; path = "resources/css/style-Common.css"; sourceTree = SOURCE_ROOT; };
 		BCD4495811D23BF900BEF227 /* style-iPhone.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = "style-iPhone.css"; path = "resources/css/style-iPhone.css"; sourceTree = SOURCE_ROOT; };
@@ -165,6 +175,8 @@
 				BC3FD81511D17E7C00447DD4 /* CoreServices.framework in Frameworks */,
 				BC3FD81611D17E7D00447DD4 /* OpenGL.framework in Frameworks */,
 				BCD448B911D2122100BEF227 /* libnui3D.a in Frameworks */,
+				BCB4089B1288496E00E9D79A /* AudioToolbox.framework in Frameworks */,
+				BCB408AF1288498A00E9D79A /* CoreAudio.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -254,6 +266,7 @@
 				61A9DFD50B833F1500BC506C /* Carbon.framework */,
 				61A9DFD60B833F1500BC506C /* OpenGL.framework */,
 				61A9DFD30B833F1500BC506C /* CoreFoundation.framework */,
+				BCB408AE1288498A00E9D79A /* CoreAudio.framework */,
 			);
 			name = "frameworks osx";
 			sourceTree = "<group>";
@@ -295,9 +308,10 @@
 			children = (
 				BCD448AF11D2120F00BEF227 /* libnui3D.a */,
 				BCD448B111D2120F00BEF227 /* libnui3.a */,
-				BCD448B311D2120F00BEF227 /* libnui3D cocoa.a */,
 				BCD448B511D2120F00BEF227 /* libnuiPhoneD.a */,
 				BCD448B711D2120F00BEF227 /* libnuiPhone.a */,
+				BC39712812883D4D00061EFE /* libnui3CocoaD.a */,
+				BC39712A12883D4D00061EFE /* libnui3Cocoa.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -319,7 +333,7 @@
 			dependencies = (
 				BCD4499B11D23E8700BEF227 /* PBXTargetDependency */,
 			);
-			name = "TemplateApp";
+			name = TemplateApp;
 			productName = Temp;
 			productReference = 61A9DFBF0B833E9600BC506C /* TemplateApp.app */;
 			productType = "com.apple.product-type.application";
@@ -337,7 +351,7 @@
 			dependencies = (
 				BCD4499D11D23E8F00BEF227 /* PBXTargetDependency */,
 			);
-			name = "TemplateAppD";
+			name = TemplateAppD;
 			productName = Tempd;
 			productReference = 61A9DFC90B833EF200BC506C /* TemplateAppD.app */;
 			productType = "com.apple.product-type.application";
@@ -385,7 +399,14 @@
 			isa = PBXProject;
 			buildConfigurationList = 61A9DE400B833C9200BC506C /* Build configuration list for PBXProject "TemplateApp" */;
 			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
 			hasScannedForEncodings = 0;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
 			mainGroup = 61A9DE3D0B833C9200BC506C;
 			productRefGroup = 61A9DFB50B833DE500BC506C /* Products */;
 			projectDirPath = "";
@@ -406,6 +427,20 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		BC39712812883D4D00061EFE /* libnui3CocoaD.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnui3CocoaD.a;
+			remoteRef = BC39712712883D4D00061EFE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BC39712A12883D4D00061EFE /* libnui3Cocoa.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnui3Cocoa.a;
+			remoteRef = BC39712912883D4D00061EFE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		BCD448AF11D2120F00BEF227 /* libnui3D.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -418,13 +453,6 @@
 			fileType = archive.ar;
 			path = libnui3.a;
 			remoteRef = BCD448B011D2120F00BEF227 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		BCD448B311D2120F00BEF227 /* libnui3D cocoa.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libnui3D cocoa.a";
-			remoteRef = BCD448B211D2120F00BEF227 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		BCD448B511D2120F00BEF227 /* libnuiPhoneD.a */ = {
@@ -597,14 +625,14 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = s;
-				INFOPLIST_FILE = "TemplateApp.plist";
+				INFOPLIST_FILE = TemplateApp.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-liconv",
 					"-lz",
 				);
 				PREBINDING = YES;
-				PRODUCT_NAME = "TemplateApp";
+				PRODUCT_NAME = TemplateApp;
 				STRIP_INSTALLED_PRODUCT = YES;
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -627,14 +655,14 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = _DEBUG;
-				INFOPLIST_FILE = "TemplateApp.plist";
+				INFOPLIST_FILE = TemplateApp.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-liconv",
 					"-lz",
 				);
 				PREBINDING = YES;
-				PRODUCT_NAME = "TemplateAppD";
+				PRODUCT_NAME = TemplateAppD;
 				WARNING_CFLAGS = (
 					"-Wmost",
 					"-Wno-four-char-constants",
@@ -657,14 +685,16 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PREPROCESSOR_DEFINITIONS = NUI_IPHONE;
+				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = "TemplateApp-iPhone.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				OTHER_LDFLAGS = (
 					"-liconv",
 					"-lz",
 				);
 				PREBINDING = YES;
-				PRODUCT_NAME = "TemplateAppD";
+				PRODUCT_NAME = TemplateAppD;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos4.1;
 				WARNING_CFLAGS = (
@@ -692,14 +722,16 @@
 					NUI_IPHONE,
 					_DEBUG,
 				);
+				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = "TemplateApp-iPhone.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				OTHER_LDFLAGS = (
 					"-liconv",
 					"-lz",
 				);
 				PREBINDING = YES;
-				PRODUCT_NAME = "TemplateAppD";
+				PRODUCT_NAME = TemplateAppD;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos4.1;
 				WARNING_CFLAGS = (

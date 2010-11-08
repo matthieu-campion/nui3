@@ -21,7 +21,7 @@ public:
   
 protected:
   
-  bool OnButtonClick(const nuiEvent& rEvent);
+  void OnButtonClick(const nuiEvent& rEvent);
   
 private:
   
