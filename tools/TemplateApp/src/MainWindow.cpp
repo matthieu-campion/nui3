@@ -11,6 +11,7 @@
 #include "nuiCSS.h"
 #include "nuiVBox.h"
 
+#include "nuiAudioDevice.h"
 
 /*
  * MainWindow
@@ -28,6 +29,7 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
 #else
   LoadCSS(_T("rsrc:/css/style.css"));
 #endif
+
 }
 
 MainWindow::~MainWindow()
@@ -70,18 +72,42 @@ void MainWindow::OnCreation()
   mMyLabel->SetPosition(nuiCenter);
   pLayoutBox->AddCell(mMyLabel);
   pLayoutBox->SetCellExpand(pLayoutBox->GetNbCells()-1, nuiExpandShrinkAndGrow);
+  
+  
+  
+  
+  
+  // something else : let's enumerate available audio devices
+  // (this way, the template has everything it needs to compile and link audio source code)
+  // see output debug console to read the results
+  nuiAudioDeviceManager& deviceMan = nuiAudioDeviceManager::Get();
+  uint32 devs = nuiAudioDeviceManager::Get().GetDeviceCount();
+  for (uint32 i = 0; i < devs; i++)
+  {
+    nglString name = nuiAudioDeviceManager::Get().GetDeviceName(i);
+    name.Add(_T(" (")).Add(nuiAudioDeviceManager::Get().GetDeviceAPIName(i)).Add(_T(")"));
+    #ifdef _WIN32_
+    nglString tmp;
+    tmp.Format(_T("AudioDevice : %ls\n"), name.GetChars());
+    OutputDebugString(tmp.GetChars());
+    #else
+    NGL_OUT(_T("AudioDevice : %ls\n"), name.GetChars());
+    #endif
+  }  
 }
 
 
 
-bool MainWindow::OnButtonClick(const nuiEvent& rEvent)
+
+
+
+
+void MainWindow::OnButtonClick(const nuiEvent& rEvent)
 {
   nglString message;
   double currentTime = nglTime();
   message.Format(_T("click time: %.2f"), currentTime);
   mMyLabel->SetText(message);
-  
-  return true; // means the event is caught and not broadcasted
 }
 
 

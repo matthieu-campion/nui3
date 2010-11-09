@@ -123,8 +123,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		61A9DFBF0B833E9600BC506C /* TemplateApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TemplateApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		61A9DFC90B833EF200BC506C /* TemplateAppD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TemplateAppD.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		61A9DFBF0B833E9600BC506C /* NavigationViews.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NavigationViews.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		61A9DFC90B833EF200BC506C /* NavigationViewsD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NavigationViewsD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61A9DFD20B833F1500BC506C /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
 		61A9DFD30B833F1500BC506C /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
 		61A9DFD40B833F1500BC506C /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
@@ -143,12 +143,10 @@
 		BC3FD91E11D17F0B00447DD4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		BCAF116511D20BD5001B2A28 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		BCB408AE1288498A00E9D79A /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = /System/Library/Frameworks/CoreAudio.framework; sourceTree = "<absolute>"; };
-		BCD448A211D2120F00BEF227 /* nui3.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nui3.xcodeproj; path = ../../../nui3/nui3.xcodeproj; sourceTree = SOURCE_ROOT; };
-		BCD448D611D2142C00BEF227 /* TemplateAppD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TemplateAppD.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		BCD448D811D2142C00BEF227 /* TemplateAppD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TemplateAppD.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BCD448A211D2120F00BEF227 /* nui3.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nui3.xcodeproj; path = ../../nui3.xcodeproj; sourceTree = SOURCE_ROOT; };
+		BCD448D611D2142C00BEF227 /* NavigationViewsD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NavigationViewsD.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BCD448D811D2142C00BEF227 /* NavigationViewsD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NavigationViewsD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCD4495611D23BCE00BEF227 /* style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = style.css; path = resources/css/style.css; sourceTree = SOURCE_ROOT; };
-		BCD4495711D23BF900BEF227 /* style-Common.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = "style-Common.css"; path = "resources/css/style-Common.css"; sourceTree = SOURCE_ROOT; };
-		BCD4495811D23BF900BEF227 /* style-iPhone.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = "style-iPhone.css"; path = "resources/css/style-iPhone.css"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -250,10 +248,10 @@
 		61A9DFB50B833DE500BC506C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				61A9DFBF0B833E9600BC506C /* TemplateApp.app */,
-				61A9DFC90B833EF200BC506C /* TemplateAppD.app */,
-				BCD448D611D2142C00BEF227 /* TemplateAppD.app */,
-				BCD448D811D2142C00BEF227 /* TemplateAppD.app */,
+				61A9DFBF0B833E9600BC506C /* NavigationViews.app */,
+				61A9DFC90B833EF200BC506C /* NavigationViewsD.app */,
+				BCD448D611D2142C00BEF227 /* NavigationViewsD.app */,
+				BCD448D811D2142C00BEF227 /* NavigationViewsD.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -297,8 +295,6 @@
 			isa = PBXGroup;
 			children = (
 				BCD4495611D23BCE00BEF227 /* style.css */,
-				BCD4495811D23BF900BEF227 /* style-iPhone.css */,
-				BCD4495711D23BF900BEF227 /* style-Common.css */,
 			);
 			name = css;
 			sourceTree = "<group>";
@@ -319,9 +315,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		61A9DFBE0B833E9600BC506C /* TemplateApp */ = {
+		61A9DFBE0B833E9600BC506C /* NavigationViews */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 61A9DFC20B833E9600BC506C /* Build configuration list for PBXNativeTarget "TemplateApp" */;
+			buildConfigurationList = 61A9DFC20B833E9600BC506C /* Build configuration list for PBXNativeTarget "NavigationViews" */;
 			buildPhases = (
 				61A9DFBB0B833E9600BC506C /* Resources */,
 				61A9DFBC0B833E9600BC506C /* Sources */,
@@ -333,14 +329,14 @@
 			dependencies = (
 				BCD4499B11D23E8700BEF227 /* PBXTargetDependency */,
 			);
-			name = TemplateApp;
+			name = NavigationViews;
 			productName = Temp;
-			productReference = 61A9DFBF0B833E9600BC506C /* TemplateApp.app */;
+			productReference = 61A9DFBF0B833E9600BC506C /* NavigationViews.app */;
 			productType = "com.apple.product-type.application";
 		};
-		61A9DFC80B833EF200BC506C /* TemplateAppD */ = {
+		61A9DFC80B833EF200BC506C /* NavigationViewsD */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 61A9DFCC0B833EF300BC506C /* Build configuration list for PBXNativeTarget "TemplateAppD" */;
+			buildConfigurationList = 61A9DFCC0B833EF300BC506C /* Build configuration list for PBXNativeTarget "NavigationViewsD" */;
 			buildPhases = (
 				61A9DFC60B833EF200BC506C /* Sources */,
 				61A9DFC70B833EF200BC506C /* Frameworks */,
@@ -351,14 +347,14 @@
 			dependencies = (
 				BCD4499D11D23E8F00BEF227 /* PBXTargetDependency */,
 			);
-			name = TemplateAppD;
+			name = NavigationViewsD;
 			productName = Tempd;
-			productReference = 61A9DFC90B833EF200BC506C /* TemplateAppD.app */;
+			productReference = 61A9DFC90B833EF200BC506C /* NavigationViewsD.app */;
 			productType = "com.apple.product-type.application";
 		};
-		BC3FD50611D1055900447DD4 /* TemplateApp iPhone */ = {
+		BC3FD50611D1055900447DD4 /* NavigationViews iPhone */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BC3FD51411D1055900447DD4 /* Build configuration list for PBXNativeTarget "TemplateApp iPhone" */;
+			buildConfigurationList = BC3FD51411D1055900447DD4 /* Build configuration list for PBXNativeTarget "NavigationViews iPhone" */;
 			buildPhases = (
 				BC3FD50911D1055900447DD4 /* Sources */,
 				BC3FD50C11D1055900447DD4 /* Frameworks */,
@@ -369,14 +365,14 @@
 			dependencies = (
 				BCD4499F11D23E9800BEF227 /* PBXTargetDependency */,
 			);
-			name = "TemplateApp iPhone";
+			name = "NavigationViews iPhone";
 			productName = Tempd;
-			productReference = BCD448D811D2142C00BEF227 /* TemplateAppD.app */;
+			productReference = BCD448D811D2142C00BEF227 /* NavigationViewsD.app */;
 			productType = "com.apple.product-type.application";
 		};
-		BCD448BC11D2123000BEF227 /* TemplateAppD iPhone */ = {
+		BCD448BC11D2123000BEF227 /* NavigationViewsD iPhone */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BCD448CB11D2123000BEF227 /* Build configuration list for PBXNativeTarget "TemplateAppD iPhone" */;
+			buildConfigurationList = BCD448CB11D2123000BEF227 /* Build configuration list for PBXNativeTarget "NavigationViewsD iPhone" */;
 			buildPhases = (
 				BCD448BD11D2123000BEF227 /* Sources */,
 				BCD448C011D2123000BEF227 /* Frameworks */,
@@ -387,9 +383,9 @@
 			dependencies = (
 				BCD449A111D23E9E00BEF227 /* PBXTargetDependency */,
 			);
-			name = "TemplateAppD iPhone";
+			name = "NavigationViewsD iPhone";
 			productName = Tempd;
-			productReference = BCD448D611D2142C00BEF227 /* TemplateAppD.app */;
+			productReference = BCD448D611D2142C00BEF227 /* NavigationViewsD.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -397,7 +393,7 @@
 /* Begin PBXProject section */
 		61A9DE3F0B833C9200BC506C /* Project object */ = {
 			isa = PBXProject;
-			buildConfigurationList = 61A9DE400B833C9200BC506C /* Build configuration list for PBXProject "TemplateApp" */;
+			buildConfigurationList = 61A9DE400B833C9200BC506C /* Build configuration list for PBXProject "NavigationViews" */;
 			compatibilityVersion = "Xcode 3.1";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -418,10 +414,10 @@
 			);
 			projectRoot = "";
 			targets = (
-				61A9DFBE0B833E9600BC506C /* TemplateApp */,
-				61A9DFC80B833EF200BC506C /* TemplateAppD */,
-				BC3FD50611D1055900447DD4 /* TemplateApp iPhone */,
-				BCD448BC11D2123000BEF227 /* TemplateAppD iPhone */,
+				61A9DFBE0B833E9600BC506C /* NavigationViews */,
+				61A9DFC80B833EF200BC506C /* NavigationViewsD */,
+				BC3FD50611D1055900447DD4 /* NavigationViews iPhone */,
+				BCD448BC11D2123000BEF227 /* NavigationViewsD iPhone */,
 			);
 		};
 /* End PBXProject section */
@@ -494,7 +490,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "rsync -rC ./resources/ --exclude \".*\" \"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"\n../../../nui3/tools/make_rc.py resources resource.rc\necho 0 ICON \\\"resources/icon.ico\\\" >> resource.rc\n";
+			shellScript = "rsync -rC ./resources/ --exclude \".*\" \"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"\n../../tools/make_rc.py resources resource.rc\necho 0 ICON \\\"resources/icon.ico\\\" >> resource.rc\n";
 		};
 		BC6A09BC0EF92EBF00881ACF /* Copy Resources Script */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -508,7 +504,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "rsync -rC ./resources/ --exclude \".*\" \"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"\n../../../nui3/tools/make_rc.py resources resource.rc\necho 0 ICON \\\"resources/icon.ico\\\" >> resource.rc\n";
+			shellScript = "rsync -rC ./resources/ --exclude \".*\" \"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"\n../../tools/make_rc.py resources resource.rc\necho 0 ICON \\\"resources/icon.ico\\\" >> resource.rc\n";
 		};
 		BC6A09BE0EF92F1B00881ACF /* Copy Resources Script */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -522,7 +518,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "rsync -rC ./resources/ --exclude \".*\" \"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"\n../../../nui3/tools/make_rc.py resources resource.rc\necho 0 ICON \\\"resources/icon.ico\\\" >> resource.rc\n";
+			shellScript = "rsync -rC ./resources/ --exclude \".*\" \"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"\n../../tools/make_rc.py resources resource.rc\necho 0 ICON \\\"resources/icon.ico\\\" >> resource.rc\n";
 		};
 		BCD448CA11D2123000BEF227 /* Copy Resources Script */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -536,7 +532,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "rsync -rC ./resources/ --exclude \".*\" \"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"\n../../../nui3/tools/make_rc.py resources resource.rc\necho 0 ICON \\\"resources/icon.ico\\\" >> resource.rc\n";
+			shellScript = "rsync -rC ./resources/ --exclude \".*\" \"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"\n../../tools/make_rc.py resources resource.rc\necho 0 ICON \\\"resources/icon.ico\\\" >> resource.rc\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -607,8 +603,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
-				HEADER_SEARCH_PATHS = ../../../nui3/include;
-				INFOPLIST_FILE = TemplateApp.plist;
+				HEADER_SEARCH_PATHS = ../../include;
+				INFOPLIST_FILE = NavigationViews.plist;
 			};
 			name = Default;
 		};
@@ -625,14 +621,14 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = s;
-				INFOPLIST_FILE = TemplateApp.plist;
+				INFOPLIST_FILE = NavigationViews.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-liconv",
 					"-lz",
 				);
 				PREBINDING = YES;
-				PRODUCT_NAME = TemplateApp;
+				PRODUCT_NAME = NavigationViews;
 				STRIP_INSTALLED_PRODUCT = YES;
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -655,14 +651,14 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = _DEBUG;
-				INFOPLIST_FILE = TemplateApp.plist;
+				INFOPLIST_FILE = NavigationViews.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-liconv",
 					"-lz",
 				);
 				PREBINDING = YES;
-				PRODUCT_NAME = TemplateAppD;
+				PRODUCT_NAME = NavigationViewsD;
 				WARNING_CFLAGS = (
 					"-Wmost",
 					"-Wno-four-char-constants",
@@ -686,7 +682,7 @@
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PREPROCESSOR_DEFINITIONS = NUI_IPHONE;
 				GCC_THUMB_SUPPORT = NO;
-				INFOPLIST_FILE = "TemplateApp-iPhone.plist";
+				INFOPLIST_FILE = "NavigationViews-iPhone.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				OTHER_LDFLAGS = (
@@ -694,7 +690,7 @@
 					"-lz",
 				);
 				PREBINDING = YES;
-				PRODUCT_NAME = TemplateAppD;
+				PRODUCT_NAME = NavigationViewsD;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos4.1;
 				WARNING_CFLAGS = (
@@ -723,7 +719,7 @@
 					_DEBUG,
 				);
 				GCC_THUMB_SUPPORT = NO;
-				INFOPLIST_FILE = "TemplateApp-iPhone.plist";
+				INFOPLIST_FILE = "NavigationViews-iPhone.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				OTHER_LDFLAGS = (
@@ -731,7 +727,7 @@
 					"-lz",
 				);
 				PREBINDING = YES;
-				PRODUCT_NAME = TemplateAppD;
+				PRODUCT_NAME = NavigationViewsD;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos4.1;
 				WARNING_CFLAGS = (
@@ -747,7 +743,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		61A9DE400B833C9200BC506C /* Build configuration list for PBXProject "TemplateApp" */ = {
+		61A9DE400B833C9200BC506C /* Build configuration list for PBXProject "NavigationViews" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				61A9DE410B833C9200BC506C /* Default */,
@@ -755,7 +751,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Default;
 		};
-		61A9DFC20B833E9600BC506C /* Build configuration list for PBXNativeTarget "TemplateApp" */ = {
+		61A9DFC20B833E9600BC506C /* Build configuration list for PBXNativeTarget "NavigationViews" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				61A9DFC30B833E9600BC506C /* Default */,
@@ -763,7 +759,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Default;
 		};
-		61A9DFCC0B833EF300BC506C /* Build configuration list for PBXNativeTarget "TemplateAppD" */ = {
+		61A9DFCC0B833EF300BC506C /* Build configuration list for PBXNativeTarget "NavigationViewsD" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				61A9DFCD0B833EF300BC506C /* Default */,
@@ -771,7 +767,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Default;
 		};
-		BC3FD51411D1055900447DD4 /* Build configuration list for PBXNativeTarget "TemplateApp iPhone" */ = {
+		BC3FD51411D1055900447DD4 /* Build configuration list for PBXNativeTarget "NavigationViews iPhone" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BC3FD51511D1055900447DD4 /* Default */,
@@ -779,7 +775,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Default;
 		};
-		BCD448CB11D2123000BEF227 /* Build configuration list for PBXNativeTarget "TemplateAppD iPhone" */ = {
+		BCD448CB11D2123000BEF227 /* Build configuration list for PBXNativeTarget "NavigationViewsD iPhone" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BCD448CC11D2123000BEF227 /* Default */,

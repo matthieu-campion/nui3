@@ -31,7 +31,7 @@ public:
   nuiNavigationController();
   virtual ~nuiNavigationController();
   
-  void PushViewController(nuiViewController* pViewController, bool animated=true, TransitionType type = eTransitionSlide);
+  bool PushViewController(nuiViewController* pViewController, bool animated=true, TransitionType type = eTransitionSlide);
   nuiViewController* PopViewControllerAnimated(bool animated=true, TransitionType type = eTransitionSlide); 
   
   std::vector<nuiViewController*> PopToViewController(nuiViewController* pViewController, bool animated=true, TransitionType type = eTransitionSlide); 
