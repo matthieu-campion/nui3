@@ -160,6 +160,8 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 
 	[self initializeKeyboard];
 
+  [self makeKeyAndVisible];
+  
   return self;
 }
 
@@ -1024,6 +1026,8 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
 
 nglWindow::~nglWindow()
 {
+  if (mpUIWindow)
+    [mpUIWindow release];
 }
 
 
