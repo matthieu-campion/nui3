@@ -261,13 +261,13 @@ nuiSpriteDef* nuiSpriteDef::GetSprite(const nglString& rName)
 nuiMatrix nuiSprite::mIdentityMatrix;
 
 nuiSprite::nuiSprite(const nglString& rSpriteDefName)
-: mpSpriteDef(nuiSpriteDef::GetSprite(rSpriteDefName))
+: mpSpriteDef(nuiSpriteDef::GetSprite(rSpriteDefName)), mColor(255, 255, 255), mBlendFunc(nuiBlendTransp)
 {
   Init();
 }
 
 nuiSprite::nuiSprite(nuiSpriteDef* pSpriteDef)
-: mpSpriteDef(pSpriteDef)
+: mpSpriteDef(pSpriteDef), mColor(255, 255, 255), mBlendFunc(nuiBlendTransp)
 {
   mpSpriteDef->Acquire();
   Init();
@@ -297,7 +297,6 @@ void nuiSprite::Init()
   mScale = 1.0f;
   mScaleX = 1.0f;
   mScaleY = 1.0f;
-  
   
   // Init Matrixes:
   mpScale = new nuiMatrixNode_Scale();
@@ -351,6 +350,10 @@ void nuiSprite::InitAttributes()
                (nglString(_T("ScaleY")), nuiUnitCustom,
                 nuiMakeDelegate(this, &nuiSprite::GetScaleY),
                 nuiMakeDelegate(this, &nuiSprite::SetScaleY)));
+  AddAttribute(new nuiAttribute<const nuiColor&>
+               (nglString(_T("Color")), nuiUnitColor,
+                nuiMakeDelegate(this, &nuiSprite::GetColor),
+                nuiMakeDelegate(this, &nuiSprite::SetColor)));
 }
 
 
@@ -482,8 +485,8 @@ void nuiSprite::Draw(nuiDrawContext* pContext)
   dst.Move(-pFrame->GetHandleX(), -pFrame->GetHandleY());
 
   pContext->EnableBlending(true);
-  pContext->SetBlendFunc(nuiBlendTransp);
-  pContext->SetFillColor(nuiColor(255, 255, 255));
+  pContext->SetBlendFunc(mBlendFunc);
+  pContext->SetFillColor(mColor);
   pContext->SetTexture(pFrame->GetTexture());
   pContext->DrawImage(dst, src);
   
@@ -622,6 +625,25 @@ void nuiSprite::SetScale(float value)
   mpScale->SetScale(value);
 }
 
+void nuiSprite::SetColor(const nuiColor& rColor)
+{
+  mColor = rColor;
+}
+
+const nuiColor& nuiSprite::GetColor() const
+{
+  return mColor;
+}
+
+void nuiSprite::SetBlendFunc(nuiBlendFunc f)
+{
+  mBlendFunc = f;
+}
+
+nuiBlendFunc nuiSprite::GetBlendFunc() const
+{
+  return mBlendFunc;
+}
 
 
 /////////////////////////////////////////////

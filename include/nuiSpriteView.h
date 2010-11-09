@@ -136,7 +136,11 @@ public:
   void SetScaleY(float value);
   void SetScale(float value);
   
+  void SetColor(const nuiColor& rColor);
+  const nuiColor& GetColor() const;
   
+  void SetBlendFunc(nuiBlendFunc f);
+  nuiBlendFunc GetBlendFunc() const;
 protected:
               
   void Init();
@@ -159,7 +163,9 @@ protected:
   nuiMatrixNode_Scale* mpScale;
   nuiMatrixNode_Translation* mpPosition;
   nuiMatrixNode_Pivot* mpPivot;
-  
+
+  nuiColor mColor;
+  nuiBlendFunc mBlendFunc;
 private:
   
   void _SetAnimation(const nglString& rAnimationName);
