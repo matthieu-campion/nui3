@@ -1586,7 +1586,8 @@ nglString& nglString::Formatv(const nglChar* pFormat, va_list args)
   va_list args_copy;
   va_copy(args_copy, args);
 #else 
-#define args_copy args
+//#define args_copy args
+  va_list args_copy = args;
 #endif
 
   // Try to render in stack buffer
@@ -1628,6 +1629,8 @@ nglString& nglString::Formatv(const nglChar* pFormat, va_list args)
 
 #ifndef WIN32
       va_copy(args_copy, args);
+#else
+      args_copy = args;
 #endif
       len = ngl_vsnwprintf(&mString[0], bufsize, pFormat, args_copy);
       va_end(args_copy);
