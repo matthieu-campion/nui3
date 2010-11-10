@@ -298,17 +298,15 @@ void nuiTopLevel::Exit()
 void nuiTopLevel::DisconnectWidget(nuiWidget* pWidget)
 {
   CheckValid();
-  nuiTrashElement Elem(nuiTrashElement::DeleteWidget,pWidget);
-  mpTrash.remove(Elem);
+  mpTrash.remove(pWidget);
   AdviseObjectDeath(pWidget);
 }
 
 void nuiTopLevel::Trash(nuiWidgetPtr pWidget)
 {
   CheckValid();
-  nuiTrashElement Elem(nuiTrashElement::DeleteWidget,pWidget);
-  mpTrash.remove(Elem);
-  mpTrash.push_back(Elem);
+  mpTrash.remove(pWidget);
+  mpTrash.push_back(pWidget);
 }
 
 bool nuiTopLevel::IsTrashFilling() const
@@ -332,23 +330,19 @@ void nuiTopLevel::EmptyTrash()
 
   mFillTrash = false;
 
-  std::list<nuiTrashElement>::iterator it = mpTrash.begin();
-  std::list<nuiTrashElement>::iterator end = mpTrash.end();
+  std::list<nuiWidgetPtr>::iterator it = mpTrash.begin();
+  std::list<nuiWidgetPtr>::iterator end = mpTrash.end();
   nuiWidgetPtr pItem = NULL;
 
   // Do the "DeleteWidget" opcode
   for (; it != end; ++it)
   {
-    const nuiTrashElement& rElement = *it;
-    if (rElement.mType == nuiTrashElement::DeleteWidget)
-    {
-      pItem = rElement.mpWidget;
+    pItem = *it;
 
-      AdviseSubTreeDeath(pItem);
-      nuiContainerPtr pParent = pItem->GetParent();
-      if (pParent)
-        pParent->DelChild(pItem);
-    }
+    AdviseSubTreeDeath(pItem);
+    nuiContainerPtr pParent = pItem->GetParent();
+    if (pParent)
+      pParent->DelChild(pItem);
   }
 
   if (mpTrash.size()) // If we removed anything from the active objects then we have to redraw...
@@ -488,32 +482,6 @@ nuiRenderer nuiTopLevel::GetRenderer()
   return mRenderer;
 }
 
-
-/// Trash management operators:
-bool operator==(const nuiTrashElement& rElement1,const nuiTrashElement& rElement2)
-{
-  return (rElement1.mpWidget == rElement2.mpWidget)
-      && (rElement1.mpContainer == rElement2.mpContainer) 
-      && (rElement1.mType == rElement2.mType);
-}
-
-nuiTrashElement::nuiTrashElement(nuiTrashElement::ElementType type, nuiWidgetPtr pWidget, nuiContainerPtr pContainer )
-{
-  mpWidget = pWidget;
-  mpContainer = pContainer;
-  mType = type;
-}
-
-nuiTrashElement::nuiTrashElement(const nuiTrashElement& rSrc)
-{
-  mpWidget = rSrc.mpWidget;
-  mpContainer = rSrc.mpContainer;
-  mType = rSrc.mType;
-}
-
-nuiTrashElement::~nuiTrashElement()
-{
-}
 
 bool nuiTopLevel::DispatchGrab(nuiWidgetPtr pWidget)
 {
