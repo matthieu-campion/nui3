@@ -506,6 +506,7 @@ void nuiSprite::SetAnimation(int32 index)
 {
   NGL_ASSERT(index < mpSpriteDef->GetAnimationCount());
   mCurrentAnimation = index;
+  mCurrentFrame = 0;
 }
 
 void nuiSprite::_SetAnimation(const nglString& rAnimationName)
