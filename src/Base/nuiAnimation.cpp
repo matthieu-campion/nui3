@@ -485,8 +485,10 @@ void nuiAnimation::CallOnFrame()
   if (ShouldStop)
   {
     mUpdatingTime = true;
+    bool deleteonstop = GetDeleteOnStop();
     Stop();
-    mUpdatingTime = false;
+    if (!deleteonstop)
+      mUpdatingTime = false;
   }
 }
 
