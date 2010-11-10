@@ -186,7 +186,10 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   }
   
   if (OrientationTimer)
-    [OrientationTimer dealloc];
+  {
+    [OrientationTimer invalidate];
+    [OrientationTimer release];
+  }
   [super dealloc];
 }
 
@@ -1030,7 +1033,9 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
 nglWindow::~nglWindow()
 {
   if (mpUIWindow)
+  {
     [mpUIWindow release];
+  }
 }
 
 
