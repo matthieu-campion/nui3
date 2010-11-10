@@ -479,8 +479,6 @@ void nuiSprite::Draw(nuiDrawContext* pContext)
   pContext->PushMatrix();
   pContext->MultMatrix(m);
   
-  NGL_OUT(_T("mCurrentAnimation %d   mCurrentFrame %.2f\n"), mCurrentAnimation, mCurrentFrame);
-  
   const nuiSpriteAnimation* pAnim = mpSpriteDef->GetAnimation(mCurrentAnimation);
   const nuiSpriteFrame* pFrame = pAnim->GetFrame(ToBelow(mCurrentFrame));
   nuiRect src(pFrame->GetRect());
