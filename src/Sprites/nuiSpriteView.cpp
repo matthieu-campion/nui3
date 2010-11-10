@@ -542,8 +542,17 @@ void nuiSprite::Animate(float passedtime)
   NGL_ASSERT(fps != 0);
   mCurrentFrame += passedtime * mSpeed * fps;
   float count = (float)pAnim->GetFrameCount();
+  
+
+  bool done = false;
   while (mCurrentFrame >= count)
+  {
+    // send event
+    done = true;
     mCurrentFrame -= count;
+  }
+  if (done)
+    AnimEnd();
   
   for (size_t i = 0; i < mpChildren.size(); i++)
     mpChildren[i]->Animate(passedtime);

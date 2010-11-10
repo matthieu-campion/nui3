@@ -141,6 +141,9 @@ public:
   
   void SetBlendFunc(nuiBlendFunc f);
   nuiBlendFunc GetBlendFunc() const;
+  
+  nuiSimpleEventSource<0> AnimEnd;
+  
 protected:
               
   void Init();
