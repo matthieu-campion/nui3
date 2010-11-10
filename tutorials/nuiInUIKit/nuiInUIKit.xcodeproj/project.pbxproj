@@ -31,49 +31,49 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = BC6D2D041289AD09008C77F2 /* nui3.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E58172D80C3D103300902DFE /* libnui3D.a */;
+			remoteGlobalIDString = E58172D80C3D103300902DFE;
 			remoteInfo = nui3D;
 		};
 		BC6D2D121289AD0A008C77F2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BC6D2D041289AD09008C77F2 /* nui3.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E542A1AE0C3F0A5900225219 /* libnui3.a */;
+			remoteGlobalIDString = E542A1AE0C3F0A5900225219;
 			remoteInfo = nui3;
 		};
 		BC6D2D141289AD0A008C77F2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BC6D2D041289AD09008C77F2 /* nui3.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E52417F311CB860B0025CA71 /* libnuiPhoneD.a */;
+			remoteGlobalIDString = E52417F311CB860B0025CA71;
 			remoteInfo = nuiPhoneD;
 		};
 		BC6D2D161289AD0A008C77F2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BC6D2D041289AD09008C77F2 /* nui3.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E52420E511CBCE9E0025CA71 /* libnuiPhone.a */;
+			remoteGlobalIDString = E52420E511CBCE9E0025CA71;
 			remoteInfo = nuiPhone;
 		};
 		BC6D2D181289AD0A008C77F2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BC6D2D041289AD09008C77F2 /* nui3.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E5A8D1D311E33A54004E14CE /* libnui3CocoaD.a */;
+			remoteGlobalIDString = E5A8D1D311E33A54004E14CE;
 			remoteInfo = nui3CocoaD;
 		};
 		BC6D2D1A1289AD0A008C77F2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BC6D2D041289AD09008C77F2 /* nui3.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E5D643E51209AB9C009C26A9 /* libnui3Cocoa.a */;
+			remoteGlobalIDString = E5D643E51209AB9C009C26A9;
 			remoteInfo = nui3Cocoa;
 		};
 		BC6D2D281289AD2F008C77F2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BC6D2D041289AD09008C77F2 /* nui3.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = E52412CD11CB860B0025CA71 /* nuiPhoneD */;
+			remoteGlobalIDString = E52412CD11CB860B0025CA71;
 			remoteInfo = nuiPhoneD;
 		};
 /* End PBXContainerItemProxy section */

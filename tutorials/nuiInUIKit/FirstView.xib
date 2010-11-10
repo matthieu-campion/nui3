@@ -406,7 +406,7 @@ ZXMgaW4gdGhlIE1haW4gV2luZG93IG5pYiBmaWxlLg</string>
 			<integer value="3100" key="NS.object.0"/>
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
-		<string key="IBDocument.LastKnownRelativeProjectPath">testnui.xcodeproj</string>
+		<string key="IBDocument.LastKnownRelativeProjectPath">nuiInUIKit.xcodeproj</string>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<string key="IBCocoaTouchPluginVersion">110</string>
 	</data>
