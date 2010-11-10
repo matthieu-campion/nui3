@@ -31,11 +31,11 @@ public:
   nuiNavigationController();
   virtual ~nuiNavigationController();
   
-  bool PushViewController(nuiViewController* pViewController, bool animated=true, TransitionType type = eTransitionSlide);
-  nuiViewController* PopViewControllerAnimated(bool animated=true, TransitionType type = eTransitionSlide); 
+  void PushViewController(nuiViewController* pViewController, bool animated=true, TransitionType transition = eTransitionSlide);
+  void PopViewControllerAnimated(bool animated=true, TransitionType type = eTransitionSlide); 
   
-  std::vector<nuiViewController*> PopToViewController(nuiViewController* pViewController, bool animated=true, TransitionType type = eTransitionSlide); 
-  std::vector<nuiViewController*> PopToRootViewControllerAnimated(bool animated=true, TransitionType type = eTransitionSlide); 
+  void PopToViewController(nuiViewController* pViewController, bool animated=true, TransitionType transition = eTransitionSlide); 
+  void PopToRootViewControllerAnimated(bool animated=true, TransitionType transition = eTransitionSlide); 
   
 protected:
   
@@ -54,17 +54,26 @@ private:
   
   
   nuiNavigationBar* mpBar;
-  std::vector<nuiViewController*> mnuiViewControllers;
+  std::vector<nuiViewController*> mViewControllers;
   nuiViewController* mpIn;
   nuiViewController* mpOut;
   
   bool mPushed;
   bool mPoped;
 
-  bool mPending;
-  nuiViewController* mpPendingViewController;
-  bool mPendingAnimated;
-  TransitionType mPendingType;
+  bool mPendingLayout;
+  enum PendingOperationType {ePendingPush, ePendingPop, ePendingPopTo, ePendingPopToRoot};
+  class PendingOperation
+  {
+  public:
+    PendingOperation(nuiViewController* pView, PendingOperationType type, bool animated, TransitionType transition){mpView = pView; mType = type; mAnimated = animated; mTransition = transition;};
+    nuiViewController* mpView;
+    PendingOperationType mType;
+    bool mAnimated;
+    TransitionType mTransition;
+  };
+  std::list<PendingOperation> mPendingOperations;
+  void PopPendingOperation();
   
   nuiSize mAnimPosition;
   nuiEventSink<nuiNavigationController> mEventSink;

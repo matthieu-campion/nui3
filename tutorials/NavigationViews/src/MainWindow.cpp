@@ -132,29 +132,21 @@ void MyViewController::OnPushClick(const nuiEvent& rEvent)
   mCount++;
   
   MyViewController* pView = new MyViewController();
-  // keep object alive 'til we decide we don't need it anymore...
-  pView->Acquire();
+  
+  // if you plan to keep your object alive when it's poped from the stack,
+  // you can acquire a reference right here. You'll be responsible for releasing it, then, after the pop operation is processed.
+  // pView->Acquire();
+  // 
 
-  if (!mpNav->PushViewController(pView, true, transition))
-  {
-    mCount--;
-    delete pView;
-    return;
-  }
-
+  mpNav->PushViewController(pView, true, transition);
 }
 
 
 void MyViewController::OnPopClick(const nuiEvent& rEvent)
 {
   TransitionType transition = (mCount & 1)? eTransitionElastic : eTransitionSlide;
-  
-  MyViewController* pView = (MyViewController*)mpNav->PopViewControllerAnimated(true, transition);
-  if (!pView)
-    return;
-  
-  pView->Release();
   mCount--;
+  mpNav->PopViewControllerAnimated(true, transition); 
 }
 
 
