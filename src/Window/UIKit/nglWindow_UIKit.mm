@@ -444,6 +444,9 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 - (void) handleEvent: (UIEvent*) pEvent
 {
   //nuiStopWatch watch(_T("nglWindowUIKIT::handleEvent"));
+  if (pEvent.type != UIEventTypeTouches)
+    return;
+  
 	static double sOldTimestamp = 0.0;
   NSSet* pSet = [pEvent allTouches];
   NGL_ASSERT(pSet);
