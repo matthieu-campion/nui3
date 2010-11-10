@@ -16,30 +16,7 @@
 
 class nuiLabel;
 class nuiCSS;
-class nuiTrashElement;
 class nuiToolTip;
-
-class NUI_API nuiTrashElement
-{
-public:
-  enum ElementType
-  {
-    DeleteWidget
-  };
-
-  nuiTrashElement(ElementType type, nuiWidgetPtr pWidget, nuiContainerPtr pContainer = NULL);
-  nuiTrashElement(const nuiTrashElement& rSrc);
-  virtual ~nuiTrashElement();
-
-  friend bool operator==(const nuiTrashElement& rElement1,const nuiTrashElement& rElement2);
-  friend class nuiTopLevel;
-
-protected:
-  ElementType mType;
-  nuiWidgetPtr mpWidget;
-  nuiContainerPtr mpContainer;
-};
-
 
 class NUI_API nuiTopLevel : public nuiSimpleContainer
 {
@@ -219,7 +196,7 @@ protected:
   bool mFillTrash;
   bool mReleased;
 
-  std::list<nuiTrashElement> mpTrash;
+  std::list<nuiWidgetPtr> mpTrash;
   //@}
 
   nuiDrawContext* mpDrawContext;
@@ -246,8 +223,6 @@ protected:
   
   nuiNotificationManager mNotificationManager;
 };
-
-bool operator==(const nuiTrashElement& rElement1,const nuiTrashElement& rElement2);
 
 typedef nuiTopLevel* nuiTopLevelPtr;
 
