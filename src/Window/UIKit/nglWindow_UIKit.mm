@@ -1051,7 +1051,6 @@ nglWindow::~nglWindow()
   {
     [mpUIWindow disconnect];
     [mpUIWindow removeFromSuperview];
-    //[mpUIWindow release];
   }
 }
 
