@@ -167,11 +167,22 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 
 - (void) dealloc
 {
+  [self disconnect];
+  [super dealloc];
+}
+
+- (void) disconnect
+{
+  
   [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
   //NGL_OUT(_T("[nglUIWindow dealloc]\n"));
-  mpNGLWindow->CallOnDestruction();
-
-  nuiAnimation::ReleaseTimer();
+  if (mpNGLWindow)
+  {
+    nuiAnimation::ReleaseTimer();
+    mpNGLWindow->CallOnDestruction();
+    mpNGLWindow = NULL;
+  }
+  
   if (mInvalidationTimer != nil)
   {
     [mInvalidationTimer invalidate];
@@ -188,9 +199,13 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   if (OrientationTimer)
   {
     [OrientationTimer invalidate];
-    [OrientationTimer release];
+    //[OrientationTimer release];
+    OrientationTimer = nil;
   }
-  [super dealloc];
+  
+  UIWindow* next = [[[UIApplication sharedApplication] windows] objectAtIndex:0];
+  if (next != nil)
+    [next makeKeyAndVisible];
 }
 
 - (void) UpdateKeyboard
@@ -1034,9 +1049,12 @@ nglWindow::~nglWindow()
 {
   if (mpUIWindow)
   {
-    [mpUIWindow release];
+    [mpUIWindow disconnect];
+    [mpUIWindow removeFromSuperview];
+    //[mpUIWindow release];
   }
 }
+
 
 
 /*
