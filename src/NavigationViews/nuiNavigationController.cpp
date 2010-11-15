@@ -12,6 +12,8 @@
 #include "nuiAttributeAnimation.h"
 
 
+#define NOTIF_PENDING_OPERATION _T("PendingOp")
+
 
 // static inits
 //
@@ -81,8 +83,15 @@ nuiSize nuiNavigationController::GetAnimPositon() const
   return mAnimPosition;
 }
 
-
 void nuiNavigationController::PushViewController(nuiViewController* pViewController, bool animated, TransitionType transition)
+{
+  // store a pending operation and call for a asynchronous process
+  mPendingOperations.push_back(PendingOperation(pViewController, ePendingPush, animated, transition));
+  GetTopLevel()->PostNotification(new nuiNotification(NOTIF_PENDING_OPERATION));
+}
+
+
+void nuiNavigationController::_PushViewController(nuiViewController* pViewController, bool animated, TransitionType transition)
 {
   // don't overlapp animations
   if (mPushed || mPoped)
@@ -157,6 +166,14 @@ void nuiNavigationController::PushViewController(nuiViewController* pViewControl
 
 
 void nuiNavigationController::PopViewControllerAnimated(bool animated, TransitionType transition)
+{
+  // store a pending operation and call for a asynchronous process
+  mPendingOperations.push_back(PendingOperation(NULL, ePendingPop, animated, transition));
+  GetTopLevel()->PostNotification(new nuiNotification(NOTIF_PENDING_OPERATION));
+}
+
+
+void nuiNavigationController::_PopViewControllerAnimated(bool animated, TransitionType transition)
 {
   if (mViewControllers.size() < 1)
   {
@@ -270,16 +287,16 @@ void nuiNavigationController::PopPendingOperation()
   switch (op.mType)
   {
   case ePendingPush:
-    PushViewController(op.mpView, op.mAnimated, op.mTransition);
+    _PushViewController(op.mpView, op.mAnimated, op.mTransition);
     break;
   case ePendingPop:
-    PopViewControllerAnimated(op.mAnimated, op.mTransition);
+    _PopViewControllerAnimated(op.mAnimated, op.mTransition);
     break;
   case ePendingPopTo:
-    PopToViewController(op.mpView, op.mAnimated, op.mTransition);
+    _PopToViewController(op.mpView, op.mAnimated, op.mTransition);
     break;
   case ePendingPopToRoot:
-    PopToRootViewControllerAnimated(op.mAnimated, op.mTransition);
+    _PopToRootViewControllerAnimated(op.mAnimated, op.mTransition);
     break;
   }    
 
@@ -287,7 +304,16 @@ void nuiNavigationController::PopPendingOperation()
 }
 
 
+
 void nuiNavigationController::PopToViewController(nuiViewController* pViewController, bool animated, TransitionType transition)
+{
+  // store a pending operation and call for a asynchronous process
+  mPendingOperations.push_back(PendingOperation(pViewController, ePendingPopTo, animated, transition));
+  GetTopLevel()->PostNotification(new nuiNotification(NOTIF_PENDING_OPERATION));
+}
+
+
+void nuiNavigationController::_PopToViewController(nuiViewController* pViewController, bool animated, TransitionType transition)
 {
  if (mViewControllers.size() < 1)
   {
@@ -305,7 +331,16 @@ void nuiNavigationController::PopToViewController(nuiViewController* pViewContro
 }
 
 
+
+
 void nuiNavigationController::PopToRootViewControllerAnimated(bool animated, TransitionType transition)
+{
+  // store a pending operation and call for a asynchronous process
+  mPendingOperations.push_back(PendingOperation(NULL, ePendingPopToRoot, animated, transition));
+  GetTopLevel()->PostNotification(new nuiNotification(NOTIF_PENDING_OPERATION));
+}
+
+void nuiNavigationController::_PopToRootViewControllerAnimated(bool animated, TransitionType transition)
 {
  if (mViewControllers.size() < 1)
   {
@@ -363,6 +398,27 @@ void nuiNavigationController::OnViewPopStop(const nuiEvent& rEvent)
   
 }
 
+
+
+
+// virtual
+void nuiNavigationController::ConnectTopLevel()
+{
+  GetTopLevel()->RegisterObserver(NOTIF_PENDING_OPERATION, this); 
+}
+
+
+
+//virtual 
+void nuiNavigationController::OnNotification(const nuiNotification& rNotif)
+{
+  if (rNotif.GetName() == NOTIF_PENDING_OPERATION)
+  {
+    if (mPendingOperations.size() > 0)
+      PopPendingOperation();
+    return;
+  }
+}
 
 
 

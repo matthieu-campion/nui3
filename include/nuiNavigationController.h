@@ -24,7 +24,7 @@ enum TransitionType
 
 
 /// parent container for any nuiViewController object. Handles views switching and transitions
-class nuiNavigationController : public nuiSimpleContainer
+class nuiNavigationController : public nuiSimpleContainer, public nuiNotificationObserver
 {
   
 public:
@@ -45,6 +45,16 @@ protected:
   virtual bool SetRect(const nuiRect& rRect);
   
 private:
+  
+  void _PushViewController(nuiViewController* pViewController, bool animated, TransitionType transition);
+  void _PopViewControllerAnimated(bool animated, TransitionType type); 
+  
+  void _PopToViewController(nuiViewController* pViewController, bool animated, TransitionType transition); 
+  void _PopToRootViewControllerAnimated(bool animated, TransitionType transition); 
+
+  
+  virtual void ConnectTopLevel();
+  virtual void OnNotification(const nuiNotification& rNotif);  
   
   void InitAttributes();
   void InitStatic();
