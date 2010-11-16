@@ -199,7 +199,8 @@ nuiGLPainter::nuiGLPainter(nglContext* pContext, const nuiRect& rRect)
   mTwoPassBlend = false;
   mDefaultFramebuffer = 0;
   mDefaultRenderbuffer = 0;
-
+  mForceApply = false;
+  
   mpContext = pContext;
   if (mpContext)
   {
@@ -352,13 +353,13 @@ void nuiGLPainter::StartRendering()
   nuiCheckForGLErrors();
 }
 
-void nuiGLPainter::SetState(const nuiRenderState& rState, bool ForceApply)
+void nuiGLPainter::ApplyState(const nuiRenderState& rState, bool ForceApply)
 {
   //TEST_FBO_CREATION();
   NUI_RETURN_IF_RENDERING_DISABLED;
-
+  
   nuiCheckForGLErrors();
-
+  
   // blending
   if (ForceApply || mState.mBlending != rState.mBlending)
   {
@@ -372,7 +373,7 @@ void nuiGLPainter::SetState(const nuiRenderState& rState, bool ForceApply)
       glDisable(GL_BLEND);
     }
   }
-
+  
   if (ForceApply || mState.mBlendFunc != rState.mBlendFunc)
   {
     mState.mBlendFunc = rState.mBlendFunc;
@@ -381,7 +382,7 @@ void nuiGLPainter::SetState(const nuiRenderState& rState, bool ForceApply)
     BlendFuncSeparate(src, dst);
     nuiCheckForGLErrors();
   }
-
+  
   if (ForceApply || mState.mDepthTest != rState.mDepthTest)
   {
     mState.mDepthTest = rState.mDepthTest;
@@ -396,11 +397,11 @@ void nuiGLPainter::SetState(const nuiRenderState& rState, bool ForceApply)
     mState.mDepthWrite = rState.mDepthWrite;
     glDepthMask(mState.mDepthWrite);
   }
-    
+  
   // We don't care about the font in the lower layer of rendering
   //nuiFont* mpFont;
   // 
-
+  
   ApplyTexture(rState, ForceApply);  
   
   // Rendering buffers:
@@ -411,7 +412,7 @@ void nuiGLPainter::SetState(const nuiRenderState& rState, bool ForceApply)
     glColorMask(m, m, m, m);
     nuiCheckForGLErrors();
   }
-
+  
   if (mClip.mEnabled || ForceApply)    
   {
     uint32 width = mWidth;
@@ -424,7 +425,7 @@ void nuiGLPainter::SetState(const nuiRenderState& rState, bool ForceApply)
     }
     
     nuiRect clip(mClip);
-
+    
     int x,y,w,h;
     uint angle = (mpSurface && mpSurface->GetRenderToTexture()) ? 0 : mAngle;
     if (angle == 90)
@@ -457,7 +458,7 @@ void nuiGLPainter::SetState(const nuiRenderState& rState, bool ForceApply)
       h = ToBelow(clip.GetHeight());
     }
     //NGL_OUT(_T("To Screen Clip {%d, %d, %d, %d}\n"), x,y,w,h);
-
+    
     if (!mScissorOn || ForceApply)
     {
       glEnable(GL_SCISSOR_TEST);
@@ -490,12 +491,21 @@ void nuiGLPainter::SetState(const nuiRenderState& rState, bool ForceApply)
       mScissorOn = false;
     }
   }
-
+  
   mState.mClearColor = rState.mClearColor;
   mState.mStrokeColor = rState.mStrokeColor;
   mState.mFillColor = rState.mFillColor;
-
+  
   nuiCheckForGLErrors();
+}
+
+void nuiGLPainter::SetState(const nuiRenderState& rState, bool ForceApply)
+{
+  //TEST_FBO_CREATION();
+  NUI_RETURN_IF_RENDERING_DISABLED;
+
+  mForceApply |= ForceApply;
+  mStateAccum = rState;
 }
 
 void nuiGLPainter::SetSize(uint32 w, uint32 h)
@@ -567,7 +577,7 @@ void nuiGLPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
           PushSurface();
 
 
-          SetState(nuiRenderState());
+          ApplyState(nuiRenderState(), false);
           ResetClipRect();
           mClip.Set(0, 0, pSurface->GetWidth(), pSurface->GetHeight());
 
@@ -584,7 +594,7 @@ void nuiGLPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
           // clear the surface with transparent black:
 //          nuiRenderState s2(mState);// PushState();
 //          mState.mClearColor = nuiColor(0.0f, 0.0f, 0.0f, 0.0f);
-          SetState(mState);
+          ApplyState(mState, false);
 //          ClearColor();  
 //          SetState(s2);
 
@@ -599,7 +609,7 @@ void nuiGLPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
           PopMatrix();
           PopProjectionMatrix();
           //PopState();
-          SetState(s);
+          ApplyState(s, false);
           PopClipping();
         }
       }
@@ -687,7 +697,7 @@ void nuiGLPainter::ClearColor()
   mRenderOperations++;
   NUI_RETURN_IF_RENDERING_DISABLED;
 
-  glClearColor(mState.mClearColor.Red(),mState.mClearColor.Green(),mState.mClearColor.Blue(),mState.mClearColor.Alpha());
+  glClearColor(mStateAccum.mClearColor.Red(),mStateAccum.mClearColor.Green(),mStateAccum.mClearColor.Blue(),mStateAccum.mClearColor.Alpha());
   glClear(GL_COLOR_BUFFER_BIT);
   nuiCheckForGLErrors();
 }
@@ -862,6 +872,9 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
     pArray->Release();
     return;
   }
+
+  ApplyState(mStateAccum, mForceApply);
+  mForceApply = false;
   
   mVertices += s;
   GLenum mode = pArray->GetMode();
