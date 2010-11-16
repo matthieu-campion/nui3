@@ -82,6 +82,7 @@ typedef std::map<UITouch*,nglTouchInfo> TouchesInfo;
 - (nglWindow *) getNGLWindow;
 - (void) UpdateOrientation;
 - (void) recreateWindow;
+- (void) disconnect;
 
 - (void)showKeyboard;
 - (void)hideKeyboard;
