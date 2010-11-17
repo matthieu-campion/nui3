@@ -1,0 +1,5 @@
+icon.icns        NUI_RESOURCE    "resources/icon.icns"
+icon.ico        NUI_RESOURCE    "resources/icon.ico"
+icon.png        NUI_RESOURCE    "resources/icon.png"
+myVirtualDisk.zip        NUI_RESOURCE    "resources/myVirtualDisk.zip"
+0 ICON "resources/icon.ico"

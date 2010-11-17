@@ -53,6 +53,9 @@ protected:
   void SetSurface(nuiSurface* pSurface);
   nglContext* mpContext;
 
+  void ApplyState(const nuiRenderState& rState, bool ForceApply);
+  nuiRenderState mStateAccum;
+  bool mForceApply;
   static uint32 mActiveContexts;
 
   virtual void ReleaseCacheObject(void* pHandle);

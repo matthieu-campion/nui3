@@ -176,4 +176,39 @@ private:
 
 };
 
+typedef char nuiXML_Char;
+struct XML_ParserStruct;
+typedef struct XML_ParserStruct *XML_Parser;
+
+class nuiXMLParser ///< nui's SAX Parser
+{
+public:
+  nuiXMLParser();
+  virtual ~nuiXMLParser();
+  
+  virtual bool Parse(nglIStream* pStream);
+  void Stop();
+
+  virtual void StartElement(const nuiXML_Char* name, const nuiXML_Char** atts);
+  virtual void EndElement(const nuiXML_Char* name);
+  virtual void Characters(const nuiXML_Char* s, int len);
+  virtual void ProcessingInstruction(const nuiXML_Char* target, const nuiXML_Char* data);
+  virtual void Comment(const nuiXML_Char* data);
+  
+protected:
+  static void StartElement(void* pThis, const nuiXML_Char* name, const nuiXML_Char** atts);
+  static void EndElement(void* pThis, const nuiXML_Char* name);
+  static void Characters(void* pThis, const nuiXML_Char* s, int len);
+  static void ProcessingInstruction(void* pThis, const nuiXML_Char* target, const nuiXML_Char* data);
+  static void Comment(void* pThis, const nuiXML_Char* data);
+  
+  nglIStream* mpStream;
+  
+  //    static const uint32 BufferSize = 1024;
+  static const uint32 BufferSize = 4096;
+  
+  XML_Parser mParser;
+};
+
+
 #endif // __nuiXML_h__
