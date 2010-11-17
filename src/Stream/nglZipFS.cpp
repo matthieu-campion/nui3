@@ -378,6 +378,7 @@ bool nglZipFS::Close(void* pUnzip)
   if (pUnzip == NULL)
     return false;
 
+  printf("zip close %p\n", pUnzip);
   unzSetCurrentFile(mpPrivate->mZip, pUnzip);
   return UNZ_CRCERROR != unzCloseCurrentFile(mpPrivate->mZip);
 }
@@ -419,12 +420,11 @@ nglFileOffset nglZipFS::SetPos (void* pUnzip, nglFileOffset Where, nglIZip* pFil
       return 0;
 
     pUnzip = unzGetCurrentFile(mpPrivate->mZip);
+    pFile->SetRef(pUnzip);
+    Pos = 0;
 
     if (!pUnzip)
       return 0;
-
-    pFile->SetRef(pUnzip);
-    Pos = 0;
   }
 
   Where -= Pos;

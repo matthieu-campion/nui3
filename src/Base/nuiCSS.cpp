@@ -690,7 +690,14 @@ protected:
 
       NGL_OUT(_T("CSS Include: '%ls'\n"), includePath.GetChars());
       // launch included file parsing
-      cssLexer lexer(pF, mrCSS, includePath);
+      nglFileOffset s = pF->Available();
+      std::vector<uint8> cache;
+      cache.resize(s);
+      pF->Read(&cache[0], s, 1);
+      delete pF;
+      nglIMemory mem(&cache[0], s);
+      
+      cssLexer lexer(&mem, mrCSS, includePath);
       if (!lexer.Load())
       {
         nglString tmp;
@@ -699,7 +706,6 @@ protected:
         delete pF;
         return false;
       }
-      delete pF;
             
       return true;
     }
