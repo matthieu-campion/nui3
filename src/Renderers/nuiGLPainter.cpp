@@ -506,8 +506,8 @@ void nuiGLPainter::SetState(const nuiRenderState& rState, bool ForceApply)
   //TEST_FBO_CREATION();
   NUI_RETURN_IF_RENDERING_DISABLED;
 
-  mForceApply |= ForceApply;
   mState = rState;
+  mForceApply |= ForceApply;
 }
 
 void nuiGLPainter::SetSize(uint32 w, uint32 h)
@@ -578,8 +578,7 @@ void nuiGLPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
 
           PushSurface();
 
-
-          ApplyState(nuiRenderState(), false);
+          SetState(nuiRenderState());
           ResetClipRect();
           mClip.Set(0, 0, pSurface->GetWidth(), pSurface->GetHeight());
 
@@ -596,7 +595,7 @@ void nuiGLPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
           // clear the surface with transparent black:
 //          nuiRenderState s2(mState);// PushState();
 //          mFinalState.mClearColor = nuiColor(0.0f, 0.0f, 0.0f, 0.0f);
-          ApplyState(mState, mForceApply);
+          SetState(s);
 //          ClearColor();  
 //          SetState(s2);
 
@@ -611,7 +610,7 @@ void nuiGLPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
           PopMatrix();
           PopProjectionMatrix();
           //PopState();
-          ApplyState(mState, mForceApply);
+          SetState(s);
           PopClipping();
         }
       }
