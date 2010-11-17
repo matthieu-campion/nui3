@@ -160,16 +160,29 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 
 	[self initializeKeyboard];
 
+  [self makeKeyAndVisible];
+  
   return self;
 }
 
 - (void) dealloc
 {
+  [self disconnect];
+  [super dealloc];
+}
+
+- (void) disconnect
+{
+  
   [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
   //NGL_OUT(_T("[nglUIWindow dealloc]\n"));
-  mpNGLWindow->CallOnDestruction();
-
-  nuiAnimation::ReleaseTimer();
+  if (mpNGLWindow)
+  {
+    nuiAnimation::ReleaseTimer();
+    mpNGLWindow->CallOnDestruction();
+    mpNGLWindow = NULL;
+  }
+  
   if (mInvalidationTimer != nil)
   {
     [mInvalidationTimer invalidate];
@@ -184,8 +197,15 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   }
   
   if (OrientationTimer)
-    [OrientationTimer dealloc];
-  [super dealloc];
+  {
+    [OrientationTimer invalidate];
+    //[OrientationTimer release];
+    OrientationTimer = nil;
+  }
+  
+  UIWindow* next = [[[UIApplication sharedApplication] windows] objectAtIndex:0];
+  if (next != nil)
+    [next makeKeyAndVisible];
 }
 
 - (void) UpdateKeyboard
@@ -442,6 +462,9 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 - (void) handleEvent: (UIEvent*) pEvent
 {
   //nuiStopWatch watch(_T("nglWindowUIKIT::handleEvent"));
+  if (pEvent.type != UIEventTypeTouches)
+    return;
+  
 	static double sOldTimestamp = 0.0;
   NSSet* pSet = [pEvent allTouches];
   NGL_ASSERT(pSet);
@@ -1024,7 +1047,13 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
 
 nglWindow::~nglWindow()
 {
+  if (mpUIWindow)
+  {
+    [mpUIWindow disconnect];
+    [mpUIWindow removeFromSuperview];
+  }
 }
+
 
 
 /*

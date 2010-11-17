@@ -1,0 +1,82 @@
+//
+// main nui3 stylesheet
+//
+
+// you can include your stylesheets this way:
+//#include "style-Common.css"
+
+// remember each stylesheet file must have at least a blank ending line, 
+// or the stylehsheet parsing may not work properly
+
+@nuiColorDecoration dMyViewController0
+{
+  FillColor: rgb(240,182,178);
+  ShapeMode: Fill;
+}
+@nuiColorDecoration dMyViewController1
+{
+  FillColor: rgb(178,240,220);
+  ShapeMode: Fill;
+}
+@nuiColorDecoration dMyViewController2
+{
+  FillColor: rgb(178,184,240);
+  ShapeMode: Fill;
+}
+
+
+MyViewController0!
+{
+  Decoration: dMyViewController0;
+}
+
+MyViewController1!
+{
+  Decoration: dMyViewController1;
+}
+
+MyViewController2!
+{
+  Decoration: dMyViewController2;
+}
+
+
+
+@nuiFont fontName
+{
+  Name: "Arial";
+  Size: 24;
+  Italic: false; 
+  Bold: true;
+}
+
+"ViewControllerName"!
+{
+  Position: TopLeft;
+  Font: fontName;
+  BorderTop: 10;
+  BorderLeft: 10;
+  
+  TextColor: rgb(240,240,240);
+}
+
+
+"PopButton"!
+{
+  Position: Left;
+  UserWidth: 120;
+  UserHeight: 44;
+  BorderLeft: 20;
+}
+
+"PushButton"!
+{
+  Position: Right;
+  UserWidth: 120;
+  UserHeight: 44;
+  BorderRight: 20;
+}
+
+
+// blank ending line following
+

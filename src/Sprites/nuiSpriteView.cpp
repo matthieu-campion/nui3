@@ -48,9 +48,9 @@ bool nuiSpriteFrame::SetTexture(const nglPath& rPath)
     return false;
   
   mRect = nuiRect((float)mpTexture->GetWidth(), (float)mpTexture->GetHeight());
-  mX = mpTexture->GetWidth() / 2;
-  mY = mpTexture->GetHeight() / 2;
-
+  mX = (float)mpTexture->GetWidth() / 2;
+  mY = (float)mpTexture->GetHeight() / 2;
+  return true;
 }
 
 void nuiSpriteFrame::SetRect(const nuiRect& rRect)
@@ -113,13 +113,13 @@ nuiSpriteAnimation::nuiSpriteAnimation(const nglPath& rPath)
 
 nuiSpriteAnimation::~nuiSpriteAnimation()
 {  
-  for (int32 i = 0; i < mpFrames.size(); i++)
+  for (size_t i = 0; i < mpFrames.size(); i++)
     delete mpFrames[i];
 }
 
 int32 nuiSpriteAnimation::GetFrameCount() const
 {
-  return mpFrames.size();
+  return (int32)mpFrames.size();
 }
 
 void nuiSpriteAnimation::AddFrame(nuiSpriteFrame* pFrame)
@@ -205,7 +205,7 @@ nuiSpriteDef::nuiSpriteDef(const nglPath& rSpriteDefPath)
 
 nuiSpriteDef::~nuiSpriteDef()
 {
-  for (int32 i = 0; i < mpAnimations.size(); i++)
+  for (size_t i = 0; i < mpAnimations.size(); i++)
     delete mpAnimations[i];
 }
 
@@ -225,7 +225,7 @@ void nuiSpriteDef::AddAnimation(nuiSpriteAnimation* pAnim)
 
 int32 nuiSpriteDef::GetAnimationCount() const
 {
-  return mpAnimations.size();
+  return (int32)mpAnimations.size();
 }
 
 const nuiSpriteAnimation* nuiSpriteDef::GetAnimation(int32 index) const
@@ -261,13 +261,13 @@ nuiSpriteDef* nuiSpriteDef::GetSprite(const nglString& rName)
 nuiMatrix nuiSprite::mIdentityMatrix;
 
 nuiSprite::nuiSprite(const nglString& rSpriteDefName)
-: mpSpriteDef(nuiSpriteDef::GetSprite(rSpriteDefName))
+: mpSpriteDef(nuiSpriteDef::GetSprite(rSpriteDefName)), mColor(255, 255, 255), mBlendFunc(nuiBlendTransp)
 {
   Init();
 }
 
 nuiSprite::nuiSprite(nuiSpriteDef* pSpriteDef)
-: mpSpriteDef(pSpriteDef)
+: mpSpriteDef(pSpriteDef), mColor(255, 255, 255), mBlendFunc(nuiBlendTransp)
 {
   mpSpriteDef->Acquire();
   Init();
@@ -278,7 +278,7 @@ nuiSprite::~nuiSprite()
   LoadIdentityMatrix();
   if (mpSpriteDef)
     mpSpriteDef->Release();
-  for (int32 i = 0; i < mpChildren.size(); i++)
+  for (size_t i = 0; i < mpChildren.size(); i++)
     mpChildren[i]->Release();
 }
 
@@ -298,7 +298,6 @@ void nuiSprite::Init()
   mScaleX = 1.0f;
   mScaleY = 1.0f;
   
-  
   // Init Matrixes:
   mpScale = new nuiMatrixNode_Scale();
   mpPosition = new nuiMatrixNode_Translation();
@@ -316,9 +315,14 @@ void nuiSprite::InitAttributes()
                 nuiMakeDelegate(this, &nuiSprite::_SetAnimation)));
   
   AddAttribute(new nuiAttribute<float>
-               (nglString(_T("Speed")), nuiUnitCustom,
+               (nglString(_T("FrameTime")), nuiUnitCustom,
                 nuiMakeDelegate(this, &nuiSprite::GetSpeed),
                 nuiMakeDelegate(this, &nuiSprite::SetSpeed)));
+  
+  AddAttribute(new nuiAttribute<float>
+               (nglString(_T("FrameTime")), nuiUnitCustom,
+                nuiMakeDelegate(this, &nuiSprite::GetFrameTime),
+                nuiMakeDelegate(this, &nuiSprite::SetFrameTime)));
   
   AddAttribute(new nuiAttribute<float>
                (nglString(_T("X")), nuiUnitCustom,
@@ -346,6 +350,10 @@ void nuiSprite::InitAttributes()
                (nglString(_T("ScaleY")), nuiUnitCustom,
                 nuiMakeDelegate(this, &nuiSprite::GetScaleY),
                 nuiMakeDelegate(this, &nuiSprite::SetScaleY)));
+  AddAttribute(new nuiAttribute<const nuiColor&>
+               (nglString(_T("Color")), nuiUnitColor,
+                nuiMakeDelegate(this, &nuiSprite::GetColor),
+                nuiMakeDelegate(this, &nuiSprite::SetColor)));
 }
 
 
@@ -381,7 +389,7 @@ int32 nuiSprite::GetMatrixNodeCount() const
   CheckValid();
   if (!mpMatrixNodes)
     return 0;
-  return mpMatrixNodes->size();
+  return (int32)mpMatrixNodes->size();
 }
 
 
@@ -390,6 +398,7 @@ nuiMatrixNode* nuiSprite::GetMatrixNode(uint32 index) const
   CheckValid();
   if (mpMatrixNodes)
     return mpMatrixNodes->at(index);
+  return NULL;
 }
 
 
@@ -399,7 +408,7 @@ void nuiSprite::LoadIdentityMatrix()
   
   if (mpMatrixNodes)
   {
-    for (uint32 i = 0; i < mpMatrixNodes->size(); i++)
+    for (size_t i = 0; i < mpMatrixNodes->size(); i++)
       mpMatrixNodes->at(i)->Release();
     delete mpMatrixNodes;
     mpMatrixNodes = NULL;
@@ -419,7 +428,7 @@ void nuiSprite::GetMatrix(nuiMatrix& rMatrix) const
 {
   CheckValid();
   rMatrix.SetIdentity();
-  for (uint32 i = 0; i < mpMatrixNodes->size(); i++)
+  for (size_t i = 0; i < mpMatrixNodes->size(); i++)
     mpMatrixNodes->at(i)->Apply(rMatrix);
 }
 
@@ -441,7 +450,7 @@ void nuiSprite::AddChild(nuiSprite* pChild)
 
 void nuiSprite::DelChild(nuiSprite* pChild)
 {
-  for (int32 i = 0; i < mpChildren.size(); i++)
+  for (size_t i = 0; i < mpChildren.size(); i++)
   {
     if (mpChildren[i] == pChild)
     {
@@ -477,14 +486,14 @@ void nuiSprite::Draw(nuiDrawContext* pContext)
   dst.Move(-pFrame->GetHandleX(), -pFrame->GetHandleY());
 
   pContext->EnableBlending(true);
-  pContext->SetBlendFunc(nuiBlendTransp);
-  pContext->SetFillColor(nuiColor(255, 255, 255));
+  pContext->SetBlendFunc(mBlendFunc);
+  pContext->SetFillColor(mColor);
   pContext->SetTexture(pFrame->GetTexture());
   pContext->DrawImage(dst, src);
   
   pContext->PopMatrix();
 
-  for (int32 i = 0; i < mpChildren.size(); i++)
+  for (size_t i = 0; i < mpChildren.size(); i++)
     mpChildren[i]->Draw(pContext);
 }
 
@@ -497,6 +506,7 @@ void nuiSprite::SetAnimation(int32 index)
 {
   NGL_ASSERT(index < mpSpriteDef->GetAnimationCount());
   mCurrentAnimation = index;
+  mCurrentFrame = 0;
 }
 
 void nuiSprite::_SetAnimation(const nglString& rAnimationName)
@@ -532,11 +542,20 @@ void nuiSprite::Animate(float passedtime)
   float fps = pAnim->GetFPS();
   NGL_ASSERT(fps != 0);
   mCurrentFrame += passedtime * mSpeed * fps;
-  float count = pAnim->GetFrameCount();
-  while (mCurrentFrame >= count)
-    mCurrentFrame -= count;
+  float count = (float)pAnim->GetFrameCount();
   
-  for (int32 i = 0; i < mpChildren.size(); i++)
+
+  bool done = false;
+  while (mCurrentFrame >= count)
+  {
+    // send event
+    done = true;
+    mCurrentFrame -= count;
+  }
+  if (done)
+    AnimEnd();
+  
+  for (size_t i = 0; i < mpChildren.size(); i++)
     mpChildren[i]->Animate(passedtime);
 }
 
@@ -617,6 +636,25 @@ void nuiSprite::SetScale(float value)
   mpScale->SetScale(value);
 }
 
+void nuiSprite::SetColor(const nuiColor& rColor)
+{
+  mColor = rColor;
+}
+
+const nuiColor& nuiSprite::GetColor() const
+{
+  return mColor;
+}
+
+void nuiSprite::SetBlendFunc(nuiBlendFunc f)
+{
+  mBlendFunc = f;
+}
+
+nuiBlendFunc nuiSprite::GetBlendFunc() const
+{
+  return mBlendFunc;
+}
 
 
 /////////////////////////////////////////////
@@ -634,7 +672,7 @@ nuiSpriteView::nuiSpriteView()
 
 nuiSpriteView::~nuiSpriteView()
 {
-  for (int32 i = 0; i < mpChildren.size(); i++)
+  for (size_t i = 0; i < mpChildren.size(); i++)
     mpSprites[i]->Release();
 }
 
@@ -645,7 +683,7 @@ void nuiSpriteView::AddSprite(nuiSprite* pSprite)
 
 void nuiSpriteView::DelSprite(nuiSprite* pSprite)
 {
-  for (int32 i = 0; i < mpChildren.size(); i++)
+  for (size_t i = 0; i < mpChildren.size(); i++)
   {
     if (mpSprites[i] == pSprite)
     {
@@ -669,9 +707,9 @@ bool nuiSpriteView::Draw(nuiDrawContext* pContext)
     t = now - mLastTime;
   mLastTime = now;
 
-  for (int32 i = 0; i < mpSprites.size(); i++)
+  for (size_t i = 0; i < mpSprites.size(); i++)
   {
-    mpSprites[i]->Animate(t);
+    mpSprites[i]->Animate((float)t);
     mpSprites[i]->Draw(pContext);
     
   }
