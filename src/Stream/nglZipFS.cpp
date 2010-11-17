@@ -285,6 +285,7 @@ bool nglZipFS::BuildIndex()
       Node* pChild = pPath->Find(name);
       if (!pChild)
       {
+        //printf("zipfile: %ls\n", name.GetChars());
         pChild = new Node(name, file_info.uncompressed_size, file_pos.pos_in_zip_directory, file_pos.num_of_file, i == 1 && !IsDir);
         pPath->AddChild(pChild);
       }
@@ -378,7 +379,7 @@ bool nglZipFS::Close(void* pUnzip)
   if (pUnzip == NULL)
     return false;
 
-  printf("zip close %p\n", pUnzip);
+  //printf("zip close %p\n", pUnzip);
   unzSetCurrentFile(mpPrivate->mZip, pUnzip);
   return UNZ_CRCERROR != unzCloseCurrentFile(mpPrivate->mZip);
 }

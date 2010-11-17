@@ -86,7 +86,7 @@ int64 nglIZip::Read (void* pData, int64 WordCount, uint WordSize)
 
 nglIZip::nglIZip(nglZipFS* pZip, void* pUnzip, nglSize size, int NumOfFile,int PosInZipDirectory)
 {
-  printf("new zip %p\n", pUnzip);
+  //printf("new zip %p\n", pUnzip);
   mpZip = pZip;
   mpUnzip = pUnzip;
   mSize = size;
@@ -96,6 +96,6 @@ nglIZip::nglIZip(nglZipFS* pZip, void* pUnzip, nglSize size, int NumOfFile,int P
 
 void nglIZip::SetRef(void* pUnzip)
 {
-  printf("set zip %p (old: %p)\n", pUnzip, mpUnzip);
+  //printf("set zip %p (old: %p)\n", pUnzip, mpUnzip);
   mpUnzip = pUnzip;
 }
