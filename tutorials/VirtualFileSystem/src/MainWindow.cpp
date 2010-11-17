@@ -24,10 +24,18 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
   SetDebugMode(true);
 #endif
   
+  // create and mount virtual disk from a zip file (can be compressed or not...)
+  nglZipFS* pFS = new nglZipFS(_T("rsrc:/myVirtualDisk.zip"));
+  bool res = pFS->Open();
+  if (!res)
+    NGL_OUT(_T("Error trying to open the file system\n"));
+  nglVolume::Mount(pFS);
+
+  // load css from the virtual disk
 #ifdef NUI_IPHONE
-  LoadCSS(_T("rsrc:/css/style-iPhone.css"));
+  LoadCSS(_T("myVirtualDisk:/myFolder/css/style-iPhone.css"));
 #else
-  LoadCSS(_T("rsrc:/css/style.css"));
+  LoadCSS(_T("myVirtualDisk:/myFolder/css/style.css"));
 #endif
 
 }
@@ -38,14 +46,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::OnCreation()
 {
-  // create and mount virtual disk from a zip file (can be compressed or not...)
-  nglZipFS* pFS = new nglZipFS(_T("rsrc:/myVirtualDisk.zip"));
-  bool res = pFS->Open();
-  if (!res)
-    NGL_OUT(_T("Error trying to open the file system\n"));
-  nglVolume::Mount(pFS);
-  
-  
   // GUI : a vertical box for page layout
   nuiVBox* pLayoutBox = new nuiVBox(0);
   pLayoutBox->SetObjectName(_T("MainBox"));
@@ -53,7 +53,7 @@ void MainWindow::OnCreation()
   AddChild(pLayoutBox);
   
   // THE IMAGE IS LOAD FROM THE VIRTUAL DISK
-  nuiImage* pImg = new nuiImage(_T("myVirtualDisk:/myFolder/Logo.png"));
+  nuiImage* pImg = new nuiImage(_T("myVirtualDisk:/myFolder/images/Logo.png"));
   pImg->SetObjectName(_T("MyImage"));
   pImg->SetPosition(nuiCenter);
   pLayoutBox->AddCell(pImg);

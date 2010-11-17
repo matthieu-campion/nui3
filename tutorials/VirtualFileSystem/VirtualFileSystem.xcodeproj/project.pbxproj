@@ -147,9 +147,6 @@
 		BCD448A211D2120F00BEF227 /* nui3.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nui3.xcodeproj; path = ../../nui3.xcodeproj; sourceTree = SOURCE_ROOT; };
 		BCD448D611D2142C00BEF227 /* VirtualFileSystemD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VirtualFileSystemD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCD448D811D2142C00BEF227 /* VirtualFileSystemD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VirtualFileSystemD.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		BCD4495611D23BCE00BEF227 /* style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = style.css; path = resources/css/style.css; sourceTree = SOURCE_ROOT; };
-		BCD4495711D23BF900BEF227 /* style-Common.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = "style-Common.css"; path = "resources/css/style-Common.css"; sourceTree = SOURCE_ROOT; };
-		BCD4495811D23BF900BEF227 /* style-iPhone.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = "style-iPhone.css"; path = "resources/css/style-iPhone.css"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -219,7 +216,6 @@
 		61A9DE3D0B833C9200BC506C = {
 			isa = PBXGroup;
 			children = (
-				BC6A09CA0EF9300600881ACF /* css */,
 				BC6A09A20EF92B4B00881ACF /* resources */,
 				61A9DE4A0B833CD000BC506C /* sources */,
 				61A9DE490B833CB000BC506C /* dependencies */,
@@ -293,16 +289,6 @@
 				BC96FBBE1294370C00F10E71 /* myVirtualDisk.zip */,
 			);
 			name = resources;
-			sourceTree = "<group>";
-		};
-		BC6A09CA0EF9300600881ACF /* css */ = {
-			isa = PBXGroup;
-			children = (
-				BCD4495611D23BCE00BEF227 /* style.css */,
-				BCD4495811D23BF900BEF227 /* style-iPhone.css */,
-				BCD4495711D23BF900BEF227 /* style-Common.css */,
-			);
-			name = css;
 			sourceTree = "<group>";
 		};
 		BCD448A311D2120F00BEF227 /* Products */ = {
