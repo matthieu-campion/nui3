@@ -177,39 +177,7 @@ bool xmlLexer::AddEntity(const nglString& rName, const nglString& rValue)
   return true;
 }
 
-class nuiXMLParser
-  {
-  public:
-    nuiXMLParser();
-    virtual ~nuiXMLParser();
-    
-    bool Parse(nglIStream* pStream, nuiXML* pRoot);
-    
-  protected:
-    static void StartElement(void* pThis, const XML_Char* name, const XML_Char** atts);
-    static void EndElement(void* pThis, const XML_Char* name);
-    static void Characters(void* pThis, const XML_Char* s, int len);
-    static void ProcessingInstruction(void* pThis, const XML_Char* target, const XML_Char* data);
-    static void Comment(void* pThis, const XML_Char* data);
-    
-    void StartElement(const XML_Char* name, const XML_Char** atts);
-    void EndElement(const XML_Char* name);
-    void Characters(const XML_Char* s, int len);
-    void ProcessingInstruction(const XML_Char* target, const XML_Char* data);
-    void Comment(const XML_Char* data);
-    
-    nglIStream* mpStream;
-    
-    //    static const uint32 BufferSize = 1024;
-    static const uint32 BufferSize = 4096;
-    
-    nuiXML* mpRootNode;
-    nuiXMLNode* mpCurrentNode;
-    bool mIsRootNode;
-    bool mIsTextNode;
-    
-    XML_Parser mParser;
-  };
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 nuiXMLParser::nuiXMLParser()
 {
@@ -227,13 +195,9 @@ nuiXMLParser::~nuiXMLParser()
   XML_ParserFree(mParser);
 }
 
-bool nuiXMLParser::Parse(nglIStream* pStream, nuiXML* pRoot)
+bool nuiXMLParser::Parse(nglIStream* pStream)
 {
   mpStream = pStream;
-  mpRootNode = pRoot;
-  mpCurrentNode = pRoot;
-  mIsRootNode = true;
-  mIsTextNode = false;
   
   bool done = false;
   do
@@ -256,32 +220,104 @@ bool nuiXMLParser::Parse(nglIStream* pStream, nuiXML* pRoot)
   return true;
 }
 
-void nuiXMLParser::StartElement(void* pThis, const XML_Char* name, const XML_Char** atts)
+void nuiXMLParser::Stop()
+{
+  XML_StopParser(mParser, false);
+}
+
+void nuiXMLParser::StartElement(void* pThis, const nuiXML_Char* name, const nuiXML_Char** atts)
 {
   ((nuiXMLParser*)pThis)->StartElement(name, atts);
 }
 
-void nuiXMLParser::EndElement(void* pThis, const XML_Char* name)
+void nuiXMLParser::EndElement(void* pThis, const nuiXML_Char* name)
 {
   ((nuiXMLParser*)pThis)->EndElement(name);
 }
 
-void nuiXMLParser::Characters(void* pThis, const XML_Char* s, int len)
+void nuiXMLParser::Characters(void* pThis, const nuiXML_Char* s, int len)
 {
   ((nuiXMLParser*)pThis)->Characters(s, len);
 }
 
-void nuiXMLParser::ProcessingInstruction(void* pThis, const XML_Char* target, const XML_Char* data)
+void nuiXMLParser::ProcessingInstruction(void* pThis, const nuiXML_Char* target, const nuiXML_Char* data)
 {
   ((nuiXMLParser*)pThis)->ProcessingInstruction(target, data);
 }
 
-void nuiXMLParser::Comment(void* pThis, const XML_Char* data)
+void nuiXMLParser::Comment(void* pThis, const nuiXML_Char* data)
 {
   ((nuiXMLParser*)pThis)->Comment(data);
 }
 
-void nuiXMLParser::StartElement(const XML_Char* name, const XML_Char** atts)
+void nuiXMLParser::StartElement(const nuiXML_Char* name, const nuiXML_Char** atts)
+{
+}
+
+void nuiXMLParser::EndElement(const nuiXML_Char* name)
+{
+}
+
+void nuiXMLParser::Characters(const nuiXML_Char* s, int len)
+{
+}
+
+void nuiXMLParser::ProcessingInstruction(const nuiXML_Char* target, const nuiXML_Char* data)
+{
+}
+
+void nuiXMLParser::Comment(const nuiXML_Char* data)
+{
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+class nuiXMLBuilder : public nuiXMLParser
+{
+public:
+  nuiXMLBuilder();
+  virtual ~nuiXMLBuilder();
+  
+  virtual bool Parse(nglIStream* pStream, nuiXML* pRoot);
+  
+  virtual void StartElement(const nuiXML_Char* name, const nuiXML_Char** atts);
+  virtual void EndElement(const nuiXML_Char* name);
+  virtual void Characters(const nuiXML_Char* s, int len);
+  virtual void ProcessingInstruction(const nuiXML_Char* target, const nuiXML_Char* data);
+  virtual void Comment(const nuiXML_Char* data);
+protected:
+  
+  nglIStream* mpStream;
+  
+  //    static const uint32 BufferSize = 1024;
+  static const uint32 BufferSize = 4096;
+  
+  nuiXML* mpRootNode;
+  nuiXMLNode* mpCurrentNode;
+  bool mIsRootNode;
+  bool mIsTextNode;
+  
+  XML_Parser mParser;
+};
+
+nuiXMLBuilder::nuiXMLBuilder()
+{
+}
+
+nuiXMLBuilder::~nuiXMLBuilder()
+{
+}
+
+bool nuiXMLBuilder::Parse(nglIStream* pStream, nuiXML* pRoot)
+{
+  mpRootNode = pRoot;
+  mpCurrentNode = pRoot;
+  mIsRootNode = true;
+  mIsTextNode = false;
+  
+  return nuiXMLParser::Parse(pStream);
+}
+
+void nuiXMLBuilder::StartElement(const XML_Char* name, const XML_Char** atts)
 {
   if (!mIsRootNode)
   {
@@ -305,7 +341,7 @@ void nuiXMLParser::StartElement(const XML_Char* name, const XML_Char** atts)
   mIsRootNode = false;
 }
 
-void nuiXMLParser::EndElement(const XML_Char* name)
+void nuiXMLBuilder::EndElement(const XML_Char* name)
 {
   if (mpCurrentNode != mpRootNode)
   {
@@ -318,7 +354,7 @@ void nuiXMLParser::EndElement(const XML_Char* name)
   }
 }
 
-void nuiXMLParser::Characters(const XML_Char* s, int len)
+void nuiXMLBuilder::Characters(const XML_Char* s, int len)
 {
   bool isWhiteSpace = true;
   for (int i = 0; i<len && isWhiteSpace; i++)
@@ -343,13 +379,13 @@ void nuiXMLParser::Characters(const XML_Char* s, int len)
   }
 }
 
-void nuiXMLParser::ProcessingInstruction(const XML_Char* target, const XML_Char* data)
+void nuiXMLBuilder::ProcessingInstruction(const XML_Char* target, const XML_Char* data)
 {
   nuiXMLNode* pNode = new nuiXMLNode(_T("##comment"), mpCurrentNode);
   pNode->SetValue(nglString(target, eUTF8) + _T(" ") + nglString(data, eUTF8));
 }
 
-void nuiXMLParser::Comment(const XML_Char* data)
+void nuiXMLBuilder::Comment(const XML_Char* data)
 {
   nuiXMLNode* pNode = new nuiXMLNode(_T("##comment"), mpCurrentNode);
   pNode->SetValue(nglString(data, eUTF8));
@@ -1223,7 +1259,7 @@ nuiXML::~nuiXML()
 
 bool nuiXML::Load(nglIStream& rStream)
 {
-  nuiXMLParser parser;
+  nuiXMLBuilder parser;
   bool res = parser.Parse(&rStream, this);
   return res;
   

@@ -31,8 +31,8 @@ public:
   nuiNavigationController();
   virtual ~nuiNavigationController();
   
-  void PushViewController(nuiViewController* pViewController, bool animated=true, TransitionType transition = eTransitionSlide);
-  void PopViewControllerAnimated(bool animated=true, TransitionType type = eTransitionSlide); 
+  void PushViewController(nuiViewController* pViewController, bool animated=true, TransitionType transition = eTransitionSlide, bool viewOverlay = false);
+  void PopViewControllerAnimated(bool animated=true, TransitionType type = eTransitionSlide, bool viewOverlay = false); 
   
   void PopToViewController(nuiViewController* pViewController, bool animated=true, TransitionType transition = eTransitionSlide); 
   void PopToRootViewControllerAnimated(bool animated=true, TransitionType transition = eTransitionSlide); 
@@ -46,8 +46,8 @@ protected:
   
 private:
   
-  void _PushViewController(nuiViewController* pViewController, bool animated, TransitionType transition);
-  void _PopViewControllerAnimated(bool animated, TransitionType type); 
+  void _PushViewController(nuiViewController* pViewController, bool animated, TransitionType transition, bool viewOverlay = false);
+  void _PopViewControllerAnimated(bool animated, TransitionType type, bool viewOverlay = false); 
   
   void _PopToViewController(nuiViewController* pViewController, bool animated, TransitionType transition); 
   void _PopToRootViewControllerAnimated(bool animated, TransitionType transition); 
@@ -76,11 +76,12 @@ private:
   class PendingOperation
   {
   public:
-    PendingOperation(nuiViewController* pView, PendingOperationType type, bool animated, TransitionType transition){mpView = pView; mType = type; mAnimated = animated; mTransition = transition;};
+    PendingOperation(nuiViewController* pView, PendingOperationType type, bool animated, TransitionType transition, bool viewOverlay){mpView = pView; mType = type; mAnimated = animated; mTransition = transition; mOverlay = viewOverlay;};
     nuiViewController* mpView;
     PendingOperationType mType;
     bool mAnimated;
     TransitionType mTransition;
+    bool mOverlay;
   };
   std::list<PendingOperation> mPendingOperations;
   void PopPendingOperation();
