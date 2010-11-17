@@ -506,6 +506,7 @@ void nuiGLPainter::SetState(const nuiRenderState& rState, bool ForceApply)
 
   mForceApply |= ForceApply;
   mStateAccum = rState;
+  ApplyState(rState, ForceApply);
 }
 
 void nuiGLPainter::SetSize(uint32 w, uint32 h)
