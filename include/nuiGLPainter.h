@@ -54,7 +54,7 @@ protected:
   nglContext* mpContext;
 
   void ApplyState(const nuiRenderState& rState, bool ForceApply);
-  nuiRenderState mStateAccum;
+  nuiRenderState mFinalState;
   bool mForceApply;
   static uint32 mActiveContexts;
 
