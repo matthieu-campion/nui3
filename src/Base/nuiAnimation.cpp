@@ -643,7 +643,7 @@ void nuiAnimation::StartTasks(const nuiEvent& rEvent)
     {
       nuiTask* pTask = it->second;
       pTask->Run();
-      delete pTask;
+      pTask->Release();
       mOnNextTick.erase(it++);
     }
   }
@@ -651,6 +651,7 @@ void nuiAnimation::StartTasks(const nuiEvent& rEvent)
 
 void nuiAnimation::RunOnAnimationTick(nuiTask* pTask, int32 TickCount)
 {
+  pTask->Acquire();
   mOnNextTick.push_back(std::pair<int32, nuiTask*>(TickCount, pTask));
 }
 

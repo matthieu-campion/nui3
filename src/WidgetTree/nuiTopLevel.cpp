@@ -13,6 +13,7 @@
 #include "nuiNotification.h"
 #include "nuiCSS.h"
 #include "nuiStopWatch.h"
+#include "nuiModalContainer.h"
 #include <iterator>
 
 #define PARTIAL_REDRAW_DEFAULT true
@@ -868,6 +869,8 @@ nuiWidgetPtr GetNextFocussableWidget(nuiWidgetPtr pWidget)
       return pItem;
     
     pNextWidget = pNextWidget->GetParent();
+    if (dynamic_cast<nuiModalContainer*>(pNextWidget))
+      return DeepSearchNextFocussableWidget(pNextWidget, true);
   }
   
   nuiTopLevel* pTop = pWidget->GetTopLevel();
@@ -919,6 +922,9 @@ nuiWidgetPtr GetPreviousFocussableWidget(nuiWidgetPtr pWidget)
       pParent->GetPreviousChild(pIt.get());
     }
     
+    if (dynamic_cast<nuiModalContainer*> (pParent))
+      return DeepSearchPreviousFocussableWidget(pParent, true);
+
     return GetPreviousFocussableWidget(pParent);
   }
   

@@ -8,8 +8,9 @@
 #pragma once
 
 #include "nuiFastDelegate.h"
+#include "nuiRefCount.h"
 
-class nuiTask
+class nuiTask : public nuiRefCount
 {
 public:
   nuiTask()

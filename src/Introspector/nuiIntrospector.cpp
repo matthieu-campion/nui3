@@ -76,6 +76,7 @@ nuiWidget* nuiIntrospector::GetToolbar()
   pWBtn->SetColor(eNormalTextFg, textColor);
   pWBtn->SetColor(eSelectedTextFg, textColor);
   pWBtn->SetDecoration(nuiDecoration::Get(INTROSPECTOR_DECO_BUTTON), eDecorationBorder);
+  pWBtn->SetBorders(0);
 
   mEventSink.Connect(pWBtn->ButtonPressed, &nuiIntrospector::ShowWidgetInspector);
   pBox->AddCell(pWBtn);
@@ -84,6 +85,7 @@ nuiWidget* nuiIntrospector::GetToolbar()
   pTBtn->SetColor(eNormalTextFg, textColor);
   pTBtn->SetColor(eSelectedTextFg, textColor);
   pTBtn->SetDecoration(nuiDecoration::Get(INTROSPECTOR_DECO_BUTTON), eDecorationBorder);
+  pTBtn->SetBorders(0);
   mEventSink.Connect(pTBtn->ButtonPressed, &nuiIntrospector::ShowThreadInspector);
   pBox->AddCell(pTBtn);
     
@@ -91,6 +93,7 @@ nuiWidget* nuiIntrospector::GetToolbar()
   pFontBtn->SetColor(eNormalTextFg, textColor);
   pFontBtn->SetColor(eSelectedTextFg, textColor);
   pFontBtn->SetDecoration(nuiDecoration::Get(INTROSPECTOR_DECO_BUTTON), eDecorationBorder);
+  pFontBtn->SetBorders(0);
   mEventSink.Connect(pFontBtn->ButtonPressed, &nuiIntrospector::ShowFontInspector);
   pBox->AddCell(pFontBtn);
 
@@ -98,6 +101,7 @@ nuiWidget* nuiIntrospector::GetToolbar()
   pDecoBtn->SetColor(eNormalTextFg, textColor);
   pDecoBtn->SetColor(eSelectedTextFg, textColor);
   pDecoBtn->SetDecoration(nuiDecoration::Get(INTROSPECTOR_DECO_BUTTON), eDecorationBorder);
+  pDecoBtn->SetBorders(0);
   mEventSink.Connect(pDecoBtn->ButtonPressed, &nuiIntrospector::ShowDecorationInspector);
   pBox->AddCell(pDecoBtn);
   
@@ -105,6 +109,7 @@ nuiWidget* nuiIntrospector::GetToolbar()
   pTextureBtn->SetColor(eNormalTextFg, textColor);
   pTextureBtn->SetColor(eSelectedTextFg, textColor);
   pTextureBtn->SetDecoration(nuiDecoration::Get(INTROSPECTOR_DECO_BUTTON), eDecorationBorder);
+  pTextureBtn->SetBorders(0);
   mEventSink.Connect(pTextureBtn->ButtonPressed, &nuiIntrospector::ShowTextureInspector);
   pBox->AddCell(pTextureBtn);
   
@@ -112,6 +117,7 @@ nuiWidget* nuiIntrospector::GetToolbar()
   pObjectsBtn->SetColor(eNormalTextFg, textColor);
   pObjectsBtn->SetColor(eSelectedTextFg, textColor);
   pObjectsBtn->SetDecoration(nuiDecoration::Get(INTROSPECTOR_DECO_BUTTON), eDecorationBorder);
+  pObjectsBtn->SetBorders(0);
   mEventSink.Connect(pObjectsBtn->ButtonPressed, &nuiIntrospector::ShowObjectInspector);
   pBox->AddCell(pObjectsBtn);
   

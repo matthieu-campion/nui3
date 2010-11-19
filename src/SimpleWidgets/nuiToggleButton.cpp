@@ -135,6 +135,33 @@ bool nuiToggleButton::Draw(nuiDrawContext* pContext)
   return true;
 }
 
+
+// Keyboard events:
+bool nuiToggleButton::KeyDown(const nglKeyEvent& rEvent)
+{
+  if (rEvent.mKey == NK_ENTER || rEvent.mKey == NK_PAD_ENTER || rEvent.mKey == NK_SPACE)
+  {
+    mWasPressed = IsPressed();
+    SetPressed(!mWasPressed);
+    if (IsPressed())
+      Activated();
+    else
+      Deactivated();
+    return true;
+  }
+  
+  return false;
+}
+
+bool nuiToggleButton::KeyUp(const nglKeyEvent& rEvent)
+{
+  if (rEvent.mKey == NK_ENTER || rEvent.mKey == NK_PAD_ENTER || rEvent.mKey == NK_SPACE)
+    return true;
+  
+  return false;
+}
+
+
 // Received Mouse events:
 bool nuiToggleButton::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
 {

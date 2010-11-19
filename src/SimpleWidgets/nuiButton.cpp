@@ -13,6 +13,7 @@
 #include "nuiXML.h"
 #include "nuiDecoration.h"
 #include "nuiFrame.h"
+#include "nuiTask.h"
 
 #define INACTIVE_SHADE_SIZE 8.f
 
@@ -33,6 +34,11 @@ nuiButton::nuiButton()
   mpAutoRepeatTimer = NULL;
   mActivationOffset = 0;
   EnableInteractiveDecoration(true);
+  
+  SetBorders(10);
+  SetWantKeyboardFocus(true);
+  SetFocusVisible(true);
+  mpTask = NULL;
   
   NUI_ADD_EVENT(ButtonPressed);
   NUI_ADD_EVENT(ButtonDePressed);
@@ -59,7 +65,12 @@ nuiButton::nuiButton(const nglString& rText)
   pLabel->SetPosition(nuiCenter);
   SetRedrawOnHover(true);
   EnableInteractiveDecoration(true);
-
+  
+  SetBorders(10);
+  SetWantKeyboardFocus(true);
+  SetFocusVisible(true);
+  mpTask = NULL;
+  
   NUI_ADD_EVENT(ButtonPressed);
   NUI_ADD_EVENT(ButtonDePressed);
   NUI_ADD_EVENT(ButtonDePressedInactive);
@@ -87,6 +98,11 @@ nuiButton::nuiButton(const nglImage& rImage)
   AddChild(pImage);
   pImage->SetPosition(nuiCenter);
   
+  SetBorders(10);
+  SetWantKeyboardFocus(true);
+  SetFocusVisible(true);
+  mpTask = NULL;
+  
   NUI_ADD_EVENT(ButtonPressed);
   NUI_ADD_EVENT(ButtonDePressed);
   NUI_ADD_EVENT(ButtonDePressedInactive);
@@ -111,6 +127,11 @@ nuiButton::nuiButton(nuiDecoration* pDeco, bool AlreadyAcquired)
   EnableInteractiveDecoration(true);
   
   SetDecoration(pDeco, eDecorationOverdraw, AlreadyAcquired);
+  
+  SetBorders(10);
+  SetWantKeyboardFocus(true);
+  SetFocusVisible(true);
+  mpTask = NULL;
   
   NUI_ADD_EVENT(ButtonPressed);
   NUI_ADD_EVENT(ButtonDePressed);
@@ -148,6 +169,13 @@ nuiButton::~nuiButton()
   {
     nuiAnimation::ReleaseTimer();
     mpAutoRepeatTimer=NULL;
+  }
+  
+  if (mpTask)
+  {
+    mpTask->Cancel();
+    mpTask->Release();
+    mpTask = NULL;
   }
 }
 
@@ -239,6 +267,45 @@ bool nuiButton::SetRect(const nuiRect& rRect)
   return true;
 }
 
+
+// Keyboard events:
+bool nuiButton::KeyDown(const nglKeyEvent& rEvent)
+{
+  if (rEvent.mKey == NK_ENTER || rEvent.mKey == NK_PAD_ENTER || rEvent.mKey == NK_SPACE)
+  {
+    SetPressed(true);
+    Activated();
+    if (mpTask)
+    {
+      mpTask->Cancel();
+      mpTask->Release();
+      mpTask = NULL;
+    }
+    mpTask = nuiMakeTask(this, &nuiButton::SetPressed, false);
+    mpTask->Acquire();
+    nuiAnimation::RunOnAnimationTick(mpTask, 4);
+    return true;
+  }
+
+  return false;
+}
+
+bool nuiButton::KeyUp(const nglKeyEvent& rEvent)
+{
+  if (rEvent.mKey == NK_ENTER || rEvent.mKey == NK_PAD_ENTER || rEvent.mKey == NK_SPACE)
+  {
+    SetPressed(false);
+    if (mpTask)
+    {
+      mpTask->Cancel();
+      mpTask->Release();
+      mpTask = NULL;
+    }
+    return true;
+  }
+  
+  return false;
+}
 
 // Received Mouse events:
 bool nuiButton::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
@@ -362,6 +429,12 @@ void nuiButton::SetPressed(bool Pressed)
     {    
       SetSelected(false);
       ButtonDePressed();
+      if (mpTask)
+      {
+        mpTask->Release();
+        mpTask->Cancel();
+        mpTask = NULL;
+      }
     }
     Invalidate();
   }
