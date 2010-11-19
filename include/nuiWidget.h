@@ -532,6 +532,7 @@ public:
   const nglString& GetFocusDecorationName() const;
   nuiDecorationMode GetFocusDecorationMode() const;
   void SetFocusVisible(bool set);
+  static void SetFocusVisibleDefault(bool set);
   bool IsFocusVisible() const;
   //@}
   
@@ -615,6 +616,8 @@ protected:
 
   virtual void DrawFocus(nuiDrawContext* pContext, bool FrontOrBack); ///< Draw a decoration to show that the widget has the keyboard focus. The focus is drawn on top of the regular decoration if it exists.
   void DispatchFocus(nuiWidgetPtr pWidget); ///< Advise the objet of a change of focus object. pWidget can be null.
+
+  static bool mShowFocusDefault;
 
   bool mAnimateLayout : 1;
   bool mRedrawOnHover : 1;

@@ -90,6 +90,15 @@ public:
       return false;
   }
   
+  void OnSetFocus(nuiWidgetPtr pTarget)
+  {
+    if (pTarget != mpEditLine)
+    {
+      Canceled();
+      Trash();
+    }
+  }
+  
 private:
   nuiEventSink<nuiLabelRenamer> mSink;
 

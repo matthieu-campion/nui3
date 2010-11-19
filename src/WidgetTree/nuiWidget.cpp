@@ -146,7 +146,7 @@ void nuiWidget::InitDefaultValues()
   mInteractiveDecoration = false;
   mpDecoration = NULL;
   mpFocusDecoration = NULL;
-  mShowFocus = true;
+  mShowFocus = SetFocusVisibleDefault;
   mPosition = nuiFill;
   mFillRule = nuiFill;
   mCSSPasses = 0;
@@ -4731,6 +4731,18 @@ void nuiWidget::SetFocusVisible(bool set)
   mShowFocus = set;
   Invalidate();
 }
+
+#ifdef NUI_PHONE
+bool nuiWidget::mShowFocusDefault = false;
+#else
+bool nuiWidget::mShowFocusDefault = true;
+#endif
+
+void nuiWidget::SetFocusVisibleDefault(bool set)
+{
+  mShowFocusDefault = set;
+}
+
 
 bool nuiWidget::IsFocusVisible() const
 {
