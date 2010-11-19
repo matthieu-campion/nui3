@@ -59,6 +59,10 @@ public:
   static void SetDefaultFineSensitivityKey(nglKeyCode DefaultFineSensitivityKey);
   void SetFineSensitivityKey(nglKeyCode FineSensitivityKey);
 
+  // Keyboard events:
+  bool KeyDown(const nglKeyEvent& rEvent);
+  bool KeyUp(const nglKeyEvent& rEvent);
+  
 protected:
 
   virtual bool SetRect(const nuiRect& rRect);

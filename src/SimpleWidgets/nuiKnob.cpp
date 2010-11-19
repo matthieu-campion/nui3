@@ -60,6 +60,7 @@ void nuiKnob::Init(const nuiRange& rRange)
   mSequenceNbFrames = 0;
   mSequenceOrientation = nuiVertical;
   
+  SetWantKeyboardFocus(true);
 }
 
 
@@ -182,6 +183,90 @@ nuiImageSequence* nuiKnob::GetImageSequence() const
 {
   return mpImageSequence;
 }
+
+
+// Keyboard events:
+bool nuiKnob::KeyDown(const nglKeyEvent& rEvent)
+{
+  if (IsKeyDown(mFineSensitivityKey))
+  {
+    if (rEvent.mKey == NK_DOWN || rEvent.mKey == NK_LEFT)
+    {
+      mRange.SetValue(mRange.GetValue() - mRange.GetIncrement() / mFineSensitivityRatio);
+      InteractiveValueChanged();
+      ActivateToolTip(this, true);
+      return true;
+    }
+    if (rEvent.mKey == NK_UP || rEvent.mKey == NK_RIGHT)
+    {
+      mRange.SetValue(mRange.GetValue() + mRange.GetIncrement() / mFineSensitivityRatio);
+      InteractiveValueChanged();
+      ActivateToolTip(this, true);
+      return true;
+    }
+  }
+  else
+  {
+    if (rEvent.mKey == NK_DOWN || rEvent.mKey == NK_LEFT)
+    {
+      mRange.Decrement();
+      InteractiveValueChanged();
+      ActivateToolTip(this, true);
+      return true;
+    }
+    if (rEvent.mKey == NK_UP || rEvent.mKey == NK_RIGHT)
+    {
+      mRange.Increment();
+      InteractiveValueChanged();
+      ActivateToolTip(this, true);
+      return true;
+    }
+  }
+  
+  if (rEvent.mKey == NK_PAGEDOWN)
+  {
+    mRange.PageIncrement();
+    InteractiveValueChanged();
+    ActivateToolTip(this, true);
+    return true;
+  }
+  if (rEvent.mKey == NK_PAGEDOWN)
+  {
+    mRange.PageDecrement();
+    InteractiveValueChanged();
+    ActivateToolTip(this, true);
+    return true;
+  }
+
+  if (rEvent.mKey == NK_HOME)
+  {
+    double v = mRange.GetMinimum();
+    mRange.SetValue(v);
+    InteractiveValueChanged();
+    ActivateToolTip(this, true);
+    return true;
+  }
+  if (rEvent.mKey == NK_END)
+  {
+    double v = mRange.GetMaximum();
+    mRange.SetValue(v);
+    InteractiveValueChanged();
+    ActivateToolTip(this, true);
+    return true;
+  }
+  
+  
+  return false;
+}
+
+bool nuiKnob::KeyUp(const nglKeyEvent& rEvent)
+{
+  if (rEvent.mKey == NK_DOWN || rEvent.mKey == NK_LEFT || rEvent.mKey == NK_UP || rEvent.mKey == NK_RIGHT || rEvent.mKey == NK_PAGEDOWN || rEvent.mKey == NK_PAGEDOWN)
+    return true;
+  
+  return false;
+}
+
 
 
 // Received Mouse events:
