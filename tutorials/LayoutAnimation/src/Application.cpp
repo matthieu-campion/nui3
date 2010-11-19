@@ -146,8 +146,11 @@ void Application::OnInit()
   }
   mpMainWindow->DBG_SetMouseOverInfo(DebugInfo);
   mpMainWindow->DBG_SetMouseOverObject(DebugObject);
+#ifdef NUI_IPHONE
   mpMainWindow->SetState(nglWindow::eMaximize);
-  //mpMainWindow->SetState(nglWindow::eShow);
+#else
+  mpMainWindow->SetState(nglWindow::eShow);
+#endif
 
 }
 

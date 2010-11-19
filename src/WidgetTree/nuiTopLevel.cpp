@@ -13,6 +13,7 @@
 #include "nuiNotification.h"
 #include "nuiCSS.h"
 #include "nuiStopWatch.h"
+#include "nuiModalContainer.h"
 #include <iterator>
 
 #define PARTIAL_REDRAW_DEFAULT true
@@ -657,6 +658,16 @@ bool nuiTopLevel::SetFocus(nuiWidgetPtr pWidget)
   if (!mpFocus)
     EndTextInput();
   
+  if (mpFocus)
+  {
+    nuiRect hotrect;
+    mpFocus->GetHotRect(hotrect);
+    if (hotrect.GetWidth() == 0 && hotrect.GetHeight() == 0)
+    {
+      hotrect = mpFocus->GetVisibleRect();
+    }
+    mpFocus->SetHotRect(hotrect);
+  }
   return true;
 }
 
@@ -868,6 +879,8 @@ nuiWidgetPtr GetNextFocussableWidget(nuiWidgetPtr pWidget)
       return pItem;
     
     pNextWidget = pNextWidget->GetParent();
+    if (dynamic_cast<nuiModalContainer*>(pNextWidget))
+      return DeepSearchNextFocussableWidget(pNextWidget, true);
   }
   
   nuiTopLevel* pTop = pWidget->GetTopLevel();
@@ -919,6 +932,9 @@ nuiWidgetPtr GetPreviousFocussableWidget(nuiWidgetPtr pWidget)
       pParent->GetPreviousChild(pIt.get());
     }
     
+    if (dynamic_cast<nuiModalContainer*> (pParent))
+      return DeepSearchPreviousFocussableWidget(pParent, true);
+
     return GetPreviousFocussableWidget(pParent);
   }
   
@@ -947,23 +963,27 @@ bool nuiTopLevel::CallKeyDown (const nglKeyEvent& rEvent)
       return true;
   }
 
-  if (rEvent.mKey == NK_TAB && mpFocus)
+  if (rEvent.mKey == NK_TAB)
   {
+    nuiWidget* pFocus = mpFocus;
+    if (!pFocus && GetChildrenCount() != 0)
+      pFocus = GetChild(0);
+
     // The user wants to change the focussed widget
     nuiWidget* pNext = NULL;
     if (IsKeyDown(NK_LSHIFT) || IsKeyDown(NK_RSHIFT))
     {
       // Backward
-      pNext = GetTabBackward(mpFocus);
+      pNext = GetTabBackward(pFocus);
       if (!pNext && mpFocus->GetParent())
-        pNext = GetPreviousFocussableWidget(mpFocus);
+        pNext = GetPreviousFocussableWidget(pFocus);
     }
     else
     {
       // Forward
-      pNext = GetTabForward(mpFocus);
-      if (!pNext && mpFocus->GetParent())
-        pNext = GetNextFocussableWidget(mpFocus);
+      pNext = GetTabForward(pFocus);
+      if (!pNext && pFocus->GetParent())
+        pNext = GetNextFocussableWidget(pFocus);
     }
     
     if (pNext)

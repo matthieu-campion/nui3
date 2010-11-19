@@ -34,6 +34,10 @@ public:
   virtual bool MouseUnclicked (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
   virtual bool MouseMoved     (nuiSize X, nuiSize Y);
 
+  // Keyboard events:
+  bool KeyDown(const nglKeyEvent& rEvent);
+  bool KeyUp(const nglKeyEvent& rEvent);
+  
   virtual bool SetParent(nuiContainerPtr pParent);
 
   void                  SetGroupManager(nuiRadioButtonGroup* pGroup);

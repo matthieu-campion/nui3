@@ -975,7 +975,6 @@
 		E524144C11CB860B0025CA71 /* nuiDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = E591D80B0C83272700844D3E /* nuiDialog.h */; };
 		E524144D11CB860B0025CA71 /* nuiHBox.h in Headers */ = {isa = PBXBuildFile; fileRef = E517B0DC0C85704900190FF9 /* nuiHBox.h */; };
 		E524144E11CB860B0025CA71 /* nuiVBox.h in Headers */ = {isa = PBXBuildFile; fileRef = E517B0DD0C85704900190FF9 /* nuiVBox.h */; };
-		E524144F11CB860B0025CA71 /* nuiRadioButton.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B009E30C87857A004BEE4E /* nuiRadioButton.h */; };
 		E524145011CB860B0025CA71 /* nuiSimpleContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = E577AB430C8C071B00CE9A7A /* nuiSimpleContainer.h */; };
 		E524145111CB860B0025CA71 /* nuiMatrixView.h in Headers */ = {isa = PBXBuildFile; fileRef = E50A2B0D0C8DBD8200C58F94 /* nuiMatrixView.h */; };
 		E524145211CB860B0025CA71 /* nuiSpinnerLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = E54EDB7C0C8EF49400B294C8 /* nuiSpinnerLabel.h */; };
@@ -2308,7 +2307,6 @@
 		E5241D2311CBCE9E0025CA71 /* nuiDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = E591D80B0C83272700844D3E /* nuiDialog.h */; };
 		E5241D2411CBCE9E0025CA71 /* nuiHBox.h in Headers */ = {isa = PBXBuildFile; fileRef = E517B0DC0C85704900190FF9 /* nuiHBox.h */; };
 		E5241D2511CBCE9E0025CA71 /* nuiVBox.h in Headers */ = {isa = PBXBuildFile; fileRef = E517B0DD0C85704900190FF9 /* nuiVBox.h */; };
-		E5241D2611CBCE9E0025CA71 /* nuiRadioButton.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B009E30C87857A004BEE4E /* nuiRadioButton.h */; };
 		E5241D2711CBCE9E0025CA71 /* nuiSimpleContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = E577AB430C8C071B00CE9A7A /* nuiSimpleContainer.h */; };
 		E5241D2811CBCE9E0025CA71 /* nuiMatrixView.h in Headers */ = {isa = PBXBuildFile; fileRef = E50A2B0D0C8DBD8200C58F94 /* nuiMatrixView.h */; };
 		E5241D2911CBCE9E0025CA71 /* nuiSpinnerLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = E54EDB7C0C8EF49400B294C8 /* nuiSpinnerLabel.h */; };
@@ -5596,7 +5594,6 @@
 		E5A8CE2D11E33A54004E14CE /* nuiDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = E591D80B0C83272700844D3E /* nuiDialog.h */; };
 		E5A8CE2E11E33A54004E14CE /* nuiHBox.h in Headers */ = {isa = PBXBuildFile; fileRef = E517B0DC0C85704900190FF9 /* nuiHBox.h */; };
 		E5A8CE2F11E33A54004E14CE /* nuiVBox.h in Headers */ = {isa = PBXBuildFile; fileRef = E517B0DD0C85704900190FF9 /* nuiVBox.h */; };
-		E5A8CE3011E33A54004E14CE /* nuiRadioButton.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B009E30C87857A004BEE4E /* nuiRadioButton.h */; };
 		E5A8CE3111E33A54004E14CE /* nuiSimpleContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = E577AB430C8C071B00CE9A7A /* nuiSimpleContainer.h */; };
 		E5A8CE3211E33A54004E14CE /* nuiMatrixView.h in Headers */ = {isa = PBXBuildFile; fileRef = E50A2B0D0C8DBD8200C58F94 /* nuiMatrixView.h */; };
 		E5A8CE3311E33A54004E14CE /* nuiSpinnerLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = E54EDB7C0C8EF49400B294C8 /* nuiSpinnerLabel.h */; };
@@ -6517,8 +6514,6 @@
 		E5AFA4D8117548CD0021C1E1 /* nuiMimeMultiPart.h in Headers */ = {isa = PBXBuildFile; fileRef = E5AFA4D5117548CD0021C1E1 /* nuiMimeMultiPart.h */; };
 		E5AFA4E1117548F20021C1E1 /* nuiMimeMultiPart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5AFA4DF117548F20021C1E1 /* nuiMimeMultiPart.cpp */; };
 		E5AFA4E2117548F20021C1E1 /* nuiMimeMultiPart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5AFA4DF117548F20021C1E1 /* nuiMimeMultiPart.cpp */; };
-		E5B009E40C87857A004BEE4E /* nuiRadioButton.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B009E30C87857A004BEE4E /* nuiRadioButton.h */; };
-		E5B009E50C87857A004BEE4E /* nuiRadioButton.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B009E30C87857A004BEE4E /* nuiRadioButton.h */; };
 		E5B678C50F39EFCF00DBF325 /* nuiAttributeAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5B678C40F39EFCF00DBF325 /* nuiAttributeAnimation.cpp */; };
 		E5B678C70F39EFCF00DBF325 /* nuiAttributeAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5B678C40F39EFCF00DBF325 /* nuiAttributeAnimation.cpp */; };
 		E5B678C90F39EFE100DBF325 /* nuiAttributeAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B678C80F39EFE100DBF325 /* nuiAttributeAnimation.h */; };
@@ -7017,7 +7012,6 @@
 		E5D640381209AB9C009C26A9 /* nuiDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = E591D80B0C83272700844D3E /* nuiDialog.h */; };
 		E5D640391209AB9C009C26A9 /* nuiHBox.h in Headers */ = {isa = PBXBuildFile; fileRef = E517B0DC0C85704900190FF9 /* nuiHBox.h */; };
 		E5D6403A1209AB9C009C26A9 /* nuiVBox.h in Headers */ = {isa = PBXBuildFile; fileRef = E517B0DD0C85704900190FF9 /* nuiVBox.h */; };
-		E5D6403B1209AB9C009C26A9 /* nuiRadioButton.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B009E30C87857A004BEE4E /* nuiRadioButton.h */; };
 		E5D6403C1209AB9C009C26A9 /* nuiSimpleContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = E577AB430C8C071B00CE9A7A /* nuiSimpleContainer.h */; };
 		E5D6403D1209AB9C009C26A9 /* nuiMatrixView.h in Headers */ = {isa = PBXBuildFile; fileRef = E50A2B0D0C8DBD8200C58F94 /* nuiMatrixView.h */; };
 		E5D6403E1209AB9C009C26A9 /* nuiSpinnerLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = E54EDB7C0C8EF49400B294C8 /* nuiSpinnerLabel.h */; };
@@ -9493,7 +9487,6 @@
 		E5A8D1D311E33A54004E14CE /* libnui3CocoaD.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libnui3CocoaD.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5AFA4D5117548CD0021C1E1 /* nuiMimeMultiPart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiMimeMultiPart.h; path = include/nuiMimeMultiPart.h; sourceTree = SOURCE_ROOT; };
 		E5AFA4DF117548F20021C1E1 /* nuiMimeMultiPart.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiMimeMultiPart.cpp; path = src/Net/nuiMimeMultiPart.cpp; sourceTree = SOURCE_ROOT; };
-		E5B009E30C87857A004BEE4E /* nuiRadioButton.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiRadioButton.h; path = include/nuiRadioButton.h; sourceTree = SOURCE_ROOT; };
 		E5B678C40F39EFCF00DBF325 /* nuiAttributeAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiAttributeAnimation.cpp; path = Animations/nuiAttributeAnimation.cpp; sourceTree = "<group>"; };
 		E5B678C80F39EFE100DBF325 /* nuiAttributeAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiAttributeAnimation.h; path = include/nuiAttributeAnimation.h; sourceTree = SOURCE_ROOT; };
 		E5B74ADE0FE021C900476F43 /* nuiRSSView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiRSSView.h; path = include/nuiRSSView.h; sourceTree = SOURCE_ROOT; };
@@ -11673,7 +11666,6 @@
 				E5816D090C3CECAB00902DFE /* nuiTabBar.h */,
 				E5816DE10C3CECAB00902DFE /* nuiToggleButton.cpp */,
 				E5901BEA1043F2C200D3FD5F /* nuiToggleButton.h */,
-				E5B009E30C87857A004BEE4E /* nuiRadioButton.h */,
 				BC3919860CBA5B1A00C56FD2 /* nuiZoomBar.cpp */,
 				BC3919890CBA5B2F00C56FD2 /* nuiZoomBar.h */,
 				E5B74ADE0FE021C900476F43 /* nuiRSSView.h */,
@@ -12784,7 +12776,6 @@
 				E524144C11CB860B0025CA71 /* nuiDialog.h in Headers */,
 				E524144D11CB860B0025CA71 /* nuiHBox.h in Headers */,
 				E524144E11CB860B0025CA71 /* nuiVBox.h in Headers */,
-				E524144F11CB860B0025CA71 /* nuiRadioButton.h in Headers */,
 				E524145011CB860B0025CA71 /* nuiSimpleContainer.h in Headers */,
 				E524145111CB860B0025CA71 /* nuiMatrixView.h in Headers */,
 				E524145211CB860B0025CA71 /* nuiSpinnerLabel.h in Headers */,
@@ -13555,7 +13546,6 @@
 				E5241D2311CBCE9E0025CA71 /* nuiDialog.h in Headers */,
 				E5241D2411CBCE9E0025CA71 /* nuiHBox.h in Headers */,
 				E5241D2511CBCE9E0025CA71 /* nuiVBox.h in Headers */,
-				E5241D2611CBCE9E0025CA71 /* nuiRadioButton.h in Headers */,
 				E5241D2711CBCE9E0025CA71 /* nuiSimpleContainer.h in Headers */,
 				E5241D2811CBCE9E0025CA71 /* nuiMatrixView.h in Headers */,
 				E5241D2911CBCE9E0025CA71 /* nuiSpinnerLabel.h in Headers */,
@@ -14331,7 +14321,6 @@
 				E591D80C0C83272700844D3E /* nuiDialog.h in Headers */,
 				E517B0DE0C85704900190FF9 /* nuiHBox.h in Headers */,
 				E517B0DF0C85704900190FF9 /* nuiVBox.h in Headers */,
-				E5B009E40C87857A004BEE4E /* nuiRadioButton.h in Headers */,
 				E577AB440C8C071B00CE9A7A /* nuiSimpleContainer.h in Headers */,
 				E50A2B0F0C8DBD8200C58F94 /* nuiMatrixView.h in Headers */,
 				E54EDB7D0C8EF49400B294C8 /* nuiSpinnerLabel.h in Headers */,
@@ -15085,7 +15074,6 @@
 				E591D80D0C83272700844D3E /* nuiDialog.h in Headers */,
 				E517B0E00C85704900190FF9 /* nuiHBox.h in Headers */,
 				E517B0E10C85704900190FF9 /* nuiVBox.h in Headers */,
-				E5B009E50C87857A004BEE4E /* nuiRadioButton.h in Headers */,
 				E577AB450C8C071B00CE9A7A /* nuiSimpleContainer.h in Headers */,
 				E50A2B110C8DBD8200C58F94 /* nuiMatrixView.h in Headers */,
 				E54EDB7E0C8EF49400B294C8 /* nuiSpinnerLabel.h in Headers */,
@@ -15841,7 +15829,6 @@
 				E5A8CE2D11E33A54004E14CE /* nuiDialog.h in Headers */,
 				E5A8CE2E11E33A54004E14CE /* nuiHBox.h in Headers */,
 				E5A8CE2F11E33A54004E14CE /* nuiVBox.h in Headers */,
-				E5A8CE3011E33A54004E14CE /* nuiRadioButton.h in Headers */,
 				E5A8CE3111E33A54004E14CE /* nuiSimpleContainer.h in Headers */,
 				E5A8CE3211E33A54004E14CE /* nuiMatrixView.h in Headers */,
 				E5A8CE3311E33A54004E14CE /* nuiSpinnerLabel.h in Headers */,
@@ -16600,7 +16587,6 @@
 				E5D640381209AB9C009C26A9 /* nuiDialog.h in Headers */,
 				E5D640391209AB9C009C26A9 /* nuiHBox.h in Headers */,
 				E5D6403A1209AB9C009C26A9 /* nuiVBox.h in Headers */,
-				E5D6403B1209AB9C009C26A9 /* nuiRadioButton.h in Headers */,
 				E5D6403C1209AB9C009C26A9 /* nuiSimpleContainer.h in Headers */,
 				E5D6403D1209AB9C009C26A9 /* nuiMatrixView.h in Headers */,
 				E5D6403E1209AB9C009C26A9 /* nuiSpinnerLabel.h in Headers */,
@@ -20627,7 +20613,7 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				PRODUCT_NAME = nuiPhoneD;
-				SDKROOT = iphoneos4.0;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Default;
@@ -20684,7 +20670,7 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				PRODUCT_NAME = nuiPhone;
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Default;

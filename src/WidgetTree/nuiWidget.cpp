@@ -1628,36 +1628,6 @@ bool nuiWidget::DispatchKeyDown(const nglKeyEvent& rEvent, nuiKeyModifier Mask)
   {
     return true;
   }
-
-#if 0 // Moving this to nuiTopLevel
-  if (rEvent.mKey == NK_TAB && HasFocus())
-  {
-    nuiTopLevel* pTop = GetTopLevel();
-    NGL_ASSERT(pTop);
-    
-    // The user wants to change the focussed widget
-    nuiWidget* pNext = NULL;
-    if (IsKeyDown(NK_LSHIFT) || IsKeyDown(NK_RSHIFT))
-    {
-      // Backward
-      pNext = pTop->GetTabBackward(this);
-      if (!pNext && mpParent)
-        pNext = GetPreviousFocussableWidget(this);
-    }
-    else
-    {
-      // Forward
-      pNext = pTop->GetTabForward(this);
-      if (!pNext && mpParent)
-        pNext = GetNextFocussableWidget(this);
-    }
-
-    if (pNext)
-      pNext->Focus();
-    
-    return true;
-  }
-#endif
   
   if (mpParent)
   {
@@ -1685,15 +1655,6 @@ bool nuiWidget::DispatchKeyUp(const nglKeyEvent& rEvent, nuiKeyModifier Mask)
   {
     return true;
   }
-
-#if 0
-  if (rEvent.mKey == NK_TAB && HasFocus())
-  {
-    // The user has just changed the focussed widget
-    // Let's eat ths remnant key and return...
-    return true;
-  }
-#endif
   
   if (mpParent)
   {
@@ -4724,7 +4685,7 @@ void nuiWidget::DrawFocus(nuiDrawContext* pContext, bool FrontOrBack)
   CheckValid();
   //#FIXME LBDEBUG : there's a bug somewhere in that, that makes ComboBox tutorial crash with Win32 (ati, vista)
   // deactivate the DrawFocus for now, in order to release the application.
-  return;
+  //return;
 
 
   if (!mShowFocus)
@@ -4743,15 +4704,17 @@ void nuiWidget::DrawFocus(nuiDrawContext* pContext, bool FrontOrBack)
   {
     if (FrontOrBack)
     {
-      nuiRect rect(GetRect().Size());
-      rect.Bottom() += GetBorderBottom() - 1;
-      rect.Top() -= GetBorderTop() + 0;
-      rect.Left() -= GetBorderLeft() + 0;
-      rect.Right() += GetBorderRight() - 1;
+      nuiRect rect(GetVisibleRect());
+      rect.Bottom() -= 1;
+      rect.Top() += 0;
+      rect.Left() += 0;
+      rect.Right() -= 1;
       
+      pContext->ResetState();
       pContext->SetLineWidth(2);
       pContext->SetBlendFunc(nuiBlendTransp);
       pContext->EnableBlending(true);
+      //pContext->EnableTexturing(false);
       pContext->SetStrokeColor(nuiColor(64, 64, 255, 128));
       
       nuiShape shp;

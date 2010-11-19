@@ -66,6 +66,60 @@ nuiRadioButton::~nuiRadioButton()
     mpGroupManager->RemoveRadioButton(this);
 }
 
+// Keyboard events:
+bool nuiRadioButton::KeyDown(const nglKeyEvent& rEvent)
+{
+  if (rEvent.mKey == NK_ENTER || rEvent.mKey == NK_PAD_ENTER || rEvent.mKey == NK_SPACE)
+  {
+    mWasPressed = IsPressed(); 
+    if (mCanToggle)
+      SetPressed(!mWasPressed);
+    else
+      SetPressed(true);
+
+    if (IsPressed() && !mWasPressed)
+    {
+      if (mpParent && !mpGroupManager)
+      {
+        nuiContainer::IteratorPtr pIt = mpParent->GetFirstChild();
+        while (pIt->IsValid())
+        {
+          nuiRadioButton* pRadio = dynamic_cast<nuiRadioButton*>(pIt->GetWidget());
+          if (pRadio && (pRadio != this) && pRadio->GetGroup() == GetGroup())
+          {
+            bool wasPressed = pRadio->IsPressed();
+            pRadio->SetPressed(false);
+            if (wasPressed)
+            {
+              pRadio->Deactivated();
+            }
+          }
+          mpParent->GetNextChild(pIt);
+        }
+        delete pIt;
+      }
+      Activated();
+    }
+    else if (!IsPressed() && mWasPressed)
+    {
+      Deactivated();
+    }
+    
+    return true;
+  }
+  
+  return false;
+}
+
+bool nuiRadioButton::KeyUp(const nglKeyEvent& rEvent)
+{
+  if (rEvent.mKey == NK_ENTER || rEvent.mKey == NK_PAD_ENTER || rEvent.mKey == NK_SPACE)
+    return true;
+  
+  return false;
+}
+
+
 bool nuiRadioButton::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
 {
   if (IsDisabled())
