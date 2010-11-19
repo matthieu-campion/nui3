@@ -35,7 +35,7 @@ nuiButton::nuiButton()
   mActivationOffset = 0;
   EnableInteractiveDecoration(true);
   
-  SetBorders(10);
+  SetBorders(mDefaultBorders);
   SetWantKeyboardFocus(true);
   SetFocusVisible(true);
   mpTask = NULL;
@@ -66,7 +66,7 @@ nuiButton::nuiButton(const nglString& rText)
   SetRedrawOnHover(true);
   EnableInteractiveDecoration(true);
   
-  SetBorders(10);
+  SetBorders(mDefaultBorders);
   SetWantKeyboardFocus(true);
   SetFocusVisible(true);
   mpTask = NULL;
@@ -98,7 +98,7 @@ nuiButton::nuiButton(const nglImage& rImage)
   AddChild(pImage);
   pImage->SetPosition(nuiCenter);
   
-  SetBorders(10);
+  SetBorders(mDefaultBorders);
   SetWantKeyboardFocus(true);
   SetFocusVisible(true);
   mpTask = NULL;
@@ -128,7 +128,7 @@ nuiButton::nuiButton(nuiDecoration* pDeco, bool AlreadyAcquired)
   
   SetDecoration(pDeco, eDecorationOverdraw, AlreadyAcquired);
   
-  SetBorders(10);
+  SetBorders(mDefaultBorders);
   SetWantKeyboardFocus(true);
   SetFocusVisible(true);
   mpTask = NULL;
@@ -494,4 +494,9 @@ nuiSize nuiButton::GetActivationOffset() const
   return mActivationOffset;
 }
 
+void nuiButton::SetDefaultBorders(float pixels)
+{
+  mDefaultBorders = pixels;
+}
 
+float nuiButton::mDefaultBorders = 0;

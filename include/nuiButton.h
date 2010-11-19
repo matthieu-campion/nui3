@@ -49,6 +49,7 @@ public:
   virtual bool MouseMoved(nuiSize X, nuiSize Y);
   virtual bool MouseUngrabbed();
 
+  void SetDefaultBorders(float pixels);
 
   bool IsPressed() const;
   virtual void SetPressed(bool Pressed = true);
@@ -79,6 +80,8 @@ protected:
   nuiEventSink<nuiButton> mEventSink;
   void OnAutoRepeat(const nuiEvent& rEvent);
   nuiTask* mpTask;
+  
+  static float mDefaultBorders;
 };
 
 

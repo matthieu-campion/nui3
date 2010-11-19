@@ -658,6 +658,16 @@ bool nuiTopLevel::SetFocus(nuiWidgetPtr pWidget)
   if (!mpFocus)
     EndTextInput();
   
+  if (mpFocus)
+  {
+    nuiRect hotrect;
+    mpFocus->GetHotRect(hotrect);
+    if (hotrect.GetWidth() == 0 && hotrect.GetHeight() == 0)
+    {
+      hotrect = mpFocus->GetVisibleRect();
+    }
+    mpFocus->SetHotRect(hotrect);
+  }
   return true;
 }
 

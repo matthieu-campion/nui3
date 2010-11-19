@@ -4705,10 +4705,10 @@ void nuiWidget::DrawFocus(nuiDrawContext* pContext, bool FrontOrBack)
     if (FrontOrBack)
     {
       nuiRect rect(GetVisibleRect());
-      rect.Bottom() -= 2;
-      rect.Top() += 1;
-      rect.Left() += 1;
-      rect.Right() -= 2;
+      rect.Bottom() -= 1;
+      rect.Top() += 0;
+      rect.Left() += 0;
+      rect.Right() -= 1;
       
       pContext->ResetState();
       pContext->SetLineWidth(2);
