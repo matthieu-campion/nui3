@@ -963,23 +963,27 @@ bool nuiTopLevel::CallKeyDown (const nglKeyEvent& rEvent)
       return true;
   }
 
-  if (rEvent.mKey == NK_TAB && mpFocus)
+  if (rEvent.mKey == NK_TAB)
   {
+    nuiWidget* pFocus = mpFocus;
+    if (!pFocus && GetChildrenCount() != 0)
+      pFocus = GetChild(0);
+
     // The user wants to change the focussed widget
     nuiWidget* pNext = NULL;
     if (IsKeyDown(NK_LSHIFT) || IsKeyDown(NK_RSHIFT))
     {
       // Backward
-      pNext = GetTabBackward(mpFocus);
+      pNext = GetTabBackward(pFocus);
       if (!pNext && mpFocus->GetParent())
-        pNext = GetPreviousFocussableWidget(mpFocus);
+        pNext = GetPreviousFocussableWidget(pFocus);
     }
     else
     {
       // Forward
-      pNext = GetTabForward(mpFocus);
-      if (!pNext && mpFocus->GetParent())
-        pNext = GetNextFocussableWidget(mpFocus);
+      pNext = GetTabForward(pFocus);
+      if (!pNext && pFocus->GetParent())
+        pNext = GetNextFocussableWidget(pFocus);
     }
     
     if (pNext)
