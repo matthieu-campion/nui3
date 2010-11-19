@@ -697,6 +697,7 @@ protected:
       delete pF;
       nglIMemory mem(&cache[0], s);
       
+      uint32 c = mrCSS.GetRulesCount();
       cssLexer lexer(&mem, mrCSS, includePath);
       if (!lexer.Load())
       {
@@ -706,7 +707,8 @@ protected:
         delete pF;
         return false;
       }
-            
+      uint32 cc = mrCSS.GetRulesCount();
+      printf("\tNew css rules: %d\n", cc - c);
       return true;
     }
     else if (mChar == _T('+'))
@@ -1974,6 +1976,7 @@ bool nuiCSS::Load(nglIStream& rStream, const nglPath& rSourcePath)
     mErrorString.CFormat(_T("Error line %d (%d): %ls"), lexer.GetLine(), lexer.GetColumn(), lexer.GetErrorStr().GetChars() );
     return false;
   }
+  printf("Loaded %d css rules\n", GetRulesCount());
   return true;
 }
 
@@ -2025,4 +2028,15 @@ nuiObject* nuiCSS::CreateObject(const nglString& rType, const nglString& rName)
 {
   return nuiDecoration::CreateDecoration(rType, rName);
 }
+
+uint32 nuiCSS::GetRulesCount() const
+{
+  return mRules.size();
+}
+
+const std::vector<nuiCSSRule*> nuiCSS::GetRules() const
+{
+  return mRules;
+}
+
 

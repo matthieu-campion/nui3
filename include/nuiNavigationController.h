@@ -89,7 +89,7 @@ private:
   nuiSize mAnimPosition;
   nuiEventSink<nuiNavigationController> mEventSink;
   
-  
+  nuiAnimation* mpCurrentAnim;
   
   static std::vector<nuiEasingMethod> mEasings;
   static std::vector<float> mDurations;

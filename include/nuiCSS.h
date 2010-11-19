@@ -154,6 +154,8 @@ public:
   
   const nglString& GetErrorString() const;
 
+  uint32 GetRulesCount() const;
+  const std::vector<nuiCSSRule*> GetRules() const;
 private:
 
   std::vector<nuiCSSRule*> mRules;

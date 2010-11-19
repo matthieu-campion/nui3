@@ -36,6 +36,7 @@ nuiNavigationController::nuiNavigationController()
   mpOut = NULL;
   mPushed = false;
   mPoped = false;
+  mpCurrentAnim = NULL;
   
   mPendingLayout = true;
  
@@ -45,7 +46,8 @@ nuiNavigationController::nuiNavigationController()
 
 nuiNavigationController::~nuiNavigationController()
 {
-  
+  if (mpCurrentAnim)
+    delete mpCurrentAnim;
 }
 
 void nuiNavigationController::InitStatic()
@@ -143,6 +145,8 @@ void nuiNavigationController::_PushViewController(nuiViewController* pViewContro
     pAnim->SetDuration(mDurations[transition]);
     pAnim->SetDeleteOnStop(true);
     mEventSink.Connect(pAnim->AnimStop, &nuiNavigationController::OnViewPushStop, (void*)viewOverlay);
+    NGL_ASSERT(!mpCurrentAnim);
+    mpCurrentAnim = pAnim;
     pAnim->Play();
   }
   else 
@@ -215,6 +219,8 @@ void nuiNavigationController::_PopViewControllerAnimated(bool animated, Transiti
     pAnim->SetDuration(mDurations[transition]);
     pAnim->SetDeleteOnStop(true);
     mEventSink.Connect(pAnim->AnimStop, &nuiNavigationController::OnViewPopStop, (void*)viewOverlay);
+    NGL_ASSERT(!mpCurrentAnim);
+    mpCurrentAnim = pAnim;
     pAnim->Play();
   }
   else
@@ -362,6 +368,7 @@ void nuiNavigationController::_PopToRootViewControllerAnimated(bool animated, Tr
 
 void nuiNavigationController::OnViewPushStop(const nuiEvent& rEvent)
 {
+  mpCurrentAnim = NULL;
   mPushed = false;
   mPoped = false;
   bool viewOverlay = (bool)rEvent.mpUser;
@@ -386,6 +393,7 @@ void nuiNavigationController::OnViewPushStop(const nuiEvent& rEvent)
 
 void nuiNavigationController::OnViewPopStop(const nuiEvent& rEvent)
 {
+  mpCurrentAnim = NULL;
   mPushed = false;
   mPoped = false;
   bool viewOverlay = (bool)rEvent.mpUser;
@@ -394,6 +402,7 @@ void nuiNavigationController::OnViewPopStop(const nuiEvent& rEvent)
   if (mpOut->GetParent())
   {
     mpOut->Release();
+
     DelChild(mpOut);
     mViewControllers.pop_back(); 
 
