@@ -22,7 +22,6 @@ nuiViewController::nuiViewController()
 
 nuiViewController::~nuiViewController()
 {
-  
 }
 
 // virtual 
