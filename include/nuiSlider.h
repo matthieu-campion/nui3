@@ -57,7 +57,11 @@ public:
   void HookMouse();
   
 
-  //Received Events:
+  // Keyboard events:
+  bool KeyDown(const nglKeyEvent& rEvent);
+  bool KeyUp(const nglKeyEvent& rEvent);
+  
+  // Mouse Events:
   bool MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
   bool MouseUnclicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
   bool MouseMoved  (nuiSize X, nuiSize Y);

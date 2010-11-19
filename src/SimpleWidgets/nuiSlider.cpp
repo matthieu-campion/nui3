@@ -51,6 +51,8 @@ mSliderSink(this)
   SetHandlePosMin(0);
   SetHandlePosMax(100);
   
+  SetWantKeyboardFocus(true);
+  
   NUI_ADD_EVENT(ValueChanged);
   NUI_ADD_EVENT(InteractiveValueChanged);
 }
@@ -200,6 +202,53 @@ void nuiSlider::HookMouse()
 }
 
 
+// Keyboard events:
+bool nuiSlider::KeyDown(const nglKeyEvent& rEvent)
+{
+  if (rEvent.mKey == NK_DOWN || rEvent.mKey == NK_LEFT)
+  {
+    mRange.Decrement();
+    return true;
+  }
+  if (rEvent.mKey == NK_UP || rEvent.mKey == NK_RIGHT)
+  {
+    mRange.Increment();
+    return true;
+  }
+  if (rEvent.mKey == NK_PAGEDOWN)
+  {
+    mRange.PageIncrement();
+    return true;
+  }
+  if (rEvent.mKey == NK_PAGEDOWN)
+  {
+    mRange.PageDecrement();
+    return true;
+  }
+  if (rEvent.mKey == NK_HOME)
+  {
+    double v = mOrientation == nuiHorizontal ? mRange.GetMinimum() : mRange.GetMaximum();
+    mRange.SetValue(v);
+    return true;
+  }
+  if (rEvent.mKey == NK_END)
+  {
+    double v = mOrientation == nuiHorizontal ? mRange.GetMaximum() : mRange.GetMinimum();
+    mRange.SetValue(v);
+    return true;
+  }
+  
+  
+  return false;
+}
+
+bool nuiSlider::KeyUp(const nglKeyEvent& rEvent)
+{
+  if (rEvent.mKey == NK_DOWN || rEvent.mKey == NK_LEFT || rEvent.mKey == NK_UP || rEvent.mKey == NK_RIGHT || rEvent.mKey == NK_PAGEDOWN || rEvent.mKey == NK_PAGEDOWN)
+    return true;
+  
+  return false;
+}
 
 // Received Mouse events:
 bool nuiSlider::MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
