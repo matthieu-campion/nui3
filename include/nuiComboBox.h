@@ -45,6 +45,9 @@ protected:
 
   virtual bool    MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
 
+  virtual bool    KeyDown(const nglKeyEvent& rEvent);
+  virtual bool    KeyUp(const nglKeyEvent& rEvent);
+  
   void OnSelect(const nuiEvent& rEvent);
 
   void ReparentTree(nuiTreeNode* pTree);

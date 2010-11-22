@@ -24,6 +24,7 @@ nuiComboBox::nuiComboBox()
   mComboBoxEvents(this)
 {
   SetObjectClass(_T("nuiComboBox"));
+  SetWantKeyboardFocus(true);
 }
 
 
@@ -42,6 +43,7 @@ nuiComboBox::nuiComboBox(nuiTreeNode* pChoicesTree, bool ownTree)
   if (mpChoicesTree)
     mpChoicesTree->Acquire();
   ReparentTree(mpChoicesTree);
+  SetWantKeyboardFocus(true);
 }
 
 bool nuiComboBox::Load(nuiXMLNode* pNode)
@@ -162,13 +164,7 @@ bool nuiComboBox::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
   {
     if (Button & nglMouseInfo::ButtonLeft)
     {
-//      if (mpOldSelected)
-//        mpOldSelected->Release();
       mpOldSelected = mpSelected;
-//      if (mpOldSelected)
-//        mpOldSelected->Acquire();
-//      if (mpSelected)
-//        mpSelected->Release();
       mpSelected = NULL;
       nuiRect rect(0.f,0.f,0.f,0.f);
       PrepareMenuTree(mpChoicesTree);
@@ -180,6 +176,31 @@ bool nuiComboBox::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
     }
   }
 
+  return false;
+}
+
+bool nuiComboBox::KeyDown(const nglKeyEvent& rEvent)
+{
+  if (rEvent.mKey == NK_SPACE || rEvent.mKey == NK_ENTER || rEvent.mKey == NK_PAD_ENTER)
+  {
+    mpOldSelected = mpSelected;
+    mpSelected = NULL;
+    nuiRect rect(0.f,0.f,0.f,0.f);
+    PrepareMenuTree(mpChoicesTree);
+    nuiPopupMenu* pMenu = new nuiPopupMenu(this, mpChoicesTree, nuiRect(0.f,0.f,GetRect().GetWidth() - (mHandleWidth + mHandleOffset),0.f), false);  
+    
+    pMenu->ShowFirstNode(false);
+    mComboBoxEvents.Connect(pMenu->MenuDone, &nuiComboBox::OnSelect, pMenu);
+    return true;
+  }
+  
+  return false;
+}
+
+bool nuiComboBox::KeyUp(const nglKeyEvent& rEvent)
+{
+  if (rEvent.mKey == NK_SPACE || rEvent.mKey == NK_ENTER || rEvent.mKey == NK_PAD_ENTER)
+    return true;
   return false;
 }
 
@@ -203,6 +224,8 @@ void nuiComboBox::OnSelect(const nuiEvent& rEvent)
   InvalidateLayout();
       
   rEvent.Cancel();
+  
+  Focus();
 }
 
 void nuiComboBox::SetSelected(uint32 childIndex)
