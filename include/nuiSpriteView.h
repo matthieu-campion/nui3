@@ -194,6 +194,13 @@ public:
   nuiRect CalcIdealRect();
 
   bool Draw(nuiDrawContext* pContext);
+
+  void GetSpritesAtPoint(float x, float y, std::vector<nuiSprite*>& rSprites);
+  void GetSpritesInRect(const nuiRect& rRect, std::vector<nuiSprite*>& rSprites);
+  
+  bool MouseClicked(const nglMouseEvent& rEvent);
+  bool MouseUnclicked(const nglMouseEvent& rEvent);
+  bool MouseMoved(const nglMouseEvent& rEvent);
   
 protected:
   std::vector<nuiSprite*> mpSprites;
