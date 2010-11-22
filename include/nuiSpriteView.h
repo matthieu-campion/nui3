@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include "nuiSlotSlink.h"
+
 class nuiTexture;
 
 class nuiSpriteFrame
@@ -141,6 +143,10 @@ public:
   
   void SetBlendFunc(nuiBlendFunc f);
   nuiBlendFunc GetBlendFunc() const;
+  
+  nuiSlot<const nglMouseEvent&, bool> MouseClicked;
+  nuiSlot<const nglMouseEvent&, bool> MouseUnclicked;
+  nuiSlot<const nglMouseEvent&, bool> MouseMoved;
   
   nuiSimpleEventSource<0> AnimEnd;
   

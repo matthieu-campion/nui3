@@ -717,5 +717,34 @@ bool nuiSpriteView::Draw(nuiDrawContext* pContext)
   return true;
 }
 
+void GetSpritesAtPoint(float x, float y, std::vector<nuiSprite*>& rSprites)
+{
+  
+}
 
+void GetSpritesInRect(const nuiRect& rRect, std::vector<nuiSprite*>& rSprites)
+{
+  uint32 s = mpSprites.size();
+  for (size_t i = 0; i < s; i++)
+  {
+    mpSprites[s - 1 - i]->GetSpritesInRect(rRect, rSprites);
+  }
+}
+
+
+
+bool nuiSpriteView::MouseClicked(const nglMouseEvent& rEvent)
+{
+  
+}
+
+bool nuiSpriteView::MouseUnclicked(const nglMouseEvent& rEvent)
+{
+  
+}
+
+bool nuiSpriteView::MouseMoved(const nglMouseEvent& rEvent)
+{
+  
+}
 
