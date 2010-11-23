@@ -108,16 +108,55 @@ MyViewController::MyViewController(nuiNavigationController* pNav)
   pLabel->SetObjectName(_T("ViewControllerName"));
   AddChild(pLabel);
   
-  nuiButton* pButton = new nuiButton(_T("pop"));
-  pButton->SetObjectName(_T("PopButton"));
+  // pop buttons
+  nuiButton* pButton = new nuiButton(_T("pop [slide]"));
+  pButton->SetObjectName(_T("PopButton0"));
   pButton->SetEnabled(mCount != 0);
   AddChild(pButton);
-  mEventSink.Connect(pButton->Activated, &MyViewController::OnPopClick);
+  mEventSink.Connect(pButton->Activated, &MyViewController::OnPopClick, (void*)0);
   
-  pButton = new nuiButton(_T("push"));
-  pButton->SetObjectName(_T("PushButton"));
+  pButton = new nuiButton(_T("pop [elastic]"));
+  pButton->SetObjectName(_T("PopButton1"));
+  pButton->SetEnabled(mCount != 0);
   AddChild(pButton);
-  mEventSink.Connect(pButton->Activated, &MyViewController::OnPushClick);
+  mEventSink.Connect(pButton->Activated, &MyViewController::OnPopClick, (void*)1);
+
+  pButton = new nuiButton(_T("pop [transp.]"));
+  pButton->SetObjectName(_T("PopButton2"));
+  pButton->SetEnabled(mCount != 0);
+  AddChild(pButton);
+  mEventSink.Connect(pButton->Activated, &MyViewController::OnPopClick, (void*)2);
+  
+  name.Format(_T("pop to [%d]"), mCount-5);
+  pButton = new nuiButton(name);
+  pButton->SetObjectName(_T("PopButton3"));
+  pButton->SetEnabled(mCount >= 5);
+  AddChild(pButton);
+  mEventSink.Connect(pButton->Activated, &MyViewController::OnPopClick, (void*)3);
+
+  pButton = new nuiButton(_T("pop to root"));
+  pButton->SetObjectName(_T("PopButton4"));
+  pButton->SetEnabled(mCount != 0);
+  AddChild(pButton);
+  mEventSink.Connect(pButton->Activated, &MyViewController::OnPopClick, (void*)4);
+  
+  
+
+  // push buttons
+  pButton = new nuiButton(_T("push [slide]"));
+  pButton->SetObjectName(_T("PushButton0"));
+  AddChild(pButton);
+  mEventSink.Connect(pButton->Activated, &MyViewController::OnPushClick, (void*)0);
+
+  pButton = new nuiButton(_T("push [elastic]"));
+  pButton->SetObjectName(_T("PushButton1"));
+  AddChild(pButton);
+  mEventSink.Connect(pButton->Activated, &MyViewController::OnPushClick, (void*)1);
+
+  pButton = new nuiButton(_T("push [transp.]"));
+  pButton->SetObjectName(_T("PushButton2"));
+  AddChild(pButton);
+  mEventSink.Connect(pButton->Activated, &MyViewController::OnPushClick, (void*)2);
 }
 
 MyViewController::~MyViewController()
@@ -128,25 +167,36 @@ MyViewController::~MyViewController()
 
 void MyViewController::OnPushClick(const nuiEvent& rEvent)
 {
-  TransitionType transition = (mCount & 1)? eTransitionElastic : eTransitionSlide;
+  uint32 code = (uint32)rEvent.mpUser;
+  TransitionType transition = (code == 0)? eTransitionSlide : (code == 1)? eTransitionElastic : eTransitionTransparency;
   mCount++;
   
   MyViewController* pView = new MyViewController();
   
-  // if you plan to keep your object alive when it's poped from the stack,
-  // you can acquire a reference right here. You'll be responsible for releasing it, then, after the pop operation is processed.
-  // pView->Acquire();
-  // 
-
   mpNav->PushViewController(pView, true, transition);
 }
 
 
 void MyViewController::OnPopClick(const nuiEvent& rEvent)
 {
-  TransitionType transition = (mCount & 1)? eTransitionElastic : eTransitionSlide;
-  mCount--;
-  mpNav->PopViewControllerAnimated(true, transition); 
+  uint32 code = (uint32)rEvent.mpUser;  
+  
+  if (code == 3)
+  {
+    mCount-=5;
+    mpNav->PopToViewController(mpNav->GetViewControllers()[mCount]);
+  }
+  else if (code == 4)
+  {
+    mCount = 0;
+    mpNav->PopToRootViewControllerAnimated();
+  }
+  else
+  {
+    mCount--;
+    TransitionType transition = (code == 0)? eTransitionSlide : (code == 1)? eTransitionElastic : eTransitionTransparency;
+    mpNav->PopViewControllerAnimated(true, transition); 
+  }
 }
 
 
