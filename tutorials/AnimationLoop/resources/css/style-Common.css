@@ -1,0 +1,86 @@
+//
+// main nui3 stylesheet
+//
+
+
+"MyImage"!
+{
+  Texture: "rsrc:/decorations/Logo.png";
+  UserWidth: 198;
+  UserHeight: 163;
+}
+
+
+@nuiColorDecoration dMyLabel
+{
+  FillColor: rgb(96,96,96);
+  StrokeColor: black;
+  ShapeMode: StrokeAndFill;
+  ClientRect: "{10 10 0 0}";
+}
+
+"MyLabel"!
+{
+  DecorationMode: Border;
+  Decoration: dMyLabel;
+  TextColor: white;
+}
+
++nuiSimpleContainer MainContainer
+{
+  +nuiLabel countLabel
+  {
+    Position: TopLeft;
+    BorderLeft: 10;
+    BorderTop: 10;
+    Text: "count:";
+  }
+  
+  +nuiSlider countSlider
+  {
+    Position: TopLeft;
+    BorderLeft: 60;
+    BorderTop: 10;
+    UserWidth: 140;
+  }
+  
+  +nuiLabel countValueLabel
+  {
+    Position: TopLeft;
+    BorderLeft: 220;
+    BorderTop: 10;
+    Text: "0";
+  }
+  
+  
+  +nuiLabel loopLabel
+  {
+    Position: TopLeft;
+    BorderLeft: 10;
+    BorderTop: 30;
+    Text: "loop:";
+  }
+  
+  +nuiComboBox loopCombo
+  {
+    Position: TopLeft;
+    BorderLeft: 60;
+    BorderTop: 30;
+  }
+  
+  
+  +nuiButton goButton
+  {
+    Position: Center;
+    
+    +nuiLabel goButtonLabel
+    {
+      Text: "Go !";
+      Position: Center;
+    }
+    
+  }
+}
+
+// blank ending line following
+
