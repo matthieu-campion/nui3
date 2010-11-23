@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include "nuiSignalsSlots.h"
+
 class nuiTexture;
 
 class nuiSpriteFrame
@@ -142,8 +144,13 @@ public:
   void SetBlendFunc(nuiBlendFunc f);
   nuiBlendFunc GetBlendFunc() const;
   
+  nuiSignal1<const nglMouseInfo&, bool> MouseClicked;
+  nuiSignal1<const nglMouseInfo&, bool> MouseUnclicked;
+  nuiSignal1<const nglMouseInfo&, bool> MouseMoved;
+  
   nuiSimpleEventSource<0> AnimEnd;
   
+  void GetSpritesAtPoint(float x, float y, std::vector<nuiSprite*>& rSprites);
 protected:
               
   void Init();
@@ -188,6 +195,12 @@ public:
   nuiRect CalcIdealRect();
 
   bool Draw(nuiDrawContext* pContext);
+
+  void GetSpritesAtPoint(float x, float y, std::vector<nuiSprite*>& rSprites);
+  
+  bool MouseClicked(const nglMouseInfo& rEvent);
+  bool MouseUnclicked(const nglMouseInfo& rEvent);
+  bool MouseMoved(const nglMouseInfo& rEvent);
   
 protected:
   std::vector<nuiSprite*> mpSprites;

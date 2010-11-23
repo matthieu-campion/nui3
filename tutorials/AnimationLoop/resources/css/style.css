@@ -1,0 +1,24 @@
+//
+// main nui3 stylesheet
+//
+
+// you can include your stylesheets this way:
+#include "style-Common.css"
+
+// remember each stylesheet file must have at least a blank ending line, 
+// or the stylehsheet parsing may not work properly
+
+@nuiFrame dMainBox
+{
+  Texture: "rsrc:/decorations/Background.png";
+}
+
+"MainBox"!
+{
+  Decoration: dMainBox;
+}
+
+
+
+// blank ending line following
+

@@ -1435,7 +1435,7 @@ bool nuiPopupMenu::KeyDown(const nglKeyEvent& rEvent)
     InvalidateLayout();
     return false;
   }
-  else if (rEvent.mKey == NK_ENTER)
+  else if (rEvent.mKey == NK_ENTER || rEvent.mKey == NK_PAD_ENTER || rEvent.mKey == NK_SPACE)
   {
     if (mpSelectedNode && !mpSelectedNode->IsEmpty()) // maybe open
     {
