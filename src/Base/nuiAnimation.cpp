@@ -501,94 +501,59 @@ bool nuiAnimation::UpdateTime()
 {
   bool ShouldStop = false;
   mUpdatingTime = true;
-
+  
   nglTime now;
   double t = now - mLastTime;
-  double advance = mDirection * t;
   if (!mFirstFrameSincePlay)
-    mCurrentTime += advance;
+    mCurrentTime += t;
   else
     mFirstFrameSincePlay = false;
-
+  
   mLastTime = now;
-
-  double duration = GetDuration();
-
-  switch (mLoopMode)
+  
+  double duration = GetDuration();  
+  if (mCurrentTime >= duration) 
   {
-  case eAnimLoopForward:
-    if (mCurrentTime >= duration)
+    mCount--;
+    mCurrentTime = 0;
+    if (mCount <= 0)
     {
-      mCount--;
-      mCurrentTime = 0;
+      mCurrentTime = duration;
+      ShouldStop = true;
+    }
+    else 
+    {
+      AnimLoop();
+      if (mLoopMode == eAnimLoopPingPong)
+        mDirection = -mDirection;
+    }
 
-      if (mCount <= 0)
-      {
-        mCurrentTime = duration;
-        //NGL_OUT(_T("Stop anim (time has come: %f > %f)\n"), mCurrentTime, duration);
-        //Stop();
-        ShouldStop = true;
-      }
-      else
-      {
-        AnimLoop();
-      }
-    }
-    break;
-  case eAnimLoopReverse:
-    if (mCurrentTime <= 0.0)
-    {
-      mCount--;
-      if (mCount <= 0)
-      {
-        mCurrentTime = 0;
-        //Stop();
-        ShouldStop = true;
-      }
-      else
-      {
-        mCurrentTime = duration;
-        AnimLoop();
-      }
-    }
-    break;
-  case eAnimLoopPingPong:
-    if (mCurrentTime >= duration)
-    {
-      if (mCount-- <= 0)
-      {
-        mCurrentTime = duration;
-        //Stop();
-        ShouldStop = true;
-      }
-      else
-      {
-        mCurrentTime = duration - (mCurrentTime - duration);
-        mDirection = -mDirection;
-        AnimLoop();
-      }
-    }
-    if (mCurrentTime <= 0.0)
-    {
-      if (mCount-- <= 0)
-      {
-        mCurrentTime = 0;
-        //Stop();
-        ShouldStop = true;
-      }
-      else
-      {
-        mCurrentTime = -mCurrentTime;
-        mDirection = -mDirection;
-        AnimLoop();
-      }
-    }
-    break;
   }
   
   if (GetDuration() != 0)
-  {
-    mCurrentPosition = mCurrentTime / GetDuration();
+  {    
+    switch (mLoopMode) 
+    {
+      case eAnimLoopForward:
+        mCurrentPosition = mCurrentTime / GetDuration();
+        break;
+        
+      case eAnimLoopReverse:
+        mCurrentPosition = 1.f - (mCurrentTime / GetDuration());
+        break;
+        
+      case eAnimLoopPingPong:
+        if (mDirection > 0)
+          mCurrentPosition = mCurrentTime / GetDuration();
+        else
+          mCurrentPosition = 1.f - (mCurrentTime / GetDuration());
+        break;
+        
+      default:
+        break;
+    }
+    
+    
     if (mpEasing)
       mCurrentPosition = mpEasing->Map(mCurrentPosition);
   }
@@ -596,7 +561,6 @@ bool nuiAnimation::UpdateTime()
   {
     mCurrentPosition = 1.0f;
   }
-
   
   mUpdatingTime = false;
   return ShouldStop;
