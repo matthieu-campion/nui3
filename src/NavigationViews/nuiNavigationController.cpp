@@ -62,7 +62,7 @@ void nuiNavigationController::InitStatic()
   mDurations[eTransitionElastic] = 0.8f;
 
   mEasings[eTransitionTransparency] = nuiEasingSinusStartFast;
-  mDurations[eTransitionTransparency] = 0.5f;
+  mDurations[eTransitionTransparency] = 0.8f;
 }
 
 
@@ -163,16 +163,19 @@ void nuiNavigationController::_PushViewController(nuiViewController* pViewContro
     mCurrentAnims.push_back(pAnim);
     pAnim->Play();
     
-    pAnim = new nuiAttributeAnimation();
-    pAnim->SetTargetObject(mpOut);
-    pAnim->SetTargetAttribute(_T("Alpha"));
-    pAnim->SetStartValue(1);
-    pAnim->SetEndValue(0);
-    pAnim->SetEasing(mEasings[transition]);
-    pAnim->SetDuration(mDurations[transition]);
-    pAnim->SetDeleteOnStop(true);
-    mCurrentAnims.push_back(pAnim);
-    pAnim->Play();    
+    if (mpOut)
+    {
+      pAnim = new nuiAttributeAnimation();
+      pAnim->SetTargetObject(mpOut);
+      pAnim->SetTargetAttribute(_T("Alpha"));
+      pAnim->SetStartValue(1);
+      pAnim->SetEndValue(0);
+      pAnim->SetEasing(mEasings[transition]);
+      pAnim->SetDuration(mDurations[transition]);
+      pAnim->SetDeleteOnStop(true);
+      mCurrentAnims.push_back(pAnim);
+      pAnim->Play();    
+    }
     
   }
   else if (animated && (transition != eTransitionNone))
@@ -262,22 +265,22 @@ void nuiNavigationController::_PopViewControllerAnimated(bool animated, Transiti
     {
       AddChild(mpIn);  
       mpIn->SetAlpha(0);
-    }
     
-    nuiAttributeAnimation* pAnim = new nuiAttributeAnimation();
-    pAnim->SetTargetObject(mpIn);
-    pAnim->SetTargetAttribute(_T("Alpha"));
-    pAnim->SetStartValue(0);
-    pAnim->SetEndValue(1);
-    pAnim->SetEasing(mEasings[transition]);
-    pAnim->SetDuration(mDurations[transition]);
-    pAnim->SetDeleteOnStop(true);
-    mEventSink.Connect(pAnim->AnimStop, &nuiNavigationController::OnViewPopStop, (void*)viewOverlay);
-    NGL_ASSERT(mCurrentAnims.size() == 0);
-    mCurrentAnims.push_back(pAnim);
-    pAnim->Play();
+      nuiAttributeAnimation* pAnim = new nuiAttributeAnimation();
+      pAnim->SetTargetObject(mpIn);
+      pAnim->SetTargetAttribute(_T("Alpha"));
+      pAnim->SetStartValue(0);
+      pAnim->SetEndValue(1);
+      pAnim->SetEasing(mEasings[transition]);
+      pAnim->SetDuration(mDurations[transition]);
+      pAnim->SetDeleteOnStop(true);
+      mEventSink.Connect(pAnim->AnimStop, &nuiNavigationController::OnViewPopStop, (void*)viewOverlay);
+      NGL_ASSERT(mCurrentAnims.size() == 0);
+      mCurrentAnims.push_back(pAnim);
+      pAnim->Play();
+    }
 
-    pAnim = new nuiAttributeAnimation();
+    nuiAttributeAnimation* pAnim = new nuiAttributeAnimation();
     pAnim->SetTargetObject(mpOut);
     pAnim->SetTargetAttribute(_T("Alpha"));
     pAnim->SetStartValue(1);
