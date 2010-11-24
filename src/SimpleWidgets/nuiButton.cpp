@@ -268,22 +268,28 @@ bool nuiButton::SetRect(const nuiRect& rRect)
 }
 
 
+// Activate:
+void nuiButton::Activate()
+{
+  SetPressed(true);
+  Activated();
+  if (mpTask)
+  {
+    mpTask->Cancel();
+    mpTask->Release();
+    mpTask = NULL;
+  }
+  mpTask = nuiMakeTask(this, &nuiButton::SetPressed, false);
+  mpTask->Acquire();
+  nuiAnimation::RunOnAnimationTick(mpTask, 4);
+}
+
 // Keyboard events:
 bool nuiButton::KeyDown(const nglKeyEvent& rEvent)
 {
   if (rEvent.mKey == NK_ENTER || rEvent.mKey == NK_PAD_ENTER || rEvent.mKey == NK_SPACE)
   {
-    SetPressed(true);
-    Activated();
-    if (mpTask)
-    {
-      mpTask->Cancel();
-      mpTask->Release();
-      mpTask = NULL;
-    }
-    mpTask = nuiMakeTask(this, &nuiButton::SetPressed, false);
-    mpTask->Acquire();
-    nuiAnimation::RunOnAnimationTick(mpTask, 4);
+    Activate();
     return true;
   }
 

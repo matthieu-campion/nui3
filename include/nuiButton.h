@@ -53,6 +53,8 @@ public:
 
   bool IsPressed() const;
   virtual void SetPressed(bool Pressed = true);
+  void Activate(); ///< Simulate the action of the user pressing the button (useful for hotkey graphical feedback).
+
 
   void EnableAutoRepeat(bool set);
   bool GetAutoRepeat() const;
