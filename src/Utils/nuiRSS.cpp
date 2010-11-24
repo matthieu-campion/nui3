@@ -188,7 +188,7 @@ const nglString& nuiRSSItem::GetImageLink() const
 /////////////////////////////////////////////////////////////////////////
 // nuiRSS
 nuiRSS::nuiRSS(const nglString& rURL, int32 SecondsBetweenUpdates, nglIStream* pOriginalStream)
-: mSink(this), mRSSURL(rURL), mUpdating(false)
+: mSink(this), mRSSURL(rURL), mUpdating(false), mRefreshRate(SecondsBetweenUpdates)
 {
   mpXML = NULL;
   mpHTTPThread = NULL;
@@ -201,7 +201,7 @@ nuiRSS::nuiRSS(const nglString& rURL, int32 SecondsBetweenUpdates, nglIStream* p
     }
   }
   
-  mpUpdateTimer = new nuiTimer(SecondsBetweenUpdates);
+  mpUpdateTimer = new nuiTimer(mRefreshRate);
   mpNotificationTimer = new nuiTimer(0.2); // Process notifications every X seconds
   
   mSink.Connect(mpUpdateTimer->Tick, &nuiRSS::TimeToUpdate);
@@ -513,3 +513,22 @@ const nglString& nuiRSS::GetRSSURL() const
 {
   return mRSSURL;
 }
+
+void nuiRSS::SetRefreshRate(int32 SecondsBetweenUpdates)
+{
+  if (mRefreshRate == SecondsBetweenUpdates)
+    return;
+  
+  mRefreshRate = SecondsBetweenUpdates;
+  delete mpUpdateTimer;
+  mpUpdateTimer = new nuiTimer(mRefreshRate);
+  mSink.Connect(mpUpdateTimer->Tick, &nuiRSS::TimeToUpdate);
+  // let the user force the first update (for him to be able to connect the events properly)
+  mpUpdateTimer->Start(false);
+}
+
+int32 nuiRSS::GetRefreshRate() const
+{
+  return mRefreshRate;
+}
+

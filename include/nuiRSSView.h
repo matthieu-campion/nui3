@@ -41,6 +41,9 @@ public:
   
   void SetExpand(nuiExpandMode expand);
   nuiExpandMode GetExpand() const;
+  
+  void SetRefreshRate(int32 SecondsBetweenUpdates);
+  int32 GetRefreshRate() const;
 protected:
   
   void Update(const nuiEvent& rEvent);

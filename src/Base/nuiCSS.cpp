@@ -193,8 +193,6 @@ public:
   }
 
   
-  
-protected:
   bool PeekChar()
   {
     nglFileOffset ofs = mpStream->GetPos();
@@ -543,7 +541,7 @@ protected:
     }
   }
   
-  bool CreateObject(const nglString& rType, const nglString& rName)
+  nuiObject* CreateObject(const nglString& rType, const nglString& rName)
   {
     nuiObject* pObj = mrCSS.CreateObject(rType, rName);
 
@@ -553,13 +551,13 @@ protected:
       ApplyActionsToObject(&fontrequest);
       nuiFont* pFont = nuiFontManager::GetManager().GetFont(fontrequest, rName);
       Clear();
-      return true;
+      return pFont;
     }
     
     if (!pObj)
     {
       Clear();
-      return false;
+      return NULL;
     }
     
     // Apply the actions to the object:
@@ -571,7 +569,7 @@ protected:
     }
         
     Clear();
-    return true;
+    return pObj;
   }
   
   
@@ -862,37 +860,43 @@ protected:
     return true;
   }
   
-  bool ReadResourceCreator()
+  nuiObject* ReadObject(const nglString& rName = nglString::Null)
   {
-    // Eat the creator @
-    bool res = GetChar();
-    if (!res)
-      return false;
-    
+    // Read Type:
     nglString type;
     if (!GetSymbol(type))
     {
       SetError(_T("expected a symbol"));
-      return false;
+      return NULL;
     }
     
     if (!SkipBlank())
     {
       SetError(_T("unexpected end of file"));
-      return false;        
+      return NULL;
     }
     
     nglString name;
-    if (!GetSymbol(name))
+    
+    if (mChar == '{' && !rName.IsNull())
+    {
+      name = rName;
+    }
+    else if (!GetSymbol(name))
     {
       SetError(_T("expected a symbol"));
-      return false;
+      return NULL;
+    }
+    else
+    {
+      if (!rName.IsNull())
+        name = rName;
     }
     
     if (!SkipBlank())
     {
       SetError(_T("unexpected end of file"));
-      return false;        
+      return NULL;
     }
     
     // special case. create color
@@ -905,7 +909,7 @@ protected:
           nglString str;
           str.CFormat(_T("Unable to parse a color with name '%ls'"), name.GetChars());
           SetError(str);
-          return false;
+          return NULL;
         }
       }
       else if (!type.Compare(_T("var"), false))
@@ -915,41 +919,53 @@ protected:
           nglString str;
           str.CFormat(_T("Unable to parse a variable with name '%ls'"), name.GetChars());
           SetError(str);
-          return false;
+          return NULL;
         }
       }
       
-      return true;
+      return (nuiObject*)-1;
     }
     
     // create an object
     if (mChar != _T('{'))
     {
       SetError(_T("'{' expected"));
-      return false;        
+      return NULL;
     }
     
-    res = ReadActionList();
-    if (!res)
+    if (!ReadActionList())
     {
       Clear();
-      return false;
+      return NULL;
     }
     
     // Create the object from the type and the name
-    if (!CreateObject(type, name))
+    nuiObject* pObj = CreateObject(type, name);
+    if (!pObj)
     {
       nglString str;
       str.CFormat(_T("Unable to create an object of type '%ls' and name '%ls'"), type.GetChars(), name.GetChars());
       SetError(str);
-      return false;
+      return NULL;
     }
     
     // Clear all
     mMatchers.clear();
     mActions.clear();
     
-    return res;
+    return pObj;
+  }
+
+  bool ReadResourceCreator()
+  {
+    // Eat the creator @
+    bool res = GetChar();
+    if (!res)
+      return false;
+
+    nuiObject* pObject = ReadObject();
+    
+    return NULL != pObject;
   }
   
   bool ReadDictionary(std::map<nglString, nglString>& rDict)
@@ -2037,6 +2053,23 @@ uint32 nuiCSS::GetRulesCount() const
 const std::vector<nuiCSSRule*> nuiCSS::GetRules() const
 {
   return mRules;
+}
+
+nuiObject* nuiCSS::CreateObject(const nglString& rDesc)
+{
+  std::string str(rDesc.GetStdString());
+  str.append(" ");
+  nglIMemory mem(&str[0], str.size());
+  
+  nuiCSS css;
+  cssLexer lexer(&mem, css, "inline");
+
+  lexer.GetChar();
+  lexer.SkipBlank();
+  nuiObject* pObj = lexer.ReadObject(rDesc);
+  if (pObj == (nuiObject*)-1)
+    return NULL;
+  return pObj;
 }
 
 

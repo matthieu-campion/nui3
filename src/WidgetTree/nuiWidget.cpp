@@ -23,7 +23,7 @@
 #include "nuiColorDecoration.h"
 #include "nuiTask.h"
 #include "nuiMatrixNode.h"
-
+#include "nuiCSS.h"
 
 #ifdef _UIKIT_
 //const bool gGlobalUseRenderCache = false;
@@ -4468,6 +4468,13 @@ void nuiWidget::SetDecoration(const nglString& rName)
     if (col.SetValue(rName))
     {
       pDecoration = new nuiColorDecoration(rName, rName, 0, nuiColor(), eFillShape, nuiBlendTransp, nuiRect());
+    }
+    else // Try to load a CSS description for an object:
+    {
+      nuiObject* pObj = nuiCSS::CreateObject(rName);
+      pDecoration = dynamic_cast<nuiDecoration*> (pObj);
+      if (!pDecoration)
+        delete pObj;
     }
   }
   SetDecoration(pDecoration, mDecorationMode, true);

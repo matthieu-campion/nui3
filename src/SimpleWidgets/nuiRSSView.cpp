@@ -83,6 +83,11 @@ void nuiRSSView::InitAttributes()
                 nuiMakeDelegate(this, &nuiRSSView::GetExpand), 
                 nuiMakeDelegate(this, &nuiRSSView::SetExpand)));
   
+  AddAttribute(new nuiAttribute<int32>
+               (nglString(_T("RefreshRate")), nuiUnitSeconds,
+                nuiMakeDelegate(this, &nuiRSSView::GetRefreshRate), 
+                nuiMakeDelegate(this, &nuiRSSView::SetRefreshRate)));
+  
 }
 
 
@@ -286,3 +291,12 @@ nuiExpandMode nuiRSSView::GetExpand() const
   return mExpand;
 }
 
+void nuiRSSView::SetRefreshRate(int32 SecondsBetweenUpdates)
+{
+  return mpRSS->SetRefreshRate(SecondsBetweenUpdates);
+}
+
+int32 nuiRSSView::GetRefreshRate() const
+{
+  return mpRSS->GetRefreshRate();
+}

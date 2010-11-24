@@ -151,6 +151,7 @@ public:
   bool GetMatchingRules(nuiWidget* pWidget, std::vector<nuiCSSRule*>& rMatchingRules, uint32 MatchersMask); /// Returns true if the widget is matched by this rule
 
   virtual nuiObject* CreateObject(const nglString& rType, const nglString& rName);
+  static nuiObject* CreateObject(const nglString& rDesc);
   
   const nglString& GetErrorString() const;
 

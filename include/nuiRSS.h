@@ -94,6 +94,10 @@ public:
   void SetURL(const nglString& rURL);
   const nglString& GetRSSURL() const;
   bool ForceUpdate();
+
+  void SetRefreshRate(int32 SecondsBetweenUpdates);
+  int32 GetRefreshRate() const;
+  
   
   nuiSimpleEventSource<0> UpdateStarted;
   nuiSimpleEventSource<0> UpdateDone;
@@ -136,5 +140,7 @@ protected:
   
   bool mUpdating;
   nuiXML* mpXML;
+  
+  int32 mRefreshRate;
 };
 
