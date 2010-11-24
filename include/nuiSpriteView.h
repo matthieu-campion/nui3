@@ -197,6 +197,8 @@ public:
   bool Draw(nuiDrawContext* pContext);
 
   void GetSpritesAtPoint(float x, float y, std::vector<nuiSprite*>& rSprites);
+  const std::vector<nuiSprite*>& GetSprites() const;
+  int32 GetSpriteCount() const;
   
   bool MouseClicked(const nglMouseInfo& rEvent);
   bool MouseUnclicked(const nglMouseInfo& rEvent);

@@ -78,6 +78,25 @@ void MainWindow::OnClose()
   App->Quit();
 }
 
+bool MainWindow::MouseMoved(const nglMouseInfo& rInfo)
+{
+  std::vector<nuiSprite*> sprites;
+  mpSpriteView->GetSpritesAtPoint(rInfo.X, rInfo.Y, sprites);
+  
+  for (uint32 i = 0; i < mpSpriteView->GetSpriteCount(); i++)
+  {
+    nuiSprite* pSprite = mpSpriteView->GetSprites()[i];
+    pSprite->SetScale(1.0f);
+  }
+  
+  for (uint32 i = 0; i < sprites.size(); i++)
+  {
+    nuiSprite* pSprite = sprites[i];
+    pSprite->SetScale(2.0f);
+  }
+  
+  return true;
+}
 
 bool MainWindow::LoadCSS(const nglPath& rPath)
 {

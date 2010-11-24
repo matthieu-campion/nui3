@@ -22,6 +22,7 @@ public:
   void OnCreation();
   void OnClose();
   
+  bool MouseMoved(const nglMouseInfo& rInfo);
 protected:
   
 private:

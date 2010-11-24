@@ -659,7 +659,10 @@ nuiBlendFunc nuiSprite::GetBlendFunc() const
 void nuiSprite::GetSpritesAtPoint(float x, float y, std::vector<nuiSprite*>& rSprites)
 {
   nuiVector ov(x, y, 0);
-  nuiVector v = GetMatrix() * ov;
+  nuiMatrix m;
+  GetMatrix(m);
+  m.Invert();
+  nuiVector v = m * ov;
   x = v[0];
   y = v[1];
   
@@ -668,7 +671,7 @@ void nuiSprite::GetSpritesAtPoint(float x, float y, std::vector<nuiSprite*>& rSp
   nuiRect dst(pFrame->GetRect());
   dst.Move(-pFrame->GetHandleX(), -pFrame->GetHandleY());
   
-  if (dst.IsInside(x, y));
+  if (dst.IsInside(x, y))
     rSprites.push_back(this);
 
   uint32 s = mpChildren.size();
@@ -784,3 +787,12 @@ bool nuiSpriteView::MouseMoved(const nglMouseInfo& rEvent)
   return false;
 }
 
+const std::vector<nuiSprite*>& nuiSpriteView::GetSprites() const
+{
+  return mpSprites;
+}
+
+int32 nuiSpriteView::GetSpriteCount() const
+{
+  return mpSprites.size();
+}
