@@ -7,6 +7,7 @@
 
 
 
+#include "nui.h"
 #include "nuiTask.h"
 
 
