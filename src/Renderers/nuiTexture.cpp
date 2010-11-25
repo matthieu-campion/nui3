@@ -618,6 +618,33 @@ void nuiTexture::TextureToImageCoord(nuiSize& x, nuiSize& y) const
     y *= mpImage->GetHeight();
 }
 
+void nuiTexture::ImageToTextureCoord(nuiRect& rRect) const
+{
+  nuiSize x, y, xx, yy;
+  x = rRect.Left();
+  y = rRect.Top();
+  xx = rRect.Right();
+  yy = rRect.Bottom();
+  ImageToTextureCoord(x, y);
+  ImageToTextureCoord(xx, yy);
+  
+  rRect.Set(x, y, xx, yy, false);
+}
+
+void nuiTexture::TextureToImageCoord(nuiRect& rRect) const
+{
+  nuiSize x, y, xx, yy;
+  x = rRect.Left();
+  y = rRect.Top();
+  xx = rRect.Right();
+  yy = rRect.Bottom();
+  TextureToImageCoord(x, y);
+  TextureToImageCoord(xx, yy);
+  
+  rRect.Set(x, y, xx, yy, false);
+}
+
+
 GLuint nuiTexture::GetMinFilter() const
 {
   return mMinFilter;

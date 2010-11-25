@@ -596,7 +596,7 @@ void nuiGLPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
           // clear the surface with transparent black:
 //          nuiRenderState s2(mState);// PushState();
 //          mFinalState.mClearColor = nuiColor(0.0f, 0.0f, 0.0f, 0.0f);
-          SetState(s);
+//SetState(s);
 //          ClearColor();  
 //          SetState(s2);
 
@@ -611,7 +611,7 @@ void nuiGLPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
           PopMatrix();
           PopProjectionMatrix();
           //PopState();
-          SetState(s);
+          //          SetState(s);
           PopClipping();
         }
       }
