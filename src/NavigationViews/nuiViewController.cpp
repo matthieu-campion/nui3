@@ -32,6 +32,19 @@ void nuiViewController::ConnectTopLevel()
 
 
 // virtual 
+void nuiViewController::ViewWillAppear()
+{
+
+}
+
+// virtual 
+void nuiViewController::ViewWillDisappear()
+{
+
+}
+
+
+// virtual 
 void nuiViewController::ViewDidAppear()
 {
   
