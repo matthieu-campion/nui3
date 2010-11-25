@@ -73,6 +73,7 @@ private:
   
   bool mPushed;
   bool mPoped;
+  bool mAlphed;
 
   bool mPendingLayout;
   enum PendingOperationType {ePendingPush, ePendingPop, ePendingPopTo, ePendingPopToRoot};

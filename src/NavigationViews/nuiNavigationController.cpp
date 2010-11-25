@@ -36,6 +36,7 @@ nuiNavigationController::nuiNavigationController()
   mpOut = NULL;
   mPushed = false;
   mPoped = false;
+  mAlphed = false;
   
   mPendingLayout = true;
  
@@ -105,7 +106,7 @@ void nuiNavigationController::PushViewController(nuiViewController* pViewControl
 void nuiNavigationController::_PushViewController(nuiViewController* pViewController, bool animated, TransitionType transition, bool viewOverlay)
 {
   // don't overlapp animations
-  if (mPushed || mPoped)
+  if (mPushed || mPoped || mAlphed)
   {
     mPendingOperations.push_back(PendingOperation(pViewController, ePendingPush, animated, transition, viewOverlay));
     return;
@@ -124,26 +125,31 @@ void nuiNavigationController::_PushViewController(nuiViewController* pViewContro
   
   mpIn->mAnimated = animated;
   mpIn->SetAlpha(1);
-  if (mpOut)
+  
+  if ((mViewControllers.size() >0) && !viewOverlay)
   {
+    mpOut = mViewControllers.back();
     mpOut->mAnimated = animated;
     mpOut->SetAlpha(1);
   }
-  
-  if ((mViewControllers.size() >0) && !viewOverlay)
-    mpOut = mViewControllers.back();
-  
+
   // push the new view in the stack
   mViewControllers.push_back(mpIn);
   
+  // virtual cbk
+  if (mpOut)
+    mpOut->ViewWillDisappear();
+  mpIn->ViewWillAppear();
+
   nuiRect idealsize = GetRect().Size();
-  
+
   
   // animation was requested. launch animation and connect the event
   if (animated && (transition == eTransitionTransparency))
   {
     mPushed = false;
     mPoped = false;
+    mAlphed = true;
     
     mAnimPosition = 0;
     
@@ -182,6 +188,7 @@ void nuiNavigationController::_PushViewController(nuiViewController* pViewContro
   {
     mPushed = true;
     mPoped = false;
+    mAlphed = false;
     
     mAnimPosition = idealsize.GetWidth();
     
@@ -210,6 +217,7 @@ void nuiNavigationController::_PushViewController(nuiViewController* pViewContro
   {
     mpOut->ViewDidDisappear();
     DelChild(mpOut);
+    // mpIn->ViewDidAppear is made in nuiViewController::ConnectTopLevel
   }
 
   if (!animated)
@@ -237,7 +245,7 @@ void nuiNavigationController::_PopViewControllerAnimated(bool animated, Transiti
   }
 
   // don't overlapp animations
-  if (mPushed || mPoped)
+  if (mPushed || mPoped || mAlphed)
   {
     mPendingOperations.push_back(PendingOperation(NULL, ePendingPop, animated, transition, viewOverlay));
     return;
@@ -254,11 +262,17 @@ void nuiNavigationController::_PopViewControllerAnimated(bool animated, Transiti
   if (mpIn)
     mpIn->SetAlpha(1);
   
+  // virtual cbk
+  mpOut->ViewWillDisappear();
+  if (mpIn)
+    mpIn->ViewWillAppear();
+  
   // animation was requested. launch animation and connect the event
   if (animated && (transition == eTransitionTransparency))
   {
     mPushed = false;
-    mPoped = false;    
+    mPoped = false; 
+    mAlphed = true;
     mAnimPosition = 0;
     
     if (mpIn)
@@ -296,6 +310,7 @@ void nuiNavigationController::_PopViewControllerAnimated(bool animated, Transiti
   {
     mPushed = false;
     mPoped = true;
+    mAlphed = false;
     
     mAnimPosition = -idealsize.GetWidth();
     
@@ -322,6 +337,9 @@ void nuiNavigationController::_PopViewControllerAnimated(bool animated, Transiti
     mpOut->ViewDidDisappear();
     mpOut->Release();
     DelChild(mpOut);
+    
+    // mpIn->ViewDidAppear() is made in nuiViewController::ConnectTopLevel
+    
     mViewControllers.pop_back();
     
     if (mPendingOperations.size() >0)
@@ -420,7 +438,7 @@ void nuiNavigationController::_PopToViewController(nuiViewController* pViewContr
   }
 
   // don't overlapp animations
-  if (mPushed || mPoped)
+  if (mPushed || mPoped || mAlphed)
   {
     mPendingOperations.push_back(PendingOperation(pViewController, ePendingPopTo, animated, transition, false));
     return;
@@ -476,7 +494,7 @@ void nuiNavigationController::_PopToRootViewControllerAnimated(bool animated, Tr
   }
 
   // don't overlapp animations
-  if (mPushed || mPoped)
+  if (mPushed || mPoped || mAlphed)
   {
     mPendingOperations.push_back(PendingOperation(NULL, ePendingPopToRoot, animated, transition, false));
     return;
@@ -520,6 +538,7 @@ void nuiNavigationController::OnViewPushStop(const nuiEvent& rEvent)
   mCurrentAnims.clear();
   mPushed = false;
   mPoped = false;
+  mAlphed = false;
   bool viewOverlay = (bool)rEvent.mpUser;
   
   if (mViewControllers.size() >1) 
@@ -528,6 +547,7 @@ void nuiNavigationController::OnViewPushStop(const nuiEvent& rEvent)
     {
       mpOut = mViewControllers[mViewControllers.size()-2];  
       mpOut->ViewDidDisappear();
+      // mpIn->ViewDidAppear is made in nuiViewController::ConnectTopLevel
       if (mpOut->GetParent())
         DelChild(mpOut);
     }
@@ -545,9 +565,12 @@ void nuiNavigationController::OnViewPopStop(const nuiEvent& rEvent)
   mCurrentAnims.clear();
   mPushed = false;
   mPoped = false;
+  mAlphed = false;
   bool viewOverlay = (bool)rEvent.mpUser;
-  
+
   mpOut->ViewDidDisappear();
+  // mpIn->ViewDidAppear is made in nuiViewController::ConnectTopLevel
+
   if (mpOut->GetParent())
   {
     mpOut->Release();

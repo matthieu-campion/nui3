@@ -43,7 +43,14 @@ protected:
   void OnPushClick(const nuiEvent& rEvent);
   void OnPopClick(const nuiEvent& rEvent);
   
+  virtual void ViewWillAppear();
+  virtual void ViewWillDisappear();
+  virtual void ViewDidAppear();
+  virtual void ViewDidDisappear();
+
+  
 private:
+  bool mRunning;
   static uint32 mCount;
   static nuiNavigationController* mpNav;
   nuiEventSink<MyViewController> mEventSink;  
