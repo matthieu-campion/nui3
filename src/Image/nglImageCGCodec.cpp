@@ -27,7 +27,7 @@
 #include "nglIStream.h"
 #include "nglOStream.h"
 
-#ifdef _COCOA_
+#if (defined _COCOA_) || (defined _CARBON_)
 #import <ApplicationServices/ApplicationServices.h>
 #else
 #include <CoreGraphics/CoreGraphics.h>
@@ -224,6 +224,7 @@ bool nglImageCGCodec::Feed(nglIStream* pIStream)
 
   CGColorSpaceRelease(pCGColors);
   CGRect rect = { {0,0}, {info.mWidth, info.mHeight} };
+  CGContextClearRect(pCGContext, rect);
   CGContextDrawImage(pCGContext, rect, mpCGImage);
   CGContextRelease(pCGContext);
 

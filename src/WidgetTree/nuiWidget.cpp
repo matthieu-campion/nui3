@@ -4739,7 +4739,7 @@ void nuiWidget::SetFocusVisible(bool set)
   Invalidate();
 }
 
-#ifdef NUI_PHONE
+#if TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE
 bool nuiWidget::mShowFocusDefault = false;
 #else
 bool nuiWidget::mShowFocusDefault = true;
