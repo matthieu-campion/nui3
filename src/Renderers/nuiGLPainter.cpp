@@ -864,7 +864,7 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
     return;
   }
 
-  ApplyState(mState, mForceApply);
+  //ApplyState(mState, mForceApply);
   
   mVertices += s;
   GLenum mode = pArray->GetMode();

@@ -146,7 +146,7 @@ void nuiWidget::InitDefaultValues()
   mInteractiveDecoration = false;
   mpDecoration = NULL;
   mpFocusDecoration = NULL;
-  mShowFocus = SetFocusVisibleDefault;
+  mShowFocus = mShowFocusDefault;
   mPosition = nuiFill;
   mFillRule = nuiFill;
   mCSSPasses = 0;
