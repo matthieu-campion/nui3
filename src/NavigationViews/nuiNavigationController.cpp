@@ -118,7 +118,7 @@ void nuiNavigationController::_PushViewController(nuiViewController* pViewContro
     mPendingOperations.push_back(PendingOperation(pViewController, ePendingPush, animated, transition, viewOverlay));
     return;
   }
-  
+
   pViewController->Acquire();
   mpIn = pViewController;
   mpOut  = NULL;
@@ -461,6 +461,7 @@ void nuiNavigationController::_PopToViewController(nuiViewController* pViewContr
     
     nuiViewController* pView = *it;
     pView->Release();
+    pView->Release(); // double release 'cause of the acquiring thing... 
     mViewControllers.erase(it);
   }
   
@@ -518,6 +519,7 @@ void nuiNavigationController::_PopToRootViewControllerAnimated(bool animated, Tr
     
     nuiViewController* pView = *it;
     pView->Release();
+    pView->Release(); // double release 'cause of the acquiring thing... 
     mViewControllers.erase(it);
   }
   
