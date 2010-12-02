@@ -21,7 +21,7 @@ nuiColorAttributeEditor::nuiColorAttributeEditor(const nuiAttrib<nuiColor>& rAtt
   SetObjectClass(_T("nuiColorAttributeEditor"));
   Init(mAttribute.Get());
 	// the visual object of the property need to be warned when the property value has been set without a user control
-  if (mConstAttribute.GetDimension() == 0)
+  if (mAttribute.GetDimension() == 0)
     mSink.Connect(mAttribute.GetChangedSignal(), nuiMakeDelegate(this, &nuiColorAttributeEditor::OnAttributeChanged));
 }
 

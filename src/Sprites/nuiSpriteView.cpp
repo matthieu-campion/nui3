@@ -491,6 +491,10 @@ void nuiSprite::Draw(nuiDrawContext* pContext)
   pContext->SetBlendFunc(mBlendFunc);
   pContext->SetFillColor(mColor);
   pContext->SetTexture(pFrame->GetTexture());
+  
+  // #TEST Meeloo
+  //dst.Grow(dst.GetWidth() * -.25, dst.GetHeight() * -.25);
+
   pContext->DrawImage(dst, src);
   
   pContext->PopMatrix();
@@ -728,6 +732,8 @@ nuiRect nuiSpriteView::CalcIdealRect()
 
 bool nuiSpriteView::Draw(nuiDrawContext* pContext)
 {
+  //printf("%p - draw %d sprites\n", this, mpSprites.size());
+
   nglTime now;
   double t = 0;
   if (mLastTime != 0)
