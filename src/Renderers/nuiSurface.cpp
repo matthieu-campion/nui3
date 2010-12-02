@@ -50,7 +50,7 @@ nuiSurface::nuiSurface(const nglString& rName, int32 Width, int32 Height, nglIma
 {
   SetObjectClass(_T("nuiSurface"));
   SetObjectName(rName);
-  static bool tr = true;
+  static bool tr = false;
   if (tr)
   {
     mTrace = true;

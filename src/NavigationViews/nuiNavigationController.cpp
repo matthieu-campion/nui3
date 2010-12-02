@@ -461,7 +461,7 @@ void nuiNavigationController::_PopToViewController(nuiViewController* pViewContr
     
     nuiViewController* pView = *it;
     pView->Release();
-    pView->Release(); // double release 'cause of the acquiring thing... 
+    DelChild(pView);
     mViewControllers.erase(it);
   }
   
@@ -519,7 +519,7 @@ void nuiNavigationController::_PopToRootViewControllerAnimated(bool animated, Tr
     
     nuiViewController* pView = *it;
     pView->Release();
-    pView->Release(); // double release 'cause of the acquiring thing... 
+    DelChild(pView);
     mViewControllers.erase(it);
   }
   
