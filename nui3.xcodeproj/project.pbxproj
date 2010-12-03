@@ -11259,11 +11259,6 @@
 		E5816D200C3CECAB00902DFE /* src */ = {
 			isa = PBXGroup;
 			children = (
-				E553C12112A55987009DDD22 /* ngl_config.uikit.h */,
-				E553C12212A55987009DDD22 /* ngl_config.mac.h */,
-				E553C12312A55987009DDD22 /* ngl_config.cocoa.h */,
-				E5816C770C3CECAB00902DFE /* ngl.h */,
-				E5816C790C3CECAB00902DFE /* ngl_all.h */,
 				E5CBF87A0F38993F00D34E6F /* Animations */,
 				E5816D210C3CECAB00902DFE /* Application */,
 				BC35D3140CF5C54B002CE274 /* Attributes */,
@@ -11279,6 +11274,7 @@
 				BCC51B9A0DC0D8FA00563B7E /* Introspector */,
 				E5816D920C3CECAB00902DFE /* Layout */,
 				E5816DA30C3CECAB00902DFE /* Math */,
+				BC92AC991282F8F1006A27B0 /* NavigationViews */,
 				56AFF7550D745215003A6AF3 /* Net */,
 				E5816DA50C3CECAB00902DFE /* Renderers */,
 				E5816DC70C3CECAB00902DFE /* SimpleWidgets */,
@@ -11290,10 +11286,14 @@
 				E5816E040C3CECAB00902DFE /* Time */,
 				E5816E0D0C3CECAB00902DFE /* TreeViews */,
 				E5816E120C3CECAB00902DFE /* Utils */,
-				BC92AC991282F8F1006A27B0 /* NavigationViews */,
 				408D9BA11097433F00AEE78A /* Video */,
 				E5816E150C3CECAB00902DFE /* WidgetTree */,
 				E5816E1C0C3CECAB00902DFE /* Window */,
+				E5816C770C3CECAB00902DFE /* ngl.h */,
+				E5816C790C3CECAB00902DFE /* ngl_all.h */,
+				E553C12312A55987009DDD22 /* ngl_config.cocoa.h */,
+				E553C12212A55987009DDD22 /* ngl_config.mac.h */,
+				E553C12112A55987009DDD22 /* ngl_config.uikit.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
