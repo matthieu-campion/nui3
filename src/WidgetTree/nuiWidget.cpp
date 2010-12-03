@@ -146,7 +146,7 @@ void nuiWidget::InitDefaultValues()
   mInteractiveDecoration = false;
   mpDecoration = NULL;
   mpFocusDecoration = NULL;
-  mShowFocus = mShowFocusDefault;
+  mShowFocus = true;
   mPosition = nuiFill;
   mFillRule = nuiFill;
   mCSSPasses = 0;
@@ -4690,12 +4690,8 @@ uint32 nuiWidget::GetCSSPass() const
 void nuiWidget::DrawFocus(nuiDrawContext* pContext, bool FrontOrBack)
 {
   CheckValid();
-  //#FIXME LBDEBUG : there's a bug somewhere in that, that makes ComboBox tutorial crash with Win32 (ati, vista)
-  // deactivate the DrawFocus for now, in order to release the application.
-  //return;
 
-
-  if (!mShowFocus)
+  if (!IsFocusVisible())
     return;
   
   if (mpFocusDecoration)
@@ -4754,7 +4750,7 @@ void nuiWidget::SetFocusVisibleDefault(bool set)
 bool nuiWidget::IsFocusVisible() const
 {
   CheckValid();
-  return mShowFocus;
+  return mShowFocus && mShowFocusDefault;
 }
 
 
