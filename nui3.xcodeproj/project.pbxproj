@@ -212,6 +212,14 @@
 		BC8383510E8D36D600023E3A /* nuiBackgroundPane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC83834F0E8D36D600023E3A /* nuiBackgroundPane.cpp */; };
 		BC8383530E8D36E500023E3A /* nuiBackgroundPane.h in Headers */ = {isa = PBXBuildFile; fileRef = BC8383520E8D36E500023E3A /* nuiBackgroundPane.h */; };
 		BC8383540E8D36E500023E3A /* nuiBackgroundPane.h in Headers */ = {isa = PBXBuildFile; fileRef = BC8383520E8D36E500023E3A /* nuiBackgroundPane.h */; };
+		BC87DEFF12A9598B00D836BF /* nuiNavigationButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC87DEFE12A9598B00D836BF /* nuiNavigationButton.cpp */; };
+		BC87DF0012A9598B00D836BF /* nuiNavigationButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC87DEFE12A9598B00D836BF /* nuiNavigationButton.cpp */; };
+		BC87DF0112A9598B00D836BF /* nuiNavigationButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC87DEFE12A9598B00D836BF /* nuiNavigationButton.cpp */; };
+		BC87DF0212A9598B00D836BF /* nuiNavigationButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC87DEFE12A9598B00D836BF /* nuiNavigationButton.cpp */; };
+		BC87DF0412A9599B00D836BF /* nuiNavigationButton.h in Headers */ = {isa = PBXBuildFile; fileRef = BC87DF0312A9599B00D836BF /* nuiNavigationButton.h */; };
+		BC87DF0512A9599B00D836BF /* nuiNavigationButton.h in Headers */ = {isa = PBXBuildFile; fileRef = BC87DF0312A9599B00D836BF /* nuiNavigationButton.h */; };
+		BC87DF0612A9599B00D836BF /* nuiNavigationButton.h in Headers */ = {isa = PBXBuildFile; fileRef = BC87DF0312A9599B00D836BF /* nuiNavigationButton.h */; };
+		BC87DF0712A9599B00D836BF /* nuiNavigationButton.h in Headers */ = {isa = PBXBuildFile; fileRef = BC87DF0312A9599B00D836BF /* nuiNavigationButton.h */; };
 		BC915AF90DE187E80044CD59 /* nuiImageDecoration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC915AF80DE187E80044CD59 /* nuiImageDecoration.cpp */; };
 		BC915AFA0DE187E80044CD59 /* nuiImageDecoration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC915AF80DE187E80044CD59 /* nuiImageDecoration.cpp */; };
 		BC915AFC0DE187F80044CD59 /* nuiImageDecoration.h in Headers */ = {isa = PBXBuildFile; fileRef = BC915AFB0DE187F80044CD59 /* nuiImageDecoration.h */; };
@@ -8122,6 +8130,8 @@
 		BC80B3640E8BBB2600ECDCE7 /* DefaultDecoration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DefaultDecoration.cpp; path = graphics/DefaultDecoration.cpp; sourceTree = SOURCE_ROOT; };
 		BC83834F0E8D36D600023E3A /* nuiBackgroundPane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiBackgroundPane.cpp; path = src/Layout/nuiBackgroundPane.cpp; sourceTree = SOURCE_ROOT; };
 		BC8383520E8D36E500023E3A /* nuiBackgroundPane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiBackgroundPane.h; path = include/nuiBackgroundPane.h; sourceTree = SOURCE_ROOT; };
+		BC87DEFE12A9598B00D836BF /* nuiNavigationButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiNavigationButton.cpp; path = src/NavigationViews/nuiNavigationButton.cpp; sourceTree = SOURCE_ROOT; };
+		BC87DF0312A9599B00D836BF /* nuiNavigationButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiNavigationButton.h; path = include/nuiNavigationButton.h; sourceTree = SOURCE_ROOT; };
 		BC915AF80DE187E80044CD59 /* nuiImageDecoration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiImageDecoration.cpp; path = src/Decorations/nuiImageDecoration.cpp; sourceTree = SOURCE_ROOT; };
 		BC915AFB0DE187F80044CD59 /* nuiImageDecoration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiImageDecoration.h; path = include/nuiImageDecoration.h; sourceTree = SOURCE_ROOT; };
 		BC92ACA21282F90D006A27B0 /* nuiNavigationBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiNavigationBar.cpp; path = NavigationViews/nuiNavigationBar.cpp; sourceTree = "<group>"; };
@@ -9888,6 +9898,8 @@
 				BC92ACB81282F91C006A27B0 /* nuiNavigationController.h */,
 				BC92ACA21282F90D006A27B0 /* nuiNavigationBar.cpp */,
 				BC92ACB71282F91C006A27B0 /* nuiNavigationBar.h */,
+				BC87DEFE12A9598B00D836BF /* nuiNavigationButton.cpp */,
+				BC87DF0312A9599B00D836BF /* nuiNavigationButton.h */,
 			);
 			name = NavigationViews;
 			sourceTree = "<group>";
@@ -13191,6 +13203,7 @@
 				E553C12A12A55987009DDD22 /* ngl_config.uikit.h in Headers */,
 				E553C12B12A55987009DDD22 /* ngl_config.mac.h in Headers */,
 				E553C12C12A55987009DDD22 /* ngl_config.cocoa.h in Headers */,
+				BC87DF0512A9599B00D836BF /* nuiNavigationButton.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13964,6 +13977,7 @@
 				E553C12D12A55987009DDD22 /* ngl_config.uikit.h in Headers */,
 				E553C12E12A55987009DDD22 /* ngl_config.mac.h in Headers */,
 				E553C12F12A55987009DDD22 /* ngl_config.cocoa.h in Headers */,
+				BC87DF0412A9599B00D836BF /* nuiNavigationButton.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14723,6 +14737,7 @@
 				E553C12812A55987009DDD22 /* ngl_config.mac.h in Headers */,
 				E553C12912A55987009DDD22 /* ngl_config.cocoa.h in Headers */,
 				E553C15412A55B1E009DDD22 /* nglImageCGCodec.h in Headers */,
+				BC87DF0612A9599B00D836BF /* nuiNavigationButton.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15482,6 +15497,7 @@
 				E553C12512A55987009DDD22 /* ngl_config.mac.h in Headers */,
 				E553C12612A55987009DDD22 /* ngl_config.cocoa.h in Headers */,
 				E553C15312A55B16009DDD22 /* nglImageCGCodec.h in Headers */,
+				BC87DF0712A9599B00D836BF /* nuiNavigationButton.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17722,6 +17738,7 @@
 				BC92ACAB1282F90D006A27B0 /* nuiNavigationBar.cpp in Sources */,
 				BC92ACAC1282F90D006A27B0 /* nuiNavigationController.cpp in Sources */,
 				BC92ACAD1282F90D006A27B0 /* nuiViewController.cpp in Sources */,
+				BC87DF0012A9598B00D836BF /* nuiNavigationButton.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18303,6 +18320,7 @@
 				BC92ACAE1282F90D006A27B0 /* nuiNavigationBar.cpp in Sources */,
 				BC92ACAF1282F90D006A27B0 /* nuiNavigationController.cpp in Sources */,
 				BC92ACB01282F90D006A27B0 /* nuiViewController.cpp in Sources */,
+				BC87DEFF12A9598B00D836BF /* nuiNavigationButton.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18877,6 +18895,7 @@
 				BC92ACA91282F90D006A27B0 /* nuiNavigationController.cpp in Sources */,
 				BC92ACAA1282F90D006A27B0 /* nuiViewController.cpp in Sources */,
 				E553C15512A55B21009DDD22 /* nglImageCGCodec.cpp in Sources */,
+				BC87DF0112A9598B00D836BF /* nuiNavigationButton.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -19450,6 +19469,7 @@
 				BC92ACA61282F90D006A27B0 /* nuiNavigationController.cpp in Sources */,
 				BC92ACA71282F90D006A27B0 /* nuiViewController.cpp in Sources */,
 				E553C15212A55B11009DDD22 /* nglImageCGCodec.cpp in Sources */,
+				BC87DF0212A9598B00D836BF /* nuiNavigationButton.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

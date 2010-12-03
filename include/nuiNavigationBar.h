@@ -12,16 +12,37 @@
 #include "nuiHBox.h"
 
 
-class nuiNavigationBar : public nuiHBox
+
+enum nuiNavigationBarStyle
+{
+  eBarStyleDefault = 0,
+  eBarStyleBlack   = 1
+};
+
+
+class nuiNavigationBar : public nuiSimpleContainer
 {
 public:
   nuiNavigationBar();
   virtual ~nuiNavigationBar();
-  
 
+  void SetBarStyle(nuiNavigationBarStyle style);
+  void SetTintColor(const nuiColor& rColor);
+  void SetTranslucent(bool set);
+
+  void SetBackNavigationItem(nuiNavigationButton* pButton);
+  void SetTopNavigationItem(nuiNavigationButton* pButton);
+  void SetLeftNavigationItem(nuiNavigationButton* pButton);
+  void SetRightNavigationItem(nuiNavigationButton* pButton);
+    
 protected:
   
   
 private:
 
+  nuiNavigationBarStyle mBarStyle;
+  nuiColor mTintColor;
+  bool mTranslucent;
+  
+  nuiEventSink<nuiNavigationBar> mEventSink;
 };
