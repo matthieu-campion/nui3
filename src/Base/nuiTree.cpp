@@ -24,7 +24,7 @@ nuiTreeBase::~nuiTreeBase()
   {
     nuiTreePtr pTree = mpChildren.back();
     mpChildren.pop_back();
-    delete pTree;
+    pTree->Release();
   }
 
   delete mpAutoSort;

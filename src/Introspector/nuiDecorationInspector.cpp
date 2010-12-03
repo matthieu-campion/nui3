@@ -33,11 +33,11 @@ nuiDecorationInspector::nuiDecorationInspector()
   }
   
   UpdateDecos();
-  //mSink.Connect(nuiDecoration::DecorationsChanged, &nuiDecorationInspector::OnDecosChanged);
 }
 
 nuiDecorationInspector::~nuiDecorationInspector()
-{  
+{
+  mSlot.DisconnectAll();
 }
 
 void nuiDecorationInspector::OnDecosChanged(const nuiEvent& rEvent)

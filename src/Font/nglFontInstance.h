@@ -23,7 +23,7 @@
 /*!
 See src/font/README for more details.
 */
-class nglFontInstance : nuiRefCount
+class nglFontInstance : public nuiRefCount
 {
 public:
   nglFontInstance(const nglPath& rPath, uint Face);
@@ -34,8 +34,8 @@ public:
   nglPath  GetPath() const;
   uint     GetFace() const;
 
-  static FTC_FaceID       Install(const nglFontInstance& rInstance);
-  static FTC_FaceID       Uninstall(const nglFontInstance& rInstance);
+  static FTC_FaceID       Install(nglFontInstance * pInstance);
+  static FTC_FaceID       Uninstall(nglFontInstance * pInstance);
   static nglFontInstance* Lookup(const FTC_FaceID FaceID);
   static FT_Error         FaceRequestHandler (FTC_FaceID FaceID, FT_Library pLibrary, FT_Pointer pData, FT_Face* pFace);
   static void             OnExit();

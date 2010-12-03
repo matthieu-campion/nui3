@@ -16,7 +16,7 @@ public:
 
   virtual ~nuiRefCount()           
   { 
-    //NGL_ASSERT(mCount == 0); 
+    NGL_ASSERT(mCount == 0); 
   }
 
   uint32 Acquire() const   

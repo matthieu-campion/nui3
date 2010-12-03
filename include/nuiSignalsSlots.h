@@ -130,7 +130,8 @@ private:
     typename std::vector< std::pair<Slot, nuiSlotsSink*> >::iterator end = mSlots.end();
     while (it != end)
     {
-      if ((*it).first == slot)
+      const Slot& rS(it->first);
+      if (rS == slot)
       {
         mSlots.erase(it);
         break;
@@ -219,7 +220,8 @@ private:
     typename std::vector< std::pair<Slot, nuiSlotsSink*> >::iterator end = mSlots.end();
     while (it != end)
     {
-      if ((*it).first == slot)
+      const Slot& rS(it->first);
+      if (rS == slot)
       {
         mSlots.erase(it);
         break;
@@ -309,7 +311,8 @@ private:
     typename std::vector< std::pair<Slot, nuiSlotsSink*> >::iterator end = mSlots.end();
     while (it != end)
     {
-      if ((*it).first == slot)
+      const Slot& rS(it->first);
+      if (rS == slot)
       {
         mSlots.erase(it);
         break;
@@ -398,7 +401,8 @@ private:
     typename std::vector< std::pair<Slot, nuiSlotsSink*> >::iterator end = mSlots.end();
     while (it != end)
     {
-      if ((*it).first == slot)
+      const Slot& rS(it->first);
+      if (rS == slot)
       {
         mSlots.erase(it);
         break;
@@ -466,7 +470,7 @@ private:
   void RemoveConnection(nuiSignal* pSignal, const nuiDelegateMemento &slot);
 
 private:
-  std::map<nuiSignal*, nuiDelegateMemento> mConnections;
+  std::multimap<nuiSignal*, nuiDelegateMemento> mConnections;
 };
 
 

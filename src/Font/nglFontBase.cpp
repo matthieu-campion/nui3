@@ -80,15 +80,24 @@ public:
   FT_Face          Face;  // FreeType face object handler
   FTC_ImageTypeRec Desc;  // Font description, for image cache (pixel size, rendering mode)
 
-  nglFontInstance mFontInstance;
+  nglFontInstance* mpFontInstance;
   
   FaceHandle()
-    : Face(NULL), mFontInstance(nglPath(), 0)
+    : Face(NULL), mpFontInstance(new nglFontInstance(nglPath(), 0))
   {
     Desc.face_id = 0;
     Desc.width = 0;
     Desc.height = 0;
     Desc.flags = 0;
+  }
+  
+  ~FaceHandle()
+  {
+    if (mpFontInstance)
+    {
+      mpFontInstance->Release();
+      nglFontInstance::Uninstall(mpFontInstance);
+    }
   }
 };
 
@@ -308,7 +317,6 @@ nglFontBase::nglFontBase (const nglFontBase& rFont)
 
 nglFontBase::~nglFontBase()
 {
-  nglFontInstance::Uninstall(mpFace->mFontInstance);
   delete mpFace;
 }
 
@@ -1083,8 +1091,10 @@ bool nglFontBase::Load (const nglPath& rPath, uint Face)
 {
   // Load face from file spec
   NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_INFO, _T("Loading logical font '%ls' (face %d)"), rPath.GetNodeName().GetChars(), Face); )
-  mpFace->mFontInstance = nglFontInstance(rPath, Face);
-  mpFace->Desc.face_id = nglFontInstance::Install(mpFace->mFontInstance);
+  nglFontInstance* pInst = mpFace->mpFontInstance;
+  mpFace->mpFontInstance = new nglFontInstance(rPath, Face);
+  pInst->Release();
+  mpFace->Desc.face_id = nglFontInstance::Install(mpFace->mpFontInstance);
 
   return LoadFinish();
 }
@@ -1093,9 +1103,11 @@ bool nglFontBase::Load (const uint8* pBase, int32 Size, uint Face, bool StaticBu
 {
   // Load face from memory
   NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_INFO, _T("Loading logical font at %p (face %d, %d bytes)"), pBase, Face, Size); )
-  mpFace->mFontInstance = nglFontInstance(pBase, Size, Face, StaticBuffer);
-  mpFace->Desc.face_id = nglFontInstance::Install(mpFace->mFontInstance);
-
+  nglFontInstance* pInst = mpFace->mpFontInstance;
+  mpFace->mpFontInstance = new nglFontInstance(pBase, Size, Face, StaticBuffer);
+  mpFace->Desc.face_id = nglFontInstance::Install(mpFace->mpFontInstance);
+  pInst->Release();
+  
   return LoadFinish();
 }
 
