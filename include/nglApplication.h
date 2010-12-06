@@ -213,6 +213,7 @@ myprogram --log-level all:0,net:info
   */
   //@}
 
+  void OnDeactivation();
 
 protected:
   const nglChar* OnError (uint& rError) const; // From nglError

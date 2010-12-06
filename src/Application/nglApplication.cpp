@@ -287,5 +287,10 @@ bool nglApplication::IsQuitRequested() const
   return mExitPosted;
 }
 
+void nglApplication::OnDeactivation()
+{
+  Quit(0);
+}
+
 
 
