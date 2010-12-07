@@ -223,13 +223,9 @@ bool MainWindow::Draw(nuiDrawContext* pContext)
   mpSurface1->EnableBlending(true);
   
   
-  mpSurface1->SetFont(nuiFont::GetFont(250));
-  mpSurface1->SetTextColor(nuiColor(192, 0, 0, 64, true));
-  mpSurface1->DrawText(50, 240, _T("Text1"));
-  mpSurface1->SetTextColor(nuiColor(0, 0, 250, 64, true));
-  mpSurface1->DrawText(80, 280, _T("Text2"));
+  mpSurface1->SetFont(nuiFont::GetFont(25));
   mpSurface1->SetTextColor(nuiColor(255, 255, 255, 255, true));
-  mpSurface1->DrawText(mMouseX - 400, mMouseY + 50, _T("Text3"));
+  mpSurface1->DrawText(50, 240, _T("Text1"));
   DrawChildren(mpSurface1);
   mpSurface1->SetDirty(true);
   
@@ -296,7 +292,7 @@ bool MainWindow::Draw(nuiDrawContext* pContext)
   
   // Draw the final surface on screen:
   
-  pContext->SetClearColor(nuiColor(0.0f, 0.0f, 0.0f, 0.0f));
+  pContext->SetClearColor(nuiColor(255,255,255));
   pContext->Clear();  
   pContext->SetFillColor(nuiColor(255, 255, 255, 255));
   pContext->EnableBlending(true);
@@ -307,8 +303,8 @@ bool MainWindow::Draw(nuiDrawContext* pContext)
   pContext->DrawImage(nuiRect(0, 0, w, h), r);
 
   float a = mMean;
-  pContext->SetFillColor(nuiColor(a, a, a, a));
-  pContext->SetBlendFunc(nuiBlendTranspAdd);
+  //pContext->SetFillColor(nuiColor(a, a, a, a));
+  pContext->SetBlendFunc(nuiBlendTransp);
   pContext->SetTexture(mpTexture3);
   pContext->DrawImage(nuiRect(w, h), r2);
   return true;
