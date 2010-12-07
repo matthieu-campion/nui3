@@ -10,8 +10,9 @@
 
 
 nuiNavigationBar::nuiNavigationBar()
+: nuiSimpleContainer(), mEventSink(this)
 {
-
+  
 }
 
 // virtual 
@@ -27,21 +28,36 @@ void nuiNavigationBar::SetBarStyle(nuiNavigationBarStyle style)
 }
 
 
-void nuiNavigationBar::SetTintColor(const nuiColor& rColor);
-void nuiNavigationBar::SetTranslucent(bool set);
+void nuiNavigationBar::SetTintColor(const nuiColor& rColor)
+{
+
+}
+
+
+void nuiNavigationBar::SetTranslucent(bool set)
+{
+
+}
   
-void nuiNavigationBar::SetBackNavigationItem(nuiNavigationButton* pButton = NULL);
-void nuiNavigationBar::SetTopNavigationItem(nuiNavigationButton* pButton);
-void nuiNavigationBar::SetLeftNavigationItem(nuiNavigationButton* pButton);
-  void SetRightNavigationItem(nuiNavigationButton* pButton);
+void nuiNavigationBar::SetBackNavigationItem(nuiNavigationButton* pButton)
+{
+
+}
+
+
+void nuiNavigationBar::SetTopNavigationItem(nuiNavigationButton* pButton)
+{
+
+}
+
+void nuiNavigationBar::SetLeftNavigationItem(nuiNavigationButton* pButton)
+{
+
+}
+
+
+void nuiNavigationBar::SetRightNavigationItem(nuiNavigationButton* pButton)
+{
+
+}
   
-protected:
-  
-  
-private:
-  
-  nuiNavigationBarStyle mBarStyle;
-  nuiColor mTintColor;
-  bool mTranslucent;
-  
-  nuiEventSink<nuiNavigationBar> mEventSink;

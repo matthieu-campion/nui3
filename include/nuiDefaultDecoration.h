@@ -100,6 +100,9 @@ protected:
   static void FileTree_ParentFolderIcon(nuiWidget* pWidget);
   static void FileTree_FileIcon(nuiWidget* pWidget);
 
+  // NavigationViews
+  static void NavigationButton(nuiWidget* pWidget);
+
 private:
   
   static nuiImageSequence* mpKnobSequence;

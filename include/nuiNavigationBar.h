@@ -9,7 +9,7 @@
 
 #pragma once
 #include "nui.h"
-#include "nuiHBox.h"
+#include "nuiNavigationButton.h"
 
 
 

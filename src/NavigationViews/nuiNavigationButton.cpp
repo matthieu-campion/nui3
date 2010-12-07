@@ -6,7 +6,7 @@
  */
 
 
-#include "nuiNavigationBar.h"
+#include "nuiNavigationButton.h"
 
 
 
@@ -21,7 +21,7 @@ nuiNavigationButton::nuiNavigationButton(const nglString& rText)
 : nuiButton()
 {
   nuiLabel* pLabel = new nuiLabel(rText);
-  AddChild(pButton);
+  AddChild(pLabel);
  
 }
 
