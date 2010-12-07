@@ -16,7 +16,8 @@
 enum nuiNavigationBarStyle
 {
   eBarStyleDefault = 0,
-  eBarStyleBlack   = 1
+  eBarStyleBlack   = 1,
+  eBarStyleTint
 };
 
 
@@ -37,8 +38,11 @@ public:
     
 protected:
   
+//  virtual nuiRect CalcIdealSize();
+  virtual bool Draw(nuiDrawContext* pContext);
   
 private:
+  
 
   nuiNavigationBarStyle mBarStyle;
   nuiColor mTintColor;
