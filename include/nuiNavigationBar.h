@@ -9,9 +9,10 @@
 
 #pragma once
 #include "nui.h"
-#include "nuiHBox.h"
+#include "nuiNavigationButton.h"
 
 
+class nuiNavigationButton;
 
 enum nuiNavigationBarStyle
 {
@@ -31,6 +32,10 @@ public:
   void SetTintColor(const nuiColor& rColor);
   void SetTranslucent(bool set);
 
+  nuiNavigationBarStyle GetBarStyle() const;
+  const nuiColor& GetTintColor() const;
+  bool GetTranslucent();
+
   void SetBackNavigationItem(nuiNavigationButton* pButton);
   void SetTopNavigationItem(nuiNavigationButton* pButton);
   void SetLeftNavigationItem(nuiNavigationButton* pButton);
@@ -39,7 +44,7 @@ public:
 protected:
   
 //  virtual nuiRect CalcIdealSize();
-  virtual bool Draw(nuiDrawContext* pContext);
+//  virtual bool Draw(nuiDrawContext* pContext);
   
 private:
   

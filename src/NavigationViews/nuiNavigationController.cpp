@@ -10,9 +10,9 @@
 #include "nuiNavigationController.h"
 #include "nuiViewController.h"
 #include "nuiAttributeAnimation.h"
+#include "nuiNavigationBar.h"
 
-
-#define NOTIF_PENDING_OPERATION _T("PendingOp")
+#define NOTIF_PENDING_OPERATION _T("nuiNavigationController_PendingOp")
 
 
 // static inits
@@ -39,6 +39,9 @@ nuiNavigationController::nuiNavigationController()
   mAlphed = false;
   
   mPendingLayout = true;
+  
+  mpBar = new nuiNavigationBar();
+  AddChild(mpBar);
  
 }
 

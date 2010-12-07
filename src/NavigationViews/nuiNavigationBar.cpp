@@ -7,7 +7,8 @@
 
 
 #include "nuiNavigationBar.h"
-
+#include "nuiDefaultDecoration.h"
+#include "nuiNavigationButton.h"
 
 nuiNavigationBar::nuiNavigationBar()
 : nuiSimpleContainer(), mEventSink(this)
@@ -30,6 +31,7 @@ nuiNavigationBar::~nuiNavigationBar()
 void nuiNavigationBar::SetBarStyle(nuiNavigationBarStyle style)
 {
   mBarStyle = style;
+  nuiDefaultDecoration::NavigationBar(this);
 }
 
 
@@ -42,6 +44,25 @@ void nuiNavigationBar::SetTranslucent(bool set)
 {
   mTranslucent = set;
 }
+
+nuiNavigationBarStyle nuiNavigationBar::GetBarStyle() const
+{
+  return mBarStyle;
+}
+
+
+const nuiColor& nuiNavigationBar::GetTintColor() const
+{
+  return mTintColor;
+}
+
+bool nuiNavigationBar::GetTranslucent()
+{
+  return mTranslucent;
+}
+
+
+
   
 void nuiNavigationBar::SetBackNavigationItem(nuiNavigationButton* pButton)
 {
@@ -54,7 +75,6 @@ void nuiNavigationBar::SetTopNavigationItem(nuiNavigationButton* pButton)
 
 }
 
-
 void nuiNavigationBar::SetLeftNavigationItem(nuiNavigationButton* pButton)
 {
 
@@ -66,17 +86,17 @@ void nuiNavigationBar::SetRightNavigationItem(nuiNavigationButton* pButton)
 }
   
 
-
 // virtual 
 //nuiRect nuiNavigationBar::CalcIdealSize()
 //{
-//
+//  // plateform? orientation? 
+//  return nuiRect(0, 0, 320, 44);
 //}
 
 
 // virtual 
-bool nuiNavigationBar::Draw(nuiDrawContext* pContext)
-{
-
-}
+//bool nuiNavigationBar::Draw(nuiDrawContext* pContext)
+//{
+//    
+//}
 

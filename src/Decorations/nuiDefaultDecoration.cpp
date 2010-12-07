@@ -18,6 +18,8 @@
 #include "nuiTabView.h"
 #include "nuiBackgroundPane.h"
 #include "nuiKnob.h"
+#include "nuiNavigationBar.h"
+#include "nuiNavigationButton.h"
 
 nuiDefaultDecoration::nuiDefaultDecoration()
 {
@@ -99,6 +101,11 @@ void nuiDefaultDecoration::Init()
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileTree::ParentFolderIcon")), &nuiDefaultDecoration::FileTree_ParentFolderIcon);
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiFileTree::FileIcon")), &nuiDefaultDecoration::FileTree_FileIcon);
 
+  // NavigationViews
+  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiNavigationBar")), &nuiDefaultDecoration::NavigationBar);
+  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiNavigationButton")), &nuiDefaultDecoration::NavigationButton);
+  
+  
   App->AddExit(nuiDefaultDecoration::Exit);
 }
 
@@ -1604,6 +1611,77 @@ void nuiDefaultDecoration::TabView_Contents(nuiTabView* pView, nuiWidget* pConte
   
 }
 
+
+
+
+//**************************************************************************************************************
+//
+// NavigationViews
+//
+
+//static 
+void nuiDefaultDecoration::NavigationBar(nuiWidget* pWidget)
+{
+  nuiNavigationBar* pBar = (nuiNavigationBar*)pWidget;
+  
+  nuiMetaDecoration* pMeta = (nuiMetaDecoration*)nuiDecoration::Get(_T("nuiDefaultNavigationBarDecoration"));
+  delete pMeta;
+  
+  pMeta = new nuiMetaDecoration(_T("nuiDefaultNavigationBarDecoration"));
+  
+  nuiGradientDecoration* pGradient = new nuiGradientDecoration(_T("nuiDefaultNavigationBarDecoration_Gradient"));
+  pGradient->SetShapeMode(eFillShape);
+  
+  nuiGradientDecoration* pReflect = new nuiGradientDecoration(_T("nuiDefaultNavigationBarDecoration_Reflect"));
+  pReflect->SetLayer(eLayerFront);
+  pReflect->SetColors(nuiColor(255,255,255,106), nuiColor(100,100,100,106),nuiColor(0,0,0,0), nuiColor(0,0,0,0));
+  pReflect->SetOffset1(0.f);
+  pReflect->SetOffset2(0.5f);
+  pReflect->SetOffset3(0.5f);
+  pReflect->SetOffset4(1.f);
+  pReflect->SetShapeMode(eFillShape);
+  
+  // TODO : plateform? 
+  if (pBar->GetBarStyle() == eBarStyleDefault)
+  {
+    pGradient->SetColors(nuiColor(145,165,191), nuiColor(109,131,161));
+  }
+  else if (pBar->GetBarStyle() == eBarStyleBlack)
+  {
+    pGradient->SetColors(nuiColor(0,0,0), nuiColor(0,0,0));    
+  }
+  else
+  {
+    nuiColor tint = pBar->GetTintColor();
+    nuiColor tint2 = nuiColor(tint.Red()+(18.f/255.f), tint.Green()+(17.f/255.f), tint.Blue()+(15.f/255.f), tint.Alpha());
+    pGradient->SetColors(tint2, tint);  
+  }
+  
+  
+  pMeta->AddDecoration(pGradient);
+  
+  nuiBorderDecoration* pBorder = new nuiBorderDecoration(_T("nuiDefaultNavigationBarDecoration_BorderTop"));
+  pBorder->SetBorderType(_T("Top"));
+  pBorder->SetStrokeTopColor(nuiColor(255,255,255,140));
+  pMeta->AddDecoration(pBorder);
+  
+  pBorder = new nuiBorderDecoration(_T("nuiDefaultNavigationBarDecoration_BorderBottom"));
+  pBorder->SetBorderType(_T("Bottom"));
+  pBorder->SetStrokeBottomColor(nuiColor(0,0,0,127));
+  pMeta->AddDecoration(pBorder);
+  
+  pMeta->AddDecoration(pReflect);
+  
+  pBar->SetDecoration(pMeta);  
+}
+
+
+//static 
+void nuiDefaultDecoration::NavigationButton(nuiWidget* pWidget)
+{
+  nuiNavigationButton* pButton = (nuiNavigationButton*)pWidget;
+  // TODO ?
+}
 
 
 
