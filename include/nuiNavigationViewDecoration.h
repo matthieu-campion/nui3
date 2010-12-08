@@ -10,13 +10,16 @@
 #include "nui.h"
 #include "nuiDecoration.h"
 
+#define DEVICESTYLE_DEFAULT _T("Default")
+#define DEVICESTYLE_IPHONE _T("iPhone")
+#define DEVICESTYLE_IPAD _T("iPad")
 
-class nuiCheckerboardDecoration : public nuiDecoration
+class nuiNavigationViewDecoration : public nuiDecoration
 {
 public:
 
-  nuiCheckerboardDecoration(const nglString& rName);
-  virtual ~nuiCheckerboardDecoration();
+  nuiNavigationViewDecoration(const nglString& rName);
+  virtual ~nuiNavigationViewDecoration();
   
   bool Load(const nuiXMLNode* pNode);
   nuiXMLNode* Serialize(nuiXMLNode* pNode);
@@ -29,20 +32,21 @@ public:
   void SetSourceClientRect(const nuiRect& rRect);
   const nuiRect& GetSourceClientRect() const;
 
-  const nuiColor& GetBackgroundColor() const;
-  void SetBackgroundColor(const nuiColor& color);
-  
-  const nuiColor& GetTileColor() const;
-  void SetTileColor(const nuiColor& color);
-  
-  void SetTilesPerLine(uint32 nb);
-  uint32 GetTilesPerLine() const;
+//  const nuiColor& GetBackgroundColor() const;
+//  void SetBackgroundColor(const nuiColor& color);
+//  
+//  const nuiColor& GetTileColor() const;
+//  void SetTileColor(const nuiColor& color);
+//  
+//  void SetNbTiles(uint32 nb);
+//  uint32 GetNbTiles() const;
+//  
+//  void SetTileWidth(float size);
+//  float GetTileWidth() const;
 
-  const nuiColor& GetStrokeColor() const;
-	void SetStrokeColor(const nuiColor& color);
-
-  void SetStrokeSize(uint32 size);
-  uint32 GetStrokeSize() const;
+  // "SystemDefault", "iPhone", "iPad"
+  void SetDeviceStyle(const nglString& style);
+  const nglString& GetDeviceStyle() const;
 
 private:
 
@@ -50,10 +54,10 @@ private:
 
   void InitAttributes();
 
-  uint32 mStrokeSize;
-  uint32 mTilesPerLine;
-  nuiColor mStrokeColor;
-  nuiColor mTileColor;
+  float mEvenWidth;
+  float mOddWidth;
+  nuiColor mColumnColor;
+  nglString mDeviceStyle;
   nuiColor mBackgroundColor;
   nuiRect mClientRect;
 

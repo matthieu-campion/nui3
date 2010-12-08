@@ -18,7 +18,8 @@ enum nuiNavigationBarStyle
 {
   eBarStyleDefault = 0,
   eBarStyleBlack   = 1,
-  eBarStyleTint
+  eBarStyleTint,
+  eBarStyleNone
 };
 
 
@@ -36,6 +37,7 @@ public:
   const nuiColor& GetTintColor() const;
   bool GetTranslucent();
 
+  void SetTitle(const nglString& rTitle);
   void SetBackNavigationItem(nuiNavigationButton* pButton);
   void SetTopNavigationItem(nuiNavigationButton* pButton);
   void SetLeftNavigationItem(nuiNavigationButton* pButton);
@@ -44,7 +46,7 @@ public:
 protected:
   
 //  virtual nuiRect CalcIdealSize();
-//  virtual bool Draw(nuiDrawContext* pContext);
+  virtual bool Draw(nuiDrawContext* pContext);
   
 private:
   

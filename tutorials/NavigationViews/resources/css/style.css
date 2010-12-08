@@ -24,20 +24,25 @@
   ShapeMode: Fill;
 }
 
+@nuiNavigationViewDecoration dMyViewController
+{
+  DeviceStyle: Default;
+}
+
 
 MyViewController0!
 {
-  Decoration: dMyViewController0;
+  Decoration: dMyViewController;
 }
 
 MyViewController1!
 {
-  Decoration: dMyViewController1;
+  Decoration: dMyViewController;
 }
 
 MyViewController2!
 {
-  Decoration: dMyViewController2;
+  Decoration: dMyViewController;
 }
 
 

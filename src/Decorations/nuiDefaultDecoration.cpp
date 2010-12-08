@@ -1624,22 +1624,24 @@ void nuiDefaultDecoration::NavigationBar(nuiWidget* pWidget)
 {
   nuiNavigationBar* pBar = (nuiNavigationBar*)pWidget;
   
+  pBar->SetPosition(nuiTopLeft);
+
+  // TODO : plateform? orientation?
+  pBar->SetUserWidth(320.f);
+  pBar->SetUserHeight(44.f);
+  
+  
   nuiMetaDecoration* pMeta = (nuiMetaDecoration*)nuiDecoration::Get(_T("nuiDefaultNavigationBarDecoration"));
-  delete pMeta;
+  if (pMeta)
+  {
+    pBar->SetDecoration(pMeta);
+    return;
+  }
   
   pMeta = new nuiMetaDecoration(_T("nuiDefaultNavigationBarDecoration"));
   
   nuiGradientDecoration* pGradient = new nuiGradientDecoration(_T("nuiDefaultNavigationBarDecoration_Gradient"));
   pGradient->SetShapeMode(eFillShape);
-  
-  nuiGradientDecoration* pReflect = new nuiGradientDecoration(_T("nuiDefaultNavigationBarDecoration_Reflect"));
-  pReflect->SetLayer(eLayerFront);
-  pReflect->SetColors(nuiColor(255,255,255,106), nuiColor(100,100,100,106),nuiColor(0,0,0,0), nuiColor(0,0,0,0));
-  pReflect->SetOffset1(0.f);
-  pReflect->SetOffset2(0.5f);
-  pReflect->SetOffset3(0.5f);
-  pReflect->SetOffset4(1.f);
-  pReflect->SetShapeMode(eFillShape);
   
   // TODO : plateform? 
   if (pBar->GetBarStyle() == eBarStyleDefault)
@@ -1667,10 +1669,8 @@ void nuiDefaultDecoration::NavigationBar(nuiWidget* pWidget)
   
   pBorder = new nuiBorderDecoration(_T("nuiDefaultNavigationBarDecoration_BorderBottom"));
   pBorder->SetBorderType(_T("Bottom"));
-  pBorder->SetStrokeBottomColor(nuiColor(0,0,0,127));
+  pBorder->SetStrokeBottomColor(nuiColor(0,0,0,164));
   pMeta->AddDecoration(pBorder);
-  
-  pMeta->AddDecoration(pReflect);
   
   pBar->SetDecoration(pMeta);  
 }
