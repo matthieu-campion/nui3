@@ -219,21 +219,15 @@ bool MainWindow::Draw(nuiDrawContext* pContext)
   mpSurface1->SetClearColor(nuiColor(0.0f, 0.0f, 0.0f, 0.0f));
   mpSurface1->Clear();  
   
-  mpSurface1->SetBlendFunc(nuiBlendTranspAdd);
+  mpSurface1->SetBlendFunc(nuiBlendTransp);
   mpSurface1->EnableBlending(true);
   
   
   mpSurface1->SetFont(nuiFont::GetFont(250));
-  mpSurface1->SetTextColor(nuiColor(192, 0, 0, 64, true));
-  mpSurface1->DrawText(50, 240, _T("Text1"));
-  mpSurface1->SetTextColor(nuiColor(0, 0, 250, 64, true));
-  mpSurface1->DrawText(80, 280, _T("Text2"));
   mpSurface1->SetTextColor(nuiColor(255, 255, 255, 255, true));
-  mpSurface1->DrawText(mMouseX - 400, mMouseY + 50, _T("Text3"));
+  mpSurface1->DrawText(50, 240, _T("Text"));
   DrawChildren(mpSurface1);
   mpSurface1->SetDirty(true);
-  
-  
   
   // Vertical Blur the first surface into the second:
   // Prepare the first surface:
@@ -246,7 +240,7 @@ bool MainWindow::Draw(nuiDrawContext* pContext)
   mpSurface2->Set2DProjectionMatrix(r2);
   mpSurface2->SetClearColor(nuiColor(0.0f, 0.0f, 0.0f, 0.0f));
   mpSurface2->Clear();  
-  mpSurface2->SetBlendFunc(nuiBlendTranspAdd);
+  mpSurface2->SetBlendFunc(nuiBlendTransp);
   mpSurface2->EnableBlending(true);
   
   mpSurface2->SetClearColor(nuiColor(0,0,0));
@@ -254,7 +248,7 @@ bool MainWindow::Draw(nuiDrawContext* pContext)
   mpSurface2->nuiDrawContext::SetTexture(mpTexture1);
   mpSurface2->EnableBlending(true);
   mpSurface2->EnableTexturing(true);
-  mpSurface2->SetBlendFunc(nuiBlendAdd);
+  mpSurface2->SetBlendFunc(nuiBlendTransp);
   
   //pContext->DrawImage(nuiRect(512, 512), nuiRect(512, 512));
   
@@ -276,7 +270,7 @@ bool MainWindow::Draw(nuiDrawContext* pContext)
   mpSurface3->Set2DProjectionMatrix(r2);
   mpSurface3->SetClearColor(nuiColor(0.0f, 0.0f, 0.0f, 0.0f));
   mpSurface3->Clear();  
-  mpSurface3->SetBlendFunc(nuiBlendTranspAdd);
+  mpSurface3->SetBlendFunc(nuiBlendTransp);
   mpSurface3->EnableBlending(true);
 
   mpSurface3->SetClearColor(nuiColor(0,0,0));
@@ -284,7 +278,7 @@ bool MainWindow::Draw(nuiDrawContext* pContext)
   mpSurface3->nuiDrawContext::SetTexture(mpTexture2);
   mpSurface3->EnableBlending(true);
   mpSurface3->EnableTexturing(true);
-  mpSurface3->SetBlendFunc(nuiBlendAdd);
+  mpSurface3->SetBlendFunc(nuiBlendTransp);
   
   for (int32 i = 0; i < mCountX; i++)
   {
@@ -296,9 +290,9 @@ bool MainWindow::Draw(nuiDrawContext* pContext)
   
   // Draw the final surface on screen:
   
-  pContext->SetClearColor(nuiColor(0.0f, 0.0f, 0.0f, 0.0f));
+  pContext->SetClearColor(nuiColor(1.0f, 1.0f, 1.0f, 1.0f));
   pContext->Clear();  
-  pContext->SetFillColor(nuiColor(255, 255, 255, 255));
+  pContext->SetFillColor(nuiColor(0, 0, 0, 255));
   pContext->EnableBlending(true);
   pContext->EnableTexturing(true);
 
@@ -307,8 +301,9 @@ bool MainWindow::Draw(nuiDrawContext* pContext)
   pContext->DrawImage(nuiRect(0, 0, w, h), r);
 
   float a = mMean;
-  pContext->SetFillColor(nuiColor(a, a, a, a));
-  pContext->SetBlendFunc(nuiBlendTranspAdd);
+  float b = 1.0f;
+  pContext->SetFillColor(nuiColor(b, b, b, a));
+  pContext->SetBlendFunc(nuiBlendTransp);
   pContext->SetTexture(mpTexture3);
   pContext->DrawImage(nuiRect(w, h), r2);
   return true;
