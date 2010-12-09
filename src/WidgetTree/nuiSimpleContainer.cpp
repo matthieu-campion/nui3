@@ -66,7 +66,7 @@ nuiSimpleContainer::~nuiSimpleContainer()
   {
     nuiWidgetPtr pItem = pIt->GetWidget();
     if (pItem)
-      delete pItem;
+      pItem->Release();
   }
   delete pIt;
 }

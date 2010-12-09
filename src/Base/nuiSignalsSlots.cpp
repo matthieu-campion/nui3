@@ -31,8 +31,8 @@ nuiSlotsSink::~nuiSlotsSink()
 
 void nuiSlotsSink::DisconnectAll()
 {
-  std::map<nuiSignal*, nuiDelegateMemento>::const_iterator it = mConnections.begin();
-  std::map<nuiSignal*, nuiDelegateMemento>::const_iterator end = mConnections.end();
+  std::multimap<nuiSignal*, nuiDelegateMemento>::const_iterator it = mConnections.begin();
+  std::multimap<nuiSignal*, nuiDelegateMemento>::const_iterator end = mConnections.end();
   for(; it!= end; ++it)
   {
     (*it).first->DisconnectInternal((*it).second);
@@ -43,11 +43,12 @@ void nuiSlotsSink::DisconnectAll()
 void nuiSlotsSink::AddConnection(nuiSignal* pSignal, const nuiDelegateMemento &slot) 
 {
   mConnections.insert(std::make_pair<nuiSignal*, nuiDelegateMemento>(pSignal, slot));
+  uint32 count = mConnections.size();
 }
 
 void nuiSlotsSink::RemoveConnection(nuiSignal* pSignal, const nuiDelegateMemento &slot) 
 {	
-  std::map<nuiSignal*, nuiDelegateMemento>::iterator it = mConnections.find(pSignal);
+  std::multimap<nuiSignal*, nuiDelegateMemento>::iterator it = mConnections.find(pSignal);
   if (it != mConnections.end())
     mConnections.erase(it);
 }

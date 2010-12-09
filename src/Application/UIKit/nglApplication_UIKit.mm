@@ -172,7 +172,7 @@ const nglChar* gpApplicationErrorTable[] =
 
 nglApplication::nglApplication()
 {
-//  mExitPosted = false;
+  mExitPosted = false;
   mUseIdle = false;
 //  mIdleTimer = NULL;
 
@@ -192,10 +192,11 @@ nglApplication::~nglApplication()
 
 void nglApplication::Quit (int Code)
 {
-//  mExitPosted = true;
-//  mExitCode = Code;
+  mExitPosted = true;
   
-//  QuitApplicationEventLoop();
+  CallOnWillExit();
+  CallOnExit(Code);
+  exit(Code);
 }
 
 
