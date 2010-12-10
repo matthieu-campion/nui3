@@ -39,7 +39,6 @@ nuiContextInfo::nuiContextInfo(Type type)
   FrameBitsA = 0;
   AABufferCnt = 0;
   AASampleCnt = 0;
-  mPaintEnabled = true;
 
   switch (type)
   {
@@ -71,7 +70,9 @@ nuiMainWindow::nuiMainWindow(uint Width, uint Height, bool Fullscreen, const ngl
   : nuiTopLevel(rResPath),
     mMainWinSink(this),
     mQuitOnClose(true),
-    mpDragSource(NULL)
+    mpDragSource(NULL),
+    mPaintEnabled(true)
+
 {
   mFullFrameRedraw = 2;
   mpNGLWindow = new NGLWindow(this, Width, Height, Fullscreen);
@@ -112,7 +113,8 @@ nuiMainWindow::nuiMainWindow(const nglContextInfo& rContextInfo, const nglWindow
   : nuiTopLevel(rResPath),
     mMainWinSink(this),
     mQuitOnClose(true),
-    mpDragSource(NULL)
+    mpDragSource(NULL),
+    mPaintEnabled(true)
 {
   mFullFrameRedraw = 2;
   mpNGLWindow = new NGLWindow(this, rContextInfo, rInfo, pShared);
