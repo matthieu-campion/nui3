@@ -1,0 +1,51 @@
+//
+// main nui3 stylesheet
+//
+
+
+@Font fontBold
+{
+  Name: "Verdana";
+  Size: 10;
+  Italic: false;
+  Bold: true;
+}
+
+@Font fontItalic
+{
+  Name: "Verdana";
+  Size: 10;
+  Italic: true;
+  Bold: faslse;
+}
+
+@nuiColorDecoration dMyLabel
+{
+  FillColor: rgb(96,96,96);
+  StrokeColor: black;
+  ShapeMode: StrokeAndFill;
+  ClientRect: "{10 10 0 0}";
+}
+
+
+"attributeNameLabel"!
+{
+  Position: TopLeft;
+  Font: fontBold;
+}
+
+"attributeNameTypeLabel"!
+{
+  Position: TopLeft;
+  Font: fontItalic;
+  BorderLeft: 3;
+}
+
+ValueView!
+{
+  BorderBottom: 20;
+}
+
+
+// blank ending line following
+
