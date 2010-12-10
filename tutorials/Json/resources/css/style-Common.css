@@ -44,6 +44,29 @@
 ValueView!
 {
   BorderBottom: 20;
+  BorderLeft: 4;
+  BorderRight: 4;
+}
+
+"RootView"!
+{
+  Position: YTopLeft;
+  BorderLeft: 10;
+  BorderTop: 50;
+}
+
+"LoadButton"!
+{
+  Position: TopLeft;
+  BorderLeft: 10;
+  BorderTop: 10;
+}
+
+"SaveButton"!
+{
+  Position: TopLeft;
+  BorderLeft: 80;
+  BorderTop: 10;
 }
 
 

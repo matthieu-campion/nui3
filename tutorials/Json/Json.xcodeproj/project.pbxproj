@@ -31,6 +31,10 @@
 		4001706512B27D9F001B3BA2 /* BoolView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4001706312B27D9F001B3BA2 /* BoolView.cpp */; };
 		4001706612B27D9F001B3BA2 /* BoolView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4001706312B27D9F001B3BA2 /* BoolView.cpp */; };
 		4001706712B27D9F001B3BA2 /* BoolView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4001706312B27D9F001B3BA2 /* BoolView.cpp */; };
+		409A923D12B290B300FEF8BD /* ArrayView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 409A923C12B290B300FEF8BD /* ArrayView.cpp */; };
+		409A923E12B290B300FEF8BD /* ArrayView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 409A923C12B290B300FEF8BD /* ArrayView.cpp */; };
+		409A923F12B290B300FEF8BD /* ArrayView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 409A923C12B290B300FEF8BD /* ArrayView.cpp */; };
+		409A924012B290B300FEF8BD /* ArrayView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 409A923C12B290B300FEF8BD /* ArrayView.cpp */; };
 		61A9DFD70B833F1500BC506C /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD20B833F1500BC506C /* AGL.framework */; };
 		61A9DFD80B833F1500BC506C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD30B833F1500BC506C /* CoreFoundation.framework */; };
 		61A9DFD90B833F1500BC506C /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD40B833F1500BC506C /* CoreServices.framework */; };
@@ -159,6 +163,8 @@
 		4001705C12B27D43001B3BA2 /* NullView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NullView.cpp; path = src/NullView.cpp; sourceTree = "<group>"; };
 		4001706212B27D9F001B3BA2 /* BoolView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BoolView.h; path = src/BoolView.h; sourceTree = "<group>"; };
 		4001706312B27D9F001B3BA2 /* BoolView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BoolView.cpp; path = src/BoolView.cpp; sourceTree = "<group>"; };
+		409A923B12B290B300FEF8BD /* ArrayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ArrayView.h; path = src/ArrayView.h; sourceTree = "<group>"; };
+		409A923C12B290B300FEF8BD /* ArrayView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ArrayView.cpp; path = src/ArrayView.cpp; sourceTree = "<group>"; };
 		61A9DFBF0B833E9600BC506C /* Json.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Json.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61A9DFC90B833EF200BC506C /* JsonD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JsonD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61A9DFD20B833F1500BC506C /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
@@ -291,6 +297,8 @@
 				4001705C12B27D43001B3BA2 /* NullView.cpp */,
 				4001706212B27D9F001B3BA2 /* BoolView.h */,
 				4001706312B27D9F001B3BA2 /* BoolView.cpp */,
+				409A923B12B290B300FEF8BD /* ArrayView.h */,
+				409A923C12B290B300FEF8BD /* ArrayView.cpp */,
 			);
 			name = sources;
 			sourceTree = "<group>";
@@ -601,6 +609,7 @@
 				40016FAE12B27726001B3BA2 /* StringView.cpp in Sources */,
 				4001705D12B27D43001B3BA2 /* NullView.cpp in Sources */,
 				4001706412B27D9F001B3BA2 /* BoolView.cpp in Sources */,
+				409A923D12B290B300FEF8BD /* ArrayView.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -616,6 +625,7 @@
 				40016FAF12B27726001B3BA2 /* StringView.cpp in Sources */,
 				4001705E12B27D43001B3BA2 /* NullView.cpp in Sources */,
 				4001706512B27D9F001B3BA2 /* BoolView.cpp in Sources */,
+				409A924012B290B300FEF8BD /* ArrayView.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -631,6 +641,7 @@
 				40016FB112B27726001B3BA2 /* StringView.cpp in Sources */,
 				4001706012B27D43001B3BA2 /* NullView.cpp in Sources */,
 				4001706712B27D9F001B3BA2 /* BoolView.cpp in Sources */,
+				409A923F12B290B300FEF8BD /* ArrayView.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -646,6 +657,7 @@
 				40016FB012B27726001B3BA2 /* StringView.cpp in Sources */,
 				4001705F12B27D43001B3BA2 /* NullView.cpp in Sources */,
 				4001706612B27D9F001B3BA2 /* BoolView.cpp in Sources */,
+				409A923E12B290B300FEF8BD /* ArrayView.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

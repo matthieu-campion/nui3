@@ -21,6 +21,7 @@ StringView::StringView(nuiJson::Value& rValue)
   
   nuiAttribBase attr  = GetAttribute(_T("stringAttrib"));
   nuiWidget* pEditor = attr.GetEditor();
+  pEditor->SetEnabled(false); // read-only, mouse events forbidden, there is a bug with label renamer
   AddChild(pEditor);
 }
 

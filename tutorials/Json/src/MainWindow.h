@@ -10,6 +10,7 @@
 #include "nuiMainWindow.h"
 
 #include "nuiJson.h"
+class ObjectView;
 
 class MainWindow : public nuiMainWindow
 {
@@ -26,7 +27,11 @@ private:
   
   bool LoadCSS(const nglPath& rPath);
   
+  void OnLoad(const nuiEvent& rEvent);
+  void OnSave(const nuiEvent& rEvent);
+  
   nuiJson::Value mRoot;
+  ObjectView* mpRootView;
   
   nuiEventSink<MainWindow> mEventSink;
 };

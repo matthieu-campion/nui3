@@ -11,10 +11,7 @@
 #include "nuiVBox.h"
 #include "nuiHBox.h"
 
-#include "NullView.h"
-#include "NumberView.h"
-#include "StringView.h"
-#include "BoolView.h"
+
 
 ObjectView::ObjectView(nuiJson::Value& rValue)
 : ValueView(rValue)
@@ -36,44 +33,30 @@ ObjectView::ObjectView(nuiJson::Value& rValue)
     mpVBox->AddCell(pHBox);
     pHBox->SetExpand(nuiExpandShrinkAndGrow);
     
-    ValueView* pView = NULL;
-    
     nglString typeStr;
     if (rVal.isNull())
     {
       typeStr += _T("(null):");
-      
-      pView = new NullView(rVal);
     }
     else if (rVal.isBool())
     {
       typeStr += _T("(bool):");
-      
-      pView = new BoolView(rVal);
     }
     else if (rVal.isInt())
     {
       typeStr += _T("(int):");
-      
-      pView = new NumberView(rVal);
     }
     else if (rVal.isUInt())
     {
       typeStr += _T("(uint):");
-      
-      pView = new NumberView(rVal);
     }
     else if (rVal.isDouble())
     {
       typeStr += _T("(double):");
-      
-      pView = new NumberView(rVal);
     }
     else if (rVal.isString())
     {
       typeStr += _T("(string):");
-      
-      pView = new StringView(rVal);
     }
     else if (rVal.isArray())
     {
@@ -82,8 +65,6 @@ ObjectView::ObjectView(nuiJson::Value& rValue)
     else if (rVal.isObject())
     {
       typeStr += _T("(object):");
-      
-      pView = new ObjectView(rVal);
     }
     
     nuiLabel* pLabel = new nuiLabel(name);
@@ -94,6 +75,7 @@ ObjectView::ObjectView(nuiJson::Value& rValue)
     pTypeLabel->SetObjectName(_T("attributeNameTypeLabel"));
     pHBox->AddCell(pTypeLabel);
     
+    ValueView* pView = ValueView::CreateView(rVal);
     NGL_ASSERT(pView);
     pHBox->AddCell(pView);
   }

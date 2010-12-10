@@ -12,9 +12,12 @@
 #include "nui.h"
 #include "nuiJson.h"
 
-class ValueView : public nuiSimpleContainer 
+class ValueView : public nuiSimpleContainer
 {
 public:
+  
+  static ValueView* CreateView(nuiJson::Value& rValue);
+  
   ValueView(nuiJson::Value& rValue);
   virtual ~ValueView();
   

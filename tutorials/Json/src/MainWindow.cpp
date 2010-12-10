@@ -15,6 +15,8 @@
 #include "nuiAudioDevice.h"
 
 #include "ObjectView.h"
+#include "nuiDialogSelectFile.h"
+#include "nuiMessageBox.h"
 
 /*
  * MainWindow
@@ -41,16 +43,99 @@ MainWindow::~MainWindow()
 
 void MainWindow::OnCreation()
 {  
-//  mRoot["attribInt"] = 5;
-  mRoot["attribDouble"] = 2.34;
-//  mRoot["attribString"] = "mystring";
-//  mRoot["attribBool"] = true;
-//  mRoot["attribObject"]["attr0"] = 123;
-//  mRoot["attribObject"]["attr1"] = 7.89;
-//  mRoot["attribObject"]["attr2"] = "a string";
+  nuiButton* pLoadBtn = new nuiButton(_T("load"));
+  pLoadBtn->SetObjectName(_T("LoadButton"));
+  AddChild(pLoadBtn);
+  mEventSink.Connect(pLoadBtn->Activated, &MainWindow::OnLoad);
   
-  ObjectView* pView = new ObjectView(mRoot);
-  AddChild(pView);
+  nuiButton* pSaveBtn = new nuiButton(_T("save"));
+  pSaveBtn->SetObjectName(_T("SaveButton"));
+  AddChild(pSaveBtn);
+  mEventSink.Connect(pSaveBtn->Activated, &MainWindow::OnSave);
+  
+  
+  
+  mRoot["attribInt"] = 5;
+  mRoot["attribDouble"] = 2.34;
+  mRoot["attribString"] = "mystring";
+  mRoot["attribBool"] = true;
+  
+  int idx = 0;
+  mRoot["attribArray"][idx] = 10;
+  mRoot["attribArray"][1] = 20;
+  mRoot["attribArray"][2] = 30;
+  mRoot["attribArray"][3] = 40;
+  mRoot["attribArray"][4] = "fifty";
+  mRoot["attribArray"][5] = false;
+  
+  
+  mRoot["attribObject"]["attr0"] = 123;
+  mRoot["attribObject"]["attr1"] = 7.89;
+  mRoot["attribObject"]["attr2"] = "a string";
+  
+  mpRootView = new ObjectView(mRoot);
+  mpRootView->SetObjectName(_T("RootView"));
+  AddChild(mpRootView);
+}
+
+void MainWindow::OnLoad(const nuiEvent& rEvent)
+{
+  nuiDialogSelectFile* pDialog = new nuiDialogSelectFile((nuiMainWindow*)GetMainWindow(), _T("save to json"), nglPath(nglString::Null), nglPath(nglString::Null), nglString::Null, _T("*"));
+  pDialog->DoModal();
+  nglPath path = pDialog->GetSelectedFile();
+  
+  if (!path.Exists())
+    return;
+  
+  if (!path.IsLeaf())
+    return;
+  
+  nglIStream* pStream = path.OpenRead();
+  if (!pStream)
+    return;
+  
+  nglString text;
+  pStream->ReadText(text);
+  
+  nuiJson::Value root;
+  nuiJson::Reader reader;
+  bool parsed = reader.parse(text.GetStdString(), root);
+  if (!parsed)
+    return;
+  
+  mpRootView->Trash();
+  mRoot = root;
+  
+  mpRootView = new ObjectView(mRoot);
+  mpRootView->SetObjectName(_T("RootView"));
+  AddChild(mpRootView);
+}
+
+void MainWindow::OnSave(const nuiEvent& rEvent)
+{
+  nuiDialogSelectFile* pDialog = new nuiDialogSelectFile((nuiMainWindow*)GetMainWindow(), _T("save to json"), nglPath(nglString::Null), nglPath(nglString::Null), nglString::Null, _T("*"));
+  pDialog->DoModal();
+  nglPath path = pDialog->GetSelectedFile();
+  
+  if (path.Exists())
+  {
+    if (!path.IsLeaf())
+      return;
+    
+    nglString msg;
+    msg.Add(_T("the file: ")).Add(path.GetPathName()).Add(_T(" already exists. Do you really want to overwrite it?"));
+    nuiMessageBox::Button btn = nuiMessageBox::Do((nuiContainer*)GetMainWindow(), _T("file exists"), msg, eMB_OKCancel);
+    if (btn == nuiMessageBox::ButtonCancel)
+      return;
+  }
+  
+  nglIOStream* pStream = path.OpenWrite(true/*overwrite*/);
+  if (!pStream)
+    return;
+  
+  nuiJson::FastWriter writer;
+  nglString text = writer.write(mRoot);
+  pStream->WriteText(text);
 }
 
 
