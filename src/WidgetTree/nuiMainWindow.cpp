@@ -39,6 +39,7 @@ nuiContextInfo::nuiContextInfo(Type type)
   FrameBitsA = 0;
   AABufferCnt = 0;
   AASampleCnt = 0;
+  mPaintEnabled = true;
 
   switch (type)
   {
@@ -290,6 +291,9 @@ static float Gx = 0;
 
 void nuiMainWindow::Paint()
 {
+  if (!IsPaintEnabled())
+    return;
+  
   mLastEventTime = nglTime();
   //nuiStopWatch watch(_T("nuiMainWindow::Paint"));
   do 
@@ -1181,3 +1185,14 @@ double nuiMainWindow::GetLastInteractiveEventTime() const
 {
   return mLastInteractiveEventTime;
 }
+
+void nuiMainWindow::SetPaintEnabled(bool set)
+{
+  mPaintEnabled = set;
+}
+
+bool nuiMainWindow::IsPaintEnabled() const
+{
+  return mPaintEnabled;
+}
+
