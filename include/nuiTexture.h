@@ -45,6 +45,8 @@ public:
   void TextureToImageCoord(nuiSize& x, nuiSize& y) const; ///< Transform the x,y point in the coordinates of the texture to the coordinates of the image. 
   void ImageToTextureCoord(nuiAltSize& x, nuiAltSize& y) const;
   void TextureToImageCoord(nuiAltSize& x, nuiAltSize& y) const;
+  void ImageToTextureCoord(nuiRect& rRect) const; ///< Transform the rRect rectangle in the coordinates of the image to the coordinates of the texture. 
+  void TextureToImageCoord(nuiRect& rRect) const; ///< Transform the rRect rectangle in the coordinates of the texture to the coordinates of the image. 
 
   nglImage* GetImage() const; ///< Return a pointer to the nglImage contained in this object.
   void      ReleaseBuffer(); ///< Release the image source

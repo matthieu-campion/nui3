@@ -98,6 +98,8 @@ MyViewController::MyViewController(nuiNavigationController* pNav)
 {
   if (!mpNav)
     mpNav = pNav;
+  
+  mRunning = false;
       
   nglString name;
   name.Format(_T("MyViewController%d"), mCount % 3);
@@ -164,9 +166,37 @@ MyViewController::~MyViewController()
 
 }
 
+// virtual 
+void MyViewController::ViewWillAppear()
+{
+  
+}
+
+//virtual 
+void MyViewController::ViewWillDisappear()
+{
+  mRunning = false;
+}
+
+// virtual 
+void MyViewController::ViewDidAppear()
+{
+  mRunning = true;
+}
+
+//virtual 
+void MyViewController::ViewDidDisappear()
+{
+  
+}
+
+
 
 void MyViewController::OnPushClick(const nuiEvent& rEvent)
 {
+  if (!mRunning)
+    return;
+  
   uint32 code = (uint32)rEvent.mpUser;
   TransitionType transition = (code == 0)? eTransitionSlide : (code == 1)? eTransitionElastic : eTransitionTransparency;
   mCount++;
@@ -179,6 +209,9 @@ void MyViewController::OnPushClick(const nuiEvent& rEvent)
 
 void MyViewController::OnPopClick(const nuiEvent& rEvent)
 {
+  if (!mRunning)
+    return;
+  
   uint32 code = (uint32)rEvent.mpUser;  
   
   if (code == 3)

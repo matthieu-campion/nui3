@@ -81,7 +81,7 @@ uint nglFontInstance::GetFace() const
   return mFace;
 }
 
-FTC_FaceID nglFontInstance::Install(const nglFontInstance& rInstance)
+FTC_FaceID nglFontInstance::Install(nglFontInstance * pInstance)
 {
   nglFontInstance* font;
   
@@ -90,7 +90,7 @@ FTC_FaceID nglFontInstance::Install(const nglFontInstance& rInstance)
   for (; it != end; ++it)
   {
     font = *it;
-    if ((rInstance.mPath == font->mPath) && (rInstance.mFace == font->mFace))
+    if ((pInstance->mPath == font->mPath) && (pInstance->mFace == font->mFace))
     {
       font->Acquire();
       return (FTC_FaceID)font;
@@ -98,16 +98,13 @@ FTC_FaceID nglFontInstance::Install(const nglFontInstance& rInstance)
   }
 
   // Not matching installed font : create (copy), install and return it
-  font = new nglFontInstance(rInstance);
-  if (!font)
-    return (FTC_FaceID)0;
-
-  NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_DEBUG, _T("Install '%ls' %d"), font->mPath.GetPathName().GetChars(), font->mFace); )
-  gFontList.insert(font);
-  return (FTC_FaceID)font;
+  pInstance->Acquire();
+  NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_DEBUG, _T("Install '%ls' %d"), pInstance->mPath.GetPathName().GetChars(), pInstance->mFace); )
+  gFontList.insert(pInstance);
+  return (FTC_FaceID)pInstance;
 }
 
-FTC_FaceID nglFontInstance::Uninstall(const nglFontInstance& rInstance)
+FTC_FaceID nglFontInstance::Uninstall(nglFontInstance * pInstance)
 {
   nglFontInstance* font;
 
@@ -116,7 +113,7 @@ FTC_FaceID nglFontInstance::Uninstall(const nglFontInstance& rInstance)
   for (; it != end; ++it)
   {
     font = *it;
-    if ((rInstance.mPath == font->mPath) && (rInstance.mFace == font->mFace))
+    if ((pInstance->mPath == font->mPath) && (pInstance->mFace == font->mFace))
     {
       nglPath p(font->mPath.GetPathName());
       int32 f = font->mFace;
@@ -206,8 +203,6 @@ void nglFontInstance::Dump()
     {
       pFontInstance = *i;
       NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_INFO, _T("installed font instance %d/%d: 0x%x\n"), c, s, pFontInstance);)
-      //if (pFontInstance)
-      //  delete pFontInstance;
       c++;
     }
 }

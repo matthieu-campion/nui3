@@ -16,32 +16,38 @@ public:
 
   virtual ~nuiRefCount()           
   { 
-    //NGL_ASSERT(mCount == 0); 
+    NGL_ASSERT(mCount == 0); 
   }
 
   uint32 Acquire() const   
   { 
-//    if (mTrace)
-//    {
-//      NGL_OUT(_T("Acquire object 0x%x (%d)\n"), this, mCount + 1);
-//    }
+    if (mTrace)
+    {
+      NGL_OUT(_T("Acquire object 0x%x (%d)\n"), this, mCount + 1);
+    }
+    
+    
     return ++mCount; 
   }
 
   uint32 Release()
   { 
-//    if (mTrace)
-//    {
-//      NGL_OUT(_T("Release object 0x%x (%d)\n"), this, mCount - 1);
-//    }
+    if (mTrace)
+    {
+      NGL_OUT(_T("Release object 0x%x (%d)\n"), this, mCount - 1);
+    }
+
+    
     NGL_ASSERTR(mCount > 0, mCount); 
     mCount--;
     if (mCount == 0)
     {
-//      if (mTrace)
-//      {
-//        NGL_OUT(_T("Delete object 0x%x\n"), this);
-//      }
+      if (mTrace)
+      {
+        NGL_OUT(_T("Delete object 0x%x\n"), this);
+      }
+      
+      
       OnFinalize();
       delete this;
       return 0;
@@ -49,6 +55,16 @@ public:
     return mCount; 
   }
 
+  void SetTrace(bool set)
+  {
+    mTrace = set;
+  }
+  
+  bool GetTrace() const
+  {
+    return mTrace;
+  }
+  
   uint32 GetRefCount()
   {
     return mCount;

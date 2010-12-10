@@ -285,6 +285,7 @@ nuiTreeView::nuiTreeView(nuiTreeNodePtr pTree, bool displayRoot)
   mpDraggedObject = NULL;
 
   mpTree = pTree;
+  mpTree->Acquire();
 
   ReparentTree(mpTree);
 
@@ -315,7 +316,7 @@ bool nuiTreeView::Load(const nuiXMLNode* pNode)
 nuiTreeView::~nuiTreeView()
 {
   if (mpTree)
-    delete mpTree;
+    mpTree->Release();
 }
 
 void nuiTreeView::InitAttributes()
@@ -961,8 +962,12 @@ void nuiTreeView::SetDeSelectable(bool Set)
 
 void nuiTreeView::SetTree(nuiTreeNodePtr pTree, bool DeleteOldTree)
 {
-  if (DeleteOldTree)
-    delete mpTree;
+  if (pTree)
+    pTree->Acquire();
+  
+  if (DeleteOldTree && mpTree)
+    mpTree->Release();
+
   mpTree = pTree;
   ReparentTree(pTree);
   mpSelectedNode = NULL;

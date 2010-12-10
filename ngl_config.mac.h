@@ -11,3 +11,6 @@
 
 /* Define to 1 if you want MLANG (charset conversion) support */
 #define HAVE_MLANG 0
+
+/* Define to 1 if you want to use the CoreGraphics image library */
+#define HAVE_COREGRAPHICS 1

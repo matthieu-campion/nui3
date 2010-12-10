@@ -21,6 +21,8 @@ public:
   
 protected:
   
+  virtual void ViewWillAppear();
+  virtual void ViewWillDisappear();
   virtual void ViewDidAppear();
   virtual void ViewDidDisappear();
   virtual void ConnectTopLevel();

@@ -815,6 +815,10 @@ void nglImage::StaticInit()
     mpCodecInfos->push_back(new nglImageTGACodecInfo());
     mpCodecInfos->push_back(new nglImagePPMCodecInfo());
 
+#ifdef HAVE_COREGRAPHICS
+    mpCodecInfos->push_back(new nglImageCGCodecInfo());
+#endif
+    
     mpCodecInfos->push_back(new nglImagePNGCodecInfo());
 
   #ifdef HAVE_LIBJPEG
@@ -822,9 +826,6 @@ void nglImage::StaticInit()
   #endif
     mpCodecInfos->push_back(new nglImageGIFCodecInfo());
 
-  #ifdef HAVE_COREGRAPHICS
-    mpCodecInfos->push_back(new nglImageCGCodecInfo());
-  #endif
     
   }
 }

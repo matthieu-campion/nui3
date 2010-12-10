@@ -258,15 +258,16 @@ void nuiGetBlendFuncFactors(nuiBlendFunc Func, GLenum& src, GLenum& dst)
     case nuiBlendDest:          sfactor = GL_ZERO;                  dfactor = GL_ONE;                  break;
     case nuiBlendOver:          sfactor = GL_ONE;                   dfactor = GL_ONE_MINUS_SRC_ALPHA;  break;
     case nuiBlendOverRev:       sfactor = GL_ONE_MINUS_DST_ALPHA;   dfactor = GL_ONE;                  break;
-    case nuiBlendIn:            sfactor = GL_DST_ALPHA;             dfactor = GL_ZERO;                 break;
+    case nuiBlendIn:            sfactor = GL_DST_ALPHA;             dfactor = GL_ONE;                  break;
     case nuiBlendInRev:         sfactor = GL_ZERO;                  dfactor = GL_SRC_ALPHA;            break;
     case nuiBlendOut:           sfactor = GL_ONE_MINUS_DST_ALPHA;   dfactor = GL_ZERO;                 break;
     case nuiBlendOutRev:        sfactor = GL_ZERO;                  dfactor = GL_ONE_MINUS_SRC_ALPHA;  break;
     case nuiBlendTop:           sfactor = GL_DST_ALPHA;             dfactor = GL_ONE_MINUS_SRC_ALPHA;  break;
     case nuiBlendTopRev:        sfactor = GL_ONE_MINUS_DST_ALPHA;   dfactor = GL_SRC_ALPHA;            break;
-    case nuiBlendXOR:           sfactor = GL_ONE_MINUS_DST_ALPHA;   dfactor = GL_ONE_MINUS_SRC_ALPHA;  break;
+    case nuiBlendXOR:           sfactor = GL_ONE_MINUS_DST_ALPHA;   dfactor = GL_SRC_ALPHA;            break;
     case nuiBlendAdd:           sfactor = GL_ONE;                   dfactor = GL_ONE;                  break;
-    case nuiBlendSaturate:      sfactor = GL_SRC_ALPHA_SATURATE;    dfactor = GL_ONE;                  break;
+//    case nuiBlendSaturate:      sfactor = GL_SRC_ALPHA_SATURATE;    dfactor = GL_ONE;                  break;
+    case nuiBlendSaturate:      sfactor = GL_DST_COLOR;             dfactor = GL_ONE_MINUS_SRC_ALPHA;  break;
       
     case nuiBlendTranspClear:   sfactor = GL_SRC_ALPHA;             dfactor = GL_ZERO;                 break;
     case nuiBlendTranspInRev:   sfactor = GL_SRC_ALPHA;             dfactor = GL_SRC_ALPHA;            break;
