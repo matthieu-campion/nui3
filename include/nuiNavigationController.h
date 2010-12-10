@@ -11,7 +11,6 @@
 #include "nui.h"
 
 class nuiViewController;
-class nuiNavigationBar;
 
 
 enum TransitionType
@@ -45,6 +44,7 @@ protected:
   void OnViewPushStop(const nuiEvent& rEvent);
   void OnViewPopStop(const nuiEvent& rEvent);
   
+  virtual bool Draw(nuiDrawContext* pContext);
   virtual bool SetRect(const nuiRect& rRect);
   
 private:
@@ -66,7 +66,6 @@ private:
   nuiSize GetAnimPositon() const;
   
   
-  nuiNavigationBar* mpBar;
   std::vector<nuiViewController*> mViewControllers;
   nuiViewController* mpIn;
   nuiViewController* mpOut;

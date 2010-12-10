@@ -7,7 +7,7 @@
 
 #include "nui.h"
 #include "nuiViewController.h"
-
+#include "nuiNavigationBar.h"
 
 
 nuiViewController::nuiViewController()
@@ -16,6 +16,7 @@ nuiViewController::nuiViewController()
   SetObjectClass(_T("nuiViewController"));
   mAnimated = false;
   
+  mpBar = new nuiNavigationBar();
 }
 
 
@@ -56,5 +57,16 @@ void nuiViewController::ViewDidDisappear()
 {
   
 }
+
+
+void nuiViewController::SetTitle(const nglString& rTitle)
+{
+  mpBar->SetTitle(rTitle);
+}
+
+nuiNavigationBar* nuiViewController::GetNavigationBar()
+{
+  return mpBar;
+} 
 
 

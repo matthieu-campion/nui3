@@ -36,6 +36,11 @@ public:
   static void TabView_Tab(nuiTabView* pView, nuiWidget* pTab);
   static void TabView_Contents(nuiTabView* pView, nuiWidget* pContents);
   
+  // NavigationViews
+  static void NavigationButton(nuiWidget* pWidget);
+  static void NavigationBar(nuiWidget* pWidget);
+  
+  
   static nglImage* GetImage(const nglString& rRef);
   
 protected:
@@ -99,6 +104,7 @@ protected:
   static void FileTree_OpenFolderIcon(nuiWidget* pWidget);
   static void FileTree_ParentFolderIcon(nuiWidget* pWidget);
   static void FileTree_FileIcon(nuiWidget* pWidget);
+
 
 private:
   
