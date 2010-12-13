@@ -109,7 +109,7 @@ void nuiContainer::ChildrenCallOnTrash()
 {
   CheckValid();
   IteratorPtr pIt;
-  for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
+  for (pIt = GetFirstChild(false); pIt && pIt->IsValid(); GetNextChild(pIt))
   {
     nuiWidgetPtr pItem = pIt->GetWidget();
     if (pItem)
@@ -792,44 +792,72 @@ void nuiContainer::InternalSetLayout(const nuiRect& rect, bool PositionChanged, 
 
 ////// nuiContainer::Iterator
 
-nuiContainer::Iterator::Iterator()
+nuiContainer::Iterator::Iterator(nuiContainer* pSource, bool DoRefCounting)
+: mpSource(pSource), mRefCounting(DoRefCounting)
 {
+  if (mRefCounting)
+    mpSource->Acquire();
   mValid = false;
 }
 
-nuiContainer::ConstIterator::ConstIterator()
+nuiContainer::ConstIterator::ConstIterator(const nuiContainer* pSource, bool DoRefCounting)
+: mpSource(pSource), mRefCounting(DoRefCounting)
 {
+  if (mRefCounting)
+    mpSource->Acquire();
   mValid = false;
 }
 
 nuiContainer::Iterator::Iterator(const nuiContainer::Iterator& rIterator)
+: mpSource(rIterator.mpSource), mRefCounting(rIterator.mRefCounting), mValid(rIterator.mValid)
 {
-  mValid = rIterator.mValid;
+  mpSource->Acquire();
 }
 
 nuiContainer::ConstIterator::ConstIterator(const nuiContainer::ConstIterator& rIterator)
+: mpSource(rIterator.mpSource), mRefCounting(rIterator.mRefCounting), mValid(rIterator.mValid)
 {
-  mValid = rIterator.mValid;
+  mpSource->Acquire();
 }
 
 nuiContainer::Iterator& nuiContainer::Iterator::operator = (const nuiContainer::Iterator& rIterator)
 {
+  mRefCounting = rIterator.mRefCounting;
+  const nuiContainer* pOld = mpSource;
+  mpSource = rIterator.mpSource;
+  if (mRefCounting)
+  {
+    mpSource->Acquire();
+    pOld->Release();
+  }
   mValid = rIterator.mValid;
   return *this;
 }
 
 nuiContainer::ConstIterator& nuiContainer::ConstIterator::operator = (const nuiContainer::ConstIterator& rIterator)
 {
+  mRefCounting = rIterator.mRefCounting;
+  const nuiContainer* pOld = mpSource;
+  mpSource = rIterator.mpSource;
+  if (mRefCounting)
+  {
+    mpSource->Acquire();
+    pOld->Release();
+  }
   mValid = rIterator.mValid;
   return *this;
 }
 
 nuiContainer::Iterator::~Iterator()
 {
+  if (mRefCounting)
+    mpSource->Release();
 }
 
 nuiContainer::ConstIterator::~ConstIterator()
 {
+  if (mRefCounting)
+    mpSource->Release();
 }
 
 bool nuiContainer::Iterator::IsValid() const
@@ -891,19 +919,19 @@ void nuiContainer::InternalResetCSSPass()
   delete pIt;
 }
 
-nuiContainer::IteratorPtr nuiContainer::GetChildIterator(nuiWidgetPtr pChild)
+nuiContainer::IteratorPtr nuiContainer::GetChildIterator(nuiWidgetPtr pChild, bool DoRefCounting)
 {
   CheckValid();
-  IteratorPtr pIt = GetFirstChild();
+  IteratorPtr pIt = GetFirstChild(DoRefCounting);
   while (pIt->IsValid() && pIt->GetWidget() != pChild)
     GetNextChild(pIt);
   return pIt;
 }
 
-nuiContainer::ConstIteratorPtr nuiContainer::GetChildIterator(nuiWidgetPtr pChild) const
+nuiContainer::ConstIteratorPtr nuiContainer::GetChildIterator(nuiWidgetPtr pChild, bool DoRefCounting) const
 {
   CheckValid();
-  ConstIteratorPtr pIt = GetFirstChild();
+  ConstIteratorPtr pIt = GetFirstChild(DoRefCounting);
   while (pIt->IsValid() && pIt->GetWidget() != pChild)
     GetNextChild(pIt);
   return pIt;
