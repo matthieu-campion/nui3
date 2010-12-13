@@ -1460,7 +1460,7 @@ void nuiFontManager::RequestFont(nuiFontRequest& rRequest, std::list<nuiFontRequ
   
   rFoundFonts.sort(greater_score);
   
-  if (1)
+  if (0)
   {
     std::list<nuiFontRequestResult>::const_iterator it = rFoundFonts.begin();
     std::list<nuiFontRequestResult>::const_iterator end = rFoundFonts.end();
