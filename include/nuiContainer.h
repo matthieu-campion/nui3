@@ -20,55 +20,23 @@ class NUI_API nuiContainer : public nuiWidget
   friend class nuiWidget;
   friend class nuiTopLevel;
 public:
-  class NUI_API ChildIteratorBase : public nuiRefCount
-  {
-  public:
-    ChildIteratorBase()
-    {
-    }
-
-    virtual ~ChildIteratorBase()
-    {
-    }
-
-    bool IsValid() const
-    {
-      return mValid;
-    }
-        
-  protected:
-    void SetValid(bool set)
-    {
-      mValid = set;
-    }
-    
-  private:
-    bool mValid;
-    
-  };
-
   class NUI_API Iterator
   {
   public:
     Iterator();
     Iterator(const Iterator& rIterator);
-    Iterator& operator = (const Iterator& rIterator);
+    virtual Iterator& operator = (const Iterator& rIterator);
     virtual ~Iterator();
 
-    virtual bool IsValid() const;
-    virtual nuiWidgetPtr GetWidget() const;
-    virtual nuiWidgetPtr operator*() const
+    bool IsValid() const;
+    void SetValid(bool set);
+    virtual nuiWidgetPtr GetWidget() const = 0;
+    nuiWidgetPtr operator*() const
     {
       return GetWidget();
     }
   protected:
-    nuiWidgetList::iterator mIterator;
     bool mValid;
-  private:
-    friend class nuiSimpleContainer;
-    bool SetElement(const nuiWidgetList::iterator& rIterator);
-    void SetValid(bool Valid);
-    nuiWidgetList::iterator& GetElement();
   };
 
   class NUI_API ConstIterator
@@ -76,25 +44,22 @@ public:
   public:
     ConstIterator();
     ConstIterator(const ConstIterator& rIterator);
-    ConstIterator& operator = (const ConstIterator& rIterator);
+    virtual ConstIterator& operator = (const ConstIterator& rIterator);
     virtual ~ConstIterator();
 
-    virtual bool IsValid() const;
-    virtual nuiWidgetPtr GetWidget() const;
-    virtual nuiWidgetPtr operator*() const
+    bool IsValid() const;
+    void SetValid(bool set);
+    virtual nuiWidgetPtr GetWidget() const = 0;
+    nuiWidgetPtr operator*() const
     {
       return GetWidget();
     }
   protected:
-    nuiWidgetList::const_iterator mIterator;
     bool mValid;
-  private:
-    friend class nuiSimpleContainer;
-    bool SetElement(const nuiWidgetList::const_iterator& rIterator);
-    void SetValid(bool Valid);
-    nuiWidgetList::const_iterator& GetElement();
   };
 
+  class Iterator;
+  class ConstIterator;
   typedef Iterator* IteratorPtr;
   typedef ConstIterator* ConstIteratorPtr;
 

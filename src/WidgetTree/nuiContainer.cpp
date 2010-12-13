@@ -804,50 +804,24 @@ nuiContainer::ConstIterator::ConstIterator()
 
 nuiContainer::Iterator::Iterator(const nuiContainer::Iterator& rIterator)
 {
-  mIterator = rIterator.mIterator;
   mValid = rIterator.mValid;
 }
 
 nuiContainer::ConstIterator::ConstIterator(const nuiContainer::ConstIterator& rIterator)
 {
-  mIterator = rIterator.mIterator;
   mValid = rIterator.mValid;
 }
 
 nuiContainer::Iterator& nuiContainer::Iterator::operator = (const nuiContainer::Iterator& rIterator)
 {
-  mIterator = rIterator.mIterator;
   mValid = rIterator.mValid;
   return *this;
 }
 
 nuiContainer::ConstIterator& nuiContainer::ConstIterator::operator = (const nuiContainer::ConstIterator& rIterator)
 {
-  mIterator = rIterator.mIterator;
   mValid = rIterator.mValid;
   return *this;
-}
-
-bool nuiContainer::Iterator::SetElement(const nuiWidgetList::iterator& rIterator)
-{
-  mIterator = rIterator;
-  return true;
-}
-
-bool nuiContainer::ConstIterator::SetElement(const nuiWidgetList::const_iterator& rIterator)
-{
-  mIterator = rIterator;
-  return true;
-}
-
-nuiWidgetList::iterator& nuiContainer::Iterator::GetElement()
-{
-  return mIterator; 
-}
-
-nuiWidgetList::const_iterator& nuiContainer::ConstIterator::GetElement()
-{
-  return mIterator; 
 }
 
 nuiContainer::Iterator::~Iterator()
@@ -856,16 +830,6 @@ nuiContainer::Iterator::~Iterator()
 
 nuiContainer::ConstIterator::~ConstIterator()
 {
-}
-
-nuiWidgetPtr nuiContainer::Iterator::GetWidget() const
-{
-  return mValid?*mIterator:NULL;
-}
-
-nuiWidgetPtr nuiContainer::ConstIterator::GetWidget() const
-{
-  return mValid?*mIterator:NULL;
 }
 
 bool nuiContainer::Iterator::IsValid() const
@@ -888,6 +852,8 @@ void nuiContainer::ConstIterator::SetValid(bool Valid)
   mValid = Valid;
 }
 
+
+/////////////////////////////////////////////////////////////
 nuiWidgetPtr nuiContainer::Find(const nglString& rName)
 { 
   CheckValid();
