@@ -7,6 +7,78 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		40033E7412B14D7D000695D2 /* json_reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40033E7012B14D7D000695D2 /* json_reader.cpp */; };
+		40033E7512B14D7D000695D2 /* json_value.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40033E7112B14D7D000695D2 /* json_value.cpp */; };
+		40033E7612B14D7D000695D2 /* json_writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40033E7312B14D7D000695D2 /* json_writer.cpp */; };
+		40033E7712B14D7D000695D2 /* json_reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40033E7012B14D7D000695D2 /* json_reader.cpp */; };
+		40033E7812B14D7D000695D2 /* json_value.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40033E7112B14D7D000695D2 /* json_value.cpp */; };
+		40033E7912B14D7D000695D2 /* json_writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40033E7312B14D7D000695D2 /* json_writer.cpp */; };
+		40033E7A12B14D7D000695D2 /* json_reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40033E7012B14D7D000695D2 /* json_reader.cpp */; };
+		40033E7B12B14D7D000695D2 /* json_value.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40033E7112B14D7D000695D2 /* json_value.cpp */; };
+		40033E7C12B14D7D000695D2 /* json_writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40033E7312B14D7D000695D2 /* json_writer.cpp */; };
+		40033E7D12B14D7D000695D2 /* json_reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40033E7012B14D7D000695D2 /* json_reader.cpp */; };
+		40033E7E12B14D7D000695D2 /* json_value.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40033E7112B14D7D000695D2 /* json_value.cpp */; };
+		40033E7F12B14D7D000695D2 /* json_writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40033E7312B14D7D000695D2 /* json_writer.cpp */; };
+		40033E8012B14D7D000695D2 /* json_reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40033E7012B14D7D000695D2 /* json_reader.cpp */; };
+		40033E8112B14D7D000695D2 /* json_value.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40033E7112B14D7D000695D2 /* json_value.cpp */; };
+		40033E8212B14D7D000695D2 /* json_writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40033E7312B14D7D000695D2 /* json_writer.cpp */; };
+		40033E8312B14D7D000695D2 /* json_reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40033E7012B14D7D000695D2 /* json_reader.cpp */; };
+		40033E8412B14D7D000695D2 /* json_value.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40033E7112B14D7D000695D2 /* json_value.cpp */; };
+		40033E8512B14D7D000695D2 /* json_writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40033E7312B14D7D000695D2 /* json_writer.cpp */; };
+		40033E8E12B14DF0000695D2 /* autolink.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8612B14DF0000695D2 /* autolink.h */; };
+		40033E8F12B14DF0000695D2 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8712B14DF0000695D2 /* config.h */; };
+		40033E9012B14DF0000695D2 /* features.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8812B14DF0000695D2 /* features.h */; };
+		40033E9112B14DF0000695D2 /* forwards.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8912B14DF0000695D2 /* forwards.h */; };
+		40033E9212B14DF0000695D2 /* json.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8A12B14DF0000695D2 /* json.h */; };
+		40033E9312B14DF0000695D2 /* reader.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8B12B14DF0000695D2 /* reader.h */; };
+		40033E9412B14DF0000695D2 /* value.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8C12B14DF0000695D2 /* value.h */; };
+		40033E9512B14DF0000695D2 /* writer.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8D12B14DF0000695D2 /* writer.h */; };
+		40033E9612B14DF0000695D2 /* autolink.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8612B14DF0000695D2 /* autolink.h */; };
+		40033E9712B14DF0000695D2 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8712B14DF0000695D2 /* config.h */; };
+		40033E9812B14DF0000695D2 /* features.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8812B14DF0000695D2 /* features.h */; };
+		40033E9912B14DF0000695D2 /* forwards.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8912B14DF0000695D2 /* forwards.h */; };
+		40033E9A12B14DF0000695D2 /* json.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8A12B14DF0000695D2 /* json.h */; };
+		40033E9B12B14DF0000695D2 /* reader.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8B12B14DF0000695D2 /* reader.h */; };
+		40033E9C12B14DF0000695D2 /* value.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8C12B14DF0000695D2 /* value.h */; };
+		40033E9D12B14DF0000695D2 /* writer.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8D12B14DF0000695D2 /* writer.h */; };
+		40033E9E12B14DF0000695D2 /* autolink.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8612B14DF0000695D2 /* autolink.h */; };
+		40033E9F12B14DF0000695D2 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8712B14DF0000695D2 /* config.h */; };
+		40033EA012B14DF0000695D2 /* features.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8812B14DF0000695D2 /* features.h */; };
+		40033EA112B14DF0000695D2 /* forwards.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8912B14DF0000695D2 /* forwards.h */; };
+		40033EA212B14DF0000695D2 /* json.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8A12B14DF0000695D2 /* json.h */; };
+		40033EA312B14DF0000695D2 /* reader.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8B12B14DF0000695D2 /* reader.h */; };
+		40033EA412B14DF0000695D2 /* value.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8C12B14DF0000695D2 /* value.h */; };
+		40033EA512B14DF0000695D2 /* writer.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8D12B14DF0000695D2 /* writer.h */; };
+		40033EA612B14DF0000695D2 /* autolink.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8612B14DF0000695D2 /* autolink.h */; };
+		40033EA712B14DF0000695D2 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8712B14DF0000695D2 /* config.h */; };
+		40033EA812B14DF0000695D2 /* features.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8812B14DF0000695D2 /* features.h */; };
+		40033EA912B14DF0000695D2 /* forwards.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8912B14DF0000695D2 /* forwards.h */; };
+		40033EAA12B14DF0000695D2 /* json.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8A12B14DF0000695D2 /* json.h */; };
+		40033EAB12B14DF0000695D2 /* reader.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8B12B14DF0000695D2 /* reader.h */; };
+		40033EAC12B14DF0000695D2 /* value.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8C12B14DF0000695D2 /* value.h */; };
+		40033EAD12B14DF0000695D2 /* writer.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8D12B14DF0000695D2 /* writer.h */; };
+		40033EAE12B14DF0000695D2 /* autolink.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8612B14DF0000695D2 /* autolink.h */; };
+		40033EAF12B14DF0000695D2 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8712B14DF0000695D2 /* config.h */; };
+		40033EB012B14DF0000695D2 /* features.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8812B14DF0000695D2 /* features.h */; };
+		40033EB112B14DF0000695D2 /* forwards.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8912B14DF0000695D2 /* forwards.h */; };
+		40033EB212B14DF0000695D2 /* json.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8A12B14DF0000695D2 /* json.h */; };
+		40033EB312B14DF0000695D2 /* reader.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8B12B14DF0000695D2 /* reader.h */; };
+		40033EB412B14DF0000695D2 /* value.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8C12B14DF0000695D2 /* value.h */; };
+		40033EB512B14DF0000695D2 /* writer.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8D12B14DF0000695D2 /* writer.h */; };
+		40033EB612B14DF0000695D2 /* autolink.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8612B14DF0000695D2 /* autolink.h */; };
+		40033EB712B14DF0000695D2 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8712B14DF0000695D2 /* config.h */; };
+		40033EB812B14DF0000695D2 /* features.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8812B14DF0000695D2 /* features.h */; };
+		40033EB912B14DF0000695D2 /* forwards.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8912B14DF0000695D2 /* forwards.h */; };
+		40033EBA12B14DF0000695D2 /* json.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8A12B14DF0000695D2 /* json.h */; };
+		40033EBB12B14DF0000695D2 /* reader.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8B12B14DF0000695D2 /* reader.h */; };
+		40033EBC12B14DF0000695D2 /* value.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8C12B14DF0000695D2 /* value.h */; };
+		40033EBD12B14DF0000695D2 /* writer.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033E8D12B14DF0000695D2 /* writer.h */; };
+		40033EBF12B14E08000695D2 /* nuiJson.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033EBE12B14E08000695D2 /* nuiJson.h */; };
+		40033EC012B14E08000695D2 /* nuiJson.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033EBE12B14E08000695D2 /* nuiJson.h */; };
+		40033EC112B14E08000695D2 /* nuiJson.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033EBE12B14E08000695D2 /* nuiJson.h */; };
+		40033EC212B14E08000695D2 /* nuiJson.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033EBE12B14E08000695D2 /* nuiJson.h */; };
+		40033EC312B14E08000695D2 /* nuiJson.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033EBE12B14E08000695D2 /* nuiJson.h */; };
+		40033EC412B14E08000695D2 /* nuiJson.h in Headers */ = {isa = PBXBuildFile; fileRef = 40033EBE12B14E08000695D2 /* nuiJson.h */; };
 		40182A6E0F24C74A00F11401 /* nuiChunkSampleReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 40182A6C0F24C74A00F11401 /* nuiChunkSampleReader.h */; };
 		40182A6F0F24C74A00F11401 /* nuiChunkSampleReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40182A6D0F24C74A00F11401 /* nuiChunkSampleReader.cpp */; };
 		40182A700F24C74A00F11401 /* nuiChunkSampleReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 40182A6C0F24C74A00F11401 /* nuiChunkSampleReader.h */; };
@@ -8035,6 +8107,21 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		40033E6E12B14D7D000695D2 /* json_internalarray.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = json_internalarray.inl; path = src/Json/json_internalarray.inl; sourceTree = SOURCE_ROOT; };
+		40033E6F12B14D7D000695D2 /* json_internalmap.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = json_internalmap.inl; path = src/Json/json_internalmap.inl; sourceTree = SOURCE_ROOT; };
+		40033E7012B14D7D000695D2 /* json_reader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = json_reader.cpp; path = src/Json/json_reader.cpp; sourceTree = SOURCE_ROOT; };
+		40033E7112B14D7D000695D2 /* json_value.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = json_value.cpp; path = src/Json/json_value.cpp; sourceTree = SOURCE_ROOT; };
+		40033E7212B14D7D000695D2 /* json_valueiterator.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = json_valueiterator.inl; path = src/Json/json_valueiterator.inl; sourceTree = SOURCE_ROOT; };
+		40033E7312B14D7D000695D2 /* json_writer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = json_writer.cpp; path = src/Json/json_writer.cpp; sourceTree = SOURCE_ROOT; };
+		40033E8612B14DF0000695D2 /* autolink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = autolink.h; path = include/nuiJson/autolink.h; sourceTree = SOURCE_ROOT; };
+		40033E8712B14DF0000695D2 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = config.h; path = include/nuiJson/config.h; sourceTree = SOURCE_ROOT; };
+		40033E8812B14DF0000695D2 /* features.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = features.h; path = include/nuiJson/features.h; sourceTree = SOURCE_ROOT; };
+		40033E8912B14DF0000695D2 /* forwards.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = forwards.h; path = include/nuiJson/forwards.h; sourceTree = SOURCE_ROOT; };
+		40033E8A12B14DF0000695D2 /* json.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = json.h; path = include/nuiJson/json.h; sourceTree = SOURCE_ROOT; };
+		40033E8B12B14DF0000695D2 /* reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = reader.h; path = include/nuiJson/reader.h; sourceTree = SOURCE_ROOT; };
+		40033E8C12B14DF0000695D2 /* value.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = value.h; path = include/nuiJson/value.h; sourceTree = SOURCE_ROOT; };
+		40033E8D12B14DF0000695D2 /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = writer.h; path = include/nuiJson/writer.h; sourceTree = SOURCE_ROOT; };
+		40033EBE12B14E08000695D2 /* nuiJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiJson.h; path = include/nuiJson.h; sourceTree = SOURCE_ROOT; };
 		40182A6C0F24C74A00F11401 /* nuiChunkSampleReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiChunkSampleReader.h; path = ../include/nuiChunkSampleReader.h; sourceTree = "<group>"; };
 		40182A6D0F24C74A00F11401 /* nuiChunkSampleReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiChunkSampleReader.cpp; path = AudioSamples/nuiChunkSampleReader.cpp; sourceTree = "<group>"; };
 		40182AD20F24F09500F11401 /* nuiAiffReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiAiffReader.cpp; path = AudioSamples/nuiAiffReader.cpp; sourceTree = "<group>"; };
@@ -9750,6 +9837,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		40033E6A12B14D31000695D2 /* Json */ = {
+			isa = PBXGroup;
+			children = (
+				40033E6E12B14D7D000695D2 /* json_internalarray.inl */,
+				40033E6F12B14D7D000695D2 /* json_internalmap.inl */,
+				40033E7012B14D7D000695D2 /* json_reader.cpp */,
+				40033E7112B14D7D000695D2 /* json_value.cpp */,
+				40033E7212B14D7D000695D2 /* json_valueiterator.inl */,
+				40033E7312B14D7D000695D2 /* json_writer.cpp */,
+				40033E8612B14DF0000695D2 /* autolink.h */,
+				40033E8712B14DF0000695D2 /* config.h */,
+				40033E8812B14DF0000695D2 /* features.h */,
+				40033E8912B14DF0000695D2 /* forwards.h */,
+				40033E8A12B14DF0000695D2 /* json.h */,
+				40033E8B12B14DF0000695D2 /* reader.h */,
+				40033E8C12B14DF0000695D2 /* value.h */,
+				40033E8D12B14DF0000695D2 /* writer.h */,
+				40033EBE12B14E08000695D2 /* nuiJson.h */,
+			);
+			name = Json;
+			sourceTree = "<group>";
+		};
 		408D9BA11097433F00AEE78A /* Video */ = {
 			isa = PBXGroup;
 			children = (
@@ -11296,6 +11405,7 @@
 				E5816D770C3CECAB00902DFE /* Font */,
 				E5816D860C3CECAB00902DFE /* Image */,
 				BCC51B9A0DC0D8FA00563B7E /* Introspector */,
+				40033E6A12B14D31000695D2 /* Json */,
 				E5816D920C3CECAB00902DFE /* Layout */,
 				E5816DA30C3CECAB00902DFE /* Math */,
 				BC92AC991282F8F1006A27B0 /* NavigationViews */,
@@ -13212,6 +13322,15 @@
 				BC92ACBD1282F91C006A27B0 /* nuiNavigationBar.h in Headers */,
 				BC92ACBE1282F91C006A27B0 /* nuiNavigationController.h in Headers */,
 				BC92ACC81282F923006A27B0 /* nuiViewController.h in Headers */,
+				40033E9E12B14DF0000695D2 /* autolink.h in Headers */,
+				40033E9F12B14DF0000695D2 /* config.h in Headers */,
+				40033EA012B14DF0000695D2 /* features.h in Headers */,
+				40033EA112B14DF0000695D2 /* forwards.h in Headers */,
+				40033EA212B14DF0000695D2 /* json.h in Headers */,
+				40033EA312B14DF0000695D2 /* reader.h in Headers */,
+				40033EA412B14DF0000695D2 /* value.h in Headers */,
+				40033EA512B14DF0000695D2 /* writer.h in Headers */,
+				40033EC012B14E08000695D2 /* nuiJson.h in Headers */,
 				E553C12A12A55987009DDD22 /* ngl_config.uikit.h in Headers */,
 				E553C12B12A55987009DDD22 /* ngl_config.mac.h in Headers */,
 				E553C12C12A55987009DDD22 /* ngl_config.cocoa.h in Headers */,
@@ -13987,6 +14106,15 @@
 				BC92ACBF1282F91C006A27B0 /* nuiNavigationBar.h in Headers */,
 				BC92ACC01282F91C006A27B0 /* nuiNavigationController.h in Headers */,
 				BC92ACC91282F923006A27B0 /* nuiViewController.h in Headers */,
+				40033EA612B14DF0000695D2 /* autolink.h in Headers */,
+				40033EA712B14DF0000695D2 /* config.h in Headers */,
+				40033EA812B14DF0000695D2 /* features.h in Headers */,
+				40033EA912B14DF0000695D2 /* forwards.h in Headers */,
+				40033EAA12B14DF0000695D2 /* json.h in Headers */,
+				40033EAB12B14DF0000695D2 /* reader.h in Headers */,
+				40033EAC12B14DF0000695D2 /* value.h in Headers */,
+				40033EAD12B14DF0000695D2 /* writer.h in Headers */,
+				40033EC212B14E08000695D2 /* nuiJson.h in Headers */,
 				E553C12D12A55987009DDD22 /* ngl_config.uikit.h in Headers */,
 				E553C12E12A55987009DDD22 /* ngl_config.mac.h in Headers */,
 				E553C12F12A55987009DDD22 /* ngl_config.cocoa.h in Headers */,
@@ -14747,6 +14875,15 @@
 				BC92ACBB1282F91C006A27B0 /* nuiNavigationBar.h in Headers */,
 				BC92ACBC1282F91C006A27B0 /* nuiNavigationController.h in Headers */,
 				BC92ACC71282F923006A27B0 /* nuiViewController.h in Headers */,
+				40033E9612B14DF0000695D2 /* autolink.h in Headers */,
+				40033E9712B14DF0000695D2 /* config.h in Headers */,
+				40033E9812B14DF0000695D2 /* features.h in Headers */,
+				40033E9912B14DF0000695D2 /* forwards.h in Headers */,
+				40033E9A12B14DF0000695D2 /* json.h in Headers */,
+				40033E9B12B14DF0000695D2 /* reader.h in Headers */,
+				40033E9C12B14DF0000695D2 /* value.h in Headers */,
+				40033E9D12B14DF0000695D2 /* writer.h in Headers */,
+				40033EC112B14E08000695D2 /* nuiJson.h in Headers */,
 				E553C12712A55987009DDD22 /* ngl_config.uikit.h in Headers */,
 				E553C12812A55987009DDD22 /* ngl_config.mac.h in Headers */,
 				E553C12912A55987009DDD22 /* ngl_config.cocoa.h in Headers */,
@@ -15508,6 +15645,15 @@
 				BC92ACB91282F91C006A27B0 /* nuiNavigationBar.h in Headers */,
 				BC92ACBA1282F91C006A27B0 /* nuiNavigationController.h in Headers */,
 				BC92ACC61282F923006A27B0 /* nuiViewController.h in Headers */,
+				40033E8E12B14DF0000695D2 /* autolink.h in Headers */,
+				40033E8F12B14DF0000695D2 /* config.h in Headers */,
+				40033E9012B14DF0000695D2 /* features.h in Headers */,
+				40033E9112B14DF0000695D2 /* forwards.h in Headers */,
+				40033E9212B14DF0000695D2 /* json.h in Headers */,
+				40033E9312B14DF0000695D2 /* reader.h in Headers */,
+				40033E9412B14DF0000695D2 /* value.h in Headers */,
+				40033E9512B14DF0000695D2 /* writer.h in Headers */,
+				40033EBF12B14E08000695D2 /* nuiJson.h in Headers */,
 				E553C12412A55987009DDD22 /* ngl_config.uikit.h in Headers */,
 				E553C12512A55987009DDD22 /* ngl_config.mac.h in Headers */,
 				E553C12612A55987009DDD22 /* ngl_config.cocoa.h in Headers */,
@@ -16272,6 +16418,15 @@
 				BC92ACC11282F91C006A27B0 /* nuiNavigationBar.h in Headers */,
 				BC92ACC21282F91C006A27B0 /* nuiNavigationController.h in Headers */,
 				BC92ACCA1282F923006A27B0 /* nuiViewController.h in Headers */,
+				40033EAE12B14DF0000695D2 /* autolink.h in Headers */,
+				40033EAF12B14DF0000695D2 /* config.h in Headers */,
+				40033EB012B14DF0000695D2 /* features.h in Headers */,
+				40033EB112B14DF0000695D2 /* forwards.h in Headers */,
+				40033EB212B14DF0000695D2 /* json.h in Headers */,
+				40033EB312B14DF0000695D2 /* reader.h in Headers */,
+				40033EB412B14DF0000695D2 /* value.h in Headers */,
+				40033EB512B14DF0000695D2 /* writer.h in Headers */,
+				40033EC312B14E08000695D2 /* nuiJson.h in Headers */,
 				E553C13012A55987009DDD22 /* ngl_config.uikit.h in Headers */,
 				E553C13112A55987009DDD22 /* ngl_config.mac.h in Headers */,
 				E553C13212A55987009DDD22 /* ngl_config.cocoa.h in Headers */,
@@ -17033,6 +17188,15 @@
 				BC92ACC31282F91C006A27B0 /* nuiNavigationBar.h in Headers */,
 				BC92ACC41282F91C006A27B0 /* nuiNavigationController.h in Headers */,
 				BC92ACCB1282F923006A27B0 /* nuiViewController.h in Headers */,
+				40033EB612B14DF0000695D2 /* autolink.h in Headers */,
+				40033EB712B14DF0000695D2 /* config.h in Headers */,
+				40033EB812B14DF0000695D2 /* features.h in Headers */,
+				40033EB912B14DF0000695D2 /* forwards.h in Headers */,
+				40033EBA12B14DF0000695D2 /* json.h in Headers */,
+				40033EBB12B14DF0000695D2 /* reader.h in Headers */,
+				40033EBC12B14DF0000695D2 /* value.h in Headers */,
+				40033EBD12B14DF0000695D2 /* writer.h in Headers */,
+				40033EC412B14E08000695D2 /* nuiJson.h in Headers */,
 				E553C13312A55987009DDD22 /* ngl_config.uikit.h in Headers */,
 				E553C13412A55987009DDD22 /* ngl_config.mac.h in Headers */,
 				E553C13512A55987009DDD22 /* ngl_config.cocoa.h in Headers */,
@@ -17756,6 +17920,9 @@
 				BC92ACAD1282F90D006A27B0 /* nuiViewController.cpp in Sources */,
 				BC87DF0012A9598B00D836BF /* nuiNavigationButton.cpp in Sources */,
 				BC19B5D012AFC0F1002DA665 /* nuiNavigationViewDecoration.cpp in Sources */,
+				40033E7A12B14D7D000695D2 /* json_reader.cpp in Sources */,
+				40033E7B12B14D7D000695D2 /* json_value.cpp in Sources */,
+				40033E7C12B14D7D000695D2 /* json_writer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18339,6 +18506,9 @@
 				BC92ACB01282F90D006A27B0 /* nuiViewController.cpp in Sources */,
 				BC87DEFF12A9598B00D836BF /* nuiNavigationButton.cpp in Sources */,
 				BC19B5CF12AFC0F1002DA665 /* nuiNavigationViewDecoration.cpp in Sources */,
+				40033E7D12B14D7D000695D2 /* json_reader.cpp in Sources */,
+				40033E7E12B14D7D000695D2 /* json_value.cpp in Sources */,
+				40033E7F12B14D7D000695D2 /* json_writer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18912,6 +19082,9 @@
 				BC92ACA81282F90D006A27B0 /* nuiNavigationBar.cpp in Sources */,
 				BC92ACA91282F90D006A27B0 /* nuiNavigationController.cpp in Sources */,
 				BC92ACAA1282F90D006A27B0 /* nuiViewController.cpp in Sources */,
+				40033E7712B14D7D000695D2 /* json_reader.cpp in Sources */,
+				40033E7812B14D7D000695D2 /* json_value.cpp in Sources */,
+				40033E7912B14D7D000695D2 /* json_writer.cpp in Sources */,
 				E553C15512A55B21009DDD22 /* nglImageCGCodec.cpp in Sources */,
 				BC87DF0112A9598B00D836BF /* nuiNavigationButton.cpp in Sources */,
 				BC19B5D112AFC0F1002DA665 /* nuiNavigationViewDecoration.cpp in Sources */,
@@ -19487,6 +19660,9 @@
 				BC92ACA51282F90D006A27B0 /* nuiNavigationBar.cpp in Sources */,
 				BC92ACA61282F90D006A27B0 /* nuiNavigationController.cpp in Sources */,
 				BC92ACA71282F90D006A27B0 /* nuiViewController.cpp in Sources */,
+				40033E7412B14D7D000695D2 /* json_reader.cpp in Sources */,
+				40033E7512B14D7D000695D2 /* json_value.cpp in Sources */,
+				40033E7612B14D7D000695D2 /* json_writer.cpp in Sources */,
 				E553C15212A55B11009DDD22 /* nglImageCGCodec.cpp in Sources */,
 				BC87DF0212A9598B00D836BF /* nuiNavigationButton.cpp in Sources */,
 				BC19B5D212AFC0F1002DA665 /* nuiNavigationViewDecoration.cpp in Sources */,
@@ -20066,6 +20242,9 @@
 				BC92ACB11282F90D006A27B0 /* nuiNavigationBar.cpp in Sources */,
 				BC92ACB21282F90D006A27B0 /* nuiNavigationController.cpp in Sources */,
 				BC92ACB31282F90D006A27B0 /* nuiViewController.cpp in Sources */,
+				40033E8012B14D7D000695D2 /* json_reader.cpp in Sources */,
+				40033E8112B14D7D000695D2 /* json_value.cpp in Sources */,
+				40033E8212B14D7D000695D2 /* json_writer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -20642,6 +20821,9 @@
 				BC92ACB41282F90D006A27B0 /* nuiNavigationBar.cpp in Sources */,
 				BC92ACB51282F90D006A27B0 /* nuiNavigationController.cpp in Sources */,
 				BC92ACB61282F90D006A27B0 /* nuiViewController.cpp in Sources */,
+				40033E8312B14D7D000695D2 /* json_reader.cpp in Sources */,
+				40033E8412B14D7D000695D2 /* json_value.cpp in Sources */,
+				40033E8512B14D7D000695D2 /* json_writer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -20800,6 +20982,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = NO;
+				GCC_ENABLE_EXCEPTIONS = YES;
 				GCC_PFE_FILE_C_DIALECTS = "c++";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = include/nui.h;
