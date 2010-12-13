@@ -1284,13 +1284,17 @@ static bool greater_score(const nuiFontRequestResult& rLeft, const nuiFontReques
     // If this the same score is found for variants of the same font then try to place non italic and non bold fonts first:
     const nuiFontDesc* pL = rLeft.GetFontDesc();
     const nuiFontDesc* pR = rRight.GetFontDesc();
+    
     if (pL->GetName() == pR->GetName())
     {
-      if (pL->GetItalic() && !pR->GetItalic())
-        return false;
+      int score1 = 0;
+      int score2 = 0;
+      score1 += pL->GetItalic() ? 2 : 0;
+      score1 += pL->GetBold() ? 1 : 0;
+      score2 += pR->GetItalic() ? 2 : 0;
+      score2 += pR->GetBold() ? 1 : 0;
 
-      if (pL->GetBold() && !pR->GetBold())
-        return false;
+      return score1 < score2;
     }
   }
   return l > r;
@@ -1456,7 +1460,7 @@ void nuiFontManager::RequestFont(nuiFontRequest& rRequest, std::list<nuiFontRequ
   
   rFoundFonts.sort(greater_score);
   
-  if (0)
+  if (1)
   {
     std::list<nuiFontRequestResult>::const_iterator it = rFoundFonts.begin();
     std::list<nuiFontRequestResult>::const_iterator end = rFoundFonts.end();
