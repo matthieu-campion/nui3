@@ -1999,7 +1999,7 @@ void nuiTopLevel::ApplyWidgetCSS(nuiWidget* pWidget, bool Recursive, uint32 Matc
     if (pContainer)
     {
       IteratorPtr pIt;
-      for (pIt = pContainer->GetFirstChild(true); pIt && pIt->IsValid(); pContainer->GetNextChild(pIt))
+      for (pIt = pContainer->GetFirstChild(false); pIt && pIt->IsValid(); pContainer->GetNextChild(pIt))
       {
         nuiWidgetPtr pItem = pIt->GetWidget();
         ApplyWidgetCSS(pItem, Recursive, MatchersTag);
