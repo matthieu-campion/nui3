@@ -1,5 +1,6 @@
-#include "reader.h"
-#include "value.h"
+#include "nui.h"
+#include "nuiJson/reader.h"
+#include "nuiJson/value.h"
 #include <utility>
 #include <cstdio>
 #include <cassert>
