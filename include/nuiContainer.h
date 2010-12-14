@@ -62,8 +62,6 @@ public:
     bool mRefCounting;
   };
 
-  class Iterator;
-  class ConstIterator;
   typedef Iterator* IteratorPtr;
   typedef ConstIterator* ConstIteratorPtr;
 
