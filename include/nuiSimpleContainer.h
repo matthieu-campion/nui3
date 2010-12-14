@@ -29,10 +29,10 @@ public:
   virtual uint GetChildrenCount() const;
   virtual bool Clear();
   
-  virtual nuiContainer::Iterator* GetFirstChild(bool DoRefCounting = true);
-  virtual nuiContainer::ConstIterator* GetFirstChild(bool DoRefCounting = true) const;
-  virtual nuiContainer::Iterator* GetLastChild(bool DoRefCounting = true);
-  virtual nuiContainer::ConstIterator* GetLastChild(bool DoRefCounting = true) const;
+  virtual nuiContainer::Iterator* GetFirstChild(bool DoRefCounting = false);
+  virtual nuiContainer::ConstIterator* GetFirstChild(bool DoRefCounting = false) const;
+  virtual nuiContainer::Iterator* GetLastChild(bool DoRefCounting = false);
+  virtual nuiContainer::ConstIterator* GetLastChild(bool DoRefCounting = false) const;
   virtual bool GetNextChild(nuiContainer::IteratorPtr pIterator);
   virtual bool GetNextChild(nuiContainer::ConstIteratorPtr pIterator) const;
   virtual bool GetPreviousChild(nuiContainer::IteratorPtr pIterator);

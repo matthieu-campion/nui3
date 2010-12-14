@@ -22,7 +22,7 @@
 
 #include "nuiFontManager.h"
 
-#include "harfbuzz.h"
+//#include "harfbuzz.h"
 
 using namespace std;
 

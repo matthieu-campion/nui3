@@ -23,7 +23,7 @@ public:
   class NUI_API Iterator
   {
   public:
-    Iterator(nuiContainer* pContainer, bool DoRefCounting = true);
+    Iterator(nuiContainer* pContainer, bool DoRefCounting = false);
     Iterator(const Iterator& rIterator);
     virtual Iterator& operator = (const Iterator& rIterator);
     virtual ~Iterator();
@@ -44,7 +44,7 @@ public:
   class NUI_API ConstIterator
   {
   public:
-    ConstIterator(const nuiContainer* pContainer, bool DoRefCounting = true);
+    ConstIterator(const nuiContainer* pContainer, bool DoRefCounting = false);
     ConstIterator(const ConstIterator& rIterator);
     virtual ConstIterator& operator = (const ConstIterator& rIterator);
     virtual ~ConstIterator();
@@ -98,17 +98,17 @@ public:
   nuiWidgetPtr Find (const nglString& rName); ///< Finds a node given its full path relative to the current node. Eg. Find("background/color/red").
 
   virtual uint GetChildrenCount() const = 0; ///< Returns the number of children this object has.
-  virtual IteratorPtr GetFirstChild(bool DoRefCounting = true) = 0; 
-  virtual IteratorPtr GetLastChild(bool DoRefCounting = true) = 0; 
+  virtual IteratorPtr GetFirstChild(bool DoRefCounting = false) = 0; 
+  virtual IteratorPtr GetLastChild(bool DoRefCounting = false) = 0; 
   virtual bool GetNextChild(IteratorPtr pIterator) = 0;
   virtual bool GetPreviousChild(IteratorPtr pIterator) = 0;
-  virtual ConstIteratorPtr GetFirstChild(bool DoRefCounting = true) const = 0;
-  virtual ConstIteratorPtr GetLastChild(bool DoRefCounting = true) const = 0;
+  virtual ConstIteratorPtr GetFirstChild(bool DoRefCounting = false) const = 0;
+  virtual ConstIteratorPtr GetLastChild(bool DoRefCounting = false) const = 0;
   virtual bool GetNextChild(ConstIteratorPtr pIterator) const = 0;
   virtual bool GetPreviousChild(ConstIteratorPtr pIterator) const = 0;
 
-  virtual IteratorPtr GetChildIterator(nuiWidgetPtr pChild, bool DoRefCounting = true);
-  virtual ConstIteratorPtr GetChildIterator(nuiWidgetPtr pChild, bool DoRefCounting = true) const;
+  virtual IteratorPtr GetChildIterator(nuiWidgetPtr pChild, bool DoRefCounting = false);
+  virtual ConstIteratorPtr GetChildIterator(nuiWidgetPtr pChild, bool DoRefCounting = false) const;
   virtual nuiWidgetPtr GetNextFocussableChild(nuiWidgetPtr pChild) const;
   virtual nuiWidgetPtr GetPreviousFocussableChild(nuiWidgetPtr pChild) const;
   virtual nuiWidgetPtr GetNextSibling(nuiWidgetPtr pChild) const;

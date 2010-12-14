@@ -97,7 +97,7 @@ bool nuiToolTip::SetRect(const nuiRect& rRect)
   r.Grow(-NUI_TOOLTIP_MARGIN_X, -NUI_TOOLTIP_MARGIN_Y);
 
   IteratorPtr pIt;
-  for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
+  for (pIt = GetFirstChild(true); pIt && pIt->IsValid(); GetNextChild(pIt))
   {
     nuiWidgetPtr pItem = pIt->GetWidget();
     pItem->GetIdealRect();
@@ -431,7 +431,7 @@ void nuiTopLevel::AdviseSubTreeDeath(nuiWidgetPtr pWidget)
   nuiContainer* pContainer = dynamic_cast<nuiContainer*> (pWidget);
   if (pContainer)
   {  
-    for (pIt = pContainer->GetFirstChild(); pIt && pIt->IsValid(); pContainer->GetNextChild(pIt))
+    for (pIt = pContainer->GetFirstChild(true); pIt && pIt->IsValid(); pContainer->GetNextChild(pIt))
     {
       nuiWidgetPtr pItem = pIt->GetWidget();
       if (pItem)
@@ -827,7 +827,7 @@ nuiWidgetPtr DeepSearchNextFocussableWidget(nuiWidgetPtr pWidget, bool TryThisNo
   nuiContainer* pContainer = dynamic_cast<nuiContainer*>(pWidget); // Is this a container?
   if (pContainer)
   {
-    std::auto_ptr<nuiContainer::Iterator> pIt(pContainer->GetFirstChild());
+    std::auto_ptr<nuiContainer::Iterator> pIt(pContainer->GetFirstChild(true));
     while (pIt->IsValid())
     {
       nuiWidget* pItem = pIt->GetWidget();
@@ -1335,7 +1335,7 @@ NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseMove [%d] BEGIN\n"), rInfo.TouchId) );
     nuiSize x,y;
 
     IteratorPtr pIt;
-    for (pIt = GetLastChild(); pIt && pIt->IsValid() && !pHandled; GetPreviousChild(pIt))
+    for (pIt = GetLastChild(false); pIt && pIt->IsValid() && !pHandled; GetPreviousChild(pIt))
     {
       // First find the widget directly under the mouse:
       nuiWidgetPtr pPtr = pIt->GetWidget();
@@ -1489,7 +1489,7 @@ bool nuiTopLevel::Draw(class nuiDrawContext *pContext)
 {
   CheckValid();
   IteratorPtr pIt;
-  for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
+  for (pIt = GetFirstChild(false); pIt && pIt->IsValid(); GetNextChild(pIt))
   {
     nuiWidgetPtr pItem = pIt->GetWidget();
     if (pItem && pItem != mpToolTipLabel)
@@ -1667,7 +1667,7 @@ bool nuiTopLevel::SetRect(const nuiRect& rRect)
   nuiRect rect(mRect.Size());
 
   IteratorPtr pIt;
-  for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
+  for (pIt = GetFirstChild(false); pIt && pIt->IsValid(); GetNextChild(pIt))
   {
     nuiWidgetPtr pItem = pIt->GetWidget();
     if (pItem != mpToolTipLabel)
@@ -1976,7 +1976,7 @@ void nuiTopLevel::PrepareWidgetCSS(nuiWidget* pWidget, bool Recursive, uint32 Ma
   if (pContainer)
   {
     IteratorPtr pIt;
-    for (pIt = pContainer->GetFirstChild(); pIt && pIt->IsValid(); pContainer->GetNextChild(pIt))
+    for (pIt = pContainer->GetFirstChild(false); pIt && pIt->IsValid(); pContainer->GetNextChild(pIt))
     {
       nuiWidgetPtr pItem = pIt->GetWidget();
       PrepareWidgetCSS(pItem, Recursive, MatchersTag);
@@ -1999,7 +1999,7 @@ void nuiTopLevel::ApplyWidgetCSS(nuiWidget* pWidget, bool Recursive, uint32 Matc
     if (pContainer)
     {
       IteratorPtr pIt;
-      for (pIt = pContainer->GetFirstChild(); pIt && pIt->IsValid(); pContainer->GetNextChild(pIt))
+      for (pIt = pContainer->GetFirstChild(true); pIt && pIt->IsValid(); pContainer->GetNextChild(pIt))
       {
         nuiWidgetPtr pItem = pIt->GetWidget();
         ApplyWidgetCSS(pItem, Recursive, MatchersTag);

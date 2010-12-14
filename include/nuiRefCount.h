@@ -65,7 +65,7 @@ public:
     return mTrace;
   }
   
-  uint32 GetRefCount()
+  uint32 GetRefCount() const
   {
     return mCount;
   }
@@ -88,7 +88,7 @@ public:
     }
   }
 
-  bool IsPermanent()
+  bool IsPermanent() const
   {
     return mPermanent;
   }
