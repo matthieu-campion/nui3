@@ -214,7 +214,7 @@ void nuiImage::ForceReload()
 bool nuiImage::Draw(nuiDrawContext* pContext)
 {
 //  int x=0,y=0;
-  if (!mpTexture || !mpTexture->GetImage() || !mpTexture->GetImage()->GetPixelSize())
+  if (!mpTexture)
     return false;
 
   pContext->PushState();
@@ -222,7 +222,7 @@ bool nuiImage::Draw(nuiDrawContext* pContext)
   pContext->SetTexture(mpTexture);
 //  mpTexture->Apply(pContext);
   pContext->EnableTexturing(true);
-  nglImage* pImage = mpTexture->GetImage();
+  //nglImage* pImage = mpTexture->GetImage();
 
   float alpha = 1.0f;
 
