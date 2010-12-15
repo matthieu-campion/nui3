@@ -1623,6 +1623,8 @@ void nuiDefaultDecoration::TabView_Contents(nuiTabView* pView, nuiWidget* pConte
 void nuiDefaultDecoration::NavigationBar(nuiWidget* pWidget)
 {
   nuiNavigationBar* pBar = (nuiNavigationBar*)pWidget;
+  if (!pBar->IsVisible())
+    return;
   
   pBar->SetPosition(nuiTopLeft);
 

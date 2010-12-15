@@ -185,6 +185,7 @@ nuiSpriteDef::nuiSpriteDef(const nglPath& rSpriteDefPath)
   std::map<nglString, nuiSpriteDef*>::const_iterator it = mSpriteMap.find(name);
   if (it != mSpriteMap.end())
     it->second->Release();
+
   mSpriteMap[name] = this;
 
   {
@@ -260,6 +261,17 @@ nuiSpriteDef* nuiSpriteDef::GetSprite(const nglString& rName)
 // class nuiSprite
 nuiMatrix nuiSprite::mIdentityMatrix;
 
+nuiSprite::nuiSprite(const nglPath& rSpriteDefPath, bool forceReplace)
+: mColor(255, 255, 255), mBlendFunc(nuiBlendTransp)
+{
+  mpSpriteDef = nuiSpriteDef::GetSprite(rSpriteDefPath.GetNodeName());
+  if (!mpSpriteDef || forceReplace)
+    mpSpriteDef = new nuiSpriteDef(rSpriteDefPath);
+
+  NGL_ASSERT(mpSpriteDef);
+  Init();  
+}
+
 nuiSprite::nuiSprite(const nglString& rSpriteDefName)
 : mpSpriteDef(nuiSpriteDef::GetSprite(rSpriteDefName)), mColor(255, 255, 255), mBlendFunc(nuiBlendTransp)
 {
@@ -274,6 +286,7 @@ nuiSprite::nuiSprite(nuiSpriteDef* pSpriteDef)
   mpSpriteDef->Acquire();
   Init();
 }
+
 
 nuiSprite::~nuiSprite()
 {
@@ -290,7 +303,7 @@ void nuiSprite::Init()
   {
     InitAttributes();
   }
-
+  
   mpParent = NULL;
   mpMatrixNodes = NULL;
   mCurrentAnimation = 0;
@@ -765,7 +778,7 @@ bool nuiSpriteView::MouseClicked(const nglMouseInfo& rEvent)
   GetSpritesAtPoint(rEvent.X, rEvent.Y, Sprites);
   for (uint32 i = 0; i < Sprites.size(); i++)
   {
-    Sprites[i]->MouseClicked(rEvent);
+    Sprites[i]->MouseClicked(Sprites[i], rEvent);
   }
   
   return false;
@@ -777,7 +790,7 @@ bool nuiSpriteView::MouseUnclicked(const nglMouseInfo& rEvent)
   GetSpritesAtPoint(rEvent.X, rEvent.Y, Sprites);
   for (uint32 i = 0; i < Sprites.size(); i++)
   {
-    Sprites[i]->MouseUnclicked(rEvent);
+    Sprites[i]->MouseUnclicked(Sprites[i], rEvent);
   }
   
   return false;
@@ -789,7 +802,7 @@ bool nuiSpriteView::MouseMoved(const nglMouseInfo& rEvent)
   GetSpritesAtPoint(rEvent.X, rEvent.Y, Sprites);
   for (uint32 i = 0; i < Sprites.size(); i++)
   {
-    Sprites[i]->MouseMoved(rEvent);
+    Sprites[i]->MouseMoved(Sprites[i], rEvent);
   }
   
   return false;
