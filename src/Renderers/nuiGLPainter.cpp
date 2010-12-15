@@ -1326,6 +1326,15 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
   
   TextureInfo& info(it->second);
 
+  GLuint id = pTexture->GetTextureID();
+  if (id)
+  {
+    info.mReload = false;
+    info.mTexture = id;
+    target = pTexture->GetTarget();
+    printf("upload texture %d %x\n", id, target);
+  }
+  
   nuiCheckForGLErrors();
   
   if (!pTexture->IsPowerOfTwo())
@@ -1348,7 +1357,7 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
   {
     bool firstload = false;
     bool reload = info.mReload;
-    if (!pSurface && !(pImage && pImage->GetPixelSize()))
+    if (!pSurface && !(pImage && pImage->GetPixelSize()) && !id)
       return;
 
     uint i;
