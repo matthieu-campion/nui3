@@ -16,6 +16,7 @@ class nuiVideoDecoderPrivate
 public:
   
   QTMovie* mpMovie;
+  QTVisualContextRef	mVisualContext;
 };
 
 nuiVideoDecoder::nuiVideoDecoder(const nglPath& path)
@@ -24,6 +25,14 @@ nuiVideoDecoder::nuiVideoDecoder(const nglPath& path)
 {
   mpPrivate = new nuiVideoDecoderPrivate();
   mpPrivate->mpMovie = NULL;
+  
+  
+  CGLContextObj ctx = CGLGetCurrentContext();
+  CGLPixelFormatObj pixelFormat = CGLGetPixelFormat(ctx);
+  // creates a new OpenGL texture context for a specified OpenGL context and pixel format
+	QTOpenGLTextureContextCreate(kCFAllocatorDefault, ctx, pixelFormat, NULL,	&mpPrivate->mVisualContext);
+  
+  
   Init();
 }
 
@@ -52,6 +61,7 @@ bool nuiVideoDecoder::Init()
     return false;
   
   [mpPrivate->mpMovie retain];
+  SetMovieVisualContext([mpPrivate->mpMovie quickTimeMovie], mpPrivate->mVisualContext);
   return true;
 }
 
@@ -182,4 +192,87 @@ nglImage* nuiVideoDecoder::GetCurrentImage()
   memcpy(pBuffer, pBitmapArray[0], nbBytes);   
   
   return mpImage;
+}
+
+
+nuiTexture* nuiVideoDecoder::GetCurrentTexture()
+{
+  if (!IsValid())
+    return NULL;
+  
+  CGLContextObj ctx = CGLGetCurrentContext();
+  CGLPixelFormatObj pixelFormat = CGLGetPixelFormat(ctx);
+  QTTime time = [mpPrivate->mpMovie currentTime];
+
+  NSMutableDictionary* dict = [NSMutableDictionary dictionary];
+  
+  NSString* type = QTMovieFrameImageTypeCVOpenGLTextureRef;
+  [dict setObject:type forKey:QTMovieFrameImageType];
+  
+  NSValue* ctxVal = [NSValue valueWithPointer:ctx];
+  [dict setObject:ctxVal forKey:QTMovieFrameImageOpenGLContext];
+  
+  NSValue* formatVal = [NSValue valueWithPointer:pixelFormat];
+  [dict setObject:formatVal forKey:QTMovieFrameImagePixelFormat];
+  
+  CVOpenGLTextureRef texture = (CVOpenGLTextureRef)[mpPrivate->mpMovie frameImageAtTime:time withAttributes:dict error:nil];
+  CVOpenGLTextureRetain(texture);
+  
+//  CVTimeStamp* timeStamp = NULL;
+//  if (!QTVisualContextIsNewImageAvailable(mpPrivate->mVisualContext, timeStamp))
+//    return NULL;
+  
+//  CVOpenGLTextureRef texture;
+//  OSStatus status = QTVisualContextCopyImageForTime(mpPrivate->mVisualContext, NULL, timeStamp, &texture);
+//  
+  GLuint texID = CVOpenGLTextureGetName(texture);
+  GLenum target = CVOpenGLTextureGetTarget(texture);
+//  
+//  GLfloat lowerLeft[2];
+//  GLfloat lowerRight[2]; 
+//  GLfloat upperRight[2];
+//  GLfloat upperLeft[2];
+//  CVOpenGLTextureGetCleanTexCoords(texture, lowerLeft, lowerRight, upperRight, upperLeft);
+  
+  
+  
+//  int c = 0;
+//  uint8 * tab = new uint8[16];
+//  tab[c++] = 0;
+//  tab[c++] = 0;
+//  tab[c++] = 0;
+//  //tab[c++] = 0;
+//
+//  tab[c++] = 255;
+//  tab[c++] = 255;
+//  tab[c++] = 255;
+//  //tab[c++] = 255;
+//  
+//  tab[c++] = 255;
+//  tab[c++] = 255;
+//  tab[c++] = 255;
+//  //tab[c++] = 255;
+//
+//  tab[c++] = 0;
+//  tab[c++] = 0;
+//  tab[c++] = 0;
+//  //tab[c++] = 0;
+//  
+//  GLuint texture = 0;
+//  GLenum target = GL_TEXTURE_2D;
+//  glGenTextures(1, &texture);
+//  glBindTexture(target, texture);
+//  glTexImage2D(target, 0, GL_RGB, 2, 2, 0, GL_RGB, GL_UNSIGNED_BYTE, tab);
+//  
+//  glTexParameteri(target, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+//  glTexParameteri(target, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+//  glTexParameteri(target, GL_TEXTURE_WRAP_S, GL_CLAMP);
+//  glTexParameteri(target, GL_TEXTURE_WRAP_T, GL_CLAMP);
+//  glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
+//  
+  
+  nuiTexture* pTexture = nuiTexture::BindTexture(texID, target);
+//  nuiTexture* pTexture = nuiTexture::BindTexture(texture, target);
+  
+  return pTexture;
 }

@@ -26,6 +26,7 @@ public:
   bool GoToPrevFrame();
   
   nglImage* GetCurrentImage();
+  nuiTexture* GetCurrentTexture();
   
   
   
