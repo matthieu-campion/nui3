@@ -981,5 +981,12 @@ GLenum nuiTexture::GetTarget() const
   return mTarget;
 }
 
+void nuiTexture::SetTextureIdAndTarget(GLuint textureID, GLenum target)
+{
+  mTextureID = textureID;
+  mTarget = target;
+  Init();
+}
+
 nuiSimpleEventSource<0> nuiTexture::TexturesChanged;
 

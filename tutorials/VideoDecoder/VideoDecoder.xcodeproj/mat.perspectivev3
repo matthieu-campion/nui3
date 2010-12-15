@@ -222,7 +222,48 @@
 		</dict>
 	</array>
 	<key>OpenEditors</key>
-	<array/>
+	<array>
+		<dict>
+			<key>Content</key>
+			<dict>
+				<key>PBXProjectModuleGUID</key>
+				<string>40FC577C12B92DDD0008A4D4</string>
+				<key>PBXProjectModuleLabel</key>
+				<string>MainWindow.cpp</string>
+				<key>PBXSplitModuleInNavigatorKey</key>
+				<dict>
+					<key>Split0</key>
+					<dict>
+						<key>PBXProjectModuleGUID</key>
+						<string>40FC577D12B92DDD0008A4D4</string>
+						<key>PBXProjectModuleLabel</key>
+						<string>MainWindow.cpp</string>
+						<key>_historyCapacity</key>
+						<integer>0</integer>
+						<key>bookmark</key>
+						<string>40FC577E12B92DDD0008A4D4</string>
+						<key>history</key>
+						<array>
+							<string>40FC576B12B92D490008A4D4</string>
+						</array>
+					</dict>
+					<key>SplitCount</key>
+					<string>1</string>
+				</dict>
+				<key>StatusBarVisibility</key>
+				<true/>
+			</dict>
+			<key>Geometry</key>
+			<dict>
+				<key>Frame</key>
+				<string>{{0, 20}, {1333, 1235}}</string>
+				<key>PBXModuleWindowStatusBarHidden2</key>
+				<false/>
+				<key>RubberWindowFrame</key>
+				<string>1070 142 1333 1276 0 0 2560 1418 </string>
+			</dict>
+		</dict>
+	</array>
 	<key>PerspectiveWidths</key>
 	<array>
 		<integer>1564</integer>
@@ -258,6 +299,8 @@
 			<key>Layout</key>
 			<array>
 				<dict>
+					<key>BecomeActive</key>
+					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -327,7 +370,7 @@
 							<real>234</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>931 455 1564 963 0 0 2560 1418 </string>
+						<string>813 455 1564 963 0 0 2560 1418 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -343,7 +386,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>408D9C4A1097603600AEE78A</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>nuiGLPainter.cpp</string>
+								<string>nuiVideoDecoder.mm</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -351,11 +394,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>408D9C4B1097603600AEE78A</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>nuiGLPainter.cpp</string>
+										<string>nuiVideoDecoder.mm</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>4051045112B9258500EEE95D</string>
+										<string>40FC577312B92DDD0008A4D4</string>
 										<key>history</key>
 										<array>
 											<string>4053B56012B77E5600F07124</string>
@@ -364,8 +407,8 @@
 											<string>4053B67912B7C8C800F07124</string>
 											<string>4053B67B12B7C8C800F07124</string>
 											<string>4053B68212B7C8C800F07124</string>
-											<string>4053B68D12B7C90E00F07124</string>
-											<string>4053B79212B7E84900F07124</string>
+											<string>40FC577212B92DDD0008A4D4</string>
+											<string>40FC576812B92C6A0008A4D4</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -381,7 +424,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {1308, 0}}</string>
 								<key>RubberWindowFrame</key>
-								<string>931 455 1564 963 0 0 2560 1418 </string>
+								<string>813 455 1564 963 0 0 2560 1418 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -405,6 +448,8 @@
 									<dict>
 										<key>Frame</key>
 										<string>{{10, 27}, {1308, 890}}</string>
+										<key>RubberWindowFrame</key>
+										<string>813 455 1564 963 0 0 2560 1418 </string>
 									</dict>
 									<key>Module</key>
 									<string>XCDetailModule</string>
@@ -459,8 +504,6 @@
 									<dict>
 										<key>Frame</key>
 										<string>{{10, 27}, {1308, 890}}</string>
-										<key>RubberWindowFrame</key>
-										<string>931 455 1564 963 0 0 2560 1418 </string>
 									</dict>
 									<key>Module</key>
 									<string>PBXBuildResultsModule</string>
@@ -488,11 +531,11 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>405102DD12B8D15D00EEE95D</string>
+				<string>40FC577412B92DDD0008A4D4</string>
 				<string>1CA23ED40692098700951B8B</string>
-				<string>405102DE12B8D15D00EEE95D</string>
+				<string>40FC577512B92DDD0008A4D4</string>
 				<string>408D9C4A1097603600AEE78A</string>
-				<string>405102DF12B8D15D00EEE95D</string>
+				<string>40FC577612B92DDD0008A4D4</string>
 				<string>1CA23EDF0692099D00951B8B</string>
 				<string>1CA23EE00692099D00951B8B</string>
 				<string>1CA23EE10692099D00951B8B</string>
@@ -543,12 +586,12 @@
 					<key>GeometryConfiguration</key>
 					<dict>
 						<key>Frame</key>
-						<string>{{0, 0}, {1564, 303}}</string>
+						<string>{{0, 0}, {1564, 289}}</string>
 					</dict>
 					<key>Module</key>
 					<string>PBXDebugCLIModule</string>
 					<key>Proportion</key>
-					<string>303pt</string>
+					<string>289pt</string>
 				</dict>
 				<dict>
 					<key>ContentConfiguration</key>
@@ -567,8 +610,8 @@
 								<string>yes</string>
 								<key>sizes</key>
 								<array>
-									<string>{{0, 0}, {579, 301}}</string>
-									<string>{{0, 301}, {579, 313}}</string>
+									<string>{{0, 0}, {507, 333}}</string>
+									<string>{{0, 333}, {507, 295}}</string>
 								</array>
 							</dict>
 							<key>VerticalSplitView</key>
@@ -583,8 +626,8 @@
 								<string>yes</string>
 								<key>sizes</key>
 								<array>
-									<string>{{0, 0}, {579, 614}}</string>
-									<string>{{579, 0}, {985, 614}}</string>
+									<string>{{0, 0}, {507, 628}}</string>
+									<string>{{507, 0}, {1057, 628}}</string>
 								</array>
 							</dict>
 						</dict>
@@ -604,7 +647,7 @@
 						<key>DebugSTDIOWindowFrame</key>
 						<string>{{200, 200}, {500, 300}}</string>
 						<key>Frame</key>
-						<string>{{0, 308}, {1564, 614}}</string>
+						<string>{{0, 294}, {1564, 628}}</string>
 						<key>PBXDebugSessionStackFrameViewKey</key>
 						<dict>
 							<key>DebugVariablesTableConfiguration</key>
@@ -614,16 +657,16 @@
 								<string>Value</string>
 								<real>114</real>
 								<string>Summary</string>
-								<real>193</real>
+								<real>121</real>
 							</array>
 							<key>Frame</key>
-							<string>{{0, 301}, {579, 313}}</string>
+							<string>{{0, 333}, {507, 295}}</string>
 						</dict>
 					</dict>
 					<key>Module</key>
 					<string>PBXDebugSessionModule</string>
 					<key>Proportion</key>
-					<string>614pt</string>
+					<string>628pt</string>
 				</dict>
 			</array>
 			<key>Name</key>
@@ -641,13 +684,13 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>405102E012B8D15D00EEE95D</string>
+				<string>40FC577712B92DDD0008A4D4</string>
 				<string>1CCC7628064C1048000F2A68</string>
 				<string>1CCC7629064C1048000F2A68</string>
-				<string>405102E112B8D15D00EEE95D</string>
-				<string>405102E212B8D15D00EEE95D</string>
-				<string>405102E312B8D15D00EEE95D</string>
-				<string>405102E412B8D15D00EEE95D</string>
+				<string>40FC577812B92DDD0008A4D4</string>
+				<string>40FC577912B92DDD0008A4D4</string>
+				<string>40FC577A12B92DDD0008A4D4</string>
+				<string>40FC577B12B92DDD0008A4D4</string>
 				<string>408D9C4A1097603600AEE78A</string>
 			</array>
 			<key>ToolbarConfigUserDefaultsMinorVersion</key>
@@ -665,7 +708,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>314123653.68262601</real>
+	<real>314125789.787148</real>
 	<key>ToolbarConfigUserDefaultsMinorVersion</key>
 	<string>2</string>
 	<key>ToolbarDisplayMode</key>
@@ -682,13 +725,13 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>1C530D5B069F1CE1000CFCEE</string>
-		<string>405102EC12B8D36100EEE95D</string>
-		<string>405102ED12B8D36100EEE95D</string>
+		<string>40FC577F12B92DDD0008A4D4</string>
+		<string>40FC578012B92DDD0008A4D4</string>
 		<string>/Users/mat/work/dev/nui3/tutorials/VideoDecoder/VideoDecoder.xcodeproj</string>
+		<string>40FC577C12B92DDD0008A4D4</string>
 	</array>
 	<key>WindowString</key>
-	<string>931 455 1564 963 0 0 2560 1418 </string>
+	<string>813 455 1564 963 0 0 2560 1418 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>

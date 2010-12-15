@@ -33,6 +33,7 @@ private:
   
   nglPath mPath;
   nglImage* mpImage;
+  nuiTexture* mpTexture;
   class nuiVideoDecoderPrivate* mpPrivate;
   
 };

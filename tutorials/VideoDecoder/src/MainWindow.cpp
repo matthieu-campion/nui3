@@ -335,10 +335,16 @@ void MainWindow::UpdateVideoImage()
     
   
 
-  mpTexture = mpVideoDecoder->GetCurrentTexture();
   if (!mpTexture)
-    return;
-  mpImage->SetTexture(mpTexture);
+  {
+    mpTexture = mpVideoDecoder->GetCurrentTexture();
+    if (!mpTexture)
+      return;
+    mpImage->SetTexture(mpTexture);
+  }
+  
+//  mpTexture->ForceReload(false);
+  mpImage->Invalidate();
 }
 
 void MainWindow::OnBackBtnClicked(const nuiEvent& rEvent)

@@ -17,11 +17,13 @@ public:
   
   QTMovie* mpMovie;
   QTVisualContextRef	mVisualContext;
+  CVOpenGLTextureRef mCurrentTexture;
 };
 
 nuiVideoDecoder::nuiVideoDecoder(const nglPath& path)
 : mPath(path),
-  mpImage(NULL)
+  mpImage(NULL),
+  mpTexture(NULL)
 {
   NSApplicationLoad();
   
@@ -226,14 +228,15 @@ nuiTexture* nuiVideoDecoder::GetCurrentTexture()
 //  CVOpenGLTextureRef texture = (CVOpenGLTextureRef)[mpPrivate->mpMovie frameImageAtTime:time withAttributes:dict error:nil];
 //  CVOpenGLTextureRetain(texture);
   
-//  if (!QTVisualContextIsNewImageAvailable(mpPrivate->mVisualContext, NULL))
-//    return NULL;
+  if (!QTVisualContextIsNewImageAvailable(mpPrivate->mVisualContext, NULL))
+    return NULL;
   
-  CVOpenGLTextureRef texture;
-  OSStatus status = QTVisualContextCopyImageForTime(mpPrivate->mVisualContext, NULL, NULL, &texture);
+  if (mpPrivate->mCurrentTexture)
+    CVOpenGLTextureRelease(mpPrivate->mCurrentTexture);
+  OSStatus status = QTVisualContextCopyImageForTime(mpPrivate->mVisualContext, NULL, NULL, &(mpPrivate->mCurrentTexture));
   
-  GLuint texID = CVOpenGLTextureGetName(texture);
-  GLenum target = CVOpenGLTextureGetTarget(texture);
+  GLuint texID = CVOpenGLTextureGetName(mpPrivate->mCurrentTexture);
+  GLenum target = CVOpenGLTextureGetTarget(mpPrivate->mCurrentTexture);
 //  
 //  GLfloat lowerLeft[2];
 //  GLfloat lowerRight[2]; 
@@ -278,8 +281,10 @@ nuiTexture* nuiVideoDecoder::GetCurrentTexture()
 //  glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
 //  
   
-  nuiTexture* pTexture = nuiTexture::BindTexture(texID, target);
-//  nuiTexture* pTexture = nuiTexture::BindTexture(texture, target);
+  if (!mpTexture)
+    mpTexture = nuiTexture::BindTexture(texID, target);
+  else
+    mpTexture->SetTextureIdAndTarget(texID, target);
   
-  return pTexture;
+  return mpTexture;
 }
