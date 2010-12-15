@@ -23,6 +23,8 @@ nuiVideoDecoder::nuiVideoDecoder(const nglPath& path)
 : mPath(path),
   mpImage(NULL)
 {
+  NSApplicationLoad();
+  
   mpPrivate = new nuiVideoDecoderPrivate();
   mpPrivate->mpMovie = NULL;
   
@@ -30,7 +32,7 @@ nuiVideoDecoder::nuiVideoDecoder(const nglPath& path)
   CGLContextObj ctx = CGLGetCurrentContext();
   CGLPixelFormatObj pixelFormat = CGLGetPixelFormat(ctx);
   // creates a new OpenGL texture context for a specified OpenGL context and pixel format
-	QTOpenGLTextureContextCreate(kCFAllocatorDefault, ctx, pixelFormat, NULL,	&mpPrivate->mVisualContext);
+	OSStatus err = QTOpenGLTextureContextCreate(NULL, ctx, pixelFormat, nil,	&(mpPrivate->mVisualContext));
   
   
   Init();
@@ -49,8 +51,6 @@ nuiVideoDecoder::~nuiVideoDecoder()
 
 bool nuiVideoDecoder::Init()
 {
-  NSApplicationLoad();
-  
   nglString pathStr = mPath.GetPathName();
   char* pStr = pathStr.Export();
   NSString* pNSStr = [NSString stringWithCString:pStr encoding:NSUTF8StringEncoding];
@@ -61,9 +61,17 @@ bool nuiVideoDecoder::Init()
     return false;
   
   [mpPrivate->mpMovie retain];
-  SetMovieVisualContext([mpPrivate->mpMovie quickTimeMovie], mpPrivate->mVisualContext);
+  
+  
+  OSStatus err = SetMovieVisualContext([mpPrivate->mpMovie quickTimeMovie], mpPrivate->mVisualContext);
+  
+  [mpPrivate->mpMovie gotoBeginning];
+  MoviesTask([mpPrivate->mpMovie quickTimeMovie], 0); 
+  [mpPrivate->mpMovie play];
   return true;
 }
+
+
 
 bool nuiVideoDecoder::IsValid() const
 {
@@ -200,31 +208,30 @@ nuiTexture* nuiVideoDecoder::GetCurrentTexture()
   if (!IsValid())
     return NULL;
   
-  CGLContextObj ctx = CGLGetCurrentContext();
-  CGLPixelFormatObj pixelFormat = CGLGetPixelFormat(ctx);
-  QTTime time = [mpPrivate->mpMovie currentTime];
-
-  NSMutableDictionary* dict = [NSMutableDictionary dictionary];
+//  CGLContextObj ctx = CGLGetCurrentContext();
+//  CGLPixelFormatObj pixelFormat = CGLGetPixelFormat(ctx);
+//  QTTime time = [mpPrivate->mpMovie currentTime];
+//
+//  NSMutableDictionary* dict = [NSMutableDictionary dictionary];
+//  
+//  NSString* type = QTMovieFrameImageTypeCVOpenGLTextureRef;
+//  [dict setObject:type forKey:QTMovieFrameImageType];
+//  
+//  NSValue* ctxVal = [NSValue valueWithPointer:ctx];
+//  [dict setObject:ctxVal forKey:QTMovieFrameImageOpenGLContext];
+//  
+//  NSValue* formatVal = [NSValue valueWithPointer: pixelFormat];
+//  [dict setObject:formatVal forKey:QTMovieFrameImagePixelFormat];
+//  
+//  CVOpenGLTextureRef texture = (CVOpenGLTextureRef)[mpPrivate->mpMovie frameImageAtTime:time withAttributes:dict error:nil];
+//  CVOpenGLTextureRetain(texture);
   
-  NSString* type = QTMovieFrameImageTypeCVOpenGLTextureRef;
-  [dict setObject:type forKey:QTMovieFrameImageType];
-  
-  NSValue* ctxVal = [NSValue valueWithPointer:ctx];
-  [dict setObject:ctxVal forKey:QTMovieFrameImageOpenGLContext];
-  
-  NSValue* formatVal = [NSValue valueWithPointer:pixelFormat];
-  [dict setObject:formatVal forKey:QTMovieFrameImagePixelFormat];
-  
-  CVOpenGLTextureRef texture = (CVOpenGLTextureRef)[mpPrivate->mpMovie frameImageAtTime:time withAttributes:dict error:nil];
-  CVOpenGLTextureRetain(texture);
-  
-//  CVTimeStamp* timeStamp = NULL;
-//  if (!QTVisualContextIsNewImageAvailable(mpPrivate->mVisualContext, timeStamp))
+//  if (!QTVisualContextIsNewImageAvailable(mpPrivate->mVisualContext, NULL))
 //    return NULL;
   
-//  CVOpenGLTextureRef texture;
-//  OSStatus status = QTVisualContextCopyImageForTime(mpPrivate->mVisualContext, NULL, timeStamp, &texture);
-//  
+  CVOpenGLTextureRef texture;
+  OSStatus status = QTVisualContextCopyImageForTime(mpPrivate->mVisualContext, NULL, NULL, &texture);
+  
   GLuint texID = CVOpenGLTextureGetName(texture);
   GLenum target = CVOpenGLTextureGetTarget(texture);
 //  

@@ -1,5 +1,22 @@
 // !$*UTF8*$!
 {
+	4051045112B9258500EEE95D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 4051045212B9258500EEE95D /* nuiGLPainter.cpp */;
+		name = "nuiGLPainter.cpp: 1023";
+		rLen = 0;
+		rLoc = 27285;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	4051045212B9258500EEE95D /* nuiGLPainter.cpp */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
+		name = nuiGLPainter.cpp;
+		path = /Users/mat/work/dev/nui3/src/Renderers/nuiGLPainter.cpp;
+		sourceTree = "<absolute>";
+	};
 	4053B56012B77E5600F07124 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
@@ -9,24 +26,6 @@
 		rType = 0;
 		vrLen = 0;
 		vrLoc = 0;
-	};
-	4053B5F012B7B11E00F07124 /* MainWindow.cpp:340 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
-		functionName = "MainWindow::UpdateVideoImage()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 340;
-		location = VideoDecoderD;
-		modificationTime = 314042440.091621;
-		originalNumberOfMultipleMatches = 1;
-		state = 2;
 	};
 	4053B5FA12B7BDD700F07124 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -40,6 +39,7 @@
 	};
 	4053B5FB12B7BDD700F07124 /* nuiTexture.h */ = {
 		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
 		name = nuiTexture.h;
 		path = /Users/mat/work/dev/nui3/include/nuiTexture.h;
 		sourceTree = "<absolute>";
@@ -56,6 +56,7 @@
 	};
 	4053B5FE12B7BDD700F07124 /* nuiRefCount.h */ = {
 		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
 		name = nuiRefCount.h;
 		path = /Users/mat/work/dev/nui3/include/nuiRefCount.h;
 		sourceTree = "<absolute>";
@@ -72,6 +73,7 @@
 	};
 	4053B67A12B7C8C800F07124 /* nuiObject.h */ = {
 		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
 		name = nuiObject.h;
 		path = /Users/mat/work/dev/nui3/include/nuiObject.h;
 		sourceTree = "<absolute>";
@@ -92,22 +94,13 @@
 		name = nuiTexture.cpp;
 		path = /Users/mat/work/dev/nui3/src/Renderers/nuiTexture.cpp;
 		sourceTree = "<absolute>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {924, 13598}}";
-			sepNavSelRange = "{17107, 0}";
-			sepNavVisRange = "{16624, 649}";
-		};
 	};
 	4053B68112B7C8C800F07124 /* nuiImage.cpp */ = {
 		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
 		name = nuiImage.cpp;
 		path = /Users/mat/work/dev/nui3/src/SimpleWidgets/nuiImage.cpp;
 		sourceTree = "<absolute>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1247, 4433}}";
-			sepNavSelRange = "{5168, 0}";
-			sepNavVisRange = "{0, 0}";
-		};
 	};
 	4053B68212B7C8C800F07124 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -121,6 +114,7 @@
 	};
 	4053B68312B7C8C800F07124 /* nuiTextureInspector.cpp */ = {
 		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
 		name = nuiTextureInspector.cpp;
 		path = /Users/mat/work/dev/nui3/src/Introspector/nuiTextureInspector.cpp;
 		sourceTree = "<absolute>";
@@ -131,11 +125,6 @@
 		name = nuiGLPainter.cpp;
 		path = /Users/mat/work/dev/nui3/src/Renderers/nuiGLPainter.cpp;
 		sourceTree = "<absolute>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1247, 24778}}";
-			sepNavSelRange = "{27285, 0}";
-			sepNavVisRange = "{0, 0}";
-		};
 	};
 	4053B68D12B7C90E00F07124 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -161,31 +150,9 @@
 		ignoreCount = 0;
 		lineNumber = 1332;
 		location = VideoDecoderD;
-		modificationTime = 314042440.092717;
+		modificationTime = 314123621.020022;
 		originalNumberOfMultipleMatches = 1;
 		state = 2;
-	};
-	4053B78E12B7E7F800F07124 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 4053B78F12B7E7F800F07124 /* nuiVideoDecoder.mm */;
-		name = "nuiVideoDecoder.mm: 229";
-		rLen = 0;
-		rLoc = 5788;
-		rType = 0;
-		vrLen = 1415;
-		vrLoc = 4802;
-	};
-	4053B78F12B7E7F800F07124 /* nuiVideoDecoder.mm */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.cpp.objcpp;
-		name = nuiVideoDecoder.mm;
-		path = /Users/mat/work/dev/nui3/src/Video/nuiVideoDecoder.mm;
-		sourceTree = "<absolute>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1247, 3549}}";
-			sepNavSelRange = "{5788, 0}";
-			sepNavVisRange = "{0, 0}";
-		};
 	};
 	4053B79212B7E84900F07124 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -196,27 +163,6 @@
 		rType = 0;
 		vrLen = 0;
 		vrLoc = 0;
-	};
-	4053B79912B7E8F100F07124 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 4053B79A12B7E8F100F07124 /* nuiVideoDecoder.mm */;
-		name = "nuiVideoDecoder.mm: 229";
-		rLen = 0;
-		rLoc = 5788;
-		rType = 0;
-		vrLen = 0;
-		vrLoc = 0;
-	};
-	4053B79A12B7E8F100F07124 /* nuiVideoDecoder.mm */ = {
-		isa = PBXFileReference;
-		name = nuiVideoDecoder.mm;
-		path = /Users/mat/work/dev/nui3/src/Video/nuiVideoDecoder.mm;
-		sourceTree = "<absolute>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1247, 3705}}";
-			sepNavSelRange = "{5788, 0}";
-			sepNavVisRange = "{0, 0}";
-		};
 	};
 	408D9BF110975CE400AEE78A /* VideoDecoder */ = {
 		isa = PBXExecutable;
@@ -300,7 +246,6 @@
 		activeExecutable = 408D9BF210975CE400AEE78A /* VideoDecoderD */;
 		activeTarget = 61A9DFC80B833EF200BC506C /* VideoDecoderD */;
 		breakpoints = (
-			4053B5F012B7B11E00F07124 /* MainWindow.cpp:340 */,
 			4053B69612B7C92C00F07124 /* nuiGLPainter.cpp:1332 */,
 		);
 		codeSenseManager = 408D9BFC10975D0300AEE78A /* Code sense */;
@@ -391,20 +336,19 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 314012551;
-			PBXWorkspaceStateSaveDate = 314012551;
+			PBXPerProjectTemplateStateSaveDate = 314123670;
+			PBXWorkspaceStateSaveDate = 314123670;
 		};
 		perUserProjectItems = {
-			4053B56012B77E5600F07124 /* PBXTextBookmark */ = 4053B56012B77E5600F07124 /* PBXTextBookmark */;
-			4053B5FA12B7BDD700F07124 /* PBXTextBookmark */ = 4053B5FA12B7BDD700F07124 /* PBXTextBookmark */;
-			4053B5FD12B7BDD700F07124 /* PBXTextBookmark */ = 4053B5FD12B7BDD700F07124 /* PBXTextBookmark */;
-			4053B67912B7C8C800F07124 /* PBXTextBookmark */ = 4053B67912B7C8C800F07124 /* PBXTextBookmark */;
-			4053B67B12B7C8C800F07124 /* PBXTextBookmark */ = 4053B67B12B7C8C800F07124 /* PBXTextBookmark */;
-			4053B68212B7C8C800F07124 /* PBXTextBookmark */ = 4053B68212B7C8C800F07124 /* PBXTextBookmark */;
-			4053B68D12B7C90E00F07124 /* PBXTextBookmark */ = 4053B68D12B7C90E00F07124 /* PBXTextBookmark */;
-			4053B78E12B7E7F800F07124 /* PBXTextBookmark */ = 4053B78E12B7E7F800F07124 /* PBXTextBookmark */;
-			4053B79212B7E84900F07124 /* PBXTextBookmark */ = 4053B79212B7E84900F07124 /* PBXTextBookmark */;
-			4053B79912B7E8F100F07124 /* PBXTextBookmark */ = 4053B79912B7E8F100F07124 /* PBXTextBookmark */;
+			4051045112B9258500EEE95D = 4051045112B9258500EEE95D /* PBXTextBookmark */;
+			4053B56012B77E5600F07124 = 4053B56012B77E5600F07124 /* PBXTextBookmark */;
+			4053B5FA12B7BDD700F07124 = 4053B5FA12B7BDD700F07124 /* PBXTextBookmark */;
+			4053B5FD12B7BDD700F07124 = 4053B5FD12B7BDD700F07124 /* PBXTextBookmark */;
+			4053B67912B7C8C800F07124 = 4053B67912B7C8C800F07124 /* PBXTextBookmark */;
+			4053B67B12B7C8C800F07124 = 4053B67B12B7C8C800F07124 /* PBXTextBookmark */;
+			4053B68212B7C8C800F07124 = 4053B68212B7C8C800F07124 /* PBXTextBookmark */;
+			4053B68D12B7C90E00F07124 = 4053B68D12B7C90E00F07124 /* PBXTextBookmark */;
+			4053B79212B7E84900F07124 = 4053B79212B7E84900F07124 /* PBXTextBookmark */;
 		};
 		sourceControlManager = 408D9BFB10975D0300AEE78A /* Source Control */;
 		userBuildSettings = {
@@ -424,9 +368,9 @@
 	};
 	61A9DFF10B83433800BC506C /* MainWindow.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {924, 5941}}";
-			sepNavSelRange = "{8996, 0}";
-			sepNavVisRange = "{7470, 1010}";
+			sepNavIntBoundsRect = "{{0, 0}, {1097, 4862}}";
+			sepNavSelRange = "{8915, 0}";
+			sepNavVisRange = "{912, 1224}";
 			sepNavWindowFrame = "{{1070, 86}, {1333, 1332}}";
 		};
 	};

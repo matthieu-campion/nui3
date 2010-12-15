@@ -28,8 +28,6 @@ public:
   nglImage* GetCurrentImage();
   nuiTexture* GetCurrentTexture();
   
-  
-  
 private:
   bool Init();
   
