@@ -107,6 +107,8 @@ public:
   GLuint GetTextureID() const;
   GLenum GetTarget() const;
   
+  void SetTextureIdAndTarget(GLuint textureID, GLenum target);
+  
 protected:
   friend class nuiSurface;
   static nuiTexture* GetTexture(nuiSurface* pSurface); ///< Create a texture from an existing nuiSurface.
