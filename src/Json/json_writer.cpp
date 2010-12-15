@@ -1,4 +1,5 @@
-#include "writer.h"
+#include "nui.h"
+#include "nuiJson/writer.h"
 #include <utility>
 #include <assert.h>
 #include <stdio.h>

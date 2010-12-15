@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="Json"
 	ProjectGUID="{D87858E8-0145-4B03-889A-3186371799DC}"
 	RootNamespace="template"
@@ -184,11 +184,67 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\ArrayView.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\ArrayView.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\BoolView.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\BoolView.h"
+				>
+			</File>
+			<File
 				RelativePath="src\MainWindow.cpp"
 				>
 			</File>
 			<File
 				RelativePath="src\MainWindow.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\NullView.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\NullView.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\NumberView.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\NumberView.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\ObjectView.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\ObjectView.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\StringView.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\StringView.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\ValueView.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\ValueView.h"
 				>
 			</File>
 		</Filter>

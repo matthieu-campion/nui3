@@ -794,7 +794,8 @@ void nuiObject::CheckValidInternal() const
     NGL_LOG(_T("nuiObject"), 0, _T("Operating on an invalid Object! 0x%x (%ls - %ls).\n"), this, it->second.mClass.GetChars(), it->second.mName.GetChars());
   }
   NGL_ASSERT(it != mObjects.end());
-  NGL_ASSERT(it->second.mAlive);
+  const Trace& rTrace(it->second);
+  NGL_ASSERT(rTrace.mAlive);
 }
 
 int32 nuiObject::GetClassCount()

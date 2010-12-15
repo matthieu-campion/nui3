@@ -1,6 +1,7 @@
+#include "nui.h"
 #include <iostream>
-#include "value.h"
-#include "writer.h"
+#include "nuiJson/value.h"
+#include "nuiJson/writer.h"
 #include <utility>
 #include <stdexcept>
 #include <cstring>

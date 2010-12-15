@@ -42,7 +42,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					10,
+					2114,
 					20,
 					48,
 					43,
@@ -59,13 +59,13 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 306346888;
-			PBXWorkspaceStateSaveDate = 306346888;
+			PBXPerProjectTemplateStateSaveDate = 313717842;
+			PBXWorkspaceStateSaveDate = 313717842;
 		};
 		perUserProjectItems = {
-			E50C2C71124277FE0039C2F4 /* PBXTextBookmark */ = E50C2C71124277FE0039C2F4 /* PBXTextBookmark */;
+			E5093F9212B2F42F0091739B /* PBXTextBookmark */ = E5093F9212B2F42F0091739B /* PBXTextBookmark */;
 			E55EB9591160C8AD00498779 /* PBXTextBookmark */ = E55EB9591160C8AD00498779 /* PBXTextBookmark */;
-			E5B9539A1243925E00D32FF9 /* PBXTextBookmark */ = E5B9539A1243925E00D32FF9 /* PBXTextBookmark */;
+			E5FA41EB12B5AE7E002105B7 /* PBXTextBookmark */ = E5FA41EB12B5AE7E002105B7 /* PBXTextBookmark */;
 		};
 		sourceControlManager = E54257CB115B7FB600EE458C /* Source Control */;
 		userBuildSettings = {
@@ -99,9 +99,9 @@
 	};
 	61A9DFF10B83433800BC506C /* MainWindow.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1652, 5954}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1219, 5902}}";
 			sepNavSelRange = "{9256, 0}";
-			sepNavVisRange = "{7867, 2464}";
+			sepNavVisRange = "{5791, 2076}";
 		};
 	};
 	61A9DFF20B83433800BC506C /* MainWindow.h */ = {
@@ -118,14 +118,14 @@
 			sepNavVisRange = "{0, 303}";
 		};
 	};
-	E50C2C71124277FE0039C2F4 /* PBXTextBookmark */ = {
+	E5093F9212B2F42F0091739B /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 287";
 		rLen = 0;
 		rLoc = 9256;
 		rType = 0;
-		vrLen = 2464;
+		vrLen = 2301;
 		vrLoc = 7867;
 	};
 	E54257B4115B7F9600EE458C /* Additive */ = {
@@ -216,14 +216,14 @@
 		vrLen = 1419;
 		vrLoc = 4991;
 	};
-	E5B9539A1243925E00D32FF9 /* PBXTextBookmark */ = {
+	E5FA41EB12B5AE7E002105B7 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */;
 		name = "MainWindow.cpp: 287";
 		rLen = 0;
 		rLoc = 9256;
 		rType = 0;
-		vrLen = 2464;
+		vrLen = 2301;
 		vrLoc = 7867;
 	};
 }

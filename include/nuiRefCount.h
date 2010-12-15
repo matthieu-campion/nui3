@@ -30,7 +30,7 @@ public:
     return ++mCount; 
   }
 
-  uint32 Release()
+  uint32 Release() const
   { 
     if (mTrace)
     {
@@ -48,7 +48,7 @@ public:
       }
       
       
-      OnFinalize();
+      const_cast<nuiRefCount*>(this)->OnFinalize();
       delete this;
       return 0;
     }
@@ -65,7 +65,7 @@ public:
     return mTrace;
   }
   
-  uint32 GetRefCount()
+  uint32 GetRefCount() const
   {
     return mCount;
   }
@@ -88,7 +88,7 @@ public:
     }
   }
 
-  bool IsPermanent()
+  bool IsPermanent() const
   {
     return mPermanent;
   }
@@ -98,7 +98,7 @@ public:
   }
   
 protected:
-  bool mTrace;
+  mutable bool mTrace;
 private:
   mutable uint32 mCount;
   bool mPermanent;
