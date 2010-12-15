@@ -599,28 +599,28 @@ void nuiTexture::TextureToImageCoord(nuiAltSize& x, nuiAltSize& y) const
 
 void nuiTexture::ImageToTextureCoord(nuiSize& x, nuiSize& y) const
 {
-  if (mRealWidth)
+  if (GetWidth())
     x /= GetWidth();
-  else  if (mpImage)
+  else  if (mpImage && mpImage->GetWidth())
     x /= mpImage->GetWidth();
 
 
-  if (mRealHeight)
+  if (GetHeight())
     y /= GetHeight();
-  else if (mpImage)
+  else if (mpImage && mpImage->GetHeight())
     y /= mpImage->GetHeight();
 }
 
 void nuiTexture::TextureToImageCoord(nuiSize& x, nuiSize& y) const
 {
-  if (mRealWidth)
+  if (GetWidth())
     x *= GetWidth();
-  else if (mpImage)
+  else if (mpImage && mpImage->GetWidth())
     x *= mpImage->GetWidth();
 
-  if (mRealHeight)
+  if (GetHeight())
     y *= GetHeight();
-  else if (mpImage)
+  else if (mpImage && mpImage->GetHeight())
     y *= mpImage->GetHeight();
 }
 
