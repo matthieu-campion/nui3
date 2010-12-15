@@ -10,9 +10,10 @@
 #include "nuiNavigationController.h"
 #include "nuiViewController.h"
 #include "nuiAttributeAnimation.h"
+#include "nuiNavigationBar.h"
 
-
-#define NOTIF_PENDING_OPERATION _T("PendingOp")
+#define NOTIF_PENDING_OPERATION _T("nuiNavigationController_PendingOp")
+#define NAVBAR_ANIM_ALPHA_DURATION 0.25f
 
 
 // static inits
@@ -39,6 +40,7 @@ nuiNavigationController::nuiNavigationController()
   mAlphed = false;
   
   mPendingLayout = true;
+  
  
 }
 
@@ -119,18 +121,21 @@ void nuiNavigationController::_PushViewController(nuiViewController* pViewContro
     return;
   }
 
+  pViewController->GetNavigationBar()->Acquire();
   pViewController->Acquire();
   mpIn = pViewController;
   mpOut  = NULL;
   
   mpIn->mAnimated = animated;
   mpIn->SetAlpha(1);
+  mpIn->GetNavigationBar()->SetAlpha(1);
   
   if ((mViewControllers.size() >0) && !viewOverlay)
   {
     mpOut = mViewControllers.back();
     mpOut->mAnimated = animated;
     mpOut->SetAlpha(1);
+    mpOut->GetNavigationBar()->SetAlpha(1);
   }
 
   // push the new view in the stack
@@ -154,7 +159,9 @@ void nuiNavigationController::_PushViewController(nuiViewController* pViewContro
     mAnimPosition = 0;
     
     mpIn->SetAlpha(0);
-    AddChild(mpIn);  
+    mpIn->GetNavigationBar()->SetAlpha(0);
+    AddChild(mpIn);
+    AddChild(mpIn->GetNavigationBar());
     
     nuiAttributeAnimation* pAnim = new nuiAttributeAnimation();
     pAnim->SetTargetObject(mpIn);
@@ -168,6 +175,20 @@ void nuiNavigationController::_PushViewController(nuiViewController* pViewContro
     NGL_ASSERT(mCurrentAnims.size() == 0);
     mCurrentAnims.push_back(pAnim);
     pAnim->Play();
+
+    if (mpIn->GetNavigationBar()->GetBarStyle() != eBarStyleNone)
+    {
+      pAnim = new nuiAttributeAnimation();
+      pAnim->SetTargetObject(mpIn->GetNavigationBar());
+      pAnim->SetTargetAttribute(_T("Alpha"));
+      pAnim->SetStartValue(0);
+      pAnim->SetEndValue(1);
+      pAnim->SetEasing(nuiEasingSinusStartFast);
+      pAnim->SetDuration(NAVBAR_ANIM_ALPHA_DURATION);
+      pAnim->SetDeleteOnStop(true);
+      mCurrentAnims.push_back(pAnim);
+      pAnim->Play();
+    }
     
     if (mpOut)
     {
@@ -193,6 +214,7 @@ void nuiNavigationController::_PushViewController(nuiViewController* pViewContro
     mAnimPosition = idealsize.GetWidth();
     
     AddChild(mpIn);  
+    AddChild(mpIn->GetNavigationBar());
     
     nuiAttributeAnimation* pAnim = new nuiAttributeAnimation();
     pAnim->SetTargetObject(this);
@@ -206,16 +228,32 @@ void nuiNavigationController::_PushViewController(nuiViewController* pViewContro
     NGL_ASSERT(mCurrentAnims.size() == 0);
     mCurrentAnims.push_back(pAnim);
     pAnim->Play();
+    
+    if (mpIn->GetNavigationBar()->GetBarStyle() != eBarStyleNone)
+    {
+      pAnim = new nuiAttributeAnimation();
+      pAnim->SetTargetObject(mpIn->GetNavigationBar());
+      pAnim->SetTargetAttribute(_T("Alpha"));
+      pAnim->SetStartValue(0);
+      pAnim->SetEndValue(1);
+      pAnim->SetEasing(nuiEasingSinusStartFast);
+      pAnim->SetDuration(NAVBAR_ANIM_ALPHA_DURATION);
+      pAnim->SetDeleteOnStop(true);
+      mCurrentAnims.push_back(pAnim);
+      pAnim->Play();
+    }    
   }
   else 
   {
     AddChild(mpIn);  
+    AddChild(mpIn->GetNavigationBar());
   }
   
   
   if (!animated && mpOut && !viewOverlay)
   {
     mpOut->ViewDidDisappear();
+    DelChild(mpOut->GetNavigationBar());
     DelChild(mpOut);
     // mpIn->ViewDidAppear is made in nuiViewController::ConnectTopLevel
   }
@@ -259,8 +297,12 @@ void nuiNavigationController::_PopViewControllerAnimated(bool animated, Transiti
   nuiRect idealsize = GetRect().Size();
   
   mpOut->SetAlpha(1);
+  mpOut->GetNavigationBar()->SetAlpha(1);
   if (mpIn)
+  {
     mpIn->SetAlpha(1);
+    mpIn->GetNavigationBar()->SetAlpha(1);
+  }
   
   // virtual cbk
   mpOut->ViewWillDisappear();
@@ -279,6 +321,8 @@ void nuiNavigationController::_PopViewControllerAnimated(bool animated, Transiti
     {
       AddChild(mpIn);  
       mpIn->SetAlpha(0);
+      AddChild(mpIn->GetNavigationBar());
+      mpIn->GetNavigationBar()->SetAlpha(0);
     
       nuiAttributeAnimation* pAnim = new nuiAttributeAnimation();
       pAnim->SetTargetObject(mpIn);
@@ -292,7 +336,23 @@ void nuiNavigationController::_PopViewControllerAnimated(bool animated, Transiti
       NGL_ASSERT(mCurrentAnims.size() == 0);
       mCurrentAnims.push_back(pAnim);
       pAnim->Play();
+    
+      if (mpIn->GetNavigationBar()->GetBarStyle() != eBarStyleNone)
+      {
+        pAnim = new nuiAttributeAnimation();
+        pAnim->SetTargetObject(mpIn->GetNavigationBar());
+        pAnim->SetTargetAttribute(_T("Alpha"));
+        pAnim->SetStartValue(0);
+        pAnim->SetEndValue(1);
+        pAnim->SetEasing(nuiEasingSinusStartFast);
+        pAnim->SetDuration(NAVBAR_ANIM_ALPHA_DURATION);
+        pAnim->SetDeleteOnStop(true);
+        mCurrentAnims.push_back(pAnim);
+        pAnim->Play();
+      }
     }
+    
+    
 
     nuiAttributeAnimation* pAnim = new nuiAttributeAnimation();
     pAnim->SetTargetObject(mpOut);
@@ -315,7 +375,24 @@ void nuiNavigationController::_PopViewControllerAnimated(bool animated, Transiti
     mAnimPosition = -idealsize.GetWidth();
     
     if (mpIn)
+    {
       AddChild(mpIn);  
+      AddChild(mpIn->GetNavigationBar());
+      
+      if (mpIn->GetNavigationBar()->GetBarStyle() != eBarStyleNone)
+      {
+        nuiAttributeAnimation* pAnim = new nuiAttributeAnimation();
+        pAnim->SetTargetObject(mpIn->GetNavigationBar());
+        pAnim->SetTargetAttribute(_T("Alpha"));
+        pAnim->SetStartValue(0);
+        pAnim->SetEndValue(1);
+        pAnim->SetEasing(nuiEasingSinusStartFast);
+        pAnim->SetDuration(NAVBAR_ANIM_ALPHA_DURATION);
+        pAnim->SetDeleteOnStop(true);
+        mCurrentAnims.push_back(pAnim);
+        pAnim->Play();
+      }      
+    }
     
     nuiAttributeAnimation* pAnim = new nuiAttributeAnimation();
     pAnim->SetTargetObject(this);
@@ -326,16 +403,20 @@ void nuiNavigationController::_PopViewControllerAnimated(bool animated, Transiti
     pAnim->SetDuration(mDurations[transition]);
     pAnim->SetDeleteOnStop(true);
     mEventSink.Connect(pAnim->AnimStop, &nuiNavigationController::OnViewPopStop, (void*)viewOverlay);
-    NGL_ASSERT(mCurrentAnims.size() == 0);
     mCurrentAnims.push_back(pAnim);
     pAnim->Play();
   }
   else
   {
     if (mpIn)
+    {
       AddChild(mpIn);  
+      AddChild(mpIn->GetNavigationBar());
+    }
     mpOut->ViewDidDisappear();
+    mpOut->GetNavigationBar()->Release();
     mpOut->Release();
+    DelChild(mpOut->GetNavigationBar());
     DelChild(mpOut);
     
     // mpIn->ViewDidAppear() is made in nuiViewController::ConnectTopLevel
@@ -350,6 +431,28 @@ void nuiNavigationController::_PopViewControllerAnimated(bool animated, Transiti
 
 
 
+// virtual 
+bool nuiNavigationController::Draw(nuiDrawContext* pContext)
+{
+  IteratorPtr pIt;
+  for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
+  {
+    nuiWidgetPtr pItem = pIt->GetWidget();
+    if (pItem && (pItem->GetObjectClass() != _T("nuiNavigationBar")))
+      DrawChild(pContext, pItem);
+  }
+
+  for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
+  {
+    nuiWidgetPtr pItem = pIt->GetWidget();
+    if (pItem && (pItem->GetObjectClass() == _T("nuiNavigationBar")))
+      DrawChild(pContext, pItem);
+  }
+  
+  delete pIt;
+  
+  return true;
+}
 
 
 // virtual 
@@ -372,11 +475,13 @@ bool nuiNavigationController::SetRect(const nuiRect& rRect)
   if (!mPushed && !mPoped)
     return true;
 
-  
   nuiRect rect;
   rect.Set(mAnimPosition, rRect.Top(), rRect.GetWidth(), rRect.GetHeight());
   if (mpIn)
+  {
+    //ICI
     mpIn->SetLayout(rect);
+  }
   
   if (mpOut)
   {
@@ -460,7 +565,9 @@ void nuiNavigationController::_PopToViewController(nuiViewController* pViewContr
     }
     
     nuiViewController* pView = *it;
+    pView->GetNavigationBar()->Release();
     pView->Release();
+    DelChild(pView->GetNavigationBar());
     DelChild(pView);
     mViewControllers.erase(it);
   }
@@ -518,7 +625,9 @@ void nuiNavigationController::_PopToRootViewControllerAnimated(bool animated, Tr
     }
     
     nuiViewController* pView = *it;
+    pView->GetNavigationBar()->Release();
     pView->Release();
+    DelChild(pView->GetNavigationBar());
     DelChild(pView);
     mViewControllers.erase(it);
   }
@@ -551,7 +660,10 @@ void nuiNavigationController::OnViewPushStop(const nuiEvent& rEvent)
       mpOut->ViewDidDisappear();
       // mpIn->ViewDidAppear is made in nuiViewController::ConnectTopLevel
       if (mpOut->GetParent())
+      {
+        DelChild(mpOut->GetNavigationBar());
         DelChild(mpOut);
+      }
     }
 
     if (mPendingOperations.size() >0)
@@ -575,8 +687,10 @@ void nuiNavigationController::OnViewPopStop(const nuiEvent& rEvent)
 
   if (mpOut->GetParent())
   {
+    mpOut->GetNavigationBar()->Release();
     mpOut->Release();
 
+    DelChild(mpOut->GetNavigationBar());
     DelChild(mpOut);
     mViewControllers.pop_back(); 
 

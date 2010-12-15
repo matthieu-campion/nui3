@@ -9,19 +9,51 @@
 
 #pragma once
 #include "nui.h"
-#include "nuiHBox.h"
+#include "nuiNavigationButton.h"
 
 
-class nuiNavigationBar : public nuiHBox
+class nuiNavigationButton;
+
+enum nuiNavigationBarStyle
+{
+  eBarStyleDefault = 0,
+  eBarStyleBlack   = 1,
+  eBarStyleTint,
+  eBarStyleNone
+};
+
+
+class nuiNavigationBar : public nuiSimpleContainer
 {
 public:
   nuiNavigationBar();
   virtual ~nuiNavigationBar();
-  
 
+  void SetBarStyle(nuiNavigationBarStyle style);
+  void SetTintColor(const nuiColor& rColor);
+  void SetTranslucent(bool set);
+
+  nuiNavigationBarStyle GetBarStyle() const;
+  const nuiColor& GetTintColor() const;
+  bool GetTranslucent();
+
+  void SetTitle(const nglString& rTitle);
+  void SetBackNavigationItem(nuiNavigationButton* pButton);
+  void SetTopNavigationItem(nuiNavigationButton* pButton);
+  void SetLeftNavigationItem(nuiNavigationButton* pButton);
+  void SetRightNavigationItem(nuiNavigationButton* pButton);
+    
 protected:
   
+//  virtual nuiRect CalcIdealSize();
+  virtual bool Draw(nuiDrawContext* pContext);
   
 private:
+  
 
+  nuiNavigationBarStyle mBarStyle;
+  nuiColor mTintColor;
+  bool mTranslucent;
+  
+  nuiEventSink<nuiNavigationBar> mEventSink;
 };

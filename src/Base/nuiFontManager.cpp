@@ -81,6 +81,19 @@ void nuiFontRequest::GetFontsForGenericName(const nglString& rName, std::vector<
 
 ///! Font Request class:
 nuiFontRequest::nuiFontRequest(nglFontBase* pOriginalFont, bool ForcePanoseOnlyFonts)
+:
+  mName(nglString::Null),
+  mGenericName(nglString::Null),
+  mStyle(nglString::Null),
+  mFace(0),
+  mItalic(false),
+  mBold(false),
+  mMonospace(false),
+  mScalable(true),
+  mMustHaveGlyphs(std::set<nglChar>()),
+  mMustHaveEncoding(std::set<nglTextEncoding>()),
+  mMustHaveSizes(std::set<int32>()),
+  mPanose(nuiPanose())
 {
   if (SetObjectClass(_T("nuiFontRequest")))
     InitAttributes();
@@ -229,6 +242,19 @@ nuiFontRequest::nuiFontRequest(nglFontBase* pOriginalFont, bool ForcePanoseOnlyF
 }
 
 nuiFontRequest::nuiFontRequest(const nuiFontRequest& rOriginal)
+:
+  mName(nglString::Null),
+  mGenericName(nglString::Null),
+  mStyle(nglString::Null),
+  mFace(0),
+  mItalic(false),
+  mBold(false),
+  mMonospace(false),
+  mScalable(true),
+  mMustHaveGlyphs(std::set<nglChar>()),
+  mMustHaveEncoding(std::set<nglTextEncoding>()),
+  mMustHaveSizes(std::set<int32>()),
+  mPanose(nuiPanose())
 {
 #define COPY(X) X = rOriginal.X;
   COPY(mName);
@@ -1251,7 +1277,27 @@ template <class T> float intersection_score(const std::set<T>& rRequest, const s
 
 static bool greater_score(const nuiFontRequestResult& rLeft, const nuiFontRequestResult& rRight)
 {
-  return rLeft.GetScore() > rRight.GetScore();
+  float l = rLeft.GetScore(),
+        r = rRight.GetScore();
+  if (l == r)
+  {
+    // If this the same score is found for variants of the same font then try to place non italic and non bold fonts first:
+    const nuiFontDesc* pL = rLeft.GetFontDesc();
+    const nuiFontDesc* pR = rRight.GetFontDesc();
+    
+    if (pL->GetName() == pR->GetName())
+    {
+      int score1 = 0;
+      int score2 = 0;
+      score1 += pL->GetItalic() ? 2 : 0;
+      score1 += pL->GetBold() ? 1 : 0;
+      score2 += pR->GetItalic() ? 2 : 0;
+      score2 += pR->GetBold() ? 1 : 0;
+
+      return score1 < score2;
+    }
+  }
+  return l > r;
 }
 
 static void SetScore(float& score, float& sscore, float request_score, bool strict, bool condition)
@@ -1413,6 +1459,20 @@ void nuiFontManager::RequestFont(nuiFontRequest& rRequest, std::list<nuiFontRequ
   }
   
   rFoundFonts.sort(greater_score);
+  
+  if (0)
+  {
+    std::list<nuiFontRequestResult>::const_iterator it = rFoundFonts.begin();
+    std::list<nuiFontRequestResult>::const_iterator end = rFoundFonts.end();
+    
+    while (it != end)
+    {
+      const nuiFontRequestResult& r(*it);
+      const nuiFontDesc* pDesc = r.GetFontDesc();
+      printf("font '%ls' bold: %s italic: %s (%f)\n", pDesc->GetName().GetChars(), pDesc->GetBold()?"Y":"N", pDesc->GetItalic()?"Y":"N", r.GetScore());
+      ++it;
+    }
+  }
 }
 
 
@@ -1810,7 +1870,7 @@ nuiFont* nuiFontManager::GetFont(nuiFontRequest& rRequest, const nglString& rID)
   if (!rRequest.mMustHaveSizes.mElement.empty())
     size = *(rRequest.mMustHaveSizes.mElement.begin());
   
-  //wprintf(_T("Loading font %ls\n"), rRequest.mName.mElement.GetChars());
+  wprintf(_T("Loading font %ls\n"), rRequest.mName.mElement.GetChars());
   nuiFont* pFont = nuiFont::GetFont(rRequest.mOriginalName, size, rRequest.mFace.mElement, rID);
   if (pFont)
     return pFont;
@@ -1825,8 +1885,8 @@ nuiFont* nuiFontManager::GetFont(nuiFontRequest& rRequest, const nglString& rID)
   }
   
   const nuiFontRequestResult& rFont(*(Fonts.begin()));
-  //printf("found font '%ls' (%ls)\n", rFont.GetFontDesc()->GetName().GetChars(), rFont.GetFontDesc()->GetPath().GetChars());
-
+  printf("found font '%ls' (%ls)\n", rFont.GetFontDesc()->GetName().GetChars(), rFont.GetFontDesc()->GetPath().GetChars());
+  
   pFont = nuiFont::GetFont(rFont.GetPath(), size, rFont.GetFace(), rID);
   return pFont;
 }

@@ -237,6 +237,12 @@ void nuiTexture::ClearAll()
   TexturesChanged();
 }
 
+void nuiTexture::InitTextures()
+{
+  App->AddExit(&nuiTexture::ClearAll);
+}
+
+
 void nuiTexture::ForceReloadAll(bool Rebind)
 {
   nuiTextureMap::iterator it = mpTextures.begin();

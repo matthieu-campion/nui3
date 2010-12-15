@@ -99,6 +99,11 @@ MyViewController::MyViewController(nuiNavigationController* pNav)
   if (!mpNav)
     mpNav = pNav;
   
+  nglString title;
+  title.Format(_T("View %d"), mCount);
+  SetTitle(title);
+  
+  
   mRunning = false;
       
   nglString name;

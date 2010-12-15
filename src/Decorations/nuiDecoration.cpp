@@ -377,20 +377,24 @@ void nuiDecoration::AddDecorationType(const nglString& rDecorationTypeName, cons
 #include "nuiColorDecoration.h"
 #include "nuiImageDecoration.h"
 #include "nuiGradientDecoration.h"
+#include "nuiCheckerboardDecoration.h"
+#include "nuiNavigationViewDecoration.h"
 #include "nuiStateDecoration.h"
 #include "nuiTreeHandleDecoration.h"
 #include "nuiMetaDecoration.h"
 
 void nuiDecoration::InitDecorationEngine()
 {
-  nuiDecoration::AddDecorationType(_T("nuiFrame"),                &nuiCreateDecoration<nuiFrame>);
-  nuiDecoration::AddDecorationType(_T("nuiBorderDecoration"),     &nuiCreateDecoration<nuiBorderDecoration>);
-  nuiDecoration::AddDecorationType(_T("nuiColorDecoration"),      &nuiCreateDecoration<nuiColorDecoration>);
-  nuiDecoration::AddDecorationType(_T("nuiImageDecoration"),      &nuiCreateDecoration<nuiImageDecoration>);
-  nuiDecoration::AddDecorationType(_T("nuiGradientDecoration"),   &nuiCreateDecoration<nuiGradientDecoration>);
-  nuiDecoration::AddDecorationType(_T("nuiStateDecoration"),      &nuiCreateDecoration<nuiStateDecoration>);
-  nuiDecoration::AddDecorationType(_T("nuiTreeHandleDecoration"), &nuiCreateDecoration<nuiTreeHandleDecoration>);
-  nuiDecoration::AddDecorationType(_T("nuiMetaDecoration"),       &nuiCreateDecoration<nuiMetaDecoration>);
+  nuiDecoration::AddDecorationType(_T("nuiFrame"),                      &nuiCreateDecoration<nuiFrame>);
+  nuiDecoration::AddDecorationType(_T("nuiBorderDecoration"),           &nuiCreateDecoration<nuiBorderDecoration>);
+  nuiDecoration::AddDecorationType(_T("nuiColorDecoration"),            &nuiCreateDecoration<nuiColorDecoration>);
+  nuiDecoration::AddDecorationType(_T("nuiImageDecoration"),            &nuiCreateDecoration<nuiImageDecoration>);
+  nuiDecoration::AddDecorationType(_T("nuiGradientDecoration"),         &nuiCreateDecoration<nuiGradientDecoration>);
+  nuiDecoration::AddDecorationType(_T("nuiCheckerboardDecoration"),     &nuiCreateDecoration<nuiCheckerboardDecoration>);
+  nuiDecoration::AddDecorationType(_T("nuiNavigationViewDecoration"),   &nuiCreateDecoration<nuiNavigationViewDecoration>);
+  nuiDecoration::AddDecorationType(_T("nuiStateDecoration"),            &nuiCreateDecoration<nuiStateDecoration>);
+  nuiDecoration::AddDecorationType(_T("nuiTreeHandleDecoration"),       &nuiCreateDecoration<nuiTreeHandleDecoration>);
+  nuiDecoration::AddDecorationType(_T("nuiMetaDecoration"),             &nuiCreateDecoration<nuiMetaDecoration>);
 }
 
 std::map<nglString, nuiDecoration::DecorationCreatorFunction> nuiDecoration::mDecorationCreators;

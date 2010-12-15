@@ -100,6 +100,9 @@ bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
 
   gNUIReferences++;
 
+  // Init the texture manager:
+  nuiTexture::InitTextures();
+  
   // Init the font manager:
 
 #if (defined _UIKIT_) && (!TARGET_IPHONE_SIMULATOR)
@@ -150,6 +153,7 @@ bool nuiUninit()
 
     // From now on, all the contexts are dead so we have to release the remaining textures without trying to free their opengl resources
     // because those have been destroyed at the same time than the opengl context
+    nuiDecoration::ExitDecorationEngine();
     
     __NglKernel__* pApp = dynamic_cast<__NglKernel__*>(App);
     if (pApp)
@@ -159,13 +163,12 @@ bool nuiUninit()
       App = NULL;
       nuiDecoration::ExitDecorationEngine();
       nuiFont::ClearAll();
-      nuiTexture::ClearAll();
+      //nuiTexture::ClearAll();
 #ifdef WIN32
       WSACleanup();
 #endif
       return true;
     }
-    nuiDecoration::ExitDecorationEngine();
     nuiFont::ClearAll();
     nuiTexture::ClearAll();
   }

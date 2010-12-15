@@ -129,6 +129,8 @@ public:
   virtual void EndTextInput();
   virtual bool IsEnteringText() const;
   
+  void SetPaintEnabled(bool set);
+  bool IsPaintEnabled() const;
   
   void SetMainMenu(nuiMainMenu* pMainMenu);
   nuiMainMenu* GetMainMenu();
@@ -168,6 +170,7 @@ protected:
   float mMaxFPS;
   nglTime mLastRendering;
   void InvalidateTimer(const nuiEvent& rEvent);
+  bool mPaintEnabled;
 
   nuiWidget*      mpDragSource; ///< widget that has initialized a drag operation
   nuiWidget*      mpWidgetCanDrop; ///< if not NULL, this is the last widget that return true to an OnCanDrop call (used for DragLeave)

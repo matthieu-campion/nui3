@@ -11,6 +11,8 @@
 #include "nuiNavigationController.h"
 
 
+class nuiNavigationBar;
+
 class nuiViewController : public nuiSimpleContainer
 {
   friend class nuiNavigationController;
@@ -18,6 +20,10 @@ class nuiViewController : public nuiSimpleContainer
 public:
   nuiViewController();
   virtual ~nuiViewController();
+  
+  void SetTitle(const nglString& rTitle);
+  
+  nuiNavigationBar* GetNavigationBar();
   
 protected:
   
@@ -30,5 +36,6 @@ protected:
 private:
   
   bool mAnimated;
+  nuiNavigationBar* mpBar;
   
 };

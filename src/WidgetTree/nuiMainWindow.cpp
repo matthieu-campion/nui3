@@ -70,7 +70,9 @@ nuiMainWindow::nuiMainWindow(uint Width, uint Height, bool Fullscreen, const ngl
   : nuiTopLevel(rResPath),
     mMainWinSink(this),
     mQuitOnClose(true),
-    mpDragSource(NULL)
+    mpDragSource(NULL),
+    mPaintEnabled(true)
+
 {
   mFullFrameRedraw = 2;
   mpNGLWindow = new NGLWindow(this, Width, Height, Fullscreen);
@@ -111,7 +113,8 @@ nuiMainWindow::nuiMainWindow(const nglContextInfo& rContextInfo, const nglWindow
   : nuiTopLevel(rResPath),
     mMainWinSink(this),
     mQuitOnClose(true),
-    mpDragSource(NULL)
+    mpDragSource(NULL),
+    mPaintEnabled(true)
 {
   mFullFrameRedraw = 2;
   mpNGLWindow = new NGLWindow(this, rContextInfo, rInfo, pShared);
@@ -290,6 +293,9 @@ static float Gx = 0;
 
 void nuiMainWindow::Paint()
 {
+  if (!IsPaintEnabled())
+    return;
+  
   mLastEventTime = nglTime();
   //nuiStopWatch watch(_T("nuiMainWindow::Paint"));
   do 
@@ -1181,3 +1187,14 @@ double nuiMainWindow::GetLastInteractiveEventTime() const
 {
   return mLastInteractiveEventTime;
 }
+
+void nuiMainWindow::SetPaintEnabled(bool set)
+{
+  mPaintEnabled = set;
+}
+
+bool nuiMainWindow::IsPaintEnabled() const
+{
+  return mPaintEnabled;
+}
+

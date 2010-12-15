@@ -186,6 +186,7 @@ void nglKernel::Init()
 {
   //SendSomeMail();
   mRefCount = 0;
+  App = this;
 #ifdef _DEBUG_
   mDebug = true;
 #else
@@ -199,6 +200,7 @@ void nglKernel::Init()
 
 void nglKernel::Exit()
 {
+  CallOnExit(0);
   ExitFuncList::iterator func_i;
   
   for (func_i = mExitFuncs.begin(); func_i != mExitFuncs.end(); ++func_i)

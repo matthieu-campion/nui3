@@ -99,6 +99,8 @@ public:
   static void DelCache(nuiTextureCache* pCache);
   
   static void RetainBuffers(bool Set);
+  static void InitTextures();
+
   
   nglImagePixelFormat GetPixelFormat() const;
   
