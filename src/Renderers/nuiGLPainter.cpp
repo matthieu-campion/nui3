@@ -539,6 +539,8 @@ void nuiGLPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
     if (mFinalState.mpTexture)
     {      
       outtarget = GetTextureTarget(mFinalState.mpTexture->IsPowerOfTwo());
+      if (mFinalState.mpTexture->GetTextureID())
+        outtarget = mFinalState.mpTexture->GetTarget();
 
       //mFinalState.mpTexture->UnapplyGL(this); #TODO Un apply the texture
       nuiCheckForGLErrors();
@@ -551,7 +553,10 @@ void nuiGLPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
 
     if (mFinalState.mpTexture)
     {
-      intarget = GetTextureTarget(mFinalState.mpTexture->IsPowerOfTwo());
+      if (mFinalState.mpTexture->GetTextureID())
+        intarget = mFinalState.mpTexture->GetTarget();
+      else
+        intarget = GetTextureTarget(mFinalState.mpTexture->IsPowerOfTwo());
 
       mFinalState.mpTexture->Acquire();
   
@@ -1317,6 +1322,7 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
   float Width = pTexture->GetUnscaledWidth();
   float Height = pTexture->GetUnscaledHeight();
   GLenum target = GetTextureTarget(pTexture->IsPowerOfTwo());
+
   bool changedctx = false;
 
   std::map<nuiTexture*, TextureInfo>::iterator it = mTextures.find(pTexture);
