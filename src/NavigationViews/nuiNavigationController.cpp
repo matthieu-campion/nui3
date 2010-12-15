@@ -176,7 +176,7 @@ void nuiNavigationController::_PushViewController(nuiViewController* pViewContro
     mCurrentAnims.push_back(pAnim);
     pAnim->Play();
 
-    if (mpIn->GetNavigationBar()->GetBarStyle() != eBarStyleNone)
+    if (mpIn->GetNavigationBar()->IsVisible())
     {
       pAnim = new nuiAttributeAnimation();
       pAnim->SetTargetObject(mpIn->GetNavigationBar());
@@ -229,7 +229,7 @@ void nuiNavigationController::_PushViewController(nuiViewController* pViewContro
     mCurrentAnims.push_back(pAnim);
     pAnim->Play();
     
-    if (mpIn->GetNavigationBar()->GetBarStyle() != eBarStyleNone)
+    if (mpIn->GetNavigationBar()->IsVisible())
     {
       pAnim = new nuiAttributeAnimation();
       pAnim->SetTargetObject(mpIn->GetNavigationBar());
@@ -337,7 +337,7 @@ void nuiNavigationController::_PopViewControllerAnimated(bool animated, Transiti
       mCurrentAnims.push_back(pAnim);
       pAnim->Play();
     
-      if (mpIn->GetNavigationBar()->GetBarStyle() != eBarStyleNone)
+      if (mpIn->GetNavigationBar()->IsVisible())
       {
         pAnim = new nuiAttributeAnimation();
         pAnim->SetTargetObject(mpIn->GetNavigationBar());
@@ -379,7 +379,7 @@ void nuiNavigationController::_PopViewControllerAnimated(bool animated, Transiti
       AddChild(mpIn);  
       AddChild(mpIn->GetNavigationBar());
       
-      if (mpIn->GetNavigationBar()->GetBarStyle() != eBarStyleNone)
+      if (mpIn->GetNavigationBar()->IsVisible())
       {
         nuiAttributeAnimation* pAnim = new nuiAttributeAnimation();
         pAnim->SetTargetObject(mpIn->GetNavigationBar());
@@ -565,6 +565,7 @@ void nuiNavigationController::_PopToViewController(nuiViewController* pViewContr
     }
     
     nuiViewController* pView = *it;
+    
     pView->GetNavigationBar()->Release();
     pView->Release();
     DelChild(pView->GetNavigationBar());

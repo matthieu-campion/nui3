@@ -32,6 +32,8 @@ public:
   void SetBarStyle(nuiNavigationBarStyle style);
   void SetTintColor(const nuiColor& rColor);
   void SetTranslucent(bool set);
+  
+  bool IsVisible();
 
   nuiNavigationBarStyle GetBarStyle() const;
   const nuiColor& GetTintColor() const;

@@ -85,6 +85,7 @@ class nuiSprite : public nuiObject
 {
 public:
   nuiSprite(const nglString& rSpriteDefName);
+  nuiSprite(const nglPath& rSpriteDefPath, bool forceReplace);
   nuiSprite(nuiSpriteDef* pSpriteDef);
   virtual ~nuiSprite();
 
@@ -144,9 +145,9 @@ public:
   void SetBlendFunc(nuiBlendFunc f);
   nuiBlendFunc GetBlendFunc() const;
   
-  nuiSignal1<const nglMouseInfo&, bool> MouseClicked;
-  nuiSignal1<const nglMouseInfo&, bool> MouseUnclicked;
-  nuiSignal1<const nglMouseInfo&, bool> MouseMoved;
+  nuiSignal2<nuiSprite*, const nglMouseInfo&, bool> MouseClicked;
+  nuiSignal2<nuiSprite*, const nglMouseInfo&, bool> MouseUnclicked;
+  nuiSignal2<nuiSprite*, const nglMouseInfo&, bool> MouseMoved;
   
   nuiSimpleEventSource<0> AnimEnd;
   
