@@ -27,6 +27,10 @@ nuiNavigationBar::~nuiNavigationBar()
 
 }
 
+bool nuiNavigationBar::IsVisible()
+{
+  return (mBarStyle != eBarStyleNone);
+}
 
 
 void nuiNavigationBar::SetBarStyle(nuiNavigationBarStyle style)
@@ -112,6 +116,9 @@ void nuiNavigationBar::SetRightNavigationItem(nuiNavigationButton* pButton)
 // virtual 
 bool nuiNavigationBar::Draw(nuiDrawContext* pContext)
 {
+  if (mBarStyle == eBarStyleNone)
+    return true;
+  
   bool res = nuiSimpleContainer::Draw(pContext);
   
   pContext->EnableAntialiasing(false);
