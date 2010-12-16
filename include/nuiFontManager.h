@@ -54,8 +54,9 @@ public:
   template <class T> class ScoredElement
   {
   public:
-    ScoredElement()
+    ScoredElement(const T& rInit)
     {
+      mElement = rInit;
       Clear();
     }
 
