@@ -27,6 +27,7 @@ public:
   
   nglImage* GetCurrentImage();
   nuiTexture* GetCurrentTexture();
+  void UpdateTexture();
   
 private:
   bool Init();

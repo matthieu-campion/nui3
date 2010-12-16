@@ -313,6 +313,10 @@ bool nglContext::MakeCurrent(WindowRef win) const
     res = aglSetCurrentContext(mCtx) != 0;
   if (win)
     aglSetDrawable(mCtx, GetWindowPort(win));
+  
+  CGLContextObj ctx = CGLGetCurrentContext();
+  CGLPixelFormatObj pixelFormat = CGLGetPixelFormat(ctx);
+  //printf("cglcontext  : 0x%x / 0x%x\n", ctx, pixelFormat);
 #endif
   return res;
 }

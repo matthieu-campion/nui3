@@ -241,6 +241,9 @@ bool nuiImage::Draw(nuiDrawContext* pContext)
   pContext->SetFillColor(c);
   pContext->DrawImage(rect, mTextureRect);
 
+//  nuiRect r(mTextureRect.GetWidth() * mTextureRect.GetWidth(), mTextureRect.GetHeight() * mTextureRect.GetHeight());
+//  pContext->DrawImage(rect, r);
+
   pContext->EnableBlending(false);
   pContext->EnableTexturing(false);
 
