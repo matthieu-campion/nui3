@@ -23,14 +23,14 @@ public:
 
 protected:
   
-  bool OnBrowse(const nuiEvent& rEvent);
-  bool OnDialogDone(const nuiEvent& event);
+  void OnBrowse(const nuiEvent& rEvent);
+  void OnDialogDone(const nuiEvent& event);
   virtual void OnNotification(const nuiNotification& rNotif);
  
-  bool OnBackBtnClicked(const nuiEvent& rEvent);
-  bool OnFastBackBtnClicked(const nuiEvent& rEvent);
-  bool OnForwardBtnClicked(const nuiEvent& rEvent);
-  bool OnFastForwardBtnClicked(const nuiEvent& rEvent);
+  void OnBackBtnClicked(const nuiEvent& rEvent);
+  void OnFastBackBtnClicked(const nuiEvent& rEvent);
+  void OnForwardBtnClicked(const nuiEvent& rEvent);
+  void OnFastForwardBtnClicked(const nuiEvent& rEvent);
   
 private:
   
@@ -62,7 +62,7 @@ private:
   nuiTexture* mpTexture;
   
   nuiTimer mTimer;
-  bool OnPlayBtnClicked(const nuiEvent& rEvent);
-  bool OnTimerTick(const nuiEvent& rEvent);
+  void OnPlayBtnClicked(const nuiEvent& rEvent);
+  void OnTimerTick(const nuiEvent& rEvent);
 };
 

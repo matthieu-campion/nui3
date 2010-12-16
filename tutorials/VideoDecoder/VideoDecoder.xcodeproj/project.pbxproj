@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		404D57BE12B690F40004F0FA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 404D57BD12B690F40004F0FA /* QuartzCore.framework */; };
+		4053B72112B7D9A000F07124 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4053B72012B7D9A000F07124 /* QuickTime.framework */; };
 		408A190D10984D040019E3A3 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 408D9C1310975F2E00AEE78A /* Cocoa.framework */; };
 		408A190E10984D040019E3A3 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 408D9C1510975F3A00AEE78A /* QTKit.framework */; };
 		408D9C1410975F2E00AEE78A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 408D9C1310975F2E00AEE78A /* Cocoa.framework */; };
@@ -63,33 +65,35 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E52417F311CB860B0025CA71 /* libnuiPhoneD.a */;
+			remoteGlobalIDString = E52417F311CB860B0025CA71;
 			remoteInfo = nuiPhoneD;
 		};
 		E5C065AB122B11A700F52C24 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E52420E511CBCE9E0025CA71 /* libnuiPhone.a */;
+			remoteGlobalIDString = E52420E511CBCE9E0025CA71;
 			remoteInfo = nuiPhone;
 		};
 		E5C065AD122B11A700F52C24 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E5A8D1D311E33A54004E14CE /* libnui3CocoaD.a */;
+			remoteGlobalIDString = E5A8D1D311E33A54004E14CE;
 			remoteInfo = nui3CocoaD;
 		};
 		E5C065AF122B11A700F52C24 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E5D643E51209AB9C009C26A9 /* libnui3Cocoa.a */;
+			remoteGlobalIDString = E5D643E51209AB9C009C26A9;
 			remoteInfo = nui3Cocoa;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		404D57BD12B690F40004F0FA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
+		4053B72012B7D9A000F07124 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = /System/Library/Frameworks/QuickTime.framework; sourceTree = "<absolute>"; };
 		408D9C1310975F2E00AEE78A /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		408D9C1510975F3A00AEE78A /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 		61A9DFBF0B833E9600BC506C /* VideoDecoder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VideoDecoder.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -136,6 +140,8 @@
 				BCBCB1600DFD45C1002E8BC3 /* libnui3D.a in Frameworks */,
 				408A190D10984D040019E3A3 /* Cocoa.framework in Frameworks */,
 				408A190E10984D040019E3A3 /* QTKit.framework in Frameworks */,
+				404D57BE12B690F40004F0FA /* QuartzCore.framework in Frameworks */,
+				4053B72112B7D9A000F07124 /* QuickTime.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,6 +156,7 @@
 				61A9DE4A0B833CD000BC506C /* sources */,
 				61A9DE490B833CB000BC506C /* dependencies */,
 				61A9DFB50B833DE500BC506C /* Products */,
+				404D57BD12B690F40004F0FA /* QuartzCore.framework */,
 			);
 			sourceTree = "<group>";
 		};
@@ -164,6 +171,7 @@
 				61A9DFD40B833F1500BC506C /* CoreServices.framework */,
 				61A9DFD50B833F1500BC506C /* Carbon.framework */,
 				61A9DFD60B833F1500BC506C /* OpenGL.framework */,
+				4053B72012B7D9A000F07124 /* QuickTime.framework */,
 			);
 			name = dependencies;
 			sourceTree = "<group>";
@@ -264,7 +272,14 @@
 			isa = PBXProject;
 			buildConfigurationList = 61A9DE400B833C9200BC506C /* Build configuration list for PBXProject "VideoDecoder" */;
 			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
 			hasScannedForEncodings = 0;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
 			mainGroup = 61A9DE3D0B833C9200BC506C;
 			productRefGroup = 61A9DFB50B833DE500BC506C /* Products */;
 			projectDirPath = "";
