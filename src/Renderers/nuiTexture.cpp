@@ -290,10 +290,10 @@ nuiTexture::nuiTexture (const nglPath& rPath, nglImageCodec* pCodec)
   mpImage = NULL;
   
   float scale = 1.0f;
+  nglPath p(rPath);
+  nglString path(p.GetRemovedExtension());
   if (NUI_SCALE_FACTOR > 1)
   {
-    nglPath p(rPath);
-    nglString path(p.GetRemovedExtension());
     nglString ext(p.GetExtension());
     nglString res(path);
     res.Add(_T("@2x.")).Add(ext);
@@ -309,6 +309,11 @@ nuiTexture::nuiTexture (const nglPath& rPath, nglImageCodec* pCodec)
       mpImage = NULL;
     }
   }
+  else if (path.GetRight(3) == _T("@2x"))
+  {
+    scale = 2.0;
+  }
+
   
   if (!mpImage)
   {
