@@ -476,6 +476,7 @@ void nuiTexture::Init()
   }
   else if (mTextureID)
   {
+#ifndef _OPENGL_ES_
     glPushAttrib(GL_TEXTURE_BIT);
     
     glBindTexture(mTarget, mTextureID);
@@ -506,6 +507,7 @@ void nuiTexture::Init()
     mWrapT = wrapt;
     
     glPopAttrib();
+#endif
   }
   
   mRealWidthPOT = mRealWidth;

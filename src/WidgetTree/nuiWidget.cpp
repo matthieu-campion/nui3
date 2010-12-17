@@ -2405,7 +2405,7 @@ void nuiWidget::SetVisible(bool Visible)
     {
       mNeedLayout = false; // Force relayout
       mNeedSelfLayout = false; // Force relayout
-      InvalidateLayout();
+      ForcedInvalidateLayout();
     }
     VisibilityChanged();
     DebugRefreshInfo();
