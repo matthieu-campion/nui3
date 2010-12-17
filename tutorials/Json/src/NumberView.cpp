@@ -42,7 +42,6 @@ NumberView::NumberView(nuiJson::Value& rValue)
   }
   
   nuiWidget* pEditor = attr.GetEditor();
-  pEditor->SetEnabled(false); // read-only, mouse events forbidden, there is a bug with label renamer
   AddChild(pEditor);
 }
 

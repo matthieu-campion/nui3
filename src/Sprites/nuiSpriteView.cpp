@@ -92,20 +92,29 @@ nuiSpriteAnimation::nuiSpriteAnimation()
 
 }
 
+extern float NUI_SCALE_FACTOR;
+extern float NUI_INV_SCALE_FACTOR;
+
 nuiSpriteAnimation::nuiSpriteAnimation(const nglPath& rPath)
 : mFPS(10)
 {
+  nglPath path(rPath);
   std::list<nglPath> children;
-  rPath.GetChildren(&children);
+  path.GetChildren(&children);
   children.sort(nglCompareNaturalPath);
   nuiSpriteAnimation* pAnim1 = new nuiSpriteAnimation();
   std::list<nglPath>::const_iterator it = children.begin();
   std::list<nglPath>::const_iterator end = children.end();
   for (; it != end; it++)
   {
-    nuiSpriteFrame* pFrame = new nuiSpriteFrame();
-    pFrame->SetTexture(*it);
-    AddFrame(pFrame);
+    nglPath p = *it;
+    nglString pp = p.GetRemovedExtension();
+    if (pp.GetRight(3) != _T("@2x"))
+    {
+      nuiSpriteFrame* pFrame = new nuiSpriteFrame();
+      pFrame->SetTexture(p);
+      AddFrame(pFrame);
+    }
   }
   
   SetName(rPath.GetNodeName());
