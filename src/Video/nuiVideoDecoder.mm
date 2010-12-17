@@ -16,14 +16,20 @@ class nuiVideoDecoderPrivate
 public:
   
   QTMovie* mpMovie;
+  QTVisualContextRef	mVisualContext;
+  CVOpenGLTextureRef mCurrentTexture;
 };
 
 nuiVideoDecoder::nuiVideoDecoder(const nglPath& path)
 : mPath(path),
-  mpImage(NULL)
+  mpImage(NULL),
+  mpTexture(NULL)
 {
+  NSApplicationLoad();
+  
   mpPrivate = new nuiVideoDecoderPrivate();
   mpPrivate->mpMovie = NULL;
+  
   Init();
 }
 
@@ -38,9 +44,44 @@ nuiVideoDecoder::~nuiVideoDecoder()
     delete mpImage;
 }
 
+CVReturn MyDisplayLinkCallback (
+                                CVDisplayLinkRef displayLink,
+                                const CVTimeStamp *inNow,
+                                const CVTimeStamp *inOutputTime,
+                                CVOptionFlags flagsIn,
+                                CVOptionFlags *flagsOut,
+                                void *displayLinkContext)
+{
+  //CVReturn error =
+  //[(MyVideoView*) displayLinkContext displayFrame:inOutputTime];
+  ((nuiVideoDecoder*)displayLinkContext)->UpdateTexture();
+  return 0;
+}
+
 bool nuiVideoDecoder::Init()
 {
-  NSApplicationLoad();
+  CVReturn            error = kCVReturnSuccess;
+  CGDirectDisplayID   displayID = CGMainDisplayID();// 1
+  CVDisplayLinkRef        displayLink;
+  
+  error = CVDisplayLinkCreateWithCGDisplay(displayID, &displayLink);// 2
+  if(error)
+  {
+    NGL_OUT("DisplayLink created with error:%d", error);
+    displayLink = NULL;
+    return false;
+  }
+  error = CVDisplayLinkSetOutputCallback(displayLink,// 3
+                                         MyDisplayLinkCallback, this);
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   nglString pathStr = mPath.GetPathName();
   char* pStr = pathStr.Export();
@@ -52,8 +93,27 @@ bool nuiVideoDecoder::Init()
     return false;
   
   [mpPrivate->mpMovie retain];
+  
+  CGLContextObj ctx = CGLGetCurrentContext();
+  CGLPixelFormatObj pixelFormat = CGLGetPixelFormat(ctx);
+  //printf("cglcontextQT: 0x%x / 0x%x\n", ctx, pixelFormat);
+  CGLRetainPixelFormat(pixelFormat);
+  // creates a new OpenGL texture context for a specified OpenGL context and pixel format
+	OSStatus err = QTOpenGLTextureContextCreate(kCFAllocatorDefault, ctx, pixelFormat, nil,	&(mpPrivate->mVisualContext));
+  NGL_ASSERT(!err);
+  
+  err = SetMovieVisualContext([mpPrivate->mpMovie quickTimeMovie], mpPrivate->mVisualContext);
+  NGL_ASSERT(!err);
+  
+  [mpPrivate->mpMovie gotoBeginning];
+  MoviesTask([mpPrivate->mpMovie quickTimeMovie], 0); 
+  [mpPrivate->mpMovie play];
+  
+  CVDisplayLinkStart(displayLink);
   return true;
 }
+
+
 
 bool nuiVideoDecoder::IsValid() const
 {
@@ -182,4 +242,37 @@ nglImage* nuiVideoDecoder::GetCurrentImage()
   memcpy(pBuffer, pBitmapArray[0], nbBytes);   
   
   return mpImage;
+}
+
+
+nuiTexture* nuiVideoDecoder::GetCurrentTexture()
+{
+  if (!IsValid() || !mpPrivate->mCurrentTexture)
+    return NULL;
+  
+  GLuint texID = CVOpenGLTextureGetName(mpPrivate->mCurrentTexture);
+  GLenum target = CVOpenGLTextureGetTarget(mpPrivate->mCurrentTexture);
+  
+  if (!mpTexture)
+    mpTexture = nuiTexture::BindTexture(texID, target);
+  else
+    mpTexture->SetTextureIdAndTarget(texID, target);
+
+  return mpTexture;
+}
+
+
+void nuiVideoDecoder::UpdateTexture()
+{
+  if (!IsValid())
+    return;
+  
+  if (!QTVisualContextIsNewImageAvailable(mpPrivate->mVisualContext, NULL))
+    return;
+  
+  if (mpPrivate->mCurrentTexture)
+    CVOpenGLTextureRelease(mpPrivate->mCurrentTexture);
+  QTVisualContextTask(mpPrivate->mVisualContext);
+  OSStatus status = QTVisualContextCopyImageForTime(mpPrivate->mVisualContext, NULL, NULL, &(mpPrivate->mCurrentTexture));
+  NGL_ASSERT(!status);
 }

@@ -10,6 +10,7 @@
 #include "Application.h"
 #include "nuiCSS.h"
 #include "nuiVBox.h"
+#include "nuiFontManager.h"
 #include "nuiClampedValueAttributeEditor.h"
 
 /*
@@ -222,8 +223,11 @@ bool MainWindow::Draw(nuiDrawContext* pContext)
   mpSurface1->SetBlendFunc(nuiBlendTransp);
   mpSurface1->EnableBlending(true);
   
-  
-  mpSurface1->SetFont(nuiFont::GetFont(250));
+  nuiFontRequest request;
+  request.SetName(_T("Helvetica"), 1);
+  request.MustHaveSize(250, 1);
+  nuiFont* pFont = nuiFontManager::GetManager().GetFont(request); //  nuiFont::GetFont(250);
+  mpSurface1->SetFont(pFont);
   mpSurface1->SetTextColor(nuiColor(255, 255, 255, 255, true));
   mpSurface1->DrawText(50, 240, _T("Text"));
   DrawChildren(mpSurface1);
@@ -290,7 +294,7 @@ bool MainWindow::Draw(nuiDrawContext* pContext)
   
   // Draw the final surface on screen:
   
-  pContext->SetClearColor(nuiColor(1.0f, 1.0f, 1.0f, 1.0f));
+  pContext->SetClearColor(nuiColor(255,255,255));
   pContext->Clear();  
   pContext->SetFillColor(nuiColor(0, 0, 0, 255));
   pContext->EnableBlending(true);
@@ -306,6 +310,16 @@ bool MainWindow::Draw(nuiDrawContext* pContext)
   pContext->SetBlendFunc(nuiBlendTransp);
   pContext->SetTexture(mpTexture3);
   pContext->DrawImage(nuiRect(w, h), r2);
+
+  
+  pContext->SetFillColor(nuiColor(255,255,255));
+  pContext->SetBlendFunc(nuiBlendSource);
+  pContext->SetTexture(mpTexture1);
+  pContext->DrawImage(nuiRect(0, h/2, w/2, h/2), r);
+
+  pContext->SetBlendFunc(nuiBlendSource);
+  pContext->SetTexture(mpTexture2);
+  pContext->DrawImage(nuiRect(w/2, h/2, w/2, h/2), r);
   return true;
 }
 

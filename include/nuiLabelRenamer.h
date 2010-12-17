@@ -115,12 +115,7 @@ private:
     mRejectName = false;
     
     if (mText == mpLabel->GetText())
-    {
-      Canceled();
-      Trash();
-      rEvent.Cancel();
       return;
-    }
 
     Renamed();
 

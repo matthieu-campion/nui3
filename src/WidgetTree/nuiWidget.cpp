@@ -2299,7 +2299,7 @@ void nuiWidget::SetSelected(bool set)
   {
     if (mSelectionExclusive && mpParent)
     {
-      nuiContainer::IteratorPtr pIt = mpParent->GetFirstChild();
+      nuiContainer::IteratorPtr pIt = mpParent->GetFirstChild(true);
       do
       {
         nuiWidgetPtr pItem = pIt->GetWidget();

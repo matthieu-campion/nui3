@@ -35,8 +35,8 @@ public:
 
   virtual void OnGlyph(nglFontBase* pFont, const nglString& rString, int Pos, nglGlyphInfo* pGlyph);
 
-  void SetSpacesPerTab(uint count);
-  uint GetSpacesPerTab();
+  void SetSpacesPerTab(int count);
+  int GetSpacesPerTab();
 
   void SetUnderline(bool set);
   bool GetUnderline() const;
@@ -66,7 +66,7 @@ public:
   void SetNewLineDelegate(const NewLineDelegate& rDelegate);
   const std::vector<Line>& GetLines() const;
 protected:
-  uint mSpacesPerTab;
+  int mSpacesPerTab;
   nuiOrientation mOrientation;
   nuiSize mWrapX;
   class NUI_API WordElement
@@ -128,38 +128,38 @@ private:
   {
   public:
     GlyphLocation();
-    GlyphLocation(uint OffsetX, uint OffsetY, uint Width, uint Height, uint OffsetTexture);
+    GlyphLocation(int OffsetX, int OffsetY, int Width, int Height, int OffsetTexture);
     ~GlyphLocation();
 
   public:
-    uint mOffsetX, mOffsetY, mWidth, mHeight, mOffsetTexture;
+    int mOffsetX, mOffsetY, mWidth, mHeight, mOffsetTexture;
   };
 
-  typedef std::map<uint, GlyphLocation> GlyphLocationLookupTable;
-  typedef std::map<uint, GlyphLocation>::iterator GlyphLocationLookupTableIterator;
+  typedef std::map<int, GlyphLocation> GlyphLocationLookupTable;
+  typedef std::map<int, GlyphLocation>::iterator GlyphLocationLookupTableIterator;
   typedef std::vector<nuiTexture *> Textures;
 
   GlyphLocationLookupTable mGlyphLocationLookupTable;
   Textures mTextures;
 
-  uint mCurrentX;
-  uint mRowMaxWidth;
-  uint mCurrentY;
-  uint mCurrentTexture;
+  int mCurrentX;
+  int mRowMaxWidth;
+  int mCurrentY;
+  int mCurrentTexture;
 
 private:
 
-  nuiTexture *AllocateTexture(uint size);
+  nuiTexture *AllocateTexture(int size);
   bool CopyBitmapToTexture(const GlyphBitmap &rBitmap, nuiTexture *pTexture, unsigned int OffsetX, unsigned int OffsetY);
 
   void Blit8BitsBitmapToTexture(const GlyphBitmap &rBitmap, nuiTexture *pTexture, unsigned int OffsetX, unsigned int OffsetY);
 
-  void GetCacheGlyph(uint Index, nuiFontBase::GlyphLocation &rGlyphLocation);
-  void AddCacheGlyph(uint Index, nuiFontBase::GlyphLocation &rGlyphLocation);
-  bool FindNextGlyphLocation(uint Width, uint Height, uint &rOffsetX, uint &rOffsetY);
+  void GetCacheGlyph(int Index, nuiFontBase::GlyphLocation &rGlyphLocation);
+  void AddCacheGlyph(int Index, nuiFontBase::GlyphLocation &rGlyphLocation);
+  bool FindNextGlyphLocation(int Width, int Height, int &rOffsetX, int &rOffsetY);
   void Defaults();
    
-  static const unsigned int TEXTURE_SIZE = 128;
+  static const int TEXTURE_SIZE = 128;
 
 };
 

@@ -176,6 +176,7 @@ bool nuiImageSequence::CreateTextures()
       filename.CFormat(_T("%ls/%d.png"), mTexturePath.GetChars(), i);
       nglPath path(filename);
       nuiTexture* pTex = nuiTexture::GetTexture(path, NULL);
+      //pTex->SetTrace(true);
       
       if (i == 0)
         mTexRect.Set(0, 0, pTex->GetWidth(), pTex->GetHeight());
@@ -251,6 +252,7 @@ bool nuiImageSequence::CreateTextures()
       info.mpBuffer = pDst;
       
       nuiTexture* pTex = nuiTexture::GetTexture(info, true/* clone the buffer */);
+      //pTex->SetTrace(true);
       mTextures.push_back(pTex);
       
       
@@ -313,6 +315,7 @@ bool nuiImageSequence::CreateTextures()
       
       nuiTexture* pTex = nuiTexture::GetTexture(info, true/* clone the buffer */);
       mTextures.push_back(pTex);
+      //pTex->SetTrace(true);
       
       if (mInterpolated)
       {

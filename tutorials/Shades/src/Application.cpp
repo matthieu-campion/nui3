@@ -31,14 +31,10 @@ void Application::OnExit (int Code)
 {
   if (mpMainWindow)
     delete mpMainWindow;
-
-  nuiUninit();
 }
 
 void Application::OnInit()
 {
-  nuiInit(NULL);
-
   uint Width = 0, Height = 0;
   bool HasSize = false;
   bool IsFullScreen = false;
