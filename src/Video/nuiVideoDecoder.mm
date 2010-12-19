@@ -54,25 +54,25 @@ CVReturn MyDisplayLinkCallback (
 {
   //CVReturn error =
   //[(MyVideoView*) displayLinkContext displayFrame:inOutputTime];
-  ((nuiVideoDecoder*)displayLinkContext)->UpdateTexture();
+  //  ((nuiVideoDecoder*)displayLinkContext)->UpdateTexture();
   return 0;
 }
 
 bool nuiVideoDecoder::Init()
 {
   CVReturn            error = kCVReturnSuccess;
-  CGDirectDisplayID   displayID = CGMainDisplayID();// 1
-  CVDisplayLinkRef        displayLink;
+//  CGDirectDisplayID   displayID = CGMainDisplayID();// 1
+//  CVDisplayLinkRef        displayLink;
   
-  error = CVDisplayLinkCreateWithCGDisplay(displayID, &displayLink);// 2
-  if(error)
-  {
-    NGL_OUT("DisplayLink created with error:%d", error);
-    displayLink = NULL;
-    return false;
-  }
-  error = CVDisplayLinkSetOutputCallback(displayLink,// 3
-                                         MyDisplayLinkCallback, this);
+//  error = CVDisplayLinkCreateWithCGDisplay(displayID, &displayLink);// 2
+//  if(error)
+//  {
+//    NGL_OUT("DisplayLink created with error:%d", error);
+//    displayLink = NULL;
+//    return false;
+//  }
+//  error = CVDisplayLinkSetOutputCallback(displayLink,// 3
+//                                         MyDisplayLinkCallback, this);
   
   
   
@@ -107,9 +107,9 @@ bool nuiVideoDecoder::Init()
   
   [mpPrivate->mpMovie gotoBeginning];
   MoviesTask([mpPrivate->mpMovie quickTimeMovie], 0); 
-  [mpPrivate->mpMovie play];
+//  [mpPrivate->mpMovie play];
   
-  CVDisplayLinkStart(displayLink);
+//  CVDisplayLinkStart(displayLink);
   return true;
 }
 
@@ -247,9 +247,11 @@ nglImage* nuiVideoDecoder::GetCurrentImage()
 
 nuiTexture* nuiVideoDecoder::GetCurrentTexture()
 {
-  if (!IsValid() || !mpPrivate->mCurrentTexture)
+  if (!IsValid())// || !mpPrivate->mCurrentTexture)
     return NULL;
-  
+
+  UpdateTexture();
+
   GLuint texID = CVOpenGLTextureGetName(mpPrivate->mCurrentTexture);
   GLenum target = CVOpenGLTextureGetTarget(mpPrivate->mCurrentTexture);
   

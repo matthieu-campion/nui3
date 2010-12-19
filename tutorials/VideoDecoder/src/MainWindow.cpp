@@ -335,7 +335,7 @@ void MainWindow::UpdateVideoImage()
     
   
 
-  if (!mpTexture)
+//  if (!mpTexture)
   {
     mpTexture = mpVideoDecoder->GetCurrentTexture();
     if (!mpTexture)
