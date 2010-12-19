@@ -30,6 +30,8 @@
 		BC6A09AD0EF92BAB00881ACF /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BC6A09AB0EF92BAB00881ACF /* Info.plist */; };
 		BCBCB15F0DFD45BD002E8BC3 /* libnui3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */; };
 		BCBCB1600DFD45C1002E8BC3 /* libnui3D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15C0DFD45B6002E8BC3 /* libnui3D.a */; };
+		E5D816DF12BD85C8008DAB9F /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4053B72012B7D9A000F07124 /* QuickTime.framework */; };
+		E5D816E212BD8608008DAB9F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 404D57BD12B690F40004F0FA /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -125,6 +127,8 @@
 				BCBCB15F0DFD45BD002E8BC3 /* libnui3.a in Frameworks */,
 				408D9C1410975F2E00AEE78A /* Cocoa.framework in Frameworks */,
 				408D9C1610975F3A00AEE78A /* QTKit.framework in Frameworks */,
+				E5D816DF12BD85C8008DAB9F /* QuickTime.framework in Frameworks */,
+				E5D816E212BD8608008DAB9F /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,13 +160,13 @@
 				61A9DE4A0B833CD000BC506C /* sources */,
 				61A9DE490B833CB000BC506C /* dependencies */,
 				61A9DFB50B833DE500BC506C /* Products */,
-				404D57BD12B690F40004F0FA /* QuartzCore.framework */,
 			);
 			sourceTree = "<group>";
 		};
 		61A9DE490B833CB000BC506C /* dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				404D57BD12B690F40004F0FA /* QuartzCore.framework */,
 				408D9C1510975F3A00AEE78A /* QTKit.framework */,
 				408D9C1310975F2E00AEE78A /* Cocoa.framework */,
 				BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */,
