@@ -16,7 +16,9 @@ class nuiVideoDecoderPrivate
 public:
   
   QTMovie* mpMovie;
+#ifndef _COCOA_
   QTVisualContextRef	mVisualContext;
+#endif
   CVOpenGLTextureRef mCurrentTexture;
 };
 
@@ -99,14 +101,19 @@ bool nuiVideoDecoder::Init()
   //printf("cglcontextQT: 0x%x / 0x%x\n", ctx, pixelFormat);
   CGLRetainPixelFormat(pixelFormat);
   // creates a new OpenGL texture context for a specified OpenGL context and pixel format
+#ifndef _COCOA_
 	OSStatus err = QTOpenGLTextureContextCreate(kCFAllocatorDefault, ctx, pixelFormat, nil,	&(mpPrivate->mVisualContext));
   NGL_ASSERT(!err);
   
   err = SetMovieVisualContext([mpPrivate->mpMovie quickTimeMovie], mpPrivate->mVisualContext);
   NGL_ASSERT(!err);
-  
+#endif  
   [mpPrivate->mpMovie gotoBeginning];
+
+#ifndef _COCOA_
   MoviesTask([mpPrivate->mpMovie quickTimeMovie], 0); 
+#endif
+  
 //  [mpPrivate->mpMovie play];
   
 //  CVDisplayLinkStart(displayLink);
@@ -269,12 +276,26 @@ void nuiVideoDecoder::UpdateTexture()
   if (!IsValid())
     return;
   
+#ifndef _COCOA_
   if (!QTVisualContextIsNewImageAvailable(mpPrivate->mVisualContext, NULL))
     return;
+#endif
   
   if (mpPrivate->mCurrentTexture)
     CVOpenGLTextureRelease(mpPrivate->mCurrentTexture);
+#ifndef _COCOA_
   QTVisualContextTask(mpPrivate->mVisualContext);
   OSStatus status = QTVisualContextCopyImageForTime(mpPrivate->mVisualContext, NULL, NULL, &(mpPrivate->mCurrentTexture));
   NGL_ASSERT(!status);
+#else
+  NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:QTMovieFrameImageTypeCVOpenGLTextureRef forKey:QTMovieFrameImageType];
+  CGLContextObj ctx = CGLGetCurrentContext();
+  CGLPixelFormatObj fmt = CGLGetPixelFormat(ctx);
+  [dict setObject:[NSValue valueWithPointer:&ctx] forKey:QTMovieFrameImageOpenGLContext];
+	[dict setObject:[NSValue valueWithPointer:&fmt] forKey:QTMovieFrameImagePixelFormat];
+  QTTime time = [mpPrivate->mpMovie currentTime];
+  
+  mpPrivate->mCurrentTexture = (CVOpenGLTextureRef)[mpPrivate->mpMovie frameImageAtTime:time withAttributes:dict error:NULL];
+#endif
+  
 }
