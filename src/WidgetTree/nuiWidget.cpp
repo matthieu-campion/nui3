@@ -2420,6 +2420,10 @@ void nuiWidget::SilentSetVisible(bool Visible)
     return;
   
   mVisible = Visible;
+
+  nuiContainer* pContainer = dynamic_cast<nuiContainer*> (this);
+  if (pContainer)
+    pContainer->BroadcastVisible();
 }
 
 
@@ -3926,7 +3930,7 @@ void nuiWidget::AutoTrash(const nuiEvent& rEvent)
 void nuiWidget::AutoHide(const nuiEvent& rEvent)
 {
   CheckValid();
-  //SilentSetVisible(false);
+  SetVisible(false);
 }
 
 void nuiWidget::AutoStartTransition(const nuiEvent& rEvent)
