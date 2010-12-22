@@ -8,6 +8,7 @@
 
 #pragma once
 #include "nui.h"
+#include "nglCriticalSection.h"
 
 class nuiVideoDecoder
 {

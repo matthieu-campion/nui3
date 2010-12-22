@@ -64,6 +64,9 @@ public:
   float GetThumbSideSize();
   void SetThumbMiddleSize(float MiddleSize);
   float GetThumbMiddleSize();
+  nuiSize GetThumbMinSize() const;
+  void SetThumbMinSize(nuiSize MinSize);
+  
   
   nuiSimpleEventSource<0> ThumbPressed;
   nuiSimpleEventSource<0> ThumbDepressed;
@@ -90,6 +93,7 @@ protected:
 
   float mThumbSideSize;
   float mThumbMiddleSize;
+  nuiSize mThumbMinSize;
   
   bool mRightSideClicked;
   bool mLeftSideClicked;

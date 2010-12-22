@@ -476,6 +476,7 @@ void nuiTexture::Init()
   }
   else if (mTextureID)
   {
+#ifndef _OPENGL_ES_
     glPushAttrib(GL_TEXTURE_BIT);
     
     glBindTexture(mTarget, mTextureID);
@@ -506,6 +507,7 @@ void nuiTexture::Init()
     mWrapT = wrapt;
     
     glPopAttrib();
+#endif
   }
   
   mRealWidthPOT = mRealWidth;
@@ -679,13 +681,13 @@ void nuiTexture::TextureToImageCoord(nuiAltSize& x, nuiAltSize& y) const
 
 void nuiTexture::ImageToTextureCoord(nuiSize& x, nuiSize& y) const
 {
-  if (GetWidth())
+  if (mRealWidth)
     x /= GetWidth();
   else  if (mpImage && mpImage->GetWidth())
     x /= mpImage->GetWidth();
 
 
-  if (GetHeight())
+  if (mRealHeight)
     y /= GetHeight();
   else if (mpImage && mpImage->GetHeight())
     y /= mpImage->GetHeight();
@@ -693,12 +695,12 @@ void nuiTexture::ImageToTextureCoord(nuiSize& x, nuiSize& y) const
 
 void nuiTexture::TextureToImageCoord(nuiSize& x, nuiSize& y) const
 {
-  if (GetWidth())
+  if (mRealWidth)
     x *= GetWidth();
   else if (mpImage && mpImage->GetWidth())
     x *= mpImage->GetWidth();
 
-  if (GetHeight())
+  if (mRealHeight)
     y *= GetHeight();
   else if (mpImage && mpImage->GetHeight())
     y *= mpImage->GetHeight();

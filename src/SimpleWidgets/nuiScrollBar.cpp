@@ -24,7 +24,13 @@ nuiScrollBar::nuiScrollBar(nuiOrientation orientation, const nuiRange& rRange, n
     mTimer(.2),
     mScrollBarSink(this)
 {
-  SetObjectClass(_T("nuiScrollBar"));
+  if (SetObjectClass(_T("nuiScrollBar")))
+  {
+    AddAttribute(new nuiAttribute<nuiSize>(nglString(_T("ThumbMinSize")), nuiUnitNone,
+                                           nuiMakeDelegate(this, &nuiScrollBar::GetThumbMinSize),
+                                           nuiMakeDelegate(this, &nuiScrollBar::SetThumbMinSize)));
+  }
+
   SetRedrawOnHover(true);
   mOrientation = orientation;
   mClicked = false;
@@ -35,6 +41,7 @@ nuiScrollBar::nuiScrollBar(nuiOrientation orientation, const nuiRange& rRange, n
 
   mThumbSideSize = 0.0;
   mThumbMiddleSize = 0.0;
+  mThumbMinSize = SBMINTHUMB;
   
   mRightSideClicked = false;
   mLeftSideClicked = false;
@@ -144,8 +151,8 @@ void nuiScrollBar::SetThumbRect(const nuiRect& rRect)
     mThumbRect.mLeft = (nuiSize)ToNearest(rRect.Left() + (thumbPosition * rRect.GetWidth()));
     mThumbRect.mRight = (nuiSize)ToNearest(rRect.Left() + ((thumbLength+thumbPosition) * rRect.GetWidth()));
 
-    if (mThumbRect.GetWidth() < SBMINTHUMB)
-      mThumbRect.SetSize(SBMINTHUMB, rRect.GetHeight());
+    if (mThumbRect.GetWidth() < mThumbMinSize)
+      mThumbRect.SetSize(mThumbMinSize, rRect.GetHeight());
     if (mThumbRect.Right() > rRect.Right())
       mThumbRect.Move(rRect.Right() - mThumbRect.Right(), 0.f);
   }
@@ -154,8 +161,8 @@ void nuiScrollBar::SetThumbRect(const nuiRect& rRect)
     mThumbRect.mTop = (nuiSize)ToNearest(rRect.Top() + (thumbPosition* rRect.GetHeight()));
     mThumbRect.mBottom = (nuiSize)ToNearest(rRect.Top() + ((thumbLength+thumbPosition) * rRect.GetHeight()));
 
-    if (mThumbRect.GetHeight() < SBMINTHUMB)
-      mThumbRect.SetSize(rRect.GetWidth(), SBMINTHUMB);
+    if (mThumbRect.GetHeight() < mThumbMinSize)
+      mThumbRect.SetSize(rRect.GetWidth(), mThumbMinSize);
     if (mThumbRect.Bottom() > rRect.Bottom())
       mThumbRect.Move(0.f, rRect.Bottom() - mThumbRect.Bottom());
     
@@ -472,6 +479,16 @@ void nuiScrollBar::SetThumbMiddleSize(float middleSize)
 float nuiScrollBar::GetThumbMiddleSize()
 {
   return mThumbMiddleSize;
+}
+
+nuiSize nuiScrollBar::GetThumbMinSize() const
+{
+  return mThumbMinSize;
+}
+void nuiScrollBar::SetThumbMinSize(nuiSize MinSize)
+{
+  mThumbMinSize = MinSize;
+  InvalidateLayout();
 }
 
 
