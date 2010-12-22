@@ -437,6 +437,15 @@ void nuiAnimation::Stop()
   InternalStop();
 }
 
+void nuiAnimation::SilentStop()
+{
+  mAnimSink.Disconnect(GetTimer()->Tick, &nuiAnimation::OnTick);
+  mCurrentPosition = 0;
+  
+  if (mDeleteOnStop)
+    delete this;
+}
+
 void nuiAnimation::Pause()
 {
   if (!mUpdatingTime && IsPlaying())

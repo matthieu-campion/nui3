@@ -2381,17 +2381,15 @@ void nuiWidget::SetVisible(bool Visible)
   nuiAnimation* pHideAnim = GetAnimation(_T("HIDE"));
   nuiAnimation* pShowAnim = GetAnimation(_T("SHOW"));
 
-  if (mVisible == Visible)
+  if (pShowAnim && pHideAnim)
   {
-    if (Visible && (!pHideAnim || !pHideAnim->IsPlaying()))
-      return;
-    else if (!Visible && (!pShowAnim || !pShowAnim->IsPlaying()))
-      return;
-    if (pHideAnim)
-      pHideAnim->Stop();
-    if (pShowAnim)
-      pShowAnim->Stop();
+    NGL_OUT(_T("(%p) nuiWidget::SetVisible(%ls)\n"), this, TRUEFALSE(Visible));
   }
+  
+  if (pHideAnim)
+    pHideAnim->SilentStop();
+  if (pShowAnim)
+    pShowAnim->SilentStop();
 
   if (pHideAnim && !Visible && (pHideAnim->GetPosition()==0 && pHideAnim->GetDuration()>0))
   {
@@ -2422,6 +2420,10 @@ void nuiWidget::SilentSetVisible(bool Visible)
     return;
   
   mVisible = Visible;
+
+  nuiContainer* pContainer = dynamic_cast<nuiContainer*> (this);
+  if (pContainer)
+    pContainer->BroadcastVisible();
 }
 
 
@@ -3487,9 +3489,15 @@ void nuiWidget::AddAnimation(const nglString& rName, nuiAnimation* pAnim, bool T
   mAnimations[rName] = pAnim;
   pAnim->SetDeleteOnStop(false); /// Cancel anim delete on stop or we'll crash as soon as the widget is destroyed or the user starts to play the anim once more.
   if (rName == _T("TRASH"))
+  {
     mGenericWidgetSink.Connect(pAnim->AnimStop, &nuiWidget::AutoTrash);
+    TransitionAnimation = true;
+  }
   if (rName == _T("HIDE"))
+  {
     mGenericWidgetSink.Connect(pAnim->AnimStop, &nuiWidget::AutoHide);
+    TransitionAnimation = true;
+  }
   
   if (TransitionAnimation)
   {
