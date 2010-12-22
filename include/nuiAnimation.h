@@ -136,7 +136,8 @@ public:
 
   virtual void Play(int32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward); ///< Start playing the animation. Stop after count iterations. 
   bool PlayOnNextTick(int32 Count = 1, nuiAnimLoop LoopMode = eAnimLoopForward); ///< The animation will start playing as soon as the next animation tick is reached. Stop after count iterations. 
-  virtual void Stop(); ///< Stop Playing the animation and reset the play position so tht the next play will restart from the begining.
+  virtual void Stop(); ///< Stop Playing the animation and reset the play position so that the next play will restart from the begining.
+  void SilentStop(); ///< Stop Playing the animation and reset the play position to 0, but don't call any event/callback
   virtual void Pause(); ///< Stop Playing the animation but don't reset the play position, the next play will restart from the last position.
 
   bool IsPlaying() const; ///< Return true if the animation is currently playing.
