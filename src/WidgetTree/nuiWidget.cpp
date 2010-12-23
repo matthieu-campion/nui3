@@ -2379,11 +2379,31 @@ void nuiWidget::SetVisible(bool Visible)
   CheckValid();
   
   nuiAnimation* pHideAnim = GetAnimation(_T("HIDE"));
+
+  if (Visible == mVisible)
+  {
+    // Are we already in the process of being hidden?
+    if (!Visible)
+    {
+      if (!pHideAnim)
+        return; // No
+      else if (!pHideAnim->IsPlaying())
+        return; // No
+      
+      // Yes, let's continue as we'll handle this case later
+    }
+    else
+    {
+      return;
+    }
+
+  }
+  
   nuiAnimation* pShowAnim = GetAnimation(_T("SHOW"));
 
   if (pShowAnim && pHideAnim)
   {
-    NGL_OUT(_T("(%p) nuiWidget::SetVisible(%ls)\n"), this, TRUEFALSE(Visible));
+    NGL_OUT(_T("(%p) nuiWidget::SetVisible(%ls) '%ls' / '%ls'\n"), this, TRUEFALSE(Visible), GetObjectClass().GetChars(), GetObjectName().GetChars());
   }
   
   if (pHideAnim)
@@ -2419,6 +2439,14 @@ void nuiWidget::SilentSetVisible(bool Visible)
   if (mVisible == Visible)
     return;
   
+  nuiAnimation* pAnimHide = GetAnimation(_T("HIDE"));
+  nuiAnimation* pAnimShow = GetAnimation(_T("SHOW"));
+  
+  if (pAnimHide && pAnimHide->IsPlaying())
+    pAnimHide->Stop();
+  if (pAnimShow && pAnimShow->IsPlaying())
+    pAnimShow->Stop();
+
   mVisible = Visible;
 
   nuiContainer* pContainer = dynamic_cast<nuiContainer*> (this);
@@ -3930,7 +3958,7 @@ void nuiWidget::AutoTrash(const nuiEvent& rEvent)
 void nuiWidget::AutoHide(const nuiEvent& rEvent)
 {
   CheckValid();
-  SetVisible(false);
+  SilentSetVisible(false);
 }
 
 void nuiWidget::AutoStartTransition(const nuiEvent& rEvent)
