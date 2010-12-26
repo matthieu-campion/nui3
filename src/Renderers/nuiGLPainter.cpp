@@ -1588,6 +1588,8 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
   double ry = 1;
   if (rectangle != 1 || pTexture->GetTextureID())
   {
+    rx = pTexture->GetUnscaledWidth() / Width;
+    ry = pTexture->GetUnscaledHeight() / Height;
 #ifndef _OPENGL_ES_
     if (target == GL_TEXTURE_RECTANGLE_ARB)
     {
