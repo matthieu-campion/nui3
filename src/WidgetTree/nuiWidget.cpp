@@ -2396,6 +2396,7 @@ void nuiWidget::SetVisible(bool Visible)
         mVisible = true;
         InvalidateLayout();
         VisibilityChanged();
+        pShowAnim->SetTime(0, eAnimFromStart);
         StartAnimation(_T("SHOW"));
         DebugRefreshInfo();
         ApplyCSSForStateChange(NUI_WIDGET_MATCHTAG_STATE);
@@ -2431,6 +2432,7 @@ void nuiWidget::SetVisible(bool Visible)
         mVisible = true;
         InvalidateLayout();
         VisibilityChanged();
+        pShowAnim->SetTime(0, eAnimFromStart);
         StartAnimation(_T("SHOW"));
         DebugRefreshInfo();
         ApplyCSSForStateChange(NUI_WIDGET_MATCHTAG_STATE);
@@ -2465,6 +2467,7 @@ void nuiWidget::SetVisible(bool Visible)
         mVisible = true;
         InvalidateLayout();
         VisibilityChanged();
+        pHideAnim->SetTime(0, eAnimFromStart);
         StartAnimation(_T("HIDE"));
         DebugRefreshInfo();
         ApplyCSSForStateChange(NUI_WIDGET_MATCHTAG_STATE);
@@ -2488,6 +2491,7 @@ void nuiWidget::SetVisible(bool Visible)
         mVisible = true;
         InvalidateLayout();
         VisibilityChanged();
+        pHideAnim->SetTime(0, eAnimFromStart);
         StartAnimation(_T("HIDE"));
         DebugRefreshInfo();
         ApplyCSSForStateChange(NUI_WIDGET_MATCHTAG_STATE);
@@ -4899,7 +4903,8 @@ void nuiWidget::DrawFocus(nuiDrawContext* pContext, bool FrontOrBack)
       pContext->SetBlendFunc(nuiBlendTransp);
       pContext->EnableBlending(true);
       //pContext->EnableTexturing(false);
-      pContext->SetStrokeColor(nuiColor(64, 64, 255, 128));
+      nuiColor c(64, 64, 255, ToNearest(128 * GetAlpha()));
+      pContext->SetStrokeColor(c);
       
       nuiShape shp;
       shp.AddRect(rect);
