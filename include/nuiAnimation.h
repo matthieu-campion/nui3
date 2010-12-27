@@ -128,6 +128,7 @@ public:
   virtual nuiXMLNode* Serialize(nuiXMLNode* pNode, bool CreateNewNode) const;
 
   bool SetTime(double Time, nuiAnimWhence Whence = eAnimFromStart); ///< Set the time to display. Returns false if Time is out of range (but the current time will be capped on the nearest boundary).
+  bool SilentSetTime(double Time, nuiAnimWhence Whence = eAnimFromStart); ///< Set the time to display. Returns false if Time is out of range (but the current time will be capped on the nearest boundary). This method doesn't update the animation (no call to OnFrame), it only changes the internal time.
   double GetTime() const; ///< Return the currently displayed time in the animation.
   double GetPosition() const;
 

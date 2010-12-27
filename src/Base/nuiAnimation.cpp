@@ -382,6 +382,40 @@ bool nuiAnimation::SetTime(double Time, nuiAnimWhence Whence)
   return true;
 }
 
+bool nuiAnimation::SilentSetTime(double Time, nuiAnimWhence Whence)
+{
+  switch (Whence)
+  {
+    case eAnimFromStart:
+      mCurrentTime = Time;
+      break;
+    case eAnimForward:
+      mCurrentTime += Time;
+      break;
+    case eAnimRewind:
+      mCurrentTime -= Time;
+      break;
+    case eAnimFromEnd:
+      mCurrentTime = GetDuration() - Time;
+      break;
+  }
+  
+  if (mCurrentTime < 0)
+  {
+    mCurrentTime = 0;
+    return false;
+  }
+  
+  if (mCurrentTime > GetDuration())
+  {
+    mCurrentTime = GetDuration();
+    return false;
+  }
+  
+  CallOnFrame();
+  return true;
+}
+
 double nuiAnimation::GetTime() const
 {
   return mCurrentTime;

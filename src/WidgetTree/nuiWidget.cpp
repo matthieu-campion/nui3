@@ -2377,7 +2377,7 @@ void nuiWidget::UnlockState()
 void nuiWidget::SetVisible(bool Visible)
 {
   CheckValid();
-  NGL_OUT(_T("(%p) nuiWidget::SetVisible(%ls) '%ls' / '%ls'\n"), this, TRUEFALSE(Visible), GetObjectClass().GetChars(), GetObjectName().GetChars());
+  //NGL_OUT(_T("(%p) nuiWidget::SetVisible(%ls) '%ls' / '%ls'\n"), this, TRUEFALSE(Visible), GetObjectClass().GetChars(), GetObjectName().GetChars());
   
   nuiAnimation* pHideAnim = GetAnimation(_T("HIDE"));
   nuiAnimation* pShowAnim = GetAnimation(_T("SHOW"));
@@ -2396,8 +2396,10 @@ void nuiWidget::SetVisible(bool Visible)
         mVisible = true;
         InvalidateLayout();
         VisibilityChanged();
-        pShowAnim->SetTime(0, eAnimFromStart);
+        //pShowAnim->SetTime(0, eAnimFromStart);
         StartAnimation(_T("SHOW"));
+//        pShowAnim->SilentSetTime(0, eAnimFromStart);
+//        pShowAnim->Play();
         DebugRefreshInfo();
         ApplyCSSForStateChange(NUI_WIDGET_MATCHTAG_STATE);
       }
@@ -2432,8 +2434,10 @@ void nuiWidget::SetVisible(bool Visible)
         mVisible = true;
         InvalidateLayout();
         VisibilityChanged();
-        pShowAnim->SetTime(0, eAnimFromStart);
+        //pShowAnim->SetTime(0, eAnimFromStart);
         StartAnimation(_T("SHOW"));
+//        pShowAnim->SilentSetTime(0, eAnimFromStart);
+//        pShowAnim->Play();
         DebugRefreshInfo();
         ApplyCSSForStateChange(NUI_WIDGET_MATCHTAG_STATE);
       }
@@ -2467,8 +2471,10 @@ void nuiWidget::SetVisible(bool Visible)
         mVisible = true;
         InvalidateLayout();
         VisibilityChanged();
-        pHideAnim->SetTime(0, eAnimFromStart);
+//        pHideAnim->SetTime(0, eAnimFromStart);
         StartAnimation(_T("HIDE"));
+//        pHideAnim->SilentSetTime(0, eAnimFromStart);
+//        pHideAnim->Play();
         DebugRefreshInfo();
         ApplyCSSForStateChange(NUI_WIDGET_MATCHTAG_STATE);
       }
@@ -2491,8 +2497,10 @@ void nuiWidget::SetVisible(bool Visible)
         mVisible = true;
         InvalidateLayout();
         VisibilityChanged();
-        pHideAnim->SetTime(0, eAnimFromStart);
+//        pHideAnim->SetTime(0, eAnimFromStart);
         StartAnimation(_T("HIDE"));
+//pHideAnim->SilentSetTime(0, eAnimFromStart);
+//       pHideAnim->Play();
         DebugRefreshInfo();
         ApplyCSSForStateChange(NUI_WIDGET_MATCHTAG_STATE);
       }
@@ -4108,6 +4116,7 @@ void nuiWidget::AutoHide(const nuiEvent& rEvent)
 {
   CheckValid();
   SilentSetVisible(false);
+  InvalidateLayout();
 }
 
 void nuiWidget::AutoStartTransition(const nuiEvent& rEvent)
