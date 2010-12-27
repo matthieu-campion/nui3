@@ -55,28 +55,28 @@
 			remoteGlobalIDString = E58172D70C3D103300902DFE;
 			remoteInfo = nui3D;
 		};
-		E5C065E1122B12D900F52C24 /* PBXContainerItemProxy */ = {
+		E5C064A8122B0F0600F52C24 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = E52417F311CB860B0025CA71;
 			remoteInfo = nuiPhoneD;
 		};
-		E5C065E3122B12D900F52C24 /* PBXContainerItemProxy */ = {
+		E5C064AA122B0F0600F52C24 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = E52420E511CBCE9E0025CA71;
 			remoteInfo = nuiPhone;
 		};
-		E5C065E5122B12D900F52C24 /* PBXContainerItemProxy */ = {
+		E5C064AC122B0F0600F52C24 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = E5A8D1D311E33A54004E14CE;
 			remoteInfo = nui3CocoaD;
 		};
-		E5C065E7122B12D900F52C24 /* PBXContainerItemProxy */ = {
+		E5C064AE122B0F0600F52C24 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
 			proxyType = 2;
@@ -86,8 +86,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		61A9DFBF0B833E9600BC506C /* WidgetCreatorCSS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WidgetCreatorCSS.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		61A9DFC90B833EF200BC506C /* WidgetCreatorCSSD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WidgetCreatorCSSD.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		61A9DFBF0B833E9600BC506C /* LiquidParticles.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LiquidParticles.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		61A9DFC90B833EF200BC506C /* LiquidParticlesD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LiquidParticlesD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61A9DFD20B833F1500BC506C /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
 		61A9DFD30B833F1500BC506C /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
 		61A9DFD40B833F1500BC506C /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
@@ -170,8 +170,8 @@
 		61A9DFB50B833DE500BC506C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				61A9DFBF0B833E9600BC506C /* WidgetCreatorCSS.app */,
-				61A9DFC90B833EF200BC506C /* WidgetCreatorCSSD.app */,
+				61A9DFBF0B833E9600BC506C /* LiquidParticles.app */,
+				61A9DFC90B833EF200BC506C /* LiquidParticlesD.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -197,10 +197,10 @@
 			children = (
 				BCBCB15C0DFD45B6002E8BC3 /* libnui3D.a */,
 				BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */,
-				E5C065E2122B12D900F52C24 /* libnuiPhoneD.a */,
-				E5C065E4122B12D900F52C24 /* libnuiPhone.a */,
-				E5C065E6122B12D900F52C24 /* libnui3CocoaD.a */,
-				E5C065E8122B12D900F52C24 /* libnui3Cocoa.a */,
+				E5C064A9122B0F0600F52C24 /* libnuiPhoneD.a */,
+				E5C064AB122B0F0600F52C24 /* libnuiPhone.a */,
+				E5C064AD122B0F0600F52C24 /* libnui3CocoaD.a */,
+				E5C064AF122B0F0600F52C24 /* libnui3Cocoa.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -208,9 +208,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		61A9DFBE0B833E9600BC506C /* WidgetCreatorCSS */ = {
+		61A9DFBE0B833E9600BC506C /* LiquidParticles */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 61A9DFC20B833E9600BC506C /* Build configuration list for PBXNativeTarget "WidgetCreatorCSS" */;
+			buildConfigurationList = 61A9DFC20B833E9600BC506C /* Build configuration list for PBXNativeTarget "LiquidParticles" */;
 			buildPhases = (
 				61A9DFBB0B833E9600BC506C /* Resources */,
 				61A9DFBC0B833E9600BC506C /* Sources */,
@@ -222,14 +222,14 @@
 			dependencies = (
 				BCBCB1640DFD45FA002E8BC3 /* PBXTargetDependency */,
 			);
-			name = WidgetCreatorCSS;
+			name = LiquidParticles;
 			productName = Temp;
-			productReference = 61A9DFBF0B833E9600BC506C /* WidgetCreatorCSS.app */;
+			productReference = 61A9DFBF0B833E9600BC506C /* LiquidParticles.app */;
 			productType = "com.apple.product-type.application";
 		};
-		61A9DFC80B833EF200BC506C /* WidgetCreatorCSSD */ = {
+		61A9DFC80B833EF200BC506C /* LiquidParticlesD */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 61A9DFCC0B833EF300BC506C /* Build configuration list for PBXNativeTarget "WidgetCreatorCSSD" */;
+			buildConfigurationList = 61A9DFCC0B833EF300BC506C /* Build configuration list for PBXNativeTarget "LiquidParticlesD" */;
 			buildPhases = (
 				61A9DFC60B833EF200BC506C /* Sources */,
 				61A9DFC70B833EF200BC506C /* Frameworks */,
@@ -240,9 +240,9 @@
 			dependencies = (
 				BCBCB1660DFD4605002E8BC3 /* PBXTargetDependency */,
 			);
-			name = WidgetCreatorCSSD;
+			name = LiquidParticlesD;
 			productName = Tempd;
-			productReference = 61A9DFC90B833EF200BC506C /* WidgetCreatorCSSD.app */;
+			productReference = 61A9DFC90B833EF200BC506C /* LiquidParticlesD.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -250,7 +250,7 @@
 /* Begin PBXProject section */
 		61A9DE3F0B833C9200BC506C /* Project object */ = {
 			isa = PBXProject;
-			buildConfigurationList = 61A9DE400B833C9200BC506C /* Build configuration list for PBXProject "WidgetCreatorCSS" */;
+			buildConfigurationList = 61A9DE400B833C9200BC506C /* Build configuration list for PBXProject "LiquidParticles" */;
 			compatibilityVersion = "Xcode 3.1";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -271,8 +271,8 @@
 			);
 			projectRoot = "";
 			targets = (
-				61A9DFBE0B833E9600BC506C /* WidgetCreatorCSS */,
-				61A9DFC80B833EF200BC506C /* WidgetCreatorCSSD */,
+				61A9DFBE0B833E9600BC506C /* LiquidParticles */,
+				61A9DFC80B833EF200BC506C /* LiquidParticlesD */,
 			);
 		};
 /* End PBXProject section */
@@ -292,32 +292,32 @@
 			remoteRef = BCBCB15D0DFD45B6002E8BC3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		E5C065E2122B12D900F52C24 /* libnuiPhoneD.a */ = {
+		E5C064A9122B0F0600F52C24 /* libnuiPhoneD.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libnuiPhoneD.a;
-			remoteRef = E5C065E1122B12D900F52C24 /* PBXContainerItemProxy */;
+			remoteRef = E5C064A8122B0F0600F52C24 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		E5C065E4122B12D900F52C24 /* libnuiPhone.a */ = {
+		E5C064AB122B0F0600F52C24 /* libnuiPhone.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libnuiPhone.a;
-			remoteRef = E5C065E3122B12D900F52C24 /* PBXContainerItemProxy */;
+			remoteRef = E5C064AA122B0F0600F52C24 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		E5C065E6122B12D900F52C24 /* libnui3CocoaD.a */ = {
+		E5C064AD122B0F0600F52C24 /* libnui3CocoaD.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libnui3CocoaD.a;
-			remoteRef = E5C065E5122B12D900F52C24 /* PBXContainerItemProxy */;
+			remoteRef = E5C064AC122B0F0600F52C24 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		E5C065E8122B12D900F52C24 /* libnui3Cocoa.a */ = {
+		E5C064AF122B0F0600F52C24 /* libnui3Cocoa.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libnui3Cocoa.a;
-			remoteRef = E5C065E7122B12D900F52C24 /* PBXContainerItemProxy */;
+			remoteRef = E5C064AE122B0F0600F52C24 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -403,8 +403,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
+				GCC_VERSION = 4.0;
 				HEADER_SEARCH_PATHS = ../../include;
 				INFOPLIST_FILE = Info.plist;
+				OTHER_LDFLAGS = (
+					"-lz",
+					"-liconv",
+				);
+				SDKROOT = macosx;
 			};
 			name = Default;
 		};
@@ -423,12 +429,7 @@
 				GCC_OPTIMIZATION_LEVEL = s;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-liconv",
-					"-lz",
-				);
-				PREBINDING = YES;
-				PRODUCT_NAME = WidgetCreatorCSS;
+				PRODUCT_NAME = LiquidParticles;
 				STRIP_INSTALLED_PRODUCT = YES;
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -453,12 +454,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = _DEBUG;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-liconv",
-					"-lz",
-				);
-				PREBINDING = YES;
-				PRODUCT_NAME = WidgetCreatorCSSD;
+				PRODUCT_NAME = LiquidParticlesD;
 				WARNING_CFLAGS = (
 					"-Wmost",
 					"-Wno-four-char-constants",
@@ -472,7 +468,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		61A9DE400B833C9200BC506C /* Build configuration list for PBXProject "WidgetCreatorCSS" */ = {
+		61A9DE400B833C9200BC506C /* Build configuration list for PBXProject "LiquidParticles" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				61A9DE410B833C9200BC506C /* Default */,
@@ -480,7 +476,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Default;
 		};
-		61A9DFC20B833E9600BC506C /* Build configuration list for PBXNativeTarget "WidgetCreatorCSS" */ = {
+		61A9DFC20B833E9600BC506C /* Build configuration list for PBXNativeTarget "LiquidParticles" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				61A9DFC30B833E9600BC506C /* Default */,
@@ -488,7 +484,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Default;
 		};
-		61A9DFCC0B833EF300BC506C /* Build configuration list for PBXNativeTarget "WidgetCreatorCSSD" */ = {
+		61A9DFCC0B833EF300BC506C /* Build configuration list for PBXNativeTarget "LiquidParticlesD" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				61A9DFCD0B833EF300BC506C /* Default */,
